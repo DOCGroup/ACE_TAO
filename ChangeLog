@@ -1,3 +1,11 @@
+Mon Sep 18 18:57:51 UTC 2006  Nishanth Shankaran  <nshankar@dre.vanderbilt.edu>
+
+        * common/OpString.idl:
+        * common/OpString_stub_export.h:
+        * common/RACE_common.idl:
+        * common/RACE_common.mpc: Added the operational-string IDL
+          structure.
+
 Tue Sep  5 23:29:45 UTC 2006  Nishanth Shankaran  <nshankar@dre.vanderbilt.edu>
 
         * Controller/Component/Controller.mpc:

@@ -1,0 +1,128 @@
+#ifndef OPERATIONAL_STRING_IDL
+#define OPERATIONAL_STRING_IDL
+
+#include "ciao/Deployment_Data.idl"
+
+module CIAO
+{
+  module RACE
+    {
+      struct TimeValue
+      {
+        /* Seconds since Jan. 1, 1970 */
+        long    sec;
+        /* and microseconds */
+        long    usec;
+      };
+
+      struct TimeWindow
+      {
+        TimeValue Earliest;
+
+        TimeValue Latest;
+      };
+
+      struct InstanceDescription
+      {
+        string UUID;
+
+        string name;
+
+        string node;
+
+        string taskId;
+
+        string suggestedImpl;
+
+        ::Deployment::Properties configProperty;
+
+        TimeWindow startWindow;
+
+        TimeWindow endWindow;
+      };
+
+      typedef sequence <InstanceDescription> InstanceDescriptions;
+
+
+      typedef ::Deployment::PlanConnectionDescription DataLinkDescription;
+
+
+      typedef sequence <DataLinkDescription> DataLinkDescriptions;
+
+      enum ConnectionType
+      {
+        CAUSAL,
+        SCHEDULING,
+        THREAT
+      };
+
+      struct OrderLinkDescription
+      {
+        string name;
+
+        ConnectionType type;
+
+        ::CORBA::StringSeq source;
+
+        ::Deployment::Requirements deployRequirement;
+
+        ::Deployment::ComponentExternalPortEndpoints externalEndpoint;
+
+        ::Deployment::PlanSubcomponentPortEndpoints internalEndpoint;
+
+        ::Deployment::ExternalReferenceEndpoints externalReference;
+
+        ::Deployment::ConnectionResourceDeploymentDescriptions deployedResource;
+      };
+
+      typedef sequence <OrderLinkDescription> OrderLinkDescriptions;
+
+
+      enum QoSComparator
+      {
+        LESS_THAN,
+        GREATER_THAN,
+        EQUAL,
+        LESS_THAN_EQUAL,
+        GREATER_THAN_EQUAL,
+        NOT_EQUAL
+      };
+
+      struct QoSSpecification
+      {
+        string name;
+
+        string type;
+
+        string MonitorID;
+
+        QoSComparator comparator;
+
+        any value;
+      };
+
+      typedef sequence <QoSSpecification> QoSSpecifications;
+
+      struct OperationalString
+      {
+
+        InstanceDescriptions instances;
+
+        DataLinkDescriptions dataLinks;
+
+        OrderLinkDescriptions orderLinks;
+
+        long priority;
+
+        QoSSpecifications QoSRequirements;
+
+        TimeWindow startWindow;
+
+        TimeWindow endWindow;
+      };
+
+
+  };
+};
+
+#endif /* OPERATIONAL_STRING_IDL */
