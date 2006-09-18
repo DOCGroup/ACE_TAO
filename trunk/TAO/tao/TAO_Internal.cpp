@@ -165,21 +165,15 @@ namespace
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
+#if defined (ACE_HAS_THREADS)
 /// A little helper class to get around the TAO_Singleton::instance ()
 /// inability to pass default initialization arguments to the
 /// singleton ctor.
 
-#if defined (ACE_HAS_THREADS)
 class TAO_Ubergestalt_Ready_Condition
   : public ACE_SYNCH_RECURSIVE_CONDITION
 {
 public:
-  TAO_Ubergestalt_Ready_Condition (void)
-    : ACE_SYNCH_RECURSIVE_CONDITION
-  (*ACE_Static_Object_Lock::instance())
-  {
-  };
-
   static TAO_Ubergestalt_Ready_Condition* instance (void)
   {
     // The first thread to get here will initialize the static
@@ -191,6 +185,19 @@ public:
 
     return i_;
   };
+
+  TAO_Ubergestalt_Ready_Condition (void)
+    : ACE_SYNCH_RECURSIVE_CONDITION
+  (this->mutex_)
+  {
+    // empty
+  };
+
+private:
+  /// The mutex, associated with the condition. Do not use the ACE
+  /// global mutex, because it causes deadlocks with other thrads that
+  /// may be in DLL_Manager::open()
+  ACE_Recursive_Thread_Mutex mutex_;
 };
 #endif // ACE_HAS_THREADS
 
@@ -206,7 +213,7 @@ TAO::ORB::open_services (ACE_Service_Gestalt* pcfg,
                               -1));
 
     // Wait in line, while the default ORB (which isn't us) completes
-    // initialization of the globaly reuired service objects
+    // initialization of the globaly required service objects
     if (service_open_count == 1)
       {
         if (TAO_debug_level > 4)

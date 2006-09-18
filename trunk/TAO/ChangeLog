@@ -1,3 +1,13 @@
+Mon Sep 18 23:53:29 UTC 2006  Iliyan Jeliazkov  <iliyan@ociweb.com>
+
+        * tao/TAO_Internal.cpp:
+
+          Replacing the usage of the global ACE lock with a separate
+          mutex, because the DLL Manager is also using the global
+          lock. This can cause a race condition in applications, which
+          re-enter the Service Configurator to load another DLL as part of
+          their own initialization.
+
 Mon Sep 18 23:11:31 UTC 2006  Iliyan Jeliazkov  <iliyan@ociweb.com>
 
           This change fixes bug#2651, related to the order of destruction
