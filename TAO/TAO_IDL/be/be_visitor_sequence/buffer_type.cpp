@@ -74,7 +74,8 @@ be_visitor_sequence_buffer_type::visit_predefined_type (be_predefined_type *node
   *os << "::";
 
   if (pt == AST_PredefinedType::PT_pseudo
-      || pt == AST_PredefinedType::PT_object)
+      || pt == AST_PredefinedType::PT_object
+      || pt == AST_PredefinedType::PT_abstract)
     {
       *os << node->name () << "_ptr";
     }

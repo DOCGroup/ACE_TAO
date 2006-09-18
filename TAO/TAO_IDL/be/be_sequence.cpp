@@ -346,9 +346,8 @@ be_sequence::managed_type (void)
               switch (pt)
                 {
                   case AST_PredefinedType::PT_pseudo:
-                    this->mt_ = be_sequence::MNG_PSEUDO;
-                    break;
                   case AST_PredefinedType::PT_object:
+                  case AST_PredefinedType::PT_abstract:
                     this->mt_ = be_sequence::MNG_PSEUDO;
                     break;
                   case AST_PredefinedType::PT_value:

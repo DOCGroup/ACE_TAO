@@ -584,7 +584,8 @@ be_visitor_union_branch_public_ci::visit_predefined_type (
   AST_PredefinedType::PredefinedType pt = node->pt ();
 
   if (pt == AST_PredefinedType::PT_pseudo
-      || pt == AST_PredefinedType::PT_object)
+      || pt == AST_PredefinedType::PT_object
+      || pt == AST_PredefinedType::PT_abstract)
     {
       *os << "const ::" << bt->name () << "_ptr";
     }
@@ -630,6 +631,15 @@ be_visitor_union_branch_public_ci::visit_predefined_type (
             << ");" << be_uidt << be_uidt_nl;
 
         break;
+      case AST_PredefinedType::PT_abstract:
+        *os << "typedef ::CORBA::AbstractBase_var OBJECT_FIELD;" << be_nl
+            << "ACE_NEW (" << be_idt << be_idt_nl
+            << "this->u_." << ub->local_name () << "_," << be_nl
+            << "OBJECT_FIELD ( ::CORBA::AbstractBase::_duplicate (val))"
+            << be_uidt_nl
+            << ");" << be_uidt << be_uidt_nl;
+
+        break;
       case AST_PredefinedType::PT_pseudo:
         *os << "this->u_." << ub->local_name () << "_ = ::"
             << bt->name () << "::_duplicate (val);" << be_uidt_nl;
@@ -663,80 +673,81 @@ be_visitor_union_branch_public_ci::visit_predefined_type (
 
   switch (pt)
     {
-    case AST_PredefinedType::PT_object:
-      // Get method.
-      *os << "/// Retrieve the member." << be_nl
-          << "ACE_INLINE" << be_nl
-          << "::" << bt->name () << "_ptr" << be_nl
-          << bu->name () << "::" << ub->local_name ()
-          << " (void) const" << be_nl
-          << "{" << be_idt_nl;
-      *os << "return this->u_." << ub->local_name ()
-          << "_->in ();" << be_uidt_nl;
-      *os << "}";
+      case AST_PredefinedType::PT_object:
+      case AST_PredefinedType::PT_abstract:
+        // Get method.
+        *os << "/// Retrieve the member." << be_nl
+            << "ACE_INLINE" << be_nl
+            << "::" << bt->name () << "_ptr" << be_nl
+            << bu->name () << "::" << ub->local_name ()
+            << " (void) const" << be_nl
+            << "{" << be_idt_nl;
+        *os << "return this->u_." << ub->local_name ()
+            << "_->in ();" << be_uidt_nl;
+        *os << "}";
 
-      break;
-    case AST_PredefinedType::PT_pseudo:
-      // Get method.
-      *os << "/// Retrieve the member." << be_nl
-          << "ACE_INLINE" << be_nl
-          << "::" << bt->name () << "_ptr" << be_nl
-          << bu->name () << "::" << ub->local_name ()
-          << " (void) const" << be_nl
-          << "{" << be_idt_nl;
-      *os << "return this->u_." << ub->local_name ()
-          << "_;" << be_uidt_nl;
-      *os << "}";
+        break;
+      case AST_PredefinedType::PT_pseudo:
+        // Get method.
+        *os << "/// Retrieve the member." << be_nl
+            << "ACE_INLINE" << be_nl
+            << "::" << bt->name () << "_ptr" << be_nl
+            << bu->name () << "::" << ub->local_name ()
+            << " (void) const" << be_nl
+            << "{" << be_idt_nl;
+        *os << "return this->u_." << ub->local_name ()
+            << "_;" << be_uidt_nl;
+        *os << "}";
 
-      break;
-    case AST_PredefinedType::PT_value:
-      // Get method.
-      *os << "/// Retrieve the member." << be_nl
-          << "ACE_INLINE" << be_nl
-          << "::" << bt->name () << " *" << be_nl
-          << bu->name () << "::" << ub->local_name ()
-          << " (void) const" << be_nl
-          << "{" << be_idt_nl;
-      *os << "return this->u_." << ub->local_name ()
-          << "_;" << be_uidt_nl;
-      *os << "}";
+        break;
+      case AST_PredefinedType::PT_value:
+        // Get method.
+        *os << "/// Retrieve the member." << be_nl
+            << "ACE_INLINE" << be_nl
+            << "::" << bt->name () << " *" << be_nl
+            << bu->name () << "::" << ub->local_name ()
+            << " (void) const" << be_nl
+            << "{" << be_idt_nl;
+        *os << "return this->u_." << ub->local_name ()
+            << "_;" << be_uidt_nl;
+        *os << "}";
 
-      break;
-    case AST_PredefinedType::PT_any:
-      // Get method with read-only access.
-      *os << "/// Retrieve the member." << be_nl
-          << "ACE_INLINE" << be_nl
-          << "const ::" << bt->name () << " &" << be_nl
-          << bu->name () << "::" << ub->local_name ()
-          << " (void) const" << be_nl
-          << "{" << be_idt_nl
-          << "return *this->u_." << ub->local_name () << "_;" << be_uidt_nl
-          << "}" << be_nl << be_nl;
+        break;
+      case AST_PredefinedType::PT_any:
+        // Get method with read-only access.
+        *os << "/// Retrieve the member." << be_nl
+            << "ACE_INLINE" << be_nl
+            << "const ::" << bt->name () << " &" << be_nl
+            << bu->name () << "::" << ub->local_name ()
+            << " (void) const" << be_nl
+            << "{" << be_idt_nl
+            << "return *this->u_." << ub->local_name () << "_;" << be_uidt_nl
+            << "}" << be_nl << be_nl;
 
-      // Get method with read/write access
-      *os << "/// Retrieve the member." << be_nl
-          << "ACE_INLINE" << be_nl
-          << "::" << bt->name () << " &" << be_nl
-          << bu->name () << "::" << ub->local_name ()
-          << " (void)" << be_nl
-          << "{" << be_idt_nl
-          << "return *this->u_." << ub->local_name () << "_;" << be_uidt_nl
-          << "}";
-      break;
-    case AST_PredefinedType::PT_void:
-      break;
-    default:
-      // Get method.
-      *os << "/// Retrieve the member." << be_nl
-          << "ACE_INLINE" << be_nl
-          << "::" << bt->name () << be_nl
-          << bu->name () << "::" << ub->local_name ()
-          << " (void) const" << be_nl
-          << "{" << be_idt_nl
-          << "return this->u_." << ub->local_name () << "_;" << be_uidt_nl
-          << "}";
+        // Get method with read/write access
+        *os << "/// Retrieve the member." << be_nl
+            << "ACE_INLINE" << be_nl
+            << "::" << bt->name () << " &" << be_nl
+            << bu->name () << "::" << ub->local_name ()
+            << " (void)" << be_nl
+            << "{" << be_idt_nl
+            << "return *this->u_." << ub->local_name () << "_;" << be_uidt_nl
+            << "}";
+        break;
+      case AST_PredefinedType::PT_void:
+        break;
+      default:
+        // Get method.
+        *os << "/// Retrieve the member." << be_nl
+            << "ACE_INLINE" << be_nl
+            << "::" << bt->name () << be_nl
+            << bu->name () << "::" << ub->local_name ()
+            << " (void) const" << be_nl
+            << "{" << be_idt_nl
+            << "return this->u_." << ub->local_name () << "_;" << be_uidt_nl
+            << "}";
 
-      break;
+        break;
     }
 
   return 0;
