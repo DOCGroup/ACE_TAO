@@ -1,3 +1,8 @@
+Mon Sep 18 16:44:10 UTC 2006  Ciju John  <johnc@ociweb.com>
+
+        * tao/Transport_Connector.cpp:
+          Removed an extra semi-colon.
+
 Fri Sep 15 19:02:58 UTC 2006  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/include/idl_global.h:
@@ -7,7 +12,7 @@ Fri Sep 15 19:02:58 UTC 2006  Jeff Parsons <j.parsons@vanderbilt.edu>
         * TAO_IDL/fe/fe_init.cpp:
         * TAO_IDL/util/utl_global.cpp:
         * TAO_IDL/util/utl_scope.cpp:
-        
+
           Added recognition of CORBA::AbstractBase as a pseudo
           object, similarly to the existing support for Object,
           ValueBase, and TypeCode. Also added automatic inclusion
