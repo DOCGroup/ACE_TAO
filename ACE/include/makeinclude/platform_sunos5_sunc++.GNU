@@ -192,7 +192,7 @@ else  # ! 4.2
             CFLAGS += -xarch=generic64
             LDFLAGS += -xarch=generic64
           else
-            ifeq (C++ 5.8,$(findstring C++ 5.7,$(CC_VERSION)))
+            ifeq (C++ 5.8,$(findstring C++ 5.8,$(CC_VERSION)))
               CFLAGS += -xarch=generic64
               LDFLAGS += -xarch=generic64
             else
