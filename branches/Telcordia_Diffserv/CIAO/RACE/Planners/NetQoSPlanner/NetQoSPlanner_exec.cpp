@@ -253,7 +253,7 @@ namespace CIAO
                  conn_num < conn_qos.connections.length ();
                  ++conn_num)
               {
-                AdmissionControl::AdmissionControlResult adm_ctrl_result;
+                AdmissionControl::AdmissionControlResult adm_ctrl_result = AdmissionControl::DECISION_ADMIT;
                 try
                   {
                     AdmissionControl::FlowInfo flowinfo;
@@ -281,7 +281,7 @@ namespace CIAO
                     CORBA::String_var flowtoken;
                     CORBA::Long dscp;
                     ACE_DEBUG ((LM_DEBUG,"In NetQoSPlanner_exec_i::process_netqos_req: Requesting flow.\n"));
-                    adm_ctrl_result = this->BB_ref->flowRequest (flowinfo, qos_req, sched_action, flowtoken, dscp);
+                    //adm_ctrl_result = this->BB_ref->flowRequest (flowinfo, qos_req, sched_action, flowtoken, dscp);
                   }
                 catch (AdmissionControl::AdmissionControlException &adm_ctrl_ex)
                   {
