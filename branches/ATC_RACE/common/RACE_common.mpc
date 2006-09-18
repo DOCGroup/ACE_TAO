@@ -23,3 +23,29 @@ project(RACE_common_stub): ciao_deployment_stub {
     RACE_commonC.inl
   }
 }
+
+project(OpString_stub): ciao_deployment_stub {
+
+  sharedname = OpString_stub
+  idlflags += -Wb,stub_export_macro=OPSTRING_STUB_Export \
+              -Wb,stub_export_include=OpString_stub_export.h \
+              -SS
+
+  dynamicflags   = OPSTRING_STUB_BUILD_DLL
+
+  IDL_Files {
+    OpString.idl
+  }
+
+  Header_Files {
+    OpStringC.h
+  }
+
+  Inline_Files {
+    OpStringC.inl
+  }
+
+  Source_Files {
+    OpStringC.cpp
+  }
+}
