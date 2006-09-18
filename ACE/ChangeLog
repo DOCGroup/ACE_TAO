@@ -1,3 +1,11 @@
+Mon Sep 18 10:56:29 UTC 2006  Steve Huston  <shuston@riverace.com>
+
+        * include/makeinclude/platform_sunos5_sunc++.GNU: Add buildbits=64
+          branch for Sun Studio 11 (Sun C++ 5.8). Thanks to Aleksandar
+          Vukajlovic <vukajlo at finsoft dot co dot yu> for this.
+
+        * THANKS: Added Aleksandar Vukajlovic to the Hall of Fame.
+
 Thu Sep 14 23:01:16 UTC 2006  Steve Huston  <shuston@riverace.com>
 
         * ace/Bound_Ptr.inl: Tweak syntax to try and work around apparant
