@@ -34,7 +34,11 @@
 #include "ace/Hash_Map_Manager_T.h"
 
 #include "ciao/NetQoSC.h"
+#include "BandwidthBroker/BandwidthBrokerC.h"
 #include <map>
+
+using namespace mil::darpa::arms::mlrm;
+using namespace mil::darpa::arms::mlrm::BandwidthBroker;
 
 namespace CIAO
 {
@@ -131,8 +135,9 @@ namespace CIAO
         ::CORBA::Boolean process_plan (::CIAO::RACE::Plan_Actions &  plans
                                        ACE_ENV_ARG_DECL_NOT_USED)
              ACE_THROW_SPEC (( ::CORBA::SystemException, ::CIAO::RACE::PlannerFailure));
-        
+
         void build_node_map ();
+        BandwidthBroker::AdmissionControl_ptr resolve_BB ();
         std::string get_physical_host (const std::string &logical_node);
 
         void process_netqos_req (::CIAO::DAnCE::NetworkQoS::NetQoSRequirement *net_qos_req,
@@ -199,6 +204,7 @@ namespace CIAO
         std::string BB_iorfile_;
         std::string BB_nameserv_context_;
         std::map <std::string, std::string> node_map_;
+        AdmissionControl_var BB_ref;
         typedef ACE_Hash_Map_Manager_Ex<ACE_CString,
                                         int, ACE_Hash<ACE_CString>,
                                         ACE_Equal_To<ACE_CString>,
