@@ -170,6 +170,7 @@ be_visitor_operation_rettype::visit_predefined_type (be_predefined_type *node)
     {
     case AST_PredefinedType::PT_pseudo:
     case AST_PredefinedType::PT_object:
+    case AST_PredefinedType::PT_abstract:
       *os << bt->name ();
 
       // If it's not TCKind, it's either Object, TypeCode or ValueBase.

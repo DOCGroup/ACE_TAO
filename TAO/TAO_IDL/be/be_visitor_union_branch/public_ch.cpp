@@ -465,6 +465,7 @@ be_visitor_union_branch_public_ch::visit_predefined_type (be_predefined_type *no
     {
     case AST_PredefinedType::PT_pseudo:
     case AST_PredefinedType::PT_object:
+    case AST_PredefinedType::PT_abstract:
       *os << be_nl << be_nl 
           << "void " << ub->local_name () << " (const " << no_td_global
           << bt->nested_type_name (bu, "_ptr") << ");" << be_nl;

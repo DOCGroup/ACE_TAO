@@ -940,6 +940,7 @@ be_decl::set_arg_seen_bit (be_type *bt)
               case AST_PredefinedType::PT_object:
               case AST_PredefinedType::PT_pseudo:
               case AST_PredefinedType::PT_value:
+              case AST_PredefinedType::PT_abstract:
                 idl_global->object_arg_seen_ = true;
                 break;
               case AST_PredefinedType::PT_any:
