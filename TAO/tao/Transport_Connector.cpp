@@ -66,7 +66,7 @@ namespace
     bool awake_;
 
   };
-};
+}
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
