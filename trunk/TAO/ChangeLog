@@ -1,3 +1,29 @@
+Mon Sep 18 23:11:31 UTC 2006  Iliyan Jeliazkov  <iliyan@ociweb.com>
+
+          This change fixes bug#2651, related to the order of destruction
+          of Codeset Manager instances, owned by the Default Resource
+          Factory. It is a prerequisite for correctly fixing bug#2612 and
+          also fixes a design artifact left over from the splitting of the
+          codesets in their own library. See the bugzilla entry for more
+          details.
+
+        * tao/ORB_Core.h:
+        * tao/ORB_Core.cpp:
+
+          The Core is now responsible for managing the life-cycle of the
+          Codeset Manager instance, instead of the Resource Factory.
+
+        * tao/default_resource.h:
+        * tao/default_resource.cpp:
+
+          Introducing a TAO_Codeset_Parameters class, which encapsulates
+          codeset configuration information. Keeping the configuration
+          information instead of the configured instance, allows the
+          Resource Factory to give up ownership of objects it creates (as
+          it should). Removed the ACE_Dynamic_Service_Dependency instance
+          member, which was a crude attempt at solving the issue,
+          described in bug#2651.
+
 Mon Sep 18 19:54:49 UTC 2006  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_visitor_union_branch/private_ch.cpp:

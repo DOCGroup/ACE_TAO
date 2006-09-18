@@ -1261,7 +1261,7 @@ protected:
   /// Hold the flushing strategy
   TAO_Flushing_Strategy *flushing_strategy_;
 
-  /// Code Set Manager - points to service object in the service repo
+  /// Code Set Manager, received from the Resource Factory
   TAO_Codeset_Manager *codeset_manager_;
 
   /// ORB's service configuration
