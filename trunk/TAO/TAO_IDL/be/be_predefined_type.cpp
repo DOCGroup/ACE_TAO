@@ -77,6 +77,10 @@ be_predefined_type::be_predefined_type (AST_PredefinedType::PredefinedType t,
     {
       this->fwd_helper_name_ = "::CORBA::tao_ValueBase";
     }
+  else if (t == AST_PredefinedType::PT_abstract)
+    {
+      this->fwd_helper_name_ = "::CORBA::tao_AbstractBase";
+    }
 
   switch (t)
     {
@@ -91,6 +95,7 @@ be_predefined_type::be_predefined_type (AST_PredefinedType::PredefinedType t,
       case AST_PredefinedType::PT_value:
       case AST_PredefinedType::PT_void:
       case AST_PredefinedType::PT_pseudo:
+      case AST_PredefinedType::PT_abstract:
         break;
       default:
         idl_global->basic_type_seen_ = true;
@@ -183,6 +188,10 @@ be_predefined_type::compute_tc_name (void)
     case AST_PredefinedType::PT_value:
       ACE_NEW (id,
                Identifier ("_tc_ValueBase"));
+    break;
+    case AST_PredefinedType::PT_abstract:
+      ACE_NEW (id,
+               Identifier ("_tc_AbstractBase"));
     break;
     case AST_PredefinedType::PT_pseudo:
       {

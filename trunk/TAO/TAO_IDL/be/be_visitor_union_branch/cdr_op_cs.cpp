@@ -500,7 +500,8 @@ be_visitor_union_branch_cdr_op_cs::visit_predefined_type (
   switch (this->ctx_->sub_state ())
     {
     case TAO_CodeGen::TAO_CDR_INPUT:
-      if (pt == AST_PredefinedType::PT_object)
+      if (pt == AST_PredefinedType::PT_object
+          || pt == AST_PredefinedType::PT_abstract)
         {
           *os << "::CORBA::Object_var _tao_union_tmp;" << be_nl;
 

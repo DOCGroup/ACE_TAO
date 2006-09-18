@@ -473,6 +473,7 @@ be_visitor_sequence_serializer_op_cs::visit_predefined_type (
   switch (node->pt ())
     {
     case AST_PredefinedType::PT_object:
+    case AST_PredefinedType::PT_abstract:
     case AST_PredefinedType::PT_value:
     case AST_PredefinedType::PT_pseudo:
     case AST_PredefinedType::PT_any:
@@ -1153,6 +1154,7 @@ switch (this->ctx_->sub_state ())
             switch (pt->pt ())
               {
                 case AST_PredefinedType::PT_pseudo:
+                case AST_PredefinedType::PT_abstract:
                 case AST_PredefinedType::PT_object:
                 case AST_PredefinedType::PT_value:
                   *os << "_tao_marshal_flag = (strm >> _tao_sequence[i].out ());";
@@ -1269,6 +1271,7 @@ switch (this->ctx_->sub_state ())
             switch (pt->pt ())
               {
                 case AST_PredefinedType::PT_pseudo:
+                case AST_PredefinedType::PT_abstract:
                 case AST_PredefinedType::PT_object:
                 case AST_PredefinedType::PT_value:
                   *os << "_tao_marshal_flag = (strm << _tao_sequence[i].in ());";

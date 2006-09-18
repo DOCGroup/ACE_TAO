@@ -215,7 +215,8 @@ int be_visitor_args_arglist::visit_predefined_type (be_predefined_type *node)
         }
     }
   else if (pt == AST_PredefinedType::PT_pseudo
-           || pt == AST_PredefinedType::PT_object)
+           || pt == AST_PredefinedType::PT_object
+           || pt == AST_PredefinedType::PT_abstract)
     {
       // The only PT_pseudo that doesn't take a _ptr suffix.
       bool is_tckind =

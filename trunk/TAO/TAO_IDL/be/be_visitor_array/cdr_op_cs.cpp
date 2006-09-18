@@ -269,6 +269,7 @@ be_visitor_array_cdr_op_cs::visit_predefined_type (be_predefined_type *node)
     case AST_PredefinedType::PT_pseudo:
     case AST_PredefinedType::PT_object:
     case AST_PredefinedType::PT_value:
+    case AST_PredefinedType::PT_abstract:
     case AST_PredefinedType::PT_any:
       // Let the helper handle this.
       return this->visit_node (node);

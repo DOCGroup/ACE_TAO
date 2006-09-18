@@ -389,23 +389,26 @@ be_visitor_union_branch_private_ch::visit_predefined_type (
 
   *os << be_nl
       << (td == 0 ? "::" : "");
+      
+  AST_PredefinedType::PredefinedType pt = node->pt ();
 
-  if (node->pt () == AST_PredefinedType::PT_object)
+  if (pt == AST_PredefinedType::PT_object
+      || pt == AST_PredefinedType::PT_abstract)
     {
       *os << bt->name () << "_var"
           << " *" << ub->local_name () << "_;";
     }
-  else if (node->pt () == AST_PredefinedType::PT_pseudo)
+  else if (pt == AST_PredefinedType::PT_pseudo)
     {
       *os << bt->nested_type_name (bu, "_ptr") 
           << " " << ub->local_name () << "_;";
     }
-  else if (node->pt () == AST_PredefinedType::PT_value)
+  else if (pt == AST_PredefinedType::PT_value)
     {
       *os << bt->nested_type_name (bu, " *")
           << " " << ub->local_name () << "_;";
     }
-  else if (node->pt () == AST_PredefinedType::PT_any)
+  else if (pt == AST_PredefinedType::PT_any)
     {
       // Cannot have an object inside of a union. In addition, an Any is a
       // variable data type.
