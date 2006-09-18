@@ -1,3 +1,7 @@
+Mon Sep 18 23:24:48 UTC 2006  Nishanth Shankaran  <nshankar@dre.vanderbilt.edu>
+
+        * common/Opstring.idl: Updated the IDL structure.
+
 Mon Sep 18 18:57:51 UTC 2006  Nishanth Shankaran  <nshankar@dre.vanderbilt.edu>
 
         * common/OpString.idl:
