@@ -7,6 +7,9 @@ module CIAO
 {
   module RACE
     {
+
+      const long UNDEFINED_TIME_ENTRY = -1;
+
       struct TimeValue
       {
         /* Seconds since Jan. 1, 1970 */
@@ -62,17 +65,12 @@ module CIAO
 
         ConnectionType type;
 
-        ::CORBA::StringSeq source;
-
-        ::Deployment::Requirements deployRequirement;
-
         ::Deployment::ComponentExternalPortEndpoints externalEndpoint;
 
         ::Deployment::PlanSubcomponentPortEndpoints internalEndpoint;
 
         ::Deployment::ExternalReferenceEndpoints externalReference;
 
-        ::Deployment::ConnectionResourceDeploymentDescriptions deployedResource;
       };
 
       typedef sequence <OrderLinkDescription> OrderLinkDescriptions;
@@ -88,11 +86,18 @@ module CIAO
         NOT_EQUAL
       };
 
+      enum QoSType
+      {
+        DEADLINE,
+        OTHERS
+      };
+
+
       struct QoSSpecification
       {
         string name;
 
-        string type;
+        QoSType type;
 
         string MonitorID;
 
