@@ -17,7 +17,6 @@
 
 #include /**/ "ace/pre.h"
 #include "ace/Service_Config.h"
-#include "ace/Dynamic_Service_Dependency.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -35,6 +34,48 @@ class TAO_Object_Adapter;
 class TAO_IOR_Parser;
 class TAO_LF_Strategy;
 class TAO_Codeset_Descriptor_Base;
+
+/**
+ * @class TAO_Codeset_Parametes
+ *
+ * @brief A simple storage class for the native codeset and any
+ * translators that must be configured when creating an instance of
+ * codeset manager.
+ *
+ * The Resource Factory uses two instances of this class during its
+ * initialization, to capture any native codeset or translators
+ * settings. The RF later uses these parameters when creating
+ * instances of the codeset manager.
+ *
+ * Perhaps, the best would be to place the responsibility for codeset
+ * manager's configuration with the the codeset manager factory?
+ *
+ */
+class TAO_Export TAO_Codeset_Parameters
+{
+private:
+  ACE_Unbounded_Queue<ACE_TCHAR*> translators_;
+  ACE_TCHAR* native_;
+
+private:
+  TAO_Codeset_Parameters (const TAO_Codeset_Parameters&);
+  TAO_Codeset_Parameters& operator= (const TAO_Codeset_Parameters&);
+
+  typedef ACE_Unbounded_Queue_Iterator<ACE_TCHAR*> iterator;
+
+public:
+  TAO_Codeset_Parameters (void);
+  ~TAO_Codeset_Parameters (void);
+  const ACE_TCHAR* native (void);
+  void native (const ACE_TCHAR* n);
+  void add_translator (const ACE_TCHAR*name);
+  iterator translators (void);
+
+  /// Apply the parameters to the said descriptor
+  void apply_to (TAO_Codeset_Descriptor_Base *csd);
+};
+
+
 
 /**
  * @class TAO_Default_Resource_Factory
@@ -234,7 +275,7 @@ protected:
   bool use_local_memory_pool_;
 
 private:
-  void init_codeset_descriptors (void);
+  //  void init_codeset_descriptors (void);
 
   enum Lock_Type
   {
@@ -261,9 +302,10 @@ private:
   /// Type of flushing strategy configured
   Flushing_Strategy_Type flushing_strategy_type_;
 
-  TAO_Codeset_Manager *codeset_manager_;
-  TAO_Codeset_Descriptor_Base *char_codeset_descriptor_;
-  TAO_Codeset_Descriptor_Base * wchar_codeset_descriptor_;
+  // Initialization options. To be used later when creating a codeset
+  // manager instance (s)
+  TAO_Codeset_Parameters char_codeset_parameters_;
+  TAO_Codeset_Parameters wchar_codeset_parameters_;
 
   /// Resource usage strategy
   Resource_Usage resource_usage_strategy_;
@@ -271,13 +313,9 @@ private:
   /// Flag to indicate whether replies should be dropped during ORB
   /// shutdown.
   bool drop_replies_;
-
-  // Makes a dependency on a specific dynamic service ("TAO_Codeset") explicit.
-  // It helps to keep the corresponding DLL around until the last instance
-  // is destroyed. Note that failure to delete the instances will "pin" the
-  // DLL in memory, preventing it from being unloaded on demand.
-  ACE_Dynamic_Service_Dependency *principal_;
 };
+
+
 
 TAO_END_VERSIONED_NAMESPACE_DECL
 

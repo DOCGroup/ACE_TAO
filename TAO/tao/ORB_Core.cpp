@@ -362,6 +362,9 @@ TAO_ORB_Core::~TAO_ORB_Core (void)
 
   ::CORBA::release (this->orb_);
 
+  delete this->codeset_manager_;
+  this->codeset_manager_ = 0;
+
   delete this->config_;
   this->config_ = 0;
 }
