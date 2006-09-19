@@ -98,11 +98,9 @@ namespace CIAO
       //==================================================================
 
       NetQoSPlanner_exec_i::NetQoSPlanner_exec_i (void)
-       : node_map_filename_ ("NodeDetails.dat"), 
+       : node_map_filename_ ("NodeDetails.dat"),
          planner_name_ ("NetQoSPlanner"),
-         planner_type_ ("Netqork QoS Planner"),
-         BB_iorfile_ ("BB.ior"),
-         BB_nameserv_context_ ("AdmissionControlBackup")
+         planner_type_ ("Netqork QoS Planner")
       {
       }
 
@@ -195,7 +193,8 @@ namespace CIAO
 
                    if (dep_plan.infoProperty [j].value >>= net_qos_req)
                     {
-                       this->process_netqos_req (net_qos_req, dscp_infos);
+                        this->build_instance_node_map (dep_plan);
+                        this->process_netqos_req (net_qos_req, dscp_infos);
                     }
                     else
                     {
@@ -221,6 +220,14 @@ namespace CIAO
         return true;
       }
 
+      void NetQoSPlanner_exec_i::build_instance_node_map (Deployment::DeploymentPlan & dep_plan)
+      {
+        for (size_t i = 0;i < dep_plan.instance.length (); ++i)
+          {
+            Deployment::InstanceDeploymentDescription &instance = dep_plan.instance[i];
+            this->instance_node_map_.insert (std::make_pair (instance.name.in (),instance.node.in()));
+          }
+      }
 
       void NetQoSPlanner_exec_i::process_netqos_req (::CIAO::DAnCE::NetworkQoS::NetQoSRequirement *net_qos_req,
                                                      ::Deployment::DiffservInfos & dscp_infos)
@@ -232,76 +239,34 @@ namespace CIAO
         // Build an in memory map of logical nodes to the physical hosts.
         this->build_node_map ();
 
-        if (AdmissionControl_ptr adm_ctrl_ptr = this->resolve_BB ())
-          {
-            this->BB_ref = adm_ctrl_ptr;
-          }
-        else
+        if (! this->resolve_BB ())
           {
             ACE_DEBUG ((LM_ERROR, "Can't contact BandwidthBroker.\n"));
             return;
           }
 
+        bool rollback = false;
         size_t set_len = net_qos_req->conn_qos_set.length();
         ACE_DEBUG ((LM_DEBUG,"In NetQoSPlanner_exec_i::process_netqos_req: set_len = %u\n",set_len));
         for (size_t k = 0; k < set_len; ++k)
           {
-            ::CIAO::DAnCE::NetworkQoS::ConnectionQoS conn_qos
+            const ::CIAO::DAnCE::NetworkQoS::ConnectionQoS & conn_qos
             = net_qos_req->conn_qos_set[k];
             ACE_DEBUG ((LM_DEBUG,"In NetQoSPlanner_exec_i::process_netqos_req: conn_qos.connections.length () = %u\n",conn_qos.connections.length ()));
             for (size_t conn_num = 0;
                  conn_num < conn_qos.connections.length ();
                  ++conn_num)
               {
-                AdmissionControl::AdmissionControlResult adm_ctrl_result = AdmissionControl::DECISION_ADMIT;
-                try
-                  {
-                    AdmissionControl::FlowInfo flowinfo;
-                    flowinfo.srcIP.dottedDecimal = CORBA::string_dup ("129.59.129.57");
-                    flowinfo.srcIP.subnetMask = CORBA::string_dup ("255.255.255.0");
-                    flowinfo.srcPort.low = -1;
-                    flowinfo.srcPort.high = -1;
+                CommonDef::IPAddress srcIP;
+                CommonDef::IPAddress destIP;
+                CommonDef::QOSRequired qos_req;
+                int bandwidth;
 
-                    flowinfo.destIP.dottedDecimal = CORBA::string_dup ("129.59.129.91");
-                    flowinfo.destIP.subnetMask = CORBA::string_dup ("255.255.255.0");
-                    flowinfo.destPort.low = -1;
-                    flowinfo.destPort.high = -1;
-
-                    flowinfo.protocol = AdmissionControl::notSpecified;
-                    flowinfo.fwdRate.requiredBW = CORBA::Long (1);
-                    flowinfo.fwdRate.extraBW = CORBA::Long (0);
-                    flowinfo.revRate.requiredBW = CORBA::Long (0);
-                    flowinfo.revRate.extraBW = CORBA::Long (0);
-                    flowinfo.biDirectional = CORBA::Boolean (false);
-                    flowinfo.flowDuration = CORBA::Long (1000);
-
-                    CommonDef::QOSRequired qos_req = CommonDef::highReliability;
-                    AdmissionControl::SchedulingAction sched_action = AdmissionControl::reserve;
-
-                    CORBA::String_var flowtoken;
-                    CORBA::Long dscp;
-                    ACE_DEBUG ((LM_DEBUG,"In NetQoSPlanner_exec_i::process_netqos_req: Requesting flow.\n"));
-                    //adm_ctrl_result = this->BB_ref->flowRequest (flowinfo, qos_req, sched_action, flowtoken, dscp);
-                  }
-                catch (AdmissionControl::AdmissionControlException &adm_ctrl_ex)
-                  {
-                    ACE_DEBUG ((LM_ERROR,"In NetQoSPlanner_exec_i::process_netqos_req: AdmissionControlException was raised.\n"));
-                    ACE_DEBUG ((LM_ERROR,"-- Reason: %s\n", adm_ctrl_ex.reason.in()));
-                  }
-                catch (...)
-                  {
-                    ACE_DEBUG ((LM_ERROR,"In NetQoSPlanner_exec_i::process_netqos_req: Unknown exception was raised.\n"));
-                  }
-
-                if (AdmissionControl::DECISION_ADMIT == adm_ctrl_result)
-                  {
-                    ACE_DEBUG ((LM_DEBUG,"In NetQoSPlanner_exec_i::process_netqos_req: Flow Accepted.\n"));
-                  }
-                else
-                  {
-                    ACE_DEBUG ((LM_ERROR,"In NetQoSPlanner_exec_i::process_netqos_req: Requested flow was not admitted.\n"));
-                  }
-                return;
+                if (-1 == this->make_flow_request (srcIP, destIP, bandwidth, qos_req))
+                {
+                  this->BB_proxy_.rollback ();
+                  rollback = true;
+                }
 /*
                 std::cerr
                 << "Connection Name = " << conn_qos.connections [conn_num].connection_name   << std::endl
@@ -343,6 +308,42 @@ namespace CIAO
           }
           // dscp_infos data structure is completely populated here.
           //std::cerr << "sender host = " << this->get_physical_host ("sender") << std::endl;
+          if (!rollback)
+            this->BB_proxy_.commit ();
+      }
+
+      int NetQoSPlanner_exec_i::make_flow_request (const CommonDef::IPAddress &srcIP,
+                                                   const CommonDef::IPAddress &destIP,
+                                                   int bandwidth,
+                                                   CommonDef::QOSRequired qos_req)
+      {
+          AdmissionControl::FlowInfo flowinfo;
+
+          flowinfo.srcIP = srcIP;
+          flowinfo.srcPort.low = -1;
+          flowinfo.srcPort.high = -1;
+
+          flowinfo.destIP = destIP;
+          flowinfo.destPort.low = -1;
+          flowinfo.destPort.high = -1;
+
+          flowinfo.protocol = AdmissionControl::notSpecified;
+          flowinfo.fwdRate.requiredBW = CORBA::Long (bandwidth);
+          flowinfo.fwdRate.extraBW = CORBA::Long (0);
+          flowinfo.revRate.requiredBW = CORBA::Long (0);
+          flowinfo.revRate.extraBW = CORBA::Long (0);
+          flowinfo.biDirectional = CORBA::Boolean (false);
+          flowinfo.flowDuration = CORBA::Long (1000);
+
+          ACE_DEBUG ((LM_DEBUG,"In NetQoSPlanner_exec_i::process_netqos_req: Requesting flow.\n"));
+          int result = this->BB_proxy_.flow_request (flowinfo, qos_req);
+
+          if (-1 == result)
+              ACE_DEBUG ((LM_ERROR,"In NetQoSPlanner_exec_i::process_netqos_req: Requested flow was not admitted.\n"));
+          else
+              ACE_DEBUG ((LM_DEBUG,"In NetQoSPlanner_exec_i::process_netqos_req: Flow Accepted.\n"));
+
+          return result;
       }
 
       void NetQoSPlanner_exec_i::build_node_map ()
@@ -598,101 +599,10 @@ namespace CIAO
         temp_plan.infoProperty[new_info_prop_len - 1].value <<= server_resource;
       }
 
-      BandwidthBroker::AdmissionControl_ptr
+      bool
       NetQoSPlanner_exec_i::resolve_BB ()
       {
-        struct NameServResolutionFailed {};
-        struct FilebasedResolutionFailed {};
-
-        BandwidthBroker::AdmissionControl_var adm_ctrl;
-        CORBA::ORB_var orb =  this->context_->_ciao_the_Container ()->the_ORB ();
-
-        try
-        {
-          /// Try resolving BB using the nameing service
-          CORBA::Object_var obj = orb->resolve_initial_references ("NameService");
-          CosNaming::NamingContext_var rootcontext = CosNaming::NamingContext::_narrow (obj.in());
-          if (CORBA::is_nil(rootcontext.in()))
-          {
-            ACE_DEBUG ((LM_ERROR, "In NetQoSPlanner_exec_i::resolve_BB (): Can't narrow to NamingContext.\n"));
-            throw NameServResolutionFailed ();
-          }
-  
-          CosNaming::Name name;
-          name.length (6);
-          name[0].id = CORBA::string_dup ("mil");
-          name[1].id = CORBA::string_dup ("darpa");
-          name[2].id = CORBA::string_dup ("arms");
-          name[3].id = CORBA::string_dup ("mlrm");
-          name[4].id = CORBA::string_dup ("BandwidthBroker");
-          name[5].id = CORBA::string_dup (this->BB_nameserv_context_.c_str());
-
-          obj = rootcontext->resolve (name);
-          if (CORBA::is_nil (obj))
-          {
-            ACE_DEBUG ((LM_ERROR, "In NetQoSPlanner_exec_i::resolve_BB (): Naming service reference is nil.\n"));
-            throw NameServResolutionFailed ();
-          }
-  
-          /// Downcast the object reference to a reference of type Time_Date.
-          adm_ctrl = BandwidthBroker::AdmissionControl::_narrow (obj);
-          if (CORBA::is_nil (adm_ctrl))
-          {
-            ACE_DEBUG ((LM_ERROR, "In NetQoSPlanner_exec_i::resolve_BB(): The IOR obtained from \
-                                   the NS is not an AdmissionControl reference.\n"));
-            throw NameServResolutionFailed ();
-          }
-
-        }
-        catch (NameServResolutionFailed &)
-        {
-          ACE_DEBUG ((LM_ERROR, "In NetQoSPlanner_exec_i::process_netqos_req(): NameService based resolution of BB failed.\n"));
-          try
-          {
-            /// Try to resolve using BB.ior file.
-            std::string BB_ior_url = std::string ("file://") + this->BB_iorfile_;
-
-            CORBA::Object_var obj = orb->string_to_object (BB_ior_url.c_str());
-
-            if (CORBA::is_nil (obj))
-            {
-              ACE_DEBUG ((LM_ERROR, "In NetQoSPlanner_exec_i::resolve_BB(): BandwidthBroker is a nil object reference.\n"));
-              throw FilebasedResolutionFailed ();
-            }
-
-            /// Downcast the object reference to a reference of type AdmissionControl.
-            adm_ctrl = BandwidthBroker::AdmissionControl::_narrow (obj);
-            if (CORBA::is_nil (adm_ctrl))
-            {
-              ACE_DEBUG ((LM_ERROR, "In NetQoSPlanner_exec_i::resolve_BB(): The IOR obtained from \
-                                     the file is not an AdmissionControl reference.\n"));
-              throw FilebasedResolutionFailed ();
-            }
-          }
-          catch (FilebasedResolutionFailed &)
-          {
-              ACE_DEBUG ((LM_ERROR, "In NetQoSPlanner_exec_i::resolve_BB(): Filebased IOR resolution of BB also failed.\n"));
-              return 0;
-          }
-          catch (...)
-          {
-            ACE_DEBUG ((LM_ERROR, "In NetQoSPlanner_exec_i::resolve_BB(): Unknown exception in file based resolution.\n"));
-            return 0;
-          }
-        }
-        catch (const CosNaming::NamingContext::NotFound &)
-        {
-          ACE_DEBUG ((LM_ERROR, "In NetQoSPlanner_exec_i::resolve_BB(): NamingContext::NotFound exception in nameserv resolution.\n"));
-          return 0;
-        }
-        catch (...)
-        {
-          ACE_DEBUG ((LM_ERROR, "In NetQoSPlanner_exec_i::resolve_BB(): Unknown exception in nameserv resolution.\n"));
-          return 0;
-        }
-
-        ACE_DEBUG ((LM_DEBUG, "In NetQoSPlanner_exec_i::resolve_BB(): BandwidthBroker resolved successfully.\n"));
-        return adm_ctrl._retn ();
+        return this->BB_proxy_.resolve (this->context_->_ciao_the_Container ()->the_ORB ());
       }
 
       ::CIAO::RACE::CCM_Planner_I_ptr
