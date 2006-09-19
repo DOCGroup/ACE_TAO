@@ -141,7 +141,7 @@ namespace CIAO
         bool resolve_BB ();
         std::string get_physical_host (const std::string &logical_node);
 
-        void process_netqos_req (::CIAO::DAnCE::NetworkQoS::NetQoSRequirement *net_qos_req,
+        bool process_netqos_req (::CIAO::DAnCE::NetworkQoS::NetQoSRequirement *net_qos_req,
                                  ::Deployment::DiffservInfos & dscp_infos);
 
         int make_flow_request (const CommonDef::IPAddress &srcIP,
@@ -153,6 +153,9 @@ namespace CIAO
                                      const Deployment::DiffservInfos & dscp_infos);
 
         void build_instance_node_map (Deployment::DeploymentPlan & plan);
+        void get_traffic_qos (CommonDef::QOSRequired &qos_req, const ::CIAO::DAnCE::NetworkQoS::ConnectionQoS & conn_qos);
+        int getIP (CommonDef::IPAddress & srcIP, const char *);
+
 
         virtual ::CIAO::RACE::CCM_Planner_I_ptr
         get_planner_i (
