@@ -8,15 +8,14 @@ project(BandwidthBroker_stub): ciao_client_dnc {
               -Wb,stub_export_macro=BANDWIDTHBROKER_STUB_Export \
               -Wb,stub_export_include=BandwidthBroker_stub_export.h \
               -Wb,skel_export_macro=BANDWIDTHBROKER_SVNT_Export \
-              -Wb,skel_export_include=BandwidthBroker_svnt_export.h \
-              -I$(DRM_ROOT)/DRM_Services/BandwidthBroker/idl
+              -Wb,skel_export_include=BandwidthBroker_svnt_export.h 
 
   dynamicflags   = BANDWIDTHBROKER_STUB_BUILD_DLL
 
   IDL_Files {
-    $(DRM_ROOT)/DRM_Services/BandwidthBroker/idl/BandwidthBroker.idl
-    $(DRM_ROOT)/DRM_Services/BandwidthBroker/idl/CommonDef.idl
-    $(DRM_ROOT)/DRM_Services/BandwidthBroker/idl/FaultMonitor.idl
+    BandwidthBroker.idl
+    CommonDef.idl
+    FaultMonitor.idl
     gendir = .
   }
 
@@ -48,15 +47,14 @@ project(BandwidthBroker_stub): ciao_client_dnc {
 //                -Wb,stub_export_macro=BANDWIDTHBROKER_STUB_Export \
 //                -Wb,stub_export_include=BandwidthBroker_stub_export.h \
 //                -Wb,skel_export_macro=BANDWIDTHBROKER_SVNT_Export \
-//                -Wb,skel_export_include=BandwidthBroker_svnt_export.h \
-//                -I$(DRM_ROOT)/DRM_Services/BandwidthBroker/idl
+//                -Wb,skel_export_include=BandwidthBroker_svnt_export.h 
 //
 //   dynamicflags = BANDWIDTHBROKER_SVNT_BUILD_DLL
 //
 //   IDL_Files {
-//     $(DRM_ROOT)/DRM_Services/BandwidthBroker/idl/BandwidthBroker.idl
-// //    $(DRM_ROOT)/DRM_Services/BandwidthBroker/idl/CommonDef.idl
-// //    $(DRM_ROOT)/DRM_Services/BandwidthBroker/idl/FaultMonitor.idl
+//     BandwidthBroker.idl
+// //  CommonDef.idl
+// //  FaultMonitor.idl
 //     gendir = .
 //   }
 //

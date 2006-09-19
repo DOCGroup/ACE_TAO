@@ -35,6 +35,7 @@
 
 #include "ciao/NetQoSC.h"
 #include "BandwidthBroker/BandwidthBrokerC.h"
+#include "BB_proxy.h"
 #include <map>
 
 using namespace mil::darpa::arms::mlrm;
@@ -137,14 +138,21 @@ namespace CIAO
              ACE_THROW_SPEC (( ::CORBA::SystemException, ::CIAO::RACE::PlannerFailure));
 
         void build_node_map ();
-        BandwidthBroker::AdmissionControl_ptr resolve_BB ();
+        bool resolve_BB ();
         std::string get_physical_host (const std::string &logical_node);
 
         void process_netqos_req (::CIAO::DAnCE::NetworkQoS::NetQoSRequirement *net_qos_req,
                                  ::Deployment::DiffservInfos & dscp_infos);
 
+        int make_flow_request (const CommonDef::IPAddress &srcIP,
+                               const CommonDef::IPAddress &destIP,
+                               int bandwidth,
+                               CommonDef::QOSRequired qos_req);
+
         void add_network_priorities (Deployment::DeploymentPlan & temp_plan,
                                      const Deployment::DiffservInfos & dscp_infos);
+
+        void build_instance_node_map (Deployment::DeploymentPlan & plan);
 
         virtual ::CIAO::RACE::CCM_Planner_I_ptr
         get_planner_i (
@@ -201,10 +209,9 @@ namespace CIAO
         std::string node_map_filename_;
         std::string planner_name_;
         std::string planner_type_;
-        std::string BB_iorfile_;
-        std::string BB_nameserv_context_;
         std::map <std::string, std::string> node_map_;
-        AdmissionControl_var BB_ref;
+        std::map <std::string, std::string> instance_node_map_;
+        BB_Proxy BB_proxy_;
         typedef ACE_Hash_Map_Manager_Ex<ACE_CString,
                                         int, ACE_Hash<ACE_CString>,
                                         ACE_Equal_To<ACE_CString>,
