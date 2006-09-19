@@ -32,6 +32,14 @@
 using namespace mil::darpa::arms::mlrm;
 using namespace mil::darpa::arms::mlrm::BandwidthBroker;
 
+/*
+Named loops idiom
+http://www.csse.monash.edu.au/~damian/Idioms/Topics/07.SB.NamedLoops/html/text.html
+*/
+#define NAMED(blockname) goto blockname; \
+ blockname##_skip: if (0) blockname:
+#define BREAK(blockname) goto blockname##_skip;
+
 namespace CIAO
 {
   namespace RACE
@@ -229,7 +237,7 @@ namespace CIAO
           }
       }
 
-      void NetQoSPlanner_exec_i::process_netqos_req (::CIAO::DAnCE::NetworkQoS::NetQoSRequirement *net_qos_req,
+      bool NetQoSPlanner_exec_i::process_netqos_req (::CIAO::DAnCE::NetworkQoS::NetQoSRequirement *net_qos_req,
                                                      ::Deployment::DiffservInfos & dscp_infos)
       {
         time_t t;
@@ -242,30 +250,44 @@ namespace CIAO
         if (! this->resolve_BB ())
           {
             ACE_DEBUG ((LM_ERROR, "Can't contact BandwidthBroker.\n"));
-            return;
+            return false;
           }
 
         bool rollback = false;
         size_t set_len = net_qos_req->conn_qos_set.length();
-        ACE_DEBUG ((LM_DEBUG,"In NetQoSPlanner_exec_i::process_netqos_req: set_len = %u\n",set_len));
+        //ACE_DEBUG ((LM_DEBUG,"In NetQoSPlanner_exec_i::process_netqos_req: set_len = %u\n",set_len));
+
+        NAMED(outer)
         for (size_t k = 0; k < set_len; ++k)
           {
             const ::CIAO::DAnCE::NetworkQoS::ConnectionQoS & conn_qos
             = net_qos_req->conn_qos_set[k];
-            ACE_DEBUG ((LM_DEBUG,"In NetQoSPlanner_exec_i::process_netqos_req: conn_qos.connections.length () = %u\n",conn_qos.connections.length ()));
+            //ACE_DEBUG ((LM_DEBUG,"In NetQoSPlanner_exec_i::process_netqos_req: conn_qos.connections.length () = %u\n",conn_qos.connections.length ()));
+            NAMED (inner)
             for (size_t conn_num = 0;
                  conn_num < conn_qos.connections.length ();
                  ++conn_num)
               {
                 CommonDef::IPAddress srcIP;
+                if (-1 == this->getIP (srcIP, conn_qos.connections [conn_num].client))
+                  {
+                    ACE_DEBUG ((LM_ERROR,"In NetQoSPlanner_exec_i::process_netqos_req: Can't find IP\n"));
+                    rollback = true;
+                    BREAK(outer);
+                  }
+
                 CommonDef::IPAddress destIP;
+                this->getIP (destIP, conn_qos.connections [conn_num].server);
+
                 CommonDef::QOSRequired qos_req;
-                int bandwidth;
+                this->get_traffic_qos (qos_req, conn_qos);
+
+                int bandwidth = conn_qos.fwdBWD;
 
                 if (-1 == this->make_flow_request (srcIP, destIP, bandwidth, qos_req))
                 {
-                  this->BB_proxy_.rollback ();
                   rollback = true;
+                  BREAK(outer);
                 }
 /*
                 std::cerr
@@ -287,17 +309,6 @@ namespace CIAO
             std::cerr << "fwdBWD = " << conn_qos.fwdBWD << std::endl;
             std::cerr << "revBWD = " << conn_qos.revBWD << std::endl;
 
-            if (::CIAO::DAnCE::NetworkQoS::HIGH_PRIORITY == conn_qos.data_qos)
-              std::cerr << "DataTrafficQoS = NetworkQoS::HIGH_PRIORITY\n";
-            else if (::CIAO::DAnCE::NetworkQoS::HIGH_RELIABILITY == conn_qos.data_qos)
-              std::cerr << "DataTrafficQoS = NetworkQoS::HIGH_RELIABILITY\n";
-            else if (::CIAO::DAnCE::NetworkQoS::VIDEO == conn_qos.data_qos)
-              std::cerr << "DataTrafficQoS = NetworkQoS::VIDEO\n";
-            else if (::CIAO::DAnCE::NetworkQoS::VOICE == conn_qos.data_qos)
-              std::cerr << "DataTrafficQoS = NetworkQoS::VOICE\n";
-            else if (::CIAO::DAnCE::NetworkQoS::BEST_EFFORT == conn_qos.data_qos)
-              std::cerr << "DataTrafficQoS = NetworkQoS::BEST_EFFORT\n";
-
             if (::CIAO::DAnCE::NetworkQoS::NORMAL == conn_qos.priority)
               std::cerr << "Priority = NORMAL\n";
             else if (::CIAO::DAnCE::NetworkQoS::HIGH == conn_qos.priority)
@@ -306,10 +317,52 @@ namespace CIAO
               std::cerr << "Priority = LOW\n";
             */
           }
-          // dscp_infos data structure is completely populated here.
-          //std::cerr << "sender host = " << this->get_physical_host ("sender") << std::endl;
-          if (!rollback)
-            this->BB_proxy_.commit ();
+
+          if (rollback)
+            {
+              this->BB_proxy_.rollback ();
+              return false;
+            }
+          else
+            {
+              this->BB_proxy_.commit ();
+              return true;
+            }
+      }
+
+
+      int NetQoSPlanner_exec_i::getIP (CommonDef::IPAddress & srcIP, const char *instance_name)
+      {
+        std::string inst_name (instance_name);
+        if (this->instance_node_map_.find (inst_name) != this->instance_node_map_.end ())
+        {
+          const std::string &logical_node = this->instance_node_map_[inst_name];
+          const std::string &physical_node = this->get_physical_host (logical_node);
+        }
+        else
+          return -1;
+      }
+
+      void
+      NetQoSPlanner_exec_i::get_traffic_qos (CommonDef::QOSRequired &qos_req,
+                                             const ::CIAO::DAnCE::NetworkQoS::ConnectionQoS & conn_qos)
+      {
+          if (::CIAO::DAnCE::NetworkQoS::HIGH_PRIORITY == conn_qos.data_qos)
+            qos_req = CommonDef::highPriority;
+          else if (::CIAO::DAnCE::NetworkQoS::HIGH_RELIABILITY == conn_qos.data_qos)
+            qos_req = CommonDef::highReliability;
+          else if (::CIAO::DAnCE::NetworkQoS::VIDEO == conn_qos.data_qos)
+            qos_req = CommonDef::mmVideo;
+          else if (::CIAO::DAnCE::NetworkQoS::VOICE == conn_qos.data_qos)
+            qos_req = CommonDef::mmVoice;
+          else if (::CIAO::DAnCE::NetworkQoS::BEST_EFFORT == conn_qos.data_qos)
+            qos_req = CommonDef::bestEffort;
+          /*
+          else if (::CIAO::DAnCE::NetworkQoS::HIGH_THROUGHPUT == conn_qos.data_qos)
+            qos_req = CommonDef::highThroughput;
+          */
+          else
+            qos_req = CommonDef::raw;
       }
 
       int NetQoSPlanner_exec_i::make_flow_request (const CommonDef::IPAddress &srcIP,
