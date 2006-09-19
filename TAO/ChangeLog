@@ -1,3 +1,20 @@
+Tue Sep 19 19:31:15 UTC 2006  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * tao/IIOP_Acceptor.h:
+        * tao/IIOP_Acceptor.cpp:
+
+          Fix the treatment of explicitly defaulted endpoints on
+          potentially dual-stack hosts. Prior to this fix, expressing
+          certain forms of defaulted endpoints are inappropriately encoded
+          in the IOR using the literal string provided, rather than using
+          the probed interface addresses. When an endpoint is specified as
+          iiop://[::]:, iiop://[]:, or iiop://0.0.0.0:, this patch now
+          treats the first two as indicating that all IPv6 interfaces
+          should be included, but no IPv4. The third indicates that only
+          IPv4 interface addresses should be listed in the IOR. Using
+          iiop://: means that both IPv4 and IPv6 interface addresses are
+          to be included.
+
 Mon Sep 18 23:53:29 UTC 2006  Iliyan Jeliazkov  <iliyan@ociweb.com>
 
         * tao/TAO_Internal.cpp:

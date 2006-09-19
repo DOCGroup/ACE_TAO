@@ -308,8 +308,12 @@ TAO_IIOP_Acceptor::open (TAO_ORB_Core *orb_core,
 
   ACE_CString specified_hostname;
   ACE_INET_Addr addr;
+  int def_type = AF_UNSPEC;
 
-  if (this->parse_address (address, addr, specified_hostname) == -1)
+  if (this->parse_address (address,
+                           addr,
+                           specified_hostname,
+                           &def_type) == -1)
     return -1;
 
   if (specified_hostname.length() == 0)
@@ -319,7 +323,7 @@ TAO_IIOP_Acceptor::open (TAO_ORB_Core *orb_core,
       // fully qualified domain name must be obtained.
 
       // Check for multiple network interfaces.
-      if (this->probe_interfaces (orb_core) == -1)
+      if (this->probe_interfaces (orb_core, def_type) == -1)
         return -1;
 
       return this->open_i (addr, reactor);
@@ -646,7 +650,8 @@ TAO_IIOP_Acceptor::hostname (TAO_ORB_Core *orb_core,
 int
 TAO_IIOP_Acceptor::parse_address (const char *address,
                                   ACE_INET_Addr &addr,
-                                  ACE_CString &specified_hostname)
+                                  ACE_CString &specified_hostname,
+                                  int *def_type)
 {
   {
     ACE_INET_Addr tmp;
@@ -656,11 +661,13 @@ TAO_IIOP_Acceptor::parse_address (const char *address,
 
   const char *port_separator_loc = ACE_OS::strchr (address, ':');
   char tmp_host[MAXHOSTNAMELEN + 1];
+  tmp_host[0] = '\0';
+  bool host_defaulted = port_separator_loc == address;
+  bool ipv6_in_host = false;
+  if (def_type)
+    *def_type = AF_UNSPEC;
 
 #if defined (ACE_HAS_IPV6)
-  // IPv6 numeric address in host string?
-  bool ipv6_in_host = false;
-
   // Check if this is a (possibly) IPv6 supporting profile containing a
   // numeric IPv6 address representation.
   if ((this->version_.major > TAO_MIN_IPV6_IIOP_MAJOR ||
@@ -681,26 +688,49 @@ TAO_IIOP_Acceptor::parse_address (const char *address,
         }
       else
         {
+          ipv6_in_host = true;
+          host_defaulted = (cp_pos == address+1) ||
+            (cp_pos == address+3 && address[1] == ':' && address[2] == ':');
           if (cp_pos[1] == ':')    // Look for a port
             port_separator_loc = cp_pos + 1;
           else
             port_separator_loc = 0;
+          if (def_type)
+            *def_type = AF_INET6;
           // Extract out just the host part of the address.
           size_t const len = cp_pos - (address + 1);
           ACE_OS::memcpy (tmp_host, address + 1, len);
           tmp_host[len] = '\0';
-          ipv6_in_host = true; // host string contains full IPv6 numeric address
         }
     }
+  else if (!host_defaulted)
+    {
+      // Extract out just the host part of the address.
+      size_t const len = port_separator_loc - address;
+      ACE_OS::memcpy (tmp_host, address, len);
+      tmp_host[len] = '\0';
+    }
 #endif /* ACE_HAS_IPV6 */
+  if (!ipv6_in_host && !host_defaulted)
+    {
+      if (addr.set((unsigned short)0,tmp_host) != 0)
+        return -1;
+      host_defaulted = addr.is_any();
+      if (def_type)
+        *def_type = AF_INET;
+    }
 
-  if (port_separator_loc == address)
+  if (host_defaulted)
     {
       // First convert the port into a usable form.
-      if (addr.set (address + sizeof (':')) != 0)
-        return -1;
-
-      this->default_address_.set_port_number (addr.get_port_number ());
+      unsigned short portno = 0;
+      if (port_separator_loc != 0)
+        {
+          portno =
+            static_cast<u_short> (ACE_OS::atoi (port_separator_loc +
+                                                sizeof (':')));
+        }
+      this->default_address_.set_port_number (portno);
 
       // Now reset the port and set the host.
       if (addr.set (this->default_address_) != 0)
@@ -710,50 +740,23 @@ TAO_IIOP_Acceptor::parse_address (const char *address,
     {
       // The address is a hostname.  No port was specified, so assume
       // port zero (port will be chosen for us).
-#if defined (ACE_HAS_IPV6)
-      if (ipv6_in_host)
-        {
-          if (addr.set ((unsigned short) 0, tmp_host) != 0)
-            return -1;
-
-          specified_hostname = tmp_host;
-        }
-      else
-      {
-#endif /* ACE_HAS_IPV6 */
-        if (addr.set ((unsigned short) 0, address) != 0)
-          return -1;
-
-        specified_hostname = address;
-#if defined (ACE_HAS_IPV6)
-      }
-#endif /* ACE_HAS_IPV6 */
+      specified_hostname = tmp_host[0] == '\0' ? address : tmp_host;
+      if (addr.set ((unsigned short) 0,
+                    specified_hostname.c_str()) != 0)
+        return -1;
     }
   else
     {
       // Host and port were specified.
-#if defined (ACE_HAS_IPV6)
-      if (ipv6_in_host)
+      if (addr.set (address) != 0)
+        return -1;
+      if (tmp_host[0] == '\0')
         {
-          u_short port =
-            static_cast<u_short> (ACE_OS::atoi (port_separator_loc + sizeof (':')));
-
-          if (addr.set (port, tmp_host) != 0)
-            return -1;
-        }
-      else
-        {
-#endif /* ACE_HAS_IPV6 */
-          if (addr.set (address) != 0)
-            return -1;
-
           // Extract out just the host part of the address.
           const size_t len = port_separator_loc - address;
           ACE_OS::memcpy (tmp_host, address, len);
           tmp_host[len] = '\0';
-#if defined (ACE_HAS_IPV6)
         }
-#endif /* ACE_HAS_IPV6 */
       specified_hostname = tmp_host;
     }
 
@@ -806,7 +809,7 @@ TAO_IIOP_Acceptor::dotted_decimal_address (ACE_INET_Addr &addr,
 }
 
 int
-TAO_IIOP_Acceptor::probe_interfaces (TAO_ORB_Core *orb_core)
+TAO_IIOP_Acceptor::probe_interfaces (TAO_ORB_Core *orb_core, int def_type)
 {
   // Extract the hostname for each network interface, and then cache
   // it.  The hostnames will then be used when creating a
@@ -873,14 +876,13 @@ TAO_IIOP_Acceptor::probe_interfaces (TAO_ORB_Core *orb_core)
   ACE_Auto_Basic_Array_Ptr<ACE_INET_Addr> safe_if_addrs (if_addrs);
 
 #if defined (ACE_HAS_IPV6)
+  bool ipv4_only = def_type == AF_INET;
+  bool ipv6_only = (def_type == AF_INET6) ||
+    orb_core->orb_params ()->connect_ipv6_only ();
 #if defined (ACE_WIN32)
-  bool ipv4_only = this->default_address_.get_type () == AF_INET;
-  bool ipv6_only =
-    this->default_address_.get_type () == AF_INET6 || orb_core->orb_params ()->connect_ipv6_only ();
-#else
-  bool ipv4_only = false;
-  bool ipv6_only = orb_core->orb_params ()->connect_ipv6_only ();
-#endif
+  ipv4_only |= this->default_address_.get_type () == AF_INET;
+  ipv6_only |= this->default_address_.get_type () == AF_INET6;
+#endif /* ACE_WIN32 */
   // If the loopback interface is the only interface then include it
   // in the list of interfaces to query for a hostname, otherwise
   // exclude it from the list.
@@ -929,6 +931,16 @@ TAO_IIOP_Acceptor::probe_interfaces (TAO_ORB_Core *orb_core)
   else
     this->endpoint_count_ = static_cast<CORBA::ULong> (if_cnt - lo_cnt);
 #endif /* !ACE_HAS_IPV6 */
+
+  if (this->endpoint_count_ == 0)
+    {
+      if (TAO_debug_level > 0)
+        ACE_DEBUG ((LM_DEBUG,
+                    ACE_TEXT("(%P|%t) TAO_IIOP_Acceptor::probe_interfaces ")
+                    ACE_TEXT("found no usable addresses, def_type = %d\n"),
+                    def_type));
+      return -1;
+    }
 
   ACE_NEW_RETURN (this->addrs_,
                   ACE_INET_Addr[this->endpoint_count_],
