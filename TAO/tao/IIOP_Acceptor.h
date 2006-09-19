@@ -133,13 +133,18 @@ protected:
 
   /**
    * Helper method
-   * Clear out 'addr' & 'specified_hostname' and initialize them
-   * based upon 'address'.
+   * Clear out 'addr' & 'specified_hostname' and initialize them based
+   * upon 'address'. If a non-zero pointer is passed in for def_type,
+   * this will be set to AF_INET6 if IPv6 support is enabled and
+   * supplied hostname is either [] or [::]. It will be set to AF_INET
+   * if the hostname is 0.0.0.0, otherwise it is set to
+   * AF_UNSPEC. This value is then passed to probe_interfaces by open.
    */
   int
   parse_address (const char *address,
                  ACE_INET_Addr &addr,
-                 ACE_CString &specified_hostname);
+                 ACE_CString &specified_hostname,
+                 int *def_type = 0);
 
   /**
    * Set the host name for the given address using the dotted decimal
@@ -162,8 +167,13 @@ protected:
    * interface.  The port for each initialized ACE_INET_Addr will be
    * set in the open_i() method.  This method only gets invoked when
    * no explicit hostname is provided in the specified endpoint.
+   *
+   * The optional argument def_type is used to constrain the resulting
+   * list of interfaces to be either only IPv6 or IPv4, or both, when
+   * ACE_HAS_IPV6 is enabled and the source endpoint was an explicitly
+   * declared wildcard.
    */
-  int probe_interfaces (TAO_ORB_Core *orb_core);
+  int probe_interfaces (TAO_ORB_Core *orb_core, int def_type = AF_UNSPEC);
 
   /**
    * Parse protocol specific options.
