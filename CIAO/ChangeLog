@@ -1,3 +1,14 @@
+Wed Sep 20 04:05:42 UTC 2006  xiong,ming  <ming.xiong@vanderbilt.edu>
+
+        * docs\tutorials\CoSMIC\02.html
+        
+        Added some useful links to various resources to help readers reduce
+        learning curve.Added a small section that mentions that a Node Map file
+        has to be created in order to get Quoter example working. Again,
+        Thanks to Sowayan Abdullah from LMCO for his help in improving the
+        cosmic documentations.
+
+
 Mon Sep 18 03:26:22 UTC 2006  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * tools/Config_Handlers/Utils/XML_Helper.h
