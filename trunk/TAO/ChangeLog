@@ -1,3 +1,10 @@
+Wed Sep 20 01:10:58 UTC 2006  Iliyan Jeliazkov  <iliyan@ociweb.com>
+
+        * tao/default_resource.cpp:
+
+          Fixing the extra semicolon, causing hickups on some
+          platforms. Thanks to Phil Mesnier for catching it.
+
 Tue Sep 19 19:31:15 UTC 2006  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * tao/IIOP_Acceptor.h:
