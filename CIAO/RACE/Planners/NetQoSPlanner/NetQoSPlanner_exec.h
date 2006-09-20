@@ -147,14 +147,15 @@ namespace CIAO
         int make_flow_request (const CommonDef::IPAddress &srcIP,
                                const CommonDef::IPAddress &destIP,
                                int bandwidth,
-                               CommonDef::QOSRequired qos_req);
+                               CommonDef::QOSRequired qos_req,
+                               long &dscp);
 
         void add_network_priorities (Deployment::DeploymentPlan & temp_plan,
                                      const Deployment::DiffservInfos & dscp_infos);
 
         void build_instance_node_map (Deployment::DeploymentPlan & plan);
         void get_traffic_qos (CommonDef::QOSRequired &qos_req, const ::CIAO::DAnCE::NetworkQoS::ConnectionQoS & conn_qos);
-        int getIP (CommonDef::IPAddress & srcIP, const char *);
+        int find_ip_address (CommonDef::IPAddress & srcIP, const char *);
 
 
         virtual ::CIAO::RACE::CCM_Planner_I_ptr

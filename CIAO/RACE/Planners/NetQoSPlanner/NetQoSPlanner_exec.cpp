@@ -26,6 +26,7 @@
 #include "ciao/DeploymentS.h"
 #include "BandwidthBroker/BandwidthBrokerC.h"
 //#include "tao/CORBALOC_Parser.h"
+#include "ace/INET_Addr.h"
 #include "orbsvcs/CosNamingC.h"
 #include "orbsvcs/Naming/Naming_Client.h"
 
@@ -263,47 +264,60 @@ namespace CIAO
             const ::CIAO::DAnCE::NetworkQoS::ConnectionQoS & conn_qos
             = net_qos_req->conn_qos_set[k];
             //ACE_DEBUG ((LM_DEBUG,"In NetQoSPlanner_exec_i::process_netqos_req: conn_qos.connections.length () = %u\n",conn_qos.connections.length ()));
-            NAMED (inner)
             for (size_t conn_num = 0;
                  conn_num < conn_qos.connections.length ();
                  ++conn_num)
               {
                 CommonDef::IPAddress srcIP;
-                if (-1 == this->getIP (srcIP, conn_qos.connections [conn_num].client))
+                if (-1 == this->find_ip_address (srcIP, conn_qos.connections [conn_num].client))
                   {
-                    ACE_DEBUG ((LM_ERROR,"In NetQoSPlanner_exec_i::process_netqos_req: Can't find IP\n"));
+                    ACE_DEBUG ((LM_ERROR,"In NetQoSPlanner_exec_i::process_netqos_req: Can't find source IP\n"));
                     rollback = true;
                     BREAK(outer);
                   }
 
                 CommonDef::IPAddress destIP;
-                this->getIP (destIP, conn_qos.connections [conn_num].server);
+                if (-1 == this->find_ip_address (destIP, conn_qos.connections [conn_num].server))
+                  {
+                    ACE_DEBUG ((LM_ERROR,"In NetQoSPlanner_exec_i::process_netqos_req: Can't find destination IP\n"));
+                    rollback = true;
+                    BREAK(outer);
+                  }
 
                 CommonDef::QOSRequired qos_req;
                 this->get_traffic_qos (qos_req, conn_qos);
+                long fwd_dscp = 0, rev_dscp = 0;
 
-                int bandwidth = conn_qos.fwdBWD;
-
-                if (-1 == this->make_flow_request (srcIP, destIP, bandwidth, qos_req))
+                if (-1 == this->make_flow_request (srcIP, destIP, conn_qos.fwdBWD, qos_req, fwd_dscp))
                 {
                   rollback = true;
                   BREAK(outer);
                 }
-/*
-                std::cerr
-                << "Connection Name = " << conn_qos.connections [conn_num].connection_name   << std::endl
-                << "client Name = " << conn_qos.connections [conn_num].client                << std::endl
-                << "client Port Name = " << conn_qos.connections [conn_num].client_port_name << std::endl
-                << "server Name = " << conn_qos.connections [conn_num].server                << std::endl
-                << "server Port Name = " << conn_qos.connections [conn_num].server_port_name << std::endl;
-*/
+
                 size_t len = dscp_infos.length ();
                 dscp_infos.length (len + 1);
                 dscp_infos [len].server_instance_name = CORBA::string_dup (conn_qos.connections [conn_num].server);
                 dscp_infos [len].client_instance_name = CORBA::string_dup (conn_qos.connections [conn_num].client);
                 dscp_infos [len].client_receptacle_name = CORBA::string_dup (conn_qos.connections [conn_num].client_port_name);
-                dscp_infos [len].request_dscp = random () % 7;
-                dscp_infos [len].reply_dscp = random () % 7;
+                dscp_infos [len].request_dscp = fwd_dscp;
+                dscp_infos [len].reply_dscp = rev_dscp; /// Assigning zero here.
+
+                if (conn_qos.revBWD > 0)
+                {
+                  if (-1 == this->make_flow_request (destIP, srcIP, conn_qos.revBWD, qos_req, rev_dscp))
+                    {
+                      rollback = true;
+                      BREAK(outer);
+                    }
+                  dscp_infos [len].reply_dscp = rev_dscp;
+                }
+/*              std::cerr
+                  << "Connection Name = " << conn_qos.connections [conn_num].connection_name   << std::endl
+                  << "client Name = " << conn_qos.connections [conn_num].client                << std::endl
+                  << "client Port Name = " << conn_qos.connections [conn_num].client_port_name << std::endl
+                  << "server Name = " << conn_qos.connections [conn_num].server                << std::endl
+                  << "server Port Name = " << conn_qos.connections [conn_num].server_port_name << std::endl;
+*/
               }
             /*
             std::cerr << "fwdBWD = " << conn_qos.fwdBWD << std::endl;
@@ -331,13 +345,23 @@ namespace CIAO
       }
 
 
-      int NetQoSPlanner_exec_i::getIP (CommonDef::IPAddress & srcIP, const char *instance_name)
+      int NetQoSPlanner_exec_i::find_ip_address (CommonDef::IPAddress & ip, const char *instance_name)
       {
+        const int FAKE_PORT = 20000;
         std::string inst_name (instance_name);
         if (this->instance_node_map_.find (inst_name) != this->instance_node_map_.end ())
         {
           const std::string &logical_node = this->instance_node_map_[inst_name];
           const std::string &physical_node = this->get_physical_host (logical_node);
+          ACE_INET_Addr addr (FAKE_PORT, physical_node.c_str (), AF_INET);
+          if (const char *ip_addr = addr.get_host_addr ())
+            {
+              ip.dottedDecimal = CORBA::string_dup (ip_addr);
+              ip.subnetMask = CORBA::string_dup ("255.255.255.0");
+              return 0;
+            }
+          else
+            return -1;
         }
         else
           return -1;
@@ -368,7 +392,8 @@ namespace CIAO
       int NetQoSPlanner_exec_i::make_flow_request (const CommonDef::IPAddress &srcIP,
                                                    const CommonDef::IPAddress &destIP,
                                                    int bandwidth,
-                                                   CommonDef::QOSRequired qos_req)
+                                                   CommonDef::QOSRequired qos_req,
+                                                   long &dscp)
       {
           AdmissionControl::FlowInfo flowinfo;
 
@@ -389,7 +414,7 @@ namespace CIAO
           flowinfo.flowDuration = CORBA::Long (1000);
 
           ACE_DEBUG ((LM_DEBUG,"In NetQoSPlanner_exec_i::process_netqos_req: Requesting flow.\n"));
-          int result = this->BB_proxy_.flow_request (flowinfo, qos_req);
+          int result = this->BB_proxy_.flow_request (flowinfo, qos_req, dscp);
 
           if (-1 == result)
               ACE_DEBUG ((LM_ERROR,"In NetQoSPlanner_exec_i::process_netqos_req: Requested flow was not admitted.\n"));
