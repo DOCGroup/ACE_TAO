@@ -1,4 +1,4 @@
-// $Id
+// $Id:
 #include "BB_proxy.h"
 #include "orbsvcs/CosNamingC.h"
 #include "orbsvcs/Naming/Naming_Client.h"
