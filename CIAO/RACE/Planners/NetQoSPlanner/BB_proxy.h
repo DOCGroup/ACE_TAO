@@ -1,4 +1,4 @@
-// $Id:
+// $Id$
 #ifndef BB_PROXY_H
 #define BB_PROXY_H
 
