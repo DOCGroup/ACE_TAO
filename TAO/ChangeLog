@@ -1,3 +1,10 @@
+Wed Sep 20 21:02:14 UTC 2006  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * tao/IIOP_Acceptor.cpp:
+
+          Make sure the port_separator_loc value is used to compute the
+          string length only when it is not 0.
+
 Wed Sep 20 01:10:58 UTC 2006  Iliyan Jeliazkov  <iliyan@ociweb.com>
 
         * tao/default_resource.cpp:

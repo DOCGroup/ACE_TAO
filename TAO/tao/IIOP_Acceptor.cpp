@@ -705,10 +705,15 @@ TAO_IIOP_Acceptor::parse_address (const char *address,
     }
   else if (!host_defaulted)
     {
-      // Extract out just the host part of the address.
-      size_t const len = port_separator_loc - address;
-      ACE_OS::memcpy (tmp_host, address, len);
-      tmp_host[len] = '\0';
+      if (port_separator_loc != 0)
+        {
+          // Extract out just the host part of the address.
+          size_t const len = port_separator_loc - address;
+          ACE_OS::memcpy (tmp_host, address, len);
+          tmp_host[len] = '\0';
+        }
+      else
+        ACE_OS::strcpy (tmp_host, address);
     }
 #endif /* ACE_HAS_IPV6 */
   if (!ipv6_in_host && !host_defaulted)
