@@ -126,7 +126,7 @@ namespace CIAO
         ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
       ACE_THROW_SPEC (( ::CORBA::SystemException))
       {
-        ACE_DEBUG ((LM_DEBUG, "NetQoSPlanner_exec_i::name()\n"));
+        ACE_DEBUG ((LM_DEBUG, "(%N:%l): NetQoSPlanner_exec_i::name()\n"));
         return CORBA::string_dup (this->planner_name_.c_str());
       }
 
@@ -144,7 +144,7 @@ namespace CIAO
         ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
       ACE_THROW_SPEC (( ::CORBA::SystemException))
       {
-        ACE_DEBUG ((LM_DEBUG, "NetQoSPlanner_exec_i::type()\n"));
+        ACE_DEBUG ((LM_DEBUG, "(%N:%l): NetQoSPlanner_exec_i::type()\n"));
         return CORBA::string_dup (this->planner_type_.c_str());
       }
 
@@ -203,26 +203,33 @@ namespace CIAO
                    if (dep_plan.infoProperty [j].value >>= net_qos_req)
                     {
                         this->build_instance_node_map (dep_plan);
-                        this->process_netqos_req (net_qos_req, dscp_infos);
+                        if (this->process_netqos_req (net_qos_req, dscp_infos))
+                          {
+                            // Remove CIAONetworkQoS infoProperty
+                            CORBA::ULong length = dep_plan.infoProperty.length();
+                            ACE_DEBUG ((LM_ERROR, "(%N:%l): Length of dep_plan.infoProperty before removal = %u\n",length));
+                            if (length > j+1)
+                            {
+                              for (size_t k = j + 1; k < length; ++k)
+                                {
+                                  dep_plan.infoProperty[k-1] = dep_plan.infoProperty[k];
+                                }
+                            }
+                            dep_plan.infoProperty.length(length - 1);
+                            // Removal code ends
+                            this->add_network_priorities (dep_plan, dscp_infos);
+                          }
+                        else
+                          {
+                            ACE_DEBUG ((LM_ERROR, "(%N:%l): Conversion to Any failed for NetworkQoS.\n"));
+                            return false;
+                          }
                     }
                     else
                     {
-                      ACE_DEBUG ((LM_ERROR, "Conversion to Any failed for NetworkQoS.\n"));
+                      ACE_DEBUG ((LM_ERROR, "(%N:%l)Conversion to Any failed for NetworkQoS.\n"));
                     }
 
-                    // Remove CIAONetworkQoS infoProperty
-                    CORBA::ULong length = dep_plan.infoProperty.length();
-                    ACE_DEBUG ((LM_ERROR, "Length of dep_plan.infoProperty before removal = %u\n",length));
-                    if (length > j+1)
-                    {
-                      for (size_t k = j + 1; k < length; ++k)
-                        {
-                          dep_plan.infoProperty[k-1] = dep_plan.infoProperty[k];
-                        }
-                    }
-                    dep_plan.infoProperty.length(length - 1);
-                    // Removal code ends
-                    this->add_network_priorities (dep_plan, dscp_infos);
                  }
               }
           }
@@ -250,7 +257,7 @@ namespace CIAO
 
         if (! this->resolve_BB ())
           {
-            ACE_DEBUG ((LM_ERROR, "Can't contact BandwidthBroker.\n"));
+            ACE_DEBUG ((LM_ERROR, "(%N:%l): Can't contact BandwidthBroker.\n"));
             return false;
           }
 
