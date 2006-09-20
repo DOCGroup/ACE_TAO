@@ -1,3 +1,10 @@
+Wed Sep 20 21:37:58 UTC 2006  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * tao/IIOP_Acceptor.cpp:
+
+          Fix for non-IPV6 builds. This relates back to the test for an
+          explicitly supplied any addr.
+
 Wed Sep 20 21:02:14 UTC 2006  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * tao/IIOP_Acceptor.cpp:
