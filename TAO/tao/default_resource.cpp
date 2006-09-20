@@ -37,7 +37,7 @@ TAO_Codeset_Parameters::TAO_Codeset_Parameters (void)
   : translators_ ()
   , native_ (0)
 {
-};
+}
 
 TAO_Codeset_Parameters::~TAO_Codeset_Parameters (void)
 {
