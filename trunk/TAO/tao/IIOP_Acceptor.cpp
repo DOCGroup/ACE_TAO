@@ -703,19 +703,21 @@ TAO_IIOP_Acceptor::parse_address (const char *address,
           tmp_host[len] = '\0';
         }
     }
-  else if (!host_defaulted)
-    {
-      if (port_separator_loc != 0)
-        {
-          // Extract out just the host part of the address.
-          size_t const len = port_separator_loc - address;
-          ACE_OS::memcpy (tmp_host, address, len);
-          tmp_host[len] = '\0';
-        }
-      else
-        ACE_OS::strcpy (tmp_host, address);
-    }
+  else
 #endif /* ACE_HAS_IPV6 */
+    if (!host_defaulted)
+      {
+        if (port_separator_loc != 0)
+          {
+            // Extract out just the host part of the address.
+            size_t const len = port_separator_loc - address;
+            ACE_OS::memcpy (tmp_host, address, len);
+            tmp_host[len] = '\0';
+          }
+        else
+          ACE_OS::strcpy (tmp_host, address);
+      }
+
   if (!ipv6_in_host && !host_defaulted)
     {
       if (addr.set((unsigned short)0,tmp_host) != 0)
