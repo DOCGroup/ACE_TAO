@@ -56,6 +56,7 @@ TAO/tests/Bug_2134_Regression/run_test.pl: !MINIMUM
 TAO/tests/Bug_2174_Regression/run_test.pl: !MINIMUM
 TAO/tests/Bug_2183_Regression/run_test.pl: !ACE_FOR_TAO
 TAO/tests/Bug_2186_Regression/run_test.pl: !MINIMUM !ACE_FOR_TAO
+TAO/tests/Bug_2188_Regression/run_test.pl:
 TAO/tests/Bug_2201_Regression/run_test.pl:
 TAO/tests/Bug_2234_Regression/run_test.pl: !MINIMUM !DISABLE_INTERCEPTORS
 TAO/tests/Bug_2289_Regression/run_test.pl:
