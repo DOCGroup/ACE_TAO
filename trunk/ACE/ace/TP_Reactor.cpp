@@ -191,6 +191,11 @@ ACE_TP_Reactor::dispatch_i (ACE_Time_Value *max_wait_time,
   // how many events still need processing. May be this could be
   // useful in future.
 
+#if 0
+  // @Ciju
+  // signal handling isn't in a production state yet.
+  // Commenting it out for now.
+
   // Dispatch signals
   if (event_count == -1)
     {
@@ -203,6 +208,7 @@ ACE_TP_Reactor::dispatch_i (ACE_Time_Value *max_wait_time,
       return this->handle_signals (event_count,
                                    guard);
     }
+#endif // #if 0
 
   // If there are no signals and if we had received a proper
   // event_count then first look at dispatching timeouts. We need to
@@ -253,6 +259,12 @@ ACE_TP_Reactor::dispatch_i (ACE_Time_Value *max_wait_time,
   return 0;
 }
 
+
+#if 0
+  // @Ciju
+  // signal handling isn't in a production state yet.
+  // Commenting it out for now.
+
 int
 ACE_TP_Reactor::handle_signals (int & /*event_count*/,
                                 ACE_TP_Token_Guard & /*guard*/)
@@ -275,7 +287,7 @@ ACE_TP_Reactor::handle_signals (int & /*event_count*/,
       // handle signals at all then. If we happen to handle signals
       // in the TP_Reactor, we should then start worryiung about this
       // - Bala 21-Aug- 01
-#if 0
+if 0
       // Not sure if this should be done in the TP_Reactor
       // case... leave it out for now.   -Steve Huston 22-Aug-00
 
@@ -283,9 +295,9 @@ ACE_TP_Reactor::handle_signals (int & /*event_count*/,
       // result of signals they should be dispatched since
       // they may be time critical...
       active_handle_count = this->any_ready (dispatch_set);
-#else
+else
       // active_handle_count = 0;
-#endif
+endif
 
       // Record the fact that the Reactor has dispatched a
       // handle_signal() method.  We need this to return the
@@ -295,6 +307,7 @@ ACE_TP_Reactor::handle_signals (int & /*event_count*/,
 
   return -1;
 }
+#endif // #if 0
 
 
 int
