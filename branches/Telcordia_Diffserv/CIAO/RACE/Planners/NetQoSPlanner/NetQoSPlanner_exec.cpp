@@ -186,6 +186,7 @@ namespace CIAO
       ACE_THROW_SPEC (( ::CORBA::SystemException,
                        ::CIAO::RACE::PlannerFailure))
       {
+        bool retval = true;
         for (size_t i = 0; i < plans.length (); ++i)
           {
             ::Deployment::DeploymentPlan &dep_plan = plans[i].plan;
@@ -218,22 +219,23 @@ namespace CIAO
                             dep_plan.infoProperty.length(length - 1);
                             // Removal code ends
                             this->add_network_priorities (dep_plan, dscp_infos);
+                            retval = true;
                           }
                         else
                           {
-                            ACE_DEBUG ((LM_ERROR, "(%N:%l): Conversion to Any failed for NetworkQoS.\n"));
-                            return false;
+                            ACE_DEBUG ((LM_ERROR, "(%N:%l): process_netqos_req failed.\n"));
+                            retval = false;
                           }
                     }
                     else
                     {
                       ACE_DEBUG ((LM_ERROR, "(%N:%l)Conversion to Any failed for NetworkQoS.\n"));
+                      retval = false;
                     }
-
                  }
               }
           }
-        return true;
+        return retval;
       }
 
       void NetQoSPlanner_exec_i::build_instance_node_map (Deployment::DeploymentPlan & dep_plan)
