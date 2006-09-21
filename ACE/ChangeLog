@@ -1,3 +1,16 @@
+Thu Sep 21 16:51:34 UTC 2006  Ciju John  <johnc@ociweb.com>
+
+        * ace/TP_Reactor.h:
+        * ace/TP_Reactor.cpp:
+          The TP_Reactor signal handling implementation is
+          incomplete. In the current implementation under certain
+          circumstances (event loop breaks out if interrupted. This is
+          controlled via ACE_Select_Reactor_T::restart()), a properly
+          handled OS signal can break the reactor event loop in
+          an unpredictable manner. This is due to the fact that we cannot
+          predict which thread will receive the OS signal. Untill the
+          TP_Reactor signal handling is fixed, I am commenting it out.
+
 Thu Sep 21 15:13:19 UTC 2006  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * bin/tao_orb_tests.lst:
