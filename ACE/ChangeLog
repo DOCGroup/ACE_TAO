@@ -1,3 +1,13 @@
+Tue Sep 19 12:27:47 UTC 2006  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
+
+        * tests/Unload_libACE.cpp: Fixed the formatting of this file so it
+          conformed to ACE guidelines.
+
+Tue Sep 19 02:54:20 UTC 2006  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
+
+        * ace/FILE_Connector.h: Changed the documentation to reflect the fact
+          that mkstemp() is used, not mktemp().
+
 Thu Sep 21 16:51:34 UTC 2006  Ciju John  <johnc@ociweb.com>
 
         * ace/TP_Reactor.h:
