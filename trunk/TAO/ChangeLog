@@ -1,3 +1,18 @@
+Thu Sep 21 14:59:37 UTC 2006  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * tests/Bug_2188_Regression:
+        * tests/Bug_2188_Regression/broken.idl:
+        * tests/Bug_2188_Regression/broken.mpc:
+        * tests/Bug_2188_Regression/broken_i.h:
+        * tests/Bug_2188_Regression/broken_i.cpp:
+        * tests/Bug_2188_Regression/client.cpp:
+        * tests/Bug_2188_Regression/run_test.pl:
+        * tests/Bug_2188_Regression/server.cpp:
+
+          A new test for an old problem. The actual problem is now
+          resolved, but I never got around to adding this test when I
+          should have.
+
 Wed Sep 20 21:37:58 UTC 2006  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * tao/IIOP_Acceptor.cpp:
