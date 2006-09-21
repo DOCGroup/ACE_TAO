@@ -237,6 +237,10 @@ int BB_Proxy::flow_request (const AdmissionControl::FlowInfo &f, CommonDef::QOSR
       ACE_DEBUG ((LM_ERROR,"In BB_Proxy::flow_request: AdmissionControlException was raised.\n"));
       ACE_DEBUG ((LM_ERROR,"-- Reason: %s\n", adm_ctrl_ex.reason.in()));
     }
+  catch (CORBA::Exception &e)
+    {
+      ACE_DEBUG ((LM_ERROR,"In BB_Proxy::flow_request: A CORBA exception was raised.\n"));
+    }
   catch (...)
     {
       ACE_DEBUG ((LM_ERROR,"In BB_Proxy::flow_request: Unknown exception was raised.\n"));
