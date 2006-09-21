@@ -1,3 +1,10 @@
+Thu Sep 21 11:54:54 UTC 2006  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
+
+        * src/Key_List.cpp (output_hash_function): Fixed a bug where the
+          wrong type is chosen if max_hash_value was == UCHAR_MAX or
+          _USHRT_MAX.  Thanks to Jody Hagins <jody at atdesk dot com> for
+          this fix.  This fixes bug id 2655.
+
 Tue Mar 14 21:08:12 UTC 2006  jiang,shanshan <shanshan.jiang@vanderbilt.edu>
 
         * apps/gperf/src/Gen_Perf.cpp

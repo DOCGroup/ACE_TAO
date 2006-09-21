@@ -49,10 +49,10 @@
 #define TIME_STAMP_FIELD_WIDTH  32
 
 static char *
-time_stamp ( char date_and_time[], int date_and_timelen, int format )
+time_stamp (char date_and_time[], int date_and_timelen, int format)
 {
-   static char const *const month_name[] =
-   {
+  static char const *const month_name[] =
+    {
       "Jan",
       "Feb",
       "Mar",
@@ -65,10 +65,10 @@ time_stamp ( char date_and_time[], int date_and_timelen, int format )
       "Oct",
       "Nov",
       "Dec"
-   };
+    };
 
-   static char const *const day_of_week_name[] =
-   {
+  static char const *const day_of_week_name[] =
+    {
       "Sun",
       "Mon",
       "Tue",
@@ -76,153 +76,153 @@ time_stamp ( char date_and_time[], int date_and_timelen, int format )
       "Thu",
       "Fri",
       "Sat"
-   };
+    };
 
-   char *ts = NULL;
+  char *ts = NULL;
 
-   if ( date_and_timelen >= TIME_STAMP_FIELD_WIDTH )
-   {
+  if (date_and_timelen >= TIME_STAMP_FIELD_WIDTH)
+    {
       time_t timeval;
       struct tm *now;
 
-      time ( &timeval );
-      now = localtime ( &timeval );     /* Get current local time. */
+      time (&timeval);
+      now = localtime (&timeval);     /* Get current local time. */
 
-      if ( format == 'Y' )
-      {
-         sprintf ( date_and_time,
+      if (format == 'Y')
+        {
+          sprintf (date_and_time,
                    "%3s %3s %2d %04d %02d:%02d:%02d.%06d",
                    day_of_week_name[now->tm_wday],
                    month_name[now->tm_mon],
-                   ( int ) now->tm_mday,
-                   ( int ) now->tm_year + 1900,
-                   ( int ) now->tm_hour,
-                   ( int ) now->tm_min, ( int ) now->tm_sec, ( int ) 0 );
-      }
+                   (int) now->tm_mday,
+                   (int) now->tm_year + 1900,
+                   (int) now->tm_hour,
+                   (int) now->tm_min, (int) now->tm_sec, (int) 0);
+        }
       else                      /* 'T' */
-      {
-         sprintf ( date_and_time,
+        {
+          sprintf (date_and_time,
                    "%3s %2d %02d:%02d:%02d.%03d %04d",
                    month_name[now->tm_mon],
-                   ( int ) now->tm_mday,
-                   ( int ) now->tm_hour,
-                   ( int ) now->tm_min,
-                   ( int ) now->tm_sec, ( int ) 0,
-                   ( int ) now->tm_year + 1900 );
-      }
+                   (int) now->tm_mday,
+                   (int) now->tm_hour,
+                   (int) now->tm_min,
+                   (int) now->tm_sec, (int) 0,
+                   (int) now->tm_year + 1900);
+        }
 
       ts = date_and_time;
-   }
-   return ts;
+    }
+  return ts;
 }
 
 int
-main ( int, char ** )
+main (int, char **)
 {
-   char const *const program = "UnloadLibACE";
+  char const *const program = "UnloadLibACE";
 
-   int status = 0;
-   void *handle = NULL;
-   char *ace_root = NULL;
-   char tbuf[BUFSIZ];
-   char ybuf[BUFSIZ];
-   FILE *logfp = NULL;
+  int status = 0;
+  void *handle = NULL;
+  char *ace_root = NULL;
+  char tbuf[BUFSIZ];
+  char ybuf[BUFSIZ];
+  FILE *logfp = NULL;
 
-   if (( logfp = fopen ( "log/UnloadLibACE.log", "w" )) != NULL )
-   {
-      setvbuf ( logfp, NULL, _IONBF, 0 );
+  if ((logfp = fopen ("log/UnloadLibACE.log", "w")) != NULL)
+    {
+      setvbuf (logfp, NULL, _IONBF, 0);
       // reassign stdout/stderr to log file
-      int fdno = fileno ( logfp );
+      int fdno = fileno (logfp);
 
-      dup2 ( fdno, fileno ( stdout ));
-      dup2 ( fdno, fileno ( stderr ));
-      setvbuf ( stdout, NULL, _IONBF, 0 );
-      setvbuf ( stderr, NULL, _IONBF, 0 );
-      fflush ( stdout );
-      fflush ( stderr );
+      dup2 (fdno, fileno (stdout));
+      dup2 (fdno, fileno (stderr));
+      setvbuf (stdout, NULL, _IONBF, 0);
+      setvbuf (stderr, NULL, _IONBF, 0);
+      fflush (stdout);
+      fflush (stderr);
 
-      printf ( "%s@LM_DEBUG@ Starting %s test at %s\n",
-               time_stamp ( tbuf, BUFSIZ, 'T' ),
-               program, time_stamp ( ybuf, BUFSIZ, 'Y' ));
+      printf ("%s@LM_DEBUG@ Starting %s test at %s\n",
+              time_stamp (tbuf, BUFSIZ, 'T'),
+              program, time_stamp (ybuf, BUFSIZ, 'Y'));
 
-      if (( ace_root = getenv ( "ACE_ROOT" )) != NULL )
-      {
-         char buf[BUFSIZ];
+      if ((ace_root = getenv ("ACE_ROOT")) != NULL)
+        {
+          char buf[BUFSIZ];
 
-         strcpy ( buf, ace_root );
+          strcpy (buf, ace_root);
 #if defined (__hpux) && !(defined (__ia64) && (__ia64 == 1))
-         strcat ( buf, "/lib/libACE.sl" );
+          strcat (buf, "/lib/libACE.sl");
 #else
-         strcat ( buf, "/lib/libACE.so" );
+          strcat (buf, "/lib/libACE.so");
 #endif /* (__hpux) */
 
-         handle = dlopen ( buf, RTLD_LAZY );
-         if ( handle == NULL )
-         {
-            // is it because of "No such file or directory" ?
-            if ( errno != ENOENT )
+          handle = dlopen (buf, RTLD_LAZY);
+          if (handle == NULL)
             {
-               fprintf ( stderr,
-                         "%s@LM_ERROR@ dlopen() returned NULL\n",
-                         time_stamp ( tbuf, BUFSIZ, 'T' ));
-               fprintf ( stderr,
-                         "%s@LM_ERROR@ dlerror() says: %s\n",
-                         time_stamp ( tbuf, BUFSIZ, 'T' ), dlerror ());
-               status = 1;
+              // is it because of "No such file or directory" ?
+              if (errno != ENOENT)
+                {
+                  fprintf (stderr,
+                           "%s@LM_ERROR@ dlopen() returned NULL\n",
+                           time_stamp (tbuf, BUFSIZ, 'T'));
+                  fprintf (stderr,
+                           "%s@LM_ERROR@ dlerror() says: %s\n",
+                           time_stamp (tbuf, BUFSIZ, 'T'), dlerror ());
+                  status = 1;
+                }
+              else
+                {
+                  printf ("%s@LM_DEBUG@ dlopen() did not find %s\n",
+                          time_stamp (tbuf, BUFSIZ, 'T'), buf);
+                  status = 0;
+                }
             }
-            else
+          else if (dlclose (handle) != 0)
             {
-               printf ( "%s@LM_DEBUG@ dlopen() did not find %s\n",
-                        time_stamp ( tbuf, BUFSIZ, 'T' ), buf);
-               status = 0;
+              fprintf (stderr,
+                       "%s@LM_ERROR@ dlclose() failed : %s\n",
+                       time_stamp (tbuf, BUFSIZ, 'T'), strerror (errno));
+              status = 1;
             }
-         }
-         else if ( dlclose ( handle ) != 0 )
-         {
-            fprintf ( stderr,
-                      "%s@LM_ERROR@ dlclose() failed : %s\n",
-                      time_stamp ( tbuf, BUFSIZ, 'T' ), strerror ( errno ));
-            status = 1;
-         }
-      }
+        }
       else
-      {
-         fprintf ( stderr,
+        {
+          fprintf (stderr,
                    "%s@LM_ERROR@ ACE_ROOT environment variable not set\n",
-                   time_stamp ( tbuf, BUFSIZ, 'T' ));
-         status = 1;
-      }
+                   time_stamp (tbuf, BUFSIZ, 'T'));
+          status = 1;
+        }
 
-      fflush ( stdout );
-      fflush ( stderr );
-      fflush ( logfp );
+      fflush (stdout);
+      fflush (stderr);
+      fflush (logfp);
 
-      fclose ( logfp );
-   }
-   else
-   {
+      fclose (logfp);
+    }
+  else
+    {
       // Couldn't go into the log file !!!
-      printf ( "%s@LM_DEBUG@ Starting %s test at %s\n",
-               time_stamp ( tbuf, BUFSIZ, 'T' ),
-               program, time_stamp ( ybuf, BUFSIZ, 'Y' ));
+      printf ("%s@LM_DEBUG@ Starting %s test at %s\n",
+              time_stamp (tbuf, BUFSIZ, 'T'),
+              program, time_stamp (ybuf, BUFSIZ, 'Y'));
 
-      fprintf ( stderr,
-                "%s@LM_ERROR@ Could not open log/UnloadLibACE.log : %s\n",
-                time_stamp ( tbuf, BUFSIZ, 'T' ), strerror ( errno ));
+      fprintf (stderr,
+               "%s@LM_ERROR@ Could not open log/UnloadLibACE.log : %s\n",
+               time_stamp (tbuf, BUFSIZ, 'T'), strerror (errno));
       status = 1;
-   }
+    }
 
-   printf ( "%s@LM_DEBUG@ Ending %s test at %s\n",
-            time_stamp ( tbuf, BUFSIZ, 'T' ),
-            program, time_stamp ( ybuf, BUFSIZ, 'Y' ));
+  printf ("%s@LM_DEBUG@ Ending %s test at %s\n",
+          time_stamp (tbuf, BUFSIZ, 'T'),
+          program, time_stamp (ybuf, BUFSIZ, 'Y'));
 
-   fflush ( stderr );
-   fflush ( stdout );
-   fclose ( stdout );
-   fclose ( stderr );
+  fflush (stderr);
+  fflush (stdout);
+  fclose (stdout);
+  fclose (stderr);
 
-   exit ( status );
-   return 0;
+  exit (status);
+  return 0;
 }
 #else
 # if defined (WIN32) && defined (ACE_USES_WCHAR)
@@ -234,26 +234,26 @@ main ( int, char ** )
 # endif /* ACE_HAS_WINCE || __BORLANDC__ */
 
 int
-wmain ( int, wchar_t ** )
+wmain (int, wchar_t **)
 #else
 int
-main ( int, char ** )
+main (int, char **)
 #endif /* (WIN32) && (ACE_USES_WCHAR) */
 {
-   char const *const program = "UnloadLibACE";
+  char const *const program = "UnloadLibACE";
 
-   FILE *logfp = NULL;
+  FILE *logfp = NULL;
 
-   if (( logfp = fopen ( "log/UnloadLibACE.log", "w" )) != NULL )
-   {
-      fprintf ( logfp, "@LM_DEBUG@ Starting %s test\n", program);
-      fprintf ( logfp, "@LM_DEBUG@ %s test not implemented for this platform\n",
-                program);
-      fprintf ( logfp, "@LM_DEBUG@ Ending %s test\n", program);
+  if ((logfp = fopen ("log/UnloadLibACE.log", "w")) != NULL)
+    {
+      fprintf (logfp, "@LM_DEBUG@ Starting %s test\n", program);
+      fprintf (logfp, "@LM_DEBUG@ %s test not implemented for this platform\n",
+               program);
+      fprintf (logfp, "@LM_DEBUG@ Ending %s test\n", program);
 
-      fflush ( logfp );
-      fclose ( logfp );
-   }
-   return 0;
+      fflush (logfp);
+      fclose (logfp);
+    }
+  return 0;
 }
 #endif /* UNLOAD_LIBACE_TEST */
