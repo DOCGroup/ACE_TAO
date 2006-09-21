@@ -282,7 +282,7 @@ namespace CIAO
                     rollback = true;
                     BREAK(outer);
                   }
-
+                ACE_DEBUG ((LM_DEBUG,"In NetQoSPlanner_exec_i::process_netqos_req: srcIP = %s\n",srcIP.dottedDecimal.in()));
                 CommonDef::IPAddress destIP;
                 if (-1 == this->find_ip_address (destIP, conn_qos.connections [conn_num].server))
                   {
@@ -290,7 +290,7 @@ namespace CIAO
                     rollback = true;
                     BREAK(outer);
                   }
-
+                ACE_DEBUG ((LM_DEBUG,"In NetQoSPlanner_exec_i::process_netqos_req: destIP = %s\n",destIP.dottedDecimal.in()));
                 CommonDef::QOSRequired qos_req;
                 this->get_traffic_qos (qos_req, conn_qos);
                 long fwd_dscp = 0, rev_dscp = 0;
@@ -308,6 +308,7 @@ namespace CIAO
                 dscp_infos [len].client_receptacle_name = CORBA::string_dup (conn_qos.connections [conn_num].client_port_name);
                 dscp_infos [len].request_dscp = fwd_dscp;
                 dscp_infos [len].reply_dscp = rev_dscp; /// Assigning zero here.
+                ACE_DEBUG ((LM_DEBUG,"In NetQoSPlanner_exec_i::process_netqos_req: fwd_dscp\n"));
 
                 if (conn_qos.revBWD > 0)
                 {
@@ -316,6 +317,7 @@ namespace CIAO
                       rollback = true;
                       BREAK(outer);
                     }
+                  ACE_DEBUG ((LM_DEBUG,"In NetQoSPlanner_exec_i::process_netqos_req: rev_dscp\n"));
                   dscp_infos [len].reply_dscp = rev_dscp;
                 }
 /*              std::cerr
@@ -359,12 +361,13 @@ namespace CIAO
         if (this->instance_node_map_.find (inst_name) != this->instance_node_map_.end ())
         {
           const std::string &logical_node = this->instance_node_map_[inst_name];
+          ACE_DEBUG ((LM_DEBUG,"In NetQoSPlanner_exec_i::process_netqos_req: logical_node = %s\n",logical_node.c_str()));
           const std::string &physical_node = this->get_physical_host (logical_node);
           ACE_INET_Addr addr (FAKE_PORT, physical_node.c_str (), AF_INET);
           if (const char *ip_addr = addr.get_host_addr ())
             {
               ip.dottedDecimal = CORBA::string_dup (ip_addr);
-              ip.subnetMask = CORBA::string_dup ("255.255.255.0");
+              ip.subnetMask = CORBA::string_dup ("255.255.255.255");
               return 0;
             }
           else
