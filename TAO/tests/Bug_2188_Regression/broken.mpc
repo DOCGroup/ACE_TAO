@@ -1,0 +1,23 @@
+// -*- MPC -*-
+// $Id$
+
+project(*Server): taoexe, portableserver {
+  IDL_Files {
+    broken.idl
+  }
+
+  Source_Files {
+    broken_i.cpp
+    server.cpp
+  }
+}
+
+project(*Client): taoexe {
+  IDL_Files {
+    broken.idl
+  }
+  Source_Files {
+    brokenC.cpp
+    client.cpp
+  }
+}
