@@ -258,10 +258,16 @@ protected:
   /// return 1 I/O handler for dispatching
   int get_event_for_dispatching (ACE_Time_Value *max_wait_time);
 
+#if 0
+  // @Ciju
+  // signal handling isn't in a production state yet.
+  // Commenting it out for now.
+
   /// Method to handle signals
   /// @note It is just busted at this point in time.
   int handle_signals (int &event_count,
                       ACE_TP_Token_Guard &g);
+#endif // #if 0
 
   /// Handle timer events
   int handle_timer_events (int &event_count,
