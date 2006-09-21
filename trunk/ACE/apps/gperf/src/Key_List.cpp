@@ -1126,7 +1126,7 @@ Key_List::output_hash_function (void)
   // Generate the asso_values table.
   ACE_OS::printf ("  static %sunsigned %s asso_values[] =\n    {",
                   option[CONSTANT] ? "const " : "",
-                  max_hash_value <= ((int) UCHAR_MAX) ? "char" : (max_hash_value <= ((int) USHRT_MAX) ? "short" : "int"));
+                  max_hash_value < ((int) UCHAR_MAX) ? "char" : (max_hash_value < ((int) USHRT_MAX) ? "short" : "int"));
 
   ACE_OS::printf ("\n#if defined (ACE_MVS)");
 #if ACE_STANDARD_CHARACTER_SET_SIZE == ACE_EBCDIC_SIZE
