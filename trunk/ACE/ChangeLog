@@ -1,3 +1,8 @@
+Thu Sep 21 15:13:19 UTC 2006  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * bin/tao_orb_tests.lst:
+          Added new bug 2188 regression test.
+
 Mon Sep 18 10:56:29 UTC 2006  Steve Huston  <shuston@riverace.com>
 
         * include/makeinclude/platform_sunos5_sunc++.GNU: Add buildbits=64
@@ -13,27 +18,27 @@ Thu Sep 14 23:01:16 UTC 2006  Steve Huston  <shuston@riverace.com>
 
 Thu Sep 14 21:48:39 UTC 2006  Steve Huston  <shuston@riverace.com>
 
-	* ace/OS_NS_Thread.inl (thr_getspecific): Removed the ACE_Errno_Guard
-	  around ::TlsGetValue() in the ACE_HAS_WTHREADS case. The comments
-	  near the code said (paraphrasing) "...it was to protect against
-	  ACE_Log_Msg::instance() overwriting the error value before it had a
-	  chance to be logged; although ACE_ERROR et al already store the
-	  error value before calling ACE_Log_Msg::instance(), there may be a
-	  chance that other uses of ACE_Log_Msg don't protect this way."
-	  I have a report that having the errno guard in place is taking
-	  over 10% CPU during a customer system's run-time. This is way too
-	  much to have in a hot path, especially for a mis-placed guard.
-	  It seems a little random to be picking on ACE_OS::thr_getspecific()
-	  when there are many more OS calls in the ACE_Log_Msg::instance()
-	  call path.	
-	  If there are really cases outside of ACE_ERROR... et al, then the
-	  guard should be worked into ACE_Log_Msg::instance() method. However,
-	  rather than try that now, let's see if there are any real issues,
-	  since OS-level calls should be setting errno when errors are
-	  noticed, propagating from GetLastError() via
-	  ACE_OS::set_errno_to_last_error () as needed.
-	  Thanks to Kelly Hickel <kfh at mqsoftware dot com> for raising
-	  this point.
+        * ace/OS_NS_Thread.inl (thr_getspecific): Removed the ACE_Errno_Guard
+          around ::TlsGetValue() in the ACE_HAS_WTHREADS case. The comments
+          near the code said (paraphrasing) "...it was to protect against
+          ACE_Log_Msg::instance() overwriting the error value before it had a
+          chance to be logged; although ACE_ERROR et al already store the
+          error value before calling ACE_Log_Msg::instance(), there may be a
+          chance that other uses of ACE_Log_Msg don't protect this way."
+          I have a report that having the errno guard in place is taking
+          over 10% CPU during a customer system's run-time. This is way too
+          much to have in a hot path, especially for a mis-placed guard.
+          It seems a little random to be picking on ACE_OS::thr_getspecific()
+          when there are many more OS calls in the ACE_Log_Msg::instance()
+          call path.
+          If there are really cases outside of ACE_ERROR... et al, then the
+          guard should be worked into ACE_Log_Msg::instance() method. However,
+          rather than try that now, let's see if there are any real issues,
+          since OS-level calls should be setting errno when errors are
+          noticed, propagating from GetLastError() via
+          ACE_OS::set_errno_to_last_error () as needed.
+          Thanks to Kelly Hickel <kfh at mqsoftware dot com> for raising
+          this point.
 
 Wed Sep 13 18:25:37 UTC 2006  Boris Kolpackov  <boris@codesynthesis.com>
 
