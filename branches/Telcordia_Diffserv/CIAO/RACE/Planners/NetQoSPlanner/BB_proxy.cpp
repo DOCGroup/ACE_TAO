@@ -112,7 +112,7 @@ bool BB_Proxy::resolve (CORBA::ORB_ptr orb)
           CosNaming::NamingContext_var rootcontext = CosNaming::NamingContext::_narrow (obj.in());
           if (CORBA::is_nil(rootcontext.in()))
           {
-            ACE_DEBUG ((LM_ERROR, "In NetQoSPlanner_exec_i::resolve_BB (): Can't narrow to NamingContext.\n"));
+            ACE_DEBUG ((LM_ERROR, "In BB_Proxy::resolve (): Can't narrow to NamingContext.\n"));
             throw NameServResolutionFailed ();
           }
 
@@ -124,13 +124,13 @@ bool BB_Proxy::resolve (CORBA::ORB_ptr orb)
             }
           catch (const CosNaming::NamingContext::NotFound &)
             {
-              ACE_DEBUG ((LM_ERROR, "In NetQoSPlanner_exec_i::resolve_BB(): NamingContext::NotFound exception in nameserv resolution.\n"));
+              ACE_DEBUG ((LM_ERROR, "In BB_Proxy::resolve(): NamingContext::NotFound exception in nameserv resolution.\n"));
               throw NameServResolutionFailed ();
             }
 
           if (CORBA::is_nil (obj))
           {
-            ACE_DEBUG ((LM_ERROR, "In NetQoSPlanner_exec_i::resolve_BB (): Naming service reference is nil.\n"));
+            ACE_DEBUG ((LM_ERROR, "In BB_Proxy::resolve (): Naming service reference is nil.\n"));
             throw NameServResolutionFailed ();
           }
 
@@ -138,11 +138,11 @@ bool BB_Proxy::resolve (CORBA::ORB_ptr orb)
           adm_ctrl = BandwidthBroker::AdmissionControl::_narrow (obj);
           if (CORBA::is_nil (adm_ctrl))
           {
-            ACE_DEBUG ((LM_ERROR, "In NetQoSPlanner_exec_i::resolve_BB(): The IOR obtained from \
+            ACE_DEBUG ((LM_ERROR, "In BB_Proxy::resolve(): The IOR obtained from \
                                    the NS is not an AdmissionControl reference.\n"));
             throw NameServResolutionFailed ();
           }
-
+          throw NameServResolutionFailed ();
         }
         catch (NameServResolutionFailed &)
         {
@@ -156,7 +156,7 @@ bool BB_Proxy::resolve (CORBA::ORB_ptr orb)
 
             if (CORBA::is_nil (obj))
             {
-              ACE_DEBUG ((LM_ERROR, "In NetQoSPlanner_exec_i::resolve_BB(): BandwidthBroker is a nil object reference.\n"));
+              ACE_DEBUG ((LM_ERROR, "In BB_Proxy::resolve(): BandwidthBroker is a nil object reference.\n"));
               throw FilebasedResolutionFailed ();
             }
 
@@ -164,32 +164,32 @@ bool BB_Proxy::resolve (CORBA::ORB_ptr orb)
             adm_ctrl = BandwidthBroker::AdmissionControl::_narrow (obj);
             if (CORBA::is_nil (adm_ctrl))
             {
-              ACE_DEBUG ((LM_ERROR, "In NetQoSPlanner_exec_i::resolve_BB(): The IOR obtained from \
+              ACE_DEBUG ((LM_ERROR, "In BB_Proxy::resolve(): The IOR obtained from \
                                      the file is not an AdmissionControl reference.\n"));
               throw FilebasedResolutionFailed ();
             }
           }
           catch (FilebasedResolutionFailed &)
           {
-              ACE_DEBUG ((LM_ERROR, "In NetQoSPlanner_exec_i::resolve_BB(): Filebased IOR resolution of BB also failed.\n"));
+              ACE_DEBUG ((LM_ERROR, "In BB_Proxy::resolve(): Filebased IOR resolution of BB also failed.\n"));
               this->resolved_ = false;
               return this->resolved_;
           }
           catch (...)
           {
-            ACE_DEBUG ((LM_ERROR, "In NetQoSPlanner_exec_i::resolve_BB(): Unknown exception in file based resolution.\n"));
+            ACE_DEBUG ((LM_ERROR, "In BB_Proxy::resolve(): Unknown exception in file based resolution.\n"));
             this->resolved_ = false;
             return this->resolved_;
           }
         }
         catch (...)
         {
-          ACE_DEBUG ((LM_ERROR, "In NetQoSPlanner_exec_i::resolve_BB(): Unknown exception in nameserv resolution.\n"));
+          ACE_DEBUG ((LM_ERROR, "In BB_Proxy::resolve(): Unknown exception in nameserv resolution.\n"));
           this->resolved_ = false;
           return this->resolved_;
         }
 
-        ACE_DEBUG ((LM_DEBUG, "In NetQoSPlanner_exec_i::resolve_BB(): BandwidthBroker resolved successfully.\n"));
+        ACE_DEBUG ((LM_DEBUG, "In BB_Proxy::resolve(): BandwidthBroker resolved successfully.\n"));
         this->BB_ref_ = adm_ctrl;
         {
           AdmissionControl::FlowInfo flowinfo;
@@ -212,7 +212,7 @@ bool BB_Proxy::resolve (CORBA::ORB_ptr orb)
           flowinfo.biDirectional = CORBA::Boolean (false);
           flowinfo.flowDuration = CORBA::Long (1000);
 
-          ACE_DEBUG ((LM_DEBUG,"In NetQoSPlanner_exec_i::process_netqos_req: Requesting flow.\n"));
+          ACE_DEBUG ((LM_DEBUG,"In BB_Proxy::resolve: Requesting flow.\n"));
           CommonDef::QOSRequired qos_req = CommonDef::highReliability;
           AdmissionControl::SchedulingAction sched_action = AdmissionControl::reserve;
           CORBA::Long dscp;
@@ -220,14 +220,15 @@ bool BB_Proxy::resolve (CORBA::ORB_ptr orb)
           try
           {
             adm_ctrl->flowRequest (flowinfo, qos_req , sched_action, flowtoken, dscp);
+            ACE_DEBUG ((LM_ERROR,"In BB_Proxy::resolve: flowRequest successful\n"));
           }
           catch (CORBA::Exception &e)
             {
-              ACE_DEBUG ((LM_ERROR,"In BB_Proxy::flow_request: A CORBA exception was raised: %s\n",e._name()));
+              ACE_DEBUG ((LM_ERROR,"In BB_Proxy::resolve: A CORBA exception was raised: %s\n",e._name()));
             }
           catch (...)
             {
-              ACE_DEBUG ((LM_ERROR,"In BB_Proxy::flow_request: Unknown exception was raised.\n"));
+              ACE_DEBUG ((LM_ERROR,"In BB_Proxy::resolve: Unknown exception was raised.\n"));
             }
         }
         this->resolved_ = true;
