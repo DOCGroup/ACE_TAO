@@ -190,7 +190,7 @@ bool BB_Proxy::resolve (CORBA::ORB_ptr orb)
         }
 
         ACE_DEBUG ((LM_DEBUG, "In NetQoSPlanner_exec_i::resolve_BB(): BandwidthBroker resolved successfully.\n"));
-        this->BB_ref_ = adm_ctrl;
+        this->BB_ref_ = adm_ctrl._retn();
         this->resolved_ = true;
         return this->resolved_;
   }
@@ -239,8 +239,7 @@ int BB_Proxy::flow_request (const AdmissionControl::FlowInfo &f, CommonDef::QOSR
     }
   catch (CORBA::Exception &e)
     {
-      ACE_DEBUG ((LM_ERROR,"In BB_Proxy::flow_request: A CORBA exception was raised.\n"));
-      ACE_DEBUG ((LM_ERROR,"In BB_Proxy::flow_request: Its name is %s.\n",e._name()));
+      ACE_DEBUG ((LM_ERROR,"In BB_Proxy::flow_request: A CORBA exception was raised: %s\n",e._name()));
     }
   catch (...)
     {
