@@ -1,3 +1,9 @@
+Fri Sep 22 12:42:37 UTC 2006  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
+
+        * docs/index.html: Added a link to the http://www.acejoy.com ACE
+          developers website in China.  Thanks to Winston Zhang <webmaster
+          at acejoy dot com> for creating this website.
+  
 Tue Sep 19 12:27:47 UTC 2006  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
 
         * tests/Unload_libACE.cpp: Fixed the formatting of this file so it
