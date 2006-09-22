@@ -190,7 +190,46 @@ bool BB_Proxy::resolve (CORBA::ORB_ptr orb)
         }
 
         ACE_DEBUG ((LM_DEBUG, "In NetQoSPlanner_exec_i::resolve_BB(): BandwidthBroker resolved successfully.\n"));
-        this->BB_ref_ = adm_ctrl._retn();
+        this->BB_ref_ = adm_ctrl;
+        {
+          AdmissionControl::FlowInfo flowinfo;
+
+          flowinfo.srcIP.dottedDecimal = CORBA::string_dup("129.59.129.81");
+          flowinfo.srcIP.subnetMask = CORBA::string_dup("255.255.255.255");
+          flowinfo.srcPort.low = -1;
+          flowinfo.srcPort.high = -1;
+
+          flowinfo.destIP.dottedDecimal = CORBA::string_dup("129.59.129.92");
+          flowinfo.destIP.subnetMask = CORBA::string_dup("255.255.255.255");
+          flowinfo.destPort.low = -1;
+          flowinfo.destPort.high = -1;
+
+          flowinfo.protocol = AdmissionControl::notSpecified;
+          flowinfo.fwdRate.requiredBW = CORBA::Long (10);
+          flowinfo.fwdRate.extraBW = CORBA::Long (0);
+          flowinfo.revRate.requiredBW = CORBA::Long (0);
+          flowinfo.revRate.extraBW = CORBA::Long (0);
+          flowinfo.biDirectional = CORBA::Boolean (false);
+          flowinfo.flowDuration = CORBA::Long (1000);
+
+          ACE_DEBUG ((LM_DEBUG,"In NetQoSPlanner_exec_i::process_netqos_req: Requesting flow.\n"));
+          CommonDef::QOSRequired qos_req = CommonDef::highReliability;
+          AdmissionControl::SchedulingAction sched_action = AdmissionControl::reserve;
+          CORBA::Long dscp;
+          CORBA::String_var flowtoken;
+          try
+          {
+            adm_ctrl->flowRequest (flowinfo, qos_req , sched_action, flowtoken, dscp);
+          }
+          catch (CORBA::Exception &e)
+            {
+              ACE_DEBUG ((LM_ERROR,"In BB_Proxy::flow_request: A CORBA exception was raised: %s\n",e._name()));
+            }
+          catch (...)
+            {
+              ACE_DEBUG ((LM_ERROR,"In BB_Proxy::flow_request: Unknown exception was raised.\n"));
+            }
+        }
         this->resolved_ = true;
         return this->resolved_;
   }
