@@ -104,6 +104,52 @@ TAO_DynAnyFactory::create_dyn_any_from_type_code (
 }
 
 DynamicAny::DynAny_ptr
+TAO_DynAnyFactory::create_dyn_any_without_truncation (
+    const CORBA::Any & /* value */
+    ACE_ENV_ARG_DECL
+  )
+  ACE_THROW_SPEC ((
+      CORBA::SystemException,
+      DynamicAny::DynAnyFactory::InconsistentTypeCode,
+      DynamicAny::MustTruncate
+    ))
+{
+  // TODO
+  return DynamicAny::DynAny::_nil ();
+}
+
+DynamicAny::DynAnySeq *
+TAO_DynAnyFactory::create_multiple_dyn_anys (
+    const DynamicAny::AnySeq & /* values */,
+    ::CORBA::Boolean /* allow_truncate */
+    ACE_ENV_ARG_DECL
+  )
+  ACE_THROW_SPEC ((
+      CORBA::SystemException,
+      DynamicAny::DynAnyFactory::InconsistentTypeCode,
+      DynamicAny::MustTruncate
+    ))
+{
+  // TODO
+  return 0;
+}
+
+DynamicAny::AnySeq *
+TAO_DynAnyFactory::create_multiple_anys (
+    const DynamicAny::DynAnySeq & /* values */
+    ACE_ENV_ARG_DECL
+  )
+  ACE_THROW_SPEC ((
+      CORBA::SystemException
+    ))
+{
+  // TODO
+  return 0;
+}
+      
+//*******************************************************************
+    
+DynamicAny::DynAny_ptr
 TAO_DynAnyFactory::make_dyn_any (const CORBA::Any &any
                                  ACE_ENV_ARG_DECL)
 {

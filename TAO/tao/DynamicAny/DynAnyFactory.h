@@ -84,6 +84,35 @@ public:
         DynamicAny::DynAnyFactory::InconsistentTypeCode
       ));
 
+  virtual DynamicAny::DynAny_ptr create_dyn_any_without_truncation (
+      const CORBA::Any & value
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS
+    )
+    ACE_THROW_SPEC ((
+        CORBA::SystemException,
+        DynamicAny::DynAnyFactory::InconsistentTypeCode,
+        DynamicAny::MustTruncate
+      ));
+  
+  virtual DynamicAny::DynAnySeq * create_multiple_dyn_anys (
+      const DynamicAny::AnySeq & values,
+      ::CORBA::Boolean allow_truncate
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS
+    )
+    ACE_THROW_SPEC ((
+        CORBA::SystemException,
+        DynamicAny::DynAnyFactory::InconsistentTypeCode,
+        DynamicAny::MustTruncate
+      ));
+  
+  virtual DynamicAny::AnySeq * create_multiple_anys (
+      const DynamicAny::DynAnySeq & values
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS
+    )
+    ACE_THROW_SPEC ((
+        CORBA::SystemException
+      ));
+    
 private:
   // Not allowed.
   TAO_DynAnyFactory (const TAO_DynAnyFactory &src);
