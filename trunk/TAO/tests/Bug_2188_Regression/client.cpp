@@ -66,7 +66,7 @@ main (int argc, char *argv[])
 
       CharArray_slice * char_array = CharArray_alloc();
       for (int i = 0; i < 10; i++)
-        char_array[i] = 'a' + i;
+        char_array[i] = (char)('a' + i);
       atobj->a_charArray (char_array ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 

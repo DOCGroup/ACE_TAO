@@ -1,3 +1,14 @@
+Fri Sep 22 15:31:54 UTC 2006  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * tao/IIOP_Acceptor.cpp:
+          Fix for remaining IPV6 test failures.
+
+        * tests/Bug_2188_Regression/broken.mpc:
+        * tests/Bug_2188_Regression/client.cpp:
+          Updated the mpc file to be consistent with current builds. Added
+          an explicit type case to the client to silence some build warnings.
+
+
 Thu Sep 21 14:59:37 UTC 2006  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * tests/Bug_2188_Regression:
