@@ -1,6 +1,6 @@
 //$Id$
 
-project : taolib, core, core_anytypecode, tao_versioning_idl_defaults {
+project : valuetype, tao_versioning_idl_defaults {
   sharedname    = TAO_DynamicAny
   dynamicflags  = TAO_DYNAMICANY_BUILD_DLL
 
