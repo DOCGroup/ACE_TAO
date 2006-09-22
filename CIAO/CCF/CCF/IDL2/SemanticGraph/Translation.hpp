@@ -8,8 +8,6 @@
 #include <vector>
 #include <string>
 
-#include "CCF/CompilerElements/FileSystem.hpp"
-
 #include "CCF/IDL2/SemanticGraph/Elements.hpp"
 
 namespace CCF
@@ -107,7 +105,7 @@ namespace CCF
       class Includes : public virtual Contains
       {
       public:
-        fs::path
+        Path
         file () const
         {
           return file_;
@@ -119,7 +117,7 @@ namespace CCF
       protected:
         friend class Graph<Node, Edge>;
 
-        Includes (fs::path const& file)
+        Includes (Path const& file)
             : file_ (file)
         {
           type_info (static_type_info ());
@@ -132,7 +130,7 @@ namespace CCF
         set_right_node (TranslationRegion& n);
 
       private:
-        fs::path file_;
+        Path file_;
       };
 
 
@@ -148,7 +146,7 @@ namespace CCF
       protected:
         friend class Graph<Node, Edge>;
 
-        QuoteIncludes (fs::path const& file)
+        QuoteIncludes (Path const& file)
             : Includes (file)
         {
           type_info (static_type_info ());
@@ -168,7 +166,7 @@ namespace CCF
       protected:
         friend class Graph<Node, Edge>;
 
-        BracketIncludes (fs::path const& file)
+        BracketIncludes (Path const& file)
             : Includes (file)
         {
           type_info (static_type_info ());
@@ -200,7 +198,8 @@ namespace CCF
       protected:
         friend class Graph<Node, Edge>;
 
-        Root ()
+        Root (Path const& path, unsigned long line)
+            : Node (path, line)
         {
           type_info (static_type_info ());
         }
@@ -231,7 +230,8 @@ namespace CCF
       protected:
         friend class Graph<Node, Edge>;
 
-        TranslationRegion ()
+        TranslationRegion (Path const& path, unsigned long line)
+            : Node (path, line)
         {
           type_info (static_type_info ());
         }
@@ -247,7 +247,8 @@ namespace CCF
                               public Graph<Node, Edge>
       {
       public:
-        TranslationUnit ()
+        TranslationUnit (Path const& path, unsigned long line)
+            : Node (path, line)
         {
           type_info (static_type_info ());
         }

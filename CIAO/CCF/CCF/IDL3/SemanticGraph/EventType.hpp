@@ -26,10 +26,13 @@ namespace CCF
       protected:
         friend class Graph<Node, Edge>;
 
-        EventType ()
+        EventType () // For virtual inheritance only.
         {
           type_info (static_type_info ());
         }
+
+        virtual
+        ~EventType () = 0;
       };
 
 
@@ -46,7 +49,8 @@ namespace CCF
       protected:
         friend class Graph<Node, Edge>;
 
-        AbstractEventType ()
+        AbstractEventType (Path const& path, unsigned long line)
+            : Node (path, line), AbstractValueType (path, line)
         {
           type_info (static_type_info ());
         }
@@ -66,7 +70,8 @@ namespace CCF
       protected:
         friend class Graph<Node, Edge>;
 
-        ConcreteEventType ()
+        ConcreteEventType (Path const& path, unsigned long line)
+            : Node (path, line), ConcreteValueType (path, line)
         {
           type_info (static_type_info ());
         }
@@ -84,7 +89,10 @@ namespace CCF
       protected:
         friend class Graph<Node, Edge>;
 
-        EventTypeFactory ()
+        EventTypeFactory (Path const& path, unsigned long line)
+            : Node (path, line),
+              TwoWayOperation (path, line),
+              ValueTypeFactory (path, line)
         {
           type_info (static_type_info ());
         }

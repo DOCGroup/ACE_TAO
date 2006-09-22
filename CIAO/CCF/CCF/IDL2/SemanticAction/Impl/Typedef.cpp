@@ -36,9 +36,16 @@ namespace CCF
         }
 
         void Typedef::
+        pre (KeywordPtr const& id)
+        {
+          line_ = id->line ();
+        }
+
+        void Typedef::
         begin (IdentifierPtr const& id)
         {
-          if (ctx.trace ()) cerr << "typedef " << id << endl;
+          if (ctx.trace ())
+            cerr << "typedef " << id << endl;
 
           define_ = false;
           type_ = 0;
@@ -55,28 +62,34 @@ namespace CCF
             }
             catch (Resolve const&)
             {
-              cerr << "error: invalid typedef declaration" << endl;
+              cerr << ctx.file () << ":" << id->line () << ": error: "
+                   << "invalid typedef declaration" << endl;
               throw;
             }
           }
           catch (NotFound const&)
           {
-            cerr << "no type with name \'" << name
+            cerr << ctx.file () << ":" << id->line () << ": error: "
+                 << "no type with name \'" << name
                  << "\' visible from scope \'" << from << "\'" << endl;
           }
           catch (WrongType const&)
           {
-            cerr << "declaration with name \'" << name
+            cerr << ctx.file () << ":" << id->line () << ": error: "
+                 << "declaration with name \'" << name
                  << "\' visible from scope \'" << from
                  << "\' is not a type declaration" << endl;
-            cerr << "using non-type in typedef is illegal" << endl;
+
+            cerr << ctx.file () << ":" << id->line () << ": error: "
+                 << "using non-type in typedef is illegal" << endl;
           }
         }
 
         void Typedef::
         begin_unbounded_seq (IdentifierPtr const& id)
         {
-          if (ctx.trace ()) cerr << "typedef u-sequence<" << id << ">" << endl;
+          if (ctx.trace ())
+            cerr << "typedef u-sequence<" << id << ">" << endl;
 
           define_ = true;
           type_ = 0;
@@ -91,28 +104,36 @@ namespace CCF
             {
               Type& t (resolve<Type> (from, name));
 
-              UnboundedSequence& s (ctx.tu ().new_node<UnboundedSequence> ());
+              UnboundedSequence& s (
+                ctx.tu ().new_node<UnboundedSequence> (
+                  ctx.file (), line_));
+
               ctx.tu ().new_edge<ArgumentsWithType> (t, s);
 
               type_ = &s;
             }
             catch (Resolve const&)
             {
-              cerr << "error: invalid sequence declaration" << endl;
+              cerr << ctx.file () << ":" << id->line () << ": error: "
+                   << "invalid sequence declaration" << endl;
               throw;
             }
           }
           catch (NotFound const&)
           {
-            cerr << "no type with name \'" << name
+            cerr << ctx.file () << ":" << id->line () << ": error: "
+                 << "no type with name \'" << name
                  << "\' visible from scope \'" << from << "\'" << endl;
           }
           catch (WrongType const&)
           {
-            cerr << "declaration with name \'" << name
+            cerr << ctx.file () << ":" << id->line () << ": error: "
+                 << "declaration with name \'" << name
                  << "\' visible from scope \'" << from
                  << "\' is not a type declaration" << endl;
-            cerr << "using non-type in sequence specialization is illegal"
+
+            cerr << ctx.file () << ":" << id->line () << ": error: "
+                 << "using non-type in sequence specialization is illegal"
                  << endl;
           }
         }
@@ -120,7 +141,8 @@ namespace CCF
         void Typedef::
         begin_bounded_seq (IdentifierPtr const& id)
         {
-          if (ctx.trace ()) cerr << "typedef b-sequence<" << id << ">" << endl;
+          if (ctx.trace ())
+            cerr << "typedef b-sequence<" << id << ">" << endl;
 
           define_ = true;
           type_ = 0;
@@ -135,28 +157,36 @@ namespace CCF
             {
               Type& t (resolve<Type> (from, name));
 
-              BoundedSequence& s (ctx.tu ().new_node<BoundedSequence> ());
+              BoundedSequence& s (
+                ctx.tu ().new_node<BoundedSequence> (
+                  ctx.file (), line_));
+
               ctx.tu ().new_edge<ArgumentsWithType> (t, s);
 
               type_ = &s;
             }
             catch (Resolve const&)
             {
-              cerr << "error: invalid sequence declaration" << endl;
+              cerr << ctx.file () << ":" << id->line () << ": error: "
+                   << "invalid sequence declaration" << endl;
               throw;
             }
           }
           catch (NotFound const&)
           {
-            cerr << "no type with name \'" << name
+            cerr << ctx.file () << ":" << id->line () << ": error: "
+                 << "no type with name \'" << name
                  << "\' visible from scope \'" << from << "\'" << endl;
           }
           catch (WrongType const&)
           {
-            cerr << "declaration with name \'" << name
+            cerr << ctx.file () << ":" << id->line () << ": error: "
+                 << "declaration with name \'" << name
                  << "\' visible from scope \'" << from
                  << "\' is not a type declaration" << endl;
-            cerr << "using non-type in sequence specialization is illegal"
+
+            cerr << ctx.file () << ":" << id->line () << ": error: "
+                 << "using non-type in sequence specialization is illegal"
                  << endl;
           }
         }
@@ -170,7 +200,7 @@ namespace CCF
           type_ = 0;
           array_type_ = 0;
 
-          type_ = &ctx.tu ().new_node<BoundedString> ();
+          type_ = &ctx.tu ().new_node<BoundedString> (ctx.file (), line_);
           bound ();
         }
 
@@ -183,7 +213,7 @@ namespace CCF
           type_ = 0;
           array_type_ = 0;
 
-          type_ = &ctx.tu ().new_node<BoundedWideString> ();
+          type_ = &ctx.tu ().new_node<BoundedWideString> (ctx.file (), line_);
           bound ();
         }
 
@@ -200,15 +230,17 @@ namespace CCF
 
           if (type_->named_begin () == type_->named_end ())
           {
-            cerr << "error: anonymous types in array declarations "
+            cerr << ctx.file () << ":" << line_ << ": error: "
+                 << "anonymous types in array declarations "
                  << "are not supported" << endl;
 
-            cerr << "use another typedef to name this type" << endl;
+            cerr << ctx.file () << ":" << line_ << ": error: "
+                 << "use another typedef to name this type" << endl;
 
             return;
           }
 
-          Array& a (ctx.tu ().new_node<Array> ());
+          Array& a (ctx.tu ().new_node<Array> (ctx.file (), line_));
           ctx.tu ().new_edge<ArgumentsWithType> (*type_, a);
 
           array_type_ = &a;
@@ -275,8 +307,11 @@ namespace CCF
           {
           }
 
-          cerr << "error: invalid typedef declaration" << endl;
-          cerr << "error: redeclaration of name " << name << endl;
+          cerr << ctx.file () << ":" << id->line () << ": error: "
+               << "invalid typedef declaration" << endl;
+
+          cerr << ctx.file () << ":" << id->line () << ": error: "
+               << "redeclaration of name " << name << endl;
 
           array_type_ = 0;
         }

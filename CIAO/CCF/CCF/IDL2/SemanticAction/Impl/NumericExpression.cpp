@@ -59,21 +59,26 @@ namespace CCF
             }
             catch (Resolve const&)
             {
-              cerr << "error: invalid reference to const" << endl;
+              cerr << ctx.file () << ":" << id->line () << ": error: "
+                   << "invalid reference to const" << endl;
               throw;
             }
           }
           catch (NotFound const&)
           {
-            cerr << "no const with name \'" << name
+            cerr << ctx.file () << ":" << id->line () << ": error: "
+                 << "no const with name \'" << name
                  << "\' visible from scope \'" << from << "\'" << endl;
           }
           catch (WrongType const&)
           {
-            cerr << "declaration with name \'" << name
+            cerr << ctx.file () << ":" << id->line () << ": error: "
+                 << "declaration with name \'" << name
                  << "\' visible from scope \'" << from
                  << "\' is not a const declaration" << endl;
-            cerr << "using non-const as a reference to const is illegal"
+
+            cerr << ctx.file () << ":" << id->line () << ": error: "
+                 << "using non-const as a reference to const is illegal"
                  << endl;
           }
         }
@@ -84,7 +89,15 @@ namespace CCF
           if (ctx.trace ())
             cerr << "integer literal " << il->value () << endl;
 
-          ctx.int_exp_push (ctx.tu ().new_node<IntLiteral> (il->value ()));
+          ctx.int_exp_push (
+            ctx.tu ().new_node<IntLiteral> (
+              ctx.file (), il->line (), il->value ()));
+        }
+
+        void NumericExpression::
+        pre (OperatorPtr const& op)
+        {
+          line_ = op->line ();
         }
 
         void NumericExpression::
@@ -107,7 +120,7 @@ namespace CCF
 
           IntExpression& expr (ctx.int_exp_pop ());
 
-          IntNeg& neg (ctx.tu ().new_node<IntNeg> ());
+          IntNeg& neg (ctx.tu ().new_node<IntNeg> (ctx.file (), line_));
 
           ctx.tu ().new_edge<IntNegates> (neg, expr);
 
@@ -125,7 +138,7 @@ namespace CCF
 
           IntExpression& expr (ctx.int_exp_pop ());
 
-          IntCom& com (ctx.tu ().new_node<IntCom> ());
+          IntCom& com (ctx.tu ().new_node<IntCom> (ctx.file (), line_));
 
           ctx.tu ().new_edge<IntComplements> (com, expr);
 
@@ -144,7 +157,7 @@ namespace CCF
           IntExpression& multiplier (ctx.int_exp_pop ());
           IntExpression& multiplicand (ctx.int_exp_pop ());
 
-          IntMul& mul (ctx.tu ().new_node<IntMul> ());
+          IntMul& mul (ctx.tu ().new_node<IntMul> (ctx.file (), line_));
 
           ctx.tu ().new_edge<IntMultiplies> (mul, multiplicand);
           ctx.tu ().new_edge<IntMultiplies> (mul, multiplier);
@@ -164,7 +177,7 @@ namespace CCF
           IntExpression& divisor (ctx.int_exp_pop ());
           IntExpression& divident (ctx.int_exp_pop ());
 
-          IntDiv& div (ctx.tu ().new_node<IntDiv> ());
+          IntDiv& div (ctx.tu ().new_node<IntDiv> (ctx.file (), line_));
 
           ctx.tu ().new_edge<IntDivides> (div, divident);
           ctx.tu ().new_edge<IntDivides> (div, divisor);
@@ -184,7 +197,7 @@ namespace CCF
           IntExpression& divisor (ctx.int_exp_pop ());
           IntExpression& divident (ctx.int_exp_pop ());
 
-          IntRem& rem (ctx.tu ().new_node<IntRem> ());
+          IntRem& rem (ctx.tu ().new_node<IntRem> (ctx.file (), line_));
 
           ctx.tu ().new_edge<IntDivides> (rem, divident);
           ctx.tu ().new_edge<IntDivides> (rem, divisor);
@@ -205,7 +218,7 @@ namespace CCF
           IntExpression& second_item (ctx.int_exp_pop ());
           IntExpression& first_item (ctx.int_exp_pop ());
 
-          IntAdd& add (ctx.tu ().new_node<IntAdd> ());
+          IntAdd& add (ctx.tu ().new_node<IntAdd> (ctx.file (), line_));
 
           ctx.tu ().new_edge<IntAdds> (add, first_item);
           ctx.tu ().new_edge<IntAdds> (add, second_item);
@@ -225,7 +238,7 @@ namespace CCF
           IntExpression& subtrahend (ctx.int_exp_pop ());
           IntExpression& minuend (ctx.int_exp_pop ());
 
-          IntSub& sub (ctx.tu ().new_node<IntSub> ());
+          IntSub& sub (ctx.tu ().new_node<IntSub> (ctx.file (), line_));
 
           ctx.tu ().new_edge<IntSubtracts> (sub, minuend);
           ctx.tu ().new_edge<IntSubtracts> (sub, subtrahend);
@@ -245,7 +258,7 @@ namespace CCF
           IntExpression& factor (ctx.int_exp_pop ());
           IntExpression& pattern (ctx.int_exp_pop ());
 
-          IntRsh& rsh (ctx.tu ().new_node<IntRsh> ());
+          IntRsh& rsh (ctx.tu ().new_node<IntRsh> (ctx.file (), line_));
 
           ctx.tu ().new_edge<IntShifts> (rsh, pattern);
           ctx.tu ().new_edge<IntShifts> (rsh, factor);
@@ -265,7 +278,7 @@ namespace CCF
           IntExpression& factor (ctx.int_exp_pop ());
           IntExpression& pattern (ctx.int_exp_pop ());
 
-          IntLsh& lsh (ctx.tu ().new_node<IntLsh> ());
+          IntLsh& lsh (ctx.tu ().new_node<IntLsh> (ctx.file (), line_));
 
           ctx.tu ().new_edge<IntShifts> (lsh, pattern);
           ctx.tu ().new_edge<IntShifts> (lsh, factor);
@@ -285,7 +298,7 @@ namespace CCF
           IntExpression& second_pattern (ctx.int_exp_pop ());
           IntExpression& first_pattern (ctx.int_exp_pop ());
 
-          IntAnd& and_ (ctx.tu ().new_node<IntAnd> ());
+          IntAnd& and_ (ctx.tu ().new_node<IntAnd> (ctx.file (), line_));
 
           ctx.tu ().new_edge<IntConjuncts> (and_, first_pattern);
           ctx.tu ().new_edge<IntConjuncts> (and_, second_pattern);
@@ -305,7 +318,7 @@ namespace CCF
           IntExpression& second_pattern (ctx.int_exp_pop ());
           IntExpression& first_pattern (ctx.int_exp_pop ());
 
-          IntXor& xor_ (ctx.tu ().new_node<IntXor> ());
+          IntXor& xor_ (ctx.tu ().new_node<IntXor> (ctx.file (), line_));
 
           ctx.tu ().new_edge<IntExclusivelyDisjuncts> (xor_, first_pattern);
           ctx.tu ().new_edge<IntExclusivelyDisjuncts> (xor_, second_pattern);
@@ -325,7 +338,7 @@ namespace CCF
           IntExpression& second_pattern (ctx.int_exp_pop ());
           IntExpression& first_pattern (ctx.int_exp_pop ());
 
-          IntOr& or_ (ctx.tu ().new_node<IntOr> ());
+          IntOr& or_ (ctx.tu ().new_node<IntOr> (ctx.file (), line_));
 
           ctx.tu ().new_edge<IntInclusivelyDisjuncts> (or_, first_pattern);
           ctx.tu ().new_edge<IntInclusivelyDisjuncts> (or_, second_pattern);

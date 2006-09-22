@@ -41,7 +41,8 @@ namespace CCF
           }
           else
           {
-            now (ctx.tu ().new_node<SemanticGraph::Union> ());
+            now (ctx.tu ().new_node<SemanticGraph::Union> (
+                   ctx.file (), id->line ()));
           }
 
           ctx.tu ().new_edge<Defines> (ctx.scope (), now (), name);
@@ -60,7 +61,8 @@ namespace CCF
           }
           else
           {
-            now (ctx.tu ().new_node<SemanticGraph::Union> ());
+            now (ctx.tu ().new_node<SemanticGraph::Union> (
+                   ctx.file (), id->line ()));
           }
 
           ctx.tu ().new_edge<Mentions> (ctx.scope (), now (), name);
@@ -100,18 +102,21 @@ namespace CCF
             }
             catch (Resolve const&)
             {
-              cerr << "error: invalid union declaration" << endl;
+              cerr << ctx.file () << ":" << id->line () << ": error: "
+                   << "invalid union declaration" << endl;
               throw;
             }
           }
           catch (NotFound const&)
           {
-            cerr << "no type with name \'" << name
+            cerr << ctx.file () << ":" << id->line () << ": error: "
+                 << "no type with name \'" << name
                  << "\' visible from scope \'" << from << "\'" << endl;
           }
           catch (WrongType const&)
           {
-            cerr << "declaration with name \'" << name
+            cerr << ctx.file () << ":" << id->line () << ": error: "
+                 << "declaration with name \'" << name
                  << "\' visible from scope \'" << from
                  << "\' is not a valid discriminant type" << endl;
           }
@@ -148,7 +153,8 @@ namespace CCF
             }
             catch (Resolve const&)
             {
-              cerr << "error: invalid union member declaration" << endl;
+              cerr << ctx.file () << ":" << id->line () << ": error: "
+                   << "invalid union member declaration" << endl;
               throw;
             }
 
@@ -160,19 +166,24 @@ namespace CCF
           }
           catch (NotFound const&)
           {
-            cerr << "no type with name \'" << name
+            cerr << ctx.file () << ":" << id->line () << ": error: "
+                 << "no type with name \'" << name
                  << "\' visible from scope \'" << from << "\'" << endl;
           }
           catch (WrongType const&)
           {
-            cerr << "declaration with name \'" << name
+            cerr << ctx.file () << ":" << id->line () << ": error: "
+                 << "declaration with name \'" << name
                  << "\' visible from scope \'" << from
                  << "\' is not a type declaration" << endl;
-            cerr << "using non-type as an member type is illegal" << endl;
+
+            cerr << ctx.file () << ":" << id->line () << ": error: "
+                 << "using non-type as an member type is illegal" << endl;
           }
           catch (NotComplete const& e)
           {
-            cerr << "type \'" << e.name () << "\' is not complete" << endl;
+            cerr << ctx.file () << ":" << id->line () << ": error: "
+                 << "type \'" << e.name () << "\' is not complete" << endl;
           }
         }
 
@@ -186,7 +197,8 @@ namespace CCF
             SimpleName name (id->lexeme ());
 
             SemanticGraph::UnionMember& m (
-              ctx.tu ().new_node<SemanticGraph::UnionMember> ());
+              ctx.tu ().new_node<SemanticGraph::UnionMember> (
+                ctx.file (), id->line ()));
 
             ctx.tu ().new_edge<Belongs> (m, *member_type_);
             ctx.tu ().new_edge<Defines> (ctx.scope (), m, name);

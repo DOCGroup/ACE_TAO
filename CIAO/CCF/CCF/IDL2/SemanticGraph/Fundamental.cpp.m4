@@ -72,6 +72,11 @@ namespace CCF
 
       TypeInfo const& FundamentalType::
       static_type_info () { return fundamental_type_; }
+
+      FundamentalType::
+      ~FundamentalType ()
+      {
+      }
 dnl
 fundamental_type(`object')
 fundamental_type(`value base')

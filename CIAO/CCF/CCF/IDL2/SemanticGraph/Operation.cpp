@@ -93,6 +93,11 @@ namespace CCF
       TypeInfo const& Parameter::
       static_type_info () { return parameter_; }
 
+      Parameter::
+      ~Parameter ()
+      {
+      }
+
 
       // InParameter
       //
@@ -173,6 +178,11 @@ namespace CCF
 
       TypeInfo const& Operation::
       static_type_info () { return operation_; }
+
+      Operation::
+      ~Operation ()
+      {
+      }
 
 
       // OneWayOperation

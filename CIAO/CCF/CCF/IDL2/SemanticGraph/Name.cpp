@@ -54,19 +54,6 @@ namespace CCF
         return SimpleName (str + name.str ());
       }
 
-      std::ostream&
-      operator << (std::ostream& o, SimpleName const& name)
-      {
-        if (void* tmp = o.pword (name_printer_index))
-        {
-          NamePrinter* p (reinterpret_cast<NamePrinter*> (tmp));
-          p->print (o, name);
-          return o;
-        }
-        else
-          return o << name.str ();
-      }
-
       // Name
       //
       //
@@ -154,19 +141,6 @@ namespace CCF
         return name_.size () == 1;
       }
 
-      std::ostream&
-      operator << (std::ostream& o, Name const& name)
-      {
-        if (void* tmp = o.pword (name_printer_index))
-        {
-          NamePrinter* p (reinterpret_cast<NamePrinter*> (tmp));
-          p->print (o, name);
-          return o;
-        }
-        else
-          return o << name.str ();
-      }
-
       // ScopedName
       //
       //
@@ -241,4 +215,35 @@ namespace CCF
       }
     }
   }
+}
+
+std::ostream&
+operator << (std::ostream& o,
+             CCF::IDL2::SemanticGraph::SimpleName const& name)
+{
+  using namespace CCF::IDL2::SemanticGraph;
+
+  if (void* tmp = o.pword (name_printer_index))
+  {
+    NamePrinter* p (reinterpret_cast<NamePrinter*> (tmp));
+    p->print (o, name);
+    return o;
+  }
+  else
+    return o << name.str ();
+}
+
+std::ostream&
+operator << (std::ostream& o, CCF::IDL2::SemanticGraph::Name const& name)
+{
+  using namespace CCF::IDL2::SemanticGraph;
+
+  if (void* tmp = o.pword (name_printer_index))
+  {
+    NamePrinter* p (reinterpret_cast<NamePrinter*> (tmp));
+    p->print (o, name);
+    return o;
+  }
+  else
+    return o << name.str ();
 }

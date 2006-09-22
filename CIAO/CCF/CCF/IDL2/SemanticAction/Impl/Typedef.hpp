@@ -22,6 +22,9 @@ namespace CCF
           Typedef (Context& c);
 
           virtual void
+          pre (KeywordPtr const& id);
+
+          virtual void
           begin (IdentifierPtr const& id);
 
           virtual void
@@ -50,6 +53,7 @@ namespace CCF
 
         private:
           bool define_;
+          unsigned long line_;
           SemanticGraph::Type* type_;
           SemanticGraph::Type* array_type_;
         };

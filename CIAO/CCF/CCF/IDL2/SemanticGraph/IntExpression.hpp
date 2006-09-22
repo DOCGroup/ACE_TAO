@@ -24,10 +24,13 @@ namespace CCF
       protected:
         friend class Graph<Node, Edge>;
 
-        IntExpression ()
+        IntExpression () // For virtual inheritance only.
         {
           type_info (static_type_info ());
         }
+
+        virtual
+        ~IntExpression () = 0;
       };
 
 
@@ -48,8 +51,10 @@ namespace CCF
       protected:
         friend class Graph<Node, Edge>;
 
-        IntLiteral (unsigned long long value)
-            : value_ (value)
+        IntLiteral (Path const& path,
+                    unsigned long line,
+                    unsigned long long value)
+            : Node (path, line), value_ (value)
         {
           type_info (static_type_info ());
         }
@@ -71,7 +76,8 @@ namespace CCF
       protected:
         friend class Graph<Node, Edge>;
 
-        IntConst ()
+        IntConst (Path const& path, unsigned long line)
+            : Node (path, line)
         {
           type_info (static_type_info ());
         }
@@ -134,8 +140,8 @@ namespace CCF
       protected:
         friend class Graph<Node, Edge>;
 
-        IntNeg ()
-            : negates_ (0)
+        IntNeg (Path const& path, unsigned long line)
+            : Node (path, line), negates_ (0)
         {
           type_info (static_type_info ());
         }
@@ -207,8 +213,8 @@ namespace CCF
       protected:
         friend class Graph<Node, Edge>;
 
-        IntCom ()
-            : complements_ (0)
+        IntCom (Path const& path, unsigned long line)
+            : Node (path, line), complements_ (0)
         {
           type_info (static_type_info ());
         }
@@ -286,8 +292,10 @@ namespace CCF
       protected:
         friend class Graph<Node, Edge>;
 
-        IntMul ()
-            : first_factor_ (0), second_factor_ (0)
+        IntMul (Path const& path, unsigned long line)
+            : Node (path, line),
+              first_factor_ (0),
+              second_factor_ (0)
         {
           type_info (static_type_info ());
         }
@@ -375,8 +383,10 @@ namespace CCF
       protected:
         friend class Graph<Node, Edge>;
 
-        IntDiv ()
-            : divident_ (0), divisor_ (0)
+        IntDiv (Path const& path, unsigned long line)
+            : Node (path, line),
+              divident_ (0),
+              divisor_ (0)
         {
           type_info (static_type_info ());
         }
@@ -416,8 +426,10 @@ namespace CCF
       protected:
         friend class Graph<Node, Edge>;
 
-        IntRem ()
-            : divident_ (0), divisor_ (0)
+        IntRem (Path const& path, unsigned long line)
+            : Node (path, line),
+              divident_ (0),
+              divisor_ (0)
         {
           type_info (static_type_info ());
         }
@@ -499,8 +511,10 @@ namespace CCF
       protected:
         friend class Graph<Node, Edge>;
 
-        IntAdd ()
-            : first_item_ (0), second_item_ (0)
+        IntAdd (Path const& path, unsigned long line)
+            : Node (path, line),
+              first_item_ (0),
+              second_item_ (0)
         {
           type_info (static_type_info ());
         }
@@ -582,8 +596,10 @@ namespace CCF
       protected:
         friend class Graph<Node, Edge>;
 
-        IntSub ()
-            : minuend_ (0), subtrahend_ (0)
+        IntSub (Path const& path, unsigned long line)
+            : Node (path, line),
+              minuend_ (0),
+              subtrahend_ (0)
         {
           type_info (static_type_info ());
         }
@@ -671,8 +687,10 @@ namespace CCF
       protected:
         friend class Graph<Node, Edge>;
 
-        IntRsh ()
-            : pattern_ (0), factor_ (0)
+        IntRsh (Path const& path, unsigned long line)
+            : Node (path, line),
+              pattern_ (0),
+              factor_ (0)
         {
           type_info (static_type_info ());
         }
@@ -712,8 +730,10 @@ namespace CCF
       protected:
         friend class Graph<Node, Edge>;
 
-        IntLsh ()
-            : pattern_ (0), factor_ (0)
+        IntLsh (Path const& path, unsigned long line)
+            : Node (path, line),
+              pattern_ (0),
+              factor_ (0)
         {
           type_info (static_type_info ());
         }
@@ -795,8 +815,10 @@ namespace CCF
       protected:
         friend class Graph<Node, Edge>;
 
-        IntAnd ()
-            : first_pattern_ (0), second_pattern_ (0)
+        IntAnd (Path const& path, unsigned long line)
+            : Node (path, line),
+              first_pattern_ (0),
+              second_pattern_ (0)
         {
           type_info (static_type_info ());
         }
@@ -878,8 +900,10 @@ namespace CCF
       protected:
         friend class Graph<Node, Edge>;
 
-        IntXor ()
-            : first_pattern_ (0), second_pattern_ (0)
+        IntXor (Path const& path, unsigned long line)
+            : Node (path, line),
+              first_pattern_ (0),
+              second_pattern_ (0)
         {
           type_info (static_type_info ());
         }
@@ -961,8 +985,10 @@ namespace CCF
       protected:
         friend class Graph<Node, Edge>;
 
-        IntOr ()
-            : first_pattern_ (0), second_pattern_ (0)
+        IntOr (Path const& path, unsigned long line)
+            : Node (path, line),
+              first_pattern_ (0),
+              second_pattern_ (0)
         {
           type_info (static_type_info ());
         }

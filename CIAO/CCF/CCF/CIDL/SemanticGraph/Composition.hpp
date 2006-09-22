@@ -22,10 +22,13 @@ namespace CCF
       protected:
         friend class Graph<Node, Edge>;
 
-        Composition ()
+        Composition () // Only for virtual inheritance.
         {
           type_info (static_type_info ());
         }
+
+        virtual
+        ~Composition () = 0;
       };
 
       class EntityComposition : public virtual Composition
@@ -37,7 +40,8 @@ namespace CCF
       protected:
         friend class Graph<Node, Edge>;
 
-        EntityComposition ()
+        EntityComposition (Path const& path, unsigned long line)
+            : Node (path, line)
         {
           type_info (static_type_info ());
         }
@@ -52,7 +56,8 @@ namespace CCF
       protected:
         friend class Graph<Node, Edge>;
 
-        ProcessComposition ()
+        ProcessComposition (Path const& path, unsigned long line)
+            : Node (path, line)
         {
           type_info (static_type_info ());
         }
@@ -68,7 +73,8 @@ namespace CCF
       protected:
         friend class Graph<Node, Edge>;
 
-        ServiceComposition ()
+        ServiceComposition (Path const& path, unsigned long line)
+            : Node (path, line)
         {
           type_info (static_type_info ());
         }
@@ -84,7 +90,8 @@ namespace CCF
       protected:
         friend class Graph<Node, Edge>;
 
-        SessionComposition ()
+        SessionComposition (Path const& path, unsigned long line)
+            : Node (path, line)
         {
           type_info (static_type_info ());
         }

@@ -25,6 +25,9 @@ namespace CCF
         integer_literal (IntegerLiteralPtr const&) = 0;
 
         virtual void
+        pre (OperatorPtr const&) = 0;
+
+        virtual void
         pos () = 0;
 
         virtual void

@@ -33,6 +33,10 @@ namespace CCF
       TypeInfo const& ValueType::
       static_type_info () { return value_type_; }
 
+      ValueType::
+      ~ValueType ()
+      {
+      }
 
       // AbstractValueType
       //

@@ -33,6 +33,11 @@ namespace CCF
       TypeInfo const& Composition::
       static_type_info () { return composition_; }
 
+      Composition::
+      ~Composition ()
+      {
+      }
+
 
       // EntityComposition
       //

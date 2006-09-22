@@ -29,17 +29,16 @@ namespace CCF
 
         Include::
         Include (Context& c,
-                 CompilerElements::Context& context,
                  Diagnostic::Stream& dout,
                  SemanticAction::Factory& action_factory)
             : Base (c),
-              context_ (context),
               dout_ (dout),
               action_factory_ (action_factory)
         {
           abs_path_stack_.push (
             fs::normalize (
-              fs::complete (context_.get<fs::path> ("file-path"))));
+              fs::complete (
+                ctx.parsing_context ().get<fs::path> ("file-path"))));
         }
 
         void Include::
@@ -64,6 +63,8 @@ namespace CCF
         void Include::
         impl (StringLiteralPtr const& sl, Type_ type)
         {
+          CompilerElements::Context& pctx (ctx.parsing_context ());
+
           std::string prefix;
 
           if (type == quote_)
@@ -123,7 +124,7 @@ namespace CCF
                 typedef std::vector<fs::path> SearchPaths;
 
                 SearchPaths const& search_paths (
-                  context_.get<SearchPaths> ("include-search-paths"));
+                  pctx.get<SearchPaths> ("include-search-paths"));
 
                 for (SearchPaths::const_iterator
                        i (search_paths.begin ()),
@@ -151,7 +152,8 @@ namespace CCF
 
                 if (!found)
                 {
-                  cerr << sl << ": error: file not found." << endl;
+                  cerr << ctx.file () << ":" << sl->line () << ": error: "
+                       << "'" << sl << "': file not found" << endl;
                   return;
                 }
               }
@@ -166,7 +168,8 @@ namespace CCF
             //
             ifs.exceptions (std::ios_base::iostate (0));
 
-            TranslationRegion& r (ctx.tu() .new_node<TranslationRegion> ());
+            TranslationRegion& r (
+              ctx.tu ().new_node<TranslationRegion> (include_path, 0));
 
             if (type == quote_)
             {
@@ -186,14 +189,14 @@ namespace CCF
 
             // Create Root scope for new region.
             //
-            Root& root (ctx.tu ().new_node<Root> ());
+            Root& root (ctx.tu ().new_node<Root> (include_path, 0));
             ctx.tu ().new_edge<ContainsRoot> (r, root);
             ctx.scope (root);
 
             // Store previous relative path and current absolute.
             //
-            rel_path_stack_.push (context_.get<fs::path> ("file-path"));
-            context_.set("file-path", include_path);
+            rel_path_stack_.push (pctx.get<fs::path> ("file-path"));
+            pctx.set("file-path", include_path);
 
             abs_path_stack_.push (complete_path);
 
@@ -206,7 +209,7 @@ namespace CCF
             CompilerElements::InputStreamAdapter isa (ifs);
 
             CompilerElements::CPP::Symbols const& symbols (
-              context_.get<CompilerElements::CPP::Symbols> ("cpp-symbols"));
+              pctx.get<CompilerElements::CPP::Symbols> ("cpp-symbols"));
             CompilerElements::CPP::Preprocessor pp (isa, symbols);
 
             IDL3::LexicalAnalyzer lexer (pp);
@@ -223,7 +226,7 @@ namespace CCF
 
             if (token_stream.size () > 1)
             {
-              IDL3::Parser parser (context_, dout_, lexer, action_factory_);
+              IDL3::Parser parser (pctx, dout_, lexer, action_factory_);
 
               IDL2::Parsing::parse (token_stream.begin (),
                                     token_stream.end (),
@@ -234,7 +237,7 @@ namespace CCF
             //
             abs_path_stack_.pop ();
 
-            context_.set("file-path", rel_path_stack_.top ());
+            pctx.set("file-path", rel_path_stack_.top ());
             rel_path_stack_.pop ();
 
 
@@ -246,18 +249,20 @@ namespace CCF
             // Create new Root scope.
             //
             {
-              Root& root (ctx.tu ().new_node<Root> ());
+              Root& root (ctx.tu ().new_node<Root> (ctx.file (), 0));
               ctx.tu ().new_edge<ContainsRoot> (ctx.region (), root);
               ctx.scope (root);
             }
           }
           catch (fs::filesystem_error const&)
           {
-            cerr << sl << ": error: unable to open in read mode" << endl;
+            cerr << ctx.file () << ":" << sl->line () << ": error: "
+                 << "'" << sl << "': unable to open in read mode" << endl;
           }
           catch (std::ios_base::failure const&)
           {
-            cerr << sl << ": error: unable to open in read mode" << endl;
+            cerr << ctx.file () << ":" << sl->line () << ": error: "
+                 << "'" << sl << "': unable to open in read mode" << endl;
           }
         }
 

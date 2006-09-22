@@ -30,7 +30,8 @@ namespace CCF
         void ValueTypeMember::
         begin_private ()
         {
-          if (ctx.trace ()) cerr << "private valuetype member" << endl;
+          if (ctx.trace ())
+            cerr << "private valuetype member" << endl;
 
           access_ = SemanticGraph::ValueTypeMember::Access::private_;
         }
@@ -38,7 +39,8 @@ namespace CCF
         void ValueTypeMember::
         begin_public ()
         {
-          if (ctx.trace ()) cerr << "public valuetype member" << endl;
+          if (ctx.trace ())
+            cerr << "public valuetype member" << endl;
 
           access_ = SemanticGraph::ValueTypeMember::Access::public_;
         }
@@ -46,7 +48,8 @@ namespace CCF
         void ValueTypeMember::
         type (IdentifierPtr const& id)
         {
-          if (ctx.trace ()) cerr << " type: " << id << endl;
+          if (ctx.trace ())
+            cerr << " type: " << id << endl;
 
           type_ = 0;
 
@@ -61,7 +64,8 @@ namespace CCF
             }
             catch (Resolve const&)
             {
-              cerr << "error: invalid valuetype member declaration" << endl;
+              cerr << ctx.file () << ":" << id->line () << ": error: "
+                   << "invalid valuetype member declaration" << endl;
               throw;
             }
 
@@ -73,20 +77,25 @@ namespace CCF
           }
           catch (NotFound const&)
           {
-            cerr << "no type with name \'" << name
+            cerr << ctx.file () << ":" << id->line () << ": error: "
+                 << "no type with name \'" << name
                  << "\' visible from scope \'" << from << "\'" << endl;
           }
           catch (WrongType const&)
           {
-            cerr << "declaration with name \'" << name
+            cerr << ctx.file () << ":" << id->line () << ": error: "
+                 << "declaration with name \'" << name
                  << "\' visible from scope \'" << from
                  << "\' is not a type declaration" << endl;
-            cerr << "using non-type as a valuetype member type is illegal"
+
+            cerr << ctx.file () << ":" << id->line () << ": error: "
+                 << "using non-type as a valuetype member type is illegal"
                  << endl;
           }
           catch (NotComplete const& e)
           {
-            cerr << "type \'" << e.name () << "\' is not complete" << endl;
+            cerr << ctx.file () << ":" << id->line () << ": error: "
+                 << "type \'" << e.name () << "\' is not complete" << endl;
           }
         }
 
@@ -108,12 +117,14 @@ namespace CCF
             {
             case SemanticGraph::ValueTypeMember::Access::private_:
               {
-                m = &ctx.tu ().new_node<ValueTypePrivateMember> ();
+                m = &ctx.tu ().new_node<ValueTypePrivateMember> (
+                  ctx.file (), id->line ());
                 break;
               }
             case SemanticGraph::ValueTypeMember::Access::public_:
               {
-                m = &ctx.tu ().new_node<ValueTypePublicMember> ();
+                m = &ctx.tu ().new_node<ValueTypePublicMember> (
+                  ctx.file (), id->line ());
                 break;
               }
             default:

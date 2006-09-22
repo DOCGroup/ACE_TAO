@@ -12,14 +12,13 @@ namespace CCF
   {
     namespace SemanticGraph
     {
-      // StringLiteral
-      //
-      //
-      std::ostream&
-      operator<< (std::ostream& o, StringLiteral const& lit)
-      {
-        return o << '\"' << lit.literal () << '\"';
-      }
     }
   }
+}
+
+std::ostream&
+operator<< (std::ostream& o,
+            CCF::IDL2::SemanticGraph::StringLiteral const& lit)
+{
+  return o << '\"' << lit.literal () << '\"';
 }

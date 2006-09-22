@@ -17,7 +17,7 @@ namespace CCF
     {
       namespace Impl
       {
-        // @@ This is left unimplemented for now. Later code from
+        // @@ This is left unimplemented for now. Later, code from
         // IDL3 should be copied here. Or better yet this implementation
         // should allow customization via overriding.
         //

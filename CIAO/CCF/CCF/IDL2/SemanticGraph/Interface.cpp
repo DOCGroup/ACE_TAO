@@ -34,6 +34,10 @@ namespace CCF
       TypeInfo const& Interface::
       static_type_info () { return interface_; }
 
+      Interface::
+      ~Interface ()
+      {
+      }
 
       // Supports
       //

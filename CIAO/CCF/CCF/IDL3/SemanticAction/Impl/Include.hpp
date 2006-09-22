@@ -34,7 +34,6 @@ namespace CCF
         {
         public:
           Include (Context& c,
-                   CompilerElements::Context& context,
                    Diagnostic::Stream& dout,
                    SemanticAction::Factory& action_factory);
 
@@ -61,7 +60,6 @@ namespace CCF
           handle_already_included (fs::path const& path,
                                    StringLiteralPtr const& sl);
         private:
-          CompilerElements::Context& context_;
           Diagnostic::Stream& dout_;
           SemanticAction::Factory& action_factory_;
 

@@ -51,9 +51,11 @@ namespace CCF
         {
         public:
           Context (bool trace,
-                   SemanticGraph::TranslationUnit& tu)
+                   SemanticGraph::TranslationUnit& tu,
+                   CompilerElements::Context& parsing_context)
               : trace_ (trace),
-                tu_ (tu)
+                tu_ (tu),
+                parsing_context_ (parsing_context)
           {
           }
 
@@ -93,6 +95,18 @@ namespace CCF
             region_ = &r;
           }
 
+          CompilerElements::Context&
+          parsing_context () const
+          {
+            return parsing_context_;
+          }
+
+          SemanticGraph::Path const&
+          file () const
+          {
+            return parsing_context_.get<SemanticGraph::Path> ("file-path");
+          }
+
         public:
           void
           int_exp_push (SemanticGraph::IntExpression& e)
@@ -126,6 +140,8 @@ namespace CCF
           SemanticGraph::TranslationUnit& tu_;
           SemanticGraph::TranslationRegion* region_;
           SemanticGraph::Scope* scope_;
+
+          CompilerElements::Context& parsing_context_;
 
           std::stack<SemanticGraph::IntExpression*> int_exp_stack_;
 

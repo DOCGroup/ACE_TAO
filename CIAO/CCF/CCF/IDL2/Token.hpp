@@ -63,13 +63,6 @@ namespace CCF
     std::vector<TokenPtr>
     TokenList;
 
-    inline std::ostream&
-    operator<< (std::ostream& o, TokenPtr const& t)
-    {
-      if (t != 0) t->print (o);
-      return o;
-    }
-
     //
     //
     //
@@ -343,6 +336,13 @@ namespace CCF
     ReferenceCounting::StrictPtr<StringLiteral>
     StringLiteralPtr;
   }
+}
+
+inline std::ostream&
+operator<< (std::ostream& o, CCF::IDL2::TokenPtr const& t)
+{
+  if (t != 0) t->print (o);
+  return o;
 }
 
 #endif  // CCF_IDL2_TOKEN_HPP

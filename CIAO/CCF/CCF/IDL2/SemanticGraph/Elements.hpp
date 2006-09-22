@@ -7,9 +7,11 @@
 
 #include <set>
 #include <vector>
+#include <iosfwd>
 
 #include "Graph.hpp"
 
+#include "CCF/CompilerElements/FileSystem.hpp"
 #include "CCF/CompilerElements/Introspection.hpp"
 #include "CCF/CompilerElements/Context.hpp"
 
@@ -21,6 +23,10 @@ namespace CCF
   {
     namespace SemanticGraph
     {
+      //
+      //
+      typedef fs::path Path;
+
       //
       //
       //
@@ -85,6 +91,19 @@ namespace CCF
         }
 
       public:
+        Path const&
+        file () const
+        {
+          return file_;
+        }
+
+        unsigned long
+        line () const
+        {
+          return line_;
+        }
+
+      public:
         static Introspection::TypeInfo const&
         static_type_info ();
 
@@ -92,9 +111,11 @@ namespace CCF
         friend class Graph<Node, Edge>;
 
         virtual
-        ~Node ();
+        ~Node () = 0;
 
-        Node ();
+        Node (Path const& path, unsigned long line);
+
+        Node (); // For virtual inheritance only.
 
         // This is a bunch of experimantal sink functions that allow
         // extensions in the form of one-way edges (see Executor stuff
@@ -111,6 +132,8 @@ namespace CCF
         }
 
       private:
+        Path file_;
+        unsigned long line_;
         CompilerElements::Context context_;
       };
 
@@ -290,11 +313,13 @@ namespace CCF
       protected:
         friend class Graph<Node, Edge>;
 
-        Nameable ()
-            : defined_ (false)
+        Nameable () // For virtual inheritance only.
         {
           type_info (static_type_info ());
         }
+
+        virtual
+        ~Nameable () = 0;
 
         void
         add_edge_right (Defines& e)
@@ -445,10 +470,13 @@ namespace CCF
       protected:
         friend class Graph<Node, Edge>;
 
-        Scope ()
+        Scope () // For virtual inheritance only.
         {
           type_info (static_type_info ());
         }
+
+        virtual
+        ~Scope () = 0;
 
         void
         add_edge_left (Names& e);
@@ -496,10 +524,13 @@ namespace CCF
       protected:
         friend class Graph<Node, Edge>;
 
-        Type ()
+        Type () // For virtual inheritance only.
         {
           type_info (static_type_info ());
         }
+
+        virtual
+        ~Type () = 0;
 
         using Nameable::add_edge_right;
 
@@ -541,10 +572,13 @@ namespace CCF
       protected:
         friend class Graph<Node, Edge>;
 
-        Instance ()
+        Instance () // For virtual inheritance only.
         {
           type_info (static_type_info ());
         }
+
+        virtual
+        ~Instance () = 0;
 
         void
         add_edge_left (Belongs& e)
@@ -637,10 +671,13 @@ namespace CCF
       protected:
         friend class Graph<Node, Edge>;
 
-        Specialization ()
+        Specialization () // For virtual inheritance only.
         {
           type_info (static_type_info ());
         }
+
+        virtual
+        ~Specialization () = 0;
 
         void
         add_edge_right (ArgumentsWithType& e);
@@ -875,10 +912,13 @@ namespace CCF
       protected:
         friend class Graph<Node, Edge>;
 
-        Expression ()
+        Expression () // For virtual inheritance only.
         {
           type_info (static_type_info ());
         }
+
+        virtual
+        ~Expression () = 0;
 
         void
         add_edge_left (Initializes&)
@@ -909,10 +949,13 @@ namespace CCF
       protected:
         friend class Graph<Node, Edge>;
 
-        Const ()
+        Const () // For virtual inheritance only.
         {
           type_info (static_type_info ());
         }
+
+        virtual
+        ~Const () = 0;
 
         using Instance::add_edge_left;
         using Expression::add_edge_left;
@@ -1003,10 +1046,13 @@ namespace CCF
       protected:
         friend class Graph<Node, Edge>;
 
-        Container ()
+        Container () // For virtual inheritance only.
         {
           type_info (static_type_info ());
         }
+
+        virtual
+        ~Container () = 0;
 
         void
         add_edge_left (Contains& e)
@@ -1020,6 +1066,12 @@ namespace CCF
     }
   }
 }
+
+// ADL won't find it because Path is a typedef. Note that this
+// function prints in native format.
+//
+std::ostream&
+operator<< (std::ostream& os, CCF::IDL2::SemanticGraph::Path const& path);
 
 #include "CCF/IDL2/SemanticGraph/Elements.tpp"
 

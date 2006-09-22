@@ -69,7 +69,8 @@ namespace CCF
       protected:
         friend class Graph<Node, Edge>;
 
-        UnionMember ()
+        UnionMember (Path const& path, unsigned long line)
+            : Node (path, line), Member (path, line)
         {
           type_info (static_type_info ());
         }
@@ -84,10 +85,13 @@ namespace CCF
       protected:
         friend class Graph<Node, Edge>;
 
-        Selector ()
+        Selector () // For virtual inheritance only.
         {
           type_info (static_type_info ());
         }
+
+        virtual
+        ~Selector () = 0;
       };
 
       class DefaultSelector : public virtual Selector
@@ -99,7 +103,8 @@ namespace CCF
       protected:
         friend class Graph<Node, Edge>;
 
-        DefaultSelector ()
+        DefaultSelector (Path const& path, unsigned long line)
+            : Node (path, line)
         {
           type_info (static_type_info ());
         }
@@ -115,7 +120,8 @@ namespace CCF
       protected:
         friend class Graph<Node, Edge>;
 
-        ValueSelector ()
+        ValueSelector (Path const& path, unsigned long line)
+            : Node (path, line)
         {
           type_info (static_type_info ());
         }
@@ -134,7 +140,8 @@ namespace CCF
       protected:
         friend class Graph<Node, Edge>;
 
-        Union ()
+        Union (Path const& path, unsigned long line)
+            : Node (path, line)
         {
           type_info (static_type_info ());
         }

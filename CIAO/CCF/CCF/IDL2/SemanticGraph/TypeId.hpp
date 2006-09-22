@@ -41,8 +41,12 @@ namespace CCF
       protected:
         friend class Graph<Node, Edge>;
 
-        TypeId (ScopedName const& name, StringLiteral const& id)
-            : name_ (name),
+        TypeId (Path const& path,
+                unsigned long line,
+                ScopedName const& name,
+                StringLiteral const& id)
+            : Node (path, line),
+              name_ (name),
               id_ (id)
         {
           type_info (static_type_info ());
@@ -78,8 +82,12 @@ namespace CCF
       protected:
         friend class Graph<Node, Edge>;
 
-        TypePrefix (ScopedName const& name, StringLiteral const& prefix)
-            : name_ (name),
+        TypePrefix (Path const& path,
+                    unsigned long line,
+                    ScopedName const& name,
+                    StringLiteral const& prefix)
+            : Node (path, line),
+              name_ (name),
               prefix_ (prefix)
         {
           type_info (static_type_info ());

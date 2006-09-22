@@ -75,10 +75,13 @@ namespace CCF
       protected:
         friend class Graph<Node, Edge>;
 
-        ValueType ()
+        ValueType () // For virtual inheritance only.
         {
           type_info (static_type_info ());
         }
+
+        virtual
+        ~ValueType () = 0;
 
         using Type::add_edge_right;
         using Scope::add_edge_left;
@@ -118,7 +121,8 @@ namespace CCF
       protected:
         friend class Graph<Node, Edge>;
 
-        AbstractValueType ()
+        AbstractValueType (Path const& path, unsigned long line)
+            : Node (path, line)
         {
           type_info (static_type_info ());
         }
@@ -137,7 +141,8 @@ namespace CCF
       protected:
         friend class Graph<Node, Edge>;
 
-        ConcreteValueType ()
+        ConcreteValueType (Path const& path, unsigned long line)
+            : Node (path, line)
         {
           type_info (static_type_info ());
         }
@@ -156,7 +161,8 @@ namespace CCF
       protected:
         friend class Graph<Node, Edge>;
 
-        ValueTypeFactory ()
+        ValueTypeFactory (Path const& path, unsigned long line)
+            : Node (path, line), TwoWayOperation (path, line)
         {
           type_info (static_type_info ());
         }
