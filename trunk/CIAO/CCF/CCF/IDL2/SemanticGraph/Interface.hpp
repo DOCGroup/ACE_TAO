@@ -52,10 +52,13 @@ namespace CCF
       protected:
         friend class Graph<Node, Edge>;
 
-        Interface ()
+        Interface () // For virtual inheritance only.
         {
           type_info (static_type_info ());
         }
+
+        virtual
+        ~Interface () = 0;
 
         using Type::add_edge_right;
         using Scope::add_edge_left;
@@ -125,7 +128,8 @@ namespace CCF
       protected:
         friend class Graph<Node, Edge>;
 
-        AbstractInterface ()
+        AbstractInterface (Path const& path, unsigned long line)
+            : Node (path, line)
         {
           type_info (static_type_info ());
         }
@@ -144,7 +148,8 @@ namespace CCF
       protected:
         friend class Graph<Node, Edge>;
 
-        LocalInterface ()
+        LocalInterface (Path const& path, unsigned long line)
+            : Node (path, line)
         {
           type_info (static_type_info ());
         }
@@ -163,7 +168,8 @@ namespace CCF
       protected:
         friend class Graph<Node, Edge>;
 
-        UnconstrainedInterface ()
+        UnconstrainedInterface (Path const& path, unsigned long line)
+            : Node (path, line)
         {
           type_info (static_type_info ());
         }

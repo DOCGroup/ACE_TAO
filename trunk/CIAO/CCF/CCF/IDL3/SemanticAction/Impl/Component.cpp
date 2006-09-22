@@ -38,7 +38,8 @@ namespace CCF
           }
           else
           {
-            now (ctx.tu ().new_node<SemanticGraph::Component> ());
+            now (ctx.tu ().new_node<SemanticGraph::Component> (
+                   ctx.file (), id->line ()));
           }
 
           ctx.tu ().new_edge<Defines> (ctx.scope (), now (), name);
@@ -57,7 +58,8 @@ namespace CCF
           }
           else
           {
-            now (ctx.tu ().new_node<SemanticGraph::Component> ());
+            now (ctx.tu ().new_node<SemanticGraph::Component> (
+                   ctx.file (), id->line ()));
           }
 
           ctx.tu ().new_edge<Mentions> (ctx.scope (), now (), name);
@@ -83,24 +85,30 @@ namespace CCF
             }
             catch (Resolve const&)
             {
-              cerr << "error: invalid inheritance specification" << endl;
+              cerr << ctx.file () << ":" << id->line () << ": error: "
+                   << "invalid inheritance specification" << endl;
               throw;
             }
           }
           catch (NotFound const&)
           {
-            cerr << "no component with name \'" << name
+            cerr << ctx.file () << ":" << id->line () << ": error: "
+                 << "no component with name \'" << name
                  << "\' visible from scope \'" << from << "\'" << endl;
           }
           catch (WrongType const&)
           {
-            cerr << "incompatible type in inheritance specification" << endl;
+            cerr << ctx.file () << ":" << id->line () << ": error: "
+                 << "incompatible type in inheritance specification" << endl;
           }
           catch (NotDefined const& e)
           {
-            cerr << "attempt to inherit from forward-declared component "
+            cerr << ctx.file () << ":" << id->line () << ": error: "
+                 << "attempt to inherit from forward-declared component "
                  << e.name () << endl;
-            cerr << "inheritance from forward-declared component is illegal"
+
+            cerr << ctx.file () << ":" << id->line () << ": error: "
+                 << "inheritance from forward-declared component is illegal"
                  << endl;
           }
         }
@@ -129,29 +137,36 @@ namespace CCF
             }
             catch (Resolve const&)
             {
-              cerr << "error: invalid supports specification" << endl;
+              cerr << ctx.file () << ":" << id->line () << ": error: "
+                   << "invalid supports specification" << endl;
               throw;
             }
           }
           catch (NotFound const&)
           {
-            cerr << "no interface with name \'" << name
+            cerr << ctx.file () << ":" << id->line () << ": error: "
+                 << "no interface with name \'" << name
                  << "\' visible from scope \'" << from << "\'" << endl;
           }
           catch (WrongType const&)
           {
-            cerr << "incompatible type in supports specification" << endl;
+            cerr << ctx.file () << ":" << id->line () << ": error: "
+                 << "incompatible type in supports specification" << endl;
           }
           catch (NotDefined const& e)
           {
-            cerr << "attempt to support forward-declared interface "
+            cerr << ctx.file () << ":" << id->line () << ": error: "
+                 << "attempt to support forward-declared interface "
                  << e.name () << endl;
-            cerr << "support of forward-declared interface is illegal"
+
+            cerr << ctx.file () << ":" << id->line () << ": error: "
+                 << "support of forward-declared interface is illegal"
                  << endl;
           }
           catch (AlreadySupported const& e)
           {
-            cerr << "directly supporting interface \'" << e.name ()
+            cerr << ctx.file () << ":" << id->line () << ": error: "
+                 << "directly supporting interface \'" << e.name ()
                  << "\' more than once is illegal" << endl;
           }
         }

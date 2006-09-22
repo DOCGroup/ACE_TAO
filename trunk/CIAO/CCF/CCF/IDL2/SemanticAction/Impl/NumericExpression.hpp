@@ -31,6 +31,9 @@ namespace CCF
           integer_literal (IntegerLiteralPtr const&);
 
           virtual void
+          pre (OperatorPtr const&);
+
+          virtual void
           pos ();
 
           virtual void
@@ -71,6 +74,7 @@ namespace CCF
 
 
         private:
+          unsigned long line_;
         };
       }
     }

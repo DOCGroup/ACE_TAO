@@ -61,25 +61,29 @@ namespace CCF
             }
             catch (Resolve const&)
             {
-              cerr << "error: invalid attribute declaration" << endl;
+              cerr << ctx.file () << ":" << id->line () << ": error: "
+                   << "invalid attribute declaration" << endl;
               throw;
             }
           }
           catch (NotFound const&)
           {
-            cerr << "no type with name \'" << name
+            cerr << ctx.file () << ":" << id->line () << ": error: "
+                 << "no type with name \'" << name
                  << "\' visible from scope \'" << from << "\'" << endl;
           }
           catch (WrongType const&)
           {
-            cerr << "declaration with name \'" << name
+            cerr << ctx.file () << ":" << id->line () << ": error: "
+                 << "declaration with name \'" << name
                  << "\' visible from scope \'" << from
                  << "\' is not a type declaration" << endl;
             cerr << "using non-type as an attribute type is illegal" << endl;
           }
           catch (NotComplete const& e)
           {
-            cerr << "type \'" << e.name () << "\' is not complete" << endl;
+            cerr << ctx.file () << ":" << id->line () << ": error: "
+                 << "type \'" << e.name () << "\' is not complete" << endl;
           }
         }
 
@@ -91,9 +95,11 @@ namespace CCF
           if (type_ != 0)
           {
             if (readonly_)
-              a_ = &ctx.tu ().new_node<ReadAttribute> ();
+              a_ = &ctx.tu ().new_node<ReadAttribute> (
+                ctx.file (), id->line ());
             else
-              a_ = &ctx.tu ().new_node<ReadWriteAttribute> ();
+              a_ = &ctx.tu ().new_node<ReadWriteAttribute> (
+                ctx.file (), id->line ());
 
             ctx.tu ().new_edge<Belongs> (*a_, *type_);
             ctx.tu ().new_edge<Defines> (ctx.scope (), *a_, id->lexeme ());
@@ -120,21 +126,26 @@ namespace CCF
             }
             catch (Resolve const&)
             {
-              cerr << "error: invalid raises declaration" << endl;
+              cerr << ctx.file () << ":" << id->line () << ": error: "
+                   << "invalid raises declaration" << endl;
               throw;
             }
           }
           catch (NotFound const&)
           {
-            cerr << "no exception with name \'" << name
+            cerr << ctx.file () << ":" << id->line () << ": error: "
+                 << "no exception with name \'" << name
                  << "\' visible from scope \'" << from << "\'" << endl;
           }
           catch (WrongType const&)
           {
-            cerr << "declaration with name \'" << name
+            cerr << ctx.file () << ":" << id->line () << ": error: "
+                 << "declaration with name \'" << name
                  << "\' visible from scope \'" << from
                  << "\' is not an exception declaration" << endl;
-            cerr << "using non-exception type in raises declaration is "
+
+            cerr << ctx.file () << ":" << id->line () << ": error: "
+                 << "using non-exception type in raises declaration is "
                  << "illegal" << endl;
           }
         }
@@ -159,21 +170,26 @@ namespace CCF
             }
             catch (Resolve const&)
             {
-              cerr << "error: invalid raises declaration" << endl;
+              cerr << ctx.file () << ":" << id->line () << ": error: "
+                   << "invalid raises declaration" << endl;
               throw;
             }
           }
           catch (NotFound const&)
           {
-            cerr << "no exception with name \'" << name
+            cerr << ctx.file () << ":" << id->line () << ": error: "
+                 << "no exception with name \'" << name
                  << "\' visible from scope \'" << from << "\'" << endl;
           }
           catch (WrongType const&)
           {
-            cerr << "declaration with name \'" << name
+            cerr << ctx.file () << ":" << id->line () << ": error: "
+                 << "declaration with name \'" << name
                  << "\' visible from scope \'" << from
                  << "\' is not an exception declaration" << endl;
-            cerr << "using non-exception type in raises declaration is "
+
+            cerr << ctx.file () << ":" << id->line () << ": error: "
+                 << "using non-exception type in raises declaration is "
                  << "illegal" << endl;
           }
         }

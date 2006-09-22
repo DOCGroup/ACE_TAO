@@ -17,11 +17,22 @@ namespace CCF
       {
         using namespace SemanticGraph;
 
+        template <typename X>
+        void Factory::
+        define_fund_type (Root& root, SimpleName const& name)
+        {
+          ctx_.tu ().new_edge<Defines> (
+            root,
+            ctx_.tu ().new_node<X> ("fundamental-types", 0), name);
+        }
+
         Factory::
-        Factory (CompilerElements::Context& context,
+        Factory (CompilerElements::Context& parsing_context,
                  Diagnostic::Stream&,
                  SemanticGraph::TranslationUnit& tu)
-            : ctx_ (context.get ("trace-semantic-action", false), tu),
+            : ctx_ (parsing_context.get ("trace-semantic-action", false),
+                    tu,
+                    parsing_context),
 
               attribute_ (ctx_),
               const__ (ctx_),
@@ -45,36 +56,41 @@ namespace CCF
         {
           // Implied translation region with fundamental types.
           //
-          TranslationRegion& ftr (tu.new_node<TranslationRegion> ());
-          tu.new_edge<ContainsImplied> (tu, ftr, ".fundamental");
+          TranslationRegion& ftr (
+            tu.new_node<TranslationRegion> (
+              "fundamental-type", 0));
 
-          Root& fr (tu.new_node<Root> ());
+          tu.new_edge<ContainsImplied> (tu, ftr, "fundamental-type");
+
+          Root& fr (tu.new_node<Root> ("fundamental-types", 0));
           tu.new_edge<ContainsRoot> (ftr, fr);
 
-          tu.new_edge<Defines> (fr, tu.new_node<Object> (), "Object");
-          tu.new_edge<Defines> (fr, tu.new_node<ValueBase> (), "ValueBase");
-          tu.new_edge<Defines> (fr, tu.new_node<Any> (), "any");
-          tu.new_edge<Defines> (fr, tu.new_node<Boolean> (), "boolean");
-          tu.new_edge<Defines> (fr, tu.new_node<Char> (), "char");
-          tu.new_edge<Defines> (fr, tu.new_node<Double> (), "double");
-          tu.new_edge<Defines> (fr, tu.new_node<Float> (), "float");
-          tu.new_edge<Defines> (fr, tu.new_node<Long> (), "long");
-          tu.new_edge<Defines> (fr, tu.new_node<LongDouble> (), "long double");
-          tu.new_edge<Defines> (fr, tu.new_node<LongLong> (), "long long");
-          tu.new_edge<Defines> (fr, tu.new_node<Octet> (), "octet");
-          tu.new_edge<Defines> (fr, tu.new_node<Short> (), "short");
-          tu.new_edge<Defines> (fr, tu.new_node<String> (), "string");
-          tu.new_edge<Defines> (fr, tu.new_node<UnsignedLong> (), "unsigned long");
-          tu.new_edge<Defines> (fr, tu.new_node<UnsignedLongLong> (), "unsigned long long");
-          tu.new_edge<Defines> (fr, tu.new_node<UnsignedShort> (), "unsigned short");
-          tu.new_edge<Defines> (fr, tu.new_node<Void> (), "void");
-          tu.new_edge<Defines> (fr, tu.new_node<Wchar> (), "wchar");
-          tu.new_edge<Defines> (fr, tu.new_node<Wstring> (), "wstring");
+          define_fund_type<Object>           (fr, "Object");
+          define_fund_type<ValueBase>        (fr, "ValueBase");
+          define_fund_type<Any>              (fr, "any");
+          define_fund_type<Boolean>          (fr, "boolean");
+          define_fund_type<Char>             (fr, "char");
+          define_fund_type<Double>           (fr, "double");
+          define_fund_type<Float>            (fr, "float");
+          define_fund_type<Long>             (fr, "long");
+          define_fund_type<LongDouble>       (fr, "long double");
+          define_fund_type<LongLong>         (fr, "long long");
+          define_fund_type<Octet>            (fr, "octet");
+          define_fund_type<Short>            (fr, "short");
+          define_fund_type<String>           (fr, "string");
+          define_fund_type<UnsignedLong>     (fr, "unsigned long");
+          define_fund_type<UnsignedLongLong> (fr, "unsigned long long");
+          define_fund_type<UnsignedShort>    (fr, "unsigned short");
+          define_fund_type<Void>             (fr, "void");
+          define_fund_type<Wchar>            (fr, "wchar");
+          define_fund_type<Wstring>          (fr, "wstring");
 
-          TranslationRegion& principal (tu.new_node<TranslationRegion> ());
+          TranslationRegion& principal (
+            tu.new_node<TranslationRegion> (ctx_.file (), 0));
+
           tu.new_edge<ContainsPrincipal> (tu, principal);
 
-          Root& root (tu.new_node<Root> ());
+          Root& root (tu.new_node<Root> (ctx_.file (), 0));
           tu.new_edge<ContainsRoot> (principal, root);
 
           ctx_.region (principal);

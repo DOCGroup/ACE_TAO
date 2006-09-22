@@ -264,7 +264,7 @@ main (int argc, char* argv[])
       return 0;
     }
 
-    TranslationUnit tu;
+    TranslationUnit tu (file_path, 0);
 
     // Initialize compilation context.
     //
@@ -375,10 +375,12 @@ main (int argc, char* argv[])
   {
     cerr << "invalid name exception" << endl;
   }
+  /*
   catch (...)
   {
     cerr << "caught unknown exception" << endl;
   }
+  */
 
   return 1;
 }

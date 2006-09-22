@@ -34,10 +34,9 @@ namespace CCF
 
           SimpleName name (id->lexeme ());
 
-          //@@ Need to check for redeclaration of the name.
-          //
+          type_ = &ctx.tu ().new_node<SemanticGraph::Enum> (
+            ctx.file (), id->line ());
 
-          type_ = &ctx.tu ().new_node<SemanticGraph::Enum> ();
           ctx.tu ().new_edge<Defines> (ctx.scope (), *type_, name);
         }
 
@@ -53,7 +52,10 @@ namespace CCF
 
           if (type_ != 0)
           {
-            Enumerator& e (ctx.tu ().new_node<Enumerator> ());
+            Enumerator& e (
+              ctx.tu ().new_node<Enumerator> (
+                ctx.file (), id->line ()));
+
             ctx.tu ().new_edge<Belongs> (e, *type_);
             ctx.tu ().new_edge<Defines> (ctx.scope (), e, name);
           }

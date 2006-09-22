@@ -39,10 +39,13 @@ namespace CCF
       protected:
         friend class Graph<Node, Edge>;
 
-        Executor ()
+        Executor () // For virtual inheritance only.
         {
           type_info (static_type_info ());
         }
+
+        virtual
+        ~Executor () = 0;
 
         void
         add_edge_left (Implements& e)
@@ -67,7 +70,8 @@ namespace CCF
       protected:
         friend class Graph<Node, Edge>;
 
-        ComponentExecutor ()
+        ComponentExecutor (Path const& path, unsigned long line)
+            : Node (path, line)
         {
           type_info (static_type_info ());
         }
@@ -93,7 +97,8 @@ namespace CCF
       protected:
         friend class Graph<Node, Edge>;
 
-        HomeExecutor ()
+        HomeExecutor (Path const& path, unsigned long line)
+            : Node (path, line)
         {
           type_info (static_type_info ());
         }

@@ -43,7 +43,8 @@ namespace CCF
           }
           else
           {
-            now (ctx.tu ().new_node<SemanticGraph::Struct> ());
+            now (ctx.tu ().new_node<SemanticGraph::Struct> (
+                   ctx.file (), id->line ()));
           }
 
           ctx.tu ().new_edge<Defines> (ctx.scope (), now (), name);
@@ -62,7 +63,8 @@ namespace CCF
           }
           else
           {
-            now (ctx.tu ().new_node<SemanticGraph::Struct> ());
+            now (ctx.tu ().new_node<SemanticGraph::Struct> (
+                   ctx.file (), id->line ()));
           }
 
           ctx.tu ().new_edge<Mentions> (ctx.scope (), now (), name);

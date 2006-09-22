@@ -38,10 +38,13 @@ namespace CCF
         static_type_info ();
 
       protected:
-        ValueTypeMember ()
+        ValueTypeMember () // For virtual inheritance only.
         {
           type_info (static_type_info ());
         }
+
+        virtual
+        ~ValueTypeMember () = 0;
       };
 
 
@@ -64,7 +67,8 @@ namespace CCF
       protected:
         friend class Graph<Node, Edge>;
 
-        ValueTypePrivateMember ()
+        ValueTypePrivateMember (Path const& path, unsigned long line)
+            : Node (path, line)
         {
           type_info (static_type_info ());
         }
@@ -90,7 +94,8 @@ namespace CCF
       protected:
         friend class Graph<Node, Edge>;
 
-        ValueTypePublicMember ()
+        ValueTypePublicMember (Path const& path, unsigned long line)
+            : Node (path, line)
         {
           type_info (static_type_info ());
         }

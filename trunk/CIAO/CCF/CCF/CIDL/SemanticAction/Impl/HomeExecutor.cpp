@@ -31,7 +31,8 @@ namespace CCF
           if (ctx.trace ()) cerr << "home executor " << id << endl;
 
           id_ = id;
-          he_ = &ctx.tu ().new_node<SemanticGraph::HomeExecutor> ();
+          he_ = &ctx.tu ().new_node<SemanticGraph::HomeExecutor> (
+            ctx.file (), id->line ());
         }
 
         void HomeExecutor::
@@ -58,24 +59,30 @@ namespace CCF
             }
             catch (Resolve const&)
             {
-              cerr << "error: invalid implements specification" << endl;
+              cerr << ctx.file () << ":" << id->line () << ": error: "
+                   << "invalid implements specification" << endl;
               throw;
             }
           }
           catch (NotFound const&)
           {
-            cerr << "no home with name \'" << name
+            cerr << ctx.file () << ":" << id->line () << ": error: "
+                 << "no home with name \'" << name
                  << "\' visible from scope \'" << from << "\'" << endl;
           }
           catch (WrongType const&)
           {
-            cerr << "incompatible type in implements specification" << endl;
+            cerr << ctx.file () << ":" << id->line () << ": error: "
+                 << "incompatible type in implements specification" << endl;
           }
           catch (NotDefined const& e)
           {
-            cerr << "attempt to implement forward-declared home "
+            cerr << ctx.file () << ":" << id->line () << ": error: "
+                 << "attempt to implement forward-declared home "
                  << e.name () << endl;
-            cerr << "implementation of forward-declared home is illegal"
+
+            cerr << ctx.file () << ":" << id->line () << ": error: "
+                 << "implementation of forward-declared home is illegal"
                  << endl;
           }
         }
@@ -88,7 +95,8 @@ namespace CCF
           if (c_ != 0)
           {
             SemanticGraph::ComponentExecutor& ce (
-              ctx.tu ().new_node<SemanticGraph::ComponentExecutor> ());
+              ctx.tu ().new_node<SemanticGraph::ComponentExecutor> (
+                ctx.file (), id->line ()));
 
             ctx.tu ().new_edge<Implements> (ce, *c_);
 

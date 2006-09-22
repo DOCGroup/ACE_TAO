@@ -32,11 +32,9 @@ namespace CCF
 
           SimpleName name (id->lexeme ());
 
-          //@@ Need to check for redeclaration of the name. Can not
-          //   do that because I don't have mechanism for throwing
-          //   exception from SA.
-          //
-          now (ctx.tu ().new_node<SemanticGraph::Exception> ());
+          now (ctx.tu ().new_node<SemanticGraph::Exception> (
+                 ctx.file (), id->line ()));
+
           ctx.tu ().new_edge<Defines> (ctx.scope (), now (), name);
         }
 

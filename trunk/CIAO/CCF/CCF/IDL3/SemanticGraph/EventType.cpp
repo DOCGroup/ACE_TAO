@@ -32,6 +32,11 @@ namespace CCF
       TypeInfo const& EventType::
       static_type_info () { return event_type_; }
 
+      EventType::
+      ~EventType ()
+      {
+      }
+
 
       // AbstractEventType
       //

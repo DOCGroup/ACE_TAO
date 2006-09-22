@@ -35,6 +35,11 @@ namespace CCF
       TypeInfo const& ValueTypeMember::
       static_type_info () { return value_type_member_; }
 
+      ValueTypeMember::
+      ~ValueTypeMember ()
+      {
+      }
+
 
       // ValueTypePrivateMember
       //

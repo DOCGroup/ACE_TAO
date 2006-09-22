@@ -32,19 +32,23 @@ namespace CCF
 
           if(c == Category::entity)
           {
-            now (ctx.tu ().new_node<EntityComposition> ());
+            now (ctx.tu ().new_node<EntityComposition> (
+                   ctx.file (), id->line ()));
           }
           else if (c == Category::process)
           {
-            now (ctx.tu ().new_node<ProcessComposition> ());
+            now (ctx.tu ().new_node<ProcessComposition> (
+                   ctx.file (), id->line ()));
           }
           else if (c == Category::service)
           {
-            now (ctx.tu ().new_node<ServiceComposition> ());
+            now (ctx.tu ().new_node<ServiceComposition> (
+                   ctx.file (), id->line ()));
           }
           else
           {
-            now (ctx.tu ().new_node<SessionComposition> ());
+            now (ctx.tu ().new_node<SessionComposition> (
+                   ctx.file (), id->line ()));
           }
 
           ctx.tu ().new_edge<Defines> (ctx.scope (), now (), id->lexeme ());

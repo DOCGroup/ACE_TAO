@@ -35,6 +35,11 @@ namespace CCF
       TypeInfo const& FundamentalType::
       static_type_info () { return fundamental_type_; }
 
+      FundamentalType::
+      ~FundamentalType ()
+      {
+      }
+
 
       // Object
       //

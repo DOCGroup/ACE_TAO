@@ -30,16 +30,14 @@ namespace CCF
         one_way ()
         {
           if (ctx.trace ()) cerr << "oneway ";
-
-          op_ = &ctx.tu ().new_node<OneWayOperation> ();
+          one_way_ = true;
         }
 
         void Operation::
         two_way ()
         {
           if (ctx.trace ()) cerr << "twoway ";
-
-          op_ = &ctx.tu ().new_node<TwoWayOperation> ();
+          one_way_ = false;
         }
 
         void Operation::
@@ -52,48 +50,40 @@ namespace CCF
           Name name (id->lexeme ());
           ScopedName from (ctx.scope ().scoped_name ());
 
-          struct NotVoid : Resolve {};
-
           try
           {
             try
             {
-              Type& t (resolve<Type> (from, name, Flags::complete));
-
-              if (dynamic_cast<OneWayOperation*>(op_))
-              {
-                if (dynamic_cast<Void*> (&t) == 0) throw NotVoid ();
-              }
-
-              type_ = &t;
+              type_ = &resolve<Type> (from, name, Flags::complete);
             }
             catch (Resolve const&)
             {
-              cerr << "error: invalid operation declaration" << endl;
+              cerr << ctx.file () << ":" << id->line () << ": error: "
+                   << "invalid operation declaration" << endl;
               throw;
             }
           }
           catch (NotFound const&)
           {
-            cerr << "no type with name \'" << name
+            cerr << ctx.file () << ":" << id->line () << ": error: "
+                 << "no type with name \'" << name
                  << "\' visible from scope \'" << from << "\'" << endl;
           }
           catch (WrongType const&)
           {
-            cerr << "declaration with name \'" << name
+            cerr << ctx.file () << ":" << id->line () << ": error: "
+                 << "declaration with name \'" << name
                  << "\' visible from scope \'" << from
                  << "\' is not a type declaration" << endl;
-            cerr << "using non-type as an operation return type is illegal"
+
+            cerr << ctx.file () << ":" << id->line () << ": error: "
+                 << "using non-type as an operation return type is illegal"
                  << endl;
           }
           catch (NotComplete const& e)
           {
-            cerr << "type \'" << e.name () << "\' is not complete" << endl;
-          }
-          catch (NotVoid const&)
-          {
-            cerr << "oneway operation should have void as a return type"
-                 << endl;
+            cerr << ctx.file () << ":" << id->line () << ": error: "
+                 << "type \'" << e.name () << "\' is not complete" << endl;
           }
         }
 
@@ -101,6 +91,25 @@ namespace CCF
         name (SimpleIdentifierPtr const& id)
         {
           if (ctx.trace ()) cerr << " " << id << endl;
+
+          if (one_way_)
+          {
+            if (dynamic_cast<Void*> (type_) == 0)
+            {
+              cerr << ctx.file () << ":" << id->line () << ": error: "
+                   << "invalid operation declaration" << endl;
+
+              cerr << ctx.file () << ":" << id->line () << ": error: "
+                   << "oneway operation should have void as a return type"
+                   << endl;
+            }
+
+            op_ = &ctx.tu ().new_node<OneWayOperation> (
+              ctx.file (), id->line ());
+          }
+          else
+            op_ = &ctx.tu ().new_node<TwoWayOperation> (
+              ctx.file (), id->line ());
 
           SimpleName name (id->lexeme ());
           ctx.tu ().new_edge<Defines> (ctx.scope (), *op_, name);
@@ -129,11 +138,8 @@ namespace CCF
           {
             try
             {
-              if (dynamic_cast<OneWayOperation*>(op_) &&
-                  direction != Direction::in)
-              {
+              if (one_way_ && direction != Direction::in)
                 throw NotIn ();
-              }
 
               Type& t (resolve<Type> (from, name, Flags::complete));
 
@@ -143,17 +149,20 @@ namespace CCF
               {
               case Direction::in:
                 {
-                  p = &ctx.tu ().new_node<InParameter> (name_id->lexeme ());
+                  p = &ctx.tu ().new_node<InParameter> (
+                    ctx.file (), name_id->line (), name_id->lexeme ());
                   break;
                 }
               case Direction::out:
                 {
-                  p = &ctx.tu ().new_node<OutParameter> (name_id->lexeme ());
+                  p = &ctx.tu ().new_node<OutParameter> (
+                    ctx.file (), name_id->line (), name_id->lexeme ());
                   break;
                 }
               case Direction::inout:
                 {
-                  p = &ctx.tu ().new_node<InOutParameter> (name_id->lexeme ());
+                  p = &ctx.tu ().new_node<InOutParameter> (
+                    ctx.file (), name_id->line (), name_id->lexeme ());
                   break;
                 }
               }
@@ -163,30 +172,37 @@ namespace CCF
             }
             catch (Resolve const&)
             {
-              cerr << "error: invalid parameter declaration" << endl;
+              cerr << ctx.file () << ":" << type_id->line () << ": error: "
+                   << "invalid parameter declaration" << endl;
               throw;
             }
           }
           catch (NotFound const&)
           {
-            cerr << "no type with name \'" << name
+            cerr << ctx.file () << ":" << type_id->line () << ": error: "
+                 << "no type with name \'" << name
                  << "\' visible from scope \'" << from << "\'" << endl;
           }
           catch (WrongType const&)
           {
-            cerr << "declaration with name \'" << name
+            cerr << ctx.file () << ":" << type_id->line () << ": error: "
+                 << "declaration with name \'" << name
                  << "\' visible from scope \'" << from
                  << "\' is not a type declaration" << endl;
-            cerr << "using non-type as an operation parameter type is "
+
+            cerr << ctx.file () << ":" << type_id->line () << ": error: "
+                 << "using non-type as an operation parameter type is "
                  << "illegal" << endl;
           }
           catch (NotComplete const& e)
           {
-            cerr << "type \'" << e.name () << "\' is not complete" << endl;
+            cerr << ctx.file () << ":" << type_id->line () << ": error: "
+                 << "type \'" << e.name () << "\' is not complete" << endl;
           }
           catch (NotIn const&)
           {
-            cerr << "parameter of oneway operation should have \'in\' "
+            cerr << ctx.file () << ":" << type_id->line () << ": error: "
+                 << "parameter of oneway operation should have \'in\' "
                  << "direction" << endl;
           }
         }
@@ -206,7 +222,8 @@ namespace CCF
           {
             try
             {
-              if (dynamic_cast<OneWayOperation*>(op_)) throw OneWay ();
+              if (one_way_)
+                throw OneWay ();
 
               SemanticGraph::Exception& e (
                 resolve<SemanticGraph::Exception> (from, name));
@@ -215,26 +232,32 @@ namespace CCF
             }
             catch (Resolve const&)
             {
-              cerr << "error: invalid raises declaration" << endl;
+              cerr << ctx.file () << ":" << id->line () << ": error: "
+                   << "invalid raises declaration" << endl;
               throw;
             }
           }
           catch (NotFound const&)
           {
-            cerr << "no exception with name \'" << name
+            cerr << ctx.file () << ":" << id->line () << ": error: "
+                 << "no exception with name \'" << name
                  << "\' visible from scope \'" << from << "\'" << endl;
           }
           catch (WrongType const&)
           {
-            cerr << "declaration with name \'" << name
+            cerr << ctx.file () << ":" << id->line () << ": error: "
+                 << "declaration with name \'" << name
                  << "\' visible from scope \'" << from
                  << "\' is not an exception declaration" << endl;
-            cerr << "using non-exception type in raises declaration is "
+
+            cerr << ctx.file () << ":" << id->line () << ": error: "
+                 << "using non-exception type in raises declaration is "
                  << "illegal" << endl;
           }
           catch (OneWay const&)
           {
-            cerr << "oneway operation may not raise exceptions" << endl;
+            cerr << ctx.file () << ":" << id->line () << ": error: "
+                 << "oneway operation may not raise exceptions" << endl;
           }
         }
       }

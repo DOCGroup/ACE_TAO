@@ -28,7 +28,8 @@ namespace CCF
       protected:
         friend class Graph<Node, Edge>;
 
-        Native ()
+        Native (Path const& path, unsigned long line)
+            : Node (path, line)
         {
           type_info (static_type_info ());
         }

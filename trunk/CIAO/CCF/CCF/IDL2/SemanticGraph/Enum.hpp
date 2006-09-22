@@ -28,7 +28,8 @@ namespace CCF
       protected:
         friend class Graph<Node, Edge>;
 
-        Enum ()
+        Enum (Path const& path, unsigned long line)
+            : Node (path, line)
         {
           type_info (static_type_info ());
         }
@@ -44,7 +45,8 @@ namespace CCF
       protected:
         friend class Graph<Node, Edge>;
 
-        Enumerator ()
+        Enumerator (Path const& path, unsigned long line)
+            : Node (path, line), IntConst (path, line)
         {
           type_info (static_type_info ());
         }

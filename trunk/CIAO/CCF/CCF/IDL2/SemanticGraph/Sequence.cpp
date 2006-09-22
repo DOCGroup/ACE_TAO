@@ -1,8 +1,8 @@
-// file      : CCF/IDL2/SemanticGraph/String.cpp
+// file      : CCF/IDL2/SemanticGraph/Sequence.cpp
 // author    : Boris Kolpackov <boris@dre.vanderbilt.edu>
 // cvs-id    : $Id$
 
-#include "CCF/IDL2/SemanticGraph/String.hpp"
+#include "CCF/IDL2/SemanticGraph/Sequence.hpp"
 
 namespace CCF
 {
@@ -13,46 +13,70 @@ namespace CCF
       using Introspection::TypeInfo;
       using Introspection::Access;
 
-      // BoundedString
+      // Sequence
       //
       //
       namespace
       {
         TypeInfo
-        bounded_string_init_ ()
+        sequence_init_ ()
         {
-          TypeInfo ti (typeid (BoundedString));
+          TypeInfo ti (typeid (Sequence));
           ti.add_base (
             Access::PUBLIC, true, Specialization::static_type_info ());
           return ti;
         }
 
-        TypeInfo bounded_string_ (bounded_string_init_ ());
+        TypeInfo sequence_ (sequence_init_ ());
       }
 
-      TypeInfo const& BoundedString::
-      static_type_info () { return bounded_string_; }
+      TypeInfo const& Sequence::
+      static_type_info () { return sequence_; }
+
+      Sequence::
+      ~Sequence ()
+      {
+      }
 
 
-      // BoundedWideString
+      // UnboundedSequence
       //
       //
       namespace
       {
         TypeInfo
-        bounded_wide_string_init_ ()
+        unbounded_sequence_init_ ()
         {
-          TypeInfo ti (typeid (BoundedWideString));
-          ti.add_base (
-            Access::PUBLIC, true, Specialization::static_type_info ());
+          TypeInfo ti (typeid (UnboundedSequence));
+          ti.add_base (Access::PUBLIC, true, Sequence::static_type_info ());
           return ti;
         }
 
-        TypeInfo bounded_wide_string_ (bounded_wide_string_init_ ());
+        TypeInfo unbounded_sequence_ (unbounded_sequence_init_ ());
       }
 
-      TypeInfo const& BoundedWideString::
-      static_type_info () { return bounded_wide_string_; }
+      TypeInfo const& UnboundedSequence::
+      static_type_info () { return unbounded_sequence_; }
+
+
+      // BoundedSequence
+      //
+      //
+      namespace
+      {
+        TypeInfo
+        bounded_sequence_init_ ()
+        {
+          TypeInfo ti (typeid (BoundedSequence));
+          ti.add_base (Access::PUBLIC, true, Sequence::static_type_info ());
+          return ti;
+        }
+
+        TypeInfo bounded_sequence_ (bounded_sequence_init_ ());
+      }
+
+      TypeInfo const& BoundedSequence::
+      static_type_info () { return bounded_sequence_; }
     }
   }
 }

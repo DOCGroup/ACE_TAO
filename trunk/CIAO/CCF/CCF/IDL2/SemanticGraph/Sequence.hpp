@@ -39,10 +39,13 @@ namespace CCF
       protected:
         friend class Graph<Node, Edge>;
 
-        Sequence ()
+        Sequence () // For virtual inheritance only.
         {
           type_info (static_type_info ());
         }
+
+        virtual
+        ~Sequence () = 0;
       };
 
 
@@ -58,7 +61,8 @@ namespace CCF
       protected:
         friend class Graph<Node, Edge>;
 
-        UnboundedSequence ()
+        UnboundedSequence (Path const& path, unsigned long line)
+            : Node (path, line)
         {
           type_info (static_type_info ());
         }
@@ -89,7 +93,8 @@ namespace CCF
       protected:
         friend class Graph<Node, Edge>;
 
-        BoundedSequence ()
+        BoundedSequence (Path const& path, unsigned long line)
+            : Node (path, line)
         {
           type_info (static_type_info ());
         }

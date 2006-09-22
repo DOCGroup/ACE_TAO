@@ -22,7 +22,8 @@ namespace CCF
       protected:
         friend class Graph<Node, Edge>;
 
-        Member ()
+        Member (Path const& path, unsigned long line)
+            : Node (path, line)
         {
           type_info (static_type_info ());
         }

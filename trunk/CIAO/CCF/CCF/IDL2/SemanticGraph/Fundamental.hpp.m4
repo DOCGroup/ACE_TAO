@@ -22,7 +22,8 @@ define(`fundamental_type_impl', `
       protected:
         friend class Graph<Node, Edge>;
 
-        $1 ()
+        $1 (Path const& path, unsigned long line)
+            : Node (path, line)
         {
           type_info (static_type_info ());
         }
@@ -65,10 +66,13 @@ namespace CCF
         static_type_info ();
 
       protected:
-        FundamentalType ()
+        FundamentalType () // For virtual inheritance only.
         {
           type_info (static_type_info ());
         }
+
+        virtual
+        ~FundamentalType () = 0;
       };
 dnl
 fundamental_type(`Object')

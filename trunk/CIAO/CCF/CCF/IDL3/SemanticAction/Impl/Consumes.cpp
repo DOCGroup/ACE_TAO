@@ -44,21 +44,26 @@ namespace CCF
             }
             catch (Resolve const&)
             {
-              cerr << "error: invalid consumes declaration" << endl;
+              cerr << ctx.file () << ":" << id->line () << ": error: "
+                   << "invalid consumes declaration" << endl;
               throw;
             }
           }
           catch (NotFound const&)
           {
-            cerr << "no eventtype with name \'" << name
+            cerr << ctx.file () << ":" << id->line () << ": error: "
+                 << "no eventtype with name \'" << name
                  << "\' visible from scope \'" << from << "\'" << endl;
           }
           catch (WrongType const&)
           {
-            cerr << "declaration with name \'" << name
+            cerr << ctx.file () << ":" << id->line () << ": error: "
+                 << "declaration with name \'" << name
                  << "\' visible from scope \'" << from
                  << "\' is not an eventtype declaration" << endl;
-            cerr << "using non-eventtype in consumes declaration is illegal"
+
+            cerr << ctx.file () << ":" << id->line () << ": error: "
+                 << "using non-eventtype in consumes declaration is illegal"
                  << endl;
           }
         }
@@ -70,7 +75,8 @@ namespace CCF
 
           if (type_)
           {
-            Consumer& c (ctx.tu ().new_node<Consumer> ());
+            Consumer& c (ctx.tu ().new_node<Consumer> (
+                           ctx.file (), id->line ()));
 
             ctx.tu ().new_edge<Belongs> (c, *type_);
             ctx.tu ().new_edge<Defines> (ctx.scope (), c, id->lexeme ());

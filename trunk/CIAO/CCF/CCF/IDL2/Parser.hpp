@@ -204,6 +204,7 @@ namespace CCF
                   Diagnostic::Error rec (
                     context_.get<fs::path> ("file-path").native_file_string (),
                     (*i)->line ());
+
                   rec << "after \'" << (*i)->lexeme () << "\': "
                       << "unable to recover from previous error: bailing out";
 
@@ -560,6 +561,9 @@ namespace CCF
       OneArgAction<IntegerLiteralPtr, SemanticAction::NumericExpression>
       act_numeric_expression_integer_literal;
 
+      OneArgAction<OperatorPtr, SemanticAction::NumericExpression>
+      act_numeric_expression_pre;
+
       NoArgAction<SemanticAction::NumericExpression>
         act_numeric_expression_pos,
         act_numeric_expression_neg,
@@ -730,6 +734,9 @@ namespace CCF
       // Typedef
       //
       //
+      OneArgAction<KeywordPtr, SemanticAction::Typedef>
+      act_typedef_pre;
+
       OneArgAction<IdentifierPtr, SemanticAction::Typedef>
       act_typedef_begin;
 

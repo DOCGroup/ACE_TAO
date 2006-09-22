@@ -26,10 +26,13 @@ namespace CCF
       protected:
         friend class Graph<Node, Edge>;
 
-        Attribute ()
+        Attribute () // For virtual inheritance only.
         {
           type_info (static_type_info ());
         }
+
+        virtual
+        ~Attribute () = 0;
       };
 
 
@@ -118,7 +121,8 @@ namespace CCF
       protected:
         friend class Graph<Node, Edge>;
 
-        ReadAttribute ()
+        ReadAttribute (Path const& path, unsigned long line)
+            : Node (path, line)
         {
           type_info (static_type_info ());
         }
@@ -215,7 +219,8 @@ namespace CCF
       protected:
         friend class Graph<Node, Edge>;
 
-        WriteAttribute ()
+        WriteAttribute (Path const& path, unsigned long line)
+            : Node (path, line)
         {
           type_info (static_type_info ());
         }
@@ -244,7 +249,10 @@ namespace CCF
       protected:
         friend class Graph<Node, Edge>;
 
-        ReadWriteAttribute ()
+        ReadWriteAttribute (Path const& path, unsigned long line)
+            : Node (path, line),
+              ReadAttribute (path, line),
+              WriteAttribute (path, line)
         {
           type_info (static_type_info ());
         }

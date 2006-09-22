@@ -40,7 +40,8 @@ namespace CCF
           }
           else
           {
-            now (ctx.tu ().new_node<AbstractValueType> ());
+            now (ctx.tu ().new_node<AbstractValueType> (
+                   ctx.file (), id->line ()));
           }
 
           ctx.tu ().new_edge<Defines> (ctx.scope (), now (), name);
@@ -59,7 +60,8 @@ namespace CCF
           }
           else
           {
-            now (ctx.tu ().new_node<AbstractValueType> ());
+            now (ctx.tu ().new_node<AbstractValueType> (
+                   ctx.file (), id->line ()));
           }
 
           ctx.tu ().new_edge<Mentions> (ctx.scope (), now (), name);
@@ -80,7 +82,8 @@ namespace CCF
           }
           else
           {
-            now (ctx.tu ().new_node<ConcreteValueType> ());
+            now (ctx.tu ().new_node<ConcreteValueType> (
+                   ctx.file (), id->line ()));
           }
 
           ctx.tu ().new_edge<Defines> (ctx.scope (), now (), name);
@@ -99,7 +102,8 @@ namespace CCF
           }
           else
           {
-            now (ctx.tu ().new_node<ConcreteValueType> ());
+            now (ctx.tu ().new_node<ConcreteValueType> (
+                   ctx.file (), id->line ()));
           }
 
           ctx.tu ().new_edge<Mentions> (ctx.scope (), now (), name);
@@ -133,7 +137,11 @@ namespace CCF
                 //
                 if (!abstract)
                 {
-                  cerr << "abstract valuetype `" << now ().name ()
+                  cerr << ctx.file () << ":" << id->line () << ": error: "
+                       << "invalid inheritance specification" << endl;
+
+                  cerr << ctx.file () << ":" << id->line () << ": error: "
+                       << "abstract valuetype `" << now ().name ()
                        << "\' may not inherit from concrete valuetype `"
                        << v.scoped_name () << "\'" << endl;
                   return;
@@ -148,7 +156,11 @@ namespace CCF
                 if (now ().inherits_begin () != now ().inherits_end () &&
                     !abstract)
                 {
-                  cerr << "concrete valuetype `" << v.scoped_name ()
+                  cerr << ctx.file () << ":" << id->line () << ": error: "
+                       << "invalid inheritance specification" << endl;
+
+                  cerr << ctx.file () << ":" << id->line () << ": error: "
+                       << "concrete valuetype `" << v.scoped_name ()
                        << "\' is not the first in the inheritance list of "
                        << "valuetype `" << now ().name () << "\'" << endl;
                   return;
@@ -160,29 +172,36 @@ namespace CCF
             }
             catch (Resolve const&)
             {
-              cerr << "error: invalid inheritance specification" << endl;
+              cerr << ctx.file () << ":" << id->line () << ": error: "
+                   << "invalid inheritance specification" << endl;
               throw;
             }
           }
           catch (NotFound const&)
           {
-            cerr << "no valuetype with name \'" << name
+            cerr << ctx.file () << ":" << id->line () << ": error: "
+                 << "no valuetype with name \'" << name
                  << "\' visible from scope \'" << from << "\'" << endl;
           }
           catch (WrongType const&)
           {
-            cerr << "incompatible type in inheritance specification" << endl;
+            cerr << ctx.file () << ":" << id->line () << ": error: "
+                 << "incompatible type in inheritance specification" << endl;
           }
           catch (NotDefined const& e)
           {
-            cerr << "attempt to inherit from the forward-declared valuetype "
+            cerr << ctx.file () << ":" << id->line () << ": error: "
+                 << "attempt to inherit from the forward-declared valuetype "
                  << e.name () << endl;
-            cerr << "inheritance from a forward-declared valuetype is illegal"
+
+            cerr << ctx.file () << ":" << id->line () << ": error: "
+                 << "inheritance from a forward-declared valuetype is illegal"
                  << endl;
           }
           catch (AlreadyInherited const& e)
           {
-            cerr << "directly inheriting from valuetype \'" << e.name ()
+            cerr << ctx.file () << ":" << id->line () << ": error: "
+                 << "directly inheriting from valuetype \'" << e.name ()
                  << "\' more than once is illegal" << endl;
           }
         }
@@ -211,29 +230,36 @@ namespace CCF
             }
             catch (Resolve const&)
             {
-              cerr << "error: invalid supports specification" << endl;
+              cerr << ctx.file () << ":" << id->line () << ": error: "
+                   << "invalid supports specification" << endl;
               throw;
             }
           }
           catch (NotFound const&)
           {
-            cerr << "no interface with name \'" << name
+            cerr << ctx.file () << ":" << id->line () << ": error: "
+                 << "no interface with name \'" << name
                  << "\' visible from scope \'" << from << "\'" << endl;
           }
           catch (WrongType const&)
           {
-            cerr << "incompatible type in supports specification" << endl;
+            cerr << ctx.file () << ":" << id->line () << ": error: "
+                 << "incompatible type in supports specification" << endl;
           }
           catch (NotDefined const& e)
           {
-            cerr << "attempt to support forward-declared interface "
+            cerr << ctx.file () << ":" << id->line () << ": error: "
+                 << "attempt to support forward-declared interface "
                  << e.name () << endl;
-            cerr << "support of forward-declared interface is illegal"
+
+            cerr << ctx.file () << ":" << id->line () << ": error: "
+                 << "support of forward-declared interface is illegal"
                  << endl;
           }
           catch (AlreadySupported const& e)
           {
-            cerr << "directly supporting interface \'" << e.name ()
+            cerr << ctx.file () << ":" << id->line () << ": error: "
+                 << "directly supporting interface \'" << e.name ()
                  << "\' more than once is illegal" << endl;
           }
         }

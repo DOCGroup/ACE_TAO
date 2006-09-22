@@ -40,7 +40,8 @@ namespace CCF
       protected:
         friend class Graph<Node, Edge>;
 
-        BoundedString ()
+        BoundedString (Path const& path, unsigned long line)
+            : Node (path, line)
         {
           type_info (static_type_info ());
         }
@@ -73,7 +74,8 @@ namespace CCF
       protected:
         friend class Graph<Node, Edge>;
 
-        BoundedWideString ()
+        BoundedWideString (Path const& path, unsigned long line)
+            : Node (path, line)
         {
           type_info (static_type_info ());
         }

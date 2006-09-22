@@ -149,11 +149,14 @@ namespace CCF
       protected:
         friend class Graph<Node, Edge>;
 
-        Parameter (std::string const& name)
+        Parameter (std::string const& name) // For virtual inheritance only.
             : name_ (name)
         {
           type_info (static_type_info ());
         }
+
+        virtual
+        ~Parameter () = 0;
 
         void
         add_edge_right (Receives&)
@@ -174,8 +177,10 @@ namespace CCF
       protected:
         friend class Graph<Node, Edge>;
 
-        InParameter (std::string const& name)
-            : Parameter (name)
+        InParameter (Path const& path,
+                     unsigned long line,
+                     std::string const& name)
+            : Node (path, line), Parameter (name)
         {
           type_info (static_type_info ());
         }
@@ -190,8 +195,10 @@ namespace CCF
       protected:
         friend class Graph<Node, Edge>;
 
-        OutParameter (std::string const& name)
-            : Parameter (name)
+        OutParameter (Path const& path,
+                      unsigned long line,
+                      std::string const& name)
+            : Node (path, line), Parameter (name)
         {
           type_info (static_type_info ());
         }
@@ -206,8 +213,10 @@ namespace CCF
       protected:
         friend class Graph<Node, Edge>;
 
-        InOutParameter (std::string const& name)
-            : Parameter (name)
+        InOutParameter (Path const& path,
+                        unsigned long line,
+                        std::string const& name)
+            : Node (path, line), Parameter (name)
         {
           type_info (static_type_info ());
         }
@@ -272,10 +281,14 @@ namespace CCF
       protected:
         friend class Graph<Node, Edge>;
 
-        Operation ()
+        Operation () // For virtual inheritance only.
         {
           type_info (static_type_info ());
         }
+
+        virtual
+        ~Operation () = 0;
+
 
         void
         add_edge_left (Receives& e)
@@ -313,7 +326,8 @@ namespace CCF
       protected:
         friend class Graph<Node, Edge>;
 
-        OneWayOperation ()
+        OneWayOperation (Path const& path, unsigned long line)
+            : Node (path, line)
         {
           type_info (static_type_info ());
         }
@@ -332,7 +346,8 @@ namespace CCF
       protected:
         friend class Graph<Node, Edge>;
 
-        TwoWayOperation ()
+        TwoWayOperation (Path const& path, unsigned long line)
+            : Node (path, line)
         {
           type_info (static_type_info ());
         }
