@@ -142,47 +142,6 @@ bool BB_Proxy::resolve (CORBA::ORB_ptr orb)
                                    the NS is not an AdmissionControl reference.\n"));
             throw NameServResolutionFailed ();
           }
-/*        {
-          AdmissionControl::FlowInfo flowinfo;
-
-          flowinfo.srcIP.dottedDecimal = CORBA::string_dup("129.59.129.82");
-          flowinfo.srcIP.subnetMask = CORBA::string_dup("255.255.255.255");
-          flowinfo.srcPort.low = -1;
-          flowinfo.srcPort.high = -1;
-
-          flowinfo.destIP.dottedDecimal = CORBA::string_dup("129.59.129.91");
-          flowinfo.destIP.subnetMask = CORBA::string_dup("255.255.255.255");
-          flowinfo.destPort.low = -1;
-          flowinfo.destPort.high = -1;
-
-          flowinfo.protocol = AdmissionControl::notSpecified;
-          flowinfo.fwdRate.requiredBW = CORBA::Long (10);
-          flowinfo.fwdRate.extraBW = CORBA::Long (0);
-          flowinfo.revRate.requiredBW = CORBA::Long (0);
-          flowinfo.revRate.extraBW = CORBA::Long (0);
-          flowinfo.biDirectional = CORBA::Boolean (false);
-          flowinfo.flowDuration = CORBA::Long (1000);
-
-          ACE_DEBUG ((LM_DEBUG,"In BB_Proxy::resolve: Requesting flow.\n"));
-          CommonDef::QOSRequired qos_req = CommonDef::highReliability;
-          AdmissionControl::SchedulingAction sched_action = AdmissionControl::reserve;
-          CORBA::Long dscp;
-          CORBA::String_var flowtoken;
-          try
-          {
-            adm_ctrl->flowRequest (flowinfo, qos_req , sched_action, flowtoken, dscp);
-            ACE_DEBUG ((LM_ERROR,"In BB_Proxy::resolve: flowRequest successful\n"));
-          }
-          catch (CORBA::Exception &e)
-            {
-              ACE_PRINT_EXCEPTION (e, "In BB_Proxy::resolve: A CORBA exception was raised:\n");
-            }
-          catch (...)
-            {
-              ACE_DEBUG ((LM_ERROR,"In BB_Proxy::resolve: Unknown exception was raised.\n"));
-            }
-          }
-*/
         }
         catch (NameServResolutionFailed &)
         {
