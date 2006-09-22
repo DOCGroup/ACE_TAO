@@ -175,7 +175,7 @@ bool BB_Proxy::resolve (CORBA::ORB_ptr orb)
           }
           catch (CORBA::Exception &e)
             {
-              ACE_DEBUG ((LM_ERROR,"In BB_Proxy::resolve: A CORBA exception was raised: %s\n",e._name()));
+              ACE_PRINT_EXCEPTION (e, "In BB_Proxy::resolve: A CORBA exception was raised:\n");
             }
           catch (...)
             {
