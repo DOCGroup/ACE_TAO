@@ -103,7 +103,7 @@ bool BB_Proxy::resolve (CORBA::ORB_ptr orb)
         struct NameServResolutionFailed {};
         struct FilebasedResolutionFailed {};
 
-        //BandwidthBroker::AdmissionControl_var adm_ctrl;
+        BandwidthBroker::AdmissionControl_var adm_ctrl;
 
         try
         {
@@ -135,22 +135,22 @@ bool BB_Proxy::resolve (CORBA::ORB_ptr orb)
           }
 
           /// Downcast the object reference to a reference of type Time_Date.
-          BandwidthBroker::AdmissionControl_var adm_ctrl = BandwidthBroker::AdmissionControl::_narrow (obj);
+          adm_ctrl = BandwidthBroker::AdmissionControl::_narrow (obj);
           if (CORBA::is_nil (adm_ctrl))
           {
             ACE_DEBUG ((LM_ERROR, "In BB_Proxy::resolve(): The IOR obtained from \
                                    the NS is not an AdmissionControl reference.\n"));
             throw NameServResolutionFailed ();
           }
-        {
+/*        {
           AdmissionControl::FlowInfo flowinfo;
 
-          flowinfo.srcIP.dottedDecimal = CORBA::string_dup("129.59.129.81");
+          flowinfo.srcIP.dottedDecimal = CORBA::string_dup("129.59.129.82");
           flowinfo.srcIP.subnetMask = CORBA::string_dup("255.255.255.255");
           flowinfo.srcPort.low = -1;
           flowinfo.srcPort.high = -1;
 
-          flowinfo.destIP.dottedDecimal = CORBA::string_dup("129.59.129.92");
+          flowinfo.destIP.dottedDecimal = CORBA::string_dup("129.59.129.91");
           flowinfo.destIP.subnetMask = CORBA::string_dup("255.255.255.255");
           flowinfo.destPort.low = -1;
           flowinfo.destPort.high = -1;
@@ -182,7 +182,7 @@ bool BB_Proxy::resolve (CORBA::ORB_ptr orb)
               ACE_DEBUG ((LM_ERROR,"In BB_Proxy::resolve: Unknown exception was raised.\n"));
             }
           }
-          this->BB_ref_ = adm_ctrl;
+*/
         }
         catch (NameServResolutionFailed &)
         {
@@ -202,14 +202,13 @@ bool BB_Proxy::resolve (CORBA::ORB_ptr orb)
             }
 
             /// Downcast the object reference to a reference of type AdmissionControl.
-            BandwidthBroker::AdmissionControl_var adm_ctrl = BandwidthBroker::AdmissionControl::_narrow (obj);
+            adm_ctrl = BandwidthBroker::AdmissionControl::_narrow (obj);
             if (CORBA::is_nil (adm_ctrl))
             {
               ACE_DEBUG ((LM_ERROR, "In BB_Proxy::resolve(): The IOR obtained from \
                                      the file is not an AdmissionControl reference.\n"));
               throw FilebasedResolutionFailed ();
             }
-            this->BB_ref_ = adm_ctrl;
           }
           catch (FilebasedResolutionFailed &)
           {
@@ -232,7 +231,7 @@ bool BB_Proxy::resolve (CORBA::ORB_ptr orb)
         }
 
       ACE_DEBUG ((LM_DEBUG, "In BB_Proxy::resolve(): BandwidthBroker resolved successfully.\n"));
-      //this->BB_ref_ = adm_ctrl;
+      this->BB_ref_ = adm_ctrl;
       this->resolved_ = true;
       return this->resolved_;
   }
