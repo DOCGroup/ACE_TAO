@@ -1,3 +1,32 @@
+Fri Sep 22 21:29:26 UTC 2006  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tao/DynamicAny/DynAnyFactory.h:
+        * tao/DynamicAny/DynamicAny.pidl:
+        * tao/DynamicAny/DynCommon.cpp:
+        * tao/DynamicAny/DynCommon.h:
+        * tao/DynamicAny/DynAnyFactory.cpp:
+        * tao/DynamicAny.mpc:
+
+          Updated spec IDL to conform to CORBA
+          3.0.3 (formal/2004-03-01) and added
+          dummy implementations of new operations
+          in existing interfaces. Also modified
+          the MPC file to inherit from valuetype.mpb,
+          to accommodate the new DynValue and
+          DynValueBox interfaces.      
+
+        * tao/DynamicAny/DynValue_i.cpp:
+        * tao/DynamicAny/DynValue_i.h:
+        * tao/DynamicAny/DynValueCommon_i.cpp:
+        * tao/DynamicAny/DynValueBox_i.cpp:
+        * tao/DynamicAny/DynValueBox_i.h:
+        * tao/DynamicAny/DynValueCommon_i.h:
+
+          New files containing implementation classes
+          for new DynAny types related to valuetypes.
+          All of the operations in these classes are
+          dummy impls at present.
+
 Fri Sep 22 15:31:54 UTC 2006  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * tao/IIOP_Acceptor.cpp:
