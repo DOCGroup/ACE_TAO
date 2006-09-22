@@ -40,7 +40,8 @@ namespace CCF
         void TypeId::
         begin (IdentifierPtr const& d, StringLiteralPtr const& id)
         {
-          if (ctx.trace ()) cerr << "typeid " << d << " " << id << endl;
+          if (ctx.trace ())
+            cerr << "typeid " << d << " " << id << endl;
 
           Name name (d->lexeme ());
           SemanticGraph::StringLiteral tid (id->value ());
@@ -53,14 +54,18 @@ namespace CCF
             ScopedName full ((**(nodes.begin ())).scoped_name ());
 
             SemanticGraph::TypeId& ti (
-              ctx.tu ().new_node<SemanticGraph::TypeId> (full, tid));
+              ctx.tu ().new_node<SemanticGraph::TypeId> (
+                ctx.file (), d->line (), full, tid));
 
             ctx.tu ().new_edge<Defines> (ctx.scope (), ti, "typeid");
           }
           catch (NotFound const&)
           {
-            cerr << "error: invalid typeid declaration" << endl;
-            cerr << "no declaration with name \'"
+            cerr << ctx.file () << ":" << d->line () << ": error: "
+                 << "invalid typeid declaration" << endl;
+
+            cerr << ctx.file () << ":" << d->line () << ": error: "
+                 << "no declaration with name \'"
                  << name << "\' visible from scope \'"
                  << ctx.scope ().scoped_name () << "\'" << endl;
           }
@@ -103,21 +108,28 @@ namespace CCF
             ScopedName full (node.scoped_name ());
 
             SemanticGraph::TypePrefix& tp (
-              ctx.tu ().new_node<SemanticGraph::TypePrefix> (full, tprefix));
+              ctx.tu ().new_node<SemanticGraph::TypePrefix> (
+                ctx.file (), d->line (), full, tprefix));
 
             ctx.tu ().new_edge<Defines> (ctx.scope (), tp, "typeprefix");
           }
           catch (NotFound const&)
           {
-            cerr << "error: invalid typeprefix declaration" << endl;
-            cerr << "no declaration with name \'"
+            cerr << ctx.file () << ":" << d->line () << ": error: "
+                 << "invalid typeprefix declaration" << endl;
+
+            cerr << ctx.file () << ":" << d->line () << ": error: "
+                 << "no declaration with name \'"
                  << name << "\' visible from scope \'"
                  << ctx.scope ().scoped_name () << "\'" << endl;
           }
           catch (std::bad_cast const&)
           {
-            cerr << "error: invalid typeprefix declaration" << endl;
-            cerr << "no suitable declaration with name \'"
+            cerr << ctx.file () << ":" << d->line () << ": error: "
+                 << "invalid typeprefix declaration" << endl;
+
+            cerr << ctx.file () << ":" << d->line () << ": error: "
+                 << "no suitable declaration with name \'"
                  << name << "\' visible from scope \'"
                  << ctx.scope ().scoped_name () << "\'" << endl;
           }

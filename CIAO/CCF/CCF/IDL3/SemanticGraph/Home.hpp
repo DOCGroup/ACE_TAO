@@ -65,8 +65,8 @@ namespace CCF
       protected:
         friend class Graph<Node, Edge>;
 
-        Home ()
-            : inherits_ (0)
+        Home (Path const& path, unsigned long line)
+            : Node (path, line), inherits_ (0)
         {
           type_info (static_type_info ());
         }
@@ -116,7 +116,8 @@ namespace CCF
       protected:
         friend class Graph<Node, Edge>;
 
-        HomeFactory ()
+        HomeFactory (Path const& path, unsigned long line)
+            : Node (path, line), TwoWayOperation (path, line)
         {
           type_info (static_type_info ());
         }
@@ -135,7 +136,8 @@ namespace CCF
       protected:
         friend class Graph<Node, Edge>;
 
-        HomeFinder ()
+        HomeFinder (Path const& path, unsigned long line)
+            : Node (path, line), TwoWayOperation (path, line)
         {
           type_info (static_type_info ());
         }

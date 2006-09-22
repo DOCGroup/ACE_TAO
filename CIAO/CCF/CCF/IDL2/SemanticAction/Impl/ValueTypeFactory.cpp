@@ -38,7 +38,8 @@ namespace CCF
 
           SimpleName name (id->lexeme ());
 
-          f_ = &ctx.tu ().new_node<SemanticGraph::ValueTypeFactory> ();
+          f_ = &ctx.tu ().new_node<SemanticGraph::ValueTypeFactory> (
+            ctx.file (), id->line ());
 
           ctx.tu ().new_edge<Returns> (*f_, h);
           ctx.tu ().new_edge<Defines> (ctx.scope (), *f_, name);
@@ -64,33 +65,40 @@ namespace CCF
               Type& t (resolve<Type> (from, name, Flags::complete));
 
               Parameter& p (
-                ctx.tu ().new_node<InParameter> (name_id->lexeme ()));
+                ctx.tu ().new_node<InParameter> (
+                  ctx.file (), name_id->line (), name_id->lexeme ()));
 
               ctx.tu ().new_edge<Belongs> (p, t);
               ctx.tu ().new_edge<Receives> (*f_, p);
             }
             catch (Resolve const&)
             {
-              cerr << "error: invalid parameter declaration" << endl;
+              cerr << ctx.file () << ":" << type_id->line () << ": error: "
+                   << "invalid parameter declaration" << endl;
               throw;
             }
           }
           catch (NotFound const&)
           {
-            cerr << "no type with name \'" << name
+            cerr << ctx.file () << ":" << type_id->line () << ": error: "
+                 << "no type with name \'" << name
                  << "\' visible from scope \'" << from << "\'" << endl;
           }
           catch (WrongType const&)
           {
-            cerr << "declaration with name \'" << name
+            cerr << ctx.file () << ":" << type_id->line () << ": error: "
+                 << "declaration with name \'" << name
                  << "\' visible from scope \'" << from
                  << "\' is not a type declaration" << endl;
-            cerr << "using non-type as an factory parameter type is "
+
+            cerr << ctx.file () << ":" << type_id->line () << ": error: "
+                 << "using non-type as an factory parameter type is "
                  << "illegal" << endl;
           }
           catch (NotComplete const& e)
           {
-            cerr << "type \'" << e.name () << "\' is not complete" << endl;
+            cerr << ctx.file () << ":" << type_id->line () << ": error: "
+                 << "type \'" << e.name () << "\' is not complete" << endl;
           }
         }
 
@@ -115,21 +123,26 @@ namespace CCF
             }
             catch (Resolve const&)
             {
-              cerr << "error: invalid raises declaration" << endl;
+              cerr << ctx.file () << ":" << id->line () << ": error: "
+                   << "invalid raises declaration" << endl;
               throw;
             }
           }
           catch (NotFound const&)
           {
-            cerr << "no exception with name \'" << name
+            cerr << ctx.file () << ":" << id->line () << ": error: "
+                 << "no exception with name \'" << name
                  << "\' visible from scope \'" << from << "\'" << endl;
           }
           catch (WrongType const&)
           {
-            cerr << "declaration with name \'" << name
+            cerr << ctx.file () << ":" << id->line () << ": error: "
+                 << "declaration with name \'" << name
                  << "\' visible from scope \'" << from
                  << "\' is not an exception declaration" << endl;
-            cerr << "using non-exception type in raises declaration is "
+
+            cerr << ctx.file () << ":" << id->line () << ": error: "
+                 << "using non-exception type in raises declaration is "
                  << "illegal" << endl;
           }
         }

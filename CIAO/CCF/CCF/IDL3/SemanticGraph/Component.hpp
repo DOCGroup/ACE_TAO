@@ -26,7 +26,8 @@ namespace CCF
       protected:
         friend class Graph<Node, Edge>;
 
-        Provider ()
+        Provider (Path const& path, unsigned long line)
+            : Node (path, line)
         {
           type_info (static_type_info ());
         }
@@ -43,10 +44,13 @@ namespace CCF
         static_type_info ();
 
       protected:
-        User ()
+        User () // For virtual inheritance only.
         {
           type_info (static_type_info ());
         }
+
+        virtual
+        ~User () = 0;
       };
 
 
@@ -59,7 +63,8 @@ namespace CCF
       protected:
         friend class Graph<Node, Edge>;
 
-        MultiUser ()
+        MultiUser (Path const& path, unsigned long line)
+            : Node (path, line)
         {
           type_info (static_type_info ());
         }
@@ -75,7 +80,8 @@ namespace CCF
       protected:
         friend class Graph<Node, Edge>;
 
-        SingleUser ()
+        SingleUser (Path const& path, unsigned long line)
+            : Node (path, line)
         {
           type_info (static_type_info ());
         }
@@ -94,7 +100,8 @@ namespace CCF
       protected:
         friend class Graph<Node, Edge>;
 
-        Publisher ()
+        Publisher (Path const& path, unsigned long line)
+            : Node (path, line)
         {
           type_info (static_type_info ());
         }
@@ -113,7 +120,8 @@ namespace CCF
       protected:
         friend class Graph<Node, Edge>;
 
-        Emitter ()
+        Emitter (Path const& path, unsigned long line)
+            : Node (path, line)
         {
           type_info (static_type_info ());
         }
@@ -132,7 +140,8 @@ namespace CCF
       protected:
         friend class Graph<Node, Edge>;
 
-        Consumer ()
+        Consumer (Path const& path, unsigned long line)
+            : Node (path, line)
         {
           type_info (static_type_info ());
         }
@@ -183,8 +192,8 @@ namespace CCF
       protected:
         friend class Graph<Node, Edge>;
 
-        Component ()
-            : inherits_ (0)
+        Component (Path const& path, unsigned long line)
+            : Node (path, line), inherits_ (0)
         {
           type_info (static_type_info ());
         }

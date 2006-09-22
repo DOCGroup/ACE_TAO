@@ -33,6 +33,11 @@ namespace CCF
       TypeInfo const& Attribute::
       static_type_info () { return attribute_; }
 
+      Attribute::
+      ~Attribute ()
+      {
+      }
+
 
       // GetRaises
       //

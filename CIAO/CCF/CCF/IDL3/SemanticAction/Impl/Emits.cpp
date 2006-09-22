@@ -44,21 +44,26 @@ namespace CCF
             }
             catch (Resolve const&)
             {
-              cerr << "error: invalid emits declaration" << endl;
+              cerr << ctx.file () << ":" << id->line () << ": error: "
+                   << "invalid emits declaration" << endl;
               throw;
             }
           }
           catch (NotFound const&)
           {
-            cerr << "no eventtype with name \'" << name
+            cerr << ctx.file () << ":" << id->line () << ": error: "
+                 << "no eventtype with name \'" << name
                  << "\' visible from scope \'" << from << "\'" << endl;
           }
           catch (WrongType const&)
           {
-            cerr << "declaration with name \'" << name
+            cerr << ctx.file () << ":" << id->line () << ": error: "
+                 << "declaration with name \'" << name
                  << "\' visible from scope \'" << from
                  << "\' is not an eventtype declaration" << endl;
-            cerr << "using non-eventtype in emits declaration is illegal"
+
+            cerr << ctx.file () << ":" << id->line () << ": error: "
+                 << "using non-eventtype in emits declaration is illegal"
                  << endl;
           }
         }
@@ -70,7 +75,8 @@ namespace CCF
 
           if (type_)
           {
-            Emitter& e (ctx.tu ().new_node<Emitter> ());
+            Emitter& e (ctx.tu ().new_node<Emitter> (
+                          ctx.file (), id->line ()));
 
             ctx.tu ().new_edge<Belongs> (e, *type_);
             ctx.tu ().new_edge<Defines> (ctx.scope (), e, id->lexeme ());

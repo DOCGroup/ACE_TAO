@@ -45,6 +45,7 @@ namespace CCF
           raises (IdentifierPtr const& id);
 
         private:
+          bool one_way_;
           SemanticGraph::Type* type_;
           SemanticGraph::Operation* op_;
         };

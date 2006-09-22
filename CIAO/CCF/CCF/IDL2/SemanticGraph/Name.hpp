@@ -81,13 +81,6 @@ namespace CCF
       operator+ (std::string const& str, SimpleName const& name);
 
 
-      // Uses the name printer (see below) If it is installed, otherwise
-      // prints in the escaped form.
-      //
-      std::ostream&
-      operator << (std::ostream& o, SimpleName const& name);
-
-
       //
       //
       //
@@ -177,13 +170,6 @@ namespace CCF
         std::string name_cache_; // Unescaped name cache.
       };
 
-      // Uses the name printer (see below) If it is installed, otherwise
-      // prints in the escaped form.
-      //
-      std::ostream&
-      operator << (std::ostream& o, Name const& name);
-
-
       // Should always start with "::". Can be just "::" which
       // means it's a file-scope.
       //
@@ -235,5 +221,17 @@ namespace CCF
     }
   }
 }
+
+// Uses the name printer (see above) If it is installed, otherwise
+// prints in the escaped form.
+//
+std::ostream&
+operator << (std::ostream&, CCF::IDL2::SemanticGraph::SimpleName const&);
+
+// Uses the name printer (see above) If it is installed, otherwise
+// prints in the escaped form.
+//
+std::ostream&
+operator << (std::ostream& o, CCF::IDL2::SemanticGraph::Name const& name);
 
 #endif  // CCF_IDL2_SEMANTIC_GRAPH_NAME_HPP

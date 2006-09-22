@@ -46,11 +46,11 @@ namespace CCF
       {
         return a.literal () != b.literal ();
       }
-
-      std::ostream&
-      operator<< (std::ostream& o, StringLiteral const& lit);
     }
   }
 }
+
+std::ostream&
+operator<< (std::ostream&, CCF::IDL2::SemanticGraph::StringLiteral const&);
 
 #endif  // CCF_IDL2_SEMANTIC_GRAPH_LITERALS_HPP

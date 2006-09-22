@@ -73,6 +73,10 @@ namespace CCF
       TypeInfo const& Selector::
       static_type_info () { return selector_; }
 
+      Selector::
+      ~Selector ()
+      {
+      }
 
       // DefaultSelector
       //

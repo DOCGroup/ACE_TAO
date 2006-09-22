@@ -26,7 +26,7 @@ namespace CCF
               home_ (ctx_),
               home_factory_ (ctx_),
               home_finder_ (ctx_),
-              include_ (ctx_, context, dout, *this),
+              include_ (ctx_, dout, *this),
               provides_ (ctx_),
               publishes_ (ctx_),
               uses_ (ctx_)

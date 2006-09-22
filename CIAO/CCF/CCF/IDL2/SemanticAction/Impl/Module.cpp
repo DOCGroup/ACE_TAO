@@ -30,7 +30,9 @@ namespace CCF
         {
           if (ctx.trace ()) cerr << "module " << id << endl;
 
-          now (ctx.tu ().new_node<SemanticGraph::Module> ());
+          now (ctx.tu ().new_node<SemanticGraph::Module> (
+                 ctx.file (), id->line ()));
+
           ctx.tu ().new_edge<Defines> (ctx.scope (), now (), id->lexeme ());
         }
 

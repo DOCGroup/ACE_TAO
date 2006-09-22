@@ -1,7 +1,133 @@
+Fri Sep 22 09:27:25 UTC 2006  Boris Kolpackov  <boris@codesynthesis.com>
+
+        * CCF/CCF/IDL2/SemanticGraph/Fundamental.cpp:
+        * CCF/CCF/IDL2/SemanticGraph/Interface.cpp:
+        * CCF/CCF/IDL2/SemanticGraph/Operation.cpp:
+        * CCF/CCF/IDL2/SemanticGraph/Fundamental.hpp:
+        * CCF/CCF/IDL2/SemanticGraph/Interface.hpp:
+        * CCF/CCF/IDL2/SemanticGraph/Operation.hpp:
+        * CCF/CCF/IDL2/SemanticGraph/String.cpp:
+        * CCF/CCF/IDL2/SemanticGraph/ValueTypeMember.cpp:
+        * CCF/CCF/IDL2/SemanticGraph/Enum.hpp:
+        * CCF/CCF/IDL2/SemanticGraph/IntExpression.cpp:
+        * CCF/CCF/IDL2/SemanticGraph/String.hpp:
+        * CCF/CCF/IDL2/SemanticGraph/ValueTypeMember.hpp:
+        * CCF/CCF/IDL2/SemanticGraph/Elements.cpp:
+        * CCF/CCF/IDL2/SemanticGraph/ValueType.cpp:
+        * CCF/CCF/IDL2/SemanticGraph/IntExpression.hpp:
+        * CCF/CCF/IDL2/SemanticGraph/Name.cpp:
+        * CCF/CCF/IDL2/SemanticGraph/Elements.hpp:
+        * CCF/CCF/IDL2/SemanticGraph/Fundamental.hpp.m4:
+        * CCF/CCF/IDL2/SemanticGraph/ValueType.hpp:
+        * CCF/CCF/IDL2/SemanticGraph/Array.hpp:
+        * CCF/CCF/IDL2/SemanticGraph/Name.hpp:
+        * CCF/CCF/IDL2/SemanticGraph/Union.cpp:
+        * CCF/CCF/IDL2/SemanticGraph/Native.hpp:
+        * CCF/CCF/IDL2/SemanticGraph/Union.hpp:
+        * CCF/CCF/IDL2/SemanticGraph/Attribute.cpp:
+        * CCF/CCF/IDL2/SemanticGraph/Exception.hpp:
+        * CCF/CCF/IDL2/SemanticGraph/Translation.hpp:
+        * CCF/CCF/IDL2/SemanticGraph/TypeId.hpp:
+        * CCF/CCF/IDL2/SemanticGraph/Graph.hpp:
+        * CCF/CCF/IDL2/SemanticGraph/Attribute.hpp:
+        * CCF/CCF/IDL2/SemanticGraph/Sequence.cpp:
+        * CCF/CCF/IDL2/SemanticGraph/Member.hpp:
+        * CCF/CCF/IDL2/SemanticGraph/Fundamental.cpp.m4:
+        * CCF/CCF/IDL2/SemanticGraph/Sequence.hpp:
+        * CCF/CCF/IDL2/SemanticGraph/Literals.cpp:
+        * CCF/CCF/IDL2/SemanticGraph/Graph.tpp:
+        * CCF/CCF/IDL2/SemanticGraph/Literals.hpp:
+        * CCF/CCF/IDL2/SemanticGraph/Struct.hpp:
+        * CCF/CCF/IDL2/SemanticGraph/Module.hpp:
+
+        * CCF/CCF/CIDL/SemanticGraph/Executor.cpp:
+        * CCF/CCF/CIDL/SemanticGraph/Composition.cpp:
+        * CCF/CCF/CIDL/SemanticGraph/Executor.hpp:
+        * CCF/CCF/CIDL/SemanticGraph/Composition.hpp:
+
+        * CCF/CCF/IDL3/SemanticGraph/Component.cpp:
+        * CCF/CCF/IDL3/SemanticGraph/EventType.cpp:
+        * CCF/CCF/IDL3/SemanticGraph/Component.hpp:
+        * CCF/CCF/IDL3/SemanticGraph/EventType.hpp:
+        * CCF/CCF/IDL3/SemanticGraph/Home.hpp:
+
+
+        Add file name and line information to every semantic
+        graph node. This information is used in diagnostics.
+
+
+        * CCF/CCF/IDL2/SemanticAction/Typedef.hpp:
+        * CCF/CCF/IDL2/SemanticAction/NumericExpression.hpp:
+
+        Adjust semantic actions interface to provide a way to derive
+        line numbers.
+
+
+        * CCF/CCF/IDL2/SemanticAction/Impl/Operation.cpp:
+        * CCF/CCF/IDL2/SemanticAction/Impl/Interface.cpp:
+        * CCF/CCF/IDL2/SemanticAction/Impl/Enum.cpp:
+        * CCF/CCF/IDL2/SemanticAction/Impl/Operation.hpp:
+        * CCF/CCF/IDL2/SemanticAction/Impl/ValueTypeMember.cpp:
+        * CCF/CCF/IDL2/SemanticAction/Impl/ValueType.cpp:
+        * CCF/CCF/IDL2/SemanticAction/Impl/Elements.hpp:
+        * CCF/CCF/IDL2/SemanticAction/Impl/NumericExpression.cpp:
+        * CCF/CCF/IDL2/SemanticAction/Impl/Native.cpp:
+        * CCF/CCF/IDL2/SemanticAction/Impl/NumericExpression.hpp:
+        * CCF/CCF/IDL2/SemanticAction/Impl/Union.cpp:
+        * CCF/CCF/IDL2/SemanticAction/Impl/Exception.cpp:
+        * CCF/CCF/IDL2/SemanticAction/Impl/TypeId.cpp:
+        * CCF/CCF/IDL2/SemanticAction/Impl/Typedef.cpp:
+        * CCF/CCF/IDL2/SemanticAction/Impl/Attribute.cpp:
+        * CCF/CCF/IDL2/SemanticAction/Impl/Typedef.hpp:
+        * CCF/CCF/IDL2/SemanticAction/Impl/ValueTypeFactory.cpp:
+        * CCF/CCF/IDL2/SemanticAction/Impl/Factory.cpp:
+        * CCF/CCF/IDL2/SemanticAction/Impl/Member.cpp:
+        * CCF/CCF/IDL2/SemanticAction/Impl/Factory.hpp:
+        * CCF/CCF/IDL2/SemanticAction/Impl/Include.cpp:
+        * CCF/CCF/IDL2/SemanticAction/Impl/Struct.cpp:
+        * CCF/CCF/IDL2/SemanticAction/Impl/Module.cpp:
+        * CCF/CCF/IDL2/SemanticAction/Impl/Const.cpp:
+
+        * CCF/CCF/IDL3/SemanticAction/Impl/Publishes.cpp:
+        * CCF/CCF/IDL3/SemanticAction/Impl/Component.cpp:
+        * CCF/CCF/IDL3/SemanticAction/Impl/Factory.cpp:
+        * CCF/CCF/IDL3/SemanticAction/Impl/EventTypeFactory.cpp:
+        * CCF/CCF/IDL3/SemanticAction/Impl/Uses.cpp:
+        * CCF/CCF/IDL3/SemanticAction/Impl/HomeFinder.cpp:
+        * CCF/CCF/IDL3/SemanticAction/Impl/HomeFactory.cpp:
+        * CCF/CCF/IDL3/SemanticAction/Impl/Emits.cpp:
+        * CCF/CCF/IDL3/SemanticAction/Impl/EventType.cpp:
+        * CCF/CCF/IDL3/SemanticAction/Impl/Include.cpp:
+        * CCF/CCF/IDL3/SemanticAction/Impl/Home.cpp:
+        * CCF/CCF/IDL3/SemanticAction/Impl/Include.hpp:
+        * CCF/CCF/IDL3/SemanticAction/Impl/Provides.cpp:
+        * CCF/CCF/IDL3/SemanticAction/Impl/Consumes.cpp:
+
+        * CCF/CCF/CIDL/SemanticAction/Impl/Composition.cpp:
+        * CCF/CCF/CIDL/SemanticAction/Impl/HomeExecutor.cpp:
+
+        Propagate file name and line number from tokens to semantic
+        graph nodes. Use file and line numbers when printing error
+        messages.
+
+
+        * CCF/CCF/IDL2/Token.hpp:
+        * CCF/CCF/IDL2/Parser.hpp:
+        * CCF/CCF/IDL2/Parser.cpp:
+
+        Fix a number of bugs in error handling and recover.
+
+
+        * CIDLC/cidlc.cpp:
+
+        Use file name and line number when creating the translation
+        unit object.
+
+
 Wed Sep 20 04:05:42 UTC 2006  xiong,ming  <ming.xiong@vanderbilt.edu>
 
         * docs\tutorials\CoSMIC\02.html
-        
+
         Added some useful links to various resources to help readers reduce
         learning curve.Added a small section that mentions that a Node Map file
         has to be created in order to get Quoter example working. Again,
@@ -12,14 +138,14 @@ Wed Sep 20 04:05:42 UTC 2006  xiong,ming  <ming.xiong@vanderbilt.edu>
 Mon Sep 18 03:26:22 UTC 2006  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * tools/Config_Handlers/Utils/XML_Helper.h
-        
+
           Fixed compile error by removing extra ;.
 
 Fri Sep 15 21:28:47 UTC 2006  Gan Deng  <gan.deng@vanderbilt.edu>
 
         * DAnCE/DomainApplicationManager/DomainApplicationManager_Impl.cpp
         * ciao/Deployment_Core.idl
-        
+
           Removed the unnecessary event type definition for RTEC since
           they are no longer used.
 
@@ -27,7 +153,7 @@ Sun Sep 10 09:20:18 UTC 2006  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * tools/Config_Handlers/Utils/XML_Helper.cpp
         * tools/Config_Handlers/Utils/XML_Helper.h
-        
+
           Removed workaround from previous commit, as Ossama Othman has
           provided the proper fix in the G++ macros.
 
@@ -35,7 +161,7 @@ Fri Sep  8 00:28:27 UTC 2006  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * tools/Config_Handlers/Utils/XML_Helper.cpp
         * tools/Config_Handlers/Utils/XML_Helper.h
-        
+
           Made the export declaration on the singleton typedef
           contingent on a Microsoft compiler, as the GCC included
           with FC5 was not defining the symbol as a result.
@@ -44,7 +170,7 @@ Fri Sep  1 03:09:38 UTC 2006  xiong,ming  <ming.xiong@vanderbilt.edu>
 
         * docs\tutorials\CoSMIC\index.html
         * docs\tutorials\CoSMIC\01.html
-        
+
         Updated index.html to change the cosmic version.Updated 01.html
         to reflect recent changes of idl_to_picml. Thanks to Sowayan Abdullah
         from LMCO for his help in improving the cosmic documentations.
@@ -53,7 +179,7 @@ Thu Aug 31 22:45:09 UTC 2006  Shanshan Jiang <shanshan.jiang@vanderbilt.edu>
 
         * DAnCE/RepositoryManager/RepositoryManager.mpc
           Modified this file to include $(CIAO_ROOT)/tools/Config_Handlers
-          in the RMAdmin project.  
+          in the RMAdmin project.
 
 Wed Aug 30 17:16:18 UTC 2006  Shanshan Jiang <shanshan.jiang@vanderbilt.edu>
 
@@ -68,10 +194,10 @@ Tue Aug 29 23:08:20 UTC 2006  Shanshan Jiang <shanshan.jiang@vanderbilt.edu>
           Fixed the "reference to `ACE_Singleton<CIAO::Config_Handlers
           ::XML_Helper, ACE_Null_Mutex>::instance()'"warnings with
           FC5_Static build.
-          
+
         * DAnCE/RepositoryManager/RMadmin.cpp
         * DAnCE/RepositoryManager/RepositoryManager_Impl.cpp
-          Removed unnecessary using of CIAO::Config_Handlers::XML_Helper.          
+          Removed unnecessary using of CIAO::Config_Handlers::XML_Helper.
 
 Mon Aug 28 12:53:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 

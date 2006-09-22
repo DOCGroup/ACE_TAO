@@ -31,6 +31,10 @@ namespace CCF
       TypeInfo const& IntExpression::
       static_type_info () { return int_expression_; }
 
+      IntExpression::
+      ~IntExpression ()
+      {
+      }
 
       // IntLiteral
       //

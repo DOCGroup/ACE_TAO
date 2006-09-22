@@ -157,6 +157,10 @@ namespace CCF
             f.numeric_expression (),
             &SemanticAction::NumericExpression::integer_literal),
 
+          act_numeric_expression_pre (
+            f.numeric_expression (),
+            &SemanticAction::NumericExpression::pre),
+
           act_numeric_expression_pos (
             f.numeric_expression (),
             &SemanticAction::NumericExpression::pos),
@@ -353,6 +357,9 @@ namespace CCF
           // Typedef
           //
           //
+          act_typedef_pre (
+            f.typedef_ (), &SemanticAction::Typedef::pre),
+
           act_typedef_begin (
             f.typedef_ (), &SemanticAction::Typedef::begin),
 
@@ -492,9 +499,23 @@ namespace CCF
       language =
         guard
         (
-          *import >> +declaration >> EOS
-
-        )[root_error_handler]
+          guard
+          (
+               assertion ("declaration or include directive expected",
+                          RecoveryMethod::STANDARD,
+                          DiagnosticType::BEFORE)
+               (
+                   (+import >> *declaration)
+                 | +declaration
+               )
+            >> assertion ("declaration or include directive expected",
+                          RecoveryMethod::STANDARD,
+                          DiagnosticType::BEFORE)
+               (
+                 EOS
+               )
+          )[error_handler]
+        )[root_error_handler] // Stops bailing out (rethrowing).
         ;
 
 
@@ -669,50 +690,88 @@ namespace CCF
 
       numeric_or_expr =
            numeric_xor_expr
-        >> *(OR >> numeric_xor_expr)[act_numeric_expression_or]
+        >> *(
+                 OR[act_numeric_expression_pre]
+              >> numeric_xor_expr
+            )[act_numeric_expression_or]
         ;
 
       numeric_xor_expr =
            numeric_and_expr
-        >> *(XOR >> numeric_and_expr)[act_numeric_expression_xor]
+        >> *(
+                 XOR[act_numeric_expression_pre]
+              >> numeric_and_expr
+            )[act_numeric_expression_xor]
         ;
 
 
       numeric_and_expr =
            numeric_shift_expr
-        >> *(AND >> numeric_shift_expr)[act_numeric_expression_and]
+        >> *(
+                 AND[act_numeric_expression_pre]
+              >> numeric_shift_expr
+            )[act_numeric_expression_and]
         ;
 
       numeric_shift_expr =
            numeric_add_expr
         >> *(
-                (RSH >> numeric_add_expr)[act_numeric_expression_rsh]
-              | (LSH >> numeric_add_expr)[act_numeric_expression_lsh]
+                (
+                     RSH[act_numeric_expression_pre]
+                  >> numeric_add_expr
+                )[act_numeric_expression_rsh]
+              |
+                (
+                     LSH[act_numeric_expression_pre]
+                  >> numeric_add_expr
+                )[act_numeric_expression_lsh]
             )
         ;
 
       numeric_add_expr =
            numeric_mul_expr
         >> *(
-                (ADD >> numeric_mul_expr)[act_numeric_expression_add]
-              | (SUB >> numeric_mul_expr)[act_numeric_expression_sub]
+                (    ADD[act_numeric_expression_pre]
+                  >> numeric_mul_expr
+                )[act_numeric_expression_add]
+
+              |
+                (    SUB[act_numeric_expression_pre]
+                  >> numeric_mul_expr
+                )[act_numeric_expression_sub]
             )
         ;
 
       numeric_mul_expr =
            numeric_unary_expr
         >> *(
-                (MUL >> numeric_unary_expr)[act_numeric_expression_mul]
-              | (DIV >> numeric_unary_expr)[act_numeric_expression_div]
-              | (REM >> numeric_unary_expr)[act_numeric_expression_rem]
+                (    MUL[act_numeric_expression_pre]
+                  >> numeric_unary_expr
+                )[act_numeric_expression_mul]
+
+              |
+                (    DIV[act_numeric_expression_pre]
+                  >> numeric_unary_expr
+                )[act_numeric_expression_div]
+
+              |
+                (    REM[act_numeric_expression_pre]
+                  >> numeric_unary_expr
+                )[act_numeric_expression_rem]
             )
         ;
 
       numeric_unary_expr =
           numeric_primary_expr
-        | ADD >> numeric_primary_expr[act_numeric_expression_pos]
-        | SUB >> numeric_primary_expr[act_numeric_expression_neg]
-        | COM >> numeric_primary_expr[act_numeric_expression_com]
+
+        |    ADD[act_numeric_expression_pre]
+          >> numeric_primary_expr[act_numeric_expression_pos]
+
+        |    SUB[act_numeric_expression_pre]
+          >> numeric_primary_expr[act_numeric_expression_neg]
+
+        |    COM[act_numeric_expression_pre]
+          >> numeric_primary_expr[act_numeric_expression_com]
         ;
 
       numeric_primary_expr =
@@ -1146,7 +1205,7 @@ namespace CCF
       //
 
       typedef_decl =
-           TYPEDEF
+           TYPEDEF[act_typedef_pre]
         >> typedef_type_spec
         >> typedef_declarator
         >> *(COMMA >> typedef_declarator)

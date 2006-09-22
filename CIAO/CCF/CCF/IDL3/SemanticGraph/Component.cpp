@@ -55,6 +55,11 @@ namespace CCF
       TypeInfo const& User::
       static_type_info () { return user_; }
 
+      User::
+      ~User ()
+      {
+      }
+
 
       // MultiUser
       //

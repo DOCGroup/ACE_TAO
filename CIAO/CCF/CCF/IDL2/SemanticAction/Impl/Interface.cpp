@@ -42,7 +42,8 @@ namespace CCF
           }
           else
           {
-            now (ctx.tu ().new_node<AbstractInterface> ());
+            now (ctx.tu ().new_node<AbstractInterface> (
+                   ctx.file (), id->line ()));
           }
 
           ctx.tu ().new_edge<Defines> (ctx.scope (), now (), name);
@@ -61,7 +62,8 @@ namespace CCF
           }
           else
           {
-            now (ctx.tu ().new_node<AbstractInterface> ());
+            now (ctx.tu ().new_node<AbstractInterface> (
+                   ctx.file (), id->line ()));
           }
 
           ctx.tu ().new_edge<Mentions> (ctx.scope (), now (), name);
@@ -82,7 +84,8 @@ namespace CCF
           }
           else
           {
-            now (ctx.tu ().new_node<LocalInterface> ());
+            now (ctx.tu ().new_node<LocalInterface> (
+                   ctx.file (), id->line ()));
           }
 
           ctx.tu ().new_edge<Defines> (ctx.scope (), now (), name);
@@ -101,7 +104,8 @@ namespace CCF
           }
           else
           {
-            now (ctx.tu ().new_node<LocalInterface> ());
+            now (ctx.tu ().new_node<LocalInterface> (
+                   ctx.file (), id->line ()));
           }
 
           ctx.tu ().new_edge<Mentions> (ctx.scope (), now (), name);
@@ -123,7 +127,8 @@ namespace CCF
           }
           else
           {
-            now (ctx.tu ().new_node<UnconstrainedInterface> ());
+            now (ctx.tu ().new_node<UnconstrainedInterface> (
+                   ctx.file (), id->line ()));
           }
 
           ctx.tu ().new_edge<Defines> (ctx.scope (), now (), name);
@@ -143,7 +148,8 @@ namespace CCF
           }
           else
           {
-            now (ctx.tu ().new_node<UnconstrainedInterface> ());
+            now (ctx.tu ().new_node<UnconstrainedInterface> (
+                   ctx.file (), id->line ()));
           }
 
           ctx.tu ().new_edge<Mentions> (ctx.scope (), now (), name);
@@ -191,29 +197,36 @@ namespace CCF
             }
             catch (Resolve const&)
             {
-              cerr << "error: invalid inheritance specification" << endl;
+              cerr << ctx.file () << ":" << id->line () << ": error: "
+                   << "invalid inheritance specification" << endl;
               throw;
             }
           }
           catch (NotFound const&)
           {
-            cerr << "no interface with name \'" << name
+            cerr << ctx.file () << ":" << id->line () << ": error: "
+                 << "no interface with name \'" << name
                  << "\' visible from scope \'" << from << "\'" << endl;
           }
           catch (WrongType const&)
           {
-            cerr << "incompatible type in inheritance specification" << endl;
+            cerr << ctx.file () << ":" << id->line () << ": error: "
+                 << "incompatible type in inheritance specification" << endl;
           }
           catch (NotDefined const& e)
           {
-            cerr << "attempt to inherit from forward-declared interface "
+            cerr << ctx.file () << ":" << id->line () << ": error: "
+                 << "attempt to inherit from forward-declared interface "
                  << e.name () << endl;
-            cerr << "inheritance from forward-declared interface is illegal"
+
+            cerr << ctx.file () << ":" << id->line () << ": error: "
+                 << "inheritance from forward-declared interface is illegal"
                  << endl;
           }
           catch (AlreadyInherited const& e)
           {
-            cerr << "directly inheriting from interface \'" << e.name ()
+            cerr << ctx.file () << ":" << id->line () << ": error: "
+                 << "directly inheriting from interface \'" << e.name ()
                  << "\' more than once is illegal" << endl;
           }
         }

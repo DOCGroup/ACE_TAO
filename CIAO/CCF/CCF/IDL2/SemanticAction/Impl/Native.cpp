@@ -34,7 +34,8 @@ namespace CCF
           SimpleName name (id->lexeme ());
 
           SemanticGraph::Native& n (
-            ctx.tu ().new_node<SemanticGraph::Native> ());
+            ctx.tu ().new_node<SemanticGraph::Native> (
+              ctx.file (), id->line ()));
 
           ctx.tu ().new_edge<Defines> (ctx.scope (), n, name);
         }

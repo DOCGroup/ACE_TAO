@@ -166,6 +166,12 @@ namespace CCF
           Context ctx_;
 
         private:
+          template <typename X>
+          void
+          define_fund_type (SemanticGraph::Root& root,
+                            SemanticGraph::SimpleName const& name);
+
+        private:
           Attribute attribute_;
           Const const__;
           Enum enum__;

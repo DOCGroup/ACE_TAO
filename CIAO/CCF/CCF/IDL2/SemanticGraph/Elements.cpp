@@ -4,6 +4,8 @@
 
 #include "CCF/IDL2/SemanticGraph/Elements.hpp"
 
+#include <ostream>
+
 namespace CCF
 {
   namespace IDL2
@@ -54,9 +56,16 @@ namespace CCF
       }
 
       Node::
-      Node ()
+      Node (Path const& file, unsigned long line)
+          : file_ (file), line_ (line)
       {
         type_info (static_type_info ());
+      }
+
+      Node::
+      Node ()
+      {
+        abort (); // This ctor should never be called.
       }
 
       namespace
@@ -163,6 +172,11 @@ namespace CCF
       //
       //
 
+      Nameable::
+      ~Nameable ()
+      {
+      }
+
       SimpleName Nameable::
       name () const
       {
@@ -217,9 +231,15 @@ namespace CCF
       TypeInfo const& Extends::
       static_type_info () { return extends_; }
 
+
       // Scope
       //
       //
+      Scope::
+      ~Scope ()
+      {
+      }
+
       Nameables Scope::
       lookup (Name const& name) const
       {
@@ -311,6 +331,10 @@ namespace CCF
       TypeInfo const& Type::
       static_type_info () { return type_; }
 
+      Type::
+      ~Type ()
+      {
+      }
 
       // Instance
       //
@@ -331,6 +355,10 @@ namespace CCF
       TypeInfo const& Instance::
       static_type_info () { return instance_; }
 
+      Instance::
+      ~Instance ()
+      {
+      }
 
       // Belongs
       //
@@ -383,6 +411,12 @@ namespace CCF
       {
         arguments_.push_back (&e);
       }
+
+      Specialization::
+      ~Specialization ()
+      {
+      }
+
 
       // Arguments
       //
@@ -534,6 +568,11 @@ namespace CCF
       TypeInfo const& Expression::
       static_type_info () { return expression_; }
 
+      Expression::
+      ~Expression ()
+      {
+      }
+
 
       // Const
       //
@@ -556,6 +595,10 @@ namespace CCF
       TypeInfo const& Const::
       static_type_info () { return const_; }
 
+      Const::
+      ~Const ()
+      {
+      }
 
       // Contains
       //
@@ -595,6 +638,19 @@ namespace CCF
 
       TypeInfo const& Container::
       static_type_info () { return container_; }
+
+      Container::
+      ~Container ()
+      {
+      }
     }
   }
+}
+
+//
+//
+std::ostream&
+operator<< (std::ostream& os, CCF::IDL2::SemanticGraph::Path const& path)
+{
+  return os << path.native_file_string ();
 }

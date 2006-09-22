@@ -45,6 +45,30 @@ namespace CCF
         return *n;
       }
 
+      template <typename N, typename E>
+      template <typename T, typename A0, typename A1, typename A2>
+      T& Graph<N, E>::
+      new_node (A0 const& a0, A1 const& a1, A2 const& a2)
+      {
+        T* n  (new T (a0, a1, a2)); //@@ auto
+        nodes_.insert (n);
+        return *n;
+      }
+
+      template <typename N, typename E>
+      template <typename T,
+                typename A0,
+                typename A1,
+                typename A2,
+                typename A3>
+      T& Graph<N, E>::
+      new_node (A0 const& a0, A1 const& a1, A2 const& a2, A3 const& a3)
+      {
+        T* n  (new T (a0, a1, a2, a3)); //@@ auto
+        nodes_.insert (n);
+        return *n;
+      }
+
 
       template <typename N, typename E>
       void Graph<N, E>::

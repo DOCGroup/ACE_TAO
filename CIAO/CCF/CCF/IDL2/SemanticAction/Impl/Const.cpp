@@ -57,7 +57,8 @@ namespace CCF
               {
                 // Integer constant.
                 //
-                const_ = &ctx.tu ().new_node<SemanticGraph::IntConst> ();
+                const_ = &ctx.tu ().new_node<SemanticGraph::IntConst> (
+                  ctx.file (), name_id->line ());
 
                 ctx.tu ().new_edge<Belongs> (*const_, t);
                 ctx.tu ().new_edge<Defines> (ctx.scope (), *const_, name);
@@ -66,7 +67,8 @@ namespace CCF
             }
             catch (Resolve const&)
             {
-              cerr << "error: invalid const declaration" << endl;
+              cerr << ctx.file () << ":" << type_id->line () << ": error: "
+                   << "invalid const declaration" << endl;
               throw;
             }
 
@@ -78,19 +80,24 @@ namespace CCF
           }
           catch (NotFound const&)
           {
-            cerr << "no type with name \'" << name
+            cerr << ctx.file () << ":" << type_id->line () << ": error: "
+                 << "no type with name \'" << name
                  << "\' visible from scope \'" << from << "\'" << endl;
           }
           catch (WrongType const&)
           {
-            cerr << "declaration with name \'" << name
+            cerr << ctx.file () << ":" << type_id->line () << ": error: "
+                 << "declaration with name \'" << name
                  << "\' visible from scope \'" << from
                  << "\' is not a type declaration" << endl;
-            cerr << "using non-type as a const type is illegal" << endl;
+
+            cerr << ctx.file () << ":" << type_id->line () << ": error: "
+                 << "using non-type as a const type is illegal" << endl;
           }
           catch (NotComplete const& e)
           {
-            cerr << "type \'" << e.name () << "\' is not complete" << endl;
+            cerr << ctx.file () << ":" << type_id->line () << ": error: "
+                 << "type \'" << e.name () << "\' is not complete" << endl;
           }
         }
 

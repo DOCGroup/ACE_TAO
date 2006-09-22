@@ -16,6 +16,9 @@ namespace CCF
       struct Typedef
       {
         virtual void
+        pre (KeywordPtr const& id) = 0;
+
+        virtual void
         begin (IdentifierPtr const& id) = 0;
 
         virtual void
