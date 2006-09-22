@@ -262,8 +262,8 @@ int BB_Proxy::flow_request (const AdmissionControl::FlowInfo &f, CommonDef::QOSR
       if (AdmissionControl::DECISION_ADMIT == adm_ctrl_result)
         {
           ACE_DEBUG ((LM_DEBUG,"In BB_Proxy::flow_request: Flow Accepted.\n"));
-          this->BB_commands_.push_back (flow_request.release ());
           dscp = flow_request->get_dscp ();
+          this->BB_commands_.push_back (flow_request.release ());
           retval = 0;
         }
       else
