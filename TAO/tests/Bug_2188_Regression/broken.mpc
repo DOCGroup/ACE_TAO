@@ -1,10 +1,8 @@
 // -*- MPC -*-
 // $Id$
 
-project(*Server): taoexe, portableserver {
-  IDL_Files {
-    broken.idl
-  }
+project(*Server): taoserver {
+  idlflags += -Sa -St
 
   Source_Files {
     broken_i.cpp
@@ -12,10 +10,9 @@ project(*Server): taoexe, portableserver {
   }
 }
 
-project(*Client): taoexe {
-  IDL_Files {
-    broken.idl
-  }
+project(*Client): taoclient {
+  after += *Server
+
   Source_Files {
     brokenC.cpp
     client.cpp
