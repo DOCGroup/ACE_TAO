@@ -240,6 +240,7 @@ int BB_Proxy::flow_request (const AdmissionControl::FlowInfo &f, CommonDef::QOSR
   catch (CORBA::Exception &e)
     {
       ACE_DEBUG ((LM_ERROR,"In BB_Proxy::flow_request: A CORBA exception was raised.\n"));
+      ACE_DEBUG ((LM_ERROR,"In BB_Proxy::flow_request: Its name is %s.\n",e._name()));
     }
   catch (...)
     {
