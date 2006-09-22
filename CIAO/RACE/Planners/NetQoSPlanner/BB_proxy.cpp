@@ -103,7 +103,7 @@ bool BB_Proxy::resolve (CORBA::ORB_ptr orb)
         struct NameServResolutionFailed {};
         struct FilebasedResolutionFailed {};
 
-        BandwidthBroker::AdmissionControl_var adm_ctrl;
+        //BandwidthBroker::AdmissionControl_var adm_ctrl;
 
         try
         {
@@ -135,7 +135,7 @@ bool BB_Proxy::resolve (CORBA::ORB_ptr orb)
           }
 
           /// Downcast the object reference to a reference of type Time_Date.
-          adm_ctrl = BandwidthBroker::AdmissionControl::_narrow (obj);
+          BandwidthBroker::AdmissionControl_var adm_ctrl = BandwidthBroker::AdmissionControl::_narrow (obj);
           if (CORBA::is_nil (adm_ctrl))
           {
             ACE_DEBUG ((LM_ERROR, "In BB_Proxy::resolve(): The IOR obtained from \
@@ -182,6 +182,7 @@ bool BB_Proxy::resolve (CORBA::ORB_ptr orb)
               ACE_DEBUG ((LM_ERROR,"In BB_Proxy::resolve: Unknown exception was raised.\n"));
             }
           }
+          this->BB_ref_ = adm_ctrl;
         }
         catch (NameServResolutionFailed &)
         {
@@ -201,13 +202,14 @@ bool BB_Proxy::resolve (CORBA::ORB_ptr orb)
             }
 
             /// Downcast the object reference to a reference of type AdmissionControl.
-            adm_ctrl = BandwidthBroker::AdmissionControl::_narrow (obj);
+            BandwidthBroker::AdmissionControl_var adm_ctrl = BandwidthBroker::AdmissionControl::_narrow (obj);
             if (CORBA::is_nil (adm_ctrl))
             {
               ACE_DEBUG ((LM_ERROR, "In BB_Proxy::resolve(): The IOR obtained from \
                                      the file is not an AdmissionControl reference.\n"));
               throw FilebasedResolutionFailed ();
             }
+            this->BB_ref_ = adm_ctrl;
           }
           catch (FilebasedResolutionFailed &)
           {
@@ -230,7 +232,7 @@ bool BB_Proxy::resolve (CORBA::ORB_ptr orb)
         }
 
       ACE_DEBUG ((LM_DEBUG, "In BB_Proxy::resolve(): BandwidthBroker resolved successfully.\n"));
-      this->BB_ref_ = adm_ctrl;
+      //this->BB_ref_ = adm_ctrl;
       this->resolved_ = true;
       return this->resolved_;
   }
