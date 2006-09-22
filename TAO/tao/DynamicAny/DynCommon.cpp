@@ -14,11 +14,9 @@
 #include "ace/OS_NS_wchar.h"
 #include "ace/OS_NS_string.h"
 
-
 ACE_RCSID (DynamicAny,
            DynCommon,
            "$Id$")
-
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -1643,6 +1641,373 @@ TAO_DynCommon::component_count (ACE_ENV_SINGLE_ARG_DECL)
 
   return this->component_count_;
 }
+
+// ****************************************************************
+
+void
+TAO_DynCommon::insert_abstract (CORBA::AbstractBase_ptr /* value */
+                                ACE_ENV_ARG_DECL)
+  ACE_THROW_SPEC ((
+      CORBA::SystemException,
+      DynamicAny::DynAny::TypeMismatch,
+      DynamicAny::DynAny::InvalidValue
+    ))
+{
+  // TODO
+}
+  
+CORBA::AbstractBase_ptr
+TAO_DynCommon::get_abstract (ACE_ENV_SINGLE_ARG_DECL)
+  ACE_THROW_SPEC ((
+      CORBA::SystemException,
+      DynamicAny::DynAny::TypeMismatch,
+      DynamicAny::DynAny::InvalidValue
+    ))
+{
+  // TODO
+  return CORBA::AbstractBase::_nil ();
+}
+    
+// ****************************************************************
+
+void
+TAO_DynCommon::insert_boolean_seq (
+    const CORBA::BooleanSeq &value
+    ACE_ENV_ARG_DECL)
+  ACE_THROW_SPEC ((
+      CORBA::SystemException,
+      DynamicAny::DynAny::TypeMismatch,
+      DynamicAny::DynAny::InvalidValue
+    ))
+{
+  if (this->destroyed_)
+    {
+      ACE_THROW (CORBA::OBJECT_NOT_EXIST ());
+    }
+
+  if (this->has_components_)
+    {
+      DynamicAny::DynAny_var cc =
+        this->check_component (ACE_ENV_SINGLE_ARG_PARAMETER);
+      ACE_CHECK;
+
+      cc->insert_boolean_seq (value
+                              ACE_ENV_ARG_PARAMETER);
+      ACE_CHECK;
+    }
+  else
+    {
+      this->check_type (CORBA::_tc_BooleanSeq
+                        ACE_ENV_ARG_PARAMETER);
+      ACE_CHECK;
+
+      this->any_ <<= value;
+    }
+}
+  
+void
+TAO_DynCommon::insert_octet_seq (
+    const CORBA::OctetSeq & /* value */
+    ACE_ENV_ARG_DECL)
+  ACE_THROW_SPEC ((
+      CORBA::SystemException,
+      DynamicAny::DynAny::TypeMismatch,
+      DynamicAny::DynAny::InvalidValue
+    ))
+{
+}
+  
+void
+TAO_DynCommon::insert_char_seq (
+    const CORBA::CharSeq & /* value */
+    ACE_ENV_ARG_DECL)
+  ACE_THROW_SPEC ((
+      CORBA::SystemException,
+      DynamicAny::DynAny::TypeMismatch,
+      DynamicAny::DynAny::InvalidValue
+    ))
+{
+}
+  
+void
+TAO_DynCommon::insert_short_seq (
+    const CORBA::ShortSeq & /* value */
+    ACE_ENV_ARG_DECL)
+  ACE_THROW_SPEC ((
+      CORBA::SystemException,
+      DynamicAny::DynAny::TypeMismatch,
+      DynamicAny::DynAny::InvalidValue
+    ))
+{
+}
+  
+void
+TAO_DynCommon::insert_ushort_seq (
+    const CORBA::UShortSeq & /* value */
+    ACE_ENV_ARG_DECL)
+  ACE_THROW_SPEC ((
+      CORBA::SystemException,
+      DynamicAny::DynAny::TypeMismatch,
+      DynamicAny::DynAny::InvalidValue
+    ))
+{
+}
+  
+void
+TAO_DynCommon::insert_long_seq (
+    const CORBA::LongSeq & /* value */
+    ACE_ENV_ARG_DECL)
+  ACE_THROW_SPEC ((
+      CORBA::SystemException,
+      DynamicAny::DynAny::TypeMismatch,
+      DynamicAny::DynAny::InvalidValue
+    ))
+{
+}
+  
+void
+TAO_DynCommon::insert_ulong_seq (
+    const CORBA::ULongSeq & /* value */
+    ACE_ENV_ARG_DECL)
+  ACE_THROW_SPEC ((
+      CORBA::SystemException,
+      DynamicAny::DynAny::TypeMismatch,
+      DynamicAny::DynAny::InvalidValue
+    ))
+{
+}
+  
+void
+TAO_DynCommon::insert_float_seq (
+    const CORBA::FloatSeq & /* value */
+    ACE_ENV_ARG_DECL)
+  ACE_THROW_SPEC ((
+      CORBA::SystemException,
+      DynamicAny::DynAny::TypeMismatch,
+      DynamicAny::DynAny::InvalidValue
+    ))
+{
+}
+  
+void
+TAO_DynCommon::insert_double_seq (
+    const CORBA::DoubleSeq & /* value */
+    ACE_ENV_ARG_DECL)
+  ACE_THROW_SPEC ((
+      CORBA::SystemException,
+      DynamicAny::DynAny::TypeMismatch,
+      DynamicAny::DynAny::InvalidValue
+    ))
+{
+}
+  
+void
+TAO_DynCommon::insert_longlong_seq (
+    const CORBA::LongLongSeq & /* value */
+    ACE_ENV_ARG_DECL)
+  ACE_THROW_SPEC ((
+      CORBA::SystemException,
+      DynamicAny::DynAny::TypeMismatch,
+      DynamicAny::DynAny::InvalidValue
+    ))
+{
+}
+  
+void
+TAO_DynCommon::insert_ulonglong_seq (
+    const CORBA::ULongLongSeq & /* value */
+    ACE_ENV_ARG_DECL)
+  ACE_THROW_SPEC ((
+      CORBA::SystemException,
+      DynamicAny::DynAny::TypeMismatch,
+      DynamicAny::DynAny::InvalidValue
+    ))
+{
+}
+  
+void
+TAO_DynCommon::insert_longdouble_seq (
+    const CORBA::LongDoubleSeq & /* value */
+    ACE_ENV_ARG_DECL)
+  ACE_THROW_SPEC ((
+      CORBA::SystemException,
+      DynamicAny::DynAny::TypeMismatch,
+      DynamicAny::DynAny::InvalidValue
+    ))
+{
+}
+  
+void
+TAO_DynCommon::insert_wchar_seq (
+    const CORBA::WCharSeq & /* value */
+    ACE_ENV_ARG_DECL)
+  ACE_THROW_SPEC ((
+      CORBA::SystemException,
+      DynamicAny::DynAny::TypeMismatch,
+      DynamicAny::DynAny::InvalidValue
+    ))
+{
+}
+  
+// ****************************************************************
+
+CORBA::BooleanSeq *
+TAO_DynCommon::get_boolean_seq (
+    ACE_ENV_SINGLE_ARG_DECL)
+  ACE_THROW_SPEC ((
+      CORBA::SystemException,
+      DynamicAny::DynAny::TypeMismatch,
+      DynamicAny::DynAny::InvalidValue
+    ))
+{
+  return 0;
+}
+  
+CORBA::OctetSeq *
+TAO_DynCommon::get_octet_seq (
+    ACE_ENV_SINGLE_ARG_DECL)
+  ACE_THROW_SPEC ((
+      CORBA::SystemException,
+      DynamicAny::DynAny::TypeMismatch,
+      DynamicAny::DynAny::InvalidValue
+    ))
+{
+  return 0;
+}
+ 
+CORBA::CharSeq *
+TAO_DynCommon::get_char_seq (
+    ACE_ENV_SINGLE_ARG_DECL)
+  ACE_THROW_SPEC ((
+      CORBA::SystemException,
+      DynamicAny::DynAny::TypeMismatch,
+      DynamicAny::DynAny::InvalidValue
+    ))
+{
+  return 0;
+}
+  
+CORBA::ShortSeq *
+TAO_DynCommon::get_short_seq (
+    ACE_ENV_SINGLE_ARG_DECL)
+  ACE_THROW_SPEC ((
+      CORBA::SystemException,
+      DynamicAny::DynAny::TypeMismatch,
+      DynamicAny::DynAny::InvalidValue
+    ))
+{
+  return 0;
+}
+  
+CORBA::UShortSeq *
+TAO_DynCommon::get_ushort_seq (
+    ACE_ENV_SINGLE_ARG_DECL)
+  ACE_THROW_SPEC ((
+      CORBA::SystemException,
+      DynamicAny::DynAny::TypeMismatch,
+      DynamicAny::DynAny::InvalidValue
+    ))
+{
+  return 0;
+}
+  
+CORBA::LongSeq *
+TAO_DynCommon::get_long_seq (
+    ACE_ENV_SINGLE_ARG_DECL)
+  ACE_THROW_SPEC ((
+      CORBA::SystemException,
+      DynamicAny::DynAny::TypeMismatch,
+      DynamicAny::DynAny::InvalidValue
+    ))
+{
+  return 0;
+}
+  
+CORBA::ULongSeq *
+TAO_DynCommon::get_ulong_seq (
+    ACE_ENV_SINGLE_ARG_DECL)
+  ACE_THROW_SPEC ((
+      CORBA::SystemException,
+      DynamicAny::DynAny::TypeMismatch,
+      DynamicAny::DynAny::InvalidValue
+    ))
+{
+  return 0;
+}
+  
+CORBA::FloatSeq *
+TAO_DynCommon::get_float_seq (
+    ACE_ENV_SINGLE_ARG_DECL)
+  ACE_THROW_SPEC ((
+      CORBA::SystemException,
+      DynamicAny::DynAny::TypeMismatch,
+      DynamicAny::DynAny::InvalidValue
+    ))
+{
+  return 0;
+}
+  
+CORBA::DoubleSeq *
+TAO_DynCommon::get_double_seq (
+    ACE_ENV_SINGLE_ARG_DECL)
+  ACE_THROW_SPEC ((
+      CORBA::SystemException,
+      DynamicAny::DynAny::TypeMismatch,
+      DynamicAny::DynAny::InvalidValue
+    ))
+{
+  return 0;
+}
+  
+CORBA::LongLongSeq *
+TAO_DynCommon::get_longlong_seq (
+    ACE_ENV_SINGLE_ARG_DECL)
+  ACE_THROW_SPEC ((
+      CORBA::SystemException,
+      DynamicAny::DynAny::TypeMismatch,
+      DynamicAny::DynAny::InvalidValue
+    ))
+{
+  return 0;
+}
+  
+CORBA::ULongLongSeq *
+TAO_DynCommon::get_ulonglong_seq (
+    ACE_ENV_SINGLE_ARG_DECL)
+  ACE_THROW_SPEC ((
+      CORBA::SystemException,
+      DynamicAny::DynAny::TypeMismatch,
+      DynamicAny::DynAny::InvalidValue
+    ))
+{
+  return 0;
+}
+  
+CORBA::LongDoubleSeq *
+TAO_DynCommon::get_longdouble_seq (
+    ACE_ENV_SINGLE_ARG_DECL)
+  ACE_THROW_SPEC ((
+      CORBA::SystemException,
+      DynamicAny::DynAny::TypeMismatch,
+      DynamicAny::DynAny::InvalidValue
+    ))
+{
+  return 0;
+}
+  
+CORBA::WCharSeq *
+TAO_DynCommon::get_wchar_seq (
+    ACE_ENV_SINGLE_ARG_DECL)
+  ACE_THROW_SPEC ((
+      CORBA::SystemException,
+      DynamicAny::DynAny::TypeMismatch,
+      DynamicAny::DynAny::InvalidValue
+    ))
+{
+  return 0;
+}
+
+// ****************************************************************
 
 void
 TAO_DynCommon::set_flag (DynamicAny::DynAny_ptr component,
