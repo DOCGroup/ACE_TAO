@@ -200,7 +200,8 @@ void CIAO_RepositoryManagerDaemon_i::shutdown ()
 
 void CIAO_RepositoryManagerDaemon_i::installPackage (
                                                      const char * installationName,
-                                                     const char * location
+                                                     const char * location,
+                                                     ::CORBA::Boolean replace
                                                      )
                      ACE_THROW_SPEC ((
                                       CORBA::SystemException,
@@ -210,9 +211,13 @@ void CIAO_RepositoryManagerDaemon_i::installPackage (
 {
 
   PCEntry *entry = 0;
-
   if (this->names_.find (ACE_CString (installationName), entry) == 0)
-    ACE_THROW (Deployment::NameExists ());
+    {  
+      if (!replace)
+        ACE_THROW (Deployment::NameExists ());
+      else
+        deletePackage (installationName);
+    }
 
   //Now lets form the path for the local file
   //NOTE: I need the absolute path because I will change to a subdirectory
@@ -412,7 +417,12 @@ void CIAO_RepositoryManagerDaemon_i::createPackage (
   // Find if there is a PackageConfiguration with the same name.
   PCEntry *entry = 0;
   if (this->names_.find (ACE_CString (installationName), entry) == 0)
-    ACE_THROW (Deployment::NameExists ());
+    {  
+      if (!replace)
+        ACE_THROW (Deployment::NameExists ());
+      else
+        deletePackage (installationName);
+    }
 
   // Find if there is a PackageConfiguration with the same uuid.
   if (this->uuids_.find (ACE_CString (pc.UUID), entry) == 0)

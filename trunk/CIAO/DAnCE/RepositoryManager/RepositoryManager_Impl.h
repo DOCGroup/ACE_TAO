@@ -77,7 +77,8 @@ public:
   virtual
   void installPackage (
       const char * installationName,
-      const char * location
+      const char * location,
+      ::CORBA::Boolean replace
     )
     ACE_THROW_SPEC ((
       CORBA::SystemException,

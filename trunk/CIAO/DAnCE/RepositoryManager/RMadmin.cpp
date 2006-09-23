@@ -161,7 +161,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     {
       try
       {
-        rm->installPackage (options->name_.c_str (), options->path_.c_str ());
+        rm->installPackage (options->name_.c_str (), options->path_.c_str (), false);
       }
       catch (CORBA::Exception & ex)
       {

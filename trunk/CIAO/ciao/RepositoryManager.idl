@@ -16,7 +16,9 @@ module Deployment {
   };
 
   interface RepositoryManager {
-    void installPackage (in string installationName, in string location)
+    void installPackage (in string installationName, 
+                         in string location,
+                         in boolean replace)
       raises (NameExists, PackageError);
     void createPackage (in string installationName,
                         in PackageConfiguration package,
