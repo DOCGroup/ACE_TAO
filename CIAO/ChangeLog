@@ -1,3 +1,48 @@
+Sat Sep 23 04:07:59 UTC 2006  Shanshan Jiang <shanshan.jiang@vanderbilt.edu>
+
+        * DAnCE/Plan_Generator
+        * DAnCE/Plan_Generator/PCVisitor.cpp
+        * DAnCE/Plan_Generator/PCVisitor.h
+        * DAnCE/Plan_Generator/PCVisitorBase.cpp
+        * DAnCE/Plan_Generator/PCVisitorBase.h
+        * DAnCE/Plan_Generator/PCVisitorBase.inl
+        * DAnCE/Plan_Generator/Plan_Generator.mpc
+        * DAnCE/Plan_Generator/Plan_Generator_Impl.cpp
+        * DAnCE/Plan_Generator/Plan_Generator_Impl.h
+        * DAnCE/Plan_Generator/Plan_Generator_Impl_Export.h
+        Added these files which implement the Plan_Generator project. This
+        project is used to retrieve information from Repoman and generate/modify
+        DeploymentPlans based on different demands.
+        
+        * DAnCE/Planner
+        * DAnCE/Planner/Node_T.cpp
+        * DAnCE/Planner/Node_T.h
+        * DAnCE/Planner/Node_T.inl
+        * DAnCE/Planner/PCVisitor.cpp
+        * DAnCE/Planner/PCVisitor.h
+        * DAnCE/Planner/PCVisitorBase.cpp
+        * DAnCE/Planner/PCVisitorBase.h
+        * DAnCE/Planner/PCVisitorBase.inl
+        * DAnCE/Planner/Planner.cpp
+        * DAnCE/Planner/Planner.mpc
+        Deleted these files. The planner project has been replaced by the more
+        useful Plan_Generator project.
+        
+        * DAnCE/Plan_Launcher/Plan_Launcher.cpp
+        * DAnCE/Plan_Launcher/Plan_Launcher.mpc
+        * DAnCE/Plan_Launcher/Plan_Launcher_Impl.cpp
+        * DAnCE/Plan_Launcher/Plan_Launcher_Impl.h
+        Modified these files.
+                
+        * DAnCE/Plan_Generator/PCVisitor.cpp
+        * DAnCE/Plan_Generator/PCVisitor.h
+        * DAnCE/Plan_Generator/PCVisitorBase.cpp
+        * DAnCE/Plan_Generator/PCVisitorBase.h
+        * DAnCE/Plan_Generator/PCVisitorBase.inl
+        Deleted these files.
+        Removed the Plan_Launcher's dependence on RepoMan. Use Plan_Generator
+        to retrieve information from Repoman and generate/modify DeploymentPlans.
+
 Fri Sep 22 09:27:25 UTC 2006  Boris Kolpackov  <boris@codesynthesis.com>
 
         * CCF/CCF/IDL2/SemanticGraph/Fundamental.cpp:
