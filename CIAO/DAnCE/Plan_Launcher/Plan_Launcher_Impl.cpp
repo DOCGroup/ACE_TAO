@@ -10,7 +10,6 @@ namespace CIAO
 {
   namespace Plan_Launcher
   {
-
     static CORBA::Object_ptr
     fetch_reference_naming (CORBA::ORB_ptr orb,
                             bool use_repoman = 0, 
@@ -30,21 +29,14 @@ namespace CIAO
       CosNaming::Name name (1);
       name.length (1);
       
-      if (!use_repoman)
-        {
-          name[0].id = CORBA::string_dup ("ExecutionManager");
-        }
-      else
-        {
-          name[0].id = CORBA::string_dup (repoman_name);
-        }
+      name[0].id = CORBA::string_dup ("ExecutionManager");
 
       return pns->resolve (name
                            ACE_ENV_ARG_PARAMETER);
     }
 
     Plan_Launcher_i::Plan_Launcher_i ()
-      : em_ (), rm_ ()
+      : em_ (), pg_ ()
     {
     }
 
@@ -53,7 +45,7 @@ namespace CIAO
                            CORBA::ORB_ptr orb,
                            bool use_repoman,
                            bool rm_use_naming,
-                           const char *rm_ior
+                           const char *rm_name
                            ACE_ENV_ARG_DECL)
     {
       CORBA::Object_var obj;
@@ -88,38 +80,8 @@ namespace CIAO
                     "(%P|%t) CIAO_PlanLauncher: Obtained Execution"
                     " Manager ref \n"));
 
-      // RM
       if (use_repoman)
-        {
-          if (rm_use_naming)
-            {
-              obj = fetch_reference_naming (orb, use_repoman, rm_ior ACE_ENV_ARG_PARAMETER);
-              ACE_CHECK;
-            }
-          else
-            {
-              obj = orb->string_to_object (rm_ior
-                                          ACE_ENV_ARG_PARAMETER);
-              ACE_CHECK;
-            }
-
-          this->rm_ = Deployment::RepositoryManager::_narrow (obj.in ()
-                                                              ACE_ENV_ARG_PARAMETER);
-          ACE_CHECK;
-
-          if (CORBA::is_nil (this->rm_.in ()))
-            {
-              ACE_ERROR ((LM_ERROR,
-                          "(%P|%t) CIAO_PlanLauncher: nil Repository"
-                          " Manager reference, narrow failed\n"));
-              return false;
-            }
-
-          if (CIAO::debug_level () > 9)
-            ACE_DEBUG ((LM_DEBUG,
-                        "(%P|%t) CIAO_PlanLauncher: Obtained Repository"
-                        " Manager ref \n"));
-        }
+        return pg_.init (orb, rm_use_naming, rm_name);
 
       return true;
     }
@@ -129,7 +91,7 @@ namespace CIAO
     Plan_Launcher_i::launch_plan (const char *deployment_plan_uri,
                                   const char *package_uri,
                                   bool use_package_name,
-                                  bool use_repoman 
+                                  bool use_repoman
                                   ACE_ENV_ARG_DECL)
       ACE_THROW_SPEC ((Plan_Launcher_i::Deployment_Failure))
     {
@@ -140,45 +102,12 @@ namespace CIAO
       ::Deployment::DeploymentPlan_var plan =
           intf.get_plan ();
 
+      // Use the package name(s) or type(s) to modify the location of all the
+      // artifacts in DeploymentPlan.
       if (use_repoman)
-      {
-        ::Deployment::PackageConfiguration_var pc;
-
-        ACE_TCHAR package[PACKAGE_NAME_LEN];
-
-        size_t length = ACE_OS::strlen (package_uri);
-        
-        size_t pos1 = 0;
-        size_t pos2 = ACE_OS::strcspn (package_uri + pos1, "+");
-
-        while (pos1 < length)
         {
-          ACE_OS::strsncpy (package, package_uri + pos1, pos2 + 1);
-          
-          if (use_package_name)
-          {
-            pc = rm_->findPackageByName (package);
-            
-            PCVisitor pcv (plan, *pc);
-            pcv.Visit ();
-          }
-          else
-          {
-            CORBA::StringSeq_var seq = rm_->findNamesByType (package);
-
-            for (size_t i = 0; i < seq->length (); ++i)
-            {
-              pc = rm_->findPackageByName (seq[i]);
-            
-              PCVisitor pcv (plan, *pc);
-              pcv.Visit ();
-            }
-          }
-
-          pos1 += pos2 + 1;
-          pos2 = ACE_OS::strcspn (package_uri + pos1, "+");
+          pg_.generate_plan (plan, package_uri, use_package_name);
         }
-      }
 
       ACE_DEBUG ((LM_DEBUG, "Parsing complete....\n"));
       

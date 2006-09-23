@@ -10,21 +10,17 @@
 #define PLAN_LAUNCHER_IMPL_H
 
 #include "ciao/RepositoryManagerC.h"
-#include "PCVisitor.h"
-#include "PCVisitorBase.h"
-
 #include "Plan_Launcher_Impl_Export.h"
 #include "ciao/DeploymentS.h"
 #include "ciao/CIAO_common.h"
 #include "DAnCE/ExecutionManager/DAM_Map.h"
 #include "DAnCE/Interfaces/ExecutionManagerDaemonC.h"
+#include "DAnCE/Plan_Generator/Plan_Generator_Impl.h"
 
 namespace CIAO
 {
   namespace Plan_Launcher
   {
-    const size_t PACKAGE_NAME_LEN = 1024;
-
     /**
      * @class Plan_Launcher_i
      * @brief This class launches and manages deployment plans.
@@ -49,7 +45,7 @@ namespace CIAO
                  CORBA::ORB_ptr orb,
                  bool use_repoman = 0,
                  bool rm_use_naming = 0,
-                 const char *rm_ior = 0
+                 const char *rm_name = 0
                  ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
       /**
@@ -58,8 +54,10 @@ namespace CIAO
        * @param plan_uri A uri that points ot a valid deployment plan
        * @returns a string containing the UUID of the plan. Null indicates failure.
        */
-      const char * launch_plan (const char *deployment_plan_uri, const char *package_uri = 0,
-                                bool use_package_name = 1, bool use_repoman = 0
+      const char * launch_plan (const char *deployment_plan_uri,
+                                const char *package_uri = 0,
+                                bool use_package_name = 1,
+                                bool use_repoman = 0
                                 ACE_ENV_ARG_DECL_WITH_DEFAULTS)
         ACE_THROW_SPEC ((Deployment_Failure));
 
@@ -100,10 +98,10 @@ namespace CIAO
     private:
       ::CIAO::ExecutionManagerDaemon_var em_;
 
-      Deployment::RepositoryManager_var rm_;
-
       /// Local map for DAMs, to save expensive UUID lookups.
       Execution_Manager::DAM_Map map_;
+
+      CIAO::Plan_Generator::Plan_Generator_i pg_;
     };
 
   }
