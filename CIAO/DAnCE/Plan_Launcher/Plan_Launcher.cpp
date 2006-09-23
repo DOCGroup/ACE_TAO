@@ -206,14 +206,14 @@ namespace CIAO
 
               if (package_names != 0)
                 uuid = launcher.launch_plan (deployment_plan_url,
-                                                         package_names,
-                                                         use_package_name,
-                                                         use_repoman);
+                                             package_names,
+                                             use_package_name,
+                                             use_repoman);
               else
                 uuid = launcher.launch_plan (deployment_plan_url,
-                                                         package_types,
-                                                         use_package_name,
-                                                         use_repoman);
+                                             package_types,
+                                             use_package_name,
+                                             use_repoman);
 
               if (uuid == 0)
                 {
