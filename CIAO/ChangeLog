@@ -1,3 +1,8 @@
+Sun Sep 24 21:06:07 UTC 2006  Shanshan Jiang <shanshan.jiang@vanderbilt.edu>
+
+        * DAnCE/Plan_Launcher/Plan_Launcher_Impl.h
+        Removed the unnecessary Repoman head file.
+        
 Sat Sep 23 04:31:13 UTC 2006  Shanshan Jiang <shanshan.jiang@vanderbilt.edu>
 
         * DAnCE/RepositoryManager/RepositoryManager_Impl.cpp
