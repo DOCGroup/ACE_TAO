@@ -51,6 +51,7 @@ namespace CIAO
                                       ACE_ENV_ARG_DECL_NOT_USED)
         ACE_THROW_SPEC ((CORBA::SystemException))
       {
+        return true;
         using namespace CIAO::Config_Handlers;
         for (CORBA::ULong i = 0;i < plan_seq.length ();i++)
           {
