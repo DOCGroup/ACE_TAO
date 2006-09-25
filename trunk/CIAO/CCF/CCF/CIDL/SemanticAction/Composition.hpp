@@ -23,9 +23,6 @@ namespace CCF
           {
             entity , process, service, session
           };
-
-          friend std::ostream&
-          operator<< (std::ostream& o, Value v);
         };
 
         virtual void
@@ -37,5 +34,9 @@ namespace CCF
     }
   }
 }
+
+std::ostream&
+operator<< (std::ostream& o,
+            CCF::CIDL::SemanticAction::Composition::Category::Value v);
 
 #endif  // CCF_CIDL_SEMANTIC_ACTION_COMPOSITION_HPP

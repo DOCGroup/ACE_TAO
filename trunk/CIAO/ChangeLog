@@ -1,8 +1,19 @@
+Mon Sep 25 13:06:05 UTC 2006  Boris Kolpackov  <boris@codesynthesis.com>
+
+        * CCF/CCF/IDL2/SemanticAction/Operation.cpp:
+        * CCF/CCF/IDL2/SemanticAction/Operation.hpp:
+        * CCF/CCF/IDL2/SemanticAction/Impl/Factory.cpp:
+        * CCF/CCF/CIDL/SemanticAction/Composition.cpp:
+        * CCF/CCF/CIDL/SemanticAction/Composition.hpp:
+
+        Move some operator<< operators to the global scope so that they
+        do not hide others.
+
 Sun Sep 24 21:06:07 UTC 2006  Shanshan Jiang <shanshan.jiang@vanderbilt.edu>
 
         * DAnCE/Plan_Launcher/Plan_Launcher_Impl.h
         Removed the unnecessary Repoman head file.
-        
+
 Sat Sep 23 04:31:13 UTC 2006  Shanshan Jiang <shanshan.jiang@vanderbilt.edu>
 
         * DAnCE/RepositoryManager/RepositoryManager_Impl.cpp
@@ -28,7 +39,7 @@ Sat Sep 23 04:07:59 UTC 2006  Shanshan Jiang <shanshan.jiang@vanderbilt.edu>
         Added these files which implement the Plan_Generator project. This
         project is used to retrieve information from Repoman and generate/modify
         DeploymentPlans based on different demands.
-        
+
         * DAnCE/Planner
         * DAnCE/Planner/Node_T.cpp
         * DAnCE/Planner/Node_T.h
@@ -42,13 +53,13 @@ Sat Sep 23 04:07:59 UTC 2006  Shanshan Jiang <shanshan.jiang@vanderbilt.edu>
         * DAnCE/Planner/Planner.mpc
         Deleted these files. The planner project has been replaced by the more
         useful Plan_Generator project.
-        
+
         * DAnCE/Plan_Launcher/Plan_Launcher.cpp
         * DAnCE/Plan_Launcher/Plan_Launcher.mpc
         * DAnCE/Plan_Launcher/Plan_Launcher_Impl.cpp
         * DAnCE/Plan_Launcher/Plan_Launcher_Impl.h
         Modified these files.
-                
+
         * DAnCE/Plan_Generator/PCVisitor.cpp
         * DAnCE/Plan_Generator/PCVisitor.h
         * DAnCE/Plan_Generator/PCVisitorBase.cpp

@@ -12,17 +12,18 @@ namespace CCF
   {
     namespace SemanticAction
     {
-      namespace
-      {
-        char* labels[] = {"in", "out", "inout"};
-      }
-
-      std::ostream&
-
-      operator<< (std::ostream& o, Operation::Direction::Value d)
-      {
-        return o << labels[d];
-      }
     }
   }
+}
+
+namespace
+{
+  char* labels[] = {"in", "out", "inout"};
+}
+
+std::ostream&
+operator<< (std::ostream& o,
+            CCF::IDL2::SemanticAction::Operation::Direction::Value d)
+{
+  return o << labels[d];
 }

@@ -21,9 +21,9 @@ namespace CCF
         void Factory::
         define_fund_type (Root& root, SimpleName const& name)
         {
-          ctx_.tu ().new_edge<Defines> (
+          ctx_.tu ().template new_edge<Defines> (
             root,
-            ctx_.tu ().new_node<X> ("fundamental-types", 0), name);
+            ctx_.tu ().template new_node<X> ("fundamental-types", 0), name);
         }
 
         Factory::
