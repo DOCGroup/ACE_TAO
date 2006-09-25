@@ -12,16 +12,18 @@ namespace CCF
   {
     namespace SemanticAction
     {
-      namespace
-      {
-        char* labels[] = {"entity", "process", "service", "session" };
-      }
-
-      std::ostream&
-      operator<< (std::ostream& o, Composition::Category::Value v)
-      {
-        return o << labels[v];
-      }
     }
   }
+}
+
+namespace
+{
+  char* labels[] = {"entity", "process", "service", "session" };
+}
+
+std::ostream&
+operator<< (std::ostream& o,
+            CCF::CIDL::SemanticAction::Composition::Category::Value v)
+{
+  return o << labels[v];
 }

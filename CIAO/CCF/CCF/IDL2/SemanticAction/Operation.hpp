@@ -37,9 +37,6 @@ namespace CCF
             out,
             inout
           };
-
-          friend std::ostream&
-          operator<< (std::ostream& o, Value d);
         };
 
         virtual void
@@ -53,5 +50,9 @@ namespace CCF
     }
   }
 }
+
+std::ostream&
+operator<< (std::ostream& o,
+            CCF::IDL2::SemanticAction::Operation::Direction::Value d);
 
 #endif  // CCF_IDL2_SEMANTIC_ACTION_OPERATION_HPP
