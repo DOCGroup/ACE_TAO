@@ -1,9 +1,23 @@
+Mon Sep 25 11:39:35 UTC 2006  Boris Kolpackov  <boris@codesynthesis.com>
+
+        * ace/Bound_Ptr.inl:
+        * ace/Bound_Ptr.h:
+
+          Applied workarounds that should fix compile errors on BCB6.
+          Thanks to Martin Corino <mcorino at remedy.nl> for providing
+          the patch.
+
+        * protocols/ace/TMCast/Messaging.hpp:
+        * protocols/ace/TMCast/TransactionController.hpp:
+
+          Updated to use ACE_Strong_Bound_Ptr.
+
 Fri Sep 22 12:42:37 UTC 2006  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
 
         * docs/index.html: Added a link to the http://www.acejoy.com ACE
           developers website in China.  Thanks to Winston Zhang <webmaster
           at acejoy dot com> for creating this website.
-  
+
 Tue Sep 19 12:27:47 UTC 2006  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
 
         * tests/Unload_libACE.cpp: Fixed the formatting of this file so it
