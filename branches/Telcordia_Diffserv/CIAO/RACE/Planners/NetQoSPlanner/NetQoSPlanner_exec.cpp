@@ -310,7 +310,8 @@ namespace CIAO
                 dscp_infos [len].client_receptacle_name = CORBA::string_dup (conn_qos.connections [conn_num].client_port_name);
                 dscp_infos [len].request_dscp = fwd_dscp;
                 dscp_infos [len].reply_dscp = rev_dscp; /// Assigning zero here.
-                ACE_DEBUG ((LM_DEBUG,"In NetQoSPlanner_exec_i::process_netqos_req: fwd_dscp\n"));
+                ACE_DEBUG ((LM_DEBUG,"In\
+NetQoSPlanner_exec_i::process_netqos_req: fwd_dscpi = %d\n",fwd_dscp));
 
                 if (conn_qos.revBWD > 0)
                 {
@@ -319,7 +320,8 @@ namespace CIAO
                       rollback = true;
                       BREAK(outer);
                     }
-                  ACE_DEBUG ((LM_DEBUG,"In NetQoSPlanner_exec_i::process_netqos_req: rev_dscp\n"));
+                  ACE_DEBUG ((LM_DEBUG,"In\
+NetQoSPlanner_exec_i::process_netqos_req: rev_dscp = %d\n",rev_dscp));
                   dscp_infos [len].reply_dscp = rev_dscp;
                 }
 /*              std::cerr
