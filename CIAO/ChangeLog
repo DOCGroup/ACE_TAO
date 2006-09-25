@@ -1,3 +1,13 @@
+Mon Sep 25 23:19:15 UTC 2006  Shanshan Jiang <shanshan.jiang@vanderbilt.edu>
+
+        * DAnCE/Plan_Launcher/Plan_Launcher_Impl.cpp
+        Modified the fetch_reference_naming () to remove its arguments related
+        to Repoman.
+        
+        * DAnCE/Plan_Generator/PCVisitor.h
+        Adjusted the order of the data members of Plan_Generator_i class.
+        
+
 Mon Sep 25 19:46:37 UTC 2006  Nishanth Shankaran  <nshankar@dre.vanderbilt.edu>
 
         * DAnCE/Plan_Generator/Plan_Generator.mpc (project): Fixed the MPC
