@@ -1,6 +1,0 @@
-// $Id$
-
-project : namingexe, rtcorba, core, messaging {
-  exename   = catior
-  install   = $(ACE_ROOT)/bin
-}
