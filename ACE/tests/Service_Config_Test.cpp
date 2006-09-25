@@ -243,25 +243,23 @@ testLimits (int , ACE_TCHAR *[])
 
   u_int error0 = error;
 
-  // Ensure enough room for one
+  // Ensure enough room for one in a own
   ACE_Service_Gestalt one (1, true);
 
   // Add two.
   // We cant simply rely on the fact that insertion fails, because it
   // is typical to have no easy way of getting detailed error
   // information from a parser.
-  int ret1 = one.process_directive (svc_desc1);
-  if (ret1 != 0 ||
-      -1 == one.find (ACE_TEXT ("Test_Object_1_More"), 0, 0))
+  one.process_directive (svc_desc1);
+  one.process_directive (svc_desc2);
+
+  if (-1 == one.find (ACE_TEXT ("Test_Object_1_More"), 0, 0))
     {
       ++error;
       ACE_ERROR ((LM_ERROR, ACE_TEXT("Expected to have registered the first service\n")));
     }
 
-  int ret2 = one.process_directive (svc_desc2);
-
-  if (ret2 == 0 ||
-      -1 != one.find (ACE_TEXT ("Test_Object_2_More"), 0, 0))
+  if (-1 != one.find (ACE_TEXT ("Test_Object_2_More"), 0, 0))
     {
       ++error;
       ACE_ERROR ((LM_ERROR, ACE_TEXT("Being able to add more than 1 service was not expected\n")));
