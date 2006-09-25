@@ -40,16 +40,6 @@ TAO_Connection_Handler::TAO_Connection_Handler (TAO_ORB_Core *orb_core)
 
 TAO_Connection_Handler::~TAO_Connection_Handler (void)
 {
-  int const result =
-    this->release_os_resources ();
-
-  if (result == -1 && TAO_debug_level)
-    {
-      ACE_ERROR ((LM_ERROR,
-                  "TAO (%P|%t) - Connection_Handler::~Connection_Handler,"
-                  "release_os_resources() failed %m\n"));
-    }
-
   // @@ TODO Use auto_ptr<>
   delete this->lock_;
 

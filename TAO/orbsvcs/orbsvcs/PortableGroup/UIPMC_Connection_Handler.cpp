@@ -69,7 +69,16 @@ TAO_UIPMC_Connection_Handler::~TAO_UIPMC_Connection_Handler (void)
     this->udp_socket_.close ();
 
   delete this->transport ();
-  this->release_os_resources();
+  int const result =
+    this->release_os_resources ();
+
+  if (result == -1 && TAO_debug_level)
+    {
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT("TAO (%P|%t) - UMPIC_Connection_Handler::")
+                  ACE_TEXT("~UMPIC_Connection_Handler, ")
+                  ACE_TEXT("release_os_resources() failed %m\n")));
+    }
 }
 
 ACE_HANDLE
