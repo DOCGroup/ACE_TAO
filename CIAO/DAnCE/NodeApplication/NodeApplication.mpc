@@ -12,6 +12,7 @@ project(NodeApplication): ciao_server_dnc, ciao_events_dnc {
     NodeApplication_Core.cpp
     NodeApplication_Impl.cpp
     NodeApplication.cpp
+    NodeApp_Configurator.cpp
   }
 }
 
