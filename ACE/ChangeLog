@@ -1,3 +1,13 @@
+Mon Sep 25 16:29:42 UTC 2006  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
+
+        * ace/ACE.cpp (send_n_i): Conditionally removed the check for
+          errno == ENOBUFS because Winsock send, or WSASend will try to
+          enqueue all buffer at once (to the kernel) and if not it will
+          return ENOBUFS, in which case the socket is always ready for
+          writing but actually winsock can never perform such write and we
+          have endless loop.  Thanks to Aleksandar Vukajlovic <vukajlo at
+          finsoft dot co dot yu> for reporting this and suggesting a fix.
+
 Mon Sep 25 11:39:35 UTC 2006  Boris Kolpackov  <boris@codesynthesis.com>
 
         * ace/Bound_Ptr.inl:
