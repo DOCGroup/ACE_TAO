@@ -6,7 +6,7 @@
 #define TMCAST_MESSAGING_HPP
 
 #include <ace/Synch.h>
-#include <ace/Refcounted_Auto_Ptr.h>
+#include <ace/Bound_Ptr.h>
 
 #include "MTQueue.hpp"
 
@@ -20,7 +20,7 @@ namespace ACE_TMCast
   };
 
   typedef
-  ACE_Refcounted_Auto_Ptr<Message, ACE_Null_Mutex>
+  ACE_Strong_Bound_Ptr<Message, ACE_SYNCH_MUTEX>
   MessagePtr;
 
   typedef
