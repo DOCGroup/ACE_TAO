@@ -311,7 +311,7 @@ namespace CIAO
                 dscp_infos [len].request_dscp = fwd_dscp;
                 dscp_infos [len].reply_dscp = rev_dscp; /// Assigning zero here.
                 ACE_DEBUG ((LM_DEBUG,"In\
-NetQoSPlanner_exec_i::process_netqos_req: fwd_dscpi = %d\n",fwd_dscp));
+NetQoSPlanner_exec_i::process_netqos_req: fwd_dscp = %d\n",fwd_dscp));
 
                 if (conn_qos.revBWD > 0)
                 {
