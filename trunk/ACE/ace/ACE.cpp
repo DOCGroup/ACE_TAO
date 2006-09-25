@@ -1430,7 +1430,11 @@ ACE::send_n_i (ACE_HANDLE handle,
       if (n == -1)
         {
           // Check for possible blocking.
+#if defined (ACE_WIN32)
+          if (errno == EWOULDBLOCK) // If enobufs no need to loop
+#else
           if (errno == EWOULDBLOCK || errno == ENOBUFS)
+#endif /* ACE_WIN32 */
             {
               // Wait for the blocking to subside.
               int result = ACE::handle_write_ready (handle,
