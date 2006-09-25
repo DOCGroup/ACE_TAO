@@ -52,12 +52,15 @@ namespace CIAO
 	ACE_DEBUG ((LM_ERROR, "RACE:Output_Manager::output_plan\n"));
         CIAO::RACE::Output_Manager::adaptersConnections_var conn
             (comp_.context_->get_connections_adapters ());
-
+	
+        ACE_DEBUG ((LM_DEBUG, "length = %d\n",conn->length()));
         for (CORBA::ULong i = 0;
              i < conn->length ();
              ++i)
           {
             try {
+
+              ACE_DEBUG ((LM_DEBUG, "i = %d\n",i));
 	      conn[i].objref->output_plan (plan_seq);
 	    }
 	    catch (...)
