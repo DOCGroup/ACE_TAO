@@ -126,7 +126,10 @@ public:
   void dump (void) const;
 
   /// Get to the DLL's implentation
-  const ACE_DLL & dll () const;
+  const ACE_DLL & dll (void) const;
+
+  /// Sets the DLL
+  void dll (const ACE_DLL&);
 
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
