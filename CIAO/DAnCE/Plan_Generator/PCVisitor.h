@@ -119,8 +119,8 @@ protected:
 private:
   Deployment::DeploymentPlan& plan_;
   Deployment::PackageConfiguration& pc_;
-  size_t last_impl_index_;
   bool modify_;
+  int last_impl_index_;
 };
 
 #include /**/ "ace/post.h"
