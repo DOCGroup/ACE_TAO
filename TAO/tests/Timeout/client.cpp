@@ -44,15 +44,18 @@ parse_args (int argc, char *argv[])
                            argv [0]),
                           -1);
       }
-  // Indicates sucessful parsing of the command line
+  // Indicates successful parsing of the command line
   return 0;
 }
 
-static int timeout_count = 0;
-static int in_time_count = 0;
+enum TO_TYPE {none = 0, orb1 = 1, thread1 = 2, object1 = 3};
+char *to_type_names[4] ={"none", "orb", "thread", "object"};
+
+static int timeout_count[4] = {0, 0, 0, 0};
+static int in_time_count[4] = {0, 0, 0, 0};
 
 void
-send_echo (CORBA::ORB_ptr orb,
+send_echo (TO_TYPE ctype, CORBA::ORB_ptr orb,
            Simple_Server_ptr server,
            CORBA::Long t
            ACE_ENV_ARG_DECL)
@@ -62,19 +65,19 @@ send_echo (CORBA::ORB_ptr orb,
       server->echo (0, t ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      in_time_count++;
+      in_time_count[ctype]++;
     }
   ACE_CATCH (CORBA::TIMEOUT, timeout)
     {
-      timeout_count++;
+      timeout_count[ctype]++;
 
       // Trap this exception and continue...
-      // ACE_DEBUG ((LM_DEBUG,
-      //             "==> Trapped a TIMEOUT exception (expected)\n"));
+      ACE_DEBUG ((LM_DEBUG,
+                  "==> Trapped a TIMEOUT exception (expected)\n"));
 
       // Sleep so the server can send the reply...
-      ACE_Time_Value tv (max_timeout / 1000,
-                         (max_timeout % 1000) * 1000);
+      ACE_Time_Value tv (max_timeout / 1000, // max_timeout is in msec, so get seconds
+                         (max_timeout % 1000) * 1000); // and usec
 
       // This is a non-standard TAO call that's used to give the
       // client ORB a chance to cleanup the reply that's come back
@@ -132,14 +135,14 @@ int main (int argc, char* argv[])
       ACE_TRY_CHECK;
 
       TimeBase::TimeT mid_value =
-        10000 * (min_timeout + max_timeout) / 2;
+        10000 * (min_timeout + max_timeout) / 2; // convert from msec to "TimeT" (0.1 usec units)
 
       CORBA::Any any_orb;
       any_orb <<= mid_value;
       CORBA::Any any_thread;
-      any_thread <<= mid_value + 10000;
+      any_thread <<= mid_value + 10000; // midvalue + 1 msec
       CORBA::Any any_object;
-      any_object <<= mid_value + 20000;
+      any_object <<= mid_value + 20000; // midvalue + 2 msec
 
       CORBA::PolicyList policy_list (1);
       policy_list.length (1);
@@ -166,14 +169,14 @@ int main (int argc, char* argv[])
                   "client (%P) testing from %d to %d milliseconds\n",
                   min_timeout, max_timeout));
 
-      for (CORBA::Long t = min_timeout; t != max_timeout; ++t)
-        {
-          //ACE_DEBUG ((LM_DEBUG,
-          //            "\n================================\n"
-          //            "Trying with timeout = %d\n", t));
+      for (CORBA::Long t = min_timeout; t < max_timeout; ++t)
+       {
+         ACE_DEBUG ((LM_DEBUG,
+                     "\n================================\n"
+                     "Trying with timeout = %d msec\n", t));
 
-          // ACE_DEBUG ((LM_DEBUG,
-          //            "Cleanup ORB/Thread/Object policies\n"));
+         ACE_DEBUG ((LM_DEBUG,
+                     "Cleanup ORB/Thread/Object policies\n"));
 
           policy_list.length (0);
           policy_manager->set_policy_overrides (policy_list,
@@ -185,11 +188,14 @@ int main (int argc, char* argv[])
                                                 ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
 
-          send_echo (orb.in (), server.in (), t ACE_ENV_ARG_PARAMETER);
+          send_echo (none, orb.in (), server.in (), t ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
 
-          // ACE_DEBUG ((LM_DEBUG,
-          //             "client(%P) Set the ORB policies\n"));
+
+
+
+          ACE_DEBUG ((LM_DEBUG,
+                      "client(%P) Set the ORB policies\n"));
 
           policy_list.length (1);
           policy_list[0] =
@@ -203,14 +209,20 @@ int main (int argc, char* argv[])
                                                 ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
 
-          send_echo (orb.in (), server.in (), t ACE_ENV_ARG_PARAMETER);
+          send_echo (orb1, orb.in (), server.in (), t ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
 
           policy_list[0]->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
           ACE_TRY_CHECK;
 
-          // ACE_DEBUG ((LM_DEBUG,
-          //             "client(%P) Set the thread policies\n"));
+
+
+
+
+
+
+          ACE_DEBUG ((LM_DEBUG,
+                      "client(%P) Set the thread policies\n"));
 
           policy_list.length (1);
           policy_list[0] =
@@ -224,21 +236,27 @@ int main (int argc, char* argv[])
                                                 ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
 
-          send_echo (orb.in (), server.in (), t ACE_ENV_ARG_PARAMETER);
+          send_echo (thread1, orb.in (), server.in (), t ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
 
           policy_list[0]->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
           ACE_TRY_CHECK;
 
-          // ACE_DEBUG ((LM_DEBUG,
-          //            "client(%P) Use the object policies\n"));
-          send_echo (orb.in (), timeout_server.in (), t ACE_ENV_ARG_PARAMETER);
+
+
+
+
+
+
+          ACE_DEBUG ((LM_DEBUG,
+                      "client(%P) Use the object policies\n"));
+          send_echo (object1, orb.in (), timeout_server.in (), t ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
         }
 
-      // ACE_DEBUG ((LM_DEBUG,
-      //             "\n\n\nclient(%P) Test completed, "
-      //             "resynch with server\n"));
+      ACE_DEBUG ((LM_DEBUG,
+                  "\n\n\nclient(%P) Test completed, "
+                  "resynch with server\n"));
       policy_list.length (0);
       policy_manager->set_policy_overrides (policy_list,
                                             CORBA::SET_OVERRIDE
@@ -249,22 +267,32 @@ int main (int argc, char* argv[])
                                             ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      send_echo (orb.in (), server.in (), 0 ACE_ENV_ARG_PARAMETER);
+      send_echo (none, orb.in (), server.in (), 0 ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       server->shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      if (timeout_count == 0)
-        ACE_ERROR ((LM_ERROR,
-                    "ERROR: No messaged timed out\n"));
+      int timeout_count_total = 0;
+      int in_time_count_total = 0;
+      for (int i = 0; i < 4; i++) {
+        timeout_count_total += timeout_count[i];
+        in_time_count_total += in_time_count[i];
+        ACE_DEBUG ((LM_DEBUG, "in_time_count[%s]= %d timeout_count[%s]= %d\n",
+                    to_type_names[i], in_time_count[i],
+                    to_type_names[i], timeout_count[i]));
+      }
 
-      if (in_time_count == 0)
+      if (timeout_count_total == 0)
         ACE_ERROR ((LM_ERROR,
-                    "ERROR: No messages on time\n"));
+                    "ERROR: No messages timed out\n"));
 
-      ACE_DEBUG ((LM_DEBUG, "In time = %d, timed out = %d\n",
-                  in_time_count, timeout_count));
+      if (in_time_count_total == 0)
+        ACE_ERROR ((LM_ERROR,
+                    "ERROR: No messages on time (within time limit)\n"));
+
+      ACE_DEBUG ((LM_DEBUG, "in_time_count_total = %d, timeout_count_total = %d\n",
+                  in_time_count_total, timeout_count_total));
 
       orb->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
