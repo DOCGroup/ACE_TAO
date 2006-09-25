@@ -1,3 +1,7 @@
+Mon Sep 25 14:42:03 UTC 2006  Nishanth Shankaran  <nshankar@dre.vanderbilt.edu>
+
+        * DAnCE/Plan_Launcher/Plan_Launcher.mpc: Fixed the mpc file.
+
 Mon Sep 25 13:06:05 UTC 2006  Boris Kolpackov  <boris@codesynthesis.com>
 
         * CCF/CCF/IDL2/SemanticAction/Operation.cpp:

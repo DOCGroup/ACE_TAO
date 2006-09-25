@@ -6,12 +6,12 @@ project(Plan_Launcher_Impl) : ciao_servant_dnc, ciao_config_handlers {
 
   after += Plan_Generator ExecutionManager_stub
   libs  += Plan_Generator ExecutionManager_stub
-  includes += $(CIAO_ROOT/DAnCE/Plan_Generator
+   includes += $(CIAO_ROOT)/DAnCE/Plan_Generator
 
   dynamicflags = PLAN_LAUNCHER_IMPL_BUILD_DLL
 
   Source_Files {
-    Plan_Launcher_Impl.cpp    
+    Plan_Launcher_Impl.cpp
     ../ExecutionManager/DAM_Map.cpp
   }
 
