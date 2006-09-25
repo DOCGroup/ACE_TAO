@@ -5,7 +5,7 @@
 #include "ace/OS_NS_string.h"
 #include "ace/OS_NS_stdlib.h"
 #include "ace/Synch.h"
-#include "ace/Refcounted_Auto_Ptr.h"
+#include "ace/Bound_Ptr.h"
 
 #include "Protocol.hpp"
 #include "Messaging.hpp"
@@ -45,7 +45,7 @@ namespace ACE_TMCast
   };
 
   typedef
-  ACE_Refcounted_Auto_Ptr<Send, ACE_Null_Mutex>
+  ACE_Strong_Bound_Ptr<Send, ACE_SYNCH_MUTEX>
   SendPtr;
 
 
@@ -76,7 +76,7 @@ namespace ACE_TMCast
   };
 
   typedef
-  ACE_Refcounted_Auto_Ptr<Recv, ACE_Null_Mutex>
+  ACE_Strong_Bound_Ptr<Recv, ACE_SYNCH_MUTEX>
   RecvPtr;
 
   class Aborted : public virtual Message {};
@@ -129,7 +129,7 @@ namespace ACE_TMCast
               else // joined transaction
               {
                 MessageQueueAutoLock lock (recv_out_);
-                recv_out_.push (MessagePtr (recv_.release ()));
+                recv_out_.push (MessagePtr (recv_));
                 recv_ = RecvPtr ();
               }
             }
@@ -346,7 +346,7 @@ namespace ACE_TMCast
 
         if (typeid (*m) == typeid (Send))
         {
-          send_ = SendPtr (dynamic_cast<Send*> (m.release ()));
+          send_ = SendPtr (m);
         }
         else
         {
