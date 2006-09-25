@@ -11,9 +11,7 @@ namespace CIAO
   namespace Plan_Launcher
   {
     static CORBA::Object_ptr
-    fetch_reference_naming (CORBA::ORB_ptr orb,
-                            bool use_repoman = 0, 
-                            const char *repoman_name = 0
+    fetch_reference_naming (CORBA::ORB_ptr orb
                             ACE_ENV_ARG_DECL)
     {
       CORBA::Object_var tmp =
