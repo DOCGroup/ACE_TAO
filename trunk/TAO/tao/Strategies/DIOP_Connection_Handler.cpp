@@ -59,7 +59,16 @@ TAO_DIOP_Connection_Handler::TAO_DIOP_Connection_Handler (TAO_ORB_Core *orb_core
 TAO_DIOP_Connection_Handler::~TAO_DIOP_Connection_Handler (void)
 {
   delete this->transport ();
-  this->release_os_resources();
+  int const result =
+    this->release_os_resources ();
+
+  if (result == -1 && TAO_debug_level)
+    {
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT("TAO (%P|%t) - DIOP_Connection_Handler::")
+                  ACE_TEXT("~DIOP_Connection_Handler, ")
+                  ACE_TEXT("release_os_resources() failed %m\n")));
+    }
   this->udp_socket_.close ();
 }
 
