@@ -1,3 +1,17 @@
+Mon Sep 25 17:09:58 UTC 2006  Edward R. Mulholland  <emulholl@atl.lmco.com>
+
+        * tests/Timeout/client.cpp:
+        * tests/Timeout/run_test.pl:
+        * tests/Timeout/test_i.cpp:
+        * tests/Timeout/README.expected_behavior:
+        * tests/Timeout/README:
+
+          Made relatively modest changes to track statistics on per type
+          of timeout.  Also added a file README.expected_behavior that
+          carefully describes the timeout behavior that we should observe
+          on a proper real-time platform.  Please address comments and
+          questions to Gautam Thaker <gthaker@atl.lmco.com>.
+
 Fri Sep 22 21:29:26 UTC 2006  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tao/DynamicAny/DynAnyFactory.h:
