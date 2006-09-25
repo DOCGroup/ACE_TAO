@@ -20,7 +20,7 @@ cp Sender.ior ~
 
 mv ~/Sender.ior .
 
-$CIAO_ROOT/examples/Hello/Sender/starter -k Sender.ior
+$CIAO_ROOT/examples/Hello/Sender/starter -k file://Sender.ior
 
 sudo tethereal -a filesize:10000 -a duration:30 -w /tmp/ethcap1.tango host tango.dre.vanderbilt.edu
 sudo tethereal -a filesize:10000 -a duration:30 -w /tmp/ethcap1.lambada host lambada.dre.vanderbilt.edu

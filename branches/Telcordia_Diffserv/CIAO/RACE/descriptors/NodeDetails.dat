@@ -1,4 +1,4 @@
-foil      corbaloc:iiop:lambada.dre.vanderbilt.edu:50200/NodeManager
-blade34   corbaloc:iiop:lambada.dre.vanderbilt.edu:50200/NodeManager
-sender    corbaloc:iiop:lambada.dre.vanderbilt.edu:60003/NodeManager
-receiver  corbaloc:iiop:tango.dre.vanderbilt.edu:60004/NodeManager
+foil      corbaloc:iiop:javelin.isislab.vanderbilt.edu:60004/NodeManager
+blade34   corbaloc:iiop:javelin.isislab.vanderbilt.edu:60004/NodeManager
+sender    corbaloc:iiop:javelin.isislab.vanderbilt.edu:60004/NodeManager
+receiver  corbaloc:iiop:champion.isislab.vanderbilt.edu:60003/NodeManager
