@@ -1,3 +1,0 @@
-# !/bin/sh
-echo java -Dorg.omg.CORBA.ORBClass=org.jacorb.orb.ORB -Dorg.omg.CORBA.ORBSingletonClass=org.jacorb.orb.ORBSingleton -Djacorb.ior_proxy_host=localhost -Djacorb.implname=AdmissionControl  mil.darpa.arms.mlrm.BandwidthBroker.bb.server.BBServer $BBLOGPROP -ORBInitRef NameService=corbaloc::$ONS_HOST:$ONS_PORT/NameService &
-java -Dorg.omg.CORBA.ORBClass=org.jacorb.orb.ORB -Dorg.omg.CORBA.ORBSingletonClass=org.jacorb.orb.ORBSingleton -Djacorb.ior_proxy_host=localhost -Djacorb.implname=AdmissionControl  mil.darpa.arms.mlrm.BandwidthBroker.bb.server.BBServer $BBLOGPROP -ORBInitRef NameService=corbaloc::$ONS_HOST:$ONS_PORT/NameService &

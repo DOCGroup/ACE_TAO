@@ -1,9 +1,0 @@
-#!/bin/sh 
-
-# JacORB v1.0 name server
-# Gerald Brose, Freie Universitaet Berlin
-# brose@inf.fu-berlin.de
-
-# Starts the JacORB name server
-
-jaco org.jacorb.naming.NameServer "$@"

@@ -1,7 +1,0 @@
-use ARMSBB;
-update L3Hops set l3InterfaceID=13 where l3InterfaceID=14 OR l3InterfaceID=15;
-update L3Hops set l3InterfaceID=16 where l3InterfaceID=17 OR l3InterfaceID=18;
-update L3Hops set l3InterfaceID=19 where l3InterfaceID=20 OR l3InterfaceID=21;
-update L3Hops set l3InterfaceID=22 where l3InterfaceID=23 OR l3InterfaceID=24;
-update L3Hops set l3InterfaceID=25 where l3InterfaceID=26 OR l3InterfaceID=27;
-update L3Hops set l3InterfaceID=28 where l3InterfaceID=29 OR l3InterfaceID=30;
