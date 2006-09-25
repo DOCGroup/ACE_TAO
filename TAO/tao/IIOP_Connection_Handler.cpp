@@ -63,7 +63,16 @@ TAO_IIOP_Connection_Handler::TAO_IIOP_Connection_Handler (TAO_ORB_Core *orb_core
 TAO_IIOP_Connection_Handler::~TAO_IIOP_Connection_Handler (void)
 {
   delete this->transport ();
-  this->release_os_resources();
+  int const result =
+    this->release_os_resources ();
+
+  if (result == -1 && TAO_debug_level)
+    {
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT("TAO (%P|%t) - IIOP_Connection_Handler::")
+                  ACE_TEXT("~IIOP_Connection_Handler, ")
+                  ACE_TEXT("release_os_resources() failed %m\n")));
+    }
 }
 
 /* Copy hook that copies over the concrete methods from this class

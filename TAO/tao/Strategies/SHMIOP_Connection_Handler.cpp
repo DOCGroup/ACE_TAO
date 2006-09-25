@@ -56,6 +56,17 @@ TAO_SHMIOP_Connection_Handler::TAO_SHMIOP_Connection_Handler (TAO_ORB_Core *orb_
 TAO_SHMIOP_Connection_Handler::~TAO_SHMIOP_Connection_Handler (void)
 {
   delete this->transport ();
+  int const result =
+    this->release_os_resources ();
+
+  if (result == -1 && TAO_debug_level)
+    {
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT("TAO (%P|%t) - SHMIOP_Connection_Handler::")
+                  ACE_TEXT("~SHMIOP_Connection_Handler, ")
+                  ACE_TEXT("release_os_resources() failed %m\n")));
+    }
+
 }
 
 int
