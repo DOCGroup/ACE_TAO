@@ -37,6 +37,7 @@ project : taolib, core, core_anytypecode, tao_versioning_idl_defaults {
     idlflags -= -St
     Strategies/uiop_endpoints.pidl
     Strategies/sciop_endpoints.pidl
+    Strategies/COIOP_Endpoints.pidl
   }
 
   Pkgconfig_Files {
