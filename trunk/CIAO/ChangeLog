@@ -1,12 +1,19 @@
+Tue Sep 26 15:52:12 UTC 2006  Boris Kolpackov  <boris@codesynthesis.com>
+
+        * docs/tutorials/Quoter/Simple/Broker/Broker.cidl:
+        * docs/tutorials/Quoter/Simple/Distributor/Distributor.cidl:
+
+        Added missing semicolons.
+
 Mon Sep 25 23:19:15 UTC 2006  Shanshan Jiang <shanshan.jiang@vanderbilt.edu>
 
         * DAnCE/Plan_Launcher/Plan_Launcher_Impl.cpp
         Modified the fetch_reference_naming () to remove its arguments related
         to Repoman.
-        
+
         * DAnCE/Plan_Generator/PCVisitor.h
         Adjusted the order of the data members of Plan_Generator_i class.
-        
+
 
 Mon Sep 25 19:46:37 UTC 2006  Nishanth Shankaran  <nshankar@dre.vanderbilt.edu>
 
