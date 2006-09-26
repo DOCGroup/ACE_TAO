@@ -6,6 +6,7 @@
 #include "tao/Strategies/SHMIOP_Factory.h"
 #include "tao/Strategies/DIOP_Factory.h"
 #include "tao/Strategies/SCIOP_Factory.h"
+#include "tao/Strategies/COIOP_Factory.h"
 
 #include "tao/Strategies/LFU_Connection_Purging_Strategy.h"
 #include "tao/Strategies/FIFO_Connection_Purging_Strategy.h"
@@ -57,6 +58,10 @@ TAO_Resource_Factory_Changer::TAO_Resource_Factory_Changer (void)
 
 #if TAO_HAS_SCIOP == 1
   ACE_Service_Config::process_directive (ace_svc_desc_TAO_SCIOP_Protocol_Factory);
+#endif /* TAO_HAS_SCIOP == 1 */
+
+#if TAO_HAS_COIOP == 1
+  ACE_Service_Config::process_directive (ace_svc_desc_TAO_COIOP_Protocol_Factory);
 #endif /* TAO_HAS_SCIOP == 1 */
 }
 
@@ -350,6 +355,12 @@ TAO_Advanced_Resource_Factory::init_protocol_factories (void)
           this->protocol_factories_, "SCIOP_Factory") == -1)
         return -1;
 #endif /* TAO_HAS_SCIOP && TAO_HAS_SCIOP != 0 */
+
+#if defined (TAO_HAS_COIOP) && (TAO_HAS_COIOP != 0)
+      if (TAO::details::load_protocol_factory <TAO_COIOP_Protocol_Factory> (
+          this->protocol_factories_, "COIOP_Factory") == -1)
+        return -1;
+#endif /* TAO_HAS_COIOP && TAO_HAS_COIOP != 0 */
 
       return 0;
 
