@@ -49,7 +49,7 @@ parse_args (int argc, char *argv[])
 }
 
 enum TO_TYPE {none = 0, orb1 = 1, thread1 = 2, object1 = 3};
-char *to_type_names[4] ={"none", "orb", "thread", "object"};
+const char *to_type_names[4] ={"none", "orb", "thread", "object"};
 
 static int timeout_count[4] = {0, 0, 0, 0};
 static int in_time_count[4] = {0, 0, 0, 0};
