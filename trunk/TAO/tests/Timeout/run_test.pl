@@ -22,12 +22,15 @@ else {
 $CL = new PerlACE::Process ("client", "-ORBDebugLevel 0 -k file://$iorfile -l 20 -h 40");
 
 
-$SV->Spawn ();
+$server_spawn = $SV->Spawn ();
 
-# if (PerlACE::waitforfile_timed ($iorfile,
-#                         $PerlACE::wait_interval_for_process_creation) == -1) {
+if ($server_spawn != 0) {
+    print STDERR "ERROR: server returned $server_spawn\n";
+    exit 1;
+}
+
 if (PerlACE::waitforfile_timed ($iorfile,
-                        10) == -1) { # wait for 10 seconds
+                                $PerlACE::wait_interval_for_process_creation) == -1) {
     print STDERR "ERROR: cannot find file <$iorfile>\n";
     $SV->Kill ();
     exit 1;
