@@ -275,7 +275,7 @@ namespace CIAO
           ::Deployment::DomainApplicationManager_var dapp_mgr =
               this->em_->getManager (uuid);
 
-          if (!::CORBA::is_nil (dapp_mgr))
+          if (!::CORBA::is_nil (dapp_mgr.in ()))
           {
             dapp_mgr->destroyApplication ();
             if (CIAO::debug_level ())
