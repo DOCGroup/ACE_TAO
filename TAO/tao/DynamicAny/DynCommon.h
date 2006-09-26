@@ -21,11 +21,6 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#if defined (_MSC_VER)
-# pragma warning(push)
-# pragma warning (disable:4250)
-#endif /* _MSC_VER */
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
@@ -439,7 +434,7 @@ public:
         DynamicAny::DynAny::TypeMismatch,
         DynamicAny::DynAny::InvalidValue
       ));
-  
+
   virtual CORBA::AbstractBase_ptr get_abstract (
       ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((
@@ -447,7 +442,7 @@ public:
         DynamicAny::DynAny::TypeMismatch,
         DynamicAny::DynAny::InvalidValue
       ));
-  
+
   virtual void insert_boolean_seq (
       const CORBA::BooleanSeq & value
       ACE_ENV_ARG_DECL_WITH_DEFAULTS)
@@ -456,7 +451,7 @@ public:
         DynamicAny::DynAny::TypeMismatch,
         DynamicAny::DynAny::InvalidValue
       ));
-  
+
   virtual void insert_octet_seq (
       const CORBA::OctetSeq & value
       ACE_ENV_ARG_DECL_WITH_DEFAULTS)
@@ -465,7 +460,7 @@ public:
         DynamicAny::DynAny::TypeMismatch,
         DynamicAny::DynAny::InvalidValue
       ));
-  
+
   virtual void insert_char_seq (
       const CORBA::CharSeq & value
       ACE_ENV_ARG_DECL_WITH_DEFAULTS)
@@ -474,7 +469,7 @@ public:
         DynamicAny::DynAny::TypeMismatch,
         DynamicAny::DynAny::InvalidValue
       ));
-  
+
   virtual void insert_short_seq (
       const CORBA::ShortSeq & value
       ACE_ENV_ARG_DECL_WITH_DEFAULTS)
@@ -483,7 +478,7 @@ public:
         DynamicAny::DynAny::TypeMismatch,
         DynamicAny::DynAny::InvalidValue
       ));
-  
+
   virtual void insert_ushort_seq (
       const CORBA::UShortSeq & value
       ACE_ENV_ARG_DECL_WITH_DEFAULTS)
@@ -492,7 +487,7 @@ public:
         DynamicAny::DynAny::TypeMismatch,
         DynamicAny::DynAny::InvalidValue
       ));
-  
+
   virtual void insert_long_seq (
       const CORBA::LongSeq & value
       ACE_ENV_ARG_DECL_WITH_DEFAULTS)
@@ -501,7 +496,7 @@ public:
         DynamicAny::DynAny::TypeMismatch,
         DynamicAny::DynAny::InvalidValue
       ));
-  
+
   virtual void insert_ulong_seq (
       const CORBA::ULongSeq & value
       ACE_ENV_ARG_DECL_WITH_DEFAULTS)
@@ -510,7 +505,7 @@ public:
         DynamicAny::DynAny::TypeMismatch,
         DynamicAny::DynAny::InvalidValue
       ));
-  
+
   virtual void insert_float_seq (
       const CORBA::FloatSeq & value
       ACE_ENV_ARG_DECL_WITH_DEFAULTS)
@@ -519,7 +514,7 @@ public:
         DynamicAny::DynAny::TypeMismatch,
         DynamicAny::DynAny::InvalidValue
       ));
-  
+
   virtual void insert_double_seq (
       const CORBA::DoubleSeq & value
       ACE_ENV_ARG_DECL_WITH_DEFAULTS)
@@ -528,7 +523,7 @@ public:
         DynamicAny::DynAny::TypeMismatch,
         DynamicAny::DynAny::InvalidValue
       ));
-  
+
   virtual void insert_longlong_seq (
       const CORBA::LongLongSeq & value
       ACE_ENV_ARG_DECL_WITH_DEFAULTS)
@@ -537,7 +532,7 @@ public:
         DynamicAny::DynAny::TypeMismatch,
         DynamicAny::DynAny::InvalidValue
       ));
-  
+
   virtual void insert_ulonglong_seq (
       const CORBA::ULongLongSeq & value
       ACE_ENV_ARG_DECL_WITH_DEFAULTS)
@@ -546,7 +541,7 @@ public:
         DynamicAny::DynAny::TypeMismatch,
         DynamicAny::DynAny::InvalidValue
       ));
-  
+
   virtual void insert_longdouble_seq (
       const CORBA::LongDoubleSeq & value
       ACE_ENV_ARG_DECL_WITH_DEFAULTS)
@@ -555,7 +550,7 @@ public:
         DynamicAny::DynAny::TypeMismatch,
         DynamicAny::DynAny::InvalidValue
       ));
-  
+
   virtual void insert_wchar_seq (
       const CORBA::WCharSeq & value
       ACE_ENV_ARG_DECL_WITH_DEFAULTS)
@@ -564,7 +559,7 @@ public:
         DynamicAny::DynAny::TypeMismatch,
         DynamicAny::DynAny::InvalidValue
       ));
-  
+
   virtual CORBA::BooleanSeq * get_boolean_seq (
       ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((
@@ -572,7 +567,7 @@ public:
         DynamicAny::DynAny::TypeMismatch,
         DynamicAny::DynAny::InvalidValue
       ));
-  
+
   virtual CORBA::OctetSeq * get_octet_seq (
       ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((
@@ -580,7 +575,7 @@ public:
         DynamicAny::DynAny::TypeMismatch,
         DynamicAny::DynAny::InvalidValue
       ));
-  
+
   virtual CORBA::CharSeq * get_char_seq (
       ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((
@@ -588,7 +583,7 @@ public:
         DynamicAny::DynAny::TypeMismatch,
         DynamicAny::DynAny::InvalidValue
       ));
-  
+
   virtual CORBA::ShortSeq * get_short_seq (
       ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((
@@ -596,7 +591,7 @@ public:
         DynamicAny::DynAny::TypeMismatch,
         DynamicAny::DynAny::InvalidValue
       ));
-  
+
   virtual CORBA::UShortSeq * get_ushort_seq (
       ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((
@@ -604,7 +599,7 @@ public:
         DynamicAny::DynAny::TypeMismatch,
         DynamicAny::DynAny::InvalidValue
       ));
-  
+
   virtual CORBA::LongSeq * get_long_seq (
       ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((
@@ -612,7 +607,7 @@ public:
         DynamicAny::DynAny::TypeMismatch,
         DynamicAny::DynAny::InvalidValue
       ));
-  
+
   virtual CORBA::ULongSeq * get_ulong_seq (
       ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((
@@ -620,7 +615,7 @@ public:
         DynamicAny::DynAny::TypeMismatch,
         DynamicAny::DynAny::InvalidValue
       ));
-  
+
   virtual CORBA::FloatSeq * get_float_seq (
       ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((
@@ -628,7 +623,7 @@ public:
         DynamicAny::DynAny::TypeMismatch,
         DynamicAny::DynAny::InvalidValue
       ));
-  
+
   virtual CORBA::DoubleSeq * get_double_seq (
       ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((
@@ -636,7 +631,7 @@ public:
         DynamicAny::DynAny::TypeMismatch,
         DynamicAny::DynAny::InvalidValue
       ));
-  
+
   virtual CORBA::LongLongSeq * get_longlong_seq (
       ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((
@@ -644,7 +639,7 @@ public:
         DynamicAny::DynAny::TypeMismatch,
         DynamicAny::DynAny::InvalidValue
       ));
-  
+
   virtual CORBA::ULongLongSeq * get_ulonglong_seq (
       ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((
@@ -652,7 +647,7 @@ public:
         DynamicAny::DynAny::TypeMismatch,
         DynamicAny::DynAny::InvalidValue
       ));
-  
+
   virtual CORBA::LongDoubleSeq * get_longdouble_seq (
       ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((
@@ -660,7 +655,7 @@ public:
         DynamicAny::DynAny::TypeMismatch,
         DynamicAny::DynAny::InvalidValue
       ));
-  
+
   virtual CORBA::WCharSeq * get_wchar_seq (
       ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((
@@ -668,7 +663,7 @@ public:
         DynamicAny::DynAny::TypeMismatch,
         DynamicAny::DynAny::InvalidValue
       ));
-  
+
   /// This sets one of two flags in this base class. CORBA 2.4.2
   /// requires that destroy() do nothing if it is called on
   /// the result of current_component(), the only non-deep-copying
@@ -739,10 +734,6 @@ private:
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL
-
-#if defined(_MSC_VER)
-# pragma warning(pop)
-#endif /* _MSC_VER */
 
 #include /**/ "ace/post.h"
 #endif /* TAO_DYNCOMMON_H */
