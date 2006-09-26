@@ -1,3 +1,8 @@
+Tue Sep 26 21:05:48 UTC 2006  Shanshan Jiang <shanshan.jiang@vanderbilt.edu>
+
+        * DAnCE/Plan_Launcher/Plan_Launcher_Impl.cpp
+        Fixed the "conversion from '_var' to 'CORBA::Object*'" warning.
+
 Tue Sep 26 15:52:12 UTC 2006  Boris Kolpackov  <boris@codesynthesis.com>
 
         * docs/tutorials/Quoter/Simple/Broker/Broker.cidl:
