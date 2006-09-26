@@ -1,3 +1,9 @@
+Tue Sep 26 06:21:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Timeout/run_test.pl:
+          Don't use a hardcoded timeout and when there is no executable, exit
+          directly
+
 Mon Sep 25 22:27:24 UTC 2006  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * orbsvcs/orbsvcs/HTIOP/HTIOP_Connection_Handler.cpp:
