@@ -1,3 +1,32 @@
+Tue Sep 26 11:59:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Strategies/COIOP_*.*:
+          New pluggable protocol COIOP, this is Collocated Only IOP. It is
+          almost finished, some small improvements are pending which will
+          be added soon. This protocol only allows collocated invocations and
+          must be explicitly enabled by defined TAO_HAS_COIOP to 1. At the
+          moment all other protocols are disabled with their defines it is
+          then possible to run a collocated TAO application without using
+          any network API's which safes footprint for an application.
+
+        * tao/DynamicAny/DynCommon.h:
+          No need for a pragma push/pop
+
+        * tao/ORB_Constants.h:
+          Added COIOP profile constant
+
+        * tao/Strategies.mpc:
+          Extended for COIOP
+
+        * tao/Strategies/advanced_resource.cpp:
+          Added COIOP factory
+
+        * utils/catior/catior.cpp:
+          Added support for COIOP
+
+        * docs/releasenotes/index.html:
+          Added COIOP
+
 Tue Sep 26 06:21:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Timeout/run_test.pl:
