@@ -15,7 +15,7 @@ composition session StockDistributor_Impl {
   home executor StockDistributorHome_Exec  {
     implements Stock::StockDistributorHome;
     manages StockDistributor_Exec;
-  }
+  };
 };
 
 #endif /* DISTRIBUTOR_CIDL */

@@ -16,7 +16,7 @@ composition session StockBroker_Impl {
   home executor StockBrokerHome_Exec  {
     implements Stock::StockBrokerHome;
     manages StockBroker_Exec;
-  }
+  };
 };
 
 #endif /* STOCK_CIDL */
