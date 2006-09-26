@@ -1,3 +1,9 @@
+Tue Sep 26 09:49:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/MakeProjectCreator/config/dynamicany.mpb:
+          Derive from valuetype, needed to get AbstractBase::_nil() in a no inline
+          build.
+
 Mon Sep 25 16:29:42 UTC 2006  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
 
         * ace/ACE.cpp (send_n_i): Conditionally removed the check for
