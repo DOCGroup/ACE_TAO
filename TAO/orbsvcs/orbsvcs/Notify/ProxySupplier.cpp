@@ -41,8 +41,12 @@ TAO_Notify_ProxySupplier::init (TAO_Notify_ConsumerAdmin* consumer_admin ACE_ENV
   const CosNotification::QoSProperties &default_ps_qos =
     TAO_Notify_PROPERTIES::instance ()->default_proxy_supplier_qos_properties ();
 
-  this->set_qos (default_ps_qos ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+  {
+    ACE_GUARD_THROW_EX (TAO_SYNCH_MUTEX, ace_mon, this->lock_,
+                          CORBA::INTERNAL ());
+    this->TAO_Notify_Object::set_qos (default_ps_qos ACE_ENV_ARG_PARAMETER);
+    ACE_CHECK;
+  }
 }
 
 TAO_Notify_Peer*
