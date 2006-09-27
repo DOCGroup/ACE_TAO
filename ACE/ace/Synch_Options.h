@@ -41,16 +41,16 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
  *
  * <TABLE>
  * <TR><TD align="center"><B>Reactor</B></TD><TD align="center"><B>Timeout</B></TD><TD><B>Behavior</B></TD></TR>
- * <TR><TD>Unused</TD><TD>yes</TD><TD>Infinite timeout (using Reactor);
+ * <TR><TD>yes</TD><TD>Unused</TD><TD>Infinite timeout (using Reactor);
  *                                    this is the default.</TD></TR>
- * <TR><TD>time</TD><TD>yes</TD><TD>Try asynch transaction for the
+ * <TR><TD>yes</TD><TD>time</TD><TD>Try asynch transaction for the
  *                                 specified time (using Reactor)</TD></TR>
- * <TR><TD>0,0</TD><TD>yes</TD><TD>Poll; try, if EWOULDBLOCK, return
+ * <TR><TD>yes</TD><TD>0,0</TD><TD>Poll; try, if EWOULDBLOCK, return
  *                                 immediately (using Reactor)</TD></TR>
- * <TR><TD>Unused</TD><TD>no</TD><TD>Block until completion (don't use Reactor)</TD></TR>
- * <TR><TD>time</TD><TD>no</TD><TD>Wait up to specified amount of time for
+ * <TR><TD>no</TD><TD>Unused</TD><TD>Block until completion (don't use Reactor)</TD></TR>
+ * <TR><TD>no</TD><TD>time</TD><TD>Wait up to specified amount of time for
  *                                 completion (don't use Reactor)</TD></TR>
- * <TR><TD>0,0</TD><TD>no</TD><TD>Poll and return immediately</TD></TR>
+ * <TR><TD>no</TD><TD>0,0</TD><TD>Poll and return immediately</TD></TR>
  * </TABLE>
  */
 class ACE_Export ACE_Synch_Options

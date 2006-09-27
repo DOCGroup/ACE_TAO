@@ -1,3 +1,15 @@
+Wed Sep 27 21:18:04 UTC 2006  Steve Huston  <shuston@riverace.com>
+
+        * ace/Synch_Options.h: Corrected the table of possible Use_Reactor,
+          Timeout combinations - it was reversed.
+
+        * ace/WFMO_Reactor.{h cpp}: Change the delete_signal_handler_,
+          delete_timer_queue_, delete_handler_rep_, delete_notify_handler_,
+          and open_for_business_ members from int to bool to more
+          accurately reflect their nature as yes/no indicators.
+          Also, initialize notify_handler_ to 0 in constructors to avoid
+          a UMR warning from Purify.
+
 Wed Sep 27 06:28:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/msvc_static_compile.pl:
@@ -6,8 +18,8 @@ Wed Sep 27 06:28:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 Tue Sep 26 09:49:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/MakeProjectCreator/config/dynamicany.mpb:
-          Derive from valuetype, needed to get AbstractBase::_nil() in a no inline
-          build.
+          Derive from valuetype, needed to get AbstractBase::_nil() in a no
+          inline build.
 
 Mon Sep 25 16:29:42 UTC 2006  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
 

@@ -1256,23 +1256,23 @@ protected:
 
   /// Keeps track of whether we should delete the signal handler (if we
   /// didn't create it, then we don't delete it).
-  int delete_signal_handler_;
+  bool delete_signal_handler_;
 
   /// Defined as a pointer to allow overriding by derived classes...
   ACE_Timer_Queue *timer_queue_;
 
   /// Keeps track of whether we should delete the timer queue (if we
   /// didn't create it, then we don't delete it).
-  int delete_timer_queue_;
+  bool delete_timer_queue_;
 
   /// Keeps track of whether we should delete the handler repository
-  int delete_handler_rep_;
+  bool delete_handler_rep_;
 
   /// Used when <notify> is called.
   ACE_Reactor_Notify *notify_handler_;
 
   /// Keeps track of whether we should delete the notify handler.
-  int delete_notify_handler_;
+  bool delete_notify_handler_;
 
   /**
    * Synchronization for the ACE_WFMO_Reactor.
@@ -1334,7 +1334,7 @@ protected:
   ACE_HANDLE atomic_wait_array_ [2];
 
   /// This flag is used to keep track of whether we are already closed.
-  int open_for_business_;
+  bool open_for_business_;
 
   /// This flag is used to keep track of whether we are actively handling
   /// events or not.
