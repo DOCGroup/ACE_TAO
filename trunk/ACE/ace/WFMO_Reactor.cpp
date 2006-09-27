@@ -1065,11 +1065,12 @@ ACE_WFMO_Reactor::ACE_WFMO_Reactor (ACE_Sig_Handler *sh,
                                     ACE_Timer_Queue *tq,
                                     ACE_Reactor_Notify *notify)
   : signal_handler_ (0),
-    delete_signal_handler_ (0),
+    delete_signal_handler_ (false),
     timer_queue_ (0),
-    delete_timer_queue_ (0),
-    delete_handler_rep_ (0),
-    delete_notify_handler_ (0),
+    delete_timer_queue_ (false),
+    delete_handler_rep_ (false),
+    notify_handler_ (0),
+    delete_notify_handler_ (false),
     lock_adapter_ (lock_),
     handler_rep_ (*this),
     // this event is initially signaled
@@ -1082,7 +1083,7 @@ ACE_WFMO_Reactor::ACE_WFMO_Reactor (ACE_Sig_Handler *sh,
     owner_ (ACE_Thread::self ()),
     new_owner_ (0),
     change_state_thread_ (0),
-    open_for_business_ (0),
+    open_for_business_ (false),
     deactivated_ (0)
 {
   if (this->open (ACE_WFMO_Reactor::DEFAULT_SIZE, 0, sh, tq, 0, notify) == -1)
@@ -1097,11 +1098,12 @@ ACE_WFMO_Reactor::ACE_WFMO_Reactor (size_t size,
                                     ACE_Timer_Queue *tq,
                                     ACE_Reactor_Notify *notify)
   : signal_handler_ (0),
-    delete_signal_handler_ (0),
+    delete_signal_handler_ (false),
     timer_queue_ (0),
-    delete_timer_queue_ (0),
-    delete_handler_rep_ (0),
-    delete_notify_handler_ (0),
+    delete_timer_queue_ (false),
+    delete_handler_rep_ (false),
+    notify_handler_ (0),
+    delete_notify_handler_ (false),
     lock_adapter_ (lock_),
     handler_rep_ (*this),
     // this event is initially signaled
@@ -1114,7 +1116,7 @@ ACE_WFMO_Reactor::ACE_WFMO_Reactor (size_t size,
     owner_ (ACE_Thread::self ()),
     new_owner_ (0),
     change_state_thread_ (0),
-    open_for_business_ (0),
+    open_for_business_ (false),
     deactivated_ (0)
 {
   ACE_UNUSED_ARG (unused);
@@ -1158,12 +1160,12 @@ ACE_WFMO_Reactor::open (size_t size,
       ACE_NEW_RETURN (this->timer_queue_,
                       ACE_Timer_Heap,
                       -1);
-      this->delete_timer_queue_ = 1;
+      this->delete_timer_queue_ = true;
     }
   else
     {
       this->timer_queue_ = tq;
-      this->delete_timer_queue_ = 0;
+      this->delete_timer_queue_ = false;
     }
 
   // Signal Handler
@@ -1175,12 +1177,12 @@ ACE_WFMO_Reactor::open (size_t size,
       ACE_NEW_RETURN (this->signal_handler_,
                       ACE_Sig_Handler,
                       -1);
-      this->delete_signal_handler_ = 1;
+      this->delete_signal_handler_ = true;
     }
   else
     {
       this->signal_handler_ = sh;
-      this->delete_signal_handler_ = 0;
+      this->delete_signal_handler_ = false;
     }
 
   // Setup the atomic wait array (used later in <handle_events>)
@@ -1209,10 +1211,9 @@ ACE_WFMO_Reactor::open (size_t size,
                        ACE_LIB_TEXT ("opening handler repository")),
                       -1);
   else
-    this->delete_handler_rep_ = 1;
+    this->delete_handler_rep_ = true;
 
-  if (this->notify_handler_ != 0
-      && this->delete_notify_handler_ != 0)
+  if (this->notify_handler_ != 0 && this->delete_notify_handler_)
     delete this->notify_handler_;
 
   this->notify_handler_ = notify;
@@ -1226,7 +1227,7 @@ ACE_WFMO_Reactor::open (size_t size,
       if (this->notify_handler_ == 0)
         return -1;
       else
-        this->delete_notify_handler_ = 1;
+        this->delete_notify_handler_ = true;
     }
 
   /* NOTE */
@@ -1259,7 +1260,7 @@ ACE_WFMO_Reactor::open (size_t size,
     }
 
   // We are open for business
-  this->open_for_business_ = 1;
+  this->open_for_business_ = true;
 
   return 0;
 }
@@ -1267,10 +1268,10 @@ ACE_WFMO_Reactor::open (size_t size,
 int
 ACE_WFMO_Reactor::set_sig_handler (ACE_Sig_Handler *signal_handler)
 {
-  if (this->signal_handler_ != 0 && this->delete_signal_handler_ != 0)
+  if (this->signal_handler_ != 0 && this->delete_signal_handler_)
     delete this->signal_handler_;
   this->signal_handler_ = signal_handler;
-  this->delete_signal_handler_ = 0;
+  this->delete_signal_handler_ = false;
   return 0;
 }
 
@@ -1283,10 +1284,10 @@ ACE_WFMO_Reactor::timer_queue (void) const
 int
 ACE_WFMO_Reactor::timer_queue (ACE_Timer_Queue *tq)
 {
-  if (this->timer_queue_ != 0 && this->delete_timer_queue_ != 0)
+  if (this->timer_queue_ != 0 && this->delete_timer_queue_)
     delete this->timer_queue_;
   this->timer_queue_ = tq;
-  this->delete_timer_queue_ = 0;
+  this->delete_timer_queue_ = false;
   return 0;
 }
 
@@ -1301,7 +1302,7 @@ ACE_WFMO_Reactor::close (void)
     return -1;
 
   // We are now closed
-  this->open_for_business_ = 0;
+  this->open_for_business_ = false;
   // This will unregister all handles
   this->handler_rep_.close ();
 
@@ -1324,21 +1325,21 @@ ACE_WFMO_Reactor::~ACE_WFMO_Reactor (void)
     {
       delete this->timer_queue_;
       this->timer_queue_ = 0;
-      this->delete_timer_queue_ = 0;
+      this->delete_timer_queue_ = false;
     }
 
   if (this->delete_signal_handler_)
     {
       delete this->signal_handler_;
       this->signal_handler_ = 0;
-      this->delete_signal_handler_ = 0;
+      this->delete_signal_handler_ = false;
     }
 
   if (this->delete_notify_handler_)
     {
       delete this->notify_handler_;
       this->notify_handler_ = 0;
-      this->delete_notify_handler_ = 0;
+      this->delete_notify_handler_ = false;
     }
 }
 
