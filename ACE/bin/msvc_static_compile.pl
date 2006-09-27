@@ -27,6 +27,7 @@ use Cwd;
              "$ACE_ROOT\\examples",
              "$ACE_ROOT\\netsvcs",
              "$ACE_ROOT\\performance-tests",
+             "$ACE_ROOT\\protocols",
              "$ACE_ROOT\\tests",
              "$ACE_ROOT\\websvcs");
 
