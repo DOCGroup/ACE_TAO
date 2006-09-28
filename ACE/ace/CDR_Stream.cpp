@@ -1350,7 +1350,7 @@ ACE_InputCDR::read_1 (ACE_CDR::Octet *x)
 ACE_CDR::Boolean
 ACE_InputCDR::read_2 (ACE_CDR::UShort *x)
 {
-  char *buf;
+  char *buf = 0;
   if (this->adjust (ACE_CDR::SHORT_SIZE, buf) == 0)
     {
 #if !defined (ACE_DISABLE_SWAP_ON_READ)
