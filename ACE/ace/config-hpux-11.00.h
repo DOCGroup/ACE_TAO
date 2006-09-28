@@ -27,9 +27,6 @@
 // gcc 2.95.2 supplies the ssize_t typedef.
 #  define ACE_HAS_SSIZE_T
 
-// We have to explicitly instantiate static template members
-# define ACE_HAS_EXPLICIT_STATIC_TEMPLATE_MEMBER_INSTANTIATION
-
 // gcc 3.0 claims to have wide character stuff, but (at least the version
 // built by HP) can't actually compile it. It refers to a wctype.h file
 // that's only available with aC++.
