@@ -6,7 +6,7 @@ project(Plan_Launcher_Impl) : ciao_servant_dnc, ciao_config_handlers {
 
   after += Plan_Generator ExecutionManager_stub
   libs  += Plan_Generator ExecutionManager_stub
-   includes += $(CIAO_ROOT)/DAnCE/Plan_Generator
+  includes += $(CIAO_ROOT)/DAnCE/Plan_Generator
 
   dynamicflags = PLAN_LAUNCHER_IMPL_BUILD_DLL
 
@@ -25,8 +25,8 @@ project(Plan_Launcher) : ciao_server_dnc, ciao_config_handlers  {
   exename = plan_launcher
 
   after += Plan_Launcher_Impl
-  libs  += Plan_Launcher_Impl  ExecutionManager_stub
-
+  libs  += Plan_Generator Plan_Launcher_Impl  ExecutionManager_stub
+  
   Source_Files {
     Plan_Launcher.cpp
   }
