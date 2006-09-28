@@ -1,3 +1,9 @@
+Thu Sep 28 16:53:14 UTC 2006  Shanshan Jiang <shanshan.jiang@vanderbilt.edu>
+
+        * bin\MakeProjectCreator\config\ciao_executionmanager_stub.mpb
+        * bin\MakeProjectCreator\config\ciao_plan_generator.mpb
+        Added the base projects for executionmanager_stub and plan_generator.
+
 Thu Sep 28 14:46:43 UTC 2006  Iliyan Jeliazkov  <iliyan@ociweb.com>
 
         * bin/diff-builds.pl:

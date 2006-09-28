@@ -1,3 +1,10 @@
+Thu Sep 28 16:47:58 UTC 2006  Shanshan Jiang <shanshan.jiang@vanderbilt.edu>
+
+        * DAnCE/Plan_Launcher/Plan_Launcher.mpc
+        Added the base projects to Plan_Launcher_Impl project to include
+        required libs. Added null head files to the Plan_Launcher project to
+        remove the unnecessary dependency on other libs.
+
 Thu Sep 28 15:57:53 UTC 2006  Shanshan Jiang <shanshan.jiang@vanderbilt.edu>
 
         * DAnCE/Plan_Launcher/Plan_Launcher.mpc

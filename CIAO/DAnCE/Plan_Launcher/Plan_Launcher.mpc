@@ -1,22 +1,19 @@
 // -*- MPC -*-
 // $Id$
 
-project(Plan_Launcher_Impl) : ciao_servant_dnc, ciao_config_handlers {
+project(Plan_Launcher_Impl) : ciao_servant_dnc, ciao_config_handlers, ciao_executionmanager_stub, ciao_plan_generator {
   sharedname = Plan_Launcher_Impl
-
-  after += Plan_Generator ExecutionManager_stub
-  libs  += Plan_Generator ExecutionManager_stub
-  includes += $(CIAO_ROOT)/DAnCE/Plan_Generator
 
   dynamicflags = PLAN_LAUNCHER_IMPL_BUILD_DLL
 
   Source_Files {
-    Plan_Launcher_Impl.cpp
     ../ExecutionManager/DAM_Map.cpp
+    Plan_Launcher_Impl.cpp
   }
 
   Header_Files {
     ../ExecutionManager/DAM_Map.h
+    Plan_Launcher_Impl.h
     Plan_Launcher_Impl_Export.h
   }
 }
@@ -25,9 +22,12 @@ project(Plan_Launcher) : ciao_server_dnc, ciao_config_handlers  {
   exename = plan_launcher
 
   after += Plan_Launcher_Impl
-  libs  += Plan_Generator Plan_Launcher_Impl  ExecutionManager_stub
+  libs  += Plan_Launcher_Impl
   
   Source_Files {
     Plan_Launcher.cpp
+  }
+  
+  Header_Files {
   }
 }
