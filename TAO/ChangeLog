@@ -1,3 +1,8 @@
+Thu Sep 28 14:55:06 UTC 2006  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * tests/Bug_2188_Regression/broken_i.cpp:
+          Silence the Borland warning.
+
 Wed Sep 27 07:24:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         Merged in the patch from bugzilla bug 2425, this fixes the crashing

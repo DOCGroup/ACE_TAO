@@ -105,7 +105,7 @@ ArrayTest_i::~ArrayTest_i (void)
     CORBA::SystemException
   ))
 {
-  p3 = LongArray_dup(p2);
+  ::LongArray_copy(p3,p2);
   return LongArray_dup(p1);
 }
 
@@ -119,7 +119,7 @@ ArrayTest_i::~ArrayTest_i (void)
   ))
 {
   // Add your implementation here
-  p3 = StringArray_dup(p2);
+  ::StringArray_copy(p3,p2);
   return StringArray_dup(p1);
 }
 
@@ -132,7 +132,7 @@ ArrayTest_i::~ArrayTest_i (void)
     CORBA::SystemException
   ))
 {
-  p3 = ShortArray_dup(p2);
+  ::ShortArray_copy(p3,p2);
   return ShortArray_dup(p1);
   // Add your implementation here
 }
@@ -147,7 +147,7 @@ ArrayTest_i::~ArrayTest_i (void)
   ))
 {
   // Add your implementation here
-  p3 = UShortArray_dup(p2);
+  ::UShortArray_copy(p3,p2);
   return UShortArray_dup(p1);
 }
 
@@ -161,7 +161,7 @@ ArrayTest_i::~ArrayTest_i (void)
   ))
 {
   // Add your implementation here
-  p3 = CharArray_dup(p2);
+  ::CharArray_copy(p3,p2);
   return CharArray_dup(p1);
 
 }
@@ -176,7 +176,7 @@ ArrayTest_i::~ArrayTest_i (void)
   ))
 {
   // Add your implementation here
-  p3 = OctetArray_dup(p2);
+  ::OctetArray_copy(p3,p2);
   return OctetArray_dup(p1);
 }
 
@@ -190,7 +190,7 @@ ArrayTest_i::~ArrayTest_i (void)
   ))
 {
   // Add your implementation here
-  p3 = DoubleArray_dup(p2);
+  ::DoubleArray_copy(p3,p2);
   return DoubleArray_dup(p1);
 }
 
