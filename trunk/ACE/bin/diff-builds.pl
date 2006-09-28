@@ -5,6 +5,7 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 # $Id$
 # -*- perl -*-
 
+use File::Spec qw/ tmpdir /;
 use File::Temp qw/ tempfile tempdir /;
 use POSIX qw/ strftime /;
 
@@ -55,6 +56,9 @@ sub find_closest_earlier  {
     my $rx = quotemeta ( $file);
     my @temp = map { (/${rx}_([_0-9]+)([0-9][0-9]_[0-9][0-9])/ && $1 le $date) ? $1 : undef } @suffixes;
     my @temp2 = grep /^[0-9]/, @temp; 
+
+    print "Found closest earlier build times for $file on $date is $temp2[0]\n" unless !$debugging;
+
     return $temp2[0];
 }
 
@@ -97,8 +101,9 @@ sub load_failed_tests_list ($$)
           . find_closest_earlier ($file, $date) . "\n\n" 
     }
 
+    my $tmpdir = File::Spec->tmpdir();
     my $fullfile = $file .'_' . $date . '_' . $timestamps[0];
-    my ($fh, $tmpfile) = tempfile ($fullfile . ".XXXXXX", UNLINK => 1);
+    my ($fh, $tmpfile) = tempfile ($fullfile . ".XXXXXX", UNLINK => 1, DIR => $tmpdir);
 
     print "wget " . $verbose . " \'" .$teststaturl 
             . $fullfile . ".log\' -O - | sort >\'" . $tmpfile . '\'' . "\n" unless !$debugging;
@@ -113,6 +118,8 @@ sub load_failed_tests_list ($$)
 sub differentiate ($$)
 {
     my ($rfiles, $rdates) = @_;
+
+    print "Differentiating for dates " . join (', ', @$rdates) . "\n" unless !$debugging;
 
     open (DIFF, "diff -u \'" . load_failed_tests_list ($rfiles->[0], $rdates->[0]) 
           . "\' \'" . load_failed_tests_list ($rfiles->[1], $rdates->[1]) . "\' 2>&1 |")
@@ -184,7 +191,11 @@ while ($arg = shift(@ARGV)) {
       exit 0;
     }
     if ($arg eq '-D') {
-        push (@dates, shift(@ARGV));
+        my $date = shift(@ARGV);
+        $date =~ s/-/_/g;
+        push (@dates, $date);
+        print "Date=$date\n"
+            unless !$debugging;
     }
     elsif ($arg eq '-v') {
         $verbose = undef;
@@ -200,26 +211,29 @@ while ($arg = shift(@ARGV)) {
     }
     else {
         push (@builds, $arg);
+        print "Build=$arg\n"
+            unless !$debugging;
     }
 }
 
 
 # Diff the todays clean builds with the ones from a specific date
-if ($#builds == -1 && $#dates == 0)
+if ($#builds == -1 && $#dates >= 0)
 {
-    if ($clean_builds_only)
-    {
+    if ($clean_builds_only) {
         find_builds (\@builds, $cleanbuildsurl, 7);
     }
-    else
-    {
+    else {
         find_builds (\@builds, $allbuildsurl, 3);
     }
         
-    $dates[1] = strftime ("%Y_%m_%d", gmtime);
+    # only the start date given - implies we should 
+    # use the today's date
+    if ($#dates == 0) { 
+        $dates[1] = strftime ("%Y_%m_%d", gmtime);
+    }
 
-    foreach $build (@builds)
-    {
+    foreach $build (@builds) {
         $files[0] = $files[1] = $build;
         differentiate (\@files, \@dates);
     }

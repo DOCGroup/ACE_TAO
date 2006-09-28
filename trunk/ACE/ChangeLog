@@ -1,3 +1,11 @@
+Thu Sep 28 14:46:43 UTC 2006  Iliyan Jeliazkov  <iliyan@ociweb.com>
+
+        * bin/diff-builds.pl:
+
+          Updated to fix temporary files creation. Now all those are put
+          in the temporary files directory. Fixed the ability to compare
+          just two dates.
+
 Thu Sep 28 13:35:04 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/config-hpux-11.00.h:
