@@ -101,7 +101,7 @@ public:
 
   /// Returns whether the thread that created this object ownes the
   /// token or not.
-  int is_owner (void);
+  bool is_owner (void);
 
   /// A helper method that grabs the token for us, after which the
   /// thread that owns that can do some actual work.
@@ -130,10 +130,10 @@ private:
   ACE_Select_Reactor_Token &token_;
 
   /// Flag that indicate whether the thread that created this object
-  /// owns the token or not. A value of 0 indicates that this class
-  /// hasnt got the token (and hence the thread) and a value of 1
+  /// owns the token or not. A value of false indicates that this class
+  /// hasnt got the token (and hence the thread) and a value of true
   /// vice-versa.
-  int owner_;
+  bool owner_;
 
 };
 

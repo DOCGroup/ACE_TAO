@@ -1,3 +1,16 @@
+Thu Sep 28 13:35:04 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/config-hpux-11.00.h:
+          Removed ACE_HAS_EXPLICIT_STATIC_TEMPLATE_MEMBER_INSTANTIATION that
+          was set for gcc, with this define set the ACE library doesn't
+          build.
+
+        * ace/CDR_Stream.cpp:
+          Initialise pointer with 0
+
+        * ace/TP_Reactor.{h,inl}:
+          Changed owner from int to bool.
+
 Wed Sep 27 21:18:04 UTC 2006  Steve Huston  <shuston@riverace.com>
 
         * ace/Synch_Options.h: Corrected the table of possible Use_Reactor,
