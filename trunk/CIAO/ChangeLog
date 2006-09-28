@@ -1,3 +1,11 @@
+Thu Sep 28 15:57:53 UTC 2006  Shanshan Jiang <shanshan.jiang@vanderbilt.edu>
+
+        * DAnCE/Plan_Launcher/Plan_Launcher.mpc
+        Fixed the "undefined reference" error on FC5_Static build.
+        
+        * DAnCE/Plan_Generator/Plan_Generator_Impl.cpp
+        Modified this file to handle the possible RepoMan null reference error.
+
 Tue Sep 26 21:05:48 UTC 2006  Shanshan Jiang <shanshan.jiang@vanderbilt.edu>
 
         * DAnCE/Plan_Launcher/Plan_Launcher_Impl.cpp
