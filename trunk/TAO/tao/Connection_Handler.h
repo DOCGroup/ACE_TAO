@@ -15,6 +15,7 @@
 
 #include /**/ "ace/pre.h"
 
+#include "ace/Copy_Disabled.h"
 #include "tao/LF_CH_Event.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
@@ -200,6 +201,37 @@ private:
 };
 
 //@@ CONNECTION_HANDLER_SPL_EXTERN_ADD_HOOK
+
+
+/**
+ * @class TAO_Auto_Reference
+ *
+ * @brief TAO_Auto_Reference acts as a "smart pointer" for
+ * reference-countable instances.
+ *
+ * It increments the refrence count in the constructor and decrements
+ * it in the destructor. The only requiement for the template
+ * parameter is to be a class that provides add_reference() and
+ * remove_reference().
+ */
+template <class T> class TAO_Auto_Reference
+  : private ACE_Copy_Disabled
+{
+public:
+  TAO_Auto_Reference (T& r): ref_ (r)
+  {
+    ref_.add_reference ();
+  }
+
+  ~TAO_Auto_Reference ()
+  {
+    ref_.remove_reference ();
+  }
+
+private:
+  T& ref_;
+};
+
 
 TAO_END_VERSIONED_NAMESPACE_DECL
 

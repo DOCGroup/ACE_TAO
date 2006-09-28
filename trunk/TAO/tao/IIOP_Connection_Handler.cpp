@@ -341,15 +341,29 @@ TAO_IIOP_Connection_Handler::handle_output (ACE_HANDLE handle)
   return result;
 }
 
+
 int
 TAO_IIOP_Connection_Handler::handle_timeout (const ACE_Time_Value &,
                                              const void *)
 {
+  // Using this to ensure this instance will be deleted (if necessary)
+  // only after reset_state(). Without this, when this refcount==1 -
+  // the call to close() will cause a call to remove_reference() which
+  // will delete this. At that point this->reset_state() is in no
+  // man's territory and that causes SEGV on some platforms (Windows!)
+
+  TAO_Auto_Reference<TAO_IIOP_Connection_Handler> safeguard (*this);
+
+  // NOTE: Perhaps not the best solution, as it feels like the upper
+  // layers should be responsible for this?
+
   // We don't use this upcall for I/O.  This is only used by the
   // Connector to indicate that the connection timedout.  Therefore,
-  // we should call close().
+  // we should call close()
+
   int const ret = this->close ();
   this->reset_state (TAO_LF_Event::LFS_TIMEOUT);
+
   return ret;
 }
 
