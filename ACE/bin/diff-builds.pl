@@ -28,7 +28,7 @@ sub find_timestamps ($$)  {
 
 #    print "\nSearching for $file, $date\n";
     open (INDEX, "wget " . $verbose . " \'" . $teststaturl . $file . ".html\' -O - |")
-        || die "Could not read the index page\n";
+        || die "***Could not read the index page for $file\n";
 
     # Split at all HTML tags, except <a ..>
     my @suffixes = split ( /[<][b-zB-Z\/]+[>]/, <INDEX>);
@@ -46,7 +46,7 @@ sub find_closest_earlier  {
     my ($file,$date) = @_;
 
     open (INDEX, "wget " . $verbose . " \'" . $teststaturl . $file . ".html\' -O - |")
-        || die "Could not read the index page\n";
+        || die "***Could not read the index page for $file\n";
 
     # Split at all HTML tags, except <a ..>
     my @suffixes = split ( /[<][b-zB-Z\/]+[>]/, <INDEX>);
@@ -54,10 +54,12 @@ sub find_closest_earlier  {
 
     # Select only those of the "href=..." that match our file
     my $rx = quotemeta ( $file);
-    my @temp = map { (/${rx}_([_0-9]+)([0-9][0-9]_[0-9][0-9])/ && $1 le $date) ? $1 : undef } @suffixes;
-    my @temp2 = grep /^[0-9]/, @temp; 
+    my @temp = map { (/${rx}_([0-9][0-9][0-9][0-9]_[0-9][0-9]_[0-9][0-9])/ && $1 le $date) ? $1 : undef } @suffixes;
+    my @temp2 = grep /^[0-9]/, @temp;
 
-    print "Found closest earlier build times for $file on $date is $temp2[0]\n" unless !$debugging;
+    if ($#temp2 == -1) {
+        return undef;
+    }
 
     return $temp2[0];
 }
@@ -90,17 +92,34 @@ sub select_builds ($$$)
 
 sub load_failed_tests_list ($$)
 {
-    my ($file, $date) = @_;
+    my ($file, $original_date) = @_;
     
-    my @timestamps = find_timestamps ($file, $date);
-    print "Build times for $file on $date are " 
-        . join (', ', @timestamps) . "\n" unless !$debugging;
+    my $date = $original_date;
+    my $last_tried_date = $original_date;
+    my @timestamps = ();
 
-    if ($#timestamps == -1) {
-      print "No builds for $file on $date. The closest earlier date is " 
-          . find_closest_earlier ($file, $date) . "\n\n" 
+    while ($#timestamps < 0) {
+     
+        @timestamps = find_timestamps ($file, $date);
+
+        if ($#timestamps == -1) {
+            $date = find_closest_earlier ($file, $date);
+            if (!$date) {
+                print "***Found no builds for $file on, or before $original_date\n";
+                return File::Spec->devnull();
+            }
+
+            print "***No builds for $file on $last_tried_date. The closest earlier is " 
+                . $date . "\n";
+
+            $last_tried_date = $date;
+            next;
+        }
+
+        print "Build times for $file on $date are " 
+            . join (', ', @timestamps) . "\n" unless !$debugging;
     }
-
+    
     my $tmpdir = File::Spec->tmpdir();
     my $fullfile = $file .'_' . $date . '_' . $timestamps[0];
     my ($fh, $tmpfile) = tempfile ($fullfile . ".XXXXXX", UNLINK => 1, DIR => $tmpdir);
@@ -119,16 +138,24 @@ sub differentiate ($$)
 {
     my ($rfiles, $rdates) = @_;
 
-    print "Differentiating for dates " . join (', ', @$rdates) . "\n" unless !$debugging;
+    print "Difference for dates " . join (', ', @$rdates) . "\n" unless !$debugging;
 
-    open (DIFF, "diff -u \'" . load_failed_tests_list ($rfiles->[0], $rdates->[0]) 
-          . "\' \'" . load_failed_tests_list ($rfiles->[1], $rdates->[1]) . "\' 2>&1 |")
-        || die "Could not diff the files.\n";
+    my $first_file = load_failed_tests_list ($rfiles->[0], $rdates->[0]);
+    my $second_file = load_failed_tests_list ($rfiles->[1], $rdates->[1]);
+
+    open (DIFF, "diff -u \'" . $first_file . "\' \'" . $second_file . "\' 2>&1 |")
+        || die "***Failed to diff \'" . $first_file . "\' \'" . $second_file . "\'\n";
 
     while (<DIFF>) {
-        if (/^[^\+]/) {
+        
+        # Don't filter out the build details when printing the new errors only
+        if (/^---/) { 
+            print;
+        }
+        elsif (/^[^\+]/) {
             print unless ($new_errors_only == 1);
-        } else { 
+        } 
+        else {
             print;
         }
     }
@@ -178,16 +205,17 @@ while ($arg = shift(@ARGV)) {
       print "Prints a diff for the list of test failures, for two builds on a certain date\n\n";
       print "diff-builds [-n] [-d] [-D date] [-A] [build ...]\n";
       print "\n";
-      print "-n                  -- Show only new test failing (default=no)\n";
-      print "-d                  -- Show debug info\n";
-      print "-h                  -- Prints this information\n";
-      print "-D date             -- Specify a date, format is YYYY_MM_DD\n";
-      print "                       Use two to specify an interval\n";
-      print "-A                  -- Use all builds from the score, not only the clean ones\n"; 
-      print "build               -- Specify the build name, as it appears on the scoreboard\n";
-      print "                       also can use two builds, with one date.\n";
-      print "                       No build and a single date, implies all builds from\n";
-      print "                       todays build score page.\n";
+      print "  -n          -- Show only new test failing (default=no)\n";
+      print "  -d          -- Show debug info\n";
+      print "  -h          -- Prints this information\n";
+      print "  -D date     -- Specify a date. Either YYYY_MM_DD or YYYY-MM-DD works\n";
+      print "                 Use two date parameters to specify an interval\n";
+      print "  -A          -- Use all builds, not just the clean (successful) ones\n"; 
+      print "  build       -- Specify the build name. As it appears on the scoreboard\n";
+      print "                 Works with two builds and one date to show the differences\n";
+      print "                 between them. One build and two dates works, too.\n";
+      print "                 Just a single date (no builds) implies comparing all of \n";
+      print "                 today's builds with the builds on the supplied date.\n";
       exit 0;
     }
     if ($arg eq '-D') {
