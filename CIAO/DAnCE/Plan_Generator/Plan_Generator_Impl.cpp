@@ -79,6 +79,12 @@ namespace CIAO
                                      const char *package_uri,
                                      bool use_package_name)
     {
+      if (CORBA::is_nil (rm_.in ()))
+        {
+          ACE_ERROR ((LM_ERROR,
+                      "(%P|%t) CIAO_Repoman: nil Execution\n"));
+          return false;
+        }
 
       ::Deployment::PackageConfiguration_var pc;
 
@@ -125,6 +131,13 @@ namespace CIAO
                                      const char *specific_type,
                                      int &index)
     {
+      if (CORBA::is_nil (rm_.in ()))
+        {
+          ACE_ERROR ((LM_ERROR,
+                      "(%P|%t) CIAO_Repoman: nil Execution\n"));
+          return false;
+        }
+
       ::Deployment::PackageConfiguration_var pc;
       
       CORBA::StringSeq_var seq = rm_->findNamesByType (specific_type);
