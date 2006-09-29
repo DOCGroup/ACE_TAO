@@ -1,3 +1,10 @@
+Fri Sep 29 18:54:29 UTC 2006  Steve Huston  <shuston@riverace.com>
+
+	* ace/OS_NS_signal.inl (sigaction): In the !ACE_HAS_SIGACTION_CONSTP2
+	  case, use ACE_SIGACTION instead of "struct sigaction" to pick up
+	  the funky HP hack. Also see:
+          Mon Jan 23 22:08:56 UTC 2006  Steve Huston  <shuston@riverace.com>
+
 Fri Sep 29 10:00:04 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * examples/Web_Crawler/Web_Crawler.mpc:
