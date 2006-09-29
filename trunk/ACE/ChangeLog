@@ -1,3 +1,10 @@
+Fri Sep 29 10:00:04 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * examples/Web_Crawler/Web_Crawler.mpc:
+          Added avoids+=uses_wchar for borland and bmake, the Borland
+          compiler gives a warning which can't be easily suppressed and
+          by not building this project we do get a few new green builds
+
 Thu Sep 28 19:37:13 UTC 2006  Iliyan Jeliazkov  <iliyan@ociweb.com>
 
         * bin/diff-builds.pl:
