@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
-<Deployment:TopLevelPackageDescription
-xmlns:Deployment="http://www.omg.org/Deployment"
-xmlns:xmi="http://www.omg.org/XMI"
-xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-xsi:schemaLocation="http://www.omg.org/Deployment Deployment.xsd">
-  <package href="Hello.pcd"/>
-</Deployment:TopLevelPackageDescription>
