@@ -1,0 +1,233 @@
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML//EN">
+<html>
+  <head>
+    <title>Asynchronous Method Invocation - CORBA for impatient clients</title>
+    <!-- $Id$ -->
+  </head>
+
+  <BODY text = "#000000"
+    link="#000fff"
+    vlink="#ff0f0f"
+    bgcolor="#ffffff">
+
+    <h3>Asynchronous Method Invocation - CORBA for impatient clients</h3>
+
+    <P>Our <A HREF="../Simple/Client/index.html">simple client</A>
+      illustrated how to use the traditional CORBA synchronous method
+      invocation to query a number of stock prices.
+      Suppose that we had to query hundreds of stock prices, for
+      example, during the initialization of a complex market analysis
+      tool.
+      In that case sending the requests in sequence is going to yield
+      poor performance; we are not taking advantage of the natural
+      parallelism in distributed systems, since we are waiting for the 
+      first response to come back before sending the next query.
+      Traditionally this problem has been attacked using either
+      <CODE>oneway</CODE> calls or multiple threads.  Both approaches can
+      work, but they have some disadvantages:
+      multi-threading programming can be hard and error-prone,
+      oneways are unreliable and require callback interfaces to return 
+      the stock value.
+      Recently the OMG approved the CORBA Messaging specification
+      that extends the basic invocation model to include asynchronous
+      calls.
+      Unlike the old deferred synchronous model, the new model uses
+      the IDL compiler and the SII to achieve type safety and improved 
+      performance, but the application does not block waiting for a
+      response. Instead, it gives the ORB a reference to a reply
+      handler that will receive the response asynchronously.
+      The specification also defines a polling interface that we will
+      not discuss as TAO does not implement it.
+    </P>
+
+    <P>For this problem we will extend the IDL interface to include a
+      new operation:
+    </P>
+<PRE>
+  interface Single_Query_Stock : Stock {
+    double get_price_and_names (out string symbol,
+                               out string full_name);
+  };
+</PRE>
+    <P>This will simplify some of the examples.
+    </P>
+
+    <P>The first step is to generate the stubs and skeletons with
+      support for the callback AMI.  We do this with the <CODE>-GC</CODE>
+      flag:
+    </P>
+<PRE>
+$ $ACE_ROOT/TAO/TAO_IDL/tao_idl -GC Quoter.idl
+</PRE>
+    <P>You may want to take a brief look at the generated client side
+      interface.
+      The IDL compiler adds new methods to the <CODE>Quoter::Stock</CODE>
+      interface.  In particular pay attention to this operation:
+    </P>
+<PRE>
+  virtual void sendc_get_price_and_names (
+      AMI_Single_Query_StockHandler_ptr ami_handler
+    )
+    ACE_THROW_SPEC ((
+      CORBA::SystemException
+    ));
+</PRE>
+    <P>This is the operation used to send a request asynchronously.  The 
+      response is received in the handler object. This is a regular
+      CORBA object with the following IDL interface:
+    </P>
+<PRE>
+interface AMI_Single_Query_StockHandler {
+  void get_price_and_names (in double ami_return_val,
+                           in string symbol,
+                           in string full_name);
+};
+</PRE>
+    <P>You don't have to write this IDL interface.  The IDL compiler
+      automatically generates the so-called <EM>implied IDL</EM>
+      constructs from your original IDL.
+      Notice how the arguments are generated.  The first argument is
+      simply the return value, then the output arguments show up, but
+      as <EM>input</EM> only since the handler has to receive the 
+      reply.
+    </P>
+
+    <H3>Implementing the reply handler</H3>
+
+    <P>We will have to implement a servant for this new IDL interface
+      so we can receive the reply,
+      exactly as we do for servers:
+    </P>
+<PRE>
+class Single_Query_Stock_Handler_i : public POA_Quoter::AMI_Single_Query_StockHandler
+{
+public:
+  Single_Query_Stock_Handler_i (int *response_count)
+    : response_count_ (response_count) {}
+
+  void get_price_and_names (CORBA::Double ami_return_val,
+                           const char *symbol,
+                           const char *full_name)
+      throw (CORBA::SystemException)
+  {
+    std::cout << "The price of one stock in \""
+              << full_name << "\" (" << symbol << ") is "
+              << ami_return_val << std::endl;
+    *this->response_count_++;
+  }
+
+private:
+  int *response_count_;
+};
+</PRE>
+    <P>The <CODE>response_count_</CODE> field will be used to
+      terminate the client when all the responses are received.
+    </P>
+
+    <H3>Sending asynchronous method invocations</H3>
+
+    <P>The handler servant is activated as any other CORBA object:
+    </P>
+<PRE>
+    int response_count = 0;
+    Single_Query_Stock_Handler_i handler_i (&response_count);
+    Quoter::AMI_Single_Query_StockHandler_var handler =
+      handler_i._this ();
+</PRE>
+    <P>and now we change the loop to send all the requests at once:
+    </P>
+<PRE>
+    int request_count = 0;
+    for (int i = 2; i != argc; ++i) {
+      try {
+        // Get the stock object
+        Quoter::Stock_var tmp =
+          factory->get_stock (argv[i]);
+        Quoter::Single_Query_Stock_var stock =
+          Quoter::Single_Query_Stock::_narrow (tmp.in ());
+
+        stock->sendc_get_price_and_names (handler.in ());
+        request_count++;
+      }
+</PRE>
+    <P>after the loop we wait until all the responses have arrived:
+    </P>
+<PRE>
+    while (response_count < request_count
+           && orb->work_pending ()) {
+      orb->perform_work ();
+    }
+</PRE>
+
+    <H3>Exercise 1</H3>
+
+    <P>Complete the <CODE>client.cpp</CODE> file.  Does this client play
+      the server role too?  If not, what is the role with respect to
+      the handler servant?  If you think it is a server too, what
+      should you do about the POA?
+    </P>
+    <P>You can use the following files to complete your implementation:
+      the <A HREF="Quoter.idl">Quoter.idl</A>,
+      <A HREF="Handler_i.h">Handler_i.h</A>, 
+      <A HREF="Handler_i.cpp">Handler_i.cpp</A>,
+      <A HREF="Makefile">Makefile</A>.
+      Remember that the simple client main program
+      (located
+      <A HREF="../Simple/Client/client.cpp">here</A>)
+      is a good start.
+    </P>
+
+    <H4>Solution</H4>
+    <P>Look at
+      <A HREF="client.cpp">client.cpp</A> file.  It should
+      not be much different from yours.
+    </P>
+
+    <H3>Testing</H3>
+
+    <P>A simple server is provided, based on the
+      <A HREF="../Simple/Server/index.html">simple server</A>
+      from the introduction.
+      As before, you need the following files:
+      <A HREF="Stock_i.h">Stock_i.h</A>,
+      <A HREF="Stock_i.cpp">Stock_i.cpp</A>,
+      <A HREF="Stock_Factory_i.h">Stock_Factory_i.h</A>
+      <A HREF="Stock_Factory_i.cpp">Stock_Factory_i.cpp</A>
+      and <A HREF="server.cpp">server.cpp</A>.
+    </P>
+
+    <H2>Configuration</H2>
+
+    <P>So far we have used the default configuration in TAO,
+      but AMI works better with some fine tuning.  For example,
+      by default TAO uses a separate connection for each outstanding
+      request.  With SMI this is a very good strategy, as separate
+      threads can send concurrent requests without any shared
+      resources,
+      but this approach does not scale well with AMI, as it would
+      create too many connections.
+      The solution is to change the strategy to share connections.
+      All we need to do is create a
+      <A HREF="svc.conf">svc.conf</A> file with the following
+      contents:
+    </P>
+<PRE>
+static Client_Strategy_Factory "-ORBTransportMuxStrategy MUXED"
+</PRE>
+    <P>There are many other configuration options, all of them
+      documented in
+      <A HREF="http://ace.cs.wustl.edu/cvsweb/ace-latest.cgi/ACE_wrappers/TAO/docs/Options.html">Options.html</A>,
+      in 
+      <A HREF="http://ace.cs.wustl.edu/cvsweb/ace-latest.cgi/ACE_wrappers/TAO/docs/configurations.html">configurations.html</A>,
+      and in the Developer's Guide available from
+      <A HREF="http://www.theaceorb.com/">OCI</A>.
+    </P>
+
+    <hr>
+    <address><a href="mailto:coryan@cs.wustl.edu">Carlos O'Ryan</a></address>
+<!-- Created: Sat Nov 27 15:47:01 CST 1999 -->
+<!-- hhmts start -->
+Last modified: Thu Mar 29 16:04:44 PST 2001
+<!-- hhmts end -->
+  </body>
+</html>
