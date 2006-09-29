@@ -1,0 +1,7 @@
+// -*- MPC -*-
+// $Id$
+
+project : taolib, anytypecode {
+  after   += PortableServer
+  libs    += TAO_PortableServer
+}
