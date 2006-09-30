@@ -120,7 +120,7 @@ Reference_Counted_Event_Handler::handle_input (ACE_HANDLE)
   buf[message_size] = '\0';
 
   ACE_DEBUG ((LM_DEBUG,
-              "Message received: %s\n",
+              "Message received: %C\n",
               buf));
 
   return 0;
@@ -151,7 +151,7 @@ Reference_Counted_Event_Handler::handle_timeout (const ACE_Time_Value &,
                                                  const void *arg)
 {
   ACE_DEBUG ((LM_DEBUG,
-              "Reference count in Reference_Counted_Event_Handler::handle_timeout() for arg = %s is %d\n",
+              "Reference count in Reference_Counted_Event_Handler::handle_timeout() for arg = %C is %d\n",
               (const char *) arg,
               this->reference_count_.value ()));
 
@@ -497,7 +497,7 @@ Simple_Event_Handler::handle_input (ACE_HANDLE)
   buf[message_size] = '\0';
 
   ACE_DEBUG ((LM_DEBUG,
-              "Message received: %s\n",
+              "Message received: %C\n",
               buf));
 
   return 0;
@@ -527,7 +527,7 @@ Simple_Event_Handler::handle_timeout (const ACE_Time_Value &,
                                       const void *arg)
 {
   ACE_DEBUG ((LM_DEBUG,
-              "Simple_Event_Handler::handle_timeout() for arg = %s\n",
+              "Simple_Event_Handler::handle_timeout() for arg = %C\n",
               (const char *) arg));
 
   --this->events_;
@@ -771,7 +771,7 @@ Closed_In_Upcall_Event_Handler::handle_input (ACE_HANDLE)
   buf[message_size] = '\0';
 
   ACE_DEBUG ((LM_DEBUG,
-              "Message received: %s\n",
+              "Message received: %C\n",
               buf));
 
   return 0;

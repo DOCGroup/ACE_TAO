@@ -237,7 +237,7 @@ run_test (int& test_number, int ordering)
   int retval = 0;
 
   ACE_DEBUG ((LM_INFO,
-              " ##########   Running Tests with ordering = %s   ##########\n",
+              " ##########   Running Tests with ordering = %C   ##########\n",
               ordering == 1 ? "REQUIRE_ORDER" :
                               ordering == 2 ? "PERMUTE_ARGS" :
                                               "RETURN_IN_ORDER"));
