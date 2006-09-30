@@ -16,27 +16,6 @@ Thu Sep 28 15:13:49 UTC 2006  Iliyan Jeliazkov  <iliyan@ociweb.com>
           which magically increments the reference count in its
           constructor and decrements it in its destructor.
 
-Thu Sep 28 15:07:54 UTC 2006  Iliyan Jeliazkov  <iliyan@ociweb.com>
-
-        * orbsvcs/orbsvcs/PortableGroup/UIPMC_Connection_Handler.cpp:
-
-        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connection_Handler.cpp:
-
-        * tao/Connection_Handler.h:
-        * tao/IIOP_Connection_Handler.cpp:
-
-        * tao/PortableServer/Active_Policy_Strategies.h:
-        * tao/PortableServer/Active_Policy_Strategies.cpp:
-
-        * tao/Strategies/SCIOP_Connection_Handler.cpp:
-        * tao/Strategies/SHMIOP_Connection_Handler.cpp:
-
-        * tests/ORB_Local_Config/Bug_1459/Test.cpp:
-        * tests/ORB_Local_Config/Bug_1459/a.conf:
-        * tests/ORB_Local_Config/Bug_1459/b.conf:
-
-        * tests/ORB_Local_Config/run_tests_all.pl:
-
 Thu Sep 28 14:55:06 UTC 2006  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * tests/Bug_2188_Regression/broken_i.cpp:
