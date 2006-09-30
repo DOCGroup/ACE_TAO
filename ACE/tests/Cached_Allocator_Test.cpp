@@ -239,15 +239,15 @@ run_main (int argc, ACE_TCHAR *argv[])
   else
     ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT (" (%t) Something is wrong\n")), -1);
 
-  ACE_DEBUG ((LM_INFO, ACE_TEXT (" (%t) Writing to chunk 1:   %s\n"), str1));
+  ACE_DEBUG ((LM_INFO, ACE_TEXT (" (%t) Writing to chunk 1:   %C\n"), str1));
   ACE_OS::memcpy (ptr1, str1, chunk_size);
   ptr1[chunk_size - 1] = '\0';
-  ACE_DEBUG ((LM_INFO, ACE_TEXT (" (%t) Reading from chunk 1: %s\n"), ptr1));
+  ACE_DEBUG ((LM_INFO, ACE_TEXT (" (%t) Reading from chunk 1: %C\n"), ptr1));
 
-  ACE_DEBUG ((LM_INFO, ACE_TEXT (" (%t) Writing to chunk 3:   %s\n"), str3));
+  ACE_DEBUG ((LM_INFO, ACE_TEXT (" (%t) Writing to chunk 3:   %C\n"), str3));
   ACE_OS::memcpy (ptr3, str3, chunk_size);
   ptr3[chunk_size - 1] = '\0';
-  ACE_DEBUG ((LM_INFO, ACE_TEXT (" (%t) Reading from chunk 3: %s\n"), ptr3));
+  ACE_DEBUG ((LM_INFO, ACE_TEXT (" (%t) Reading from chunk 3: %C\n"), ptr3));
 
   ACE_DEBUG ((LM_INFO, ACE_TEXT (" (%t) Deallocating chunk 1\n")));
   allocator.free (ptr1);
