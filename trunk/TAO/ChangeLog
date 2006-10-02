@@ -1,3 +1,9 @@
+Mon Oct  2 12:59:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/POA/POAManagerFactory/POAManagerFactory.cpp:
+          Renamed VERIFY macro to fix warning in mfc build and use
+          ACE_ERROR instead of ACE_DEBUG
+
 Thu Sep 28 15:13:49 UTC 2006  Iliyan Jeliazkov  <iliyan@ociweb.com>
 
         * orbsvcs/orbsvcs/PortableGroup/UIPMC_Connection_Handler.cpp:
