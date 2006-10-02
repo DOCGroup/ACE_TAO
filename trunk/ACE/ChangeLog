@@ -1,3 +1,8 @@
+Mon Oct  2 12:21:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Log_Msg.cpp:
+          Const/bool improvements
+
 Mon Oct  2 11:26:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Log_Msg.{h,cpp}:
