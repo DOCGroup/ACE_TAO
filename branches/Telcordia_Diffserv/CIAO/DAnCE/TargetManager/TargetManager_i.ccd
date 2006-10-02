@@ -1,0 +1,53 @@
+<?xml version="1.0"?>
+<!DOCTYPE corbacomponent SYSTEM "corbacomponent.dtd">
+
+<corbacomponent>
+  <corbaversion>3.0</corbaversion>
+  <componentrepid repid="IDL:CIAO/TargetManagerImpl:1.0"/>
+  <homerepid repid="IDL:CIAO/TargetManagerHome:1.0"/>
+  <componentkind>
+    <session>
+      <servant lifetime="container"/>
+    </session>
+  </componentkind>
+  <threading policy="multithread"/>
+  <configurationcomplete set="true"/>
+  
+  <homefeatures
+      name="TargetManagerHome"
+      repid="IDL:CIAO/TargetManagerHome:1.0">
+  </homefeatures>
+  
+  <componentfeatures
+      name="TargetManagerImpl"
+      repid="IDL:CIAO/TargetManagerImpl:1.0">
+    <ports>
+      <provides
+          providesname="targetMgr"
+          repid="IDL:Deployment/TargetManager:1.0"
+          facettag="1">
+      </provides>
+      <provides
+          providesname="target_manager_ext"
+          repid="IDL:CIAO/TargetManagerExt:1.0"
+          facettag="2">
+      </provides>
+      <publishes
+          publishesname="changes"
+          eventtype="IDL:CIAO/Domain_Changed_Event:1.0">
+        <eventpolicy policy="normal"/>
+      </publishes>
+    </ports>
+  </componentfeatures>
+  
+  <interface
+      name="TargetManager"
+      repid="IDL:Deployment/TargetManager:1.0">
+  </interface>
+  
+  <interface
+      name="TargetManagerExt"
+      repid="IDL:CIAO/TargetManagerExt:1.0">
+  </interface>
+  
+</corbacomponent>
