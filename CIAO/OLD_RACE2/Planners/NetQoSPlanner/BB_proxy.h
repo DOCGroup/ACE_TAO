@@ -23,6 +23,7 @@ class FlowRequest
     int commit ();
     int rollback ();
     long get_dscp () const;
+    std::string get_token () const;
 
   private:
     AdmissionControl_var BB_ref_;

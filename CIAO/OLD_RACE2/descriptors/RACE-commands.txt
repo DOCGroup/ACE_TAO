@@ -1,14 +1,23 @@
-export NameServiceIOR=corbaloc:iiop:tango.dre.vanderbilt.edu:40203/NameService
+# commands to init BB DB
+cd $ARMS_ROOT/../src/db
+mysql -u arms -parms < arms-init-no-ndb.sql
+mysql -u arms -parms < data.sql
+mysql -u arms -parms ARMSBB < patchEth.sql
 
-$TAO_ROOT/orbsvcs/Naming_Service/Naming_Service -m 1 -ORBEndpoint iiop://tango.dre.vanderbilt.edu:40203
+$ARMS_ROOT/bin/loadpaths.sh ldbf.txt <DB_host>
 
-$CIAO_ROOT/DAnCE/NodeManager/NodeManager -ORBEndpoint iiop://lambada.dre.vanderbilt.edu:60003 -s $CIAO_ROOT/DAnCE/NodeApplication/NodeApplication -a -o NodeApp1.ior
+export BLADE2=10.2.250.100 ; export BLADE4=10.3.250.100 ; 
+#export NameServiceIOR=corbaloc:iiop:blade2.isislab.vanderbilt.edu:40203/NameService
 
-$CIAO_ROOT/DAnCE/NodeManager/NodeManager -ORBEndpoint iiop://tango.dre.vanderbilt.edu:60004 -s $CIAO_ROOT/DAnCE/NodeApplication/NodeApplication -a -o NodeApp2.ior
+$TAO_ROOT/orbsvcs/Naming_Service/Naming_Service -m 1 -ORBEndpoint iiop://$BLADE2:40203 &
 
-$CIAO_ROOT/DAnCE/ExecutionManager/Execution_Manager -n -i NodeDetails.dat
+$CIAO_ROOT/DAnCE/NodeManager/NodeManager -ORBEndpoint iiop://$BLADE2:60003 -s $CIAO_ROOT/DAnCE/NodeApplication/NodeApplication -a \"-ORBEndpoint iiop://$BLADE2 -ORBPreferredInterfaces \"$BLADE4:$BLADE2\" -ORBEnforcePreferredInterfaces yes\" -o NodeApp1.ior
 
-$CIAO_ROOT/DAnCE/Plan_Launcher/plan_launcher -n -p RACE_NetQoS.cdp -o DAM.ior
+$CIAO_ROOT/DAnCE/NodeManager/NodeManager -ORBEndpoint iiop://$BLADE4:60004 -s $CIAO_ROOT/DAnCE/NodeApplication/NodeApplication -a \"-ORBEndpoint iiop://$BLADE4 -ORBPreferredInterfaces \"$BLADE2:$BLADE4\" -ORBEnforcePreferredInterfaces yes\" -o NodeApp2.ior
+
+$CIAO_ROOT/DAnCE/ExecutionManager/Execution_Manager -ORBEndpoint iiop://$BLADE2 -ORBPreferredInterfaces "$BLADE4:$BLADE2" -ORBEnforcePreferredInterfaces yes -n -i NodeDetails.dat
+
+$CIAO_ROOT/DAnCE/Plan_Launcher/plan_launcher -ORBEndpoint iiop://$BLADE2 -ORBPreferredInterfaces "$BLADE4:$BLADE2" -ORBEnforcePreferredInterfaces yes -n -p RACE_NetQoS.cdp -o DAM.ior
 
 cp Interactive_Input_Adapter.ior ~
 
@@ -22,9 +31,26 @@ mv ~/Sender.ior .
 
 $CIAO_ROOT/examples/Hello/Sender/starter -k file://Sender.ior
 
-sudo tethereal -a filesize:10000 -a duration:30 -w /tmp/ethcap1.tango host tango.dre.vanderbilt.edu
-sudo tethereal -a filesize:10000 -a duration:30 -w /tmp/ethcap1.lambada host lambada.dre.vanderbilt.edu
+sudo tethereal -a filesize:10000 -a duration:30 -w /tmp/ethcap1.$BLADE2 host $BLADE4
+sudo tethereal -a filesize:10000 -a duration:30 -w /tmp/ethcap1.$BLADE4 host $BLADE2
 
-ethereal -r /tmp/ethcap1.tango
-ethereal -r /tmp/ethcap1.lambada
+ethereal -r /tmp/ethcap1.$BLADE2
+ethereal -r /tmp/ethcap1.$BLADE4
+
+blade2
+          inet addr:10.2.250.100  Bcast:10.2.250.255  Mask:255.255.255.0
+blade3
+          inet addr:10.1.250.100  Bcast:10.1.250.255  Mask:255.255.255.0
+blade4
+          inet addr:10.3.250.100  Bcast:10.3.250.255  Mask:255.255.255.0
+blade5
+          inet addr:10.4.250.100  Bcast:10.4.250.250  Mask:255.255.255.0
+blade6
+          inet addr:10.6.250.100  Bcast:10.6.250.255  Mask:255.255.255.0
+blade7
+          inet addr:10.5.250.100  Bcast:10.5.250.255  Mask:255.255.255.0
+blade13
+          inet addr:10.7.250.100  Bcast:10.7.250.255  Mask:255.255.255.0
+blade14
+          inet addr:10.8.250.100  Bcast:10.8.250.255  Mask:255.255.255.0
 
