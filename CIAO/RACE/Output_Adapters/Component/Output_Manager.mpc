@@ -1,4 +1,4 @@
-project(Output_Manager_stub): ciao_client_dnc, ciao_race_component  {
+project(Output_Manager_stub): ciao_deployment_stub, ciao_race_component  {
 
   after += Output_Adapter_Interface_stub
 
