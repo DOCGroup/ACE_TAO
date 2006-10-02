@@ -1,4 +1,11 @@
+<<<<<<< .mine
+foil      corbaloc:iiop:129.59.129.82:50200/NodeManager
+blade34   corbaloc:iiop:129.59.129.82:50200/NodeManager
+sender    corbaloc:iiop:129.59.129.82:50200/NodeManager
+receiver  corbaloc:iiop:129.59.129.91:50200/NodeManager
+=======
 foil      corbaloc:iiop:javelin.isislab.vanderbilt.edu:60004/NodeManager
 blade34   corbaloc:iiop:javelin.isislab.vanderbilt.edu:60004/NodeManager
 sender    corbaloc:iiop:javelin.isislab.vanderbilt.edu:60004/NodeManager
 receiver  corbaloc:iiop:champion.isislab.vanderbilt.edu:60003/NodeManager
+>>>>>>> .r74537

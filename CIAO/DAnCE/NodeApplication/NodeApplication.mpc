@@ -4,6 +4,7 @@
 project(NodeApplication): ciao_server_dnc, ciao_events_dnc {
   after += NoOp_Configurator
   libs  += CIAO_NoOp_Configurator
+  libpaths += $(CIAO_ROOT)/DAnCE/NodeApplication
   exename   = NodeApplication
 
   Source_Files {
