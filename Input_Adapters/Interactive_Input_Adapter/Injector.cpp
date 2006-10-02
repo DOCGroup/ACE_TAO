@@ -20,7 +20,6 @@ namespace CIAO
       const char *plan_uri = 0;
       const char *iia_ior_file = 0;
       const char *iia_name = "RACE::InteractiveInput";
-      
       bool teardown = false;
 
       static void
@@ -64,10 +63,10 @@ namespace CIAO
               case 't':
                 teardown = true;
 		break;
-                
+
               case 'n':
                 iia_name = get_opt.opt_arg ();
-                
+
 	      case 'h':
 	      default:
 		usage (argv[0]);
@@ -93,11 +92,11 @@ namespace CIAO
 
         Name ns_name;
 	CORBA::ULong i = 0;
-        
+
         ACE_Tokenizer tok ( name.rep ());
         tok.delimiter_replace (':', 0);
         tok.delimiter_replace ('/', 0);
-        
+
         char *name_element = 0;
         while ((name_element = tok.next ()) != 0)
           {
@@ -105,7 +104,7 @@ namespace CIAO
             ns_name[i].id = CORBA::string_dup (name_element);
             ++i;
           }
-        
+
 
 	return pns->resolve (ns_name);
       }
