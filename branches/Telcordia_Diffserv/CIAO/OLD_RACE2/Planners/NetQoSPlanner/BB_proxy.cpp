@@ -84,6 +84,11 @@ long FlowRequest::get_dscp () const
   return this->dscp_;
 }
 
+std::string FlowRequest::get_token () const
+{
+  return std::string (this->flowtoken_.in());
+}
+
 BB_Proxy::BB_Proxy ()
 : resolved_ (false),
   BB_iorfile_ ("BB.ior"),
@@ -220,7 +225,7 @@ int BB_Proxy::flow_request (const AdmissionControl::FlowInfo &f, CommonDef::QOSR
       AdmissionControl::AdmissionControlResult adm_ctrl_result = flow_request->send_request ();
       if (AdmissionControl::DECISION_ADMIT == adm_ctrl_result)
         {
-          ACE_DEBUG ((LM_DEBUG,"In BB_Proxy::flow_request: Flow Accepted.\n"));
+          ACE_DEBUG ((LM_DEBUG,"In BB_Proxy::flow_request: Flow Accepted token = %s.\n",flow_request->get_token().c_str()));
           dscp = flow_request->get_dscp ();
           this->BB_commands_.push_back (flow_request.release ());
           retval = 0;

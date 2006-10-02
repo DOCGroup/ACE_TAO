@@ -21,7 +21,7 @@
 
   <instance id="_Hello.ComponentImplementations.HelloAssemblyTypeContainer.HelloAssemblyType.Receiver">
     <name>_Hello.ComponentImplementations.HelloAssemblyTypeContainer.HelloAssemblyType.Receiver</name>
-    <node>receiver</node>
+    <node>host2</node>
     <source/>
     <implementation>_9B4442B8-A9B3-4030-A33F-AF343E22DBF2</implementation>
     <configProperty>
@@ -39,7 +39,7 @@
 
   <instance id="_Hello.ComponentImplementations.HelloAssemblyTypeContainer.HelloAssemblyType.Sender">
     <name>_Hello.ComponentImplementations.HelloAssemblyTypeContainer.HelloAssemblyType.Sender</name>
-    <node>sender</node>
+    <node>host3</node>
     <source/>
     <implementation>_51B2FD0F-060B-4895-B7F1-2645E7EF4211</implementation>
     <configProperty>
