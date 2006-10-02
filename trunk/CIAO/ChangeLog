@@ -1,3 +1,13 @@
+Mon Oct  2 08:58:58 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * DAnCE/NodeApplicationManager/NodeApplicationManager_Impl.cpp:
+          Set the nodemanager in the static nodeapplication manager.
+          Thanks to Sowayan Abdullah <abdullah dot sowayan at lmco dot com>
+          for reporting this.
+
+        * DAnCE/NodeApplicationManager/NodeApplicationManager_Impl.h:
+          Doxygen improvement
+
 Thu Sep 28 16:47:58 UTC 2006  Shanshan Jiang <shanshan.jiang@vanderbilt.edu>
 
         * DAnCE/Plan_Launcher/Plan_Launcher.mpc
@@ -9,7 +19,7 @@ Thu Sep 28 15:57:53 UTC 2006  Shanshan Jiang <shanshan.jiang@vanderbilt.edu>
 
         * DAnCE/Plan_Launcher/Plan_Launcher.mpc
         Fixed the "undefined reference" error on FC5_Static build.
-        
+
         * DAnCE/Plan_Generator/Plan_Generator_Impl.cpp
         Modified this file to handle the possible RepoMan null reference error.
 
