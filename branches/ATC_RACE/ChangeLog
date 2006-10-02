@@ -1,3 +1,12 @@
+Mon Oct  2 20:14:55 UTC 2006  Nishanth Shankaran  <nshankar@dre.vanderbilt.edu>
+
+        * Output_Adapters/Component/Output_Manager.mpc:
+        * Output_Adapters/DAnCE_Output_Adapter/DAnCE_Output_Adapter.mpc:
+          Fixed linking errors on mac.
+
+        * descriptors/RACE.cdp: Checking in the CDP generated from the
+          RACE model.
+
 Mon Sep 18 23:24:48 UTC 2006  Nishanth Shankaran  <nshankar@dre.vanderbilt.edu>
 
         * common/Opstring.idl: Updated the IDL structure.
