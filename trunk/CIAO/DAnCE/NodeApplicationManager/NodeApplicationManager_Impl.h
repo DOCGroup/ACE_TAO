@@ -394,8 +394,8 @@ namespace CIAO
     /// Destructor
     virtual ~Static_NodeApplicationManager_Impl (void);
 
-    // Internal help function to create new NodeApplicationProcess
-    // Here we override it to create an in-process NodeApplication object
+    /// Internal help function to create new NodeApplicationProcess
+    /// Here we override it to create an in-process NodeApplication object
     virtual Deployment::NodeApplication_ptr
     create_node_application (const ACE_CString & options
                              ACE_ENV_ARG_DECL_WITH_DEFAULTS)

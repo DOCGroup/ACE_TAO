@@ -91,7 +91,7 @@ create_connections (ACE_ENV_SINGLE_ARG_DECL)
           facets = ((*iter).int_id_)->get_all_facets (ACE_ENV_SINGLE_ARG_PARAMETER);
           this->node_manager_->set_all_facets (comp_name, facets);
         }
-      
+
       if (CIAO::debug_level () > 9)
         {
           ACE_DEBUG ((LM_DEBUG,
@@ -1126,10 +1126,11 @@ CIAO::Static_NodeApplicationManager_Impl::init (
   ACE_UNUSED_ARG (nodeapp_op);
   ACE_UNUSED_ARG (delay);
   ACE_UNUSED_ARG (callback_poa);
-  ACE_UNUSED_ARG (nm);
 
   ACE_TRY
     {
+      this->node_manager_ = nm;
+
       // Make a copy of the plan for later usage.
       this->plan_ =  plan;
 
