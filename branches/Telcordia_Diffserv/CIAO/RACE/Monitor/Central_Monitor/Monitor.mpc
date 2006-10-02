@@ -1,0 +1,65 @@
+project(Monitor_stub): ciao_client_dnc {
+
+  sharedname = Monitor_stub
+  idlflags += -Wb,stub_export_macro=MONITOR_STUB_Export \
+              -Wb,stub_export_include=Monitor_stub_export.h \
+              -Wb,skel_export_macro=MONITOR_SVNT_Export \
+              -Wb,skel_export_include=Monitor_svnt_export.h
+  dynamicflags   = MONITOR_STUB_BUILD_DLL
+
+  IDL_Files {
+    Monitor.idl
+  }
+
+  Source_Files {
+    MonitorC.cpp
+  }
+}
+
+project(Monitor_svnt) : ciao_servant_dnc {
+  after +=  Monitor_stub
+  sharedname  = Monitor_svnt
+  libs    += Monitor_stub
+
+  idlflags  +=  -Wb,export_macro=MONITOR_SVNT_Export \
+                -Wb,export_include=Monitor_svnt_export.h
+  dynamicflags = MONITOR_SVNT_BUILD_DLL
+
+//  cidlflags -= --
+
+//  cidlflags += -gen-exec-impl --
+
+  CIDL_Files {
+    Monitor.cidl
+  }
+
+  IDL_Files {
+    MonitorE.idl
+  }
+
+  Source_Files {
+    MonitorEC.cpp
+    MonitorS.cpp
+    Monitor_svnt.cpp
+  }
+}
+
+
+project(Monitor_exec) : ciao_component_dnc {
+  after   += Monitor_svnt
+  sharedname = Monitor_exec
+  libs      += Monitor_stub Monitor_svnt
+
+  idlflags  +=  -Wb,export_macro=MONITOR_EXEC_Export \
+                -Wb,export_include=Monitor_exec_export.h
+  dynamicflags   = MONITOR_EXEC_BUILD_DLL
+
+  IDL_Files {
+
+  }
+
+  Source_Files {
+
+    Monitor_exec.cpp
+  }
+}
