@@ -675,7 +675,7 @@ ACE_Log_Msg::ACE_Log_Msg (void)
                                                 ACE_Log_Msg::sync_hook,
                                                 ACE_Log_Msg::thr_desc_hook);
 
-  this->conditional_values_.is_set_ = 0;
+  this->conditional_values_.is_set_ = false;
 
   char *timestamp = ACE_OS::getenv ("ACE_LOG_TIMESTAMP");
   if (timestamp != 0)
@@ -983,10 +983,10 @@ ACE_Log_Msg::log (const ACE_TCHAR *format_str,
   typedef void (*PTF)(...);
 
   // Check if there were any conditional values set.
-  int conditional_values = this->conditional_values_.is_set_;
+  bool const conditional_values = this->conditional_values_.is_set_;
 
   // Reset conditional values.
-  this->conditional_values_.is_set_ = 0;
+  this->conditional_values_.is_set_ = false;
 
   // Only print the message if <priority_mask_> hasn't been reset to
   // exclude this logging priority.
@@ -2243,7 +2243,7 @@ ACE_Log_Msg::conditional_set (const char *filename,
                               int status,
                               int err)
 {
-  this->conditional_values_.is_set_ = 1;
+  this->conditional_values_.is_set_ = true;
   this->conditional_values_.file_ = filename;
   this->conditional_values_.line_ = line;
   this->conditional_values_.op_status_ = status;
