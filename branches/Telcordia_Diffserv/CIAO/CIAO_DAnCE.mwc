@@ -6,4 +6,7 @@ workspace {
   ciaosvcs
   tools/Config_Handlers
   RACE
+  exclude {
+   DAnCE/TargetManager_SVN
+}
 }
