@@ -1,0 +1,37 @@
+#ifndef RACE_MONITOR_IDL
+#define RACE_MONITOR_IDL
+
+#include <Components.idl>
+
+module CIAO
+{
+  module RACE
+  {
+    typedef sequence<long> Delays;
+
+    interface Execution_Time_Monitor
+    {
+      exception IdNotFound
+      {
+      };
+
+      oneway void push_delays (in string id, in Delays delay);
+
+      Delays get_delays (in string id) raises (IdNotFound);
+    };
+
+    component Central_Monitor
+    {
+      provides Execution_Time_Monitor Monitor;
+    };
+
+
+    home Central_Monitor_Home manages Central_Monitor
+    {
+    };
+
+  };
+
+};
+
+#endif /*RACE_MONITOR_IDL*/

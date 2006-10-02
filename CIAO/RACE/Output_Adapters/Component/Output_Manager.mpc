@@ -1,0 +1,74 @@
+project(Output_Manager_stub): ciao_client_dnc, ciao_race_component  {
+
+  after += Output_Adapter_Interface_stub
+
+  libs += Output_Adapter_Interface_stub
+
+  sharedname = Output_Manager_stub
+
+  idlflags += -Wb,stub_export_macro=OUTPUT_MANAGER_STUB_Export \
+              -Wb,stub_export_include=Output_Manager_stub_export.h \
+              -Wb,skel_export_macro=OUTPUT_MANAGER_SVNT_Export \
+              -Wb,skel_export_include=Output_Manager_svnt_export.h
+
+  dynamicflags   = OUTPUT_MANAGER_STUB_BUILD_DLL
+
+  IDL_Files {
+    Output_Manager.idl
+  }
+
+  Source_Files {
+    Output_ManagerC.cpp
+  }
+}
+
+project(Output_Manager_svnt) : ciao_servant_dnc, ciao_race_component  {
+  after +=  Output_Manager_stub
+  sharedname  = Output_Manager_svnt
+  libs    += Output_Manager_stub \
+             Output_Adapter_Interface_stub \
+             Output_Adapter_Interface_svnt
+
+  idlflags  +=  -Wb,export_macro=OUTPUT_MANAGER_SVNT_Export \
+                -Wb,export_include=Output_Manager_svnt_export.h
+
+  dynamicflags = OUTPUT_MANAGER_SVNT_BUILD_DLL
+
+  CIDL_Files {
+    Output_Manager.cidl
+  }
+
+  IDL_Files {
+    Output_ManagerE.idl
+  }
+
+  Source_Files {
+    Output_ManagerEC.cpp
+    Output_ManagerS.cpp
+    Output_Manager_svnt.cpp
+  }
+}
+
+
+project(Output_Manager_exec) : ciao_component_dnc, ciao_race_component  {
+  after   += Output_Manager_svnt
+  sharedname = Output_Manager_exec
+  libs      += Output_Manager_stub \
+               Output_Manager_svnt \
+               Output_Adapter_Interface_stub \
+               Output_Adapter_Interface_svnt
+
+  idlflags  +=  -Wb,export_macro=OUTPUT_MANAGER_EXEC_Export \
+                -Wb,export_include=Output_Manager_exec_export.h
+
+  dynamicflags   = OUTPUT_MANAGER_EXEC_BUILD_DLL
+
+  IDL_Files {
+
+  }
+
+  Source_Files {
+
+    Output_Manager_exec.cpp
+  }
+}
