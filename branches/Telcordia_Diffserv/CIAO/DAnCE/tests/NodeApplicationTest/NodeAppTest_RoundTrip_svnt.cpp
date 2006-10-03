@@ -124,14 +124,13 @@ namespace CIDL_RoundTrip_Impl
     ::Components::CCMHome_ptr h,
     const char *ins_name,
     ::CIAO::Home_Servant_Impl_Base *hs,
-    ::CIAO::Session_Container *c,
-    ::CIAO::REC_POL_MAP &rec_pol_map)
-    : ::CIAO::Servant_Impl_Base (h, hs, c, rec_pol_map),
+    ::CIAO::Session_Container *c)
+    : ::CIAO::Servant_Impl_Base (h, hs, c),
       ::CIAO::Servant_Impl<
           ::POA_NodeAppTest::NodeAppTest_RoundTrip,
           ::NodeAppTest::CCM_NodeAppTest_RoundTrip,
           NodeAppTest_RoundTrip_Context
-        > (exe, h, hs, c, rec_pol_map),
+        > (exe, h, hs, c),
       ins_name_ (ins_name)
   {
     ACE_NEW (this->context_,
@@ -600,14 +599,13 @@ namespace CIDL_RoundTrip_Impl
   NodeAppTest_RoundTripHome_Servant::NodeAppTest_RoundTripHome_Servant (
     ::NodeAppTest::CCM_NodeAppTest_RoundTripHome_ptr exe,
     const char *ins_name,
-    ::CIAO::Session_Container *c,
-    ::CIAO::REC_POL_MAP &rec_pol_map)
+    ::CIAO::Session_Container *c)
     : ::CIAO::Home_Servant_Impl_Base (c),
       ::CIAO::Home_Servant_Impl<
             ::POA_NodeAppTest::NodeAppTest_RoundTripHome,
             ::NodeAppTest::CCM_NodeAppTest_RoundTripHome,
             NodeAppTest_RoundTrip_Servant
-          > (exe, c, ins_name, rec_pol_map)
+          > (exe, c, ins_name)
   {
   }
 
@@ -627,8 +625,7 @@ namespace CIDL_RoundTrip_Impl
   create_NodeAppTest_NodeAppTest_RoundTripHome_Servant (
     ::Components::HomeExecutorBase_ptr p,
     ::CIAO::Session_Container *c,
-    const char *ins_name,
-    ::CIAO::REC_POL_MAP &rec_pol_map
+    const char *ins_name
     ACE_ENV_ARG_DECL)
   {
     if (p == 0)
@@ -651,7 +648,7 @@ namespace CIDL_RoundTrip_Impl
     NodeAppTest_RoundTripHome_Servant (
       x.in (),
       ins_name,
-      c, rec_pol_map);
+      c);
   }
-} 
+}
 
