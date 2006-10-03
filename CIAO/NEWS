@@ -74,6 +74,8 @@ PLANNED MAJOR CHANGES FOR THE NEXT RELEASE
 
 . Integrate various Pub/Sub services into CIAO and DAnCE.
 
+. Improve documentation for CoSMiC Quoter tutorial to reflect the latest update
+
 USER VISIBLE CHANGES BETWEEN CIAO-0.5.1 and CIAO-0.5.2
 ====================================================
 
