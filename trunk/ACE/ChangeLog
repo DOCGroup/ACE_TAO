@@ -1,3 +1,9 @@
+Tue Oct  3 16:45:35 UTC 2006  Shanshan Jiang <shanshan.jiang@vanderbilt.edu>
+
+        * NEWS
+          Updated the NEWS to add the changes for ACE_Hash_MultiMap_Manager
+          class and executionmanager_stub and plan_generator base projects. 
+
 Tue Oct  3 15:02:14 UTC 2006  Steve Huston  <shuston@riverace.com>
 
         * NEWS: Described the ACE_Refcounted_Auto_Ptr effects of
