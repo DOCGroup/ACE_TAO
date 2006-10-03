@@ -4,6 +4,10 @@ PLANNED MAJOR CHANGES "SOMETIME IN THE FUTURE" (i.e., exact beta not known)
 USER VISIBLE CHANGES BETWEEN ACE-5.5.2 and ACE-5.5.3
 ====================================================
 
+. Added the base projects for executionmanager_stub and plan_generator.
+
+. Added the ACE_Hash_MultiMap_Manager class and its test file.
+ 
 . Changed the ACE_Synch_Options::operator[] method to return bool rather than
   int. The value returned is a yes/no indication of whether or not the
   specified option(s) are set in the object.
