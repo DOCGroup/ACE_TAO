@@ -11,7 +11,9 @@ USER VISIBLE CHANGES BETWEEN ACE-5.5.2 and ACE-5.5.3
 . Changed the prototype(s) for ACE::debug () to return (and take) a
   bool. This is consistent with the original intent for this
   feature. If you have been using it like 'ACE::debug () > 0' or
-  'ACE::debug (1)', you may have to rebuild ACE.
+  'ACE::debug (1)', you may have to rebuild ACE. The value of the
+  ACE_DEBUG environment variable can be used to specify the initial
+  value for ACE::debug(), at the process start up.
 
 . An assembler (within a C source file) based implementation for SPARC
   of atomic operations suitable for use with the
