@@ -1,8 +1,0 @@
-// $Id$
-
-project : ciao_events_base_dnc, ciao_client_dnc, cutslib {
-  idlflags += -I $(CUTS_ROOT)
-
-  //-- project dependencies
-  after += CUTS_stub
-}

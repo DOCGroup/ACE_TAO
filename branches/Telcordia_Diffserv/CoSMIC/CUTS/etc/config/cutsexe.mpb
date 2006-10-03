@@ -1,5 +1,0 @@
-// $Id$
-
-project : aceexe, cuts_base {
-  install = $(CUTS_ROOT)/bin
-}

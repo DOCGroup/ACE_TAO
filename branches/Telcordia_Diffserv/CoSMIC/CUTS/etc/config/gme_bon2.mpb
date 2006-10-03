@@ -1,9 +1,0 @@
-// $Id$
-
-project : gme_component {
-  dynamicflags += BUILDER_OBJECT_NETWORK_V2
-
-  Source_Files {
-    Bon2Component.cpp
-  }
-}

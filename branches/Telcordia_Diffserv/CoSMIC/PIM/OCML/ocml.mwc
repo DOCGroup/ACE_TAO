@@ -1,6 +1,0 @@
-workspace {
-  common
-  engine
-  ui
-  config_exe
-}

@@ -1,5 +1,0 @@
-project  {
-
-   libout = $(COSMIC_ROOT)/lib
-   dllout = $(COSMIC_ROOT)/bin
-}
