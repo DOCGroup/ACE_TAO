@@ -1,3 +1,9 @@
+Tue Oct  3 14:13:55 UTC 2006  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * NEWS
+
+          Updated NEWS file.
+
 Mon Oct  2 12:59:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/POA/POAManagerFactory/POAManagerFactory.cpp:
