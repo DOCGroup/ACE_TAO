@@ -77,6 +77,12 @@ USER VISIBLE CHANGES BETWEEN ACE-5.5.2 and ACE-5.5.3
   HP-UX 11i Version 1.5 the naming scheme is lib*.sl for PA and
   lib*.so on IPF.
 
+. The ACE_Refcounted_Auto_Ptr reset() and release() methods were changed
+  per Bugzilla #1925. They will both now detach from the underlying
+  ACE_Refcounted_Auto_Ptr_Rep object; reset() will create a new one for
+  the new pointer specified as its argument. This change may cause referenced
+  objects to be deleted in cases where previous ACE versions would not have.
+
 . The return type of "ACE_Refcounted_Auto_Ptr::null (void) const" changed
   from int to bool. It's possible values, true and false, have not changed.
 
