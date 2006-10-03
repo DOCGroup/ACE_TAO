@@ -8,5 +8,6 @@ workspace {
   RACE
   exclude {
    DAnCE/TargetManager_SVN
+   DAnCE/Plan_Launcher_OLD
 }
 }
