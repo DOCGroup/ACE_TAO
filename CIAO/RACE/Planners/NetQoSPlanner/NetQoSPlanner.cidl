@@ -1,0 +1,26 @@
+// NetQoS.cidl
+// NetQoS.cidl,v 1.1 2005/09/06 19:57:22 wotte Exp
+
+#ifndef RACE_NETQOS_CIDL
+#define RACE_NETQOS_CIDL
+
+#include "NetQoSPlanner.idl"
+
+module CIAO
+{
+  module RACE
+  {
+    composition session NetQoSPlanner_Impl
+    {
+      home executor NetQoSPlanner_Home_Exec
+        {
+          implements RACE::NetQoSPlanner_Home;
+          manages    NetQoSPlanner_Exec;
+        };
+    };
+  };
+};
+
+
+#endif /* RACE_NETQOS_CIDL */
+
