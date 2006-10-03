@@ -1,8 +1,0 @@
-; RegisterParadigm.def
-;
-; Defines the exported functions which will be available to the MSI engine
-;
-LIBRARY    "RegisterParadigm"
-EXPORTS
-        RegisterParadigms @1
-        UnRegisterParadigms @2
