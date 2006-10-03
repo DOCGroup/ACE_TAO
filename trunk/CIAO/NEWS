@@ -74,10 +74,10 @@ PLANNED MAJOR CHANGES FOR THE NEXT RELEASE
 
 . Integrate various Pub/Sub services into CIAO and DAnCE.
 
-. Improve documentation for CoSMiC Quoter tutorial to reflect the latest update
-
-USER VISIBLE CHANGES BETWEEN CIAO-0.5.1 and CIAO-0.5.2
+USER VISIBLE CHANGES BETWEEN CIAO-0.5.2 and CIAO-0.5.3
 ====================================================
+
+. Improve documentation for CoSMiC Quoter tutorial to reflect the latest update
 
 . Reimplemented the findNamesByType () and getAllTypes () operations
   of Repository Manager, which use the newly generated
@@ -86,11 +86,14 @@ USER VISIBLE CHANGES BETWEEN CIAO-0.5.1 and CIAO-0.5.2
 . Added the replace argument in installPackage () and createPackage ()
   functions to Repoman and extend the functionalities of these two
   functions based on the latest D&C spec.
-  
+
 . Added the Plan_Generator project. This project is used to retrieve
   information from Repoman and generate/modify DeploymentPlans based
   on different demands. Removed the planner project.
-  
+
+USER VISIBLE CHANGES BETWEEN CIAO-0.5.1 and CIAO-0.5.2
+====================================================
+
 . Changed CIDL compiler code generation for facet servant classes
   to enable reuse if the same interface is used as a facet more
   than once in a single translation unit.
