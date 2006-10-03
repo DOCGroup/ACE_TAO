@@ -127,8 +127,7 @@ namespace CIDL_RoundTrip_Impl
       ::Components::CCMHome_ptr h,
       const char *ins_name,
       ::CIAO::Home_Servant_Impl_Base *hs,
-      ::CIAO::Session_Container *c,
-      ::CIAO::REC_POL_MAP &rec_pol_map);
+      ::CIAO::Session_Container *c);
 
     virtual ~NodeAppTest_RoundTrip_Servant (void);
 
@@ -285,8 +284,7 @@ namespace CIDL_RoundTrip_Impl
     NodeAppTest_RoundTripHome_Servant (
       ::NodeAppTest::CCM_NodeAppTest_RoundTripHome_ptr exe,
       const char *ins_name,
-      ::CIAO::Session_Container *c,
-      ::CIAO::REC_POL_MAP &rec_pol_map);
+      ::CIAO::Session_Container *c);
 
     virtual ~NodeAppTest_RoundTripHome_Servant (void);
 
@@ -300,12 +298,11 @@ namespace CIDL_RoundTrip_Impl
   create_NodeAppTest_NodeAppTest_RoundTripHome_Servant (
     ::Components::HomeExecutorBase_ptr p,
     CIAO::Session_Container *c,
-    const char *ins_name,
-    ::CIAO::REC_POL_MAP &rec_pol_map
+    const char *ins_name
     ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 }
 
 #include /**/ "ace/post.h"
 
 #endif /* CIAO_GLUE_SESSION_NODEAPPTEST_ROUNDTRIP_SVNT_H */
- 
+
