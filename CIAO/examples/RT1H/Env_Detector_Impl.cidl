@@ -1,0 +1,18 @@
+#ifndef ENV_DETECTOR_CIDL
+#define ENV_DETECTOR_CIDL
+
+#include "Env_Detector.idl"
+
+module TSCE
+{
+  composition session Env_Detector_Impl
+  {
+    home executor Env_DetectorHome_Exec
+    {
+      implements Env_Detector_Factory;
+      manages Env_Detector_Exec;
+    };
+  };
+};
+
+#endif // !defined ENV_DETECTOR_CIDL

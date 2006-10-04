@@ -1,0 +1,27 @@
+
+#ifndef ENV_DETECTOR_IDL
+#define ENV_DETECTOR_IDL
+
+#include <Components.idl>
+#include "Event_Types.idl"
+#include "cuts/CUTS.idl"
+
+module TSCE
+{
+  component Env_Detector
+  {
+    consumes TSCE::Command_Event command;
+    
+    publishes TSCE::Track_Event track;
+    
+    uses CUTS::Testing_Service cuts_testing_service;
+  };
+  
+  home Env_Detector_Factory
+    manages Env_Detector
+  {
+  };
+};
+
+#endif // ENV_DETECTOR_IDL
+

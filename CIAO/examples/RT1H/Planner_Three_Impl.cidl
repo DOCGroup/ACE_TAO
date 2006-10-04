@@ -1,0 +1,18 @@
+#ifndef PLANNER_THREE_CIDL
+#define PLANNER_THREE_CIDL
+
+#include "Planner_Three.idl"
+
+module TSCE
+{
+  composition session Planner_Three_Impl
+  {
+    home executor Planner_ThreeHome_Exec
+    {
+      implements Planner_Three_Factory;
+      manages Planner_Three_Exec;
+    };
+  };
+};
+
+#endif // !defined PLANNER_THREE_CIDL

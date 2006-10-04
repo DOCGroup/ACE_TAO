@@ -1,0 +1,27 @@
+
+#ifndef EFFECTOR_SECONDARY_IDL
+#define EFFECTOR_SECONDARY_IDL
+
+#include <Components.idl>
+#include "Event_Types.idl"
+#include "cuts/CUTS.idl"
+
+module TSCE
+{
+  component Effector_Secondary
+  {
+    consumes TSCE::Command_Event command;
+    
+    publishes TSCE::Status_Event status;
+    
+    uses CUTS::Testing_Service cuts_testing_service;
+  };
+  
+  home Effector_Secondary_Factory
+    manages Effector_Secondary
+  {
+  };
+};
+
+#endif // EFFECTOR_SECONDARY_IDL
+

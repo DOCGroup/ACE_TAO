@@ -1,0 +1,18 @@
+#ifndef PLANNER_ONE_CIDL
+#define PLANNER_ONE_CIDL
+
+#include "Planner_One.idl"
+
+module TSCE
+{
+  composition session Planner_One_Impl
+  {
+    home executor Planner_OneHome_Exec
+    {
+      implements Planner_One_Factory;
+      manages Planner_One_Exec;
+    };
+  };
+};
+
+#endif // !defined PLANNER_ONE_CIDL

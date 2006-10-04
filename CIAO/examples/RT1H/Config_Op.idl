@@ -1,0 +1,29 @@
+
+#ifndef CONFIG_OP_IDL
+#define CONFIG_OP_IDL
+
+#include <Components.idl>
+#include "Event_Types.idl"
+#include "cuts/CUTS.idl"
+
+module TSCE
+{
+  component Config_Op
+  {
+    publishes TSCE::Command_Event command;
+    
+    consumes TSCE::Assessment_Event assessment;
+    
+    consumes TSCE::Status_Event status;
+    
+    uses CUTS::Testing_Service cuts_testing_service;
+  };
+  
+  home Config_Op_Factory
+    manages Config_Op
+  {
+  };
+};
+
+#endif // CONFIG_OP_IDL
+
