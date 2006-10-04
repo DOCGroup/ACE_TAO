@@ -1397,7 +1397,7 @@ reentrancy in the VxWorks' <em>Programmers Guide</em>.</p><p>
 
 Instead of trying to run separate programs onto a VxWorks target, we
 recommend creating just one program, and spawning a thread for each
-task.  The TAO IDL_Cubit test <a href="http://www.cs.wustl.edu/%7Eschmidt/ACE_wrappers/TAO/performance-tests/Cubit/TAO/IDL_Cubit/collocation_test.cpp">collocation
+task.  The TAO IDL_Cubit test <a href="TAO/performance-tests/Cubit/TAO/IDL_Cubit/collocation_test.cpp">collocation
 test</a> is a good example.</p><p>
 
 </p><h3><a name="VxWorks/LinkToKernel">Linking ACE and/or TAO Libraries into the VxWorks Kernel</a>.</h3>
@@ -1824,7 +1824,7 @@ Here's what you need to do:<p>
       source tree (and ACE has been ported to your platform, of course) the
       netsvcs static and shared object libraries should be built
       automatically.  In addition, the server driver program
-      (<code>main</code>) contained in <a href="http://www.cs.wustl.edu/%7Eschmidt/ACE_wrappers/netsvcs/servers/main.cpp">$ACE_ROOT/netsvcs/servers/main.cpp</a>
+      (<code>main</code>) contained in <a href="netsvcs/servers/main.cpp">$ACE_ROOT/netsvcs/servers/main.cpp</a>
       should also be compiled and ready to run.<p>
 
   </p></li><li>Set your <code>LD_LIBRARY_PATH</code> environment variable to
@@ -1838,7 +1838,7 @@ Here's what you need to do:<p>
   </p></li><li>By default, if the shared object library is built, the services
       are linked into the <code>main</code> driver program dynamically.
       To specify which services should be linked in and executed, edit the
-      <a href="http://www.cs.wustl.edu/%7Eschmidt/ACE_wrappers/netsvcs/servers/svc.conf">$ACE_ROOT/netsvcs/servers/svc.conf</a>
+      <a href="netsvcs/servers/svc.conf">$ACE_ROOT/netsvcs/servers/svc.conf</a>
       file.  During your editing, you should update information (such as the
       default service port numbers) that affects the initialization of
       services in this file.  Refer to the
@@ -2323,7 +2323,7 @@ libraries.
       </p></li></ul>
 
       Please see the comments in the
-      <a href="http://www.cs.wustl.edu/%7Eschmidt/ACE_wrappers/include/makeinclude/platform_lynxos.GNU">ACE
+      <a href="include/makeinclude/platform_lynxos.GNU">ACE
       platform_lynxos.GNU file</a> for information on, and an
       example of, tailoring for your particular platform.<p>
 
@@ -2423,7 +2423,7 @@ libraries.
 
       ACE has been ported to <a href="http://www.qnx.com/products/os/neutrino.html">QNX Neutrino
       2.0</a>.  We cross-compile for Neutrino on a QNX4 host using g++
-      2.8.1, using the <a href="http://www.cs.wustl.edu/%7Eschmidt/ACE_wrappers/ace/config-qnx-neutrino.h">ace/config-qnx-neutrino.h</a>
+      2.8.1, using the <a href="ace/config-qnx-neutrino.h">ace/config-qnx-neutrino.h</a>
       and <a href="include/makeinclude/platform_qnx_neutrino.GNU">include/makeinclude/platform_qnx_neutrino.GNU</a>
       configuration files.  Many of the ACE tests succeed, though some
       fail.  As the porting effort progresses, we hope to eliminate
@@ -2433,8 +2433,8 @@ libraries.
 
       ACE has been ported to <a href="http://get.qnx.com/">QNX RTP
       </a>. We compile for QNX RTP using the GCC compiler shipped with the
-      distribution, using the <a href="http://www.cs.wustl.edu/%7Eschmidt/ACE_wrappers/ace/config-qnx-rtp.h">ace/config-qnx-rtp.h</a>
-      and <a href="http://www.cs.wustl.edu/%7Eschmidt/ACE_wrappers/include/makeinclude/platform_qnx_rtp_gcc.GNU">include/makeinclude/platform_qnx_rtp_gcc.GNU</a>
+      distribution, using the <a href="ace/config-qnx-rtp.h">ace/config-qnx-rtp.h</a>
+      and <a href="include/makeinclude/platform_qnx_rtp_gcc.GNU">include/makeinclude/platform_qnx_rtp_gcc.GNU</a>
       configuration files.
       Many of the ACE tests succeed, though some
       fail.  As the porting effort progresses, we hope to eliminate
@@ -2554,7 +2554,7 @@ To save time and space, I set
 <pre>    TAO_ORBSVCS = Naming Time Trader ImplRepo
 </pre>
 in <code>$ACE_ROOT/include/makeinclude/platform_macros.GNU</code> also.  See
-<a href="http://www.cs.wustl.edu/%7Eschmidt/ACE_wrappers/TAO/docs/configurations.html#orbsvcs">TAO's orbsvcs
+<a href="TAO/docs/configurations.html#orbsvcs">TAO's orbsvcs
 library customization instructions</a> for more information.<p>
 
 
@@ -2569,7 +2569,7 @@ of ACE and TAO can use well over 4 GB of disk space.  It's usually not
 necessary to build <strong>all</strong> of ACE and TAO, though.<p>
 
 Much less disk space is required for just the libraries.  For example,
-see the <a href="http://www.cs.wustl.edu/%7Eschmidt/ACE_wrappers/docs/ACE-subsets.html#ACE%20Library%20Size%20Breakdown">ACE
+see the <a href="docs/ACE-subsets.html#ACE%20Library%20Size%20Breakdown">ACE
 library subset sizes</a>.</p><p>
 
 If you run out of memory when building, you might consider trying
@@ -2585,9 +2585,9 @@ some or all of these suggestions:</p><p>
     <code>include/makeinclude/platform_macros.GNU</code> file.<p>
   </p></li><li>Restrict the components that you build.  For ACE and TAO, see the
     discussion of <code>ACE_COMPONENTS</code> in the
-    <a href="http://www.cs.wustl.edu/%7Eschmidt/ACE_wrappers/docs/ACE-subsets.html">ACE subsets</a> page.  For TAO's
+    <a href="docs/ACE-subsets.html">ACE subsets</a> page.  For TAO's
     orbsvcs, see the discussion of <code>TAO_ORBSVCS</code> in
-    <a href="http://www.cs.wustl.edu/%7Eschmidt/ACE_wrappers/TAO/docs/configurations.html#orbsvcs">orbsvcs Library configuration information</a>.<p>
+    <a href="TAO/docs/configurations.html#orbsvcs">orbsvcs Library configuration information</a>.<p>
 
 If disk space is a problem, disabling debugging should greatly
 reduce object code, and therefore, library size.  This is especially
@@ -2722,7 +2722,7 @@ The Eclipse CDT C++ development environment can be used to develop ACE applicati
 </p><h1><a name="advanced">Advanced Topics</a></h1>
 
 <ul>
-  <li><a href="http://www.cs.wustl.edu/%7Eschmidt/ACE_wrappers/docs/ACE-porting.html">Porting ACE and TAO to a New OS Platform</a>
+  <li><a href="docs/ACE-porting.html">Porting ACE and TAO to a New OS Platform</a>
   </li><li><a href="#NonStaticObjectManager">Non-static ACE_Object_Manager</a>
   </li><li><a href="#cloning">Cloning the Source Tree</a>
   </li><li><a href="#mvs">Additional Build Tips for MVS</a>
