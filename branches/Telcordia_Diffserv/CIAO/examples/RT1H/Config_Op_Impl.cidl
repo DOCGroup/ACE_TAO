@@ -1,0 +1,18 @@
+#ifndef CONFIG_OP_CIDL
+#define CONFIG_OP_CIDL
+
+#include "Config_Op.idl"
+
+module TSCE
+{
+  composition session Config_Op_Impl
+  {
+    home executor Config_OpHome_Exec
+    {
+      implements Config_Op_Factory;
+      manages Config_Op_Exec;
+    };
+  };
+};
+
+#endif // !defined CONFIG_OP_CIDL

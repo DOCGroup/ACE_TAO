@@ -1,0 +1,18 @@
+#ifndef EFFECTOR_SECONDARY_CIDL
+#define EFFECTOR_SECONDARY_CIDL
+
+#include "Effector_Secondary.idl"
+
+module TSCE
+{
+  composition session Effector_Secondary_Impl
+  {
+    home executor Effector_SecondaryHome_Exec
+    {
+      implements Effector_Secondary_Factory;
+      manages Effector_Secondary_Exec;
+    };
+  };
+};
+
+#endif // !defined EFFECTOR_SECONDARY_CIDL

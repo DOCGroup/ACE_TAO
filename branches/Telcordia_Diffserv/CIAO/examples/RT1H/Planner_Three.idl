@@ -1,0 +1,29 @@
+
+#ifndef PLANNER_THREE_IDL
+#define PLANNER_THREE_IDL
+
+#include <Components.idl>
+#include "Event_Types.idl"
+#include "cuts/CUTS.idl"
+
+module TSCE
+{
+  component Planner_Three
+  {
+    publishes TSCE::Command_Event command;
+    
+    consumes TSCE::Track_Event track;
+    
+    publishes TSCE::Situation_Event situation;
+    
+    uses CUTS::Testing_Service cuts_testing_service;
+  };
+  
+  home Planner_Three_Factory
+    manages Planner_Three
+  {
+  };
+};
+
+#endif // PLANNER_THREE_IDL
+

@@ -1,0 +1,67 @@
+
+#ifndef EVENT_TYPES_IDL
+#define EVENT_TYPES_IDL
+
+#include <Components.idl>
+
+module TSCE
+{
+  eventtype Command_Event
+  {
+    public string data;
+    public long sender;
+    public long dispatch_time;
+  };
+  
+  eventtype Track_Event
+  {
+    public string data;
+    public long dispatch_time;
+    public long sender;
+  };
+  
+  eventtype Assessment_Event
+  {
+    public long dispatch_time;
+    public string data;
+    public long sender;
+  };
+  
+  eventtype Outbound_Event
+  {
+    public long sender;
+    public long dispatch_time;
+    public string data;
+  };
+  
+  eventtype Inbound_Event
+  {
+    public long dispatch_time;
+    public string data;
+    public long sender;
+  };
+  
+  eventtype Internal_Event
+  {
+    public string data;
+    public long dispatch_time;
+    public long sender;
+  };
+  
+  eventtype Situation_Event
+  {
+    public string data;
+    public long dispatch_time;
+    public long sender;
+  };
+  
+  eventtype Status_Event
+  {
+    public string data;
+    public long dispatch_time;
+    public long sender;
+  };
+};
+
+#endif // EVENT_TYPES_IDL
+

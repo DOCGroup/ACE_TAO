@@ -1,0 +1,8 @@
+#ifndef EVENT_TYPES_CIDL
+#define EVENT_TYPES_CIDL
+
+#include "Event_Types.idl"
+
+
+
+#endif // !defined EVENT_TYPES_CIDL

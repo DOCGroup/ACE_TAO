@@ -1,0 +1,18 @@
+#ifndef EFFECTOR_MAIN_CIDL
+#define EFFECTOR_MAIN_CIDL
+
+#include "Effector_Main.idl"
+
+module TSCE
+{
+  composition session Effector_Main_Impl
+  {
+    home executor Effector_MainHome_Exec
+    {
+      implements Effector_Main_Factory;
+      manages Effector_Main_Exec;
+    };
+  };
+};
+
+#endif // !defined EFFECTOR_MAIN_CIDL

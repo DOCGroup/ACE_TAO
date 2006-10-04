@@ -1,0 +1,31 @@
+
+#ifndef EFFECTOR_MAIN_IDL
+#define EFFECTOR_MAIN_IDL
+
+#include <Components.idl>
+#include "Event_Types.idl"
+#include "cuts/CUTS.idl"
+
+module TSCE
+{
+  component Effector_Main
+  {
+    consumes TSCE::Command_Event command;
+    
+    publishes TSCE::Command_Event command;
+    
+    consumes TSCE::Status_Event status;
+    
+    publishes TSCE::Status_Event status;
+    
+    uses CUTS::Testing_Service cuts_testing_service;
+  };
+  
+  home Effector_Main_Factory
+    manages Effector_Main
+  {
+  };
+};
+
+#endif // EFFECTOR_MAIN_IDL
+

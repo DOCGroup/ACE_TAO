@@ -1,0 +1,27 @@
+
+#ifndef PLANNER_ONE_IDL
+#define PLANNER_ONE_IDL
+
+#include <Components.idl>
+#include "Event_Types.idl"
+#include "cuts/CUTS.idl"
+
+module TSCE
+{
+  component Planner_One
+  {
+    publishes TSCE::Assessment_Event assessment;
+    
+    consumes TSCE::Situation_Event situation;
+    
+    uses CUTS::Testing_Service cuts_testing_service;
+  };
+  
+  home Planner_One_Factory
+    manages Planner_One
+  {
+  };
+};
+
+#endif // PLANNER_ONE_IDL
+
