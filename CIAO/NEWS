@@ -91,6 +91,19 @@ USER VISIBLE CHANGES BETWEEN CIAO-0.5.2 and CIAO-0.5.3
   information from Repoman and generate/modify DeploymentPlans based
   on different demands. Removed the planner project.
 
+. Added C++ keyword mangling to the CIDL compiler (bug#2427).
+
+. Fixed the CIDL compiler source code to build with Intel C++ (bug#2387).
+
+. Reimplemented the CIDL compiler command line handling to make use
+  of '--' to separate options from arguments unnecessary (bug#2426).
+
+. Added file and line number to the semantic errors printed by the CIDL
+  compiler.
+
+. Fixed a number of bugs in the CIDL compiler error handling and recovery
+  mechanisms.
+
 USER VISIBLE CHANGES BETWEEN CIAO-0.5.1 and CIAO-0.5.2
 ====================================================
 
