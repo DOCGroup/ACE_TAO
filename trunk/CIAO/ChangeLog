@@ -1,15 +1,21 @@
+Wed Oct  4 08:12:24 UTC 2006  Boris Kolpackov  <boris@codesynthesis.com>
+
+        * NEWS:
+
+          Updated with entries for the CIDL compiler work.
+
 Tue Oct  3 15:16:40 UTC 2006  Shanshan Jiang <shanshan.jiang@vanderbilt.edu>
 
-        * NEWS
+        * NEWS:
 
           Updated the NEWS to add the changes for Repoman and Plan_Generator
-          projects. 
+          projects.
 
 Tue Oct  3 12:49:16 UTC 2006  xiong,ming  <ming.xiong@vanderbilt.edu>
 
-        * NEWS
+        * NEWS:
 
-          Updated the NEWS to add the changes for CoSMIC Quoter tutorial 
+          Updated the NEWS to add the changes for CoSMIC Quoter tutorial
 
 Mon Oct  2 09:28:58 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -28,22 +34,22 @@ Mon Oct  2 08:58:58 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Thu Sep 28 16:47:58 UTC 2006  Shanshan Jiang <shanshan.jiang@vanderbilt.edu>
 
-        * DAnCE/Plan_Launcher/Plan_Launcher.mpc
+        * DAnCE/Plan_Launcher/Plan_Launcher.mpc:
         Added the base projects to Plan_Launcher_Impl project to include
         required libs. Added null head files to the Plan_Launcher project to
         remove the unnecessary dependency on other libs.
 
 Thu Sep 28 15:57:53 UTC 2006  Shanshan Jiang <shanshan.jiang@vanderbilt.edu>
 
-        * DAnCE/Plan_Launcher/Plan_Launcher.mpc
+        * DAnCE/Plan_Launcher/Plan_Launcher.mpc:
         Fixed the "undefined reference" error on FC5_Static build.
 
-        * DAnCE/Plan_Generator/Plan_Generator_Impl.cpp
+        * DAnCE/Plan_Generator/Plan_Generator_Impl.cpp:
         Modified this file to handle the possible RepoMan null reference error.
 
 Tue Sep 26 21:05:48 UTC 2006  Shanshan Jiang <shanshan.jiang@vanderbilt.edu>
 
-        * DAnCE/Plan_Launcher/Plan_Launcher_Impl.cpp
+        * DAnCE/Plan_Launcher/Plan_Launcher_Impl.cpp:
         Fixed the "conversion from '_var' to 'CORBA::Object*'" warning.
 
 Tue Sep 26 15:52:12 UTC 2006  Boris Kolpackov  <boris@codesynthesis.com>
@@ -55,11 +61,11 @@ Tue Sep 26 15:52:12 UTC 2006  Boris Kolpackov  <boris@codesynthesis.com>
 
 Mon Sep 25 23:19:15 UTC 2006  Shanshan Jiang <shanshan.jiang@vanderbilt.edu>
 
-        * DAnCE/Plan_Launcher/Plan_Launcher_Impl.cpp
+        * DAnCE/Plan_Launcher/Plan_Launcher_Impl.cpp:
         Modified the fetch_reference_naming () to remove its arguments related
         to Repoman.
 
-        * DAnCE/Plan_Generator/PCVisitor.h
+        * DAnCE/Plan_Generator/PCVisitor.h:
         Adjusted the order of the data members of Plan_Generator_i class.
 
 
