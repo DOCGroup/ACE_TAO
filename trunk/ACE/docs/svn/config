@@ -101,6 +101,7 @@ enable-auto-props = yes
 *.py=svn:eol-style=native;svn:keywords=Author Date Id Revision;svn:executable
 *.pl=svn:eol-style=native;svn:keywords=Author Date Id Revision;svn:executable
 *.mpc=svn:eol-style=native;svn:keywords=Author Date Id Revision
+*.mwc=svn:eol-style=native;svn:keywords=Author Date Id Revision
 *.mpb=svn:eol-style=native;svn:keywords=Author Date Id Revision
 *.mpt=svn:eol-style=native;svn:keywords=Author Date Id Revision
 *.cdp=svn:eol-style=native;svn:keywords=Author Date Id Revision
@@ -108,6 +109,8 @@ enable-auto-props = yes
 *.cdd=svn:eol-style=native;svn:keywords=Author Date Id Revision
 *.cid=svn:eol-style=native;svn:keywords=Author Date Id Revision
 *.cpd=svn:eol-style=native;svn:keywords=Author Date Id Revision
+*.ccd=svn:eol-style=native;svn:keywords=Author Date Id Revision
+*.iad=svn:eol-style=native;svn:keywords=Author Date Id Revision
 *.xsd=svn:eol-style=native;svn:keywords=Author Date Id Revision
 *.xml=svn:eol-style=native;svn:keywords=Author Date Id Revision
 *.txt=svn:eol-style=native;svn:keywords=Author Date Id Revision
