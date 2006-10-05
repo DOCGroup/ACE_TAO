@@ -1,0 +1,103 @@
+module ComponentTest
+{
+  component A;
+  component B
+  {
+  };
+  interface I
+  {
+  };
+  interface J
+  {
+  };
+  component A : ::ComponentTest::B supports ::ComponentTest::I, ::ComponentTest::J
+  {
+  };
+};
+module ConsumesTest
+{
+  eventtype E
+  {
+  };
+  component C
+  {
+    consumes ::ConsumesTest::E e;
+  };
+};
+module EmitsTest
+{
+  eventtype E
+  {
+  };
+  component C
+  {
+    emits ::EmitsTest::E e;
+  };
+};
+module EventTypeTest
+{
+  eventtype E
+  {
+  };
+};
+module HomeTest
+{
+  interface I
+  {
+  };
+  interface J
+  {
+  };
+  component A
+  {
+  };
+  home AH manages ::HomeTest::A
+  {
+  };
+  component B
+  {
+  };
+  home BH : ::HomeTest::AH supports ::HomeTest::I, ::HomeTest::J manages ::HomeTest::B
+  {
+  };
+};
+module HomeFactoryTest
+{
+  component A
+  {
+  };
+  home AH manages ::HomeFactoryTest::A
+  {
+    factory new (in long size);
+  };
+};
+module ProvidesTest
+{
+  interface I
+  {
+  };
+  component C
+  {
+    provides ::ProvidesTest::I i;
+  };
+};
+module PublishesTest
+{
+  eventtype E
+  {
+  };
+  component C
+  {
+    publishes ::PublishesTest::E e;
+  };
+};
+module UsesTest
+{
+  interface I
+  {
+  };
+  component C
+  {
+    uses ::UsesTest::I i;
+  };
+};

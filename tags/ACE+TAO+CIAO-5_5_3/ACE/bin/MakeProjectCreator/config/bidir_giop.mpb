@@ -1,0 +1,7 @@
+// -*- MPC -*-
+// $Id$
+
+project : taolib, pi {
+  after   += BiDir_GIOP
+  libs    += TAO_BiDirGIOP
+}
