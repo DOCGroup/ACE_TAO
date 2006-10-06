@@ -18,7 +18,7 @@
 // Information about CIAO is available at:
 //    http://www.dre.vanderbilt.edu/CIAO
 
-#include "Effector_Main_Impl_svnt.h"
+#include "Env_Dectector_Impl_svnt.h"
 #include "Cookies.h"
 #include "ciao/Servant_Activator.h"
 #include "ciao/Port_Activator_T.h"
@@ -26,40 +26,40 @@
 
 namespace CIDL_MonolithicImplementation
 {
-  Effector_Main_Context::Effector_Main_Context (
+  Env_Detector_Context::Env_Detector_Context (
     ::Components::CCMHome_ptr h,
     ::CIAO::Session_Container *c,
-    Effector_Main_Servant *sv)
+    Env_Detector_Servant *sv)
     : ::CIAO::Context_Impl_Base (h, c), 
       ::CIAO::Context_Impl<
-          ::TSCE::CCM_Effector_Main_Context,
-          Effector_Main_Servant,
-          ::TSCE::Effector_Main,
-          ::TSCE::Effector_Main_var
+          ::TSCE::CCM_Env_Detector_Context,
+          Env_Detector_Servant,
+          ::TSCE::Env_Detector,
+          ::TSCE::Env_Detector_var
         > (h, c, sv)
   {
   }
 
-  Effector_Main_Context::~Effector_Main_Context (void)
+  Env_Detector_Context::~Env_Detector_Context (void)
   {
   }
 
-  // Operations for Effector_Main receptacles and event sources,
-  // defined in ::TSCE::CCM_Effector_Main_Context.
+  // Operations for Env_Detector receptacles and event sources,
+  // defined in ::TSCE::CCM_Env_Detector_Context.
 
   void
-  Effector_Main_Context::push_command (
-    ::TSCE::Command_Event *ev
+  Env_Detector_Context::push_track (
+    ::TSCE::Track_Event *ev
     ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC (( ::CORBA::SystemException))
   {
     for (ACE_Active_Map_Manager< 
-           ::TSCE::Command_EventConsumer_var>::iterator iter =
-             this->ciao_publishes_command_map_.begin ();
-         iter != this->ciao_publishes_command_map_.end ();
+           ::TSCE::Track_EventConsumer_var>::iterator iter =
+             this->ciao_publishes_track_map_.begin ();
+         iter != this->ciao_publishes_track_map_.end ();
          ++iter)
     {
-      (*iter).int_id_->push_Command_Event (
+      (*iter).int_id_->push_Track_Event (
         ev
         ACE_ENV_ARG_PARAMETER);
       ACE_CHECK;
@@ -67,8 +67,8 @@ namespace CIDL_MonolithicImplementation
 
     for (ACE_Active_Map_Manager< 
            ::Components::EventConsumerBase_var>::iterator giter =
-             this->ciao_publishes_command_generic_map_.begin ();
-         giter != this->ciao_publishes_command_generic_map_.end ();
+             this->ciao_publishes_track_generic_map_.begin ();
+         giter != this->ciao_publishes_track_generic_map_.end ();
          ++giter)
     {
       (*giter).int_id_->push_event (
@@ -79,8 +79,8 @@ namespace CIDL_MonolithicImplementation
   }
 
   ::Components::Cookie *
-  Effector_Main_Context::subscribe_command (
-    ::TSCE::Command_EventConsumer_ptr c
+  Env_Detector_Context::subscribe_track (
+    ::TSCE::Track_EventConsumer_ptr c
     ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC (( ::CORBA::SystemException,
                    ::Components::ExceededConnectionLimit))
@@ -90,11 +90,11 @@ namespace CIDL_MonolithicImplementation
       ACE_THROW_RETURN ( ::CORBA::BAD_PARAM (), 0);
     }
 
-    ::TSCE::Command_EventConsumer_var sub =
-      ::TSCE::Command_EventConsumer::_duplicate (c);
+    ::TSCE::Track_EventConsumer_var sub =
+      ::TSCE::Track_EventConsumer::_duplicate (c);
 
     ACE_Active_Map_Manager_Key key;
-    this->ciao_publishes_command_map_.bind (sub.in (), key);
+    this->ciao_publishes_track_map_.bind (sub.in (), key);
     sub._retn ();
 
     ::Components::Cookie * retv = 0;
@@ -106,7 +106,7 @@ namespace CIDL_MonolithicImplementation
   }
 
   ::Components::Cookie *
-  Effector_Main_Context::subscribe_command_generic (
+  Env_Detector_Context::subscribe_track_generic (
     ::Components::EventConsumerBase_ptr c
     ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC (( ::CORBA::SystemException,
@@ -121,7 +121,7 @@ namespace CIDL_MonolithicImplementation
       ::Components::EventConsumerBase::_duplicate (c);
 
     ACE_Active_Map_Manager_Key key;
-    this->ciao_publishes_command_generic_map_.bind (sub.in (), key);
+    this->ciao_publishes_track_generic_map_.bind (sub.in (), key);
     sub._retn ();
 
     ::Components::Cookie * retv = 0;
@@ -132,8 +132,8 @@ namespace CIDL_MonolithicImplementation
     return retv;
   }
 
-  ::TSCE::Command_EventConsumer_ptr
-  Effector_Main_Context::unsubscribe_command (
+  ::TSCE::Track_EventConsumer_ptr
+  Env_Detector_Context::unsubscribe_track (
     ::Components::Cookie *ck
     ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC (( ::CORBA::SystemException,
@@ -144,145 +144,28 @@ namespace CIDL_MonolithicImplementation
     if (ck == 0 || ::CIAO::Map_Key_Cookie::extract (ck, key) == false)
     {
       ACE_THROW_RETURN ( ::Components::InvalidConnection (),
-                        ::TSCE::Command_EventConsumer::_nil ());
+                        ::TSCE::Track_EventConsumer::_nil ());
     }
 
-    ::TSCE::Command_EventConsumer_var retv;
-    if (this->ciao_publishes_command_map_.unbind (key, retv) == 0)
+    ::TSCE::Track_EventConsumer_var retv;
+    if (this->ciao_publishes_track_map_.unbind (key, retv) == 0)
     {
       return retv._retn ();
     }
 
     ::Components::EventConsumerBase_var ecb;
 
-    if (this->ciao_publishes_command_generic_map_.unbind (key, ecb) != 0)
+    if (this->ciao_publishes_track_generic_map_.unbind (key, ecb) != 0)
     {
       ACE_THROW_RETURN ( ::Components::InvalidConnection (),
-                        ::TSCE::Command_EventConsumer::_nil ());
+                        ::TSCE::Track_EventConsumer::_nil ());
     }
 
-    return ::TSCE::Command_EventConsumer::_nil ();
-  }
-
-  void
-  Effector_Main_Context::push_status (
-    ::TSCE::Status_Event *ev
-    ACE_ENV_ARG_DECL)
-  ACE_THROW_SPEC (( ::CORBA::SystemException))
-  {
-    for (ACE_Active_Map_Manager< 
-           ::TSCE::Status_EventConsumer_var>::iterator iter =
-             this->ciao_publishes_status_map_.begin ();
-         iter != this->ciao_publishes_status_map_.end ();
-         ++iter)
-    {
-      (*iter).int_id_->push_Status_Event (
-        ev
-        ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
-    }
-
-    for (ACE_Active_Map_Manager< 
-           ::Components::EventConsumerBase_var>::iterator giter =
-             this->ciao_publishes_status_generic_map_.begin ();
-         giter != this->ciao_publishes_status_generic_map_.end ();
-         ++giter)
-    {
-      (*giter).int_id_->push_event (
-        ev
-        ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
-    }
-  }
-
-  ::Components::Cookie *
-  Effector_Main_Context::subscribe_status (
-    ::TSCE::Status_EventConsumer_ptr c
-    ACE_ENV_ARG_DECL)
-  ACE_THROW_SPEC (( ::CORBA::SystemException,
-                   ::Components::ExceededConnectionLimit))
-  {
-    if ( ::CORBA::is_nil (c))
-    {
-      ACE_THROW_RETURN ( ::CORBA::BAD_PARAM (), 0);
-    }
-
-    ::TSCE::Status_EventConsumer_var sub =
-      ::TSCE::Status_EventConsumer::_duplicate (c);
-
-    ACE_Active_Map_Manager_Key key;
-    this->ciao_publishes_status_map_.bind (sub.in (), key);
-    sub._retn ();
-
-    ::Components::Cookie * retv = 0;
-    ACE_NEW_THROW_EX (retv,
-                      ::CIAO::Map_Key_Cookie (key),
-                      ::CORBA::NO_MEMORY ());
-
-    return retv;
-  }
-
-  ::Components::Cookie *
-  Effector_Main_Context::subscribe_status_generic (
-    ::Components::EventConsumerBase_ptr c
-    ACE_ENV_ARG_DECL)
-  ACE_THROW_SPEC (( ::CORBA::SystemException,
-                   ::Components::ExceededConnectionLimit))
-  {
-    if ( ::CORBA::is_nil (c))
-    {
-      ACE_THROW_RETURN ( ::CORBA::BAD_PARAM (), 0);
-    }
-
-    ::Components::EventConsumerBase_var sub =
-      ::Components::EventConsumerBase::_duplicate (c);
-
-    ACE_Active_Map_Manager_Key key;
-    this->ciao_publishes_status_generic_map_.bind (sub.in (), key);
-    sub._retn ();
-
-    ::Components::Cookie * retv = 0;
-    ACE_NEW_THROW_EX (retv,
-                      ::CIAO::Map_Key_Cookie (key),
-                      ::CORBA::NO_MEMORY ());
-
-    return retv;
-  }
-
-  ::TSCE::Status_EventConsumer_ptr
-  Effector_Main_Context::unsubscribe_status (
-    ::Components::Cookie *ck
-    ACE_ENV_ARG_DECL)
-  ACE_THROW_SPEC (( ::CORBA::SystemException,
-                   ::Components::InvalidConnection))
-  {
-    ACE_Active_Map_Manager_Key key;
-
-    if (ck == 0 || ::CIAO::Map_Key_Cookie::extract (ck, key) == false)
-    {
-      ACE_THROW_RETURN ( ::Components::InvalidConnection (),
-                        ::TSCE::Status_EventConsumer::_nil ());
-    }
-
-    ::TSCE::Status_EventConsumer_var retv;
-    if (this->ciao_publishes_status_map_.unbind (key, retv) == 0)
-    {
-      return retv._retn ();
-    }
-
-    ::Components::EventConsumerBase_var ecb;
-
-    if (this->ciao_publishes_status_generic_map_.unbind (key, ecb) != 0)
-    {
-      ACE_THROW_RETURN ( ::Components::InvalidConnection (),
-                        ::TSCE::Status_EventConsumer::_nil ());
-    }
-
-    return ::TSCE::Status_EventConsumer::_nil ();
+    return ::TSCE::Track_EventConsumer::_nil ();
   }
 
   ::CUTS::Testing_Service_ptr
-  Effector_Main_Context::get_connection_cuts_testing_service (
+  Env_Detector_Context::get_connection_cuts_testing_service (
     ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC (( ::CORBA::SystemException))
   {
@@ -291,7 +174,7 @@ namespace CIDL_MonolithicImplementation
   }
 
   void
-  Effector_Main_Context::connect_cuts_testing_service (
+  Env_Detector_Context::connect_cuts_testing_service (
     ::CUTS::Testing_Service_ptr c
     ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC (( ::CORBA::SystemException,
@@ -313,7 +196,7 @@ namespace CIDL_MonolithicImplementation
   }
 
   ::CUTS::Testing_Service_ptr
-  Effector_Main_Context::disconnect_cuts_testing_service (
+  Env_Detector_Context::disconnect_cuts_testing_service (
     ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC (( ::CORBA::SystemException,
                    ::Components::NoConnection))
@@ -329,16 +212,16 @@ namespace CIDL_MonolithicImplementation
 
   // CIAO-specific.
 
-  Effector_Main_Context *
-  Effector_Main_Context::_narrow (
+  Env_Detector_Context *
+  Env_Detector_Context::_narrow (
     ::Components::SessionContext_ptr p
     ACE_ENV_ARG_DECL_NOT_USED)
   {
-    return dynamic_cast<Effector_Main_Context *> (p);
+    return dynamic_cast<Env_Detector_Context *> (p);
   }
 
-  Effector_Main_Servant::Effector_Main_Servant (
-    ::TSCE::CCM_Effector_Main_ptr exe,
+  Env_Detector_Servant::Env_Detector_Servant (
+    ::TSCE::CCM_Env_Detector_ptr exe,
     ::Components::CCMHome_ptr h,
     const char *ins_name,
     ::CIAO::Home_Servant_Impl_Base *hs,
@@ -346,14 +229,14 @@ namespace CIDL_MonolithicImplementation
     ::CIAO::REC_POL_MAP &rec_pol_map)
     : ::CIAO::Servant_Impl_Base (h, hs, c, rec_pol_map),
       ::CIAO::Servant_Impl<
-          ::POA_TSCE::Effector_Main,
-          ::TSCE::CCM_Effector_Main,
-          Effector_Main_Context
+          ::POA_TSCE::Env_Detector,
+          ::TSCE::CCM_Env_Detector,
+          Env_Detector_Context
         > (exe, h, hs, c, rec_pol_map),
       ins_name_ (ins_name)
   {
     ACE_NEW (this->context_,
-             Effector_Main_Context (h, c, this));
+             Env_Detector_Context (h, c, this));
 
     // Set the instance id of the component on the context
 
@@ -362,10 +245,6 @@ namespace CIDL_MonolithicImplementation
     CIAO_REGISTER_OBV_FACTORY (
       ::TSCE::Command_Event_init,
       ::TSCE::Command_Event);
-
-    CIAO_REGISTER_OBV_FACTORY (
-      ::TSCE::Status_Event_init,
-      ::TSCE::Status_Event);
 
     ACE_TRY_NEW_ENV
     {
@@ -395,12 +274,12 @@ namespace CIDL_MonolithicImplementation
     ACE_ENDTRY;
   }
 
-  Effector_Main_Servant::~Effector_Main_Servant (void)
+  Env_Detector_Servant::~Env_Detector_Servant (void)
   {
   }
 
   void
-  Effector_Main_Servant::set_attributes (
+  Env_Detector_Servant::set_attributes (
     const ::Components::ConfigValues &descr
     ACE_ENV_ARG_DECL)
   {
@@ -417,91 +296,55 @@ namespace CIDL_MonolithicImplementation
   }
 
   ::Components::Cookie *
-  Effector_Main_Servant::subscribe_command (
-    ::TSCE::Command_EventConsumer_ptr c
+  Env_Detector_Servant::subscribe_track (
+    ::TSCE::Track_EventConsumer_ptr c
     ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC (( ::CORBA::SystemException,
                    ::Components::ExceededConnectionLimit))
   {
-    return this->context_->subscribe_command (
+    return this->context_->subscribe_track (
       c
       ACE_ENV_ARG_PARAMETER);
   }
 
   ::Components::Cookie *
-  Effector_Main_Servant::subscribe_command_generic (
+  Env_Detector_Servant::subscribe_track_generic (
     ::Components::EventConsumerBase_ptr c
     ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC (( ::CORBA::SystemException,
                    ::Components::ExceededConnectionLimit))
   {
-    return this->context_->subscribe_command_generic (
+    return this->context_->subscribe_track_generic (
       c
       ACE_ENV_ARG_PARAMETER);
   }
 
-  ::TSCE::Command_EventConsumer_ptr
-  Effector_Main_Servant::unsubscribe_command (
+  ::TSCE::Track_EventConsumer_ptr
+  Env_Detector_Servant::unsubscribe_track (
     ::Components::Cookie *ck
     ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC (( ::CORBA::SystemException,
                    ::Components::InvalidConnection))
   {
-    return this->context_->unsubscribe_command (
+    return this->context_->unsubscribe_track (
       ck
       ACE_ENV_ARG_PARAMETER);
   }
 
-  ::Components::Cookie *
-  Effector_Main_Servant::subscribe_status (
-    ::TSCE::Status_EventConsumer_ptr c
-    ACE_ENV_ARG_DECL)
-  ACE_THROW_SPEC (( ::CORBA::SystemException,
-                   ::Components::ExceededConnectionLimit))
-  {
-    return this->context_->subscribe_status (
-      c
-      ACE_ENV_ARG_PARAMETER);
-  }
-
-  ::Components::Cookie *
-  Effector_Main_Servant::subscribe_status_generic (
-    ::Components::EventConsumerBase_ptr c
-    ACE_ENV_ARG_DECL)
-  ACE_THROW_SPEC (( ::CORBA::SystemException,
-                   ::Components::ExceededConnectionLimit))
-  {
-    return this->context_->subscribe_status_generic (
-      c
-      ACE_ENV_ARG_PARAMETER);
-  }
-
-  ::TSCE::Status_EventConsumer_ptr
-  Effector_Main_Servant::unsubscribe_status (
-    ::Components::Cookie *ck
-    ACE_ENV_ARG_DECL)
-  ACE_THROW_SPEC (( ::CORBA::SystemException,
-                   ::Components::InvalidConnection))
-  {
-    return this->context_->unsubscribe_status (
-      ck
-      ACE_ENV_ARG_PARAMETER);
-  }
-
-  Effector_Main_Servant::Command_EventConsumer_command_Servant::Command_EventConsumer_command_Servant (
-    ::TSCE::CCM_Effector_Main_ptr executor,
-    ::TSCE::CCM_Effector_Main_Context_ptr c)
-    : executor_ ( ::TSCE::CCM_Effector_Main::_duplicate (executor)),
-      ctx_ ( ::TSCE::CCM_Effector_Main_Context::_duplicate (c))
+  Env_Detector_Servant::Command_EventConsumer_command_Servant::Command_EventConsumer_command_Servant (
+    ::TSCE::CCM_Env_Detector_ptr executor,
+    ::TSCE::CCM_Env_Detector_Context_ptr c)
+    : executor_ ( ::TSCE::CCM_Env_Detector::_duplicate (executor)),
+      ctx_ ( ::TSCE::CCM_Env_Detector_Context::_duplicate (c))
   {
   }
 
-  Effector_Main_Servant::Command_EventConsumer_command_Servant::~Command_EventConsumer_command_Servant (void)
+  Env_Detector_Servant::Command_EventConsumer_command_Servant::~Command_EventConsumer_command_Servant (void)
   {
   }
 
   ::CORBA::Object_ptr
-  Effector_Main_Servant::Command_EventConsumer_command_Servant::_get_component (
+  Env_Detector_Servant::Command_EventConsumer_command_Servant::_get_component (
     ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC (( ::CORBA::SystemException))
   {
@@ -509,7 +352,7 @@ namespace CIDL_MonolithicImplementation
   }
 
   void
-  Effector_Main_Servant::Command_EventConsumer_command_Servant::push_Command_Event (
+  Env_Detector_Servant::Command_EventConsumer_command_Servant::push_Command_Event (
     ::TSCE::Command_Event *evt
     ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC (( ::CORBA::SystemException))
@@ -521,7 +364,7 @@ namespace CIDL_MonolithicImplementation
 
   // Inherited from ::Components::EventConsumerBase.
   void
-  Effector_Main_Servant::Command_EventConsumer_command_Servant::push_event (
+  Env_Detector_Servant::Command_EventConsumer_command_Servant::push_event (
     ::Components::EventBase *ev
     ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC (( ::CORBA::SystemException,
@@ -543,7 +386,7 @@ namespace CIDL_MonolithicImplementation
   }
 
   CORBA::Boolean
-  Effector_Main_Servant::Command_EventConsumer_command_Servant::ciao_is_substitutable (
+  Env_Detector_Servant::Command_EventConsumer_command_Servant::ciao_is_substitutable (
     const char * event_repo_id
     ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC (( ::CORBA::SystemException))
@@ -553,8 +396,8 @@ namespace CIDL_MonolithicImplementation
       ACE_THROW_RETURN ( ::CORBA::BAD_PARAM (), false);
     }
 
-    Effector_Main_Context *ctx =
-      Effector_Main_Context::_narrow (
+    Env_Detector_Context *ctx =
+      Env_Detector_Context::_narrow (
         this->ctx_.in ()
         ACE_ENV_ARG_PARAMETER);
     ACE_CHECK_RETURN (false);
@@ -588,7 +431,7 @@ namespace CIDL_MonolithicImplementation
 
 
   ::TSCE::Command_EventConsumer_ptr
-  Effector_Main_Servant::get_consumer_command (
+  Env_Detector_Servant::get_consumer_command (
     ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC (( ::CORBA::SystemException))
   {
@@ -613,7 +456,7 @@ namespace CIDL_MonolithicImplementation
   }
 
   ::Components::EventConsumerBase_ptr
-  Effector_Main_Servant::get_consumer_command_i (
+  Env_Detector_Servant::get_consumer_command_i (
     ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC (( ::CORBA::SystemException))
   {
@@ -626,16 +469,16 @@ namespace CIDL_MonolithicImplementation
     }
 
     ::CIAO::Port_Activator_T<
-    Effector_Main_Servant::Command_EventConsumer_command_Servant,
-    ::TSCE::CCM_Effector_Main,
-    ::TSCE::CCM_Effector_Main_Context,
-    Effector_Main_Servant > *tmp = 0;
+    Env_Detector_Servant::Command_EventConsumer_command_Servant,
+    ::TSCE::CCM_Env_Detector,
+    ::TSCE::CCM_Env_Detector_Context,
+    Env_Detector_Servant > *tmp = 0;
 
     typedef  CIAO::Port_Activator_T<
-        Effector_Main_Servant::Command_EventConsumer_command_Servant,
-        ::TSCE::CCM_Effector_Main,
-        ::TSCE::CCM_Effector_Main_Context, 
-        Effector_Main_Servant
+        Env_Detector_Servant::Command_EventConsumer_command_Servant,
+        ::TSCE::CCM_Env_Detector,
+        ::TSCE::CCM_Env_Detector_Context, 
+        Env_Detector_Servant
       >
     MACRO_MADNESS_TYPEDEF;
 
@@ -682,202 +525,8 @@ namespace CIDL_MonolithicImplementation
     return ecb._retn ();
   }
 
-  Effector_Main_Servant::Status_EventConsumer_status_Servant::Status_EventConsumer_status_Servant (
-    ::TSCE::CCM_Effector_Main_ptr executor,
-    ::TSCE::CCM_Effector_Main_Context_ptr c)
-    : executor_ ( ::TSCE::CCM_Effector_Main::_duplicate (executor)),
-      ctx_ ( ::TSCE::CCM_Effector_Main_Context::_duplicate (c))
-  {
-  }
-
-  Effector_Main_Servant::Status_EventConsumer_status_Servant::~Status_EventConsumer_status_Servant (void)
-  {
-  }
-
-  ::CORBA::Object_ptr
-  Effector_Main_Servant::Status_EventConsumer_status_Servant::_get_component (
-    ACE_ENV_SINGLE_ARG_DECL)
-  ACE_THROW_SPEC (( ::CORBA::SystemException))
-  {
-    return this->ctx_->get_CCM_object (ACE_ENV_SINGLE_ARG_PARAMETER);
-  }
-
-  void
-  Effector_Main_Servant::Status_EventConsumer_status_Servant::push_Status_Event (
-    ::TSCE::Status_Event *evt
-    ACE_ENV_ARG_DECL)
-  ACE_THROW_SPEC (( ::CORBA::SystemException))
-  {
-    this->executor_->push_status (
-      evt
-      ACE_ENV_ARG_PARAMETER);
-  }
-
-  // Inherited from ::Components::EventConsumerBase.
-  void
-  Effector_Main_Servant::Status_EventConsumer_status_Servant::push_event (
-    ::Components::EventBase *ev
-    ACE_ENV_ARG_DECL)
-  ACE_THROW_SPEC (( ::CORBA::SystemException,
-                   ::Components::BadEventType))
-  {
-    ::TSCE::Status_Event_var ev_type =
-      ::TSCE::Status_Event::_downcast (ev);
-
-    if (ev_type.in () != 0)
-    {
-      this->push_Status_Event (
-        ev_type.in ()
-        ACE_ENV_ARG_PARAMETER);
-
-      return;
-    }
-
-    ACE_THROW ( ::Components::BadEventType ());
-  }
-
-  CORBA::Boolean
-  Effector_Main_Servant::Status_EventConsumer_status_Servant::ciao_is_substitutable (
-    const char * event_repo_id
-    ACE_ENV_ARG_DECL)
-  ACE_THROW_SPEC (( ::CORBA::SystemException))
-  {
-    if (event_repo_id == 0)
-    {
-      ACE_THROW_RETURN ( ::CORBA::BAD_PARAM (), false);
-    }
-
-    Effector_Main_Context *ctx =
-      Effector_Main_Context::_narrow (
-        this->ctx_.in ()
-        ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK_RETURN (false);
-
-    CORBA::ORB_ptr orb = ctx->_ciao_the_Container ()->the_ORB ();
-
-    CORBA::ValueFactory f =
-      orb->lookup_value_factory (
-        event_repo_id
-        ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK_RETURN (false);
-
-    if (f == 0)
-    {
-      return false;
-    }
-
-    CORBA::ValueBase_var v =
-      f->create_for_unmarshal (ACE_ENV_SINGLE_ARG_PARAMETER);
-    ACE_CHECK_RETURN (false);
-
-    f->_remove_ref ();
-
-    if (v.in () == 0)
-    {
-      return false;
-    }
-
-    return dynamic_cast< ::TSCE::Status_Event *> (v.in ()) != 0;
-  }
-
-
-  ::TSCE::Status_EventConsumer_ptr
-  Effector_Main_Servant::get_consumer_status (
-    ACE_ENV_SINGLE_ARG_DECL)
-  ACE_THROW_SPEC (( ::CORBA::SystemException))
-  {
-    if (! ::CORBA::is_nil (this->consumes_status_.in ()))
-    {
-      return ::TSCE::Status_EventConsumer::_duplicate (this->consumes_status_.in ());
-    }
-
-    ::Components::EventConsumerBase_var obj =
-      this->get_consumer_status_i (
-        ACE_ENV_SINGLE_ARG_PARAMETER);
-    ACE_CHECK_RETURN ( ::TSCE::Status_EventConsumer::_nil ());
-
-    ::TSCE::Status_EventConsumer_var eco =
-      ::TSCE::Status_EventConsumer::_narrow (
-        obj.in ()
-        ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK_RETURN ( ::TSCE::Status_EventConsumer::_nil ());
-
-    this->consumes_status_ = eco;
-    return ::TSCE::Status_EventConsumer::_duplicate (this->consumes_status_.in ());
-  }
-
-  ::Components::EventConsumerBase_ptr
-  Effector_Main_Servant::get_consumer_status_i (
-    ACE_ENV_SINGLE_ARG_DECL)
-  ACE_THROW_SPEC (( ::CORBA::SystemException))
-  {
-    ::Components::EventConsumerBase_ptr ret =
-      this->lookup_consumer ("status");
-
-    if (! ::CORBA::is_nil (ret))
-    {
-      return ret;
-    }
-
-    ::CIAO::Port_Activator_T<
-    Effector_Main_Servant::Status_EventConsumer_status_Servant,
-    ::TSCE::CCM_Effector_Main,
-    ::TSCE::CCM_Effector_Main_Context,
-    Effector_Main_Servant > *tmp = 0;
-
-    typedef  CIAO::Port_Activator_T<
-        Effector_Main_Servant::Status_EventConsumer_status_Servant,
-        ::TSCE::CCM_Effector_Main,
-        ::TSCE::CCM_Effector_Main_Context, 
-        Effector_Main_Servant
-      >
-    MACRO_MADNESS_TYPEDEF;
-
-    ACE_CString obj_id (this->ins_name_);
-    obj_id += "_status";
-
-    ACE_NEW_THROW_EX (
-      tmp,
-      MACRO_MADNESS_TYPEDEF (obj_id.c_str (),
-                             "status",
-                             ::CIAO::Port_Activator::Sink,
-                             this->executor_.in (),
-                             this->context_,
-                             this),
-      ::CORBA::NO_MEMORY ());
-
-    ::CIAO::Servant_Activator *sa =
-      this->container_->ports_servant_activator ();
-
-    if (!sa->register_port_activator (tmp))
-    {
-      return ::TSCE::Status_EventConsumer::_nil ();
-    }
-
-    ::CORBA::Object_var obj =
-      this->container_->generate_reference (
-        obj_id.c_str (),
-        "IDL:TSCE/Status_EventConsumer:1.0",
-        ::CIAO::Container::Facet_Consumer
-        ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK_RETURN ( ::TSCE::Status_EventConsumer::_nil ());
-
-    ::Components::EventConsumerBase_var ecb =
-      ::Components::EventConsumerBase::_narrow (
-        obj.in ()
-        ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK_RETURN ( ::TSCE::Status_EventConsumer::_nil ());
-
-    this->add_consumer ("status",
-                        ecb.in ()
-                        ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK_RETURN ( ::TSCE::Status_EventConsumer::_nil ());
-
-    return ecb._retn ();
-  }
-
   ::Components::Cookie *
-  Effector_Main_Servant::connect (
+  Env_Detector_Servant::connect (
     const char *name,
     ::CORBA::Object_ptr connection
     ACE_ENV_ARG_DECL)
@@ -921,7 +570,7 @@ namespace CIDL_MonolithicImplementation
   }
 
   ::CORBA::Object_ptr
-  Effector_Main_Servant::disconnect (
+  Env_Detector_Servant::disconnect (
     const char *name,
     ::Components::Cookie * ck
     ACE_ENV_ARG_DECL)
@@ -950,7 +599,7 @@ namespace CIDL_MonolithicImplementation
   }
 
   ::Components::ReceptacleDescriptions *
-  Effector_Main_Servant::get_all_receptacles (
+  Env_Detector_Servant::get_all_receptacles (
     ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC (( ::CORBA::SystemException))
   {
@@ -973,7 +622,7 @@ namespace CIDL_MonolithicImplementation
   }
 
   void
-  Effector_Main_Servant::connect_cuts_testing_service (
+  Env_Detector_Servant::connect_cuts_testing_service (
     ::CUTS::Testing_Service_ptr c
     ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC (( ::CORBA::SystemException,
@@ -988,7 +637,7 @@ namespace CIDL_MonolithicImplementation
   }
 
   ::CUTS::Testing_Service_ptr
-  Effector_Main_Servant::disconnect_cuts_testing_service (
+  Env_Detector_Servant::disconnect_cuts_testing_service (
     ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC (( ::CORBA::SystemException,
                    ::Components::NoConnection))
@@ -998,7 +647,7 @@ namespace CIDL_MonolithicImplementation
   }
 
   ::CUTS::Testing_Service_ptr
-  Effector_Main_Servant::get_connection_cuts_testing_service (
+  Env_Detector_Servant::get_connection_cuts_testing_service (
     ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC (( ::CORBA::SystemException))
   {
@@ -1007,7 +656,7 @@ namespace CIDL_MonolithicImplementation
   }
 
   void
-  Effector_Main_Servant::connect_consumer (
+  Env_Detector_Servant::connect_consumer (
     const char * emitter_name,
     ::Components::EventConsumerBase_ptr consumer
     ACE_ENV_ARG_DECL)
@@ -1026,7 +675,7 @@ namespace CIDL_MonolithicImplementation
   }
 
   ::Components::EventConsumerBase_ptr
-  Effector_Main_Servant::disconnect_consumer (
+  Env_Detector_Servant::disconnect_consumer (
     const char *source_name
     ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC (( ::CORBA::SystemException,
@@ -1044,7 +693,7 @@ namespace CIDL_MonolithicImplementation
   }
 
   ::Components::PublisherDescriptions *
-  Effector_Main_Servant::get_all_publishers (
+  Env_Detector_Servant::get_all_publishers (
     ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC (( ::CORBA::SystemException))
   {
@@ -1053,29 +702,21 @@ namespace CIDL_MonolithicImplementation
                     ::Components::PublisherDescriptions,
                     0);
     ::Components::PublisherDescriptions_var safe_retval = retval;
-    safe_retval->length (2UL);
+    safe_retval->length (1UL);
 
     ::CIAO::Servant_Impl_Base::describe_pub_event_source<
-        ::TSCE::Command_EventConsumer_var
-      > ("command",
-         "IDL:TSCE/Command_Event:1.0",
-         this->context_->ciao_publishes_command_map_,
+        ::TSCE::Track_EventConsumer_var
+      > ("track",
+         "IDL:TSCE/Track_Event:1.0",
+         this->context_->ciao_publishes_track_map_,
          safe_retval,
          0UL);
-
-    ::CIAO::Servant_Impl_Base::describe_pub_event_source<
-        ::TSCE::Status_EventConsumer_var
-      > ("status",
-         "IDL:TSCE/Status_Event:1.0",
-         this->context_->ciao_publishes_status_map_,
-         safe_retval,
-         1UL);
 
     return safe_retval._retn ();
   }
 
   ::Components::EmitterDescriptions *
-  Effector_Main_Servant::get_all_emitters (
+  Env_Detector_Servant::get_all_emitters (
     ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC (( ::CORBA::SystemException))
   {
@@ -1090,7 +731,7 @@ namespace CIDL_MonolithicImplementation
   }
 
   ::Components::Cookie *
-  Effector_Main_Servant::subscribe (
+  Env_Detector_Servant::subscribe (
     const char *publisher_name,
     ::Components::EventConsumerBase_ptr subscribe
     ACE_ENV_ARG_DECL)
@@ -1107,10 +748,10 @@ namespace CIDL_MonolithicImplementation
       ACE_THROW_RETURN ( ::Components::InvalidName (), 0);
     }
 
-    if (ACE_OS::strcmp (publisher_name, "command") == 0)
+    if (ACE_OS::strcmp (publisher_name, "track") == 0)
     {
-      ::TSCE::Command_EventConsumer_var sub =
-        ::TSCE::Command_EventConsumer::_narrow (
+      ::TSCE::Track_EventConsumer_var sub =
+        ::TSCE::Track_EventConsumer::_narrow (
         subscribe
         ACE_ENV_ARG_PARAMETER);
       ACE_CHECK_RETURN (0);
@@ -1119,13 +760,13 @@ namespace CIDL_MonolithicImplementation
       {
         ::CORBA::Boolean substitutable =
           subscribe->ciao_is_substitutable (
-            ::TSCE::Command_Event::_tao_obv_static_repository_id ()
+            ::TSCE::Track_Event::_tao_obv_static_repository_id ()
             ACE_ENV_ARG_PARAMETER);
         ACE_CHECK_RETURN (0);
 
         if (substitutable)
         {
-          return this->subscribe_command_generic (
+          return this->subscribe_track_generic (
             subscribe
             ACE_ENV_ARG_PARAMETER);
         }
@@ -1138,44 +779,7 @@ namespace CIDL_MonolithicImplementation
 
       else
       {
-        return this->subscribe_command (
-          sub.in ()
-          ACE_ENV_ARG_PARAMETER);
-      }
-    }
-
-    if (ACE_OS::strcmp (publisher_name, "status") == 0)
-    {
-      ::TSCE::Status_EventConsumer_var sub =
-        ::TSCE::Status_EventConsumer::_narrow (
-        subscribe
-        ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK_RETURN (0);
-
-      if ( ::CORBA::is_nil (sub.in ()))
-      {
-        ::CORBA::Boolean substitutable =
-          subscribe->ciao_is_substitutable (
-            ::TSCE::Status_Event::_tao_obv_static_repository_id ()
-            ACE_ENV_ARG_PARAMETER);
-        ACE_CHECK_RETURN (0);
-
-        if (substitutable)
-        {
-          return this->subscribe_status_generic (
-            subscribe
-            ACE_ENV_ARG_PARAMETER);
-        }
-
-        else
-        {
-          ACE_THROW_RETURN ( ::Components::InvalidConnection (), 0);
-        }
-      }
-
-      else
-      {
-        return this->subscribe_status (
+        return this->subscribe_track (
           sub.in ()
           ACE_ENV_ARG_PARAMETER);
       }
@@ -1185,7 +789,7 @@ namespace CIDL_MonolithicImplementation
   }
 
   ::Components::EventConsumerBase_ptr
-  Effector_Main_Servant::unsubscribe (
+  Env_Detector_Servant::unsubscribe (
     const char *publisher_name,
     ::Components::Cookie *ck
     ACE_ENV_ARG_DECL)
@@ -1202,16 +806,9 @@ namespace CIDL_MonolithicImplementation
                         ::Components::EventConsumerBase::_nil ());
     }
 
-    if (ACE_OS::strcmp (publisher_name, "command") == 0)
+    if (ACE_OS::strcmp (publisher_name, "track") == 0)
     {
-      return this->unsubscribe_command (
-        ck
-        ACE_ENV_ARG_PARAMETER);
-    }
-
-    if (ACE_OS::strcmp (publisher_name, "status") == 0)
-    {
-      return this->unsubscribe_status (
+      return this->unsubscribe_track (
         ck
         ACE_ENV_ARG_PARAMETER);
     }
@@ -1221,7 +818,7 @@ namespace CIDL_MonolithicImplementation
   }
 
   ::CORBA::Object_ptr
-  Effector_Main_Servant::get_facet_executor (
+  Env_Detector_Servant::get_facet_executor (
     const char *name
     ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC (( ::CORBA::SystemException))
@@ -1241,7 +838,7 @@ namespace CIDL_MonolithicImplementation
 
   // Private method to populate the port tables.
   void
-  Effector_Main_Servant::populate_port_tables (
+  Env_Detector_Servant::populate_port_tables (
     ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC (( ::CORBA::SystemException))
   {
@@ -1253,28 +850,23 @@ namespace CIDL_MonolithicImplementation
       this->get_consumer_command_i (
         ACE_ENV_SINGLE_ARG_PARAMETER);
     ACE_CHECK;
-
-    ecb_var =
-      this->get_consumer_status_i (
-        ACE_ENV_SINGLE_ARG_PARAMETER);
-    ACE_CHECK;
   }
 
-  Effector_Main_Factory_Servant::Effector_Main_Factory_Servant (
-    ::TSCE::CCM_Effector_Main_Factory_ptr exe,
+  Env_Detector_Factory_Servant::Env_Detector_Factory_Servant (
+    ::TSCE::CCM_Env_Detector_Factory_ptr exe,
     const char *ins_name,
     ::CIAO::Session_Container *c,
     ::CIAO::REC_POL_MAP &rec_pol_map)
     : ::CIAO::Home_Servant_Impl_Base (c),
       ::CIAO::Home_Servant_Impl<
-            ::POA_TSCE::Effector_Main_Factory,
-            ::TSCE::CCM_Effector_Main_Factory,
-            Effector_Main_Servant
+            ::POA_TSCE::Env_Detector_Factory,
+            ::TSCE::CCM_Env_Detector_Factory,
+            Env_Detector_Servant
           > (exe, c, ins_name, rec_pol_map)
   {
   }
 
-  Effector_Main_Factory_Servant::~Effector_Main_Factory_Servant (void)
+  Env_Detector_Factory_Servant::~Env_Detector_Factory_Servant (void)
   {
   }
 
@@ -1286,8 +878,8 @@ namespace CIDL_MonolithicImplementation
 
   // Home attribute operations.
 
-  extern "C" EFFECTOR_MAIN_IMPL_SVNT_Export ::PortableServer::Servant
-  create_TSCE_Effector_Main_Factory_Servant (
+  extern "C" ENV_DECTECTOR_IMPL_SVNT_Export ::PortableServer::Servant
+  create_TSCE_Env_Detector_Factory_Servant (
     ::Components::HomeExecutorBase_ptr p,
     ::CIAO::Session_Container *c,
     const char *ins_name,
@@ -1299,8 +891,8 @@ namespace CIDL_MonolithicImplementation
       return 0;
     }
 
-    ::TSCE::CCM_Effector_Main_Factory_var x =
-    ::TSCE::CCM_Effector_Main_Factory::_narrow (
+    ::TSCE::CCM_Env_Detector_Factory_var x =
+    ::TSCE::CCM_Env_Detector_Factory::_narrow (
       p
       ACE_ENV_ARG_PARAMETER);
     ACE_CHECK_RETURN (0);
@@ -1311,7 +903,7 @@ namespace CIDL_MonolithicImplementation
     }
 
     return new
-    Effector_Main_Factory_Servant (
+    Env_Detector_Factory_Servant (
       x.in (),
       ins_name,
       c, rec_pol_map);

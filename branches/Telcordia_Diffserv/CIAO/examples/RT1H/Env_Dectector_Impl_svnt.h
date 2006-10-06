@@ -18,12 +18,12 @@
 // Information about CIAO is available at:
 //    http://www.dre.vanderbilt.edu/CIAO
 
-#ifndef CIAO_GLUE_SESSION_EFFECTOR_MAIN_IMPL_SVNT_H
-#define CIAO_GLUE_SESSION_EFFECTOR_MAIN_IMPL_SVNT_H
+#ifndef CIAO_GLUE_SESSION_ENV_DECTECTOR_IMPL_SVNT_H
+#define CIAO_GLUE_SESSION_ENV_DECTECTOR_IMPL_SVNT_H
 
 #include /**/ "ace/pre.h"
 
-#include "Effector_Main_ImplEC.h"
+#include "Env_Dectector_ImplEC.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -34,43 +34,37 @@
 #include "ciao/Servant_Impl_T.h"
 #include "ciao/Home_Servant_Impl_T.h"
 
-#include "Effector_MainS.h"
+#include "Env_DetectorS.h"
 
 namespace CIDL_MonolithicImplementation
 {
-  class Effector_Main_Servant;
+  class Env_Detector_Servant;
 
-  class EFFECTOR_MAIN_IMPL_SVNT_Export Effector_Main_Context
+  class ENV_DECTECTOR_IMPL_SVNT_Export Env_Detector_Context
     : public virtual CIAO::Context_Impl<
-        ::TSCE::CCM_Effector_Main_Context,
-        Effector_Main_Servant,
-        ::TSCE::Effector_Main,
-        ::TSCE::Effector_Main_var
+        ::TSCE::CCM_Env_Detector_Context,
+        Env_Detector_Servant,
+        ::TSCE::Env_Detector,
+        ::TSCE::Env_Detector_var
       >
   {
     public:
     // We will allow the servant glue code we generate to access our state.
-    friend class Effector_Main_Servant;
+    friend class Env_Detector_Servant;
 
-    Effector_Main_Context (
+    Env_Detector_Context (
       ::Components::CCMHome_ptr h,
       ::CIAO::Session_Container *c,
-      Effector_Main_Servant *sv);
+      Env_Detector_Servant *sv);
 
-    virtual ~Effector_Main_Context (void);
+    virtual ~Env_Detector_Context (void);
 
-    // Operations for Effector_Main receptacles and event sources,
-    // defined in ::TSCE::CCM_Effector_Main_Context.
-
-    virtual void
-    push_command (
-      ::TSCE::Command_Event *ev
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC (( ::CORBA::SystemException));
+    // Operations for Env_Detector receptacles and event sources,
+    // defined in ::TSCE::CCM_Env_Detector_Context.
 
     virtual void
-    push_status (
-      ::TSCE::Status_Event *ev
+    push_track (
+      ::TSCE::Track_Event *ev
       ACE_ENV_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC (( ::CORBA::SystemException));
 
@@ -81,7 +75,7 @@ namespace CIDL_MonolithicImplementation
 
     // CIAO-specific.
 
-    static Effector_Main_Context *
+    static Env_Detector_Context *
     _narrow (
       ::Components::SessionContext_ptr p
       ACE_ENV_ARG_DECL_WITH_DEFAULTS);
@@ -90,44 +84,22 @@ namespace CIDL_MonolithicImplementation
     // Methods that manage this component's connections and consumers.
 
     virtual ::Components::Cookie *
-    subscribe_command (
-      ::TSCE::Command_EventConsumer_ptr c
+    subscribe_track (
+      ::TSCE::Track_EventConsumer_ptr c
       ACE_ENV_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC (( ::CORBA::SystemException,
                      ::Components::ExceededConnectionLimit));
 
     // CIAO-specific.
     ::Components::Cookie *
-    subscribe_command_generic (
+    subscribe_track_generic (
       ::Components::EventConsumerBase_ptr c
       ACE_ENV_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC (( ::CORBA::SystemException,
                      ::Components::ExceededConnectionLimit));
 
-    virtual ::TSCE::Command_EventConsumer_ptr
-    unsubscribe_command (
-      ::Components::Cookie *ck
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC (( ::CORBA::SystemException,
-                     ::Components::InvalidConnection));
-
-    virtual ::Components::Cookie *
-    subscribe_status (
-      ::TSCE::Status_EventConsumer_ptr c
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC (( ::CORBA::SystemException,
-                     ::Components::ExceededConnectionLimit));
-
-    // CIAO-specific.
-    ::Components::Cookie *
-    subscribe_status_generic (
-      ::Components::EventConsumerBase_ptr c
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC (( ::CORBA::SystemException,
-                     ::Components::ExceededConnectionLimit));
-
-    virtual ::TSCE::Status_EventConsumer_ptr
-    unsubscribe_status (
+    virtual ::TSCE::Track_EventConsumer_ptr
+    unsubscribe_track (
       ::Components::Cookie *ck
       ACE_ENV_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC (( ::CORBA::SystemException,
@@ -149,46 +121,38 @@ namespace CIDL_MonolithicImplementation
 
     protected:
     ACE_Active_Map_Manager<
-    ::TSCE::Command_EventConsumer_var>
-    ciao_publishes_command_map_;
+    ::TSCE::Track_EventConsumer_var>
+    ciao_publishes_track_map_;
 
     ACE_Active_Map_Manager<
     ::Components::EventConsumerBase_var>
-    ciao_publishes_command_generic_map_;
-
-    ACE_Active_Map_Manager<
-    ::TSCE::Status_EventConsumer_var>
-    ciao_publishes_status_map_;
-
-    ACE_Active_Map_Manager<
-    ::Components::EventConsumerBase_var>
-    ciao_publishes_status_generic_map_;
+    ciao_publishes_track_generic_map_;
 
     // Simplex cuts_testing_service connection.
     ::CUTS::Testing_Service_var
     ciao_uses_cuts_testing_service_;
   };
 
-  class EFFECTOR_MAIN_IMPL_SVNT_Export Effector_Main_Servant
+  class ENV_DECTECTOR_IMPL_SVNT_Export Env_Detector_Servant
     : public virtual CIAO::Servant_Impl<
-        POA_TSCE::Effector_Main,
-        ::TSCE::CCM_Effector_Main,
-        Effector_Main_Context
+        POA_TSCE::Env_Detector,
+        ::TSCE::CCM_Env_Detector,
+        Env_Detector_Context
       >
   {
     public:
 
-    typedef ::TSCE::CCM_Effector_Main _exec_type;
+    typedef ::TSCE::CCM_Env_Detector _exec_type;
 
-    Effector_Main_Servant (
-      ::TSCE::CCM_Effector_Main_ptr executor,
+    Env_Detector_Servant (
+      ::TSCE::CCM_Env_Detector_ptr executor,
       ::Components::CCMHome_ptr h,
       const char *ins_name,
       ::CIAO::Home_Servant_Impl_Base *hs,
       ::CIAO::Session_Container *c,
       ::CIAO::REC_POL_MAP &rec_pol_map);
 
-    virtual ~Effector_Main_Servant (void);
+    virtual ~Env_Detector_Servant (void);
 
     virtual void
     set_attributes (
@@ -200,13 +164,13 @@ namespace CIDL_MonolithicImplementation
     // Public port operations.
 
     // Servant class for the command consumer.
-    class EFFECTOR_MAIN_IMPL_SVNT_Export Command_EventConsumer_command_Servant
+    class ENV_DECTECTOR_IMPL_SVNT_Export Command_EventConsumer_command_Servant
     : public virtual POA_TSCE::Command_EventConsumer
     {
       public:
       Command_EventConsumer_command_Servant (
-        ::TSCE::CCM_Effector_Main_ptr executor,
-        ::TSCE::CCM_Effector_Main_Context_ptr c);
+        ::TSCE::CCM_Env_Detector_ptr executor,
+        ::TSCE::CCM_Env_Detector_Context_ptr c);
 
       virtual ~Command_EventConsumer_command_Servant (void);
 
@@ -237,10 +201,10 @@ namespace CIDL_MonolithicImplementation
       ACE_THROW_SPEC (( ::CORBA::SystemException));
 
       protected:
-      ::TSCE::CCM_Effector_Main_var
+      ::TSCE::CCM_Env_Detector_var
       executor_;
 
-      ::TSCE::CCM_Effector_Main_Context_var
+      ::TSCE::CCM_Env_Detector_Context_var
       ctx_;
     };
 
@@ -250,94 +214,22 @@ namespace CIDL_MonolithicImplementation
     ACE_THROW_SPEC (( ::CORBA::SystemException));
 
     virtual ::Components::Cookie *
-    subscribe_command (
-      ::TSCE::Command_EventConsumer_ptr c
+    subscribe_track (
+      ::TSCE::Track_EventConsumer_ptr c
       ACE_ENV_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC (( ::CORBA::SystemException,
                      ::Components::ExceededConnectionLimit));
 
     // CIAO-specific.
     ::Components::Cookie *
-    subscribe_command_generic (
+    subscribe_track_generic (
       ::Components::EventConsumerBase_ptr c
       ACE_ENV_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC (( ::CORBA::SystemException,
                      ::Components::ExceededConnectionLimit));
 
-    virtual ::TSCE::Command_EventConsumer_ptr
-    unsubscribe_command (
-      ::Components::Cookie *ck
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC (( ::CORBA::SystemException,
-                     ::Components::InvalidConnection));
-
-    // Servant class for the status consumer.
-    class EFFECTOR_MAIN_IMPL_SVNT_Export Status_EventConsumer_status_Servant
-    : public virtual POA_TSCE::Status_EventConsumer
-    {
-      public:
-      Status_EventConsumer_status_Servant (
-        ::TSCE::CCM_Effector_Main_ptr executor,
-        ::TSCE::CCM_Effector_Main_Context_ptr c);
-
-      virtual ~Status_EventConsumer_status_Servant (void);
-
-      virtual void
-      push_Status_Event (
-        ::TSCE::Status_Event *evt
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-      ACE_THROW_SPEC (( ::CORBA::SystemException));
-
-      // Inherited from ::Components::EventConsumerBase.
-      virtual void
-      push_event ( ::Components::EventBase *ev
-                  ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-      ACE_THROW_SPEC (( ::CORBA::SystemException,
-                       ::Components::BadEventType));
-
-      // CIAO-specific in ::Components::EventConsumerBase.
-      virtual CORBA::Boolean
-      ciao_is_substitutable (
-        const char *event_repo_id
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-      ACE_THROW_SPEC (( ::CORBA::SystemException));
-
-      // Get component implementation.
-      virtual CORBA::Object_ptr
-      _get_component (
-        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
-      ACE_THROW_SPEC (( ::CORBA::SystemException));
-
-      protected:
-      ::TSCE::CCM_Effector_Main_var
-      executor_;
-
-      ::TSCE::CCM_Effector_Main_Context_var
-      ctx_;
-    };
-
-    virtual ::TSCE::Status_EventConsumer_ptr
-    get_consumer_status (
-      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC (( ::CORBA::SystemException));
-
-    virtual ::Components::Cookie *
-    subscribe_status (
-      ::TSCE::Status_EventConsumer_ptr c
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC (( ::CORBA::SystemException,
-                     ::Components::ExceededConnectionLimit));
-
-    // CIAO-specific.
-    ::Components::Cookie *
-    subscribe_status_generic (
-      ::Components::EventConsumerBase_ptr c
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC (( ::CORBA::SystemException,
-                     ::Components::ExceededConnectionLimit));
-
-    virtual ::TSCE::Status_EventConsumer_ptr
-    unsubscribe_status (
+    virtual ::TSCE::Track_EventConsumer_ptr
+    unsubscribe_track (
       ::Components::Cookie *ck
       ACE_ENV_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC (( ::CORBA::SystemException,
@@ -454,9 +346,6 @@ namespace CIDL_MonolithicImplementation
     ::TSCE::Command_EventConsumer_var
     consumes_command_;
 
-    ::TSCE::Status_EventConsumer_var
-    consumes_status_;
-
     const char *ins_name_;
 
     private:
@@ -470,30 +359,25 @@ namespace CIDL_MonolithicImplementation
     get_consumer_command_i (
       ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC (( ::CORBA::SystemException));
-
-    ::Components::EventConsumerBase_ptr
-    get_consumer_status_i (
-      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC (( ::CORBA::SystemException));
   };
 
-  class EFFECTOR_MAIN_IMPL_SVNT_Export Effector_Main_Factory_Servant
+  class ENV_DECTECTOR_IMPL_SVNT_Export Env_Detector_Factory_Servant
     : public virtual
         ::CIAO::Home_Servant_Impl<
-            ::POA_TSCE::Effector_Main_Factory,
-            ::TSCE::CCM_Effector_Main_Factory,
-            Effector_Main_Servant
+            ::POA_TSCE::Env_Detector_Factory,
+            ::TSCE::CCM_Env_Detector_Factory,
+            Env_Detector_Servant
           >
   {
     public:
 
-    Effector_Main_Factory_Servant (
-      ::TSCE::CCM_Effector_Main_Factory_ptr exe,
+    Env_Detector_Factory_Servant (
+      ::TSCE::CCM_Env_Detector_Factory_ptr exe,
       const char *ins_name,
       ::CIAO::Session_Container *c,
       ::CIAO::REC_POL_MAP &rec_pol_map);
 
-    virtual ~Effector_Main_Factory_Servant (void);
+    virtual ~Env_Detector_Factory_Servant (void);
 
     // Home operations.
     // Home factory and finder operations.
@@ -501,8 +385,8 @@ namespace CIDL_MonolithicImplementation
     // Attribute operations.
   };
 
-  extern "C" EFFECTOR_MAIN_IMPL_SVNT_Export ::PortableServer::Servant
-  create_TSCE_Effector_Main_Factory_Servant (
+  extern "C" ENV_DECTECTOR_IMPL_SVNT_Export ::PortableServer::Servant
+  create_TSCE_Env_Detector_Factory_Servant (
     ::Components::HomeExecutorBase_ptr p,
     CIAO::Session_Container *c,
     const char *ins_name,
@@ -512,5 +396,5 @@ namespace CIDL_MonolithicImplementation
 
 #include /**/ "ace/post.h"
 
-#endif /* CIAO_GLUE_SESSION_EFFECTOR_MAIN_IMPL_SVNT_H */
+#endif /* CIAO_GLUE_SESSION_ENV_DECTECTOR_IMPL_SVNT_H */
 
