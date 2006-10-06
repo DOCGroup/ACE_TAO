@@ -1,0 +1,481 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+
+<!-- $Id$ -->
+
+<HTML>
+<HEAD>
+<TITLE>Using TransportCurrent</TITLE>
+
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="transport_current.css">
+
+</HEAD>
+
+<BODY TEXT = "#000000" LINK="#000fff" VLINK="#ff0f0f" BGCOLOR="#ffffff">
+
+<P>
+
+<H1 ALIGN="CENTER">TAOTransportCurrent</H1>
+<P ALIGN="CENTER">
+<STRONG>
+<A HREF="mailto:iliyan@ociweb.com">Iliyan Jeliazkov</A>
+<A HREF="mailto:mesnier_p@ociweb.com">Phil Mesnier</A>
+ and <A HREF="mailto:<john_c@ociweb.com">Ciju John</A>
+</STRONG>
+</P>
+
+<P ALIGN="CENTER">
+Object Computing Inc.<BR>
+St.Louis, Missouri
+</P>
+
+<HR>
+
+<P>
+<H3>Scope and Context</H3><P>
+
+<P>By definition, transport-specific information is available in
+contexts where the ORB has selected a Transport. The contexts covered
+by this proposal are:</P>
+
+<UL>
+  <LI>client-side interception points;</LI>
+  <LI>2.server-side interception points;</LI>
+  <LI>3.servant up-call</LI>
+</UL>
+
+<P>
+The design includes changes to the base TAO code to add a light-weight
+framework, that allows the ORB core to register listeners interested
+in Transport selection events. The framework simply keeps a list of
+such listeners and notifies them in turn when a Transport is selected
+in various points along the request processing path.
+</P>
+
+<P>
+The second piece of the implementation is a generic service-based
+framework, implementing the TAO::Transport::Current interface. It is
+designed as an optional service, which can be dynamically loaded if
+necessary. This service makes the Transport::Current available through
+orb->resolve_initial_references() and also registers as a listener
+with the Transport selection notification mechanism described
+above. The basic idea is that whenever a Transport is chosen, during
+the request/response processing, the TC will query any of the
+registered TraitsFactory objects and will let the one that “knows” how
+to handle the particular Transport, create a
+TAO::Transport::Traits-derived object. Note also, that this service
+also serves as the default TraitsFactory.
+</P>
+
+<P>
+As described above, the third conceptual piece of the design is the
+Transport-specific TraitsFactory object. It too is a dynamically
+loaded service object, which upon loading will register with the
+generic Transport Current framework.
+</P>
+
+<!-- End of Table of Contents -->
+<BR><HR>
+
+
+<P>
+<H3>
+Programmer's Reference
+</H3>
+
+<P>
+Consider the following IDL interface, describing a Factory for
+producing TAO::Transport::Traits instance, which represents
+transport-specific data.
+</P>
+
+<PRE>
+#include <IOP.pidl>
+#include <Current.pidl>
+
+#include "Traits_Factory.idl"
+
+//#pragma prefix "omg.org"                                                                                                 
+
+module TAO
+{
+  module Transport
+  {
+
+    // A factory for Transport Traits. Instances are registered with                                                       
+    // the Transport Current to provide interpretation of a specific                                                        
+    // Transport. The Current delegates to them the processing of a                                                        
+    // Transport, based on whether or not the TTF supports a                                                              
+    // particular protocol. Factories are searched in LIFO manner,                                                         
+    // with respect of their order of registration. The first is the                                                       
+    // default TF, which can handle any Transport in a generic way,                                                      
+    // if no other TF lays claims to the Transport ID.                                                                   
+
+    local interface TraitsFactory;
+
+
+    // Serve as a base from which different specializations will be                                                        
+    // derived. The specializations should add features for specific                                                       
+    // protocols. For example, IIOPTraits, SSLIOPTraits, PBXIOPTraits,                                                     
+    // etc.                                                                                                                
+
+    local interface Traits
+    {
+      IOP::ProfileId tag ();
+      boolean        is_bidirectional ();
+      boolean        is_client ();
+      boolean        is_server ();
+      boolean        is_connected ();
+    };
+
+    // The main interface, providing access to the Transport-specific                                                      
+    // information (traits), available to the current thread of                                                           
+    // execution.                                                                                                          
+
+    local interface Current
+    : TraitsFactory    // This is also the default TF                                                                      
+    {
+
+      // Used to signal that a call was made within improper invocation                                                    
+      // context.                                                                                                          
+
+      exception BadContext
+      {
+      };
+
+      // The client owns the returned Transport::Traits. The Current is                                                    
+      // filling in the data from the Transport                                                                            
+
+      Traits traits () raises (BadContext);
+
+      // An interface to allow registering a new, perhaps more                                                             
+      // specialized TraitsFactory.                                                                                        
+
+      void register_traits_factory (in TraitsFactory tf);
+   };
+
+  };
+
+};
+</PRE>
+
+<P>
+The TraitsFactory is the basic interface the specific TraitsFactories
+(like the one that knows about IIOP) must implement. Here is the
+corresponding IDL (from Traits_Factory.idl)
+</P>
+
+<PRE>
+#include <IOP.pidl>
+
+//#pragma prefix "omg.org"                                                                                                 
+
+module TAO
+{
+  module Transport
+  {
+
+    // A factory for Transport Traits. Instances are registered with                                                       
+    // the Trasport Current to provide interpretation of a specific                                                        
+    // Transport. The Current delegates to them the processing of a                                                        
+    // Transport, based on wheather or not the TTF supports a                                                              
+    // particular protocol. Factories are searched in LIFO manner,                                                         
+    // with respect of their order of registration. The first is the                                                       
+    // default TF, which can handle all Transport's in a generic way,                                                      
+    // if no other TF lays claims to the Transport's ID.                                                                   
+
+    local interface TraitsFactory
+    {
+      boolean is_supported (in IOP::ProfileId pid);
+    };
+
+
+  };
+
+};
+</PRE>
+
+<P>
+As an example of a specialized Transport Traits Factory, the
+implementation includes IIOPTraits interface:
+</P>
+
+<PRE>
+#include "Transport_Current.idl"
+
+module TAO
+{
+  module Transport
+  {
+
+    // Interface IIOPTraits defines IIOP specific attributes                                                              
+
+    local interface IIOPTraits
+    : Traits
+    {
+      unsigned short remote_port ();
+      string remote_host ();
+      unsigned short local_port ();
+      string local_host ();
+    };
+
+  };
+
+};
+</PRE>
+
+
+
+
+
+<P>
+<H3>
+User's Guide
+</H3>
+
+<P>
+The TAO::Transport::Traits is a base interface, from which different
+specializations will be derived. For example, IIOPTransportInfo,
+PBXIOPTransportInfo, etc. See below, in "TransportInfo Specialization"
+for explanation of the mechanism for extending the framework with
+protocol-specific TAO::Transport::TraitsFactory.
+</P>
+
+<P>
+Typical, generic usage is shown in the
+$TAO_ROOT/orbsvcs/tests/Transport_Current/Framework test:
+</P>
+
+<PRE>
+...
+  // Get the Current object.                                                                                               
+  ::CORBA::Object_var tcobject =
+    orb->resolve_initial_references ("TAOTransportCurrent"
+                                      ACE_ENV_SINGLE_ARG_DECL);
+  ACE_TRY_CHECK;
+
+  ::TAO::Transport::Current_var tc =
+      ::TAO::Transport::Current::_narrow (tcobject.in ()
+                                      ACE_ENV_SINGLE_ARG_DECL);
+  ACE_TRY_CHECK;
+
+  if (CORBA::is_nil (tc.in ()))
+    {
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT ("(%P|%t) client - ERROR: Could not resolve ")
+                  ACE_TEXT ("TAOTransportCurrent object.\n")));
+
+      ACE_TRY_THROW (CORBA::INTERNAL ());
+    }
+
+  ::TAO::Transport::Traits_var inf =
+      tc->traits (ACE_ENV_SINGLE_ARG_DECL);
+  ACE_TRY_CHECK;
+...
+</PRE>
+
+<P>
+Another example is available from the
+$TAO_ROOT/orbsvcs/tests/Transport_Current/IIOP_Threading test. This
+fragment shows how to obtain transport-specific traits:
+</P>
+
+</PRE>
+...
+  ::TAO::Transport::Traits_var inf = tc->traits (ACE_ENV_SINGLE_ARG_DECL);
+  //tc->traits (ACE_ENV_SINGLE_ARG_DECL);                                                                                 
+  ACE_TRY_CHECK;
+
+  ::TAO::Transport::IIOPTraits_var iiopinf =
+      ::TAO::Transport::IIOPTraits::_narrow (inf.in() ACE_ENV_ARG_PARAMETER);
+  ACE_TRY_CHECK;
+
+  iiopinf->remote_port ();
+...
+</PRE>
+
+
+
+<P>
+<H3>
+Configuration, Bootstrap, Initialization and Operation
+</H3>
+
+<P>
+To use the Transport Current features the framework must be loaded
+through the Service Configuration framework. For example, using
+something like this:
+</P>
+
+<PRE>
+dynamic TAO_Transport_Current_Loader Service_Object * libTAO_Transport_Current.so:_make_TAO_Transport_Current_Loader() ""
+</PRE>
+
+<P>
+The Transport_Current_Loader service uses an ORB initializer to register the "TAOTransportCurrent" name in a way that allows it to be resolved via orb->resolve_initial_references(). The implementation is the TAO::Transport::Current_Impl class, which in addition to TAO::Transport::Current, is also implementing the default Traits_Factory interface and the TAO::Transport::Listener interface.
+</P>
+
+<P>
+Any transport-specific Traits_Factory objects are loaded like this:
+</P>
+
+<PRE>
+dynamic TAO_IIOP_Traits_Loader Service_Object * libTAO_TC_IIOPTraits.so:_make_TAO_IIOP_Traits_Loader() ""
+</PRE>
+
+<P>
+The corresponding service initialization is where the specific Traits
+Factory registers itself with the TAO_Transport_Current_Loader.
+</P>
+
+<P>
+Whenever the TC::traits() method is invoked, a pointer to the
+currently selected Transport instance is (must be) accessible through
+Thread Specific Storage (TSS). The TC will ask a Traits Factory (TF)
+to make a specific Traits (T) instance. All TF instances implement a
+method, which the TC uses to determine if it supports a given
+Transport subclass. This is what the TC uses, when it iterates over
+the list of registered TF instances in order to select an appropriate
+one.
+</P>
+
+<P>
+Once a TF is selected, its traits() method is invoked. There a TF,
+which is always available – the default TF. It is implemented by the
+TAO::Transport::Current_Impl class and merely returns generic Traits
+instance.
+</P>
+
+<P>
+The storing of the pointer to the selected Transport, for each thread
+is managed by modifying the following TAO classes, instances of which
+are created on the stack during request/response processing:
+</P>
+
+
+<P>
+<H3>
+Implementation and Required Changes
+</H3>
+
+<P>
+The primary implementation is predicated upon usage of thread specific
+storage (TSS) and the guarantees C++ provides for calling the
+constructor and the destructor of automatic (stack-based)
+objects. Some existing objects, used in TAO will have to be modified
+and the necessary changes, both for client and the server side are
+detailed below.
+</P>
+
+<H4>
+Client Side: Sending Requests or Replies
+</H4>
+
+
+<P>
+The Profile_Transport_Resolver instance contains the reference to the
+Transport that is needed to extract protocol-specific information. An
+instance of Profile_Transport_Resolver lives on the stack, starting
+inside a call to Invocation_Adapter::invoke_remote_i(), or
+LocateRequest_Invocation_Adapter::invoke(). In the case of collocated
+invocations no such object is created.
+</P>
+
+<P>
+It is then passed around the calls that follow, except for the calls
+to the following Invocation_Base methods: send_request_interception(),
+receive_other_interception(), receive_reply_interception(),
+handle_any_exception(), handle_all_exception();
+</P>
+
+<P>
+Note that these in turn call the client-side interception points and
+that is where information about the transport will be needed. In order
+to make the transport information accessible inside those methods, we
+propose to change Profile_Transport_Resolver class to call: ...
+</P>
+
+<PRE>
+...
+
+this->stub_->orb_core ()->transport_listener_manager_notify (this->transport_);
+
+...
+</PRE>
+
+
+<P>
+from within its constructor. The rest of the TC framework will make
+sure this pointer is stored in a thread-specific storage.
+</P>
+
+<P>
+Inside an interceptor then, one can use a Transport Current to obtain
+a specialized Traits instance. It then will have to be _downcast() to
+the specific type. A pointer to the transport will be made available
+through a TSS slot, managed by the Profile_Transport_Resolver.
+</P>
+
+
+
+<H4>
+Server Side: Request Processing
+</H4>
+
+
+<P>
+On the server side, the TAO_ServerRequest instance already has a
+Transport pointer. The TAO_ServerRequest lives on the stack, starting
+its life inside a call to TAO_GIOP_Message_Base::process_request().
+</P>
+
+<P>
+Similarly to the client-side, we propose that TAO_ServerRequest
+constructor make a call like this:
+</P>
+
+<PRE>
+...
+  // Tell anyone who would listen that we have a transport                                                                
+  this->orb_core_->transport_listener_manager_notify (this->transport_);
+...
+</PRE>
+
+<P>
+n the collocated case there may not be a transport available, so the
+TSS slot will be null.
+</P>
+
+<P>
+Inside an interceptor then, one can use an RIR-resolved
+TransportCurrent to create a specialization of TransportInfo, based on
+the kind of Transport used. Then they would _downcast() it to the
+specific type.
+</P>
+
+<H3>
+Performance Impact
+</H3>
+
+<P>
+As the implementation of the Transport Current functionality
+necessitates some additional processing on the critical path of an
+invocation, we are expecting a performance impact when the
+functionality is being used. 
+</P>
+
+<P>
+It is possible at build time, to
+disable the functionality, so that applications only incur the penalty
+if they require it. The ORB will not support the Transport Current functionality. The following #define will enable it:
+</P>
+
+<PRE>
+#define TAO_HAS_TRANSPORT_CURRENT 1
+</PRE>
+
+
+</BODY>
+</HTML>

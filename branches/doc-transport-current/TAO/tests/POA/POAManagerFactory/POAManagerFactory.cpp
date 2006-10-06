@@ -31,13 +31,13 @@ int fail = 0;
 int pretest = 0;
 int verbose = 0;
 
-#define VERIFY(Condition) \
+#define VERIFY_CONDITION(Condition) \
 { \
     if (!(Condition)) \
     { \
         fail++; \
         if (!verbose) \
-          ACE_DEBUG ((LM_DEBUG, ACE_TEXT("(%P|%t) - Failure at line %l\n"))); \
+          ACE_ERROR ((LM_ERROR, ACE_TEXT("(%P|%t) - Failure at line %l\n"))); \
     } \
 }
 
@@ -106,7 +106,7 @@ main (int argc, char **argv)
       PortableServer::POAManagerFactory_var poa_manager_factory
         = root_poa->the_POAManagerFactory ();
 
-      VERIFY (!CORBA::is_nil(poa_manager_factory.in()));
+      VERIFY_CONDITION (!CORBA::is_nil(poa_manager_factory.in()));
       if (verbose)
         ACE_DEBUG ((LM_DEBUG,ACE_TEXT ("%s\n"),
                     (pretest == fail) ? ACE_TEXT ("passed") : ACE_TEXT ("failed")));
@@ -128,7 +128,7 @@ main (int argc, char **argv)
                                                   ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      VERIFY (!CORBA::is_nil(poa_manager_1.in()));
+      VERIFY_CONDITION (!CORBA::is_nil(poa_manager_1.in()));
       if (verbose)
         ACE_DEBUG ((LM_DEBUG,ACE_TEXT ("%s\n"),
                     (pretest == fail) ? ACE_TEXT ("passed") : ACE_TEXT ("failed")));
@@ -155,7 +155,7 @@ main (int argc, char **argv)
       }
       ACE_ENDTRY;
 
-      VERIFY (got_expected_exception);
+      VERIFY_CONDITION (got_expected_exception);
       if (verbose)
         ACE_DEBUG ((LM_DEBUG,ACE_TEXT ("%s\n"),
                     (pretest == fail) ? ACE_TEXT ("passed") : ACE_TEXT ("failed")));
@@ -180,7 +180,7 @@ main (int argc, char **argv)
           = child_poa->the_POAManager (ACE_ENV_SINGLE_ARG_PARAMETER);
         ACE_TRY_CHECK;
 
-        VERIFY (!CORBA::is_nil(poa_manager_2.in()));
+        VERIFY_CONDITION (!CORBA::is_nil(poa_manager_2.in()));
         if (verbose)
           ACE_DEBUG ((LM_DEBUG,ACE_TEXT ("%s\n"),
                       (pretest == fail) ? ACE_TEXT ("passed") : ACE_TEXT ("failed")));
@@ -207,7 +207,7 @@ main (int argc, char **argv)
           = poa_manager_factory->list (ACE_ENV_SINGLE_ARG_PARAMETER);
         ACE_TRY_CHECK;
 
-        VERIFY (managers->length () == 3);
+        VERIFY_CONDITION (managers->length () == 3);
         if (verbose)
           ACE_DEBUG ((LM_DEBUG,ACE_TEXT ("%s\n"),
                       (pretest == fail) ? ACE_TEXT ("passed") : ACE_TEXT ("failed")));
@@ -261,7 +261,7 @@ main (int argc, char **argv)
         CORBA::String_var name = manager->get_id (ACE_ENV_SINGLE_ARG_PARAMETER);
         ACE_TRY_CHECK;
 
-        VERIFY ((ACE_OS::strcmp (name.in (), "POAManager1") == 0
+        VERIFY_CONDITION ((ACE_OS::strcmp (name.in (), "POAManager1") == 0
                  && manager.in () == poa_manager_1.in ()));
 
         if (verbose)

@@ -97,7 +97,7 @@ $ $ACE_ROOT/TAO/TAO_IDL/tao_idl Quoter.idl
     </P>
 
     <P>TAO generates 9 files for each IDL file.
-      <CODE>QuoterC.h</CODE>, <CODE>QuoterC.i</CODE>
+      <CODE>QuoterC.h</CODE>, <CODE>QuoterC.inl</CODE>
       and <CODE>QuoterC.cpp</CODE> contain the client-side interfaces.
       Notice that the inline functions are in a separate file so you
       can optionally compile them out-of-line for smaller code.
@@ -105,13 +105,13 @@ $ $ACE_ROOT/TAO/TAO_IDL/tao_idl Quoter.idl
       generated from <CODE>QuoterC.cpp</CODE>.
     </P>
     <P>
-      Similarly, <CODE>QuoterS.h</CODE>, <CODE>QuoterS.i</CODE>
+      Similarly, <CODE>QuoterS.h</CODE>, <CODE>QuoterS.inl</CODE>
       and <CODE>QuoterS.cpp</CODE> contain the server-side
       <EM>skeletons</EM>. Servers must link the object files generated
       from <CODE>QuoterS.cpp</CODE> <STRONG>and</STRONG> <CODE>QuoterC.cpp</CODE>.
     </P>
     <P>
-      Finally, <CODE>QuoterS_T.h</CODE>, <CODE>QuoterS_T.i</CODE>
+      Finally, <CODE>QuoterS_T.h</CODE>, <CODE>QuoterS_T.inl</CODE>
       and <CODE>QuoterS_T.cpp</CODE> contain the <EM>TIE</EM> classes.
       These are the standard (after the CORBA 2.2 spec) skeletons based
       on composition instead of inheritance.
