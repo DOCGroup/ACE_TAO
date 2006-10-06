@@ -190,6 +190,7 @@ namespace CIAO
         for (size_t i = 0; i < plans.length (); ++i)
           {
             ::Deployment::DeploymentPlan &dep_plan = plans[i].plan;
+            bool flag_netqos_present = false;
 
             for (size_t j = 0;
                  j < dep_plan.infoProperty.length();
@@ -198,6 +199,7 @@ namespace CIAO
                 if (ACE_OS::strcmp (dep_plan.infoProperty[j].name.in (),
                                     "CIAONetworkQoS") == 0)
                  {
+                   flag_netqos_present = true;
                    ::Deployment::DiffservInfos dscp_infos;
                    ::CIAO::DAnCE::NetworkQoS::NetQoSRequirement *net_qos_req;
 
@@ -233,7 +235,11 @@ namespace CIAO
                       retval = false;
                     }
                  }
-              }
+               }
+             if (!flag_netqos_present)
+               {
+                 ACE_DEBUG ((LM_DEBUG, "No CIANetworkQoS info-property defined in this deployment plan.\n"));
+               }
           }
         return retval;
       }
