@@ -10,12 +10,12 @@ project (Env_Detector_stub) : cuts_coworker_stub {
               -Wb,export_include=Env_Detector_stub_export.h
 
   after += \
-    Event_Types_stub \
-    CUTS_stub
+    CUTS_stub \
+    Event_Types_stub
 
   libs += \
-    Event_Types_stub \
-    CUTS_stub
+    CUTS_stub \
+    Event_Types_stub
 
   IDL_Files {
     Env_Detector.idl
