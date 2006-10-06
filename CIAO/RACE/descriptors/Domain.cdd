@@ -4,27 +4,6 @@
   <UUID>BCB38121-9F67-4D0D-9363-65FF3AE0188A</UUID>
 
   <node>
-    <name>blade29</name>
-    <resource>
-      <name>Processor</name>
-      <resourceType>CPULoad</resourceType>
-      <property>
-        <name>LoadAverage</name>
-        <kind>Quantity</kind>
-        <dynamic>false</dynamic>
-        <value>
-          <type>
-            <kind>tk_double</kind>
-          </type>
-          <value>
-            <double>100</double>
-          </value>
-        </value>
-      </property>
-    </resource>
-  </node>
-
-  <node>
     <name>blade30</name>
     <resource>
       <name>Processor</name>
@@ -35,10 +14,10 @@
         <dynamic>false</dynamic>
         <value>
           <type>
-            <kind>tk_double</kind>
+            <kind>tk_long</kind>
           </type>
           <value>
-            <double>100</double>
+            <long>100</long>
           </value>
         </value>
       </property>
@@ -56,10 +35,10 @@
         <dynamic>false</dynamic>
         <value>
           <type>
-            <kind>tk_double</kind>
+            <kind>tk_long</kind>
           </type>
           <value>
-            <double>100</double>
+            <long>100</long>
           </value>
         </value>
       </property>
@@ -69,23 +48,6 @@
   <node>
     <name>blade32</name>
     <resource>
-      <name>CPU</name>
-      <resourceType>MaximumCPU</resourceType>
-      <property>
-        <name>AllowedCPU</name>
-        <kind>Maximum</kind>
-        <dynamic>false</dynamic>
-        <value>
-          <type>
-            <kind>tk_long</kind>
-          </type>
-          <value>
-            <long>90</long>
-          </value>
-        </value>
-      </property>
-    </resource>
-    <resource>
       <name>Processor</name>
       <resourceType>CPULoad</resourceType>
       <property>
@@ -94,10 +56,10 @@
         <dynamic>false</dynamic>
         <value>
           <type>
-            <kind>tk_double</kind>
+            <kind>tk_long</kind>
           </type>
           <value>
-            <double>100</double>
+            <long>100</long>
           </value>
         </value>
       </property>
@@ -115,10 +77,10 @@
         <dynamic>false</dynamic>
         <value>
           <type>
-            <kind>tk_double</kind>
+            <kind>tk_long</kind>
           </type>
           <value>
-            <double>100</double>
+            <long>100</long>
           </value>
         </value>
       </property>
@@ -136,10 +98,10 @@
         <dynamic>false</dynamic>
         <value>
           <type>
-            <kind>tk_double</kind>
+            <kind>tk_long</kind>
           </type>
           <value>
-            <double>100</double>
+            <long>0</long>
           </value>
         </value>
       </property>
@@ -147,7 +109,7 @@
   </node>
 
   <node>
-    <name>blade35</name>
+    <name>blade29</name>
     <resource>
       <name>Processor</name>
       <resourceType>CPULoad</resourceType>
@@ -157,31 +119,10 @@
         <dynamic>false</dynamic>
         <value>
           <type>
-            <kind>tk_double</kind>
+            <kind>tk_long</kind>
           </type>
           <value>
-            <double>100</double>
-          </value>
-        </value>
-      </property>
-    </resource>
-  </node>
-
-  <node>
-    <name>blade36</name>
-    <resource>
-      <name>Processor</name>
-      <resourceType>CPULoad</resourceType>
-      <property>
-        <name>LoadAverage</name>
-        <kind>Quantity</kind>
-        <dynamic>false</dynamic>
-        <value>
-          <type>
-            <kind>tk_double</kind>
-          </type>
-          <value>
-            <double>100</double>
+            <long>100</long>
           </value>
         </value>
       </property>
