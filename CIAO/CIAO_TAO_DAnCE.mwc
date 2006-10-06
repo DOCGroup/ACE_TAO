@@ -21,4 +21,9 @@ workspace {
   DAnCE
   ciaosvcs
   tools/Config_Handlers
+  exclude {
+   DAnCE/TargetManager_SVN
+   DAnCE/Plan_Launcher_OLD
+}
+
 }
