@@ -43,7 +43,7 @@ namespace TAO
   ACE_INLINE TAO_Transport *
   Profile_Transport_Resolver::transport (void) const
   {
-    return this->transport_;
+    return this->transport_.get ();
   }
 
   ACE_INLINE bool
