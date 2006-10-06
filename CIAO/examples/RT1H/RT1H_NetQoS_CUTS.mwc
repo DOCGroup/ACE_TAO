@@ -6,12 +6,12 @@ workspace (RT1H_NetQoS_CUTS) {
   cmdline += -include $CUTS_ROOT/etc/config
 
   // -- Explicitly specify which components(s) to build
-  Config_Op_Impl.mpc
-  Planner_One_Impl.mpc
-  Planner_Three_Impl.mpc
-  Env_Dectector_Impl.mpc
-  Effector_Main_Impl.mpc
   Effector_Secondary_Impl.mpc
+  Effector_Main_Impl.mpc
+  Planner_Three_Impl.mpc
+  Planner_One_Impl.mpc
+  Config_Op_Impl.mpc
+  Env_Detector_Impl.mpc
 
   // -- stub projects
   Config_Op_stub.mpc
