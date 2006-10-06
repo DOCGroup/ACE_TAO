@@ -66,7 +66,7 @@ sigaction (int signum, const ACE_SIGACTION *nsa, ACE_SIGACTION *osa)
   ACE_NOTSUP_RETURN (-1);
 #elif !defined (ACE_HAS_SIGACTION_CONSTP2)
   ACE_OSCALL_RETURN (::sigaction (signum,
-                                  const_cast<struct sigaction*> (nsa),
+                                  const_cast<ACE_SIGACTION*> (nsa),
                                   osa),
                      int, -1);
 #else

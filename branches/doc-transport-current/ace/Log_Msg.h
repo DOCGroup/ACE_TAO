@@ -665,7 +665,7 @@ private:
   /// calling log() if the log priority is correct.
   struct
   {
-    int is_set_;
+    bool is_set_;
     const char *file_;
     int line_;
     int op_status_;

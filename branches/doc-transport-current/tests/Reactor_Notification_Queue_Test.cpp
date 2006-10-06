@@ -162,7 +162,7 @@ Event_Handler::run (void)
   if(!done())
   {
     ACE_ERROR ((LM_ERROR,
-               ACE_TEXT ("Test %s failed due to timeout ")
+               ACE_TEXT ("Test %C failed due to timeout ")
                ACE_TEXT (" sent=%d,recv=%d \n"),
                test_name_,
                notifications_sent_,
@@ -171,7 +171,7 @@ Event_Handler::run (void)
   else
   {
     ACE_DEBUG ((LM_INFO,
-                ACE_TEXT ("Test %s passed sent=%d, recv=%d\n"),
+                ACE_TEXT ("Test %C passed sent=%d, recv=%d\n"),
                 test_name_,
                 notifications_sent_,
                 notifications_recv_));
@@ -202,7 +202,7 @@ Event_Handler::send_notifications (void)
     if(reactor()->notify (this) == -1)
     {
       ACE_ERROR((LM_ERROR,
-                 ACE_TEXT ("Cannot send notifications in %s test (%d/%d)\n"),
+                 ACE_TEXT ("Cannot send notifications in %C test (%d/%d)\n"),
                  test_name_, i, notifications_curr_));
       return;
     }
@@ -210,7 +210,7 @@ Event_Handler::send_notifications (void)
     ++notifications_sent_;
   }
   //  ACE_ERROR((LM_ERROR,
-  //                "Started iteration with %d notify() calls in test %s\n",
+  //                "Started iteration with %d notify() calls in test %C\n",
   //                notifications_curr_, test_name_));
   notifications_curr_ *= 2;
 }

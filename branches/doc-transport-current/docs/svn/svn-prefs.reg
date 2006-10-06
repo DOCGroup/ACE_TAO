@@ -26,7 +26,7 @@ REGEDIT4
 "#diff3-has-program-arg"=""
 
 [HKEY_CURRENT_USER\Software\Tigris.org\Subversion\Config\miscellany]
-"global-ignores"="*.o *.lo *.la #*# .*.rej *.rej .*~ *~ .#* .DS_Store *.class *C.i *C.inl *S.i *S.inl *C.h *S.h *C.cpp *S.cpp *C.hh *S.hh *S_T.i *S_T.inl *S_T.h *S_T.cpp .obj .pure .shobj config.h Templates.DB Thumbs.db ir.out *.aux *.lof *.lot *.log *.dvi *.blg *.bbl *.ior *Cli.* *Ser.* *Ser_T.* *.vcl *.vcb *.vcl *.vco *.SUP .depend.* GNUmake* [Mm]akefile *.mak *.a *.so* *.idb *.obj *.exe *_svnt.* *.user *.vcproj *.dsw *.dsp *.sln *.suo *.dep *.tlb *.pch *.ocx *.dll *.exp *.ilk *.lib *.ncb *.opt *.pdb *.plg *.bsc *.res LIB DLL Debug Release Static_Debug Static_Release *.bak *.trg *.mga *.mta ComponentLib.h *_[ip].c dlldata.c"
+"global-ignores"="*.o *.lo *.la #*# .*.rej *.rej .*~ *~ .#* .DS_Store *.class *C.i *C.inl *S.i *S.inl *C.h *S.h *C.cpp *S.cpp *C.hh *S.hh *S_T.i *S_T.inl *S_T.h *S_T.cpp .obj .pure .shobj config.h Templates.DB Thumbs.db ir.out *.aux *.lof *.lot *.log *.dvi *.blg *.bbl *.ior *Cli.* *Ser.* *Ser_T.* *.vcl *.vcb *.vcl *.vco *.SUP .depend.* GNUmake* [Mm]akefile *.mak *.a *.so* *.idb *.obj *.exe *_svnt.* *.user *.vcproj *.dsw *.dsp *.sln *.suo *.dep *.tlb *.pch *.ocx *.dll *.exp *.ilk *.lib *.ncb *.opt *.pdb *.plg *.bsc *.res LIB DLL Debug Release Static_Debug Static_Release *.bak *.trg *.mga *.mta ComponentLib.h *_[ip].c dlldata.c *.tds"
 "#log-encoding"=""
 "use-commit-times"="yes"
 "#template-root"=""
@@ -56,6 +56,7 @@ REGEDIT4
 "*.py"="svn:eol-style=native;svn:keywords=Author Date Id Revision;svn:executable"
 "*.pl"="svn:eol-style=native;svn:keywords=Author Date Id Revision;svn:executable"
 "*.mpc"="svn:eol-style=native;svn:keywords=Author Date Id Revision"
+"*.mwc"="svn:eol-style=native;svn:keywords=Author Date Id Revision"
 "*.mpb"="svn:eol-style=native;svn:keywords=Author Date Id Revision"
 "*.mpt"="svn:eol-style=native;svn:keywords=Author Date Id Revision"
 "*.cdp"="svn:eol-style=native;svn:keywords=Author Date Id Revision"
@@ -63,6 +64,8 @@ REGEDIT4
 "*.cdd"="svn:eol-style=native;svn:keywords=Author Date Id Revision"
 "*.cid="svn:eol-style=native;svn:keywords=Author Date Id Revision"
 "*.cpd="svn:eol-style=native;svn:keywords=Author Date Id Revision"
+"*.ccd="svn:eol-style=native;svn:keywords=Author Date Id Revision"
+"*.cid="svn:eol-style=native;svn:keywords=Author Date Id Revision"
 "*.xsd"="svn:eol-style=native;svn:keywords=Author Date Id Revision"
 "*.xml"="svn:eol-style=native;svn:keywords=Author Date Id Revision"
 "*.txt"="svn:eol-style=native;svn:keywords=Author Date Id Revision"

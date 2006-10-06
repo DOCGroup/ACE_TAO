@@ -675,7 +675,7 @@ ACE_Log_Msg::ACE_Log_Msg (void)
                                                 ACE_Log_Msg::sync_hook,
                                                 ACE_Log_Msg::thr_desc_hook);
 
-  this->conditional_values_.is_set_ = 0;
+  this->conditional_values_.is_set_ = false;
 
   char *timestamp = ACE_OS::getenv ("ACE_LOG_TIMESTAMP");
   if (timestamp != 0)
@@ -939,9 +939,9 @@ ACE_Log_Msg::log (ACE_Log_Priority log_priority,
 
   va_start (argp, format_str);
 
-  ssize_t result = this->log (format_str,
-                              log_priority,
-                              argp);
+  ssize_t const result = this->log (format_str,
+                                    log_priority,
+                                    argp);
   va_end (argp);
 
   return result;
@@ -963,9 +963,9 @@ ACE_Log_Msg::log (ACE_Log_Priority log_priority,
 
   va_start (argp, format_str);
 
-  ssize_t result = this->log (ACE_TEXT_ANTI_TO_TCHAR (format_str),
-                              log_priority,
-                              argp);
+  ssize_t const result = this->log (ACE_TEXT_ANTI_TO_TCHAR (format_str),
+                                    log_priority,
+                                    argp);
   va_end (argp);
 
   return result;
@@ -983,10 +983,10 @@ ACE_Log_Msg::log (const ACE_TCHAR *format_str,
   typedef void (*PTF)(...);
 
   // Check if there were any conditional values set.
-  int conditional_values = this->conditional_values_.is_set_;
+  bool const conditional_values = this->conditional_values_.is_set_;
 
   // Reset conditional values.
-  this->conditional_values_.is_set_ = 0;
+  this->conditional_values_.is_set_ = false;
 
   // Only print the message if <priority_mask_> hasn't been reset to
   // exclude this logging priority.
@@ -1012,6 +1012,7 @@ ACE_Log_Msg::log (const ACE_TCHAR *format_str,
   ACE_Log_Record log_record (log_priority,
                              ACE_OS::gettimeofday (),
                              this->getpid ());
+
   // bp is pointer to where to put next part of logged message.
   // bspace is the number of characters remaining in msg_.
   ACE_TCHAR *bp = const_cast<ACE_TCHAR *> (this->msg ());
@@ -1025,9 +1026,9 @@ ACE_Log_Msg::log (const ACE_TCHAR *format_str,
   // compile time. Instead, do a quick check now; if we get a -1 return,
   // the platform doesn't support the length-limiting capability.
   ACE_TCHAR test[2];
-  int can_check = ACE_OS::snprintf (test, 1, ACE_LIB_TEXT ("x")) != -1;
+  bool can_check = ACE_OS::snprintf (test, 1, ACE_LIB_TEXT ("x")) != -1;
 
-  int abort_prog = 0;
+  bool abort_prog = false;
   int exit_value = 0;
 
   if (ACE_BIT_ENABLED (ACE_Log_Msg::flags_, ACE_Log_Msg::VERBOSE))
@@ -1172,7 +1173,7 @@ ACE_Log_Msg::log (const ACE_TCHAR *format_str,
                   break;
 
                 case 'a': // Abort program after handling all of format string.
-                  abort_prog = 1;
+                  abort_prog = true;
                   exit_value = va_arg (argp, int);
                   ACE_OS::strsncpy (bp, abort_str, bspace);
                   if (bspace > ACE_OS::strlen (abort_str))
@@ -1987,7 +1988,7 @@ ACE_Log_Msg::log (const ACE_TCHAR *format_str,
   // anymore because all our members could be corrupted.
   if (bp >= (this->msg_ + ACE_MAXLOGMSGLEN+1))
     {
-      abort_prog = 1;
+      abort_prog = true;
       ACE_OS::fprintf (stderr,
                        "The following logged message is too long!\n");
     }
@@ -2243,7 +2244,7 @@ ACE_Log_Msg::conditional_set (const char *filename,
                               int status,
                               int err)
 {
-  this->conditional_values_.is_set_ = 1;
+  this->conditional_values_.is_set_ = true;
   this->conditional_values_.file_ = filename;
   this->conditional_values_.line_ = line;
   this->conditional_values_.op_status_ = status;

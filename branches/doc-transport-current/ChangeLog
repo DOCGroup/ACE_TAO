@@ -1,3 +1,75 @@
+Fri Oct  6 17:53:06 UTC 2006  Iliyan Jeliazkov  <iliyan@ociweb.com>
+
+        This simply checks in a bunch of changes from the trunk that
+        occured since the inception of the Transport Current feature. The
+        checkin also contains the feature itself.
+
+        * ACE-INSTALL.html:
+        * ChangeLog:
+        * NEWS:
+        * ace/Log_Msg.h:
+        * ace/Log_Msg.cpp:
+        * ace/OS_NS_signal.inl:
+        * ace/QoS:
+        * bin/MakeProjectCreator/config/tc.mpb:
+        * bin/tao_other_tests.lst:
+        * docs/Download.html:
+        * docs/bczar/bczar.html:
+        * docs/svn/config:
+        * docs/svn/svn-prefs.reg:
+        * tests/Cached_Allocator_Test.cpp:
+        * tests/Codecs_Test.cpp:
+        * tests/Enum_Interfaces_Test.cpp:
+        * tests/Get_Opt_Test.cpp:
+        * tests/Naming_Test.cpp:
+        * tests/Reactor_Notification_Queue_Test.cpp:
+        * tests/Reference_Counted_Event_Handler_Test.cpp:
+        * tests/Timer_Queue_Reference_Counting_Test.cpp:
+
+        * ace/.cvsignore:
+
+          Removed this file.
+
+Tue Oct  3 16:45:35 UTC 2006  Shanshan Jiang <shanshan.jiang@vanderbilt.edu>
+
+        * NEWS
+          Updated the NEWS to add the changes for ACE_Hash_MultiMap_Manager
+          class and executionmanager_stub and plan_generator base projects.
+
+Tue Oct  3 15:02:14 UTC 2006  Steve Huston  <shuston@riverace.com>
+
+        * NEWS: Described the ACE_Refcounted_Auto_Ptr effects of
+          Thu Jul  6 20:45:15 UTC 2006  Steve Huston  <shuston@riverace.com>
+
+Mon Oct  2 12:21:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Log_Msg.cpp:
+          Const/bool improvements
+
+Mon Oct  2 11:26:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Log_Msg.{h,cpp}:
+          Changed is_set_ conditional values member to bool
+
+Sat Sep 30 14:00:33 UTC 2006  Steve Huston  <shuston@riverace.com>
+
+        * tests/Cached_Allocator_Test.cpp:
+        * tests/Codecs_Test.cpp:
+        * tests/Enum_Interfaces_Test.cpp:
+        * tests/Get_Opt_Test.cpp (run_test):
+        * tests/Naming_Test.cpp:
+        * tests/Reactor_Notification_Queue_Test.cpp:
+        * tests/Reference_Counted_Event_Handler_Test.cpp:
+        * tests/Timer_Queue_Reference_Counting_Test.cpp:
+          Correct logging format for wide-char build.
+
+Fri Sep 29 18:54:29 UTC 2006  Steve Huston  <shuston@riverace.com>
+
+        * ace/OS_NS_signal.inl (sigaction): In the !ACE_HAS_SIGACTION_CONSTP2
+          case, use ACE_SIGACTION instead of "struct sigaction" to pick up
+          the funky HP hack. Also see:
+          Mon Jan 23 22:08:56 UTC 2006  Steve Huston  <shuston@riverace.com>
+
 Fri Sep 29 10:00:04 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * examples/Web_Crawler/Web_Crawler.mpc:
