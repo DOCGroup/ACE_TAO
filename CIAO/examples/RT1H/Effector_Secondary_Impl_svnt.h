@@ -36,365 +36,362 @@
 
 #include "Effector_SecondaryS.h"
 
-namespace TSCE
+namespace CIDL_MonolithicImplementation
 {
-  namespace CIDL_Effector_Secondary_Impl
+  class Effector_Secondary_Servant;
+
+  class EFFECTOR_SECONDARY_IMPL_SVNT_Export Effector_Secondary_Context
+    : public virtual CIAO::Context_Impl<
+        ::TSCE::CCM_Effector_Secondary_Context,
+        Effector_Secondary_Servant,
+        ::TSCE::Effector_Secondary,
+        ::TSCE::Effector_Secondary_var
+      >
   {
-    class Effector_Secondary_Servant;
-
-    class EFFECTOR_SECONDARY_IMPL_SVNT_Export Effector_Secondary_Context
-      : public virtual CIAO::Context_Impl<
-          ::TSCE::CCM_Effector_Secondary_Context,
-          Effector_Secondary_Servant,
-          ::TSCE::Effector_Secondary,
-          ::TSCE::Effector_Secondary_var
-        >
-    {
-      public:
-      // We will allow the servant glue code we generate to access our state.
-      friend class Effector_Secondary_Servant;
-
-      Effector_Secondary_Context (
-        ::Components::CCMHome_ptr h,
-        ::CIAO::Session_Container *c,
-        Effector_Secondary_Servant *sv);
-
-      virtual ~Effector_Secondary_Context (void);
-
-      // Operations for Effector_Secondary receptacles and event sources,
-      // defined in ::TSCE::CCM_Effector_Secondary_Context.
-
-      virtual void
-      push_status (
-        ::TSCE::Status_Event *ev
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-      ACE_THROW_SPEC (( ::CORBA::SystemException));
-
-      virtual ::CUTS::Testing_Service_ptr
-      get_connection_cuts_testing_service (
-        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
-      ACE_THROW_SPEC (( ::CORBA::SystemException));
-
-      // CIAO-specific.
-
-      static Effector_Secondary_Context *
-      _narrow (
-        ::Components::SessionContext_ptr p
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS);
-
-      protected:
-      // Methods that manage this component's connections and consumers.
-
-      virtual ::Components::Cookie *
-      subscribe_status (
-        ::TSCE::Status_EventConsumer_ptr c
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-      ACE_THROW_SPEC (( ::CORBA::SystemException,
-                       ::Components::ExceededConnectionLimit));
-
-      // CIAO-specific.
-      ::Components::Cookie *
-      subscribe_status_generic (
-        ::Components::EventConsumerBase_ptr c
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-      ACE_THROW_SPEC (( ::CORBA::SystemException,
-                       ::Components::ExceededConnectionLimit));
-
-      virtual ::TSCE::Status_EventConsumer_ptr
-      unsubscribe_status (
-        ::Components::Cookie *ck
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-      ACE_THROW_SPEC (( ::CORBA::SystemException,
-                       ::Components::InvalidConnection));
-
-      virtual void
-      connect_cuts_testing_service (
-        ::CUTS::Testing_Service_ptr
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-      ACE_THROW_SPEC (( ::CORBA::SystemException,
-                       ::Components::AlreadyConnected,
-                       ::Components::InvalidConnection));
-
-      virtual ::CUTS::Testing_Service_ptr
-      disconnect_cuts_testing_service (
-        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
-      ACE_THROW_SPEC (( ::CORBA::SystemException,
-                       ::Components::NoConnection));
-
-      protected:
-      ACE_Active_Map_Manager<
-      ::TSCE::Status_EventConsumer_var>
-      ciao_publishes_status_map_;
-
-      ACE_Active_Map_Manager<
-      ::Components::EventConsumerBase_var>
-      ciao_publishes_status_generic_map_;
-
-      // Simplex cuts_testing_service connection.
-      ::CUTS::Testing_Service_var
-      ciao_uses_cuts_testing_service_;
-    };
-
-    class EFFECTOR_SECONDARY_IMPL_SVNT_Export Effector_Secondary_Servant
-      : public virtual CIAO::Servant_Impl<
-          POA_TSCE::Effector_Secondary,
-          ::TSCE::CCM_Effector_Secondary,
-          Effector_Secondary_Context
-        >
-    {
-      public:
-
-      typedef ::TSCE::CCM_Effector_Secondary _exec_type;
-
-      Effector_Secondary_Servant (
-        ::TSCE::CCM_Effector_Secondary_ptr executor,
-        ::Components::CCMHome_ptr h,
-        const char *ins_name,
-        ::CIAO::Home_Servant_Impl_Base *hs,
-        ::CIAO::Session_Container *c,
-        ::CIAO::REC_POL_MAP &rec_pol_map);
-
-      virtual ~Effector_Secondary_Servant (void);
-
-      virtual void
-      set_attributes (
-        const ::Components::ConfigValues &descr
-        ACE_ENV_ARG_DECL);
-
-      // Supported operations.
-
-      // Public port operations.
-
-      // Servant class for the command consumer.
-      class EFFECTOR_SECONDARY_IMPL_SVNT_Export Command_EventConsumer_command_Servant
-      : public virtual POA_TSCE::Command_EventConsumer
-      {
-        public:
-        Command_EventConsumer_command_Servant (
-          ::TSCE::CCM_Effector_Secondary_ptr executor,
-          ::TSCE::CCM_Effector_Secondary_Context_ptr c);
-
-        virtual ~Command_EventConsumer_command_Servant (void);
-
-        virtual void
-        push_Command_Event (
-          ::TSCE::Command_Event *evt
-          ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-        ACE_THROW_SPEC (( ::CORBA::SystemException));
-
-        // Inherited from ::Components::EventConsumerBase.
-        virtual void
-        push_event ( ::Components::EventBase *ev
-                    ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-        ACE_THROW_SPEC (( ::CORBA::SystemException,
-                         ::Components::BadEventType));
-
-        // CIAO-specific in ::Components::EventConsumerBase.
-        virtual CORBA::Boolean
-        ciao_is_substitutable (
-          const char *event_repo_id
-          ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-        ACE_THROW_SPEC (( ::CORBA::SystemException));
-
-        // Get component implementation.
-        virtual CORBA::Object_ptr
-        _get_component (
-          ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
-        ACE_THROW_SPEC (( ::CORBA::SystemException));
-
-        protected:
-        ::TSCE::CCM_Effector_Secondary_var
-        executor_;
-
-        ::TSCE::CCM_Effector_Secondary_Context_var
-        ctx_;
-      };
-
-      virtual ::TSCE::Command_EventConsumer_ptr
-      get_consumer_command (
-        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
-      ACE_THROW_SPEC (( ::CORBA::SystemException));
-
-      virtual ::Components::Cookie *
-      subscribe_status (
-        ::TSCE::Status_EventConsumer_ptr c
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-      ACE_THROW_SPEC (( ::CORBA::SystemException,
-                       ::Components::ExceededConnectionLimit));
-
-      // CIAO-specific.
-      ::Components::Cookie *
-      subscribe_status_generic (
-        ::Components::EventConsumerBase_ptr c
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-      ACE_THROW_SPEC (( ::CORBA::SystemException,
-                       ::Components::ExceededConnectionLimit));
-
-      virtual ::TSCE::Status_EventConsumer_ptr
-      unsubscribe_status (
-        ::Components::Cookie *ck
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-      ACE_THROW_SPEC (( ::CORBA::SystemException,
-                       ::Components::InvalidConnection));
-
-      virtual void
-      connect_cuts_testing_service (
-        ::CUTS::Testing_Service_ptr c
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-      ACE_THROW_SPEC (( ::CORBA::SystemException,
-                       ::Components::AlreadyConnected,
-                       ::Components::InvalidConnection));
-
-      virtual ::CUTS::Testing_Service_ptr
-      disconnect_cuts_testing_service (
-        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
-      ACE_THROW_SPEC (( ::CORBA::SystemException,
-                       ::Components::NoConnection));
-
-      virtual ::CUTS::Testing_Service_ptr
-      get_connection_cuts_testing_service (
-        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
-      ACE_THROW_SPEC (( ::CORBA::SystemException));
-
-      // Component attribute operations.
-
-      // Operations for Receptacles interface.
-
-      virtual ::Components::Cookie *
-      connect (
-        const char *name,
-        CORBA::Object_ptr connection
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-      ACE_THROW_SPEC (( ::CORBA::SystemException,
-                       ::Components::InvalidName,
-                       ::Components::InvalidConnection,
-                       ::Components::AlreadyConnected,
-                       ::Components::ExceededConnectionLimit));
-
-      virtual CORBA::Object_ptr
-      disconnect (
-        const char *name,
-        ::Components::Cookie *ck
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-      ACE_THROW_SPEC (( ::CORBA::SystemException,
-                       ::Components::InvalidName,
-                       ::Components::InvalidConnection,
-                       ::Components::CookieRequired,
-                       ::Components::NoConnection));
-
-      virtual ::Components::ReceptacleDescriptions *
-      get_all_receptacles (
-        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
-      ACE_THROW_SPEC (( ::CORBA::SystemException));
-
-      // Operations for Events interface.
-
-      virtual ::Components::Cookie *
-      subscribe (
-        const char *publisher_name,
-        ::Components::EventConsumerBase_ptr subscriber
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-      ACE_THROW_SPEC (( ::CORBA::SystemException,
-                       ::Components::InvalidName,
-                       ::Components::InvalidConnection,
-                       ::Components::ExceededConnectionLimit));
-
-      virtual ::Components::EventConsumerBase_ptr
-      unsubscribe (
-        const char *publisher_name,
-        ::Components::Cookie *ck
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-      ACE_THROW_SPEC (( ::CORBA::SystemException,
-                       ::Components::InvalidName,
-                       ::Components::InvalidConnection));
-
-      virtual void
-      connect_consumer (
-        const char *emitter_name,
-        ::Components::EventConsumerBase_ptr consumer
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-      ACE_THROW_SPEC (( ::CORBA::SystemException,
-                       ::Components::InvalidName,
-                       ::Components::AlreadyConnected,
-                       ::Components::InvalidConnection));
-
-      virtual ::Components::EventConsumerBase_ptr
-      disconnect_consumer (
-        const char *source_name
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-      ACE_THROW_SPEC (( ::CORBA::SystemException,
-                       ::Components::InvalidName,
-                       ::Components::NoConnection));
-
-      virtual ::Components::PublisherDescriptions *
-      get_all_publishers (
-        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
-      ACE_THROW_SPEC (( ::CORBA::SystemException));
-
-      virtual ::Components::EmitterDescriptions *
-      get_all_emitters (
-        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
-      ACE_THROW_SPEC (( ::CORBA::SystemException));
-
-      // CIAO specific operations on the servant. 
-      CORBA::Object_ptr
-      get_facet_executor (
-        const char *name
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-      ACE_THROW_SPEC (( ::CORBA::SystemException));
-
-      private:
-
-      ::TSCE::Command_EventConsumer_var
-      consumes_command_;
-
-      const char *ins_name_;
-
-      private:
-
-      void
-      populate_port_tables (
-        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
-      ACE_THROW_SPEC (( ::CORBA::SystemException));
-
-      ::Components::EventConsumerBase_ptr
-      get_consumer_command_i (
-        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
-      ACE_THROW_SPEC (( ::CORBA::SystemException));
-    };
-
-    class EFFECTOR_SECONDARY_IMPL_SVNT_Export Effector_Secondary_Factory_Servant
-      : public virtual
-          ::CIAO::Home_Servant_Impl<
-              ::POA_TSCE::Effector_Secondary_Factory,
-              ::TSCE::CCM_Effector_Secondary_Factory,
-              Effector_Secondary_Servant
-            >
-    {
-      public:
-
-      Effector_Secondary_Factory_Servant (
-        ::TSCE::CCM_Effector_Secondary_Factory_ptr exe,
-        const char *ins_name,
-        ::CIAO::Session_Container *c,
-        ::CIAO::REC_POL_MAP &rec_pol_map);
-
-      virtual ~Effector_Secondary_Factory_Servant (void);
-
-      // Home operations.
-      // Home factory and finder operations.
-
-      // Attribute operations.
-    };
-
-    extern "C" EFFECTOR_SECONDARY_IMPL_SVNT_Export ::PortableServer::Servant
-    create_TSCE_Effector_Secondary_Factory_Servant (
-      ::Components::HomeExecutorBase_ptr p,
-      CIAO::Session_Container *c,
-      const char *ins_name,
-      ::CIAO::REC_POL_MAP &rec_pol_map
+    public:
+    // We will allow the servant glue code we generate to access our state.
+    friend class Effector_Secondary_Servant;
+
+    Effector_Secondary_Context (
+      ::Components::CCMHome_ptr h,
+      ::CIAO::Session_Container *c,
+      Effector_Secondary_Servant *sv);
+
+    virtual ~Effector_Secondary_Context (void);
+
+    // Operations for Effector_Secondary receptacles and event sources,
+    // defined in ::TSCE::CCM_Effector_Secondary_Context.
+
+    virtual void
+    push_status (
+      ::TSCE::Status_Event *ev
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+    ACE_THROW_SPEC (( ::CORBA::SystemException));
+
+    virtual ::CUTS::Testing_Service_ptr
+    get_connection_cuts_testing_service (
+      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+    ACE_THROW_SPEC (( ::CORBA::SystemException));
+
+    // CIAO-specific.
+
+    static Effector_Secondary_Context *
+    _narrow (
+      ::Components::SessionContext_ptr p
       ACE_ENV_ARG_DECL_WITH_DEFAULTS);
-  }
+
+    protected:
+    // Methods that manage this component's connections and consumers.
+
+    virtual ::Components::Cookie *
+    subscribe_status (
+      ::TSCE::Status_EventConsumer_ptr c
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+    ACE_THROW_SPEC (( ::CORBA::SystemException,
+                     ::Components::ExceededConnectionLimit));
+
+    // CIAO-specific.
+    ::Components::Cookie *
+    subscribe_status_generic (
+      ::Components::EventConsumerBase_ptr c
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+    ACE_THROW_SPEC (( ::CORBA::SystemException,
+                     ::Components::ExceededConnectionLimit));
+
+    virtual ::TSCE::Status_EventConsumer_ptr
+    unsubscribe_status (
+      ::Components::Cookie *ck
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+    ACE_THROW_SPEC (( ::CORBA::SystemException,
+                     ::Components::InvalidConnection));
+
+    virtual void
+    connect_cuts_testing_service (
+      ::CUTS::Testing_Service_ptr
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+    ACE_THROW_SPEC (( ::CORBA::SystemException,
+                     ::Components::AlreadyConnected,
+                     ::Components::InvalidConnection));
+
+    virtual ::CUTS::Testing_Service_ptr
+    disconnect_cuts_testing_service (
+      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+    ACE_THROW_SPEC (( ::CORBA::SystemException,
+                     ::Components::NoConnection));
+
+    protected:
+    ACE_Active_Map_Manager<
+    ::TSCE::Status_EventConsumer_var>
+    ciao_publishes_status_map_;
+
+    ACE_Active_Map_Manager<
+    ::Components::EventConsumerBase_var>
+    ciao_publishes_status_generic_map_;
+
+    // Simplex cuts_testing_service connection.
+    ::CUTS::Testing_Service_var
+    ciao_uses_cuts_testing_service_;
+  };
+
+  class EFFECTOR_SECONDARY_IMPL_SVNT_Export Effector_Secondary_Servant
+    : public virtual CIAO::Servant_Impl<
+        POA_TSCE::Effector_Secondary,
+        ::TSCE::CCM_Effector_Secondary,
+        Effector_Secondary_Context
+      >
+  {
+    public:
+
+    typedef ::TSCE::CCM_Effector_Secondary _exec_type;
+
+    Effector_Secondary_Servant (
+      ::TSCE::CCM_Effector_Secondary_ptr executor,
+      ::Components::CCMHome_ptr h,
+      const char *ins_name,
+      ::CIAO::Home_Servant_Impl_Base *hs,
+      ::CIAO::Session_Container *c,
+      ::CIAO::REC_POL_MAP &rec_pol_map);
+
+    virtual ~Effector_Secondary_Servant (void);
+
+    virtual void
+    set_attributes (
+      const ::Components::ConfigValues &descr
+      ACE_ENV_ARG_DECL);
+
+    // Supported operations.
+
+    // Public port operations.
+
+    // Servant class for the command consumer.
+    class EFFECTOR_SECONDARY_IMPL_SVNT_Export Command_EventConsumer_command_Servant
+    : public virtual POA_TSCE::Command_EventConsumer
+    {
+      public:
+      Command_EventConsumer_command_Servant (
+        ::TSCE::CCM_Effector_Secondary_ptr executor,
+        ::TSCE::CCM_Effector_Secondary_Context_ptr c);
+
+      virtual ~Command_EventConsumer_command_Servant (void);
+
+      virtual void
+      push_Command_Event (
+        ::TSCE::Command_Event *evt
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+      ACE_THROW_SPEC (( ::CORBA::SystemException));
+
+      // Inherited from ::Components::EventConsumerBase.
+      virtual void
+      push_event ( ::Components::EventBase *ev
+                  ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+      ACE_THROW_SPEC (( ::CORBA::SystemException,
+                       ::Components::BadEventType));
+
+      // CIAO-specific in ::Components::EventConsumerBase.
+      virtual CORBA::Boolean
+      ciao_is_substitutable (
+        const char *event_repo_id
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+      ACE_THROW_SPEC (( ::CORBA::SystemException));
+
+      // Get component implementation.
+      virtual CORBA::Object_ptr
+      _get_component (
+        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+      ACE_THROW_SPEC (( ::CORBA::SystemException));
+
+      protected:
+      ::TSCE::CCM_Effector_Secondary_var
+      executor_;
+
+      ::TSCE::CCM_Effector_Secondary_Context_var
+      ctx_;
+    };
+
+    virtual ::TSCE::Command_EventConsumer_ptr
+    get_consumer_command (
+      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+    ACE_THROW_SPEC (( ::CORBA::SystemException));
+
+    virtual ::Components::Cookie *
+    subscribe_status (
+      ::TSCE::Status_EventConsumer_ptr c
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+    ACE_THROW_SPEC (( ::CORBA::SystemException,
+                     ::Components::ExceededConnectionLimit));
+
+    // CIAO-specific.
+    ::Components::Cookie *
+    subscribe_status_generic (
+      ::Components::EventConsumerBase_ptr c
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+    ACE_THROW_SPEC (( ::CORBA::SystemException,
+                     ::Components::ExceededConnectionLimit));
+
+    virtual ::TSCE::Status_EventConsumer_ptr
+    unsubscribe_status (
+      ::Components::Cookie *ck
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+    ACE_THROW_SPEC (( ::CORBA::SystemException,
+                     ::Components::InvalidConnection));
+
+    virtual void
+    connect_cuts_testing_service (
+      ::CUTS::Testing_Service_ptr c
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+    ACE_THROW_SPEC (( ::CORBA::SystemException,
+                     ::Components::AlreadyConnected,
+                     ::Components::InvalidConnection));
+
+    virtual ::CUTS::Testing_Service_ptr
+    disconnect_cuts_testing_service (
+      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+    ACE_THROW_SPEC (( ::CORBA::SystemException,
+                     ::Components::NoConnection));
+
+    virtual ::CUTS::Testing_Service_ptr
+    get_connection_cuts_testing_service (
+      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+    ACE_THROW_SPEC (( ::CORBA::SystemException));
+
+    // Component attribute operations.
+
+    // Operations for Receptacles interface.
+
+    virtual ::Components::Cookie *
+    connect (
+      const char *name,
+      CORBA::Object_ptr connection
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+    ACE_THROW_SPEC (( ::CORBA::SystemException,
+                     ::Components::InvalidName,
+                     ::Components::InvalidConnection,
+                     ::Components::AlreadyConnected,
+                     ::Components::ExceededConnectionLimit));
+
+    virtual CORBA::Object_ptr
+    disconnect (
+      const char *name,
+      ::Components::Cookie *ck
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+    ACE_THROW_SPEC (( ::CORBA::SystemException,
+                     ::Components::InvalidName,
+                     ::Components::InvalidConnection,
+                     ::Components::CookieRequired,
+                     ::Components::NoConnection));
+
+    virtual ::Components::ReceptacleDescriptions *
+    get_all_receptacles (
+      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+    ACE_THROW_SPEC (( ::CORBA::SystemException));
+
+    // Operations for Events interface.
+
+    virtual ::Components::Cookie *
+    subscribe (
+      const char *publisher_name,
+      ::Components::EventConsumerBase_ptr subscriber
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+    ACE_THROW_SPEC (( ::CORBA::SystemException,
+                     ::Components::InvalidName,
+                     ::Components::InvalidConnection,
+                     ::Components::ExceededConnectionLimit));
+
+    virtual ::Components::EventConsumerBase_ptr
+    unsubscribe (
+      const char *publisher_name,
+      ::Components::Cookie *ck
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+    ACE_THROW_SPEC (( ::CORBA::SystemException,
+                     ::Components::InvalidName,
+                     ::Components::InvalidConnection));
+
+    virtual void
+    connect_consumer (
+      const char *emitter_name,
+      ::Components::EventConsumerBase_ptr consumer
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+    ACE_THROW_SPEC (( ::CORBA::SystemException,
+                     ::Components::InvalidName,
+                     ::Components::AlreadyConnected,
+                     ::Components::InvalidConnection));
+
+    virtual ::Components::EventConsumerBase_ptr
+    disconnect_consumer (
+      const char *source_name
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+    ACE_THROW_SPEC (( ::CORBA::SystemException,
+                     ::Components::InvalidName,
+                     ::Components::NoConnection));
+
+    virtual ::Components::PublisherDescriptions *
+    get_all_publishers (
+      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+    ACE_THROW_SPEC (( ::CORBA::SystemException));
+
+    virtual ::Components::EmitterDescriptions *
+    get_all_emitters (
+      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+    ACE_THROW_SPEC (( ::CORBA::SystemException));
+
+    // CIAO specific operations on the servant. 
+    CORBA::Object_ptr
+    get_facet_executor (
+      const char *name
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+    ACE_THROW_SPEC (( ::CORBA::SystemException));
+
+    private:
+
+    ::TSCE::Command_EventConsumer_var
+    consumes_command_;
+
+    const char *ins_name_;
+
+    private:
+
+    void
+    populate_port_tables (
+      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+    ACE_THROW_SPEC (( ::CORBA::SystemException));
+
+    ::Components::EventConsumerBase_ptr
+    get_consumer_command_i (
+      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+    ACE_THROW_SPEC (( ::CORBA::SystemException));
+  };
+
+  class EFFECTOR_SECONDARY_IMPL_SVNT_Export Effector_Secondary_Factory_Servant
+    : public virtual
+        ::CIAO::Home_Servant_Impl<
+            ::POA_TSCE::Effector_Secondary_Factory,
+            ::TSCE::CCM_Effector_Secondary_Factory,
+            Effector_Secondary_Servant
+          >
+  {
+    public:
+
+    Effector_Secondary_Factory_Servant (
+      ::TSCE::CCM_Effector_Secondary_Factory_ptr exe,
+      const char *ins_name,
+      ::CIAO::Session_Container *c,
+      ::CIAO::REC_POL_MAP &rec_pol_map);
+
+    virtual ~Effector_Secondary_Factory_Servant (void);
+
+    // Home operations.
+    // Home factory and finder operations.
+
+    // Attribute operations.
+  };
+
+  extern "C" EFFECTOR_SECONDARY_IMPL_SVNT_Export ::PortableServer::Servant
+  create_TSCE_Effector_Secondary_Factory_Servant (
+    ::Components::HomeExecutorBase_ptr p,
+    CIAO::Session_Container *c,
+    const char *ins_name,
+    ::CIAO::REC_POL_MAP &rec_pol_map
+    ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 }
 
 #include /**/ "ace/post.h"
