@@ -40,10 +40,17 @@ run_main (int, ACE_TCHAR *[])
 
   ACE_utsname uname;
   ACE_OS::uname (&uname);
+#if defined (ACE_LACKS_UTSNAME_T)
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Machine: %s running on %s\n"),
               uname.nodename, uname.machine ));
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Platform: %s, %s, %s\n"),
               uname.sysname, uname.release, uname.version ));
+#else
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Machine: %C running on %C\n"),
+              uname.nodename, uname.machine ));
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Platform: %C, %C, %C\n"),
+              uname.sysname, uname.release, uname.version ));
+#endif /* ACE_LACKS_UTSNAME_T */
 
   ACE_INET_Addr *the_addr_array;
   size_t how_many = 0;

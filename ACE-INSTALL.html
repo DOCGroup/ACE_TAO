@@ -17,7 +17,7 @@ it has been ported to.  Please consult the <a href="NEWS">NEWS</a> and
 <a href="ChangeLog">ChangeLog</a> files to see whether any recent changes
 to the release will affect your code.  In addition, you should check
 out our <a
-href="http://www.cs.wustl.edu/%7Eschmidt/ACE_wrappers/docs/ACE-development-process.html">development
+href="docs/ACE-development-process.html">development
 process</a>.  As you start working with ACE, we suggest you get copies
 of the <a
 href="http://www.cs.wustl.edu/%7Eschmidt/ACE/book1/">C++NPv1</a>, <a
@@ -25,12 +25,12 @@ href="http://www.cs.wustl.edu/%7Eschmidt/ACE/book2/">C++NPv2</a>, and
 <a href="http://www.riverace.com/acebooks/">APG</a> books to help
 guide you after you've built and installed ACE.  You should also
 consult the <a
-href="http://www.cs.wustl.edu/%7Eschmidt/ACE_wrappers/docs/ACE-FMM.html">ACE
+href="docs/ACE-FMM.html">ACE
 Frequently Made Mistakes page</a>.  If you encounter any problems or
 would like to request an enhancement, then use our <a
-href="http://www.cs.wustl.edu/%7Eschmidt/ACE_wrappers/docs/usage-bugzilla.html">bug
+href="docs/usage-bugzilla.html">bug
 tracking system</a> to submit a report in accordance with our <a
-href="http://www.cs.wustl.edu/%7Eschmidt/ACE_wrappers/docs/ACE-bug-process.html">bug
+href="docs/ACE-bug-process.html">bug
 report process</a>.<p>
 
 </p><h2>Document Index</h2>
@@ -65,7 +65,7 @@ The <a href="http://www.dre.vanderbilt.edu/">DOC group</a>,
 user community have all contributed ports to make ACE the successful
 and far-reaching toolkit it is today.  Any UNIX/POSIX/Windows
 variation is probably an easy target platform for ACE.  If you have
-<a href="http://www.cs.wustl.edu/%7Eschmidt/ACE_wrappers/docs/ACE-porting.html">porting questions</a> or have a problem
+<a href="docs/ACE-porting.html">porting questions</a> or have a problem
 compiling the ACE source distribution, please contact one of the
 commercial support companies, or send a copy of the
 <a href="PROBLEM-REPORT-FORM">PROBLEM-REPORT-FORM</a>, located in the
@@ -98,7 +98,7 @@ to provide build results. Members of the ACE community that maintain ACE on
 platforms not maintained by the DOC group, Riverace, OCI, or Remedy IT are
 encouraged to provide build and regression test results for the scoreboard
 to ensure that all in-use platforms are represented.
-See the <a href="https://svn.dre.vanderbilt.edu/viewvc/ACE_autobuild/trunk/README?revision=HEAD" target="_blank">autobuild README</a> for more information about
+See the <a href="https://svn.dre.vanderbilt.edu/viewvc/autobuild/trunk/README?revision=HEAD" target="_blank">autobuild README</a> for more information about
 how to set up a build; contact one of the above groups to inquire about how
 to get your build results recorded on the scoreboard.</p>
 <p>Because older
@@ -213,7 +213,7 @@ href="http://www.cs.wustl.edu/%7Eschmidt/resume-grants.html">funded
 by</a>) advanced R&amp;D projects. The group continues to be
 intimately involved in ACE+TAO development and maintenance, but with
 revised priorities for maintenance. The <a
-href="http://www.cs.wustl.edu/%7Eschmidt/ACE_wrappers/docs/ACE-bug-process.html">bug
+href="docs/ACE-bug-process.html">bug
 fixing policies</a> followed by the DOC group are designed to strike a
 balance between their many <a
 href="http://www.cs.wustl.edu/%7Eschmidt/research.html">research
@@ -1397,7 +1397,7 @@ reentrancy in the VxWorks' <em>Programmers Guide</em>.</p><p>
 
 Instead of trying to run separate programs onto a VxWorks target, we
 recommend creating just one program, and spawning a thread for each
-task.  The TAO IDL_Cubit test <a href="http://www.cs.wustl.edu/%7Eschmidt/ACE_wrappers/TAO/performance-tests/Cubit/TAO/IDL_Cubit/collocation_test.cpp">collocation
+task.  The TAO IDL_Cubit test <a href="TAO/performance-tests/Cubit/TAO/IDL_Cubit/collocation_test.cpp">collocation
 test</a> is a good example.</p><p>
 
 </p><h3><a name="VxWorks/LinkToKernel">Linking ACE and/or TAO Libraries into the VxWorks Kernel</a>.</h3>
@@ -1488,7 +1488,7 @@ Using the Cygnus tools, this approach works:
   </p></li><li>Set up your
     <code>ACE_wrappers/include/makeinclude/platform_macros.GNU</code>
     as usual for VxWorks.  See
-    <a href="http://www.cs.wustl.edu/%7Eschmidt/ACE_wrappers/include/makeinclude/platform_vxworks5.5.x.GNU">the
+    <a href="include/makeinclude/platform_vxworks5.5.x.GNU">the
     g++/VxWorks platform file</a> for more information.<p>
   </p></li><li>Create an <code>ACE_wrappers/ace/config.h</code> file that looks
     something like the following. 
@@ -1824,7 +1824,7 @@ Here's what you need to do:<p>
       source tree (and ACE has been ported to your platform, of course) the
       netsvcs static and shared object libraries should be built
       automatically.  In addition, the server driver program
-      (<code>main</code>) contained in <a href="http://www.cs.wustl.edu/%7Eschmidt/ACE_wrappers/netsvcs/servers/main.cpp">$ACE_ROOT/netsvcs/servers/main.cpp</a>
+      (<code>main</code>) contained in <a href="netsvcs/servers/main.cpp">$ACE_ROOT/netsvcs/servers/main.cpp</a>
       should also be compiled and ready to run.<p>
 
   </p></li><li>Set your <code>LD_LIBRARY_PATH</code> environment variable to
@@ -1838,7 +1838,7 @@ Here's what you need to do:<p>
   </p></li><li>By default, if the shared object library is built, the services
       are linked into the <code>main</code> driver program dynamically.
       To specify which services should be linked in and executed, edit the
-      <a href="http://www.cs.wustl.edu/%7Eschmidt/ACE_wrappers/netsvcs/servers/svc.conf">$ACE_ROOT/netsvcs/servers/svc.conf</a>
+      <a href="netsvcs/servers/svc.conf">$ACE_ROOT/netsvcs/servers/svc.conf</a>
       file.  During your editing, you should update information (such as the
       default service port numbers) that affects the initialization of
       services in this file.  Refer to the
@@ -2323,7 +2323,7 @@ libraries.
       </p></li></ul>
 
       Please see the comments in the
-      <a href="http://www.cs.wustl.edu/%7Eschmidt/ACE_wrappers/include/makeinclude/platform_lynxos.GNU">ACE
+      <a href="include/makeinclude/platform_lynxos.GNU">ACE
       platform_lynxos.GNU file</a> for information on, and an
       example of, tailoring for your particular platform.<p>
 
@@ -2423,7 +2423,7 @@ libraries.
 
       ACE has been ported to <a href="http://www.qnx.com/products/os/neutrino.html">QNX Neutrino
       2.0</a>.  We cross-compile for Neutrino on a QNX4 host using g++
-      2.8.1, using the <a href="http://www.cs.wustl.edu/%7Eschmidt/ACE_wrappers/ace/config-qnx-neutrino.h">ace/config-qnx-neutrino.h</a>
+      2.8.1, using the <a href="ace/config-qnx-neutrino.h">ace/config-qnx-neutrino.h</a>
       and <a href="include/makeinclude/platform_qnx_neutrino.GNU">include/makeinclude/platform_qnx_neutrino.GNU</a>
       configuration files.  Many of the ACE tests succeed, though some
       fail.  As the porting effort progresses, we hope to eliminate
@@ -2433,8 +2433,8 @@ libraries.
 
       ACE has been ported to <a href="http://get.qnx.com/">QNX RTP
       </a>. We compile for QNX RTP using the GCC compiler shipped with the
-      distribution, using the <a href="http://www.cs.wustl.edu/%7Eschmidt/ACE_wrappers/ace/config-qnx-rtp.h">ace/config-qnx-rtp.h</a>
-      and <a href="http://www.cs.wustl.edu/%7Eschmidt/ACE_wrappers/include/makeinclude/platform_qnx_rtp_gcc.GNU">include/makeinclude/platform_qnx_rtp_gcc.GNU</a>
+      distribution, using the <a href="ace/config-qnx-rtp.h">ace/config-qnx-rtp.h</a>
+      and <a href="include/makeinclude/platform_qnx_rtp_gcc.GNU">include/makeinclude/platform_qnx_rtp_gcc.GNU</a>
       configuration files.
       Many of the ACE tests succeed, though some
       fail.  As the porting effort progresses, we hope to eliminate
@@ -2554,7 +2554,7 @@ To save time and space, I set
 <pre>    TAO_ORBSVCS = Naming Time Trader ImplRepo
 </pre>
 in <code>$ACE_ROOT/include/makeinclude/platform_macros.GNU</code> also.  See
-<a href="http://www.cs.wustl.edu/%7Eschmidt/ACE_wrappers/TAO/docs/configurations.html#orbsvcs">TAO's orbsvcs
+<a href="TAO/docs/configurations.html#orbsvcs">TAO's orbsvcs
 library customization instructions</a> for more information.<p>
 
 
@@ -2569,7 +2569,7 @@ of ACE and TAO can use well over 4 GB of disk space.  It's usually not
 necessary to build <strong>all</strong> of ACE and TAO, though.<p>
 
 Much less disk space is required for just the libraries.  For example,
-see the <a href="http://www.cs.wustl.edu/%7Eschmidt/ACE_wrappers/docs/ACE-subsets.html#ACE%20Library%20Size%20Breakdown">ACE
+see the <a href="docs/ACE-subsets.html#ACE%20Library%20Size%20Breakdown">ACE
 library subset sizes</a>.</p><p>
 
 If you run out of memory when building, you might consider trying
@@ -2585,9 +2585,9 @@ some or all of these suggestions:</p><p>
     <code>include/makeinclude/platform_macros.GNU</code> file.<p>
   </p></li><li>Restrict the components that you build.  For ACE and TAO, see the
     discussion of <code>ACE_COMPONENTS</code> in the
-    <a href="http://www.cs.wustl.edu/%7Eschmidt/ACE_wrappers/docs/ACE-subsets.html">ACE subsets</a> page.  For TAO's
+    <a href="docs/ACE-subsets.html">ACE subsets</a> page.  For TAO's
     orbsvcs, see the discussion of <code>TAO_ORBSVCS</code> in
-    <a href="http://www.cs.wustl.edu/%7Eschmidt/ACE_wrappers/TAO/docs/configurations.html#orbsvcs">orbsvcs Library configuration information</a>.<p>
+    <a href="TAO/docs/configurations.html#orbsvcs">orbsvcs Library configuration information</a>.<p>
 
 If disk space is a problem, disabling debugging should greatly
 reduce object code, and therefore, library size.  This is especially
@@ -2722,7 +2722,7 @@ The Eclipse CDT C++ development environment can be used to develop ACE applicati
 </p><h1><a name="advanced">Advanced Topics</a></h1>
 
 <ul>
-  <li><a href="http://www.cs.wustl.edu/%7Eschmidt/ACE_wrappers/docs/ACE-porting.html">Porting ACE and TAO to a New OS Platform</a>
+  <li><a href="docs/ACE-porting.html">Porting ACE and TAO to a New OS Platform</a>
   </li><li><a href="#NonStaticObjectManager">Non-static ACE_Object_Manager</a>
   </li><li><a href="#cloning">Cloning the Source Tree</a>
   </li><li><a href="#mvs">Additional Build Tips for MVS</a>

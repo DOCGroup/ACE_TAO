@@ -37,7 +37,7 @@ encode_decode_stream (const ACE_Byte* stream, size_t length)
   size_t encode_len = 0;
 
   ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("Input stream = %s\n"),
+              ACE_TEXT ("Input stream = %C\n"),
               stream));
 
   ACE_Byte* encodeBuf = ACE_Base64::encode (stream, length,
@@ -49,7 +49,7 @@ encode_decode_stream (const ACE_Byte* stream, size_t length)
     }
 
   ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("Base64 encoded stream = %s\n"),
+              ACE_TEXT ("Base64 encoded stream = %C\n"),
               encodeBuf));
 
 
@@ -68,7 +68,7 @@ encode_decode_stream (const ACE_Byte* stream, size_t length)
   ACE_Auto_Basic_Array_Ptr<ACE_Byte> cleanup_decodeBuf (decodeBuf);
 
   ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("Decoded Base64 encoded stream = %s\n"),
+              ACE_TEXT ("Decoded Base64 encoded stream = %C\n"),
               decodeBuf));
 
   for (size_t i = 0; i < length; ++i)

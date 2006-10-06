@@ -41,7 +41,7 @@ print_time (ACE_Profile_Timer &timer,
   timer.stop ();
   timer.elapsed_time (et);
 
-  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("     *****  %s  *****     \n"), test));
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("     *****  %C  *****     \n"), test));
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("real time = %f secs, user time = %f secs, system time = %f secs\n"),
               et.real_time, et.user_time, et.system_time));
@@ -168,10 +168,10 @@ test_find (ACE_Naming_Context &ns_context, int sign, int result)
             {
               if (type_out)
                 ACE_DEBUG ((LM_DEBUG,
-                            ACE_TEXT ("Name: %s\tValue: %s\tType: %s\n"),
+                            ACE_TEXT ("Name: %C\tValue: %C\tType: %C\n"),
                             name, l_value, type_out));
               else
-                ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Name: %s\tValue: %s\n"),
+                ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Name: %C\tValue: %C\n"),
                             name, l_value));
             }
 

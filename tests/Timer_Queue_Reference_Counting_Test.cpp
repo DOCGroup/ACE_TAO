@@ -84,7 +84,7 @@ Reference_Counted_Event_Handler::handle_timeout (const ACE_Time_Value &,
 {
   if (debug)
     ACE_DEBUG ((LM_DEBUG,
-                "Reference count in Reference_Counted_Event_Handler::handle_timeout() for arg = %s is %d\n",
+                "Reference count in Reference_Counted_Event_Handler::handle_timeout() for arg = %C is %d\n",
                 (const char *) arg,
                 this->reference_count_.value ()));
 
@@ -220,7 +220,7 @@ template <class TIMER_QUEUE>
 cancellation_test<TIMER_QUEUE>::cancellation_test (const char *timer_queue_type)
 {
   ACE_DEBUG ((LM_DEBUG,
-              "\nCancellation test for %s\n\n",
+              "\nCancellation test for %C\n\n",
               timer_queue_type));
 
   int configs[][5] = {
@@ -383,7 +383,7 @@ template <class TIMER_QUEUE>
 expire_test<TIMER_QUEUE>::expire_test (const char *timer_queue_type)
 {
   ACE_DEBUG ((LM_DEBUG,
-              "\nExpire test for %s\n\n",
+              "\nExpire test for %C\n\n",
               timer_queue_type));
 
   TIMER_QUEUE timer_queue;
@@ -403,7 +403,7 @@ template <class TIMER_QUEUE>
 upcall_test<TIMER_QUEUE>::upcall_test (const char *timer_queue_type)
 {
   ACE_DEBUG ((LM_DEBUG,
-              "\nOne upcall test for %s\n\n",
+              "\nOne upcall test for %C\n\n",
               timer_queue_type));
 
   TIMER_QUEUE timer_queue;
@@ -447,7 +447,7 @@ Simple_Event_Handler::handle_timeout (const ACE_Time_Value &,
 {
   if (debug)
     ACE_DEBUG ((LM_DEBUG,
-                "Simple_Event_Handler::handle_timeout() for arg = %s\n",
+                "Simple_Event_Handler::handle_timeout() for arg = %C\n",
                 (const char *) arg));
   return 0;
 }
@@ -530,7 +530,7 @@ template <class TIMER_QUEUE>
 simple_test<TIMER_QUEUE>::simple_test (const char *timer_queue_type)
 {
   ACE_DEBUG ((LM_DEBUG,
-              "\nSimple test for %s\n\n",
+              "\nSimple test for %C\n\n",
               timer_queue_type));
 
   TIMER_QUEUE timer_queue;
