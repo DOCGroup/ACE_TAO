@@ -40,31 +40,24 @@ namespace CIDL_MonolithicImplementation
     // Destructor.
     virtual ~Effector_Main (void);
 
-    // EventSink: status
-    virtual void push_status (
-      TSCE::Status_Event * ev
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-      ACE_THROW_SPEC ((::CORBA::SystemException));
-
     // EventSink: command
     virtual void push_command (
       TSCE::Command_Event * ev
       ACE_ENV_ARG_DECL_WITH_DEFAULTS)
       ACE_THROW_SPEC ((::CORBA::SystemException));
 
-    private:
-    // Worker: cpu
-    CUTS_CPU_Worker cpu_;
+    // EventSink: status
+    virtual void push_status (
+      TSCE::Status_Event * ev
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+      ACE_THROW_SPEC ((::CORBA::SystemException));
 
+    private:
     // Worker: memory
     CUTS_Memory_Worker memory_;
 
-    // Event handler: status
-    void push_status_handler (
-      TSCE::Status_Event * ev, CUTS_Activation_Record * record);
-
-    CUTS_Event_Handler_Manager_T <
-      This_Component, TSCE::Status_Event> push_status_handler_;
+    // Worker: cpu
+    CUTS_CPU_Worker cpu_;
 
     // Event handler: command
     void push_command_handler (
@@ -72,6 +65,13 @@ namespace CIDL_MonolithicImplementation
 
     CUTS_Event_Handler_Manager_T <
       This_Component, TSCE::Command_Event> push_command_handler_;
+
+    // Event handler: status
+    void push_status_handler (
+      TSCE::Status_Event * ev, CUTS_Activation_Record * record);
+
+    CUTS_Event_Handler_Manager_T <
+      This_Component, TSCE::Status_Event> push_status_handler_;
 
     public:
     // SessionComponent: set_session_context

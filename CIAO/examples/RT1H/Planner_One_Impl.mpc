@@ -15,7 +15,8 @@ project (Planner_One_Impl_exec) : cuts_coworker_exec {
 
   // implementation specific settings
   libs += \
-    CUTS
+    CUTS_CPU_Worker \
+    CUTS_Memory_Worker
 
   Source_Files {
     Planner_One_Impl_exec_i.cpp
