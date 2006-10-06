@@ -15,7 +15,8 @@ project (Env_Dectector_Impl_exec) : cuts_coworker_exec {
 
   // implementation specific settings
   libs += \
-    CUTS
+    CUTS_CPU_Worker \
+    CUTS_Memory_Worker
 
   Source_Files {
     Env_Dectector_Impl_exec_i.cpp

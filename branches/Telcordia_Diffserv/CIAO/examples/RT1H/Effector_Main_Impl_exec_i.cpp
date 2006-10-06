@@ -8,42 +8,20 @@ namespace CIDL_MonolithicImplementation
   // Default constructor.
   Effector_Main::Effector_Main (void)
   {
-    this->push_status_handler_.name ("status");
-    this->push_status_handler_.bind (this, &Effector_Main::push_status_handler);
-    this->benchmark_agent_->register_port_agent (&this->push_status_handler_.port_agent ());
-
     this->push_command_handler_.name ("command");
     this->push_command_handler_.bind (this, &Effector_Main::push_command_handler);
     this->benchmark_agent_->register_port_agent (&this->push_command_handler_.port_agent ());
+
+    this->push_status_handler_.name ("status");
+    this->push_status_handler_.bind (this, &Effector_Main::push_status_handler);
+    this->benchmark_agent_->register_port_agent (&this->push_status_handler_.port_agent ());
   }
 
   // Destructor.
   Effector_Main::~Effector_Main (void)
   {
-    this->benchmark_agent_->unregister_port_agent (&this->push_status_handler_.port_agent ());
     this->benchmark_agent_->unregister_port_agent (&this->push_command_handler_.port_agent ());
-  }
-
-  // EventSink: status
-  void Effector_Main::push_status (
-    TSCE::Status_Event * ev
-    ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((::CORBA::SystemException))
-  {
-    this->push_status_handler_.handle_event (ev);
-  }
-
-  void Effector_Main::push_status_handler (
-    TSCE::Status_Event * ev, 
-    CUTS_Activation_Record * record) 
-  {
-    record->perform_action_no_logging (
-      CUTS_CPU_Worker::Run_Processor (this->cpu_));
-
-    record->record_exit_point (
-      "status",
-      Event_Producer::Push_Event <OBV_TSCE::Status_Event> (
-        this->producer_, &_coworker_type::_ctx_type::push_status));
+    this->benchmark_agent_->unregister_port_agent (&this->push_status_handler_.port_agent ());
   }
 
   // EventSink: command
@@ -79,6 +57,28 @@ namespace CIDL_MonolithicImplementation
         this->producer_, &_coworker_type::_ctx_type::push_status));
   }
 
+  // EventSink: status
+  void Effector_Main::push_status (
+    TSCE::Status_Event * ev
+    ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+    ACE_THROW_SPEC ((::CORBA::SystemException))
+  {
+    this->push_status_handler_.handle_event (ev);
+  }
+
+  void Effector_Main::push_status_handler (
+    TSCE::Status_Event * ev, 
+    CUTS_Activation_Record * record) 
+  {
+    record->perform_action_no_logging (
+      CUTS_CPU_Worker::Run_Processor (this->cpu_));
+
+    record->record_exit_point (
+      "status",
+      Event_Producer::Push_Event <OBV_TSCE::Status_Event> (
+        this->producer_, &_coworker_type::_ctx_type::push_status));
+  }
+
   // SessionComponent: set_session_context
   void Effector_Main::set_session_context (
     ::Components::SessionContext_ptr ctx
@@ -105,8 +105,8 @@ namespace CIDL_MonolithicImplementation
   {
     this->_coworker_type::ciao_preactivate ();
 
-    this->cpu_.parent (this->registration_id_);
     this->memory_.parent (this->registration_id_);
+    this->cpu_.parent (this->registration_id_);
 
     this->push_command_handler_.activate ();
     this->push_status_handler_.activate ();
