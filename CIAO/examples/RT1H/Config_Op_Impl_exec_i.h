@@ -23,8 +23,7 @@
 namespace CIDL_Config_Op
 {
   class CONFIG_OP_IMPL_EXEC_Export Config_Op :
-  public CUTS_CCM_CoWorkEr_T <TSCE::CIDL_Config_Op_Impl::Config_Op_Exec,
-  TSCE::CIDL_Config_Op_Impl::Config_Op_Context> 
+  public CUTS_CCM_CoWorkEr_T <Config_Op_Exec, Config_Op_Context> 
   {
     public:
     // Type definition of this component
@@ -32,8 +31,8 @@ namespace CIDL_Config_Op
 
     // Type definition of the CoWorkEr type.
     typedef CUTS_CCM_CoWorkEr_T <
-      TSCE::CIDL_Config_Op_Impl::Config_Op_Exec,
-      TSCE::CIDL_Config_Op_Impl::Config_Op_Context> _coworker_type;
+      Config_Op_Exec,
+      Config_Op_Context> _coworker_type;
 
     // Default constructor.
     Config_Op (void);
@@ -112,7 +111,7 @@ namespace CIDL_Config_Op
   };
 
   class CONFIG_OP_IMPL_EXEC_Export Config_Op_Factory :
-    public CUTS_CCM_Factory_T <TSCE::CIDL_Config_Op_Impl::Config_OpHome_Exec, Config_Op> 
+    public CUTS_CCM_Factory_T <Config_Op_Factory_Exec, Config_Op> 
   {
     public:
     // Default constructor.
