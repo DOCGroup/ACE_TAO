@@ -176,6 +176,7 @@ namespace CIAO
                                   error.c_str ());
                             return;
                           }
+                        break;
                       }
                   }
                 if (!planner_found) // must have been an error ...
