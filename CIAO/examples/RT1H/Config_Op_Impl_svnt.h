@@ -38,7 +38,7 @@
 
 namespace TSCE
 {
-  namespace CIDL_Config_Op_Impl
+  namespace CIDL_Config_Op
   {
     class Config_Op_Servant;
 
