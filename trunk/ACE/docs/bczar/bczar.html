@@ -10,7 +10,7 @@
 
   <li> Monitor the builds using the <a
   href="http://www.dre.vanderbilt.edu/scoreboard"> Scoreboard </a> as
-  one of the primary source of information. 
+  one of the primary source of information.
 
   <li> Notify developers who broke compilation to fix the errors as
   soon as possible. A red color in the "Compile" column is not at all
@@ -58,8 +58,8 @@
 the powers of a build Czar. </P>
 
 <P> The Build Czar has the power to set up more builds on his own for
-his convinience. This 
-<a href="https://svn.dre.vanderbilt.edu/viewvc/ACE_autobuild/trunk/README?revision=HEAD"> 
+his convinience. This
+<a href="https://svn.dre.vanderbilt.edu/viewvc/ACE_autobuild/trunk/README?revision=HEAD">
 page </a> has a
 step by step instructions on how to do that. </P>
 
@@ -203,7 +203,7 @@ these before you do anything with them.</li></ul>
 <li>Make sure the new version is available in Bugzilla.</li>
 <ul>
 <li>now we have a bczar Bugzilla user with full privileges. This bczar Bugzilla account would point to bczar user at ISIS. For example, as a new build czar, you could update the .forward file on one of the ISIS hosts, say, naboo.dre.vanderbilt.edu with your build czar email.</li>
-<li>you should be able to send request through the bugzilla system to email you the password at any time to bczar@dre.vanderbilt.edu</li> 
+<li>you should be able to send request through the bugzilla system to email you the password at any time to bczar@dre.vanderbilt.edu</li>
 <li>here is the description of how to add a new version through Bugzilla.</li>
 <li>go to any Bugzilla "Query" page, you should see a yellow box at the bottom. click "Log in" link to log in as bzar@dre.vanderbilt.edu.</li>
 <li>look at the yellow box at bottom again. You will see several links following "Edit". Click on the "components" link.</li>
@@ -221,17 +221,17 @@ these before you do anything with them.</li></ul>
 <li>cd to directory /web/www/Doxygen</li>
 <li>Create a temporary directory. eg. tmp</li>
 <li>Change Directory to tmp</li>
-<li>scp file from the deuce server -
-    /project/deuce/ftp/pub/ACE+TAO-distribution/ACE-html.tar.bz2</li>
+<li>scp file from the download server -
+    scp bczar@download.dre.vanderbilt.edu:/export/www/download.dre/ACE+TAO-distribution/ACE-html.tar.bz2 .</li>
 <li>Unzip and untar the files -  bunzip2 <filename>;tar -xvf
     <filename></li>
 <li>Do cd ..</li>
 <li>Create directory 'Current Version No'</li>
 <li>Change directory to 'Current Version No'</li>
-<li>Move contents of tmp/html to this dorectory - mv ../tmp/html</li>
+<li>Move contents of tmp/html to this directory - mv ../tmp/html</li>
 <li>Now Change Directory - cd ..</li>
-<li>Remove the already existing soflink to the "Beta"</li>
-<li>Create softlink "Beta" linking it to new Documentation</li>
+<li>Remove the already existing soflink to the "Beta" with rm Beta</li>
+<li>Create softlink "Beta" linking it to new Documentation using: ln X.Y.Z/html Beta --symbolic</li>
 </ul>
 <li>Mail the approved release announcement out to, at minimum the following:
 <tt>ciao-users@cs.wustl.edu</tt>,
