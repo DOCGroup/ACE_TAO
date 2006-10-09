@@ -1,3 +1,11 @@
+Mon Oct 09 09:03:12 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+	* docs/Download.html:
+	  Updated with the new download locations
+
+	* docs/bczar/bczar.html:
+	  Updated documentation generation instructions
+
 Thu Oct 05 00:35:37 2006  William R. Otte  wotte@dre.vanderbilt.edu
 
         * ACE version 5.5.3 released.
@@ -6,7 +14,7 @@ Tue Oct  3 16:45:35 UTC 2006  Shanshan Jiang <shanshan.jiang@vanderbilt.edu>
 
         * NEWS
           Updated the NEWS to add the changes for ACE_Hash_MultiMap_Manager
-          class and executionmanager_stub and plan_generator base projects. 
+          class and executionmanager_stub and plan_generator base projects.
 
 Tue Oct  3 15:02:14 UTC 2006  Steve Huston  <shuston@riverace.com>
 
