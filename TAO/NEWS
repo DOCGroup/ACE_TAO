@@ -60,20 +60,62 @@ USER VISIBLE CHANGES BETWEEN TAO-1.5.2 and TAO-1.5.3
 
 . Fixed Bugzilla #2583, a bug in the recursive check for local type
   containment that controls CDR operator generation in the IDL compiler.
-  
+
 . Addressed Bugzilla #2603, which called for a -oS option for the IDL
   compiler to set the output directory for skeleton files.
-  
+
 . Fixed Bugzilla #2634, which reported a bug in code generation for some
   escaped IDL identifiers.
-  
+
 . Eliminated the dependency of the TAO Interface Repository IDL3 test on
   CIAO libraries.
-  
+
 . Added output message to the IDL compiler, containing the name of the IDL
   file being processed.
-  
+
 . Fixed IDL compiler to recognize CORBA::AbstractBase as a pseudo object.
+
+. Fixed a regression on Bugzilla #2074 caused by a reference
+  counting problem on the Connection Handler.  This change
+  affects all pluggable transport protocol implementations.
+  Maintainers of third-party (non-DOC) pluggable protocols will
+  need to make similar changes to their *_Connection_Handler
+  implementations.
+
+. Fixed parsing of explicitly wildcarded IIOP endpoints.
+  These might be iiop://[::]:, iiop://[]: or iiop://0.0.0.0:
+  The first two examples are useful only when IPv6 is supported.
+  The last example forces only IPv4 endpoints even when IPv6 is
+  supported. Use iiop://: to get both IPv4 and IPv6 endpoints.
+
+. Fixed Bugzilla #2651 to properly handle order of destruction
+  of Codeset Manager instances owned by the Default Resource
+  Factory.  The ORB_Core is now responsible for managing the
+  lifecycle of the Codeset Manager instance instead of the
+  Resource Factory.  The Resource Factory now gives up ownership
+  of the objects it creates.
+
+. Fixed Bugzilla #2545 so collocated DII oneway requests do not
+  crash in get_in_arg().
+
+. Added a new "-b" option to the IDL compiler to control whether
+  or not arguments on oneway invocations are "cloneable".  If the
+  arguments are cloneable, and Custom Servant Dispatching (CSD)
+  strategy is in use, the arguments for collocated oneways can be
+  cloned during the copy of the TAO_Server_Request, which gives a
+  performance improvement over the old method of copying the
+  arguments using marshaling.
+
+. Fixed Bugzilla #2604 so the Implementation Repository can
+  properly keep track of servers it launched in PER_CLIENT
+  activation mode.
+
+. Fixed build warnings from some 64-bit compilers in code in which
+  unsigned long and ACE_CDR::ULong were mixed.
+
+. Added various performance enhancements.  Many thread mutex/integer
+  reference counts were replaced with ACE_Atomic_Op<unsigned long>.  Some
+  buffers are allocated on the stack instead of the heap where possible.
 
 USER VISIBLE CHANGES BETWEEN TAO-1.5.1 and TAO-1.5.2
 ====================================================
