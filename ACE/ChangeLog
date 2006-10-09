@@ -1,3 +1,9 @@
+Mon Oct 09 09:07:12 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+	* bin/generate_rel_manpages:
+	  Fixed an error in this script and updated the location to which the
+	  generated packages should be copied to
+
 Mon Oct 09 09:03:12 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 	* docs/Download.html:
