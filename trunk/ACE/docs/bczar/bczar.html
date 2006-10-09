@@ -183,6 +183,12 @@ address the complexity soon.</li>
 <li> go to /web/users/isisbuilds/tmp/ACE_wrappers </li>
 <li> Set the environment variables pointed above. </li>
 <li> Update the workspace with the right version tag </li>
+<code>
+svn co svn://svn.dre.vanderbilt.edu/DOC/Middleware/tags/ACE+TAO+CIAO-X_Y_Z/ACE ACE_wrappers<br>
+svn co svn://svn.dre.vanderbilt.edu/DOC/Middleware/tags/ACE+TAO+CIAO-X_Y_Z/TAO ACE_wrappers/TAO<br>
+svn co svn://svn.dre.vanderbilt.edu/DOC/Middleware/tags/ACE+TAO+CIAO-X_Y_Z/CIAO ACE_wrappers/TAO/CIAO<br>
+</code>
+
 <li> Run doxygen --version within the shell. </li>
 <li> Open up $ACE_ROOT/bin/generate_rel_mangpages in your favorite editor.</li>
 <li> Search for the string 'doxy_version'. </li>
