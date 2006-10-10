@@ -97,7 +97,8 @@ HTTP_Reader::send_request (void)
     ACE_ERROR_RETURN((LM_ERROR,"Request too large!"), -1);
 
   // Create a message to send to the server requesting retrieval of the file
-  int len = ACE_OS::sprintf (mesg, "%s %s %s", request_prefix_, filename_, request_suffix_);
+  int const len =
+    ACE_OS::sprintf (mesg, "%s %s %s", request_prefix_, filename_, request_suffix_);
 
   // Send the message to server
   if (peer ().send_n (mesg, len) != len)
@@ -151,7 +152,7 @@ HTTP_Reader::receive_reply (void)
   //NOTE: this function reallocates if necessary
   //this->mb_->size (bytes_read);
 
-  ACE_Message_Block* temp;   //pointer used temporarily
+  ACE_Message_Block* temp  = 0;   //pointer used temporarily
                              //for memory allocations before
                              //chaining to Message_Block
 
