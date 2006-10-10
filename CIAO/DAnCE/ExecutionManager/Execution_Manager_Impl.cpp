@@ -50,14 +50,17 @@ namespace CIAO
       // reference that is already created.
       //
       ACE_DEBUG ((LM_DEBUG, "CIAO (%P|%t) calling this->man_.is_plan_available()...\n"));
-      if (this->map_.is_plan_available (plan.UUID.in ())) {
-  ACE_DEBUG ((LM_DEBUG, "CIAO (%P|%t) Plan is already available; "
-        "calling this->man_.fetch_dam_reference()...\n"));
+      if (this->map_.is_plan_available (plan.UUID.in ()))
+        {
+          ACE_DEBUG ((LM_DEBUG, "CIAO (%P|%t) Plan is already available; "
+            "calling this->man_.fetch_dam_reference()...\n"));
 
-        return this->map_.fetch_dam_reference (plan.UUID.in ());
-      }
+          return this->map_.fetch_dam_reference (plan.UUID.in ());
+        }
       else
-  ACE_DEBUG ((LM_DEBUG, "CIAO (%P|%t) Plan wasn't already available\n"));
+        {
+          ACE_DEBUG ((LM_DEBUG, "CIAO (%P|%t) Plan wasn't already available\n"));
+        }
 
       // We are about to begin working on a new DeploymentPlan.
       // Create a DAM servant, which will be populated
@@ -202,7 +205,7 @@ namespace CIAO
           // Get DomainApplicationManager first
           if (! this->map_.is_plan_available (plan_uuid))
             {
-              ACE_DEBUG ((LM_ERROR,
+              ACE_ERROR ((LM_ERROR,
                           "Execution_Manager_Impl::destroyManagerByPlan - "
                           "Invalid plan uuid [%s]\n", plan_uuid));
               ACE_THROW (Deployment::StopError ());
@@ -284,10 +287,12 @@ namespace CIAO
       Deployment::DomainApplicationManager_var dam;
 
       if (this->map_.is_plan_available (plan.UUID.in ()))
-        dam = this->map_.fetch_dam_reference (plan.UUID.in ());
+        {
+          dam = this->map_.fetch_dam_reference (plan.UUID.in ());
+        }
       else
         {
-          ACE_DEBUG ((LM_ERROR,
+          ACE_ERROR ((LM_ERROR,
                       "DAnCE (%P|%t) ExecutionManager_Impl.cpp -"
                       "CIAO::Execution_Manager_Impl::perform_redeployment -"
                       "Invalid plan uuid: %s\n", plan.UUID.in ()));
@@ -320,10 +325,12 @@ namespace CIAO
       Deployment::DomainApplicationManager_var dam;
 
       if (this->map_.is_plan_available (plan_uuid))
-        dam = this->map_.fetch_dam_reference (plan_uuid);
+        {
+          dam = this->map_.fetch_dam_reference (plan_uuid);
+        }
       else
         {
-          ACE_DEBUG ((LM_ERROR,
+          ACE_ERROR ((LM_ERROR,
                       "DAnCE (%P|%t) ExecutionManager_Impl.cpp -"
                       "CIAO::Execution_Manager_Impl::getPlan -"
                       "Invalid plan uuid: %s\n", plan_uuid));
@@ -352,7 +359,7 @@ namespace CIAO
           ::CORBA::SystemException,
           ::Deployment::InvalidConnection))
     {
-      ACE_DEBUG ((LM_ERROR,
+      ACE_DEBUG ((LM_DEBUG,
                   "Execution_Manage::finalizing  global bindings.\n"));
 
       // Find the NodeApplication hosting the component, and then call
@@ -364,7 +371,7 @@ namespace CIAO
 
         if (CORBA::is_nil (node_app.in ()))
           {
-            ACE_DEBUG ((LM_ERROR,
+            ACE_ERROR ((LM_ERROR,
                         "Execution_Manager_Impl::finalize_global_binding - "
                         "nil NodeApplication object reference.\n"));
             ACE_THROW (Deployment::InvalidConnection ());
@@ -396,7 +403,7 @@ namespace CIAO
           ::CORBA::SystemException,
           Deployment::StartError))
     {
-      ACE_DEBUG ((LM_ERROR,
+      ACE_DEBUG ((LM_DEBUG,
                   "Execution_Manage::passivate shared components.\n"));
 
       // Find the NodeApplication hosting the component, and then call
@@ -408,7 +415,7 @@ namespace CIAO
 
         if (CORBA::is_nil (node_app.in ()))
           {
-            ACE_DEBUG ((LM_ERROR,
+            ACE_ERROR ((LM_ERROR,
                         "Execution_Manager_Impl::passivate_shared_components - "
                         "nil NodeApplication object reference.\n"));
             ACE_THROW (Deployment::StartError ());
@@ -432,7 +439,7 @@ namespace CIAO
           ::CORBA::SystemException,
           Deployment::StartError))
     {
-      ACE_DEBUG ((LM_ERROR,
+      ACE_DEBUG ((LM_DEBUG,
                   "Execution_Manage::activate shared components.\n"));
 
       // Find the NodeApplication hosting the component, and then call
@@ -444,7 +451,7 @@ namespace CIAO
 
         if (CORBA::is_nil (node_app.in ()))
           {
-            ACE_DEBUG ((LM_ERROR,
+            ACE_ERROR ((LM_ERROR,
                         "Execution_Manager_Impl::activate_shared_components - "
                         "nil NodeApplication object reference.\n"));
             ACE_THROW (Deployment::StartError ());
@@ -474,10 +481,12 @@ namespace CIAO
       Deployment::DomainApplicationManager_var dam;
 
       if (this->map_.is_plan_available (binding.plan_uuid_))
-        dam = this->map_.fetch_dam_reference (binding.plan_uuid_);
+        {
+          dam = this->map_.fetch_dam_reference (binding.plan_uuid_);
+        }
       else
         {
-          ACE_DEBUG ((LM_ERROR,
+          ACE_ERROR ((LM_ERROR,
                       "DAnCE (%P|%t) ExecutionManager_Impl.cpp -"
                       "CIAO::Execution_Manager_Impl::find_node_application -"
                       "Invalid plan uuid: %s\n", binding.plan_uuid_.c_str ()));
@@ -491,7 +500,7 @@ namespace CIAO
 
       if (CORBA::is_nil (node_app.in ()))
         {
-          ACE_DEBUG ((LM_ERROR,
+          ACE_ERROR ((LM_ERROR,
                       "DAnCE (%P|%t) ExecutionManager_Impl.cpp -"
                       "CIAO::Execution_Manager_Impl::find_node_application -"
                       "Invalid node name: %s!\n", binding.node_.c_str ()));

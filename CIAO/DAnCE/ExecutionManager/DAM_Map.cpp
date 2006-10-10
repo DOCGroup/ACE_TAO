@@ -41,8 +41,8 @@ namespace CIAO
       ::Deployment::DomainApplicationManager_var tmp;
 
       /// There should be duplicate when assigning a _var to an _var.
-      int retval =  this->map_.find (str,
-                                     tmp);
+      int const retval =  this->map_.find (str,
+                                           tmp);
 
       if (CIAO::debug_level () > 9)
         {
@@ -62,7 +62,7 @@ namespace CIAO
       ::Deployment::DomainApplicationManager_ptr dam)
     {
       CIAO_TRACE("Execution_Manager::DAM_Map::bind_dam_reference");
-      int retval =
+      int const retval =
         this->map_.rebind (str,
                          dam);
 
@@ -111,7 +111,7 @@ namespace CIAO
     DAM_Map::unbind_dam (const ACE_CString &str)
     {
       CIAO_TRACE("Execution_Manager::DAM_Map::unbind_dam");
-      int retval =
+      int const retval =
         this->map_.unbind (str);
 
       if (retval != 0)
