@@ -66,7 +66,6 @@ private:
 
   /// The connector endpoint to initiate the client connection
   ACE_Connector<HTTP_Handler, ACE_SOCK_CONNECTOR> connector_;
-
 };
 
 #endif /* HTTP_Client_H */

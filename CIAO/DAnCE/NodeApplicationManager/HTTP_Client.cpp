@@ -30,7 +30,6 @@ HTTP_Client::open (const ACE_TCHAR *filename,
 int
 HTTP_Client::read (ACE_Message_Block *mb)
 {
-
   // Create a HTTP_Client Reader
   HTTP_Reader HTTP_reader (mb, filename_);
   HTTP_Handler *brp = &HTTP_reader;
@@ -40,20 +39,17 @@ HTTP_Client::read (ACE_Message_Block *mb)
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "HTTP_Client::read():Connector error"), -1);
 
   return HTTP_reader.byte_count ();
-
 }
 
 // close down the HTTP_Client
 int
 HTTP_Client::close (void)
 {
-
   if (filename_)
     {
       ACE_OS::free ((void *) filename_);
       filename_ = 0;
     }
   return 0;
-
 }
 
