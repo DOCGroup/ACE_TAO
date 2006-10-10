@@ -25,7 +25,6 @@ namespace CIAO
     ACE_THROW_SPEC ((CORBA::SystemException,
                      PortableServer::ForwardRequest))
   {
-    // @@Jai, where i sth emutex used at all?
     Dynamic_Component_Servant_Base* servant = 0;
     PortableServer::ObjectId new_oid (oid);
 

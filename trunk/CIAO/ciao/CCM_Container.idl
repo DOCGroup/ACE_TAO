@@ -81,11 +81,15 @@ module Components
     void ccm_passivate()
       raises (CCMException);
 
-    /// The following two methods are CIAO specific extension.
+
+    void ccm_remove ()
+      raises (CCMException);
+
     /**
      * This method is invoked before ccm_activate () is called. All
      * components in the assembly get this callback before the
      * ccm_activate () is called.
+     * @note CIAO specific
      */
     void ciao_preactivate ()
       raises (CCMException);
@@ -94,11 +98,9 @@ module Components
      * This method is invoked after ccm_activate () is called. All
      * components in the assembly get this callback after the
      * ccm_activate () is called.
+     * @note CIAO specific
      */
     void ciao_postactivate ()
-      raises (CCMException);
-
-    void ccm_remove ()
       raises (CCMException);
   };
 

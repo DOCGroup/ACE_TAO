@@ -88,11 +88,6 @@ namespace CIAO
     /// Pointer to our ORB
     CORBA::ORB_var orb_;
 
-    // @@ Jai, why are there two mutexes here?Can you get one of them
-    //out of the way?
-    /// Mutex that synchronizes access to the array.
-    ACE_SYNCH_MUTEX  mutex_;
-
     ACE_Hash_Map_Manager_Ex<PortableServer::ObjectId,
                             Dynamic_Component_Servant_Base *,
                             TAO_ObjectId_Hash,

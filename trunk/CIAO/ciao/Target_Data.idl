@@ -21,11 +21,17 @@ module Deployment {
   };
 
 
+  /**
+   * @todo The ResourceCommitmentManager is part of 06-04-01 and this is not
+   * part of the Target Manager yet
+   */
   interface TargetManager {
     Domain getAllResources ();
     Domain getAvailableResources ();
+    /// @todo 06-04-01 specifies this differently
     void commitResources (in DeploymentPlan plan)
       raises (ResourceNotAvailable, PlanError);
+    /// @todo This is not part of 06-04-01
     void releaseResources (in DeploymentPlan argname);
     void updateDomain (in ::CORBA::StringSeq elements,
                        in Domain domainSubset,
