@@ -202,7 +202,7 @@ void PC_Updater::clear_list ()
       iter++;
     }
     const char* location = iad.location[0];
-    
+
     ACE_ERROR ((LM_ERROR,
                "[PC_Updater::update] Unable to update: %s!\n",
                location));
@@ -218,28 +218,22 @@ void PC_Updater::clear_list ()
   }
 
   // ImplementationRequirement
-
   void PC_Updater::update (::Deployment::ImplementationRequirement &)
   {
   }
 
   // MonolithicImplementationDescription
-
   void PC_Updater::update (::Deployment::MonolithicImplementationDescription &mid)
   {
     update_sequence (mid.primaryArtifact, this);
   }
 
   // Capability
-
   void PC_Updater::update (::Deployment::Capability &)
   {
   }
 
-
-
   // ComponentImplementationDescription
-
   void PC_Updater::update (::Deployment::ComponentImplementationDescription &cid)
   {
     update_sequence (cid.assemblyImpl, this);
@@ -247,14 +241,12 @@ void PC_Updater::clear_list ()
   }
 
   // PackagedComponentImplementation
-
   void PC_Updater::update (::Deployment::PackagedComponentImplementation &pci)
   {
     PC_Updater::update (pci.referencedImplementation);
   }
 
   // ComponentPackageDescription
-
   void PC_Updater::update (::Deployment::ComponentPackageDescription &comppkgdesc)
   {
     update_sequence (comppkgdesc.implementation, this);
