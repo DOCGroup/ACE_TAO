@@ -1,3 +1,9 @@
+Tue Oct 10 17:56:51 UTC 2006  Shanshan Jiang <shanshan.jiang@vanderbilt.edu>
+
+        * DAnCE/NodeApplicationManager/Containers_Info_Map.cpp
+        * DAnCE/NodeApplicationManager/Containers_Info_Map.h
+          Modify these files to get the artifacts names when using http reference.
+
 Tue Oct 10 14:24:12 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 	* DAnCE/ExecutionManager/Execution_Manager_Impl.cpp:

@@ -276,7 +276,9 @@ namespace CIAO
             if (ACE_OS::strstr (arti.location[loc_num], "http://"))
               {
                 ACE_CString path;
+                ACE_CString arti_name;
                 if (!this->resolve_http_reference (arti.location[loc_num],
+                                                   arti_name,
                                                    path))
                   {
                     ACE_ERROR
@@ -293,7 +295,7 @@ namespace CIAO
                   }
                 else
                   {
-                    arti.location[loc_num] = CORBA::string_dup (arti.name.in ());
+                    arti.location[loc_num] = arti_name.c_str ();
                     //enque for cleanup
                   }
               }
@@ -460,6 +462,7 @@ is_shared_component (ACE_CString & name)
 
   bool
   CIAO::Containers_Info_Map::resolve_http_reference (const char* location,
+                                                     ACE_CString &arti_name,
                                                      ACE_CString &path)
   {
 
@@ -491,6 +494,8 @@ is_shared_component (ACE_CString & name)
           }
       }
 
+    arti_name = name;
+
     // Get the file.
     ACE_Message_Block* mb = 0;
     ACE_NEW_RETURN (mb, ACE_Message_Block (0,0), false);
@@ -511,7 +516,7 @@ is_shared_component (ACE_CString & name)
       return false;
     }
 
-    mb->release ();
+    mb->release ();    
     return true;
   }
 
