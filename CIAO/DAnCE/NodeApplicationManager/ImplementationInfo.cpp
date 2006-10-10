@@ -83,8 +83,9 @@ CIAO::NodeImplementationInfoHandler::populate_server_resource_def (void)
 void
 CIAO::NodeImplementationInfoHandler::populate_container_impl_infos (void)
 {
-  CORBA::ULong curr_len =
+  CORBA::ULong const curr_len =
     this->containers_info_map_.containers_info ()->length ();
+
   ACE_UNUSED_ARG (curr_len);
 
   // assignment operation
