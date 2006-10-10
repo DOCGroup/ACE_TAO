@@ -174,7 +174,7 @@ namespace CIAO
       if (j == this->plan_.infoProperty.length ())
         {
           // No Server Resource Def found?! Inconsistent descriptor files.
-          ACE_DEBUG ((LM_ERROR, "(%P|%t) Descriptor error: "
+          ACE_ERROR ((LM_ERROR, "(%P|%t) Descriptor error: "
               "No matching server resource def found for component: %s!\n",
               this->plan_.instance[i].name.in ()));
         }
