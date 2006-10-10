@@ -38,7 +38,7 @@ module CIAO
   interface CIAO_RT_Evnet_Service :
     CIAO_Event_Service
   {
-    void create_addr_server (in );
+    void create_addr_server ();
 
     void create_sender ();
     void create_receiver ();
