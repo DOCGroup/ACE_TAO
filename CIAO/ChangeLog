@@ -1,3 +1,25 @@
+Tue Oct 10 09:28:12 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+	* ciao/CCM_Base.idl:
+	  Removed a remark about RTF 1.1, method is now according to the spec
+
+	* ciao/CCM_Component.idl:
+	* ciao/CCM_Container.idl:
+	* ciao/CCM_Event.idl:
+	* ciao/Deployment.idl:
+	* ciao/Target_Data.idl
+	  Updated some documentation and added some todos about things which
+	  are CIAO specific
+
+	* ciao/Server_init.cpp:
+	  With LM_ERROR use ACE_ERROR
+
+	* ciao/Dynamic_Component_Activator.{h,cpp}:
+	  Removed some invalid comments and a mutex that was not used at all
+
+	* ciao/Context_Impl_Base.h:
+	  Documentation update
+
 Thu Oct 05 00:35:37 2006  William R. Otte  wotte@dre.vanderbilt.edu
 
         * CIAO version 0.5.3 released.
