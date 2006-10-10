@@ -14,6 +14,8 @@
 #include "CIAO_RTEvent.h"
 #include "ciao/CIAO_common.h"
 
+#include <sstream>
+
 namespace CIAO
 {
 
@@ -63,6 +65,8 @@ namespace CIAO
   }
 
 
+  // @@TODO: We might want to maintain a map for managing multiple proxy consumers
+  // to multiple event suppliers.
   void
   RTEventService::connect_event_supplier (
       Supplier_Config_ptr supplier_config
@@ -87,6 +91,7 @@ namespace CIAO
 
     ACE_Hash<ACE_CString> hasher;
     this->source_id_ = hasher (supplier_config->supplier_id (ACE_ENV_SINGLE_ARG_PARAMETER));
+
     ACE_CHECK;
     this->type_id_ = this->source_id_;
 
@@ -168,17 +173,24 @@ namespace CIAO
       consumer_servant->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
     ACE_CHECK;
 
-    //@@@
-    rt_config->start_disjunction_group (1);
-
-    rt_config->insert_type (ACE_ES_EVENT_ANY);
-
     RtecEventChannelAdmin::ConsumerQOS_var qos =
       rt_config->rt_event_qos (ACE_ENV_SINGLE_ARG_PARAMETER);
     ACE_CHECK;
 
+    ACE_DEBUG ((LM_DEBUG, "\n======== ConsumerQoS length is: %d\n\n", 
+                qos->dependencies.length ()));
+
+    if (qos->dependencies.length () == 0)
+      {
+        qos->dependencies.length (1);
+        qos->dependencies[0].event.header.type = ACE_ES_DISJUNCTION_DESIGNATOR;
+        qos->dependencies[0].event.header.source = ACE_ES_EVENT_SOURCE_ANY;
+        qos->dependencies[0].rt_info = 0;
+      }
+
     proxy_supplier->connect_push_consumer (push_consumer.in (),
                                            qos.in ()
+                                           //qos_factory.get_ConsumerQOS ()
                                            ACE_ENV_ARG_PARAMETER);
     ACE_CHECK;
 
@@ -199,11 +211,16 @@ namespace CIAO
   {
     ACE_UNUSED_ARG (connection_id);
 
-    this->proxy_consumer_->disconnect_push_consumer (
-      ACE_ENV_SINGLE_ARG_PARAMETER);
-    ACE_CHECK;
+    /* @todo
+    if (! CORBA::is_nil (this->proxy_consumer_.in ()))
+      {
+        this->proxy_consumer_->disconnect_push_consumer (
+          ACE_ENV_SINGLE_ARG_PARAMETER);
+        ACE_CHECK;
+      }
 
     // What to do with the consumers?!
+    */
   }
 
   void
@@ -240,6 +257,37 @@ namespace CIAO
     events[0].header.source = ACE_ES_EVENT_SOURCE_ANY; //this->source_id_;
     events[0].header.type = ACE_ES_EVENT_ANY; //this->type_id_;
     events[0].data.any_value <<= ev;
+
+    this->proxy_consumer_->push (events ACE_ENV_ARG_PARAMETER);
+    ACE_CHECK;
+  }
+
+  void
+  RTEventService::ciao_push_event (
+      Components::EventBase * ev,
+      const char * source_id
+      ACE_ENV_ARG_DECL)
+    ACE_THROW_SPEC ((
+      CORBA::SystemException,
+      Components::BadEventType))
+  {
+    if (CIAO::debug_level () > 10)
+      {
+        ACE_DEBUG ((LM_DEBUG, "------CIAO::RTEventService::ciao_push_event------\n"));
+      }
+    RtecEventComm::EventSet events (1);
+    events.length (1);
+    
+    ACE_Hash<ACE_CString> hasher;
+
+    events[0].header.source = hasher (source_id);
+    //events[0].header.source = i++;
+
+    events[0].header.type = ACE_ES_EVENT_ANY; //this->type_id_;
+    events[0].data.any_value <<= ev;
+
+    ACE_DEBUG ((LM_DEBUG, "******* push event for source string: %s\n", source_id));
+    ACE_DEBUG ((LM_DEBUG, "******* push event for source id: %i\n", events[0].header.source));
 
     this->proxy_consumer_->push (events ACE_ENV_ARG_PARAMETER);
     ACE_CHECK;
@@ -313,6 +361,13 @@ namespace CIAO
 
     for (size_t i = 0; i < events.length (); ++i)
       {
+        std::ostringstream out;
+        out << "Received event,"
+            << "  type: "   << events[i].header.type
+            << "  source: " << events[i].header.source;
+
+        ACE_OS::printf("%s\n", out.str().c_str()); // printf is synchronized 
+
         Components::EventBase * ev = 0;
         if (events[i].data.any_value >>= ev)
           {
@@ -366,22 +421,31 @@ namespace CIAO
     ACE_THROW_SPEC ((
       CORBA::SystemException))
   {
-  if (CIAO::debug_level () > 11)
+  if (CIAO::debug_level () > 10)
     {
       ACE_DEBUG ((LM_DEBUG, "supplier's id: %s\n", supplier_id));
-
     }
 
     this->supplier_id_ = supplier_id;
 
     ACE_Hash<ACE_CString> hasher;
+
     RtecEventComm::EventSourceID source_id =
       hasher (this->supplier_id_.c_str ());
-
+/*
     this->qos_.insert (source_id,
-                       source_id,
+                       ACE_ES_EVENT_ANY,
                        0,
                        1);
+
+*/
+
+    this->qos_.insert (ACE_ES_EVENT_SOURCE_ANY,
+                       ACE_ES_EVENT_ANY,
+                       0,    // handle to the rt_info structure
+                       1);        
+
+    ACE_DEBUG ((LM_DEBUG, "supplier's source id is: %d\n", source_id));
   }
 
   CONNECTION_ID
@@ -448,6 +512,9 @@ namespace CIAO
     ACE_THROW_SPEC ((
       CORBA::SystemException))
   {
+    ACE_DEBUG
+      ((LM_DEBUG, "RTEvent_Consumer_Config_impl::start_conjunction_group\n"));
+
     this->qos_.start_conjunction_group (size);
   }
 
@@ -458,7 +525,11 @@ namespace CIAO
     ACE_THROW_SPEC ((
       CORBA::SystemException))
   {
-    this->qos_.start_disjunction_group (size);
+    // Note, since we only support basic builder here...
+    if (size == 0L)
+      this->qos_.start_disjunction_group ();
+    else
+      this->qos_.start_disjunction_group (size);
   }
 
   void
@@ -468,13 +539,13 @@ namespace CIAO
     ACE_THROW_SPEC ((
       CORBA::SystemException))
   {
-
     ACE_Hash<ACE_CString> hasher;
-    RtecEventComm::EventSourceID int_source_id =
-      hasher (source_id);
+    RtecEventComm::EventSourceID int_source_id = hasher (source_id);
 
-    this->qos_.insert_source (int_source_id,
-                              0);
+    ACE_DEBUG ((LM_DEBUG, "******* the source string is: %s\n", source_id));
+    ACE_DEBUG ((LM_DEBUG, "******* the source id is: %i\n", int_source_id));
+
+    this->qos_.insert_source (int_source_id, 0);
   }
 
   void
@@ -483,8 +554,11 @@ namespace CIAO
         ACE_ENV_ARG_DECL)
       ACE_THROW_SPEC ((::CORBA::SystemException))
   {
-    this->qos_.insert_type (event_type,
-                            0);
+    if (event_type == 0L)
+      this->qos_.insert_type (ACE_ES_EVENT_ANY, 0);
+    else
+      this->qos_.insert_type (event_type,
+                              0);
   }
 
   void
@@ -504,31 +578,6 @@ namespace CIAO
     this->consumer_id_ = consumer_id;
   }
 
-  void
-  RTEvent_Consumer_Config_impl::supplier_id (
-      const char * supplier_id
-      ACE_ENV_ARG_DECL)
-    ACE_THROW_SPEC ((
-      CORBA::SystemException))
-  {
-    if (CIAO::debug_level () > 10)
-      {
-        ACE_DEBUG ((LM_DEBUG,
-                    "RTEvent_Consumer_Config_impl::set_supplier_id:%s\n",
-                    supplier_id));
-      }
-
-    this->supplier_id_ = supplier_id;
-
-    ACE_Hash<ACE_CString> hasher;
-    RtecEventComm::EventSourceID source_id =
-      hasher (this->supplier_id_.c_str ());
-
-    this->qos_.start_disjunction_group (1);
-    this->qos_.insert (source_id,
-                       source_id,
-                       0);
-  }
 
   void
   RTEvent_Consumer_Config_impl::consumer (
@@ -549,19 +598,6 @@ namespace CIAO
     return CORBA::string_dup (this->consumer_id_.c_str ());
   }
 
-  CONNECTION_ID
-  RTEvent_Consumer_Config_impl::supplier_id (
-      ACE_ENV_SINGLE_ARG_DECL)
-    ACE_THROW_SPEC ((
-      CORBA::SystemException))
-  {
-    if (CIAO::debug_level () > 10)
-      {
-        ACE_DEBUG ((LM_DEBUG, "RTEvent_Consumer_Config_impl::get_supplier_id\n"));
-      }
-
-    return CORBA::string_dup (this->supplier_id_.c_str ());
-  }
 
   EventServiceType
   RTEvent_Consumer_Config_impl::service_type (
@@ -596,11 +632,6 @@ namespace CIAO
     ACE_NEW_RETURN (consumer_qos,
                     RtecEventChannelAdmin::ConsumerQOS (this->qos_.get_ConsumerQOS ()),
                     0);
-
-
-    // @@@ Hard coded
-    this->qos_.start_disjunction_group (1);
-    this->qos_.insert_type (ACE_ES_EVENT_ANY, 0);
 
     return consumer_qos;
   }
