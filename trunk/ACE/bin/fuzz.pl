@@ -489,13 +489,12 @@ sub check_for_preprocessor_comments ()
     }
 }
 
-# We should not have empty inline files in the repo
-sub check_for_empty_inline_files ()
+# We should not have empty files in the repo
+sub check_for_empty_files ()
 {
-    print "Running empty inline files test\n";
-    foreach $file (@files_inl) {
+    print "Running empty file test\n";
+    foreach $file (@files_inl, @files_cpp) {
         my $found_non_empty_line = 0;
-        my $idl_generated = 0;
         if (open (FILE, $file)) {
             print "Looking at file $file\n" if $opt_d;
             while (<FILE>) {
@@ -506,8 +505,8 @@ sub check_for_empty_inline_files ()
               last;
             }
             close (FILE);
-            if ($found_non_empty_line == 0 and $idl_generated == 0) {
-             print_error ("$file:1: empty inline file should not be in the repository");
+            if ($found_non_empty_line == 0) {
+             print_error ("$file:1: empty file should not be in the repository");
             }
         }
         else {
@@ -1443,7 +1442,7 @@ print "--------------------Configuration: Fuzz - Level ",$opt_l,
 check_for_deprecated_macros () if ($opt_l > 1 );
 check_for_refcountservantbase () if ($opt_l > 1 );
 check_for_msc_ver_string () if ($opt_l >= 3);
-check_for_empty_inline_files () if ($opt_l >= 1);
+check_for_empty_files () if ($opt_l >= 1);
 check_for_noncvs_files () if ($opt_l >= 1);
 check_for_streams_include () if ($opt_l >= 6);
 check_for_dependency_file () if ($opt_l >= 1);
