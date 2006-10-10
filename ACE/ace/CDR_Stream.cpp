@@ -579,7 +579,7 @@ ACE_OutputCDR::write_wchar_array_i (const ACE_CDR::WChar *x,
                 ACE_CDR::UShort sx = static_cast<ACE_CDR::UShort> (x[i]);
                 ACE_CDR::swap_2 (reinterpret_cast<char *> (&sx), &buf[i * 2]);
               }
-#endif /* ACE_DISABLE_SWAP_ON_READ */
+#endif /* ACE_ENABLE_SWAP_ON_WRITE */
         }
       else
         {
@@ -1276,7 +1276,7 @@ ACE_InputCDR::read_wchar_array_i (ACE_CDR::WChar* x,
   if (length == 0)
     return true;
   char* buf = 0;
-  const size_t align = (ACE_OutputCDR::wchar_maxbytes_ == 2) ?
+  size_t const align = (ACE_OutputCDR::wchar_maxbytes_ == 2) ?
     ACE_CDR::SHORT_ALIGN :
     ACE_CDR::OCTET_ALIGN;
 
