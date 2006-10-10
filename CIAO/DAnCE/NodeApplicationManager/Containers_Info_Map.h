@@ -104,6 +104,7 @@ namespace CIAO
     /// It returns true on success and false on failure
     bool
     resolve_http_reference (const char* location,
+                            ACE_CString &arti_name,
                             ACE_CString &name);
 
     /// function to retvieve a file via HTTP
