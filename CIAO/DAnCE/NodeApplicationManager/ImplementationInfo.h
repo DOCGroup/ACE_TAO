@@ -3,7 +3,7 @@
 /***************************************************************
  * @file   ImplementationInfo.h
  *
- * @brief  This file defines some helper functions for paring the
+ * @brief  This file defines some helper functions for preparing the
  *         Component ImplementationInfo and properties from
  *         the plan.
  *
@@ -27,13 +27,10 @@
 #include "Containers_Info_Map.h"
 #include "CIAO_NAM_Export.h"
 
-//@@ I wish we could have precompiled header support soon!!!
-
-// This method is a helper function to parse the local deployment plan into the
-// NodeImplementationInfo struct.
-
 namespace CIAO
 {
+  /// This class is a helper class to parse the local deployment plan into the
+  /// NodeImplementationInfo struct.
   class CIAO_NAM_Export NodeImplementationInfoHandler
   {
   public:

@@ -87,7 +87,7 @@ namespace CIAO
      * any references to HTTP URLs
      */
   protected:
-    
+
     // @Stoyan - Please follow ACE coding guideines when naming your
     //member variables.  In particular, please use lower case and
     //follow the name with a trailing underscore.
@@ -102,7 +102,6 @@ namespace CIAO
     /// This function resolves any http location references
     /// in the name of the implementation artifacts
     /// It returns true on success and false on failure
-
     bool
     resolve_http_reference (const char* location,
                             ACE_CString &name);
@@ -111,7 +110,6 @@ namespace CIAO
     /// stores the file in the passed preallocated ACE_Message_Block
     /// returns 1 on success
     ///         0 on error
-
     bool
     retrieve_via_HTTP (const char* URL,
                        ACE_Message_Block &mb);
