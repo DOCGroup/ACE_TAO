@@ -1069,7 +1069,7 @@ TAO_ORB_Core::init (int &argc, char *argv[] ACE_ENV_ARG_DECL)
           if (TAO_debug_level > 0)
             {
               current_arg = arg_shifter.get_current ();
-              ACE_DEBUG ((LM_ERROR,
+              ACE_ERROR ((LM_ERROR,
                           ACE_TEXT ("ERROR: Unknown \"-ORB\" option ")
                           ACE_TEXT ("<%s>.\n"),
                           ((current_arg == 0) ? ACE_TEXT("<NULL>")

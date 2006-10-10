@@ -414,7 +414,7 @@ int
 TAO_Connection_Handler::close_handler (void)
 {
   this->state_changed (TAO_LF_Event::LFS_CONNECTION_CLOSED,
-	               this->orb_core_->leader_follower ());
+                       this->orb_core_->leader_follower ());
   this->transport ()->remove_reference ();
   return 0;
 }

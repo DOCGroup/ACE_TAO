@@ -441,7 +441,7 @@ TAO_DIOP_Profile::decode_endpoints (void)
       // Extract endpoints sequence.
       TAO::IIOPEndpointSequence endpoints;
 
-      if ((in_cdr >> endpoints) == 0)
+      if (! (in_cdr >> endpoints))
         return -1;
 
       // Get the priority of the first endpoint (head of the list.

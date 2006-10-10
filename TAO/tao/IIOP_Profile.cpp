@@ -160,7 +160,7 @@ TAO_IIOP_Profile::parse_string_i (const char *ior
           // No valid IPv6 address specified.
           if (TAO_debug_level > 0)
             {
-              ACE_DEBUG ((LM_ERROR,
+              ACE_ERROR ((LM_ERROR,
                        ACE_TEXT ("\nTAO (%P|%t) IIOP_Profile: ")
                        ACE_TEXT ("Invalid IPv6 decimal address specified.\n")));
             }
@@ -188,7 +188,7 @@ TAO_IIOP_Profile::parse_string_i (const char *ior
       // See formal-04-03-01, section 13.6.10.3
       if (TAO_debug_level > 0)
         {
-          ACE_DEBUG ((LM_ERROR,
+          ACE_ERROR ((LM_ERROR,
                    ACE_TEXT ("\nTAO (%P|%t) IIOP_Profile: ")
                    ACE_TEXT ("Host address may be omited only when no port has been specified.\n")));
         }
