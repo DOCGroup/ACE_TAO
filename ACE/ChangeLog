@@ -1,3 +1,11 @@
+Tue Oct 10 06:03:12 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+	* docs/ACE-bug-process.html:
+	  Updated to mention svn
+
+	* docs/Download.html:
+	  Commented out the source packages that are not complete at this moment
+
 Mon Oct 09 09:07:12 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 	* bin/generate_rel_manpages:
