@@ -1,3 +1,20 @@
+Tue Oct 10 23:12:25 UTC 2006  Nishanth Shankaran  <nshankar@dre.vanderbilt.edu>
+
+        * Input_Adapters/Interactive_Input_Adapter/Converter.h:
+        * Input_Adapters/Interactive_Input_Adapter/Converter.cpp: Checking
+          in the initial version of the "converter" that converts
+          OperationalString IDL structure to DeploymentPlan IDL structure.
+        * Input_Adapters/Interactive_Input_Adapter/Interactive_Input_Adapter.idl:
+        * Input_Adapters/Interactive_Input_Adapter/Interactive_Input_Adapter.mpc:
+        * Input_Adapters/Interactive_Input_Adapter/Interactive_Input_Adapter_exec.h:
+        * Input_Adapters/Interactive_Input_Adapter/Interactive_Input_Adapter_exec.cpp:
+
+        Updated the IIA to accept inputs from the converter.
+
+        * common/OpString.idl: Extended the OperationalString and
+          InstanceDescription structures.
+
+
 Mon Oct  2 20:14:55 UTC 2006  Nishanth Shankaran  <nshankar@dre.vanderbilt.edu>
 
         * Output_Adapters/Component/Output_Manager.mpc:
