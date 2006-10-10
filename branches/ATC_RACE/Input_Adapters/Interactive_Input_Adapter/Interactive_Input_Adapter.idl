@@ -5,6 +5,7 @@
 #include <Components.idl>
 #include "RACE/Input_Adapters/Base/Input_Adapter.idl"
 #include "RACE/common/RACE_common.idl"
+#include "ciao/Packaging_Data.idl"
 
 module CIAO
 {
@@ -17,9 +18,19 @@ module CIAO
       public Action command;
     };
 
+    eventtype Metadata
+    {
+      public Action command;
+      public Deployment::DeploymentPlan plan;
+      public Deployment::PackageConfiguration package;
+    };
+
     component Interactive_Input_Adapter : Input_Adapter
     {
       consumes Deploy_Input deployment;
+
+      consumes Metadata meta_data;
+
     };
 
     home Interactive_Input_Adapter_Home manages Interactive_Input_Adapter
