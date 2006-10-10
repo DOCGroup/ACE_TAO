@@ -70,7 +70,7 @@
 class HTTP_Parser : public TAO_IOR_Parser
 {
 public:
-  virtual int match_prefix (const char *ior_string) const;
+  virtual bool match_prefix (const char *ior_string) const;
   virtual CORBA::Object_ptr parse_string (const char *ior,
                                           CORBA::ORB_ptr orb,
                                           CORBA::Environment &)
@@ -93,7 +93,7 @@ public:
         prefixes that this parser supports.  Normally this is a single
         prefix, a typical implementation will look like this:
 <PRE>
-int
+bool
 HTTP_Parser::match_prefix (const char *ior_string) const
 {
   static char http_prefix[] = "http:";

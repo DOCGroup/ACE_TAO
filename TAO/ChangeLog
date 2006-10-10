@@ -1,3 +1,8 @@
+Tue Oct 10 09:24:12 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+	* docs/ior_parsing.html:
+	  Updated that match_prefix returns bool
+
 Tue Oct 10 09:19:12 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 	* tao/Connection_Handler.cpp:
