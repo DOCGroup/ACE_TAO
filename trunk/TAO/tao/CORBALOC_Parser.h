@@ -52,7 +52,7 @@ public:
 
   /// = The IOR_Parser methods, please read the documentation in
   ///   IOR_Parser.h
-  virtual int match_prefix (const char *ior_string) const;
+  virtual bool match_prefix (const char *ior_string) const;
 
   /// Parse the ior-string that is passed.
   virtual CORBA::Object_ptr parse_string (const char *ior,

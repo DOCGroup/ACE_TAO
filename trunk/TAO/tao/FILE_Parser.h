@@ -32,7 +32,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
  *
  * This class implements the <file:> IOR format.
  * It is dynamically loaded by the ORB and used to open a file,
- * read its contents and then interepret the file as an IOR (that
+ * read its contents and then interprete the file as an IOR (that
  * can be in any valid format).
  */
 class TAO_FILE_Parser : public TAO_IOR_Parser
@@ -44,7 +44,7 @@ public:
 
   // = The IOR_Parser methods, please read the documentation in
   //   IOR_Parser.h
-  virtual int match_prefix (const char *ior_string) const;
+  virtual bool match_prefix (const char *ior_string) const;
   virtual CORBA::Object_ptr parse_string (const char *ior,
                                           CORBA::ORB_ptr orb
                                           ACE_ENV_ARG_DECL_NOT_USED)

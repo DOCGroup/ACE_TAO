@@ -129,7 +129,7 @@ TAO::CSD::TP_Strategy_Factory::init (int argc,
       {
         if (TAO_debug_level > 0)
           {
-            ACE_DEBUG ((LM_ERROR,
+            ACE_ERROR ((LM_ERROR,
                         ACE_TEXT("CSD_ORB_Loader: Unknown option ")
                         ACE_TEXT("<%s>.\n"),
                         argv[curarg]));
