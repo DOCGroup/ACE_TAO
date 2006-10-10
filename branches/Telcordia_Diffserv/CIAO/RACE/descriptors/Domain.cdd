@@ -4,7 +4,7 @@
   <UUID>BCB38121-9F67-4D0D-9363-65FF3AE0188A</UUID>
 
   <node>
-    <name>blade30</name>
+    <name>host2</name>
     <resource>
       <name>Processor</name>
       <resourceType>CPULoad</resourceType>
@@ -25,7 +25,7 @@
   </node>
 
   <node>
-    <name>blade31</name>
+    <name>host3</name>
     <resource>
       <name>Processor</name>
       <resourceType>CPULoad</resourceType>
@@ -46,7 +46,7 @@
   </node>
 
   <node>
-    <name>blade32</name>
+    <name>host4</name>
     <resource>
       <name>Processor</name>
       <resourceType>CPULoad</resourceType>
@@ -67,7 +67,7 @@
   </node>
 
   <node>
-    <name>blade33</name>
+    <name>host5</name>
     <resource>
       <name>Processor</name>
       <resourceType>CPULoad</resourceType>
@@ -88,7 +88,7 @@
   </node>
 
   <node>
-    <name>blade34</name>
+    <name>host6</name>
     <resource>
       <name>Processor</name>
       <resourceType>CPULoad</resourceType>
@@ -101,7 +101,7 @@
             <kind>tk_long</kind>
           </type>
           <value>
-            <long>0</long>
+            <long>100</long>
           </value>
         </value>
       </property>
@@ -109,7 +109,7 @@
   </node>
 
   <node>
-    <name>blade29</name>
+    <name>host1</name>
     <resource>
       <name>Processor</name>
       <resourceType>CPULoad</resourceType>

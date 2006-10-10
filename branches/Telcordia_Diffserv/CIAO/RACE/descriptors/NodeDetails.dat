@@ -1,10 +1,6 @@
-blade29      corbaloc:iiop:localhost:50000/NodeManager
-blade30      corbaloc:iiop:localhost:50001/NodeManager
-blade31      corbaloc:iiop:localhost:50002/NodeManager
-blade32      corbaloc:iiop:localhost:50003/NodeManager
-blade33      corbaloc:iiop:localhost:50004/NodeManager
-blade34      corbaloc:iiop:localhost:50005/NodeManager
-blade35      corbaloc:iiop:localhost:50006/NodeManager
-blade36      corbaloc:iiop:localhost:50007/NodeManager
-blade37      corbaloc:iiop:localhost:50008/NodeManager
-blade38      corbaloc:iiop:localhost:50009/NodeManager
+host1      corbaloc:iiop:10.2.250.100:50002/NodeManager
+host2      corbaloc:iiop:10.2.250.100:50002/NodeManager
+host3      corbaloc:iiop:10.3.250.100:50003/NodeManager
+host4      corbaloc:iiop:10.4.250.100:50004/NodeManager
+host5      corbaloc:iiop:10.5.250.100:50005/NodeManager
+host6      corbaloc:iiop:10.6.250.100:50006/NodeManager
