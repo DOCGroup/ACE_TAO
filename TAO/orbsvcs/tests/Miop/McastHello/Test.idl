@@ -1,0 +1,26 @@
+//
+// $Id$
+//
+
+/// Put the interfaces in a module, to avoid global namespace pollution
+module Test
+{
+  /// A sequence of octets for sending large messages.
+  typedef sequence<octet> Octets;
+
+  /// A very simple interface
+  interface McastHello
+  {
+    /// A method to test out a small request
+    oneway void send_forty_two (in long forty_two);
+
+    /// A method to test bigger requests
+    oneway void send_large_octet_array (in Octets payload);
+
+    /// A method to shutdown the ORB
+    /**
+     * This method is used to simplify the test shutdown process
+     */
+    oneway void shutdown ();
+  };
+};
