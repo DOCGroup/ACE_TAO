@@ -1,3 +1,19 @@
+Tue Oct 10 06:08:12 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+	* bin/fuzz.pl:
+	  Changed check for empty inline files to also check for empty
+	  source files
+
+	* bin/MakeProjectCreator/config/avoids_corba_e_compact.mpb:
+	* bin/MakeProjectCreator/config/avoids_corba_e_micro.mpb:
+	  New avoids projects
+
+	* etc/ace.doxygen:
+	  Expand some more macros, should improve documentatation
+
+	* html/README:
+	  Updated download location to ISIS
+
 Tue Oct 10 06:03:12 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 	* docs/ACE-bug-process.html:
