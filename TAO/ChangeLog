@@ -1,3 +1,38 @@
+Tue Oct 10 09:19:12 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+	* tao/Connection_Handler.cpp:
+	  Layout change
+
+	* tao/CORBALoc_Parser.{h,cpp}:
+	* tao/CORBAName_Parser.{h,cpp}:
+	* tao/DLL_Parser.{h,cpp}:
+	* tao/FILE_Parser.{h,cpp}:
+	* tao/IOR_Parser.{h,cpp}:
+	* tao/MCAST_Parser.{h,cpp}:
+	  Changed match_prefix to return a bool instead of an int.
+
+	* tao/CORBALoc_Parser.cpp:
+	* tao/CSD_ThreadPool/CSD_TP_Strategy_Factory.cpp:
+	* tao/Environment.cpp:
+	* tao/Exception.cpp:
+	* tao/IIOP_Connector.cpp:
+	* tao/IIOP_Profile.cpp:
+	* tao/ORB_Core.cpp:
+	* tao/Strategies/SCIOP_Connector.cpp:
+	* tao/Strategies/UIOP_Connector.cpp:
+	* tao/SystemException.cpp:
+	  When using LM_ERROR, use ACE_ERROR as macro
+
+	* tao/IIOP_Connection_Handler.cpp:
+	  Const improvment
+
+	* tao/ObjRefTemplate/ObjectReferenceTemplate.pidl:
+	  Cleanup of comment
+
+	* tao/Strategies/DIOP_Profile.cpp:
+	  Small code improvement assuming the fact that operator>> returns
+	  bool
+
 Tue Oct 10 06:08:12 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 	* tests/COIOP/*:

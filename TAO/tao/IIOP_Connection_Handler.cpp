@@ -296,7 +296,7 @@ TAO_IIOP_Connection_Handler::close_connection (void)
 {
   // To maintain maximum compatibility, we only set this socket option
   // if the user has provided a linger timeout.
-  int linger = this->orb_core()->orb_params()->linger ();
+  int const linger = this->orb_core()->orb_params()->linger ();
   if (linger != -1)
     {
       struct linger lval;

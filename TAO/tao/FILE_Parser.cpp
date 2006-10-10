@@ -27,7 +27,7 @@ TAO_FILE_Parser::~TAO_FILE_Parser (void)
 }
 
 
-int
+bool
 TAO_FILE_Parser::match_prefix (const char *ior_string) const
 {
   return (ACE_OS::strncmp (ior_string,

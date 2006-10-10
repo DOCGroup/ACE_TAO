@@ -29,7 +29,7 @@ TAO_MCAST_Parser::~TAO_MCAST_Parser (void)
 {
 }
 
-int
+bool
 TAO_MCAST_Parser::match_prefix (const char *ior_string) const
 {
   return (ACE_OS::strncmp (ior_string,
@@ -385,7 +385,7 @@ TAO_MCAST_Parser::assign_to_variables (const char * &mcast_name)
           // No valid IPv6 address specified.
           if (TAO_debug_level > 0)
             {
-              ACE_DEBUG ((LM_ERROR,
+              ACE_ERROR ((LM_ERROR,
                           ACE_TEXT ("\nTAO (%P|%t) MCAST_Parser: ")
                           ACE_TEXT ("Invalid IPv6 decimal address specified.\n")));
             }

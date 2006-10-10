@@ -172,9 +172,9 @@ TAO_SCIOP_Connector::make_connection_i (TAO::Profile_Transport_Resolver *r,
   this->active_connect_strategy_->synch_options (timeout,
                                                  synch_options);
 
-  // The code used to set the timeout to zero, with the intent of 
+  // The code used to set the timeout to zero, with the intent of
   // polling the reactor for connection completion. However, the side-effect
-  // was to cause the connection to timeout immediately. 
+  // was to cause the connection to timeout immediately.
 
   TAO_SCIOP_Connection_Handler *svc_handler = 0;
 
@@ -253,7 +253,7 @@ TAO_SCIOP_Connector::make_connection_i (TAO::Profile_Transport_Resolver *r,
       // Give users a clue to the problem.
       if (TAO_debug_level)
         {
-          ACE_DEBUG ((LM_ERROR,
+          ACE_ERROR ((LM_ERROR,
                       "TAO (%P|%t) - SCIOP_Connector::make_connection_i, "
                       "connection to <%s:%d> failed (%p)\n",
                       sciop_endpoint->host (), sciop_endpoint->port (),
@@ -263,7 +263,7 @@ TAO_SCIOP_Connector::make_connection_i (TAO::Profile_Transport_Resolver *r,
       return 0;
     }
 
-  if (transport->connection_handler ()->keep_waiting ()) 
+  if (transport->connection_handler ()->keep_waiting ())
     {
       svc_handler->add_reference ();
     }

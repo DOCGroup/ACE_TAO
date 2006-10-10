@@ -52,7 +52,7 @@ public:
 
   /// Return 1 if @a ior_string starts with a prefix known to this IOR
   /// parser
-  virtual int match_prefix (const char *ior_string) const = 0;
+  virtual bool match_prefix (const char *ior_string) const = 0;
 
   /**
    * Parse the @a ior argument and return an object reference.
@@ -60,8 +60,7 @@ public:
    * INV_OBJREF, etc.)
    */
   virtual CORBA::Object_ptr parse_string (const char *ior,
-                                          CORBA::ORB_ptr orb
-                                          ACE_ENV_ARG_DECL)
+                                          CORBA::ORB_ptr orb)
     ACE_THROW_SPEC ((CORBA::SystemException)) = 0;
 };
 
