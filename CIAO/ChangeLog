@@ -1,3 +1,27 @@
+Tue Oct 10 14:24:12 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+	* DAnCE/ExecutionManager/Execution_Manager_Impl.cpp:
+	  Layout improvements, use ACE_ERROR with LM_ERROR
+
+	* DAnCE/ExecutionManager/DAM_Map.cpp:
+	  Const improvements
+
+	* DAnCE/NodeApplicationManager/Containers_Info_Map.h:
+	  Layout changes
+
+	* DAnCE/NodeApplicationManager/Containers_Info_Map.cpp:
+	* DAnCE/NodeApplicationManager/NodeApplicationManager_Impl.cpp:
+	  Use ACE_ERROR with LM_ERROR
+
+	* DAnCE/NodeApplicationManager/ImplementationInfo.h:
+	  Documentation improvements
+
+	* DAnCE/NodeApplicationManager/ImplementationInfo.cpp:
+	  Const improvements
+
+	* DAnCE/NodeApplicationManager/HTTP_Handler.cpp:
+	  Const improvements
+
 Tue Oct 10 09:28:12 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 	* ciao/CCM_Base.idl:
