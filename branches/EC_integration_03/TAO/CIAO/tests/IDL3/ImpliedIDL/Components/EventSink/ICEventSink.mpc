@@ -1,0 +1,17 @@
+// $Id$
+// This file is generated with "generate_component_mpc.pl -n ICEventSink"
+
+project(ICEventSink_stub): ciao_client_dnc {
+
+  sharedname = ICEventSink_stub
+  idlflags += -Wb,stub_export_macro=ICEVENTSINK_STUB_Export -Wb,stub_export_include=ICEventSink_stub_export.h -Wb,skel_export_macro=ICEVENTSINK_SVNT_Export -Wb,skel_export_include=ICEventSink_svnt_export.h
+  dynamicflags   = ICEVENTSINK_STUB_BUILD_DLL
+
+  IDL_Files {
+    ICEventSink.idl
+  }
+
+  Source_Files {
+    ICEventSinkC.cpp
+  }
+}
