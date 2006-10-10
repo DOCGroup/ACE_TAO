@@ -1,4 +1,4 @@
-//$Id$
+// $Id$
 
 #include "NodeApplication_Impl.h"
 #include "ace/SString.h"
@@ -938,7 +938,6 @@ handle_publisher_es_connection (
   ACE_CString sid (connection.instanceName.in ());
   sid += "_";
   sid += connection.portName.in ();
-  sid += "_publisher";
 
   if (add_connection)
     {
@@ -1047,12 +1046,6 @@ handle_es_consumer_connection (
       ACE_THROW (Deployment::InvalidConnection ());
     }
 
-  // supplier ID
-  ACE_CString sid (connection.instanceName.in ());
-  sid += "_";
-  sid += connection.portName.in ();
-  sid += "_publisher";
-
   // consumer ID
   ACE_CString cid (connection.endpointInstanceName.in ());
   cid += "_";
@@ -1064,8 +1057,6 @@ handle_es_consumer_connection (
       CIAO::Consumer_Config_var consumer_config =
         event_service->create_consumer_config ();
 
-      consumer_config->supplier_id ("Hello-Sender-idd_click_out_publisher");
-      //consumer_config->supplier_id (sid.c_str ());
       consumer_config->consumer_id (cid.c_str ());
       consumer_config->consumer (consumer.in ());
 
@@ -1081,7 +1072,11 @@ handle_es_consumer_connection (
           connection.config[i].value >>=  filter;
 
           CORBA::ULong size = (*filter).sources.length ();
-          consumer_config->start_disjunction_group (size);
+
+          if ((*filter).type == DAnCE::CONJUNCTION)
+            consumer_config->start_conjunction_group (size);
+          else if ((*filter).type == DAnCE::DISJUNCTION)
+            consumer_config->start_disjunction_group (size);
 
           for (CORBA::ULong j = 0; j < size; ++j)
             {
@@ -1193,7 +1188,6 @@ CIAO::NodeApplication_Impl::build_event_connection (
     ACE_CString sid (connection.instanceName.in ());
     sid += "_";
     sid += connection.portName.in ();
-    sid += "_publisher";
 
     // consumer ID
     ACE_CString cid (connection.endpointInstanceName.in ());
@@ -1210,15 +1204,13 @@ CIAO::NodeApplication_Impl::build_event_connection (
         CIAO::Supplier_Config_var supplier_config =
           event_service->create_supplier_config ();
 
-        //supplier_config->supplier_id (sid.c_str ());
+        supplier_config->supplier_id (sid.c_str ());
         event_service->connect_event_supplier (supplier_config.in ());
         supplier_config->destroy ();
 
         CIAO::Consumer_Config_var consumer_config =
           event_service->create_consumer_config ();
 
-        //@@@
-        consumer_config->supplier_id ("dummy");
         consumer_config->consumer_id (cid.c_str ());
         consumer_config->consumer (consumer.in ());
 
