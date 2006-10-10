@@ -94,6 +94,14 @@ namespace CIAO
       ACE_THROW_SPEC ((
         CORBA::SystemException));
 
+    virtual void ciao_push_event (
+        Components::EventBase * evt,
+        const char * source_id
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+      ACE_THROW_SPEC ((
+        ::CORBA::SystemException,
+        ::Components::BadEventType));
+
   private:
     // @@ (GD) This is the place where use could provide a parameter
     //         which specifies the event channel service configuration file.
@@ -244,11 +252,11 @@ namespace CIAO
     virtual CONNECTION_ID consumer_id (ACE_ENV_SINGLE_ARG_DECL)
       ACE_THROW_SPEC ((CORBA::SystemException));
 
-    virtual void supplier_id (const char * supplier_id ACE_ENV_ARG_DECL)
-      ACE_THROW_SPEC ((CORBA::SystemException));
+    //virtual void supplier_id (const char * supplier_id ACE_ENV_ARG_DECL)
+    //  ACE_THROW_SPEC ((CORBA::SystemException));
 
-    virtual CONNECTION_ID supplier_id (ACE_ENV_SINGLE_ARG_DECL)
-      ACE_THROW_SPEC ((CORBA::SystemException));
+    //virtual CONNECTION_ID supplier_id (ACE_ENV_SINGLE_ARG_DECL)
+    //  ACE_THROW_SPEC ((CORBA::SystemException));
 
     virtual void consumer (Components::EventConsumerBase_ptr consumer ACE_ENV_ARG_DECL)
       ACE_THROW_SPEC ((CORBA::SystemException));
@@ -271,8 +279,6 @@ namespace CIAO
   private:
 
     ACE_CString consumer_id_;
-
-    ACE_CString supplier_id_;
 
     Components::EventConsumerBase_var consumer_;
 
