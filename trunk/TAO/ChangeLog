@@ -1,3 +1,16 @@
+Tue Oct 10 12:11:12 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+	* orbsvcs/examples/ORT/README:
+	  Layout improvement
+
+	* orbsvcs/orbsvcs/CosConcurrencyControl.idl:
+	* orbsvcs/orbsvcs/CosLoadBalancing.idl:
+	* orbsvcs/orbsvcs/CosNaming.idl:
+	  Doxygen improvements
+
+	* orbsvcs/LoadBalancing/LB_ObjectReferenceFactory.cpp:
+	  Const/bool improvements
+
 Tue Oct 10 09:24:12 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 	* docs/ior_parsing.html:

@@ -4,7 +4,7 @@ This example shows the use of ORT Template by a simple application.
 
 Scenario:
 ========
-	
+
 1. There's a server which has a dummy method that adds the two 'in' variables
    and return the sum to the client.
 
@@ -23,7 +23,8 @@ Gateway.idl			IDL for the Gateway
 
 Gateway_IORInterceptor		IORInterceptor for the Gateway.
 
-Gateway_i			Implementation of the Gateway which changes the 				DSI to DII.
+Gateway_i                       Implementation of the Gateway which changes the
+                                DSI to DII.
 
 Object_Factory_i		Implementation for the
 				Gateway IDL method. This method
