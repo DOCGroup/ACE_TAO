@@ -417,11 +417,11 @@
     <artifact>_3600FD54-B079-4520-971B-7D3E99F96539</artifact>
   </implementation>
 
-  <instance id="_RT1H_NetQoS.ComponentImplementations.RT1H.RT1H.EnvDetector1">
-    <name>_RT1H_NetQoS.ComponentImplementations.RT1H.RT1H.EnvDetector1</name>
-    <node>blade33</node>
+  <instance id="_RT1H_NetQoS.ComponentImplementations.RT1H.RT1H.Config_Op">
+    <name>_RT1H_NetQoS.ComponentImplementations.RT1H.RT1H.Config_Op</name>
+    <node>host3</node>
     <source/>
-    <implementation>_A8181747-270E-43FF-B723-50825AA8EA74</implementation>
+    <implementation>_2D19FD96-440B-48D4-8D68-4E9B466B2BCC</implementation>
     <configProperty>
       <name>ComponentIOR</name>
       <value>
@@ -429,69 +429,15 @@
           <kind>tk_string</kind>
         </type>
         <value>
-          <string>Env_Detector.ior</string>
+          <string>Config_Op.ior</string>
         </value>
       </value>
     </configProperty>
   </instance>
 
-  <instance id="_RT1H_NetQoS.ComponentImplementations.RT1H.RT1H.EnvDetector2">
-    <name>_RT1H_NetQoS.ComponentImplementations.RT1H.RT1H.EnvDetector2</name>
-    <node>blade33</node>
-    <source/>
-    <implementation>_A8181747-270E-43FF-B723-50825AA8EA74</implementation>
-    <configProperty>
-      <name>ComponentIOR</name>
-      <value>
-        <type>
-          <kind>tk_string</kind>
-        </type>
-        <value>
-          <string>Env_Detector.ior</string>
-        </value>
-      </value>
-    </configProperty>
-  </instance>
-
-  <instance id="_RT1H_NetQoS.ComponentImplementations.RT1H.RT1H.EnvDetector3">
-    <name>_RT1H_NetQoS.ComponentImplementations.RT1H.RT1H.EnvDetector3</name>
-    <node>blade33</node>
-    <source/>
-    <implementation>_A8181747-270E-43FF-B723-50825AA8EA74</implementation>
-    <configProperty>
-      <name>ComponentIOR</name>
-      <value>
-        <type>
-          <kind>tk_string</kind>
-        </type>
-        <value>
-          <string>Env_Detector.ior</string>
-        </value>
-      </value>
-    </configProperty>
-  </instance>
-
-  <instance id="_RT1H_NetQoS.ComponentImplementations.RT1H.RT1H.EnvDetector4">
-    <name>_RT1H_NetQoS.ComponentImplementations.RT1H.RT1H.EnvDetector4</name>
-    <node>blade33</node>
-    <source/>
-    <implementation>_A8181747-270E-43FF-B723-50825AA8EA74</implementation>
-    <configProperty>
-      <name>ComponentIOR</name>
-      <value>
-        <type>
-          <kind>tk_string</kind>
-        </type>
-        <value>
-          <string>Env_Detector.ior</string>
-        </value>
-      </value>
-    </configProperty>
-  </instance>
-
-  <instance id="_RT1H_NetQoS.ComponentImplementations.RT1H.RT1H.Effector3">
-    <name>_RT1H_NetQoS.ComponentImplementations.RT1H.RT1H.Effector3</name>
-    <node>blade32</node>
+  <instance id="_RT1H_NetQoS.ComponentImplementations.RT1H.RT1H.Effector2">
+    <name>_RT1H_NetQoS.ComponentImplementations.RT1H.RT1H.Effector2</name>
+    <node>host4</node>
     <source/>
     <implementation>_8D45FC0E-C3DD-4671-926D-A08430B37D37</implementation>
     <configProperty>
@@ -507,9 +453,9 @@
     </configProperty>
   </instance>
 
-  <instance id="_RT1H_NetQoS.ComponentImplementations.RT1H.RT1H.Effector2">
-    <name>_RT1H_NetQoS.ComponentImplementations.RT1H.RT1H.Effector2</name>
-    <node>blade32</node>
+  <instance id="_RT1H_NetQoS.ComponentImplementations.RT1H.RT1H.Effector3">
+    <name>_RT1H_NetQoS.ComponentImplementations.RT1H.RT1H.Effector3</name>
+    <node>host4</node>
     <source/>
     <implementation>_8D45FC0E-C3DD-4671-926D-A08430B37D37</implementation>
     <configProperty>
@@ -527,7 +473,7 @@
 
   <instance id="_RT1H_NetQoS.ComponentImplementations.RT1H.RT1H.Effector4">
     <name>_RT1H_NetQoS.ComponentImplementations.RT1H.RT1H.Effector4</name>
-    <node>blade32</node>
+    <node>host4</node>
     <source/>
     <implementation>_8D45FC0E-C3DD-4671-926D-A08430B37D37</implementation>
     <configProperty>
@@ -543,45 +489,9 @@
     </configProperty>
   </instance>
 
-  <instance id="_RT1H_NetQoS.ComponentImplementations.RT1H.RT1H.Planner_Three">
-    <name>_RT1H_NetQoS.ComponentImplementations.RT1H.RT1H.Planner_Three</name>
-    <node>blade30</node>
-    <source/>
-    <implementation>_A7DAA16F-D455-4C63-92CE-05B98DD34B15</implementation>
-    <configProperty>
-      <name>ComponentIOR</name>
-      <value>
-        <type>
-          <kind>tk_string</kind>
-        </type>
-        <value>
-          <string>Planner_Three.ior</string>
-        </value>
-      </value>
-    </configProperty>
-  </instance>
-
-  <instance id="_RT1H_NetQoS.ComponentImplementations.RT1H.RT1H.Planner_One">
-    <name>_RT1H_NetQoS.ComponentImplementations.RT1H.RT1H.Planner_One</name>
-    <node>blade33</node>
-    <source/>
-    <implementation>_DA5C3C13-030E-4971-A0BF-8631563EFDF3</implementation>
-    <configProperty>
-      <name>ComponentIOR</name>
-      <value>
-        <type>
-          <kind>tk_string</kind>
-        </type>
-        <value>
-          <string>Planner_One.ior</string>
-        </value>
-      </value>
-    </configProperty>
-  </instance>
-
   <instance id="_RT1H_NetQoS.ComponentImplementations.RT1H.RT1H.Effector_Main">
     <name>_RT1H_NetQoS.ComponentImplementations.RT1H.RT1H.Effector_Main</name>
-    <node>blade32</node>
+    <node>host4</node>
     <source/>
     <implementation>_05FAFE3F-76B3-4C6E-A86B-0225B9E76909</implementation>
     <configProperty>
@@ -597,11 +507,11 @@
     </configProperty>
   </instance>
 
-  <instance id="_RT1H_NetQoS.ComponentImplementations.RT1H.RT1H.Config_Op">
-    <name>_RT1H_NetQoS.ComponentImplementations.RT1H.RT1H.Config_Op</name>
-    <node>blade31</node>
+  <instance id="_RT1H_NetQoS.ComponentImplementations.RT1H.RT1H.EnvDetector1">
+    <name>_RT1H_NetQoS.ComponentImplementations.RT1H.RT1H.EnvDetector1</name>
+    <node>host5</node>
     <source/>
-    <implementation>_2D19FD96-440B-48D4-8D68-4E9B466B2BCC</implementation>
+    <implementation>_A8181747-270E-43FF-B723-50825AA8EA74</implementation>
     <configProperty>
       <name>ComponentIOR</name>
       <value>
@@ -609,7 +519,97 @@
           <kind>tk_string</kind>
         </type>
         <value>
-          <string>Config_Op.ior</string>
+          <string>Env_Detector.ior</string>
+        </value>
+      </value>
+    </configProperty>
+  </instance>
+
+  <instance id="_RT1H_NetQoS.ComponentImplementations.RT1H.RT1H.EnvDetector2">
+    <name>_RT1H_NetQoS.ComponentImplementations.RT1H.RT1H.EnvDetector2</name>
+    <node>host5</node>
+    <source/>
+    <implementation>_A8181747-270E-43FF-B723-50825AA8EA74</implementation>
+    <configProperty>
+      <name>ComponentIOR</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>Env_Detector.ior</string>
+        </value>
+      </value>
+    </configProperty>
+  </instance>
+
+  <instance id="_RT1H_NetQoS.ComponentImplementations.RT1H.RT1H.EnvDetector3">
+    <name>_RT1H_NetQoS.ComponentImplementations.RT1H.RT1H.EnvDetector3</name>
+    <node>host5</node>
+    <source/>
+    <implementation>_A8181747-270E-43FF-B723-50825AA8EA74</implementation>
+    <configProperty>
+      <name>ComponentIOR</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>Env_Detector.ior</string>
+        </value>
+      </value>
+    </configProperty>
+  </instance>
+
+  <instance id="_RT1H_NetQoS.ComponentImplementations.RT1H.RT1H.EnvDetector4">
+    <name>_RT1H_NetQoS.ComponentImplementations.RT1H.RT1H.EnvDetector4</name>
+    <node>host5</node>
+    <source/>
+    <implementation>_A8181747-270E-43FF-B723-50825AA8EA74</implementation>
+    <configProperty>
+      <name>ComponentIOR</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>Env_Detector.ior</string>
+        </value>
+      </value>
+    </configProperty>
+  </instance>
+
+  <instance id="_RT1H_NetQoS.ComponentImplementations.RT1H.RT1H.Planner_One">
+    <name>_RT1H_NetQoS.ComponentImplementations.RT1H.RT1H.Planner_One</name>
+    <node>host5</node>
+    <source/>
+    <implementation>_DA5C3C13-030E-4971-A0BF-8631563EFDF3</implementation>
+    <configProperty>
+      <name>ComponentIOR</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>Planner_One.ior</string>
+        </value>
+      </value>
+    </configProperty>
+  </instance>
+
+  <instance id="_RT1H_NetQoS.ComponentImplementations.RT1H.RT1H.Planner_Three">
+    <name>_RT1H_NetQoS.ComponentImplementations.RT1H.RT1H.Planner_Three</name>
+    <node>host2</node>
+    <source/>
+    <implementation>_A7DAA16F-D455-4C63-92CE-05B98DD34B15</implementation>
+    <configProperty>
+      <name>ComponentIOR</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>Planner_Three.ior</string>
         </value>
       </value>
     </configProperty>
@@ -2027,5 +2027,17 @@
       </value>
     </execParameter>
   </artifact>
+
+  <infoProperty>
+    <name>CIAONetworkQoS</name>
+    <value>
+      <type>
+        <kind>tk_string</kind>
+      </type>
+      <value>
+        <string>RT1H_NetQoS.nqs</string>
+      </value>
+    </value>
+  </infoProperty>
 
 </Deployment:deploymentPlan>
