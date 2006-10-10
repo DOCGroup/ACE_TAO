@@ -622,7 +622,7 @@ add_new_components ()
     }
   ACE_CATCHANY
     {
-      ACE_DEBUG ((LM_ERROR, "NodeApplicationManager_Impl_Base::"
+      ACE_ERROR ((LM_ERROR, "NodeApplicationManager_Impl_Base::"
                   "add_new_components () exception caught.\n"));
       ACE_RE_THROW;
     }
@@ -662,7 +662,7 @@ remove_existing_components ()
     }
   ACE_CATCHANY
     {
-      ACE_DEBUG ((LM_ERROR, "NodeApplicationManager_Impl_Base::"
+      ACE_ERROR ((LM_ERROR, "NodeApplicationManager_Impl_Base::"
                   "remove_existing_components () exception caught.\n"));
       ACE_RE_THROW;
     }
@@ -997,7 +997,7 @@ create_node_application (const ACE_CString & options
         {
           if (CIAO::debug_level () > 1)
             {
-              ACE_DEBUG ((LM_ERROR,
+              ACE_ERROR ((LM_ERROR,
                           "Fail to spawn a NodeApplication process\n"));
             }
 
