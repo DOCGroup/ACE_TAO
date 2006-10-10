@@ -1311,7 +1311,7 @@ handle_es_connection (
   if (binding.deployRequirement.length () != 0)
     {
       retv[len].config =
-        this->get_connection_QoS_configuration (binding.deployRequirement[0]);
+        * (this->get_connection_QoS_configuration (binding.deployRequirement[0]));
     }
 
   // If we didnt find the objref of the connection ...
@@ -2055,13 +2055,13 @@ purge_connections (Deployment::Connections_var & connections,
     }
 }
 
-const Deployment::Properties &
+Deployment::Properties *
 CIAO::DomainApplicationManager_Impl::
 get_connection_QoS_configuration (const Deployment::Requirement & requirement)
 {
   // Get the name/identifier of the filter associated with
   // this connection
-  Deployment::Properties_var retv;
+  Deployment::Properties * retv;
   ACE_NEW_NORETURN (retv, Deployment::Properties);
 
   CORBA::ULong len = retv->length ();
@@ -2093,12 +2093,12 @@ get_connection_QoS_configuration (const Deployment::Requirement & requirement)
                                   filter_name) == 0)
                 {
                   retv->length (len + 1);
-                  retv[len].name =  CORBA::string_dup ("EventFilter");
-                  retv[len].value <<= this->esd_[j].filters[k];
+                  (*retv)[len].name =  CORBA::string_dup ("EventFilter");
+                  (*retv)[len].value <<= this->esd_[j].filters[k];
                   break;
                 }
             }
         }
     }
-  return retv.inout ();
+  return retv;
 }

@@ -408,7 +408,7 @@ namespace CIAO
      * deployment requirement. The deployment requirement only specifies
      * an identifier/reference to the EventServiceDeploymentDescriptions.
      */
-    virtual const Deployment::Properties &
+    virtual Deployment::Properties *
     get_connection_QoS_configuration (
       const Deployment::Requirement & requirement);
 
