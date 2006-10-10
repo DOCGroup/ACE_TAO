@@ -12,6 +12,7 @@
 #define CIAO_DEPLOYMENT_EVENT_SERVICES_IDL
 
 #include <orb.idl>
+#include <orbsvcs/RtecUDPAdmin.idl>
 
 module CIAO
 {
@@ -46,8 +47,32 @@ module CIAO
       FilterType type;
       EventSourceSet sources;
     };
+    typedef sequence<EventFilter> EventFilters;
 
-    typedef sequence < EventFilter > EventFilters;
+    struct AddrServer
+    {
+      string name;
+    };
+    typedef sequence<AddrServer> AddrServers;
+
+    struct UDPSender
+    {
+      string name;
+    };
+    typedef sequence<UDPSender> UDPSenders;
+
+    struct UPDReceiver
+    {
+      string name;
+    };
+    typedef sequence<UPDReceiver> UPDReceivers;
+
+    struct EventHandler
+    {
+      string name;
+      boolean is_multicast;
+    };
+    typedef sequence<EventHandler> EventHandlers;
 
     /// CIAO specific extension to describe pub/sub services in the deployment
     struct EventServiceDeploymentDescription
@@ -58,8 +83,10 @@ module CIAO
       string svc_cfg_file;
 
       EventFilters filters;
+      UDPSenders senders;
+      UPDReceivers receivers;
+      EventHandlers ehs;
     };
-
     typedef sequence < EventServiceDeploymentDescription >
       EventServiceDeploymentDescriptions;
   };
