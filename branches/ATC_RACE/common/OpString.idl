@@ -35,6 +35,8 @@ module CIAO
 
         string taskId;
 
+        string typeId;
+
         string suggestedImpl;
 
         ::Deployment::Properties configProperty;
@@ -47,10 +49,7 @@ module CIAO
       typedef sequence <InstanceDescription> InstanceDescriptions;
 
 
-      typedef ::Deployment::PlanConnectionDescription DataLinkDescription;
-
-
-      typedef sequence <DataLinkDescription> DataLinkDescriptions;
+      typedef ::Deployment::PlanConnectionDescriptions DataLinkDescriptions;
 
       enum ConnectionType
       {
@@ -111,6 +110,10 @@ module CIAO
       struct OperationalString
       {
 
+        string name;
+
+        string UUID;
+
         InstanceDescriptions instances;
 
         DataLinkDescriptions dataLinks;
@@ -124,6 +127,9 @@ module CIAO
         TimeWindow startWindow;
 
         TimeWindow endWindow;
+
+        ::Deployment::Properties properties;
+
       };
 
 
