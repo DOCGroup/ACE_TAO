@@ -1,3 +1,10 @@
+Tue Oct 10 19:13:12 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+	* DAnCE/StaticConfigurator/StaticDAnCEApp.cpp.tmpl:
+	  Fixed compile error.
+          Thanks to Sowayan Abdullah <abdullah dot sowayan at lmco dot com>
+          for reporting this.
+
 Tue Oct 10 17:56:51 UTC 2006  Shanshan Jiang <shanshan.jiang@vanderbilt.edu>
 
         * DAnCE/NodeApplicationManager/Containers_Info_Map.cpp
