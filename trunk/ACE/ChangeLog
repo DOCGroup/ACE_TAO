@@ -1,3 +1,8 @@
+Tue Oct 10 18:46:12 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+	* ACE-INSTALL.html:
+	  Document how to get a current copy from subversion
+
 Tue Oct 10 14:16:12 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 	* ace/CDR_Stream.cpp:
