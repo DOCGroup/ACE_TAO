@@ -86,7 +86,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       if (CORBA::is_nil (adapter.in ()))
           ACE_ERROR_RETURN ((LM_ERROR, "Nil IORTable\n"), -1);
 
-      CIAO::NodeManager_var manager =
+      CIAO::NodeManagerDaemon_var manager =
         static_node_manager_impl->_this ();
 
       CORBA::String_var str =
