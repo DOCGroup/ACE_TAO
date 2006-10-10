@@ -91,7 +91,7 @@ namespace CIAO
 
       if (lengthMissing == name.length())
         {
-          ACE_DEBUG ((LM_ERROR, "Null name length.\n\n"));
+          ACE_ERROR ((LM_ERROR, "Null name length.\n\n"));
         }
 
       if (isNotFound)
@@ -161,7 +161,7 @@ namespace CIAO
         }
       if (CORBA::is_nil(tmpContextV.in ()))
         {
-          ACE_DEBUG ((LM_ERROR, "listBindings: Nil context.\n"));
+          ACE_ERROR ((LM_ERROR, "listBindings: Nil context.\n"));
           return 0;
         }
 
@@ -207,7 +207,7 @@ namespace CIAO
       tmpContextV = CosNaming::NamingContext::_narrow(objV.in ());
       if (CORBA::is_nil(tmpContextV.in ()))
         {
-          ACE_DEBUG ((LM_ERROR, "recursiveUnbind: Nil context reference.\n"));
+          ACE_ERROR ((LM_ERROR, "recursiveUnbind: Nil context reference.\n"));
           return;
         }
 

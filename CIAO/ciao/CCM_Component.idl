@@ -94,8 +94,11 @@ module Components
     CCMHome get_ccm_home( );
     PrimaryKeyBase get_primary_key( )
       raises (NoKeyAvailable);
+    void remove()
+      raises (RemoveFailure);
+    ComponentPortDescription get_all_ports ();
 
-    // Factory method to return a StandardConfigurator interface
+    /// Factory method to return a StandardConfigurator interface. CIAO specific
     StandardConfigurator get_standard_configurator ( );
 
     /// CIAO specific operations to have some control on when and how
@@ -131,14 +134,12 @@ module Components
 
     void configuration_complete ()
       raises (InvalidConfiguration);
-
-    void remove()
-      raises (RemoveFailure);
-    ComponentPortDescription get_all_ports ();
   };
 
-  // @@ Enumeration and DefaultEnumeration are only for EJB to CCM
-  // mapping?  At any rate, we should be able to skip them for now.
+  /// @@ Enumeration and DefaultEnumeration are only for EJB to CCM
+  /// mapping?  At any rate, we should be able to skip them for now.
+  /// @todo Move these then to a seperate file so that the linker can
+  /// optimize things out of the executable when building staticly
   abstract valuetype Enumeration
   {
     boolean has_more_elements();

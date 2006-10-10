@@ -122,7 +122,6 @@ module Components
               AlreadyConnected,
               ExceededConnectionLimit);
 
-    // @@ Changed to return the previously connected object reference -- basef on RTF 1.1.
     Object disconnect (in FeatureName name, in Cookie ck)
       raises (InvalidName,
               InvalidConnection,

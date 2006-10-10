@@ -28,9 +28,9 @@ module Components
   {
     void push_event (in EventBase evt) raises (BadEventType);
 
-    // CIAO-specific operation to help support the capability
-    // to subscribe to eventtypes more derived than the type
-    // consumed.
+    /// CIAO-specific operation to help support the capability
+    /// to subscribe to eventtypes more derived than the type
+    /// consumed.
     boolean ciao_is_substitutable (in string event_repo_id);
   };
 
@@ -64,6 +64,10 @@ module Components
     EventConsumerBase get_consumer (in FeatureName sink_name)
       raises (InvalidName);
 
+    /**
+     * @todo Mismatch with 06-04-01, AlreadyConnected is not listed in the
+     * spec with this operation
+     */
     Cookie subscribe (in FeatureName publisher_name,
                       in EventConsumerBase subscriber)
       raises (InvalidName,
