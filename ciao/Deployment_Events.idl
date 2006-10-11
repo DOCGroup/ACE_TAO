@@ -13,19 +13,13 @@
 
 #include <orb.idl>
 
+// EventServiceType definition
+#include <ciaosvcs/Events/CIAO_Events_Base/CIAO_Events.idl>
+
 module CIAO
 {
   module DAnCE
   {
-    /// CIAO specific extension to describe pub/sub services in the deployment
-    enum EventServiceType
-    {
-      EC,
-      RTEC,
-      NOTIFY,
-      RTNOTIFY
-    };
-
     /// Each element in the EventSourceSet denotes a event source id
     typedef string EventSourceId;
 

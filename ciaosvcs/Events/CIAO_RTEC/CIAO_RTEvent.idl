@@ -35,7 +35,7 @@ module CIAO
     readonly attribute RtecEventChannelAdmin::SupplierQOS rt_event_qos;
   };
 
-  interface CIAO_RT_Evnet_Service :
+  interface CIAO_RT_Event_Service :
     CIAO_Event_Service
   {
     boolean create_addr_serv (in string name,

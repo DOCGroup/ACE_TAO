@@ -4,6 +4,7 @@
 #include "ace/SString.h"
 #include "Container_Impl.h"
 #include "Deployment_EventsC.h"
+#include "ciaosvcs/Events/CIAO_RTEC/CIAO_RTEventC.h"
 
 #if !defined (__ACE_INLINE__)
 # include "NodeApplication_Impl.inl"
@@ -611,7 +612,7 @@ CIAO::NodeApplication_Impl::get_containers (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
 
 ::Deployment::CIAO_Event_Services *
 CIAO::NodeApplication_Impl::
-install_es (const ::Deployment::ESInstallationInfos & es_infos
+install_es (const ::CIAO::DAnCE::EventServiceDeploymentDescriptions & es_infos
             ACE_ENV_ARG_DECL)
 ACE_THROW_SPEC ((::CORBA::SystemException,
                  ::Deployment::InstallationFailure))
@@ -621,18 +622,47 @@ ACE_THROW_SPEC ((::CORBA::SystemException,
                   Deployment::CIAO_Event_Services,
                   0);
 
-  CORBA::ULong total_lenth = es_infos.length ();
+  CORBA::ULong es_len = es_infos.length ();
 
-  for (CORBA::ULong i = 0; i < total_lenth; ++i)
+  for (CORBA::ULong i = 0; i < es_len; ++i)
     {
-      CIAO_Event_Service_var temp =
+      CIAO_Event_Service_var ciao_es =
         es_factory_.create (es_infos[i].type);
 
+      // Set up the event channel federation configurations
+      if (es_infos[i].type == CIAO::RTEC)
+        {
+          // Narrow the event service to CIAO_RT_Event_Service
+          ::CIAO::CIAO_RT_Event_Service_var ciao_rtes =
+            ::CIAO::CIAO_RT_Event_Service::_narrow (ciao_es);
+
+          if (CORBA::is_nil (ciao_rtes.in ()))
+            ACE_THROW ((::Deployment::InstallationFailure ()));
+
+          // Set up the event channel federations
+          for (CORBA::ULong j = 0; j < es_infos[i].addr_srvs.length (); ++j)
+            ciao_rtes->create_addr_serv (
+              es_infos[i].addr_srvs[j].name.in (),
+              es_infos[i].addr_srvs[j].port,
+              es_infos[i].addr_srvs[j].address);
+
+          for (CORBA::ULong j = 0; j < es_infos[i].senders.length (); ++j)
+            ciao_rtes->create_sender (
+              es_infos[i].senders[j].addr_serv_id.in ());
+
+          for (CORBA::ULong j = 0; j < es_infos[i].receivers.length (); ++j)
+            ciao_rtes->create_receiver (
+              es_infos[i].receivers[j].addr_serv_id.in (),
+              es_infos[i].receivers[j].is_multicast,
+              es_infos[i].receivers[j].listen_port);
+
+        }
+  
       CORBA::ULong curr_len = retv->length ();
       retv->length (curr_len + 1);
 
       retv[curr_len] =
-        CIAO::CIAO_Event_Service::_duplicate (temp.in ());
+        CIAO::CIAO_Event_Service::_duplicate (ciao_es.in ());
     }
   return retv._retn ();
 }
