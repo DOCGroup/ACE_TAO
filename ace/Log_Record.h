@@ -151,11 +151,10 @@ public:
   /// Get the message data of the <Log_Record>.
   const ACE_TCHAR *msg_data (void) const;
 
-  /// Set the message data pointer
-  void set_msg_data_ptr (ACE_TCHAR *data);
-
-  /// Set the message data of the <Log_Record>.
-  void msg_data (const ACE_TCHAR *data);
+  /// Set the message data of the record. If @a data is longer than the
+  /// current msg_data_ buffer, a new msg_data_ buffer is allocated to
+  /// fit. If such a reallocation faisl, this method returns -1, else 0.
+  int msg_data (const ACE_TCHAR *data);
 
   /// Get the size of the message data of the <Log_Record>, including
   /// a byte for the NUL.
@@ -190,8 +189,8 @@ private:
   ACE_UINT32 pid_;
 
   /// Logging record data
-  ACE_TCHAR *msg_data_; // Add one for NUL-terminator.
-
+  ACE_TCHAR *msg_data_;   // Heap-allocated text message area
+  size_t msg_data_size_;  // Allocated size of msg_data_ in ACE_TCHARs
 };
 
 // Forward decls.

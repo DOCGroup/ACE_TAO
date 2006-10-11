@@ -1,34 +1,87 @@
-Fri Oct  6 17:53:06 UTC 2006  Iliyan Jeliazkov  <iliyan@ociweb.com>
+Wed Oct 11 15:24:04 UTC 2006  Steve Huston  <shuston@riverace.com>
 
-        This simply checks in a bunch of changes from the trunk that
-        occured since the inception of the Transport Current feature. The
-        checkin also contains the feature itself.
+        * ace/Log_Record.{h inl cpp}: Removed the set_msg_data_ptr()
+          method - it opens the possibility of putting a buffer in place
+          that can't be freed properly. All of the memory allocating and
+          deleting should be done internally to this class. The removed
+          method was only used internally.
+          Added a private msg_data_size_ member that keeps the allocated size
+          of msg_data_ in ACE_TCHARs (not bytes) to tell if the buffer needs
+          to be resized. Comparing to the string length is incorrect - it
+          causes buffer reallocating whenever a short logged message is
+          followed by a longer one, even if both are much shorter than the
+          allocated length of msg_data_. When a ctor allocates a msg_data_
+          area, set the first spot to '\0' to a call to msg_data_len() won't
+          get random answers or a crash.
+          (msg_data (const ACE_TCHAR *)): Changed this method to return int,
+          not void. It also will now reallocate the msg_data_ buffer if needed
+          to hold the specified string. operator<< now uses msg_data() to set
+          the string instead of the now removed set_msg_data_ptr() method,
+          keeping all msg_data_ allocation and release in the same class.
+          (operator<<): Fix memory leak when setting a new msg_data_
+          buffer. Thanks to Arturo Montes for letting us know about the leak.
 
-        * ACE-INSTALL.html:
-        * ChangeLog:
-        * NEWS:
-        * ace/Log_Msg.h:
-        * ace/Log_Msg.cpp:
-        * ace/OS_NS_signal.inl:
-        * ace/QoS:
-        * bin/MakeProjectCreator/config/tc.mpb:
-        * bin/tao_other_tests.lst:
-        * docs/Download.html:
-        * docs/bczar/bczar.html:
-        * docs/svn/config:
-        * docs/svn/svn-prefs.reg:
-        * tests/Cached_Allocator_Test.cpp:
-        * tests/Codecs_Test.cpp:
-        * tests/Enum_Interfaces_Test.cpp:
-        * tests/Get_Opt_Test.cpp:
-        * tests/Naming_Test.cpp:
-        * tests/Reactor_Notification_Queue_Test.cpp:
-        * tests/Reference_Counted_Event_Handler_Test.cpp:
-        * tests/Timer_Queue_Reference_Counting_Test.cpp:
+        * docs/ACE-guidelines.html: Clarify the format of ChangeLog entries.
+          Remove the recommendation to always test on egcs; things should be
+          tested on at least Windows and Linux, but egcs is outdated.
 
-        * ace/.cvsignore:
+Tue Oct 10 18:46:12 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-          Removed this file.
+	* ACE-INSTALL.html:
+	  Document how to get a current copy from subversion
+
+Tue Oct 10 14:16:12 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+	* ace/CDR_Stream.cpp:
+	  Fixed incorrect comment
+
+Tue Oct 10 12:54:00 UTC 2006  Simon Massey  <sma@prismtech.com>
+
+        * ace/config-win32-msvc.h:
+          Changed the MFC build run-time dll decorators to match
+          the current build system settings.
+
+Tue Oct 10 06:08:12 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+	* bin/fuzz.pl:
+	  Changed check for empty inline files to also check for empty
+	  source files
+
+	* bin/MakeProjectCreator/config/avoids_corba_e_compact.mpb:
+	* bin/MakeProjectCreator/config/avoids_corba_e_micro.mpb:
+	  New avoids projects
+
+	* etc/ace.doxygen:
+	  Expand some more macros, should improve documentatation
+
+	* html/README:
+	  Updated download location to ISIS
+
+Tue Oct 10 06:03:12 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+	* docs/ACE-bug-process.html:
+	  Updated to mention svn
+
+	* docs/Download.html:
+	  Commented out the source packages that are not complete at this moment
+
+Mon Oct 09 09:07:12 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+	* bin/generate_rel_manpages:
+	  Fixed an error in this script and updated the location to which the
+	  generated packages should be copied to
+
+Mon Oct 09 09:03:12 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+	* docs/Download.html:
+	  Updated with the new download locations
+
+	* docs/bczar/bczar.html:
+	  Updated documentation generation instructions
+
+Thu Oct 05 00:35:37 2006  William R. Otte  wotte@dre.vanderbilt.edu
+
+        * ACE version 5.5.3 released.
 
 Tue Oct  3 16:45:35 UTC 2006  Shanshan Jiang <shanshan.jiang@vanderbilt.edu>
 
@@ -65,9 +118,9 @@ Sat Sep 30 14:00:33 UTC 2006  Steve Huston  <shuston@riverace.com>
 
 Fri Sep 29 18:54:29 UTC 2006  Steve Huston  <shuston@riverace.com>
 
-        * ace/OS_NS_signal.inl (sigaction): In the !ACE_HAS_SIGACTION_CONSTP2
-          case, use ACE_SIGACTION instead of "struct sigaction" to pick up
-          the funky HP hack. Also see:
+	* ace/OS_NS_signal.inl (sigaction): In the !ACE_HAS_SIGACTION_CONSTP2
+	  case, use ACE_SIGACTION instead of "struct sigaction" to pick up
+	  the funky HP hack. Also see:
           Mon Jan 23 22:08:56 UTC 2006  Steve Huston  <shuston@riverace.com>
 
 Fri Sep 29 10:00:04 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>

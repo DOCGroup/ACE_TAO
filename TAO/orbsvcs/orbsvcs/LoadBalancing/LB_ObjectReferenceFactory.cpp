@@ -41,7 +41,7 @@ TAO_LB_ObjectReferenceFactory::TAO_LB_ObjectReferenceFactory (
   this->location_.length (1);
   this->location_[0].id = CORBA::string_dup (location);
 
-  const CORBA::ULong len = repository_ids.length ();
+  CORBA::ULong const len = repository_ids.length ();
   ACE_NEW (this->registered_members_,
            CORBA::Boolean[len]);
 
@@ -104,7 +104,7 @@ TAO_LB_ObjectReferenceFactory::make_object (
 
   CORBA::ULong index = 0;
 
-  const CORBA::Boolean found_group =
+  CORBA::Boolean const found_group =
     this->find_object_group (repository_id,
                              index,
                              object_group.out ()
@@ -180,7 +180,7 @@ TAO_LB_ObjectReferenceFactory::find_object_group (
   ACE_ENV_ARG_DECL)
 {
   if (!this->load_managed_object (repository_id, index))
-    return 0;
+    return false;
 
   PortableGroup::ObjectGroup_var group;
   if (this->table_.find (repository_id, group) != 0)
@@ -211,7 +211,7 @@ TAO_LB_ObjectReferenceFactory::find_object_group (
                                       ACE_ENV_ARG_PARAMETER);
           ACE_CHECK_RETURN (0);
 
-          const CORBA::ULong len = this->fcids_.size ();
+          CORBA::ULong const len = this->fcids_.size ();
           this->fcids_.size (len + 1); // Incremental growth.  Yuck!
           this->fcids_[len] = fcid;
         }
@@ -246,12 +246,12 @@ TAO_LB_ObjectReferenceFactory::load_managed_object (const char * repository_id,
 {
   // @todo Make this more efficient.
 
-  const CORBA::ULong len = this->repository_ids_.length ();
+  CORBA::ULong const len = this->repository_ids_.length ();
   for (i = 0; i < len; ++i)
     if (ACE_OS::strcmp (this->repository_ids_[i], repository_id) == 0)
-      return 1;
+      return true;
 
-  return 0;
+  return false;
 }
 
 

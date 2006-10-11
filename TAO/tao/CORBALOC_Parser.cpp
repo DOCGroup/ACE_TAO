@@ -33,7 +33,7 @@ TAO_CORBALOC_Parser::~TAO_CORBALOC_Parser (void)
 {
 }
 
-int
+bool
 TAO_CORBALOC_Parser::match_prefix (const char *ior_string) const
 {
   // Check if the prefix is 'corbaloc:' and return the result.
@@ -310,7 +310,7 @@ TAO_CORBALOC_Parser::make_canonical (const char *ior,
           // No valid IPv6 address specified but that will come out later.
           if (TAO_debug_level > 0)
             {
-              ACE_DEBUG ((LM_ERROR,
+              ACE_ERROR ((LM_ERROR,
                          ACE_TEXT ("\nTAO (%P|%t) TAO_CORBALOC_Parser: ")
                          ACE_TEXT ("Invalid IPv6 decimal address specified.\n")));
             }

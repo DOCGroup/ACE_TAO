@@ -25,7 +25,7 @@ TAO_CORBANAME_Parser::~TAO_CORBANAME_Parser (void)
 {
 }
 
-int
+bool
 TAO_CORBANAME_Parser::match_prefix (const char *ior_string) const
 {
   return (ACE_OS::strncmp (ior_string,
@@ -36,8 +36,7 @@ TAO_CORBANAME_Parser::match_prefix (const char *ior_string) const
 CORBA::Object_ptr
 TAO_CORBANAME_Parser::
 parse_string_dynamic_request_helper (CORBA::Object_ptr naming_context,
-                                     ACE_CString &key_string
-                                     ACE_ENV_ARG_DECL)
+                                     ACE_CString &key_string)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO::Arg_Traits<CORBA::Object>::ret_val _tao_retval;
@@ -56,8 +55,7 @@ parse_string_dynamic_request_helper (CORBA::Object_ptr naming_context,
                                     11,
                                     0);
 
-  tao_call.invoke (0, 0 ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (_tao_retval.excp ());
+  tao_call.invoke (0, 0);
 
   return _tao_retval.retn ();
 }

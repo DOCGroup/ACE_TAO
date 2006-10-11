@@ -61,7 +61,7 @@ my $checksum = '$md5sum';
 
 $SIG{'HUP'} = $SIG{'INT'} = $SIG{'QUIT'} = $SIG{'TERM'} = 'cleanup';
 
-my $release_filter = '\\( -o -name build \\) -prune -o ' .
+my $release_filter = '\\( -name .svn -o -name build \\) -prune -o ' .
                      '! -name \'.\#*\' ! -name \'\#*\' ! -name \'*~\' ' .
                      '! -name \'*.MAK\' -print';
 
@@ -69,7 +69,7 @@ my $bin_files =
     "\"\\.mak|\\.mdp|\\.ide|\\.exe\|\\.ico\|\\.gz\|\\.zip\|" .
     "\\.gif|\\.vcp|\\.vcproj|\\.vcw|\\.sln\"";
 
-my $dest = 'bugzilla@deuce.doc.wustl.edu:/project/deuce/ftp/pub/ACE+TAO-distribution';
+my $dest = 'bczar@download.dre.vanderbilt.edu:/export/www/download.dre/ACE+TAO-distribution';
 my $release_files = '';
 
 chomp ($release_files = `$make show_release_files`);

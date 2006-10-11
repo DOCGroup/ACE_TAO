@@ -1,85 +1,64 @@
-Fri Oct  6 17:59:09 UTC 2006  Iliyan Jeliazkov  <iliyan@ociweb.com>
+Tue Oct 10 12:11:12 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-        This simply checks in a bunch of changes from the trunk that
-        occured since the inception of the Transport Current feature. The
-        checkin also contains the feature itself.
+	* orbsvcs/examples/ORT/README:
+	  Layout improvement
 
-        * NEWS:
-        * TAO-INSTALL.html:
-        * docs/rtcorba/status.html:
-        * docs/transport_current:
-        * docs/transport_current/index.html:
-        * docs/transport_current/transport_current.css:
-        * docs/tutorials/Quoter/Simple/Client/index.html:
-        * orbsvcs/Transport_Current/Current_Impl.h:
-        * orbsvcs/Transport_Current/Current_Impl.cpp:
-        * orbsvcs/Transport_Current/Current_Loader.h:
-        * orbsvcs/Transport_Current/Current_Loader.cpp:
-        * orbsvcs/Transport_Current/Current_ORBInitializer.h:
-        * orbsvcs/Transport_Current/Current_ORBInitializer.cpp:
-        * orbsvcs/Transport_Current/Current_ORBInitializer_Base.h:
-        * orbsvcs/Transport_Current/Current_ORBInitializer_Base.cpp:
-        * orbsvcs/Transport_Current/IIOP_Current_Impl.h:
-        * orbsvcs/Transport_Current/IIOP_Current_Impl.cpp:
-        * orbsvcs/Transport_Current/IIOP_Current_Loader.h:
-        * orbsvcs/Transport_Current/IIOP_Current_Loader.cpp:
-        * orbsvcs/Transport_Current/IIOP_Transport_Current.h:
-        * orbsvcs/Transport_Current/TC.idl:
-        * orbsvcs/Transport_Current/TC.mpc:
-        * orbsvcs/Transport_Current/TC_IIOP.idl:
-        * orbsvcs/Transport_Current/TC_IIOP.mpc:
-        * orbsvcs/Transport_Current/Transport_Current.h:
-        * orbsvcs/Transport_Current/Transport_Current_Export.h:
-        * orbsvcs/tests/Transport_Current/Framework/Client_Request_Interceptor.h:
-        * orbsvcs/tests/Transport_Current/Framework/Client_Request_Interceptor.cpp:
-        * orbsvcs/tests/Transport_Current/Framework/Current_Test.idl:
-        * orbsvcs/tests/Transport_Current/Framework/Current_Test_Impl.h:
-        * orbsvcs/tests/Transport_Current/Framework/Current_Test_Impl.cpp:
-        * orbsvcs/tests/Transport_Current/Framework/Framework.mpc:
-        * orbsvcs/tests/Transport_Current/Framework/ORBInitializer_T.h:
-        * orbsvcs/tests/Transport_Current/Framework/README:
-        * orbsvcs/tests/Transport_Current/Framework/Server_Main.cpp:
-        * orbsvcs/tests/Transport_Current/Framework/Server_Request_Interceptor.h:
-        * orbsvcs/tests/Transport_Current/Framework/Server_Request_Interceptor.cpp:
-        * orbsvcs/tests/Transport_Current/Framework/Tester.cpp:
-        * orbsvcs/tests/Transport_Current/Framework/client-static.conf:
-        * orbsvcs/tests/Transport_Current/Framework/client.conf:
-        * orbsvcs/tests/Transport_Current/Framework/client.cpp:
-        * orbsvcs/tests/Transport_Current/Framework/run_test.pl:
-        * orbsvcs/tests/Transport_Current/Framework/server-static.conf:
-        * orbsvcs/tests/Transport_Current/Framework/server.conf:
-        * orbsvcs/tests/Transport_Current/Framework/server.cpp:
-        * orbsvcs/tests/Transport_Current/Framework/simple.cpp:
-        * orbsvcs/tests/Transport_Current/IIOP/Current_Test_Impl.cpp:
-        * orbsvcs/tests/Transport_Current/IIOP/IIOP.mpc:
-        * orbsvcs/tests/Transport_Current/IIOP/IIOP_Server_Main.cpp:
-        * orbsvcs/tests/Transport_Current/IIOP/IIOP_Server_Request_Interceptor.h:
-        * orbsvcs/tests/Transport_Current/IIOP/IIOP_Server_Request_Interceptor.cpp:
-        * orbsvcs/tests/Transport_Current/IIOP/IIOP_Tester.cpp:
-        * orbsvcs/tests/Transport_Current/IIOP/README:
-        * orbsvcs/tests/Transport_Current/IIOP/client_dynamic.conf:
-        * orbsvcs/tests/Transport_Current/IIOP/client_static.conf:
-        * orbsvcs/tests/Transport_Current/IIOP/run_test.pl:
-        * orbsvcs/tests/Transport_Current/IIOP/server_dynamic.conf:
-        * orbsvcs/tests/Transport_Current/IIOP/server_static.conf:
-        * tao/ORB_Core.h:
-        * tao/Profile_Transport_Resolver.h:
-        * tao/Profile_Transport_Resolver.inl:
-        * tao/Profile_Transport_Resolver.cpp:
-        * tao/TAO_Server_Request.h:
-        * tao/TAO_Server_Request.inl:
-        * tao/TAO_Server_Request.cpp:
-        * tao/TSS_Resources.h:
-        * tao/TSS_Resources.cpp:
-        * tao/Transport.h:
-        * tao/Transport.inl:
-        * tao/Transport.cpp:
-        * tao/Transport_Listener_Manager.h:
-        * tao/Transport_Listener_Manager.cpp:
-        * tao/Transport_Selection_Guard.h:
-        * tao/Transport_Selection_Guard.cpp:
-        * tao/tao.mpc:
-        * tests/POA/POAManagerFactory/POAManagerFactory.cpp:
+	* orbsvcs/orbsvcs/CosConcurrencyControl.idl:
+	* orbsvcs/orbsvcs/CosLoadBalancing.idl:
+	* orbsvcs/orbsvcs/CosNaming.idl:
+	  Doxygen improvements
+
+	* orbsvcs/LoadBalancing/LB_ObjectReferenceFactory.cpp:
+	  Const/bool improvements
+
+Tue Oct 10 09:24:12 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+	* docs/ior_parsing.html:
+	  Updated that match_prefix returns bool
+
+Tue Oct 10 09:19:12 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+	* tao/Connection_Handler.cpp:
+	  Layout change
+
+	* tao/CORBALoc_Parser.{h,cpp}:
+	* tao/CORBAName_Parser.{h,cpp}:
+	* tao/DLL_Parser.{h,cpp}:
+	* tao/FILE_Parser.{h,cpp}:
+	* tao/IOR_Parser.{h,cpp}:
+	* tao/MCAST_Parser.{h,cpp}:
+	  Changed match_prefix to return a bool instead of an int.
+
+	* tao/CORBALoc_Parser.cpp:
+	* tao/CSD_ThreadPool/CSD_TP_Strategy_Factory.cpp:
+	* tao/Environment.cpp:
+	* tao/Exception.cpp:
+	* tao/IIOP_Connector.cpp:
+	* tao/IIOP_Profile.cpp:
+	* tao/ORB_Core.cpp:
+	* tao/Strategies/SCIOP_Connector.cpp:
+	* tao/Strategies/UIOP_Connector.cpp:
+	* tao/SystemException.cpp:
+	  When using LM_ERROR, use ACE_ERROR as macro
+
+	* tao/IIOP_Connection_Handler.cpp:
+	  Const improvment
+
+	* tao/ObjRefTemplate/ObjectReferenceTemplate.pidl:
+	  Cleanup of comment
+
+	* tao/Strategies/DIOP_Profile.cpp:
+	  Small code improvement assuming the fact that operator>> returns
+	  bool
+
+Tue Oct 10 06:08:12 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+	* tests/COIOP/*:
+	  New test for COIOP
+
+Thu Oct 05 00:35:37 2006  William R. Otte  wotte@dre.vanderbilt.edu
+
+        * TAO version 1.5.3 released.
 
 Tue Oct  3 17:24:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
