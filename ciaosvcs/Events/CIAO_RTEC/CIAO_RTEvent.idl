@@ -38,14 +38,15 @@ module CIAO
   interface CIAO_RT_Evnet_Service :
     CIAO_Event_Service
   {
-    void create_addr_server ();
+    boolean create_addr_serv (in string name,
+                              in unsigned short port,
+                              in string address);
 
-    void create_sender ();
-    void create_receiver ();
-    void create_event_handler ();
+    boolean create_sender (in string addr_serv_id);
 
-    void connect_sender ();
-    void connect_receiver();
+    boolean create_receiver (in string addr_serv_id,
+                             in boolean is_multicast,
+                             in unsigned short listen_port);
   };
 
 };

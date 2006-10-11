@@ -51,18 +51,24 @@ module CIAO
     struct AddrServer
     {
       string name;
+      unsigned short port;
+      string address;
     };
     typedef sequence<AddrServer> AddrServers;
 
     struct UDPSender
     {
       string name;
+      string addr_serv_id;
     };
     typedef sequence<UDPSender> UDPSenders;
 
     struct UPDReceiver
     {
       string name;
+      string addr_serv_id;
+      boolean is_multicast;
+      unsigned short listen_port;
     };
     typedef sequence<UPDReceiver> UPDReceivers;
 
@@ -82,9 +88,9 @@ module CIAO
       string svc_cfg_file;
 
       EventFilters filters;
+      AddrServers addr_srvs;
       UDPSenders senders;
       UPDReceivers receivers;
-      EventHandlers ehs;
     };
     typedef sequence < EventServiceDeploymentDescription >
       EventServiceDeploymentDescriptions;
