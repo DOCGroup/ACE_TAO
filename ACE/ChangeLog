@@ -1,3 +1,30 @@
+Wed Oct 11 15:24:04 UTC 2006  Steve Huston  <shuston@riverace.com>
+
+        * ace/Log_Record.{h inl cpp}: Removed the set_msg_data_ptr()
+          method - it opens the possibility of putting a buffer in place
+          that can't be freed properly. All of the memory allocating and
+          deleting should be done internally to this class. The removed
+          method was only used internally.
+          Added a private msg_data_size_ member that keeps the allocated size
+          of msg_data_ in ACE_TCHARs (not bytes) to tell if the buffer needs
+          to be resized. Comparing to the string length is incorrect - it
+          causes buffer reallocating whenever a short logged message is
+          followed by a longer one, even if both are much shorter than the
+          allocated length of msg_data_. When a ctor allocates a msg_data_
+          area, set the first spot to '\0' to a call to msg_data_len() won't
+          get random answers or a crash.
+          (msg_data (const ACE_TCHAR *)): Changed this method to return int,
+          not void. It also will now reallocate the msg_data_ buffer if needed
+          to hold the specified string. operator<< now uses msg_data() to set
+          the string instead of the now removed set_msg_data_ptr() method,
+          keeping all msg_data_ allocation and release in the same class.
+          (operator<<): Fix memory leak when setting a new msg_data_
+          buffer. Thanks to Arturo Montes for letting us know about the leak.
+
+        * docs/ACE-guidelines.html: Clarify the format of ChangeLog entries.
+          Remove the recommendation to always test on egcs; things should be
+          tested on at least Windows and Linux, but egcs is outdated.
+
 Tue Oct 10 18:46:12 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 	* ACE-INSTALL.html:
