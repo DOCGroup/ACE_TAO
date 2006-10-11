@@ -7,6 +7,7 @@
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_time.h"
 #include "ace/CDR_Stream.h"
+#include "ace/Auto_Ptr.h"
 
 #if !defined (__ACE_INLINE__)
 # include "ace/Log_Record.inl"
@@ -111,18 +112,29 @@ ACE_Log_Record::dump (void) const
   ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("\ntype_ = %u\n"), this->type_));
   ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("\ntime_stamp_ = (%d, %d)\n"), this->secs_, this->usecs_));
   ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("\npid_ = %u\n"), this->pid_));
-  ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("\nmsg_data_ = %s\n"), this->msg_data_));
+  ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("\nmsg_data_ (0x%@) = %s\n"),
+              this->msg_data_, this->msg_data_));
+  ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("\nmsg_data_size_ = ") ACE_SIZE_T_FORMAT_SPECIFIER ACE_LIB_TEXT ("\n"), this->msg_data_size_));
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 #endif /* ACE_HAS_DUMP */
 }
 
-void
+int
 ACE_Log_Record::msg_data (const ACE_TCHAR *data)
 {
   // ACE_TRACE ("ACE_Log_Record::msg_data");
-  ACE_OS::strsncpy (this->msg_data_, data,
-                    (MAXLOGMSGLEN / sizeof (ACE_TCHAR)));
+  size_t newlen = ACE_OS::strlen (data) + 1;  // Will need room for '\0'
+  if (newlen > this->msg_data_size_)
+    {
+      ACE_TCHAR *new_msg_data;
+      ACE_NEW_RETURN (new_msg_data, ACE_TCHAR[newlen], -1);
+      delete [] this->msg_data_;
+      this->msg_data_ = new_msg_data;
+      this->msg_data_size_ = newlen;
+    }
+  ACE_OS::strcpy (this->msg_data_, data);
   this->round_up ();
+  return 0;
 }
 
 ACE_Log_Record::ACE_Log_Record (ACE_Log_Priority lp,
@@ -133,10 +145,16 @@ ACE_Log_Record::ACE_Log_Record (ACE_Log_Priority lp,
     secs_ (ts_sec),
     usecs_ (0),
     pid_ (ACE_UINT32 (p)),
-    msg_data_ (0)
+    msg_data_ (0),
+    msg_data_size_ (0)
 {
   // ACE_TRACE ("ACE_Log_Record::ACE_Log_Record");
   ACE_NEW_NORETURN (this->msg_data_, ACE_TCHAR[MAXLOGMSGLEN]);
+  if (0 != this->msg_data_)
+    {
+      this->msg_data_size_ = MAXLOGMSGLEN;
+      this->msg_data_[0] = '\0';
+    }
 }
 
 ACE_Log_Record::ACE_Log_Record (ACE_Log_Priority lp,
@@ -147,10 +165,16 @@ ACE_Log_Record::ACE_Log_Record (ACE_Log_Priority lp,
     secs_ ((ACE_UINT32) ts.sec ()),
     usecs_ ((ACE_UINT32) ts.usec ()),
     pid_ (ACE_UINT32 (p)),
-    msg_data_ (0)
+    msg_data_ (0),
+    msg_data_size_ (0)
 {
   // ACE_TRACE ("ACE_Log_Record::ACE_Log_Record");
   ACE_NEW_NORETURN (this->msg_data_, ACE_TCHAR[MAXLOGMSGLEN]);
+  if (0 != this->msg_data_)
+    {
+      this->msg_data_size_ = MAXLOGMSGLEN;
+      this->msg_data_[0] = '\0';
+    }
 }
 
 void
@@ -172,10 +196,16 @@ ACE_Log_Record::ACE_Log_Record (void)
     secs_ (0),
     usecs_ (0),
     pid_ (0),
-    msg_data_ (0)
+    msg_data_ (0),
+    msg_data_size_ (0)
 {
   // ACE_TRACE ("ACE_Log_Record::ACE_Log_Record");
   ACE_NEW_NORETURN (this->msg_data_, ACE_TCHAR[MAXLOGMSGLEN]);
+  if (0 != this->msg_data_)
+    {
+      this->msg_data_size_ = MAXLOGMSGLEN;
+      this->msg_data_[0] = '\0';
+    }
 }
 
 int
@@ -324,7 +354,9 @@ operator>> (ACE_InputCDR &cdr,
   // Extract each field from input CDR stream into <log_record>.
   if ((cdr >> type) && (cdr >> pid) && (cdr >> sec) && (cdr >> usec)
       && (cdr >> buffer_len)) {
-    ACE_TCHAR *log_msg = new ACE_TCHAR[buffer_len + 1];
+    ACE_TCHAR *log_msg;
+    ACE_NEW_RETURN (log_msg, ACE_TCHAR[buffer_len + 1], -1);
+    auto_ptr<ACE_TCHAR> log_msg_p (log_msg);
     log_record.type (type);
     log_record.pid (pid);
     log_record.time_stamp (ACE_Time_Value (sec, usec));
@@ -334,7 +366,8 @@ operator>> (ACE_InputCDR &cdr,
     cdr.read_char_array (log_msg, buffer_len);
 #endif /* ACE_USES_WCHAR */
     log_msg[buffer_len] = '\0';
-    log_record.set_msg_data_ptr (log_msg);
+    if (-1 == log_record.msg_data (log_msg))
+      return -1;
   }
   return cdr.good_bit ();
 }
