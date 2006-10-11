@@ -4,7 +4,7 @@
 #define DEPLOYMENT_CORE_IDL
 
 #include "CCM_Component.idl"
-#include <ciaosvcs/Events/CIAO_Events_Base/CIAO_Events.idl>
+#include "Deployment_Events.idl"
 
 // *************** Packaging and Deployment ***************
 module Deployment
@@ -207,6 +207,7 @@ module Deployment
   typedef sequence<Container> Containers;
   typedef sequence<CIAO::CIAO_Event_Service> CIAO_Event_Services;
 
+  /*
   /// CIAO specific extension
   /// This struct captures the installation information of a particular
   /// CIAO_Event_Service, as defined in <ciaosvcs/Events/CIAO_Events.idl>
@@ -220,6 +221,7 @@ module Deployment
 
   /// CIAO specific extension
   typedef sequence<ESInstallationInfo> ESInstallationInfos;
+  */
 
   interface NodeApplication : Application
   {
@@ -246,7 +248,8 @@ module Deployment
     /// This operation will create one or more CIAO_Event_Service objects
     /// within the NodeApplication, which will be used to mediate the
     /// communication of CCM events
-    CIAO_Event_Services install_es (in ESInstallationInfos es_infos)
+    CIAO_Event_Services install_es (
+        in CIAO::DAnCE::EventServiceDeploymentDescriptions es_infos)
       raises (InstallationFailure);
 
     /// CIAO specific extensions

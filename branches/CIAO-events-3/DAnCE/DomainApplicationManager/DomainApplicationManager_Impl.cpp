@@ -670,16 +670,6 @@ install_all_es (void)
     {
       for (CORBA::ULong j = 0; j < this->esd_->length (); ++j)
         {
-          // Construct the ESInstallationInfos data
-          Deployment::ESInstallationInfos_var es_infos;
-          ACE_NEW (es_infos,
-                   Deployment::ESInstallationInfos);
-
-          es_infos->length (1);
-          (*es_infos)[0].id = this->esd_[j].name.in ();
-          (*es_infos)[0].type = CIAO::RTEC;  //only RTEC is supported so far
-          (*es_infos)[0].svcconf = this->esd_[j].svc_cfg_file.in ();
-
           // Find NA, and then invoke operation on it
           ACE_Hash_Map_Entry <ACE_CString, Chained_Artifacts> *entry = 0;
 
@@ -708,10 +698,10 @@ install_all_es (void)
               (entry->int_id_).node_application_.in ();
 
           ::Deployment::CIAO_Event_Services_var event_services =
-              my_na->install_es (es_infos);
+              my_na->install_es (this->esd_.in ());
 
           // Add these returned ES objects into the cached map
-          this->add_es_to_map (es_infos, event_services);
+          this->add_es_to_map (this->esd_, event_services);
         }
     }
   ACE_CATCHANY
@@ -727,7 +717,7 @@ install_all_es (void)
 
 void
 CIAO::DomainApplicationManager_Impl::
-add_es_to_map (Deployment::ESInstallationInfos * es_infos,
+add_es_to_map (DAnCE::EventServiceDeploymentDescriptions * es_infos,
                Deployment::CIAO_Event_Services * event_services)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Deployment::StartError))
@@ -739,7 +729,7 @@ add_es_to_map (Deployment::ESInstallationInfos * es_infos,
       for (CORBA::ULong i = 0; i < es_length; ++i)
         {
           this->es_map_.bind (
-            (*es_infos)[i].id.in (),
+            (*es_infos)[i].name.in (),
             CIAO::CIAO_Event_Service::_duplicate ((*event_services)[i]));
         }
     }

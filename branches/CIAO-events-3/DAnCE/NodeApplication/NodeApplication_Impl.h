@@ -158,7 +158,7 @@ namespace CIAO
 
     /// Install a number of CIAO_Event_Service objects within the NA
     virtual ::Deployment::CIAO_Event_Services *
-      install_es (const ::Deployment::ESInstallationInfos & es_infos
+      install_es (const ::CIAO::DAnCE::EventServiceDeploymentDescriptions & es_infos
                   ACE_ENV_ARG_DECL_WITH_DEFAULTS)
       ACE_THROW_SPEC ((::CORBA::SystemException,
                        ::Deployment::InstallationFailure));
@@ -375,7 +375,7 @@ namespace CIAO
     /// Cache the (NA specific) installation info of all the
     /// CIAO_Event_Services
     typedef ACE_Hash_Map_Manager_Ex<ACE_CString,
-                                    ::Deployment::ESInstallationInfos_var,
+                                    DAnCE::EventServiceDeploymentDescriptions_var,
                                     ACE_Hash<ACE_CString>,
                                     ACE_Equal_To<ACE_CString>,
                                     ACE_Null_Mutex> ES_Installation_Map;

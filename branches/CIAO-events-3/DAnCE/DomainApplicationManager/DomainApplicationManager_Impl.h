@@ -398,7 +398,7 @@ namespace CIAO
      * Add all CIAO_Event_Service objects into the cached map.
      */
     virtual void
-    add_es_to_map (Deployment::ESInstallationInfos * es_infos,
+    add_es_to_map (DAnCE::EventServiceDeploymentDescriptions * es_infos,
                    Deployment::CIAO_Event_Services * event_services)
       ACE_THROW_SPEC ((CORBA::SystemException,
                       Deployment::StartError));
