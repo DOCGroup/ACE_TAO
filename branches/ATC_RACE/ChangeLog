@@ -1,3 +1,12 @@
+Wed Oct 11 14:02:30 UTC 2006  Nishanth Shankaran  <nshankar@dre.vanderbilt.edu>
+
+        * Controller/Component/starter.cpp:
+        * Monitor/Local_Monitor/Local_Monitor.h:
+        * Monitor/Local_Monitor/Local_Monitor.cpp: Fixed compilation
+          errors on windows.
+
+        * common/OpString.idl: Fixed compilation errors.
+
 Wed Oct 11 00:48:28 UTC 2006  Nishanth Shankaran  <nshankar@dre.vanderbilt.edu>
 
         * Controller/Component/Controller.mpc:

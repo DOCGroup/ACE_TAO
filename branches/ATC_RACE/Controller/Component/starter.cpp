@@ -5,14 +5,13 @@
 
 //IOR file of the Controller
 const char * ior = 0;
-enum input {ERROR, START, STOP};
 
-input
+int
 parse_args (int argc, char *argv[])
 {
   ACE_Get_Opt get_opts (argc, argv, "k:s");
   int c = 0;
-  input in = STOP;
+  int ret = 0;
   while ((c = get_opts ()) != -1)
     {
       switch (c)
@@ -22,7 +21,7 @@ parse_args (int argc, char *argv[])
           break;
 
         case 's':
-          in = START;
+          ret = 1;
           break;
 
         case '?':  // display help for use of the server.
@@ -33,7 +32,7 @@ parse_args (int argc, char *argv[])
                              "-s Start the controller "
                              "(defaults to stop the controller)\n",
                              argv [0]),
-                            ERROR);
+                            -1);
           break;
         }
 
@@ -44,7 +43,7 @@ parse_args (int argc, char *argv[])
       ior = "file://Controller.ior";
     }
 
-  return in;
+  return ret;
 }
 
 int
@@ -54,8 +53,8 @@ main (int argc, char *argv[])
     {
 
       CORBA::ORB_var orb = CORBA::ORB_init (argc, argv, "");
-      input ret = parse_args (argc, argv);
-      if (ret == ERROR)
+      int ret = parse_args (argc, argv);
+      if (ret == -1)
         {
           return -1;
         }
@@ -72,7 +71,7 @@ main (int argc, char *argv[])
                             -1);
         }
 
-      if (ret == START)
+      if (ret == 1)
         {
           trigger->start_controller ();
         }

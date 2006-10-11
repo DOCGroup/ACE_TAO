@@ -141,7 +141,7 @@ namespace CIAO
         {
           this->instance_id_ = CORBA::string_dup (id);
         }
-      this->start_time_ = ACE_OS::gettimeofday ();
+      this->timer_.start ();
     }
 
     void
@@ -151,12 +151,14 @@ namespace CIAO
         {
           return;
         }
-      size_t temp = (ACE_OS::gettimeofday () - this->start_time_).msec ();
-
+	  this->timer_.stop ();
+	  ACE_Time_Value time;
+	  this->timer_.elapsed_time (time);
+      
       this->mutex_.acquire ();
 
       this->delays_.length (this->delays_.length () + 1);
-      this->delays_ [this->delays_.length () - 1] = temp;
+      this->delays_ [this->delays_.length () - 1] = time.msec ();
 
       this->mutex_.release ();
     }
