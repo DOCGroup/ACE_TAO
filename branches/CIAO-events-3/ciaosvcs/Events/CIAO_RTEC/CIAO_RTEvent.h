@@ -28,6 +28,11 @@
 #include "orbsvcs/orbsvcs/Event_Utilities.h"
 #include "orbsvcs/orbsvcs/Event/EC_Event_Channel.h"
 #include "orbsvcs/orbsvcs/Event/EC_Default_Factory.h"
+#include "orbsvcs/Event/ECG_Mcast_EH.h"
+#include "orbsvcs/Event/ECG_UDP_Sender.h"
+#include "orbsvcs/Event/ECG_UDP_Receiver.h"
+#include "orbsvcs/Event/ECG_UDP_Out_Endpoint.h"
+#include "orbsvcs/Event/ECG_UDP_EH.h"
 #include "ace/Hash_Map_Manager.h"
 
 namespace CIAO
@@ -102,6 +107,28 @@ namespace CIAO
         ::CORBA::SystemException,
         ::Components::BadEventType));
 
+    virtual ::CORBA::Boolean create_addr_serv (
+        const char * name,
+        ::CORBA::UShort port,
+        const char * address
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+      ACE_THROW_SPEC ((
+        ::CORBA::SystemException));
+
+    virtual ::CORBA::Boolean create_sender (
+        const char * addr_serv_id
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+      ACE_THROW_SPEC ((
+        ::CORBA::SystemException));
+
+    virtual ::CORBA::Boolean create_receiver (
+        const char * addr_serv_id,
+        ::CORBA::Boolean is_multicast,
+        ::CORBA::UShort listen_port
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+      ACE_THROW_SPEC ((
+        ::CORBA::SystemException));
+
   private:
     // @@ (GD) This is the place where use could provide a parameter
     //         which specifies the event channel service configuration file.
@@ -158,6 +185,18 @@ namespace CIAO
                             ACE_Hash<ACE_CString>,
                             ACE_Equal_To<ACE_CString>,
                             ACE_Null_Mutex> proxy_supplier_map_;
+
+    /**
+     * @var ACE_Hash_Map_Manager<> addr_serv_map_
+     *
+     * A map which managers a set of address servers for event channel
+     * federation purpose.
+     */
+    ACE_Hash_Map_Manager_Ex<ACE_CString,
+                            RtecUDPAdmin::AddrServer_var,
+                            ACE_Hash<ACE_CString>,
+                            ACE_Equal_To<ACE_CString>,
+                            ACE_Null_Mutex> addr_serv_map_;
 
   };
 
