@@ -61,23 +61,21 @@ bgcolor="#ffffff">
         <strong><code>-?</code></strong> command line argument, are
         provided to the program.<p>
 
-    <li>A program entry point <code>main</code> can take any of the
-        three forms:
-        <p><pre>
+    <li>An ACE-using program's entry point should use the portable form:
+        <pre>
+        int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
+        </pre>
+        This form is portable to all ACE platforms whether using narrow
+        or wide characters. The other two common forms:
+        <pre>
         int main (int argc, char *argv[])
         int wmain (int argc, wchar_t *argv[])
-        int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
-        </pre></p>
-        Of them, the entry point <code>main</code> always gives you
-        the command line argument in char strings form.  The entry
-        point <code>wmain</code> currently can only be used under
-        Win32 and it returns the command line arguments in <code>wchar</code>
-        strings format.  Defining the <code>ACE_TMAIN</code> as the
-        program entry point is the more portable form.  The command
-        line arguments are given in char strings in most cases,
-        or <code>wchar</code> strings when <code>ACE_USES_WCHAR</code> is defined.
-        See <code>$ACE_ROOT/docs/wchar.txt</code> for more information
-        on ACE support on <code>wchar</code>.<p>
+        </pre>
+        as well as any other main entrypoint form should only be used
+        when there is some overarching reason to not use the portable form.
+        One example would be a Windows GUI program that requires WinMain.
+        <p>See <a href="wchar.txt"><code>$ACE_ROOT/docs/wchar.txt</code></a>
+        for more information on ACE support on <code>wchar</code>.<p>
 
     <li>The program entry point function, in any form mentioned above, must
         always be declared with arguments, <em>e.g.</em>,
@@ -174,8 +172,8 @@ bgcolor="#ffffff">
         <a href="http://www.doxygen.org/">Doxygen</a>
         format requirements.
         The complete documentation for Doxygen is available in the
-        <a href="http://www.stack.nl/~dimitri/doxygen/download.html#latestman">Doxygen
-        manual</a>.
+        <a href="http://www.stack.nl/~dimitri/doxygen/download.html#latestman">
+        Doxygen manual</a>.
         For an example header file using Doxygen-style comments,
         please refer to <a href="../ace/ACE.h">ACE.h</a>.<p>
 
@@ -1193,23 +1191,28 @@ public:
   <a href="http://www.cs.wustl.edu/~schmidt/TAO-overview.html">TAO</a>
   Guidelines</h3>
 <ul>
-  <li>When enhancing, updating, or fixing ACE or TAO, always:<p>
+  <li>When enhancing, updating, or fixing ACE or TAO, always:
   <ol>
-    <li>Test your change on at least one platform.  All changes
-      <strong>must</strong> be tested with egcs before commiting.
-      That means you may need to test on at least two platforms.<p>
+    <li>Test your change on at least Windows and Linux before commiting.
+      After commiting watch the scoreboard to catch errors your change
+      may be related to on other platforms.
     <li>An an entry to the appropriate ChangeLog.  TAO and some
       ACE subdirectories, such as <a href="../ASNMP">ASNMP</a>,
       <a href="../apps/JAWS">JAWS</a>, and
       <a href="../apps/gperf">gperf,</a> have their
       own ChangeLogs.  If you don't use one of those, use the
       <a href="../ChangeLog">ChangeLog</a> in the top-level
-      <a href="..">ACE_wrappers</a> directory.<p>
+      <a href="..">ACE_wrappers</a> directory. A ChangeLog entry should
+      have the form:
+      <pre>&lt;tab&gt; * dir/file.ext [(methods)]: description...</pre>
+      If you have a number of files, the names should be on separate lines.
+      In this case, it's also ok to start the description on a new line
+      indented to "dir."
     <li>Commit your change using a message of this form:<p>
 <code>
 ChangeLogTag: Thu Jul 22 09:55:10 UTC 1999  David L. Levine
  &lt;levine@cs.wustl.edu&gt;
-</code><p>
+</code>
     <li>If the change is in response to a request by someone else:
     <ol>
       <li>Make sure that person is acknowledged in
@@ -1218,9 +1221,12 @@ ChangeLogTag: Thu Jul 22 09:55:10 UTC 1999  David L. Levine
     </ol>
   </ol>
 
-  <li>Never add copyrighted, confidential, or otherwise restricted
-      code to the ACE or TAO distributions without written permission
-      from the owner.<p>
+  <li><strong>Never</strong> add copyrighted, confidential, or otherwise
+      restricted code to the ACE or TAO distributions without reviewing
+      the situation with DOC management (i.e. Doug Schmidt). You will also
+      most likely need to get written permission from the owner. The
+      particular language and form needed will be relayed to you after
+      discussing it with DOC management.<p>
 </ul>
 
 
