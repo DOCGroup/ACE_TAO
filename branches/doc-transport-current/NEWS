@@ -7,7 +7,7 @@ USER VISIBLE CHANGES BETWEEN ACE-5.5.2 and ACE-5.5.3
 . Added the base projects for executionmanager_stub and plan_generator.
 
 . Added the ACE_Hash_MultiMap_Manager class and its test file.
- 
+
 . Changed the ACE_Synch_Options::operator[] method to return bool rather than
   int. The value returned is a yes/no indication of whether or not the
   specified option(s) are set in the object.
@@ -101,6 +101,15 @@ USER VISIBLE CHANGES BETWEEN ACE-5.5.2 and ACE-5.5.3
 . Support for Intel C++ 9.1 on Windows and Linux
 
 . VxWorks 6.3 support
+
+. Fixed Bugzilla #2648 to make sure ACE_Service_Object::fini()
+  is called iff ACE_Service_Object::init() succeeded, as per
+  C++NPv2.
+
+. Added preliminary support for Mac OS X 10.4 on Intel CPU's.
+
+. Fixed Bugzilla #2602 to re-enable XML Service Configurator
+  file support.
 
 USER VISIBLE CHANGES BETWEEN ACE-5.5.1 and ACE-5.5.2
 ====================================================
