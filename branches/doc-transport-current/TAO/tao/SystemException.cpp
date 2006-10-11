@@ -223,7 +223,7 @@ CORBA::SystemException::_tao_minor_code (u_int location,
 void
 CORBA::SystemException::_tao_print_system_exception (FILE *) const
 {
-  ACE_DEBUG ((LM_ERROR,
+  ACE_ERROR ((LM_ERROR,
               ACE_TEXT("(%P|%t) system exception, ID '%s'\n"),
               ACE_TEXT_CHAR_TO_TCHAR (this->_info ().c_str ())));
 }

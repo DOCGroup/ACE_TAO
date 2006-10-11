@@ -1491,7 +1491,7 @@ Using the Cygnus tools, this approach works:
     <a href="include/makeinclude/platform_vxworks5.5.x.GNU">the
     g++/VxWorks platform file</a> for more information.<p>
   </p></li><li>Create an <code>ACE_wrappers/ace/config.h</code> file that looks
-    something like the following. 
+    something like the following.
 <pre>#if defined (_MSC_VER)  ||  defined (__BORLANDC__)
 # include "ace/config-win32.h"
 #else
@@ -2964,8 +2964,8 @@ CIAO. We point out some suggestions below to get bootstrapped
 quickly.
 
 <ul>
-  <li> Please see <a href="#MPC"> instructions</a> above to download
-  MPC from the subversion repository <p>
+	<li>You can checkout ACE+TAO+CIAO together with MPC with the following command: <p>
+	<code>svn co svn://svn.dre.vanderbilt.edu/DOC/Middleware/sets-anon/ACE+TAO+CIAO .</code>
   </p></li><li>Please make sure that you have <a href="http://www.perl.org/">
   perl</a> installed, preferably perl
   5.8 or higher. Users on Win32 based platforms are recommended to use

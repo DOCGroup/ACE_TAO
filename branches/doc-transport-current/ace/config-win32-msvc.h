@@ -31,15 +31,7 @@
 
 #if !defined (ACE_LD_DECORATOR_STR)
 # if defined (_DEBUG)
-#  if ACE_HAS_MFC == 1
-#   define ACE_LD_DECORATOR_STR ACE_LIB_TEXT ("mfcd")
-#  else
-#   define ACE_LD_DECORATOR_STR ACE_LIB_TEXT ("d")
-#  endif  /* ACE_HAS_MFC */
-# else  /* _NDEBUG */
-#  if ACE_HAS_MFC == 1
-#   define ACE_LD_DECORATOR_STR ACE_LIB_TEXT ("mfc")
-#  endif  /* ACE_HAS_MFC */
+#  define ACE_LD_DECORATOR_STR ACE_LIB_TEXT ("d")
 # endif  /* _DEBUG */
 #endif  /* ACE_LD_DECORATOR_STR */
 

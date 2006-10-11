@@ -74,29 +74,29 @@ module CosLoadBalancing
 
     Properties get_properties ();
 
-    // Report loads at given location to the LoadManager.
+    /// Report loads at given location to the LoadManager.
     void push_loads (in PortableGroup::Location the_location,
                      in LoadList loads)
       raises (StrategyNotAdaptive);
 
-    // Get loads, if any, at the given location.  Load balancing
-    // strategies may use this method to query loads at specific
-    // locations.  Returned loads are the effective loads computed by
-    // the Strategy, as opposed to the raw loads maintained by the
-    // LoadManager.
+    /// Get loads, if any, at the given location.  Load balancing
+    /// strategies may use this method to query loads at specific
+    /// locations.  Returned loads are the effective loads computed by
+    /// the Strategy, as opposed to the raw loads maintained by the
+    /// LoadManager.
     LoadList get_loads (in LoadManager load_manager,
                         in PortableGroup::Location the_location)
       raises (LocationNotFound);
 
-    // Return the next member from the given object group which will
-    // requests will be forward to.
+    /// Return the next member from the given object group which will
+    /// requests will be forward to.
     Object next_member (in PortableGroup::ObjectGroup object_group,
                         in LoadManager load_manager)
       raises (PortableGroup::ObjectGroupNotFound,
               PortableGroup::MemberNotFound);
 
-    // Ask the Strategy to analyze loads, and enable or disable alerts
-    // at object group members residing at appropriate locations.
+    /// Ask the Strategy to analyze loads, and enable or disable alerts
+    /// at object group members residing at appropriate locations.
     oneway void analyze_loads (in PortableGroup::ObjectGroup object_group,
                                in LoadManager load_manager);
 
@@ -108,7 +108,7 @@ module CosLoadBalancing
 
   typedef Strategy CustomStrategy;
 
-  // Property value for built-in load balancing Strategy.
+  /// Property value for built-in load balancing Strategy.
   struct StrategyInfo
   {
     string name;
@@ -117,81 +117,81 @@ module CosLoadBalancing
 
   interface LoadAlert
   {
-    // Forward requests back to the load manager via the object group
-    // reference.
+    /// Forward requests back to the load manager via the object group
+    /// reference.
     void enable_alert ();
 
-    // Stop forwarding requests, and begin accepting them again.
+    /// Stop forwarding requests, and begin accepting them again.
     void disable_alert ();
   };
 
-  // Interface that all load monitors must implement.
+  /// Interface that all load monitors must implement.
   interface LoadMonitor
   {
-    // Retrieve the location at which the LoadMonitor resides.
+    /// Retrieve the location at which the LoadMonitor resides.
     readonly attribute Location the_location;
 
-    // Retrieve the current load at the location LoadMonitor resides.
+    /// Retrieve the current load at the location LoadMonitor resides.
     readonly attribute LoadList loads;
   };
 
-  // Specification of LoadManager Interface
+  /// Specification of LoadManager Interface
   interface LoadManager
     : PortableGroup::PropertyManager,
       PortableGroup::ObjectGroupManager,
       PortableGroup::GenericFactory
   {
-    // For the PUSH load monitoring style.
+    /// For the PUSH load monitoring style.
     void push_loads (in PortableGroup::Location the_location,
                      in LoadList loads);
 
-    // Return the raw loads at the given location, as opposed to the
-    // potentially different effective loads returned by the
-    // Strategy::get_loads() method.
+    /// Return the raw loads at the given location, as opposed to the
+    /// potentially different effective loads returned by the
+    /// Strategy::get_loads() method.
     LoadList get_loads (in PortableGroup::Location the_location)
       raises (LocationNotFound);
 
-    // Inform member at given location of load alert condition.
+    /// Inform member at given location of load alert condition.
     void enable_alert (in PortableGroup::Location the_location)
       raises (LoadAlertNotFound);
 
-    // Inform member at given location that load alert condition has
-    // passed.
+    /// Inform member at given location that load alert condition has
+    /// passed.
     void disable_alert (in PortableGroup::Location the_location)
       raises (LoadAlertNotFound);
 
-    // Register a LoadAlert object for the member at the given
-    // location.
+    /// Register a LoadAlert object for the member at the given
+    /// location.
     void register_load_alert (in PortableGroup::Location the_location,
                               in LoadAlert load_alert)
       raises (LoadAlertAlreadyPresent,
               LoadAlertNotAdded);
 
-    // Retrieve the LoadAlert object for the member at the given
-    // location.
+    /// Retrieve the LoadAlert object for the member at the given
+    /// location.
     LoadAlert get_load_alert (in PortableGroup::Location the_location)
       raises (LoadAlertNotFound);
 
-    // Remove (de-register) the LoadAlert object for the member at the
-    // given location.
+    /// Remove (de-register) the LoadAlert object for the member at the
+    /// given location.
     void remove_load_alert (in PortableGroup::Location the_location)
       raises (LoadAlertNotFound);
 
     // The following load monitor methods are only used for the PULL
     // load monitoring style.
 
-    // Register a LoadMonitor object for "pull" monitoring of the
-    // given location.
+    /// Register a LoadMonitor object for "pull" monitoring of the
+    /// given location.
     void register_load_monitor (in PortableGroup::Location the_location,
                                 in LoadMonitor load_monitor)
       raises (MonitorAlreadyPresent);
 
-    // Retrieve the LoadMonitor object for the given location.
+    /// Retrieve the LoadMonitor object for the given location.
     LoadMonitor get_load_monitor (in PortableGroup::Location the_location)
       raises (LocationNotFound);
 
-    // Remove (de-register) the LoadMonitor object for the given
-    // location.
+    /// Remove (de-register) the LoadMonitor object for the given
+    ///  location.
     void remove_load_monitor (in PortableGroup::Location the_location)
       raises (LocationNotFound);
 

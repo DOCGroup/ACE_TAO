@@ -193,7 +193,7 @@ TAO_IIOP_Connector::make_connection (TAO::Profile_Transport_Resolver *r,
        // Give users a clue to the problem.
       if (TAO_debug_level > 1)
         {
-          ACE_DEBUG ((LM_ERROR,
+          ACE_ERROR ((LM_ERROR,
                       ACE_TEXT ("(%P|%t) IIOP_Connector::make_connection, ")
                       ACE_TEXT("connection to <%s:%d> failed (%p)\n"),
                       ACE_TEXT_CHAR_TO_TCHAR (iiop_endpoint->host ()),
@@ -459,7 +459,7 @@ TAO_IIOP_Connector::complete_connection (int result,
         {
           for (unsigned i = 0; i < count; i++)
             {
-              ACE_DEBUG ((LM_ERROR,
+              ACE_ERROR ((LM_ERROR,
                           ACE_TEXT ("(%P|%t) IIOP_Connector::make_connection,")
                           ACE_TEXT (" connection to <%s:%d> failed (%p)\n"),
                           ACE_TEXT_CHAR_TO_TCHAR (ep_list[i]->host ()),

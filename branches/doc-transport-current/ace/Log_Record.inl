@@ -107,12 +107,6 @@ ACE_Log_Record::msg_data (void) const
   return this->msg_data_;
 }
 
-ACE_INLINE void
-ACE_Log_Record::set_msg_data_ptr (ACE_TCHAR *data)
-{
-  this->msg_data_ = data;
-}
-
 ACE_INLINE size_t
 ACE_Log_Record::msg_data_len (void) const
 {
