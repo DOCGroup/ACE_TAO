@@ -35,7 +35,7 @@ module CIAO
 
         string taskId;
 
-        string typeId;
+        string taskTypeId;
 
         string suggestedImpl;
 

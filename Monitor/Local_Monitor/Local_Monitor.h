@@ -1,11 +1,12 @@
 #ifndef LOCAL_MONITOR_H
 #define LOCAL_MONITOR_H
 
-#include "ace/Time_Value.h"
+//#include "ace/Time_Value.h"
 #include "ace/Log_Msg.h"
 #include "ace/Thread.h"
 #include "ace/Event_Handler.h"
 #include "ace/Mutex.h"
+#include "ace/High_Res_Timer.h"
 #include "orbsvcs/Naming/Naming_Server.h"
 
 #include "RACE/Monitor/Central_Monitor/MonitorC.h"
@@ -61,7 +62,9 @@ namespace CIAO
 
       ACE_Time_Value interval_;
 
-      ACE_Time_Value start_time_;
+	  ACE_Time_Value start_time_;
+
+      ACE_High_Res_Timer timer_;
 
       Execution_Time_Monitor_var monitor_;
 
