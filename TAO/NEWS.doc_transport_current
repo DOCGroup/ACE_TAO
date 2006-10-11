@@ -1,0 +1,11 @@
+. (OCI) Added TransportCurrent support. This is an optional library,
+  which enables functionality for client- and server-side components,
+  to obtain information on the "current" Transport.  By definition
+  this is the Transport selected in the context of the current
+  invocation. Since specific Transport's may have very different
+  characteristics, a generic implementation is not sufficient and
+  support for specific Transports is also included. See the TC_IIOP
+  implementation, which is an IIOP-specific Transport Current.  To
+  build TAO with support for this feature, define a macro named
+  TAO_HAS_TRANSPORT_CURRENT and value of 1. For more details see
+  $TAO_ROOT/docs/transport_current/index.html
