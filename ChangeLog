@@ -1,3 +1,16 @@
+Wed Oct 11 00:48:28 UTC 2006  Nishanth Shankaran  <nshankar@dre.vanderbilt.edu>
+
+        * Controller/Component/Controller.mpc:
+        * Controller/Component/Controller_exec.cpp:
+        * Controller/Component/Descriptor.cpp: Fixed compilation errors
+          related to variadic macros.
+
+        * Controller/Component/RACE_common.h:
+
+          Removed this file.
+
+
+
 Tue Oct 10 23:12:25 UTC 2006  Nishanth Shankaran  <nshankar@dre.vanderbilt.edu>
 
         * Input_Adapters/Interactive_Input_Adapter/Converter.h:
