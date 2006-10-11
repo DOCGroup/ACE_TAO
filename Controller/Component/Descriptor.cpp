@@ -5,7 +5,6 @@
 #include "Config_Handlers/DnC_Dump.h"
 #include <sstream>
 #include "ace/SString.h"
-#include "RACE_common.h"
 namespace CIAO
 {
   namespace RACE
@@ -75,7 +74,7 @@ namespace CIAO
        ACE_ENV_ARG_DECL)
         ACE_THROW_SPEC ((::CORBA::SystemException))
       {
-        RACE_DEBUG (RACE_VERBOSE, "Descriptor::push_descriptors.\n");
+        ACE_DEBUG ((LM_DEBUG, "Descriptor::push_descriptors.\n"));
 
         App_String app_string;
         /// Register the string with the poller only if the input
@@ -146,7 +145,7 @@ namespace CIAO
             if (ACE_OS::strcmp (property.name.in (),
                                 CRITICAL_PATH) == 0)
               {
-                RACE_DEBUG (RACE_VERBOSE, "Found critical path\n");
+                ACE_DEBUG ((LM_DEBUG, "Found critical path\n"));
 
                 CORBA::Any & value = property.value;
                 CORBA::TypeCode_var tc = value.type ();
@@ -181,9 +180,8 @@ namespace CIAO
                 if (tc->kind () == CORBA::tk_double)
                   {
                     value >>= deadline;
-                    RACE_DEBUG (RACE_MIN,
-                                "Critical path deadline is:%.2f\n",
-                                 deadline);
+                    ACE_DEBUG ((LM_DEBUG, "Critical path deadline is:%.2f\n",
+                                deadline));
                     return deadline;
 
                   }
@@ -213,9 +211,8 @@ namespace CIAO
                 if (tc->kind () == CORBA::tk_long)
                   {
                     value >>= importance;
-                    RACE_DEBUG (RACE_MIN,
-                                "App-string importance is: %d\n",
-                                 importance);
+                    ACE_DEBUG ((LM_DEBUG, "App-string importance is: %d\n",
+                                importance));
                     return importance;
                   }
               }
@@ -240,8 +237,8 @@ namespace CIAO
                 if (tc->kind () == CORBA::tk_string)
                   {
                     value >>= path;
-                    RACE_DEBUG (RACE_VERBOSE, "Critical path is:%s\n",
-                                path);
+                    ACE_DEBUG ((LM_DEBUG, "Critical path is:%s\n",
+                                path));
                     return CORBA::string_dup (path);
                   }
               }
@@ -312,7 +309,7 @@ namespace CIAO
         tok.delimiter_replace (ELEMENT, 0);
         for (char *p = tok.next (); p; p = tok.next (), ++ctr)
           {
-            RACE_DEBUG (RACE_NORMAL, "%s\n", p);
+            ACE_DEBUG ((LM_DEBUG, "%s\n", p));
             ACE_Tokenizer temp_tok (p);
             temp_tok.delimiter_replace (PORT, 0);
 

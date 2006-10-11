@@ -85,7 +85,6 @@ project(Controller_exec) : ciao_component_dnc, ciao_config_handlers {
   }
 
   Header_Files {
-    RACE_common.h
     Poller.h
     Descriptor.h
   }

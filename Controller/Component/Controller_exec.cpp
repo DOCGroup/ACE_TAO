@@ -1,6 +1,5 @@
 #include "Controller_exec.h"
 #include "ciao/CIAO_common.h"
-#include "RACE_common.h"
 #include "tao/ORB_Core.h"
 
 namespace CIAO
@@ -96,26 +95,24 @@ namespace CIAO
       {
         try
           {
-            RACE_DEBUG (RACE_NORMAL, "Trying to contact TM.\n");
+            ACE_DEBUG ((LM_DEBUG, "Trying to contact TM.\n"));
             CIAO::TargetManagerExt_var TM =
               this->context_->get_connection_target_mgr_ext ();
 
             if (CORBA::is_nil (TM.in ()))
               {
-                RACE_ERROR ("Unable to connect to TM!\n");
+                ACE_ERROR ((LM_ERROR, "Unable to connect to TM!\n"));
                 throw CORBA::BAD_INV_ORDER ();
               }
-            RACE_DEBUG (RACE_NORMAL,
-                        "Done! Connection established with TM!\n");
-            RACE_DEBUG (RACE_NORMAL,
-                        "Now creating the poller object.\n");
+            ACE_DEBUG ((LM_DEBUG, "Done! Connection established with TM!\n"));
+            ACE_DEBUG ((LM_DEBUG, "Now creating the poller object.\n"));
 
             ::CIAO::RACE::Execution_Time_Monitor_var monitor =
                 this->context_->get_connection_monitor ();
 
             if (CORBA::is_nil (monitor.in ()))
               {
-                RACE_ERROR ("Unable to connect to Central Monitor!\n");
+                ACE_ERROR ((LM_ERROR, "Unable to connect to Central Monitor!\n"));
                 throw CORBA::BAD_INV_ORDER ();
               }
 
@@ -128,8 +125,7 @@ namespace CIAO
                                              reactor,
                                              this->sampling_period_));
             this->poller_->init ();
-            RACE_DEBUG (RACE_NORMAL,
-                        "Done creating the poller object.\n");
+            ACE_DEBUG ((LM_DEBUG, "Done creating the poller object.\n"));
           }
         catch (CORBA::Exception & ex)
           {
