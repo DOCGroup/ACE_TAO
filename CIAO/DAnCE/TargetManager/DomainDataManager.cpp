@@ -47,26 +47,32 @@ void CIAO::DomainDataManager::delete_data_manger ()
 
 
 
-int CIAO::DomainDataManager::update_domain (const ::CORBA::StringSeq &,
-                                            const ::Deployment::Domain & domainSubset,
-                                            ::Deployment::DomainUpdateKind )
+int CIAO::DomainDataManager::update_domain (
+                             const ::CORBA::StringSeq &,
+                             const ::Deployment::Domain & domainSubset,
+                             ::Deployment::DomainUpdateKind update_kind)
 {
   // Update the subset of the domain which the above
   // parameter corresponds to
 
-  // for now consider only nodes
-  if (CIAO::debug_level () > 9)
+
+  //check the type of update ..
+
+  switch (update_kind)
     {
-      /*
-      ACE_DEBUG ((LM_DEBUG ,
-          "TM::update_domain::Inside The update Domain of Manager\n"));
-      ACE_DEBUG ((LM_DEBUG ,
-          "TM::update_domain_::The length of domain is [%d]",
-           current_domain_.node.length ()));
-      ACE_DEBUG ((LM_DEBUG ,
-                  "TM::update_domain::domainSubsetNode is \n" ));
-      */
+      case ::Deployment::UpdateAll:
+      case ::Deployment::UpdateAvailable:
+        break;
+      case ::Deployment::Add:
+        add_to_domain (domainSubset);
+        break;
+      case ::Deployment::Delete:
+        delete_from_domain (domainSubset);
+        break;
+      default:
+        break;
     }
+
   int size = current_domain_.node.length ();
 
   int i;
@@ -125,8 +131,9 @@ DomainDataManager (CORBA::ORB_ptr orb,
   // initialize the provisioning domain
   provisioned_data_ = initial_domain_;
 
-  call_all_node_managers ();
+  update_node_status ();
 
+  call_all_node_managers ();
 }
 
 ::Deployment::Domain* CIAO::DomainDataManager::get_current_domain ()
@@ -176,7 +183,7 @@ int CIAO::DomainDataManager::call_all_node_managers ()
             deployment_config_.get_node_manager
             (initial_domain_.node[i].name.in ());
         }
-      catch (CORBA::Exception&)
+      catch (CORBA::Exception& ex)
         {
           ACE_ERROR ((LM_ERROR, "DANCE::TM (%P|%t) DomainDataManager.cpp: "
                       "Error trying to contact NodeManager %s\n",
@@ -324,12 +331,16 @@ void CIAO::DomainDataManager
   // set the action value
   current_action_ = commit;
 
+  // temporary created to guard against exceptions
+  ::Deployment::Domain temp_provisioned_data =
+      provisioned_data_;
+
   for (unsigned int i = 0;i < plan.instance.length ();i++)
     {
-      for (unsigned int j = 0;j < provisioned_data_.node.length ();j++)
+      for (unsigned int j = 0;j < temp_provisioned_data.node.length ();j++)
         {
           if (!strcmp (plan.instance[i].node.in () ,
-                       provisioned_data_.node[j].name.in ()))
+                       temp_provisioned_data.node[j].name.in ()))
           {
             if (CIAO::debug_level () > 9)
               ACE_DEBUG ((LM_DEBUG ,
@@ -337,19 +348,22 @@ void CIAO::DomainDataManager
             try {
               match_requirement_resource (
                                           plan.instance[i].deployedResource,
-                                          provisioned_data_.node[j].resource);
+                                          temp_provisioned_data.node[j].resource);
             }
             catch (::Deployment::ResourceNotAvailable& ex)
               {
                 // catch the exception and add parameters
                 ex.elementName =
-                  CORBA::string_dup (provisioned_data_.node[j].name);
+                  CORBA::string_dup (temp_provisioned_data.node[j].name);
 
                 throw ex;
               }
           }
         }
     }
+
+  // here commit the commitresources
+  provisioned_data_ = temp_provisioned_data;
 }
 
 
@@ -467,12 +481,12 @@ void CIAO::DomainDataManager::commit_release_resource (
   if (current_action_ == commit)
     {
 
-      CORBA::Double required_d;
+      CORBA::Long required_d;
 
       if ((deployed.value >>= required_d) == false)
         ACE_ERROR ((LM_ERROR, "Failed to extract required amount\n"));
 
-      CORBA::Double available_d;
+      CORBA::Long available_d;
 
       if ((available.value >>= available_d) == false)
         ACE_ERROR ((LM_ERROR, "failed to extract available amount\n"));
@@ -502,9 +516,9 @@ void CIAO::DomainDataManager::commit_release_resource (
   else
     {
       //must be release
-      CORBA::Double required_d;
+      CORBA::Long required_d;
       deployed.value >>= required_d;
-      CORBA::Double available_d;
+      CORBA::Long available_d;
       available.value >>= available_d;
 
       available_d = available_d + required_d;
@@ -541,7 +555,7 @@ void CIAO::DomainDataManager::stop_monitors ()
             deployment_config_.get_node_manager
             (initial_domain_.node[i].name.in ());
         }
-      catch (CORBA::Exception&)
+      catch (CORBA::Exception& ex)
         {
           ACE_ERROR ((LM_ERROR, "DANCE::TM (%P|%t) DomainDataManager.cpp: "
                       "Error in get Node Manager from Deployment Config %s\n",
@@ -570,5 +584,154 @@ void CIAO::DomainDataManager::stop_monitors ()
         }
     }
   return;
+
+}
+
+int CIAO::DomainDataManager::add_to_domain (
+    const ::Deployment::Domain& domain)
+{
+  // here add the domain to the Domain
+  // right now use only a node
+
+  // got to take care of the fact , that a node can be added ,
+  // while it is still in the domain
+
+  //iterate through the supplied domain
+  //for each node
+  //  find it in the pristine domain
+  //  and copy it back to the provisioned_domain
+
+  for (CORBA::ULong i = 0;i < domain.node.length ();i++)
+  {
+      //find in the pristine domain
+      ::Deployment::Node a_node;
+
+      if (!this->find_in_initial_domain (domain.node[i].name.in (),
+                                        a_node))
+        continue; // dont know this node
+
+      //check if already present
+      if (!this->find_in_provisioned_domain (domain.node[i].name.in (),
+                                             a_node))
+        {
+          // add the node to the domain ...
+          provisioned_data_.node.length (provisioned_data_.node.length () + 1);
+          provisioned_data_.node[provisioned_data_.node.length () - 1] =
+            a_node;
+        }
+  }
+
+//  ::Deployment::DnC_Dump::dump (this->provisioned_data_);
+
+  ACE_DEBUG ((LM_DEBUG, "TM::Node Up Message Processed\n"));
+
+  return 0;
+}
+
+bool CIAO::DomainDataManager::
+find_in_initial_domain (const char* node_name,
+                        ::Deployment::Node& node)
+{
+  for (CORBA::ULong i =0;
+      i < this->initial_domain_.node.length ();
+      i++)
+  {
+    if (strcmp (node_name, this->initial_domain_.node[i].name.in ()) == 0)
+    {
+      node = this->initial_domain_.node[i];
+      return true;
+    }
+  }
+
+  // not found the node , retunr a node with an empty name
+  return false;
+}
+
+
+bool CIAO::DomainDataManager::
+find_in_provisioned_domain (const char* node_name,
+                        ::Deployment::Node& node)
+{
+  for (CORBA::ULong i =0;
+      i < this->provisioned_data_.node.length ();
+      i++)
+  {
+    if (strcmp (node_name, this->provisioned_data_.node[i].name.in ()) == 0)
+    {
+      node = this->provisioned_data_.node[i];
+      return true;
+    }
+  }
+
+  // not found the node , retunr a node with an empty name
+  return false;
+}
+
+int CIAO::DomainDataManager::delete_from_domain (
+    const ::Deployment::Domain& domain)
+{
+  // validate input
+  if (domain.node.length () == 0)
+    return 1;
+
+  if (domain.node.length () >
+      this->provisioned_data_.node.length ())
+    return 0;
+
+  //algo : parse through the provisioned_data
+  // for each node , find in the deleted domain list
+  // if not found add it to the updated nodes list
+
+  ::Deployment::Nodes updated_nodes;
+  bool found = 0;
+
+
+  for (CORBA::ULong j = 0;
+       j < this->provisioned_data_.node.length ();
+       j++)
+    {
+      found = 0;
+
+      for (CORBA::ULong i = 0;i < domain.node.length ();i++)
+        {
+          if (strcmp (domain.node[i].name.in (),
+                      this->provisioned_data_.node[j].name.in ()) == 0)
+            {
+              found = 1;
+              break; // found the node
+            }
+        }
+      if (found)
+        continue;
+
+      // not found in the deleted list
+
+      // update the length of the list
+      updated_nodes.length (updated_nodes.length () + 1);
+
+      // copy the node info
+      updated_nodes[updated_nodes.length () - 1] =
+        this->provisioned_data_.node[j];
+
+    } // for provisioned_data
+
+  // here update the provisioned data
+  this->provisioned_data_.node = updated_nodes;
+
+  return 1;
+}
+
+int CIAO::DomainDataManager::intimate_planner (
+    const ::Deployment::Domain& domain)
+{
+ // use the connection with the planner and get a reference to the planner
+ // make a call top the planner
+  return 0;
+
+}
+
+bool CIAO::DomainDataManager::update_node_status ()
+{
+  // update the node status here ...
 
 }
