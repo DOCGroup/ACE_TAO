@@ -8,7 +8,7 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 use lib "$ENV{'ACE_ROOT'}/bin";
 use PerlACE::Run_Test;
 $CIAO_ROOT = "$ENV{'CIAO_ROOT'}";
-$DAnCE = "$ENV{'ACE_ROOT'}/TAO/CIAO/DAnCE";
+$DAnCE = "$ENV{'CIAO_ROOT'}/DAnCE";
 
 $daemons_running = 0;
 $em_running = 0;
@@ -16,7 +16,7 @@ $daemons = 2;
 @ports = ( 40000, 30000 );
 @iorfiles = ( "NodeApp1.ior", "NodeApp2.ior" );
 $status = 0;
-$dat_file = "NodeManagerMap.dat";
+$dat_file = "NodeDetails.dat";
 $cdp_file = "flattened_DeploymentPlan.cdp";
 
 $E = 0;
