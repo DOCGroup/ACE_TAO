@@ -1,3 +1,10 @@
+Thu Oct 12 12:20:12 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+	* ace/Svc_Conf.h:
+	  Fixed incorrect placed ACE_BEGIN_VERSIONED_NAMESPACE_DECL macro.
+	  Thanks to Alexander Libman <alexander dot libman at earthlink dot net>
+	  for reporting this
+
 Wed Oct 11 15:24:04 UTC 2006  Steve Huston  <shuston@riverace.com>
 
         * ace/Log_Record.{h inl cpp}: Removed the set_msg_data_ptr()
