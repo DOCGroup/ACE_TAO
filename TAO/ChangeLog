@@ -1,3 +1,10 @@
+Thu Oct 12 14:17:11 UTC 2006  Chad Elliott  <elliott_c@ociweb.com>
+
+        * orbsvcs/ImplRepo_Service/ImR_Locator_i.cpp:
+
+          Split a debug message into two messages to work around a strange
+          bug in Visual Studio 2005.
+
 Thu Oct 12 14:13:44 UTC 2006  Chad Elliott  <elliott_c@ociweb.com>
 
         * orbsvcs/tests/Event/Mcast/RTEC_MCast_Federated/run_test.pl:
