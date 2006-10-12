@@ -1,4 +1,4 @@
-// $Id$
+// CmpClient.cpp,v 1.3 2006/01/25 00:10:27 dengg Exp
 /**
  * @file CmpClient.cpp
  *
@@ -14,21 +14,22 @@
 #include "ace/streams.h"
 #include "Config_Handlers/DnC_Dump.h"
 
+void write_to_file (::Deployment::Domain domain);
 
 int main (int argc, char* argv[])
 {
- try {
-      // First initialize the ORB, that will remove some arguments...
-      CORBA::ORB_var orb =
-          CORBA::ORB_init (argc, argv,
-                       "" /* the ORB name, it can be anything! */);
+  try {
+    // First initialize the ORB, that will remove some arguments...
+    CORBA::ORB_var orb =
+      CORBA::ORB_init (argc, argv,
+          "" /* the ORB name, it can be anything! */);
 
-      // There must be at least two arguments, the first is the factory
-      // name, the rest are the names of the stock symbols we want to
-      // get quotes for.
-      if (argc < 2) {
-        cerr << "Usage: " << argv[0]
-           << " Factory_IOR ..." << endl;
+    // There must be at least two arguments, the first is the factory
+    // name, the rest are the names of the stock symbols we want to
+    // get quotes for.
+    if (argc < 2) {
+      cerr << "Usage: " << argv[0]
+        << " Factory_IOR ..." << endl;
       return 1;
     }
 
@@ -70,10 +71,10 @@ int main (int argc, char* argv[])
 
     Deployment::DeploymentPlan plan;
 
-    plan.instance.length (1);
+    plan.instance.length (2);
 
     ::Deployment::InstanceDeploymentDescription instance_;
-    instance_.node = CORBA::string_dup ("Delta");
+    instance_.node = CORBA::string_dup ("foil");
     instance_.deployedResource.length (1);
     instance_.deployedResource[0].requirementName =
       CORBA::string_dup ("Processor");
@@ -83,10 +84,26 @@ int main (int argc, char* argv[])
     instance_.deployedResource[0].property.length (1);
     instance_.deployedResource[0].property[0].name =
       CORBA::string_dup ("LoadAverage");
-    CORBA::Double d = 20;
+    CORBA::Long d = 20;
     instance_.deployedResource[0].property[0].value <<= d;
 
     plan.instance[0] = instance_;
+
+    instance_.node = CORBA::string_dup ("blade30");
+    instance_.deployedResource.length (1);
+    instance_.deployedResource[0].requirementName =
+      CORBA::string_dup ("Processor");
+    instance_.deployedResource[0].resourceName =
+      CORBA::string_dup ("CPULoad");
+
+    instance_.deployedResource[0].property.length (1);
+    instance_.deployedResource[0].property[0].name =
+      CORBA::string_dup ("LoadAverage");
+    d = 50;
+
+    instance_.deployedResource[0].property[0].value <<= d;
+
+    plan.instance[1] = instance_;
 
     bool resource_available = 1;
 
@@ -100,19 +117,19 @@ int main (int argc, char* argv[])
       cerr << "Error:TargetManager:CORBA::NO_IMPLEMENT thrown" << endl;
     }
     catch (Deployment::ResourceNotAvailable & e)
-      {
-        resource_available = 0;
-        cout << "TargetManager commitResources ResourceNotAvailable Exception" <<endl;
+    {
+      resource_available = 0;
+      cout << "TargetManager commitResources ResourceNotAvailable Exception" <<endl;
 
-        ACE_DEBUG ((LM_DEBUG ,
-        "ResourceNotAvailable\n name=[%s]\n elementName=[%s]\n resourceName=[%s]\n \
-         resourceType= [%s]\n propertyName=[%s]\n",
-                    e.name.in (),
-                    e.elementName.in (),
-                    e.resourceName.in (),
-                    e.resourceType.in (),
-                    e.propertyName.in ()));
-      }
+      ACE_DEBUG ((LM_DEBUG ,
+            "ResourceNotAvailable\n name=[%s]\n elementName=[%s]\n resourceName=[%s]\n \
+            resourceType= [%s]\n propertyName=[%s]\n",
+            e.name.in (),
+            e.elementName.in (),
+            e.resourceName.in (),
+            e.resourceType.in (),
+            e.propertyName.in ()));
+    }
     catch(CORBA::Exception & ex)
     {
       cout << "Error:TargetManager:commitResources Exception" <<endl;
@@ -125,19 +142,19 @@ int main (int argc, char* argv[])
     try
     {
       if (resource_available == 0)
-        {
-          targetI->releaseResources(plan);
-          ACE_DEBUG ((LM_DEBUG , "\n\nreleaseResources Returned \n"));
-        }
+      {
+        targetI->releaseResources(plan);
+        ACE_DEBUG ((LM_DEBUG , "\n\nreleaseResources Returned \n"));
+      }
     }
     catch(CORBA::NO_IMPLEMENT &)
     {
       cerr << "Error:TargetManager:CORBA::NO_IMPLEMENT thrown" << endl;
     }
-    catch (Deployment::ResourceNotAvailable & )
-      {
-        cout << "Error:TargetManager releaseResources ResourceNotAvailable Exception" <<endl;
-      }
+    catch (Deployment::ResourceNotAvailable & e)
+    {
+      cout << "Error:TargetManager releaseResources ResourceNotAvailable Exception" <<endl;
+    }
     catch(CORBA::Exception & ex)
     {
       cout << "Error:TargetManager:releaseResources Exception" <<endl;
@@ -145,11 +162,58 @@ int main (int argc, char* argv[])
       cerr << "Error:TargetManager:Exception in TargetManager call" << ex << endl;
     }
 
+    // Here make a call on the TM with update domain and node deletion
 
+    ::Deployment::Domain updated;
+    updated.node.length (1);
+    updated.node[0].name = CORBA::string_dup (argv[2]);
+
+    ::CORBA::StringSeq elements;
+    elements.length (0);
+
+    bool Add = 1;
+    Add = atoi (argv[3]);
+
+    if (Add)
+    {
+      try
+      {
+        targetI->updateDomain (elements , updated, ::Deployment::Add);
+      }
+      catch(CORBA::NO_IMPLEMENT &)
+      {
+        cerr << "Error:TargetManager:CORBA::NO_IMPLEMENT thrown" << endl;
+      }
+      catch(CORBA::Exception & ex)
+      {
+        cout << "Error:TargetManager:CORBA Generic Exception " << endl;
+        cerr << "Error:TargetManager:Exception in UpdateDomain call" << ex << endl;
+      }
+    }
+    else
+    {
+      try
+      {
+        targetI->updateDomain (elements , updated, ::Deployment::Delete);
+      }
+      catch(CORBA::NO_IMPLEMENT &)
+      {
+        cerr << "Error:TargetManager:CORBA::NO_IMPLEMENT thrown" << endl;
+      }
+      catch(CORBA::Exception & ex)
+      {
+        cout << "Error:TargetManager:CORBA Generic Exception " << endl;
+        cerr << "Error:TargetManager:Exception in UpdateDomain call" << ex << endl;
+      }
+    }
     // Now make a call of getAvailableResources on the TargetManager ...
     try
     {
       Deployment::Domain_var domainV = targetI->getAvailableResources();
+
+      // here write things to file ...
+      write_to_file (domainV);
+
       ACE_DEBUG ((LM_DEBUG , "\n\nGetAvailableResources Returned \n"));
       ::Deployment::DnC_Dump::dump (domainV);
     }
@@ -170,4 +234,38 @@ int main (int argc, char* argv[])
     cerr << "Error:TargetManager:CORBA exception raised!" << ex << endl;
   }
   return 0;
+}
+
+void write_to_file (::Deployment::Domain domain)
+{
+  for (size_t i = 0;i < domain.node.length ();i++)
+  {
+    std::ofstream out (domain.node[i].name.in ());
+
+
+    // write in the node usage ...
+    for (size_t j = 0;j < domain.node[i].resource.length ();j++)
+    {
+
+      if (!strcmp (domain.node[i].resource[j].name.in (), "Processor"))
+      {
+        CORBA::Double node_cpu;
+        domain.node[i].resource[j].property[0].value >>= node_cpu;
+        out << node_cpu << std::endl;
+      }
+      if (!strcmp (domain.node[i].resource[j].name.in (), "NA_Monitor"))
+      {
+        std::string file_name = "NA_";
+        file_name += domain.node[i].name.in ();
+        std::ofstream na_out (file_name.c_str ());
+        CORBA::Double na_node_cpu;
+        domain.node[i].resource[j].property[0].value >>= na_node_cpu;
+        na_out << na_node_cpu << std::endl;
+        na_out.close ();
+      }
+    }
+
+    out.close ();
+  }
+
 }

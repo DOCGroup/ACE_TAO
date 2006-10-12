@@ -14,6 +14,8 @@
 #include "Config_Handlers/DD_Handler.h"
 #include "Config_Handlers/DnC_Dump.h"
 
+#include "DomainEventsC.h"
+
 using namespace std;
 
 namespace CIDL_TargetManager_i
@@ -35,14 +37,18 @@ namespace CIDL_TargetManager_i
 
     // get its own obj ref , then call
 
-
+    ACE_DEBUG ((LM_DEBUG, "TM_Exec: getting ccm object\n"));
     CORBA::Object_var object = context_->get_CCM_object ();
+    ACE_DEBUG ((LM_DEBUG, "TM_Exec: narrowing target_impl\n"));
     CIAO::TargetManagerImpl_var target_impl =
             CIAO::TargetManagerImpl::_narrow (object.in ());
+    ACE_DEBUG ((LM_DEBUG, "TM_Exec: provide target manager\n"));
     ::Deployment::TargetManager_var target =
             target_impl->provide_targetMgr ();
     //    dataManager_.reset (new CIAO::DomainDataManager (orb, target.in ()));
+    ACE_DEBUG ((LM_DEBUG, "TM_Exec: creating domain data manager\n"));
     CIAO::DomainDataManager::create (orb, target.in());
+    ACE_DEBUG ((LM_DEBUG, "TM_Exec: DDD created!\n"));
   }
 
   TargetManager_exec_i::~TargetManager_exec_i (void)
@@ -111,6 +117,32 @@ namespace CIDL_TargetManager_i
                     domainSubset,
                     updateKind
                     );
+
+    // here tell the planner about the changes
+
+    // first get the node names which have failed ...
+    // assuming nodes to only fail , for now
+
+    if (updateKind == ::Deployment::Delete ||
+        updateKind == ::Deployment::Add)
+      {
+        ACE_DEBUG ((LM_DEBUG , "TM::Creating the changed event\n"));
+
+        CIAO::Domain_Changed_Event_var changed_event =
+          new OBV_CIAO::Domain_Changed_Event ();
+
+        ::Deployment::Domain_var temp_domain =
+          new ::Deployment::Domain (domainSubset);
+
+        ACE_DEBUG ((LM_DEBUG , "TM::After getting the current domain\n"));
+        changed_event->changes (temp_domain);
+        changed_event->change_kind (updateKind);
+
+        ACE_DEBUG ((LM_DEBUG , "TM::Sending the event to the Planner_Manager\n"));
+        context_->push_changes (changed_event);
+        ACE_DEBUG ((LM_DEBUG , "TM::After   Sending the event to the Planner_Manager\n"));
+      }
+
   }
 
   //==================================================================
@@ -299,9 +331,11 @@ namespace CIDL_TargetManager_i
   {
     // Your code here.
     ACE_DEBUG ((LM_DEBUG , "TM::ccm_remove , calling LeaveDomain\n"));
-        return CIAO::DomainDataManager::
-          get_data_manager ()->stop_monitors ();
+
+    //CIAO::DomainDataManager::get_data_manager ()->stop_monitors ();
+
     ACE_DEBUG ((LM_DEBUG , "TM::ccm_remove , After calling LeaveDomain\n"));
+    return;
   }
 
 

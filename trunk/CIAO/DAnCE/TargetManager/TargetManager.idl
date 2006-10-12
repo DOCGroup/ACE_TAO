@@ -16,10 +16,13 @@
 #include "ciao/Target_Data.idl"
 #include "TargetManagerExt.idl"
 
+#include "DomainEvents.idl"
+
+
 /**
  * @module CIAO
  *
- * @brief TargetManager interface defintion
+ * @brief TargetManagenr interface defintion
  *
  */
 module CIAO
@@ -28,6 +31,8 @@ module CIAO
   {
     provides ::Deployment::TargetManager targetMgr;
     provides CIAO::TargetManagerExt target_manager_ext;
+
+    publishes Domain_Changed_Event changes;
   };
 
   home TargetManagerHome manages TargetManagerImpl

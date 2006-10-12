@@ -232,6 +232,61 @@ namespace CIAO
        */
       int call_all_node_managers ();
 
+      /**
+       * @operation add_to_domain
+       * @brief This function add new elements to the
+       * already existing domain
+       *
+       * @param domain Deployment::Domain contians the new
+       * elements
+       */
+      int add_to_domain (const ::Deployment::Domain& domain);
+
+      /**
+       *  @operation delete_from_domain
+       *  @brief This function deletes elements from the domain
+       *
+       *  @param domain ::Deployment::Domain contains the new elements
+       *  in the domain
+       */
+      int delete_from_domain (const ::Deployment::Domain& domain);
+
+      /**
+       *  @operation intimate_planner
+       *  @brief This function intimates the planner about a domain
+       *  change
+       *
+       *  @param domain ::Deployment::Domain contains the new elements
+       *  in the domain
+       */
+      int intimate_planner (const ::Deployment::Domain& domain);
+
+      /**
+       *  @operation find_in_initial_domain
+       *  @brief This function finds a new node in the initial_domain
+       *
+       *  @param node The name of the node which is to be searched
+       */
+
+      bool find_in_initial_domain (const char* node_name,
+                              ::Deployment::Node& node);
+      /**
+       *  @operation find_in_provisioned_domain
+       *  @brief This function finds a new node in the proviosiond_domain
+       *
+       *  @param node The name of the node which is to be searched
+       */
+
+      bool find_in_provisioned_domain (const char* node_name,
+                                  ::Deployment::Node& node);
+
+      /**
+       *  @operation update_node_status
+       *  @brief updates the node status by reading it from a file
+       */
+
+      bool update_node_status ();
+
       /// The ORB pointer
       CORBA::ORB_var orb_;
 
