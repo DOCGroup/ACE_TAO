@@ -214,17 +214,24 @@ ImR_Locator_i::run (ACE_ENV_SINGLE_ARG_DECL)
 {
   if (debug_ > 0)
     {
-      ACE_DEBUG ((LM_DEBUG, "Implementation Repository: Running\n"
+      // This debug message was split into two calls to
+      // work around yet another bug in Visual Studio 2005.
+      // When this was a single debug message, the value for
+      // debug () came out garbled and the read-only string
+      // caused an ACCESS VIOLATION -- Chad Elliott 10/4/2006
+      ACE_DEBUG ((LM_DEBUG,
+                  "Implementation Repository: Running\n"
                   "\tPing Interval : %dms\n"
                   "\tStartup Timeout : %ds\n"
                   "\tPersistence : %s\n"
-                  "\tMulticast : %s\n"
-                  "\tDebug : %d\n"
-                  "\tLocked : %s\n\n",
+                  "\tMulticast : %s\n",
                   ping_interval_.msec (),
                   startup_timeout_.sec (),
                   repository_.repo_mode (),
-                  ior_multicast_.reactor () != 0 ? "Enabled" : "Disabled",
+                  ior_multicast_.reactor () != 0 ? "Enabled" : "Disabled"));
+      ACE_DEBUG ((LM_DEBUG,
+                  "\tDebug : %d\n"
+                  "\tLocked : %s\n\n",
                   debug (),
                   read_only_ ? "True" : "False"));
     }
