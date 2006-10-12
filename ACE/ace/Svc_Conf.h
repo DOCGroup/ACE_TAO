@@ -30,9 +30,9 @@
 
 #include "ace/Svc_Conf_Param.h"
 
-#if (ACE_USES_CLASSIC_SVC_CONF == 1)
-
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
+#if (ACE_USES_CLASSIC_SVC_CONF == 1)
 
 // The following yylex() declarations require support for reentrant
 // parser generation (e.g. from GNU Bison).
