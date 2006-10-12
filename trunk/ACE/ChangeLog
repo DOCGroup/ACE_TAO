@@ -1,9 +1,22 @@
+Thu Oct 12 15:45:24 UTC 2006  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/MakeProjectCreator/templates/gnu.mpd:
+
+          If a custom definition has an 'output_option' set, the order of
+          listing the input file changes such that it is listed before the
+          output_option setting in the build rule.
+
+        * bin/auto_run_tests.pl:
+
+          Added a new option, -l, which can be used to specify an arbitrary
+          list of tests.
+
 Thu Oct 12 12:20:12 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-	* ace/Svc_Conf.h:
-	  Fixed incorrect placed ACE_BEGIN_VERSIONED_NAMESPACE_DECL macro.
-	  Thanks to Alexander Libman <alexander dot libman at earthlink dot net>
-	  for reporting this
+        * ace/Svc_Conf.h:
+          Fixed incorrect placed ACE_BEGIN_VERSIONED_NAMESPACE_DECL macro.
+          Thanks to Alexander Libman <alexander dot libman at earthlink dot net>
+          for reporting this
 
 Wed Oct 11 15:24:04 UTC 2006  Steve Huston  <shuston@riverace.com>
 
@@ -34,13 +47,13 @@ Wed Oct 11 15:24:04 UTC 2006  Steve Huston  <shuston@riverace.com>
 
 Tue Oct 10 18:46:12 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-	* ACE-INSTALL.html:
-	  Document how to get a current copy from subversion
+        * ACE-INSTALL.html:
+          Document how to get a current copy from subversion
 
 Tue Oct 10 14:16:12 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-	* ace/CDR_Stream.cpp:
-	  Fixed incorrect comment
+        * ace/CDR_Stream.cpp:
+          Fixed incorrect comment
 
 Tue Oct 10 12:54:00 UTC 2006  Simon Massey  <sma@prismtech.com>
 
@@ -50,41 +63,41 @@ Tue Oct 10 12:54:00 UTC 2006  Simon Massey  <sma@prismtech.com>
 
 Tue Oct 10 06:08:12 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-	* bin/fuzz.pl:
-	  Changed check for empty inline files to also check for empty
-	  source files
+        * bin/fuzz.pl:
+          Changed check for empty inline files to also check for empty
+          source files
 
-	* bin/MakeProjectCreator/config/avoids_corba_e_compact.mpb:
-	* bin/MakeProjectCreator/config/avoids_corba_e_micro.mpb:
-	  New avoids projects
+        * bin/MakeProjectCreator/config/avoids_corba_e_compact.mpb:
+        * bin/MakeProjectCreator/config/avoids_corba_e_micro.mpb:
+          New avoids projects
 
-	* etc/ace.doxygen:
-	  Expand some more macros, should improve documentatation
+        * etc/ace.doxygen:
+          Expand some more macros, should improve documentatation
 
-	* html/README:
-	  Updated download location to ISIS
+        * html/README:
+          Updated download location to ISIS
 
 Tue Oct 10 06:03:12 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-	* docs/ACE-bug-process.html:
-	  Updated to mention svn
+        * docs/ACE-bug-process.html:
+          Updated to mention svn
 
-	* docs/Download.html:
-	  Commented out the source packages that are not complete at this moment
+        * docs/Download.html:
+          Commented out the source packages that are not complete at this moment
 
 Mon Oct 09 09:07:12 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-	* bin/generate_rel_manpages:
-	  Fixed an error in this script and updated the location to which the
-	  generated packages should be copied to
+        * bin/generate_rel_manpages:
+          Fixed an error in this script and updated the location to which the
+          generated packages should be copied to
 
 Mon Oct 09 09:03:12 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-	* docs/Download.html:
-	  Updated with the new download locations
+        * docs/Download.html:
+          Updated with the new download locations
 
-	* docs/bczar/bczar.html:
-	  Updated documentation generation instructions
+        * docs/bczar/bczar.html:
+          Updated documentation generation instructions
 
 Thu Oct 05 00:35:37 2006  William R. Otte  wotte@dre.vanderbilt.edu
 
@@ -125,9 +138,9 @@ Sat Sep 30 14:00:33 UTC 2006  Steve Huston  <shuston@riverace.com>
 
 Fri Sep 29 18:54:29 UTC 2006  Steve Huston  <shuston@riverace.com>
 
-	* ace/OS_NS_signal.inl (sigaction): In the !ACE_HAS_SIGACTION_CONSTP2
-	  case, use ACE_SIGACTION instead of "struct sigaction" to pick up
-	  the funky HP hack. Also see:
+        * ace/OS_NS_signal.inl (sigaction): In the !ACE_HAS_SIGACTION_CONSTP2
+          case, use ACE_SIGACTION instead of "struct sigaction" to pick up
+          the funky HP hack. Also see:
           Mon Jan 23 22:08:56 UTC 2006  Steve Huston  <shuston@riverace.com>
 
 Fri Sep 29 10:00:04 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
