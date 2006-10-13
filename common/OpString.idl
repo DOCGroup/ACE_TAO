@@ -20,9 +20,9 @@ module CIAO
 
       struct TimeWindow
       {
-        TimeValue Earliest;
+        CIAO::RACE::TimeValue Earliest;
 
-        TimeValue Latest;
+        CIAO::RACE::TimeValue Latest;
       };
 
       struct InstanceDescription

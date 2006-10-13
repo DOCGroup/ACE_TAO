@@ -107,25 +107,3 @@ project(Injector) : ciao_component_dnc, ciao_race_component, taoexe {
       Injector.cpp
    }
 }
-
-project(Converter) : ciao_component_dnc, ciao_race_component, taoexe, ciao_plan_generator {
-  after += Interactive_Input_Adapter_exec OpString_stub
-   exename = converter
-   libs += Interactive_Input_Adapter_stub \
-           Input_Adapter_stub \
-           Plan_Analyzer_Interface_stub\
-           OpString_stub
-
-
-
-   IDL_Files {
-   }
-
-   Header_Files {
-      Converter.h
-   }
-
-   Source_Files {
-      Converter.cpp
-   }
-}

@@ -1,3 +1,68 @@
+Fri Oct 13 15:52:30 UTC 2006  John S. Kinnebrew  <john.s.kinnebrew@vanderbilt.edu>
+
+        * SA_POP/Builder.h
+        * SA_POP/Converter.cpp
+        * SA_POP/Converter.h
+        * SA_POP/Driver.cpp
+        * SA_POP/LogFileOut.cpp
+        * SA_POP/LogFileOut.h
+        * SA_POP/LogScreenOut.cpp
+        * SA_POP/LogScreenOut.h
+        * SA_POP/OutAdapter.h
+        * SA_POP/PlanCommands.h
+        * SA_POP/PlanHeuristics.h
+        * SA_POP/Planner.cpp
+        * SA_POP/Planner.h
+        * SA_POP/PlanStrategy.h
+        * SA_POP/SA_Builder.cpp
+        * SA_POP/SA_Builder.h
+        * SA_POP/SA_PlanCommands.cpp
+        * SA_POP/SA_PlanCommands.h
+        * SA_POP/SA_PlanHeuristics.cpp
+        * SA_POP/SA_PlanHeuristics.h
+        * SA_POP/SA_PlanStrategy.cpp
+        * SA_POP/SA_PlanStrategy.h
+        * SA_POP/SA_POP.mpc
+        * SA_POP/SA_POP_Exceptions.cpp
+        * SA_POP/SA_POP_Exceptions.h
+        * SA_POP/SA_POP_Types.h
+        * SA_POP/SA_SchedStrategy.cpp
+        * SA_POP/SA_SchedStrategy.h
+        * SA_POP/SA_WorkingPlan.cpp
+        * SA_POP/SA_WorkingPlan.h
+        * SA_POP/SchedStrategy.h
+        * SA_POP/SPACE.san.xml
+        * SA_POP/SPACE.tm.xml
+        * SA_POP/SPACE_Goal1.san.xml
+        * SA_POP/SPACE_Goal2.san.xml
+        * SA_POP/TaskImpl.cpp
+        * SA_POP/TaskImpl.h
+        * SA_POP/TaskMap.cpp
+        * SA_POP/TaskMap.h
+        * SA_POP/TaskMapFileIn.cpp
+        * SA_POP/TaskMapFileIn.h
+        * SA_POP/WorkingPlan.h
+        * SA_POP/XML_TaskMap.cpp
+        * SA_POP/XML_TaskMap.hpp
+        * SA_POP/SANet/SANet.cpp
+        * SA_POP/SANet/SANet.h
+        * SA_POP/SANet/SANetFileIn.cpp
+        * SA_POP/SANet/SANetFileIn.h
+        * SA_POP/SANet/SANet_Exceptions.cpp
+        * SA_POP/SANet/SANet_Exceptions.h
+        * SA_POP/SANet/SANet_Types.h
+        * SA_POP/SANet/SANode.cpp
+        * SA_POP/SANet/SANode.h
+        * SA_POP/SANet/XML_SANet.cpp
+        * SA_POP/SANet/XML_SANet.hpp
+        * common/OpString.idl: Revised to fix namespace problem with TimeValue.
+        * Input_Adapters/Interactive_Input_Adapter/Interactive_Input_Adapter.mpc: Removed Converter project.
+        * Input_Adapters/Interactive_Input_Adapter/Converter.cpp: Moved to SA_POP directory.
+        * Input_Adapters/Interactive_Input_Adapter/Converter.h: Moved to SA_POP directory.
+
+        Added SA-POP files.
+
+
 Wed Oct 11 14:02:30 UTC 2006  Nishanth Shankaran  <nshankar@dre.vanderbilt.edu>
 
         * Controller/Component/starter.cpp:
