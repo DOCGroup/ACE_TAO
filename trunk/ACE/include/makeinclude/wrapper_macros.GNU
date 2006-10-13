@@ -70,7 +70,7 @@
 #  sctp             Build support for TAO SCIOP and for ACE SCTP
 #                   wrapper-facades. The sctp macro should be set to a string
 #                   value representing a particular SCTP implementation.
-#                   Recognized values include: openss7
+#                   Recognized values include: openss7 lksctp
 #
 #  versioned_so     Add versioning to libraries.  Defaults to 1 (true). If 0,
 #                   no version number is appended to shared library names.
