@@ -10,22 +10,18 @@ ACE_RCSID(Muxing, Client_Task, "$Id$")
 
 Client_Task::Client_Task (const char *ior,
                           CORBA::ORB_ptr corb,
-                          ACE_Thread_Manager *thr_mgr)
+                          ACE_Thread_Manager *thr_mgr,
+                          CORBA::Boolean result)
   : ACE_Task_Base (thr_mgr)
     , input_ (ior)
     , corb_ (CORBA::ORB::_duplicate (corb))
+    , result_ (result)
 {
 }
 
 int
 Client_Task::svc (void)
 {
-  CORBA::Boolean const collocation =
-    this->corb_->orb_core()->optimize_collocation_objects ();
-
-  CORBA::Boolean const global_collocation =
-    this->corb_->orb_core()->use_global_collocation ();
-
   ACE_TRY_NEW_ENV
     {
       CORBA::Object_var tmp =
@@ -52,25 +48,32 @@ Client_Task::svc (void)
       ACE_DEBUG ((LM_DEBUG, "(%P|%t) - string returned <%s>\n",
 		  the_string.in ()));
 
+      if (!this->result_)
+        {
+          // We would expect the call to fail, so we have an error now
+          ACE_ERROR ((LM_ERROR, "(%P|%t) - ERROR: get_string should have failed\n"));
+        }
+
       hello->shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
   ACE_CATCH (CORBA::TRANSIENT, ex)
     {
-      if ((!collocation || !global_collocation) && (ex.minor() & 0xFFFU) == 2)
+      if (!this->result_)
         {
           ACE_DEBUG ((LM_DEBUG, "(%P|%t) - caught expected exception\n"));
-          // When collocation has been disabled we expect a trancient
+          // When collocation has been disabled we expect a transient
           // with minor code 2
           return 0;
         }
+
       ACE_PRINT_EXCEPTION (ex, "Caught exception:");
       return 1;
     }
   ACE_CATCHANY
     {
       ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-			   "Exception caught:");
+        "Exception caught:");
       return 1;
     }
   ACE_ENDTRY;
