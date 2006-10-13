@@ -1,9 +1,15 @@
+Fri Oct 13 10:25:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+	* apps/soreduce/Library.cpp:
+	  aceversion is not a valid base project. Thanks to Manuel Traut
+	  <manut dot de at googlemail dot com> for reporting this.
+
 Thu Oct 12 16:44:34 UTC 2006  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
 
         * ace/Log_Record.cpp (operator<<): Zapped the nonconst_record and
           const_cast since this is no longered needed as per the following
           change:
-    
+
          Sun Aug 12 00:34:42 2001  Steve Huston  <shuston@riverace.com>
          * ace/Log_Record.h:
          * ace/Log_Record.i (msg_data()): Changed ACE_TCHAR *msg_data()
