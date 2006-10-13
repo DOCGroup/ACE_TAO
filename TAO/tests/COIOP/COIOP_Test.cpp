@@ -10,16 +10,20 @@ const char *output = "test.ior";
 const char *input = "file://test.ior";
 ACE_CString server_orb;
 ACE_CString client_orb;
+CORBA::Boolean result = false;
 
 int
 parse_args (int argc, char *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, "k:o:n");
+  ACE_Get_Opt get_opts (argc, argv, "sk:o:n");
   int c;
 
   while ((c = get_opts ()) != -1)
     switch (c)
       {
+      case 's' :
+        result = true;
+        break;
       case 'o':
         output = get_opts.opt_arg ();
         break;
@@ -83,7 +87,8 @@ main (int argc, char *argv[])
 
       Client_Task client_task (input,
                                corb.in (),
-                               ACE_Thread_Manager::instance ());
+                               ACE_Thread_Manager::instance (),
+                               result);
 
       if (client_task.activate (THR_NEW_LWP | THR_JOINABLE,
                                 1,
