@@ -79,7 +79,7 @@ MPC_Generator::write_epilog ()
 void
 MPC_Generator::write_baseprojects()
 {
-  mpcfile_ << ": acedefaults, aceversion, core";
+  mpcfile_ << ": acedefaults, core";
 }
 
 void
