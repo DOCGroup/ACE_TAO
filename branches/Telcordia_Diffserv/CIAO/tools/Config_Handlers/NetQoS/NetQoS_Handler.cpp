@@ -98,7 +98,7 @@ namespace CIAO
           }
           else
             idl_conn_qos.priority = CIAO::DAnCE::NetworkQoS::NORMAL;
-
+/*
           for (CIAO::Config_Handlers::ConnectionQoS::connectionInfo_iterator iter = conn_qos.begin_connectionInfo ();
                iter != conn_qos.end_connectionInfo ();
                ++iter)
@@ -110,6 +110,16 @@ namespace CIAO
               idl_conn_qos.connections [len].client_port_name = CORBA::string_dup (iter->clientPortName().c_str ());
               idl_conn_qos.connections [len].server = CORBA::string_dup (iter->server().c_str ());
               idl_conn_qos.connections [len].server_port_name = CORBA::string_dup (iter->serverPortName().c_str ());
+*/
+
+          for (CIAO::Config_Handlers::ConnectionQoS::connectionName_iterator 
+               iter = conn_qos.begin_connectionName ();
+               iter != conn_qos.end_connectionName ();
+               ++iter)
+            {
+              CORBA::ULong len = idl_conn_qos.connection_names.length ();
+              idl_conn_qos.connection_names.length (len + 1);
+              idl_conn_qos.connection_names [len] = CORBA::string_dup (iter->c_str ());
             }
 
           CORBA::ULong len = this->idl_netqos_->conn_qos_set.length ();
@@ -145,15 +155,10 @@ namespace CIAO
         else
           return false;
 
-        size_t num_conn = idl_conn_qos.connections.length ();
+        size_t num_conn = idl_conn_qos.connection_names.length ();
         for (size_t j = 0; j < num_conn; ++j)
         {
-          CIAO::Config_Handlers::Connection conn (idl_conn_qos.connections[j].connection_name.in(),
-                                                  idl_conn_qos.connections[j].client.in(),
-                                                  idl_conn_qos.connections[j].client_port_name.in(),
-                                                  idl_conn_qos.connections[j].server.in(),
-                                                  idl_conn_qos.connections[j].server_port_name.in());
-          xsc_conn_qos.add_connectionInfo (conn);
+          xsc_conn_qos.add_connectionName (idl_conn_qos.connection_names[j]);
         }
 
         this->netqos_->add_connectionQoS (xsc_conn_qos);
