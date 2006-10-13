@@ -206,7 +206,7 @@ namespace CIAO
                    if (dep_plan.infoProperty [j].value >>= net_qos_req)
                     {
                         this->build_instance_node_map (dep_plan);
-                        if (this->process_netqos_req (net_qos_req, dscp_infos))
+                        if (this->process_netqos_req (net_qos_req, dep_plan, dscp_infos))
                           {
                             // Remove CIAONetworkQoS infoProperty
                             CORBA::ULong length = dep_plan.infoProperty.length();
@@ -253,13 +253,10 @@ namespace CIAO
           }
       }
 
-      bool NetQoSPlanner_exec_i::process_netqos_req (::CIAO::DAnCE::NetworkQoS::NetQoSRequirement *net_qos_req,
+      bool NetQoSPlanner_exec_i::process_netqos_req (const ::CIAO::DAnCE::NetworkQoS::NetQoSRequirement *net_qos_req,
+                                                     const ::Deployment::DeploymentPlan &dep_plan,
                                                      ::Deployment::DiffservInfos & dscp_infos)
       {
-        time_t t;
-        time (&t);
-        srandom (t);
-
         // Build an in memory map of logical nodes to the physical hosts.
         this->build_node_map ();
 
@@ -276,79 +273,84 @@ namespace CIAO
         NAMED(outer)
         for (size_t k = 0; k < set_len; ++k)
           {
-            const ::CIAO::DAnCE::NetworkQoS::ConnectionQoS & conn_qos
-            = net_qos_req->conn_qos_set[k];
+            const ::CIAO::DAnCE::NetworkQoS::ConnectionQoS & conn_qos = net_qos_req->conn_qos_set[k];
             //ACE_DEBUG ((LM_DEBUG,"In NetQoSPlanner_exec_i::process_netqos_req: conn_qos.connections.length () = %u\n",conn_qos.connections.length ()));
             for (size_t conn_num = 0;
-                 conn_num < conn_qos.connections.length ();
+                 conn_num < conn_qos.connection_names.length ();
                  ++conn_num)
               {
-                CommonDef::IPAddress srcIP;
-                if (-1 == this->find_ip_address (srcIP, conn_qos.connections [conn_num].client))
+                ::Deployment::DiffservInfo endpoint;
+                if (this->get_endpoints(endpoint, dep_plan, std::string (conn_qos.connection_names[conn_num])))
+                {
+                  CommonDef::IPAddress srcIP;
+                  if (-1 == this->find_ip_address (srcIP, endpoint.client_instance_name.in()))
                   {
                     ACE_DEBUG ((LM_ERROR,"In NetQoSPlanner_exec_i::process_netqos_req: Can't find source IP\n"));
                     rollback = true;
                     BREAK(outer);
                   }
-                ACE_DEBUG ((LM_DEBUG,"In NetQoSPlanner_exec_i::process_netqos_req: srcIP = %s\n",srcIP.dottedDecimal.in()));
-                CommonDef::IPAddress destIP;
-                if (-1 == this->find_ip_address (destIP, conn_qos.connections [conn_num].server))
+                  ACE_DEBUG ((LM_DEBUG,"In NetQoSPlanner_exec_i::process_netqos_req: srcIP = %s\n",srcIP.dottedDecimal.in()));
+                  CommonDef::IPAddress destIP;
+                  if (-1 == this->find_ip_address(destIP, endpoint.server_instance_name.in()))
                   {
                     ACE_DEBUG ((LM_ERROR,"In NetQoSPlanner_exec_i::process_netqos_req: Can't find destination IP\n"));
                     rollback = true;
                     BREAK(outer);
                   }
-                ACE_DEBUG ((LM_DEBUG,"In NetQoSPlanner_exec_i::process_netqos_req: destIP = %s\n",destIP.dottedDecimal.in()));
-                CommonDef::QOSRequired qos_req;
-                this->get_traffic_qos (qos_req, conn_qos);
-                long fwd_dscp = 0, rev_dscp = 0;
+                  ACE_DEBUG ((LM_DEBUG,"In NetQoSPlanner_exec_i::process_netqos_req: destIP = %s\n",destIP.dottedDecimal.in()));
+                  CommonDef::QOSRequired qos_req;
+                  this->get_traffic_qos (qos_req, conn_qos);
+                  long fwd_dscp = 0, rev_dscp = 0;
 
-                if (-1 == this->make_flow_request (srcIP, destIP, conn_qos.fwdBWD, qos_req, fwd_dscp))
-                {
-                  rollback = true;
-                  BREAK(outer);
-                }
+                  if (-1 == this->make_flow_request (srcIP, destIP, conn_qos.fwdBWD, qos_req, fwd_dscp))
+                  {
+                    rollback = true;
+                    BREAK(outer);
+                  }
 
-                size_t len = dscp_infos.length ();
-                dscp_infos.length (len + 1);
-                dscp_infos [len].server_instance_name = CORBA::string_dup (conn_qos.connections [conn_num].server);
-                dscp_infos [len].client_instance_name = CORBA::string_dup (conn_qos.connections [conn_num].client);
-                dscp_infos [len].client_receptacle_name = CORBA::string_dup (conn_qos.connections [conn_num].client_port_name);
-                dscp_infos [len].request_dscp = fwd_dscp;
-                dscp_infos [len].reply_dscp = rev_dscp; /// Assigning zero here.
-                ACE_DEBUG ((LM_DEBUG,"In\
-NetQoSPlanner_exec_i::process_netqos_req: fwd_dscp = %d\n",fwd_dscp));
+                  size_t len = dscp_infos.length ();
+                  dscp_infos.length (len + 1);
+                  dscp_infos [len].server_instance_name = endpoint.server_instance_name;
+                  dscp_infos [len].client_instance_name = endpoint.client_instance_name;;
+                  //dscp_infos [len].client_receptacle_name = CORBA::string_dup (conn_qos.connections [conn_num].client_port_name);
+                  dscp_infos [len].request_dscp = fwd_dscp;
+                  dscp_infos [len].reply_dscp = rev_dscp; /// Assigning zero here.
+                  ACE_DEBUG ((LM_DEBUG,"In NetQoSPlanner_exec_i::process_netqos_req: fwd_dscp = %d\n",fwd_dscp));
 
-                if (conn_qos.revBWD > 0)
-                {
-                  if (-1 == this->make_flow_request (destIP, srcIP, conn_qos.revBWD, qos_req, rev_dscp))
+                  if (conn_qos.revBWD > 0)
+                  {
+                    if (-1 == this->make_flow_request (destIP, srcIP, conn_qos.revBWD, qos_req, rev_dscp))
                     {
                       rollback = true;
                       BREAK(outer);
                     }
-                  ACE_DEBUG ((LM_DEBUG,"In\
-NetQoSPlanner_exec_i::process_netqos_req: rev_dscp = %d\n",rev_dscp));
-                  dscp_infos [len].reply_dscp = rev_dscp;
+                    ACE_DEBUG ((LM_DEBUG,"In NetQoSPlanner_exec_i::process_netqos_req: rev_dscp = %d\n",rev_dscp));
+                    dscp_infos [len].reply_dscp = rev_dscp;
+                  }
+                  /*              std::cerr
+                                  << "Connection Name = " << conn_qos.connections [conn_num].connection_name   << std::endl
+                                  << "client Name = " << conn_qos.connections [conn_num].client                << std::endl
+                                  << "client Port Name = " << conn_qos.connections [conn_num].client_port_name << std::endl
+                                  << "server Name = " << conn_qos.connections [conn_num].server                << std::endl
+                                  << "server Port Name = " << conn_qos.connections [conn_num].server_port_name << std::endl;
+                   */
                 }
-/*              std::cerr
-                  << "Connection Name = " << conn_qos.connections [conn_num].connection_name   << std::endl
-                  << "client Name = " << conn_qos.connections [conn_num].client                << std::endl
-                  << "client Port Name = " << conn_qos.connections [conn_num].client_port_name << std::endl
-                  << "server Name = " << conn_qos.connections [conn_num].server                << std::endl
-                  << "server Port Name = " << conn_qos.connections [conn_num].server_port_name << std::endl;
-*/
-              }
-            /*
-            std::cerr << "fwdBWD = " << conn_qos.fwdBWD << std::endl;
-            std::cerr << "revBWD = " << conn_qos.revBWD << std::endl;
+              else
+                {
+                  ACE_DEBUG((LM_DEBUG,"Connection was not found in the deployment plan.\n"));
+                }  
+                /*
+                   std::cerr << "fwdBWD = " << conn_qos.fwdBWD << std::endl;
+                   std::cerr << "revBWD = " << conn_qos.revBWD << std::endl;
 
-            if (::CIAO::DAnCE::NetworkQoS::NORMAL == conn_qos.priority)
-              std::cerr << "Priority = NORMAL\n";
-            else if (::CIAO::DAnCE::NetworkQoS::HIGH == conn_qos.priority)
-              std::cerr << "Priority = HIGH\n";
-            else if (::CIAO::DAnCE::NetworkQoS::LOW == conn_qos.priority)
-              std::cerr << "Priority = LOW\n";
-            */
+                   if (::CIAO::DAnCE::NetworkQoS::NORMAL == conn_qos.priority)
+                   std::cerr << "Priority = NORMAL\n";
+                   else if (::CIAO::DAnCE::NetworkQoS::HIGH == conn_qos.priority)
+                   std::cerr << "Priority = HIGH\n";
+                   else if (::CIAO::DAnCE::NetworkQoS::LOW == conn_qos.priority)
+                   std::cerr << "Priority = LOW\n";
+                 */
+              }
           }
 
           if (rollback)
@@ -363,6 +365,27 @@ NetQoSPlanner_exec_i::process_netqos_req: rev_dscp = %d\n",rev_dscp));
             }
       }
 
+      bool NetQoSPlanner_exec_i::get_endpoints (::Deployment::DiffservInfo &diffserv_conn, 
+                                                const ::Deployment::DeploymentPlan &dep_plan,
+                                                const std::string &conn_name)
+      {
+        size_t total_connections = dep_plan.connection.length();
+        for (size_t num_conn = 0; num_conn < total_connections; ++num_conn)
+          {
+            if (conn_name == dep_plan.connection[num_conn].name.in())
+              {
+                const ::Deployment::PlanConnectionDescription & conn_desc =
+                      dep_plan.connection [num_conn];
+                unsigned long index = conn_desc.internalEndpoint[0].instanceRef;
+                diffserv_conn.server_instance_name = dep_plan.instance[index].name;
+                index = conn_desc.internalEndpoint[1].instanceRef;
+                diffserv_conn.client_instance_name = dep_plan.instance[index].name;
+                //diffserv_conn.client_receptacle_name = 
+                return true;
+              } 
+          }
+        return false;
+      }
 
       int NetQoSPlanner_exec_i::find_ip_address (CommonDef::IPAddress & ip, const char *instance_name)
       {
