@@ -62,16 +62,16 @@ namespace CIAO
            switch (i->type ().integral ())
            {
              case ::CIAO::Config_Handlers::EventServiceType::EC_l:
-               a_esd.type = CIAO::DAnCE::EC;
+               a_esd.type = CIAO::EC;
                break;
              case ::CIAO::Config_Handlers::EventServiceType::NOTIFY_l:
-               a_esd.type = CIAO::DAnCE::NOTIFY;
+               a_esd.type = CIAO::NOTIFY;
                break;
              case ::CIAO::Config_Handlers::EventServiceType::RTEC_l:
-               a_esd.type = CIAO::DAnCE::RTEC;
+               a_esd.type = CIAO::RTEC;
                break;
              case ::CIAO::Config_Handlers::EventServiceType::RTNOTIFY_l:
-               a_esd.type = CIAO::DAnCE::RTNOTIFY;
+               a_esd.type = CIAO::RTNOTIFY;
                break;
              default:
              ACE_ERROR ((LM_ERROR,

@@ -49,7 +49,8 @@ namespace CIAO
    *         first time initialized.
    */
   class CIAO_RTEVENT_Export RTEventService :
-    public virtual EventServiceBase
+    public virtual EventServiceBase,
+    public virtual POA_CIAO::CIAO_RT_Event_Service
   {
   public:
 

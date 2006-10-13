@@ -185,9 +185,12 @@ namespace CIAO
     if (qos->dependencies.length () == 0)
       {
         qos->dependencies.length (1);
-        qos->dependencies[0].event.header.type = ACE_ES_DISJUNCTION_DESIGNATOR;
+        qos->dependencies[0].event.header.type = ACE_ES_EVENT_ANY;
         qos->dependencies[0].event.header.source = ACE_ES_EVENT_SOURCE_ANY;
         qos->dependencies[0].rt_info = 0;
+
+        ACE_DEBUG ((LM_DEBUG, "\n======== Normalized ConsumerQoS length is: %d\n\n", 
+                    qos->dependencies.length ()));
       }
 
     proxy_supplier->connect_push_consumer (push_consumer.in (),

@@ -655,7 +655,6 @@ ACE_THROW_SPEC ((::CORBA::SystemException,
               es_infos[i].receivers[j].addr_serv_id.in (),
               es_infos[i].receivers[j].is_multicast,
               es_infos[i].receivers[j].listen_port);
-
         }
   
       CORBA::ULong curr_len = retv->length ();
