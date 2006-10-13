@@ -726,6 +726,7 @@ int CIAO::DomainDataManager::intimate_planner (
 {
  // use the connection with the planner and get a reference to the planner
  // make a call top the planner
+  Deployment::Domain d = domain; 
   return 0;
 
 }
@@ -733,5 +734,5 @@ int CIAO::DomainDataManager::intimate_planner (
 bool CIAO::DomainDataManager::update_node_status ()
 {
   // update the node status here ...
-
+  return 0;
 }
