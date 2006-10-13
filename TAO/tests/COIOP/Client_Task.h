@@ -21,7 +21,8 @@ public:
   /// Constructor
   Client_Task (const char *input,
                CORBA::ORB_ptr corb,
-               ACE_Thread_Manager *thr_mgr);
+               ACE_Thread_Manager *thr_mgr,
+               CORBA::Boolean result);
 
   /// Thread entry point
   int svc (void);
@@ -30,6 +31,9 @@ private:
   const char *input_;
 
   CORBA::ORB_var corb_;
+
+  // Boolean to indicate whether the invocation should work or not.
+  CORBA::Boolean result_;
 };
 
 #include /**/ "ace/post.h"
