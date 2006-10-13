@@ -138,11 +138,15 @@ namespace CIAO
              ACE_THROW_SPEC (( ::CORBA::SystemException, ::CIAO::RACE::PlannerFailure));
 
         void build_node_map ();
+        bool get_endpoints (::Deployment::DiffservInfo&,
+                            const ::Deployment::DeploymentPlan &dep_plan,
+                            const std::string &conn_name);
         bool resolve_BB ();
         std::string get_physical_host (const std::string &logical_node);
 
-        bool process_netqos_req (::CIAO::DAnCE::NetworkQoS::NetQoSRequirement *net_qos_req,
-                                 ::Deployment::DiffservInfos & dscp_infos);
+        bool process_netqos_req (const ::CIAO::DAnCE::NetworkQoS::NetQoSRequirement *net_qos_req, 
+                                 const ::Deployment::DeploymentPlan &dep_plan,
+                                 ::Deployment::DiffservInfos &dscp_infos);
 
         int make_flow_request (const CommonDef::IPAddress &srcIP,
                                const CommonDef::IPAddress &destIP,
