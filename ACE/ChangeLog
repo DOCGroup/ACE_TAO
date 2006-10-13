@@ -1,8 +1,18 @@
+Fri Oct 13 12:32:35 UTC 2006  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/PerlACE/Process_Unix.pm:
+
+          Added support for remote testing on UNIX only.  Currently, ssh or
+          rsh is used to run an executable on the remote machine.  The
+          remote test capability is only enabled if the RemoteInformation
+          method is called on the PerlACE::Process object.  For more
+          details, see the RemoteInformation method in this module.
+
 Fri Oct 13 10:25:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-	* apps/soreduce/Library.cpp:
-	  aceversion is not a valid base project. Thanks to Manuel Traut
-	  <manut dot de at googlemail dot com> for reporting this.
+        * apps/soreduce/Library.cpp:
+          aceversion is not a valid base project. Thanks to Manuel Traut
+          <manut dot de at googlemail dot com> for reporting this.
 
 Thu Oct 12 16:44:34 UTC 2006  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
 
