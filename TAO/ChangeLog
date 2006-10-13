@@ -1,3 +1,10 @@
+Fri Oct 13 10:28:12 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+	* tests/COIOP/*:
+	  Extended this test so that we check whether a call should
+	  succeed or not. This test requires that COIOP is the only
+	  pluggable protocol available.
+
 Thu Oct 12 14:17:11 UTC 2006  Chad Elliott  <elliott_c@ociweb.com>
 
         * orbsvcs/ImplRepo_Service/ImR_Locator_i.cpp:
