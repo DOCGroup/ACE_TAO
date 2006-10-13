@@ -600,11 +600,28 @@ namespace CIDL_Sender_Impl
 
     if (ACE_OS::strcmp (publisher_name, "click_out") == 0)
     {
+      CORBA::PolicyList policy_list;
+      policy_list = this->get_receptacle_policy (publisher_name);
+
       ::Hello::TimeOutConsumer_var sub =
         ::Hello::TimeOutConsumer::_narrow (
         subscribe
         ACE_ENV_ARG_PARAMETER);
       ACE_CHECK_RETURN (0);
+
+      if (policy_list.length () != 0)
+        {
+          CORBA::Object_var over_ridden_object =
+            sub->_set_policy_overrides (policy_list,
+                                        CORBA::SET_OVERRIDE
+                                        ACE_ENV_ARG_PARAMETER);
+          ACE_TRY_CHECK;
+
+         sub = ::Hello::TimeOutConsumer::_narrow (
+                over_ridden_object
+                ACE_ENV_ARG_PARAMETER);
+          ACE_CHECK_RETURN (0);
+        }
 
       if ( ::CORBA::is_nil (sub.in ()))
       {
