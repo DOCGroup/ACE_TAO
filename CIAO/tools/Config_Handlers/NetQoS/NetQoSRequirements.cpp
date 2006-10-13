@@ -172,137 +172,6 @@ namespace CIAO
     {
     }
 
-    // Connection
-    // 
-
-    Connection::
-    Connection (::XMLSchema::string< ACE_TCHAR > const& connectionName__,
-                ::XMLSchema::string< ACE_TCHAR > const& client__,
-                ::XMLSchema::string< ACE_TCHAR > const& clientPortName__,
-                ::XMLSchema::string< ACE_TCHAR > const& server__,
-                ::XMLSchema::string< ACE_TCHAR > const& serverPortName__)
-    : 
-    ::XSCRT::Type (), 
-    connectionName_ (new ::XMLSchema::string< ACE_TCHAR > (connectionName__)),
-    client_ (new ::XMLSchema::string< ACE_TCHAR > (client__)),
-    clientPortName_ (new ::XMLSchema::string< ACE_TCHAR > (clientPortName__)),
-    server_ (new ::XMLSchema::string< ACE_TCHAR > (server__)),
-    serverPortName_ (new ::XMLSchema::string< ACE_TCHAR > (serverPortName__)),
-    regulator__ ()
-    {
-      connectionName_->container (this);
-      client_->container (this);
-      clientPortName_->container (this);
-      server_->container (this);
-      serverPortName_->container (this);
-    }
-
-    Connection::
-    Connection (::CIAO::Config_Handlers::Connection const& s)
-    :
-    ::XSCRT::Type (),
-    connectionName_ (new ::XMLSchema::string< ACE_TCHAR > (*s.connectionName_)),
-    client_ (new ::XMLSchema::string< ACE_TCHAR > (*s.client_)),
-    clientPortName_ (new ::XMLSchema::string< ACE_TCHAR > (*s.clientPortName_)),
-    server_ (new ::XMLSchema::string< ACE_TCHAR > (*s.server_)),
-    serverPortName_ (new ::XMLSchema::string< ACE_TCHAR > (*s.serverPortName_)),
-    regulator__ ()
-    {
-      connectionName_->container (this);
-      client_->container (this);
-      clientPortName_->container (this);
-      server_->container (this);
-      serverPortName_->container (this);
-    }
-
-    ::CIAO::Config_Handlers::Connection& Connection::
-    operator= (::CIAO::Config_Handlers::Connection const& s)
-    {
-      connectionName (s.connectionName ());
-
-      client (s.client ());
-
-      clientPortName (s.clientPortName ());
-
-      server (s.server ());
-
-      serverPortName (s.serverPortName ());
-
-      return *this;
-    }
-
-
-    // Connection
-    // 
-    ::XMLSchema::string< ACE_TCHAR > const& Connection::
-    connectionName () const
-    {
-      return *connectionName_;
-    }
-
-    void Connection::
-    connectionName (::XMLSchema::string< ACE_TCHAR > const& e)
-    {
-      *connectionName_ = e;
-    }
-
-    // Connection
-    // 
-    ::XMLSchema::string< ACE_TCHAR > const& Connection::
-    client () const
-    {
-      return *client_;
-    }
-
-    void Connection::
-    client (::XMLSchema::string< ACE_TCHAR > const& e)
-    {
-      *client_ = e;
-    }
-
-    // Connection
-    // 
-    ::XMLSchema::string< ACE_TCHAR > const& Connection::
-    clientPortName () const
-    {
-      return *clientPortName_;
-    }
-
-    void Connection::
-    clientPortName (::XMLSchema::string< ACE_TCHAR > const& e)
-    {
-      *clientPortName_ = e;
-    }
-
-    // Connection
-    // 
-    ::XMLSchema::string< ACE_TCHAR > const& Connection::
-    server () const
-    {
-      return *server_;
-    }
-
-    void Connection::
-    server (::XMLSchema::string< ACE_TCHAR > const& e)
-    {
-      *server_ = e;
-    }
-
-    // Connection
-    // 
-    ::XMLSchema::string< ACE_TCHAR > const& Connection::
-    serverPortName () const
-    {
-      return *serverPortName_;
-    }
-
-    void Connection::
-    serverPortName (::XMLSchema::string< ACE_TCHAR > const& e)
-    {
-      *serverPortName_ = e;
-    }
-
-
     // ConnectionQoS
     // 
 
@@ -333,7 +202,7 @@ namespace CIAO
     regulator__ ()
     {
       {
-        for (connectionInfo_const_iterator i (s.connectionInfo_.begin ());i != s.connectionInfo_.end ();++i) add_connectionInfo (*i);
+        for (connectionName_const_iterator i (s.connectionName_.begin ());i != s.connectionName_.end ();++i) add_connectionName (*i);
       }
 
       fwdBW_->container (this);
@@ -345,9 +214,9 @@ namespace CIAO
     ::CIAO::Config_Handlers::ConnectionQoS& ConnectionQoS::
     operator= (::CIAO::Config_Handlers::ConnectionQoS const& s)
     {
-      connectionInfo_.clear ();
+      connectionName_.clear ();
       {
-        for (connectionInfo_const_iterator i (s.connectionInfo_.begin ());i != s.connectionInfo_.end ();++i) add_connectionInfo (*i);
+        for (connectionName_const_iterator i (s.connectionName_.begin ());i != s.connectionName_.end ();++i) add_connectionName (*i);
       }
 
       fwdBW (s.fwdBW ());
@@ -365,40 +234,40 @@ namespace CIAO
 
     // ConnectionQoS
     // 
-    ConnectionQoS::connectionInfo_iterator ConnectionQoS::
-    begin_connectionInfo ()
+    ConnectionQoS::connectionName_iterator ConnectionQoS::
+    begin_connectionName ()
     {
-      return connectionInfo_.begin ();
+      return connectionName_.begin ();
     }
 
-    ConnectionQoS::connectionInfo_iterator ConnectionQoS::
-    end_connectionInfo ()
+    ConnectionQoS::connectionName_iterator ConnectionQoS::
+    end_connectionName ()
     {
-      return connectionInfo_.end ();
+      return connectionName_.end ();
     }
 
-    ConnectionQoS::connectionInfo_const_iterator ConnectionQoS::
-    begin_connectionInfo () const
+    ConnectionQoS::connectionName_const_iterator ConnectionQoS::
+    begin_connectionName () const
     {
-      return connectionInfo_.begin ();
+      return connectionName_.begin ();
     }
 
-    ConnectionQoS::connectionInfo_const_iterator ConnectionQoS::
-    end_connectionInfo () const
+    ConnectionQoS::connectionName_const_iterator ConnectionQoS::
+    end_connectionName () const
     {
-      return connectionInfo_.end ();
+      return connectionName_.end ();
     }
 
     void ConnectionQoS::
-    add_connectionInfo (::CIAO::Config_Handlers::Connection const& e)
+    add_connectionName (::XMLSchema::string< ACE_TCHAR > const& e)
     {
-      connectionInfo_.push_back (e);
+      connectionName_.push_back (e);
     }
 
     size_t ConnectionQoS::
-    count_connectionInfo(void) const
+    count_connectionName(void) const
     {
-      return connectionInfo_.size ();
+      return connectionName_.size ();
     }
 
     // ConnectionQoS
@@ -596,57 +465,6 @@ namespace CIAO
     AdmissionPriority const AdmissionPriority::HIGH (AdmissionPriority::HIGH_l);
     AdmissionPriority const AdmissionPriority::LOW (AdmissionPriority::LOW_l);
 
-    // Connection
-    //
-
-    Connection::
-    Connection (::XSCRT::XML::Element< ACE_TCHAR > const& e)
-    :Base__ (e), regulator__ ()
-    {
-
-      ::XSCRT::Parser< ACE_TCHAR > p (e);
-
-      while (p.more_elements ())
-      {
-        ::XSCRT::XML::Element< ACE_TCHAR > e (p.next_element ());
-        ::std::basic_string< ACE_TCHAR > n (::XSCRT::XML::uq_name (e.name ()));
-
-        if (n == "connectionName")
-        {
-          connectionName_ = ::std::auto_ptr< ::XMLSchema::string< ACE_TCHAR > > (new ::XMLSchema::string< ACE_TCHAR > (e));
-          connectionName_->container (this);
-        }
-
-        else if (n == "client")
-        {
-          client_ = ::std::auto_ptr< ::XMLSchema::string< ACE_TCHAR > > (new ::XMLSchema::string< ACE_TCHAR > (e));
-          client_->container (this);
-        }
-
-        else if (n == "clientPortName")
-        {
-          clientPortName_ = ::std::auto_ptr< ::XMLSchema::string< ACE_TCHAR > > (new ::XMLSchema::string< ACE_TCHAR > (e));
-          clientPortName_->container (this);
-        }
-
-        else if (n == "server")
-        {
-          server_ = ::std::auto_ptr< ::XMLSchema::string< ACE_TCHAR > > (new ::XMLSchema::string< ACE_TCHAR > (e));
-          server_->container (this);
-        }
-
-        else if (n == "serverPortName")
-        {
-          serverPortName_ = ::std::auto_ptr< ::XMLSchema::string< ACE_TCHAR > > (new ::XMLSchema::string< ACE_TCHAR > (e));
-          serverPortName_->container (this);
-        }
-
-        else 
-        {
-        }
-      }
-    }
-
     // ConnectionQoS
     //
 
@@ -662,10 +480,10 @@ namespace CIAO
         ::XSCRT::XML::Element< ACE_TCHAR > e (p.next_element ());
         ::std::basic_string< ACE_TCHAR > n (::XSCRT::XML::uq_name (e.name ()));
 
-        if (n == "connectionInfo")
+        if (n == "connectionName")
         {
-          ::CIAO::Config_Handlers::Connection t (e);
-          add_connectionInfo (t);
+          ::XMLSchema::string< ACE_TCHAR > t (e);
+          add_connectionName (t);
         }
 
         else if (n == "fwdBW")
@@ -775,20 +593,6 @@ namespace CIAO
       };
 
       AdmissionPriorityTypeInfoInitializer AdmissionPriorityTypeInfoInitializer_;
-
-      struct ConnectionTypeInfoInitializer
-      {
-        ConnectionTypeInfoInitializer ()
-        {
-          ::XSCRT::TypeId id (typeid (Connection));
-          ::XSCRT::ExtendedTypeInfo nf (id);
-
-          nf.add_base (::XSCRT::ExtendedTypeInfo::Access::public_, false, typeid (::XSCRT::Type));
-          ::XSCRT::extended_type_info_map ().insert (::std::make_pair (id, nf));
-        }
-      };
-
-      ConnectionTypeInfoInitializer ConnectionTypeInfoInitializer_;
 
       struct ConnectionQoSTypeInfoInitializer
       {
@@ -949,114 +753,6 @@ namespace CIAO
       {
       }
 
-      // Connection
-      //
-      //
-
-      void Connection::
-      traverse (Type& o)
-      {
-        pre (o);
-        connectionName (o);
-        client (o);
-        clientPortName (o);
-        server (o);
-        serverPortName (o);
-        post (o);
-      }
-
-      void Connection::
-      traverse (Type const& o)
-      {
-        pre (o);
-        connectionName (o);
-        client (o);
-        clientPortName (o);
-        server (o);
-        serverPortName (o);
-        post (o);
-      }
-
-      void Connection::
-      pre (Type&)
-      {
-      }
-
-      void Connection::
-      pre (Type const&)
-      {
-      }
-
-      void Connection::
-      connectionName (Type& o)
-      {
-        dispatch (o.connectionName ());
-      }
-
-      void Connection::
-      connectionName (Type const& o)
-      {
-        dispatch (o.connectionName ());
-      }
-
-      void Connection::
-      client (Type& o)
-      {
-        dispatch (o.client ());
-      }
-
-      void Connection::
-      client (Type const& o)
-      {
-        dispatch (o.client ());
-      }
-
-      void Connection::
-      clientPortName (Type& o)
-      {
-        dispatch (o.clientPortName ());
-      }
-
-      void Connection::
-      clientPortName (Type const& o)
-      {
-        dispatch (o.clientPortName ());
-      }
-
-      void Connection::
-      server (Type& o)
-      {
-        dispatch (o.server ());
-      }
-
-      void Connection::
-      server (Type const& o)
-      {
-        dispatch (o.server ());
-      }
-
-      void Connection::
-      serverPortName (Type& o)
-      {
-        dispatch (o.serverPortName ());
-      }
-
-      void Connection::
-      serverPortName (Type const& o)
-      {
-        dispatch (o.serverPortName ());
-      }
-
-      void Connection::
-      post (Type&)
-      {
-      }
-
-      void Connection::
-      post (Type const&)
-      {
-      }
-
       // ConnectionQoS
       //
       //
@@ -1065,7 +761,7 @@ namespace CIAO
       traverse (Type& o)
       {
         pre (o);
-        connectionInfo (o);
+        connectionName (o);
         fwdBW (o);
         revBW (o);
         qos (o);
@@ -1078,7 +774,7 @@ namespace CIAO
       traverse (Type const& o)
       {
         pre (o);
-        connectionInfo (o);
+        connectionName (o);
         fwdBW (o);
         revBW (o);
         qos (o);
@@ -1098,72 +794,72 @@ namespace CIAO
       }
 
       void ConnectionQoS::
-      connectionInfo (Type& o)
+      connectionName (Type& o)
       {
         // VC6 anathema strikes again
         //
-        ConnectionQoS::Type::connectionInfo_iterator b (o.begin_connectionInfo()), e (o.end_connectionInfo());
+        ConnectionQoS::Type::connectionName_iterator b (o.begin_connectionName()), e (o.end_connectionName());
 
         if (b != e)
         {
-          connectionInfo_pre (o);
+          connectionName_pre (o);
           for (; b != e;)
           {
             dispatch (*b);
-            if (++b != e) connectionInfo_next (o);
+            if (++b != e) connectionName_next (o);
           }
 
-          connectionInfo_post (o);
+          connectionName_post (o);
         }
       }
 
       void ConnectionQoS::
-      connectionInfo (Type const& o)
+      connectionName (Type const& o)
       {
         // VC6 anathema strikes again
         //
-        ConnectionQoS::Type::connectionInfo_const_iterator b (o.begin_connectionInfo()), e (o.end_connectionInfo());
+        ConnectionQoS::Type::connectionName_const_iterator b (o.begin_connectionName()), e (o.end_connectionName());
 
         if (b != e)
         {
-          connectionInfo_pre (o);
+          connectionName_pre (o);
           for (; b != e;)
           {
             dispatch (*b);
-            if (++b != e) connectionInfo_next (o);
+            if (++b != e) connectionName_next (o);
           }
 
-          connectionInfo_post (o);
+          connectionName_post (o);
         }
       }
 
       void ConnectionQoS::
-      connectionInfo_pre (Type&)
+      connectionName_pre (Type&)
       {
       }
 
       void ConnectionQoS::
-      connectionInfo_pre (Type const&)
+      connectionName_pre (Type const&)
       {
       }
 
       void ConnectionQoS::
-      connectionInfo_next (Type&)
+      connectionName_next (Type&)
       {
       }
 
       void ConnectionQoS::
-      connectionInfo_next (Type const&)
+      connectionName_next (Type const&)
       {
       }
 
       void ConnectionQoS::
-      connectionInfo_post (Type&)
+      connectionName_post (Type&)
       {
       }
 
       void ConnectionQoS::
-      connectionInfo_post (Type const&)
+      connectionName_post (Type const&)
       {
       }
 
@@ -1371,67 +1067,6 @@ namespace CIAO
         }
       }
 
-      // Connection
-      //
-      //
-
-      Connection::
-      Connection (::XSCRT::XML::Element< ACE_TCHAR >& e)
-      : ::XSCRT::Writer< ACE_TCHAR > (e)
-      {
-      }
-
-      Connection::
-      Connection ()
-      {
-      }
-
-      void Connection::
-      traverse (Type const& o)
-      {
-        Traversal::Connection::traverse (o);
-      }
-
-      void Connection::
-      connectionName (Type const& o)
-      {
-        push_ (::XSCRT::XML::Element< ACE_TCHAR > ("connectionName", top_ ()));
-        Traversal::Connection::connectionName (o);
-        pop_ ();
-      }
-
-      void Connection::
-      client (Type const& o)
-      {
-        push_ (::XSCRT::XML::Element< ACE_TCHAR > ("client", top_ ()));
-        Traversal::Connection::client (o);
-        pop_ ();
-      }
-
-      void Connection::
-      clientPortName (Type const& o)
-      {
-        push_ (::XSCRT::XML::Element< ACE_TCHAR > ("clientPortName", top_ ()));
-        Traversal::Connection::clientPortName (o);
-        pop_ ();
-      }
-
-      void Connection::
-      server (Type const& o)
-      {
-        push_ (::XSCRT::XML::Element< ACE_TCHAR > ("server", top_ ()));
-        Traversal::Connection::server (o);
-        pop_ ();
-      }
-
-      void Connection::
-      serverPortName (Type const& o)
-      {
-        push_ (::XSCRT::XML::Element< ACE_TCHAR > ("serverPortName", top_ ()));
-        Traversal::Connection::serverPortName (o);
-        pop_ ();
-      }
-
       // ConnectionQoS
       //
       //
@@ -1454,20 +1089,20 @@ namespace CIAO
       }
 
       void ConnectionQoS::
-      connectionInfo_pre (Type const&)
+      connectionName_pre (Type const&)
       {
-        push_ (::XSCRT::XML::Element< ACE_TCHAR > ("connectionInfo", top_ ()));
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > ("connectionName", top_ ()));
       }
 
       void ConnectionQoS::
-      connectionInfo_next (Type const& o)
+      connectionName_next (Type const& o)
       {
-        connectionInfo_post (o);
-        connectionInfo_pre (o);
+        connectionName_post (o);
+        connectionName_pre (o);
       }
 
       void ConnectionQoS::
-      connectionInfo_post (Type const&)
+      connectionName_post (Type const&)
       {
         pop_ ();
       }
@@ -1522,7 +1157,6 @@ namespace CIAO
 
       struct W : virtual ::CIAO::Config_Handlers::Writer::NetQoSRequirementsDef,
       virtual ::CIAO::Config_Handlers::Writer::ConnectionQoS,
-      virtual ::CIAO::Config_Handlers::Writer::Connection,
       virtual ::XMLSchema::Writer::FundamentalType< ::XMLSchema::string< ACE_TCHAR >, ACE_TCHAR >,
       virtual ::XMLSchema::Writer::FundamentalType< ::XMLSchema::unsignedInt, ACE_TCHAR >,
       virtual ::CIAO::Config_Handlers::Writer::NetworkQoS,

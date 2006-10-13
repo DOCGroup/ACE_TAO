@@ -12,7 +12,6 @@ namespace CIAO
     class NetQoSRequirementsDef;
     class NetworkQoS;
     class AdmissionPriority;
-    class Connection;
     class ConnectionQoS;
   }
 }
@@ -144,7 +143,7 @@ namespace CIAO
     bool NetQoS_Handler_Export operator!= (AdmissionPriority const &a, AdmissionPriority const &b);
 
 
-    class NetQoS_Handler_Export Connection : public ::XSCRT::Type
+    class NetQoS_Handler_Export ConnectionQoS : public ::XSCRT::Type
     {
       //@@ VC6 anathema
       typedef ::XSCRT::Type Base__;
@@ -152,85 +151,17 @@ namespace CIAO
       // connectionName
       // 
       public:
-      ::XMLSchema::string< ACE_TCHAR > const& connectionName () const;
-      void connectionName (::XMLSchema::string< ACE_TCHAR > const& );
+      typedef ::std::list< ::XMLSchema::string< ACE_TCHAR > >::iterator connectionName_iterator;
+      typedef ::std::list< ::XMLSchema::string< ACE_TCHAR > >::const_iterator connectionName_const_iterator;
+      connectionName_iterator begin_connectionName ();
+      connectionName_iterator end_connectionName ();
+      connectionName_const_iterator begin_connectionName () const;
+      connectionName_const_iterator end_connectionName () const;
+      void add_connectionName (::XMLSchema::string< ACE_TCHAR > const& );
+      size_t count_connectionName (void) const;
 
       protected:
-      ::std::auto_ptr< ::XMLSchema::string< ACE_TCHAR > > connectionName_;
-
-      // client
-      // 
-      public:
-      ::XMLSchema::string< ACE_TCHAR > const& client () const;
-      void client (::XMLSchema::string< ACE_TCHAR > const& );
-
-      protected:
-      ::std::auto_ptr< ::XMLSchema::string< ACE_TCHAR > > client_;
-
-      // clientPortName
-      // 
-      public:
-      ::XMLSchema::string< ACE_TCHAR > const& clientPortName () const;
-      void clientPortName (::XMLSchema::string< ACE_TCHAR > const& );
-
-      protected:
-      ::std::auto_ptr< ::XMLSchema::string< ACE_TCHAR > > clientPortName_;
-
-      // server
-      // 
-      public:
-      ::XMLSchema::string< ACE_TCHAR > const& server () const;
-      void server (::XMLSchema::string< ACE_TCHAR > const& );
-
-      protected:
-      ::std::auto_ptr< ::XMLSchema::string< ACE_TCHAR > > server_;
-
-      // serverPortName
-      // 
-      public:
-      ::XMLSchema::string< ACE_TCHAR > const& serverPortName () const;
-      void serverPortName (::XMLSchema::string< ACE_TCHAR > const& );
-
-      protected:
-      ::std::auto_ptr< ::XMLSchema::string< ACE_TCHAR > > serverPortName_;
-
-      public:
-      Connection (::XMLSchema::string< ACE_TCHAR > const& connectionName__,
-                  ::XMLSchema::string< ACE_TCHAR > const& client__,
-                  ::XMLSchema::string< ACE_TCHAR > const& clientPortName__,
-                  ::XMLSchema::string< ACE_TCHAR > const& server__,
-                  ::XMLSchema::string< ACE_TCHAR > const& serverPortName__);
-
-      Connection (::XSCRT::XML::Element< ACE_TCHAR > const&);
-      Connection (Connection const& s);
-
-      Connection&
-      operator= (Connection const& s);
-
-      private:
-      char regulator__;
-    };
-
-
-    class NetQoS_Handler_Export ConnectionQoS : public ::XSCRT::Type
-    {
-      //@@ VC6 anathema
-      typedef ::XSCRT::Type Base__;
-
-      // connectionInfo
-      // 
-      public:
-      typedef ::std::list< ::CIAO::Config_Handlers::Connection >::iterator connectionInfo_iterator;
-      typedef ::std::list< ::CIAO::Config_Handlers::Connection >::const_iterator connectionInfo_const_iterator;
-      connectionInfo_iterator begin_connectionInfo ();
-      connectionInfo_iterator end_connectionInfo ();
-      connectionInfo_const_iterator begin_connectionInfo () const;
-      connectionInfo_const_iterator end_connectionInfo () const;
-      void add_connectionInfo (::CIAO::Config_Handlers::Connection const& );
-      size_t count_connectionInfo (void) const;
-
-      protected:
-      ::std::list< ::CIAO::Config_Handlers::Connection > connectionInfo_;
+      ::std::list< ::XMLSchema::string< ACE_TCHAR > > connectionName_;
 
       // fwdBW
       // 
@@ -369,7 +300,7 @@ namespace CIAO
       ::XMLSchema::Traversal::Traverser< ::CIAO::Config_Handlers::AdmissionPriority >
       AdmissionPriority;
 
-      struct NetQoS_Handler_Export Connection : ::XMLSchema::Traversal::Traverser< ::CIAO::Config_Handlers::Connection >
+      struct NetQoS_Handler_Export ConnectionQoS : ::XMLSchema::Traversal::Traverser< ::CIAO::Config_Handlers::ConnectionQoS >
       {
         virtual void
         traverse (Type&);
@@ -390,73 +321,22 @@ namespace CIAO
         connectionName (Type const&);
 
         virtual void
-        client (Type&);
+        connectionName_pre (Type&);
 
         virtual void
-        client (Type const&);
+        connectionName_pre (Type const&);
 
         virtual void
-        clientPortName (Type&);
+        connectionName_next (Type&);
 
         virtual void
-        clientPortName (Type const&);
+        connectionName_next (Type const&);
 
         virtual void
-        server (Type&);
+        connectionName_post (Type&);
 
         virtual void
-        server (Type const&);
-
-        virtual void
-        serverPortName (Type&);
-
-        virtual void
-        serverPortName (Type const&);
-
-        virtual void
-        post (Type&);
-
-        virtual void
-        post (Type const&);
-      };
-
-      struct NetQoS_Handler_Export ConnectionQoS : ::XMLSchema::Traversal::Traverser< ::CIAO::Config_Handlers::ConnectionQoS >
-      {
-        virtual void
-        traverse (Type&);
-
-        virtual void
-        traverse (Type const&);
-
-        virtual void
-        pre (Type&);
-
-        virtual void
-        pre (Type const&);
-
-        virtual void
-        connectionInfo (Type&);
-
-        virtual void
-        connectionInfo (Type const&);
-
-        virtual void
-        connectionInfo_pre (Type&);
-
-        virtual void
-        connectionInfo_pre (Type const&);
-
-        virtual void
-        connectionInfo_next (Type&);
-
-        virtual void
-        connectionInfo_next (Type const&);
-
-        virtual void
-        connectionInfo_post (Type&);
-
-        virtual void
-        connectionInfo_post (Type const&);
+        connectionName_post (Type const&);
 
         virtual void
         fwdBW (Type&);
@@ -607,82 +487,6 @@ namespace CIAO
         AdmissionPriority ();
       };
 
-      struct Connection : Traversal::Connection, 
-      virtual ::XSCRT::Writer< ACE_TCHAR >
-      {
-        typedef ::CIAO::Config_Handlers::Connection Type;
-        Connection (::XSCRT::XML::Element< ACE_TCHAR >&);
-
-        virtual void 
-        traverse (Type &o)
-        {
-
-          this->traverse (const_cast <Type const &> (o));
-        }
-
-
-        virtual void
-        traverse (Type const&);
-
-        virtual void 
-        connectionName (Type &o)
-        {
-
-          this->connectionName (const_cast <Type const &> (o));
-        }
-
-
-        virtual void
-        connectionName (Type const&);
-
-        virtual void 
-        client (Type &o)
-        {
-
-          this->client (const_cast <Type const &> (o));
-        }
-
-
-        virtual void
-        client (Type const&);
-
-        virtual void 
-        clientPortName (Type &o)
-        {
-
-          this->clientPortName (const_cast <Type const &> (o));
-        }
-
-
-        virtual void
-        clientPortName (Type const&);
-
-        virtual void 
-        server (Type &o)
-        {
-
-          this->server (const_cast <Type const &> (o));
-        }
-
-
-        virtual void
-        server (Type const&);
-
-        virtual void 
-        serverPortName (Type &o)
-        {
-
-          this->serverPortName (const_cast <Type const &> (o));
-        }
-
-
-        virtual void
-        serverPortName (Type const&);
-
-        protected:
-        Connection ();
-      };
-
       struct ConnectionQoS : Traversal::ConnectionQoS, 
       virtual ::XSCRT::Writer< ACE_TCHAR >
       {
@@ -701,37 +505,37 @@ namespace CIAO
         traverse (Type const&);
 
         virtual void 
-        connectionInfo_pre (Type &o)
+        connectionName_pre (Type &o)
         {
 
-          this->connectionInfo_pre (const_cast <Type const &> (o));
+          this->connectionName_pre (const_cast <Type const &> (o));
         }
 
 
         virtual void
-        connectionInfo_pre (Type const&);
+        connectionName_pre (Type const&);
 
         virtual void 
-        connectionInfo_next (Type &o)
+        connectionName_next (Type &o)
         {
 
-          this->connectionInfo_next (const_cast <Type const &> (o));
+          this->connectionName_next (const_cast <Type const &> (o));
         }
 
 
         virtual void
-        connectionInfo_next (Type const&);
+        connectionName_next (Type const&);
 
         virtual void 
-        connectionInfo_post (Type &o)
+        connectionName_post (Type &o)
         {
 
-          this->connectionInfo_post (const_cast <Type const &> (o));
+          this->connectionName_post (const_cast <Type const &> (o));
         }
 
 
         virtual void
-        connectionInfo_post (Type const&);
+        connectionName_post (Type const&);
 
         virtual void 
         fwdBW (Type &o)
