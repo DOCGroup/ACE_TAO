@@ -102,7 +102,7 @@ CIAO::Container_Impl::install (
                  value.type ()->kind () == CORBA::tk_string)
                {
                  const char * policy_set_id;
-                 const char * receptacle_name;
+                 const char * port_name;
                  impl_infos[i].component_config[cp_len].value >>= 
                    policy_set_id;
 
@@ -111,7 +111,7 @@ CIAO::Container_Impl::install (
 
                  if (result == true)
                    {
-                     receptacle_name = impl_infos[i].component_config[cp_len].
+                     port_name = impl_infos[i].component_config[cp_len].
                        name.in ();
                      CORBA::PolicyList_var policies =
                        this->configurator_.find_policies_by_name (
@@ -121,7 +121,7 @@ CIAO::Container_Impl::install (
                        {
                          temp_policies = *policies;
                        }
-                     rec_pol_map.bind (receptacle_name, temp_policies);
+                     rec_pol_map.bind (port_name, temp_policies);
                    }
                }
            }

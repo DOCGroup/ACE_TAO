@@ -239,6 +239,17 @@ namespace CIAO
                                               CORBA::string_dup 
                                                  ("ReceptaclePolicySet");
                                           }
+                                        else if (ACE_OS::strcmp (
+                                                  this->plan_.instance[i].
+                                                  deployedResource[z].
+                                                  property[s].name.in (),
+                                                  "CIAO:PublisherPolicy") == 0)
+                                          {
+                                            info->
+                                             container_config[config_length].name =
+                                              CORBA::string_dup 
+                                                 ("PublisherPolicySet");
+                                          }
                                         else
                                           {
                                             info->
@@ -362,6 +373,7 @@ namespace CIAO
       instance.deployedResource.length ();
 
     const char* policy_set_id = "";
+    CORBA::ULong next_pro;
 
     for (CORBA::ULong x = 0; x < dp_length; ++x)
       {
@@ -378,14 +390,31 @@ namespace CIAO
                 if (ACE_OS::strcmp (
                       instance.deployedResource[x].
                       property[p].name.in (),
-                      "CIAO:ReceptaclePolicy") != 0)
+                      "CIAO:ReceptaclePolicy") == 0)
                   {
+                    next_pro = p + 1;
                     config_length = 
                       impl_infos[i].component_config.length ();
                     impl_infos[i].component_config.length (config_length + 1);
                     impl_infos[i].component_config[config_length].name =
-                      instance.deployedResource[x].property[p].name.in (); 
-                    instance.deployedResource[x].property[p].value >>=
+                      instance.deployedResource[x].property[next_pro].name.in (); 
+                    instance.deployedResource[x].property[next_pro].value >>=
+                      policy_set_id;
+                    impl_infos[i].component_config[config_length].value <<=
+                      policy_set_id;
+                  }
+                else if (ACE_OS::strcmp (
+                         instance.deployedResource[x].
+                         property[p].name.in (),
+                         "CIAO:PublisherPolicy") == 0)
+                  {
+                    next_pro = p + 1;
+                    config_length = 
+                      impl_infos[i].component_config.length ();
+                    impl_infos[i].component_config.length (config_length + 1);
+                    impl_infos[i].component_config[config_length].name =
+                      instance.deployedResource[x].property[next_pro].name.in (); 
+                    instance.deployedResource[x].property[next_pro].value >>=
                       policy_set_id;
                     impl_infos[i].component_config[config_length].value <<=
                       policy_set_id;
