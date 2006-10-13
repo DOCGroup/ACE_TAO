@@ -9,20 +9,22 @@
 ACE_RCSID(Muxing, Client_Task, "$Id$")
 
 Client_Task::Client_Task (const char *ior,
-			  CORBA::ORB_ptr corb,
-			  ACE_Thread_Manager *thr_mgr)
+                          CORBA::ORB_ptr corb,
+                          ACE_Thread_Manager *thr_mgr)
   : ACE_Task_Base (thr_mgr)
     , input_ (ior)
     , corb_ (CORBA::ORB::_duplicate (corb))
-
 {
 }
 
 int
 Client_Task::svc (void)
 {
-  CORBA::Boolean collocation =
+  CORBA::Boolean const collocation =
     this->corb_->orb_core()->optimize_collocation_objects ();
+
+  CORBA::Boolean const global_collocation =
+    this->corb_->orb_core()->use_global_collocation ();
 
   ACE_TRY_NEW_ENV
     {
@@ -55,7 +57,7 @@ Client_Task::svc (void)
     }
   ACE_CATCH (CORBA::TRANSIENT, ex)
     {
-      if (!collocation && (ex.minor() & 0xFFFU) == 2)
+      if ((!collocation || !global_collocation) && (ex.minor() & 0xFFFU) == 2)
         {
           ACE_DEBUG ((LM_DEBUG, "(%P|%t) - caught expected exception\n"));
           // When collocation has been disabled we expect a trancient
