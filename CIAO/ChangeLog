@@ -1,3 +1,8 @@
+Fri Oct 13 17:43:29 UTC 2006  Nilabja Roy  <roy_n@dre.vanderbilt.edu>
+
+        * DAnCE/TargetManager/DomainDataManager.cpp:
+          Addressed an error in the last check-in.
+
 Thu Oct 12 17:36:58 UTC 2006  Nilabja Roy  <roy_n@dre.vanderbilt.edu>
 
         * DAnCE/TargetManager/CmpClient.cpp:
