@@ -32,19 +32,21 @@ module CIAO
         HIGH,
         LOW
       };
-  
+/*  
       struct ConnectionInfo
       {
         string connection_name;
         string client, client_port_name;
         string server, server_port_name;
       };
-  
       typedef sequence<ConnectionInfo> ConnectionInfos;
+*/ 
+     typedef sequence<string> ConnectionNames;      
   
       struct ConnectionQoS
       {
-        ConnectionInfos connections;
+        //ConnectionInfos connections;
+        ConnectionNames connection_names;
         long fwdBWD;
         long revBWD;
         DataTrafficQoS data_qos;
