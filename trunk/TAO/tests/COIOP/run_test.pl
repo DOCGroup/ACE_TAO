@@ -20,7 +20,7 @@ else {
 }
 
 print STDERR "======== Running in Default Mode \n";
-$SV->Arguments ("-o $iorfile -k file://$iorfile -s");
+$SV->Arguments ("-s -o $iorfile -k file://$iorfile");
 $sv = $SV->SpawnWaitKill (60);
 
 if ($sv != 0) {
@@ -50,7 +50,7 @@ if ($sv != 0) {
 unlink $iorfile;
 
 print STDERR "======== Running in default mode and two ORBS \n";
-$SV->Arguments ("-o $iorfile -k file://$iorfile -n -s");
+$SV->Arguments ("-s -o $iorfile -k file://$iorfile -n");
 $sv = $SV->SpawnWaitKill (60);
 
 if ($sv != 0) {
