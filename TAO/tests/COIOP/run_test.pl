@@ -30,7 +30,7 @@ if ($sv != 0) {
 unlink $iorfile;
 
 print STDERR "======== Running with per-orb \n";
-$SV->Arguments ("-o $iorfile -k file://$iorfile -ORBCollocation per-orb -s");
+$SV->Arguments ("-s -o $iorfile -k file://$iorfile -ORBCollocation per-orb");
 $sv = $SV->SpawnWaitKill (60);
 
 if ($sv != 0) {
