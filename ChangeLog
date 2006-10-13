@@ -1,3 +1,13 @@
+Fri Oct 13 16:51:49 UTC 2006  Gan Deng  <gan.deng@vanderbilt.edu>
+
+        * docs/imgs/dance_arch.jpg:
+        * docs/imgs/static_dance_arch.jpg:
+        * docs/imgs/static_dance_impl.jpg:
+        
+          Fixed corrupted files. Thanks to Sowayan Abudullah 
+          <abdullah dot sowayan at lmco dot com>
+          for reporting this.
+
 Tue Oct 10 19:13:12 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 	* DAnCE/StaticConfigurator/StaticDAnCEApp.cpp.tmpl:
