@@ -30,7 +30,6 @@ private:
   const char *input_;
 
   CORBA::ORB_var corb_;
-
 };
 
 #include /**/ "ace/post.h"
