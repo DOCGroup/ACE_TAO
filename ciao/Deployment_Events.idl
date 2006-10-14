@@ -65,13 +65,14 @@ module CIAO
       unsigned short listen_port;
     };
     typedef sequence<UPDReceiver> UPDReceivers;
-
+/*
     struct EventHandler
     {
       string name;
       boolean is_multicast;
     };
     typedef sequence<EventHandler> EventHandlers;
+    */
 
     /// CIAO specific extension to describe pub/sub services in the deployment
     struct EventServiceDeploymentDescription
@@ -82,7 +83,7 @@ module CIAO
       string svc_cfg_file;
 
       EventFilters filters;
-      AddrServers addr_srvs;
+      AddrServers addr_servs;
       UDPSenders senders;
       UPDReceivers receivers;
     };

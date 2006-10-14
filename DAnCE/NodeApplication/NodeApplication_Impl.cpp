@@ -610,60 +610,84 @@ CIAO::NodeApplication_Impl::get_containers (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   return 0;
 }
 
-::Deployment::CIAO_Event_Services *
+CIAO::CIAO_Event_Service *
 CIAO::NodeApplication_Impl::
-install_es (const ::CIAO::DAnCE::EventServiceDeploymentDescriptions & es_infos
+install_es (const ::CIAO::DAnCE::EventServiceDeploymentDescription & es_info
             ACE_ENV_ARG_DECL)
 ACE_THROW_SPEC ((::CORBA::SystemException,
                  ::Deployment::InstallationFailure))
 {
-  Deployment::CIAO_Event_Services_var retv;
-  ACE_NEW_RETURN (retv,
-                  Deployment::CIAO_Event_Services,
-                  0);
-
-  CORBA::ULong es_len = es_infos.length ();
-
-  for (CORBA::ULong i = 0; i < es_len; ++i)
+  ACE_TRY
     {
-      CIAO_Event_Service_var ciao_es =
-        es_factory_.create (es_infos[i].type);
+      ACE_DEBUG ((LM_DEBUG, "\nNodeApplication_Impl::install_es() called.\n\n"));
 
-      // Set up the event channel federation configurations
-      if (es_infos[i].type == CIAO::RTEC)
-        {
-          // Narrow the event service to CIAO_RT_Event_Service
-          ::CIAO::CIAO_RT_Event_Service_var ciao_rtes =
-            ::CIAO::CIAO_RT_Event_Service::_narrow (ciao_es);
+          CIAO_Event_Service_var ciao_es =
+            es_factory_.create (es_info.type);
 
-          if (CORBA::is_nil (ciao_rtes.in ()))
-            ACE_THROW ((::Deployment::InstallationFailure ()));
+          // Set up the event channel federation configurations
+          if (es_info.type == CIAO::RTEC)
+            {
+              // Narrow the event service to CIAO_RT_Event_Service
+              ::CIAO::CIAO_RT_Event_Service_var ciao_rtes =
+                ::CIAO::CIAO_RT_Event_Service::_narrow (ciao_es);
 
-          // Set up the event channel federations
-          for (CORBA::ULong j = 0; j < es_infos[i].addr_srvs.length (); ++j)
-            ciao_rtes->create_addr_serv (
-              es_infos[i].addr_srvs[j].name.in (),
-              es_infos[i].addr_srvs[j].port,
-              es_infos[i].addr_srvs[j].address);
+              if (CORBA::is_nil (ciao_rtes.in ()))
+                ACE_THROW ((::Deployment::InstallationFailure ()));
 
-          for (CORBA::ULong j = 0; j < es_infos[i].senders.length (); ++j)
-            ciao_rtes->create_sender (
-              es_infos[i].senders[j].addr_serv_id.in ());
+              // Set up the event channel federations
+              for (CORBA::ULong j = 0; j < es_info.addr_servs.length (); ++j)
+                {
+                  bool retv = 
+                    ciao_rtes->create_addr_serv (
+                      es_info.addr_servs[j].name.in (),
+                      es_info.addr_servs[j].port,
+                      es_info.addr_servs[j].address);
 
-          for (CORBA::ULong j = 0; j < es_infos[i].receivers.length (); ++j)
-            ciao_rtes->create_receiver (
-              es_infos[i].receivers[j].addr_serv_id.in (),
-              es_infos[i].receivers[j].is_multicast,
-              es_infos[i].receivers[j].listen_port);
-        }
-  
-      CORBA::ULong curr_len = retv->length ();
-      retv->length (curr_len + 1);
+                  if (retv == false)
+                    {
+                      ACE_DEBUG ((LM_ERROR, "RTEC failed to create addr serv object\t\n"));
+                      ACE_THROW_RETURN (::Deployment::InstallationFailure (), 0);
+                    }
+                }
+              for (CORBA::ULong j = 0; j < es_info.senders.length (); ++j)
+                {
+                  bool retv = 
+                    ciao_rtes->create_sender (
+                      es_info.senders[j].addr_serv_id.in ());
 
-      retv[curr_len] =
-        CIAO::CIAO_Event_Service::_duplicate (ciao_es.in ());
+                  if (retv == false)
+                    {
+                      ACE_DEBUG ((LM_ERROR, "RTEC failed to create UDP sender object\t\n"));
+                      ACE_THROW_RETURN (::Deployment::InstallationFailure (), 0);
+                    }
+                }
+
+              for (CORBA::ULong j = 0; j < es_info.receivers.length (); ++j)
+                {
+                  bool retv = 
+                    ciao_rtes->create_receiver (
+                      es_info.receivers[j].addr_serv_id.in (),
+                      es_info.receivers[j].is_multicast,
+                      es_info.receivers[j].listen_port);
+
+                  if (retv == false)
+                    {
+                      ACE_DEBUG ((LM_ERROR, "RTEC failed to create UDP receiver object\t\n"));
+                      ACE_THROW_RETURN (::Deployment::InstallationFailure (), 0);
+                    }
+                }
+            }
+
+          return ciao_es._retn ();
     }
-  return retv._retn ();
+  ACE_CATCHANY
+    {
+      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
+                           "NodeApplication_Impl::finishLaunch\t\n");
+      ACE_THROW_RETURN (::Deployment::InstallationFailure (), 0);
+    }
+
+  ACE_ENDTRY;
 }
 
 

@@ -697,11 +697,11 @@ install_all_es (void)
           ::Deployment::NodeApplication_ptr my_na =
               (entry->int_id_).node_application_.in ();
 
-          ::Deployment::CIAO_Event_Services_var event_services =
-              my_na->install_es (this->esd_.in ());
+          ::CIAO::CIAO_Event_Service_var ciao_es =
+              my_na->install_es (this->esd_[j]);
 
           // Add these returned ES objects into the cached map
-          this->add_es_to_map (this->esd_, event_services);
+          this->add_es_to_map (this->esd_[j].name.in (), ciao_es.in ());
         }
     }
   ACE_CATCHANY
@@ -717,21 +717,16 @@ install_all_es (void)
 
 void
 CIAO::DomainApplicationManager_Impl::
-add_es_to_map (DAnCE::EventServiceDeploymentDescriptions * es_infos,
-               Deployment::CIAO_Event_Services * event_services)
+add_es_to_map (const char * node_name,
+               CIAO::CIAO_Event_Service * ciao_es)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Deployment::StartError))
 {
   ACE_TRY
     {
-      CORBA::ULong es_length = event_services->length ();
-
-      for (CORBA::ULong i = 0; i < es_length; ++i)
-        {
-          this->es_map_.bind (
-            (*es_infos)[i].name.in (),
-            CIAO::CIAO_Event_Service::_duplicate ((*event_services)[i]));
-        }
+      this->es_map_.bind (
+        node_name,
+        CIAO::CIAO_Event_Service::_duplicate (ciao_es));
     }
   ACE_CATCHANY
     {
