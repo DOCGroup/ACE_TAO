@@ -81,11 +81,11 @@ chomp ($release_files = `$make show_release_files`);
     && die "$0: failed to generate ACE man pages\n";
 
 my $build_command =
-    "$find html $release_filter | $cpio -o -H tar | " .
+    "$find ./html $release_filter | $cpio -o -H tar | " .
     "$gzip -9 > ACE-html.tar.gz && ".
-    "$find html $release_filter | $cpio -o -H tar | " .
+    "$find ./html $release_filter | $cpio -o -H tar | " .
    "$bzip -9 > ACE-html.tar.bz2 && ".
-    "$find html $release_filter | $egrep -v $bin_files | " .
+    "$find ./html $release_filter | $egrep -v $bin_files | " .
     "zip ACE-html.zip -q9@ &&" .
     "$scp ACE-html.tar.gz ACE-html.tar.bz2 ACE-html.zip $dest;";
 
