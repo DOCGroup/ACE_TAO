@@ -331,21 +331,21 @@ namespace CIAO
       ACE_THROW_SPEC ((
         ::CORBA::SystemException))
   {
+    ACE_DEBUG ((LM_ERROR, "Create an address server using port [%d]\n", port));
+
     // Initialize the address server with the desired address.
     // This will be used by the sender object and the multicast
     // receiver.
-    
     ACE_INET_Addr send_addr (port, address);
+    
     //ACE_INET_Addr send_addr (10001, ACE_DEFAULT_MULTICAST_ADDR);
 
     SimpleAddressServer * addr_srv_impl = new SimpleAddressServer (send_addr);
 
     PortableServer::ObjectId_var addr_srv_oid =
       this->root_poa_->activate_object (addr_srv_impl);
-
     CORBA::Object_var addr_srv_obj = 
       this->root_poa_->id_to_reference (addr_srv_oid.in());
-
     RtecUDPAdmin::AddrServer_var addr_srv =
       RtecUDPAdmin::AddrServer::_narrow (addr_srv_obj.in());
 
@@ -363,9 +363,11 @@ namespace CIAO
       ACE_THROW_SPEC ((
         ::CORBA::SystemException))
   {
+    ACE_DEBUG ((LM_DEBUG, "Create a Sender object with addr_serv_id: %s\n",addr_serv_id ));
+
     // Create and initialize the sender object
     TAO_EC_Servant_Var<TAO_ECG_UDP_Sender> sender =
-                                TAO_ECG_UDP_Sender::create();
+                                TAO_ECG_UDP_Sender::create ();
 
     TAO_ECG_UDP_Out_Endpoint endpoint;
 
@@ -410,30 +412,32 @@ namespace CIAO
       ACE_THROW_SPEC ((
         ::CORBA::SystemException))
   {
+    ACE_DEBUG ((LM_DEBUG, "Create a receiver object with addr_serv_id: %s\n",addr_serv_id ));
+
     // Create and initialize the receiver
     TAO_EC_Servant_Var<TAO_ECG_UDP_Receiver> receiver =
                                       TAO_ECG_UDP_Receiver::create();
 
-    TAO_ECG_UDP_Out_Endpoint endpoint;
-    if (endpoint.dgram ().open (ACE_Addr::sap_any) == -1) 
-      {
-        ACE_DEBUG ((LM_ERROR, "Cannot open send endpoint\n"));
-        return false;
-      }
-
-    // TAO_ECG_UDP_Receiver::init() takes a TAO_ECG_Refcounted_Endpoint.
-    // If we don't clone our endpoint and pass &endpoint, the receiver will
-    // attempt to delete endpoint during shutdown.
-    TAO_ECG_UDP_Out_Endpoint* clone;
-    ACE_NEW_RETURN (clone,
-                    TAO_ECG_UDP_Out_Endpoint (endpoint),
-                    false);
-
-    RtecUDPAdmin::AddrServer_var addr_srv;
-
     // AddressServer is necessary when "multicast" is enabled, but not for "udp"
     if (is_multicast)
       {
+        TAO_ECG_UDP_Out_Endpoint endpoint;
+        if (endpoint.dgram ().open (ACE_Addr::sap_any) == -1) 
+          {
+            ACE_DEBUG ((LM_ERROR, "Cannot open send endpoint\n"));
+            return false;
+          }
+
+        // TAO_ECG_UDP_Receiver::init() takes a TAO_ECG_Refcounted_Endpoint.
+        // If we don't clone our endpoint and pass &endpoint, the receiver will
+        // attempt to delete endpoint during shutdown.
+        TAO_ECG_UDP_Out_Endpoint* clone;
+        ACE_NEW_RETURN (clone,
+                        TAO_ECG_UDP_Out_Endpoint (endpoint),
+                        false);
+
+        RtecUDPAdmin::AddrServer_var addr_srv;
+
         if (this->addr_serv_map_.find (addr_serv_id, addr_srv) != 0)
           return false;
 
@@ -443,7 +447,7 @@ namespace CIAO
       }
     else
       {
-        receiver->init (this->rt_event_channel_.in (), clone, 0);
+        receiver->init (this->rt_event_channel_.in (), 0, 0);
       }
 
     // Setup the registration and connect to the event channel
@@ -464,7 +468,7 @@ namespace CIAO
       } 
     else 
       {
-        ACE_DEBUG ((LM_DEBUG, "\nUDP Event Hander Port [%d]\n\n", listen_port));
+        ACE_DEBUG ((LM_DEBUG, "\nUDP Event Handler Port [%d]\n\n", listen_port));
 
         auto_ptr<TAO_ECG_UDP_EH> udp_eh (new TAO_ECG_UDP_EH (receiver.in()));
         udp_eh->reactor (this->orb_->orb_core ()->reactor ());
