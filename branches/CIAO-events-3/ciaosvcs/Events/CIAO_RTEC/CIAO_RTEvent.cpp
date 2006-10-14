@@ -334,11 +334,14 @@ namespace CIAO
     // Initialize the address server with the desired address.
     // This will be used by the sender object and the multicast
     // receiver.
+    
     ACE_INET_Addr send_addr (port, address);
-    SimpleAddressServer addr_srv_impl (send_addr);
+    //ACE_INET_Addr send_addr (10001, ACE_DEFAULT_MULTICAST_ADDR);
+
+    SimpleAddressServer * addr_srv_impl = new SimpleAddressServer (send_addr);
 
     PortableServer::ObjectId_var addr_srv_oid =
-      this->root_poa_->activate_object (&addr_srv_impl);
+      this->root_poa_->activate_object (addr_srv_impl);
 
     CORBA::Object_var addr_srv_obj = 
       this->root_poa_->id_to_reference (addr_srv_oid.in());
@@ -427,12 +430,21 @@ namespace CIAO
                     false);
 
     RtecUDPAdmin::AddrServer_var addr_srv;
-    if (this->addr_serv_map_.find (addr_serv_id, addr_srv) != 0)
-      return false;
 
-    receiver->init (this->rt_event_channel_.in (), 
-                    clone,
-                    addr_srv.in ());
+    // AddressServer is necessary when "multicast" is enabled, but not for "udp"
+    if (is_multicast)
+      {
+        if (this->addr_serv_map_.find (addr_serv_id, addr_srv) != 0)
+          return false;
+
+        receiver->init (this->rt_event_channel_.in (), 
+                        clone,
+                        addr_srv.in ());
+      }
+    else
+      {
+        receiver->init (this->rt_event_channel_.in (), clone, 0);
+      }
 
     // Setup the registration and connect to the event channel
     ACE_SupplierQOS_Factory supp_qos_fact;
@@ -452,13 +464,15 @@ namespace CIAO
       } 
     else 
       {
+        ACE_DEBUG ((LM_DEBUG, "\nUDP Event Hander Port [%d]\n\n", listen_port));
+
         auto_ptr<TAO_ECG_UDP_EH> udp_eh (new TAO_ECG_UDP_EH (receiver.in()));
         udp_eh->reactor (this->orb_->orb_core ()->reactor ());
 
         ACE_INET_Addr local_addr (listen_port);
         if (udp_eh->open (local_addr) == -1)
           {
-            ACE_DEBUG ((LM_ERROR, "Cannot open event handler.\n"));
+            ACE_DEBUG ((LM_ERROR, "Cannot open event handler on port [%d]\n", listen_port));
             return false;
           }
         ACE_AUTO_PTR_RESET (eh, udp_eh.release(), ACE_Event_Handler);

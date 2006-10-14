@@ -245,11 +245,11 @@ module Deployment
               ::Components::RemoveFailure);
 
     /// CIAO specific extension
-    /// This operation will create one or more CIAO_Event_Service objects
+    /// This operation will create one CIAO_Event_Service object
     /// within the NodeApplication, which will be used to mediate the
     /// communication of CCM events
-    CIAO_Event_Services install_es (
-        in CIAO::DAnCE::EventServiceDeploymentDescriptions es_infos)
+    CIAO::CIAO_Event_Service install_es (
+        in CIAO::DAnCE::EventServiceDeploymentDescription es_info)
       raises (InstallationFailure);
 
     /// CIAO specific extensions
