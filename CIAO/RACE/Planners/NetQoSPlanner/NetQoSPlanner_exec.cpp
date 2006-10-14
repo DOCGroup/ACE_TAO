@@ -21,14 +21,15 @@
 #include "NetQoSPlanner_exec.h"
 #include "ciao/CIAO_common.h"
 #include "ciao/NetQoSC.h"
-#include <iostream>
-#include <fstream>
 #include "ciao/DeploymentS.h"
 #include "BandwidthBroker/BandwidthBrokerC.h"
-//#include "tao/CORBALOC_Parser.h"
 #include "ace/INET_Addr.h"
 #include "orbsvcs/CosNamingC.h"
 #include "orbsvcs/Naming/Naming_Client.h"
+//#include "tao/CORBALOC_Parser.h"
+
+#include <iostream>
+#include <fstream>
 
 using namespace mil::darpa::arms::mlrm;
 using namespace mil::darpa::arms::mlrm::BandwidthBroker;
@@ -244,11 +245,11 @@ namespace CIAO
         return retval;
       }
 
-      void NetQoSPlanner_exec_i::build_instance_node_map (Deployment::DeploymentPlan & dep_plan)
+      void NetQoSPlanner_exec_i::build_instance_node_map (const Deployment::DeploymentPlan & dep_plan)
       {
         for (size_t i = 0;i < dep_plan.instance.length (); ++i)
           {
-            Deployment::InstanceDeploymentDescription &instance = dep_plan.instance[i];
+            const Deployment::InstanceDeploymentDescription &instance = dep_plan.instance[i];
             this->instance_node_map_.insert (std::make_pair (instance.name.in (),instance.node.in()));
           }
       }
@@ -283,7 +284,7 @@ namespace CIAO
                 if (this->get_endpoints(endpoint, dep_plan, std::string (conn_qos.connection_names[conn_num])))
                 {
                   CommonDef::IPAddress srcIP;
-                  if (-1 == this->find_ip_address (srcIP, endpoint.client_instance_name.in()))
+                  if (-1 == this->get_ip_address (srcIP, endpoint.client_instance_name.in()))
                   {
                     ACE_DEBUG ((LM_ERROR,"In NetQoSPlanner_exec_i::process_netqos_req: Can't find source IP\n"));
                     rollback = true;
@@ -291,7 +292,7 @@ namespace CIAO
                   }
                   ACE_DEBUG ((LM_DEBUG,"In NetQoSPlanner_exec_i::process_netqos_req: srcIP = %s\n",srcIP.dottedDecimal.in()));
                   CommonDef::IPAddress destIP;
-                  if (-1 == this->find_ip_address(destIP, endpoint.server_instance_name.in()))
+                  if (-1 == this->get_ip_address(destIP, endpoint.server_instance_name.in()))
                   {
                     ACE_DEBUG ((LM_ERROR,"In NetQoSPlanner_exec_i::process_netqos_req: Can't find destination IP\n"));
                     rollback = true;
@@ -376,20 +377,22 @@ namespace CIAO
               {
                 const ::Deployment::PlanConnectionDescription & conn_desc =
                       dep_plan.connection [num_conn];
-                unsigned long index = conn_desc.internalEndpoint[0].instanceRef;
+                unsigned long index = conn_desc.internalEndpoint[1].instanceRef;
                 diffserv_conn.server_instance_name = dep_plan.instance[index].name;
-                index = conn_desc.internalEndpoint[1].instanceRef;
+                diffserv_conn.server_port_name = conn_desc.internalEndpoint[1].portName;
+                diffserv_conn.server_port_kind =conn_desc.internalEndpoint[1].
+                index = conn_desc.internalEndpoint[0].instanceRef;
                 diffserv_conn.client_instance_name = dep_plan.instance[index].name;
-                //diffserv_conn.client_receptacle_name = 
+                diffserv_conn.client_receptacle_name = 
                 return true;
               } 
           }
         return false;
       }
 
-      int NetQoSPlanner_exec_i::find_ip_address (CommonDef::IPAddress & ip, const char *instance_name)
+      int NetQoSPlanner_exec_i::get_ip_address (CommonDef::IPAddress & ip, const char *instance_name)
       {
-        const int FAKE_PORT = 20000;
+        //const int FAKE_PORT = 20000;
         std::string inst_name (instance_name);
         if (this->instance_node_map_.find (inst_name) != this->instance_node_map_.end ())
         {
@@ -510,217 +513,155 @@ namespace CIAO
         else
            return std::string ("");
       }
+      
+      void NetQoSPlanner_exec_i::build_instance_index_map (
+           const ::Deployment::DeploymentPlan &dep_plan)
+      {
+        CORBA::ULong instance_len = dep_plan.instance.length ();
+        for (CORBA::ULong j = 0; j < instance_len; ++j)
+          {
+            const char *instance_name = dep_plan.instance[j].name.in ();
+            this->instance_map_.bind (instance_name, j);
+          }
+      }
+      
+      ACE_CString NetQoSPlanner_exec_i::push_policy 
+           (CIAO::DAnCE::ServerResource &server_resource, 
+            const char *instance_name,
+            NWPriorityModel model,
+            int request_dscp, int reply_dscp)
+      {
+        CORBA::ULong policy_set_len = server_resource.orb_config.policy_set.length ();
+        CORBA::ULong new_policy_set_len = policy_set_len + 1;
+        server_resource.orb_config.policy_set.length (new_policy_set_len);
+        ::CIAO::DAnCE::PolicySet &policy_set =
+            server_resource.orb_config.policy_set[policy_set_len];
+
+        ACE_CString policy_set_id = "test_policy_set_id";
+        policy_set_id += "_";
+        policy_set_id += instance_name;
+        policy_set.Id = CORBA::string_dup (policy_set_id.c_str ());
+
+        CORBA::ULong policy_def_len = policy_set.policies.length ();
+        CORBA::ULong new_policy_def_len = policy_def_len + 1;
+        policy_set.policies.length (new_policy_def_len);
+
+        if (SERVER == model)
+          {
+            ::CIAO::DAnCE::NWPriorityModelPolicyDef npmd;
+            npmd.nw_priority_model = ::CIAO::DAnCE::CLIENT_PROPAGATED_NWPRIORITY;
+            npmd.request_dscp = request_dscp;
+            npmd.reply_dscp = reply_dscp;
+     
+            policy_set.policies[policy_def_len].NWPriorityModelDef (npmd); 
+          }
+        if (CLIENT == model)
+          {
+            ::CIAO::DAnCE::CNWPriorityModelPolicyDef cnpmd;
+            // @@TODO Where is the nw_priority_model as above?
+            cnpmd.request_dscp = request_dscp;
+            cnpmd.reply_dscp = reply_dscp;
+
+            policy_set.policies[policy_def_len].CNWPriorityModelDef (cnpmd);
+          }
+        
+        return policy_set_id;
+      } 
+
+      void NetQoSPlanner_exec_i::push_deployed_resource 
+             (Deployment::DeploymentPlan &dep_plan,
+              size_t server_instance_iter,
+              const ACE_CString &policy_set_id)
+      {
+          CORBA::ULong dep_res_len = dep_plan.instance[server_instance_iter].deployedResource.length ();
+          CORBA::ULong new_dep_res_len = dep_res_len + 1;
+          dep_plan.instance[server_instance_iter].deployedResource.length (new_dep_res_len);
+
+          Deployment::InstanceResourceDeploymentDescription &resource_desc =
+            dep_plan.instance[server_instance_iter].deployedResource[dep_res_len]; 
+
+          resource_desc.resourceUsage = Deployment::InstanceUsesResource;
+          resource_desc.requirementName = CORBA::string_dup ("CIAO:PolicySet");
+          resource_desc.resourceName = CORBA::string_dup ("test_server_resource_id");
+          
+          CORBA::ULong pro_len = resource_desc.property.length ();
+          CORBA::ULong new_pro_len = pro_len + 1;
+          resource_desc.property.length (new_pro_len);
+          resource_desc.property[pro_len].name = CORBA::string_dup ("CIAO:InstancePolicy");
+          resource_desc.property[pro_len].value <<= policy_set_id.c_str ();
+    }
+
+     void push_deployed_resource(Deployment::DeploymentPlan &dep_plan, 
+                                 size_t client_instance_iter, 
+                                 const ACE_CString & policy_set_id, 
+                                 const ACE_CString & port_name)
+     { 
+          CORBA::ULong dep_res_len = dep_plan.instance[client_instance_iter].deployedResource.length ();
+          CORBA::ULong new_dep_res_len = dep_res_len + 1;
+          dep_plan.instance[client_instance_iter].deployedResource.length (new_dep_res_len);
+
+          Deployment::InstanceResourceDeploymentDescription &resource_desc = 
+             dep_plan.instance[client_instance_iter].deployedResource[dep_res_len];
+
+          resource_desc.resourceUsage = Deployment::InstanceUsesResource;
+          resource_desc.requirementName = CORBA::string_dup ("CIAO:PolicySet");
+          resource_desc.resourceName = CORBA::string_dup ("test_server_resource_id");
+
+          CORBA::ULong pro_len = resource_desc.property.length ();
+          CORBA::ULong new_pro_len = pro_len + 1;
+          resource_desc.property.length (new_pro_len);
+          resource_desc.property[pro_len].name = CORBA::string_dup ("CIAO:ReceptaclePolicy");
+          resource_desc.property[pro_len].value <<= policy_set_id.c_str ();
+
+          pro_len = resource_desc.property.length ();
+          new_pro_len = pro_len + 1;
+          resource_desc.property.length (new_pro_len);
+          resource_desc.property[pro_len].name = port_name.c_str();
+          resource_desc.property[pro_len].value <<= policy_set_id.c_str ();
+     }
 
       // *********************************************************
       // code that creates the deployment plan populating the network
       // priority policies using the diffserv codepoint decisions.
 
       void
-      NetQoSPlanner_exec_i::add_network_priorities (Deployment::DeploymentPlan & temp_plan,
+      NetQoSPlanner_exec_i::add_network_priorities (Deployment::DeploymentPlan & dep_plan,
                                                     const Deployment::DiffservInfos & dscp_infos)
       {
-        //Deployment::DeploymentPlan temp_plan = plan.in ();
+        this->build_instance_index_map(dep_plan);
 
-        //Deployment::DiffservInfos dscp_infos;
-        //Deployment::DiffservInfo dscp_info;
-
-        //int request_array_slot = 3;
-        //int reply_array_slot = 2;
-/*
-        dscp_info.server_instance_name =
-          CORBA::string_dup ("Hello-Sender-idd");
-        dscp_info.client_instance_name =
-          CORBA::string_dup ("Hello-Receiver-idd");
-        dscp_info.client_receptacle_name =
-          CORBA::string_dup ("read_message");
-        dscp_info.request_dscp = dscp[request_array_slot];
-        dscp_info.reply_dscp = dscp[reply_array_slot];
-
-        CORBA::ULong dscp_infos_len = dscp_infos.length ();
-        CORBA::ULong new_dscp_infos_len;
-        new_dscp_infos_len = dscp_infos_len + 1;
-        dscp_infos.length (new_dscp_infos_len);
-        dscp_infos[dscp_infos_len] = dscp_info;
-*/
         CORBA::ULong len = dscp_infos.length ();
         CIAO::DAnCE::ServerResource server_resource;
-        server_resource.Id =
-          CORBA::string_dup ("test_server_resource_id");
+        server_resource.Id = CORBA::string_dup ("test_server_resource_id");
 
         for (CORBA::ULong i = 0; i < len; ++i)
           {
-            const char *server_instance_name =
-                dscp_infos[i].server_instance_name.in ();
-            const char *client_instance_name =
-                dscp_infos[i].client_instance_name.in ();
-            const char *client_receptacle_name =
-                dscp_infos[i].client_receptacle_name.in ();
+            const char *server_instance_name = dscp_infos[i].server_instance_name.in ();
+            const char *client_instance_name = dscp_infos[i].client_instance_name.in ();
+            const char *client_receptacle_name = dscp_infos[i].client_receptacle_name.in ();
             CORBA::Long request_dscp = dscp_infos[i].request_dscp;
             CORBA::Long reply_dscp = dscp_infos[i].reply_dscp;
 
-            CORBA::ULong instance_len = temp_plan.instance.length ();
-            for (CORBA::ULong j = 0; j < instance_len; ++j)
-              {
-                const char *instance_name =
-                  temp_plan.instance[j].name.in ();
-                this->instance_map_.bind (instance_name, j);
-              }
-
-            CORBA::ULong policy_set_len;
-            CORBA::ULong new_policy_set_len;
-            CORBA::ULong policy_def_len;
-            CORBA::ULong new_policy_def_len;
-            CORBA::ULong dep_res_len;
-            CORBA::ULong new_dep_res_len;
-            CORBA::ULong pro_len;
-            CORBA::ULong new_pro_len;
-            ACE_CString policy_set_id;
-            ACE_CString temp_policy_set_id;
-
             int server_instance_iter = 0;
-            if (this->instance_map_.find
-                    (server_instance_name, server_instance_iter) == 0)
+            if (this->instance_map_.find (server_instance_name, server_instance_iter) == 0)
               {
-                policy_set_len =
-                  server_resource.orb_config.policy_set.length ();
-                new_policy_set_len = policy_set_len + 1;
-                server_resource.orb_config.policy_set.length (
-                    new_policy_set_len);
-                policy_set_id = "test_policy_set_id";
-                policy_set_id += "_";
-                policy_set_id += server_instance_name;
-                server_resource.orb_config.policy_set[policy_set_len].Id =
-                  CORBA::string_dup (policy_set_id.c_str ());
-    
-                policy_def_len = server_resource.orb_config.
-                                    policy_set[policy_set_len].
-                                      policies.length ();
-                new_policy_def_len = policy_def_len + 1;
-                server_resource.orb_config.policy_set[policy_set_len].
-                  policies.length (new_policy_def_len);
-    
-                ::CIAO::DAnCE::NWPriorityModelPolicyDef npmd;
-                npmd.nw_priority_model =
-                  ::CIAO::DAnCE::CLIENT_PROPAGATED_NWPRIORITY;
-                npmd.request_dscp = 0;
-                npmd.reply_dscp = 0;
-    
-                server_resource.orb_config.policy_set[policy_set_len].
-                  policies[policy_def_len].NWPriorityModelDef (npmd);
-    
-                dep_res_len =
-                  temp_plan.instance[server_instance_iter].
-                    deployedResource.length ();
-                new_dep_res_len = dep_res_len + 1;
-                temp_plan.instance[server_instance_iter].
-                    deployedResource.length (new_dep_res_len);
-                temp_plan.instance[server_instance_iter].
-                  deployedResource[dep_res_len].resourceUsage =
-                      Deployment::InstanceUsesResource;
-                temp_plan.instance[server_instance_iter].
-                  deployedResource[dep_res_len].requirementName =
-                    CORBA::string_dup ("CIAO:PolicySet");
-                temp_plan.instance[server_instance_iter].
-                  deployedResource[dep_res_len].resourceName =
-                    CORBA::string_dup ("test_server_resource_id");
-                pro_len = temp_plan.instance[server_instance_iter].
-                  deployedResource[dep_res_len].property.length ();
-                new_pro_len = pro_len + 1;
-                temp_plan.instance[server_instance_iter].
-                  deployedResource[dep_res_len].property.length (
-                    new_pro_len);
-                temp_plan.instance[server_instance_iter].
-                  deployedResource[dep_res_len].property[pro_len].
-                      name = CORBA::string_dup ("CIAO:InstancePolicy");
-                temp_plan.instance[server_instance_iter].
-                  deployedResource[dep_res_len].property[pro_len].
-                      value <<= policy_set_id.c_str ();
+                ACE_CString policy_set_id = this->push_policy (server_resource, server_instance_name, SERVER, 0, 0);
+                this->push_deployed_resource (dep_plan, server_instance_iter, policy_set_id);    
               }
     
             int client_instance_iter = 0;
-            if (this->instance_map_.find
-                    (client_instance_name, client_instance_iter) == 0)
+            if (this->instance_map_.find (client_instance_name, client_instance_iter) == 0)
               {
-                policy_set_len =
-                  server_resource.orb_config.policy_set.length ();
-                new_policy_set_len = policy_set_len + 1;
-                server_resource.orb_config.policy_set.length (
-                    new_policy_set_len);
-    
-                policy_set_id = "test_policy_set_id";
-                policy_set_id += "_";
-                policy_set_id += client_instance_name;
-                temp_policy_set_id = "test_policy_set_id";
-                temp_policy_set_id += "_";
-                temp_policy_set_id += server_instance_name;
-    
-                server_resource.orb_config.policy_set[policy_set_len].Id =
-                  CORBA::string_dup (policy_set_id.c_str ());
-    
-                policy_def_len = server_resource.orb_config.
-                                    policy_set[policy_set_len].
-                                      policies.length ();
-                new_policy_def_len = policy_def_len + 1;
-                server_resource.orb_config.policy_set[policy_set_len].
-                  policies.length (new_policy_def_len);
-    
-                ::CIAO::DAnCE::CNWPriorityModelPolicyDef cnpmd;
-                cnpmd.request_dscp = request_dscp;
-                cnpmd.reply_dscp = reply_dscp;
-    
-                server_resource.orb_config.policy_set[policy_set_len].
-                  policies[policy_def_len].CNWPriorityModelDef (cnpmd);
-    
-                dep_res_len =
-                  temp_plan.instance[client_instance_iter].
-                    deployedResource.length ();
-                new_dep_res_len = dep_res_len + 1;
-                temp_plan.instance[client_instance_iter].
-                    deployedResource.length (new_dep_res_len);
-                temp_plan.instance[client_instance_iter].
-                  deployedResource[dep_res_len].resourceUsage =
-                      Deployment::InstanceUsesResource;
-                temp_plan.instance[client_instance_iter].
-                  deployedResource[dep_res_len].requirementName =
-                    CORBA::string_dup ("CIAO:PolicySet");
-                temp_plan.instance[client_instance_iter].
-                  deployedResource[dep_res_len].resourceName =
-                    CORBA::string_dup ("test_server_resource_id");
-    
-                pro_len = temp_plan.instance[client_instance_iter].
-                  deployedResource[dep_res_len].property.length ();
-                new_pro_len = pro_len + 1;
-                temp_plan.instance[client_instance_iter].
-                  deployedResource[dep_res_len].property.length (
-                    new_pro_len);
-                temp_plan.instance[client_instance_iter].
-                  deployedResource[dep_res_len].property[pro_len].
-                      name = CORBA::string_dup ("CIAO:ReceptaclePolicy");
-                temp_plan.instance[client_instance_iter].
-                  deployedResource[dep_res_len].property[pro_len].
-                      value <<= policy_set_id.c_str ();
-    
-                pro_len = temp_plan.instance[client_instance_iter].
-                  deployedResource[dep_res_len].property.length ();
-                new_pro_len = pro_len + 1;
-                temp_plan.instance[client_instance_iter].
-                  deployedResource[dep_res_len].property.length (
-                    new_pro_len);
-                temp_plan.instance[client_instance_iter].
-                  deployedResource[dep_res_len].property[pro_len].
-                      name = client_receptacle_name;
-                temp_plan.instance[client_instance_iter].
-                  deployedResource[dep_res_len].property[pro_len].
-                      value <<= policy_set_id.c_str ();
+                ACE_CString policy_set_id = this->push_policy (server_resource, client_instance_name, CLIENT, request_dscp, reply_dscp);
+               this->push_deployed_resource (dep_plan, client_instance_iter, policy_set_id, client_receptacle_name);
               }
           }
     
-        CORBA::ULong new_info_prop_len;
-        CORBA::ULong info_prop_len = temp_plan.infoProperty.length ();
-        new_info_prop_len = info_prop_len + 1;
-        temp_plan.infoProperty.length (new_info_prop_len);
-        temp_plan.infoProperty[new_info_prop_len - 1].name = CORBA::string_dup ("CIAOServerResources");
-        temp_plan.infoProperty[new_info_prop_len - 1].value <<= server_resource;
+        CORBA::ULong info_prop_len = dep_plan.infoProperty.length ();
+        CORBA::ULong new_info_prop_len = info_prop_len + 1;
+        dep_plan.infoProperty.length (new_info_prop_len);
+        dep_plan.infoProperty[info_prop_len].name = CORBA::string_dup ("CIAOServerResources");
+        dep_plan.infoProperty[info_prop_len].value <<= server_resource;
       }
 
       bool
