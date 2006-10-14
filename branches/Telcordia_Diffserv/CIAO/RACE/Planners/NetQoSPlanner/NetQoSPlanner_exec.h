@@ -32,8 +32,9 @@
 #include "NetQoSPlanner_exec_export.h"
 #include "tao/LocalObject.h"
 #include "ace/Hash_Map_Manager_T.h"
-
+#include "ciao/DeploymentS.h"
 #include "ciao/NetQoSC.h"
+#include "ciao/CIAO_common.h"
 #include "BandwidthBroker/BandwidthBrokerC.h"
 #include "BB_proxy.h"
 #include <map>
@@ -132,35 +133,10 @@ namespace CIAO
         ACE_THROW_SPEC (( ::CORBA::SystemException));
 
         // Port operations.
-
+        
         ::CORBA::Boolean process_plan (::CIAO::RACE::Plan_Actions &  plans
                                        ACE_ENV_ARG_DECL_NOT_USED)
              ACE_THROW_SPEC (( ::CORBA::SystemException, ::CIAO::RACE::PlannerFailure));
-
-        void build_node_map ();
-        bool get_endpoints (::Deployment::DiffservInfo&,
-                            const ::Deployment::DeploymentPlan &dep_plan,
-                            const std::string &conn_name);
-        bool resolve_BB ();
-        std::string get_physical_host (const std::string &logical_node);
-
-        bool process_netqos_req (const ::CIAO::DAnCE::NetworkQoS::NetQoSRequirement *net_qos_req, 
-                                 const ::Deployment::DeploymentPlan &dep_plan,
-                                 ::Deployment::DiffservInfos &dscp_infos);
-
-        int make_flow_request (const CommonDef::IPAddress &srcIP,
-                               const CommonDef::IPAddress &destIP,
-                               int bandwidth,
-                               CommonDef::QOSRequired qos_req,
-                               long &dscp);
-
-        void add_network_priorities (Deployment::DeploymentPlan & temp_plan,
-                                     const Deployment::DiffservInfos & dscp_infos);
-
-        void build_instance_node_map (Deployment::DeploymentPlan & plan);
-        void get_traffic_qos (CommonDef::QOSRequired &qos_req, const ::CIAO::DAnCE::NetworkQoS::ConnectionQoS & conn_qos);
-        int find_ip_address (CommonDef::IPAddress & srcIP, const char *);
-
 
         virtual ::CIAO::RACE::CCM_Planner_I_ptr
         get_planner_i (
@@ -213,6 +189,7 @@ namespace CIAO
                           ::Components::CCMException));
 
         protected:
+
         NetQoSPlanner_Context *context_;
         std::string node_map_filename_;
         std::string planner_name_;
@@ -225,6 +202,50 @@ namespace CIAO
                                         ACE_Equal_To<ACE_CString>,
                                         ACE_Null_Mutex> Instance_Map;
         Instance_Map instance_map_;
+
+        enum NWPriorityModel { UNDEF_NWPM = -1, CLIENT = 0 , SERVER = 1 };
+
+        protected:
+
+        void build_node_map ();
+        void build_instance_node_map (const Deployment::DeploymentPlan & dep_plan);
+        void build_instance_index_map (const Deployment::DeploymentPlan & dep_plan);
+
+        bool get_endpoints (::Deployment::DiffservInfo&,
+                            const ::Deployment::DeploymentPlan &dep_plan,
+                            const std::string &conn_name);
+        void get_traffic_qos (CommonDef::QOSRequired &qos_req, 
+                              const ::CIAO::DAnCE::NetworkQoS::ConnectionQoS & conn_qos);
+        std::string get_physical_host (const std::string &logical_node);
+        int get_ip_address (CommonDef::IPAddress & srcIP, const char *);
+
+        bool resolve_BB ();
+
+        bool process_netqos_req (const CIAO::DAnCE::NetworkQoS::NetQoSRequirement *, 
+                                 const ::Deployment::DeploymentPlan &dep_plan,
+                                 ::Deployment::DiffservInfos &dscp_infos);
+
+        int make_flow_request (const CommonDef::IPAddress &srcIP,
+                               const CommonDef::IPAddress &destIP,
+                               int bandwidth,
+                               CommonDef::QOSRequired qos_req,
+                               long &dscp);
+
+        void add_network_priorities (Deployment::DeploymentPlan & temp_plan,
+                                     const Deployment::DiffservInfos & dscp_infos);
+
+        ACE_CString push_policy(CIAO::DAnCE::ServerResource&, 
+                                const char*,
+                                NWPriorityModel model,
+                                int request_dscp,
+                                int reply_dscp);
+
+        void push_deployed_resource(Deployment::DeploymentPlan&, 
+                                    size_t, const ACE_CString &);
+        void push_deployed_resource(Deployment::DeploymentPlan&, 
+                                    size_t, const ACE_CString &, 
+                                    const ACE_CString & port_name);
+
       };
 
       class NETQOSPLANNER_EXEC_Export NetQoSPlanner_Home_exec_i
