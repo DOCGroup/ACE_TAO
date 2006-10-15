@@ -16,7 +16,7 @@
     </param>
   </taskImpl> 
   <taskImpl>
-    <implID>IDL:SPACE/Exec_Component:1.0</implID>
+    <implID>IDL:SPACE/Filter_Component:1.0</implID>
     <param>
       <paramID></paramID>
       <kind></kind>
@@ -103,12 +103,12 @@
   </taskToImpl>
   <taskToImpl>
     <taskID>2231</taskID>
-    <implID>IDL:SPACE/Exec_Component:1.0</implID> 
+    <implID>IDL:SPACE/Filter_Component:1.0</implID> 
     <duration />
   </taskToImpl>
   <taskToImpl>
     <taskID>2232</taskID>
-    <implID>IDL:SPACE/Exec_Component:1.0</implID> 
+    <implID>IDL:SPACE/Filter_Component:1.0</implID> 
     <duration />
   </taskToImpl>
   <taskToImpl>
@@ -156,7 +156,7 @@
     <utilization>5</utilization>
   </implToResource> 
   <implToResource>
-    <implID>IDL:SPACE/Exec_Component:1.0</implID>
+    <implID>IDL:SPACE/Filter_Component:1.0</implID>
     <resourceID>CPU</resourceID>
     <utilization>5</utilization>
   </implToResource> 
