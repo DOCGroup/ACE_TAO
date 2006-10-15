@@ -156,6 +156,20 @@ int main (int argc, char **argv)
     SA_POP::PortID taskAport = conn.first_port;
     SA_POP::PortID taskBport = conn.second_port;
 
+    std::string taskAname = "";
+    SA_POP::PlanInstSet::iterator inst_iter = plan.task_insts.find (taskA);
+    if (inst_iter != plan.task_insts.end ())
+      taskAname = (*inst_iter).name);
+    else
+      throw "SA_POP::Driver::main (): Instance not found to get name when adding data links.");
+
+    std::string taskBname = "";
+    SA_POP::PlanInstSet::iterator inst_iter = plan.task_insts.find (taskB);
+    if (inst_iter != plan.task_insts.end ())
+      taskBname = (*inst_iter).name);
+    else
+      throw "SA_POP::Driver::main (): Instance not found to get name when adding data links.");
+
     // Get deployment plan instances (port IDs are the same).
     InstToIndexMap::iterator taskA_iter = inst_to_index.find (taskA);
     CORBA::ULong taskAinst = taskA_iter->second;
@@ -166,9 +180,13 @@ int main (int argc, char **argv)
     std::string conn_name = "";
     conn_name += itoa (taskAinst, buffer, 64);
     conn_name += "_";
+    conn_name += taskAname;
+    conn_name += "_";
     conn_name += taskAport;
     conn_name += "___";
     conn_name += itoa (taskBinst, buffer, 64);
+    conn_name += "_";
+    conn_name += taskBname;
     conn_name += "_";
     conn_name += taskBport;
 
@@ -341,7 +359,7 @@ int main (int argc, char **argv)
     links_index++;
   }
 
-/*
+
   // Print out opstring instances.
   std::cout << "Opstring Instances:" << std::endl;
   if (opstring.instances.length () > 0) {
@@ -368,7 +386,7 @@ int main (int argc, char **argv)
     std::cout << "KindB " << check_conns[i].internalEndpoint[1].kind << "; ";
     std::cout << std::endl << std::endl;
   }
-*/
+
 
   // Planner no longer needed.
   delete planner;

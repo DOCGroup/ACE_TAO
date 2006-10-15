@@ -297,8 +297,10 @@ const Plan& SA_WorkingPlan::get_plan (void)
     inst.type_id = this->planner_->get_task_name (inst.task_id);
     // Give instance a name.
     char buffer[64];
-    inst.name = "Task_Instance_";
+    inst.name = "TaskInst";
     inst.name += itoa (inst.inst_id, buffer, 10);
+    inst.name += "_";
+    inst.name += inst.type_id;
     //****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP
 
     // Set start and end windows for this instance.
