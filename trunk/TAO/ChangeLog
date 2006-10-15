@@ -1,3 +1,24 @@
+Sun Oct 15 23:23:53 UTC 2006  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * tao/IORTable/Table_Adapter.cpp:
+        * tao/IORTable/Table_Adapter.h:
+          Fix for bug 2683. The problem was that if ORB::shutdown() was
+          called by another thread, the Table_Adapter::root_ reference
+          could go to nil while it was needed for processing in the
+          find_object() method. The fix is to use the reference counting
+          already supplied for the root_ reference to ensure the pointer
+          can never go nil while it is needed. Further, a synchronized
+          flag is used to restrict access to find_object() to ensure it is
+          not called once ORB::shutdown() was invoked.
+
+        * tests/Bug_2683_Regression/*:
+          A new regression test for this bug. As this bug is the result of
+          a race condition, it is hard to detect anyway. The best way to
+          observe the bug is to revert the above change to Table_Adapter*
+          and add a small sleep to the find_object() method. This simply
+          forces the race condition. Adding a small sleep along with the
+          above fix demonstrates that the problem no longer occurs.
+
 Fri Oct 13 10:28:12 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 	* tests/COIOP/*:
