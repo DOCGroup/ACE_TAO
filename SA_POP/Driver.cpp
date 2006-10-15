@@ -15,11 +15,6 @@
 int main (int argc, char **argv)
 {
 
-  try {
-    ::CIAO::RACE::Converter converter (argc, argv);
-  }
-
-
   CIAO::RACE::OperationalString opstring;
   std::string sanet_str;
   std::string taskmap_str;
@@ -380,8 +375,10 @@ int main (int argc, char **argv)
 
   SA_POP_DEBUG (SA_POP_DEBUG_NORMAL, "\nSA-POP END\n");
 
+
   try
     {
+      ::CIAO::RACE::Converter converter (argc, argv);
 
       ::Deployment::DeploymentPlan deploy_plan;
 
