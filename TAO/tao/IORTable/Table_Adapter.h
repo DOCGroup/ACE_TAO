@@ -16,6 +16,7 @@
 #include /**/ "ace/pre.h"
 
 #include "tao/IORTable/iortable_export.h"
+#include "tao/IORTable/IORTable.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -24,16 +25,17 @@
 #include "tao/Adapter.h"
 #include "tao/Adapter_Factory.h"
 #include "ace/Service_Config.h"
+#include "ace/Lock.h"
+#include "tao/ORB_Core.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
-
-class TAO_IOR_Table_Impl;
 
 class TAO_IORTable_Export TAO_Table_Adapter : public TAO_Adapter
 {
 public:
+
   /// Constructor
-  TAO_Table_Adapter (TAO_ORB_Core *orb_core);
+  TAO_Table_Adapter (TAO_ORB_Core &orb_core);
 
   /// Destructor
   virtual ~TAO_Table_Adapter (void);
@@ -51,13 +53,16 @@ public:
                         CORBA::Object_out foward_to
                         ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
+
   virtual const char *name (void) const;
   virtual CORBA::Object_ptr root (void);
   virtual CORBA::Object_ptr create_collocated_object (TAO_Stub *,
                                                       const TAO_MProfile &);
 
   virtual CORBA::Long initialize_collocated_object (TAO_Stub *);
+
 private:
+  static ACE_Lock * create_lock (bool enable_locking, TAO_SYNCH_MUTEX &l);
   /// Helper method to find an object bound in the table.
   /// @return 1 if found, 0 otherwise.
   CORBA::Long find_object (TAO::ObjectKey &key,
@@ -66,10 +71,15 @@ private:
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   /// The ORB Core we belong to
-  TAO_ORB_Core * const orb_core_;
+  TAO_ORB_Core &orb_core_;
 
   /// The table implementation
-  TAO_IOR_Table_Impl *root_;
+  IORTable::Table_var root_;
+
+  bool closed_;
+  bool enable_locking_;
+  TAO_SYNCH_MUTEX thread_lock_;
+  ACE_Lock *lock_;
 };
 
 // ****************************************************************
