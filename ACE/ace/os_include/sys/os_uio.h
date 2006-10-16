@@ -37,15 +37,7 @@ extern "C"
 {
 #endif /* __cplusplus */
 
-// todo: make this a regular ACE_LACKS macro test...
-#if defined(__rtems__)
-   struct iovec {
-     /// Base address.
-     char *iov_base;
-     /// Length.
-     size_t iov_len;
-   };
-#elif defined (ACE_WIN32)
+#if defined (ACE_WIN32)
    /// The ordering of the fields in this struct is important.  It has to
    /// match those in WSABUF.
    struct iovec
@@ -60,7 +52,7 @@ extern "C"
      operator WSABUF &(void) { return *((WSABUF *) this); }
 #  endif /* defined (ACE_HAS_WINSOCK2) && (ACE_HAS_WINSOCK2 != 0) */
    };
-#endif /* __rtems__ */
+#endif /* ACE_WIN32 */
 
 
 # if defined (ACE_LACKS_TIMEDWAIT_PROTOTYPES)

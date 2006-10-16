@@ -1,3 +1,18 @@
+Mon Oct 16 14:02:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+	* ace/config-rtems.h:
+	  Added first set of missing defines
+
+	* ace/os_include/sys/os_select.h:
+	* ace/os_include/sys/os_uio.h:
+	  Removed rtems specific part, not needed anymore
+
+	* ace/os_include/sys/os_types.h:
+	  Added rtems check
+
+	* include/makeinclude/plaform_rtems.x_g++.GNU:
+	  Updated
+
 Mon Oct 16 13:47:25 UTC 2006  Chad Elliott  <elliott_c@ociweb.com>
 
         * bin/MakeProjectCreator/modules/GNUACEWorkspaceCreator.pm:
