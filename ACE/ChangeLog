@@ -1,3 +1,18 @@
+Mon Oct 16 19:20:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+	* ace/config-rtems.h:
+	  Updated with more changes needed for rtems
+
+	* ace/os_include/os_signal.h:
+	  Added specific defines for rtems
+
+	* ace/OS_NS_time.cpp (difftime):
+	  Removed not used variable and get gmtime/gmtime_r from the
+	  global scope
+
+	* ace/OS_NS_string.{h,cpp,inl}:
+	  Added ACE_LACKS_STRTOK_R to make the rtems port easier
+
 Mon Oct 16 14:24:25 UTC 2006  Steve Huston  <shuston@riverace.com>
 
         * ace/OS_NS_netdb.{cpp inl} (gethostbyname[_r], gethostbyaddr[_r]):

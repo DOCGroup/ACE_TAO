@@ -361,7 +361,7 @@ ACE_OS::strspn_emulation (const char *string,
 }
 #endif /* ACE_LACKS_STRSPN */
 
-#if !defined (ACE_HAS_REENTRANT_FUNCTIONS)
+#if !defined (ACE_HAS_REENTRANT_FUNCTIONS) || defined (ACE_LACKS_STRTOK_R)
 char *
 ACE_OS::strtok_r_emulation (char *s, const char *tokens, char **lasts)
 {
