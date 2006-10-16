@@ -24,6 +24,12 @@ include $(RTEMS_MAKEFILE_PATH)/Makefile.inc
 #include $(RTEMS_CUSTOM)
 #include $(PROJECT_ROOT)/make/leaf.cfg
 
+CXX = $(CC_FOR_TARGET)
+AR  = $(AR_FOR_TARGET)
+LD  = $(LD_FOR_TARGET)
+NM  = $(NM_FOR_TARGET)
+AS  = $(AS_FOR_TARGET)
+
 # Test for template instantiation.
 include $(ACE_ROOT)/include/makeinclude/platform_g++_common.GNU
 
