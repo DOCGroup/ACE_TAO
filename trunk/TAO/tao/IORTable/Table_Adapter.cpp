@@ -69,7 +69,7 @@ TAO_Table_Adapter::open (ACE_ENV_SINGLE_ARG_DECL)
 {
   ACE_GUARD (ACE_Lock, ace_mon, *this->lock_);
 
-  ACE_NEW_THROW_EX (this->root_,
+  ACE_NEW_THROW_EX (root_,
                     TAO_IOR_Table_Impl (),
                     CORBA::NO_MEMORY ());
   ACE_CHECK;
@@ -104,7 +104,7 @@ TAO_Table_Adapter::dispatch (TAO::ObjectKey &key,
                              ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  CORBA::Object_var rootref;
+  TAO_IOR_Table_Impl_var rootref;
   {
     ACE_GUARD_RETURN (ACE_Lock,
                       ace_mon,
@@ -112,7 +112,7 @@ TAO_Table_Adapter::dispatch (TAO::ObjectKey &key,
                       TAO_Adapter::DS_MISMATCHED_KEY);
     if (this->closed_)
       return TAO_Adapter::DS_MISMATCHED_KEY;
-    rootref = this->root();
+    rootref = this->root_;
   }
 
   return this->find_object (key, forward_to) ? TAO_Adapter::DS_FORWARD
@@ -200,17 +200,17 @@ TAO_Table_Adapter::find_object (TAO::ObjectKey &key,
                                             key);
   ACE_TRY
     {
-      CORBA::String_var ior =
-        dynamic_cast<TAO_IOR_Table_Impl*>(this->root_.in())->find (object_key.in () ACE_ENV_ARG_PARAMETER);
+      CORBA::String_var ior = root_->find (object_key.in ()
+                                           ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
-
       forward_to =
         this->orb_core_.orb ()->string_to_object (ior.in ()
-                                                   ACE_ENV_ARG_PARAMETER);
+                                                  ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
   ACE_CATCH (IORTable::NotFound, nf_ex)
     {
+      ACE_UNUSED_ARG(nf_ex);
       return 0;
     }
   ACE_ENDTRY;
