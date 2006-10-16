@@ -599,7 +599,7 @@
 
   <instance id="_RT1H_NetQoS.ComponentImplementations.RT1H.RT1H.Planner_Three">
     <name>_RT1H_NetQoS.ComponentImplementations.RT1H.RT1H.Planner_Three</name>
-    <node>host2</node>
+    <node>host6</node>
     <source/>
     <implementation>_A7DAA16F-D455-4C63-92CE-05B98DD34B15</implementation>
     <configProperty>

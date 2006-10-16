@@ -1,17 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no" ?>
-<CIAO:NetQoSRequirements xmlns:CIAO="http://www.dre.vanderbilt.edu/NetQoSRequirements" id="_ADD11D8D-63B6-45F3-A61F-E5E9A37DCDF8" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.dre.vanderbilt.edu/NetQoSRequirements NetQoSRequirements.xsd">
+<CIAO:NetQoSRequirements xmlns:CIAO="http://www.dre.vanderbilt.edu/NetQoSRequirements" id="_9A641A50-3FAB-48A1-95E5-A0ADD2CC5AB0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.dre.vanderbilt.edu/NetQoSRequirements NetQoSRequirements.xsd">
 
   <connectionQoS>
-    <connectionInfo>
-      <connectionName>situation_situation_RT1H_NetQoS.ComponentImplementations.RT1H.RT1H.Planner_Three_RT1H_NetQoS.ComponentImplementations.RT1H.RT1H.Planner_One</connectionName>
-      <client>_RT1H_NetQoS.ComponentImplementations.RT1H.RT1H.Planner_Three</client>
-      <clientPortName>situation</clientPortName>
-      <server>_RT1H_NetQoS.ComponentImplementations.RT1H.RT1H.Planner_One</server>
-      <serverPortName>situation</serverPortName>
-    </connectionInfo>
-    <fwdBW>2000</fwdBW>
+    <connectionName>situation_situation_RT1H_NetQoS.ComponentImplementations.RT1H.RT1H.Planner_Three_RT1H_NetQoS.ComponentImplementations.RT1H.RT1H.Planner_One</connectionName>
+    <fwdBW>0</fwdBW>
     <revBW>0</revBW>
-    <qos>HIGH_RELIABILITY</qos>
+    <qos>BEST_EFFORT</qos>
     <admissionPriority>NORMAL</admissionPriority>
   </connectionQoS>
 
