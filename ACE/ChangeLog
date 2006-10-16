@@ -1,3 +1,10 @@
+Mon Oct 16 08:33:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/MakeProjectCreator/templates/ciao_static_dnc_app.mpb:
+	  New base project for static dnc.
+          Thanks to Abdul Sowayan <abdullah dot sowayan at lmco dot com>
+          for creating this file
+
 Sun Oct 15 23:22:52 UTC 2006  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * bin/tao_orb_tests.lst:
