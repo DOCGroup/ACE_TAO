@@ -1,20 +1,31 @@
+Mon Oct 16 12:06:10 UTC 2006  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/generate_compile_stats.sh:
+
+          Added some changes to make this script usable for software other
+          than ACE+TAO+CIAO.
+
+          - Enhanced the usage message.                                 
+          - Fixed minor HTML errors.                                    
+          - Added options to set the base root directory and software title.
+
 Mon Oct 16 11:53:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-	* examples/IOStream/client/IOStream_Client.mpc:
-	* examples/IOStream/server/IOStream_Server.mpc:
-	  Added exename so that we create an exe, not a dll
+        * examples/IOStream/client/IOStream_Client.mpc:
+        * examples/IOStream/server/IOStream_Server.mpc:
+          Added exename so that we create an exe, not a dll
 
-	* examples/IOStream/client/.cvsignore:
-	* examples/IOStream/server/.cvsignore:
-	  Removed duplicate lines
+        * examples/IOStream/client/.cvsignore:
+        * examples/IOStream/server/.cvsignore:
+          Removed duplicate lines
 
-	* examples/IOStream/server/iostream_server.cpp:
-	  Added needed include for building with VxWorks 5.5.2
+        * examples/IOStream/server/iostream_server.cpp:
+          Added needed include for building with VxWorks 5.5.2
 
 Mon Oct 16 08:33:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/MakeProjectCreator/templates/ciao_static_dnc_app.mpb:
-	  New base project for static dnc.
+          New base project for static dnc.
           Thanks to Abdul Sowayan <abdullah dot sowayan at lmco dot com>
           for creating this file
 

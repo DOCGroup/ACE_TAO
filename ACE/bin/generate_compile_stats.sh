@@ -28,7 +28,22 @@
 ###############################################################################
 usage ()
 {
-  echo "usage: $0 <input_file> <destination_directory> <target_file> {Footprint|Compilation} [<date> [<fudge_factor>]]"
+  echo "Usage: `basename $0` [--base=<dir>] [--title=<name>] <input_file>"
+  echo "       <destination_directory> [target_file] [Footprint|Compilation]"
+  echo "       [<date>] [<fudge_factor>]"
+  echo ""
+  echo "--base       This option can be used to set the base root directory to"
+  echo "             something other than the default \$ACE_ROOT."
+  echo "--title      This option can be used to set the software title to something"
+  echo "             other than the default ACE+TAO+CIAO."
+  echo "input_file   This is the compilation log file."
+  echo "destination_directory This designates the location of the generated html."
+  echo "target_file  This is similar to input_file, but should contain no errors."
+  echo "date         Set the date used in all generated html pages."
+  echo "fudge_factor Add the specified number of seconds to the compilation time"
+  echo "             for each target."
+  echo ""
+  echo "Options must be specified in the order shown above."
   exit
 }
 
@@ -134,6 +149,18 @@ strip_date ()
 parse ()
 {
   echo "parse()"
+  while [ $# -gt 1 ]; do
+    if [ -n "`echo $1 | grep '^--base=.*'`" ]; then
+      BASE_ROOT=`echo $1 | sed 's/^--base=//'`
+      shift
+    elif [ -n "`echo $1 | grep '^--name=.*'`" ]; then
+      BASE_TITLE=`echo $1 | sed 's/^--name=//'`
+      shift
+    else
+      break
+    fi
+  done
+
   # set input file and destination (required)
   if [ $# -gt 1 ]; then
     INFILE=$1
@@ -346,7 +373,7 @@ composite_list ()
 
         if [ $INDEX -eq 3 ]; then
           DIR="${i%?}"                        # strip off last "'"
-          DIR="${DIR#*$ACE_ROOT/}"            # strip off $ACE_ROOT
+          DIR="${DIR#*$BASE_ROOT/}"           # strip off $BASE_ROOT
           DIR="${DIR//\//___}___"             # replace "/" with "___"
           break
         else
@@ -431,7 +458,7 @@ library_list ()
       if [ $DIR_LINE -eq 1 ]; then
         if [ $INDEX -eq 3 ]; then
           DIR="${i%?}"                        # strip off last "'"
-          DIR="${DIR#*$ACE_ROOT/}"            # strip off $ACE_ROOT
+          DIR="${DIR#*$BASE_ROOT/}"           # strip off $BASE_ROOT
           DIR="${DIR//\//___}___"             # replace "/" with "___"
           break
         else
@@ -533,7 +560,7 @@ footprint ()
   # each dependent object and write it to a *.size file.
   while read outfile colon infiles; do
     # reconstitue file name
-    FILE="$ACE_ROOT/${outfile//___//}"
+    FILE="$BASE_ROOT/${outfile//___//}"
 
     if [ -e $FILE ]; then
       #echo "inside if"
@@ -569,13 +596,13 @@ process_included ()
 
   # while we are here, and have the info, go ahead and write out
   # size dependencies for each library.
-  LIBRARY="${LIBRARY#*$ACE_ROOT/}"    # strip off $ACE_ROOT
+  LIBRARY="${LIBRARY#*$BASE_ROOT/}"   # strip off $BASE_ROOT
   LIBRARY="${LIBRARY//\//___}"        # replace "/" with "___"
   echo -n  "$LIBRARY : " >> .metrics/size_composites.txt
 
   while read size colon file; do
     FILE=$fpath/$file
-    OUTFILE="${FILE#*$ACE_ROOT/}"      # strip off $ACE_ROOT
+    OUTFILE="${FILE#*$BASE_ROOT/}"     # strip off $BASE_ROOT
     OUTFILE="${OUTFILE//\//___}"       # replace "/" with "___"
     #echo "size = ($size)"
     echo "$DATE $size" >> $lpath/${OUTFILE}.size
@@ -645,7 +672,7 @@ create_size_composites ()
 
   while read outfile colon infiles; do
     # reconstitue file name
-    FILE="$ACE_ROOT/${outfile//___//}.map"
+    FILE="$BASE_ROOT/${outfile//___//}.map"
     if [ -e $FILE ]; then
       echo -n "$outfile : " >> .metrics/size_composites.txt
       # only process lines that don't begin with a space
@@ -707,7 +734,7 @@ create_images ()
 create_index_page ()
 {
   local TYPE="$1"
-  local TITLE="$TYPE metrics for ACE+TAO+CIAO"
+  local TITLE="$TYPE metrics for $BASE_TITLE"
 
   echo "<html>"
   echo "<head><title>$TITLE</title></head>"
@@ -719,13 +746,21 @@ create_index_page ()
   echo '</style>'
   echo '<body text = "#000000" link="#000fff" vlink="#ff0f0f" bgcolor="#ffffff">'
   echo "<br><center><h1>$TITLE</h1></center><br><hr>"
-  echo '<p>One of the goals of the PCES-TENA project is to decrease compile times.
-           In order to track our progress, metrics are gathered nightly on all
-           objects in the ACE+TAO+CIAO distribution and displayed here.'
+  if [ $BASE_TITLE = $DEFAULT_TITLE ]; then
+    echo '<p>One of the goals of the PCES-TENA project is to decrease compile imes.'
+  else
+    echo '<p>'
+  fi
+  echo '   Metrics are gathered nightly on all
+           objects in the '$BASE_TITLE' distribution and displayed here.'
   echo '<ul>'
-  echo "<li><a href=\"ace_${TYPE}.html\">ACE</a>"
-  echo "<li><a href=\"tao_${TYPE}.html\">TAO</a>"
-  echo "<li><a href=\"ciao_${TYPE}.html\">CIAO</a>"
+  if [ $BASE_TITLE = $DEFAULT_TITLE ]; then
+    echo "<li><a href=\"ace_${TYPE}.html\">ACE</a>"
+    echo "<li><a href=\"tao_${TYPE}.html\">TAO</a>"
+    echo "<li><a href=\"ciao_${TYPE}.html\">CIAO</a>"
+  else
+    echo "<li><a href=\"all_${TYPE}.html\">ALL</a>"
+  fi
   echo '</ul>'
   echo '<hr>'
 
@@ -745,17 +780,21 @@ create_index_page ()
   /usr/bin/gcc -dumpversion > .metrics/gccversion.txt 2>&1
   cat .metrics/gccversion.txt
 
-  echo ' to compile ACE+TAO+CIAO. </P>'
+  echo ' to compile '$BASE_TITLE'. </P>'
 
-  echo '<TABLE border="2"><TBODY><TR><TD>ACE+TAO+CIAO Configuration</TD><TD>config.h</TD></TR>'
-  echo '<TR><TD colspan="2"><PRE>'
+  if [ -r $ACE_ROOT/ace/config.h ]; then
+    echo '<TABLE border="2"><TBODY><TR><TD>ACE+TAO+CIAO Configuration</TD><TD>config.h</TD></TR>'
+    echo '<TR><TD colspan="2"><PRE>'
 
-  cat $ACE_ROOT/ace/config.h
+    cat $ACE_ROOT/ace/config.h
+  fi
 
-  echo '</PRE></TD></TR><TR><TD>ACE+TAO+CIAO Configuration</TD><TD>platform_macros.GNU</TD></TR>'
-  echo '<TR><TD colspan="2"><PRE>'
+  if [ -r $ACE_ROOT/include/makeinclude/platform_macros.GNU ]; then
+    echo '</PRE></TD></TR><TR><TD>ACE+TAO+CIAO Configuration</TD><TD>platform_macros.GNU</TD></TR>'
+    echo '<TR><TD colspan="2"><PRE>'
 
-  cat $ACE_ROOT/include/makeinclude/platform_macros.GNU
+    cat $ACE_ROOT/include/makeinclude/platform_macros.GNU
+  fi
 
   echo '</PRE></TD></TR><TR><TD>CPU Information</TD><TD>/proc/cpuinfo</TD></TR>'
   echo '<TR><TD colspan="2"><PRE>'
@@ -831,8 +870,8 @@ create_page ()
   echo "<center><h2>Detail (${DATE})</h2></center>"
 
   echo '<TABLE border="2"><TBODY><TR><TD rowspan=2><b>Object</b></TD>'
-  echo '<TD colspan="3"; align=center><b>Last Compile</b></TD></TR>'
-  echo "<TD align=center><b>Date</b></TD><TD align=center><b>$UNITS</b></TD>"
+  echo '<TD colspan="3" align=center><b>Last Compile</b></TD></TR>'
+  echo "<TR><TD align=center><b>Date</b></TD><TD align=center><b>$UNITS</b></TD>"
   echo '<TD align=center><b>%chg</b></TD></TR>'
   while read i; do
     if [ -e ".metrics/data/${i}.${EXT}" ]; then
@@ -951,18 +990,23 @@ create_html ()
   cp .metrics/index.html ${DEST}/index.html
 
   if [ "${TYPE}" = "Compilation" ] || [ "${TYPE}" = "Footprint" ]; then
-    #echo "ace objects: $ACE_OBJS"
-    name="ace_${TYPE}.html"
-    sort_list ${ACE_OBJS} | create_page "ACE" ${TYPE} > .metrics/${name}
-    cp .metrics/${name} ${DEST}/${name}
+    if [ $BASE_TITLE = $DEFAULT_TITLE ]; then
+      name="ace_${TYPE}.html"
+      sort_list ${ACE_OBJS} | create_page "ACE" ${TYPE} > .metrics/${name}
+      cp .metrics/${name} ${DEST}/${name}
 
-    name="tao_${TYPE}.html"
-    sort_list ${TAO_OBJS} | create_page "TAO" ${TYPE} > .metrics/${name}
-    cp .metrics/${name} ${DEST}/${name}
+      name="tao_${TYPE}.html"
+      sort_list ${TAO_OBJS} | create_page "TAO" ${TYPE} > .metrics/${name}
+      cp .metrics/${name} ${DEST}/${name}
 
-    name="ciao_${TYPE}.html"
-    sort_list ${CIAO_OBJS} | create_page "CIAO" ${TYPE} > .metrics/${name}
-    cp .metrics/${name} ${DEST}/${name}
+      name="ciao_${TYPE}.html"
+      sort_list ${CIAO_OBJS} | create_page "CIAO" ${TYPE} > .metrics/${name}
+      cp .metrics/${name} ${DEST}/${name}
+    else
+      name="all_${TYPE}.html"
+      sort_list ${ACE_OBJS} | create_page $BASE_TITLE ${TYPE} > .metrics/${name}
+      cp .metrics/${name} ${DEST}/${name}
+    fi
   fi
 }
 
@@ -978,6 +1022,9 @@ TARGETS=""
 DATE=""
 METRIC="Compilation"
 FUDGE_FACTOR=0
+BASE_ROOT=$ACE_ROOT
+DEFAULT_TITLE=ACE+TAO+CIAO
+BASE_TITLE=$DEFAULT_TITLE
 
 parse $@
 create_dirs ".metrics/"
