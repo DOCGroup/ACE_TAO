@@ -123,7 +123,7 @@ namespace CIAO
            }
            catch (Deployment::NoSuchName &)
            {
-             ACE_DEBUG ((LM_ERROR,
+             ACE_ERROR ((LM_ERROR,
                  "Error! Package not found! Location update failed!\n"));
 
              ACE_THROW (CORBA::INTERNAL ());
@@ -131,7 +131,7 @@ namespace CIAO
            }
            catch (CORBA::Exception &)
            {
-             ACE_DEBUG ((LM_ERROR,
+             ACE_ERROR ((LM_ERROR,
                  "Error! General exception! Location update failed!\n"));
 
              ACE_THROW (CORBA::INTERNAL ());
@@ -144,7 +144,7 @@ namespace CIAO
 
             PlanUpdater updater (*dp, *rmpc);
             if (!updater.Visit ())
-               ACE_DEBUG ((LM_ERROR,
+               ACE_ERROR ((LM_ERROR,
                    "Partial location update error possible!\n"));
 
             cout << "Updating plan ... DONE!" << endl;
