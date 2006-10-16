@@ -95,12 +95,19 @@ namespace CIAO
         if (flow.length () == 0)
           {
             ACE_DEBUG ((LM_DEBUG, "RACE::Allocation::Analayzer::"
-                        "Implicit static requrest, queueing planner...."));
+                        "Implicit static reqest, queueing planner...."));
             FlowItem item;
             item.planner = "StaticPlanner";
             flow.length (1);
             flow[0] = item;
           }
+
+        ACE_DEBUG ((LM_DEBUG, "Adding NetQoSPlanner."));
+        FlowItem item;
+        item.planner = "NetQoSPlanner";
+        size_t len = flow.length () + 1;
+        flow.length (len);
+        flow[len - 1] = item;
 
         this->comp_.context_->get_connection_planner_manager_i ()
           ->execute_planners (plan_action, flow);

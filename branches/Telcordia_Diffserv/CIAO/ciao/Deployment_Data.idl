@@ -184,8 +184,11 @@ module Deployment {
 
   struct DiffservInfo {
     string server_instance_name;
+    string server_port_name;
+    CCMComponentPortKind server_port_kind;
     string client_instance_name;
-    string client_receptacle_name;
+    string client_port_name;
+    CCMComponentPortKind client_port_kind;
     long request_dscp;
     long reply_dscp;
   };

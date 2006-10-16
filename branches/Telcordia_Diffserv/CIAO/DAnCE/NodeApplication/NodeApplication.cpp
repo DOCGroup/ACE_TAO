@@ -15,6 +15,11 @@ void print_arg (int argc, char *argv[])
 int
 main (int argc, char *argv[])
 {
+  for (int i = 0;i < argc;++i)
+  {
+    ACE_DEBUG((LM_DEBUG, "Argument %d: %s\n", i, argv[i]));
+  }
+
   ACE_TRY_NEW_ENV
     {
       ACE_DEBUG ((LM_DEBUG, "*** Starting NodeApplication\n"));
