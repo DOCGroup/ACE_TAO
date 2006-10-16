@@ -140,7 +140,7 @@ TAO_CodeGen::start_client_header (const char *fname)
   this->gen_ident_string (this->client_header_);
 
   ACE_CString pidl_checker (idl_global->filename ()->get_string ());
-  bool got_pidl =
+  bool const got_pidl =
     (pidl_checker.substr (pidl_checker.length () - 5) == ".pidl");
 
   if (!got_pidl)
@@ -934,7 +934,7 @@ TAO_CodeGen::start_anyop_header (const char *fname)
           idl_name_str.destroy ();
 
           ACE_CString pidl_checker (idl_name);
-          bool got_pidl =
+          bool const got_pidl =
             (pidl_checker.substr (pidl_checker.length () - 5) == ".pidl");
 
           // If we're here and we have a .pidl file, we need to generate
