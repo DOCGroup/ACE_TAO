@@ -536,7 +536,7 @@ ACE_OS::strtok (wchar_t *s, const wchar_t *tokens)
 ACE_INLINE char *
 ACE_OS::strtok_r (char *s, const char *tokens, char **lasts)
 {
-#if defined (ACE_HAS_REENTRANT_FUNCTIONS)
+#if defined (ACE_HAS_REENTRANT_FUNCTIONS) && !defined (ACE_LACKS_STRTOK_R)
   return ::strtok_r (s, tokens, lasts);
 #else
   return ACE_OS::strtok_r_emulation (s, tokens, lasts);

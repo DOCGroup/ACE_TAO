@@ -96,14 +96,13 @@ ACE_OS::difftime (time_t t1, time_t t0)
   /* return t1 - t0 in seconds */
   struct tm tms[2], *ptms[2], temp;
   double seconds;
-  double days;
   int swap = 0;
 
   /* extract the tm structure from time_t */
-  ptms[1] = gmtime_r (&t1, &tms[1]);
+  ptms[1] = ::gmtime_r (&t1, &tms[1]);
   if (ptms[1] == 0) return 0.0;
 
-  ptms[0] = gmtime_r (&t0, &tms[0]);
+  ptms[0] = ::gmtime_r (&t0, &tms[0]);
   if (ptms[0] == 0) return 0.0;
 
     /* make sure t1 is > t0 */
