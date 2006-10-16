@@ -1,3 +1,167 @@
+Mon Oct 16 14:24:25 UTC 2006  Steve Huston  <shuston@riverace.com>
+
+        * ace/OS_NS_netdb.{cpp inl} (gethostbyname[_r], gethostbyaddr[_r]):
+          Check the specified string (name or addr) for unspecified or of
+          0 length and return 0 if so - bypasses a system call and a possible
+          memory leak. Thanks to Howard Finer <hfiner at sonusnet dot com>
+          for these fixes.
+
+        * ace/Sock_Connect.cpp (get_ip_interfaces): Don't report an error if
+          we can't find IPv6 addresses. It may be on a system with ACE_HAS_IPV6
+          support compiled but IPv6 not configured/enabled. Thanks to Andre
+          Kostur <akostur at incognito dot com> for reporting this.
+
+        * ace/WFMO_Reactor.cpp (ok_to_wait): In the ACE_HAS_WINCE block,
+          change fwaitAll arg from TRUE to FALSE - it must be FALSE on
+          WinCE (thru WinMobile 5) per MSDN. Thanks to Drew Reynaud
+          <drewreynaud at hotmail dot com> for this fix.
+
+        * THANKS: Added Drew Reynaud to the Hall of Fame.
+
+Mon Oct 16 14:21:48 UTC 2006  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/generate_compile_stats.sh:
+
+          I accidentally deleted a letter in my previous commit.
+
+Mon Oct 16 14:02:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/config-rtems.h:
+          Added first set of missing defines
+
+        * ace/os_include/sys/os_select.h:
+        * ace/os_include/sys/os_uio.h:
+          Removed rtems specific part, not needed anymore
+
+        * ace/os_include/sys/os_types.h:
+          Added rtems check
+
+        * include/makeinclude/plaform_rtems.x_g++.GNU:
+          Updated
+
+Mon Oct 16 13:47:25 UTC 2006  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/MakeProjectCreator/modules/GNUACEWorkspaceCreator.pm:
+
+          Use the create_command_line_string() method instead of printing
+          the command line directly.  This opens the door for disabling this
+          functionality.
+
+Mon Oct 16 12:18:14 UTC 2006  Chad Elliott  <elliott_c@ociweb.com>
+
+        * ace/OS_NS_Thread.inl:
+        * ace/os_include/os_semaphore.h:
+
+          The feature that I put in for Gottwald Port on Mon Mar  6 18:25:41
+          UTC 2006 causes a performance overhead for semaphores where
+          ACE_HAS_POSIX_SEM is defined (SunOS, HP-UX, MacOS X, etc.).  For
+          those that are not interested in timed semaphores, this feature
+          provides nothing and is detemental to performance.  Now, this
+          feature is disabled by default and must be manually enabled by
+          defining the ACE_HAS_POSIX_SEM_TIMEOUT_EMULATION macro.
+
+Mon Oct 16 12:06:10 UTC 2006  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/generate_compile_stats.sh:
+
+          Added some changes to make this script usable for software other
+          than ACE+TAO+CIAO.
+
+          - Enhanced the usage message.
+          - Fixed minor HTML errors.
+          - Added options to set the base root directory and software title.
+
+Mon Oct 16 11:53:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * examples/IOStream/client/IOStream_Client.mpc:
+        * examples/IOStream/server/IOStream_Server.mpc:
+          Added exename so that we create an exe, not a dll
+
+        * examples/IOStream/client/.cvsignore:
+        * examples/IOStream/server/.cvsignore:
+          Removed duplicate lines
+
+        * examples/IOStream/server/iostream_server.cpp:
+          Added needed include for building with VxWorks 5.5.2
+
+Mon Oct 16 08:33:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/MakeProjectCreator/templates/ciao_static_dnc_app.mpb:
+          New base project for static dnc.
+          Thanks to Abdul Sowayan <abdullah dot sowayan at lmco dot com>
+          for creating this file
+
+Sun Oct 15 23:22:52 UTC 2006  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * bin/tao_orb_tests.lst:
+          Added Bug_2683_Regression to the test suite.
+
+Fri Oct 13 18:26:19 UTC 2006  Andy Stafford  <ajs3@cec.wustl.edu>
+
+        * include/makeinclude/wrapper_macros.GNU:
+
+          Added 'lksctp' as recognized option to sctp documentation.
+
+Fri Oct 13 18:13:00 UTC 2006  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/cle.pl (getDefaultDomain):
+
+          Fixed a bug where extra text would be part of the domain name when
+          the /etc/hosts file contains an alias after the fully qualified
+          host name.
+
+Fri Oct 13 12:32:35 UTC 2006  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/PerlACE/Process_Unix.pm:
+
+          Added support for remote testing on UNIX only.  Currently, ssh or
+          rsh is used to run an executable on the remote machine.  The
+          remote test capability is only enabled if the RemoteInformation
+          method is called on the PerlACE::Process object.  For more
+          details, see the RemoteInformation method in this module.
+
+Fri Oct 13 10:25:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * apps/soreduce/Library.cpp:
+          aceversion is not a valid base project. Thanks to Manuel Traut
+          <manut dot de at googlemail dot com> for reporting this.
+
+Thu Oct 12 16:44:34 UTC 2006  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
+
+        * ace/Log_Record.cpp (operator<<): Zapped the nonconst_record and
+          const_cast since this is no longer needed as per the following
+          change:
+
+         Sun Aug 12 00:34:42 2001  Steve Huston  <shuston@riverace.com>
+         * ace/Log_Record.h:
+         * ace/Log_Record.i (msg_data()): Changed ACE_TCHAR *msg_data()
+           to:  const ACE_TCHAR *msg_data (void) const. Makes it safer,
+           and conforms to all current usage inside ACE. Also makes
+           C++ Network Programming examples simpler :-)
+
+          Thanks to Abdul Sowayan <abdullah dot sowayan at lmco dot com>
+          for reporting this.
+
+Thu Oct 12 15:45:24 UTC 2006  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/MakeProjectCreator/templates/gnu.mpd:
+
+          If a custom definition has an 'output_option' set, the order of
+          listing the input file changes such that it is listed before the
+          output_option setting in the build rule.
+
+        * bin/auto_run_tests.pl:
+
+          Added a new option, -l, which can be used to specify an arbitrary
+          list of tests.
+
+Thu Oct 12 12:20:12 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Svc_Conf.h:
+          Fixed incorrect placed ACE_BEGIN_VERSIONED_NAMESPACE_DECL macro.
+          Thanks to Alexander Libman <alexander dot libman at earthlink dot net>
+          for reporting this
+
 Wed Oct 11 15:24:04 UTC 2006  Steve Huston  <shuston@riverace.com>
 
         * ace/Log_Record.{h inl cpp}: Removed the set_msg_data_ptr()
@@ -27,13 +191,13 @@ Wed Oct 11 15:24:04 UTC 2006  Steve Huston  <shuston@riverace.com>
 
 Tue Oct 10 18:46:12 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-	* ACE-INSTALL.html:
-	  Document how to get a current copy from subversion
+        * ACE-INSTALL.html:
+          Document how to get a current copy from subversion
 
 Tue Oct 10 14:16:12 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-	* ace/CDR_Stream.cpp:
-	  Fixed incorrect comment
+        * ace/CDR_Stream.cpp:
+          Fixed incorrect comment
 
 Tue Oct 10 12:54:00 UTC 2006  Simon Massey  <sma@prismtech.com>
 
@@ -43,41 +207,41 @@ Tue Oct 10 12:54:00 UTC 2006  Simon Massey  <sma@prismtech.com>
 
 Tue Oct 10 06:08:12 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-	* bin/fuzz.pl:
-	  Changed check for empty inline files to also check for empty
-	  source files
+        * bin/fuzz.pl:
+          Changed check for empty inline files to also check for empty
+          source files
 
-	* bin/MakeProjectCreator/config/avoids_corba_e_compact.mpb:
-	* bin/MakeProjectCreator/config/avoids_corba_e_micro.mpb:
-	  New avoids projects
+        * bin/MakeProjectCreator/config/avoids_corba_e_compact.mpb:
+        * bin/MakeProjectCreator/config/avoids_corba_e_micro.mpb:
+          New avoids projects
 
-	* etc/ace.doxygen:
-	  Expand some more macros, should improve documentatation
+        * etc/ace.doxygen:
+          Expand some more macros, should improve documentatation
 
-	* html/README:
-	  Updated download location to ISIS
+        * html/README:
+          Updated download location to ISIS
 
 Tue Oct 10 06:03:12 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-	* docs/ACE-bug-process.html:
-	  Updated to mention svn
+        * docs/ACE-bug-process.html:
+          Updated to mention svn
 
-	* docs/Download.html:
-	  Commented out the source packages that are not complete at this moment
+        * docs/Download.html:
+          Commented out the source packages that are not complete at this moment
 
 Mon Oct 09 09:07:12 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-	* bin/generate_rel_manpages:
-	  Fixed an error in this script and updated the location to which the
-	  generated packages should be copied to
+        * bin/generate_rel_manpages:
+          Fixed an error in this script and updated the location to which the
+          generated packages should be copied to
 
 Mon Oct 09 09:03:12 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-	* docs/Download.html:
-	  Updated with the new download locations
+        * docs/Download.html:
+          Updated with the new download locations
 
-	* docs/bczar/bczar.html:
-	  Updated documentation generation instructions
+        * docs/bczar/bczar.html:
+          Updated documentation generation instructions
 
 Thu Oct 05 00:35:37 2006  William R. Otte  wotte@dre.vanderbilt.edu
 
@@ -118,9 +282,9 @@ Sat Sep 30 14:00:33 UTC 2006  Steve Huston  <shuston@riverace.com>
 
 Fri Sep 29 18:54:29 UTC 2006  Steve Huston  <shuston@riverace.com>
 
-	* ace/OS_NS_signal.inl (sigaction): In the !ACE_HAS_SIGACTION_CONSTP2
-	  case, use ACE_SIGACTION instead of "struct sigaction" to pick up
-	  the funky HP hack. Also see:
+        * ace/OS_NS_signal.inl (sigaction): In the !ACE_HAS_SIGACTION_CONSTP2
+          case, use ACE_SIGACTION instead of "struct sigaction" to pick up
+          the funky HP hack. Also see:
           Mon Jan 23 22:08:56 UTC 2006  Steve Huston  <shuston@riverace.com>
 
 Fri Sep 29 10:00:04 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
