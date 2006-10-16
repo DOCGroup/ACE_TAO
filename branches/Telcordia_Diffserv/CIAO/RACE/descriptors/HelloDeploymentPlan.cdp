@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<Deployment:deploymentPlan xmlns:Deployment="http://www.omg.org/Deployment" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.omg.org/Deployment Deployment.xsd">
+
+  <UUID>AF99A04B-1C6B-4696-A9E3-4104CBA9B66A</UUID>
+
+  <implementation id="_51B2FD0F-060B-4895-B7F1-2645E7EF4211">
+    <name>Hello.ComponentImplementations.SenderImplementation.SenderMonolithicImpl</name>
+    <source/>
+    <artifact>_059BC20C-E68B-44B0-A7BC-BFA62BDEB0C4</artifact>
+    <artifact>_533FDB0F-8EDB-4964-8EA9-E3058B1A5CD7</artifact>
+    <artifact>_23C4B1A0-DCDE-402D-86E9-FA6A7AD2CDBF</artifact>
+  </implementation>
+
+  <implementation id="_9B4442B8-A9B3-4030-A33F-AF343E22DBF2">
+    <name>Hello.ComponentImplementations.ReceiverImplementation.ReceiverMonolithicImpl</name>
+    <source/>
+    <artifact>_9DF756D9-ABCF-4799-ACC5-8047C87390FE</artifact>
+    <artifact>_37A50603-D422-4B45-AEBA-6BB48DF869ED</artifact>
+    <artifact>_34E0ED84-7FF5-4B8D-9F23-BEC1C6BB23A7</artifact>
+  </implementation>
+
+  <instance id="_Hello.ComponentImplementations.HelloAssemblyTypeContainer.HelloAssemblyType.Receiver">
+    <name>_Hello.ComponentImplementations.HelloAssemblyTypeContainer.HelloAssemblyType.Receiver</name>
+    <node>host3</node>
+    <source/>
+    <implementation>_9B4442B8-A9B3-4030-A33F-AF343E22DBF2</implementation>
+    <configProperty>
+      <name>ComponentIOR</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>Receiver.ior</string>
+        </value>
+      </value>
+    </configProperty>
+  </instance>
+
+  <instance id="_Hello.ComponentImplementations.HelloAssemblyTypeContainer.HelloAssemblyType.Sender">
+    <name>_Hello.ComponentImplementations.HelloAssemblyTypeContainer.HelloAssemblyType.Sender</name>
+    <node>host4</node>
+    <source/>
+    <implementation>_51B2FD0F-060B-4895-B7F1-2645E7EF4211</implementation>
+    <configProperty>
+      <name>ComponentIOR</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>Sender.ior</string>
+        </value>
+      </value>
+    </configProperty>
+  </instance>
+
+  <connection>
+    <name>read_message_push_message_Hello.ComponentImplementations.HelloAssemblyTypeContainer.HelloAssemblyType.Receiver_Hello.ComponentImplementations.HelloAssemblyTypeContainer.HelloAssemblyType.Sender</name>
+    <internalEndpoint>
+      <portName>read_message</portName>
+      <kind>SimplexReceptacle</kind>
+      <instance>_Hello.ComponentImplementations.HelloAssemblyTypeContainer.HelloAssemblyType.Receiver</instance>
+    </internalEndpoint>
+    <internalEndpoint>
+      <portName>push_message</portName>
+      <kind>Facet</kind>
+      <instance>_Hello.ComponentImplementations.HelloAssemblyTypeContainer.HelloAssemblyType.Sender</instance>
+    </internalEndpoint>
+  </connection>
+
+  <connection>
+    <name>click_out_click_in_Hello.ComponentImplementations.HelloAssemblyTypeContainer.HelloAssemblyType.Sender_Hello.ComponentImplementations.HelloAssemblyTypeContainer.HelloAssemblyType.Receiver</name>
+    <internalEndpoint>
+      <portName>click_out</portName>
+      <kind>EventPublisher</kind>
+      <instance>_Hello.ComponentImplementations.HelloAssemblyTypeContainer.HelloAssemblyType.Sender</instance>
+    </internalEndpoint>
+    <internalEndpoint>
+      <portName>click_in</portName>
+      <kind>EventConsumer</kind>
+      <instance>_Hello.ComponentImplementations.HelloAssemblyTypeContainer.HelloAssemblyType.Receiver</instance>
+    </internalEndpoint>
+  </connection>
+
+  <artifact id="_059BC20C-E68B-44B0-A7BC-BFA62BDEB0C4">
+    <name>Hello.ImplementationArtifacts.SenderArtifacts.Sender_stub</name>
+    <source/>
+    <node/>
+    <location>Sender_DnC_stub</location>
+  </artifact>
+
+  <artifact id="_533FDB0F-8EDB-4964-8EA9-E3058B1A5CD7">
+    <name>Hello.ImplementationArtifacts.SenderArtifacts.Sender_svnt</name>
+    <source/>
+    <node/>
+    <location>Sender_DnC_svnt</location>
+    <execParameter>
+      <name>entryPoint</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>create_Hello_SenderHome_Servant</string>
+        </value>
+      </value>
+    </execParameter>
+  </artifact>
+
+  <artifact id="_23C4B1A0-DCDE-402D-86E9-FA6A7AD2CDBF">
+    <name>Hello.ImplementationArtifacts.SenderArtifacts.Sender_exec</name>
+    <source/>
+    <node/>
+    <location>Sender_DnC_exec</location>
+    <execParameter>
+      <name>entryPoint</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>createSenderHome_Impl</string>
+        </value>
+      </value>
+    </execParameter>
+  </artifact>
+
+  <artifact id="_9DF756D9-ABCF-4799-ACC5-8047C87390FE">
+    <name>Hello.ImplementationArtifacts.ReceiverArtifacts.Receiver_stub</name>
+    <source/>
+    <node/>
+    <location>Receiver_DnC_stub</location>
+  </artifact>
+
+  <artifact id="_37A50603-D422-4B45-AEBA-6BB48DF869ED">
+    <name>Hello.ImplementationArtifacts.ReceiverArtifacts.Receiver_svnt</name>
+    <source/>
+    <node/>
+    <location>Receiver_DnC_svnt</location>
+    <execParameter>
+      <name>entryPoint</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>create_Hello_ReceiverHome_Servant</string>
+        </value>
+      </value>
+    </execParameter>
+  </artifact>
+
+  <artifact id="_34E0ED84-7FF5-4B8D-9F23-BEC1C6BB23A7">
+    <name>Hello.ImplementationArtifacts.ReceiverArtifacts.Receiver_exec</name>
+    <source/>
+    <node/>
+    <location>Receiver_DnC_exec</location>
+    <execParameter>
+      <name>entryPoint</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>createReceiverHome_Impl</string>
+        </value>
+      </value>
+    </execParameter>
+  </artifact>
+
+  <infoProperty>
+    <name>CIAONetworkQoS</name>
+    <value>
+      <type>
+        <kind>tk_string</kind>
+      </type>
+      <value>
+        <string>myNetQoS.nqs</string>
+      </value>
+    </value>
+  </infoProperty>
+
+</Deployment:deploymentPlan>
