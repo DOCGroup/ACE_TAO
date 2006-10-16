@@ -1,3 +1,9 @@
+Mon Oct 16 11:20:00 UTC 2006  Simon Massey  <sma@prismtech.com>
+
+       * DAnCE/NodeApplication/NodeApp_Configurator.cpp
+       * DAnCE/TargetManager/DomainEvents.idl
+         BUILD CZAR. Removed Fuzz errors after no user action to correct.
+
 Mon Oct 16 08:35:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 	* tools/Config_Handlers/ADD_Handler.cpp:

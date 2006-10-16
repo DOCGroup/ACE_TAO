@@ -1,5 +1,5 @@
 /**
- * @file DomainEvent.idl
+ * @file DomainEvents.idl
  * @brief Contains Events in the Domain
  *
  * @author Nilabja R <nilabjar@dre.vanderbilt.edu>
