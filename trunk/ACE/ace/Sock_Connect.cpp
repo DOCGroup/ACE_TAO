@@ -570,14 +570,14 @@ ACE::get_ip_interfaces (size_t &count,
     return -1;
 
   n_interfaces = bytes / sizeof(INTERFACE_INFO);
-  if (n_interfaces == 0)
-    return 0;
 
   // SIO_GET_INTERFACE_LIST does not work for IPv6
-  // Instead recent versions of Winsock2 add the new opcode SIO_ADDRESS_LIST_QUERY.
+  // Instead recent versions of Winsock2 add the new opcode
+  // SIO_ADDRESS_LIST_QUERY.
   // If this is not available forget about IPv6 local interfaces:-/
-# if defined (ACE_HAS_IPV6) && defined (SIO_ADDRESS_LIST_QUERY)
   int n_v6_interfaces = 0;
+
+# if defined (ACE_HAS_IPV6) && defined (SIO_ADDRESS_LIST_QUERY)
 
   LPSOCKET_ADDRESS_LIST v6info;
   char *buffer;
@@ -590,38 +590,26 @@ ACE::get_ip_interfaces (size_t &count,
   // Get an (overlapped) DGRAM socket to test with.
   // If it fails only return IPv4 interfaces.
   sock = socket (AF_INET6, SOCK_DGRAM, IPPROTO_UDP);
-  if (sock == INVALID_SOCKET)
+  if (sock != INVALID_SOCKET)
     {
-      delete [] buffer;
-      return -1;
+      status = WSAIoctl(sock,
+                        SIO_ADDRESS_LIST_QUERY,
+                        0,
+                        0,
+                        v6info,
+                        buflen,
+                        &bytes,
+                        0,
+                        0);
+      closesocket (sock);
+      if (status != SOCKET_ERROR)
+        n_v6_interfaces = v6info->iAddressCount;
     }
-
-  status = WSAIoctl(sock,
-                    SIO_ADDRESS_LIST_QUERY,
-                    0,
-                    0,
-                    v6info,
-                    buflen,
-                    &bytes,
-                    0,
-                    0);
-  closesocket (sock);
-  if (status == SOCKET_ERROR)
-  {
-      delete [] buffer; // clean up
-      return -1;
-  }
-
-  n_v6_interfaces = v6info->iAddressCount;
+# endif /* ACE_HAS_IPV6 */
 
   ACE_NEW_RETURN (addrs,
                   ACE_INET_Addr[n_interfaces + n_v6_interfaces],
                   -1);
-# else /* ACE_HAS_IPV6 */
-  ACE_NEW_RETURN (addrs,
-                  ACE_INET_Addr[n_interfaces],
-                  -1);
-# endif /* !ACE_HAS_IPV6 */
 
   // Now go through the list and transfer the good ones to the list of
   // because they're down or don't have an IP address.

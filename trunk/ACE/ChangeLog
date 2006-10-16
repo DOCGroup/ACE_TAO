@@ -1,3 +1,23 @@
+Mon Oct 16 14:24:25 UTC 2006  Steve Huston  <shuston@riverace.com>
+
+        * ace/OS_NS_netdb.{cpp inl} (gethostbyname[_r], gethostbyaddr[_r]):
+          Check the specified string (name or addr) for unspecified or of
+          0 length and return 0 if so - bypasses a system call and a possible
+          memory leak. Thanks to Howard Finer <hfiner at sonusnet dot com>
+          for these fixes.
+
+        * ace/Sock_Connect.cpp (get_ip_interfaces): Don't report an error if
+          we can't find IPv6 addresses. It may be on a system with ACE_HAS_IPV6
+          support compiled but IPv6 not configured/enabled. Thanks to Andre
+          Kostur <akostur at incognito dot com> for reporting this.
+
+        * ace/WFMO_Reactor.cpp (ok_to_wait): In the ACE_HAS_WINCE block,
+          change fwaitAll arg from TRUE to FALSE - it must be FALSE on
+          WinCE (thru WinMobile 5) per MSDN. Thanks to Drew Reynaud
+          <drewreynaud at hotmail dot com> for this fix.
+
+        * THANKS: Added Drew Reynaud to the Hall of Fame.
+
 Mon Oct 16 14:21:48 UTC 2006  Chad Elliott  <elliott_c@ociweb.com>
 
         * bin/generate_compile_stats.sh:
@@ -90,6 +110,7 @@ Fri Oct 13 18:13:00 UTC 2006  Chad Elliott  <elliott_c@ociweb.com>
           the /etc/hosts file contains an alias after the fully qualified
           host name.
 
+>>>>>>> .r74782
 Fri Oct 13 12:32:35 UTC 2006  Chad Elliott  <elliott_c@ociweb.com>
 
         * bin/PerlACE/Process_Unix.pm:
