@@ -211,6 +211,9 @@ extern "C"
 #elif defined (INTEGRITY)
    typedef void (*ACE_SignalHandler)();
    typedef void (*ACE_SignalHandlerV)(int);
+#elif defined (__rtems__)
+   typedef void (*ACE_SignalHandler)();
+   typedef void (*ACE_SignalHandlerV)();
 #else /* This is necessary for some older broken version of cfront */
 #  if defined (SIG_PF)
 #    define ACE_SignalHandler SIG_PF

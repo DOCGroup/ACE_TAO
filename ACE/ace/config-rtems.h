@@ -54,6 +54,19 @@
 #define ACE_LACKS_SETEGID
 #define ACE_LACKS_SETEUID
 #define ACE_LACKS_POLL_H
+#define ACE_HAS_NONCONST_SELECT_TIMEVAL
+#define ACE_LACKS_STRCASECMP
+#define ACE_LACKS_MKSTEMP
+#define ACE_LACKS_PUTENV
+#define ACE_LACKS_STRDUP
+#define ACE_LACKS_STRTOK_R
+#define ACE_LACKS_RAND_REENTRANT_FUNCTIONS
+#define ACE_LACKS_REALPATH
+#define ACE_LACKS_TEMPNAM
+
+// Temporarily, enabling this results in compile errors with
+// rtems 4.6.6.
+#define ACE_LACKS_WCHAR_H
 
 // Yes, we do have threads.
 #define ACE_HAS_THREADS
@@ -87,11 +100,9 @@
 #define ACE_HAS_SYS_ERRLIST
 #define ACE_HAS_SYS_FILIO_H
 #define ACE_HAS_TIMEZONE_GETTIMEOFDAY
-#define ACE_LACKS_DIFFTIME
 #define ACE_LACKS_EXEC
 #define ACE_LACKS_FILELOCKS
 #define ACE_LACKS_FORK
-#define ACE_LACKS_GETOPT_PROTOTYPE
 #define ACE_LACKS_GETPGID
 #define ACE_LACKS_TIMESPEC_T
 #define ACE_LACKS_MADVISE
@@ -151,12 +162,5 @@ ACE_LACKS_NETDB_REENTRANT_FUNCTIONS
 
 Why don't we have alloca.h?
  */
-
-#include /**/ <pthread.h>
-
-extern "C"
-{
-  int getopt (int, char *const *, const char *);
-}
 
 #endif /* ACE_CONFIG_H */
