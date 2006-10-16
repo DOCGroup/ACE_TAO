@@ -43,7 +43,7 @@ include $(ACE_ROOT)/include/makeinclude/platform_g++_common.GNU
 #CXX := $(shell make --no-print-directory -f $(ACE_ROOT)/include/makeinclude/Makefile.rtems print_cxx)
 
 CFLAGS          += -D_REENTRANT -ansi -fno-builtin -fno-defer-pop -fvolatile $(PIPE_OPT) -W -Wall
-CCFLAGS         += $(CFLAGS)
+CCFLAGS         += $(CFLAGS) $(CPPFLAGS) -I$(RTEMS_MAKEFILE_PATH)/lib/include
 ifeq (,$(rtti))
   CCFLAGS += -fno-rtti -DACE_LACKS_RTTI
 endif # rtti
