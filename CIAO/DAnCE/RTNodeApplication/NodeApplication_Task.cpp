@@ -88,7 +88,7 @@ CIAO::NodeApplication_Task::svc ()
         {
           ACE_DEBUG ((LM_DEBUG, "NodeApplication Failed on creating and\
                                initializing the session container!"));
-	return 1;
+          return 1;
       }
 
       CORBA::String_var str = this->orb_->object_to_string (nodeapp_obj.in ()
