@@ -1357,10 +1357,10 @@ ACE_OS::sema_destroy (ACE_sema_t *s)
   ACE_OS_TRACE ("ACE_OS::sema_destroy");
 # if defined (ACE_HAS_POSIX_SEM)
   int result;
-#   if !defined (ACE_HAS_POSIX_SEM_TIMEOUT)
+#   if !defined (ACE_HAS_POSIX_SEM_TIMEOUT) && defined (ACE_HAS_POSIX_SEM_TIMEOUT_EMULATION)
   ACE_OS::mutex_destroy (&s->lock_);
   ACE_OS::cond_destroy (&s->count_nonzero_);
-#   endif /* !ACE_HAS_POSIX_SEM_TIMEOUT */
+#   endif /* !ACE_HAS_POSIX_SEM_TIMEOUT && ACE_HAS_POSIX_SEM_TIMEOUT_EMULATION */
 #   if defined (ACE_LACKS_NAMED_POSIX_SEM)
   if (s->name_)
     {
@@ -1447,7 +1447,7 @@ ACE_OS::sema_init (ACE_sema_t *s,
   ACE_UNUSED_ARG (sa);
 
   s->name_ = 0;
-#  if defined (ACE_HAS_POSIX_SEM_TIMEOUT)
+#  if defined (ACE_HAS_POSIX_SEM_TIMEOUT) || !defined (ACE_HAS_POSIX_SEM_TIMEOUT_EMULATION)
   ACE_UNUSED_ARG (arg);
 #  else
   int result = -1;
@@ -1467,7 +1467,7 @@ ACE_OS::sema_init (ACE_sema_t *s,
       ACE_OS::cond_destroy (&s->count_nonzero_);
       return result;
     }
-#  endif /* ACE_HAS_POSIX_SEM_TIMEOUT */
+#  endif /* ACE_HAS_POSIX_SEM_TIMEOUT || !ACE_HAS_POSIX_SEM_TIMEOUT_EMULATION */
 
 #  if defined (ACE_LACKS_NAMED_POSIX_SEM)
   s->new_sema_ = 0;
@@ -1833,7 +1833,7 @@ ACE_OS::sema_post (ACE_sema_t *s)
 {
   ACE_OS_TRACE ("ACE_OS::sema_post");
 # if defined (ACE_HAS_POSIX_SEM)
-#   if defined (ACE_HAS_POSIX_SEM_TIMEOUT)
+#   if defined (ACE_HAS_POSIX_SEM_TIMEOUT) || !defined (ACE_HAS_POSIX_SEM_TIMEOUT_EMULATION)
   ACE_OSCALL_RETURN (::sem_post (s->sema_), int, -1);
 #   else
   int result = -1;
@@ -1846,7 +1846,7 @@ ACE_OS::sema_post (ACE_sema_t *s)
       ACE_OS::mutex_unlock (&s->lock_);
     }
   return result;
-#   endif /* ACE_HAS_POSIX_SEM_TIMEOUT */
+#   endif /* ACE_HAS_POSIX_SEM_TIMEOUT || !ACE_HAS_POSIX_SEM_TIMEOUT_EMULATION */
 # elif defined (ACE_USES_FIFO_SEM)
   char    c = 1;
   if (ACE_OS::write (s->fd_[1], &c, sizeof (char)) == sizeof (char))
@@ -2174,6 +2174,7 @@ ACE_OS::sema_wait (ACE_sema_t *s, ACE_Time_Value &tv)
     errno = ETIME;  /* POSIX returns ETIMEDOUT but we need ETIME */
   return rc;
 #   else
+#     if defined (ACE_HAS_POSIX_SEM_TIMEOUT_EMULATION)
   int result = 0;
   bool expired = false;
   ACE_Errno_Guard error (errno);
@@ -2220,6 +2221,11 @@ ACE_OS::sema_wait (ACE_sema_t *s, ACE_Time_Value &tv)
     ACE_OS::mutex_unlock (&s->lock_);
   ACE_PTHREAD_CLEANUP_POP (0);
   return result < 0 ? -1 : result;
+#     else
+  ACE_UNUSED_ARG (s);
+  ACE_UNUSED_ARG (tv);
+  ACE_NOTSUP_RETURN (-1);
+#     endif /* ACE_HAS_POSIX_SEM_TIMEOUT_EMULATION */
 #   endif /* !ACE_HAS_POSIX_SEM_TIMEOUT */
 # elif defined (ACE_USES_FIFO_SEM)
   int rc;
