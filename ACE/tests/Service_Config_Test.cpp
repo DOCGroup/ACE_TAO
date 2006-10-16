@@ -161,6 +161,67 @@ testFailedServiceInit (int, ACE_TCHAR *[])
                 ACE_TEXT ("Repo reports no Refuses_Svc; correct.\n")));
 }
 
+
+void
+testLoadingServiceConfFileAndProcessNo (int argc, ACE_TCHAR *argv[])
+{
+  ACE_ARGV new_argv;
+
+#if defined (ACE_USES_WCHAR)
+  // When using full Unicode support, use the version of the Service
+  // Configurator file appropriate to the platform.
+  // For example, Windows Unicode uses UTF-16.
+  //
+  //          iconv(1) found on Linux and Solaris, for example, can
+  //          be used to convert between encodings.
+  //
+  //          Byte ordering is also an issue, so we should be
+  //          generating this file on-the-fly from the UTF-8 encoded
+  //          file by using functions like iconv(1) or iconv(3).
+#  if defined (ACE_WIN32)
+  const ACE_TCHAR svc_conf[] =
+    ACE_TEXT ("Service_Config_Test.UTF-16")
+    ACE_TEXT (ACE_DEFAULT_SVC_CONF_EXT);
+#  else
+  const ACE_TCHAR svc_conf[] =
+    ACE_TEXT ("Service_Config_Test.WCHAR_T")
+    ACE_TEXT (ACE_DEFAULT_SVC_CONF_EXT);
+#  endif /* ACE_WIN32 */
+#else
+    // ASCII (UTF-8) encoded Service Configurator file.
+  const ACE_TCHAR svc_conf[] =
+    ACE_TEXT ("Service_Config_Test")
+    ACE_TEXT (ACE_DEFAULT_SVC_CONF_EXT);
+#endif  /* ACE_USES_WCHAR */
+
+  // Process the Service Configurator directives in this test's Making
+  // sure we have more than one option with an argument, to capture
+  // any errors caused by "reshuffling" of the options.
+  ACE_ASSERT (new_argv.add (argv) != -1
+              && new_argv.add (ACE_TEXT ("-d")) != -1
+              && new_argv.add (ACE_TEXT ("-k")) != -1
+              && new_argv.add (ACE_TEXT ("xxx")) != -1
+              && new_argv.add (ACE_TEXT ("-p")) != -1
+              && new_argv.add (ACE_TEXT ("Service_Config_Test.pid")) != -1
+              && new_argv.add (ACE_TEXT ("-f")) != -1
+              && new_argv.add (svc_conf) != -1);
+
+  // We need this scope to make sure that the destructor for the
+  // <ACE_Service_Config> gets called.
+  ACE_Service_Config daemon;
+
+  ACE_ASSERT (daemon.open (new_argv.argc (),
+                           new_argv.argv ()) != -1 || errno == ENOENT);
+
+  ACE_Time_Value tv (argc > 1 ? ACE_OS::atoi (argv[1]) : 2);
+
+  ACE_ASSERT (ACE_Reactor::instance()->run_reactor_event_loop (tv) == 0);
+
+  // Wait for all threads to complete.
+  ACE_Thread_Manager::instance ()->wait ();
+}
+
+
 void
 testLoadingServiceConfFile (int argc, ACE_TCHAR *argv[])
 {
@@ -297,6 +358,7 @@ run_main (int argc, ACE_TCHAR *argv[])
   testOrderlyInstantiation (argc, argv);
   testFailedServiceInit (argc, argv);
   testLoadingServiceConfFile (argc, argv);
+  testLoadingServiceConfFileAndProcessNo (argc, argv);
   testLimits (argc, argv);
 
   ACE_END_TEST;

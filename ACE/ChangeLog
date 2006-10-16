@@ -1,17 +1,104 @@
+Mon Oct 16 20:04:59 UTC 2006  Iliyan Jeliazkov  <iliyan@ociweb.com>
+
+          This change fixes bug#2612. See the description for the gory
+          details. In a nutshell, the problem is caused by the fact that
+          static services, loaded from a DLL, as part of a dynamic service
+          initialization can not be safely finalized when the dynamic
+          service's DLL gets unloaded. This was historically handled by
+          simply not unloading DLLs, and by finalizing all services at
+          process exit. With the introduction of the local configurations
+          feature, this changed.
+
+          The finalization order was supposed to be guaranteed by the
+          ordering of the services in the repository. It really was a
+          kludge, because when dynamically loading and removing services
+          the order can change.  Then whenever the process tries to clean
+          up, the dynamic service's DLL can be unloaded (because it gets
+          finalized first), and the static services' destructor code would
+          become inaccessible. The situation results in a SEGV at exit().
+
+        * ace/DLL.h:
+        * ace/DLL.cpp:
+
+          Made assignment operator return a non-const reference to make it
+          well-formed. See C++ Standard, section "[special]".
+
+        * ace/DLL_Manager.cpp:
+        * ace/Dynamic_Service_Base.cpp (instance):
+        * ace/Parse_Node.cpp:
+
+          Fixed formatting and logging
+
+        * ace/Service_Config.cpp (parse_args_i):
+
+          Fixing a bug related to parsing the command line options that
+          take arguments. Thanks to Aaron Scamehorn <Aaron dot Scamehorn
+          at cogcap dot com> for reporting it.
+
+        * ace/Service_Gestalt.cpp:
+
+          Added ACE_Service_Dynamic_Guard (formerly
+          ACE_Service_Type_Forward_Declaration_Guard) which helps to
+          resolve an issue with hybrid services, i.e. dynamic services,
+          accompanied by static services in the same DLL.  Only automatic
+          instances of SDG are supposed to exist. Those are created during
+          (dynamic) service initialization and serve to:
+
+          (a) Ensure the service we are loading is ordered last in the
+          repository, following any other services it may cause to
+          register, as part of its own registration. This is a common case
+          when loading dynamic services from DLLs - there are often static
+          initializers, which register static services.
+
+          (b) The SDG instance destructor detects if the dynamic service
+          initialized successfully and "fixes-up" all the newly registered
+          static services, so that each holds a reference to the DLL, from
+          which they have originated.
+
+          Updated comments and formatting.
+
+        * ace/Service_Object.h (dll):
+        * ace/Service_Object.inl (dll):
+
+          Added void dll (const ACE_DLL&) to make it possible to
+          "relocate" services registered through static initializers found
+          in DLL's code segment(s).
+
+        * ace/Service_Object.cpp (fini):
+
+          Modified ACE_Service_Type::fini() to ensure the DLL associated
+          with the service is properly closed. This in conjunction with
+          the gestalt changes above, makes it possible to safely and
+          completely unload a service.
+
+        * ace/Service_Repository.h:
+        * ace/Service_Repository.cpp (remove_i,relocate_i,relocate):
+
+          Added relocate(), which allows association of a (static) service
+          objects with a DLL. Per changes to ACE_Service_Gestalt,
+          above. Added a counterpart private relocate_i(), which does not
+          obtain locks.
+
+        * tests/Service_Config_Test.cpp:
+
+          Added a test that combines more than one argument-taking command
+          line option to guard against regression for the bug fixed in
+          ACE_Service_Config::parse_args_i (see above).
+
 Mon Oct 16 19:20:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-	* ace/config-rtems.h:
-	  Updated with more changes needed for rtems
+        * ace/config-rtems.h:
+          Updated with more changes needed for rtems
 
-	* ace/os_include/os_signal.h:
-	  Added specific defines for rtems
+        * ace/os_include/os_signal.h:
+          Added specific defines for rtems
 
-	* ace/OS_NS_time.cpp (difftime):
-	  Removed not used variable and get gmtime/gmtime_r from the
-	  global scope
+        * ace/OS_NS_time.cpp (difftime):
+          Removed not used variable and get gmtime/gmtime_r from the
+          global scope
 
-	* ace/OS_NS_string.{h,cpp,inl}:
-	  Added ACE_LACKS_STRTOK_R to make the rtems port easier
+        * ace/OS_NS_string.{h,cpp,inl}:
+          Added ACE_LACKS_STRTOK_R to make the rtems port easier
 
 Mon Oct 16 14:24:25 UTC 2006  Steve Huston  <shuston@riverace.com>
 
