@@ -1,5 +1,13 @@
 Mon Oct 16 11:20:00 UTC 2006  Simon Massey  <sma@prismtech.com>
 
+       * DAnCE/NodeApplicationManager/NodeApplicationManager.mpc
+         BUILD CZAR. Due to the removal of
+         DAnCE/NodeApplication/NodeApp_Configurator.cpp to correct
+         the fuze error below, this "other" project's MPC needed to
+         be updated. (Why is this dependancy here?)
+
+Mon Oct 16 11:20:00 UTC 2006  Simon Massey  <sma@prismtech.com>
+
        * DAnCE/NodeApplication/NodeApp_Configurator.cpp
        * DAnCE/TargetManager/DomainEvents.idl
          BUILD CZAR. Removed Fuzz errors after no user action to correct.
