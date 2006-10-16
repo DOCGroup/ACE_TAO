@@ -1770,7 +1770,7 @@ ACE_WFMO_Reactor::ok_to_wait (ACE_Time_Value *max_wait_time,
 #elif defined (ACE_HAS_WINCE)
       result = ::WaitForMultipleObjects (sizeof this->atomic_wait_array_ / sizeof (ACE_HANDLE),
                                          this->atomic_wait_array_,
-                                         TRUE,
+                                         FALSE,   // Must be FALSE on WinCE
                                          timeout);
       break;  // CE does not have WAIT_IO_COMPLETION defined.
 #else
