@@ -632,7 +632,7 @@ ACE_THROW_SPEC ((::CORBA::SystemException,
                 ::CIAO::CIAO_RT_Event_Service::_narrow (ciao_es);
 
               if (CORBA::is_nil (ciao_rtes.in ()))
-                ACE_THROW ((::Deployment::InstallationFailure ()));
+                ACE_THROW (::Deployment::InstallationFailure ());
 
               // Set up the event channel federations
               for (CORBA::ULong j = 0; j < es_info.addr_servs.length (); ++j)
