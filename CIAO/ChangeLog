@@ -1,3 +1,19 @@
+Mon Oct 16 19:52:15 UTC 2006  Shanshan Jiang <shanshan.jiang@vanderbilt.edu>
+
+        * DAnCE/Plan_Launcher/Plan_Launcher.cpp
+        * DAnCE/Plan_Launcher/Plan_Launcher_Impl.cpp
+        * DAnCE/Plan_Launcher/Plan_Launcher_Impl.h
+          Updated the re_launch_plan () function for Repoman integration.
+        
+        * DAnCE/RepositoryManager/README
+        * DAnCE/RepositoryManager/RepositoryManager.cpp
+        * DAnCE/RepositoryManager/RepositoryManager.mpc
+        * DAnCE/RepositoryManager/RepositoryManager_Impl.cpp
+        * DAnCE/RepositoryManager/RepositoryManager_Impl.h
+        * examples/BasicSP/RepoMan_Usage.html
+          Fixed some warnings on Liunx.
+          Fixed the "Deamon" typos.
+
 Mon Oct 16 15:11:40 UTC 2006  Nilabja R  <nilabjar@dre.vanderbilt.edu>
 
         * DAnCE/TargetManager/TM_Client.mpc:
