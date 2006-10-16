@@ -1,3 +1,9 @@
+Mon Oct 16 10:59:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+	* tests/Nested_Upcall_Crash/run_test.pl:
+	  Check whether we could spawn the server, if not, give an error
+	  and exit directly.
+
 Mon Oct 16 08:43:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 	* TAO_IDL/be/be_codegen.cpp:
