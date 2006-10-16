@@ -18,7 +18,7 @@ URL_Parser::parse_args (int argc, ACE_TCHAR *argv[])
     switch (c)
       {
       case 'd':
-        this->debug_ = 1;
+        this->debug_ = true;
         break;
     case 'u':
       success = parseURL (get_opt.opt_arg ());
@@ -37,7 +37,7 @@ URL_Parser::URL_Parser (void)
   : hostname_ ("127.0.0.1"),
     port_ (ACE_DEFAULT_HTTP_SERVER_PORT),
     filename_ (0),
-    debug_ (0)
+    debug_ (false)
 {
 }
 

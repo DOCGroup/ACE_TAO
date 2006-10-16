@@ -127,7 +127,7 @@ CIAO_RepositoryManagerDaemon_i::CIAO_RepositoryManagerDaemon_i
     ::Deployment::PackageConfiguration_var pc = this->findPackageByName (element.ext_id_.c_str ());
 
     if(!this->add_type (pc, element.ext_id_.c_str ()))
-      ACE_DEBUG ((LM_ERROR, "Failed to add the type\n"));
+      ACE_ERROR ((LM_ERROR, "Failed to add the type\n"));
   }
 }
 
@@ -212,7 +212,7 @@ void CIAO_RepositoryManagerDaemon_i::installPackage (
 
   PCEntry *entry = 0;
   if (this->names_.find (ACE_CString (installationName), entry) == 0)
-    {  
+    {
       if (!replace)
         ACE_THROW (Deployment::NameExists ());
       else
@@ -330,7 +330,7 @@ void CIAO_RepositoryManagerDaemon_i::installPackage (
 
   if (!updater.update (pc))
   {
-    ACE_DEBUG ((LM_ERROR, "[RM] problem updating the PackageConfiguration!\n"));
+    ACE_ERROR ((LM_ERROR, "[RM] problem updating the PackageConfiguration!\n"));
     //clean the extracted files
     remove_extracted_package (package_path.c_str (), path.c_str ());
     //remove the package
@@ -347,7 +347,7 @@ void CIAO_RepositoryManagerDaemon_i::installPackage (
   //insert the package into the database
   if (this->names_.bind (ACE_CString (installationName), path) == -1)
   {
-    ACE_DEBUG ((LM_ERROR,
+    ACE_ERROR ((LM_ERROR,
                  "[RM] could not bind %s.\n",
                  installationName));
 
@@ -365,7 +365,7 @@ void CIAO_RepositoryManagerDaemon_i::installPackage (
   //ALSO NEED THE UUID here
   if (this->uuids_.bind (ACE_CString (pc->UUID), path) == -1)
   {
-     ACE_DEBUG ((LM_ERROR,
+     ACE_ERROR ((LM_ERROR,
                  "[RM] could not bind %s.\n",
                  pc->UUID));
 
@@ -385,7 +385,7 @@ void CIAO_RepositoryManagerDaemon_i::installPackage (
 
   //now add the type interface
   if(!this->add_type (pc, installationName))
-    ACE_DEBUG ((LM_ERROR, "Failed to add the type\n"));
+    ACE_ERROR ((LM_ERROR, "Failed to add the type\n"));
 
   this->dump ();
 
@@ -417,7 +417,7 @@ void CIAO_RepositoryManagerDaemon_i::createPackage (
   // Find if there is a PackageConfiguration with the same name.
   PCEntry *entry = 0;
   if (this->names_.find (ACE_CString (installationName), entry) == 0)
-    {  
+    {
       if (!replace)
         ACE_THROW (Deployment::NameExists ());
       else
@@ -489,14 +489,14 @@ void CIAO_RepositoryManagerDaemon_i::createPackage (
 
   if (!updater.update (pc))
   {
-    ACE_DEBUG ((LM_ERROR, "[RM] problem updating the PackageConfiguration!\n"));
+    ACE_ERROR ((LM_ERROR, "[RM] problem updating the PackageConfiguration!\n"));
     //clean the extracted files
     remove_extracted_package (package_path.c_str (), path.c_str ());
     //remove the package
     remove (package_path.c_str ());
     ACE_THROW (Deployment::PackageError ());
   }
-  
+
   // Externalize the PackageConfiguration, so that we can access it later on
   // without having to do the whole parsing again.
   // NOTE: Order here is important. Do not populate maps before the externalization!
@@ -505,7 +505,7 @@ void CIAO_RepositoryManagerDaemon_i::createPackage (
   // Insert the name of the package.
   if (this->names_.bind (ACE_CString (installationName), path) == -1)
   {
-    ACE_DEBUG ((LM_ERROR,
+    ACE_ERROR ((LM_ERROR,
                  "[RM] could not bind %s.\n",
                  installationName));
 
@@ -523,7 +523,7 @@ void CIAO_RepositoryManagerDaemon_i::createPackage (
   // Insert the UUID of the package.
   if (this->uuids_.bind (ACE_CString (pc.UUID), path) == -1)
   {
-     ACE_DEBUG ((LM_ERROR,
+     ACE_ERROR ((LM_ERROR,
                  "[RM] could not bind %s.\n",
                  pc.UUID));
 
@@ -544,7 +544,7 @@ void CIAO_RepositoryManagerDaemon_i::createPackage (
   //now add the type interface
   //TODO: CHECK if successful
   if(!this->add_type (pc, installationName))
-    ACE_DEBUG ((LM_ERROR, "Failed to add the type\n"));
+    ACE_ERROR ((LM_ERROR, "Failed to add the type\n"));
 
   this->dump ();
 
@@ -656,7 +656,7 @@ CIAO_RepositoryManagerDaemon_i::findPackageByUUID (const char * UUID)
     CORBA::StringSeq_var seq;
     ACE_NEW_THROW_EX (seq, CORBA::StringSeq (0), CORBA::INTERNAL ());
     ACE_CHECK_RETURN (0);
-  
+
     return seq._retn ();
   }
   else
@@ -808,7 +808,7 @@ void CIAO_RepositoryManagerDaemon_i::deletePackage (
   //remove the name association
   if (this->names_.unbind (installationName) == -1)
   {
-    ACE_DEBUG ((LM_ERROR,
+    ACE_ERROR ((LM_ERROR,
                 "Unable to unbind %s.\n",
                 installationName));
     internal_err = true;
@@ -831,20 +831,20 @@ void CIAO_RepositoryManagerDaemon_i::deletePackage (
 
   if(!RM_Helper::reincarnate (pc, pc_path.c_str ()))
   {
-    ACE_DEBUG ((LM_ERROR, "Could not reincarnate PC\n"));
+    ACE_ERROR ((LM_ERROR, "Could not reincarnate PC\n"));
       internal_err = true;
   }
 
   if (this->uuids_.unbind (ACE_CString (pc->UUID)) == -1)
   {
-    ACE_DEBUG ((LM_ERROR, "Could not remove UUID\n"));
+    ACE_ERROR ((LM_ERROR, "Could not remove UUID\n"));
     internal_err = true;
   }
 
   //remove the type from the interface map
   if (!this->remove_type (pc, installationName))
   {
-    ACE_DEBUG ((LM_ERROR, "Could not remove type\n"));
+    ACE_ERROR ((LM_ERROR, "Could not remove type\n"));
     internal_err = true;
   }
 
@@ -992,7 +992,7 @@ CIAO_RepositoryManagerDaemon_i::retrieve_PC_from_descriptors (const char* pc_nam
 
   //change back the the old working dir
   ACE_OS::chdir (this->cwd_);
-  
+
   return pc._retn ();
 }
 
@@ -1234,7 +1234,7 @@ int CIAO_RepositoryManagerDaemon_i::remove_type (Deployment::PackageConfiguratio
                                         .supportedType;
 
     if (supportedTypes.length () != 0)
-    {      
+    {
       CORBA::ULong len = supportedTypes.length ();
       for (CORBA::ULong i = 0; i < len; ++i)
       {
