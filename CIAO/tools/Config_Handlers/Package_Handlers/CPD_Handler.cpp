@@ -78,7 +78,7 @@ namespace CIAO
                        cpd->end_infoProperty (),
                        Property_Functor (toconfig.configProperty));
 
-        //        ACE_DEBUG ((LM_ERROR, "***** Count of PCIs is %i\n",
+        //        ACE_ERROR ((LM_ERROR, "***** Count of PCIs is %i\n",
         //           cpd->count_implementation ()));
 
         // Packaged Component Implementations
