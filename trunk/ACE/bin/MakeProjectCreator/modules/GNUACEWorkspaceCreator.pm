@@ -61,7 +61,7 @@ sub pre_workspace {
             '# this file will be lost the next time it is generated.', $crlf,
             '#', $crlf,
             '# MPC Command:', $crlf,
-            "# $0 @ARGV", $crlf,
+            '# ', $self->create_command_line_string($0, @ARGV), $crlf,
             '#', $crlf,
             '#-------------------------------------------------------------------------', $crlf,
             'MAKEFILE = ', $self->get_modified_workspace_name($base, '', 1),
