@@ -1,15 +1,23 @@
+Mon Oct 16 13:47:25 UTC 2006  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/MakeProjectCreator/modules/GNUACEWorkspaceCreator.pm:
+
+          Use the create_command_line_string() method instead of printing
+          the command line directly.  This opens the door for disabling this
+          functionality.
+
 Mon Oct 16 12:18:14 UTC 2006  Chad Elliott  <elliott_c@ociweb.com>
 
         * ace/OS_NS_Thread.inl:
         * ace/os_include/os_semaphore.h:
 
           The feature that I put in for Gottwald Port on Mon Mar  6 18:25:41
-          UTC 2006 causes a performance overhead for semaphores where       
+          UTC 2006 causes a performance overhead for semaphores where
           ACE_HAS_POSIX_SEM is defined (SunOS, HP-UX, MacOS X, etc.).  For
-          those that are not interested in timed semaphores, this feature 
+          those that are not interested in timed semaphores, this feature
           provides nothing and is detemental to performance.  Now, this
           feature is disabled by default and must be manually enabled by
-          defining the ACE_HAS_POSIX_SEM_TIMEOUT_EMULATION macro.       
+          defining the ACE_HAS_POSIX_SEM_TIMEOUT_EMULATION macro.
 
 Mon Oct 16 12:06:10 UTC 2006  Chad Elliott  <elliott_c@ociweb.com>
 
