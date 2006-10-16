@@ -65,7 +65,14 @@ ACE_Service_Type::fini_called (void) const
 
 ACE_INLINE const ACE_DLL & ACE_Service_Type::dll () const
 {
+  ACE_TRACE ("ACE_Service_Type::dll");
   return this->dll_;
+}
+
+ACE_INLINE void ACE_Service_Type::dll (const ACE_DLL &adll)
+{
+  ACE_TRACE ("ACE_Service_Type::dll");
+  this->dll_ = adll;
 }
 
 ACE_END_VERSIONED_NAMESPACE_DECL

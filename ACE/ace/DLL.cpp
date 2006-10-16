@@ -48,7 +48,7 @@ ACE_DLL::ACE_DLL (const ACE_DLL &rhs)
 
 // Assignment operator
 
-const ACE_DLL &
+ACE_DLL &
 ACE_DLL::operator= (const ACE_DLL &rhs)
 {
   ACE_TRACE ("ACE_DLL::operator= (const ACE_DLL &)");

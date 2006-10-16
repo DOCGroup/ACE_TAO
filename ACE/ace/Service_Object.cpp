@@ -87,20 +87,29 @@ ACE_Service_Type::~ACE_Service_Type (void)
 int
 ACE_Service_Type::fini (void)
 {
-  if (!this->fini_already_called_)
+  if (this->fini_already_called_)
+    return 0;
+
+  this->fini_already_called_ = 1;
+
+  if (this->type_ == 0)
     {
-      this->fini_already_called_ = 1;
-      if (this->type_ != 0)
-        return this->type_->fini ();
-      else
-        return 1; // No implementation was found.
-                  // Currently only makes sense for dummy ST, used to "reserve"
-                  // a spot (kind of like forward-declarations) for a dynamic
-                  // service. This is necessary to help enforce the correct
-                  // finalization order, when such service also has any
-                  // (dependent) static services
+      // Returning 1 currently only makes sense for dummy instances, used
+      // to "reserve" a spot (kind of like forward-declarations) for a
+      // dynamic service. This is necessary to help enforce the correct
+      // finalization order, when such service also has any (dependent)
+      // static services
+
+      return 1; // No implementation was found.
     }
-  return 0;
+
+  int ret = this->type_->fini ();
+
+  // Ensure that closing the DLL is done after type_->fini() as it may
+  // require access to the code for the service object destructor,
+  // which resides in the DLL
+  return (ret | this->dll_.close());
+
 }
 
 int
