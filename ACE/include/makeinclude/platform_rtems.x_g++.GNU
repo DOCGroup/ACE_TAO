@@ -20,34 +20,25 @@ ifeq (,$(PERL_PATH))
   PERL_PATH = perl
 endif # ! PERL_PATH
 
+include $(RTEMS_MAKEFILE_PATH)/Makefile.inc
+#include $(RTEMS_CUSTOM)
+#include $(PROJECT_ROOT)/make/leaf.cfg
 
 # Test for template instantiation.
 include $(ACE_ROOT)/include/makeinclude/platform_g++_common.GNU
 
 #### BEGIN target CPU-specific settings
-
 # look them up
 #CFLAGS = $(shell make --no-print-directory -f $(ACE_ROOT)/include/makeinclude/Makefile.rtems print_cflags)
 #CCFLAGS = $(shell make --no-print-directory -f $(ACE_ROOT)/include/makeinclude/Makefile.rtems print_cflags) -fno-implicit-templates
-CCFLAGS = $(TEMPLATES_FLAG)
-
+#CCFLAGS = $(TEMPLATES_FLAG)
 #### END target CPU-specific settings
 
 #CXX := $(shell make --no-print-directory -f $(ACE_ROOT)/include/makeinclude/Makefile.rtems print_cxx)
 
-ifndef ACE_CC
-#ACE_CC := $(shell make --no-print-directory -f $(ACE_ROOT)/include/makeinclude/Makefile.rtems print_cc)
-endif # ! ACE_CC
-ifndef ACE_CC_VERSION
-#  ACE_CC_VERSION := $(shell $(ACE_CC) --version)
-endif # ! ACE_CC_VERSION
-
-#CFLAGS          += -D_REENTRANT -ansi -fno-builtin -fno-defer-pop \
-#                   -fvolatile $(PIPE_OPT) -W -Wall
-#CCFLAGS         += $(CFLAGS)
+CFLAGS          += -D_REENTRANT -ansi -fno-builtin -fno-defer-pop -fvolatile $(PIPE_OPT) -W -Wall
+CCFLAGS         += $(CFLAGS)
 ifeq (,$(rtti))
-  #### Don't use RTTI even with egcs, because Tornado 1.0.x libraries
-  #### don't support it.
   CCFLAGS += -fno-rtti -DACE_LACKS_RTTI
 endif # rtti
 DCFLAGS         += -g
@@ -62,7 +53,6 @@ LD              = $(CXX) $(CCFLAGS) $(ACE_ROOT)/tests/rtems_init.o
 LDFLAGS         += #-Wl,-X -Wl,-r
 OCFLAGS         += -O
 PIC             =
-
 
 #### ld can't handle INCLDIRS, so override LINK definitions.
 LINK.c           = override
