@@ -38,6 +38,8 @@
 #include "BandwidthBroker/BandwidthBrokerC.h"
 #include "BB_proxy.h"
 #include <map>
+#include <string>
+#include <sstream>
 
 using namespace mil::darpa::arms::mlrm;
 using namespace mil::darpa::arms::mlrm::BandwidthBroker;
@@ -218,6 +220,10 @@ namespace CIAO
                               const ::CIAO::DAnCE::NetworkQoS::ConnectionQoS & conn_qos);
         std::string get_physical_host (const std::string &logical_node);
         int get_ip_address (CommonDef::IPAddress & srcIP, const char *);
+        void dump_policies (const ::Deployment::DeploymentPlan &dep_plan);
+        void dump_deployed_resources (const ::Deployment::DeploymentPlan
+&dep_plan);
+
 
         bool resolve_BB ();
 
@@ -234,17 +240,18 @@ namespace CIAO
         void add_network_priorities (Deployment::DeploymentPlan & temp_plan,
                                      const Deployment::DiffservInfos & dscp_infos);
 
-        ACE_CString push_policy(CIAO::DAnCE::ServerResource&, 
-                                const char*,
+        std::string push_policy(CIAO::DAnCE::ServerResource&, 
+                                const std::string &,
                                 NWPriorityModel model,
                                 int request_dscp,
                                 int reply_dscp);
 
         void push_deployed_resource(Deployment::DeploymentPlan&, 
-                                    size_t, const ACE_CString &);
+                                    size_t, const std::string &);
         void push_deployed_resource(Deployment::DeploymentPlan&, 
-                                    size_t, const ACE_CString &, 
-                                    const ACE_CString & port_name);
+                                    size_t, const std::string &, 
+                                    const std::string & port_name,
+                                    Deployment::CCMComponentPortKind client_port_kind);
 
       };
 
