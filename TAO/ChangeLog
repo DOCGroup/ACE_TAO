@@ -1,3 +1,11 @@
+Mon Oct 16 21:16:14 UTC 2006  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * tao/IORTable/Table_Adapter.cpp:
+        * tao/IORTable/Table_Adapter.h:
+        * tao/IORTable/IOR_Table_Impl.cpp:
+        * tao/IORTable/IOR_Table_Impl.h:
+          Added var type for the impl, to avoid casting.
+
 Mon Oct 16 10:59:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 	* tests/Nested_Upcall_Crash/run_test.pl:
@@ -29,6 +37,9 @@ Sun Oct 15 23:23:53 UTC 2006  Phil Mesnier  <mesnier_p@ociweb.com>
           and add a small sleep to the find_object() method. This simply
           forces the race condition. Adding a small sleep along with the
           above fix demonstrates that the problem no longer occurs.
+
+          Thanks to Chris Reed, cr at progress dot com, for reporting this
+          bug.
 
 Fri Oct 13 10:28:12 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
