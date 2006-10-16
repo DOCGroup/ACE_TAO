@@ -57,11 +57,6 @@ extern "C"
    typedef fd_set ACE_FD_SET_TYPE;
 #endif /* ACE_SELECT_USES_INT */
 
-#if defined (__rtems__)
-  int select (int n, fd_set *readfds, fd_set *writefds,
-              fd_set *exceptfds, const struct timeval *timeout);
-#endif /* __rtems__ */
-
 #ifdef __cplusplus
 }
 #endif /* __cplusplus */

@@ -127,6 +127,9 @@ ACE_OS::gethostbyname (const char *name)
   static char *hostaddr[2];
   static char *aliases[1];
 
+  if (0 == name || '\0' == name[0])
+    return 0;
+
   ACE_OSCALL (::hostGetByName ((char *) name), int, -1, first_addr);
   if (first_addr == -1)
     return 0;
@@ -155,6 +158,9 @@ ACE_OS::gethostbyname_r (const char *name, hostent *result,
                          int *h_errnop)
 {
   ACE_OS_TRACE ("ACE_OS::gethostbyname_r");
+
+  if (0 == name || '\0' == name[0])
+    return 0;
 
   if (ACE_OS::netdb_acquire ())
     return 0;

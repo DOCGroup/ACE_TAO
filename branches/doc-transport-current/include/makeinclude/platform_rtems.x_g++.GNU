@@ -1,13 +1,6 @@
 # $Id$
 #
-# RTEMS 4.5.0 and later with GNU g++.
-
-#### Notes:
-#### 1) This file requires that the WIND_BASE and WIND_HOST_TYPE environment
-####    variables be set.  If the target CPU is not a PPC604, then your CPU
-####    environment variable must be set.  If perl is not on your path,
-####    you'll also need to set your PERL_PATH environment variable to
-####    the full path to perl.
+# RTEMS 4.6.6 and later with GNU g++.
 
 CROSS-COMPILE = 1
 
@@ -27,35 +20,31 @@ ifeq (,$(PERL_PATH))
   PERL_PATH = perl
 endif # ! PERL_PATH
 
+include $(RTEMS_MAKEFILE_PATH)/Makefile.inc
+#include $(RTEMS_CUSTOM)
+#include $(PROJECT_ROOT)/make/leaf.cfg
+
+CXX = $(CC_FOR_TARGET)
+AR  = $(AR_FOR_TARGET)
+LD  = $(LD_FOR_TARGET)
+NM  = $(NM_FOR_TARGET)
+AS  = $(AS_FOR_TARGET)
 
 # Test for template instantiation.
-#
 include $(ACE_ROOT)/include/makeinclude/platform_g++_common.GNU
 
 #### BEGIN target CPU-specific settings
-
 # look them up
-CFLAGS = $(shell make --no-print-directory -f $(ACE_ROOT)/include/makeinclude/Makefile.rtems print_cflags)
+#CFLAGS = $(shell make --no-print-directory -f $(ACE_ROOT)/include/makeinclude/Makefile.rtems print_cflags)
 #CCFLAGS = $(shell make --no-print-directory -f $(ACE_ROOT)/include/makeinclude/Makefile.rtems print_cflags) -fno-implicit-templates
-CCFLAGS = $(TEMPLATES_FLAG)
-
+#CCFLAGS = $(TEMPLATES_FLAG)
 #### END target CPU-specific settings
 
-CXX := $(shell make --no-print-directory -f $(ACE_ROOT)/include/makeinclude/Makefile.rtems print_cxx)
+#CXX := $(shell make --no-print-directory -f $(ACE_ROOT)/include/makeinclude/Makefile.rtems print_cxx)
 
-ifndef ACE_CC
-ACE_CC := $(shell make --no-print-directory -f $(ACE_ROOT)/include/makeinclude/Makefile.rtems print_cc)
-endif # ! ACE_CC
-ifndef ACE_CC_VERSION
-  ACE_CC_VERSION := $(shell $(ACE_CC) --version)
-endif # ! ACE_CC_VERSION
-
-#CFLAGS          += -D_REENTRANT -ansi -fno-builtin -fno-defer-pop \
-#                   -fvolatile $(PIPE_OPT) -W -Wall
-#CCFLAGS         += $(CFLAGS)
+CFLAGS          += -D_REENTRANT -ansi -fno-builtin -fno-defer-pop -fvolatile $(PIPE_OPT) -W -Wall
+CCFLAGS         += $(CFLAGS) $(CPPFLAGS) -I$(RTEMS_MAKEFILE_PATH)/lib/include
 ifeq (,$(rtti))
-  #### Don't use RTTI even with egcs, because Tornado 1.0.x libraries
-  #### don't support it.
   CCFLAGS += -fno-rtti -DACE_LACKS_RTTI
 endif # rtti
 DCFLAGS         += -g
@@ -70,7 +59,6 @@ LD              = $(CXX) $(CCFLAGS) $(ACE_ROOT)/tests/rtems_init.o
 LDFLAGS         += #-Wl,-X -Wl,-r
 OCFLAGS         += -O
 PIC             =
-
 
 #### ld can't handle INCLDIRS, so override LINK definitions.
 LINK.c           = override

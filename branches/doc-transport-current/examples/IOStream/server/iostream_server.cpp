@@ -8,6 +8,7 @@
 #include "ace/SOCK_Acceptor.h"
 #include "ace/Service_Config.h"
 #include "ace/Signal.h"
+#include "ace/Sig_Adapter.h"
 
 #include "iostream_server.h"
 #include "ace/OS_NS_unistd.h"

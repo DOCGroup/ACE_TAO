@@ -77,7 +77,7 @@ Server_Task::svc (void)
   ACE_CATCHANY
     {
       ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Caught exception in  iteration \n");
+                           "Caught exception in iteration.\n");
     }
   ACE_ENDTRY;
 

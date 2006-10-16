@@ -53,19 +53,25 @@ ACE_OS::gethostbyaddr (const char *addr, int length, int type)
   ACE_UNUSED_ARG (length);
   ACE_UNUSED_ARG (type);
   ACE_NOTSUP_RETURN (0);
-# elif defined (ACE_HAS_NONCONST_GETBY)
+# else
+
+  if (0 == addr || '\0' == addr[0])
+      return 0;
+
+#   if defined (ACE_HAS_NONCONST_GETBY)
   ACE_SOCKCALL_RETURN (::gethostbyaddr (const_cast<char *> (addr),
                                         (ACE_SOCKET_LEN) length,
                                         type),
                        struct hostent *,
                        0);
-# else
+#   else
   ACE_SOCKCALL_RETURN (::gethostbyaddr (addr,
                                         (ACE_SOCKET_LEN) length,
                                         type),
                        struct hostent *,
                        0);
-# endif /* ACE_HAS_NONCONST_GETBY */
+#   endif /* ACE_HAS_NONCONST_GETBY */
+# endif /* !ACE_LACKS_GETHOSTBYADDR */
 }
 
 #endif
@@ -82,6 +88,10 @@ ACE_OS::gethostbyaddr_r (const char *addr,
 {
   ACE_OS_TRACE ("ACE_OS::gethostbyaddr_r");
 # if defined (ACE_HAS_REENTRANT_FUNCTIONS) && !defined (UNIXWARE)
+
+  if (0 == addr || '\0' == addr[0])
+      return 0;
+
 #   if defined (AIX) || defined (DIGITAL_UNIX)
   ACE_OS::memset (buffer, 0, sizeof (ACE_HOSTENT_DATA));
 
@@ -155,15 +165,21 @@ ACE_OS::gethostbyname (const char *name)
 # if defined (ACE_LACKS_GETHOSTBYNAME)
   ACE_UNUSED_ARG (name);
   ACE_NOTSUP_RETURN (0);
-# elif defined (ACE_HAS_NONCONST_GETBY)
+# else
+
+  if (0 == name || '\0' == name[0])
+      return 0;
+
+#   if defined (ACE_HAS_NONCONST_GETBY)
   ACE_SOCKCALL_RETURN (::gethostbyname (const_cast<char *> (name)),
                        struct hostent *,
                        0);
-# else
+#   else
   ACE_SOCKCALL_RETURN (::gethostbyname (name),
                        struct hostent *,
                        0);
-# endif /* ACE_HAS_NONCONST_GETBY */
+#   endif /* ACE_HAS_NONCONST_GETBY */
+# endif /* !ACE_LACKS_GETHOSTBYNAME */
 }
 
 #endif
@@ -184,6 +200,10 @@ ACE_OS::gethostbyname_r (const char *name,
   ACE_UNUSED_ARG (h_errnop);
   ACE_NOTSUP_RETURN (0);
 # elif defined (ACE_HAS_REENTRANT_FUNCTIONS) && !defined (UNIXWARE)
+
+  if (0 == name || '\0' == name[0])
+      return (struct hostent *)0;
+
 #   if defined (DIGITAL_UNIX) || \
        (defined (ACE_AIX_MINOR_VERS) && (ACE_AIX_MINOR_VERS > 2))
   ACE_UNUSED_ARG (result);
