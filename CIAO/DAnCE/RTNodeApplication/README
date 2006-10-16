@@ -1,6 +1,6 @@
 $Id$
 
-This directory contains the depricated RTNodeApplication
+This directory contains the deprecated RTNodeApplication
 implementation.  It will be removed shortly.
 
 * Currently, the RTNodeApplication does not support configuring of any
