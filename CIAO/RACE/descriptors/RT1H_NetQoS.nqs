@@ -9,9 +9,9 @@
       <server>_RT1H_NetQoS.ComponentImplementations.RT1H.RT1H.Planner_One</server>
       <serverPortName>situation</serverPortName>
     </connectionInfo>
-    <fwdBW>100</fwdBW>
-    <revBW>10</revBW>
-    <qos>BEST_EFFORT</qos>
+    <fwdBW>2000</fwdBW>
+    <revBW>0</revBW>
+    <qos>HIGH_RELIABILITY</qos>
     <admissionPriority>NORMAL</admissionPriority>
   </connectionQoS>
 
