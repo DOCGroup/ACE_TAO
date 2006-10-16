@@ -21,7 +21,7 @@ use Env qw(ACE_ROOT PATH);
 
 ################################################################################
 
-if (!getopts ('ados:tC') || $opt_h) {
+if (!getopts ('adl:os:tC') || $opt_h) {
     print "auto_run_tests.pl [-a] [-h] [-s sandbox] [-o] [-t]\n";
     print "\n";
     print "Runs the tests listed in auto_run_tests.lst\n";
@@ -35,6 +35,7 @@ if (!getopts ('ados:tC') || $opt_h) {
     print "    -t          TAO tests (other than ORB tests) only\n";
     print "    -C          CIAO tests only\n";
     print "    -Config cfg Run the tests for the <cfg> configuration\n";
+    print "    -l list     Load the list and run only those tests\n";
     print "\n";
     $ace_config_list = new PerlACE::ConfigList;
     $ace_config_list->load ($ACE_ROOT."/bin/ace_tests.lst");
@@ -69,6 +70,10 @@ if ($opt_C) {
 push (@file_list, "/bin/ciao_tests.lst");
 }
 
+if ($opt_l) {
+push (@file_list, "$opt_l");
+}
+
 if (scalar(@file_list) == 0) {
 push (@file_list, "/bin/ace_tests.lst");
 push (@file_list, "/bin/tao_orb_tests.lst") if -d "$ACE_ROOT/TAO";
@@ -76,10 +81,19 @@ push (@file_list, "/bin/tao_other_tests.lst") if -d "$ACE_ROOT/TAO";
 push (@file_list, "/bin/ciao_tests.lst") if -d "$ACE_ROOT/TAO/CIAO";
 }
 
+$startdir = getcwd();
 foreach my $test_lst (@file_list) {
 
     my $config_list = new PerlACE::ConfigList;
-    $config_list->load ($ACE_ROOT.$test_lst);
+    if (-r $ACE_ROOT.$test_lst) {
+      $config_list->load ($ACE_ROOT.$test_lst);
+    }
+    elsif (-r "$startdir/$test_list") {
+      $config_list->load ("$stardir/$test_lst");
+    }
+    else {
+      $config_list->load ($test_list);
+    }
 
     # Insures that we search for stuff in the current directory.
     $PATH .= $Config::Config{path_sep} . '.';
@@ -104,8 +118,21 @@ foreach my $test_lst (@file_list) {
             print "auto_run_tests: $test\n";
         }
 
-        chdir ($ACE_ROOT."/$directory")
-            || print STDERR "ERROR: Cannot chdir to $ACE_ROOT/$directory" || next;
+        $status = 0;
+        if (-d $ACE_ROOT."/$directory") {
+          $status = chdir ($ACE_ROOT."/$directory");
+        }
+        elsif (-d $startdir."/$directory") {
+          $status = chdir ($startdir."/$directory");
+        }
+        else {
+          $status = chdir ($directory);
+        }
+
+        if (!$status) {
+          print STDERR "ERROR: Cannot chdir to $ACE_ROOT/$directory";
+          next;
+        }
 
         if ($program =~ /(.*?) (.*)/) {
             if (! -e $1) {
