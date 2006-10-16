@@ -246,11 +246,14 @@ namespace CIAO
                                 int request_dscp,
                                 int reply_dscp);
 
-        void push_deployed_resource(Deployment::DeploymentPlan&, 
+        void push_deployed_resource(Deployment::DeploymentPlan&,
+                                    const std::string &server_resource_id,
                                     size_t, const std::string &);
-        void push_deployed_resource(Deployment::DeploymentPlan&, 
-                                    size_t, const std::string &, 
-                                    const std::string & port_name,
+        void push_deployed_resource(Deployment::DeploymentPlan &dep_plan, 
+                                    const std::string &server_resource_id,
+                                    size_t client_instance_iter, 
+                                    const std::string & policy_set_id, 
+                                    const std::string & client_port_name,
                                     Deployment::CCMComponentPortKind client_port_kind);
 
       };

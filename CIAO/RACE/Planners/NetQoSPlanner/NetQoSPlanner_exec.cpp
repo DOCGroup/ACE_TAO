@@ -673,10 +673,11 @@ pd.NWPriorityModelDef().reply_dscp));
 
       void NetQoSPlanner_exec_i::push_deployed_resource 
              (Deployment::DeploymentPlan &dep_plan,
+              const std::string &server_resource_id,
               size_t server_instance_iter,
               const std::string &policy_set_id)
       {
-          static long server_resource_count = 0;
+          //static long server_resource_count = 0;
           CORBA::ULong dep_res_len = dep_plan.instance[server_instance_iter].deployedResource.length ();
           CORBA::ULong new_dep_res_len = dep_res_len + 1;
           dep_plan.instance[server_instance_iter].deployedResource.length (new_dep_res_len);
@@ -686,9 +687,10 @@ pd.NWPriorityModelDef().reply_dscp));
 
           resource_desc.resourceUsage = Deployment::InstanceUsesResource;
           resource_desc.requirementName = CORBA::string_dup ("CIAO:PolicySet");
-          std::ostringstream res_name;
-          res_name <<  "test_server_resource_name" << server_resource_count++;
-          resource_desc.resourceName = CORBA::string_dup (res_name.str().c_str());
+          //std::ostringstream res_name;
+          //res_name <<  "test_server_resource_name" << server_resource_count++;
+          //resource_desc.resourceName = CORBA::string_dup (res_name.str().c_str());
+          resource_desc.resourceName = CORBA::string_dup (server_resource_id.c_str());
 
           CORBA::ULong pro_len = resource_desc.property.length ();
           CORBA::ULong new_pro_len = pro_len + 1;
@@ -697,13 +699,15 @@ pd.NWPriorityModelDef().reply_dscp));
           resource_desc.property[pro_len].value <<= policy_set_id.c_str ();
     }
 
-     void NetQoSPlanner_exec_i::push_deployed_resource(Deployment::DeploymentPlan &dep_plan, 
-                                                       size_t client_instance_iter, 
-                                                       const std::string & policy_set_id, 
-                                                       const std::string & client_port_name,
-                                                       Deployment::CCMComponentPortKind client_port_kind)
+     void NetQoSPlanner_exec_i::push_deployed_resource
+              (Deployment::DeploymentPlan &dep_plan, 
+               const std::string &server_resource_id,
+               size_t client_instance_iter, 
+               const std::string & policy_set_id, 
+               const std::string & client_port_name,
+               Deployment::CCMComponentPortKind client_port_kind)
      { 
-          static long client_resource_count = 0;
+          //static long client_resource_count = 0;
           CORBA::ULong dep_res_len = dep_plan.instance[client_instance_iter].deployedResource.length ();
           CORBA::ULong new_dep_res_len = dep_res_len + 1;
           dep_plan.instance[client_instance_iter].deployedResource.length (new_dep_res_len);
@@ -713,9 +717,10 @@ pd.NWPriorityModelDef().reply_dscp));
 
           resource_desc.resourceUsage = Deployment::InstanceUsesResource;
           resource_desc.requirementName = CORBA::string_dup ("CIAO:PolicySet");
-          std::ostringstream res_name;
-          res_name << "test_client_resource_name" << client_resource_count++;
-          resource_desc.resourceName = CORBA::string_dup (res_name.str().c_str());
+          //std::ostringstream res_name;
+          //res_name << "test_client_resource_name" << client_resource_count++;
+          //resource_desc.resourceName = CORBA::string_dup (res_name.str().c_str());
+          resource_desc.resourceName = CORBA::string_dup (server_resource_id.c_str());
 
           CORBA::ULong pro_len = resource_desc.property.length ();
           CORBA::ULong new_pro_len = pro_len + 1;
@@ -752,9 +757,9 @@ pd.NWPriorityModelDef().reply_dscp));
 
         CORBA::ULong len = dscp_infos.length ();
         CIAO::DAnCE::ServerResource server_resource;
-        std::ostringstream id;
-        id << "test_server_resource_id" << server_resource_count++;
-        server_resource.Id = CORBA::string_dup (id.str().c_str());
+        std::ostringstream server_resource_id;
+        server_resource_id << "test_server_resource_id" << server_resource_count++;
+        server_resource.Id = CORBA::string_dup (server_resource_id.str().c_str());
 
         for (CORBA::ULong i = 0; i < len; ++i)
           {
@@ -770,14 +775,17 @@ pd.NWPriorityModelDef().reply_dscp));
             if (this->instance_map_.find (server_instance_name.c_str(), server_instance_iter) == 0)
               {
                 std::string policy_set_id = this->push_policy (server_resource, server_instance_name, SERVER, 0, 0);
-                this->push_deployed_resource (dep_plan, server_instance_iter, policy_set_id);    
+                this->push_deployed_resource (dep_plan, server_resource_id.str(), 
+                                              server_instance_iter, policy_set_id);    
               }
     
             int client_instance_iter = 0;
             if (this->instance_map_.find (client_instance_name.c_str(), client_instance_iter) == 0)
               {
                 std::string policy_set_id = this->push_policy (server_resource, client_instance_name, CLIENT, request_dscp, reply_dscp);
-                this->push_deployed_resource (dep_plan, client_instance_iter, policy_set_id, client_port_name, client_port_kind);
+                this->push_deployed_resource (dep_plan, server_resource_id.str(), 
+                                              client_instance_iter, policy_set_id, 
+                                              client_port_name, client_port_kind);
               }
           }
     
