@@ -1,13 +1,6 @@
 # $Id$
 #
-# RTEMS 4.5.0 and later with GNU g++.
-
-#### Notes:
-#### 1) This file requires that the WIND_BASE and WIND_HOST_TYPE environment
-####    variables be set.  If the target CPU is not a PPC604, then your CPU
-####    environment variable must be set.  If perl is not on your path,
-####    you'll also need to set your PERL_PATH environment variable to
-####    the full path to perl.
+# RTEMS 4.6.6 and later with GNU g++.
 
 CROSS-COMPILE = 1
 
@@ -29,7 +22,6 @@ endif # ! PERL_PATH
 
 
 # Test for template instantiation.
-#
 include $(ACE_ROOT)/include/makeinclude/platform_g++_common.GNU
 
 #### BEGIN target CPU-specific settings
