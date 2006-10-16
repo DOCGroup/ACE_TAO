@@ -27,19 +27,19 @@ include $(ACE_ROOT)/include/makeinclude/platform_g++_common.GNU
 #### BEGIN target CPU-specific settings
 
 # look them up
-CFLAGS = $(shell make --no-print-directory -f $(ACE_ROOT)/include/makeinclude/Makefile.rtems print_cflags)
+#CFLAGS = $(shell make --no-print-directory -f $(ACE_ROOT)/include/makeinclude/Makefile.rtems print_cflags)
 #CCFLAGS = $(shell make --no-print-directory -f $(ACE_ROOT)/include/makeinclude/Makefile.rtems print_cflags) -fno-implicit-templates
 CCFLAGS = $(TEMPLATES_FLAG)
 
 #### END target CPU-specific settings
 
-CXX := $(shell make --no-print-directory -f $(ACE_ROOT)/include/makeinclude/Makefile.rtems print_cxx)
+#CXX := $(shell make --no-print-directory -f $(ACE_ROOT)/include/makeinclude/Makefile.rtems print_cxx)
 
 ifndef ACE_CC
-ACE_CC := $(shell make --no-print-directory -f $(ACE_ROOT)/include/makeinclude/Makefile.rtems print_cc)
+#ACE_CC := $(shell make --no-print-directory -f $(ACE_ROOT)/include/makeinclude/Makefile.rtems print_cc)
 endif # ! ACE_CC
 ifndef ACE_CC_VERSION
-  ACE_CC_VERSION := $(shell $(ACE_CC) --version)
+#  ACE_CC_VERSION := $(shell $(ACE_CC) --version)
 endif # ! ACE_CC_VERSION
 
 #CFLAGS          += -D_REENTRANT -ansi -fno-builtin -fno-defer-pop \
