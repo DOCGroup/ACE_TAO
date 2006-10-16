@@ -1217,6 +1217,8 @@ TAO_Transport::send_message_shared_i (TAO_Stub *stub,
                                       ACE_Time_Value *max_wait_time)
 {
   int ret = 0;
+  size_t message_length = message_block->length ();
+
   switch (message_semantics)
     {
       case TAO_Transport::TAO_TWOWAY_REQUEST:
@@ -1237,8 +1239,8 @@ TAO_Transport::send_message_shared_i (TAO_Stub *stub,
     }
 
   // "Count" the message, only if no error was encountered.
-  if (ret == 0 && this->stats_ != 0)
-    this->stats_->messages_sent (message_block->length ());
+  if (ret != -1 && this->stats_ != 0)
+    this->stats_->messages_sent (message_length);
 
   return ret;
 }

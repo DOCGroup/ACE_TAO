@@ -210,7 +210,6 @@ TAO::Transport::Stats::messages_sent (size_t message_length)
 {
   this->messages_sent_++;
   this->bytes_sent_.sample (message_length);
-  ACE_DEBUG ((LM_DEBUG, "TAO - message_length: %d\n", message_length));
 }
 
 ACE_INLINE CORBA::LongLong
@@ -230,7 +229,6 @@ TAO::Transport::Stats::messages_received (size_t message_length)
 {
   this->messages_rcvd_++;
   this->bytes_rcvd_.sample (message_length);
-  ACE_DEBUG ((LM_DEBUG, "TAO - messages_received: %d\n", message_length));
 }
 
 ACE_INLINE CORBA::LongLong

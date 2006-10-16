@@ -115,6 +115,42 @@ sub CommandLine ()
 
     my $commandline = $self->Executable ();
 
+    if (defined $self->{REMOTEINFO}) {
+      my($method)   = $self->{REMOTEINFO}->{method};
+      my($username) = $self->{REMOTEINFO}->{username};
+      my($remote)   = $self->{REMOTEINFO}->{hostname};
+      my($exepath)  = $self->{REMOTEINFO}->{exepath};
+      my($libpath)  = $self->{REMOTEINFO}->{libpath};
+      my($exe)      = (defined $exepath ?
+                        "$exepath/" . basename($commandline) : $commandline);
+      $commandline  = "$method -l $username $remote \"";
+      if (defined $libpath) {
+        my($csh) = (defined $self->{REMOTEINFO}->{shell} &&
+                            $self->{REMOTEINFO}->{shell} =~ /csh/);
+        foreach my $pvar ('LD_LIBRARY_PATH', 'LIBPATH', 'SHLIB_PATH') {
+          if ($csh) {
+            $commandline .= "if (! \\\$?$pvar) setenv $pvar; " .
+                            "setenv $pvar $libpath:\\\$$pvar; ";
+          }
+          else {
+            $commandline .= "$pvar=$libpath:\\\$$pvar; export $pvar; ";
+          }
+        }
+        my($env) = $self->{REMOTEINFO}->{env};
+        if (defined $env) {
+          foreach my $pvar (keys %$env) {
+            if ($csh) {
+              $commandline .= "setenv $pvar $$env{$pvar}; ";
+            }
+            else {
+              $commandline .= "$pvar=$$env{$pvar}; export $pvar; ";
+            }
+          }
+        }
+      }
+      $commandline .= $exe;
+    }
+
     if (defined $self->{ARGUMENTS}) {
         $commandline .= ' '.$self->{ARGUMENTS};
     }
@@ -132,6 +168,10 @@ sub CommandLine ()
         }
     }
 
+    if (defined $self->{REMOTEINFO}) {
+      $commandline .= '"';
+    }
+
     return $commandline;
 }
 
@@ -144,6 +184,39 @@ sub IgnoreExeSubDir
     }
 
     return $self->{IGNOREEXESUBDIR};
+}
+
+sub RemoteInformation
+{
+  my($self)   = shift;
+  my(%params) = @_;
+
+  ## Valid keys for %params
+  ##  hostname - The remote hostname
+  ##  method   - either rsh or ssh
+  ##  username - The remote user name
+  ##  exepath  - The remote path to the executable
+  ##  shell    - The shell of the remote user
+  ##  libpath  - A library path for libraries required by the executable
+  ##  env      - A hash reference of name value pairs to be set in the
+  ##             environment prior to executing the executable.
+  ##
+  ## At a minimum, the user must provide the remote hostname.
+
+  if (defined $params{'hostname'}) {
+    my(@pwd) = getpwuid($<);
+    $self->{REMOTEINFO} = \%params;
+    if (!defined $self->{REMOTEINFO}->{'method'}) {
+      $self->{REMOTEINFO}->{'method'} = 'ssh';
+    }
+    if (!defined $self->{REMOTEINFO}->{'username'}) {
+      $self->{REMOTEINFO}->{'username'} = $pwd[0] ||
+                                          $ENV{LOGNAME} || $ENV{USERNAME};
+    }
+    if (!defined $self->{REMOTEINFO}->{'shell'}) {
+      $self->{REMOTEINFO}->{'shell'} = basename($pwd[8]);
+    }
+  }
 }
 
 ###############################################################################
@@ -178,7 +251,7 @@ sub Spawn ()
     }
 
     if ($self->{IGNOREEXESUBDIR} == 0) {
-        if (!-f $self->Executable ()) {
+        if (!defined $self->{REMOTEINFO} && !-f $self->Executable ()) {
             print STDERR "ERROR: Cannot Spawn: <", $self->Executable (),
                          "> not found\n";
             return -1;

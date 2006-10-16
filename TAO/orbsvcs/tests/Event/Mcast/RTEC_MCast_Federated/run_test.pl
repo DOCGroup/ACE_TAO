@@ -51,6 +51,7 @@ $ec2iorfile = PerlACE::LocalFile ("ec2.ior");
 
 $arg_ns_ref = "-ORBInitRef NameService=file://$nsiorfile";
 $end_point = "-ORBEndpoint iiop://localhost";
+$ns_port = PerlACE::random_port();
 
 unlink $nsiorfile;
 unlink $ec1iorfile;
@@ -59,7 +60,7 @@ unlink $ec2iorfile;
 # start Naming Service
 
 $NameService = "$ENV{TAO_ROOT}/orbsvcs/Naming_Service/Naming_Service";
-$NS = new PerlACE::Process($NameService, "$flags -o $nsiorfile $end_point:2809");
+$NS = new PerlACE::Process($NameService, "$flags -o $nsiorfile $end_point:$ns_port");
 $NS->Spawn();
 if (PerlACE::waitforfile_timed ($nsiorfile, 5) == -1) {
     print STDERR "ERROR: cannot find file <$nsiorfile>\n";

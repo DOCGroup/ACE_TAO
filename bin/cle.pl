@@ -126,7 +126,7 @@ sub getDefaultDomain {
       my($fh)    = new FileHandle();
       if (open($fh, $hosts)) {
         while(<$fh>) {
-          if (/$host\.(.*)/) {
+          if (/$host\.([^\s]+)/) {
             $domain = $1;
             last;
           }
