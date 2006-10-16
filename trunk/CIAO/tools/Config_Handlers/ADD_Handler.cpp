@@ -96,7 +96,7 @@ namespace CIAO
           }
         else
           {
-            ACE_DEBUG ((LM_ERROR,
+            ACE_ERROR ((LM_ERROR,
                         "(%P|%t) Warning: ADD %s has no idref.\n",
                         src.name ().c_str ()));
           }
@@ -158,15 +158,15 @@ namespace CIAO
           {
             add.add_execParameter (Property_Handler::get_property (src.execParameter[k]));
           }
-        
+
         // Generate a UUID to use for the IDREF.
         ACE_Utils::UUID uuid;
         ACE_Utils::UUID_GENERATOR::instance ()->generateUUID (uuid);
         ACE_CString add_id ("_");
         add_id += *uuid.to_string ();
-        
+
         XMLSchema::ID< ACE_TCHAR > xml_id (add_id.c_str ());
-        
+
         // Bind the ref and set it in the IDD
         ADD_Handler::IDREF.bind_next_available (add_id);
 
