@@ -1,3 +1,8 @@
+Mon Oct 16 15:11:40 UTC 2006  Nilabja R  <nilabjar@dre.vanderbilt.edu>
+
+        * DAnCE/TargetManager/TM_Client.mpc:
+          Fixed the linking error in Mac and in FC5 Static
+
 Mon Oct 16 11:20:00 UTC 2006  Simon Massey  <sma@prismtech.com>
 
        * DAnCE/NodeApplicationManager/NodeApplicationManager.mpc
@@ -14,67 +19,67 @@ Mon Oct 16 11:20:00 UTC 2006  Simon Massey  <sma@prismtech.com>
 
 Mon Oct 16 08:35:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-	* tools/Config_Handlers/ADD_Handler.cpp:
-	* tools/Config_Handlers/DP_Handler.cpp:
-	* tools/Config_Handlers/IDREF_Base.cpp:
-	* tools/Config_Handlers/Package_Handlers/CPD_Handler.cpp:
-	* tools/Config_Handlers/RT-CCM/PS_Handler.cpp:
-	* RACE/Input_Adapters/LocationUpdater/LocationUpdater_exec.cpp
-	* RACE/Input_Adapters/PlanGenerator/PlanGenerator_exec.cpp
-	* DAnCE/RepositoryManager/
-	* DAnCE/RepositoryManager/RepositoryManager_Impl.cpp:
-	  Use ACE_ERROR together with LM_ERROR
+        * tools/Config_Handlers/ADD_Handler.cpp:
+        * tools/Config_Handlers/DP_Handler.cpp:
+        * tools/Config_Handlers/IDREF_Base.cpp:
+        * tools/Config_Handlers/Package_Handlers/CPD_Handler.cpp:
+        * tools/Config_Handlers/RT-CCM/PS_Handler.cpp:
+        * RACE/Input_Adapters/LocationUpdater/LocationUpdater_exec.cpp
+        * RACE/Input_Adapters/PlanGenerator/PlanGenerator_exec.cpp
+        * DAnCE/RepositoryManager/
+        * DAnCE/RepositoryManager/RepositoryManager_Impl.cpp:
+          Use ACE_ERROR together with LM_ERROR
 
-	* RACE/Controller/Component/Controller.idl:
-	  Changed some comments to doxygen style
+        * RACE/Controller/Component/Controller.idl:
+          Changed some comments to doxygen style
 
-	* DAnCE/RepositoryManager/PC_Updater_T.cpp:
-	  Const change
+        * DAnCE/RepositoryManager/PC_Updater_T.cpp:
+          Const change
 
-	* DAnCE/RepositoryManager/RepositoryManager.cpp:
-	  Layout changes
+        * DAnCE/RepositoryManager/RepositoryManager.cpp:
+          Layout changes
 
-	* DAnCE/RepositoryManager/RM_Helper.cpp:
-	  Use strcmp to compare two strings and several layout changes
+        * DAnCE/RepositoryManager/RM_Helper.cpp:
+          Use strcmp to compare two strings and several layout changes
 
-	* DAnCE/RepositoryManager/RM_Helper.h:
-	* DAnCE/RepositoryManager/ZIP_Wrapper.h:
-	  Doxygen changes
+        * DAnCE/RepositoryManager/RM_Helper.h:
+        * DAnCE/RepositoryManager/ZIP_Wrapper.h:
+          Doxygen changes
 
-	* DAnCE/RepositoryManager/RMadmin.cpp:
-	  Documentation changes
+        * DAnCE/RepositoryManager/RMadmin.cpp:
+          Documentation changes
 
-	* DAnCE/RepositoryManager/URL_Parser.{h,cpp}:
-	  Use bool for debug_
+        * DAnCE/RepositoryManager/URL_Parser.{h,cpp}:
+          Use bool for debug_
 
-	* DAnCE/RepositoryManager/ZIP_Wrapper.cpp:
-	  Initialise pointers with 0
+        * DAnCE/RepositoryManager/ZIP_Wrapper.cpp:
+          Initialise pointers with 0
 
 Mon Oct 16 08:35:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-	* DAnCE/StaticConfigurator/StaticDAnCEApp.mpc.tmpl:
-	  Simplified this file by using the new ciao_static_dnc_app base
-	  project.
+        * DAnCE/StaticConfigurator/StaticDAnCEApp.mpc.tmpl:
+          Simplified this file by using the new ciao_static_dnc_app base
+          project.
 
 Fri Oct 13 17:57:12 2006  John S. Kinnebrew  <john.s.kinnebrew@vanderbilt.edu>
 
-	* docs/schema/SANet_Network.xsd
+        * docs/schema/SANet_Network.xsd
         * docs/schema/Task_Map.xsd
 
         Added SA-POP schemas.
 
-Fri Oct 13 17:54:58 UTC 2006  Nilabja Roy  <roy_n@dre.vanderbilt.edu>
+Fri Oct 13 17:54:58 UTC 2006  Nilabja Roy  <nilabjar@dre.vanderbilt.edu>
 
         * DAnCE/TargetManager/TargetManager.mpc:
           Addressed the problems coming up in Mac. Changed the project
           inheritence of the TM Component.
 
-Fri Oct 13 17:43:29 UTC 2006  Nilabja Roy  <roy_n@dre.vanderbilt.edu>
+Fri Oct 13 17:43:29 UTC 2006  Nilabja Roy  <nilabjar@dre.vanderbilt.edu>
 
         * DAnCE/TargetManager/DomainDataManager.cpp:
           Addressed an error in the last check-in.
 
-Thu Oct 12 17:36:58 UTC 2006  Nilabja Roy  <roy_n@dre.vanderbilt.edu>
+Thu Oct 12 17:36:58 UTC 2006  Nilabja Roy  <nilabjar@dre.vanderbilt.edu>
 
         * DAnCE/TargetManager/CmpClient.cpp:
         * DAnCE/TargetManager/DomainDataManager.h:
