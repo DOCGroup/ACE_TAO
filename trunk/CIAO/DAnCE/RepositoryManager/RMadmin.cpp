@@ -34,7 +34,7 @@ using namespace std;
 
 
 //IOR file of the RM
-static const char *ior = "file://RepositoryManagerDeamon.ior";
+static const char *ior = "file://RepositoryManagerDaemon.ior";
 
 // Name service of the RM
 static const char *RMname_service;

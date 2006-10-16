@@ -45,13 +45,7 @@
 
 namespace
 {
-  const static size_t TEMP_LEN = 1024;
-
-  const static char* PC_EXTENSION = ".epc";
-
-  const static char *RM_RECORD_FILE = "RM_record";
-  const static char *RM_RECORD_NAME_SECTION = "Names";
-  const static char *RM_RECORD_UUID_SECTION = "UUIDs";
+  static const size_t TEMP_LEN = 1024;
 }
 
 class  CIAO_RepositoryManagerDaemon_i :

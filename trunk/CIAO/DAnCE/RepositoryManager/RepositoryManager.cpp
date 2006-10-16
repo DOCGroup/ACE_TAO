@@ -10,7 +10,7 @@
  * Description:
  *  Main driver program for the CIAO RepositoryManager
  *  Please run as follows:
- *       RepositoryManagerDeamon [int:nthreads]
+ *       RepositoryManagerDaemon [int:nthreads]
  *
  * @author Stoyan Paunov
  */
@@ -31,7 +31,7 @@ namespace CIAO
   namespace RepositoryManager
   {
     /// Name of the file holding the IOR of the RM
-    const char * RMior = "RepositoryManagerDeamon.ior";
+    const char * RMior = "RepositoryManagerDaemon.ior";
 
     // Name of RepoMan
     char * repoman_name_ = "RepositoryManager";
@@ -166,7 +166,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     PortableServer::ServantBase_var owner_transfer(repo);
 
     //register and implicitly activate servant
-    CIAO::RepositoryManagerDaemon_var RepositoryManagerDeamon = repo->_this ();
+    CIAO::RepositoryManagerDaemon_var RepositoryManagerDaemon = repo->_this ();
 
     bool retval = false;
 
@@ -174,7 +174,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     {
       retval =
         write_ior_file (orb.in (),
-        RepositoryManagerDeamon.in ()
+        RepositoryManagerDaemon.in ()
         ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
@@ -182,7 +182,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     {
       retval =
         register_with_ns (orb.in (),
-        RepositoryManagerDeamon.in ()
+        RepositoryManagerDaemon.in ()
         ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }

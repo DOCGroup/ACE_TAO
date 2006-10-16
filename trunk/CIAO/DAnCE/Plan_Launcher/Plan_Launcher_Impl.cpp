@@ -2,6 +2,7 @@
 #include "Plan_Launcher_Impl.h"
 #include "orbsvcs/CosNamingC.h"
 #include "Config_Handlers/XML_File_Intf.h"
+#include "Config_Handlers/DnC_Dump.h"
 
 #include <iostream>
 #include <string>
@@ -108,6 +109,8 @@ namespace CIAO
         }
 
       ACE_DEBUG ((LM_DEBUG, "Parsing complete....\n"));
+
+      //::Deployment::DnC_Dump::dump (plan.in ());
       
       return this->launch_plan (plan.in ());
     }
@@ -344,14 +347,27 @@ namespace CIAO
     }
 
     const char *
-    Plan_Launcher_i::re_launch_plan (const char *plan_uri ACE_ENV_ARG_DECL)
+    Plan_Launcher_i::re_launch_plan (const char *deployment_plan_uri,
+                                     const char *package_uri,
+                                     bool use_package_name,
+                                     bool use_repoman
+                                     ACE_ENV_ARG_DECL)
       ACE_THROW_SPEC ((Plan_Launcher_i::Deployment_Failure))
     {
-      CIAO::Config_Handlers::XML_File_Intf intf (plan_uri);
+      CIAO::Config_Handlers::XML_File_Intf intf (deployment_plan_uri);
 
       ::Deployment::DeploymentPlan_var plan =
           intf.get_plan ();
 
+      // Use the package name(s) or type(s) to modify the location of all the
+      // artifacts in DeploymentPlan.
+      if (use_repoman)
+        {
+          pg_.generate_plan (plan, package_uri, use_package_name);
+        }
+
+      //::Deployment::DnC_Dump::dump (plan.in ());
+      
       return this->re_launch_plan (plan.in ());
     }
 

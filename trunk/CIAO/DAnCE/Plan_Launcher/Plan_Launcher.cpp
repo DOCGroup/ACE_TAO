@@ -17,7 +17,7 @@ namespace CIAO
     bool use_package_name = true;
     const char* package_names = 0;
     const char* package_types = 0;
-    const char* new_package_url = 0;
+    const char* new_deployment_plan_url = 0;
     const char* plan_uuid = 0;
     bool em_use_naming = false;
     const char* em_ior_file = "file://em.ior";
@@ -114,7 +114,7 @@ namespace CIAO
               mode = pl_mode_stop_by_uuid;
               break;
             case 'r':
-              new_package_url = get_opt.opt_arg ();
+              new_deployment_plan_url = get_opt.opt_arg ();
               mode = pl_mode_redeployment;
               break;
             case 'h':
@@ -129,7 +129,7 @@ namespace CIAO
           (package_names == 0) &&
           (package_types == 0) &&
           (deployment_plan_url == 0) &&
-          (new_package_url == 0))
+          (new_deployment_plan_url == 0))
         {
           usage (argv[0]);
           return false;
@@ -243,11 +243,23 @@ namespace CIAO
                                   "unkonw plan uuid.\n"));
                 }
             }
-          else if (mode == pl_mode_redeployment && new_package_url != 0) // do redeployment
+          else if (mode == pl_mode_redeployment && new_deployment_plan_url != 0) // do redeployment
             {
               ACE_DEBUG ((LM_DEBUG,
                           "Plan_Launcher: reconfigure application assembly....."));
-              const char* uuid = launcher.re_launch_plan (new_package_url);
+              
+              const char* uuid;
+
+              if (package_names != 0)
+                uuid = launcher.re_launch_plan (new_deployment_plan_url,
+                                                package_names,
+                                                use_package_name,
+                                                use_repoman);
+              else
+                uuid = launcher.re_launch_plan (new_deployment_plan_url,
+                                                package_types,
+                                                use_package_name,
+                                                use_repoman);
 
               if (uuid == 0)
                 {

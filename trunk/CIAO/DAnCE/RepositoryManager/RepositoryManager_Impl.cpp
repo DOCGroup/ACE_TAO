@@ -51,6 +51,15 @@
 #include <iostream>
 using namespace std;
 
+namespace
+{
+  static const char* PC_EXTENSION = ".epc";
+
+  static const char *RM_RECORD_FILE = "RM_record";
+  static const char *RM_RECORD_NAME_SECTION = "Names";
+  static const char *RM_RECORD_UUID_SECTION = "UUIDs";
+}
+
 //-----------------------------------------------------------------
 //Constructor
 //
@@ -330,7 +339,8 @@ void CIAO_RepositoryManagerDaemon_i::installPackage (
 
   if (!updater.update (pc))
   {
-    ACE_ERROR ((LM_ERROR, "[RM] problem updating the PackageConfiguration!\n"));
+    ACE_DEBUG ((LM_ERROR, "[RM] problem updating the PackageConfiguration!\n"));
+
     //clean the extracted files
     remove_extracted_package (package_path.c_str (), path.c_str ());
     //remove the package
@@ -367,7 +377,7 @@ void CIAO_RepositoryManagerDaemon_i::installPackage (
   {
      ACE_ERROR ((LM_ERROR,
                  "[RM] could not bind %s.\n",
-                 pc->UUID));
+                 ACE_CString (pc->UUID).c_str ()));
 
      //unbind the name
      this->names_.unbind (installationName);
@@ -391,7 +401,7 @@ void CIAO_RepositoryManagerDaemon_i::installPackage (
 
   ACE_DEBUG ((LM_INFO,
               "Installed PackageConfiguration \n\tname: %s \n\tuuid: %s\n",
-              installationName, pc->UUID));
+              installationName, ACE_CString (pc->UUID).c_str ()));
 }
 
 
@@ -525,7 +535,7 @@ void CIAO_RepositoryManagerDaemon_i::createPackage (
   {
      ACE_ERROR ((LM_ERROR,
                  "[RM] could not bind %s.\n",
-                 pc.UUID));
+                 ACE_CString (pc.UUID).c_str ()));
 
      //unbind the name
      this->names_.unbind (installationName);
@@ -550,7 +560,7 @@ void CIAO_RepositoryManagerDaemon_i::createPackage (
 
   ACE_DEBUG ((LM_INFO,
               "Created PackageConfiguration \n  directory: %s \n  name: %s \n  uuid: %s\n",
-              path.c_str (), installationName, pc.UUID));
+              path.c_str (), installationName, ACE_CString (pc.UUID).c_str ()));
 }
 
 
@@ -1240,7 +1250,7 @@ int CIAO_RepositoryManagerDaemon_i::remove_type (Deployment::PackageConfiguratio
       {
         if (this->types_.unbind (ACE_CString (supportedTypes[i]), ACE_CString (name)) != 0)
           ACE_DEBUG ((LM_DEBUG, "Could not find type %s with package name %s!\n",
-                      supportedTypes[i],
+                      ACE_CString (supportedTypes[i]).c_str (),
                       name));
       }
     }

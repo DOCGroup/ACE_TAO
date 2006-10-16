@@ -20,9 +20,9 @@ If you want to get the component package through http server:
 
 Start RM:
 1.Using ior file: 
-  RepositoryManagerDeamon -o
+  RepositoryManagerDaemon -o
 2.Using Naming Service:
-  RepositoryManagerDeamon -v [NameofRM]
+  RepositoryManagerDaemon -v [NameofRM]
 
 Using RMadmin:
 1.Install component package: (use BasicSP for example)
