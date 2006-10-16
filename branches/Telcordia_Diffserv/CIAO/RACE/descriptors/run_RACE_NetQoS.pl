@@ -127,8 +127,7 @@ $ns_running = 1;
 
 # Invoke execution manager.
 # print "Invoking execution manager\n";
- $EM = new PerlACE::Process ("$DAnCE/ExecutionManager/Execution_Manager",
-                             "-n -o EM.ior -i $dat_file");
+ $EM = new PerlACE::Process ("$DAnCE/ExecutionManager/Execution_Manager",  "-n -ORBEndpoint iiop://10.1.250.100 -o EM.ior -i $dat_file");
  $EM->Spawn ();
 
 # if (PerlACE::waitforfile_timed ("EM.ior",
