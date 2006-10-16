@@ -50,7 +50,7 @@ namespace CIAO
 
       default:
         ACE_ERROR_RETURN ((LM_ERROR, "CIAO::EventService_Factory_impl::"
-                          "create_event_service: unsuppoted type.\n"),
+                          "create_event_service: unsupported type.\n"),
                           0);
 
     }
