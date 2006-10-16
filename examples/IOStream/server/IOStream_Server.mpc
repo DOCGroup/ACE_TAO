@@ -2,4 +2,5 @@
 // $Id$
 
 project : aceexe {
+  exename = iostream_server
 }

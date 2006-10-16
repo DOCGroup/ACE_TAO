@@ -10,6 +10,7 @@
 #include "tao/IORTable/Table_Adapter.h"
 #include "tao/IORTable/IOR_Table_Impl.h"
 #include "tao/ORB_Core.h"
+#include "tao/Server_Strategy_Factory.h"
 #include "tao/Object.h"
 #include "tao/Stub.h"
 #include "tao/ORB.h"
@@ -21,31 +22,68 @@ ACE_RCSID (IORTable,
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_Table_Adapter::TAO_Table_Adapter (TAO_ORB_Core *orb_core)
-  :  orb_core_ (orb_core)
-  ,  root_ (0)
+TAO_Table_Adapter::TAO_Table_Adapter (TAO_ORB_Core &orb_core)
+  :  orb_core_ (orb_core),
+     root_ (),
+     closed_ (true),
+     enable_locking_ (orb_core_.server_factory ()->enable_poa_locking ()),
+     thread_lock_ (),
+     lock_ (TAO_Table_Adapter::create_lock (enable_locking_,
+                                            thread_lock_))
 {
 }
 
 TAO_Table_Adapter::~TAO_Table_Adapter (void)
 {
-  ::CORBA::release (this->root_);
+  delete this->lock_;
+}
+
+/* static */
+ACE_Lock *
+TAO_Table_Adapter::create_lock (bool enable_locking,
+                                TAO_SYNCH_MUTEX &thread_lock)
+{
+#if defined (ACE_HAS_THREADS)
+  if (enable_locking)
+    {
+      ACE_Lock *the_lock = 0;
+      ACE_NEW_RETURN (the_lock,
+                      ACE_Lock_Adapter<TAO_SYNCH_MUTEX> (thread_lock),
+                      0);
+      return the_lock;
+    }
+#else
+  ACE_UNUSED_ARG (enable_locking);
+  ACE_UNUSED_ARG (thread_lock);
+#endif /* ACE_HAS_THREADS */
+
+  ACE_Lock *the_lock = 0;
+  ACE_NEW_RETURN (the_lock,
+                  ACE_Lock_Adapter<ACE_SYNCH_NULL_MUTEX> (),
+                  0);
+  return the_lock;
 }
 
 void
 TAO_Table_Adapter::open (ACE_ENV_SINGLE_ARG_DECL)
 {
+  ACE_GUARD (ACE_Lock, ace_mon, *this->lock_);
+
   ACE_NEW_THROW_EX (this->root_,
                     TAO_IOR_Table_Impl (),
                     CORBA::NO_MEMORY ());
   ACE_CHECK;
+
+  this->closed_ = false;
 }
 
 void
 TAO_Table_Adapter::close (int  ACE_ENV_ARG_DECL_NOT_USED)
 {
-  ::CORBA::release (this->root_);
-  this->root_ = 0;
+  ACE_GUARD (ACE_Lock, ace_mon, *this->lock_);
+  this->closed_ = true;
+  // no need to release the impl now, that will happen in the
+  // destructor.
 }
 
 void
@@ -66,6 +104,17 @@ TAO_Table_Adapter::dispatch (TAO::ObjectKey &key,
                              ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
+  CORBA::Object_var rootref;
+  {
+    ACE_GUARD_RETURN (ACE_Lock,
+                      ace_mon,
+                      *this->lock_,
+                      TAO_Adapter::DS_MISMATCHED_KEY);
+    if (this->closed_)
+      return TAO_Adapter::DS_MISMATCHED_KEY;
+    rootref = this->root();
+  }
+
   return this->find_object (key, forward_to) ? TAO_Adapter::DS_FORWARD
                                              : TAO_Adapter::DS_MISMATCHED_KEY;
 }
@@ -79,7 +128,7 @@ TAO_Table_Adapter::name (void) const
 CORBA::Object_ptr
 TAO_Table_Adapter::root (void)
 {
-  return CORBA::Object::_duplicate (this->root_);
+  return CORBA::Object::_duplicate (this->root_.in());
 }
 
 CORBA::Object_ptr
@@ -152,11 +201,11 @@ TAO_Table_Adapter::find_object (TAO::ObjectKey &key,
   ACE_TRY
     {
       CORBA::String_var ior =
-        this->root_->find (object_key.in () ACE_ENV_ARG_PARAMETER);
+        dynamic_cast<TAO_IOR_Table_Impl*>(this->root_.in())->find (object_key.in () ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       forward_to =
-        this->orb_core_->orb ()->string_to_object (ior.in ()
+        this->orb_core_.orb ()->string_to_object (ior.in ()
                                                    ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
@@ -179,7 +228,7 @@ TAO_Table_Adapter_Factory::create (TAO_ORB_Core *oc)
 {
   TAO_Adapter* ptr = 0;
   ACE_NEW_RETURN (ptr,
-                 TAO_Table_Adapter (oc),
+                 TAO_Table_Adapter (*oc),
                  0);
   return ptr;
 }

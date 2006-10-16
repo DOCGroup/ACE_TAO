@@ -8,10 +8,6 @@
 #ifndef ACE_CONFIG_H
 #define ACE_CONFIG_H
 
-// begin of linux-common.h
-
-/* #define ACE_HAS_BYTESEX_H */
-
 #if ! defined (__ACE_INLINE__)
 #define __ACE_INLINE__
 #endif /* ! __ACE_INLINE__ */
@@ -30,11 +26,8 @@
   // config-g-common.h undef's ACE_HAS_STRING_CLASS with -frepo, so
   // this must appear before its #include.
 # define ACE_HAS_STRING_CLASS
-# include "ace/config-g-common.h"
-#elif defined (__DECCXX)
-# define ACE_CONFIG_INCLUDE_CXX_COMMON
-# include "ace/config-cxx-common.h"
-#else  /* ! __GNUG__ && ! __KCC && !__DECCXX */
+# include "ace/config-g++-common.h"
+#else  /* ! __GNUG__  */
 #  ifdef __cplusplus  /* Let it slide for C compilers. */
 #   error unsupported compiler in ace/config-rtems.h
 #  endif  /* __cplusplus */
@@ -43,9 +36,24 @@
 // Completely common part :-)
 
 #define ACE_HAS_NONSTATIC_OBJECT_MANAGER
-# if !defined (ACE_MAIN)
-#   define ACE_MAIN ace_main
-# endif /* ! ACE_MAIN */
+
+#if !defined (ACE_MAIN)
+# define ACE_MAIN ace_main
+#endif /* ! ACE_MAIN */
+
+#define ACE_LACKS_REGEX_H
+#define ACE_LACKS_STROPTS_H
+#define ACE_LACKS_DLFCN_H
+#define ACE_LACKS_SIGINFO_H
+#define ACE_LACKS_SYS_IPC_H
+#define ACE_LACKS_SYS_SEM_H
+#define ACE_LACKS_SUSECONDS_T
+#define ACE_LACKS_CUSERID
+#define ACE_LACKS_STRINGS_H
+#define ACE_LACKS_SYS_SHM_H
+#define ACE_LACKS_SETEGID
+#define ACE_LACKS_SETEUID
+#define ACE_LACKS_POLL_H
 
 // Yes, we do have threads.
 #define ACE_HAS_THREADS
@@ -62,10 +70,8 @@
 #define ACE_HAS_4_4BSD_SENDMSG_RECVMSG
 #define ACE_HAS_CLOCK_GETTIME
 #define ACE_HAS_CLOCK_SETTIME
-/* #define ACE_HAS_CONSISTENT_SIGNAL_PROTOTYPES */
 #define ACE_HAS_DIRENT
 #define ACE_HAS_HANDLE_SET_OPTIMIZED_FOR_SELECT
-/* #define ACE_HAS_LLSEEK */
 #define ACE_HAS_MEMCHR
 #define ACE_HAS_MSG
 #define ACE_HAS_MT_SAFE_MKTIME
@@ -76,7 +82,6 @@
 #define ACE_HAS_SIGINFO_T
 #define ACE_HAS_SIGSUSPEND
 #define ACE_HAS_SSIZE_T
-/* #define ACE_HAS_STANDARD_CPP_LIBRARY */
 #define ACE_HAS_STRERROR
 #define ACE_HAS_VOIDPTR_GETTIMEOFDAY
 #define ACE_HAS_SYS_ERRLIST
@@ -116,7 +121,6 @@
 #define ACE_LACKS_SYS_MSG_H
 #define ACE_LACKS_SYSV_SHMEM
 #define ACE_LACKS_SYSCALL
-#define ACE_LACKS_UALARM_PROTOTYPE
 #define ACE_LACKS_UCONTEXT_H
 #define ACE_HAS_NONCONST_WRITEV
 #define ACE_LACKS_WRITEV
