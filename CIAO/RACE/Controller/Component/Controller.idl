@@ -48,7 +48,7 @@ module CIAO
       uses TargetManagerExt target_mgr_ext;
       uses ::Deployment::TargetManager targer_mgr;
 
-      /// TODO: Need to integrate the receptacle for the BDC facet into
+      /// @todo Need to integrate the receptacle for the BDC facet into
       /// the controller.
       //      uses BDC_QoS bdc;
 
