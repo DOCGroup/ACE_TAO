@@ -783,19 +783,19 @@ ACE_Service_Type_Factory::make_service_type (ACE_Service_Gestalt *cfg) const
   u_int flags = ACE_Service_Type::DELETE_THIS
     | (this->location_->dispose () == 0 ? 0 : ACE_Service_Type::DELETE_OBJ);
 
+  int yyerrno = 0;
   ACE_Service_Object_Exterminator gobbler = 0;
 
-  int yyerrno = 0;
   void *sym = this->location_->symbol (cfg, yyerrno, &gobbler);
 
   if (sym != 0)
     {
-      ACE_Service_Type_Impl *stp
-        = ACE_Service_Config::create_service_type_impl (this->name (),
-                                                        this->type_,
-                                                        sym,
-                                                        flags,
-                                                        gobbler);
+      ACE_Service_Type_Impl *stp =
+        ACE_Service_Config::create_service_type_impl (this->name (),
+                                                      this->type_,
+                                                      sym,
+                                                      flags,
+                                                      gobbler);
       if (stp == 0)
         ++yyerrno;
 
@@ -808,16 +808,15 @@ ACE_Service_Type_Factory::make_service_type (ACE_Service_Gestalt *cfg) const
                       0);
       return tmp;
     }
-  else
-    {
+
 #ifndef ACE_NLOGGING
-      ACE_ERROR ((LM_ERROR,
-                  ACE_LIB_TEXT ("(%P|%t) Unable to find service \'%s\'\n"),
-                  this->name ()));
+  ACE_ERROR ((LM_ERROR,
+              ACE_LIB_TEXT ("ACE (%P|%t) Unable to create ")
+              ACE_LIB_TEXT ("service object for %s\n"),
+              this->name ()));
 #endif
-      ++yyerrno;
-      return 0;
-    }
+  ++yyerrno;
+  return 0;
 }
 
 ACE_TCHAR const*

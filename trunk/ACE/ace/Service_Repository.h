@@ -27,6 +27,7 @@
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class ACE_Service_Type;
+class ACE_DLL;
 
 #define ACE_Component_Repository ACE_Service_Repository
 /**
@@ -132,11 +133,39 @@ public:
   ACE_ALLOC_HOOK_DECLARE;
 
 private:
+
+  friend class ACE_Service_Type_Dynamic_Guard;
+
+  /// Remove an existing service record. It requires @a sr != 0, which
+  /// receives the service record pointer and the caller is
+  /// responsible for properly disposing of it.
+  int remove_i (const ACE_TCHAR[], ACE_Service_Type **sr);
+
   /// Locates <service_name>.  Must be called without locks being
   /// held...
+
   int find_i (const ACE_TCHAR service_name[],
               const ACE_Service_Type ** = 0,
               int ignore_suspended = 1) const;
+
+  /// @brief Relocate (static) services to another DLL.
+  ///
+  /// If any have been registered in the context of a "forward
+  /// declaration" guard, those really aren't static services. Their
+  /// code is in the DLL's code segment, or in one of the dependent
+  /// DLLs. Therefore, such services need to be associated with the
+  /// proper DLL in order to prevent failures upon finalization. The
+  /// method locks the repo.
+  ///
+  /// Works by having the service type keep a reference to a specific
+  /// DLL. No locking, caller makes sure calling it is safe. You can
+  /// forcefully relocate any DLLs in the given range, not only the
+  /// static ones - but that will cause Very Bad Things (tm) to happen.
+
+  int relocate_i (size_t begin,
+                  size_t end,
+                  const ACE_DLL &adll,
+                  bool static_only = true);
 
   /// Contains all the configured services.
   const ACE_Service_Type **service_vector_;
@@ -178,6 +207,8 @@ public:
   /// Destructor.
   ~ACE_Service_Repository_Iterator (void);
 
+
+public:
   // = Iteration methods.
 
   /// Pass back the <next_item> that hasn't been seen in the repository.
@@ -199,9 +230,10 @@ public:
 
 private:
   bool valid (void) const;
-  ACE_Service_Repository_Iterator (const ACE_Service_Repository_Iterator&);
 
 private:
+  ACE_Service_Repository_Iterator (const ACE_Service_Repository_Iterator&);
+
   /// Reference to the Service Repository we are iterating over.
   ACE_Service_Repository &svc_rep_;
 

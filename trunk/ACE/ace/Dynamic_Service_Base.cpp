@@ -86,22 +86,23 @@ ACE_Dynamic_Service_Base::instance (const ACE_Service_Gestalt* repo,
     {
       type = svc_rec->type ();
       if (type != 0)
-  obj = type->object ();
+        obj = type->object ();
     }
 
   if (ACE::debug ())
     {
+      ACE_Guard <ACE_Log_Msg> log_guard (*ACE_Log_Msg::instance ());
+
       ACE_DEBUG ((LM_DEBUG,
-      ACE_LIB_TEXT ("(%P|%t) DSB::instance, repo=%@, name=%s, ")
-      ACE_LIB_TEXT ("type=%@ => %@"),
-      repo->repo_, name, type, obj));
+                  ACE_LIB_TEXT ("ACE (%P|%t) DSB::instance, repo=%@, name=%s")
+                  ACE_LIB_TEXT (" type=%@ => %@"),
+                  repo->repo_, name, type, obj));
 
       if (repo->repo_ != repo_found->repo_)
-  ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT (" [in repo=%@]\n"),
-        repo_found->repo_));
+        ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT (" [in repo=%@]\n"),
+                    repo_found->repo_));
       else
-  ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("\n")));
-
+        ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("\n")));
     }
 
   return obj;
