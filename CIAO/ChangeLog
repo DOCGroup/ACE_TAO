@@ -1,5 +1,43 @@
 Mon Oct 16 08:35:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
+	* tools/Config_Handlers/ADD_Handler.cpp:
+	* tools/Config_Handlers/DP_Handler.cpp:
+	* tools/Config_Handlers/IDREF_Base.cpp:
+	* tools/Config_Handlers/Package_Handlers/CPD_Handler.cpp:
+	* tools/Config_Handlers/RT-CCM/PS_Handler.cpp:
+	* RACE/Input_Adapters/LocationUpdater/LocationUpdater_exec.cpp
+	* RACE/Input_Adapters/PlanGenerator/PlanGenerator_exec.cpp
+	* DAnCE/RepositoryManager/
+	* DAnCE/RepositoryManager/RepositoryManager_Impl.cpp:
+	  Use ACE_ERROR together with LM_ERROR
+
+	* RACE/Controller/Component/Controller.idl:
+	  Changed some comments to doxygen style
+
+	* DAnCE/RepositoryManager/PC_Updater_T.cpp:
+	  Const change
+
+	* DAnCE/RepositoryManager/RepositoryManager.cpp:
+	  Layout changes
+
+	* DAnCE/RepositoryManager/RM_Helper.cpp:
+	  Use strcmp to compare two strings and several layout changes
+
+	* DAnCE/RepositoryManager/RM_Helper.h:
+	* DAnCE/RepositoryManager/ZIP_Wrapper.h:
+	  Doxygen changes
+
+	* DAnCE/RepositoryManager/RMadmin.cpp:
+	  Documentation changes
+
+	* DAnCE/RepositoryManager/URL_Parser.{h,cpp}:
+	  Use bool for debug_
+
+	* DAnCE/RepositoryManager/ZIP_Wrapper.cpp:
+	  Initialise pointers with 0
+
+Mon Oct 16 08:35:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
 	* DAnCE/StaticConfigurator/StaticDAnCEApp.mpc.tmpl:
 	  Simplified this file by using the new ciao_static_dnc_app base
 	  project.
