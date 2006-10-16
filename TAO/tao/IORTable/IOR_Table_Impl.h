@@ -26,6 +26,7 @@
 #include "ace/Null_Mutex.h"
 #include "tao/LocalObject.h"
 #include "ace/SString.h"
+#include "tao/Objref_VarOut_T.h"
 
 #if defined(_MSC_VER)
 #pragma warning(push)
@@ -34,11 +35,21 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
+class TAO_IOR_Table_Impl;
+typedef TAO_IOR_Table_Impl *TAO_IOR_Table_Impl_ptr;
+typedef TAO_Objref_Var_T<TAO_IOR_Table_Impl> TAO_IOR_Table_Impl_var;
+typedef TAO_Objref_Out_T<TAO_IOR_Table_Impl> TAO_IOR_Table_Impl_out;
+
 class TAO_IOR_Table_Impl
   : public virtual IORTable::Table,
     public virtual TAO_Local_RefCounted_Object
 {
 public:
+    static TAO_IOR_Table_Impl_ptr _nil (void)
+    {
+      return static_cast<TAO_IOR_Table_Impl_ptr> (0);
+    }
+
   /// Constructor
   TAO_IOR_Table_Impl (void);
 
@@ -107,6 +118,33 @@ private:
   /// Synchronization
   TAO_SYNCH_MUTEX lock_;
 };
+
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
+// Traits specializations.
+namespace TAO
+{
+  template<>
+  struct TAO_IORTable_Export Objref_Traits< TAO_IOR_Table_Impl>
+  {
+    static TAO_IOR_Table_Impl_ptr duplicate (
+        TAO_IOR_Table_Impl_ptr
+      );
+
+    static void release (
+        TAO_IOR_Table_Impl_ptr
+      );
+
+    static TAO_IOR_Table_Impl_ptr nil (void);
+
+    static ::CORBA::Boolean marshal (
+        const TAO_IOR_Table_Impl_ptr p,
+        TAO_OutputCDR & cdr
+      );
+  };
+}
+
 
 TAO_END_VERSIONED_NAMESPACE_DECL
 
