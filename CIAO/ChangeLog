@@ -1,3 +1,9 @@
+Mon Oct 16 08:35:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+	* DAnCE/StaticConfigurator/StaticDAnCEApp.mpc.tmpl:
+	  Simplified this file by using the new ciao_static_dnc_app base
+	  project.
+
 Fri Oct 13 17:57:12 2006  John S. Kinnebrew  <john.s.kinnebrew@vanderbilt.edu>
 
 	* docs/schema/SANet_Network.xsd
