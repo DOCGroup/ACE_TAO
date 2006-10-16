@@ -152,7 +152,7 @@ create_POA_and_register_servant (CORBA::Policy_ptr threadpool_policy,
     servant->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
 
-  int result =
+  int const result =
     write_ior_to_file (orb,
                        test.in ()
                        ACE_ENV_ARG_PARAMETER);
