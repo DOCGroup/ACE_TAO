@@ -1,60 +1,113 @@
+Mon Oct 16 10:59:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+	* tests/Nested_Upcall_Crash/run_test.pl:
+	  Check whether we could spawn the server, if not, give an error
+	  and exit directly.
+
+Mon Oct 16 08:43:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+	* TAO_IDL/be/be_codegen.cpp:
+	  Const changes
+
+Sun Oct 15 23:23:53 UTC 2006  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * tao/IORTable/Table_Adapter.cpp:
+        * tao/IORTable/Table_Adapter.h:
+          Fix for bug 2683. The problem was that if ORB::shutdown() was
+          called by another thread, the Table_Adapter::root_ reference
+          could go to nil while it was needed for processing in the
+          find_object() method. The fix is to use the reference counting
+          already supplied for the root_ reference to ensure the pointer
+          can never go nil while it is needed. Further, a synchronized
+          flag is used to restrict access to find_object() to ensure it is
+          not called once ORB::shutdown() was invoked.
+
+        * tests/Bug_2683_Regression/*:
+          A new regression test for this bug. As this bug is the result of
+          a race condition, it is hard to detect anyway. The best way to
+          observe the bug is to revert the above change to Table_Adapter*
+          and add a small sleep to the find_object() method. This simply
+          forces the race condition. Adding a small sleep along with the
+          above fix demonstrates that the problem no longer occurs.
+
+Fri Oct 13 10:28:12 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+	* tests/COIOP/*:
+	  Extended this test so that we check whether a call should
+	  succeed or not. This test requires that COIOP is the only
+	  pluggable protocol available.
+
+Thu Oct 12 14:17:11 UTC 2006  Chad Elliott  <elliott_c@ociweb.com>
+
+        * orbsvcs/ImplRepo_Service/ImR_Locator_i.cpp:
+
+          Split a debug message into two messages to work around a strange
+          bug in Visual Studio 2005.
+
+Thu Oct 12 14:13:44 UTC 2006  Chad Elliott  <elliott_c@ociweb.com>
+
+        * orbsvcs/tests/Event/Mcast/RTEC_MCast_Federated/run_test.pl:
+
+          Use a random port number for the Naming_Service instead of a
+          hard-coded port number.
+
 Tue Oct 10 12:11:12 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-	* orbsvcs/examples/ORT/README:
-	  Layout improvement
+        * orbsvcs/examples/ORT/README:
+          Layout improvement
 
-	* orbsvcs/orbsvcs/CosConcurrencyControl.idl:
-	* orbsvcs/orbsvcs/CosLoadBalancing.idl:
-	* orbsvcs/orbsvcs/CosNaming.idl:
-	  Doxygen improvements
+        * orbsvcs/orbsvcs/CosConcurrencyControl.idl:
+        * orbsvcs/orbsvcs/CosLoadBalancing.idl:
+        * orbsvcs/orbsvcs/CosNaming.idl:
+          Doxygen improvements
 
-	* orbsvcs/LoadBalancing/LB_ObjectReferenceFactory.cpp:
-	  Const/bool improvements
+        * orbsvcs/LoadBalancing/LB_ObjectReferenceFactory.cpp:
+          Const/bool improvements
 
 Tue Oct 10 09:24:12 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-	* docs/ior_parsing.html:
-	  Updated that match_prefix returns bool
+        * docs/ior_parsing.html:
+          Updated that match_prefix returns bool
 
 Tue Oct 10 09:19:12 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-	* tao/Connection_Handler.cpp:
-	  Layout change
+        * tao/Connection_Handler.cpp:
+          Layout change
 
-	* tao/CORBALoc_Parser.{h,cpp}:
-	* tao/CORBAName_Parser.{h,cpp}:
-	* tao/DLL_Parser.{h,cpp}:
-	* tao/FILE_Parser.{h,cpp}:
-	* tao/IOR_Parser.{h,cpp}:
-	* tao/MCAST_Parser.{h,cpp}:
-	  Changed match_prefix to return a bool instead of an int.
+        * tao/CORBALoc_Parser.{h,cpp}:
+        * tao/CORBAName_Parser.{h,cpp}:
+        * tao/DLL_Parser.{h,cpp}:
+        * tao/FILE_Parser.{h,cpp}:
+        * tao/IOR_Parser.{h,cpp}:
+        * tao/MCAST_Parser.{h,cpp}:
+          Changed match_prefix to return a bool instead of an int.
 
-	* tao/CORBALoc_Parser.cpp:
-	* tao/CSD_ThreadPool/CSD_TP_Strategy_Factory.cpp:
-	* tao/Environment.cpp:
-	* tao/Exception.cpp:
-	* tao/IIOP_Connector.cpp:
-	* tao/IIOP_Profile.cpp:
-	* tao/ORB_Core.cpp:
-	* tao/Strategies/SCIOP_Connector.cpp:
-	* tao/Strategies/UIOP_Connector.cpp:
-	* tao/SystemException.cpp:
-	  When using LM_ERROR, use ACE_ERROR as macro
+        * tao/CORBALoc_Parser.cpp:
+        * tao/CSD_ThreadPool/CSD_TP_Strategy_Factory.cpp:
+        * tao/Environment.cpp:
+        * tao/Exception.cpp:
+        * tao/IIOP_Connector.cpp:
+        * tao/IIOP_Profile.cpp:
+        * tao/ORB_Core.cpp:
+        * tao/Strategies/SCIOP_Connector.cpp:
+        * tao/Strategies/UIOP_Connector.cpp:
+        * tao/SystemException.cpp:
+          When using LM_ERROR, use ACE_ERROR as macro
 
-	* tao/IIOP_Connection_Handler.cpp:
-	  Const improvment
+        * tao/IIOP_Connection_Handler.cpp:
+          Const improvment
 
-	* tao/ObjRefTemplate/ObjectReferenceTemplate.pidl:
-	  Cleanup of comment
+        * tao/ObjRefTemplate/ObjectReferenceTemplate.pidl:
+          Cleanup of comment
 
-	* tao/Strategies/DIOP_Profile.cpp:
-	  Small code improvement assuming the fact that operator>> returns
-	  bool
+        * tao/Strategies/DIOP_Profile.cpp:
+          Small code improvement assuming the fact that operator>> returns
+          bool
 
 Tue Oct 10 06:08:12 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-	* tests/COIOP/*:
-	  New test for COIOP
+        * tests/COIOP/*:
+          New test for COIOP
 
 Thu Oct 05 00:35:37 2006  William R. Otte  wotte@dre.vanderbilt.edu
 
