@@ -85,14 +85,16 @@ write_ior_file (CORBA::ORB_ptr orb,
     ACE_OS::fopen (CIAO::RepositoryManager::RMior, "w");
 
   if (RMior_file)
-  {
-    ACE_OS::fprintf (RMior_file,
-      "%s",
-      ior.in ());
-    ACE_OS::fclose (RMior_file);
-  }
+    {
+      ACE_OS::fprintf (RMior_file,
+        "%s",
+        ior.in ());
+      ACE_OS::fclose (RMior_file);
+    }
   else
-    return false;
+    {
+      return false;
+    }
 
   return true;
 }
@@ -103,7 +105,7 @@ register_with_ns (CORBA::ORB_ptr orb,
                   ACE_ENV_ARG_DECL)
 {
   if (CIAO::RepositoryManager::repoman_name_ != "")
-    CIAO::RepositoryManager::RMname_service = 
+    CIAO::RepositoryManager::RMname_service =
       CIAO::RepositoryManager::repoman_name_;
 
   // Naming Service related operations
@@ -124,7 +126,7 @@ register_with_ns (CORBA::ORB_ptr orb,
 
   // Register the servant with the Naming Service
   naming_context->rebind (name, obj);
- 
+
   return true;
 }
 

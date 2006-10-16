@@ -36,42 +36,45 @@ public:
 
   static bool reincarnate (Deployment::PackageConfiguration& pc, const char* path);
 
-  ///function that copies the file from a specified location to another 
-  ///specified location on the hard disk.
-  ///returns 1 on success
-  ///        0 on error
-
+  /**
+   * Function that copies the file from a specified location to another
+   * specified location on the hard disk.
+   * @retval true on success
+   * @retval false on error
+   */
   static bool copy_from_disk_to_disk (const char* from_path, const char* to_path);
 
-
-  ///function that writes out a file to a specified location on the hand disk
-  ///returns 1 on success
-  ///        0 on already exists and replace == false
-  ///        0 on error
-
+  /**
+   * Function that writes out a file to a specified location on the hard disk
+   * @retval true on success
+   * @retval false on already exists and replace == false
+   * @retval false on error
+   */
   static bool write_to_disk (const char* full_path,
                  ACE_Message_Block& mb,
                  bool replace = true
                  );
 
-  ///function that writes out a file to a specified location on the hand disk
-  ///returns 1 on success
-  ///        0 on already exists and replace == false
-  ///        0 on error
-  ///
-  ///NOTE: This function is relevant for PackageConfigurations ONLY
-
+  /**
+   * Function that writes out a file to a specified location on the hard disk
+   * @retval true on success
+   * @retval false on already exists and replace == false
+   * @retval 0 on error
+   * @note This function is relevant for PackageConfigurations ONLY
+   */
   static bool write_pc_to_disk (const char* full_path,
-                  ACE_Message_Block& mb,
-                  bool replace = true
-                 );
+                                ACE_Message_Block& mb,
+                                bool replace = true);
 
+  /**
+   * Function to read the contents of a file from disk into an
+   * ACE_Message_Block returns a pointer to an ACE_Message_Block and updates
+   * the lenght on success
+   * @retval 0 on failure
+   */
 
-  ///function to read the contents of a file from disk into an ACE_Message_Block
-  ///returns a pointer to an ACE_Message_Block and updates the lenght on success
-  ///0 on failure
-
-  static ACE_Message_Block* read_pc_from_disk (const char* full_path, size_t &length);
+  static ACE_Message_Block* read_pc_from_disk (const char* full_path,
+                                               size_t &length);
 
 };
 
