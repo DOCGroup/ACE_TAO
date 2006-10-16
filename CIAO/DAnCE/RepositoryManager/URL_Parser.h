@@ -9,7 +9,6 @@
  *
  *  Parses a URL into its logical chunks
  *
- *
  *  @author Stoyan Paunov
  */
 //=============================================================================
@@ -23,11 +22,10 @@
 #include "ace/Singleton.h"  //for ACE_Singleton
 #include "ace/Null_Mutex.h" //for ACE_Null_Mutex
 
-//forward declaration
+// Forward declaration
 class URL_Parser;
 
 typedef ACE_Singleton <URL_Parser, ACE_Null_Mutex> TheURL_Parser;
-
 
 class URL_Parser
 {
@@ -35,10 +33,10 @@ public:
 
   friend class ACE_Singleton <URL_Parser, ACE_Null_Mutex>;
 
-  /// parses commandline arguments
+  /// Parses commandline arguments
   bool parse_args (int argc, ACE_TCHAR *argv[]);
 
-  //return false on failure
+  /// Return false on failure
   bool parseURL (char* url);
 
   void Error (void);
@@ -52,15 +50,15 @@ public:
   /// Filename to upload/download
   ACE_TCHAR *filename_;
 
-  /// turns on verbosity
-  int debug_;
+  /// Turns on verbosity
+  bool debug_;
 
-  //destructor
+  /// destructor
   ~URL_Parser (void);
 
 protected:
+  /// protected constructor, singleton
   URL_Parser (void);
-  // protected constructor, singleton
 };
 
 

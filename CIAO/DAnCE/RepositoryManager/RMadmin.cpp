@@ -36,10 +36,10 @@ using namespace std;
 //IOR file of the RM
 static const char *ior = "file://RepositoryManagerDeamon.ior";
 
-//Name service of the RM
+// Name service of the RM
 static const char *RMname_service;
 
-///main function that provides a sample interface for RM clients
+/// main function that provides a sample interface for RM clients
 int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   ACE_TRY_NEW_ENV

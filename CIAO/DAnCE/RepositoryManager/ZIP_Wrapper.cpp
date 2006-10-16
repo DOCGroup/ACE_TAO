@@ -33,7 +33,7 @@
 #include "ZIP_Wrapper.h"
 
 
-//ZIP_File_Info constructor
+// ZIP_File_Info constructor
 ZIP_File_Info::ZIP_File_Info (char* name, size_t size)
   : name_ (name),
     size_ (size),
@@ -52,7 +52,7 @@ ZIP_File_Info::ZIP_File_Info ()
 }
 
 
-//get a list of the files in the archive
+// get a list of the files in the archive
 int ZIP_Wrapper::file_list_info (char* zip_name, ACE_Double_Linked_List<ZIP_File_Info> &list)
 {
   size_t num = 0;          //number of files in archive
@@ -104,7 +104,7 @@ bool ZIP_Wrapper::get_file (char* accessor, ACE_Message_Block &file)
   while (0 < (num_read = zzip_read(zip_file, head->wr_ptr(), head->size())))
     {
       head->wr_ptr (num_read);
-      ACE_Message_Block* next;
+      ACE_Message_Block* next = 0;
       ACE_NEW_RETURN (next, ACE_Message_Block (BUFSIZ), false);
       head->cont (next);
       head = head->cont ();
@@ -122,10 +122,10 @@ bool ZIP_Wrapper::get_file (char* accessor, ACE_Message_Block &file)
 bool ZIP_Wrapper::get_file (char* archive_path, char* filename, ACE_Message_Block &file)
 {
   bool return_code = true;
-  ZZIP_DIR * dir;          //pointer to a zip archive
+  ZZIP_DIR * dir = 0;          //pointer to a zip archive
 
   //open the zip archive
-    dir = zzip_opendir(archive_path);
+  dir = zzip_opendir(archive_path);
 
   if (!dir)
     return false;

@@ -10,7 +10,7 @@ namespace PC_Updater_T
   template <typename SEQUENCE>
   void update_sequence (SEQUENCE &seq, PC_Updater* updater)
   {
-    const CORBA::ULong size = seq.length ();
+    CORBA::ULong const size = seq.length ();
 
     for (CORBA::ULong i = 0; i < size; ++i)
       updater->update (seq[i]);

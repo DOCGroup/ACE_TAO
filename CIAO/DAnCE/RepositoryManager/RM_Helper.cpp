@@ -8,21 +8,25 @@
 #include "ace/OS_NS_fcntl.h"         //for open
 #include "ace/OS_NS_unistd.h"        //for close
 #include "ace/OS_NS_sys_stat.h"      //for filesize and mkdir
+#include "ace/OS_NS_string.h"
 
 
-void RM_Helper::pc_to_cdr (const Deployment::PackageConfiguration& pc, TAO_OutputCDR& cdr)
+void
+RM_Helper::pc_to_cdr (const Deployment::PackageConfiguration& pc, TAO_OutputCDR& cdr)
 {
   cdr << pc;
 }
 
 
-void RM_Helper::cdr_to_pc (Deployment::PackageConfiguration& pc, TAO_InputCDR& cdr)
+void
+RM_Helper::cdr_to_pc (Deployment::PackageConfiguration& pc, TAO_InputCDR& cdr)
 {
   cdr >> pc;
 }
 
 
-bool RM_Helper::externalize (const Deployment::PackageConfiguration& pc, const char* path)
+bool
+RM_Helper::externalize (const Deployment::PackageConfiguration& pc, const char* path)
 {
   size_t bufsiz = 0;
   TAO_OutputCDR out (bufsiz);
@@ -35,7 +39,8 @@ bool RM_Helper::externalize (const Deployment::PackageConfiguration& pc, const c
 }
 
 
-bool RM_Helper::reincarnate (Deployment::PackageConfiguration& pc, const char* path)
+bool
+RM_Helper::reincarnate (Deployment::PackageConfiguration& pc, const char* path)
 {
   size_t length = 0;
   ACE_Auto_Ptr<ACE_Message_Block> mb (read_pc_from_disk (path, length));
@@ -53,9 +58,10 @@ bool RM_Helper::reincarnate (Deployment::PackageConfiguration& pc, const char* p
 
 /// This function attempts to copy the file from a specified location
 /// to another specified location on the hard disk.
-bool RM_Helper::copy_from_disk_to_disk (const char* from_path, const char* to_path)
+bool
+RM_Helper::copy_from_disk_to_disk (const char* from_path, const char* to_path)
 {
-  if (from_path == to_path)
+  if (ACE_OS::strcmp (from_path, to_path) == 0)
     return true;
 
   // Open the files
@@ -69,7 +75,7 @@ bool RM_Helper::copy_from_disk_to_disk (const char* from_path, const char* to_pa
   ACE_stat file_info;
   ACE_OS::fstat (from_handle, &file_info);
   ACE_UINT64 file_length = file_info.st_size;
-  
+
   ACE_HANDLE to_handle = ACE_OS::open (to_path, O_CREAT | O_TRUNC | O_WRONLY);
   if (to_handle == ACE_INVALID_HANDLE)
       ACE_ERROR_RETURN ((LM_ERROR,
@@ -77,9 +83,9 @@ bool RM_Helper::copy_from_disk_to_disk (const char* from_path, const char* to_pa
                           ACE_TEXT ("[RM::copy_from_disk_to_disk] file creation error")),
                           0);
 
-  
+
   // Read the contents of the file into the buffer and write the data to another file
-  ACE_Message_Block *mb;
+  ACE_Message_Block *mb = 0;
   size_t length;
   size_t number = 0;
   bool last = false;
@@ -93,7 +99,7 @@ bool RM_Helper::copy_from_disk_to_disk (const char* from_path, const char* to_pa
       length = static_cast<size_t> (file_length - BUFSIZ*number);
       last = true;
     }
-    
+
     mb = new ACE_Message_Block (length);
 
     if (ACE_OS::read_n (from_handle, mb->wr_ptr (), length) == -1)
@@ -102,7 +108,7 @@ bool RM_Helper::copy_from_disk_to_disk (const char* from_path, const char* to_pa
                             ACE_TEXT ("[RM::copy_from_disk_to_disk] file read error")),
                             0);
 
-    number++;
+    ++number;
 
     mb->length (length);
 
@@ -114,7 +120,7 @@ bool RM_Helper::copy_from_disk_to_disk (const char* from_path, const char* to_pa
                             ACE_TEXT ("%p\n"),
                             ACE_TEXT ("[RM::copy_from_disk_to_disk] file write error")),
                             0);
-      }  
+      }
 
     mb->release ();
 
@@ -125,7 +131,7 @@ bool RM_Helper::copy_from_disk_to_disk (const char* from_path, const char* to_pa
   // Close the files
   ACE_OS::close (from_handle);
   ACE_OS::close (to_handle);
-  
+
   return true;
 }
 
@@ -186,14 +192,14 @@ bool RM_Helper::write_pc_to_disk (
     return false;
 
   // Open a file handle to the local filesystem
-  ACE_HANDLE handle = ACE_OS::open (full_path, O_CREAT | O_TRUNC | O_WRONLY);
+  ACE_HANDLE const handle = ACE_OS::open (full_path, O_CREAT | O_TRUNC | O_WRONLY);
   if (handle == ACE_INVALID_HANDLE)
       ACE_ERROR_RETURN ((LM_ERROR,
                          ACE_TEXT ("%p\n"),
                          ACE_TEXT ("[RM::write_to_disk] file creation error")),
                          false);
 
-  //write the data to the file
+  // write the data to the file
   for (ACE_Message_Block * curr = &mb; curr != 0; curr = curr->cont ())
     if (ACE_OS::write_n (handle, curr->rd_ptr(), curr->length()) == -1)
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -220,7 +226,7 @@ RM_Helper::read_pc_from_disk (
   length = 0;
 
   // Open the file
-  ACE_HANDLE handle = ACE_OS::open (full_path, O_RDONLY);
+  ACE_HANDLE const handle = ACE_OS::open (full_path, O_RDONLY);
   if (handle == ACE_INVALID_HANDLE)
       ACE_ERROR_RETURN ((LM_ERROR,
                           ACE_TEXT ("%p\n"),
