@@ -197,7 +197,7 @@ ACE_RCSID (Config_Handlers,
         std::for_each (xsc_dp.begin_connection (),
                        xsc_dp.end_connection (),
                        PCD_Functor (this->idl_dp_->connection));
-        
+
         //PCD_Handler::get_PlanConnectionDescription (xsc_dp, this->idl_dp_->connection);
 
         return true;
@@ -253,7 +253,7 @@ ACE_RCSID (Config_Handlers,
             if (ACE_OS::strcmp (plan.infoProperty[q].name.in (),
                                 "CIAOServerResources") == 0)
               {
-                ACE_DEBUG ((LM_ERROR,
+                ACE_ERROR ((LM_ERROR,
                             "(%P|%t) DP_Handler: Dumping of ServerResources not currently supported."));
                 continue;
               }
@@ -271,7 +271,7 @@ ACE_RCSID (Config_Handlers,
         this->xsc_dp_->realizes(CCD_Handler::component_interface_descr(plan.realizes));
         if (!this->xsc_dp_->realizes_p())
           {
-            ACE_DEBUG ((LM_ERROR,
+            ACE_ERROR ((LM_ERROR,
                         "(%P|%t) DP_Handler: "
                         "Error parsing Component Interface Descriptor."));
             return false;

@@ -81,7 +81,7 @@ namespace CIAO
         int retval =
           pos_map_.find (value, id);
 
-        //      ACE_DEBUG ((LM_ERROR, "**** Looking up value %i\n",
+        //      ACE_ERROR ((LM_ERROR, "**** Looking up value %i\n",
         //            value));
 
         if (retval < 0)
