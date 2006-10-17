@@ -1,3 +1,17 @@
+Tue Oct 17 15:41:50 UTC 2006  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_visitor_typedef/any_op_cs.cpp:
+        
+          Cosmetic changes.
+          
+        * TAO_IDL/be/be_visitor_sequence/any_op_cs.cpp:
+        * TAO_IDL/be/be_visitor_array/any_op_cs.cpp:
+        
+          Changed generated implementation of Any operators to
+          pass the alias typecode for typedefed sequences and
+          arrays. Formerly the raw sequence or array typecode
+          was used in all cases.
+
 Tue Oct 17 14:40:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 	* orbsvcs/orbsvcs/Log/Hash_LogRecordStore.cpp:
