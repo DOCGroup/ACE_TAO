@@ -52,7 +52,7 @@ TAO_Hash_LogRecordStore::TAO_Hash_LogRecordStore (
   this->log_qos_.length(1);
   this->log_qos_[0] = DsLogAdmin::QoSNone;
 
-  PortableServer::POA_ptr log_poa = 
+  PortableServer::POA_ptr log_poa =
 	logmgr_i_->log_poa();
 
   // Create POA for iterators
@@ -70,7 +70,7 @@ TAO_Hash_LogRecordStore::TAO_Hash_LogRecordStore (
   PortableServer::POAManager_var poa_manager =
     log_poa->the_POAManager ();
 
-  this->iterator_poa_ = 
+  this->iterator_poa_ =
 	log_poa->create_POA(buf, PortableServer::POAManager::_nil(), policies);
 }
 
@@ -218,7 +218,7 @@ TAO_Hash_LogRecordStore::remove_i (LOG_RECORD_STORE_ITER iter
 				   ACE_ENV_ARG_DECL)
 {
   size_t size = log_record_size(iter->item ());
-  
+
   rec_map_.unbind(&*iter);
 
   --this->num_records_;
@@ -241,12 +241,12 @@ TAO_Hash_LogRecordStore::purge_old_records (ACE_ENV_SINGLE_ARG_DECL)
       LOG_RECORD_STORE_ITER iter (rec_map_.begin ());
       LOG_RECORD_STORE_ITER iter_end (rec_map_.end ());
 
-      for (CORBA::ULongLong i = 0; 
-	   iter != iter_end && i < num_records_to_purge; 
+      for (CORBA::ULongLong i = 0;
+	   iter != iter_end && i < num_records_to_purge;
 	   ++i)
         {
           this->remove_i (iter++);
-	  count++;
+          ++count;
         }
     }
 
@@ -414,25 +414,24 @@ TAO_Hash_LogRecordStore::query_i (const char *constraint,
 
       // Does it match the constraint?
       if (interpreter.evaluate (evaluator) == 1)
-	{
-	  if (TAO_debug_level > 0)
-	    {
+        {
+          if (TAO_debug_level > 0)
+            {
 #if defined (ACE_LACKS_LONGLONG_T)
-	      ACE_DEBUG ((LM_DEBUG,"Matched constraint! d = %d, Time = %d\n",
-			  ACE_U64_TO_U32 (iter->item ().id),
-			  ACE_U64_TO_U32 (iter->item ().time)));
-
+              ACE_DEBUG ((LM_DEBUG,"Matched constraint! d = %d, Time = %d\n",
+                ACE_U64_TO_U32 (iter->item ().id),
+                ACE_U64_TO_U32 (iter->item ().time)));
 #else
-	      ACE_DEBUG ((LM_DEBUG,"Matched constraint! d = %Q, Time = %Q\n",
-			  iter->item ().id,
-			  iter->item ().time));
+              ACE_DEBUG ((LM_DEBUG,"Matched constraint! d = %Q, Time = %Q\n",
+                iter->item ().id,
+                iter->item ().time));
 #endif
-	    }
-	  
-	  (*rec_list)[count] = iter->item ();
-	  // copy the log record.
-	  count++;
-	}
+            }
+
+        (*rec_list)[count] = iter->item ();
+        // copy the log record.
+        ++count;
+      }
     }
 
   rec_list->length (count);
@@ -457,9 +456,9 @@ TAO_Hash_LogRecordStore::query_i (const char *constraint,
 
       // Activate it.
       PortableServer::ObjectId_var oid =
-	this->iterator_poa_->activate_object (iter_query);
+        this->iterator_poa_->activate_object (iter_query);
       CORBA::Object_var obj =
-	this->iterator_poa_->id_to_reference (oid);
+        this->iterator_poa_->id_to_reference (oid.in ());
 
       // Narrow it
       iter_out = DsLogAdmin::Iterator::_narrow (obj.in ());
@@ -551,7 +550,7 @@ TAO_Hash_LogRecordStore::match (const char* grammar,
       // Does it match the constraint?
       if (interpreter.evaluate (evaluator) == 1)
         {
-	  count++;
+          ++count;
         }
     }
 
@@ -588,12 +587,12 @@ TAO_Hash_LogRecordStore::delete_records (const char *grammar,
       // Does it match the constraint?
       if (interpreter.evaluate (evaluator) == 1)
         {
-	  this->remove_i (iter++);
-	  count++;
+          this->remove_i (iter++);
+          ++count;
         }
       else
         {
-	  ++iter;
+          ++iter;
         }
     }
 
@@ -611,7 +610,7 @@ TAO_Hash_LogRecordStore::delete_records_by_id (const DsLogAdmin::RecordIdList &i
     {
       if (this->remove_i (ids [i]) == 0)
         {
-          count++;
+          ++count;
         }
     }
 
@@ -658,7 +657,7 @@ TAO_Hash_LogRecordStore::remove_old_records (ACE_ENV_SINGLE_ARG_DECL)
       if (interpreter.evaluate (evaluator) == 1)
         {
           this->remove_i (iter++);
-	  count++;
+          ++count;
         }
       else
         {
@@ -768,7 +767,7 @@ TAO_Hash_LogRecordStore::set_log_full_action (DsLogAdmin::LogFullActionType acti
 DsLogAdmin::QoSList *
 TAO_Hash_LogRecordStore::get_log_qos (ACE_ENV_SINGLE_ARG_DECL) const
 {
-  DsLogAdmin::QoSList* ret_val;
+  DsLogAdmin::QoSList* ret_val = 0;
   ACE_NEW_THROW_EX (ret_val,
                     DsLogAdmin::QoSList (this->log_qos_),
                     CORBA::NO_MEMORY ());
@@ -813,7 +812,7 @@ TAO_Hash_LogRecordStore::set_max_size (CORBA::ULongLong size
 DsLogAdmin::WeekMask*
 TAO_Hash_LogRecordStore::get_week_mask (ACE_ENV_SINGLE_ARG_DECL)
 {
-  DsLogAdmin::WeekMask* ret_val;
+  DsLogAdmin::WeekMask* ret_val = 0;
   ACE_NEW_THROW_EX (ret_val,
                     DsLogAdmin::WeekMask (this->weekmask_),
                     CORBA::NO_MEMORY ());
