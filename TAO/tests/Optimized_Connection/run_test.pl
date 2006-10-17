@@ -13,8 +13,6 @@ $status = 0;
 
 $CL_ALT_IIOP = new PerlACE::Process ("client", " -k file://$iorfile " .
                                      "-orbsvcconf oc_svc.conf");
-#print STDOUT $CL_ALT_IIOP->CommandLine()."\n";
-
 
 if (PerlACE::waitforfile_timed ($iorfile,
                         $PerlACE::wait_interval_for_process_creation) == -1) {
