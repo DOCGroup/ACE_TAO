@@ -1,3 +1,9 @@
+Tue Oct 17 14:40:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+	* orbsvcs/orbsvcs/Log/Hash_LogRecordStore.cpp:
+	  Fixed warning in VxWorks 5.5.2PPC build, some layout changes
+	  and use prefix increment instead of postfix
+
 Tue Oct 17 14:24:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 	* tests/Optimized_Connection/run_test.pl:
