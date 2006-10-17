@@ -7,11 +7,13 @@
  *
  *  $Id$
  *
- *  Purpose:  to provide a wrapper around ZZIPlib for easy handling of
- *            ZIP archives. This wrapper can me used as an auxiliary
+ *  Purpose:  to provide a wrapper around minizip for easy handling of
+ *            ZIP archives. This wrapper can be used as an auxiliary
  *            class that allows a program to become ZIP-aware
  *
- *  @author   Stoyan Paunov
+ *  @author   Stoyan Paunov, Vipul Singh
+ * 
+ *  
  */
 //=======================================================================
 
@@ -21,11 +23,14 @@
 #include "ace/Containers_T.h"     //for ACE_Double_Linked_List
 #include "ace/Message_Block.h"    //for ACE_Message_Block
 #include "ace/SString.h"          //for ACE_CString
-
+#include "ace/Log_Msg.h"
+#include "ace/Synch.h"
 #include "ace/OS_NS_fcntl.h"      //for open
 #include "ace/OS_NS_sys_stat.h"   //for filesize and mkdir
 
 #include <string>
+#include "unzip.h"
+
 
 /**
  * @class ZIP_File_Info
@@ -54,38 +59,60 @@ public:
 class ZIP_Wrapper
 {
 public:
+  
+  /// Get file and store it into an ACE_Message_Block. The function
+  /// averts subdirectory traversal problems. 
+  /// NOTE: Be sure to release the message block even if the function returns
+  /// false becuase the return value might be due to unsuccessful allocation 
+  
+  ///archive_path is the zip archive with the path
+  ///filename is the name of the file to be looked for in the zip archive.
+  ///the file is stored in ACE message block.
+  static bool get_file (char* archive_path, char* filename, 
+                        ACE_Message_Block &file); 
+
+  /// uncompress the zip file
+  /// The zip file will be uncompressed into a directory with the 
+  ///name of zip archive.
+  /// The path is assumed to be an existing directory
+  
+  ///zip_archive is the arcive to be uncompressed with full path.
+  ///path is used for creating a directory with the name of zip archive.
+  static bool uncompress (char* zip_archive, char* path = "",
+                          bool verbose = true);
+
   /// Get a list of the files in the archive
-  /// returns -1 on failure
+  
+  ///zip_name is the name of zipfile with fullpath.
+  ///list stores information about each entry in zip file.
   static int file_list_info (char* zip_name,
                              ACE_Double_Linked_List<ZIP_File_Info> &list);
 
-  /**
-   * Get file and store it into an ACE_Message_Block need to provide the
-   * correct accessor string. It formed by the ZIP_Options singleton on
-   * argument parsing and stored in ZIP_Options::instance()->read_file_
-   * ACE_Message_Block is null-terminated, but this is not reflected in the
-   * size!
-   *
-   * @note Be sure to release the message block even if the function returns
-   * false because the return value might be due to unsuccessful allocation
-   */
-  static bool get_file (char* accessor, ACE_Message_Block &file);
+  ///Check if an entry of a zip file is a file or directory
+  ///We assume a directoryname terminates with a forward slash
+  ///Returns 1 for directory while 0 for file.
+  
+  ///filename_inzip is an entry in a zipfile
+  static int checkdir (char* filename_inzip); 
 
-  /**
-   * Additional get_file function to avert subdirectory traversal problems with
-   * zziplib accessors
-   *
-   * @note Be sure to release the message block even if the function returns
-   * false because the return value might be due to unsuccessful allocation
-   */
-  static bool get_file (char* archive_path, char* filename, ACE_Message_Block &file);
+  ///Create directory structure if entry in zipfile is a directory
+  
+  ///filename_inzip is an entry in a zipfile
+  ///arch_dir stores the name of the directory to be created
+  static int makethedir (char* filename_inzip, ACE_CString arch_dir);
 
-  /// uncompress
-  /// the uncompress format will be
-  /// mkdir(name of zip archive)
-  /// store all files in that directory.
-  /// the path is assumed to be an existing directory
-  static bool uncompress (char* zip_archive, char* path = "", bool verbose = true);
+  ///If entry in zipfile is a file, then read the file and write
+  /// the uncompressed data at the proper filepath.
+  
+ ///filename_inzip is an entry in a zipfile
+ ///uf refers to the zip archive
+ ///file_info is used to get information about current file
+ ///verbose decides if the details are to be printed or not
+ ///arch_dir is the name of file with full path where it is to be 
+ ///uncompressed 
+  static int handlethefile (char* filename_inzip, unzFile uf,
+                            unz_file_info file_info,
+                            bool verbose, ACE_CString arch_dir);
 };
 
 #endif
