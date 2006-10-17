@@ -4,6 +4,10 @@
 #include "ciao/ServerResourcesC.h"
 #include "tao/RTPortableServer/RTPortableServer.h"
 
+CIAO::RTNodeApp_Configurator::~RTNodeApp_Configurator ()
+{
+}
+
 int
 CIAO::RTNodeApp_Configurator::pre_orb_initialize ()
 {
@@ -78,7 +82,7 @@ CIAO::RTNodeApp_Configurator::find_container_policies
 
       if (ACE_OS::strcmp ("ContainerPolicySet", properties[i].name) == 0)
         {
-          const char *policy_name;
+          const char *policy_name = 0;
           if (properties[i].value >>= policy_name)
             {
               return this->config_manager_.find_policies_by_name (policy_name);
@@ -98,7 +102,7 @@ extern "C" CIAO_RTNA_Configurator_Export CIAO::NodeApp_Configurator *create_node
 CIAO::NodeApp_Configurator *
 create_nodeapp_configurator (void)
 {
-  CIAO::RTNodeApp_Configurator *config;
+  CIAO::RTNodeApp_Configurator *config = 0;
   ACE_NEW_RETURN (config, CIAO::RTNodeApp_Configurator, 0);
   return config;
 }
