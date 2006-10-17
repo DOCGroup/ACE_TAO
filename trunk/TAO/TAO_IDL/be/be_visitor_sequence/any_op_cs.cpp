@@ -83,6 +83,10 @@ be_visitor_sequence_any_op_cs::visit_sequence (be_sequence *node)
           << "}" << be_uidt_nl
           << "}" << be_nl;
     }
+    
+  // If this is non-zero, we want to call its tc_name()
+  // for the TypeCode to pass to the Any operator impls.  
+  be_typedef *td = this->ctx_->tdef ();
 
   // Copying insertion.
   *os << be_nl << "// Copying insertion." << be_nl
@@ -92,15 +96,17 @@ be_visitor_sequence_any_op_cs::visit_sequence (be_sequence *node)
       << ")" << be_uidt_nl
       << "{" << be_idt_nl
 
-      << "if (0 == &_tao_elem) // Trying to de-reference NULL object" << be_idt_nl
-      << "_tao_any <<= static_cast<" << node->name () << " *>( 0 ); // Use non-copying insertion of a NULL" << be_uidt_nl
+      << "if (0 == &_tao_elem) // Trying to de-reference NULL object"
+      << be_idt_nl
+      << "_tao_any <<= static_cast<" << node->name ()
+      << " *>( 0 ); // Use non-copying insertion of a NULL" << be_uidt_nl
       << "else" << be_idt_nl
 
       << "TAO::Any_Dual_Impl_T<" << node->name () << ">::insert_copy ("
       << be_idt << be_idt_nl
       << "_tao_any," << be_nl
       << node->name () << "::_tao_any_destructor," << be_nl
-      << node->tc_name () << "," << be_nl
+      << (td != 0 ? td->tc_name () : node->tc_name ()) << "," << be_nl
       << "_tao_elem" << be_uidt_nl
       << ");" << be_uidt << be_uidt << be_uidt_nl
       << "}" << be_nl << be_nl;
@@ -116,7 +122,7 @@ be_visitor_sequence_any_op_cs::visit_sequence (be_sequence *node)
       << be_idt << be_idt_nl
       << "_tao_any," << be_nl
       << node->name () << "::_tao_any_destructor," << be_nl
-      << node->tc_name () << "," << be_nl
+      << (td != 0 ? td->tc_name () : node->tc_name ()) << "," << be_nl
       << "_tao_elem" << be_uidt_nl
       << ");" << be_uidt << be_uidt_nl
       << "}" << be_nl << be_nl;
@@ -146,7 +152,7 @@ be_visitor_sequence_any_op_cs::visit_sequence (be_sequence *node)
       << be_idt << be_idt_nl
       << "_tao_any," << be_nl
       << node->name () << "::_tao_any_destructor," << be_nl
-      << node->tc_name () << "," << be_nl
+      << (td != 0 ? td->tc_name () : node->tc_name ()) << "," << be_nl
       << "_tao_elem" << be_uidt_nl
       << ");" << be_uidt << be_uidt << be_uidt_nl
       << "}";

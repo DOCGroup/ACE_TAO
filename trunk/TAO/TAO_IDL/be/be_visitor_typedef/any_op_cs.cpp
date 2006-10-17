@@ -84,6 +84,7 @@ be_visitor_typedef_any_op_cs::visit_typedef (be_typedef *node)
       // grab the most primitive base type in the chain to avoid recusrsively
       // going thru this visit method
       bt = node->primitive_base_type ();
+      
       if (!bt)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
@@ -102,16 +103,18 @@ be_visitor_typedef_any_op_cs::visit_typedef (be_typedef *node)
                              "failed to accept visitor\n"
                              ),  -1);
         }
+        
       this->ctx_->alias (0); // reset
     }
   else
     {
-      // the context has not stored any "tdef" node. So we must be in here for
-      // the first time
+      // The context has not stored any "tdef" node. So we must be in here for
+      // the first time.
       this->ctx_->tdef (node); // save the typedef node
 
-      // grab the immediate base type node
+      // Grab the immediate base type node.
       bt = be_type::narrow_from_decl (node->base_type ());
+      
       if (!bt)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
@@ -121,7 +124,7 @@ be_visitor_typedef_any_op_cs::visit_typedef (be_typedef *node)
                              ),  -1);
         }
 
-      // accept on this base type, but generate code for the typedef node
+      // Accept on this base type, but generate code for the typedef node.
       if (bt->accept (this) == -1)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
@@ -131,10 +134,10 @@ be_visitor_typedef_any_op_cs::visit_typedef (be_typedef *node)
                              ),  -1);
         }
 
-      this->ctx_->tdef (0); // reset
+      this->ctx_->tdef (0); // Reset.
     }
 
-  node->cli_stub_any_op_gen (1);
+  node->cli_stub_any_op_gen (true);
   return 0;
 }
 
