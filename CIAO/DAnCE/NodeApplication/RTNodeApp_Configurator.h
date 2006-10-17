@@ -39,7 +39,7 @@ namespace CIAO
   {
   public:
     /// Default destructor.
-    virtual ~RTNodeApp_Configurator (void) {}
+    virtual ~RTNodeApp_Configurator (void);
 
     /**
      * @brief "pre_orb_initialize" is called before ORB_init.
