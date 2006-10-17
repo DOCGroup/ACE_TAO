@@ -21,14 +21,7 @@ ifeq (,$(PERL_PATH))
 endif # ! PERL_PATH
 
 include $(RTEMS_MAKEFILE_PATH)/Makefile.inc
-#include $(RTEMS_CUSTOM)
-#include $(PROJECT_ROOT)/make/leaf.cfg
-
-CXX = $(CC_FOR_TARGET)
-AR  = $(AR_FOR_TARGET)
-LD  = $(LD_FOR_TARGET)
-NM  = $(NM_FOR_TARGET)
-AS  = $(AS_FOR_TARGET)
+include $(RTEMS_MAKEFILE_PATH)/make/target.cfg
 
 # Test for template instantiation.
 include $(ACE_ROOT)/include/makeinclude/platform_g++_common.GNU
@@ -42,21 +35,23 @@ include $(ACE_ROOT)/include/makeinclude/platform_g++_common.GNU
 
 #CXX := $(shell make --no-print-directory -f $(ACE_ROOT)/include/makeinclude/Makefile.rtems print_cxx)
 
-CFLAGS          += -D_REENTRANT -ansi -fno-builtin -fno-defer-pop -fvolatile $(PIPE_OPT) -W -Wall
-CCFLAGS         += $(CFLAGS) $(CPPFLAGS) -I$(RTEMS_MAKEFILE_PATH)/lib/include
+CFLAGS          += -D_REENTRANT -ansi -fno-builtin -fno-defer-pop -fvolatile $(PIPE_OPT) -W -Wall -I$(RTEMS_MAKEFILE_PATH)/lib/include
+CCFLAGS         += $(CFLAGS) $(CPPFLAGS)
 ifeq (,$(rtti))
   CCFLAGS += -fno-rtti -DACE_LACKS_RTTI
 endif # rtti
 DCFLAGS         += -g
 DLD             = $(LD)
 INCLDIRS        +=
+LIBS            += -lrtems++ -lrtemsbsp -lrtemscpu
+
 # Hand build tests/rtems_init.o  .. something like this
 #  sparc-rtems-gcc -B/opt/rtems/sparc-rtems/erc32/lib/ -specs bsp_specs \
 #       -qrtems -mcpu=cypress  -O -g \
 #       -I$(ACE_ROOT) -c -o rtems_init.o rtems_init.c
 
 LD              = $(CXX) $(CCFLAGS) $(ACE_ROOT)/tests/rtems_init.o
-LDFLAGS         += #-Wl,-X -Wl,-r
+LDFLAGS         += -L$(RTEMS_MAKEFILE_PATH)/lib
 OCFLAGS         += -O
 PIC             =
 
