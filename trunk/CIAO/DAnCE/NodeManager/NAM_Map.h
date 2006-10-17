@@ -39,7 +39,7 @@ namespace CIAO
     NAM_Map (void);
 
     /// Determine if there is a NAM associated with a UUID
-    bool is_available (const ACE_CString &str);
+    bool is_available (const ACE_CString &str) const;
 
     /// Insert a NAM OID into the collection
     bool insert_nam (const ACE_CString &str,
