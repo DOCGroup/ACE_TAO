@@ -138,6 +138,7 @@
 #define ACE_NEEDS_HUGE_THREAD_STACKSIZE 65536
 #define ACE_NEEDS_SCHED_H
 #define ACE_HAS_POSIX_NONBLOCK
+#define ACE_LACKS_FDOPEN
 
 /*  What should these be set to?.
 
