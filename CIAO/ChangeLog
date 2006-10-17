@@ -1,3 +1,10 @@
+Tue Oct 17 13:40:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * DAnCE/Plan_Launcher/Plan_Launcher.cpp:
+        * DAnCE/Plan_Launcher/Plan_Launcher_Impl.cpp:
+	  Several small layout changes and use ACE_ERROR for
+	  errors
+
 Tue Oct 17 13:30:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 	* DAnCE/NodeApplication/RTNodeApp_Configurator.{h,cpp}:
