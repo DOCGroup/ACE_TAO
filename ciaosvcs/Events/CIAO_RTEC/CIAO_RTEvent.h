@@ -130,6 +130,11 @@ namespace CIAO
       ACE_THROW_SPEC ((
         ::CORBA::SystemException));
 
+    virtual ::RtecEventChannelAdmin::EventChannel_ptr tao_rt_event_channel (
+        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
+      )
+      ACE_THROW_SPEC ((::CORBA::SystemException));
+
   private:
     // @@ (GD) This is the place where use could provide a parameter
     //         which specifies the event channel service configuration file.
@@ -154,27 +159,15 @@ namespace CIAO
     RtecEventChannelAdmin::EventChannel_var rt_event_channel_;
 
     /**
-     * @var RtecEventComm::EventType type_id_
+     * @var ACE_Hash_Map_Manager<> proxy_supplier_map_
      *
-     * The type of event.
+     * Mapping of each event sink to a proxy supplier for disconnect purposes.
      */
-    RtecEventComm::EventType type_id_;
-
-    /**
-     * @var RtecEventComm::EventSourceID source_id_
-     * @@@ Need to change this into a map, since multiple sources
-     * could be connected to the event channel.
-     *
-     * The supplier id.
-     */
-    RtecEventComm::EventSourceID source_id_;
-
-    /**
-     * @var RtecEventChannelAdmin::ProxyPushConsumer_var proxy_consumer_
-     *
-     * The proxy consumer to which events are pushed.
-     */
-    RtecEventChannelAdmin::ProxyPushConsumer_var proxy_consumer_;
+    ACE_Hash_Map_Manager_Ex<ACE_CString,
+                            RtecEventChannelAdmin::ProxyPushConsumer_var,
+                            ACE_Hash<ACE_CString>,
+                            ACE_Equal_To<ACE_CString>,
+                            ACE_Null_Mutex> proxy_consumer_map_;
 
     /**
      * @var ACE_Hash_Map_Manager<> proxy_supplier_map_
@@ -182,7 +175,7 @@ namespace CIAO
      * Mapping of each event sink to a proxy supplier for disconnect purposes.
      */
     ACE_Hash_Map_Manager_Ex<ACE_CString,
-                            RtecEventChannelAdmin::ProxyPushSupplier_ptr,
+                            RtecEventChannelAdmin::ProxyPushSupplier_var,
                             ACE_Hash<ACE_CString>,
                             ACE_Equal_To<ACE_CString>,
                             ACE_Null_Mutex> proxy_supplier_map_;

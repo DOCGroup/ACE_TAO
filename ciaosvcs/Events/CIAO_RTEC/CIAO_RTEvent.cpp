@@ -24,9 +24,7 @@ namespace CIAO
   RTEventService::RTEventService (CORBA::ORB_ptr orb,
                                   PortableServer::POA_ptr poa) :
     orb_ (CORBA::ORB::_duplicate (orb)),
-    root_poa_ (PortableServer::POA::_duplicate (poa)),
-    type_id_ (ACE_ES_EVENT_ANY),
-    source_id_ (ACE_ES_EVENT_SOURCE_ANY)
+    root_poa_ (PortableServer::POA::_duplicate (poa))
   {
     this->create_rt_event_channel ();
   }
@@ -91,24 +89,13 @@ namespace CIAO
         ACE_THROW (CORBA::BAD_PARAM ());
       }
 
-    ACE_Hash<ACE_CString> hasher;
-    this->source_id_ = hasher (supplier_config->supplier_id (ACE_ENV_SINGLE_ARG_PARAMETER));
-
-    ACE_CHECK;
-    this->type_id_ = this->source_id_;
-
-    if (CIAO::debug_level () > 11)
-      {
-        ACE_DEBUG ((LM_DEBUG, "connect source id: %i\n", this->source_id_));
-      }
-
+    // Get a proxy push consumer from the EventChannel.
     RtecEventChannelAdmin::SupplierAdmin_var supplier_admin =
       this->rt_event_channel_->for_suppliers (ACE_ENV_SINGLE_ARG_PARAMETER);
     ACE_CHECK;
 
-    this->proxy_consumer_ =
-      supplier_admin->obtain_push_consumer (ACE_ENV_SINGLE_ARG_PARAMETER);
-    ACE_CHECK;
+    RtecEventChannelAdmin::ProxyPushConsumer_var proxy_push_consumer =
+      supplier_admin->obtain_push_consumer();
 
     // Create and register supplier servant
     RTEventServiceSupplier_impl * supplier_servant = 0;
@@ -122,10 +109,23 @@ namespace CIAO
       rt_config->rt_event_qos (ACE_ENV_SINGLE_ARG_PARAMETER);
     ACE_CHECK;
 
-    this->proxy_consumer_->connect_push_supplier (push_supplier.in (),
-                                                  qos.in ()
-                                                  ACE_ENV_ARG_PARAMETER);
+    ACE_SupplierQOS_Factory supplier_qos;
+    supplier_qos.insert (ACE_ES_EVENT_SOURCE_ANY, ACE_ES_EVENT_ANY, 0, 1);
+
+    supplier_qos.insert (ACE_ES_EVENT_SOURCE_ANY,
+                       ACE_ES_EVENT_ANY,
+                       0,    // handle to the rt_info structure
+                       1);    
+
+    proxy_push_consumer->connect_push_supplier (push_supplier.in (),
+                                                supplier_qos.get_SupplierQOS ()
+                                                ACE_ENV_ARG_PARAMETER);
     ACE_CHECK;
+
+
+    this->proxy_consumer_map_.bind (
+      supplier_config->supplier_id (), 
+      proxy_push_consumer._retn ());
   }
 
   void
@@ -216,16 +216,13 @@ namespace CIAO
   {
     ACE_UNUSED_ARG (connection_id);
 
-    /* @todo
-    if (! CORBA::is_nil (this->proxy_consumer_.in ()))
-      {
-        this->proxy_consumer_->disconnect_push_consumer (
-          ACE_ENV_SINGLE_ARG_PARAMETER);
-        ACE_CHECK;
-      }
+    RtecEventChannelAdmin::ProxyPushConsumer_var proxy_consumer;
 
-    // What to do with the consumers?!
-    */
+    this->proxy_consumer_map_.unbind (connection_id, proxy_consumer);
+
+    proxy_consumer->disconnect_push_consumer (
+      ACE_ENV_SINGLE_ARG_PARAMETER);
+    ACE_CHECK;
   }
 
   void
@@ -256,15 +253,6 @@ namespace CIAO
       {
         ACE_DEBUG ((LM_DEBUG, "------CIAO::RTEventService::push_event------\n"));
       }
-
-    RtecEventComm::EventSet events (1);
-    events.length (1);
-    events[0].header.source = ACE_ES_EVENT_SOURCE_ANY; //this->source_id_;
-    events[0].header.type = ACE_ES_EVENT_ANY; //this->type_id_;
-    events[0].data.any_value <<= ev;
-
-    this->proxy_consumer_->push (events ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK;
   }
 
   void
@@ -294,7 +282,17 @@ namespace CIAO
     ACE_DEBUG ((LM_DEBUG, "******* push event for source string: %s\n", source_id));
     ACE_DEBUG ((LM_DEBUG, "******* push event for source id: %i\n", events[0].header.source));
 
-    this->proxy_consumer_->push (events ACE_ENV_ARG_PARAMETER);
+    RtecEventChannelAdmin::ProxyPushConsumer_var proxy_consumer;
+
+    if (this->proxy_consumer_map_.find (source_id, proxy_consumer) != 0)
+      {
+        ACE_DEBUG ((LM_DEBUG, 
+                    "CIAO (%P|%t) - RTEventService::ciao_push_event, "
+                    "Error in finding the proxy consumer object.\n"));
+        ACE_THROW (Components::BadEventType ());
+      }
+
+    proxy_consumer->push (events ACE_ENV_ARG_PARAMETER);
     ACE_CHECK;
   }
 
@@ -468,7 +466,7 @@ namespace CIAO
       } 
     else 
       {
-        ACE_DEBUG ((LM_DEBUG, "\nUDP Event Handler Port [%d]\n\n", listen_port));
+        ACE_DEBUG ((LM_DEBUG, "\nUDP Event Handler Port [%d]\n", listen_port));
 
         auto_ptr<TAO_ECG_UDP_EH> udp_eh (new TAO_ECG_UDP_EH (receiver.in()));
         udp_eh->reactor (this->orb_->orb_core ()->reactor ());
@@ -485,6 +483,12 @@ namespace CIAO
     return true;
   }
 
+
+  ::RtecEventChannelAdmin::EventChannel_ptr
+  RTEventService::tao_rt_event_channel (ACE_ENV_SINGLE_ARG_DECL)
+  {
+    return this->rt_event_channel_;
+  }
 
   //////////////////////////////////////////////////////////////////////
   ///                 Supplier Servant Implementation
