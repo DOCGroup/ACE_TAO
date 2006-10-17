@@ -444,13 +444,16 @@ TAO_Advanced_Resource_Factory::allocate_reactor_impl (void) const
 
     default:
     case TAO_REACTOR_TP:
-      ACE_NEW_RETURN (impl, ACE_TP_Reactor ((ACE_Sig_Handler*)0,
-                                            (ACE_Timer_Queue*)0,
-                                            this->reactor_mask_signals_,
-                                            this->threadqueue_type_ == TAO_THREAD_QUEUE_FIFO ?
-                                              ACE_Select_Reactor_Token::FIFO :
-                                              ACE_Select_Reactor_Token::LIFO),
-                      0);
+      ACE_NEW_RETURN (impl,
+          ACE_TP_Reactor (ACE_TP_Reactor::DEFAULT_SIZE,
+              1,
+              (ACE_Sig_Handler*)0,
+              (ACE_Timer_Queue*)0,
+              this->reactor_mask_signals_,
+              this->threadqueue_type_ == TAO_THREAD_QUEUE_FIFO ?
+              ACE_Select_Reactor_Token::FIFO :
+              ACE_Select_Reactor_Token::LIFO),
+          0);
       break;
     }
 

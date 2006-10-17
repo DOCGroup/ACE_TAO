@@ -1,3 +1,11 @@
+Tue Oct 17 22:04:33 UTC 2006  Ciju John  <johnc@ociweb.com>
+
+        * tao/Strategies/advanced_resource.cpp:
+          Believe the default reactor for advanced resources and default
+          resources should be the same. No reason for the advanced
+          resources recator not to automatically restart upon signal
+          interruption.
+
 Tue Oct 17 18:02:25 UTC 2006  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * tao/IORTable/Table_Adapter.cpp:
@@ -19,14 +27,14 @@ Tue Oct 17 15:41:50 UTC 2006  Jeff Parsons <j.parsons@vanderbilt.edu>
 
 Tue Oct 17 14:40:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-	* orbsvcs/orbsvcs/Log/Hash_LogRecordStore.cpp:
-	  Fixed warning in VxWorks 5.5.2PPC build, some layout changes
-	  and use prefix increment instead of postfix
+        * orbsvcs/orbsvcs/Log/Hash_LogRecordStore.cpp:
+          Fixed warning in VxWorks 5.5.2PPC build, some layout changes
+          and use prefix increment instead of postfix
 
 Tue Oct 17 14:24:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-	* tests/Optimized_Connection/run_test.pl:
-	  Removed commented out test code
+        * tests/Optimized_Connection/run_test.pl:
+          Removed commented out test code
 
 Tue Oct 17 11:58:02 UTC 2006  Phil Mesnier  <mesnier_p@ociweb.com>
 
