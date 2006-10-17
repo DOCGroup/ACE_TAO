@@ -47,6 +47,8 @@ module CIAO
     boolean create_receiver (in string addr_serv_id,
                              in boolean is_multicast,
                              in unsigned short listen_port);
+
+    RtecEventChannelAdmin::EventChannel tao_rt_event_channel ();
   };
 
 };

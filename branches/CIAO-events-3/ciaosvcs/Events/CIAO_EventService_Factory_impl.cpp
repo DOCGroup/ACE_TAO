@@ -56,7 +56,15 @@ namespace CIAO
     }
 
     // Activate the servant
-    CIAO_Event_Service_var service = event_service->_this ();
+    PortableServer::ObjectId_var oid =
+      this->poa_->activate_object (event_service);
+
+    CORBA::Object_var obj = poa_->id_to_reference (oid.in());
+
+    CIAO_Event_Service_var service =
+      CIAO_Event_Service::_narrow (obj.in ());
+
+    //CIAO_Event_Service_var service = event_service->_this ();
     return service._retn ();
   }
 
