@@ -1155,7 +1155,7 @@ ACE_Service_Gestalt::parse_args_i (int argc, ACE_TCHAR *argv[])
   if (this->init_svc_conf_file_queue () == -1)
     return -1;
 
-  for (int c; (c = getopt ()) != -1; )
+  for (int c; (argc != 0) && ((c = getopt ()) != -1); )
     switch (c)
       {
       case 'd':

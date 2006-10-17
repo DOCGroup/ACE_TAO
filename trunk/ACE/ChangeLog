@@ -1,3 +1,11 @@
+Tue Oct 17 21:28:11 UTC 2006  Iliyan Jeliazkov  <iliyan@ociweb.com>
+
+        * ace/Service_Gestalt.cpp (parse_args_i):
+
+          Checking for no arguments was missed inadvertently in the
+          original change-set from "Tue Oct 17 16:27:27 UTC 2006 ..."
+
+
 Tue Oct 17 21:09:36 UTC 2006  Shanshan Jiang <shanshan.jiang@vanderbilt.edu>
 
         * contrib/minizip/ChangeLogUnzip
@@ -18,7 +26,7 @@ Tue Oct 17 21:09:36 UTC 2006  Shanshan Jiang <shanshan.jiang@vanderbilt.edu>
         * contrib/minizip/zip.h
           Added the minizip project. Thanks to Krishnakumar Balasubramanian
           <kitty at dre dot vanderbilt dot edu> for providing this.
-          
+
 Tue Oct 17 17:17:36 UTC 2006  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
 
         * ace/OS_NS_unistd.inl (truncate): SetFilePointerEx() returns a
