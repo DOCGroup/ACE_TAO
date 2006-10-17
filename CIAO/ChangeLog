@@ -1,3 +1,17 @@
+Tue Oct 17 13:10:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+	* DAnCE/NodeManager/CIAO_Monitor.h:
+	  Doxygen improvements
+
+	* DAnCE/NodeManager/NAM_Map.{h,cpp}:
+	  Made is_available a const method
+
+	* DAnCE/NodeManager/Node_Manager.cpp:
+	  Use bool
+
+	* DAnCE/NodeManager/Node_Manager_Impl.cpp:
+          Use ACE_ERROR together with LM_ERROR
+
 Tue Oct 17 12:32:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 	* DAnCE/DomainApplicationManager/Deployment_Configuration.cpp:
