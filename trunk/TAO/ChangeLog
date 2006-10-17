@@ -1,3 +1,8 @@
+Tue Oct 17 14:24:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+	* tests/Optimized_Connection/run_test.pl:
+	  Removed commented out test code
+
 Tue Oct 17 11:58:02 UTC 2006  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * tao/IORTable/IOR_Table_Impl.h:
