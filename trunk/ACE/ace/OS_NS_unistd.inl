@@ -358,7 +358,7 @@ ACE_OS::ftruncate (ACE_HANDLE handle, ACE_LOFF_T offset)
 #  if !defined (ACE_LACKS_SETFILEPOINTEREX)
   LARGE_INTEGER loff;
   loff.QuadPart = offset;
-  if (::SetFilePointerEx (handle, loff, 0, FILE_BEGIN) != (unsigned) -1)
+  if (::SetFilePointerEx (handle, loff, 0, FILE_BEGIN))
 #  else
   if (::SetFilePointer (handle, offset, 0, FILE_BEGIN) != (unsigned) -1)
 #  endif
@@ -995,7 +995,7 @@ ACE_OS::truncate (const ACE_TCHAR *filename,
   else if (::SetFilePointerEx (handle,
                                loffset,
                                0,
-                               FILE_BEGIN) != (unsigned) -1)
+                               FILE_BEGIN))
 #  else
   else if (::SetFilePointer (handle,
                              offset,
