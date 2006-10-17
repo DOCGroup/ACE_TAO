@@ -48,7 +48,7 @@ CIAO::Deployment_Configuration::init (const char *filename)
       //
       if (this->deployment_info_.bind (destination, ior) != 0)
         {
-          ACE_DEBUG ((LM_ERROR,
+          ACE_ERROR ((LM_ERROR,
                       "DAnCE (%P|%t) Deployment_Configuration.cpp:"
                       "Reuse existing node in the cached map: [%s]\n",
                       destination));
