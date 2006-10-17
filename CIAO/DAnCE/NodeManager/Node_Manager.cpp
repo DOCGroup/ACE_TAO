@@ -18,8 +18,8 @@ char *svcconf_config_ = 0;
 char *nodeapp_location_ = 0;
 const char *nodeapp_options_ = 0;
 const char *pid_file_name_ = 0;
-int write_to_ior_ = 0;
-int register_with_ns_ = 0;
+bool write_to_ior_ = false;
+bool register_with_ns_ = false;
 int nodeapp_loc_ = 0;
 int spawn_delay = 1;
 
@@ -39,7 +39,7 @@ parse_args (int argc, char *argv[])
 
           case 'o':  // Get the file name to write to.
             ior_file_name_ = get_opts.opt_arg ();
-            write_to_ior_ = 1;
+            write_to_ior_ = true;
             break;
 
           case 'c':  // Get the default svc.conf filename.
@@ -64,7 +64,7 @@ parse_args (int argc, char *argv[])
             break;
 
           case 'n':
-            register_with_ns_ = 1;
+            register_with_ns_ = true;
             break;
 
           case 'p':

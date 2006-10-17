@@ -163,10 +163,10 @@ get_all_facets (ACE_CString & name)
   Component_Facets_Map::ENTRY *entry = 0;
 
   if (this->comp_facets_map_.find (name.c_str (), entry) != 0)
-    ACE_DEBUG ((LM_ERROR, "(%P|%t) - NodeManager_Impl_Base::get_all_facets - "
+    ACE_ERROR ((LM_ERROR, "(%P|%t) - NodeManager_Impl_Base::get_all_facets - "
                 "No component with name [%s] was found in the NodeManager\n", name.c_str ()));
 
-  CORBA::ULong facet_len = entry->int_id_->length ();
+  CORBA::ULong const facet_len = entry->int_id_->length ();
 
   Components::FacetDescriptions_var retv;
   ACE_NEW_RETURN (retv,
@@ -190,10 +190,10 @@ get_all_consumers (ACE_CString & name)
   Component_Consumers_Map::ENTRY *entry = 0;
 
   if (this->comp_consumers_map_.find (name.c_str (), entry) != 0)
-    ACE_DEBUG ((LM_ERROR, "(%P|%t) - NodeManager_Impl_Base::get_all_facets - "
+    ACE_ERROR ((LM_ERROR, "(%P|%t) - NodeManager_Impl_Base::get_all_facets - "
                 "Component [%s] was not found in the NodeManager\n", name.c_str ()));
 
-  CORBA::ULong consumer_len = entry->int_id_->length ();
+  CORBA::ULong const consumer_len = entry->int_id_->length ();
 
   Components::ConsumerDescriptions_var retv;
   ACE_NEW_RETURN (retv,
@@ -239,9 +239,9 @@ preparePlan (const Deployment::DeploymentPlan &plan
 
   if (! this->validate_plan (plan))
     {
-      ACE_DEBUG ((LM_DEBUG, "(%P|%t) NodeManager <%s>:prepare_plan:Plan_Error.\n",
+      ACE_ERROR ((LM_ERROR, "(%P|%t) NodeManager <%s>:prepare_plan:Plan_Error.\n",
                   plan.instance[0].node.in ()));
-      ACE_DEBUG ((LM_DEBUG, "(%P|%t) All component instances hosted in the "
+      ACE_ERROR ((LM_ERROR, "(%P|%t) All component instances hosted in the "
                   "same component server must have the "
                   "same \"resourceName\" defined.\n"));
 
@@ -289,9 +289,8 @@ preparePlan (const Deployment::DeploymentPlan &plan
                           plan.UUID.in ()));
             }
 
-          //Implementation undefined.
-          CIAO::NodeApplicationManager_Impl_Base *node_app_mgr;
-          node_app_mgr =
+          // Implementation undefined.
+          CIAO::NodeApplicationManager_Impl_Base *node_app_mgr =
             this->create_node_app_manager (this->orb_.in (), this->poa_.in ()
                                            ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
@@ -539,7 +538,7 @@ CIAO::NodeManager_Impl_Base::get_shared_components_i (void)
       else
         {
           // should never happen
-          ACE_DEBUG ((LM_ERROR, "Component [%s] in the list of shared component, "
+          ACE_ERROR ((LM_ERROR, "Component [%s] in the list of shared component, "
                       "was not found in the NodeManager ref count map.\n",
                       (*iter).c_str ()));
         }
