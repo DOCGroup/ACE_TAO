@@ -129,7 +129,7 @@ run_tests (int iterations, FILE *input_fp, FILE *output_fp)
     {
       ACE_HANDLE hfile = fileno (output_fp);
       if (ACE_OS::ftruncate (hfile, 0) == -1)
-	ACE_ERROR_RETURN ((LM_ERROR,
+        ACE_ERROR_RETURN ((LM_ERROR,
                            ACE_TEXT ("%s\n"),
                            ACE_TEXT ("ftruncate")),
                           -1);
