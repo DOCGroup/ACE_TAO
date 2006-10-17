@@ -1,3 +1,24 @@
+Tue Oct 17 21:09:36 UTC 2006  Shanshan Jiang <shanshan.jiang@vanderbilt.edu>
+
+        * contrib/minizip/ChangeLogUnzip
+        * contrib/minizip/crypt.h
+        * contrib/minizip/ioapi.c
+        * contrib/minizip/ioapi.h
+        * contrib/minizip/iowin32.c
+        * contrib/minizip/iowin32.h
+        * contrib/minizip/miniunz.c
+        * contrib/minizip/minizip.c
+        * contrib/minizip/minizip.mpc
+        * contrib/minizip/minizip_export.h
+        * contrib/minizip/mztools.c
+        * contrib/minizip/mztools.h
+        * contrib/minizip/unzip.c
+        * contrib/minizip/unzip.h
+        * contrib/minizip/zip.c
+        * contrib/minizip/zip.h
+          Added the minizip project. Thanks to Krishnakumar Balasubramanian
+          <kitty at dre dot vanderbilt dot edu> for providing this.
+          
 Tue Oct 17 17:17:36 UTC 2006  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
 
         * ace/OS_NS_unistd.inl (truncate): SetFilePointerEx() returns a
