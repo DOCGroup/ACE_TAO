@@ -1,3 +1,9 @@
+Tue Oct 17 12:35:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * apps/soreduce/Library.cpp:
+          taoversion is not a valid base project. Thanks to Manuel Traut
+          <manut dot de at googlemail dot com> for reporting this.
+
 Tue Oct 17 12:09:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 	* ACE-INSTALL.html:
