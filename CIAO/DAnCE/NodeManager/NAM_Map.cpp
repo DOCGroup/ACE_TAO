@@ -11,7 +11,7 @@ namespace CIAO
   }
 
   bool
-  NAM_Map::is_available (const ACE_CString &str)
+  NAM_Map::is_available (const ACE_CString &str) const
   {
     if (this->map_.find (str) == 0)
       return true;
