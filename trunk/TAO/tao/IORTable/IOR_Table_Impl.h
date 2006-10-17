@@ -119,9 +119,6 @@ private:
   TAO_SYNCH_MUTEX lock_;
 };
 
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
-
 // Traits specializations.
 namespace TAO
 {
