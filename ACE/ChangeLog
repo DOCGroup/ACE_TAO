@@ -1,3 +1,9 @@
+Tue Oct 17 17:17:36 UTC 2006  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
+
+        * ace/OS_NS_unistd.inl (truncate): SetFilePointerEx() returns a
+          BOOL not a DWORD (unlike SetFilePointer()..).  Thanks to Boris
+          Kaminer <boris dot kaminer at gmail dot com> for reporting this.
+
 Tue Oct 17 16:27:27 UTC 2006  Iliyan Jeliazkov  <iliyan@ociweb.com>
 
         * ace/DLL_Manager.cpp:
