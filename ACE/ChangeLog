@@ -1,3 +1,11 @@
+Tue Oct 17 12:05:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/config-rtems.h:
+	  Cleanup
+
+        * include/makeinclude/plaform_rtems.x_g++.GNU:
+	  Improved for rtems 4.6.6
+
 Tue Oct 17 07:03:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/config-rtems.h:
