@@ -88,7 +88,7 @@ CIAO::Container_Impl::install (
      const ::Deployment::ComponentImplementationInfos impl_infos =
        container_impl_info.impl_infos;
 
-     const CORBA::ULong len = impl_infos.length ();
+     CORBA::ULong const len = impl_infos.length ();
      retv->length (len);
 
      for (CORBA::ULong i = 0; i < len; ++i)
@@ -257,7 +257,7 @@ CIAO::Container_Impl::properties (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   CIAO_TRACE ("CIAO::Container_Impl::properties");
-  ::Deployment::Properties *retval;
+  ::Deployment::Properties *retval = 0;
 
   ACE_NEW_THROW_EX (retval,
                     ::Deployment::Properties,
@@ -323,7 +323,7 @@ CIAO::Container_Impl::install_home (
   if (this->home_map_.bind (impl_info.component_instance_name.in (),
                             Components::CCMHome::_duplicate (newhome.in ())))
     {
-      ACE_DEBUG ((LM_DEBUG,
+      ACE_ERROR ((LM_ERROR,
                   "CIAO (%P|%t) Container_Impl.cpp -"
                   "CIAO::Container_Impl::install_home -"
                   "error in binding home for component "
@@ -373,7 +373,7 @@ CIAO::Container_Impl::get_homes (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   CIAO_TRACE ("CIAO::Container_Impl::get_homes");
-  Components::CCMHomes * tmp;
+  Components::CCMHomes * tmp = 0;
   ACE_NEW_THROW_EX (tmp,
                     Components::CCMHomes (),
                     CORBA::NO_MEMORY ());
@@ -381,7 +381,7 @@ CIAO::Container_Impl::get_homes (ACE_ENV_SINGLE_ARG_DECL)
 
   Components::CCMHomes_var retval (tmp);
 
-  const CORBA::ULong len = this->home_map_.current_size ();
+  CORBA::ULong const len = this->home_map_.current_size ();
   retval->length (len);
 
 

@@ -651,7 +651,7 @@ create_connection_key (const Deployment::Connection & connection)
   (*retv) += connection.endpointPortName.in ();
 
   if (CIAO::debug_level () > 3)
-    ACE_DEBUG ((LM_ERROR, "The key is: %s\n", (*retv).c_str ()));
+    ACE_ERROR ((LM_ERROR, "The key is: %s\n", (*retv).c_str ()));
 
   return retv;
 }
@@ -687,7 +687,7 @@ handle_facet_receptable_connection (
       ACE_CString key = (*create_connection_key (connection));
       if (CIAO::debug_level () > 10)
         {
-          ACE_DEBUG ((LM_ERROR, "[BINDING KEY]: %s\n", key.c_str ()));
+          ACE_ERROR ((LM_ERROR, "[BINDING KEY]: %s\n", key.c_str ()));
         }
       this->cookie_map_.rebind (key, cookie);
 
@@ -709,11 +709,11 @@ handle_facet_receptable_connection (
       ::Components::Cookie_var cookie;
       if (CIAO::debug_level () > 6)
         {
-          ACE_DEBUG ((LM_ERROR, "[FINDING KEY]: %s\n", key.c_str ()));
+          ACE_ERROR ((LM_ERROR, "[FINDING KEY]: %s\n", key.c_str ()));
         }
       if (this->cookie_map_.find (key, cookie) != 0)
         {
-          ACE_DEBUG ((LM_ERROR, "Error: Cookie Not Found!\n"));
+          ACE_ERROR ((LM_ERROR, "Error: Cookie Not Found!\n"));
           ACE_TRY_THROW (Deployment::InvalidConnection ());
         }
 
@@ -878,11 +878,11 @@ handle_publisher_consumer_connection (
 
       if (CIAO::debug_level () > 6)
         {
-          ACE_DEBUG ((LM_ERROR, "[FINDING KEY]: %s\n", key.c_str ()));
+          ACE_ERROR ((LM_ERROR, "[FINDING KEY]: %s\n", key.c_str ()));
         }
       if (this->cookie_map_.find (key, cookie) != 0)
         {
-          ACE_DEBUG ((LM_ERROR, "Error: Cookie Not Found!\n"));
+          ACE_ERROR ((LM_ERROR, "Error: Cookie Not Found!\n"));
           ACE_TRY_THROW (Deployment::InvalidConnection ());
         }
 
@@ -976,11 +976,11 @@ handle_publisher_es_connection (
 
       if (CIAO::debug_level () > 6)
         {
-          ACE_DEBUG ((LM_ERROR, "[FINDING KEY]: %s\n", key.c_str ()));
+          ACE_ERROR ((LM_ERROR, "[FINDING KEY]: %s\n", key.c_str ()));
         }
       if (this->cookie_map_.find (key, cookie) != 0)
         {
-          ACE_DEBUG ((LM_ERROR, "Error: Cookie Not Found!\n"));
+          ACE_ERROR ((LM_ERROR, "Error: Cookie Not Found!\n"));
           ACE_TRY_THROW (Deployment::InvalidConnection ());
         }
 
@@ -1027,7 +1027,7 @@ handle_es_consumer_connection (
 
   if (CORBA::is_nil (event_service))
     {
-      ACE_DEBUG ((LM_ERROR,
+      ACE_ERROR ((LM_ERROR,
                   "CIAO (%P|%t) - NodeApplication_Impl.cpp, "
                   "CIAO::NodeApplication_Impl::handle_es_consumer_connection: "
                   "NIL event_service\n"));
@@ -1040,7 +1040,7 @@ handle_es_consumer_connection (
 
   if (CORBA::is_nil (consumer.in ()))
     {
-      ACE_DEBUG ((LM_ERROR,
+      ACE_ERROR ((LM_ERROR,
                   "CIAO (%P|%t) - NodeApplication_Impl.cpp, "
                   "CIAO::NodeApplication_Impl::handle_es_consumer_connection: "
                   "Nil consumer port object reference\n"));
