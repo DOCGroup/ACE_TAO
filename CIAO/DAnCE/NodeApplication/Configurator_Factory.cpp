@@ -17,12 +17,12 @@ CIAO::NodeApplication_Options::parse_args (int &argc, char *argv[])
 
       if (shifter.cur_arg_strncasecmp ("-n") == 0) // Use callback.
         {
-          this->use_callback_ = 0;
+          this->use_callback_ = false;
           shifter.consume_arg ();
         }
       else if (shifter.cur_arg_strncasecmp ("-r") == 0)
         {
-          this->rt_support_ = 1;
+          this->rt_support_ = true;
           shifter.consume_arg ();
         }
       else if (ACE_OS::strncmp (shifter.get_current (),
@@ -67,7 +67,7 @@ CIAO::NodeApplication_Options::parse_args (int &argc, char *argv[])
         }
     }
 
-  if (0 != this->use_callback_ && 0 == this->callback_ior_.length ())
+  if (this->use_callback_ && 0 == this->callback_ior_.length ())
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          "Callback IOR to NodeApplicationManager "
@@ -86,7 +86,7 @@ CIAO::NodeApplication_Options::create_nodeapp_configurator (void)
 
   if (this->rt_support_)
     {
-      int retval =
+      int const retval =
         this->config_dll_.open (
           ACE_DLL_PREFIX ACE_TEXT ("CIAO_RTNA_Configurator"),
           ACE_DEFAULT_SHLIB_MODE,
