@@ -6,6 +6,8 @@ mysql -u arms -parms ARMSBB < patchEth.sql
 
 $ARMS_ROOT/bin/loadpaths.sh ldbf.txt <DB_host>
 
+for i in 1 2 3 4 5 6 7 8 ; do ssh 10.0.$i.$i sudo /sbin/iptables -t mangle -F PREROUTING ; done
+
 export BLADE2=10.2.250.100 ; export BLADE4=10.3.250.100 ; 
 #export NameServiceIOR=corbaloc:iiop:blade2.isislab.vanderbilt.edu:40203/NameService
 
