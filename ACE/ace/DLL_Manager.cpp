@@ -252,7 +252,8 @@ ACE_DLL_Handle::close (int unload)
 
   if (ACE::debug ())
     ACE_DEBUG ((LM_DEBUG,
-                ACE_LIB_TEXT ("ACE (%P|%t) DLL_Handle::close - %s (%d), refcount=%d\n"),
+                ACE_LIB_TEXT ("ACE (%P|%t) DLL_Handle::close - ")
+                ACE_LIB_TEXT ("%s (handle=%d, refcount=%d)\n"),
                 this->dll_name_,
                 this->handle_,
                 this->refcount_));
@@ -264,7 +265,7 @@ ACE_DLL_Handle::close (int unload)
       if (ACE::debug ())
         ACE_DEBUG ((LM_DEBUG,
                     ACE_LIB_TEXT ("ACE (%P|%t) DLL_Handle::close: ")
-                    ACE_LIB_TEXT ("Unloading %s (%d)\n"),
+                    ACE_LIB_TEXT ("Unloading %s (handle=%d)\n"),
                     this->dll_name_,
                     this->handle_));
 
@@ -282,8 +283,8 @@ ACE_DLL_Handle::close (int unload)
 
   if (retval != 0)
     ACE_ERROR ((LM_ERROR,
-                ACE_LIB_TEXT ("ACE (%P|%t) DLL_Handle::close: ")
-                ACE_LIB_TEXT ("failed with: \"%s\".\n"),
+                ACE_LIB_TEXT ("ACE (%P|%t) DLL_Handle::close - ")
+                ACE_LIB_TEXT ("Failed with: \"%s\".\n"),
                 this->error ()->c_str ()));
 
   return retval;

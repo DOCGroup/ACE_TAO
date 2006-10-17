@@ -239,7 +239,7 @@ ACE_Remove_Node::apply (ACE_Service_Gestalt *config, int &yyerrno)
 #ifndef ACE_NLOGGING
   if (ACE::debug ())
     ACE_DEBUG ((LM_DEBUG,
-                ACE_LIB_TEXT ("(%P|%t) ACE_Remove_Node::apply")
+                ACE_LIB_TEXT ("ACE (%P|%t) Remove_Node::apply")
                 ACE_LIB_TEXT (" - did remove on %s, error = %d\n"),
                 this->name (),
                 yyerrno));
@@ -267,8 +267,8 @@ ACE_Dynamic_Node::apply (ACE_Service_Gestalt *config, int &yyerrno)
 #ifndef ACE_NLOGGING
   if (ACE::debug ())
     ACE_DEBUG ((LM_DEBUG,
-                ACE_LIB_TEXT ("(%P|%t) ACE_Dynamic_Node::apply")
-                ACE_LIB_TEXT (" - did dynamic on %s, error = %d\n"),
+                ACE_LIB_TEXT ("ACE (%P|%t) Dynamic_Node::apply")
+                ACE_LIB_TEXT (" - Did dynamic on %s (yyerrno=%d)\n"),
                 this->name (),
                 yyerrno));
 #endif /* ACE_NLOGGING */
@@ -337,7 +337,8 @@ ACE_Static_Node::apply (ACE_Service_Gestalt *config, int &yyerrno)
 #ifndef ACE_NLOGGING
   if (ACE::debug ())
     ACE_DEBUG ((LM_DEBUG,
-                ACE_LIB_TEXT ("did static on %s, error = %d\n"),
+                ACE_LIB_TEXT ("ACE (%P|%t) Static_Node::apply -")
+                ACE_LIB_TEXT (" Did static on %s (yyerrno=%d)\n"),
                 this->name (),
                 yyerrno));
 #endif /* ACE_NLOGGING */
@@ -408,7 +409,7 @@ ACE_Location_Node::open_dll (int & yyerrno)
 #ifndef ACE_NLOGGING
   if (ACE::debug ())
     ACE_DEBUG ((LM_DEBUG,
-                ACE_LIB_TEXT ("(%P|%t) LN::open_dll - path=%s\n"),
+                ACE_LIB_TEXT ("ACE (%P|%t) LN::open_dll - path=%s\n"),
                 this->pathname ()));
 #endif /* ACE_NLOGGING */
 
@@ -419,7 +420,7 @@ ACE_Location_Node::open_dll (int & yyerrno)
 #ifndef ACE_NLOGGING
       ACE_TCHAR *errmsg = this->dll_.error ();
       ACE_ERROR ((LM_ERROR,
-                  ACE_LIB_TEXT ("(%P|%t) LN - DLL::open failed for %s: %s\n"),
+                  ACE_LIB_TEXT ("ACE (%P|%t) LN::open_dll - Failed to open %s: %s\n"),
                   this->pathname (),
                   errmsg ? errmsg : ACE_LIB_TEXT ("no error reported")));
 #endif /* ACE_NLOGGING */
@@ -475,7 +476,8 @@ ACE_Object_Node::symbol (ACE_Service_Gestalt *,
 #ifndef ACE_NLOGGING
           ACE_TCHAR *errmsg = this->dll_.error ();
           ACE_ERROR ((LM_ERROR,
-                      ACE_LIB_TEXT ("DLL::symbol failed for object %s: %s\n"),
+                      ACE_LIB_TEXT ("ACE (%P|%t) DLL::symbol -")
+                      ACE_LIB_TEXT (" Failed for object %s: %s\n"),
                       object_name,
                       errmsg ? errmsg : ACE_LIB_TEXT ("no error reported")));
 #endif /* ACE_NLOGGING */

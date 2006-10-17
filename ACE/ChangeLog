@@ -1,3 +1,15 @@
+Tue Oct 17 16:27:27 UTC 2006  Iliyan Jeliazkov  <iliyan@ociweb.com>
+
+        * ace/DLL_Manager.cpp:
+        * ace/Parse_Node.cpp:
+
+          Updated logging messages.
+
+        * ace/Service_Gestalt.cpp:
+
+          Updated logging messages to exclude the "e-word" causing false
+          positives in the Service_Config_Test. Updated comments.
+
 Tue Oct 17 12:35:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * apps/soreduce/Library.cpp:
@@ -6,23 +18,23 @@ Tue Oct 17 12:35:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Tue Oct 17 12:09:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-	* ACE-INSTALL.html:
-	  Updated supported platforms by Remedy IT. New are VxWorks 5.5.2,
-	  OpenVMS 8.3, RTEMS and LynxOS.
+        * ACE-INSTALL.html:
+          Updated supported platforms by Remedy IT. New are VxWorks 5.5.2,
+          OpenVMS 8.3, RTEMS and LynxOS.
 
 Tue Oct 17 12:05:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/config-rtems.h:
-	  Cleanup
+          Cleanup
 
         * include/makeinclude/plaform_rtems.x_g++.GNU:
-	  Improved for rtems 4.6.6
+          Improved for rtems 4.6.6
 
 Tue Oct 17 07:03:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/config-rtems.h:
-	* ace/OS_NS_unistd.inl:
-	  Added support for ACE_LACKS_FDOPEN
+        * ace/OS_NS_unistd.inl:
+          Added support for ACE_LACKS_FDOPEN
 
 Mon Oct 16 21:29:57 UTC 2006  Phil Mesnier  <mesnier_p@ociweb.com>
 
