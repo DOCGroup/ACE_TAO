@@ -13,8 +13,8 @@ private:
   CORBA::ORB_var orb_;
 
 public:
-  ORB_Run_Task (CORBA::ORB_var& orb)
-    : orb_(orb)
+  ORB_Run_Task (CORBA::ORB_ptr orb)
+    : orb_(CORBA::ORB::_duplicate(orb))
   {
   }
 
@@ -88,7 +88,7 @@ main (int argc, char *argv[])
                            " (%P|%t) Panic: nil IORTable\n"),
                           1);
 
-      ORB_Killer killer (orb);
+      ORB_Killer killer (orb.in());
       test_i *servant;
       ACE_NEW_RETURN (servant,
                       test_i (&killer),
@@ -109,7 +109,7 @@ main (int argc, char *argv[])
       ACE_DEBUG ((LM_DEBUG,
                   "(%P|%t) server - activating ORB threads\n"));
 
-      ORB_Run_Task ort (orb);
+      ORB_Run_Task ort (orb.in());
       ort.activate (THR_NEW_LWP | THR_JOINABLE, 3);
       ACE_DEBUG ((LM_DEBUG,"(%P|%t) server - ORB running\n"));
 

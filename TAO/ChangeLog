@@ -1,3 +1,10 @@
+Tue Oct 17 11:58:02 UTC 2006  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * tao/IORTable/IOR_Table_Impl.h:
+        * tests/Bug_2683_Regression/server.cpp:
+
+          Clean up scoreboard related problems.
+
 Mon Oct 16 21:16:14 UTC 2006  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * tao/IORTable/Table_Adapter.cpp:
@@ -8,14 +15,14 @@ Mon Oct 16 21:16:14 UTC 2006  Phil Mesnier  <mesnier_p@ociweb.com>
 
 Mon Oct 16 10:59:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-	* tests/Nested_Upcall_Crash/run_test.pl:
-	  Check whether we could spawn the server, if not, give an error
-	  and exit directly.
+        * tests/Nested_Upcall_Crash/run_test.pl:
+          Check whether we could spawn the server, if not, give an error
+          and exit directly.
 
 Mon Oct 16 08:43:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-	* TAO_IDL/be/be_codegen.cpp:
-	  Const changes
+        * TAO_IDL/be/be_codegen.cpp:
+          Const changes
 
 Sun Oct 15 23:23:53 UTC 2006  Phil Mesnier  <mesnier_p@ociweb.com>
 
@@ -43,10 +50,10 @@ Sun Oct 15 23:23:53 UTC 2006  Phil Mesnier  <mesnier_p@ociweb.com>
 
 Fri Oct 13 10:28:12 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-	* tests/COIOP/*:
-	  Extended this test so that we check whether a call should
-	  succeed or not. This test requires that COIOP is the only
-	  pluggable protocol available.
+        * tests/COIOP/*:
+          Extended this test so that we check whether a call should
+          succeed or not. This test requires that COIOP is the only
+          pluggable protocol available.
 
 Thu Oct 12 14:17:11 UTC 2006  Chad Elliott  <elliott_c@ociweb.com>
 
