@@ -40,14 +40,14 @@ check_supported_priorities (CORBA::ORB_ptr orb)
 {
   CIAO_TRACE ("NodeApplication_Core::check_supported_priorities");
 
-  int sched_policy =
+  int const sched_policy =
     orb->orb_core ()->orb_params ()->ace_sched_policy ();
 
   // Check that we have sufficient priority range to run,
   // i.e., more than 1 priority level.
-  int max_priority =
+  int const max_priority =
     ACE_Sched_Params::priority_max (sched_policy);
-  int min_priority =
+  int const min_priority =
     ACE_Sched_Params::priority_min (sched_policy);
 
   if (max_priority == min_priority)

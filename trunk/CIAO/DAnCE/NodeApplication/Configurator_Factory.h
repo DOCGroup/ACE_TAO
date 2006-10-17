@@ -6,7 +6,7 @@
  *
  *  $Id$
  *
- *  Configurator Facotry contains the factory method for creating concret
+ *  Configurator Factory contains the factory method for creating concret
  *  NodeApp_Configurator object.
  *
  *  @author Nanbor Wang <nanbor@cs.wustl.edu>
@@ -53,16 +53,16 @@ namespace CIAO
   {
   public:
     // default ctor.
-    NodeApplication_Options () : use_callback_ (1), rt_support_ (0) {}
+    NodeApplication_Options () : use_callback_ (true), rt_support_ (false) {}
 
-    // extracting commandline arguments
+    /// extracting commandline arguments
     int parse_args (int &argc, char *argv[]);
 
     NodeApp_Configurator *create_nodeapp_configurator (void);
 
-    int use_callback () {return this->use_callback_; }
+    bool use_callback () {return this->use_callback_; }
 
-    int rt_support () {return this->rt_support_; }
+    bool rt_support () {return this->rt_support_; }
 
     int write_ior_file ()
     { return (this->ior_output_filename_.length () != 0); }
@@ -74,22 +74,22 @@ namespace CIAO
     { return this->callback_ior_.c_str (); }
 
   private:
-    // The name of the file to write stringified IOR to.
+    /// The name of the file to write stringified IOR to.
     ACE_CString ior_output_filename_;
 
-    // Stringified IOR of a CIAO's callback object.
+    /// Stringified IOR of a CIAO's callback object.
     ACE_CString callback_ior_;
 
-    // CIAO ComponentServer uses the callback object to pass it's
-    // own object reference back to NodeApplicationManager.
-    int use_callback_;
+    /// CIAO ComponentServer uses the callback object to pass it's
+    /// own object reference back to NodeApplicationManager.
+    bool use_callback_;
 
-    // If we need to support RT-CORBA.  Currently, this is
-    // mandatory, but we can probably allow some sort of
-    // "best-effort" RT support.  I.e., if the platform/environment
-    // doesn't support RT, then we will still deploy the NodeApp but
-    // ignore the RT spec.  Perhaps something in the future.
-    int rt_support_;
+    /// If we need to support RT-CORBA.  Currently, this is
+    /// mandatory, but we can probably allow some sort of
+    /// "best-effort" RT support.  I.e., if the platform/environment
+    /// doesn't support RT, then we will still deploy the NodeApp but
+    /// ignore the RT spec.  Perhaps something in the future.
+    bool rt_support_;
 
     // For managing dynamically loaded configurator library
     ACE_DLL config_dll_;

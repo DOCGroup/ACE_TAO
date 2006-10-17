@@ -112,7 +112,7 @@ CIAO::RTResource_Config_Manager::init_resources
 
   if (CORBA::is_nil (this->rtorb_.in()))
     {
-      ACE_DEBUG ((LM_DEBUG,
+      ACE_ERROR ((LM_ERROR,
                   "RTResource_Config_Manager has not been properly initialized.\n"));
       ACE_THROW (CORBA::INTERNAL ());
     }
@@ -147,7 +147,7 @@ CIAO::RTResource_Config_Manager::init_resources
       if (this->threadpool_map_.bind (orb_resource.threadpool_list[i].Id.in (),
                                       thr_id) != 0)
         {
-          ACE_DEBUG ((LM_DEBUG, "Error binding thread pool Id: %s to map when initializing RTNodeApplication resources.\n", orb_resource.threadpool_list[i].Id.in ()));
+          ACE_ERROR ((LM_ERROR, "Error binding thread pool Id: %s to map when initializing RTNodeApplication resources.\n", orb_resource.threadpool_list[i].Id.in ()));
           ACE_THROW (CORBA::INTERNAL ());
         }
       else
@@ -198,7 +198,7 @@ CIAO::RTResource_Config_Manager::init_resources
       if (this->threadpool_map_.bind (orb_resource.threadpool_with_lanes_list[i].Id.in (),
                                       thr_id) != 0)
         {
-          ACE_DEBUG ((LM_DEBUG,
+          ACE_ERROR ((LM_ERROR,
                       "Error binding thread pool name: %s to map when "
                       "initializing RTNodeApplication resources.\n",
                       orb_resource.threadpool_with_lanes_list[i].Id.in ()));
@@ -230,7 +230,7 @@ CIAO::RTResource_Config_Manager::init_resources
       if (this->priority_bands_map_.bind (orb_resource.connection_bands_list[i].Id.in (),
                                           safebands) != 0)
         {
-          ACE_DEBUG ((LM_DEBUG,
+          ACE_ERROR ((LM_ERROR,
                       "Error binding priority bands name: %s to map "
                       "when initializing RTNodeApplication resources.\n",
                       orb_resource.connection_bands_list[i].Id.in ()));
@@ -270,7 +270,7 @@ CIAO::RTResource_Config_Manager::init_resources
       if (this->policy_map_.bind (sets[i].Id.in (),
                                   policy_list) != 0)
         {
-          ACE_DEBUG ((LM_DEBUG,
+          ACE_ERROR ((LM_ERROR,
                       "Error binding Policy_Set with name: %s\n",
                       sets[i].Id.in ()));
           ACE_THROW (CORBA::INTERNAL ());
@@ -307,7 +307,7 @@ CIAO::RTResource_Config_Manager::find_threadpool_by_name (const char *name
 {
   if (name == 0)
     {
-      ACE_DEBUG ((LM_DEBUG,
+      ACE_ERROR ((LM_ERROR,
                   "Invalid name string found in \"find_threadpool_by_name\"\n"));
       ACE_THROW_RETURN (CORBA::INTERNAL (), 0);
     }
@@ -317,7 +317,7 @@ CIAO::RTResource_Config_Manager::find_threadpool_by_name (const char *name
 
   if (this->threadpool_map_.find (name, ret_id) != 0)
     {
-      ACE_DEBUG ((LM_DEBUG,
+      ACE_ERROR ((LM_ERROR,
                   "Unable to find a threadpool named %s\n",
                   name));
       ACE_THROW_RETURN (CORBA::INTERNAL (), 0);
@@ -333,7 +333,7 @@ CIAO::RTResource_Config_Manager::find_priority_bands_by_name (const char *name
 {
   if (name == 0)
     {
-      ACE_DEBUG ((LM_DEBUG,
+      ACE_ERROR ((LM_ERROR,
                   "Invalid name string found in \"find_priority_bands_by_name\"\n"));
       ACE_THROW_RETURN (CORBA::INTERNAL (), 0);
     }
@@ -342,7 +342,7 @@ CIAO::RTResource_Config_Manager::find_priority_bands_by_name (const char *name
 
   if (this->priority_bands_map_.find (name, entry) != 0)
     {
-      ACE_DEBUG ((LM_DEBUG,
+      ACE_ERROR ((LM_ERROR,
                   "Unable to find a connection bands named %s\n",
                   name));
       ACE_THROW_RETURN (CORBA::INTERNAL (), 0);
@@ -360,7 +360,7 @@ CIAO::RTResource_Config_Manager::find_policies_by_name (const char *name
 {
   if (name == 0)
     {
-      ACE_DEBUG ((LM_DEBUG,
+      ACE_ERROR ((LM_ERROR,
                   "Invalid name string found in \"find_policies_by_name\"\n"));
       ACE_THROW_RETURN (CORBA::INTERNAL (), 0);
     }
@@ -373,7 +373,7 @@ CIAO::RTResource_Config_Manager::find_policies_by_name (const char *name
 
   if (this->policy_map_.find (name, entry) != 0)
     {
-      ACE_DEBUG ((LM_DEBUG,
+      ACE_ERROR ((LM_ERROR,
                   "Unable to find a PolicyList named %s\n",
                   name));
       ACE_THROW_RETURN (CORBA::INTERNAL (), 0);
@@ -414,9 +414,9 @@ CIAO::RTResource_Config_Manager::create_single_policy
         ACE_CHECK_RETURN (0);
 
         if (! CORBA::is_nil (retv.in ()))
-        ACE_DEBUG ((LM_DEBUG,
-                    "Create PriorityModel policy: %d - %d\n",
-                    tmp.priority_model, tmp.server_priority));
+          ACE_DEBUG ((LM_DEBUG,
+                      "Create PriorityModel policy: %d - %d\n",
+                      tmp.priority_model, tmp.server_priority));
       }
       break;
 
@@ -432,9 +432,9 @@ CIAO::RTResource_Config_Manager::create_single_policy
         ACE_CHECK_RETURN (0);
 
         if (! CORBA::is_nil (retv.in ()))
-        ACE_DEBUG ((LM_DEBUG,
-                    "Create Threadpool policy: %s, TPid: %d\n",
-                    policy_def.ThreadpoolDef().Id.in (), tpid));
+          ACE_DEBUG ((LM_DEBUG,
+                      "Create Threadpool policy: %s, TPid: %d\n",
+                      policy_def.ThreadpoolDef().Id.in (), tpid));
       }
       break;
 
@@ -451,14 +451,16 @@ CIAO::RTResource_Config_Manager::create_single_policy
         ACE_CHECK_RETURN (0);
 
         if (! CORBA::is_nil (retv.in ()))
-        ACE_DEBUG ((LM_DEBUG,
-                    "Created Banded Connection policy: %s\n",
-                    policy_def.PriorityBandedConnectionDef().Id.in ()));
+          {
+            ACE_DEBUG ((LM_DEBUG,
+                        "Created Banded Connection policy: %s\n",
+                        policy_def.PriorityBandedConnectionDef().Id.in ()));
+          }
       }
       break;
 
     default:
-      ACE_DEBUG ((LM_DEBUG,
+      ACE_ERROR ((LM_ERROR,
                   "Invalid policy type - RTPolicy_Set_Manager::create_single_policy\n"));
       ACE_THROW_RETURN (CORBA::INTERNAL (), 0);
     }

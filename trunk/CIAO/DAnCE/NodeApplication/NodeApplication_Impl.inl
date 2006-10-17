@@ -22,7 +22,7 @@ Deployment::Properties *
 CIAO::NodeApplication_Impl::properties (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  Deployment::Properties * tmp;
+  Deployment::Properties * tmp = 0;
 
   ACE_NEW_THROW_EX (tmp,
                     Deployment::Properties (this->properties_),
