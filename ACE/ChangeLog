@@ -1,3 +1,9 @@
+Tue Oct 17 12:09:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+	* ACE-INSTALL.html:
+	  Updated supported platforms by Remedy IT. New are VxWorks 5.5.2,
+	  OpenVMS 8.3, RTEMS and LynxOS.
+
 Tue Oct 17 12:05:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/config-rtems.h:
