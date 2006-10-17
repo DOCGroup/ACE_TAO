@@ -202,7 +202,7 @@ namespace CIAO
 
           if (mode == pl_mode_start || mode == pl_mode_interactive)  // initial deployment
             {
-              const char* uuid;
+              const char* uuid = 0;
 
               if (package_names != 0)
                 uuid = launcher.launch_plan (deployment_plan_url,
@@ -226,7 +226,9 @@ namespace CIAO
 
               // Write out DAM ior if requested
               if (mode == pl_mode_start)
-                write_dap_ior (orb.in (), dapp_mgr.in ());
+                {
+                  write_dap_ior (orb.in (), dapp_mgr.in ());
+                }
               else // if (pl_mode_interactive)
                 {
                   ACE_DEBUG ((LM_DEBUG,
@@ -247,7 +249,7 @@ namespace CIAO
             {
               ACE_DEBUG ((LM_DEBUG,
                           "Plan_Launcher: reconfigure application assembly....."));
-              
+
               const char* uuid;
 
               if (package_names != 0)
@@ -292,9 +294,11 @@ namespace CIAO
               ACE_DEBUG ((LM_DEBUG,
                           "Plan_Launcher: destroy the application....."));
               if (! launcher.teardown_plan (plan_uuid))
-                  ACE_DEBUG ((LM_DEBUG,
+                {
+                  ACE_ERROR ((LM_ERROR,
                               "(%P|%t) CIAO_PlanLauncher:tear down assembly failed: "
-                              "unkonw plan uuid.\n"));
+                              "unkown plan uuid.\n"));
+                }
             }
 
           orb->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
@@ -303,7 +307,7 @@ namespace CIAO
       ACE_CATCH (Plan_Launcher_i::Deployment_Failure, ex)
         {
           ACE_ERROR ((LM_ERROR,
-                      "Deployment failed.  Plan_Launcher exiting.\n"));
+                      "Deployment failed. Plan_Launcher exiting.\n"));
         }
       ACE_CATCHANY
         {
