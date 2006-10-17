@@ -558,46 +558,51 @@ ACE_Service_Gestalt::initialize (const ACE_Service_Type_Factory *stf,
 
   // If there is an active service already, it must first be removed,
   // before it could be re-installed.
+  // IJ: This used to be the behavior, before allowing multiple
+  // independent service repositories. Should that still be required?
   if (retv >= 0)
     {
 #ifndef ACE_NLOGGING
       if (ACE::debug ())
         ACE_ERROR_RETURN ((LM_WARNING,
-                           ACE_LIB_TEXT ("ACE (%P|%t) \'%s\' already installed.")
-                           ACE_LIB_TEXT (" Must be removed before re-installing\n"),
+                           ACE_LIB_TEXT ("ACE (%P|%t) SG::initialize - repo=%@,")
+                           ACE_LIB_TEXT (" %s is already initialized.")
+                           ACE_LIB_TEXT (" Remove before re-initializing.\n"),
+                           this->repo_,
                            stf->name ()),
                           0);
 #endif
         return 0;
     }
 
-  // There is an inactive service by that name, so it may have been
+  // If there is an inactive service by that name it may have been
   // either inactivated, or just a forward declaration for a service,
-  // that is in the process of being loaded. If the latter, then we
-  // have detected an attempt to initialize the same dynamic service
-  // while still processing previous attempt. This can lock up the
-  // process, because the ACE_DLL_Manager::open () is not re-entrant -
-  // it uses a Singleton lock to serialize concurent invocations. This
-  // use case must be handled here, because if the DLL_Manager was
-  // re-entrant we would have entered an infinite recursion here.
+  // that is in the process of being initialized. If it is the latter,
+  // then we have detected an attempt to initialize the same dynamic
+  // service while still processing previous attempt. This can lock up
+  // the process, because the ACE_DLL_Manager::open () is not
+  // re-entrant - it uses a Singleton lock to serialize concurent
+  // invocations. This use case must be handled here, because if the
+  // DLL_Manager was re-entrant we would have entered an infinite
+  // recursion here.
   if (retv == -2 && srp->type () == 0)
     ACE_ERROR_RETURN ((LM_WARNING,
-                       ACE_LIB_TEXT ("ACE (%P|%t) \'%s\' has not been ")
-                       ACE_LIB_TEXT ("completely defined. Recursive ")
-                       ACE_LIB_TEXT ("initialization request while ")
-                       ACE_LIB_TEXT ("already performing one.\n"),
+                       ACE_LIB_TEXT ("ACE (%P|%t) SG::initialize - repo=%@,")
+                       ACE_LIB_TEXT (" %s is forward-declared.")
+                       ACE_LIB_TEXT (" Recursive initialization requests are")
+                       ACE_LIB_TEXT (" not supported.\n"),
+                       this->repo_,
                        stf->name ()),
                       -1);
 
   // Reserve a spot for the dynamic service by inserting an incomplete
   // service declaration, i.e. one that can not produce a service
-  // object if asked.  Having this incomplete declaration works
-  // similar to C++'s forward declaration to allow, in this case
-  // proper partial ordering of the loaded services in respect to
-  // their finalization. I.e. dependent static services must be
-  // registered *after* the dynamic service that loads them, so that
-  // their finalization is complete *before* finalizing the dynamic
-  // service.
+  // object if asked (a forward declaration).  This declaration
+  // ensures maintaining the proper partial ordering of the services
+  // with respect to their finalization. For example, dependent static
+  // services must be registered *after* the dynamic service that
+  // loads them, so that their finalization is complete *before*
+  // finalizing the dynamic service.
   ACE_Service_Type_Dynamic_Guard dummy (*this->repo_,
                                         stf->name ());
 
@@ -612,20 +617,8 @@ ACE_Service_Gestalt::initialize (const ACE_Service_Type_Factory *stf,
       // repository and we should make sure it is not destroyed upon
       // exit from this method.
       tmp.release ();
-
-
-
       return 0;
     }
-
-  // Something went wrong ...
-#ifndef ACE_NLOGGING
-  if (ACE::debug ())
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_LIB_TEXT ("ACE (%P|%t) Error initializing %s: %m\n"),
-                       stf->name()),
-                      -1);
-#endif
 
   return -1;
 }
