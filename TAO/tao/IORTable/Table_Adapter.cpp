@@ -68,12 +68,13 @@ void
 TAO_Table_Adapter::open (ACE_ENV_SINGLE_ARG_DECL)
 {
   ACE_GUARD (ACE_Lock, ace_mon, *this->lock_);
-
-  ACE_NEW_THROW_EX (root_,
+  TAO_IOR_Table_Impl *impl;
+  ACE_NEW_THROW_EX (impl,
                     TAO_IOR_Table_Impl (),
                     CORBA::NO_MEMORY ());
   ACE_CHECK;
 
+  this->root_ = impl;
   this->closed_ = false;
 }
 
@@ -210,7 +211,6 @@ TAO_Table_Adapter::find_object (TAO::ObjectKey &key,
     }
   ACE_CATCH (IORTable::NotFound, nf_ex)
     {
-      ACE_UNUSED_ARG(nf_ex);
       return 0;
     }
   ACE_ENDTRY;
