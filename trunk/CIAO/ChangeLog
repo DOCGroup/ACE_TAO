@@ -1,3 +1,11 @@
+Tue Oct 17 21:23:27 UTC 2006  Shanshan Jiang <shanshan.jiang@vanderbilt.edu>
+
+        * DAnCE/RepositoryManager/README
+        * DAnCE/RepositoryManager/RepositoryManager.mpc
+        * DAnCE/RepositoryManager/ZIP_Wrapper.cpp
+        * DAnCE/RepositoryManager/ZIP_Wrapper.h
+          Updated these files to use minizip under $ACE_ROOT/contrib/minizip.
+
 Tue Oct 17 13:40:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * DAnCE/Plan_Launcher/Plan_Launcher.cpp:
