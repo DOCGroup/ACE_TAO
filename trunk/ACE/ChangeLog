@@ -1,3 +1,9 @@
+Tue Oct 17 07:03:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/config-rtems.h:
+	* ace/OS_NS_unistd.inl:
+	  Added support for ACE_LACKS_FDOPEN
+
 Mon Oct 16 21:29:57 UTC 2006  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * THANKS: Updated Chris Reed's entry in the list.
