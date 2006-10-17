@@ -194,7 +194,7 @@ namespace CIAO
                                     ACE_ENV_ARG_PARAMETER);
     ACE_CHECK_RETURN (COMP_SVNT::_stub_type::_nil ());
 
-	typedef typename COMP_SVNT::_stub_type stub_type;
+    typedef typename COMP_SVNT::_stub_type stub_type;
     COMP_SVNT *svt = 0;
     ACE_NEW_RETURN (svt,
                     COMP_SVNT (exe,
@@ -213,7 +213,7 @@ namespace CIAO
                                            ACE_ENV_ARG_PARAMETER);
     ACE_CHECK_RETURN (COMP_SVNT::_stub_type::_nil ());
 
-	typedef typename COMP_SVNT::_stub_type stub_type;
+    typedef typename COMP_SVNT::_stub_type stub_type;
     typename COMP_SVNT::_stub_var_type ho =
       stub_type::_narrow (objref.in ()
                           ACE_ENV_ARG_PARAMETER);
