@@ -1655,7 +1655,7 @@ TAO_DynCommon::insert_abstract (CORBA::AbstractBase_ptr /* value */
 {
   // TODO
 }
-  
+
 CORBA::AbstractBase_ptr
 TAO_DynCommon::get_abstract (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((
@@ -1667,7 +1667,7 @@ TAO_DynCommon::get_abstract (ACE_ENV_SINGLE_ARG_DECL)
   // TODO
   return CORBA::AbstractBase::_nil ();
 }
-    
+
 // ****************************************************************
 
 void
@@ -1704,7 +1704,7 @@ TAO_DynCommon::insert_boolean_seq (
       this->any_ <<= value;
     }
 }
-  
+
 void
 TAO_DynCommon::insert_octet_seq (
     const CORBA::OctetSeq & /* value */
@@ -1716,7 +1716,7 @@ TAO_DynCommon::insert_octet_seq (
     ))
 {
 }
-  
+
 void
 TAO_DynCommon::insert_char_seq (
     const CORBA::CharSeq & /* value */
@@ -1728,7 +1728,7 @@ TAO_DynCommon::insert_char_seq (
     ))
 {
 }
-  
+
 void
 TAO_DynCommon::insert_short_seq (
     const CORBA::ShortSeq & /* value */
@@ -1740,7 +1740,7 @@ TAO_DynCommon::insert_short_seq (
     ))
 {
 }
-  
+
 void
 TAO_DynCommon::insert_ushort_seq (
     const CORBA::UShortSeq & /* value */
@@ -1752,7 +1752,7 @@ TAO_DynCommon::insert_ushort_seq (
     ))
 {
 }
-  
+
 void
 TAO_DynCommon::insert_long_seq (
     const CORBA::LongSeq & /* value */
@@ -1764,7 +1764,7 @@ TAO_DynCommon::insert_long_seq (
     ))
 {
 }
-  
+
 void
 TAO_DynCommon::insert_ulong_seq (
     const CORBA::ULongSeq & /* value */
@@ -1776,7 +1776,7 @@ TAO_DynCommon::insert_ulong_seq (
     ))
 {
 }
-  
+
 void
 TAO_DynCommon::insert_float_seq (
     const CORBA::FloatSeq & /* value */
@@ -1788,7 +1788,7 @@ TAO_DynCommon::insert_float_seq (
     ))
 {
 }
-  
+
 void
 TAO_DynCommon::insert_double_seq (
     const CORBA::DoubleSeq & /* value */
@@ -1800,7 +1800,7 @@ TAO_DynCommon::insert_double_seq (
     ))
 {
 }
-  
+
 void
 TAO_DynCommon::insert_longlong_seq (
     const CORBA::LongLongSeq & /* value */
@@ -1812,7 +1812,7 @@ TAO_DynCommon::insert_longlong_seq (
     ))
 {
 }
-  
+
 void
 TAO_DynCommon::insert_ulonglong_seq (
     const CORBA::ULongLongSeq & /* value */
@@ -1824,7 +1824,7 @@ TAO_DynCommon::insert_ulonglong_seq (
     ))
 {
 }
-  
+
 void
 TAO_DynCommon::insert_longdouble_seq (
     const CORBA::LongDoubleSeq & /* value */
@@ -1836,7 +1836,7 @@ TAO_DynCommon::insert_longdouble_seq (
     ))
 {
 }
-  
+
 void
 TAO_DynCommon::insert_wchar_seq (
     const CORBA::WCharSeq & /* value */
@@ -1848,7 +1848,7 @@ TAO_DynCommon::insert_wchar_seq (
     ))
 {
 }
-  
+
 // ****************************************************************
 
 CORBA::BooleanSeq *
@@ -1862,7 +1862,7 @@ TAO_DynCommon::get_boolean_seq (
 {
   return 0;
 }
-  
+
 CORBA::OctetSeq *
 TAO_DynCommon::get_octet_seq (
     ACE_ENV_SINGLE_ARG_DECL)
@@ -1874,7 +1874,7 @@ TAO_DynCommon::get_octet_seq (
 {
   return 0;
 }
- 
+
 CORBA::CharSeq *
 TAO_DynCommon::get_char_seq (
     ACE_ENV_SINGLE_ARG_DECL)
@@ -1886,7 +1886,7 @@ TAO_DynCommon::get_char_seq (
 {
   return 0;
 }
-  
+
 CORBA::ShortSeq *
 TAO_DynCommon::get_short_seq (
     ACE_ENV_SINGLE_ARG_DECL)
@@ -1898,7 +1898,7 @@ TAO_DynCommon::get_short_seq (
 {
   return 0;
 }
-  
+
 CORBA::UShortSeq *
 TAO_DynCommon::get_ushort_seq (
     ACE_ENV_SINGLE_ARG_DECL)
@@ -1910,7 +1910,7 @@ TAO_DynCommon::get_ushort_seq (
 {
   return 0;
 }
-  
+
 CORBA::LongSeq *
 TAO_DynCommon::get_long_seq (
     ACE_ENV_SINGLE_ARG_DECL)
@@ -1922,7 +1922,7 @@ TAO_DynCommon::get_long_seq (
 {
   return 0;
 }
-  
+
 CORBA::ULongSeq *
 TAO_DynCommon::get_ulong_seq (
     ACE_ENV_SINGLE_ARG_DECL)
@@ -1934,7 +1934,7 @@ TAO_DynCommon::get_ulong_seq (
 {
   return 0;
 }
-  
+
 CORBA::FloatSeq *
 TAO_DynCommon::get_float_seq (
     ACE_ENV_SINGLE_ARG_DECL)
@@ -1946,7 +1946,7 @@ TAO_DynCommon::get_float_seq (
 {
   return 0;
 }
-  
+
 CORBA::DoubleSeq *
 TAO_DynCommon::get_double_seq (
     ACE_ENV_SINGLE_ARG_DECL)
@@ -1958,7 +1958,7 @@ TAO_DynCommon::get_double_seq (
 {
   return 0;
 }
-  
+
 CORBA::LongLongSeq *
 TAO_DynCommon::get_longlong_seq (
     ACE_ENV_SINGLE_ARG_DECL)
@@ -1970,7 +1970,7 @@ TAO_DynCommon::get_longlong_seq (
 {
   return 0;
 }
-  
+
 CORBA::ULongLongSeq *
 TAO_DynCommon::get_ulonglong_seq (
     ACE_ENV_SINGLE_ARG_DECL)
@@ -1982,7 +1982,7 @@ TAO_DynCommon::get_ulonglong_seq (
 {
   return 0;
 }
-  
+
 CORBA::LongDoubleSeq *
 TAO_DynCommon::get_longdouble_seq (
     ACE_ENV_SINGLE_ARG_DECL)
@@ -1994,7 +1994,7 @@ TAO_DynCommon::get_longdouble_seq (
 {
   return 0;
 }
-  
+
 CORBA::WCharSeq *
 TAO_DynCommon::get_wchar_seq (
     ACE_ENV_SINGLE_ARG_DECL)
