@@ -527,7 +527,7 @@ ACE_OS::hostname (char name[], size_t maxnamelen)
 #elif defined (ACE_VXWORKS) || defined (ACE_HAS_WINCE)
   ACE_OSCALL_RETURN (::gethostname (name, maxnamelen), int, -1);
 #elif defined (ACE_WIN32)
-  if (::gethostname (name, ACE_Utils::Truncate (maxnamelen)) == 0)
+  if (::gethostname (name, ACE_Utils::Truncate<int> (maxnamelen)) == 0)
   {
     return 0;
   }

@@ -1136,6 +1136,17 @@ ACE_MAKE_SVC_CONFIG_FACTORY_NAME(ACE_VERSIONED_NAMESPACE_NAME,SERVICE_CLASS) (AC
 #   define ACE_PAGEFILE_MEMORY_POOL ACE_Pagefile_Memory_Pool, ACE_Pagefile_Memory_Pool_Options
 # endif /* ACE_HAS_TEMPLATE_TYPEDEFS */
 
+// Work around compilers that don't like in-class static integral
+// constants.  Constants in this case are meant to be compile-time
+// constants so that they may be used as template arguments, for
+// example.  BOOST provides a similar macro.
+#ifndef ACE_LACKS_STATIC_IN_CLASS_CONSTANTS
+# define ACE_STATIC_CONSTANT(TYPE, ASSIGNMENT) static TYPE const ASSIGNMENT
+#else
+# define ACE_STATIC_CONSTANT(TYPE, ASSIGNMENT) enum { ASSIGNMENT }
+#endif  /* !ACE_LACKS_STATIC_IN_CLASS_CONSTANTS */
+
+
 #include /**/ "ace/post.h"
 
 #endif /*ACE_GLOBAL_MACROS_H*/
