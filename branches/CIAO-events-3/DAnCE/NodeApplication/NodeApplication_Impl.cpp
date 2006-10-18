@@ -6,6 +6,30 @@
 #include "Deployment_EventsC.h"
 #include "ciaosvcs/Events/CIAO_RTEC/CIAO_RTEventC.h"
 
+
+#include <DevGuideExamples/EventServices/RTEC_MCast_Federated/EchoEventSupplier_i.h>
+#include <DevGuideExamples/EventServices/RTEC_MCast_Federated/EchoEventConsumer_i.h>
+#include "examples/Hello/Sender/SenderEC.h"
+
+#include "SimpleAddressServer.h"
+
+#include <orbsvcs/RtecEventCommC.h>
+#include <orbsvcs/RtecEventChannelAdminC.h>
+#include <orbsvcs/Time_Utilities.h>
+#include <orbsvcs/Event_Utilities.h>
+#include <orbsvcs/CosNamingC.h>
+#include <orbsvcs/Event/EC_Event_Channel.h>
+#include <orbsvcs/Event/EC_Default_Factory.h>
+#include <orbsvcs/Event/ECG_Mcast_EH.h>
+#include <orbsvcs/Event/ECG_UDP_Sender.h>
+#include <orbsvcs/Event/ECG_UDP_Receiver.h>
+#include <orbsvcs/Event/ECG_UDP_Out_Endpoint.h>
+#include <orbsvcs/Event/ECG_UDP_EH.h>
+
+#include <tao/ORB_Core.h>
+
+#include <ace/Auto_Ptr.h>
+
 #if !defined (__ACE_INLINE__)
 # include "NodeApplication_Impl.inl"
 #endif /* __ACE_INLINE__ */
@@ -19,6 +43,8 @@ CIAO::NodeApplication_Impl::init (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   /// @todo initialize this NodeApplication properties
+  //this->test_rtec_federation ();
+
   return 0;
 }
 
@@ -1300,4 +1326,149 @@ _is_publisher_es_conn (Deployment::Connection conn)
     return true;
   else
     return false;
+}
+
+// Below code is not used at this time.
+int
+CIAO::NodeApplication_Impl::test_rtec_federation ()
+  ACE_THROW_SPEC ((CORBA::SystemException))
+{
+  ACE_DEBUG ((LM_DEBUG, "CIAO::NodeApplication_Impl::test_rtec_federation ()!!!\n"));
+
+      // Install an event channel with a UDP Sender object
+      CIAO_Event_Service_var ciao_es = es_factory_.create (CIAO::RTEC);
+
+      // Narrow the event service to CIAO_RT_Event_Service
+      ::CIAO::CIAO_RT_Event_Service_var ciao_rtes =
+        ::CIAO::CIAO_RT_Event_Service::_narrow (ciao_es);
+
+      if (CORBA::is_nil (ciao_rtes.in ()))
+        ACE_DEBUG ((LM_ERROR, "Cannot narrow to CIAO_RT_Event_Service\n"));
+
+      ciao_rtes->create_addr_serv ("addr_serv_0", 1234, "localhost");
+      ciao_rtes->create_sender ("addr_serv_0");
+
+      RtecEventChannelAdmin::EventChannel_var ec_01 =
+        ciao_rtes->tao_rt_event_channel ();
+
+      PortableServer::ObjectId_var oid;
+
+    // Get a proxy push consumer from the EventChannel.
+    RtecEventChannelAdmin::SupplierAdmin_var supplier_admin = ec_01->for_suppliers();
+    RtecEventChannelAdmin::ProxyPushConsumer_var proxy_push_consumer =
+      supplier_admin->obtain_push_consumer();
+
+    // Instantiate an EchoEventSupplier_i servant.
+    EchoEventSupplier_i supplier_servant(orb_.in());
+
+    // Register it with the RootPOA.
+    oid = this->poa_->activate_object(&supplier_servant);
+    CORBA::Object_var supplier_obj = this->poa_->id_to_reference(oid.in());
+    RtecEventComm::PushSupplier_var push_supplier =
+      RtecEventComm::PushSupplier::_narrow(supplier_obj.in());
+
+    // Connect to the EC.
+    ACE_SupplierQOS_Factory supplier_qos;
+    supplier_qos.insert (ACE_ES_EVENT_SOURCE_ANY, ACE_ES_EVENT_ANY, 0, 1);
+    proxy_push_consumer->connect_push_supplier (push_supplier.in (), 
+                                                supplier_qos.get_SupplierQOS ());
+
+      //==================================================
+
+      // Install another event channel with a UDP Receiver object
+      CIAO_Event_Service_var ciao_es_receiver = es_factory_.create (CIAO::RTEC);
+
+      // Narrow the event service to CIAO_RT_Event_Service
+      ::CIAO::CIAO_RT_Event_Service_var ciao_rtes_receiver =
+        ::CIAO::CIAO_RT_Event_Service::_narrow (ciao_es_receiver);
+
+      if (CORBA::is_nil (ciao_rtes_receiver.in ()))
+        ACE_DEBUG ((LM_ERROR, "Cannot narrow to CIAO_RT_Event_Service\n"));
+
+      RtecEventChannelAdmin::EventChannel_var ec_02 = ciao_rtes_receiver->tao_rt_event_channel ();
+
+    //---------------------------
+    // Obtain a reference to the consumer administration object.
+    RtecEventChannelAdmin::ConsumerAdmin_var consumer_admin = ec_02->for_consumers();
+
+    // Obtain a reference to the push supplier proxy.
+    RtecEventChannelAdmin::ProxyPushSupplier_var proxy_push_supplier =
+      consumer_admin->obtain_push_supplier();
+
+    // Instantiate an EchoEventConsumer_i servant.
+    EchoEventConsumer_i consumer_servant(orb_.in(), 0); // EVENT_LIMIT);
+    
+    // Register it with the RootPOA.
+    PortableServer::ObjectId_var oid_2 = poa_->activate_object(&consumer_servant);
+    CORBA::Object_var consumer_obj = poa_->id_to_reference(oid_2.in());
+    RtecEventComm::PushConsumer_var push_consumer =
+      RtecEventComm::PushConsumer::_narrow(consumer_obj.in());
+    
+    // Connect as a consumer.
+    ACE_ConsumerQOS_Factory consumer_qos;
+    consumer_qos.start_disjunction_group ();
+    consumer_qos.insert (ACE_ES_EVENT_SOURCE_ANY,   // Source ID
+                         ACE_ES_EVENT_ANY,  // Event Type
+                          0);             // handle to the rt_info
+    proxy_push_supplier->connect_push_consumer (push_consumer.in (),
+                                                consumer_qos.get_ConsumerQOS ());
+
+    //ciao_rtes_receiver->create_receiver ("dummy", false, 1234);
+
+
+    // Create and initialize the receiver
+    TAO_EC_Servant_Var<TAO_ECG_UDP_Receiver> receiver =
+                                      TAO_ECG_UDP_Receiver::create();
+
+    receiver->init (ec_02.in (), 0, 0); //clone, addr_srv.in ());
+
+    // Setup the registration and connect to the event channel
+    ACE_SupplierQOS_Factory supp_qos_fact;
+    supp_qos_fact.insert (ACE_ES_EVENT_SOURCE_ANY, ACE_ES_EVENT_ANY, 0, 1);
+    RtecEventChannelAdmin::SupplierQOS pub = supp_qos_fact.get_SupplierQOS ();
+    receiver->connect (pub);
+
+    // Create the appropriate event handler and register it with the reactor
+    auto_ptr<ACE_Event_Handler> eh;
+
+      auto_ptr<TAO_ECG_UDP_EH> udp_eh (new TAO_ECG_UDP_EH (receiver.in()));
+      udp_eh->reactor (this->orb_->orb_core ()->reactor ());
+      
+      //@@
+      ACE_INET_Addr local_addr (1234);
+
+      if (udp_eh->open (local_addr) == -1) {
+        ACE_DEBUG ((LM_ERROR, "Cannot open EH\n"));
+      }
+      ACE_AUTO_PTR_RESET(eh,udp_eh.release(),ACE_Event_Handler);
+   
+    //==============================================
+
+    // Create an event set for one event
+    RtecEventComm::EventSet event (1);
+    event.length (1);
+
+    // Initialize event header.
+    event[0].header.source = ACE_ES_EVENT_SOURCE_ANY;
+    event[0].header.ttl = 1;
+    event[0].header.type = ACE_ES_EVENT_ANY;
+
+    // Initialize data fields in event.
+    event[0].data.any_value <<= CORBA::string_dup ("junk data");
+
+    const int EVENT_DELAY_MS = 10;
+
+
+    proxy_push_consumer->push (event);
+
+    ACE_DEBUG ((LM_ERROR, "\nPushed an event for testing.\n"));
+
+    while (1) {
+      proxy_push_consumer->push (event);
+
+      ACE_Time_Value tv (0, 1000 * EVENT_DELAY_MS);
+      orb_->run (tv);
+      //ACE_OS::sleep (ACE_Time_Value(1,10));
+    }
+  return 0;
 }

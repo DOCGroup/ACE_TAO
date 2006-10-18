@@ -243,6 +243,9 @@ namespace CIAO
       ACE_THROW_SPEC ((Deployment::InvalidConnection,
                        CORBA::SystemException));
 
+    int test_rtec_federation ()
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
   protected:
     /// If <add_connection> is "false", then we shall "remove"
     /// the connections, otherwise we will add these connections.
