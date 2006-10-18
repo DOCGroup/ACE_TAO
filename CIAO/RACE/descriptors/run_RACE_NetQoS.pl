@@ -97,18 +97,18 @@ delete_ior_files ();
 
 # Invoke naming service
 
-$NS = new PerlACE::Process ("$TAO_ROOT/orbsvcs/Naming_Service/Naming_Service", "-m 1 -ORBEndpoint iiop://10.1.250.100:40003 -o ns.ior");
+#$NS = new PerlACE::Process ("$TAO_ROOT/orbsvcs/Naming_Service/Naming_Service", "-m 1 -ORBEndpoint iiop://10.1.250.100:40003 -o ns.ior");
 
-$NS->Spawn ();
+#$NS->Spawn ();
 
- print STDERR "Starting Naming Service\n";
+# print STDERR "Starting Naming Service\n";
 
- if (PerlACE::waitforfile_timed ($nsior, 10) == -1)
- {
-     print STDERR "ERROR: cannot find naming service IOR file\n";
-     $NS->Kill ();
-     exit 1;
- }
+# if (PerlACE::waitforfile_timed ($nsior, 10) == -1)
+# {
+#     print STDERR "ERROR: cannot find naming service IOR file\n";
+#     $NS->Kill ();
+#     exit 1;
+# }
 
 # Set up NamingService environment
 $ENV{"NameServiceIOR"} = "corbaloc:iiop:10.1.250.100:40003/NameService";
