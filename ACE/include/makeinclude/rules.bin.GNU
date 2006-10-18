@@ -56,13 +56,8 @@ else # !CHORUSLINK
 $(BIN): %: %.icc $(SRC)
 	vacbld_r $< -severitylevel=warning
   else # !using_aix_vacpp
-    ifdef kylix
-$(BIN): %: $(VDIR)%.$(OBJEXT) $(VOBJS)
-	$(LINK.cc) $(LDFLAGS) $(CC_OUTPUT_FLAG) $(VLDLIBS) $(BORINITEXEOBJ) $(POSTLINK) $(sort $(VDIR)$@.$(OBJEXT) $(VOBJS)) , $@,,
-    else # !kylix
 $(BIN): %: $(VDIR)%.$(OBJEXT) $(VOBJS)
 	$(LINK.cc) $(LDFLAGS) $(CC_OUTPUT_FLAG) $@ $(sort $(VDIR)$@.$(OBJEXT) $(VOBJS)) $(VLDLIBS) $(POSTLINK)
-    endif # kylix
   endif # using_aix_vacpp
 endif
 endif
