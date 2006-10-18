@@ -133,7 +133,6 @@
   </connection>
   
   
-<!--
   <connection>
     <name>hello_event_ec_consumer_connection</name>
     <internalEndpoint>
@@ -145,7 +144,7 @@
       <location>ES_02</location>
     </externalReference>
   </connection>
--->
+
   
   <!-- @@ Runtime library name must match exactly in "location" tag -->
   <artifact id="Hello-Sender_exec">
