@@ -48,13 +48,7 @@ template <class ENTRY> FP_RETURN_TYPE
 File_Parser<ENTRY>::getint (ACE_INT32 &value)
 {
   char buf[BUFSIZ];
-#if defined (__GNUG__)
-  // egcs 1.1b can't handle the typedef.
-  FP::Return_Type
-#else  /* ! __GNUG__ */
-  FP_RETURN_TYPE
-#endif /* ! __GNUG__ */
-    read_result = this->readword (buf);
+  FP_RETURN_TYPE read_result = this->readword (buf);
 
   if (read_result == FP::RT_SUCCESS)
     {
