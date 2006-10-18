@@ -45,7 +45,7 @@
 // ============================================================================
 
 static const char usage [] = "[-? |\n"
-                             "       [-c <repeat count, 0 means forever>]\n"
+                             "       [-c <repeat counter, 0 means forever>]\n"
                              "       [-n to spawn a new LWP with each thread\n"
                              "[<iterations>]]";
 
@@ -73,7 +73,7 @@ static const u_int LOW_PRIORITY = ACE_THR_PRI_FIFO_DEF;
 static u_int HIGH_PRIORITY;
 
 // Global test configuration parameters.
-static ACE_UINT32 count = 1;
+static ACE_UINT32 counter = 1;
 static ACE_UINT32 num_iterations = 1000;
 static ACE_UINT32 new_lwp = 0;
 
@@ -1092,7 +1092,7 @@ get_options (int argc, ACE_TCHAR *argv[])
     case 'c':
       if (ACE_OS::atoi (get_opt.opt_arg ()) >= 0)
         {
-          count = ACE_OS::atoi (get_opt.opt_arg ());
+          counter = ACE_OS::atoi (get_opt.opt_arg ());
         }
       else
         {
@@ -1196,7 +1196,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv [])
   ACE_OS::thr_setprio (ACE_Sched_Params::next_priority (ACE_SCHED_FIFO,
                                                         HIGH_PRIORITY));
 
-  int forever = count == 0;
+  bool forever = counter == 0;
 
   ACE_Stats context_switch_test_stats;
   ACE_Stats yield_test_stats;
@@ -1208,7 +1208,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv [])
   if (ACE_OS::thr_continue (self) == 0  ||  errno != ENOTSUP)
     suspend_resume_supported = 1;
 
- while (forever  ||  count-- > 0)
+ while (forever  ||  counter-- > 0)
     {
       if (suspend_resume_supported)
         {
