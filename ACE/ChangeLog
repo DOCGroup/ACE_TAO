@@ -33,6 +33,11 @@ Tue Oct 18 06:02:28 UTC 2006  Ossama Othman  <ossama_othman at symantec dot com>
           compile-time constants so that they may be used as template
           arguments, for example.  BOOST provides a similar macro.
 
+        * ace/OS_NS_stdlib.inl (atop):
+        * ace/OS_NS_stdio.cpp (fopen):
+
+          Removed ACE_LACKS_INTPTR_T check.  It is no longer needed.
+
         * ace/Truncate.h:
 
           Generalized the ACE_Utils::Truncate<> function template
