@@ -13,7 +13,7 @@
 ACE_RCSID(Misc, test_signals_1, "$Id$")
 
 // Number of times to allow signal to execute until we quit.
-static size_t count = 10;
+static size_t signal_count = 10;
 
 static void
 my_signal_function (int sig)
@@ -34,11 +34,11 @@ public:
     // since it uses print statements within signal handler context.
     ACE_DEBUG ((LM_DEBUG,
                 "Executed ACE signal handler for signal %S, count = %d\n",
-		sig,
-                count));
-    count--;
+                sig,
+                signal_count));
+    --signal_count;
 
-    if (count == 0)
+    if (signal_count == 0)
       ACE_Reactor::end_event_loop ();
 
     return 0;
