@@ -1,3 +1,9 @@
+Wed Oct 18 14:00:04 UTC 2006  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
+
+        * docs/tutorials/Quoter/Simple/Distributor/Distributor.cpp
+          (parse_args): Changed the naked atoi() to ACE_OS::atoi().
+          Thanks to Abdul for reporting this.
+
 Wed Oct 18 12:05:00 UTC 2006  Simon Massey  <sma@prismtech.com>
 
         * DAnCE/TargetManager/DomainDataManager.cpp
