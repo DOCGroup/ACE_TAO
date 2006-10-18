@@ -213,7 +213,7 @@ ACE_END_VERSIONED_NAMESPACE_DECL
       // sets O_NDELAY
 #     include /**/ <unix.h>
 #     include "ace/os_include/os_limits.h"  // <sys/param.h> /* for NBBY */
-#   elif defined(__rtems__)
+#   elif defined(ACE_HAS_RTEMS)
 #     include "ace/os_include/os_fcntl.h"  // <sys/file.h>
 #     include "ace/os_include/sys/os_resource.h"
 #     include "ace/os_include/sys/os_time.h"

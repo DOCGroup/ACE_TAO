@@ -464,7 +464,7 @@ ACE_OS::timezone (void)
 ACE_INLINE void
 ACE_OS::tzset (void)
 {
-#if !defined (ACE_HAS_WINCE) && !defined (ACE_VXWORKS) && !defined(__rtems__) && !defined (ACE_HAS_DINKUM_STL)
+#if !defined (ACE_HAS_WINCE) && !defined (ACE_VXWORKS) && !defined(ACE_HAS_RTEMS) && !defined (ACE_HAS_DINKUM_STL)
 #   if defined (ACE_WIN32)
   ::_tzset ();  // For Win32.
 #   else
@@ -472,7 +472,7 @@ ACE_OS::tzset (void)
 #   endif /* ACE_WIN32 */
 # else
   errno = ENOTSUP;
-# endif /* ACE_HAS_WINCE && !VXWORKS && !__rtems__ && !ACE_HAS_DINKUM_STL */
+# endif /* ACE_HAS_WINCE && !VXWORKS && !ACE_HAS_RTEMS && !ACE_HAS_DINKUM_STL */
 }
 
 ACE_END_VERSIONED_NAMESPACE_DECL
