@@ -151,7 +151,7 @@ int main (int argc, char* argv[])
     {
       cerr << "Error:TargetManager:CORBA::NO_IMPLEMENT thrown" << endl;
     }
-    catch (Deployment::ResourceNotAvailable & e)
+    catch (Deployment::ResourceNotAvailable &)
     {
       cout << "Error:TargetManager releaseResources ResourceNotAvailable Exception" <<endl;
     }
