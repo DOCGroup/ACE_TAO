@@ -26,7 +26,7 @@ include $(RTEMS_MAKEFILE_PATH)/make/target.cfg
 # Test for template instantiation.
 include $(ACE_ROOT)/include/makeinclude/platform_g++_common.GNU
 
-CFLAGS          += -D_REENTRANT -ansi -fno-builtin -fno-defer-pop -fvolatile $(PIPE_OPT) -W -Wall -I$(RTEMS_MAKEFILE_PATH)/lib/include -DACE_HAS_RTEMS
+CFLAGS          += -D_REENTRANT -fasm -ansi -fno-builtin -fno-defer-pop -fvolatile $(PIPE_OPT) -W -Wall -I$(RTEMS_MAKEFILE_PATH)/lib/include -DACE_HAS_RTEMS
 CCFLAGS         += $(CFLAGS) $(CPPFLAGS)
 ifeq (,$(rtti))
   CCFLAGS += -fno-rtti -DACE_LACKS_RTTI
