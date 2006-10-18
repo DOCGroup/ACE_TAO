@@ -1,3 +1,11 @@
+Tue Oct 18 06:27:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+	* examples/Reactor/Misc/test_signals_1.cpp:
+	* performance-tests/Misc/context_switch_time.cpp:
+	  Renamed the global count variables to another name. These triggered
+	  a bug in the VxWorks 5.5.2 compiler which we reported to windriver.
+	  By renaming these we will get an error free compilation.
+
 Tue Oct 18 06:02:28 UTC 2006  Ossama Othman  <ossama_othman at symantec dot com>
 
         * ace/Basic_Types.h (intptr_t, uintptr_t):
@@ -6,11 +14,11 @@ Tue Oct 18 06:02:28 UTC 2006  Ossama Othman  <ossama_othman at symantec dot com>
           ACE_LACKS_INTPTR_T is defined.
 
         * ace/Event_Handler.cpp (~ACE_Event_Handler_var):
-        
+
           Only use an ACE_Errno_Guard if the underlying ACE_Event_Handler
           pointer is non-zero.  Saves a TSS access in the zero
           ACE_Event_Handler pointer case.
-        
+
           (operator=):
 
           Made strongly exception safe.
@@ -56,7 +64,6 @@ Tue Oct 17 21:28:11 UTC 2006  Iliyan Jeliazkov  <iliyan@ociweb.com>
 
           Checking for no arguments was missed inadvertently in the
           original change-set from "Tue Oct 17 16:27:27 UTC 2006 ..."
-
 
 Tue Oct 17 21:09:36 UTC 2006  Shanshan Jiang <shanshan.jiang@vanderbilt.edu>
 
