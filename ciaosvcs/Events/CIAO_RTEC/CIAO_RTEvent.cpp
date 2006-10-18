@@ -15,6 +15,7 @@
 #include "ciao/CIAO_common.h"
 #include "SimpleAddressServer.h"
 #include <tao/ORB_Core.h>
+#include <orbsvcs/CosNamingC.h>
 
 #include <sstream>
 
@@ -249,6 +250,7 @@ namespace CIAO
     ACE_THROW_SPEC ((
       CORBA::SystemException))
   {
+    ACE_UNUSED_ARG (ev);
     if (CIAO::debug_level () > 10)
       {
         ACE_DEBUG ((LM_DEBUG, "------CIAO::RTEventService::push_event------\n"));
@@ -307,7 +309,6 @@ namespace CIAO
         ACE_DEBUG ((LM_DEBUG, "CIAO::EventService_Factory_impl::create_rt_event_channel\n"));
       }
 
-    // @@ (GD) Anything else to do to get the svc.conf file options?
     TAO_EC_Default_Factory::init_svcs ();
 
     TAO_EC_Event_Channel_Attributes attributes (this->root_poa_.in (),
@@ -486,6 +487,7 @@ namespace CIAO
 
   ::RtecEventChannelAdmin::EventChannel_ptr
   RTEventService::tao_rt_event_channel (ACE_ENV_SINGLE_ARG_DECL)
+    ACE_THROW_SPEC ((::CORBA::SystemException))
   {
     return this->rt_event_channel_;
   }
