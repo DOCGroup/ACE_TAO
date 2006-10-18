@@ -45,12 +45,12 @@ DLD             = $(LD)
 INCLDIRS        +=
 LIBS            += -lrtems++ -lrtemsbsp -lrtemscpu
 
-# Hand build tests/rtems_init.o  .. something like this
+# Hand build etc/rtems_init.o  .. something like this
 #  sparc-rtems-gcc -B/opt/rtems/sparc-rtems/erc32/lib/ -specs bsp_specs \
 #       -qrtems -mcpu=cypress  -O -g \
 #       -I$(ACE_ROOT) -c -o rtems_init.o rtems_init.c
 
-LD              = $(CXX) $(CCFLAGS) $(ACE_ROOT)/tests/rtems_init.o
+LD              = $(CXX) $(CCFLAGS) $(ACE_ROOT)/etc/rtems_init.o
 LDFLAGS         += -L$(RTEMS_MAKEFILE_PATH)/lib
 OCFLAGS         += -O
 PIC             =
