@@ -79,6 +79,59 @@
 #  include <inttypes.h>
 # endif
 
+#ifdef ACE_LACKS_INTPTR_T
+# include "ace/If_Then_Else.h"
+
+// This intptr_t typedef is here instead of
+// <ace/os_include/os_inttypes.h> since it depends on the template
+// metaprogramming in <ace/If_Then_Else.h>.
+
+// We could compare ACE_SIZEOF_VOID_P against ACE_SIZEOF_LONG, etc.
+// However, that depends on the ACE preprocessor symbol definitions in
+// the platform-specific configuration header being correct.
+// The template meta-programming approach we take below,
+// i.e. determining the type at compile-time rather than at
+// preprocessing-time, will work for all platforms, and does not
+// depend on ACE developer-defined configuration parameters.
+
+typedef ACE::If_Then_Else<
+  (sizeof (void*) == sizeof (signed int)),
+  signed int,
+  ACE::If_Then_Else<
+    (sizeof (void*) == sizeof (signed long))
+    signed long,
+#ifdef ACE_LACKS_LONGLONG_T
+    void  /* Unknown. Force an invalid type */
+#else  
+    ACE::If_Then_Else<
+      (sizeof (void*) == sizeof (signed long long))
+      signed long long,
+      void /* Unknown. Force an invalid type */
+      >::result_type
+#endif  /* ACE_LACKS_LONGLONG_T */
+    >::result_type
+  >::result_type intptr_t;
+
+typedef ACE::If_Then_Else<
+  (sizeof (void*) == sizeof (unsigned int)),
+  unsigned int,
+  ACE::If_Then_Else<
+    (sizeof (void*) == sizeof (unsigned long))
+    unsigned long,
+#ifdef ACE_LACKS_UNSIGNEDLONGLONG_T
+    void  /* Unknown. Force an invalid type */
+#else
+    ACE::If_Then_Else<
+      (sizeof (void*) == sizeof (unsigned long long))
+      unsigned long long,
+      void /* Unknown. Force an invalid type */
+      >::result_type
+#endif  /* ACE_LACKS_UNSIGNEDLONGLONG_T */
+    >::result_type
+  >::result_type uintptr_t;
+
+#endif  /* ACE_LACKS_INTPTR_T */
+
 // A char always has 1 byte, by definition.
 # define ACE_SIZEOF_CHAR 1
 
