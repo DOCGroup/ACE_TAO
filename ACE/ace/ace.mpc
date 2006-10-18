@@ -192,6 +192,7 @@ project(ACE) : acedefaults, core, other, codecs, token, svcconf, uuid, filecache
     Recyclable.cpp
     Refcountable.cpp
     Registry.cpp
+    Rtems_init.c
     RW_Mutex.cpp
     RW_Process_Mutex.cpp
     RW_Thread_Mutex.cpp

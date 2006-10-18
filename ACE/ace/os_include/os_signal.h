@@ -159,7 +159,7 @@ extern "C"
 #  define ACE_NSIG (_NSIGS + 1)
 #elif defined (__Lynx__)
 #  define ACE_NSIG (NSIG + 1)
-#elif defined (__rtems__)
+#elif defined (ACE_HAS_RTEMS)
 #  define ACE_NSIG (SIGRTMAX)
 #elif defined(__BORLANDC__) && (__BORLANDC__ >= 0x600)
 #  define ACE_NSIG _NSIG
@@ -211,7 +211,7 @@ extern "C"
 #elif defined (INTEGRITY)
    typedef void (*ACE_SignalHandler)();
    typedef void (*ACE_SignalHandlerV)(int);
-#elif defined (__rtems__)
+#elif defined (ACE_HAS_RTEMS)
    typedef void (*ACE_SignalHandler)();
    typedef void (*ACE_SignalHandlerV)();
 #else /* This is necessary for some older broken version of cfront */
@@ -262,11 +262,11 @@ extern "C"
      int _Psigwait __((const sigset_t *set, int *sig));
 #  endif /* __DECCXX_VER */
 #elif !defined (ACE_HAS_SIGWAIT)
-#  if defined(__rtems__)
+#  if defined(ACE_HAS_RTEMS)
      int sigwait (const sigset_t *set, int *sig);
 #  else
      int sigwait (sigset_t *set);
-#  endif /* __rtems__ */
+#  endif /* ACE_HAS_RTEMS */
 #endif /* ! DIGITAL_UNIX && ! ACE_HAS_SIGWAIT */
 
 #if !defined (ACE_HAS_PTHREAD_SIGMASK_PROTOTYPE)
