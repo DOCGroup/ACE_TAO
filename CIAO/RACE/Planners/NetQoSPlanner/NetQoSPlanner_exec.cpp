@@ -190,63 +190,77 @@ namespace CIAO
         bool retval = true;
         for (size_t i = 0; i < plans.length (); ++i)
           {
-            ::Deployment::DeploymentPlan &dep_plan = plans[i].plan;
-            bool flag_netqos_present = false;
-
-            for (size_t j = 0;
-                 j < dep_plan.infoProperty.length();
-                 ++j)
+            if (CIAO::RACE::DEPLOY == plans[i].command)
               {
-                if (ACE_OS::strcmp (dep_plan.infoProperty[j].name.in (),
-                                    "CIAONetworkQoS") == 0)
-                 {
-                   flag_netqos_present = true;
-                   ::Deployment::DiffservInfos dscp_infos;
-                   ::CIAO::DAnCE::NetworkQoS::NetQoSRequirement *net_qos_req;
-
-                   if (dep_plan.infoProperty [j].value >>= net_qos_req)
-                    {
-                        this->build_instance_node_map (dep_plan);
-                        if (this->process_netqos_req (net_qos_req, dep_plan, dscp_infos))
-                          {
-                            // Remove CIAONetworkQoS infoProperty
-                            CORBA::ULong length = dep_plan.infoProperty.length();
-                            //ACE_DEBUG ((LM_ERROR, "(%N:%l): Length of dep_plan.infoProperty before removal = %u\n",length));
-                            if (length > j+1)
-                            {
-                              for (size_t k = j + 1; k < length; ++k)
-                                {
-                                  dep_plan.infoProperty[k-1] = dep_plan.infoProperty[k];
-                                }
-                            }
-                            dep_plan.infoProperty.length(length - 1);
-                            // Removal code ends
-                            this->add_network_priorities (dep_plan, dscp_infos);
-                            this->dump_policies (dep_plan);
-                            this->dump_deployed_resources (dep_plan);
-                            retval = true;
-                          }
-                        else
-                          {
-                            ACE_DEBUG ((LM_ERROR, "(%N:%l): process_netqos_req failed.\n"));
-                            retval = false;
-                          }
-                    }
-                    else
-                    {
-                      ACE_DEBUG ((LM_ERROR, "(%N:%l)Conversion to Any failed for NetworkQoS.\n"));
-                      retval = false;
-                    }
-                 }
-               }
-             if (!flag_netqos_present)
-               {
-                 ACE_DEBUG ((LM_DEBUG, "No CIANetworkQoS info-property defined in this deployment plan.\n"));
-               }
+                retval = this->deploy_plan (plans[i].plan);
+              }
           }
         return retval;
       }
       
+      bool NetQoSPlanner_exec_i::deploy_plan (::Deployment::DeploymentPlan &dep_plan)
+      {
+          bool flag_netqos_present = false;
+          bool retval = true;
+
+          for (size_t j = 0; j < dep_plan.infoProperty.length(); ++j)
+            {
+              if (ACE_OS::strcmp (dep_plan.infoProperty[j].name.in (),
+                                  "CIAONetworkQoS") == 0)
+               {
+                 flag_netqos_present = true;
+                 ::Deployment::DiffservInfos dscp_infos;
+                 ::CIAO::DAnCE::NetworkQoS::NetQoSRequirement *net_qos_req;
+
+                 if (dep_plan.infoProperty [j].value >>= net_qos_req)
+                  {
+                      if (this->process_netqos_req (net_qos_req, dep_plan, dscp_infos))
+                        {
+                          this->remove_netqos(dep_plan, j);
+                          this->add_network_priorities (dep_plan, dscp_infos);
+                          //this->dump_policies (dep_plan);
+                          //this->dump_deployed_resources (dep_plan);
+                          retval = true;
+                        }
+                      else
+                        {
+                          ACE_DEBUG ((LM_ERROR, "(%N:%l): process_netqos_req failed.\n"));
+                          retval = false;
+                        }
+                  }
+                  else
+                  {
+                    ACE_DEBUG ((LM_ERROR, "(%N:%l)Conversion to Any failed for NetworkQoS.\n"));
+                    retval = false;
+                  }
+               }
+             }
+           if (!flag_netqos_present)
+             {
+               ACE_DEBUG ((LM_DEBUG, "No CIANetworkQoS info-property defined in this deployment plan.\n"));
+             }
+          return retval;
+      }
+
+      
+      void NetQoSPlanner_exec_i::remove_netqos (::Deployment::DeploymentPlan &dep_plan, 
+                                                size_t property_index)
+      {
+          // Remove CIAONetworkQoS infoProperty
+          CORBA::ULong length = dep_plan.infoProperty.length();
+          size_t j = property_index;
+          //ACE_DEBUG ((LM_ERROR, "(%N:%l): Length of dep_plan.infoProperty before removal = %u\n",length));
+          if (length > j+1)
+          {
+            for (size_t k = j + 1; k < length; ++k)
+              {
+                dep_plan.infoProperty[k-1] = dep_plan.infoProperty[k];
+              }
+          }
+          dep_plan.infoProperty.length(length - 1);
+          // Removal code ends
+      }
+
       void NetQoSPlanner_exec_i::dump_policies (const ::Deployment::DeploymentPlan &dep_plan)
       {
         ACE_DEBUG((LM_DEBUG,"Dumping policies\n"));
@@ -329,6 +343,7 @@ pd.NWPriorityModelDef().reply_dscp));
         size_t set_len = net_qos_req->conn_qos_set.length();
         if (set_len != 0)
           {
+            this->build_instance_node_map (dep_plan);
             // Build an in memory map of logical nodes to the physical hosts.
             this->build_node_map ();
 
@@ -373,40 +388,47 @@ pd.NWPriorityModelDef().reply_dscp));
                       this->get_traffic_qos (qos_req, conn_qos);
                       long fwd_dscp = 0, rev_dscp = 0;
 
-                      if (-1 == this->make_flow_request (srcIP, destIP, conn_qos.fwdBWD, qos_req, fwd_dscp))
-                      {
-                        rollback = true;
-                        BREAK(outer);
-                      }
-
-                      size_t len = dscp_infos.length ();
-                      dscp_infos.length (len + 1);
-                      dscp_infos [len] = endpoint;
-                      dscp_infos [len].request_dscp = fwd_dscp;
-                      dscp_infos [len].reply_dscp = rev_dscp; /// Assigning zero here.
-                      ACE_DEBUG ((LM_DEBUG,"In NetQoSPlanner_exec_i::process_netqos_req: fwd_dscp = %d\n",fwd_dscp));
-
-                      if (conn_qos.revBWD > 0)
-                      {
-                        if (-1 == this->make_flow_request (destIP, srcIP, conn_qos.revBWD, qos_req, rev_dscp))
+                      if (conn_qos.fwdBWD > 0)
                         {
-                          rollback = true;
-                          BREAK(outer);
+                          if (-1 == this->make_flow_request (srcIP, destIP, conn_qos.fwdBWD, qos_req, fwd_dscp))
+                            {
+                              rollback = true;
+                              BREAK(outer);
+                            }
+
+                            size_t len = dscp_infos.length ();
+                            dscp_infos.length (len + 1);
+                            dscp_infos [len] = endpoint;
+                            dscp_infos [len].request_dscp = fwd_dscp;
+                            dscp_infos [len].reply_dscp = rev_dscp; /// Assigning zero here.
+                            ACE_DEBUG ((LM_DEBUG,"In NetQoSPlanner_exec_i::process_netqos_req: fwd_dscp = %d\n",fwd_dscp));
+
+                            if (conn_qos.revBWD > 0)
+                            {
+                              if (-1 == this->make_flow_request (destIP, srcIP, conn_qos.revBWD, qos_req, rev_dscp))
+                              {
+                                rollback = true;
+                                BREAK(outer);
+                              }
+                              ACE_DEBUG ((LM_DEBUG,"In NetQoSPlanner_exec_i::process_netqos_req: rev_dscp = %d\n",rev_dscp));
+                              dscp_infos [len].reply_dscp = rev_dscp;
+                            }
+                            /*              std::cerr
+                                            << "Connection Name = " << conn_qos.connections [conn_num].connection_name   << std::endl
+                                            << "client Name = " << conn_qos.connections [conn_num].client                << std::endl
+                                            << "client Port Name = " << conn_qos.connections [conn_num].client_port_name << std::endl
+                                            << "server Name = " << conn_qos.connections [conn_num].server                << std::endl
+                                            << "server Port Name = " << conn_qos.connections [conn_num].server_port_name << std::endl;
+                             */
                         }
-                        ACE_DEBUG ((LM_DEBUG,"In NetQoSPlanner_exec_i::process_netqos_req: rev_dscp = %d\n",rev_dscp));
-                        dscp_infos [len].reply_dscp = rev_dscp;
-                      }
-                      /*              std::cerr
-                                      << "Connection Name = " << conn_qos.connections [conn_num].connection_name   << std::endl
-                                      << "client Name = " << conn_qos.connections [conn_num].client                << std::endl
-                                      << "client Port Name = " << conn_qos.connections [conn_num].client_port_name << std::endl
-                                      << "server Name = " << conn_qos.connections [conn_num].server                << std::endl
-                                      << "server Port Name = " << conn_qos.connections [conn_num].server_port_name << std::endl;
-                       */
+                      else
+                        {
+                          ACE_DEBUG((LM_ERROR,"Invalid forward bandwidth = %d\n",conn_qos.fwdBWD));
+                        }
                     }
                   else
                     {
-                      ACE_DEBUG((LM_DEBUG,"Connection was not found in the deployment plan.\n"));
+                      ACE_DEBUG((LM_DEBUG,"Extra connection found in the NetQoS requirements structure.\n"));
                     }  
                     /*
                        std::cerr << "fwdBWD = " << conn_qos.fwdBWD << std::endl;
@@ -424,12 +446,16 @@ pd.NWPriorityModelDef().reply_dscp));
 
               if (rollback)
                 {
+                  ACE_DEBUG ((LM_DEBUG,"Starting Rollback...\n"));
                   this->BB_proxy_.rollback ();
+                  ACE_DEBUG ((LM_DEBUG,"Finished Rollback.\n"));
                   return false;
                 }
               else
                 {
+                  ACE_DEBUG ((LM_DEBUG,"Starting Commit..\n"));
                   this->BB_proxy_.commit ();
+                  ACE_DEBUG ((LM_DEBUG,"Finished Commit.\n"));
                   return true;
                 }
           }
@@ -564,13 +590,13 @@ pd.NWPriorityModelDef().reply_dscp));
           flowinfo.biDirectional = CORBA::Boolean (false);
           flowinfo.flowDuration = CORBA::Long (1000);
 
-          ACE_DEBUG ((LM_DEBUG,"In NetQoSPlanner_exec_i::process_netqos_req: Requesting flow.\n"));
+          ACE_DEBUG ((LM_DEBUG,"In NetQoSPlanner_exec_i::make_flow_request: Requesting flow.\n"));
           int result = this->BB_proxy_.flow_request (flowinfo, qos_req, dscp);
 
           if (-1 == result)
-              ACE_DEBUG ((LM_ERROR,"In NetQoSPlanner_exec_i::process_netqos_req: Requested flow was not admitted.\n"));
+              ACE_DEBUG ((LM_ERROR,"In NetQoSPlanner_exec_i::make_flow_request: Requested flow was not admitted.\n"));
           else
-              ACE_DEBUG ((LM_DEBUG,"In NetQoSPlanner_exec_i::process_netqos_req: Flow Accepted.\n"));
+              ACE_DEBUG ((LM_DEBUG,"In NetQoSPlanner_exec_i::make_flow_request: Flow Accepted.\n"));
 
           return result;
       }
