@@ -1,3 +1,9 @@
+Wed Oct 19 08:07:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+	* tests/rtems_init.c:
+	* etc/rtems_init.c:
+	  Moved from tests to etc
+
 Tue Oct 18 06:27:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 	* examples/Reactor/Misc/test_signals_1.cpp:
