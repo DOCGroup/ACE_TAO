@@ -5,7 +5,7 @@
  *  with some modifications to support loopback only.  This file
  *  is OK for a starting point for a real networked application.
  *     --joel sherrill 16 Mar 2001
- * 
+ *
  * This program may be distributed and used for any purpose.
  * I ask only that you:
  *	1. Leave this author information intact.
@@ -20,7 +20,11 @@
  *  $Id$
  */
 
+#if defined (ACE_HAS_RTEMS)
+
 #include <bsp.h>
+
+char *rtems_progname;
 
 #define CONFIGURE_TEST_NEEDS_CONSOLE_DRIVER
 #define CONFIGURE_TEST_NEEDS_CLOCK_DRIVER
@@ -50,10 +54,10 @@ rtems_task Init (rtems_task_argument argument);
 
 /*
  * Network configuration
- * 
+ *
  ************************************************************
  * EDIT THIS FILE TO REFLECT YOUR NETWORK CONFIGURATION     *
- * BEFORE RUNNING ANY RTEMS PROGRAMS WHICH USE THE NETWORK! * 
+ * BEFORE RUNNING ANY RTEMS PROGRAMS WHICH USE THE NETWORK! *
  ************************************************************
  *
  *  $Id$
@@ -88,9 +92,9 @@ static char ethernet_address[6] = { 0x00, 0x80, 0x7F, 0x22, 0x61, 0x77 };
 
 #endif
 
-#define RTEMS_USE_LOOPBACK 
+#define RTEMS_USE_LOOPBACK
 #define RTEMS_USE_LOOPBACK_ONLY
-#ifdef RTEMS_USE_LOOPBACK 
+#ifdef RTEMS_USE_LOOPBACK
 /*
  * Loopback interface
  */
@@ -119,7 +123,7 @@ static struct rtems_bsdnet_ifconfig netdriver_config = {
 	RTEMS_BSP_NETWORK_DRIVER_NAME,		/* name */
 	RTEMS_BSP_NETWORK_DRIVER_ATTACH,	/* attach function */
 
-#ifdef RTEMS_USE_LOOPBACK 
+#ifdef RTEMS_USE_LOOPBACK
 	&loopback_config,		/* link to next interface */
 #else
 	NULL,				/* No more interfaces */
@@ -208,3 +212,5 @@ Init (rtems_task_argument ignored)
   rtems_bsdnet_show_inet_routes ();
   exit (0);
 }
+
+#endif /* ACE_HAS_RTEMS */

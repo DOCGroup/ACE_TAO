@@ -1,3 +1,27 @@
+Wed Oct 19 13:52:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+	* include/makeinclude/platform_rtems.x_g++.GNU:
+	  Major cleanup of old stuff and always define ACE_HAS_RTEMS
+
+	* etc/rtems_init.c:
+	* ace/rtems_init.c:
+	  Another move, for rtems we require some functions to always
+	  be available, this defines our network settings and much more.
+	  Because we always build static, we moved this to the ACE lib,
+	  on rtems we define ACE_HAS_RTEMS and then compile the contents
+	  of this file. This way the functions in this file are available
+	  in any executable we link
+
+	* ace/OS.h:
+	* ace/os_include/os_signal.h:
+	* ace/os_include/sys/os_types.h:
+	* ace/OS_NS_stdio.h:
+	* ace/OS_NS_time.inl:
+	  Replaced __rtems__ with ACE_HAS_RTEMS
+
+	* ace/ace.mpc:
+	  Added rtems_init.c
+
 Wed Oct 19 13:01:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 	* include/makeincludes/rules.bin.GNU:

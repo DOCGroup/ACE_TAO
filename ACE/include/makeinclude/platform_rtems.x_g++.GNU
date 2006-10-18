@@ -26,15 +26,6 @@ include $(RTEMS_MAKEFILE_PATH)/make/target.cfg
 # Test for template instantiation.
 include $(ACE_ROOT)/include/makeinclude/platform_g++_common.GNU
 
-#### BEGIN target CPU-specific settings
-# look them up
-#CFLAGS = $(shell make --no-print-directory -f $(ACE_ROOT)/include/makeinclude/Makefile.rtems print_cflags)
-#CCFLAGS = $(shell make --no-print-directory -f $(ACE_ROOT)/include/makeinclude/Makefile.rtems print_cflags) -fno-implicit-templates
-#CCFLAGS = $(TEMPLATES_FLAG)
-#### END target CPU-specific settings
-
-#CXX := $(shell make --no-print-directory -f $(ACE_ROOT)/include/makeinclude/Makefile.rtems print_cxx)
-
 CFLAGS          += -D_REENTRANT -ansi -fno-builtin -fno-defer-pop -fvolatile $(PIPE_OPT) -W -Wall -I$(RTEMS_MAKEFILE_PATH)/lib/include -DACE_HAS_RTEMS
 CCFLAGS         += $(CFLAGS) $(CPPFLAGS)
 ifeq (,$(rtti))
@@ -44,14 +35,7 @@ DCFLAGS         += -g
 DLD             = $(LD)
 INCLDIRS        +=
 
-#LIBS            += -lrtems++ -lrtemsbsp -lrtemscpu
-
-# Hand build etc/rtems_init.o  .. something like this
-#  sparc-rtems-gcc -B/opt/rtems/sparc-rtems/erc32/lib/ -specs bsp_specs \
-#       -qrtems -mcpu=cypress  -O -g \
-#       -I$(ACE_ROOT) -c -o rtems_init.o rtems_init.c
-
-LD              = $(CXX) $(CCFLAGS) $(ACE_ROOT)/etc/rtems_init.o
+LD              = $(CXX) $(CCFLAGS)
 LDFLAGS         += -specs bsp_specs -qrtems -Wl,--allow-multiple-definition -B$(RTEMS_MAKEFILE_PATH)/lib
 OCFLAGS         += -O
 PIC             =
