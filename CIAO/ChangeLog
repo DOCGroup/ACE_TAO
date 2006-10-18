@@ -1,7 +1,12 @@
+Wed Oct 18 12:05:00 UTC 2006  Simon Massey  <sma@prismtech.com>
+
+        * DAnCE/TargetManager/DomainDataManager.cpp
+          Removed warnings about unused local variables (line 186 & 558)
+
 Wed Oct 18 09:50:00 UTC 2006  Simon Massey  <sma@prismtech.com>
 
         * DAnCE/TargetManager/CmpClient.cpp
-          Removed warning about unused local variable
+          Removed warning about unused local variable (line 154)
 
 Tue Oct 17 21:23:27 UTC 2006  Shanshan Jiang <shanshan.jiang@vanderbilt.edu>
 
