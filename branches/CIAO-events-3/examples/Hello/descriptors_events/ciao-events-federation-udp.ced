@@ -12,7 +12,7 @@
     <type>RTEC</type>
     <svc_cfg_file>dummy.conf</svc_cfg_file>
        
-    <!-- The remote EC's host name and port # 
+    <!-- The remote EC's host name and port # -->
     <addr_serv>
       <name>addr_serv_0</name>
       <port>1234</port>
@@ -22,11 +22,11 @@
     <udp_sender>
       <name>upd_sender_1</name>
       <addr_serv_id>addr_serv_0</addr_serv_id>
-    </udp_sender> -->
+    </udp_sender> 
   </eventServiceConfiguration>
   
   
-<!--  
+
   <eventServiceConfiguration id="es_configuration-02">
     <name>ES_02</name>
     <node>SenderNode</node>
@@ -45,6 +45,5 @@
       <listen_port>1234</listen_port>
     </udp_receiver>
   </eventServiceConfiguration>  
--->
 
 </CIAO:CIAOEvents>  
