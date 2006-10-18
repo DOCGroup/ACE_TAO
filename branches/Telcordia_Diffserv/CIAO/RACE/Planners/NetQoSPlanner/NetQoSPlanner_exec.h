@@ -226,6 +226,8 @@ namespace CIAO
 
 
         bool resolve_BB ();
+        bool deploy_plan (::Deployment::DeploymentPlan &dep_plan);
+        void remove_netqos (::Deployment::DeploymentPlan &dep_plan, size_t property_index);
 
         bool process_netqos_req (const CIAO::DAnCE::NetworkQoS::NetQoSRequirement *, 
                                  const ::Deployment::DeploymentPlan &dep_plan,
