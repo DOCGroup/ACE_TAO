@@ -6,6 +6,7 @@
 #include "ace/Object_Manager_Base.h"
 #include "ace/OS_NS_string.h"
 #include "ace/Global_Macros.h"
+#include "ace/Basic_Types.h"  /* intptr_t */
 #include "ace/os_include/os_errno.h"
 #include "ace/os_include/os_search.h"
 
@@ -76,13 +77,9 @@ ACE_INLINE void *
 ACE_OS::atop (const char *s)
 {
   ACE_TRACE ("ACE_OS::atop");
-  // It would be nice to make use of Basic_Types.h here, but that
-  // file relies on OS.h. Fortunately, most platforms have int
-  // the same as pointer size (IA32, IA64), with Win64 being the
-  // exception.
 #if defined (ACE_WIN64)
   __int64 ip = ::_atoi64 (s);
-#elif defined(ACE_WIN32) && !defined(ACE_LACKS_INTPTR_T)
+#elif defined(ACE_WIN32)
   // Avoid warnings with /Wp64
   intptr_t ip = ::atoi (s);
 #else
@@ -98,7 +95,7 @@ ACE_OS::atop (const wchar_t *s)
 {
 #  if defined (ACE_WIN64)
   __int64 ip = ::_wtoi64 (s);
-#  elif defined(ACE_WIN32) && !defined(ACE_LACKS_INTPTR_T)
+#  elif defined(ACE_WIN32)
   // Avoid warnings with /Wp64
   intptr_t ip = ACE_OS::atoi (s);
 #  else

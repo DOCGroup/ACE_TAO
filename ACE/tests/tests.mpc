@@ -438,6 +438,13 @@ project(INET Addr Test) : acetest {
   }
 }
 
+project(Integer_Truncate Test) : acetest {
+  exename = Integer_Truncate_Test
+  Source_Files {
+    Integer_Truncate_Test.cpp
+  }
+}
+
 project(IOStream Test) : acetest {
   exename = IOStream_Test
   Source_Files {

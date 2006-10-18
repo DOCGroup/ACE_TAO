@@ -1,3 +1,50 @@
+Tue Oct 18 06:02:28 UTC 2006  Ossama Othman  <ossama_othman at symantec dot com>
+
+        * ace/Basic_Types.h (intptr_t, uintptr_t):
+
+          Provided suitable typedefs for these standard types when
+          ACE_LACKS_INTPTR_T is defined.
+
+        * ace/Event_Handler.cpp (~ACE_Event_Handler_var):
+        
+          Only use an ACE_Errno_Guard if the underlying ACE_Event_Handler
+          pointer is non-zero.  Saves a TSS access in the zero
+          ACE_Event_Handler pointer case.
+        
+          (operator=):
+
+          Made strongly exception safe.
+
+        * ace/FILE_IO.cpp (send, recv):
+        * ace/Message_Queue.cpp (enqueue, dequeue):
+        * ace/Message_Queue_T.cpp:
+        * ace/OS_NS_unistd.inl (hostname):
+
+          Explicitly supply the "int" "TO" type to the
+          ACE_Utils::Truncate<> function template.  It must now be
+          explicitly specified since ACE_Utils::Truncate<> now supports
+          truncation to all integer types, not just "int".
+
+        * ace/Global_Macros.h (ACE_STATIC_CONSTANT):
+
+          New macro for in-class static integral constant initialization
+          that works around compilers that don't like such initialization.
+          In-class integral constants in this case are meant to be
+          compile-time constants so that they may be used as template
+          arguments, for example.  BOOST provides a similar macro.
+
+        * ace/Truncate.h:
+
+          Generalized the ACE_Utils::Truncate<> function template
+          implementation for all integer types.
+
+        * tests/run_test.lst:
+        * tests/tests.mpc:
+
+          Added new "Integer_Truncate_Test" test that verifies the
+          ACE_Utils::Truncate<> function template works for all type
+          size/sign scenarios.
+
 Tue Oct 17 21:28:11 UTC 2006  Iliyan Jeliazkov  <iliyan@ociweb.com>
 
         * ace/Service_Gestalt.cpp (parse_args_i):
