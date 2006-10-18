@@ -1,3 +1,11 @@
+Wed Oct 19 13:01:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+	* include/makeincludes/rules.bin.GNU:
+	* include/makeincludes/rules.lib.GNU:
+	* include/makeincludes/wrapper_macros.GNU:
+	* include/makeincludes/platform_linux_borland.GNU:
+	  Removed kylix support
+
 Wed Oct 19 10:05:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 	* apps/Gateway/Gateway/File_Parser.cpp:
