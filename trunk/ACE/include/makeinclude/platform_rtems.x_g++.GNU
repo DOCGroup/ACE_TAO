@@ -43,7 +43,8 @@ endif # rtti
 DCFLAGS         += -g
 DLD             = $(LD)
 INCLDIRS        +=
-LIBS            += -lrtems++ -lrtemsbsp -lrtemscpu
+
+#LIBS            += -lrtems++ -lrtemsbsp -lrtemscpu
 
 # Hand build etc/rtems_init.o  .. something like this
 #  sparc-rtems-gcc -B/opt/rtems/sparc-rtems/erc32/lib/ -specs bsp_specs \
@@ -51,7 +52,7 @@ LIBS            += -lrtems++ -lrtemsbsp -lrtemscpu
 #       -I$(ACE_ROOT) -c -o rtems_init.o rtems_init.c
 
 LD              = $(CXX) $(CCFLAGS) $(ACE_ROOT)/etc/rtems_init.o
-LDFLAGS         += -L$(RTEMS_MAKEFILE_PATH)/lib
+LDFLAGS         += -specs bsp_specs -qrtems -Wl,--allow-multiple-definition -B$(RTEMS_MAKEFILE_PATH)/lib
 OCFLAGS         += -O
 PIC             =
 
