@@ -183,7 +183,7 @@ int CIAO::DomainDataManager::call_all_node_managers ()
             deployment_config_.get_node_manager
             (initial_domain_.node[i].name.in ());
         }
-      catch (CORBA::Exception& ex)
+      catch (CORBA::Exception&)
         {
           ACE_ERROR ((LM_ERROR, "DANCE::TM (%P|%t) DomainDataManager.cpp: "
                       "Error trying to contact NodeManager %s\n",
@@ -555,7 +555,7 @@ void CIAO::DomainDataManager::stop_monitors ()
             deployment_config_.get_node_manager
             (initial_domain_.node[i].name.in ());
         }
-      catch (CORBA::Exception& ex)
+      catch (CORBA::Exception&)
         {
           ACE_ERROR ((LM_ERROR, "DANCE::TM (%P|%t) DomainDataManager.cpp: "
                       "Error in get Node Manager from Deployment Config %s\n",
