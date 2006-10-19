@@ -48,10 +48,11 @@ SOEXT           = exe
 EXEEXT          = .exe
 INSLIB          = $(ACE_ROOT)/lib
 REALCLEAN_FILES += $(CLEANUP_VSHLIB_NO_VER:%.exe=%_symvec.opt) $(CLEANUP_VSHLIB_NO_VER:%.exe=%.DSF) \
-	$(CLEANUP_BIN:%=%.DSF)
+	$(CLEANUP_BIN:%=%.DSF) $(basename $(BIN))
 
 ifneq ($(MAKEFILE),$(DEPENDENCY_FILE))
 VMS_DUMMY_ := $(shell touch $(DEPENDENCY_FILE))
 VMS_DUMMY_ := $(VMS_DUMMY_)
 endif
 
+POSTLINK       = ; ln -f $(BIN) $(basename $(BIN))

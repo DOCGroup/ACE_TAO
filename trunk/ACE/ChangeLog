@@ -1,10 +1,15 @@
+Thu Oct 19 08:27:12 UTC 2006  Martin Corino  <mcorino@remedy.nl>
+
+    * include/makeinclude/platform_openvms.GNU:
+      Small change to create hardlinks for produced executables.
+
 Wed Oct 18 16:19:38 UTC 2006  Shanshan Jiang <shanshan.jiang@vanderbilt.edu>
 
         * contrib/minizip/minizip.suo
         * contrib/minizip/miniziplibrarycode.suo
           Removed these files.
 
-Wed Oct 19 13:52:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+Wed Oct 18 13:52:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 	* include/makeinclude/platform_rtems.x_g++.GNU:
 	  Major cleanup of old stuff and always define ACE_HAS_RTEMS
@@ -28,7 +33,7 @@ Wed Oct 19 13:52:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 	* ace/ace.mpc:
 	  Added rtems_init.c
 
-Wed Oct 19 13:01:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+Wed Oct 18 13:01:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 	* include/makeincludes/rules.bin.GNU:
 	* include/makeincludes/rules.lib.GNU:
@@ -36,12 +41,12 @@ Wed Oct 19 13:01:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 	* include/makeincludes/platform_linux_borland.GNU:
 	  Removed kylix support
 
-Wed Oct 19 10:05:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+Wed Oct 18 10:05:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 	* apps/Gateway/Gateway/File_Parser.cpp:
 	  Removed egcs workaround
 
-Wed Oct 19 08:07:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+Wed Oct 18 08:07:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 	* tests/rtems_init.c:
 	* etc/rtems_init.c:
