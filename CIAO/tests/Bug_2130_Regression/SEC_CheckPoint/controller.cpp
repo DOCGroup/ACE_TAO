@@ -60,7 +60,7 @@ parse_args
     switch( c )
     {
       case 'i':
-         _ident = atoi( get_opts.opt_arg() );
+         _ident = ACE_OS::atoi( get_opts.opt_arg() );
          break;
 
       case 'k':
@@ -68,11 +68,11 @@ parse_args
         break;
 
       case 'l':
-        _loop = atoi( get_opts.opt_arg() );
+        _loop = ACE_OS::atoi( get_opts.opt_arg() );
         break;
 
       case 't':
-        _testcase = atoi( get_opts.opt_arg() );
+        _testcase = ACE_OS::atoi( get_opts.opt_arg() );
         break;
 
       case '?':  // display help for use of the server.

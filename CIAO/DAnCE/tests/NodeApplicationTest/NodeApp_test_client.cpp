@@ -29,7 +29,7 @@ int parse_args (int argc, char *argv[])
         break;
 
       case 'n':
-        comp_number = atoi (get_opts.opt_arg ());
+        comp_number = ACE_OS::atoi (get_opts.opt_arg ());
         break;
 
       case '?':

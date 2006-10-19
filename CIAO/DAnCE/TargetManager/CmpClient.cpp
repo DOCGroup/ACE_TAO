@@ -172,7 +172,7 @@ int main (int argc, char* argv[])
     elements.length (0);
 
     bool Add = 1;
-    Add = atoi (argv[3]);
+    Add = ACE_OS::atoi (argv[3]);
 
     if (Add)
     {
