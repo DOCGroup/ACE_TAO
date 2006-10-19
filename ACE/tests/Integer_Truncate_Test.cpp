@@ -113,10 +113,10 @@ sizeof_from_lt_sizeof_to (void)
   }
 
   ACE_DEBUG ((LM_INFO,
-              ACE_TEXT (("\t%s\n")),
+              ACE_TEXT ("\t%s\n"),
               success
-              ? ACE_TEXT (("PASSED"))
-              : ACE_TEXT (("FAILED"))));
+              ? ACE_TEXT ("PASSED")
+              : ACE_TEXT ("FAILED")));
   
   return success;
 }
@@ -214,10 +214,10 @@ sizeof_from_eq_sizeof_to (void)
   }
 
   ACE_DEBUG ((LM_INFO,
-              ACE_TEXT (("\t%s\n")),
+              ACE_TEXT ("\t%s\n"),
               success
-              ? ACE_TEXT (("PASSED"))
-              : ACE_TEXT (("FAILED"))));
+              ? ACE_TEXT ("PASSED")
+              : ACE_TEXT ("FAILED")));
 
   return success;
 }
@@ -315,8 +315,8 @@ sizeof_from_gt_sizeof_to (void)
   ACE_DEBUG ((LM_INFO,
               ACE_TEXT (("\t%s\n")),
               success
-              ? ACE_TEXT (("PASSED"))
-              : ACE_TEXT (("FAILED"))));
+              ? ACE_TEXT ("PASSED")
+              : ACE_TEXT ("FAILED")));
 
   return success;
 }
