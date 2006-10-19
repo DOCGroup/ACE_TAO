@@ -11,6 +11,7 @@ project (RepositoryManager) : ciao_server_dnc, ciao_config_handlers, zlib {
   //in the Package_Handlers/PC_Intf.h
   exename = RepositoryManagerDaemon
   requires += zlib
+  after += minizip
   libs += Package_Config_Handlers minizip  
 
   IDL_Files {

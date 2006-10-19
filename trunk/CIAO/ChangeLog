@@ -1,3 +1,9 @@
+Thu Oct 19 23:22:49 UTC 2006  Shanshan Jiang <shanshan.jiang@vanderbilt.edu>
+
+        * DAnCE/RepositoryManager/RepositoryManager.mpc
+          Modified this file to make sure RepositoryManager project is built
+          after minizip project.
+
 Thu Oct 19 10:47:12 UTC 2006  xiong,ming  <ming.xiong@vanderbilt.edu>
 
 
