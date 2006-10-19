@@ -10,7 +10,7 @@ Thu Oct 19 23:20:26 UTC 2006  Ossama Othman  <ossama_othman at symantec dot com>
 Thu Oct 19 22:58:02 UTC 2006  Ossama Othman  <ossama_othman at symantec dot com>
 
         * ace/Truncate.h:
-        
+
           Borland compilers currently cannot handle the template
           meta-programming in this header.  Work around the limitation by
           explicitly specializing the ACE_Utils::Truncator<> structure
