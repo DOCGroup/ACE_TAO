@@ -1,7 +1,12 @@
+Thu Oct 19 11:48:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+	* ace/Rtems_init.c:
+	  Fixed empty translation unit warnings
+
 Thu Oct 19 08:27:12 UTC 2006  Martin Corino  <mcorino@remedy.nl>
 
-    * include/makeinclude/platform_openvms.GNU:
-      Small change to create hardlinks for produced executables.
+	* include/makeinclude/platform_openvms.GNU:
+      	  Small change to create hardlinks for produced executables.
 
 Wed Oct 18 16:19:38 UTC 2006  Shanshan Jiang <shanshan.jiang@vanderbilt.edu>
 
