@@ -204,7 +204,7 @@ struct rtems_bsdnet_config rtems_bsdnet_config = {
  * RTEMS Startup Task
  */
 rtems_task
-Init (rtems_task_argument ignored)
+Init (rtems_task_argument)
 {
   int doSocket(void);
 
@@ -213,4 +213,7 @@ Init (rtems_task_argument ignored)
   exit (0);
 }
 
+#elif !defined (__GNUC__)
+/* Make compilers stop complaining about an empty translation unit */
+static int shut_up_compiler = 0;
 #endif /* ACE_HAS_RTEMS */
