@@ -26,8 +26,8 @@ include $(RTEMS_MAKEFILE_PATH)/make/target.cfg
 # Test for template instantiation.
 include $(ACE_ROOT)/include/makeinclude/platform_g++_common.GNU
 
-CFLAGS          += -specs bsp_specs -qrtems -D_REENTRANT -fasm -ansi -fno-builtin -fno-defer-pop -fvolatile $(PIPE_OPT) -W -Wall -I$(RTEMS_MAKEFILE_PATH)/lib/include -DACE_HAS_RTEMS -B$(RTEMS_MAKEFILE_PATH)/lib
-CCFLAGS         += $(CFLAGS) $(CPPFLAGS)
+CFLAGS          += -specs bsp_specs -qrtems -D_REENTRANT -fasm -ansi -fno-builtin -fno-defer-pop -fvolatile $(PIPE_OPT) -W -Wall -DACE_HAS_RTEMS -B$(RTEMS_MAKEFILE_PATH)/lib
+CCFLAGS         += -specs bsp_specs -qrtems -D_REENTRANT -fasm -ansi -fno-builtin -fno-defer-pop -fvolatile $(PIPE_OPT) -W -Wall -DACE_HAS_RTEMS -B$(RTEMS_MAKEFILE_PATH)/lib
 ifeq (,$(rtti))
   CCFLAGS += -fno-rtti -DACE_LACKS_RTTI
 endif # rtti
@@ -35,8 +35,8 @@ DCFLAGS         += -g
 DLD             = $(LD)
 INCLDIRS        +=
 
-LD              = $(CXX) $(CCFLAGS)
-LDFLAGS         += -Wl,--allow-multiple-definition
+LD              = $(CXX)
+LDFLAGS         += -Wl,--allow-multiple-definition -B$(RTEMS_MAKEFILE_PATH)/lib
 OCFLAGS         += -O
 PIC             =
 
