@@ -1,3 +1,11 @@
+Thu Oct 19 15:25:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/generate_rel_manpages:
+	  Updated doxygen version
+
+	* bin/MakeProjectCreator/templates/gnu.mpb:
+	  Removed kylix support
+
 Thu Oct 19 13:19:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 	* ace/OS_main.h:
