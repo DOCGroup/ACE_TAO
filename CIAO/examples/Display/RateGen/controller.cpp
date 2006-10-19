@@ -36,7 +36,7 @@ parse_args (int argc, char *argv[])
           rategen_ior_ = get_opts.opt_arg ();
           break;
         case 'r':
-          rate = atoi (get_opts.opt_arg ());
+          rate = ACE_OS::atoi (get_opts.opt_arg ());
           break;
         case '?':  // display help for use of the server.
         default:
