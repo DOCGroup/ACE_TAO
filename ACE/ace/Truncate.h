@@ -27,10 +27,17 @@
 #include "ace/If_Then_Else.h"
 #include "ace/Numeric_Limits.h"
 
+#if defined (__BORLANDC__) && __BORLANDC__ <= 0x800
+# include "ace/Basic_Types.h"
+#endif  /* __BORLANDC__ <= 0x800 */
+
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace ACE_Utils
 {
+
+#if !defined (__BORLANDC__) || __BORLANDC__ > 0x800
+
   template<typename T> struct Sign_Check;
 
   // Specialize the unsigned signed cases.
@@ -470,6 +477,175 @@ namespace ACE_Utils
 
     return truncator() (val);
   }
+
+#else
+
+  // Borland can't handle the template meta-programming above so
+  // provide explicit specializations for a few types.  More will be
+  // added if necessary.
+
+  /**
+   * @deprecated Borland ACE_Utils::Truncator<> specializations should
+   *             be removed.
+   */
+
+  template<typename FROM, typename TO> struct Truncator;
+
+  // Partial specialization for the case where the types are the same.
+  // No truncation is necessary.
+  template<typename T>
+  struct Truncator<T, T>
+  {
+    T operator() (T val)
+    {
+      return val;
+    }
+  };
+
+  //----------------------------------------------------------
+  // sizeof(FROM) >  sizeof(TO)
+  //----------------------------------------------------------
+  template<>
+  struct Truncator<ACE_INT64, ACE_INT32>
+  {
+    ACE_INT32 operator() (ACE_INT64 val)
+    {
+      return 
+        (val > ACE_Numeric_Limits<ACE_INT32>::max ()
+         ? ACE_Numeric_Limits<ACE_INT32>::max ()
+         : static_cast<ACE_INT32> (val));
+    }
+  };
+
+  template<>
+  struct Truncator<ACE_INT64, ACE_UINT32>
+  {
+    ACE_UINT32 operator() (ACE_INT64 val)
+    {
+      return 
+        (val > static_cast<ACE_INT64> (ACE_Numeric_Limits<ACE_UINT32>::max ())
+         ? ACE_Numeric_Limits<ACE_UINT32>::max ()
+         : static_cast<ACE_UINT32> (val));
+    }
+  };
+
+  template<>
+  struct Truncator<ACE_UINT64, ACE_UINT32>
+  {
+    ACE_UINT32 operator() (ACE_UINT64 val)
+    {
+      return 
+        (val > ACE_Numeric_Limits<ACE_UINT32>::max ()
+         ? ACE_Numeric_Limits<ACE_UINT32>::max ()
+         : static_cast<ACE_UINT32> (val));
+    }
+  };
+
+  template<>
+  struct Truncator<ACE_UINT64, ACE_INT32>
+  {
+    ACE_INT32 operator() (ACE_UINT64 val)
+    {
+      return 
+        (val > static_cast<ACE_UINT64> (ACE_Numeric_Limits<ACE_INT32>::max ())
+         ? ACE_Numeric_Limits<ACE_INT32>::max ()
+         : static_cast<ACE_INT32> (val));
+    }
+  };
+
+  //----------------------------------------------------------
+  // sizeof(FROM) == sizeof(TO)
+  //----------------------------------------------------------
+
+  template<>
+  struct Truncator<ACE_INT32, ACE_UINT32>
+  {
+    ACE_UINT32 operator() (ACE_INT32 val)
+    {
+      return static_cast<ACE_UINT32> (val);
+    }
+  };
+
+  template<>
+  struct Truncator<ACE_UINT32, ACE_INT32>
+  {
+    ACE_INT32 operator() (ACE_UINT32 val)
+    {
+      return 
+        (val > static_cast<ACE_UINT32> (ACE_Numeric_Limits<ACE_INT32>::max ())
+         ? ACE_Numeric_Limits<ACE_INT32>::max ()
+         : static_cast<ACE_INT32> (val));
+    }
+  };
+
+  template<>
+  struct Truncator<ACE_INT64, ACE_UINT64>
+  {
+    ACE_UINT64 operator() (ACE_INT64 val)
+    {
+      return static_cast<ACE_UINT64> (val);
+    }
+  };
+
+  template<>
+  struct Truncator<ACE_UINT64, ACE_INT64>
+  {
+    ACE_INT64 operator() (ACE_UINT64 val)
+    {
+      return 
+        (val > static_cast<ACE_UINT64> (ACE_Numeric_Limits<ACE_INT64>::max ())
+         ? ACE_Numeric_Limits<ACE_INT64>::max ()
+         : static_cast<ACE_INT64> (val));
+    }
+  };
+
+  //----------------------------------------------------------
+  // sizeof(FROM) <  sizeof(TO)
+  //----------------------------------------------------------
+  template<>
+  struct Truncator<ACE_INT32, ACE_INT64>
+  {
+    ACE_INT64 operator() (ACE_INT32 val)
+    {
+      return static_cast<ACE_INT64> (val);
+    }
+  };
+
+  template<>
+  struct Truncator<ACE_INT32, ACE_UINT64>
+  {
+    ACE_UINT64 operator() (ACE_INT32 val)
+    {
+      return static_cast<ACE_UINT64> (val);
+    }
+  };
+
+  template<>
+  struct Truncator<ACE_UINT32, ACE_UINT64>
+  {
+    ACE_UINT64 operator() (ACE_UINT32 val)
+    {
+      return static_cast<ACE_UINT64> (val);
+    }
+  };
+
+  template<>
+  struct Truncator<ACE_UINT32, ACE_INT64>
+  {
+    ACE_INT64 operator() (ACE_UINT32 val)
+    {
+      return static_cast<ACE_INT64> (val);
+    }
+  };
+
+  // -------------------------------------
+  template<typename TO, typename FROM>
+  inline TO Truncate (FROM val)
+  {
+    return Truncator<FROM, TO>() (val);
+  }
+
+#endif  /* !__BORLANDC__ || __BORLANDC__ > 0x800 */
 
 } // namespace ACE_Utils
 
