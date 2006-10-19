@@ -42,7 +42,7 @@ twoway_server (void *arg)
 {
   ACE_INET_Addr cli_addr;
   ACE_SOCK_Stream new_stream;
-  ACE_HANDLE handle = (ACE_HANDLE) (long) arg;
+  ACE_HANDLE handle = (ACE_HANDLE) (intptr_t) arg;
 
   new_stream.set_handle (handle);
 
@@ -154,7 +154,7 @@ oneway_server (void *arg)
 {
   ACE_INET_Addr cli_addr;
   ACE_SOCK_Stream new_stream;
-  ACE_HANDLE handle = (ACE_HANDLE) (long) arg;
+  ACE_HANDLE handle = (ACE_HANDLE) (intptr_t) arg;
 
   new_stream.set_handle (handle);
 
