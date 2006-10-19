@@ -621,11 +621,7 @@ endif
 
 <%endif%>
 $(BIN): $(addprefix $(VDIR), $(OBJS)) $(DEPLIBS)
-ifndef kylix
 	$(LINK.cc) $(LDFLAGS) $(CC_OUTPUT_FLAG) $@ $^ $(VLDLIBS) $(POSTLINK)
-else
-	$(LINK.cc) $(LDFLAGS) $(CC_OUTPUT_FLAG) $(VLDLIBS) $(BORINITEXEOBJ) $(POSTLINK) $^, $@,,
-endif
 endif
 <%endif%>
 
