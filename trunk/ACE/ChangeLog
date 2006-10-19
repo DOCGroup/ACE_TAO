@@ -1,11 +1,9 @@
-<<<<<<< .mine
 Thu Oct 19 17:25:16 UTC 2006  Ossama Othman  <ossama_othman at symantec dot com>
 
         * tests/Integer_Truncate_Test.cpp:
 
           Removed redundant parentheses.
 
-=======
 Thu Oct 19 15:25:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/generate_rel_manpages:
@@ -86,7 +84,6 @@ Tue Oct 18 06:27:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 	  a bug in the VxWorks 5.5.2 compiler which we reported to windriver.
 	  By renaming these we will get an error free compilation.
 
->>>>>>> .r74890
 Tue Oct 18 06:02:28 UTC 2006  Ossama Othman  <ossama_othman at symantec dot com>
 
         * ace/Basic_Types.h (intptr_t, uintptr_t):
