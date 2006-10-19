@@ -38,7 +38,7 @@ parse_args (int argc, char *argv[])
           break;
 
         case 'r':
-        rate = atoi (get_opts.opt_arg ());
+        rate = ACE_OS::atoi (get_opts.opt_arg ());
         break;
 
         case '?':  // display help for use of the server.
