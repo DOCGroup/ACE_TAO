@@ -204,7 +204,7 @@ struct rtems_bsdnet_config rtems_bsdnet_config = {
  * RTEMS Startup Task
  */
 rtems_task
-Init (rtems_task_argument)
+Init (rtems_task_argument not_used)
 {
   int doSocket(void);
 
