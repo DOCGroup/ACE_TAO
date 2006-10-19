@@ -40,9 +40,3 @@ LDFLAGS         += -Wl,--allow-multiple-definition
 OCFLAGS         += -O
 PIC             =
 
-#### ld can't handle INCLDIRS, so override LINK definitions.
-LINK.c           = override
-LINK.c.override  = $(LD) $(LDFLAGS) $(LDLIBS) $(LIBS)
-
-LINK.cc          = override
-LINK.cc.override = $(LD)
