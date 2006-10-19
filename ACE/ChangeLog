@@ -1,3 +1,12 @@
+Thu Oct 19 23:20:26 UTC 2006  Ossama Othman  <ossama_othman at symantec dot com>
+
+        * examples/IPC_SAP/SOCK_SAP/CPP-inserver.cpp:
+        * examples/IPC_SAP/SOCK_SAP/CPP-inclient.cpp:
+        * examples/C++NPv1/Reactive_Logging_Server.h:
+
+          Fixed integer/void* conversion related warnings by using
+          the "intptr_t" type instead of "int" or "long".
+
 Thu Oct 19 22:58:02 UTC 2006  Ossama Othman  <ossama_othman at symantec dot com>
 
         * ace/Truncate.h:
