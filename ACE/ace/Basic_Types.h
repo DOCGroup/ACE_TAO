@@ -98,13 +98,13 @@ typedef ACE::If_Then_Else<
   (sizeof (void*) == sizeof (signed int)),
   signed int,
   ACE::If_Then_Else<
-    (sizeof (void*) == sizeof (signed long))
+    (sizeof (void*) == sizeof (signed long)),
     signed long,
 #ifdef ACE_LACKS_LONGLONG_T
     void  /* Unknown. Force an invalid type */
-#else  
+#else
     ACE::If_Then_Else<
-      (sizeof (void*) == sizeof (signed long long))
+      (sizeof (void*) == sizeof (signed long long)),
       signed long long,
       void /* Unknown. Force an invalid type */
       >::result_type
@@ -116,13 +116,13 @@ typedef ACE::If_Then_Else<
   (sizeof (void*) == sizeof (unsigned int)),
   unsigned int,
   ACE::If_Then_Else<
-    (sizeof (void*) == sizeof (unsigned long))
+    (sizeof (void*) == sizeof (unsigned long)),
     unsigned long,
 #ifdef ACE_LACKS_UNSIGNEDLONGLONG_T
     void  /* Unknown. Force an invalid type */
 #else
     ACE::If_Then_Else<
-      (sizeof (void*) == sizeof (unsigned long long))
+      (sizeof (void*) == sizeof (unsigned long long)),
       unsigned long long,
       void /* Unknown. Force an invalid type */
       >::result_type
