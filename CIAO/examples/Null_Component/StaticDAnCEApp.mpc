@@ -4,7 +4,7 @@
 project(StaticDAnCEApp *): ciao_static_dnc_app, iortable {
   after    += Null_Component_exec
   exename   = StaticDAnCEApp
-  requires += exceptions
+  requires += exceptions dummy_label
 
   libs     += Null_Interface_stub
   libs     += Null_Interface_svnt
