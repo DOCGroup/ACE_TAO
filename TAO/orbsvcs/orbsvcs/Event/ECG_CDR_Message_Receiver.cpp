@@ -246,7 +246,6 @@ TAO_ECG_CDR_Message_Receiver::handle_input (
                         + ACE_CDR::MAX_ALIGNMENT];
   char *header_buf = ACE_ptr_align_binary (nonaligned_header,
                                            ACE_CDR::MAX_ALIGNMENT);
-
   char nonaligned_data[ACE_MAX_DGRAM_SIZE + ACE_CDR::MAX_ALIGNMENT];
   char *data_buf = ACE_ptr_align_binary (nonaligned_data,
                                          ACE_CDR::MAX_ALIGNMENT);
@@ -310,20 +309,20 @@ TAO_ECG_CDR_Message_Receiver::handle_input (
   if ( this->check_crc_ && header.crc != crc)
     {
       static unsigned int err_count = 0;
-      ACE_ERROR ((LM_DEBUG,
+      ACE_ERROR ((LM_ERROR,
                   "******************************\n"));
 
-      ACE_ERROR ((LM_DEBUG,
+      ACE_ERROR ((LM_ERROR,
                   "ERROR DETECTED \n"));
 
       if (crc == 0)
         {
-          ACE_ERROR ((LM_DEBUG,
+          ACE_ERROR ((LM_ERROR,
                       "Sending process may not have computed CRC \n"));
         }
       else
         {
-          ACE_ERROR ((LM_DEBUG,
+          ACE_ERROR ((LM_ERROR,
                       " NETWORK CRC CHECKSUM FAILED\n"));
         }
 
@@ -347,7 +346,7 @@ TAO_ECG_CDR_Message_Receiver::handle_input (
     {
       // Update <request_map_> to mark this request as completed. (Not
       // needed if we don't care about duplicates.)
-      int result = this->mark_received (from, header.request_id);
+      int const result = this->mark_received (from, header.request_id);
       if (result != 1)
         return result;
 
@@ -485,7 +484,7 @@ TAO_ECG_CDR_Message_Receiver::Request_Map::ENTRY*
 TAO_ECG_CDR_Message_Receiver::get_source_entry (const ACE_INET_Addr &from)
 {
   // Get the entry for <from> from the <request_map_>.
-  Request_Map::ENTRY * entry;
+  Request_Map::ENTRY * entry = 0;
 
   if (this->request_map_.find (from, entry) == -1)
     {
