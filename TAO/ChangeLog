@@ -1,12 +1,26 @@
+Fri Oct 20 16:54:32 UTC 2006  Chad Elliott  <elliott_c@ociweb.com>
+
+        * tao/ORB_Core.cpp:
+
+          Fixed a memory leak where the TAO_Adapter would be leaked in the
+          event that an exception occurred before the adapter was added to
+          the adapter registry.
+
+        * tao/PortableServer/Object_Adapter.cpp:
+
+          Clean up the TAO_Root_POA and TAO_POAManager_Factory pointers in
+          the destructor in the event that the close() method was never
+          called.
+
 Fri Oct 20 07:44:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-	* tao/Transport_Connector.cpp:
-	  Updated formatting of a debug message to match the others
-	  in TAO
+        * tao/Transport_Connector.cpp:
+          Updated formatting of a debug message to match the others
+          in TAO
 
-	* orbsvcs/orbsvcs/Event/ECG_CDR_Message_Receiver.cpp:
-	* orbsvcs/orbsvcs/Event/ECG_UDP_Receiver.cpp:
-	  Use LM_ERROR together with ACE_ERROR, const improvements
+        * orbsvcs/orbsvcs/Event/ECG_CDR_Message_Receiver.cpp:
+        * orbsvcs/orbsvcs/Event/ECG_UDP_Receiver.cpp:
+          Use LM_ERROR together with ACE_ERROR, const improvements
 
 Tue Oct 17 22:04:33 UTC 2006  Ciju John  <johnc@ociweb.com>
 
