@@ -165,6 +165,8 @@
 # define ACE_LACKS_GETHOSTBYNAME
 # define ACE_LACKS_GETIPNODEBYADDR
 # define ACE_LACKS_LISTEN
+# define ACE_LACKS_NTOHL
+# define ACE_LACKS_HTONL
 
 // Missing OS features
 # define ACE_LACKS_UNIX_SYSLOG
