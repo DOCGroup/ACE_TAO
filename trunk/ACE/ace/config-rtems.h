@@ -141,7 +141,8 @@
 #define ACE_LACKS_FDOPEN
 #define ACE_HAS_TERMIOS
 
-#if defined (ACE_LACKS_NETWORKING)
+if defined (ACE_LACKS_NETWORKING)
+// Missing header files
 # define ACE_LACKS_SYS_UIO_H
 # define ACE_LACKS_SYS_SOCKET_H
 # define ACE_LACKS_NETINET_IN_H
@@ -154,6 +155,11 @@
 # define ACE_LACKS_MEMORY_H
 # define ACE_LACKS_SYS_SYSCTL_H
 # define ACE_LACKS_NETINET_TCP_H
+
+// Missing types
+# define ACE_LACKS_IOVEC
+
+// Missing methods
 #endif
 
 #endif /* ACE_CONFIG_H */
