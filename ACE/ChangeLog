@@ -1,3 +1,9 @@
+Fri Oct 20 08:55:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+	* ace/os_include/sys/os_uio.h:
+	  When INADDR_ANY is not defined, then define it, we need it in several
+	  of the ACE header files
+
 Fri Oct 20 08:44:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 	* ace/os_include/sys/os_uio.h:
