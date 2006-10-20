@@ -161,6 +161,9 @@
 # define ACE_LACKS_IOVEC
 
 // Missing methods
+#define ACE_LACKS_GETHOSTBYADDR
+#define ACE_LACKS_GETHOSTBYNAME
+#define ACE_LACKS_GETIPNODEBYADDR
 
 // Missing OS features
 #define ACE_LACKS_UNIX_SYSLOG
