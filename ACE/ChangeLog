@@ -1,3 +1,14 @@
+Fri Oct 20 09:56:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+	* ace/INET_Addr.h:
+	  Small change to improve doxygen documentation
+
+	* ace/OS_NS_sys_socket.inl (listen):
+	  Added ACE_LACKS_LISTEN
+
+	* ace/config-rtems.h:
+	  Added ACE_LACKS_LISTEN
+
 Fri Oct 20 09:36:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 	* bin/MakeProjectCreator/config/ciao_nodeapplicationmanager.mpb:
