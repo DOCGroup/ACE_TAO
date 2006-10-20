@@ -250,7 +250,13 @@ ACE_INLINE int
 ACE_OS::listen (ACE_HANDLE handle, int backlog)
 {
   ACE_OS_TRACE ("ACE_OS::listen");
+#if defined (ACE_LACKS_LISTEN)
+  ACE_UNUSED_ARG (handle);
+  ACE_UNUSED_ARG (backlog);
+  ACE_NOTSUP_RETURN (-1);
+#else
   ACE_SOCKCALL_RETURN (::listen ((ACE_SOCKET) handle, backlog), int, -1);
+#endif /* ACE_LACKS_LISTEN */
 }
 
 ACE_INLINE ssize_t
