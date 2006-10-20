@@ -51,6 +51,7 @@
 #include "ace/Arg_Shifter.h"
 #include "ace/Argv_Type_Converter.h"
 #include "ace/Static_Object_Lock.h"
+#include "ace/Auto_Ptr.h"
 
 
 #if !defined (ACE_LACKS_IOSTREAM_TOTALLY)
@@ -1856,9 +1857,7 @@ TAO_ORB_Core::root_poa (ACE_ENV_SINGLE_ARG_DECL)
 
       if (CORBA::is_nil (this->root_poa_.in ()))
         {
-          // @@ Not exception safe
-          TAO_Adapter *poa_adapter =
-            factory->create (this);
+          auto_ptr<TAO_Adapter> poa_adapter (factory->create (this));
 
           poa_adapter->open (ACE_ENV_SINGLE_ARG_PARAMETER);
           ACE_CHECK_RETURN (CORBA::Object::_nil ());
@@ -1867,9 +1866,11 @@ TAO_ORB_Core::root_poa (ACE_ENV_SINGLE_ARG_DECL)
           this->root_poa_ =
             poa_adapter->root ();
 
-          this->adapter_registry_.insert (poa_adapter
+          this->adapter_registry_.insert (poa_adapter.get ()
                                           ACE_ENV_ARG_PARAMETER);
           ACE_CHECK_RETURN (CORBA::Object::_nil ());
+
+          poa_adapter.release ();
         }
     }
 
