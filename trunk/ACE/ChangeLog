@@ -1,3 +1,12 @@
+Fri Oct 20 12:05:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+	* ace/Log_Record.inl:
+	  Added check for ACE_LACKS_NTOHL and ACE_LACKS_HTONL
+
+	* ace/config-rtems.h:
+	  Added ACE_LACKS_NTOHL and ACE_LACKS_HTONL when no networking
+	  is available
+
 Fri Oct 20 09:56:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 	* ace/INET_Addr.h:
