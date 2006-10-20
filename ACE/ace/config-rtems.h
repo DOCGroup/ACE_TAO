@@ -161,6 +161,10 @@
 # define ACE_LACKS_IOVEC
 
 // Missing methods
+
+// Missing OS features
+#define ACE_LACKS_UNIX_SYSLOG
+
 #endif
 
 #endif /* ACE_CONFIG_H */
