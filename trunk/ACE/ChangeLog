@@ -1,3 +1,8 @@
+Fri Oct 20 12:55:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+	* ace/Service_Manger.{h,cpp}:
+	  Changed debug_ member to a real bool
+
 Fri Oct 20 12:40:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 	* ace/OS_NS_sys_socket.inl (bind):
