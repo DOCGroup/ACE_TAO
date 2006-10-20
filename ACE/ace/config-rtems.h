@@ -141,7 +141,8 @@
 #define ACE_LACKS_FDOPEN
 #define ACE_HAS_TERMIOS
 
-if defined (ACE_LACKS_NETWORKING)
+#if defined (ACE_LACKS_NETWORKING)
+
 // Missing header files
 # define ACE_LACKS_SYS_UIO_H
 # define ACE_LACKS_SYS_SOCKET_H
