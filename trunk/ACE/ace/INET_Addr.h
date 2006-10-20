@@ -47,7 +47,7 @@ public:
   ACE_INET_Addr (const ACE_INET_Addr &);
 
   /// Creates an ACE_INET_Addr from a sockaddr_in structure.
-  ACE_INET_Addr (const sockaddr_in *, int len);
+  ACE_INET_Addr (const sockaddr_in *addr, int len);
 
   /// Creates an ACE_INET_Addr from a <port_number> and the remote
   /// <host_name>. The port number is assumed to be in host byte order.
@@ -299,9 +299,9 @@ public:
    * Return the "dotted decimal" Internet address representation of
    * the hostname.  This version is non-reentrant since it returns a
    * pointer to a static data area.  You should therefore either
-   * (1) do a "deep copy" of the address returned by get_host_addr(), e.g., 
+   * (1) do a "deep copy" of the address returned by get_host_addr(), e.g.,
    * using strdup() or (2) use the "reentrant" version of
-   * get_host_addr() described above. 
+   * get_host_addr() described above.
    */
   const char *get_host_addr (void) const;
 
