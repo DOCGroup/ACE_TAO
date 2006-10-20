@@ -1,3 +1,16 @@
+Fri Oct 20 09:36:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+	* bin/MakeProjectCreator/config/ciao_nodeapplicationmanager.mpb:
+	* bin/MakeProjectCreator/config/ciao_nodemanager_stub.mpb:
+	* bin/MakeProjectCreator/config/ciao_targetmanager_stub.mpb:
+	  New base projects
+
+	* bin/MakeProjectCreator/config/ciao_static_dnc_app.mpb:
+	  Use the new base projects above
+
+          Thanks to Abdul Sowayan <abdullah dot sowayan at lmco dot com>
+          for delivering these files
+
 Fri Oct 20 09:00:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 	* ace/os_include/sys/os_socket.h:

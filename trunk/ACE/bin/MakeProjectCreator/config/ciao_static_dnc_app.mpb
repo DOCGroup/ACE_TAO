@@ -1,12 +1,6 @@
 // -*- MPC -*-
 // $Id$
 
-project : ciao_component_dnc, iortable {
+project : ciao_nodemanager_svnt, ciao_nodeapplicationmanager, ciao_component_dnc, iortable {
 
-  includes += $(CIAO_ROOT)/DAnCE/NodeApplicationManager
-  includes += $(CIAO_ROOT)/DAnCE/NodeManager
-  includes += $(CIAO_ROOT)/DAnCE/Interfaces
-
-  libs     += NodeManager NodeManager_stub NodeApplicationManager TargetManager_stub
-  after    += NodeManager NodeManager_stub NodeApplicationManager TargetManager_stub
 }
