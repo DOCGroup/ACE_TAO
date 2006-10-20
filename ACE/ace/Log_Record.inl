@@ -20,6 +20,7 @@ ACE_INLINE void
 ACE_Log_Record::encode (void)
 {
   ACE_TRACE ("ACE_Log_Record::encode");
+#if !defined (ACE_LACKS_HTONL)
   this->length_ = htonl (this->length_);
   this->type_ = htonl (this->type_);
   // Make sure we don't enclose the sec() and usec() fields until
@@ -27,12 +28,14 @@ ACE_Log_Record::encode (void)
   this->secs_ = htonl (this->secs_);
   this->usecs_ = htonl (this->usecs_);
   this->pid_ = htonl (this->pid_);
+#endif /* ACE_LACKS_HTONL */
 }
 
 ACE_INLINE void
 ACE_Log_Record::decode (void)
 {
   ACE_TRACE ("ACE_Log_Record::decode");
+#if !defined (ACE_LACKS_NTOHL)
   ACE_Time_Value tv (ntohl (this->secs_),
                      ntohl (this->usecs_));
 
@@ -41,6 +44,7 @@ ACE_Log_Record::decode (void)
   this->type_ = ntohl (this->type_);
   this->pid_ = ntohl (this->pid_);
   this->length_ = ntohl (this->length_);
+#endif /* ACE_LACKS_NTOHL */
 }
 
 ACE_INLINE ACE_UINT32
