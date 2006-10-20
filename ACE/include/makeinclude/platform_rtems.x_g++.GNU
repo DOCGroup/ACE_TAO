@@ -26,6 +26,11 @@ include $(RTEMS_MAKEFILE_PATH)/make/target.cfg
 # Test for template instantiation.
 include $(ACE_ROOT)/include/makeinclude/platform_g++_common.GNU
 
+ifeq (no,$(RTEMS_HAS_NETWORKING))
+ CFLAGS += ACE_LACKS_NETWORKING
+ CCFLAGS += ACE_LACKS_NETWORKING
+endif
+
 CFLAGS          += -specs bsp_specs -qrtems -D_REENTRANT -fasm -ansi -fno-builtin -fno-defer-pop -fvolatile $(PIPE_OPT) -W -Wall -DACE_HAS_RTEMS -B$(RTEMS_MAKEFILE_PATH)/lib
 CCFLAGS         += -specs bsp_specs -qrtems -D_REENTRANT -fasm -ansi -fno-builtin -fno-defer-pop -fvolatile $(PIPE_OPT) -W -Wall -DACE_HAS_RTEMS -B$(RTEMS_MAKEFILE_PATH)/lib
 ifeq (,$(rtti))
