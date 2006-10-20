@@ -104,8 +104,8 @@ protected:
   /// Acceptor instance.
   ACE_SOCK_Acceptor acceptor_;
 
-  /// Keep track of the debugging level.
-  int debug_;
+  /// Keep track whether we debug or not.
+  bool debug_;
 
   /// The signal used to trigger reconfiguration.
   int signum_;
