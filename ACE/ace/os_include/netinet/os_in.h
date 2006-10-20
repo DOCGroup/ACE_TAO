@@ -132,6 +132,10 @@ extern "C"
 #   define IP_MAX_MEMBERSHIPS 0
 # endif /* IP_MAX_MEMBERSHIP */
 
+# if !defined (INADDR_ANY)
+#   define INADDR_ANY (u_long)0x00000000
+# endif /* INADDR_ANY */
+
 #ifdef __cplusplus
 }
 #endif /* __cplusplus */
