@@ -307,6 +307,17 @@ TAO_Object_Adapter::~TAO_Object_Adapter (void)
   delete this->lock_;
 
   delete this->servant_dispatcher_;
+
+  // This cleanup may have already occurred in the close() method.  If
+  // that is the case then this won't cause any harm since root_ and 
+  // poa_manager_factory_ would have been set to zero.  But, if close
+  // wasn't called, then these would be leaked.  It may be better if
+  // these pointers had a corresponding _var version so that this cleanup
+  // could be automatic.
+  ::CORBA::release (this->root_);
+#if (TAO_HAS_MINIMUM_POA == 0) && !defined (CORBA_E_COMPACT) && !defined (CORBA_E_MICRO)
+  ::CORBA::release (this->poa_manager_factory_);
+#endif
 }
 
 /* static */
