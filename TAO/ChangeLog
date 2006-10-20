@@ -1,3 +1,13 @@
+Fri Oct 20 07:44:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+	* tao/Transport_Connector.cpp:
+	  Updated formatting of a debug message to match the others
+	  in TAO
+
+	* orbsvcs/orbsvcs/Event/ECG_CDR_Message_Receiver.cpp:
+	* orbsvcs/orbsvcs/Event/ECG_UDP_Receiver.cpp:
+	  Use LM_ERROR together with ACE_ERROR, const improvements
+
 Tue Oct 17 22:04:33 UTC 2006  Ciju John  <johnc@ociweb.com>
 
         * tao/Strategies/advanced_resource.cpp:

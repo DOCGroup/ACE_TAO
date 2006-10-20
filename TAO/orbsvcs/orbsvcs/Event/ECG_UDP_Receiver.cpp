@@ -218,7 +218,7 @@ TAO_ECG_UDP_Receiver::handle_input (ACE_SOCK_Dgram& dgram)
 
       // Receive data.
       TAO_ECG_Event_CDR_Decoder cdr_decoder;
-      int result = this->cdr_receiver_.handle_input (dgram, &cdr_decoder);
+      int const result = this->cdr_receiver_.handle_input (dgram, &cdr_decoder);
 
       if (result == 0)
         // No data to act on.
@@ -238,7 +238,7 @@ TAO_ECG_UDP_Receiver::handle_input (ACE_SOCK_Dgram& dgram)
 
   ACE_CATCHANY
     {
-      ACE_DEBUG ((LM_ERROR,
+      ACE_ERROR ((LM_ERROR,
                   "Caught and swallowed EXCEPTION in "
                   "ECG_UDP_Receiver::handle_input: %s\n",
                   ACE_ANY_EXCEPTION._info ().c_str ()));

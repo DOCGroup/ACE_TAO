@@ -400,7 +400,7 @@ TAO_Connector::connect (TAO::Profile_Transport_Resolver *r,
       if (TAO_debug_level > 4)
         {
           ACE_DEBUG ((LM_DEBUG,
-                      ACE_TEXT("TAO (%P|%t) Transport_Connector::connect, ")
+                      ACE_TEXT("TAO (%P|%t) - Transport_Connector::connect, ")
                       ACE_TEXT("opening Transport[%d] in TAO_CLIENT_ROLE\n"),
                       t->id ()));
         }
