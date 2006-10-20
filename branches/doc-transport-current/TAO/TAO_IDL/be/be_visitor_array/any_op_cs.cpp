@@ -55,7 +55,7 @@ be_visitor_array_any_op_cs::visit_array (be_array *node)
       << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
 
   *os << be_global->core_versioning_begin () << be_nl;
-  
+
   // Since we don't generate CDR stream operators for types that
   // explicitly contain a local interface (at some level), we
   // must override these Any template class methods to avoid
@@ -90,6 +90,10 @@ be_visitor_array_any_op_cs::visit_array (be_array *node)
           << "}";
     }
 
+  // If this is non-zero, we want to call its tc_name()
+  // for the TypeCode to pass to the Any operator impls.
+  be_typedef *td = this->ctx_->tdef ();
+
   *os << "void operator<<= (" << be_idt << be_idt_nl
       << "::CORBA::Any &_tao_any," << be_nl
       << "const " << node->name () << "_forany &_tao_elem" << be_uidt_nl
@@ -102,7 +106,7 @@ be_visitor_array_any_op_cs::visit_array (be_array *node)
       << be_idt << be_idt_nl
       << "_tao_any," << be_nl
       << node->name () << "_forany::_tao_any_destructor," << be_nl
-      << node->tc_name () << "," << be_nl
+      << (td != 0 ? td->tc_name () : node->tc_name ()) << "," << be_nl
       << "_tao_elem.nocopy ()" << be_idt_nl
       << "? _tao_elem.ptr ()" << be_nl
       << ": "
@@ -122,13 +126,13 @@ be_visitor_array_any_op_cs::visit_array (be_array *node)
       << ">::extract (" << be_idt << be_idt_nl
       << "_tao_any," << be_nl
       << node->name () << "_forany::_tao_any_destructor," << be_nl
-      << node->tc_name () << "," << be_nl
+      << (td != 0 ? td->tc_name () : node->tc_name ()) << "," << be_nl
       << "_tao_elem.out ()" << be_uidt_nl
       << ");" << be_uidt << be_uidt << be_uidt << be_uidt_nl
       << "}";
 
   *os << be_global->core_versioning_end () << be_nl;
-  
+
   node->cli_stub_any_op_gen (1);
   return 0;
 }

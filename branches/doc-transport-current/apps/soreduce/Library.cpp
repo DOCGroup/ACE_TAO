@@ -117,7 +117,7 @@ void
 MPC_TAO_Lib::write_baseprojects()
 {
   MPC_ACE_Dep_Lib::write_baseprojects ();
-  mpcfile_ << ", taoversion, core, tao_output, taodefaults";
+  mpcfile_ << ", core, tao_output, taodefaults";
 }
 
 void

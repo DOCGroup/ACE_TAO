@@ -65,6 +65,7 @@ Hash_Multi_Map_Manager_Test
 High_Res_Timer_Test: !ACE_FOR_TAO
 INET_Addr_Test
 IOStream_Test
+Integer_Truncate_Test
 Lazy_Map_Manager_Test
 Log_Msg_Test: !LynxOS !ACE_FOR_TAO
 Logging_Strategy_Test: !DISABLE_ToFix_LynxOS_PPC !STATIC !ST

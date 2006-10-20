@@ -1,0 +1,7 @@
+// -*- MPC -*-
+// $Id
+
+project : ciao_nodemanager_stub {
+  libs  += NodeManager
+  after += NodeManager_svnt
+}

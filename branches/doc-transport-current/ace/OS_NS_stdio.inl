@@ -516,21 +516,21 @@ ACE_INLINE FILE *
 ACE_OS::fdopen (ACE_HANDLE handle, const ACE_TCHAR *mode)
 {
   ACE_OS_TRACE ("ACE_OS::fdopen");
-# if defined (ACE_HAS_WINCE)
+#if defined (ACE_HAS_WINCE)
   ACE_OSCALL_RETURN (::_wfdopen (handle, ACE_TEXT_ALWAYS_WCHAR (mode)),
                      FILE*,
                      0);
-# elif defined (ACE_WIN32)
+#elif defined (ACE_WIN32)
   // kernel file handle -> FILE* conversion...
   // Options: _O_APPEND, _O_RDONLY and _O_TEXT are lost
 
   FILE *file = 0;
 
-#if defined (ACE_LACKS_INTPTR_T)
+# if defined (ACE_LACKS_INTPTR_T)
   int crt_handle = ::_open_osfhandle (long (handle), 0);
-#else
+# else
   int crt_handle = ::_open_osfhandle (intptr_t (handle), 0);
-#endif
+# endif
 
   if (crt_handle != -1)
     {
@@ -555,10 +555,14 @@ ACE_OS::fdopen (ACE_HANDLE handle, const ACE_TCHAR *mode)
     }
 
   return file;
-# else
+#elif defined (ACE_LACKS_FDOPEN)
+  ACE_UNUSED_ARG (handle);
+  ACE_UNUSED_ARG (mode);
+  ACE_NOTSUP_RETURN (0);
+#else
   ACE_OSCALL_RETURN
     (::fdopen (handle, ACE_TEXT_ALWAYS_CHAR (mode)), FILE *, 0);
-# endif /* ACE_HAS_WINCE */
+#endif /* ACE_HAS_WINCE */
 }
 
 ACE_INLINE int

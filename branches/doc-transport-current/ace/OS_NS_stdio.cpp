@@ -127,11 +127,7 @@ ACE_OS::fopen (const char *filename,
     {
       hmode &= _O_TEXT | _O_RDONLY | _O_APPEND;
 
-#   if defined (ACE_LACKS_INTPTR_T)
-      int fd = ::_open_osfhandle (long (handle), hmode);
-#   else
-      int fd = ::_open_osfhandle (intptr_t (handle), hmode);
-#   endif
+      int const fd = ::_open_osfhandle (intptr_t (handle), hmode);
 
       if (fd != -1)
         {
@@ -175,11 +171,7 @@ ACE_OS::fopen (const wchar_t *filename,
     {
       hmode &= _O_TEXT | _O_RDONLY | _O_APPEND;
 
-#   if defined (ACE_LACKS_INTPTR_T)
-      int fd = ::_open_osfhandle (long (handle), hmode);
-#   else
-      int fd = ::_open_osfhandle (intptr_t (handle), hmode);
-#   endif
+      int const fd = ::_open_osfhandle (intptr_t (handle), hmode);
 
       if (fd != -1)
         {
