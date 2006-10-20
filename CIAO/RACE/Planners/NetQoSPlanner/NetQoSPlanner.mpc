@@ -63,6 +63,7 @@ project(Planner_NetQoSPlanner_exec) : naming, ciao_component_dnc, ciao_race_comp
   Source_Files {
     BB_proxy.cpp
     NetQoSPlanner_exec.cpp
+    PlanManager.cpp
   }
 }
 

@@ -108,7 +108,8 @@ namespace CIAO
       //==================================================================
 
       NetQoSPlanner_exec_i::NetQoSPlanner_exec_i (void)
-       : node_map_filename_ ("NodeDetails.dat"),
+       : current_pm_ (0),
+         node_map_filename_ ("NodeDetails.dat"),
          planner_name_ ("NetQoSPlanner"),
          planner_type_ ("Netqork QoS Planner")
       {
@@ -194,6 +195,15 @@ namespace CIAO
               {
                 retval = this->deploy_plan (plans[i].plan);
               }
+            else if (CIAO::RACE::TEARDOWN == plans[i].command)
+              {
+                retval = this->teardown_plan (plans[i].plan);
+              }
+            else
+              {
+                ACE_DEBUG ((LM_ERROR,"Unknown command.\n"));
+                retval = false;
+              }
           }
         return retval;
       }
@@ -209,17 +219,21 @@ namespace CIAO
                                   "CIAONetworkQoS") == 0)
                {
                  flag_netqos_present = true;
-                 ::Deployment::DiffservInfos dscp_infos;
                  ::CIAO::DAnCE::NetworkQoS::NetQoSRequirement *net_qos_req;
 
                  if (dep_plan.infoProperty [j].value >>= net_qos_req)
                   {
-                      if (this->process_netqos_req (net_qos_req, dep_plan, dscp_infos))
+                      std::auto_ptr<PlanManager> plan_man (new
+                          PlanManager(dep_plan, j, net_qos_req));
+                      this->current_pm_ = plan_man;
+                      
+                      if (this->current_pm_->process_netqos_req ())
                         {
-                          this->remove_netqos(dep_plan, j);
-                          this->add_network_priorities (dep_plan, dscp_infos);
+                          this->current_pm_->add_network_priorities ();
+                          this->current_pm_->remove_netqos(j);
                           //this->dump_policies (dep_plan);
                           //this->dump_deployed_resources (dep_plan);
+                          this->state_ = state;
                           retval = true;
                         }
                       else
@@ -240,25 +254,6 @@ namespace CIAO
                ACE_DEBUG ((LM_DEBUG, "No CIANetworkQoS info-property defined in this deployment plan.\n"));
              }
           return retval;
-      }
-
-      
-      void NetQoSPlanner_exec_i::remove_netqos (::Deployment::DeploymentPlan &dep_plan, 
-                                                size_t property_index)
-      {
-          // Remove CIAONetworkQoS infoProperty
-          CORBA::ULong length = dep_plan.infoProperty.length();
-          size_t j = property_index;
-          //ACE_DEBUG ((LM_ERROR, "(%N:%l): Length of dep_plan.infoProperty before removal = %u\n",length));
-          if (length > j+1)
-          {
-            for (size_t k = j + 1; k < length; ++k)
-              {
-                dep_plan.infoProperty[k-1] = dep_plan.infoProperty[k];
-              }
-          }
-          dep_plan.infoProperty.length(length - 1);
-          // Removal code ends
       }
 
       void NetQoSPlanner_exec_i::dump_policies (const ::Deployment::DeploymentPlan &dep_plan)
@@ -327,99 +322,103 @@ pd.NWPriorityModelDef().reply_dscp));
           }
       }
 
-      void NetQoSPlanner_exec_i::build_instance_node_map (const Deployment::DeploymentPlan & dep_plan)
+      bool NetQoSPlanner_exec_i::process_netqos_req ()
       {
-        for (size_t i = 0;i < dep_plan.instance.length (); ++i)
-          {
-            const Deployment::InstanceDeploymentDescription &instance = dep_plan.instance[i];
-            this->instance_node_map_.insert (std::make_pair (instance.name.in (),instance.node.in()));
-          }
-      }
-
-      bool NetQoSPlanner_exec_i::process_netqos_req (const ::CIAO::DAnCE::NetworkQoS::NetQoSRequirement *net_qos_req,
-                                                     const ::Deployment::DeploymentPlan &dep_plan,
-                                                     ::Deployment::DiffservInfos & dscp_infos)
-      {
-        size_t set_len = net_qos_req->conn_qos_set.length();
+        ::CIAO::DAnCE::NetworkQoS::NetQoSRequirement const *
+          net_qos_req_ = this->current_pm_->get_NetQoS();
+        
+        size_t set_len = net_qos_req_->length();
         if (set_len != 0)
           {
-            this->build_instance_node_map (dep_plan);
+            this->current_pm_->build_instance_node_map ();
             // Build an in memory map of logical nodes to the physical hosts.
-            this->build_node_map ();
+            this->current_pm_->build_node_map (this->node_map_filename_);
 
             if (! this->resolve_BB ())
               {
                 ACE_DEBUG ((LM_ERROR, "(%N:%l): Can't contact BandwidthBroker.\n"));
                 return false;
               }
-
+            this->BB_proxy_.set_command_list (state->command_list_);
+            
             bool rollback = false;
             //ACE_DEBUG ((LM_DEBUG,"In NetQoSPlanner_exec_i::process_netqos_req: set_len = %u\n",set_len));
 
             NAMED(outer)
             for (size_t k = 0; k < set_len; ++k)
               {
-                const ::CIAO::DAnCE::NetworkQoS::ConnectionQoS & conn_qos = net_qos_req->conn_qos_set[k];
-                //ACE_DEBUG ((LM_DEBUG,"In NetQoSPlanner_exec_i::process_netqos_req: conn_qos.connections.length () = %u\n",conn_qos.connections.length ()));
+                const ::CIAO::DAnCE::NetworkQoS::ConnectionQoS & conn_qos =
+                  net_qos_req_.conn_qos_set[k];
+                /*ACE_DEBUG ((LM_DEBUG,
+                              "In NetQoSPlanner_exec_i::process_netqos_req: conn_qos.connections.length () = %u\n",
+                                conn_qos.connections.length ()));*/
                 for (size_t conn_num = 0;
                      conn_num < conn_qos.connection_names.length ();
                      ++conn_num)
                   {
                     ::Deployment::DiffservInfo endpoint;
-                    if (this->get_endpoints(endpoint, dep_plan, std::string (conn_qos.connection_names[conn_num])))
+                    if (this->current_pm_->get_endpoints (
+                                   endpoint, 
+                                   std::string (conn_qos.connection_names[conn_num])))
                     {
                       CommonDef::IPAddress srcIP;
-                      if (-1 == this->get_ip_address (srcIP, endpoint.client_instance_name.in()))
+                      if (-1 == this->current_pm_->get_ip_address (
+                                                      srcIP,
+                                                      endpoint.client_instance_name.in()))
                       {
-                        ACE_DEBUG ((LM_ERROR,"In NetQoSPlanner_exec_i::process_netqos_req: Can't find source IP\n"));
+                        ACE_DEBUG ((LM_ERROR,
+                                    "In NetQoSPlanner_exec_i::process_netqos_req: Can't find source IP\n"));
                         rollback = true;
                         BREAK(outer);
                       }
-                      ACE_DEBUG ((LM_DEBUG,"In NetQoSPlanner_exec_i::process_netqos_req: srcIP = %s\n",srcIP.dottedDecimal.in()));
+                      ACE_DEBUG ((LM_DEBUG,
+                                  "In NetQoSPlanner_exec_i::process_netqos_req: srcIP = %s\n",
+                                  srcIP.dottedDecimal.in()));
                       CommonDef::IPAddress destIP;
-                      if (-1 == this->get_ip_address(destIP, endpoint.server_instance_name.in()))
+                      if (-1 == this->get_ip_address(destIP,
+                                                     endpoint.server_instance_name.in()))
                       {
-                        ACE_DEBUG ((LM_ERROR,"In NetQoSPlanner_exec_i::process_netqos_req: Can't find destination IP\n"));
+                        ACE_DEBUG ((LM_ERROR,
+                                    "In NetQoSPlanner_exec_i::process_netqos_req: Can't find destination IP\n"));
                         rollback = true;
                         BREAK(outer);
                       }
-                      ACE_DEBUG ((LM_DEBUG,"In NetQoSPlanner_exec_i::process_netqos_req: destIP = %s\n",destIP.dottedDecimal.in()));
+                      ACE_DEBUG ((LM_DEBUG,
+                                  "In NetQoSPlanner_exec_i::process_netqos_req: destIP = %s\n",
+                                  destIP.dottedDecimal.in()));
                       CommonDef::QOSRequired qos_req;
                       this->get_traffic_qos (qos_req, conn_qos);
                       long fwd_dscp = 0, rev_dscp = 0;
 
                       if (conn_qos.fwdBWD > 0)
                         {
-                          if (-1 == this->make_flow_request (srcIP, destIP, conn_qos.fwdBWD, qos_req, fwd_dscp))
+                          if (-1 == this->make_flow_request 
+                                      (srcIP, destIP, conn_qos.fwdBWD, qos_req, fwd_dscp))
                             {
                               rollback = true;
                               BREAK(outer);
                             }
-
-                            size_t len = dscp_infos.length ();
-                            dscp_infos.length (len + 1);
-                            dscp_infos [len] = endpoint;
-                            dscp_infos [len].request_dscp = fwd_dscp;
-                            dscp_infos [len].reply_dscp = rev_dscp; /// Assigning zero here.
-                            ACE_DEBUG ((LM_DEBUG,"In NetQoSPlanner_exec_i::process_netqos_req: fwd_dscp = %d\n",fwd_dscp));
+                            endpoint.request_dscp = fwd_dscp;
+                            
+                            ACE_DEBUG ((LM_DEBUG,
+                                        "In NetQoSPlanner_exec_i::process_netqos_req: fwd_dscp = %d\n",
+                                        fwd_dscp));
 
                             if (conn_qos.revBWD > 0)
                             {
-                              if (-1 == this->make_flow_request (destIP, srcIP, conn_qos.revBWD, qos_req, rev_dscp))
+                              if (-1 == this->make_flow_request 
+                                          (destIP, srcIP, conn_qos.revBWD, qos_req, rev_dscp))
                               {
                                 rollback = true;
                                 BREAK(outer);
                               }
-                              ACE_DEBUG ((LM_DEBUG,"In NetQoSPlanner_exec_i::process_netqos_req: rev_dscp = %d\n",rev_dscp));
-                              dscp_infos [len].reply_dscp = rev_dscp;
+                              ACE_DEBUG ((LM_DEBUG,
+                                          "In NetQoSPlanner_exec_i::process_netqos_req: rev_dscp = %d\n",
+                                          rev_dscp));
                             }
-                            /*              std::cerr
-                                            << "Connection Name = " << conn_qos.connections [conn_num].connection_name   << std::endl
-                                            << "client Name = " << conn_qos.connections [conn_num].client                << std::endl
-                                            << "client Port Name = " << conn_qos.connections [conn_num].client_port_name << std::endl
-                                            << "server Name = " << conn_qos.connections [conn_num].server                << std::endl
-                                            << "server Port Name = " << conn_qos.connections [conn_num].server_port_name << std::endl;
-                             */
+
+                            endpoint.reply_dscp = rev_dscp;
+                            this->current_pm_->push_dscp_info(endpoint);
                         }
                       else
                         {
@@ -428,19 +427,9 @@ pd.NWPriorityModelDef().reply_dscp));
                     }
                   else
                     {
-                      ACE_DEBUG((LM_DEBUG,"Extra connection found in the NetQoS requirements structure.\n"));
+                      ACE_DEBUG((LM_DEBUG,
+                                 "Extra connection found in the NetQoS requirements structure.\n"));
                     }  
-                    /*
-                       std::cerr << "fwdBWD = " << conn_qos.fwdBWD << std::endl;
-                       std::cerr << "revBWD = " << conn_qos.revBWD << std::endl;
-
-                       if (::CIAO::DAnCE::NetworkQoS::NORMAL == conn_qos.priority)
-                       std::cerr << "Priority = NORMAL\n";
-                       else if (::CIAO::DAnCE::NetworkQoS::HIGH == conn_qos.priority)
-                       std::cerr << "Priority = HIGH\n";
-                       else if (::CIAO::DAnCE::NetworkQoS::LOW == conn_qos.priority)
-                       std::cerr << "Priority = LOW\n";
-                     */
                   }
               }
 
@@ -464,84 +453,6 @@ pd.NWPriorityModelDef().reply_dscp));
              ACE_DEBUG((LM_ERROR, "Connection set is empty in the NetQoS schema.\n"));
              return true;
           }
-      }
-
-      bool NetQoSPlanner_exec_i::get_endpoints (::Deployment::DiffservInfo &diffserv_conn, 
-                                                const ::Deployment::DeploymentPlan &dep_plan,
-                                                const std::string &conn_name)
-      {
-        size_t total_connections = dep_plan.connection.length();
-        for (size_t num_conn = 0; num_conn < total_connections; ++num_conn)
-          {
-            if (conn_name == dep_plan.connection[num_conn].name.in())
-              {
-                const ::Deployment::PlanConnectionDescription & conn_desc =
-                      dep_plan.connection [num_conn];
-                for (size_t i = 0; i < 2; ++i)
-                  {
-                    switch (conn_desc.internalEndpoint[i].kind)
-                      {
-                        case Deployment::Facet:
-                        case Deployment::EventConsumer:
-                        case Deployment::ecEventConsumer:
-                        case Deployment::rtecEventConsumer:
-                        case Deployment::nsEventConsumer:
-                          {
-                            unsigned long index = conn_desc.internalEndpoint[i].instanceRef;
-                            diffserv_conn.server_instance_name = dep_plan.instance[index].name;
-                            diffserv_conn.server_port_name = conn_desc.internalEndpoint[i].portName;
-                            diffserv_conn.server_port_kind = conn_desc.internalEndpoint[i].kind;
-                            break;
-                          }
-                        case Deployment::SimplexReceptacle:
-                        case Deployment::MultiplexReceptacle:
-                        case Deployment::EventEmitter:
-                        case Deployment::EventPublisher:
-                        case Deployment::ecEventEmitter:
-                        case Deployment::ecEventPublisher:
-                        case Deployment::rtecEventEmitter:
-                        case Deployment::rtecEventPublisher:
-                        case Deployment::nsEventEmitter:
-                        case Deployment::nsEventPublisher:
-                          {
-                            unsigned long index = conn_desc.internalEndpoint[i].instanceRef;
-                            diffserv_conn.client_instance_name = dep_plan.instance[index].name;
-                            diffserv_conn.client_port_name = conn_desc.internalEndpoint[i].portName;
-                            diffserv_conn.client_port_kind = conn_desc.internalEndpoint[i].kind;
-                            break;
-                          }
-                      }
-                  }
-                return true;
-              } 
-          }
-        return false;
-      }
-
-      int NetQoSPlanner_exec_i::get_ip_address (CommonDef::IPAddress & ip, const char *instance_name)
-      {
-        //const int FAKE_PORT = 20000;
-        std::string inst_name (instance_name);
-        if (this->instance_node_map_.find (inst_name) != this->instance_node_map_.end ())
-        {
-          const std::string &logical_node = this->instance_node_map_[inst_name];
-          ACE_DEBUG ((LM_DEBUG,"In NetQoSPlanner_exec_i::process_netqos_req: logical_node = %s\n",logical_node.c_str()));
-          //const std::string &physical_node = this->get_physical_host (logical_node);
-          ip.dottedDecimal = CORBA::string_dup (logical_node.c_str());
-          ip.subnetMask = CORBA::string_dup ("255.255.255.255");
-          return 0;
-/*          ACE_INET_Addr addr (FAKE_PORT, physical_node.c_str (), AF_INET);
-          if (const char *ip_addr = addr.get_host_addr ())
-            {
-              ip.dottedDecimal = CORBA::string_dup (ip_addr);
-              ip.subnetMask = CORBA::string_dup ("255.255.255.255");
-              return 0;
-            }
-          else
-            return -1;
-*/        }
-        else
-          return -1;
       }
 
       void
@@ -590,236 +501,19 @@ pd.NWPriorityModelDef().reply_dscp));
           flowinfo.biDirectional = CORBA::Boolean (false);
           flowinfo.flowDuration = CORBA::Long (1000);
 
-          ACE_DEBUG ((LM_DEBUG,"In NetQoSPlanner_exec_i::make_flow_request: Requesting flow.\n"));
-          int result = this->BB_proxy_.flow_request (flowinfo, qos_req, dscp);
+          ACE_DEBUG ((LM_DEBUG,
+                "In NetQoSPlanner_exec_i::make_flow_request: Requesting flow.\n"));
+          int result = this->BB_proxy_.flow_request 
+                                         (flowinfo, qos_req, dscp, this->current_pm_);
 
           if (-1 == result)
-              ACE_DEBUG ((LM_ERROR,"In NetQoSPlanner_exec_i::make_flow_request: Requested flow was not admitted.\n"));
+              ACE_DEBUG ((LM_ERROR,
+                    "In NetQoSPlanner_exec_i::make_flow_request: Requested flow was not admitted.\n"));
           else
-              ACE_DEBUG ((LM_DEBUG,"In NetQoSPlanner_exec_i::make_flow_request: Flow Accepted.\n"));
+              ACE_DEBUG ((LM_DEBUG,
+                    "In NetQoSPlanner_exec_i::make_flow_request: Flow Accepted.\n"));
 
           return result;
-      }
-
-      void NetQoSPlanner_exec_i::build_node_map ()
-      { 
-          //std::cerr << "Node_map Filename: " << this->node_map_file () << std::endl;
-          std::ifstream input_file (this->node_map_file ());
-          std::istream_iterator <std::string> begin (input_file), end;
-          for (; begin != end; )
-            {
-               std::string logical_node = *begin++;
-               if (begin == end)
-                break;
-               //std::cerr << "Logical node name = " << logical_node << std::endl;
-               std::string corbaloc_url = *begin++;
-               //std::cerr << "Physical corbaloc URL = " << corbaloc_url << std::endl;
-               //TAO_CORBALOC_Parser corbaloc_parser;
-               //std:: cerr << "Is it a valid corbaloc URL? = " << corbaloc_parser.match_prefix (corbaloc_url.c_str()) << std::endl;
-               if (1/*corbaloc_parser.match_prefix (corbaloc_url.c_str())*/)
-                 {
-                    size_t first = corbaloc_url.find (':', 0); 
-                    size_t second = corbaloc_url.find (':', first + 1);
-                    size_t third = corbaloc_url.find (':', second + 1);
-                    std::string hostname = corbaloc_url.substr (second + 1, third - second - 1);
-                    //std::cerr << "Hostname = " << hostname << std::endl;
-                    this->node_map_.insert (make_pair (logical_node, hostname));
-                 }
-               else
-                 {
-                    ACE_DEBUG ((LM_ERROR, "In NetQoSPlanner_exec_i::process_netqos_req(): Incorrect corbaloc URL"));
-                 }
-            }
-      }
-
-      std::string NetQoSPlanner_exec_i::get_physical_host (const std::string &logical_node)
-      {
-        if (this->node_map_.find (logical_node) != this->node_map_.end ())
-        {
-           return this->node_map_[logical_node];
-        }
-        else
-           return std::string ("");
-      }
-      
-      void NetQoSPlanner_exec_i::build_instance_index_map (
-           const ::Deployment::DeploymentPlan &dep_plan)
-      {
-        CORBA::ULong instance_len = dep_plan.instance.length ();
-        for (CORBA::ULong j = 0; j < instance_len; ++j)
-          {
-            const char *instance_name = dep_plan.instance[j].name.in ();
-            this->instance_map_.bind (instance_name, j);
-          }
-      }
-      
-      std::string NetQoSPlanner_exec_i::push_policy 
-           (CIAO::DAnCE::ServerResource &server_resource, 
-            const std::string & instance_name,
-            NWPriorityModel model,
-            int request_dscp, int reply_dscp)
-      {
-        static long policy_count = 0;
-        CORBA::ULong policy_set_len = server_resource.orb_config.policy_set.length ();
-        CORBA::ULong new_policy_set_len = policy_set_len + 1;
-        server_resource.orb_config.policy_set.length (new_policy_set_len);
-        ::CIAO::DAnCE::PolicySet &policy_set =
-            server_resource.orb_config.policy_set[policy_set_len];
-
-        std::ostringstream policy_set_id;
-        policy_set_id << "test_policy_set_id" <<  policy_count++ 
-                      <<  "_" << instance_name;
-
-        policy_set.Id = CORBA::string_dup (policy_set_id.str().c_str ());
-
-        CORBA::ULong policy_def_len = policy_set.policies.length ();
-        CORBA::ULong new_policy_def_len = policy_def_len + 1;
-        policy_set.policies.length (new_policy_def_len);
-
-        if (SERVER == model)
-          {
-            ::CIAO::DAnCE::NWPriorityModelPolicyDef npmd;
-            npmd.nw_priority_model = ::CIAO::DAnCE::CLIENT_PROPAGATED_NWPRIORITY;
-            npmd.request_dscp = request_dscp;
-            npmd.reply_dscp = reply_dscp;
-     
-            policy_set.policies[policy_def_len].NWPriorityModelDef (npmd); 
-          }
-        else if (CLIENT == model)
-          {
-            ::CIAO::DAnCE::CNWPriorityModelPolicyDef cnpmd;
-            cnpmd.request_dscp = request_dscp;
-            cnpmd.reply_dscp = reply_dscp;
-
-            policy_set.policies[policy_def_len].CNWPriorityModelDef (cnpmd);
-          }
-        
-        return policy_set_id.str();
-      } 
-
-      void NetQoSPlanner_exec_i::push_deployed_resource 
-             (Deployment::DeploymentPlan &dep_plan,
-              const std::string &server_resource_id,
-              size_t server_instance_iter,
-              const std::string &policy_set_id)
-      {
-          //static long server_resource_count = 0;
-          CORBA::ULong dep_res_len = dep_plan.instance[server_instance_iter].deployedResource.length ();
-          CORBA::ULong new_dep_res_len = dep_res_len + 1;
-          dep_plan.instance[server_instance_iter].deployedResource.length (new_dep_res_len);
-
-          Deployment::InstanceResourceDeploymentDescription &resource_desc =
-            dep_plan.instance[server_instance_iter].deployedResource[dep_res_len]; 
-
-          resource_desc.resourceUsage = Deployment::InstanceUsesResource;
-          resource_desc.requirementName = CORBA::string_dup ("CIAO:PolicySet");
-          //std::ostringstream res_name;
-          //res_name <<  "test_server_resource_name" << server_resource_count++;
-          //resource_desc.resourceName = CORBA::string_dup (res_name.str().c_str());
-          resource_desc.resourceName = CORBA::string_dup (server_resource_id.c_str());
-
-          CORBA::ULong pro_len = resource_desc.property.length ();
-          CORBA::ULong new_pro_len = pro_len + 1;
-          resource_desc.property.length (new_pro_len);
-          resource_desc.property[pro_len].name = CORBA::string_dup ("CIAO:InstancePolicy");
-          resource_desc.property[pro_len].value <<= policy_set_id.c_str ();
-    }
-
-     void NetQoSPlanner_exec_i::push_deployed_resource
-              (Deployment::DeploymentPlan &dep_plan, 
-               const std::string &server_resource_id,
-               size_t client_instance_iter, 
-               const std::string & policy_set_id, 
-               const std::string & client_port_name,
-               Deployment::CCMComponentPortKind client_port_kind)
-     { 
-          //static long client_resource_count = 0;
-          CORBA::ULong dep_res_len = dep_plan.instance[client_instance_iter].deployedResource.length ();
-          CORBA::ULong new_dep_res_len = dep_res_len + 1;
-          dep_plan.instance[client_instance_iter].deployedResource.length (new_dep_res_len);
-
-          Deployment::InstanceResourceDeploymentDescription &resource_desc = 
-             dep_plan.instance[client_instance_iter].deployedResource[dep_res_len];
-
-          resource_desc.resourceUsage = Deployment::InstanceUsesResource;
-          resource_desc.requirementName = CORBA::string_dup ("CIAO:PolicySet");
-          //std::ostringstream res_name;
-          //res_name << "test_client_resource_name" << client_resource_count++;
-          //resource_desc.resourceName = CORBA::string_dup (res_name.str().c_str());
-          resource_desc.resourceName = CORBA::string_dup (server_resource_id.c_str());
-
-          CORBA::ULong pro_len = resource_desc.property.length ();
-          CORBA::ULong new_pro_len = pro_len + 1;
-          resource_desc.property.length (new_pro_len);
-          if (Deployment::SimplexReceptacle == client_port_kind ||  
-              Deployment::MultiplexReceptacle == client_port_kind)
-            {
-                resource_desc.property[pro_len].name = CORBA::string_dup ("CIAO:ReceptaclePolicy");
-            }
-          else if (Deployment::EventPublisher == client_port_kind)
-            {
-                resource_desc.property[pro_len].name = CORBA::string_dup ("CIAO:PublisherPolicy");
-            }
-            
-          resource_desc.property[pro_len].value <<= policy_set_id.c_str ();
-
-          pro_len = resource_desc.property.length ();
-          new_pro_len = pro_len + 1;
-          resource_desc.property.length (new_pro_len);
-          resource_desc.property[pro_len].name = client_port_name.c_str();
-          resource_desc.property[pro_len].value <<= policy_set_id.c_str ();
-     }
-
-      // *********************************************************
-      // code that creates the deployment plan populating the network
-      // priority policies using the diffserv codepoint decisions.
-
-      void
-      NetQoSPlanner_exec_i::add_network_priorities (Deployment::DeploymentPlan & dep_plan,
-                                                    const Deployment::DiffservInfos & dscp_infos)
-      {
-        static long server_resource_count = 0;
-        this->build_instance_index_map(dep_plan);
-
-        CORBA::ULong len = dscp_infos.length ();
-        CIAO::DAnCE::ServerResource server_resource;
-        std::ostringstream server_resource_id;
-        server_resource_id << "test_server_resource_id" << server_resource_count++;
-        server_resource.Id = CORBA::string_dup (server_resource_id.str().c_str());
-
-        for (CORBA::ULong i = 0; i < len; ++i)
-          {
-            std::string server_instance_name = dscp_infos[i].server_instance_name.in ();
-            std::string client_instance_name = dscp_infos[i].client_instance_name.in ();
-            std::string client_port_name = dscp_infos[i].client_port_name.in ();
-            Deployment::CCMComponentPortKind client_port_kind = dscp_infos[i].client_port_kind; 
-
-            CORBA::Long request_dscp = dscp_infos[i].request_dscp;
-            CORBA::Long reply_dscp = dscp_infos[i].reply_dscp;
-
-            int server_instance_iter = 0;
-            if (this->instance_map_.find (server_instance_name.c_str(), server_instance_iter) == 0)
-              {
-                std::string policy_set_id = this->push_policy (server_resource, server_instance_name, SERVER, 0, 0);
-                this->push_deployed_resource (dep_plan, server_resource_id.str(), 
-                                              server_instance_iter, policy_set_id);    
-              }
-    
-            int client_instance_iter = 0;
-            if (this->instance_map_.find (client_instance_name.c_str(), client_instance_iter) == 0)
-              {
-                std::string policy_set_id = this->push_policy (server_resource, client_instance_name, CLIENT, request_dscp, reply_dscp);
-                this->push_deployed_resource (dep_plan, server_resource_id.str(), 
-                                              client_instance_iter, policy_set_id, 
-                                              client_port_name, client_port_kind);
-              }
-          }
-    
-        CORBA::ULong info_prop_len = dep_plan.infoProperty.length ();
-        CORBA::ULong new_info_prop_len = info_prop_len + 1;
-        dep_plan.infoProperty.length (new_info_prop_len);
-        dep_plan.infoProperty[info_prop_len].name = CORBA::string_dup ("CIAOServerResources");
-        dep_plan.infoProperty[info_prop_len].value <<= server_resource;
       }
 
       bool
