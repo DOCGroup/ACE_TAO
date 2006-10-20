@@ -13,7 +13,7 @@
 ACE_RCSID(Misc, test_signals_1, "$Id$")
 
 // Number of times to allow signal to execute until we quit.
-static size_t count = 10;
+static size_t signal_count = 10;
 
 static void
 my_signal_function (int sig)
@@ -27,25 +27,25 @@ class My_Handler : public ACE_Event_Handler
 {
 public:
   virtual int handle_signal (int sig,
-			     siginfo_t *,
-			     ucontext_t *)
+           siginfo_t *,
+           ucontext_t *)
   {
     // @@ Note that this code is not portable to all OS platforms
     // since it uses print statements within signal handler context.
     ACE_DEBUG ((LM_DEBUG,
                 "Executed ACE signal handler for signal %S, count = %d\n",
-		sig,
-                count));
-    count--;
+                sig,
+                signal_count));
+    --signal_count;
 
-    if (count == 0)
+    if (signal_count == 0)
       ACE_Reactor::end_event_loop ();
 
     return 0;
   }
 
   virtual int handle_timeout (const ACE_Time_Value &,
-			      const void *arg)
+            const void *arg)
   {
     ACE_DEBUG ((LM_DEBUG,
                 "%s\n",
@@ -94,7 +94,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   ACE_UNUSED_ARG (sig);
 
   ACE_DEBUG ((LM_DEBUG,
-	      "starting event loop that runs until you've typed ^C a total of 10 times or ^\\ once.\n"));
+        "starting event loop that runs until you've typed ^C a total of 10 times or ^\\ once.\n"));
 
   // This call executes the reactor events until we're finished.
   int result = ACE_Reactor::run_event_loop ();

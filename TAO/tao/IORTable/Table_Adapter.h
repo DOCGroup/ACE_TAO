@@ -17,6 +17,7 @@
 
 #include "tao/IORTable/iortable_export.h"
 #include "tao/IORTable/IORTable.h"
+#include "tao/IORTable/IOR_Table_Impl.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -74,7 +75,7 @@ private:
   TAO_ORB_Core &orb_core_;
 
   /// The table implementation
-  IORTable::Table_var root_;
+  TAO_IOR_Table_Impl_var root_;
 
   bool closed_;
   bool enable_locking_;

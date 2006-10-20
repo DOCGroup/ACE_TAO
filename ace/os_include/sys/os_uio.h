@@ -37,7 +37,7 @@ extern "C"
 {
 #endif /* __cplusplus */
 
-#if defined (ACE_WIN32)
+#if defined (ACE_LACKS_IOVEC)
    /// The ordering of the fields in this struct is important.  It has to
    /// match those in WSABUF.
    struct iovec
@@ -52,7 +52,7 @@ extern "C"
      operator WSABUF &(void) { return *((WSABUF *) this); }
 #  endif /* defined (ACE_HAS_WINSOCK2) && (ACE_HAS_WINSOCK2 != 0) */
    };
-#endif /* ACE_WIN32 */
+#endif /* ACE_LACKS_IOVEC */
 
 
 # if defined (ACE_LACKS_TIMEDWAIT_PROTOTYPES)

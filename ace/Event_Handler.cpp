@@ -12,6 +12,8 @@
 #include "ace/Event_Handler.inl"
 #endif /* __ACE_INLINE__ */
 
+#include <algorithm>
+
 ACE_RCSID(ace, Event_Handler, "$Id$")
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
@@ -289,23 +291,22 @@ ACE_Event_Handler::register_stdin_handler (ACE_Event_Handler *eh,
 
 int
 ACE_Event_Handler::remove_stdin_handler (ACE_Reactor *reactor,
-                                         ACE_Thread_Manager *thr_mgr)
+                                         ACE_Thread_Manager * /* thr_mgr */)
 {
 #if defined (ACE_WIN32)
   ACE_UNUSED_ARG (reactor);
-  ACE_UNUSED_ARG (thr_mgr);
 
   // What should we do here?
   ACE_NOTSUP_RETURN (-1);
 #else
-  // Keep compilers happy.
-  ACE_UNUSED_ARG (thr_mgr);
   return reactor->remove_handler (ACE_STDIN,
                                   ACE_Event_Handler::READ_MASK);
 #endif /* ACE_WIN32 */
 }
 
 //#endif /* ACE_HAS_WINCE */
+
+// ---------------------------------------------------------------------
 
 ACE_Event_Handler_var::ACE_Event_Handler_var (void)
   : ptr_ (0)
@@ -328,9 +329,9 @@ ACE_Event_Handler_var::ACE_Event_Handler_var (const ACE_Event_Handler_var &b)
 
 ACE_Event_Handler_var::~ACE_Event_Handler_var (void)
 {
-  ACE_Errno_Guard eguard (errno);
   if (this->ptr_ != 0)
     {
+      ACE_Errno_Guard eguard (errno);
       this->ptr_->remove_reference ();
     }
 }
@@ -338,13 +339,11 @@ ACE_Event_Handler_var::~ACE_Event_Handler_var (void)
 ACE_Event_Handler_var &
 ACE_Event_Handler_var::operator= (ACE_Event_Handler *p)
 {
-  if (this->ptr_ == p)
-    return *this;
-
-  if (this->ptr_ != 0)
-    this->ptr_->remove_reference ();
-
-  this->ptr_ = p;
+  if (this->ptr_ != p)
+    {
+      ACE_Event_Handler_var tmp (p);
+      std::swap (this->ptr_, tmp.ptr_);
+    }
 
   return *this;
 }
@@ -352,18 +351,8 @@ ACE_Event_Handler_var::operator= (ACE_Event_Handler *p)
 ACE_Event_Handler_var &
 ACE_Event_Handler_var::operator= (const ACE_Event_Handler_var &b)
 {
-  if (this->ptr_ != b.ptr_)
-    {
-      if (this->ptr_ != 0)
-        {
-          this->ptr_->remove_reference ();
-        }
-
-      if ((this->ptr_ = b.ptr_) != 0)
-        {
-          this->ptr_->add_reference ();
-        }
-    }
+  ACE_Event_Handler_var tmp (b);
+  std::swap (this->ptr_, tmp.ptr_);
 
   return *this;
 }
@@ -383,7 +372,7 @@ ACE_Event_Handler_var::handler (void) const
 ACE_Event_Handler *
 ACE_Event_Handler_var::release (void)
 {
-  ACE_Event_Handler *old = this->ptr_;
+  ACE_Event_Handler * const old = this->ptr_;
   this->ptr_ = 0;
   return old;
 }
@@ -393,6 +382,8 @@ ACE_Event_Handler_var::reset (ACE_Event_Handler *p)
 {
   *this = p;
 }
+
+// ---------------------------------------------------------------------
 
 ACE_Notification_Buffer::ACE_Notification_Buffer (void)
 {

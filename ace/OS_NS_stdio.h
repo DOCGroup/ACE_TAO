@@ -78,7 +78,7 @@ inline char *ace_cuserid(char *user)
 #endif /* !ACE_LACKS_CUSERID && !ACE_HAS_ALT_CUSERID && ... */
 
 # if defined (ACE_LACKS_FILELOCKS)
-#   if ! defined (ACE_VXWORKS) && ! defined (__rtems__) && !defined (INTEGRITY)
+#   if ! defined (ACE_VXWORKS) && ! defined (ACE_HAS_RTEMS) && !defined (INTEGRITY)
 // VxWorks defines struct flock in sys/fcntlcom.h.  But it doesn't
 // appear to support flock ().  RTEMS defines struct flock but
 // currently does not support locking.

@@ -442,7 +442,7 @@ ACE_Message_Queue_NT::enqueue (ACE_Message_Block *new_item,
           // Update the states once I succeed.
           this->cur_bytes_ += msize;
           this->cur_length_ += mlength;
-          return ACE_Utils::Truncate (++this->cur_count_);
+          return ACE_Utils::Truncate<int> (++this->cur_count_);
         }
     }
   else
@@ -489,7 +489,7 @@ ACE_Message_Queue_NT::dequeue (ACE_Message_Block *&first_item,
             --this->cur_count_;
             this->cur_bytes_ -= msize;
             this->cur_length_ -= first_item->total_length ();
-            return ACE_Utils::Truncate (this->cur_count_);
+            return ACE_Utils::Truncate<int> (this->cur_count_);
           }
         else                    // Woken up by deactivate () or pulse ().
             errno = ESHUTDOWN;

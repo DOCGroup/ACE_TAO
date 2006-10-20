@@ -1,3 +1,415 @@
+Fri Oct 20 12:55:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Service_Manger.{h,cpp}:
+          Changed debug_ member to a real bool
+
+Fri Oct 20 12:40:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/OS_NS_sys_socket.inl (bind):
+        * ace/config-rtems.h:
+          Added ACE_LACKS_BIND
+
+        * ace/Basic_Types.h:
+          Fixed compile problems with BCB6
+
+Fri Oct 20 12:05:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Log_Record.inl:
+          Added check for ACE_LACKS_NTOHL and ACE_LACKS_HTONL
+
+        * ace/config-rtems.h:
+          Added ACE_LACKS_NTOHL and ACE_LACKS_HTONL when no networking
+          is available
+
+Fri Oct 20 09:56:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/INET_Addr.h:
+          Small change to improve doxygen documentation
+
+        * ace/OS_NS_sys_socket.inl (listen):
+          Added ACE_LACKS_LISTEN
+
+        * ace/config-rtems.h:
+          Added ACE_LACKS_LISTEN
+
+Fri Oct 20 09:36:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/MakeProjectCreator/config/ciao_nodeapplicationmanager.mpb:
+        * bin/MakeProjectCreator/config/ciao_nodemanager_stub.mpb:
+        * bin/MakeProjectCreator/config/ciao_targetmanager_stub.mpb:
+          New base projects
+
+        * bin/MakeProjectCreator/config/ciao_static_dnc_app.mpb:
+          Use the new base projects above
+
+          Thanks to Abdul Sowayan <abdullah dot sowayan at lmco dot com>
+          for delivering these files
+
+Fri Oct 20 09:00:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/os_include/sys/os_socket.h:
+          Defined AF_UNSPEC and PF_UNSPEC when these are not defined by the
+          OS header files.
+
+Fri Oct 20 08:55:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/os_include/sys/os_uio.h:
+          When INADDR_ANY is not defined, then define it, we need it in several
+          of the ACE header files
+
+Fri Oct 20 08:44:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/os_include/sys/os_uio.h:
+          We define iovec when ACE_WIN32 was defined, changed this to a new
+          define, ACE_LACKS_IOVEC to make it easier to use with other platforms
+
+        * ace/config-win32-common.h:
+          Added ACE_LACKS_IOVEC
+
+        * ace/config-rtems.h:
+          When no networking has been configured, also define ACE_LACKS_IOVEC
+
+Thu Oct 19 22:28:59 UTC 2006  Shanshan Jiang <shanshan.jiang@vanderbilt.edu>
+
+        * contrib/minizip/iowin32.c
+        * contrib/minizip/iowin32.h
+          Removed these files.
+
+Thu Oct 19 23:20:26 UTC 2006  Ossama Othman  <ossama_othman at symantec dot com>
+
+        * examples/IPC_SAP/SOCK_SAP/CPP-inserver.cpp:
+        * examples/IPC_SAP/SOCK_SAP/CPP-inclient.cpp:
+        * examples/C++NPv1/Reactive_Logging_Server.h:
+
+          Fixed integer/void* conversion related warnings by using
+          the "intptr_t" type instead of "int" or "long".
+
+Thu Oct 19 22:58:02 UTC 2006  Ossama Othman  <ossama_othman at symantec dot com>
+
+        * ace/Truncate.h:
+
+          Borland compilers currently cannot handle the template
+          meta-programming in this header.  Work around the limitation by
+          explicitly specializing the ACE_Utils::Truncator<> structure
+          template for a select few 32- and 64-bit integers.  More will be
+          added as needed.
+
+Thu Oct 19 17:25:16 UTC 2006  Ossama Othman  <ossama_othman at symantec dot com>
+
+        * tests/Integer_Truncate_Test.cpp:
+
+          Removed redundant parentheses.
+
+Thu Oct 19 15:25:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/generate_rel_manpages:
+          Updated doxygen version
+
+        * bin/MakeProjectCreator/templates/gnu.mpb:
+          Removed kylix support
+
+Thu Oct 19 13:19:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/OS_main.h:
+          Added main for rtems
+
+Thu Oct 19 11:48:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Rtems_init.c:
+          Fixed empty translation unit warnings
+
+Thu Oct 19 08:27:12 UTC 2006  Martin Corino  <mcorino@remedy.nl>
+
+        * include/makeinclude/platform_openvms.GNU:
+      	  Small change to create hardlinks for produced executables.
+
+Wed Oct 18 16:19:38 UTC 2006  Shanshan Jiang <shanshan.jiang@vanderbilt.edu>
+
+        * contrib/minizip/minizip.suo
+        * contrib/minizip/miniziplibrarycode.suo
+          Removed these files.
+
+Wed Oct 18 13:52:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * include/makeinclude/platform_rtems.x_g++.GNU:
+          Major cleanup of old stuff and always define ACE_HAS_RTEMS
+
+        * etc/rtems_init.c:
+        * ace/rtems_init.c:
+          Another move, for rtems we require some functions to always
+          be available, this defines our network settings and much more.
+          Because we always build static, we moved this to the ACE lib,
+          on rtems we define ACE_HAS_RTEMS and then compile the contents
+          of this file. This way the functions in this file are available
+          in any executable we link
+
+        * ace/OS.h:
+        * ace/os_include/os_signal.h:
+        * ace/os_include/sys/os_types.h:
+        * ace/OS_NS_stdio.h:
+        * ace/OS_NS_time.inl:
+          Replaced __rtems__ with ACE_HAS_RTEMS
+
+        * ace/ace.mpc:
+          Added rtems_init.c
+
+Wed Oct 18 13:01:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * include/makeincludes/rules.bin.GNU:
+        * include/makeincludes/rules.lib.GNU:
+        * include/makeincludes/wrapper_macros.GNU:
+        * include/makeincludes/platform_linux_borland.GNU:
+          Removed kylix support
+
+Wed Oct 18 10:05:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * apps/Gateway/Gateway/File_Parser.cpp:
+          Removed egcs workaround
+
+Wed Oct 18 08:07:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/rtems_init.c:
+        * etc/rtems_init.c:
+          Moved from tests to etc
+
+Tue Oct 18 06:27:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * examples/Reactor/Misc/test_signals_1.cpp:
+        * performance-tests/Misc/context_switch_time.cpp:
+          Renamed the global count variables to another name. These triggered
+          a bug in the VxWorks 5.5.2 compiler which we reported to windriver.
+          By renaming these we will get an error free compilation.
+
+Tue Oct 18 06:02:28 UTC 2006  Ossama Othman  <ossama_othman at symantec dot com>
+
+        * ace/Basic_Types.h (intptr_t, uintptr_t):
+
+          Provided suitable typedefs for these standard types when
+          ACE_LACKS_INTPTR_T is defined.
+
+        * ace/Event_Handler.cpp (~ACE_Event_Handler_var):
+
+          Only use an ACE_Errno_Guard if the underlying ACE_Event_Handler
+          pointer is non-zero.  Saves a TSS access in the zero
+          ACE_Event_Handler pointer case.
+
+          (operator=):
+
+          Made strongly exception safe.
+
+        * ace/FILE_IO.cpp (send, recv):
+        * ace/Message_Queue.cpp (enqueue, dequeue):
+        * ace/Message_Queue_T.cpp:
+        * ace/OS_NS_unistd.inl (hostname):
+
+          Explicitly supply the "int" "TO" type to the
+          ACE_Utils::Truncate<> function template.  It must now be
+          explicitly specified since ACE_Utils::Truncate<> now supports
+          truncation to all integer types, not just "int".
+
+        * ace/Global_Macros.h (ACE_STATIC_CONSTANT):
+
+          New macro for in-class static integral constant initialization
+          that works around compilers that don't like such initialization.
+          In-class integral constants in this case are meant to be
+          compile-time constants so that they may be used as template
+          arguments, for example.  BOOST provides a similar macro.
+
+        * ace/OS_NS_stdlib.inl (atop):
+        * ace/OS_NS_stdio.cpp (fopen):
+
+          Removed ACE_LACKS_INTPTR_T check.  It is no longer needed.
+
+        * ace/Truncate.h:
+
+          Generalized the ACE_Utils::Truncate<> function template
+          implementation for all integer types.
+
+        * tests/run_test.lst:
+        * tests/tests.mpc:
+
+          Added new "Integer_Truncate_Test" test that verifies the
+          ACE_Utils::Truncate<> function template works for all type
+          size/sign scenarios.
+
+Tue Oct 17 21:28:11 UTC 2006  Iliyan Jeliazkov  <iliyan@ociweb.com>
+
+        * ace/Service_Gestalt.cpp (parse_args_i):
+
+          Checking for no arguments was missed inadvertently in the
+          original change-set from "Tue Oct 17 16:27:27 UTC 2006 ..."
+
+Tue Oct 17 21:09:36 UTC 2006  Shanshan Jiang <shanshan.jiang@vanderbilt.edu>
+
+        * contrib/minizip/ChangeLogUnzip
+        * contrib/minizip/crypt.h
+        * contrib/minizip/ioapi.c
+        * contrib/minizip/ioapi.h
+        * contrib/minizip/iowin32.c
+        * contrib/minizip/iowin32.h
+        * contrib/minizip/miniunz.c
+        * contrib/minizip/minizip.c
+        * contrib/minizip/minizip.mpc
+        * contrib/minizip/minizip_export.h
+        * contrib/minizip/mztools.c
+        * contrib/minizip/mztools.h
+        * contrib/minizip/unzip.c
+        * contrib/minizip/unzip.h
+        * contrib/minizip/zip.c
+        * contrib/minizip/zip.h
+          Added the minizip project. Thanks to Krishnakumar Balasubramanian
+          <kitty at dre dot vanderbilt dot edu> for providing this.
+
+Tue Oct 17 17:17:36 UTC 2006  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
+
+        * ace/OS_NS_unistd.inl (truncate): SetFilePointerEx() returns a
+          BOOL not a DWORD (unlike SetFilePointer()..).  Thanks to Boris
+          Kaminer <boris dot kaminer at gmail dot com> for reporting this.
+
+Tue Oct 17 16:27:27 UTC 2006  Iliyan Jeliazkov  <iliyan@ociweb.com>
+
+        * ace/DLL_Manager.cpp:
+        * ace/Parse_Node.cpp:
+
+          Updated logging messages.
+
+        * ace/Service_Gestalt.cpp:
+
+          Updated logging messages to exclude the "e-word" causing false
+          positives in the Service_Config_Test. Updated comments.
+
+Tue Oct 17 12:35:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * apps/soreduce/Library.cpp:
+          taoversion is not a valid base project. Thanks to Manuel Traut
+          <manut dot de at googlemail dot com> for reporting this.
+
+Tue Oct 17 12:09:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ACE-INSTALL.html:
+          Updated supported platforms by Remedy IT. New are VxWorks 5.5.2,
+          OpenVMS 8.3, RTEMS and LynxOS.
+
+Tue Oct 17 12:05:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/config-rtems.h:
+          Cleanup
+
+        * include/makeinclude/plaform_rtems.x_g++.GNU:
+          Improved for rtems 4.6.6
+
+Tue Oct 17 07:03:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/config-rtems.h:
+        * ace/OS_NS_unistd.inl:
+          Added support for ACE_LACKS_FDOPEN
+
+Mon Oct 16 21:29:57 UTC 2006  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * THANKS: Updated Chris Reed's entry in the list.
+
+Mon Oct 16 20:04:59 UTC 2006  Iliyan Jeliazkov  <iliyan@ociweb.com>
+
+          This change fixes bug#2612. See the description for the gory
+          details. In a nutshell, the problem is caused by the fact that
+          static services, loaded from a DLL, as part of a dynamic service
+          initialization can not be safely finalized when the dynamic
+          service's DLL gets unloaded. This was historically handled by
+          simply not unloading DLLs, and by finalizing all services at
+          process exit. With the introduction of the local configurations
+          feature, this changed.
+
+          The finalization order was supposed to be guaranteed by the
+          ordering of the services in the repository. It really was a
+          kludge, because when dynamically loading and removing services
+          the order can change.  Then whenever the process tries to clean
+          up, the dynamic service's DLL can be unloaded (because it gets
+          finalized first), and the static services' destructor code would
+          become inaccessible. The situation results in a SEGV at exit().
+
+        * ace/DLL.h:
+        * ace/DLL.cpp:
+
+          Made assignment operator return a non-const reference to make it
+          well-formed. See C++ Standard, section "[special]".
+
+        * ace/DLL_Manager.cpp:
+        * ace/Dynamic_Service_Base.cpp (instance):
+        * ace/Parse_Node.cpp:
+
+          Fixed formatting and logging
+
+        * ace/Service_Config.cpp (parse_args_i):
+
+          Fixing a bug related to parsing the command line options that
+          take arguments. Thanks to Aaron Scamehorn <Aaron dot Scamehorn
+          at cogcap dot com> for reporting it.
+
+        * ace/Service_Gestalt.cpp:
+
+          Added ACE_Service_Dynamic_Guard (formerly
+          ACE_Service_Type_Forward_Declaration_Guard) which helps to
+          resolve an issue with hybrid services, i.e. dynamic services,
+          accompanied by static services in the same DLL.  Only automatic
+          instances of SDG are supposed to exist. Those are created during
+          (dynamic) service initialization and serve to:
+
+          (a) Ensure the service we are loading is ordered last in the
+          repository, following any other services it may cause to
+          register, as part of its own registration. This is a common case
+          when loading dynamic services from DLLs - there are often static
+          initializers, which register static services.
+
+          (b) The SDG instance destructor detects if the dynamic service
+          initialized successfully and "fixes-up" all the newly registered
+          static services, so that each holds a reference to the DLL, from
+          which they have originated.
+
+          Updated comments and formatting.
+
+        * ace/Service_Object.h (dll):
+        * ace/Service_Object.inl (dll):
+
+          Added void dll (const ACE_DLL&) to make it possible to
+          "relocate" services registered through static initializers found
+          in DLL's code segment(s).
+
+        * ace/Service_Object.cpp (fini):
+
+          Modified ACE_Service_Type::fini() to ensure the DLL associated
+          with the service is properly closed. This in conjunction with
+          the gestalt changes above, makes it possible to safely and
+          completely unload a service.
+
+        * ace/Service_Repository.h:
+        * ace/Service_Repository.cpp (remove_i,relocate_i,relocate):
+
+          Added relocate(), which allows association of a (static) service
+          objects with a DLL. Per changes to ACE_Service_Gestalt,
+          above. Added a counterpart private relocate_i(), which does not
+          obtain locks.
+
+        * tests/Service_Config_Test.cpp:
+
+          Added a test that combines more than one argument-taking command
+          line option to guard against regression for the bug fixed in
+          ACE_Service_Config::parse_args_i (see above).
+
+Mon Oct 16 19:20:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/config-rtems.h:
+          Updated with more changes needed for rtems
+
+        * ace/os_include/os_signal.h:
+          Added specific defines for rtems
+
+        * ace/OS_NS_time.cpp (difftime):
+          Removed not used variable and get gmtime/gmtime_r from the
+          global scope
+
+        * ace/OS_NS_string.{h,cpp,inl}:
+          Added ACE_LACKS_STRTOK_R to make the rtems port easier
+
 Mon Oct 16 14:24:25 UTC 2006  Steve Huston  <shuston@riverace.com>
 
         * ace/OS_NS_netdb.{cpp inl} (gethostbyname[_r], gethostbyaddr[_r]):

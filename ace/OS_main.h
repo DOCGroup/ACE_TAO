@@ -25,6 +25,10 @@
 #  pragma once
 # endif /* ACE_LACKS_PRAGMA_ONCE */
 
+# if defined (ACE_HAS_RTEMS)
+extern char* rtems_progname;
+# endif /* ACE_HAS_RTEMS */
+
 # if !defined (ACE_MAIN)
 #   define ACE_MAIN main
 # endif /* ! ACE_MAIN */
@@ -78,6 +82,24 @@ int \
 ACE_MAIN (int argc, char *argv[])    /* user's entry point, e.g., main */ \
 { \
   vx_ace_main_i_ptr = ace_main_i; \
+  return ace_os_main_i (argc, argv); /* what the user calls "main" */ \
+} \
+int \
+ace_main_i
+
+#   elif defined (ACE_HAS_RTEMS)
+
+#     define main \
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL \
+ace_os_main_i (int, char *[]); \
+ACE_END_VERSIONED_NAMESPACE_DECL \
+int \
+ACE_MAIN (int argc, char *argv[])    /* user's entry point, e.g., main */ \
+{ \
+  if ((argc > 0) && argv && argv[0]) \
+    rtems_progname = argv[0]; \
+  else \
+    rtems_progname = "RTEMS"; \
   return ace_os_main_i (argc, argv); /* what the user calls "main" */ \
 } \
 int \

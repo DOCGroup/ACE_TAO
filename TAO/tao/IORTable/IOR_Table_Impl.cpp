@@ -17,6 +17,42 @@ ACE_RCSID (IORTable,
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
+TAO_IOR_Table_Impl_ptr
+TAO::Objref_Traits<TAO_IOR_Table_Impl>::duplicate (
+    TAO_IOR_Table_Impl_ptr p
+  )
+{
+  if (! ::CORBA::is_nil (p))
+    {
+      p->_add_ref ();
+    }
+
+  return p;
+}
+
+void
+TAO::Objref_Traits<TAO_IOR_Table_Impl>::release (
+    TAO_IOR_Table_Impl_ptr p
+  )
+{
+  ::CORBA::release (p);
+}
+
+TAO_IOR_Table_Impl_ptr
+TAO::Objref_Traits<TAO_IOR_Table_Impl>::nil (void)
+{
+  return TAO_IOR_Table_Impl::_nil ();
+}
+
+::CORBA::Boolean
+TAO::Objref_Traits<TAO_IOR_Table_Impl>::marshal (
+    const TAO_IOR_Table_Impl_ptr ,
+    TAO_OutputCDR &
+  )
+{
+  return false;
+}
+
 TAO_IOR_Table_Impl::TAO_IOR_Table_Impl (void)
 {
 }

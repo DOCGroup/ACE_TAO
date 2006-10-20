@@ -1,6 +1,10 @@
 PLANNED MAJOR CHANGES "SOMETIME IN THE FUTURE" (i.e., exact beta not known)
 ===========================================================================
 
+. (Remedy) OpenVMS 8.3 on IA64 port
+
+. (Remedy) RTEMS port
+
 USER VISIBLE CHANGES BETWEEN ACE-5.5.2 and ACE-5.5.3
 ====================================================
 

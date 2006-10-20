@@ -103,6 +103,14 @@ extern "C"
 #  define AF_ANY (-1)
 #endif /* AF_ANY */
 
+#if !defined (AF_UNSPEC)
+#  define AF_UNSPEC 0
+#endif /* AF_UNSPEC */
+
+#if !defined (PF_UNSPEC)
+#  define PF_UNSPEC 0
+#endif /* PF_UNSPEC */
+
 #define AF_SPIPE (AF_MAX + 1)
 #if !defined (AF_FILE)
 #  define AF_FILE (AF_MAX + 2)
@@ -191,7 +199,7 @@ extern "C"
                           struct timespec *timeout);
 
   ssize_t sendmsg_timedwait (ACE_HANDLE handle,
-			     const struct msghdr *msg,
+           const struct msghdr *msg,
                              int flags,
                              struct timespec *timeout);
 

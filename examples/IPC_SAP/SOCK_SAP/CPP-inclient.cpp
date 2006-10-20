@@ -245,7 +245,7 @@ Options::oneway_client_test (void *)
   size_t iteration = 0;
 
   // Keep track of return value.
-  int result = 0;
+  intptr_t result = 0;
   ACE_INT32 len = options->message_len ();
 
   ACE_DEBUG ((LM_DEBUG,
@@ -297,7 +297,7 @@ Options::twoway_client_test (void *)
   size_t iteration = 0;
 
   // Keep track of return value.
-  int result = 0;
+  intptr_t result = 0;
 
   // Timer business.
   ACE_High_Res_Timer timer;

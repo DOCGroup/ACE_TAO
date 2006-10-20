@@ -42,7 +42,7 @@ protected:
                 0) == -1) // no timeout
       return -1;
     active_handles_.sync
-      ((ACE_HANDLE) ((int) active_handles_.max_set () + 1));
+      ((ACE_HANDLE) ((intptr_t) active_handles_.max_set () + 1));
     return 0;
   }
 
