@@ -93,9 +93,16 @@ ACE_INLINE int
 ACE_OS::bind (ACE_HANDLE handle, struct sockaddr *addr, int addrlen)
 {
   ACE_OS_TRACE ("ACE_OS::bind");
+#if defined (ACE_LACKS_BIND)
+  ACE_UNUSED_ARG (handle);
+  ACE_UNUSED_ARG (addr);
+  ACE_UNUSED_ARG (addrlen);
+  ACE_NOTSUP_RETURN (-1);
+#else
   ACE_SOCKCALL_RETURN (::bind ((ACE_SOCKET) handle,
                                addr,
                                (ACE_SOCKET_LEN) addrlen), int, -1);
+#endif
 }
 
 ACE_INLINE int
