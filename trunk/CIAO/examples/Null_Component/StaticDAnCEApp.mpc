@@ -1,10 +1,12 @@
 // -*- MPC -*-
 // $Id$
 
-project(StaticDAnCEApp *): ciao_static_dnc_app, iortable {
+project(StaticDAnCEApp *): ciao_component_dnc, iortable, ciao_nodeapplicationmanager {
   after    += Null_Component_exec
   exename   = StaticDAnCEApp
-  requires += exceptions dummy_label
+  requires += exceptions
+  libs     += NodeManager
+  after    += NodeManager_svnt
 
   libs     += Null_Interface_stub
   libs     += Null_Interface_svnt
