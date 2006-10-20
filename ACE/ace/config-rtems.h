@@ -141,4 +141,16 @@
 #define ACE_LACKS_FDOPEN
 #define ACE_HAS_TERMIOS
 
+#if define (ACE_LACKS_NETWORKING)
+# define ACE_LACKS_SYS_UIO_H
+# define ACE_LACKS_SYS_SOCKET_H
+# define ACE_LACKS_NETINET_IN_H
+# define ACE_LACKS_NETDB_H
+# define ACE_LACKS_ARPA_INET_H
+# define ACE_LACKS_SYS_SELECT_H
+# define ACE_LACKS_NET_IF_H
+# define ACE_LACKS_SYSLOG_H
+# define ACE_LACKS_SYS_UN_H
+#endif
+
 #endif /* ACE_CONFIG_H */
