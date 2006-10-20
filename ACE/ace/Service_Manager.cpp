@@ -33,7 +33,7 @@ ACE_Service_Manager::dump (void) const
 u_short ACE_Service_Manager::DEFAULT_PORT_ = 10000;
 
 ACE_Service_Manager::ACE_Service_Manager (void)
-  : debug_ (0),
+  : debug_ (false),
     signum_ (SIGHUP)
 {
   ACE_TRACE ("ACE_Service_Manager::ACE_Service_Manager");
@@ -102,7 +102,7 @@ ACE_Service_Manager::init (int argc, ACE_TCHAR *argv[])
      switch (c)
        {
        case 'd':
-         this->debug_ = 1;
+         this->debug_ = true;
          break;
        case 'p':
          local_addr.set ((u_short) ACE_OS::atoi (getopt.opt_arg ()));
