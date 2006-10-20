@@ -192,46 +192,43 @@ namespace CIAO
 
         protected:
 
+        typedef ACE_Hash_Map_Manager_Ex<ACE_CString,
+                                          int, ACE_Hash<ACE_CString>,
+                                          ACE_Equal_To<ACE_CString>,
+                                          ACE_Null_Mutex> Instance_Map;
+        enum NWPriorityModel { UNDEF_NWPM = -1, CLIENT = 0 , SERVER = 1 };
+        
+
         NetQoSPlanner_Context *context_;
+        std::auto_ptr <PlanManager> plan_man_;
+        PlanManager *current_pm_;
         std::string node_map_filename_;
         std::string planner_name_;
         std::string planner_type_;
-        std::map <std::string, std::string> node_map_;
-        std::map <std::string, std::string> instance_node_map_;
         BB_Proxy BB_proxy_;
-        typedef ACE_Hash_Map_Manager_Ex<ACE_CString,
-                                        int, ACE_Hash<ACE_CString>,
-                                        ACE_Equal_To<ACE_CString>,
-                                        ACE_Null_Mutex> Instance_Map;
-        Instance_Map instance_map_;
-
-        enum NWPriorityModel { UNDEF_NWPM = -1, CLIENT = 0 , SERVER = 1 };
-
+        
         protected:
 
-        void build_node_map ();
-        void build_instance_node_map (const Deployment::DeploymentPlan & dep_plan);
-        void build_instance_index_map (const Deployment::DeploymentPlan & dep_plan);
-
-        bool get_endpoints (::Deployment::DiffservInfo&,
-                            const ::Deployment::DeploymentPlan &dep_plan,
-                            const std::string &conn_name);
         void get_traffic_qos (CommonDef::QOSRequired &qos_req, 
                               const ::CIAO::DAnCE::NetworkQoS::ConnectionQoS & conn_qos);
-        std::string get_physical_host (const std::string &logical_node);
-        int get_ip_address (CommonDef::IPAddress & srcIP, const char *);
+        
+        std::string get_physical_host (const std::string &logical_node, 
+                                       PlannerState *state);
+        
+        int get_ip_address (CommonDef::IPAddress & srcIP, 
+                            const char *,
+                            PlannerState *state);
+        
         void dump_policies (const ::Deployment::DeploymentPlan &dep_plan);
-        void dump_deployed_resources (const ::Deployment::DeploymentPlan
-&dep_plan);
-
+        void dump_deployed_resources (const ::Deployment::DeploymentPlan &dep_plan);
 
         bool resolve_BB ();
         bool deploy_plan (::Deployment::DeploymentPlan &dep_plan);
+        bool teardown_plan (::Deployment::DeploymentPlan &dep_plan);
         void remove_netqos (::Deployment::DeploymentPlan &dep_plan, size_t property_index);
 
-        bool process_netqos_req (const CIAO::DAnCE::NetworkQoS::NetQoSRequirement *, 
-                                 const ::Deployment::DeploymentPlan &dep_plan,
-                                 ::Deployment::DiffservInfos &dscp_infos);
+        bool process_netqos_req (PlannerState *state, 
+                                 const ::Deployment::DeploymentPlan &dep_plan);
 
         int make_flow_request (const CommonDef::IPAddress &srcIP,
                                const CommonDef::IPAddress &destIP,
@@ -240,7 +237,7 @@ namespace CIAO
                                long &dscp);
 
         void add_network_priorities (Deployment::DeploymentPlan & temp_plan,
-                                     const Deployment::DiffservInfos & dscp_infos);
+                                     PlannerState *state);
 
         std::string push_policy(CIAO::DAnCE::ServerResource&, 
                                 const std::string &,
