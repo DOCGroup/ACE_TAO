@@ -1,3 +1,15 @@
+Fri Oct 20 06:41:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+	* DAnCE/StaticConfigurator/StaticDAnCEParser.cpp:
+	  Changed the HomeAttributes generation in such a way that it
+	  also compiles with BCB6
+
+	* examples/Null_Component/*:
+	  New example, a component with just one interface. This can be used
+	  to analyze the core footprint and see what we can reduce
+          Thanks to Sowayan Abdullah <abdullah dot sowayan at lmco dot com>
+          for creating this example
+
 Thu Oct 19 23:22:49 UTC 2006  Shanshan Jiang <shanshan.jiang@vanderbilt.edu>
 
         * DAnCE/RepositoryManager/RepositoryManager.mpc
@@ -6,16 +18,13 @@ Thu Oct 19 23:22:49 UTC 2006  Shanshan Jiang <shanshan.jiang@vanderbilt.edu>
 
 Thu Oct 19 10:47:12 UTC 2006  xiong,ming  <ming.xiong@vanderbilt.edu>
 
-
         * DAnCE/TargetManager/CmpClient.cpp
         * DAnCE/tests/NodeApplicationTest/NodeApp_test_client.cpp
         * examples/BasicSP/EC/controller.cpp
         * examples/Display/RateGen/controller.cpp
         * tests/Bug_2130_Regression/SEC_CheckPoint/controller.cpp
-
-        Changed the naked atoi () to ACE_OS::atoi (), again thanks to Abdul
-        for reporiting this.
-
+          Changed the naked atoi () to ACE_OS::atoi (), again thanks to Abdul
+          for reporiting this.
 
 Wed Oct 18 14:00:04 UTC 2006  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
 
