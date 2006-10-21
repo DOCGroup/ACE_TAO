@@ -102,7 +102,7 @@ sizeof_from_lt_sizeof_to (void)
     from_type const f =
       ACE_Numeric_Limits<from_type>::max ();  // Should not be truncated.
 
-    if (Truncate<to_type> (f) != f)
+    if (Truncate<to_type> (f) != static_cast<to_type> (f))
       {
         success = false;
 
@@ -313,7 +313,7 @@ sizeof_from_gt_sizeof_to (void)
   }
 
   ACE_DEBUG ((LM_INFO,
-              ACE_TEXT (("\t%s\n")),
+              ACE_TEXT ("\t%s\n"),
               success
               ? ACE_TEXT ("PASSED")
               : ACE_TEXT ("FAILED")));
