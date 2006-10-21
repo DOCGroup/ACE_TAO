@@ -1,3 +1,14 @@
+Sat Oct 21 15:19:46 UTC 2006  Steve Huston  <shuston@riverace.com>
+
+        * configure.ac: Removed the check for LINUX_VERSION that disabled
+          the check for epoll on Linux. Just let the check run - the macros
+          used checked the kernel/C version used to build the kernel instead
+          of the running kernel itself (I think...). In any event, the
+          use of the macros to disable the check prevented the check from
+          running on systems (such as RHEL 4) that do have epoll. Thank you
+          to Brian Campbell <becampbel at hotmail dot com> for researching
+          this area.
+
 Sat Oct 21 10:48:12 UTC 2006  Martin Corino  <mcorino@remedy.nl>
 
     * bin/PerlACE/RunTest.pm:
