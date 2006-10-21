@@ -263,9 +263,6 @@ ACE_TSS<TYPE>::ts_get (void) const
 template <class TYPE> TYPE *
 ACE_TSS<TYPE>::ts_object (void) const
 {
-  // Ensure that we are serialized!
-  ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, (ACE_Thread_Mutex &) this->keylock_, 0);
-
   if (this->once_ == 0) // Return 0 if we've never been initialized.
     return 0;
 
@@ -311,9 +308,6 @@ ACE_TSS<TYPE>::ts_object (TYPE *new_ts_obj)
       if (this->ts_init () == -1)
         return 0;
     }
-
-  // Ensure that we are serialized!
-  ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->keylock_, 0);
 
   TYPE *ts_obj = 0;
 

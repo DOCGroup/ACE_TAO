@@ -1,3 +1,34 @@
+Sat Oct 21 14:49:21 UTC 2006  Steve Huston  <shuston@riverace.com>
+
+        * ace/TSS_T.{h cpp}: Added "volatile" keyword to once_ member
+          since it can be changed by other threads. Removed the lock
+          acquiring from the ts_object() methods - after once_ is checked,
+          there are no further needs for locks. When needed, the key_ is
+          set up by ts_init() which does acquire a lock. This avoids a lock
+          acquire/release cycle on all calls when initialization of the
+          ACE_TSS object is not required, speeding up performance. Thanks to
+          Guy Peleg <guy dot peleg at amdocs dot com> for reporting this and
+          to Russell Mora <russell_mora at symantec dot com> for assisting in
+          analyzing the situation and recommending the particular fixes.
+
+        * ace/Logging_Strategy.h: Minor doxygen improvements.
+
+        * ace/Sock_Connect.cpp: When checking for IPv6 interfaces on Windows,
+          there's two conditionally compiled blocks of code. One block was
+          built if ACE_HAS_IPV6 SIO_ADDRESS_LIST_QUERY are both defined; the
+          other was built if ACE_HAS_IPV6 is defined. Added the check for
+          SIO_ADDRESS_LIST_QUERY to the second case as well since it makes
+          no sense to run it if the first isn't built. Thanks to Andre
+          Kostur for this fix. Also see:
+          Mon Oct 16 14:24:25 UTC 2006  Steve Huston  <shuston@riverace.com>
+
+        * ace/Task_T.h (reply): Clarified what happens on a reply(). Thanks
+          to Doug Schmidt for explaining the rationale for this.
+
+        * ace/Token_Request_Reply.inl (token_name): VC7.1 had trouble grokking
+          the ACE_Utils::Truncate arguments in this case, so add the types
+          to a more complete specification of what template is desired.
+
 Sat Oct 21 15:19:46 UTC 2006  Steve Huston  <shuston@riverace.com>
 
         * configure.ac: Removed the check for LINUX_VERSION that disabled
