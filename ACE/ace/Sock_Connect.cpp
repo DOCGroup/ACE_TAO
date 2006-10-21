@@ -632,7 +632,7 @@ ACE::get_ip_interfaces (size_t &count,
       ++count;
     }
 
-# if defined (ACE_HAS_IPV6)
+# if defined (ACE_HAS_IPV6) && defined (SIO_ADDRESS_LIST_QUERY)
   // Now go through the list and transfer the good ones to the list of
   // because they're down or don't have an IP address.
   for (i = 0; i < n_v6_interfaces; i++)
