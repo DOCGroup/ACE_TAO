@@ -4,7 +4,7 @@
 project(StaticDAnCEApp *): ciao_component_dnc, iortable, ciao_nodeapplicationmanager {
   after    += Null_Component_exec
   exename   = StaticDAnCEApp
-  requires += exceptions
+  requires += exceptions dummy_label
   libs     += NodeManager
   after    += NodeManager_svnt
 
