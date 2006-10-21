@@ -4,7 +4,7 @@
 # startup ARGV processing that is used by all tests.
 
 use PerlACE::Process;
-use PerlACE::ProcessVX;
+##use PerlACE::ProcessVX;
 use PerlACE::ConfigList;
 
 package PerlACE;
@@ -22,6 +22,11 @@ if(exists $ENV{TAO_ROOT}) {
 my $config = new PerlACE::ConfigList;
 $PerlACE::VxWorks_Test = $config->check_config("VxWorks");
 $PerlACE::VxWorks_RTP_Test = $config->check_config("VxWorks_RTP");
+
+# load VxWorks Process helpers in case this is a VxWorks target build
+if ($PerlACE::VxWorks_Test or $PerlACE::VxWorks_RTP_Test) {
+    require PerlACE::ProcessVX;
+}
 
 # Figure out the svc.conf extension
 $svcconf_ext = $ENV{"ACE_RUNTEST_SVCCONF_EXT"};
