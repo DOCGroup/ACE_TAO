@@ -9,7 +9,8 @@ use File::Spec;
 use Config;
 use FileHandle;
 use Cwd;
-use Net::Telnet ();
+
+require Net::Telnet;
 
 ###############################################################################
 
