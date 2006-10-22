@@ -65,7 +65,7 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
  * However, if you must use an older compiler that won't work with a built-in
  * type, the ACE_TSS_Type_Adapter class template, below, can be used for
  * adapting built-in types to work with ACE_TSS.
- *  
+ *
  * @note Beware when creating static instances of this type
  * (as with any other, btw). The unpredictable order of initialization
  * across different platforms may cause a situation where one uses
@@ -125,7 +125,7 @@ public:
   //@{
   /**
    * Get the thread-specific object for this object.
-   * 
+   *
    * @return  0 if the object has never been initialized, otherwise returns
    *          the calling thread's copy of the data. The returned pointer
    *          may be 0 under odd error conditions; check errno for further
@@ -190,7 +190,7 @@ protected:
   ACE_Thread_Mutex keylock_;
 
   /// "First time in" flag.
-  int once_;
+  volatile int once_;
 
   /// Key for the thread-specific error data.
   ACE_thread_key_t key_;
