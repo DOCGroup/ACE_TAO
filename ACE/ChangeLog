@@ -4,8 +4,8 @@ Sun Oct 22 08:11:25 UTC 2006  Ossama Othman  <ossama_othman at symantec dot com>
 
           Simplified use of ACE_Utils::Truncate<> function template.  Only
           the "TO" type must be explicitly specified.  The "FROM" type is
-          deduced automatically by the compiler.  Note that the explicitly
-          specifiying both template parameters is perfectly valid, too.
+          deduced automatically by the compiler.  Note that explicitly
+          specifying both template parameters is perfectly valid, too.
 
         * ace/Truncate.h (Truncator):
 
