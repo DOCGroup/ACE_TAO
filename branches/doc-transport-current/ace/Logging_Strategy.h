@@ -30,8 +30,9 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 /**
  * @class ACE_Logging_Strategy
  *
- * @brief This class provides the hooks to control the output produced
- * by any of the network services.
+ * @brief This class provides a way to dynamically configure the ACE logging
+ * mechanism at run time as well as enable the mechanisms for limiting
+ * log file size and log file backup/rotation capability.
  *
  * Depending upon when this service is invoked and with what
  * flags, the output of other network services can be
@@ -73,7 +74,8 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
  * and then logging_strategy will use your reactor.  If you're
  * dynamically linking the @c ACE_Logging_Strategy then you can use
  * the @c ACE_Dynamic_Service template to get a pointer to the
- * @c ACE_Logging_Strategy.  */
+ * @c ACE_Logging_Strategy.
+ */
 class ACE_Export ACE_Logging_Strategy : public ACE_Service_Object
 {
 public:

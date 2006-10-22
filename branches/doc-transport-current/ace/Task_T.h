@@ -96,9 +96,15 @@ public: // Should be protected:
   int ungetq (ACE_Message_Block *, ACE_Time_Value *timeout = 0);
 
   /**
-   * Turn the message around and send it back down the Stream.  Note
-   * that <timeout> uses <{absolute}> time rather than <{relative}>
-   * time.
+   * Turn the message around, sending it in the opposite direction in
+   * the stream. To do this, the message is put onto the task next in
+   * the stream after this task's sibling.
+   *
+   * @param ACE_Message_Block  Pointer to the block that is used in the reply.
+   * @param timeout  The absolute time at which the put operation used to
+   *                 send the message block to the next module in the stream
+   *                 will time out. If 0, this call blocks until it can be
+   *                 completed.
    */
   int reply (ACE_Message_Block *, ACE_Time_Value *timeout = 0);
 

@@ -3826,11 +3826,6 @@ case "$host" in
       AC_LINK_IFELSE([
       AC_LANG_PROGRAM([
 #include <sys/epoll.h>
-#include <linux/version.h>
-#if LINUX_VERSION_CODE < KERNEL_VERSION (2,5,45)
-#  error Disabling Linux epoll support.  Kernel used in C library is too old.
-#  error Linux kernel 2.5.45 or better is required.
-#endif  /* LINUX_VERSION_CODE < KERNEL_VERSION (2,5,45) */
        ],
        [
 int const ACE_NUM_DESCRIPTORS = 10;

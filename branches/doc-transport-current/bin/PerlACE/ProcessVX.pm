@@ -53,10 +53,10 @@ for(my $i = 0; $i <= $#ARGV; ++$i) {
 $PerlACE::ProcessVX::WAIT_DELAY_FACTOR = $ENV{"ACE_RUNTEST_DELAY"};
 
 if ($OSNAME eq "MSWin32") {
-	require PerlACE::ProcessVX_Win32;
+    require PerlACE::ProcessVX_Win32;
 }
 else {
-        #require PerlACE::ProcessVX_Unix;
+    require PerlACE::ProcessVX_Unix;
 }
 
 1;
