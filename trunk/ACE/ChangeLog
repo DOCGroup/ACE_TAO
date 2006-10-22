@@ -3,7 +3,7 @@ Sun Oct 23 00:29:55 UTC 2006  Ossama Othman  <ossama_othman at symantec dot com>
         * ace/Truncate.h:
 
           In the Borland-specific workaround, explicitly cast return value
-          of ACE_Numeric_Limits::max() of the smaller signed type to the
+          of ACE_Numeric_Limits::max() of the smaller unsigned type to the
           unsigned larger type to which it is being compared.  Addresses
           non-intuitive "comparison of signed and unsigned types" warning
           issued by Borland compiler.  Borland promotes unsigned char to
