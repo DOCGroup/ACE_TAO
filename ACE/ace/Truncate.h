@@ -524,7 +524,7 @@ namespace ACE_Utils
     ACE_UINT8 operator() (ACE_UINT32 val)
     {
       return 
-        (val > ACE_Numeric_Limits<ACE_UINT8>::max ()
+        (val > static_cast<ACE_UINT32> (ACE_Numeric_Limits<ACE_UINT8>::max ())
          ? ACE_Numeric_Limits<ACE_UINT8>::max ()
          : static_cast<ACE_UINT8> (val));
     }
@@ -584,7 +584,7 @@ namespace ACE_Utils
     ACE_UINT32 operator() (ACE_UINT64 val)
     {
       return 
-        (val > ACE_Numeric_Limits<ACE_UINT32>::max ()
+        (val > static_cast<ACE_UINT64> (ACE_Numeric_Limits<ACE_UINT32>::max ())
          ? ACE_Numeric_Limits<ACE_UINT32>::max ()
          : static_cast<ACE_UINT32> (val));
     }
