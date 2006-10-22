@@ -1,3 +1,18 @@
+Sun Oct 23 00:29:55 UTC 2006  Ossama Othman  <ossama_othman at symantec dot com>
+
+        * ace/Truncate.h:
+
+          In the Borland-specific workaround, explicitly cast return value
+          of ACE_Numeric_Limits::max() of the smaller signed type to the
+          unsigned larger type to which it is being compared.  Addresses
+          non-intuitive "comparison of signed and unsigned types" warning
+          issued by Borland compiler.  Borland promotes unsigned char to
+          int, instead of unsigned int, when comparing to unsigned int.
+          This implicit type promotion behavior complies with the C++
+          standard, but is a bit awkward nonetheless (IMHO :)).  Thanks to
+          Johnny for pointing out Borlands explanation of the
+          non-intuitive warning.
+
 Sun Oct 22 08:11:25 UTC 2006  Ossama Othman  <ossama_othman at symantec dot com>
 
         * ace/Token_Request_Reply.inl (token_name):
