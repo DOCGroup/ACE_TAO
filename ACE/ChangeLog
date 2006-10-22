@@ -1,3 +1,13 @@
+Sun Oct 22 08:11:25 UTC 2006  Ossama Othman  <ossama_othman at symantec dot com>
+
+        * ace/Truncate.h (Truncator):
+
+          Added char/int specializations for Borland to allow the
+          Integer_Truncate_Test to compile.  All of the Borland-specific
+          Truncator specializations are meant to be a temporary workaround
+          until Borland C++ is capable of supporting the generalized
+          implementation.
+
 Sat Oct 21 14:49:21 UTC 2006  Steve Huston  <shuston@riverace.com>
 
         * ace/TSS_T.{h cpp}: Added "volatile" keyword to once_ member
@@ -42,33 +52,34 @@ Sat Oct 21 15:19:46 UTC 2006  Steve Huston  <shuston@riverace.com>
 
 Sat Oct 21 10:48:12 UTC 2006  Martin Corino  <mcorino@remedy.nl>
 
-    * bin/PerlACE/RunTest.pm:
-    * bin/PerlACE/ProcessVX.pm:
-    * bin/PerlACE/ProcessVX_Unix.pm:
+        * bin/PerlACE/RunTest.pm:
+        * bin/PerlACE/ProcessVX.pm:
+        * bin/PerlACE/ProcessVX_Unix.pm:
 
-      Changes to accomodate running autotests for VxWorks RTPs on Linux hosts.
+          Changes to accomodate running autotests for VxWorks RTPs on
+          Linux hosts.
 
 Sat Oct 21 04:34:33 UTC 2006  Ossama Othman  <ossama_othman at symantec dot com>
 
-    * ace/OS_NS_stdlib.cpp:
+        * ace/OS_NS_stdlib.cpp:
 
-        Always include "ace/Numeric_Limits.h" in the ACE_LACKS_MKSTEMP
-        case.  There is no need to conditionally include it when "max"
-        is undefined.  Addresses VxWorks build errors.
+          Always include "ace/Numeric_Limits.h" in the ACE_LACKS_MKSTEMP
+          case.  There is no need to conditionally include it when "max"
+          is undefined.  Addresses VxWorks build errors.
 
-    * ace/Truncate.h:
+        * ace/Truncate.h:
 
-        Only use workaround for Borland compiler versions less than or
-        equal to 0x582.  Thanks to Johnny for the suggestion.
+          Only use workaround for Borland compiler versions less than or
+          equal to 0x582.  Thanks to Johnny for the suggestion.
 
-    * tests/Integer_Truncate_Test.cpp (sizeof_from_lt_sizeof_to):
+        * tests/Integer_Truncate_Test.cpp (sizeof_from_lt_sizeof_to):
 
-        Explicitly cast types in inequality comparison to silence
-        comparison of signed and unsigned warnings.  It's not clear why
-        the warning is occuring since both types are unsigned.
+          Explicitly cast types in inequality comparison to silence
+          comparison of signed and unsigned warnings.  It's not clear why
+          the warning is occuring since both types are unsigned.
 
-        Removed remaining set of redundant parentheses that were
-        missed in a previous commit.
+          Removed remaining set of redundant parentheses that were
+          missed in a previous commit.
 
 Fri Oct 20 12:55:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
