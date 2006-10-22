@@ -10,7 +10,7 @@ Sun Oct 23 00:29:55 UTC 2006  Ossama Othman  <ossama_othman at symantec dot com>
           int, instead of unsigned int, when comparing to unsigned int.
           This implicit type promotion behavior complies with the C++
           standard, but is a bit awkward nonetheless (IMHO :)).  Thanks to
-          Johnny for pointing out Borlands explanation of the
+          Johnny for pointing out Borland's explanation of the
           non-intuitive warning.
 
 Sun Oct 22 08:11:25 UTC 2006  Ossama Othman  <ossama_othman at symantec dot com>
