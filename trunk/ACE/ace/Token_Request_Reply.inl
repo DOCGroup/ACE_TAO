@@ -147,7 +147,7 @@ ACE_Token_Request::token_name (const ACE_TCHAR *token_name,
 
   // ... then add in the amount of the variable-sized portion.
   len += token_name_length + client_id_length + 1;
-  this->length (ACE_Utils::Truncate<ACE_UINT32, size_t> (len));
+  this->length (ACE_Utils::Truncate<ACE_UINT32> (len));
 }
 
 // = Set/get the id of the client.
