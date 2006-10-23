@@ -29,7 +29,7 @@
 
   <eventServiceConfiguration id="es_configuration-02">
     <name>ES_02</name>
-    <node>SenderNode</node>
+    <node>ReceiverNode</node>
     <type>RTEC</type>
     <svc_cfg_file>dummy.conf</svc_cfg_file>
     
