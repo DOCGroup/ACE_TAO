@@ -1,3 +1,17 @@
+Mon Oct 23 06:34:24 UTC 2006  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
+
+        * ace/os_include/os_pthread.h: Changed
+  
+          #      if !defined (ACE_LACKS_RWLOCK_T)
+  
+          to
+  
+          #      if !defined (ACE_LACKS_RWLOCK_T) && !defined (ACE_HAS_PTHREADS_UNIX98_EXT)
+  
+          to stop a compile error on Solaris after SunOS 5.8.  Thanks to
+          Boris Kaminer <boris dot kaminer at gmail dot com> for reporting
+          this fix.
+
 Sun Oct 23 00:29:55 UTC 2006  Ossama Othman  <ossama_othman at symantec dot com>
 
         * ace/Truncate.h:

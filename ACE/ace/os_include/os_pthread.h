@@ -393,7 +393,7 @@ public:
 #    if defined (ACE_LACKS_PTHREAD_YIELD) && defined (ACE_HAS_THR_YIELD)
        // If we are on Solaris we can just reuse the existing
        // implementations of these synchronization types.
-#      if !defined (ACE_LACKS_RWLOCK_T)
+#      if !defined (ACE_LACKS_RWLOCK_T) && !defined (ACE_HAS_PTHREADS_UNIX98_EXT)
 #        include /**/ <synch.h>
          typedef rwlock_t ACE_rwlock_t;
 #      endif /* !ACE_LACKS_RWLOCK_T */
