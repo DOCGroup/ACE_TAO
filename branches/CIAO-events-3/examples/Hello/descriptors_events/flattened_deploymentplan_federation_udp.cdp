@@ -103,7 +103,7 @@
   
   <instance id="Hello-Receiver-idd">
     <name>Hello-Receiver-idd</name>
-    <node>SenderNode</node>
+    <node>ReceiverNode</node>
     <source><!-- @@ What goes here --></source>
     <implementation>Hello-Receiver-mdd</implementation>
     <configProperty>
@@ -132,7 +132,6 @@
     </externalReference>
   </connection>
   
-  
   <connection>
     <name>hello_event_ec_consumer_connection</name>
     <internalEndpoint>
@@ -143,9 +142,8 @@
     <externalReference>
       <location>ES_02</location>
     </externalReference>
-  </connection>
+  </connection> 
 
-  
   <!-- @@ Runtime library name must match exactly in "location" tag -->
   <artifact id="Hello-Sender_exec">
     <name>Sender_exec</name>
