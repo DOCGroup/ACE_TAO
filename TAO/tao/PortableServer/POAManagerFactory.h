@@ -63,6 +63,8 @@ public:
       const char * id ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException));
 
+  void remove_all_poamanagers (void);
+
   int remove_poamanager (::PortableServer::POAManager_ptr poamanager);
 
   int register_poamanager (::PortableServer::POAManager_ptr poamanager);
