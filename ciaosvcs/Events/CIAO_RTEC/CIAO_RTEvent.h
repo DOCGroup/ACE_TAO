@@ -55,7 +55,8 @@ namespace CIAO
   public:
 
     RTEventService (CORBA::ORB_ptr orb,
-                    PortableServer::POA_ptr poa);
+                    PortableServer::POA_ptr poa,
+                    const char * ec_name);
 
     virtual ~RTEventService (void);
 
@@ -138,8 +139,7 @@ namespace CIAO
   private:
     // @@ (GD) This is the place where use could provide a parameter
     //         which specifies the event channel service configuration file.
-    void create_rt_event_channel (
-        ACE_ENV_SINGLE_ARG_DECL)
+    void create_rt_event_channel (const char * ec_name)
       ACE_THROW_SPEC ((
         CORBA::SystemException));
 

@@ -41,7 +41,8 @@ namespace CIAO
     virtual ~EventService_Factory_impl (void);
 
     /// A factory method which creates an CIAO_Event_Service object
-    virtual CIAO_Event_Service_ptr create (EventServiceType type);
+    virtual CIAO_Event_Service_ptr create (EventServiceType type,
+                                           const char * ec_name);
 
     virtual void initialize (CORBA::ORB_ptr orb, PortableServer::POA_ptr poa);
 
