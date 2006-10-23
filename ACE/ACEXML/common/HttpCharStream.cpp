@@ -119,13 +119,17 @@ ACEXML_HttpCharStream::get_url (size_t& len)
   int header_state = HDST_LINE1_PROTOCOL;
   int status = 0;
   size_t b = 0;
-  char* buf = 0;
+  char const * buf = 0;
   size_t buflen = BUFSIZ;
   for (;;)
     {
-      if ((buf = const_cast<char*> (this->stream_->recv (buflen))) == 0)
-        if (buflen <= 0)
+      buf = this->stream_->recv (buflen);
+
+      if (buf == 0)
+        if (buflen == 0)
           break;
+        else
+          continue;
 
       for (b = 0; b < buflen; ++b)
         {
@@ -224,12 +228,12 @@ ACEXML_HttpCharStream::get_url (size_t& len)
   ++b;
   // Store the address of the beginning of data. We will use it to seek to
   // beginning of the data in the URL.
-  char* data_beg = buf + b;
+  char const * const data_beg = buf + b;
   buflen = BUFSIZ;
 
   // Get all of the data. Since this is backed by file store, we won't lose
   // any of the data.
-  while (( buf = const_cast<char*> (this->stream_->recv (buflen))) != 0)
+  while ((buf = this->stream_->recv (buflen)) != 0)
     ;
 
   // Length of data in the URL.
@@ -318,33 +322,41 @@ ACEXML_HttpCharStream::determine_encoding (void)
   if (this->stream_ == 0)
     return -1;
 
-  char input[4] = {0, 0, 0, 0};
-  int i = 0;
-  for (; i < 4 && input[i] != (char)-1; ++i)
-    input[i] = static_cast<char> (this->stream_->peek_char(i));
-  if (i < 4)
+  char input[] = {0, 0, 0, 0};
+  size_t const len = sizeof (input) / sizeof (input[0]);
+  
+  size_t i = 0;
+  for (; i < len && input[i] != static_cast<char> (EOF); ++i)
+    input[i] = this->stream_->peek_char (i);
+
+  if (i < len)
     return -1;
-  const ACEXML_Char* temp = ACEXML_Encoding::get_encoding (input);
+
+  ACEXML_Char const * const temp = ACEXML_Encoding::get_encoding (input);
+
   if (!temp)
     return -1;
   else
     {
       if (this->encoding_)
         delete [] this->encoding_;
+
       this->encoding_ = ACE::strnew (temp);
       //   ACE_DEBUG ((LM_DEBUG, "URI's encoding is %s\n", this->encoding_));
     }
+
   // Move over the byte-order-mark if present.
-  for (int j = 0; j < 3; ++j)
+  for (size_t j = 0; j < len; ++j)
     {
-      if (input[i] == '\xFF' || input[i] == '\xFE' || input[i] == '\xEF' ||
-          input[i] == '\xBB' || input[i] == '\xBF')
+      if (input[j] == '\xFF' || input[j] == '\xFE' || input[j] == '\xEF' ||
+          input[j] == '\xBB' || input[j] == '\xBF')
         {
           this->stream_->get_char();
           continue;
         }
       break;
     }
+
   return 0;
 }
 

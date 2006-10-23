@@ -2,7 +2,6 @@
 // $Id$
 
 project(ACEXML_Parser): acelib, core {
-  avoids       += ace_for_tao
   sharedname    = ACEXML_Parser
   after        += ACEXML
   libs         += ACEXML
