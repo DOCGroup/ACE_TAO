@@ -27,8 +27,9 @@ ACE_RCSID(src, Key_List, "$Id$")
 
 #if defined (ACE_HAS_GPERF)
 
-#include "ace/Read_Buffer.h"
 #include "Hash_Table.h"
+#include "ace/Read_Buffer.h"
+#include "ace/Auto_Ptr.h"
 #include "ace/OS_Memory.h"
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_string.h"
@@ -543,7 +544,9 @@ Key_List::output_switch (int use_keyword_table)
         output_keyword_table ();
     }
 
-  char *comp_buffer;
+  ACE_Auto_Basic_Array_Ptr<char> safe_comp_buffer;
+  char * comp_buffer;
+
   List_Node *curr = head;
   int pointer_and_type_enabled = option[POINTER] && option[TYPE];
   int total_switches = option.total_switches ();
@@ -553,8 +556,14 @@ Key_List::output_switch (int use_keyword_table)
     {
       // Keep track of the longest string we'll need!
       const char *s = "charmap[*str] == *resword->%s && !strncasecmp (str + 1, resword->%s + 1, len - 1)";
-      comp_buffer =
-        new char [ACE_OS::strlen (s) + 2 * ACE_OS::strlen (option.key_name ()) + 1];
+
+      char * const tmp =
+        new char[ACE_OS::strlen (s)
+                 + 2 * ACE_OS::strlen (option.key_name ()) + 1];
+      ACE_AUTO_PTR_RESET (safe_comp_buffer, tmp, char);
+
+      comp_buffer = safe_comp_buffer.get ();
+
       if (option[COMP])
         sprintf (comp_buffer, "%s == *resword->%s && !%s (str + 1, resword->%s + 1, len - 1)",
                  option[STRCASECMP] ? "charmap[*str]" : "*str", option.key_name (),

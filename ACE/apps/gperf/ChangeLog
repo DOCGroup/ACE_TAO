@@ -1,3 +1,9 @@
+Mon Oct 24 02:36:08 UTC 2006  Ossama Othman  <ossama_othman at symantec dot com>
+
+        * apps/gperf/src/Key_List.cpp:
+
+          Addressed Coverity RESOURCE_LEAK errors.
+
 Thu Sep 21 11:54:54 UTC 2006  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
 
         * src/Key_List.cpp (output_hash_function): Fixed a bug where the
