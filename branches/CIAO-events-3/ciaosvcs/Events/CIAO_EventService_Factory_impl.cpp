@@ -33,7 +33,8 @@ namespace CIAO
   }
 
   CIAO_Event_Service_ptr
-  EventService_Factory_impl::create (EventServiceType type)
+  EventService_Factory_impl::create (EventServiceType type,
+                                     const char * ec_name)
   {
     ACE_DEBUG ((LM_DEBUG, "CIAO::EventService_Factory_impl::create_event_service\n"));
 
@@ -44,7 +45,8 @@ namespace CIAO
       case RTEC:
         ACE_NEW_RETURN (event_service,
                         RTEventService (this->orb_.in (),
-                                        this->poa_.in ()),
+                                        this->poa_.in (),
+                                        ec_name),
                         0);
         break;
 

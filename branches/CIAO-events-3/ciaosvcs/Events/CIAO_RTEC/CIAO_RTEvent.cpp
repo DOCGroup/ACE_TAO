@@ -19,15 +19,19 @@
 
 #include <sstream>
 
+      static int iii;
+
 namespace CIAO
 {
 
+
   RTEventService::RTEventService (CORBA::ORB_ptr orb,
-                                  PortableServer::POA_ptr poa) :
+                                  PortableServer::POA_ptr poa,
+                                  const char * ec_name) :
     orb_ (CORBA::ORB::_duplicate (orb)),
     root_poa_ (PortableServer::POA::_duplicate (poa))
   {
-    this->create_rt_event_channel ();
+    this->create_rt_event_channel (ec_name);
   }
 
 
@@ -276,10 +280,11 @@ namespace CIAO
     ACE_Hash<ACE_CString> hasher;
 
     events[0].header.source = hasher (source_id);
-    //events[0].header.source = i++;
-
     events[0].header.type = ACE_ES_EVENT_ANY; //this->type_id_;
-    events[0].data.any_value <<= ev;
+    //events[0].header.ttl = 1;
+    //events[0].data.any_value <<= ev;
+
+    events[0].data.any_value <<= CORBA::string_dup( "Hey! Junk Data");
 
     ACE_DEBUG ((LM_DEBUG, "******* push event for source string: %s\n", source_id));
     ACE_DEBUG ((LM_DEBUG, "******* push event for source id: %i\n", events[0].header.source));
@@ -299,8 +304,7 @@ namespace CIAO
   }
 
   void
-  RTEventService::create_rt_event_channel (
-      ACE_ENV_SINGLE_ARG_DECL)
+  RTEventService::create_rt_event_channel (const char * ec_name)
     ACE_THROW_SPEC ((
       CORBA::SystemException))
   {
@@ -319,6 +323,18 @@ namespace CIAO
     ACE_CHECK;
     this->rt_event_channel_ = ec_servant->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
     ACE_CHECK;
+
+    if (false)
+      {
+        // Find the Naming Service.
+        CORBA::Object_var obj = orb_->resolve_initial_references("NameService");
+        CosNaming::NamingContextExt_var root_context = CosNaming::NamingContextExt::_narrow(obj.in());
+
+        // Bind the Event Channel using Naming Services
+        CosNaming::Name_var name = root_context->to_name (ec_name);
+        ACE_DEBUG ((LM_DEBUG, "\nRegister naming: %s\n", ec_name));
+        root_context->rebind (name.in(), rt_event_channel_.in());
+      }
   }
 
   ::CORBA::Boolean
