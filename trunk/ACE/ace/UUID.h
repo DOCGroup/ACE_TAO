@@ -188,8 +188,8 @@ namespace ACE_Utils
     ACE_SYNCH_MUTEX* lock (void);
 
     /// Set a new locking strategy and return the old one.
-    ACE_SYNCH_MUTEX* lock (ACE_SYNCH_MUTEX*lock,
-                           bool release_lock);
+    void lock (ACE_SYNCH_MUTEX* lock,
+               bool release_lock);
 
   private:
 

@@ -44,7 +44,7 @@ ACE_Wide_To_Ascii::convert (const wchar_t *wstr)
                                          0);
 # elif defined (ACE_LACKS_WCSLEN)
   const wchar_t * wtemp = wstr;
-  while (wtemp != 0)
+  while ((*wtemp) != 0) // Hopefully the string is null terminated!
     ++wtemp;
 
   int const len = wtemp - wstr + 1;

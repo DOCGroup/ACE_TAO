@@ -1186,8 +1186,10 @@ ACE_OS::rw_unlock (ACE_rwlock_t *rw)
   else if (rw->ref_count_ == -1) // Releasing a writer.
     rw->ref_count_ = 0;
   else
-    return -1; // @@ ACE_ASSERT (!"count should not be 0!\n");
-
+    {
+      (void) ACE_OS::mutex_unlock (&rw->lock_);
+      return -1; // @@ ACE_ASSERT (!"count should not be 0!\n");
+    }
 
   int result = 0;
   ACE_Errno_Guard error (errno);
@@ -1210,7 +1212,7 @@ ACE_OS::rw_unlock (ACE_rwlock_t *rw)
       error = errno;
     }
 
-  ACE_OS::mutex_unlock (&rw->lock_);
+  (void) ACE_OS::mutex_unlock (&rw->lock_);
   return result;
 # endif /* ! ace_lacks_rwlock_t */
 #else

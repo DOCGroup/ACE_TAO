@@ -102,32 +102,7 @@ public:
   typedef ptrdiff_t                      difference_type;
   typedef size_t                         size_type;
 
-#if ((defined (_MSC_VER) && !defined (_CPPLIB_VER)))
-  // the latest Platform SDK's doesn't define a standard's compliant
-  // reverse_iterator,
-  // It seems when there is no _CPPLIB_VER defined, then we can assume
-  // also that the SDK is old.
-  typedef std::reverse_iterator<iterator, value_type> reverse_iterator;
-  typedef std::reverse_iterator<const_iterator,
-                                value_type const>     const_reverse_iterator;
-#elif defined (__SUNPRO_CC) && __SUNPRO_CC <= 0x580 \
-      && defined (_RWSTD_NO_CLASS_PARTIAL_SPEC)
-  typedef std::reverse_iterator<iterator,
-                                std::input_iterator_tag,
-                                value_type,
-                                reference,
-                                pointer,
-                                difference_type> reverse_iterator;
-  typedef std::reverse_iterator<const_iterator,
-                                std::input_iterator_tag,
-                                value_type const,
-                                const_reference,
-                                const_pointer,
-                                difference_type> const_reverse_iterator;
-#else
-  typedef std::reverse_iterator<iterator>       reverse_iterator;
-  typedef std::reverse_iterator<const_iterator> const_reverse_iterator;
-#endif  /* _MSC_VER */
+  ACE_DECLARE_STL_REVERSE_ITERATORS
 
   /// Default Constructor.
   /**
@@ -182,14 +157,14 @@ public:
   size_type max_size (void) const;
 
   /// Return @c true if the map is empty, else @c false.
-  bool is_empty (void) const;
+  bool is_empty (void) const;  // ACE style
 
   /** 
    * Return @c true if the map is empty, else @c false.  We recommend
    * using @c is_empty() instead since it's more consistent with the
    * ACE container naming conventions.
    */
-  bool empty (void) const;
+  bool empty (void) const;  // STL style
 
   /// Swap the contents of this map with the given @a map in an
   /// exception-safe manner.

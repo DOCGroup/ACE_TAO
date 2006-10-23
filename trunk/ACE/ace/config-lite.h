@@ -99,6 +99,66 @@ typedef ACE_OS_Thread_Descriptor *(*ACE_THR_DESC_LOG_MSG_HOOK) (void);
 
 ACE_END_VERSIONED_NAMESPACE_DECL
 
+/**
+ * @deprecated ACE_DECLARE_STL_REVERSE_ITERATORS is a crutch to be
+ *             used until all C++ compiler supported by ACE support
+ *             the standard reverse_iterator adapters.
+ * @internal   ACE_DECLARE_STL_REVERSE_ITERATORS is not meant for use
+ *             outside of ACE.
+ */
+// STL reverse_iterator declaration generator
+// Make sure you include <iterator> in the file you're using this
+// generator, and that the following traits are available:
+//
+//   iterator
+//   const_iterator
+//   value_type
+//   reference
+//   pointer
+//   const_reference
+//   const_pointer
+//   difference_type
+//
+// Once all C++ compilers support the standard reverse_iterator
+// adapters, we can drop this generator macro or at least drop the
+// MSVC++ or Sun Studio preprocessor conditional blocks.
+#if defined (__SUNPRO_CC) && __SUNPRO_CC <= 0x580
+  // We need to ensure that this is included in order to test
+  // _RWSTD_NO_CLASS_PARTIAL_SPEC below
+# include <Cstd/stdcomp.h>
+#endif /* __SUNPRO_CC <= 0x580 */
+#if defined (_MSC_VER) && !defined (_CPPLIB_VER)
+  // MSVC++ 6 and the latest platform SDKs don't define a standard
+  // compliant reverse_iterator adapter.
+  //
+  // It seems when there is no _CPPLIB_VER defined we can also assume
+  // that the SDK is old.
+# define ACE_DECLARE_STL_REVERSE_ITERATORS \
+  typedef std::reverse_iterator<iterator, value_type> reverse_iterator; \
+  typedef std::reverse_iterator<const_iterator, \
+                                value_type const> const_reverse_iterator;
+#elif defined (__SUNPRO_CC) && __SUNPRO_CC <= 0x580 \
+      && defined (_RWSTD_NO_CLASS_PARTIAL_SPEC)
+# define ACE_DECLARE_STL_REVERSE_ITERATORS \
+  typedef std::reverse_iterator<iterator, \
+                                std::input_iterator_tag, \
+                                value_type, \
+                                reference, \
+                                pointer, \
+                                difference_type> reverse_iterator; \
+  typedef std::reverse_iterator<const_iterator, \
+                                std::input_iterator_tag, \
+                                value_type const, \
+                                const_reference, \
+                                const_pointer, \
+                                difference_type> const_reverse_iterator;
+#else
+# define ACE_DECLARE_STL_REVERSE_ITERATORS \
+  typedef std::reverse_iterator<iterator>       reverse_iterator; \
+  typedef std::reverse_iterator<const_iterator> const_reverse_iterator;
+#endif  /* _MSC_VER <= 1200 */
+
+
 #include /**/ "ace/post.h"
 
 #endif /* ACE_CONFIG_LITE_H */

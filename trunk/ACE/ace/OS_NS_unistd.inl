@@ -596,11 +596,7 @@ ACE_OS::isatty (ACE_HANDLE handle)
   ACE_UNUSED_ARG (handle);
   return 0;
 #else
-# if defined (ACE_LACKS_INTPTR_T)
-   int fd = ::_open_osfhandle (long (handle), 0);
-# else
-   int fd = ::_open_osfhandle (intptr_t (handle), 0);
-# endif
+  int fd = ::_open_osfhandle (intptr_t (handle), 0);
   int status = ::_isatty (fd);
   ::_close (fd);
   return status;

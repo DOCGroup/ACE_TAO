@@ -53,6 +53,11 @@ namespace ACE
     ACE_UINT32 host_addr = 0,
     ACE_HANDLE handle = ACE_INVALID_HANDLE);
 
+  /// Get fully qualified host/domain name.
+  extern ACE_Export int get_fqdn (ACE_INET_Addr const & addr,
+                                  char hostname[],
+                                  size_t len);
+
   /**
    * Return count and array of all configured IP interfaces on this
    * host, rc = 0 on success (count == number of interfaces else -1).
@@ -72,6 +77,17 @@ namespace ACE
   /// Routine to return a handle from which @c ioctl requests can be
   /// made.  Caller must close the handle.
   extern ACE_Export ACE_HANDLE get_handle (void);
+
+  /// Returns @c true if IPv4 is enabled on the current host; @c false
+  /// if not.
+  /**
+   * This is an execution-time check. If ACE has not been compiled
+   * with @c ACE_HAS_IPV6, it always returns @c true. This function
+   * tries to create a @c PF_INET socket, returning @c true if it
+   * succeeds, and @c false if it fails. Caches the result so it only
+     gets checked once.
+   */
+  extern ACE_Export bool ipv4_enabled (void);
 
   /**
    * Returns 1 if IPv6 is enabled on the current host; 0 if not.

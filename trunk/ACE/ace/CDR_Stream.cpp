@@ -392,30 +392,23 @@ ACE_OutputCDR::write_octet_array_mb (const ACE_Message_Block* mb)
       this->good_bit_ = false;
       ACE_NEW_RETURN (cont,
                       ACE_Message_Block (i->data_block ()->duplicate ()),
-                      0);
+                      false);
       this->good_bit_ = true;
 
-      if (cont != 0)
-        {
-          if (this->current_->cont () != 0)
-            ACE_Message_Block::release (this->current_->cont ());
-          cont->rd_ptr (i->rd_ptr ());
-          cont->wr_ptr (i->wr_ptr ());
+      if (this->current_->cont () != 0)
+        ACE_Message_Block::release (this->current_->cont ());
+      cont->rd_ptr (i->rd_ptr ());
+      cont->wr_ptr (i->wr_ptr ());
 
-          this->current_->cont (cont);
-          this->current_ = cont;
-          this->current_is_writable_ = false;
+      this->current_->cont (cont);
+      this->current_ = cont;
+      this->current_is_writable_ = false;
 #if !defined (ACE_LACKS_CDR_ALIGNMENT)
-          this->current_alignment_ =
-            (this->current_alignment_ + cont->length ()) % ACE_CDR::MAX_ALIGNMENT;
+      this->current_alignment_ =
+        (this->current_alignment_ + cont->length ()) % ACE_CDR::MAX_ALIGNMENT;
 #endif /* ACE_LACKS_CDR_ALIGNMENT */
-        }
-      else
-        {
-          this->good_bit_ = false;
-          return false;
-        }
     }
+
   return true;
 }
 
@@ -671,15 +664,15 @@ ACE_OutputCDR::write_boolean_array (const ACE_CDR::Boolean* x,
 {
   // It is hard to optimize this, the spec requires that on the wire
   // booleans be represented as a byte with value 0 or 1, but in
-  // memoery it is possible (though very unlikely) that a boolean has
+  // memory it is possible (though very unlikely) that a boolean has
   // a non-zero value (different from 1).
   // We resort to a simple loop.
-  const ACE_CDR::Boolean* end = x + length;
+  ACE_CDR::Boolean const * const end = x + length;
 
-  for (const ACE_CDR::Boolean* i = x;
+  for (ACE_CDR::Boolean const * i = x;
        i != end && this->good_bit ();
        ++i)
-    this->write_boolean (*i);
+    (void) this->write_boolean (*i);
 
   return this->good_bit ();
 }
@@ -862,7 +855,7 @@ ACE_InputCDR::ACE_InputCDR (const ACE_InputCDR& rhs,
       this->start_.wr_ptr (newpos + size);
 
       ACE_CDR::Octet byte_order = 0;
-      this->read_octet (byte_order);
+      (void) this->read_octet (byte_order);
       this->do_byte_swap_ = (byte_order != ACE_CDR_BYTE_ORDER);
     }
   else
@@ -1324,11 +1317,11 @@ ACE_InputCDR::read_boolean_array (ACE_CDR::Boolean *x,
 
   // It is hard to optimize this, the spec requires that on the wire
   // booleans be represented as a byte with value 0 or 1, but in
-  // memoery it is possible (though very unlikely) that a boolean has
+  // memory it is possible (though very unlikely) that a boolean has
   // a non-zero value (different from 1).
   // We resort to a simple loop.
   for (ACE_CDR::ULong i = 0; i != length && this->good_bit_; ++i)
-    this->read_boolean (x[i]);
+    (void) this->read_boolean (x[i]);
 
   return this->good_bit_;
 }

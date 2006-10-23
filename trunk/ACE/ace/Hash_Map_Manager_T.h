@@ -149,6 +149,17 @@ public:
   typedef ACE_Hash_Map_Reverse_Iterator_Ex<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK>
           reverse_iterator;
 
+  // = STL-style typedefs/traits.
+  typedef EXT_ID                             key_type;
+  typedef INT_ID                             data_type;
+  typedef ACE_Hash_Map_Entry<EXT_ID, INT_ID> value_type;
+  typedef value_type &                       reference;
+  typedef value_type const &                 const_reference;
+  typedef value_type *                       pointer;
+  typedef value_type const *                 const_pointer;
+//   typedef ptrdiff_t                          difference_type;
+  typedef size_t                             size_type;
+  
   // = Initialization and termination methods.
 
   /**
@@ -322,6 +333,13 @@ public:
   int find (const EXT_ID &ext_id,
             ACE_Hash_Map_Entry<EXT_ID, INT_ID> *&entry) const;
 
+  /// Locate <ext_id> and pass out an iterator that points to its
+  /// corresponding value.
+  /**
+   * @param pos @a pos will be set to @c end() if not found.
+   */
+  void find (EXT_ID const & ext_id, iterator & pos) const;
+
   /**
    * Unbind (remove) the <ext_id> from the map.  Don't return the
    * <int_id> to the caller (this is useful for collections where the
@@ -335,10 +353,26 @@ public:
   int unbind (const EXT_ID &ext_id,
               INT_ID &int_id);
 
-  /// Remove entry from map. Return 0 if the unbind was successfully,
-  /// and returns -1 if failures occur.
+  /// Remove entry from map.
+  /**
+   * This unbind operation is fast relative to those that accept an
+   * external ID parameter since no map lookup is performed.
+   *
+   * @return 0 if the unbind was successful, and -1 if failures
+   *         occur.
+   */
   int unbind (ACE_Hash_Map_Entry<EXT_ID, INT_ID> *entry);
 
+  /// Remove entry from map pointed to by @c iterator @a pos.
+  /**
+   * This unbind operation is fast relative to those that accept an
+   * external ID parameter since no map lookup is performed.
+   *
+   * @return 0 if the unbind was successful, and -1 if failures
+   *         occur.
+   */
+  int unbind (iterator pos);
+  
   /// Returns the current number of ACE_Hash_Map_Entry objects in the
   /// hash table.
   size_t current_size (void) const;
@@ -363,12 +397,16 @@ public:
   // = STL styled iterator factory functions.
 
   /// Return forward iterator.
-  ACE_Hash_Map_Iterator_Ex<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK> begin (void);
-  ACE_Hash_Map_Iterator_Ex<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK> end (void);
-
+  iterator begin (void);
+  iterator end (void);
+  const_iterator begin (void) const;
+  const_iterator end (void) const;
+  
   /// Return reverse iterator.
-  ACE_Hash_Map_Reverse_Iterator_Ex<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK> rbegin (void);
-  ACE_Hash_Map_Reverse_Iterator_Ex<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK> rend (void);
+  reverse_iterator rbegin (void);
+  reverse_iterator rend (void);
+//   const_reverse_iterator rbegin (void) const;
+//   const_reverse_iterator rend (void) const;
 
 protected:
   // = The following methods do the actual work.
@@ -484,7 +522,7 @@ protected:
 
   /// Synchronization variable for the MT_SAFE
   /// @c ACE_Hash_Map_Manager_Ex.
-  ACE_LOCK lock_;
+  ACE_LOCK mutable lock_;
 
   /// Function object used for hashing keys.
   HASH_KEY hash_key_;
@@ -538,10 +576,32 @@ class ACE_Hash_Map_Iterator_Base_Ex
 {
 public:
   // = Initialization method.
-  /// Contructor.  If head != 0, the iterator constructed is positioned
-  /// at the head of the map, it is positioned at the end otherwise.
-  ACE_Hash_Map_Iterator_Base_Ex (ACE_Hash_Map_Manager_Ex<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK> &mm,
-                                 int head);
+  /// Contructor.
+  /**
+   *  If @a head != @c false, the iterator constructed is positioned
+   *  at the head of the map.  It is positioned at the end otherwise.
+   *  @par
+   */
+  ACE_Hash_Map_Iterator_Base_Ex (
+    ACE_Hash_Map_Manager_Ex<EXT_ID,
+    INT_ID,
+    HASH_KEY,
+    COMPARE_KEYS,
+    ACE_LOCK> &mm,
+    bool head);
+
+  /// Contructor.
+  /**
+   * This constructor positions the iterator to the given @a entry.
+   */
+  ACE_Hash_Map_Iterator_Base_Ex (
+    ACE_Hash_Map_Manager_Ex<EXT_ID,
+    INT_ID,
+    HASH_KEY,
+    COMPARE_KEYS,
+    ACE_LOCK> & mm,
+    ACE_Hash_Map_Entry<EXT_ID, INT_ID> * entry,
+    size_t index);
 
   // = ITERATION methods.
 
@@ -678,6 +738,19 @@ public:
   // = Initialization method.
   ACE_Hash_Map_Iterator_Ex (ACE_Hash_Map_Manager_Ex<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK> &mm,
                             int tail = 0);
+
+  /// Contructor.
+  /**
+   * This constructor positions the iterator to the given @a entry.
+   */
+  ACE_Hash_Map_Iterator_Ex (
+    ACE_Hash_Map_Manager_Ex<EXT_ID,
+    INT_ID,
+    HASH_KEY,
+    COMPARE_KEYS,
+    ACE_LOCK> & mm,
+    ACE_Hash_Map_Entry<EXT_ID, INT_ID> * entry,
+    size_t index);
 
   // = Iteration methods.
   /// Move forward by one element in the set.  Returns 0 when all the
