@@ -1,3 +1,12 @@
+Mon Oct 23 21:44:32 UTC 2006  Ossama Othman  <ossama_othman at symantec dot com>
+
+        * ace/Truncate.h (Truncator):
+
+          Borland doesn't appear to be able to grok the use of the
+          function call operator in the ACE_Utils::Truncate<> function
+          template.  Replaced the Truncator<>::operator() function call
+          operator with a static Truncator<>::truncate() method instead.
+
 Mon Oct 23 13:29:15 UTC 2006  Olli Savia  <ops@iki.fi>
 
         * ACE-INSTALL.html:

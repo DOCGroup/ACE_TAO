@@ -496,7 +496,7 @@ namespace ACE_Utils
   template<typename T>
   struct Truncator<T, T>
   {
-    T operator() (T val)
+    static T truncate (T val)
     {
       return val;
     }
@@ -509,7 +509,7 @@ namespace ACE_Utils
   template<>
   struct Truncator<ACE_INT32, ACE_INT8>
   {
-    ACE_INT8 operator() (ACE_INT32 val)
+    static ACE_INT8 truncate (ACE_INT32 val)
     {
       return 
         (val > ACE_Numeric_Limits<ACE_INT8>::max ()
@@ -521,7 +521,7 @@ namespace ACE_Utils
   template<>
   struct Truncator<ACE_UINT32, ACE_UINT8>
   {
-    ACE_UINT8 operator() (ACE_UINT32 val)
+    static ACE_UINT8 truncate (ACE_UINT32 val)
     {
       return 
         (val > static_cast<ACE_UINT32> (ACE_Numeric_Limits<ACE_UINT8>::max ())
@@ -533,7 +533,7 @@ namespace ACE_Utils
   template<>
   struct Truncator<ACE_INT32, ACE_UINT8>
   {
-    ACE_UINT8 operator() (ACE_INT32 val)
+    static ACE_UINT8 truncate (ACE_INT32 val)
     {
       return 
         (val > static_cast<ACE_INT32> (ACE_Numeric_Limits<ACE_UINT8>::max ())
@@ -545,7 +545,7 @@ namespace ACE_Utils
   template<>
   struct Truncator<ACE_UINT32, ACE_INT8>
   {
-    ACE_INT8 operator() (ACE_UINT32 val)
+    static ACE_INT8 truncate (ACE_UINT32 val)
     {
       return 
         (val > static_cast<ACE_UINT32> (ACE_Numeric_Limits<ACE_INT8>::max ())
@@ -557,7 +557,7 @@ namespace ACE_Utils
   template<>
   struct Truncator<ACE_INT64, ACE_INT32>
   {
-    ACE_INT32 operator() (ACE_INT64 val)
+    static ACE_INT32 truncate (ACE_INT64 val)
     {
       return 
         (val > ACE_Numeric_Limits<ACE_INT32>::max ()
@@ -569,7 +569,7 @@ namespace ACE_Utils
   template<>
   struct Truncator<ACE_INT64, ACE_UINT32>
   {
-    ACE_UINT32 operator() (ACE_INT64 val)
+    static ACE_UINT32 truncate (ACE_INT64 val)
     {
       return 
         (val > static_cast<ACE_INT64> (ACE_Numeric_Limits<ACE_UINT32>::max ())
@@ -581,7 +581,7 @@ namespace ACE_Utils
   template<>
   struct Truncator<ACE_UINT64, ACE_UINT32>
   {
-    ACE_UINT32 operator() (ACE_UINT64 val)
+    static ACE_UINT32 truncate (ACE_UINT64 val)
     {
       return 
         (val > static_cast<ACE_UINT64> (ACE_Numeric_Limits<ACE_UINT32>::max ())
@@ -593,7 +593,7 @@ namespace ACE_Utils
   template<>
   struct Truncator<ACE_UINT64, ACE_INT32>
   {
-    ACE_INT32 operator() (ACE_UINT64 val)
+    static ACE_INT32 truncate (ACE_UINT64 val)
     {
       return 
         (val > static_cast<ACE_UINT64> (ACE_Numeric_Limits<ACE_INT32>::max ())
@@ -609,7 +609,7 @@ namespace ACE_Utils
   template<>
   struct Truncator<ACE_INT32, ACE_UINT32>
   {
-    ACE_UINT32 operator() (ACE_INT32 val)
+    static ACE_UINT32 truncate (ACE_INT32 val)
     {
       return static_cast<ACE_UINT32> (val);
     }
@@ -618,7 +618,7 @@ namespace ACE_Utils
   template<>
   struct Truncator<ACE_UINT32, ACE_INT32>
   {
-    ACE_INT32 operator() (ACE_UINT32 val)
+    static ACE_INT32 truncate (ACE_UINT32 val)
     {
       return 
         (val > static_cast<ACE_UINT32> (ACE_Numeric_Limits<ACE_INT32>::max ())
@@ -630,7 +630,7 @@ namespace ACE_Utils
   template<>
   struct Truncator<ACE_INT64, ACE_UINT64>
   {
-    ACE_UINT64 operator() (ACE_INT64 val)
+    static ACE_UINT64 truncate (ACE_INT64 val)
     {
       return static_cast<ACE_UINT64> (val);
     }
@@ -639,7 +639,7 @@ namespace ACE_Utils
   template<>
   struct Truncator<ACE_UINT64, ACE_INT64>
   {
-    ACE_INT64 operator() (ACE_UINT64 val)
+    static ACE_INT64 truncate (ACE_UINT64 val)
     {
       return 
         (val > static_cast<ACE_UINT64> (ACE_Numeric_Limits<ACE_INT64>::max ())
@@ -655,7 +655,7 @@ namespace ACE_Utils
   template<>
   struct Truncator<ACE_INT8, ACE_INT32>
   {
-    ACE_INT32 operator() (ACE_INT8 val)
+    static ACE_INT32 truncate (ACE_INT8 val)
     {
       return static_cast<ACE_INT32> (val);
     }
@@ -664,7 +664,7 @@ namespace ACE_Utils
   template<>
   struct Truncator<ACE_UINT8, ACE_UINT32>
   {
-    ACE_UINT32 operator() (ACE_UINT8 val)
+    static ACE_UINT32 truncate (ACE_UINT8 val)
     {
       return static_cast<ACE_UINT32> (val);
     }
@@ -673,7 +673,7 @@ namespace ACE_Utils
   template<>
   struct Truncator<ACE_UINT8, ACE_INT32>
   {
-    ACE_INT32 operator() (ACE_UINT8 val)
+    static ACE_INT32 truncate (ACE_UINT8 val)
     {
       return static_cast<ACE_INT32> (val);
     }
@@ -682,7 +682,7 @@ namespace ACE_Utils
   template<>
   struct Truncator<ACE_INT8, ACE_UINT32>
   {
-    ACE_UINT32 operator() (ACE_INT8 val)
+    static ACE_UINT32 truncate (ACE_INT8 val)
     {
       return static_cast<ACE_UINT32> (val);
     }
@@ -691,7 +691,7 @@ namespace ACE_Utils
   template<>
   struct Truncator<ACE_INT32, ACE_INT64>
   {
-    ACE_INT64 operator() (ACE_INT32 val)
+    static ACE_INT64 truncate (ACE_INT32 val)
     {
       return static_cast<ACE_INT64> (val);
     }
@@ -700,7 +700,7 @@ namespace ACE_Utils
   template<>
   struct Truncator<ACE_INT32, ACE_UINT64>
   {
-    ACE_UINT64 operator() (ACE_INT32 val)
+    static ACE_UINT64 truncate (ACE_INT32 val)
     {
       return static_cast<ACE_UINT64> (val);
     }
@@ -709,7 +709,7 @@ namespace ACE_Utils
   template<>
   struct Truncator<ACE_UINT32, ACE_UINT64>
   {
-    ACE_UINT64 operator() (ACE_UINT32 val)
+    static ACE_UINT64 truncate (ACE_UINT32 val)
     {
       return static_cast<ACE_UINT64> (val);
     }
@@ -718,7 +718,7 @@ namespace ACE_Utils
   template<>
   struct Truncator<ACE_UINT32, ACE_INT64>
   {
-    ACE_INT64 operator() (ACE_UINT32 val)
+    static ACE_INT64 truncate (ACE_UINT32 val)
     {
       return static_cast<ACE_INT64> (val);
     }
@@ -728,7 +728,7 @@ namespace ACE_Utils
   template<typename TO, typename FROM>
   inline TO Truncate (FROM val)
   {
-    return Truncator<FROM, TO>() (val);
+    return Truncator<FROM, TO>::truncate (val);
   }
 
 #endif  /* !__BORLANDC__ || __BORLANDC__ > 0x582 */
