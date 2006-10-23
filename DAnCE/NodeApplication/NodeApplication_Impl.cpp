@@ -623,7 +623,7 @@ ACE_THROW_SPEC ((::CORBA::SystemException,
       ACE_DEBUG ((LM_DEBUG, "\nNodeApplication_Impl::install_es() called.\n\n"));
 
           CIAO_Event_Service_var ciao_es =
-            es_factory_.create (es_info.type);
+            es_factory_.create (es_info.type, es_info.name.in ());
 
           // Set up the event channel federation configurations
           if (es_info.type == CIAO::RTEC)
