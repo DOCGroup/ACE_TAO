@@ -198,13 +198,14 @@ ACEXML_Mem_Map_Stream::grow_file_and_remap (void)
   while (1)
     {
       n = this->svc_handler_->peer ().recv (buf, sizeof buf, 0, &tv);
-      if (n == -1)
+      if (n < 0)
         {
           if (errno != EWOULDBLOCK)
             {
               ACE_ERROR ((LM_ERROR, "%p\n", "recv"));
-              return -1;
             }
+
+          return -1;
         }
       bytes += n;
       if (n == 0 && !bytes)
