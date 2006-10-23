@@ -7,7 +7,8 @@
  *  $Id$
  *
  *  @author Prashant Jain
- *  @author Tim H. Harrison and Douglas C. Schmidt
+ *  @author Tim H. Harrison
+ *  @author Douglas C. Schmidt
  */
 //=============================================================================
 
@@ -21,11 +22,18 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/MMAP_Memory_Pool.h"
-#include "ace/Malloc_T.h"
-#include "ace/Null_Mutex.h"
+#include "ace/Global_Macros.h"
+#include "ace/os_include/os_time.h"  /* For time_t. */
+#include "ace/os_include/os_limits.h"  /* For MAXPATHLEN. */
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
+template<ACE_MEM_POOL_1, class ACE_LOCK> class ACE_Malloc;
+template<class MALLOC> class ACE_Allocator_Adapter;
+
+class ACE_Null_Mutex;
+class ACE_Time_Value;
+class ACE_MMAP_Memory_Pool;
 
 /**
  * @class ACE_System_Time
@@ -54,14 +62,14 @@ public:
 
   /// Get the local system time, i.e., the value returned by
   /// ACE_OS::time().
-  static int get_local_system_time (ACE_UINT32 &time_out);
+  static int get_local_system_time (time_t & time_out);
 
   /// Get the local system time, i.e., the value returned by
   /// ACE_OS::time().
   static int get_local_system_time (ACE_Time_Value &time_out);
 
   /// Get the system time of the central time server.
-  int get_master_system_time (ACE_UINT32 &time_out);
+  int get_master_system_time (time_t & time_out);
 
   /// Get the system time of the central time server.
   int get_master_system_time (ACE_Time_Value &time_out);
@@ -75,13 +83,13 @@ private:
   typedef ACE_Allocator_Adapter<MALLOC> ALLOCATOR;
 
   /// Our allocator (used for obtaining system time from shared memory).
-  ALLOCATOR *shmem_;
+  ALLOCATOR * shmem_;
 
   /// The name of the pool used by the allocator.
   ACE_TCHAR poolname_[MAXPATHLEN + 1];
 
   /// Pointer to delta time kept in shared memory.
-  long *delta_time_;
+  long * delta_time_;
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL

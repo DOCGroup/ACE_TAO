@@ -313,7 +313,8 @@ ACE_Service_Config::instance (void)
 /// Provides access to the static ptr, containing the TSS
 /// accessor. Ensures the desired order of initialization, even when
 /// other static initializers need the value.
-ACE_Service_Config::TSS_Service_Gestalt_Ptr *& ACE_Service_Config::impl_ (void)
+ACE_Service_Config::TSS_Service_Gestalt_Ptr *
+ACE_Service_Config::impl_ (void)
 {
   /// A "straight" static ptr does not work in static builds, because
   /// some static initializer may call current() method and assign
@@ -323,8 +324,21 @@ ACE_Service_Config::TSS_Service_Gestalt_Ptr *& ACE_Service_Config::impl_ (void)
   /// static guarantees that the first time the method is invoked, the
   /// instance_ will be initialized before returning.
 
-  static TSS_Service_Gestalt_Ptr *instance_ = 0;
+  static TSS_Service_Gestalt_Ptr * instance_ = 0;
 
+  if (instance_ == 0)
+    {
+      // TSS not initialized yet - first thread to hit this, so doing
+      // the double-checked locking thing
+      ACE_MT (ACE_GUARD_RETURN (ACE_Recursive_Thread_Mutex, ace_mon,
+                                *ACE_Static_Object_Lock::instance (), 0));
+
+      if (instance_ == 0)
+        ACE_NEW_RETURN (instance_,
+                        TSS_Service_Gestalt_Ptr,
+                        0);
+    }
+  
   return instance_;
 }
 
@@ -336,61 +350,34 @@ ACE_Service_Config::TSS_Service_Gestalt_Ptr *& ACE_Service_Config::impl_ (void)
 ACE_Service_Gestalt *
 ACE_Service_Config::current (void)
 {
+  TSS_Service_Gestalt_Ptr * const impl = ACE_Service_Config::impl_ ();
+  if (impl == 0)
+    return 0;
 
-  if (ACE_Service_Config::impl_ () != 0)
-    {
-      // TSS already initialized, but a new thread may need its own
-      // ptr to the process-wide gestalt.
-      if (ACE_TSS_GET (ACE_Service_Config::impl_ (), TSS_Resources)->ptr_ == 0)
-        return current_i (global ());
+  ACE_Service_Gestalt* & gestalt =
+    ACE_TSS_GET (impl, TSS_Resources)->ptr_;
 
-      return ACE_TSS_GET (ACE_Service_Config::impl_ (), TSS_Resources)->ptr_;
-    }
-  else
-    {
-      // TSS not initialized yet - first thread to hit this, so doing
-      // the double-checked locking thing
-      ACE_MT (ACE_GUARD_RETURN (ACE_Recursive_Thread_Mutex, ace_mon,
-                                *ACE_Static_Object_Lock::instance (), 0));
+  if (gestalt == 0)
+    gestalt = ACE_Service_Config::global ();
 
-      if (ACE_Service_Config::impl_ () != 0)
-        {
-          // Another thread snuck in and initialized the TSS, but we
-          // still need ow own ptr to the process-wide gestalt.
-          if (ACE_TSS_GET (ACE_Service_Config::impl_ (), TSS_Resources)->ptr_ == 0)
-            return current_i (global ());
-
-          return ACE_TSS_GET (ACE_Service_Config::impl_ (), TSS_Resources)->ptr_;
-        }
-
-      return current_i (global ());
-    }
+  return gestalt;
 }
 
 /// A mutator to set the "current" (TSS) gestalt instance.
 ACE_Service_Gestalt*
 ACE_Service_Config::current (ACE_Service_Gestalt *newcurrent)
 {
-   ACE_MT (ACE_GUARD_RETURN (ACE_Recursive_Thread_Mutex, ace_mon,
-                             *ACE_Static_Object_Lock::instance (), 0));
+  TSS_Service_Gestalt_Ptr * const impl = ACE_Service_Config::impl_ ();
+  if (impl == 0)
+    return 0;
 
-  return current_i (newcurrent);
+  ACE_Service_Gestalt* & gestalt =
+    ACE_TSS_GET (impl, TSS_Resources)->ptr_;
+
+  gestalt = newcurrent;
+
+  return gestalt;
 }
-
-/// A private, non-locking mutator to set the "current" (TSS) gestalt instance.
-/// Make sure to call with the proper locks held!
-ACE_Service_Gestalt*
-ACE_Service_Config::current_i (ACE_Service_Gestalt *newcurrent)
-{
-  if (ACE_Service_Config::impl_ () == 0)
-    {
-      ACE_NEW_RETURN (ACE_Service_Config::impl_ (), TSS_Service_Gestalt_Ptr, 0);
-    }
-
-  ACE_TSS_GET (ACE_Service_Config::impl_ (), TSS_Resources)->ptr_ = newcurrent;
-  return newcurrent;
-}
-
 
 // This method has changed to return the gestalt instead of the
 // container, underlying the service repository and defined

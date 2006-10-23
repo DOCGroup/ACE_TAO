@@ -694,6 +694,9 @@ ACE_Dev_Poll_Reactor_Handler_Repository::bind (
 {
   ACE_TRACE ("ACE_Dev_Poll_Reactor_Handler_Repository::bind");
 
+  if (event_handler == 0)
+    return -1;
+
   if (handle == ACE_INVALID_HANDLE)
     handle = event_handler->get_handle ();
 

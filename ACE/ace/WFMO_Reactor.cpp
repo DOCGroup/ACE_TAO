@@ -631,6 +631,9 @@ ACE_WFMO_Reactor_Handler_Repository::bind_i (int io_entry,
                                              ACE_HANDLE event_handle,
                                              int delete_event)
 {
+  if (event_handler == 0)
+    return -1;
+
   // Make sure that the <handle> is valid
   if (event_handle == ACE_INVALID_HANDLE)
     event_handle = event_handler->get_handle ();

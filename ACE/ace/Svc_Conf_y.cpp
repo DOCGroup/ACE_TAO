@@ -1255,7 +1255,9 @@ ace_yyreduce:
           ACE_Stream_Type *st =
             dynamic_cast<ACE_Stream_Type *> (const_cast<ACE_Service_Type_Impl *> (module->record (ACE_SVC_CONF_PARAM->config)->type ()));
 
-          if (mt->init (args.argc (), args.argv ()) == -1
+          if (!st
+              || !mt
+              || mt->init (args.argc (), args.argv ()) == -1
               || st->push (mt) == -1)
             {
               ACE_ERROR ((LM_ERROR,
@@ -1319,7 +1321,7 @@ ace_yyreduce:
 
       ACE_Stream_Type *st =
         dynamic_cast<ACE_Stream_Type *> (const_cast<ACE_Service_Type_Impl *> (stream->record (ACE_SVC_CONF_PARAM->config)->type ()));
-      if (mt != 0 && st->remove (mt) == -1)
+      if (!st || (mt != 0 && st->remove (mt) == -1))
         {
           ACE_ERROR ((LM_ERROR,
                       ACE_LIB_TEXT ("cannot remove Module_Type %s from STREAM_Type %s\n"),
@@ -1544,7 +1546,7 @@ ace_yyerrlab:
 `---------------------------------------------------*/
 ace_yyerrorlab:
 
-#if defined (__GNUC__)  || defined (ACE_WIN32)
+#if defined (__GNUC__) || defined (ACE_WIN32) || defined (__HP_aCC) || defined (__DECCXX)
   /* Pacify GCC when the user code never invokes ACE_YYERROR and the label
      ace_yyerrorlab therefore never appears in user code.  */
   if (0)
@@ -1659,54 +1661,61 @@ ace_yyerror (int ace_yyerrno, int ace_yylineno, const char *s)
 // record.
 
 static ACE_Module_Type *
-ace_get_module (const ACE_Service_Type *sr,
-                const ACE_TCHAR *svc_name,
+ace_get_module (ACE_Service_Type const * sr,
+                ACE_TCHAR const * svc_name,
                 int & ace_yyerrno)
 {
-  const ACE_Service_Type_Impl *type = sr->type ();
-  ACE_Stream_Type *st = sr == 0
-    ? 0
-    : dynamic_cast<ACE_Stream_Type *> (const_cast<ACE_Service_Type_Impl *> (type));
-  ACE_Module_Type *mt = st == 0 ? 0 : st->find (svc_name);
+  ACE_Service_Type_Impl const * const type = sr->type ();
+  ACE_Stream_Type const * const st =
+    (sr == 0
+     ? 0
+     : dynamic_cast<ACE_Stream_Type const *> (type));
+  ACE_Module_Type const * const mt = (st == 0 ? 0 : st->find (svc_name));
 
   if (sr == 0 || st == 0 || mt == 0)
     {
       ACE_ERROR ((LM_ERROR,
-                  ACE_LIB_TEXT ("cannot locate Module_Type %s in STREAM_Type %s\n"),
+                  ACE_LIB_TEXT ("cannot locate Module_Type %s ")
+                  ACE_LIB_TEXT ("in STREAM_Type %s\n"),
                   svc_name,
-                  sr->name ()));
-      ace_yyerrno++;
+                  (sr ? sr->name () : ACE_LIB_TEXT ("(nil)"))));
+      ++ace_yyerrno;
     }
 
-  return mt;
+  return const_cast<ACE_Module_Type *> (mt);
 }
 
 static ACE_Module_Type *
-ace_get_module (const ACE_Service_Type *sr,
-                const ACE_Service_Type *sv,
+ace_get_module (ACE_Service_Type const * sr,
+                ACE_Service_Type const * sv,
                 int & ace_yyerrno)
 {
-  const ACE_Service_Type_Impl *type = sr->type ();
-  ACE_Stream_Type *st = sr == 0 ? 0 : (ACE_Stream_Type *) type;
+  ACE_Stream_Type const * const st =
+    (sr == 0
+     ? 0
+     : static_cast<ACE_Stream_Type const *> (sr->type ()));
+  
+  ACE_Module_Type const * const mt =
+    static_cast <ACE_Module_Type const *> (sv->type ());
 
-  type = sv->type ();
-  ACE_Module_Type *mt = (ACE_Module_Type *) type;
-  const ACE_TCHAR *module_type_name = sr->name ();
+  ACE_TCHAR const * const module_type_name =
+    (mt ? mt->name () : ACE_LIB_TEXT ("(nil)"));
 
   if (sr == 0 || st == 0 || mt == 0)
     {
       ACE_ERROR ((LM_ERROR,
                   ACE_LIB_TEXT ("cannot locate Module_Type %s or STREAM_Type %s\n"),
                   module_type_name,
-                  sr->name ()));
-      ace_yyerrno++;
+                  (sr ? sr->name () : ACE_LIB_TEXT ("(nil)"))));
+      ++ace_yyerrno;
     }
 
   // Make sure that the Module has the same name as the
   // Module_Type object from the svc.conf file.
-  ACE_Module<ACE_SYNCH> *mp = (ACE_Module<ACE_SYNCH> *) mt->object ();
+  ACE_Module<ACE_SYNCH> * const mp =
+    static_cast<ACE_Module<ACE_SYNCH> *> (mt ? mt->object () : 0);
 
-  if (ACE_OS::strcmp (mp->name (), module_type_name) != 0)
+  if (mp && ACE_OS::strcmp (mp->name (), module_type_name) != 0)
     {
       ACE_DEBUG ((LM_DEBUG,
                   ACE_LIB_TEXT ("warning: assigning Module_Type name %s to Module %s since names differ\n"),
@@ -1715,7 +1724,7 @@ ace_get_module (const ACE_Service_Type *sr,
       mp->name (module_type_name);
     }
 
-  return mt;
+  return const_cast<ACE_Module_Type *> (mt);
 }
 
 #if defined (DEBUGGING)

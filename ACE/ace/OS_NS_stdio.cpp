@@ -119,10 +119,17 @@ ACE_OS::fopen (const char *filename,
   ACE_OS_TRACE ("ACE_OS::fopen");
   int hmode = _O_TEXT;
 
-  for (const ACE_TCHAR *mode_ptr = mode; *mode_ptr != 0; mode_ptr++)
+  // Let the chips fall where they may if the user passes in a NULL
+  // mode string.  Convert to an empty mode string to prevent a
+  // crash.
+  ACE_TCHAR const empty_mode[] = ACE_TEXT ("");
+  if (!mode)
+    mode = empty_mode;
+
+  for (ACE_TCHAR const* mode_ptr = mode; *mode_ptr != 0; ++mode_ptr)
     ACE_OS::fopen_mode_to_open_mode_converter (*mode_ptr, hmode);
 
-  ACE_HANDLE handle = ACE_OS::open (filename, hmode);
+  ACE_HANDLE const handle = ACE_OS::open (filename, hmode);
   if (handle != ACE_INVALID_HANDLE)
     {
       hmode &= _O_TEXT | _O_RDONLY | _O_APPEND;
@@ -132,13 +139,13 @@ ACE_OS::fopen (const char *filename,
       if (fd != -1)
         {
 #   if defined (__BORLANDC__) && !defined (ACE_USES_WCHAR)
-          FILE *fp = ::_fdopen (fd, const_cast<ACE_TCHAR *> (mode));
+          FILE * const fp = ::_fdopen (fd, const_cast<ACE_TCHAR *> (mode));
 #   elif defined (__BORLANDC__) && defined (ACE_USES_WCHAR)
-          FILE *fp = ::_wfdopen (fd, const_cast<ACE_TCHAR *> (mode));
+          FILE * const fp = ::_wfdopen (fd, const_cast<ACE_TCHAR *> (mode));
 #   elif defined (ACE_USES_WCHAR)
-          FILE *fp = ::_wfdopen (fd, mode);
+          FILE * const fp = ::_wfdopen (fd, mode);
 #   else
-          FILE *fp = ::fdopen (fd, mode);
+          FILE * const fp = ::fdopen (fd, mode);
 #   endif /* defined(__BORLANDC__) && !defined (ACE_USES_WCHAR)) */
           if (fp != 0)
           {

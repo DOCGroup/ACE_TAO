@@ -14,6 +14,10 @@
 #include "ace/Select_Reactor_Base.inl"
 #endif /* __ACE_INLINE__ */
 
+#ifndef ACE_WIN32
+# include <algorithm>
+#endif  /* !ACE_WIN32 */
+
 ACE_RCSID (ace,
            Select_Reactor_Base,
            "$Id$")
@@ -21,17 +25,20 @@ ACE_RCSID (ace,
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
-#if defined (ACE_WIN32)
-#define ACE_SELECT_REACTOR_HANDLE(H) (this->event_handlers_[(H)].handle_)
-#define ACE_SELECT_REACTOR_EVENT_HANDLER(THIS,H) ((THIS)->event_handlers_[(H)].event_handler_)
+template<typename iterator>
+inline ACE_Event_Handler *
+ACE_SELECT_REACTOR_EVENT_HANDLER (iterator i)
+{
+#ifdef ACE_WIN32
+  return (*i).item ();
 #else
-#define ACE_SELECT_REACTOR_HANDLE(H) (H)
-#define ACE_SELECT_REACTOR_EVENT_HANDLER(THIS,H) ((THIS)->event_handlers_[(H)])
-#endif /* ACE_WIN32 */
+  return (*i);
+#endif  /* ACE_WIN32 */
+}
 
 // Performs sanity checking on the ACE_HANDLE.
 
-int
+bool
 ACE_Select_Reactor_Handler_Repository::invalid_handle (ACE_HANDLE handle)
 {
   ACE_TRACE ("ACE_Select_Reactor_Handler_Repository::invalid_handle");
@@ -40,19 +47,20 @@ ACE_Select_Reactor_Handler_Repository::invalid_handle (ACE_HANDLE handle)
   // Win32 due to the way that they implement SOCKET HANDLEs.
   if (handle == ACE_INVALID_HANDLE)
 #else /* !ACE_WIN32 */
-    if (handle < 0 || handle >= this->max_size_)
+  if (handle < 0
+      || static_cast<size_type> (handle) >= this->event_handlers_.size ())
 #endif /* ACE_WIN32 */
-      {
-        errno = EINVAL;
-        return 1;
-      }
-    else
-      return 0;
+    {
+      errno = EINVAL;
+      return true;
+    }
+
+  return false;
 }
 
 // Performs sanity checking on the ACE_HANDLE.
 
-int
+bool
 ACE_Select_Reactor_Handler_Repository::handle_in_range (ACE_HANDLE handle)
 {
   ACE_TRACE ("ACE_Select_Reactor_Handler_Repository::handle_in_range");
@@ -61,52 +69,37 @@ ACE_Select_Reactor_Handler_Repository::handle_in_range (ACE_HANDLE handle)
   // Win32 due to the way that they implement SOCKET HANDLEs.
   if (handle != ACE_INVALID_HANDLE)
 #else /* !ACE_WIN32 */
-    if (handle >= 0 && handle < this->max_handlep1_)
+  if (handle >= 0 && handle < this->max_handlep1_)
 #endif /* ACE_WIN32 */
-      return 1;
-    else
-      {
-        errno = EINVAL;
-        return 0;
-      }
-}
+    {
+      return true;
+    }
 
-size_t
-ACE_Select_Reactor_Handler_Repository::max_handlep1 (void)
-{
-  ACE_TRACE ("ACE_Select_Reactor_Handler_Repository::max_handlep1");
+  // Don't bother setting errno.  It isn't used in the select()-based
+  // reactors and incurs a TSS access.
+  // errno = EINVAL;
 
-  return this->max_handlep1_;
+  return false;
 }
 
 int
 ACE_Select_Reactor_Handler_Repository::open (size_t size)
 {
   ACE_TRACE ("ACE_Select_Reactor_Handler_Repository::open");
-  this->max_size_ = size;
-  this->max_handlep1_ = 0;
 
 #if defined (ACE_WIN32)
-  // Try to allocate the memory.
-  ACE_NEW_RETURN (this->event_handlers_,
-                  ACE_Event_Tuple[size],
-                  -1);
-
-  // Initialize the ACE_Event_Handler * to { ACE_INVALID_HANDLE, 0 }.
-  for (size_t h = 0; h < size; ++h)
-    {
-      ACE_SELECT_REACTOR_HANDLE (h) = ACE_INVALID_HANDLE;
-      ACE_SELECT_REACTOR_EVENT_HANDLER (this, h) = 0;
-    }
+  if (this->event_handlers_.open (size) == -1)
+    return -1;
 #else
-  // Try to allocate the memory.
-  ACE_NEW_RETURN (this->event_handlers_,
-                  ACE_Event_Handler *[size],
-                  -1);
+  if (this->event_handlers_.size (size) == -1)
+    return -1;
 
-  // Initialize the ACE_Event_Handler * to NULL.
-  for (size_t h = 0; h < size; ++h)
-    ACE_SELECT_REACTOR_EVENT_HANDLER (this, h) = 0;
+  // Initialize the ACE_Event_Handler pointers to 0.
+  std::fill (this->event_handlers_.begin (),
+             this->event_handlers_.end (),
+             static_cast<ACE_Event_Handler *> (0));
+
+  this->max_handlep1_ = 0;
 #endif /* ACE_WIN32 */
 
   // Try to increase the number of handles if <size> is greater than
@@ -118,22 +111,51 @@ ACE_Select_Reactor_Handler_Repository::open (size_t size)
 
 ACE_Select_Reactor_Handler_Repository::ACE_Select_Reactor_Handler_Repository (ACE_Select_Reactor_Impl &select_reactor)
   : select_reactor_ (select_reactor),
-    max_size_ (0),
+#ifndef ACE_WIN32
     max_handlep1_ (0),
-    event_handlers_ (0)
+#endif  /* !ACE_WIN32 */
+    event_handlers_ ()
 {
   ACE_TRACE ("ACE_Select_Reactor_Handler_Repository::ACE_Select_Reactor_Handler_Repository");
 }
 
 int
 ACE_Select_Reactor_Handler_Repository::unbind_all (void)
-{
+{  
   // Unbind all of the <handle, ACE_Event_Handler>s.
-  for (int slot = 0;
-       slot < this->max_handlep1_;
-       ++slot)
-    this->unbind (ACE_SELECT_REACTOR_HANDLE (slot),
-                  ACE_Event_Handler::ALL_EVENTS_MASK);
+#ifdef ACE_WIN32
+  map_type::iterator const end = this->event_handlers_.end ();
+  for (map_type::iterator pos = this->event_handlers_.begin ();
+       pos != end;
+       )
+    {
+      // Post-increment (*not* pre-increment) before unbind()ing since
+      // the current iterator will be invalidated during the unbind()
+      // operation.
+      map_type::iterator const the_pos (pos++);
+
+      ACE_HANDLE const handle = (*the_pos).key ();
+      (void) this->unbind (handle,
+                           the_pos,
+                           ACE_Event_Handler::ALL_EVENTS_MASK);
+    }
+#else
+  // We could use the "end()" iterator but leveraging max_handlep1_
+  // allows us to optimize away unnecessary accesses of nil event
+  // handler pointers.
+  map_type::iterator pos =
+    this->event_handlers_.begin ();  // iterator == ACE_Event_Handler*
+
+  for (ACE_HANDLE handle = 0;
+       handle < this->max_handlep1_;
+       ++handle)
+    {
+      (void) this->unbind (handle,
+                           pos,
+                           ACE_Event_Handler::ALL_EVENTS_MASK);
+      ++pos;
+    }
+#endif  /* ACE_WIN32 */
 
   return 0;
 }
@@ -143,69 +165,42 @@ ACE_Select_Reactor_Handler_Repository::close (void)
 {
   ACE_TRACE ("ACE_Select_Reactor_Handler_Repository::close");
 
-  if (this->event_handlers_ != 0)
-    {
-      this->unbind_all ();
-
-      delete [] this->event_handlers_;
-      this->event_handlers_ = 0;
-    }
-  return 0;
+  return this->unbind_all ();
 }
 
-// Return the <ACE_Event_Handler *> associated with the <handle>.
-
-ACE_Event_Handler *
-ACE_Select_Reactor_Handler_Repository::find (ACE_HANDLE handle,
-                                             size_t *index_p)
+ACE_Select_Reactor_Handler_Repository::map_type::iterator
+ACE_Select_Reactor_Handler_Repository::find_eh (ACE_HANDLE handle)
 {
-  ACE_TRACE ("ACE_Select_Reactor_Handler_Repository::find");
+  ACE_TRACE ("ACE_Select_Reactor_Handler_Repository::find_eh");
 
-  ACE_Event_Handler *eh = 0;
-  ssize_t i;
+  map_type::iterator pos (this->event_handlers_.end ());
 
   // Only bother to search for the <handle> if it's in range.
   if (this->handle_in_range (handle))
     {
 #if defined (ACE_WIN32)
-      i = 0;
-
-      for (; i < this->max_handlep1_; ++i)
-        if (ACE_SELECT_REACTOR_HANDLE (i) == handle)
-          {
-            eh = ACE_SELECT_REACTOR_EVENT_HANDLER (this, i);
-            break;
-          }
+      this->event_handlers_.find (handle, pos);
 #else
-      i = handle;
+      map_type::iterator const tmp = &this->event_handlers_[handle];
 
-      eh = ACE_SELECT_REACTOR_EVENT_HANDLER (this, handle);
+      if (*tmp != 0)
+        pos = tmp;
 #endif /* ACE_WIN32 */
     }
-  else
-    // g++ can't figure out that <i> won't be used below if the handle
-    // is out of range, so keep it happy by defining <i> here . . .
-    i = 0;
 
-  if (eh != 0)
-    {
-      if (index_p != 0)
-        *index_p = i;
-    }
-  else
-    errno = ENOENT;
-
-  return eh;
+  return pos;
 }
 
 // Bind the <ACE_Event_Handler *> to the <ACE_HANDLE>.
-
 int
 ACE_Select_Reactor_Handler_Repository::bind (ACE_HANDLE handle,
                                              ACE_Event_Handler *event_handler,
                                              ACE_Reactor_Mask mask)
 {
   ACE_TRACE ("ACE_Select_Reactor_Handler_Repository::bind");
+
+  if (event_handler == 0)
+    return -1;
 
   if (handle == ACE_INVALID_HANDLE)
     handle = event_handler->get_handle ();
@@ -214,66 +209,39 @@ ACE_Select_Reactor_Handler_Repository::bind (ACE_HANDLE handle,
     return -1;
 
   // Is this handle already in the Reactor?
-  int existing_handle = 0;
+  bool existing_handle = false;
 
 #if defined (ACE_WIN32)
 
-  ssize_t assigned_slot = -1;
+  map_type::ENTRY * entry = 0;
 
-  for (ssize_t i = 0; i < this->max_handlep1_; ++i)
+  int const result =
+    this->event_handlers_.bind (handle, event_handler, entry);
+
+  if (result == -1)
     {
-      // If handle is already registered.
-      if (ACE_SELECT_REACTOR_HANDLE (i) == handle)
+      return -1;
+    }
+  else if (result == 1)  // Entry already exists.
+    {
+      // Cannot use a different handler for an existing handle.
+      if (event_handler != entry->item ())
         {
-          // Cannot use a different handler for an existing handle.
-          if (ACE_SELECT_REACTOR_EVENT_HANDLER (this, i) !=
-              event_handler)
-            return -1;
-
-          // Remember location.
-          assigned_slot = i;
-
-          // Remember that this handle is already registered in the
-          // Reactor.
-          existing_handle = 1;
-
-          // We can stop looking now.
-          break;
+          return -1;
         }
       else
-        // Here's the first free slot, so let's take it.
-        if (ACE_SELECT_REACTOR_HANDLE (i) == ACE_INVALID_HANDLE &&
-            assigned_slot == -1)
-          {
-            assigned_slot = i;
-          }
-    }
-
-  if (assigned_slot > -1)
-    // We found a spot.
-    {
-      ACE_SELECT_REACTOR_HANDLE (assigned_slot) = handle;
-      ACE_SELECT_REACTOR_EVENT_HANDLER (this, assigned_slot) = event_handler;
-    }
-  else if (this->max_handlep1_ < this->max_size_)
-    {
-      // Insert at the end of the active portion.
-      ACE_SELECT_REACTOR_HANDLE (this->max_handlep1_) = handle;
-      ACE_SELECT_REACTOR_EVENT_HANDLER (this, this->max_handlep1_) = event_handler;
-      ++this->max_handlep1_;
-    }
-  else
-    {
-      // No more room at the inn!
-      errno = ENOMEM;
-      return -1;
+        {
+          // Remember that this handle is already registered in the
+          // Reactor.
+          existing_handle = true;
+        }
     }
 
 #else
 
   // Check if this handle is already registered.
-  ACE_Event_Handler *current_handler =
-    ACE_SELECT_REACTOR_EVENT_HANDLER (this, handle);
+  ACE_Event_Handler * const current_handler =
+    this->event_handlers_[handle];
 
   if (current_handler)
     {
@@ -283,10 +251,10 @@ ACE_Select_Reactor_Handler_Repository::bind (ACE_HANDLE handle,
 
       // Remember that this handle is already registered in the
       // Reactor.
-      existing_handle = 1;
+      existing_handle = true;
     }
 
-  ACE_SELECT_REACTOR_EVENT_HANDLER (this, handle) = event_handler;
+  this->event_handlers_[handle] = event_handler;
 
   if (this->max_handlep1_ < handle + 1)
     this->max_handlep1_ = handle + 1;
@@ -323,15 +291,20 @@ ACE_Select_Reactor_Handler_Repository::bind (ACE_HANDLE handle,
 // Remove the binding of <ACE_HANDLE>.
 
 int
-ACE_Select_Reactor_Handler_Repository::unbind (ACE_HANDLE handle,
-                                               ACE_Reactor_Mask mask)
+ACE_Select_Reactor_Handler_Repository::unbind (
+  ACE_HANDLE handle,
+  map_type::iterator pos,
+  ACE_Reactor_Mask mask)
 {
   ACE_TRACE ("ACE_Select_Reactor_Handler_Repository::unbind");
 
-  size_t slot = 0;
-  ACE_Event_Handler *event_handler = this->find (handle, &slot);
+  // Retrieve event handler before unbinding it from the map.  The
+  // iterator pointing to it will no longer be valid once the handler
+  // is unbound.
+  ACE_Event_Handler * const event_handler =
+    ACE_SELECT_REACTOR_EVENT_HANDLER (pos);
 
-  if (event_handler == 0)
+  if (event_handler == 0)  	 
     return -1;
 
   // Clear out the <mask> bits in the Select_Reactor's wait_set.
@@ -354,64 +327,42 @@ ACE_Select_Reactor_Handler_Repository::unbind (ACE_HANDLE handle,
   // If there are no longer any outstanding events on this <handle>
   // then we can totally shut down the Event_Handler.
 
-  int has_any_wait_mask =
+  bool const has_any_wait_mask =
     (this->select_reactor_.wait_set_.rd_mask_.is_set (handle)
      || this->select_reactor_.wait_set_.wr_mask_.is_set (handle)
      || this->select_reactor_.wait_set_.ex_mask_.is_set (handle));
-  int has_any_suspend_mask =
+  bool const has_any_suspend_mask =
     (this->select_reactor_.suspend_set_.rd_mask_.is_set (handle)
      || this->select_reactor_.suspend_set_.wr_mask_.is_set (handle)
      || this->select_reactor_.suspend_set_.ex_mask_.is_set (handle));
 
-  int complete_removal = 0;
+  bool complete_removal = false;
 
   if (!has_any_wait_mask && !has_any_suspend_mask)
     {
-      // The handle has been completed removed.
-      complete_removal = 1;
-
-      ACE_SELECT_REACTOR_EVENT_HANDLER (this, slot) = 0;
-
 #if defined (ACE_WIN32)
-
-      ACE_SELECT_REACTOR_HANDLE (slot) = ACE_INVALID_HANDLE;
-
-      if (this->max_handlep1_ == (int) slot + 1)
-        {
-          // We've deleted the last entry (i.e., i + 1 == the current
-          // size of the array), so we need to figure out the last
-          // valid place in the array that we should consider in
-          // subsequent searches.
-
-          int i;
-
-          for (i = this->max_handlep1_ - 1;
-               i >= 0 && ACE_SELECT_REACTOR_HANDLE (i) == ACE_INVALID_HANDLE;
-               --i)
-            continue;
-
-          this->max_handlep1_ = i + 1;
-        }
-
+      if (this->event_handlers_.unbind (pos) == -1)
+        return -1;  // Should not happen!
 #else
+      this->event_handlers_[handle] = 0;
 
       if (this->max_handlep1_ == handle + 1)
         {
           // We've deleted the last entry, so we need to figure out
           // the last valid place in the array that is worth looking
           // at.
-          ACE_HANDLE wait_rd_max =
+          ACE_HANDLE const wait_rd_max =
             this->select_reactor_.wait_set_.rd_mask_.max_set ();
-          ACE_HANDLE wait_wr_max =
+          ACE_HANDLE const wait_wr_max =
             this->select_reactor_.wait_set_.wr_mask_.max_set ();
-          ACE_HANDLE wait_ex_max =
+          ACE_HANDLE const wait_ex_max =
             this->select_reactor_.wait_set_.ex_mask_.max_set ();
 
-          ACE_HANDLE suspend_rd_max =
+          ACE_HANDLE const suspend_rd_max =
             this->select_reactor_.suspend_set_.rd_mask_.max_set ();
-          ACE_HANDLE suspend_wr_max =
+          ACE_HANDLE const suspend_wr_max =
             this->select_reactor_.suspend_set_.wr_mask_.max_set ();
-          ACE_HANDLE suspend_ex_max =
+          ACE_HANDLE const suspend_ex_max =
             this->select_reactor_.suspend_set_.ex_mask_.max_set ();
 
           // Compute the maximum of six values.
@@ -433,6 +384,8 @@ ACE_Select_Reactor_Handler_Repository::unbind (ACE_HANDLE handle,
 
 #endif /* ACE_WIN32 */
 
+      // The handle has been completely removed.
+      complete_removal = true;
     }
 
   bool const requires_reference_counting =
@@ -442,63 +395,70 @@ ACE_Select_Reactor_Handler_Repository::unbind (ACE_HANDLE handle,
   // Close down the <Event_Handler> unless we've been instructed not
   // to.
   if (ACE_BIT_ENABLED (mask, ACE_Event_Handler::DONT_CALL) == 0)
-    event_handler->handle_close (handle, mask);
+    (void) event_handler->handle_close (handle, mask);
 
   // Call remove_reference() if the removal is complete and reference
   // counting is needed.
   if (complete_removal && requires_reference_counting)
     {
-      event_handler->remove_reference ();
+      (void) event_handler->remove_reference ();
     }
 
   return 0;
 }
 
 ACE_Select_Reactor_Handler_Repository_Iterator::ACE_Select_Reactor_Handler_Repository_Iterator
-  (const ACE_Select_Reactor_Handler_Repository *s)
+  (ACE_Select_Reactor_Handler_Repository const * s)
     : rep_ (s),
-      current_ (-1)
+      current_ (s->event_handlers_.begin ())
 {
-  this->advance ();
 }
 
 // Pass back the <next_item> that hasn't been seen in the Set.
 // Returns 0 when all items have been seen, else 1.
 
-int
-ACE_Select_Reactor_Handler_Repository_Iterator::next (ACE_Event_Handler *&next_item)
+bool
+ACE_Select_Reactor_Handler_Repository_Iterator::next (
+  ACE_Event_Handler *&next_item)
 {
-  int result = 1;
+  bool result = true;
 
-  if (this->current_ >= this->rep_->max_handlep1_)
-    result = 0;
+  if (this->done ())
+    result = false;
   else
-    next_item = ACE_SELECT_REACTOR_EVENT_HANDLER (this->rep_,
-                                                  this->current_);
-  return result;
-}
+    next_item = ACE_SELECT_REACTOR_EVENT_HANDLER (this->current_);
 
-int
-ACE_Select_Reactor_Handler_Repository_Iterator::done (void) const
-{
-  return this->current_ >= this->rep_->max_handlep1_;
+  return result;
 }
 
 // Move forward by one element in the set.
 
-int
+bool
 ACE_Select_Reactor_Handler_Repository_Iterator::advance (void)
 {
-  if (this->current_ < this->rep_->max_handlep1_)
+#ifdef ACE_WIN32
+  // No need to explicitly limit search to "current" to
+  // max_handlep1_ range.
+  const_base_iterator const end = this->rep_->event_handlers_.end ();
+#else
+  // Don't use ACE_Array_Base::end() since it may be larger than
+  // event_handlers[max_handlep1_].
+  const_base_iterator const end =
+    &this->rep_->event_handlers_[this->rep_->max_handlep1 ()];
+#endif  /* ACE_WIN32 */
+
+  if (this->current_ != end)
     ++this->current_;
 
-  while (this->current_ < this->rep_->max_handlep1_)
-    if (ACE_SELECT_REACTOR_EVENT_HANDLER (this->rep_, this->current_) != 0)
-      return 1;
-    else
-      ++this->current_;
-
-  return this->current_ < this->rep_->max_handlep1_;
+#ifndef ACE_WIN32
+  // Advance to the next element containing a non-zero event handler.
+  // There's no need to do this for the Windows case since the hash
+  // map will only contain non-zero event handlers.
+  while (this->current_ != end && (*(this->current_) == 0))
+    ++this->current_;
+#endif  /* !ACE_WIN32 */
+  
+  return this->current_ != end;
 }
 
 // Dump the state of an object.
@@ -511,7 +471,12 @@ ACE_Select_Reactor_Handler_Repository_Iterator::dump (void) const
 
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
   ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("rep_ = %u"), this->rep_));
-  ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("current_ = %d"), this->current_));
+# ifdef ACE_WIN32
+  ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("current_ = ")));
+  this->current_.dump ();
+# else
+  ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("current_ = %@"), this->current_));
+# endif  /* ACE_WIN32 */
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 #endif /* ACE_HAS_DUMP */
 }
@@ -524,8 +489,8 @@ ACE_Select_Reactor_Handler_Repository::dump (void) const
 
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
   ACE_DEBUG ((LM_DEBUG,
-              ACE_LIB_TEXT ("max_handlep1_ = %d, max_size_ = %d\n"),
-              this->max_handlep1_, this->max_size_));
+              ACE_LIB_TEXT ("max_handlep1_ = %d\n"),
+              this->max_handlep1 ()));
   ACE_DEBUG ((LM_DEBUG,  ACE_LIB_TEXT ("[")));
 
   ACE_Event_Handler *event_handler = 0;

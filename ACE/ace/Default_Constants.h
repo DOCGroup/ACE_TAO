@@ -30,7 +30,7 @@
 // the ACE tests and applications.  You can change these values by
 // defining the macros in your config.h file.
 # if !defined (ACE_DEFAULT_CLOSE_ALL_HANDLES)
-#   define ACE_DEFAULT_CLOSE_ALL_HANDLES 1
+#   define ACE_DEFAULT_CLOSE_ALL_HANDLES true
 # endif /* ACE_DEFAULT_CLOSE_ALL_HANDLES */
 
 // The maximum length for a fully qualified Internet name.

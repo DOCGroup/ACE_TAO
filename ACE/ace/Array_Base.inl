@@ -2,10 +2,9 @@
 //
 // $Id$
 
-// Clean up the array (e.g., delete dynamically allocated memory).
-
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
+// Clean up the array (e.g., delete dynamically allocated memory).
 template <class T> ACE_INLINE
 ACE_Array_Base<T>::~ACE_Array_Base (void)
 {
@@ -15,32 +14,88 @@ ACE_Array_Base<T>::~ACE_Array_Base (void)
                       T);
 }
 
-template <class T> ACE_INLINE size_t
+template <class T>
+ACE_INLINE typename ACE_Array_Base<T>::iterator
+ACE_Array_Base<T>::begin (void)
+{
+  return this->array_;
+}
+
+template <class T>
+ACE_INLINE typename ACE_Array_Base<T>::iterator
+ACE_Array_Base<T>::end (void)
+{
+  return this->array_ + this->cur_size_;
+}
+
+template <class T>
+ACE_INLINE typename ACE_Array_Base<T>::const_iterator
+ACE_Array_Base<T>::begin (void) const
+{
+  return this->array_;
+}
+
+template <class T>
+ACE_INLINE typename ACE_Array_Base<T>::const_iterator
+ACE_Array_Base<T>::end (void) const
+{
+  return this->array_ + this->cur_size_;
+}
+
+template <class T>
+ACE_INLINE typename ACE_Array_Base<T>::reverse_iterator
+ACE_Array_Base<T>::rbegin (void)
+{
+  return reverse_iterator (this->end ());
+}
+
+template <class T>
+ACE_INLINE typename ACE_Array_Base<T>::reverse_iterator
+ACE_Array_Base<T>::rend (void)
+{
+  return reverse_iterator (this->begin ());
+}
+
+template <class T>
+ACE_INLINE typename ACE_Array_Base<T>::const_reverse_iterator
+ACE_Array_Base<T>::rbegin (void) const
+{
+  return const_reverse_iterator (this->end ());
+}
+
+template <class T>
+ACE_INLINE typename ACE_Array_Base<T>::const_reverse_iterator
+ACE_Array_Base<T>::rend (void) const
+{
+  return const_reverse_iterator (this->begin ());
+}
+
+template <class T> ACE_INLINE typename ACE_Array_Base<T>::size_type
 ACE_Array_Base<T>::size (void) const
 {
   return this->cur_size_;
 }
 
-template <class T> ACE_INLINE size_t
+template <class T> ACE_INLINE typename ACE_Array_Base<T>::size_type
 ACE_Array_Base<T>::max_size (void) const
 {
   return this->max_size_;
 }
 
-template <class T> ACE_INLINE int
-ACE_Array_Base<T>::in_range (size_t index) const
+template <class T> ACE_INLINE bool
+ACE_Array_Base<T>::in_range (typename ACE_Array_Base<T>::size_type index) const
 {
   return index < this->cur_size_;
 }
 
 template <class T> ACE_INLINE T &
-ACE_Array_Base<T>::operator[] (size_t index)
+ACE_Array_Base<T>::operator[] (typename ACE_Array_Base<T>::size_type index)
 {
   return this->array_[index];
 }
 
 template <class T> ACE_INLINE const T &
-ACE_Array_Base<T>::operator[] (size_t index) const
+ACE_Array_Base<T>::operator[] (typename ACE_Array_Base<T>::size_type index) const
 {
   return this->array_[index];
 }
