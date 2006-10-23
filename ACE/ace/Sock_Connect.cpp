@@ -574,7 +574,7 @@ ACE::get_fqdn (ACE_INET_Addr const & addr,
    if (hp == 0 || hp->h_name == 0)
      return -1;
 
-   if (ACE::debug() > 0)
+   if (ACE::debug())
      ACE_DEBUG ((LM_DEBUG,
                  ACE_TEXT ("(%P|%t) - ACE::get_fqdn, ")
                  ACE_TEXT ("canonical host name is %s\n"),  
@@ -607,7 +607,7 @@ ACE::get_fqdn (ACE_INET_Addr const & addr,
                      // address in the profile
                      continue;
 
-                   if (ACE::debug () > 0)
+                   if (ACE::debug ())
                      ACE_DEBUG ((LM_DEBUG,
                                  ACE_TEXT ("(%P|%t) - ACE::get_fqdn, ")
                                  ACE_TEXT ("found fqdn within alias as %s\n"),  
