@@ -1,13 +1,22 @@
+Mon Oct 23 12:59:35 UTC 2006  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/generate_compile_stats.sh:
+
+          Corrected a bug with my previous change.  If config.h or
+          platform_macros.GNU were not present, the html would be incorrect.
+          I also added default.features to the list of configuration files
+          that are displayed.
+
 Mon Oct 23 06:34:24 UTC 2006  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
 
         * ace/os_include/os_pthread.h: Changed
-  
+
           #      if !defined (ACE_LACKS_RWLOCK_T)
-  
+
           to
-  
+
           #      if !defined (ACE_LACKS_RWLOCK_T) && !defined (ACE_HAS_PTHREADS_UNIX98_EXT)
-  
+
           to stop a compile error on Solaris after SunOS 5.8.  Thanks to
           Boris Kaminer <boris dot kaminer at gmail dot com> for reporting
           this fix.
@@ -119,74 +128,74 @@ Sat Oct 21 04:34:33 UTC 2006  Ossama Othman  <ossama_othman at symantec dot com>
 
 Fri Oct 20 12:55:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-	* ace/Service_Manger.{h,cpp}:
-	  Changed debug_ member to a real bool
+        * ace/Service_Manger.{h,cpp}:
+          Changed debug_ member to a real bool
 
 Fri Oct 20 12:40:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-	* ace/OS_NS_sys_socket.inl (bind):
-	* ace/config-rtems.h:
-	  Added ACE_LACKS_BIND
+        * ace/OS_NS_sys_socket.inl (bind):
+        * ace/config-rtems.h:
+          Added ACE_LACKS_BIND
 
-	* ace/Basic_Types.h:
-	  Fixed compile problems with BCB6
+        * ace/Basic_Types.h:
+          Fixed compile problems with BCB6
 
 Fri Oct 20 12:05:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-	* ace/Log_Record.inl:
-	  Added check for ACE_LACKS_NTOHL and ACE_LACKS_HTONL
+        * ace/Log_Record.inl:
+          Added check for ACE_LACKS_NTOHL and ACE_LACKS_HTONL
 
-	* ace/config-rtems.h:
-	  Added ACE_LACKS_NTOHL and ACE_LACKS_HTONL when no networking
-	  is available
+        * ace/config-rtems.h:
+          Added ACE_LACKS_NTOHL and ACE_LACKS_HTONL when no networking
+          is available
 
 Fri Oct 20 09:56:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-	* ace/INET_Addr.h:
-	  Small change to improve doxygen documentation
+        * ace/INET_Addr.h:
+          Small change to improve doxygen documentation
 
-	* ace/OS_NS_sys_socket.inl (listen):
-	  Added ACE_LACKS_LISTEN
+        * ace/OS_NS_sys_socket.inl (listen):
+          Added ACE_LACKS_LISTEN
 
-	* ace/config-rtems.h:
-	  Added ACE_LACKS_LISTEN
+        * ace/config-rtems.h:
+          Added ACE_LACKS_LISTEN
 
 Fri Oct 20 09:36:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-	* bin/MakeProjectCreator/config/ciao_nodeapplicationmanager.mpb:
-	* bin/MakeProjectCreator/config/ciao_nodemanager_stub.mpb:
-	* bin/MakeProjectCreator/config/ciao_targetmanager_stub.mpb:
-	  New base projects
+        * bin/MakeProjectCreator/config/ciao_nodeapplicationmanager.mpb:
+        * bin/MakeProjectCreator/config/ciao_nodemanager_stub.mpb:
+        * bin/MakeProjectCreator/config/ciao_targetmanager_stub.mpb:
+          New base projects
 
-	* bin/MakeProjectCreator/config/ciao_static_dnc_app.mpb:
-	  Use the new base projects above
+        * bin/MakeProjectCreator/config/ciao_static_dnc_app.mpb:
+          Use the new base projects above
 
           Thanks to Abdul Sowayan <abdullah dot sowayan at lmco dot com>
           for delivering these files
 
 Fri Oct 20 09:00:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-	* ace/os_include/sys/os_socket.h:
-	  Defined AF_UNSPEC and PF_UNSPEC when these are not defined by the
-	  OS header files.
+        * ace/os_include/sys/os_socket.h:
+          Defined AF_UNSPEC and PF_UNSPEC when these are not defined by the
+          OS header files.
 
 Fri Oct 20 08:55:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-	* ace/os_include/sys/os_uio.h:
-	  When INADDR_ANY is not defined, then define it, we need it in several
-	  of the ACE header files
+        * ace/os_include/sys/os_uio.h:
+          When INADDR_ANY is not defined, then define it, we need it in several
+          of the ACE header files
 
 Fri Oct 20 08:44:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-	* ace/os_include/sys/os_uio.h:
-	  We define iovec when ACE_WIN32 was defined, changed this to a new
-	  define, ACE_LACKS_IOVEC to make it easier to use with other platforms
+        * ace/os_include/sys/os_uio.h:
+          We define iovec when ACE_WIN32 was defined, changed this to a new
+          define, ACE_LACKS_IOVEC to make it easier to use with other platforms
 
-	* ace/config-win32-common.h:
-	  Added ACE_LACKS_IOVEC
+        * ace/config-win32-common.h:
+          Added ACE_LACKS_IOVEC
 
-	* ace/config-rtems.h:
-	  When no networking has been configured, also define ACE_LACKS_IOVEC
+        * ace/config-rtems.h:
+          When no networking has been configured, also define ACE_LACKS_IOVEC
 
 Thu Oct 19 22:28:59 UTC 2006  Shanshan Jiang <shanshan.jiang@vanderbilt.edu>
 
@@ -222,25 +231,25 @@ Thu Oct 19 17:25:16 UTC 2006  Ossama Othman  <ossama_othman at symantec dot com>
 Thu Oct 19 15:25:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/generate_rel_manpages:
-	  Updated doxygen version
+          Updated doxygen version
 
-	* bin/MakeProjectCreator/templates/gnu.mpb:
-	  Removed kylix support
+        * bin/MakeProjectCreator/templates/gnu.mpb:
+          Removed kylix support
 
 Thu Oct 19 13:19:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-	* ace/OS_main.h:
-	  Added main for rtems
+        * ace/OS_main.h:
+          Added main for rtems
 
 Thu Oct 19 11:48:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-	* ace/Rtems_init.c:
-	  Fixed empty translation unit warnings
+        * ace/Rtems_init.c:
+          Fixed empty translation unit warnings
 
 Thu Oct 19 08:27:12 UTC 2006  Martin Corino  <mcorino@remedy.nl>
 
-	* include/makeinclude/platform_openvms.GNU:
-      	  Small change to create hardlinks for produced executables.
+        * include/makeinclude/platform_openvms.GNU:
+          Small change to create hardlinks for produced executables.
 
 Wed Oct 18 16:19:38 UTC 2006  Shanshan Jiang <shanshan.jiang@vanderbilt.edu>
 
@@ -250,54 +259,54 @@ Wed Oct 18 16:19:38 UTC 2006  Shanshan Jiang <shanshan.jiang@vanderbilt.edu>
 
 Wed Oct 18 13:52:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-	* include/makeinclude/platform_rtems.x_g++.GNU:
-	  Major cleanup of old stuff and always define ACE_HAS_RTEMS
+        * include/makeinclude/platform_rtems.x_g++.GNU:
+          Major cleanup of old stuff and always define ACE_HAS_RTEMS
 
-	* etc/rtems_init.c:
-	* ace/rtems_init.c:
-	  Another move, for rtems we require some functions to always
-	  be available, this defines our network settings and much more.
-	  Because we always build static, we moved this to the ACE lib,
-	  on rtems we define ACE_HAS_RTEMS and then compile the contents
-	  of this file. This way the functions in this file are available
-	  in any executable we link
+        * etc/rtems_init.c:
+        * ace/rtems_init.c:
+          Another move, for rtems we require some functions to always
+          be available, this defines our network settings and much more.
+          Because we always build static, we moved this to the ACE lib,
+          on rtems we define ACE_HAS_RTEMS and then compile the contents
+          of this file. This way the functions in this file are available
+          in any executable we link
 
-	* ace/OS.h:
-	* ace/os_include/os_signal.h:
-	* ace/os_include/sys/os_types.h:
-	* ace/OS_NS_stdio.h:
-	* ace/OS_NS_time.inl:
-	  Replaced __rtems__ with ACE_HAS_RTEMS
+        * ace/OS.h:
+        * ace/os_include/os_signal.h:
+        * ace/os_include/sys/os_types.h:
+        * ace/OS_NS_stdio.h:
+        * ace/OS_NS_time.inl:
+          Replaced __rtems__ with ACE_HAS_RTEMS
 
-	* ace/ace.mpc:
-	  Added rtems_init.c
+        * ace/ace.mpc:
+          Added rtems_init.c
 
 Wed Oct 18 13:01:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-	* include/makeincludes/rules.bin.GNU:
-	* include/makeincludes/rules.lib.GNU:
-	* include/makeincludes/wrapper_macros.GNU:
-	* include/makeincludes/platform_linux_borland.GNU:
-	  Removed kylix support
+        * include/makeincludes/rules.bin.GNU:
+        * include/makeincludes/rules.lib.GNU:
+        * include/makeincludes/wrapper_macros.GNU:
+        * include/makeincludes/platform_linux_borland.GNU:
+          Removed kylix support
 
 Wed Oct 18 10:05:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-	* apps/Gateway/Gateway/File_Parser.cpp:
-	  Removed egcs workaround
+        * apps/Gateway/Gateway/File_Parser.cpp:
+          Removed egcs workaround
 
 Wed Oct 18 08:07:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-	* tests/rtems_init.c:
-	* etc/rtems_init.c:
-	  Moved from tests to etc
+        * tests/rtems_init.c:
+        * etc/rtems_init.c:
+          Moved from tests to etc
 
 Tue Oct 18 06:27:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-	* examples/Reactor/Misc/test_signals_1.cpp:
-	* performance-tests/Misc/context_switch_time.cpp:
-	  Renamed the global count variables to another name. These triggered
-	  a bug in the VxWorks 5.5.2 compiler which we reported to windriver.
-	  By renaming these we will get an error free compilation.
+        * examples/Reactor/Misc/test_signals_1.cpp:
+        * performance-tests/Misc/context_switch_time.cpp:
+          Renamed the global count variables to another name. These triggered
+          a bug in the VxWorks 5.5.2 compiler which we reported to windriver.
+          By renaming these we will get an error free compilation.
 
 Tue Oct 18 06:02:28 UTC 2006  Ossama Othman  <ossama_othman at symantec dot com>
 
