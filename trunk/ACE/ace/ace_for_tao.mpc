@@ -190,13 +190,10 @@ project(ACE_FOR_TAO) : acedefaults, core, svcconf, versioned_namespace, pkgconfi
 
     // ACE_Token implementation uses semaphores on Windows and VxWorks.
     conditional(vc6,vc71,vc8,nmake,bmake,borland) {
-      ACE_crc32.cpp  // Required by SV_Semaphore_Simple
       NT_Service.cpp // Required by ace_for_tao sponsors
       Semaphore.cpp
       Process_Mutex.cpp
       WFMO_Reactor.cpp
-      SV_Semaphore_Simple.cpp
-      SV_Semaphore_Complex.cpp
     }
   }
 
@@ -341,6 +338,7 @@ project(ACE_FOR_TAO) : acedefaults, core, svcconf, versioned_namespace, pkgconfi
     Synch_Traits.h
     TSS_T.h
     Timer_Queuefwd.h
+    Truncate.h
     Value_Ptr.h
     Version.h
     ace_wchar.h

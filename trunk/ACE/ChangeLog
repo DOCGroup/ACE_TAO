@@ -1,3 +1,17 @@
+Mon Oct 23 22:24:01 UTC 2006  Ossama Othman  <ossama_othman at symantec dot com>
+
+        * ace/Unbounded_Queue.cpp (set):
+
+          Explicitly initialize dummy value.  Addresses "use of
+          uninitialized variable" g++ 4.1 warning when the variable is a
+          POD type.
+
+        * ace/ace_for_tao.mpc:
+
+          Removed unnecessary semaphore related files.
+
+          Added missing ace/Truncate.h header.
+
 Mon Oct 23 21:44:32 UTC 2006  Ossama Othman  <ossama_othman at symantec dot com>
 
         * ace/Truncate.h (Truncator):
