@@ -50,10 +50,6 @@ namespace ACE_Acquire_Method
   };
 }
 
-#if defined (ACE_LYNXOS_MAJOR) && (ACE_LYNXOS_MAJOR < 4)
-  using namespace ACE_Acquire_Method;
-#endif
-
 /**
  * @class ACE_Reverse_Lock
  *
@@ -82,14 +78,8 @@ public:
   // = Initialization/Finalization methods.
 
   /// Constructor. All locking requests will be forwarded to <lock>.
-#if defined (ACE_LYNXOS_MAJOR) && (ACE_LYNXOS_MAJOR < 4)
-  // Make LynxOS 3.x buggy compiler happy
-  ACE_Reverse_Lock (ACE_LOCKING_MECHANISM &lock,
-                    METHOD_TYPE acquire_method = ACE_REGULAR);
-#else
   ACE_Reverse_Lock (ACE_LOCKING_MECHANISM &lock,
                     ACE_Acquire_Method::METHOD_TYPE acquire_method = ACE_Acquire_Method::ACE_REGULAR);
-#endif
 
   /// Destructor. If <lock_> was not passed in by the user, it will be
   /// deleted.

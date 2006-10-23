@@ -152,13 +152,7 @@ public: // Should be protected:
    * Note that if this conflicts with the C++ iostream <flush>
    * function, just rewrite the iostream function as ::<flush>.
    */
-
-#if defined (ACE_LYNXOS_MAJOR) && (ACE_LYNXOS_MAJOR < 4)
-  // Make LynxOS 3.x buggy compiler happy
-  int flush (u_long flag = ACE_FLUSHALL);
-#else
   int flush (u_long flag = ACE_Task_Flags::ACE_FLUSHALL);
-#endif
 
   // = Special routines corresponding to certain message types.
 
