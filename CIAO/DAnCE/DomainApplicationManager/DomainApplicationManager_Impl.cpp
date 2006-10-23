@@ -1304,7 +1304,7 @@ handle_es_connection (
   ACE_CString es_id = binding.externalReference[0].location.in ();
 
   retv[len].endpointInstanceName = es_id.c_str ();
-  retv[len].endpointPortName = "CIAO_ES";
+  retv[len].endpointPortName = CORBA::string_dup ("CIAO_ES");
 
   // We need to populate the actual filter and store it into
   // the <connection.config> field
