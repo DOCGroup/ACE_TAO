@@ -1513,23 +1513,18 @@ ACE_Configuration_Heap::new_section (const ACE_TString& section,
       // entry with the same name.
       return_value = this->index_->bind (name, entry, this->allocator_);
 
-      if (return_value == 1)
+      if (return_value == 1      /* Entry already existed so bind failed. */
+          || return_value == -1  /* Unable to bind for other reasons. */)
         {
-          // Entry already existed so bind failed. Free our dynamically
-          // allocated memory.
-          this->allocator_->free ((void *) ptr);
+          // Free our dynamically allocated memory.
+          this->allocator_->free (static_cast<void *> (ptr));
           return return_value;
         }
 
-      if (return_value == -1)
-        // Free our dynamically allocated memory.
-        this->allocator_->free ((void *) ptr);
-      else
-        // If bind () succeed, it will automatically sync
-        // up the map manager entry.  However, we must sync up our
-        // name/value memory.
-        this->allocator_->sync (ptr, section_len);
-
+      // If bind () succeed, it will automatically sync
+      // up the map manager entry.  However, we must sync up our
+      // name/value memory.
+      this->allocator_->sync (ptr, section_len);
     }
 
   // set the result

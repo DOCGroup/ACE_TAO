@@ -60,8 +60,12 @@ namespace
   // private:
   //  Used internally so not exported.
 
-  /// Does this box have ipv6 turned on?
+  // Does this box have ipv4 turned on?
+  int ace_ipv4_enabled = -1;
+
+  // Does this box have ipv6 turned on?
   int ace_ipv6_enabled = -1;
+  
 }
 #endif /* ACE_HAS_IPV6 */
 
@@ -526,6 +530,111 @@ ACE::get_bcast_addr (ACE_UINT32 &bcast_addr,
   bcast_addr = (ACE_UINT32 (INADDR_BROADCAST));
   return 0;
 #endif /* !ACE_WIN32 && !__INTERIX */
+}
+
+int
+ACE::get_fqdn (ACE_INET_Addr const & addr,
+               char hostname[],
+               size_t len)
+{
+  int h_error;  // Not the same as errno!
+  hostent hentry;
+  ACE_HOSTENT_DATA buf;
+
+  char * ip_addr;
+  int ip_addr_size;
+  if (addr.get_type () == AF_INET)
+    {
+      sockaddr_in * const sock_addr =
+        reinterpret_cast<sockaddr_in *> (addr.get_addr ());
+      ip_addr_size = sizeof sock_addr->sin_addr;
+      ip_addr = (char*) &sock_addr->sin_addr;
+    }
+#ifdef ACE_HAS_IPV6
+  else
+    {
+      sockaddr_in6 * sock_addr =
+        reinterpret_cast<sockaddr_in6 *> (addr.get_addr ());
+
+      ip_addr_size = sizeof sock_addr->sin6_addr;
+      ip_addr = (char*) &sock_addr->sin6_addr;
+    }
+#endif  /* ACE_HAS_IPV6 */
+
+   // get the host entry for the address in question
+   hostent * const hp = ACE_OS::gethostbyaddr_r (ip_addr,
+                                                 ip_addr_size,
+                                                 addr.get_type (),
+                                                 &hentry,
+                                                 buf,
+                                                 &h_error);
+
+   // if it's not found in the host file or the DNS datase, there is nothing
+   // much we can do. embed the IP address
+   if (hp == 0 || hp->h_name == 0)
+     return -1;
+
+   if (ACE::debug() > 0)
+     ACE_DEBUG ((LM_DEBUG,
+                 ACE_TEXT ("(%P|%t) - ACE::get_fqdn, ")
+                 ACE_TEXT ("canonical host name is %s\n"),  
+                 ACE_TEXT_CHAR_TO_TCHAR (hp->h_name)));
+
+   // check if the canonical name is the FQDN
+   if (!ACE_OS::strchr(hp->h_name, '.'))
+     {
+       // list of address
+       char** p;
+       // list of aliases
+       char** q;
+
+       // for every address and for every alias within the address, check and 
+       // see if we can locate a FQDN
+       for (p = hp->h_addr_list; *p != 0; ++p) 
+         {
+           for (q = hp->h_aliases; *q != 0; ++q)
+             {
+               if (ACE_OS::strchr(*q, '.'))
+                 {
+                   // we got an FQDN from an alias. use this
+                   if (ACE_OS::strlen (*q) >= len)
+                     // the hostname is too huge to fit into a 
+                     // buffer of size MAXHOSTNAMELEN
+                     // should we check other aliases as well
+                     // before bailing out prematurely?
+                     // for right now, let's do it. this (short name)
+                     // is atleast better than embedding the IP
+                     // address in the profile
+                     continue;
+
+                   if (ACE::debug () > 0)
+                     ACE_DEBUG ((LM_DEBUG,
+                                 ACE_TEXT ("(%P|%t) - ACE::get_fqdn, ")
+                                 ACE_TEXT ("found fqdn within alias as %s\n"),  
+                                 ACE_TEXT_CHAR_TO_TCHAR(*q)));
+                   ACE_OS::strcpy (hostname, *q);
+
+                   return 0;
+                 }
+             }
+         }
+     }
+
+   // The canonical name may be an FQDN when we reach here.
+   // Alternatively, the canonical name (a non FQDN) may be the best
+   // we can do.
+   if (ACE_OS::strlen (hp->h_name) >= len)
+     {
+       // The hostname is too large to fit into a buffer of size
+       // MAXHOSTNAMELEN.
+       return -2;
+     }
+   else
+     {
+       ACE_OS::strcpy (hostname, hp->h_name);
+     }
+
+   return 0;
 }
 
 // return an array of all configured IP interfaces on this host, count
@@ -1479,6 +1588,40 @@ ACE::get_handle (void)
   return handle;
 }
 
+bool
+ACE::ipv4_enabled (void)
+{
+#if defined (ACE_HAS_IPV6)
+  if (ace_ipv4_enabled == -1)
+    {
+      // Perform Double-Checked Locking Optimization.
+      ACE_MT (ACE_GUARD_RETURN (ACE_Recursive_Thread_Mutex, ace_mon,
+                                *ACE_Static_Object_Lock::instance (), false));
+
+      if (ace_ipv4_enabled == -1)
+        {
+          // Determine if the kernel has IPv6 support by attempting to
+          // create a PF_INET socket and see if it fails.
+          ACE_HANDLE const s = ACE_OS::socket (PF_INET, SOCK_DGRAM, 0);
+          if (s == ACE_INVALID_HANDLE)
+            {
+              ace_ipv4_enabled = 0;
+            }
+          else
+            {
+              ace_ipv4_enabled = 1;
+              ACE_OS::closesocket (s);
+            }
+        }
+    }
+
+  return static_cast<bool> (ace_ipv4_enabled);
+#else
+ // Assume it's always enabled since ACE requires some version of
+ // TCP/IP to exist.
+  return true;
+#endif  /* ACE_HAS_IPV6*/
+}
 
 int
 ACE::ipv6_enabled (void)

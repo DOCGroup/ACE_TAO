@@ -1,3 +1,233 @@
+Mon Oct 23 02:28:42 UTC 2006  Ossama Othman  <ossama_othman at symantec dot com>
+
+        * ace/Array_Base.cpp:
+        * ace/Array_Base.h:
+        * ace/Array_Base.inl:
+
+          Added STL-style traits, iterators and swap() method.
+
+          (operator=):
+
+          Improved exception-safety.
+
+        * ace/Array_Map.h:
+        * ace/config-lite.h:
+
+          Moved reverse_iterator declarations to a new
+          ACE_DECLARE_STL_REVERSE_ITERATORS so that other ACE containers
+          may use them in a way that minimizes platform-specific
+          declaration duplication.
+        
+        * ace/CDR_Stream.cpp (read_boolean_array):
+
+          Addressed a Coverity CHECKED_RETURN error.  There's no need to
+          check the return value of read_boolean() in this case.
+          Explicitly cast the return value to "void".
+
+          Addressed Coverity DEADCODE error.  No need to check for zero
+          "cont" pointer since the ACE_NEW_RETURN() call that initializes
+          it will return immediately.  "cont" cannot be zero if the latter
+          call succeeds.
+
+        * ace/CDR_Stream.inl (operator>>):
+
+          Explicitly check return value of input stream read operations.
+          Addressed a Coverity CHECKED_RETURN errors.
+
+        * ace/Configuration.cpp (new_section):
+
+          Fixed Coverity USE_AFTER_FREE error.  Memory was being accessed
+          after it was freed.
+
+        * ace/Configuration_Import_Export.cpp:
+        * apps/gperf/src/Key_List.cpp:
+
+          Addressed Coverity RESOURCE_LEAK errors.
+
+        * ace/Default_Constants.h (ACE_DEFAULT_CLOSE_ALL_HANDLES):
+
+          This symbol represents a boolean value.  s/1/true.
+
+        * ace/Dev_Poll_Reactor.cpp (bind):
+        * ace/WFMO_Reactor.cpp (bind_i):
+
+          Disallow binding of a nil event handler pointer to the
+          repository.  It is deferenced later on this method.
+
+        * ace/Hash_Map_Manager_T.h:
+        * ace/Hash_Map_Manager_T.inl:
+
+          Added STL-style traits and iterator accessors.
+
+          (find):
+
+          New method that returns an iterator as an "out" parameter.  An
+          iterator return value could not be used due a conflict with an
+          existing find() method.
+
+          (unbind):
+
+          New method that unbinds the value pointed to by the given
+          iterator.
+
+          (ACE_Hash_Map_Iterator_Base_Ex, ACE_Hash_Map_Iterator_Ex):
+
+          New constructors that position the iterator at the given
+          ACE_Hash_Map_Entry.
+
+        * ace/Lib_Find.cpp (ldfind):
+
+          Place parentheses around ternary operator "?:" conditional to
+          address an operator precedence problem.  In this case, an
+          expression such as "a + b ? 0 : 1" was used, which is equivalent
+          to "(a + b) ? 0 : 1" instead of the desired "a + (b ? 0 : 1)".
+
+          Changed local variable name from "got_suffix" to "has_suffix" to
+          clarify how the variable is being used.
+
+        * ace/OS_NS_Thread.inl (rw_unlock):
+
+          Fixed potential deadlock in case where reference count is one.
+          Addresses a Coverity DEADLOCK error.
+
+        * ace/OS_NS_dirent.cpp (scandir_emulation):
+
+          Fixed potential dereferencing of zero pointer reported by the
+          Coverity FORWARD_NULL checker.
+
+        * ace/OS_NS_fcntl.cpp (open):
+
+          Return if SetFilePointer() call fails.  Addresses Coverity
+          CHECKED_RETURN error.
+
+          Added support for large files SetFilePointer() calls.  Thanks to
+          Russell Mora for this fix.
+
+        * ace/OS_NS_stdio.cpp (fopen):
+
+          Fixed potential crash if null mode string is passed to this
+          method.
+
+        * ace/OS_NS_stdio.inl (fdopen):
+        * ace/OS_NS_unistd.inl (isatty):
+
+          No need to check for ACE_LACKS_INTPTR_T.  Just use intptr_t in
+          all cases.  ACE now supplies this typedef if the platform
+          doesn't.
+
+        * ace/OS_TLI.h (t_bind):
+        * ace/OS_TLI.inl (t_bind):
+
+          Work around HP aCC 3.63 namespace scoping problem using typedef
+          hack in use for other structures.
+
+        * ace/Select_Reactor_Base.cpp:
+        * ace/Select_Reactor_Base.h:
+        * ace/Select_Reactor_Base.inl:
+
+          Changed underlying event handler container from a simple array
+          to an ACE_Hash_Map_Manager<> on Windows, and to an
+          ACE_Array_Base<> on UNIX-like platforms.
+
+          Use of an ACE_Hash_Map_Manager<> on Windows allows for faster
+          event handler searches.
+
+          Use of an ACE_Array_Base<> on UNIX-like platforms allows us to
+          leverage advantages using a container (improved
+          exception-safety, container interface, etc), while still
+          retaining the direct file descriptor to event handler mapping at
+          essentially no cost to footprint relative to the previous
+          implementation.
+
+          (bind):
+
+          Disallow binding of a nil event handler pointer to the
+          repository.  It is deferenced later on this method.  Addresses a
+          potential crash.
+
+        * ace/Service_Config.cpp (current):
+
+          Simplified these methods.
+
+          Removed global lock that was held when accessing TSS.  Only
+          initialization of global implementation needs to synchronized
+          with that lock.
+
+          Removed redundant accesses to TSS.
+
+        * ace/Service_Config.h:
+
+          Removed stray semi-colon.
+
+          (impl_):
+
+          This method no longer needs to return the pointer by reference.
+
+        * ace/Service_Repository.cpp:
+
+          Changed loop index type so that it matches repository size type
+          (an unsigned integer), and updated loop decrement to take into
+          account the index type is now unsigned.
+
+        * ace/Sock_Connect.h (ipv4_enabled):
+        * ace/Sock_Connect.cpp (ipv4_enabled):
+
+          New run-time check for existence IPv4 stack.  Some hosts only
+          contain IPv6 stacks.
+
+        * ace/Svc_Conf.y (ace_get_module):
+        * ace/Svc_Conf_y.cpp (ace_get_module):
+
+          Simplified explicit casts.
+
+          Prevent dereferencing of potentially null pointer.
+
+        * ace/System_Time.cpp:
+        * ace/System_Time.h:
+
+          No need to include "ace/Malloc_T.h", "ace/MMAP_Memory_Pool.h"
+          and "ace/Null_Mutex.h".  Forward declarations are sufficient.
+
+          Use time_t type instead of ACE_UINT32 when returning times, such
+          as those returned from ACE_OS::time().  Addresses lack of
+          precision issues.
+
+        * ace/Thread_Manager.cpp (wait):
+
+          Addressed a Coverity CHECKED_RETURN error.  There's no need to
+          check the return value of ACE_Thread::join() in this case.
+          Explicitly cast the return value to "void".
+
+        * ace/Time_Value.h (ACE_ONE_SECOND_IN_USECONDS):
+
+          Made this constant type-safe.  It is now of type suseconds_t,
+          instead of a preprocessor symbol definition.
+
+        * ace/UUID.cpp (lock):
+
+          Addressed USE_AFTER_FREE Coverity error.  Do not return a
+          pointer to the previous lock.  It may have been destroyed.
+
+        * ace/UUID.h (lock):
+
+          Changed return type from "ACE_SYNCH_MUTEX*" to "void".  The
+          interface/implementation does not provide a means to safely
+          return the previous lock instance.
+
+        * ace/ace_wchar.inl (convert):
+
+          Corrected calculation of wide string length.
+
+        * bin/MakeProjectCreator/config/acexml.mpb:
+
+          No longer any need to explicitly disable ACEXML in the
+          ace_for_tao configuration.
+
+        * include/makeinclude/platform_irix6.x_sgic++.GNU:
+
+          SGI 7.3.x compiler doesn't have the 3506 error code.  Do not
+          attempt to supress it.
+
 Mon Oct 23 22:24:01 UTC 2006  Ossama Othman  <ossama_othman at symantec dot com>
 
         * ace/Unbounded_Queue.cpp (set):

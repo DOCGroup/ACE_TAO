@@ -162,8 +162,10 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 // Mon Jan 23 22:08:56 UTC 2006  Steve Huston  <shuston@riverace.com>
 #if defined (__HP_aCC) && (__HP_aCC <= 36500)
 typedef extern "C" struct t_optmgmt  ACE_TOPTMGMT;
+typedef extern "C" struct t_bind  ACE_TBIND;
 #else
 typedef struct t_optmgmt ACE_TOPTMGMT;
+typedef struct t_bind  ACE_TBIND;
 #endif
 
 /**
@@ -189,8 +191,8 @@ namespace ACE_OS
 
   ACE_NAMESPACE_INLINE_FUNCTION
   int t_bind (ACE_HANDLE fildes,
-              struct t_bind *req,
-              struct t_bind *ret);
+              ACE_TBIND *req,
+              ACE_TBIND *ret);
 
   ACE_NAMESPACE_INLINE_FUNCTION
   int t_close (ACE_HANDLE fildes);

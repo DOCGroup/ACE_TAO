@@ -16,11 +16,13 @@
 #include "ace/Malloc_Base.h"
 #include "ace/os_include/os_errno.h"
 
+#include <algorithm>
+
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // Dynamically initialize an array.
 template <class T>
-ACE_Array_Base<T>::ACE_Array_Base (size_t size,
+ACE_Array_Base<T>::ACE_Array_Base (typename ACE_Array_Base<T>::size_type size,
                                    ACE_Allocator *alloc)
   : max_size_ (size),
     cur_size_ (size),
@@ -33,7 +35,7 @@ ACE_Array_Base<T>::ACE_Array_Base (size_t size,
     {
       ACE_ALLOCATOR (this->array_,
                      (T *) this->allocator_->malloc (size * sizeof (T)));
-      for (size_t i = 0; i < size; ++i)
+      for (size_type i = 0; i < size; ++i)
         new (&array_[i]) T;
     }
   else
@@ -41,7 +43,7 @@ ACE_Array_Base<T>::ACE_Array_Base (size_t size,
 }
 
 template <class T>
-ACE_Array_Base<T>::ACE_Array_Base (size_t size,
+ACE_Array_Base<T>::ACE_Array_Base (typename ACE_Array_Base<T>::size_type size,
                                    const T &default_value,
                                    ACE_Allocator *alloc)
   : max_size_ (size),
@@ -55,7 +57,7 @@ ACE_Array_Base<T>::ACE_Array_Base (size_t size,
     {
       ACE_ALLOCATOR (this->array_,
                      (T *) this->allocator_->malloc (size * sizeof (T)));
-      for (size_t i = 0; i < size; ++i)
+      for (size_type i = 0; i < size; ++i)
         new (&array_[i]) T (default_value);
     }
   else
@@ -75,7 +77,7 @@ ACE_Array_Base<T>::ACE_Array_Base (const ACE_Array_Base<T> &s)
 
   ACE_ALLOCATOR (this->array_,
                  (T *) this->allocator_->malloc (s.size () * sizeof (T)));
-  for (size_t i = 0; i < this->size (); i++)
+  for (size_type i = 0; i < this->size (); ++i)
     new (&this->array_[i]) T (s.array_[i]);
 }
 
@@ -90,32 +92,47 @@ ACE_Array_Base<T>::operator= (const ACE_Array_Base<T> &s)
     {
       if (this->max_size_ < s.size ())
         {
-          ACE_DES_ARRAY_FREE (this->array_,
-                              this->max_size_,
-                              this->allocator_->free,
-                              T);
-          ACE_ALLOCATOR (this->array_,
-                         (T *) this->allocator_->malloc (s.size () * sizeof (T)));
-          this->max_size_ = s.size ();
+          // Need to reallocate memory.
+
+          // Strongly exception-safe assignment.
+          //
+          // Note that we're swapping the allocators here, too.
+          // Should we?  Probably.  "*this" should be a duplicate of
+          // the "right hand side".
+          ACE_Array_Base<T> tmp (s);
+          this->swap (tmp);
         }
       else
         {
+          // Underlying array is large enough.  No need to reallocate
+          // memory.
+          //
+          // "*this" still owns the memory for the underlying array.
+          // Do not swap out the allocator.
+          //
+          // @@ Why don't we just drop the explicit destructor and
+          //    placement operator new() calls with a straight
+          //    element-by-element assignment?  Is the existing
+          //    approach more efficient?
+          //        -Ossama
+
           ACE_DES_ARRAY_NOFREE (this->array_,
                                 s.size (),
                                 T);
+
+          this->cur_size_ = s.size ();
+
+          for (size_type i = 0; i < this->size (); ++i)
+            new (&this->array_[i]) T (s.array_[i]);
         }
-
-      this->cur_size_ = s.size ();
-
-      for (size_t i = 0; i < this->size (); i++)
-        new (&this->array_[i]) T (s.array_[i]);
     }
 }
 
 // Set an item in the array at location slot.
 
 template <class T> int
-ACE_Array_Base<T>::set (const T &new_item, size_t slot)
+ACE_Array_Base<T>::set (const T &new_item,
+                        typename ACE_Array_Base<T>::size_type slot)
 {
   if (this->in_range (slot))
     {
@@ -129,7 +146,8 @@ ACE_Array_Base<T>::set (const T &new_item, size_t slot)
 // Get an item in the array at location slot.
 
 template <class T> int
-ACE_Array_Base<T>::get (T &item, size_t slot) const
+ACE_Array_Base<T>::get (T &item,
+                        typename ACE_Array_Base<T>::size_type slot) const
 {
   if (this->in_range (slot))
     {
@@ -143,7 +161,7 @@ ACE_Array_Base<T>::get (T &item, size_t slot) const
 }
 
 template<class T> int
-ACE_Array_Base<T>::max_size (size_t new_size)
+ACE_Array_Base<T>::max_size (typename ACE_Array_Base<T>::size_type new_size)
 {
   if (new_size > this->max_size_)
     {
@@ -152,12 +170,12 @@ ACE_Array_Base<T>::max_size (size_t new_size)
       ACE_ALLOCATOR_RETURN (tmp,
                             (T *) this->allocator_->malloc (new_size * sizeof (T)),
                             -1);
-      for (size_t i = 0; i < this->cur_size_; ++i)
+      for (size_type i = 0; i < this->cur_size_; ++i)
         new (&tmp[i]) T (this->array_[i]);
 
       // Initialize the new portion of the array that exceeds the
       // previously allocated section.
-      for (size_t j = this->cur_size_; j < new_size; j++)
+      for (size_type j = this->cur_size_; j < new_size; ++j)
         new (&tmp[j]) T;
 
       ACE_DES_ARRAY_FREE (this->array_,
@@ -173,13 +191,23 @@ ACE_Array_Base<T>::max_size (size_t new_size)
 }
 
 template<class T> int
-ACE_Array_Base<T>::size (size_t new_size)
+ACE_Array_Base<T>::size (typename ACE_Array_Base<T>::size_type new_size)
 {
-  int r = this->max_size (new_size);
+  int const r = this->max_size (new_size);
   if (r != 0)
     return r;
   this->cur_size_ = new_size;
   return 0;
+}
+
+template<class T>
+void
+ACE_Array_Base<T>::swap (ACE_Array_Base<T> & rhs)
+{
+  std::swap (this->max_size_ , rhs.max_size_);
+  std::swap (this->cur_size_ , rhs.cur_size_);
+  std::swap (this->array_    , rhs.array_);
+  std::swap (this->allocator_, rhs.allocator_);
 }
 
 // ****************************************************************

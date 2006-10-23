@@ -1,3 +1,5 @@
+// -*- C++ -*-
+
 //=============================================================================
 /**
  *  @file Array_Base.h
@@ -21,6 +23,7 @@
 
 #include "ace/Global_Macros.h"
 #include "ace/Malloc_Base.h"
+#include <iterator>  /* For reverse_iterator adapters */
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -41,27 +44,40 @@ class ACE_Array_Base
 {
 public:
 
-  // Define a "trait"
+  // Old/ACE-style traits.
   typedef T TYPE;
   typedef ACE_Array_Iterator<T> ITERATOR;
+
+  // STL-style typedefs/traits.
+  typedef T                              value_type;
+  typedef value_type *                   iterator;
+  typedef value_type const *             const_iterator;
+  typedef value_type &                   reference;
+  typedef value_type const &             const_reference;
+  typedef value_type *                   pointer;
+  typedef value_type const *             const_pointer;
+  typedef ptrdiff_t                      difference_type;
+  typedef ACE_Allocator::size_type       size_type;
+
+  ACE_DECLARE_STL_REVERSE_ITERATORS
 
   // = Initialization and termination methods.
 
   /// Dynamically create an uninitialized array.
-  ACE_Array_Base (size_t size = 0,
-                  ACE_Allocator *the_allocator = 0);
+  ACE_Array_Base (size_type size = 0,
+                  ACE_Allocator * the_allocator = 0);
 
   /// Dynamically initialize the entire array to the <default_value>.
-  ACE_Array_Base (size_t size,
-                  const T &default_value,
-                  ACE_Allocator *the_allocator = 0);
+  ACE_Array_Base (size_type size,
+                  T const & default_value,
+                  ACE_Allocator * the_allocator = 0);
 
   /**
    * The copy constructor performs initialization by making an exact
    * copy of the contents of parameter <s>, i.e., *this == s will
    * return true.
    */
-  ACE_Array_Base (const ACE_Array_Base<T> &s);
+  ACE_Array_Base (ACE_Array_Base<T> const & s);
 
   /**
    * Assignment operator performs an assignment by making an exact
@@ -71,7 +87,7 @@ public:
    * <max_size_> is < <s.max_size_> we must delete the <array_>,
    * reallocate a new <array_>, and then copy the contents of <s>.
    */
-  void operator= (const ACE_Array_Base<T> &s);
+  void operator= (ACE_Array_Base<T> const & s);
 
   /// Clean up the array (e.g., delete dynamically allocated memory).
   ~ACE_Array_Base (void);
@@ -80,15 +96,15 @@ public:
 
   /// Set item in the array at location <slot>.  Doesn't
   /// perform range checking.
-  T &operator [] (size_t slot);
+  T & operator[] (size_type slot);
 
   /// Get item in the array at location <slot>.  Doesn't
   /// perform range checking.
-  const T &operator [] (size_t slot) const;
+  T const & operator[] (size_type slot) const;
 
   /// Set an item in the array at location <slot>.  Returns
   /// -1 if <slot> is not in range, else returns 0.
-  int set (const T &new_item, size_t slot);
+  int set (T const & new_item, size_type slot);
 
   /**
    * Get an item in the array at location <slot>.  Returns -1 if
@@ -96,20 +112,20 @@ public:
    * copies the item.  If you want to avoid the copy, you can use
    * the const operator [], but then you'll be responsible for range checking.
    */
-  int get (T &item, size_t slot) const;
+  int get (T & item, size_type slot) const;
 
   /// Returns the <cur_size_> of the array.
-  size_t size (void) const;
+  size_type size (void) const;
 
   /**
    * Changes the size of the array to match <new_size>.
    * It copies the old contents into the new array.
    * Return -1 on failure.
    */
-  int size (size_t new_size);
+  int size (size_type new_size);
 
   /// Returns the <max_size_> of the array.
-  size_t max_size (void) const;
+  size_type max_size (void) const;
 
   /**
    * Changes the size of the array to match <new_size>.
@@ -117,16 +133,45 @@ public:
    * Return -1 on failure.
    * It does not affect new_size
    */
-  int max_size (size_t new_size);
+  int max_size (size_type new_size);
+
+  /**
+   * @name Forward Iterator Accessors
+   *
+   * Forward iterator accessors.
+   */
+  //@{
+  iterator begin (void);
+  iterator end   (void);
+  const_iterator begin (void) const;
+  const_iterator end   (void) const;
+  //@}
+ 
+  /**
+   * @name Reverse Iterator Accessors
+   *
+   * Reverse iterator accessors.
+   */
+  //@{
+  reverse_iterator rbegin (void);
+  reverse_iterator rend   (void);
+  const_reverse_iterator rbegin (void) const;
+  const_reverse_iterator rend   (void) const;
+  //@}
+ 
+  /// Swap the contents of this array with the given @a array in
+  /// an exception-safe manner.
+  void swap (ACE_Array_Base<T> & array);
 
 protected:
+
   /// Returns 1 if <slot> is within range, i.e., 0 >= <slot> <
   /// <cur_size_>, else returns 0.
-  int in_range (size_t slot) const;
+  bool in_range (size_type slot) const;
 
   /// Maximum size of the array, i.e., the total number of <T> elements
   /// in <array_>.
-  size_t max_size_;
+  size_type max_size_;
 
   /**
    * Current size of the array.  This starts out being == to
@@ -135,13 +180,13 @@ protected:
    * keeping track of both sizes is to avoid reallocating memory if we
    * don't have to.
    */
-  size_t cur_size_;
+  size_type cur_size_;
 
   /// Pointer to the array's storage buffer.
-  T *array_;
+  value_type * array_;
 
   /// Allocation strategy of the ACE_Array_Base.
-  ACE_Allocator *allocator_;
+  ACE_Allocator * allocator_;
 
   friend class ACE_Array_Iterator<T>;
 };

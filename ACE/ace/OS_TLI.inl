@@ -46,7 +46,7 @@ t_alloc (ACE_HANDLE handle, int struct_type, int fields)
 }
 
 ACE_INLINE int
-t_bind (ACE_HANDLE handle, struct t_bind *req, struct t_bind *ret)
+t_bind (ACE_HANDLE handle, ACE_TBIND *req, ACE_TBIND *ret)
 {
 #if defined (ACE_HAS_TLI)
   ACE_OSCALL_RETURN (::t_bind (handle, req, ret), int, -1);
@@ -133,7 +133,7 @@ ACE_INLINE int
 t_getname (ACE_HANDLE handle, struct netbuf *namep, int type)
 {
 #if defined (ACE_HAS_XTI)
-  struct t_bind bound, peer;
+  ACE_TBIND bound, peer;
   // Depending on which address the caller wants, fill caller's values
   // into one of the t_bind netbufs. The other is set up to ignore that
   // address.

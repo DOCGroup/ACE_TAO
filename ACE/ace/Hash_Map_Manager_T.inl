@@ -163,6 +163,26 @@ ACE_Hash_Map_Manager_Ex<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK>::unbin
   return this->unbind_i (ext_id, int_id);
 }
 
+template <class EXT_ID,
+          class INT_ID,
+          class HASH_KEY,
+          class COMPARE_KEYS,
+          class ACE_LOCK>
+ACE_INLINE int
+ACE_Hash_Map_Manager_Ex<EXT_ID,
+                        INT_ID,
+                        HASH_KEY,
+                        COMPARE_KEYS,
+                        ACE_LOCK>::unbind (
+  typename ACE_Hash_Map_Manager_Ex<EXT_ID,
+                                   INT_ID,
+                                   HASH_KEY,
+                                   COMPARE_KEYS,
+                                   ACE_LOCK>::iterator pos)
+{
+  return this->unbind (&(*pos));
+}
+
 template <class EXT_ID, class INT_ID, class HASH_KEY, class COMPARE_KEYS, class ACE_LOCK> ACE_INLINE int
 ACE_Hash_Map_Manager_Ex<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK>::unbind (const EXT_ID &ext_id)
 {
@@ -212,7 +232,7 @@ ACE_Hash_Map_Manager_Ex<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK>::find 
     const_cast <ACE_Hash_Map_Manager_Ex<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK> *>
     (this);
 
-  ACE_READ_GUARD_RETURN (ACE_LOCK, ace_mon, nc_this->lock_, -1);
+  ACE_READ_GUARD_RETURN (ACE_LOCK, ace_mon, this->lock_, -1);
 
   return nc_this->find_i (ext_id, int_id);
 }
@@ -224,7 +244,7 @@ ACE_Hash_Map_Manager_Ex<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK>::find 
     const_cast <ACE_Hash_Map_Manager_Ex<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK> *>
     (this);
 
-  ACE_READ_GUARD_RETURN (ACE_LOCK, ace_mon, nc_this->lock_, -1);
+  ACE_READ_GUARD_RETURN (ACE_LOCK, ace_mon, this->lock_, -1);
 
   return nc_this->find_i (ext_id);
 }
@@ -245,7 +265,7 @@ ACE_Hash_Map_Manager_Ex<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK>::find 
     const_cast <ACE_Hash_Map_Manager_Ex<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK> *>
     (this);
 
-  ACE_READ_GUARD_RETURN (ACE_LOCK, ace_mon, nc_this->lock_, -1);
+  ACE_READ_GUARD_RETURN (ACE_LOCK, ace_mon, this->lock_, -1);
 
   return nc_this->find_i (ext_id, entry);
 }
@@ -353,32 +373,60 @@ ACE_Hash_Map_Manager_Ex<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK>::rebin
 }
 
 template <class EXT_ID, class INT_ID, class HASH_KEY, class COMPARE_KEYS, class ACE_LOCK> ACE_INLINE
-ACE_Hash_Map_Iterator_Ex<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK>
+typename ACE_Hash_Map_Manager_Ex<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK>::iterator
 ACE_Hash_Map_Manager_Ex<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK>::begin (void)
 {
-  return ACE_Hash_Map_Iterator_Ex<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK> (*this);
+  return iterator (*this);
 }
 
 template <class EXT_ID, class INT_ID, class HASH_KEY, class COMPARE_KEYS, class ACE_LOCK> ACE_INLINE
-ACE_Hash_Map_Iterator_Ex<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK>
+typename ACE_Hash_Map_Manager_Ex<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK>::iterator
 ACE_Hash_Map_Manager_Ex<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK>::end (void)
 {
-  return ACE_Hash_Map_Iterator_Ex<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK> (*this, 1);
+  return iterator (*this, 1);
 }
 
 template <class EXT_ID, class INT_ID, class HASH_KEY, class COMPARE_KEYS, class ACE_LOCK> ACE_INLINE
-ACE_Hash_Map_Reverse_Iterator_Ex<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK>
+typename ACE_Hash_Map_Manager_Ex<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK>::const_iterator
+ACE_Hash_Map_Manager_Ex<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK>::begin (void) const
+{
+  return const_iterator (*this);
+}
+
+template <class EXT_ID, class INT_ID, class HASH_KEY, class COMPARE_KEYS, class ACE_LOCK> ACE_INLINE
+typename ACE_Hash_Map_Manager_Ex<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK>::const_iterator
+ACE_Hash_Map_Manager_Ex<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK>::end (void) const
+{
+  return const_iterator (*this, 1);
+}
+
+template <class EXT_ID, class INT_ID, class HASH_KEY, class COMPARE_KEYS, class ACE_LOCK> ACE_INLINE
+typename ACE_Hash_Map_Manager_Ex<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK>::reverse_iterator
 ACE_Hash_Map_Manager_Ex<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK>::rbegin (void)
 {
-  return ACE_Hash_Map_Reverse_Iterator_Ex<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK> (*this);
+  return reverse_iterator (*this);
 }
 
 template <class EXT_ID, class INT_ID, class HASH_KEY, class COMPARE_KEYS, class ACE_LOCK> ACE_INLINE
-ACE_Hash_Map_Reverse_Iterator_Ex<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK>
+typename ACE_Hash_Map_Manager_Ex<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK>::reverse_iterator
 ACE_Hash_Map_Manager_Ex<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK>::rend (void)
 {
-  return ACE_Hash_Map_Reverse_Iterator_Ex<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK> (*this, 1);
+  return reverse_iterator (*this, 1);
 }
+
+// template <class EXT_ID, class INT_ID, class HASH_KEY, class COMPARE_KEYS, class ACE_LOCK> ACE_INLINE
+// typename ACE_Hash_Map_Manager_Ex<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK>::const_reverse_iterator
+// ACE_Hash_Map_Manager_Ex<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK>::rbegin (void) const
+// {
+//   return const_reverse_iterator (*this);
+// }
+
+// template <class EXT_ID, class INT_ID, class HASH_KEY, class COMPARE_KEYS, class ACE_LOCK> ACE_INLINE
+// typename ACE_Hash_Map_Manager_Ex<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK>::const_reverse_iterator
+// ACE_Hash_Map_Manager_Ex<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK>::rend (void) const
+// {
+//   return const_reverse_iterator (*this, 1);
+// }
 
 template <class EXT_ID, class INT_ID, class HASH_KEY, class COMPARE_KEYS, class ACE_LOCK> ACE_INLINE
 ACE_Hash_Map_Entry<EXT_ID, INT_ID> *
@@ -394,20 +442,94 @@ ACE_Hash_Map_Manager_Ex<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK>::cur_s
   return this->cur_size_;
 }
 
-template <class EXT_ID, class INT_ID, class HASH_KEY, class COMPARE_KEYS, class ACE_LOCK> ACE_INLINE
-ACE_Hash_Map_Iterator_Base_Ex<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK>::ACE_Hash_Map_Iterator_Base_Ex (ACE_Hash_Map_Manager_Ex<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK> &mm,
-                                                                                                                int head)
+template <class EXT_ID,
+          class INT_ID,
+          class HASH_KEY,
+          class COMPARE_KEYS,
+          class ACE_LOCK>
+ACE_INLINE void
+ACE_Hash_Map_Manager_Ex<EXT_ID,
+                        INT_ID,
+                        HASH_KEY,
+                        COMPARE_KEYS,
+                        ACE_LOCK>::find (
+  EXT_ID const &ext_id,
+  typename ACE_Hash_Map_Manager_Ex<EXT_ID,
+                                   INT_ID,
+                                   HASH_KEY,
+                                   COMPARE_KEYS,
+                                   ACE_LOCK>::iterator & pos) const
+{
+  ENTRY * entry = 0;
+  size_t index = 0;
+
+  ACE_Hash_Map_Manager_Ex<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK> *nc_this =
+    const_cast <ACE_Hash_Map_Manager_Ex<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK> *>
+    (this);
+
+  ACE_READ_GUARD (ACE_LOCK, ace_mon, this->lock_);
+
+  if (nc_this->shared_find (ext_id, entry, index) != -1)
+    pos = iterator (*nc_this, entry, index);
+  else
+    pos = nc_this->end ();
+}
+
+// ---------------------------------------------------------------------
+
+template <class EXT_ID,
+          class INT_ID,
+          class HASH_KEY,
+          class COMPARE_KEYS,
+          class ACE_LOCK>
+ACE_INLINE
+ACE_Hash_Map_Iterator_Base_Ex<EXT_ID,
+                              INT_ID,
+                              HASH_KEY,
+                              COMPARE_KEYS,
+                              ACE_LOCK>::ACE_Hash_Map_Iterator_Base_Ex (
+  ACE_Hash_Map_Manager_Ex<EXT_ID,
+                          INT_ID,
+                          HASH_KEY,
+                          COMPARE_KEYS,
+                          ACE_LOCK> &mm,
+  bool head)
   : map_man_ (&mm),
-    index_ (head != 0 ? -1 : (ssize_t) mm.total_size_),
+    index_ (head ? -1 : (ssize_t) mm.total_size_),
     next_ (0)
 {
   ACE_TRACE ("ACE_Hash_Map_Iterator_Base_Ex<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK>::ACE_Hash_Map_Iterator_Base_Ex");
 
   if (mm.table_ != 0)
-    this->next_ = &mm.table_[head != 0 ? 0 : mm.total_size_ - 1];
+    this->next_ = &mm.table_[head ? 0 : mm.total_size_ - 1];
 }
 
-template <class EXT_ID, class INT_ID, class HASH_KEY, class COMPARE_KEYS, class ACE_LOCK> ACE_INLINE int
+template <class EXT_ID,
+          class INT_ID,
+          class HASH_KEY,
+          class COMPARE_KEYS,
+          class ACE_LOCK>
+ACE_INLINE
+ACE_Hash_Map_Iterator_Base_Ex<EXT_ID,
+                              INT_ID,
+                              HASH_KEY,
+                              COMPARE_KEYS,
+                              ACE_LOCK>::ACE_Hash_Map_Iterator_Base_Ex (
+  ACE_Hash_Map_Manager_Ex<EXT_ID,
+                          INT_ID,
+                          HASH_KEY,
+                          COMPARE_KEYS,
+                          ACE_LOCK> & mm,
+  ACE_Hash_Map_Entry<EXT_ID, INT_ID> * entry,
+  size_t index)
+  : map_man_ (&mm)
+  , index_ (static_cast<ssize_t> (index))
+  , next_ (entry)
+{
+}
+
+template <class EXT_ID,
+    class INT_ID, class HASH_KEY, class COMPARE_KEYS, class ACE_LOCK> ACE_INLINE int
 ACE_Hash_Map_Iterator_Base_Ex<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK>::next (ACE_Hash_Map_Entry<EXT_ID, INT_ID> *&entry) const
 {
   ACE_TRACE ("ACE_Hash_Map_Iterator_Base_Ex<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK>::next");
@@ -611,6 +733,34 @@ ACE_Hash_Map_Iterator_Ex<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK>::ACE_
   ACE_TRACE ("ACE_Hash_Map_Iterator_Ex<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK>::ACE_Hash_Map_Iterator_Ex");
   if (tail == 0)
     this->forward_i ();
+}
+
+template <class EXT_ID,
+          class INT_ID,
+          class HASH_KEY,
+          class COMPARE_KEYS,
+          class ACE_LOCK>
+ACE_INLINE
+ACE_Hash_Map_Iterator_Ex<EXT_ID,
+                         INT_ID,
+                         HASH_KEY,
+                         COMPARE_KEYS,
+                         ACE_LOCK>::ACE_Hash_Map_Iterator_Ex (
+  ACE_Hash_Map_Manager_Ex<EXT_ID,
+                          INT_ID,
+                          HASH_KEY,
+                          COMPARE_KEYS,
+                          ACE_LOCK> & mm,
+  ACE_Hash_Map_Entry<EXT_ID, INT_ID> * entry,
+  size_t index)
+  : ACE_Hash_Map_Iterator_Base_Ex<EXT_ID,
+                                  INT_ID,
+                                  HASH_KEY,
+                                  COMPARE_KEYS,
+                                  ACE_LOCK> (mm,
+                                             entry,
+                                             index)
+{
 }
 
 template <class EXT_ID, class INT_ID, class HASH_KEY, class COMPARE_KEYS, class ACE_LOCK> ACE_INLINE int

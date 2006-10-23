@@ -248,7 +248,7 @@ ACE::ldfind (const ACE_TCHAR* filename,
       ACE_OS::strcpy (searchpathname, tempcopy);
     }
 
-  int got_suffix = 0;
+  bool has_suffix = false;
 
   // Check to see if this has an appropriate DLL suffix for the OS
   // platform.
@@ -259,7 +259,7 @@ ACE::ldfind (const ACE_TCHAR* filename,
   if (s != 0)
     {
       // If we have a dot, we have a suffix
-      got_suffix = 1;
+      has_suffix = true;
 
       // Check whether this matches the appropriate platform-specific
       // suffix.
@@ -281,8 +281,8 @@ ACE::ldfind (const ACE_TCHAR* filename,
   // Make sure we've got enough space in searchfilename.
   if (ACE_OS::strlen (searchfilename)
       + ACE_OS::strlen (ACE_DLL_PREFIX)
-      + got_suffix ? 0 : ACE_OS::strlen (dll_suffix) >= (sizeof searchfilename /
-                                                         sizeof (ACE_TCHAR)))
+      + (has_suffix ? 0 : ACE_OS::strlen (dll_suffix))
+      >= (sizeof searchfilename / sizeof (ACE_TCHAR)))
     {
       errno = ENOMEM;
       return -1;
@@ -290,7 +290,7 @@ ACE::ldfind (const ACE_TCHAR* filename,
 
 #if defined (ACE_WIN32) && defined (ACE_LD_DECORATOR_STR) && !defined (ACE_DISABLE_DEBUG_DLL_CHECK)
   size_t len_searchfilename = ACE_OS::strlen (searchfilename);
-  if (! got_suffix)
+  if (! has_suffix)
     ACE_OS::strcpy (searchfilename + len_searchfilename,
                            decorator);
 
@@ -323,7 +323,7 @@ ACE::ldfind (const ACE_TCHAR* filename,
                                ACE_LIB_TEXT ("%s%s%s"),
                                searchpathname,
                                searchfilename,
-                               got_suffix ? ACE_LIB_TEXT ("") : dll_suffix);
+                               has_suffix ? ACE_LIB_TEXT ("") : dll_suffix);
               if (ACE_OS::access (pathname, F_OK) == 0)
                 return 0;
 
@@ -333,7 +333,7 @@ ACE::ldfind (const ACE_TCHAR* filename,
                                searchpathname,
                                ACE_DLL_PREFIX,
                                searchfilename,
-                               got_suffix ? ACE_LIB_TEXT ("") : dll_suffix);
+                               has_suffix ? ACE_LIB_TEXT ("") : dll_suffix);
               if (ACE_OS::access (pathname, F_OK) == 0)
                 return 0;
             }
@@ -474,7 +474,7 @@ ACE::ldfind (const ACE_TCHAR* filename,
                                    path_entry,
                                    ACE_DIRECTORY_SEPARATOR_CHAR,
                                    searchfilename,
-                                   got_suffix ? ACE_LIB_TEXT ("") : dll_suffix);
+                                   has_suffix ? ACE_LIB_TEXT ("") : dll_suffix);
                   if (ACE_OS::access (pathname, F_OK) == 0)
                     break;
 
@@ -486,7 +486,7 @@ ACE::ldfind (const ACE_TCHAR* filename,
                                    ACE_DIRECTORY_SEPARATOR_CHAR,
                                    ACE_DLL_PREFIX,
                                    searchfilename,
-                                   got_suffix ? ACE_LIB_TEXT ("") : dll_suffix);
+                                   has_suffix ? ACE_LIB_TEXT ("") : dll_suffix);
                   if (ACE_OS::access (pathname, F_OK) == 0)
                     break;
 

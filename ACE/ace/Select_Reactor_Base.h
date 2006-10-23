@@ -30,6 +30,15 @@
 # include "ace/Unbounded_Queue.h"
 #endif /* ACE_HAS_REACTOR_NOTIFICATION_QUEUE */
 
+#ifdef ACE_WIN32
+# include "ace/Null_Mutex.h"
+# include "ace/Hash_Map_Manager_T.h"
+# include "ace/Functor.h"  /* For ACE_Hash<void *> */
+# include <functional>      /* For std::equal_to<>  */
+#else
+# include "ace/Array_Base.h"
+#endif  /* ACE_WIN32 */
+
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // Add useful typedefs to simplify the following code.
@@ -76,9 +85,10 @@ public:
  * stored explicitly.  This class provides a lightweight
  * mechanism to do so.
  */
-class ACE_Export ACE_Event_Tuple
+class ACE_Event_Tuple
 {
 public:
+
   /// Default constructor.
   ACE_Event_Tuple (void);
 
@@ -86,20 +96,20 @@ public:
   ACE_Event_Tuple (ACE_Event_Handler *eh,
                    ACE_HANDLE h);
 
-  /// Destructor.
-  ~ACE_Event_Tuple (void);
-
   /// Equality operator.
   bool operator== (const ACE_Event_Tuple &rhs) const;
 
   /// Inequality operator.
   bool operator!= (const ACE_Event_Tuple &rhs) const;
 
+public:
+
   /// Handle.
   ACE_HANDLE handle_;
 
   /// ACE_Event_Handler associated with the ACE_HANDLE.
   ACE_Event_Handler *event_handler_;
+
 };
 
 /**
@@ -277,12 +287,36 @@ class ACE_Export ACE_Select_Reactor_Handler_Repository
 public:
   friend class ACE_Select_Reactor_Handler_Repository_Iterator;
 
+  typedef ACE_HANDLE          key_type;
+  typedef ACE_Event_Handler * value_type;
+
+  // = The mapping from <HANDLES> to <Event_Handlers>.
+#ifdef ACE_WIN32
+  /**
+   * The NT version implements this via a hash map
+   * @c ACE_Event_Handler*.  Since NT implements @c ACE_HANDLE
+   * as a void * we can't directly index into this array.  Therefore,
+   * we must explicitly map @c ACE_HANDLE to @c ACE_Event_Handler.
+   */
+  typedef ACE_Hash_Map_Manager_Ex<key_type,
+                                  value_type,
+                                  ACE_Hash<key_type>,
+                                  std::equal_to<key_type>,
+                                  ACE_Null_Mutex> map_type;
+#else
+  /**
+   * The UNIX version implements this via a dynamically allocated
+   * array of @c ACE_Event_Handler* that is indexed directly using
+   * the @c ACE_HANDLE value.
+   */
+  typedef ACE_Array_Base<value_type> map_type;
+#endif  /* ACE_WIN32 */
+
+  typedef map_type::size_type size_type;
+
   // = Initialization and termination methods.
   /// Default "do-nothing" constructor.
   ACE_Select_Reactor_Handler_Repository (ACE_Select_Reactor_Impl &);
-
-  /// Destructor.
-  ~ACE_Select_Reactor_Handler_Repository (void);
 
   /// Initialize a repository of the appropriate <size>.
   /**
@@ -293,7 +327,7 @@ public:
    * handler repository.  Direct indexing is used for efficiency
    * reasons.
    */
-  int open (size_t size);
+  int open (size_type size);
 
   /// Close down the repository.
   int close (void);
@@ -301,11 +335,9 @@ public:
   // = Search structure operations.
 
   /**
-   * Return the <ACE_Event_Handler *> associated with ACE_HANDLE.
-   * If <index_p> is non-0, then return the index location of the
-   * <handle>, if found.
+   * Return the @c ACE_Event_Handler* associated with @c ACE_HANDLE.
    */
-  ACE_Event_Handler *find (ACE_HANDLE handle, size_t *index_p = 0);
+  ACE_Event_Handler * find (ACE_HANDLE handle);
 
   /// Bind the ACE_Event_Handler * to the ACE_HANDLE with the
   /// appropriate ACE_Reactor_Mask settings.
@@ -322,21 +354,21 @@ public:
 
   // = Sanity checking.
 
-  // Check the <handle> to make sure it's a valid ACE_HANDLE that
-  // within the range of legal handles (i.e., >= 0 && < max_size_).
-  int invalid_handle (ACE_HANDLE handle);
+  // Check the @a handle to make sure it's a valid @c ACE_HANDLE that
+  // is within the range of legal handles (i.e., >= 0 && < max_size_).
+  bool invalid_handle (ACE_HANDLE handle);
 
-  // Check the <handle> to make sure it's a valid ACE_HANDLE that
+  // Check the @c handle to make sure it's a valid @c ACE_HANDLE that
   // within the range of currently registered handles (i.e., >= 0 && <
-  // max_handlep1_).
-  int handle_in_range (ACE_HANDLE handle);
+  // @c max_handlep1_).
+  bool handle_in_range (ACE_HANDLE handle);
 
   // = Accessors.
   /// Returns the current table size.
-  size_t size (void) const;
+  size_type size (void) const;
 
   /// Maximum ACE_HANDLE value, plus 1.
-  size_t max_handlep1 (void);
+  size_type max_handlep1 (void) const;
 
   /// Dump the state of an object.
   void dump (void) const;
@@ -345,35 +377,31 @@ public:
   ACE_ALLOC_HOOK_DECLARE;
 
 private:
+
+  /// Remove the binding of @a handle corresponding to position @a pos
+  /// in accordance with the @a mask.
+  int unbind (ACE_HANDLE handle,
+              map_type::iterator pos,
+              ACE_Reactor_Mask mask);
+  
+  /**
+   * @return @c iterator corresponding @c ACE_Event_Handler*
+   *         associated with @c ACE_HANDLE.
+   */
+  map_type::iterator find_eh (ACE_HANDLE handle);
+
+private:
   /// Reference to our <Select_Reactor>.
   ACE_Select_Reactor_Impl &select_reactor_;
 
-  /// Maximum number of handles.
-  ssize_t max_size_;
-
+#ifndef ACE_WIN32
   /// The highest currently active handle, plus 1 (ranges between 0 and
-  /// <max_size_>.
+  /// @c max_size_.
   int max_handlep1_;
+#endif  /* !ACE_WIN32 */
 
-#if defined (ACE_WIN32)
-  // = The mapping from <HANDLES> to <Event_Handlers>.
-
-  /**
-   * The NT version implements this via a dynamically allocated
-   * array of <ACE_Event_Tuple *>.  Since NT implements ACE_HANDLE
-   * as a void * we can't directly index into this array.  Therefore,
-   * we just do a linear search (for now).  Next, we'll modify
-   * things to use hashing or something faster...
-   */
-  ACE_Event_Tuple *event_handlers_;
-#else
-  /**
-   * The UNIX version implements this via a dynamically allocated
-   * array of <ACE_Event_Handler *> that is indexed directly using
-   * the ACE_HANDLE value.
-   */
-  ACE_Event_Handler **event_handlers_;
-#endif /* ACE_WIN32 */
+  /// Underlying table of event handlers.
+  map_type event_handlers_;
 };
 
 /**
@@ -384,24 +412,26 @@ private:
 class ACE_Export ACE_Select_Reactor_Handler_Repository_Iterator
 {
 public:
-  // = Initialization method.
-  ACE_Select_Reactor_Handler_Repository_Iterator (const ACE_Select_Reactor_Handler_Repository *s);
 
-  /// dtor.
-  ~ACE_Select_Reactor_Handler_Repository_Iterator (void);
+  typedef
+    ACE_Select_Reactor_Handler_Repository::map_type::const_iterator const_base_iterator;
+
+  // = Initialization method.
+  ACE_Select_Reactor_Handler_Repository_Iterator (
+    ACE_Select_Reactor_Handler_Repository const * s);
 
   // = Iteration methods.
 
   /// Pass back the <next_item> that hasn't been seen in the Set.
-  /// Returns 0 when all items have been seen, else 1.
-  int next (ACE_Event_Handler *&next_item);
+  /// Returns @c false when all items have been seen, else @c true.
+  bool next (ACE_Event_Handler* & next_item);
 
-  /// Returns 1 when all items have been seen, else 0.
-  int done (void) const;
+  /// Returns @c true when all items have been seen, else @c false.
+  bool done (void) const;
 
-  /// Move forward by one element in the set.  Returns 0 when all the
-  /// items in the set have been seen, else 1.
-  int advance (void);
+  /// Move forward by one element in the set.  Returns @c false when
+  /// all the items in the set have been seen, else @c true.
+  bool advance (void);
 
   /// Dump the state of an object.
   void dump (void) const;
@@ -410,11 +440,12 @@ public:
   ACE_ALLOC_HOOK_DECLARE;
 
 private:
+
   /// Reference to the Handler_Repository we are iterating over.
-  const ACE_Select_Reactor_Handler_Repository *rep_;
+  ACE_Select_Reactor_Handler_Repository const * const rep_;
 
   /// Pointer to the current iteration level.
-  ssize_t current_;
+  const_base_iterator current_;
 };
 
 /**

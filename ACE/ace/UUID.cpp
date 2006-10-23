@@ -475,17 +475,15 @@ namespace ACE_Utils
     return this->lock_;
   }
 
-  ACE_SYNCH_MUTEX*
+  void
   UUID_Generator::lock (ACE_SYNCH_MUTEX* lock,
-                        bool release_lock_)
+                        bool release_lock)
   {
-    if (destroy_lock_)
-      delete lock_;
+    if (this->destroy_lock_)
+      delete this->lock_;
 
-    ACE_SYNCH_MUTEX* prev_lock = this->lock_;
     this->lock_ = lock;
-    this->destroy_lock_ = release_lock_;
-    return prev_lock;
+    this->destroy_lock_ = release_lock;
   }
 
 }

@@ -1816,7 +1816,7 @@ ACE_Thread_Manager::wait (const ACE_Time_Value *timeout,
         if (ACE_BIT_DISABLED (item->flags_, THR_DETACHED | THR_DAEMON)
             || ACE_BIT_ENABLED (item->flags_, THR_JOINABLE))
           // Detached handles shouldn't reached here.
-          ACE_Thread::join (item->thr_handle_);
+          (void) ACE_Thread::join (item->thr_handle_);
 
 # if defined (ACE_HAS_PTHREADS_DRAFT4)  &&  defined (ACE_LACKS_SETDETACH)
         // Must explicitly detach threads.  Threads without
