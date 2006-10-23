@@ -1,3 +1,19 @@
+Mon Oct 23 13:29:15 UTC 2006  Olli Savia  <ops@iki.fi>
+
+        * ACE-INSTALL.html:
+        * ace/Mem_Map.h:
+        * ace/Mem_Map.inl:
+        * ace/Mem_Map.cpp:
+        * ace/OS_NS_Thread.inl:
+        * ace/OS_NS_sys_mman.inl:
+        * ace/Reverse_Lock_T.h:
+        * ace/Task_Ex_T.h:
+        * ace/Task_T.h:
+        * ace/config-lynxos.h:
+        * include/makeinclude/platform_lynxos.GNU:
+        
+          Removed LynxOS 3.x support.
+
 Mon Oct 23 12:59:35 UTC 2006  Chad Elliott  <elliott_c@ociweb.com>
 
         * bin/generate_compile_stats.sh:
