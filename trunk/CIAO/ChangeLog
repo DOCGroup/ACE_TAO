@@ -1,3 +1,8 @@
+Mon Oct 23 19:35:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+	* DAnCE/DomainApplicationManager/DomainApplicationManager_Impl.cpp:
+	  Added missing CORBA::string_dup to fix crash with BCB
+
 Fri Oct 20 06:41:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 	* DAnCE/StaticConfigurator/StaticDAnCEParser.cpp:
