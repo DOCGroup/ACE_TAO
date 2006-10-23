@@ -174,6 +174,11 @@ Mon Oct 23 02:28:42 UTC 2006  Ossama Othman  <ossama_othman at symantec dot com>
           New run-time check for existence IPv4 stack.  Some hosts only
           contain IPv6 stacks.
 
+          (get_fqdn):
+
+          New method that retrieves fully qualified domain.  getaddrinfo()
+          doesn't always provide the desired results.
+
         * ace/Svc_Conf.y (ace_get_module):
         * ace/Svc_Conf_y.cpp (ace_get_module):
 
