@@ -67,14 +67,6 @@ endif # ! LynxOS
 LYNXOS_MAJOR = $(shell echo $(VERSION) | awk -F. '{print $$1;}')
 LYNXOS_MINOR = $(shell echo $(VERSION) | awk -F. '{print $$2;}')
 
-# LynxOS 3.x does not support shared libraries or native exceptions
-ifeq ($(LYNXOS_MAJOR),3)
-  shared_libs_only =
-  static_libs_only = 1
-  exceptions = 0
-  debug ?= 0
-endif
-
 ifeq ($(shared_libs_only),1)
   shared_libs = 1
   static_libs =

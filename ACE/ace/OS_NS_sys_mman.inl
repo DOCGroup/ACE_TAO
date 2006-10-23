@@ -8,10 +8,6 @@
 #include "ace/OS_NS_macros.h"
 #include "ace/OS_NS_errno.h"
 
-#if defined (__Lynx__)
-#  include "ace/OS_NS_sys_stat.h"
-#endif /* __Lynx__ */
-
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 #if defined (ACE_HAS_VOIDPTR_MMAP)
@@ -162,51 +158,6 @@ ACE_OS::mmap (void *addr,
     ACE_FAIL_RETURN (MAP_FAILED);
   else
     return addr_mapping;
-#elif defined (ACE_HAS_LYNXOS_BROKEN_MMAP)
-  // The LynxOS mmap doesn't allow operations on plain
-  // file descriptors.  So, create a shm object and use that.
-  ACE_UNUSED_ARG (sa);
-
-  char name [128];
-  sprintf (name, "%d", file_handle);
-
-  // Assumes that this was called by ACE_Mem_Map, so &file_mapping !=
-  // 0.  Otherwise, we don't support the incomplete LynxOS mmap
-  // implementation.  We do support it by creating a hidden shared
-  // memory object, and using that for the mapping.
-  int shm_handle;
-  if (! file_mapping)
-    file_mapping = &shm_handle;
-  if ((*file_mapping = ::shm_open (name,
-                                   O_RDWR | O_CREAT | O_TRUNC,
-                                   ACE_DEFAULT_FILE_PERMS)) == -1)
-    return MAP_FAILED;
-  else
-    {
-      // The size of the shared memory object must be explicitly set on LynxOS.
-      const off_t filesize = ACE_OS::filesize (file_handle);
-      if (::ftruncate (*file_mapping, filesize) == -1)
-        return MAP_FAILED;
-      else
-        {
-#  if defined (ACE_OS_EXTRA_MMAP_FLAGS)
-          flags |= ACE_OS_EXTRA_MMAP_FLAGS;
-#  endif /* ACE_OS_EXTRA_MMAP_FLAGS */
-          char *map = (char *) ::mmap ((ACE_MMAP_TYPE) addr,
-                                       len,
-                                       prot,
-                                       flags,
-                                       *file_mapping,
-                                       off);
-          if (map == MAP_FAILED)
-            return MAP_FAILED;
-          else
-            // Finally, copy the file contents to the shared memory object.
-            return ::read (file_handle, map, (int) filesize) == filesize
-              ? map
-              : MAP_FAILED;
-        }
-    }
 #elif !defined (ACE_LACKS_MMAP)
   ACE_UNUSED_ARG (sa);
 

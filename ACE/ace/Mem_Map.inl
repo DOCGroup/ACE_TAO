@@ -103,8 +103,6 @@ ACE_Mem_Map::close_filemapping_handle (void)
   if (this->file_mapping_ != this->handle_
       && this->file_mapping_ != ACE_INVALID_HANDLE)
     {
-      // On LynxOS, this will result in unlinking of the (hidden)
-      // shared memory file if there are no more references to it.
       result = ACE_OS::close (this->file_mapping_);
       this->file_mapping_ = ACE_INVALID_HANDLE;
     }
@@ -121,20 +119,6 @@ ACE_Mem_Map::unmap (ssize_t len)
 
   this->close_filemapping_handle ();
 
-#if defined (ACE_HAS_LYNXOS_BROKEN_MMAP)
-  int writeback_result = 0;
-  if (write_enabled_)
-    {
-      // Write back the contents of the shared memory object to the
-      // file.
-      off_t const filesize = ACE_OS::filesize (handle_);
-      writeback_result =
-        ACE_OS::lseek (handle_, 0, 0) != -1
-        && ACE_OS::write (handle_,
-                          base_addr_,
-                          (int) filesize) == filesize ? 0 : -1;
-    }
-#endif /* ACE_HAS_LYNXOS_BROKEN_MMAP */
   if (this->base_addr_ != MAP_FAILED)
     {
       int const result = ACE_OS::munmap (this->base_addr_,
@@ -143,11 +127,7 @@ ACE_Mem_Map::unmap (ssize_t len)
       return result;
     }
   else
-#if defined (ACE_HAS_LYNXOS_BROKEN_MMAP)
-    return writeback_result;
-#else  /* ! ACE_HAS_LYNXOS_BROKEN_MMAP */
     return 0;
-#endif /* ! ACE_HAS_LYNXOS_BROKEN_MMAP */
 }
 
 // Unmap the region starting at <addr_>.
@@ -159,28 +139,8 @@ ACE_Mem_Map::unmap (void *addr, ssize_t len)
 
   this->close_filemapping_handle ();
 
-#if defined (ACE_HAS_LYNXOS_BROKEN_MMAP)
-  int writeback_result = 0;
-  if (write_enabled_)
-    {
-      // Write back the contents of the shared memory object to the file.
-      off_t const filesize = ACE_OS::filesize (handle_);
-      writeback_result =
-        ACE_OS::lseek (handle_, 0, 0) != -1
-        && ACE_OS::write (handle_,
-                          base_addr_,
-                          filesize) == filesize ? 0 : -1;
-    }
-#endif /* ACE_HAS_LYNXOS_BROKEN_MMAP */
-
-#if defined (ACE_HAS_LYNXOS_BROKEN_MMAP)
-  return ACE_OS::munmap (addr,
-                         len < 0 ? this->length_ : len)
-    | writeback_result;
-#else  /* ! ACE_HAS_LYNXOS_BROKEN_MMAP */
   return ACE_OS::munmap (addr,
                          len < 0 ? this->length_ : len);
-#endif /* ! ACE_HAS_LYNXOS_BROKEN_MMAP */
 }
 
 // Sync <len> bytes of the memory region to the backing store starting
