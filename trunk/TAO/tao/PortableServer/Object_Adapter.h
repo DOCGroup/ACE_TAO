@@ -477,6 +477,9 @@ private:
   /// Helper method to get collocated servant
   TAO_ServantBase *get_collocated_servant (const TAO_MProfile &mp);
 
+#if (TAO_HAS_MINIMUM_POA == 0) && !defined (CORBA_E_COMPACT) && !defined (CORBA_E_MICRO)
+  static void release_poa_manager_factory (TAO_POAManager_Factory *factory);
+#endif
 private:
 
   /// Condition variable for waiting on non-servant upcalls to end.

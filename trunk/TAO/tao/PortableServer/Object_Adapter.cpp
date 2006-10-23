@@ -316,7 +316,7 @@ TAO_Object_Adapter::~TAO_Object_Adapter (void)
   // could be automatic.
   ::CORBA::release (this->root_);
 #if (TAO_HAS_MINIMUM_POA == 0) && !defined (CORBA_E_COMPACT) && !defined (CORBA_E_MICRO)
-  ::CORBA::release (this->poa_manager_factory_);
+  release_poa_manager_factory (this->poa_manager_factory_);
 #endif
 }
 
@@ -768,7 +768,7 @@ TAO_Object_Adapter::close (int wait_for_completion
   ACE_CHECK;
   ::CORBA::release (root);
 #if (TAO_HAS_MINIMUM_POA == 0) && !defined (CORBA_E_COMPACT) && !defined (CORBA_E_MICRO)
-  ::CORBA::release (factory);
+  release_poa_manager_factory (factory);
 #endif
 }
 
@@ -993,6 +993,19 @@ TAO_Object_Adapter::initialize_collocated_object (TAO_Stub *stub)
   // Return 0 (success) iff we found a servant.
   return ! sb;
 }
+
+#if (TAO_HAS_MINIMUM_POA == 0) && !defined (CORBA_E_COMPACT) && !defined (CORBA_E_MICRO)
+void
+TAO_Object_Adapter::release_poa_manager_factory (
+                                     TAO_POAManager_Factory *factory)
+{
+  if (factory != 0)
+    {
+      factory->remove_all_poamanagers ();
+      ::CORBA::release (factory);
+    }
+}
+#endif
 
 TAO_ServantBase *
 TAO_Object_Adapter::get_collocated_servant (const TAO_MProfile &mp)
