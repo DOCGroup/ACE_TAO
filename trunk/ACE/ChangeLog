@@ -40,7 +40,6 @@ Mon Oct 23 02:28:42 UTC 2006  Ossama Othman  <ossama_othman at symantec dot com>
           after it was freed.
 
         * ace/Configuration_Import_Export.cpp:
-        * apps/gperf/src/Key_List.cpp:
 
           Addressed Coverity RESOURCE_LEAK errors.
 
