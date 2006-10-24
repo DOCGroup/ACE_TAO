@@ -62,6 +62,14 @@ extern "C"
 #  endif /* ! msg_accrightslen */
 #endif /* ACE_HAS_MSG && ACE_LACKS_MSG_ACCRIGHTS */
 
+# if defined (ACE_LACKS_SOCKADDR)
+    struct sockaddr {
+            u_char  sa_len;                 /* total length */
+            u_char  sa_family;              /* address family */
+            char    sa_data[14];            /* actually longer; address value */
+    };
+# endif /* ACE_LACKS_SOCKADDR */
+
 #if defined (ACE_WIN32)
    struct msghdr
    {
