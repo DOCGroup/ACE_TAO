@@ -1,76 +1,83 @@
+Tue Oct 24 14:44:09 UTC 2006  Olli Savia  <ops@iki.fi>
+
+        * ace/TTY_IO.cpp:
+        
+          Changed the default constructor to always initialise member
+          variables regardless of ACE_HAS_TERMIOS or ACE_HAS_TERMIO setting.
+
 Tue Oct 24 14:16:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-	* ace/ACE.cpp:
-	  Use some bools instead of int
+        * ace/ACE.cpp:
+          Use some bools instead of int
 
-	* ace/INET_Addr.cpp (set_port_number):
-	  Added check for ACE_LACKS_HTONS
+        * ace/INET_Addr.cpp (set_port_number):
+          Added check for ACE_LACKS_HTONS
 
-	* ace/INET_Addr.inl (get_port_number):
-	  Added check for ACE_LACKS_NTOHS
+        * ace/INET_Addr.inl (get_port_number):
+          Added check for ACE_LACKS_NTOHS
 
 Tue Oct 24 13:54:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-	* ace/os_include/netinet/os_in.h:
-	* ace/config-rtems.h:
-	  Added ACE_LACKS_IP_MREQ
+        * ace/os_include/netinet/os_in.h:
+        * ace/config-rtems.h:
+          Added ACE_LACKS_IP_MREQ
 
-	* ace/INET_Addr.cpp (get_port_number_from_name):
-	  Added ACE_LACKS_HTONS check
+        * ace/INET_Addr.cpp (get_port_number_from_name):
+          Added ACE_LACKS_HTONS check
 
 Tue Oct 24 13:27:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-	* ace/Reactor.h:
-	  Added an include of Time_Value.h, this is included implicitly
-	  but this implicit include is not there when using FOCUS with
-	  tp-reactor specialization
+        * ace/Reactor.h:
+          Added an include of Time_Value.h, this is included implicitly
+          but this implicit include is not there when using FOCUS with
+          tp-reactor specialization
 
 Tue Oct 24 13:09:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-	* ace/Sock_Connect.cpp:
-	* ace/config-rtems.h:
-	  Added ACE_LACKS_GET_BCAST_ADDR
+        * ace/Sock_Connect.cpp:
+        * ace/config-rtems.h:
+          Added ACE_LACKS_GET_BCAST_ADDR
 
 Tue Oct 24 13:00:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-	* ace/os_include/os_socket.h:
-	* ace/config-rtems.h:
-	  Added ACE_LACKS_SOCKADDR
+        * ace/os_include/os_socket.h:
+        * ace/config-rtems.h:
+          Added ACE_LACKS_SOCKADDR
 
 Tue Oct 24 12:54:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-	* ace/os_include/os_netdb.h:
-	* ace/config-rtems.h:
-	  Added ACE_LACKS_HOSTENT
+        * ace/os_include/os_netdb.h:
+        * ace/config-rtems.h:
+          Added ACE_LACKS_HOSTENT
 
 Tue Oct 24 12:09:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-	* ace/OS_NS_arpa_inet.inl:
-	* ace/config-rtems.h:
-	  Added ACE_LACKS_INET_ADDR and ACE_LACKS_INET_NTOA
+        * ace/OS_NS_arpa_inet.inl:
+        * ace/config-rtems.h:
+          Added ACE_LACKS_INET_ADDR and ACE_LACKS_INET_NTOA
 
 Tue Oct 24 12:00:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-	* ace/os_include/sys/os_socket.h:
-	  Define MSG_OOB when it is not defined
+        * ace/os_include/sys/os_socket.h:
+          Define MSG_OOB when it is not defined
 
 Tue Oct 24 11:17:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-	* ace/OS_NS_sys_socket.inl:
+        * ace/OS_NS_sys_socket.inl:
         * ace/config-rtems.h:
-	  Added ACE_LACKS_SOCKET, ACE_LACKS_SHUTDOWN and ACE_LACKS_SETSOCKOPT
+          Added ACE_LACKS_SOCKET, ACE_LACKS_SHUTDOWN and ACE_LACKS_SETSOCKOPT
 
 Tue Oct 24 11:08:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-	* ace/OS_NS_sys_select.inl:
+        * ace/OS_NS_sys_select.inl:
         * ace/config-rtems.h:
-	  Added ACE_LACKS_SELECT
+          Added ACE_LACKS_SELECT
 
 Tue Oct 24 10:58:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-	* ace/os_include/netinet/os_in.h:
+        * ace/os_include/netinet/os_in.h:
         * ace/config-rtems.h:
-	  Added ACE_LACKS_IN_ADDR and ACE_LACKS_SOCKADDR_IN
+          Added ACE_LACKS_IN_ADDR and ACE_LACKS_SOCKADDR_IN
 
 Tue Oct 24 06:31:05 UTC 2006  Ossama Othman  <ossama_othman at symantec dot com>
 
