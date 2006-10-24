@@ -341,11 +341,24 @@ run_main (int, ACE_TCHAR *[])
   if (thr_mgr->suspend_grp (grp_id) == -1)
     {
       // Pthreads w/o UNIX 98 extensions doesn't support suspend/resume,
-      // so it's allowed to ENOTSUP; anything else is a hard fail.
-      ACE_ASSERT (errno == ENOTSUP);
-      ACE_DEBUG((LM_DEBUG,
-                 ACE_TEXT (" OK: suspend_grp isn't supported with ")
-                 ACE_TEXT ("Pthreads\n")));
+      // so it's allowed to ENOTSUP as long as the config indicates this.
+      if (errno == ENOTSUP)
+        {
+#if defined (ACE_HAS_PTHREADS) && (defined (ACE_HAS_PTHREAD_SUSPEND) || \
+                                   defined (ACE_HAS_PTHREAD_SUSPEND_NP))
+          ACE_ERROR ((LM_ERROR,
+                      ACE_TEXT ("suspend_grp: ENOTSUP but config ")
+                      ACE_TEXT ("says it should work.\n")));
+#else
+          ACE_DEBUG((LM_DEBUG,
+                     ACE_TEXT (" OK: suspend_grp isn't supported with ")
+                     ACE_TEXT ("Pthreads\n")));
+#endif /* ACE_HAS_PTHREADS && should be able to suspend */
+        }
+      else
+        {
+          ACE_ERROR ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("suspend_grp")));
+        }
     }
 
   // Wait for 1 more second and then resume every thread in the
@@ -357,10 +370,26 @@ run_main (int, ACE_TCHAR *[])
 
   if (thr_mgr->resume_grp (grp_id) == -1)
     {
-      ACE_ASSERT (errno == ENOTSUP);
-      ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT (" OK: resume_grp isn't supported with ")
-                  ACE_TEXT ("Pthreads\n")));
+      // Pthreads w/o UNIX 98 extensions doesn't support suspend/resume,
+      // so it's allowed to ENOTSUP as long as the config indicates this.
+      if (errno == ENOTSUP)
+        {
+#if defined (ACE_HAS_PTHREADS) && (defined (ACE_HAS_PTHREAD_CONTINUE) || \
+                                   defined (ACE_HAS_PTHREAD_CONTINUE_NP) || \
+                                   defined (ACE_HAS_PTHREAD_RESUME_NP))
+          ACE_ERROR ((LM_ERROR,
+                      ACE_TEXT ("resume_grp: ENOTSUP but config ")
+                      ACE_TEXT ("says it should work.\n")));
+#else
+          ACE_DEBUG((LM_DEBUG,
+                     ACE_TEXT (" OK: resume_grp isn't supported with ")
+                     ACE_TEXT ("Pthreads\n")));
+#endif /* ACE_HAS_PTHREADS && should be able to continue/resume */
+        }
+      else
+        {
+          ACE_ERROR ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("resume_grp")));
+        }
     }
 
   // Wait for 1 more second and then send a SIGINT to every thread in
