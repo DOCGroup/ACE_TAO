@@ -1,3 +1,13 @@
+Tue Oct 24 23:59:10 UTC 2006  Ossama othman  <ossama_othman at symantec dot com>
+
+        * examples/Service_Configurator/IPC-tests/server/Handle_Timeout.inl
+          (init):
+        * examples/Shared_Malloc/test_position_independent_malloc.cpp
+          (parse_args):
+
+          Use intptr_t instead of int when casting to void*.  Addresses
+          "sizes do not match" warnings in 64-bit Intel compiler builds.
+
 Tue Oct 24 23:49:25 UTC 2006  Ossama Othman  <ossama_othman at symantec dot com>
 
         * ace/Hash_Map_Manager_T.inl (ACE_Hash_Map_Iterator_Base_Ex):
