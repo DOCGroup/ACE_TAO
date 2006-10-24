@@ -1,3 +1,14 @@
+Tue Oct 24 14:16:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+	* ace/ACE.cpp:
+	  Use some bools instead of int
+
+	* ace/INET_Addr.cpp (set_port_number):
+	  Added check for ACE_LACKS_HTONS
+
+	* ace/INET_Addr.inl (get_port_number):
+	  Added check for ACE_LACKS_NTOHS
+
 Tue Oct 24 13:54:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 	* ace/os_include/netinet/os_in.h:
@@ -6,7 +17,6 @@ Tue Oct 24 13:54:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 	* ace/INET_Addr.cpp (get_port_number_from_name):
 	  Added ACE_LACKS_HTONS check
-
 
 Tue Oct 24 13:27:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
