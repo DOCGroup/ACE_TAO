@@ -118,6 +118,10 @@ extern "C"
 #define AF_DEV (AF_MAX + 3)
 #define AF_UPIPE (AF_SPIPE)
 
+#if !defined (MSG_OOB)
+#  define MSG_OOB 0x1
+#endif /* MSG_OOB */
+
 #if defined (ACE_HAS_IPV6)
 #  if defined (ACE_USES_IPV4_IPV6_MIGRATION)
 #    define ACE_ADDRESS_FAMILY_INET  AF_UNSPEC
