@@ -1,3 +1,9 @@
+Tue Oct 24 12:54:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+	* ace/os_include/os_netdb.h:
+	* ace/config-rtems.h:
+	  Added ACE_LACKS_HOSTENT
+
 Tue Oct 24 12:09:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 	* ace/OS_NS_arpa_inet.inl:
