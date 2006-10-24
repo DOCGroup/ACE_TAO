@@ -156,7 +156,7 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 # define ACE_DECLARE_STL_REVERSE_ITERATORS \
   typedef std::reverse_iterator<iterator>       reverse_iterator; \
   typedef std::reverse_iterator<const_iterator> const_reverse_iterator;
-#endif  /* _MSC_VER <= 1200 */
+#endif  /* _MSC_VER && !_CPPLIB_VER */
 
 
 #include /**/ "ace/post.h"
