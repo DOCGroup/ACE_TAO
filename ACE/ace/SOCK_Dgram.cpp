@@ -589,6 +589,8 @@ ACE_SOCK_Dgram::set_nic (const ACE_TCHAR *net_if,
   // Send interface option not supported - ignore it.
   // (We may have been invoked by ::subscribe, so we have to allow
   // a non-null interface parameter in this function.)
+  ACE_UNUSED_ARG (net_if);
+  ACE_UNUSED_ARG (addr_family);
   ACE_DEBUG ((LM_DEBUG,
               ACE_LIB_TEXT ("Send interface specification not ")
               ACE_LIB_TEXT ("supported - IGNORED.\n")));
