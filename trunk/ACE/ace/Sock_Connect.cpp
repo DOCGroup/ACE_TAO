@@ -360,7 +360,13 @@ ACE::get_bcast_addr (ACE_UINT32 &bcast_addr,
 {
   ACE_TRACE ("ACE::get_bcast_addr");
 
-#if !defined(ACE_WIN32) && !defined(__INTERIX)
+#if defined (ACE_LACKS_GET_BCAST_ADDR)
+  ACE_UNUSED_ARG (bcast_addr);
+  ACE_UNUSED_ARG (host_name);
+  ACE_UNUSED_ARG (host_addr);
+  ACE_UNUSED_ARG (handle);
+  ACE_NOTSUP_RETURN (-1);
+#elif !defined(ACE_WIN32) && !defined(__INTERIX)
   ACE_HANDLE s = handle;
 
   if (s == ACE_INVALID_HANDLE)
