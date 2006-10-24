@@ -1,3 +1,9 @@
+Tue Oct 24 13:00:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+	* ace/os_include/os_socket.h:
+	* ace/config-rtems.h:
+	  Added ACE_LACKS_SOCKADDR
+
 Tue Oct 24 12:54:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 	* ace/os_include/os_netdb.h:
