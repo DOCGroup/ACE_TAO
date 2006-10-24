@@ -65,7 +65,7 @@ namespace
 
   // Does this box have ipv6 turned on?
   int ace_ipv6_enabled = -1;
-  
+
 }
 #endif /* ACE_HAS_IPV6 */
 
@@ -583,7 +583,7 @@ ACE::get_fqdn (ACE_INET_Addr const & addr,
    if (ACE::debug())
      ACE_DEBUG ((LM_DEBUG,
                  ACE_TEXT ("(%P|%t) - ACE::get_fqdn, ")
-                 ACE_TEXT ("canonical host name is %s\n"),  
+                 ACE_TEXT ("canonical host name is %s\n"),
                  ACE_TEXT_CHAR_TO_TCHAR (hp->h_name)));
 
    // check if the canonical name is the FQDN
@@ -594,9 +594,9 @@ ACE::get_fqdn (ACE_INET_Addr const & addr,
        // list of aliases
        char** q;
 
-       // for every address and for every alias within the address, check and 
+       // for every address and for every alias within the address, check and
        // see if we can locate a FQDN
-       for (p = hp->h_addr_list; *p != 0; ++p) 
+       for (p = hp->h_addr_list; *p != 0; ++p)
          {
            for (q = hp->h_aliases; *q != 0; ++q)
              {
@@ -604,7 +604,7 @@ ACE::get_fqdn (ACE_INET_Addr const & addr,
                  {
                    // we got an FQDN from an alias. use this
                    if (ACE_OS::strlen (*q) >= len)
-                     // the hostname is too huge to fit into a 
+                     // the hostname is too huge to fit into a
                      // buffer of size MAXHOSTNAMELEN
                      // should we check other aliases as well
                      // before bailing out prematurely?
@@ -616,7 +616,7 @@ ACE::get_fqdn (ACE_INET_Addr const & addr,
                    if (ACE::debug ())
                      ACE_DEBUG ((LM_DEBUG,
                                  ACE_TEXT ("(%P|%t) - ACE::get_fqdn, ")
-                                 ACE_TEXT ("found fqdn within alias as %s\n"),  
+                                 ACE_TEXT ("found fqdn within alias as %s\n"),
                                  ACE_TEXT_CHAR_TO_TCHAR(*q)));
                    ACE_OS::strcpy (hostname, *q);
 
