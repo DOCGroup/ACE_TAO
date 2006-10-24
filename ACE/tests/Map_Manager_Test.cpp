@@ -86,7 +86,7 @@ test_cache_map_manager (size_t table_size,
   CACHE_MAP_MANAGER map (null_caching_strategy,
                          table_size);
   TYPE i;
-  TYPE j;
+  TYPE j = TYPE ();
   ssize_t k;
 
   for (i = 0; i < iterations; i++)

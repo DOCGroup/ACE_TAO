@@ -16,7 +16,7 @@ ACE_Select_Reactor_Handler_Repository::size (void) const
 #endif  /* ACE_WIN32 */
 }
   
-ACE_INLINE size_t
+ACE_INLINE ACE_Select_Reactor_Handler_Repository::max_handlep1_type
 ACE_Select_Reactor_Handler_Repository::max_handlep1 (void) const
 {
 #ifdef ACE_WIN32

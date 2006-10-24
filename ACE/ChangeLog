@@ -1,3 +1,30 @@
+Tue Oct 24 22:01:41 UTC 2006  Ossama Othman  <ossama_othman at symantec dot com>
+
+        * ace/OS_NS_stdlib.inl (atop):
+
+          Use intptr_t type to fix 64-bit conversion to void* warnings.
+
+        * ace/Select_Reactor_Base.h (max_handlep1):
+        * ace/Select_Reactor_Base.inl (max_handlep1):
+
+          Changed return type to be ACE_HANDLE on UNIX platforms instead
+          of size_t.  Addresses "loss of significant bits" warnings in
+          64-bit Intel compiler builds.
+
+        * ace/Select_Reactor_Base.cpp (dump):
+
+          Corrected format specifiers for Windows configuration.
+
+        * ace/Select_Reactor_T.cpp (work_pending):
+          (wait_for_multiple_events):
+
+          Removed unnecessary casts and corrected type of "width" variable
+          that is passed to select().
+
+        * tests/Map_Manager_Test.cpp (test_cache_map_manager):
+
+          Fixed "might be used uninitialized" warning.
+
 Tue Oct 24 17:46:40 UTC 2006  Ossama Othman  <ossama_othman at symantec dot com>
 
         * ace/Truncate.h (Truncator):
