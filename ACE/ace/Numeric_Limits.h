@@ -68,6 +68,15 @@ template <typename T> struct ACE_Numeric_Limits;
 
 
 // ------------------------------------------
+// Special cases.
+template<>
+struct ACE_Export ACE_Numeric_Limits<char>
+{
+  static char min (void) { return CHAR_MIN; }
+  static char max (void) { return CHAR_MAX; }
+};
+
+// ------------------------------------------
 // Signed integers.
 
 template<>

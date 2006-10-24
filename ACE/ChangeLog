@@ -1,3 +1,11 @@
+Mon Oct 24 06:31:05 UTC 2006  Ossama Othman  <ossama_othman at symantec dot com>
+
+        * ace/Numeric_Limits.h (ACE_Numeric_Limits):
+        
+          Added missing "char" specialization for the
+          ACE_LACKS_NUMERIC_LIMITS case.  The "signed char" and
+          "unsigned char" specializations are not always suitable.
+
 Mon Oct 24 04:04:26 UTC 2006  Ossama Othman  <ossama_othman at symantec dot com>
 
         * ace/Hash_Map_Manager_T.h (lock_):
