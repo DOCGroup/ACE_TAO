@@ -1,3 +1,16 @@
+Tue Oct 24 17:46:40 UTC 2006  Ossama Othman  <ossama_othman at symantec dot com>
+
+        * ace/Truncate.h (Truncator):
+
+          Export the Borland-specific specializations from the DLL.  This
+          should address the "undefined symbol" link-time problem.
+
+        * bin/MakeProjectCreator/config/acexml.mpb:
+
+          Re-disabled ACEXML when ace_for_tao is enabled.  ACEXML needs
+          the ACE_Configuration and memory map classes that are not found
+          in the ace_for_tao subset.
+
 Tue Oct 24 14:44:09 UTC 2006  Olli Savia  <ops@iki.fi>
 
         * ace/TTY_IO.cpp:
