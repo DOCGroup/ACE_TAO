@@ -138,6 +138,14 @@ extern "C"
 #  define MSG_PEEK 0x2
 #endif /* MSG_PEEK */
 
+#if !defined (SOCK_STREAM)
+#  define SOCK_STREAM 1
+#endif /* SOCK_STREAM */
+
+#if !defined (SOCK_DGRAM)
+#  define SOCK_DGRAM 2
+#endif /* SOCK_DGRAM */
+
 #if defined (ACE_HAS_IPV6)
 #  if defined (ACE_USES_IPV4_IPV6_MIGRATION)
 #    define ACE_ADDRESS_FAMILY_INET  AF_UNSPEC
