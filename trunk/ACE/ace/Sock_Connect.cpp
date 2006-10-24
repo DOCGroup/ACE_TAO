@@ -541,8 +541,8 @@ ACE::get_fqdn (ACE_INET_Addr const & addr,
   hostent hentry;
   ACE_HOSTENT_DATA buf;
 
-  char * ip_addr;
-  int ip_addr_size;
+  char * ip_addr = 0;
+  int ip_addr_size = 0;
   if (addr.get_type () == AF_INET)
     {
       sockaddr_in * const sock_addr =

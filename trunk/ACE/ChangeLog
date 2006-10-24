@@ -1,3 +1,15 @@
+Mon Oct 24 04:04:26 UTC 2006  Ossama Othman  <ossama_othman at symantec dot com>
+
+        * ace/Hash_Map_Manager_T.h (lock_):
+
+          Placed "mutable" keyword to beginning of declaration.  It is a
+          storage class specifier, not a CV qualifier, and belongs at the
+          beginning.  Addresses g++ warnings.
+        
+        * ace/Sock_Connect.cpp (get_fqdn):
+
+          Addressed "might be used uninitialized warnings.
+
 Mon Oct 23 02:28:42 UTC 2006  Ossama Othman  <ossama_othman at symantec dot com>
 
         * ace/Array_Base.cpp:
@@ -174,6 +186,7 @@ Mon Oct 23 02:28:42 UTC 2006  Ossama Othman  <ossama_othman at symantec dot com>
           New run-time check for existence IPv4 stack.  Some hosts only
           contain IPv6 stacks.
 
+          From Sriram Chandramouli <sriram_chandramouli at symantec dot com>
           (get_fqdn):
 
           New method that retrieves fully qualified domain.  getaddrinfo()
