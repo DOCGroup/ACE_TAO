@@ -1,3 +1,9 @@
+Tue Oct 24 11:17:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+	* ace/OS_NS_sys_socket.inl:
+        * ace/config-rtems.h:
+	  Added ACE_LACKS_SOCKET, ACE_LACKS_SHUTDOWN and ACE_LACKS_SETSOCKOPT
+
 Tue Oct 24 11:08:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 	* ace/OS_NS_sys_select.inl:

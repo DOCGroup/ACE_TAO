@@ -758,8 +758,15 @@ ACE_OS::setsockopt (ACE_HANDLE handle,
                     int optlen)
 {
   ACE_OS_TRACE ("ACE_OS::setsockopt");
-
-  #if defined (ACE_HAS_WINSOCK2) && (ACE_HAS_WINSOCK2 != 0) && defined(SO_REUSEPORT)
+#if defined (ACE_LACKS_SETSOCKOPT)
+  ACE_UNUSED_ARG (handle);
+  ACE_UNUSED_ARG (level);
+  ACE_UNUSED_ARG (optname);
+  ACE_UNUSED_ARG (optval);
+  ACE_UNUSED_ARG (optlen);
+  ACE_NOTSUP_RETURN (-1);
+#else
+#if defined (ACE_HAS_WINSOCK2) && (ACE_HAS_WINSOCK2 != 0) && defined(SO_REUSEPORT)
   // To work around an inconsistency with Microsofts implementation of
   // sockets, we will check for SO_REUSEADDR, and ignore it. Winsock
   // always behaves as if SO_REUSEADDR=1. Some implementations have
@@ -778,7 +785,7 @@ ACE_OS::setsockopt (ACE_HANDLE handle,
       optname = SO_REUSEADDR;
     }
   }
-  #endif /*ACE_HAS_WINSOCK2*/
+#endif /*ACE_HAS_WINSOCK2*/
 
   int result;
   ACE_SOCKCALL (::setsockopt ((ACE_SOCKET) handle,
@@ -796,13 +803,20 @@ ACE_OS::setsockopt (ACE_HANDLE handle,
 #endif /* WSAEOPNOTSUPP */
     errno = ENOTSUP;
   return result;
+#endif
 }
 
 ACE_INLINE int
 ACE_OS::shutdown (ACE_HANDLE handle, int how)
 {
   ACE_OS_TRACE ("ACE_OS::shutdown");
+#if defined (ACE_LACKS_SHUTDOWN)
+  ACE_UNUSED_ARG (handle);
+  ACE_UNUSED_ARG (how);
+  ACE_NOTSUP_RETURN (-1);
+#else
   ACE_SOCKCALL_RETURN (::shutdown ((ACE_SOCKET) handle, how), int, -1);
+#endif /* ACE_LACKS_SHUTDOWN */
 }
 
 ACE_INLINE ACE_HANDLE
@@ -811,11 +825,18 @@ ACE_OS::socket (int domain,
                 int proto)
 {
   ACE_OS_TRACE ("ACE_OS::socket");
+#if defined (ACE_LACKS_SOCKET)
+  ACE_UNUSED_ARG (domain);
+  ACE_UNUSED_ARG (type);
+  ACE_UNUSED_ARG (proto);
+  ACE_NOTSUP_RETURN (ACE_INVALID_HANDLE);
+#else
   ACE_SOCKCALL_RETURN (::socket (domain,
                                  type,
                                  proto),
                        ACE_HANDLE,
                        ACE_INVALID_HANDLE);
+#endif /* ACE_LACKS_SOCKET */
 }
 
 ACE_INLINE ACE_HANDLE
