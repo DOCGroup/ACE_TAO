@@ -1,3 +1,10 @@
+Tue Oct 24 13:27:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+	* ace/Reactor.h:
+	  Added an include of Time_Value.h, this is included implicitly
+	  but this implicit include is not there when using FOCUS with
+	  tp-reactor specialization
+
 Tue Oct 24 13:09:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 	* ace/Sock_Connect.cpp:
