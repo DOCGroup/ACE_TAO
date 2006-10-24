@@ -1,10 +1,10 @@
-Tue Oct 25 10:58:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+Tue Oct 24 10:58:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 	* ace/os_include/netinet/os_in.h:
         * ace/config-rtems.h:
 	  Added ACE_LACKS_IN_ADDR and ACE_LACKS_SOCKADDR_IN
 
-Mon Oct 24 06:31:05 UTC 2006  Ossama Othman  <ossama_othman at symantec dot com>
+Tue Oct 24 06:31:05 UTC 2006  Ossama Othman  <ossama_othman at symantec dot com>
 
         * ace/Numeric_Limits.h (ACE_Numeric_Limits):
 
@@ -12,7 +12,7 @@ Mon Oct 24 06:31:05 UTC 2006  Ossama Othman  <ossama_othman at symantec dot com>
           ACE_LACKS_NUMERIC_LIMITS case.  The "signed char" and
           "unsigned char" specializations are not always suitable.
 
-Mon Oct 24 04:04:26 UTC 2006  Ossama Othman  <ossama_othman at symantec dot com>
+Tue Oct 24 04:04:26 UTC 2006  Ossama Othman  <ossama_othman at symantec dot com>
 
         * ace/Hash_Map_Manager_T.h (lock_):
 
