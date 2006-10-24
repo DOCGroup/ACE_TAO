@@ -88,7 +88,9 @@ ACE_INLINE u_short
 ACE_INET_Addr::get_port_number (void) const
 {
   ACE_TRACE ("ACE_INET_Addr::get_port_number");
-#if defined (ACE_HAS_IPV6)
+#if defined (ACE_LACKS_NTOHS)
+  ACE_NOTSUP_RETURN (0);
+#elif defined (ACE_HAS_IPV6)
   if (this->get_type () == PF_INET)
     return ntohs (this->inet_addr_.in4_.sin_port);
   else
