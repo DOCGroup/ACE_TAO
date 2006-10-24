@@ -782,21 +782,29 @@ create_index_page ()
 
   echo ' to compile '$BASE_TITLE'. </P>'
 
-  if [ -r $ACE_ROOT/ace/config.h ]; then
-    echo '<TABLE border="2"><TBODY><TR><TD>ACE+TAO+CIAO Configuration</TD><TD>config.h</TD></TR>'
-    echo '<TR><TD colspan="2"><PRE>'
-
-    cat $ACE_ROOT/ace/config.h
+  if [ -z "$MPC_ROOT" ]; then
+    MPC_ROOT=$ACE_ROOT/MPC
   fi
 
-  if [ -r $ACE_ROOT/include/makeinclude/platform_macros.GNU ]; then
-    echo '</PRE></TD></TR><TR><TD>ACE+TAO+CIAO Configuration</TD><TD>platform_macros.GNU</TD></TR>'
-    echo '<TR><TD colspan="2"><PRE>'
-
-    cat $ACE_ROOT/include/makeinclude/platform_macros.GNU
+  CFG_FILES=$ACE_ROOT/ace/config.h
+  if [ -r $ACE_ROOT/bin/MakeProjectCreator/config/default.features ]; then
+    CFG_FILES="$CFG_FILES $ACE_ROOT/bin/MakeProjectCreator/config/default.features"
+  elif [ -r $MPC_ROOT/config/default.features ]; then
+    CFG_FILES="$CFG_FILES $MPC_ROOT/config/default.features"
   fi
+  CFG_FILES="$CFG_FILES $ACE_ROOT/include/makeinclude/platform_macros.GNU"
 
-  echo '</PRE></TD></TR><TR><TD>CPU Information</TD><TD>/proc/cpuinfo</TD></TR>'
+  echo '<TABLE border="2"><TBODY>'
+  for cfg_file in $CFG_FILES; do
+    if [ -r $cfg_file ]; then
+      echo "<TR><TD>ACE+TAO+CIAO Configuration</TD><TD>`basename $cfg_file`</TD></TR>"
+      echo '<TR><TD colspan="2"><PRE>'
+      cat $cfg_file
+      echo '</PRE></TD></TR>'
+    fi
+  done
+
+  echo '<TR><TD>CPU Information</TD><TD>/proc/cpuinfo</TD></TR>'
   echo '<TR><TD colspan="2"><PRE>'
 
   cat /proc/cpuinfo

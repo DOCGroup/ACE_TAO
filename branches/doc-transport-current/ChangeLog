@@ -1,3 +1,57 @@
+Mon Oct 23 13:29:15 UTC 2006  Olli Savia  <ops@iki.fi>
+
+        * ACE-INSTALL.html:
+        * ace/Mem_Map.h:
+        * ace/Mem_Map.inl:
+        * ace/Mem_Map.cpp:
+        * ace/OS_NS_Thread.inl:
+        * ace/OS_NS_sys_mman.inl:
+        * ace/Reverse_Lock_T.h:
+        * ace/Task_Ex_T.h:
+        * ace/Task_T.h:
+        * ace/config-lynxos.h:
+        * include/makeinclude/platform_lynxos.GNU:
+
+          Removed LynxOS 3.x support.
+
+Mon Oct 23 12:59:35 UTC 2006  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/generate_compile_stats.sh:
+
+          Corrected a bug with my previous change.  If config.h or
+          platform_macros.GNU were not present, the html would be incorrect.
+          I also added default.features to the list of configuration files
+          that are displayed.
+
+Mon Oct 23 06:34:24 UTC 2006  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
+
+        * ace/os_include/os_pthread.h: Changed
+
+          #      if !defined (ACE_LACKS_RWLOCK_T)
+
+          to
+
+          #      if !defined (ACE_LACKS_RWLOCK_T) && !defined (ACE_HAS_PTHREADS_UNIX98_EXT)
+
+          to stop a compile error on Solaris after SunOS 5.8.  Thanks to
+          Boris Kaminer <boris dot kaminer at gmail dot com> for reporting
+          this fix.
+
+Sun Oct 23 00:29:55 UTC 2006  Ossama Othman  <ossama_othman at symantec dot com>
+
+        * ace/Truncate.h:
+
+          In the Borland-specific workaround, explicitly cast return value
+          of ACE_Numeric_Limits::max() of the smaller unsigned type to the
+          unsigned larger type to which it is being compared.  Addresses
+          non-intuitive "comparison of signed and unsigned types" warning
+          issued by Borland compiler.  Borland promotes unsigned char to
+          int, instead of unsigned int, when comparing to unsigned int.
+          This implicit type promotion behavior complies with the C++
+          standard, but is a bit awkward nonetheless (IMHO :)).  Thanks to
+          Johnny for pointing out Borland's explanation of the
+          non-intuitive warning.
+
 Sun Oct 22 08:11:25 UTC 2006  Ossama Othman  <ossama_othman at symantec dot com>
 
         * ace/Token_Request_Reply.inl (token_name):
@@ -210,8 +264,13 @@ Thu Oct 19 11:48:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Thu Oct 19 08:27:12 UTC 2006  Martin Corino  <mcorino@remedy.nl>
 
+<<<<<<< .working
         * include/makeinclude/platform_openvms.GNU:
       	  Small change to create hardlinks for produced executables.
+=======
+        * include/makeinclude/platform_openvms.GNU:
+          Small change to create hardlinks for produced executables.
+>>>>>>> .merge-right.r74951
 
 Wed Oct 18 16:19:38 UTC 2006  Shanshan Jiang <shanshan.jiang@vanderbilt.edu>
 

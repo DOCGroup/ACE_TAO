@@ -20,13 +20,7 @@ TAO_POAManager_Factory::TAO_POAManager_Factory (TAO_Object_Adapter &object_adapt
 
 TAO_POAManager_Factory::~TAO_POAManager_Factory (void)
 {
-  for (POAMANAGERSET::iterator iterator = this->poamanager_set_.begin ();
-        iterator != this->poamanager_set_.end ();
-        ++iterator)
-    {
-      ::PortableServer::POAManager_ptr poamanager = (*iterator);
-      CORBA::release (poamanager);
-    }
+  this->remove_all_poamanagers ();
 }
 
 ::PortableServer::POAManager_ptr
@@ -149,6 +143,19 @@ TAO_POAManager_Factory::find (
     }
 
   return poamanager;
+}
+
+void
+TAO_POAManager_Factory::remove_all_poamanagers (void)
+{
+  for (POAMANAGERSET::iterator iterator = this->poamanager_set_.begin ();
+        iterator != this->poamanager_set_.end ();
+        ++iterator)
+    {
+      ::PortableServer::POAManager_ptr poamanager = (*iterator);
+      CORBA::release (poamanager);
+    }
+  this->poamanager_set_.reset ();
 }
 
 int

@@ -172,11 +172,6 @@ ACE_Mem_Map::map_it (ACE_HANDLE handle,
         return -1;
     }
 
-#if defined (ACE_HAS_LYNXOS_BROKEN_MMAP)
-  // Set flag that indicates whether PROT_WRITE has been enabled.
-  write_enabled_ = ACE_BIT_ENABLED (prot, PROT_WRITE);
-#endif /* ACE_HAS_LYNXOS_BROKEN_MMAP */
-
 #if defined (ACE_USE_MAPPING_NAME)
   if (ACE_BIT_ENABLED (share, MAP_SHARED))
     {

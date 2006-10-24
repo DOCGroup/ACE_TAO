@@ -1,3 +1,27 @@
+Mon Oct 23 12:24:57 UTC 2006  Chad Elliott  <elliott_c@ociweb.com>
+
+        * tao/PortableServer/Object_Adapter.h:
+        * tao/PortableServer/Object_Adapter.cpp:
+
+          Added a helper method to correctly release the
+          TAO_POAManager_Factory which is used in both the destructor and
+          the close method.
+
+        * tao/PortableServer/POAManagerFactory.h:
+        * tao/PortableServer/POAManagerFactory.cpp:
+
+          When CORBA::release() is called on the POAManagerFactory, the
+          reference count does not necessarily go to zero because it has a
+          set of objects that are still holding on to a reference to the
+          factory.
+
+          I added a method to the POAManagerFactory to remove all the
+          registered poa managers.  This is called by the helper method in
+          the TAO_Object_Adapter class.
+
+          Thanks to Artur DeEsperanto <DrEsperanto at gmx dot net> for
+          reporting this.  This fixes bugid 2686.
+
 Fri Oct 20 16:54:32 UTC 2006  Chad Elliott  <elliott_c@ociweb.com>
 
         * tao/ORB_Core.cpp:
@@ -5,7 +29,7 @@ Fri Oct 20 16:54:32 UTC 2006  Chad Elliott  <elliott_c@ociweb.com>
           Fixed a memory leak where the TAO_Adapter would be leaked in the
           event that an exception occurred before the adapter was added to
           the adapter registry.  Thanks to Artur DeEsperanto <DrEsperanto
-          at gmx dot net> for reporting this.  This fixes bugid 2686.
+          at gmx dot net> for reporting this.
 
         * tao/PortableServer/Object_Adapter.cpp:
 

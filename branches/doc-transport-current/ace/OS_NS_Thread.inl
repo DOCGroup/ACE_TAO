@@ -401,23 +401,9 @@ ACE_OS::cond_timedwait (ACE_cond_t *cv,
                 int, -1, result);
   else
     {
-
-#     if defined (ACE_LYNXOS_MAJOR) && (ACE_LYNXOS_MAJOR == 3) && (ACE_LYNXOS_MINOR == 0)
-      // Note that we must convert between absolute time (which is
-      // passed as a parameter) and relative time (which is what the
-      // LynxOS pthread_cond_timedwait expects).  This differs from 1003.4a
-      // draft 4.
-
-      timespec_t relative_time = *timeout - ACE_OS::gettimeofday ();
-
-      ACE_OSCALL (pthread_cond_timedwait (cv, external_mutex,
-                                            &relative_time),
-                  int, -1, result);
-#     else
       ACE_OSCALL (pthread_cond_timedwait (cv, external_mutex,
                                             (ACE_TIMESPEC_PTR) &ts),
                   int, -1, result);
-#     endif /* ACE_LYNXOS_MAJOR ... */
     }
 
 #     else
@@ -429,10 +415,9 @@ ACE_OS::cond_timedwait (ACE_cond_t *cv,
               int, -1, result);
 #     endif /* ACE_HAS_PTHREADS_DRAFT4 || ACE_HAS_PTHREADS_DRAFT6*/
   // We need to adjust this to make the POSIX and Solaris return
-  // values consistent.  EAGAIN is from Pthreads DRAFT4 (HP-UX 10.20 and
-  // down); EINTR is from LynxOS.
+  // values consistent.  EAGAIN is from Pthreads DRAFT4 (HP-UX 10.20 and down)
   if (result == -1 &&
-      (errno == ETIMEDOUT || errno == EAGAIN || errno == EINTR))
+      (errno == ETIMEDOUT || errno == EAGAIN))
     errno = ETIME;
 
 #   elif defined (ACE_HAS_STHREADS)

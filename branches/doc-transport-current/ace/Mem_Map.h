@@ -207,11 +207,6 @@ private:
   /// HANDLE for the open mapping.
   ACE_HANDLE file_mapping_;
 
-#if defined (ACE_HAS_LYNXOS_BROKEN_MMAP)
-  /// Flag to indicate that PROT_WRITE has been enabled.
-  int write_enabled_;
-#endif /* ACE_HAS_LYNXOS_BROKEN_MMAP */
-
   /// Keeps track of whether we need to close the handle.  This is set
   /// if we opened the file.
   bool close_handle_;
