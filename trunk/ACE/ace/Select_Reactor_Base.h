@@ -303,6 +303,8 @@ public:
                                   ACE_Hash<key_type>,
                                   std::equal_to<key_type>,
                                   ACE_Null_Mutex> map_type;
+
+  typedef map_type::size_type max_handlep1_type;
 #else
   /**
    * The UNIX version implements this via a dynamically allocated
@@ -310,6 +312,7 @@ public:
    * the @c ACE_HANDLE value.
    */
   typedef ACE_Array_Base<value_type> map_type;
+  typedef ACE_HANDLE max_handlep1_type;
 #endif  /* ACE_WIN32 */
 
   typedef map_type::size_type size_type;
@@ -368,7 +371,7 @@ public:
   size_type size (void) const;
 
   /// Maximum ACE_HANDLE value, plus 1.
-  size_type max_handlep1 (void) const;
+  max_handlep1_type max_handlep1 (void) const;
 
   /// Dump the state of an object.
   void dump (void) const;
@@ -397,7 +400,7 @@ private:
 #ifndef ACE_WIN32
   /// The highest currently active handle, plus 1 (ranges between 0 and
   /// @c max_size_.
-  int max_handlep1_;
+  max_handlep1_type max_handlep1_;
 #endif  /* !ACE_WIN32 */
 
   /// Underlying table of event handlers.

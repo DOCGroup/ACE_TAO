@@ -487,9 +487,19 @@ ACE_Select_Reactor_Handler_Repository::dump (void) const
 #if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_Select_Reactor_Handler_Repository::dump");
 
+# ifdef ACE_WIN32
+#  define ACE_HANDLE_FORMAT_SPECIFIER ACE_LIB_TEXT("%@")
+#  define ACE_MAX_HANDLEP1_FORMAT_SPECIFIER ACE_LIB_TEXT("%u")
+# else
+#  define ACE_HANDLE_FORMAT_SPECIFIER ACE_LIB_TEXT("%d")
+#  define ACE_MAX_HANDLEP1_FORMAT_SPECIFIER ACE_LIB_TEXT("%d")
+# endif  /* ACE_WIN32 */
+  
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
   ACE_DEBUG ((LM_DEBUG,
-              ACE_LIB_TEXT ("max_handlep1_ = %d\n"),
+              ACE_LIB_TEXT ("max_handlep1_ = ")
+              ACE_MAX_HANDLEP1_FORMAT_SPECIFIER
+              ACE_LIB_TEXT ("\n"),
               this->max_handlep1 ()));
   ACE_DEBUG ((LM_DEBUG,  ACE_LIB_TEXT ("[")));
 
@@ -498,8 +508,13 @@ ACE_Select_Reactor_Handler_Repository::dump (void) const
   for (ACE_Select_Reactor_Handler_Repository_Iterator iter (this);
        iter.next (event_handler) != 0;
        iter.advance ())
-    ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT (" (event_handler = %x, event_handler->handle_ = %d)\n"),
-                event_handler, event_handler->get_handle ()));
+    ACE_DEBUG ((LM_DEBUG,
+                ACE_LIB_TEXT (" (event_handler = %@,")
+                ACE_LIB_TEXT (" event_handler->handle_ = ")
+                ACE_HANDLE_FORMAT_SPECIFIER
+                ACE_LIB_TEXT ("\n"),
+                event_handler,
+                event_handler->get_handle ()));
 
   ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT (" ]\n")));
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));

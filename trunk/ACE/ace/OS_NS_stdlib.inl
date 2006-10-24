@@ -78,14 +78,11 @@ ACE_OS::atop (const char *s)
 {
   ACE_TRACE ("ACE_OS::atop");
 #if defined (ACE_WIN64)
-  __int64 ip = ::_atoi64 (s);
-#elif defined(ACE_WIN32)
-  // Avoid warnings with /Wp64
-  intptr_t ip = ::atoi (s);
+  intptr_t ip = ::_atoi64 (s);
 #else
-  int ip = ::atoi (s);
+  intptr_t ip = ::atoi (s);
 #endif /* ACE_WIN64 */
-  void *p = reinterpret_cast<void *> (ip);
+  void * p = reinterpret_cast<void *> (ip);
   return p;
 }
 
@@ -94,14 +91,11 @@ ACE_INLINE void *
 ACE_OS::atop (const wchar_t *s)
 {
 #  if defined (ACE_WIN64)
-  __int64 ip = ::_wtoi64 (s);
-#  elif defined(ACE_WIN32)
-  // Avoid warnings with /Wp64
-  intptr_t ip = ACE_OS::atoi (s);
+  intptr ip = ::_wtoi64 (s);
 #  else
-  int ip = ACE_OS::atoi (s);
+  intptr_t ip = ACE_OS::atoi (s);
 #  endif /* ACE_WIN64 */
-  void *p = reinterpret_cast<void *> (ip);
+  void * p = reinterpret_cast<void *> (ip);
   return p;
 }
 #endif /* ACE_HAS_WCHAR */
