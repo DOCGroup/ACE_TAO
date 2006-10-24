@@ -120,7 +120,7 @@ namespace CIAO
     supplier_qos.insert (ACE_ES_EVENT_SOURCE_ANY,
                        ACE_ES_EVENT_ANY,
                        0,    // handle to the rt_info structure
-                       1);    
+                       1);
 
     proxy_push_consumer->connect_push_supplier (push_supplier.in (),
                                                 supplier_qos.get_SupplierQOS ()
@@ -129,7 +129,7 @@ namespace CIAO
 
 
     this->proxy_consumer_map_.bind (
-      supplier_config->supplier_id (), 
+      supplier_config->supplier_id (),
       proxy_push_consumer._retn ());
   }
 
@@ -184,7 +184,7 @@ namespace CIAO
       rt_config->rt_event_qos (ACE_ENV_SINGLE_ARG_PARAMETER);
     ACE_CHECK;
 
-    ACE_DEBUG ((LM_DEBUG, "\n======== ConsumerQoS length is: %d\n\n", 
+    ACE_DEBUG ((LM_DEBUG, "\n======== ConsumerQoS length is: %d\n\n",
                 qos->dependencies.length ()));
 
     if (qos->dependencies.length () == 0)
@@ -194,7 +194,7 @@ namespace CIAO
         qos->dependencies[0].event.header.source = ACE_ES_EVENT_SOURCE_ANY;
         qos->dependencies[0].rt_info = 0;
 
-        ACE_DEBUG ((LM_DEBUG, "\n======== Normalized ConsumerQoS length is: %d\n\n", 
+        ACE_DEBUG ((LM_DEBUG, "\n======== Normalized ConsumerQoS length is: %d\n\n",
                     qos->dependencies.length ()));
       }
 
@@ -276,7 +276,7 @@ namespace CIAO
       }
     RtecEventComm::EventSet events (1);
     events.length (1);
-    
+
     ACE_Hash<ACE_CString> hasher;
 
     events[0].header.source = hasher (source_id);
@@ -293,7 +293,7 @@ namespace CIAO
 
     if (this->proxy_consumer_map_.find (source_id, proxy_consumer) != 0)
       {
-        ACE_DEBUG ((LM_DEBUG, 
+        ACE_DEBUG ((LM_DEBUG,
                     "CIAO (%P|%t) - RTEventService::ciao_push_event, "
                     "Error in finding the proxy consumer object.\n"));
         ACE_THROW (Components::BadEventType ());
@@ -352,20 +352,20 @@ namespace CIAO
     // This will be used by the sender object and the multicast
     // receiver.
     ACE_INET_Addr send_addr (port, address);
-    
+
     //ACE_INET_Addr send_addr (10001, ACE_DEFAULT_MULTICAST_ADDR);
 
     SimpleAddressServer * addr_srv_impl = new SimpleAddressServer (send_addr);
 
     PortableServer::ObjectId_var addr_srv_oid =
       this->root_poa_->activate_object (addr_srv_impl);
-    CORBA::Object_var addr_srv_obj = 
+    CORBA::Object_var addr_srv_obj =
       this->root_poa_->id_to_reference (addr_srv_oid.in());
     RtecUDPAdmin::AddrServer_var addr_srv =
       RtecUDPAdmin::AddrServer::_narrow (addr_srv_obj.in());
 
     this->addr_serv_map_.bind (
-      name, 
+      name,
       RtecUDPAdmin::AddrServer::_duplicate (addr_srv.in ()));
 
     return true;
@@ -386,7 +386,7 @@ namespace CIAO
 
     TAO_ECG_UDP_Out_Endpoint endpoint;
 
-    if (endpoint.dgram ().open (ACE_Addr::sap_any) == -1) 
+    if (endpoint.dgram ().open (ACE_Addr::sap_any) == -1)
       {
         ACE_DEBUG ((LM_ERROR, "Cannot open send endpoint\n"));
         return false;
@@ -404,7 +404,7 @@ namespace CIAO
     if (this->addr_serv_map_.find (addr_serv_id, addr_srv) != 0)
       return false;
 
-    sender->init (this->rt_event_channel_.in (), 
+    sender->init (this->rt_event_channel_.in (),
                   addr_srv.in (),
                   clone);
 
@@ -437,7 +437,7 @@ namespace CIAO
     if (is_multicast)
       {
         TAO_ECG_UDP_Out_Endpoint endpoint;
-        if (endpoint.dgram ().open (ACE_Addr::sap_any) == -1) 
+        if (endpoint.dgram ().open (ACE_Addr::sap_any) == -1)
           {
             ACE_DEBUG ((LM_ERROR, "Cannot open send endpoint\n"));
             return false;
@@ -456,7 +456,7 @@ namespace CIAO
         if (this->addr_serv_map_.find (addr_serv_id, addr_srv) != 0)
           return false;
 
-        receiver->init (this->rt_event_channel_.in (), 
+        receiver->init (this->rt_event_channel_.in (),
                         clone,
                         addr_srv.in ());
       }
@@ -472,16 +472,15 @@ namespace CIAO
     receiver->connect (pub);
 
     // Create the appropriate event handler and register it with the reactor
-    auto_ptr<ACE_Event_Handler> eh;
 
-    if (is_multicast) 
+    if (is_multicast)
       {
         auto_ptr<TAO_ECG_Mcast_EH> mcast_eh (new TAO_ECG_Mcast_EH (receiver.in()));
         mcast_eh->reactor (this->orb_->orb_core ()->reactor ());
         mcast_eh->open (this->rt_event_channel_.in());
-        ACE_AUTO_PTR_RESET (eh, mcast_eh.release(), ACE_Event_Handler);
-      } 
-    else 
+        mcast_eh.release();
+      }
+    else
       {
         ACE_DEBUG ((LM_DEBUG, "\nUDP Event Handler Port [%d]\n", listen_port));
 
@@ -494,7 +493,7 @@ namespace CIAO
             ACE_DEBUG ((LM_ERROR, "Cannot open event handler on port [%d]\n", listen_port));
             return false;
           }
-        ACE_AUTO_PTR_RESET (eh, udp_eh.release(), ACE_Event_Handler);
+        udp_eh.release ();
       }
 
     return true;
@@ -556,7 +555,7 @@ namespace CIAO
             << "  type: "   << events[i].header.type
             << "  source: " << events[i].header.source;
 
-        ACE_OS::printf("%s\n", out.str().c_str()); // printf is synchronized 
+        ACE_OS::printf("%s\n", out.str().c_str()); // printf is synchronized
 
         Components::EventBase * ev = 0;
         if (events[i].data.any_value >>= ev)
@@ -633,7 +632,7 @@ namespace CIAO
     this->qos_.insert (ACE_ES_EVENT_SOURCE_ANY,
                        ACE_ES_EVENT_ANY,
                        0,    // handle to the rt_info structure
-                       1);        
+                       1);
 
     ACE_DEBUG ((LM_DEBUG, "supplier's source id is: %d\n", source_id));
   }
