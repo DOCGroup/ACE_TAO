@@ -498,7 +498,7 @@ ACE_Hash_Map_Iterator_Base_Ex<EXT_ID,
     index_ (head ? -1 : (ssize_t) mm.total_size_),
     next_ (0)
 {
-  ACE_TRACE ("ACE_Hash_Map_Iterator_Base_Ex<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK>::ACE_Hash_Map_Iterator_Base_Ex");
+//   ACE_TRACE ("ACE_Hash_Map_Iterator_Base_Ex<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK>::ACE_Hash_Map_Iterator_Base_Ex");
 
   if (mm.table_ != 0)
     this->next_ = &mm.table_[head ? 0 : mm.total_size_ - 1];

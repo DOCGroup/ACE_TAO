@@ -1,3 +1,12 @@
+Tue Oct 24 23:49:25 UTC 2006  Ossama Othman  <ossama_othman at symantec dot com>
+
+        * ace/Hash_Map_Manager_T.inl (ACE_Hash_Map_Iterator_Base_Ex):
+
+          Commented out use of ACE_TRACE macro.  The regular expression in
+          the bin/fuzz.pl script used to detect ACE_TRACE mismatch
+          incorrectly identifies a mismatch the ACE_TRACE question.  Once
+          the fuzz script is fixed, the ACE_TRACE can be uncommented.
+
 Tue Oct 24 22:20:38 UTC 2006  Ossama Othman  <ossama_othman at symantec dot com>
 
         * ace/Truncate.h:
