@@ -1,3 +1,15 @@
+Tue Oct 24 23:53:08 UTC 2006  Steve Huston  <shuston@riverace.com>
+
+        * ace/config-aix-4.x.h: Changed ACE_HAS_PTHREAD_CONTINUE to
+          ACE_HAS_PTHREAD_CONTINUE_NP and ACE_HAS_PTHREAD_SUSPEND to
+          ACE_HAS_PTHREAD_SUSPEND_NP. The non-_NP varieties return ENOTSUP;
+          the _NP varieties are the only documented APIs through AIX 5.3.
+          Thanks to Guy Peleg for raising this issue.
+
+        * tests/Thread_Manager_Test.cpp: Altered the suspend/resume tests to
+          only allow ENOTSUP as a legit result if the config.h file does not
+          include ACE_HAS_... settings that indicate it should work.
+
 Tue Oct 24 23:59:10 UTC 2006  Ossama othman  <ossama_othman at symantec dot com>
 
         * examples/Service_Configurator/IPC-tests/server/Handle_Timeout.inl
