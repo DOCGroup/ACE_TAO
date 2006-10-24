@@ -161,6 +161,7 @@
 # define ACE_LACKS_IOVEC
 # define ACE_LACKS_IN_ADDR
 # define ACE_LACKS_SOCKADDR_IN
+# define ACE_LACKS_HOSTENT
 
 // Missing methods
 # define ACE_LACKS_GETHOSTBYADDR
