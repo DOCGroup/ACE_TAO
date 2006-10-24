@@ -1,7 +1,13 @@
+Tue Oct 25 10:58:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+	* ace/os_include/netinet/os_in.h:
+        * ace/config-rtems.h:
+	  Added ACE_LACKS_IN_ADDR and ACE_LACKS_SOCKADDR_IN
+
 Mon Oct 24 06:31:05 UTC 2006  Ossama Othman  <ossama_othman at symantec dot com>
 
         * ace/Numeric_Limits.h (ACE_Numeric_Limits):
-        
+
           Added missing "char" specialization for the
           ACE_LACKS_NUMERIC_LIMITS case.  The "signed char" and
           "unsigned char" specializations are not always suitable.
@@ -13,7 +19,7 @@ Mon Oct 24 04:04:26 UTC 2006  Ossama Othman  <ossama_othman at symantec dot com>
           Placed "mutable" keyword to beginning of declaration.  It is a
           storage class specifier, not a CV qualifier, and belongs at the
           beginning.  Addresses g++ warnings.
-        
+
         * ace/Sock_Connect.cpp (get_fqdn):
 
           Addressed "might be used uninitialized warnings.
@@ -37,7 +43,7 @@ Mon Oct 23 02:28:42 UTC 2006  Ossama Othman  <ossama_othman at symantec dot com>
           ACE_DECLARE_STL_REVERSE_ITERATORS so that other ACE containers
           may use them in a way that minimizes platform-specific
           declaration duplication.
-        
+
         * ace/CDR_Stream.cpp (read_boolean_array):
 
           Addressed a Coverity CHECKED_RETURN error.  There's no need to
@@ -289,7 +295,7 @@ Mon Oct 23 13:29:15 UTC 2006  Olli Savia  <ops@iki.fi>
         * ace/Task_T.h:
         * ace/config-lynxos.h:
         * include/makeinclude/platform_lynxos.GNU:
-        
+
           Removed LynxOS 3.x support.
 
 Mon Oct 23 12:59:35 UTC 2006  Chad Elliott  <elliott_c@ociweb.com>

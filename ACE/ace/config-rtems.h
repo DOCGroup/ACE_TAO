@@ -159,6 +159,7 @@
 
 // Missing types
 # define ACE_LACKS_IOVEC
+# define ACE_LACKS_IN_ADDR
 # define ACE_LACKS_SOCKADDR_IN
 
 // Missing methods

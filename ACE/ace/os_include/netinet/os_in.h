@@ -68,6 +68,23 @@ extern "C"
   };
 # endif /* ! ACE_HAS_IP_MULTICAST  &&  ACE_LACKS_IP_ADD_MEMBERSHIP */
 
+# if defined (ACE_LACKS_IN_ADDR)
+  struct in_addr
+    {
+      u_long s_addr;
+    };
+# endif /* ACE_LACKS_IN_ADDR */
+
+# if defined (ACE_LACKS_SOCKADDR_IN)
+  struct sockaddr_in
+  {
+    short            sin_family;   // e.g. AF_INET
+    unsigned short   sin_port;     // e.g. htons(3490)
+    struct in_addr   sin_addr;     // see struct in_addr, below
+    char             sin_zero[8];  // zero this if you want to
+  };
+# endif /* ACE_LACKS_SOCKADDR_IN */
+
 #if !defined (IPPORT_RESERVED)
 #  define IPPORT_RESERVED       1024
 #endif /* !IPPORT_RESERVED */
