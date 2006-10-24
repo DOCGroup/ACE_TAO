@@ -1,3 +1,12 @@
+Tue Oct 24 18:00:15 UTC 2006  Ossama Othman  <ossama_othman at symantec dot com>
+
+        * common/common.mpc:
+        * parser/parser/parser.mpc:
+
+          Re-disabled ACEXML when ace_for_tao is enabled.  ACEXML needs
+          the ACE_Configuration and memory map classes that are not found
+          in the ace_for_tao subset.
+
 Mon Oct 24 02:26:32 UTC 2006  Ossama Othman  <ossama_othman at symantec dot com>
 
         * common/common.mpc:
