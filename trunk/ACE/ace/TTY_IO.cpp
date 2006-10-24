@@ -15,12 +15,12 @@ ACE_RCSID (ace,
            TTY_IO,
            "$Id$")
 
-#if defined (ACE_HAS_TERMIOS) || defined (ACE_HAS_TERMIO) || defined (ACE_WIN32)
 namespace
 {
+  const char ACE_TTY_IO_NONE[]  = "none";
+#if defined (ACE_HAS_TERMIOS) || defined (ACE_HAS_TERMIO) || defined (ACE_WIN32)
   const char ACE_TTY_IO_ODD[]   = "odd";
   const char ACE_TTY_IO_EVEN[]  = "even";
-  const char ACE_TTY_IO_NONE[]  = "none";
 #if defined (ACE_WIN32)
   const char ACE_TTY_IO_MARK[]  = "mark";
   const char ACE_TTY_IO_SPACE[] = "space";
@@ -32,7 +32,6 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_TTY_IO::Serial_Params::Serial_Params (void)
 {
-#if defined (ACE_HAS_TERMIOS) || defined (ACE_HAS_TERMIO) || defined (ACE_WIN32)
   baudrate = 9600;
   xonlim = 0;
   xofflim = 0;
@@ -50,7 +49,6 @@ ACE_TTY_IO::Serial_Params::Serial_Params (void)
   dtrdisable = false;
   databits = 8;
   stopbits = 1;
-#endif
 }
 
 // Interface for reading/writing serial device parameters
