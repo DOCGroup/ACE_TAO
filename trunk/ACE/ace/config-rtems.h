@@ -175,6 +175,8 @@
 # define ACE_LACKS_SHUTDOWN
 # define ACE_LACKS_SETSOCKOPT
 # define ACE_LACKS_INET_ATON
+# define ACE_LACKS_INET_ADDR
+# define ACE_LACKS_INET_NTOA
 
 // Missing OS features
 # define ACE_LACKS_UNIX_SYSLOG
