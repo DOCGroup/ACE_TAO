@@ -170,6 +170,7 @@
 # define ACE_LACKS_BIND
 # define ACE_LACKS_NTOHL
 # define ACE_LACKS_HTONL
+# define ACE_LACKS_SELECT
 
 // Missing OS features
 # define ACE_LACKS_UNIX_SYSLOG
