@@ -111,6 +111,10 @@ extern "C"
 #  define AF_INET 2
 #endif /* AF_INET */
 
+#if !defined (PF_INET)
+#  define PF_INET AF_INET
+#endif /* PF_INET */
+
 #if !defined (AF_MAX)
 #  define AF_MAX 29
 #endif /* AF_MAX */
