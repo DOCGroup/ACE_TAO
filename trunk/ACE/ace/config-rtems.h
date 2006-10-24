@@ -173,6 +173,7 @@
 # define ACE_LACKS_BIND
 # define ACE_LACKS_NTOHL
 # define ACE_LACKS_HTONL
+# define ACE_LACKS_HTONS
 # define ACE_LACKS_SELECT
 # define ACE_LACKS_SOCKET
 # define ACE_LACKS_SHUTDOWN
