@@ -522,7 +522,7 @@ protected:
 
   /// Synchronization variable for the MT_SAFE
   /// @c ACE_Hash_Map_Manager_Ex.
-  ACE_LOCK mutable lock_;
+  mutable ACE_LOCK lock_;
 
   /// Function object used for hashing keys.
   HASH_KEY hash_key_;
