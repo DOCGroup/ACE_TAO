@@ -171,6 +171,9 @@
 # define ACE_LACKS_NTOHL
 # define ACE_LACKS_HTONL
 # define ACE_LACKS_SELECT
+# define ACE_LACKS_SOCKET
+# define ACE_LACKS_SHUTDOWN
+# define ACE_LACKS_SETSOCKOPT
 
 // Missing OS features
 # define ACE_LACKS_UNIX_SYSLOG
