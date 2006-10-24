@@ -107,6 +107,10 @@ extern "C"
 #  define AF_UNSPEC 0
 #endif /* AF_UNSPEC */
 
+#if !defined (AF_INET)
+#  define AF_INET 2
+#endif /* AF_INET */
+
 #if !defined (PF_UNSPEC)
 #  define PF_UNSPEC 0
 #endif /* PF_UNSPEC */
