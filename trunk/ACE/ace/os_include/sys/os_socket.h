@@ -107,6 +107,10 @@ extern "C"
 #  define AF_UNSPEC 0
 #endif /* AF_UNSPEC */
 
+#if !defined (AF_LOCAL)
+#  define AF_LOCAL 1
+#endif /* AF_LOCAL */
+
 #if !defined (AF_INET)
 #  define AF_INET 2
 #endif /* AF_INET */
@@ -114,6 +118,14 @@ extern "C"
 #if !defined (PF_INET)
 #  define PF_INET AF_INET
 #endif /* PF_INET */
+
+#if !defined (PF_LOCAL)
+#  define PF_LOCAL AF_LOCAL
+#endif /* PF_LOCAL */
+
+#if !defined (PF_UNIX)
+#  define PF_UNIX PF_LOCAL
+#endif /* PF_UNIX */
 
 #if !defined (AF_MAX)
 #  define AF_MAX 29
@@ -145,6 +157,22 @@ extern "C"
 #if !defined (SOCK_DGRAM)
 #  define SOCK_DGRAM 2
 #endif /* SOCK_DGRAM */
+
+#if !defined (SOL_SOCKET)
+#  define SOL_SOCKET 0xffff
+#endif /* SOL_SOCKET */
+
+#if !defined (SO_REUSEADDR)
+#  define SO_REUSEADDR 0x0004
+#endif /* SO_REUSEADDR */
+
+#if !defined (SO_SNDBUF)
+#  define SO_SNDBUF 0x1001
+#endif /* SO_SNDBUF */
+
+#if !defined (SO_RCVBUF)
+#  define SO_RCVBUF 0x1002
+#endif /* SO_RCVBUF */
 
 #if defined (ACE_HAS_IPV6)
 #  if defined (ACE_USES_IPV4_IPV6_MIGRATION)
