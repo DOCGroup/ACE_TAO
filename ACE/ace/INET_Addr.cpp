@@ -732,8 +732,10 @@ ACE_INET_Addr::set_port_number (u_short port_number,
 {
   ACE_TRACE ("ACE_INET_Addr::set_port_number");
 
+#if !defined (ACE_LACKS_HTONS)
   if (encode)
     port_number = htons (port_number);
+#endif /* ACE_LACKS_HTONS */
 
 #if defined (ACE_HAS_IPV6)
   if (this->get_type () == AF_INET6)

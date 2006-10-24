@@ -2603,8 +2603,8 @@ ACE::handle_timed_complete (ACE_HANDLE h,
   ex_handles.set_bit (h);
 #endif /* ACE_WIN32 */
 
-  int need_to_check = 0;
-  int known_failure = 0;
+  bool need_to_check = false;
+  bool known_failure = false;
 
 #if defined (ACE_WIN32)
   int n = ACE_OS::select (0,    // Ignored on Windows: int (h) + 1,
@@ -2649,8 +2649,8 @@ ACE::handle_timed_complete (ACE_HANDLE h,
   // what getsockopt says about the error.
   if (ex_handles.is_set (h))
     {
-      need_to_check = 1;
-      known_failure = 1;
+      need_to_check = true;
+      known_failure = true;
     }
 #elif defined (ACE_VXWORKS)
   ACE_UNUSED_ARG (is_tli);
@@ -2658,7 +2658,7 @@ ACE::handle_timed_complete (ACE_HANDLE h,
   // Force the check on VxWorks.  The read handle for "h" is not set,
   // so "need_to_check" is false at this point.  The write handle is
   // set, for what it's worth.
-  need_to_check = 1;
+  need_to_check = true;
 #else
   if (is_tli)
 
@@ -2672,7 +2672,7 @@ ACE::handle_timed_complete (ACE_HANDLE h,
 #if defined(AIX)
     // AIX is broken... both success and failed connect will set the
     // write handle only, so always check.
-    need_to_check = 1;
+    need_to_check = true;
 #else
 # if defined (ACE_HAS_POLL) && defined (ACE_HAS_LIMITED_SELECT)
   need_to_check = (fds.revents & POLLIN);
