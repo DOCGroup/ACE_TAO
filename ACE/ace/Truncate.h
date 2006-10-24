@@ -507,7 +507,7 @@ namespace ACE_Utils
   //----------------------------------------------------------
 
   template<>
-  struct Truncator<ACE_INT32, ACE_INT8>
+  struct ACE_Export Truncator<ACE_INT32, ACE_INT8>
   {
     static ACE_INT8 truncate (ACE_INT32 val)
     {
@@ -519,7 +519,7 @@ namespace ACE_Utils
   };
 
   template<>
-  struct Truncator<ACE_UINT32, ACE_UINT8>
+  struct ACE_Export Truncator<ACE_UINT32, ACE_UINT8>
   {
     static ACE_UINT8 truncate (ACE_UINT32 val)
     {
@@ -531,7 +531,7 @@ namespace ACE_Utils
   };
 
   template<>
-  struct Truncator<ACE_INT32, ACE_UINT8>
+  struct ACE_Export Truncator<ACE_INT32, ACE_UINT8>
   {
     static ACE_UINT8 truncate (ACE_INT32 val)
     {
@@ -543,7 +543,7 @@ namespace ACE_Utils
   };
 
   template<>
-  struct Truncator<ACE_UINT32, ACE_INT8>
+  struct ACE_Export Truncator<ACE_UINT32, ACE_INT8>
   {
     static ACE_INT8 truncate (ACE_UINT32 val)
     {
@@ -555,7 +555,7 @@ namespace ACE_Utils
   };
 
   template<>
-  struct Truncator<ACE_INT64, ACE_INT32>
+  struct ACE_Export Truncator<ACE_INT64, ACE_INT32>
   {
     static ACE_INT32 truncate (ACE_INT64 val)
     {
@@ -567,7 +567,7 @@ namespace ACE_Utils
   };
 
   template<>
-  struct Truncator<ACE_INT64, ACE_UINT32>
+  struct ACE_Export Truncator<ACE_INT64, ACE_UINT32>
   {
     static ACE_UINT32 truncate (ACE_INT64 val)
     {
@@ -579,7 +579,7 @@ namespace ACE_Utils
   };
 
   template<>
-  struct Truncator<ACE_UINT64, ACE_UINT32>
+  struct ACE_Export Truncator<ACE_UINT64, ACE_UINT32>
   {
     static ACE_UINT32 truncate (ACE_UINT64 val)
     {
@@ -591,7 +591,7 @@ namespace ACE_Utils
   };
 
   template<>
-  struct Truncator<ACE_UINT64, ACE_INT32>
+  struct ACE_Export Truncator<ACE_UINT64, ACE_INT32>
   {
     static ACE_INT32 truncate (ACE_UINT64 val)
     {
@@ -607,7 +607,7 @@ namespace ACE_Utils
   //----------------------------------------------------------
 
   template<>
-  struct Truncator<ACE_INT32, ACE_UINT32>
+  struct ACE_Export Truncator<ACE_INT32, ACE_UINT32>
   {
     static ACE_UINT32 truncate (ACE_INT32 val)
     {
@@ -616,7 +616,7 @@ namespace ACE_Utils
   };
 
   template<>
-  struct Truncator<ACE_UINT32, ACE_INT32>
+  struct ACE_Export Truncator<ACE_UINT32, ACE_INT32>
   {
     static ACE_INT32 truncate (ACE_UINT32 val)
     {
@@ -628,7 +628,7 @@ namespace ACE_Utils
   };
 
   template<>
-  struct Truncator<ACE_INT64, ACE_UINT64>
+  struct ACE_Export Truncator<ACE_INT64, ACE_UINT64>
   {
     static ACE_UINT64 truncate (ACE_INT64 val)
     {
@@ -637,7 +637,7 @@ namespace ACE_Utils
   };
 
   template<>
-  struct Truncator<ACE_UINT64, ACE_INT64>
+  struct ACE_Export Truncator<ACE_UINT64, ACE_INT64>
   {
     static ACE_INT64 truncate (ACE_UINT64 val)
     {
@@ -653,7 +653,7 @@ namespace ACE_Utils
   //----------------------------------------------------------
 
   template<>
-  struct Truncator<ACE_INT8, ACE_INT32>
+  struct ACE_Export Truncator<ACE_INT8, ACE_INT32>
   {
     static ACE_INT32 truncate (ACE_INT8 val)
     {
@@ -662,7 +662,7 @@ namespace ACE_Utils
   };
 
   template<>
-  struct Truncator<ACE_UINT8, ACE_UINT32>
+  struct ACE_Export Truncator<ACE_UINT8, ACE_UINT32>
   {
     static ACE_UINT32 truncate (ACE_UINT8 val)
     {
@@ -671,7 +671,7 @@ namespace ACE_Utils
   };
 
   template<>
-  struct Truncator<ACE_UINT8, ACE_INT32>
+  struct ACE_Export Truncator<ACE_UINT8, ACE_INT32>
   {
     static ACE_INT32 truncate (ACE_UINT8 val)
     {
@@ -680,7 +680,7 @@ namespace ACE_Utils
   };
 
   template<>
-  struct Truncator<ACE_INT8, ACE_UINT32>
+  struct ACE_Export Truncator<ACE_INT8, ACE_UINT32>
   {
     static ACE_UINT32 truncate (ACE_INT8 val)
     {
@@ -689,7 +689,7 @@ namespace ACE_Utils
   };
 
   template<>
-  struct Truncator<ACE_INT32, ACE_INT64>
+  struct ACE_Export Truncator<ACE_INT32, ACE_INT64>
   {
     static ACE_INT64 truncate (ACE_INT32 val)
     {
@@ -698,7 +698,7 @@ namespace ACE_Utils
   };
 
   template<>
-  struct Truncator<ACE_INT32, ACE_UINT64>
+  struct ACE_Export Truncator<ACE_INT32, ACE_UINT64>
   {
     static ACE_UINT64 truncate (ACE_INT32 val)
     {
@@ -707,7 +707,7 @@ namespace ACE_Utils
   };
 
   template<>
-  struct Truncator<ACE_UINT32, ACE_UINT64>
+  struct ACE_Export Truncator<ACE_UINT32, ACE_UINT64>
   {
     static ACE_UINT64 truncate (ACE_UINT32 val)
     {
@@ -716,7 +716,7 @@ namespace ACE_Utils
   };
 
   template<>
-  struct Truncator<ACE_UINT32, ACE_INT64>
+  struct ACE_Export Truncator<ACE_UINT32, ACE_INT64>
   {
     static ACE_INT64 truncate (ACE_UINT32 val)
     {
