@@ -1,3 +1,9 @@
+Tue Oct 24 22:20:38 UTC 2006  Ossama Othman  <ossama_othman at symantec dot com>
+
+        * ace/Truncate.h:
+
+          Yet another attempt at fixing Borland compiler brain damage.
+
 Tue Oct 24 22:01:41 UTC 2006  Ossama Othman  <ossama_othman at symantec dot com>
 
         * ace/OS_NS_stdlib.inl (atop):
