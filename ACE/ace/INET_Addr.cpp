@@ -357,6 +357,7 @@ static int get_port_number_from_name (const char port_name[],
 {
   int port_number = 0;
 
+#if !defined (ACE_LACKS_HTONS)
   // Maybe port_name is directly a port number?
   char *endp = 0;
   port_number = static_cast<int> (ACE_OS::strtol (port_name, &endp, 10));
@@ -370,6 +371,7 @@ static int get_port_number_from_name (const char port_name[],
       n = htons (n);
       return n;
     }
+#endif
 
   // We try to resolve port number from its name.
 

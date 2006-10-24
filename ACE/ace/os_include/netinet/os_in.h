@@ -85,6 +85,14 @@ extern "C"
   };
 # endif /* ACE_LACKS_SOCKADDR_IN */
 
+# if defined (ACE_LACKS_IP_MREQ)
+  struct ip_mreq
+  {
+    struct  in_addr imr_multiaddr;  /* IP multicast address of group */
+    struct  in_addr imr_interface;  /* local IP address of interface */
+  };
+# endif /* ACE_LACKS_IP_MREQ */
+
 #if !defined (IPPORT_RESERVED)
 #  define IPPORT_RESERVED       1024
 #endif /* !IPPORT_RESERVED */

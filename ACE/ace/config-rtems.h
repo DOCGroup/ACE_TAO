@@ -163,6 +163,7 @@
 # define ACE_LACKS_SOCKADDR_IN
 # define ACE_LACKS_HOSTENT
 # define ACE_LACKS_SOCKADDR
+# define ACE_LACKS_IP_MREQ
 
 // Missing methods
 # define ACE_LACKS_GETHOSTBYADDR

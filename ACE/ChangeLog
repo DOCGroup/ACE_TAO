@@ -1,3 +1,13 @@
+Tue Oct 24 13:54:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+	* ace/os_include/netinet/os_in.h:
+	* ace/config-rtems.h:
+	  Added ACE_LACKS_IP_MREQ
+
+	* ace/INET_Addr.cpp (get_port_number_from_name):
+	  Added ACE_LACKS_HTONS check
+
+
 Tue Oct 24 13:27:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 	* ace/Reactor.h:
