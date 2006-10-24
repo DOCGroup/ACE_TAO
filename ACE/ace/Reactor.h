@@ -30,6 +30,9 @@
 // Event_Handler.h contains the definition of ACE_Reactor_Mask
 #include "ace/Event_Handler.h"
 
+// Get ACE_Time_Value in
+#include "ace/Time_Value.h"
+
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class ACE_Reactor_Impl;
