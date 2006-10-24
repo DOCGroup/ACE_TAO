@@ -111,6 +111,10 @@ extern "C"
 #  define AF_INET 2
 #endif /* AF_INET */
 
+#if !defined (AF_MAX)
+#  define AF_MAX 29
+#endif /* AF_MAX */
+
 #if !defined (PF_UNSPEC)
 #  define PF_UNSPEC 0
 #endif /* PF_UNSPEC */
@@ -125,6 +129,10 @@ extern "C"
 #if !defined (MSG_OOB)
 #  define MSG_OOB 0x1
 #endif /* MSG_OOB */
+
+#if !defined (MSG_PEEK)
+#  define MSG_PEEK 0x2
+#endif /* MSG_PEEK */
 
 #if defined (ACE_HAS_IPV6)
 #  if defined (ACE_USES_IPV4_IPV6_MIGRATION)
