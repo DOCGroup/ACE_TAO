@@ -1,3 +1,10 @@
+Wed Oct 25 08:11:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+	* ace/config-rtems.h:
+	* ace/OS_NS_sys_socket.inl:
+	  Added ACE_LACKS_GETSOCKOPT, ACE_LACKS_RECV, ACE_LACKS_SEND,
+	  and ACE_LACKS_SENDTO
+
 Wed Oct 25 08:04:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 	* tests/Priority_Buffer_Test.cpp:
