@@ -16,7 +16,11 @@ Wed Oct 26 00:31:56 UTC 2006  Ossama Othman  <ossama_othman at symantec dot com>
 
             ACE_auto_ptr_reset (my_auto_ptr_instance, new foo);
 
-          This build failures on platforms that define
+          Note that ACE_AUTO_PTR_RESET support for ACE's other
+          auto_ptr-like classes isn't strictly necessary since they all
+          support the reset() method.
+
+          Addresses build failures on platforms that define
           ACE_LACKS_AUTO_PTR_RESET and in code that expects to use
           ACE_AUTO_PTR_RESET on ACE_Auto_{Basic_}_Array<> instances.
 
