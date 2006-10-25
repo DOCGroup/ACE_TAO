@@ -13,6 +13,9 @@ namespace CCF
 {
   namespace IDL3
   {
+    using  IDL2::Parsing::DiagnosticType;
+    using  IDL2::Parsing::RecoveryMethod;
+
     Parser::
     Parser (CompilerElements::Context& context,
             Diagnostic::Stream& dout,
@@ -48,10 +51,10 @@ namespace CCF
             f.component (), &SemanticAction::Component::supports),
 
           act_component_open_scope (
-            f.component (), &SemanticAction::Component::open_scope),
+            f.component (), &SemanticAction::Scope::open_scope),
 
           act_component_close_scope (
-            f.component (), &SemanticAction::Component::close_scope),
+            f.component (), &SemanticAction::Scope::close_scope),
 
           act_component_end         (
             f.component (), &SemanticAction::Component::end),
@@ -112,10 +115,10 @@ namespace CCF
             f.event_type (), &SemanticAction::EventType::supports),
 
           act_event_type_open_scope (
-            f.event_type (), &SemanticAction::EventType::open_scope),
+            f.event_type (), &SemanticAction::Scope::open_scope),
 
           act_event_type_close_scope (
-            f.event_type (), &SemanticAction::EventType::close_scope),
+            f.event_type (), &SemanticAction::Scope::close_scope),
 
           act_event_type_end (
             f.event_type (), &SemanticAction::EventType::end),
@@ -147,10 +150,10 @@ namespace CCF
             f.home (), &SemanticAction::Home::manages),
 
           act_home_open_scope (
-            f.home (), &SemanticAction::Home::open_scope),
+            f.home (), &SemanticAction::Scope::open_scope),
 
           act_home_close_scope (
-            f.home (), &SemanticAction::Home::close_scope),
+            f.home (), &SemanticAction::Scope::close_scope),
 
           act_home_end (
             f.home (), &SemanticAction::Home::end),
@@ -193,11 +196,11 @@ namespace CCF
            (
              assertion ("interface, valuetype or eventtype declaration expected")
              (
-                 (INTERFACE >> assertion ()(abstract_interface_decl))
+                 (INTERFACE >> abstract_interface_decl)
                |
-                 (VALUETYPE >> assertion ()(abstract_value_type_decl))
+                 (VALUETYPE >> abstract_value_type_decl)
                |
-                 (EVENTTYPE >> assertion ()(abstract_event_type_decl))
+                 (EVENTTYPE >> abstract_event_type_decl)
              )
            )[error_handler]
         ;
@@ -208,65 +211,169 @@ namespace CCF
 
       component_decl =
            COMPONENT
-        >> (
-               (
-                    simple_identifier
-                 >> SEMI
-               )[act_component_begin_fwd][act_component_end]
-             |
-               (
-                    (
-                         simple_identifier
-                      >> COLON
-                    )[act_component_begin_def]
-                 >> component_inheritance_spec
-                 >> !(SUPPORTS >> component_support_spec)
-                 >> LCBRACE[act_component_open_scope]
-                 >> component_def_trailer
-               )
-             |
-               (
-                    (
-                         simple_identifier
-                      >> SUPPORTS
-                    )[act_component_begin_def]
-                 >> component_support_spec
-                 >> LCBRACE[act_component_open_scope]
-                 >> component_def_trailer
-               )
-             |
-               (
-                    (
-                         simple_identifier
-                      >> LCBRACE
-                    )[act_component_begin_def][act_component_open_scope]
-                 >> component_def_trailer
-               )
+        >> guard
+           (
+             assertion ("component declaration expected",
+                     DiagnosticType::BEFORE)
+             (
+                 (
+                      simple_identifier
+                   >> SEMI
+                 )[act_component_begin_fwd][act_component_end]
+               |
+                 (
+                      (
+                           simple_identifier
+                        >> COLON
+                      )[act_component_begin_def]
 
-           )
+                   >> hood
+                      (
+                           component_inheritance_spec
+                        >> !(SUPPORTS >> component_support_spec)
+                        >> assertion ("'{' expected")
+                           (
+                             LCBRACE[act_component_open_scope]
+                           )
+                        >> hood (component_body)
+                           [
+                             handler (f.component (),
+                                      &SemanticAction::Component::close_scope)
+                           ]
+                        >> assertion ("'}' expected",
+                                      f.component (),
+                                      &SemanticAction::Component::close_scope,
+                                      DiagnosticType::BEFORE)
+                           (
+                             RCBRACE[act_component_close_scope]
+                           )
+                      )
+                      [
+                        handler (f.component (),
+                                 &SemanticAction::Component::end)
+                      ]
+
+                   >> assertion ("';' expected",
+                              f.component (),
+                              &SemanticAction::Component::end,
+                              RecoveryMethod::NONE)
+                   (
+                     SEMI[act_component_end]
+                   )
+                 )
+               |
+                 (
+                      (
+                           simple_identifier
+                        >> SUPPORTS
+                      )[act_component_begin_def]
+
+                   >> hood
+                      (
+                           component_support_spec
+                        >> assertion ("'{' expected")
+                           (
+                             LCBRACE[act_component_open_scope]
+                           )
+                        >> hood (component_body)
+                           [
+                             handler (f.component (),
+                                      &SemanticAction::Component::close_scope)
+                           ]
+                        >> assertion ("'}' expected",
+                                      f.component (),
+                                      &SemanticAction::Component::close_scope,
+                                      DiagnosticType::BEFORE)
+                           (
+                             RCBRACE[act_component_close_scope]
+                           )
+                      )
+                      [
+                        handler (f.component (),
+                                 &SemanticAction::Component::end)
+                      ]
+
+                   >> assertion ("';' expected",
+                              f.component (),
+                              &SemanticAction::Component::end,
+                              RecoveryMethod::NONE)
+                   (
+                     SEMI[act_component_end]
+                   )
+                 )
+               |
+                 (
+                      (
+                           simple_identifier
+                        >> LCBRACE
+                      )[act_component_begin_def][act_component_open_scope]
+
+                   >> hood
+                      (
+                           hood (component_body)
+                           [
+                             handler (f.component (),
+                                      &SemanticAction::Component::close_scope)
+                           ]
+                        >> assertion ("'}' expected",
+                                      f.component (),
+                                      &SemanticAction::Component::close_scope,
+                                      DiagnosticType::BEFORE)
+                           (
+                             RCBRACE[act_component_close_scope]
+                           )
+                      )
+                      [
+                        handler (f.component (),
+                                 &SemanticAction::Component::end)
+                      ]
+
+                   >> assertion ("';' expected",
+                              f.component (),
+                              &SemanticAction::Component::end,
+                              RecoveryMethod::NONE)
+                   (
+                     SEMI[act_component_end]
+                   )
+                 )
+             )
+           )[error_handler]
         ;
 
-      component_def_trailer =
-           component_body
-        >> RCBRACE[act_component_close_scope]
-        >> SEMI[act_component_end]
-        ;
-
-      component_inheritance_spec = identifier[act_component_inherits]
+      component_inheritance_spec =
+        guard
+        (
+          assertion ("base component name expected")
+          (
+            identifier[act_component_inherits]
+          )
+        )[error_handler]
         ;
 
       component_support_spec =
-           identifier[act_component_supports]
-        >> *(COMMA >> identifier[act_component_supports])
+        guard
+        (
+              assertion ("supported interface name expected")
+              (
+                identifier[act_component_supports]
+              )
+           >> *(
+                    COMMA
+                 >> assertion ("supported interface name expected")
+                    (
+                      identifier[act_component_supports]
+                    )
+               )
+        )[error_handler]
         ;
 
       component_body =
-        *(    provides_decl
-           |  uses_decl
-           |  emits_decl
-           |  publishes_decl
-           |  consumes_decl
-           |  attribute_decl
+        *(   provides_decl
+           | uses_decl
+           | emits_decl
+           | publishes_decl
+           | consumes_decl
+           | attribute_decl
         )
         ;
 
@@ -275,38 +382,108 @@ namespace CCF
       //
       provides_decl =
            PROVIDES
-        >> identifier[act_provides_type]
-        >> simple_identifier[act_provides_name]
-        >> SEMI
+        >> guard
+           (
+                assertion ("interface name expected")
+                (
+                  identifier[act_provides_type]
+                )
+             >> assertion ("provides name expected",
+                           DiagnosticType::BEFORE)
+                (
+                  simple_identifier[act_provides_name]
+                )
+             >> assertion ("';' expected",
+                           RecoveryMethod::NONE)
+                (
+                  SEMI
+                )
+           )[error_handler]
         ;
 
       uses_decl =
            USES
-        >> !(MULTIPLE[act_uses_multiple])
-        >> identifier[act_uses_type]
-        >> simple_identifier[act_uses_name]
-        >> SEMI
+        >> guard
+           (
+                !(MULTIPLE[act_uses_multiple])
+             >> assertion ("interface name expected")
+                (
+                  identifier[act_uses_type]
+                )
+             >> assertion ("uses name expected",
+                           DiagnosticType::BEFORE)
+                (
+                  simple_identifier[act_uses_name]
+                )
+             >> assertion ("';' expected",
+                           RecoveryMethod::NONE)
+                (
+                  SEMI
+                )
+           )[error_handler]
         ;
 
       emits_decl =
            EMITS
-        >> identifier[act_emits_type]
-        >> simple_identifier[act_emits_name]
-        >> SEMI
+        >> guard
+           (
+                assertion ("eventtype name expected")
+                (
+                  identifier[act_emits_type]
+                )
+             >> assertion ("emits name expected",
+                           DiagnosticType::BEFORE)
+                (
+                  simple_identifier[act_emits_name]
+                )
+             >> assertion ("';' expected",
+                           RecoveryMethod::NONE)
+                (
+                  SEMI
+                )
+           )[error_handler]
         ;
 
       publishes_decl =
            PUBLISHES
-        >> identifier[act_publishes_type]
-        >> simple_identifier[act_publishes_name]
-        >> SEMI
+        >> guard
+           (
+                assertion ("eventtype name expected")
+                (
+                  identifier[act_publishes_type]
+                )
+             >> assertion ("publishes name expected",
+                           DiagnosticType::BEFORE)
+                (
+                  simple_identifier[act_publishes_name]
+                )
+             >> assertion ("';' expected",
+                           RecoveryMethod::NONE)
+                (
+                  SEMI
+                )
+           )[error_handler]
         ;
 
       consumes_decl =
            CONSUMES
-        >> identifier[act_consumes_type]
-        >> simple_identifier[act_consumes_name]
-        >> SEMI
+        >> guard
+           (
+                assertion ("eventtype name expected")
+                (
+                  identifier[act_consumes_type]
+                )
+             >> assertion ("consumes name expected",
+                           DiagnosticType::BEFORE)
+                (
+                  simple_identifier[act_consumes_name]
+                )
+             >> assertion ("';' expected",
+                           RecoveryMethod::NONE)
+                (
+                  SEMI
+                )
+           )[error_handler]
         ;
 
 
@@ -316,111 +493,297 @@ namespace CCF
       abstract_event_type_decl =
         guard
         (
-            (
-                 simple_identifier
-              >> SEMI
-            )[act_event_type_begin_abstract_fwd][act_event_type_end]
-          |
-            (
-                 (
+          assertion ("abstract eventtype declaration expected",
+                     DiagnosticType::BEFORE)
+          (
+              (
                    simple_identifier
-                   >> COLON
-                 )[act_event_type_begin_abstract_def]
+                >> SEMI
+              )[act_event_type_begin_abstract_fwd][act_event_type_end]
+            |
+              (
+                   (
+                        simple_identifier
+                     >> COLON
+                   )[act_event_type_begin_abstract_def]
 
-              >> event_type_inheritance_spec
-              >> !(SUPPORTS >> event_type_supports_spec)
-              >> LCBRACE[act_event_type_open_scope]
-              >> event_type_def_trailer
-            )
-          |
-            (
-                 (
-                           simple_identifier
-                        >> SUPPORTS
-                 )[act_event_type_begin_abstract_def]
+                >> hood
+                   (
+                        event_type_inheritance_spec
+                     >> !(SUPPORTS >> event_type_supports_spec)
+                     >> assertion ("'{' expected")
+                        (
+                          LCBRACE[act_event_type_open_scope]
+                        )
+                     >> hood (event_type_body)
+                        [
+                          handler (f.event_type (),
+                                   &SemanticAction::EventType::close_scope)
+                        ]
+                     >> assertion ("'}' expected",
+                                   f.event_type (),
+                                   &SemanticAction::EventType::close_scope,
+                                   DiagnosticType::BEFORE)
+                        (
+                          RCBRACE[act_event_type_close_scope]
+                        )
+                   )
+                   [
+                     handler (f.event_type (),
+                              &SemanticAction::EventType::end)
+                   ]
 
-              >> event_type_supports_spec
-              >> LCBRACE[act_event_type_open_scope]
-              >> event_type_def_trailer
-            )
-          |
-            (
-                 (
-                      simple_identifier
-                   >> LCBRACE
-                 )[act_event_type_begin_abstract_def][act_event_type_open_scope]
+                >> assertion ("';' expected",
+                              f.event_type (),
+                              &SemanticAction::EventType::end,
+                              RecoveryMethod::NONE)
+                   (
+                     SEMI[act_event_type_end]
+                   )
+              )
+            |
+              (
+                   (
+                        simple_identifier
+                     >> SUPPORTS
+                   )[act_event_type_begin_abstract_def]
 
-              >> event_type_def_trailer
-            )
+                >> hood
+                   (
+                        event_type_supports_spec
+                     >> assertion ("'{' expected")
+                        (
+                          LCBRACE[act_event_type_open_scope]
+                        )
+                     >> hood (event_type_body)
+                        [
+                          handler (f.event_type (),
+                                   &SemanticAction::EventType::close_scope)
+                        ]
+                     >> assertion ("'}' expected",
+                                   f.event_type (),
+                                   &SemanticAction::EventType::close_scope,
+                                   DiagnosticType::BEFORE)
+                        (
+                          RCBRACE[act_event_type_close_scope]
+                        )
+                   )
+                   [
+                     handler (f.event_type (),
+                              &SemanticAction::EventType::end)
+                   ]
+
+                >> assertion ("';' expected",
+                              f.event_type (),
+                              &SemanticAction::EventType::end,
+                              RecoveryMethod::NONE)
+                   (
+                     SEMI[act_event_type_end]
+                   )
+              )
+            |
+              (
+                   (
+                        simple_identifier
+                     >> LCBRACE
+                   )[act_event_type_begin_abstract_def][act_event_type_open_scope]
+
+                >> hood
+                   (
+                        hood (event_type_body)
+                        [
+                          handler (f.event_type (),
+                                   &SemanticAction::EventType::close_scope)
+                        ]
+                     >> assertion ("'}' expected",
+                                   f.event_type (),
+                                   &SemanticAction::EventType::close_scope,
+                                   DiagnosticType::BEFORE)
+                        (
+                          RCBRACE[act_event_type_close_scope]
+                        )
+                   )
+                   [
+                     handler (f.event_type (),
+                              &SemanticAction::EventType::end)
+                   ]
+
+                >> assertion ("';' expected",
+                              f.event_type (),
+                              &SemanticAction::EventType::end,
+                              RecoveryMethod::NONE)
+                   (
+                     SEMI[act_event_type_end]
+                   )
+              )
+          )
         )[error_handler]
         ;
+
 
       concrete_event_type_decl =
-        guard
-        (
-             EVENTTYPE
-          >> (
-                 (
-                      simple_identifier
-                   >> SEMI
-                 )[act_event_type_begin_concrete_fwd][act_event_type_end]
-               |
-                 (
-                      (
-                           simple_identifier
-                        >> COLON
-                      )[act_event_type_begin_concrete_def]
+           EVENTTYPE
+        >> guard
+           (
+             assertion ("eventtype declaration expected",
+                     DiagnosticType::BEFORE)
+             (
+                (
+                     simple_identifier
+                  >> SEMI
+                )[act_event_type_begin_concrete_fwd][act_event_type_end]
+              |
+                (
+                     (
+                          simple_identifier
+                       >> COLON
+                     )[act_event_type_begin_concrete_def]
 
-                   >> event_type_inheritance_spec
-                   >> !(SUPPORTS >> event_type_supports_spec)
-                   >> LCBRACE[act_event_type_open_scope]
-                   >> event_type_def_trailer
-                 )
-               |
-                 (
-                      (
-                           simple_identifier
-                        >> SUPPORTS
-                      )[act_event_type_begin_concrete_def]
+                  >> hood
+                     (
+                          event_type_inheritance_spec
+                       >> !(SUPPORTS >> event_type_supports_spec)
+                       >> assertion ("'{' expected")
+                          (
+                            LCBRACE[act_event_type_open_scope]
+                          )
+                       >> hood (event_type_body)
+                          [
+                            handler (f.event_type (),
+                                     &SemanticAction::EventType::close_scope)
+                          ]
+                       >> assertion ("'}' expected",
+                                     f.event_type (),
+                                     &SemanticAction::EventType::close_scope,
+                                     DiagnosticType::BEFORE)
+                          (
+                            RCBRACE[act_event_type_close_scope]
+                          )
+                     )
+                     [
+                       handler (f.event_type (),
+                                &SemanticAction::EventType::end)
+                     ]
 
-                   >> event_type_supports_spec
-                   >> LCBRACE[act_event_type_open_scope]
-                   >> event_type_def_trailer
-                 )
-               |
-                 (
-                      (
-                           simple_identifier
-                        >> LCBRACE
-                      )[act_event_type_begin_concrete_def][act_event_type_open_scope]
+                  >> assertion ("';' expected",
+                                f.event_type (),
+                                &SemanticAction::EventType::end,
+                                RecoveryMethod::NONE)
+                     (
+                       SEMI[act_event_type_end]
+                     )
+                )
+              |
+                (
+                     (
+                          simple_identifier
+                       >> SUPPORTS
+                     )[act_event_type_begin_concrete_def]
 
-                   >> event_type_def_trailer
-                 )
-             )
-        )[error_handler]
+                  >> hood
+                     (
+                          event_type_supports_spec
+                       >> assertion ("'{' expected")
+                          (
+                            LCBRACE[act_event_type_open_scope]
+                          )
+                       >> hood (event_type_body)
+                          [
+                            handler (f.event_type (),
+                                     &SemanticAction::EventType::close_scope)
+                          ]
+                       >> assertion ("'}' expected",
+                                     f.event_type (),
+                                     &SemanticAction::EventType::close_scope,
+                                     DiagnosticType::BEFORE)
+                          (
+                            RCBRACE[act_event_type_close_scope]
+                          )
+                     )
+                     [
+                       handler (f.event_type (),
+                                &SemanticAction::EventType::end)
+                     ]
+
+                  >> assertion ("';' expected",
+                                f.event_type (),
+                                &SemanticAction::EventType::end,
+                                RecoveryMethod::NONE)
+                     (
+                       SEMI[act_event_type_end]
+                     )
+                )
+              |
+                (
+                     (
+                          simple_identifier
+                       >> LCBRACE
+                     )[act_event_type_begin_concrete_def][act_event_type_open_scope]
+
+                  >> hood
+                     (
+                          hood (event_type_body)
+                          [
+                            handler (f.event_type (),
+                                     &SemanticAction::EventType::close_scope)
+                          ]
+                       >> assertion ("'}' expected",
+                                     f.event_type (),
+                                     &SemanticAction::EventType::close_scope,
+                                     DiagnosticType::BEFORE)
+                          (
+                            RCBRACE[act_event_type_close_scope]
+                          )
+                     )
+                     [
+                       handler (f.event_type (),
+                                &SemanticAction::EventType::end)
+                     ]
+
+                  >> assertion ("';' expected",
+                                f.event_type (),
+                                &SemanticAction::EventType::end,
+                                RecoveryMethod::NONE)
+                     (
+                       SEMI[act_event_type_end]
+                     )
+                )
+            )
+          )[error_handler]
         ;
 
-
       event_type_inheritance_spec =
-           identifier[act_event_type_inherits]
-        >> *(
-                 COMMA
-              >> identifier[act_event_type_inherits]
-            )
+        guard
+        (
+              assertion ("base eventtype name expected")
+              (
+                identifier[act_event_type_inherits]
+              )
+           >> *(
+                    COMMA
+                 >> assertion ("base eventtype name expected")
+                    (
+                      identifier[act_event_type_inherits]
+                    )
+               )
+        )[error_handler]
         ;
 
       event_type_supports_spec =
-           identifier[act_event_type_supports]
-        >> *(
-                 COMMA
-              >> identifier[act_event_type_supports]
-            )
-        ;
-
-      event_type_def_trailer =
-           event_type_body
-        >> RCBRACE[act_event_type_close_scope]
-        >> SEMI[act_event_type_end]
+        guard
+        (
+              assertion ("supported interface name expected")
+              (
+                identifier[act_event_type_supports]
+              )
+           >> *(
+                    COMMA
+                 >> assertion ("supported interface name expected")
+                    (
+                      identifier[act_event_type_supports]
+                    )
+               )
+        )[error_handler]
         ;
 
       event_type_body =
@@ -443,12 +806,41 @@ namespace CCF
       //
       event_type_factory_decl =
            FACTORY
-        >> simple_identifier[act_event_type_factory_name]
-        >> LPAREN
-        >> event_type_factory_parameter_list
-        >> RPAREN
-        >> !(RAISES >> LPAREN >> event_type_factory_raises_list >> RPAREN)
-        >> SEMI
+        >> guard
+           (
+                assertion ("factory name expected")
+                (
+                  simple_identifier[act_event_type_factory_name]
+                )
+             >> assertion ("'(' expected")
+                (
+                  LPAREN
+                )
+             >> event_type_factory_parameter_list
+             >> assertion ("parameter declaration or ')' expected",
+                           DiagnosticType::BEFORE)
+                (
+                  RPAREN
+                )
+             >> !(
+                      RAISES
+                   >> assertion ("'(' expected")
+                      (
+                        LPAREN
+                      )
+                   >> event_type_factory_raises_list
+                   >> assertion ("',' or ')' expected",
+                                 DiagnosticType::BEFORE)
+                      (
+                        RPAREN
+                      )
+                 )
+             >> assertion ("';' expected",
+                           RecoveryMethod::NONE)
+                (
+                  SEMI
+                )
+           )[error_handler]
         ;
 
       event_type_factory_parameter_list =
@@ -460,40 +852,119 @@ namespace CCF
 
       event_type_factory_parameter =
            IN
-        >> (identifier >> simple_identifier)[act_event_type_factory_parameter]
+        >> guard
+           (
+             (
+                   assertion ("type name expected")
+                   (
+                     identifier
+                   )
+                >> assertion ("parameter name expected",
+                              DiagnosticType::BEFORE)
+                   (
+                     simple_identifier
+                   )
+             )[act_event_type_factory_parameter]
+        )[error_handler]
         ;
 
       event_type_factory_raises_list =
-           identifier[act_event_type_factory_raises]
-        >> *(COMMA >> identifier[act_event_type_factory_raises])
+        guard
+        (
+             assertion ("exception name expected")
+             (
+               identifier[act_event_type_factory_raises]
+             )
+          >> *(
+                  COMMA
+               >> assertion ("exception name expected")
+                  (
+                    identifier[act_event_type_factory_raises]
+                  )
+              )
+        )[error_handler]
         ;
 
       //
       // home
       //
       home_decl =
-           home_header
-        >> !(COLON >> home_inheritance_spec)
-        >> !(SUPPORTS >> home_support_spec)
-        >> MANAGES >> home_manage_spec
-        >> LCBRACE[act_home_open_scope]
-        >> home_body
-        >> RCBRACE[act_home_close_scope]
-        >> SEMI[act_home_end]
+           HOME
+        >> guard
+           (
+                assertion ("home name expected")
+                (
+                  simple_identifier[act_home_begin]
+                )
+             >> hood
+                (
+                     !(COLON >> home_inheritance_spec)
+                  >> !(SUPPORTS >> home_support_spec)
+                  >> assertion ("'manages' expected",
+                                DiagnosticType::BEFORE)
+                     (
+                       MANAGES
+                     )
+                  >> assertion ("executor name expected")
+                     (
+                       identifier[act_home_manages]
+                     )
+                  >> assertion ("'{' expected")
+                     (
+                       LCBRACE[act_home_open_scope]
+                     )
+                  >> hood (home_body)
+                     [
+                       handler (f.home (),
+                                &SemanticAction::Home::close_scope)
+                     ]
+                  >> assertion ("'}' expected",
+                                f.home (),
+                                &SemanticAction::Home::close_scope,
+                                DiagnosticType::BEFORE)
+                     (
+                       RCBRACE[act_home_close_scope]
+                     )
+                )
+                [
+                  handler (f.home (),
+                           &SemanticAction::Home::end)
+                ]
+             >> assertion ("';' expected",
+                           f.home (),
+                           &SemanticAction::Home::end,
+                           RecoveryMethod::NONE)
+                (
+                  SEMI[act_home_end]
+                )
+           )[error_handler]
         ;
 
-      home_header = HOME >> simple_identifier[act_home_begin]
-        ;
-
-      home_inheritance_spec = identifier[act_home_inherits]
+      home_inheritance_spec =
+        guard
+        (
+          assertion ("base home name expected")
+          (
+            identifier[act_home_inherits]
+          )
+        )[error_handler]
         ;
 
       home_support_spec =
-           identifier[act_home_supports]
-        >> *(COMMA >> identifier[act_home_supports])
-        ;
-
-      home_manage_spec = identifier[act_home_manages]
+        guard
+        (
+              assertion ("supported interface name expected")
+              (
+                identifier[act_home_supports]
+              )
+           >> *(
+                    COMMA
+                 >> assertion ("supported interface name expected")
+                    (
+                      identifier[act_home_supports]
+                    )
+               )
+        )[error_handler]
         ;
 
       home_body =
@@ -515,12 +986,41 @@ namespace CCF
       //
       home_factory_decl =
            FACTORY
-        >> simple_identifier[act_home_factory_name]
-        >> LPAREN
-        >> home_factory_parameter_list
-        >> RPAREN
-        >> !(RAISES >> LPAREN >> home_factory_raises_list >> RPAREN)
-        >> SEMI
+        >> guard
+           (
+                assertion ("factory name expected")
+                (
+                  simple_identifier[act_home_factory_name]
+                )
+             >> assertion ("'(' expected")
+                (
+                  LPAREN
+                )
+             >> home_factory_parameter_list
+             >> assertion ("parameter declaration or ')' expected",
+                           DiagnosticType::BEFORE)
+                (
+                  RPAREN
+                )
+             >> !(
+                      RAISES
+                   >> assertion ("'(' expected")
+                      (
+                        LPAREN
+                      )
+                   >> home_factory_raises_list
+                   >> assertion ("',' or ')' expected",
+                                 DiagnosticType::BEFORE)
+                      (
+                        RPAREN
+                      )
+                 )
+             >> assertion ("';' expected",
+                           RecoveryMethod::NONE)
+                (
+                  SEMI
+                )
+           )[error_handler]
         ;
 
       home_factory_parameter_list =
@@ -532,12 +1032,37 @@ namespace CCF
 
       home_factory_parameter =
            IN
-        >> (identifier >> simple_identifier)[act_home_factory_parameter]
+        >> guard
+           (
+             (
+                   assertion ("type name expected")
+                   (
+                     identifier
+                   )
+                >> assertion ("parameter name expected",
+                              DiagnosticType::BEFORE)
+                   (
+                     simple_identifier
+                   )
+             )[act_home_factory_parameter]
+        )[error_handler]
         ;
 
       home_factory_raises_list =
-           identifier[act_home_factory_raises]
-        >> *(COMMA >> identifier[act_home_factory_raises])
+        guard
+        (
+             assertion ("exception name expected")
+             (
+               identifier[act_home_factory_raises]
+             )
+          >> *(
+                  COMMA
+               >> assertion ("exception name expected")
+                  (
+                    identifier[act_home_factory_raises]
+                  )
+              )
+        )[error_handler]
         ;
 
 
@@ -546,12 +1071,41 @@ namespace CCF
       //
       home_finder_decl =
            FINDER
-        >> simple_identifier[act_home_finder_name]
-        >> LPAREN
-        >> home_finder_parameter_list
-        >> RPAREN
-        >> !(RAISES >> LPAREN >> home_finder_raises_list >> RPAREN)
-        >> SEMI
+        >> guard
+           (
+                assertion ("finder name expected")
+                (
+                  simple_identifier[act_home_finder_name]
+                )
+             >> assertion ("'(' expected")
+                (
+                  LPAREN
+                )
+             >> home_finder_parameter_list
+             >> assertion ("parameter declaration or ')' expected",
+                           DiagnosticType::BEFORE)
+                (
+                  RPAREN
+                )
+             >> !(
+                      RAISES
+                   >> assertion ("'(' expected")
+                      (
+                        LPAREN
+                      )
+                   >> home_finder_raises_list
+                   >> assertion ("',' or ')' expected",
+                                 DiagnosticType::BEFORE)
+                      (
+                        RPAREN
+                      )
+                 )
+             >> assertion ("';' expected",
+                           RecoveryMethod::NONE)
+                (
+                  SEMI
+                )
+           )[error_handler]
         ;
 
       home_finder_parameter_list =
@@ -563,12 +1117,37 @@ namespace CCF
 
       home_finder_parameter =
            IN
-        >> (identifier >> simple_identifier)[act_home_finder_parameter]
+        >> guard
+           (
+             (
+                   assertion ("type name expected")
+                   (
+                     identifier
+                   )
+                >> assertion ("parameter name expected",
+                              DiagnosticType::BEFORE)
+                   (
+                     simple_identifier
+                   )
+             )[act_home_finder_parameter]
+        )[error_handler]
         ;
 
       home_finder_raises_list =
-           identifier[act_home_finder_raises]
-        >> *(COMMA >> identifier[act_home_finder_raises])
+        guard
+        (
+             assertion ("exception name expected")
+             (
+               identifier[act_home_finder_raises]
+             )
+          >> *(
+                  COMMA
+               >> assertion ("exception name expected")
+                  (
+                    identifier[act_home_finder_raises]
+                  )
+              )
+        )[error_handler]
         ;
     }
   }

@@ -287,10 +287,12 @@ namespace CCF
         RecoveryStatus
         operator() (Parsing::Scanner const&, Parsing::Error e) const
         {
+          /*
           assert (
             e.descriptor->diagnostic_ == Parsing::DiagnosticType::NONE &&
             e.descriptor->recovery_ == Parsing::RecoveryMethod::BAIL_OUT
           );
+          */
 
           if (action_one_.get ()) action_one_->execute ();
           if (action_two_.get ()) action_two_->execute ();
@@ -435,12 +437,12 @@ namespace CCF
       Rule local_interface_decl;
       Rule unconstrained_interface_decl;
       Rule interface_inheritance_spec;
-      Rule interface_def_trailer;
       Rule interface_body;
 
       Rule attribute_decl;
       Rule attribute_ro_decl_trailer;
       Rule attribute_rw_decl_trailer;
+      Rule attribute_ro_raises_spec;
       Rule attribute_rw_raises_spec;
       Rule attribute_get_raises_list;
       Rule attribute_set_raises_list;
@@ -461,7 +463,6 @@ namespace CCF
       Rule operation_raises_list;
 
       Rule struct_decl;
-      Rule struct_def_trailer;
       Rule struct_body;
 
       Rule typedef_decl;
@@ -480,7 +481,6 @@ namespace CCF
       Rule concrete_value_type_decl;
       Rule value_type_inheritance_spec;
       Rule value_type_supports_spec;
-      Rule value_type_def_trailer;
       Rule value_type_body;
 
       Rule value_type_factory_decl;

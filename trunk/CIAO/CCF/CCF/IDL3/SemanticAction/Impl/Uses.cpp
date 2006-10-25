@@ -67,7 +67,7 @@ namespace CCF
             cerr << ctx.file () << ":" << id->line () << ": error: "
                  << "declaration with name \'" << name
                  << "\' visible from scope \'" << from
-                 << "\' is not an eventtype declaration" << endl;
+                 << "\' is not an interface declaration" << endl;
 
             cerr << ctx.file () << ":" << id->line () << ": error: "
                  << "using non-interface type in uses declaration is "

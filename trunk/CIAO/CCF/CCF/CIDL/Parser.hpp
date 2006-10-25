@@ -47,13 +47,10 @@ namespace CCF
 
       // Composition
       Rule composition_decl;
-      Rule composition_header;
       Rule composition_category;
 
       // Home executor
       Rule home_executor_decl;
-      Rule home_executor_header;
-      Rule home_executor_body;
       Rule home_executor_home_impl_decl;
       Rule home_executor_executor_decl;
 
