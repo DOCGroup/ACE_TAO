@@ -192,6 +192,7 @@
 # define ACE_LACKS_RECV
 # define ACE_LACKS_SEND
 # define ACE_LACKS_SENDTO
+# undef ACE_HAS_MSG
 
 // Missing OS features
 # define ACE_LACKS_UNIX_SYSLOG
