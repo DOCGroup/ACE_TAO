@@ -353,14 +353,22 @@ ACE_OS::recvfrom (ACE_HANDLE handle,
                   int *addrlen)
 {
   ACE_OS_TRACE ("ACE_OS::recvfrom");
-#if defined (ACE_WIN32)
-  int shortened_len = static_cast<int> (len);
-  int result = ::recvfrom ((ACE_SOCKET) handle,
-                           buf,
-                           shortened_len,
-                           flags,
-                           addr,
-                           (ACE_SOCKET_LEN *) addrlen);
+#if defined (ACE_LACKS_RECVFROM)
+  ACE_UNUSED_ARG (handle);
+  ACE_UNUSED_ARG (buf);
+  ACE_UNUSED_ARG (len);
+  ACE_UNUSED_ARG (flags);
+  ACE_UNUSED_ARG (addr);
+  ACE_UNUSED_ARG (addrlen);
+  ACE_NOTSUP_RETURN (-1);
+#elif defined (ACE_WIN32)
+  int const shortened_len = static_cast<int> (len);
+  int const result = ::recvfrom ((ACE_SOCKET) handle,
+                                 buf,
+                                 shortened_len,
+                                 flags,
+                                 addr,
+                                 (ACE_SOCKET_LEN *) addrlen);
   if (result == SOCKET_ERROR)
     {
       ACE_OS::set_errno_to_wsa_last_error ();
@@ -380,7 +388,7 @@ ACE_OS::recvfrom (ACE_HANDLE handle,
                                    addr,
                                    (ACE_SOCKET_LEN *) addrlen),
                        ssize_t, -1);
-#endif /* defined (ACE_WIN32) */
+#endif /* ACE_LACKS_RECVFROM */
 }
 
 ACE_INLINE ssize_t
