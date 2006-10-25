@@ -1,3 +1,7 @@
+Wed Oct 25 15:05:42 UTC 2006  Steve Huston  <shuston@riverace.com>
+
+        * ace/OS_NS_stdlib.inl (atop): s/intptr/intptr_t/ in ACE_WIN64 case.
+
 Wed Oct 25 09:47:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 	* ace/SOCK_Dgram.cpp:
