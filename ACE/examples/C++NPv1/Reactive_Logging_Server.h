@@ -12,6 +12,7 @@
 #include "ace/SOCK_Stream.h"
 #include "ace/Log_Record.h"
 #include "ace/Handle_Set.h"
+#include "ace/Basic_Types.h"
 #include "ace/os_include/os_fcntl.h"
 #include "Iterative_Logging_Server.h"
 

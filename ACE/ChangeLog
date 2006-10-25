@@ -1,3 +1,10 @@
+Wed Oct 25 18:31:47 UTC 2006  Ossama Othman  <ossama_othman at symantec dot com>
+
+        * examples/C++NPv1/Reactive_Logging_Server.h:
+        * examples/IPC_SAP/SOCK_SAP/CPP-inclient.cpp:
+
+          Include "ace/Basic_Types.h" to pull in intptr_t typedef.
+
 Wed Oct 25 15:05:42 UTC 2006  Steve Huston  <shuston@riverace.com>
 
         * ace/OS_NS_stdlib.inl (atop): s/intptr/intptr_t/ in ACE_WIN64 case.
