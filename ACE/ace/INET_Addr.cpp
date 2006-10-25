@@ -317,9 +317,13 @@ ACE_INET_Addr::set (u_short port_number,
   struct in_addr addrv4;
   if (ACE_OS::inet_aton (host_name,
                          &addrv4) == 1)
+# if !defined (ACE_LACKS_NTOHL)
     return this->set (port_number,
                       encode ? ntohl (addrv4.s_addr) : addrv4.s_addr,
                       encode);
+# else
+    return -1;
+# endif /* ACE_LACKS_NTOHL */
   else
     {
 #  if defined (ACE_VXWORKS) && defined (ACE_LACKS_GETHOSTBYNAME)
