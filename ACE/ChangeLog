@@ -1,3 +1,9 @@
+Wed Oct 25 08:38:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+	* ace/config-rtems.h:
+	* ace/OS_NS_netdb.inl:
+	  Added ACE_LACKS_GETHOSTBYADDR_R
+
 Wed Oct 25 08:11:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 	* ace/config-rtems.h:
