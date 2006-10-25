@@ -1,3 +1,8 @@
+Wed Oct 25 09:47:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+	* ace/SOCK_Dgram.cpp:
+	  Fixed compile error in non win32 part
+
 Wed Oct 25 09:24:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 	* ace/ace_for_tao.mpc:
