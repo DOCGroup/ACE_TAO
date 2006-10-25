@@ -49,6 +49,48 @@ extern "C"
 {
 #endif /* __cplusplus */
 
+<<<<<<< .working
+#if defined (ACE_LACKS_HOSTENT)
+struct  hostent {
+        char    *h_name;        /* official name of host */
+        char    **h_aliases;    /* alias list */
+        int     h_addrtype;     /* host address type */
+        int     h_length;       /* length of address */
+        char    **h_addr_list;  /* list of addresses from name server */
+#define h_addr  h_addr_list[0]  /* address, for backward compatibility */
+};
+#endif /* ACE_LACKS_HOSTENT */
+
+=======
+#if defined (ACE_LACKS_HOSTENT)
+struct  hostent {
+        char    *h_name;        /* official name of host */
+        char    **h_aliases;    /* alias list */
+        int     h_addrtype;     /* host address type */
+        int     h_length;       /* length of address */
+        char    **h_addr_list;  /* list of addresses from name server */
+#define h_addr  h_addr_list[0]  /* address, for backward compatibility */
+};
+#endif /* ACE_LACKS_HOSTENT */
+
+#if defined (ACE_LACKS_PROTOENT)
+struct  protoent {
+        char    *p_name;        /* official protocol name */
+        char    **p_aliases;    /* alias list */
+        int     p_proto;        /* protocol # */
+};
+#endif /* ACE_LACKS_PROTOENT */
+
+#if defined (ACE_LACKS_SERVENT)
+struct  servent {
+        char    *s_name;        /* official service name */
+        char    **s_aliases;    /* alias list */
+        int     s_port;         /* port # */
+        char    *s_proto;       /* protocol to use */
+};
+#endif /* ACE_LACKS_SERVENT */
+
+>>>>>>> .merge-right.r75022
 #if defined (ACE_HAS_STRUCT_NETDB_DATA)
    typedef char ACE_HOSTENT_DATA[sizeof(struct hostent_data)];
    typedef char ACE_SERVENT_DATA[sizeof(struct servent_data)];

@@ -41,7 +41,12 @@ ACE_OS::accept (ACE_HANDLE handle,
   // this function needs to be reviewed.  On Win32, the regular macros
   // can be used, as this is not an issue.
 
-#if defined (ACE_WIN32)
+#if defined (ACE_LACKS_ACCEPT)
+  ACE_UNUSED_ARG (handle);
+  ACE_UNUSED_ARG (addr);
+  ACE_UNUSED_ARG (addrlen);
+  ACE_NOTSUP_RETURN (ACE_INVALID_HANDLE);
+#elif defined (ACE_WIN32)
   ACE_SOCKCALL_RETURN (::accept ((ACE_SOCKET) handle,
                                  addr,
                                  (ACE_SOCKET_LEN *) addrlen),
@@ -127,9 +132,16 @@ ACE_OS::connect (ACE_HANDLE handle,
                  int addrlen)
 {
   ACE_OS_TRACE ("ACE_OS::connect");
+#if defined (ACE_LACKS_CONNECT)
+  ACE_UNUSED_ARG (handle);
+  ACE_UNUSED_ARG (addr);
+  ACE_UNUSED_ARG (addrlen);
+  ACE_NOTSUP_RETURN (-1);
+#else
   ACE_SOCKCALL_RETURN (::connect ((ACE_SOCKET) handle,
                                   addr,
                                   (ACE_SOCKET_LEN) addrlen), int, -1);
+#endif /* ACE_LACKS_CONNECT */
 }
 
 ACE_INLINE int
@@ -159,8 +171,13 @@ ACE_OS::getpeername (ACE_HANDLE handle, struct sockaddr *addr,
 {
   ACE_OS_TRACE ("ACE_OS::getpeername");
 
-#if defined (ACE_GETNAME_RETURNS_RANDOM_SIN_ZERO) \
-         && (ACE_GETNAME_RETURNS_RANDOM_SIN_ZERO == 1)
+#if defined (ACE_LACKS_GETPEERNAME)
+  ACE_UNUSED_ARG (handle);
+  ACE_UNUSED_ARG (addr);
+  ACE_UNUSED_ARG (addrlen);
+  ACE_NOTSUP_RETURN (-1);
+#elif defined (ACE_GETNAME_RETURNS_RANDOM_SIN_ZERO) \
+           && (ACE_GETNAME_RETURNS_RANDOM_SIN_ZERO == 1)
   int result;
   ACE_SOCKCALL (::getpeername ((ACE_SOCKET) handle,
                                addr,
@@ -202,8 +219,13 @@ ACE_OS::getsockname (ACE_HANDLE handle,
                      int *addrlen)
 {
   ACE_OS_TRACE ("ACE_OS::getsockname");
-#if defined (ACE_GETNAME_RETURNS_RANDOM_SIN_ZERO) \
-         && (ACE_GETNAME_RETURNS_RANDOM_SIN_ZERO == 1)
+#if defined (ACE_LACKS_GETSOCKNAME)
+  ACE_UNUSED_ARG (handle);
+  ACE_UNUSED_ARG (addr);
+  ACE_UNUSED_ARG (addrlen);
+  ACE_NOTSUP_RETURN (-1);
+#elif defined (ACE_GETNAME_RETURNS_RANDOM_SIN_ZERO) \
+           && (ACE_GETNAME_RETURNS_RANDOM_SIN_ZERO == 1)
   int result;
   ACE_SOCKCALL (::getsockname ((ACE_SOCKET) handle,
                                addr,
@@ -244,6 +266,14 @@ ACE_OS::getsockopt (ACE_HANDLE handle,
                     int *optlen)
 {
   ACE_OS_TRACE ("ACE_OS::getsockopt");
+#if defined (ACE_LACKS_GETSOCKOPT)
+  ACE_UNUSED_ARG (handle);
+  ACE_UNUSED_ARG (level);
+  ACE_UNUSED_ARG (optname);
+  ACE_UNUSED_ARG (optval);
+  ACE_UNUSED_ARG (optlen);
+  ACE_NOTSUP_RETURN (-1);
+#else
   ACE_SOCKCALL_RETURN (::getsockopt ((ACE_SOCKET) handle,
                                      level,
                                      optname,
@@ -251,6 +281,7 @@ ACE_OS::getsockopt (ACE_HANDLE handle,
                                      (ACE_SOCKET_LEN *) optlen),
                        int,
                        -1);
+#endif /* ACE_LACKS_GETSOCKOPT */
 }
 
 ACE_INLINE int
@@ -280,7 +311,13 @@ ACE_OS::recv (ACE_HANDLE handle, char *buf, size_t len, int flags)
   // handled explicitly here.  If the ACE_OSCALL macro ever changes,
   // this function needs to be reviewed.  On Win32, the regular macros
   // can be used, as this is not an issue.
-#if defined (ACE_WIN32)
+#if defined (ACE_LACKS_RECV)
+  ACE_UNUSED_ARG (handle);
+  ACE_UNUSED_ARG (buf);
+  ACE_UNUSED_ARG (len);
+  ACE_UNUSED_ARG (flags);
+  ACE_NOTSUP_RETURN (-1);
+#elif defined (ACE_WIN32)
   ACE_SOCKCALL_RETURN (::recv ((ACE_SOCKET) handle, buf,
                                static_cast<int> (len), flags), ssize_t, -1);
 #else
@@ -304,7 +341,7 @@ ACE_OS::recv (ACE_HANDLE handle, char *buf, size_t len, int flags)
 # endif /* EAGAIN != EWOULDBLOCK*/
 
   return ace_result_;
-#endif /* defined (ACE_WIN32) */
+#endif /* ACE_LACKS_RECV */
 }
 
 ACE_INLINE ssize_t
@@ -316,14 +353,22 @@ ACE_OS::recvfrom (ACE_HANDLE handle,
                   int *addrlen)
 {
   ACE_OS_TRACE ("ACE_OS::recvfrom");
-#if defined (ACE_WIN32)
-  int shortened_len = static_cast<int> (len);
-  int result = ::recvfrom ((ACE_SOCKET) handle,
-                           buf,
-                           shortened_len,
-                           flags,
-                           addr,
-                           (ACE_SOCKET_LEN *) addrlen);
+#if defined (ACE_LACKS_RECVFROM)
+  ACE_UNUSED_ARG (handle);
+  ACE_UNUSED_ARG (buf);
+  ACE_UNUSED_ARG (len);
+  ACE_UNUSED_ARG (flags);
+  ACE_UNUSED_ARG (addr);
+  ACE_UNUSED_ARG (addrlen);
+  ACE_NOTSUP_RETURN (-1);
+#elif defined (ACE_WIN32)
+  int const shortened_len = static_cast<int> (len);
+  int const result = ::recvfrom ((ACE_SOCKET) handle,
+                                 buf,
+                                 shortened_len,
+                                 flags,
+                                 addr,
+                                 (ACE_SOCKET_LEN *) addrlen);
   if (result == SOCKET_ERROR)
     {
       ACE_OS::set_errno_to_wsa_last_error ();
@@ -343,7 +388,7 @@ ACE_OS::recvfrom (ACE_HANDLE handle,
                                    addr,
                                    (ACE_SOCKET_LEN *) addrlen),
                        ssize_t, -1);
-#endif /* defined (ACE_WIN32) */
+#endif /* ACE_LACKS_RECVFROM */
 }
 
 ACE_INLINE ssize_t
@@ -499,7 +544,13 @@ ACE_OS::send (ACE_HANDLE handle, const char *buf, size_t len, int flags)
   // handled explicitly here.  If the ACE_OSCALL macro ever changes,
   // this function needs to be reviewed.  On Win32, the regular macros
   // can be used, as this is not an issue.
-#if defined (ACE_WIN32)
+#if defined (ACE_LACKS_SEND)
+  ACE_UNUSED_ARG (handle);
+  ACE_UNUSED_ARG (buf);
+  ACE_UNUSED_ARG (len);
+  ACE_UNUSED_ARG (flags);
+  ACE_NOTSUP_RETURN (-1);
+#elif defined (ACE_WIN32)
   ACE_SOCKCALL_RETURN (::send ((ACE_SOCKET) handle,
                                buf,
                                static_cast<int> (len),
@@ -578,7 +629,15 @@ ACE_OS::sendto (ACE_HANDLE handle,
                 int addrlen)
 {
   ACE_OS_TRACE ("ACE_OS::sendto");
-#if defined (ACE_VXWORKS)
+#if defined (ACE_LACKS_SENDTO)
+  ACE_UNUSED_ARG (handle);
+  ACE_UNUSED_ARG (buf);
+  ACE_UNUSED_ARG (len);
+  ACE_UNUSED_ARG (flags);
+  ACE_UNUSED_ARG (addr);
+  ACE_UNUSED_ARG (addrlen);
+  ACE_NOTSUP_RETURN (-1);
+#elif defined (ACE_VXWORKS)
   ACE_SOCKCALL_RETURN (::sendto ((ACE_SOCKET) handle,
                                  const_cast <char *> (buf),
                                  len,
@@ -586,8 +645,7 @@ ACE_OS::sendto (ACE_HANDLE handle,
                                  const_cast<struct sockaddr *> (addr),
                                  addrlen),
                        ssize_t, -1);
-#else
-#  if defined (ACE_WIN32)
+#elif defined (ACE_WIN32)
   ACE_SOCKCALL_RETURN (::sendto ((ACE_SOCKET) handle,
                                  buf,
                                  static_cast<int> (len),
@@ -595,7 +653,7 @@ ACE_OS::sendto (ACE_HANDLE handle,
                                  const_cast<struct sockaddr *> (addr),
                                  addrlen),
                        ssize_t, -1);
-#  else
+#else
   ACE_SOCKCALL_RETURN (::sendto ((ACE_SOCKET) handle,
                                  buf,
                                  len,
@@ -603,8 +661,7 @@ ACE_OS::sendto (ACE_HANDLE handle,
                                  const_cast<struct sockaddr *> (addr),
                                  addrlen),
                        ssize_t, -1);
-#  endif /* ACE_WIN32 */
-#endif /* ACE_VXWORKS */
+#endif /* ACE_LACKS_SENDTO */
 }
 
 ACE_INLINE ssize_t
@@ -758,8 +815,15 @@ ACE_OS::setsockopt (ACE_HANDLE handle,
                     int optlen)
 {
   ACE_OS_TRACE ("ACE_OS::setsockopt");
-
-  #if defined (ACE_HAS_WINSOCK2) && (ACE_HAS_WINSOCK2 != 0) && defined(SO_REUSEPORT)
+#if defined (ACE_LACKS_SETSOCKOPT)
+  ACE_UNUSED_ARG (handle);
+  ACE_UNUSED_ARG (level);
+  ACE_UNUSED_ARG (optname);
+  ACE_UNUSED_ARG (optval);
+  ACE_UNUSED_ARG (optlen);
+  ACE_NOTSUP_RETURN (-1);
+#else
+#if defined (ACE_HAS_WINSOCK2) && (ACE_HAS_WINSOCK2 != 0) && defined(SO_REUSEPORT)
   // To work around an inconsistency with Microsofts implementation of
   // sockets, we will check for SO_REUSEADDR, and ignore it. Winsock
   // always behaves as if SO_REUSEADDR=1. Some implementations have
@@ -778,7 +842,7 @@ ACE_OS::setsockopt (ACE_HANDLE handle,
       optname = SO_REUSEADDR;
     }
   }
-  #endif /*ACE_HAS_WINSOCK2*/
+#endif /*ACE_HAS_WINSOCK2*/
 
   int result;
   ACE_SOCKCALL (::setsockopt ((ACE_SOCKET) handle,
@@ -796,13 +860,20 @@ ACE_OS::setsockopt (ACE_HANDLE handle,
 #endif /* WSAEOPNOTSUPP */
     errno = ENOTSUP;
   return result;
+#endif
 }
 
 ACE_INLINE int
 ACE_OS::shutdown (ACE_HANDLE handle, int how)
 {
   ACE_OS_TRACE ("ACE_OS::shutdown");
+#if defined (ACE_LACKS_SHUTDOWN)
+  ACE_UNUSED_ARG (handle);
+  ACE_UNUSED_ARG (how);
+  ACE_NOTSUP_RETURN (-1);
+#else
   ACE_SOCKCALL_RETURN (::shutdown ((ACE_SOCKET) handle, how), int, -1);
+#endif /* ACE_LACKS_SHUTDOWN */
 }
 
 ACE_INLINE ACE_HANDLE
@@ -811,11 +882,18 @@ ACE_OS::socket (int domain,
                 int proto)
 {
   ACE_OS_TRACE ("ACE_OS::socket");
+#if defined (ACE_LACKS_SOCKET)
+  ACE_UNUSED_ARG (domain);
+  ACE_UNUSED_ARG (type);
+  ACE_UNUSED_ARG (proto);
+  ACE_NOTSUP_RETURN (ACE_INVALID_HANDLE);
+#else
   ACE_SOCKCALL_RETURN (::socket (domain,
                                  type,
                                  proto),
                        ACE_HANDLE,
                        ACE_INVALID_HANDLE);
+#endif /* ACE_LACKS_SOCKET */
 }
 
 ACE_INLINE ACE_HANDLE

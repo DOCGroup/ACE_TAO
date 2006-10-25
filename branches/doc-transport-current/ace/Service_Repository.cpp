@@ -149,7 +149,10 @@ ACE_Service_Repository::fini (void)
       // remove services, so typically they are deleted in reverse
       // order.
 
-      for (int i = this->current_size_ - 1; i >= 0; i--)
+      // Do not be tempted to use the prefix decrement operator.  We
+      // need to use the postfix decrement operator in this case since
+      // the index is unsigned.
+      for (size_t i = this->current_size_; i-- != 0; )
         {
           ACE_Service_Type *s =
             const_cast<ACE_Service_Type *> (this->service_vector_[i]);
@@ -197,7 +200,10 @@ ACE_Service_Repository::close (void)
                     this->current_size_));
 #endif
 
-      for (int i = this->current_size_ - 1; i >= 0; i--)
+      // Do not be tempted to use the prefix decrement operator.  We
+      // need to use the postfix decrement operator in this case since
+      // the index is unsigned.
+      for (size_t i = this->current_size_; i-- != 0; )
         {
 
 #ifndef ACE_NLOGGING

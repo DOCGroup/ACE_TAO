@@ -65,7 +65,12 @@ endif # templates != implicit
 # Suppress warnings about "class has no copy assignment operator"
 # Suppress warnings about "Access control" on inherited classes
 # Suppress warnings about "last argument" of varargs function is unnamed
-CCFLAGS         += -diag_suppress 3284,1253,3439,1234,3506
+ifeq (7.3,$(findstring 7.3,$(CXX_VERSION)))
+    # 7.3.x doesn't have the 3506 error code
+    CCFLAGS         += -diag_suppress 3284,1253,3439,1234
+else
+    CCFLAGS         += -diag_suppress 3284,1253,3439,1234,3506
+endif
 
 LDFLAGS		+= -Wl,-woff,15
 LDFLAGS		+= -Wl,-woff,84

@@ -1044,14 +1044,21 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::work_pending
   int const timers_pending =
     (this_timeout != 0 && *this_timeout != mwt ? 1 : 0);
 
-  u_long const width = (u_long) this->handler_rep_.max_handlep1 ();
+#ifdef ACE_WIN32
+  // This arg is ignored on Windows and causes pointer truncation
+  // warnings on 64-bit compiles.
+  int const width = 0;
+#else
+  int const width =
+    this->handler_rep_.max_handlep1 ();
+#endif  /* ACE_WIN32 */
 
   ACE_Select_Reactor_Handle_Set fd_set;
   fd_set.rd_mask_ = this->wait_set_.rd_mask_;
   fd_set.wr_mask_ = this->wait_set_.wr_mask_;
   fd_set.ex_mask_ = this->wait_set_.ex_mask_;
 
-  int nfds = ACE_OS::select (int (width),
+  int nfds = ACE_OS::select (width,
                              fd_set.rd_mask_,
                              fd_set.wr_mask_,
                              fd_set.ex_mask_,
@@ -1070,7 +1077,6 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::wait_for_multiple_events
    ACE_Time_Value *max_wait_time)
 {
   ACE_TRACE ("ACE_Select_Reactor_T::wait_for_multiple_events");
-  u_long width = 0;
   ACE_Time_Value timer_buf (0);
   ACE_Time_Value *this_timeout;
 
@@ -1086,12 +1092,18 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::wait_for_multiple_events
           this_timeout =
             this->timer_queue_->calculate_timeout (max_wait_time,
                                                    &timer_buf);
-          width = (u_long) this->handler_rep_.max_handlep1 ();
+#ifdef ACE_WIN32
+          // This arg is ignored on Windows and causes pointer
+          // truncation warnings on 64-bit compiles.
+          int const width = 0;
+#else
+          int const width = this->handler_rep_.max_handlep1 ();
+#endif  /* ACE_WIN32 */
 
           dispatch_set.rd_mask_ = this->wait_set_.rd_mask_;
           dispatch_set.wr_mask_ = this->wait_set_.wr_mask_;
           dispatch_set.ex_mask_ = this->wait_set_.ex_mask_;
-          number_of_active_handles = ACE_OS::select (int (width),
+          number_of_active_handles = ACE_OS::select (width,
                                                      dispatch_set.rd_mask_,
                                                      dispatch_set.wr_mask_,
                                                      dispatch_set.ex_mask_,

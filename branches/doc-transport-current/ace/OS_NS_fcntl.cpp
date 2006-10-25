@@ -102,9 +102,16 @@ ACE_OS::open (const char *filename,
 
   if (ACE_BIT_ENABLED (mode, _O_APPEND))
     {
-      if (h != ACE_INVALID_HANDLE)
+      LONG high_size = 0;
+      if (h != ACE_INVALID_HANDLE
+          && ::SetFilePointer (h,
+                               0,
+                               &high_size,
+                               FILE_END) == INVALID_SET_FILE_POINTER
+          && GetLastError () != NO_ERROR)
         {
-          ::SetFilePointer (h, 0, 0, FILE_END);
+          ACE_MT (ACE_OS::thread_mutex_unlock (ace_os_monitor_lock);)
+          ACE_FAIL_RETURN (ACE_INVALID_HANDLE);
         }
 
       ACE_MT (ACE_OS::thread_mutex_unlock (ace_os_monitor_lock);)
@@ -206,9 +213,16 @@ ACE_OS::open (const wchar_t *filename,
 
   if (ACE_BIT_ENABLED (mode, _O_APPEND))
     {
-      if (h != ACE_INVALID_HANDLE)
+      LONG high_size = 0;
+      if (h != ACE_INVALID_HANDLE
+          && ::SetFilePointer (h,
+                               0,
+                               &high_size,
+                               FILE_END) == INVALID_SET_FILE_POINTER
+          && GetLastError () != NO_ERROR)
         {
-          ::SetFilePointer (h, 0, 0, FILE_END);
+          ACE_MT (ACE_OS::thread_mutex_unlock (ace_os_monitor_lock);)
+          ACE_FAIL_RETURN (ACE_INVALID_HANDLE);
         }
 
       ACE_MT (ACE_OS::thread_mutex_unlock (ace_os_monitor_lock);)

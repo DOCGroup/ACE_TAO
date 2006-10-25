@@ -1,6 +1,7 @@
 // $Id$
 
 #include "ace/Configuration_Import_Export.h"
+#include "ace/OS_Errno.h"
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_ctype.h"
 #include "ace/OS_NS_string.h"
@@ -42,7 +43,13 @@ ACE_Registry_ImpExp::import_config (const ACE_TCHAR* filename)
   u_int buffer_size = 4096;
   u_int read_pos = 0;
   ACE_TCHAR *buffer;
-  ACE_NEW_RETURN (buffer, ACE_TCHAR[buffer_size], -1);
+  ACE_NEW_NORETURN (buffer, ACE_TCHAR[buffer_size]);
+  if (!buffer)
+    {
+      ACE_Errno_Guard guard (errno);
+      (void) ACE_OS::fclose (in);
+      return -1;
+    }
   ACE_Configuration_Section_Key section;
   ACE_TCHAR *end = 0;
 
@@ -55,7 +62,14 @@ ACE_Registry_ImpExp::import_config (const ACE_TCHAR* filename)
         {
           // allocate a new buffer - double size the previous one
           ACE_TCHAR *temp_buffer;
-          ACE_NEW_RETURN (temp_buffer, ACE_TCHAR[buffer_size * 2], -1);
+          ACE_NEW_NORETURN (temp_buffer, ACE_TCHAR[buffer_size * 2]);
+          if (!temp_buffer)
+            {
+              ACE_Errno_Guard guard (errno);
+              delete [] buffer;
+              (void) ACE_OS::fclose (in);
+              return -1;
+            }
 
           // copy the beginnning of the line
           ACE_OS::memcpy (temp_buffer, buffer, buffer_size);

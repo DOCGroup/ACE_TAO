@@ -182,7 +182,6 @@ public:
   /// memory.
   virtual ~ACE_Service_Config (void);
 
-
 protected:
 
   /**
@@ -210,19 +209,13 @@ protected:
    */
   virtual int parse_args_i (int argc, ACE_TCHAR *argv[]);
 
-
-
   /// = Static interfaces
 
 private:
 
-  /// A private, non-locking mutator to set the "current" (TSS) gestalt instance.
-  /// Make sure to call with the proper locks held!
-  static ACE_Service_Gestalt* current_i (ACE_Service_Gestalt *newcurrent);
-
   /// A Wrapper for the TSS-stored pointer.
   struct TSS_Resources {
-    TSS_Resources (void) : ptr_ (0) {};
+    TSS_Resources (void) : ptr_ (0) {}
     ACE_Service_Gestalt *ptr_;
   };
 
@@ -234,7 +227,7 @@ private:
   /// Provides access to the static ptr, containing the TSS
   /// accessor. Ensures the desired order of initialization, even when
   /// other static initializers need the value.
-  static TSS_Service_Gestalt_Ptr * & impl_ (void);
+  static TSS_Service_Gestalt_Ptr * impl_ (void);
 
 protected:
 
@@ -244,7 +237,6 @@ protected:
   /// global from the point of view of the static initializers in DLLs.
   static ACE_Service_Gestalt* current (ACE_Service_Gestalt*);
 
-
 public:
 
   /// If not yet initialized, creates a process-wide instance
@@ -253,7 +245,6 @@ public:
   /// in contrast with current (), which may be different instance at
   /// different times, dependent on the context.
   static  ACE_Service_Gestalt* global (void);
-
 
   /// Accessor for the "current" service repository through a pointer
   /// held in TSS.

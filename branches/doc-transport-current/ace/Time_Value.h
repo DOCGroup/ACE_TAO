@@ -26,7 +26,7 @@
 // Define some helpful constants.
 // Not type-safe, and signed.  For backward compatibility.
 #define ACE_ONE_SECOND_IN_MSECS 1000L
-#define ACE_ONE_SECOND_IN_USECS 1000000L
+suseconds_t const ACE_ONE_SECOND_IN_USECS = 1000000;
 #define ACE_ONE_SECOND_IN_NSECS 1000000000L
 
 // needed for ACE_UINT64

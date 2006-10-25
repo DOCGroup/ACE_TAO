@@ -257,7 +257,7 @@ ACE_OS::scandir_emulation (const ACE_TCHAR *dirname,
   if (fail)
     {
       ACE_OS::closedir (dirp);
-      while (nfiles-- > 0)
+      while (vector && nfiles-- > 0)
         {
 #if defined (ACE_LACKS_STRUCT_DIR)
           ACE_OS::free (vector[nfiles]->d_name);

@@ -317,9 +317,13 @@ ACE_INET_Addr::set (u_short port_number,
   struct in_addr addrv4;
   if (ACE_OS::inet_aton (host_name,
                          &addrv4) == 1)
+# if !defined (ACE_LACKS_NTOHL)
     return this->set (port_number,
                       encode ? ntohl (addrv4.s_addr) : addrv4.s_addr,
                       encode);
+# else
+    return -1;
+# endif /* ACE_LACKS_NTOHL */
   else
     {
 #  if defined (ACE_VXWORKS) && defined (ACE_LACKS_GETHOSTBYNAME)
@@ -342,9 +346,13 @@ ACE_INET_Addr::set (u_short port_number,
           (void) ACE_OS::memcpy ((void *) &addrv4.s_addr,
                                  hp->h_addr,
                                  hp->h_length);
+#  if !defined (ACE_LACKS_NTOHL)
           return this->set (port_number,
                             encode ? ntohl (addrv4.s_addr) : addrv4.s_addr,
                             encode);
+#  else
+          return -1;
+#  endif /* ACE_LACKS_NTOHL */
         }
     }
 #endif /* ACE_HAS_IPV6 */
@@ -357,6 +365,7 @@ static int get_port_number_from_name (const char port_name[],
 {
   int port_number = 0;
 
+#if !defined (ACE_LACKS_HTONS)
   // Maybe port_name is directly a port number?
   char *endp = 0;
   port_number = static_cast<int> (ACE_OS::strtol (port_name, &endp, 10));
@@ -370,6 +379,7 @@ static int get_port_number_from_name (const char port_name[],
       n = htons (n);
       return n;
     }
+#endif
 
   // We try to resolve port number from its name.
 
@@ -625,12 +635,18 @@ ACE_INET_Addr::ACE_INET_Addr (const char port_name[],
   : ACE_Addr (this->determine_type(), sizeof (inet_addr_))
 {
   ACE_TRACE ("ACE_INET_Addr::ACE_INET_Addr");
+#if !defined (ACE_LACKS_HTONL)
   this->reset ();
   if (this->set (port_name,
                  htonl (inet_address),
                  protocol) == -1)
     ACE_ERROR ((LM_ERROR,
                 ACE_LIB_TEXT ("ACE_INET_Addr::ACE_INET_Addr")));
+#else
+  ACE_UNUSED_ARG (port_name);
+  ACE_UNUSED_ARG (inet_address);
+  ACE_UNUSED_ARG (protocol);
+#endif
 }
 
 #if defined (ACE_HAS_WCHAR)
@@ -730,8 +746,12 @@ ACE_INET_Addr::set_port_number (u_short port_number,
 {
   ACE_TRACE ("ACE_INET_Addr::set_port_number");
 
+#if !defined (ACE_LACKS_HTONS)
   if (encode)
     port_number = htons (port_number);
+#else
+  ACE_UNUSED_ARG (encode);
+#endif /* ACE_LACKS_HTONS */
 
 #if defined (ACE_HAS_IPV6)
   if (this->get_type () == AF_INET6)
@@ -844,7 +864,7 @@ int ACE_INET_Addr::set_address (const char *ip_addr,
       if (this->get_type () == AF_INET && map == 0) {
         this->base_set (AF_INET, sizeof (this->inet_addr_.in4_));
 #ifdef ACE_HAS_SOCKADDR_IN_SIN_LEN
-	this->inet_addr_.in4_.sin_len = sizeof (this->inet_addr_.in4_);
+  this->inet_addr_.in4_.sin_len = sizeof (this->inet_addr_.in4_);
 #endif
         this->inet_addr_.in4_.sin_family = AF_INET;
         this->set_size (sizeof (this->inet_addr_.in4_));
@@ -858,7 +878,7 @@ int ACE_INET_Addr::set_address (const char *ip_addr,
           // this->set_type (AF_INET);
           this->base_set (AF_INET, sizeof (this->inet_addr_.in4_));
 #ifdef ACE_HAS_SOCKADDR_IN_SIN_LEN
-	  this->inet_addr_.in4_.sin_len = sizeof (this->inet_addr_.in4_);
+    this->inet_addr_.in4_.sin_len = sizeof (this->inet_addr_.in4_);
 #endif
           this->inet_addr_.in4_.sin_family = AF_INET;
           this->set_size (sizeof (this->inet_addr_.in4_));
@@ -871,7 +891,7 @@ int ACE_INET_Addr::set_address (const char *ip_addr,
         {
           this->base_set (AF_INET6, sizeof (this->inet_addr_.in6_));
 #ifdef ACE_HAS_SOCKADDR_IN6_SIN6_LEN
-	  this->inet_addr_.in6_.sin6_len = sizeof (this->inet_addr_.in6_);
+    this->inet_addr_.in6_.sin6_len = sizeof (this->inet_addr_.in6_);
 #endif
           this->inet_addr_.in6_.sin6_family = AF_INET6;
           this->set_size (sizeof (this->inet_addr_.in6_));
@@ -1083,7 +1103,11 @@ ACE_INET_Addr::get_ip_address (void) const
       return 0;
     }
 #endif /* ACE_HAS_IPV6 */
+#if !defined (ACE_LACKS_NTOHL)
   return ntohl (ACE_UINT32 (this->inet_addr_.in4_.sin_addr.s_addr));
+#else
+  return 0;
+#endif /* ACE_LACKS_NTOHL */
 }
 
 ACE_END_VERSIONED_NAMESPACE_DECL
