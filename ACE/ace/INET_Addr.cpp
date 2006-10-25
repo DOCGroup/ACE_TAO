@@ -346,9 +346,13 @@ ACE_INET_Addr::set (u_short port_number,
           (void) ACE_OS::memcpy ((void *) &addrv4.s_addr,
                                  hp->h_addr,
                                  hp->h_length);
+#  if !defined (ACE_LACKS_NTOHL)
           return this->set (port_number,
                             encode ? ntohl (addrv4.s_addr) : addrv4.s_addr,
                             encode);
+#  else
+          return -1;
+#  endif /* ACE_LACKS_NTOHL */
         }
     }
 #endif /* ACE_HAS_IPV6 */
