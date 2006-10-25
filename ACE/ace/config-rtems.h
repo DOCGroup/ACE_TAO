@@ -166,6 +166,7 @@
 # define ACE_LACKS_IP_MREQ
 # define ACE_LACKS_PROTOENT
 # define ACE_LACKS_SERVENT
+# define ACE_LACKS_IFREQ
 
 // Missing methods
 # define ACE_LACKS_GETHOSTBYADDR
