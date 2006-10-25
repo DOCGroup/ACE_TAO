@@ -19,8 +19,6 @@
 
 #include <sstream>
 
-      static int iii;
-
 namespace CIAO
 {
 
@@ -281,7 +279,7 @@ namespace CIAO
 
     events[0].header.source = hasher (source_id);
     events[0].header.type = ACE_ES_EVENT_ANY; //this->type_id_;
-    //events[0].header.ttl = 1;
+    events[0].header.ttl = 10;
     //events[0].data.any_value <<= ev;
 
     events[0].data.any_value <<= CORBA::string_dup( "Hey! Junk Data");
@@ -380,39 +378,33 @@ namespace CIAO
   {
     ACE_DEBUG ((LM_DEBUG, "Create a Sender object with addr_serv_id: %s\n",addr_serv_id ));
 
-    // Create and initialize the sender object
-    TAO_EC_Servant_Var<TAO_ECG_UDP_Sender> sender =
-                                TAO_ECG_UDP_Sender::create ();
-
-    TAO_ECG_UDP_Out_Endpoint endpoint;
-
-    if (endpoint.dgram ().open (ACE_Addr::sap_any) == -1)
+    // We need a local socket to send the data, open it and check
+    // that everything is OK:
+    TAO_ECG_Refcounted_Endpoint endpoint(new TAO_ECG_UDP_Out_Endpoint);
+    if (endpoint->dgram ().open (ACE_Addr::sap_any) == -1)
       {
-        ACE_DEBUG ((LM_ERROR, "Cannot open send endpoint\n"));
-        return false;
+        ACE_ERROR_RETURN ((LM_ERROR, "Cannot open send endpoint\n"),
+                          1);
       }
-
-    // TAO_ECG_UDP_Sender::init() takes a TAO_ECG_Refcounted_Endpoint.
-    // If we don't clone our endpoint and pass &endpoint, the sender will
-    // attempt to delete endpoint during shutdown.
-    TAO_ECG_UDP_Out_Endpoint* clone;
-    ACE_NEW_RETURN (clone,
-                    TAO_ECG_UDP_Out_Endpoint (endpoint),
-                    false);
 
     RtecUDPAdmin::AddrServer_var addr_srv;
     if (this->addr_serv_map_.find (addr_serv_id, addr_srv) != 0)
       return false;
 
-    sender->init (this->rt_event_channel_.in (),
-                  addr_srv.in (),
-                  clone);
+      // Now we setup the sender:
+      TAO_EC_Servant_Var<TAO_ECG_UDP_Sender> sender = TAO_ECG_UDP_Sender::create();
+      sender->init (this->rt_event_channel_.in (),
+                    addr_srv.in (),
+                    endpoint
+                    ACE_ENV_ARG_PARAMETER);
+      ACE_TRY_CHECK;
 
     // Setup the subscription and connect to the EC
     ACE_ConsumerQOS_Factory cons_qos_fact;
     cons_qos_fact.start_disjunction_group ();
     cons_qos_fact.insert (ACE_ES_EVENT_SOURCE_ANY, ACE_ES_EVENT_ANY, 0);
     RtecEventChannelAdmin::ConsumerQOS sub = cons_qos_fact.get_ConsumerQOS ();
+    sub.is_gateway = 1;
     sender->connect (sub);
 
     return true;
@@ -484,7 +476,9 @@ namespace CIAO
       {
         ACE_DEBUG ((LM_DEBUG, "\nUDP Event Handler Port [%d]\n", listen_port));
 
-        auto_ptr<TAO_ECG_UDP_EH> udp_eh (new TAO_ECG_UDP_EH (receiver.in()));
+        //auto_ptr<TAO_ECG_UDP_EH> udp_eh (new TAO_ECG_UDP_EH (receiver.in()));
+        TAO_ECG_UDP_EH * udp_eh = new TAO_ECG_UDP_EH (receiver.in());
+
         udp_eh->reactor (this->orb_->orb_core ()->reactor ());
 
         ACE_INET_Addr local_addr (listen_port);
@@ -493,7 +487,7 @@ namespace CIAO
             ACE_DEBUG ((LM_ERROR, "Cannot open event handler on port [%d]\n", listen_port));
             return false;
           }
-        udp_eh.release ();
+        //udp_eh.release ();
       }
 
     return true;
