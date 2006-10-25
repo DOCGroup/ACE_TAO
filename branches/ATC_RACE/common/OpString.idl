@@ -18,15 +18,21 @@ module CIAO
         long    usec;
       };
 
+      // A time window is a range between an earliest and latest time value.
       struct TimeWindow
       {
+        // Beginning of time window.
         CIAO::RACE::TimeValue Earliest;
 
+        // End of time window.
         CIAO::RACE::TimeValue Latest;
       };
 
+      // A task instance in an opstring.
       struct InstanceDescription
       {
+        // Universally unique ID of opstring.
+        // (Should correspond to goal UUID).
         string UUID;
 
         // Human-readable name (for debugging, not identification).
@@ -58,6 +64,13 @@ module CIAO
 
       typedef ::Deployment::PlanConnectionDescriptions DataLinkDescriptions;
 
+      // Type of an ordering link in opstring (data links handled separately).
+      // CAUSAL: causal link; must be obeyed for correct functionality.
+      // SCHEDULING: scheduling link introduced during scheduling to prevent
+      //             potential resource violations; can be ignored if
+      //             additional scheduling is done.
+      // THREAT: threat link, introduced to avoid a causal link threat;
+      //         must be obeyed for correct functionality.
       enum ConnectionType
       {
         CAUSAL,
@@ -65,10 +78,13 @@ module CIAO
         THREAT
       };
 
+      // A link specifying an ordering between two instances (the endpoints).
       struct OrderLinkDescription
       {
+        // Human-readable name (for debugging, not identification).
         string name;
 
+        // Type of link.
         ConnectionType type;
 
         ::Deployment::ComponentExternalPortEndpoints externalEndpoint;
@@ -82,6 +98,7 @@ module CIAO
       typedef sequence <OrderLinkDescription> OrderLinkDescriptions;
 
 
+      // Kind of comparison for a QoS specification.
       enum QoSComparator
       {
         LESS_THAN,
@@ -92,6 +109,7 @@ module CIAO
         NOT_EQUAL
       };
 
+      // Type of QoS specification.
       enum QoSType
       {
         DEADLINE,
@@ -101,14 +119,19 @@ module CIAO
 
       struct QoSSpecification
       {
+        // Human-readable name (for debugging, not identification).
         string name;
 
+        // Type of QoS.
         QoSType type;
 
+        // Specific type ID of component that monitors this QoS.
         string MonitorID;
 
+        // Comparison used for this QoS specification.
         QoSComparator comparator;
 
+        // Value to compare actual QoS to (using comparator).
         any value;
       };
 
@@ -116,8 +139,10 @@ module CIAO
 
       struct GoalCondition
       {
+        // ID of condition (in Task Network).
         int condID;
 
+        // Utility value (specifying importance of this goal condition).
         int utility;
       };
 
@@ -125,8 +150,10 @@ module CIAO
 
       struct TimeConstraint
       {
+        // ID of condition (in Task Network).
         int condID;
 
+        // Start-by (end-by) time for this data (non-data) condition.
         TimeValue timeConstraint;
       };
 
@@ -134,43 +161,65 @@ module CIAO
 
       struct Goal
       {
-        string name;
-
+        // Universally unique ID of goal.
         string UUID;
 
+        // Human-readable name (for debugging, not identification).
+        string name;
+
+        // Goal conditions with utility values.
         GoalConditions goalConds;
 
+        // Start-by and end-by constraints on conditions, in relative time
+        // (relative to start of opstring to achieve this goal).
         TimeConstraints relativeTimeConstraints;
 
+        // Start-by and end-by constraints on conditions, in clock time.
         TimeConstraints absoluteTimeConstraints;
 
+        // QoS requirements.
         QoSSpecifications QoSRequirements;
 
+        // Expected time range for start of opstring (for achieving this goal)
+        // execution.
         TimeWindow startWindow;
       };
 
       struct OperationalString
       {
-        string name;
-
+        // Universally unique ID of opstring.
+        // (Should correspond to goal UUID).
         string UUID;
 
+        // Human-readable name (for debugging, not identification).
+        string name;
+
+        // Goal achieved by this opstring.
         Goal goal;
 
+        // Task instances in opstring.
         InstanceDescriptions instances;
 
+        // Data links (between task instances) in opstring.
         DataLinkDescriptions dataLinks;
 
+        // Ordering links (between task instances) in opstring.
         OrderLinkDescriptions orderLinks;
 
+        // Priority of this opstring.
+        // (Should be derived from expected utility of goal).
         long priority;
 
+        // QoS requirements.
         QoSSpecifications QoSRequirements;
 
+        // Expected time range for start of opstring execution.
         TimeWindow startWindow;
 
+        // Expected time range for end of opstring execution.
         TimeWindow endWindow;
 
+        // Properties for deployment of opstring.
         ::Deployment::Properties properties;
       };
 
