@@ -68,6 +68,15 @@ struct  protoent {
 };
 #endif /* ACE_LACKS_PROTOENT */
 
+#if defined (ACE_LACKS_SERVENT)
+struct  servent {
+        char    *s_name;        /* official service name */
+        char    **s_aliases;    /* alias list */
+        int     s_port;         /* port # */
+        char    *s_proto;       /* protocol to use */
+};
+#endif /* ACE_LACKS_SERVENT */
+
 #if defined (ACE_HAS_STRUCT_NETDB_DATA)
    typedef char ACE_HOSTENT_DATA[sizeof(struct hostent_data)];
    typedef char ACE_SERVENT_DATA[sizeof(struct servent_data)];

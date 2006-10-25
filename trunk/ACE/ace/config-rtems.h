@@ -165,6 +165,7 @@
 # define ACE_LACKS_SOCKADDR
 # define ACE_LACKS_IP_MREQ
 # define ACE_LACKS_PROTOENT
+# define ACE_LACKS_SERVENT
 
 // Missing methods
 # define ACE_LACKS_GETHOSTBYADDR
