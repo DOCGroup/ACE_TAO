@@ -615,6 +615,8 @@ ACE_SOCK_Dgram::make_multicast_ifaddr (ip_mreq *ret_mreq,
         return -1;
       lmreq.imr_interface.s_addr =
         ACE_HTONL (interface_addr.get_ip_address ());
+#elif (ACE_LACKS_IFREQ)
+      // Do nothing
 #else
       ifreq if_address;
 
@@ -625,8 +627,8 @@ ACE_SOCK_Dgram::make_multicast_ifaddr (ip_mreq *ret_mreq,
                          &if_address) == -1)
         return -1;
 
-      sockaddr_in *socket_address;
-      socket_address = reinterpret_cast<sockaddr_in*> (&if_address.ifr_addr);
+      sockaddr_in *socket_address =
+        = reinterpret_cast<sockaddr_in*> (&if_address.ifr_addr);
       lmreq.imr_interface.s_addr = socket_address->sin_addr.s_addr;
 #endif /* ACE_WIN32 || __INTERIX */
     }
