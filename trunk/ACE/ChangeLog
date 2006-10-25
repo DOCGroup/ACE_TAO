@@ -1,3 +1,9 @@
+Wed Oct 25 09:24:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+	* ace/ace_for_tao.mpc:
+	  Added Rtems_init.c, for rtems without network support we
+	  also use the ace_for_tao base project
+
 Wed Oct 25 08:38:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 	* ace/config-rtems.h:
