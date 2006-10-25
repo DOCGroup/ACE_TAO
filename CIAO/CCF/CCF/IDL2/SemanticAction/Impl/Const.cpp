@@ -81,13 +81,13 @@ namespace CCF
           catch (NotFound const&)
           {
             cerr << ctx.file () << ":" << type_id->line () << ": error: "
-                 << "no type with name \'" << name
+                 << "no type with name \'" << type_name
                  << "\' visible from scope \'" << from << "\'" << endl;
           }
           catch (WrongType const&)
           {
             cerr << ctx.file () << ":" << type_id->line () << ": error: "
-                 << "declaration with name \'" << name
+                 << "declaration with name \'" << type_name
                  << "\' visible from scope \'" << from
                  << "\' is not a type declaration" << endl;
 

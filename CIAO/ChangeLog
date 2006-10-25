@@ -1,3 +1,25 @@
+Wed Oct 25 14:54:03 UTC 2006  Boris Kolpackov  <boris@codesynthesis.com>
+
+        * CCF/CCF/IDL2/SemanticAction/Impl/Const.cpp:
+        * CCF/CCF/CIDL/SemanticAction/Composition.hpp:
+        * CCF/CCF/IDL3/SemanticAction/Impl/Uses.cpp:
+        * CCF/CCF/IDL3/SemanticAction/Impl/Provides.cpp:
+        * CCF/CCF/IDL3/SemanticAction/Component.hpp:
+        * CCF/CCF/IDL3/SemanticAction/EventType.hpp:
+        * CCF/CCF/IDL3/SemanticAction/Home.hpp:
+
+          Minor fixes and cleanups.
+
+        * CCF/CCF/IDL2/Parsing/Recovery.hpp:
+        * CCF/CCF/IDL2/Parser.hpp:
+        * CCF/CCF/IDL2/Parser.cpp:
+        * CCF/CCF/CIDL/Parser.hpp:
+        * CCF/CCF/CIDL/Parser.cpp:
+        * CCF/CCF/IDL3/Parser.hpp:
+        * CCF/CCF/IDL3/Parser.cpp:
+
+          Added syntax errors to every grammar rule.
+
 Wed Oct 25 11:02:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 	* examples/Null_Component/StaticDAnCEApp.mpc:

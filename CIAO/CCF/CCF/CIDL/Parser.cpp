@@ -13,6 +13,9 @@ namespace CCF
 {
   namespace CIDL
   {
+    using  IDL2::Parsing::DiagnosticType;
+    using  IDL2::Parsing::RecoveryMethod;
+
     Parser::
     Parser (CompilerElements::Context& context,
             Diagnostic::Stream& dout,
@@ -70,16 +73,61 @@ namespace CCF
       // Composition
       //
       composition_decl =
-           composition_header
-        >> LCBRACE[act_composition_open_scope]
-        >> home_executor_decl
-        >> RCBRACE[act_composition_close_scope]
-        >> SEMI[act_composition_end]
-        ;
-
-      composition_header =
            COMPOSITION
-        >> (composition_category >> simple_identifier)[act_composition_begin]
+        >> guard
+           (
+                (
+                     assertion ("composition category expected",
+                                DiagnosticType::BEFORE)
+                     (
+                       composition_category
+                     )
+                  >> assertion ("composition name expected",
+                                DiagnosticType::BEFORE)
+                     (
+                       simple_identifier
+                     )
+                )[act_composition_begin]
+
+             >> assertion ("'{' expected",
+                           f.composition (),
+                           &SemanticAction::Composition::end)
+                (
+                  LCBRACE[act_composition_open_scope]
+                )
+
+             >> assertion ("home executor declaration expected",
+                           f.composition (),
+                           &SemanticAction::Composition::close_scope,
+                           &SemanticAction::Composition::end,
+                           DiagnosticType::BEFORE)
+                (
+                  hood (home_executor_decl)
+                  [
+                    handler (f.composition (),
+                             &SemanticAction::Composition::close_scope,
+                             &SemanticAction::Composition::end)
+                  ]
+                )
+
+             >> assertion ("'}' expected",
+                           f.composition (),
+                           &SemanticAction::Composition::close_scope,
+                           &SemanticAction::Composition::end,
+                           DiagnosticType::BEFORE)
+                (
+                  RCBRACE[act_composition_close_scope]
+                )
+
+             >> assertion ("';' expected",
+                           f.composition (),
+                           &SemanticAction::Composition::end,
+                           RecoveryMethod::NONE)
+                (
+                  SEMI[act_composition_end]
+                )
+
+           )[error_handler]
         ;
 
       composition_category =
@@ -89,34 +137,105 @@ namespace CCF
         | SESSION
         ;
 
+
       //
       // Home executor
       //
       home_executor_decl =
-           home_executor_header
-        >> LCBRACE
-        >> home_executor_home_impl_decl
-        >> home_executor_executor_decl
-        >> RCBRACE
-        >> SEMI[act_home_executor_end]
-        ;
-
-      home_executor_header =
            HOME
         >> EXECUTOR
-        >> simple_identifier[act_home_executor_begin]
+        >> guard
+           (
+                assertion ("home executor name expected",
+                           DiagnosticType::BEFORE)
+                (
+                  simple_identifier[act_home_executor_begin]
+                )
+
+             >> assertion ("'{' expected",
+                           f.home_executor (),
+                           &SemanticAction::HomeExecutor::end)
+                (
+                  LCBRACE
+                )
+
+             >> assertion ("implements declaration expected",
+                           f.home_executor (),
+                           &SemanticAction::HomeExecutor::end,
+                           DiagnosticType::BEFORE)
+                (
+                  hood (home_executor_home_impl_decl)
+                  [
+                    handler (f.home_executor (),
+                             &SemanticAction::HomeExecutor::end)
+                  ]
+                )
+
+             >> assertion ("manages declaration expected",
+                           f.home_executor (),
+                           &SemanticAction::HomeExecutor::end,
+                           DiagnosticType::BEFORE)
+                (
+                  hood (home_executor_executor_decl)
+                  [
+                    handler (f.home_executor (),
+                             &SemanticAction::HomeExecutor::end)
+                  ]
+                )
+
+             >> assertion ("'}' expected",
+                           f.home_executor (),
+                           &SemanticAction::HomeExecutor::end,
+                           DiagnosticType::BEFORE)
+                (
+                  RCBRACE
+                )
+
+             >> assertion ("';' expected",
+                           f.home_executor (),
+                           &SemanticAction::HomeExecutor::end,
+                           RecoveryMethod::NONE)
+                (
+                  SEMI[act_home_executor_end]
+                )
+
+           )[error_handler]
         ;
+
 
       home_executor_home_impl_decl =
            IMPLEMENTS
-        >> identifier[act_home_executor_implements]
-        >> SEMI
+        >> guard
+           (
+                assertion ("home name expected",
+                           DiagnosticType::BEFORE)
+                (
+                  identifier[act_home_executor_implements]
+                )
+             >> assertion ("';' expected",
+                           RecoveryMethod::NONE)
+                (
+                  SEMI
+                )
+           )[error_handler]
         ;
+
 
       home_executor_executor_decl =
            MANAGES
-        >> simple_identifier[act_home_executor_manages]
-        >> SEMI
+        >> guard
+           (
+                assertion ("executor name expected",
+                           DiagnosticType::BEFORE)
+                (
+                  simple_identifier[act_home_executor_manages]
+                )
+             >> assertion ("';' expected",
+                           RecoveryMethod::NONE)
+                (
+                  SEMI
+                )
+           )[error_handler]
         ;
     }
   }
