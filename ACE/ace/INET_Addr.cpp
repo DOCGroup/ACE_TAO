@@ -741,6 +741,8 @@ ACE_INET_Addr::set_port_number (u_short port_number,
 #if !defined (ACE_LACKS_HTONS)
   if (encode)
     port_number = htons (port_number);
+#else
+  ACE_UNUSED_ARG (encode);
 #endif /* ACE_LACKS_HTONS */
 
 #if defined (ACE_HAS_IPV6)
