@@ -255,6 +255,10 @@ TAO_Root_POA::TAO_Root_POA (const TAO_Root_POA::String &name,
     caller_key_to_object_ (0),
     servant_for_key_to_object_ (0)
 {
+  // Since we are keeping a reference to a POAManager, we need to
+  // increment the reference count
+  this->poa_manager_._add_ref();
+
   // Parse the policies that are used in the critical path in
   // a cache.
   this->cached_policies_.update (this->policies_
@@ -331,6 +335,7 @@ TAO_Root_POA::TAO_Root_POA (const TAO_Root_POA::String &name,
 
 TAO_Root_POA::~TAO_Root_POA (void)
 {
+  this->poa_manager_._remove_ref();
 }
 
 void

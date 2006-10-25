@@ -1,3 +1,11 @@
+Wed Oct 25 15:33:27 UTC 2006  Chad Elliott  <elliott_c@ociweb.com>
+
+        * tao/PortableServer/Root_POA.cpp:
+
+          My change from Mon Oct 23 12:24:57 UTC 2006 uncovered yet another
+          reference counting problem.  The TAO_Root_POA was not manipulating
+          the reference count of the TAO_POA_Manager that it held.
+
 Mon Oct 23 12:24:57 UTC 2006  Chad Elliott  <elliott_c@ociweb.com>
 
         * tao/PortableServer/Object_Adapter.h:
