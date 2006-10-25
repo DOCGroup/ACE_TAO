@@ -1,3 +1,8 @@
+Wed Oct 25 11:02:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+	* examples/Null_Component/StaticDAnCEApp.mpc:
+	  Enabled this project in all builds
+
 Mon Oct 23 19:35:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 	* DAnCE/DomainApplicationManager/DomainApplicationManager_Impl.cpp:
