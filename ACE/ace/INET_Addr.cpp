@@ -1103,7 +1103,11 @@ ACE_INET_Addr::get_ip_address (void) const
       return 0;
     }
 #endif /* ACE_HAS_IPV6 */
+#if !defined (ACE_LACKS_NTOHL)
   return ntohl (ACE_UINT32 (this->inet_addr_.in4_.sin_addr.s_addr));
+#else
+  return 0;
+#endif /* ACE_LACKS_NTOHL */
 }
 
 ACE_END_VERSIONED_NAMESPACE_DECL
