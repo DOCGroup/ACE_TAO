@@ -139,6 +139,7 @@ project(ACE_FOR_TAO) : acedefaults, core, svcconf, versioned_namespace, pkgconfi
     Read_Buffer.cpp
     Recursive_Thread_Mutex.cpp
     Refcountable.cpp
+    Rtems_init.c
     RW_Mutex.cpp
     RW_Thread_Mutex.cpp
     Sched_Params.cpp
