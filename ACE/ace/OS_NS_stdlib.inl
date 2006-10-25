@@ -91,7 +91,7 @@ ACE_INLINE void *
 ACE_OS::atop (const wchar_t *s)
 {
 #  if defined (ACE_WIN64)
-  intptr ip = ::_wtoi64 (s);
+  intptr_t ip = ::_wtoi64 (s);
 #  else
   intptr_t ip = ACE_OS::atoi (s);
 #  endif /* ACE_WIN64 */
