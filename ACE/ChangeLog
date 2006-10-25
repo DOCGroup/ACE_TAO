@@ -1,3 +1,8 @@
+Wed Oct 25 06:30:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+	* ace/TTY_IO.cpp:
+	  Fixed compile error on Vxworks
+
 Tue Oct 24 23:53:08 UTC 2006  Steve Huston  <shuston@riverace.com>
 
         * ace/config-aix-4.x.h: Changed ACE_HAS_PTHREAD_CONTINUE to
@@ -79,7 +84,7 @@ Tue Oct 24 17:46:40 UTC 2006  Ossama Othman  <ossama_othman at symantec dot com>
 Tue Oct 24 14:44:09 UTC 2006  Olli Savia  <ops@iki.fi>
 
         * ace/TTY_IO.cpp:
-        
+
           Changed the default constructor to always initialise member
           variables regardless of ACE_HAS_TERMIOS or ACE_HAS_TERMIO setting.
 
