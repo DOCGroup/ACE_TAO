@@ -1,3 +1,10 @@
+Wed Oct 25 07:58:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+	* ace/config-rtems.h:
+	* ace/OS_NS_sys_socket.inl:
+	  Added ACE_LACKS_ACCEPT, ACE_LACKS_CONNECT, ACE_LACKS_GETPEERNAME,
+	  ACE_LACKS_GETSOCKNAME
+
 Wed Oct 25 06:30:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 	* ace/TTY_IO.cpp:
