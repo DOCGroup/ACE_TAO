@@ -266,6 +266,14 @@ ACE_OS::getsockopt (ACE_HANDLE handle,
                     int *optlen)
 {
   ACE_OS_TRACE ("ACE_OS::getsockopt");
+#if defined (ACE_LACKS_GETSOCKOPT)
+  ACE_UNUSED_ARG (handle);
+  ACE_UNUSED_ARG (level);
+  ACE_UNUSED_ARG (optname);
+  ACE_UNUSED_ARG (optval);
+  ACE_UNUSED_ARG (optlen);
+  ACE_NOTSUP_RETURN (-1);
+#else
   ACE_SOCKCALL_RETURN (::getsockopt ((ACE_SOCKET) handle,
                                      level,
                                      optname,
@@ -273,6 +281,7 @@ ACE_OS::getsockopt (ACE_HANDLE handle,
                                      (ACE_SOCKET_LEN *) optlen),
                        int,
                        -1);
+#endif /* ACE_LACKS_GETSOCKOPT */
 }
 
 ACE_INLINE int
@@ -302,7 +311,13 @@ ACE_OS::recv (ACE_HANDLE handle, char *buf, size_t len, int flags)
   // handled explicitly here.  If the ACE_OSCALL macro ever changes,
   // this function needs to be reviewed.  On Win32, the regular macros
   // can be used, as this is not an issue.
-#if defined (ACE_WIN32)
+#if defined (ACE_LACKS_RECV)
+  ACE_UNUSED_ARG (handle);
+  ACE_UNUSED_ARG (buf);
+  ACE_UNUSED_ARG (len);
+  ACE_UNUSED_ARG (flags);
+  ACE_NOTSUP_RETURN (-1)
+#elif defined (ACE_WIN32)
   ACE_SOCKCALL_RETURN (::recv ((ACE_SOCKET) handle, buf,
                                static_cast<int> (len), flags), ssize_t, -1);
 #else
@@ -326,7 +341,7 @@ ACE_OS::recv (ACE_HANDLE handle, char *buf, size_t len, int flags)
 # endif /* EAGAIN != EWOULDBLOCK*/
 
   return ace_result_;
-#endif /* defined (ACE_WIN32) */
+#endif /* ACE_LACKS_RECV */
 }
 
 ACE_INLINE ssize_t
@@ -521,7 +536,13 @@ ACE_OS::send (ACE_HANDLE handle, const char *buf, size_t len, int flags)
   // handled explicitly here.  If the ACE_OSCALL macro ever changes,
   // this function needs to be reviewed.  On Win32, the regular macros
   // can be used, as this is not an issue.
-#if defined (ACE_WIN32)
+#if defined (ACE_LACKS_SEND)
+  ACE_UNUSED_ARG (handle);
+  ACE_UNUSED_ARG (buf);
+  ACE_UNUSED_ARG (len);
+  ACE_UNUSED_ARG (flags);
+  ACE_NOTSUP_RETURN (-1);
+#elif defined (ACE_WIN32)
   ACE_SOCKCALL_RETURN (::send ((ACE_SOCKET) handle,
                                buf,
                                static_cast<int> (len),
@@ -600,7 +621,15 @@ ACE_OS::sendto (ACE_HANDLE handle,
                 int addrlen)
 {
   ACE_OS_TRACE ("ACE_OS::sendto");
-#if defined (ACE_VXWORKS)
+#if defined (ACE_LACKS_SENDTO)
+  ACE_UNUSED_ARG (handle);
+  ACE_UNUSED_ARG (buf);
+  ACE_UNUSED_ARG (len);
+  ACE_UNUSED_ARG (flags);
+  ACE_UNUSED_ARG (addr);
+  ACE_UNUSED_ARG (addrlen);
+  ACE_NOTSUP_RETURN (-1);
+#elif defined (ACE_VXWORKS)
   ACE_SOCKCALL_RETURN (::sendto ((ACE_SOCKET) handle,
                                  const_cast <char *> (buf),
                                  len,
@@ -608,8 +637,7 @@ ACE_OS::sendto (ACE_HANDLE handle,
                                  const_cast<struct sockaddr *> (addr),
                                  addrlen),
                        ssize_t, -1);
-#else
-#  if defined (ACE_WIN32)
+#elif defined (ACE_WIN32)
   ACE_SOCKCALL_RETURN (::sendto ((ACE_SOCKET) handle,
                                  buf,
                                  static_cast<int> (len),
@@ -617,7 +645,7 @@ ACE_OS::sendto (ACE_HANDLE handle,
                                  const_cast<struct sockaddr *> (addr),
                                  addrlen),
                        ssize_t, -1);
-#  else
+#else
   ACE_SOCKCALL_RETURN (::sendto ((ACE_SOCKET) handle,
                                  buf,
                                  len,
@@ -625,8 +653,7 @@ ACE_OS::sendto (ACE_HANDLE handle,
                                  const_cast<struct sockaddr *> (addr),
                                  addrlen),
                        ssize_t, -1);
-#  endif /* ACE_WIN32 */
-#endif /* ACE_VXWORKS */
+#endif /* ACE_LACKS_SENDTO */
 }
 
 ACE_INLINE ssize_t
