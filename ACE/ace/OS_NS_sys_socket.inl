@@ -41,7 +41,12 @@ ACE_OS::accept (ACE_HANDLE handle,
   // this function needs to be reviewed.  On Win32, the regular macros
   // can be used, as this is not an issue.
 
-#if defined (ACE_WIN32)
+#if defined (ACE_LACKS_ACCEPT)
+  ACE_UNUSED_ARG (handle);
+  ACE_UNUSED_ARG (addr);
+  ACE_UNUSED_ARG (addrlen);
+  ACE_NOTSUP_RETURN (ACE_INVALID_HANDLE);
+#elif defined (ACE_WIN32)
   ACE_SOCKCALL_RETURN (::accept ((ACE_SOCKET) handle,
                                  addr,
                                  (ACE_SOCKET_LEN *) addrlen),
@@ -127,9 +132,16 @@ ACE_OS::connect (ACE_HANDLE handle,
                  int addrlen)
 {
   ACE_OS_TRACE ("ACE_OS::connect");
+#if defined (ACE_LACKS_CONNECT)
+  ACE_UNUSED_ARG (handle);
+  ACE_UNUSED_ARG (addr);
+  ACE_UNUSED_ARG (addrlen);
+  ACE_NOTSUP_RETURN (-1);
+#else
   ACE_SOCKCALL_RETURN (::connect ((ACE_SOCKET) handle,
                                   addr,
                                   (ACE_SOCKET_LEN) addrlen), int, -1);
+#endif /* ACE_LACKS_CONNECT */
 }
 
 ACE_INLINE int
@@ -159,8 +171,13 @@ ACE_OS::getpeername (ACE_HANDLE handle, struct sockaddr *addr,
 {
   ACE_OS_TRACE ("ACE_OS::getpeername");
 
-#if defined (ACE_GETNAME_RETURNS_RANDOM_SIN_ZERO) \
-         && (ACE_GETNAME_RETURNS_RANDOM_SIN_ZERO == 1)
+#if defined (ACE_LACKS_GETPEERNAME)
+  ACE_UNUSED_ARG (handle);
+  ACE_UNUSED_ARG (addr);
+  ACE_UNUSED_ARG (addrlen);
+  ACE_NOTSUP_RETURN (-1);
+#elif defined (ACE_GETNAME_RETURNS_RANDOM_SIN_ZERO) \
+           && (ACE_GETNAME_RETURNS_RANDOM_SIN_ZERO == 1)
   int result;
   ACE_SOCKCALL (::getpeername ((ACE_SOCKET) handle,
                                addr,
@@ -202,8 +219,13 @@ ACE_OS::getsockname (ACE_HANDLE handle,
                      int *addrlen)
 {
   ACE_OS_TRACE ("ACE_OS::getsockname");
-#if defined (ACE_GETNAME_RETURNS_RANDOM_SIN_ZERO) \
-         && (ACE_GETNAME_RETURNS_RANDOM_SIN_ZERO == 1)
+#if defined (ACE_LACKS_GETSOCKNAME)
+  ACE_UNUSED_ARG (handle);
+  ACE_UNUSED_ARG (addr);
+  ACE_UNUSED_ARG (addrlen);
+  ACE_NOTSUP_RETURN (-1);
+#elif defined (ACE_GETNAME_RETURNS_RANDOM_SIN_ZERO) \
+           && (ACE_GETNAME_RETURNS_RANDOM_SIN_ZERO == 1)
   int result;
   ACE_SOCKCALL (::getsockname ((ACE_SOCKET) handle,
                                addr,
