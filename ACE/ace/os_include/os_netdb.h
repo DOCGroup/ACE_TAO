@@ -60,6 +60,14 @@ struct  hostent {
 };
 #endif /* ACE_LACKS_HOSTENT */
 
+#if defined (ACE_LACKS_PROTOENT)
+struct  protoent {
+        char    *p_name;        /* official protocol name */
+        char    **p_aliases;    /* alias list */
+        int     p_proto;        /* protocol # */
+};
+#endif /* ACE_LACKS_PROTOENT */
+
 #if defined (ACE_HAS_STRUCT_NETDB_DATA)
    typedef char ACE_HOSTENT_DATA[sizeof(struct hostent_data)];
    typedef char ACE_SERVENT_DATA[sizeof(struct servent_data)];
