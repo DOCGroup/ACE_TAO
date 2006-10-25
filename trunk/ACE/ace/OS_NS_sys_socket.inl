@@ -316,7 +316,7 @@ ACE_OS::recv (ACE_HANDLE handle, char *buf, size_t len, int flags)
   ACE_UNUSED_ARG (buf);
   ACE_UNUSED_ARG (len);
   ACE_UNUSED_ARG (flags);
-  ACE_NOTSUP_RETURN (-1)
+  ACE_NOTSUP_RETURN (-1);
 #elif defined (ACE_WIN32)
   ACE_SOCKCALL_RETURN (::recv ((ACE_SOCKET) handle, buf,
                                static_cast<int> (len), flags), ssize_t, -1);
