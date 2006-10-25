@@ -1,3 +1,25 @@
+Wed Oct 26 00:31:56 UTC 2006  Ossama Othman  <ossama_othman at symantec dot com>
+
+        * ace/Auto_Ptr.h:
+
+          Added missing "element_type" typedef.
+
+          (ACE_auto_ptr_reset):
+
+          Introduced this new function template to simplify the
+          ACE_AUTO_PTR_RESET macro implementation, to support
+          ACE's other auto_ptr-like class templates
+          (e.g. ACE_Auto_Array_Ptr<>), and to make auto_ptr
+          reset() operations convenient and easy for those needing the
+          ACE_AUTO_PTR_RESET functionality to.  Users now need only
+          perform a call like:
+
+            ACE_auto_ptr_reset (my_auto_ptr_instance, new foo);
+
+          This build failures on platforms that define
+          ACE_LACKS_AUTO_PTR_RESET and in code that expects to use
+          ACE_AUTO_PTR_RESET on ACE_Auto_{Basic_}_Array<> instances.
+
 Wed Oct 25 22:42:03 UTC 2006  Ossama Othman  <ossama_othman at symantec dot com>
 
         * tests/Integer_Truncate_Test.cpp:
