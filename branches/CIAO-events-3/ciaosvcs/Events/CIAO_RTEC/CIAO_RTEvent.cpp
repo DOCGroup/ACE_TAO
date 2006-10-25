@@ -280,9 +280,9 @@ namespace CIAO
     events[0].header.source = hasher (source_id);
     events[0].header.type = ACE_ES_EVENT_ANY; //this->type_id_;
     events[0].header.ttl = 10;
-    //events[0].data.any_value <<= ev;
+    events[0].data.any_value <<= ev;
 
-    events[0].data.any_value <<= CORBA::string_dup( "Hey! Junk Data");
+    //events[0].data.any_value <<= CORBA::string_dup( "Hey! Junk Data");
 
     ACE_DEBUG ((LM_DEBUG, "******* push event for source string: %s\n", source_id));
     ACE_DEBUG ((LM_DEBUG, "******* push event for source id: %i\n", events[0].header.source));
