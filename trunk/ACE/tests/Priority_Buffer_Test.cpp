@@ -31,7 +31,7 @@ ACE_RCSID(tests, Priority_Buffer_Test, "$Id$")
 static const char ACE_ALPHABET[] = "abcdefghijklmnopqrstuvwxyz";
 
 // Global message count.
-static int count = 0;
+static int message_count = 0;
 
 // Make the queue be capable of being *very* large.
 static const long max_queue = LONG_MAX;
@@ -88,7 +88,7 @@ consumer (void *args)
         break;
     }
 
-  ACE_ASSERT (local_count == count);
+  ACE_ASSERT (local_count == message_count);
   return 0;
 }
 
@@ -104,11 +104,11 @@ producer (void *args)
   ACE_Message_Queue<ACE_MT_SYNCH> *msg_queue =
     reinterpret_cast<ACE_Message_Queue<ACE_MT_SYNCH> *> (args);
 
-  ACE_Message_Block *mb;
+  ACE_Message_Block *mb = 0;
 
   for (const char *c = ACE_ALPHABET; *c != '\0'; c++)
     {
-      count++;
+      ++message_count;
 
       // Allocate a new message
 
@@ -118,7 +118,7 @@ producer (void *args)
       *mb->wr_ptr () = *c;
 
       // Set the priority.
-      mb->msg_priority (count);
+      mb->msg_priority (message_count);
       mb->wr_ptr (1);
 
       // Enqueue in priority order.
@@ -139,7 +139,7 @@ producer (void *args)
                 ACE_TEXT ("(%t) %p\n"),
                 ACE_TEXT ("put_next")));
 
-  count++;
+  ++message_count;
 
   // Now read all the items out in priority order (i.e., ordered by
   // the size of the lines!).
