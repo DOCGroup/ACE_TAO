@@ -63,6 +63,7 @@
 #define ACE_LACKS_RAND_REENTRANT_FUNCTIONS
 #define ACE_LACKS_REALPATH
 #define ACE_LACKS_TEMPNAM
+# define ACE_LACKS_INTPTR_T
 
 // Temporarily, enabling this results in compile errors with
 // rtems 4.6.6.
@@ -167,7 +168,6 @@
 # define ACE_LACKS_PROTOENT
 # define ACE_LACKS_SERVENT
 # define ACE_LACKS_IFREQ
-# define ACE_LACKS_INTPTR_T
 
 // Missing methods
 # define ACE_LACKS_GETHOSTBYADDR
