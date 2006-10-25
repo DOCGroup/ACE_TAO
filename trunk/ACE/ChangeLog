@@ -1,3 +1,13 @@
+Wed Oct 25 22:42:03 UTC 2006  Ossama Othman  <ossama_othman at symantec dot com>
+
+        * tests/Integer_Truncate_Test.cpp:
+
+          Remove "const" qualifiers from types used in
+          ACE_Utils::Truncate<>() function template parameters that are
+          deduced using argument dependent lookup.  Borland appears to get
+          confused, and can't find the non-const template parameter
+          Truncate<>() specializations.
+
 Wed Oct 25 20:17:13 UTC 2006  Ossama Othman  <ossama_othman at symantec dot com>
 
         * ace/Hash_Map_Manager_T.inl (ACE_Hash_Map_Iterator_Base_Ex):
