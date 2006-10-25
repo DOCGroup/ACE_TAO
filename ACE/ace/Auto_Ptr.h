@@ -41,22 +41,24 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
  * @brief Implements the draft C++ standard auto_ptr abstraction.
  * This class allows one to work on non-object (basic) types
  */
-template <class X>
+template <typename X>
 class ACE_Auto_Basic_Ptr
 {
 public:
-  // = Initialization and termination methods
-  explicit ACE_Auto_Basic_Ptr (X *p = 0) : p_ (p) {}
+  typedef X element_type;
 
-  ACE_Auto_Basic_Ptr (ACE_Auto_Basic_Ptr<X> &ap);
-  ACE_Auto_Basic_Ptr<X> &operator= (ACE_Auto_Basic_Ptr<X> &rhs);
+  // = Initialization and termination methods
+  explicit ACE_Auto_Basic_Ptr (X * p = 0) : p_ (p) {}
+
+  ACE_Auto_Basic_Ptr (ACE_Auto_Basic_Ptr<X> & ap);
+  ACE_Auto_Basic_Ptr<X> &operator= (ACE_Auto_Basic_Ptr<X> & rhs);
   ~ACE_Auto_Basic_Ptr (void);
 
   // = Accessor methods.
   X &operator *() const;
   X *get (void) const;
   X *release (void);
-  void reset (X *p = 0);
+  void reset (X * p = 0);
 
   /// Dump the state of an object.
   void dump (void) const;
@@ -85,13 +87,15 @@ using std::auto_ptr;
  *
  * @brief Implements the draft C++ standard auto_ptr abstraction.
  */
-template <class X>
-class auto_ptr : public ACE_Auto_Basic_Ptr <X>
+template <typename X>
+class auto_ptr : public ACE_Auto_Basic_Ptr<X>
 {
 public:
+  typedef X element_type;
+
   // = Initialization and termination methods
-  explicit auto_ptr (X *p = 0) : ACE_Auto_Basic_Ptr<X> (p) {}
-  auto_ptr (auto_ptr<X> &ap) : ACE_Auto_Basic_Ptr<X> (ap.release()) {}
+  explicit auto_ptr (X * p = 0) : ACE_Auto_Basic_Ptr<X> (p) {}
+  auto_ptr (auto_ptr<X> & ap) : ACE_Auto_Basic_Ptr<X> (ap.release ()) {}
 
   X *operator-> () const;
 };
@@ -106,12 +110,14 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
  * the need for the ACE_AUTO_PTR_RESET macro on platforms like
  * VC6 where the auto_ptr<T> is broken.
  */
-template <class X>
+template <typename X>
 class ACE_Auto_Ptr : public ACE_Auto_Basic_Ptr <X>
 {
 public:
+  typedef X element_type;
+
   // = Initialization and termination methods
-  explicit ACE_Auto_Ptr (X *p = 0) : ACE_Auto_Basic_Ptr<X> (p) {}
+  explicit ACE_Auto_Ptr (X * p = 0) : ACE_Auto_Basic_Ptr<X> (p) {}
 
   X *operator-> () const;
 };
@@ -124,23 +130,25 @@ public:
  * (basic) types that must be treated as an array, e.g.,
  * deallocated via "delete [] foo".
  */
-template<class X>
+template<typename X>
 class ACE_Auto_Basic_Array_Ptr
 {
 public:
-  // = Initialization and termination methods.
-  explicit ACE_Auto_Basic_Array_Ptr (X *p = 0) : p_ (p) {}
+  typedef X element_type;
 
-  ACE_Auto_Basic_Array_Ptr (ACE_Auto_Basic_Array_Ptr<X> &ap);
-  ACE_Auto_Basic_Array_Ptr<X> &operator= (ACE_Auto_Basic_Array_Ptr<X> &rhs);
+  // = Initialization and termination methods.
+  explicit ACE_Auto_Basic_Array_Ptr (X * p = 0) : p_ (p) {}
+
+  ACE_Auto_Basic_Array_Ptr (ACE_Auto_Basic_Array_Ptr<X> & ap);
+  ACE_Auto_Basic_Array_Ptr<X> &operator= (ACE_Auto_Basic_Array_Ptr<X> & rhs);
   ~ACE_Auto_Basic_Array_Ptr (void);
 
   // = Accessor methods.
-  X &operator* () const;
-  X &operator[] (int i) const;
-  X *get (void) const;
-  X *release (void);
-  void reset (X *p = 0);
+  X & operator* () const;
+  X & operator[] (int i) const;
+  X * get (void) const;
+  X * release (void);
+  void reset (X * p = 0);
 
   /// Dump the state of an object.
   void dump (void) const;
@@ -149,7 +157,7 @@ public:
   ACE_ALLOC_HOOK_DECLARE;
 
 protected:
-  X *p_;
+  X * p_;
 };
 
 /**
@@ -158,16 +166,45 @@ protected:
  * @brief Implements an extension to the draft C++ standard auto_ptr
  * abstraction.
  */
-template<class X>
+template<typename X>
 class ACE_Auto_Array_Ptr : public ACE_Auto_Basic_Array_Ptr<X>
 {
 public:
+  typedef X element_type;
+
   // = Initialization and termination methods.
   explicit ACE_Auto_Array_Ptr (X *p = 0)
     : ACE_Auto_Basic_Array_Ptr<X> (p) {}
 
   X *operator-> () const;
 };
+
+
+/**
+ * @function
+ *
+ * @brief
+ *
+ * Some platforms have an older version of auto_ptr support, which
+ * lacks reset, and cannot be disabled easily.  Portability to these
+ * platforms requires use of this function template.  This function
+ * template also works for the @c ACE_Auto_{Basic_}Array_Ptr class
+ * template, as well.
+ */
+template<typename AUTO_PTR_TYPE>
+inline void
+ACE_auto_ptr_reset (AUTO_PTR_TYPE & ap,
+                    typename AUTO_PTR_TYPE::element_type * p)
+{
+#if defined (ACE_AUTO_PTR_LACKS_RESET)
+  if (p != ap.get ())
+    {
+      ap = AUTO_PTR_TYPE (p);
+    }
+#else
+  ap.reset (p);
+#endif /* ACE_AUTO_PTR_LACKS_RESET */
+}
 
 ACE_END_VERSIONED_NAMESPACE_DECL
 
@@ -176,25 +213,12 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 // easily.  Portability to these platforms requires
 // use of the following ACE_AUTO_PTR_RESET macro.
 //
-// Note that this macro correctly handles the case where NEWPTR may be
-// a call to operator new(), e.g. "new foo", by making sure it is only
-// evaluated once.
-# if defined (ACE_AUTO_PTR_LACKS_RESET)
-#   define ACE_AUTO_PTR_RESET(AUTOPTR,NEWPTR,TYPE) \
-      do { \
-        TYPE * tmp_ptr = NEWPTR; \
-        if (tmp_ptr != AUTOPTR.get ()) \
-          { \
-            delete AUTOPTR.release (); \
-            AUTOPTR = auto_ptr<TYPE> (tmp_ptr); \
-          } \
-      } while (0)
-# else /* ! ACE_AUTO_PTR_LACKS_RESET */
-#   define ACE_AUTO_PTR_RESET(AUTOPTR,NEWPTR,TYPE) \
-      do { \
-         AUTOPTR.reset (NEWPTR); \
-      } while (0)
-# endif /* ACE_AUTO_PTR_LACKS_RESET */
+// The TYPE macro parameter is no longer necessary but we leave it
+// around for backward compatibility.  This is also the reason why the
+// ACE_auto_ptr_reset function template is not called
+// ACE_AUTO_PTR_RESET.
+# define ACE_AUTO_PTR_RESET(AUTOPTR,NEWPTR,TYPE) \
+  ACE_auto_ptr_reset (AUTOPTR, NEWPTR);
 
 #if defined (__ACE_INLINE__)
 #include "ace/Auto_Ptr.inl"
