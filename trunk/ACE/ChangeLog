@@ -1,3 +1,18 @@
+Wed Oct 25 20:17:13 UTC 2006  Ossama Othman  <ossama_othman at symantec dot com>
+
+        * ace/Hash_Map_Manager_T.inl (ACE_Hash_Map_Iterator_Base_Ex):
+
+          Removed commented ACE_TRACE macro entirely.  Fuzz parses
+          commented out code, and still incorrectly reports an ACE_TRACE
+          mismatch.
+
+        * ace/Truncate.h:
+
+          Yet another attempt at placating Borland C++.  Removed the
+          partial specialization for truncating values of the same type.
+          Typedefed the underlying Truncator structure template to further
+          simplify the function call.
+
 Wed Oct 25 18:31:47 UTC 2006  Ossama Othman  <ossama_othman at symantec dot com>
 
         * examples/C++NPv1/Reactive_Logging_Server.h:
