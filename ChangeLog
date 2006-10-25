@@ -1,3 +1,7 @@
+Wed Oct 25 22:27:20 UTC 2006  John S. Kinnebrew  <john.s.kinnebrew@vanderbilt.edu>
+
+        * common/OpString.idl:  Added Goal IDL structure.
+
 Fri Oct 13 15:52:30 UTC 2006  John S. Kinnebrew  <john.s.kinnebrew@vanderbilt.edu>
 
         * SA_POP/Builder.h

@@ -29,25 +29,32 @@ module CIAO
       {
         string UUID;
 
+        // Human-readable name (for debugging, not identification).
         string name;
 
+        // Node to which instance is deployed.
         string node;
 
+        // ID of task performed by instance (in Task Network).
         string taskId;
 
+        // Supported type ID of task (in Repository Manager).
         string taskTypeId;
 
+        // Specific type ID of suggested component (in Repository Manager).
         string suggestedImpl;
 
+        // Initial values of component configuration parameters.
         ::Deployment::Properties configProperty;
 
+        // Expected time range of instance start.
         TimeWindow startWindow;
 
+        // Expected time range of instance finish.
         TimeWindow endWindow;
       };
 
       typedef sequence <InstanceDescription> InstanceDescriptions;
-
 
       typedef ::Deployment::PlanConnectionDescriptions DataLinkDescriptions;
 
@@ -107,12 +114,48 @@ module CIAO
 
       typedef sequence <QoSSpecification> QoSSpecifications;
 
-      struct OperationalString
+      struct GoalCondition
       {
+        int condID;
 
+        int utility;
+      };
+
+      typedef sequence <GoalCondition> GoalConditions;
+
+      struct TimeConstraint
+      {
+        int condID;
+
+        TimeValue timeConstraint;
+      };
+
+      typedef sequence <TimeConstraint> TimeConstraints;
+
+      struct Goal
+      {
         string name;
 
         string UUID;
+
+        GoalConditions goalConds;
+
+        TimeConstraints relativeTimeConstraints;
+
+        TimeConstraints absoluteTimeConstraints;
+
+        QoSSpecifications QoSRequirements;
+
+        TimeWindow startWindow;
+      };
+
+      struct OperationalString
+      {
+        string name;
+
+        string UUID;
+
+        Goal goal;
 
         InstanceDescriptions instances;
 
@@ -129,9 +172,7 @@ module CIAO
         TimeWindow endWindow;
 
         ::Deployment::Properties properties;
-
       };
-
 
   };
 };
