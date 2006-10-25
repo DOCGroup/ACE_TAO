@@ -31,7 +31,14 @@ ACE_OS::select (int width,
 #else
   const timeval *timep = (timeout == 0 ? (const timeval *)0 : *timeout);
 #endif /* ACE_HAS_NONCONST_SELECT_TIMEVAL */
-#if defined(ACE_TANDEM_T1248_PTHREADS)
+#if defined (ACE_LACKS_SELECT)
+  ACE_UNUSED_ARG (width);
+  ACE_UNUSED_ARG (rfds);
+  ACE_UNUSED_ARG (wfds);
+  ACE_UNUSED_ARG (efds);
+  ACE_UNUSED_ARG (timeout);
+  ACE_NOTSUP_RETURN (-1);
+#elif defined(ACE_TANDEM_T1248_PTHREADS)
   ACE_SOCKCALL_RETURN (::spt_select (width,
                                  (ACE_FD_SET_TYPE *) rfds,
                                  (ACE_FD_SET_TYPE *) wfds,
@@ -61,7 +68,14 @@ ACE_OS::select (int width,
 # define ___ACE_TIMEOUT timep
   const timeval *timep = timeout;
 #endif /* ACE_HAS_NONCONST_SELECT_TIMEVAL */
-#if defined(ACE_TANDEM_T1248_PTHREADS)
+#if defined (ACE_LACKS_SELECT)
+  ACE_UNUSED_ARG (width);
+  ACE_UNUSED_ARG (rfds);
+  ACE_UNUSED_ARG (wfds);
+  ACE_UNUSED_ARG (efds);
+  ACE_UNUSED_ARG (timeout);
+  ACE_NOTSUP_RETURN (-1);
+#elif defined(ACE_TANDEM_T1248_PTHREADS)
   ACE_SOCKCALL_RETURN (::spt_select (width,
                                  (ACE_FD_SET_TYPE *) rfds,
                                  (ACE_FD_SET_TYPE *) wfds,

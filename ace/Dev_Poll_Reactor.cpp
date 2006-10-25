@@ -694,6 +694,9 @@ ACE_Dev_Poll_Reactor_Handler_Repository::bind (
 {
   ACE_TRACE ("ACE_Dev_Poll_Reactor_Handler_Repository::bind");
 
+  if (event_handler == 0)
+    return -1;
+
   if (handle == ACE_INVALID_HANDLE)
     handle = event_handler->get_handle ();
 
@@ -709,7 +712,7 @@ ACE_Dev_Poll_Reactor_Handler_Repository::bind (
 
 int
 ACE_Dev_Poll_Reactor_Handler_Repository::unbind (ACE_HANDLE handle,
-						 bool decr_refcnt)
+             bool decr_refcnt)
 {
   ACE_TRACE ("ACE_Dev_Poll_Reactor_Handler_Repository::unbind");
 
@@ -1187,7 +1190,7 @@ ACE_Dev_Poll_Reactor::handle_events_i (ACE_Time_Value *max_wait_time,
     {
       result = this->work_pending_i (max_wait_time);
       if (result == -1)
-	ACE_ERROR((LM_ERROR, "%t: %p\n", "work_pending_i"));
+  ACE_ERROR((LM_ERROR, "%t: %p\n", "work_pending_i"));
     }
   while (result == -1 && this->restart_ != 0 && errno == EINTR);
 

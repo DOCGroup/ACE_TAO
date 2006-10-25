@@ -31,7 +31,7 @@ Handle_Timeout::init (int argc, ACE_TCHAR *argv[])
   ACE_Time_Value delta (10);
   ACE_Time_Value interval (1);
   ACE_Get_Opt    get_opt (argc, argv, ACE_TEXT("a:d:i:"), 0);
-  int        arg = 0;
+  intptr_t       arg = 0;
 
   for (int c; (c = get_opt ()) != -1; )
      switch (c)
@@ -51,8 +51,8 @@ Handle_Timeout::init (int argc, ACE_TCHAR *argv[])
 
   if (ACE_Reactor::instance ()->schedule_timer (this,
                                                 reinterpret_cast<void *> (arg),
-                                                      delta,
-                                                      interval) == -1)
+                                                delta,
+                                                interval) == -1)
     return -1;
   else
     return 0;

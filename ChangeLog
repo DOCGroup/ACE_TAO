@@ -1,3 +1,481 @@
+Wed Oct 25 09:47:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/SOCK_Dgram.cpp:
+          Fixed compile error in non win32 part
+
+Wed Oct 25 09:24:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/ace_for_tao.mpc:
+          Added Rtems_init.c, for rtems without network support we
+          also use the ace_for_tao base project
+
+Wed Oct 25 08:38:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/config-rtems.h:
+        * ace/OS_NS_netdb.inl:
+          Added ACE_LACKS_GETHOSTBYADDR_R
+
+Wed Oct 25 08:11:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/config-rtems.h:
+        * ace/OS_NS_sys_socket.inl:
+          Added ACE_LACKS_GETSOCKOPT, ACE_LACKS_RECV, ACE_LACKS_SEND,
+          and ACE_LACKS_SENDTO
+
+Wed Oct 25 08:04:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Priority_Buffer_Test.cpp:
+          Fixed compile problem with gcc 2.96
+
+Wed Oct 25 07:58:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/config-rtems.h:
+        * ace/OS_NS_sys_socket.inl:
+          Added ACE_LACKS_ACCEPT, ACE_LACKS_CONNECT, ACE_LACKS_GETPEERNAME,
+          ACE_LACKS_GETSOCKNAME
+
+Wed Oct 25 06:30:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/TTY_IO.cpp:
+          Fixed compile error on Vxworks
+
+Tue Oct 24 23:53:08 UTC 2006  Steve Huston  <shuston@riverace.com>
+
+        * ace/config-aix-4.x.h: Changed ACE_HAS_PTHREAD_CONTINUE to
+          ACE_HAS_PTHREAD_CONTINUE_NP and ACE_HAS_PTHREAD_SUSPEND to
+          ACE_HAS_PTHREAD_SUSPEND_NP. The non-_NP varieties return ENOTSUP;
+          the _NP varieties are the only documented APIs through AIX 5.3.
+          Thanks to Guy Peleg for raising this issue.
+
+        * tests/Thread_Manager_Test.cpp: Altered the suspend/resume tests to
+          only allow ENOTSUP as a legit result if the config.h file does not
+          include ACE_HAS_... settings that indicate it should work.
+
+Tue Oct 24 23:59:10 UTC 2006  Ossama othman  <ossama_othman at symantec dot com>
+
+        * examples/Service_Configurator/IPC-tests/server/Handle_Timeout.inl
+          (init):
+        * examples/Shared_Malloc/test_position_independent_malloc.cpp
+          (parse_args):
+
+          Use intptr_t instead of int when casting to void*.  Addresses
+          "sizes do not match" warnings in 64-bit Intel compiler builds.
+
+Tue Oct 24 23:49:25 UTC 2006  Ossama Othman  <ossama_othman at symantec dot com>
+
+        * ace/Hash_Map_Manager_T.inl (ACE_Hash_Map_Iterator_Base_Ex):
+
+          Commented out use of ACE_TRACE macro.  The regular expression in
+          the bin/fuzz.pl script used to detect ACE_TRACE mismatch
+          incorrectly identifies a mismatch the ACE_TRACE question.  Once
+          the fuzz script is fixed, the ACE_TRACE can be uncommented.
+
+Tue Oct 24 22:20:38 UTC 2006  Ossama Othman  <ossama_othman at symantec dot com>
+
+        * ace/Truncate.h:
+
+          Rename truncate to trunc.  Yet another attempt at fixing Borland
+          compiler brain damage.
+
+Tue Oct 24 22:01:41 UTC 2006  Ossama Othman  <ossama_othman at symantec dot com>
+
+        * ace/OS_NS_stdlib.inl (atop):
+
+          Use intptr_t type to fix 64-bit conversion to void* warnings.
+
+        * ace/Select_Reactor_Base.h (max_handlep1):
+        * ace/Select_Reactor_Base.inl (max_handlep1):
+
+          Changed return type to be ACE_HANDLE on UNIX platforms instead
+          of size_t.  Addresses "loss of significant bits" warnings in
+          64-bit Intel compiler builds.
+
+        * ace/Select_Reactor_Base.cpp (dump):
+
+          Corrected format specifiers for Windows configuration.
+
+        * ace/Select_Reactor_T.cpp (work_pending):
+          (wait_for_multiple_events):
+
+          Removed unnecessary casts and corrected type of "width" variable
+          that is passed to select().
+
+        * tests/Map_Manager_Test.cpp (test_cache_map_manager):
+
+          Fixed "might be used uninitialized" warning.
+
+Tue Oct 24 17:46:40 UTC 2006  Ossama Othman  <ossama_othman at symantec dot com>
+
+        * ace/Truncate.h (Truncator):
+
+          Export the Borland-specific specializations from the DLL.  This
+          should address the "undefined symbol" link-time problem.
+
+        * bin/MakeProjectCreator/config/acexml.mpb:
+
+          Re-disabled ACEXML when ace_for_tao is enabled.  ACEXML needs
+          the ACE_Configuration and memory map classes that are not found
+          in the ace_for_tao subset.
+
+Tue Oct 24 14:44:09 UTC 2006  Olli Savia  <ops@iki.fi>
+
+        * ace/TTY_IO.cpp:
+
+          Changed the default constructor to always initialise member
+          variables regardless of ACE_HAS_TERMIOS or ACE_HAS_TERMIO setting.
+
+Tue Oct 24 14:16:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/ACE.cpp:
+          Use some bools instead of int
+
+        * ace/INET_Addr.cpp (set_port_number):
+          Added check for ACE_LACKS_HTONS
+
+        * ace/INET_Addr.inl (get_port_number):
+          Added check for ACE_LACKS_NTOHS
+
+Tue Oct 24 13:54:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/os_include/netinet/os_in.h:
+        * ace/config-rtems.h:
+          Added ACE_LACKS_IP_MREQ
+
+        * ace/INET_Addr.cpp (get_port_number_from_name):
+          Added ACE_LACKS_HTONS check
+
+Tue Oct 24 13:27:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Reactor.h:
+          Added an include of Time_Value.h, this is included implicitly
+          but this implicit include is not there when using FOCUS with
+          tp-reactor specialization
+
+Tue Oct 24 13:09:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Sock_Connect.cpp:
+        * ace/config-rtems.h:
+          Added ACE_LACKS_GET_BCAST_ADDR
+
+Tue Oct 24 13:00:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/os_include/os_socket.h:
+        * ace/config-rtems.h:
+          Added ACE_LACKS_SOCKADDR
+
+Tue Oct 24 12:54:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/os_include/os_netdb.h:
+        * ace/config-rtems.h:
+          Added ACE_LACKS_HOSTENT
+
+Tue Oct 24 12:09:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/OS_NS_arpa_inet.inl:
+        * ace/config-rtems.h:
+          Added ACE_LACKS_INET_ADDR and ACE_LACKS_INET_NTOA
+
+Tue Oct 24 12:00:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/os_include/sys/os_socket.h:
+          Define MSG_OOB when it is not defined
+
+Tue Oct 24 11:17:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/OS_NS_sys_socket.inl:
+        * ace/config-rtems.h:
+          Added ACE_LACKS_SOCKET, ACE_LACKS_SHUTDOWN and ACE_LACKS_SETSOCKOPT
+
+Tue Oct 24 11:08:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/OS_NS_sys_select.inl:
+        * ace/config-rtems.h:
+          Added ACE_LACKS_SELECT
+
+Tue Oct 24 10:58:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/os_include/netinet/os_in.h:
+        * ace/config-rtems.h:
+          Added ACE_LACKS_IN_ADDR and ACE_LACKS_SOCKADDR_IN
+
+Tue Oct 24 06:31:05 UTC 2006  Ossama Othman  <ossama_othman at symantec dot com>
+
+        * ace/Numeric_Limits.h (ACE_Numeric_Limits):
+
+          Added missing "char" specialization for the
+          ACE_LACKS_NUMERIC_LIMITS case.  The "signed char" and
+          "unsigned char" specializations are not always suitable.
+
+Tue Oct 24 04:04:26 UTC 2006  Ossama Othman  <ossama_othman at symantec dot com>
+
+        * ace/Hash_Map_Manager_T.h (lock_):
+
+          Placed "mutable" keyword to beginning of declaration.  It is a
+          storage class specifier, not a CV qualifier, and belongs at the
+          beginning.  Addresses g++ warnings.
+
+        * ace/Sock_Connect.cpp (get_fqdn):
+
+          Addressed "might be used uninitialized warnings.
+
+Mon Oct 23 02:28:42 UTC 2006  Ossama Othman  <ossama_othman at symantec dot com>
+
+        * ace/Array_Base.cpp:
+        * ace/Array_Base.h:
+        * ace/Array_Base.inl:
+
+          Added STL-style traits, iterators and swap() method.
+
+          (operator=):
+
+          Improved exception-safety.
+
+        * ace/Array_Map.h:
+        * ace/config-lite.h:
+
+          Moved reverse_iterator declarations to a new
+          ACE_DECLARE_STL_REVERSE_ITERATORS so that other ACE containers
+          may use them in a way that minimizes platform-specific
+          declaration duplication.
+
+        * ace/CDR_Stream.cpp (read_boolean_array):
+
+          Addressed a Coverity CHECKED_RETURN error.  There's no need to
+          check the return value of read_boolean() in this case.
+          Explicitly cast the return value to "void".
+
+          Addressed Coverity DEADCODE error.  No need to check for zero
+          "cont" pointer since the ACE_NEW_RETURN() call that initializes
+          it will return immediately.  "cont" cannot be zero if the latter
+          call succeeds.
+
+        * ace/CDR_Stream.inl (operator>>):
+
+          Explicitly check return value of input stream read operations.
+          Addressed a Coverity CHECKED_RETURN errors.
+
+        * ace/Configuration.cpp (new_section):
+
+          Fixed Coverity USE_AFTER_FREE error.  Memory was being accessed
+          after it was freed.
+
+        * ace/Configuration_Import_Export.cpp:
+
+          Addressed Coverity RESOURCE_LEAK errors.
+
+        * ace/Default_Constants.h (ACE_DEFAULT_CLOSE_ALL_HANDLES):
+
+          This symbol represents a boolean value.  s/1/true.
+
+        * ace/Dev_Poll_Reactor.cpp (bind):
+        * ace/WFMO_Reactor.cpp (bind_i):
+
+          Disallow binding of a nil event handler pointer to the
+          repository.  It is deferenced later on this method.
+
+        * ace/Hash_Map_Manager_T.h:
+        * ace/Hash_Map_Manager_T.inl:
+
+          Added STL-style traits and iterator accessors.
+
+          (find):
+
+          New method that returns an iterator as an "out" parameter.  An
+          iterator return value could not be used due a conflict with an
+          existing find() method.
+
+          (unbind):
+
+          New method that unbinds the value pointed to by the given
+          iterator.
+
+          (ACE_Hash_Map_Iterator_Base_Ex, ACE_Hash_Map_Iterator_Ex):
+
+          New constructors that position the iterator at the given
+          ACE_Hash_Map_Entry.
+
+        * ace/Lib_Find.cpp (ldfind):
+
+          Place parentheses around ternary operator "?:" conditional to
+          address an operator precedence problem.  In this case, an
+          expression such as "a + b ? 0 : 1" was used, which is equivalent
+          to "(a + b) ? 0 : 1" instead of the desired "a + (b ? 0 : 1)".
+
+          Changed local variable name from "got_suffix" to "has_suffix" to
+          clarify how the variable is being used.
+
+        * ace/OS_NS_Thread.inl (rw_unlock):
+
+          Fixed potential deadlock in case where reference count is one.
+          Addresses a Coverity DEADLOCK error.
+
+        * ace/OS_NS_dirent.cpp (scandir_emulation):
+
+          Fixed potential dereferencing of zero pointer reported by the
+          Coverity FORWARD_NULL checker.
+
+        * ace/OS_NS_fcntl.cpp (open):
+
+          Return if SetFilePointer() call fails.  Addresses Coverity
+          CHECKED_RETURN error.
+
+          Added support for large files SetFilePointer() calls.  Thanks to
+          Russell Mora for this fix.
+
+        * ace/OS_NS_stdio.cpp (fopen):
+
+          Fixed potential crash if null mode string is passed to this
+          method.
+
+        * ace/OS_NS_stdio.inl (fdopen):
+        * ace/OS_NS_unistd.inl (isatty):
+
+          No need to check for ACE_LACKS_INTPTR_T.  Just use intptr_t in
+          all cases.  ACE now supplies this typedef if the platform
+          doesn't.
+
+        * ace/OS_TLI.h (t_bind):
+        * ace/OS_TLI.inl (t_bind):
+
+          Work around HP aCC 3.63 namespace scoping problem using typedef
+          hack in use for other structures.
+
+        * ace/Select_Reactor_Base.cpp:
+        * ace/Select_Reactor_Base.h:
+        * ace/Select_Reactor_Base.inl:
+
+          Changed underlying event handler container from a simple array
+          to an ACE_Hash_Map_Manager<> on Windows, and to an
+          ACE_Array_Base<> on UNIX-like platforms.
+
+          Use of an ACE_Hash_Map_Manager<> on Windows allows for faster
+          event handler searches.
+
+          Use of an ACE_Array_Base<> on UNIX-like platforms allows us to
+          leverage advantages using a container (improved
+          exception-safety, container interface, etc), while still
+          retaining the direct file descriptor to event handler mapping at
+          essentially no cost to footprint relative to the previous
+          implementation.
+
+          (bind):
+
+          Disallow binding of a nil event handler pointer to the
+          repository.  It is deferenced later on this method.  Addresses a
+          potential crash.
+
+        * ace/Service_Config.cpp (current):
+
+          Simplified these methods.
+
+          Removed global lock that was held when accessing TSS.  Only
+          initialization of global implementation needs to synchronized
+          with that lock.
+
+          Removed redundant accesses to TSS.
+
+        * ace/Service_Config.h:
+
+          Removed stray semi-colon.
+
+          (impl_):
+
+          This method no longer needs to return the pointer by reference.
+
+        * ace/Service_Repository.cpp:
+
+          Changed loop index type so that it matches repository size type
+          (an unsigned integer), and updated loop decrement to take into
+          account the index type is now unsigned.
+
+        * ace/Sock_Connect.h (ipv4_enabled):
+        * ace/Sock_Connect.cpp (ipv4_enabled):
+
+          New run-time check for existence IPv4 stack.  Some hosts only
+          contain IPv6 stacks.
+
+          From Sriram Chandramouli <sriram_chandramouli at symantec dot com>
+          (get_fqdn):
+
+          New method that retrieves fully qualified domain.  getaddrinfo()
+          doesn't always provide the desired results.
+
+        * ace/Svc_Conf.y (ace_get_module):
+        * ace/Svc_Conf_y.cpp (ace_get_module):
+
+          Simplified explicit casts.
+
+          Prevent dereferencing of potentially null pointer.
+
+        * ace/System_Time.cpp:
+        * ace/System_Time.h:
+
+          No need to include "ace/Malloc_T.h", "ace/MMAP_Memory_Pool.h"
+          and "ace/Null_Mutex.h".  Forward declarations are sufficient.
+
+          Use time_t type instead of ACE_UINT32 when returning times, such
+          as those returned from ACE_OS::time().  Addresses lack of
+          precision issues.
+
+        * ace/Thread_Manager.cpp (wait):
+
+          Addressed a Coverity CHECKED_RETURN error.  There's no need to
+          check the return value of ACE_Thread::join() in this case.
+          Explicitly cast the return value to "void".
+
+        * ace/Time_Value.h (ACE_ONE_SECOND_IN_USECONDS):
+
+          Made this constant type-safe.  It is now of type suseconds_t,
+          instead of a preprocessor symbol definition.
+
+        * ace/UUID.cpp (lock):
+
+          Addressed USE_AFTER_FREE Coverity error.  Do not return a
+          pointer to the previous lock.  It may have been destroyed.
+
+        * ace/UUID.h (lock):
+
+          Changed return type from "ACE_SYNCH_MUTEX*" to "void".  The
+          interface/implementation does not provide a means to safely
+          return the previous lock instance.
+
+        * ace/ace_wchar.inl (convert):
+
+          Corrected calculation of wide string length.
+
+        * bin/MakeProjectCreator/config/acexml.mpb:
+
+          No longer any need to explicitly disable ACEXML in the
+          ace_for_tao configuration.
+
+        * include/makeinclude/platform_irix6.x_sgic++.GNU:
+
+          SGI 7.3.x compiler doesn't have the 3506 error code.  Do not
+          attempt to supress it.
+
+Mon Oct 23 22:24:01 UTC 2006  Ossama Othman  <ossama_othman at symantec dot com>
+
+        * ace/Unbounded_Queue.cpp (set):
+
+          Explicitly initialize dummy value.  Addresses "use of
+          uninitialized variable" g++ 4.1 warning when the variable is a
+          POD type.
+
+        * ace/ace_for_tao.mpc:
+
+          Removed unnecessary semaphore related files.
+
+          Added missing ace/Truncate.h header.
+
+Mon Oct 23 21:44:32 UTC 2006  Ossama Othman  <ossama_othman at symantec dot com>
+
+        * ace/Truncate.h (Truncator):
+
+          Borland doesn't appear to be able to grok the use of the
+          function call operator in the ACE_Utils::Truncate<> function
+          template.  Replaced the Truncator<>::operator() function call
+          operator with a static Truncator<>::truncate() method instead.
+
 Mon Oct 23 13:29:15 UTC 2006  Olli Savia  <ops@iki.fi>
 
         * ACE-INSTALL.html:
@@ -265,8 +743,18 @@ Thu Oct 19 11:48:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 Thu Oct 19 08:27:12 UTC 2006  Martin Corino  <mcorino@remedy.nl>
 
 <<<<<<< .working
+<<<<<<< .working
+<<<<<<< .working
         * include/makeinclude/platform_openvms.GNU:
       	  Small change to create hardlinks for produced executables.
+=======
+        * include/makeinclude/platform_openvms.GNU:
+          Small change to create hardlinks for produced executables.
+>>>>>>> .merge-right.r75022
+=======
+        * include/makeinclude/platform_openvms.GNU:
+          Small change to create hardlinks for produced executables.
+>>>>>>> .merge-right.r74993
 =======
         * include/makeinclude/platform_openvms.GNU:
           Small change to create hardlinks for produced executables.

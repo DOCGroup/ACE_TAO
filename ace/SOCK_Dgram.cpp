@@ -90,7 +90,7 @@ ACE_SOCK_Dgram::recv (iovec *io_vec,
 
   if (ACE_OS::ioctl (this->get_handle (),
                      FIONREAD,
-		     &inlen) == -1)
+         &inlen) == -1)
     return -1;
   else if (inlen > 0)
     {
@@ -589,6 +589,8 @@ ACE_SOCK_Dgram::set_nic (const ACE_TCHAR *net_if,
   // Send interface option not supported - ignore it.
   // (We may have been invoked by ::subscribe, so we have to allow
   // a non-null interface parameter in this function.)
+  ACE_UNUSED_ARG (net_if);
+  ACE_UNUSED_ARG (addr_family);
   ACE_DEBUG ((LM_DEBUG,
               ACE_LIB_TEXT ("Send interface specification not ")
               ACE_LIB_TEXT ("supported - IGNORED.\n")));
@@ -613,6 +615,8 @@ ACE_SOCK_Dgram::make_multicast_ifaddr (ip_mreq *ret_mreq,
         return -1;
       lmreq.imr_interface.s_addr =
         ACE_HTONL (interface_addr.get_ip_address ());
+#elif defined (ACE_LACKS_IFREQ)
+      // Do nothing
 #else
       ifreq if_address;
 
@@ -623,8 +627,8 @@ ACE_SOCK_Dgram::make_multicast_ifaddr (ip_mreq *ret_mreq,
                          &if_address) == -1)
         return -1;
 
-      sockaddr_in *socket_address;
-      socket_address = reinterpret_cast<sockaddr_in*> (&if_address.ifr_addr);
+      sockaddr_in *socket_address =
+        reinterpret_cast<sockaddr_in*> (&if_address.ifr_addr);
       lmreq.imr_interface.s_addr = socket_address->sin_addr.s_addr;
 #endif /* ACE_WIN32 || __INTERIX */
     }

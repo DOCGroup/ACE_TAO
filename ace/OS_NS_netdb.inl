@@ -87,7 +87,15 @@ ACE_OS::gethostbyaddr_r (const char *addr,
                          int *h_errnop)
 {
   ACE_OS_TRACE ("ACE_OS::gethostbyaddr_r");
-# if defined (ACE_HAS_REENTRANT_FUNCTIONS) && !defined (UNIXWARE)
+# if defined (ACE_LACKS_GETHOSTBYADDR_R)
+  ACE_UNUSED_ARG (addr);
+  ACE_UNUSED_ARG (length);
+  ACE_UNUSED_ARG (type);
+  ACE_UNUSED_ARG (result);
+  ACE_UNUSED_ARG (buffer);
+  ACE_UNUSED_ARG (h_errnop);
+  ACE_NOTSUP_RETURN (0);
+# elif defined (ACE_HAS_REENTRANT_FUNCTIONS) && !defined (UNIXWARE)
 
   if (0 == addr || '\0' == addr[0])
       return 0;
@@ -151,7 +159,7 @@ ACE_OS::gethostbyaddr_r (const char *addr,
                                         type),
                        struct hostent *,
                        0);
-# endif /* defined (ACE_HAS_REENTRANT_FUNCTIONS) && !defined (UNIXWARE) */
+# endif /* ACE_LACKS_GETHOSTBYADDR_R */
 }
 
 #endif

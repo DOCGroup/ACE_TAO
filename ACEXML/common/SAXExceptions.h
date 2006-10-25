@@ -66,7 +66,7 @@ public:
   virtual void print (void);
 
 protected:
-  static const ACEXML_Char *exception_name_;
+  static const ACEXML_Char * exception_name_;
 
   /// A message providing more information about the exception being thrown.
   ACEXML_Char *message_;
@@ -111,7 +111,7 @@ public:
   virtual void print (void);
 
 protected:
-  static const ACEXML_Char *exception_name_;
+  static const ACEXML_Char exception_name_[];
 };
 
 /**
@@ -153,7 +153,7 @@ public:
   virtual void print (void);
 
 protected:
-  static const ACEXML_Char *exception_name_;
+  static const ACEXML_Char exception_name_[];
 };
 
 /**
@@ -196,7 +196,7 @@ public:
   virtual void print (void);
 
 protected:
-  static const ACEXML_Char *exception_name_;
+  static const ACEXML_Char exception_name_[];
 };
 
 #if defined (__ACEXML_INLINE__)

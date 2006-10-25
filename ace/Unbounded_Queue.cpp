@@ -272,7 +272,7 @@ ACE_Unbounded_Queue<T>::set (const T &item,
 
   for (i = 0;
        i < slot && i < this->cur_size_;
-       i++)
+       ++i)
     curr = curr->next_;
 
   if (i < this->cur_size_)
@@ -297,10 +297,10 @@ ACE_Unbounded_Queue<T>::set (const T &item,
         }
       else
         {
-          T dummy;
+          T const dummy = T ();
 
           // We need to expand the list by multiple (dummy) items.
-          for (; i < slot; i++)
+          for (; i < slot; ++i)
             {
               // This head points to the existing dummy node, which is
               // about to be overwritten when we add the new dummy

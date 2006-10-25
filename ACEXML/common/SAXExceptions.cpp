@@ -6,13 +6,13 @@
 #include "ace/OS_Memory.h"
 #include "ace/OS_NS_string.h"
 
-const ACEXML_Char *ACEXML_SAXException::exception_name_ = ACE_TEXT ("ACEXML_SAXException");
+const ACEXML_Char * ACEXML_SAXException::exception_name_ = ACE_TEXT ("ACEXML_SAXException");
 
-const ACEXML_Char *ACEXML_SAXNotSupportedException::exception_name_ = ACE_TEXT ("ACEXML_SAXNotSupportedException");
+const ACEXML_Char ACEXML_SAXNotSupportedException::exception_name_[] = ACE_TEXT ("ACEXML_SAXNotSupportedException");
 
-const ACEXML_Char *ACEXML_SAXNotRecognizedException::exception_name_ = ACE_TEXT ("ACEXML_SAXNotRecognizedException");
+const ACEXML_Char ACEXML_SAXNotRecognizedException::exception_name_[] = ACE_TEXT ("ACEXML_SAXNotRecognizedException");
 
-const ACEXML_Char *ACEXML_SAXParseException::exception_name_ = ACE_TEXT ("ACEXML_SAXParseException");
+const ACEXML_Char ACEXML_SAXParseException::exception_name_[] = ACE_TEXT ("ACEXML_SAXParseException");
 
 #if !defined (__ACEXML_INLINE__)
 # include "ACEXML/common/SAXExceptions.inl"
@@ -46,21 +46,15 @@ ACEXML_SAXException::operator= (const ACEXML_SAXException& src)
   return *this;
 }
 
-
 ACEXML_SAXException*
 ACEXML_SAXException::_downcast (ACEXML_Exception* ex)
 {
-  if (ex->is_a (ACE_TEXT ("ACEXML_SAXException")))
-    return dynamic_cast<ACEXML_SAXException*> (ex);
-  return 0;
+  return dynamic_cast<ACEXML_SAXException*> (ex);
 }
 
 ACEXML_SAXException::~ACEXML_SAXException (void)
 {
-  delete[] this->message_;
 }
-
-
 
 ACEXML_Exception *
 ACEXML_SAXException::duplicate (void) const
@@ -105,9 +99,7 @@ ACEXML_SAXNotSupportedException::operator= (const
 ACEXML_SAXNotSupportedException*
 ACEXML_SAXNotSupportedException::_downcast (ACEXML_Exception* ex)
 {
-  if (ex->is_a (ACE_TEXT ("ACEXML_SAXNotSupportedException")))
-    return dynamic_cast<ACEXML_SAXNotSupportedException*> (ex);
-  return 0;
+  return dynamic_cast<ACEXML_SAXNotSupportedException*> (ex);
 }
 
 ACEXML_SAXNotSupportedException::ACEXML_SAXNotSupportedException (const ACEXML_Char* msg)
@@ -169,14 +161,11 @@ ACEXML_SAXNotRecognizedException::operator= (const ACEXML_SAXNotRecognizedExcept
 ACEXML_SAXNotRecognizedException*
 ACEXML_SAXNotRecognizedException::_downcast (ACEXML_Exception* ex)
 {
-  if (ex->is_a (ACE_TEXT ("ACEXML_SAXNotRecognizedException")))
-    return dynamic_cast<ACEXML_SAXNotRecognizedException*> (ex);
-  return 0;
+  return dynamic_cast<ACEXML_SAXNotRecognizedException*> (ex);
 }
 
 ACEXML_SAXNotRecognizedException::~ACEXML_SAXNotRecognizedException (void)
 {
-  delete[] this->message_;
 }
 
 ACEXML_Exception *
@@ -227,9 +216,7 @@ ACEXML_SAXParseException::operator= (const ACEXML_SAXParseException &ex)
 ACEXML_SAXParseException*
 ACEXML_SAXParseException::_downcast (ACEXML_Exception* ex)
 {
-  if (ex->is_a (ACE_TEXT ("ACEXML_SAXParseException")))
-    return dynamic_cast<ACEXML_SAXParseException*> (ex);
-  return 0;
+  return dynamic_cast<ACEXML_SAXParseException*> (ex);
 }
 
 ACEXML_SAXParseException::~ACEXML_SAXParseException (void)

@@ -631,6 +631,9 @@ ACE_WFMO_Reactor_Handler_Repository::bind_i (int io_entry,
                                              ACE_HANDLE event_handle,
                                              int delete_event)
 {
+  if (event_handler == 0)
+    return -1;
+
   // Make sure that the <handle> is valid
   if (event_handle == ACE_INVALID_HANDLE)
     event_handle = event_handler->get_handle ();
@@ -1189,7 +1192,7 @@ ACE_WFMO_Reactor::open (size_t size,
   this->atomic_wait_array_[0] = this->lock_.lock ().proc_mutex_;
   this->atomic_wait_array_[1] = this->ok_to_wait_.handle ();
 
-  // Prevent memory leaks when the ACE_WFMO_Reactor is reopened. 
+  // Prevent memory leaks when the ACE_WFMO_Reactor is reopened.
   if (this->delete_handler_rep_)
     {
       if (this->handler_rep_.changes_required ())
