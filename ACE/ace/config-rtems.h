@@ -193,6 +193,8 @@
 # define ACE_LACKS_SEND
 # define ACE_LACKS_SENDTO
 # define ACE_LACKS_RECVFROM
+# define ACE_LACKS_RECVMSG
+# define ACE_LACKS_SENDMSG
 # undef ACE_HAS_MSG
 
 // Missing OS features
