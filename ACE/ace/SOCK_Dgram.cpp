@@ -628,7 +628,7 @@ ACE_SOCK_Dgram::make_multicast_ifaddr (ip_mreq *ret_mreq,
         return -1;
 
       sockaddr_in *socket_address =
-        = reinterpret_cast<sockaddr_in*> (&if_address.ifr_addr);
+        reinterpret_cast<sockaddr_in*> (&if_address.ifr_addr);
       lmreq.imr_interface.s_addr = socket_address->sin_addr.s_addr;
 #endif /* ACE_WIN32 || __INTERIX */
     }
