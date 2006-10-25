@@ -49,6 +49,9 @@ rtems_task Init (rtems_task_argument argument);
 #include <confdefs.h>
 
 #include <stdio.h>
+
+#if !defined (ACE_LACKS_NETWORKING)
+
 #include <rtems/rtems_bsdnet.h>
 /* start of #include "../networkconfig.h" */
 
@@ -200,6 +203,8 @@ struct rtems_bsdnet_config rtems_bsdnet_config = {
 #endif /* _RTEMS_NETWORKCONFIG_H_ */
 /* end of #include "../networkconfig.h" */
 
+#endif /* ACE_LACKS_NETWORKING */
+
 /*
  * RTEMS Startup Task
  */
@@ -208,8 +213,10 @@ Init (rtems_task_argument not_used)
 {
   int doSocket(void);
 
+#if !defined (ACE_LACKS_NETWORKING)
   rtems_bsdnet_initialize_network ();
   rtems_bsdnet_show_inet_routes ();
+#endif /* ACE_LACKS_NETWORKING */
   exit (0);
 }
 
