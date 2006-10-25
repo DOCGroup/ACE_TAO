@@ -188,6 +188,10 @@
 # define ACE_LACKS_CONNECT
 # define ACE_LACKS_GETPEERNAME
 # define ACE_LACKS_GETSOCKNAME
+# define ACE_LACKS_GETSOCKOPT
+# define ACE_LACKS_RECV
+# define ACE_LACKS_SEND
+# define ACE_LACKS_SENDTO
 
 // Missing OS features
 # define ACE_LACKS_UNIX_SYSLOG
