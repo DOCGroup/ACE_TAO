@@ -21,12 +21,12 @@ namespace
 #if defined (ACE_HAS_TERMIOS) || defined (ACE_HAS_TERMIO) || defined (ACE_WIN32)
   const char ACE_TTY_IO_ODD[]   = "odd";
   const char ACE_TTY_IO_EVEN[]  = "even";
+#endif
 #if defined (ACE_WIN32)
   const char ACE_TTY_IO_MARK[]  = "mark";
   const char ACE_TTY_IO_SPACE[] = "space";
 #endif /* ACE_WIN32 */
 }
-#endif
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
