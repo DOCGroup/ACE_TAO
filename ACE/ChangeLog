@@ -1,14 +1,19 @@
+Thu Oct 26 10:29:49 UTC 2006  Olli Savia  <ops@iki.fi>
+
+        * ace/config-posix.h:
+          Removed duplicate check of _POSIX_MESSAGE_PASSING.
+
 Thu Oct 26 07:48:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Truncate.h:
-	  Added partial specialization for when types are the same, fixes compile
-	  problems in the ACE lib with Borland
+          Added partial specialization for when types are the same, fixes compile
+          problems in the ACE lib with Borland
 
 Thu Oct 26 07:01:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-	* ace/config-vxworks5.x.h:
-	  Added ACE_LACKS_INTPTR_T, VxWorks 5.5.x seems not to deliver this
-	  type
+        * ace/config-vxworks5.x.h:
+          Added ACE_LACKS_INTPTR_T, VxWorks 5.5.x seems not to deliver this
+          type
 
 Thu Oct 26 00:31:56 UTC 2006  Ossama Othman  <ossama_othman at symantec dot com>
 
@@ -74,44 +79,44 @@ Wed Oct 25 15:05:42 UTC 2006  Steve Huston  <shuston@riverace.com>
 
 Wed Oct 25 09:47:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-	* ace/SOCK_Dgram.cpp:
-	  Fixed compile error in non win32 part
+        * ace/SOCK_Dgram.cpp:
+          Fixed compile error in non win32 part
 
 Wed Oct 25 09:24:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-	* ace/ace_for_tao.mpc:
-	  Added Rtems_init.c, for rtems without network support we
-	  also use the ace_for_tao base project
+        * ace/ace_for_tao.mpc:
+          Added Rtems_init.c, for rtems without network support we
+          also use the ace_for_tao base project
 
 Wed Oct 25 08:38:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-	* ace/config-rtems.h:
-	* ace/OS_NS_netdb.inl:
-	  Added ACE_LACKS_GETHOSTBYADDR_R
+        * ace/config-rtems.h:
+        * ace/OS_NS_netdb.inl:
+          Added ACE_LACKS_GETHOSTBYADDR_R
 
 Wed Oct 25 08:11:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-	* ace/config-rtems.h:
-	* ace/OS_NS_sys_socket.inl:
-	  Added ACE_LACKS_GETSOCKOPT, ACE_LACKS_RECV, ACE_LACKS_SEND,
-	  and ACE_LACKS_SENDTO
+        * ace/config-rtems.h:
+        * ace/OS_NS_sys_socket.inl:
+          Added ACE_LACKS_GETSOCKOPT, ACE_LACKS_RECV, ACE_LACKS_SEND,
+          and ACE_LACKS_SENDTO
 
 Wed Oct 25 08:04:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-	* tests/Priority_Buffer_Test.cpp:
-	  Fixed compile problem with gcc 2.96
+        * tests/Priority_Buffer_Test.cpp:
+          Fixed compile problem with gcc 2.96
 
 Wed Oct 25 07:58:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-	* ace/config-rtems.h:
-	* ace/OS_NS_sys_socket.inl:
-	  Added ACE_LACKS_ACCEPT, ACE_LACKS_CONNECT, ACE_LACKS_GETPEERNAME,
-	  ACE_LACKS_GETSOCKNAME
+        * ace/config-rtems.h:
+        * ace/OS_NS_sys_socket.inl:
+          Added ACE_LACKS_ACCEPT, ACE_LACKS_CONNECT, ACE_LACKS_GETPEERNAME,
+          ACE_LACKS_GETSOCKNAME
 
 Wed Oct 25 06:30:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-	* ace/TTY_IO.cpp:
-	  Fixed compile error on Vxworks
+        * ace/TTY_IO.cpp:
+          Fixed compile error on Vxworks
 
 Tue Oct 24 23:53:08 UTC 2006  Steve Huston  <shuston@riverace.com>
 
