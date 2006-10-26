@@ -46,6 +46,7 @@
     -->
   </implementation>
 
+
   <instance id="Hello-Sender-idd">
     <name>Hello-Sender-idd</name>
     <node>SenderNode</node>
@@ -99,6 +100,60 @@
       </value>
     </configProperty>
   </instance>
+  
+  <instance id="Hello-Sender-idd-02">
+    <name>Hello-Sender-idd-02</name>
+    <node>SenderNode</node>
+    <source><!-- @@ What goes here --></source>
+    <implementation>Hello-Sender-mdd</implementation>
+
+    <!-- Add this property if you want to write component reference to IOR -->
+    <configProperty>
+      <name>ComponentIOR</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>Sender_02.ior</string>
+        </value>
+      </value>
+    </configProperty>
+
+    <!-- Add this property if you want to initialize component attribute -->
+    <configProperty>
+      <name>local_message</name>
+      <value>
+        <type>
+         <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>This is a another message through XML.</string>
+        </value>
+      </value> 
+    </configProperty>
+
+    <!-- This attribute initializes an enumerated value -->
+    <configProperty>
+      <name>color</name>
+      <value>
+        <type>
+          <kind>tk_enum</kind>
+          <enum>
+            <name>COLOR_SELECTION</name>
+            <typeId>IDL:Hello/COLOR_SELECTION:1.0</typeId>
+            <member>empty</member>
+            <member>white</member>
+            <member>red</member>
+            <member>yellow</member>
+          </enum>
+        </type>
+        <value>
+          <enum>yellow</enum>
+        </value>
+      </value>
+    </configProperty>
+  </instance>  
 
   <instance id="Hello-Receiver-idd">
     <name>Hello-Receiver-idd</name>
@@ -119,35 +174,8 @@
   </instance>
 
 
-  <connection>
-    <name>hello_facet_connection</name>
-    <internalEndpoint>
-      <portName>push_message</portName>
-      <kind>Facet</kind>
-      <instance>Hello-Sender-idd</instance>
-    </internalEndpoint>
-    <internalEndpoint>
-      <portName>read_message</portName>
-      <kind>SimplexReceptacle</kind>
-      <instance>Hello-Receiver-idd</instance>
-    </internalEndpoint>
-  </connection>
 
-<!--
-  <connection>
-    <name>hello_event_connection</name>
-    <internalEndpoint>
-      <portName>click_out</portName>
-      <kind>EventPublisher</kind>
-      <instance>Hello-Sender-idd</instance>
-    </internalEndpoint>
-    <internalEndpoint>
-      <portName>click_in</portName>
-      <kind>EventConsumer</kind>
-      <instance>Hello-Receiver-idd</instance>
-    </internalEndpoint>
-  </connection>
--->
+
 
   <connection>
     <name>hello_event_ec_publisher_connection</name>
@@ -161,8 +189,42 @@
     </externalReference>
   </connection>
 
+
+
+
+  <connection>
+    <name>hello_event_ec_publisher_connection_02</name>
+    <internalEndpoint>
+      <portName>click_out</portName>
+      <kind>EventPublisher</kind>
+      <instance>Hello-Sender-idd-02</instance>
+    </internalEndpoint>
+    <externalReference>
+      <location>ES_01</location>
+    </externalReference>
+  </connection>  
+
+
   <connection>
     <name>hello_event_ec_consumer_connection</name>
+    
+    <!-- The position of the below "deployRequirement" element matters     -->
+    <deployRequirement>
+      <resourceType>EventFilter</resourceType>
+      <name>my_filter_03</name>
+      <property>
+        <name>EventFilter</name>
+        <value>
+	        <type>
+	          <kind>tk_string</kind>
+	        </type>
+	        <value>
+	          <string>my_filter_03</string>
+	        </value>
+        </value>	        
+      </property>              
+    </deployRequirement>
+    
     <internalEndpoint>
       <portName>click_in</portName>
       <kind>EventConsumer</kind>
@@ -253,7 +315,7 @@
         <kind>tk_string</kind>
       </type>
       <value>
-        <string>ciao-events-example.ced</string>
+        <string>ciao-events-example-with-filters.ced</string>
       </value>
     </value>
   </infoProperty>  

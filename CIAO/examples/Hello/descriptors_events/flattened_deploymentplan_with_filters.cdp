@@ -153,7 +153,7 @@
     <name>hello_event_ec_publisher_connection</name>
     <internalEndpoint>
       <portName>click_out</portName>
-      <kind>rtecEventPublisher</kind>
+      <kind>EventPublisher</kind>
       <instance>Hello-Sender-idd</instance>
     </internalEndpoint>
     <externalReference>
@@ -175,7 +175,7 @@
 	          <kind>tk_string</kind>
 	        </type>
 	        <value>
-	          <string>my_filter</string>
+	          <string>my_filter_01</string>
 	        </value>
         </value>	        
       </property>              
@@ -183,7 +183,7 @@
     
     <internalEndpoint>
       <portName>click_in</portName>
-      <kind>rtecEventConsumer</kind>
+      <kind>EventConsumer</kind>
       <instance>Hello-Receiver-idd</instance>
     </internalEndpoint>
     <externalReference>

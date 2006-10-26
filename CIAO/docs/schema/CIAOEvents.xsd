@@ -43,11 +43,12 @@
       <xsd:element name="type" type="CIAO:EventServiceType"/>
       <xsd:element name="svc_cfg_file" type="xsd:string"/>
       <xsd:element name="filter" type="CIAO:Filter" minOccurs="0" maxOccurs="unbounded"/>
+      <xsd:element name="addr_serv" type="CIAO:AddressServerDescription" minOccurs="0" maxOccurs="unbounded"/>
+      <xsd:element name="udp_sender" type="CIAO:UDPSenderDescription" minOccurs="0" maxOccurs="unbounded"/>
+      <xsd:element name="udp_receiver" type="CIAO:UDPReceiverDescription" minOccurs="0" maxOccurs="unbounded"/> 
     </xsd:sequence>
     <xsd:attribute name="id" type="xsd:ID"/>
   </xsd:complexType>
-
-
 
   
 <!-- =============================================================== -->
@@ -76,37 +77,28 @@
 <!--            CIAO Event Service Federation Description            -->
 <!-- =============================================================== -->  
 
-  <xsd:complexType name="MCastSenderDescription">
+  <xsd:complexType name="AddressServerDescription">
     <xsd:sequence>
-      <xsd:element name="node" type="xsd:string"/>
-      <xsd:element name="type" type="CIAO:EventServiceType"/>
-      <xsd:element name="svc_cfg_file" type="xsd:string"/>
+      <xsd:element name="name" type="xsd:string"/>
+      <xsd:element name="port" type="xsd:unsignedShort"/>
+      <xsd:element name="address" type="xsd:string"/>
     </xsd:sequence>
-    <xsd:attribute name="id" type="xsd:ID"/>
   </xsd:complexType>
-  
-  <xsd:complexType name="MCastReceiverDescription">
-    <xsd:sequence>
-      <xsd:element name="node" type="xsd:string"/>
-      <xsd:element name="type" type="CIAO:EventServiceType"/>
-      <xsd:element name="svc_cfg_file" type="xsd:string"/>
-    </xsd:sequence>
-    <xsd:attribute name="id" type="xsd:ID"/>
-  </xsd:complexType>  
 
-  <xsd:complexType name="EC_to_MCastSender">
+  <xsd:complexType name="UDPSenderDescription">
     <xsd:sequence>
-      <xsd:element name="destination" type="xsd:string"/>
+      <xsd:element name="name" type="xsd:string"/>
+      <xsd:element name="addr_serv_id" type="xsd:string"/>
     </xsd:sequence>
-    <xsd:attribute name="id" type="xsd:ID"/>    
   </xsd:complexType>
   
-  <xsd:complexType name="MCastReceiver_to_EC">
+  <xsd:complexType name="UDPReceiverDescription">
     <xsd:sequence>
-      <xsd:element name="source" type="xsd:string"/>
-      <xsd:element name="destination" type="xsd:string"/>
+      <xsd:element name="name" type="xsd:string"/>
+      <xsd:element name="addr_serv_id" type="xsd:string" minOccurs="0" />
+      <xsd:element name="is_multicast" type="xsd:boolean"/>
+      <xsd:element name="listen_port" type="xsd:unsignedShort"/>
     </xsd:sequence>
-    <xsd:attribute name="id" type="xsd:ID"/>       
-  </xsd:complexType>  
-  
+  </xsd:complexType> 
+
 </xsd:schema>

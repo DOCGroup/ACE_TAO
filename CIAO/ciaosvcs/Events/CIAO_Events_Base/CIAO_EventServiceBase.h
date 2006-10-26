@@ -107,6 +107,18 @@ namespace CIAO
         ACE_ENV_ARG_DECL_WITH_DEFAULTS)
       ACE_THROW_SPEC ((
         CORBA::SystemException)) = 0;
+
+    /**
+     * Pushes event @c ev to all consumers. The source id of the 
+     * supplier is specified through @c source_id.
+     */
+    virtual void ciao_push_event (
+        ::Components::EventBase * evt,
+        const char * source_id
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+      ACE_THROW_SPEC ((
+        ::CORBA::SystemException,
+        ::Components::BadEventType));
   };
 
   class Event_Consumer_Config_Base :
