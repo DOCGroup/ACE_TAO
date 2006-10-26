@@ -476,7 +476,7 @@ TAO_ECG_CDR_Message_Receiver::process_fragment (
     return -1;
 
   delete *request;
-  *request = 0;
+  *request = &Request_Completed_;
   return 1;
 }
 
