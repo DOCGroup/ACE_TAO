@@ -33,12 +33,6 @@
 # endif /* ACE_HAS_POSIX_SEM */
 #endif /* ACE_HAS_POSIX_SEM */
 
-#if defined(_POSIX_MESSAGE_PASSING) && (_POSIX_MESSAGE_PASSING-0 != -1 )
-# if !defined(ACE_HAS_POSIX_MESSAGE_PASSING)
-#  define ACE_HAS_POSIX_MESSAGE_PASSING
-# endif /* ACE_HAS_POSIX_MESSAGE_PASSING */
-#endif /* _POSIX_MESSAGE_PASSING */
-
 #if defined(_POSIX_SHARED_MEMORY_OBJECTS) && (_POSIX_SHARED_MEMORY_OBJECTS-0 != -1 )
 # if !defined(ACE_HAS_SHM_OPEN)
 #  define ACE_HAS_SHM_OPEN
@@ -81,4 +75,3 @@
 #endif /* _XOPEN_SOURCE */
 
 #endif /* ACE_CONFIG_POSIX_H */
-
