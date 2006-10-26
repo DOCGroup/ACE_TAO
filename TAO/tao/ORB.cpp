@@ -1305,7 +1305,7 @@ TAO::ORB::init_orb_globals (ACE_ENV_SINGLE_ARG_DECL)
 CORBA::ORB_ptr
 CORBA::ORB::_tao_make_ORB (TAO_ORB_Core * orb_core)
 {
-  CORBA::ORB_ptr orb = CORBA::ORB::_nil ();
+  CORBA::ORB_ptr orb = CORBA::ORB_ptr ();
 
   ACE_NEW_RETURN (orb,
                   CORBA::ORB (orb_core),
@@ -1323,10 +1323,27 @@ CORBA::ORB_init (int &argc,
                  char *argv[],
                  const char *orb_name)
 {
+#ifndef ACE_HAS_EXCEPTIONS
+  // Make sure TAO's singleton manager is initialized.
+  //
+  // We need to initialize before TAO_default_environment() is called
+  // since that call instantiates a TAO_TSS_Singleton.
+  if (TAO_Singleton_Manager::instance ()->init () == -1)
+    {
+      return CORBA::ORB::_nil ();
+    }
+
   return CORBA::ORB_init (argc,
                           argv,
                           orb_name,
                           TAO_default_environment ());
+#else
+  CORBA::Environment env;
+  return CORBA::ORB_init (argc,
+                          argv,
+                          orb_name,
+                          env /* unused */);
+#endif  /* !ACE_HAS_EXCEPTIONS */
 }
 
 CORBA::ORB_ptr

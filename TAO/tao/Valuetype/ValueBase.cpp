@@ -456,9 +456,9 @@ CORBA::ValueBase::_tao_write_value(TAO_OutputCDR &strm,
 
 CORBA::Boolean
 CORBA::ValueBase::_tao_write_value_header(TAO_OutputCDR &strm,
-                                     ptrdiff_t formal_type_id) const
+                                          ptrdiff_t formal_type_id) const
 {
-#if defined (TAO_HAS_OPTIMIZED_VALUETYPE_MARSHALING)
+#ifdef TAO_HAS_OPTIMIZED_VALUETYPE_MARSHALING
   // this case allows TAO to avoid marshaling the typeID for values
   // where the actual type matches the formal type (ie not a derived
   // type).
@@ -475,15 +475,15 @@ CORBA::ValueBase::_tao_write_value_header(TAO_OutputCDR &strm,
   // support unmarshaling of valuetypes that did not explicitly
   // marshal the type id. At least it is benign to always encode the
   // typecode value, even if it can be a little verbose.
-  CORBA::Boolean const is_formal_type =
-    false;
+  CORBA::Boolean const is_formal_type = false;
   ACE_UNUSED_ARG (formal_type_id);
 #endif /* TAO_HAS_OPTIMIZED_VALUETYPE_MARSHALING */
 
   // Get the list of repository ids for this valuetype.
   Repository_Id_List repository_ids;
   this->_tao_obv_truncatable_repo_ids (repository_ids);
-  CORBA::Long const num_ids = static_cast <CORBA::Long> (repository_ids.size ());
+  CORBA::Long const num_ids =
+    static_cast <CORBA::Long> (repository_ids.size ());
 
   // Build <value-tag>, which states if chunking is used
   // and if type information ((list of) repository id(s))
@@ -502,24 +502,29 @@ CORBA::ValueBase::_tao_write_value_header(TAO_OutputCDR &strm,
   if (num_ids > 1)
     valuetag |= TAO_OBV_GIOP_Flags::Type_info_list;
 
-  // Write <value-tag>.
-  if (!strm.write_long (valuetag))
-    return false;
-
-  if (num_ids > 1 && !strm.write_long (num_ids))
-    return false;
-
-  if (this->is_truncatable_ ||
-      !is_formal_type ||
-      num_ids > 1)
+  if (! strm.write_long (valuetag)                    // Write <value-tag>.
+      || (num_ids > 1 && !strm.write_long (num_ids))) // Write <num-ids>.
     {
+      return false;
+    }
+
+#ifndef TAO_HAS_OPTIMIMIZED_VALUETYPE_MARSHALING
+  if (this->is_truncatable_
+      || !is_formal_type  /* Always evaluates to true in the
+                             !TAO_HAS_OPTIMIMIZED_VALUETYPE_MARSHALING
+                             case */
+      || num_ids > 1)
+    {    
+#endif  /* !TAO_HAS_OPTIMIMIZED_VALUETYPE_MARSHALING */
       // Marshal type information.
       for( CORBA::Long i = 0; i < num_ids; ++i )
         {
           if (! strm.write_string (repository_ids[i]))
             return false;
         }
+#ifndef TAO_HAS_OPTIMIMIZED_VALUETYPE_MARSHALING
     }
+#endif  /* !TAO_HAS_OPTIMIMIZED_VALUETYPE_MARSHALING */
 
   return true;
 }
