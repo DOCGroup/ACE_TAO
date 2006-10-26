@@ -12,6 +12,7 @@
 #include "tao/ORB_Core.h"
 #include "ace/Get_Opt.h"
 #include "ace/OS_NS_unistd.h"
+#include "TestC.h"
 
 ACE_RCSID (EC_Examples,
            MCast,
@@ -59,6 +60,20 @@ main (int argc, char* argv[])
           ACE_ERROR ((LM_ERROR,
                       "Usage: Service [-m udp_mcast_addr]\n"));
           return 1;
+        }
+
+      if (valuetype)
+        {
+          ValueTypeData_init *vb_factory = 0;
+          ACE_NEW_RETURN (vb_factory,
+                          ValueTypeData_init,
+                          1); // supplied by mapping
+
+          orb->register_value_factory (vb_factory->tao_repository_id (),
+                                       vb_factory
+                                       ACE_ENV_ARG_PARAMETER);
+          ACE_TRY_CHECK;
+          vb_factory->_remove_ref (); // release ownership
         }
 
       // This is the standard code to get access to the POA and
