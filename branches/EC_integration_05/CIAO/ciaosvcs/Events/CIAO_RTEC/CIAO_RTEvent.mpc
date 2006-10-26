@@ -1,7 +1,7 @@
 // -*- MPC -*-
 // $Id$
 
-project (CIAO_RTEvent) : rtevent_serv, ciao_events_base_dnc {
+project (CIAO_RTEvent) : naming, rtevent_serv, ciao_events_base_dnc {
 
   sharedname  = CIAO_RTEvent
   idlflags  += -Wb,export_include=CIAO_RTEVENT_Export.h -Wb,export_macro=CIAO_RTEVENT_Export
@@ -15,11 +15,13 @@ project (CIAO_RTEvent) : rtevent_serv, ciao_events_base_dnc {
     CIAO_RTEvent.cpp
     CIAO_RTEventC.cpp
     CIAO_RTEventS.cpp
+    SimpleAddressServer.cpp
   }
 
   Header_Files {
     CIAO_RTEvent.h
     CIAO_RTEventC.h
     CIAO_RTEventS.h
+    SimpleAddressServer.h
   }
 }

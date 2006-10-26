@@ -5,7 +5,9 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 # $Id$
 # -*- perl -*-
 
-use lib "$ENV{ACE_ROOT}/bin";
+$ACE_ROOT=$ENV{'ACE_ROOT'};
+
+use lib "../../../../../bin";
 use PerlACE::Run_Test;
 
 $status = 0;
@@ -29,10 +31,10 @@ unlink $iorfile2;
 $CIAO_ROOT=$ENV{'CIAO_ROOT'};
 
 $SV1 = new PerlACE::Process ("$CIAO_ROOT/DAnCE/NodeManager/NodeManager",
-                             "-ORBEndpoint iiop://localhost:60001 -s $CIAO_ROOT/DAnCE/NodeApplication/NodeApplication");
+                             "-ORBEndpoint iiop://localhost:60001 -s $CIAO_ROOT/DAnCE/NodeApplication/NodeApplication -c rtec.conf");
 
 $SV2 = new PerlACE::Process ("$CIAO_ROOT/DAnCE/NodeManager/NodeManager",
-                             "-ORBEndpoint iiop://localhost:60002 -s $CIAO_ROOT/DAnCE/NodeApplication/NodeApplication");
+                             "-ORBEndpoint iiop://localhost:60002 -s $CIAO_ROOT/DAnCE/NodeApplication/NodeApplication -c rtec.conf");
 
 $SV1->Spawn ();
 $SV2->Spawn ();

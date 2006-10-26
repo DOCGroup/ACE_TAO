@@ -822,6 +822,13 @@ namespace
            << "ACE_CHECK;" << endl
            << "}";
 
+        // @@ GD Modified Code Below
+
+        os << endl;
+        os << "ACE_CString source_id = this->_ciao_instance_id ();";
+        os << "source_id += \"_\";" << endl;
+        os << "source_id += \"" << p.name () << "\";//port name" << endl << endl;
+
         os << "for (ACE_Active_Map_Manager< " << endl
            << "  " << STRS[COMP_ECB] << "_var>::iterator giter =" << endl
            << "    this->ciao_publishes_" << p.name ()
@@ -830,8 +837,9 @@ namespace
            << "_generic_map_.end ();" << endl
            << "++giter)" << endl
            << "{"
-           << "(*giter).int_id_->push_event" << " (" << endl
-           << "ev" << endl
+           << "(*giter).int_id_->ciao_push_event" << " (" << endl
+           << "ev," << endl
+           << "source_id.c_str ()" << endl
            << STRS[ENV_ARG] << ");"
            << "ACE_CHECK;" << endl
            << "}"
@@ -2217,6 +2225,30 @@ namespace
            << "}"
            << "ACE_THROW ( " << STRS[EXCP_BET] << " ());" << endl
            << "}";
+
+        // GD Added below code
+        // Begin
+
+        os << "// Inherited from " << STRS[COMP_ECB] << "." << endl
+           << "void" << endl
+           << scope_.name  () << "_Servant::";
+
+        Traversal::ConsumerData::belongs (c, simple_belongs_);
+
+        os << "Consumer_" << c.name ()
+           << "_Servant::ciao_push_event (" << endl
+           << "::Components::EventBase *ev," << endl
+           << "const char * source_id" << endl
+           << STRS[ENV_SRC] << ")" << endl
+           << STRS[EXCP_START] << " "
+           << STRS[EXCP_SYS] << "," << endl
+           << STRS[EXCP_BET] << "))" << endl
+           << "{"
+           << "ACE_UNUSED_ARG (source_id);" << endl
+           << "this->push_event (ev);" << endl
+           << "}";
+
+         // End
 
         os << "CORBA::Boolean" << endl
            << scope_.name () << "_Servant::";
