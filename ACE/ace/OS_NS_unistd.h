@@ -139,7 +139,7 @@ namespace ACE_OS
 
   ACE_NAMESPACE_INLINE_FUNCTION
   int ftruncate (ACE_HANDLE,
-                 ACE_LOFF_T);
+                 ACE_OFF_T);
 
   ACE_NAMESPACE_INLINE_FUNCTION
   char *getcwd (char *, size_t);
@@ -198,9 +198,9 @@ namespace ACE_OS
 #endif /* ACE_WIN32 */
 
   ACE_NAMESPACE_INLINE_FUNCTION
-  off_t lseek (ACE_HANDLE handle,
-               off_t offset,
-               int whence);
+  ACE_OFF_T lseek (ACE_HANDLE handle,
+                   ACE_OFF_T offset,
+                   int whence);
 
 #if defined (ACE_HAS_LLSEEK) || defined (ACE_HAS_LSEEK64)
   ACE_NAMESPACE_INLINE_FUNCTION
@@ -224,13 +224,13 @@ namespace ACE_OS
   ssize_t pread (ACE_HANDLE handle,
                  void *buf,
                  size_t nbyte,
-                 off_t offset);
+                 ACE_OFF_T offset);
 
   extern ACE_Export
   ssize_t pwrite (ACE_HANDLE handle,
                   const void *buf,
                   size_t nbyte,
-                  ACE_LOFF_T offset);
+                  ACE_OFF_T offset);
 
   ACE_NAMESPACE_INLINE_FUNCTION
   ssize_t read (ACE_HANDLE handle,
@@ -315,7 +315,7 @@ namespace ACE_OS
                 long count);
 
   ACE_NAMESPACE_INLINE_FUNCTION
-  int truncate (const ACE_TCHAR *filename, ACE_LOFF_T length);
+  int truncate (const ACE_TCHAR *filename, ACE_OFF_T length);
 
   ACE_NAMESPACE_INLINE_FUNCTION
   useconds_t ualarm (useconds_t usecs,

@@ -86,8 +86,8 @@ struct flock
 {
   short l_type;
   short l_whence;
-  off_t l_start;
-  off_t l_len;          /* len == 0 means until end of file */
+  ACE_OFF_T l_start;
+  ACE_OFF_T l_len;          /* len == 0 means until end of file */
   long  l_sysid;
   pid_t l_pid;
   long  l_pad[4];               /* reserve area */
@@ -187,8 +187,8 @@ namespace ACE_OS {
   ACE_NAMESPACE_INLINE_FUNCTION
   void flock_adjust_params (ace_flock_t *lock,
                             short whence,
-                            off_t &start,
-                            off_t &len);
+                            ACE_OFF_T &start,
+                            ACE_OFF_T &len);
 # endif /* ACE_WIN32 */
 
   ACE_NAMESPACE_INLINE_FUNCTION
@@ -204,32 +204,32 @@ namespace ACE_OS {
   ACE_NAMESPACE_INLINE_FUNCTION
   int flock_rdlock (ace_flock_t *lock,
                     short whence = 0,
-                    off_t start = 0,
-                    off_t len = 0);
+                    ACE_OFF_T start = 0,
+                    ACE_OFF_T len = 0);
 
   ACE_NAMESPACE_INLINE_FUNCTION
   int flock_tryrdlock (ace_flock_t *lock,
                        short whence = 0,
-                       off_t start = 0,
-                       off_t len = 0);
+                       ACE_OFF_T start = 0,
+                       ACE_OFF_T len = 0);
 
   ACE_NAMESPACE_INLINE_FUNCTION
   int flock_trywrlock (ace_flock_t *lock,
                        short whence = 0,
-                       off_t start = 0,
-                       off_t len = 0);
+                       ACE_OFF_T start = 0,
+                       ACE_OFF_T len = 0);
 
   ACE_NAMESPACE_INLINE_FUNCTION
   int flock_unlock (ace_flock_t *lock,
                     short whence = 0,
-                    off_t start = 0,
-                    off_t len = 0);
+                    ACE_OFF_T start = 0,
+                    ACE_OFF_T len = 0);
 
   ACE_NAMESPACE_INLINE_FUNCTION
   int flock_wrlock (ace_flock_t *lock,
                     short whence = 0,
-                    off_t start = 0,
-                    off_t len = 0);
+                    ACE_OFF_T start = 0,
+                    ACE_OFF_T len = 0);
 
   //@}
 
@@ -275,11 +275,6 @@ namespace ACE_OS {
   /// the required resources reside somewhere other than the executable.
   ACE_NAMESPACE_INLINE_FUNCTION
   void set_win32_resource_module (HINSTANCE);
-
-  /// Translate fopen's mode char to open's mode.  This helper function
-  /// is here to avoid maintaining several pieces of identical code.
-  ACE_NAMESPACE_INLINE_FUNCTION
-  void fopen_mode_to_open_mode_converter (ACE_TCHAR x, int &hmode);
 
   extern ACE_Export ACE_TEXT_OSVERSIONINFO win32_versioninfo_;
 

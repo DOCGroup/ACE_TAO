@@ -70,7 +70,7 @@ Mem_Map_Stream::recv (size_t &len)
 
   
   const char *s = this->recv_pos_;
-  off_t olen = static_cast <off_t> (len);
+  ACE_OFF_T olen = static_cast <ACE_OFF_T> (len);
   this->seek (olen, SEEK_CUR);
   len = this->get_pos_ - s;
   return s;
@@ -94,8 +94,8 @@ Mem_Map_Stream::peek_str (size_t offset,
   return &this->get_pos_[offset];
 }
 
-off_t
-Mem_Map_Stream::seek (off_t offset, int whence)
+ACE_OFF_T
+Mem_Map_Stream::seek (ACE_OFF_T offset, int whence)
 {
   switch (whence)
     {
@@ -120,7 +120,7 @@ Mem_Map_Stream::seek (off_t offset, int whence)
   // Make sure that the backing store will cover this.
   while (this->get_pos_ > this->end_of_mapping_plus1_)
     if (this->grow_file_and_remap () == -1)
-      return (off_t) -1;
+      return (ACE_OFF_T) -1;
 
   this->recv_pos_ = this->get_pos_;
   return this->recv_pos_ - reinterpret_cast<char *> (this->mem_map_.addr ());

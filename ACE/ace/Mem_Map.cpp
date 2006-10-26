@@ -11,6 +11,7 @@
 #include "ace/OS_NS_fcntl.h"
 #include "ace/OS_NS_string.h"
 #include "ace/Log_Msg.h"
+#include "ace/Truncate.h"
 
 #if defined (ACE_WIN32) \
     && (!defined(ACE_HAS_WINNT4) || (ACE_HAS_WINNT4 == 0))
@@ -95,11 +96,11 @@ ACE_Mem_Map::~ACE_Mem_Map (void)
 
 int
 ACE_Mem_Map::map_it (ACE_HANDLE handle,
-                     ssize_t length_request,
+                     size_t length_request,
                      int prot,
                      int share,
                      void *addr,
-                     off_t offset,
+                     ACE_OFF_T offset,
                      LPSECURITY_ATTRIBUTES sa)
 {
   ACE_TRACE ("ACE_Mem_Map::map_it");
@@ -115,25 +116,31 @@ ACE_Mem_Map::map_it (ACE_HANDLE handle,
   this->base_addr_ = addr;
   this->handle_ = handle;
 
-  ACE_LOFF_T const result = ACE_OS::filesize (this->handle_);
+  ACE_OFF_T const result = ACE_OS::filesize (this->handle_);
 
   // At this point we know <result> is not negative...
-  size_t const current_file_length = static_cast<size_t> (result);
+  ACE_OFF_T const current_file_length = result;
 
   // Flag to indicate if we need to extend the back store
   bool extend_backing_store = false;
 
   // File length requested by user
-  size_t requested_file_length = 0;
+  ACE_OFF_T requested_file_length = 0;
 
   // Check <length_request>
-  if (length_request == -1)
-    // Set length to file_request.
-    this->length_ = current_file_length - offset;
+  if (length_request == static_cast<size_t> (-1))
+    // Set length to file_request or size_t max.
+    this->length_ = ACE_Utils::Truncate<size_t> (current_file_length - offset);
   else
-    {
+    { 
+      // Make sure that we have not been asked to do the impossible.
+      if (static_cast<ACE_UINT64> (length_request)
+          + static_cast<ACE_UINT64> (offset)
+          > static_cast<ACE_UINT64> (ACE_Numeric_Limits<ACE_OFF_T>::max ()))
+        return -1;
+
       // File length implicitly requested by user
-      requested_file_length = length_request + offset;
+      requested_file_length = static_cast<ACE_OFF_T> (length_request) + offset;
 
       // Check to see if we need to extend the backing store
       if (requested_file_length > current_file_length)
@@ -156,11 +163,10 @@ ACE_Mem_Map::map_it (ACE_HANDLE handle,
   if (extend_backing_store)
     {
       // Remember than write increases the size by one.
-      off_t null_byte_position;
+      ACE_OFF_T null_byte_position;
       if (requested_file_length > 0)
         // This will make the file size <requested_file_length>
-        null_byte_position =
-          static_cast<off_t> (requested_file_length - 1);
+        null_byte_position = requested_file_length - 1;
       else
         // This will make the file size 1
         null_byte_position = 0;
@@ -240,13 +246,13 @@ ACE_Mem_Map::open (const ACE_TCHAR *file_name,
 
 int
 ACE_Mem_Map::map (const ACE_TCHAR *file_name,
-                  ssize_t len,
+                  size_t len,
                   int flags,
                   int mode,
                   int prot,
                   int share,
                   void *addr,
-                  off_t offset,
+                  ACE_OFF_T offset,
                   LPSECURITY_ATTRIBUTES sa)
 {
   ACE_TRACE ("ACE_Mem_Map::map");
@@ -281,13 +287,13 @@ ACE_Mem_Map::ACE_Mem_Map (void)
 // Map a file specified by FILE_NAME.
 
 ACE_Mem_Map::ACE_Mem_Map (const ACE_TCHAR *file_name,
-                          ssize_t len,
+                          size_t len,
                           int flags,
                           int mode,
                           int prot,
                           int share,
                           void *addr,
-                          off_t offset,
+                          ACE_OFF_T offset,
                           LPSECURITY_ATTRIBUTES sa)
   : base_addr_ (MAP_FAILED),
     length_ (0),
@@ -314,11 +320,11 @@ ACE_Mem_Map::ACE_Mem_Map (const ACE_TCHAR *file_name,
 // lookup the length of the file if it is not given.
 
 ACE_Mem_Map::ACE_Mem_Map (ACE_HANDLE handle,
-                          ssize_t len,
+                          size_t len,
                           int prot,
                           int share,
                           void *addr,
-                          off_t offset,
+                          ACE_OFF_T offset,
                           LPSECURITY_ATTRIBUTES sa)
   : base_addr_ (MAP_FAILED),
     length_ (0),

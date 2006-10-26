@@ -72,6 +72,12 @@ typedef double ACE_timer_t;
    typedef unsigned int dev_t;
 #endif /* ACE_HAS_WINCE */
 
+#if defined(ACE_WIN32) && defined(_FILE_OFFSET_BITS) && (_FILE_OFFSET_BITS==64)
+  typedef __int64 ACE_OFF_T;
+#else
+  typedef off_t ACE_OFF_T;
+#endif
+  
 #if defined (ACE_SIZEOF_LONG) && ACE_SIZEOF_LONG == 8
    typedef off_t ACE_LOFF_T;
 #elif defined (ACE_HAS_RTEMS) || defined (__FreeBSD__) || defined (__NetBSD__) || defined (__OpenBSD__) || defined (__APPLE__) || \
