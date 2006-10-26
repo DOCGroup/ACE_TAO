@@ -220,7 +220,7 @@ CIAO::MonitorController::terminate ()
              guard,
              lock_);
 
-  terminate_flag_ = true;
+  terminate_flag_=1;
 }
 
 bool
