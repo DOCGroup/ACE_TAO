@@ -60,10 +60,7 @@ namespace CIAO
                                 ACE_ENV_ARG_DECL_WITH_DEFAULTS)
         ACE_THROW_SPEC ((Deployment_Failure));
 
-      const char * re_launch_plan (const char *deployment_plan_uri,
-                                   const char *package_uri = 0,
-                                   bool use_package_name = 1,
-                                   bool use_repoman = 0
+      const char * re_launch_plan (const char *plan_uri
                                    ACE_ENV_ARG_DECL_WITH_DEFAULTS)
         ACE_THROW_SPEC ((Deployment_Failure));
 

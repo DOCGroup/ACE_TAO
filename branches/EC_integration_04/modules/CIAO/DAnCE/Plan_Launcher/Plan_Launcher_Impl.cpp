@@ -2,7 +2,6 @@
 #include "Plan_Launcher_Impl.h"
 #include "orbsvcs/CosNamingC.h"
 #include "Config_Handlers/XML_File_Intf.h"
-#include "Config_Handlers/DnC_Dump.h"
 
 #include <iostream>
 #include <string>
@@ -27,7 +26,7 @@ namespace CIAO
 
       CosNaming::Name name (1);
       name.length (1);
-
+      
       name[0].id = CORBA::string_dup ("ExecutionManager");
 
       return pns->resolve (name
@@ -75,11 +74,9 @@ namespace CIAO
         }
 
       if (CIAO::debug_level () > 9)
-        {
-          ACE_DEBUG ((LM_DEBUG,
-                      "(%P|%t) CIAO_PlanLauncher: Obtained Execution"
-                      " Manager ref \n"));
-        }
+        ACE_DEBUG ((LM_DEBUG,
+                    "(%P|%t) CIAO_PlanLauncher: Obtained Execution"
+                    " Manager ref \n"));
 
       if (use_repoman)
         return pg_.init (orb, rm_use_naming, rm_name);
@@ -111,7 +108,7 @@ namespace CIAO
         }
 
       ACE_DEBUG ((LM_DEBUG, "Parsing complete....\n"));
-
+      
       return this->launch_plan (plan.in ());
     }
 
@@ -121,54 +118,42 @@ namespace CIAO
     {
       ACE_TRY
         {
-          if (CORBA::is_nil (this->em_.in ()))
-            {
-              ACE_ERROR ((LM_ERROR,
-                ACE_TEXT ("CIAO::Plan_Launcher_i: ")
-                ACE_TEXT ("launch_plan called witn an uninitialized EM.\n")));
-              return 0;
-            }
+	  if (CORBA::is_nil (this->em_.in ()))
+	    {
+	      ACE_ERROR ((LM_ERROR,
+			  ACE_TEXT ("CIAO::Plan_Launcher_i: ")
+			  ACE_TEXT ("launch_plan called witn an uninitialized EM.\n")));
+	      return 0;
+	    }
 
-        if (CIAO::debug_level () > 9)
-          {
-            ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("CIAO::Plan_Launcher_i: " )
-              ACE_TEXT ("about to call this->em_->preparePlan\n")));
-          }
+	  ACE_ERROR ((LM_ERROR,
+		      ACE_TEXT ("CIAO::Plan_Launcher_i: " )
+		      ACE_TEXT ("about to call this->em_->preparePlan\n")));
+	  ::Deployment::DomainApplicationManager_var dam (this->em_->preparePlan (plan, 1));
+	  ACE_ERROR ((LM_ERROR,
+		      ACE_TEXT ("CIAO::Plan_Launcher_i: " )
+		      ACE_TEXT ("after to call this->em_->preparePlan\n")));
 
-        ::Deployment::DomainApplicationManager_var dam (this->em_->preparePlan (plan, 1));
+	  if (CORBA::is_nil (dam.in ()))
+	    {
+	      ACE_DEBUG ((LM_DEBUG,
+			  "(%P|%t) CIAO_PlanLauncher:preparePlan call failed: "
+			  "nil DomainApplicationManager reference\n"));
+	      return 0;
+	    }
 
-        if (CIAO::debug_level () > 9)
-          {
-            ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("CIAO::Plan_Launcher_i: " )
-              ACE_TEXT ("after to call this->em_->preparePlan\n")));
-          }
+	  if (CIAO::debug_level () > 9)
+	    ACE_DEBUG ((LM_DEBUG,
+			"CIAO_PlanLauncher: Obtained DAM ref \n"));
 
-        if (CORBA::is_nil (dam.in ()))
-          {
-            ACE_ERROR ((LM_ERROR,
-              "(%P|%t) CIAO_PlanLauncher:preparePlan call failed: "
-              "nil DomainApplicationManager reference\n"));
-            return 0;
-          }
+	  ::Deployment::Properties_var properties;
+	  ACE_NEW_RETURN (properties,
+			  Deployment::Properties,
+			  0);
 
-        if (CIAO::debug_level () > 9)
-          {
-            ACE_DEBUG ((LM_DEBUG,
-              "CIAO_PlanLauncher: Obtained DAM ref \n"));
-          }
-
-        ::Deployment::Properties_var properties;
-        ACE_NEW_RETURN (properties,
-            Deployment::Properties,
-            0);
-
-        if (CIAO::debug_level ())
-        {
-          ACE_DEBUG ((LM_DEBUG,
-            "CIAO_PlanLauncher: start Launch application...\n"));
-        }
+	  if (CIAO::debug_level ())
+	    ACE_DEBUG ((LM_DEBUG,
+			"CIAO_PlanLauncher: start Launch application...\n"));
 
 	  // Dont not start the Application immediately since it vialtes
 	  // the semantics of component activation sequence
@@ -294,9 +279,7 @@ namespace CIAO
           {
             dapp_mgr->destroyApplication ();
             if (CIAO::debug_level ())
-              {
-                ACE_DEBUG ((LM_DEBUG, "[success]\n"));
-              }
+              ACE_DEBUG ((LM_DEBUG, "[success]\n"));
 
             // Note that we should ask the DAM to tell EM whether the DAM should
             // be destroyed
@@ -305,7 +288,7 @@ namespace CIAO
         }
       ACE_CATCHANY
         {
-          ACE_ERROR ((LM_ERROR, "Unable to find DomainApplicationManager "
+          ACE_DEBUG ((LM_ERROR, "Unable to find DomainApplicationManager "
                       "for plan with uuid: %s\n", uuid));
           return false;
         }
@@ -319,17 +302,13 @@ namespace CIAO
                                     ACE_ENV_ARG_DECL)
     {
       if (CIAO::debug_level ())
-        {
-          ACE_DEBUG ((LM_DEBUG,
-                      "CIAO_PlanLauncher: destroy the application.....\n"));
-        }
+        ACE_DEBUG ((LM_DEBUG,
+                    "CIAO_PlanLauncher: destroy the application.....\n"));
 
       dam->destroyApplication ();
 
       if (CIAO::debug_level ())
-        {
-          ACE_DEBUG ((LM_DEBUG, "[success]\n"));
-        }
+        ACE_DEBUG ((LM_DEBUG, "[success]\n"));
 
       this->destroy_dam (dam);
 
@@ -341,17 +320,13 @@ namespace CIAO
                                   ACE_ENV_ARG_DECL)
     {
       if (CIAO::debug_level ())
-        {
-          ACE_DEBUG ((LM_DEBUG,
-                      "CIAO_PlanLauncher: destroy the manager.....\n"));
-        }
+        ACE_DEBUG ((LM_DEBUG,
+                    "CIAO_PlanLauncher: destroy the manager.....\n"));
 
       this->em_->destroyManager (dam);
 
       if (CIAO::debug_level ())
-        {
-          ACE_DEBUG ((LM_DEBUG, "[success]\n"));
-        }
+        ACE_DEBUG ((LM_DEBUG, "[success]\n"));
     }
 
     void
@@ -369,26 +344,13 @@ namespace CIAO
     }
 
     const char *
-    Plan_Launcher_i::re_launch_plan (const char *deployment_plan_uri,
-                                     const char *package_uri,
-                                     bool use_package_name,
-                                     bool use_repoman
-                                     ACE_ENV_ARG_DECL)
+    Plan_Launcher_i::re_launch_plan (const char *plan_uri ACE_ENV_ARG_DECL)
       ACE_THROW_SPEC ((Plan_Launcher_i::Deployment_Failure))
     {
-      CIAO::Config_Handlers::XML_File_Intf intf (deployment_plan_uri);
+      CIAO::Config_Handlers::XML_File_Intf intf (plan_uri);
 
       ::Deployment::DeploymentPlan_var plan =
           intf.get_plan ();
-
-      // Use the package name(s) or type(s) to modify the location of all the
-      // artifacts in DeploymentPlan.
-      if (use_repoman)
-        {
-          pg_.generate_plan (plan, package_uri, use_package_name);
-        }
-
-      //::Deployment::DnC_Dump::dump (plan.in ());
 
       return this->re_launch_plan (plan.in ());
     }
