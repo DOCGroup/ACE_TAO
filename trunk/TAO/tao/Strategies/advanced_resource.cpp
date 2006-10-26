@@ -29,6 +29,7 @@
 #include "ace/WFMO_Reactor.h"
 #include "ace/Msg_WFMO_Reactor.h"
 #include "ace/TP_Reactor.h"
+#include "ace/Dev_Poll_Reactor.h"
 #include "ace/Malloc_T.h"
 #include "ace/Local_Memory_Pool.h"
 #include "ace/Null_Mutex.h"
@@ -164,15 +165,26 @@ TAO_Advanced_Resource_Factory::init (int argc, ACE_TCHAR** argv)
 #endif /* ACE_WIN32 */
           else if (ACE_OS::strcasecmp (current_arg,
                                        ACE_TEXT("msg_wfmo")) == 0)
-#if defined(ACE_WIN32)
+#if defined(ACE_WIN32) && !defined (ACE_LACKS_MSG_WFMO)
             this->reactor_type_ = TAO_REACTOR_MSGWFMO;
 #else
             this->report_unsupported_error (ACE_TEXT("MsgWFMO Reactor"));
-#endif /* ACE_WIN32 */
+#endif /* ACE_WIN32 && !ACE_LACKS_MSG_WFMO */
 
           else if (ACE_OS::strcasecmp (current_arg,
                                        ACE_TEXT("tp")) == 0)
             this->reactor_type_ = TAO_REACTOR_TP;
+
+          else if (ACE_OS::strcasecmp (current_arg,
+                                       ACE_TEXT("dev_poll")) == 0)
+            {
+#if defined (ACE_HAS_EVENT_POLL) || defined (ACE_HAS_DEV_POLL)
+              this->reactor_type_ = TAO_REACTOR_DEV_POLL;
+#else
+              this->report_unsupported_error (ACE_TEXT ("Dev_Poll Reactor"));
+#endif  /* ACE_HAS_EVENT_POLL || ACE_HAS_DEV_POLL */
+            }
+
           else if (ACE_OS::strcasecmp (current_arg,
                                        ACE_TEXT("fl")) == 0)
             this->report_option_value_error (
@@ -431,16 +443,34 @@ TAO_Advanced_Resource_Factory::allocate_reactor_impl (void) const
       break;
 
     case TAO_REACTOR_WFMO:
-#if defined(ACE_WIN32) && !defined (ACE_LACKS_MSG_WFMO)
+#if defined(ACE_WIN32)
       ACE_NEW_RETURN (impl, ACE_WFMO_Reactor, 0);
-#endif /* ACE_WIN32 && !ACE_LACKS_MSG_WFMO */
+#endif /* ACE_WIN32 */
       break;
 
+#if defined(ACE_WIN32) \
+  && !defined (ACE_LACKS_MSG_WFMO) \
+  && !defined (ACE_HAS_WINCE)      \
+  && !defined (ACE_HAS_PHARLAP)
     case TAO_REACTOR_MSGWFMO:
-#if defined(ACE_WIN32) && !defined (ACE_HAS_WINCE) && !defined (ACE_HAS_PHARLAP)
       ACE_NEW_RETURN (impl, ACE_Msg_WFMO_Reactor, 0);
-#endif /* ACE_WIN32 && !ACE_HAS_WINCE */
       break;
+#endif /* ACE_WIN32 && !ACE_LACKS_MSG_WFMO */
+
+#if defined (ACE_HAS_EVENT_POLL) || defined (ACE_HAS_DEV_POLL)
+    case TAO_REACTOR_DEV_POLL:
+      ACE_NEW_RETURN (impl,
+                      ACE_Dev_Poll_Reactor (ACE::max_handles (),
+                                            1,  // restart
+                                            (ACE_Sig_Handler*)0,
+                                            (ACE_Timer_Queue*)0,
+                                            0, // Do not disable notify
+                                            0, // Allocate notify handler
+                                            this->reactor_mask_signals_,
+                                            ACE_Select_Reactor_Token::LIFO),
+                      0);
+      break;
+#endif  /* ACE_HAS_EVENT_POLL || ACE_HAS_DEV_POLL */
 
     default:
     case TAO_REACTOR_TP:
