@@ -44,12 +44,12 @@ Thu Oct 27 01:58:09 UTC 2006  Ossama Othman  <ossama_othman at symantec dot com>
         * examples/Web_Crawler/Mem_Map_Stream.h:
         * examples/IPC_SAP/FILE_SAP/client.cpp:
 
-          Added support for 64-bit file offsets on 32-bit platforms on
-          platforms that support the _FILE_OFFSET_BITS preprocessor
-          symbol, as well as Windows.  Enable by defining the
-          _FILE_OFFSET_BITS=64 preprocessor symbol (ACE provides the
-          necessary support on Windows when it is defined with the
-          assistance of a new ACE_OFF_T typedef).
+          Added support for 64-bit file offsets on 32-bit platforms that
+          support the _FILE_OFFSET_BITS preprocessor symbol, as well as
+          Windows.  Enable by defining the _FILE_OFFSET_BITS=64
+          preprocessor symbol.  ACE provides the necessary support on
+          Windows when it is defined with the assistance of a new
+          ACE_OFF_T typedef.
 
 Thu Oct 26 24:44:55 UTC 2006  Ossama Othman  <ossama_othman at symantec dot com>
 
