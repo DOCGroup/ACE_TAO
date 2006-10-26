@@ -132,7 +132,7 @@ main (int argc, char* argv[])
       // convert that into the right IDL structure:
       ACE_INET_Addr udp_addr (udp_mcast_address);
       ACE_DEBUG ((LM_DEBUG,
-                  "Multicast address is: %s\n",
+                  "udp mcast address is: %s\n",
                   udp_mcast_address));
       RtecUDPAdmin::UDP_Addr addr;
       addr.ipaddr = udp_addr.get_ip_address ();

@@ -77,7 +77,7 @@ Supplier::perform_push (ACE_ENV_SINGLE_ARG_DECL)
       RtecEventComm::EventSet event (1);
       event.length (1);
       event[0].header.type   = ACE_ES_EVENT_UNDEFINED;
-      event[0].header.source = 1;
+      event[0].header.source = event_count_;
       // Avoid loops throught the event channel federations
       event[0].header.ttl    = 1;
 
