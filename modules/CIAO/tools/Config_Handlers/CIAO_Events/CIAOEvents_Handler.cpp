@@ -62,16 +62,16 @@ namespace CIAO
            switch (i->type ().integral ())
            {
              case ::CIAO::Config_Handlers::EventServiceType::EC_l:
-               a_esd.type = CIAO::DAnCE::EC;
+               a_esd.type = CIAO::EC;
                break;
              case ::CIAO::Config_Handlers::EventServiceType::NOTIFY_l:
-               a_esd.type = CIAO::DAnCE::NOTIFY;
+               a_esd.type = CIAO::NOTIFY;
                break;
              case ::CIAO::Config_Handlers::EventServiceType::RTEC_l:
-               a_esd.type = CIAO::DAnCE::RTEC;
+               a_esd.type = CIAO::RTEC;
                break;
              case ::CIAO::Config_Handlers::EventServiceType::RTNOTIFY_l:
-               a_esd.type = CIAO::DAnCE::RTNOTIFY;
+               a_esd.type = CIAO::RTNOTIFY;
                break;
              default:
              ACE_ERROR ((LM_ERROR,
@@ -82,6 +82,7 @@ namespace CIAO
            a_esd.svc_cfg_file = CORBA::string_dup  (i->svc_cfg_file ().c_str ());
 
 
+           // Populate filtering information for this event channel
            a_esd.filters.length (i->count_filter ());
            CORBA::ULong pos_j = 0;
            for (EventServiceDescription::filter_const_iterator j = i->begin_filter ();
@@ -120,6 +121,47 @@ namespace CIAO
 
                }
                pos_j++;
+            }
+
+           // Populate address server information for this event channel
+           a_esd.addr_servs.length (i->count_addr_serv ());
+           pos_j = 0;
+           for (EventServiceDescription::addr_serv_const_iterator j = i->begin_addr_serv ();
+                j != i->end_addr_serv ();
+                j++)
+           {
+              a_esd.addr_servs[pos_j].name = CORBA::string_dup (j->name ().c_str ());
+              a_esd.addr_servs[pos_j].port = j->port ();
+              a_esd.addr_servs[pos_j].address = CORBA::string_dup (j->address ().c_str ());
+              pos_j++;
+            }
+
+           // Populate UDP sender information for this event channel
+           a_esd.senders.length (i->count_udp_sender ());
+           pos_j = 0;
+           for (EventServiceDescription::udp_sender_const_iterator j = i->begin_udp_sender ();
+                j != i->end_udp_sender ();
+                j++)
+           {
+              a_esd.senders[pos_j].name = CORBA::string_dup (j->name ().c_str ());
+              a_esd.senders[pos_j].addr_serv_id = 
+                CORBA::string_dup (j->addr_serv_id ().c_str ());
+              pos_j++;
+            }
+
+           // Populate UDP receiver information for this event channel
+           a_esd.receivers.length (i->count_udp_receiver ());
+           pos_j = 0;
+           for (EventServiceDescription::udp_receiver_const_iterator j = i->begin_udp_receiver ();
+                j != i->end_udp_receiver ();
+                j++)
+           {
+              a_esd.receivers[pos_j].name = CORBA::string_dup (j->name ().c_str ());
+              a_esd.receivers[pos_j].addr_serv_id = 
+                CORBA::string_dup (j->addr_serv_id ().c_str ());
+              a_esd.receivers[pos_j].is_multicast = j->is_multicast ();
+              a_esd.receivers[pos_j].listen_port = j->listen_port ();
+              pos_j++;
             }
 
            (*this->idl_esd_)[pos_i] = a_esd;
