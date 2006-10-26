@@ -69,6 +69,46 @@
 
 #endif /* !ACE_WIN32 */
 
+// Helper functions to split large intergers into smaller high-order
+// and low-order parts, and reconstitute them again.  These are
+// required primarily for supporting _FILE_OFFSET_BITS==64 on windows.
+
+#if defined(ACE_WIN32)
+#  if defined(_FILE_OFFSET_BITS) && (_FILE_OFFSET_BITS==64)
+#    include "ace/Basic_Types.h"
+
+#    define ACE_LOW_PART(X) static_cast<DWORD>(X)
+
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+LONG
+inline ACE_High_Part (ACE_OFF_T value)
+{
+  LARGE_INTEGER new_value;
+  new_value.QuadPart = value;
+  return new_value.HighPart;
+}
+#    define ACE_HIGH_PART(X) ACE_High_Part(X)
+
+LONGLONG
+inline ACE_Combine_Parts (LONG high, DWORD low)
+{
+  LARGE_INTEGER value;
+  value.LowPart = low;    // DWORD
+  value.HighPart = high;  // LONG
+  return value.QuadPart;
+}
+ACE_END_VERSIONED_NAMESPACE_DECL
+
+#    define ACE_COMBINE_PARTS(X,Y) ACE_Combine_Parts(X,Y)
+#  else  /* _FILE_OFFSET_BITS==64 */
+#    define ACE_LOW_PART(X) X
+#    define ACE_HIGH_PART(X) 0
+#    define ACE_COMBINE_PARTS(X,Y) X
+#  endif /* _FILE_OFFSET_BITS==64 */
+#endif /* ACE_WIN32 */
+
+
+
 # include /**/ "ace/post.h"
 
 #endif /* ACE_OS_NS_MACROS_H */

@@ -108,7 +108,7 @@ public:
    * Change the initial MMAP buffer size (in bytes) of the MEM_Stream
    * this MEM_Acceptor creates.
    */
-  void init_buffer_size (off_t bytes);
+  void init_buffer_size (ACE_OFF_T bytes);
 
   /// Get the preferred signaling strategy.
   ACE_MEM_IO::Signal_Strategy preferred_strategy (void) const;

@@ -9,6 +9,7 @@
 #include "ace/OS_NS_time.h"
 #include "ace/OS_NS_unistd.h"
 #include "ace/OS_NS_fcntl.h"
+#include "ace/Truncate.h"
 
 ACE_RCSID (ace,
            Filecache,
@@ -130,7 +131,7 @@ ACE_Filecache_Handle::error (void) const
     return this->file_->error ();
 }
 
-ACE_LOFF_T
+ACE_OFF_T
 ACE_Filecache_Handle::size (void) const
 {
   if (this->file_ == 0)
@@ -523,7 +524,7 @@ ACE_Filecache_Object::ACE_Filecache_Object (const ACE_TCHAR *filename,
       return;
     }
 
-  this->size_ = this->stat_.st_size;
+  this->size_ = ACE_Utils::Truncate<ACE_OFF_T> (this->stat_.st_size);
   this->tempname_ = this->filename_;
 
   // Can we open the file?
@@ -555,7 +556,7 @@ ACE_Filecache_Object::ACE_Filecache_Object (const ACE_TCHAR *filename,
 }
 
 ACE_Filecache_Object::ACE_Filecache_Object (const ACE_TCHAR *filename,
-                                            off_t size,
+                                            ACE_OFF_T size,
                                             ACE_SYNCH_RW_MUTEX &lock,
                                             LPSECURITY_ATTRIBUTES sa)
   : stale_ (0),
@@ -706,7 +707,7 @@ ACE_Filecache_Object::filename (void) const
   return this->filename_;
 }
 
-ACE_LOFF_T
+ACE_OFF_T
 ACE_Filecache_Object::size (void) const
 {
   // The existence of the object means a read lock is being held.

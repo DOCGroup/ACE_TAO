@@ -111,7 +111,7 @@ extern "C"
       ACE_Time_Value st_ctime;
 
       /// file size, in bytes
-      off_t st_size;
+      ACE_OFF_T st_size;
 
       // Following members do not have direct conversion in Window platforms.
       //u_long st_blksize;        // optimal blocksize for I/O

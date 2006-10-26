@@ -2552,7 +2552,7 @@ ACE::timestamp (ACE_TCHAR date_and_time[],
 // This function rounds the request to a multiple of the page size.
 
 size_t
-ACE::round_to_pagesize (off_t len)
+ACE::round_to_pagesize (size_t len)
 {
   ACE_TRACE ("ACE::round_to_pagesize");
 
@@ -2563,7 +2563,7 @@ ACE::round_to_pagesize (off_t len)
 }
 
 size_t
-ACE::round_to_allocation_granularity (off_t len)
+ACE::round_to_allocation_granularity (size_t len)
 {
   ACE_TRACE ("ACE::round_to_allocation_granularity");
 

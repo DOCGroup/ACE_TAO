@@ -72,7 +72,7 @@ public:
    * wrappers we include the <acquire> method.  This is implemented as
    * a write-lock to be on the safe-side...
    */
-  int acquire (short whence = 0, off_t start = 0, off_t len = 1);
+  int acquire (short whence = 0, ACE_OFF_T start = 0, ACE_OFF_T len = 1);
 
   /**
    * Note, for interface uniformity with other synchronization
@@ -81,21 +81,21 @@ public:
    * If we "failed" because someone else already had the lock, <errno>
    * is set to <EBUSY>.
    */
-  int tryacquire (short whence = 0, off_t start = 0, off_t len = 1);
+  int tryacquire (short whence = 0, ACE_OFF_T start = 0, ACE_OFF_T len = 1);
 
   /// Unlock a readers/writer lock.
-  int release (short whence = 0, off_t start = 0, off_t len = 1);
+  int release (short whence = 0, ACE_OFF_T start = 0, ACE_OFF_T len = 1);
 
   /// Acquire a write lock, but block if any readers or a
   /// writer hold the lock.
-  int acquire_write (short whence = 0, off_t start = 0, off_t len = 1);
+  int acquire_write (short whence = 0, ACE_OFF_T start = 0, ACE_OFF_T len = 1);
 
   /**
    * Conditionally acquire a write lock (i.e., won't block).  Returns
    * -1 on failure.  If we "failed" because someone else already had
    * the lock, <errno> is set to <EBUSY>.
    */
-  int tryacquire_write (short whence = 0, off_t start = 0, off_t len = 1);
+  int tryacquire_write (short whence = 0, ACE_OFF_T start = 0, ACE_OFF_T len = 1);
 
   /**
    * Conditionally upgrade to a write lock (i.e., won't block).  Returns
@@ -103,22 +103,22 @@ public:
    * the lock, <errno> is set to <EBUSY>.
    */
   int tryacquire_write_upgrade (short whence = 0,
-                                off_t start = 0,
-                                off_t len = 1);
+                                ACE_OFF_T start = 0,
+                                ACE_OFF_T len = 1);
 
   /**
    * Acquire a read lock, but block if a writer hold the lock.
    * Returns -1 on failure.  If we "failed" because someone else
    * already had the lock, <errno> is set to <EBUSY>.
    */
-  int acquire_read (short whence = 0, off_t start = 0, off_t len = 1);
+  int acquire_read (short whence = 0, ACE_OFF_T start = 0, ACE_OFF_T len = 1);
 
   /**
    * Conditionally acquire a read lock (i.e., won't block).  Returns
    * -1 on failure.  If we "failed" because someone else already had
    * the lock, <errno> is set to <EBUSY>.
    */
-  int tryacquire_read (short whence = 0, off_t start = 0, off_t len = 1);
+  int tryacquire_read (short whence = 0, ACE_OFF_T start = 0, ACE_OFF_T len = 1);
 
   /// Get underlying ACE_HANDLE for the file.
   ACE_HANDLE get_handle (void) const;
