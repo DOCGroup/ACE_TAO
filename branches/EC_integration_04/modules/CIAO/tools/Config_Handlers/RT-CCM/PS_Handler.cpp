@@ -74,7 +74,7 @@ namespace CIAO
            i < src.policies.length ();
            ++i)
         {
-          ACE_ERROR ((LM_ERROR,
+          ACE_DEBUG ((LM_ERROR,
                       "Attempting switch for i = %d\n",
                       i));
 

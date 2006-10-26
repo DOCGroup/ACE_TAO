@@ -1,254 +1,17 @@
-Thu Oct 26 14:37:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
-
-	* DAnCE/StaticConfigurator/StaticDAnCEParser.cpp:
-	  Use ACE_OS methods, this fixes bugzilla 2691.
-          Thanks to Sowayan Abdullah <abdullah dot sowayan at lmco dot com>
-          for reporting this issue
-
-Wed Oct 25 14:54:03 UTC 2006  Boris Kolpackov  <boris@codesynthesis.com>
-
-        * CCF/CCF/IDL2/SemanticAction/Impl/Const.cpp:
-        * CCF/CCF/CIDL/SemanticAction/Composition.hpp:
-        * CCF/CCF/IDL3/SemanticAction/Impl/Uses.cpp:
-        * CCF/CCF/IDL3/SemanticAction/Impl/Provides.cpp:
-        * CCF/CCF/IDL3/SemanticAction/Component.hpp:
-        * CCF/CCF/IDL3/SemanticAction/EventType.hpp:
-        * CCF/CCF/IDL3/SemanticAction/Home.hpp:
-
-          Minor fixes and cleanups.
-
-        * CCF/CCF/IDL2/Parsing/Recovery.hpp:
-        * CCF/CCF/IDL2/Parser.hpp:
-        * CCF/CCF/IDL2/Parser.cpp:
-        * CCF/CCF/CIDL/Parser.hpp:
-        * CCF/CCF/CIDL/Parser.cpp:
-        * CCF/CCF/IDL3/Parser.hpp:
-        * CCF/CCF/IDL3/Parser.cpp:
-
-          Added syntax errors to every grammar rule.
-
-Wed Oct 25 11:02:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
-
-	* examples/Null_Component/StaticDAnCEApp.mpc:
-	  Enabled this project in all builds
-
-Mon Oct 23 19:35:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
-
-	* DAnCE/DomainApplicationManager/DomainApplicationManager_Impl.cpp:
-	  Added missing CORBA::string_dup to fix crash with BCB
-
-Fri Oct 20 06:41:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
-
-	* DAnCE/StaticConfigurator/StaticDAnCEParser.cpp:
-	  Changed the HomeAttributes generation in such a way that it
-	  also compiles with BCB6
-
-	* examples/Null_Component/*:
-	  New example, a component with just one interface. This can be used
-	  to analyze the core footprint and see what we can reduce
-          Thanks to Sowayan Abdullah <abdullah dot sowayan at lmco dot com>
-          for creating this example
-
-Thu Oct 19 23:22:49 UTC 2006  Shanshan Jiang <shanshan.jiang@vanderbilt.edu>
-
-        * DAnCE/RepositoryManager/RepositoryManager.mpc
-          Modified this file to make sure RepositoryManager project is built
-          after minizip project.
-
-Thu Oct 19 10:47:12 UTC 2006  xiong,ming  <ming.xiong@vanderbilt.edu>
-
-        * DAnCE/TargetManager/CmpClient.cpp
-        * DAnCE/tests/NodeApplicationTest/NodeApp_test_client.cpp
-        * examples/BasicSP/EC/controller.cpp
-        * examples/Display/RateGen/controller.cpp
-        * tests/Bug_2130_Regression/SEC_CheckPoint/controller.cpp
-          Changed the naked atoi () to ACE_OS::atoi (), again thanks to Abdul
-          for reporiting this.
-
-Wed Oct 18 14:00:04 UTC 2006  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
-
-        * docs/tutorials/Quoter/Simple/Distributor/Distributor.cpp
-          (parse_args): Changed the naked atoi() to ACE_OS::atoi().
-          Thanks to Abdul for reporting this.
-
-Wed Oct 18 12:05:00 UTC 2006  Simon Massey  <sma@prismtech.com>
-
-        * DAnCE/TargetManager/DomainDataManager.cpp
-          Removed warnings about unused local variables (line 186 & 558)
-
-Wed Oct 18 09:50:00 UTC 2006  Simon Massey  <sma@prismtech.com>
-
-        * DAnCE/TargetManager/CmpClient.cpp
-          Removed warning about unused local variable (line 154)
-
-Tue Oct 17 21:23:27 UTC 2006  Shanshan Jiang <shanshan.jiang@vanderbilt.edu>
-
-        * DAnCE/RepositoryManager/README
-        * DAnCE/RepositoryManager/RepositoryManager.mpc
-        * DAnCE/RepositoryManager/ZIP_Wrapper.cpp
-        * DAnCE/RepositoryManager/ZIP_Wrapper.h
-          Updated these files to use minizip under $ACE_ROOT/contrib/minizip.
-
-Tue Oct 17 13:40:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
-
-        * DAnCE/Plan_Launcher/Plan_Launcher.cpp:
-        * DAnCE/Plan_Launcher/Plan_Launcher_Impl.cpp:
-	  Several small layout changes and use ACE_ERROR for
-	  errors
-
-Tue Oct 17 13:30:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
-
-	* DAnCE/NodeApplication/RTNodeApp_Configurator.{h,cpp}:
-	  Moved destructor implementation to cpp file
-
-Tue Oct 17 13:10:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
-
-	* DAnCE/NodeManager/CIAO_Monitor.h:
-	  Doxygen improvements
-
-	* DAnCE/NodeManager/NAM_Map.{h,cpp}:
-	  Made is_available a const method
-
-	* DAnCE/NodeManager/Node_Manager.cpp:
-	  Use bool
-
-	* DAnCE/NodeManager/Node_Manager_Impl.cpp:
-          Use ACE_ERROR together with LM_ERROR
-
-Tue Oct 17 12:32:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
-
-	* DAnCE/DomainApplicationManager/Deployment_Configuration.cpp:
-	* DAnCE/NodeApplication/NodeApplication_Impl.cpp:
-	* DAnCE/NodeApplication/RTConfig_Manager.cpp:
-          Use ACE_ERROR together with LM_ERROR
-
-	* DAnCE/NodeApplication/NodeApplication_Impl.inl:
-          Initialise pointers with 0
-
-	* DAnCE/NodeApplication/Configurator_Factory.{h,cpp}:
-	* DAnCE/NodeApplication/Container_Impl.cpp:
-	* DAnCE/NodeApplication/NodeApplication_Core.cpp:
-	  Use bool and const improvements, doxygen improvements
-
-Mon Oct 16 19:52:15 UTC 2006  Shanshan Jiang <shanshan.jiang@vanderbilt.edu>
-
-        * DAnCE/Plan_Launcher/Plan_Launcher.cpp
-        * DAnCE/Plan_Launcher/Plan_Launcher_Impl.cpp
-        * DAnCE/Plan_Launcher/Plan_Launcher_Impl.h
-          Updated the re_launch_plan () function for Repoman integration.
-
-        * DAnCE/RepositoryManager/README
-        * DAnCE/RepositoryManager/RepositoryManager.cpp
-        * DAnCE/RepositoryManager/RepositoryManager.mpc
-        * DAnCE/RepositoryManager/RepositoryManager_Impl.cpp
-        * DAnCE/RepositoryManager/RepositoryManager_Impl.h
-        * examples/BasicSP/RepoMan_Usage.html
-          Fixed some warnings on Liunx.
-          Fixed the "Deamon" typos.
-
-Mon Oct 16 15:11:40 UTC 2006  Nilabja R  <nilabjar@dre.vanderbilt.edu>
-
-        * DAnCE/TargetManager/TM_Client.mpc:
-          Fixed the linking error in Mac and in FC5 Static
-
-Mon Oct 16 11:20:00 UTC 2006  Simon Massey  <sma@prismtech.com>
-
-       * DAnCE/NodeApplicationManager/NodeApplicationManager.mpc
-         BUILD CZAR. Due to the removal of
-         DAnCE/NodeApplication/NodeApp_Configurator.cpp to correct
-         the fuze error below, this "other" project's MPC needed to
-         be updated. (Why is this dependancy here?)
-
-Mon Oct 16 11:20:00 UTC 2006  Simon Massey  <sma@prismtech.com>
-
-       * DAnCE/NodeApplication/NodeApp_Configurator.cpp
-       * DAnCE/TargetManager/DomainEvents.idl
-         BUILD CZAR. Removed Fuzz errors after no user action to correct.
-
-Mon Oct 16 08:35:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
-
-        * tools/Config_Handlers/ADD_Handler.cpp:
-        * tools/Config_Handlers/DP_Handler.cpp:
-        * tools/Config_Handlers/IDREF_Base.cpp:
-        * tools/Config_Handlers/Package_Handlers/CPD_Handler.cpp:
-        * tools/Config_Handlers/RT-CCM/PS_Handler.cpp:
-        * RACE/Input_Adapters/LocationUpdater/LocationUpdater_exec.cpp
-        * RACE/Input_Adapters/PlanGenerator/PlanGenerator_exec.cpp
-        * DAnCE/RepositoryManager/
-        * DAnCE/RepositoryManager/RepositoryManager_Impl.cpp:
-          Use ACE_ERROR together with LM_ERROR
-
-        * RACE/Controller/Component/Controller.idl:
-          Changed some comments to doxygen style
-
-        * DAnCE/RepositoryManager/PC_Updater_T.cpp:
-          Const change
-
-        * DAnCE/RepositoryManager/RepositoryManager.cpp:
-          Layout changes
-
-        * DAnCE/RepositoryManager/RM_Helper.cpp:
-          Use strcmp to compare two strings and several layout changes
-
-        * DAnCE/RepositoryManager/RM_Helper.h:
-        * DAnCE/RepositoryManager/ZIP_Wrapper.h:
-          Doxygen changes
-
-        * DAnCE/RepositoryManager/RMadmin.cpp:
-          Documentation changes
-
-        * DAnCE/RepositoryManager/URL_Parser.{h,cpp}:
-          Use bool for debug_
-
-        * DAnCE/RepositoryManager/ZIP_Wrapper.cpp:
-          Initialise pointers with 0
-
-Mon Oct 16 08:35:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
-
-        * DAnCE/StaticConfigurator/StaticDAnCEApp.mpc.tmpl:
-          Simplified this file by using the new ciao_static_dnc_app base
-          project.
-
-Fri Oct 13 17:57:12 2006  John S. Kinnebrew  <john.s.kinnebrew@vanderbilt.edu>
-
-        * docs/schema/SANet_Network.xsd
-        * docs/schema/Task_Map.xsd
-
-        Added SA-POP schemas.
-
-Fri Oct 13 17:54:58 UTC 2006  Nilabja Roy  <nilabjar@dre.vanderbilt.edu>
-
-        * DAnCE/TargetManager/TargetManager.mpc:
-          Addressed the problems coming up in Mac. Changed the project
-          inheritence of the TM Component.
-
-Fri Oct 13 17:43:29 UTC 2006  Nilabja Roy  <nilabjar@dre.vanderbilt.edu>
-
-        * DAnCE/TargetManager/DomainDataManager.cpp:
-          Addressed an error in the last check-in.
-
-Thu Oct 12 17:36:58 UTC 2006  Nilabja Roy  <nilabjar@dre.vanderbilt.edu>
-
-        * DAnCE/TargetManager/CmpClient.cpp:
-        * DAnCE/TargetManager/DomainDataManager.h:
-        * DAnCE/TargetManager/DomainDataManager.cpp:
-        * DAnCE/TargetManager/DomainEvents.idl:
-        * DAnCE/TargetManager/TM_Client.mpc:
-        * DAnCE/TargetManager/TargetManager.idl:
-        * DAnCE/TargetManager/TargetManager.mpc:
-        * DAnCE/TargetManager/TargetManagerExt.idl:
-        * DAnCE/TargetManager/TargetManager_exec.h:
-        * DAnCE/TargetManager/TargetManager_exec.cpp:
-          Added the functionality to detect any add/delete to the Domain.
-          Added the feature to relay events to anyone interested for the above.
-
-        * DAnCE/TargetManager/descriptors/run_test_TargetManager.pl:
-          Changed the test script to test the above
+Fri Oct 13 16:51:49 UTC 2006  Gan Deng  <gan.deng@vanderbilt.edu>
+
+        * docs/imgs/dance_arch.jpg:
+        * docs/imgs/static_dance_arch.jpg:
+        * docs/imgs/static_dance_impl.jpg:
+        
+          Fixed corrupted files. Thanks to Sowayan Abudullah 
+          <abdullah dot sowayan at lmco dot com>
+          for reporting this.
 
 Tue Oct 10 19:13:12 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-        * DAnCE/StaticConfigurator/StaticDAnCEApp.cpp.tmpl:
-          Fixed compile error.
+	* DAnCE/StaticConfigurator/StaticDAnCEApp.cpp.tmpl:
+	  Fixed compile error.
           Thanks to Sowayan Abdullah <abdullah dot sowayan at lmco dot com>
           for reporting this.
 
@@ -260,49 +23,49 @@ Tue Oct 10 17:56:51 UTC 2006  Shanshan Jiang <shanshan.jiang@vanderbilt.edu>
 
 Tue Oct 10 14:24:12 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-        * DAnCE/ExecutionManager/Execution_Manager_Impl.cpp:
-          Layout improvements, use ACE_ERROR with LM_ERROR
+	* DAnCE/ExecutionManager/Execution_Manager_Impl.cpp:
+	  Layout improvements, use ACE_ERROR with LM_ERROR
 
-        * DAnCE/ExecutionManager/DAM_Map.cpp:
-          Const improvements
+	* DAnCE/ExecutionManager/DAM_Map.cpp:
+	  Const improvements
 
-        * DAnCE/NodeApplicationManager/Containers_Info_Map.h:
-          Layout changes
+	* DAnCE/NodeApplicationManager/Containers_Info_Map.h:
+	  Layout changes
 
-        * DAnCE/NodeApplicationManager/Containers_Info_Map.cpp:
-        * DAnCE/NodeApplicationManager/NodeApplicationManager_Impl.cpp:
-          Use ACE_ERROR with LM_ERROR
+	* DAnCE/NodeApplicationManager/Containers_Info_Map.cpp:
+	* DAnCE/NodeApplicationManager/NodeApplicationManager_Impl.cpp:
+	  Use ACE_ERROR with LM_ERROR
 
-        * DAnCE/NodeApplicationManager/ImplementationInfo.h:
-          Documentation improvements
+	* DAnCE/NodeApplicationManager/ImplementationInfo.h:
+	  Documentation improvements
 
-        * DAnCE/NodeApplicationManager/ImplementationInfo.cpp:
-          Const improvements
+	* DAnCE/NodeApplicationManager/ImplementationInfo.cpp:
+	  Const improvements
 
-        * DAnCE/NodeApplicationManager/HTTP_Handler.cpp:
-          Const improvements
+	* DAnCE/NodeApplicationManager/HTTP_Handler.cpp:
+	  Const improvements
 
 Tue Oct 10 09:28:12 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-        * ciao/CCM_Base.idl:
-          Removed a remark about RTF 1.1, method is now according to the spec
+	* ciao/CCM_Base.idl:
+	  Removed a remark about RTF 1.1, method is now according to the spec
 
-        * ciao/CCM_Component.idl:
-        * ciao/CCM_Container.idl:
-        * ciao/CCM_Event.idl:
-        * ciao/Deployment.idl:
-        * ciao/Target_Data.idl
-          Updated some documentation and added some todos about things which
-          are CIAO specific
+	* ciao/CCM_Component.idl:
+	* ciao/CCM_Container.idl:
+	* ciao/CCM_Event.idl:
+	* ciao/Deployment.idl:
+	* ciao/Target_Data.idl
+	  Updated some documentation and added some todos about things which
+	  are CIAO specific
 
-        * ciao/Server_init.cpp:
-          With LM_ERROR use ACE_ERROR
+	* ciao/Server_init.cpp:
+	  With LM_ERROR use ACE_ERROR
 
-        * ciao/Dynamic_Component_Activator.{h,cpp}:
-          Removed some invalid comments and a mutex that was not used at all
+	* ciao/Dynamic_Component_Activator.{h,cpp}:
+	  Removed some invalid comments and a mutex that was not used at all
 
-        * ciao/Context_Impl_Base.h:
-          Documentation update
+	* ciao/Context_Impl_Base.h:
+	  Documentation update
 
 Thu Oct 05 00:35:37 2006  William R. Otte  wotte@dre.vanderbilt.edu
 
@@ -920,21 +683,21 @@ Thu Jul 20 22:03:31 UTC 2006  Nanbor Wang  <nanbor (at) txcorp (dot) com>
 Thu Jul 20 01:10:58 UTC 2006  Vipul Singh  <vipuls@dre.vanderbilt.edu>
 
         * DAnCE/RepositoryManager/PC_Updater.cpp: Removed the variable name
-          from the arguments in function definition in empty functions to
-          fix warnings.
+	  from the arguments in function definition in empty functions to
+	  fix warnings.
 
         * DAnCE/RepositoryManager/RepositoryManager_Impl.h: Changed declaration
-          at a few places from const static to static const to fix a few
-          warnings, also removed an unnecessarily defined namespace.
+	  at a few places from const static to static const to fix a few
+	  warnings, also removed an unnecessarily defined namespace.
 
         * DAnCE/RepositoryManager/RepositoryManager_Impl.cpp: Made a few
-          changes to fix the warnings and to keep the code in sync with
-          the changes made to RepositoryManager_Impl.h. Fixed code which
-          passed non POD types to a varargs function(ACE_DEBUG) which
-          resulted in aborts at runtime.
+	  changes to fix the warnings and to keep the code in sync with
+	  the changes made to RepositoryManager_Impl.h. Fixed code which
+	  passed non POD types to a varargs function(ACE_DEBUG) which
+	  resulted in aborts at runtime.
 
         * DAnCE/RepositoryManager/URL_Parser.cpp: Assigned value to ptr before
-          if condition to fix a few warnings.
+	  if condition to fix a few warnings.
 
 Wed Jul 19 08:00:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
