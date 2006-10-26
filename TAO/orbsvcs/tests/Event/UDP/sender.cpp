@@ -267,7 +267,7 @@ main (int argc, char* argv[])
       // **************** THAT COMPLETES THE CLEANUP CODE
 
       ACE_DEBUG ((LM_DEBUG,
-                  "MCast example ready\n"));
+                  "UDP sender ready\n"));
     }
   ACE_CATCHANY
     {
