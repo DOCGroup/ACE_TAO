@@ -92,7 +92,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
   Deployment::ContainerImplementationInfos& impl_infos = node_impl_info[0].impl_infos;
 
-  FILE* fp = fopen ("plan.h", "w");
+  FILE* fp = ACE_OS::fopen ("plan.h", "w");
 
   CORBA::ULong i,j,num_containers,num_components;
   num_containers = impl_infos.length ();
@@ -156,7 +156,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     }
   ACE_OS::fprintf (fp, "};\n\n");
 
-  fclose (fp);
+  ACE_OS::fclose (fp);
 
   return 0;
 }
