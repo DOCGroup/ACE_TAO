@@ -13,15 +13,14 @@
 #include "ciao/CIAO_common.h"
 
 const char *ior_file_name_ = "nodedaemon.ior";
-char *default_svcconf_ = 0;
-char *svcconf_config_ = 0;
 char *nodeapp_location_ = 0;
-const char *nodeapp_options_ = 0;
 const char *pid_file_name_ = 0;
-bool write_to_ior_ = false;
-bool register_with_ns_ = false;
+int write_to_ior_ = 0;
+int register_with_ns_ = 0;
 int nodeapp_loc_ = 0;
 int spawn_delay = 1;
+
+ACE_CString nodeapp_options_;
 
 int
 parse_args (int argc, char *argv[])
@@ -34,20 +33,18 @@ parse_args (int argc, char *argv[])
       switch (c)
         {
           case 'z':
-            nodeapp_options_ = "-ORBDebugLevel 10";
+            nodeapp_options_ += " -ORBDebugLevel ";
+            nodeapp_options_ += get_opts.opt_arg ();
             break;
 
           case 'o':  // Get the file name to write to.
             ior_file_name_ = get_opts.opt_arg ();
-            write_to_ior_ = true;
+            write_to_ior_ = 1;
             break;
 
           case 'c':  // Get the default svc.conf filename.
-            default_svcconf_ = get_opts.opt_arg ();
-            break;
-
-          case 'm':  // Get the svc.conf map configuration filename.
-            svcconf_config_ = get_opts.opt_arg ();
+            nodeapp_options_ += " -ORBSvcConf ";
+            nodeapp_options_ += get_opts.opt_arg ();
             break;
 
           case 's': // Get the location to spawn the NodeApplication.
@@ -64,7 +61,7 @@ parse_args (int argc, char *argv[])
             break;
 
           case 'n':
-            register_with_ns_ = true;
+            register_with_ns_ = 1;
             break;
 
           case 'p':
@@ -221,7 +218,7 @@ main (int argc, char *argv[])
                                              orb.in (),
                                              poa.in (),
                                              nodeapp_location_,
-                                             nodeapp_options_,
+                                             nodeapp_options_.c_str (),
                                              spawn_delay),
                       -1);
 
