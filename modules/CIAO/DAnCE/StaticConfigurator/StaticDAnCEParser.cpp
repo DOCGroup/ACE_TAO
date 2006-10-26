@@ -92,7 +92,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
   Deployment::ContainerImplementationInfos& impl_infos = node_impl_info[0].impl_infos;
 
-  FILE* fp = ACE_OS::fopen ("plan.h", "w");
+  FILE* fp = fopen ("plan.h", "w");
 
   CORBA::ULong i,j,num_containers,num_components;
   num_containers = impl_infos.length ();
@@ -126,15 +126,15 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
   ACE_OS::fprintf (fp, "struct HomeAttributes\n");
   ACE_OS::fprintf (fp, "{\n");
-  ACE_OS::fprintf (fp, "  char const * component_instance_name_;\n");
+  ACE_OS::fprintf (fp, "  ACE_TString component_instance_name_;\n");
   ACE_OS::fprintf (fp, "  /// Specify the entrypoint to component executor DLL.\n");
-  ACE_OS::fprintf (fp, "  char const * executor_entrypt_;\n");
+  ACE_OS::fprintf (fp, "  ACE_TString executor_entrypt_;\n");
   ACE_OS::fprintf (fp, "  ::CIAO::HomeFactory executor_fptr_;\n");
   ACE_OS::fprintf (fp, "  /// Specify the entrypoint to component servant DLL.\n");
-  ACE_OS::fprintf (fp, "  char const * servant_entrypt_;\n");
+  ACE_OS::fprintf (fp, "  ACE_TString servant_entrypt_;\n");
   ACE_OS::fprintf (fp, "  ::CIAO::ServantFactory servant_fptr_;\n");
   ACE_OS::fprintf (fp, "};\n");
-  ACE_OS::fprintf (fp, "/// Homes\n");
+  ACE_OS::fprintf (fp, "//Homes\n");
   ACE_OS::fprintf (fp, "HomeAttributes homes_table[]= \n");
   ACE_OS::fprintf (fp, "{\n");
 
@@ -156,7 +156,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     }
   ACE_OS::fprintf (fp, "};\n\n");
 
-  ACE_OS::fclose (fp);
+  fclose (fp);
 
   return 0;
 }
