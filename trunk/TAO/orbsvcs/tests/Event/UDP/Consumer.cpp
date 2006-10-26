@@ -119,7 +119,7 @@ Consumer::push (const RtecEventComm::EventSet& events
         }
       else
         {
-          char* mystring = 0;
+          const char* mystring = 0;
           if (events[i].data.any_value >>= mystring)
             {
               ACE_DEBUG ((LM_DEBUG, "Consumer (%P|%t): Received message <%d>: %s\n",
