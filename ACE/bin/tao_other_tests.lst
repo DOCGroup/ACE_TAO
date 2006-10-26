@@ -87,6 +87,7 @@ TAO/orbsvcs/tests/Redundant_Naming/run_test.pl: !ST !SUNCC5_1 !MINIMUM !ACE_FOR_
 TAO/orbsvcs/tests/Trading/run_test.pl: !MINIMUM !SUNCC5_1
 TAO/orbsvcs/tests/Event/Basic/run_test.pl: !ST !MINIMUM !ACE_FOR_TAO
 TAO/orbsvcs/tests/Event/Performance/run_test.pl: !ST !MINIMUM !ACE_FOR_TAO
+TAO/orbsvcs/tests/Event/UDP/run_test.pl: !MINIMUM !ACE_FOR_TAO !NO_DIOP
 TAO/orbsvcs/tests/EC_Custom_Marshal/run_test.pl: !ST !MINIMUM !ACE_FOR_TAO !DISABLE_ToFix_LynxOS_x86
 TAO/orbsvcs/tests/EC_Throughput/run_test.pl: !ST !MINIMUM !DISABLE_ToFix_LynxOS_x86 !ACE_FOR_TAO
 TAO/orbsvcs/tests/EC_MT_Mcast/run_test.pl:!ST !MINIMUM !ACE_FOR_TAO
