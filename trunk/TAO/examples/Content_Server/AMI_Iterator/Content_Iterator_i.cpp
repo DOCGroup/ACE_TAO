@@ -36,12 +36,12 @@ Content_Iterator_i::next_chunk (CORBA::ULongLong offset,
   if (offset >= this->file_size_)
     return false;  // Applications shouldn't throw system exceptions.
 
-  off_t real_offset =
+  ACE_OFF_T real_offset =
     ACE_OS::lseek (this->file_io_.get_handle (),
                    offset,
                    SEEK_SET);
 
-  if (real_offset == (off_t) -1)
+  if (real_offset == static_cast<ACE_OFF_T> (-1))
     // Invalid supplied offset?
     ACE_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT ("%p\n"),
