@@ -1,0 +1,57 @@
+// $Id$
+
+Goals:
+------
+The goal of this test is to verify that federation of Event Channels
+using multicast works correctly.  Unlike "Simple" and "Complex" tests,
+this test can have any number of Event Channels participating in the
+federation, and each participating Event Channel has a full duplex
+multicast communication, i.e., both sends and receives events via multicast.
+
+Description:
+------------
+There are two executables: federation-enabled Event Channel an
+application, which acts both as EC consumer and supplier.  Any number
+of EC/application executable pairs can be started for running the test.
+
+Each application subscribes with its EC for heartbeat events, and,
+while listening, also pushes (at regular intervals) 50 heartbeat
+events to its EC.  Each heartbeat event contains info identifying its
+source (hostname + process id).  Applications keep track of all the heartbeat
+events they receive, and print out the summary before shutting down.
+
+Command-line Options:
+---------------------
+Application: $application -ORBInitRef Event_Service=<ior> [-d]
+where
+-d indicates that the application will destroy its Event Channel
+   before exiting.  If each application has its own private Event
+   Channel, each should use this flag, to have all executables terminate
+   automatically.  If more than one application is using the same
+   Event Channel, then only one of those applications should use "-d"
+   option.
+
+Mcast-equipped EC: $gateway_ec -ORBsvcconf <conf_file> -i <ior_file>
+where
+<ior_file> is the name of the file to which the ior of the Event
+           Channel will be printed
+<conf_file> is a service conf file used to configure the Event Channel
+            and the multicast components.  See consumer-ec.conf or
+            supplier-ec.conf for examples, or
+            $TAO_ROOT/orbsvcs/orbsvcs/Event/ECG_Mcast_Gateway.h for
+            all valid multicast configuration options.
+
+To run:
+-------
+Automagically (runs three EC/application pairs):
+$ run_test.pl
+
+Manually:
+As many times as desired (using a different ior file name each time) do
+$gateway-ec -ORBsvcconf gateway.conf -i ec.ior
+$application -ORBInitRef Event_Service=file://ec.ior -d
+
+
+
+
+

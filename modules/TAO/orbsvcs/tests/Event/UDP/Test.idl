@@ -1,0 +1,11 @@
+//$Id$:
+
+#ifndef TAO_RTEC_MCAST_TEST_IDL
+#define TAO_RTEC_MCAST_TEST_IDL
+
+valuetype ValueTypeData
+{
+  public string data;
+};
+
+#endif /* TAO_RTEC_MCAST_TEST_IDL */
