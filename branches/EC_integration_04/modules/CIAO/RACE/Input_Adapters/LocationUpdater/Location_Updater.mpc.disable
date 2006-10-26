@@ -1,0 +1,119 @@
+// generate_component_mpc.pl
+//LocationUpdater.mpc, spaunov Exp
+//Author: Stoyan Paunov
+// $Id$
+
+
+project(LocationUpdater_stub): ciao_deployment_stub, ciao_race_component {
+  after += Input_Adapter_stub
+  sharedname = LocationUpdater_stub
+  idlflags += -Sc \
+              -Wb,stub_export_macro=LOCATIONUPDATER_STUB_Export \
+              -Wb,stub_export_include=LocationUpdater_stub_export.h \
+              -Wb,skel_export_macro=LOCATIONUPDATER_SVNT_Export \
+              -Wb,skel_export_include=LocationUpdater_svnt_export.h
+  dynamicflags   = LOCATIONUPDATER_STUB_BUILD_DLL
+  libs += Input_Adapter_stub \
+          Plan_Analyzer_Interface_stub
+
+  IDL_Files {
+    LocationUpdater.idl
+  }
+
+  Source_Files {
+    LocationUpdaterC.cpp
+  }
+
+  Header_Files {
+    LocationUpdaterC.h
+  }
+
+  Inline_Files {
+    LocationUpdaterC.inl
+  }
+}
+
+project(LocationUpdater_svnt) : ciao_servant_dnc, ciao_race_component {
+  after += LocationUpdater_stub \
+           Input_Adapter_svnt
+  sharedname  = LocationUpdater_svnt
+  libs    += LocationUpdater_stub \
+             Input_Adapter_stub \
+             Input_Adapter_svnt \
+             Plan_Analyzer_Interface_stub
+
+  idlflags  +=  -Sc \
+                -Wb,export_macro=LOCATIONUPDATER_SVNT_Export \
+                -Wb,export_include=LocationUpdater_svnt_export.h
+
+  dynamicflags = LOCATIONUPDATER_SVNT_BUILD_DLL
+
+  CIDL_Files {
+    LocationUpdater.cidl
+  }
+
+  IDL_Files {
+    LocationUpdaterE.idl
+  }
+
+  Source_Files {
+    LocationUpdaterEC.cpp
+    LocationUpdaterS.cpp
+    LocationUpdater_svnt.cpp
+  }
+
+  Header_Files {
+    LocationUpdaterEC.h
+    LocationUpdaterS.h
+    LocationUpdater_svnt.h
+  }
+
+  Inline_Files {
+    LocationUpdaterEC.inl
+    LocationUpdaterS.inl
+    LocationUpdater_svnt.inl
+  }
+}
+
+
+project(LocationUpdater_exec) : ciao_component_dnc, ciao_config_handlers, ciao_race_component {
+  after   += LocationUpdater_svnt XSC_Config_Handlers
+  sharedname = LocationUpdater_exec
+  libs    += LocationUpdater_stub \
+             LocationUpdater_svnt \
+             Input_Adapter_stub \
+             Input_Adapter_svnt \
+             Plan_Analyzer_Interface_stub \
+  
+  idlflags  +=  -Sc \
+                -Wb,export_macro=LOCATIONUPDATER_EXEC_Export \
+                -Wb,export_include=LocationUpdater_exec_export.h
+  dynamicflags   = LOCATIONUPDATER_EXEC_BUILD_DLL
+
+  requires += RepositoryManager
+  after += RepositoryManager
+  includes += $(CIAO_ROOT)/DAnCE/RepositoryManager
+
+  IDL_Files {
+    
+  }
+
+  Source_Files {
+    LocationUpdater_exec.cpp
+    PCVisitorBase.cpp
+    PlanUpdater.cpp
+    $(CIAO_ROOT)/DAnCE/RepositoryManager/RepositoryManagerDaemonC.cpp
+  }
+}
+
+project(LocationUpdater_Injector) : ciao_component_dnc, ciao_race_component, taoexe {
+   exename = injector
+
+   libs += LocationUpdater_stub
+
+   IDL_Files {
+   }
+   Source_Files {
+      Injector.cpp
+   }
+}
