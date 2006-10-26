@@ -1806,7 +1806,7 @@ TAO_GIOP_Message_Base::parse_request_id (const TAO_Queued_Data *qd,
                           qd->minor_version_,
                           this->orb_core_);
 
-  if (qd->major_version_ >= 1 &&
+  if (qd->major_version_ == 1 &&
       (qd->minor_version_ == 0 || qd->minor_version_ == 1))
     {
       if (qd->msg_type_ == TAO_PLUGGABLE_MESSAGE_REQUEST ||
