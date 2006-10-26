@@ -1,3 +1,9 @@
+Thu Oct 26 07:48:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Truncate.h:
+	  Added partial specialization for when types are the same, fixes compile
+	  problems in the ACE lib with Borland
+
 Thu Oct 26 07:01:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 	* ace/config-vxworks5.x.h:
