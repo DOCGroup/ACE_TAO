@@ -4,6 +4,8 @@
 #include "orbsvcs/RtecEventChannelAdminS.h"
 #include "orbsvcs/Event_Service_Constants.h"
 
+#include "TestC.h"
+
 ACE_RCSID (EC_Examples,
            Consumer,
            "$Id$")
@@ -88,6 +90,21 @@ Consumer::push (const RtecEventComm::EventSet& events
     }
 
   this->event_count_ += events.length ();
+
+  for (size_t i = 0; i < events.length (); ++i)
+    {
+      ValueTypeData * test_data = 0;
+      if (events[i].data.any_value >>= test_data)
+        {
+          ACE_ERROR ((LM_ERROR, "Consumer (%P|%t): Received a message: %s\n",
+                      test_data->data ()));
+        }
+      else
+        {
+          ACE_ERROR ((LM_ERROR, "Consumer (%P|%t): failed to extract valuetype data\n"));
+        }
+    }
+
   if (this->event_count_ % 100 == 0)
     {
       ACE_DEBUG ((LM_DEBUG,
