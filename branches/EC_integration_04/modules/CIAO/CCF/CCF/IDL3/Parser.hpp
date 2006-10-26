@@ -48,6 +48,7 @@ namespace CCF
       // component
       //
       Rule component_decl;
+      Rule component_def_trailer;
       Rule component_inheritance_spec;
       Rule component_support_spec;
       Rule component_body;
@@ -64,6 +65,7 @@ namespace CCF
       Rule concrete_event_type_decl;
       Rule event_type_inheritance_spec;
       Rule event_type_supports_spec;
+      Rule event_type_def_trailer;
       Rule event_type_body;
 
       Rule event_type_factory_decl;
@@ -74,8 +76,10 @@ namespace CCF
       // home
       //
       Rule home_decl;
+      Rule home_header;
       Rule home_inheritance_spec;
       Rule home_support_spec;
+      Rule home_manage_spec;
       Rule home_body;
 
       Rule home_factory_decl;
