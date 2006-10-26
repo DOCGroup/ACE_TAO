@@ -2,4 +2,7 @@
 // $Id$
 
 project : orbsvcsexe, rtevent_serv, rtsched {
+  IDL_Files {
+    Test.idl
+  }
 }

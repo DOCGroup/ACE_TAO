@@ -4,6 +4,8 @@
 #include "orbsvcs/RtecEventChannelAdminS.h"
 #include "orbsvcs/Event_Service_Constants.h"
 
+#include "TestC.h"
+
 ACE_RCSID (EC_Examples,
            Supplier,
            "$Id$")
@@ -76,6 +78,11 @@ Supplier::perform_push (ACE_ENV_SINGLE_ARG_DECL)
       event[0].header.source = 1;
       // Avoid loops throught the event channel federations
       event[0].header.ttl    = 1;
+
+      OBV_ValueTypeData * test_data;
+      ACE_NEW (test_data, OBV_ValueTypeData ());
+      test_data->data ("This is a test message");
+      event[0].data.any_value <<= test_data;
 
       this->proxy_->push (event ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
