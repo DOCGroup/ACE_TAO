@@ -1,3 +1,12 @@
+Thu Oct 27 02:53:53 UTC 2006  Ossama Othman  <ossama_othman at symantec dot com>
+
+        * tao/GIOP_Message_Base.cpp (parse_request_id):
+
+          Corrected GIOP version check so that the GIOP 1.{0,1} case
+          doesn't apply to all major versions greater than or equal to
+          one, i.e. {1,2,3,...,N}.{0,1}.  The case in question is only
+          meant for GIOP 1.0 or 1.1.
+
 Thu Oct 27 01:59:19 UTC 2006  Ossama Othman  <ossama_othman at symantec dot com>
 
         * tao/GIOP_Message_Base.cpp (parse_request_id):
