@@ -1,3 +1,55 @@
+Thu Oct 27 01:59:19 UTC 2006  Ossama Othman  <ossama_othman at symantec dot com>
+
+        * tao/GIOP_Message_Base.cpp (parse_request_id):
+
+          Simplified error return logic.  Addresses "code not reached"
+          warning.
+
+        * tao/ORB.cpp (ORB_init):
+
+          Do not pass down the default CORBA::Environment from TSS in the
+          native C++ exception case.  Simply pass a locally instantiated
+          CORBA::Environment.  Removes an unnecessary TSS access.
+
+        * tao/EndpointPolicy/Endpoint_Acceptor_Filter.h:
+
+          Moved TAO_POA_Manager forward declaration into the versioned
+          namespace.
+
+        * tao/PortableServer/Servant_var.h:
+
+          Removed suggestion of adding an exception specification.
+          They've fallen out of favor by most C++ gurus.
+
+        * tao/Strategies/advanced_resource.cpp:
+        * tao/Strategies/advanced_resource.h:
+
+          Added support ACE_Dev_Poll_Reactor.
+
+        * tao/ValueBase.cpp (_tao_write_value_header):
+
+          Fixed Coverity DEADCODE error.
+
+        From Russell Mora <russell_mora at symantec dot com>
+        * examples/Content_Server/AMI_Iterator/Content_Iterator_i.cpp:
+        * examples/Content_Server/SMI_Iterator/Content_Iterator_i.cpp:
+        * tao/Strategies/SHMIOP_Acceptor.cpp:
+        * tao/Strategies/SHMIOP_Acceptor.h:
+        * tao/Strategies/SHMIOP_Factory.h:
+
+          Added support for 64-bit file offsets.
+
+        From Duane Binder <duane_binder at symantec dot com>
+        * TAO_IDL/be/be_helper.cpp:
+
+          Buffer I/O by removing fflush() calls.  Greatly improves tao_idl
+          performance, particularly over networked filesystems.
+
+        * TAO_IDL/be/be_interface.cpp (gen_gperf_lookup_methods):
+
+          Flush the output stream. Gperf also uses it as output.  Ensure
+          current contents are written before gperf writes.
+
 Thu Oct 26 14:20:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 	* orbsvcs/tests/Event/UDP/receiver.cpp:
