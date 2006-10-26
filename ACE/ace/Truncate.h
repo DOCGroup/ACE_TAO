@@ -289,7 +289,7 @@ namespace ACE_Utils
   struct Fast_Comparator
   {
     ACE_STATIC_CONSTANT (
-      bool, 
+      bool,
       USE_LEFT  = ((sizeof (LEFT) > sizeof (RIGHT)
                     && (Sign_Check<LEFT>::is_signed == 1
                         || Sign_Check<RIGHT>::is_signed == 0))
@@ -412,7 +412,7 @@ namespace ACE_Utils
     /// the value is larger than the maximum of value of type @c TO.
     TO operator() (FROM val)
     {
-      return 
+      return
         (comparator::greater_than (val, ACE_Numeric_Limits<TO>::max ())
          ? ACE_Numeric_Limits<TO>::max ()
          : static_cast<TO> (val));
@@ -491,17 +491,6 @@ namespace ACE_Utils
 
   template<typename FROM, typename TO> struct Truncator;
 
-  // Partial specialization for the case where the types are the same.
-  // No truncation is necessary.
-//   template<typename T>
-//   struct Truncator<T, T>
-//   {
-//     T operator() (T val)
-//     {
-//       return val;
-//     }
-//   };
-
   //----------------------------------------------------------
   // sizeof(FROM) >  sizeof(TO)
   //----------------------------------------------------------
@@ -511,7 +500,7 @@ namespace ACE_Utils
   {
     ACE_INT8 operator() (ACE_INT32 val)
     {
-      return 
+      return
         (val > ACE_Numeric_Limits<ACE_INT8>::max ()
          ? ACE_Numeric_Limits<ACE_INT8>::max ()
          : static_cast<ACE_INT8> (val));
@@ -523,7 +512,7 @@ namespace ACE_Utils
   {
     ACE_UINT8 operator() (ACE_UINT32 val)
     {
-      return 
+      return
         (val > static_cast<ACE_UINT32> (ACE_Numeric_Limits<ACE_UINT8>::max ())
          ? ACE_Numeric_Limits<ACE_UINT8>::max ()
          : static_cast<ACE_UINT8> (val));
@@ -535,7 +524,7 @@ namespace ACE_Utils
   {
     ACE_UINT8 operator() (ACE_INT32 val)
     {
-      return 
+      return
         (val > static_cast<ACE_INT32> (ACE_Numeric_Limits<ACE_UINT8>::max ())
          ? ACE_Numeric_Limits<ACE_UINT8>::max ()
          : static_cast<ACE_UINT8> (val));
@@ -547,7 +536,7 @@ namespace ACE_Utils
   {
     ACE_INT8 operator() (ACE_UINT32 val)
     {
-      return 
+      return
         (val > static_cast<ACE_UINT32> (ACE_Numeric_Limits<ACE_INT8>::max ())
          ? ACE_Numeric_Limits<ACE_INT8>::max ()
          : static_cast<ACE_INT8> (val));
@@ -559,7 +548,7 @@ namespace ACE_Utils
   {
     ACE_INT32 operator() (ACE_INT64 val)
     {
-      return 
+      return
         (val > ACE_Numeric_Limits<ACE_INT32>::max ()
          ? ACE_Numeric_Limits<ACE_INT32>::max ()
          : static_cast<ACE_INT32> (val));
@@ -571,7 +560,7 @@ namespace ACE_Utils
   {
     ACE_UINT32 operator() (ACE_INT64 val)
     {
-      return 
+      return
         (val > static_cast<ACE_INT64> (ACE_Numeric_Limits<ACE_UINT32>::max ())
          ? ACE_Numeric_Limits<ACE_UINT32>::max ()
          : static_cast<ACE_UINT32> (val));
@@ -583,7 +572,7 @@ namespace ACE_Utils
   {
     ACE_UINT32 operator() (ACE_UINT64 val)
     {
-      return 
+      return
         (val > static_cast<ACE_UINT64> (ACE_Numeric_Limits<ACE_UINT32>::max ())
          ? ACE_Numeric_Limits<ACE_UINT32>::max ()
          : static_cast<ACE_UINT32> (val));
@@ -595,7 +584,7 @@ namespace ACE_Utils
   {
     ACE_INT32 operator() (ACE_UINT64 val)
     {
-      return 
+      return
         (val > static_cast<ACE_UINT64> (ACE_Numeric_Limits<ACE_INT32>::max ())
          ? ACE_Numeric_Limits<ACE_INT32>::max ()
          : static_cast<ACE_INT32> (val));
@@ -620,7 +609,7 @@ namespace ACE_Utils
   {
     ACE_INT32 operator() (ACE_UINT32 val)
     {
-      return 
+      return
         (val > static_cast<ACE_UINT32> (ACE_Numeric_Limits<ACE_INT32>::max ())
          ? ACE_Numeric_Limits<ACE_INT32>::max ()
          : static_cast<ACE_INT32> (val));
@@ -641,7 +630,7 @@ namespace ACE_Utils
   {
     ACE_INT64 operator() (ACE_UINT64 val)
     {
-      return 
+      return
         (val > static_cast<ACE_UINT64> (ACE_Numeric_Limits<ACE_INT64>::max ())
          ? ACE_Numeric_Limits<ACE_INT64>::max ()
          : static_cast<ACE_INT64> (val));
@@ -721,6 +710,17 @@ namespace ACE_Utils
     ACE_INT64 operator() (ACE_UINT32 val)
     {
       return static_cast<ACE_INT64> (val);
+    }
+  };
+
+  // Partial specialization for the case where the types are the same.
+  // No truncation is necessary.
+  template<typename T>
+  struct ACE_Export Truncator<T, T>
+  {
+    T operator() (T val)
+    {
+      return val;
     }
   };
 
