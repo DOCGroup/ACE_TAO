@@ -1,3 +1,10 @@
+Thu Oct 26 24:44:55 UTC 2006  Ossama Othman  <ossama_othman at symantec dot com>
+
+        * ace/Truncate.h (Truncator):
+
+          Removed ACE_Export macros in the Borland case.  They shouldn't
+          be necessary.
+
 Thu Oct 26 14:05:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/tao_other_tests.lst:
@@ -18,8 +25,9 @@ Thu Oct 26 10:29:49 UTC 2006  Olli Savia  <ops@iki.fi>
 Thu Oct 26 07:48:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Truncate.h:
-          Added partial specialization for when types are the same, fixes compile
-          problems in the ACE lib with Borland
+
+          Added partial specialization for when types are the same, fixes
+          compile problems in the ACE lib with Borland
 
 Thu Oct 26 07:01:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
