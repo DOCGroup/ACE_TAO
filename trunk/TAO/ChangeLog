@@ -1,3 +1,11 @@
+Thu Oct 26 14:20:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+	* orbsvcs/tests/Event/UDP/receiver.cpp:
+	  Register the value factory
+
+	* orbsvcs/tests/Event/UDP/run_test.pl:
+	  Also run the test with a valuetype in the event.
+
 Thu Oct 26 13:30:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 	* orbsvcs/orbsvcs/Event/ECG_CDR_Message_Receiver.cpp:
