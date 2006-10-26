@@ -1,6 +1,0 @@
-// $Id$
-
-#include "TestType.idl"
-
-typedef Array_Typedef Typedef_Of_Imported_Array_Typedef;
-
