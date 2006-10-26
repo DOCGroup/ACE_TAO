@@ -29,12 +29,6 @@ namespace CCF
         begin (SimpleIdentifierPtr const& id, Category::Value category) = 0;
 
         virtual void
-        open_scope () = 0;
-
-        virtual void
-        close_scope () = 0;
-
-        virtual void
         end () = 0;
       };
     }

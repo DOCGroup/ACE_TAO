@@ -213,16 +213,6 @@ namespace CCF
               new RecoveryDescriptor (d, recovery, diagnostic)));
         }
 
-        AssertionImpl
-        operator () (std::string d,
-                     DiagnosticType::Value diagnostic)
-        {
-          return AssertionImpl (
-            RecoveryDescriptorPtr (
-              new RecoveryDescriptor (
-                d, RecoveryMethod::STANDARD, diagnostic)));
-        }
-
         template<typename Object>
         AssertionImpl
         operator () (std::string d,
@@ -235,19 +225,6 @@ namespace CCF
             RecoveryDescriptorPtr (
               new RecoveryDescriptor (
                 d, recovery, diagnostic, obj, action_one)));
-        }
-
-        template<typename Object>
-        AssertionImpl
-        operator () (std::string d,
-                     Object& obj,
-                     void (Object::*action_one)(),
-                     DiagnosticType::Value diagnostic)
-        {
-          return AssertionImpl (
-            RecoveryDescriptorPtr (
-              new RecoveryDescriptor (
-                d, RecoveryMethod::STANDARD, diagnostic, obj, action_one)));
         }
 
         template<typename Object>
@@ -275,20 +252,6 @@ namespace CCF
             RecoveryDescriptorPtr (
               new RecoveryDescriptor (
                 d, recovery, diagnostic, obj, action_one, action_two)));
-        }
-
-        template<typename Object>
-        AssertionImpl
-        operator () (std::string d,
-                     Object& obj,
-                     void (Object::*action_one)(),
-                     void (Object::*action_two)(),
-                     DiagnosticType::Value diagnostic)
-        {
-          return AssertionImpl (
-            RecoveryDescriptorPtr (
-              new RecoveryDescriptor (
-                d, RecoveryMethod::STANDARD, diagnostic, obj, action_one, action_two)));
         }
 
 

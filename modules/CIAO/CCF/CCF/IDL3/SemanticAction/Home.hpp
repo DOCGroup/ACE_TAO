@@ -28,12 +28,6 @@ namespace CCF
         manages (IdentifierPtr const& id) = 0;
 
         virtual void
-        open_scope () = 0;
-
-        virtual void
-        close_scope () = 0;
-
-        virtual void
         end () = 0;
       };
     }
