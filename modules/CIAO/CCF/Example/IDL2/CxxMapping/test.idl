@@ -1,0 +1,12 @@
+// file      : Example/IDL2/CxxMapping/test.idl
+// author    : Boris Kolpackov <boris@dre.vanderbilt.edu>
+// cvs-id    : $Id$
+
+module M
+{
+  interface I
+  {
+    long foo (in string s, inout boolean b, out long l);
+    void bar ();
+  };
+};

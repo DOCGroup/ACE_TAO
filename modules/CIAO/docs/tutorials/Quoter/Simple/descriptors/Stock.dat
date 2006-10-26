@@ -1,0 +1,3 @@
+DistributorNode corbaloc:iiop:localhost:30000/NodeManager
+BrokerNode      corbaloc:iiop:localhost:40000/NodeManager
+
