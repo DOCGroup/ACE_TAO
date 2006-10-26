@@ -1,3 +1,9 @@
+Thu Oct 26 11:19:45 UTC 2006  Olli Savia  <ops@iki.fi>
+
+        * ace/config-lynxos.h:
+          Added include "ace/config-posix.h" and removed defines
+          that are already defined by config-posix.h.
+
 Thu Oct 26 10:29:49 UTC 2006  Olli Savia  <ops@iki.fi>
 
         * ace/config-posix.h:
