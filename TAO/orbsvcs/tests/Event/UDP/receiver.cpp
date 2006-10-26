@@ -7,7 +7,6 @@
 #include "orbsvcs/Event/EC_Event_Channel.h"
 #include "orbsvcs/Event/EC_Default_Factory.h"
 #include "orbsvcs/Event/ECG_Mcast_EH.h"
-#include "orbsvcs/Event/ECG_UDP_Sender.h"
 #include "orbsvcs/Event/ECG_UDP_Receiver.h"
 #include "orbsvcs/Event/ECG_UDP_Out_Endpoint.h"
 #include "tao/ORB_Core.h"
@@ -133,7 +132,7 @@ main (int argc, char* argv[])
       // convert that into the right IDL structure:
       ACE_INET_Addr udp_addr (udp_mcast_address);
       ACE_DEBUG ((LM_DEBUG,
-                  "Multicast address is: %s\n",
+                  "udp mcast address is: %s\n",
                   udp_mcast_address));
       RtecUDPAdmin::UDP_Addr addr;
       addr.ipaddr = udp_addr.get_ip_address ();
@@ -145,22 +144,7 @@ main (int argc, char* argv[])
         as_impl._this (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      // We need a local socket to send the data, open it and check
-      // that everything is OK:
       TAO_ECG_Refcounted_Endpoint endpoint(new TAO_ECG_UDP_Out_Endpoint);
-      if (endpoint->dgram ().open (ACE_Addr::sap_any) == -1)
-        {
-          ACE_ERROR_RETURN ((LM_ERROR, "Cannot open send endpoint\n"),
-                            1);
-        }
-
-      // Now we setup the sender:
-      TAO_EC_Servant_Var<TAO_ECG_UDP_Sender> sender = TAO_ECG_UDP_Sender::create();
-      sender->init (event_channel.in (),
-                    address_server.in (),
-                    endpoint
-                    ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       // Now we connect the sender as a consumer of events, it will
       // receive any event from any source and send it to the "right"
@@ -173,9 +157,6 @@ main (int argc, char* argv[])
         ACE_ES_EVENT_ANY;        // first free event type
       sub.dependencies[0].event.header.source =
         ACE_ES_EVENT_SOURCE_ANY; // Any source is OK
-
-      sender->connect (sub ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       // To receive events we need to setup an event handler:
       TAO_EC_Servant_Var<TAO_ECG_UDP_Receiver> receiver = TAO_ECG_UDP_Receiver::create();

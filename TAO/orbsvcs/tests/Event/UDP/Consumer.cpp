@@ -105,8 +105,8 @@ Consumer::push (const RtecEventComm::EventSet& events
           ValueTypeData * test_data = 0;
           if (events[i].data.any_value >>= test_data)
             {
-              ACE_DEBUG ((LM_DEBUG, "Consumer (%P|%t): Received a message: %s\n",
-                          test_data->data ()));
+              ACE_DEBUG ((LM_DEBUG, "Consumer (%P|%t): Received message <%d>: %s\n",
+                          events[i].header.source, test_data->data ()));
               if (ACE_OS::strcmp (test_data->data (), "ACE/TAO/CIAO") != 0)
                 {
                   ACE_ERROR ((LM_ERROR, "Consumer (%P|%t): ERROR received not expected message\n"));
@@ -122,8 +122,8 @@ Consumer::push (const RtecEventComm::EventSet& events
           char* mystring = 0;
           if (events[i].data.any_value >>= mystring)
             {
-              ACE_DEBUG ((LM_DEBUG, "Consumer (%P|%t): Received a message: %s\n",
-                                    mystring));
+              ACE_DEBUG ((LM_DEBUG, "Consumer (%P|%t): Received message <%d>: %s\n",
+                                    events[i].header.source, mystring));
               if (ACE_OS::strcmp (mystring, "ACE/TAO/CIAO") != 0)
                 {
                   ACE_ERROR ((LM_ERROR, "Consumer (%P|%t): ERROR received not expected message\n"));
