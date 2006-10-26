@@ -243,6 +243,10 @@ main (int argc, char* argv[])
             }
           ACE_Time_Value tv (0, 100000);
           ACE_OS::sleep (tv);
+          if (consumer.event_count () == 25)
+          {
+            break;
+          }
         }
 
       // **************** THAT COMPLETES THE EVENT LOOP
@@ -302,7 +306,7 @@ main (int argc, char* argv[])
       // **************** THAT COMPLETES THE CLEANUP CODE
 
       ACE_DEBUG ((LM_DEBUG,
-                  "MCast example terminated\n"));
+                  "UDP receiver ready\n"));
     }
   ACE_CATCHANY
     {
