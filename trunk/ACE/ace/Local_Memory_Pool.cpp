@@ -138,7 +138,7 @@ size_t
 ACE_Local_Memory_Pool::round_up (size_t nbytes)
 {
   ACE_TRACE ("ACE_Local_Memory_Pool::round_up");
-  return ACE::round_to_pagesize (static_cast<off_t> (nbytes));
+  return ACE::round_to_pagesize (nbytes);
 }
 
 ACE_END_VERSIONED_NAMESPACE_DECL

@@ -71,7 +71,7 @@ public:
    * Return the size of valid information containing in the <buf>,
    * -1 if <shm_malloc_> is not initialized.
    */
-  ssize_t get_buf_len (const off_t off, ACE_MEM_SAP_Node *&buf);
+  ssize_t get_buf_len (const ACE_OFF_T off, ACE_MEM_SAP_Node *&buf);
 };
 
 #if defined (ACE_WIN32) || !defined (_ACE_USE_SV_SEM)

@@ -1,3 +1,55 @@
+Thu Oct 26 15:58:09 Pacific Daylight Time 2006    <ossama_othman at symantec dot com>
+
+        From Russell Mora <russell_mora at symantec dot com>
+        * ace/ACE.cpp:
+        * ace/ACE.h:
+        * ace/FILE.cpp:
+        * ace/File_Lock.h:
+        * ace/File_Lock.inl:
+        * ace/Filecache.cpp:
+        * ace/Filecache.h:
+        * ace/Local_Memory_Pool.cpp:
+        * ace/MEM_Acceptor.h:
+        * ace/MEM_Acceptor.inl:
+        * ace/MEM_IO.cpp:
+        * ace/MEM_IO.inl:
+        * ace/MEM_IO.h:
+        * ace/MMAP_Memory_Pool.cpp:
+        * ace/MMAP_Memory_Pool.h:
+        * ace/Mem_Map.cpp:
+        * ace/Mem_Map.h:
+        * ace/Mem_Map.inl:
+        * ace/OS_NS_macros.h:
+        * ace/OS_NS_stdio.cpp:
+        * ace/OS_NS_stdio.inl:
+        * ace/OS_NS_stdio.h:
+        * ace/OS_NS_sys_mman.h:
+        * ace/OS_NS_sys_mman.inl: 
+        * ace/OS_NS_sys_stat.h:
+        * ace/OS_NS_sys_stat.inl:        
+        * ace/OS_NS_unistd.cpp:
+        * ace/OS_NS_unistd.inl:
+        * ace/OS_NS_unistd.h:
+        * ace/Pagefile_Memory_Pool.inl:
+        * ace/Shared_Memory_MM.cpp:
+        * ace/Shared_Memory_MM.h:
+        * ace/Shared_Memory_MM.inl:
+        * ace/Shared_Memory_Pool.cpp:
+        * ace/Shared_Memory_Pool.h:
+        * ace/os_include/sys/os_types.h:
+        * ace/os_include/sys/os_stat.h:
+        * ace/os_include/os_unistd.h:
+        * examples/Web_Crawler/Iterators.cpp:
+        * examples/Web_Crawler/Mem_Map_Stream.cpp:
+        * examples/Web_Crawler/Mem_Map_Stream.h:
+        * examples/IPC_SAP/FILE_SAP/client.cpp:
+
+          Added support for 64-bit file offsets on 32-bit platforms on
+          platforms that support the _FILE_OFFSET_BITS preprocessor
+          symbol, as well as Windows.  Enable by defining the
+          _FILE_OFFSET_BITS=64 preprocessor symbol (ACE provides the
+          necessary support on Windows when it is defined).
+
 Thu Oct 26 24:44:55 UTC 2006  Ossama Othman  <ossama_othman at symantec dot com>
 
         * ace/Truncate.h (Truncator):

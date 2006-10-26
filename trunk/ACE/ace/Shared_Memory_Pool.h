@@ -43,11 +43,12 @@ class ACE_Export ACE_Shared_Memory_Pool_Options
 {
 public:
   /// Initialization method.
-  ACE_Shared_Memory_Pool_Options (const char *base_addr = ACE_DEFAULT_BASE_ADDR,
-                                  size_t max_segments = ACE_DEFAULT_MAX_SEGMENTS,
-                                  size_t file_perms = ACE_DEFAULT_FILE_PERMS,
-                                  off_t minimum_bytes = 0,
-                                  size_t segment_size = ACE_DEFAULT_SEGMENT_SIZE);
+  ACE_Shared_Memory_Pool_Options (
+    const char *base_addr = ACE_DEFAULT_BASE_ADDR,
+    size_t max_segments = ACE_DEFAULT_MAX_SEGMENTS,
+    size_t file_perms = ACE_DEFAULT_FILE_PERMS,
+    ACE_OFF_T minimum_bytes = 0,
+    size_t segment_size = ACE_DEFAULT_SEGMENT_SIZE);
 
   /// Base address of the memory-mapped backing store.
   const char *base_addr_;
@@ -56,7 +57,7 @@ public:
   size_t max_segments_;
 
   /// What the minimum bytes of the initial segment should be.
-  off_t minimum_bytes_;
+  ACE_OFF_T minimum_bytes_;
 
   /// File permissions to use when creating/opening a segment.
   size_t file_perms_;
@@ -145,7 +146,7 @@ protected:
    * the backing store.
    */
   virtual int commit_backing_store_name (size_t rounded_bytes,
-                                    off_t &offset);
+                                         ACE_OFF_T &offset);
 
   /// Keeps track of all the segments being used.
   struct SHM_TABLE
@@ -175,7 +176,7 @@ protected:
   size_t max_segments_;
 
   /// What the minimim bytes of the initial segment should be.
-  off_t minimum_bytes_;
+  ACE_OFF_T minimum_bytes_;
 
   /// Shared memory segment size.
   size_t segment_size_;
@@ -185,11 +186,11 @@ protected:
 
   /// Find the segment that contains the @a searchPtr
   virtual int find_seg (const void *const searchPtr,
-                        off_t &offset,
+                        ACE_OFF_T &offset,
                         size_t &counter);
 
   /// Determine how much memory is currently in use.
-  virtual int in_use (off_t &offset,
+  virtual int in_use (ACE_OFF_T &offset,
                       size_t &counter);
 
   /// Handles SIGSEGV.

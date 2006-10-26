@@ -48,51 +48,51 @@ public:
   /// Map a file from an open file descriptor @a handle.  This function
   /// will lookup the length of the file if it is not given.
   ACE_Mem_Map (ACE_HANDLE handle,
-               ssize_t length = -1,
+               size_t length = static_cast<size_t> (-1),
                int prot = PROT_RDWR,
                int share = ACE_MAP_PRIVATE,
                void *addr = 0,
-               off_t offset = 0,
+               ACE_OFF_T offset = 0,
                LPSECURITY_ATTRIBUTES sa = 0);
 
   /// Map a file specified by @a file_name.
   ACE_Mem_Map (const ACE_TCHAR *filename,
-               ssize_t length = -1,
+               size_t length = static_cast<size_t> (-1),
                int flags = O_RDWR | O_CREAT,
                int mode = ACE_DEFAULT_FILE_PERMS,
                int prot = PROT_RDWR,
                int share = ACE_MAP_PRIVATE,
                void *addr = 0,
-               off_t offset = 0,
+               ACE_OFF_T offset = 0,
                LPSECURITY_ATTRIBUTES sa = 0);
 
   /// Map a file from an open file descriptor @a handle.  This function
   /// will lookup the length of the file if it is not given.
   int map (ACE_HANDLE handle,
-           ssize_t length = -1,
+           size_t length = static_cast<size_t> (-1),
            int prot = PROT_RDWR,
            int share = ACE_MAP_PRIVATE,
            void *addr = 0,
-           off_t offset = 0,
+           ACE_OFF_T offset = 0,
            LPSECURITY_ATTRIBUTES sa = 0);
 
   /// Remap the file associated with <handle_>.
-  int map (ssize_t length = -1,
+  int map (size_t length = static_cast<size_t> (-1),
            int prot = PROT_RDWR,
            int share = ACE_MAP_PRIVATE,
            void *addr = 0,
-           off_t offset = 0,
+           ACE_OFF_T offset = 0,
            LPSECURITY_ATTRIBUTES sa = 0);
 
   /// Map a file specified by <filename>.
   int map (const ACE_TCHAR *filename,
-           ssize_t length = -1,
+           size_t length = static_cast<size_t> (-1),
            int flags = O_RDWR | O_CREAT,
            int mode = ACE_DEFAULT_FILE_PERMS,
            int prot = PROT_RDWR,
            int share = ACE_MAP_PRIVATE,
            void *addr = 0,
-           off_t offset = 0,
+           ACE_OFF_T offset = 0,
            LPSECURITY_ATTRIBUTES sa = 0);
 
   /// Destructor.
@@ -139,7 +139,13 @@ public:
    * starting at <base_addr_>.  If <len> == -1 then sync the whole
    * region.
    */
-  int sync (ssize_t len = -1, int flags = MS_SYNC);
+  int sync (size_t len, int flags = MS_SYNC);
+
+  /**
+   * Sync the whole memory region to the backing store
+   * starting at <base_addr_>.
+   */
+  int sync (int flags = MS_SYNC);
 
   /// Sync <len> bytes of the memory region to the backing store
   /// starting at <addr_>.
@@ -147,10 +153,15 @@ public:
 
   /**
    * Change the protection of the pages of the mapped region to <prot>
-   * starting at <base_addr_> up to <len> bytes.  If <len> == -1 then
-   * change protection of all pages in the mapped region.
+   * starting at <base_addr_> up to <len> bytes.
    */
-  int protect (ssize_t len = -1, int prot = PROT_RDWR);
+  int protect (size_t len, int prot = PROT_RDWR);
+
+  /**
+   * Change the protection of all the pages of the mapped region to <prot>
+   * starting at <base_addr_>.
+   */
+  int protect (int prot = PROT_RDWR);
 
   /// Change the protection of the pages of the mapped region to <prot>
   /// starting at <addr> up to <len> bytes.
@@ -179,11 +190,11 @@ private:
   /// This method does the dirty work of actually calling ::mmap to map
   /// the file into memory.
   int map_it (ACE_HANDLE handle,
-              ssize_t len = -1,
+              size_t len = static_cast<size_t> (-1),
               int prot = PROT_RDWR,
               int share = MAP_SHARED,
               void *addr = 0,
-              off_t offset = 0,
+              ACE_OFF_T offset = 0,
               LPSECURITY_ATTRIBUTES sa = 0);
 
   // = Disallow copying and assignment.
