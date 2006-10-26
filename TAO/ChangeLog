@@ -26,7 +26,7 @@ Thu Oct 27 01:59:19 UTC 2006  Ossama Othman  <ossama_othman at symantec dot com>
 
           Added support ACE_Dev_Poll_Reactor.
 
-        * tao/ValueBase.cpp (_tao_write_value_header):
+        * tao/Valuetype/ValueBase.cpp (_tao_write_value_header):
 
           Fixed Coverity DEADCODE error.
 
