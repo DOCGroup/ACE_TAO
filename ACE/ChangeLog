@@ -24,9 +24,9 @@ Thu Oct 27 01:58:09 UTC 2006  Ossama Othman  <ossama_othman at symantec dot com>
         * ace/OS_NS_stdio.inl:
         * ace/OS_NS_stdio.h:
         * ace/OS_NS_sys_mman.h:
-        * ace/OS_NS_sys_mman.inl: 
+        * ace/OS_NS_sys_mman.inl:
         * ace/OS_NS_sys_stat.h:
-        * ace/OS_NS_sys_stat.inl:        
+        * ace/OS_NS_sys_stat.inl:
         * ace/OS_NS_unistd.cpp:
         * ace/OS_NS_unistd.inl:
         * ace/OS_NS_unistd.h:
