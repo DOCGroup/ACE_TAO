@@ -1,0 +1,27 @@
+// -*- MPC -*-
+// $Id$
+
+project: taoserver {
+  idlflags += -St
+  exename = CollocationLockup
+
+  Source_Files {
+    ABC.cpp
+    ABS.cpp
+    SimpleNamingServiceC.cpp
+    CollocationLockup.cpp
+  }
+}
+
+project(*SimpleNamingService): taoserver {
+  idlflags += -St
+  exename = SimpleNamingService
+
+  IDL_Files {
+    SimpleNamingService.idl
+  }
+
+  Source_Files {
+    SimpleNamingService.cpp
+  }
+}

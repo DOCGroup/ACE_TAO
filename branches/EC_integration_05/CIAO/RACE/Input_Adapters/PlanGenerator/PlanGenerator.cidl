@@ -1,0 +1,26 @@
+//PlanGenerator.cidl,v 1.1 spaunov Exp
+//Author: Stoyan Paunov
+//$Id$
+
+#ifndef RACE_PLAN_GENERATOR_INPUT_ADAPTER_CIDL
+#define RACE_PLAN_GENERATOR_INPUT_ADAPTER_CIDL
+
+#include "PlanGenerator.idl"
+
+module CIAO
+{
+  module RACE
+  {
+    composition session PlanGenerator_Impl
+    {
+      home executor PlanGenerator_Home_Exec
+        {
+          implements RACE::PlanGenerator_Home;
+          manages    PlanGenerator_Exec;
+        };
+    };
+  };
+};
+
+
+#endif /* RACE_PLAN_GENERATOR_INPUT_ADAPTER_CIDL */
