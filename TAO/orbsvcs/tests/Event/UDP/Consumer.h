@@ -53,6 +53,7 @@ public:
     ACE_THROW_SPEC ((CORBA::SystemException));
   // The skeleton methods.
 
+  CORBA::ULong event_count (void) const;
 private:
   CORBA::ULong event_count_;
   // Keep track of the number of events received.

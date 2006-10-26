@@ -59,6 +59,8 @@ private:
   // The proxy
 
   bool valuetype_;
+
+  CORBA::ULong event_count_;
 };
 
 #endif /* SUPPLIER_H */
