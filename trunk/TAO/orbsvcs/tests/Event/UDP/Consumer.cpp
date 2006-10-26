@@ -16,6 +16,12 @@ Consumer::Consumer (bool valuetype)
 {
 }
 
+CORBA::ULong
+Consumer::event_count (void) const
+{
+  return this->event_count_;
+}
+
 void
 Consumer::connect (RtecEventChannelAdmin::ConsumerAdmin_ptr consumer_admin
                    ACE_ENV_ARG_DECL)
@@ -90,10 +96,10 @@ Consumer::push (const RtecEventComm::EventSet& events
       return;
     }
 
-  this->event_count_ += events.length ();
-
   for (size_t i = 0; i < events.length (); ++i)
     {
+      ++this->event_count_;
+
       if (this->valuetype_)
         {
           ValueTypeData * test_data = 0;

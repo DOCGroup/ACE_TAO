@@ -10,7 +10,7 @@ ACE_RCSID (EC_Examples,
            Supplier,
            "$Id$")
 
-Supplier::Supplier (bool valuetype) : valuetype_ (valuetype)
+Supplier::Supplier (bool valuetype) : valuetype_ (valuetype), event_count_ (0)
 {
 }
 
@@ -72,6 +72,8 @@ Supplier::perform_push (ACE_ENV_SINGLE_ARG_DECL)
   ACE_TRY
     {
       // The event type and source must match our publications
+      ++event_count_;
+      ACE_DEBUG ((LM_DEBUG, "Sending event %d\n", event_count_));
       RtecEventComm::EventSet event (1);
       event.length (1);
       event[0].header.type   = ACE_ES_EVENT_UNDEFINED;

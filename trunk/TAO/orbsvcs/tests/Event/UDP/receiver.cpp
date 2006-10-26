@@ -245,7 +245,7 @@ main (int argc, char* argv[])
       // Wait for events, including incoming multicast data.
       // We could also use orb->run(), but that will not let us
       // terminate the application in a nice way.
-      for (int i = 0; i != 1000; ++i)
+      for (int i = 0; i != 100; ++i)
         {
           CORBA::Boolean there_is_work =
             orb->work_pending (ACE_ENV_SINGLE_ARG_PARAMETER);
@@ -275,7 +275,7 @@ main (int argc, char* argv[])
       receiver->shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      int r = mcast_eh.shutdown ();
+      int const r = mcast_eh.shutdown ();
 
       if (r == -1)
         {

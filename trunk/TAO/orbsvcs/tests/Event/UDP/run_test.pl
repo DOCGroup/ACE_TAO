@@ -20,13 +20,13 @@ $S = new PerlACE::Process ("sender",
 $R = new PerlACE::Process ("receiver",
                            "$valuetype");
 
-print STDOUT "Starting sender\n";
-$S->Spawn ();
+print STDOUT "Starting receiver\n";
+$R->Spawn ();
 
 sleep 1;
 
-print STDOUT "Starting receiver\n";
-$R->Spawn ();
+print STDOUT "Starting sender\n";
+$S->Spawn ();
 
 sleep 1;
 
