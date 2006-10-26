@@ -1,4 +1,10 @@
-Wed Oct 26 00:31:56 UTC 2006  Ossama Othman  <ossama_othman at symantec dot com>
+Thu Oct 26 07:01:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+	* ace/config-vxworks5.x.h:
+	  Added ACE_LACKS_INTPTR_T, VxWorks 5.5.x seems not to deliver this
+	  type
+
+Thu Oct 26 00:31:56 UTC 2006  Ossama Othman  <ossama_othman at symantec dot com>
 
         * ace/Auto_Ptr.h:
 
