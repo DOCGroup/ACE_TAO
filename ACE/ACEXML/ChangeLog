@@ -1,3 +1,32 @@
+Fri Oct 28 02:29:57 UTC 2006  Ossama Othman  <ossama_othman at symantec dot com>
+
+        From Russell Mora <russell_mora at symantec dot com>
+        * common/ContentHandler.h:
+        * common/DefaultHandler.h:
+        * common/DefaultHandler.cpp:
+        * common/FileCharStream.cpp:
+        * common/FileCharStream.h:
+        * common/HttpCharStream.cpp:
+        * common/HttpCharStream.h:
+        * common/Mem_Map_Stream.cpp:
+        * common/Mem_Map_Stream.h:
+        * common/XMLFilterImpl.cpp:
+        * common/XMLFilterImpl.h:
+        * common/ZipCharStream.cpp:
+        * common/ZipCharStream.h:
+        * common/StrCharStream.cpp:
+        * examples/SAXPrint/Print_Handler.cpp:
+        * examples/SAXPrint/Print_Handler.h:
+        * examples/SAXPrint/SAXPrint_Handler.cpp:
+        * examples/SAXPrint/SAXPrint_Handler.h:
+        * parser/parser/Parser.cpp:
+        * parser/parser/Parser.h:
+        * tests/ContentHandler_Test.cpp:
+
+          Added support for 64-bit file offsets.
+
+          Addressed 64-bit conversion warnings.
+
 Tue Oct 24 18:00:15 UTC 2006  Ossama Othman  <ossama_othman at symantec dot com>
 
         * common/common.mpc:
@@ -14,7 +43,7 @@ Mon Oct 24 02:26:32 UTC 2006  Ossama Othman  <ossama_othman at symantec dot com>
 
           No longer any need to explicitly disable ACEXML in the
           ace_for_tao configuration.
-                                         
+
         * common/HttpCharStream.cpp:
 
           Fixed Coverity OVERRUN_STATIC and FORWARD_NULL errors.

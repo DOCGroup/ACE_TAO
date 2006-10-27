@@ -14,8 +14,8 @@ ACEXML_DefaultHandler::~ACEXML_DefaultHandler (void)
 
 void
 ACEXML_DefaultHandler::characters (const ACEXML_Char *,
-                                   int,
-                                   int
+                                   size_t,
+                                   size_t
                                    ACEXML_ENV_ARG_DECL_NOT_USED)
       ACE_THROW_SPEC ((ACEXML_SAXException))
 {

@@ -22,8 +22,8 @@ public:
    * Receive notification of character data.
    */
   virtual void characters (const ACEXML_Char *ch,
-                           int start,
-                           int length ACEXML_ENV_ARG_DECL)
+                           size_t start,
+                           size_t length ACEXML_ENV_ARG_DECL)
         ACE_THROW_SPEC ((ACEXML_SAXException));
 
   const ACEXML_Char *get_test_string (void)
@@ -40,8 +40,8 @@ const ACEXML_Char * Basic_Content_Tester::test_string_ =
 
 void
 Basic_Content_Tester::characters (const ACEXML_Char *ch,
-                                  int start,
-                                  int length ACEXML_ENV_ARG_DECL)
+                                  size_t start,
+                                  size_t length ACEXML_ENV_ARG_DECL)
         ACE_THROW_SPEC ((ACEXML_SAXException))
 {
   static int already_called = 0;
@@ -55,12 +55,12 @@ Basic_Content_Tester::characters (const ACEXML_Char *ch,
     }
   already_called = 1;
 
-  int expected_len = static_cast<int> (ACE_OS::strlen (expect));
+  size_t expected_len = ACE_OS::strlen (expect);
   if (length != expected_len)
     {
       ACE_ERROR ((LM_ERROR,
-                  ACE_TEXT ("characters() expected len %d (%*s); ")
-                  ACE_TEXT ("got %d (%*s)\n"),
+                  ACE_TEXT ("characters() expected len %u (%*s); ")
+                  ACE_TEXT ("got %u (%*s)\n"),
                   expected_len, expected_len, ch + start,
                   length, length, ch + start));
       ACEXML_THROW (ACEXML_SAXException (ACE_TEXT ("Functionality failure")));

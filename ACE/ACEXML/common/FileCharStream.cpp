@@ -5,6 +5,7 @@
 #include "ace/Log_Msg.h"
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_sys_stat.h"
+#include "ace/Truncate.h"
 
 #if defined (ACE_USES_WCHAR)
 #  include "ace/OS_NS_wchar.h"
@@ -37,7 +38,7 @@ ACEXML_FileCharStream::open (const ACEXML_Char *name)
   if (ACE_OS::stat (name, &statbuf) < 0)
     return -1;
 
-  this->size_ = statbuf.st_size;
+  this->size_ = ACE_Utils::Truncate<ACE_OFF_T> (statbuf.st_size);
   this->filename_ = ACE::strnew (name);
   return this->determine_encoding();
 }
@@ -106,7 +107,7 @@ ACEXML_FileCharStream::available (void)
   long curr;
   if ((curr = ACE_OS::ftell (this->infile_)) < 0)
     return -1;
-  return (this->size_ - curr);
+  return static_cast<int> (this->size_ - curr);
 }
 
 int
