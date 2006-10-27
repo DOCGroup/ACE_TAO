@@ -1,3 +1,10 @@
+Fri Oct 27 19:28:16 UTC 2006  Ossama Othman  <ossama_othman at symantec dot com>
+
+        * ace/OS_NS_stdio.inl (flock_adjust_params):
+        * ace/OS_NS_sys_stat.inl (filesize):
+
+          Fixed comparison of signed/unsigned warnings.
+
 Fri Oct 27 09:25:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 	* ace/Configuration_Import_Export.cpp:
