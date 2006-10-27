@@ -1,3 +1,11 @@
+Fri Oct 28 02:49:11 UTC 2006  Ossama Othman  <ossama_othman at symantec dot com>
+
+        * examples/APG/Shared_Memory/Mem_Map.cpp:
+        * examples/Mem_Map/file-reverse/file-reverse.cpp:
+        * examples/Web_Crawler/Mem_Map_Stream.cpp:
+
+          Addressed 64-bit conversion warnings.
+
 Fri Oct 27 21:41:25 UTC 2006  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * THANKS:
