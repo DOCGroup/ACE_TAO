@@ -124,7 +124,7 @@ public:
   // store if necessary.  Returns 0 if <offset> or <offset + size> is
   // past the end of the stream.
 
-  virtual off_t seek (off_t offset, int whence = SEEK_CUR);
+  virtual ACE_OFF_T seek (ACE_OFF_T offset, int whence = SEEK_CUR);
   // Sets the <get> and <recv> positions as follows:
   //    o If <whence> is <SEEK_SET>, the positions are set to <offset>
   //      bytes from the start of the stream.

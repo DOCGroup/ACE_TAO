@@ -37,7 +37,7 @@ ACE_OS::mmap (void *addr,
               int prot,
               int flags,
               ACE_HANDLE file_handle,
-              off_t off,
+              ACE_OFF_T off,
               ACE_HANDLE *file_mapping,
               LPSECURITY_ATTRIBUTES sa,
               const ACE_TCHAR *file_mapping_name)
@@ -135,18 +135,21 @@ ACE_OS::mmap (void *addr,
   nt_flags |= ACE_OS_EXTRA_MMAP_FLAGS;
 #  endif /* ACE_OS_EXTRA_MMAP_FLAGS */
 
+  DWORD low_off  = ACE_LOW_PART (off);
+  DWORD high_off = ACE_HIGH_PART (off);
+
 #  if !defined (ACE_HAS_WINCE)
   void *addr_mapping = ::MapViewOfFileEx (*file_mapping,
                                           nt_flags,
-                                          0,
-                                          off,
+                                          high_off,
+                                          low_off,
                                           len,
                                           addr);
 #  else
   void *addr_mapping = ::MapViewOfFile (*file_mapping,
                                         nt_flags,
-                                        0,
-                                        off,
+                                        high_off,
+                                        low_off,
                                         len);
 #  endif /* ! ACE_HAS_WINCE */
 

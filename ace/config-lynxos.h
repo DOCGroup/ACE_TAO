@@ -15,8 +15,13 @@
 # include "ace/config-g++-common.h"
 #endif /* __GNUG__ */
 
-#define ACE_NEEDS_IPC_1C_H
+// Compile using multi-thread libraries.
+#if !defined (ACE_MT_SAFE)
+# define ACE_MT_SAFE 1
+# define _REENTRANT
+#endif
 
+#include "ace/config-posix.h"
 
 #if defined (__x86__)
 # define ACE_HAS_PENTIUM
@@ -56,12 +61,10 @@
 #define ACE_HAS_NONCONST_SETRLIMIT
 #define ACE_HAS_NONCONST_WRITEV
 #define ACE_HAS_POSIX_NONBLOCK
-#define ACE_HAS_POSIX_REALTIME_SIGNALS
 #define ACE_HAS_POSIX_TIME
 #define ACE_HAS_RECURSIVE_THR_EXIT_SEMANTICS
 #define ACE_HAS_SCANDIR
 #define ACE_HAS_SEMUN
-#define ACE_HAS_SHM_OPEN
 #define ACE_HAS_SIGINFO_T
 #define ACE_HAS_SIGWAIT
 #define ACE_HAS_SIG_ATOMIC_T
@@ -101,20 +104,13 @@
 #define ACE_LACKS_USECONDS_T
 #define ACE_LACKS_WCHAR_H
 #define ACE_MALLOC_ALIGN 8
+#define ACE_NEEDS_IPC_1C_H
 #define ACE_PAGE_SIZE 4096
 #define ACE_SCANDIR_CMP_USES_CONST_VOIDPTR
-
-// Compile using multi-thread libraries.
-#if !defined (ACE_MT_SAFE)
-# define ACE_MT_SAFE 1
-# define _REENTRANT
-#endif
 
 #if ACE_MT_SAFE == 1
   // Platform supports threads.
 # define ACE_HAS_PTHREADS
-# define ACE_HAS_PTHREADS_STD
-# define ACE_HAS_THREADS
 # define ACE_HAS_THREAD_SPECIFIC_STORAGE
 # define ACE_LACKS_NULL_PTHREAD_STATUS
 # define ACE_LACKS_SETDETACH
@@ -122,7 +118,6 @@
 # define ACE_LACKS_THREAD_STACK_ADDR
 #endif /* ACE_MT_SAFE */
 
-#define ACE_HAS_AIO_CALLS
 #define ACE_POSIX_AIOCB_PROACTOR
 // AIOCB Proactor works on Lynx. But it is not multi-threaded.
 // Lynx OS 3.0.0 lacks POSIX call <pthread_sigmask>. So,we cannot use
@@ -145,7 +140,6 @@
 // System include files are not in sys/, this gets rid of warning.
 #define __NO_INCLUDE_WARN__
 
-#define ACE_HAS_POSIX_SEM
 // "changes signedness" error (OS.i and many other files)
 #define ACE_HAS_SOCKLEN_T
 // LSOCK.cpp uses a macro from param.h, not included

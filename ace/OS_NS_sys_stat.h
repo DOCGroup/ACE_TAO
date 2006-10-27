@@ -61,10 +61,10 @@ namespace ACE_OS
 
   // non-standard
   ACE_NAMESPACE_INLINE_FUNCTION
-  ACE_LOFF_T filesize (ACE_HANDLE handle);
+  ACE_OFF_T filesize (ACE_HANDLE handle);
 
   ACE_NAMESPACE_INLINE_FUNCTION
-  ACE_LOFF_T filesize (const ACE_TCHAR *handle);
+  ACE_OFF_T filesize (const ACE_TCHAR *handle);
   //@}
 
   ACE_NAMESPACE_INLINE_FUNCTION

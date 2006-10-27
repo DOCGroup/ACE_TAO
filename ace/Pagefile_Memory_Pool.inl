@@ -16,7 +16,7 @@ ACE_Pagefile_Memory_Pool::round_to_chunk_size (size_t nbytes)
 ACE_INLINE size_t
 ACE_Pagefile_Memory_Pool::round_to_page_size (size_t nbytes)
 {
-  return ACE::round_to_pagesize (static_cast<off_t> (nbytes));
+  return ACE::round_to_pagesize (nbytes);
 }
 
 ACE_INLINE int

@@ -519,10 +519,10 @@ namespace ACE
 
   // = Miscellaneous functions.
   /// Rounds the request to a multiple of the page size.
-  extern ACE_Export size_t round_to_pagesize (off_t len);
+  extern ACE_Export size_t round_to_pagesize (size_t len);
 
   /// Rounds the request to a multiple of the allocation granularity.
-  extern ACE_Export size_t round_to_allocation_granularity (off_t len);
+  extern ACE_Export size_t round_to_allocation_granularity (size_t len);
 
   // @@ UNICODE what about buffer?
   /// Format buffer into printable format.  This is useful for

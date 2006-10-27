@@ -86,7 +86,7 @@ ACE_MEM_Acceptor::preferred_strategy (ACE_MEM_IO::Signal_Strategy strategy)
 }
 
 ACE_INLINE void
-ACE_MEM_Acceptor::init_buffer_size (off_t bytes)
+ACE_MEM_Acceptor::init_buffer_size (ACE_OFF_T bytes)
 {
   this->malloc_options_.minimum_bytes_ = bytes;
 }
