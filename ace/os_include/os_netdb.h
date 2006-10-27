@@ -49,19 +49,6 @@ extern "C"
 {
 #endif /* __cplusplus */
 
-<<<<<<< .working
-#if defined (ACE_LACKS_HOSTENT)
-struct  hostent {
-        char    *h_name;        /* official name of host */
-        char    **h_aliases;    /* alias list */
-        int     h_addrtype;     /* host address type */
-        int     h_length;       /* length of address */
-        char    **h_addr_list;  /* list of addresses from name server */
-#define h_addr  h_addr_list[0]  /* address, for backward compatibility */
-};
-#endif /* ACE_LACKS_HOSTENT */
-
-=======
 #if defined (ACE_LACKS_HOSTENT)
 struct  hostent {
         char    *h_name;        /* official name of host */
@@ -90,7 +77,6 @@ struct  servent {
 };
 #endif /* ACE_LACKS_SERVENT */
 
->>>>>>> .merge-right.r75022
 #if defined (ACE_HAS_STRUCT_NETDB_DATA)
    typedef char ACE_HOSTENT_DATA[sizeof(struct hostent_data)];
    typedef char ACE_SERVENT_DATA[sizeof(struct servent_data)];
