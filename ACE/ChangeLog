@@ -1,4 +1,10 @@
-Thu Oct 27 01:58:09 UTC 2006  Ossama Othman  <ossama_othman at symantec dot com>
+Fri Oct 27 09:25:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+	* ace/Configuration_Import_Export.cpp:
+	  Explicitly initialise pointer to 0 to silence warning in
+	  gcc cygwi build
+
+Fri Oct 27 01:58:09 UTC 2006  Ossama Othman  <ossama_othman at symantec dot com>
 
         From Russell Mora <russell_mora at symantec dot com>
         * ace/ACE.cpp:
