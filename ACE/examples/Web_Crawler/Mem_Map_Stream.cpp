@@ -210,7 +210,7 @@ Mem_Map_Stream::grow_file_and_remap (void)
                       -1);
 
   // Grow the memory-mapping to encompass the entire temporary file.
-  if (this->mem_map_.map (-1,
+  if (this->mem_map_.map (static_cast<size_t> (-1),
                           PROT_RDWR,
                           ACE_MAP_PRIVATE | ACE_MAP_FIXED,
                           ACE_DEFAULT_BASE_ADDR) == -1)
