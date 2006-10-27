@@ -105,7 +105,7 @@ TAO_ECG_Mcast_EH::shutdown (void)
   this->receiver_ = 0;
 
   // Deregister from reactor, close and clean up sockets.
-  size_t subscriptions_size = this->subscriptions_.size ();
+  size_t const subscriptions_size = this->subscriptions_.size ();
   for (size_t i = 0; i != subscriptions_size; ++i)
     {
       (void) this->reactor ()->remove_handler (
@@ -122,7 +122,7 @@ TAO_ECG_Mcast_EH::shutdown (void)
 int
 TAO_ECG_Mcast_EH::handle_input (ACE_HANDLE fd)
 {
-  size_t subscriptions_size = this->subscriptions_.size ();
+  size_t const subscriptions_size = this->subscriptions_.size ();
   for (size_t i = 0; i != subscriptions_size; ++i)
     {
       ACE_SOCK_Dgram_Mcast *socket = this->subscriptions_[i].dgram;
@@ -225,7 +225,7 @@ TAO_ECG_Mcast_EH::add_new_subscriptions (Address_Set& multicast_addresses)
       new_subscription.mcast_addr = *k;
       ACE_NEW (new_subscription.dgram, ACE_SOCK_Dgram_Mcast);
 
-      size_t subscriptions_size = this->subscriptions_.size ();
+      size_t const subscriptions_size = this->subscriptions_.size ();
       this->subscriptions_.size (subscriptions_size + 1);
       this->subscriptions_[subscriptions_size] = new_subscription;
 

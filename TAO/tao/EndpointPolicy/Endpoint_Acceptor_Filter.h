@@ -28,10 +28,9 @@
 #include "tao/PortableServer/Default_Acceptor_Filter.h"
 #include "tao/EndpointPolicy/EndpointPolicyC.h"
 
-class TAO_POA_Manager;
-
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
+class TAO_POA_Manager;
 
 //=============================================================================
 /**

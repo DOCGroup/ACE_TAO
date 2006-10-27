@@ -87,7 +87,7 @@ public:
   /// Set the MMAP options the MEM_Stream this acceptor creates will
   /// use.
   int set_mmap_options (const ACE_TCHAR *prefix,
-                        off_t size);
+                        ACE_OFF_T size);
 
 private:
   /// Implement the common part of the open*() methods.
@@ -139,7 +139,7 @@ private:
 
   /// Determine the minimum size of mmap file.  This dictate the
   /// maximum size of a CORBA method invocation.
-  off_t mmap_size_;
+  ACE_OFF_T mmap_size_;
 
   /// Should we use GIOP lite??
   CORBA::Boolean lite_flag_;
