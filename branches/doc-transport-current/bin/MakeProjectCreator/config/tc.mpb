@@ -5,10 +5,3 @@ project {
   after   += TC
   libs    += TAO_TC
 }
-// -*- MPC -*-
-// $Id$
-
-project {
-  after   += TC
-  libs    += TAO_TC
-}
