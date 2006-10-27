@@ -476,12 +476,10 @@ be_interface::redefine (AST_Interface *from)
 void
 be_interface::gen_def_ctors (TAO_OutStream *os)
 {
-  this->traverse_inheritance_graph (
+  (void) this->traverse_inheritance_graph (
       be_interface::gen_def_ctors_helper,
       os
     );
-
-  return;
 }
 
 
@@ -1672,6 +1670,12 @@ be_interface::gen_gperf_lookup_methods (const char *flat_name)
                          "open_temp_file"),
                         -1);
     }
+
+#ifndef ACE_OPENVMS
+  // Flush the output stream.  Gperf also uses it as output.  Ensure
+  // current contents are written before gperf writes.
+  ACE_OS::fflush (this->strategy_->get_out_stream ()->file ());
+#endif  /* !ACE_OPENVMS */
 
   // Stdout is server skeleton.  Do *not* close the file, just open
   // again with <ACE_OS::open> with WRITE + APPEND option.. After

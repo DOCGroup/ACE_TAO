@@ -79,7 +79,7 @@ private:
   ACE_TCHAR *mmap_prefix_;
 
   /// Minimum bytes of the mmap files.
-  off_t min_bytes_;
+  ACE_OFF_T min_bytes_;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

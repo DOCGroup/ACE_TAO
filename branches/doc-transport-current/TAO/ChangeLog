@@ -1,3 +1,114 @@
+Thu Oct 27 02:53:53 UTC 2006  Ossama Othman  <ossama_othman at symantec dot com>
+
+        * tao/GIOP_Message_Base.cpp (parse_request_id):
+
+          Corrected GIOP version check so that the GIOP 1.{0,1} case
+          doesn't apply to all major versions greater than or equal to
+          one, i.e. {1,2,3,...,N}.{0,1}.  The case in question is only
+          meant for GIOP 1.0 or 1.1.
+
+Thu Oct 27 01:59:19 UTC 2006  Ossama Othman  <ossama_othman at symantec dot com>
+
+        * tao/GIOP_Message_Base.cpp (parse_request_id):
+
+          Simplified error return logic.  Addresses "code not reached"
+          warning.
+
+        * tao/ORB.cpp (ORB_init):
+
+          Do not pass down the default CORBA::Environment from TSS in the
+          native C++ exception case.  Simply pass a locally instantiated
+          CORBA::Environment.  Removes an unnecessary TSS access.
+
+        * tao/EndpointPolicy/Endpoint_Acceptor_Filter.h:
+
+          Moved TAO_POA_Manager forward declaration into the versioned
+          namespace.
+
+        * tao/PortableServer/Servant_var.h:
+
+          Removed suggestion of adding an exception specification.
+          They've fallen out of favor by most C++ gurus.
+
+        * tao/Strategies/advanced_resource.cpp:
+        * tao/Strategies/advanced_resource.h:
+
+          Added support ACE_Dev_Poll_Reactor.
+
+        * tao/Valuetype/ValueBase.cpp (_tao_write_value_header):
+
+          Fixed Coverity DEADCODE error.
+
+        From Russell Mora <russell_mora at symantec dot com>
+        * examples/Content_Server/AMI_Iterator/Content_Iterator_i.cpp:
+        * examples/Content_Server/SMI_Iterator/Content_Iterator_i.cpp:
+        * tao/Strategies/SHMIOP_Acceptor.cpp:
+        * tao/Strategies/SHMIOP_Acceptor.h:
+        * tao/Strategies/SHMIOP_Factory.h:
+
+          Added support for 64-bit file offsets.
+
+        From Duane Binder <duane_binder at symantec dot com>
+        * TAO_IDL/be/be_helper.cpp:
+
+          Buffer I/O by removing fflush() calls.  Greatly improves tao_idl
+          performance, particularly over networked filesystems.
+
+        * TAO_IDL/be/be_interface.cpp (gen_gperf_lookup_methods):
+
+          Flush the output stream. Gperf also uses it as output.  Ensure
+          current contents are written before gperf writes.
+
+Thu Oct 26 14:20:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+	* orbsvcs/tests/Event/UDP/receiver.cpp:
+	  Register the value factory
+
+	* orbsvcs/tests/Event/UDP/run_test.pl:
+	  Also run the test with a valuetype in the event.
+
+Thu Oct 26 13:30:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+	* orbsvcs/orbsvcs/Event/ECG_CDR_Message_Receiver.cpp:
+	  Reverted the change below. Thew new UDP RTEC test showed
+	  that the consumer was receiving duplicate events without being
+	  able to detect that. So a single send resulted in two events
+	  being received. The original problem needs to be resolved in
+	  a different way because this breaks any assumptions about events
+
+          Mon Aug 21 15:37:23 UTC 2006  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
+          * orbsvcs/orbsvcs/Event/ECG_UDP_Out_Endpoint.i:
+          * orbsvcs/orbsvcs/Event/ECG_CDR_Message_Receiver.cpp: Made the
+            simplest fix to the problem where if a UDP RTEC supplier
+            restarts while the consumer is still running, it gets duplicate
+            fragment errors.  The cost of this fix is that duplicate
+            completed requests are no longer detected.  Thanks to Keith
+            Nicewarner for these fixes.
+
+Thu Oct 26 12:54:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+	* orbsvcs/orbsvcs/Event/ECG_CDR_Message_Sender.cpp:
+	* orbsvcs/orbsvcs/Event/ECG_Mcast_EH.cpp:
+	  Const improvements
+
+Thu Oct 26 10:53:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+	* orbsvcs/tests/Event/UDP/*:
+	  New regression test for the RTEC using UDP federations. By default
+	  we just send the string ACE/TAO/CIAO in the Any and this works, but
+	  when -v is passed to the run_test.pl we send a valuetype which
+	  contains the string. With the current svn head version of today
+	  this fails because on the receiver side we can't extract the valuetype
+	  out of the Any
+
+Wed Oct 25 15:33:27 UTC 2006  Chad Elliott  <elliott_c@ociweb.com>
+
+        * tao/PortableServer/Root_POA.cpp:
+
+          My change from Mon Oct 23 12:24:57 UTC 2006 uncovered yet another
+          reference counting problem.  The TAO_Root_POA was not manipulating
+          the reference count of the TAO_POA_Manager that it held.
+
 Mon Oct 23 12:24:57 UTC 2006  Chad Elliott  <elliott_c@ociweb.com>
 
         * tao/PortableServer/Object_Adapter.h:
@@ -102,14 +213,14 @@ Mon Oct 16 21:16:14 UTC 2006  Phil Mesnier  <mesnier_p@ociweb.com>
 
 Mon Oct 16 10:59:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-        * tests/Nested_Upcall_Crash/run_test.pl:
-          Check whether we could spawn the server, if not, give an error
-          and exit directly.
+	* tests/Nested_Upcall_Crash/run_test.pl:
+	  Check whether we could spawn the server, if not, give an error
+	  and exit directly.
 
 Mon Oct 16 08:43:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-        * TAO_IDL/be/be_codegen.cpp:
-          Const changes
+	* TAO_IDL/be/be_codegen.cpp:
+	  Const changes
 
 Sun Oct 15 23:23:53 UTC 2006  Phil Mesnier  <mesnier_p@ociweb.com>
 
@@ -132,15 +243,12 @@ Sun Oct 15 23:23:53 UTC 2006  Phil Mesnier  <mesnier_p@ociweb.com>
           forces the race condition. Adding a small sleep along with the
           above fix demonstrates that the problem no longer occurs.
 
-          Thanks to Chris Reed, cr at progress dot com, for reporting this
-          bug.
-
 Fri Oct 13 10:28:12 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-        * tests/COIOP/*:
-          Extended this test so that we check whether a call should
-          succeed or not. This test requires that COIOP is the only
-          pluggable protocol available.
+	* tests/COIOP/*:
+	  Extended this test so that we check whether a call should
+	  succeed or not. This test requires that COIOP is the only
+	  pluggable protocol available.
 
 Thu Oct 12 14:17:11 UTC 2006  Chad Elliott  <elliott_c@ociweb.com>
 

@@ -257,7 +257,7 @@ TAO_ECG_CDR_Message_Sender::send_fragment (const ACE_INET_Addr &addr,
     expected_n += iov[i].iov_len;
   if (n > 0 && size_t(n) != expected_n)
     {
-      ACE_DEBUG ((LM_ERROR, ("Sent only %d out of %d bytes "
+      ACE_ERROR ((LM_ERROR, ("Sent only %d out of %d bytes "
                               "for mcast fragment.\n"),
                   n,
                   expected_n));
@@ -267,7 +267,7 @@ TAO_ECG_CDR_Message_Sender::send_fragment (const ACE_INET_Addr &addr,
     {
       if (errno == EWOULDBLOCK)
         {
-          ACE_DEBUG ((LM_ERROR, "Send of mcast fragment failed (%m).\n"));
+          ACE_ERROR ((LM_ERROR, "Send of mcast fragment failed (%m).\n"));
           // @@ TODO Use a Event Channel specific exception
           ACE_THROW (CORBA::COMM_FAILURE ());
         }
