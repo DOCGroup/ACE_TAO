@@ -121,7 +121,7 @@ ACE_Select_Reactor_Handler_Repository::ACE_Select_Reactor_Handler_Repository (AC
 
 int
 ACE_Select_Reactor_Handler_Repository::unbind_all (void)
-{  
+{
   // Unbind all of the <handle, ACE_Event_Handler>s.
 #ifdef ACE_WIN32
   map_type::iterator const end = this->event_handlers_.end ();
@@ -301,11 +301,9 @@ ACE_Select_Reactor_Handler_Repository::unbind (
   // Retrieve event handler before unbinding it from the map.  The
   // iterator pointing to it will no longer be valid once the handler
   // is unbound.
+
   ACE_Event_Handler * const event_handler =
     ACE_SELECT_REACTOR_EVENT_HANDLER (pos);
-
-  if (event_handler == 0)  	 
-    return -1;
 
   // Clear out the <mask> bits in the Select_Reactor's wait_set.
   this->select_reactor_.bit_ops (handle,
@@ -388,6 +386,9 @@ ACE_Select_Reactor_Handler_Repository::unbind (
       complete_removal = true;
     }
 
+  if (event_handler == 0)
+    return -1;
+
   bool const requires_reference_counting =
     event_handler->reference_counting_policy ().value () ==
     ACE_Event_Handler::Reference_Counting_Policy::ENABLED;
@@ -457,7 +458,7 @@ ACE_Select_Reactor_Handler_Repository_Iterator::advance (void)
   while (this->current_ != end && (*(this->current_) == 0))
     ++this->current_;
 #endif  /* !ACE_WIN32 */
-  
+
   return this->current_ != end;
 }
 

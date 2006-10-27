@@ -423,6 +423,14 @@ ACE_TP_Reactor::handle_socket_events (int &event_count,
   // dispatch information is recorded in dispatch_info.
   if (!dispatch_info.dispatch ())
     {
+      // Check for removed handlers.
+      if (dispatch_info.event_handler_ == 0)
+        {
+          this->handler_rep_.unbind(dispatch_info.handle_,
+                                    dispatch_info.mask_);
+        }
+
+
       return 0;
     }
 

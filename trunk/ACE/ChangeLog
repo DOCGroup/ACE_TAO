@@ -1,3 +1,16 @@
+Fri Oct 27 21:41:25 UTC 2006  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * THANKS:
+        * ace/Select_Reactor_Base.inl:
+        * ace/Select_Reactor_Base.cpp:
+        * ace/TP_Reactor.inl:
+        * ace/TP_Reactor.cpp:
+        * tests/run_test.lst:
+
+          The fix for bug 2653. Thanks to Scott Mitchell <rsm at progress
+          dot com> and Chris Reed <cr at progress dot com> for the
+          considerable effort they put in helping to isolate this problem.
+
 Fri Oct 27 21:28:36 UTC 2006  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * tests/Bug_2653_Regression_Test.cpp:
