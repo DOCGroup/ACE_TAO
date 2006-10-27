@@ -540,7 +540,7 @@ ACE_Filecache_Object::ACE_Filecache_Object (const ACE_TCHAR *filename,
   if (mapit)
     {
       // Can we map the file?
-      if (this->mmap_.map (this->handle_, -1,
+      if (this->mmap_.map (this->handle_, static_cast<size_t> (-1),
                            PROT_READ, ACE_MAP_PRIVATE, 0, 0, this->sa_) != 0)
         {
           this->error_i (ACE_Filecache_Object::ACE_MEMMAP_FAILED,
