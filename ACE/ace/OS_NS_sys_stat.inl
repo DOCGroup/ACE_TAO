@@ -107,10 +107,10 @@ namespace ACE_OS
        ? size.QuadPart
        : (ACE_OS::set_errno_to_last_error (), -1));
 # else
-    ACE_OFF_T const size = ::GetFileSize (handle, 0);
+    DWORD const size = ::GetFileSize (handle, 0);
     return
       (size != INVALID_FILE_SIZE
-       ? size
+       ? static_cast<ACE_OFF_T> (size)
        : (ACE_OS::set_errno_to_last_error (), -1));
 # endif  /* _FILE_OFFSET_BITS == 64 */
 #else /* !ACE_WIN32 */

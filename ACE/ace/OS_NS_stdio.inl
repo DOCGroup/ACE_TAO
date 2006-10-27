@@ -48,14 +48,14 @@ ACE_OS::flock_adjust_params (ACE_OS::ace_flock_t *lock,
           }
         start += offset.QuadPart;
 # else
-        ACE_OFF_T const offset =
+        DWORD const offset =
           ::SetFilePointer (lock->handle_, 0, 0, FILE_CURRENT);
         if (offset == INVALID_SET_FILE_POINTER)
           {
             ACE_OS::set_errno_to_last_error ();
             return;
           }
-        start += offset;
+        start += static_cast<ACE_OFF_T> (offset);
 # endif  /* _FILE_OFFSET_BITS == 64 */
       }
       break;
