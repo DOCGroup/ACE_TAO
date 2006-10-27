@@ -42,8 +42,9 @@ public:
    * Receive notification of character data.
    */
   virtual void characters (const ACEXML_Char *ch,
-                           int start,
-                           int length ACEXML_ENV_ARG_DECL)
+                           size_t start,
+                           size_t length
+                           ACEXML_ENV_ARG_DECL)
         ACE_THROW_SPEC ((ACEXML_SAXException))
     ;
 

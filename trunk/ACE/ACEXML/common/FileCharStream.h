@@ -115,7 +115,7 @@ private:
 
   ACEXML_Char*  filename_;
   ACEXML_Char*  encoding_;
-  off_t         size_;
+  ACE_OFF_T     size_;
   FILE*         infile_;
   // This is needed to ensure that we can implement a peek operation on a
   // UTF-16 encoded file. It is a bit hackish, but there is no other way of

@@ -79,7 +79,7 @@ ACEXML_HttpCharStream::open (const ACEXML_Char *url)
                        "Refer HTTP/1.0 error code for details"), -1);
   }
 
-  this->size_ = static_cast<off_t> (len);
+  this->size_ = static_cast<ACE_OFF_T> (len);
   return this->determine_encoding();
 }
 
@@ -277,7 +277,7 @@ ACEXML_HttpCharStream::send_request (void)
   ACE_Time_Value tv (ACE_DEFAULT_TIMEOUT);
 
   // Send the command to the connected server.
-  int retval = this->stream_->send_n (command, bytes, &tv);
+  int retval = static_cast<int> (this->stream_->send_n (command, bytes, &tv));
   if (retval <= 0)
     return -1;
   return retval;

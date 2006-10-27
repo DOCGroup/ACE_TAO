@@ -145,7 +145,7 @@ public:
    *  If offset is greater than EOF, both <get> and <recv> are set to EOF.
    *  Note special return value is returned to indicate this condition.
    */
-  virtual off_t seek (off_t offset, int whence = SEEK_CUR);
+  virtual ACE_OFF_T seek (ACE_OFF_T offset, int whence = SEEK_CUR);
 
   /// Returns 1 if we're at the end of the HTTP stream, else 0.
   virtual int eof (void) const;
