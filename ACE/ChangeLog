@@ -1,3 +1,10 @@
+Fri Oct 27 19:48:23 UTC 2006  Ossama Othman  <ossama_othman at symantec dot com>
+
+        * ace/Filecache.cpp (ACE_Filecache_Object):
+
+          Cast -1 to size_t.  Ugly (and works), but currently necessary.
+          Addresses "passing negative value" warnings.
+
 Fri Oct 27 19:28:16 UTC 2006  Ossama Othman  <ossama_othman at symantec dot com>
 
         * ace/OS_NS_stdio.inl (flock_adjust_params):
