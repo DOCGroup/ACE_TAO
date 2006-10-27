@@ -351,8 +351,6 @@ namespace CIAO
     // receiver.
     ACE_INET_Addr send_addr (port, address);
 
-    //ACE_INET_Addr send_addr (10001, ACE_DEFAULT_MULTICAST_ADDR);
-
     SimpleAddressServer * addr_srv_impl = new SimpleAddressServer (send_addr);
 
     PortableServer::ObjectId_var addr_srv_oid =
@@ -362,9 +360,28 @@ namespace CIAO
     RtecUDPAdmin::AddrServer_var addr_srv =
       RtecUDPAdmin::AddrServer::_narrow (addr_srv_obj.in());
 
+/*
+      // First we convert the string into an INET address, then we
+      // convert that into the right IDL structure:
+      ACE_INET_Addr udp_addr (address);
+      ACE_DEBUG ((LM_DEBUG,
+                  "udp mcast address is: %s\n",
+                  address));
+      RtecUDPAdmin::UDP_Addr addr;
+      addr.ipaddr = udp_addr.get_ip_address ();
+      addr.port   = udp_addr.get_port_number ();
+
+      // Now we create and activate the servant
+      SimpleAddressServer as_impl (addr);
+      RtecUDPAdmin::AddrServer_var addr_srv =
+        as_impl._this (ACE_ENV_SINGLE_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+*/
+
     this->addr_serv_map_.bind (
       name,
       RtecUDPAdmin::AddrServer::_duplicate (addr_srv.in ()));
+      
 
     return true;
   }
@@ -391,13 +408,13 @@ namespace CIAO
     if (this->addr_serv_map_.find (addr_serv_id, addr_srv) != 0)
       return false;
 
-      // Now we setup the sender:
-      TAO_EC_Servant_Var<TAO_ECG_UDP_Sender> sender = TAO_ECG_UDP_Sender::create();
-      sender->init (this->rt_event_channel_.in (),
-                    addr_srv.in (),
-                    endpoint
-                    ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+    // Now we setup the sender:
+    TAO_EC_Servant_Var<TAO_ECG_UDP_Sender> sender = TAO_ECG_UDP_Sender::create();
+    sender->init (this->rt_event_channel_.in (),
+                  addr_srv.in (),
+                  endpoint
+                  ACE_ENV_ARG_PARAMETER);
+    ACE_TRY_CHECK;
 
     // Setup the subscription and connect to the EC
     ACE_ConsumerQOS_Factory cons_qos_fact;
@@ -558,6 +575,11 @@ namespace CIAO
             this->event_consumer_->push_event (ev
                                                ACE_ENV_ARG_PARAMETER);
             ACE_CHECK;
+          }
+        else
+          {
+            ACE_ERROR ((LM_ERROR, "CIAO::RTEventServiceConsumer_impl::push(), "
+                                  "failed to extract event\n"));
           }
       }
 
