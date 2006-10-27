@@ -7,6 +7,7 @@
 #include "ace/OS_NS_string.h"
 #include "ace/OS_NS_sys_stat.h"
 #include "ace/Log_Msg.h"
+#include "ace/Truncate.h"
 
 #if (ACE_HAS_POSITION_INDEPENDENT_POINTERS == 1)
 #include "ace/Based_Pointer_T.h"
@@ -50,12 +51,20 @@ ACE_MMAP_Memory_Pool::release (int destroy)
 }
 
 int
-ACE_MMAP_Memory_Pool::sync (ssize_t len, int flags)
+ACE_MMAP_Memory_Pool::sync (size_t len, int flags)
 {
   ACE_TRACE ("ACE_MMAP_Memory_Pool::sync");
 
-  if (len < 0)
-    len = ACE_OS::lseek (this->mmap_.handle (), 0, SEEK_END);
+  return this->mmap_.sync (len, flags);
+}
+
+int
+ACE_MMAP_Memory_Pool::sync (int flags)
+{
+  ACE_TRACE ("ACE_MMAP_Memory_Pool::sync");
+
+  size_t const len = ACE_Utils::Truncate<size_t> (
+    ACE_OS::lseek (this->mmap_.handle (), 0, SEEK_END));
 
   return this->mmap_.sync (len, flags);
 }
@@ -71,19 +80,28 @@ ACE_MMAP_Memory_Pool::sync (void *addr, size_t len, int flags)
 }
 
 // Change the protection of the pages of the mapped region to <prot>
-// starting at <this->base_addr_> up to <len> bytes.  If <len> == -1
-// then change protection of all pages in the mapped region.
+// starting at <this->base_addr_> up to <len> bytes.
+// Change protection of all pages in the mapped region.
 
 int
-ACE_MMAP_Memory_Pool::protect (ssize_t len, int prot)
+ACE_MMAP_Memory_Pool::protect (size_t len, int prot)
 {
   ACE_TRACE ("ACE_MMAP_Memory_Pool::protect");
 
-  if (len < 0)
-    len = ACE_OS::lseek (this->mmap_.handle (), 0, SEEK_END);
+  return this->mmap_.protect (len, prot);
+}
+
+int
+ACE_MMAP_Memory_Pool::protect (int prot)
+{
+  ACE_TRACE ("ACE_MMAP_Memory_Pool::protect");
+
+  size_t const len = ACE_Utils::Truncate<size_t> (
+    ACE_OS::lseek (this->mmap_.handle (), 0, SEEK_END));
 
   return this->mmap_.protect (len, prot);
 }
+
 
 // Change the protection of the pages of the mapped region to <prot>
 // starting at <addr> up to <len> bytes.
@@ -188,7 +206,7 @@ ACE_MMAP_Memory_Pool::~ACE_MMAP_Memory_Pool (void)
 // memory.
 int
 ACE_MMAP_Memory_Pool::commit_backing_store_name (size_t rounded_bytes,
-                                                 ACE_LOFF_T &map_size)
+                                                 size_t & map_size)
 {
   ACE_TRACE ("ACE_MMAP_Memory_Pool::commit_backing_store_name");
 
@@ -210,11 +228,13 @@ ACE_MMAP_Memory_Pool::commit_backing_store_name (size_t rounded_bytes,
        cur_block < rounded_bytes;
        cur_block += seek_len)
     {
-      map_size = ACE_OS::lseek (this->mmap_.handle (),
-                                static_cast<off_t> (seek_len - 1),
-                                SEEK_END);
+      map_size =
+        ACE_Utils::Truncate<size_t> (
+          ACE_OS::lseek (this->mmap_.handle (),
+                         static_cast<ACE_OFF_T> (seek_len - 1),
+                         SEEK_END));
 
-      if (map_size == -1
+      if (map_size == static_cast<size_t> (-1)
           || ACE_OS::write (this->mmap_.handle (),
                             "",
                             1) == -1)
@@ -237,7 +257,7 @@ ACE_MMAP_Memory_Pool::commit_backing_store_name (size_t rounded_bytes,
 // Memory map the file up to <map_size> bytes.
 
 int
-ACE_MMAP_Memory_Pool::map_file (ACE_LOFF_T map_size)
+ACE_MMAP_Memory_Pool::map_file (size_t map_size)
 {
   ACE_TRACE ("ACE_MMAP_Memory_Pool::map_file");
 #if (ACE_HAS_POSITION_INDEPENDENT_POINTERS == 1)
@@ -303,7 +323,7 @@ ACE_MMAP_Memory_Pool::acquire (size_t nbytes,
   // ACE_DEBUG ((LM_DEBUG, "(%P|%t) acquiring more chunks, nbytes =
   // %d, rounded_bytes = %d\n", nbytes, rounded_bytes));
 
-  ACE_LOFF_T map_size;
+  size_t map_size;
 
   if (this->commit_backing_store_name (rounded_bytes,
                                        map_size) == -1)
@@ -345,7 +365,7 @@ ACE_MMAP_Memory_Pool::init_acquire (size_t nbytes,
       errno = 0;
       // Reopen file *without* using O_EXCL...
       if (this->mmap_.map (this->backing_store_name_,
-                           -1,
+                           static_cast<size_t> (-1),
                            O_RDWR,
                            this->file_mode_,
                            PROT_RDWR,
@@ -397,7 +417,8 @@ ACE_MMAP_Memory_Pool::remap (void *addr)
 {
   ACE_TRACE ("ACE_MMAP_Memory_Pool::remap");
   //  ACE_DEBUG ((LM_DEBUG,  ACE_LIB_TEXT ("Remapping with fault address at: %X\n"), addr));
-  off_t const current_map_size = ACE_OS::filesize (this->mmap_.handle ());
+  size_t const current_map_size =
+    ACE_Utils::Truncate<size_t> (ACE_OS::filesize (this->mmap_.handle ()));
   // ACE_OS::lseek (this->mmap_.handle (), 0, SEEK_END);
 
   if (!(addr < (void *) ((char *) this->mmap_.addr () + current_map_size)
@@ -408,15 +429,16 @@ ACE_MMAP_Memory_Pool::remap (void *addr)
   return this->map_file (current_map_size);
 }
 
-ACE_MMAP_Memory_Pool_Options::ACE_MMAP_Memory_Pool_Options (const void *base_addr,
-                                                            int use_fixed_addr,
-                                                            int write_each_page,
-                                                            ACE_LOFF_T minimum_bytes,
-                                                            u_int flags,
-                                                            int guess_on_fault,
-                                                            LPSECURITY_ATTRIBUTES sa,
-                                                            mode_t file_mode,
-                                                            bool unique)
+ACE_MMAP_Memory_Pool_Options::ACE_MMAP_Memory_Pool_Options (
+  const void *base_addr,
+  int use_fixed_addr,
+  int write_each_page,
+  size_t minimum_bytes,
+  u_int flags,
+  int guess_on_fault,
+  LPSECURITY_ATTRIBUTES sa,
+  mode_t file_mode,
+  bool unique)
   : base_addr_ (base_addr),
     use_fixed_addr_ (use_fixed_addr),
     write_each_page_ (write_each_page),
@@ -478,7 +500,8 @@ ACE_MMAP_Memory_Pool::handle_signal (int signum, siginfo_t *siginfo, ucontext_t 
   if (guess_on_fault_)
     {
       // Check if the current mapping is up to date.
-      ACE_LOFF_T const current_map_size = ACE_OS::filesize (this->mmap_.handle ());
+      size_t const current_map_size =
+        ACE_Utils::Truncate<size_t> (ACE_OS::filesize (this->mmap_.handle ()));
 
       if (static_cast<size_t> (current_map_size) == this->mmap_.size ())
         {
@@ -508,7 +531,7 @@ size_t
 ACE_MMAP_Memory_Pool::round_up (size_t nbytes)
 {
   ACE_TRACE ("ACE_MMAP_Memory_Pool::round_up");
-  return ACE::round_to_pagesize (static_cast<off_t> (nbytes));
+  return ACE::round_to_pagesize (nbytes);
 }
 
 ACE_ALLOC_HOOK_DEFINE(ACE_Lite_MMAP_Memory_Pool)
@@ -525,7 +548,14 @@ ACE_Lite_MMAP_Memory_Pool::~ACE_Lite_MMAP_Memory_Pool (void)
 }
 
 int
-ACE_Lite_MMAP_Memory_Pool::sync (ssize_t, int)
+ACE_Lite_MMAP_Memory_Pool::sync (size_t, int)
+{
+  ACE_TRACE ("ACE_Lite_MMAP_Memory_Pool::sync");
+  return 0;
+}
+
+int
+ACE_Lite_MMAP_Memory_Pool::sync (int)
 {
   ACE_TRACE ("ACE_Lite_MMAP_Memory_Pool::sync");
   return 0;

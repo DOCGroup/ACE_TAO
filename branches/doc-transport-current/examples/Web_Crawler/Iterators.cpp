@@ -46,7 +46,7 @@ HTML_Body_Iterator::next (ACE_CString &url)
       if ( href_index > 0)
         {
           // Get back to buffer start location.
-          this->url_.stream ().seek (-1 * static_cast<off_t> (len),
+          this->url_.stream ().seek (-1 * static_cast<ACE_OFF_T> (len),
                                      SEEK_CUR);
 
           int start_index = buffer.find ('\"',

@@ -30,7 +30,7 @@ ACE_Shared_Memory_MM::ACE_Shared_Memory_MM (ACE_HANDLE handle,
                                             int prot,
                                             int share,
                                             char *addr,
-                                            off_t pos)
+                                            ACE_OFF_T pos)
   : shared_memory_ (handle, length, prot, share, addr, pos)
 {
   ACE_TRACE ("ACE_Shared_Memory_MM::ACE_Shared_Memory_MM");
@@ -43,7 +43,7 @@ ACE_Shared_Memory_MM::ACE_Shared_Memory_MM (const ACE_TCHAR *file_name,
                                             int prot,
                                             int share,
                                             char *addr,
-                                            off_t pos)
+                                            ACE_OFF_T pos)
   : shared_memory_ (file_name, len, flags, mode,
                     prot, share, addr, pos)
 {

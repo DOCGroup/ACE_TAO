@@ -25,11 +25,11 @@ ACE_Mem_Map::filename (void) const
 
 ACE_INLINE int
 ACE_Mem_Map::map (ACE_HANDLE handle,
-                  ssize_t length,
+                  size_t length,
                   int prot,
                   int share,
                   void *addr,
-                  off_t offset,
+                  ACE_OFF_T offset,
                   LPSECURITY_ATTRIBUTES sa)
 {
   ACE_TRACE ("ACE_Mem_Map::map");
@@ -39,11 +39,11 @@ ACE_Mem_Map::map (ACE_HANDLE handle,
 // Remap the file associated with <this->handle_>.
 
 ACE_INLINE int
-ACE_Mem_Map::map (ssize_t length,
+ACE_Mem_Map::map (size_t length,
                   int prot,
                   int share,
                   void *addr,
-                  off_t offset,
+                  ACE_OFF_T offset,
                   LPSECURITY_ATTRIBUTES sa)
 {
   ACE_TRACE ("ACE_Mem_Map::map");
@@ -144,15 +144,24 @@ ACE_Mem_Map::unmap (void *addr, ssize_t len)
 }
 
 // Sync <len> bytes of the memory region to the backing store starting
-// at <this->base_addr_>.  If <len> == -1 then sync the whole mapped
-// region.
+// at <this->base_addr_>.
 
 ACE_INLINE int
-ACE_Mem_Map::sync (ssize_t len, int flags)
+ACE_Mem_Map::sync (size_t len, int flags)
 {
   ACE_TRACE ("ACE_Mem_Map::sync");
   return ACE_OS::msync (this->base_addr_,
-                        len < 0 ? this->length_ : len,
+                        len,
+                        flags);
+}
+
+// Sync the whole mapped region.
+ACE_INLINE int
+ACE_Mem_Map::sync (int flags)
+{
+  ACE_TRACE ("ACE_Mem_Map::sync");
+  return ACE_OS::msync (this->base_addr_,
+                        this->length_,
                         flags);
 }
 
@@ -167,16 +176,24 @@ ACE_Mem_Map::sync (void *addr, size_t len, int flags)
 }
 
 // Change the protection of the pages of the mapped region to <prot>
-// starting at <this->base_addr_> up to <len> bytes.  If <len> == -1
-// then change protection of all pages in the mapped region.
+// starting at <this->base_addr_> up to <len> bytes.
 
 ACE_INLINE int
-ACE_Mem_Map::protect (ssize_t len, int prot)
+ACE_Mem_Map::protect (size_t len, int prot)
 {
   ACE_TRACE ("ACE_Mem_Map::protect");
-  if (len < 0)
-    len = this->length_;
   return ACE_OS::mprotect (this->base_addr_, len, prot);
+}
+
+
+// Change the protection of all the pages of the mapped region to <prot>
+// starting at <this->base_addr_>.
+
+ACE_INLINE int
+ACE_Mem_Map::protect (int prot)
+{
+  ACE_TRACE ("ACE_Mem_Map::protect");
+  return ACE_OS::mprotect (this->base_addr_, this->length_, prot);
 }
 
 // Change the protection of the pages of the mapped region to <prot>

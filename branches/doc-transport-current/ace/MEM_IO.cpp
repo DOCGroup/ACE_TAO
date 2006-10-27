@@ -41,10 +41,10 @@ ACE_Reactive_MEM_IO::recv_buf (ACE_MEM_SAP_Node *&buf,
   if (this->shm_malloc_ == 0 || this->handle_ == ACE_INVALID_HANDLE)
     return -1;
 
-  off_t new_offset = 0;
+  ACE_OFF_T new_offset = 0;
   ssize_t retv = ACE::recv (this->handle_,
                             (char *) &new_offset,
-                            sizeof (off_t),
+                            sizeof (ACE_OFF_T),
                             flags,
                             timeout);
 
@@ -54,7 +54,7 @@ ACE_Reactive_MEM_IO::recv_buf (ACE_MEM_SAP_Node *&buf,
       buf = 0;
       return 0;
     }
-  else if (retv != sizeof (off_t))
+  else if (retv != sizeof (ACE_OFF_T))
     {
       //  Nothing available or we are really screwed.
       buf = 0;
@@ -74,7 +74,7 @@ ACE_Reactive_MEM_IO::send_buf (ACE_MEM_SAP_Node *buf,
   if (this->shm_malloc_ == 0 || this->handle_ == ACE_INVALID_HANDLE)
     return -1;
 
-  off_t offset = reinterpret_cast<char *> (buf) -
+  ACE_OFF_T offset = reinterpret_cast<char *> (buf) -
     static_cast<char *> (this->shm_malloc_->base_addr ()); // the offset.
   // Send the offset value over the socket.
   if (ACE::send (this->handle_,
