@@ -73,7 +73,7 @@ ACEXML_Mem_Map_Stream::recv (size_t &len)
       return 0;
     }
   const char *s = this->recv_pos_;
-  this->seek (static_cast<off_t> (len), SEEK_CUR);
+  this->seek (static_cast<ACE_OFF_T> (len), SEEK_CUR);
   len = this->get_pos_ - s;
   return s;
 }
@@ -96,8 +96,8 @@ ACEXML_Mem_Map_Stream::peek_str (size_t offset,
   return &this->get_pos_[offset];
 }
 
-off_t
-ACEXML_Mem_Map_Stream::seek (off_t offset, int whence)
+ACE_OFF_T
+ACEXML_Mem_Map_Stream::seek (ACE_OFF_T offset, int whence)
 {
   switch (whence)
     {
@@ -234,7 +234,7 @@ ACEXML_Mem_Map_Stream::grow_file_and_remap (void)
 //                           -1);
 
   // Grow the memory-mapping to encompass the entire temporary file.
-  if (this->mem_map_.map (-1,
+  if (this->mem_map_.map (static_cast<size_t> (-1),
                           PROT_RDWR,
                           ACE_MAP_PRIVATE,
                           (void*)0) == -1)

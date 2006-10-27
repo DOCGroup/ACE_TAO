@@ -709,7 +709,7 @@ private:
   /**
    *  Pop the top element in the stack and replace current context with that.
    */
-  int pop_context (int GE_ref ACEXML_ENV_ARG_DECL);
+  size_t pop_context (int GE_ref ACEXML_ENV_ARG_DECL);
 
   /**
    *  Create a new ACEXML_CharStream from @a systemId and @a publicId and
