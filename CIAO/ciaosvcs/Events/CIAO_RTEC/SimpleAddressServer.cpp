@@ -9,6 +9,11 @@ SimpleAddressServer::SimpleAddressServer (const ACE_INET_Addr& address) {
   this->address_.port   = address.get_port_number ();
 }
 
+SimpleAddressServer::SimpleAddressServer (const RtecUDPAdmin::UDP_Addr& addr)
+  : address_ (addr)
+{
+}
+
 void
 SimpleAddressServer::get_addr (const RtecEventComm::EventHeader&,
                                RtecUDPAdmin::UDP_Addr& address)
