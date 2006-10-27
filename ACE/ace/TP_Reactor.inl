@@ -32,10 +32,15 @@ ACE_EH_Dispatch_Info::set (ACE_HANDLE handle,
   this->event_handler_ = event_handler;
   this->mask_ = mask;
   this->callback_ = callback;
-  this->resume_flag_ = event_handler->resume_handler ();
-  this->reference_counting_required_ =
-    (event_handler_->reference_counting_policy ().value () ==
-      ACE_Event_Handler::Reference_Counting_Policy::ENABLED);
+  if (event_handler_)
+    {
+      this->resume_flag_ = event_handler->resume_handler ();
+      this->reference_counting_required_ =
+        (event_handler_->reference_counting_policy ().value () ==
+         ACE_Event_Handler::Reference_Counting_Policy::ENABLED);
+    }
+  else
+    this->dispatch_ = false;
 }
 
 ACE_INLINE bool

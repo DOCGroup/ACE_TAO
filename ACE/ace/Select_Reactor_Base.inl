@@ -5,7 +5,7 @@
 #include "ace/Reactor.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
-  
+
 ACE_INLINE ACE_Select_Reactor_Handler_Repository::size_type
 ACE_Select_Reactor_Handler_Repository::size (void) const
 {
@@ -25,18 +25,18 @@ ACE_Select_Reactor_Handler_Repository::max_handlep1 (void) const
   return this->max_handlep1_;
 #endif  /* ACE_WIN32 */
 }
-  
+
 ACE_INLINE int
 ACE_Select_Reactor_Handler_Repository::unbind (ACE_HANDLE handle,
                                                ACE_Reactor_Mask mask)
 {
-  map_type::iterator const pos = this->find_eh (handle);
-
-  return (pos == this->event_handlers_.end ()
-          ? -1
-          : this->unbind (handle, pos, mask));
+    return (handle == ACE_INVALID_HANDLE
+            ? -1
+            : this->unbind (handle,
+                            this->find_eh (handle),
+                            mask));
 }
-  
+
 ACE_INLINE ACE_Event_Handler *
 ACE_Select_Reactor_Handler_Repository::find (ACE_HANDLE handle)
 {
@@ -63,7 +63,7 @@ ACE_Select_Reactor_Handler_Repository::find (ACE_HANDLE handle)
 
   return eh;
 }
-  
+
 // ------------------------------------------------------------------
 
 ACE_INLINE bool
