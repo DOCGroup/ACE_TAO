@@ -1,3 +1,8 @@
+Sat Oct 28 20:50:56 UTC 2006  Steve Huston  <shuston@riverace.com>
+
+        * examples/Threads/thread_specific.cpp: Need to reinterpret_cast a
+          pointer back to an intptr_t.
+
 Sat Oct 28 20:10:42 UTC 2006  Steve Huston  <shuston@riverace.com>
 
         * bin/make_release: Added Smartphone configurations to the WinCE
