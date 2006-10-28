@@ -1,3 +1,11 @@
+Fri Oct 28 03:23:18 UTC 2006  Ossama Othman  <ossama_othman at symantec dot com>
+
+        * examples/POA/On_Demand_Loading/Servant_Manager.cpp:
+        * examples/POA/Loader/Servant_Activator.cpp:
+        * examples/POA/Loader/Servant_Locator.cpp:
+
+          Addressed 64-bit conversion warnings.
+
 Thu Oct 27 02:53:53 UTC 2006  Ossama Othman  <ossama_othman at symantec dot com>
 
         * tao/GIOP_Message_Base.cpp (parse_request_id):
