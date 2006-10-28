@@ -1,3 +1,12 @@
+Fri Oct 28 03:23:18 UTC 2006  Ossama Othman  <ossama_othman at symantec dot com>
+
+        * examples/Threads/thread_manager.cpp:
+        * examples/Threads/cancel.cpp:
+        * examples/Threads/thread_specific.cpp:
+        * examples/C++NPv1/Process_Per_Connection_Logging_Server.cpp:
+        * performance-tests/Synch-Benchmarks/Perf_Test/Benchmark_Performance.cpp
+          Addressed 64-bit conversion warnings.
+
 Fri Oct 28 02:49:11 UTC 2006  Ossama Othman  <ossama_othman at symantec dot com>
 
         * examples/APG/Shared_Memory/Mem_Map.cpp:

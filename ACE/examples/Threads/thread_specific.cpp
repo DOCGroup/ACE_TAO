@@ -44,9 +44,7 @@ cleanup (void *ptr)
 static void *
 worker (void *c)
 {
-  // Cast the arg to a long, first, because a pointer is the same size
-  // as a long on all current ACE platforms.
-  int count = (int) (long) c;
+  intptr_t count = static_cast<intptr_t> (c);
 
   ACE_thread_key_t key = ACE_OS::NULL_key;
   int *ip = 0;
@@ -68,7 +66,7 @@ worker (void *c)
                 "(%t) %p\n",
                 "ACE_Thread::setspecific"));
 
-  for (int i = 0; i < count; i++)
+  for (intptr_t i = 0; i < count; i++)
     {
       if (ACE_Thread::keycreate (&key, cleanup) == -1)
         ACE_ERROR ((LM_ERROR,
@@ -194,7 +192,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   ACE_Service_Config daemon (argv[0]);
 
   int threads = argc > 1 ? ACE_OS::atoi (argv[1]) : 4;
-  int count = argc > 2 ? ACE_OS::atoi (argv[2]) : 10000;
+  intptr_t count = argc > 2 ? ACE_OS::atoi (argv[2]) : 10000;
 
   // Register a signal handler.
   ACE_Sig_Action sa ((ACE_SignalHandler) (handler), SIGINT);
