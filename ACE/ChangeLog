@@ -1,3 +1,8 @@
+Sat Oct 28 20:10:42 UTC 2006  Steve Huston  <shuston@riverace.com>
+
+        * bin/make_release: Added Smartphone configurations to the WinCE
+          project files generated at release time.
+
 Sat Oct 28 13:50:01 UTC 2006  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * ace/Select_Reactor_Base.cpp:
