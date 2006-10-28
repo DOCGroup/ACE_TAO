@@ -13,15 +13,9 @@ ACE_RCSID(Threads, cancel, "$Id$")
 #if defined (ACE_HAS_THREADS)
 
 static void *
-#if ACE_SIZEOF_VOID_P==8 && ACE_SIZEOF_INT<ACE_SIZEOF_VOID_P
-worker (long iterations)
+worker (intptr_t iterations)
 {
-  for (long i = 0; i < iterations; i++)
-#else
-worker (int iterations)
-{
-  for (int i = 0; i < iterations; i++)
-#endif
+  for (intptr_t i = 0; i < iterations; i++)
     {
       if ((i % 10) == 0
 		  && (ACE_Thread_Manager::instance ()->testcancel (ACE_Thread::self ()) != 0))
@@ -35,7 +29,7 @@ worker (int iterations)
 }
 
 static const int DEFAULT_THREADS = ACE_DEFAULT_THREADS;
-static const int DEFAULT_ITERATIONS = 100000;
+static const intptr_t DEFAULT_ITERATIONS = 100000;
 
 int
 ACE_TMAIN (int argc, ACE_TCHAR *argv[])
@@ -45,11 +39,8 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   daemon.open (argv[0]);
 
   int n_threads = argc > 1 ? ACE_OS::atoi (argv[1]) : DEFAULT_THREADS;
-#if ACE_SIZEOF_VOID_P==8 && ACE_SIZEOF_INT<ACE_SIZEOF_VOID_P
-  long n_iterations = (long)( argc > 2 ? ACE_OS::atoi (argv[2]) : DEFAULT_ITERATIONS );
-#else
-  int n_iterations = argc > 2 ? ACE_OS::atoi (argv[2]) : DEFAULT_ITERATIONS;
-#endif
+  intptr_t n_iterations =
+    argc > 2 ? ACE_OS::atoi (argv[2]) : DEFAULT_ITERATIONS;
 
   ACE_Thread_Manager *thr_mgr = ACE_Thread_Manager::instance ();
 
