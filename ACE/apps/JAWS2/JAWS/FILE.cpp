@@ -21,7 +21,7 @@ JAWS_FILE::mem_map (int length,
                     int prot,
                     int share,
                     void *addr,
-                    off_t offset,
+                    ACE_OFF_T offset,
                     LPSECURITY_ATTRIBUTES sa) const
 {
   JAWS_FILE *mutable_this = (JAWS_FILE *) this;
@@ -33,7 +33,7 @@ JAWS_FILE::mem_map (int length,
                     int prot,
                     int share,
                     void *addr,
-                    off_t offset,
+                    ACE_OFF_T offset,
                     LPSECURITY_ATTRIBUTES sa)
 {
   if (this->map_ == 0)
@@ -46,7 +46,12 @@ JAWS_FILE::mem_map (int length,
           if (this->map_ != 0)
             {
               int r = this->map_->map (this->get_handle (),
-                                       length, prot, share, addr, offset, sa);
+                                       static_cast<size_t> (length),
+                                       prot,
+                                       share,
+                                       addr,
+                                       offset,
+                                       sa);
               if (r < 0)
                 {
                   delete this->map_;

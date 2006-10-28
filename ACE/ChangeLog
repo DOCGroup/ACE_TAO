@@ -1,5 +1,10 @@
 Fri Oct 28 03:23:18 UTC 2006  Ossama Othman  <ossama_othman at symantec dot com>
 
+        * apps/JAWS2/JAWS/FILE.cpp:
+        * apps/JAWS2/JAWS/FILE.h:
+        * apps/JAWS2/JAWS/IO.cpp:
+        * apps/JAWS3/jaws3/FILE.cpp:
+        * apps/JAWS3/jaws3/FILE.h:
         * examples/Threads/thread_manager.cpp:
         * examples/Threads/cancel.cpp:
         * examples/Threads/thread_specific.cpp:

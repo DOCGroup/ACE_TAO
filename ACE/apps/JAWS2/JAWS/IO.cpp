@@ -574,7 +574,7 @@ JAWS_Asynch_IO::send_message (JAWS_IO_Handler *ioh,
 
   ACE_Asynch_Write_Stream aw;
   if (aw.open (*(aioh->handler ()), aioh->handle ()) == -1
-      || aw.write (*mb, length, (void *) act) == -1)
+      || aw.write (*mb, length, (void *) static_cast<intptr_t> (act)) == -1)
     {
       mb->release ();
 
