@@ -301,9 +301,10 @@ ACE_Select_Reactor_Handler_Repository::unbind (
   // Retrieve event handler before unbinding it from the map.  The
   // iterator pointing to it will no longer be valid once the handler
   // is unbound.
-
   ACE_Event_Handler * const event_handler =
-    ACE_SELECT_REACTOR_EVENT_HANDLER (pos);
+    (pos == this->event_handlers_.end () 
+     ? 0 
+     : ACE_SELECT_REACTOR_EVENT_HANDLER (pos));
 
   // Clear out the <mask> bits in the Select_Reactor's wait_set.
   this->select_reactor_.bit_ops (handle,
@@ -339,7 +340,7 @@ ACE_Select_Reactor_Handler_Repository::unbind (
   if (!has_any_wait_mask && !has_any_suspend_mask)
     {
 #if defined (ACE_WIN32)
-      if (this->event_handlers_.unbind (pos) == -1)
+      if (event_handler != 0 && this->event_handlers_.unbind (pos) == -1)
         return -1;  // Should not happen!
 #else
       this->event_handlers_[handle] = 0;

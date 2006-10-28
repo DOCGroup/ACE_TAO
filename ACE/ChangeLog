@@ -1,3 +1,9 @@
+Sat Oct 28 13:50:01 UTC 2006  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * ace/Select_Reactor_Base.cpp:
+
+          Fix to address Win32-specific problems in bug 2653 fix.
+
 Sat Oct 28 01:48:27 UTC 2006  Steve Huston  <shuston@riverace.com>
 
         * include/makeinclude/wrapper_macros.GNU: Add -L$(INSLIB) to LDFLAGS
