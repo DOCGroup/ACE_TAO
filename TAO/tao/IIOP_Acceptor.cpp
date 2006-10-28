@@ -326,6 +326,11 @@ TAO_IIOP_Acceptor::open (TAO_ORB_Core *orb_core,
       if (this->probe_interfaces (orb_core, def_type) == -1)
         return -1;
 
+      // Probe interfaces has a side effect of potentially modifying
+      // the default address, since that is where the address family
+      // is considered.
+      addr.set(this->default_address_);
+
       return this->open_i (addr, reactor);
     }
 

@@ -1,3 +1,11 @@
+Sat Oct 28 16:11:12 UTC 2006  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * tao/IIOP_Acceptor.cpp (open):
+
+          When using an explicit, default address for the endpoint such as
+          iiop://:12345 this change is necessary to ensure the encoded
+          address is correct for either IPv4 or IPv6 as configured.
+
 Fri Oct 28 03:23:18 UTC 2006  Ossama Othman  <ossama_othman at symantec dot com>
 
         * examples/POA/On_Demand_Loading/Servant_Manager.cpp:
