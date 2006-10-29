@@ -1,3 +1,8 @@
+Sun Oct 29 17:10:39 UTC 2006  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * bin/tao_orb_tests.lst:
+          Added Bug 2654 regression test to suite.
+
 Sat Oct 28 20:50:56 UTC 2006  Steve Huston  <shuston@riverace.com>
 
         * examples/Threads/thread_specific.cpp: Need to reinterpret_cast a
