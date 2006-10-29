@@ -25,7 +25,17 @@ ACE_RCSID (tao,
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-
+// Uncomment *one* of the the following defines if you want to explicitly induce
+// the race condition defined in Bug 2654. These enable the introduction of a
+// slight delay during connection completion processing.
+// A - before checking the connection_pending status
+// B - after A but before checking the connection error result
+// C - acter B but before caching
+// D - after caching
+//#define INDUCE_BUG_2654_A
+//#define INDUCE_BUG_2654_B
+//#define INDUCE_BUG_2654_C
+//#define INDUCE_BUG_2654_D
 
 //-----------------------------------------------------------------------------
 
@@ -424,24 +434,47 @@ TAO_IIOP_Connector::complete_connection (int result,
             }
         }
     }
+
+#if defined (INDUCE_BUG_2654_A)
+  // This is where the fatal error would occur. A pending asynch
+  // connection would fail, the failure handled by another thread,
+  // closing the connection.  However the remainder of this method
+  // only checked to see if the keep_waiting status was true, and bump
+  // the refcount then. However if the status was really
+  // error_detected, then no bump in refcount occured allowing the
+  // connection_handler's close_handler method to effectively steal
+  // the reference to be handed back to the caller. That would then
+  // trigger an abort as the profile_transport_resolver (our caller)
+  // to delete the transport while it is still cached.
+  ACE_Time_Value udelay(0,600);
+  struct timespec ts = udelay;
+  ACE_OS::nanosleep (&ts);
+#endif // INDUCE_BUG_2654_A
+
+  int retval = -1;
+
   // At this point, the connection has been successfully created
   // connected or not connected, but we have a connection.
   TAO_IIOP_Connection_Handler *svc_handler = 0;
   TAO_IIOP_Endpoint *iiop_endpoint = 0;
-
+  bool set_connection_pending = false;
   if (transport != 0)
     {
-      for (unsigned i = 0; i < count; i++)
+      if (count == 1)
         {
-          if (transport == tlist[i])
+          svc_handler = sh_list[0];
+          iiop_endpoint = ep_list[0];
+        }
+      else
+        {
+          for (unsigned i = 0; i < count; i++)
             {
-              svc_handler = sh_list[i];
-              if (transport->connection_handler()->keep_waiting())
+              if (transport == tlist[i])
                 {
-                  svc_handler->connection_pending();
+                  svc_handler = sh_list[i];
+                  iiop_endpoint = ep_list[i];
+                  break;
                 }
-              iiop_endpoint = ep_list[i];
-              break;
             }
         }
     }
@@ -470,6 +503,35 @@ TAO_IIOP_Connector::complete_connection (int result,
       return 0;
     }
 
+  if (transport->connection_handler()->keep_waiting())
+    {
+      svc_handler->connection_pending();
+      set_connection_pending = true;
+    }
+
+#if defined (INDUCE_BUG_2654_B)
+  // It is possible for the connection failure to be processed after bumping
+  // the reference count and before we plan to cache the connection. Prior to
+  // fixing bug 2654, this would lead to a failed connection in the cache.
+  // Though not a fatal condition, it was certainly wasteful of resources.
+  ACE_Time_Value udelay(0,600);
+  struct timespec ts = udelay;
+  ACE_OS::nanosleep (&ts);
+#endif // INDUCE_BUG_2654_B
+
+  // Fix for bug 2654.
+  if (transport->connection_handler()->error_detected())
+    {
+      if (TAO_debug_level > 0)
+        ACE_DEBUG((LM_DEBUG,
+                   ACE_TEXT("TAO (%P|%t) - IIOP_Connector::make_connection, ")
+                   ACE_TEXT("transport in error before cache! ")
+                   ACE_TEXT("conn_pend = %d\n"),
+                   set_connection_pending));
+      if (set_connection_pending)
+        svc_handler->remove_reference ();
+      return 0;
+    }
 
   if (TAO_debug_level > 2)
     {
@@ -483,16 +545,25 @@ TAO_IIOP_Connector::complete_connection (int result,
                 svc_handler->peer ().get_handle ()));
     }
 
+#if defined (INDUCE_BUG_2654_C)
+  // This sets up the possibility that a failed connection is detected after we
+  // checked the connection status but before we cached the connection. This
+  // will allow a failed connection to be cached
+  ACE_Time_Value udelay(0,600);
+  struct timespec ts = udelay;
+  ACE_OS::nanosleep (&ts);
+#endif // INDUCE_BUG_2654_C
+
+
   // Add the handler to Cache
-  int retval = -1;
-  if (count == 1U || desc.reset_endpoint(iiop_endpoint))
+  if (count == 1 || desc.reset_endpoint(iiop_endpoint))
     {
       retval = this->orb_core ()->
         lane_resources ().transport_cache ().cache_transport (&desc,
                                                               transport);
     }
 
-  // Failure in adding to cache.
+  // Failure in adding to cache
   if (retval != 0)
     {
       // Close the handler.
@@ -507,6 +578,34 @@ TAO_IIOP_Connector::complete_connection (int result,
 
       return 0;
     }
+
+  // Other part of fix for bug 2654.
+  // It is possible that after checking for a connection failure but
+  // before caching, the connection really failed, thus an invalid
+  // connection is put into the cache. Thus we do one last status
+  // check before handing the connection back to the caller.
+  if (transport->connection_handler()->error_detected())
+    {
+      if (TAO_debug_level > 0)
+        ACE_DEBUG((LM_DEBUG,
+                   ACE_TEXT("TAO (%P|%t) - IIOP_Connector::make_connection, ")
+                   ACE_TEXT("transport in error after cache! ")
+                   ACE_TEXT("conn_pend = %d\n"),
+                   set_connection_pending));
+      if (set_connection_pending)
+        svc_handler->remove_reference ();
+      transport->purge_entry();
+      return 0;
+    }
+
+
+#if defined (INDUCE_BUG_2654_D)
+  // at this point the connection handler's close connection will manage
+  // purging the entry from the cache so we are fine there.
+  ACE_Time_Value udelay(0,600);
+  struct timespec ts = udelay;
+  ACE_OS::nanosleep (&ts);
+#endif // INDUCE_BUG_2654_D
 
   if (transport->is_connected () &&
       transport->wait_strategy ()->register_handler () != 0)
