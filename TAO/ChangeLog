@@ -1,3 +1,12 @@
+Sun Oct 29 10:58:12 UTC 2006  Martin Corino  <mcorino@remedy.nl>
+
+        * tao/Strategies/advanced_resource.cpp:
+
+          Changed size argument for TP_Reactor construction from
+          ACE_TP_Reactor::DEFAULT_SIZE to ACE::max_handles () (as it is in
+          default_resource.cpp) to solve CTOR failures on OpenVMS (and most likely
+          also LynxOS) in OctetSeq and Leader_Followers tests.
+
 Sat Oct 28 16:11:12 UTC 2006  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * tao/IIOP_Acceptor.cpp (open):
