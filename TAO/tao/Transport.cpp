@@ -2447,6 +2447,17 @@ TAO_Transport::out_stream (void)
   return this->messaging_object ()->out_stream ();
 }
 
+void
+TAO_Transport::pre_close (void)
+{
+  this->is_connected_ = false;
+  this->purge_entry ();
+  {
+    ACE_MT (ACE_GUARD (ACE_Lock, guard, *this->handler_lock_));
+    this->cleanup_queue_i ();
+  }
+}
+
 bool
 TAO_Transport::post_open (size_t id)
 {
