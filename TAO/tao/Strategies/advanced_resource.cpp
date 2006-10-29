@@ -475,7 +475,7 @@ TAO_Advanced_Resource_Factory::allocate_reactor_impl (void) const
     default:
     case TAO_REACTOR_TP:
       ACE_NEW_RETURN (impl,
-          ACE_TP_Reactor (ACE_TP_Reactor::DEFAULT_SIZE,
+          ACE_TP_Reactor (ACE::max_handles (),
               1,
               (ACE_Sig_Handler*)0,
               (ACE_Timer_Queue*)0,
