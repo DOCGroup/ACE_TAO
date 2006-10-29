@@ -1,3 +1,8 @@
+Sun Oct 29 17:08:21 UTC 2006  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * tests/Bug_2654_Regression/Hello.cpp:
+          Took out temporary, unix-only, header.
+
 Sun Oct 29 16:51:47 UTC 2006  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * tao/Connection_Handler.cpp:
