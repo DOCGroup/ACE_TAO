@@ -3,7 +3,6 @@
 //
 #include "Hello.h"
 #include "ace/Task.h"
-#include "unistd.h"
 #include "ace/OS_NS_time.h"
 
 class Killer : public ACE_Task_Base
