@@ -1,3 +1,25 @@
+Sun Oct 29 16:51:47 UTC 2006  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * tao/Connection_Handler.cpp:
+        * tao/IIOP_Connector.cpp:
+        * tao/Transport.h:
+        * tao/Transport.cpp:
+
+          The fix for bug 2654. Thanks to Chris Reed <cr at progress dot
+          com> an Scott Mitchell <rsm at progress dot com> for help
+          tracking this down.
+
+        * tests/Bug_2654_Regression/Bug_2654_Regression.mpc:
+        * tests/Bug_2654_Regression/Hello.h:
+        * tests/Bug_2654_Regression/Hello.idl:
+        * tests/Bug_2654_Regression/Hello.cpp:
+        * tests/Bug_2654_Regression/README:
+        * tests/Bug_2654_Regression/client.cpp:
+        * tests/Bug_2654_Regression/run_test.pl:
+        * tests/Bug_2654_Regression/server.cpp:
+
+          The new test for ensuring bug 2654 is fixed.
+
 Sun Oct 29 10:58:12 UTC 2006  Martin Corino  <mcorino@remedy.nl>
 
         * tao/Strategies/advanced_resource.cpp:
@@ -86,20 +108,20 @@ Thu Oct 27 01:59:19 UTC 2006  Ossama Othman  <ossama_othman at symantec dot com>
 
 Thu Oct 26 14:20:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-	* orbsvcs/tests/Event/UDP/receiver.cpp:
-	  Register the value factory
+        * orbsvcs/tests/Event/UDP/receiver.cpp:
+          Register the value factory
 
-	* orbsvcs/tests/Event/UDP/run_test.pl:
-	  Also run the test with a valuetype in the event.
+        * orbsvcs/tests/Event/UDP/run_test.pl:
+          Also run the test with a valuetype in the event.
 
 Thu Oct 26 13:30:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-	* orbsvcs/orbsvcs/Event/ECG_CDR_Message_Receiver.cpp:
-	  Reverted the change below. Thew new UDP RTEC test showed
-	  that the consumer was receiving duplicate events without being
-	  able to detect that. So a single send resulted in two events
-	  being received. The original problem needs to be resolved in
-	  a different way because this breaks any assumptions about events
+        * orbsvcs/orbsvcs/Event/ECG_CDR_Message_Receiver.cpp:
+          Reverted the change below. Thew new UDP RTEC test showed
+          that the consumer was receiving duplicate events without being
+          able to detect that. So a single send resulted in two events
+          being received. The original problem needs to be resolved in
+          a different way because this breaks any assumptions about events
 
           Mon Aug 21 15:37:23 UTC 2006  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
           * orbsvcs/orbsvcs/Event/ECG_UDP_Out_Endpoint.i:
@@ -112,19 +134,19 @@ Thu Oct 26 13:30:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Thu Oct 26 12:54:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-	* orbsvcs/orbsvcs/Event/ECG_CDR_Message_Sender.cpp:
-	* orbsvcs/orbsvcs/Event/ECG_Mcast_EH.cpp:
-	  Const improvements
+        * orbsvcs/orbsvcs/Event/ECG_CDR_Message_Sender.cpp:
+        * orbsvcs/orbsvcs/Event/ECG_Mcast_EH.cpp:
+          Const improvements
 
 Thu Oct 26 10:53:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-	* orbsvcs/tests/Event/UDP/*:
-	  New regression test for the RTEC using UDP federations. By default
-	  we just send the string ACE/TAO/CIAO in the Any and this works, but
-	  when -v is passed to the run_test.pl we send a valuetype which
-	  contains the string. With the current svn head version of today
-	  this fails because on the receiver side we can't extract the valuetype
-	  out of the Any
+        * orbsvcs/tests/Event/UDP/*:
+          New regression test for the RTEC using UDP federations. By default
+          we just send the string ACE/TAO/CIAO in the Any and this works, but
+          when -v is passed to the run_test.pl we send a valuetype which
+          contains the string. With the current svn head version of today
+          this fails because on the receiver side we can't extract the valuetype
+          out of the Any
 
 Wed Oct 25 15:33:27 UTC 2006  Chad Elliott  <elliott_c@ociweb.com>
 

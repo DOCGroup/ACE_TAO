@@ -1,0 +1,21 @@
+// -*- MPC -*-
+// $Id$
+
+project(*Server): taoserver, bidir_giop {
+  idlflags += -Sa -St
+
+  Source_Files {
+    Hello.cpp
+    server.cpp
+  }
+}
+
+
+project(*Client): taoclient, messaging, bidir_giop {
+
+  Source_Files {
+    HelloS.cpp
+    HelloC.cpp
+    client.cpp
+  }
+}

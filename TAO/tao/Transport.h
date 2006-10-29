@@ -532,6 +532,9 @@ public:
   /// Perform all the actions when this transport get opened
   bool post_open (size_t id);
 
+  /// do what needs to be done when closing the transport
+  void pre_close (void);
+
   /// Get the connection handler for this transport
   TAO_Connection_Handler * connection_handler (void);
 

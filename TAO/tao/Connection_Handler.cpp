@@ -297,7 +297,7 @@ TAO_Connection_Handler::close_connection_eh (ACE_Event_Handler *eh)
                    handle));
     }
 
-  this->transport ()->purge_entry ();
+  this->transport ()->pre_close ();
 
   // @@ This seems silly, but if we have no reason to be in the
   // reactor, then we dont remove ourselves.
@@ -307,7 +307,7 @@ TAO_Connection_Handler::close_connection_eh (ACE_Event_Handler *eh)
 
       if (this->orb_core_->has_shutdown () == 0)
         {
-          // If the ORB is nill, get the reactor from orb_core which gets it
+          // If the ORB is nil, get the reactor from orb_core which gets it
           // from LF.
           if (eh_reactor == 0)
             eh_reactor = this->transport()->orb_core()->reactor ();
@@ -415,6 +415,7 @@ TAO_Connection_Handler::close_handler (void)
 {
   this->state_changed (TAO_LF_Event::LFS_CONNECTION_CLOSED,
                        this->orb_core_->leader_follower ());
+  this->transport ()->purge_entry();
   this->transport ()->remove_reference ();
   return 0;
 }
