@@ -1,3 +1,16 @@
+Sun Oct 30 05:31:01 UTC 2006  Ossama Othman  <ossama_othman at symantec.com>
+
+        * ace/Auto_Ptr.h (ACE_auto_ptr_reset):
+
+          Adjusted function template arguments to handle case where the
+          auto_ptr element type and pointer type passed to this function
+          are not the same.  Addresses argument deduction failures.
+
+        * ace/Truncate.h (Truncator):
+
+          Added explicit specializations for int and long for Borland.
+          Relying on ACE_{U}INT32 specializations is not sufficient.
+
 Sun Oct 29 17:10:39 UTC 2006  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * bin/tao_orb_tests.lst:
