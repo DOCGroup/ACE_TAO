@@ -1,3 +1,21 @@
+Mon Oct 30 18:56:03 UTC 2006  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tao/AnyTypeCode/Any_Unknown_IDL_Type.cpp (to_object):
+        
+          Modified the decoding to be from a copy of the class
+          member CDR stream, rather than from the stream itself,
+          so the Any will retain ownership of the value as
+          mandated by the CORBA spec. Thanks to Phil Mesnier
+          <mesnier_p@ociweb.com> for reporting the bug and
+          suggesting the fix. Also changed several instances of
+          '0' to 'false' where CORBA::Boolean is referenced.
+          
+        * tao/AnyTypeCode/Marshal.cpp:
+        
+          Added CORBA::tk_event case values to the switch 
+          statements in perform_append() and perform_skip(),
+          so that IDL eventtypes will be handled correctly.
+
 Mon Oct 30 15:09:24 UTC 2006  Simon McQueen  <sm@prismtech.com>
 
         * TAO_IDL/be/be_visitor_ami_pre_proc.cpp:
