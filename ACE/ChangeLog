@@ -1,3 +1,10 @@
+Mon Oct 30 19:57:20 UTC 2006  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * bin/ciao_tests.lst:
+        
+          Added run_test.pl in CIAO/tests/IDL3/Events/Any to the list of
+          CIAO tests to be run automatically.
+
 Mon Oct 30 17:34:35 UTC 2006  Ossama Othman  <ossama_othman at symantec.com>
 
         * ace/config-win32-common.h:
