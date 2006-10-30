@@ -20,8 +20,13 @@ Server_Task::svc (void)
   ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY
     {
+#if defined (ACE_OPENVMS)
+      // OpenVMS typically takes a lot longer...
+      ACE_Time_Value tv (360, 0);
+#else
       // run the test for at most 120 seconds...
       ACE_Time_Value tv (120, 0);
+#endif
       this->orb_->run (tv ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
