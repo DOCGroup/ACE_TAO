@@ -1,3 +1,13 @@
+Mon Oct 30 19:08:12 UTC 2006  Martin Corino  <mcorino@remedy.nl>
+
+        * tests/Muxing/client.cpp:
+        * tests/Muxing/Server_Task.cpp:
+        * tests/Muxing/run_test.pl:
+
+          Some adjustments of testparameters for when test running on
+          OpenVMS where the original test takes far too long for the
+          the timeouts set.
+
 Mon Oct 30 18:56:03 UTC 2006  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tao/AnyTypeCode/Any_Unknown_IDL_Type.cpp (to_object):
