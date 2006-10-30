@@ -1,3 +1,19 @@
+Mon Oct 30 15:09:24 UTC 2006  Simon McQueen  <sm@prismtech.com>
+
+        * TAO_IDL/be/be_visitor_ami_pre_proc.cpp:
+
+          Set the corect pragma prefix value on the AMI reply handlers for
+          inherited interfaces.
+
+        * tests/Bug_2669_Regression/Bug_2669_Regression.mpc:
+        * tests/Bug_2669_Regression/Child.idl:
+        * tests/Bug_2669_Regression/Parent.idl:
+        * tests/Bug_2669_Regression/README:
+        * tests/Bug_2669_Regression/client.cpp:
+        * tests/Bug_2669_Regression/run_test.pl:
+
+          Regression test for the above fix.
+
 Mon Oct 30 14:35:24 UTC 2006  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * tests/Bug_2654_Regression/Bug_2654_Regression.mpc:
