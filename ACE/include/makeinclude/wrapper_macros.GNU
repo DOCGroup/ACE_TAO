@@ -18,19 +18,26 @@
 #
 #  Flag             Description
 #  ----             -----------
+#  ace_for_tao      Build "ace_for_tao" subset.  Primarily useful for
+#                   reducing the size of the ACE shared library when
+#                   using TAO.
 #  debug            Enable debugging; see DCFLAGS and DCCFLAGS.
+#  dmalloc          Indicate build with dmalloc; adds PLATFORM_DMALLOC_CPPFLAGS
+#                   to CPPFLAGS, PLATFORM_DMALLOC_LDFLAGS to LDFLAGS, and
+#                   PLATFORM_DMALLOC_LIBS to LIBS. For more information on
+#                   dmalloc, see http://dmalloc.com.
 #  exceptions       Enable exception handling (not supported by all platforms).
+#  fast             Enable -fast option, e.g., with Sun C++.
 #  include_env      Enable usage of CORBA::Environment parameters that is
 #                   compatible with TAO versions before 1.2.2.  Default:
 #                   disabled.  Has no effect when building with exceptions=0
-#  minimum_corba    Enable minimumCORBA support.  (Documented here, but
-#                   implemented in TAO/rules.TAO.GNU.)
-#  fast             Enable -fast option, e.g., with Sun C++.
 #  inline           Enable ACE inlining.  Some platforms enable inlining by
 #                   default, others do not. If platform_macros.GNU does not
 #                   set this, inline is enabled.
-#  templates	    Type of template instantiation to perform. Can be one of
-#                   automatic, used. Defaults to automatic.
+#  minimum_corba    Enable minimumCORBA support.  (Documented here, but
+#                   implemented in TAO/rules.TAO.GNU.)
+#  mtrace           Indicate build with mtrace; adds PLATFORM_MTRACE_CPPFLAGS
+#                   to CPPFLAGS. Mtrace is an extension in GNU libc.
 #  optimize         Enable optimization; see OCFLAGS and OCCFLAGS.
 #  probe            Enable ACE_Timeprobes.
 #  profile          Enable profiling; see PCFLAGS and PCCFLAGS.
@@ -47,10 +54,9 @@
 #  static_libs_only Only build static libraries.
 #  static_link      Link only static libs to executables, e.g., uses "-static"
 #                   flag with the GNU ld linker.
+#  templates	    Type of template instantiation to perform. Can be one of
+#                   automatic, used. Defaults to automatic.
 #  threads          Build with thread support.
-#  ace_for_tao      Build "ace_for_tao" subset.  Primarily useful for
-#                   reducing the size of the ACE shared library when
-#                   using TAO.
 #  xt               Build with Xt (X11 Toolkit) support.
 #  fl               Build with FlTk (Fast Light Toolkit) support.
 #  tk               Build with Tk (Tcl/Tk) support.
@@ -427,6 +433,26 @@ else
   CCFLAGS += $(DCCFLAGS)
 endif # debug
 
+dmalloc ?=
+ifeq ($(dmalloc),0)
+  override dmalloc =
+endif # dmalloc
+
+ifdef dmalloc
+  CPPFLAGS += $(PLATFORM_DMALLOC_CPPFLAGS)
+  LDFLAGS += $(PLATFORM_DMALLOC_LDFLAGS)
+  LIBS += $(PLATFORM_DMALLOC_LIBS)
+endif # dmalloc
+
+mtrace ?=
+ifeq ($(mtrace),0)
+  override mtrace =
+endif # mtrace
+
+ifdef mtrace
+  CPPFLAGS += $(PLATFORM_MTRACE_CPPFLAGS)
+endif # mtrace
+
 ifeq ($(threads),0)
   override threads =
 endif # threads
@@ -698,7 +724,7 @@ PURE_CACHE_DIR = $(PURE_CACHE_BASE_DIR)-$(LOGNAME)-$(notdir $(CXX) )
   #### to help avoid occasional link failure.
   PURELINK += purify -best-effort -cache-dir=$(PURE_CACHE_DIR) \
               -chain-length=20 -fds-inuse-at-exit=no \
-              -inuse-at-exit -max_threads=100
+              -inuse-at-exit -max_threads=100 $(PLATFORM_PURIFY_OPTIONS)
   CPPFLAGS += -DACE_HAS_PURIFY -I$(ACE_PURIFY_DIR)
 endif # purify
 
@@ -716,7 +742,7 @@ ifdef quantify
   #### -best-effort is undocumented but supported, and seems
   #### to help avoid occasional link failure.
   PRELINK += quantify -best-effort -cache-dir=$(PURE_CACHE_DIR) \
-             -max_threads=100
+             -max_threads=100 $(PLATFORM_QUANTIFY_OPTIONS)
   CPPFLAGS += -DACE_HAS_QUANTIFY -I$(ACE_QUANTIFY_DIR)
 
   ifeq ($(shell uname -p),sparc)
