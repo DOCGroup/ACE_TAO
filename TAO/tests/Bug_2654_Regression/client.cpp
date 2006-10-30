@@ -179,8 +179,8 @@ init_callback (Worker &w)
   PortableServer::ServantBase_var owner = servant;
 
   PortableServer::ObjectId_var id = child_poa->activate_object (servant);
-  obj = child_poa->id_to_reference (id);
-  w.callback_ = Test::CallBack::_narrow(obj);
+  obj = child_poa->id_to_reference (id.in());
+  w.callback_ = Test::CallBack::_narrow(obj.in());
 
   // Creation of childPOA is over. Destroy the Policy objects.
   for (CORBA::ULong i = 0;
