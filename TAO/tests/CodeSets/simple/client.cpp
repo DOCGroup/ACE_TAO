@@ -127,6 +127,8 @@ int main (int argc, char *argv[])
       ACE_OS::free (wide_string);
       CORBA::wstring_free (wide_reply);
 #endif /* ACE_HAS_WCHAR */
+
+      server->shutdown ();
     }
   ACE_CATCHANY
     {

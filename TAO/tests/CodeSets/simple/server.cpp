@@ -31,6 +31,9 @@
 class SimpleImpl : public POA_simple
 {
 public:
+  SimpleImpl (CORBA::ORB_ptr orb)
+    : orb_ (CORBA::ORB::_duplicate (orb))
+  {}
 
   // implementation of corba interface
   char * op1 (const char * name,
@@ -62,6 +65,17 @@ public:
   {
     return CORBA::wstring_dup (s1);
   };
+
+  void shutdown (ACE_ENV_SINGLE_ARG_DECL)
+    ACE_THROW_SPEC ((CORBA::SystemException))
+  {
+    this->orb_->shutdown (0 ACE_ENV_ARG_PARAMETER);
+  };
+
+private:
+  /// Use an ORB reference to shutdown
+  /// the application.
+  CORBA::ORB_var orb_;
 };
 
 // ------------------------------------------------------------
@@ -107,7 +121,7 @@ int main(int argc, char *argv[])
       // Create a C++ implementation of CORBA object
       SimpleImpl* my_impl = 0;
       ACE_NEW_RETURN (my_impl,
-                      SimpleImpl,
+                      SimpleImpl (orb.in ()),
                       -1);
 
       // Create CORBA object for servant and REGISTER with POA
