@@ -1,3 +1,13 @@
+Mon Oct 30 19:49:12 UTC 2006  Martin Corino  <mcorino@remedy.nl>
+
+        * tests/CodeSets/simple/simple.idl:
+        * tests/CodeSets/simple/client.cpp:
+        * tests/CodeSets/simple/server.cpp:
+        * tests/CodeSets/simple/run_test.pl:
+
+          Added proper shutdown operation to have test behave better
+          under (at least) OpenVMS.
+
 Mon Oct 30 19:08:12 UTC 2006  Martin Corino  <mcorino@remedy.nl>
 
         * tests/Muxing/client.cpp:
