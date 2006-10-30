@@ -12,3 +12,4 @@ TAO/CIAO/examples/Hello/descriptors/run_test_without_ns.pl: !STATIC !MINIMUM !NO
 TAO/CIAO/DAnCE/tests/NodeApplicationTest/run_test_simple.pl: !STATIC !MINIMUM !ACE_FOR_TAO
 TAO/CIAO/DAnCE/tests/NodeApplicationTest/run_test.pl: !STATIC !MINIMUM !ACE_FOR_TAO
 TAO/CIAO/DAnCE/tests/NodeApplicationTest/run_test_ex.pl: !STATIC !MINIMUM !ACE_FOR_TAO
+TAO/CIAO/tests/IDL3/Events/Any/run_test.pl: !STATIC !MINIMUM !ACE_FOR_TAO
