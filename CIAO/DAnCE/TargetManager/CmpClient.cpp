@@ -212,7 +212,7 @@ int main (int argc, char* argv[])
       Deployment::Domain_var domainV = targetI->getAvailableResources();
 
       // here write things to file ...
-      write_to_file (domainV);
+      write_to_file (domainV.in());
 
       ACE_DEBUG ((LM_DEBUG , "\n\nGetAvailableResources Returned \n"));
       ::Deployment::DnC_Dump::dump (domainV);

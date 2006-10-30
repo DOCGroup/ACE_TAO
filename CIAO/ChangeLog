@@ -1,3 +1,8 @@
+Mon Oct 30 13:26:00 UTC 2006  Simon Massey  <sma@prismtech.com>
+
+        * DAnCE/TargetManager/CmpClient.cpp
+          BUILDCZAR removing old scoreboard warning.
+
 Thu Oct 26 14:37:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 	* DAnCE/StaticConfigurator/StaticDAnCEParser.cpp:
