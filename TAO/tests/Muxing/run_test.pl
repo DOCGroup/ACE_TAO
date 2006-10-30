@@ -32,14 +32,19 @@ if (PerlACE::waitforfile_timed ($iorfile, 15) == -1) {
 $CL1->Spawn (60);
 $CL2->Spawn (60);
 
-$client1 = $CL1->WaitKill (60);
+$max_wait = 60;
+if ($^O == 'VMS') {
+    $max_wait = 360;
+}
+
+$client1 = $CL1->WaitKill ($max_wait);
 
 if ($client1 != 0) {
     print STDERR "ERROR: client 1 returned $client1\n";
     $status = 1;
 }
 
-$client2 = $CL2->WaitKill (60);
+$client2 = $CL2->WaitKill ($max_wait);
 
 if ($client2 != 0) {
     print STDERR "ERROR: client 2 returned $client2\n";
