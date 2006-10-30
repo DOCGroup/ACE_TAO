@@ -6,10 +6,19 @@ Sun Oct 30 05:31:01 UTC 2006  Ossama Othman  <ossama_othman at symantec.com>
           auto_ptr element type and pointer type passed to this function
           are not the same.  Addresses argument deduction failures.
 
+        * ace/FILE.h (ACE_FILE):
+
+          64-bit file offset fixes.  s/off_t/ACE_OFF_T.
+
         * ace/Truncate.h (Truncator):
 
           Added explicit specializations for int and long for Borland.
           Relying on ACE_{U}INT32 specializations is not sufficient.
+
+        * tests/CDR_File_Test.cpp (run_test):
+
+          A 64-bit file offset is not always enabled.  Corrected offset
+          type.  s/ACE_LOFF_T/ACE_OFF_T.
 
 Sun Oct 29 17:10:39 UTC 2006  Phil Mesnier  <mesnier_p@ociweb.com>
 

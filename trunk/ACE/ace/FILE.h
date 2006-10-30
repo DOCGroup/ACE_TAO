@@ -52,7 +52,7 @@ public:
   nlink_t nlink_;
 
   /// Size of file
-  ACE_LOFF_T size_;
+  ACE_OFF_T size_;
 };
 
 /**
@@ -81,7 +81,7 @@ public:
   int get_info (ACE_FILE_Info &finfo);
 
   /// Set filesize to length byte.
-  int truncate (off_t length);
+  int truncate (ACE_OFF_T length);
 
   /**
    * Sets the file pointer as follows:
@@ -94,11 +94,11 @@ public:
    *    o  If <whence> is <SEEK_END>, the pointer is set to the size
    *       of the file plus offset.
    */
-  off_t seek (off_t offset,
-              int whence = SEEK_CUR);
+  ACE_OFF_T seek (ACE_OFF_T offset,
+                  int whence = SEEK_CUR);
 
   /// Return an offset for the file handle.
-  off_t tell (void);
+  ACE_OFF_T tell (void);
 
   /**
    * Disable signal @a signum
