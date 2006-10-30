@@ -255,7 +255,7 @@ run_test (int write_file,
                            filename),
                           -1);
 
-      ACE_LOFF_T msgsize = info.size_ - 1;
+      ACE_OFF_T msgsize = info.size_ - 1;
 
       // Allocate the input buffer
       char *buffer = 0;
