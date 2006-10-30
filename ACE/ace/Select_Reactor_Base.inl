@@ -15,7 +15,7 @@ ACE_Select_Reactor_Handler_Repository::size (void) const
   return this->event_handlers_.size ();
 #endif  /* ACE_WIN32 */
 }
-  
+
 ACE_INLINE ACE_Select_Reactor_Handler_Repository::max_handlep1_type
 ACE_Select_Reactor_Handler_Repository::max_handlep1 (void) const
 {
@@ -30,11 +30,14 @@ ACE_INLINE int
 ACE_Select_Reactor_Handler_Repository::unbind (ACE_HANDLE handle,
                                                ACE_Reactor_Mask mask)
 {
-    return (handle == ACE_INVALID_HANDLE
-            ? -1
-            : this->unbind (handle,
-                            this->find_eh (handle),
-                            mask));
+  // Do not refactor this code to optimize the call to the unbind impl.
+  // To resolve bug 2653, unbind must be called even when find_eh returns
+  // event_handlers_.end().
+  return (handle == ACE_INVALID_HANDLE || handle > this->max_handlep1())
+          ? -1
+          : this->unbind (handle,
+                          this->find_eh (handle),
+                          mask);
 }
 
 ACE_INLINE ACE_Event_Handler *
