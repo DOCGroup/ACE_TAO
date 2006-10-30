@@ -10,6 +10,10 @@ Mon Oct 30 19:13:03 UTC 2006  Jeff Parsons <j.parsons@vanderbilt.edu>
           inserted/extracted from Anys correctly, and that
           the resulting Anys are marshaled/demarshaled
           correctly.
+          
+        * tests/IDL3/Events/Regular/Regular.mpc:
+        
+          Added backslashes to shorted 'idlflags' line.
 
 Mon Oct 30 13:26:00 UTC 2006  Simon Massey  <sma@prismtech.com>
 
