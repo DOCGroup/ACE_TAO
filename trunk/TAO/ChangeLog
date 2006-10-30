@@ -1,3 +1,8 @@
+Mon Oct 30 13:48:48 UTC 2006  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * tests/Bug_2654_Regression/client.cpp (init_callback):
+          Scoreboard cleanup.
+
 Sun Oct 29 17:08:21 UTC 2006  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * tests/Bug_2654_Regression/Hello.cpp:
