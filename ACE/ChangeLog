@@ -1,3 +1,12 @@
+Mon Oct 30 09:24:42 UTC 2006  Ossama Othman  <ossama_othman at symantec.com>
+
+        * ace/OS_NS_sys_stat.h (ACE_stat):
+        * ace/OS_NS_sys_stat.inl (stat, wstat):
+
+          Only use Windows 64-bit stat structures and functions when
+          _FILE_OFFSET_BITS=64 is defined.  Addresses 64-bit conversion
+          warnings.
+
 Sun Oct 30 05:31:01 UTC 2006  Ossama Othman  <ossama_othman at symantec.com>
 
         * ace/Auto_Ptr.h (ACE_auto_ptr_reset):
@@ -5604,12 +5613,15 @@ Fri Jun  9 08:16:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 Fri Jun  9 07:55:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/ARGV.{h,cpp,inl}:
-          Refactored ACE_ARGV to ACE_ARGV_T which is a template, where ACE_ARGV is
-          now a typedef of ACE_ARGV_T<ACE_TCHAR>. Taken the idea from the wchar
-          work of David Giovannini <giovannd at ociweb dot com>
+
+          Refactored ACE_ARGV to ACE_ARGV_T which is a template, where
+          ACE_ARGV is now a typedef of ACE_ARGV_T<ACE_TCHAR>. Taken the
+          idea from the wchar work of David Giovannini <giovannd at ociweb
+          dot com>
 
         * ace/ace.mpc:
         * ace/Makefile.am:
+
           ARGV.cpp added to the template files, added the new netlink files
 
         * ace/OS_NS_sys_stat.{h,inl}:
@@ -5618,11 +5630,13 @@ Fri Jun  9 07:55:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
         * ace/Filecache.{h,cpp}:
         * ace/FILE_IO.cpp:
         * ace/FILE.h:
-          Use ACE_LOFF_T for the filesize so that we can support files bigger then
-          2Gb on windows and other platforms. Also use for Borland the 64bit stat
-          structure and api's. This fixes bugzilla bug 1286, thanks to Ruslan Zasukhin
-          <sunshine at public dot kherson dot ua> for reporting this. Also fixes part
-          of bugzilla bug 2359, thanks to Olivier Brunet <o dot brunet at free dot fr>
+
+          Use ACE_LOFF_T for the filesize so that we can support files
+          bigger then 2Gb on windows and other platforms. Also use for
+          Borland the 64bit stat structure and api's. This fixes bugzilla
+          bug 1286, thanks to Ruslan Zasukhin <sunshine at public dot
+          kherson dot ua> for reporting this. Also fixes part of bugzilla
+          bug 2359, thanks to Olivier Brunet <o dot brunet at free dot fr>
           for reporting this.
 
 Thu Jun  8 17:13:42 UTC 2006  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
