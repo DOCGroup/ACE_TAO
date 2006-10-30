@@ -194,17 +194,21 @@ TAO::Unknown_IDL_Type::to_object (CORBA::Object_ptr &obj) const
 
       if (kind != CORBA::tk_objref)
         {
-          return 0;
+          return false;
         }
 
-      return this->cdr_ >> obj;
+      // We don't want the rd_ptr to move, in case we are shared by
+      // another Any, so we use this to copy the state, not the buffer.
+      TAO_InputCDR for_reading (this->cdr_);
+      
+      return for_reading >> obj;
     }
   ACE_CATCH (CORBA::Exception, ex)
     {
     }
   ACE_ENDTRY;
 
-  return 0;
+  return false;
 }
 
 CORBA::Boolean
@@ -230,7 +234,7 @@ TAO::Unknown_IDL_Type::to_value (CORBA::ValueBase *&val) const
 
       if (kind != CORBA::tk_value)
         {
-          return 0;
+          return false;
         }
 
     TAO_ORB_Core *orb_core = this->cdr_.orb_core ();
@@ -254,7 +258,7 @@ TAO::Unknown_IDL_Type::to_value (CORBA::ValueBase *&val) const
     }
   ACE_ENDTRY;
 
-  return 0;
+  return false;
 }
 
 CORBA::Boolean
@@ -280,7 +284,7 @@ TAO::Unknown_IDL_Type::to_abstract_base (CORBA::AbstractBase_ptr &obj) const
 
       if (kind != CORBA::tk_value)
         {
-          return 0;
+          return false;
         }
 
     TAO_ORB_Core *orb_core = this->cdr_.orb_core ();
@@ -305,7 +309,7 @@ TAO::Unknown_IDL_Type::to_abstract_base (CORBA::AbstractBase_ptr &obj) const
     }
   ACE_ENDTRY;
 
-  return 0;
+  return false;
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL
