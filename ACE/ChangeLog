@@ -1,3 +1,10 @@
+Mon Oct 30 17:34:35 UTC 2006  Ossama Othman  <ossama_othman at symantec.com>
+
+        * ace/config-win32-common.h:
+
+          Use 64-bit file offsets by default in the WIN64 case, similar to
+          what 64-bit UNIX systems do.
+
 Mon Oct 30 17:23:15 UTC 2006  Steve Huston  <shuston@riverace.com>
 
         * include/makeinclude/wrapper_macros.GNU: Added 2 new build options,
