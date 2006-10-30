@@ -1235,7 +1235,10 @@ be_visitor_ami_pre_proc::create_inheritance_list (be_interface *node,
 
           if (d != 0)
             {
-              retval[index++] = AST_Interface::narrow_from_decl (d);
+              retval[index] = AST_Interface::narrow_from_decl (d);
+              retval[index++]->set_prefix_with_typeprefix (parent->prefix () ?
+                                                           const_cast<char*> (parent->prefix()) :
+                                                           const_cast<char*> (""));
             }
 
           rh_parent_name->destroy ();
