@@ -249,18 +249,8 @@ namespace ACE_OS
     // Solaris for intel uses an macro for stat(), this macro is a
     // wrapper for _xstat().
     ACE_OSCALL_RETURN (::_xstat (_STAT_VER, file, stp), int, -1);
-#elif defined (ACE_WIN32)
-# if defined(__IBMCPP__) || defined (__MINGW32__)
-    ACE_OSCALL_RETURN (::_stat (file,  stp), int, -1);
-# elif defined (__BORLANDC__)
-    ACE_OSCALL_RETURN (::_stati64 (file, stp), int, -1);
-# elif defined _MSC_VER && _MSC_VER >= 1300 && _MSC_VER < 1400 // vc71
-    ACE_OSCALL_RETURN (::_stati64 (file, stp), int, -1);
-# else
-    ACE_OSCALL_RETURN (::_stat64 (file, stp), int, -1);
-# endif /* __IBMCPP__ */
-#else /* ACE_HAS_NONCONST_STAT */
-    ACE_OSCALL_RETURN (::stat (file, stp), int, -1);
+#else
+    ACE_OSCALL_RETURN (ACE_STAT_FUNC_NAME (file, stp), int, -1);
 #endif /* ACE_HAS_NONCONST_STAT */
   }
 
@@ -293,14 +283,10 @@ namespace ACE_OS
         stp->st_mtime = ACE_Time_Value (fdata.ftLastWriteTime);
       }
     return 0;
-#elif defined (__BORLANDC__)
-    ACE_OSCALL_RETURN (::_wstati64 (file, stp), int, -1);
-#elif defined (ACE_WIN32) && defined _MSC_VER && _MSC_VER >= 1300 && _MSC_VER < 1400 // vc71
-    ACE_OSCALL_RETURN (::_wstati64 (file, stp), int, -1);
-#elif defined (__MINGW32__)
-    ACE_OSCALL_RETURN (::_wstat (file, stp), int, -1);
-#elif defined (ACE_WIN32)
-    ACE_OSCALL_RETURN (::_wstat64 (file, stp), int, -1);
+#elif defined (__BORLANDC__) \
+      || (defined (_MSC_VER) && _MSC_VER >= 1300) \
+      || defined (__MINGW32__)
+    ACE_OSCALL_RETURN (ACE_WSTAT_FUNC_NAME (file, stp), int, -1);
 #else /* ACE_HAS_WINCE */
     ACE_Wide_To_Ascii nfile (file);
     return ACE_OS::stat (nfile.char_rep (), stp);
