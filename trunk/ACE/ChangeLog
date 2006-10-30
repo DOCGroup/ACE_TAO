@@ -1,3 +1,9 @@
+Mon Oct 30 12:18:03 UTC 2006    <mesnier_p@ociweb.com>
+
+        * ace/Select_Reactor_Base.inl (unbind):
+          Added an additional validity check and a comment to ward off
+          future optimizations.
+
 Mon Oct 30 09:24:42 UTC 2006  Ossama Othman  <ossama_othman at symantec.com>
 
         * ace/OS_NS_sys_stat.h (ACE_stat):
