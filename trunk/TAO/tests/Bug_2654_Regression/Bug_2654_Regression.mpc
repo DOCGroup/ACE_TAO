@@ -1,7 +1,7 @@
 // -*- MPC -*-
 // $Id$
 
-project(*Server): taoserver, bidir_giop {
+project(*Server): taoserver, minimum_corba, bidir_giop {
   idlflags += -Sa -St
 
   Source_Files {
@@ -11,7 +11,7 @@ project(*Server): taoserver, bidir_giop {
 }
 
 
-project(*Client): taoclient, messaging, bidir_giop {
+project(*Client): taoclient, minimum_corba, messaging, bidir_giop {
 
   Source_Files {
     HelloS.cpp

@@ -1,3 +1,8 @@
+Mon Oct 30 14:35:24 UTC 2006  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * tests/Bug_2654_Regression/Bug_2654_Regression.mpc:
+          Do not build on minimum_corba platforms.
+
 Mon Oct 30 13:48:48 UTC 2006  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * tests/Bug_2654_Regression/client.cpp (init_callback):
