@@ -32,7 +32,7 @@ namespace CIAO
           std::string get_token () const;
 
         private:
-          AdmissionControl_var BB_ref_;
+          AdmissionControl_ptr BB_ref_;
           AdmissionControl::FlowInfo_var flowinfo_;
           CommonDef::QOSRequired qos_req_;
           AdmissionControl::SchedulingAction sched_action_;

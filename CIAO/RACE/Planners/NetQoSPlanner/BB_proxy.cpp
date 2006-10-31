@@ -74,12 +74,14 @@ int FlowRequest::rollback ()
     }
   catch (AdmissionControl::AdmissionControlException &adm_ctrl_ex)
     {
-      ACE_DEBUG ((LM_ERROR,"In FlowRequest::commit: AdmissionControlException was raised.\n"));
+      ACE_DEBUG ((LM_ERROR,"In FlowRequest::rollback: AdmissionControlException was raised.\n"));
       ACE_DEBUG ((LM_ERROR,"-- Reason: %s\n", adm_ctrl_ex.reason.in()));
+      retval = -1;
     }
   catch (...)
     {
-      ACE_DEBUG ((LM_ERROR,"In FlowRequest::commit: Unknown exception was raised.\n"));
+      ACE_DEBUG ((LM_ERROR,"In FlowRequest::rollback: Unknown exception was raised.\n"));
+      retval = -1;
     }
 
   return retval;
