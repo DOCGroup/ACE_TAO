@@ -2,13 +2,12 @@
 #ifndef BB_PROXY_H
 #define BB_PROXY_H
 
+#include <list>
+#include <string>
 #include "BandwidthBroker/BandwidthBrokerC.h"
 #include "orbsvcs/CosNamingC.h"
 #include "orbsvcs/Naming/Naming_Client.h"
-#include "PlanManager.h"
 
-#include <list>
-#include <string>
 
 using namespace mil::darpa::arms::mlrm;
 using namespace mil::darpa::arms::mlrm::BandwidthBroker;
@@ -42,11 +41,23 @@ namespace CIAO
           AdmissionControl::AdmissionControlResult adm_ctrl_result_;
       };
 
+      typedef std::list <FlowRequest *> CommandList;
+    }
+  }
+}
+      
+#include "PlanManager.h"
+      
+namespace CIAO
+{
+  namespace RACE
+  {
+    namespace CIDL_NetQoSPlanner_Impl
+    {
+      class PlanManager;
       class BB_Proxy
       {
         public:
-
-          typedef std::list <FlowRequest *> CommandList;
 
           BB_Proxy ();
           ~BB_Proxy () throw ();
@@ -57,7 +68,7 @@ namespace CIAO
                             PlanManager *plan_man);
           int commit ();
           int rollback ();
-          void set_command_list (CommandList &command_list);
+          void set_plan_manager (PlanManager *plan_man);
           static void del (const FlowRequest *) throw ();
 
         protected:
@@ -68,7 +79,7 @@ namespace CIAO
           std::string BB_iorfile_;
           std::string BB_nameserv_context_;
           AdmissionControl_var BB_ref_;
-          CommandList *BB_commands_;
+          PlanManager *plan_man_;
       };
     } // namespace 
   } // namespace 

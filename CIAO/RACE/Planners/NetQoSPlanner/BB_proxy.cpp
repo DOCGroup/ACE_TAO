@@ -99,14 +99,12 @@ BB_Proxy::BB_Proxy ()
 : resolved_ (false),
   BB_iorfile_ ("BB.ior"),
   BB_nameserv_context_ ("AdmissionControlBackup"),
-  BB_commands_ (0)
+  plan_man_ (0)
 {
 }
 
 BB_Proxy::~BB_Proxy ()  throw ()
-  {
-  std::for_each (this->BB_commands_->begin (), this->BB_commands_->end (), BB_Proxy::del);
-}
+{}
 
 bool BB_Proxy::resolve (CORBA::ORB_ptr orb)
 {
@@ -282,8 +280,8 @@ int BB_Proxy::flow_request (const AdmissionControl::FlowInfo &f,
 int BB_Proxy::commit ()
 {
   int result = 0;
-  for (CommandList::iterator iter = this->BB_commands_->begin ();
-       iter != this->BB_commands_->end ();
+  for (CommandList::iterator iter = this->plan_man_->flows_begin ();
+       iter != this->plan_man_->flows_end ();
        ++iter)
     {
       result |= (*iter)->commit ();
@@ -292,16 +290,16 @@ int BB_Proxy::commit ()
   return result;
 }
 
-void BB_Proxy::set_command_list (CommandList &command_list)
+void BB_Proxy::set_plan_manager (PlanManager *plan_man)
 {
-  this->BB_commands_ = &command_list;
+  this->plan_man_ = plan_man;
 }
 
 int BB_Proxy::rollback ()
 {
   int result = 0;
-  for (CommandList::iterator iter = this->BB_commands_->begin ();
-       iter != this->BB_commands_->end ();
+  for (CommandList::iterator iter = this->plan_man_->flows_begin ();
+       iter != this->plan_man_->flows_end ();
        ++iter)
     {
       result |= (*iter)->rollback ();

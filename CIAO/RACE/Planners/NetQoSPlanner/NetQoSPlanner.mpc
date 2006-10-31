@@ -65,6 +65,12 @@ project(Planner_NetQoSPlanner_exec) : naming, ciao_component_dnc, ciao_race_comp
     NetQoSPlanner_exec.cpp
     PlanManager.cpp
   }
+  
+  Header_Files {
+    BB_proxy.h
+    NetQoSPlanner_exec.h
+    PlanManager.h
+  }
 }
 
 
