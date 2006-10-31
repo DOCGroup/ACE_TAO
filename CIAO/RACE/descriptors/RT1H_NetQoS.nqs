@@ -1,12 +1,27 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no" ?>
-<CIAO:NetQoSRequirements xmlns:CIAO="http://www.dre.vanderbilt.edu/NetQoSRequirements" id="_9A641A50-3FAB-48A1-95E5-A0ADD2CC5AB0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.dre.vanderbilt.edu/NetQoSRequirements NetQoSRequirements.xsd">
+<CIAO:NetQoSRequirements xmlns:CIAO="http://www.dre.vanderbilt.edu/NetQoSRequirements" id="_757668B7-8461-4C6B-8C59-74B3F11E705E" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.dre.vanderbilt.edu/NetQoSRequirements NetQoSRequirements.xsd">
 
   <connectionQoS>
     <connectionName>situation_situation_RT1H_NetQoS.ComponentImplementations.RT1H.RT1H.Planner_Three_RT1H_NetQoS.ComponentImplementations.RT1H.RT1H.Planner_One</connectionName>
-    <fwdBW>0</fwdBW>
-    <revBW>0</revBW>
-    <qos>BEST_EFFORT</qos>
-    <admissionPriority>NORMAL</admissionPriority>
+    <fwdBW>100</fwdBW>
+    <revBW>10</revBW>
+    <qos>HIGH_RELIABILITY</qos>
+    <admissionPriority>HIGH</admissionPriority>
+  </connectionQoS>
+
+  <connectionQoS>
+    <connectionName>command_command_RT1H_NetQoS.ComponentImplementations.RT1H.RT1H.Planner_Three_RT1H_NetQoS.ComponentImplementations.RT1H.RT1H.EnvDetector1</connectionName>
+    <connectionName>command_command_RT1H_NetQoS.ComponentImplementations.RT1H.RT1H.Planner_Three_RT1H_NetQoS.ComponentImplementations.RT1H.RT1H.EnvDetector2</connectionName>
+    <connectionName>command_command_RT1H_NetQoS.ComponentImplementations.RT1H.RT1H.Planner_Three_RT1H_NetQoS.ComponentImplementations.RT1H.RT1H.EnvDetector3</connectionName>
+    <connectionName>command_command_RT1H_NetQoS.ComponentImplementations.RT1H.RT1H.Planner_Three_RT1H_NetQoS.ComponentImplementations.RT1H.RT1H.EnvDetector4</connectionName>
+    <connectionName>track_track_RT1H_NetQoS.ComponentImplementations.RT1H.RT1H.EnvDetector1_RT1H_NetQoS.ComponentImplementations.RT1H.RT1H.Planner_Three</connectionName>
+    <connectionName>track_track_RT1H_NetQoS.ComponentImplementations.RT1H.RT1H.EnvDetector2_RT1H_NetQoS.ComponentImplementations.RT1H.RT1H.Planner_Three</connectionName>
+    <connectionName>track_track_RT1H_NetQoS.ComponentImplementations.RT1H.RT1H.EnvDetector3_RT1H_NetQoS.ComponentImplementations.RT1H.RT1H.Planner_Three</connectionName>
+    <connectionName>track_track_RT1H_NetQoS.ComponentImplementations.RT1H.RT1H.EnvDetector4_RT1H_NetQoS.ComponentImplementations.RT1H.RT1H.Planner_Three</connectionName>
+    <fwdBW>1000</fwdBW>
+    <revBW>100</revBW>
+    <qos>HIGH_RELIABILITY</qos>
+    <admissionPriority>HIGH</admissionPriority>
   </connectionQoS>
 
 </CIAO:NetQoSRequirements>
