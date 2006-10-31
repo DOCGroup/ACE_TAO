@@ -1,5 +1,5 @@
 # commands to init BB DB
-cd $ARMS_ROOT/../src/db ; mysql -u arms -parms < arms-init-no-ndb.sql ; mysql -u arms -parms < data.sql ; mysql -u arms -parms ARMSBB < patchEth.sql
+cd $ARMS_ROOT/../src/db ; mysql -u arms -parms < arms-init-no-ndb.sql ; mysql -u arms -parms < data.sql ; mysql -u arms -parms ARMSBB < patchEth.sql ; $ARMS_ROOT/bin/loadpaths.sh ldbf.txt localhost
 
 $ARMS_ROOT/bin/loadpaths.sh ldbf.txt <DB_host>
 
