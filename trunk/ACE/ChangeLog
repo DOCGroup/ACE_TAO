@@ -1,3 +1,9 @@
+Tue Oct 31 23:08:32 UTC 2006  Steve Huston  <shuston@riverace.com>
+
+        * ace/Dev_Poll_Reactor.h: Note that the Linux epoll code implementation
+          is supported, but the /dev/poll implementation is still
+          experimental.
+
 Tue Oct 31 10:31:10 UTC 2006  Ossama Othman  <ossama_othman at symantec.com>
 
         * ace/OS_NS_sys_stat.h (ACE_WSTAT_FUNC_NAME):
