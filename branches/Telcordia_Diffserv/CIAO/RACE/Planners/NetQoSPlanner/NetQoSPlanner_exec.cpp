@@ -213,8 +213,13 @@ namespace CIAO
                 {
                    ACE_DEBUG ((LM_DEBUG,"Tearing down plan.\n"));
                    retval = this->teardown_plan (dep_plan_uuid);
+                   
+                   if (!retval)  
+                     ACE_DEBUG((LM_ERROR,"teardown of the plan failed somewhere. UUID = %s\n",dep_plan_uuid.c_str()));
+                   
                    delete plan_iter->second;
                    this->dep_plan_map_.erase (plan_iter);
+                   ACE_DEBUG ((LM_DEBUG,"Tearing down complete.\n"));
                 }
                 else
                   ACE_DEBUG((LM_ERROR,"This plan has NOT been deployed. UUID = %s",dep_plan_uuid.c_str()));

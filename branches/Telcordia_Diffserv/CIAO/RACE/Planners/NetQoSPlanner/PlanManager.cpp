@@ -69,7 +69,7 @@ namespace CIAO
       {
         return &this->net_qos_req_;
       }
-     /* 
+/* 
       size_t PlanManager::get_net_qos_length ()
       {
         return this->net_qos_req_.conn_qos_set.length();
@@ -389,16 +389,23 @@ namespace CIAO
 
      bool PlanManager::teardown()
      {
-        std::for_each (this->command_list_.begin (), 
+/*        std::for_each (this->command_list_.begin (), 
                        this->command_list_.end (),
                        std::mem_fun(&FlowRequest::rollback));
-        
+*/        
+        bool retval = true;
+        for (CommandList::iterator iter = this->command_list_.begin();
+            iter != this->command_list_.end();
+            ++iter)
+        { 
+          retval &= ((*iter)->rollback () == -1) ? false : true;
+        }
         std::for_each (this->command_list_.begin (), 
                        this->command_list_.end (),
                        PlanManager::del);
         
         this->command_list_.clear();
-        return true;
+        return retval;
      }
 
       // *********************************************************
