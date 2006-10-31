@@ -191,13 +191,33 @@ namespace CIAO
         bool retval = true;
         for (size_t i = 0; i < plans.length (); ++i)
           {
+            std::string dep_plan_uuid (plans[i].plan.UUID.in());
             if (CIAO::RACE::DEPLOY == plans[i].command)
               {
-                retval = this->deploy_plan (plans[i].plan);
+                if (this->dep_plan_map_.find (dep_plan_uuid) ==
+                    this->dep_plan_map_.end())
+                {
+                  PlanManager *plan_man = 0;
+                  retval = this->deploy_plan (plans[i].plan, plan_man);
+                  if (retval) 
+                    this->dep_plan_map_.insert (std::make_pair(dep_plan_uuid, plan_man));
+                }
+                else
+                  ACE_DEBUG((LM_ERROR,"This plan has already been deployed. UUID = %s",dep_plan_uuid.c_str()));
               }
             else if (CIAO::RACE::TEARDOWN == plans[i].command)
               {
-                retval = this->teardown_plan (plans[i].plan);
+                std::map <std::string, PlanManager *>::iterator plan_iter = 
+                  this->dep_plan_map_.find (dep_plan_uuid);
+                if (plan_iter != this->dep_plan_map_.end())
+                {
+                   ACE_DEBUG ((LM_DEBUG,"Tearing down plan.\n"));
+                   retval = this->teardown_plan (dep_plan_uuid);
+                   delete plan_iter->second;
+                   this->dep_plan_map_.erase (plan_iter);
+                }
+                else
+                  ACE_DEBUG((LM_ERROR,"This plan has NOT been deployed. UUID = %s",dep_plan_uuid.c_str()));
               }
             else
               {
@@ -208,7 +228,13 @@ namespace CIAO
         return retval;
       }
       
-      bool NetQoSPlanner_exec_i::deploy_plan (::Deployment::DeploymentPlan &dep_plan)
+      bool NetQoSPlanner_exec_i::teardown_plan (std::string const &dep_plan_uuid)
+      {
+         return this->dep_plan_map_.find (dep_plan_uuid)->second->teardown();
+      }
+      
+      bool NetQoSPlanner_exec_i::deploy_plan (::Deployment::DeploymentPlan &dep_plan,
+                                              PlanManager *&plan_man_ptr)
       {
           bool flag_netqos_present = false;
           bool retval = true;
@@ -219,32 +245,36 @@ namespace CIAO
                                   "CIAONetworkQoS") == 0)
                {
                  flag_netqos_present = true;
-                 ::CIAO::DAnCE::NetworkQoS::NetQoSRequirement *net_qos_req;
-
-                 if (dep_plan.infoProperty [j].value >>= net_qos_req)
-                  {
-                      std::auto_ptr<PlanManager> plan_man (new
-                          PlanManager(dep_plan, j, net_qos_req));
-                      this->current_pm_ = plan_man;
-                      
-                      if (this->current_pm_->process_netqos_req ())
-                        {
-                          this->current_pm_->add_network_priorities ();
-                          this->current_pm_->remove_netqos(j);
-                          //this->dump_policies (dep_plan);
-                          //this->dump_deployed_resources (dep_plan);
-                          this->state_ = state;
-                          retval = true;
-                        }
-                      else
-                        {
-                          ACE_DEBUG ((LM_ERROR, "(%N:%l): process_netqos_req failed.\n"));
-                          retval = false;
-                        }
+                 try
+                 {
+                    std::auto_ptr<PlanManager> plan_man 
+                      (new PlanManager(dep_plan, j, this->node_map_filename_));
+                    this->current_pm_ = plan_man.get();
+                    
+                    if (this->process_netqos_req ())
+                      {
+                        plan_man->add_network_priorities ();
+                        plan_man->remove_netqos ();
+                        //this->dump_policies (dep_plan);
+                        //this->dump_deployed_resources (dep_plan);
+                        //@TODO 
+                        plan_man_ptr = plan_man.release ();
+                        retval = true;
+                      }
+                    else
+                      {
+                        ACE_DEBUG ((LM_ERROR, "(%N:%l): process_netqos_req failed.\n"));
+                        retval = false;
+                      }
                   }
-                  else
+                  catch (PlanManager::Invalid_NetQoS &ex)
                   {
                     ACE_DEBUG ((LM_ERROR, "(%N:%l)Conversion to Any failed for NetworkQoS.\n"));
+                    retval = false;
+                  }
+                  catch (...)
+                  {
+                    ACE_DEBUG ((LM_ERROR, "(%N:%l)An unknown exception was raised.\n"));
                     retval = false;
                   }
                }
@@ -325,21 +355,17 @@ pd.NWPriorityModelDef().reply_dscp));
       bool NetQoSPlanner_exec_i::process_netqos_req ()
       {
         ::CIAO::DAnCE::NetworkQoS::NetQoSRequirement const *
-          net_qos_req_ = this->current_pm_->get_NetQoS();
+          net_qos_req = this->current_pm_->getNetQoS();
         
-        size_t set_len = net_qos_req_->length();
+        size_t set_len = net_qos_req->conn_qos_set.length();
         if (set_len != 0)
           {
-            this->current_pm_->build_instance_node_map ();
-            // Build an in memory map of logical nodes to the physical hosts.
-            this->current_pm_->build_node_map (this->node_map_filename_);
-
             if (! this->resolve_BB ())
               {
                 ACE_DEBUG ((LM_ERROR, "(%N:%l): Can't contact BandwidthBroker.\n"));
                 return false;
               }
-            this->BB_proxy_.set_command_list (state->command_list_);
+            this->BB_proxy_.set_plan_manager (this->current_pm_);
             
             bool rollback = false;
             //ACE_DEBUG ((LM_DEBUG,"In NetQoSPlanner_exec_i::process_netqos_req: set_len = %u\n",set_len));
@@ -348,7 +374,7 @@ pd.NWPriorityModelDef().reply_dscp));
             for (size_t k = 0; k < set_len; ++k)
               {
                 const ::CIAO::DAnCE::NetworkQoS::ConnectionQoS & conn_qos =
-                  net_qos_req_.conn_qos_set[k];
+                  net_qos_req->conn_qos_set[k];
                 /*ACE_DEBUG ((LM_DEBUG,
                               "In NetQoSPlanner_exec_i::process_netqos_req: conn_qos.connections.length () = %u\n",
                                 conn_qos.connections.length ()));*/
@@ -362,8 +388,7 @@ pd.NWPriorityModelDef().reply_dscp));
                                    std::string (conn_qos.connection_names[conn_num])))
                     {
                       CommonDef::IPAddress srcIP;
-                      if (-1 == this->current_pm_->get_ip_address (
-                                                      srcIP,
+                      if (-1 == this->current_pm_->get_ip_address (srcIP,
                                                       endpoint.client_instance_name.in()))
                       {
                         ACE_DEBUG ((LM_ERROR,
@@ -375,7 +400,7 @@ pd.NWPriorityModelDef().reply_dscp));
                                   "In NetQoSPlanner_exec_i::process_netqos_req: srcIP = %s\n",
                                   srcIP.dottedDecimal.in()));
                       CommonDef::IPAddress destIP;
-                      if (-1 == this->get_ip_address(destIP,
+                      if (-1 == this->current_pm_->get_ip_address(destIP,
                                                      endpoint.server_instance_name.in()))
                       {
                         ACE_DEBUG ((LM_ERROR,
