@@ -308,6 +308,14 @@ namespace CIDL_Sender_Impl
         continue;
       }
 
+      if (ACE_OS::strcmp (descr_name, "hertz") == 0)
+      {
+        ::CORBA::Long _ciao_extract_val = 0;
+        descr_value >>= _ciao_extract_val;
+        this->hertz (_ciao_extract_val);
+        continue;
+      }
+
       if (ACE_OS::strcmp (descr_name, "color") == 0)
       {
         ::Hello::COLOR_SELECTION _ciao_extract_val;
@@ -744,6 +752,17 @@ namespace CIDL_Sender_Impl
   {
     return this->executor_->hertz (
       ACE_ENV_SINGLE_ARG_PARAMETER);
+  }
+
+  void
+  Sender_Servant::hertz (
+    ::CORBA::Long hertz
+    ACE_ENV_ARG_DECL)
+  ACE_THROW_SPEC (( ::CORBA::SystemException))
+  {
+    this->executor_->hertz (
+      hertz
+      ACE_ENV_ARG_PARAMETER);
   }
 
   ::Hello::COLOR_SELECTION
