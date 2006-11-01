@@ -15,6 +15,7 @@
 #include "ciao/CIAO_common.h"
 #include "SimpleAddressServer.h"
 #include <tao/ORB_Core.h>
+#include "tao/AnyTypeCode/Any_Unknown_IDL_Type.h"
 #include <orbsvcs/CosNamingC.h>
 
 #include <sstream>
@@ -30,6 +31,10 @@ namespace CIAO
     root_poa_ (PortableServer::POA::_duplicate (poa))
   {
     this->create_rt_event_channel (ec_name);
+
+     CIAO_REGISTER_OBV_FACTORY (
+      ::Hello::TimeOut_init,
+      ::Hello::TimeOut);
   }
 
 
@@ -262,7 +267,8 @@ namespace CIAO
   void
   RTEventService::ciao_push_event (
       Components::EventBase * ev,
-      const char * source_id
+      const char * source_id,
+      CORBA::TypeCode_ptr tc
       ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((
       CORBA::SystemException,
@@ -278,11 +284,23 @@ namespace CIAO
     ACE_Hash<ACE_CString> hasher;
 
     events[0].header.source = hasher (source_id);
-    events[0].header.type = ACE_ES_EVENT_ANY; //this->type_id_;
+    events[0].header.type = ACE_ES_EVENT_ANY;
     events[0].header.ttl = 10;
-    events[0].data.any_value <<= ev;
 
-    //events[0].data.any_value <<= CORBA::string_dup( "Hey! Junk Data");
+    // We can't use the Any insert operator here, since it will put the
+    // EventBase typecode into the Any, and the actual eventtype's fields
+    // (if any) will get truncated when the Any is demarshaled. So the
+    // signature of this method has been changed to pass in the derived
+    // typecode, and TAO-specific methods are used to assign it as the
+    // Any's typecode and encode the value. This incurs an extra 
+    // encoding, which we may want to try to optimize someday.
+    TAO_OutputCDR out;
+    out << ev;
+    TAO_InputCDR in (out);
+    TAO::Unknown_IDL_Type *unk = 0;
+    ACE_NEW (unk,
+             TAO::Unknown_IDL_Type (tc, in));
+    events[0].data.any_value.replace (unk);
 
     ACE_DEBUG ((LM_DEBUG, "******* push event for source string: %s\n", source_id));
     ACE_DEBUG ((LM_DEBUG, "******* push event for source id: %i\n", events[0].header.source));
@@ -569,18 +587,33 @@ namespace CIAO
         ACE_OS::printf("%s\n", out.str().c_str()); // printf is synchronized
 
         Components::EventBase * ev = 0;
-        if (events[i].data.any_value >>= ev)
-          {
-            ev->_add_ref ();
-            this->event_consumer_->push_event (ev
-                                               ACE_ENV_ARG_PARAMETER);
-            ACE_CHECK;
-          }
-        else
-          {
-            ACE_ERROR ((LM_ERROR, "CIAO::RTEventServiceConsumer_impl::push(), "
-                                  "failed to extract event\n"));
-          }
+        ACE_TRY
+        {
+          TAO::Unknown_IDL_Type *unk =
+              dynamic_cast<TAO::Unknown_IDL_Type *> (events[i].data.any_value.impl ());
+          TAO_InputCDR for_reading (unk->_tao_get_cdr ());
+
+          if (for_reading >> ev)
+            {
+              ev->_add_ref ();
+              this->event_consumer_->push_event (ev
+                                                 ACE_ENV_ARG_PARAMETER);
+              ACE_CHECK;
+            }
+          else
+            {
+              ACE_ERROR ((LM_ERROR, "CIAO::RTEventServiceConsumer_impl::push(), "
+                                    "failed to extract event\n"));
+            }
+        }
+        ACE_CATCHANY
+        {
+          ACE_ERROR ((LM_ERROR,
+                      "CORBA EXCEPTION caught\n"));
+          ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
+                              "RTEventServiceConsumer_impl::push()\n");
+        }
+        ACE_ENDTRY;
       }
 
   }
