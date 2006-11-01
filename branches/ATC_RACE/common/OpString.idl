@@ -12,9 +12,9 @@ module CIAO
 
       struct TimeValue
       {
-        /* Seconds since Jan. 1, 1970 */
+        // Seconds since Jan. 1, 1970
         long    sec;
-        /* and microseconds */
+        //and microseconds
         long    usec;
       };
 
@@ -87,10 +87,16 @@ module CIAO
         // Type of link.
         ConnectionType type;
 
+        // Identifies ports of task instances external to this operational
+        // string as an endpoint of this link.
         ::Deployment::ComponentExternalPortEndpoints externalEndpoint;
 
+        // Identifies ports of task instances within this operational
+        // string as an endpoint of this link.
         ::Deployment::PlanSubcomponentPortEndpoints internalEndpoint;
 
+        // Identifies a location outside the operational string as an
+        // endpoint of the link.
         ::Deployment::ExternalReferenceEndpoints externalReference;
 
       };
@@ -140,10 +146,10 @@ module CIAO
       struct GoalCondition
       {
         // ID of condition (in Task Network).
-        int condID;
+        long condID;
 
         // Utility value (specifying importance of this goal condition).
-        int utility;
+        long utility;
       };
 
       typedef sequence <GoalCondition> GoalConditions;
@@ -151,15 +157,15 @@ module CIAO
       struct TimeConstraint
       {
         // ID of condition (in Task Network).
-        int condID;
+        long condID;
 
         // Start-by (end-by) time for this data (non-data) condition.
-        TimeValue timeConstraint;
+        TimeValue constraint;
       };
 
       typedef sequence <TimeConstraint> TimeConstraints;
 
-      struct Goal
+      struct GoalStructure
       {
         // Universally unique ID of goal.
         string UUID;
@@ -175,7 +181,7 @@ module CIAO
         TimeConstraints relativeTimeConstraints;
 
         // Start-by and end-by constraints on conditions, in clock time.
-        TimeConstraints absoluteTimeConstraints;
+        TimeConstraints absoluteTimeConstraintns;
 
         // QoS requirements.
         QoSSpecifications QoSRequirements;
@@ -195,7 +201,7 @@ module CIAO
         string name;
 
         // Goal achieved by this opstring.
-        Goal goal;
+        GoalStructure goal;
 
         // Task instances in opstring.
         InstanceDescriptions instances;

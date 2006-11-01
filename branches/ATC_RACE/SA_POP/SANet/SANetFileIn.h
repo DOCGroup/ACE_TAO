@@ -39,7 +39,7 @@ namespace SANet {
     virtual ~SANetFileIn (void);
 
     /// Buffer size for string conversion.
-    const static size_t STR_BUF_SIZE = 129;
+    static const size_t STR_BUF_SIZE = 129;
 
     /// Create network from XML file.
     /**

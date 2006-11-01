@@ -1,3 +1,12 @@
+Wed Nov  1 18:58:45 UTC 2006  Nishanth Shankaran  <nshankar@nospan.com>
+
+        * SA_POP/Converter.h:
+        * SA_POP/SANet/SANetFileIn.h:
+        * SA_POP/SA_POP.mpc:
+        * common/OpString.idl:
+
+        Fixed compilation errors and warnings on linux.
+
 Wed Nov  1 17:07:41 UTC 2006  Nishanth Shankaran  <nshankar@nospam.com>
 
         * SA_POP/Converter.cpp:

@@ -3,7 +3,7 @@
 #include "ace/SString.h"
 #include "orbsvcs/CosNamingC.h"
 #include "RACE/common/OpStringC.h"
-#include "Plan_Generator_impl.h"
+#include "Plan_Generator_Impl.h"
 namespace CIAO
 {
   namespace RACE
