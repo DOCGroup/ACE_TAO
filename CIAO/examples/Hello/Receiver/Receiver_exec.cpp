@@ -24,8 +24,7 @@ namespace CIDL_Receiver_Impl
     ACE_THROW_SPEC ((CORBA::SystemException))
   {
     //Get the message from the Sender first.
-    ACE_DEBUG ((LM_DEBUG,
-                "Receiver - Informed by the Sender \n"));
+    //ACE_DEBUG ((LM_DEBUG, "Receiver - Informed by the Sender \n"));
 
     Hello::ReadMessage_var rev
       = this->context_->get_connection_read_message 
@@ -35,13 +34,14 @@ namespace CIDL_Receiver_Impl
     if (CORBA::is_nil (rev.in ()))
       ACE_THROW (CORBA::BAD_INV_ORDER ());
 
-    CORBA::String_var str =
-      rev->get_message (ACE_ENV_SINGLE_ARG_PARAMETER);
-    ACE_CHECK;
+    for (int i = 0; i < 1; ++i)
+    {
+      CORBA::String_var str =
+        rev->get_message (ACE_ENV_SINGLE_ARG_PARAMETER);
+      ACE_CHECK;
 
-    ACE_DEBUG ((LM_DEBUG,
-                "Receiver - Got message from the server [%s] \n",
-                str.in () ));
+      //ACE_DEBUG ((LM_DEBUG, "Receiver - Got message from the server [%s] \n", str.in () ));
+    }
   }
 
   // Operations from Components::SessionComponen

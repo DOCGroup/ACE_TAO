@@ -2,13 +2,17 @@
 
 #include "Sender_exec.h"
 
+#include "ace/High_Res_Timer.h"
+#include "ace/Stats.h"
+#include "ace/Sample_History.h"
+
 namespace CIDL_Sender_Impl
 {
   char*
   Message_Impl::get_message (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((CORBA::SystemException))
   {
-    ACE_DEBUG ((LM_DEBUG, "Sender sending out message: [%s]\n", component_.message_.in ()));
+    //ACE_DEBUG ((LM_DEBUG, "Sender sending out message: [%s]\n", component_.message_.in ()));
     return CORBA::string_dup (component_.message_.in ());
   }
 
@@ -69,8 +73,7 @@ namespace CIDL_Sender_Impl
   Sender_exec_i::get_push_message (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
         ACE_THROW_SPEC ((CORBA::SystemException))
   {
-    ACE_DEBUG ((LM_DEBUG,
-                "Sender_exec.i::get_push_message called\n "));
+    ACE_DEBUG ((LM_DEBUG, "Sender_exec.i::get_push_message called\n "));
     return ( new Message_Impl (*this) );
   }
 
@@ -78,17 +81,57 @@ namespace CIDL_Sender_Impl
   Sender_exec_i::start (ACE_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException))
   {
-    Hello::TimeOut_var event = new OBV_Hello::TimeOut;
+    Hello::OctetStream payload;
+    payload.length (10000);
+    Hello::TimeOut_var event = new OBV_Hello::TimeOut (payload);
     ACE_DEBUG ((LM_DEBUG, "Sender initiates the process.\n"));
-    this->context_->push_click_out (event ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK;
+    
+    
+
+      long niterations = 50000;
+      ACE_Sample_History history (niterations);
+      
+      ACE_hrtime_t test_start = ACE_OS::gethrtime ();
+      
+      for (int i = 0; i < niterations; ++i)
+        {
+          ACE_hrtime_t start = ACE_OS::gethrtime ();
+
+          this->context_->push_click_out (event ACE_ENV_ARG_PARAMETER);
+          ACE_TRY_CHECK;
+
+          ACE_hrtime_t now = ACE_OS::gethrtime ();
+          history.sample (now - start);
+        }
+
+      ACE_hrtime_t test_end = ACE_OS::gethrtime ();
+
+      ACE_DEBUG ((LM_DEBUG, "test finished\n"));
+
+      ACE_DEBUG ((LM_DEBUG, "High resolution timer calibration...."));
+      ACE_UINT32 gsf = ACE_High_Res_Timer::global_scale_factor ();
+      ACE_DEBUG ((LM_DEBUG, "done\n"));
+
+      bool do_dump_history = false;
+      if (do_dump_history)
+        {
+          history.dump_samples ("HISTORY", gsf);
+        }
+
+      ACE_Basic_Stats stats;
+      history.collect_basic_stats (stats);
+      stats.dump_results ("Total", gsf);
+
+      ACE_Throughput_Stats::dump_throughput ("Total", gsf,
+                                             test_end - test_start,
+                                             stats.samples_count ());
 
     ACE_DEBUG ((LM_DEBUG, "My current color is:"));
 
     switch (this->color_)
       {
       case ::Hello::empty:
-        ACE_DEBUG ((LM_DEBUG, "ERROR: Enum attribute initialization failed.\n"));
+        ACE_DEBUG ((LM_DEBUG, "Enum attribute is uninitialized.\n"));
         break;
 
       case ::Hello::white:

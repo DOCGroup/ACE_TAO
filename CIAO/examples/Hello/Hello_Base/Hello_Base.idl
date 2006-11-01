@@ -11,10 +11,13 @@ module Hello
   {
     string get_message();
   };
-
+    
+  typedef sequence <octet> OctetStream;
+  
   eventtype TimeOut
   {
-    public string data;
+    //public string data;
+    public OctetStream payload;
   };
 };
 
