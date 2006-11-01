@@ -1,4 +1,5 @@
 #include "Converter.h"
+#include "Config_Handlers/DnC_Dump.h"
 namespace CIAO
 {
 
@@ -34,8 +35,8 @@ namespace CIAO
           CORBA::Object_var iia_tmp = ns->resolve (ns_name);
           this->iia_ =
             ::CIAO::RACE::Interactive_Input_Adapter::_narrow (iia_tmp.in ());
-
-          this->plan_gen_.init (this->orb_);
+		  this->plan_gen_.init (this->orb_, true, "RM");
+          
 
         }
       catch (CORBA::Exception &ex)
@@ -59,14 +60,17 @@ namespace CIAO
 
       plan.connection = op_string.dataLinks;
 
-      plan.infoProperty = op_string.properties;
+	 plan.infoProperty = op_string.properties;
 
       int position;
 
       for (CORBA::ULong itr = 0; itr < op_string.instances.length (); ++itr)
         {
+			
           ::CIAO::RACE::InstanceDescription op_instance =
             op_string.instances [itr];
+		  ACE_DEBUG ((LM_DEBUG, "CONVERTER: Trying to retrieve package info for: %s\n",
+						op_instance.suggestedImpl.in ()));
           if (this->plan_gen_.generate_plan
               (plan,
                op_instance.suggestedImpl.in (),
@@ -74,7 +78,15 @@ namespace CIAO
             {
               ::Deployment::InstanceDeploymentDescription instance;
               instance.name = op_instance.name;
-              instance.node = CORBA::string_dup ("Satellite");
+			  if (strcmp ("IDL:SPACE/Ground_Station:1.0", 
+				  op_instance.suggestedImpl.in ()) == 0)
+				{
+					instance.node = CORBA::string_dup ("ground");
+				}
+			  else
+				{	
+					instance.node = CORBA::string_dup ("space");
+				}
               instance.implementationRef = position;
               instance.configProperty = op_instance.configProperty;
               CORBA::ULong cur_len = plan.instance.length ();
@@ -89,7 +101,7 @@ namespace CIAO
               return -1;
             }
         }
-
+	 //::Deployment::DnC_Dump::dump (plan);
       return 0;
     }
 

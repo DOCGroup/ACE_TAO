@@ -109,7 +109,7 @@
 
   <instance id="_RACE.ComponentImplementations.RACE.RACE.Interactive_Input_Adapter">
     <name>_RACE.ComponentImplementations.RACE.RACE.Interactive_Input_Adapter</name>
-    <node>blade30</node>
+    <node>RACE</node>
     <source/>
     <implementation>_73898E70-9FB1-4881-9313-A2DE181EE48E</implementation>
     <configProperty>
@@ -149,7 +149,7 @@
 
   <instance id="_RACE.ComponentImplementations.RACE.RACE.Controller">
     <name>_RACE.ComponentImplementations.RACE.RACE.Controller</name>
-    <node>blade29</node>
+    <node>RACE</node>
     <source/>
     <implementation>_D98AF36F-11FA-43A4-8FAD-C14A461437FF</implementation>
     <configProperty>
@@ -167,7 +167,7 @@
 
   <instance id="_RACE.ComponentImplementations.RACE.RACE.TargetManagerImpl">
     <name>_RACE.ComponentImplementations.RACE.RACE.TargetManagerImpl</name>
-    <node>blade29</node>
+    <node>RACE</node>
     <source/>
     <implementation>_CA363CD1-4E23-4A4B-B25B-C38B939E2B25</implementation>
     <configProperty>
@@ -185,7 +185,7 @@
 
   <instance id="_RACE.ComponentImplementations.RACE.RACE.Central_Monitor">
     <name>_RACE.ComponentImplementations.RACE.RACE.Central_Monitor</name>
-    <node>blade29</node>
+    <node>RACE</node>
     <source/>
     <implementation>_198AF36F-11FA-43A4-8FAD-C14A461437EE</implementation>
     <configProperty>
@@ -214,35 +214,35 @@
 
   <instance id="_RACE.ComponentImplementations.RACE.RACE.OutputManager.Output_Manager">
     <name>_RACE.ComponentImplementations.RACE.RACE.OutputManager.Output_Manager</name>
-    <node>blade30</node>
+    <node>RACE</node>
     <source/>
     <implementation>_A22015F9-9BC9-4767-A861-FAFF737E074B</implementation>
   </instance>
 
   <instance id="_RACE.ComponentImplementations.RACE.RACE.OutputManager.DAnCE_Output_Adapter">
     <name>_RACE.ComponentImplementations.RACE.RACE.OutputManager.DAnCE_Output_Adapter</name>
-    <node>blade30</node>
+    <node>RACE</node>
     <source/>
     <implementation>_219DB379-DB2E-44D2-8308-D91FC5A42A9D</implementation>
   </instance>
 
   <instance id="_RACE.ComponentImplementations.RACE.RACE.PlanAnalyzerAssembly.Plan_Analyzer">
     <name>_RACE.ComponentImplementations.RACE.RACE.PlanAnalyzerAssembly.Plan_Analyzer</name>
-    <node>blade30</node>
+    <node>RACE</node>
     <source/>
     <implementation>_5D6641D2-640C-4F80-B055-10DC69C7A636</implementation>
   </instance>
 
   <instance id="_RACE.ComponentImplementations.RACE.RACE.AssemblyPlannerManager.Planner_ManagerImplementation">
     <name>_RACE.ComponentImplementations.RACE.RACE.AssemblyPlannerManager.Planner_ManagerImplementation</name>
-    <node>blade30</node>
+    <node>RACE</node>
     <source/>
     <implementation>_FD120510-765E-4B02-803D-7DADF3F5E4E6</implementation>
   </instance>
 
   <instance id="_RACE.ComponentImplementations.RACE.RACE.AssemblyPlannerManager.SimpleBinPackerImplementation">
     <name>_RACE.ComponentImplementations.RACE.RACE.AssemblyPlannerManager.SimpleBinPackerImplementation</name>
-    <node>blade30</node>
+    <node>RACE</node>
     <source/>
     <implementation>_38C5B64C-72FD-48FF-B095-260669E2A488</implementation>
   </instance>
