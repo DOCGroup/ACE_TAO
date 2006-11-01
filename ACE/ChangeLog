@@ -1,3 +1,9 @@
+Wed Nov 01 09:05:10 UTC 2006  Martin Corino  <mcorino@remedy.nl>
+
+        * ace/OS_NS_stdlib.inl:
+
+          Fixed conversion warnings in atop() on OpenVMS.
+
 Wed Nov 01 08:35:10 UTC 2006  Martin Corino  <mcorino@remedy.nl>
 
         * ace/OS_NS_sys_stat.h:
