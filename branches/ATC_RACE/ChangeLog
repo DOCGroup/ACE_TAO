@@ -1,3 +1,15 @@
+Wed Nov  1 17:07:41 UTC 2006  Nishanth Shankaran  <nshankar@nospam.com>
+
+        * SA_POP/Converter.cpp:
+        * SA_POP/Driver.cpp:
+
+        * descriptors/Domain.cdd:
+        * descriptors/NodeDetails.dat:
+        * descriptors/RACE.cdp:
+        * descriptors/run_RACE.pl:
+
+        Checking in the codebase used for the ATC demo.
+
 Wed Oct 25 22:27:20 UTC 2006  John S. Kinnebrew  <john.s.kinnebrew@vanderbilt.edu>
 
         * common/OpString.idl:  Added Goal IDL structure.

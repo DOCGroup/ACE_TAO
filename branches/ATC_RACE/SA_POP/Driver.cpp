@@ -179,7 +179,7 @@ int main (int argc, char **argv)
     conn_desc.internalEndpoint[0].provider = 1;
 //****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP
     // (Get kind from data link in plan)
-    conn_desc.internalEndpoint[0].kind = Deployment::EventPublisher;
+    conn_desc.internalEndpoint[0].kind = Deployment::EventEmitter;
 //****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP
     conn_desc.internalEndpoint[1].instanceRef = taskBinst;
     conn_desc.internalEndpoint[1].portName = CORBA::string_dup (taskBport.c_str ());
