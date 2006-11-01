@@ -7,7 +7,7 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 
 $ACE_ROOT=$ENV{'ACE_ROOT'};
 
-use lib "../../../../../bin";
+use lib "$ENV{'ACE_ROOT'}/bin";
 use PerlACE::Run_Test;
 
 $status = 0;

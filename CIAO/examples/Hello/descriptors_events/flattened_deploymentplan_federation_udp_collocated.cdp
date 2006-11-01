@@ -103,7 +103,7 @@
   
   <instance id="Hello-Receiver-idd">
     <name>Hello-Receiver-idd</name>
-    <node>ReceiverNode</node>
+    <node>SenderNode</node>
     <source><!-- @@ What goes here --></source>
     <implementation>Hello-Receiver-mdd</implementation>
     <configProperty>
@@ -146,7 +146,7 @@
     </externalReference>
   </connection>
   
-  <!-- The Receiver Component connects to "ES_02" -->    
+  <!-- The Receiver Component connects to "ES_02" -->  
   <connection>
     <name>hello_event_ec_consumer_connection</name>
     <internalEndpoint>
@@ -239,7 +239,7 @@
         <kind>tk_string</kind>
       </type>
       <value>
-        <string>ciao-events-federation-udp.ced</string>
+        <string>ciao-events-federation-udp-collocated.ced</string>
       </value>
     </value>
   </infoProperty>  
