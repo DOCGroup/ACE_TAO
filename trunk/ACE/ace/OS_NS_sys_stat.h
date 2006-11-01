@@ -65,11 +65,7 @@ typedef struct stat ACE_stat;
 #   if defined (ACE_WIN32) \
        && !defined (ACE_HAS_WINCE) \
        && !defined(__IBMCPP__)
-#     if defined (__BORLANDC__)
-typedef struct stat ACE_stat;
-#     else
 typedef struct _stat ACE_stat;
-#     endif  /* __BORLANDC__ */
 #     define ACE_STAT_FUNC_NAME ::_stat
 #     define ACE_WSTAT_FUNC_NAME ::_wstat
 #   else
