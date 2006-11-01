@@ -88,7 +88,7 @@ namespace CIDL_Sender_Impl
     
     
 
-      long niterations = 50000;
+      long niterations = this->hertz_;
       ACE_Sample_History history (niterations);
       
       ACE_hrtime_t test_start = ACE_OS::gethrtime ();

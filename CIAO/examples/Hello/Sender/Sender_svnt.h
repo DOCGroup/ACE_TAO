@@ -225,6 +225,12 @@ namespace CIDL_Sender_Impl
       ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC (( ::CORBA::SystemException));
 
+    void
+    hertz (
+      ::CORBA::Long hertz
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+    ACE_THROW_SPEC (( ::CORBA::SystemException));
+
     virtual ::Hello::COLOR_SELECTION
     color (
       ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
