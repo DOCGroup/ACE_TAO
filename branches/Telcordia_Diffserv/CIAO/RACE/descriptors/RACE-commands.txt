@@ -30,8 +30,8 @@ mv ~/Sender.ior .
 
 $CIAO_ROOT/examples/Hello/Sender/starter -k file://Sender.ior
 
-sudo tethereal -a filesize:10000 -a duration:30 -i eth1 -w /tmp/ethcap1.$BLADE2 host $BLADE4
-sudo tethereal -a filesize:10000 -a duration:30 -i eth1 -w /tmp/ethcap1.$BLADE4 host $BLADE2
+sudo /usr/sbin/tethereal -a filesize:10000 -a duration:30 -i eth1 -w /tmp/ethcap.$BLADE2 host $BLADE4
+sudo /usr/sbin/tethereal -a filesize:10000 -a duration:30 -i eth1 -w /tmp/ethcap.$BLADE4 host $BLADE2
 
 ethereal -r /tmp/ethcap1.$BLADE2
 ethereal -r /tmp/ethcap1.$BLADE4
