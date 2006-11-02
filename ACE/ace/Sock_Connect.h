@@ -72,7 +72,7 @@ namespace ACE
    * list of ifreq structs.
    */
   extern ACE_Export int count_interfaces (ACE_HANDLE handle,
-                               size_t &how_many);
+                                          size_t &how_many);
 
   /// Routine to return a handle from which @c ioctl requests can be
   /// made.  Caller must close the handle.
