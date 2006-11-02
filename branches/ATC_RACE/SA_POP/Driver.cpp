@@ -12,6 +12,7 @@
 #include "SANet/SANetFileIn.h"
 #include "LogScreenOut.h"
 
+
 int main (int argc, char **argv)
 {
 
@@ -92,9 +93,6 @@ int main (int argc, char **argv)
   InstToIndexMap inst_to_index;
   inst_to_index.clear ();
 
-  // Buffer for strings.
-  char buffer[64];
-
   // Add instances to opstring.
   for (SA_POP::PlanInstSet::iterator inst_iter = plan.task_insts.begin ();
     inst_iter != plan.task_insts.end (); inst_iter++)
@@ -119,7 +117,7 @@ int main (int argc, char **argv)
 
     // Set instance name, task ID, supported type ID, and suggested implementation ID.
     inst_desc.name = CORBA::string_dup (inst.name.c_str());
-    inst_desc.taskId = CORBA::string_dup (itoa (inst.task_id, buffer, 64));
+    inst_desc.taskId = CORBA::string_dup (SA_POP::to_string (inst.task_id).c_str ());
     inst_desc.taskTypeId = CORBA::string_dup (inst.type_id.c_str ());
     inst_desc.suggestedImpl = CORBA::string_dup (inst.suggested_impl.c_str ());
 
@@ -164,11 +162,11 @@ int main (int argc, char **argv)
 
     // Create connection name.
     std::string conn_name = "";
-    conn_name += itoa (taskAinst, buffer, 64);
+    conn_name += SA_POP::to_string (static_cast<unsigned long>(taskAinst));
     conn_name += "_";
     conn_name += taskAport;
     conn_name += "___";
-    conn_name += itoa (taskBinst, buffer, 64);
+    conn_name += SA_POP::to_string (static_cast<unsigned long>(taskBinst));
     conn_name += "_";
     conn_name += taskBport;
 
@@ -225,9 +223,9 @@ int main (int argc, char **argv)
 
     // Create link name.
     std::string link_name = "";
-    link_name += itoa (taskAinst, buffer, 64);
+    link_name += SA_POP::to_string (static_cast<unsigned long>(taskAinst));
     link_name += "___";
-    link_name += itoa (taskBinst, buffer, 64);
+    link_name += SA_POP::to_string (static_cast<unsigned long>(taskBinst));
 
     // Create link endpoints.
     link_desc.internalEndpoint.length (2);
@@ -272,9 +270,9 @@ int main (int argc, char **argv)
 
     // Create link name.
     std::string link_name = "";
-    link_name += itoa (taskAinst, buffer, 64);
+    link_name += SA_POP::to_string (static_cast<unsigned long>(taskAinst));
     link_name += "___";
-    link_name += itoa (taskBinst, buffer, 64);
+    link_name += SA_POP::to_string (static_cast<unsigned long>(taskBinst));
 
     // Create link endpoints.
     link_desc.internalEndpoint.length (2);
@@ -319,9 +317,9 @@ int main (int argc, char **argv)
 
     // Create link name.
     std::string link_name = "";
-    link_name += itoa (taskAinst, buffer, 64);
+    link_name += SA_POP::to_string (static_cast<unsigned long>(taskAinst));
     link_name += "___";
-    link_name += itoa (taskBinst, buffer, 64);
+    link_name += SA_POP::to_string (static_cast<unsigned long>(taskBinst));
 
     // Create link endpoints.
     link_desc.internalEndpoint.length (2);
