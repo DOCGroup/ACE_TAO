@@ -1,3 +1,29 @@
+Thu Nov  2 17:48:07 UTC 2006  Nishanth Shankaran  <nshanka@nospam.com>
+
+        * Controller/Component/Poller.cpp: Fixed compiler warnings.
+
+        * Output_Adapters/Component/Output_Manager_exec.cpp:
+        * Output_Adapters/DAnCE_Output_Adapter/DAnCE_Output_Adapter_exec.h:
+        * Output_Adapters/DAnCE_Output_Adapter/DAnCE_Output_Adapter_exec.cpp:
+
+        Make some cosmetic changes.
+
+        * Output_Adapters/XML_Output_Adapter:
+        * Output_Adapters/XML_Output_Adapter/XML_Output_Adapter.cidl:
+        * Output_Adapters/XML_Output_Adapter/XML_Output_Adapter.idl:
+        * Output_Adapters/XML_Output_Adapter/XML_Output_Adapter.mpc:
+        * Output_Adapters/XML_Output_Adapter/XML_Output_Adapter_exec.h:
+        * Output_Adapters/XML_Output_Adapter/XML_Output_Adapter_exec.cpp:
+        * Output_Adapters/XML_Output_Adapter/XML_Output_Adapter_exec_export.h:
+        * Output_Adapters/XML_Output_Adapter/XML_Output_Adapter_stub_export.h:
+        * Output_Adapters/XML_Output_Adapter/XML_Output_Adapter_svnt_export.h:
+
+        Added the XML output adapter.
+
+        * RACE.mwc: Create a new project file.
+
+        * descriptors/RACE.cdp: Modified the descriptor to include the XML
+          output adapter.
 Wed Nov  1 19:24:27 UTC 2006  Nishanth Shankaran  <nshankar@nospam.com>
 
         * descriptors/run_all.pl:

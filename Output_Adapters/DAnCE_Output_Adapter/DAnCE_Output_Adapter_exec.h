@@ -58,8 +58,6 @@ namespace CIAO
                      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
           ACE_THROW_SPEC ((CORBA::SystemException));
       private:
-        //::CORBA::Boolean launch_helper (const ::Deployment::DeploymentPlan &plan,
-        //                                const ::Deployment::PackageConfiguration &package);
         ::CORBA::Boolean launch_helper (const ::CIAO::RACE::Plan_Action& plan_action );
         ::CORBA::Boolean teardown_helper (const ::CIAO::RACE::Plan_Action& plan_action );
 
@@ -199,4 +197,3 @@ namespace CIAO
 #include /**/ "ace/post.h"
 
 #endif /* CIAO_DANCE_OUTPUT_ADAPTER_EXEC_H */
-

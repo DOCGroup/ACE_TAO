@@ -1,0 +1,10 @@
+workspace {
+  Monitor
+  Planner_Manager
+  common
+  Output_Adapters
+  Planners
+  Controller
+  Input_Adapters
+  Plan_Analyzer
+}
