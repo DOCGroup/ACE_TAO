@@ -139,11 +139,6 @@ namespace
 # define SA_FAMILY sa_family
 #endif /* ACE_HAS_IPV6 */
 
-#if defined (_AIX)
-# undef SIOCGIFCONF_CMD
-# define SIOCGIFCONF_CMD CSIOCGIFCONF
-#endif /* _AIX */
-
 // This is a hack to work around a problem with Visual Age C++ 5 and 6 on AIX.
 // Without this, the compiler auto-instantiates the ACE_Auto_Array_Ptr for
 // ifreq (contained in this module) but only adds the #include for <net/if.h>
@@ -1646,14 +1641,8 @@ ACE::get_ip_interfaces (size_t &count,
   ifcfg.IFC_REQ = p_ifs.get ();
   ifcfg.IFC_LEN = num_ifs * sizeof (struct IFREQ);
 
-# if defined (SIOCGLIFCONF)
-  int cmd = SIOCGLIFCONF;
-# else
-  int cmd = SIOCGIFCONF;
-# endif /* SIOCGLIFCONF */
-
   if (ACE_OS::ioctl (handle,
-                     cmd,
+                     SIOCGIFCONF_CMD,
                      (caddr_t) &ifcfg) == -1)
     {
       ACE_OS::close (handle);
