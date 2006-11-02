@@ -107,8 +107,16 @@
     <artifact>__BF4AE6A2-BE32-4B8E-9919-C812EC16BF00</artifact>
   </implementation>
 
-  <instance id="_RACE.ComponentImplementations.RACE.RACE.Interactive_Input_Adapter">
-    <name>_RACE.ComponentImplementations.RACE.RACE.Interactive_Input_Adapter</name>
+  <implementation id="_DF055B64-3713-4E0C-8CBB-7940347252CB">
+    <name>RACE.ComponentImplementations.XML_Output_AdapterImplementation.XML_Output_AdapterMonolithicImpl</name>
+    <source/>
+    <artifact>_51E98A22-D8B4-46FF-B531-9756A94B19B3</artifact>
+    <artifact>_BFEFFD00-977E-42C1-ACB4-873556C44F33</artifact>
+    <artifact>_A5A450AC-A314-45F4-9195-5A9EDFD8260F</artifact>
+  </implementation>
+
+  <instance id="RACE.ComponentImplementations.RACE.RACE.Interactive_Input_Adapter">
+    <name>RACE.ComponentImplementations.RACE.RACE.Interactive_Input_Adapter</name>
     <node>RACE</node>
     <source/>
     <implementation>_73898E70-9FB1-4881-9313-A2DE181EE48E</implementation>
@@ -147,8 +155,8 @@
     </configProperty>
   </instance>
 
-  <instance id="_RACE.ComponentImplementations.RACE.RACE.Controller">
-    <name>_RACE.ComponentImplementations.RACE.RACE.Controller</name>
+  <instance id="RACE.ComponentImplementations.RACE.RACE.Controller">
+    <name>RACE.ComponentImplementations.RACE.RACE.Controller</name>
     <node>RACE</node>
     <source/>
     <implementation>_D98AF36F-11FA-43A4-8FAD-C14A461437FF</implementation>
@@ -165,8 +173,8 @@
     </configProperty>
   </instance>
 
-  <instance id="_RACE.ComponentImplementations.RACE.RACE.TargetManagerImpl">
-    <name>_RACE.ComponentImplementations.RACE.RACE.TargetManagerImpl</name>
+  <instance id="RACE.ComponentImplementations.RACE.RACE.TargetManagerImpl">
+    <name>RACE.ComponentImplementations.RACE.RACE.TargetManagerImpl</name>
     <node>RACE</node>
     <source/>
     <implementation>_CA363CD1-4E23-4A4B-B25B-C38B939E2B25</implementation>
@@ -183,8 +191,8 @@
     </configProperty>
   </instance>
 
-  <instance id="_RACE.ComponentImplementations.RACE.RACE.Central_Monitor">
-    <name>_RACE.ComponentImplementations.RACE.RACE.Central_Monitor</name>
+  <instance id="RACE.ComponentImplementations.RACE.RACE.Central_Monitor">
+    <name>RACE.ComponentImplementations.RACE.RACE.Central_Monitor</name>
     <node>RACE</node>
     <source/>
     <implementation>_198AF36F-11FA-43A4-8FAD-C14A461437EE</implementation>
@@ -212,178 +220,199 @@
     </configProperty>
   </instance>
 
-  <instance id="_RACE.ComponentImplementations.RACE.RACE.OutputManager.Output_Manager">
-    <name>_RACE.ComponentImplementations.RACE.RACE.OutputManager.Output_Manager</name>
+  <instance id="RACE.ComponentImplementations.RACE.RACE.OutputManager.Output_Manager">
+    <name>RACE.ComponentImplementations.RACE.RACE.OutputManager.Output_Manager</name>
     <node>RACE</node>
     <source/>
     <implementation>_A22015F9-9BC9-4767-A861-FAFF737E074B</implementation>
   </instance>
 
-  <instance id="_RACE.ComponentImplementations.RACE.RACE.OutputManager.DAnCE_Output_Adapter">
-    <name>_RACE.ComponentImplementations.RACE.RACE.OutputManager.DAnCE_Output_Adapter</name>
+  <instance id="RACE.ComponentImplementations.RACE.RACE.OutputManager.DAnCE_Output_Adapter">
+    <name>RACE.ComponentImplementations.RACE.RACE.OutputManager.DAnCE_Output_Adapter</name>
     <node>RACE</node>
     <source/>
     <implementation>_219DB379-DB2E-44D2-8308-D91FC5A42A9D</implementation>
   </instance>
 
-  <instance id="_RACE.ComponentImplementations.RACE.RACE.PlanAnalyzerAssembly.Plan_Analyzer">
-    <name>_RACE.ComponentImplementations.RACE.RACE.PlanAnalyzerAssembly.Plan_Analyzer</name>
+  <instance id="RACE.ComponentImplementations.RACE.RACE.PlanAnalyzerAssembly.Plan_Analyzer">
+    <name>RACE.ComponentImplementations.RACE.RACE.PlanAnalyzerAssembly.Plan_Analyzer</name>
     <node>RACE</node>
     <source/>
     <implementation>_5D6641D2-640C-4F80-B055-10DC69C7A636</implementation>
   </instance>
 
-  <instance id="_RACE.ComponentImplementations.RACE.RACE.AssemblyPlannerManager.Planner_ManagerImplementation">
-    <name>_RACE.ComponentImplementations.RACE.RACE.AssemblyPlannerManager.Planner_ManagerImplementation</name>
+  <instance id="RACE.ComponentImplementations.RACE.RACE.AssemblyPlannerManager.Planner_ManagerImplementation">
+    <name>RACE.ComponentImplementations.RACE.RACE.AssemblyPlannerManager.Planner_ManagerImplementation</name>
     <node>RACE</node>
     <source/>
     <implementation>_FD120510-765E-4B02-803D-7DADF3F5E4E6</implementation>
   </instance>
 
-  <instance id="_RACE.ComponentImplementations.RACE.RACE.AssemblyPlannerManager.SimpleBinPackerImplementation">
-    <name>_RACE.ComponentImplementations.RACE.RACE.AssemblyPlannerManager.SimpleBinPackerImplementation</name>
+  <instance id="RACE.ComponentImplementations.RACE.RACE.AssemblyPlannerManager.StaticPlannerImplementation">
+    <name>RACE.ComponentImplementations.RACE.RACE.AssemblyPlannerManager.StaticPlannerImplementation</name>
     <node>RACE</node>
     <source/>
     <implementation>_38C5B64C-72FD-48FF-B095-260669E2A488</implementation>
   </instance>
 
+  <instance id="RACE.ComponentImplementations.RACE.RACE.OutputManager.XML_Output_Adapter">
+    <name>RACE.ComponentImplementations.RACE.RACE.OutputManager.XML_Output_Adapter</name>
+    <node>RACE</node>
+    <source/>
+    <implementation>_DF055B64-3713-4E0C-8CBB-7940347252CB</implementation>
+  </instance>
+
   <connection>
-    <name>ingress_plan_ingress_RACE.ComponentImplementations.RACE.RACE.Interactive_Input_Adapter_RACE.ComponentImplementations.RACE.RACE.PlanAnalyzerAssembly.Plan_Analyzer</name>
+    <name>ingress_plan_ingressRACE.ComponentImplementations.RACE.RACE.Interactive_Input_AdapterRACE.ComponentImplementations.RACE.RACE.PlanAnalyzerAssembly.Plan_Analyzer</name>
     <internalEndpoint>
       <portName>ingress</portName>
       <kind>SimplexReceptacle</kind>
-      <instance>_RACE.ComponentImplementations.RACE.RACE.Interactive_Input_Adapter</instance>
+      <instance>RACE.ComponentImplementations.RACE.RACE.Interactive_Input_Adapter</instance>
     </internalEndpoint>
     <internalEndpoint>
       <portName>plan_ingress</portName>
       <kind>Facet</kind>
-      <instance>_RACE.ComponentImplementations.RACE.RACE.PlanAnalyzerAssembly.Plan_Analyzer</instance>
+      <instance>RACE.ComponentImplementations.RACE.RACE.PlanAnalyzerAssembly.Plan_Analyzer</instance>
     </internalEndpoint>
   </connection>
 
   <connection>
-    <name>planner_manager_i_planner_manager_i_RACE.ComponentImplementations.RACE.RACE.PlanAnalyzerAssembly.Plan_Analyzer_RACE.ComponentImplementations.RACE.RACE.AssemblyPlannerManager.Planner_ManagerImplementation</name>
+    <name>planner_manager_i_planner_manager_iRACE.ComponentImplementations.RACE.RACE.PlanAnalyzerAssembly.Plan_AnalyzerRACE.ComponentImplementations.RACE.RACE.AssemblyPlannerManager.Planner_ManagerImplementation</name>
     <internalEndpoint>
       <portName>planner_manager_i</portName>
       <kind>SimplexReceptacle</kind>
-      <instance>_RACE.ComponentImplementations.RACE.RACE.PlanAnalyzerAssembly.Plan_Analyzer</instance>
+      <instance>RACE.ComponentImplementations.RACE.RACE.PlanAnalyzerAssembly.Plan_Analyzer</instance>
     </internalEndpoint>
     <internalEndpoint>
       <portName>planner_manager_i</portName>
       <kind>Facet</kind>
-      <instance>_RACE.ComponentImplementations.RACE.RACE.AssemblyPlannerManager.Planner_ManagerImplementation</instance>
+      <instance>RACE.ComponentImplementations.RACE.RACE.AssemblyPlannerManager.Planner_ManagerImplementation</instance>
     </internalEndpoint>
   </connection>
 
   <connection>
-    <name>outputs_output_RACE.ComponentImplementations.RACE.RACE.AssemblyPlannerManager.Planner_ManagerImplementation_RACE.ComponentImplementations.RACE.RACE.OutputManager.Output_Manager</name>
+    <name>outputs_outputRACE.ComponentImplementations.RACE.RACE.AssemblyPlannerManager.Planner_ManagerImplementationRACE.ComponentImplementations.RACE.RACE.OutputManager.Output_Manager</name>
     <internalEndpoint>
       <portName>outputs</portName>
       <kind>SimplexReceptacle</kind>
-      <instance>_RACE.ComponentImplementations.RACE.RACE.AssemblyPlannerManager.Planner_ManagerImplementation</instance>
+      <instance>RACE.ComponentImplementations.RACE.RACE.AssemblyPlannerManager.Planner_ManagerImplementation</instance>
     </internalEndpoint>
     <internalEndpoint>
       <portName>output</portName>
       <kind>Facet</kind>
-      <instance>_RACE.ComponentImplementations.RACE.RACE.OutputManager.Output_Manager</instance>
+      <instance>RACE.ComponentImplementations.RACE.RACE.OutputManager.Output_Manager</instance>
     </internalEndpoint>
   </connection>
 
   <connection>
-    <name>control_output_descriptors_RACE.ComponentImplementations.RACE.RACE.OutputManager.DAnCE_Output_Adapter_RACE.ComponentImplementations.RACE.RACE.Controller</name>
+    <name>control_output_descriptorsRACE.ComponentImplementations.RACE.RACE.OutputManager.DAnCE_Output_AdapterRACE.ComponentImplementations.RACE.RACE.Controller</name>
     <internalEndpoint>
       <portName>control_output</portName>
       <kind>SimplexReceptacle</kind>
-      <instance>_RACE.ComponentImplementations.RACE.RACE.OutputManager.DAnCE_Output_Adapter</instance>
+      <instance>RACE.ComponentImplementations.RACE.RACE.OutputManager.DAnCE_Output_Adapter</instance>
     </internalEndpoint>
     <internalEndpoint>
       <portName>descriptors</portName>
       <kind>Facet</kind>
-      <instance>_RACE.ComponentImplementations.RACE.RACE.Controller</instance>
+      <instance>RACE.ComponentImplementations.RACE.RACE.Controller</instance>
     </internalEndpoint>
   </connection>
 
   <connection>
-    <name>target_mgr_targetMgr_RACE.ComponentImplementations.RACE.RACE.AssemblyPlannerManager.SimpleBinPackerImplementation_RACE.ComponentImplementations.RACE.RACE.TargetManagerImpl</name>
+    <name>target_mgr_targetMgrRACE.ComponentImplementations.RACE.RACE.AssemblyPlannerManager.StaticPlannerImplementationRACE.ComponentImplementations.RACE.RACE.TargetManagerImpl</name>
     <internalEndpoint>
       <portName>target_mgr</portName>
       <kind>SimplexReceptacle</kind>
-      <instance>_RACE.ComponentImplementations.RACE.RACE.AssemblyPlannerManager.SimpleBinPackerImplementation</instance>
+      <instance>RACE.ComponentImplementations.RACE.RACE.AssemblyPlannerManager.StaticPlannerImplementation</instance>
     </internalEndpoint>
     <internalEndpoint>
       <portName>targetMgr</portName>
       <kind>Facet</kind>
-      <instance>_RACE.ComponentImplementations.RACE.RACE.TargetManagerImpl</instance>
+      <instance>RACE.ComponentImplementations.RACE.RACE.TargetManagerImpl</instance>
     </internalEndpoint>
   </connection>
 
   <connection>
-    <name>target_mgr_ext_target_manager_ext_RACE.ComponentImplementations.RACE.RACE.Controller_RACE.ComponentImplementations.RACE.RACE.TargetManagerImpl</name>
+    <name>target_mgr_ext_target_manager_extRACE.ComponentImplementations.RACE.RACE.ControllerRACE.ComponentImplementations.RACE.RACE.TargetManagerImpl</name>
     <internalEndpoint>
       <portName>target_mgr_ext</portName>
       <kind>SimplexReceptacle</kind>
-      <instance>_RACE.ComponentImplementations.RACE.RACE.Controller</instance>
+      <instance>RACE.ComponentImplementations.RACE.RACE.Controller</instance>
     </internalEndpoint>
     <internalEndpoint>
       <portName>target_manager_ext</portName>
       <kind>Facet</kind>
-      <instance>_RACE.ComponentImplementations.RACE.RACE.TargetManagerImpl</instance>
+      <instance>RACE.ComponentImplementations.RACE.RACE.TargetManagerImpl</instance>
     </internalEndpoint>
   </connection>
 
   <connection>
-    <name>target_mgr_targetMgr_RACE.ComponentImplementations.RACE.RACE.Controller_RACE.ComponentImplementations.RACE.RACE.TargetManagerImpl</name>
+    <name>target_mgr_targetMgrRACE.ComponentImplementations.RACE.RACE.ControllerRACE.ComponentImplementations.RACE.RACE.TargetManagerImpl</name>
     <internalEndpoint>
       <portName>target_mgr</portName>
       <kind>SimplexReceptacle</kind>
-      <instance>_RACE.ComponentImplementations.RACE.RACE.Controller</instance>
+      <instance>RACE.ComponentImplementations.RACE.RACE.Controller</instance>
     </internalEndpoint>
     <internalEndpoint>
       <portName>targetMgr</portName>
       <kind>Facet</kind>
-      <instance>_RACE.ComponentImplementations.RACE.RACE.TargetManagerImpl</instance>
+      <instance>RACE.ComponentImplementations.RACE.RACE.TargetManagerImpl</instance>
     </internalEndpoint>
   </connection>
 
   <connection>
-    <name>monitor_Monitor_RACE.ComponentImplementations.RACE.RACE.Controller_RACE.ComponentImplementations.RACE.RACE.Central_Monitor</name>
+    <name>monitor_MonitorRACE.ComponentImplementations.RACE.RACE.ControllerRACE.ComponentImplementations.RACE.RACE.Central_Monitor</name>
     <internalEndpoint>
       <portName>monitor</portName>
       <kind>SimplexReceptacle</kind>
-      <instance>_RACE.ComponentImplementations.RACE.RACE.Controller</instance>
+      <instance>RACE.ComponentImplementations.RACE.RACE.Controller</instance>
     </internalEndpoint>
     <internalEndpoint>
       <portName>Monitor</portName>
       <kind>Facet</kind>
-      <instance>_RACE.ComponentImplementations.RACE.RACE.Central_Monitor</instance>
+      <instance>RACE.ComponentImplementations.RACE.RACE.Central_Monitor</instance>
     </internalEndpoint>
   </connection>
 
   <connection>
-    <name>adapters_plan_egress_RACE.ComponentImplementations.RACE.RACE.OutputManager.Output_Manager_RACE.ComponentImplementations.RACE.RACE.OutputManager.DAnCE_Output_Adapter</name>
+    <name>adapters_plan_egressRACE.ComponentImplementations.RACE.RACE.OutputManager.Output_ManagerRACE.ComponentImplementations.RACE.RACE.OutputManager.DAnCE_Output_Adapter</name>
     <internalEndpoint>
       <portName>adapters</portName>
       <kind>SimplexReceptacle</kind>
-      <instance>_RACE.ComponentImplementations.RACE.RACE.OutputManager.Output_Manager</instance>
+      <instance>RACE.ComponentImplementations.RACE.RACE.OutputManager.Output_Manager</instance>
     </internalEndpoint>
     <internalEndpoint>
       <portName>plan_egress</portName>
       <kind>Facet</kind>
-      <instance>_RACE.ComponentImplementations.RACE.RACE.OutputManager.DAnCE_Output_Adapter</instance>
+      <instance>RACE.ComponentImplementations.RACE.RACE.OutputManager.DAnCE_Output_Adapter</instance>
     </internalEndpoint>
   </connection>
 
   <connection>
-    <name>planners_planner_i_RACE.ComponentImplementations.RACE.RACE.AssemblyPlannerManager.Planner_ManagerImplementation_RACE.ComponentImplementations.RACE.RACE.AssemblyPlannerManager.SimpleBinPackerImplementation</name>
+    <name>adapters_plan_egressRACE.ComponentImplementations.RACE.RACE.OutputManager.Output_ManagerRACE.ComponentImplementations.RACE.RACE.OutputManager.XML_Output_Adapter</name>
+    <internalEndpoint>
+      <portName>adapters</portName>
+      <kind>SimplexReceptacle</kind>
+      <instance>RACE.ComponentImplementations.RACE.RACE.OutputManager.Output_Manager</instance>
+    </internalEndpoint>
+    <internalEndpoint>
+      <portName>plan_egress</portName>
+      <kind>Facet</kind>
+      <instance>RACE.ComponentImplementations.RACE.RACE.OutputManager.XML_Output_Adapter</instance>
+    </internalEndpoint>
+  </connection>
+
+  <connection>
+    <name>planners_planner_iRACE.ComponentImplementations.RACE.RACE.AssemblyPlannerManager.Planner_ManagerImplementationRACE.ComponentImplementations.RACE.RACE.AssemblyPlannerManager.StaticPlannerImplementation</name>
     <internalEndpoint>
       <portName>planners</portName>
       <kind>SimplexReceptacle</kind>
-      <instance>_RACE.ComponentImplementations.RACE.RACE.AssemblyPlannerManager.Planner_ManagerImplementation</instance>
+      <instance>RACE.ComponentImplementations.RACE.RACE.AssemblyPlannerManager.Planner_ManagerImplementation</instance>
     </internalEndpoint>
     <internalEndpoint>
       <portName>planner_i</portName>
       <kind>Facet</kind>
-      <instance>_RACE.ComponentImplementations.RACE.RACE.AssemblyPlannerManager.SimpleBinPackerImplementation</instance>
+      <instance>RACE.ComponentImplementations.RACE.RACE.AssemblyPlannerManager.StaticPlannerImplementation</instance>
     </internalEndpoint>
   </connection>
 
@@ -941,6 +970,49 @@
         </type>
         <value>
           <string>create_CIAO_RACE_Central_Monitor_Home_Servant</string>
+        </value>
+      </value>
+    </execParameter>
+  </artifact>
+
+  <artifact id="_BFEFFD00-977E-42C1-ACB4-873556C44F33">
+    <name>RACE.ImplementationArtifacts.XML_Output_AdapterArtifacts.XML_Output_Adapter_stub</name>
+    <source/>
+    <node/>
+    <location>XML_Output_Adapter_stub</location>
+  </artifact>
+
+  <artifact id="_A5A450AC-A314-45F4-9195-5A9EDFD8260F">
+    <name>RACE.ImplementationArtifacts.XML_Output_AdapterArtifacts.XML_Output_Adapter_svnt</name>
+    <source/>
+    <node/>
+    <location>XML_Output_Adapter_svnt</location>
+    <execParameter>
+      <name>entryPoint</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>create_CIAO_RACE_XML_Output_Adapter_Home_Servant</string>
+        </value>
+      </value>
+    </execParameter>
+  </artifact>
+
+  <artifact id="_51E98A22-D8B4-46FF-B531-9756A94B19B3">
+    <name>RACE.ImplementationArtifacts.XML_Output_AdapterArtifacts.XML_Output_Adapter_exec</name>
+    <source/>
+    <node/>
+    <location>XML_Output_Adapter_exec</location>
+    <execParameter>
+      <name>entryPoint</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>create_CIAO_RACE_XML_Output_Adapter_Home_Impl</string>
         </value>
       </value>
     </execParameter>
