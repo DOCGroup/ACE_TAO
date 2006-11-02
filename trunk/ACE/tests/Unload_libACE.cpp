@@ -221,7 +221,7 @@ main (int, char **)
   fclose (stdout);
   fclose (stderr);
 
-  exit (status);
+  ACE_OS::exit (status);
   return 0;
 }
 #else

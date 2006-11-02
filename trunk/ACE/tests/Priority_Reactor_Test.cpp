@@ -338,11 +338,11 @@ run_main (int argc, ACE_TCHAR *argv[])
                       ACE_TEXT ("(%P|%t) %p\n%a"),
                       ACE_TEXT ("fork failed"),
                       1));
-          exit (-1);
+          ACE_OS::exit (-1);
           /* NOTREACHED */
         case 0:
           client (&connection_addr);
-          exit (0);
+          ACE_OS::exit (0);
           break;
           /* NOTREACHED */
         default:

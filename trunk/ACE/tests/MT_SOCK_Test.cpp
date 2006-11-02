@@ -369,7 +369,7 @@ spawn (int num_clients)
               break;
             case 0:
               client (&server_addr);
-              exit (0);
+              ACE_OS::exit (0);
               /* NOTREACHED */
             default:
               break;
