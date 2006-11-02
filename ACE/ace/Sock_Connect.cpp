@@ -1461,8 +1461,6 @@ get_ip_interfaces_aix (size_t &count,
                        -1);
   }
 
-  ACE_DEBUG ((LM_DEBUG, "ifc_len = %d\n",ifc.ifc_len));
-
   ACE_NEW_RETURN (ifc.ifc_buf,char [ifc.ifc_len], -1);
 
   ACE_Auto_Array_Ptr<char> safe_buf (ifc.ifc_buf);
@@ -1493,7 +1491,6 @@ get_ip_interfaces_aix (size_t &count,
         )
        num_ifs++;
     }
-  ACE_DEBUG ((LM_DEBUG, "found %d interfaces\n",num_ifs));
   ACE_NEW_RETURN (addrs,ACE_INET_Addr[num_ifs], -1);
 
   for (char * ptr = buf_start;  ptr < buf_end; )
