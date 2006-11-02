@@ -2198,20 +2198,20 @@ namespace
 
         Traversal::ConsumerData::belongs (c, belongs_);
 
-        os << "_var ev_type =" << endl
+        os << " *ev_type =" << endl
            << "  ";
 
         Traversal::ConsumerData::belongs (c, belongs_);
 
         os << "::_downcast (ev);" << endl
-           << "if (ev_type.in () != 0)" << endl
+           << "if (ev_type != 0)" << endl
            << "{"
            << "this->push_";
 
         Traversal::ConsumerData::belongs (c, simple_belongs_);
 
         os << " (" << endl
-           << "ev_type.in ()" << endl
+           << "ev_type" << endl
            << STRS[ENV_ARG] << ");" << endl
            << "return;" << endl
            << "}"
@@ -2453,17 +2453,16 @@ namespace
     struct OperationExistsEmitter;
 
     struct RegisterValueFactoryEmitter : Traversal::ConsumerData,
+                                         Traversal::PublisherData,
+                                         Traversal::EmitterData,
                                          EmitterBase
     {
       RegisterValueFactoryEmitter (Context& c)
         : EmitterBase (c),
-          c_ (cerr, c.export_macro (), c.cl ()),
           type_name_emitter_ (c),
-          cerr_type_name_emitter_ (c_),
           gen_factory_ (true)
       {
         belongs_.node_traverser (type_name_emitter_);
-        cerr_belongs_.node_traverser (cerr_type_name_emitter_);
       }
 
       void factory_gen_off (void)
@@ -2471,22 +2470,57 @@ namespace
         gen_factory_ = false;
       }
 
+      bool gen_factory (void) const
+      {
+        return gen_factory_;
+      }
+
       virtual void
-      traverse (Type& c)
+      traverse (SemanticGraph::Publisher& p)
+      {
+        Traversal::PublisherData publisher;
+        RegisterValueFactoryEmitter::traverse_common<
+          SemanticGraph::Publisher,
+          Traversal::PublisherData> (p, publisher, this, os, belongs_);
+      }
+
+      virtual void
+      traverse (SemanticGraph::Emitter& e)
+      {
+        Traversal::EmitterData emitter;
+        RegisterValueFactoryEmitter::traverse_common<
+          SemanticGraph::Emitter,
+          Traversal::EmitterData> (e, emitter, this, os, belongs_);
+      }
+
+      virtual void
+      traverse (SemanticGraph::Consumer& c)
+      {
+        Traversal::ConsumerData consumer;
+        RegisterValueFactoryEmitter::traverse_common<
+          SemanticGraph::Consumer,
+          Traversal::ConsumerData> (c, consumer, this, os, belongs_);
+      }
+
+      template<typename SemanticType, typename TraversalType>
+      static void
+      traverse_common (SemanticType& st,
+                       TraversalType& tt,
+                       RegisterValueFactoryEmitter* r,
+                       ostream& os,
+                       Traversal::Belongs& blongs)
       {
         {
-          Traversal::ConsumerData consumer;
-
-          Traversal::Belongs consumer_belongs;
-          consumer.edge_traverser (consumer_belongs);
+          Traversal::Belongs tt_belongs;
+          tt.edge_traverser (tt_belongs);
 
           // Separate traversers because we want to catch inherited
           // operations, but not base class factories or private
           // members.
           Traversal::ValueType event_type_operations;
           Traversal::ValueType event_type_factories;
-          consumer_belongs.node_traverser (event_type_operations);
-          consumer_belongs.node_traverser (event_type_factories);
+          tt_belongs.node_traverser (event_type_operations);
+          tt_belongs.node_traverser (event_type_factories);
 
           Traversal::Inherits inherits;
           inherits.node_traverser (event_type_operations);
@@ -2494,7 +2528,7 @@ namespace
 
           Traversal::Defines include_inherit_defines;
           event_type_operations.edge_traverser (include_inherit_defines);
-          OperationExistsEmitter op_emitter (this);
+          OperationExistsEmitter op_emitter (r);
           include_inherit_defines.node_traverser (op_emitter);
 
           Traversal::Supports supports;
@@ -2507,46 +2541,31 @@ namespace
 
           Traversal::Defines no_include_inherit_defines;
           event_type_factories.edge_traverser (no_include_inherit_defines);
-          PrivateExistsEmitter priv_emitter (this);
-          FactoryExistsEmitter factory_emitter (this);
+          PrivateExistsEmitter priv_emitter (r);
+          FactoryExistsEmitter factory_emitter (r);
           no_include_inherit_defines.node_traverser (priv_emitter);
           no_include_inherit_defines.node_traverser (factory_emitter);
 
-          consumer.traverse (c);
+          tt.traverse (st);
         }
 
-        if (gen_factory_)
+        if (r->gen_factory ())
           {
             os << "CIAO_REGISTER_OBV_FACTORY (" << endl;
 
-            Traversal::ConsumerData::belongs (c, belongs_);
+            r->TraversalType::belongs (st, blongs);
 
             os << "_init," << endl;
 
-            Traversal::ConsumerData::belongs (c, belongs_);
+            r->TraversalType::belongs (st, blongs);
 
             os << ");" << endl;
-          }
-        else
-          {
-            cerr << "    " << endl
-                 << "event type ";
-
-            Traversal::ConsumerData::belongs (c, cerr_belongs_);
-
-            cerr << " consumed by " << c.scoped_name () << endl
-                 << "has an operation, factory declaration,"
-                 << " or private member. "
-                 << "ORB registration of default factory not generated" << endl;
           }
       }
 
     private:
-      Context c_;
       FullTypeNameEmitter type_name_emitter_;
-      FullTypeNameEmitter cerr_type_name_emitter_;
       Traversal::Belongs belongs_;
-      Traversal::Belongs cerr_belongs_;
       bool gen_factory_;
     };
 
