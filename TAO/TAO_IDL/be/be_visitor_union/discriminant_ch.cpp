@@ -18,8 +18,8 @@
 //
 // ============================================================================
 
-ACE_RCSID (be_visitor_union, 
-           discriminant_ch, 
+ACE_RCSID (be_visitor_union,
+           discriminant_ch,
            "$Id$")
 
 // *************************************************************************
@@ -73,7 +73,7 @@ be_visitor_union_discriminant_ch::visit_enum (be_enum *node)
           ACE_ERROR_RETURN ((LM_ERROR,
                              "(%N:%l) be_visitor_union_discriminant_ch::"
                              "visit_enum - "
-                             "codegen failed\n"), 
+                             "codegen failed\n"),
                             -1);
         }
     }
@@ -82,7 +82,7 @@ be_visitor_union_discriminant_ch::visit_enum (be_enum *node)
       << "// " << __FILE__ << ":" << __LINE__;
 
   // The set method.
-  *os << be_nl << be_nl 
+  *os << be_nl << be_nl
       << "void _d (" << bt->nested_type_name (bu) << ");" << be_nl;
   // The get method.
   *os << bt->nested_type_name (bu) << " _d (void) const;";
@@ -114,10 +114,10 @@ be_visitor_union_discriminant_ch::visit_predefined_type (be_predefined_type
       << "// " << __FILE__ << ":" << __LINE__;
 
   // The set method.
-  *os << be_nl << be_nl 
-      << "void _d ( ::" << bt->nested_type_name (bu) << ");" << be_nl;
+  *os << be_nl << be_nl
+      << "void _d ( " << bt->nested_type_name (bu) << ");" << be_nl;
   // The get method.
-  *os << "::" << bt->nested_type_name (bu) << " _d (void) const;";
+  *os << bt->nested_type_name (bu) << " _d (void) const;";
 
   return 0;
 }
@@ -135,7 +135,7 @@ be_visitor_union_discriminant_ch::visit_typedef (be_typedef *node)
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_union_discriminant_ch::"
                          "visit_typedef - "
-                         "Bad primitive type\n"), 
+                         "Bad primitive type\n"),
                         -1);
     }
 
