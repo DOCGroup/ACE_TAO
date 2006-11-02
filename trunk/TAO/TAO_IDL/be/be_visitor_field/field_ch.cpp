@@ -282,14 +282,6 @@ be_visitor_field_ch::visit_predefined_type (be_predefined_type *node)
       bt = node;
     }
 
-  // If we are a typedef of a basic type, ACE_NESTED_CLASS might
-  // be emitted as part of the type name, in which case the '::'
-  // would be incorrect for certain expansions of the macro.
-  if (td == 0)
-    {
-      *os << "::";
-    }
-    
   AST_PredefinedType::PredefinedType pt = node->pt ();
 
   if (pt == AST_PredefinedType::PT_object
