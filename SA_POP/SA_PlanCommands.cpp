@@ -62,12 +62,7 @@ std::string SA_AdjustMinTimesCmd::get_log_text (void)
 {
   std::string log_str = "";
   log_str += "Adjusting Schedule Minimum Times (CommandID ";
-  char buffer[64];
-  log_str += itoa (this->get_id().step, buffer, 10);
-  log_str += ".";
-  log_str += itoa (this->get_id().decision_pt, buffer, 10);
-  log_str += ".";
-  log_str += itoa (this->get_id().seq_num, buffer, 10);
+  log_str += to_string (this->get_id ());
   //****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP
   log_str += "): [NOT HANDLING FULL SCHEDULING YET]";
 
@@ -131,12 +126,7 @@ std::string SA_AdjustMaxTimesCmd::get_log_text (void)
 {
   std::string log_str = "";
   log_str += "Adjusting Schedule Maximum Times (CommandID ";
-  char buffer[64];
-  log_str += itoa (this->get_id().step, buffer, 10);
-  log_str += ".";
-  log_str += itoa (this->get_id().decision_pt, buffer, 10);
-  log_str += ".";
-  log_str += itoa (this->get_id().seq_num, buffer, 10);
+  log_str += to_string (this->get_id ());
   //****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP
   log_str += "): [NOT HANDLING FULL SCHEDULING YET]";
 
@@ -218,18 +208,13 @@ std::string SA_AddTaskCmd::get_log_text (void)
 {
   std::string log_str = "";
   log_str += "Adding Task (CommandID ";
-  char buffer[64];
-  log_str += itoa (this->get_id().step, buffer, 10);
-  log_str += ".";
-  log_str += itoa (this->get_id().decision_pt, buffer, 10);
-  log_str += ".";
-  log_str += itoa (this->get_id().seq_num, buffer, 10);
+  log_str += to_string (this->get_id ());
   log_str += "): ";
   TaskList::iterator task_iter = this->tasks_.begin ();
   if (task_iter == this->tasks_.end ())
     log_str += "[NO TASKS TO ADD]";
   else
-    log_str += itoa (*task_iter, buffer, 10);
+    log_str += to_string (*task_iter);
 
   return log_str;
 };
@@ -334,17 +319,11 @@ std::string SA_AssocTaskImplCmd::get_log_text (void)
 {
   std::string log_str = "";
   log_str += "Associating Task(Instance)->Implementation (CommandID ";
-  char buffer[64];
-  log_str += itoa (this->get_id().step, buffer, 10);
-  log_str += ".";
-  log_str += itoa (this->get_id().decision_pt, buffer, 10);
-  log_str += ".";
-  log_str += itoa (this->get_id().seq_num, buffer, 10);
+  log_str += to_string (this->get_id ());
   log_str += "): ";
-  log_str += itoa (this->working_plan_->get_task_from_inst (this->task_inst_),
-    buffer, 10);
+  log_str += to_string (this->working_plan_->get_task_from_inst (this->task_inst_));
   log_str += "(";
-  log_str += itoa (this->task_inst_, buffer, 10);
+  log_str += to_string (this->task_inst_);
   log_str += ")->";
   TaskImplList::iterator impl_iter = this->impls_.begin ();
   if (impl_iter == this->impls_.end ())
@@ -430,18 +409,13 @@ std::string SA_AddOpenCondsCmd::get_log_text (void)
 {
   std::string log_str = "";
   log_str += "Adding Open Conditions (CommandID ";
-  char buffer[64];
-  log_str += itoa (this->get_id().step, buffer, 10);
-  log_str += ".";
-  log_str += itoa (this->get_id().decision_pt, buffer, 10);
-  log_str += ".";
-  log_str += itoa (this->get_id().seq_num, buffer, 10);
+  log_str += to_string (this->get_id ());
   log_str += "):";
   for (CondSet::iterator cond_iter = this->conds_.begin ();
     cond_iter != this->conds_.end (); cond_iter++)
   {
     log_str += " ";
-    log_str += itoa ((*cond_iter).id, buffer, 10);
+    log_str += to_string ((*cond_iter).id);
     log_str += " = ";
     if ((*cond_iter).value)
       log_str += "TRUE;";
@@ -521,18 +495,13 @@ std::string SA_RemoveOpenCondsCmd::get_log_text (void)
 {
   std::string log_str = "";
   log_str += "Removing Open Conditions (CommandID ";
-  char buffer[64];
-  log_str += itoa (this->get_id().step, buffer, 10);
-  log_str += ".";
-  log_str += itoa (this->get_id().decision_pt, buffer, 10);
-  log_str += ".";
-  log_str += itoa (this->get_id().seq_num, buffer, 10);
+  log_str += to_string (this->get_id ());
   log_str += "):";
   for (CondSet::iterator cond_iter = this->conds_.begin ();
     cond_iter != this->conds_.end (); cond_iter++)
   {
     log_str += " ";
-    log_str += itoa ((*cond_iter).id, buffer, 10);
+    log_str += to_string ((*cond_iter).id);
     log_str += " = ";
     if ((*cond_iter).value)
       log_str += "TRUE;";
@@ -597,12 +566,7 @@ std::string SA_AddOpenThreatsCmd::get_log_text (void)
 {
   std::string log_str = "";
   log_str += "Adding Open Threats (CommandID ";
-  char buffer[64];
-  log_str += itoa (this->get_id().step, buffer, 10);
-  log_str += ".";
-  log_str += itoa (this->get_id().decision_pt, buffer, 10);
-  log_str += ".";
-  log_str += itoa (this->get_id().seq_num, buffer, 10);
+  log_str += to_string (this->get_id ());
   //****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP
   log_str += "): [NOT HANDLING THREATS YET]";
 
@@ -657,12 +621,7 @@ std::string SA_RemoveOpenThreatsCmd::get_log_text (void)
 {
   std::string log_str = "";
   log_str += "Removing Open Threats (CommandID ";
-  char buffer[64];
-  log_str += itoa (this->get_id().step, buffer, 10);
-  log_str += ".";
-  log_str += itoa (this->get_id().decision_pt, buffer, 10);
-  log_str += ".";
-  log_str += itoa (this->get_id().seq_num, buffer, 10);
+  log_str += to_string (this->get_id ());
   //****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP
   log_str += "): [NOT HANDLING THREATS YET]";
 
@@ -717,12 +676,7 @@ std::string SA_ResolveCLThreatCmd::get_log_text (void)
 {
   std::string log_str = "";
   log_str += "Resolving Open Threat (CommandID ";
-  char buffer[64];
-  log_str += itoa (this->get_id().step, buffer, 10);
-  log_str += ".";
-  log_str += itoa (this->get_id().decision_pt, buffer, 10);
-  log_str += ".";
-  log_str += itoa (this->get_id().seq_num, buffer, 10);
+  log_str += to_string (this->get_id ());
   //****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP
   log_str += "): [NOT HANDLING THREATS YET]";
 
@@ -777,12 +731,7 @@ std::string SA_ResolveSchedOrderCmd::get_log_text (void)
 {
   std::string log_str = "";
   log_str += "Resolving Schedule Ordering (CommandID ";
-  char buffer[64];
-  log_str += itoa (this->get_id().step, buffer, 10);
-  log_str += ".";
-  log_str += itoa (this->get_id().decision_pt, buffer, 10);
-  log_str += ".";
-  log_str += itoa (this->get_id().seq_num, buffer, 10);
+  log_str += to_string (this->get_id ());
   //****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP
   log_str += "): [NOT HANDLING FULL SCHEDULING YET]";
 

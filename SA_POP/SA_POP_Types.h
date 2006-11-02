@@ -18,6 +18,7 @@
 #include <set>
 #include <list>
 #include <map>
+#include <sstream>
 
 #if defined (SA_POP_HAS_ACE)
 #include "ace/Log_Msg.h"
@@ -421,6 +422,54 @@ namespace SA_POP {
         return this->connections < s.connections;
       return this->task_insts < s.task_insts;
     };
+  };
+
+  inline std::string to_string(int x)
+  {
+    std::ostringstream o;
+    if (!(o << x))
+      throw "to_string(int) error writing to ostringstream";
+    return o.str();
+  };
+
+  inline std::string to_string(long x)
+  {
+    std::ostringstream o;
+    if (!(o << x))
+      throw "to_string(long) error writing to ostringstream";
+    return o.str();
+  };
+
+  inline std::string to_string(unsigned long x)
+  {
+    std::ostringstream o;
+    if (!(o << x))
+      throw "to_string(unsigned long) error writing to ostringstream";
+    return o.str();
+  };
+
+  inline std::string to_string(double x)
+  {
+    std::ostringstream o;
+    if (!(o << x))
+      throw "to_string(double) error writing to ostringstream";
+    return o.str();
+  };
+
+  inline std::string to_string(float x)
+  {
+    std::ostringstream o;
+    if (!(o << x))
+      throw "to_string(float) error writing to ostringstream";
+    return o.str();
+  };
+
+  inline std::string to_string(CommandID x)
+  {
+    std::ostringstream o;
+    if (!(o << x.step << "." << x.decision_pt << "." << x.seq_num))
+      throw "to_string(CommandID) error writing to ostringstream";
+    return o.str();
   };
 
 };  /* SA_POP namespace */
