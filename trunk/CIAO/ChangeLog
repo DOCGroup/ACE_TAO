@@ -1,9 +1,20 @@
+Thu Nov  2 22:54:12 UTC 2006  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * CIDLC/ServnatSourceGenerator.cpp:
+
+          Added generation of code to register eventtype factories with
+          the container ORB for components with publish and emit ports
+          (generation of such registration for components with consume
+          ports already existed). This additional registration is necessary
+          if the component sends an event using a CIAO Event Service
+          event channel that is collocated with it.
+
 Thu Nov  2 20:22:46 UTC 2006  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
 
-        * DAnCE/tests/NodeApplicationTest/NodeApp_test_client.cpp (main): 
-        * DAnCE/tests/NodeApplicationTest/NodeApp_test_client_simple.cpp (main): 
-        * DAnCE/tests/NodeApplicationTest/NodeApp_test_client_dynamic.cpp (main): 
-        * DAnCE/tests/NodeApplicationTest/NodeApp_test_client_ex.cpp: 
+        * DAnCE/tests/NodeApplicationTest/NodeApp_test_client.cpp (main):
+        * DAnCE/tests/NodeApplicationTest/NodeApp_test_client_simple.cpp (main):
+        * DAnCE/tests/NodeApplicationTest/NodeApp_test_client_dynamic.cpp (main):
+        * DAnCE/tests/NodeApplicationTest/NodeApp_test_client_ex.cpp:
         * DAnCE/NodeManager/Node_Manager.cpp (main): Replaced exit() with
           ACE_OS::exit().  Thanks to Abdul Sowayan for reporting this.
 
@@ -14,14 +25,14 @@ Mon Oct 30 19:13:03 UTC 2006  Jeff Parsons <j.parsons@vanderbilt.edu>
         * tests/IDL3/Events/Any/main.cpp:
         * tests/IDL3/Events/Any/README:
         * tests/IDL3/Events/Any/run_test.pl:
-        
+
           New test, to ensure that IDL eventtypes are
           inserted/extracted from Anys correctly, and that
           the resulting Anys are marshaled/demarshaled
           correctly.
-          
+
         * tests/IDL3/Events/Regular/Regular.mpc:
-        
+
           Added backslashes to shorted 'idlflags' line.
 
 Mon Oct 30 13:26:00 UTC 2006  Simon Massey  <sma@prismtech.com>
@@ -31,8 +42,8 @@ Mon Oct 30 13:26:00 UTC 2006  Simon Massey  <sma@prismtech.com>
 
 Thu Oct 26 14:37:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-	* DAnCE/StaticConfigurator/StaticDAnCEParser.cpp:
-	  Use ACE_OS methods, this fixes bugzilla 2691.
+  * DAnCE/StaticConfigurator/StaticDAnCEParser.cpp:
+    Use ACE_OS methods, this fixes bugzilla 2691.
           Thanks to Sowayan Abdullah <abdullah dot sowayan at lmco dot com>
           for reporting this issue
 
@@ -60,23 +71,23 @@ Wed Oct 25 14:54:03 UTC 2006  Boris Kolpackov  <boris@codesynthesis.com>
 
 Wed Oct 25 11:02:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-	* examples/Null_Component/StaticDAnCEApp.mpc:
-	  Enabled this project in all builds
+  * examples/Null_Component/StaticDAnCEApp.mpc:
+    Enabled this project in all builds
 
 Mon Oct 23 19:35:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-	* DAnCE/DomainApplicationManager/DomainApplicationManager_Impl.cpp:
-	  Added missing CORBA::string_dup to fix crash with BCB
+  * DAnCE/DomainApplicationManager/DomainApplicationManager_Impl.cpp:
+    Added missing CORBA::string_dup to fix crash with BCB
 
 Fri Oct 20 06:41:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-	* DAnCE/StaticConfigurator/StaticDAnCEParser.cpp:
-	  Changed the HomeAttributes generation in such a way that it
-	  also compiles with BCB6
+  * DAnCE/StaticConfigurator/StaticDAnCEParser.cpp:
+    Changed the HomeAttributes generation in such a way that it
+    also compiles with BCB6
 
-	* examples/Null_Component/*:
-	  New example, a component with just one interface. This can be used
-	  to analyze the core footprint and see what we can reduce
+  * examples/Null_Component/*:
+    New example, a component with just one interface. This can be used
+    to analyze the core footprint and see what we can reduce
           Thanks to Sowayan Abdullah <abdullah dot sowayan at lmco dot com>
           for creating this example
 
@@ -124,42 +135,42 @@ Tue Oct 17 13:40:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * DAnCE/Plan_Launcher/Plan_Launcher.cpp:
         * DAnCE/Plan_Launcher/Plan_Launcher_Impl.cpp:
-	  Several small layout changes and use ACE_ERROR for
-	  errors
+    Several small layout changes and use ACE_ERROR for
+    errors
 
 Tue Oct 17 13:30:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-	* DAnCE/NodeApplication/RTNodeApp_Configurator.{h,cpp}:
-	  Moved destructor implementation to cpp file
+  * DAnCE/NodeApplication/RTNodeApp_Configurator.{h,cpp}:
+    Moved destructor implementation to cpp file
 
 Tue Oct 17 13:10:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-	* DAnCE/NodeManager/CIAO_Monitor.h:
-	  Doxygen improvements
+  * DAnCE/NodeManager/CIAO_Monitor.h:
+    Doxygen improvements
 
-	* DAnCE/NodeManager/NAM_Map.{h,cpp}:
-	  Made is_available a const method
+  * DAnCE/NodeManager/NAM_Map.{h,cpp}:
+    Made is_available a const method
 
-	* DAnCE/NodeManager/Node_Manager.cpp:
-	  Use bool
+  * DAnCE/NodeManager/Node_Manager.cpp:
+    Use bool
 
-	* DAnCE/NodeManager/Node_Manager_Impl.cpp:
+  * DAnCE/NodeManager/Node_Manager_Impl.cpp:
           Use ACE_ERROR together with LM_ERROR
 
 Tue Oct 17 12:32:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-	* DAnCE/DomainApplicationManager/Deployment_Configuration.cpp:
-	* DAnCE/NodeApplication/NodeApplication_Impl.cpp:
-	* DAnCE/NodeApplication/RTConfig_Manager.cpp:
+  * DAnCE/DomainApplicationManager/Deployment_Configuration.cpp:
+  * DAnCE/NodeApplication/NodeApplication_Impl.cpp:
+  * DAnCE/NodeApplication/RTConfig_Manager.cpp:
           Use ACE_ERROR together with LM_ERROR
 
-	* DAnCE/NodeApplication/NodeApplication_Impl.inl:
+  * DAnCE/NodeApplication/NodeApplication_Impl.inl:
           Initialise pointers with 0
 
-	* DAnCE/NodeApplication/Configurator_Factory.{h,cpp}:
-	* DAnCE/NodeApplication/Container_Impl.cpp:
-	* DAnCE/NodeApplication/NodeApplication_Core.cpp:
-	  Use bool and const improvements, doxygen improvements
+  * DAnCE/NodeApplication/Configurator_Factory.{h,cpp}:
+  * DAnCE/NodeApplication/Container_Impl.cpp:
+  * DAnCE/NodeApplication/NodeApplication_Core.cpp:
+    Use bool and const improvements, doxygen improvements
 
 Mon Oct 16 19:52:15 UTC 2006  Shanshan Jiang <shanshan.jiang@vanderbilt.edu>
 
