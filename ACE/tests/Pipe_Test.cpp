@@ -159,7 +159,7 @@ run_main (int argc, ACE_TCHAR *argv[])
 
               ACE_END_TEST;
 
-              exit (WEXITSTATUS (status));
+              ACE_OS::exit (WEXITSTATUS (status));
             }
 
           ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Server %d finished\n"),

@@ -240,7 +240,7 @@ run_main (int, ACE_TCHAR *[])
   tcl_interp   = Tcl_CreateInterp ();
 
   if (init (tcl_interp) != TCL_OK) {
-    exit (1);
+    ACE_OS::exit (1);
   }
 
   Tk_Window tk = 0;
@@ -252,7 +252,7 @@ run_main (int, ACE_TCHAR *[])
 
   char tcl_cmd[] = "source TkReactor_Test.tcl";
   if (Tcl_Eval (tcl_interp, tcl_cmd) != TCL_OK) {
-    exit (1);
+    ACE_OS::exit (1);
   }
   // set up callback
   char label_var_name[] = "label_var";

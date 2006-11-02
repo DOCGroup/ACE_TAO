@@ -343,7 +343,7 @@ Erik Margraf <erik at asgard dot gud dot siemens dot co dot at>
 Bryan Doerr <Bryan dot S dot Doerr at boeing dot com>
 Adam Miller <adam at royalblueny dot com>
 Thomas Jordan <ace at programmer dot net>
-Keith Nicewarner <knicewar at email dot arc dot nasa dot gov>
+Keith Nicewarner <Keith.Nicewarner at SpaceDev dot com>
 Frederic Andres <andres at rd dot nacsis dot ac dot jp>
 Achint Sandhu <sandhu at nortelnetworks dot com>
 Mitch Kuninsky <Mitch_Kuninsky at avid dot com>
@@ -2155,12 +2155,13 @@ Manuel Traut <manut dot de at googlemail dot com>
 Drew Reynaud <drewreynaud at hotmail dot com>
 Artur DeEsperanto <DrEsperanto at gmx dot net>
 Scott Mitchell <rsm at progress dot com>
+Thomas Vanier <thomas dot vanier at gmail dot com>
 N Johnson <nj at artesys dot info>
 
 I would particularly like to thank Paul Stephenson, who worked with me
 at Ericsson in the early 1990's.  Paul devised the recursive Makefile
-scheme that underlies this distribution and also spent countless hours
-with me discussing object-oriented techniques for developing
+scheme that underlies the ACE distribution and also spent countless
+hours with me discussing object-oriented techniques for developing
 distributed application frameworks.
 
 Finally, I'd also like to thank Todd L. Montgomery <tmont at cs.wvu.edu>,
