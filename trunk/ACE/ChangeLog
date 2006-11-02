@@ -1,3 +1,10 @@
+Thu Nov  2 15:42:29 UTC 2006  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * ace/Sock_Connect.cpp:
+        * ace/Sock_Connect.h:
+          Added support for IPv6 detection on HPUX, AIX, Solaris, WinCE,
+          and VxWorks 5.5.x.
+
 Wed Nov 01 09:05:10 UTC 2006  Martin Corino  <mcorino@remedy.nl>
 
         * ace/OS_NS_stdlib.inl:
@@ -25,7 +32,7 @@ Tue Oct 31 10:31:10 UTC 2006  Ossama Othman  <ossama_othman at symantec.com>
 Mon Oct 30 19:57:20 UTC 2006  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * bin/ciao_tests.lst:
-        
+
           Added run_test.pl in CIAO/tests/IDL3/Events/Any to the list of
           CIAO tests to be run automatically.
 
