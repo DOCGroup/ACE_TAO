@@ -1,3 +1,12 @@
+Thu Nov  2 20:22:46 UTC 2006  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
+
+        * DAnCE/tests/NodeApplicationTest/NodeApp_test_client.cpp (main): 
+        * DAnCE/tests/NodeApplicationTest/NodeApp_test_client_simple.cpp (main): 
+        * DAnCE/tests/NodeApplicationTest/NodeApp_test_client_dynamic.cpp (main): 
+        * DAnCE/tests/NodeApplicationTest/NodeApp_test_client_ex.cpp: 
+        * DAnCE/NodeManager/Node_Manager.cpp (main): Replaced exit() with
+          ACE_OS::exit().  Thanks to Abdul Sowayan for reporting this.
+
 Mon Oct 30 19:13:03 UTC 2006  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tests/IDL3/Events/Any/EventAny.idl:

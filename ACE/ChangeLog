@@ -1,3 +1,25 @@
+Thu Nov  2 20:33:55 UTC 2006  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
+
+        * tests/SOCK_Test_IPv6.cpp (spawn): 
+        * tests/Pipe_Test.cpp (run_main): 
+        * tests/SPIPE_Test.cpp (client): 
+        * tests/TkReactor_Test.cpp (run_main): 
+        * tests/MT_SOCK_Test.cpp (spawn): 
+        * tests/Process_Strategy_Test.cpp (run_main): 
+        * tests/Unload_libACE.cpp (main): 
+        * tests/SOCK_Test.cpp (spawn): 
+        * tests/Priority_Reactor_Test.cpp (run_main): 
+        * tests/SOCK_Dgram_Test.cpp (spawn): 
+        * tests/SOCK_SEQPACK_SCTP_Test.cpp (spawn_test): 
+        * examples/Map_Manager/test_hash_map_manager.cpp (ACE_TMAIN): 
+        * apps/mkcsregdb/mkcsregdb.cpp (fail): Replaced exit() with
+          ACE_OS::exit().
+
+Wed Nov 01 20:04:00 US Central Time 2006 Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
+
+        * Bronson Royce Schmidt checked in at 7 pounds, 15 ounces and
+          21.25 inches long.
+
 Thu Nov  2 16:10:10 UTC 2006  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * ace/Sock_Connect.cpp:

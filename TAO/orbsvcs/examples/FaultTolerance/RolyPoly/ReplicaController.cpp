@@ -392,7 +392,7 @@ ReplicaController::send_reply (
 
     // Crash point 1.
     //
-    if (crash_point == 1 && ftr->retention_id > 2) exit (1);
+    if (crash_point == 1 && ftr->retention_id > 2) ACE_OS::exit (1);
 
     try
     {
@@ -429,7 +429,7 @@ ReplicaController::send_reply (
 
   // Crash point 2.
   //
-  if (crash_point == 2 && ftr->retention_id > 2) exit (1);
+  if (crash_point == 2 && ftr->retention_id > 2) ACE_OS::exit (1);
 }
 
 
