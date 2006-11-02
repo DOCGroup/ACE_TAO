@@ -127,7 +127,7 @@ main (int argc, char *argv[])
       else
       {
         ACE_DEBUG ((LM_DEBUG, "Return values did not match: failure\n"));
-        exit (1);
+        ACE_OS::exit (1);
       }
 
       // Install another set of components
