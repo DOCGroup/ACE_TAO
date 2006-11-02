@@ -239,7 +239,7 @@ main (int argc, char *argv[])
               ACE_DEBUG ((LM_DEBUG,
                           "Return values did not match: on Component: %d \n",
                           i));
-              exit (1);
+              ACE_OS::exit (1);
             }
         }
 
