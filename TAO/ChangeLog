@@ -1,7 +1,25 @@
+Thu Nov  2 20:53:16 UTC 2006  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_visitor_exception/exception_ctor.cpp:
+        * TAO_IDL/be/be_visitor_union/discriminant_ch.cpp:
+        * TAO_IDL/be/be_visitor_field/field_ch.cpp:
+        * TAO_IDL/ast/ast_type.cpp:
+
+          Fixed generation of nested type name to add a double
+          colon if the name includes the canonical CORBA
+          namespace, to disambiguate it from any scoped
+          name which may include a different, nested namespace
+          named CORBA. Thanks to N Johnson <nj@artesys.info>
+          for reporting the bug.
+
+        * tests/IDL_Test/nested_scope.idl:
+
+          Added use case from the bug report above to the IDL file.
+
 Wed Nov  1 18:48:26 UTC 2006  Simon McQueen  <sm@prismtech.com>
 
         * tests/Bug_2174_Regression/run_test.pl:
-        
+
           Add a sleep to prevent spurious fails on win32.
 
 Mon Oct 30 19:49:12 UTC 2006  Martin Corino  <mcorino@remedy.nl>
