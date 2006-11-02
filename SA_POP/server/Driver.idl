@@ -1,0 +1,21 @@
+#include "common/OpString.idl"
+
+module CIAO
+{
+  module RACE
+  {
+    module SA_POP
+    {
+      interface Driver
+      {
+        // Deploy the given fully populated deployment plan.
+        oneway void deploy_plan (in string plan_uri);
+
+        // Generate and deploy a deployment plan that achieves the
+        // specified goal.
+        oneway void deploy_goal (in ::CIAO::RACE::GoalStructure goal);
+      };
+
+    };
+  };
+};

@@ -1,0 +1,82 @@
+project(Driver_stub): taolib_with_idl, ciao_race_default {
+
+  after += OpString_stub
+  libs += OpString_stub
+
+  IDL_Files {
+
+    Driver.idl
+  }
+
+  Header_Files {
+    DriverC.h
+  }
+
+  Inline_Files {
+    DriverC.inl
+  }
+
+  Source_Files {
+    DriverC.cpp
+  }
+}
+
+project(Driver_svnt): taolib_with_idl, ciao_race_default {
+
+  after += Driver_stub
+  libs += OpString_stub \
+          Driver_stub
+
+  IDL_Files {
+
+    Driver.idl
+  }
+
+  Header_Files {
+    DriverS.h
+  }
+
+  Inline_Files {
+    DriverS.inl
+  }
+
+  Source_Files {
+    DriverS.cpp
+  }
+}
+
+project(Server): ciao_component_dnc, ciao_race_component, taoexe, ciao_plan_generator {
+
+  exename = server
+  after += Driver_svnt
+  libs += OpString_stub \
+          Driver_stub \
+          Driver_svnt \
+          Interactive_Input_Adapter_stub
+
+  IDL_Files {
+  }
+
+  Header_Files {
+    Driver.h
+  }
+
+  Source_Files {
+    Driver.cpp
+    server.cpp
+  }
+}
+
+project(client): taoclient, ciao_race_component, ciao_component_dnc {
+
+  exename = client
+  after += Driver_stub
+  libs += Driver_stub
+
+  IDL_Files {
+  }
+
+  Source_Files {
+    client.cpp
+  }
+}
