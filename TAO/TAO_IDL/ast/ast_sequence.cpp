@@ -130,7 +130,7 @@ AST_Sequence::AST_Sequence (AST_Expression *ms,
   this->size_type (AST_Type::VARIABLE);
 
   AST_Decl::NodeType nt = bt->node_type ();
-  
+
   if (AST_Decl::NT_array == nt || AST_Decl::NT_sequence == nt)
     {
       this->owns_base_type_ = true;
@@ -154,6 +154,7 @@ AST_Sequence::in_recursion (ACE_Unbounded_Queue<AST_Type *> &list)
     }
 
   AST_Type *type = AST_Type::narrow_from_decl (this->base_type ());
+  AST_Decl::NodeType nt = type->node_type ();
 
   if (!type)
     {
@@ -168,12 +169,14 @@ AST_Sequence::in_recursion (ACE_Unbounded_Queue<AST_Type *> &list)
     {
       AST_Typedef *td = AST_Typedef::narrow_from_decl (type);
       type = td->primitive_base_type ();
-      AST_Decl::NodeType nt = type->node_type ();
+      nt = type->node_type ();
+    }
 
-      if (nt != AST_Decl::NT_struct && nt != AST_Decl::NT_union)
-        {
-          return false;
-        }
+  if (nt != AST_Decl::NT_struct
+      && nt != AST_Decl::NT_union
+      && nt != AST_Decl::NT_sequence)
+    {
+      return false;
     }
 
   if (this->match_names (type, list))
@@ -255,7 +258,7 @@ AST_Sequence::destroy (void)
   this->pd_max_size->destroy ();
   delete this->pd_max_size;
   this->pd_max_size = 0;
-  
+
   this->AST_ConcreteType::destroy ();
 }
 
