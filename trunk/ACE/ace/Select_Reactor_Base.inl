@@ -33,7 +33,8 @@ ACE_Select_Reactor_Handler_Repository::unbind (ACE_HANDLE handle,
   // Do not refactor this code to optimize the call to the unbind impl.
   // To resolve bug 2653, unbind must be called even when find_eh returns
   // event_handlers_.end().
-  return (handle == ACE_INVALID_HANDLE) ? -1
+
+  return !this->handle_in_range (handle) ? -1
           : this->unbind (handle,
                           this->find_eh (handle),
                           mask);
@@ -46,15 +47,18 @@ ACE_Select_Reactor_Handler_Repository::find (ACE_HANDLE handle)
 
   ACE_Event_Handler * eh = 0;
 
-  map_type::iterator const pos = this->find_eh (handle);
-
-  if (pos != this->event_handlers_.end ())
+  if (this->handle_in_range (handle))
     {
+      map_type::iterator const pos = this->find_eh (handle);
+
+      if (pos != this->event_handlers_.end ())
+        {
 #ifdef ACE_WIN32
-      eh = (*pos).item ();
+          eh = (*pos).item ();
 #else
-      eh = *pos;
+          eh = *pos;
 #endif  /* ACE_WIN32 */
+        }
     }
   // Don't bother setting errno.  It isn't used in the select()-based
   // reactors and incurs a TSS access.
