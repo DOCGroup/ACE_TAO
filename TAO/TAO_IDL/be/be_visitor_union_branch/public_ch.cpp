@@ -18,8 +18,8 @@
 //
 // ============================================================================
 
-ACE_RCSID (be_visitor_union_branch, 
-           public_ch, 
+ACE_RCSID (be_visitor_union_branch,
+           public_ch,
            "$Id$")
 
 // **********************************************
@@ -124,7 +124,7 @@ be_visitor_union_branch_public_ch::visit_array (be_array *node)
 
       // Now use this array as a "type" for the subsequent declarator
       // the set method.
-      *os << be_nl << be_nl 
+      *os << be_nl << be_nl
           << "void " << ub->local_name () << " ("
           << "_" << bt->local_name () << ");" << be_nl;
       // The get method.
@@ -458,43 +458,41 @@ be_visitor_union_branch_public_ch::visit_predefined_type (be_predefined_type *no
 
   *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
       << "// " << __FILE__ << ":" << __LINE__;
-      
-  const char *no_td_global = (td == 0 ? "::" : "");
 
   switch (node->pt ())
     {
     case AST_PredefinedType::PT_pseudo:
     case AST_PredefinedType::PT_object:
     case AST_PredefinedType::PT_abstract:
-      *os << be_nl << be_nl 
-          << "void " << ub->local_name () << " (const " << no_td_global
+      *os << be_nl << be_nl
+          << "void " << ub->local_name () << " (const "
           << bt->nested_type_name (bu, "_ptr") << ");" << be_nl;
-      *os << no_td_global << bt->nested_type_name (bu, "_ptr") << " "
+      *os << bt->nested_type_name (bu, "_ptr") << " "
           << ub->local_name () << " (void) const;";
       break;
     case AST_PredefinedType::PT_value:
-      *os << be_nl << be_nl 
-          << "void " << ub->local_name () << " ( " << no_td_global
+      *os << be_nl << be_nl
+          << "void " << ub->local_name () << " ( "
           << bt->nested_type_name (bu, " *") << ");" << be_nl;
-      *os << no_td_global << bt->nested_type_name (bu, " *") << " "
+      *os << bt->nested_type_name (bu, " *") << " "
           << ub->local_name () << " (void) const;";
       break;
     case AST_PredefinedType::PT_any:
-      *os << be_nl << be_nl 
-          << "void " << ub->local_name () << " (const " << no_td_global
+      *os << be_nl << be_nl
+          << "void " << ub->local_name () << " (const "
           << bt->nested_type_name (bu) << " &);" << be_nl;
-      *os << "const " << no_td_global<< bt->nested_type_name (bu) << " &"
+      *os << "const " << bt->nested_type_name (bu) << " &"
           << ub->local_name () << " (void) const;" << be_nl;
-      *os << no_td_global << bt->nested_type_name (bu) << " &"
+      *os << bt->nested_type_name (bu) << " &"
           << ub->local_name () << " (void);";
       break;
     case AST_PredefinedType::PT_void:
       break;
     default:
-      *os << be_nl << be_nl 
-          << "void " << ub->local_name () << " ( " << no_td_global
+      *os << be_nl << be_nl
+          << "void " << ub->local_name () << " ( "
           << bt->nested_type_name (bu) << ");" << be_nl;
-      *os << no_td_global << bt->nested_type_name (bu) << " "
+      *os << bt->nested_type_name (bu) << " "
           << ub->local_name () << " (void) const;";
     }
 
@@ -552,7 +550,7 @@ be_visitor_union_branch_public_ch::visit_sequence (be_sequence *node)
       // Generate the anonymous sequence member typedef.
       // This provides a consistent name to use instead of the
       // implementation-specific name.
-      *os << be_nl << be_nl 
+      *os << be_nl << be_nl
           << "typedef " << bt->nested_type_name (bu)
           << " _" << ub->local_name () << "_seq;";
     }
@@ -560,7 +558,7 @@ be_visitor_union_branch_public_ch::visit_sequence (be_sequence *node)
   *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
       << "// " << __FILE__ << ":" << __LINE__;
 
-  *os << be_nl << be_nl 
+  *os << be_nl << be_nl
       << "void " << ub->local_name () << " (const "
       << bt->nested_type_name (bu) << " &);" << be_nl;
   *os << "const " << bt->nested_type_name (bu) << " &"
@@ -595,7 +593,7 @@ be_visitor_union_branch_public_ch::visit_string (be_string *node)
   // Three methods to set the string value
   if (node->width () == (long) sizeof (char))
     {
-      *os << be_nl << be_nl 
+      *os << be_nl << be_nl
           << "void " << ub->local_name () << " (char *);" << be_nl;
       *os << "void " << ub->local_name () << " (const char *);"
           << be_nl;
@@ -606,7 +604,7 @@ be_visitor_union_branch_public_ch::visit_string (be_string *node)
     }
   else
     {
-      *os << be_nl << be_nl 
+      *os << be_nl << be_nl
           << "void " << ub->local_name () << " ( ::CORBA::WChar *);" << be_nl;
       *os << "void " << ub->local_name () << " (const ::CORBA::WChar *);"
           << be_nl;
@@ -668,7 +666,7 @@ be_visitor_union_branch_public_ch::visit_structure (be_structure *node)
   *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
       << "// " << __FILE__ << ":" << __LINE__;
 
-  *os << be_nl << be_nl 
+  *os << be_nl << be_nl
       << "void " << ub->local_name () << " (const "
       << bt->nested_type_name (bu) << " &);" << be_nl
       << "const " << bt->nested_type_name (bu) << " &"
@@ -751,7 +749,7 @@ be_visitor_union_branch_public_ch::visit_union (be_union *node)
   *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
       << "// " << __FILE__ << ":" << __LINE__;
 
-  *os << be_nl << be_nl 
+  *os << be_nl << be_nl
       << "void " << ub->local_name () << " (const "
       << bt->nested_type_name (bu) << " &);" << be_nl
       << "const " << bt->nested_type_name (bu) << " &"
