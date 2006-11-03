@@ -237,14 +237,13 @@ int BB_Proxy::flow_request (const AdmissionControl::FlowInfo &f,
       std::auto_ptr <FlowRequest> flow_request 
         (new FlowRequest (this->BB_ref_.in(), f, qos_req));
 
-      ACE_DEBUG ((LM_DEBUG,"In BB_Proxy::flow_request: Requesting flow.\n"));
+      //ACE_DEBUG ((LM_DEBUG,"In BB_Proxy::flow_request: Requesting flow.\n"));
       AdmissionControl::AdmissionControlResult adm_ctrl_result = 
         flow_request->send_request ();
       
       if (AdmissionControl::DECISION_ADMIT == adm_ctrl_result)
         {
-          ACE_DEBUG ((LM_DEBUG,
-                "In BB_Proxy::flow_request: Flow Accepted token = %s.\n",
+          ACE_DEBUG ((LM_DEBUG, "In BB_Proxy::flow_request: Flow Accepted token = %s.\n",
                 flow_request->get_token().c_str()));
           dscp = flow_request->get_dscp ();
           plan_man->push_flow (flow_request);
@@ -252,8 +251,7 @@ int BB_Proxy::flow_request (const AdmissionControl::FlowInfo &f,
         }
       else
         {
-          ACE_DEBUG ((LM_ERROR,
-                "In BB_Proxy::flow_request: Requested flow was not admitted.\n"));
+          ACE_DEBUG ((LM_ERROR, "In BB_Proxy::flow_request: Requested flow was not admitted.\n"));
           dscp = -1;
           retval = -1;
         }

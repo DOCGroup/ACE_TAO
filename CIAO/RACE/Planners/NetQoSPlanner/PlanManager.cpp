@@ -198,9 +198,9 @@ namespace CIAO
         if (this->instance_node_map_.find (inst_name) != this->instance_node_map_.end ())
         {
           const std::string &logical_node = this->instance_node_map_[inst_name];
-          ACE_DEBUG ((LM_DEBUG,
-                       "In PlanManager::process_netqos_req: logical_node = %s\n",
-                       logical_node.c_str()));
+          //ACE_DEBUG ((LM_DEBUG, 
+          //            "In PlanManager::process_netqos_req: logical_node = %s\n",
+          //            logical_node.c_str()));
           //const std::string &physical_node = this->get_physical_host (logical_node);
           ip.dottedDecimal = CORBA::string_dup (logical_node.c_str());
           ip.subnetMask = CORBA::string_dup ("255.255.255.255");
