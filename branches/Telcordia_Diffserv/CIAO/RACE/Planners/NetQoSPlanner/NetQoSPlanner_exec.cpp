@@ -383,6 +383,13 @@ pd.NWPriorityModelDef().reply_dscp));
               {
                 const ::CIAO::DAnCE::NetworkQoS::ConnectionQoS & conn_qos =
                   net_qos_req->conn_qos_set[k];
+                
+                if (conn_qos.data_qos == ::CIAO::DAnCE::NetworkQoS::BEST_EFFORT)
+                  {
+                    ACE_DEBUG((LM_DEBUG,"BEST_EFFORT Requested, skipping...\n"));
+                    continue;
+                  }
+                
                 /*ACE_DEBUG ((LM_DEBUG,
                               "In NetQoSPlanner_exec_i::process_netqos_req: conn_qos.connections.length () = %u\n",
                                 conn_qos.connections.length ()));*/
@@ -423,7 +430,7 @@ pd.NWPriorityModelDef().reply_dscp));
                       this->get_traffic_qos (qos_req, conn_qos);
                       long fwd_dscp = 0, rev_dscp = 0;
 
-                      if (conn_qos.fwdBWD > 0)
+                      if (conn_qos.fwdBWD > 0 )
                         {
                           if (-1 == this->make_flow_request 
                                       (srcIP, destIP, conn_qos.fwdBWD, qos_req, fwd_dscp))
@@ -463,7 +470,7 @@ pd.NWPriorityModelDef().reply_dscp));
                       ACE_DEBUG((LM_DEBUG,
                                  "Extra connection found in the NetQoS requirements structure.\n"));
                     }  
-                  }
+                }
               }
 
               if (rollback)
