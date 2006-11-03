@@ -1,3 +1,8 @@
+Fri Nov  3 15:54:35 UTC 2006  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * tao/Strategies/SHMIOP_Connector.cpp (make_connection):
+          scoreboard cleanup.
+
 Fri Nov  3 12:35:41 UTC 2006  Chad Elliott  <elliott_c@ociweb.com>
 
         * tao/Connection_Handler.inl:
