@@ -175,18 +175,15 @@ ACE_Select_Reactor_Handler_Repository::find_eh (ACE_HANDLE handle)
 
   map_type::iterator pos (this->event_handlers_.end ());
 
-  // Only bother to search for the <handle> if it's in range.
-  if (this->handle_in_range (handle))
-    {
+  // this code assumes the handle is in range.
 #if defined (ACE_WIN32)
-      this->event_handlers_.find (handle, pos);
+  this->event_handlers_.find (handle, pos);
 #else
-      map_type::iterator const tmp = &this->event_handlers_[handle];
+  map_type::iterator const tmp = &this->event_handlers_[handle];
 
-      if (*tmp != 0)
-        pos = tmp;
+  if (*tmp != 0)
+    pos = tmp;
 #endif /* ACE_WIN32 */
-    }
 
   return pos;
 }
@@ -302,8 +299,8 @@ ACE_Select_Reactor_Handler_Repository::unbind (
   // iterator pointing to it will no longer be valid once the handler
   // is unbound.
   ACE_Event_Handler * const event_handler =
-    (pos == this->event_handlers_.end () 
-     ? 0 
+    (pos == this->event_handlers_.end ()
+     ? 0
      : ACE_SELECT_REACTOR_EVENT_HANDLER (pos));
 
   // Clear out the <mask> bits in the Select_Reactor's wait_set.
@@ -496,7 +493,7 @@ ACE_Select_Reactor_Handler_Repository::dump (void) const
 #  define ACE_HANDLE_FORMAT_SPECIFIER ACE_LIB_TEXT("%d")
 #  define ACE_MAX_HANDLEP1_FORMAT_SPECIFIER ACE_LIB_TEXT("%d")
 # endif  /* ACE_WIN32 */
-  
+
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
   ACE_DEBUG ((LM_DEBUG,
               ACE_LIB_TEXT ("max_handlep1_ = ")
