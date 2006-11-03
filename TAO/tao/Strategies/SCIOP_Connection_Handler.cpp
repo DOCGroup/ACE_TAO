@@ -94,6 +94,9 @@ TAO_SCIOP_Connection_Handler::open_handler (void *v)
 int
 TAO_SCIOP_Connection_Handler::open (void*)
 {
+  if (this->shared_open() == -1)
+    return -1;
+
   TAO_SCIOP_Protocol_Properties protocol_properties;
 
   // Initialize values from ORB params.

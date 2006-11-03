@@ -635,9 +635,9 @@ TAO::SSLIOP::Connector::ssliop_connect (
       this->active_connect_strategy_->synch_options (max_wait_time,
                                                      synch_options);
 
-      // The code used to set the timeout to zero, with the intent of 
+      // The code used to set the timeout to zero, with the intent of
       // polling the reactor for connection completion. However, the side-effect
-      // was to cause the connection to timeout immediately. 
+      // was to cause the connection to timeout immediately.
 
       // We obtain the transport in the <svc_handler> variable.  As we
       // know now that the connection is not available in Cache we can
@@ -705,9 +705,16 @@ TAO::SSLIOP::Connector::ssliop_connect (
           return 0;
         }
 
-      if (transport->connection_handler ()->keep_waiting ()) 
+      // fix for bug 2654
+      if (svc_handler->keep_waiting ())
         {
-          svc_handler->add_reference ();
+          svc_handler->connection_pending ();
+        }
+
+      // fix for bug 2654
+      if (svc_handler->error_detected ())
+        {
+          svc_handler->cancel_pending_connection ();
         }
 
       // At this point, the connection has be successfully connected.
@@ -738,6 +745,14 @@ TAO::SSLIOP::Connector::ssliop_connect (
                           "could not add the new connection to cache\n"));
             }
 
+          return 0;
+        }
+
+      // fix for bug 2654
+      if (svc_handler->error_detected ())
+        {
+          svc_handler->cancel_pending_connection ();
+          transport->purge_entry();
           return 0;
         }
 

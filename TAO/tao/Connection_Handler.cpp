@@ -24,8 +24,9 @@ ACE_RCSID (tao,
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_Connection_Handler::TAO_Connection_Handler (TAO_ORB_Core *orb_core)
-  : orb_core_ (orb_core)
-  , transport_ (0)
+  : orb_core_ (orb_core),
+    transport_ (0),
+    connection_pending_ (false)
 {
   // @@todo: We need to have a distinct option/ method in the resource
   // factory for this and TAO_Transport.
@@ -46,6 +47,18 @@ TAO_Connection_Handler::~TAO_Connection_Handler (void)
   //@@ CONNECTION_HANDLER_DESTRUCTOR_ADD_HOOK
 }
 
+int
+TAO_Connection_Handler::shared_open (void)
+{
+  // This reference counting is related to asynch connections.  It
+  // should probably be managed by the ACE_Strategy_Connector, since
+  // that's really the reference being managed here.  also, whether
+  // open ultimately succeeds or fails, the connection attempted is
+  // ending, so the reference must be removed in any case.
+  this->cancel_pending_connection();
+
+  return 0;
+}
 
 int
 TAO_Connection_Handler::set_socket_option (ACE_SOCK &sock,
@@ -417,6 +430,12 @@ TAO_Connection_Handler::close_handler (void)
                        this->orb_core_->leader_follower ());
   this->transport ()->purge_entry();
   this->transport ()->remove_reference ();
+
+  // @@ I think that if the connection_pending state is true
+  // when close_handler is calld, we should probably release
+  // another reference so that the connector doesn't have to
+  // worry about it.
+
   return 0;
 }
 
