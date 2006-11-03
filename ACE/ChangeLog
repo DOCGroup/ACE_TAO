@@ -1,3 +1,9 @@
+Fri Nov  3 18:12:36 UTC 2006  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
+
+        * tests/Unload_libACE.cpp (main): Reverted the ACE_OS::exit() from
+          this since it's not supposed to be an ACE test.  Thanks to Simon
+          Massey for reporting this.
+
 Fri Nov 03 15:52:10 UTC 2006  Martin Corino  <mcorino@remedy.nl>
 
         * bin/PerlACE/ProcessVX_Unix.pm:
