@@ -200,6 +200,9 @@ TAO_SHMIOP_Connector::make_connection (TAO::Profile_Transport_Resolver *,
       svc_handler->cancel_pending_connection ();
     }
 
+  TAO_Transport *transport =
+    svc_handler->transport ();
+
   // At this point, the connection has be successfully connected.
   // #REFCOUNT# is one.
   if (TAO_debug_level > 2)
@@ -210,9 +213,6 @@ TAO_SHMIOP_Connector::make_connection (TAO::Profile_Transport_Resolver *,
                 ACE_TEXT_CHAR_TO_TCHAR (shmiop_endpoint->host ()),
                 shmiop_endpoint->port (),
                 svc_handler->peer ().get_handle ()));
-
-  TAO_Transport *transport =
-    svc_handler->transport ();
 
   // Add the handler to Cache
   int retval =
