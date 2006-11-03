@@ -23,6 +23,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "tao/Basic_Types.h"
+#include "ace/Event_Handler.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_SOCK;
@@ -112,6 +113,19 @@ public:
   /// this handler
   virtual int close_handler (void);
 
+  /// When waiting for an asynchronous connection to complete an
+  /// additional reference must be maintained, related to bugzilla
+  /// #2417. However once the connection is successfully established,
+  /// this reference must be removed. Using connection_pending allows
+  /// the connection handler to know that it is opening as a result of
+  /// a delayed asynch connection rather than an immediate synch
+  /// connection, which has no additional reference needs.
+  void connection_pending (void);
+
+  /// A pending connection may be canceled due to an error detected
+  /// while the initiating thread is still in the Connector.
+  void cancel_pending_connection (void);
+
   /// Set the Diff-Serv codepoint on outgoing packets.  Only has
   /// effect for remote protocols (e.g., IIOP); no effect for local
   /// protocols (UIOP).  Default implementation is for local
@@ -132,6 +146,11 @@ protected:
 
   /// Return our TAO_ORB_Core pointer
   TAO_ORB_Core *orb_core (void);
+
+  /// A common function called at the start of any protocol-specific
+  /// open. Returns -1 on a failure (although no failure mode is
+  /// currently defined).
+  int shared_open (void);
 
   /// Set options on the socket
   int set_socket_option (ACE_SOCK &sock,
@@ -179,7 +198,6 @@ protected:
   virtual void pos_io_hook (int & return_value);
   //@}
 
-
 private:
   /// Pointer to the TAO_ORB_Core
   TAO_ORB_Core * const orb_core_;
@@ -190,6 +208,9 @@ private:
   /// Internal state lock, needs to be separate from the reference
   /// count / pending upcalls lock because they interleave.
   ACE_Lock * lock_;
+
+  /// Stores the connection pending state
+  bool connection_pending_;
 
   /*
    * Hook to add instance members from derived class
