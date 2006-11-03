@@ -1,3 +1,9 @@
+Fri Nov 03 10:54:10 UTC 2006  Martin Corino  <mcorino@remedy.nl>
+
+        * ace/OS_NS_sys_time.inl:
+
+          Fixed conversion warning on OpenVMS.
+
 Fri Nov  3 00:39:04 UTC 2006  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * ace/Sock_Connect.cpp:
