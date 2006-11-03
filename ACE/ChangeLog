@@ -1,3 +1,9 @@
+Fri Nov 03 15:52:10 UTC 2006  Martin Corino  <mcorino@remedy.nl>
+
+        * bin/PerlACE/ProcessVX_Unix.pm:
+
+          Bugfix in cmdline composition.
+
 Fri Nov  3 15:15:43 UTC 2006  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * ace/Sock_Connect.cpp:
