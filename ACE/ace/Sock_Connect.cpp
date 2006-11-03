@@ -1938,34 +1938,42 @@ ACE::get_handle (void)
   return handle;
 }
 
+
+#if defined (ACE_HAS_IPV6)
+static int
+ip_check (int &ipvn_enabled, int pf)
+{
+  // We only get to this point if ipvn_enabled was -1 in the caller.
+  // Perform Double-Checked Locking Optimization.
+  ACE_MT (ACE_GUARD_RETURN (ACE_Recursive_Thread_Mutex, ace_mon,
+                            *ACE_Static_Object_Lock::instance (), 0));
+
+  if (ipvn_enabled == -1)
+    {
+      // Determine if the kernel has IPv6 support by attempting to
+      // create a PF_INET socket and see if it fails.
+      ACE_HANDLE const s = ACE_OS::socket (pf, SOCK_DGRAM, 0);
+      if (s == ACE_INVALID_HANDLE)
+        {
+          ipvn_enabled = 0;
+        }
+      else
+        {
+          ipvn_enabled = 1;
+          ACE_OS::closesocket (s);
+        }
+    }
+  return ipvn_enabled;
+}
+#endif /* ACE_HAS_IPV6 */
+
 bool
 ACE::ipv4_enabled (void)
 {
 #if defined (ACE_HAS_IPV6)
-  if (ace_ipv4_enabled == -1)
-    {
-      // Perform Double-Checked Locking Optimization.
-      ACE_MT (ACE_GUARD_RETURN (ACE_Recursive_Thread_Mutex, ace_mon,
-                                *ACE_Static_Object_Lock::instance (), false));
-
-      if (ace_ipv4_enabled == -1)
-        {
-          // Determine if the kernel has IPv6 support by attempting to
-          // create a PF_INET socket and see if it fails.
-          ACE_HANDLE const s = ACE_OS::socket (PF_INET, SOCK_DGRAM, 0);
-          if (s == ACE_INVALID_HANDLE)
-            {
-              ace_ipv4_enabled = 0;
-            }
-          else
-            {
-              ace_ipv4_enabled = 1;
-              ACE_OS::closesocket (s);
-            }
-        }
-    }
-
-  return static_cast<bool> (ace_ipv4_enabled);
+  return static_cast<bool> (ace_ipv4_enabled == -1 ?
+                            ::ip_check (ace_ipv4_enabled, PF_INET) :
+                            ace_ipv4_enabled);
 #else
  // Assume it's always enabled since ACE requires some version of
  // TCP/IP to exist.
@@ -1977,30 +1985,9 @@ int
 ACE::ipv6_enabled (void)
 {
 #if defined (ACE_HAS_IPV6)
-  if (ace_ipv6_enabled == -1)
-    {
-      // Perform Double-Checked Locking Optimization.
-      ACE_MT (ACE_GUARD_RETURN (ACE_Recursive_Thread_Mutex, ace_mon,
-                                *ACE_Static_Object_Lock::instance (), 0));
-
-      if (ace_ipv6_enabled == -1)
-        {
-          // Determine if the kernel has IPv6 support by attempting to
-          // create a PF_INET6 socket and see if it fails.
-          ACE_HANDLE s = ACE_OS::socket (PF_INET6, SOCK_DGRAM, 0);
-          if (s == ACE_INVALID_HANDLE)
-            {
-              ace_ipv6_enabled = 0;
-            }
-          else
-            {
-              ace_ipv6_enabled = 1;
-              ACE_OS::closesocket (s);
-            }
-        }
-    }
-
-  return ace_ipv6_enabled;
+  return ace_ipv6_enabled == -1 ?
+    ::ip_check (ace_ipv6_enabled, PF_INET6) :
+    ace_ipv6_enabled;
 #else /* ACE_HAS_IPV6 */
   return 0;
 #endif /* !ACE_HAS_IPV6 */
