@@ -221,7 +221,8 @@ main (int, char **)
   fclose (stdout);
   fclose (stderr);
 
-  ACE_OS::exit (status);
+  // Don't change this since we do NOT want to use ACE for this test!
+  exit (status);
   return 0;
 }
 #else
