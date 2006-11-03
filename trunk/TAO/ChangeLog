@@ -6,7 +6,7 @@ Fri Nov  3 22:16:28 UTC 2006  Jeff Parsons <j.parsons@vanderbilt.edu>
           The change will in any case speed up the performance of
           this method somewhat, since it will short-circuit the
           checking if the sequence's element type is neither a struct,
-          a union, or a sequence.
+          a union, nor a sequence.
 
 Fri Nov  3 18:05:20 UTC 2006  Jeff Parsons <j.parsons@vanderbilt.edu>
 
