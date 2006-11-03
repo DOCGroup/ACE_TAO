@@ -1,3 +1,18 @@
+Fri Nov  3 16:10:31 UTC 2006  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_visitor_union_branch/private_ch.cpp:
+        * TAO_IDL/be/be_visitor_union_branch/public_ch.cpp:
+
+          More cases of ad hoc generation of the global "::" that can be
+          removed because such generation is now handled systematically
+          in AST_Type::nested_name(), see
+
+          Thu Nov  2 20:53:16 UTC 2006  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+          Thanks to Simon Massey <simon.massey@prismtechnologies.com> for
+          pointing out the code generation errors in the Security Service
+          that uncovered the omissions.
+
 Fri Nov  3 15:54:35 UTC 2006  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * tao/Strategies/SHMIOP_Connector.cpp (make_connection):
