@@ -1621,26 +1621,30 @@ TAO_ORB_Core::policy_factory_registry_i (void)
 TAO::ORBInitializer_Registry_Adapter *
 TAO_ORB_Core::orbinitializer_registry_i (void)
 {
+  // The ORBInitializer_Registry is supposed to be a singleton.  Store
+  // it in the global configuration, not the ORB-specific one.
+  ACE_Service_Gestalt * const config = ACE_Service_Config::global ();
+
   // If not, lookup it up.
   this->orbinitializer_registry_ =
     ACE_Dynamic_Service<TAO::ORBInitializer_Registry_Adapter>::instance
-      (this->configuration (),
+      (config,
        ACE_TEXT ("ORBInitializer_Registry"));
 
 #if !defined (TAO_AS_STATIC_LIBS)
       // In case we build shared, try to load the PI Client library, in a
       // static build we just can't do this, so don't try it, lower layers
       // output an error then.
-  if (orbinitializer_registry_ == 0)
+  if (this->orbinitializer_registry_ == 0)
     {
-      this->configuration ()->process_directive (
-        ACE_DYNAMIC_SERVICE_DIRECTIVE("ORBInitializer_Registry",
-                                      "TAO_PI",
-                                      "_make_ORBInitializer_Registry",
-                                      ""));
-      orbinitializer_registry_ =
+      config->process_directive (
+        ACE_DYNAMIC_SERVICE_DIRECTIVE ("ORBInitializer_Registry",
+                                       "TAO_PI",
+                                       "_make_ORBInitializer_Registry",
+                                       ""));
+      this->orbinitializer_registry_ =
         ACE_Dynamic_Service<TAO::ORBInitializer_Registry_Adapter>::instance
-          (this->configuration (),
+          (config,
            ACE_TEXT ("ORBInitializer_Registry"));
     }
 #endif /* !TAO_AS_STATIC_LIBS */

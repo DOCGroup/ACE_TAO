@@ -1,6 +1,22 @@
+Thu Nov  2 23:23:16 UTC 2006  Ossama Othman  <ossama_othman at symantec.com>
+
+        * tao/ORB_Core.cpp (orbinitializer_registry_i):
+
+          The ORBInitializer registry is supposed to be (and originally
+          was) a singleton.  Store it in the global service configuration,
+          not the ORB-specific one.  Addresses disjoint ORBInitializer
+          lists, and redundant ORBInitializer registrations.
+
+        * tests/Portable_Interceptors/Register_Initial_References/Server_ORBInitializer.cpp (pre_init):
+
+          Corrected CORBA::BAD_PARAM minor code check to use
+          CORBA::OMGVMCID instead.  Easier to read and understand.
+
 Thu Nov  2 20:28:04 UTC 2006  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
 
-        * orbsvcs/examples/FaultTolerance/RolyPoly/ReplicaController.cpp (send_reply): 
+        * orbsvcs/examples/FaultTolerance/RolyPoly/ReplicaController.cpp
+          (send_reply):
+
           Fixed exit(1) to be ACE_OS::exit(1).
 
 Thu Nov  2 20:53:16 UTC 2006  Jeff Parsons <j.parsons@vanderbilt.edu>
@@ -69,8 +85,8 @@ Mon Oct 30 15:09:24 UTC 2006  Simon McQueen  <sm@prismtech.com>
 
         * TAO_IDL/be/be_visitor_ami_pre_proc.cpp:
 
-          Set the corect pragma prefix value on the AMI reply handlers for
-          inherited interfaces.
+          Set the correct pragma prefix value on the AMI reply handlers
+          for inherited interfaces.
 
         * tests/Bug_2669_Regression/Bug_2669_Regression.mpc:
         * tests/Bug_2669_Regression/Child.idl:
@@ -124,8 +140,9 @@ Sun Oct 29 10:58:12 UTC 2006  Martin Corino  <mcorino@remedy.nl>
 
           Changed size argument for TP_Reactor construction from
           ACE_TP_Reactor::DEFAULT_SIZE to ACE::max_handles () (as it is in
-          default_resource.cpp) to solve CTOR failures on OpenVMS (and most likely
-          also LynxOS) in OctetSeq and Leader_Followers tests.
+          default_resource.cpp) to solve CTOR failures on OpenVMS (and
+          most likely also LynxOS) in OctetSeq and Leader_Followers
+          tests.
 
 Sat Oct 28 16:11:12 UTC 2006  Phil Mesnier  <mesnier_p@ociweb.com>
 
@@ -929,12 +946,15 @@ Wed Aug 30 13:20:38 UTC 2006  Phil Mesnier  <mesnier_p@ociweb.com>
 Wed Aug 30 13:29:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/PortableServer/PortableServer.cpp:
-          Don't do the process_directives for the policies that aren't supported
-          with CORBA/e micro, this will reduce the footprint for a static build
+
+          Don't do the process_directives for the policies that aren't
+          supported with CORBA/e micro, this will reduce the footprint for
+          a static build.
 
 Wed Aug 30 06:05:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Bug_2560_Regression/server.cpp:
+
           No need to explicitly set the defaul thread policy, makes it possible
           to use this test when minimum corb is enabled
 
