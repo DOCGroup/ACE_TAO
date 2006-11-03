@@ -13,7 +13,7 @@
 #include "ace/OS_NS_sys_stat.h"      //for filesize and mkdir
 #include "ace/OS_NS_string.h"        //for string functions
 
-
+#include "iostream"   
 namespace CIAO
 {
   Containers_Info_Map::
@@ -465,11 +465,6 @@ is_shared_component (ACE_CString & name)
                                                      ACE_CString &arti_name,
                                                      ACE_CString &path)
   {
-
-    ACE_DEBUG ((LM_INFO,
-                "Attempting to download %s\n",
-                location));
-
     // Figure out the file name.
     char* name = const_cast<char*> (location);
     char* p = 0;
@@ -506,9 +501,17 @@ is_shared_component (ACE_CString & name)
       return false;
     }
 
+    ACE_CString new_name (name);
+
+#if defined (ACE_WIN32)
+    new_name += "d.dll";
+#else
+    new_name = "lib" + new_name + ".so";
+#endif    
+
     path = HTTP_DOWNLOAD_PATH;
     path += "/";
-    path += name;
+    path += new_name;
 
     if (!this->write_to_disk (path.c_str (), *mb))
     {
@@ -529,9 +532,50 @@ is_shared_component (ACE_CString & name)
   CIAO::Containers_Info_Map::retrieve_via_HTTP (const char* URL,
                                                 ACE_Message_Block &mb)
   {
+    ACE_CString loc (URL);
+
+    // Figure out the file name.
+    char* name_ = const_cast<char*> (URL);
+    char* p = 0;
+
+    while (true)
+      {
+        p = ACE_OS::strstr (name_, "/");
+
+        if (0 == p)
+          {
+            p = ACE_OS::strstr (name_, "\\");
+          }
+
+        if (0 == p)
+          {
+            break;
+          }
+        else
+          {
+            name_ = ++p;
+            continue;
+          }
+      }
+
+    ACE_CString name (name_);
+    loc = loc.substr (0, loc.length() - name.length ());    
+
+#if defined (ACE_WIN32)
+    name += "d.dll";
+#else
+    name = "lib" + name + ".so";
+#endif    
+
+    loc = loc + name;
+
+    ACE_DEBUG ((LM_INFO,
+                "Attempting to download %s\n",
+                loc.c_str ()));
+
     URL_Parser *parser = TheURL_Parser::instance ();
-    if (!parser->parseURL (const_cast<char*> (URL)))
-    return false;
+    if (!parser->parseURL (const_cast<char*> (loc.c_str ())))
+      return false;
 
     // Create a client
     HTTP_Client client;
