@@ -1472,7 +1472,7 @@ get_ip_interfaces_aix (size_t &count,
 
   char *buf_start = safe_buf.get();
   char *buf_end = buf_start + ifc.ifc_len;
-  char *ptr = buf_start;
+
   num_ifs = 0;
   for (char *ptr = buf_start; ptr < buf_end; )
     {
