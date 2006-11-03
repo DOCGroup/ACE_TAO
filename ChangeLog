@@ -8,6 +8,15 @@ Thu Nov  2 23:41:56 UTC 2006  Nishanth Shankaran  <nshankar@nospam.com>
         * SA_POP/server/client.cpp:
         * SA_POP/server/server.cpp: Added the "driver server".
 
+Thu Nov  2 19:25:01 UTC 2006  John S. Kinnebrew  <john.s.kinnebrew@vanderbilt.edu>
+
+        * SA_POP/Driver.cpp:
+        * SA_POP/SA_POP_Types.h:
+        * SA_POP/SA_PlanCommands.cpp:
+        * SA_POP/SA_WorkingPlan.cpp:
+        
+        Revised code to correct errors in Linux compilation.
+
 Thu Nov  2 17:48:07 UTC 2006  Nishanth Shankaran  <nshanka@nospam.com>
 
         * Controller/Component/Poller.cpp: Fixed compiler warnings.
