@@ -1,3 +1,10 @@
+Fri Nov  3 03:03:24 UTC 2006  Shanshan Jiang <shanshan.jiang@vanderbilt.edu>
+
+        * DAnCE/NodeApplicationManager/Containers_Info_Map.cpp
+        * DAnCE/RepositoryManager/PC_Updater.cpp
+          Modified these files to differentiate the location field of
+          deploymentplan for different platforms.
+
 Thu Nov  2 22:54:12 UTC 2006  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * CIDLC/ServnatSourceGenerator.cpp:

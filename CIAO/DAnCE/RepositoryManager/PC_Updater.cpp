@@ -171,6 +171,8 @@ void PC_Updater::clear_list ()
 
   void PC_Updater::update (::Deployment::ImplementationArtifactDescription &iad)
   {
+    const char* location = CORBA::string_dup (iad.location[0]);
+
     //create an interator
     ACE_Double_Linked_List_Iterator<ZIP_File_Info> iter (this->file_list_);
 
@@ -190,8 +192,8 @@ void PC_Updater::clear_list ()
         if (name)
         {
           ACE_CString loc (this->server_path_);
-          loc += "/";
-          loc += full_path;
+          loc += "/implementations/";
+          loc += location;
 
           iad.location[0] = CORBA::string_dup (loc.c_str ());
 
@@ -201,7 +203,6 @@ void PC_Updater::clear_list ()
       }
       iter++;
     }
-    const char* location = iad.location[0];
 
     ACE_ERROR ((LM_ERROR,
                "[PC_Updater::update] Unable to update: %s!\n",
