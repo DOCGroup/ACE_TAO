@@ -1,3 +1,9 @@
+Fri Nov  3 00:39:04 UTC 2006  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * ace/Sock_Connect.cpp:
+          One more optimization, this one to combine the methods for
+          evaluating the IPv6 or IPv4 enabled status.
+
 Fri Nov  3 00:32:27 UTC 2006  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * ace/Select_Reactor_Base.inl:
