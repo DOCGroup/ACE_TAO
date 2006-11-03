@@ -112,15 +112,6 @@ public:
   /// hang around.
   void abort (void);
 
-  /// When waiting for an asynchronous connection to complete an
-  /// additional reference must be maintained, related to bugzilla
-  /// #2417. However once the connection is successfully established,
-  /// this reference must be removed. Using connection_pending allows
-  /// the connection handler to know that it is opening as a result of
-  /// a delayed asynch connection rather than an immediate synch
-  /// connection, which has no additional reference needs.
-  void connection_pending (void);
-
 protected:
 
   /// Constructor that could be used by the derived classes.
@@ -144,9 +135,6 @@ private:
 
   /// Stores the type of service value.
   int dscp_codepoint_;
-
-  /// Stores the connection pending state
-  bool connection_pending_;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

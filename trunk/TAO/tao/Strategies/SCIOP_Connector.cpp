@@ -263,9 +263,15 @@ TAO_SCIOP_Connector::make_connection_i (TAO::Profile_Transport_Resolver *r,
       return 0;
     }
 
-  if (transport->connection_handler ()->keep_waiting ())
+  if (svc_handler->keep_waiting ())
     {
-      svc_handler->add_reference ();
+      svc_handler->connection_pending ();
+    }
+
+  if (svc_handler->error_detected ())
+    {
+      svc_handler->cancel_pending_connection ();
+      return 0;
     }
 
   // At this point, the connection has be successfully connected.
@@ -296,6 +302,13 @@ TAO_SCIOP_Connector::make_connection_i (TAO::Profile_Transport_Resolver *r,
                       "could not add the new connection to cache\n"));
         }
 
+      return 0;
+    }
+
+  if (svc_handler->error_detected ())
+    {
+      svc_handler->cancel_pending_connection ();
+      transport->purge_entry();
       return 0;
     }
 

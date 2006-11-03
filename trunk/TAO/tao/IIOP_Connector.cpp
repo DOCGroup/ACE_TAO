@@ -457,7 +457,7 @@ TAO_IIOP_Connector::complete_connection (int result,
   // connected or not connected, but we have a connection.
   TAO_IIOP_Connection_Handler *svc_handler = 0;
   TAO_IIOP_Endpoint *iiop_endpoint = 0;
-  bool set_connection_pending = false;
+
   if (transport != 0)
     {
       if (count == 1)
@@ -503,10 +503,9 @@ TAO_IIOP_Connector::complete_connection (int result,
       return 0;
     }
 
-  if (transport->connection_handler()->keep_waiting())
+  if (svc_handler->keep_waiting())
     {
       svc_handler->connection_pending();
-      set_connection_pending = true;
     }
 
 #if defined (INDUCE_BUG_2654_B)
@@ -525,11 +524,8 @@ TAO_IIOP_Connector::complete_connection (int result,
       if (TAO_debug_level > 0)
         ACE_DEBUG((LM_DEBUG,
                    ACE_TEXT("TAO (%P|%t) - IIOP_Connector::make_connection, ")
-                   ACE_TEXT("transport in error before cache! ")
-                   ACE_TEXT("conn_pend = %d\n"),
-                   set_connection_pending));
-      if (set_connection_pending)
-        svc_handler->remove_reference ();
+                   ACE_TEXT("transport in error before cache! \n")));
+      transport->connection_handler()->cancel_pending_connection();
       return 0;
     }
 
@@ -584,16 +580,13 @@ TAO_IIOP_Connector::complete_connection (int result,
   // before caching, the connection really failed, thus an invalid
   // connection is put into the cache. Thus we do one last status
   // check before handing the connection back to the caller.
-  if (transport->connection_handler()->error_detected())
+  if (svc_handler->error_detected())
     {
       if (TAO_debug_level > 0)
         ACE_DEBUG((LM_DEBUG,
                    ACE_TEXT("TAO (%P|%t) - IIOP_Connector::make_connection, ")
-                   ACE_TEXT("transport in error after cache! ")
-                   ACE_TEXT("conn_pend = %d\n"),
-                   set_connection_pending));
-      if (set_connection_pending)
-        svc_handler->remove_reference ();
+                   ACE_TEXT("transport in error after cache! \n")));
+      svc_handler->cancel_pending_connection();
       transport->purge_entry();
       return 0;
     }

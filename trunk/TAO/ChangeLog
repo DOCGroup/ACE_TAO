@@ -1,3 +1,27 @@
+Fri Nov  3 00:22:27 UTC 2006  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * orbsvcs/orbsvcs/HTIOP/HTIOP_Connection_Handler.cpp:
+
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connection_Handler.cpp:
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connector.cpp:
+
+        * tao/Connection_Handler.h:
+        * tao/Connection_Handler.inl:
+        * tao/Connection_Handler.cpp:
+        * tao/IIOP_Connection_Handler.h:
+        * tao/IIOP_Connection_Handler.cpp:
+        * tao/IIOP_Connector.cpp:
+
+        * tao/Strategies/SCIOP_Connection_Handler.cpp:
+        * tao/Strategies/SCIOP_Connector.cpp:
+        * tao/Strategies/SHMIOP_Connection_Handler.cpp:
+        * tao/Strategies/SHMIOP_Connector.cpp:
+        * tao/Strategies/UIOP_Connection_Handler.cpp:
+        * tao/Strategies/UIOP_Connector.cpp:
+
+          Propagating the changes applied just to IIOP for bug 2654 to the
+          other DOC managed ESIOPs.
+
 Thu Nov  2 23:23:16 UTC 2006  Ossama Othman  <ossama_othman at symantec.com>
 
         * tao/ORB_Core.cpp (orbinitializer_registry_i):
