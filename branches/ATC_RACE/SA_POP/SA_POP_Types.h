@@ -424,6 +424,37 @@ namespace SA_POP {
     };
   };
 
+  /// Type of a set of conditions with associated time constraints.
+  typedef std::map<CondID, TimeValue> TimeConstraintMap;
+
+  /// Type of a goal for SA-POP.
+  struct Goal
+  {
+    // Unique ID of goal.
+    GoalID goal_id;
+
+    // Human-readable name of goal (used for debugging, not identification).
+    std::string name;
+
+    // Goal conditions with utility values.
+    GoalMap goal_conds;
+
+    // Start-by and end-by constraints on conditions, in relative time
+    // (relative to start of opstring to achieve this goal).
+    TimeConstraintMap rel_time_constraints;
+
+    // Start-by and end-by constraints on conditions, in clock time.
+    TimeConstraintMap abs_time_constraints;
+
+    // Expected time range for start of opstring (for achieving this goal)
+    // execution.
+    TimeWindow start_window;
+
+    bool operator== (const Goal &s) const { return (this->goal_id == s.goal_id); };
+    bool operator!= (const Goal &s) const { return !(*this == s); };
+    bool operator< (const Goal &s) const { return this->goal_id < s.goal_id; };
+  };
+
   inline std::string to_string(int x)
   {
     std::ostringstream o;

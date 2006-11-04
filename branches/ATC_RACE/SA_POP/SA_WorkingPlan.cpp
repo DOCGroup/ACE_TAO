@@ -38,6 +38,14 @@ add_threats_cmd_ (0)
   this->task_impls_.clear ();
   this->causal_links_.clear ();
 
+  // Clear goal.
+  this->goal_.goal_id = "NULL";
+  this->goal_.name = "NULL";
+  this->goal_.abs_time_constraints.clear ();
+  this->goal_.rel_time_constraints.clear ();
+  this->goal_.goal_conds.clear ();
+  this->goal_.start_window = std::make_pair (0, 0);
+
   // Clear plan.
   this->plan_.causal_links.clear ();
   this->plan_.connections.clear ();
@@ -234,6 +242,12 @@ this->init_end.insert(std::make_pair(32,(TimeWindow)std::make_pair(NULL_TIME,NUL
 SA_WorkingPlan::~SA_WorkingPlan (void)
 {
   // Nothing to do.
+};
+
+// Set goal.
+void SA_WorkingPlan::set_goal (const SA_POP::Goal &goal)
+{
+  this->goal_ = goal; 
 };
 
 // Set command prototypes to use.

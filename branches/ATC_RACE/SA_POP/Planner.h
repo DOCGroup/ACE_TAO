@@ -83,9 +83,29 @@ namespace SA_POP {
     /**
      * @param sa_max_steps  Maximum steps to run spreading activation.
      *
+     * @param goal  Goal for which to plan.
+     *
      * @return  True if planning succeeded, false otherwise.
      */
-    virtual bool plan (size_t sa_max_steps);
+    virtual bool plan (size_t sa_max_steps, SA_POP::Goal goal);
+    
+    /// Replan with new goal.
+    /**
+     * @param sa_max_steps  Maximum steps to run spreading activation.
+     *
+     * @param goal  Goal for which to plan.
+     *
+     * @return  True if planning succeeded, false otherwise.
+     */
+    virtual bool replan (size_t sa_max_steps, SA_POP::Goal goal);
+
+    /// Replan with current goal.
+    /**
+     * @param sa_max_steps  Maximum steps to run spreading activation.
+     *
+     * @return  True if planning succeeded, false otherwise.
+     */
+    virtual bool replan (size_t sa_max_steps);
 
     /// Get current plan.
     /**

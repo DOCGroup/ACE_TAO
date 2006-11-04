@@ -41,6 +41,12 @@ namespace SA_POP {
     /// Destructor.
     virtual ~WorkingPlan (void) { };
 
+    /// Set goal.
+    /**	
+     * @param goal  Goal of this working plan.
+     */
+    virtual void set_goal (const SA_POP::Goal &goal) = 0;
+
     /// Get current plan.
     /**	
      * @return  Reference to current plan.
@@ -73,15 +79,15 @@ namespace SA_POP {
      *
      * @return  The task implementation id of this task instance.
      */
-	virtual TaskImplID get_task_impl_from_inst (TaskInstID inst_id) = 0;
+    virtual TaskImplID get_task_impl_from_inst (TaskInstID inst_id) = 0;
 
-	/// Get all current causal link threats.
+    /// Get all current causal link threats
     /**
      * @return  Set of all current causal link threats.
      */
     virtual CLThreatSet get_all_threats (void) = 0;
 
-    //Get the Start Window for a task instance
+    /// Get the Start Window for a task instance
     /**
      * @param task_inst The task instance of which the start window is returned
      *
@@ -89,7 +95,7 @@ namespace SA_POP {
      */
     virtual TimeWindow get_start_window(TaskInstID task_inst) = 0;
 
-    //Get the End Window for a task instance
+    /// Get the End Window for a task instance
     /**
      * @param task_inst The task instance of which the end window is returned
      *
@@ -97,7 +103,7 @@ namespace SA_POP {
      */
     virtual TimeWindow get_end_window(TaskInstID task_inst) = 0;
 
-    //Get the duration of a task instance
+    /// Get the duration of a task instance
     /**
      * @param task_inst The task instance of which the duration is returned
      *
@@ -105,20 +111,20 @@ namespace SA_POP {
      */
     virtual TimeValue get_duration(TaskInstID task_inst) = 0;
 
-     /// Get the Causal and Scheduling orderings to this task instance
+    /// Get the Causal and Scheduling orderings to this task instance
     /**
      * @param inst_id The task instance to which all orderings are required
      */
-  virtual TaskInstSet before_orderings (TaskInstID inst_id) = 0;
+    virtual TaskInstSet before_orderings (TaskInstID inst_id) = 0;
 
     /// Get the Causal and Scheduling orderings from this task instance
     /**
      * @param inst_id The task instance from which all orderings are required
      */
-  virtual TaskInstSet after_orderings (TaskInstID inst_id) = 0;
+    virtual TaskInstSet after_orderings (TaskInstID inst_id) = 0;
 
-	/// Get all the task instances
-	virtual TaskInstSet get_all_insts() = 0;
+    /// Get all the task instances
+    virtual TaskInstSet get_all_insts() = 0;
     
     /// Check if the instance id already exists and is being reused.
     /**
@@ -185,6 +191,9 @@ namespace SA_POP {
   protected:
     /// Pointer to Planner object.
     SA_POP::Planner *planner_;
+
+    /// Goal of this working plan.
+    SA_POP::Goal goal_;
   };
 
 };  /* SA_POP namespace */
