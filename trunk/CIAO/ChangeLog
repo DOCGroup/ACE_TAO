@@ -49,8 +49,8 @@ Mon Oct 30 13:26:00 UTC 2006  Simon Massey  <sma@prismtech.com>
 
 Thu Oct 26 14:37:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-  * DAnCE/StaticConfigurator/StaticDAnCEParser.cpp:
-    Use ACE_OS methods, this fixes bugzilla 2691.
+  	* DAnCE/StaticConfigurator/StaticDAnCEParser.cpp:
+          Use ACE_OS methods, this fixes bugzilla 2691.
           Thanks to Sowayan Abdullah <abdullah dot sowayan at lmco dot com>
           for reporting this issue
 
