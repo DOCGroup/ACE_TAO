@@ -314,6 +314,12 @@ namespace SANet {
     /// Destructor.
     virtual ~CondNode (void);
 
+    /// Update goal utility.
+    /**
+     * @param util  Goal utility.
+     */
+    virtual void set_goal_util (Utility util);
+
     /// Get initial/current probability.
     /**
      * @param value  Value for which to get probability (default = true).

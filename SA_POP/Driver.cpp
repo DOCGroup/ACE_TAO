@@ -53,7 +53,7 @@ int main (int argc, char **argv)
   planner->add_out_adapter (&screen_out);
 
   // Run planner (with a maximum of 50 steps of spreading activation).
-  planner->plan (50);
+  planner->replan (50);
 
   SA_POP::Plan plan = planner->get_plan ();
   

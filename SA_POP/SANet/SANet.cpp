@@ -257,17 +257,36 @@ void SANet::Network::update_cond_val (CondID cond_id, Probability true_prob)
 };
 
 // Update a condition's (goal) utility.
-void SANet::Network::update_cond_util (CondID cond_id, Probability utility)
+void SANet::Network::update_cond_util (CondID cond_id, Utility utility)
 {
-  // ****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP
-  throw "Plan monitoring/updating/replanning not yet implemented: SANet::SANet::Network::updated_cond_val ().";
+  CondNodeMap::iterator cond_iter = this->cond_nodes_.find (cond_id);
+  if (cond_iter == this->cond_nodes_.end ())
+    throw "SANet::Network::update_cond_util(): Could not find condition by ID.";
+  cond_iter->second->set_goal_util (utility);
 };
 
 // Update all condition utilities based on new goal set.
 void SANet::Network::update_goals (GoalMap goals)
 {
-  // ****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP
-  throw "Plan monitoring/updating/replanning not yet implemented: SANet::SANet::Network::update_goals ().";
+  SA_POP::GoalMap goal;
+
+  // Remove all old goals.
+  for (GoalMap::iterator old_goal_iter = this->goals_.begin ();
+    old_goal_iter != this->goals_.end ();
+    old_goal_iter++)
+  {
+    this->update_cond_util (old_goal_iter->first, 0);
+  }
+  this->goals_.clear ();
+
+  // Add all new goals.
+  for (GoalMap::iterator new_goal_iter = goals.begin ();
+    new_goal_iter != goals.end ();
+    new_goal_iter++)
+  {
+    this->update_cond_util (new_goal_iter->first, new_goal_iter->second);
+  }
+  this->goals_ = goals;
 };
 
 // Get a condition's current value (probability of being true).

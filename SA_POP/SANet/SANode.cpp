@@ -584,12 +584,15 @@ CondNode::CondNode (CondID ID, std::string name, MultFactor atten_factor,
   // Set prob_changed_ flag.
   prob_changed_ = true;
 
-  // If this node is a goal, set util_changed_ flag and add goal utility
-  // to positive utilities.
+  // If this node is a goal, set util_changed_ flag and add goal utility.
   if (goal_util > 0) {
-    util_changed_ = true;
-    pos_util_.utility = goal_util;
-    pos_util_.common.insert (std::make_pair (ID, goal_util));
+    this->util_changed_ = true;
+    this->pos_util_.utility = goal_util;
+    this->pos_util_.common.insert (std::make_pair (ID, goal_util));
+  } else if (goal_util < 0) {
+    this->util_changed_ = true;
+    this->neg_util_.utility = goal_util;
+    this->neg_util_.common.insert (std::make_pair (ID, goal_util));
   }
 };
 
@@ -597,6 +600,33 @@ CondNode::~CondNode (void)
 {
   // Nothing to do.
 };
+
+// Update goal utility.
+void CondNode::set_goal_util (Utility util)
+{
+  // Remove old goal utility.
+  if (this->goal_util_ > 0) {
+    this->pos_util_.utility -= this->goal_util_;
+    this->pos_util_.common.erase (this->ID_);
+  } else if (this->goal_util_ < 0) {
+    this->neg_util_.utility -= this->goal_util_;
+    this->neg_util_.common.erase (this->ID_);
+  }
+
+  // Update total utility and utility maps for new utility.
+  if (util > 0) {
+    this->pos_util_.utility += util;
+    this->pos_util_.common.insert (std::make_pair (this->ID_, util));
+  } else if (util < 0) {
+    this->neg_util_.utility += util;
+    this->neg_util_.common.insert (std::make_pair (this->ID_, util));
+  }
+
+  // Update utility changed flag and goal utility.
+  this->util_changed_ = true;
+  this->goal_util_ = util;
+};
+
 
 // Get initial/current probability.
 Probability CondNode::get_init_prob (bool value)

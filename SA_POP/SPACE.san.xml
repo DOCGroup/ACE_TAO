@@ -184,7 +184,7 @@
     <nodeID>1141</nodeID>
     <name>G1_Data_Recvd</name>
     <probTrue>0</probTrue>
-    <utility>10</utility>
+    <utility>0</utility>
     <kind />
     <attenFactor />
   </condNode>
@@ -192,7 +192,7 @@
     <nodeID>1142</nodeID>
     <name>G2_G3_Data_Recvd</name>
     <probTrue>0</probTrue>
-    <utility>10</utility>
+    <utility>0</utility>
     <kind />
     <attenFactor />
   </condNode>

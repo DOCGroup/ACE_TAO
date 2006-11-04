@@ -48,6 +48,12 @@ namespace SA_POP {
      */
     virtual void set_commands (AddOpenThreatsCmd *add_threats_cmd);
 
+    /// Set goal.
+    /**	
+     * @param goal  Goal of this working plan.
+     */
+    virtual void set_goal (const SA_POP::Goal &goal);
+
     /// Get current plan.
     /**
      * @return  Reference to current plan.
