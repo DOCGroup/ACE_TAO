@@ -1,7 +1,12 @@
+Sun Nov  5 14:14:51 UTC 2006  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * ace/Sock_Connect.cpp:
+          Fix for Solaris x86.
+
 Sat Nov  4 12:46:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-	* ace/config-sunos4*.h:
-	  Removed these files, these are ancient and not supported anymore
+        * ace/config-sunos4*.h:
+          Removed these files, these are ancient and not supported anymore
 
 Fri Nov  3 18:12:36 UTC 2006  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
 
