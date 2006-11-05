@@ -48,9 +48,6 @@
 
 #include "ace/Configuration_Import_Export.h"
 
-#include <iostream>
-using namespace std;
-
 namespace
 {
   static const char* PC_EXTENSION = ".epc";

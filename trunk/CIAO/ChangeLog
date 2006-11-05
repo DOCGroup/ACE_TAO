@@ -1,3 +1,14 @@
+Sun Nov  5 19:16:57 UTC 2006  Shanshan Jiang <shanshan.jiang@vanderbilt.edu>
+
+        * DAnCE/NodeApplicationManager/Containers_Info_Map.cpp:
+          Removed the use of STL iostream.
+          Use ACE DLL decorator, prefix, suffix for DLL file names.
+          
+        * DAnCE/RepositoryManager/PC_Updater.cpp:
+        * DAnCE/RepositoryManager/RepositoryManager_Impl.cpp:
+        * DAnCE/RepositoryManager/RMadmin.cpp:
+          Removed the use of STL iostream.
+
 Fri Nov  3 03:03:24 UTC 2006  Shanshan Jiang <shanshan.jiang@vanderbilt.edu>
 
         * DAnCE/NodeApplicationManager/Containers_Info_Map.cpp

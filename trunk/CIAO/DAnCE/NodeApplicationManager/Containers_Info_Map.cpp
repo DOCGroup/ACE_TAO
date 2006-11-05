@@ -12,8 +12,8 @@
 #include "ace/OS_NS_unistd.h"        //for close
 #include "ace/OS_NS_sys_stat.h"      //for filesize and mkdir
 #include "ace/OS_NS_string.h"        //for string functions
+#include "ace/streams.h"
 
-#include "iostream"   
 namespace CIAO
 {
   Containers_Info_Map::
@@ -501,13 +501,18 @@ is_shared_component (ACE_CString & name)
       return false;
     }
 
+#if defined (ACE_WIN32) && defined (ACE_LD_DECORATOR_STR) && !defined (ACE_DISABLE_DEBUG_DLL_CHECK)
+    ACE_TString decorator (ACE_LD_DECORATOR_STR);
+#endif
+    ACE_TString prefix (ACE_DLL_PREFIX);
+    ACE_TString suffix (ACE_DLL_SUFFIX);
+    
     ACE_CString new_name (name);
-
-#if defined (ACE_WIN32)
-    new_name += "d.dll";
-#else
-    new_name = "lib" + new_name + ".so";
-#endif    
+    new_name = prefix + new_name;
+#if defined (ACE_WIN32) && defined (ACE_LD_DECORATOR_STR) && !defined (ACE_DISABLE_DEBUG_DLL_CHECK)
+    new_name += decorator;
+#endif
+    new_name += suffix;
 
     path = HTTP_DOWNLOAD_PATH;
     path += "/";
@@ -561,13 +566,20 @@ is_shared_component (ACE_CString & name)
     ACE_CString name (name_);
     loc = loc.substr (0, loc.length() - name.length ());    
 
-#if defined (ACE_WIN32)
-    name += "d.dll";
-#else
-    name = "lib" + name + ".so";
-#endif    
+#if defined (ACE_WIN32) && defined (ACE_LD_DECORATOR_STR) && !defined (ACE_DISABLE_DEBUG_DLL_CHECK)
+    ACE_TString decorator (ACE_LD_DECORATOR_STR);
+#endif
+    ACE_TString prefix (ACE_DLL_PREFIX);
+    ACE_TString suffix (ACE_DLL_SUFFIX);
+    
+    ACE_CString new_name (name);
+    new_name = prefix + new_name;
+#if defined (ACE_WIN32) && defined (ACE_LD_DECORATOR_STR) && !defined (ACE_DISABLE_DEBUG_DLL_CHECK)
+    new_name += decorator;
+#endif
+    new_name += suffix;
 
-    loc = loc + name;
+    loc = loc + new_name;
 
     ACE_DEBUG ((LM_INFO,
                 "Attempting to download %s\n",
