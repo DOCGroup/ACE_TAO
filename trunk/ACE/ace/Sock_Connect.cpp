@@ -1804,13 +1804,10 @@ ACE::count_interfaces (ACE_HANDLE handle,
 #if defined (SIOCGIFNUM)
 # if defined (SIOCGLIFNUM)
   int cmd = SIOCGLIFNUM;
-#  if defined (sparc)  // what is a better way of limiting this to solaris? what about x86 solaris?
   struct lifnum if_num = {AF_UNSPEC,0,0};
-#  else
-  int if_num;
-#  endif /* sparc */
 # else
   int cmd = SIOCGIFNUM;
+  int if_num = 0;
 # endif /* SIOCGLIFNUM */
   if (ACE_OS::ioctl (handle, cmd, (caddr_t)&if_num) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
@@ -1818,7 +1815,7 @@ ACE::count_interfaces (ACE_HANDLE handle,
                        ACE_LIB_TEXT ("ACE::count_interfaces:")
                        ACE_LIB_TEXT ("ioctl - SIOCGLIFNUM failed")),
                       -1);
-# if defined (SIOCGLIFNUM) && defined (sparc) // see previous comment
+# if defined (SIOCGLIFNUM)
   how_many = if_num.lifn_count;
 # else
   how_many = if_num;
