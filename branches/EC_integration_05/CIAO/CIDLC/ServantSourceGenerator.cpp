@@ -549,18 +549,20 @@ namespace
     // Nested classes used by ContextEmitter.
   private:
     struct ContextPortsEmitter : Traversal::SingleUserData,
-    Traversal::MultiUserData,
-    Traversal::PublisherData,
-    Traversal::EmitterData,
-    EmitterBase
+                                 Traversal::MultiUserData,
+                                 Traversal::PublisherData,
+                                 Traversal::EmitterData,
+                                 EmitterBase
     {
       ContextPortsEmitter (Context& c, SemanticGraph::Component& scope)
         : EmitterBase (c),
           type_name_emitter_ (c),
+          enclosing_type_name_emitter_ (c),
           simple_type_name_emitter_ (c),
           scope_ (scope)
       {
         belongs_.node_traverser (type_name_emitter_);
+        enclosing_belongs_.node_traverser (enclosing_type_name_emitter_);
         simple_belongs_.node_traverser (simple_type_name_emitter_);
       }
 
@@ -839,7 +841,15 @@ namespace
            << "{"
            << "(*giter).int_id_->ciao_push_event" << " (" << endl
            << "ev," << endl
-           << "source_id.c_str ()" << endl
+           << "source_id.c_str ()," << endl;
+
+        Traversal::PublisherData::belongs (p, enclosing_belongs_);
+
+        os << "::_tc_";
+
+        Traversal::PublisherData::belongs (p, simple_belongs_);
+
+        os << "," << endl
            << STRS[ENV_ARG] << ");"
            << "ACE_CHECK;" << endl
            << "}"
@@ -1041,8 +1051,10 @@ namespace
 
     private:
       FullTypeNameEmitter type_name_emitter_;
+      EnclosingTypeNameEmitter enclosing_type_name_emitter_;
       SimpleTypeNameEmitter simple_type_name_emitter_;
       Traversal::Belongs belongs_;
+      Traversal::Belongs enclosing_belongs_;
       Traversal::Belongs simple_belongs_;
       SemanticGraph::Component& scope_;
     };
@@ -2238,13 +2250,13 @@ namespace
         os << "Consumer_" << c.name ()
            << "_Servant::ciao_push_event (" << endl
            << "::Components::EventBase *ev," << endl
-           << "const char * source_id" << endl
+           << "const char * /* source_id */," << endl
+           << "::CORBA::TypeCode_ptr /* tc */" << endl
            << STRS[ENV_SRC] << ")" << endl
            << STRS[EXCP_START] << " "
            << STRS[EXCP_SYS] << "," << endl
            << STRS[EXCP_BET] << "))" << endl
            << "{"
-           << "ACE_UNUSED_ARG (source_id);" << endl
            << "this->push_event (ev);" << endl
            << "}";
 
