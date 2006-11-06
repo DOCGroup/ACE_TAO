@@ -45,14 +45,23 @@ project(Driver_svnt): taolib_with_idl, ciao_race_default {
   }
 }
 
-project(Server): ciao_component_dnc, ciao_race_component, taoexe, ciao_plan_generator {
+project(Server): ciao_component_dnc, ciao_race_component, ciao_config_handlers, taoexe, ciao_plan_generator {
 
   exename = server
-  after += Driver_svnt
+
+  after += Driver_svnt SA_POP
+
+  includes += $(CIAO_ROOT)/RACE/Input_Adapters/Interactive_Input_Adapter \
+              $(CIAO_ROOT)/tools/Config_Handlers \
+              $(CIAO_ROOT)/RACE/SA_POP
+
   libs += OpString_stub \
           Driver_stub \
           Driver_svnt \
-          Interactive_Input_Adapter_stub
+          Interactive_Input_Adapter_stub \
+          Input_Adapter_stub \
+          Plan_Analyzer_Interface_stub \
+          SA_POP
 
   IDL_Files {
   }
@@ -70,7 +79,9 @@ project(Server): ciao_component_dnc, ciao_race_component, taoexe, ciao_plan_gene
 project(client): taoclient, ciao_race_component, ciao_component_dnc {
 
   exename = client
+
   after += Driver_stub
+
   libs += Driver_stub
 
   IDL_Files {
