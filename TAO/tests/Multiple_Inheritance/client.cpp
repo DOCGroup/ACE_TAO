@@ -114,7 +114,7 @@ main (int argc, char **argv)
       ACE_TRY_CHECK;
 
       // Narrow the object reference
-      B_var b = B::_narrow (a.in () ACE_ENV_ARG_PARAMETER);
+      intB_var b = intB::_narrow (a.in () ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // Narrow the object reference
