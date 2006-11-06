@@ -5,6 +5,11 @@ Mon Nov  6 09:30:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 	  Renamed struct B to struct C to resolve compile problems with
 	  rtems which seems to have a struct B.
 
+	* tests/Multiple_Inheritance/client.cpp:
+	* tests/Multiple_Inheritance/Multiple_Inheritance.idl:
+	  Renamed B to intB to resolve compile problems with
+	  rtems which seems to have a struct B.
+
 Fri Nov  3 22:16:28 UTC 2006  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/ast/ast_sequence.cpp (in_recursion):
