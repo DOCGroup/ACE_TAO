@@ -1,3 +1,11 @@
+Mon Nov  6 20:52:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * apps/Gateway/Gateway/Config_Files.{h,cpp}:
+        * apps/Gateway/Gateway/File_Parser.{h,cpp}:
+        * apps/Gateway/Gateway/Gateway.cpp:
+          Renamed class FP to FPRT. This resolves the compile errors on
+          rtems where a struct FP does exist
+
 Mon Nov  6 16:52:14 UTC 2006  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * ace/Sock_Connect.cpp:

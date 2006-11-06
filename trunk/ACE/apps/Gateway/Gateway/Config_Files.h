@@ -60,8 +60,8 @@ class Connection_Config_File_Parser : public File_Parser<Connection_Config_Info>
   //     Parser for the Connection_Handler Connection file.
 {
 public:
-  virtual FP::Return_Type read_entry (Connection_Config_Info &entry,
-                                      int &line_number);
+  virtual FPRT::Return_Type read_entry (Connection_Config_Info &entry,
+                                        int &line_number);
   // Read in a <Connection_Config_Info> entry.
 
 };
@@ -90,8 +90,8 @@ class Consumer_Config_File_Parser : public File_Parser<Consumer_Config_Info>
   //     Parser for the Consumer Map file.
 {
 public:
-  virtual FP::Return_Type read_entry (Consumer_Config_Info &entry,
-                                      int &line_number);
+  virtual FPRT::Return_Type read_entry (Consumer_Config_Info &entry,
+                                        int &line_number);
   // Read in a <Consumer_Config_Info> entry.
 };
 
