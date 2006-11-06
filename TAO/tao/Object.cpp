@@ -589,6 +589,13 @@ CORBA::Object::_set_policy_overrides (
                       CORBA::COMPLETED_MAYBE));
   ACE_CHECK_RETURN (CORBA::Object::_nil ());
 
+  // If the stub is collocated and we don't have a collocated server we need
+  // to reinitialize it to get it.
+  if (stub->is_collocated () && stub->collocated_servant () == 0)
+    {
+      obj->orb_core ()->reinitialize_object (stub);
+    }
+
   (void) safe_stub.release ();
 
   return obj;

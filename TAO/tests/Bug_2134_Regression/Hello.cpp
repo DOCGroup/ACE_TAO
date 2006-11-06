@@ -2,6 +2,8 @@
 
 #include "tao/corba.h"
 #include "tao/IORTable/IORTable.h"
+#include "tao/Messaging/Messaging.h"
+#include "tao/AnyTypeCode/Any.h"
 #include "ace/OS_NS_string.h"
 #include "ace/SString.h"
 
@@ -19,6 +21,7 @@ public:
 
 int main(int argc, char* argv[])
 {
+  int status = 0;
   CORBA::ORB_var orb = CORBA::ORB::_nil();
 
   ACE_TRY_NEW_ENV
@@ -82,13 +85,41 @@ int main(int argc, char* argv[])
       CORBA::Object_var obj = orb->string_to_object (friendly_corbaloc.c_str ());
       ACE_TRY_CHECK;
 
-      Test::Hello_var hello2 = Test::Hello::_narrow (obj.in ());
+      TimeBase::TimeT timeout = 10000000;
+
+      CORBA::Any timeout_any;
+      timeout_any <<= timeout;
+
+      CORBA::PolicyList policy_list (1);
+      policy_list.length (1);
+
+      policy_list[0] = orb->create_policy (
+                              Messaging::RELATIVE_RT_TIMEOUT_POLICY_TYPE,
+                              timeout_any);
+
+      CORBA::Object_var rtt_obj = obj->_set_policy_overrides (
+                                                  policy_list,
+                                                  CORBA::SET_OVERRIDE);
+
+      policy_list[0]->destroy();
+
+      Test::Hello_var hello2 = Test::Hello::_narrow (rtt_obj.in ());
       ACE_TRY_CHECK;
 
-      hello2->say_hello ();
-      ACE_TRY_CHECK;
+      if (CORBA::is_nil (hello2.in ()))
+        {
+          ACE_ERROR ((LM_ERROR,
+                      "Unable to narrow from "
+                      "corbaloc with policy override\n"));
+          status = 1;
+        }
+      else
+        {
+          hello2->say_hello ();
+          ACE_TRY_CHECK;
 
-      ACE_DEBUG ((LM_DEBUG, "Test succeeded !!!\n"));
+          ACE_DEBUG ((LM_DEBUG, "Test succeeded !!!\n"));
+        }
 
       orb->destroy();
       ACE_TRY_CHECK;
@@ -97,9 +128,9 @@ int main(int argc, char* argv[])
     {
       ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
                           "Error - test failed - exception caught:");
-      return 1;
+      status = 1;
     }
   ACE_ENDTRY;
 
-  return 0;
+  return status;
 }
