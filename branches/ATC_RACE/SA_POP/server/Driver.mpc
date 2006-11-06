@@ -1,10 +1,12 @@
-project(Driver_stub): taolib_with_idl, ciao_race_default {
+//project(Driver_stub): taolib_with_idl, ciao_race_default {
+project(Driver_stub): taolib_with_idl, ciao_component_dnc, ciao_race_default {
 
+  sharedname = Driver_stub
   after += OpString_stub
   libs += OpString_stub
+  	
 
   IDL_Files {
-
     Driver.idl
   }
 
@@ -21,14 +23,14 @@ project(Driver_stub): taolib_with_idl, ciao_race_default {
   }
 }
 
-project(Driver_svnt): taolib_with_idl, ciao_race_default {
+// project(Driver_svnt): ciao_servant_dnc, ciao_race_default {
 
+project(Driver_svnt): ciao_component_dnc, ciao_race_default {
   after += Driver_stub
   libs += OpString_stub \
           Driver_stub
 
   IDL_Files {
-
     Driver.idl
   }
 
@@ -76,15 +78,22 @@ project(Server): ciao_component_dnc, ciao_race_component, ciao_config_handlers, 
   }
 }
 
-project(client): taoclient, ciao_race_component, ciao_component_dnc {
+project(client): taoclient, ciao_race_component, ciao_component_dnc, ciao_plan_generator {
 
   exename = client
 
-  after += Driver_stub
+  after += Driver_stub SA_POP
 
-  libs += Driver_stub
+  includes += $(CIAO_ROOT)/RACE/SA_POP
+
+  libs += Driver_stub \
+          SA_POP
 
   IDL_Files {
+  }
+
+  Header_Files {
+    client.h
   }
 
   Source_Files {

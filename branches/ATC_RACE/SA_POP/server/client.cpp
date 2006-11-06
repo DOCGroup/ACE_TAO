@@ -1,3 +1,4 @@
+#include "client.h"
 #include "DriverC.h"
 #include "ace/Get_Opt.h"
 
@@ -79,3 +80,137 @@ main (int argc, char *argv[])
     }
   return 0;
 }
+
+using namespace ::SA_POP;
+
+// Constructor.
+UIOption::UIOption (std::string descrip, std::string undo_descrip,
+                    ::CIAO::RACE::SA_POP::Driver_ptr driver)
+: descrip_ (descrip),
+  undo_descrip_ (undo_descrip),
+  is_invoked_ (false),
+  is_active_ (true),
+  driver_ (driver)
+{
+  // Nothing to do.
+};
+
+// Destructor.
+UIOption::~UIOption (void)
+{
+  // Nothing to do.
+};
+
+// Get description of option for display in UI.
+std::string UIOption::get_descrip (void)
+{
+  if (!this->is_invoked ())
+    return this->descrip_;
+  return this->undo_descrip_;
+};
+
+// Get whether option is active.
+bool UIOption::is_active (void)
+{
+  return this->is_active_;
+};
+
+// Get whether option is invoked.
+bool UIOption::is_invoked (void)
+{
+  return this->is_invoked_;
+};
+
+// Do option action (if not invoked, invoke; otherwise, undo).
+bool UIOption::do_action (void)
+{
+  if (!this->is_active ())
+    return false;
+  if (this->is_invoked ())
+    return this->undo ();
+  return this->invoke ();
+};
+
+
+// Constructor.
+GoalOption::GoalOption (std::string descrip, std::string undo_descrip,
+                        ::CIAO::RACE::SA_POP::Driver_ptr driver,
+                        ::CIAO::RACE::GoalStructure goal)
+: UIOption (descrip, undo_descrip, driver),
+  goal_ (goal)
+{
+  // Nothing to do.
+};
+
+// Destructor.
+GoalOption::~GoalOption (void)
+{
+  // Nothing to do.
+};
+
+// Invoke option action (plan and deploy opstring for goal).
+bool GoalOption::invoke (void)
+{
+  if (this->is_invoked ())
+    return false;
+
+  // Plan and deploy opstring for goal, and update invocation flag.
+  this->driver_->deploy_goal (this->goal_);
+  this->is_invoked_ = true;
+  return true;
+};
+
+// Undo option action (remove deployment plan).
+bool GoalOption::undo (void)
+{
+  if (!this->is_invoked ())
+    return false;
+
+  //****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****
+  // Remove deployment plan and update invocation flag.
+  //****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****
+  this->is_invoked_ = false;
+  return true;
+};
+
+// Constructor.
+DeployOption::DeployOption (std::string descrip, std::string undo_descrip,
+                            ::CIAO::RACE::SA_POP::Driver_ptr driver,
+                            std::string dp_uri)
+: UIOption (descrip, undo_descrip, driver),
+  dp_uri_ (dp_uri)
+{
+  // Nothing to do.
+};
+
+// Destructor.
+DeployOption::~DeployOption (void)
+{
+  // Nothing to do.
+};
+
+// Invoke option action (deploy plan).
+bool DeployOption::invoke (void)
+{
+  if (this->is_invoked ())
+    return false;
+
+  // Deploy plan and update invocation flag.
+  this->driver_->deploy_plan (CORBA::string_dup (this->dp_uri_.c_str ()));
+  this->is_invoked_ = true;
+  return true;
+};
+
+// Undo option action (remove deployment plan).
+bool DeployOption::undo (void)
+{
+  if (!this->is_invoked ())
+    return false;
+
+  //****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****
+  // Remove deployment plan and update invocation flag.
+  //****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****
+  this->is_invoked_ = false;
+  return true;
+};
+
