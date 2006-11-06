@@ -4,6 +4,7 @@
 #include "Hello.h"
 #include "ace/Task.h"
 #include "ace/OS_NS_time.h"
+#include "ace/OS_NS_stdlib.h"
 
 class Killer : public ACE_Task_Base
 {
@@ -11,7 +12,7 @@ public:
   int svc (void)
   {
     ACE_DEBUG ((LM_DEBUG,"(%P|%t) server exiting\n"));
-    exit (0);
+    ACE_OS::exit (0);
     return 0;
   }
 };

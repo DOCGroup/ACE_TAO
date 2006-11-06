@@ -1,9 +1,14 @@
+Mon Nov  6 20:04:53 UTC 2006  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * tests/Bug_2654_Regression/Hello.cpp:
+          Replace ::exit() with ACE_OS::exit() for portability.
+
 Mon Nov  6 19:33:15 UTC 2006  Chad Elliott  <elliott_c@ociweb.com>
 
         * tao/Object.cpp (_set_policy_overrides):
 
            When setting the policy overrides on an Object, we need to ensure
-           that when it is collocated it has a collocated servant. 
+           that when it is collocated it has a collocated servant.
            Otherwise, narrowing the Object afterward will cause an exception
            to be thrown.  Thanks to Artur DeEsperanto <DrEsperanto at gmx
            dot net> for reporting this.
