@@ -176,6 +176,10 @@
   #define ACE_SIZEOF_WCHAR 2
   #define ACE_HAS_SHM_OPEN
   #define ACE_HAS_AIO_CALLS
+  // VxWorks seems to either not define this or define as zero up till now
+  #if !defined (IOV_MAX) || (IOV_MAX == 0)
+    #define ACE_IOV_MAX 16
+  #endif
 #else
   // We are building for kernel mode
   #define ACE_LACKS_SUSECONDS_T
