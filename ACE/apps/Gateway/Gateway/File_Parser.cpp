@@ -10,7 +10,7 @@
 
 // This fixes a nasty bug with cfront-based compilers (like
 // Centerline).
-typedef FP::Return_Type FP_RETURN_TYPE;
+typedef FPRT::Return_Type FP_RETURN_TYPE;
 
 // File_Parser stuff.
 
@@ -50,24 +50,24 @@ File_Parser<ENTRY>::getint (ACE_INT32 &value)
   char buf[BUFSIZ];
   FP_RETURN_TYPE read_result = this->readword (buf);
 
-  if (read_result == FP::RT_SUCCESS)
+  if (read_result == FPRT::RT_SUCCESS)
     {
       // Check to see if this is the "use the default value" symbol?
       if (buf[0] == '*')
-        return FP::RT_DEFAULT;
+        return FPRT::RT_DEFAULT;
       else
         {
           // ptr is used for error checking with ACE_OS::strtol.
-          char *ptr;
+          char *ptr = 0;
 
           // try to convert the buf to a decimal number
           value = ACE_OS::strtol (buf, &ptr, 10);
 
           // check if the buf is a decimal or not
           if (value == 0 && ptr == buf)
-            return FP::RT_PARSE_ERROR;
+            return FPRT::RT_PARSE_ERROR;
           else
-            return FP::RT_SUCCESS;
+            return FPRT::RT_SUCCESS;
         }
     }
   else
@@ -101,11 +101,11 @@ File_Parser<ENTRY>::readword (char buf[])
     if (wordlength > 0)
       {
         ungetc (c, this->infile_);
-        return FP::RT_SUCCESS;
+        return FPRT::RT_SUCCESS;
       }
     else
       // else return EOF so that read loops stop
-      return FP::RT_EOFILE;
+      return FPRT::RT_EOFILE;
   }
   else if (c == '\n')
     {
@@ -114,19 +114,19 @@ File_Parser<ENTRY>::readword (char buf[])
       if (wordlength > 0)
         ungetc (c, this->infile_);
       else
-        return FP::RT_EOLINE;
+        return FPRT::RT_EOLINE;
     }
 
   // Skip comments.
   if (this->comments (buf[0]))
     {
       if (this->skipline () == EOF)
-        return FP::RT_EOFILE;
+        return FPRT::RT_EOFILE;
       else
-        return FP::RT_COMMENT;
+        return FPRT::RT_COMMENT;
     }
   else
-    return FP::RT_SUCCESS;
+    return FPRT::RT_SUCCESS;
 }
 
 template <class ENTRY> int
