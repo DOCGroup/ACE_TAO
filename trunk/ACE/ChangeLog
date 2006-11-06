@@ -1,3 +1,16 @@
+Mon Nov  6 16:52:14 UTC 2006  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * ace/Sock_Connect.cpp:
+          My fix for Solaris x86 broke HPUX. The trouble is that the
+          method ACE::count_interfaces() is only used by the "generic"
+          implementation of get_ip_interfaces(). Probably a better
+          solution is to remove count_interfaces() and move its
+          functionality into the get_ip_interfaces() implementation, but
+          that is a bigger change than I care to make at the moment. I
+          think it should be possible to do so in a way that also reduces
+          the footprint and improves performance by eliminating the
+          effectively duplicated code in count_interfaces().
+
 Mon Nov 06 14:14:10 UTC 2006  Martin Corino  <mcorino@remedy.nl>
 
         * ace/config-vxworks6.3.h:
