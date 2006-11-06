@@ -849,7 +849,7 @@ namespace
 
         Traversal::PublisherData::belongs (p, simple_belongs_);
 
-        os << "," << endl
+        os << endl
            << STRS[ENV_ARG] << ");"
            << "ACE_CHECK;" << endl
            << "}"
