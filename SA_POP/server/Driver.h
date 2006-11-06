@@ -8,6 +8,11 @@
 #include "orbsvcs/CosNamingC.h"
 #include "RACE/common/OpStringC.h"
 #include "Plan_Generator_Impl.h"
+
+#include "SA_POP_Types.h"
+#include "Planner.h"
+#include "LogScreenOut.h"
+
 namespace CIAO
 {
   namespace RACE
@@ -27,19 +32,38 @@ namespace CIAO
         virtual ~Driver_i (void);
 
         virtual
-        int init (const char *RM_name);
+        int init (const char *RM_name, const char *sanet_str, const char *taskmap_str);
 
         virtual
         void deploy_plan (const char * plan_uri)
           throw (::CORBA::SystemException);
 
         virtual
-        void deploy_goal (const ::CIAO::RACE::GoalStructure & goal)
+        void deploy_goal (const ::CIAO::RACE::GoalStructure & goal_idl)
           throw (::CORBA::SystemException);
 
       protected:
-        virtual int convert (::CIAO::RACE::OperationalString &op_string,
-                             ::Deployment::DeploymentPlan &plan);
+        virtual int opstring_to_dplan (::CIAO::RACE::OperationalString &op_string,
+                                       ::Deployment::DeploymentPlan &plan);
+
+        /// Convert SA-POP operational string to IDL operational string.
+        /**
+         * @param opstring  SA-POP operational string to convert.
+         *
+         * @param opstring_idl  Empty IDL operational string structure
+         *                      to be populated.
+         */
+        virtual void opstring_to_idl (const ::SA_POP::Plan &opstring,
+                                      OperationalString &opstring_idl);
+
+        /// Convert IDL goal to SA-POP goal.
+        /**
+         * @param goal_idl  IDL goal to convert.
+         *
+         * @param goal  Empty SA-POP goal structure to be populated.
+         */
+        virtual void goal_from_idl (const GoalStructure &goal_idl,
+                                    ::SA_POP::Goal &goal);
 
         virtual int deploy_plan (::Deployment::DeploymentPlan &plan);
 
@@ -57,6 +81,12 @@ namespace CIAO
 
         // Plan generator object.
         ::CIAO::Plan_Generator::Plan_Generator_i plan_gen_;
+
+        // Pointer to SA-POP planner.
+        ::SA_POP::Planner *planner_;
+
+        // Screen output adapter for SA-POP.
+        ::SA_POP::LogScreenOut screen_out_;
       };
     }
   }

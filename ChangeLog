@@ -1,3 +1,18 @@
+Mon Nov  6 04:42:43 UTC 2006  John S. Kinnebrew  <john.s.kinnebrew@vanderbilt.edu>
+
+        * common/OpString.idl:
+
+        * SA_POP/SA_POP.mpc:
+        * SA_POP/SA_POP_Types.h:
+        * SA_POP/SA_WorkingPlan.cpp:
+
+        * SA_POP/server/Driver.h:
+        * SA_POP/server/Driver.cpp:
+        * SA_POP/server/Driver.mpc:
+        * SA_POP/server/server.cpp:
+
+        Updated SA-POP driver/server to handle IDL goal structure.
+
 Sat Nov  4 19:07:07 UTC 2006  John S. Kinnebrew  <john.s.kinnebrew@vanderbilt.edu>
 
         * SA_POP/Driver.cpp:

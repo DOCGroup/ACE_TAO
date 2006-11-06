@@ -22,10 +22,10 @@ module CIAO
       struct TimeWindow
       {
         // Beginning of time window.
-        CIAO::RACE::TimeValue Earliest;
+        CIAO::RACE::TimeValue earliest;
 
         // End of time window.
-        CIAO::RACE::TimeValue Latest;
+        CIAO::RACE::TimeValue latest;
       };
 
       // A task instance in an opstring.
@@ -178,10 +178,10 @@ module CIAO
 
         // Start-by and end-by constraints on conditions, in relative time
         // (relative to start of opstring to achieve this goal).
-        TimeConstraints relativeTimeConstraints;
+        TimeConstraints relTimes;
 
         // Start-by and end-by constraints on conditions, in clock time.
-        TimeConstraints absoluteTimeConstraintns;
+        TimeConstraints absTimes;
 
         // QoS requirements.
         QoSSpecifications QoSRequirements;

@@ -441,10 +441,10 @@ namespace SA_POP {
 
     // Start-by and end-by constraints on conditions, in relative time
     // (relative to start of opstring to achieve this goal).
-    TimeConstraintMap rel_time_constraints;
+    TimeConstraintMap rel_times;
 
     // Start-by and end-by constraints on conditions, in clock time.
-    TimeConstraintMap abs_time_constraints;
+    TimeConstraintMap abs_times;
 
     // Expected time range for start of opstring (for achieving this goal)
     // execution.

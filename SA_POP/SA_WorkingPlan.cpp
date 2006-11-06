@@ -41,8 +41,8 @@ add_threats_cmd_ (0)
   // Clear goal.
   this->goal_.goal_id = "NULL";
   this->goal_.name = "NULL";
-  this->goal_.abs_time_constraints.clear ();
-  this->goal_.rel_time_constraints.clear ();
+  this->goal_.abs_times.clear ();
+  this->goal_.rel_times.clear ();
   this->goal_.goal_conds.clear ();
   this->goal_.start_window = std::make_pair (0, 0);
 

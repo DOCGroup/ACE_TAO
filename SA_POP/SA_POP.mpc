@@ -1,18 +1,10 @@
-project(SA_POP_Driver) : ciao_component_dnc, ciao_race_component, \
-                         taoexe, ciao_plan_generator, \
-                         ciao_config_handlers, xerces {
+project(SA_POP) : ciao_config_handlers, xerces {
 
-   after += Interactive_Input_Adapter_stub OpString_stub XSC_Config_Handlers
-   exename = driver
+   after += XSC_Config_Handlers
+   sharedname   = SA_POP
 
-   includes += $(CIAO_ROOT)/RACE/Input_Adapters/Interactive_Input_Adapter \
-               $(CIAO_ROOT)/tools/Config_Handlers \
+   includes += $(CIAO_ROOT)/tools/Config_Handlers \
                $(CIAO_ROOT)/RACE/SA_POP
-
-   libs += Interactive_Input_Adapter_stub \
-           Input_Adapter_stub \
-           Plan_Analyzer_Interface_stub\
-           OpString_stub
 
    macros = SA_POP_HAS_ACE SA_POP_HAS_CIAO
 
@@ -21,8 +13,6 @@ project(SA_POP_Driver) : ciao_component_dnc, ciao_race_component, \
    }
 
    Header_Files {
-      Converter.h
-
       SA_POP_Types.h
       SA_POP_Exceptions.h
 
@@ -59,9 +49,6 @@ project(SA_POP_Driver) : ciao_component_dnc, ciao_race_component, \
    }
 
    Source_Files {
-      Converter.cpp
-      Driver.cpp
-
       SA_POP_Exceptions.cpp
 
       SA_Builder.cpp

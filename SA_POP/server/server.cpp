@@ -4,6 +4,8 @@
 
 const char *ior_output_file = "server.ior";
 const char *rm_name = "RM";
+const char *sanet_str = "";
+const char *taskmap_str = "";
 
 int
 parse_args (int argc, char *argv[])
@@ -22,12 +24,22 @@ parse_args (int argc, char *argv[])
         rm_name = get_opts.opt_arg ();
         break;
 
+      case 's':
+        sanet_str = get_opts.opt_arg ();
+        break;
+
+      case 't':
+        taskmap_str = get_opts.opt_arg ();
+        break;
+
       case '?':
       default:
         ACE_ERROR_RETURN ((LM_ERROR,
                            "usage: %s "
                            "-o <iorfile> "
                            "-r <repoman name>"
+                           "-s <task network filename>"
+                           "-t <task map filename>"
                            "\n",
                            argv [0]),
                           -1);
@@ -66,7 +78,7 @@ main (int argc, char *argv[])
       ACE_NEW_RETURN (driver_impl,
                       ::CIAO::RACE::SA_POP::Driver_i (orb.in ()), 1);
 
-      if (driver_impl->init (rm_name) != 0)
+      if (driver_impl->init (rm_name, sanet_str, taskmap_str) != 0)
         {
           return -1;
 
