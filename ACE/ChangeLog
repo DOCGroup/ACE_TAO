@@ -1,3 +1,10 @@
+Mon Nov 06 11:17:10 UTC 2006  Martin Corino  <mcorino@remedy.nl>
+
+        * ace/Service_Config.cpp:
+
+          Implemented a fix for runtime problems in case
+          ACE_HAS_NONSTATIC_OBJECT_MANAGER is defined (seen on VxWorks 6.3 RTP).
+
 Sun Nov  5 14:14:51 UTC 2006  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * ace/Sock_Connect.cpp:
