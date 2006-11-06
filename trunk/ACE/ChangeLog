@@ -1,3 +1,10 @@
+Mon Nov  6 13:08:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+	* ace/config-sunos5.5.h:
+	  Added ACE_HAS_GETRUSAGE, thanks to Michael Klein
+	  <michael dot klein at fazi dot de> for reporting that SunOS has
+	  this method, fixes bugzilla 2694.
+
 Mon Nov  6 12:59:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 	* examples/Service_Configurator/Misc/main.cpp:

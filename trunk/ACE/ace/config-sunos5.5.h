@@ -237,6 +237,7 @@
 
 // Platform supports the prusage_t struct.
 #define ACE_HAS_PRUSAGE_T
+#define ACE_HAS_GETRUSAGE
 
 // Compiler/platform defines the sig_atomic_t typedef.
 #define ACE_HAS_SIG_ATOMIC_T
