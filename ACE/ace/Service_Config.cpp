@@ -453,6 +453,9 @@ ACE_Service_Config::ACE_Service_Config (int ignore_static_svcs,
   // Initialize the Service Repository.
   //  ACE_Service_Repository::instance (static_cast<int> (size));
 
+  // Make sure ACE_OS_Object_Manager is initialized.
+  (void)ACE_OS_Object_Manager::instance ();
+
   // Initialize the ACE_Reactor (the ACE_Reactor should be the same
   // size as the ACE_Service_Repository).
   (void)ACE_Reactor::instance ();
