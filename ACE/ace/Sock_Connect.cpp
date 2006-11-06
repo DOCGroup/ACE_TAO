@@ -1605,6 +1605,7 @@ ACE::get_ip_interfaces (size_t &count,
                        ACE_LIB_TEXT ("%p\n"),
                        ACE_LIB_TEXT ("ACE::get_ip_interfaces:open")),
                       -1);
+
   if (ACE::count_interfaces (handle, num_ifs))
     {
       ACE_OS::close (handle);
@@ -1800,8 +1801,13 @@ int
 ACE::count_interfaces (ACE_HANDLE handle,
                        size_t &how_many)
 {
+#if defined (ACE_WIN32) || defined (ACE_HAS_GETIFADDRS) || defined (__hpux) || defined (_AIX) || (defined (ACE_VXWORKS) && (ACE_VXWORKS < 0x600))
+  // none of these platforms make use of count_interfaces
+  ACE_UNUSED_ARG (handle);
+  ACE_UNUSED_ARG (how_many);
+  ACE_NOTSUP_RETURN (-1); // no implementation
 
-#if defined (SIOCGIFNUM)
+#elif defined (SIOCGIFNUM)
 # if defined (SIOCGLIFNUM)
   int cmd = SIOCGLIFNUM;
   struct lifnum if_num = {AF_UNSPEC,0,0};
@@ -1816,11 +1822,11 @@ ACE::count_interfaces (ACE_HANDLE handle,
                        ACE_LIB_TEXT ("ioctl - SIOCGLIFNUM failed")),
                       -1);
 # if defined (SIOCGLIFNUM)
-  how_many = if_num.lifn_count;
+  num_ifs = if_num.lifn_count;
 # else
-  how_many = if_num;
-# endif /* sparc */
-  return 0;
+  num_ifs = if_num;
+# endif /* SIOCGLIFNUM */
+return 0;
 
 #elif defined (__unix) || defined (__unix__) || defined (__Lynx__) || defined (ACE_OPENVMS)
   // Note: DEC CXX doesn't define "unix".  BSD compatible OS: HP UX,
