@@ -5,6 +5,9 @@ Mon Nov  6 04:42:43 UTC 2006  John S. Kinnebrew  <john.s.kinnebrew@vanderbilt.ed
         * SA_POP/SA_POP.mpc:
         * SA_POP/SA_POP_Types.h:
         * SA_POP/SA_WorkingPlan.cpp:
+        * SA_POP/Converter.h: Removed
+        * SA_POP/Converter.cpp: Removed
+        * SA_POP/Driever.cpp: Removed
 
         * SA_POP/server/Driver.h:
         * SA_POP/server/Driver.cpp:
