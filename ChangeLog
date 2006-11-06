@@ -1,3 +1,11 @@
+Mon Nov  6 22:37:28 UTC 2006  John S. Kinnebrew  <john.s.kinnebrew@vanderbilt.edu>
+
+        * SA_POP/server/Driver.mpc:
+        * SA_POP/server/client.h: Added file.
+        * SA_POP/server/client.cpp:
+
+        Updated SA-POP demo client for text UI options.
+
 Mon Nov  6 04:42:43 UTC 2006  John S. Kinnebrew  <john.s.kinnebrew@vanderbilt.edu>
 
         * common/OpString.idl:
