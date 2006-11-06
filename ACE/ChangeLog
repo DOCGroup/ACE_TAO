@@ -1,3 +1,12 @@
+Mon Nov  6 12:59:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+	* examples/Service_Configurator/Misc/main.cpp:
+	* examples/Service_Configurator/Misc/Service_Configurator_Misc.mpc:
+	* examples/Service_Configurator/Misc/svc.conf1
+	  Fixed shared library name, make working for embedded platforms.
+          Thanks to Abdul Sowayan <abdullah dot sowayan at lmco dot com>
+          for reporting this, fixes bugzilla bug 2698
+
 Mon Nov 06 11:17:10 UTC 2006  Martin Corino  <mcorino@remedy.nl>
 
         * ace/Service_Config.cpp:
