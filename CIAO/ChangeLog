@@ -1,7 +1,17 @@
+Mon Nov  6 17:48:56 UTC 2006  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * CIDLC/ServantHeaderGenerator.cpp:
+        * CIDLC/ServantSourceGenerator.cpp:
+
+          Changed signature of generated ciao_push_event() method,
+          with additional typecode parameter, also added this arg
+          to a generated call to the CIAO Event Service version
+          of this method.
+
 Thu Oct 26 14:37:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-	* DAnCE/StaticConfigurator/StaticDAnCEParser.cpp:
-	  Use ACE_OS methods, this fixes bugzilla 2691.
+  * DAnCE/StaticConfigurator/StaticDAnCEParser.cpp:
+    Use ACE_OS methods, this fixes bugzilla 2691.
           Thanks to Sowayan Abdullah <abdullah dot sowayan at lmco dot com>
           for reporting this issue
 
@@ -29,23 +39,23 @@ Wed Oct 25 14:54:03 UTC 2006  Boris Kolpackov  <boris@codesynthesis.com>
 
 Wed Oct 25 11:02:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-	* examples/Null_Component/StaticDAnCEApp.mpc:
-	  Enabled this project in all builds
+  * examples/Null_Component/StaticDAnCEApp.mpc:
+    Enabled this project in all builds
 
 Mon Oct 23 19:35:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-	* DAnCE/DomainApplicationManager/DomainApplicationManager_Impl.cpp:
-	  Added missing CORBA::string_dup to fix crash with BCB
+  * DAnCE/DomainApplicationManager/DomainApplicationManager_Impl.cpp:
+    Added missing CORBA::string_dup to fix crash with BCB
 
 Fri Oct 20 06:41:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-	* DAnCE/StaticConfigurator/StaticDAnCEParser.cpp:
-	  Changed the HomeAttributes generation in such a way that it
-	  also compiles with BCB6
+  * DAnCE/StaticConfigurator/StaticDAnCEParser.cpp:
+    Changed the HomeAttributes generation in such a way that it
+    also compiles with BCB6
 
-	* examples/Null_Component/*:
-	  New example, a component with just one interface. This can be used
-	  to analyze the core footprint and see what we can reduce
+  * examples/Null_Component/*:
+    New example, a component with just one interface. This can be used
+    to analyze the core footprint and see what we can reduce
           Thanks to Sowayan Abdullah <abdullah dot sowayan at lmco dot com>
           for creating this example
 
@@ -93,42 +103,42 @@ Tue Oct 17 13:40:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * DAnCE/Plan_Launcher/Plan_Launcher.cpp:
         * DAnCE/Plan_Launcher/Plan_Launcher_Impl.cpp:
-	  Several small layout changes and use ACE_ERROR for
-	  errors
+    Several small layout changes and use ACE_ERROR for
+    errors
 
 Tue Oct 17 13:30:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-	* DAnCE/NodeApplication/RTNodeApp_Configurator.{h,cpp}:
-	  Moved destructor implementation to cpp file
+  * DAnCE/NodeApplication/RTNodeApp_Configurator.{h,cpp}:
+    Moved destructor implementation to cpp file
 
 Tue Oct 17 13:10:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-	* DAnCE/NodeManager/CIAO_Monitor.h:
-	  Doxygen improvements
+  * DAnCE/NodeManager/CIAO_Monitor.h:
+    Doxygen improvements
 
-	* DAnCE/NodeManager/NAM_Map.{h,cpp}:
-	  Made is_available a const method
+  * DAnCE/NodeManager/NAM_Map.{h,cpp}:
+    Made is_available a const method
 
-	* DAnCE/NodeManager/Node_Manager.cpp:
-	  Use bool
+  * DAnCE/NodeManager/Node_Manager.cpp:
+    Use bool
 
-	* DAnCE/NodeManager/Node_Manager_Impl.cpp:
+  * DAnCE/NodeManager/Node_Manager_Impl.cpp:
           Use ACE_ERROR together with LM_ERROR
 
 Tue Oct 17 12:32:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-	* DAnCE/DomainApplicationManager/Deployment_Configuration.cpp:
-	* DAnCE/NodeApplication/NodeApplication_Impl.cpp:
-	* DAnCE/NodeApplication/RTConfig_Manager.cpp:
+  * DAnCE/DomainApplicationManager/Deployment_Configuration.cpp:
+  * DAnCE/NodeApplication/NodeApplication_Impl.cpp:
+  * DAnCE/NodeApplication/RTConfig_Manager.cpp:
           Use ACE_ERROR together with LM_ERROR
 
-	* DAnCE/NodeApplication/NodeApplication_Impl.inl:
+  * DAnCE/NodeApplication/NodeApplication_Impl.inl:
           Initialise pointers with 0
 
-	* DAnCE/NodeApplication/Configurator_Factory.{h,cpp}:
-	* DAnCE/NodeApplication/Container_Impl.cpp:
-	* DAnCE/NodeApplication/NodeApplication_Core.cpp:
-	  Use bool and const improvements, doxygen improvements
+  * DAnCE/NodeApplication/Configurator_Factory.{h,cpp}:
+  * DAnCE/NodeApplication/Container_Impl.cpp:
+  * DAnCE/NodeApplication/NodeApplication_Core.cpp:
+    Use bool and const improvements, doxygen improvements
 
 Mon Oct 16 19:52:15 UTC 2006  Shanshan Jiang <shanshan.jiang@vanderbilt.edu>
 
@@ -250,8 +260,8 @@ Fri Oct 13 16:51:49 UTC 2006  Gan Deng  <gan.deng@vanderbilt.edu>
         * docs/imgs/dance_arch.jpg:
         * docs/imgs/static_dance_arch.jpg:
         * docs/imgs/static_dance_impl.jpg:
-        
-          Fixed corrupted files. Thanks to Sowayan Abudullah 
+
+          Fixed corrupted files. Thanks to Sowayan Abudullah
           <abdullah dot sowayan at lmco dot com>
           for reporting this.
 
