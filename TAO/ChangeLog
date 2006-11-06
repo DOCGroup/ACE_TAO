@@ -1,14 +1,29 @@
+Mon Nov  6 19:33:15 UTC 2006  Chad Elliott  <elliott_c@ociweb.com>
+
+        * tao/Object.cpp (_set_policy_overrides):
+
+           When setting the policy overrides on an Object, we need to ensure
+           that when it is collocated it has a collocated servant. 
+           Otherwise, narrowing the Object afterward will cause an exception
+           to be thrown.
+
+        * tests/Bug_2134_Regression/Bug_2134_Regression.mpc:
+        * tests/Bug_2134_Regression/Hello.cpp:
+
+          Modified this test to utilize _set_policy_overrides() on the
+          collocated object to exercise the change above.
+
 Mon Nov  6 09:30:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-	* tests/CollocationLockup/CollocationLockup.cpp:
-	* tests/CollocationLockup/AB.idl:
-	  Renamed struct B to struct C to resolve compile problems with
-	  rtems which seems to have a struct B.
+        * tests/CollocationLockup/CollocationLockup.cpp:
+        * tests/CollocationLockup/AB.idl:
+          Renamed struct B to struct C to resolve compile problems with
+          rtems which seems to have a struct B.
 
-	* tests/Multiple_Inheritance/client.cpp:
-	* tests/Multiple_Inheritance/Multiple_Inheritance.idl:
-	  Renamed B to intB to resolve compile problems with
-	  rtems which seems to have a struct B.
+        * tests/Multiple_Inheritance/client.cpp:
+        * tests/Multiple_Inheritance/Multiple_Inheritance.idl:
+          Renamed B to intB to resolve compile problems with
+          rtems which seems to have a struct B.
 
 Fri Nov  3 22:16:28 UTC 2006  Jeff Parsons <j.parsons@vanderbilt.edu>
 
