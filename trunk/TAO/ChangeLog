@@ -5,7 +5,8 @@ Mon Nov  6 19:33:15 UTC 2006  Chad Elliott  <elliott_c@ociweb.com>
            When setting the policy overrides on an Object, we need to ensure
            that when it is collocated it has a collocated servant. 
            Otherwise, narrowing the Object afterward will cause an exception
-           to be thrown.
+           to be thrown.  Thanks to Artur DeEsperanto <DrEsperanto at gmx
+           dot net> for reporting this.
 
         * tests/Bug_2134_Regression/Bug_2134_Regression.mpc:
         * tests/Bug_2134_Regression/Hello.cpp:
