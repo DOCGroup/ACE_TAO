@@ -49,7 +49,7 @@ namespace SA_POP {
     virtual void set_commands (AddOpenThreatsCmd *add_threats_cmd);
 
     /// Set goal.
-    /**	
+    /**
      * @param goal  Goal of this working plan.
      */
     virtual void set_goal (const SA_POP::Goal &goal);
@@ -159,7 +159,7 @@ namespace SA_POP {
    * @param second_task_inst The task instance after the first one
    */
 	virtual void remove_sched_link(TaskInstID first_task_inst, TaskInstID second_task_inst);
-    
+
 	/// Get all the task instances
 	virtual TaskInstSet get_all_insts();
 
@@ -356,34 +356,33 @@ namespace SA_POP {
   	/// This is a particular Precedence set. Like Before, After etc.
 	  typedef std::map <TaskInstID, TaskInstSet> PrecedenceSet;
 
-	  /// Type of a Precedence Relation mapped to a Precedence Set. 
+	  /// Type of a Precedence Relation mapped to a Precedence Set.
 	  /// This gives the whole Precedence Graph
 	  typedef std::map <PrecedenceRelation, PrecedenceSet> PrecedenceGraph;
 
 	/// PrecedenceGraph
 	PrecedenceGraph precedence_graph_;
-	
+
 	/// Type of an ordering imposed during Scheduling.
 	/// First task instance is ordered before the second.
 	typedef std::multimap <TaskInstID, TaskInstID> SchedulingLinks;
-	
+
 	/// Map of the imposed orderings
 	SchedulingLinks sched_links_;
 
 	/// Map from task instances to the time windows
 	typedef std::map <TaskInstID, TimeWindow> InstToWinMap;
-	typedef std::map <TaskInstID, TimeWindow> InstToWinMap;
 
 	/// InstToWinMap and InstToWinMap
 	InstToWinMap start_window_map_;
 	InstToWinMap end_window_map_;
-	
+
   /// Type of a map of task instances and the durations
   typedef std::map <TaskInstID, TimeValue> DurationMap;
 
   DurationMap durations;
 
-  // The initial start and end windows. There has to be something 
+  // The initial start and end windows. There has to be something
   // in this for every task instance be it {NULL_TIME,NULL_TIME}
   InstToWinMap init_start;
 	InstToWinMap init_end;
