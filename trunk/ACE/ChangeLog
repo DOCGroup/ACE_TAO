@@ -1,3 +1,9 @@
+Tue Nov 07 13:31:10 UTC 2006  Martin Corino  <mcorino@remedy.nl>
+
+        * include/makeinclude/platform_vxworks6.3.GNU:
+
+          Fixed build settings for PPC32 builds with softfloat.
+
 Tue Nov  7 10:38:25 UTC 2006  Simon McQueen  <sm@prismtech.com>
 
         * tests/Naming_Test.cpp:
