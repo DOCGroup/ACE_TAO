@@ -279,7 +279,7 @@ be_visitor_valuetype_cs::visit_valuetype (be_valuetype *node)
       << ")" << be_uidt_nl
       << "{" << be_idt_nl
       << "::CORBA::ValueBase *base = 0;" << be_nl
-      << "::CORBA::Boolean retval =" << be_idt_nl
+      << "::CORBA::Boolean const retval =" << be_idt_nl
       << "::CORBA::ValueBase::_tao_unmarshal_pre (" << be_idt << be_idt_nl
       << "strm," << be_nl
       << "base," << be_nl
