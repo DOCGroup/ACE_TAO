@@ -125,7 +125,7 @@ Worker::svc()
     {
       this->orb_->shutdown();
     }
-  catch (CORBA::Exception &ex)
+  catch (CORBA::Exception &)
     {
     }
 
