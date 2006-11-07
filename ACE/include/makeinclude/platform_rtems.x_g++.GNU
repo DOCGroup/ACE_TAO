@@ -31,8 +31,8 @@ ifeq (no,$(RTEMS_HAS_NETWORKING))
  CCFLAGS += -DACE_LACKS_NETWORKING
 endif
 
-CFLAGS          += -specs bsp_specs -qrtems -D_REENTRANT -fasm -ansi -fno-builtin -fno-defer-pop -fvolatile $(PIPE_OPT) -W -Wall -DACE_HAS_RTEMS -B$(RTEMS_MAKEFILE_PATH)/lib
-CCFLAGS         += -specs bsp_specs -qrtems -D_REENTRANT -fasm -ansi -fno-builtin -fno-defer-pop -fvolatile $(PIPE_OPT) -W -Wall -DACE_HAS_RTEMS -B$(RTEMS_MAKEFILE_PATH)/lib
+CFLAGS          += -specs bsp_specs -qrtems -D_REENTRANT -fasm -fno-builtin -fno-defer-pop -fvolatile $(PIPE_OPT) -W -Wall -DACE_HAS_RTEMS -B$(RTEMS_MAKEFILE_PATH)/lib
+CCFLAGS         += -specs bsp_specs -qrtems -D_REENTRANT -fasm -fno-builtin -fno-defer-pop -fvolatile $(PIPE_OPT) -W -Wall -DACE_HAS_RTEMS -B$(RTEMS_MAKEFILE_PATH)/lib
 ifeq (,$(rtti))
   CCFLAGS += -fno-rtti -DACE_LACKS_RTTI
 endif # rtti
