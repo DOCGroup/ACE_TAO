@@ -1621,9 +1621,9 @@ TAO_ORB_Core::policy_factory_registry_i (void)
 TAO::ORBInitializer_Registry_Adapter *
 TAO_ORB_Core::orbinitializer_registry_i (void)
 {
-  // The ORBInitializer_Registry is supposed to be a singleton.  Store
-  // it in the global configuration, not the ORB-specific one.
-  ACE_Service_Gestalt * const config = ACE_Service_Config::global ();
+  // @todo The ORBInitializer_Registry is supposed to be a singleton.
+
+  ACE_Service_Gestalt * const config = this->configuration ();
 
   // If not, lookup it up.
   this->orbinitializer_registry_ =

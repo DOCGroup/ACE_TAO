@@ -1,3 +1,15 @@
+Tue Nov  7 19:06:12 UTC 2006  Ossama Othman  <ossama_othman at symantec dot com>
+
+        * tao/ORB_Core.cpp (orbinitializer_registry_i):
+
+          Temporarily reverted
+          "Thu Nov  2 23:23:16 UTC 2006  Ossama Othman  <ossama_othman at
+          symantec.com>" change.  It's not completely correct since it
+          prevents dynamic ORB unloading from working properly when
+          ORBInitializers have been registered.  The existing code isn't
+          correct either but go with it for now since it has been tested
+          more.
+
 Tue Nov  7 12:44:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Two_Objects/worker.{h,cpp}:
