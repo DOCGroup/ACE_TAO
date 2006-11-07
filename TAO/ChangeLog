@@ -1,3 +1,8 @@
+Tue Nov  7 09:26:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/orbsvcs/IFRService/IFR_Service_Utils.cpp:
+          Fixed warning abour variable not used in rtems build
+
 Tue Nov  7 06:30:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Bug_2654_Regression/client.cpp:
