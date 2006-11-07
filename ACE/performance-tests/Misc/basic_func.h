@@ -25,7 +25,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-extern int A,B,C,D,E,F;
+extern int A,BB,C,D,E,F;
 
 // If your compiler optimizes away Empty_Iteration_Test::run (), then
 // #defining ACE_HAS_OPTIMIZED_NULL_FUNCTIONS may help produce more
@@ -36,8 +36,8 @@ extern int A,B,C,D,E,F;
 #endif /* _MSC_VER */
 
 #if defined (ACE_HAS_OPTIMIZED_NULL_FUNCTIONS)
-# define EXPR(R,A,B,C,D) (R=(A*B + C*D))
-# define DO_SOMETHING EXPR(A,B,EXPR(F,A,E,C,B),EXPR(B,F,A,D,E),EXPR(E,B,F,A,C));
+# define EXPR(R,A,BB,C,D) (R=(A*BB + C*D))
+# define DO_SOMETHING EXPR(A,BB,EXPR(F,A,E,C,BB),EXPR(BB,F,A,D,E),EXPR(E,BB,F,A,C));
 #else  /* ACE_HAS_OPTIMIZED_NULL_FUNCTIONS */
 # define DO_SOMETHING
 #endif /* ACE_HAS_OPTIMIZED_NULL_FUNCTIONS */
