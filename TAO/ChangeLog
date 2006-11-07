@@ -1,3 +1,16 @@
+Tue Nov  7 20:00:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * be/be_visitor_exception/exception_cs.cpp:
+          Generate the constructor taking all members as first method. The
+          gcc 3.2.3 based rtems compiler seems to get confused in the
+          generated tests/IDL_Test/anonymousC.cpp file when it is the last
+          method. For other compilers it doesn't make a difference but at
+          least with this change we have an error free compilation for
+          rtems
+
+        * be/be_visitor_valuetype/valuetype_cs.cpp:
+          Generate const for retval
+
 Tue Nov  7 19:06:12 UTC 2006  Ossama Othman  <ossama_othman at symantec dot com>
 
         * tao/ORB_Core.cpp (orbinitializer_registry_i):
