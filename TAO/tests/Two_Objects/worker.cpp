@@ -6,7 +6,7 @@
 
 Worker::Worker (CORBA::ORB_ptr orb, int time)
   :  orb_ (CORBA::ORB::_duplicate (orb)),
-     timeout_(time)
+     orb_timeout_(time)
 {
 }
 
@@ -17,9 +17,9 @@ Worker::svc (void)
 
   ACE_TRY
     {
-      ACE_Time_Value tv (timeout_);
+      ACE_Time_Value tv (orb_timeout_);
 
-      ///orb times out after <timeout> seconds
+      // orb times out after <timeout> seconds
       this->orb_->run (tv ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
