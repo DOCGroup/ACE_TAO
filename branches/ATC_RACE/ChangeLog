@@ -1,3 +1,11 @@
+Tue Nov  7 19:50:13 UTC 2006  Nishanth Shankaran  <nshankar@nosmam.com>
+
+        * SA_POP/SA_POP.mpc:
+        * SA_POP/SA_WorkingPlan.h:
+
+        * SA_POP/server/Driver.cpp:
+        * SA_POP/server/Driver.mpc: Fixed linking error on mac.
+
 Tue Nov  7 19:23:15 UTC 2006  Nishanth Shankaran  <nshankar@nospam.com>
 
         * SA_POP/Builder.h:
