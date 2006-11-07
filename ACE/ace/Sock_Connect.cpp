@@ -1822,9 +1822,9 @@ ACE::count_interfaces (ACE_HANDLE handle,
                        ACE_LIB_TEXT ("ioctl - SIOCGLIFNUM failed")),
                       -1);
 # if defined (SIOCGLIFNUM)
-  num_ifs = if_num.lifn_count;
+  how_many = if_num.lifn_count;
 # else
-  num_ifs = if_num;
+  how_many = if_num;
 # endif /* SIOCGLIFNUM */
 return 0;
 
