@@ -80,7 +80,13 @@ ifeq ($(TOOL),)
 else
   override TOOL := $(TOOL)
 endif
-override TOOL_FAMILY := $(TOOL)
+ifeq ($(TOOL_FAMILY),)
+  ifeq ($(findstring gnu,$(TOOL)),gnu)
+    override TOOL_FAMILY := gnu
+  else
+    override TOOL_FAMILY := diab
+  endif
+endif
 
 ifeq ("$(TOOL)","gnu")
   templates ?= automatic
@@ -170,7 +176,11 @@ ifeq ($(rtp),1)
   LDFLAGS := $(filter-out -N, $(LDFLAGS))
   LD := $(CPLUS)
   DLD := $(CPLUS)
-  LDFLAGS += -L$(WIND_USR)/lib/$(VX_CPU_FAMILY)/$(CPU)/common
+  ifeq ($(findstring *sf,*$(TOOL)),*sf)
+    LDFLAGS += -L$(WIND_USR)/lib/$(VX_CPU_FAMILY)/$(CPU)/sfcommon
+  else
+    LDFLAGS += -L$(WIND_USR)/lib/$(VX_CPU_FAMILY)/$(CPU)/common
+  endif
   LDLIBS += -ldl
 else
   include $(TGT_DIR)/h/make/defs.default
