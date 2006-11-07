@@ -58,7 +58,15 @@ ACE_OS::gethostbyaddr (const char *addr, int length, int type)
   if (0 == addr || '\0' == addr[0])
       return 0;
 
-#   if defined (ACE_HAS_NONCONST_GETBY)
+#   if defined (ACE_VXWORKS)
+  // VxWorks 6.x has a gethostbyaddr() that is threadsafe and
+  // returns an heap-allocated hostentry structure.
+  // just call ACE_OS::gethostbyaddr_r () which knows how to handle this.
+  struct hostent hentry;
+  ACE_HOSTENT_DATA buf;
+  int h_error;  // Not the same as errno!
+  return ACE_OS::gethostbyaddr_r (addr, length, type, &hentry, buf, &h_error);
+#   elif defined (ACE_HAS_NONCONST_GETBY)
   ACE_SOCKCALL_RETURN (::gethostbyaddr (const_cast<char *> (addr),
                                         (ACE_SOCKET_LEN) length,
                                         type),
@@ -111,7 +119,7 @@ ACE_OS::gethostbyaddr_r (const char *addr,
       *h_errnop = h_errno;
       return (struct hostent *) 0;
     }
-# elif defined (__GLIBC__)
+#   elif defined (__GLIBC__)
   // GNU C library has a different signature
   ACE_OS::memset (buffer, 0, sizeof (ACE_HOSTENT_DATA));
 
@@ -126,6 +134,50 @@ ACE_OS::gethostbyaddr_r (const char *addr,
     return result;
   else
     return (struct hostent *) 0;
+#   elif defined (ACE_VXWORKS)
+  // VxWorks 6.x has a threadsafe gethostbyaddr() which returns a heap-allocated
+  // data structure which needs to be freed with hostentFree()
+  struct hostent* hp = ::gethostbyaddr (addr, length, type);
+  if (hp)
+  {
+    result->h_addrtype = hp->h_addrtype;
+    result->h_length = hp->h_length;
+
+    // buffer layout:
+    // buffer[0-3]: h_addr_list[0], pointer to the addr.
+    // buffer[4-7]: h_addr_list[1], null terminator for the h_addr_list.
+    // buffer[8..(8+h_length)]: the first (and only) addr.
+    // buffer[(8+h_length)...]: hostname
+
+    // Store the address list in buffer.
+    result->h_addr_list = (char **) buffer;
+    // Store the actual address _after_ the address list.
+    result->h_addr_list[0] = (char *) &result->h_addr_list[2];
+    ACE_OS::memcpy (result->h_addr_list[0], hp->h_addr_list[0], hp->h_length);
+    // Null-terminate the list of addresses.
+    result->h_addr_list[1] = 0;
+    // And no aliases, so null-terminate h_aliases.
+    result->h_aliases = &result->h_addr_list[1];
+
+    if (((2*sizeof(char*))+hp->h_length+ACE_OS::strlen (hp->h_name)+1) > sizeof (ACE_HOSTENT_DATA))
+    {
+      result->h_name = (char *) result->h_addr_list[0] + hp->h_length;
+      ACE_OS::strcpy (result->h_name, hp->h_name);
+    }
+    else
+    {
+      result->h_name = (char *)0;
+    }
+
+    // free hostent memory
+    ::hostentFree (hp);
+
+    return result;
+  }
+  else
+  {
+    return (struct hostent *) 0;
+  }
 #   else
 #     if defined(ACE_LACKS_NETDB_REENTRANT_FUNCTIONS)
   ACE_UNUSED_ARG (result);
@@ -178,7 +230,15 @@ ACE_OS::gethostbyname (const char *name)
   if (0 == name || '\0' == name[0])
       return 0;
 
-#   if defined (ACE_HAS_NONCONST_GETBY)
+#   if defined (ACE_VXWORKS)
+  // VxWorks 6.x has a gethostbyname() that is threadsafe and
+  // returns an heap-allocated hostentry structure.
+  // just call ACE_OS::gethostbyname_r () which knows how to handle this.
+  struct hostent hentry;
+  ACE_HOSTENT_DATA buf;
+  int h_error;  // Not the same as errno!
+  return ACE_OS::gethostbyname_r (name, &hentry, buf, &h_error);
+#   elif defined (ACE_HAS_NONCONST_GETBY)
   ACE_SOCKCALL_RETURN (::gethostbyname (const_cast<char *> (name)),
                        struct hostent *,
                        0);
@@ -231,7 +291,7 @@ ACE_OS::gethostbyname_r (const char *name,
       *h_errnop = h_errno;
       return (struct hostent *) 0;
     }
-# elif defined (__GLIBC__)
+#   elif defined (__GLIBC__)
   // GNU C library has a different signature
   ACE_OS::memset (buffer, 0, sizeof (ACE_HOSTENT_DATA));
 
@@ -244,6 +304,49 @@ ACE_OS::gethostbyname_r (const char *name,
     return result;
   else
     return (struct hostent *) 0;
+#   elif defined (ACE_VXWORKS)
+  // VxWorks 6.x has a threadsafe gethostbyname() which returns a heap-allocated
+  // data structure which needs to be freed with hostentFree()
+  struct hostent* hp = ::gethostbyname (name);
+  if (hp)
+  {
+    result->h_addrtype = hp->h_addrtype;
+    result->h_length = hp->h_length;
+
+    // buffer layout:
+    // buffer[0-3]: h_addr_list[0], pointer to the addr.
+    // buffer[4-7]: h_addr_list[1], null terminator for the h_addr_list.
+    // buffer[8...]: the first (and only) addr.
+
+    // Store the address list in buffer.
+    result->h_addr_list = (char **) buffer;
+    // Store the actual address _after_ the address list.
+    result->h_addr_list[0] = (char *) &result->h_addr_list[2];
+    ACE_OS::memcpy (result->h_addr_list[0], hp->h_addr_list[0], hp->h_length);
+    // Null-terminate the list of addresses.
+    result->h_addr_list[1] = 0;
+    // And no aliases, so null-terminate h_aliases.
+    result->h_aliases = &result->h_addr_list[1];
+
+    if (((2*sizeof(char*))+hp->h_length+ACE_OS::strlen (hp->h_name)+1) > sizeof (ACE_HOSTENT_DATA))
+    {
+      result->h_name = (char *) result->h_addr_list[0] + hp->h_length;
+      ACE_OS::strcpy (result->h_name, hp->h_name);
+    }
+    else
+    {
+      result->h_name = (char *)0;
+    }
+
+    // free hostent memory
+    ::hostentFree (hp);
+
+    return result;
+  }
+  else
+  {
+    return (struct hostent *) 0;
+  }
 #   else
 #     if defined(ACE_LACKS_NETDB_REENTRANT_FUNCTIONS)
   ACE_UNUSED_ARG (result);
