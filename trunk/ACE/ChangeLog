@@ -1,3 +1,10 @@
+Tue Nov  7 10:38:25 UTC 2006  Simon McQueen  <sm@prismtech.com>
+
+        * tests/Naming_Test.cpp:
+
+          Moved an ::open out of an ACE_ASSERT. It wasn't getting performed on
+          some builds.
+
 Tue Nov  7 09:56:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * performance-tests/Misc/basic_func.{h,cpp}:
