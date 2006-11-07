@@ -35,9 +35,9 @@
 #include "ace/Sock_Connect.h"
 #include "ace/Default_Constants.h"
 
-#if defined (CYGWIN32)
+#if defined (CYGWIN32) || defined (ACE_HAS_RTEMS)
 // Include math.h. math.h defines a macro log2 that conflicts with ACE::log2()
-// which seems to only cause a problem on cygwin.  Insuring that math.h is
+// which seems to only cause a problem on cygwin and rtems.  Insuring that math.h is
 // included first solves it since we define acelog2 as log2, then
 // undefines log2.
 # include "ace/os_include/os_math.h"

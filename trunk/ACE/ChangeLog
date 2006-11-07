@@ -1,3 +1,11 @@
+Tue Nov  7 07:52:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/ACE.h:
+          Also rtems defines log2, use the same workaround as with cygwin
+
+        * include/makeinclude/platform_rtems.x_g++.GNU:
+          Removed -ansi
+
 Tue Nov  7 01:47:46 UTC 2006  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * ace/Sock_Connect.cpp (count_interfaces):
