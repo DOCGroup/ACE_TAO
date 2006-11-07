@@ -3,18 +3,24 @@
 //
 #include "Hello.h"
 #include "ace/Task.h"
-#include "ace/OS_NS_time.h"
-#include "ace/OS_NS_stdlib.h"
 
 class Killer : public ACE_Task_Base
 {
 public:
+  Killer (CORBA::ORB_ptr orb)
+  : orb_ (CORBA::ORB::_duplicate (orb))
+  {
+  }
+
   int svc (void)
   {
     ACE_DEBUG ((LM_DEBUG,"(%P|%t) server exiting\n"));
-    ACE_OS::exit (0);
+    this->orb_->shutdown (1);
     return 0;
   }
+
+private:
+  CORBA::ORB_var orb_;
 };
 
 Hello::Hello (CORBA::ORB_ptr orb)
@@ -44,7 +50,7 @@ Hello::method (CORBA::Short count ACE_ENV_ARG_DECL_NOT_USED)
       PortableServer::POA_var poa = this->_default_POA();
       PortableServer::POAManager_var mgr = poa->the_POAManager();
       mgr->hold_requests(false);
-      Killer *k = new Killer;
+      Killer *k = new Killer (orb);
       k->activate();
     }
 }
