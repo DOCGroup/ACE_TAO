@@ -66,7 +66,7 @@
 #include "be_visitor_interface/interface_ss.cpp"
 #include "be_visitor_interface/interface_is.cpp"
 #include "be_visitor_interface/tie_sh.cpp"
-#include "be_visitor_interface/tie_si.cpp"
+#include "be_visitor_interface/tie_ss.cpp"
 #include "be_visitor_interface/any_op_ch.cpp"
 #include "be_visitor_interface/any_op_cs.cpp"
 #include "be_visitor_interface/cdr_op_ch.cpp"

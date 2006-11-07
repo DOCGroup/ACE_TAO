@@ -141,7 +141,7 @@ public:
       TAO_ROOT_SI,
       TAO_ROOT_SS,
       TAO_ROOT_TIE_SH,
-      TAO_ROOT_TIE_SI,
+      TAO_ROOT_TIE_SS,
       TAO_ROOT_IH,
       TAO_ROOT_IS,
       TAO_ROOT_ANY_OP_CH,
@@ -256,9 +256,6 @@ public:
   int start_server_inline (const char *fname);
   // Set the server inline stream.
 
-  int start_server_template_inline (const char *fname);
-  // Set the server template inline stream.
-
   int start_server_skeletons (const char *fname);
   // Set the server skeletons stream.
 
@@ -294,9 +291,6 @@ public:
   // Put a last #endif in the server header.
 
   int end_server_template_header (void);
-  // Put a last #endif in the server template header.
-
-  int end_server_template_inline (void);
   // Put a last #endif in the server template header.
 
   int end_server_template_skeletons (void);
@@ -445,9 +439,6 @@ private:
 
   TAO_OutStream *server_inline_;
   // Server side inline file.
-
-  TAO_OutStream *server_template_inline_;
-  // Server side template inline file.
 
   TAO_OutStream *anyop_header_;
   // Anyop header file.

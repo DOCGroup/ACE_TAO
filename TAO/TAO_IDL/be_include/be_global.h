@@ -98,9 +98,6 @@ public:
   static const char *be_get_server_inline_fname (
       bool base_name_only = 0
     );
-  static const char *be_get_server_template_inline_fname (
-      bool base_name_only = 0
-    );
   static const char *be_get_anyop_source_fname (
       bool base_name_only = 0
     );
@@ -133,8 +130,6 @@ public:
     );
   static const char *be_get_server_inline (UTL_String *idl_file_name,
                                            bool base_name_only = 0);
-  static const char *be_get_server_template_inline (UTL_String *idl_file_name,
-                                                    bool base_name_only = 0);
   static const char *be_get_anyop_header (UTL_String *idl_file_name,
                                           bool base_name_only = 0);
   static const char *be_get_anyop_source (UTL_String *idl_file_name,
@@ -324,12 +319,6 @@ public:
 
   const char* server_inline_ending (void) const;
   // Get the server_inline_ending.
-
-  void server_template_inline_ending (const char* s);
-  //  Set the server_template_inline_ending.
-
-  const char* server_template_inline_ending (void) const;
-  // Get the server_template_inline_ending.
 
   void anyop_header_ending (const char* s);
   // Set the anyop_header_ending.
@@ -660,9 +649,6 @@ private:
 
   // Server's inline file name ending. Default is "S.i".
   char* server_inline_ending_;
-
-  // Server's template inline file name ending. Default is "S_T.i".
-  char* server_template_inline_ending_;
 
   // Anyop header file name ending. Default is "A.h".
   char* anyop_hdr_ending_;

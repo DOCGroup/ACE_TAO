@@ -73,9 +73,9 @@ be_visitor_attribute::visit_attribute (be_attribute *node)
 
   get_op.set_name ((UTL_IdList *) node->name ()->copy ());
   get_op.set_defined_in (node->defined_in ());
-  
+
   UTL_ExceptList *get_exceptions = node->get_get_exceptions ();
-  
+
   if (0 != get_exceptions)
     {
       get_op.be_add_exceptions (get_exceptions->copy ());
@@ -85,7 +85,7 @@ be_visitor_attribute::visit_attribute (be_attribute *node)
   // to the operation.
   be_operation_strategy *old_strategy =
     get_op.set_strategy (node->get_get_strategy ()->copy ());
-    
+
   if (0 != old_strategy)
     {
       old_strategy->destroy ();
@@ -160,9 +160,9 @@ be_visitor_attribute::visit_attribute (be_attribute *node)
         status = get_op.accept (&visitor);
         break;
       }
-    case TAO_CodeGen::TAO_ROOT_TIE_SI:
+    case TAO_CodeGen::TAO_ROOT_TIE_SS:
       {
-        be_visitor_operation_tie_si visitor (&ctx);
+        be_visitor_operation_tie_ss visitor (&ctx);
         status = get_op.accept (&visitor);
         break;
       }
@@ -224,7 +224,7 @@ be_visitor_attribute::visit_attribute (be_attribute *node)
           visitor = 0;
         }
     }
-    
+
   get_op.destroy ();
 
   // Do nothing for readonly attributes.
@@ -243,13 +243,13 @@ be_visitor_attribute::visit_attribute (be_attribute *node)
   // The return type  is "void".
   be_predefined_type rt (AST_PredefinedType::PT_void,
                          &sn);
- 
+
   // Argument type is the same as the attribute type.
   AST_Argument *arg =
     idl_global->gen ()->create_argument (AST_Argument::dir_IN,
                                          node->field_type (),
                                          node->name ());
-                                         
+
   arg->set_name ((UTL_IdList *) node->name ()->copy ());
   // Create the operation.
   be_operation set_op (&rt,
@@ -260,9 +260,9 @@ be_visitor_attribute::visit_attribute (be_attribute *node)
   set_op.set_name ((UTL_IdList *) node->name ()->copy ());
   set_op.set_defined_in (node->defined_in ());
   set_op.be_add_argument (arg);
-  
+
   UTL_ExceptList *set_exceptions = node->get_set_exceptions ();
-  
+
   if (0 != set_exceptions)
     {
       set_op.be_add_exceptions (set_exceptions->copy ());
@@ -347,9 +347,9 @@ be_visitor_attribute::visit_attribute (be_attribute *node)
         status = set_op.accept (&visitor);
         break;
       }
-    case TAO_CodeGen::TAO_ROOT_TIE_SI:
+    case TAO_CodeGen::TAO_ROOT_TIE_SS:
       {
-        be_visitor_operation_tie_si visitor (&ctx);
+        be_visitor_operation_tie_ss visitor (&ctx);
         status = set_op.accept (&visitor);
         break;
       }
@@ -424,7 +424,7 @@ be_visitor_attribute::visit_attribute (be_attribute *node)
       delete visitor;
       visitor = 0;
     }
-    
+
   set_op.destroy ();
   rt.destroy ();
   return 0;
