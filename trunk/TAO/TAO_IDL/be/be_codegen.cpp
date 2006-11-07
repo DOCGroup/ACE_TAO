@@ -43,7 +43,6 @@ TAO_CodeGen::TAO_CodeGen (void)
     server_skeletons_ (0),
     server_template_skeletons_ (0),
     server_inline_ (0),
-    server_template_inline_ (0),
     anyop_header_ (0),
     anyop_source_ (0),
     gperf_input_stream_ (0),
@@ -719,15 +718,6 @@ TAO_CodeGen::start_server_template_skeletons (const char *fname)
       << be_global->be_get_server_template_hdr_fname (1)
       << "\"";
 
-  // Generate the code that includes the inline file if not included in the
-  // header file.
-  *this->server_template_skeletons_ << "\n\n#if !defined (__ACE_INLINE__)";
-  *this->server_template_skeletons_
-      << "\n#include \""
-      << be_global->be_get_server_template_inline_fname (1)
-      << "\"";
-  *this->server_template_skeletons_ << "\n#endif /* !defined INLINE */\n\n";
-
   // Begin versioned namespace support after initial headers have been
   // included, but before the inline file and post include
   // directives.
@@ -779,47 +769,6 @@ TAO_OutStream *
 TAO_CodeGen::server_inline (void)
 {
   return this->server_inline_;
-}
-
-// Set the server template inline stream.
-int
-TAO_CodeGen::start_server_template_inline (const char *fname)
-{
-  // Retrieve the singleton instance to the outstream factory.
-  TAO_OutStream_Factory *factory = TAO_OUTSTREAM_FACTORY::instance ();
-
-  // Clean up between multiple files.
-  delete this->server_template_inline_;
-  this->server_template_inline_ = factory->make_outstream ();
-
-  if (!this->server_template_inline_)
-    {
-      return -1;
-    }
-
-  if (this->server_template_inline_->open (fname,
-                                           TAO_OutStream::TAO_SVR_INL)
-       == -1)
-    {
-      return -1;
-    }
-
-  // Generate the ident string, if any.
-  this->gen_ident_string (this->server_template_inline_);
-
-  // Begin versioned namespace support after initial headers have been
-  // included, but before the inline file and post include
-  // directives.
-  *this->server_template_inline_ << be_global->versioning_begin ();
-
-  return 0;
-}
-
-// Get the server template inline stream.
-TAO_OutStream *
-TAO_CodeGen::server_template_inline (void)
-{
-  return this->server_template_inline_;
 }
 
 int
@@ -1354,14 +1303,6 @@ TAO_CodeGen::end_server_template_header (void)
   // before this.
   *this->server_template_header_ << be_global->versioning_end ();
 
-  // Insert the code to include the inline file.
-  *this->server_template_header_ << "#if defined (__ACE_INLINE__)";
-  *this->server_template_header_
-      << "\n#include \""
-      << be_global->be_get_server_template_inline_fname (1)
-      << "\"";
-  *this->server_template_header_ << "\n#endif /* defined INLINE */";
-
   // Insert the code to include the template source file.
   *this->server_template_header_
       << "\n\n#if defined (ACE_TEMPLATES_REQUIRE_SOURCE)";
@@ -1391,18 +1332,6 @@ TAO_CodeGen::end_server_template_header (void)
     }
 
   *this->server_template_header_ << "#endif /* ifndef */\n";
-  return 0;
-}
-
-int
-TAO_CodeGen::end_server_template_inline (void)
-{
-  *this->server_template_inline_ << "\n";
-
-  // End versioned namespace support.  Do not place include directives
-  // before this.
-  *this->server_template_inline_ << be_global->versioning_end ();
-
   return 0;
 }
 
@@ -2465,7 +2394,6 @@ TAO_CodeGen::destroy (void)
   delete this->server_template_skeletons_;
   delete this->client_inline_;
   delete this->server_inline_;
-  delete this->server_template_inline_;
   delete this->anyop_source_;
   delete this->anyop_header_;
 #if !defined (linux) && !defined (__QNX__) && !defined (__GLIBC__)

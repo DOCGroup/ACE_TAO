@@ -8,7 +8,7 @@
 //    TAO IDL
 //
 // = FILENAME
-//    tie_si.cpp
+//    tie_ss.cpp
 //
 // = DESCRIPTION
 //    Visitor generating code for operations for the TIE class.
@@ -19,25 +19,25 @@
 // ============================================================================
 
 ACE_RCSID (be_visitor_operation,
-           tie_si,
+           tie_ss,
            "$Id$")
 
 // ************************************************************
 // Operation visitor for server inline for TIE class operations.
 // ************************************************************
 
-be_visitor_operation_tie_si::be_visitor_operation_tie_si (
+be_visitor_operation_tie_ss::be_visitor_operation_tie_ss (
     be_visitor_context *ctx
   )
   : be_visitor_scope (ctx)
 {
 }
 
-be_visitor_operation_tie_si::~be_visitor_operation_tie_si (void)
+be_visitor_operation_tie_ss::~be_visitor_operation_tie_ss (void)
 {
 }
 
-int be_visitor_operation_tie_si::visit_operation (be_operation *node)
+int be_visitor_operation_tie_ss::visit_operation (be_operation *node)
 {
   TAO_OutStream *os = this->ctx_->stream ();
 
@@ -46,7 +46,7 @@ int be_visitor_operation_tie_si::visit_operation (be_operation *node)
   if (!intf)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                         "(%N:%l) be_visitor_operation_tie_si::"
+                         "(%N:%l) be_visitor_operation_tie_ss::"
                          "visit_operation - "
                          "bad interface scope\n"),
                         -1);
@@ -58,7 +58,7 @@ int be_visitor_operation_tie_si::visit_operation (be_operation *node)
   if (!bt)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                         "(%N:%l) be_visitor_operation_tie_si::"
+                         "(%N:%l) be_visitor_operation_tie_ss::"
                          "visit_operation - "
                          "Bad return type\n"),
                         -1);
@@ -100,7 +100,7 @@ int be_visitor_operation_tie_si::visit_operation (be_operation *node)
   *os << be_nl << be_nl << "// TAO_IDL - Generated from " << be_nl
       << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
 
-  *os << "template <class " << template_name.c_str () << "> ACE_INLINE\n";
+  *os << "template <class " << template_name.c_str () << ">" << be_nl;
 
   // Generate the return type mapping (same as in the header file).
   be_visitor_context ctx (*this->ctx_);
@@ -109,7 +109,7 @@ int be_visitor_operation_tie_si::visit_operation (be_operation *node)
   if (bt->accept (&oro_visitor) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                         "(%N:%l) be_visitor_operation_tie_si::"
+                         "(%N:%l) be_visitor_operation_tie_ss::"
                          "visit_operation - "
                          "codegen for return type failed\n"),
                         -1);

@@ -170,8 +170,8 @@ be_visitor_interface_tie_sh::method_helper (be_interface *,
     }
 
   be_visitor_context ctx;
-  ctx.state (TAO_CodeGen::TAO_ROOT_TIE_SH);
   ctx.stream (os);
+  ctx.state (TAO_CodeGen::TAO_ROOT_TIE_SH);
   be_visitor_interface_tie_sh visitor (&ctx);
 
   if (visitor.visit_scope (node) == -1)

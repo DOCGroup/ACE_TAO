@@ -8,7 +8,7 @@
 //    TAO IDL
 //
 // = FILENAME
-//    tie_si.cpp
+//    tie_ss.cpp
 //
 // = DESCRIPTION
 //    Visitor generating code for TIE classes for the Interface node in the
@@ -20,7 +20,7 @@
 // ============================================================================
 
 ACE_RCSID (be_visitor_interface,
-           tie_si,
+           tie_ss,
            "$Id$")
 
 
@@ -28,19 +28,19 @@ ACE_RCSID (be_visitor_interface,
 // Interface visitor for server inline
 // ************************************************************************
 
-be_visitor_interface_tie_si::be_visitor_interface_tie_si (
+be_visitor_interface_tie_ss::be_visitor_interface_tie_ss (
     be_visitor_context *ctx
   )
   : be_visitor_interface (ctx)
 {
 }
 
-be_visitor_interface_tie_si::~be_visitor_interface_tie_si (void)
+be_visitor_interface_tie_ss::~be_visitor_interface_tie_ss (void)
 {
 }
 
 int
-be_visitor_interface_tie_si::visit_interface (be_interface *node)
+be_visitor_interface_tie_ss::visit_interface (be_interface *node)
 {
   if (node->srv_inline_gen ()
       || node->imported ()
@@ -95,14 +95,14 @@ be_visitor_interface_tie_si::visit_interface (be_interface *node)
   *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
       << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
 
-  *os << "template <class T> ACE_INLINE" << be_nl
+  *os << "template <class T>" << be_nl
       << fulltiename << "<T>::" << localtiename << " (T &t)" << be_nl
       << "\t: ptr_ (&t)," << be_nl
       << "\t  poa_ (PortableServer::POA::_nil ())," << be_nl
       << "\t  rel_ (0)" << be_nl
       << "{}" << be_nl << be_nl;
 
-  *os << "template <class T> ACE_INLINE" << be_nl
+  *os << "template <class T> " << be_nl
       << fulltiename << "<T>::" << localtiename
       << " (T &t, PortableServer::POA_ptr poa)" << be_nl
       << "\t: ptr_ (&t)," << be_nl
@@ -110,7 +110,7 @@ be_visitor_interface_tie_si::visit_interface (be_interface *node)
       << "\t  rel_ (0)" << be_nl
       << "{}" << be_nl << be_nl;
 
-  *os << "template <class T> ACE_INLINE" << be_nl
+  *os << "template <class T>" << be_nl
       << fulltiename << "<T>::" << localtiename
       << " (T *tp, ::CORBA::Boolean release)" << be_nl
       << "\t: ptr_ (tp)," << be_nl
@@ -118,7 +118,7 @@ be_visitor_interface_tie_si::visit_interface (be_interface *node)
       << "\t  rel_ (release)" << be_nl
       << "{}" << be_nl << be_nl;
 
-  *os << "template <class T> ACE_INLINE" << be_nl
+  *os << "template <class T>" << be_nl
       << fulltiename << "<T>::" << localtiename
       << " (T *tp, PortableServer::POA_ptr poa, ::CORBA::Boolean release)"
       << be_nl
@@ -127,7 +127,7 @@ be_visitor_interface_tie_si::visit_interface (be_interface *node)
       << "\t  rel_ (release)" << be_nl
       << "{}" << be_nl << be_nl;
 
-  *os << "template <class T> ACE_INLINE" << be_nl
+  *os << "template <class T>" << be_nl
       << fulltiename << "<T>::~" << localtiename << " (void)" << be_nl
       << "{" << be_idt_nl
       << "if (this->rel_)" << be_idt_nl
@@ -136,13 +136,13 @@ be_visitor_interface_tie_si::visit_interface (be_interface *node)
       << "}" << be_uidt << be_uidt_nl
       << "}" << be_nl << be_nl;
 
-  *os << "template <class T> ACE_INLINE T *" << be_nl
+  *os << "template <class T> T *" << be_nl
       << fulltiename << "<T>::_tied_object (void)" << be_nl
       << "{" << be_idt_nl
       << "return this->ptr_;" << be_uidt_nl
       << "}" << be_nl << be_nl;
 
-  *os << "template <class T> ACE_INLINE void" << be_nl
+  *os << "template <class T> void" << be_nl
       << fulltiename << "<T>::_tied_object (T &obj)" << be_nl
       << "{" << be_idt_nl
       << "if (this->rel_)" << be_idt_nl
@@ -153,7 +153,7 @@ be_visitor_interface_tie_si::visit_interface (be_interface *node)
       << "this->rel_ = 0;" << be_uidt_nl
       << "}" << be_nl << be_nl;
 
-  *os << "template <class T> ACE_INLINE void" << be_nl
+  *os << "template <class T> void" << be_nl
       << fulltiename << "<T>::_tied_object (T *obj, "
       << "::CORBA::Boolean release)" << be_nl
       << "{" << be_idt_nl
@@ -165,19 +165,19 @@ be_visitor_interface_tie_si::visit_interface (be_interface *node)
       << "this->rel_ = release;" << be_uidt_nl
       << "}" << be_nl << be_nl;
 
-  *os << "template <class T> ACE_INLINE ::CORBA::Boolean" << be_nl
+  *os << "template <class T>  ::CORBA::Boolean" << be_nl
       << fulltiename << "<T>::_is_owner (void)" << be_nl
       << "{" << be_idt_nl
       << "return this->rel_;" << be_uidt_nl
       << "}" << be_nl << be_nl;
 
-  *os << "template <class T> ACE_INLINE void" << be_nl
+  *os << "template <class T> void" << be_nl
       << fulltiename << "<T>::_is_owner ( ::CORBA::Boolean b)" << be_nl
       << "{" << be_idt_nl
       << "this->rel_ = b;" << be_uidt_nl
       << "}" << be_nl << be_nl;
 
-  *os << "template <class T> ACE_INLINE "
+  *os << "template <class T> "
       << "PortableServer::POA_ptr" << be_nl
       << fulltiename
       << "<T>::_default_POA ("
@@ -197,7 +197,7 @@ be_visitor_interface_tie_si::visit_interface (be_interface *node)
 
   int status =
     node->traverse_inheritance_graph (
-              be_visitor_interface_tie_si::method_helper,
+              be_visitor_interface_tie_ss::method_helper,
               os
             );
 
@@ -214,13 +214,13 @@ be_visitor_interface_tie_si::visit_interface (be_interface *node)
 }
 
 int
-be_visitor_interface_tie_si::visit_component (be_component *node)
+be_visitor_interface_tie_ss::visit_component (be_component *node)
 {
   return this->visit_interface (node);
 }
 
 int
-be_visitor_interface_tie_si::method_helper (be_interface *derived,
+be_visitor_interface_tie_ss::method_helper (be_interface *derived,
                                             be_interface *node,
                                             TAO_OutStream *os)
 {
@@ -234,16 +234,16 @@ be_visitor_interface_tie_si::method_helper (be_interface *derived,
     }
 
   be_visitor_context ctx;
-  ctx.state (TAO_CodeGen::TAO_ROOT_TIE_SI);
   ctx.interface (derived);
   ctx.stream (os);
-  be_visitor_interface_tie_si visitor (&ctx);
+  ctx.state (TAO_CodeGen::TAO_ROOT_TIE_SS);
+  be_visitor_interface_tie_ss visitor (&ctx);
 
   if (visitor.visit_scope (node) == -1)
 
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                         "be_visitor_interface_tie_si::"
+                         "be_visitor_interface_tie_ss::"
                          "method_helper\n"),
                         -1);
     }
