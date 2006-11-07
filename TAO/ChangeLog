@@ -1,3 +1,19 @@
+Tue Nov  7 19:45:02 UTC 2006  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * tests/Bug_2654_Regression/Hello.cpp:
+          ACE_OS::exit() doesn't seem to work well when called from
+          non-main threads on windows. Switching to ORB::shutdown() may
+          improve the performance a bit.
+
+        * tests/Oneway_Timeouts/client.cpp:
+          Replaced cout/cerr with ACE_DEBUG/ACE_ERROR. Also reset the
+          timeout test value before issuing the shutdown invocation. I
+          believe this invocation was the major cause of failures because
+          it would cause a timeout after a delay in a scenaro that is
+          otherwise intended to be asynchronous and otherwise have no
+          delay at all. I also increased the TIME_THRESHOLD value to
+          better accomodate preemptively multitasking test hosts.
+
 Tue Nov  7 20:00:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * be/be_visitor_exception/exception_cs.cpp:
