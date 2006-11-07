@@ -1,3 +1,10 @@
+Tue Nov  7 15:44:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Sock_Connect.cpp:
+          With VxWorks 6.3 in rtp mode with IPv6 enabled declare the
+          in6addr_ constants explicitly, these are exported by the
+          VxWorks 6.3 rtp header files but not implemented
+
 Tue Nov 07 13:31:10 UTC 2006  Martin Corino  <mcorino@remedy.nl>
 
         * include/makeinclude/platform_vxworks6.3.GNU:
