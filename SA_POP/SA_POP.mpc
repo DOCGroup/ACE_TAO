@@ -1,4 +1,4 @@
-project(SA_POP) : ciao_config_handlers, xerces, taolib {
+project(SA_POP) : ciao_config_handlers, ciao_deployment_stub, xerces {
 
    after += XSC_Config_Handlers
    sharedname   = SA_POP

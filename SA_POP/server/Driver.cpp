@@ -227,7 +227,7 @@ namespace CIAO
 
 
         // Map from instance IDs to instance index.
-        typedef std::map <::SA_POP::TaskInstID, CORBA::ULong> InstToIndexMap;
+        typedef std::map < ::SA_POP::TaskInstID, CORBA::ULong> InstToIndexMap;
         InstToIndexMap inst_to_index;
         inst_to_index.clear ();
 
