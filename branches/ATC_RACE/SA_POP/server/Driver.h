@@ -9,7 +9,6 @@
 #include "RACE/common/OpStringC.h"
 #include "Plan_Generator_Impl.h"
 
-#include "SA_POP_Types.h"
 #include "Planner.h"
 #include "LogScreenOut.h"
 
@@ -32,7 +31,9 @@ namespace CIAO
         virtual ~Driver_i (void);
 
         virtual
-        int init (const char *RM_name, const char *sanet_str, const char *taskmap_str);
+        int init (const char *RM_name,
+                  const char *sanet_str,
+                  const char *taskmap_str);
 
         virtual
         void deploy_plan (const char * plan_uri)
@@ -43,8 +44,9 @@ namespace CIAO
           throw (::CORBA::SystemException);
 
       protected:
-        virtual int opstring_to_dplan (::CIAO::RACE::OperationalString &op_string,
-                                       ::Deployment::DeploymentPlan &plan);
+        virtual int opstring_to_dplan
+        (::CIAO::RACE::OperationalString &op_string,
+         ::Deployment::DeploymentPlan &plan);
 
         /// Convert SA-POP operational string to IDL operational string.
         /**

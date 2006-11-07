@@ -7,9 +7,6 @@
 #include "SA_Builder.h"
 #include "TaskMapFileIn.h"
 #include "SANet/SANetFileIn.h"
-#include "Planner.h"
-#include "LogScreenOut.h"
-
 
 namespace CIAO
 {
@@ -32,7 +29,9 @@ namespace CIAO
       }
 
       int
-      Driver_i::init (const char *RM_name, const char *sanet_str, const char *taskmap_str)
+      Driver_i::init (const char *RM_name,
+                      const char *sanet_str,
+                      const char *taskmap_str)
       {
         try
           {
@@ -510,7 +509,7 @@ namespace CIAO
           goal.abs_times.insert (std::make_pair (abs_times[i].condID,
                                  abs_times[i].constraint.sec));
         }
-        
+
       };
 
       int

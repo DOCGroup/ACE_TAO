@@ -17,6 +17,10 @@
 #ifndef SA_POP_SA_BUILDER_H_
 #define SA_POP_SA_BUILDER_H_
 
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+# pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
+
 #include "SA_POP_Types.h"
 #include "Builder.h"
 #include "Planner.h"
@@ -26,7 +30,7 @@
 #include "SA_SchedStrategy.h"
 #include "SA_WorkingPlan.h"
 #include "TaskMap.h"
-
+#include "SA_Builder_Export.h"
 
 namespace SA_POP {
 
@@ -37,7 +41,8 @@ namespace SA_POP {
    *        associated objects for planning with spreading activation networks
    *        and scheduling with precedence graphs.
    */
-  class SA_Builder : public Builder {
+  class SA_BUILDER_Export SA_Builder : public Builder {
+//  class SA_Builder : public Builder {
   public:
     /// Constructor.
     SA_Builder (void);

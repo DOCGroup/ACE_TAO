@@ -1,4 +1,4 @@
-project(SA_POP) : ciao_config_handlers, xerces {
+project(SA_POP) : ciao_config_handlers, xerces, taolib {
 
    after += XSC_Config_Handlers
    sharedname   = SA_POP
@@ -7,6 +7,11 @@ project(SA_POP) : ciao_config_handlers, xerces {
                $(CIAO_ROOT)/RACE/SA_POP
 
    macros = SA_POP_HAS_ACE SA_POP_HAS_CIAO
+
+   dynamicflags   = SANETFILEIN_BUILD_DLL \
+                    TASKMAPFILEIN_BUILD_DLL \
+                    SA_BUILDER_BUILD_DLL \
+                    LOGSCREENOUT_BUILD_DLL
 
 
    IDL_Files {

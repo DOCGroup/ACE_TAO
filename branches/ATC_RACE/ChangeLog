@@ -1,3 +1,27 @@
+Tue Nov  7 19:23:15 UTC 2006  Nishanth Shankaran  <nshankar@nospam.com>
+
+        * SA_POP/Builder.h:
+        * SA_POP/LogScreenOut.h:
+        * SA_POP/LogScreenOut_Export.h:
+
+        * SA_POP/SANet/SANetFileIn.h:
+        * SA_POP/SANet/SANetFileIn_Export.h:
+
+        * SA_POP/SA_Builder.h:
+        * SA_POP/SA_Builder.cpp:
+        * SA_POP/SA_Builder_Export.h:
+        * SA_POP/SA_POP.mpc:
+        * SA_POP/TaskMapFileIn.h:
+        * SA_POP/TaskMapFileIn_Export.h:
+
+        * SA_POP/server/Driver.h:
+        * SA_POP/server/Driver.cpp:
+        * SA_POP/server/Driver.idl:
+        * SA_POP/server/Driver.mpc:
+        * SA_POP/server/Driver_stub_export.h:
+        * SA_POP/server/Driver_svnt_export.h: Fixed problems related to
+          "export macros" on windows.
+
 Mon Nov  6 22:37:28 UTC 2006  John S. Kinnebrew  <john.s.kinnebrew@vanderbilt.edu>
 
         * SA_POP/server/Driver.mpc:

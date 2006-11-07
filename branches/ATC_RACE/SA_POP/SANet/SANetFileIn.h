@@ -17,6 +17,7 @@
 
 #include "SANet_Types.h"
 #include "SANet.h"
+#include "SANetFileIn_Export.h"
 
 #if !defined (SANET_STANDALONE)
 #include "Builder.h"
@@ -30,7 +31,8 @@ namespace SANet {
    * @brief Input adapter that initializes a SANet object using an XML
    *        SANet file.
    */
-  class SANetFileIn {
+  class SANETFILEIN_Export SANetFileIn {
+//class SANetFileIn {
   public:
     /// Constructor.
     SANetFileIn (void);
