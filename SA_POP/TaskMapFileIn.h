@@ -17,7 +17,7 @@
 
 #include "SA_POP_Types.h"
 #include "Builder.h"
-
+#include "TaskMapFileIn_Export.h"
 
 namespace SA_POP {
 
@@ -27,7 +27,8 @@ namespace SA_POP {
    * @brief Input adapter that initializes a TaskMap object using an XML
    *        TaskMap file.
    */
-  class TaskMapFileIn {
+  class TASKMAPFILEIN_Export TaskMapFileIn {
+    //  class TaskMapFileIn {
   public:
     /// Constructor.
     TaskMapFileIn (void);

@@ -1,21 +1,16 @@
-//project(Driver_stub): taolib_with_idl, ciao_race_default {
-project(Driver_stub): taolib_with_idl, ciao_component_dnc, ciao_race_default {
-
+project(Driver_stub): ciao_client_dnc, ciao_race_component {
   sharedname = Driver_stub
+  idlflags += -Wb,stub_export_macro=DRIVER_STUB_Export \
+              -Wb,stub_export_include=Driver_stub_export.h \
+              -Wb,skel_export_macro=DRIVER_SVNT_Export \
+              -Wb,skel_export_include=Driver_svnt_export.h
+
   after += OpString_stub
   libs += OpString_stub
-  	
+  dynamicflags   = DRIVER_STUB_BUILD_DLL
 
   IDL_Files {
     Driver.idl
-  }
-
-  Header_Files {
-    DriverC.h
-  }
-
-  Inline_Files {
-    DriverC.inl
   }
 
   Source_Files {
@@ -23,23 +18,14 @@ project(Driver_stub): taolib_with_idl, ciao_component_dnc, ciao_race_default {
   }
 }
 
-// project(Driver_svnt): ciao_servant_dnc, ciao_race_default {
-
-project(Driver_svnt): ciao_component_dnc, ciao_race_default {
-  after += Driver_stub
-  libs += OpString_stub \
-          Driver_stub
+project(Driver_svnt) : ciao_servant_dnc, ciao_race_component {
+  after +=  Driver_stub
+  sharedname  = Driver_svnt
+  libs    += Driver_stub \
+             OpString_stub
+  dynamicflags = DRIVER_SVNT_BUILD_DLL
 
   IDL_Files {
-    Driver.idl
-  }
-
-  Header_Files {
-    DriverS.h
-  }
-
-  Inline_Files {
-    DriverS.inl
   }
 
   Source_Files {
@@ -47,7 +33,7 @@ project(Driver_svnt): ciao_component_dnc, ciao_race_default {
   }
 }
 
-project(Server): ciao_component_dnc, ciao_race_component, ciao_config_handlers, taoexe, ciao_plan_generator {
+project(Server): ciao_component_dnc, ciao_race_component, ciao_config_handlers, ciao_plan_generator {
 
   exename = server
 
@@ -81,13 +67,10 @@ project(Server): ciao_component_dnc, ciao_race_component, ciao_config_handlers, 
 project(client): taoclient, ciao_race_component, ciao_component_dnc, ciao_plan_generator {
 
   exename = client
-
   after += Driver_stub SA_POP
-
-  includes += $(CIAO_ROOT)/RACE/SA_POP
-
   libs += Driver_stub \
-          SA_POP
+          OpString_stub
+  includes += $(CIAO_ROOT)/RACE/SA_POP
 
   IDL_Files {
   }

@@ -17,6 +17,7 @@
 
 #include <iostream>
 #include "OutAdapter.h"
+#include "LogScreenOut_Export.h"
 
 namespace SA_POP {
 
@@ -26,7 +27,7 @@ namespace SA_POP {
    * @brief Output adapter that displays plan changes on the screen as they
    *        occur.
    */
-  class LogScreenOut : public OutAdapter {
+  class LOGSCREENOUT_Export LogScreenOut : public OutAdapter {
   public:
     /// Constructor.
     /**
