@@ -1,3 +1,8 @@
+Tue Nov  7 06:30:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Bug_2654_Regression/client.cpp:
+          Fixed warning in vc7 builds
+
 Mon Nov  6 20:04:53 UTC 2006  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * tests/Bug_2654_Regression/Hello.cpp:
