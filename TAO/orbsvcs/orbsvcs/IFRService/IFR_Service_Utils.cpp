@@ -401,10 +401,9 @@ TAO_IFR_Server::create_repository (ACE_ENV_SINGLE_ARG_DECL)
 int
 TAO_IFR_Server::init_multicast_server (ACE_ENV_SINGLE_ARG_DECL)
 {
+#if defined (ACE_HAS_IP_MULTICAST)
   // Get reactor instance from TAO.
   ACE_Reactor *reactor = this->orb_->orb_core ()->reactor ();
-
-#if defined (ACE_HAS_IP_MULTICAST)
 
   // See if the -ORBMulticastDiscoveryEndpoint option was specified.
   ACE_CString mde (
