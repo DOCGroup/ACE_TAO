@@ -31,10 +31,6 @@ namespace CIAO
     root_poa_ (PortableServer::POA::_duplicate (poa))
   {
     this->create_rt_event_channel (ec_name);
-
-     CIAO_REGISTER_OBV_FACTORY (
-      ::Hello::TimeOut_init,
-      ::Hello::TimeOut);
   }
 
 
