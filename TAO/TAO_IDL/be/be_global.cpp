@@ -69,7 +69,6 @@ BE_GlobalData::BE_GlobalData (void)
     server_skeleton_ending_ (ACE::strnew ("S.cpp")),
     server_template_skeleton_ending_ (ACE::strnew ("S_T.cpp")),
     server_inline_ending_ (ACE::strnew ("S.inl")),
-    server_template_inline_ending_ (ACE::strnew ("S_T.inl")),
     anyop_hdr_ending_ (ACE::strnew ("A.h")),
     anyop_src_ending_ (ACE::strnew ("A.cpp")),
     output_dir_ (0),
@@ -359,17 +358,6 @@ BE_GlobalData::be_get_server_inline (UTL_String *idl_file_name,
 }
 
 const char *
-BE_GlobalData::be_get_server_template_inline (UTL_String *idl_file_name,
-                                              bool base_name_only)
-{
-  return be_change_idl_file_extension (idl_file_name,
-                                       be_global->server_template_inline_ending (),
-                                       base_name_only,
-                                       false,
-                                       true);
-}
-
-const char *
 BE_GlobalData::be_get_anyop_header (UTL_String *idl_file_name,
                                     bool base_name_only)
 {
@@ -461,13 +449,6 @@ BE_GlobalData::be_get_server_inline_fname (bool base_name_only)
 {
   return be_get_server_inline (idl_global->stripped_filename (),
                                base_name_only);
-}
-
-const char *
-BE_GlobalData::be_get_server_template_inline_fname (bool base_name_only)
-{
-  return be_get_server_template_inline (idl_global->stripped_filename (),
-                                        base_name_only);
 }
 
 const char *
@@ -848,19 +829,6 @@ const char*
 BE_GlobalData::server_inline_ending (void) const
 {
   return this->server_inline_ending_;
-}
-
-void
-BE_GlobalData::server_template_inline_ending (const char* s)
-{
-  delete [] this->server_template_inline_ending_;
-  this->server_template_inline_ending_ = ACE::strnew (s);
-}
-
-const char*
-BE_GlobalData::server_template_inline_ending (void) const
-{
-  return this->server_template_inline_ending_;
 }
 
 void
@@ -1248,9 +1216,6 @@ BE_GlobalData::destroy (void)
 
   delete [] this->server_inline_ending_;
   this->server_inline_ending_ = 0;
-
-  delete [] this->server_template_inline_ending_;
-  this->server_template_inline_ending_ = 0;
 
   delete [] this->anyop_hdr_ending_;
   this->anyop_hdr_ending_ = 0;
@@ -1664,7 +1629,7 @@ BE_GlobalData::parse_args (long &i, char **av)
             be_global->use_clonable_in_args(true);
           }
         else
-          { 
+          {
             ACE_ERROR ((
                 LM_ERROR,
                 ACE_TEXT ("IDL: I don't understand")
@@ -1711,8 +1676,6 @@ BE_GlobalData::parse_args (long &i, char **av)
         //      Default is "S_T.cpp".
         // <-si Server's inline file name ending>
         //      Default is "S.inl".
-        // <-st Server's template inline file name ending>
-        //      Default is "S_T.inl".
         // <-sI Server's implementation skeleton file name ending>
         //      Default is "I.cpp".
 
@@ -1732,12 +1695,6 @@ BE_GlobalData::parse_args (long &i, char **av)
           {
             idl_global->append_idl_flag (av[i + 1]);
             be_global->server_inline_ending (av[i + 1]);
-            ++i;
-          }
-        else if (av[i][2] == 't')
-          {
-            idl_global->append_idl_flag (av[i + 1]);
-            be_global->server_template_inline_ending (av[i + 1]);
             ++i;
           }
         else if (av[i][2] == 'I')
@@ -2738,11 +2695,6 @@ BE_GlobalData::usage (void) const
       LM_DEBUG,
       ACE_TEXT (" -ss\t\t\tServer's skeleton file name ending.")
       ACE_TEXT (" Default is S.cpp\n")
-    ));
-  ACE_DEBUG ((
-      LM_DEBUG,
-      ACE_TEXT (" -st\t\t\tServer's template inline file name ending.")
-      ACE_TEXT (" Default S_T.inl\n")
     ));
   ACE_DEBUG ((
       LM_DEBUG,

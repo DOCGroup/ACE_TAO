@@ -156,7 +156,7 @@ be_visitor_interface::add_abstract_op_args (AST_Operation *old_op,
     }
 
   UTL_ExceptList *excep_list = old_op->exceptions ();
-  
+
   if (0 != excep_list)
     {
       new_op.be_add_exceptions (excep_list->copy ());
@@ -443,9 +443,9 @@ be_visitor_interface::visit_operation (be_operation *node)
         status = node->accept (&visitor);
         break;
       }
-    case TAO_CodeGen::TAO_ROOT_TIE_SI:
+    case TAO_CodeGen::TAO_ROOT_TIE_SS:
       {
-        be_visitor_operation_tie_si visitor (&ctx);
+        be_visitor_operation_tie_ss visitor (&ctx);
         status = node->accept (&visitor);
         break;
       }

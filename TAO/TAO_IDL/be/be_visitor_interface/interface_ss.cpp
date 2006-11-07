@@ -285,7 +285,7 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
 
     *os << be_uidt_nl
         << "}";
-    
+
     is_a.destroy ();
     rt.destroy ();
     s.get ()->destroy ();
@@ -393,7 +393,7 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
 
     *os << be_uidt_nl
         << "}";
-        
+
     non_existent.destroy ();
     rt.destroy ();
   }
@@ -504,7 +504,7 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
 
     *os << be_uidt_nl
         << "}";
-    
+
     repository_id.destroy ();
     s.get ()->destroy ();
   }
@@ -666,7 +666,7 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
         << (be_global->use_raw_throw () ? "" : "ACE_ENV_ARG_PARAMETER")
         << ");" << TAO_ACE_CHECK () << be_uidt_nl
         << "}";
-  
+
     get_component.destroy ();
     rt.destroy ();
   }
@@ -734,6 +734,24 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
 
   this->this_method (node);
 
+  if (be_global->gen_tie_classes ())
+    {
+      // Generate the TIE class.
+      be_visitor_context ctx (*this->ctx_);
+      ctx.state (TAO_CodeGen::TAO_ROOT_TIE_SS);
+      ctx.stream (tao_cg->server_template_skeletons ());
+      be_visitor_interface_tie_ss visitor (&ctx);
+
+      if (node->accept (&visitor) == -1)
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "be_visitor_interface_ss::"
+                             "visit_interface - "
+                             "codegen for TIE class failed\n"),
+                            -1);
+        }
+    }
+
   return 0;
 }
 
@@ -766,12 +784,12 @@ be_visitor_interface_ss::gen_abstract_ops_helper (be_interface *node,
                              "bad node in this scope\n"),
                             -1);
         }
-        
+
       AST_Decl::NodeType nt = d->node_type ();
-  
+
       UTL_ScopedName *item_new_name = 0;
       UTL_ScopedName *new_name = 0;
-      
+
       if (AST_Decl::NT_op == nt || AST_Decl::NT_attr == nt)
         {
           ACE_NEW_RETURN (item_new_name,
@@ -799,10 +817,10 @@ be_visitor_interface_ss::gen_abstract_ops_helper (be_interface *node,
           op->set_name (new_name);
           op->set_defined_in (node);
           op->is_abstract (node->is_abstract ());
-          
+
           be_visitor_operation_ss op_visitor (&ctx);
           op_visitor.visit_operation (op);
-          
+
           op->set_name (old_name);
           op->set_defined_in (base);
           op->is_abstract (base->is_abstract ());
@@ -817,21 +835,21 @@ be_visitor_interface_ss::gen_abstract_ops_helper (be_interface *node,
                                  attr->is_abstract ());
           new_attr.set_defined_in (node);
           new_attr.set_name (new_name);
-          
+
           UTL_ExceptList *get_exceptions = attr->get_get_exceptions ();
-          
+
           if (0 != get_exceptions)
             {
               new_attr.be_add_get_exceptions (get_exceptions->copy ());
             }
-            
+
           UTL_ExceptList *set_exceptions = attr->get_set_exceptions ();
-          
+
           if (0 != set_exceptions)
             {
               new_attr.be_add_set_exceptions (set_exceptions->copy ());
             }
-            
+
           be_visitor_attribute attr_visitor (&ctx);
           attr_visitor.visit_attribute (&new_attr);
           ctx.attribute (0);
