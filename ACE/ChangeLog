@@ -1,3 +1,11 @@
+Tue Nov 08 15:40:10 UTC 2006  Martin Corino  <mcorino@remedy.nl>
+
+        * ace/INET_Addr.inl:
+
+          Enhanced operator <() to support IPv6 addresses as well.
+          Thanks to Andre Kostur (akostur at incognito dot com) for
+          submitting a patch for this.
+
 Wed Nov  8 14:24:02 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
 
         * configure.ac:
