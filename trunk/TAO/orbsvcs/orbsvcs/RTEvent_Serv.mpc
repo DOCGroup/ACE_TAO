@@ -81,6 +81,7 @@ project(RTEvent_Serv) : orbsvcslib, core, rtevent_skel, svc_utils, messaging {
     Event/EC_TPC_Factory.cpp
     Event/EC_TPC_ProxyConsumer.cpp
     Event/EC_TPC_ProxySupplier.cpp
+    Event/EC_Thread_Flags.cpp
   }
 
   Template_Files {

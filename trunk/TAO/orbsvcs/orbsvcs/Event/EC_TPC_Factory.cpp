@@ -14,13 +14,11 @@
 
 ACE_RCSID(Event, EC_TPC_Factory, "$Id$")
 
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
-
-unsigned long EC_TPC_debug_level;
+unsigned long TAO_EC_TPC_debug_level;
 
 TAO_EC_TPC_Factory::TAO_EC_TPC_Factory (void)
 {
-  EC_TPC_debug_level = 0;
+  TAO_EC_TPC_debug_level = 0;
 }
 
 TAO_EC_TPC_Factory::~TAO_EC_TPC_Factory (void)
@@ -63,7 +61,7 @@ TAO_EC_TPC_Factory::init (int argc, char* argv[])
       if (ACE_OS::strcasecmp (arg, "-ECTPCDebug") == 0)
         {
           arg_shifter.consume_arg ();
-          ++EC_TPC_debug_level;
+          ++TAO_EC_TPC_debug_level;
         }
       else
         {
@@ -80,21 +78,25 @@ TAO_EC_TPC_Factory::init (int argc, char* argv[])
 TAO_EC_Dispatching*
 TAO_EC_TPC_Factory::create_dispatching (TAO_EC_Event_Channel_Base *)
 {
-  if (EC_TPC_debug_level > 0)
+  if (TAO_EC_TPC_debug_level > 0)
     ACE_DEBUG ((LM_DEBUG, "EC (%P|%t) EC_TPC_Factory::create_dispatching\n"));
 
   TAO_EC_Queue_Full_Service_Object* so =
     this->find_service_object (this->queue_full_service_object_name_.fast_rep(),
                                TAO_EC_DEFAULT_QUEUE_FULL_SERVICE_OBJECT_NAME);
  
-  return new TAO_EC_TPC_Dispatching (so);
+  return new TAO_EC_TPC_Dispatching (this->dispatching_threads_,
+                                     this->dispatching_threads_flags_,
+                                     this->dispatching_threads_priority_,
+                                     this->dispatching_threads_force_active_,
+                                     so);
 }
 
 
 TAO_EC_ProxyPushSupplier*
 TAO_EC_TPC_Factory::create_proxy_push_supplier (TAO_EC_Event_Channel_Base *ec)
 {
-  if (EC_TPC_debug_level > 0)
+  if (TAO_EC_TPC_debug_level > 0)
     ACE_DEBUG ((LM_DEBUG, "EC (%P|%t) EC_TPC_Factory::create_proxy_push_supplier\n"));
   return new TAO_EC_TPC_ProxyPushSupplier (ec, this->consumer_validate_connection_);
 }
@@ -103,7 +105,7 @@ TAO_EC_TPC_Factory::create_proxy_push_supplier (TAO_EC_Event_Channel_Base *ec)
 TAO_EC_ProxyPushConsumer*
 TAO_EC_TPC_Factory::create_proxy_push_consumer (TAO_EC_Event_Channel_Base *ec)
 {
-  if (EC_TPC_debug_level > 0)
+  if (TAO_EC_TPC_debug_level > 0)
     ACE_DEBUG ((LM_DEBUG, "EC (%P|%t) EC_TPC_Factory::create_proxy_push_consumer\n"));
   return new TAO_EC_TPC_ProxyPushConsumer (ec);
 }

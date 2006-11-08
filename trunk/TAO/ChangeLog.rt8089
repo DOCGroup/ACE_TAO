@@ -1,0 +1,68 @@
+Wed Nov  8 18:42:03 UTC 2006  Chris Cleeland  <cleeland_c@ociweb.com>
+
+        * docs/ec_options.html: Add documentation for TPC and
+          -ECDispatchingThreadFlags options.
+
+        * orbsvcs/orbsvcs/Event/EC_Default_Factory.h:
+        * orbsvcs/orbsvcs/Event/EC_Default_Factory.cpp:
+
+          Added new option, -ECDispatchingThreadsFlags, that allows the
+          user to pass in a list of thread creation flags and priority for
+          dispatching threads.  These can be used for either the MT
+          dispatching strategy or the TPC dispatching strategy.
+
+          Also added -ECDebug option to enable debugging output from the
+          RTEC.  Only the option and variable was added, but no messages.
+          Therefore, at the moment, this does not generate much output.
+
+        * orbsvcs/orbsvcs/Event/EC_Factory.h:
+        * orbsvcs/orbsvcs/Event/EC_Factory.cpp:
+
+          Added support for RTEC's debug level.
+
+        * orbsvcs/orbsvcs/Event/EC_TPC_Dispatching.h:
+        * orbsvcs/orbsvcs/Event/EC_TPC_Dispatching.cpp:
+
+          (CTOR) Changed so that thread flags can be passed in just like
+          with the MT dispatching strategy.
+
+          (add_consumer) Modified so that it passes the thread flags set
+          in the CTOR to the dispatching task's activate call.
+
+        * orbsvcs/orbsvcs/Event/EC_TPC_Factory.cpp (create_dispatching):
+
+          Update to reflect new CTOR args for EC_TPC_Dispatching.
+
+        * orbsvcs/orbsvcs/Event/EC_TPC_Factory.h:
+        * orbsvcs/orbsvcs/Event/EC_TPC_Factory.cpp:
+        * orbsvcs/orbsvcs/Event/EC_TPC_ProxyConsumer.cpp:
+        * orbsvcs/orbsvcs/Event/EC_TPC_ProxySupplier.inl:
+        * orbsvcs/orbsvcs/Event/EC_TPC_ProxySupplier.cpp:
+
+          Change references to EC_TPC_debug_level to
+          TAO_EC_TPC_debug_level for proper scoping.
+
+        * orbsvcs/orbsvcs/Event/EC_Thread_Flags.h:
+        * orbsvcs/orbsvcs/Event/EC_Thread_Flags.cpp:
+
+          Added new abstraction around thread flags.  This also handles
+          parsing of text representation of THR_* options.  Ideally this
+          is part of ACE, but such a low-level change is difficult to push
+          through in general, much less in a patch.
+
+        * orbsvcs/orbsvcs/RTEvent_Serv.mpc:
+
+          Updated with new files.
+
+        * orbsvcs/tests/Event/ThreadFlags/testflags.cpp:
+        * orbsvcs/tests/Event/ThreadFlags/tftest.mpc:
+
+          Added unit test for TAO_EC_Thread_Flags abstraction.
+          Unfortunately, due to the way that some of the thread flags
+          are encoded on some platforms, e.g., Linux, the test can
+          give false failing indications.  I've left this as-is for
+          now because I haven't decided if this is a flaw in the test,
+          a flaw in the TAO_EC_Thread_Flags abstraction, or a flaw in
+          the way ACE assigns values when a THR_ symbol is not provided
+          by the platform itself.
+
