@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<Deployment:ImplementationArtifactDescription xmlns:Deployment="http://www.omg.org/Deployment" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.omg.org/Deployment Deployment.xsd">
+
+  <UUID>_6BECFE2C-84AB-4B4A-B14C-DB8048563368</UUID>
+
+  <location>Null_Component_exec</location>
+
+  <dependsOn>
+    <name>Null_Component_svnt</name>
+    <referencedArtifact href="Null_Component_svnt.iad"/>
+  </dependsOn>
+
+  <dependsOn>
+    <name>Null_Component_stub</name>
+    <referencedArtifact href="Null_Component_stub.iad"/>
+  </dependsOn>
+
+  <execParameter>
+    <name>entryPoint</name>
+    <value>
+      <type>
+        <kind>tk_string</kind>
+      </type>
+      <value>
+        <string>create_Null_Component_Home_Impl</string>
+      </value>
+    </value>
+  </execParameter>
+
+</Deployment:ImplementationArtifactDescription>
