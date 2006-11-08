@@ -59,7 +59,7 @@ namespace CIAO
               ::CIAO::RACE::Interactive_Input_Adapter::_narrow (iia_tmp.in ());
 
             // Now initialize the plan generator.
-            //            this->plan_gen_.init (this->orb_, true, RM_name);
+                        this->plan_gen_.init (this->orb_, true, RM_name);
 
             // Create SA-POP planner.
             ::SA_POP::SA_Builder builder;

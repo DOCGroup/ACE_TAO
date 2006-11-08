@@ -10,7 +10,7 @@ const char *taskmap_str = "";
 int
 parse_args (int argc, char *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, "o:r:");
+  ACE_Get_Opt get_opts (argc, argv, "o:r:s:t:");
   int c;
 
   while ((c = get_opts ()) != -1)

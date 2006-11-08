@@ -1,6 +1,8 @@
+#include <iostream>
 #include "client.h"
 #include "DriverC.h"
 #include "ace/Get_Opt.h"
+#include "ace/UUID.h"
 
 const char *ior = "file://server.ior";
 const char *plan = 0;
@@ -40,9 +42,11 @@ parse_args (int argc, char *argv[])
 
   else
     {
-      ACE_ERROR ((LM_ERROR, "URI of the deployment plan is necessary!\n"));
-      return -1;
+//      ACE_ERROR ((LM_ERROR, "URI of the deployment plan is necessary!\n"));
+//      return -1;
     }
+
+  return 0;
 }
 
 int
@@ -53,9 +57,7 @@ main (int argc, char *argv[])
       CORBA::ORB_var orb = CORBA::ORB_init (argc, argv, "");
 
       if (parse_args (argc, argv) != 0)
-        {
-          return 1;
-        }
+        return 1;
 
       CORBA::Object_var tmp =
         orb->string_to_object(ior);
@@ -66,12 +68,40 @@ main (int argc, char *argv[])
       if (CORBA::is_nil (driver.in ()))
         {
           ACE_ERROR_RETURN ((LM_DEBUG,
-                             "Nil Driver reference <%s>\n", ior), 1);
+                            "Nil Driver reference <%s>\n", ior), 1);
         }
 
-      driver->deploy_plan (plan);
+      if (plan != 0) {
+        driver->deploy_plan (plan);
+      } else {
+        // Get goal ID and utility.
+        ::SA_POP::CondID cond_id;
+        ::SA_POP::Utility util;
+        std::cout << "Goal condition ID: ";
+        std::cin >> cond_id;
+        std::cout << std::endl;
+        std::cout << "Goal utility: ";
+        std::cin >> util;
+        std::cout << std::endl;
+
+        // Create goal map.
+        ::SA_POP::GoalMap goal_map;
+        goal_map.clear ();
+        goal_map.insert (std::make_pair (cond_id, util));
+
+        // Create goal option.
+        ::SA_POP::GoalOption goal_opt (
+          "Plan and deploy opstring for user-specified goal.",
+          "Tear down deployed opstring for user-specified goal.", driver.in (),
+          goal_map);
+
+        // Activate goal option.
+        std::cout << "Activating goal option to plan and deploy opstring." << std::endl;
+        goal_opt.do_action ();
+      }
 
       orb->destroy ();
+
     }
   catch (CORBA::Exception &ex)
     {
@@ -90,7 +120,7 @@ UIOption::UIOption (std::string descrip, std::string undo_descrip,
   undo_descrip_ (undo_descrip),
   is_invoked_ (false),
   is_active_ (true),
-  driver_ (driver)
+  driver_ (::CIAO::RACE::SA_POP::Driver::_duplicate (driver))
 {
   // Nothing to do.
 };
@@ -142,6 +172,16 @@ GoalOption::GoalOption (std::string descrip, std::string undo_descrip,
   // Nothing to do.
 };
 
+// Constructor for a goal with only goal conditions.
+GoalOption::GoalOption (std::string descrip, std::string undo_descrip,
+            ::CIAO::RACE::SA_POP::Driver_ptr driver,
+            ::SA_POP::GoalMap goal_conds)
+: UIOption (descrip, undo_descrip, driver)
+{
+  // Create goal with specified goal conditions and default values for the rest.
+  this->create_def_goal (goal_conds);
+};
+
 // Destructor.
 GoalOption::~GoalOption (void)
 {
@@ -171,6 +211,47 @@ bool GoalOption::undo (void)
   //****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****
   this->is_invoked_ = false;
   return true;
+};
+
+// Create and set internal goal using specified goal conditions and defaults.
+void GoalOption::create_def_goal (const ::SA_POP::GoalMap goal_conds)
+{
+  // Add goal conditions.
+  ::CORBA::ULong cond_index = 0;
+  for (::SA_POP::GoalMap::const_iterator cond_iter = goal_conds.begin ();
+        cond_iter != goal_conds.end (); cond_iter++)
+  {
+    // Goal condition to populate.
+    ::CIAO::RACE::GoalCondition cond_desc;
+
+    // Set condition ID and utility.
+    cond_desc.condID = cond_iter->first;
+    cond_desc.utility = static_cast< ::CORBA::Long> (cond_iter->second);
+
+    // Add goal condition to goal idl.
+    this->goal_.goalConds.length (cond_index + 1);
+    this->goal_.goalConds[cond_index] = cond_desc;
+
+    // Increment link index.
+    cond_index++;
+  }
+
+  // Create and set UUID.
+  ACE_Utils::UUID goal_uuid;
+  ACE_Utils::UUID_GENERATOR::instance ()->generateUUID (goal_uuid);
+  this->goal_.UUID = CORBA::string_dup (goal_uuid.to_string()->c_str());
+
+  // Provide default name.
+  this->goal_.name = "DefaultGoalName";
+
+  // Create default time.
+  ::CIAO::RACE::TimeValue def_time;
+  def_time.sec = 0;
+  def_time.usec = 0;
+
+  // Set start window to [default, default].
+  this->goal_.startWindow.earliest = def_time;
+  this->goal_.startWindow.latest = def_time;
 };
 
 // Constructor.

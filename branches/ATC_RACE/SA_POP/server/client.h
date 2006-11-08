@@ -122,6 +122,20 @@ namespace SA_POP {
       ::CIAO::RACE::SA_POP::Driver_ptr driver,
       ::CIAO::RACE::GoalStructure goal);
 
+    /// Constructor for a goal with only goal conditions.
+    /**
+     * @param descrip  Description of option for display in UI.
+     *
+     * @param undo_descrip  Description of undo option for display in UI.
+     *
+     * @param driver  Pointer to SA-POP driver to use during option invocation.
+     *
+     * @param goal_conds  Map from goal conditions to utilities.
+     */
+    GoalOption (std::string descrip, std::string undo_descrip,
+      ::CIAO::RACE::SA_POP::Driver_ptr driver,
+      ::SA_POP::GoalMap goal_conds);
+
     /// Destructor.
     virtual ~GoalOption (void);
 
@@ -142,6 +156,12 @@ namespace SA_POP {
      * @return  True if undo succeeded; otherwise false.
      */
     virtual bool undo (void);
+
+    /// Create and set internal goal using specified goal conditions & defaults.
+    /**
+     * @param goal_conds  Map from goal condition IDs to utilities.
+     */
+    virtual void create_def_goal (const ::SA_POP::GoalMap goal_conds);
   };
 
   /**
