@@ -79,8 +79,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
   NodeImplementationInfoHandler handler (plan, dummy);
 
-  Deployment::NodeImplementationInfo * node_impl_info =
-    handler.node_impl_info ();
+  Deployment::NodeImplementationInfo_var node_impl_info (handler.node_impl_info ());
 
   if (!node_impl_info)
     {
@@ -90,7 +89,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
     }
 
-  Deployment::ContainerImplementationInfos& impl_infos = node_impl_info[0].impl_infos;
+  Deployment::ContainerImplementationInfos& impl_infos = node_impl_info->impl_infos;
 
   FILE* fp = ACE_OS::fopen ("plan.h", "w");
 
