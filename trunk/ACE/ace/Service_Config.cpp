@@ -89,10 +89,10 @@ ACE_Service_Config::parse_args_i (int argc, ACE_TCHAR *argv[])
 {
   ACE_TRACE ("ACE_Service_Config::parse_args_i");
 
-  // Using PERMUTE_ARGS (default) in order to have all 
-  // unrecognized options and their value arguments moved 
-  // to the end of the argument vector. We'll pick them up 
-  // after processing our options and pass them on to the 
+  // Using PERMUTE_ARGS (default) in order to have all
+  // unrecognized options and their value arguments moved
+  // to the end of the argument vector. We'll pick them up
+  // after processing our options and pass them on to the
   // base class for further parsing.
   ACE_Get_Opt getopt (argc,
                       argv,
@@ -101,7 +101,7 @@ ACE_Service_Config::parse_args_i (int argc, ACE_TCHAR *argv[])
                       0,                       // Do not report errors
                       ACE_Get_Opt::RETURN_IN_ORDER);
 
-  // Keep a list of all unknown arguments, begin with the 
+  // Keep a list of all unknown arguments, begin with the
   // executable's name
   ACE_ARGV superargv;
   superargv.add (argv[0]);
@@ -140,7 +140,7 @@ ACE_Service_Config::parse_args_i (int argc, ACE_TCHAR *argv[])
   for (int c = getopt.opt_ind (); c < argc; c++)
       superargv.add (argv[c-1]);
 
-  return ACE_Service_Gestalt::parse_args_i (superargv.argc (), 
+  return ACE_Service_Gestalt::parse_args_i (superargv.argc (),
                                             superargv.argv ());
 
 } /* parse_args_i () */
@@ -338,7 +338,7 @@ ACE_Service_Config::impl_ (void)
                         TSS_Service_Gestalt_Ptr,
                         0);
     }
-  
+
   return instance_;
 }
 
@@ -449,9 +449,6 @@ ACE_Service_Config::ACE_Service_Config (int ignore_static_svcs,
   //  this->no_static_svcs_ = (ignore_static_svcs);
 
   ACE_Service_Config::signum_ = signum;
-
-  // Initialize the Service Repository.
-  //  ACE_Service_Repository::instance (static_cast<int> (size));
 
   // Make sure ACE_OS_Object_Manager is initialized.
   (void)ACE_OS_Object_Manager::instance ();
@@ -582,7 +579,13 @@ ACE_Service_Config::reconfigure (void)
 int
 ACE_Service_Config::close (void)
 {
-  return ACE_Service_Config::current ()->close ();
+  int result1 = ACE_Service_Config::current ()->close ();
+
+  // Delete the service repository.  All the objects inside the
+  // service repository should already have been finalized.
+  int result2 = ACE_Service_Config::close_svcs ();
+
+  return (result1 | result2);
 }
 
 int
