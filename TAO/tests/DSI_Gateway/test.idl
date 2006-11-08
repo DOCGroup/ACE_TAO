@@ -19,6 +19,8 @@ exception test_exception
 
 interface Simple_Server
 {
+  attribute long test_val;
+
   long test_method (in long x,
                     in Structure the_in_structure,
                     out Structure the_out_structure,

@@ -38,6 +38,12 @@ public:
                            ACE_ENV_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
+   CORBA::Long test_val (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+     ACE_THROW_SPEC (( CORBA::SystemException));
+
+   void test_val (CORBA::Long test_val ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+     ACE_THROW_SPEC ((CORBA::SystemException));
+
   void raise_user_exception (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      test_exception));
@@ -49,8 +55,9 @@ public:
     ACE_THROW_SPEC ((CORBA::SystemException));
 
 private:
-  CORBA::ORB_var orb_;
   // The ORB
+  CORBA::ORB_var orb_;
+  CORBA::Long  vlong_;
 };
 
 #if defined(__ACE_INLINE__)
