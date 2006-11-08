@@ -1,3 +1,9 @@
+Wed Nov  8 13:14:12 UTC 2006  Martin Corino  <mcorino@remedy.nl>
+
+        * tests/Bug_2654_Regression/Hello.cpp:
+
+          Fixed typo causing compile error.
+
 Wed Nov  8 07:31:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/DSI_Gateway/client.cpp:
