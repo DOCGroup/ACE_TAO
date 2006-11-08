@@ -1,3 +1,9 @@
+Wed Nov  8 20:56:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * examples/Null_Component/*:
+          Added some modelling files I got also from Abdul and removed the .ccd file
+          I committed by accident
+
 Wed Nov  8 14:24:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * DAnCE/StaticConfigurator/StaticDAnCEParser.cpp:
@@ -44,7 +50,7 @@ Thu Nov  2 20:22:46 UTC 2006  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
         * DAnCE/tests/NodeApplicationTest/NodeApp_test_client_dynamic.cpp (main):
         * DAnCE/tests/NodeApplicationTest/NodeApp_test_client_ex.cpp:
         * DAnCE/NodeManager/Node_Manager.cpp (main): Replaced exit() with
-          ACE_OS::exit().  Thanks to Abdul Sowayan for reporting this. 
+          ACE_OS::exit().  Thanks to Abdul Sowayan for reporting this.
           This fixes bugid #2695.
 
 Mon Oct 30 19:13:03 UTC 2006  Jeff Parsons <j.parsons@vanderbilt.edu>
