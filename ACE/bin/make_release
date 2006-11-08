@@ -23,9 +23,10 @@ my $long_usage="   -? option prints this message\n" .
     "   -n option prints what would be done, but doesn't do it\n" .
     "   -v <version>, where <version> is major, minor, or beta (default)\n" .
     "   -t Specifies the tag from which to pull components during release." .
-    " Uses working copy for exports if not present.";
+    " Uses working copy for exports if not present." .
     "   -u to update versions\n" .
-    "   -r to specify alternate repository root\n";
+    "   -r to specify alternate repository root\n" .
+    "   -d to specify destination for generated packages\n";
 
 ########
 ######## Sanity checks.
@@ -82,7 +83,7 @@ my $gnu2 = '/usr/local/bin:/usr/bin';
 ####### Add the path to /usr/bin unconditionally..
 $ENV{'PATH'} = "$gnu2" . ':' . $ENV{'PATH'};
 
-my $repo_root = 'svn+ssh://abbarach.dre.vanderbilt.edu/build/wotte/ACE-svn/DOC';
+my $repo_root = 'https://svn.dre.vanderbilt.edu/DOC';
 my $export_dir = '/export/doc/latest';
 my $old_versions_dir = '/export/doc/previous-versions';
 my $diffs_dir = "$export_dir/diffs";
@@ -98,7 +99,7 @@ my $release_filter = '-iname build -prune -o ' .
     '! -name \'*.MAK\' ! -name \'.cvsignore\' -print';
 my $update_versions = 0;
 my $create_zips = 1;
-
+my $package_dest = ".";
 ########
 ######## Process command line args.
 ########
@@ -140,6 +141,8 @@ while ($#ARGV >= $[  &&  $ARGV[0] =~ /^-/) {
     } elsif ($ARGV[0] eq '-?') {
         print "$usage$long_usage";
         exit;
+    } elsif ($ARGV[0] eq '-d') {
+        $package_dest = $ARGV[1]; shift;
     } else {
         print STDERR "$0:  unknown option $ARGV[0]\n";
         die "$usage$long_usage";
@@ -271,14 +274,13 @@ if ($update_versions) {
 
     #### If a tag was specified, export using the tag from a staging area.
     #### If not, create a kit from the current directory.
-    my $stage_dir = "/export/wotte/tmp/ACE_wrappers_stage-$$";
+    my $stage_dir = "../ACE_wrappers_stage-$$";
     unless ("$exec_prefix") {
 	mkdir "$stage_dir", 0755  ||
 	    die "$0: unable to mkdir $stage_dir\n";
     }
 
     # Root for all tags.
-    
     if ($kit =~ /ace/) {
 	if ("$kit_tag") {
 	    # Export ACE
@@ -406,13 +408,13 @@ sub check_workspace () {
 sub get_and_update_versions () {
     # Update the version numbers for the various components.
     my $retval = 
-	get_version ("ACE") ||
+	get_version ("ACE", 1) ||
 	update_version_files ("ACE") ||
 	update_changelog ("ACE") ||
-	get_version ("TAO") ||
+	get_version ("TAO", 1) ||
 	update_version_files ("TAO") ||
 	update_changelog ("TAO") ||
-	get_version ("CIAO") ||
+	get_version ("CIAO", 1) ||
 	update_version_files ("CIAO") ||
 	update_changelog ("CIAO");
     
@@ -425,6 +427,7 @@ sub get_and_update_versions () {
 
 sub get_version {
     my $component = shift;
+    my $update_version = shift;
     print "Getting version information for $component\n";
     
     open (VERSION, "< $component/VERSION") ||
@@ -451,18 +454,19 @@ sub get_version {
     }
     close VERSION;
     
-    # Increment the version count
-    if ($release_type eq 'beta') {
-        ++$comp_versions{"$component" . "_beta"};
-    } elsif ($release_type eq 'minor' ) {
-	$comp_versions{"$component" . "_beta"} = 0;
-	++$comp_versions{"$component" . "_minor"};
-    } elsif ($release_type eq 'major' ) {
-	$comp_versions{"$component" . "_beta"} = 
-	    $comp_versions{"$component" . "_minor"} = 0;
-	++$comp_versions{"$component" . "_major"};
+    if ($update_version) {
+        # Increment the version count
+        if ($release_type eq 'beta') {
+            ++$comp_versions{"$component" . "_beta"};
+        } elsif ($release_type eq 'minor' ) {
+            $comp_versions{"$component" . "_beta"} = 0;
+            ++$comp_versions{"$component" . "_minor"};
+        } elsif ($release_type eq 'major' ) {
+            $comp_versions{"$component" . "_beta"} = 
+                $comp_versions{"$component" . "_minor"} = 0;
+            ++$comp_versions{"$component" . "_major"};
+        }
     }
-    
     
     if ($release_type eq 'beta') {
 	$comp_versions{"$component" . "_version"} =
@@ -649,10 +653,8 @@ sub generate_makefiles () {
     # available platforms known at this point is in
     # $MPC_ROOT/template/vc8_platforms.mpt - since the default is Win32
     # and we're generating only CE builds, replace it instead of adding to it.
-    my $tmp_ce = '-value_template platforms=\'"Pocket PC 2003 (ARMV4)"\'';
-    $tmp_ce = $tmp_ce.' -value_template platforms+=\'"Smartphone 2003 (ARMV4)"\'';
-    $tmp_ce = $tmp_ce.' -value_template platforms+=\'"Windows Mobile 5.0 Pocket PC SDK (ARMV4I)"\'';
-    $tmp_ce = $tmp_ce.' -value_template platforms+=\'"Windows Mobile 5.0 Smartphone SDK (ARMV4I)"\'';
+    my $tmp_ce = '-value_template platforms=\'"Pocket PC 2003 (ARMV4)"\' ';
+    $tmp_ce = $tmp_ce.'-value_template platforms+=\'"Windows Mobile 5.0 Pocket PC SDK (ARMV4I)"\'';
     my $ce_option = '-name_modifier *_WinCE -features "uses_wchar=1,wince=1" '.$tmp_ce;
 
     &ex ("cd ACE_wrappers; \
@@ -699,6 +701,13 @@ sub bootstrap_autotools () {
 ########
 sub create_kit {
     my $src_only = shift;
+
+    get_version ("ACE_wrappers", 0);
+
+
+    # Get version but don't udpate version count
+    (my $local_ace_tag = $comp_versions{"ACE_wrappers_version"}) =~ s|_|.|g;
+
     my $suffix = "";
     
     if ($src_only) {
@@ -717,9 +726,9 @@ sub create_kit {
     my $redirect = $install  ?  '>'  :  '\>';
     my $shell_cd = $install  ?  'cd'  :  'echo cd';
 
-    (my $local_ace_tag = $kit_tag) =~ s|_|.|g;
-    (my $local_tao_tag = $kit_tag) =~ s|_|.|g;
-    (my $local_ciao_tag = $kit_tag) =~ s|_|.|g;
+    
+#    (my $local_tao_tag = $kit_tag) =~ s|_|.|g;
+#    (my $local_ciao_tag = $kit_tag) =~ s|_|.|g;
 
     # These files don't get LF->CRLF conversions done when making the zip.
     my $bin_files =
@@ -746,22 +755,22 @@ sub create_kit {
         print "RELEASE FILES from CIAO are $release_files \n";
 
         $build_command =
-            "$rm ACE+TAO+CIAO$suffix.zip; " .
+            "$rm $package_dest/ACE+TAO+CIAO$suffix.zip; " .
             "$find $release_files $release_filter | $egrep $bin_files | " .
-            "zip ACE+TAO+CIAO$suffix.zip -q9@ &&" .
+            "zip $package_dest/ACE+TAO+CIAO$suffix.zip -q9@ &&" .
             "$find $release_files $release_filter | $egrep -v $bin_files | " .
-            "zip ACE+TAO+CIAO$suffix.zip -qlg9@ &&" .
+            "zip $package_dest/ACE+TAO+CIAO$suffix.zip -qlg9@ &&" .
             "$find $release_files $release_filter | $cpio -o -H ustar | " .
-            "$gzip -9 > ACE+TAO+CIAO$suffix.tar.gz && " .
+            "$gzip -9 > $package_dest/ACE+TAO+CIAO$suffix.tar.gz && " .
             "$find $release_files $release_filter | $cpio -o -H ustar | " .
-            "$bzip2 > ACE+TAO+CIAO$suffix.tar.bz2 && " .
-            "$chmod 664 ACE+TAO+CIAO$suffix.tar.gz ACE+TAO+CIAO$suffix.zip ACE+TAO+CIAO$suffix.tar.bz2 && " .
-            "$chgrp doc ACE+TAO+CIAO$suffix.tar.gz ACE+TAO+CIAO$suffix.zip ACE+TAO+CIAO$suffix.tar.bz2 && " .
-            "$dispose ACE+TAO+CIAO$suffix.tar.gz ACE+TAO+CIAO$suffix.zip ACE+TAO+CIAO$suffix.tar.bz2 $dest &&" .
+            "$bzip2 > $package_dest/ACE+TAO+CIAO$suffix.tar.bz2 && " .
+            "$chmod 664 $package_dest/ACE+TAO+CIAO$suffix.tar.gz $package_dest/ACE+TAO+CIAO$suffix.zip $package_dest/ACE+TAO+CIAO$suffix.tar.bz2 && " .
+            "$chgrp doc $package_dest/ACE+TAO+CIAO$suffix.tar.gz $package_dest/ACE+TAO+CIAO$suffix.zip $package_dest/ACE+TAO+CIAO$suffix.tar.bz2 && " .
+            "$dispose $package_dest/ACE+TAO+CIAO$suffix.tar.gz $package_dest/ACE+TAO+CIAO$suffix.zip $package_dest/ACE+TAO+CIAO$suffix.tar.bz2 $dest &&" .
             "$cp $dest/ACE+TAO+CIAO$suffix.zip $old_versions_dir/ACE+TAO+CIAO$suffix-$local_ace_tag.zip &&".
             "$cp $dest/ACE+TAO+CIAO$suffix.tar.gz $old_versions_dir/ACE+TAO+CIAO$suffix-$local_ace_tag.tar.gz &&".
             "$cp $dest/ACE+TAO+CIAO$suffix.tar.bz2 $old_versions_dir/ACE+TAO+CIAO$suffix-$local_ace_tag.tar.bz2; ";
-        $archives = " ACE+TAO+CIAO$suffix.tar.gz ACE+TAO+CIAO$suffix.zip ACE+TAO+CIAO$suffix.tar.bz2 ";
+        $archives = " $package_dest/ACE+TAO+CIAO$suffix.tar.gz $package_dest/ACE+TAO+CIAO$suffix.zip $package_dest/ACE+TAO+CIAO$suffix.tar.bz2 ";
     }
 
     # First dispose of ACE+TAO+CIAO.
@@ -795,22 +804,22 @@ sub create_kit {
         print "RELEASE FILES for TAO are $release_files \n";
 
         $build_command =
-            "$rm ACE+TAO$suffix.zip; " .
+            "$rm $package_dest/ACE+TAO$suffix.zip; " .
             "$find $release_files $release_filter | $egrep $bin_files | " .
-            "zip ACE+TAO$suffix.zip -q9@ &&" .
+            "zip $package_dest/ACE+TAO$suffix.zip -q9@ &&" .
             "$find $release_files $release_filter | $egrep -v $bin_files | " .
-            "zip ACE+TAO$suffix.zip -qlg9@ &&" .
+            "zip $package_dest/ACE+TAO$suffix.zip -qlg9@ &&" .
             "$find $release_files $release_filter | $cpio -o -H ustar | " .
-            "$gzip -9 > ACE+TAO$suffix.tar.gz && " .
+            "$gzip -9 > $package_dest/ACE+TAO$suffix.tar.gz && " .
             "$find $release_files $release_filter | $cpio -o -H ustar | " .
-            "$bzip2 > ACE+TAO$suffix.tar.bz2 && " .
-            "$chmod 664 ACE+TAO$suffix.tar.gz ACE+TAO$suffix.zip ACE+TAO$suffix.tar.bz2 && " .
-            "$chgrp doc ACE+TAO$suffix.tar.gz ACE+TAO$suffix.zip ACE+TAO$suffix.tar.bz2 && " .
-            "$dispose ACE+TAO$suffix.tar.gz ACE+TAO$suffix.zip ACE+TAO$suffix.tar.bz2 $dest &&" .
+            "$bzip2 > $package_dest/ACE+TAO$suffix.tar.bz2 && " .
+            "$chmod 664 $package_dest/ACE+TAO$suffix.tar.gz $package_dest/ACE+TAO$suffix.zip $package_dest/ACE+TAO$suffix.tar.bz2 && " .
+            "$chgrp doc $package_dest/ACE+TAO$suffix.tar.gz $package_dest/ACE+TAO$suffix.zip $package_dest/ACE+TAO$suffix.tar.bz2 && " .
+            "$dispose $package_dest/ACE+TAO$suffix.tar.gz $package_dest/ACE+TAO$suffix.zip $package_dest/ACE+TAO$suffix.tar.bz2 $dest &&" .
             "$cp $dest/ACE+TAO$suffix.zip $old_versions_dir/ACE+TAO$suffix-$local_ace_tag.zip &&".
             "$cp $dest/ACE+TAO$suffix.tar.gz $old_versions_dir/ACE+TAO$suffix-$local_ace_tag.tar.gz &&".
             "$cp $dest/ACE+TAO$suffix.tar.bz2 $old_versions_dir/ACE+TAO$suffix-$local_ace_tag.tar.bz2; ";
-        $archives = " ACE+TAO$suffix.tar.gz ACE+TAO$suffix.zip ACE+TAO$suffix.tar.bz2 ";
+        $archives = " $package_dest/ACE+TAO$suffix.tar.gz $package_dest/ACE+TAO$suffix.zip $package_dest/ACE+TAO$suffix.tar.bz2 ";
     }
 
     # Dispose of ACE+TAO now
@@ -839,37 +848,37 @@ sub create_kit {
         chomp ($release_files = `$regmake -f $ace_root/Release show_release_files`);
 
         $build_command =
-            "$rm ACE$suffix.zip ACE$suffix-lib.zip; " .
+            "$rm $package_dest/ACE$suffix.zip $package_dest/ACE$suffix-lib.zip; " .
             "$find $release_files $release_filter | $egrep $bin_files | " .
-            "zip ACE$suffix.zip -q9@ &&" .
+            "zip $package_dest/ACE$suffix.zip -q9@ &&" .
             "$find $release_files $release_filter | $egrep -v $bin_files | " .
-            "zip ACE$suffix.zip -qlg9@ &&" .
+            "zip $package_dest/ACE$suffix.zip -qlg9@ &&" .
             "$find $release_lib_files $release_filter | $egrep $bin_files | " .
-            "zip ACE$suffix-lib.zip -q9@ &&" .
+            "zip $package_dest/ACE$suffix-lib.zip -q9@ &&" .
             "$find $release_lib_files $release_filter | $egrep -v $bin_files | " .
-            "zip ACE$suffix-lib.zip -qlg9@ &&" .
+            "zip $package_dest/ACE$suffix-lib.zip -qlg9@ &&" .
             "$find $release_files $release_filter | $cpio -o -H ustar | " .
-            "$gzip -9 > ACE$suffix.tar.gz && " .
+            "$gzip -9 > $package_dest/ACE$suffix.tar.gz && " .
             "$find $release_files $release_filter | $cpio -o -H ustar | " .
-            "$bzip2 > ACE$suffix.tar.bz2 && " .
+            "$bzip2 > $package_dest/ACE$suffix.tar.bz2 && " .
             "$find $release_lib_files $release_filter | $cpio -o -H ustar | " .
-            "$gzip -9 > ACE$suffix-lib.tar.gz && " .
+            "$gzip -9 > $package_dest/ACE$suffix-lib.tar.gz && " .
             "$find $release_lib_files $release_filter | $cpio -o -H ustar | " .
-            "$bzip2 > ACE$suffix-lib.tar.bz2 && " .
-            "$chmod 664 ACE$suffix.tar.gz ACE$suffix-lib.tar.gz ACE$suffix.tar.bz2 ACE$suffix-lib.tar.bz2 ".
-            "ACE$suffix.zip ACE$suffix-lib.zip && " .
-            "$chgrp doc ACE$suffix.tar.gz ACE$suffix-lib.tar.gz ACE$suffix.tar.bz2 ACE$suffix-lib.tar.bz2 ".
-            "ACE$suffix.zip ACE$suffix-lib.zip && " .
-            "$dispose ACE$suffix.zip ACE$suffix-lib.zip $dest && " .
-            "$dispose ACE$suffix.tar.gz ACE$suffix-lib.tar.gz ACE$suffix.tar.bz2 ACE$suffix-lib.tar.bz2 $dest && " .
+            "$bzip2 > $package_dest/ACE$suffix-lib.tar.bz2 && " .
+            "$chmod 664 $package_dest/ACE$suffix.tar.gz $package_dest/ACE$suffix-lib.tar.gz $package_dest/ACE$suffix.tar.bz2 $package_dest/ACE$suffix-lib.tar.bz2 ".
+            "$package_dest/ACE$suffix.zip $package_dest/ACE$suffix-lib.zip && " .
+            "$chgrp doc $package_dest/ACE$suffix.tar.gz $package_dest/ACE$suffix-lib.tar.gz $package_dest/ACE$suffix.tar.bz2 $package_dest/ACE$suffix-lib.tar.bz2 ".
+            "$package_dest/ACE$suffix.zip $package_dest/ACE$suffix-lib.zip && " .
+            "$dispose $package_dest/ACE$suffix.zip $package_dest/ACE$suffix-lib.zip $dest && " .
+            "$dispose $package_dest/ACE$suffix.tar.gz $package_dest/ACE$suffix-lib.tar.gz $package_dest/ACE$suffix.tar.bz2 $package_dest/ACE$suffix-lib.tar.bz2 $dest && " .
             "$cp $dest/ACE$suffix.zip $old_versions_dir/$local_ace_tag.zip &&".
             "$cp $dest/ACE$suffix-lib.zip $old_versions_dir/$local_ace_tag-lib.zip &&".
             "$cp $dest/ACE$suffix.tar.gz $old_versions_dir/$local_ace_tag.tar.gz &&".
             "$cp $dest/ACE$suffix-lib.tar.gz $old_versions_dir/$local_ace_tag-lib.tar.gz &&".
             "$cp $dest/ACE$suffix.tar.bz2 $old_versions_dir/$local_ace_tag.tar.bz2 &&".
             "$cp $dest/ACE$suffix-lib.tar.bz2 $old_versions_dir/$local_ace_tag-lib.tar.bz2;";
-        $archives = " ACE$suffix.tar.gz ACE$suffix-lib.tar.gz ".
-            "ACE$suffix.zip ACE$suffix-lib.zip ACE$suffix.tar.bz2 ACE$suffix-lib.tar.bz2 ";
+        $archives = " $package_dest/ACE$suffix.tar.gz $package_dest/ACE$suffix-lib.tar.gz ".
+            "$package_dest/ACE$suffix.zip $package_dest/ACE$suffix-lib.zip $package_dest/ACE$suffix.tar.bz2 $package_dest/ACE$suffix-lib.tar.bz2 ";
     }
 
     # Now dispose of ACE in all its glory
@@ -883,6 +892,7 @@ sub create_kit {
     &ex ($build_command);
     &ex ($checksum_command);
 }
+
 
 
 ########

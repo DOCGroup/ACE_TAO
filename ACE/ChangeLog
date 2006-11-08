@@ -1,3 +1,9 @@
+Wed Nov  8 19:21:17 UTC 2006  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * bin/make_release:
+        
+          Updates to the release script to work with Subversion.
+
 Mon Nov  6 16:07:43 UTC 2006  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
 
         * ace/SOCK_IO.h (ACE_SOCK_IO): Clarified the behavior of
