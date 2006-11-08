@@ -653,8 +653,10 @@ sub generate_makefiles () {
     # available platforms known at this point is in
     # $MPC_ROOT/template/vc8_platforms.mpt - since the default is Win32
     # and we're generating only CE builds, replace it instead of adding to it.
-    my $tmp_ce = '-value_template platforms=\'"Pocket PC 2003 (ARMV4)"\' ';
-    $tmp_ce = $tmp_ce.'-value_template platforms+=\'"Windows Mobile 5.0 Pocket PC SDK (ARMV4I)"\'';
+    my $tmp_ce = '-value_template platforms=\'"Pocket PC 2003 (ARMV4)"\'';
+    $tmp_ce = $tmp_ce.' -value_template platforms+=\'"Smartphone 2003 (ARMV4)"\'';
+    $tmp_ce = $tmp_ce.' -value_template platforms+=\'"Windows Mobile 5.0 Pocket PC SDK (ARMV4I)"\'';
+    $tmp_ce = $tmp_ce.' -value_template platforms+=\'"Windows Mobile 5.0 Smartphone SDK (ARMV4I)"\'';
     my $ce_option = '-name_modifier *_WinCE -features "uses_wchar=1,wince=1" '.$tmp_ce;
 
     &ex ("cd ACE_wrappers; \
