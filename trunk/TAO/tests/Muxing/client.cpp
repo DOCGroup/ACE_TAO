@@ -6,11 +6,12 @@
 ACE_RCSID(Muxing, client, "$Id$")
 
 const char *ior = "file://test.ior";
+bool shutdown_srv = false;
 
 int
 parse_args (int argc, char *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, "k:");
+  ACE_Get_Opt get_opts (argc, argv, "k:x");
   int c;
 
   while ((c = get_opts ()) != -1)
@@ -19,11 +20,15 @@ parse_args (int argc, char *argv[])
       case 'k':
         ior = get_opts.opt_arg ();
         break;
+      case 'x':
+        shutdown_srv = true;
+        break;
       case '?':
       default:
         ACE_ERROR_RETURN ((LM_ERROR,
                            "usage:  %s "
-                           "-k <ior>"
+                           "-k <ior> "
+                           "[-x]"
                            "\n",
                            argv [0]),
                           -1);
@@ -60,28 +65,34 @@ main (int argc, char *argv[])
                             1);
         }
 
-
-      Client_Task client_task (receiver.in (),
-#if defined (ACE_OPENVMS)
-                               750, /* test takes much longer on OpenVMS */
-#else
-                               1000,
-#endif
-                               32768,
-                               ACE_Thread_Manager::instance ());
-
-      if (client_task.activate (THR_NEW_LWP | THR_JOINABLE, 4, 1) == -1)
+      if (shutdown_srv)
         {
-          ACE_ERROR ((LM_ERROR, "Error activating client task\n"));
+          receiver->shutdown ();
         }
-      ACE_Thread_Manager::instance ()->wait ();
-
-      CORBA::Long count = receiver->get_event_count (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
-
-      ACE_DEBUG ((LM_DEBUG, "(%P) - Receiver got %d messages\n",
-                  count));
-
+      else
+        {
+        
+          Client_Task client_task (receiver.in (),
+#if defined (ACE_OPENVMS)
+                                  750, /* test takes much longer on OpenVMS */
+#else
+                                  1000,
+#endif
+                                  32768,
+                                  ACE_Thread_Manager::instance ());
+        
+          if (client_task.activate (THR_NEW_LWP | THR_JOINABLE, 4, 1) == -1)
+              {
+              ACE_ERROR ((LM_ERROR, "Error activating client task\n"));
+              }
+          ACE_Thread_Manager::instance ()->wait ();
+        
+          CORBA::Long count = receiver->get_event_count (ACE_ENV_SINGLE_ARG_PARAMETER);
+          ACE_TRY_CHECK;
+        
+          ACE_DEBUG ((LM_DEBUG, "(%P) - Receiver got %d messages\n",
+                      count));
+        }
       orb->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }

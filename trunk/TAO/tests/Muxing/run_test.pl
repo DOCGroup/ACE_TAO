@@ -23,7 +23,7 @@ $CL2 = new PerlACE::Process ("client", " -k file://$iorfile");
 
 $SV->Spawn ();
 
-if (PerlACE::waitforfile_timed ($iorfile, 15) == -1) {
+if (PerlACE::waitforfile_timed ($iorfile, $PerlACE::wait_interval_for_process_creation) == -1) {
     print STDERR "ERROR: cannot find file <$iorfile>\n";
     $SV->Kill (); $SV->TimedWait (1);
     exit 1;
@@ -51,7 +51,12 @@ if ($client2 != 0) {
     $status = 1;
 }
 
-$server = $SV->TerminateWaitKill (5);
+# shutdown
+$CLx = new PerlACE::Process ("client", " -k file://$iorfile -x");
+$CLx->Spawn (60);
+$CLx->WaitKill (15);
+
+$server = $SV->WaitKill (15);
 
 if ($server != 0) {
     print STDERR "ERROR: server returned $server\n";
