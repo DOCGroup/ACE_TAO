@@ -1,9 +1,19 @@
+Wed Nov  8 14:24:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * DAnCE/StaticConfigurator/StaticDAnCEParser.cpp:
+          Fixed a small memory leaks and other problems. This fixes bugzilla
+          2692. Thanks to Sowayan Abdullah <abdullah dot sowayan at lmco dot com>
+          for reporting these issues.
+
+        * DAnCE/NodeApplicationManager/ImplementationInfo.cpp:
+          A few small improvements
+
 Sun Nov  5 19:16:57 UTC 2006  Shanshan Jiang <shanshan.jiang@vanderbilt.edu>
 
         * DAnCE/NodeApplicationManager/Containers_Info_Map.cpp:
           Removed the use of STL iostream.
           Use ACE DLL decorator, prefix, suffix for DLL file names.
-          
+
         * DAnCE/RepositoryManager/PC_Updater.cpp:
         * DAnCE/RepositoryManager/RepositoryManager_Impl.cpp:
         * DAnCE/RepositoryManager/RMadmin.cpp:
