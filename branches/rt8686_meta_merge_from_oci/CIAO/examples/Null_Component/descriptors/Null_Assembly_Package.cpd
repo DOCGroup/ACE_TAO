@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<Deployment:ComponentPackageDescription xmlns:Deployment="http://www.omg.org/Deployment" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.omg.org/Deployment Deployment.xsd">
+
+  <UUID>_AAC92636-57DD-4503-A616-CF75AD417E99</UUID>
+
+  <implementation>
+    <name>Null_Assembly</name>
+    <referencedImplementation href="Null_Assembly.cid"/>
+  </implementation>
+
+</Deployment:ComponentPackageDescription>

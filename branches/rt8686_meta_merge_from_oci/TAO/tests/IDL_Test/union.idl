@@ -1,0 +1,271 @@
+// $Id$
+
+// ============================================================================
+//
+// = LIBRARY
+//    TAO/tests/IDL_Test
+//
+// = FILENAME
+//    union.idl
+//
+// = DESCRIPTION
+//    This file contains examples of IDL code that has 
+//    caused problems in the past for the TAO IDL
+//    compiler. This test is to make sure the problems
+//    stay fixed.
+//
+// = AUTHORS
+//    Jeff Parsons <parsons@cs.wustl.edu> and TAO users.
+//
+// ============================================================================
+
+
+// Implicit default case
+
+enum DataType
+{
+  dtEmpty,
+  dtLong,
+  dtShort
+};
+
+union Data switch (DataType)
+{
+  case dtLong: long longData;
+  case dtShort: short shortData;
+  // by default, empty union
+};
+
+// Explicit default case
+
+module Necessary 
+{
+  // It is important to have a module, in which 
+  // the following union is declared.
+
+  typedef long Result;
+
+  enum Kind
+    {
+      e_Result,
+      e_Unused
+    };
+
+  union WhichResult switch (Kind )
+    {   
+      case e_Result: Result  m_Result;
+      default: long m_Unused;
+    };
+};
+
+// Make sure that CORBA_Any::to_* is used everywhere.
+module UnionDiscTest
+  {
+   	union BooleanUnion switch (boolean) 
+      {
+      	case TRUE: string value;
+   		};
+
+    union CharUnion switch (char)
+      {
+        case 'a': string value;
+      };
+	};
+
+
+// Nested unions
+
+enum disc1
+{
+  one,
+  two
+};
+
+enum disc2
+{
+  a,
+  b
+};
+
+enum disc_outer
+{
+  out1,
+  out2
+};
+
+union inner1 switch (disc1)
+{ 
+  case one: short s;
+  case two: long l;
+};
+
+union inner2 switch (disc2)
+{
+  case a: char c;
+  case b: long lng;
+};
+
+union outer switch (disc_outer)
+{
+  case out1: inner1 first;
+  case out2: inner2 second;
+};
+
+module UnionTest3 
+{
+   enum ValChoice 
+     {
+    	 intVal,
+    	 realVal
+   	 };
+
+   union ValType switch(ValChoice) 
+     {
+       case intVal: long integerValue;
+       case realVal: double realValue;
+   	 };
+
+   struct UpType 
+     {
+       ValType high;
+       ValType low;
+   	 };
+
+   struct DownType 
+     {
+       ValType high;
+       ValType low;
+   	 };
+
+   enum IndChoice 
+     {
+       up_Level,
+       down_Level
+   	 };
+
+   union IndType switch(IndChoice) 
+     {
+       case up_Level: UpType up;
+       case down_Level: DownType down;
+   	 };
+};
+
+// Make sure inner union is generated in header file with
+// proper scoping (or lack thereof) in its name, depending
+// on the platform.
+enum XType 
+{ 
+  X_A 
+};
+
+enum ZType 
+{ 
+  Z_A 
+};
+
+union X switch (XType) 
+{
+  case X_A:
+    struct Y 
+      {
+        union Z switch (ZType) 
+        {
+          case Z_A: long a;
+        } u;
+      } a;
+};
+
+// Example involving union members with multiple case labels.
+enum FieldType
+{
+    FTYPE_CHAR,
+    FTYPE_VARCHAR,
+    FTYPE_DEFCHAR
+};
+
+union FieldValue switch (FieldType)
+{
+    case FTYPE_CHAR:
+    case FTYPE_VARCHAR:
+       string strValue;
+    default:
+       string defstr;
+};
+
+
+struct Field
+{
+    FieldValue value;
+};
+
+// Tricky case of lookup for a recursive union. When defined
+// inside another datatype like this, the union is referenced
+// inside itself before the closing brace is seen, but not
+// declared yet.
+struct Element
+{
+  union ValueUnion switch (short)
+  {
+    case 0:
+      long lvalue;
+    case 1:
+      sequence<ValueUnion> VUValue;
+  } Value;
+};
+
+// A fix to the IDL compiler's typecoce generation created
+// a problem with unions that have more than one member,
+// where any member except the last is itself a scoped type.
+// This is the simplest example that will reproduce the problem,
+// if it ever reappears.
+enum TestOneEnum 
+{ 
+  TALL, 
+  SCHORT
+};
+
+enum TestTwoEnum 
+{ 
+  LIGHT, 
+  DARK
+};
+
+union TestUnion switch (short) 
+{
+  case 1: TestOneEnum oneEnum;
+  case 2: TestTwoEnum twoEnum;
+};
+
+// Test for various kinds of declarations inside a union,
+// similar to the example in enum_in_struct.idl.
+
+union decl_heavy_union switch (short)
+{
+  case 1:
+    enum which
+    {
+      ZERO,
+      ONE,
+      TWO
+    } m_which;
+  case 2: 
+    enum en 
+    {
+      a, 
+      b, 
+      c
+    } m_en_arr[10];
+  case 3: 
+    struct st 
+    {
+      long a; 
+      char b;
+    } m_st_arr[10];
+  case 4: 
+    union un switch (long) 
+    {
+      case 1: long a; 
+      case 2: char b;
+    } m_un_arr[10];
+};
+
