@@ -156,13 +156,12 @@ protected:
   int consumer_lock_;
   int supplier_lock_;
 
-  /// The MT dispatching priority has several arguments that could be
-  /// controlled here...
-  int dispatching_threads_;
-  int dispatching_threads_flags_;
-  int dispatching_threads_priority_;
-  int dispatching_threads_force_active_;
-  ACE_CString queue_full_service_object_name_;
+  /// Flags used by thread-based dispatching strategies.
+  int dispatching_threads_;     //! number of threads; may be ignored depending on strategy; default: TAO_EC_DEFAULT_DISPATCHING_THREADS
+  int dispatching_threads_flags_; //! flags for thread creation; default: TAO_EC_DEFAULT_DISPATCHING_THREADS_FLAGS
+  int dispatching_threads_priority_; //! dispatching thread priority; default: TAO_EC_DEFAULT_DISPATCHING_THREADS_PRIORITY
+  int dispatching_threads_force_active_; //! create threads with innocuous default values if creation with requested values fails
+  ACE_CString queue_full_service_object_name_; //! name of ACE_Service_Object which should be invoked when output queue becomes full
   TAO_EC_Queue_Full_Service_Object* find_service_object (const char* wanted,
                                                          const char* fallback);
 

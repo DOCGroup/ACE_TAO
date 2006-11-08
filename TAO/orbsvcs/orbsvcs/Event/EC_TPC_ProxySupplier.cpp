@@ -13,7 +13,7 @@ ACE_RCSID(Event, EC_TPC_ProxySupplier, "$Id$")
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-extern unsigned long EC_TPC_debug_level;
+extern unsigned long TAO_EC_TPC_debug_level;
 
 TAO_EC_TPC_ProxyPushSupplier::~TAO_EC_TPC_ProxyPushSupplier (void)
 {
@@ -24,7 +24,7 @@ void
 TAO_EC_TPC_ProxyPushSupplier:: disconnect_push_supplier (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  if (EC_TPC_debug_level > 0)
+  if (TAO_EC_TPC_debug_level > 0)
     ACE_DEBUG ((LM_DEBUG, "EC (%P|%t): enter EC_TPC_ProxySupplier::disconnect_push_supplier (%@): refcount=%u,consumer=%@\n",
 				this,
 				this->refcount_,
@@ -39,7 +39,7 @@ TAO_EC_TPC_ProxyPushSupplier:: disconnect_push_supplier (ACE_ENV_SINGLE_ARG_DECL
   BASECLASS::disconnect_push_supplier (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
-  if (EC_TPC_debug_level > 0)
+  if (TAO_EC_TPC_debug_level > 0)
     ACE_DEBUG ((LM_DEBUG, "EC (%P|%t): leave EC_TPC_ProxySupplier::disconnect_push_supplier (%@)\n", this));
 }
 
@@ -63,7 +63,7 @@ TAO_EC_TPC_ProxyPushSupplier::connect_push_consumer (
   BASECLASS::connect_push_consumer (push_consumer, qos ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
-  if (EC_TPC_debug_level > 0)
+  if (TAO_EC_TPC_debug_level > 0)
     ACE_DEBUG ((LM_DEBUG, "EC (%P|%t): EC_ProxySupplier(%@): refcount=%u,consumer=%@\n",
               this, this->refcount_, this->consumer_.in()));
 

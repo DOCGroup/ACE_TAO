@@ -97,11 +97,9 @@ struct RtecEventData
       <code>$TAO_ROOT/orbsvcs/orbsvcs/Event/EC_Null_Factory.h</code>
       and <code>$TAO_ROOT/orbsvcs/orbsvcs/Event/EC_Basic_Factory.h</code>
       for details.
-</ul>
-    The
-      table below describes all of the options (and values) supported by
-      these factories.
+    </ul>
     </P>
+
 <h3>Special Topic: Queue Configuration</h3>
     <p>
       In certain configurations such as <em>mt</em> and <em>tpc</em>,
@@ -165,6 +163,10 @@ static EC_QueueFullSimpleActions "[wait | discard]"
 #    (see below) to specify that object's service configurator tag.
 </PRE>
 
+    <p>
+    The
+      table below describes all of the options (and values) supported by
+      these factories. 
     <P>All the event service factory options start with
       <CODE>-EC</CODE></P>
 
@@ -206,6 +208,27 @@ static EC_QueueFullSimpleActions "[wait | discard]"
             <b>Does not apply to the <em>tpc</em> factory.</b>
           </TD>
         </TR>
+        <!-- <TR NAME="ECDispatchingThreadFlags"> -->
+        <TR>
+          <td><code>-ECDispatchingThreadFlags</code>
+            <em>thread_flags</em><b>:</b><em>thread_priority</em>
+            </td>
+          <td>
+            Provide flags and priority used for creation of
+            dispatching threads.<br>
+            <em>thread_flags</em> is a set of
+            <code>THR_</code> flags separated by the vertical bar
+            ('|'), e.g.,
+            <code>THR_BOUND|THR_NEW_LWP|THR_SCOPE_SYSTEM</code>.
+            <br>
+            <em>thread_priority</em> is a numeric value indicating the
+            desired priority at which the thread should be created.
+            No range checking is performed on the value prior to
+            passing to the thread creation function.  Also note that
+            priorities are platform-specific, so a valid value for a
+            given set of flags on one platform may not work with the
+            same flags on another platform.
+          </tr>
 
         <!-- <TR  NAME="ECQueueFullServiceObject"> -->
         <tr>
