@@ -1251,10 +1251,6 @@ ACE_Service_Gestalt::close (void)
   if (this->is_opened_ > 0)
     return 0;
 
-  // Delete the service repository.  All the objects inside the
-  // service repository should already have been finalized.
-  //  ACE_Service_Config::close_svcs ();
-
   // Delete the list fo svc.conf files
   delete this->svc_conf_file_queue_;
   this->svc_conf_file_queue_ = 0;

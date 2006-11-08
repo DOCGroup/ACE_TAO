@@ -1,7 +1,19 @@
+Wed Nov  8 22:12:46 UTC 2006  Iliyan Jeliazkov  <iliyan@ociweb.com>
+
+        * ace/Service_Config.cpp:
+        * ace/Service_Gestalt.cpp:
+
+        This resolves a problem with shutting down the Service
+        Configurator via the static ACE_Service_Config::close () method,
+        where the registered services' fini() methods were not being
+        called. For full details, see bugzilla# 2701. Thanks to Aaron
+        Scamehorn <Aaron dot Scamehorn at cogcap dot com> for discovering
+        it an providing a test case.
+
 Wed Nov  8 19:21:17 UTC 2006  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * bin/make_release:
-        
+
           Updates to the release script to work with Subversion.
 
 Mon Nov  6 16:07:43 UTC 2006  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
@@ -74,7 +86,6 @@ Tue Nov  7 07:52:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
         * include/makeinclude/platform_rtems.x_g++.GNU:
           Removed -ansi
 
->>>>>>> .r75251
 Tue Nov  7 01:47:46 UTC 2006  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * ace/Sock_Connect.cpp (count_interfaces):
@@ -101,7 +112,6 @@ Mon Nov  6 16:52:14 UTC 2006  Phil Mesnier  <mesnier_p@ociweb.com>
           the footprint and improves performance by eliminating the
           effectively duplicated code in count_interfaces().
 
->>>>>>> .r75238
 Mon Nov 06 14:14:10 UTC 2006  Martin Corino  <mcorino@remedy.nl>
 
         * ace/config-vxworks6.3.h:
