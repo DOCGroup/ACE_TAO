@@ -42,7 +42,7 @@ if (PerlACE::waitforfile_timed ($iorfile, $sleeptime) == -1) {
 $client = $CL->SpawnWaitKill (30);
 
 # Clean up.
-$amhserver= $AMH->TerminateWaitKill (5);
+$amhserver= $AMH->WaitKill (15);
 
 if ($amhserver != 0) {
     print STDERR "ERROR: AMH Server returned $amhserver\n";

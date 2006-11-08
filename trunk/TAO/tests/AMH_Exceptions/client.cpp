@@ -30,14 +30,19 @@ main (int argc, char *argv[])
                             1);
         }
 
-      Test::Timestamp time = 10;
-      roundtrip->test_method (time ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
-    }
-  ACE_CATCH(Test::ServerOverload, ov)
-    {
-      ACE_DEBUG ((LM_DEBUG, "Received expected exception\n"));
-      received_expected_exception = 1;
+      ACE_TRY {
+          Test::Timestamp time = 10;
+          roundtrip->test_method (time ACE_ENV_ARG_PARAMETER);
+          ACE_TRY_CHECK;
+        }
+      ACE_CATCH(Test::ServerOverload, ov)
+        {
+          ACE_DEBUG ((LM_DEBUG, "Received expected exception\n"));
+          received_expected_exception = 1;
+
+          roundtrip->shutdown ();
+        }
+      ACE_ENDTRY;
     }
   ACE_CATCHANY
     {

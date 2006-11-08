@@ -3,6 +3,7 @@
 
 #include "ace/OS_NS_stdio.h"
 #include "TestS.h"
+#include "tao/ORB_Core.h"
 
 /***************************/
 /*** Servant Declaration ***/
@@ -17,6 +18,9 @@ public:
                     Test::Timestamp send_time
                     ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
+
+  void shutdown (Test::AMH_RoundtripResponseHandler_ptr _tao_rh ACE_ENV_ARG_DECL)
+  ACE_THROW_SPEC ((CORBA::SystemException));
 
 protected:
   CORBA::ORB_ptr orb_;
@@ -56,6 +60,12 @@ ST_AMH_Servant::test_method (Test::AMH_RoundtripResponseHandler_ptr _tao_rh,
   ACE_UNUSED_ARG (send_time);
 }
 
+void
+ST_AMH_Servant::shutdown (Test::AMH_RoundtripResponseHandler_ptr /*_tao_rh*/ ACE_ENV_ARG_DECL)
+  ACE_THROW_SPEC ((CORBA::SystemException))
+{
+  this->orb_->shutdown (0 ACE_ENV_ARG_PARAMETER);
+}
 
 /*** Server Declaration ***/
 
@@ -192,7 +202,7 @@ ST_AMH_Server::run_event_loop ()
   ACE_TRY
     {
       ACE_Time_Value period (0, 11000);
-      while (1)
+      while (!this->orb_->orb_core ()->has_shutdown ())
         {
               this->orb_->perform_work (&period);
               ACE_TRY_CHECK;
