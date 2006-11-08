@@ -35,8 +35,8 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
  * If <timeout> == 0, then the call behaves as a normal
  * send/recv call, i.e., for blocking sockets, the call will
  * block until action is possible; for non-blocking sockets,
- * EWOULDBLOCK will be returned if no action is immediately
- * possible.
+ * -1 will be returned with errno == EWOULDBLOCK if no action is
+ * immediately possible.
  * If <timeout> != 0, the call will wait until the relative time
  * specified in *<timeout> elapses.
  * Errors are reported by -1 and 0 return values.  If the

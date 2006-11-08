@@ -1,3 +1,9 @@
+Mon Nov  6 16:07:43 UTC 2006  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
+
+        * ace/SOCK_IO.h (ACE_SOCK_IO): Clarified the behavior of
+          non-blocking I/O.  Thanks to Robert Neumann <robert dot neumann
+          at gmail dot com> for motivating this change.
+
 Tue Nov 08 15:40:10 UTC 2006  Martin Corino  <mcorino@remedy.nl>
 
         * ace/INET_Addr.inl:
@@ -62,6 +68,7 @@ Tue Nov  7 07:52:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
         * include/makeinclude/platform_rtems.x_g++.GNU:
           Removed -ansi
 
+>>>>>>> .r75251
 Tue Nov  7 01:47:46 UTC 2006  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * ace/Sock_Connect.cpp (count_interfaces):
@@ -88,6 +95,7 @@ Mon Nov  6 16:52:14 UTC 2006  Phil Mesnier  <mesnier_p@ociweb.com>
           the footprint and improves performance by eliminating the
           effectively duplicated code in count_interfaces().
 
+>>>>>>> .r75238
 Mon Nov 06 14:14:10 UTC 2006  Martin Corino  <mcorino@remedy.nl>
 
         * ace/config-vxworks6.3.h:
