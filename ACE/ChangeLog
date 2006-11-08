@@ -1,3 +1,10 @@
+Wed Nov  8 14:24:02 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * configure.ac:
+
+          Change ACE_LACKS_NET_IF_H feature test to #include <sys/types.h>
+          (if present).
+
 Wed Nov  8 13:45:07 UTC 2006  Chad Elliott  <elliott_c@ociweb.com>
 
         * examples/C++NPv2/C++NPv2.mpc:

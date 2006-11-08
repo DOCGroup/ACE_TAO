@@ -627,7 +627,11 @@ ACE_CHECK_LACKS_HEADERS(netinet/tcp.h)
 ACE_CHECK_LACKS_HEADERS(sys/socket.h)
 
 ACE_CHECK_LACKS_HEADERS(net/if.h, [], [],
-[#ifndef ACE_LACKS_SYS_SOCKET_H
+[
+#ifndef ACE_LACKS_SYS_TYPES_H
+# include <sys/types.h>
+#endif
+#ifndef ACE_LACKS_SYS_SOCKET_H
 # include <sys/socket.h>
 # endif
 ])
