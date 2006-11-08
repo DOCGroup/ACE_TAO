@@ -1,0 +1,38 @@
+<?xml version="1.0"?>
+<!DOCTYPE corbacomponent SYSTEM "corbacomponent.dtd">
+
+<corbacomponent>
+  <corbaversion>3.0</corbaversion>
+  <componentrepid repid="IDL:Null_Component:1.0"/>
+  <homerepid repid="IDL:Null_Component_Home:1.0"/>
+  <componentkind>
+    <session>
+      <servant lifetime="container"/>
+    </session>
+  </componentkind>
+  <threading policy="multithread"/>
+  <configurationcomplete set="true"/>
+  
+  <homefeatures
+      name="Null_Component_Home"
+      repid="IDL:Null_Component_Home:1.0">
+  </homefeatures>
+  
+  <componentfeatures
+      name="Null_Component"
+      repid="IDL:Null_Component:1.0">
+    <ports>
+      <provides
+          providesname="null_facet"
+          repid="IDL:Null_Interface:1.0"
+          facettag="1">
+      </provides>
+    </ports>
+  </componentfeatures>
+  
+  <interface
+      name="Null_Interface"
+      repid="IDL:Null_Interface:1.0">
+  </interface>
+  
+</corbacomponent>
