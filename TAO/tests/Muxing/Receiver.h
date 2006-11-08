@@ -22,7 +22,7 @@ class Receiver
 {
 public:
   /// Constructor
-  Receiver (void);
+  Receiver (CORBA::ORB_ptr orb);
 
   /// Print out the results
   void dump_results (void);
@@ -34,10 +34,16 @@ public:
   virtual CORBA::Long get_event_count (ACE_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
+  virtual void shutdown (ACE_ENV_SINGLE_ARG_DECL)
+    ACE_THROW_SPEC ((CORBA::SystemException));
+
 private:
   ACE_SYNCH_MUTEX mutex_;
   CORBA::ULong message_count_;
   CORBA::ULong byte_count_;
+  /// Use an ORB reference to shutdown
+  /// the application.
+  CORBA::ORB_var orb_;
 };
 
 #if defined(_MSC_VER)

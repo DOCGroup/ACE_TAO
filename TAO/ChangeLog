@@ -1,3 +1,13 @@
+Wed Nov  8 13:22:12 UTC 2006  Martin Corino  <mcorino@remedy.nl>
+
+        * tests/Muxing/Test.idl:
+        * tests/Muxing/Receiver{.h .cpp}:
+        * tests/Muxing/server.cpp:
+        * tests/Muxing/client.cpp:
+        * tests/Muxing/run_test.pl:
+
+          Added clean shutdown option.
+
 Wed Nov  8 13:14:12 UTC 2006  Martin Corino  <mcorino@remedy.nl>
 
         * tests/Bug_2654_Regression/Hello.cpp:
