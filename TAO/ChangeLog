@@ -1,3 +1,21 @@
+Wed Nov  8 07:31:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/DSI_Gateway/client.cpp:
+        * tests/DSI_Gateway/test_i.{h,cpp,inl}:
+        * tests/DSI_Gateway/test.idl:
+          Extended this test to also test an attribute, this extension
+          exhibits a few bugs in the DII code. Thanks to Venkat
+          <swara101 at yahoo dot com> for extending this test.
+
+        * tao/DynamicInterface/Context.cpp:
+        * tao/DynamicInterface/DII_Arguments.cpp:
+        * tao/DynamicInterface/DII_Arguments_Converter_Impl.cpp:
+          Const changes and small performance improvements
+
+        * tao/DynamicInterface/Request.cpp:
+          Fixed a few bugs related to the number of arguments, also
+          applied a few const and performance improvements.
+
 Tue Nov  7 23:13:51 UTC 2006  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_visitor_operation/tie_si.cpp:
