@@ -1,5 +1,7 @@
 // $Id$
 
+extern unsigned long TAO_EC_TPC_debug_level;
+
 #include "orbsvcs/Event/EC_TPC_Dispatching.h"
 #include "orbsvcs/Event/EC_Defaults.h"
 
@@ -13,10 +15,16 @@ ACE_RCSID(Event, EC_TPC_Dispatching, "$Id$")
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-extern unsigned long EC_TPC_debug_level;
-
-TAO_EC_TPC_Dispatching::TAO_EC_TPC_Dispatching (TAO_EC_Queue_Full_Service_Object* so)
-  : consumer_task_map_(TAO_EC_TPC_DISPATCHING_DEFAULT_MAP_SIZE)
+TAO_EC_TPC_Dispatching::TAO_EC_TPC_Dispatching (int nthreads,
+                                                int thread_creation_flags,
+                                                int thread_priority,
+                                                int force_activate,
+                                                TAO_EC_Queue_Full_Service_Object* so)
+  : nthreads_(nthreads)
+  , thread_creation_flags_ (thread_creation_flags)
+  , thread_priority_ (thread_priority)
+  , force_activate_ (force_activate)
+  , consumer_task_map_(TAO_EC_TPC_DISPATCHING_DEFAULT_MAP_SIZE)
   , queue_full_service_object_(so)
 {
   ACE_ASSERT (this->queue_full_service_object_ != 0);
@@ -40,20 +48,20 @@ TAO_EC_TPC_Dispatching::add_consumer (RtecEventComm::PushConsumer_ptr consumer
   RtecEventComm::PushConsumer_var pc =
     RtecEventComm::PushConsumer::_duplicate(consumer);
 
-  if (EC_TPC_debug_level > 0)
+  if (TAO_EC_TPC_debug_level > 0)
     ACE_DEBUG ((LM_DEBUG, "EC (%P|%t) TPC_Dispatching::add_consumer(%@)\n", pc.in()));
 
   TAO_EC_Dispatching_Task* dtask =
     new TAO_EC_TPC_Dispatching_Task (&this->thread_manager_,
                                      this->queue_full_service_object_);
 
-  if (EC_TPC_debug_level > 0)
+  if (TAO_EC_TPC_debug_level > 0)
     ACE_DEBUG ((LM_DEBUG, "EC (%P|%t) TPC_Dispatching::add_consumer(%@): new task %@\n", pc.in(), dtask));
 
-  if ((dtask->activate (TAO_EC_DEFAULT_DISPATCHING_THREADS_FLAGS,
+  if ((dtask->activate (this->thread_creation_flags_,
                        1, // we only want one thread to dispatch to a consumer
                        1, // magic number??
-                        TAO_EC_DEFAULT_DISPATCHING_THREADS_PRIORITY)) == -1)
+                        this->thread_priority_)) == -1)
     {
       ACE_DEBUG ((LM_WARNING,
                   "EC (%P|%t): TPC_Dispatching::add_consumer unable to activate"
@@ -176,7 +184,7 @@ TAO_EC_TPC_Dispatching::push_nocopy (TAO_EC_ProxyPushSupplier* proxy,
                                     TAO_EC_QOS_Info&
                                     ACE_ENV_ARG_DECL)
 {
-  if (EC_TPC_debug_level > 0)
+  if (TAO_EC_TPC_debug_level > 0)
     ACE_DEBUG ((LM_DEBUG, "EC (%P|%t) TPC_Dispatching::push_nocopy(supplier=%@,consumer=%@)\n", proxy, consumer));
 
   ACE_GUARD (ACE_SYNCH_MUTEX, ace_mon, this->lock_);
