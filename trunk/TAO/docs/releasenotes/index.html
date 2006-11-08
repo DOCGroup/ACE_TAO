@@ -659,7 +659,7 @@ in a directory different from that where the other generated files are
 created.</li>
 
 <li>
-Generation of explicit template instantiations has been completely 
+Generation of explicit template instantiations has been completely
 removed, it is no longer available via the command line option -GT.</li>
 
 <li>
@@ -672,6 +672,10 @@ local interfaces only.</li>
 Added new command line option -oS to specify output directory for
 all skeleton files, including TIE class files, if generated. Overrides
 -o option value, if any.</li>
+
+<li>
+Uninlined all generated TIE class code, since inlining could potentially
+cause a problem for RTTI.</li>
 
 </ul>
 
@@ -1440,7 +1444,7 @@ Point of contact: <a href="mailto:pradeep@cs.wustl.edu">Pradeep Gore</a>
 <br>The different command line and service configurator options used
 for configuring the CORBA event services are located <A
 href="../cec_options.html"> here</a>. This implementation is based on
-the Real Time Event service. 
+the Real Time Event service.
 <h3>
 Features in this release:</h3>
 
@@ -1529,18 +1533,18 @@ Notify_Logging_Service <tt>$TAO_ROOT/orbsvcs/Logging_Service/Notify_Logging_Serv
 RTEvent_Logging_Service <tt>$TAO_ROOT/orbsvcs/Logging_Service/RTEvent_Logging_Service</tt></li></ul>
 
 <li>
-Each service registers with the Naming Service as 
-"BasicLogFactory", "EventLogFactory", "NotifyLogFactory" and 
+Each service registers with the Naming Service as
+"BasicLogFactory", "EventLogFactory", "NotifyLogFactory" and
 "RTEventLogFactory" respectively.</li>
 
 <li>
-Each service registers with the Interoperable Naming Service as 
-"BasicLogService", "EventLogService", "NotifyLogService" and 
+Each service registers with the Interoperable Naming Service as
+"BasicLogService", "EventLogService", "NotifyLogService" and
 "RTEventLogService" respectively.</li>
 
 <li>
-The Log Service uses a dynamically loaded "plug-in" Strategy for storing and 
-querying log records.  The default Strategy stores Log records in memory and 
+The Log Service uses a dynamically loaded "plug-in" Strategy for storing and
+querying log records.  The default Strategy stores Log records in memory and
 supports the Extended Trader Constraint Language (ETCL) Query Language.</li>
 
 <li>
@@ -2360,7 +2364,7 @@ Current Status:</h4>
 <p>A concrete CSD Strategy implementation has also been added to serve as a "reference implementation".  This is being called the CSD Thread Pool Strategy (TP_Strategy).  The TP_Strategy provides a means to decouple the threads (ORB threads) that receive requests from the underlying transport from the thread that will ultimately dispatch the request to the target servant object.  The TP_Strategy implements a "request queue" as the integral part of the mechanism that allows an ORB thread to "hand-off" a request to one of the TP_Strategy object's worker threads.  The TP_Strategy reference implementation is provided as an example of how concrete CSD Strategy could be implemented.
 <p>Two approaches are supported for applying CSD strategy to an application.
 <ol>
-<li>Explicitly calling CSD interfaces. 
+<li>Explicitly calling CSD interfaces.
 <p>Here is an example application code showing how a TP_Strategy object can be created and applied to a POA:
 
 <pre>
@@ -2377,7 +2381,7 @@ Current Status:</h4>
   csd_strategy->set_servant_serialization (false);
 
   // Tell the strategy to apply itself to the poa.
-  if (csd_strategy->apply_to(poa.in()) == false) 
+  if (csd_strategy->apply_to(poa.in()) == false)
     {
       ACE_ERROR((LM_ERROR, "Failed to apply CSD strategy to the poa.\n"));
       return -1;
@@ -2385,7 +2389,7 @@ Current Status:</h4>
 </pre>
 <li>Service Configurator
 
- <p>The format of the CSD specific parameters for creating the TP_Strategy service object is:          
+ <p>The format of the CSD specific parameters for creating the TP_Strategy service object is:
  <pre>-CSDtp &lt;poa_name&gt;:&lt;csd_thread_number&gt;:[OFF]</pre>
 
  <p>The last portion of the parameter is the servant serialization flag. It's only needed when the servant serialization needs be turned off, otherwise the servant serialization is always on. When servant serialization is on (the default), the TP_Strategy will serialize requests to any particular servant.  Requests to different servant objects can occur in parallel, but requests to any particular servant will be dispatched serially (ie, one at a time).
@@ -2393,8 +2397,8 @@ Current Status:</h4>
  <p>Here is an example of the svc.conf file.
 
  <pre>
-  dynamic TAO_CSD_TP_Strategy_Factory Service_Object * 
-	TAO_CSD_ThreadPool:_make_TAO_CSD_TP_Strategy_Factory() "-CSDtp RootPOA:2"
+  dynamic TAO_CSD_TP_Strategy_Factory Service_Object *
+  TAO_CSD_ThreadPool:_make_TAO_CSD_TP_Strategy_Factory() "-CSDtp RootPOA:2"
  </pre>
 </ol>
 </ul>
@@ -2448,16 +2452,16 @@ online</a>.<P>
 Point of contact: <a href="mailto:mcorino@remedy.nl">Martin Corino</a>, Remedy IT.
 
 
-<p>TAO has support for IPv6 for IIOP under Windows and Linux. 
+<p>TAO has support for IPv6 for IIOP under Windows and Linux.
 To use this, add <code>ipv6</code> to your <code>default.features</code>
 file and regenerate all makefiles. When using the automated tests, add IPV6
 to the configs.
 <p>
 Finished work:
-<li>Added IPv6 support to all IIOP related classes (parsers, connectors, 
+<li>Added IPv6 support to all IIOP related classes (parsers, connectors,
   acceptors)</li>
 <li>Added IPv6 support to corbaloc and mcast URL parsers.</li>
-<li>Implemented IPv6 support in the TAO_IOR_MCast utility class from TAO Svc 
+<li>Implemented IPv6 support in the TAO_IOR_MCast utility class from TAO Svc
   Utils</li>
 <p>
 
@@ -2465,7 +2469,7 @@ The following gotchas are known:
 <li>In a localhost situation connecting a server listening at the IPv6 ANY address
   has the following problems:
 On Linux this does not work when the client tries to connect to a
-    LinkLocal address of one the local NICs, 
+    LinkLocal address of one the local NICs,
 on Windows this only works (locally) by using the 'localhost' address (either
     IPv4 or IPv6)
 </li>
@@ -2478,8 +2482,8 @@ on Windows this only works (locally) by using the 'localhost' address (either
 
 <p>
 Future work:
-<li>IPv6 support for other protocols/strategies than IIOP (i.e. SHMIOP, UIOP, 
-  SCIOP, SSLIOP etc.; for this we excluded some regression tests in IPv6 builds for this 
+<li>IPv6 support for other protocols/strategies than IIOP (i.e. SHMIOP, UIOP,
+  SCIOP, SSLIOP etc.; for this we excluded some regression tests in IPv6 builds for this
   reason)</li>
 
 <li>IPv4 runtime dependencies in various CORBA services (f.i. Event service)
