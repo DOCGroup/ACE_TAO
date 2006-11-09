@@ -1,3 +1,8 @@
+Thu Nov  9 10:50:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Timer_Heap_T.{h,cpp}:
+          Changed the preallocated constructor from int to bool.
+
 Thu Nov  9 09:25:48 UTC 2006  Olli Savia  <ops@iki.fi>
 
         * ace/TTY_IO.cpp:
