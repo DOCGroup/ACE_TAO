@@ -1,3 +1,9 @@
+Thu Nov  9 15:22:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * include/makeinclude/wrapper_macros.GNU:
+          Default threads to 1 if not set, thanks to Chad for helping out
+          with finding out why I had a problem in the rtems build
+
 Thu Nov  9 12:46:54 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
 
         * bin/MakeProjectCreator/config/acedefaults.mpb:
