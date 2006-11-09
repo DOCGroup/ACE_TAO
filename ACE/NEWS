@@ -5,6 +5,44 @@ PLANNED MAJOR CHANGES "SOMETIME IN THE FUTURE" (i.e., exact beta not known)
 
 . (Remedy) RTEMS port
 
+USER VISIBLE CHANGES BETWEEN ACE-5.5.3 and ACE-5.5.4
+====================================================
+. Added appropriate intptr_t and uintptr_t typedefs on platforms that
+  don't provide them (i.e. when ACE_LACKS_INTPTR_T is defined).
+
+. Added ability to explicitly choose support for 32 bit or 64 bit file
+  offsets on all platforms.  Define the _FILE_OFFSET_BITS preprocessor
+  symbol to either 32 or 64 to choose the desired number of file
+  offset bits.  This preprocessor symbol is supported natively by most
+  UNIX and UNIX-like operating systems, and supported by ACE on
+  Windows.  Use the new ACE_OFF_T typedef to refer to file offsets
+  across UNIX and Windows portably.
+
+. 64 bit file offsets are now enabled by default in Win64
+  configurations.
+
+. Improved support for 64 bit platforms (64 bit addresses, etc).
+
+. Added STL-style traits, iterators and a swap() method to the
+  ACE_Array_Base<> class template.
+
+. Added STL-style traits and iterator accessors to the
+  ACE_Hash_Map_Manager_Ex<> class template, as well as new find() and
+  unbind() methods that return (as an "out" parameter) and accept
+  iterators, respectively.
+
+. Greatly improved event handler dispatch performance in
+  select()-based reactors (e.g. ACE_Select_Reactor and ACE_TP_Reactor)
+  for large handle sets on Windows.  Previous event handler search
+  were linear, and are now constant on average.
+
+. Addressed a number of Coverity errors (CHECKED_RETURN, DEADCODE,
+  LOCK, USE_AFTER_FREE, RESOURCE_LEAK, FORWARD_NULL).
+
+. Added STL-style "element_type" trait to all ACE auto_ptr class
+  templates.
+
+
 USER VISIBLE CHANGES BETWEEN ACE-5.5.2 and ACE-5.5.3
 ====================================================
 
