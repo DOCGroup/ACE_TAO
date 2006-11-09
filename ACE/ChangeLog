@@ -1,3 +1,10 @@
+Thu Nov  9 10:48:52 UTC 2006  Olli Savia  <ops@iki.fi>
+
+        * examples/IPC_SAP/DEV_SAP/reader/reader.cpp:
+        * examples/IPC_SAP/DEV_SAP/writer/writer.cpp:
+          Changed used baudrate to 19200. Extended reader example to handle
+          timeout.
+
 Thu Nov  9 10:50:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Timer_Heap_T.{h,cpp}:
