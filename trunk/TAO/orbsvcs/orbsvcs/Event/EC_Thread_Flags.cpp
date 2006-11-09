@@ -1,6 +1,6 @@
 #include "EC_Thread_Flags.h"
 
-ACE_RCSID(Event, EC_Thread_Flags , "$Id$");
+ACE_RCSID(Event, EC_Thread_Flags , "$Id$")
 
 #if 0
 #include "ace/Obstack.h"
