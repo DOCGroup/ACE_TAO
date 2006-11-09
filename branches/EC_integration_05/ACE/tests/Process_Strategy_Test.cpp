@@ -672,7 +672,7 @@ run_main (int argc, ACE_TCHAR *argv[])
           ACE_ERROR ((LM_ERROR,
                       ACE_TEXT ("(%P|%t) %p\n%a"),
                       ACE_TEXT ("fork failed")));
-          exit (-1);
+          ACE_OS::exit (-1);
           /* NOTREACHED */
         case 0:
           client (&server_addr);

@@ -76,7 +76,7 @@ csdb_generator::fail (const char *msg)
   ACE_ERROR ((LM_ERROR,"Error, line %d: %s\n",linecounter_,msg));
   ACE_OS::fclose (outf_);
   ACE_OS::unlink (tempfilename_);
-  exit (-1);
+  ACE_OS::exit (-1);
 }
 
 int

@@ -55,7 +55,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                     static_cast<u_long > (fileinfo.nlink_),
                     (u_long) fileinfo.size_);
 
-  off_t fpos = cli_file.tell ();
+  ACE_OFF_T fpos = cli_file.tell ();
 
   if (fpos == -1)
     ACE_ERROR_RETURN ((LM_ERROR,

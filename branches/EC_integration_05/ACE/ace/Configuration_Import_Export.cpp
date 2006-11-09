@@ -42,7 +42,7 @@ ACE_Registry_ImpExp::import_config (const ACE_TCHAR* filename)
 
   u_int buffer_size = 4096;
   u_int read_pos = 0;
-  ACE_TCHAR *buffer;
+  ACE_TCHAR *buffer = 0;
   ACE_NEW_NORETURN (buffer, ACE_TCHAR[buffer_size]);
   if (!buffer)
     {

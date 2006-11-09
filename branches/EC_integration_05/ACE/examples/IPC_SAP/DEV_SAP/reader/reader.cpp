@@ -25,11 +25,11 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                       1);
 
   ACE_TTY_IO::Serial_Params myparams;
-  myparams.baudrate = 9600;
+  myparams.baudrate = 19200;
   myparams.xonlim = 0;
   myparams.xofflim = 0;
   myparams.readmincharacters = 0;
-  myparams.readtimeoutmsec = 10000;
+  myparams.readtimeoutmsec = 10*1000; // 10 seconds
   myparams.paritymode = "EVEN";
   myparams.ctsenb = false;
   myparams.rtsenb = 0;
@@ -56,9 +56,12 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         read_dev.recv ((void *) &readback, 1);
 
       if (bytes_read == 1)
-	ACE_DEBUG ((LM_DEBUG,
-                    ACE_TEXT ("read: %c\n"),
-                    readback));
+          ACE_DEBUG ((LM_DEBUG,
+                      ACE_TEXT ("read: %c\n"),
+                      readback));
+      else if (bytes_read == 0)
+          ACE_DEBUG ((LM_DEBUG,
+                      ACE_TEXT ("timeout!\n")));
       else if (bytes_read == -1)
           ACE_ERROR_RETURN ((LM_ERROR,
                              ACE_TEXT ("%p  recv\n"),

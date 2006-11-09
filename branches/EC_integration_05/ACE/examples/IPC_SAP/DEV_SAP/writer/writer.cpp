@@ -24,7 +24,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                       1);
 
   ACE_TTY_IO::Serial_Params myparams;
-  myparams.baudrate = 9600;
+  myparams.baudrate = 19200;
   myparams.xonlim = 0;
   myparams.xofflim = 0;
   myparams.readmincharacters = 0;

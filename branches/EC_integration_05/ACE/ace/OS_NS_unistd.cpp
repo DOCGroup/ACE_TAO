@@ -374,7 +374,7 @@ ssize_t
 ACE_OS::pread (ACE_HANDLE handle,
                void *buf,
                size_t nbytes,
-               off_t offset)
+               ACE_OFF_T offset)
 {
 # if defined (ACE_HAS_P_READ_WRITE)
 #   if defined (ACE_WIN32)
@@ -382,20 +382,25 @@ ACE_OS::pread (ACE_HANDLE handle,
   ACE_OS_GUARD
 
   // Remember the original file pointer position
-  DWORD original_position = ::SetFilePointer (handle,
-                                              0,
-                                              0,
-                                              FILE_CURRENT);
+  LONG original_high_position = 0;
+  DWORD original_low_position = ::SetFilePointer (handle,
+                                                  0,
+                                                  &original_high_position,
+                                                  FILE_CURRENT);
 
-  if (original_position == 0xFFFFFFFF)
+  if (original_low_position == INVALID_SET_FILE_POINTER
+      && GetLastError() != NO_ERROR)
     return -1;
 
   // Go to the correct position
+  LONG low_offset = ACE_LOW_PART (offset);
+  LONG high_offset = ACE_HIGH_PART (offset);
   DWORD altered_position = ::SetFilePointer (handle,
-                                             offset,
-                                             0,
+                                             low_offset,
+                                             &high_offset,
                                              FILE_BEGIN);
-  if (altered_position == 0xFFFFFFFF)
+  if (altered_position == INVALID_SET_FILE_POINTER
+      && GetLastError() != NO_ERROR)
     return -1;
 
   DWORD bytes_read;
@@ -405,8 +410,8 @@ ACE_OS::pread (ACE_HANDLE handle,
   OVERLAPPED overlapped;
   overlapped.Internal = 0;
   overlapped.InternalHigh = 0;
-  overlapped.Offset = offset;
-  overlapped.OffsetHigh = 0;
+  overlapped.Offset = low_offset;
+  overlapped.OffsetHigh = high_offset;
   overlapped.hEvent = 0;
 
   BOOL result = ::ReadFile (handle,
@@ -445,9 +450,10 @@ ACE_OS::pread (ACE_HANDLE handle,
 
   // Reset the original file pointer position
   if (::SetFilePointer (handle,
-                        original_position,
-                        0,
-                        FILE_BEGIN) == 0xFFFFFFFF)
+                        original_low_position,
+                        &original_high_position,
+                        FILE_BEGIN) == INVALID_SET_FILE_POINTER
+      && GetLastError() != NO_ERROR)
     return -1;
 
   return (ssize_t) bytes_read;
@@ -463,17 +469,17 @@ ACE_OS::pread (ACE_HANDLE handle,
   ACE_OS_GUARD
 
   // Remember the original file pointer position
-  off_t original_position = ACE_OS::lseek (handle,
-                                           0,
-                                           SEEK_CUR);
+  ACE_OFF_T original_position = ACE_OS::lseek (handle,
+                                               0,
+                                               SEEK_CUR);
 
   if (original_position == -1)
     return -1;
 
   // Go to the correct position
-  off_t altered_position = ACE_OS::lseek (handle,
-                                          offset,
-                                          SEEK_SET);
+  ACE_OFF_T altered_position = ACE_OS::lseek (handle,
+                                              offset,
+                                              SEEK_SET);
 
   if (altered_position == -1)
     return -1;
@@ -499,7 +505,7 @@ ssize_t
 ACE_OS::pwrite (ACE_HANDLE handle,
                 const void *buf,
                 size_t nbytes,
-                ACE_LOFF_T offset)
+                ACE_OFF_T offset)
 {
 # if defined (ACE_HAS_P_READ_WRITE)
 #   if defined (ACE_WIN32)
@@ -513,8 +519,8 @@ ACE_OS::pwrite (ACE_HANDLE handle,
                                             0,
                                             &orig_position.HighPart,
                                             FILE_CURRENT);
-  if (orig_position.LowPart == INVALID_SET_FILE_POINTER &&
-      GetLastError () != NO_ERROR)
+  if (orig_position.LowPart == INVALID_SET_FILE_POINTER
+      && GetLastError () != NO_ERROR)
     return -1;
 
   DWORD bytes_written;
@@ -552,8 +558,11 @@ ACE_OS::pwrite (ACE_HANDLE handle,
 #     else /* ACE_HAS_WINNT4 && (ACE_HAS_WINNT4 != 0) */
 
   // Go to the correct position
-  if (0 != ::SetFilePointerEx (handle, loffset, 0, FILE_BEGIN))
-    return -1;
+  if (! ::SetFilePointerEx (handle, loffset, 0, FILE_BEGIN))
+    {
+      ACE_OS::set_errno_to_last_error ();
+      return -1;
+    }
 
   BOOL result = ::WriteFile (handle,
                              buf,
@@ -569,7 +578,8 @@ ACE_OS::pwrite (ACE_HANDLE handle,
   if (::SetFilePointer (handle,
                         orig_position.LowPart,
                         &orig_position.HighPart,
-                        FILE_BEGIN) == INVALID_SET_FILE_POINTER)
+                        FILE_BEGIN) == INVALID_SET_FILE_POINTER
+      && GetLastError () != NO_ERROR)
     return -1;
 
   return (ssize_t) bytes_written;
@@ -583,16 +593,16 @@ ACE_OS::pwrite (ACE_HANDLE handle,
   ACE_OS_GUARD
 
   // Remember the original file pointer position
-  off_t original_position = ACE_OS::lseek (handle,
-                                           0,
-                                           SEEK_CUR);
+  ACE_OFF_T original_position = ACE_OS::lseek (handle,
+                                               0,
+                                               SEEK_CUR);
   if (original_position == -1)
     return -1;
 
   // Go to the correct position
-  off_t altered_position = ACE_OS::lseek (handle,
-                                          offset,
-                                          SEEK_SET);
+  ACE_OFF_T altered_position = ACE_OS::lseek (handle,
+                                              offset,
+                                              SEEK_SET);
   if (altered_position == -1)
     return -1;
 

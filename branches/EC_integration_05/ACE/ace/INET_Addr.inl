@@ -117,6 +117,27 @@ ACE_INET_Addr::get_addr_size (void) const
 ACE_INLINE bool
 ACE_INET_Addr::operator < (const ACE_INET_Addr &rhs) const
 {
+#if defined (ACE_HAS_IPV6)
+  if (this->get_type() != rhs.get_type())
+  {
+    return this->get_type() < rhs.get_type();
+  }
+
+  if (this->get_type() == PF_INET6)
+  {
+    int memval = ACE_OS::memcmp (this->ip_addr_pointer(),
+                                 rhs.ip_addr_pointer(),
+                                 this->ip_addr_size());
+
+    return memval < 0
+            || (memval == 0
+                && (this->get_port_number() < rhs.get_port_number()
+                    || (this->get_port_number() == rhs.get_port_number()
+                        && this->inet_addr_.in6_.sin6_scope_id <
+                            rhs.inet_addr_.in6_.sin6_scope_id)));
+  }
+#endif
+
   return this->get_ip_address () < rhs.get_ip_address ()
     || (this->get_ip_address () == rhs.get_ip_address ()
         && this->get_port_number () < rhs.get_port_number ());

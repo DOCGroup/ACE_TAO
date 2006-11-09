@@ -79,21 +79,21 @@ ACE_FILE::get_info (ACE_FILE_Info &finfo)
 }
 
 int
-ACE_FILE::truncate (off_t length)
+ACE_FILE::truncate (ACE_OFF_T length)
 {
   ACE_TRACE ("ACE_FILE::truncate");
   return ACE_OS::ftruncate (this->get_handle(), length);
 }
 
-off_t
-ACE_FILE::seek (off_t offset, int startpos)
+ACE_OFF_T
+ACE_FILE::seek (ACE_OFF_T offset, int startpos)
 {
   return ACE_OS::lseek (this->get_handle (),
                         offset,
                         startpos);
 }
 
-off_t
+ACE_OFF_T
 ACE_FILE::tell (void)
 {
   ACE_TRACE ("ACE_FILE::tell");

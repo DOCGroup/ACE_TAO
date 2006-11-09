@@ -314,7 +314,7 @@ spawn_test(bool ipv6_test)
     break;
   case 0:
     Client (&ServerAddr);
-    exit (0);
+    ACE_OS::exit (0);
     break;
   default:
     Server (reinterpret_cast<void *> (&AcceptorSocket));

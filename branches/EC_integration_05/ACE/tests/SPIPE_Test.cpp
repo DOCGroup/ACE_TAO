@@ -194,7 +194,7 @@ run_main (int, ACE_TCHAR *[])
     {
     case -1:
       ACE_ERROR ((LM_ERROR, ACE_TEXT ("%p\n%a"), ACE_TEXT ("fork failed")));
-      exit (-1);
+      ACE_OS::exit (-1);
     case 0:
       client (0);
     default:

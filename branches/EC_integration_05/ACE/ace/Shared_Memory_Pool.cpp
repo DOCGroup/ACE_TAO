@@ -13,11 +13,12 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_ALLOC_HOOK_DEFINE(ACE_Shared_Memory_Pool)
 
-ACE_Shared_Memory_Pool_Options::ACE_Shared_Memory_Pool_Options (const char *base_addr,
-                                                                size_t max_segments,
-                                                                size_t file_perms,
-                                                                off_t minimum_bytes,
-                                                                size_t segment_size)
+ACE_Shared_Memory_Pool_Options::ACE_Shared_Memory_Pool_Options (
+  const char *base_addr,
+  size_t max_segments,
+  size_t file_perms,
+  ACE_OFF_T minimum_bytes,
+  size_t segment_size)
   : base_addr_ (base_addr),
     max_segments_ (max_segments),
     minimum_bytes_ (minimum_bytes),
@@ -36,7 +37,7 @@ ACE_Shared_Memory_Pool::dump (void) const
 }
 
 int
-ACE_Shared_Memory_Pool::in_use (off_t &offset,
+ACE_Shared_Memory_Pool::in_use (ACE_OFF_T &offset,
                                 size_t &counter)
 {
   offset = 0;
@@ -61,7 +62,7 @@ ACE_Shared_Memory_Pool::in_use (off_t &offset,
 
 int
 ACE_Shared_Memory_Pool::find_seg (const void* const searchPtr,
-                                  off_t &offset,
+                                  ACE_OFF_T &offset,
                                   size_t &counter)
 {
   offset = 0;
@@ -97,7 +98,7 @@ ACE_Shared_Memory_Pool::find_seg (const void* const searchPtr,
 
 int
 ACE_Shared_Memory_Pool::commit_backing_store_name (size_t rounded_bytes,
-                                                   off_t &offset)
+                                                   ACE_OFF_T &offset)
 {
   ACE_TRACE ("ACE_Shared_Memory_Pool::commit_backing_store_name");
 
@@ -155,7 +156,7 @@ ACE_Shared_Memory_Pool::handle_signal (int , siginfo_t *siginfo, ucontext_t *)
   // it does not define SEGV_MAPERR.
 #if defined (ACE_HAS_SIGINFO_T) && !defined (ACE_LACKS_SI_ADDR) && \
         (defined (SEGV_MAPERR) || defined (SEGV_MEMERR))
-  off_t offset;
+  ACE_OFF_T offset;
   // Make sure that the pointer causing the problem is within the
   // range of the backing store.
 
@@ -224,8 +225,9 @@ ACE_Shared_Memory_Pool::handle_signal (int , siginfo_t *siginfo, ucontext_t *)
   return 0;
 }
 
-ACE_Shared_Memory_Pool::ACE_Shared_Memory_Pool (const ACE_TCHAR *backing_store_name,
-                                                const OPTIONS *options)
+ACE_Shared_Memory_Pool::ACE_Shared_Memory_Pool (
+  const ACE_TCHAR *backing_store_name,
+  const OPTIONS *options)
   : base_addr_ (0),
     file_perms_ (ACE_DEFAULT_FILE_PERMS),
     max_segments_ (ACE_DEFAULT_MAX_SEGMENTS),
@@ -293,7 +295,7 @@ ACE_Shared_Memory_Pool::acquire (size_t nbytes,
 
   // ACE_DEBUG ((LM_DEBUG,  ACE_LIB_TEXT ("(%P|%t) acquiring more chunks, nbytes = %d, rounded_bytes = %d\n"), nbytes, rounded_bytes));
 
-  off_t offset;
+  ACE_OFF_T offset;
 
   if (this->commit_backing_store_name (rounded_bytes, offset) == -1)
     return 0;
@@ -311,7 +313,7 @@ ACE_Shared_Memory_Pool::init_acquire (size_t nbytes,
 {
   ACE_TRACE ("ACE_Shared_Memory_Pool::init_acquire");
 
-  off_t shm_table_offset = ACE::round_to_pagesize (sizeof (SHM_TABLE));
+  ACE_OFF_T shm_table_offset = ACE::round_to_pagesize (sizeof (SHM_TABLE));
   rounded_bytes = this->round_up (nbytes > (size_t) this->minimum_bytes_
                                   ? nbytes
                                   : (size_t) this->minimum_bytes_);

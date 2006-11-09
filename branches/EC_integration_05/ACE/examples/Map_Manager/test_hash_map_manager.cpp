@@ -51,7 +51,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                     entry->int_id_.fast_rep ()));
 
       if (!ACE_OS::freopen (argv[3], ACE_TEXT("r"), stdin))
-        ACE_OS::perror (argv[0]), exit (1);
+        ACE_OS::perror (argv[0]), ACE_OS::exit (1);
 
       while (ACE_OS::fgets (key, sizeof key, stdin))
         {
@@ -62,7 +62,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         }
 
       if (!ACE_OS::freopen (argv[3], ACE_TEXT("r"), stdin))
-        ACE_OS::perror (argv[0]), exit (1);
+        ACE_OS::perror (argv[0]), ACE_OS::exit (1);
 
       while (ACE_OS::fgets (key, sizeof key, stdin))
         {

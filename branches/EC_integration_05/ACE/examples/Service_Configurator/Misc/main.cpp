@@ -46,7 +46,7 @@ ACE_TMAIN (int, ACE_TCHAR *argv[])
   args.add (ACE_TEXT ("-S"));
   args.add (ACE_TEXT ("\"static Timer_Service_1 'timer 1 10 $TRACE'\""));
   args.add (ACE_TEXT ("-S"));
-  args.add (ACE_TEXT ("\"dynamic Timer_Service_2 Service_Object * ./Timer:_make_Timer_Service_2() 'timer 2 10 $TRACE'\""));
+  args.add (ACE_TEXT ("\"dynamic Timer_Service_2 Service_Object * Timer:_make_Timer_Service_2() 'timer 2 10 $TRACE'\""));
   // Test the -f option!
   args.add (ACE_TEXT ("-fsvc.conf1"));
   args.add (ACE_TEXT ("-fsvc.conf2"));
@@ -62,10 +62,10 @@ ACE_TMAIN (int, ACE_TCHAR *argv[])
                 i,
                 args.argv ()[i]));
 
-  int result = ACE_Service_Config::open (args.argc (),
-                                         args.argv (),
-                                         ACE_DEFAULT_LOGGER_KEY,
-                                         0);
+  int const result = ACE_Service_Config::open (args.argc (),
+                                               args.argv (),
+                                               ACE_DEFAULT_LOGGER_KEY,
+                                               0);
   if (result != 0)
     ACE_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT ("%p\n"),

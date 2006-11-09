@@ -14,14 +14,14 @@
 MAKEFILE         = <%project_file%>
 DEPENDENCY_FILE  = .depend.<%project_name%>
 <%if(exename)%>
-BIN_UNCHECKED    = <%if(targetoutdir)%><%targetoutdir%><%endif%><%exename%>
+BIN_UNCHECKED    = <%exename%>
 <%endif%>
 <%if(staticname)%>
 
 ## LIB may be set to empty later on in this file
-LIB_UNCHECKED    = <%if(targetoutdir)%><%targetoutdir%><%endif%>lib<%libname_prefix%><%staticname%>.a
+LIB_UNCHECKED    = lib<%libname_prefix%><%staticname%>.a
 LIB              = $(LIB_UNCHECKED)
-LIB_NAME         = <%if(targetoutdir)%><%targetoutdir%><%endif%>lib<%libname_prefix%><%staticname%>
+LIB_NAME         = lib<%libname_prefix%><%staticname%>
 <%if(!sharedname)%>
 static_libs_only = 1
 <%endif%>
@@ -29,7 +29,7 @@ static_libs_only = 1
 <%if(sharedname)%>
 
 ## SHLIB may be set to empty later on in this file
-SHLIB_UNCHECKED  = <%if(targetoutdir)%><%targetoutdir%><%endif%>lib<%libname_prefix%><%sharedname%>.$(SOEXT)
+SHLIB_UNCHECKED  = lib<%libname_prefix%><%sharedname%>.$(SOEXT)
 SHLIB            = $(SHLIB_UNCHECKED)
 <%endif%>
 <%if(tao || ciao)%>
@@ -114,17 +114,15 @@ ifeq ($(INSBIN),.)
   ifeq ($(PWD),)
     PWD=$(shell pwd)
   endif
-  INSBIN = $(PWD)
-endif
+  INSBIN = $(PWD)<%if(targetoutdir)%>/<%targetoutdir%><%endif%>
 <%if(targetoutdir)%>
-ifneq ($(INSBIN),)
-OUTPUT_DIRECTORY = $(INSBIN)/<%targetoutdir%>
 else
+  ifneq ($(INSBIN),)
+    INSBIN := $(INSBIN)/<%targetoutdir%>
+  endif
 <%endif%>
-OUTPUT_DIRECTORY = $(INSBIN)
-<%if(targetoutdir)%>
 endif
-<%endif%>
+OUTPUT_DIRECTORY = $(INSBIN)
 <%else%>
 <%if(dllout || libout)%>
 INSLIB ?= <%if(dllout)%><%dllout%><%else%><%libout%><%endif%>
@@ -133,9 +131,13 @@ ifeq ($(INSLIB),.)
   ifeq ($(PWD),)
     PWD=$(shell pwd)
   endif
-  INSLIB = $(PWD)
+  INSLIB = $(PWD)<%if(targetoutdir)%>/<%targetoutdir%><%endif%>
+<%if(targetoutdir)%>
+else
+  INSLIB := $(INSLIB)/<%targetoutdir%>
+<%endif%>
 endif
-OUTPUT_DIRECTORY = $(INSLIB)<%if(targetoutdir)%>/<%targetoutdir%><%endif%>
+OUTPUT_DIRECTORY = $(INSLIB)
 <%endif%>
 
 <%if(targetoutdir)%>
@@ -200,7 +202,7 @@ else
   ifeq ($(findstring k, $(MAKEFLAGS)),k)
     LIBCHECK = 1
   else
-    LIBCHECK ?= $(filter-out $(foreach lib,<%foreach(libs)%><%libname_prefix%><%lib%><%fornotlast(" ")%><%endfor%>,$(findstring $(lib),$(foreach libpath,<%libpaths%> /usr/lib $(INSLIB),$(wildcard $(libpath)/lib$(lib).* $(libpath)/$(lib).lib)))),<%foreach(libs)%><%libname_prefix%><%lib%><%fornotlast(" ")%><%endfor%>)
+    LIBCHECK ?= $(filter-out $(foreach lib,<%foreach(libs)%><%libname_prefix%><%lib%><%fornotlast(" ")%><%endfor%>,$(findstring $(lib),$(foreach libpath,<%foreach(libpaths)%><%if(targetoutdir)%><%libpath%>/<%targetoutdir%> <%endif%><%libpath%> <%endfor%>/usr/lib $(INSLIB),$(wildcard $(libpath)/lib$(lib).* $(libpath)/$(lib).lib)))),<%foreach(libs)%><%libname_prefix%><%lib%><%fornotlast(" ")%><%endfor%>)
     ifeq ($(LIBCHECK),)
       LIBCHECK = 1
     endif
@@ -417,9 +419,9 @@ endif
 <%endfor%>
 <%if(libpaths)%>
 ifeq ($(VXWORKSLINK),true)
-LDLIBPATH     =<%foreach(libpaths)%> -L<%libpath%><%endfor%>
+LDLIBPATH     =<%foreach(libpaths)%> <%if(targetoutdir)%>-L<%libpath%>/<%targetoutdir%> <%endif%>-L<%libpath%><%endfor%>
 else
-LDFLAGS      +=<%foreach(libpaths)%> -L<%libpath%><%endfor%>
+LDFLAGS      +=<%foreach(libpaths)%> <%if(targetoutdir)%>-L<%libpath%>/<%targetoutdir%> <%endif%>-L<%libpath%><%endfor%>
 endif
 <%endif%>
 <%if(includes)%>
@@ -615,7 +617,7 @@ ifneq ($(VXWORKSLINK),true)
 <%if(libs && libpaths)%>
 ifeq ($(static_libs_only), 1)
   ifeq ($(use_dep_libs), 1)
-    DEPLIBS = $(foreach lib,<%foreach(libs)%> <%libname_prefix%><%lib%><%endfor%> <%lit_libs%>, $(foreach libpath, <%libpaths%>, $(wildcard $(libpath)/lib$(lib).a)))
+    DEPLIBS = $(foreach lib,<%foreach(libs)%> <%libname_prefix%><%lib%><%endfor%> <%lit_libs%>, $(foreach libpath,<%foreach(libpaths)%><%if(targetoutdir)%> <%libpath%>/<%targetoutdir%><%endif%> <%libpath%><%endfor%>, $(wildcard $(libpath)/lib$(lib).a)))
   endif
 endif
 

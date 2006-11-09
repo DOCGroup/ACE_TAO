@@ -47,7 +47,7 @@ public:
                         int prot = PROT_RDWR,
                         int share = ACE_MAP_PRIVATE,
                         char *addr = 0,
-                        off_t pos = 0);
+                        ACE_OFF_T pos = 0);
 
   /// Constructor.
   ACE_Shared_Memory_MM (const ACE_TCHAR *file_name,
@@ -56,7 +56,7 @@ public:
                         int mode = ACE_DEFAULT_FILE_PERMS,
                         int prot = PROT_RDWR,
                         int share = ACE_MAP_SHARED,
-                        char *addr = 0, off_t pos = 0);
+                        char *addr = 0, ACE_OFF_T pos = 0);
 
   /// Open method.
   int open (ACE_HANDLE handle,
@@ -64,7 +64,7 @@ public:
             int prot = PROT_RDWR,
             int share = ACE_MAP_PRIVATE,
             char *addr = 0,
-            off_t pos = 0);
+            ACE_OFF_T pos = 0);
 
   /// Open method.
   int open (const ACE_TCHAR *file_name,
@@ -74,7 +74,7 @@ public:
             int prot = PROT_RDWR,
             int share = ACE_MAP_SHARED,
             char *addr = 0,
-            off_t pos = 0);
+            ACE_OFF_T pos = 0);
 
   /// Return the name of file that is mapped (if any).
   const ACE_TCHAR *filename (void) const;

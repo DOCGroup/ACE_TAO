@@ -1,8 +1,559 @@
+Thu Nov  9 19:59:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * include/makeinclude/platform_aix4_cset++.GNU:
+        * include/makeinclude/platform_integrity_ghs.GNU:
+        * include/makeinclude/platform_irix6.x_sgic++.GNU:
+        * include/makeinclude/platform_linux_pgi.GNU:
+        * include/makeinclude/platform_macosx_panther.GNU:
+        * include/makeinclude/platform_macosx_tiger.GNU:
+        * include/makeinclude/platform_netbsd.GNU:
+        * include/makeinclude/platform_openbsd.GNU:
+        * include/makeinclude/platform_osf1_4.x_rcc.GNU:
+        * include/makeinclude/platform_vxworks5.x_ghs.GNU:
+          Simplified these files using the ?= operator
+
+Thu Nov 09 16:10:10 UTC 2006  Martin Corino  <mcorino@remedy.nl>
+
+        * ace/Service_Config.cpp:
+
+          Reverted my earlier change of Nov 6 and additionally removed
+          the ACE_Reactor::instance() call from the ACE_Service_Config
+          CTOR since it seems to be unnecessary here.
+
+Thu Nov  9 15:22:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * include/makeinclude/wrapper_macros.GNU:
+          Default threads to 1 if not set, thanks to Chad for helping out
+          with finding out why I had a problem in the rtems build
+
+Thu Nov  9 12:46:54 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * bin/MakeProjectCreator/config/acedefaults.mpb:
+        * bin/MakeProjectCreator/config/taodefaults.mpb:
+
+          Add automake specific section to subtract out $(ACE_ROOT)/lib
+          from libpaths, as libraries are not copied to, or linked from,
+          there in automake builds.  This removes unnecessary -L's from
+          being added to *_LDFLAGS, sometimes eliminating the need for
+          that automake variable altogether.
+
+Thu Nov  9 10:48:52 UTC 2006  Olli Savia  <ops@iki.fi>
+
+        * examples/IPC_SAP/DEV_SAP/reader/reader.cpp:
+        * examples/IPC_SAP/DEV_SAP/writer/writer.cpp:
+          Changed used baudrate to 19200. Extended reader example to handle
+          timeout.
+
+Thu Nov  9 10:50:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Timer_Heap_T.{h,cpp}:
+          Changed the preallocated constructor from int to bool.
+
+Thu Nov  9 09:25:48 UTC 2006  Olli Savia  <ops@iki.fi>
+
+        * ace/TTY_IO.cpp:
+          Removed LynxOS 3.x specific workaround.
+
+Wed Nov  8 22:22:27 UTC 2006  Steve Huston  <shuston@riverace.com>
+
+        * bin/make_release: Re-applied this:
+          Sat Oct 28 20:10:42 UTC 2006  Steve Huston  <shuston@riverace.com>
+
+Wed Nov  8 22:12:46 UTC 2006  Iliyan Jeliazkov  <iliyan@ociweb.com>
+
+        * ace/Service_Config.cpp:
+        * ace/Service_Gestalt.cpp:
+
+        This resolves a problem with shutting down the Service
+        Configurator via the static ACE_Service_Config::close () method,
+        where the registered services' fini() methods were not being
+        called. For full details, see bugzilla# 2701. Thanks to Aaron
+        Scamehorn <Aaron dot Scamehorn at cogcap dot com> for discovering
+        it an providing a test case.
+
+Wed Nov  8 19:21:17 UTC 2006  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * bin/make_release:
+
+          Updates to the release script to work with Subversion.
+
+Mon Nov  6 16:07:43 UTC 2006  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
+
+        * ace/SOCK_IO.h (ACE_SOCK_IO): Clarified the behavior of
+          non-blocking I/O.  Thanks to Robert Neumann <robert dot neumann
+          at gmail dot com> for motivating this change.
+
+Tue Nov 08 15:40:10 UTC 2006  Martin Corino  <mcorino@remedy.nl>
+
+        * ace/INET_Addr.inl:
+
+          Enhanced operator <() to support IPv6 addresses as well.
+          Thanks to Andre Kostur (akostur at incognito dot com) for
+          submitting a patch for this.
+
+Wed Nov  8 14:24:02 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * configure.ac:
+
+          Change ACE_LACKS_NET_IF_H feature test to #include <sys/types.h>
+          (if present).
+
+Wed Nov  8 13:45:07 UTC 2006  Chad Elliott  <elliott_c@ociweb.com>
+
+        * examples/C++NPv2/C++NPv2.mpc:
+
+          The AC_CLD project requires threads in order to build and run
+          correctly.
+
+Tue Nov 07 15:49:10 UTC 2006  Martin Corino  <mcorino@remedy.nl>
+
+        * ace/OS_NS_netdb.inl:
+
+          Changes to accomodate VxWorks 6.x versions of gethostbyname and
+          gethostbyaddr. These are threadsafe as the x_r versions are but
+          require deallocating the returned hostent structure.
+
+Tue Nov  7 15:44:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Sock_Connect.cpp:
+          With VxWorks 6.3 in rtp mode with IPv6 enabled declare the
+          in6addr_ constants explicitly, these are exported by the
+          VxWorks 6.3 rtp header files but not implemented
+
+Tue Nov 07 13:31:10 UTC 2006  Martin Corino  <mcorino@remedy.nl>
+
+        * include/makeinclude/platform_vxworks6.3.GNU:
+
+          Fixed build settings for PPC32 builds with softfloat.
+
+Tue Nov  7 10:38:25 UTC 2006  Simon McQueen  <sm@prismtech.com>
+
+        * tests/Naming_Test.cpp:
+
+          Moved an ::open out of an ACE_ASSERT. It wasn't getting performed on
+          some builds.
+
+Tue Nov  7 09:56:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * performance-tests/Misc/basic_func.{h,cpp}:
+          Renamed B to BB to resolve compile problems on rtems where we
+          have also a typedef B
+
+Tue Nov  7 07:52:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/ACE.h:
+          Also rtems defines log2, use the same workaround as with cygwin
+
+        * include/makeinclude/platform_rtems.x_g++.GNU:
+          Removed -ansi
+
+Tue Nov  7 01:47:46 UTC 2006  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * ace/Sock_Connect.cpp (count_interfaces):
+          Another scoreboard fix.
+
+Mon Nov  6 20:52:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * apps/Gateway/Gateway/Config_Files.{h,cpp}:
+        * apps/Gateway/Gateway/File_Parser.{h,cpp}:
+        * apps/Gateway/Gateway/Gateway.cpp:
+          Renamed class FP to FPRT. This resolves the compile errors on
+          rtems where a struct FP does exist
+
+Mon Nov  6 16:52:14 UTC 2006  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * ace/Sock_Connect.cpp:
+          My fix for Solaris x86 broke HPUX. The trouble is that the
+          method ACE::count_interfaces() is only used by the "generic"
+          implementation of get_ip_interfaces(). Probably a better
+          solution is to remove count_interfaces() and move its
+          functionality into the get_ip_interfaces() implementation, but
+          that is a bigger change than I care to make at the moment. I
+          think it should be possible to do so in a way that also reduces
+          the footprint and improves performance by eliminating the
+          effectively duplicated code in count_interfaces().
+
+Mon Nov 06 14:14:10 UTC 2006  Martin Corino  <mcorino@remedy.nl>
+
+        * ace/config-vxworks6.3.h:
+
+          Fixed incorrect definition of IOV_MAX.
+
+Mon Nov  6 13:08:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/config-sunos5.5.h:
+          Added ACE_HAS_GETRUSAGE, thanks to Michael Klein
+          <michael dot klein at fazi dot de> for reporting that SunOS has
+          this method, fixes bugzilla 2694.
+
+Mon Nov  6 12:59:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * examples/Service_Configurator/Misc/main.cpp:
+        * examples/Service_Configurator/Misc/Service_Configurator_Misc.mpc:
+        * examples/Service_Configurator/Misc/svc.conf1
+          Fixed shared library name, make working for embedded platforms.
+          Thanks to Abdul Sowayan <abdullah dot sowayan at lmco dot com>
+          for reporting this, fixes bugzilla bug 2698
+
+Mon Nov 06 11:17:10 UTC 2006  Martin Corino  <mcorino@remedy.nl>
+
+        * ace/Service_Config.cpp:
+
+          Implemented a fix for runtime problems in case
+          ACE_HAS_NONSTATIC_OBJECT_MANAGER is defined (seen on VxWorks 6.3 RTP).
+
+Sun Nov  5 14:14:51 UTC 2006  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * ace/Sock_Connect.cpp:
+          Fix for Solaris x86.
+
+Sat Nov  4 12:46:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/config-sunos4*.h:
+          Removed these files, these are ancient and not supported anymore
+
+Fri Nov  3 18:12:36 UTC 2006  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
+
+        * tests/Unload_libACE.cpp (main): Reverted the ACE_OS::exit() from
+          this since it's not supposed to be an ACE test.  Thanks to Simon
+          Massey for reporting this.
+
+Fri Nov 03 15:52:10 UTC 2006  Martin Corino  <mcorino@remedy.nl>
+
+        * bin/PerlACE/ProcessVX_Unix.pm:
+
+          Bugfix in cmdline composition.
+
+Fri Nov  3 15:15:43 UTC 2006  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * ace/Sock_Connect.cpp:
+          Scoreboard cleanup.
+
+Fri Nov 03 10:54:10 UTC 2006  Martin Corino  <mcorino@remedy.nl>
+
+        * ace/OS_NS_sys_time.inl:
+
+          Fixed conversion warning on OpenVMS.
+
+Fri Nov  3 00:39:04 UTC 2006  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * ace/Sock_Connect.cpp:
+          One more optimization, this one to combine the methods for
+          evaluating the IPv6 or IPv4 enabled status.
+
+Fri Nov  3 00:32:27 UTC 2006  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * ace/Select_Reactor_Base.inl:
+        * ace/Select_Reactor_Base.cpp:
+          Additional optimization for finding and unbinding event
+          handlers. The solution moves the test for handles in range into
+          the top-level find and unbind methods to allow the fix for bug
+          2653 to continue to work in unbind while avoiding a double check
+          for handles in range during a find.
+
+Thu Nov  2 20:33:55 UTC 2006  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
+
+        * tests/SOCK_Test_IPv6.cpp (spawn):
+        * tests/Pipe_Test.cpp (run_main):
+        * tests/SPIPE_Test.cpp (client):
+        * tests/TkReactor_Test.cpp (run_main):
+        * tests/MT_SOCK_Test.cpp (spawn):
+        * tests/Process_Strategy_Test.cpp (run_main):
+        * tests/Unload_libACE.cpp (main):
+        * tests/SOCK_Test.cpp (spawn):
+        * tests/Priority_Reactor_Test.cpp (run_main):
+        * tests/SOCK_Dgram_Test.cpp (spawn):
+        * tests/SOCK_SEQPACK_SCTP_Test.cpp (spawn_test):
+        * examples/Map_Manager/test_hash_map_manager.cpp (ACE_TMAIN):
+        * apps/mkcsregdb/mkcsregdb.cpp (fail): Replaced exit() with
+          ACE_OS::exit().
+
+Wed Nov 01 20:04:00 US Central Time 2006 Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
+
+        * Bronson Royce Schmidt checked in at 7 pounds, 15 ounces and
+          21.25 inches long.
+
+Thu Nov  2 16:10:10 UTC 2006  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * ace/Sock_Connect.cpp:
+          Cleaned up debugging code left in my previous premature commit.
+
+Thu Nov  2 15:42:29 UTC 2006  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * ace/Sock_Connect.cpp:
+        * ace/Sock_Connect.h:
+          Added support for IPv6 detection on HPUX, AIX, Solaris, WinCE,
+          and VxWorks 5.5.x.
+
+Wed Nov 01 09:05:10 UTC 2006  Martin Corino  <mcorino@remedy.nl>
+
+        * ace/OS_NS_stdlib.inl:
+
+          Fixed conversion warnings in atop() on OpenVMS.
+
+Wed Nov 01 08:35:10 UTC 2006  Martin Corino  <mcorino@remedy.nl>
+
+        * ace/OS_NS_sys_stat.h:
+
+          Fixed Borland compile failure over def of ACE_Stat.
+
+Tue Oct 31 23:08:32 UTC 2006  Steve Huston  <shuston@riverace.com>
+
+        * ace/Dev_Poll_Reactor.h: Note that the Linux epoll code implementation
+          is supported, but the /dev/poll implementation is still
+          experimental.
+
+Tue Oct 31 10:31:10 UTC 2006  Ossama Othman  <ossama_othman at symantec.com>
+
+        * ace/OS_NS_sys_stat.h (ACE_WSTAT_FUNC_NAME):
+
+          Corrected wstat() function name for Borland.
+
+Mon Oct 30 19:57:20 UTC 2006  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * bin/ciao_tests.lst:
+
+          Added run_test.pl in CIAO/tests/IDL3/Events/Any to the list of
+          CIAO tests to be run automatically.
+
+Mon Oct 30 17:34:35 UTC 2006  Ossama Othman  <ossama_othman at symantec.com>
+
+        * ace/config-win32-common.h:
+
+          Use 64-bit file offsets by default in the WIN64 case, similar to
+          what 64-bit UNIX systems do.
+
+Mon Oct 30 17:23:15 UTC 2006  Steve Huston  <shuston@riverace.com>
+
+        * include/makeinclude/wrapper_macros.GNU: Added 2 new build options,
+          dmalloc and mtrace. When specified at build time (e.g. make mtrace=1)
+          the PLATFORM_DMALLOC_CPPFLAGS and/or PLATFORM_MTRACE_CPPFLAGS values
+          are added to CPPFLAGS. For dmalloc, the PLATFORM_DMALLOC_LDFLAGS and
+          PLATFORM_DMALLOC_LIBS are added to LDFLAGS and LIBS, respectively.
+          Also added the ability to specify additional purify and quantify
+          command-line options by setting PLATFORM_PURIFY_OPTIONS and
+          PLATFORM_QUANTIFY_OPTIONS, respectively. Thank you to Howard
+          Finer for supplying these additions.
+
+Mon Oct 30 16:56:28 UTC 2006  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/MakeProjectCreator/templates/gnu.mpd:
+
+          The implementation for the 'targetoutdir' template variable was
+          incorrect.  Libraries and executables were not symbolically linked
+          to the output location correctly.  Also, 'targetoutdir' was not
+          taken into account for the 'libpaths' setting.
+
+Mon Oct 30 15:30:47 UTC 2006  Simon McQueen  <sm@prismtech.com>
+
+        * bin/tao_orb_tests.lst:
+
+          Scheduled regression test for bug #2669.
+
+Mon Oct 30 14:31:42 UTC 2006  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * ace/Select_Reactor_Base.inl:
+          Reverting the functional part of my previous commit until I
+          learn the correct way to manage the upper bound test portably.
+
+        * bin/tao_orb_tests.lst:
+          Make the Bug 2654 test be ignored for minimum CORBA builds.
+
+Mon Oct 30 12:18:03 UTC 2006 Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * ace/Select_Reactor_Base.inl (unbind):
+          Added an additional validity check and a comment to ward off
+          future optimizations.
+
+Mon Oct 30 09:24:42 UTC 2006  Ossama Othman  <ossama_othman at symantec.com>
+
+        * ace/OS_NS_sys_stat.h (ACE_stat):
+        * ace/OS_NS_sys_stat.inl (stat, wstat):
+
+          Only use Windows 64-bit stat structures and functions when
+          _FILE_OFFSET_BITS=64 is defined.  Addresses 64-bit conversion
+          warnings.
+
+Sun Oct 30 05:31:01 UTC 2006  Ossama Othman  <ossama_othman at symantec.com>
+
+        * ace/Auto_Ptr.h (ACE_auto_ptr_reset):
+
+          Adjusted function template arguments to handle case where the
+          auto_ptr element type and pointer type passed to this function
+          are not the same.  Addresses argument deduction failures.
+
+        * ace/FILE.h (ACE_FILE):
+
+          64-bit file offset fixes.  s/off_t/ACE_OFF_T.
+
+        * ace/Truncate.h (Truncator):
+
+          Added explicit specializations for int and long for Borland.
+          Relying on ACE_{U}INT32 specializations is not sufficient.
+
+        * tests/CDR_File_Test.cpp (run_test):
+
+          A 64-bit file offset is not always enabled.  Corrected offset
+          type.  s/ACE_LOFF_T/ACE_OFF_T.
+
+Sun Oct 29 17:10:39 UTC 2006  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * bin/tao_orb_tests.lst:
+          Added Bug 2654 regression test to suite.
+
+Sat Oct 28 20:50:56 UTC 2006  Steve Huston  <shuston@riverace.com>
+
+        * examples/Threads/thread_specific.cpp: Need to reinterpret_cast a
+          pointer back to an intptr_t.
+
+Sat Oct 28 20:10:42 UTC 2006  Steve Huston  <shuston@riverace.com>
+
+        * bin/make_release: Added Smartphone configurations to the WinCE
+          project files generated at release time.
+
+Sat Oct 28 13:50:01 UTC 2006  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * ace/Select_Reactor_Base.cpp:
+
+          Fix to address Win32-specific problems in bug 2653 fix.
+
+Sat Oct 28 01:48:27 UTC 2006  Steve Huston  <shuston@riverace.com>
+
+        * include/makeinclude/wrapper_macros.GNU: Add -L$(INSLIB) to LDFLAGS
+          if it was not there already. Allows link to work when built libraries
+          are moved to locations other than the default $(ACE_ROOT)/lib
+          location.
+
+Fri Oct 28 03:23:18 UTC 2006  Ossama Othman  <ossama_othman at symantec dot com>
+
+        * apps/JAWS2/JAWS/FILE.cpp:
+        * apps/JAWS2/JAWS/FILE.h:
+        * apps/JAWS2/JAWS/IO.cpp:
+        * apps/JAWS3/jaws3/FILE.cpp:
+        * apps/JAWS3/jaws3/FILE.h:
+        * examples/Threads/thread_manager.cpp:
+        * examples/Threads/cancel.cpp:
+        * examples/Threads/thread_specific.cpp:
+        * examples/C++NPv1/Process_Per_Connection_Logging_Server.cpp:
+        * performance-tests/Synch-Benchmarks/Perf_Test/Benchmark_Performance.cpp
+          Addressed 64-bit conversion warnings.
+
+Fri Oct 28 02:49:11 UTC 2006  Ossama Othman  <ossama_othman at symantec dot com>
+
+        * examples/APG/Shared_Memory/Mem_Map.cpp:
+        * examples/Mem_Map/file-reverse/file-reverse.cpp:
+        * examples/Web_Crawler/Mem_Map_Stream.cpp:
+
+          Addressed 64-bit conversion warnings.
+
+Fri Oct 27 21:41:25 UTC 2006  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * THANKS:
+        * ace/Select_Reactor_Base.inl:
+        * ace/Select_Reactor_Base.cpp:
+        * ace/TP_Reactor.inl:
+        * ace/TP_Reactor.cpp:
+        * tests/run_test.lst:
+
+          The fix for bug 2653. Thanks to Scott Mitchell <rsm at progress
+          dot com> and Chris Reed <cr at progress dot com> for the
+          considerable effort they put in helping to isolate this problem.
+
+Fri Oct 27 21:28:36 UTC 2006  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * tests/Bug_2653_Regression_Test.cpp:
+        * tests/tests.mpc:
+
+          Added a new regression test. Without the accompaning fix, the
+          test coredump. If you comment out the call to test_for_crash,
+          the test will spin madly for 5 seconds, then abort. With the
+          pending fix to the TP reactor, the test has no errors.
+
+Fri Oct 27 19:48:23 UTC 2006  Ossama Othman  <ossama_othman at symantec dot com>
+
+        * ace/Filecache.cpp (ACE_Filecache_Object):
+
+          Cast -1 to size_t.  Ugly (and works), but currently necessary.
+          Addresses "passing negative value" warnings.
+
+Fri Oct 27 19:28:16 UTC 2006  Ossama Othman  <ossama_othman at symantec dot com>
+
+        * ace/OS_NS_stdio.inl (flock_adjust_params):
+        * ace/OS_NS_sys_stat.inl (filesize):
+
+          Fixed comparison of signed/unsigned warnings.
+
+Fri Oct 27 09:25:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Configuration_Import_Export.cpp:
+          Explicitly initialise pointer to 0 to silence warning in
+          gcc cygwi build
+
+Fri Oct 27 01:58:09 UTC 2006  Ossama Othman  <ossama_othman at symantec dot com>
+
+        From Russell Mora <russell_mora at symantec dot com>
+        * ace/ACE.cpp:
+        * ace/ACE.h:
+        * ace/FILE.cpp:
+        * ace/File_Lock.h:
+        * ace/File_Lock.inl:
+        * ace/Filecache.cpp:
+        * ace/Filecache.h:
+        * ace/Local_Memory_Pool.cpp:
+        * ace/MEM_Acceptor.h:
+        * ace/MEM_Acceptor.inl:
+        * ace/MEM_IO.cpp:
+        * ace/MEM_IO.inl:
+        * ace/MEM_IO.h:
+        * ace/MMAP_Memory_Pool.cpp:
+        * ace/MMAP_Memory_Pool.h:
+        * ace/Mem_Map.cpp:
+        * ace/Mem_Map.h:
+        * ace/Mem_Map.inl:
+        * ace/OS_NS_macros.h:
+        * ace/OS_NS_stdio.cpp:
+        * ace/OS_NS_stdio.inl:
+        * ace/OS_NS_stdio.h:
+        * ace/OS_NS_sys_mman.h:
+        * ace/OS_NS_sys_mman.inl:
+        * ace/OS_NS_sys_stat.h:
+        * ace/OS_NS_sys_stat.inl:
+        * ace/OS_NS_unistd.cpp:
+        * ace/OS_NS_unistd.inl:
+        * ace/OS_NS_unistd.h:
+        * ace/Pagefile_Memory_Pool.inl:
+        * ace/Shared_Memory_MM.cpp:
+        * ace/Shared_Memory_MM.h:
+        * ace/Shared_Memory_MM.inl:
+        * ace/Shared_Memory_Pool.cpp:
+        * ace/Shared_Memory_Pool.h:
+        * ace/os_include/sys/os_types.h:
+        * ace/os_include/sys/os_stat.h:
+        * ace/os_include/os_unistd.h:
+        * examples/Web_Crawler/Iterators.cpp:
+        * examples/Web_Crawler/Mem_Map_Stream.cpp:
+        * examples/Web_Crawler/Mem_Map_Stream.h:
+        * examples/IPC_SAP/FILE_SAP/client.cpp:
+
+          Added support for 64-bit file offsets on 32-bit platforms that
+          support the _FILE_OFFSET_BITS preprocessor symbol, as well as
+          Windows.  Enable by defining the _FILE_OFFSET_BITS=64
+          preprocessor symbol.  ACE provides the necessary support on
+          Windows when it is defined with the assistance of a new
+          ACE_OFF_T typedef.
+
+Thu Oct 26 24:44:55 UTC 2006  Ossama Othman  <ossama_othman at symantec dot com>
+
+        * ace/Truncate.h (Truncator):
+
+          Removed ACE_Export macros in the Borland case.  They shouldn't
+          be necessary.
+
 Thu Oct 26 14:05:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/tao_other_tests.lst:
-	  Added orbsvcs/tests/Event/UDP test which tests the rtec
-	  udp federation
+          Added orbsvcs/tests/Event/UDP test which tests the rtec
+          udp federation
 
 Thu Oct 26 11:19:45 UTC 2006  Olli Savia  <ops@iki.fi>
 
@@ -18,8 +569,9 @@ Thu Oct 26 10:29:49 UTC 2006  Olli Savia  <ops@iki.fi>
 Thu Oct 26 07:48:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Truncate.h:
-          Added partial specialization for when types are the same, fixes compile
-          problems in the ACE lib with Borland
+
+          Added partial specialization for when types are the same, fixes
+          compile problems in the ACE lib with Borland
 
 Thu Oct 26 07:01:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -5428,12 +5980,15 @@ Fri Jun  9 08:16:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 Fri Jun  9 07:55:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/ARGV.{h,cpp,inl}:
-          Refactored ACE_ARGV to ACE_ARGV_T which is a template, where ACE_ARGV is
-          now a typedef of ACE_ARGV_T<ACE_TCHAR>. Taken the idea from the wchar
-          work of David Giovannini <giovannd at ociweb dot com>
+
+          Refactored ACE_ARGV to ACE_ARGV_T which is a template, where
+          ACE_ARGV is now a typedef of ACE_ARGV_T<ACE_TCHAR>. Taken the
+          idea from the wchar work of David Giovannini <giovannd at ociweb
+          dot com>
 
         * ace/ace.mpc:
         * ace/Makefile.am:
+
           ARGV.cpp added to the template files, added the new netlink files
 
         * ace/OS_NS_sys_stat.{h,inl}:
@@ -5442,11 +5997,13 @@ Fri Jun  9 07:55:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
         * ace/Filecache.{h,cpp}:
         * ace/FILE_IO.cpp:
         * ace/FILE.h:
-          Use ACE_LOFF_T for the filesize so that we can support files bigger then
-          2Gb on windows and other platforms. Also use for Borland the 64bit stat
-          structure and api's. This fixes bugzilla bug 1286, thanks to Ruslan Zasukhin
-          <sunshine at public dot kherson dot ua> for reporting this. Also fixes part
-          of bugzilla bug 2359, thanks to Olivier Brunet <o dot brunet at free dot fr>
+
+          Use ACE_LOFF_T for the filesize so that we can support files
+          bigger then 2Gb on windows and other platforms. Also use for
+          Borland the 64bit stat structure and api's. This fixes bugzilla
+          bug 1286, thanks to Ruslan Zasukhin <sunshine at public dot
+          kherson dot ua> for reporting this. Also fixes part of bugzilla
+          bug 2359, thanks to Olivier Brunet <o dot brunet at free dot fr>
           for reporting this.
 
 Thu Jun  8 17:13:42 UTC 2006  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>

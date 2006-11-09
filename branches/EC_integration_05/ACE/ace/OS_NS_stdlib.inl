@@ -79,6 +79,12 @@ ACE_OS::atop (const char *s)
   ACE_TRACE ("ACE_OS::atop");
 #if defined (ACE_WIN64)
   intptr_t ip = ::_atoi64 (s);
+#elif defined (ACE_OPENVMS)
+#  if !defined (__INITIAL_POINTER_SIZE) || (__INITIAL_POINTER_SIZE < 64)
+  int ip = ::atoi (s);
+#  else
+  intptr_t ip = ::atoi (s);
+#  endif
 #else
   intptr_t ip = ::atoi (s);
 #endif /* ACE_WIN64 */
@@ -92,6 +98,12 @@ ACE_OS::atop (const wchar_t *s)
 {
 #  if defined (ACE_WIN64)
   intptr_t ip = ::_wtoi64 (s);
+#  elif defined (ACE_OPENVMS)
+#    if !defined (__INITIAL_POINTER_SIZE) || (__INITIAL_POINTER_SIZE < 64)
+  int ip = ACE_OS::atoi (s);
+#    else
+  intptr_t ip = ACE_OS::atoi (s);
+#    endif
 #  else
   intptr_t ip = ACE_OS::atoi (s);
 #  endif /* ACE_WIN64 */

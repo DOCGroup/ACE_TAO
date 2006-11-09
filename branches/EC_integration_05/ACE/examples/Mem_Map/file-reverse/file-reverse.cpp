@@ -47,7 +47,7 @@ ACE_TMAIN (int argc, ACE_TCHAR **argv)
 
   ACE_Mem_Map mmap;
 
-  if (mmap.map (argv[1], -1, O_RDWR) == -1)
+  if (mmap.map (argv[1], static_cast<size_t> (-1), O_RDWR) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "%n: %p\n",
                        "mmap"),

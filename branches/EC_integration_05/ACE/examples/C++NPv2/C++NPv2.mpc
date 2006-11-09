@@ -8,6 +8,7 @@
 // without setting a build dependency within vc6 and the like.
 
 project(*AC_CLD) : acelib, ssl {
+  requires += threads
   avoids += uses_wchar
   sharedname = AC_CLD
   dynamicflags = AC_CLD_BUILD_DLL

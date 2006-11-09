@@ -130,12 +130,12 @@ ACEXML_ZipCharStream::getchar_i (char& ch)
 }
 
 int
-ACEXML_ZipCharStream::peekchar_i (off_t offset)
+ACEXML_ZipCharStream::peekchar_i (ACE_OFF_T offset)
 {
   if (this->infile_ == 0)
     return -1;
 
-  if (offset > (off_t) sizeof (this->buf_))
+  if (offset > (ACE_OFF_T) sizeof (this->buf_))
     return -1;
   if (this->pos_ + offset < this->limit_)
     return this->buf_[this->pos_ + offset];
