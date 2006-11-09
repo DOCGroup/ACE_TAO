@@ -107,30 +107,12 @@ main (int argc, char *argv[])
         {
           for (int i = 0; i != niterations; ++i)
             {
-              CORBA::Long const tv = i + 100;
-              server->test_val(tv);
-              CORBA::Long const rtv = server->test_val ();
+              the_in_structure.i = i;
+              CORBA::String_var name = CORBA::string_dup ("the name");
 
-              if (TAO_debug_level > 0)
-                {
-                   ACE_DEBUG ((LM_DEBUG,
-                               "DSI_Simpler_Server ==== Expected result = %d for %d\n",
-                               rtv, tv));
-                }
+              Structure_var the_out_structure;
 
-              if (rtv != tv)
-                {
-                   ACE_ERROR ((LM_ERROR,
-                             "(%P|%t) ERROR: unexpected result = %d for %d\n",
-                             rtv, tv));
-               }
-
-             the_in_structure.i = i;
-             CORBA::String_var name = CORBA::string_dup ("the name");
-
-             Structure_var the_out_structure;
-
-             CORBA::Long const r =
+              CORBA::Long r =
                 server->test_method (i,
                                      the_in_structure,
                                      the_out_structure.out (),
@@ -154,8 +136,8 @@ main (int argc, char *argv[])
 
               if (r != i)
                 {
-                  ACE_ERROR ((LM_ERROR,
-                              "(%P|%t) ERROR: unexpected result = %d for %d",
+                  ACE_DEBUG ((LM_DEBUG,
+                              "(%P|%t) unexpected result = %d for %d",
                               r, i));
                 }
             }

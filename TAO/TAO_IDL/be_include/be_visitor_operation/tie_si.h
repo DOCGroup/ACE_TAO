@@ -8,24 +8,25 @@
 //    TAO IDL
 //
 // = FILENAME
-//    tie_ss.h
+//    tie_si.h
 //
 // = DESCRIPTION
-//    Visitor for generating code for IDL operations for the TIE class
+//    Visitor for generating code for IDL operations for the TIE class inside
+//    the server inline
 //
 // = AUTHOR
 //    Aniruddha Gokhale
 //
 // ============================================================================
 
-#ifndef _BE_VISITOR_OPERATION_TIE_SS_H_
-#define _BE_VISITOR_OPERATION_TIE_SS_H_
+#ifndef _BE_VISITOR_OPERATION_TIE_SI_H_
+#define _BE_VISITOR_OPERATION_TIE_SI_H_
 
 // ***********************************************************************
 // Operation visitor for operation declaration inside the TIE class
 // ***********************************************************************
 
-class be_visitor_operation_tie_ss : public be_visitor_scope
+class be_visitor_operation_tie_si : public be_visitor_scope
 {
   //
   // = TITLE
@@ -36,14 +37,14 @@ class be_visitor_operation_tie_ss : public be_visitor_scope
   //
   //
 public:
-  be_visitor_operation_tie_ss (be_visitor_context *ctx);
+  be_visitor_operation_tie_si (be_visitor_context *ctx);
   // constructor
 
-  ~be_visitor_operation_tie_ss (void);
+  ~be_visitor_operation_tie_si (void);
   // destructor
 
   virtual int visit_operation (be_operation *node);
   // set the right context and make a visitor
 };
 
-#endif /* _BE_VISITOR_OPERATION_TIE_SS_H_ */
+#endif /* _BE_VISITOR_OPERATION_TIE_SI_H_ */

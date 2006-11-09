@@ -5,10 +5,9 @@
 
 ACE_RCSID(Muxing, Receiver, "$Id$")
 
-Receiver::Receiver (CORBA::ORB_ptr orb)
+Receiver::Receiver (void)
   :  message_count_ (0)
   ,  byte_count_ (0)
-  , orb_ (CORBA::ORB::_duplicate (orb))
 {
 }
 
@@ -39,11 +38,4 @@ Receiver::get_event_count (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
 {
   ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ace_mon, this->mutex_, 0);
   return this->message_count_;
-}
-
-void
-Receiver::shutdown (ACE_ENV_SINGLE_ARG_DECL)
-  ACE_THROW_SPEC ((CORBA::SystemException))
-{
-  this->orb_->shutdown (0 ACE_ENV_ARG_PARAMETER);
 }

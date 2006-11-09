@@ -10,7 +10,7 @@ ACE_RCSID(Test, server, "$Id$")
 int msglen = 100; //default length of reply message is 100 bytes
 int nthreads = 2;
 const char *ior_output_file = "test.ior";
-int orb_timeout = 30; //default timeout for ORB is 30 sec
+int timeout = 30; //default timeout for ORB is 30 sec
 
 
 int
@@ -35,7 +35,7 @@ parse_args (int argc, char *argv[])
         break;
 
       case 't':
-        orb_timeout = ACE_OS::atoi (get_opts.opt_arg ());
+        timeout = ACE_OS::atoi (get_opts.opt_arg ());
         break;
 
       case '?':
@@ -90,7 +90,7 @@ main (int argc, char *argv[])
 
       ACE_DEBUG(( LM_DEBUG, "ior file = %s\t#threads = %d\t"
                   "msglen = %d\tORB timeout = %d sec\n",
-                  ior_output_file, nthreads, msglen, orb_timeout ));
+                  ior_output_file, nthreads, msglen, timeout ));
 
       // Create the factory servant
       Object_Factory_i *factory_impl;
@@ -127,7 +127,7 @@ main (int argc, char *argv[])
       ACE_TRY_CHECK;
 
       // Instantiate the specified # of worker threads
-      Worker worker (orb.in (), orb_timeout);
+      Worker worker (orb.in (), timeout);
 
       if (worker.activate (THR_NEW_LWP | THR_JOINABLE,
                            nthreads) != 0)

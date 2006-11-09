@@ -61,24 +61,3 @@ Simple_Server_i::shutdown (ACE_ENV_SINGLE_ARG_DECL)
 {
   this->orb_->shutdown (0 ACE_ENV_ARG_PARAMETER);
 }
-
-CORBA::Long
-Simple_Server_i::test_val (ACE_ENV_SINGLE_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException))
-{
-  return vlong_;
-}
-
-void
-Simple_Server_i::test_val (CORBA::Long tv ACE_ENV_ARG_DECL_NOT_USED)
-    ACE_THROW_SPEC ((CORBA::SystemException))
-{
-  if (TAO_debug_level > 0)
-    {
-      ACE_DEBUG ((LM_DEBUG,
-                  "Simpler_Server_i ====test_val: %d\n", tv
-                 ));
-    }
-    vlong_ = tv;
-}
-

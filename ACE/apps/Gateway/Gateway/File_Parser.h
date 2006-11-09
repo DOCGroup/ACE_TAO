@@ -23,7 +23,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-class FPRT
+class FP
 {
   // = TITLE
   //     This class serves as a namespace for the <Return_Type>.
@@ -54,19 +54,19 @@ public:
   int open (const ACE_TCHAR filename[]);
   int close (void);
 
-  virtual FPRT::Return_Type read_entry (ENTRY &entry,
-                                        int &line_number) = 0;
+  virtual FP::Return_Type read_entry (ENTRY &entry,
+                                      int &line_number) = 0;
   // Pure virtual hook that subclasses override and use the protected
   // methods to fill in the <entry>.
 
 protected:
-  FPRT::Return_Type getword (char buf[]);
+  FP::Return_Type getword (char buf[]);
   // Read the next ASCII word.
 
-  FPRT::Return_Type getint (ACE_INT32 &value);
+  FP::Return_Type getint (ACE_INT32 &value);
   // Read the next integer.
 
-  FPRT::Return_Type readword (char buf[]);
+  FP::Return_Type readword (char buf[]);
   // Read the next "word," which is demarcated by <delimiter>s.
   //
   // @@ This function is inherently flawed since it doesn't take a

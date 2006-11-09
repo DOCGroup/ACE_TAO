@@ -1,30 +1,3 @@
-Wed Nov  8 20:56:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
-
-        * examples/Null_Component/*:
-          Added some modelling files I got also from Abdul and removed the .ccd file
-          I committed by accident
-
-Wed Nov  8 14:24:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
-
-        * DAnCE/StaticConfigurator/StaticDAnCEParser.cpp:
-          Fixed a small memory leaks and other problems. This fixes bugzilla
-          2692. Thanks to Sowayan Abdullah <abdullah dot sowayan at lmco dot com>
-          for reporting these issues.
-
-        * DAnCE/NodeApplicationManager/ImplementationInfo.cpp:
-          A few small improvements
-
-Sun Nov  5 19:16:57 UTC 2006  Shanshan Jiang <shanshan.jiang@vanderbilt.edu>
-
-        * DAnCE/NodeApplicationManager/Containers_Info_Map.cpp:
-          Removed the use of STL iostream.
-          Use ACE DLL decorator, prefix, suffix for DLL file names.
-
-        * DAnCE/RepositoryManager/PC_Updater.cpp:
-        * DAnCE/RepositoryManager/RepositoryManager_Impl.cpp:
-        * DAnCE/RepositoryManager/RMadmin.cpp:
-          Removed the use of STL iostream.
-
 Fri Nov  3 03:03:24 UTC 2006  Shanshan Jiang <shanshan.jiang@vanderbilt.edu>
 
         * DAnCE/NodeApplicationManager/Containers_Info_Map.cpp
@@ -51,7 +24,6 @@ Thu Nov  2 20:22:46 UTC 2006  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
         * DAnCE/tests/NodeApplicationTest/NodeApp_test_client_ex.cpp:
         * DAnCE/NodeManager/Node_Manager.cpp (main): Replaced exit() with
           ACE_OS::exit().  Thanks to Abdul Sowayan for reporting this.
-          This fixes bugid #2695.
 
 Mon Oct 30 19:13:03 UTC 2006  Jeff Parsons <j.parsons@vanderbilt.edu>
 

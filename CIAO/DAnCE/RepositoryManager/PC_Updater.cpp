@@ -6,6 +6,10 @@
 #include "PC_Updater_T.h"
 #include "ace/Containers_T.h"        //for ACE_Double_Linked_List
 
+
+#include <iostream>
+using namespace std;
+
 namespace
 {
   const size_t TEMP_LEN = 1024;

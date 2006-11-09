@@ -5,15 +5,11 @@
 #include "Config_Files.h"
 #include "Options.h"
 
-#if defined (GATEWAY_DEBUGGING)
-#include "ace/Log_Msg.h"
-#endif /* GATEWAY_DEBUGGING */
-
 ACE_RCSID(Gateway, Config_Files, "$Id$")
 
 // This fixes a nasty bug with cfront-based compilers (like
 // Centerline).
-typedef FPRT::Return_Type FP_RETURN_TYPE;
+typedef FP::Return_Type FP_RETURN_TYPE;
 
 FP_RETURN_TYPE
 Consumer_Config_File_Parser::read_entry (Consumer_Config_Info &entry,
@@ -27,27 +23,27 @@ Consumer_Config_File_Parser::read_entry (Consumer_Config_Info &entry,
   // Ignore comments, check for EOF and EOLINE if this succeeds, we
   // have our connection id.
 
-  while ((result = this->getint (entry.connection_id_)) != FPRT::RT_SUCCESS)
-    if (result == FPRT::RT_EOFILE)
-      return FPRT::RT_EOFILE;
-    else if (result == FPRT::RT_EOLINE
-             || result == FPRT::RT_COMMENT)
+  while ((result = this->getint (entry.connection_id_)) != FP::RT_SUCCESS)
+    if (result == FP::RT_EOFILE)
+      return FP::RT_EOFILE;
+    else if (result == FP::RT_EOLINE
+             || result == FP::RT_COMMENT)
       line_number++;
 
   // Get the payload type.
   result = this->getint (entry.type_);
-  if (result != FPRT::RT_SUCCESS)
+  if (result != FP::RT_SUCCESS)
     return result;
 
   // get all the consumers.
   entry.total_consumers_ = 0;
 
   while ((result = this->getint
-          (entry.consumers_[entry.total_consumers_])) == FPRT::RT_SUCCESS)
+          (entry.consumers_[entry.total_consumers_])) == FP::RT_SUCCESS)
     ++entry.total_consumers_; // do nothing (should check against max...)
 
-  if (result == FPRT::RT_EOLINE || result == FPRT::RT_EOFILE)
-    return FPRT::RT_SUCCESS;
+  if (result == FP::RT_EOLINE || result == FP::RT_EOFILE)
+    return FP::RT_SUCCESS;
   else
     return result;
 }
@@ -60,32 +56,32 @@ Connection_Config_File_Parser::read_entry (Connection_Config_Info &entry,
   FP_RETURN_TYPE result;
 
   // Increment the line count.
-  ++line_number;
+  line_number++;
 
   // Ignore comments, check for EOF and EOLINE if this succeeds, we
   // have our connection id
 
-  while ((result = this->getint (entry.connection_id_)) != FPRT::RT_SUCCESS)
-    if (result == FPRT::RT_EOFILE)
-      return FPRT::RT_EOFILE;
-    else if (result == FPRT::RT_EOLINE
-             || result == FPRT::RT_COMMENT)
-      ++line_number;
+  while ((result = this->getint (entry.connection_id_)) != FP::RT_SUCCESS)
+    if (result == FP::RT_EOFILE)
+      return FP::RT_EOFILE;
+    else if (result == FP::RT_EOLINE
+             || result == FP::RT_COMMENT)
+      line_number++;
 
   // Get the hostname.
   result = this->getword (entry.host_);
-  if (result != FPRT::RT_SUCCESS)
+  if (result != FP::RT_SUCCESS)
     return result;
 
   ACE_INT32 port;
 
   // Get the port number.
   result = this->getint (port);
-  if (result == FPRT::RT_DEFAULT)
+  if (result == FP::RT_DEFAULT)
     {
       // Get the proxy role, i.e., 'C' (Consumer) or 'S' (Supplier).
       result = this->getword (buf);
-      if (result != FPRT::RT_SUCCESS)
+      if (result != FP::RT_SUCCESS)
         return result;
       else
         entry.connection_role_ = buf[0];
@@ -98,7 +94,7 @@ Connection_Config_File_Parser::read_entry (Connection_Config_Info &entry,
         // Yikes, this is a *weird* error!
         entry.remote_port_ = 0;
     }
-  else if (result != FPRT::RT_SUCCESS)
+  else if (result != FP::RT_SUCCESS)
     return result;
   else
     {
@@ -106,7 +102,7 @@ Connection_Config_File_Parser::read_entry (Connection_Config_Info &entry,
 
       // Get the proxy role, i.e., 'C' (Consumer) or 'S' (Supplier).
       result = this->getword (buf);
-      if (result != FPRT::RT_SUCCESS)
+      if (result != FP::RT_SUCCESS)
         return result;
       else
         entry.connection_role_ = buf[0];
@@ -114,16 +110,16 @@ Connection_Config_File_Parser::read_entry (Connection_Config_Info &entry,
 
   // Get the max retry delay.
   result = this->getint (entry.max_retry_timeout_);
-  if (result == FPRT::RT_DEFAULT)
+  if (result == FP::RT_DEFAULT)
     entry.max_retry_timeout_ = Options::instance ()->max_timeout ();
-  else if (result != FPRT::RT_SUCCESS)
+  else if (result != FP::RT_SUCCESS)
     return result;
 
   // Get the local port number.
   result = this->getint (port);
-  if (result == FPRT::RT_DEFAULT)
+  if (result == FP::RT_DEFAULT)
     entry.local_port_ = 0; // @@ Should make this an option.
-  else if (result != FPRT::RT_SUCCESS)
+  else if (result != FP::RT_SUCCESS)
     return result;
   else
     entry.local_port_ = (unsigned short) port;
@@ -132,15 +128,15 @@ Connection_Config_File_Parser::read_entry (Connection_Config_Info &entry,
 
   // Get the priority.
   result = this->getint (priority);
-  if (result != FPRT::RT_SUCCESS)
+  if (result != FP::RT_SUCCESS)
     return result;
   else
     entry.priority_ = priority;
 
-  return FPRT::RT_SUCCESS;
+  return FP::RT_SUCCESS;
 }
 
-#if defined (GATEWAY_DEBUGGING)
+#if defined (DEBUGGING)
 int
 main (int argc, char *argv[])
 {
@@ -159,8 +155,8 @@ main (int argc, char *argv[])
                 "ConnID\tHost\t\tRPort\tRole\tRetry\tLPort\tPriority\n"));
 
     // Read config file line at a time.
-    while ((result = connection_config_file.read_entry (entry, line_number)) != FPRT::RT_EOFILE)
-      if (result == FPRT::RT_PARSE_ERROR)
+    while ((result = connection_config_file.read_entry (entry, line_number)) != FP::RT_EOFILE)
+      if (result == FP::RT_PARSE_ERROR)
         ACE_DEBUG ((LM_DEBUG,
                     "Error line %d.\n",
                     line_number));
@@ -190,8 +186,8 @@ main (int argc, char *argv[])
                 "\nConnID\tLogic\tPayload\tDestinations\n"));
 
     // Read config file line at a time.
-    while ((result = consumer_config_file.read_entry (entry, line_number)) != FPRT::RT_EOFILE)
-      if (result == FPRT::RT_PARSE_ERROR)
+    while ((result = consumer_config_file.read_entry (entry, line_number)) != FP::RT_EOFILE)
+      if (result == FP::RT_PARSE_ERROR)
         ACE_DEBUG ((LM_DEBUG,
                     "Error line %d.\n",
                     line_number));
@@ -215,5 +211,5 @@ main (int argc, char *argv[])
 
   return 0;
 }
-#endif /* GATEWAY_DEBUGGING */
+#endif /* DEBUGGING */
 

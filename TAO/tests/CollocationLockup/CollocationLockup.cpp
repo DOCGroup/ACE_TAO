@@ -39,7 +39,7 @@ class A_i : public virtual POA_A
 {
 };
 
-class B_i : public virtual POA_C
+class B_i : public virtual POA_B
 {
 public:
   virtual A_ptr
@@ -134,7 +134,7 @@ TestThread (void*)
       for (size_t i (0); i < N_ITERATIONS; ++i)
         {
           CORBA::Object_var obj = g_pNameService->resolve ();
-          C_var b = C::_narrow (obj.in ());
+          B_var b = B::_narrow (obj.in ());
           b->makeA ();
           if (i % 50 == 0)
             ACE_DEBUG ((LM_INFO, "(%t) collocated call returned\n"));

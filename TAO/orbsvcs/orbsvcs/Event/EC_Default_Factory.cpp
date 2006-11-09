@@ -18,7 +18,6 @@
 #include "orbsvcs/Event/EC_Event_Channel_Base.h"
 #include "orbsvcs/Event/EC_Reactive_ConsumerControl.h"
 #include "orbsvcs/Event/EC_Reactive_SupplierControl.h"
-#include "orbsvcs/Event/EC_Thread_Flags.h"
 
 #include "orbsvcs/ESF/ESF_Proxy_List.h"
 #include "orbsvcs/ESF/ESF_Proxy_RB_Tree.h"
@@ -95,39 +94,6 @@ TAO_EC_Default_Factory::init (int argc, ACE_TCHAR* argv[])
                 this->dispatching_ = 1;
               else
                   this->unsupported_option_value ("-ECDispatching", opt);
-              arg_shifter.consume_arg ();
-            }
-        }
-      else if (ACE_OS::strcasecmp (arg, ACE_TEXT("-ECDispatchingThreadFlags")) == 0)
-        {
-          arg_shifter.consume_arg ();
-
-          // Need to be in the form of <flags>:<priority>
-          if (arg_shifter.is_parameter_next ())
-            {
-              const ACE_TCHAR* s = arg_shifter.get_current ();
-              // need to parse the flags...ugh
-              ACE_TCHAR* opt = ACE_OS::strdup (s);
-
-              ACE_TCHAR* aux;
-              ACE_TCHAR* flags = ACE_OS::strtok_r (opt, ACE_TEXT_CHAR_TO_TCHAR(":"), &aux);
-
-              TAO_EC_Thread_Flags tf(ACE_TEXT_ALWAYS_CHAR (flags)); // parse and set up
-              this->dispatching_threads_flags_ = tf.flags ();
-
-              ACE_TCHAR* arg = ACE_OS::strtok_r (0, ACE_TEXT_CHAR_TO_TCHAR(":"), &aux);
-              if (arg)
-                {
-                  long prio = ACE_OS::strtol (arg, 0, 0);
-
-                  this->dispatching_threads_priority_ = prio;
-                }
-              else
-                {
-                  // Should we set the default priority?
-                  this->dispatching_threads_priority_ = tf.default_priority ();
-                }
-              ACE_OS::free (opt);
               arg_shifter.consume_arg ();
             }
         }
@@ -542,7 +508,7 @@ TAO_EC_Default_Factory::find_service_object (const char* wanted,
     return so;
 
   ACE_ERROR ((LM_ERROR,
-              "EC (%P|%t) EC_Default_Factory::find_service_object "
+              "EC (%P|%t) EC_Default_Factory::create_dispatching "
               "unable to find queue full service object '%s'; "
               "using '%s' instead\n",
               wanted,
@@ -553,7 +519,7 @@ TAO_EC_Default_Factory::find_service_object (const char* wanted,
     return so;
 
   ACE_ERROR ((LM_ERROR,
-              "EC (%P|%t) EC_Default_Factory::find_service_object "
+              "EC (%P|%t) EC_Default_Factory::create_dispatching "
                       "unable find default queue full service object '%s'; "
                       "aborting.\n",
                       fallback));

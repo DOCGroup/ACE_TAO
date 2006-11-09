@@ -5,12 +5,7 @@
 
 ACE_RCSID(Event, EC_Factory, "$Id$")
 
-TAO_RTEvent_Serv_Export unsigned short TAO_EC_debug_level;
-
-TAO_EC_Factory::TAO_EC_Factory (void)
-{
-  TAO_EC_debug_level = 0;
-}
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_EC_Factory::~TAO_EC_Factory (void)
 {

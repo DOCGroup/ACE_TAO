@@ -70,7 +70,7 @@
 #include "be_visitor_operation/rettype.cpp"
 #include "be_visitor_operation/rettype_return_cs.cpp"
 #include "be_visitor_operation/tie_sh.cpp"
-#include "be_visitor_operation/tie_ss.cpp"
+#include "be_visitor_operation/tie_si.cpp"
 #include "be_visitor_operation/upcall_command_ss.cpp"
 
 // AMI

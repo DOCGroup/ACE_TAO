@@ -49,13 +49,6 @@ extern "C" {
 #include "ace/OS_NS_stdio.h"
 #endif /* ACE_VXWORKS < 0x600 */
 
-#if defined (ACE_VXWORKS) && (ACE_VXWORKS == 0x630) && defined (__RTP__) && defined (ACE_HAS_IPV6)
-const struct in6_addr in6addr_any = IN6ADDR_ANY_INIT;
-const struct in6_addr in6addr_nodelocal_allnodes = IN6ADDR_NODELOCAL_ALLNODES_INIT;
-const struct in6_addr in6addr_linklocal_allnodes = IN6ADDR_LINKLOCAL_ALLNODES_INIT;
-const struct in6_addr in6addr_linklocal_allrouters = IN6ADDR_LINKLOCAL_ALLROUTERS_INIT;
-#endif /* ACE_VXWORKS == 0x630 && __RTP__ && ACE_HAS_IPV6 */
-
 #if defined (ACE_HAS_WINCE)
 #include /**/ <Iphlpapi.h>
 // The following code is suggested by microsoft as a workaround to the fact
@@ -1612,7 +1605,6 @@ ACE::get_ip_interfaces (size_t &count,
                        ACE_LIB_TEXT ("%p\n"),
                        ACE_LIB_TEXT ("ACE::get_ip_interfaces:open")),
                       -1);
-
   if (ACE::count_interfaces (handle, num_ifs))
     {
       ACE_OS::close (handle);
@@ -1808,19 +1800,17 @@ int
 ACE::count_interfaces (ACE_HANDLE handle,
                        size_t &how_many)
 {
-#if defined (ACE_WIN32) || defined (ACE_HAS_GETIFADDRS) || defined (__hpux) || defined (_AIX) || (defined (ACE_VXWORKS) && (ACE_VXWORKS < 0x600))
-  // none of these platforms make use of count_interfaces
-  ACE_UNUSED_ARG (handle);
-  ACE_UNUSED_ARG (how_many);
-  ACE_NOTSUP_RETURN (-1); // no implementation
 
-#elif defined (SIOCGIFNUM)
+#if defined (SIOCGIFNUM)
 # if defined (SIOCGLIFNUM)
   int cmd = SIOCGLIFNUM;
+#  if defined (sparc)  // what is a better way of limiting this to solaris? what about x86 solaris?
   struct lifnum if_num = {AF_UNSPEC,0,0};
+#  else
+  int if_num;
+#  endif /* sparc */
 # else
   int cmd = SIOCGIFNUM;
-  int if_num = 0;
 # endif /* SIOCGLIFNUM */
   if (ACE_OS::ioctl (handle, cmd, (caddr_t)&if_num) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
@@ -1828,12 +1818,12 @@ ACE::count_interfaces (ACE_HANDLE handle,
                        ACE_LIB_TEXT ("ACE::count_interfaces:")
                        ACE_LIB_TEXT ("ioctl - SIOCGLIFNUM failed")),
                       -1);
-# if defined (SIOCGLIFNUM)
+# if defined (SIOCGLIFNUM) && defined (sparc) // see previous comment
   how_many = if_num.lifn_count;
 # else
   how_many = if_num;
-# endif /* SIOCGLIFNUM */
-return 0;
+# endif /* sparc */
+  return 0;
 
 #elif defined (__unix) || defined (__unix__) || defined (__Lynx__) || defined (ACE_OPENVMS)
   // Note: DEC CXX doesn't define "unix".  BSD compatible OS: HP UX,

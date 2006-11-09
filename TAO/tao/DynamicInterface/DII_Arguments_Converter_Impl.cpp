@@ -26,7 +26,7 @@ TAO_DII_Arguments_Converter_Impl::convert (
   // in collocation case and the server expects the list of arguments
   // and not the NVList_Argument, we need expand the NVList_Argument
   // to be list of Arguments.
-
+  
   // Before expanding NVList_Argument logic was added, the
   // $TAO_ROOT/tests/DII_Collocated_Tests/run_test.pl should fail.
   // The servant will get incorrect "IN" parameter from the oneway
@@ -36,7 +36,7 @@ TAO_DII_Arguments_Converter_Impl::convert (
   CORBA::NVList_ptr lst
     = static_cast<TAO::NVList_Argument *> (server_request.operation_details ()->args()[1])->arg ();
 
-  CORBA::ULong const sz = lst->count (ACE_ENV_SINGLE_ARG_PARAMETER);
+  const CORBA::ULong sz = lst->count (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
   if (sz != nargs - 1)
@@ -52,7 +52,7 @@ TAO_DII_Arguments_Converter_Impl::convert (
     {
       CORBA::NamedValue_ptr theitem = lst->item (i ACE_ENV_ARG_PARAMETER);
       ACE_CHECK;
-
+      
       if (!(theitem->value ()->impl ()->marshal_value (output)))
         {
           ACE_THROW (CORBA::BAD_PARAM ());

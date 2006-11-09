@@ -64,7 +64,7 @@ main (int argc, char *argv[])
 
       Receiver *receiver_impl;
       ACE_NEW_RETURN (receiver_impl,
-                      Receiver (orb.in ()),
+                      Receiver,
                       1);
       PortableServer::ServantBase_var receiver_owner_transfer(receiver_impl);
 

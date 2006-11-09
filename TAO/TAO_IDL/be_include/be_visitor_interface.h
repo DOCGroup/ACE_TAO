@@ -39,7 +39,7 @@
 #include "be_visitor_interface/cdr_op_ch.h"
 #include "be_visitor_interface/cdr_op_cs.h"
 #include "be_visitor_interface/tie_sh.h"
-#include "be_visitor_interface/tie_ss.h"
+#include "be_visitor_interface/tie_si.h"
 #include "be_visitor_interface/ami_interface_ch.h"
 #include "be_visitor_interface/smart_proxy_ch.h"
 #include "be_visitor_interface/smart_proxy_cs.h"

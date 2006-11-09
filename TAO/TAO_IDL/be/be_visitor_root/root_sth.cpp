@@ -18,8 +18,8 @@
 //
 // ============================================================================
 
-ACE_RCSID (be_visitor_root,
-           root_sth,
+ACE_RCSID (be_visitor_root, 
+           root_sth, 
            "$Id$")
 
 // ****************************************
@@ -156,7 +156,9 @@ be_visitor_root_sth::visit_interface (be_interface *node)
 
   // Generate the TIE class.
 
+  this->ctx_->state (TAO_CodeGen::TAO_ROOT_TIE_SH);
   this->ctx_->node (node);
+
   be_visitor_interface_tie_sh visitor (this->ctx_);
 
   if (node->accept (&visitor) == -1)
@@ -167,6 +169,8 @@ be_visitor_root_sth::visit_interface (be_interface *node)
                          "codegen for TIE class failed\n"),
                         -1);
     }
+
+  this->ctx_->state (TAO_CodeGen::TAO_ROOT_TIE_SH);
 
   return 0;
 }
