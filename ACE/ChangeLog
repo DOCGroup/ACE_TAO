@@ -1,3 +1,14 @@
+Thu Nov  9 12:46:54 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * bin/MakeProjectCreator/config/acedefaults.mpb:
+        * bin/MakeProjectCreator/config/taodefaults.mpb:
+
+          Add automake specific section to subtract out $(ACE_ROOT)/lib
+          from libpaths, as libraries are not copied to, or linked from,
+          there in automake builds.  This removes unnecessary -L's from
+          being added to *_LDFLAGS, sometimes eliminating the need for
+          that automake variable altogether.
+
 Thu Nov  9 10:48:52 UTC 2006  Olli Savia  <ops@iki.fi>
 
         * examples/IPC_SAP/DEV_SAP/reader/reader.cpp:
