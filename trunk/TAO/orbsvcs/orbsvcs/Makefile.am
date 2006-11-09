@@ -4112,6 +4112,7 @@ libTAO_RTEvent_Serv_la_SOURCES = \
   Event/EC_TPC_Factory.cpp \
   Event/EC_TPC_ProxyConsumer.cpp \
   Event/EC_TPC_ProxySupplier.cpp \
+  Event/EC_Thread_Flags.cpp \
   Event/EC_Timeout_Filter.cpp \
   Event/EC_Timeout_Generator.cpp \
   Event/EC_Trivial_Supplier_Filter.cpp \
@@ -4239,6 +4240,7 @@ nobase_include_HEADERS += \
   Event/EC_TPC_ProxyConsumer.h \
   Event/EC_TPC_ProxySupplier.h \
   Event/EC_TPC_ProxySupplier.inl \
+  Event/EC_Thread_Flags.h \
   Event/EC_Timeout_Filter.h \
   Event/EC_Timeout_Filter.inl \
   Event/EC_Timeout_Generator.h \
