@@ -1,3 +1,11 @@
+Thu Nov 09 16:10:10 UTC 2006  Martin Corino  <mcorino@remedy.nl>
+
+        * ace/Service_Config.cpp:
+
+          Reverted my earlier change of Nov 6 and additionally removed
+          the ACE_Reactor::instance() call from the ACE_Service_Config
+          CTOR since it seems to be unnecessary here.
+
 Thu Nov  9 15:22:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * include/makeinclude/wrapper_macros.GNU:

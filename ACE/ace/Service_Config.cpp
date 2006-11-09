@@ -449,13 +449,6 @@ ACE_Service_Config::ACE_Service_Config (int ignore_static_svcs,
   //  this->no_static_svcs_ = (ignore_static_svcs);
 
   ACE_Service_Config::signum_ = signum;
-
-  // Make sure ACE_OS_Object_Manager is initialized.
-  (void)ACE_OS_Object_Manager::instance ();
-
-  // Initialize the ACE_Reactor (the ACE_Reactor should be the same
-  // size as the ACE_Service_Repository).
-  (void)ACE_Reactor::instance ();
 }
 
 
