@@ -25,21 +25,11 @@
 # ftp://service.boulder.ibm.com/aix/fixes/v4/os/bos.rte.bind_cmds.4.2.0.4.bff
 # or a successor.
 
-ifeq (,$(debug))
-  debug = 1
-endif
-ifeq (,$(distrib))
-  distrib = 0
-endif
-ifeq (,$(exceptions))
-  exceptions = 1
-endif
-ifeq (,$(optimize))
-  optimize = 0
-endif
-ifeq (,$(threads))
-  threads = 1
-endif
+debug ?= 1
+distrib ?= 0
+exceptions ?= 1
+optimize ?= 0
+threads ?= 1
 
 # There's no way to turn off exceptions with IBM C/C++
 ifeq (0,$(exceptions))
