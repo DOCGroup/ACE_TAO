@@ -162,7 +162,7 @@ spawn (int proto)
           /* NOTREACHED */
         case 0:
           client (&server_addr);
-          exit (0);
+          ACE_OS::exit (0);
           /* NOTREACHED */
         default:
           server ((void *) &server_dgram);

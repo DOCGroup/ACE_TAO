@@ -36,7 +36,7 @@ int
 ACEXML_StrCharStream::available (void)
 {
   if (this->start_ != 0)
-    return (this->end_ - this->start_); // @@ Will this work on all platforms?
+    return static_cast<int> (this->end_ - this->start_); // @@ Will this work on all platforms?
   return -1;
 }
 

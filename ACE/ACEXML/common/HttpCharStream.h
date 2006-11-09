@@ -126,9 +126,9 @@ private:
 
   Connector* connector_;
 
-  off_t size_;
+  ACE_OFF_T size_;
 
-  off_t data_offset_;
+  ACE_OFF_T data_offset_;
 
   ACEXML_Char* encoding_;
 

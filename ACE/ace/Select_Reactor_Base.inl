@@ -5,7 +5,7 @@
 #include "ace/Reactor.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
-  
+
 ACE_INLINE ACE_Select_Reactor_Handler_Repository::size_type
 ACE_Select_Reactor_Handler_Repository::size (void) const
 {
@@ -15,7 +15,7 @@ ACE_Select_Reactor_Handler_Repository::size (void) const
   return this->event_handlers_.size ();
 #endif  /* ACE_WIN32 */
 }
-  
+
 ACE_INLINE ACE_Select_Reactor_Handler_Repository::max_handlep1_type
 ACE_Select_Reactor_Handler_Repository::max_handlep1 (void) const
 {
@@ -25,18 +25,21 @@ ACE_Select_Reactor_Handler_Repository::max_handlep1 (void) const
   return this->max_handlep1_;
 #endif  /* ACE_WIN32 */
 }
-  
+
 ACE_INLINE int
 ACE_Select_Reactor_Handler_Repository::unbind (ACE_HANDLE handle,
                                                ACE_Reactor_Mask mask)
 {
-  map_type::iterator const pos = this->find_eh (handle);
+  // Do not refactor this code to optimize the call to the unbind impl.
+  // To resolve bug 2653, unbind must be called even when find_eh returns
+  // event_handlers_.end().
 
-  return (pos == this->event_handlers_.end ()
-          ? -1
-          : this->unbind (handle, pos, mask));
+  return !this->handle_in_range (handle) ? -1
+          : this->unbind (handle,
+                          this->find_eh (handle),
+                          mask);
 }
-  
+
 ACE_INLINE ACE_Event_Handler *
 ACE_Select_Reactor_Handler_Repository::find (ACE_HANDLE handle)
 {
@@ -44,15 +47,18 @@ ACE_Select_Reactor_Handler_Repository::find (ACE_HANDLE handle)
 
   ACE_Event_Handler * eh = 0;
 
-  map_type::iterator const pos = this->find_eh (handle);
-
-  if (pos != this->event_handlers_.end ())
+  if (this->handle_in_range (handle))
     {
+      map_type::iterator const pos = this->find_eh (handle);
+
+      if (pos != this->event_handlers_.end ())
+        {
 #ifdef ACE_WIN32
-      eh = (*pos).item ();
+          eh = (*pos).item ();
 #else
-      eh = *pos;
+          eh = *pos;
 #endif  /* ACE_WIN32 */
+        }
     }
   // Don't bother setting errno.  It isn't used in the select()-based
   // reactors and incurs a TSS access.
@@ -63,7 +69,7 @@ ACE_Select_Reactor_Handler_Repository::find (ACE_HANDLE handle)
 
   return eh;
 }
-  
+
 // ------------------------------------------------------------------
 
 ACE_INLINE bool

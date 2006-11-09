@@ -83,7 +83,7 @@ ACE_OS::gettimeofday (void)
 #endif /* 0 */
 #if !defined (ACE_HAS_WINCE)&& !defined (ACE_WIN32)
   if (result == -1)
-    return ACE_Time_Value (-1);
+    return ACE_Time_Value ((time_t)-1);
   else
     return ACE_Time_Value (tv);
 #endif // !defined (ACE_HAS_WINCE)&& !defined (ACE_WIN32)

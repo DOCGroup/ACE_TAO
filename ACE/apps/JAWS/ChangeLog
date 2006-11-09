@@ -1,3 +1,9 @@
+Fri Oct 28 03:23:18 UTC 2006  Ossama Othman  <ossama_othman at symantec dot com>
+
+        * server/IO.cpp:
+
+          Addressed 64-bit conversion warnings.
+
 Mon Feb  6 01:00:55 UTC 2006  William Otte  <wotte@dre.vanderbilt.edu>
 
         * server/HTTP_Server.h

@@ -4,7 +4,7 @@
 
 ACE_RCSID(Misc, basic_func, "$Id$")
 
-int A, B, C, D, E, F;
+int A, BB, C, D, E, F;
 
 void
 func ()

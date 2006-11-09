@@ -234,7 +234,12 @@ run_main (int argc, ACE_TCHAR *argv[])
       name_options->database (ACE_OS::mktemp (temp_file));
     }
 
-  ACE_ASSERT (ns_context->open (ACE_Naming_Context::PROC_LOCAL, 1) != -1);
+  if (ns_context->open (ACE_Naming_Context::PROC_LOCAL, 1) == -1)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                  "ERROR: Naming_Test - ns_context->open () failed.\n"),
+                  -1);
+    }
 
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("time to test %d iterations using %s\n"),
               ACE_NS_MAX_ENTRIES, name_options->use_registry () ?

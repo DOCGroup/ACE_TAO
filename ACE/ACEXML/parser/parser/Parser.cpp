@@ -421,7 +421,7 @@ ACEXML_Parser::parse_external_subset (ACEXML_ENV_SINGLE_ARG_DECL)
 {
   this->ref_state_ = ACEXML_ParserInt::IN_EXT_DTD;
   this->external_subset_ = 1;
-  int nrelems = 0;
+  size_t nrelems = 0;
   ACEXML_Char nextch = this->skip_whitespace();
   do {
     switch (nextch)
@@ -2966,7 +2966,7 @@ ACEXML_Parser::push_context (ACEXML_Parser_Context* context)
   return 0;
 }
 
-int
+size_t
 ACEXML_Parser::pop_context (int GE_ref ACEXML_ENV_ARG_DECL)
 {
   size_t nrelems = this->ctx_stack_.size();

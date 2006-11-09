@@ -6,8 +6,7 @@
  *
  *  $Id$
  *
- *  @em Experimental @c /dev/poll (or Linux @c sys_epoll) based
- *  Reactor implementation.
+ *  @c /dev/poll (or Linux @c sys_epoll) based Reactor implementation.
  *
  *  @author  Ossama Othman <ossama@dre.vanderbilt.edu>
  */
@@ -436,7 +435,8 @@ private:
  *
  * @brief A `/dev/poll' or `/dev/epoll' based Reactor implemenatation.
  *
- * @attention This reactor is @em experimental.
+ * @attention The Linux epoll implementation works quite well and is
+ * fully supported; however, the /dev/poll implementation is @em experimental.
  *
  * The ACE_Dev_Poll_Reactor uses the `/dev/poll' or '/dev/epoll'
  * character devices to demultiplex events on a given set of file

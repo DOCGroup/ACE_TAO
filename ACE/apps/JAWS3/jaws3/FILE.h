@@ -1,6 +1,7 @@
+// -*- c++ -*-
+//
 // $Id$
 
-/* -*- c++ -*- */
 
 #ifndef JAWS_FILE_H
 #define JAWS_FILE_H
@@ -24,13 +25,13 @@ public:
                         int prot = PROT_RDWR,
                         int share = ACE_MAP_PRIVATE,
                         void *addr = 0,
-                        off_t offset = 0,
+                        ACE_OFF_T offset = 0,
                         LPSECURITY_ATTRIBUTES sa = 0);
   ACE_Mem_Map *mem_map (int length = -1,
                         int prot = PROT_RDWR,
                         int share = ACE_MAP_PRIVATE,
                         void *addr = 0,
-                        off_t offset = 0,
+                        ACE_OFF_T offset = 0,
                         LPSECURITY_ATTRIBUTES sa = 0) const;
 
   ACE_Mem_Map *map (void) const;

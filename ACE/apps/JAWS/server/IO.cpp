@@ -14,6 +14,7 @@
 #include "ace/OS_NS_unistd.h"
 #include "ace/OS_NS_sys_stat.h"
 #include "ace/Auto_Ptr.h"
+#include "ace/Basic_Types.h"
 
 ACE_RCSID (server,
            IO,
@@ -398,7 +399,7 @@ JAWS_Asynch_IO::send_message (const char *buffer,
 
   ACE_Asynch_Write_Stream aw;
   if (aw.open (*this, this->handle_) == -1
-      || aw.write (*mb, length, (void *) act) == -1)
+      || aw.write (*mb, length, (void *) static_cast<intptr_t> (act)) == -1)
     {
       mb->release ();
 

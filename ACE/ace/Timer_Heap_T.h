@@ -99,7 +99,7 @@ public:
    *
    * @param size The maximum number of timers that can be
    * inserted into the new object.
-   * @param preallocated Default 0, if non-0 then all the memory
+   * @param preallocated Default false, true then all the memory
    * for the @c ACE_Timer_Node objects will be pre-allocated. This saves
    * time and is more predictable (though it requires more space).
    * Otherwise, timer nodes are allocated as needed.
@@ -107,7 +107,7 @@ public:
    * @param upcall_functor If 0 Timer Heap will create a default FUNCTOR.
    */
   ACE_Timer_Heap_T (size_t size,
-                    int preallocated = 0,
+                    bool preallocated = false,
                     FUNCTOR *upcall_functor = 0,
                     ACE_Free_List<ACE_Timer_Node_T <TYPE> > *freelist = 0);
 

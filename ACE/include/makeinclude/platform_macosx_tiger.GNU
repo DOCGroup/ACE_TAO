@@ -1,30 +1,18 @@
 # $Id$
 # platform_macosx.GNU
 # support for Mac OS X 10.4 (Tiger)
-# By default, this uses the default compiler selected using gcc_select. 
+# By default, this uses the default compiler selected using gcc_select.
 
 cidl = 1
 boost = 1
 zzip = 1
 zlib = 1
-ifndef exceptions
-  exceptions = 1
-endif
-ifeq (,$(threads))
-  threads = 1
-endif
-ifeq (,$(debug))
-  debug = 1
-endif
-ifeq (,$(optimize))
-  optimize = 0
-endif
-ifeq (,$(ssl))
-  ssl = 1
-endif
-ifeq (,$(versioned_so))
-  versioned_so = 0
-endif
+exceptions ?= 1
+threads ?= 1
+debug ?= 1
+optimize ?= 0
+ssl ?= 1
+versioned_so ?= 0
 ifeq (,$(no_hidden_visibility))
 # Disable symbol visibility support by default.
 #
@@ -38,7 +26,7 @@ pipes ?= 1
 
 CC              = gcc
 CXX             = g++
-CFLAGS          += -Wall -Wpointer-arith -Wno-long-double  
+CFLAGS          += -Wall -Wpointer-arith -Wno-long-double
 
 DCFLAGS         += -g
 DLD				= $(CXX)
@@ -51,10 +39,10 @@ SOEXT			= dylib
 SOFLAGS		   += -dynamiclib
 SOBUILD			= -o $(VSHDIR)$*.dylib $<
 
-# Test for template instantiation, add to SOFLAGS if versioned_so set, 
+# Test for template instantiation, add to SOFLAGS if versioned_so set,
 # add -E to LDFLAGS if using GNU ld
 #
 include $(ACE_ROOT)/include/makeinclude/platform_g++_common.GNU
 
-LDFLAGS         += -flat_namespace 
+LDFLAGS         += -flat_namespace
 CCFLAGS         += $(CFLAGS) $(TEMPLATES_FLAG)

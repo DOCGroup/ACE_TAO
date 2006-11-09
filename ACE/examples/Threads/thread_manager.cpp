@@ -22,9 +22,9 @@ handler (int signum)
 }
 
 static void *
-worker (int iterations)
+worker (intptr_t iterations)
 {
-  for (int i = 0; i < iterations; i++)
+  for (intptr_t i = 0; i < iterations; i++)
     {
       if ((i % 1000) == 0)
 	{
@@ -47,7 +47,7 @@ worker (int iterations)
 }
 
 static const int DEFAULT_THREADS = ACE_DEFAULT_THREADS;
-static const int DEFAULT_ITERATIONS = 100000;
+static const intptr_t DEFAULT_ITERATIONS = 100000;
 
 int
 ACE_TMAIN (int argc, ACE_TCHAR *argv[])
@@ -61,7 +61,8 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   ACE_UNUSED_ARG (sa);
 
   int n_threads = argc > 1 ? ACE_OS::atoi (argv[1]) : DEFAULT_THREADS;
-  int n_iterations = argc > 2 ? ACE_OS::atoi (argv[2]) : DEFAULT_ITERATIONS;
+  intptr_t n_iterations =
+    argc > 2 ? ACE_OS::atoi (argv[2]) : DEFAULT_ITERATIONS;
 
   ACE_Thread_Manager *thr_mgr = ACE_Thread_Manager::instance ();
 

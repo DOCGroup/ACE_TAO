@@ -26,6 +26,15 @@
 #define ACE_WIN32
 #if defined (_WIN64) || defined (WIN64)
 #  define ACE_WIN64
+
+// Use 64-bit file offsets by default in the WIN64 case, similar to
+// what 64-bit UNIX systems do.
+//
+// Note that _FILE_OFFSET_BITS is not recognized by Windows.  It is,
+// however, recognized by ACE.
+#  ifndef _FILE_OFFSET_BITS
+#    define _FILE_OFFSET_BITS 64
+#  endif  /* !_FILE_OFFSET_BITS */
 #endif /* _WIN64 || WIN64 */
 
 // Define this if you're running NT >= 4.0 (Win2K == NT 5).

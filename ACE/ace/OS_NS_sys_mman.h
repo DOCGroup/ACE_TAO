@@ -52,7 +52,7 @@ namespace ACE_OS
               int prot,
               int flags,
               ACE_HANDLE handle,
-              off_t off = 0,
+              ACE_OFF_T off = 0,
               ACE_HANDLE *file_mapping = 0,
               LPSECURITY_ATTRIBUTES sa = 0,
               const ACE_TCHAR *file_mapping_name = 0);

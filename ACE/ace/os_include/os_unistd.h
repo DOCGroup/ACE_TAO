@@ -100,14 +100,14 @@ extern "C"
    // It seems that _XOPEN_SOURCE == 500 means that the prototypes are
    // already defined in the system headers.
    ssize_t pread (int fd,
-                             void *buf,
-                             size_t nbytes,
-                             off_t offset);
+                  void *buf,
+                  size_t nbytes,
+                  ACE_OFF_T offset);
 
    ssize_t pwrite (int fd,
-                              const void *buf,
-                              size_t n,
-                              off_t offset);
+                   const void *buf,
+                   size_t n,
+                   ACE_OFF_T offset);
 #endif  /* ACE_LACKS_PREAD_PROTOTYPE && (_XOPEN_SOURCE - 0) < 500 */
 
 #if defined (ACE_LACKS_GETPGID_PROTOTYPE) && \

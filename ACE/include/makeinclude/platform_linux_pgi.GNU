@@ -1,25 +1,15 @@
 # $Id$
 
-# This file should allow ACE to be built on Linux, using the 
+# This file should allow ACE to be built on Linux, using the
 # Portland Group PGI compilers
 #
 # This is just a copy of platform_linux.GNU, with a few things changed.
 
-ifndef exceptions
-  exceptions = 1
-endif
-ifeq (,$(debug))
-  debug = 0
-endif
-ifeq (,$(optimize))
-  optimize = 1
-endif
-ifeq (,$(threads))
-  threads = 1
-endif
-ifeq (,$(static_libs_only))
-  static_libs_only=1
-endif
+exceptions ?= 1
+debug ?= 0
+optimize ?= 1
+threads ?= 1
+static_libs_only ?= 1
 
 PLATFORM_XT_CPPFLAGS=
 PLATFORM_XT_LIBS=-lXt
@@ -65,7 +55,7 @@ ifeq ($(threads),1)
     CPPFLAGS  += -D_REENTRANT $(PLATFORM_AIO_SUPPORT)
 endif # threads
 
-CCFLAGS += $(CFLAGS) $(IMPLICIT_TEMPLATES_FLAG) 
+CCFLAGS += $(CFLAGS) $(IMPLICIT_TEMPLATES_FLAG)
 DCFLAGS += -g
 DLD     = $(CXX)
 LD      = $(CXX)

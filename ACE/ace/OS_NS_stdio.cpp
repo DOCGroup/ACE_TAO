@@ -112,6 +112,54 @@ void ACE_OS::checkUnicodeFormat (FILE* fp)
 #endif  // ACE_USES_WCHAR
 
 #if defined (ACE_WIN32) && !defined (ACE_HAS_WINCE)
+namespace
+{
+  /// Translate fopen's mode char to open's mode.  This helper function
+  /// is here to avoid maintaining several pieces of identical code.
+  void
+  fopen_mode_to_open_mode_converter (ACE_TCHAR x, int & hmode)
+  {
+    switch (x)
+      {
+      case ACE_LIB_TEXT ('r'):
+        if (ACE_BIT_DISABLED (hmode, _O_RDWR))
+          {
+            ACE_CLR_BITS (hmode, _O_WRONLY);
+            ACE_SET_BITS (hmode, _O_RDONLY);
+          }
+        break;
+      case ACE_LIB_TEXT ('w'):
+        if (ACE_BIT_DISABLED (hmode, _O_RDWR))
+          {
+            ACE_CLR_BITS (hmode, _O_RDONLY);
+            ACE_SET_BITS (hmode, _O_WRONLY);
+          }
+        ACE_SET_BITS (hmode, _O_CREAT | _O_TRUNC);
+        break;
+      case ACE_LIB_TEXT ('a'):
+        if (ACE_BIT_DISABLED (hmode, _O_RDWR))
+          {
+            ACE_CLR_BITS (hmode, _O_RDONLY);
+            ACE_SET_BITS (hmode, _O_WRONLY);
+          }
+        ACE_SET_BITS (hmode, _O_CREAT | _O_APPEND);
+        break;
+      case ACE_LIB_TEXT ('+'):
+        ACE_CLR_BITS (hmode, _O_RDONLY | _O_WRONLY);
+        ACE_SET_BITS (hmode, _O_RDWR);
+        break;
+      case ACE_LIB_TEXT ('t'):
+        ACE_CLR_BITS (hmode, _O_BINARY);
+        ACE_SET_BITS (hmode, _O_TEXT);
+        break;
+      case ACE_LIB_TEXT ('b'):
+        ACE_CLR_BITS (hmode, _O_TEXT);
+        ACE_SET_BITS (hmode, _O_BINARY);
+        break;
+      }
+  }
+}  // Close anonymous namespace
+
 FILE *
 ACE_OS::fopen (const char *filename,
                const ACE_TCHAR *mode)
@@ -127,7 +175,7 @@ ACE_OS::fopen (const char *filename,
     mode = empty_mode;
 
   for (ACE_TCHAR const* mode_ptr = mode; *mode_ptr != 0; ++mode_ptr)
-    ACE_OS::fopen_mode_to_open_mode_converter (*mode_ptr, hmode);
+    fopen_mode_to_open_mode_converter (*mode_ptr, hmode);
 
   ACE_HANDLE const handle = ACE_OS::open (filename, hmode);
   if (handle != ACE_INVALID_HANDLE)
@@ -171,7 +219,7 @@ ACE_OS::fopen (const wchar_t *filename,
   int hmode = _O_TEXT;
 
   for (const ACE_TCHAR *mode_ptr = mode; *mode_ptr != 0; mode_ptr++)
-    ACE_OS::fopen_mode_to_open_mode_converter (*mode_ptr, hmode);
+    fopen_mode_to_open_mode_converter (*mode_ptr, hmode);
 
   ACE_HANDLE handle = ACE_OS::open (filename, hmode);
   if (handle != ACE_INVALID_HANDLE)

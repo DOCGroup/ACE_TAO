@@ -124,8 +124,9 @@ ACEXML_XMLFilterImpl::setParent (ACEXML_XMLReader *parent)
 
 void
 ACEXML_XMLFilterImpl::characters (const ACEXML_Char *ch,
-                                  int start,
-                                  int length ACEXML_ENV_ARG_DECL)
+                                  size_t start,
+                                  size_t length
+                                  ACEXML_ENV_ARG_DECL)
       ACE_THROW_SPEC ((ACEXML_SAXException))
 {
   if (this->contentHandler_ != 0)

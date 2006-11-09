@@ -117,7 +117,7 @@ public:
   int error (void) const;
 
   /// The size of the file.
-  ACE_LOFF_T size (void) const;
+  ACE_OFF_T size (void) const;
 
 protected:
   /// Default do nothing constructor.  Prevent it from being called.
@@ -215,7 +215,7 @@ protected:
   ACE_Filecache (void);
 
 private:
-  int size_;
+  ACE_OFF_T size_;
 
   /// The hash table
   ACE_Filecache_Hash hash_;
@@ -249,7 +249,7 @@ public:
 
   /// Creates a file for writing.
   ACE_Filecache_Object (const ACE_TCHAR *filename,
-                        off_t size,
+                        ACE_OFF_T size,
                         ACE_SYNCH_RW_MUTEX &lock,
                         LPSECURITY_ATTRIBUTES sa = 0);
 
@@ -277,7 +277,7 @@ public:
   void *address (void) const;
 
   /// size_ accessor.
-  ACE_LOFF_T size (void) const;
+  ACE_OFF_T size (void) const;
 
   /// True if file on disk is newer than cached file.
   int update (void) const;
@@ -327,7 +327,7 @@ private:
 
   /// Used to compare against the real file to test if an update is needed.
   ACE_stat stat_;
-  ACE_LOFF_T size_;
+  ACE_OFF_T size_;
 
   /// Status indicators.
   int action_;

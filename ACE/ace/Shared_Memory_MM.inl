@@ -18,7 +18,7 @@ ACE_Shared_Memory_MM::open (ACE_HANDLE handle,
                             int prot,
                             int share,
                             char *addr,
-                            off_t pos)
+                            ACE_OFF_T pos)
 {
   ACE_TRACE ("ACE_Shared_Memory_MM::open");
   return shared_memory_.map (handle, length, prot, share, addr, pos);
@@ -32,7 +32,7 @@ ACE_Shared_Memory_MM::open (const ACE_TCHAR *file_name,
                             int prot,
                             int share,
                             char *addr,
-                            off_t pos)
+                            ACE_OFF_T pos)
 {
   ACE_TRACE ("ACE_Shared_Memory_MM::open");
   return shared_memory_.map (file_name, len, flags, mode,

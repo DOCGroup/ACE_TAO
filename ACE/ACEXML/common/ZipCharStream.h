@@ -108,7 +108,7 @@ protected:
    * Peek @c offset bytes into the stream and return the character at @c
    * offset. If EOF is reached, return -1.
    */
-  virtual int peekchar_i (off_t offset = 0);
+  virtual int peekchar_i (ACE_OFF_T offset = 0);
 
 private:
 
@@ -130,7 +130,7 @@ private:
 
   ACEXML_Char*  filename_;
   ACEXML_Char*  encoding_;
-  off_t         size_;
+  ACE_OFF_T     size_;
   ZZIP_FILE*    infile_;
   char          buf_[80];
   int           pos_;
