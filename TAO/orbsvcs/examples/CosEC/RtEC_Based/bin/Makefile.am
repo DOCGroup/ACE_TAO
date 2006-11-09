@@ -17,8 +17,8 @@ TAO_ROOT = $(top_srcdir)
 ## Makefile.CosEC_RtEC_Based_bin.am
 
 if BUILD_CORBA_MESSAGING
+if BUILD_EXCEPTIONS
 if !BUILD_ACE_FOR_TAO
-if !BUILD_MINIMUM_CORBA
 
 noinst_PROGRAMS = RtEC_Based_CosEC
 
@@ -35,6 +35,15 @@ RtEC_Based_CosEC_CPPFLAGS = \
 RtEC_Based_CosEC_SOURCES = \
   RtEC_Based_CosEC.cpp \
   RtEC_Based_CosEC.h
+
+../lib:
+	mkdir -p ../lib
+
+RtEC_Based_CosEC_DEPENDENCIES = \
+  ../lib
+
+RtEC_Based_CosEC_LDFLAGS = \
+  -L../lib
 
 RtEC_Based_CosEC_LDADD = \
   $(top_builddir)/orbsvcs/examples/CosEC/RtEC_Based/lib/libCosEC_RtEC_Based.la \
@@ -54,8 +63,8 @@ RtEC_Based_CosEC_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
-endif !BUILD_MINIMUM_CORBA
 endif !BUILD_ACE_FOR_TAO
+endif BUILD_EXCEPTIONS
 endif BUILD_CORBA_MESSAGING
 
 ## Clean up template repositories, etc.

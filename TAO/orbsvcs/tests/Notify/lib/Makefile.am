@@ -20,7 +20,7 @@ TAO_ROOT = $(top_srcdir)
 ## Makefile.NotifyTests_Lib.am
 
 if BUILD_CORBA_MESSAGING
-if !BUILD_MINIMUM_CORBA
+if BUILD_EXCEPTIONS
 
 BUILT_SOURCES = \
   Activation_ManagerC.cpp \
@@ -171,7 +171,7 @@ noinst_HEADERS = \
   common.h \
   notify_test_export.h
 
-endif !BUILD_MINIMUM_CORBA
+endif BUILD_EXCEPTIONS
 endif BUILD_CORBA_MESSAGING
 
 ## Clean up template repositories, etc.

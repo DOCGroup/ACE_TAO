@@ -49,8 +49,8 @@ noinst_HEADERS = \
 
 ## Makefile.MT_SSLIOP_Security_Client.am
 
+if BUILD_EXCEPTIONS
 if BUILD_SSL
-if !BUILD_ACE_FOR_TAO
 
 noinst_PROGRAMS += client
 
@@ -79,13 +79,13 @@ client_LDADD = \
   $(ACE_BUILDDIR)/ace/libACE.la \
   @ACE_TLS_LIBS@
 
-endif !BUILD_ACE_FOR_TAO
 endif BUILD_SSL
+endif BUILD_EXCEPTIONS
 
 ## Makefile.MT_SSLIOP_Security_Server.am
 
+if BUILD_EXCEPTIONS
 if BUILD_SSL
-if !BUILD_ACE_FOR_TAO
 
 noinst_PROGRAMS += server
 
@@ -119,8 +119,8 @@ server_LDADD = \
   $(ACE_BUILDDIR)/ace/libACE.la \
   @ACE_TLS_LIBS@
 
-endif !BUILD_ACE_FOR_TAO
 endif BUILD_SSL
+endif BUILD_EXCEPTIONS
 
 ## Clean up template repositories, etc.
 clean-local:

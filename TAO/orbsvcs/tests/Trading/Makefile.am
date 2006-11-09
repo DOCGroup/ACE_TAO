@@ -16,7 +16,11 @@ TAO_IDL_DEP = $(TAO_BUILDDIR)/TAO_IDL/tao_idl
 TAO_IDLFLAGS = -Ge 1 -Wb,pre_include=ace/pre.h -Wb,post_include=ace/post.h -I$(TAO_ROOT) -I$(srcdir) -g $(ACE_BUILDDIR)/apps/gperf/src/gperf
 TAO_ROOT = $(top_srcdir)
 
+noinst_PROGRAMS =
+
 ## Makefile.Trading_Test_Lib.am
+
+if BUILD_EXCEPTIONS
 
 BUILT_SOURCES = \
   TTestC.cpp \
@@ -44,7 +48,7 @@ CLEANFILES = \
 TTestC.cpp TTestC.h TTestC.inl TTestS.cpp TTestS.h TTestS.inl TTestS_T.cpp TTestS_T.h TTestS_T.inl: TTest-stamp
 
 TTest-stamp: $(srcdir)/TTest.idl $(TAO_IDL_DEP)
-	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs -GT -I..\..\.. -I..\..\..\orbsvcs -Sc -Wb,export_macro=TAO_TTest_Export -Wb,export_include=ttest_export.h $(srcdir)/TTest.idl
+	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs -GT -I..\..\.. -I..\..\..\orbsvcs -Wb,export_macro=TAO_TTest_Export -Wb,export_include=ttest_export.h $(srcdir)/TTest.idl
 	@touch $@
 
 noinst_LTLIBRARIES = libTTest.la
@@ -83,9 +87,13 @@ noinst_HEADERS = \
   TTestS_T.inl \
   ttest_export.h
 
+endif BUILD_EXCEPTIONS
+
 ## Makefile.Trading_Colocated_Test.am
 
-noinst_PROGRAMS = colocated_test
+if BUILD_EXCEPTIONS
+
+noinst_PROGRAMS += colocated_test
 
 colocated_test_CPPFLAGS = \
   -I$(ACE_ROOT) \
@@ -113,6 +121,7 @@ colocated_test_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO_IORTable.la \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_Svc_Utils.la \
   $(TAO_BUILDDIR)/tao/libTAO_DynamicAny.la \
+  $(TAO_BUILDDIR)/tao/libTAO_Valuetype.la \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosTrading_Skel.la \
   $(TAO_BUILDDIR)/tao/libTAO_PortableServer.la \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosTrading.la \
@@ -121,7 +130,11 @@ colocated_test_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
+endif BUILD_EXCEPTIONS
+
 ## Makefile.Trading_Export_Test.am
+
+if BUILD_EXCEPTIONS
 
 noinst_PROGRAMS += export_test
 
@@ -151,6 +164,7 @@ export_test_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO_IORTable.la \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_Svc_Utils.la \
   $(TAO_BUILDDIR)/tao/libTAO_DynamicAny.la \
+  $(TAO_BUILDDIR)/tao/libTAO_Valuetype.la \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosTrading_Skel.la \
   $(TAO_BUILDDIR)/tao/libTAO_PortableServer.la \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosTrading.la \
@@ -159,7 +173,11 @@ export_test_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
+endif BUILD_EXCEPTIONS
+
 ## Makefile.Trading_Import_Test.am
+
+if BUILD_EXCEPTIONS
 
 noinst_PROGRAMS += import_test
 
@@ -189,6 +207,7 @@ import_test_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO_IORTable.la \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_Svc_Utils.la \
   $(TAO_BUILDDIR)/tao/libTAO_DynamicAny.la \
+  $(TAO_BUILDDIR)/tao/libTAO_Valuetype.la \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosTrading_Skel.la \
   $(TAO_BUILDDIR)/tao/libTAO_PortableServer.la \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosTrading.la \
@@ -196,6 +215,8 @@ import_test_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO_AnyTypeCode.la \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
+
+endif BUILD_EXCEPTIONS
 
 ## Clean up template repositories, etc.
 clean-local:

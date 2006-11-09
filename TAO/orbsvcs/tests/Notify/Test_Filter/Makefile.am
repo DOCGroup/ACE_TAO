@@ -16,8 +16,8 @@ TAO_ROOT = $(top_srcdir)
 
 ## Makefile.TAO_RT_NotifyTests_Filter.am
 
+if BUILD_EXCEPTIONS
 if BUILD_RT_CORBA
-if !BUILD_MINIMUM_CORBA
 
 noinst_LTLIBRARIES = libTAO_RT_NotifyTests_Filter.la
 
@@ -39,8 +39,8 @@ noinst_HEADERS = \
   RT_Test_Filter.h \
   RT_Test_FilterFactory.h
 
-endif !BUILD_MINIMUM_CORBA
 endif BUILD_RT_CORBA
+endif BUILD_EXCEPTIONS
 
 ## Clean up template repositories, etc.
 clean-local:

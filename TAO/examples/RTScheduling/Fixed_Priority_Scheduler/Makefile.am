@@ -22,6 +22,7 @@ BUILT_SOURCES =
 
 ## Makefile.Fixed_Priority_Scheduler_Starter.am
 
+if BUILD_EXCEPTIONS
 if BUILD_RT_CORBA
 
 BUILT_SOURCES += \
@@ -47,7 +48,7 @@ CLEANFILES += \
   ../SynchS_T.h \
   ../SynchS_T.inl
 
-../SynchC.cpp ../SynchC.h ../SynchC.inl ../SynchS.cpp ../SynchS.h ../SynchS.inl ../SynchS_T.cpp ../SynchS_T.h ../SynchS_T.inl: Synch-stamp
+../SynchC.cpp ../SynchC.h ../SynchC.inl ../SynchS.cpp ../SynchS.h ../SynchS.inl ../SynchS_T.cpp ../SynchS_T.h ../SynchS_T.inl: ../Synch-stamp
 
 ../Synch-stamp: $(srcdir)/../Synch.idl $(TAO_IDL_DEP)
 	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs -GT -o .. $(srcdir)/../Synch.idl
@@ -91,9 +92,11 @@ Starter_LDADD = \
   $(ACE_BUILDDIR)/ace/libACE.la
 
 endif BUILD_RT_CORBA
+endif BUILD_EXCEPTIONS
 
 ## Makefile.Fixed_Priority_Scheduler_Test.am
 
+if BUILD_EXCEPTIONS
 if BUILD_RT_CORBA
 
 BUILT_SOURCES += \
@@ -119,7 +122,7 @@ CLEANFILES += \
   ../SynchS_T.h \
   ../SynchS_T.inl
 
-../SynchC.cpp ../SynchC.h ../SynchC.inl ../SynchS.cpp ../SynchS.h ../SynchS.inl ../SynchS_T.cpp ../SynchS_T.h ../SynchS_T.inl: Synch-stamp
+../SynchC.cpp ../SynchC.h ../SynchC.inl ../SynchS.cpp ../SynchS.h ../SynchS.inl ../SynchS_T.cpp ../SynchS_T.h ../SynchS_T.inl: ../Synch-stamp
 
 ../Synch-stamp: $(srcdir)/../Synch.idl $(TAO_IDL_DEP)
 	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs -GT -o .. $(srcdir)/../Synch.idl
@@ -148,7 +151,7 @@ CLEANFILES += \
   ../JobS_T.h \
   ../JobS_T.inl
 
-../JobC.cpp ../JobC.h ../JobC.inl ../JobS.cpp ../JobS.h ../JobS.inl ../JobS_T.cpp ../JobS_T.h ../JobS_T.inl: Job-stamp
+../JobC.cpp ../JobC.h ../JobC.inl ../JobS.cpp ../JobS.h ../JobS.inl ../JobS_T.cpp ../JobS_T.h ../JobS_T.inl: ../Job-stamp
 
 ../Job-stamp: $(srcdir)/../Job.idl $(TAO_IDL_DEP)
 	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs -GT -o .. $(srcdir)/../Job.idl
@@ -175,7 +178,7 @@ CLEANFILES += \
   ../FP_SchedulingS_T.h \
   ../FP_SchedulingS_T.inl
 
-../FP_SchedulingC.cpp ../FP_SchedulingC.h ../FP_SchedulingC.inl ../FP_SchedulingS.h ../FP_SchedulingS.inl ../FP_SchedulingS_T.cpp ../FP_SchedulingS_T.h ../FP_SchedulingS_T.inl: FP_Scheduling-stamp
+../FP_SchedulingC.cpp ../FP_SchedulingC.h ../FP_SchedulingC.inl ../FP_SchedulingS.h ../FP_SchedulingS.inl ../FP_SchedulingS_T.cpp ../FP_SchedulingS_T.h ../FP_SchedulingS_T.inl: ../FP_Scheduling-stamp
 
 ../FP_Scheduling-stamp: $(srcdir)/../FP_Scheduling.idl $(TAO_IDL_DEP)
 	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs -GT -o .. $(srcdir)/../FP_Scheduling.idl
@@ -251,6 +254,7 @@ test_LDADD = \
   $(ACE_BUILDDIR)/ace/libACE.la
 
 endif BUILD_RT_CORBA
+endif BUILD_EXCEPTIONS
 
 ## Clean up template repositories, etc.
 clean-local:

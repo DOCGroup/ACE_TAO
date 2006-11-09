@@ -16,6 +16,8 @@ TAO_IDL_DEP = $(TAO_BUILDDIR)/TAO_IDL/tao_idl
 TAO_IDLFLAGS = -Ge 1 -Wb,pre_include=ace/pre.h -Wb,post_include=ace/post.h -I$(TAO_ROOT) -I$(srcdir) -g $(ACE_BUILDDIR)/apps/gperf/src/gperf
 TAO_ROOT = $(top_srcdir)
 
+noinst_PROGRAMS =
+
 ## Makefile.Demux_Poa_Idl.am
 
 BUILT_SOURCES = \
@@ -47,7 +49,9 @@ noinst_HEADERS = \
 
 ## Makefile.Demux_Poa_Client.am
 
-noinst_PROGRAMS = client
+if BUILD_EXCEPTIONS
+
+noinst_PROGRAMS += client
 
 client_CPPFLAGS = \
   -I$(ACE_ROOT) \
@@ -72,7 +76,11 @@ client_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
+endif BUILD_EXCEPTIONS
+
 ## Makefile.Demux_Poa_Server.am
+
+if BUILD_EXCEPTIONS
 
 noinst_PROGRAMS += server
 
@@ -90,7 +98,7 @@ server_SOURCES = \
   demux_test_i.cpp \
   demux_test_server.cpp \
   server.cpp \
-  demux_test_client.inl\
+  demux_test_client.inl \
   demux_test_i.h \
   demux_test_server.h
 
@@ -100,6 +108,8 @@ server_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO_AnyTypeCode.la \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
+
+endif BUILD_EXCEPTIONS
 
 ## Clean up template repositories, etc.
 clean-local:
