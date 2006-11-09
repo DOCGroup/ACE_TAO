@@ -1,4 +1,10 @@
-Wed Nov  9 06:46:21 UTC 2006  Ossama Othman  <ossama_othman at symantec dot com>
+Thu Nov  9 09:54:12 UTC 2006  Martin Corino  <mcorino@remedy.nl>
+
+        * tests/Bug_2654_Regression/Hello.cpp:
+
+          Fixed the last fix to get rid of compile warning;-).
+
+Thu Nov  9 06:46:21 UTC 2006  Ossama Othman  <ossama_othman at symantec dot com>
 
         * docs/Options.html:
 

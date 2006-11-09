@@ -50,7 +50,7 @@ Hello::method (CORBA::Short count ACE_ENV_ARG_DECL_NOT_USED)
       PortableServer::POA_var poa = this->_default_POA();
       PortableServer::POAManager_var mgr = poa->the_POAManager();
       mgr->hold_requests(false);
-      Killer *k = new Killer (orb_);
+      Killer *k = new Killer (orb_.in ());
       k->activate();
     }
 }
