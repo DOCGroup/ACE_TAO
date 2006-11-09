@@ -734,7 +734,7 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
 
   this->this_method (node);
 
-  if (be_global->gen_tie_classes ())
+  if (be_global->gen_tie_classes () && !node->tie_skel_gen ())
     {
       // Generate the TIE class.
       be_visitor_context ctx (*this->ctx_);
@@ -750,6 +750,9 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
                              "codegen for TIE class failed\n"),
                             -1);
         }
+
+      // AMH generation reuses this visit_interface(), hence the flag.
+      node->tie_skel_gen (true);
     }
 
   return 0;
