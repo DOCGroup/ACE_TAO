@@ -1,3 +1,16 @@
+Thu Nov  9 20:07:42 UTC 2006  Iliyan Jeliazkov  <iliyan@ociweb.com>
+
+        * ace/Service_Config.cpp:
+        * ace/Service_Gestalt.h:
+        * ace/Service_Gestalt.cpp:
+
+          A follow up to my change from "Wed Nov 8 22:12:46". Adding the
+          close_svcs() call in ACE_Service_Config::close() ensured that
+          the repository and its contents gets properly finalized, but it
+          did not account for the potential subsequent re-opening of the
+          Service Config. This causes failures in open/close/open
+          scenarios, like Framework_Component_Test.
+
 Thu Nov  9 19:59:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * include/makeinclude/platform_aix4_cset++.GNU:
