@@ -1,3 +1,11 @@
+Thu Nov  9 01:19:02 UTC 2006  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_visitor_interface/interface_ss.cpp:
+        * TAO_IDL/be/be_decl.cpp:
+
+          Fixed bug where TIE class skeleton code is generated twice
+          when AMH code generation is enabled.
+
 Wed Nov  8 16:16:37 UTC 2006  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * docs/releasenotes/index.html:
