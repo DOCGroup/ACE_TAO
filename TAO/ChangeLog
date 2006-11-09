@@ -1,3 +1,10 @@
+Thu Nov  9 19:27:16 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * orbsvcs/orbsvcs/Makefile.am:
+
+          Regenerated (again, to catch changes made while I was preparing
+          the last set of changes).
+
 Thu Nov  9 18:52:15 UTC 2006  Chris Cleeland  <cleeland_c@ociweb.com>
 
         * NEWS: Updated to reflect RTEC changes.
@@ -69,7 +76,6 @@ Thu Nov  9 15:42:32 UTC 2006  Chris Cleeland  <cleeland_c@ociweb.com>
           a flaw in the TAO_EC_Thread_Flags abstraction, or a flaw in
           the way ACE assigns values when a THR_ symbol is not provided
           by the platform itself.
-
 
 Thu Nov  9 12:17:10 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
 
