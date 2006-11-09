@@ -1,0 +1,12 @@
+// $Id$  -*- IDL -*-
+
+#include "Worker.idl"
+
+composition session Worker_Impl
+{
+  home executor WorkerHome_exec
+  {
+    implements Priority_Test::WorkerHome;
+    manages Worker_exec;
+  };
+};
