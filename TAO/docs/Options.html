@@ -1159,6 +1159,16 @@ the ORB uses. The default reactor is the ACE_TP_Reactor.
               <td>Use the <code>ACE_TP_Reactor</code>, a select based
 thread-pool reactor which is the default.</td>
             </tr>
+            <tr>
+              <td><code>dev_poll</code></td>
+              <td>Use the <code>ACE_Dev_Poll_Reactor</code>, a
+              <code>/dev/poll</code> or Linux <code>sys_epoll()</code>
+              based thread-pool reactor.  It is intended to be a
+              highly scalable replacement for the
+              <code>select()</code> based reactors.  The
+              ACE_Dev_Poll_Reactor is currently only supported on
+              HP-UX, Solaris and Linux.</td>
+            </tr>
           </tbody>
         </table>
         </td>
