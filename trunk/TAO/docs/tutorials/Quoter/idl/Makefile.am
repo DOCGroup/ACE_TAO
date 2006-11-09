@@ -16,7 +16,10 @@ TAO_IDL_DEP = $(TAO_BUILDDIR)/TAO_IDL/tao_idl
 TAO_IDLFLAGS = -Ge 1 -Wb,pre_include=ace/pre.h -Wb,post_include=ace/post.h -I$(TAO_ROOT) -I$(srcdir) -g $(ACE_BUILDDIR)/apps/gperf/src/gperf
 TAO_ROOT = $(top_srcdir)
 
+
 ## Makefile.Quoter_Idl_Lib.am
+
+if BUILD_EXCEPTIONS
 
 BUILT_SOURCES = \
   QuoterC.cpp \
@@ -70,6 +73,8 @@ noinst_HEADERS = \
   QuoterS_T.h \
   QuoterS_T.inl \
   quoter_common_export.h
+
+endif BUILD_EXCEPTIONS
 
 ## Clean up template repositories, etc.
 clean-local:

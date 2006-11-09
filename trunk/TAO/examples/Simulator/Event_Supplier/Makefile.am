@@ -20,6 +20,8 @@ noinst_PROGRAMS =
 
 ## Makefile.Event_Supplier_IDL.am
 
+if BUILD_EXCEPTIONS
+
 BUILT_SOURCES = \
   ./NavWeapC.cpp \
   ./NavWeapC.h \
@@ -48,9 +50,12 @@ CLEANFILES = \
 noinst_HEADERS = \
   ../NavWeap.idl
 
+endif BUILD_EXCEPTIONS
+
 ## Makefile.Event_Supplier_DualEC_Sup.am
 
 if BUILD_CORBA_MESSAGING
+if BUILD_EXCEPTIONS
 if !BUILD_ACE_FOR_TAO
 
 noinst_PROGRAMS += DualEC_Sup
@@ -89,11 +94,13 @@ DualEC_Sup_LDADD = \
   $(ACE_BUILDDIR)/ace/libACE.la
 
 endif !BUILD_ACE_FOR_TAO
+endif BUILD_EXCEPTIONS
 endif BUILD_CORBA_MESSAGING
 
 ## Makefile.Event_Supplier_Event_Con.am
 
 if BUILD_CORBA_MESSAGING
+if BUILD_EXCEPTIONS
 
 noinst_PROGRAMS += Event_Con
 
@@ -125,11 +132,13 @@ Event_Con_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
+endif BUILD_EXCEPTIONS
 endif BUILD_CORBA_MESSAGING
 
 ## Makefile.Event_Supplier_Event_Sup.am
 
 if BUILD_CORBA_MESSAGING
+if BUILD_EXCEPTIONS
 
 noinst_PROGRAMS += Event_Sup
 
@@ -164,11 +173,13 @@ Event_Sup_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
+endif BUILD_EXCEPTIONS
 endif BUILD_CORBA_MESSAGING
 
 ## Makefile.Event_Supplier_Logging_Sup.am
 
 if BUILD_CORBA_MESSAGING
+if BUILD_EXCEPTIONS
 
 noinst_PROGRAMS += Logging_Sup
 
@@ -203,6 +214,7 @@ Logging_Sup_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
+endif BUILD_EXCEPTIONS
 endif BUILD_CORBA_MESSAGING
 
 ## Clean up template repositories, etc.

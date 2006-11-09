@@ -20,6 +20,8 @@ noinst_PROGRAMS =
 
 ## Makefile.Quoter_Event_Service_Idl.am
 
+if BUILD_EXCEPTIONS
+
 BUILT_SOURCES = \
   QuoterC.cpp \
   QuoterC.h \
@@ -47,10 +49,11 @@ Quoter-stamp: $(srcdir)/Quoter.idl $(TAO_IDL_DEP)
 noinst_HEADERS = \
   Quoter.idl
 
+endif BUILD_EXCEPTIONS
+
 ## Makefile.Quoter_Event_Service_Client.am
 
 if BUILD_EXCEPTIONS
-if !BUILD_MINIMUM_CORBA
 
 noinst_PROGRAMS += client
 
@@ -78,13 +81,11 @@ client_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
-endif !BUILD_MINIMUM_CORBA
 endif BUILD_EXCEPTIONS
 
 ## Makefile.Quoter_Event_Service_Server.am
 
 if BUILD_EXCEPTIONS
-if !BUILD_MINIMUM_CORBA
 
 noinst_PROGRAMS += server
 
@@ -115,7 +116,6 @@ server_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
-endif !BUILD_MINIMUM_CORBA
 endif BUILD_EXCEPTIONS
 
 ## Clean up template repositories, etc.

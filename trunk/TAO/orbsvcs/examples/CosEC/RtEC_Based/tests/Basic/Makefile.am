@@ -17,8 +17,8 @@ TAO_ROOT = $(top_srcdir)
 ## Makefile.CosEC_RtEC_Based_Tests_Basic_Client.am
 
 if BUILD_CORBA_MESSAGING
+if BUILD_EXCEPTIONS
 if !BUILD_ACE_FOR_TAO
-if !BUILD_MINIMUM_CORBA
 
 noinst_PROGRAMS = Basic
 
@@ -40,6 +40,15 @@ Basic_SOURCES = \
   Consumer.h \
   Supplier.h
 
+../../lib:
+	mkdir -p ../../lib
+
+Basic_DEPENDENCIES = \
+  ../../lib
+
+Basic_LDFLAGS = \
+  -L../../lib
+
 Basic_LDADD = \
   $(top_builddir)/orbsvcs/examples/CosEC/RtEC_Based/lib/libCosEC_RtEC_Based.la \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_RTSched.la \
@@ -59,8 +68,8 @@ Basic_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
-endif !BUILD_MINIMUM_CORBA
 endif !BUILD_ACE_FOR_TAO
+endif BUILD_EXCEPTIONS
 endif BUILD_CORBA_MESSAGING
 
 ## Clean up template repositories, etc.

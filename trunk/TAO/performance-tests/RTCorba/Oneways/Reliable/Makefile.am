@@ -50,8 +50,8 @@ noinst_HEADERS = \
 ## Makefile.Reliable_Oneways_Client_RT.am
 
 if BUILD_CORBA_MESSAGING
+if BUILD_EXCEPTIONS
 if BUILD_RT_CORBA
-if !BUILD_MINIMUM_CORBA
 
 noinst_PROGRAMS += client
 
@@ -78,15 +78,15 @@ client_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
-endif !BUILD_MINIMUM_CORBA
 endif BUILD_RT_CORBA
+endif BUILD_EXCEPTIONS
 endif BUILD_CORBA_MESSAGING
 
 ## Makefile.Reliable_Oneways_Server_RT.am
 
 if BUILD_CORBA_MESSAGING
+if BUILD_EXCEPTIONS
 if BUILD_RT_CORBA
-if !BUILD_MINIMUM_CORBA
 
 noinst_PROGRAMS += server
 
@@ -116,8 +116,8 @@ server_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
-endif !BUILD_MINIMUM_CORBA
 endif BUILD_RT_CORBA
+endif BUILD_EXCEPTIONS
 endif BUILD_CORBA_MESSAGING
 
 ## Clean up template repositories, etc.

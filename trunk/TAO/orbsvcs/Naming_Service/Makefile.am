@@ -17,6 +17,7 @@ bin_PROGRAMS =
 
 ## Makefile.NT_Naming_Service.am
 
+if BUILD_EXCEPTIONS
 if BUILD_WINNT
 if !BUILD_ACE_FOR_TAO
 
@@ -54,9 +55,11 @@ NT_Naming_Service_LDADD = \
 
 endif !BUILD_ACE_FOR_TAO
 endif BUILD_WINNT
+endif BUILD_EXCEPTIONS
 
 ## Makefile.Naming_Service.am
 
+if BUILD_EXCEPTIONS
 if !BUILD_ACE_FOR_TAO
 
 bin_PROGRAMS += Naming_Service
@@ -91,6 +94,7 @@ Naming_Service_LDADD = \
   $(ACE_BUILDDIR)/ace/libACE.la
 
 endif !BUILD_ACE_FOR_TAO
+endif BUILD_EXCEPTIONS
 
 ## Clean up template repositories, etc.
 clean-local:

@@ -17,3 +17,5 @@ SUBDIRS = \
         Simple \
         Naming_Service
 
+#	RTCORBA
+

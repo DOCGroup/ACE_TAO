@@ -21,7 +21,7 @@ noinst_PROGRAMS =
 ## Makefile.CosEC_TypedSimple_Consumer.am
 
 if BUILD_EC_TYPED_EVENTS
-if !BUILD_MINIMUM_CORBA
+if BUILD_EXCEPTIONS
 
 BUILT_SOURCES = \
   CountryC.cpp \
@@ -85,13 +85,13 @@ Consumer_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
-endif !BUILD_MINIMUM_CORBA
+endif BUILD_EXCEPTIONS
 endif BUILD_EC_TYPED_EVENTS
 
 ## Makefile.CosEC_TypedSimple_Supplier.am
 
 if BUILD_EC_TYPED_EVENTS
-if !BUILD_MINIMUM_CORBA
+if BUILD_EXCEPTIONS
 
 noinst_PROGRAMS += Supplier
 
@@ -118,7 +118,7 @@ Supplier_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
-endif !BUILD_MINIMUM_CORBA
+endif BUILD_EXCEPTIONS
 endif BUILD_EC_TYPED_EVENTS
 
 ## Clean up template repositories, etc.
