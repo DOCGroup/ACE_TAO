@@ -1,0 +1,72 @@
+Sat Oct 11 23:19:31 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* tests/RTCCM/Priority_Test/descriptors/CB_Worker.csd:
+	* tests/RTCCM/Priority_Test/descriptors/IOB_Worker.csd:
+	* tests/RTCCM/Priority_Test/descriptors/Wroker.ssd:
+	* tests/RTCCM/Priority_Test/descriptors/CIAO_Installation_Data.ini:
+	* tests/RTCCM/Priority_Test/descriptors/Controller.csd:
+	* tests/RTCCM/Priority_Test/descriptors/Controller.ssd:
+	* tests/RTCCM/Priority_Test/descriptors/RTsvc.conf:
+	* tests/RTCCM/Priority_Test/descriptors/svcmap.dat:
+	* tests/RTCCM/Priority_Test/descriptors/test.dat:
+	* tests/RTCCM/Priority_Test/descriptors/test.rtd: New files for
+	  running the test.
+
+Sat Oct 11 00:11:18 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* tests/RTCCM/Priority_Test/Priority_Test.mpc:
+	* tests/RTCCM/Priority_Test/Workers/Worker.mpc:
+	* tests/RTCCM/Priority_Test/Controllers/Controller.mpc:  Manually
+	  changed the generated MPC files as the "depends" keyword is
+	  depricated by "after" in MPC, and the dependencies is broken in
+	  earlier changes in MPC generator scripts.
+
+	* tests/RTCCM/Priority_Test/Priority_Test.idl: Changed the use of
+	  "unsigned long" type to "long".  CIDL compiler doesn't seem to
+	  support unsigned long yet.
+
+	* tests/RTCCM/Priority_Test/Workers/Worker.idl: Fixed a typo.
+
+	* tests/RTCCM/Priority_Test/Workers/CB_Worker_exec.cpp:
+	* tests/RTCCM/Priority_Test/Workers/CB_Worker_exec.h:
+	* tests/RTCCM/Priority_Test/Workers/IOB_Worker_exec.cpp:
+	* tests/RTCCM/Priority_Test/Workers/IOB_Worker_exec.h:  Fixed a
+	  couple of compilation errors and changed some operation
+	  signatures to match the interface change in Priority_Test.idl.
+
+Fri Oct 10 22:05:48 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* tests/RTCCM/Priority_Test/Priority_Test.idl:
+	* tests/RTCCM/Priority_Test/Controllers/Controller.cidl:
+	* tests/RTCCM/Priority_Test/Controllers/Controller.idl:
+	* tests/RTCCM/Priority_Test/Controllers/Controller.mpc:
+	* tests/RTCCM/Priority_Test/Controllers/ControllerEI.idl:
+	* tests/RTCCM/Priority_Test/Controllers/Controller_exec.cpp:
+	* tests/RTCCM/Priority_Test/Controllers/Controller_exec.h:
+	* tests/RTCCM/Priority_Test/Controllers/Controller_exec_export.h:
+	* tests/RTCCM/Priority_Test/Controllers/Controller_stub_export.h:
+	* tests/RTCCM/Priority_Test/Controllers/Controller_svnt_export.h:
+	* tests/RTCCM/Priority_Test/Workers/CB_Worker_exec.cpp:
+	* tests/RTCCM/Priority_Test/Workers/CB_Worker_exec.h:
+	* tests/RTCCM/Priority_Test/Workers/IOB_Worker_exec.cpp:
+	* tests/RTCCM/Priority_Test/Workers/IOB_Worker_exec.h:
+	* tests/RTCCM/Priority_Test/Workers/README:
+	* tests/RTCCM/Priority_Test/Workers/Worker.cidl:
+	* tests/RTCCM/Priority_Test/Workers/Worker.idl:
+	* tests/RTCCM/Priority_Test/Workers/Worker.mpc:
+	* tests/RTCCM/Priority_Test/Workers/WorkerEI.idl:
+	* tests/RTCCM/Priority_Test/Workers/Worker_exec_export.h:
+	* tests/RTCCM/Priority_Test/Workers/Worker_stub_export.h:
+	* tests/RTCCM/Priority_Test/Workers/Worker_svnt_export.h:
+	* tests/RTCCM/Priority_Test/descriptors/CB_Worker.csd:
+	* tests/RTCCM/Priority_Test/descriptors/IOB_Worker.csd:
+	* tests/RTCCM/Priority_Test/descriptors/Worker.ssd: New files for
+	  test Worker components.
+
+Thu Oct 09 00:59:26 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* tests/RTCCM/Priority_Test/Priority_Test.idl:
+	* tests/RTCCM/Priority_Test/Priority_Test.mpc:
+	* tests/RTCCM/Priority_Test/Priority_Test_stub_export.h:
+	* tests/RTCCM/Priority_Test/Priority_Test_svnt_export.h: Added
+	  files for RTCCM Priority_Test project.
