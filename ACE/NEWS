@@ -42,6 +42,7 @@ USER VISIBLE CHANGES BETWEEN ACE-5.5.3 and ACE-5.5.4
 . Added STL-style "element_type" trait to all ACE auto_ptr class
   templates.
 
+. Removed support for LynxOS 3.x.
 
 USER VISIBLE CHANGES BETWEEN ACE-5.5.2 and ACE-5.5.3
 ====================================================

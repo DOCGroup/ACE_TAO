@@ -1,8 +1,13 @@
+Thu Nov  9 09:25:48 UTC 2006  Olli Savia  <ops@iki.fi>
+
+        * ace/TTY_IO.cpp:
+          Removed LynxOS 3.x specific workaround.
+
 Wed Nov  8 22:22:27 UTC 2006  Steve Huston  <shuston@riverace.com>
 
         * bin/make_release: Re-applied this:
           Sat Oct 28 20:10:42 UTC 2006  Steve Huston  <shuston@riverace.com>
-        
+
 Wed Nov  8 22:12:46 UTC 2006  Iliyan Jeliazkov  <iliyan@ociweb.com>
 
         * ace/Service_Config.cpp:
