@@ -49,6 +49,7 @@ noinst_HEADERS = \
 
 ## Makefile.Implicit_Activation_Client.am
 
+if BUILD_EXCEPTIONS
 if !BUILD_ACE_FOR_TAO
 
 noinst_PROGRAMS += client
@@ -70,9 +71,11 @@ client_LDADD = \
   $(ACE_BUILDDIR)/ace/libACE.la
 
 endif !BUILD_ACE_FOR_TAO
+endif BUILD_EXCEPTIONS
 
 ## Makefile.Implicit_Activation_Collocated.am
 
+if BUILD_EXCEPTIONS
 if !BUILD_ACE_FOR_TAO
 
 noinst_PROGRAMS += collocated
@@ -97,8 +100,11 @@ collocated_LDADD = \
   $(ACE_BUILDDIR)/ace/libACE.la
 
 endif !BUILD_ACE_FOR_TAO
+endif BUILD_EXCEPTIONS
 
 ## Makefile.Implicit_Activation_Server.am
+
+if BUILD_EXCEPTIONS
 
 noinst_PROGRAMS += server
 
@@ -122,6 +128,8 @@ server_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO_AnyTypeCode.la \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
+
+endif BUILD_EXCEPTIONS
 
 ## Clean up template repositories, etc.
 clean-local:

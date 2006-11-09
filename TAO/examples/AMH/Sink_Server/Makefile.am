@@ -21,6 +21,7 @@ noinst_PROGRAMS =
 ## Makefile.Sink_Server_IDL.am
 
 if BUILD_CORBA_MESSAGING
+if BUILD_EXCEPTIONS
 
 BUILT_SOURCES = \
   TestC.cpp \
@@ -49,11 +50,13 @@ Test-stamp: $(srcdir)/Test.idl $(TAO_IDL_DEP)
 noinst_HEADERS = \
   Test.idl
 
+endif BUILD_EXCEPTIONS
 endif BUILD_CORBA_MESSAGING
 
 ## Makefile.Sink_Server_Client.am
 
 if BUILD_CORBA_MESSAGING
+if BUILD_EXCEPTIONS
 if !BUILD_ACE_FOR_TAO
 
 noinst_PROGRAMS += client
@@ -83,11 +86,13 @@ client_LDADD = \
   $(ACE_BUILDDIR)/ace/libACE.la
 
 endif !BUILD_ACE_FOR_TAO
+endif BUILD_EXCEPTIONS
 endif BUILD_CORBA_MESSAGING
 
 ## Makefile.Sink_Server_Mt_Server.am
 
 if BUILD_CORBA_MESSAGING
+if BUILD_EXCEPTIONS
 if !BUILD_ACE_FOR_TAO
 
 noinst_PROGRAMS += mt_server
@@ -124,11 +129,13 @@ mt_server_LDADD = \
   $(ACE_BUILDDIR)/ace/libACE.la
 
 endif !BUILD_ACE_FOR_TAO
+endif BUILD_EXCEPTIONS
 endif BUILD_CORBA_MESSAGING
 
 ## Makefile.Sink_Server_St_Server.am
 
 if BUILD_CORBA_MESSAGING
+if BUILD_EXCEPTIONS
 if !BUILD_ACE_FOR_TAO
 
 noinst_PROGRAMS += st_server
@@ -163,6 +170,7 @@ st_server_LDADD = \
   $(ACE_BUILDDIR)/ace/libACE.la
 
 endif !BUILD_ACE_FOR_TAO
+endif BUILD_EXCEPTIONS
 endif BUILD_CORBA_MESSAGING
 
 ## Clean up template repositories, etc.

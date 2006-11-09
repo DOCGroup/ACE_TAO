@@ -19,8 +19,8 @@ TAO_ROOT = $(top_srcdir)
 
 ## Makefile.RTCORBA_Common.am
 
+if BUILD_EXCEPTIONS
 if BUILD_RT_CORBA
-if !BUILD_MINIMUM_CORBA
 
 BUILT_SOURCES = \
   testC.cpp \
@@ -69,8 +69,8 @@ noinst_HEADERS = \
   test_i.h \
   test_i.inl
 
-endif !BUILD_MINIMUM_CORBA
 endif BUILD_RT_CORBA
+endif BUILD_EXCEPTIONS
 
 ## Clean up template repositories, etc.
 clean-local:

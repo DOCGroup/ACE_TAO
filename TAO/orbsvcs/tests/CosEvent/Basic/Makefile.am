@@ -18,7 +18,7 @@ noinst_PROGRAMS =
 ## Makefile.CosEvent_Basic_Disconnect.am
 
 if BUILD_CORBA_MESSAGING
-if !BUILD_MINIMUM_CORBA
+if BUILD_EXCEPTIONS
 
 noinst_PROGRAMS += Disconnect
 
@@ -56,13 +56,13 @@ Disconnect_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
-endif !BUILD_MINIMUM_CORBA
+endif BUILD_EXCEPTIONS
 endif BUILD_CORBA_MESSAGING
 
 ## Makefile.CosEvent_Basic_MT_Disconnect.am
 
 if BUILD_CORBA_MESSAGING
-if !BUILD_MINIMUM_CORBA
+if BUILD_EXCEPTIONS
 
 noinst_PROGRAMS += MT_Disconnect
 
@@ -99,13 +99,13 @@ MT_Disconnect_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
-endif !BUILD_MINIMUM_CORBA
+endif BUILD_EXCEPTIONS
 endif BUILD_CORBA_MESSAGING
 
 ## Makefile.CosEvent_Basic_Pull_Push_Event.am
 
 if BUILD_CORBA_MESSAGING
-if !BUILD_MINIMUM_CORBA
+if BUILD_EXCEPTIONS
 
 noinst_PROGRAMS += Pull_Push_Event
 
@@ -143,13 +143,13 @@ Pull_Push_Event_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
-endif !BUILD_MINIMUM_CORBA
+endif BUILD_EXCEPTIONS
 endif BUILD_CORBA_MESSAGING
 
 ## Makefile.CosEvent_Basic_Push_Event.am
 
 if BUILD_CORBA_MESSAGING
-if !BUILD_MINIMUM_CORBA
+if BUILD_EXCEPTIONS
 
 noinst_PROGRAMS += Push_Event
 
@@ -187,13 +187,13 @@ Push_Event_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
-endif !BUILD_MINIMUM_CORBA
+endif BUILD_EXCEPTIONS
 endif BUILD_CORBA_MESSAGING
 
 ## Makefile.CosEvent_Basic_Random.am
 
 if BUILD_CORBA_MESSAGING
-if !BUILD_MINIMUM_CORBA
+if BUILD_EXCEPTIONS
 
 noinst_PROGRAMS += Random
 
@@ -230,13 +230,13 @@ Random_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
-endif !BUILD_MINIMUM_CORBA
+endif BUILD_EXCEPTIONS
 endif BUILD_CORBA_MESSAGING
 
 ## Makefile.CosEvent_Basic_Shutdown.am
 
 if BUILD_CORBA_MESSAGING
-if !BUILD_MINIMUM_CORBA
+if BUILD_EXCEPTIONS
 
 noinst_PROGRAMS += Shutdown
 
@@ -274,7 +274,7 @@ Shutdown_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
-endif !BUILD_MINIMUM_CORBA
+endif BUILD_EXCEPTIONS
 endif BUILD_CORBA_MESSAGING
 
 ## Clean up template repositories, etc.

@@ -22,7 +22,8 @@ BUILT_SOURCES =
 
 ## Makefile.CSD_Test_ThreadPool6_Server.am
 
-if !BUILD_MINIMUM_CORBA
+if BUILD_EXCEPTIONS
+if BUILD_THREADS
 
 BUILT_SOURCES += \
   FooC.cpp \
@@ -88,9 +89,12 @@ server_main_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
-endif !BUILD_MINIMUM_CORBA
+endif BUILD_THREADS
+endif BUILD_EXCEPTIONS
 
 ## Makefile.CSD_Test_ThreadPool6_Client.am
+
+if BUILD_EXCEPTIONS
 
 BUILT_SOURCES += \
   FooC.cpp \
@@ -135,6 +139,8 @@ client_main_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO_AnyTypeCode.la \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
+
+endif BUILD_EXCEPTIONS
 
 ## Clean up template repositories, etc.
 clean-local:

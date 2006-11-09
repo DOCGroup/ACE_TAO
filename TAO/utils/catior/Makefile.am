@@ -16,6 +16,8 @@ TAO_ROOT = $(top_srcdir)
 
 ## Makefile.catior.am
 
+if BUILD_CORBA_MESSAGING
+if BUILD_EXCEPTIONS
 if BUILD_RT_CORBA
 
 bin_PROGRAMS = catior
@@ -32,6 +34,9 @@ catior_SOURCES = \
   catior.cpp
 
 catior_LDADD = \
+  $(TAO_BUILDDIR)/tao/libTAO_Messaging.la \
+  $(TAO_BUILDDIR)/tao/libTAO_PortableServer.la \
+  $(TAO_BUILDDIR)/tao/libTAO_Valuetype.la \
   $(TAO_BUILDDIR)/tao/libTAO_RTCORBA.la \
   $(TAO_BUILDDIR)/tao/libTAO_PI.la \
   $(TAO_BUILDDIR)/tao/libTAO_CodecFactory.la \
@@ -41,6 +46,8 @@ catior_LDADD = \
   $(ACE_BUILDDIR)/ace/libACE.la
 
 endif BUILD_RT_CORBA
+endif BUILD_EXCEPTIONS
+endif BUILD_CORBA_MESSAGING
 
 ## Clean up template repositories, etc.
 clean-local:

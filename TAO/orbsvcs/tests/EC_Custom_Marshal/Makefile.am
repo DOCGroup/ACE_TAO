@@ -21,6 +21,7 @@ noinst_PROGRAMS =
 ## Makefile.EC_Custom_Marshal_IDL.am
 
 if BUILD_CORBA_MESSAGING
+if BUILD_EXCEPTIONS
 
 BUILT_SOURCES = \
   dataC.cpp \
@@ -55,11 +56,13 @@ data-stamp: $(srcdir)/data.idl $(TAO_IDL_DEP)
 noinst_HEADERS = \
   data.idl
 
+endif BUILD_EXCEPTIONS
 endif BUILD_CORBA_MESSAGING
 
 ## Makefile.ECM_Consumer.am
 
 if BUILD_CORBA_MESSAGING
+if BUILD_EXCEPTIONS
 
 noinst_PROGRAMS += ECM_Consumer
 
@@ -94,11 +97,13 @@ ECM_Consumer_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
+endif BUILD_EXCEPTIONS
 endif BUILD_CORBA_MESSAGING
 
 ## Makefile.ECM_Supplier.am
 
 if BUILD_CORBA_MESSAGING
+if BUILD_EXCEPTIONS
 if !BUILD_ACE_FOR_TAO
 
 noinst_PROGRAMS += ECM_Supplier
@@ -136,6 +141,7 @@ ECM_Supplier_LDADD = \
   $(ACE_BUILDDIR)/ace/libACE.la
 
 endif !BUILD_ACE_FOR_TAO
+endif BUILD_EXCEPTIONS
 endif BUILD_CORBA_MESSAGING
 
 ## Clean up template repositories, etc.

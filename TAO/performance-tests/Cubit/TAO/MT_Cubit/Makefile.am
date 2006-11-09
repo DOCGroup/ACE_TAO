@@ -20,6 +20,7 @@ noinst_PROGRAMS =
 
 ## Makefile.MT_Cubit_IDL.am
 
+if BUILD_EXCEPTIONS
 if !BUILD_ACE_FOR_TAO
 
 BUILT_SOURCES = \
@@ -50,9 +51,11 @@ noinst_HEADERS = \
   cubit.idl
 
 endif !BUILD_ACE_FOR_TAO
+endif BUILD_EXCEPTIONS
 
 ## Makefile.MT_Cubit_Client.am
 
+if BUILD_EXCEPTIONS
 if !BUILD_ACE_FOR_TAO
 
 noinst_PROGRAMS += client
@@ -92,9 +95,11 @@ client_LDADD = \
   $(ACE_BUILDDIR)/ace/libACE.la
 
 endif !BUILD_ACE_FOR_TAO
+endif BUILD_EXCEPTIONS
 
 ## Makefile.MT_Cubit_Server.am
 
+if BUILD_EXCEPTIONS
 if !BUILD_ACE_FOR_TAO
 
 noinst_PROGRAMS += server
@@ -130,6 +135,7 @@ server_LDADD = \
   $(ACE_BUILDDIR)/ace/libACE.la
 
 endif !BUILD_ACE_FOR_TAO
+endif BUILD_EXCEPTIONS
 
 ## Clean up template repositories, etc.
 clean-local:

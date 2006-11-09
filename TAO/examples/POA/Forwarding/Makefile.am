@@ -20,6 +20,8 @@ noinst_PROGRAMS =
 
 ## Makefile.POA_Forwarding_IDL.am
 
+if BUILD_EXCEPTIONS
+
 BUILT_SOURCES = \
   testC.cpp \
   testC.h \
@@ -47,9 +49,11 @@ test-stamp: $(srcdir)/test.idl $(TAO_IDL_DEP)
 noinst_HEADERS = \
   test.idl
 
+endif BUILD_EXCEPTIONS
+
 ## Makefile.POA_Forwarding_Client.am
 
-if !BUILD_MINIMUM_CORBA
+if BUILD_EXCEPTIONS
 
 noinst_PROGRAMS += client
 
@@ -70,11 +74,11 @@ client_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
-endif !BUILD_MINIMUM_CORBA
+endif BUILD_EXCEPTIONS
 
 ## Makefile.POA_Forwarding_Server.am
 
-if !BUILD_MINIMUM_CORBA
+if BUILD_EXCEPTIONS
 
 noinst_PROGRAMS += server
 
@@ -99,7 +103,7 @@ server_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
-endif !BUILD_MINIMUM_CORBA
+endif BUILD_EXCEPTIONS
 
 ## Clean up template repositories, etc.
 clean-local:

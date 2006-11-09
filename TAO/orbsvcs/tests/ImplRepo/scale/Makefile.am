@@ -49,7 +49,7 @@ noinst_HEADERS = \
 
 ## Makefile.scaletest_client.am
 
-if !BUILD_MINIMUM_CORBA
+if BUILD_EXCEPTIONS
 
 noinst_PROGRAMS += client
 
@@ -72,11 +72,11 @@ client_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
-endif !BUILD_MINIMUM_CORBA
+endif BUILD_EXCEPTIONS
 
 ## Makefile.scaletest_server.am
 
-if !BUILD_MINIMUM_CORBA
+if BUILD_EXCEPTIONS
 
 noinst_PROGRAMS += server
 
@@ -101,7 +101,7 @@ server_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
-endif !BUILD_MINIMUM_CORBA
+endif BUILD_EXCEPTIONS
 
 ## Clean up template repositories, etc.
 clean-local:

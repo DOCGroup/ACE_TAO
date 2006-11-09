@@ -40,7 +40,7 @@ CLEANFILES = \
 testC.cpp testC.h testC.inl testS.cpp testS.h testS.inl: test-stamp
 
 test-stamp: $(srcdir)/test.idl $(TAO_IDL_DEP)
-	$(TAO_IDL) $(TAO_IDLFLAGS) -Sa -St -Sc $(srcdir)/test.idl
+	$(TAO_IDL) $(TAO_IDLFLAGS) -Sa -St $(srcdir)/test.idl
 	@touch $@
 
 BUILT_SOURCES += \
@@ -63,7 +63,7 @@ CLEANFILES += \
 testsC.cpp testsC.h testsC.inl testsS.cpp testsS.h testsS.inl: tests-stamp
 
 tests-stamp: $(srcdir)/tests.idl $(TAO_IDL_DEP)
-	$(TAO_IDL) $(TAO_IDLFLAGS) -Sa -St -Sc $(srcdir)/tests.idl
+	$(TAO_IDL) $(TAO_IDLFLAGS) -Sa -St $(srcdir)/tests.idl
 	@touch $@
 
 
@@ -75,9 +75,9 @@ noinst_HEADERS = \
 
 if BUILD_ACE_UUID
 if BUILD_CORBA_MESSAGING
+if BUILD_EXCEPTIONS
 if BUILD_INTERCEPTORS
 if !BUILD_ACE_FOR_TAO
-if !BUILD_MINIMUM_CORBA
 
 noinst_PROGRAMS += client
 
@@ -111,9 +111,9 @@ client_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
-endif !BUILD_MINIMUM_CORBA
 endif !BUILD_ACE_FOR_TAO
 endif BUILD_INTERCEPTORS
+endif BUILD_EXCEPTIONS
 endif BUILD_CORBA_MESSAGING
 endif BUILD_ACE_UUID
 
@@ -121,9 +121,9 @@ endif BUILD_ACE_UUID
 
 if BUILD_ACE_UUID
 if BUILD_CORBA_MESSAGING
+if BUILD_EXCEPTIONS
 if BUILD_INTERCEPTORS
 if !BUILD_ACE_FOR_TAO
-if !BUILD_MINIMUM_CORBA
 
 noinst_PROGRAMS += server
 
@@ -165,9 +165,9 @@ server_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
-endif !BUILD_MINIMUM_CORBA
 endif !BUILD_ACE_FOR_TAO
 endif BUILD_INTERCEPTORS
+endif BUILD_EXCEPTIONS
 endif BUILD_CORBA_MESSAGING
 endif BUILD_ACE_UUID
 

@@ -13,9 +13,13 @@ ACE_ROOT = $(top_srcdir)/..
 TAO_BUILDDIR = $(top_builddir)
 TAO_ROOT = $(top_srcdir)
 
+bin_PROGRAMS =
+
 ## Makefile.nsadd.am
 
-bin_PROGRAMS = nsadd
+if BUILD_EXCEPTIONS
+
+bin_PROGRAMS += nsadd
 
 nsadd_CPPFLAGS = \
   -I$(ACE_ROOT) \
@@ -34,7 +38,11 @@ nsadd_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
+endif BUILD_EXCEPTIONS
+
 ## Makefile.nsdel.am
+
+if BUILD_EXCEPTIONS
 
 bin_PROGRAMS += nsdel
 
@@ -55,7 +63,11 @@ nsdel_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
+endif BUILD_EXCEPTIONS
+
 ## Makefile.nslist.am
+
+if BUILD_EXCEPTIONS
 
 bin_PROGRAMS += nslist
 
@@ -75,6 +87,8 @@ nslist_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO_AnyTypeCode.la \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
+
+endif BUILD_EXCEPTIONS
 
 ## Clean up template repositories, etc.
 clean-local:

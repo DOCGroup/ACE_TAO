@@ -49,6 +49,7 @@ noinst_HEADERS = \
 
 ## Makefile.mif_example_client.am
 
+if BUILD_EXCEPTIONS
 if BUILD_RT_CORBA
 
 noinst_PROGRAMS += mif_client
@@ -82,9 +83,11 @@ mif_client_LDADD = \
   $(ACE_BUILDDIR)/ace/libACE.la
 
 endif BUILD_RT_CORBA
+endif BUILD_EXCEPTIONS
 
 ## Makefile.mif_example_server.am
 
+if BUILD_EXCEPTIONS
 if BUILD_RT_CORBA
 
 noinst_PROGRAMS += mif_server
@@ -120,6 +123,7 @@ mif_server_LDADD = \
   $(ACE_BUILDDIR)/ace/libACE.la
 
 endif BUILD_RT_CORBA
+endif BUILD_EXCEPTIONS
 
 ## Clean up template repositories, etc.
 clean-local:

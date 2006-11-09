@@ -20,6 +20,8 @@ noinst_PROGRAMS =
 
 ## Makefile.LoadBalancing_Idl.am
 
+if BUILD_EXCEPTIONS
+
 BUILT_SOURCES = \
   TestC.cpp \
   TestC.h \
@@ -47,8 +49,11 @@ Test-stamp: $(srcdir)/Test.idl $(TAO_IDL_DEP)
 noinst_HEADERS = \
   Test.idl
 
+endif BUILD_EXCEPTIONS
+
 ## Makefile.LoadBalancing_Client.am
 
+if BUILD_EXCEPTIONS
 if !BUILD_ACE_FOR_TAO
 
 noinst_PROGRAMS += client
@@ -75,6 +80,7 @@ client_LDADD = \
   $(ACE_BUILDDIR)/ace/libACE.la
 
 endif !BUILD_ACE_FOR_TAO
+endif BUILD_EXCEPTIONS
 
 ## Makefile.LoadBalancing_Server.am
 
@@ -82,7 +88,6 @@ if BUILD_AMI
 if BUILD_CORBA_MESSAGING
 if BUILD_EXCEPTIONS
 if !BUILD_ACE_FOR_TAO
-if !BUILD_MINIMUM_CORBA
 
 noinst_PROGRAMS += server
 
@@ -126,7 +131,6 @@ server_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
-endif !BUILD_MINIMUM_CORBA
 endif !BUILD_ACE_FOR_TAO
 endif BUILD_EXCEPTIONS
 endif BUILD_CORBA_MESSAGING

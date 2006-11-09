@@ -54,3 +54,4 @@ SUBDIRS = \
         ior_corbaname \
         tests_svc_loader
 
+#	Bug_2615_Regression

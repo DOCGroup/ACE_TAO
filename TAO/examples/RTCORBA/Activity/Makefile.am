@@ -19,6 +19,7 @@ TAO_ROOT = $(top_srcdir)
 
 ## Makefile.Activity.am
 
+if BUILD_EXCEPTIONS
 if BUILD_RT_CORBA
 
 BUILT_SOURCES = \
@@ -98,6 +99,7 @@ activity_LDADD = \
   $(ACE_BUILDDIR)/ace/libACE.la
 
 endif BUILD_RT_CORBA
+endif BUILD_EXCEPTIONS
 
 ## Clean up template repositories, etc.
 clean-local:

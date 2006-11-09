@@ -19,7 +19,7 @@ TAO_ROOT = $(top_srcdir)
 
 ## Makefile.POA_Generic_Servant_Lib.am
 
-if !BUILD_MINIMUM_CORBA
+if BUILD_EXCEPTIONS
 
 BUILT_SOURCES = \
   testC.cpp \
@@ -66,12 +66,12 @@ noinst_HEADERS = \
   testS.inl \
   test_i.h
 
-endif !BUILD_MINIMUM_CORBA
+endif BUILD_EXCEPTIONS
 
 ## Makefile.POA_Generic_Servant_Client.am
 
+if BUILD_EXCEPTIONS
 if !BUILD_ACE_FOR_TAO
-if !BUILD_MINIMUM_CORBA
 
 noinst_PROGRAMS = client
 
@@ -93,8 +93,8 @@ client_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
-endif !BUILD_MINIMUM_CORBA
 endif !BUILD_ACE_FOR_TAO
+endif BUILD_EXCEPTIONS
 
 ## Clean up template repositories, etc.
 clean-local:

@@ -20,6 +20,8 @@ noinst_PROGRAMS =
 
 ## Makefile.CosEC_Factory_Idl.am
 
+if BUILD_EXCEPTIONS
+
 BUILT_SOURCES = \
   CosEventChannelFactoryC.cpp \
   CosEventChannelFactoryC.h \
@@ -53,9 +55,11 @@ CosEventChannelFactory-stamp: $(srcdir)/CosEventChannelFactory.idl $(TAO_IDL_DEP
 noinst_HEADERS = \
   CosEventChannelFactory.idl
 
+endif BUILD_EXCEPTIONS
+
 ## Makefile.CosEC_Factory_Client.am
 
-if !BUILD_MINIMUM_CORBA
+if BUILD_EXCEPTIONS
 
 noinst_PROGRAMS += FactoryClient
 
@@ -83,12 +87,12 @@ FactoryClient_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
-endif !BUILD_MINIMUM_CORBA
+endif BUILD_EXCEPTIONS
 
 ## Makefile.CosEC_Factory_Server.am
 
 if BUILD_CORBA_MESSAGING
-if !BUILD_MINIMUM_CORBA
+if BUILD_EXCEPTIONS
 
 noinst_PROGRAMS += FactoryServer
 
@@ -127,7 +131,7 @@ FactoryServer_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
-endif !BUILD_MINIMUM_CORBA
+endif BUILD_EXCEPTIONS
 endif BUILD_CORBA_MESSAGING
 
 ## Clean up template repositories, etc.
