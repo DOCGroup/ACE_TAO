@@ -3,24 +3,11 @@
 # This platform macros file is intended to work with Rational C++ (2.4.1) on
 # Digital UNIX 4.0 (OSF/1 4.0).
 
-ifeq (,$(debug))
-  debug = 1
-endif
-
-ifeq (,$(exceptions))
-  exceptions = 1
-endif
-ifeq (,$(rtti))
-   rtti = 1
-endif
-
-ifeq (,$(threads))
-  threads = 1
-endif
-
-ifeq (,$(optimize))
-  optimize = 1
-endif
+debug ?= 1
+exceptions ?= 1
+rtti ?= 1
+threads ?= 1
+optimize ?= 1
 
 CC              = rcc
 CXX             = RCC

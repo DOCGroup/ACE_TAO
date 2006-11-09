@@ -1,3 +1,17 @@
+Thu Nov  9 19:59:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * include/makeinclude/platform_aix4_cset++.GNU:
+        * include/makeinclude/platform_integrity_ghs.GNU:
+        * include/makeinclude/platform_irix6.x_sgic++.GNU:
+        * include/makeinclude/platform_linux_pgi.GNU:
+        * include/makeinclude/platform_macosx_panther.GNU:
+        * include/makeinclude/platform_macosx_tiger.GNU:
+        * include/makeinclude/platform_netbsd.GNU:
+        * include/makeinclude/platform_openbsd.GNU:
+        * include/makeinclude/platform_osf1_4.x_rcc.GNU:
+        * include/makeinclude/platform_vxworks5.x_ghs.GNU:
+          Simplified these files using the ?= operator
+
 Thu Nov 09 16:10:10 UTC 2006  Martin Corino  <mcorino@remedy.nl>
 
         * ace/Service_Config.cpp:
