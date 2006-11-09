@@ -7,6 +7,8 @@ CROSS-COMPILE = 1
 debug ?= 1
 optimize ?= 1
 rtti ?= 1
+threads ?= 1
+exceptions ?= 1
 
 shared_libs =
 static_libs = 1
