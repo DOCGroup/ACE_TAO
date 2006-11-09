@@ -1,3 +1,11 @@
+Thu Nov  9 22:34:28 UTC 2006  Chris Cleeland  <cleeland_c@ociweb.com>
+
+        * orbsvcs/orbsvcs/Event/EC_Thread_Flags.cpp:
+        
+          Removed semicolon after ACE_RCSID that caused problems with some
+          compilers, but not others, and caused a domino effect of no
+          RTEC-related stuff to build.
+
 Thu Nov  9 19:27:16 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
 
         * orbsvcs/orbsvcs/Makefile.am:
