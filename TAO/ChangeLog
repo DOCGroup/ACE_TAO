@@ -1,3 +1,7 @@
+Thu Nov  9 18:52:15 UTC 2006  Chris Cleeland  <cleeland_c@ociweb.com>
+
+        * NEWS: Updated to reflect RTEC changes.
+
 Thu Nov  9 15:42:32 UTC 2006  Chris Cleeland  <cleeland_c@ociweb.com>
 
         * docs/ec_options.html: Add documentation for TPC and
