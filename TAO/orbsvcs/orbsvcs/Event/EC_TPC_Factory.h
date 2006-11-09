@@ -58,6 +58,8 @@ public:
 
 extern unsigned long TAO_EC_TPC_debug_level;
 
+TAO_END_VERSIONED_NAMESPACE_DECL
+
 ACE_STATIC_SVC_DECLARE (TAO_EC_TPC_Factory)
 ACE_FACTORY_DECLARE (TAO_RTEvent_Serv, TAO_EC_TPC_Factory)
 
