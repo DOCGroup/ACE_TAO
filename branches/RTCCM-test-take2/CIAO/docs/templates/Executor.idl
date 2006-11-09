@@ -1,0 +1,246 @@
+// $Id$
+
+// ===========================================================
+//
+// @file Executor.idl
+//
+// The purpose of this IDL file is to serve as a template for the CIDL
+// generated equivalent executor file.  The CIDL will generate this
+// file directly which, in turn, gets compiled by the TAO IDL compiler
+// to generate the C++ mappings for the stuff defined in this file
+// into a set of [idl-name]EC.{h,inl,cpp} files.
+//
+// This intermediate step is necessary because component implemenetors
+// will need to extend these executor definitions (thru inheritance)
+// to implemenet more complex executor implementations, such as those
+// that support session component interface.  (This is necessary to
+// properly support C++ mapping for features such as interface
+// narrowing.)
+//
+// What are missing in the template for executor mappings are the
+// exception specifications for most operations.
+//
+// @author Nanbor Wang <nanbor@cs.wustl.edu>
+//
+// ===========================================================
+
+#ifndef [component_idl]E_IDL
+#define [component_idl]E_IDL
+
+#include "CCM_Container.idl"    // Found in $(CIAO_ROOT)/ciao
+                                // For various definitions of container
+                                // internal/callback interfaces
+#include "[component_idl].idl"  // Original component IDL definition
+// @@ We may need to include other *E.idl here....  Can't figure out
+// if we can do this automagically or not.
+
+##if there are module definitions, preserve them all
+module [module_name] {
+##endif
+
+////////////////////////////////////////////////////////////////////
+//// * Iterate thru all supported interface types
+////   It's possible that we need to put some of the common supported
+////   interface definitions into a separate compilation unit.  How do we
+////   specify that in CCIDL?  I haven't figured that out.  Perhaps
+////   allowing CCIDL to compile files that contain no component
+////   definition?
+##foreach [interface_type] in (types of all supported interface) generate:
+
+  local interface CCM_[interface_type] : [interface_type]
+  {
+  };
+
+##end foreach [interface_type]
+
+////////////////////////////////////////////////////////////////////
+//// * Iterate thru all facet ('provides' interface) interface types
+////   It's possible that we need to put some of the common facet
+////   definitions into a separate compilation unit.  How do we
+////   specify that in CCIDL?  I haven't figured that out.  Perhaps
+////   allowing CCIDL to compile files that contain no component
+////   definition?
+##foreach [facet_interface_type] in (types of all facets) generate:
+
+  local interface CCM_[facet_interface_type] : [facet_interface_type]
+  {
+  };
+
+##end foreach [facet_interface_type]
+
+////////////////////////////////////////////////////////////////////
+//// * Iterate thru all event ('emits', "publishes', or 'consumes') types
+////   It's possible that we need to put some of the EventConsumer
+////   definitions into a separate compilation unit.  Like in the case
+////   of facets interface mappings, how do we
+////   specify that in CCIDL?  I haven't figured that out.  Perhaps
+////   allowing CCIDL to compile files that contain no component
+////   definition?
+
+##foreach [eventtype] in (all eventtypes) generate:
+
+  local interface CCM_[eventtype]Consumer
+  {
+    void push (in [eventtype] ev);
+  };
+
+##end foreach [eventtype]
+
+
+////////////////////////////////////////////////////////////////////
+//// * Iterate thru all component definitions in the IDL files.
+////   Notice that there's no distinction between entity and session
+////   components in executor mappings.
+
+##foreach [component basename] in (all component definitions) generate:
+
+  // Component Main Executor Interface.  We currently do not
+  // support Executor-based implementation.
+
+  local interface CCM_[component basename]_Executor
+    :
+##  if [component basename] inherits from [parent component name]
+      CCM_[parent component name]_Executor
+##  else
+      ::Components::EnterpriseComponent
+##  endif
+##  foreach [interface name] in (all component supported interfaces) generate:
+      , [interface name]
+##  end foreach [interface name]
+
+  {
+##  foreach [attribute definition] in (attributes defined in [component basename]) generate:
+    [attribute definition];
+##  end foreach [attribute definition]
+
+  };
+
+  // Monolithic component executor.
+  // For implementing monolithic component call back interface.
+
+  local interface CCM_[component basename]
+    :
+##  if [component basename] inherits from [parent component name]
+      CCM_[parent component name]
+##  else
+      ::Components::EnterpriseComponent
+##  endif
+##  foreach [interface name] in (all component supported interfaces) generate:
+      , [interface name]
+##  end foreach [interface name]
+
+  {
+##  foreach [attribute definition] in (attributes defined in [component basename]) generate:
+    [attribute definition];
+##  end foreach [attribute definition]
+
+##  foreach [facet name] with [facet type] in (list of all provided interfaces) generate:
+    CCM_[facet type] get_[facet name] ();
+##  end foreach [facet name] with [facet type]
+
+##  foreach [event name] with [eventtype] in (list of all event sinks) generate:
+    void push_[event name] (in [eventtype] ev);
+##  end foreach [event name] with [eventtype]
+
+  };
+
+  /**
+   * Component Context Interface
+   *
+   * Notice that we are taking a shortcut here to inherit the
+   * component-specific context from SessionContext directly instead
+   * of CCMContext.
+   */
+  local interface CCM_[component basename]_Context
+    :
+##  if [component basename] inherits from [parent component name]
+      CCM_[parent component name]_Context
+##  else
+      ::Components::SessionContext
+##  endif
+  {
+
+##  foreach [receptacle name] with [uses type] in (list of all 'uses' interfaces) generate:
+##    if [receptacle name] is a simplex receptacle ('uses')
+    [uses type] get_connection_[receptacle name] ();
+##    else ([receptacle name] is a multiplex ('uses multiple') receptacle)
+    // [receptacle name]Connections typedef'ed as a sequence of
+    // struct [receptacle name]Connection.
+    [receptacle name]Connections get_connections_[receptacle name] ();
+##    endif [receptacle name]
+##  end foreach [receptacle name] with [uses type]
+
+##  foreach [event name] with [eventtype] in (list of all event sources) generate:
+    void push_[event name] (in [eventtype] ev);
+##  end foreach [event name] with [eventtype]
+
+  };
+
+##end foreach [component basename]
+
+
+////////////////////////////////////////////////////////////////////
+//// * Iterate thru all home definitions in the IDL files.
+
+##foreach [home basename] in (all home definitions) generate:
+
+  local interface CCM_[home basename]Explicit
+    :
+##  if [home basename] inherits from [parent home name]
+      CCM_[parent home name]Explicit
+##  else
+      ::Components::HomeExecutorBase
+##  endif
+##  foreach [interface name] in (all home supported interfaces) generate:
+      , [interface name]
+##  end foreach [interface name]
+  {
+##foreach [operation] in (all explicit operations defined in [home basename])
+
+    // The operation decl here.
+
+## end foreach opeartion
+
+##foreach [factory name]  in (all factory operations defined in [home basename])
+    ::Components::EnterpriseComponent [factory name] (....)
+      raise (Components::CreateFailure, ....);
+##end foreach [factory name]
+
+##foreach [finder name]  in (all finder operations defined in [home basename])
+    ::Components::EnterpriseComponent [finder name] (....)
+      raise (Components::FinderFailure, ....);
+##end foreach [finder name]
+  };
+
+  local interface CCM_[home basename]Implicit
+  {
+##  if [home basename] is a keyless home
+    ::Components::EnterpriseComponent create ()
+      raises (::Components::CCMException);
+##  else [home basename] is key'ed home with [key type]
+    // We do not support key'ed home at the moment but we might
+    // as well generate the mapping.
+    ::Components::EnterpriseComponent create (in [key type] key)
+      raises (::Components::CCMException);
+
+    ::Components::EnterpriseComponent find_by_primary_key (in [key type] key)
+      raises (::Components::CCMException);
+
+    void remove (in [key type] key)
+      raises (::Components::CCMException);
+##  endif (key'ed or keyless home)
+  };
+
+  local interface CCM_[home basename]
+    : CCM_[home basename]Explicit,
+      CCM_[home basename]Implicit
+  {
+  };
+
+##end foreach [home basename]
+
+##if there are module definitions, preserve them all
+};
+##endif
+
+#endif /* [component_idl]E_IDL */

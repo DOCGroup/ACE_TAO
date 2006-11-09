@@ -1,0 +1,4 @@
+project : ciao_race_default {
+  after += Local_Monitor
+  libs += Local_Monitor
+}

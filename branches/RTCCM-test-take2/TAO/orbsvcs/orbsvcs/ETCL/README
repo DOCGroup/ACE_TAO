@@ -1,0 +1,12 @@
+# $Id$
+#
+# Implement an "Extended Trader Constraint Language" parser.
+# This language was defined as part of the Notification Service 
+# [give URL] to define filtering constraints.  It is in fact an
+# extension on the "Trader Constraint Language", using in the Trading
+# Service [URL] to constraint on user queries.
+#
+# Other services use the same language, including the Logging Service,
+# parts of the Fault Tolerance services and (in the future) TAO's
+# Real-time Event Service.
+#

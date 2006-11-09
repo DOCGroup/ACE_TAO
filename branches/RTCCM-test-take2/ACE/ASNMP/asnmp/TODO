@@ -1,0 +1,25 @@
+This is the todo list aka wish list: feel free to add/implmement
+Fri Aug  1 19:40:55 PDT 1997
+
+0) collapse CMU and HP code - make this thing faster since it is really
+   slow and bulky...
+
+1) implement response time statistics collection so that timeout can vary based
+   on empirical response times
+
+2) Implement pdu fragmentation based on tooBig errors or app directed
+   Snmp::set_pdu_max_size() command 
+
+3) implement async interface
+
+4) make templatized version to implement sync/nonsync (thread safe version)
+
+5) add V2c when a real agent is in the field that supports it
+
+6) Add DISMAN support when IETF approves the Expression Mib
+
+7) way too many procedural case stmts in the code...
+
+8) add compare_right() method to be orthogonal to oid class.
+ 
+

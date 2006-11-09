@@ -1,0 +1,17 @@
+
+//=============================================================================
+/**
+ *  $Id$
+ */
+//=============================================================================
+
+#include "Parent.idl"
+
+#pragma prefix "child.pragma.prefix"
+
+interface ChildInterface : ParentInterface {};
+
+module ChildModule
+  {
+    interface ChildInterface : ParentModule::ParentInterface {};
+  };
