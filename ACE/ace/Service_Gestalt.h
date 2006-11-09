@@ -367,10 +367,14 @@ protected:
   // the designated shared object in this file.
   int initialize_i (const ACE_Service_Type *sr, const ACE_TCHAR *parameters);
 
-const ACE_Static_Svc_Descriptor*
-   find_processed_static_svc (const ACE_TCHAR* );
+  const ACE_Static_Svc_Descriptor* find_processed_static_svc (const ACE_TCHAR*);
+  void add_processed_static_svc (const ACE_Static_Svc_Descriptor *);
 
-void add_processed_static_svc (const ACE_Static_Svc_Descriptor *);
+  /// Performs the common initialization tasks for a new or previously
+  /// closed instance. Must not be virtual, as it is called from the
+  /// constructor.
+  int init_i (void);
+
 
 protected:
 
@@ -398,9 +402,13 @@ protected:
 
 protected:
 
-  /// Do we own the service repository instance or have only been given a ptr
-  /// to the singleton one?
+  /// Do we own the service repository instance, or have only been
+  /// given a ptr to the singleton?
   bool svc_repo_is_owned_;
+
+  /// Repository size is necessary, so that we can close (which may
+  /// destroy the repository instance), and then re-open again.
+  size_t svc_repo_size_;
 
   /// Keep track of the number of times the instance has been
   /// initialized (opened). "If so, we can't allow <yyparse> to be called since
