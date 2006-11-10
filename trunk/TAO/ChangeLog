@@ -1,3 +1,10 @@
+Fri Nov 10 21:09:53 UTC 2006  Iliyan Jeliazkov  <iliyan@ociweb.com>
+
+        * tao/default_resource.h:
+
+          Cleaning up the code that fixes bug #2651 to fix typos and
+          eliminate unnecessary exports. (Thanks Johnny!)
+
 Fri Nov 10 15:51:29 UTC 2006  Iliyan Jeliazkov  <iliyan@ociweb.com>
 
         * tao/ORB_Core.cpp (fini, ~TAO_ORB_Core):
