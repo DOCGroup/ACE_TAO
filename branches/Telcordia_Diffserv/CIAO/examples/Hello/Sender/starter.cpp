@@ -6,18 +6,28 @@
 //IOR file of the Sender
 const char * ior = 0;
 const char * message = 0;
+size_t payload = 0;
+size_t iterations = 0;  
 
 
 int
 parse_args (int argc, char *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, "k:m:");
+  ACE_Get_Opt get_opts (argc, argv, "k:m:i:p:");
   int c = 0;
   
   while ((c = get_opts ()) != -1)
     {
       switch (c)
         {
+        case 'i':
+                iterations = atoi (get_opts.opt_arg ());
+	        break;
+
+        case 'p':
+	        payload = atoi (get_opts.opt_arg ());
+	        break;
+                
         case 'k':
           ior = get_opts.opt_arg ();
 	        break;
@@ -82,8 +92,8 @@ main (int argc, char *argv[])
       {
         sender->local_message (message);
       }
-
-      sender->start (ACE_ENV_SINGLE_ARG_PARAMETER);
+      
+      sender->start (payload, iterations);
       ACE_TRY_CHECK;
 
       orb->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);

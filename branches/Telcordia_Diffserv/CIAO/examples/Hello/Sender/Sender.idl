@@ -14,7 +14,7 @@ module Hello
   
   interface trigger
   {
-    void start ();
+    void start (in long payload, in long iterations);
   };
 
   enum COLOR_SELECTION 

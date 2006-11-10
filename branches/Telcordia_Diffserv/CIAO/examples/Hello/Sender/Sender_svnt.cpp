@@ -716,11 +716,15 @@ namespace CIDL_Sender_Impl
 
   void
   Sender_Servant::start (
-    ACE_ENV_SINGLE_ARG_DECL)
+    ::CORBA::Long payload,
+    ::CORBA::Long iterations
+    ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC (( ::CORBA::SystemException))
   {
     this->executor_->start (
-      ACE_ENV_SINGLE_ARG_PARAMETER);
+      payload,
+      iterations
+      ACE_ENV_ARG_PARAMETER);
   }
 
   // Component attribute operations.

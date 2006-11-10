@@ -78,11 +78,11 @@ namespace CIDL_Sender_Impl
   }
 
   void
-  Sender_exec_i::start (ACE_ENV_SINGLE_ARG_DECL)
+  Sender_exec_i::start (CORBA::ULong payload, CORBA::ULong iterations)
     ACE_THROW_SPEC ((CORBA::SystemException))
   {
     Hello::OctetStream payload;
-    payload.length (10000);
+    payload.length (1000000);
     Hello::TimeOut_var event = new OBV_Hello::TimeOut (payload);
     ACE_DEBUG ((LM_DEBUG, "Sender initiates the process.\n"));
     
@@ -92,6 +92,7 @@ namespace CIDL_Sender_Impl
       ACE_Sample_History history (niterations);
       
       ACE_hrtime_t test_start = ACE_OS::gethrtime ();
+      //timespec short_sleep = { 0, 1000000 };
       
       for (int i = 0; i < niterations; ++i)
         {
@@ -102,6 +103,7 @@ namespace CIDL_Sender_Impl
 
           ACE_hrtime_t now = ACE_OS::gethrtime ();
           history.sample (now - start);
+          //ACE_OS::nanosleep (&short_sleep);
         }
 
       ACE_hrtime_t test_end = ACE_OS::gethrtime ();

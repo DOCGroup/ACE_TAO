@@ -175,7 +175,9 @@ namespace CIDL_Sender_Impl
 
     virtual void
     start (
-      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+      ::CORBA::Long payload,
+      ::CORBA::Long iterations
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC (( ::CORBA::SystemException));
 
     // Public port operations.
