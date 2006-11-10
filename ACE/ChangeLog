@@ -1,7 +1,18 @@
+Fri Nov 10 10:03:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/OS_NS_unistd.cpp:
+          Const changes and use prefix operators instead of postfix
+
+        * ace/Process.cpp:
+          Use prefix increment instead of postfix
+
+        * ace/Reactor.cpp (timer_queue):
+          No need to use an intermediate variable
+
 Fri Nov 10 05:47:15 UTC 2006  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * docs/bczar/bczar.html
-        
+
           Updates to release script documentation.
 
 Thu Nov  9 20:07:42 UTC 2006  Iliyan Jeliazkov  <iliyan@ociweb.com>
