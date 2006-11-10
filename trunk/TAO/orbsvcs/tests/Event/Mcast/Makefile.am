@@ -11,8 +11,7 @@
 SUBDIRS = \
         Common \
         Complex \
+        RTEC_MCast_Federated \
         Simple \
         Two_Way
-
-#	RTEC_MCast_Federated
 

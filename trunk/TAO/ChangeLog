@@ -1,7 +1,30 @@
+Fri Nov 10 01:29:39 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * orbsvcs/tests/CosEvent/Makefile.am:
+        * orbsvcs/tests/Event/Makefile.am:
+        * orbsvcs/tests/Event/Mcast/Makefile.am:
+
+          Regenerated to recurse into new test directories.
+
+        * configure.ac:
+
+          Configure Makefiles in new test directories.
+
+        * orbsvcs/tests/CosEvent/Timeout/Makefile.am:
+        * orbsvcs/tests/Event/Mcast/RTEC_MCast_Federated/Makefile.am:
+        * orbsvcs/tests/Event/ThreadFlags/Makefile.am:
+
+          New files.  Makefile.am's for new test directories.
+
+        * orbsvcs/tests/Event/Mcast/RTEC_MCast_Federated/RTEC_MCast_Federated.mpc:
+          Add automake specific section so that includes is set relative
+          to $(srcdir).  Fix includes so it is correct on case-sensitive
+          filesystems.
+
 Thu Nov  9 22:34:28 UTC 2006  Chris Cleeland  <cleeland_c@ociweb.com>
 
         * orbsvcs/orbsvcs/Event/EC_Thread_Flags.cpp:
-        
+
           Removed semicolon after ACE_RCSID that caused problems with some
           compilers, but not others, and caused a domino effect of no
           RTEC-related stuff to build.

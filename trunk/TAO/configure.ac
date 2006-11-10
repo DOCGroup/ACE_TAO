@@ -450,6 +450,7 @@ if test $tao_build_tests = yes; then
     orbsvcs/tests/Concurrency/Makefile
     orbsvcs/tests/CosEvent/Basic/Makefile
     orbsvcs/tests/CosEvent/Makefile
+    orbsvcs/tests/CosEvent/Timeout/Makefile
     orbsvcs/tests/CosEvent/lib/Makefile
     orbsvcs/tests/EC_Custom_Marshal/Makefile
     orbsvcs/tests/EC_MT_Mcast/Makefile
@@ -461,9 +462,11 @@ if test $tao_build_tests = yes; then
     orbsvcs/tests/Event/Mcast/Common/Makefile
     orbsvcs/tests/Event/Mcast/Complex/Makefile
     orbsvcs/tests/Event/Mcast/Makefile
+    orbsvcs/tests/Event/Mcast/RTEC_MCast_Federated/Makefile
     orbsvcs/tests/Event/Mcast/Simple/Makefile
     orbsvcs/tests/Event/Mcast/Two_Way/Makefile
     orbsvcs/tests/Event/Performance/Makefile
+    orbsvcs/tests/Event/ThreadFlags/Makefile
     orbsvcs/tests/Event/lib/Makefile
     orbsvcs/tests/FT_App/Makefile
     orbsvcs/tests/FaultTolerance/GroupRef_Manipulation/Makefile
