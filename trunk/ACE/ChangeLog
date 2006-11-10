@@ -1,3 +1,11 @@
+Fri Nov 10 12:53:32 UTC 2006  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * bin/make_release:
+        * docs/bczar/bczar.html:
+        
+        Minor update to bczar documentation to correct install paths,
+        minor bugfix to release script to correct PRF generation.
+
 Fri Nov 10 12:22:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/INET_Addr.cpp:
