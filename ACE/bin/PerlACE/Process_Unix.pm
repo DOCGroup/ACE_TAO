@@ -447,4 +447,16 @@ sub TimedWait ($)
     return -1;
 }
 
+sub Signal ($)
+{
+    my $self = shift;
+    my $signal = shift;
+    
+    if (defined $signal) {
+        kill ($signal, $self->{PROCESS});
+    }
+    
+}
+    
+    
 1;

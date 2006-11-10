@@ -4,8 +4,7 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 
 # $Id$
 #
-# Creates an ACE or TAO kit.  Intended to be called from the
-# ACE or TAO top-level GNUmakefiles.
+# Creates an ACE or TAO kit.  
 #
 # The first three lines above let this script run without specifying the
 # full path to perl, as long as it is in the user's PATH.
@@ -99,7 +98,7 @@ my $release_filter = '-iname build -prune -o ' .
     '! -name \'*.MAK\' ! -name \'.cvsignore\' -print';
 my $update_versions = 0;
 my $create_zips = 1;
-my $package_dest = ".";
+my $package_dest = "/export/anduriltmp/bczar/packages";
 ########
 ######## Process command line args.
 ########
@@ -193,7 +192,7 @@ my $touch = which ("touch");
 my $whoami = which ("whoami");
 chop (my $now = `$date +"%a %b %d %T %Y"`);
 
-my $log_line = "$now  $ENV{'SIGNATURE'}  $ENV{'MAILID'}";
+my $log_line = "$now  $ENV{'SIGNATURE'}  <$ENV{'MAILID'}>";
 
 # unless ("$controlled_files") {
 #     chomp ($controlled_files = `$make show_controlled_files`);
@@ -520,6 +519,11 @@ sub update_version_files {
     # Component specific PRF.
     if ($component eq "CIAO") {
         # For CIAO we need to add ACE + TAO versions..
+        &ex ("perl -pi -e 's/CIAO VERSION :.*/CIAO VERSION : " .
+	     $comp_versions{"CIAO_version"} .
+	     "/' PROBLEM-REPORT-FORM");
+        return 1 if $? >> 8;
+
         &ex ("perl -pi -e 's/TAO VERSION :.*/TAO VERSION : " .
 	     $comp_versions{"TAO_version"} .
 	     "/' PROBLEM-REPORT-FORM");
@@ -534,6 +538,11 @@ sub update_version_files {
     }
 
     if ($component eq "TAO") {
+        &ex ("perl -pi -e 's/TAO VERSION :.*/TAO VERSION : " .
+	     $comp_versions{"TAO_version"} .
+	     "/' PROBLEM-REPORT-FORM");
+        return 1 if $? >> 8;
+
         &ex ("perl -pi -e 's/ACE VERSION:.*/ACE VERSION: " . 
 	     $comp_versions{"ACE_version"} . 
 	     "/' PROBLEM-REPORT-FORM");
