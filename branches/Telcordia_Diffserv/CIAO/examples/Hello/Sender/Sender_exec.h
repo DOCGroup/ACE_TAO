@@ -83,7 +83,10 @@ namespace CIDL_Sender_Impl
     ACE_THROW_SPEC ((CORBA::SystemException));
 
     // Operation inside of the trigger interface.
-    virtual void start (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+    virtual void start (
+        ::CORBA::Long payload,
+        ::CORBA::Long iterations
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS)
         ACE_THROW_SPEC ((CORBA::SystemException));
 
     // Operations from Components::SessionComponent
