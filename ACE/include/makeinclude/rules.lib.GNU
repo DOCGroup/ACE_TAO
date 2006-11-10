@@ -108,34 +108,56 @@ endif # shared_libs
 ace_lib_prelink ?= 0
 aix_build ?= 0
 
-$(VLIB): $(VLOBJS)
+ifeq (1,$(VXWORKS))
 
-ifeq (1,$(repo))
-  ifneq (,$(ACELIB))
+  ifeq (1,$(ace_lib_prelink))
+.PHONY: ace-templ_inst
+
+ace-templ_inst:
+	-$(LINK.cc) $(LINK_OUTPUT_FLAG) ace-templ_inst $(VLOBJS) $(LDFLAGS) $(ACE_SHLIBS)
+	-$(RM) ace-templ_inst
+
+$(VLIB): $(VLOBJS) ace-templ_inst
+  else
+$(VLIB): $(VLOBJS)
+  endif
+  ifeq (1,$(repo))
+	@echo $(LINK.cc) $(LINK_OUTPUT_FLAG) > .prelink.spec
+	@echo xargs $(AR) $(ARFLAGS) $(notdir $@) $(AREXTRA) >> .prelink.spec
+	@if not [""]==["$(ACE_SHLIBS)"] @echo $(subst -l,,$(ACE_SHLIBS)) >> .prelink.spec
+	@echo Add .rpo files
+	echo .prelink.spec $(foreach rpo,$(patsubst %.o,%.rpo,$(filter %.o, $?)),$(shell if exist $(rpo) echo $(rpo))) | xargs $(AR) $(ARFLAGS) $@ $(AREXTRA)
+  endif
+	@echo Add .o files
+	echo $(TMPINCDIR:%=%/*.o) $(filter %.o, $?) | xargs $(AR) $(ARFLAGS) $@ $(AREXTRA)
+	-chmod a+r $@
+  ifneq (,$(RANLIB))
+	-$(RANLIB) $@
+  endif # RANLIB
+
+else # !VXWORKS
+
+$(VLIB): $(VLOBJS)
+  ifeq (1,$(repo))
+    ifneq (,$(ACELIB))
     #### With repo, link in all of the ace object files to the lib.
     #### This avoids multiple instantiations.  We haven't found it to
     #### be necessary with shared libs, so just do it for static libs.
     vpath %.$(OBJEXT) $(ACE_ROOT)/ace/$(VDIR)
 
     $(VLIB): $(ACE_ROOT)/ace/$(VDIR)*.$(OBJEXT)
-  endif # ! ACELIB
-endif # repo
-
-ifdef PRELIB
+    endif # ! ACELIB
+  endif # repo
+  ifdef PRELIB
 	$(PRELIB)
-endif
-ifeq (1,$(ace_lib_prelink))
+  endif
+  ifeq (1,$(ace_lib_prelink))
         #### Attempt a link (which will fail), to add template instantiations
         #### to lib files, for example.
-  ifeq (1,$(VXWORKS))
-        #### In VxWorks builds we would like to see the output here.
-	-$(LINK.cc) $(LINK_OUTPUT_FLAG) ace-templ_inst $? $(LDFLAGS)
-  else
 	-$(LINK.cc) $(LINK_OUTPUT_FLAG) ace-templ_inst $? $(LDFLAGS) $(ACE_NUL_STDERR)
-  endif
-endif # ace_lib_prelink
+  endif # ace_lib_prelink
 	echo $(TMPINCDIR:%=%/*.o) $(filter %.o, $?) | xargs $(AR) $(ARFLAGS) $@ $(AREXTRA)
-ifdef ibmcxx_build
+  ifdef ibmcxx_build
 # This is required to get AIX IBM C/C++ to instantiate and compile the needed
 # templates.
                       if test -s ./$(TEMPINCDIR)/*.C; \
@@ -144,11 +166,13 @@ ifdef ibmcxx_build
 		$(RM) dummy; \
 		$(AR) $(ARFLAGS) $@ $(TEMPINCDIR)/*.$(OBJEXT); \
 	fi
-endif
+  endif
 	-chmod a+r $@
-ifneq (,$(RANLIB))
+  ifneq (,$(RANLIB))
 	-$(RANLIB) $@
-endif # RANLIB
+  endif # RANLIB
+
+endif # !VXWORKS
 
 # Note that if you don't want to build shared libraries, just remove the
 # $(VSHOBJS)
