@@ -582,8 +582,6 @@ ACE_Service_Config::close (void)
   // service repository should already have been finalized.
   int result2 = ACE_Service_Config::close_svcs ();
 
-  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("ACE (%P|%t) Service Config ::close_svcs() called\n")));
-
   return (result1 | result2);
 }
 
