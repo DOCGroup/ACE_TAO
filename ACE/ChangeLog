@@ -1,3 +1,14 @@
+Fri Nov 10 21:26:41 UTC 2006  Chris Cleeland  <cleeland_c@ociweb.com>
+
+        * ace/OS_NS_Thread.h (THR_HAS_WTHREADS):
+
+          Added THR_EXPLICIT_SCHED definition to ACE_HAS_WTHREADS clause
+          so that application-level code doesn't have to have #ifdefs to
+          figure out whether it's okay to use THR_EXPLICIT_SCHED.
+        
+          This change is part of a change to TAO from
+          Thu Nov  9 15:42:32 UTC 2006  Chris Cleeland  <cleeland_c@ociweb.com>
+
 Fri Nov 10 15:02:26 UTC 2006  Iliyan Jeliazkov  <iliyan@ociweb.com>
 
         * ace/Service_Config.cpp (close):
