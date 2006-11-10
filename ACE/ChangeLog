@@ -1,3 +1,9 @@
+Fri Nov 10 22:30:12 UTC 2006  Martin Corino  <mcorino@remedy.nl>
+
+        * include/makeinclude/platform_vxworks6.3.GNU:
+
+          Fixes for VxWorks 6.3 PPC builds.
+
 Fri Nov 10 21:26:41 UTC 2006  Chris Cleeland  <cleeland_c@ociweb.com>
 
         * ace/OS_NS_Thread.h (THR_HAS_WTHREADS):
