@@ -1,3 +1,15 @@
+Fri Nov 10 09:08:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Wait_On_Read.cpp:
+        * tao/SystemException.cpp:
+        * tao/Synch_Invocation.cpp:
+        * tao/Base_Transport_Property.cpp:
+          Const improvements
+
+        * tao/Stub.cpp:
+          Removed TAO_Synchronous_Cancellation_Required, not used and
+          const improvements
+
 Fri Nov 10 08:53:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Unbounded_Octet_Sequence_T.h:
