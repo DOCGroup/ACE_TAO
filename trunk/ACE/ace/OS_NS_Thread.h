@@ -313,6 +313,7 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 #     define THR_SCHED_RR            0
 #     define THR_SCHED_DEFAULT       0
 #     define THR_INHERIT_SCHED       0
+#     define THR_EXPLICIT_SCHED      0
 #     define THR_SCOPE_PROCESS       0
 #     define THR_SCOPE_SYSTEM        0
 #   endif /* ACE_HAS_PTHREADS / STHREADS / VXWORKS / WTHREADS **********/
