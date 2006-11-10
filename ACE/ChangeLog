@@ -1,3 +1,12 @@
+Fri Nov 10 10:06:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Reactor_Impl.h:
+        * ace/Dev_Poll_Reactor.{h,cpp}:
+        * ace/Select_Reactor_T.{h,cpp}:
+        * ace/WFMO_Reactor.{h,inl}:
+          Changed initialized to return a bool, that is the type we store
+          as member.
+
 Fri Nov 10 10:03:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/OS_NS_unistd.cpp:
