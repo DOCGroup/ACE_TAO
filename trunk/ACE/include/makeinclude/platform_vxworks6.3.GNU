@@ -88,7 +88,7 @@ ifeq ($(TOOL_FAMILY),)
   endif
 endif
 
-ifeq ("$(TOOL)","gnu")
+ifeq ("$(TOOL_FAMILY)","gnu")
   templates ?= automatic
 endif
 
@@ -236,7 +236,7 @@ ifeq ($(pthread),1)
   CPPFLAGS += -DACE_HAS_PTHREADS
 endif
 
-ifeq ("$(TOOL)","gnu")
+ifeq ("$(TOOL_FAMILY)","gnu")
 # Test for template instantiation, add to SOFLAGS if SONAME set,
 # add -E to LDFLAGS if using GNU ld
 include $(ACE_ROOT)/include/makeinclude/platform_g++_common.GNU
@@ -266,16 +266,16 @@ endif
 ifneq ($(TEMPLATES_FLAG),) # If specified, add it to the CCFLAGS
   CPPFLAGS += $(TEMPLATES_FLAG)
 endif
-endif  # TOOL == gnu
+endif  # TOOL_FAMILY == gnu
 
-ifeq ("$(TOOL)","diab")
+ifeq ("$(TOOL_FAMILY)","diab")
 ifeq ($(exceptions),1)
   C++FLAGS += -Xexceptions
 else
   C++FLAGS += -Xexceptions-off
 endif
 else
-ifeq ("$(TOOL)","gnu")
+ifeq ("$(TOOL_FAMILY)","gnu")
 ifeq ($(exceptions),1)
   C++FLAGS += -fexceptions
 else
@@ -286,7 +286,7 @@ endif
 
 ifeq (0,$(rtti))
 C++FLAGS += -DACE_LACKS_RTTI
-ifeq ("$(TOOL)","gnu")
+ifeq ("$(TOOL_FAMILY)","gnu")
   C++FLAGS += -fno-rtti
 else
   C++FLAGS += -Xrtti-off
@@ -294,10 +294,10 @@ endif
 endif # rtti
 
 ifneq ($(findstring $(VX_CPU_FAMILY),ppc arm),)
-ifeq ("$(TOOL)","diab")
+ifeq ("$(TOOL_FAMILY)","diab")
   C++FLAGS += -Xchar-signed
 else
-ifeq ("$(TOOL)","gnu")
+ifeq ("$(TOOL_FAMILY)","gnu")
   C++FLAGS += -fsigned-char
 endif
 endif
@@ -316,10 +316,10 @@ CCFLAGS         += $(C++FLAGS)
 ifeq (0,$(rtp))
 PIC              =
 else
-  ifeq ("$(TOOL)","diab")
+  ifeq ("$(TOOL_FAMILY)","diab")
     PIC = -Xpic
   else
-  ifeq ("$(TOOL)","gnu")
+  ifeq ("$(TOOL_FAMILY)","gnu")
     PIC = -fpic
   endif
 endif
