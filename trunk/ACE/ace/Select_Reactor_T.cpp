@@ -108,13 +108,14 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::handler_i (int signum,
   return 0;
 }
 
-template <class ACE_SELECT_REACTOR_TOKEN> int
+template <class ACE_SELECT_REACTOR_TOKEN> bool
 ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::initialized (void)
 {
   ACE_TRACE ("ACE_Select_Reactor_T::initialized");
-  ACE_MT (ACE_GUARD_RETURN (ACE_SELECT_REACTOR_TOKEN, ace_mon, this->token_, 0));
+  ACE_MT (ACE_GUARD_RETURN (ACE_SELECT_REACTOR_TOKEN, ace_mon, this->token_, false));
   return this->initialized_;
 }
+
 
 template <class ACE_SELECT_REACTOR_TOKEN> int
 ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::owner (ACE_thread_t tid,
@@ -414,7 +415,7 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::open
       if (this->timer_queue_ == 0)
         result = -1;
       else
-        this->delete_timer_queue_ = 1;
+        this->delete_timer_queue_ = true;
     }
 
   // Allows the Notify_Handler to be overridden.
@@ -427,7 +428,7 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::open
       if (this->notify_handler_ == 0)
         result = -1;
       else
-        this->delete_notify_handler_ = 1;
+        this->delete_notify_handler_ = true;
     }
 
   if (result != -1 && this->handler_rep_.open (size) == -1)
@@ -444,7 +445,7 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::open
 
   if (result != -1)
     // We're all set to go.
-    this->initialized_ = 1;
+    this->initialized_ = true;
   else
     // This will close down all the allocated resources properly.
     this->close ();
@@ -473,10 +474,10 @@ template <class ACE_SELECT_REACTOR_TOKEN> int
 ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::timer_queue
   (ACE_Timer_Queue *tq)
 {
-  if (this->timer_queue_ != 0 && this->delete_timer_queue_ != 0)
+  if (this->timer_queue_ != 0 && this->delete_timer_queue_)
     delete this->timer_queue_;
   this->timer_queue_ = tq;
-  this->delete_timer_queue_ = 0;
+  this->delete_timer_queue_ = false;
   return 0;
 }
 
@@ -582,7 +583,7 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::close (void)
     {
       delete this->timer_queue_;
       this->timer_queue_ = 0;
-      this->delete_timer_queue_ = 0;
+      this->delete_timer_queue_ = false;
     }
 
   if (this->notify_handler_ != 0)
@@ -592,10 +593,10 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::close (void)
     {
       delete this->notify_handler_;
       this->notify_handler_ = 0;
-      this->delete_notify_handler_ = 0;
+      this->delete_notify_handler_ = false;
     }
 
-  this->initialized_ = 0;
+  this->initialized_ = false;
 
   return 0;
 }
