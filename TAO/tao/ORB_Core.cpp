@@ -366,6 +366,9 @@ TAO_ORB_Core::~TAO_ORB_Core (void)
   delete this->codeset_manager_;
   this->codeset_manager_ = 0;
 
+  // This will destroy the service repository for this core
+  (void) TAO::ORB::close_services (this->config_);
+
   delete this->config_;
   this->config_ = 0;
 }
@@ -1405,8 +1408,6 @@ TAO_ORB_Core::fini (void)
   //       TAO_ORB_Core::thread_lane_resources_manager().
   if (this->thread_lane_resources_manager_ != 0)
     this->thread_lane_resources_manager_->finalize ();
-
-  (void) TAO::ORB::close_services (this->configuration ());
 
   // Destroy the object_key table
   this->object_key_table_.destroy ();
