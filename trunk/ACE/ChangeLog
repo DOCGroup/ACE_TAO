@@ -1,3 +1,8 @@
+Fri Nov 10 12:22:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/INET_Addr.cpp:
+          Fixed argument not used warnings in rtems no network build
+
 Fri Nov 10 10:06:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Reactor_Impl.h:
