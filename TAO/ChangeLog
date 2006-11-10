@@ -1,3 +1,9 @@
+Fri Nov 10 08:53:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Unbounded_Octet_Sequence_T.h:
+          Export this template specialization to resolve application link
+          errors with Intel 9.0
+
 Fri Nov 10 01:29:39 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
 
         * orbsvcs/tests/CosEvent/Makefile.am:
