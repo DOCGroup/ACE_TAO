@@ -1,3 +1,9 @@
+Fri Nov 10 15:02:26 UTC 2006  Iliyan Jeliazkov  <iliyan@ociweb.com>
+
+        * ace/Service_Config.cpp (close):
+
+          Removing a forgotten debug statetement.
+
 Fri Nov 10 13:42:12 UTC 2006  Martin Corino  <mcorino@remedy.nl>
 
         * bin/vx_repo_link.pl:
