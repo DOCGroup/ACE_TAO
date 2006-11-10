@@ -1,8 +1,21 @@
+Fri Nov 10 13:42:12 UTC 2006  Martin Corino  <mcorino@remedy.nl>
+
+        * bin/vx_repo_link.pl:
+
+          New perl 'program' to handle link phase for VxWorks 5.5.x
+          builds using -frepo option.
+
+        * include/makeinclude/platform_vxworks5.5.x.GNU:
+        * include/makeinclude/rules.lib.GNU:
+
+          Changes to enable building ACE/TAO apps for VxWorks 5.5.x SIMNT
+          targets using -frepo option.
+
 Fri Nov 10 12:53:32 UTC 2006  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * bin/make_release:
         * docs/bczar/bczar.html:
-        
+
         Minor update to bczar documentation to correct install paths,
         minor bugfix to release script to correct PRF generation.
 
