@@ -322,9 +322,11 @@ ACE_INET_Addr::set (u_short port_number,
                       encode ? ntohl (addrv4.s_addr) : addrv4.s_addr,
                       encode);
 # else
-    ACE_UNUSED_ARG (port_number);
-    ACE_UNUSED_ARG (encode);
-    return -1;
+    {
+      ACE_UNUSED_ARG (port_number);
+      ACE_UNUSED_ARG (encode);
+      return -1;
+    }
 # endif /* ACE_LACKS_NTOHL */
   else
     {
