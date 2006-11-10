@@ -76,25 +76,24 @@ namespace CIDL_Sender_Impl
     ACE_DEBUG ((LM_DEBUG, "Sender_exec.i::get_push_message called\n "));
     return ( new Message_Impl (*this) );
   }
-
-  void
-  Sender_exec_i::start (CORBA::ULong payload, CORBA::ULong iterations)
-    ACE_THROW_SPEC ((CORBA::SystemException))
+  
+  void Sender_exec_i::start (::CORBA::Long payload,
+                             ::CORBA::Long iterations
+                             ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+                             ACE_THROW_SPEC ((CORBA::SystemException))
   {
-    Hello::OctetStream payload;
-    payload.length (1000000);
-    Hello::TimeOut_var event = new OBV_Hello::TimeOut (payload);
+    Hello::OctetStream dataload;
+    dataload.length (payload);
+    Hello::TimeOut_var event = new OBV_Hello::TimeOut (dataload);
     ACE_DEBUG ((LM_DEBUG, "Sender initiates the process.\n"));
     
-    
-
-      long niterations = this->hertz_;
-      ACE_Sample_History history (niterations);
+      //long niterations = this->hertz_;
+      ACE_Sample_History history (iterations);
       
       ACE_hrtime_t test_start = ACE_OS::gethrtime ();
       //timespec short_sleep = { 0, 1000000 };
       
-      for (int i = 0; i < niterations; ++i)
+      for (int i = 0; i < iterations; ++i)
         {
           ACE_hrtime_t start = ACE_OS::gethrtime ();
 
