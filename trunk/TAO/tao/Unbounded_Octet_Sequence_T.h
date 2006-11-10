@@ -15,6 +15,7 @@
 
 #if (TAO_NO_COPY_OCTET_SEQUENCES == 1)
 
+#include /**/ "tao/TAO_Export.h"
 #include "tao/Unbounded_Value_Allocation_Traits_T.h"
 #include "tao/Value_Traits_T.h"
 #include "tao/Range_Checking_T.h"
@@ -29,7 +30,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 namespace TAO
 {
 template<>
-class unbounded_value_sequence<CORBA::Octet>
+class TAO_Export unbounded_value_sequence<CORBA::Octet>
 {
 public:
   typedef CORBA::Octet value_type;
