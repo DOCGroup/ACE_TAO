@@ -5,7 +5,7 @@
 #include <orbsvcs/Event/EC_Thread_Flags.h>
 #include <ace/Log_Msg.h>
 
-ACE_RCSID(EC_Tests, testflags, "$Id$");
+ACE_RCSID(EC_Tests, testflags, "$Id$")
 
 /*
   Here are the scenarios we need to test:
