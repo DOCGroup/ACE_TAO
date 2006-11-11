@@ -1,3 +1,15 @@
+Sat Nov 11 18:37:12 UTC 2006  Chris Cleeland  <cleeland_c@ociweb.com>
+
+        * ace/Service_Gestalt.cpp (find_processed_static_svc): 
+        
+          Added a check at the beginning of this function that drops out
+          if processed_static_svcs_ or the arg is a zero pointer.  This
+          gets ride of core dumps in scoreboard builds running tests like
+          some of the TAO EC tests (basically anything which has a static
+          service defined and expects to find it), but there is still the
+          more fundamental problem as to why the static services aren't
+          there in the first place.
+
 Fri Nov 10 22:30:12 UTC 2006  Martin Corino  <mcorino@remedy.nl>
 
         * include/makeinclude/platform_vxworks6.3.GNU:
