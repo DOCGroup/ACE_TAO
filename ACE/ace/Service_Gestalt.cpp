@@ -378,6 +378,9 @@ ACE_Service_Gestalt::find_static_svc_descriptor (const ACE_TCHAR* name,
 const ACE_Static_Svc_Descriptor*
 ACE_Service_Gestalt::find_processed_static_svc (const ACE_TCHAR* name)
 {
+  if (this->processed_static_svcs_ == 0 || name == 0)
+    return 0;
+
   Processed_Static_Svc **pss = 0;
   for (ACE_PROCESSED_STATIC_SVCS_ITERATOR iter (*this->processed_static_svcs_);
        iter.next (pss) != 0;
