@@ -1,3 +1,10 @@
+Sat Nov 11 09:31:30 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * orbsvcs/tests/Event/ThreadFlags/tftest.mpc:
+
+          Fix broken dependency by inheriting from rtevent_serv.mpb
+          instead of appending TAO_RTEvent_Serv to libs.
+
 Fri Nov 10 21:09:53 UTC 2006  Iliyan Jeliazkov  <iliyan@ociweb.com>
 
         * tao/default_resource.h:

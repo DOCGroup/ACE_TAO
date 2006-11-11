@@ -1,5 +1,4 @@
 // $Id$
-project(TFTest): rteventexe {
+project(TFTest): rteventexe, rtevent_serv {
   exename = testflags 
-  libs      += TAO_RTEvent_Serv
 }
