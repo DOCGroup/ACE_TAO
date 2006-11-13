@@ -1,9 +1,13 @@
+// $Id$
+
 /*
  * Test TAO_EC_Thread_Flags encapsulation.
  */
 
-#include <orbsvcs/Event/EC_Thread_Flags.h>
-#include <ace/Log_Msg.h>
+#include "orbsvcs/Event/EC_Thread_Flags.h"
+#include "ace/Log_Msg.h"
+#include "ace/OS_NS_Thread.h"
+#include "ace/OS_NS_strings.h"
 
 ACE_RCSID(EC_Tests, testflags, "$Id$")
 
