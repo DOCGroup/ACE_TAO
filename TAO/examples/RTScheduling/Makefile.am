@@ -8,7 +8,128 @@
 ## MPC Command:
 ## ../bin/mwc.pl -type automake -noreldefs TAO.mwc
 
+ACE_BUILDDIR = $(top_builddir)/..
+ACE_ROOT = $(top_srcdir)/..
+TAO_BUILDDIR = $(top_builddir)
+TAO_IDL = ACE_ROOT=$(ACE_ROOT) TAO_ROOT=$(TAO_ROOT) $(TAO_BUILDDIR)/TAO_IDL/tao_idl
+TAO_IDL_DEP = $(TAO_BUILDDIR)/TAO_IDL/tao_idl
+TAO_IDLFLAGS = -Ge 1 -Wb,pre_include=ace/pre.h -Wb,post_include=ace/post.h -I$(TAO_ROOT) -I$(srcdir) -g $(ACE_BUILDDIR)/apps/gperf/src/gperf
+TAO_ROOT = $(top_srcdir)
+
 SUBDIRS = \
+        . \
         MIF_Scheduler \
         Fixed_Priority_Scheduler
 
+noinst_LTLIBRARIES =
+CLEANFILES =
+BUILT_SOURCES =
+noinst_HEADERS =
+
+## Makefile.Job.am
+
+if BUILD_EXCEPTIONS
+
+BUILT_SOURCES += \
+  JobC.cpp \
+  JobC.h \
+  JobC.inl \
+  JobS.cpp \
+  JobS.h \
+  JobS.inl
+
+CLEANFILES += \
+  Job-stamp \
+  JobC.cpp \
+  JobC.h \
+  JobC.inl \
+  JobS.cpp \
+  JobS.h \
+  JobS.inl
+
+JobC.cpp JobC.h JobC.inl JobS.cpp JobS.h JobS.inl: Job-stamp
+
+Job-stamp: $(srcdir)/Job.idl $(TAO_IDL_DEP)
+	$(TAO_IDL) $(TAO_IDLFLAGS) -St -Wb,export_macro=JOB_Export -Wb,export_include=job_export.h $(srcdir)/Job.idl
+	@touch $@
+
+noinst_LTLIBRARIES += libJob.la
+
+libJob_la_CPPFLAGS = \
+  -I$(ACE_ROOT) \
+  -I$(ACE_BUILDDIR) \
+  -I$(TAO_ROOT) \
+  -I$(TAO_BUILDDIR) \
+  -DJOB_BUILD_DLL
+
+libJob_la_SOURCES = \
+  JobC.cpp \
+  JobS.cpp
+
+noinst_HEADERS += \
+  Job.idl \
+  JobC.h \
+  JobC.inl \
+  JobS.h \
+  JobS.inl \
+  job_export.h
+
+endif BUILD_EXCEPTIONS
+
+## Makefile.Synch.am
+
+if BUILD_EXCEPTIONS
+
+BUILT_SOURCES += \
+  SynchC.cpp \
+  SynchC.h \
+  SynchC.inl \
+  SynchS.cpp \
+  SynchS.h \
+  SynchS.inl
+
+CLEANFILES += \
+  Synch-stamp \
+  SynchC.cpp \
+  SynchC.h \
+  SynchC.inl \
+  SynchS.cpp \
+  SynchS.h \
+  SynchS.inl
+
+SynchC.cpp SynchC.h SynchC.inl SynchS.cpp SynchS.h SynchS.inl: Synch-stamp
+
+Synch-stamp: $(srcdir)/Synch.idl $(TAO_IDL_DEP)
+	$(TAO_IDL) $(TAO_IDLFLAGS) -St -Wb,export_macro=SYNCH_Export -Wb,export_include=synch_export.h $(srcdir)/Synch.idl
+	@touch $@
+
+noinst_LTLIBRARIES += libSynch.la
+
+libSynch_la_CPPFLAGS = \
+  -I$(ACE_ROOT) \
+  -I$(ACE_BUILDDIR) \
+  -I$(TAO_ROOT) \
+  -I$(TAO_BUILDDIR) \
+  -DSYNCH_BUILD_DLL
+
+libSynch_la_SOURCES = \
+  SynchC.cpp \
+  SynchS.cpp
+
+noinst_HEADERS += \
+  Synch.idl \
+  SynchC.h \
+  SynchC.inl \
+  SynchS.h \
+  SynchS.inl \
+  synch_export.h
+
+endif BUILD_EXCEPTIONS
+
+## Clean up template repositories, etc.
+clean-local:
+	-rm -f *~ *.bak *.rpo *.sym lib*.*_pure_* core core.*
+	-rm -f gcctemp.c gcctemp so_locations *.ics
+	-rm -rf cxx_repository ptrepository ti_files
+	-rm -rf templateregistry ir.out
+	-rm -rf ptrepository SunWS_cache Templates.DB
