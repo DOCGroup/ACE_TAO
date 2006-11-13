@@ -18,6 +18,7 @@ TAO_ROOT = $(top_srcdir)
 
 if BUILD_CORBA_MESSAGING
 if BUILD_EXCEPTIONS
+if !BUILD_ACE_FOR_TAO
 
 noinst_PROGRAMS = testflags
 
@@ -46,6 +47,7 @@ testflags_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
+endif !BUILD_ACE_FOR_TAO
 endif BUILD_EXCEPTIONS
 endif BUILD_CORBA_MESSAGING
 
