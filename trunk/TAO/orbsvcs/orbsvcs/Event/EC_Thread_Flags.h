@@ -13,13 +13,13 @@
 #define TAO_EC_THREAD_FLAGS_H
 #include /**/ "ace/pre.h"
 
-#include "event_serv_export.h"
+#include /**/ "tao/orbconf.h"
+#include /**/ "tao/Versioned_Namespace.h"
+#include /**/ "orbsvcs/Event/event_serv_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
-
-#include "ace/Synch.h"  // for ACE_Lock
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
