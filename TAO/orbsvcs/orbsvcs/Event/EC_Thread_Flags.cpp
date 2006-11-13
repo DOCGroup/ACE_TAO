@@ -9,6 +9,8 @@ ACE_RCSID(Event, EC_Thread_Flags , "$Id$")
 #include "ace/OS_String.h" // OS_NS_String.h in later versions
 #include "ace/Sched_Params.h"
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 #define TETFSF(flag)  { #flag, flag }
 TAO_EC_Thread_Flags::Supported_Flag TAO_EC_Thread_Flags::supported_flags_[] = {
 #if defined (ACE_HAS_THREADS)
@@ -233,3 +235,5 @@ TAO_EC_Thread_Flags::default_priority () const
 
   return priority;
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

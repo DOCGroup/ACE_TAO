@@ -21,6 +21,8 @@
 
 #include "ace/Synch.h"  // for ACE_Lock
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 /*!
   \class TAO_EC_Thread_Flags
 
@@ -143,6 +145,8 @@ protected:
 #if 0  && defined (__ACE_INLINE__)
 #include "EC_Thread_Flags.i"
 #endif /* __ACE_INLINE__ */
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 #endif /* TAO_EC_THREAD_FLAGS_H */
