@@ -1,12 +1,30 @@
+Mon Nov 13 19:22:06 UTC 2006  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * examples/RTScheduling/Job.mpc:
+        * examples/RTScheduling/job_export.h:
+        * examples/RTScheduling/Synch.mpc:
+        * examples/RTScheduling/synch_export.h:
+
+          New files, factored out IDL files common to some or all
+          of the examples in this directory into separate builds,
+          to eliminate problems with parallel builds when IDL
+          files are repeated in builds in the same directory.
+
+        * examples/RTScheduling/Fixed_Priority_Scheduler/Fixed_Priority_Scheduler.mpc:
+        * examples/RTScheduling/MIF_Scheduler/MIF_Scheduler.mpc:
+
+          Modified these files to make them consistent with the
+          changes above.
+
 Mon Nov 13 15:23:05 UTC 2006  Chris Cleeland  <cleeland_c@ociweb.com>
 
-        * orbsvcs/orbsvcs/Event/EC_TPC_Dispatching.cpp (TAO_EC_TPC_debug_level): 
-        
+        * orbsvcs/orbsvcs/Event/EC_TPC_Dispatching.cpp (TAO_EC_TPC_debug_level):
+
           Moved declaration to fix versioned namespace builds.
-        
+
         * orbsvcs/orbsvcs/Event/EC_Thread_Flags.h:
         * orbsvcs/orbsvcs/Event/EC_Thread_Flags.cpp:
-        
+
           Add in versioned namespace boundary macros to fix versioned
           namespace builds.
 
