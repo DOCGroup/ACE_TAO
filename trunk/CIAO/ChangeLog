@@ -1,3 +1,29 @@
+Mon Nov 13 16:54:47 UTC 2006  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * examples/Null_Component/Null_Interface_svnt_export.h:
+
+          Removed this file, renamed as below.
+
+        * examples/Null_Component/Null_Interface_skel_export.h:
+
+          Added this file, renamed from removed file above.
+
+        * examples/Null_Component/Null_Interface.mpc:
+
+          Renamed several things corresponding to the renaming
+          change above and replace export macro definition in
+          the skel project with separate stub and skel export
+          macro definitions and corresponding included. Also
+          added typecode/Any suppression command line option
+          -St to IDL compiler execution for both stub and skel
+          projects, and reduced MPC base project dependencies
+          (and thus link dependencies) to a minimum.
+
+        * examples/Null_Component/Null_Component.mpc:
+        * examples/Null_Component/StaticDAnCEApp.mpc:
+
+          Renamed items corresponding to change above.
+
 Fri Nov 10 16:10:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * examples/Hello/Hello_Base/Hello_Base.mpc:
@@ -84,7 +110,7 @@ Mon Oct 30 13:26:00 UTC 2006  Simon Massey  <sma@prismtech.com>
 
 Thu Oct 26 14:37:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-  	* DAnCE/StaticConfigurator/StaticDAnCEParser.cpp:
+    * DAnCE/StaticConfigurator/StaticDAnCEParser.cpp:
           Use ACE_OS methods, this fixes bugzilla 2691.
           Thanks to Sowayan Abdullah <abdullah dot sowayan at lmco dot com>
           for reporting this issue
