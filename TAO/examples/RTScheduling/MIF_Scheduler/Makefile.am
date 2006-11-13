@@ -16,43 +16,12 @@ TAO_IDL_DEP = $(TAO_BUILDDIR)/TAO_IDL/tao_idl
 TAO_IDLFLAGS = -Ge 1 -Wb,pre_include=ace/pre.h -Wb,post_include=ace/post.h -I$(TAO_ROOT) -I$(srcdir) -g $(ACE_BUILDDIR)/apps/gperf/src/gperf
 TAO_ROOT = $(top_srcdir)
 
-CLEANFILES =
 noinst_PROGRAMS =
-BUILT_SOURCES =
 
 ## Makefile.MIF_Scheduler_Starter.am
 
 if BUILD_EXCEPTIONS
 if BUILD_RT_CORBA
-
-BUILT_SOURCES += \
-  ../SynchC.cpp \
-  ../SynchC.h \
-  ../SynchC.inl \
-  ../SynchS.cpp \
-  ../SynchS.h \
-  ../SynchS.inl \
-  ../SynchS_T.cpp \
-  ../SynchS_T.h \
-  ../SynchS_T.inl
-
-CLEANFILES += \
-  ../Synch-stamp \
-  ../SynchC.cpp \
-  ../SynchC.h \
-  ../SynchC.inl \
-  ../SynchS.cpp \
-  ../SynchS.h \
-  ../SynchS.inl \
-  ../SynchS_T.cpp \
-  ../SynchS_T.h \
-  ../SynchS_T.inl
-
-../SynchC.cpp ../SynchC.h ../SynchC.inl ../SynchS.cpp ../SynchS.h ../SynchS.inl ../SynchS_T.cpp ../SynchS_T.h ../SynchS_T.inl: ../Synch-stamp
-
-../Synch-stamp: $(srcdir)/../Synch.idl $(TAO_IDL_DEP)
-	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs -GT -o .. $(srcdir)/../Synch.idl
-	@touch $@
 
 noinst_PROGRAMS += Starter
 
@@ -66,19 +35,12 @@ Starter_CPPFLAGS = \
 
 Starter_SOURCES = \
   ../Starter.cpp \
-  ../SynchC.cpp \
-  ../SynchS.cpp \
   ../Synch_i.cpp \
   ../Starter.h \
-  ../SynchC.h \
-  ../SynchC.inl \
-  ../SynchS.h \
-  ../SynchS.inl \
-  ../SynchS_T.h \
-  ../SynchS_T.inl \
   ../Synch_i.h
 
 Starter_LDADD = \
+  $(top_builddir)/examples/RTScheduling/libSynch.la \
   $(TAO_BUILDDIR)/tao/libTAO_RTScheduler.la \
   $(TAO_BUILDDIR)/tao/libTAO_PI_Server.la \
   $(TAO_BUILDDIR)/tao/libTAO_RTPortableServer.la \
@@ -99,65 +61,7 @@ endif BUILD_EXCEPTIONS
 if BUILD_EXCEPTIONS
 if BUILD_RT_CORBA
 
-BUILT_SOURCES += \
-  ../SynchC.cpp \
-  ../SynchC.h \
-  ../SynchC.inl \
-  ../SynchS.cpp \
-  ../SynchS.h \
-  ../SynchS.inl \
-  ../SynchS_T.cpp \
-  ../SynchS_T.h \
-  ../SynchS_T.inl
-
-CLEANFILES += \
-  ../Synch-stamp \
-  ../SynchC.cpp \
-  ../SynchC.h \
-  ../SynchC.inl \
-  ../SynchS.cpp \
-  ../SynchS.h \
-  ../SynchS.inl \
-  ../SynchS_T.cpp \
-  ../SynchS_T.h \
-  ../SynchS_T.inl
-
-../SynchC.cpp ../SynchC.h ../SynchC.inl ../SynchS.cpp ../SynchS.h ../SynchS.inl ../SynchS_T.cpp ../SynchS_T.h ../SynchS_T.inl: ../Synch-stamp
-
-../Synch-stamp: $(srcdir)/../Synch.idl $(TAO_IDL_DEP)
-	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs -GT -o .. $(srcdir)/../Synch.idl
-	@touch $@
-
-BUILT_SOURCES += \
-  ../JobC.cpp \
-  ../JobC.h \
-  ../JobC.inl \
-  ../JobS.cpp \
-  ../JobS.h \
-  ../JobS.inl \
-  ../JobS_T.cpp \
-  ../JobS_T.h \
-  ../JobS_T.inl
-
-CLEANFILES += \
-  ../Job-stamp \
-  ../JobC.cpp \
-  ../JobC.h \
-  ../JobC.inl \
-  ../JobS.cpp \
-  ../JobS.h \
-  ../JobS.inl \
-  ../JobS_T.cpp \
-  ../JobS_T.h \
-  ../JobS_T.inl
-
-../JobC.cpp ../JobC.h ../JobC.inl ../JobS.cpp ../JobS.h ../JobS.inl ../JobS_T.cpp ../JobS_T.h ../JobS_T.inl: ../Job-stamp
-
-../Job-stamp: $(srcdir)/../Job.idl $(TAO_IDL_DEP)
-	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs -GT -o .. $(srcdir)/../Job.idl
-	@touch $@
-
-BUILT_SOURCES += \
+BUILT_SOURCES = \
   ../MIF_SchedulingC.cpp \
   ../MIF_SchedulingC.h \
   ../MIF_SchedulingC.inl \
@@ -167,7 +71,7 @@ BUILT_SOURCES += \
   ../MIF_SchedulingS_T.h \
   ../MIF_SchedulingS_T.inl
 
-CLEANFILES += \
+CLEANFILES = \
   ../MIF_Scheduling-stamp \
   ../MIF_SchedulingC.cpp \
   ../MIF_SchedulingC.h \
@@ -196,13 +100,9 @@ test_CPPFLAGS = \
 
 test_SOURCES = \
   ../DT_Creator.cpp \
-  ../JobC.cpp \
-  ../JobS.cpp \
   ../Job_i.cpp \
   ../MIF_SchedulingC.cpp \
   ../POA_Holder.cpp \
-  ../SynchC.cpp \
-  ../SynchS.cpp \
   ../Synch_i.cpp \
   ../Task_Stats.cpp \
   ../Thread_Task.cpp \
@@ -211,12 +111,6 @@ test_SOURCES = \
   MIF_Task.cpp \
   test.cpp \
   ../DT_Creator.h \
-  ../JobC.h \
-  ../JobC.inl \
-  ../JobS.h \
-  ../JobS.inl \
-  ../JobS_T.h \
-  ../JobS_T.inl \
   ../Job_i.h \
   ../MIF_SchedulingC.h \
   ../MIF_SchedulingC.inl \
@@ -225,12 +119,6 @@ test_SOURCES = \
   ../MIF_SchedulingS_T.h \
   ../MIF_SchedulingS_T.inl \
   ../POA_Holder.h \
-  ../SynchC.h \
-  ../SynchC.inl \
-  ../SynchS.h \
-  ../SynchS.inl \
-  ../SynchS_T.h \
-  ../SynchS_T.inl \
   ../Synch_i.h \
   ../Task_Stats.h \
   ../Task_Stats.inl \
@@ -241,6 +129,8 @@ test_SOURCES = \
   test.h
 
 test_LDADD = \
+  $(top_builddir)/examples/RTScheduling/libSynch.la \
+  $(top_builddir)/examples/RTScheduling/libJob.la \
   $(TAO_BUILDDIR)/tao/libTAO_RTScheduler.la \
   $(TAO_BUILDDIR)/tao/libTAO_PI_Server.la \
   $(TAO_BUILDDIR)/tao/libTAO_RTPortableServer.la \

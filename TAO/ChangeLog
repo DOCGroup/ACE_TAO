@@ -1,3 +1,11 @@
+Mon Nov 13 22:36:51 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * examples/RTScheduling/Fixed_Priority_Scheduler/Makefile.am:
+        * examples/RTScheduling/MIF_Scheduler/Makefile.am:
+        * examples/RTScheduling/Makefile.am:
+
+          Regenerated.
+
 Mon Nov 13 20:01:51 UTC 2006  Chris Cleeland  <cleeland_c@ociweb.com>
 
         * orbsvcs/orbsvcs/Event/EC_Thread_Flags.h:
