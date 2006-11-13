@@ -3,28 +3,23 @@
 
 project(*Starter): namingexe, rtscheduling_server {
   idlflags += -o ..
-
-  IDL_Files {
-    ../Synch.idl
-  }
+  after += Synch
+  libs += Synch
 
   Source_Files {
     ../Starter.cpp
     ../Synch_i.cpp
-    ../SynchC.cpp
-    ../SynchS.cpp
   }
 
   exename = Starter
 }
 
 project(*test) : namingexe, rtscheduling_server {
-  after += *Starter
+  after += *Starter Job
+  libs += Synch Job
   idlflags += -o ..
 
   IDL_Files {
-    ../Synch.idl
-    ../Job.idl
     ../MIF_Scheduling.idl
   }
 
@@ -36,13 +31,9 @@ project(*test) : namingexe, rtscheduling_server {
     ../MIF_SchedulingC.cpp
     ../Thread_Task.cpp
     ../DT_Creator.cpp
-    ../JobC.cpp
-    ../JobS.cpp
     ../Job_i.cpp
     ../POA_Holder.cpp
     ../Task_Stats.cpp
-    ../SynchC.cpp
-    ../SynchS.cpp
     ../Synch_i.cpp
   }
 

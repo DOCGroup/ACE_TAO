@@ -1,0 +1,29 @@
+// -*- MPC -*-
+// $Id$
+
+project(Synch): portableserver {
+  idlflags += -St \
+              -Wb,export_macro=SYNCH_Export \
+              -Wb,export_include=synch_export.h
+  dynamicflags += SYNCH_BUILD_DLL
+
+  IDL_Files {
+    Synch.idl
+  }
+
+  Source_Files {
+    SynchC.cpp
+    SynchS.cpp
+  }
+
+  Header_Files {
+    SynchC.h
+    SynchS.h
+    synch_export.h
+  }
+
+  Inline_Files {
+    SynchC.inl
+    SynchS.inl
+  }
+}
