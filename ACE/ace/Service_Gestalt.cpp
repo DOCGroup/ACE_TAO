@@ -281,6 +281,7 @@ ACE_Service_Gestalt::ACE_Service_Gestalt (size_t size,
   , no_static_svcs_ (no_static_svcs)
   , svc_queue_ (0)
   , svc_conf_file_queue_ (0)
+  , static_svcs_ (0)
 {
   (void)this->init_i ();
 
@@ -308,10 +309,6 @@ ACE_Service_Gestalt::init_i (void)
       this->repo_ =
         ACE_Service_Repository::instance (this->svc_repo_size_);
     }
-
-  ACE_NEW_RETURN (this->static_svcs_,
-                  ACE_STATIC_SVCS,
-                  -1);
 
   this->processed_static_svcs_ = 0;
   return 0;
@@ -475,6 +472,11 @@ ACE_Service_Gestalt::insert (ACE_Static_Svc_Descriptor *stsd)
            stsd->name_,
            stsd->active_);
     }
+
+  if (this->static_svcs_ == 0)
+    ACE_NEW_RETURN (this->static_svcs_,
+                    ACE_STATIC_SVCS,
+                    -1);
 
   // Inserting a service after the Gestalt has been opened makes it
   // impossible to activate it later. Perhaps open came too soon?
@@ -1292,9 +1294,6 @@ ACE_Service_Gestalt::close (void)
                 ACE_LIB_TEXT ("ACE (%P|%t) SG::close - this=%@, repo=%@, pss = %@\n"),
                 this, this->repo_, this->processed_static_svcs_));
 #endif
-
-  delete this->static_svcs_;
-  this->static_svcs_ = 0;
 
   if (this->processed_static_svcs_ &&
       !this->processed_static_svcs_->is_empty())
