@@ -1,3 +1,9 @@
+Mon Nov 13 22:40:11 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * orbsvcs/tests/Event/ThreadFlags/Makefile.am:
+
+          Regenerated.
+
 Mon Nov 13 22:36:51 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
 
         * examples/RTScheduling/Fixed_Priority_Scheduler/Makefile.am:
