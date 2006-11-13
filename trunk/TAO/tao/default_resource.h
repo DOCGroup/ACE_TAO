@@ -52,7 +52,7 @@ class TAO_Codeset_Descriptor_Base;
  * manager's configuration with the the codeset manager factory?
  *
  */
-class TAO_Codeset_Parameters
+class TAO_Export TAO_Codeset_Parameters
   : ACE_Copy_Disabled
 {
 public:
