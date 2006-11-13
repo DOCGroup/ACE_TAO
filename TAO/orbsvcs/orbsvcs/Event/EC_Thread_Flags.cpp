@@ -1,15 +1,13 @@
-#include "EC_Thread_Flags.h"
+// $Id$
 
-ACE_RCSID(Event, EC_Thread_Flags , "$Id$")
+#include "orbsvcs/Event/EC_Thread_Flags.h"
 
-#if 0
-#include "ace/Obstack.h"
-#endif
-#include "ace/OS.h" // OS_NS_Thread.h in later versions
-#include "ace/OS_String.h" // OS_NS_String.h in later versions
+#include "ace/OS_NS_Thread.h" // OS_NS_Thread.h in later versions
+#include "ace/OS_NS_strings.h" // OS_NS_String.h in later versions
+#include "ace/Log_Msg.h"
 #include "ace/Sched_Params.h"
 
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+ACE_RCSID(Event, EC_Thread_Flags , "$Id$")
 
 #define TETFSF(flag)  { #flag, flag }
 TAO_EC_Thread_Flags::Supported_Flag TAO_EC_Thread_Flags::supported_flags_[] = {
@@ -33,6 +31,8 @@ TAO_EC_Thread_Flags::Supported_Flag TAO_EC_Thread_Flags::supported_flags_[] = {
 #endif /* ACE_HAS_THREADS */
   };
 #undef TETFSF
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_EC_Thread_Flags::~TAO_EC_Thread_Flags ()
 {

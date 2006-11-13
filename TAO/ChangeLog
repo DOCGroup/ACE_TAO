@@ -1,3 +1,11 @@
+Mon Nov 13 20:01:51 UTC 2006  Chris Cleeland  <cleeland_c@ociweb.com>
+
+        * orbsvcs/orbsvcs/Event/EC_Thread_Flags.h:
+        * orbsvcs/orbsvcs/Event/EC_Thread_Flags.cpp:
+        * orbsvcs/tests/Event/ThreadFlags/testflags.cpp:
+
+          Various fixes to enable Versioned Namespace builds to complete.
+
 Mon Nov 13 19:22:06 UTC 2006  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * examples/RTScheduling/Job.mpc:
