@@ -74,20 +74,28 @@ main (int argc, char *argv[])
       if (plan != 0) {
         driver->deploy_plan (plan);
       } else {
-        // Get goal ID and utility.
-        ::SA_POP::CondID cond_id;
-        ::SA_POP::Utility util;
-        std::cout << "Goal condition ID: ";
-        std::cin >> cond_id;
-        std::cout << std::endl;
-        std::cout << "Goal utility: ";
-        std::cin >> util;
+        // Get number of goal conditions.
+        unsigned int num_goals = 0;
+        std::cout << "Number of goals: ";
+        std::cin >> num_goals;
         std::cout << std::endl;
 
         // Create goal map.
         ::SA_POP::GoalMap goal_map;
         goal_map.clear ();
-        goal_map.insert (std::make_pair (cond_id, util));
+        for (unsigned int loop = 0; loop < num_goals; loop++) {
+          // Get goal ID and utility.
+          ::SA_POP::CondID cond_id;
+          ::SA_POP::Utility util;
+          std::cout << "Goal condition ID: ";
+          std::cin >> cond_id;
+          std::cout << std::endl;
+          std::cout << "Goal utility: ";
+          std::cin >> util;
+          std::cout << std::endl;
+
+          goal_map.insert (std::make_pair (cond_id, util));
+        }
 
         // Create goal option.
         ::SA_POP::GoalOption goal_opt (
