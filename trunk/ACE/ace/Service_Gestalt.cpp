@@ -243,6 +243,7 @@ ACE_Service_Gestalt::~ACE_Service_Gestalt (void)
 {
   if (this->svc_repo_is_owned_)
     delete this->repo_;
+
   this->repo_ =0;
 
   delete this->static_svcs_;
@@ -674,8 +675,8 @@ ACE_Service_Gestalt::initialize (const ACE_Service_Type *sr,
   if (ACE::debug ())
     ACE_DEBUG ((LM_DEBUG,
                 ACE_LIB_TEXT ("ACE (%P|%t) SG::initialize - looking up dynamic ")
-                ACE_LIB_TEXT (" service \'%s\' to initialize\n"),
-                sr->name ()));
+                ACE_LIB_TEXT (" service %s to initialize, repo=%@\n"),
+                sr->name (), this->repo_));
 
   ACE_Service_Type *srp = 0;
   if (this->repo_->find (sr->name (),
@@ -742,6 +743,9 @@ int
 ACE_Service_Gestalt::remove (const ACE_TCHAR svc_name[])
 {
   ACE_TRACE ("ACE_Service_Gestalt::remove");
+  if (this->repo_ == 0)
+    return -1;
+
   return this->repo_->remove (svc_name);
 }
 
@@ -755,6 +759,9 @@ int
 ACE_Service_Gestalt::suspend (const ACE_TCHAR svc_name[])
 {
   ACE_TRACE ("ACE_Service_Gestalt::suspend");
+  if (this->repo_ == 0)
+    return -1;
+
   return this->repo_->suspend (svc_name);
 }
 
@@ -765,6 +772,9 @@ int
 ACE_Service_Gestalt::resume (const ACE_TCHAR svc_name[])
 {
   ACE_TRACE ("ACE_Service_Gestalt::resume");
+  if (this->repo_ == 0)
+    return -1;
+
   return this->repo_->resume (svc_name);
 }
 
@@ -785,6 +795,9 @@ int
 ACE_Service_Gestalt::process_directive_i (const ACE_Static_Svc_Descriptor &ssd,
                                         int force_replace)
 {
+  if (this->repo_ == 0)
+    return -1;
+
   if (!force_replace)
     {
       if (this->repo_->find (ssd.name_, 0, 0) >= 0)
@@ -1310,10 +1323,7 @@ ACE_Service_Gestalt::close (void)
   this->processed_static_svcs_ = 0;
 
   if (this->svc_repo_is_owned_)
-    {
       delete this->repo_;
-      this->repo_ = 0;
-    }
 
 #ifndef ACE_NLOGGING
   if (ACE::debug ())
@@ -1321,6 +1331,8 @@ ACE_Service_Gestalt::close (void)
                 ACE_LIB_TEXT ("ACE (%P|%t) SG::close - complete this=%@, repo=%@\n"),
                 this, this->repo_));
 #endif
+
+  this->repo_ = 0;
 
   return 0;
 
