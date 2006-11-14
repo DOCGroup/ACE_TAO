@@ -1,3 +1,9 @@
+Tue Nov 14 09:00:00 UTC 2006  Simon Massey  <sma@prismtech.com>
+
+        * NEWS:
+
+          Submitted by Jeff Parsons.
+
 Tue Nov 14 04:59:41 UTC 2006  Chris Cleeland  <cleeland_c@ociweb.com>
 
         * orbsvcs/orbsvcs/Event/EC_Thread_Flags.cpp: 
