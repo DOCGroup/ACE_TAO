@@ -76,6 +76,8 @@ USER VISIBLE CHANGES BETWEEN CIAO-0.5.3 and CIAO-0.5.4
 
 . Improved syntax error checking and reporting in the CIDL compiler.
 
+. Add Null Component to be able to measure footprint in detail
+
 USER VISIBLE CHANGES BETWEEN CIAO-0.5.2 and CIAO-0.5.3
 ======================================================
 
