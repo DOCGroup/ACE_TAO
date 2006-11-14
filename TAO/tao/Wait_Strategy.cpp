@@ -27,12 +27,17 @@ TAO_Wait_Strategy::~TAO_Wait_Strategy (void)
 {
 }
 
+/*
+ * Hook to comment out this method in the lf wait strategy
+ */
+//@@ LF_WAIT_STRATEGY_SPL_COMMENT_HOOK_START
 int
 TAO_Wait_Strategy::sending_request (TAO_ORB_Core * /* orb_core */,
                                     int            /* two_way */)
 {
   return 0;
 }
+//@@ LF_WAIT_STRATEGY_SPL_COMMENT_HOOK_END
 
 /*
  * Hook to specialize the Wait Strategy
