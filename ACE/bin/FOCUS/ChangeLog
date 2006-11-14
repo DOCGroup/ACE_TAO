@@ -1,3 +1,8 @@
+Tue Nov 14 12:17:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * specializations/Messaging_Strategy/GIOP.spl:
+          Updated to work with current svn head
+
 Tue Nov 14 11:30:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * specializations/Reactor_Family/TP_Reactor.spl:
