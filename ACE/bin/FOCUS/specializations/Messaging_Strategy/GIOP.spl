@@ -43,20 +43,6 @@
 
 </file>
 
-<file name="TAO_Server_Request.cpp">
-
-<!-- Remove Pluggable Messaging include directive -->
-<remove>#include "tao/Pluggable_Messaging.h"</remove>
-
-</file>
-
-<file name="Transport.cpp">
-
-<!-- Remove Pluggable Messaging include directive -->
-<remove>#include "tao/Pluggable_Messaging.h"</remove>
-
-</file>
-
 <file name="GIOP_Message_Base.h">
 
 <!-- Remove Pluggable Messaging include directive -->
