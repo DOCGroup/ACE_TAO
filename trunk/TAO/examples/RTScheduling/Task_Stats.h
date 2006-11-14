@@ -13,10 +13,13 @@
 #ifndef TASK_STATS_H
 #define TASK_STATS_H
 
-#include "ace/OS_NS_time.h"
-#include "ace/Singleton.h"
+#include "rtschedtestlib_export.h"
+
 #include "tao/orbconf.h"
 #include "tao/debug.h"
+
+#include "ace/OS_NS_time.h"
+#include "ace/Singleton.h"
 
 /**
  * @class Base_Time
@@ -24,7 +27,7 @@
  * @brief maintains readings recorded by tasks.
  *
  */
-class Base_Time
+class RTSCHEDTESTLIB_Export Base_Time
 {
  public:
   Base_Time (void);
@@ -39,7 +42,7 @@ typedef ACE_Singleton<Base_Time, TAO_SYNCH_MUTEX> BASE_TIME;
  * @brief maintains readings recorded by tasks.
  *
  */
-class Task_Stats
+class RTSCHEDTESTLIB_Export Task_Stats
 {
  public:
   /// Constructor
