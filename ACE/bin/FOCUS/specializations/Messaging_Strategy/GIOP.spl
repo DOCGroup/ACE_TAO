@@ -107,7 +107,7 @@ protected:
 <file name="TAO_Server_Request.cpp">
 
 <!-- Remove Pluggable messaging include altogether -->
-<remove>#include "Pluggable_Messaging.h"</remove>
+<remove>#include "tao/Pluggable_Messaging.h"</remove>
 
 </file>
 
@@ -120,7 +120,7 @@ protected:
 </file>
 
 <file name="Transport.cpp">
- <remove>#include "Pluggable_Messaging.h"</remove>
+ <remove>#include "tao/Pluggable_Messaging.h"</remove>
 </file>
 
 </module>
