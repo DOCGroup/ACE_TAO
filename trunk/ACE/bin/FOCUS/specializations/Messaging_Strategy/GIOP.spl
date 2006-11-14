@@ -177,6 +177,7 @@ protected:
  <data>
     ACE_NEW (this->messaging_object_,
                TAO_GIOP_Message_Base (orb_core,
+                                      this,
                                       ACE_MAX_DGRAM_SIZE));
  </data>
 </add>
@@ -203,7 +204,7 @@ protected:
  <data>
     ACE_NEW (this->messaging_object_,
                TAO_GIOP_Message_Base (orb_core,
-                                      ACE_MAX_DGRAM_SIZE));
+                                      this));
  </data>
 </add>
 
@@ -234,7 +235,7 @@ protected:
  <data>
     ACE_NEW (this->messaging_object_,
                TAO_GIOP_Message_Base (orb_core,
-                                      ACE_MAX_DGRAM_SIZE));
+                                      this));
  </data>
 </add>
  <remove>#include "tao/GIOP_Message_Lite.h"</remove>
