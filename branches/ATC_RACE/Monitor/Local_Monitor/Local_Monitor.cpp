@@ -2,6 +2,7 @@
 #include "ace/Reactor.h"
 #include "orbsvcs/CosNamingC.h"
 #include "tao/ORB_Core.h"
+
 namespace CIAO
 {
 
@@ -9,16 +10,31 @@ namespace CIAO
   {
 
     Local_Monitor::Local_Monitor (const char *,
-                                  CORBA::ORB_ptr orb)
-      : handler_ (new Event_Handler ()),
-        reactor_ (orb->orb_core ()->reactor ()),
-        interval_ (10),
-        start_time_ (10),
-        initialized_ (false)
+                                  CORBA::ORB_ptr orb,
+                                  size_t period,
+                                  size_t start_time,
+                                  bool dump_log)
+      : reactor_ (orb->orb_core ()->reactor ()),
+        interval_ (period),
+        start_time_ (start_time),
+        initialized_ (false),
+        dump_log_ (dump_log)
     {
       this->delays_.length (0);
-      if (this->resolve_central_monitor (orb) == 0 &&
-          this->register_timer () == 0)
+
+      // We resolve the reference to the centralized monitor only if
+      // dump_log is false.
+      int init = 0;
+
+      if (!this->dump_log_)
+        {
+
+          init += this->resolve_central_monitor (orb);
+        }
+
+      init += this->register_timer ();
+
+      if (init == 0)
         {
           ACE_DEBUG ((LM_DEBUG, "[CIAO::RACE] Local_Monitor object has been "
                       "successfully initialized.\n"));
@@ -109,8 +125,8 @@ namespace CIAO
       /// Now set up the "periodic update task".
       this->reactor_->owner (ACE_Thread::self ());
       this->timer_id_ =
-        this->reactor_->schedule_timer (this->handler_,
-                                        this,
+        this->reactor_->schedule_timer (this,
+                                        0,
                                         this->start_time_,
                                         this->interval_);
       if (this->timer_id_ < 0)
@@ -127,7 +143,7 @@ namespace CIAO
     Local_Monitor::~Local_Monitor ()
     {
       this->reactor_->cancel_timer (this->timer_id_);
-      delete this->handler_;
+      ACE_OS::fclose (this->log_file_);
     }
 
     void
@@ -137,11 +153,21 @@ namespace CIAO
         {
           return;
         }
+
+      /// @@ This is hack! instance id should be specified in the
+      /// constructor itself!
       if (!this->instance_id_.in ())
         {
           this->instance_id_ = CORBA::string_dup (id);
+          this->log_file_ = ACE_OS::fopen (this->instance_id_.in (), "w");
+          if (this->log_file_ == 0)
+            {
+              ACE_ERROR ((LM_ERROR,
+                          "Cannot open log file for writing!\n"));
+            }
         }
       this->timer_.start ();
+
     }
 
     void
@@ -151,10 +177,11 @@ namespace CIAO
         {
           return;
         }
-	  this->timer_.stop ();
-	  ACE_Time_Value time;
-	  this->timer_.elapsed_time (time);
-      
+      this->timer_.stop ();
+      ACE_Time_Value time;
+      this->timer_.elapsed_time (time);
+
+
       this->mutex_.acquire ();
 
       this->delays_.length (this->delays_.length () + 1);
@@ -163,24 +190,38 @@ namespace CIAO
       this->mutex_.release ();
     }
 
-    void
+    int
     Local_Monitor::dump ()
     {
-      if (!this->initialized_)
+      if (this->initialized_ && this->log_file_!= 0)
         {
-          return;
+          // Acquire the lock, make a temporay copy of the collected data,
+          // and relase the lock.
+          Delays temp;
+
+          this->mutex_.acquire ();
+
+          temp = this->delays_;
+
+          this->delays_.release ();
+          this->delays_.length (0);
+          this->mutex_.release ();
+
+
+          // Now dump the collected data to the log file.
+          for (CORBA::ULong itr = 0; itr < temp.length (); ++itr)
+            {
+              ACE_OS::fprintf (this->log_file_, "%d\n", temp [itr]);
+            }
+          ACE_OS::fflush (this->log_file_);
+
+          return 0;
         }
-      ACE_DEBUG ((LM_DEBUG, "In Trigger::dump %s.\n",
-                  this->instance_id_.in ()));
-
-      this->mutex_.acquire ();
-
-      for (CORBA::ULong itr = 0; itr < this->delays_.length (); ++itr)
+      else
         {
-          ACE_DEBUG ((LM_DEBUG, "%d\n", this->delays_[itr]));
-        }
+          return -1;
 
-      this->mutex_.release ();
+        }
     }
 
     int
@@ -190,13 +231,24 @@ namespace CIAO
         {
           return -1;
         }
+      // Acquire the lock, make a temporay copy of the collected data,
+      // and relase the lock.
+      Delays temp;
+
+      this->mutex_.acquire ();
+
+      temp = this->delays_;
+
+      this->delays_.release ();
+      this->delays_.length (0);
+
+      this->mutex_.release ();
+
+      // Now push the collected data to the centralized monitor.
       try
         {
-          this->mutex_.acquire ();
           this->monitor_->push_delays (this->instance_id_.in (),
-                                       this->delays_);
-          this->delays_.length (0);
-          this->mutex_.release ();
+                                       temp);
           return 0;
         }
 
@@ -204,22 +256,24 @@ namespace CIAO
         {
           ACE_PRINT_EXCEPTION (ex, "[CIAO::RACE] Local_Monitor:: "
                                "Exception caught in push ().\n");
-          this->mutex_.release ();
           return -1;
         }
     }
 
 
     int
-    Event_Handler::handle_timeout (const ACE_Time_Value &,
-                                   const void *ref)
+    Local_Monitor::handle_timeout (const ACE_Time_Value &,
+                                   const void *)
     {
-      const Local_Monitor *const_monitor =
-        reinterpret_cast <const Local_Monitor *> (ref);
-      Local_Monitor *monitor = const_cast <Local_Monitor *> (const_monitor);
-
-      return monitor->push ();
+      if (this->dump_log_)
+        {
+          return this->dump ();
+        }
+      else
+        {
+          return this->push ();
+        }
     }
 
-  };
-};
+  }
+}
