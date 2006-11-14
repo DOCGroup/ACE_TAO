@@ -1,3 +1,15 @@
+Tue Nov 14 18:42:18 UTC 2006  Iliyan Jeliazkov  <iliyan@ociweb.com>
+
+        * ace/Service_Gestalt.inl:
+        * ace/Service_Gestalt.cpp:
+
+          After a gestalt gets close()-ed it is still a valid instance
+          however, because it is disassociated from its service repository
+          the situation becomes another special case the gestalt
+          implementation must account for.  This change is in addition to
+          the bug fix introduced with the change from "Thu Nov 9 20:07:42
+          UTC 2006".
+
 Tue Nov 14 14:30:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Select_Reactor_T.cpp:
@@ -18,11 +30,11 @@ Mon Nov 13 00:17:19 UTC 2006  Iliyan Jeliazkov  <iliyan@ociweb.com>
 
         * ace/Service_Gestalt.cpp:
 
-          The closing a configuration gestalt must not obliterate any
-          static services' registrations, because it may still be needed,
-          in case the gestalts gets re-opened, before the destructor runs.
-          This change fixes a problem (introduced with "Thu Nov 9 20:07:42
-          UTC 2006") due to breaking of this invariant.
+          Calling close() on a gestalt must not obliterate any static
+          service registrations. Those may still be needed if the gestalts
+          gets re-opened again, before its destructor runs.  This change
+          fixes a problem (introduced with "Thu Nov 9 20:07:42 UTC 2006")
+          which broke this invariant.
 
 Sat Nov 11 18:37:12 UTC 2006  Chris Cleeland  <cleeland_c@ociweb.com>
 
