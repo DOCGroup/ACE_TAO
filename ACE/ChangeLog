@@ -1,3 +1,8 @@
+Tue Nov 14 07:56:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ACE-INSTALL.html:
+          Updated rtems information
+
 Mon Nov 13 00:17:19 UTC 2006  Iliyan Jeliazkov  <iliyan@ociweb.com>
 
         * ace/Service_Gestalt.cpp:
