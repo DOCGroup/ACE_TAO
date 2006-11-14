@@ -150,6 +150,7 @@ protected:
 
 <file name="Asynch_Invocation.cpp">
  <remove>#include "tao/Pluggable_Messaging.h"</remove>
+ <replace>#include "tao/GIOP_Message_Base.h"</replace>
 </file>
 
 </module>
