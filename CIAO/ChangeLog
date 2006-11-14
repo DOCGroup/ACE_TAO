@@ -1,3 +1,11 @@
+Tue Nov 14 16:27:55 UTC 2006  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * examples/Null_Component/Null_Component.mpc:
+
+          Updated lib names in 'libs +=...' lines, overlooked in
+
+          Mon Nov 13 16:54:47 UTC 2006  Jeff Parsons <j.parsons@vanderbilt.edu>
+
 Tue Nov 14 09:00:00 UTC 2006  Simon Massey  <sma@prismtech.com>
 
         * NEWS:
