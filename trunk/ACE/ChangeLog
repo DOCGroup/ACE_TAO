@@ -1,3 +1,8 @@
+Tue Nov 14 11:23:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Timer_Queue_T.cpp:
+          Added hook for FOCUS, const improvement
+
 Tue Nov 14 07:56:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ACE-INSTALL.html:
