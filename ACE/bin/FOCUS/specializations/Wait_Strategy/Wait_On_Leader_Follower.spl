@@ -3,7 +3,7 @@
 <!-- Wait Strategy Specialization
  *   ===============================
  *   Details all the specialization transformations necessary
- *   to specialize the Wait_Strategy with the Wait_On_Read strategy
+ *   to specialize the Wait_Strategy with the TAO_Wait_On_Leader_Follower strategy
  *
  *   @author Arvind S. Krishna <arvindk@dre.vanderbilt.edu>
  *   $Id$
@@ -15,14 +15,14 @@
 
 <file name="Wait_Strategy.cpp">
 
-<!-- Copy specialized code from the Wait_On_Read strategy
+<!-- Copy specialized code from the Wait_On_Leader_Follower strategy
      to this file -->
 
 <copy-from-source>
 
  <!-- Name of the source file from which to copy. In this case, this is
       the Wait_On_Read source file -->
- <source>Wait_On_Read.cpp</source>
+ <source>Wait_On_Leader_Follower.cpp</source>
 
  <!-- Copy data between the following hooks defined in the aforementioned
       file -->
@@ -50,10 +50,10 @@
  </data>
 </add>
 
-<!-- Once this is done, replace all occurences of TAO_Wait_On_Read with
+<!-- Once this is done, replace all occurences of TAO_Wait_On_Leader_Follower with
      TAO_Wait_Strategy -->
 <substitute>
- <search>TAO_Wait_On_Read</search>
+ <search>TAO_Wait_On_Leader_Follower</search>
  <replace>TAO_Wait_Strategy</replace>
 </substitute>
 
