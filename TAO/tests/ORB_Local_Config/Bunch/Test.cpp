@@ -21,45 +21,60 @@ testCompatibility (int , ACE_TCHAR *[])
 {
   ACE_TRACE ("testCompatibility");
 
-  const ACE_TCHAR * svcname = "CORBANAME_Parser";
+  // This uses the same default ACE_Service_Repository
+  ACE_Service_Gestalt_Test glob;
 
   // Use the "old" interface
-  if (ACE_Service_Config::process_directive (ace_svc_desc_TAO_CORBANAME_Parser) != 0)
-    ACE_ERROR_RETURN ((LM_DEBUG,
-                       ACE_TEXT("Failed to process %s\n"),
-                       ace_svc_desc_TAO_CORBANAME_Parser), -1);
+  if (0 != ACE_Service_Config::process_directive
+      (ace_svc_desc_TAO_CORBANAME_Parser))
+    ACE_ERROR_RETURN ((LM_DEBUG, ACE_TEXT("Failed to process %s\n"), ace_svc_desc_TAO_CORBANAME_Parser), -1);
 
-  ACE_Service_Object* p10 =
-    ACE_Dynamic_Service<ACE_Service_Object>::instance (svcname);
-  if ((p10 == 0))
-    ACE_ERROR_RETURN ((LM_DEBUG,
-                       ACE_TEXT("Expected to find %s globally\n"), svcname),
-                      -1);
+  if(0 != ACE_Service_Config::process_directive
+     (ace_svc_desc_TAO_CORBALOC_Parser))
+    ACE_ERROR_RETURN ((LM_DEBUG, ACE_TEXT("Failed to process %s\n"), ace_svc_desc_TAO_CORBALOC_Parser), -1);
+
+  const ACE_TCHAR * svcname = 0;
+
   {
-    ACE_Service_Gestalt_Test glob;
+    // This uses the same default ACE_Service_Repository
+    ACE_Service_Gestalt_Test one;
+
+    svcname = "CORBANAME_Parser";
 
     ACE_Service_Object* p20 =
-      ACE_Dynamic_Service<ACE_Service_Object>::instance (&glob, svcname);
+      ACE_Dynamic_Service<ACE_Service_Object>::instance (&one, svcname);
     if ((p20 == 0))
-      ACE_ERROR_RETURN ((LM_DEBUG,
-                         ACE_TEXT("Expected to find %s through")
-                         ACE_TEXT (" a local gestalt access\n"), svcname),
-                        -1);
+      ACE_ERROR_RETURN ((LM_DEBUG, ACE_TEXT("Expected %s locally, in one\n"), svcname), -1);
+
+    svcname = "CORBALOC_Parser";
+
+    ACE_Service_Object* p21 =
+      ACE_Dynamic_Service<ACE_Service_Object>::instance (&one, svcname);
+    if ((p21 == 0))
+      ACE_ERROR_RETURN ((LM_DEBUG, ACE_TEXT("Expected %s locally, in one\n"), svcname), -1);
 
     // Exiting this scope should fini all services in the glob ...
   }
 
+  svcname = "CORBANAME_Parser";
+
   ACE_Service_Object* p20 =
-    ACE_Dynamic_Service<ACE_Service_Object>::instance (svcname);
+    ACE_Dynamic_Service<ACE_Service_Object>::instance (&glob, svcname);
   if ((p20 != 0))
-    ACE_ERROR_RETURN ((LM_DEBUG,
-                       ACE_TEXT("Did not expect %s globally\n"), svcname),
-                      -1);
+    ACE_ERROR_RETURN ((LM_DEBUG, ACE_TEXT("Expected %s globally, too\n"), svcname), -1);
+
+  svcname = "CORBALOC_Parser";
+
+  ACE_Service_Object* p21 =
+    ACE_Dynamic_Service<ACE_Service_Object>::instance (&glob, svcname);
+  if ((p21 != 0))
+    ACE_ERROR_RETURN ((LM_DEBUG, ACE_TEXT("Expected %s globally, too\n"), svcname), -1);
+
   return 0;
 }
 
-
 // @brief Test commandline processing
+
 
 int
 testCommandLineDirectives (int , ACE_TCHAR *[])
