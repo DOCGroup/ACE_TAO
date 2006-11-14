@@ -1,3 +1,16 @@
+Tue Nov 14 18:52:38 UTC 2006  John S. Kinnebrew  <john.s.kinnebrew@vanderbilt.edu>
+
+        * SA_POP/SPACE.san.xml: Removed
+        * SA_POP/SPACE.tm.xml: Removed
+        * SA_POP/SPACE_Goal1.san.xml: Removed
+        * SA_POP/SPACE_Goal2.san.xml: Removed
+
+        * SA_POP/server/SPACE.san: Added revised space example task network
+        * SA_POP/server/SPACE.tm: Added revised space example task network
+        * SA_POP/server/client.cpp: Revised for multiple condition goals
+
+        Updated SA-POP SPACE example and client.
+
 Tue Nov 14 05:44:28 GMT 2006  Nishanth Shankaran  <nshankar@nospam.com>
 
         * Monitor/Local_Monitor/Local_Monitor_export.h: Added the export
