@@ -1,3 +1,10 @@
+Tue Nov 14 04:59:41 UTC 2006  Chris Cleeland  <cleeland_c@ociweb.com>
+
+        * orbsvcs/orbsvcs/Event/EC_Thread_Flags.cpp: 
+        
+          Correct problems related to missing string functions on
+          non-inline builds.
+
 Mon Nov 13 22:40:11 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
 
         * orbsvcs/tests/Event/ThreadFlags/Makefile.am:
