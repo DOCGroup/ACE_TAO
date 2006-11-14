@@ -1,3 +1,9 @@
+Tue Nov 14 14:30:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Select_Reactor_T.cpp:
+          Removed some not used macros that did cause problems when running
+          FOCUS
+
 Tue Nov 14 11:23:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Timer_Queue_T.cpp:
