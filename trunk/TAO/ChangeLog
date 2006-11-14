@@ -1,3 +1,42 @@
+Tue Nov 14 16:17:04 UTC 2006  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * examples/RTScheduling/RTSchedTestLib.mpc:
+        * examples/RTScheduling/rtschedtestlib_export.h:
+
+          New files, representing a new build created to hold common
+          code factored out from the other builds. Motivated not only
+          by good design, but by necessity on our scoreboard
+          platforms with parallel builds, where strict dependency
+          ordering in required.
+
+        * examples/RTScheduling/Thread_Task.h:
+        * examples/RTScheduling/Synch_i.h:
+        * examples/RTScheduling/Job.mpc:
+        * examples/RTScheduling/POA_Holder.cpp:
+        * examples/RTScheduling/Fixed_Priority_Scheduler\FP_DT_Creator.cpp:
+        * examples/RTScheduling/Fixed_Priority_Scheduler\FP_DT_Creator.h:
+        * examples/RTScheduling/Fixed_Priority_Scheduler\Fixed_Priority_Scheduler.mpc:
+        * examples/RTScheduling/POA_Holder.h:
+        * examples/RTScheduling/Synch.mpc:
+        * examples/RTScheduling/Job_i.cpp:
+        * examples/RTScheduling/Starter.cpp:
+        * examples/RTScheduling/Task_Stats.h:
+        * examples/RTScheduling/DT_Creator.cpp:
+        * examples/RTScheduling/Job_i.h:
+        * examples/RTScheduling/MIF_Scheduler\MIF_Scheduler.mpc:
+        * examples/RTScheduling/MIF_Scheduler\MIF_Scheduler.h:
+        * examples/RTScheduling/MIF_Scheduler\test.cpp:
+        * examples/RTScheduling/MIF_Scheduler\test.h:
+        * examples/RTScheduling/MIF_Scheduler\MIF_Task.cpp:
+        * examples/RTScheduling/Starter.h:
+        * examples/RTScheduling/Thread_Task.cpp:
+        * examples/RTScheduling/DT_Creator.h:
+
+          Factored files and dependencies out of existing MPC files to
+          be consistent with the new MPC file above. Also, in C++
+          files, re-ordered includes, added export macros, and made
+          other cosmetic changes.
+
 Tue Nov 14 16:08:35 UTC 2006  Iliyan Jeliazkov  <iliyan@ociweb.com>
 
         * tests/ORB_Local_Config/Bunch/Test.cpp:
