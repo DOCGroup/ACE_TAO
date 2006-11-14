@@ -1753,59 +1753,7 @@ your needs. For example when you give option debug=1 all the debug
 symbols will be created and the build will huge in size. The debug
 symbols are necessary when you want to debug your code.</p>
 
-<p></p><hr align="left" width="50%"><p>
-</p><h2><a name="rtems">Building and Installing ACE on RTEMS</a></h2>
-
-<pre>export RTEMS_MAKEFILE_PATH=/opt/rtems/CPU-rtems/BSP
-# setup the build structure
-cd ACE_wrappers
-
-# create the host (e.g. Linux in this case) build tree
-bin/create_ace_build.pl Linux_g++
-cd build/Linux_g++/ace
-ln -s ../../../ace/config-linux.h config.h
-cd ../include/makeinclude
-ln -s ../../../../include/makeinclude/platform_linux.GNU platform_macros.GNU
-cd ../../../..
-
-# create the target build tree
-bin/create_ace_build.pl rtems
-cd build/rtems/TAO
-/bin/rm -r TAO_IDL
-ln -s ../../Linux_g++/TAO/TAO_IDL .
-cd ../ace
-ln -s ../../../ace/config-rtems.h config.h
-cd ../include/makeinclude
-ln -s ../../../../include/makeinclude/platform_rtems.x_g++.GNU platform_macros.GNU
-cd ../../../..
-
-# build the host side of things
-cd build/Linux_g++
-export ACE_ROOT=`pwd`; export LD_LIBRARY_PATH=`pwd`/ace:`pwd`/lib:$LD_LIBRARY_PATH
-cd ace
-make
-
-# optionally build the ACE tests
-cd ../tests
-make
-
-cd ../TAO
-make
-
-# build the target side of things
-cd ../rtems
-export ACE_ROOT=`pwd`
-cd ace
-make
-cd ../tests
-# build rtems_init.o by hand
-make -f  ../include/makeinclude/Makefile.rtems rtems_init.o
-make
-cd ../TAO
-make
-</pre>
-
-
+<p></p><hr align="left" width="50%">
 <hr>
 <h1><a name="svcsinstall">Building and Installing ACE Network Services</a></h1>
 
@@ -2439,6 +2387,24 @@ libraries.
       <strong><blink><font color="#ff0000">WARNING:</font></blink></strong>
       Under the current version of QNX RTP ACE fails if compiled with
       inline=0 . </p><p>
+
+  </p></li><li><strong><a name="rtems">RTEMS</a></strong><p>
+
+      The support for RTEMS has been reviVed from version x.5.4. This version
+      was the first version that build again out of the box on RTEMS. Compilation
+      and testing was done for RTEMS with and without networking support. The
+      ACE GNU makefiles do automatically detect whether networking support
+      is available or not.
+
+      Besides the standard config.h/platform_macros.GNU file you will need
+      to set <code>RTEMS_MAKEFILE_PATH</code> to point to the location
+      of your RTEMS installation.</p>
+      <p>export RTEMS_MAKEFILE_PATH=/opt/rtems/CPU-rtems/BSP
+
+      When building without network support you will need the ace_for_tao
+      subsetting functionality enabled. For this add <code>ace_for_tao = 1</code>
+      to your <code>bin/MakeProjectCreator/config</code> file and regenerate the
+      GNU makefiles as described <a href="#power">here</a>.</p><p>
 
   </p></li><li><strong>PharLap TNT Embedded ToolSuite (ETS)</strong><p>
 
