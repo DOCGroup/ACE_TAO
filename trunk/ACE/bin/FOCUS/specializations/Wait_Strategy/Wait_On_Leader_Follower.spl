@@ -55,6 +55,11 @@
  <replace>TAO_Wait_Strategy</replace>
 </substitute>
 
+<comment>
+ <start-hook>LF_WAIT_STRATEGY_SPL_COMMENT_HOOK_START</start-hook>
+ <end-hook>LF_WAIT_STRATEGY_SPL_COMMENT_HOOK_END</end-hook>
+</comment>
+
 </file>
 
 <file name="Wait_Strategy.h">
