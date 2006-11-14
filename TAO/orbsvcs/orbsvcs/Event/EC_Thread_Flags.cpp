@@ -2,8 +2,9 @@
 
 #include "orbsvcs/Event/EC_Thread_Flags.h"
 
-#include "ace/OS_NS_Thread.h" // OS_NS_Thread.h in later versions
-#include "ace/OS_NS_strings.h" // OS_NS_String.h in later versions
+#include "ace/OS_NS_Thread.h"
+#include "ace/OS_NS_string.h"
+#include "ace/OS_NS_strings.h"
 #include "ace/Log_Msg.h"
 #include "ace/Sched_Params.h"
 
