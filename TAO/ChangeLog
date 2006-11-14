@@ -1,3 +1,9 @@
+Tue Nov 14 15:23:43 UTC 2006  Chad Elliott  <elliott_c@ociweb.com>
+
+        * NEWS:
+
+          Updated this file with information about my two bug fixes.
+
 Tue Nov 14 13:49:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Wait_Strategy.cpp:
