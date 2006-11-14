@@ -40,15 +40,7 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_ALLOC_HOOK_DEFINE(ACE_Select_Reactor_T)
 
-#if defined (ACE_WIN32)
-#define ACE_SELECT_REACTOR_HANDLE(H) (this->event_handlers_[(H)].handle_)
-#define ACE_SELECT_REACTOR_EVENT_HANDLER(THIS,H) ((THIS)->event_handlers_[(H)].event_handler_)
-#else
-#define ACE_SELECT_REACTOR_HANDLE(H) (H)
-#define ACE_SELECT_REACTOR_EVENT_HANDLER(THIS,H) ((THIS)->event_handlers_[(H)])
-#endif /* ACE_WIN32 */
-
-  template <class ACE_SELECT_REACTOR_TOKEN> int
+template <class ACE_SELECT_REACTOR_TOKEN> int
 ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::any_ready
   (ACE_Select_Reactor_Handle_Set &wait_set)
 {
@@ -66,7 +58,7 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::any_ready
   return this->any_ready_i (wait_set);
 }
 
-  template <class ACE_SELECT_REACTOR_TOKEN> int
+template <class ACE_SELECT_REACTOR_TOKEN> int
 ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::any_ready_i
   (ACE_Select_Reactor_Handle_Set &wait_set)
 {
