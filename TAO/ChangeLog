@@ -37,13 +37,6 @@ Tue Nov 14 16:17:04 UTC 2006  Jeff Parsons <j.parsons@vanderbilt.edu>
           files, re-ordered includes, added export macros, and made
           other cosmetic changes.
 
-Tue Nov 14 16:08:35 UTC 2006  Iliyan Jeliazkov  <iliyan@ociweb.com>
-
-        * tests/ORB_Local_Config/Bunch/Test.cpp:
-
-          Fixed a test failure due to the fact the test has become out of
-          sync with the changes in ACE from "Thu Nov 9 20:07:42 UTC 2006"
-
 Tue Nov 14 15:23:43 UTC 2006  Chad Elliott  <elliott_c@ociweb.com>
 
         * NEWS:
