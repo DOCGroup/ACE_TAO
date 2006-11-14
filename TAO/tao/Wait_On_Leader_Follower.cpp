@@ -58,10 +58,9 @@ TAO_Wait_On_Leader_Follower::sending_request (TAO_ORB_Core *orb_core,
     }
 
   // Send the request.
-//@@ LF_WAIT_STRATEGY_SPL_COMMENT_HOOK_START
+//@@ LF_WAIT_STRATEGY_SPL_SENDING_REQUEST_HOOK
   return this->TAO_Wait_Strategy::sending_request (orb_core,
                                                    two_way);
-//@@ LF_WAIT_STRATEGY_SPL_COMMENT_HOOK_END
 }
 
 int
