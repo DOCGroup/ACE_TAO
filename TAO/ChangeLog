@@ -1,3 +1,15 @@
+Wed Nov 15 16:38:29 UTC 2006  Chris Cleeland  <cleeland_c@ociweb.com>
+
+        * orbsvcs/orbsvcs/Event/EC_Thread_Flags.h:
+        * orbsvcs/orbsvcs/Event/EC_Thread_Flags.cpp:
+ 
+          Removed code that had been in #if 0/#endif, which had been part
+          of an earlier, more complete design but more difficult to
+          implement.
+ 
+          Eliminated #include of non-existent inline file that gave the
+          fuzz build heartburn.
+
 Wed Nov 15 10:35:00 UTC 2006  Simon Massey  <sma@prismtech.com>
 
         * NEWS:
@@ -15,7 +27,7 @@ Wed Nov 15 08:04:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
         * docs/Options.html:
 
           Added ORBServiceConfigLoggerKey, thanks to Doug and Abdul for
-          finding out this was lacking
+          finding out this was lacking.
 
 Wed Nov 15 04:00:22 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
 

@@ -27,7 +27,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
   \class TAO_EC_Thread_Flags
 
   \brief Parse thread flags from string to a long.
-  
+ 
   Encapsulate flags used for creating threads with \a
   ACE_OS::thr_create and \a ACE_Task::activate.
 
@@ -76,7 +76,7 @@ public:
     \brief Returns value of THR_SCOPE_* used, or zero if unknown.
   */
   long scope() const { return this->scope_; }
-  
+ 
   /*!
     \brief Returns value of THR_SCHED_* used, or zero if unknown.
   */
@@ -85,40 +85,13 @@ public:
   /// Synonym for flags(), i.e., syntactic sugar.
   operator long () const { return this->flags(); }
 
-#if 0
-  /*!
-    \brief Indicate whether a priority is valid for the scheduler returned by sched().
-
-    \return non-zero if the priority is valid.
-    
-    \note Always returns non-zero if sched == 0, i.e., the scheduler is unknown.
-  */
-  int is_valid_priority (long priority) const;
-
-  /*!
-    \brief Convert THR_SCHED_* values to ACE_SCHED_* values.
-    
-    For some wacked out reason the THR_SCHED_* values are different from
-    the ACE_SCHED_* values, so we provide a mapping function.
-  */
-  long ace_sched_from_thr_sched (long thr_sched) const;
-  long ace_scope_from_thr_scope (long thr_scope) const;
-  long thr_sched_from_ace_sched (long ace_sched) const;
-  long thr_scope_from_ace_scope (long ace_scope) const;
-#endif
-
   /*!
     \brief Return an acceptable default priority for the scheduler returned by sched().
     \return the priority, or ACE_DEFAULT_THREAD_PRIORITY if the scheduler is unknown.
   */
   long default_priority () const;
-  
+ 
 
-
-#if 0
-  /// Return a |-separated list of all flags that we can parse.
-  const char* supported_flags () const;
-#endif
 
   struct Supported_Flag
   {
@@ -135,16 +108,7 @@ protected:
   long sched_; /// Value of THR_SCHED_*
 
   void parse_symbols (const char* syms);
-  
-#if 0
-  ACE_Lock sf_lock_; // lock guarding access to supported_flags_
-  const char* supported_flags_;
-#endif
 };
-
-#if 0  && defined (__ACE_INLINE__)
-#include "EC_Thread_Flags.i"
-#endif /* __ACE_INLINE__ */
 
 TAO_END_VERSIONED_NAMESPACE_DECL
 
