@@ -26,6 +26,58 @@ CLEANFILES =
 BUILT_SOURCES =
 noinst_HEADERS =
 
+## Makefile.RTSchedSynch.am
+
+if BUILD_EXCEPTIONS
+
+BUILT_SOURCES += \
+  SynchC.cpp \
+  SynchC.h \
+  SynchC.inl \
+  SynchS.cpp \
+  SynchS.h \
+  SynchS.inl
+
+CLEANFILES += \
+  Synch-stamp \
+  SynchC.cpp \
+  SynchC.h \
+  SynchC.inl \
+  SynchS.cpp \
+  SynchS.h \
+  SynchS.inl
+
+SynchC.cpp SynchC.h SynchC.inl SynchS.cpp SynchS.h SynchS.inl: Synch-stamp
+
+Synch-stamp: $(srcdir)/Synch.idl $(TAO_IDL_DEP)
+	$(TAO_IDL) $(TAO_IDLFLAGS) -St -Wb,export_macro=SYNCH_Export -Wb,export_include=synch_export.h $(srcdir)/Synch.idl
+	@touch $@
+
+noinst_LTLIBRARIES += libRTSchedSynch.la
+
+libRTSchedSynch_la_CPPFLAGS = \
+  -I$(ACE_ROOT) \
+  -I$(ACE_BUILDDIR) \
+  -I$(TAO_ROOT) \
+  -I$(TAO_BUILDDIR) \
+  -DSYNCH_BUILD_DLL
+
+libRTSchedSynch_la_SOURCES = \
+  SynchC.cpp \
+  SynchS.cpp \
+  Synch_i.cpp
+
+noinst_HEADERS += \
+  Synch.idl \
+  SynchC.h \
+  SynchC.inl \
+  SynchS.h \
+  SynchS.inl \
+  Synch_i.h \
+  synch_export.h
+
+endif BUILD_EXCEPTIONS
+
 ## Makefile.Job.am
 
 if BUILD_EXCEPTIONS
@@ -76,54 +128,39 @@ noinst_HEADERS += \
 
 endif BUILD_EXCEPTIONS
 
-## Makefile.Synch.am
+## Makefile.RTSchedTestLib.am
 
 if BUILD_EXCEPTIONS
+if BUILD_RT_CORBA
 
-BUILT_SOURCES += \
-  SynchC.cpp \
-  SynchC.h \
-  SynchC.inl \
-  SynchS.cpp \
-  SynchS.h \
-  SynchS.inl
+noinst_LTLIBRARIES += libRTSchedTestLib.la
 
-CLEANFILES += \
-  Synch-stamp \
-  SynchC.cpp \
-  SynchC.h \
-  SynchC.inl \
-  SynchS.cpp \
-  SynchS.h \
-  SynchS.inl
-
-SynchC.cpp SynchC.h SynchC.inl SynchS.cpp SynchS.h SynchS.inl: Synch-stamp
-
-Synch-stamp: $(srcdir)/Synch.idl $(TAO_IDL_DEP)
-	$(TAO_IDL) $(TAO_IDLFLAGS) -St -Wb,export_macro=SYNCH_Export -Wb,export_include=synch_export.h $(srcdir)/Synch.idl
-	@touch $@
-
-noinst_LTLIBRARIES += libSynch.la
-
-libSynch_la_CPPFLAGS = \
+libRTSchedTestLib_la_CPPFLAGS = \
   -I$(ACE_ROOT) \
   -I$(ACE_BUILDDIR) \
   -I$(TAO_ROOT) \
   -I$(TAO_BUILDDIR) \
-  -DSYNCH_BUILD_DLL
+  -I$(TAO_ROOT)/orbsvcs \
+  -I$(TAO_BUILDDIR)/orbsvcs \
+  -DRTSCHEDTESTLIB_BUILD_DLL
 
-libSynch_la_SOURCES = \
-  SynchC.cpp \
-  SynchS.cpp
+libRTSchedTestLib_la_SOURCES = \
+  DT_Creator.cpp \
+  Job_i.cpp \
+  POA_Holder.cpp \
+  Task_Stats.cpp \
+  Thread_Task.cpp
 
 noinst_HEADERS += \
-  Synch.idl \
-  SynchC.h \
-  SynchC.inl \
-  SynchS.h \
-  SynchS.inl \
-  synch_export.h
+  DT_Creator.h \
+  Job_i.h \
+  POA_Holder.h \
+  Task_Stats.h \
+  Task_Stats.inl \
+  Thread_Task.h \
+  rtschedtestlib_export.h
 
+endif BUILD_RT_CORBA
 endif BUILD_EXCEPTIONS
 
 ## Clean up template repositories, etc.
