@@ -122,9 +122,11 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 // Once all C++ compilers support the standard reverse_iterator
 // adapters, we can drop this generator macro or at least drop the
 // MSVC++ or Sun Studio preprocessor conditional blocks.
-#if defined (__SUNPRO_CC) && __SUNPRO_CC <= 0x580
-  // We need to ensure that this is included in order to test
-  // _RWSTD_NO_CLASS_PARTIAL_SPEC below
+#if defined (__SUNPRO_CC) && __SUNPRO_CC <= 0x580 \
+      && !defined (_STLPORT_VERSION)
+  // If we're not using the stlport4 C++ library (which has standard
+  // iterators), we need to ensure this is included in order to test
+  // the _RWSTD_NO_CLASS_PARTIAL_SPEC feature test macro below.
 # include <Cstd/stdcomp.h>
 #endif /* __SUNPRO_CC <= 0x580 */
 #if defined (_MSC_VER) && !defined (_CPPLIB_VER)
