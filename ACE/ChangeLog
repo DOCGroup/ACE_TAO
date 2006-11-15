@@ -1,3 +1,9 @@
+Wed Nov 15 21:55:01 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * ace/Makefile.am:
+
+          Add OS.inl to nobase_include_HEADERS.
+
 Wed Nov 15 19:08:39 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
 
         * ace/config-lite.h:
@@ -34,7 +40,7 @@ Wed Nov 15 01:11:02 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
 
         * ace/Makefile.am:
 
-          Add Numeric_Limits.h to Header_Files section.
+          Add Numeric_Limits.h to nobase_include_HEADERS.
 
 Tue Nov 14 18:42:18 UTC 2006  Iliyan Jeliazkov  <iliyan@ociweb.com>
 
