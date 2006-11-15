@@ -7,6 +7,7 @@ PLANNED MAJOR CHANGES "SOMETIME IN THE FUTURE" (i.e., exact beta not known)
 
 USER VISIBLE CHANGES BETWEEN ACE-5.5.3 and ACE-5.5.4
 ====================================================
+
 . Added appropriate intptr_t and uintptr_t typedefs on platforms that
   don't provide them (i.e. when ACE_LACKS_INTPTR_T is defined).
 
@@ -33,7 +34,7 @@ USER VISIBLE CHANGES BETWEEN ACE-5.5.3 and ACE-5.5.4
 
 . Greatly improved event handler dispatch performance in
   select()-based reactors (e.g. ACE_Select_Reactor and ACE_TP_Reactor)
-  for large handle sets on Windows.  Previous event handler search
+  for large handle sets on Windows. Previous event handler search
   were linear, and are now constant on average.
 
 . Addressed a number of Coverity errors (CHECKED_RETURN, DEADCODE,
@@ -46,6 +47,10 @@ USER VISIBLE CHANGES BETWEEN ACE-5.5.3 and ACE-5.5.4
 
 . Resolved Bugzilla #2701 to ensure fini() is called for all
   Service Objects upon calling ACE_Service_Config::close()
+
+. VxWorks 5.5.2 has been tested, for ACE the support is exactly
+  the same as for VxWorks 5.5.1. No specific defines or flags have
+  to be used.
 
 USER VISIBLE CHANGES BETWEEN ACE-5.5.2 and ACE-5.5.3
 ====================================================
