@@ -1,3 +1,9 @@
+Wed Nov 15 10:35:00 UTC 2006  Simon Massey  <sma@prismtech.com>
+
+        * NEWS:
+
+          Added entries.
+
 Wed Nov 15 10:05:00 UTC 2006  Simon Massey  <sma@prismtech.com>
 
         * tests/Oneway_Timeouts/client.cpp:
