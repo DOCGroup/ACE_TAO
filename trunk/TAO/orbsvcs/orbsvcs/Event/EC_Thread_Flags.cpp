@@ -37,46 +37,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_EC_Thread_Flags::~TAO_EC_Thread_Flags ()
 {
-#if 0
-  ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->sf_lock_);
-  delete[] this->supported_flags_;
-  this->supported_flags_ = 0;
-#endif
 }
-
-#if 0
-const char* const
-TAO_EC_Thread_Flags::supported_flags () const
-{
-  if (supported_flags_ == 0)
-    {
-      ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, this->sf_lock_, 0);
-
-      // Check again, b/c somebody else could have stuffed somethign
-      // there before we got the lock.
-      if (supported_flags_ == 0)
-        {
-          ACE_Obstack o;
-          size_t num_flags = sizeof(Supported_Flags)/sizeof(Supported_Flags[0]);
-          for (size_t i = 0; i < num_flags; ++i)
-            {
-              const char* sym = Supported_Flags[i].n;
-              while (*sym != 0)
-                {
-                  o.grow(*sym++);
-                }
-              o.grow ('|');
-            }
-
-          char* f = o.freeze ();
-          size_t l = ACE_OS_String::strlen(f);
-          this->supported_flags_ = new char[l+1];
-          ACE_OS_String::strcpy (this->supported_flags_, f, l);
-        }
-    }
-  return this->supported_flags_;
-}
-#endif
 
 void
 TAO_EC_Thread_Flags::parse_symbols (const char* syms)
@@ -113,7 +74,7 @@ TAO_EC_Thread_Flags::parse_symbols (const char* syms)
       if (tok[0] >= '0' && tok[0] <= '9') // Numeric, so just accept it!
         {
           // parse it as a long straight to the flags
-          
+ 
           // If somebody specifies the scheduler this way, then they
           // lose range checking on the priority.  Bummer, but those
           // are the breaks.
@@ -161,76 +122,17 @@ TAO_EC_Thread_Flags::parse_symbols (const char* syms)
   ACE_OS::free (s); // clean up after ourselves
 }
 
-#if 0
-long
-TAO_EC_Thread_Flags::ace_sched_from_thr_sched (long thr_sched) const
-{
-  long ace_sched =
-    (thr_sched == THR_SCHED_FIFO) ? ACE_SCHED_FIFO :
-    (thr_sched == THR_SCHED_RR)   ? ACE_SCHED_RR   :
-    ACE_SCHED_OTHER;
-  return ace_sched;
-}
-
-long
-TAO_EC_Thread_Flags::ace_scope_from_thr_scope (long thr_scope) const
-{
-  long ace_scope =
-    (thr_scope == THR_SCOPE_PROCESS) ? ACE_SCOPE_PROCESS :
-    (thr_scope == THR_SCOPE_SYSTEM)  ? ACE_SCOPE_SYSTEM  :
-    ACE_SCOPE_THREAD;
-  return ace_scope;
-}
-
-long
-TAO_EC_Thread_Flags::thr_sched_from_ace_sched (long ace_sched) const
-{
-  long thr_sched =
-    (ace_sched == ACE_SCHED_FIFO) ? THR_SCHED_FIFO :
-    (ace_sched == ACE_SCHED_RR)   ? THR_SCHED_RR   :
-    THR_SCHED_DEFAULT; // there is no THR_SCHED_OTHER for some reason
-  return thr_sched;
-}
-
-long
-TAO_EC_Thread_Flags::thr_scope_from_ace_scope (long ace_scope) const
-{
-  long thr_scope =
-    (ace_scope == ACE_SCOPE_PROCESS) ? THR_SCOPE_PROCESS :
-    (ace_scope == ACE_SCOPE_THREAD)  ? THR_SCOPE_THREAD  :
-    THR_SCOPE_SYSTEM;
-  return thr_scope;
-}
-
-int
-TAO_EC_Thread_Flags::is_valid_priority (long priority) const
-{
-  // For some wacked out reason the THR_SCHED_* values are different from
-  // the ACE_SCHED_* values.  And, more than likely, the same is true for
-  // the *_SCOPE_* values, too.  So, here we convert the THR values, which
-  // are in 
-  const long ace_sched = ace_sched_from_thr_sched (this->sched());
-  const long ace_scope = ace_scope_from_thr_scope (this->scope());
-  if (this->sched() != 0 && // we have a scheduler
-      priority < ACE_Sched_Params::priority_min (ace_sched, ace_scope) ||
-      priority > ACE_Sched_Params::priority_max (ace_sched, ace_scope))
-    return 0;
-  else
-    return 1;
-}
-#endif
-
 long
 TAO_EC_Thread_Flags::default_priority () const
 {
   long priority = ACE_DEFAULT_THREAD_PRIORITY;
 
-  // use the implementation  
+  // use the implementation
   if (this->sched() == 0)
     return priority;
 
   priority =
-    ACE_Sched_Params::priority_min (this->sched()) + 
+    ACE_Sched_Params::priority_min (this->sched()) +
     ACE_Sched_Params::priority_max (this->sched()) / 2;
   priority = ACE_Sched_Params::next_priority (this->sched(), priority);
 
