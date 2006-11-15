@@ -1,3 +1,11 @@
+Wed Nov 15 04:00:22 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * examples/RTScheduling/Fixed_Priority_Scheduler/Makefile.am:
+        * examples/RTScheduling/MIF_Scheduler/Makefile.am:
+        * examples/RTScheduling/Makefile.am:
+
+          Regenerated.
+
 Wed Nov 15 02:04:44 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
 
         * tao/Makefile.am:

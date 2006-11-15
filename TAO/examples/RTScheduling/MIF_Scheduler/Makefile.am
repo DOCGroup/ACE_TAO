@@ -21,7 +21,6 @@ noinst_PROGRAMS =
 ## Makefile.MIF_Scheduler_Starter.am
 
 if BUILD_EXCEPTIONS
-if BUILD_RT_CORBA
 
 noinst_PROGRAMS += Starter
 
@@ -35,25 +34,16 @@ Starter_CPPFLAGS = \
 
 Starter_SOURCES = \
   ../Starter.cpp \
-  ../Synch_i.cpp \
-  ../Starter.h \
-  ../Synch_i.h
+  ../Starter.h
 
 Starter_LDADD = \
-  $(top_builddir)/examples/RTScheduling/libSynch.la \
-  $(TAO_BUILDDIR)/tao/libTAO_RTScheduler.la \
-  $(TAO_BUILDDIR)/tao/libTAO_PI_Server.la \
-  $(TAO_BUILDDIR)/tao/libTAO_RTPortableServer.la \
-  $(TAO_BUILDDIR)/tao/libTAO_RTCORBA.la \
-  $(TAO_BUILDDIR)/tao/libTAO_PortableServer.la \
-  $(TAO_BUILDDIR)/tao/libTAO_PI.la \
-  $(TAO_BUILDDIR)/tao/libTAO_CodecFactory.la \
+  $(top_builddir)/examples/RTScheduling/libRTSchedSynch.la \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosNaming.la \
+  $(TAO_BUILDDIR)/tao/libTAO_PortableServer.la \
   $(TAO_BUILDDIR)/tao/libTAO_AnyTypeCode.la \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
-endif BUILD_RT_CORBA
 endif BUILD_EXCEPTIONS
 
 ## Makefile.MIF_Scheduler_Test.am
@@ -64,28 +54,18 @@ if BUILD_RT_CORBA
 BUILT_SOURCES = \
   ../MIF_SchedulingC.cpp \
   ../MIF_SchedulingC.h \
-  ../MIF_SchedulingC.inl \
-  ../MIF_SchedulingS.h \
-  ../MIF_SchedulingS.inl \
-  ../MIF_SchedulingS_T.cpp \
-  ../MIF_SchedulingS_T.h \
-  ../MIF_SchedulingS_T.inl
+  ../MIF_SchedulingC.inl
 
 CLEANFILES = \
   ../MIF_Scheduling-stamp \
   ../MIF_SchedulingC.cpp \
   ../MIF_SchedulingC.h \
-  ../MIF_SchedulingC.inl \
-  ../MIF_SchedulingS.h \
-  ../MIF_SchedulingS.inl \
-  ../MIF_SchedulingS_T.cpp \
-  ../MIF_SchedulingS_T.h \
-  ../MIF_SchedulingS_T.inl
+  ../MIF_SchedulingC.inl
 
-../MIF_SchedulingC.cpp ../MIF_SchedulingC.h ../MIF_SchedulingC.inl ../MIF_SchedulingS.h ../MIF_SchedulingS.inl ../MIF_SchedulingS_T.cpp ../MIF_SchedulingS_T.h ../MIF_SchedulingS_T.inl: ../MIF_Scheduling-stamp
+../MIF_SchedulingC.cpp ../MIF_SchedulingC.h ../MIF_SchedulingC.inl: ../MIF_Scheduling-stamp
 
 ../MIF_Scheduling-stamp: $(srcdir)/../MIF_Scheduling.idl $(TAO_IDL_DEP)
-	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs -GT -o .. $(srcdir)/../MIF_Scheduling.idl
+	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs -GT -SS -St -o .. $(srcdir)/../MIF_Scheduling.idl
 	@touch $@
 
 noinst_PROGRAMS += test
@@ -99,38 +79,23 @@ test_CPPFLAGS = \
   -I$(TAO_BUILDDIR)/orbsvcs
 
 test_SOURCES = \
-  ../DT_Creator.cpp \
-  ../Job_i.cpp \
   ../MIF_SchedulingC.cpp \
-  ../POA_Holder.cpp \
-  ../Synch_i.cpp \
-  ../Task_Stats.cpp \
-  ../Thread_Task.cpp \
   MIF_DT_Creator.cpp \
   MIF_Scheduler.cpp \
   MIF_Task.cpp \
   test.cpp \
-  ../DT_Creator.h \
-  ../Job_i.h \
   ../MIF_SchedulingC.h \
   ../MIF_SchedulingC.inl \
-  ../MIF_SchedulingS.h \
-  ../MIF_SchedulingS.inl \
-  ../MIF_SchedulingS_T.h \
-  ../MIF_SchedulingS_T.inl \
-  ../POA_Holder.h \
-  ../Synch_i.h \
-  ../Task_Stats.h \
-  ../Task_Stats.inl \
-  ../Thread_Task.h \
   MIF_DT_Creator.h \
   MIF_Scheduler.h \
   MIF_Task.h \
+  mif_dt_creator_export.h \
   test.h
 
 test_LDADD = \
-  $(top_builddir)/examples/RTScheduling/libSynch.la \
+  $(top_builddir)/examples/RTScheduling/libRTSchedTestLib.la \
   $(top_builddir)/examples/RTScheduling/libJob.la \
+  $(top_builddir)/examples/RTScheduling/libRTSchedSynch.la \
   $(TAO_BUILDDIR)/tao/libTAO_RTScheduler.la \
   $(TAO_BUILDDIR)/tao/libTAO_PI_Server.la \
   $(TAO_BUILDDIR)/tao/libTAO_RTPortableServer.la \
