@@ -924,6 +924,37 @@ nobase_include_HEADERS = \
   Adapter_Factory.h \
   Adapter_Registry.h \
   Allocator.h \
+  AnyTypeCode/BooleanSeqA.h \
+  AnyTypeCode/CONV_FRAMEA.h \
+  AnyTypeCode/CharSeqA.h \
+  AnyTypeCode/CurrentA.h \
+  AnyTypeCode/DoubleSeqA.h \
+  AnyTypeCode/FloatSeqA.h \
+  AnyTypeCode/GIOPA.h \
+  AnyTypeCode/IIOPA.h \
+  AnyTypeCode/IIOP_EndpointsA.h \
+  AnyTypeCode/IOPA.h \
+  AnyTypeCode/IOP_IORA.h \
+  AnyTypeCode/LongDoubleSeqA.h \
+  AnyTypeCode/LongLongSeqA.h \
+  AnyTypeCode/LongSeqA.h \
+  AnyTypeCode/Messaging_PolicyValueA.h \
+  AnyTypeCode/Messaging_SyncScopeA.h \
+  AnyTypeCode/ObjectIdListA.h \
+  AnyTypeCode/PI_ForwardA.h \
+  AnyTypeCode/ParameterModeA.h \
+  AnyTypeCode/Policy_ForwardA.h \
+  AnyTypeCode/PortableInterceptorA.h \
+  AnyTypeCode/ServicesA.h \
+  AnyTypeCode/ShortSeqA.h \
+  AnyTypeCode/StringSeqA.h \
+  AnyTypeCode/TAOA.h \
+  AnyTypeCode/TimeBaseA.h \
+  AnyTypeCode/ULongLongSeqA.h \
+  AnyTypeCode/ULongSeqA.h \
+  AnyTypeCode/WCharSeqA.h \
+  AnyTypeCode/WStringSeqA.h \
+  AnyTypeCode/orb_typesA.h \
   AnyTypeCode_Adapter.h \
   Any_Insert_Policy_T.h \
   Arg_Traits_T.h \

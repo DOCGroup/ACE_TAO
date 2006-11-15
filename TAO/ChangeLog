@@ -1,3 +1,17 @@
+Wed Nov 15 02:04:44 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * tao/Makefile.am:
+
+          Regenerated.
+
+        * tao/tao.mpc:
+
+          Add Header_Files section containing all the fooA.h headers
+          generated from *.pidl files.  These aren't automagically
+          added (possibly because of the use of MPC's >> construct),
+          which results in these headers not being installed in
+          automake builds.
+
 Tue Nov 14 16:17:04 UTC 2006  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * examples/RTScheduling/RTSchedTestLib.mpc:
