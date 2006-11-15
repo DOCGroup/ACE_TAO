@@ -1,6 +1,13 @@
+Wed Nov 15 10:05:00 UTC 2006  Simon Massey  <sma@prismtech.com>
+
+        * tests/Oneway_Timeouts/client.cpp:
+
+          Windows warnings removed (for Phil Mesnier).
+
 Wed Nov 15 08:04:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * docs/Options.html:
+
           Added ORBServiceConfigLoggerKey, thanks to Doug and Abdul for
           finding out this was lacking
 
