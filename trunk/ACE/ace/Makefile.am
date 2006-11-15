@@ -703,6 +703,7 @@ nobase_include_HEADERS += \
   Null_Semaphore.h \
   Numeric_Limits.h \
   OS.h \
+  OS.inl \
   OS_Dirent.h \
   OS_Errno.h \
   OS_Errno.inl \
