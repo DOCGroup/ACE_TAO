@@ -72,11 +72,22 @@ USER VISIBLE CHANGES BETWEEN CIAO-0.5.3 and CIAO-0.5.4
 . Seamless integration of swapping into the main line programming model,
   so that DAnCE can actually kickstart swapping.
 
-. Integrate various Pub/Sub services into CIAO and DAnCE.
+. Integrated real-time event service into CIAO and DAnCE.
 
 . Improved syntax error checking and reporting in the CIDL compiler.
 
 . Add Null Component to be able to measure footprint in detail
+
+. Added the naming service & the implementation of createPackage function to RepoMan.
+
+. Added the code to save the state of the RepoMan at exit and load the state of it at start.
+
+. Reimplemented the findNamesByType () and getAllTypes () operations of
+  RepoMan, which use the newly generated    ACE_Hash_MultiMap_Manager class
+  and its corresponding classes.
+
+. Added Plan_Generator project. This project is used to retrieve information from Repoman
+  and generate/modify DeploymentPlans based on different demands.
 
 USER VISIBLE CHANGES BETWEEN CIAO-0.5.2 and CIAO-0.5.3
 ======================================================
