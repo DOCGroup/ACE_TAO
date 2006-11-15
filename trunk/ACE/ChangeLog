@@ -1,3 +1,9 @@
+Wed Nov 15 01:11:02 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * ace/Makefile.am:
+
+          Add Numeric_Limits.h to Header_Files section.
+
 Tue Nov 14 18:42:18 UTC 2006  Iliyan Jeliazkov  <iliyan@ociweb.com>
 
         * ace/Service_Gestalt.inl:
