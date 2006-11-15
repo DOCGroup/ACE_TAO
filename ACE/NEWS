@@ -18,7 +18,7 @@ USER VISIBLE CHANGES BETWEEN ACE-5.5.3 and ACE-5.5.4
   Windows.  Use the new ACE_OFF_T typedef to refer to file offsets
   across UNIX and Windows portably.
 
-. 64 bit file offsets are now enabled by default in Win64
+. 64-bit file offsets are now enabled by default in Win64
   configurations.
 
 . Improved support for 64 bit platforms (64 bit addresses, etc).
@@ -43,6 +43,9 @@ USER VISIBLE CHANGES BETWEEN ACE-5.5.3 and ACE-5.5.4
   templates.
 
 . Removed support for LynxOS 3.x.
+
+. Resolved Bugzilla #2701 to ensure fini() is called for all
+  Service Objects upon calling ACE_Service_Config::close()
 
 USER VISIBLE CHANGES BETWEEN ACE-5.5.2 and ACE-5.5.3
 ====================================================
