@@ -701,6 +701,7 @@ nobase_include_HEADERS += \
   Null_Condition.h \
   Null_Mutex.h \
   Null_Semaphore.h \
+  Numeric_Limits.h \
   OS.h \
   OS_Dirent.h \
   OS_Errno.h \
