@@ -40,8 +40,8 @@ typedef enum GIOP_Messages
   TAO_GIOP_CANCELREQUEST = 2,          // by client.
   TAO_GIOP_LOCATEREQUEST = 3,          // by client.
   TAO_GIOP_LOCATEREPLY = 4,
-  TAO_GIOP_CLOSECONNECTION = 5,
-  TAO_GIOP_MESSAGERROR = 6,           // by both.
+  TAO_GIOP_CLOSECONNECTION = 5,        // by both.
+  TAO_GIOP_MESSAGERROR = 6,            // by both.
   TAO_GIOP_FRAGMENT = 7                // by both.
 }  TAO_GIOP_Message_Type;
 

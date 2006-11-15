@@ -1,0 +1,28 @@
+Wed Nov 15 16:37:58 UTC 2006  Chris Cleeland  <cleeland_c@ociweb.com>
+
+        * tao/GIOP_Message_State.cpp (parse_message_header_i):
+
+          Fixed a problem where TAO mistakenly considered ALL messages
+          with zero-length payload to be errors and was thus not
+          properly parsing and handling the GIOP CloseConnection
+          message.
+
+        * tao/GIOP_Utils.h:
+
+          Corrected comment incorrectly indicating that
+          CloseConnection could not be send by both sides of a
+          connection.
+
+        * tests/Bug_2702_Regression/CloseConnection.mpc:
+        * tests/Bug_2702_Regression/README:
+        * tests/Bug_2702_Regression/Test.idl:
+        * tests/Bug_2702_Regression/client.cpp:
+        * tests/Bug_2702_Regression/closeconnection.dat:
+        * tests/Bug_2702_Regression/fakeserver.pm:
+        * tests/Bug_2702_Regression/fakeserver2.pl:
+        * tests/Bug_2702_Regression/run_test.pl:
+
+          Added a test to simulate the receipt of a CloseConnection in a
+          client, similar to what the original reporter experienced.
+          See the accompanying README for details.
+
