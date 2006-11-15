@@ -1,3 +1,38 @@
+Wed Nov 15 19:56:46 UTC 2006  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * examples/Display/Display_Base/Display_Base_svnt_export.h:
+
+          Removed this file, and added it as named below.
+
+        * examples/Display/Display_Base/Display_Base_skel_export.h:
+
+          New file, renamed from the one removed above.
+
+        * examples/Display/Display_Base/Display_Base.mpc:
+
+          Fixed incorrect export macros that were originally generated
+          by generate_component_mpc.pl. Also removed the -GT IDL
+          compiler command line option, which generated unnecessar
+          tie classes and template files (added by a base MPC project),
+          and made cosmetic changes to line breaks. Finally,
+          renamed project Display_Base_svnt to Display_Base_skel,
+          to eliminate confusion since the projects in this MPC
+          file are object-based, not component-based. The export
+          macros and export include files were also renamed, as
+          described above, consistently with these last changes.
+
+        * examples/GPS/GPS.mpc:
+        * examples/NavDisplay/NavDisplay.mpc:
+        * examples/RateGen/RateGen.mpc:
+
+          Renamed references to the Display_Base_svnt lib to be
+          consistent with the name change above, removed -GT
+          from the command line options passed to the IDL compiler,
+          and added -SS (suppress skeleton file generation) and
+          -St (suppress typecode and Any operator generation) from
+          *_svnt projects, and removed 'idlflags' line from
+          *_exec projects without IDL files.
+
 Wed Nov 15 10:30:00 UTC 2006  Simon Massey  <sma@prismtech.com>
 
         * NEWS:
