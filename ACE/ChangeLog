@@ -1,3 +1,10 @@
+Wed Nov 15 15:33:10 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * apps/JAWS/clients/Caching/caching.mpc:
+
+          Add exename definition so that an executable, rather than
+          a shared library, is built.
+
 Wed Nov 15 10:35:00 UTC 2006  Simon Massey  <sma@prismtech.com>
 
         * NEWS:
