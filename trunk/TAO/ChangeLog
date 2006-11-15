@@ -1,3 +1,9 @@
+Wed Nov 15 08:04:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * docs/Options.html:
+          Added ORBServiceConfigLoggerKey, thanks to Doug and Abdul for
+          finding out this was lacking
+
 Wed Nov 15 04:00:22 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
 
         * examples/RTScheduling/Fixed_Priority_Scheduler/Makefile.am:
