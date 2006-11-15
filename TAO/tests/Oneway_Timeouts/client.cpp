@@ -352,7 +352,6 @@ int main (int ac, char *av[])
 
       for (; i < num_requests; ++i)
         {
-          ACE_DEBUG ((LM_DEBUG, "Updating 'before' time\n"));
           before = ACE_High_Res_Timer::gettimeofday_hr ();
           try
             {
@@ -461,7 +460,7 @@ int main (int ac, char *av[])
 
       return 0;
     }
-  catch (CORBA::TRANSIENT &ex)
+  catch (CORBA::TRANSIENT &)
     {
       ACE_DEBUG ((LM_DEBUG, "caught transient exception\n"));
       if (force_timeout)
@@ -502,7 +501,7 @@ int main (int ac, char *av[])
           ACE_ERROR_RETURN ((LM_ERROR, "Error: Unexpected\n"), 1);
         }
     }
-  catch (CORBA::TIMEOUT &ex)
+  catch (CORBA::TIMEOUT &)
     {
       ACE_DEBUG ((LM_DEBUG, "caught timeout exception\n"));
       if (force_timeout)
