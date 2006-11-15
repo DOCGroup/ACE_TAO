@@ -4,7 +4,12 @@
 project(Display_Base_GPS_stub): ciao_client_dnc {
   after += Display_Base_stub
   sharedname = GPS_stub
-  idlflags += -Wb,stub_export_macro=GPS_STUB_Export -Wb,stub_export_include=GPS_stub_export.h -Wb,skel_export_macro=GPS_SVNT_Export -Wb,skel_export_include=GPS_svnt_export.h
+  idlflags -= -GT
+  idlflags += -St \
+              -Wb,stub_export_macro=GPS_STUB_Export \
+              -Wb,stub_export_include=GPS_stub_export.h \
+              -Wb,skel_export_macro=GPS_SVNT_Export \
+              -Wb,skel_export_include=GPS_svnt_export.h
   dynamicflags   = GPS_STUB_BUILD_DLL
   libs += Display_Base_stub
 
@@ -15,14 +20,21 @@ project(Display_Base_GPS_stub): ciao_client_dnc {
   Source_Files {
     GPSC.cpp
   }
+
+  Header_Files {
+    GPS_stub_export.h
+  }
 }
 
 project(Display_Base_GPS_svnt) : ciao_servant_dnc {
-  after += Display_Base_svnt Display_Base_GPS_stub
+  after += Display_Base_skel Display_Base_GPS_stub
   sharedname  = GPS_svnt
-  libs    += GPS_stub Display_Base_stub Display_Base_svnt
-  
-  idlflags  +=  -Wb,export_macro=GPS_SVNT_Export -Wb,export_include=GPS_svnt_export.h
+  libs    += GPS_stub Display_Base_stub Display_Base_skel
+
+  idlflags -= -GT
+  idlflags  +=  -SS -St \
+                -Wb,export_macro=GPS_SVNT_Export \
+                -Wb,export_include=GPS_svnt_export.h
   dynamicflags = GPS_SVNT_BUILD_DLL
 
   CIDL_Files {
@@ -38,24 +50,35 @@ project(Display_Base_GPS_svnt) : ciao_servant_dnc {
     GPSS.cpp
     GPS_svnt.cpp
   }
+
+  Header_Files {
+    GPS_svnt_export.h
+  }
 }
 
 
 project(Display_Base_GPS_exec) : ciao_component_dnc {
   after   += Display_Base_GPS_svnt
   sharedname = GPS_exec
-  libs      += GPS_stub GPS_svnt Display_Base_stub Display_Base_svnt
-  
-  idlflags  +=  -Wb,export_macro=GPS_EXEC_Export -Wb,export_include=GPS_exec_export.h
+  libs      += GPS_stub GPS_svnt Display_Base_stub Display_Base_skel
+
+  idlflags -= -GT
+  idlflags  +=  -SS -St \
+                -Wb,export_macro=GPS_EXEC_Export \
+                -Wb,export_include=GPS_exec_export.h
   dynamicflags   = GPS_EXEC_BUILD_DLL
 
   IDL_Files {
-    GPSEI.idl    
+    GPSEI.idl
   }
 
   Source_Files {
     GPSEIC.cpp
     GPS_exec.cpp
+  }
+
+  Header_Files {
+    GPS_exec_export.h
   }
 }
 
