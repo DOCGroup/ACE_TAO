@@ -1,12 +1,23 @@
+Thu Nov 16 00:07:30 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * tao/Makefile.am:
+
+          Regenerated.
+
+        * tao/DynamicAny.mpc:
+
+          Changed to inherit from core.mpb, so that library and headers
+          will be installed for automake build.
+
 Wed Nov 15 16:38:29 UTC 2006  Chris Cleeland  <cleeland_c@ociweb.com>
 
         * orbsvcs/orbsvcs/Event/EC_Thread_Flags.h:
         * orbsvcs/orbsvcs/Event/EC_Thread_Flags.cpp:
- 
+
           Removed code that had been in #if 0/#endif, which had been part
           of an earlier, more complete design but more difficult to
           implement.
- 
+
           Eliminated #include of non-existent inline file that gave the
           fuzz build heartburn.
 
