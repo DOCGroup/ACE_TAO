@@ -124,6 +124,8 @@ TAO/examples/POA/Generic_Servant/POA_Generic_Servant_Lib
 TAO/examples/Simple/time-date/Simple_Time_Date_Lib
 TAO/docs/tutorials/Quoter/idl/Quoter_Idl_Lib
 TAO/performance-tests/RTCorba/Multiple_Endpoints/Common/RTCORBA_Common
+TAO/examples/RTScheduling/Job
+TAO/examples/RTScheduling/RTSchedTestLib
 tests/Test_Output
 tests/DLL_Test_Parent
 TAO/tests/CSD_Strategy_Tests/TP_Common/CSD_TP_Test_Lib
