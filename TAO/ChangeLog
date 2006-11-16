@@ -1,3 +1,17 @@
+Thu Nov 16 10:20:00 UTC 2006  Simon Massey  <sma@prismtech.com>
+
+        * tao/IIOP_Profile.cpp:
+
+          Committed for Phil Mesnier. Patch so that Bug_2604_Regression
+          test passes on windows. The problem was that an IIOP_Profile
+          that is decoded from a CDR buffer does not correctly set the
+          is_ipv6_decimal_ flag for the first endpoint only. After the
+          beta is out more changes have to be made to remove the friend
+          relationships and cleanup more code. Need to also update
+          tests/IPV6 so that we have a regression in the repo for this
+          problem. Thanks to Johnny Willemsen and Martin Corino for
+          quickly testing this fix.
+
 Thu Nov 16 00:07:30 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
 
         * tao/Makefile.am:
