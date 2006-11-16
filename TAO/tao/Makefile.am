@@ -3710,7 +3710,7 @@ DynamicAny/DynamicAny-stamp: $(srcdir)/DynamicAny/DynamicAny.pidl $(TAO_IDL_DEP)
 	$(TAO_IDL) $(TAO_IDLFLAGS) -Wb,versioning_begin=TAO_BEGIN_VERSIONED_NAMESPACE_DECL -Wb,versioning_end=TAO_END_VERSIONED_NAMESPACE_DECL -Gp -Gd -Ge 1 -Sci -SS -Sorb -Wb,export_macro=TAO_DynamicAny_Export -Wb,export_include=tao/DynamicAny/dynamicany_export.h -Wb,include_guard=TAO_DYNAMICANY_SAFE_INCLUDE -Wb,safe_include=tao/DynamicAny/DynamicAny.h -o DynamicAny $(srcdir)/DynamicAny/DynamicAny.pidl
 	@touch $@
 
-noinst_LTLIBRARIES = libTAO_DynamicAny.la
+lib_LTLIBRARIES += libTAO_DynamicAny.la
 
 libTAO_DynamicAny_la_CPPFLAGS = \
   -I$(ACE_ROOT) \
@@ -3734,7 +3734,16 @@ libTAO_DynamicAny_la_SOURCES = \
   DynamicAny/DynamicAny.cpp \
   DynamicAny/DynamicAnyC.cpp
 
-noinst_HEADERS = \
+libTAO_DynamicAny_la_LDFLAGS = \
+ -version-number @TAO_MAJOR@:@TAO_MINOR@:@TAO_BETA@
+
+libTAO_DynamicAny_la_LIBADD = \
+  libTAO_Valuetype.la \
+  libTAO_AnyTypeCode.la \
+  libTAO.la \
+  $(ACE_BUILDDIR)/ace/libACE.la
+
+nobase_include_HEADERS += \
   DynamicAny/DynAnyFactory.h \
   DynamicAny/DynAny_i.h \
   DynamicAny/DynArray_i.h \
