@@ -1,3 +1,9 @@
+Thu Nov 16 20:38:10 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * bin/msvc_static_order.lst:
+          Added new RTScheduling example library projects to fix compile
+          errors in the msvc static builds
+
 Wed Nov 15 23:23:10 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
 
         * protocols/Makefile.am:
