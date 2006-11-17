@@ -1,4 +1,10 @@
-Thu Nov 16 20:38:10 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
+Fri Nov 17 06:47:10 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/MakeProjectCreator/config/taoidldefaults.mpb:
+          Updated this file because tao_idl doesn't generate a S_T.inl
+          file anymore
+
+Thu Nov 16 20:38:10 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/msvc_static_order.lst:
           Added new RTScheduling example library projects to fix compile
