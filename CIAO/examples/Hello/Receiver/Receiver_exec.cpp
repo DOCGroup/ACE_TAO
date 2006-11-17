@@ -7,6 +7,7 @@
 
 #include "Receiver_exec.h"
 #include "CIAO_common.h"
+#include "ace/High_Res_Timer.h"
 
 namespace CIDL_Receiver_Impl
 {
@@ -24,7 +25,17 @@ namespace CIDL_Receiver_Impl
     ACE_THROW_SPEC ((CORBA::SystemException))
   {
     //Get the message from the Sender first.
-    //ACE_DEBUG ((LM_DEBUG, "Receiver - Informed by the Sender \n"));
+    //ACE_DEBUG ((LM_DEBUG, "Receiver - Informed by the Sender %T\n"));A
+/*    static int i = 0;
+    static ACE_UINT32 gsf = ACE_High_Res_Timer::global_scale_factor ();
+    static ACE_hrtime_t last;
+    ACE_hrtime_t now = ACE_OS::gethrtime ();
+    const ACE_UINT64 x = (now - last) / gsf;
+    const ACE_UINT32 val = ACE_CU64_TO_CU32 (x);
+    //ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT("%s: %d %u\n"), msg, i, val));
+    ACE_DEBUG ((LM_DEBUG, "%d: Difference = %u, now = %T\n", i++, val));
+    last = now;
+*/
 /*
     Hello::ReadMessage_var rev
       = this->context_->get_connection_read_message 
