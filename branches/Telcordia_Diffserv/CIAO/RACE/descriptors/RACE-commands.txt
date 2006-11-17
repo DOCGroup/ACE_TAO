@@ -53,3 +53,6 @@ blade13
 blade14
           inet addr:10.8.250.100  Bcast:10.8.250.255  Mask:255.255.255.0
 
+traffic control in linux:
+http://lartc.org/howto/lartc.qdisc.html
+
