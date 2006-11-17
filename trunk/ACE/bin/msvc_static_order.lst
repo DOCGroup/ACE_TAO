@@ -125,6 +125,7 @@ TAO/examples/Simple/time-date/Simple_Time_Date_Lib
 TAO/docs/tutorials/Quoter/idl/Quoter_Idl_Lib
 TAO/performance-tests/RTCorba/Multiple_Endpoints/Common/RTCORBA_Common
 TAO/examples/RTScheduling/Job
+TAO/examples/RTScheduling/RTSchedSynch
 TAO/examples/RTScheduling/RTSchedTestLib
 tests/Test_Output
 tests/DLL_Test_Parent
