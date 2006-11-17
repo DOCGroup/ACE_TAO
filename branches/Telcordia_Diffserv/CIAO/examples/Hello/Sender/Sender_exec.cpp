@@ -5,6 +5,9 @@
 #include "ace/High_Res_Timer.h"
 #include "ace/Stats.h"
 #include "ace/Sample_History.h"
+#include <vector>
+#include <iostream>
+#include <algorithm>
 
 namespace CIDL_Sender_Impl
 {
@@ -91,7 +94,9 @@ namespace CIDL_Sender_Impl
       ACE_Sample_History history (iterations);
       
       ACE_hrtime_t test_start = ACE_OS::gethrtime ();
-      //timespec short_sleep = { 0, 1000000 };
+      timespec short_sleep = { 0, 750000 };
+      ACE_UINT32 gsf = ACE_High_Res_Timer::global_scale_factor ();
+      std::vector <long> array (iterations);
       
       for (int i = 0; i < iterations; ++i)
         {
@@ -102,15 +107,69 @@ namespace CIDL_Sender_Impl
 
           ACE_hrtime_t now = ACE_OS::gethrtime ();
           history.sample (now - start);
-          //ACE_OS::nanosleep (&short_sleep);
+          array[i] = (now - start) / gsf;
+          ACE_OS::nanosleep (&short_sleep);
+        }
+/*
+      std::cerr << "Min = " << std::min_element (array.begin(),array.end()) <<
+        std::endl;
+      std::cerr << "Max = " << std::max_element (array.begin(),array.end()) <<
+        std::endl;
+*/
+      long average = 0;
+      int histogram [185] = {0};
+      long min = array [0];
+      long max = 0;
+      long outOfRange = 0;
+
+      for (int i = 0; i < iterations; ++i)
+      {
+        int hist_range = 800;
+        for (int j = 0; j < 185; j++)
+        {
+          if (array[i] < hist_range)
+          {
+            histogram [j]++;
+            break;
+          }
+          hist_range += 50;
         }
 
+        if (array [i] > 10000)
+        {
+          outOfRange ++;
+          continue;
+        }
+        average += array[i];
+        if (array[i] < min)
+           min = array [i];
+        else if (array [i] > max)
+           max = array [i];
+      }
+      average /= iterations - outOfRange;
+      
       ACE_hrtime_t test_end = ACE_OS::gethrtime ();
 
-      ACE_DEBUG ((LM_DEBUG, "test finished\n"));
+      std::cerr << "Min = " << min <<  std::endl;
+      std::cerr << "Average = " << average <<  std::endl;
+      std::cerr << "Max = " << max <<  std::endl;
+      std::cerr << "Out Of Range delays = " << outOfRange <<  std::endl;
+      for (int j = 0; j < 185; j++)
+      {
+        int start_limit = 750 + (50 * j);
+        int end_limit = 750 + (50 * (j + 1));
+        if (histogram[j] > 0)
+        {
+          printf ("%d to %d = %d    ", start_limit, end_limit, 
+                   histogram [j]);
+        }
+      }
+      printf ("\n");
+      std::cerr << "Test time = " << ((test_end - test_start)/gsf) <<  std::endl;
+      
 
+      ACE_DEBUG ((LM_DEBUG, "test finished\n"));
       ACE_DEBUG ((LM_DEBUG, "High resolution timer calibration...."));
-      ACE_UINT32 gsf = ACE_High_Res_Timer::global_scale_factor ();
       ACE_DEBUG ((LM_DEBUG, "done\n"));
 
       bool do_dump_history = false;
