@@ -46,8 +46,6 @@ PLANNED MAJOR CHANGES "SOMETIME IN THE FUTURE" (i.e., exact beta not known)
 
 . Implement support for more complex type initialization with XML.
 
-. (Remedy) support for using CIAO with VxWorks as target
-
 . Decouple dependencies to NodeApplication from other DAnCE tools.
   These dependencies were added to support static configurator.  We
   need to have these tools in both conventional version and static
@@ -78,16 +76,22 @@ USER VISIBLE CHANGES BETWEEN CIAO-0.5.3 and CIAO-0.5.4
 
 . Add Null Component to be able to measure footprint in detail
 
-. Added the naming service & the implementation of createPackage function to RepoMan.
+. Added the naming service & the implementation of createPackage function
+  to RepoMan.
 
-. Added the code to save the state of the RepoMan at exit and load the state of it at start.
+. Added the code to save the state of the RepoMan at exit and load the
+  state of it at start.
 
 . Reimplemented the findNamesByType () and getAllTypes () operations of
   RepoMan, which use the newly generated    ACE_Hash_MultiMap_Manager class
   and its corresponding classes.
 
-. Added Plan_Generator project. This project is used to retrieve information from Repoman
-  and generate/modify DeploymentPlans based on different demands.
+. Added Plan_Generator project. This project is used to retrieve information
+  from Repoman and generate/modify DeploymentPlans based on different demands.
+
+. A succesfull static deployment of the Hello example has been tested on
+  VxWorks 6.3
+
 
 USER VISIBLE CHANGES BETWEEN CIAO-0.5.2 and CIAO-0.5.3
 ======================================================
