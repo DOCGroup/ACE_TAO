@@ -1,3 +1,8 @@
+Fri Nov 17 07:06:10 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/msvc_static_order.lst:
+          Added another RTScheduling example library project
+
 Fri Nov 17 06:47:10 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/MakeProjectCreator/config/taoidldefaults.mpb:
