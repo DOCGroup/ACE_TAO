@@ -1,3 +1,11 @@
+Fri Nov 17 09:08:00 UTC 2006  Simon Massey  <sma@prismtech.com>
+
+        * NEWS:
+        * orbsvcs/tests/ImplRepo/Bug_2604_Regression/MessengerServer.cpp
+
+          Slight tidy-up, to keep release notes / NEWS in step.
+          Wallace Zhang's fix for shutdown run-time windows test problem.
+
 Thu Nov 16 10:20:00 UTC 2006  Simon Massey  <sma@prismtech.com>
 
         * tao/IIOP_Profile.cpp:
