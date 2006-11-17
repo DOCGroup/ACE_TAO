@@ -1,6 +1,4 @@
 host1      corbaloc:iiop:10.7.250.100:50007/NodeManager
 host2      corbaloc:iiop:10.7.250.100:50007/NodeManager
 host3      corbaloc:iiop:10.3.250.100:50003/NodeManager
-host4      corbaloc:iiop:10.4.250.100:50004/NodeManager
-host5      corbaloc:iiop:10.5.250.100:50005/NodeManager
-host6      corbaloc:iiop:10.6.250.100:50006/NodeManager
+host8      corbaloc:iiop:10.8.250.100:50008/NodeManager
