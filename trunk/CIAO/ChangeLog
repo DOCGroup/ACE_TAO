@@ -1,24 +1,50 @@
+Fri Nov 17 16:08:43 UTC 2006  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * performace-tests/Protocols/common/Protocols_svnt_export.h:
+
+          Removed this file, renamed as the one added below.
+
+        * performace-tests/Protocols/common/Protocols_skel_export.h:
+
+          New file, renamed from the one removed above.
+
+        * performace-tests/Protocols/Sender/Sender.idl:
+        * performace-tests/Protocols/Sender/Sender.mpc:
+        * performace-tests/Protocols/Receiver/Receiver.mpc:
+        * performace-tests/Protocols/Receiver/Receiver.idl:
+        * performace-tests/Protocols/common/Protocols.mpc:
+        * performace-tests/Protocols/common/Protocols.idl:
+
+          Fixes to incorrect generation by generate_component_mpc.pl,
+          similar to those in
+
+          Wed Nov 15 19:56:46 UTC 2006  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+          Also removed include of Components.idl from Protocols.idl,
+          since it contains no component or eventtype declarations,
+          and added the include to Sender.idl and Receiver.idl.
+
 Thu Nov 16 14:41:24 UTC 2006  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tests/Bug_2130_Regression/interfaces/ENW_svnt_export.h:
         * docs/tutorials/Quoter/Simple/Stock_Base/Stock_Base_svnt_export.h:
-        
+
           Removed these files, added as renamed below.
-        
+
         * tests/Bug_2130_Regression/interfaces/ENW_skel_export.h:
-        * docs/tutorials/Quoter/Simple/Stock_Base/tock_Base_skel_export.h:
-        
+        * docs/tutorials/Quoter/Simple/Stock_Base/Stock_Base_skel_export.h:
+
           New files, renamed from those removed above.
-        
+
         * tests/Bug_2130_Regression/interfaces/ENW.mpc:
-        * tests/Bug_2130_Regression/SEC_CheckPoint/TSEC_CheckPoint.mpc:     
+        * tests/Bug_2130_Regression/SEC_CheckPoint/TSEC_CheckPoint.mpc:
         * docs/tutorials/Quoter/Simple/Stock_Base/Stock_Base.mpc:
         * docs/tutorials/Quoter/Simple/Distributor/Distributor.mpc:
         * docs/tutorials/Quoter/Simple/Broker/Broker.mpc:
-        
+
           Fixes to incorrect generation by generate_component_mpc.pl,
           similar to those in
-          
+
           Wed Nov 15 19:56:46 UTC 2006  Jeff Parsons <j.parsons@vanderbilt.edu>
 
 Wed Nov 15 19:56:46 UTC 2006  Jeff Parsons <j.parsons@vanderbilt.edu>
