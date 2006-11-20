@@ -4,7 +4,7 @@
 /**
  *  @file ZIOP_ORBInitializer.h
  *
- *  $Id: ZIOP_ORBInitializer.h 72363 2006-04-26 14:18:54Z mesnier_p $
+ *  $Id$
  *
  *  @author  Johnny Willemsen
  */

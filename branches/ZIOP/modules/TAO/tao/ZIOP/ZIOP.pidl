@@ -3,58 +3,185 @@
 
 module ZIOP
 {
-        exception CompressionException {    string reason;};
-        exception FactoryAlreadyRegistered {};
-        exception UnknownCompressorId {};
-        typedef unsigned long CompressorId;
-        typedef unsigned long CompressionLevel;
-        const unsigned long TAG_IONA_ZIOP_COMPONENT = 1230266182;
-        const CORBA::PolicyType COMPRESSION_ENABLING_POLICY_ID = 1230266247;
-        const CORBA::PolicyType COMPRESSOR_ID_POLICY_ID = 1230266248;
-        local interface CompressorFactory;
-        local interface Compressor
-        {
-                void compress(in CORBA::OctetSeq source, inout CORBA::OctetSeq target) raises(    ZIOP::CompressionException);
-                void decompress(in CORBA::OctetSeq source, inout CORBA::OctetSeq target) raises(    ZIOP::CompressionException);
-                readonly attribute ZIOP::CompressorFactory compressor_factory;
-                readonly attribute CompressionLevel compression_level;
-        };
+    /**
+     * Exception thrown when an error occurs during a compress or decompress
+     * operation.
+     */
+    exception CompressionException
+    {
+        string reason;
+    };
 
-        local interface CompressorFactory
-        {
-                readonly attribute ZIOP::CompressorId compressor_id;
-                readonly attribute unsigned long long compressed_bytes;
-                readonly attribute unsigned long long uncompressed_bytes;
-                readonly attribute double average_compression;
-                ZIOP::Compressor get_compressor(in CompressionLevel compression_level);
+    /**
+     * Exception thrown if a CompressorFactory with the same CompressorId is
+     * already registered with the CompressionManager.
+     */
+    exception FactoryAlreadyRegistered
+    {
+    };
+
+    /**
+     * Exception thrown if a CompressorId is not known.
+     */
+    exception UnknownCompressorId
+    {
+    };
+
+    /**
+     * CompressorId type.
+     */
+    typedef unsigned long CompressorId;
+
+    /**
+     * CompressionLevel type.
+     */
+    typedef unsigned long CompressionLevel;
+
+    /**
+     * The ZIOP IOR Component Tag Id
+     */
+    const unsigned long TAG_IONA_ZIOP_COMPONENT = 1230266182;
+
+    /**
+     * Tag Id for CompressionEnablingPolicy
+     */
+    const CORBA::PolicyType COMPRESSION_ENABLING_POLICY_ID = 1230266247;
+
+    /**
+     * Tag Id for CompressorIdPolicy
+     */
+    const CORBA::PolicyType COMPRESSOR_ID_POLICY_ID = 1230266248;
+
+    local interface CompressorFactory;
+    /**
+     * Compressor - abstraction of a GIOP message level compressor and
+     * decompressor.
+     */
+    local interface Compressor
+    {
+        /**
+         * Operation that compresses data contained in the source Buffer into
+         * the target Buffer. If an error occurs during the compression, it
+         * throws CompressionException
+         */
+        void compress(in CORBA::OctetSeq source, inout CORBA::OctetSeq target) raises(    ZIOP::CompressionException);
+        /**
+         * Operation that decompresses data contained in the source Buffer into
+         * the target Buffer. If an error occurs during the decompression, it
+         * throws CompressionException
+         */
+        void decompress(in CORBA::OctetSeq source, inout CORBA::OctetSeq target) raises(    ZIOP::CompressionException);
+        /**
+         * The CompressorFactory associated with this Compressor.
+         */
+        readonly attribute CompressorFactory compressor_factory;
+        /**
+         * The (implementation and algorithm specific) compression level
+         * associated with this Compressor.
+         */
+        readonly attribute long compression_level;
+    };
+
+    local interface CompressorFactory
+    {
+        /**
+         * The CompressorId associated with this CompressorFactory
+         */
+        readonly attribute CompressorId compressor_id;
+        /**
+         * The total number of compressed bytes read and written by Compressors
+         * that were created by this CompressorFactory
+         * (i.e. the "target" side of Compressor::compress and
+         * the "source" side of Compressor::decompress operations).
+         */
+        readonly attribute unsigned long long compressed_bytes;
+        /**
+         * The total number of uncompressed bytes read and written by
+         * Compressors that were created by this CompressorFactory
+         * (i.e. the "source" side of Compressor::compress and
+         * the "target" side of Compressor::decompress operations).
+         */
+        readonly attribute unsigned long long uncompressed_bytes;
+        /**
+         * The average compression achieved by Compressors that were created by
+         * this CompressorFactory, usually a value between 0 and >=1.
+         * (i.e. compressed_bytes divided by uncompressed_bytes).
+         */
+        readonly attribute double average_compression;
+        /**
+         * Create a Compressor instance with the given compression level.
+         */
+                Compressor get_compressor(in CompressionLevel compression_level);
+        /**
+         * Add a sample of compressed and uncompressed bytes.
+         */
                 void add_sample(in unsigned long long compressed_bytes, in unsigned long long uncompressed_bytes);
-        };
-        typedef sequence<ZIOP::CompressorFactory> CompressorFactorySeq;
+    };
 
-        local interface CompressionManager
-        {
-                void register_factory(    in ZIOP::CompressorFactory compressor_factory)raises(    ZIOP::FactoryAlreadyRegistered);
-                void unregister_factory(    in ZIOP::CompressorId compressor_id) raises (    ZIOP::UnknownCompressorId);
-                ZIOP::CompressorFactory get_factory(    in ZIOP::CompressorId compressor_id)raises(    ZIOP::UnknownCompressorId);
-                ZIOP::Compressor get_compressor(    in ZIOP::CompressorId compressor_id,    in CompressionLevel compression_level)raises(    ZIOP::UnknownCompressorId);
-                ZIOP::CompressorFactorySeq get_factories();
-        };
+    typedef sequence<ZIOP::CompressorFactory> CompressorFactorySeq;
 
-/*        interface CompressionComponent : IOR::Component
-        {
-                readonly attribute ZIOP::CompressorId compressor_id;
-        };
+    /**
+     * Per-ORB interface to register and unregister CompressorFactories.
+     * Initial reference: "IT_CompressionManager"
+     */
+    local interface CompressionManager
+    {
+        /**
+         * Register a new CompressorFactory
+         */
+        void register_factory(    in CompressorFactory compressor_factory)raises(FactoryAlreadyRegistered);
+        /**
+         * Unregister a CompressorFactory with the given CompressorId from the
+         * CompressionManager
+         */
+        void unregister_factory(    in CompressorId compressor_id) raises (    UnknownCompressorId);
+        /**
+         * Retrieve a CompressorFactory with the given CompressorId from the
+         * CompressionManager
+         */
+        CompressorFactory get_factory(    in ZIOP::CompressorId compressor_id)raises(    ZIOP::UnknownCompressorId);
+        /**
+         * Create a Compressor with the given compression_level from the
+         * CompressorFactory with the given CompressorId
+         */
+        ZIOP::Compressor get_compressor(    in ZIOP::CompressorId compressor_id,    in CompressionLevel compression_level)raises(    ZIOP::UnknownCompressorId);
+        /**
+         * List all registered CompressorFactories
+         */
+        CompressorFactorySeq get_factories();
+    };
 
+
+    /**
+     * The ZIOP IOR Component. Has an CompressorId attribute indicating the
+     * compression algorithm supported by the server side.
+     */
+    interface CompressionComponent : IOR::Component
+    {
+       readonly attribute ZIOP::CompressorId compressor_id;
+    };
+
+    /**
+     * Factory for ZIOP IOR Components
+     */
         interface CompressionComponentFactory
         {
                 ZIOP::CompressionComponent get_compression_component(    in ZIOP::CompressorId compressor_id);
-        };*/
+        };
 
+    /**
+     * The ZIOP CompressionEnablingPolicy. Has an boolean attribute indicating
+     * if compression is enabled or not.
+     */
         local interface CompressionEnablingPolicy : CORBA::Policy
         {
                 readonly attribute boolean compression_enabled;
         };
 
+    /**
+     * The ZIOP CompressorIdPolicy. Has an CompressorId attribute indicating
+     * the compression algorithm to be used.
+     */
         local interface CompressorIdPolicy : CORBA::Policy
         {
                 readonly attribute ZIOP::CompressorId compressor_id;

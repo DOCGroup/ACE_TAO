@@ -4,7 +4,7 @@
 /**
  *  @file ZIOP.h
  *
- *  $Id: ZIOP.h 72666 2006-05-16 22:44:35Z mesnier_p $
+ *  $Id$
  *
  *  Dynamic loader object for BiDir GIOP
  *

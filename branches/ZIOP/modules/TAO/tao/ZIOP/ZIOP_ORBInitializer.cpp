@@ -1,4 +1,4 @@
-// $Id: ZIOP_ORBInitializer.cpp 72363 2006-04-26 14:18:54Z mesnier_p $
+// $Id$
 
 #include "tao/ZIOP/ZIOP_ORBInitializer.h"
 
@@ -10,7 +10,7 @@
 
 ACE_RCSID (ZIOP,
            ZIOP_ORBInitializer,
-           "$Id: ZIOP_ORBInitializer.cpp 72363 2006-04-26 14:18:54Z mesnier_p $")
+           "$Id$")
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

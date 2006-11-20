@@ -7,7 +7,7 @@
 
 ACE_RCSID (ZIOP_GIOP,
            ZIOP_PolicyFactory,
-           "$Id: ZIOP_PolicyFactory.cpp 71473 2006-03-10 07:19:20Z jtc $")
+           "$Id$")
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -48,7 +48,6 @@ TAO_ZIOP_PolicyFactory::create_policy (
       ::ZIOP::CompressorId val;
 
       // Extract the value from the any.
-      value >>= val;
       if ((value >>= val) == 0)
         {
           ACE_THROW_RETURN (CORBA::PolicyError (CORBA::BAD_POLICY_VALUE),

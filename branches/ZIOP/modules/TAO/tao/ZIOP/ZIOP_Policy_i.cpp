@@ -1,4 +1,4 @@
-// $Id: ZIOP_Policy_i.cpp 72141 2006-04-19 09:45:01Z jwillemsen $
+// $Id$
 
 #include "tao/ZIOP/ZIOP_Policy_i.h"
 
@@ -8,7 +8,7 @@
 
 ACE_RCSID (ZIOP,
            ZIOP_Policy_i,
-           "$Id: ZIOP_Policy_i.cpp 72141 2006-04-19 09:45:01Z jwillemsen $")
+           "$Id$")
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

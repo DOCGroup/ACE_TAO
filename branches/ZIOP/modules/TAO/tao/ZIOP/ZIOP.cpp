@@ -7,7 +7,7 @@
 
 ACE_RCSID (ZIOP,
            ZIOP,
-           "$Id: ZIOP.cpp 71473 2006-03-10 07:19:20Z jtc $")
+           "$Id$")
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
