@@ -26,7 +26,7 @@ namespace TAO
 
                   if (compressor_factory->compressor_id () == current)
                     {
-                      // exception
+                      ACE_THROW (::ZIOP::FactoryAlreadyRegistered);
                     }
 
                 }
@@ -94,7 +94,8 @@ namespace TAO
               return ::ZIOP::CompressorFactory::_duplicate (this->factories_[i]);
             }
 
-          // todo exception
+          ACE_THROW (::ZIOP::UnknownCompressorId);
+
           return ::ZIOP::CompressorFactory::_nil ();
 
         }
