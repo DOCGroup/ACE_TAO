@@ -133,6 +133,7 @@ TAO_Marshal_Object::perform_skip (CORBA::TypeCode_ptr tc,
       }
     case CORBA::tk_value_box:
     case CORBA::tk_value:
+    case CORBA::tk_event:
       {
         TAO_Marshal_Value marshal;
         return marshal.skip (tc, stream ACE_ENV_ARG_PARAMETER);
@@ -243,6 +244,7 @@ TAO_Marshal_Object::perform_append (CORBA::TypeCode_ptr tc,
       }
     case CORBA::tk_value_box:
     case CORBA::tk_value:
+    case CORBA::tk_event:
       {
         TAO_Marshal_Value marshal;
         return marshal.append (tc, src, dest ACE_ENV_ARG_PARAMETER);
