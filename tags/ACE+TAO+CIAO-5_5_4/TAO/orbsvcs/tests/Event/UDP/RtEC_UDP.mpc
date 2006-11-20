@@ -1,0 +1,26 @@
+// -*- MPC -*-
+// $Id$
+
+project (* sender): orbsvcsexe, rtevent_serv, rtsched {
+  exename = sender
+  Source_Files {
+    AddrServer.cpp
+    Supplier.cpp
+    sender.cpp
+  }
+  IDL_Files {
+    Test.idl
+  }
+}
+
+project (* receiver) : orbsvcsexe, rtevent_serv, rtsched {
+  exename = receiver
+  Source_Files {
+    AddrServer.cpp
+    Consumer.cpp
+    receiver.cpp
+  }
+  IDL_Files {
+    Test.idl
+  }
+}
