@@ -1,3 +1,8 @@
+Wed Nov 22 23:16:22 UTC 2006  Steve Huston  <shuston@riverace.com>
+
+        * examples/Timer_Queue/Async_Timer_Queue_Test.cpp: Ignore SIGQUIT code
+          for platforms with ACE_LACKS_UNIX_SIGNALS. Fixes WinCE build error.
+
 Wed Nov 22 21:58:16 UTC 2006  Steve Huston  <shuston@riverace.com>
 
         * tests/RB_Tree_Test.cpp: Don't use ACE_ASSERT for code - it doesn't
