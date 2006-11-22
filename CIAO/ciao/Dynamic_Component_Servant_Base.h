@@ -1,4 +1,4 @@
-// -*- C++ -*-
+c// -*- C++ -*-
 
 //=============================================================================
 /**
@@ -15,15 +15,13 @@
 
 #include /**/ "ace/pre.h"
 
-// @@ Jai, why is this includion necessary. Looks heavy weight to me.
-#include "CCM_ComponentS.h"
+#include "CIAO_Server_Export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "tao/PortableServer/PortableServer.h"
-#include "CIAO_Server_Export.h"
 
 namespace CIAO
 {
