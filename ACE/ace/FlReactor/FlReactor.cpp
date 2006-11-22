@@ -1,6 +1,6 @@
 // $Id$
 
-#include "ace/FlReactor.h"
+#include "ace/FlReactor/FlReactor.h"
 
 ACE_RCSID(ace, FlReactor, "$Id$")
 

@@ -1,3 +1,12 @@
+Wed Nov 22 10:35:12 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/QtReactor*.*:
+        * ace/FlReactor*.*:
+        * ace/XtReactor*.*:
+        * ace/TkReactor*.*:
+          Moved these reactors to their own subdirectories to make
+          maintenance a lot easier.
+
 Wed Nov 22 10:45:12 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/MakeProjectCreator/config/core_anytypecode.mpb:

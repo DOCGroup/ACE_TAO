@@ -1,18 +1,22 @@
-// -*- C++ -*-
+/* -*- C++ -*- */
 
 //=============================================================================
 /**
- *  @file    TkReactor.h
+ *  @file   FlReactor.h
  *
  *  $Id$
  *
- *  @author Nagarajan Surendran <naga@cs.wustl.edu>
+ *  @author Carlos O'Ryan <coryan@cs.wustl.edu>
+ *  @author Based in part in the ACE_XtReactor implementation by
+ *  @author Eric C. Newton's <ecn@clark.net>
+ *  @author Kirill Rybaltchenko <Kirill.Rybaltchenko@cern.ch>
+ *  @author Douglas C. Schmidt <schmidt@cs.wustl.edu>
  */
 //=============================================================================
 
 
-#ifndef ACE_TKREACTOR_H
-#define ACE_TKREACTOR_H
+#ifndef ACE_FLREACTOR_H
+#define ACE_FLREACTOR_H
 #include /**/ "ace/pre.h"
 
 #include /**/ "ace/config-all.h"
@@ -21,52 +25,33 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/ACE_TkReactor_export.h"
+#include "ace/FlReactor/ACE_FlReactor_export.h"
 #include "ace/Select_Reactor.h"
-#include /**/ <tk.h>
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
- * @class ACE_TkReactorID
+ * @class ACE_FlReactor
  *
- * @brief This little class is necessary due to the way that Microsoft
- * implements sockets to be pointers rather than indices.
- */
-class ACE_TkReactor_Export ACE_TkReactorID
-{
-public:
-  /// Underlying handle.
-  ACE_HANDLE handle_;
-
-  /// Pointer to next node in the linked list.
-  ACE_TkReactorID *next_;
-};
-
-class ACE_TkReactor;
-
-class ACE_TkReactor_Export ACE_TkReactor_Input_Callback
-{
-public:
-  ACE_TkReactor *reactor_;
-  ACE_HANDLE handle_;
-};
-
-/**
- * @class ACE_TkReactor
+ * @brief A Reactor implementation that uses the Fast-Light (FL) toolkit
+ * for event demultiplexing.  This will let us integrate the FL
+ * toolkit with ACE and/or TAO.
  *
- * @brief An object-oriented event demultiplexor and event handler
- * dispatcher that uses the Tk functions.
+ * As many other GUI toolkits FL supports a minimal set of
+ * callbacks to handle event demultiplexing, namely simple methods
+ * to add file descriptors to the event demuxing set or timeout
+ * events.  This class adapts this simple mechanisms so they are
+ * compatible with ACE's Reactor.
  */
-class ACE_TkReactor_Export ACE_TkReactor : public ACE_Select_Reactor
+class ACE_FlReactor_Export ACE_FlReactor : public ACE_Select_Reactor
 {
+
 public:
   // = Initialization and termination methods.
-  ACE_TkReactor (size_t size = DEFAULT_SIZE,
+  ACE_FlReactor (size_t size = DEFAULT_SIZE,
                  int restart = 0,
                  ACE_Sig_Handler * = 0);
-
-  virtual ~ACE_TkReactor (void);
+  virtual ~ACE_FlReactor (void);
 
   // = Timer operations.
   virtual long schedule_timer (ACE_Event_Handler *event_handler,
@@ -82,7 +67,7 @@ public:
                             int dont_call_handle_close = 1);
 
 protected:
-  // = Register timers/handles with Tk.
+  // = Register timers/handles with Fl.
   /// Register a single <handler>.
   virtual int register_handler_i (ACE_HANDLE handle,
                                   ACE_Event_Handler *handler,
@@ -101,36 +86,25 @@ protected:
   virtual int remove_handler_i (const ACE_Handle_Set &handles,
                                 ACE_Reactor_Mask);
 
-  /// Removes an Tk FileHandler.
-  virtual void remove_TkFileHandler (ACE_HANDLE handle);
-
   /// Wait for events to occur.
   virtual int wait_for_multiple_events (ACE_Select_Reactor_Handle_Set &,
                                         ACE_Time_Value *);
 
-  ///Wait for Tk events to occur.
-  virtual int TkWaitForMultipleEvents (int,
-                                       ACE_Select_Reactor_Handle_Set &,
-                                       ACE_Time_Value *);
-
-  ACE_TkReactorID *ids_;
-  Tk_TimerToken timeout_;
-
 private:
-  /// This method ensures there's a Tk timeout for the first timeout in
-  /// the Reactor's Timer_Queue.
+  /// This method ensures there's an Fl timeout for the first timeout
+  /// in the Reactor's Timer_Queue.
   void reset_timeout (void);
 
-  // = Integrate with the X callback function mechanism.
-  static void TimerCallbackProc (ClientData cd);
-  static void InputCallbackProc (ClientData cd,int mask);
+  // = Integrate with the FL callback function mechanism.
+  static void fl_io_proc (int fd, void*);
+  static void fl_timeout_proc (void*);
 
   /// Deny access since member-wise won't work...
-  ACE_TkReactor (const ACE_TkReactor &);
-  ACE_TkReactor &operator = (const ACE_TkReactor &);
+  ACE_FlReactor (const ACE_FlReactor &);
+  ACE_FlReactor &operator = (const ACE_FlReactor &);
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
-#endif /* ACE_TK_REACTOR_H */
+#endif /* ACE_FLREACTOR_H */
