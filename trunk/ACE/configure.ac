@@ -7902,6 +7902,7 @@ if test $ace_build_examples = yes; then
     examples/Bounded_Packet_Relay/Makefile
     examples/C++NPv1/Makefile
     examples/C++NPv2/Makefile
+    examples/ConfigViewer/Makefile
     examples/Connection/Makefile
     examples/Connection/blocking/Makefile
     examples/Connection/misc/Makefile

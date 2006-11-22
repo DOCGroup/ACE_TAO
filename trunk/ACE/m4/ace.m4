@@ -487,6 +487,9 @@ AC_DEFUN([ACE_CONFIGURATION_OPTIONS],
  ACE_ENABLE_TK_REACTOR
  ACE_ENABLE_XT_REACTOR
 
+ # placeholder for WxWindows/wxWidgets support
+ AM_CONDITIONAL([BUILD_WXWINDOWS], false)
+
  AC_ARG_ENABLE([gperf],
   AS_HELP_STRING(--enable-gperf,compile the gperf program [[[yes]]]),
   [
@@ -1417,3 +1420,5 @@ AM_CONDITIONAL([BUILD_ACE_XTREACTOR],
 AM_CONDITIONAL([BUILD_TAO_XTRESOURCE],
                [test X$ace_user_enable_xt_reactor = Xyes])
 ])
+
+
