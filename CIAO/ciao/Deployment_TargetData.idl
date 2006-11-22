@@ -3,7 +3,7 @@
 #ifndef DEPLOYMENT_TARGETDATA_IDL
 #define DEPLOYMENT_TARGETDATA_IDL
 
-#include <ciao/Deployment_Base.idl>
+#include "ciao/Deployment_Base.idl"
 
 module Deployment {
 
