@@ -21,7 +21,7 @@ noinst_LTLIBRARIES = libBase_Test.la
 libBase_Test_la_CPPFLAGS = \
   -I$(ACE_ROOT) \
   -I$(ACE_BUILDDIR) \
-  -I..
+  -I$(srcdir)/..
 
 libBase_Test_la_SOURCES = \
   Baseline_Test.cpp \
