@@ -11,12 +11,24 @@
  *          CCM_Component.idl
  */
 
-#if !defined (CCM_COMPONENT_IDL)
-#define CCM_COMPONENT_IDL
+#if !defined (CCM_CONFIGURATOR_IDL)
+#define CCM_CONFIGURATOR_IDL
 
 #include "CCM_Event.idl"
 #include "CCM_Home.idl"
-#include "CCM_Object.idl"
-#include "CCM_Enumeration.idl"
 
-#endif /* CCM_COMPONENT_IDL */
+module Components
+{
+  typeprefix Components "omg.org";
+
+  exception WrongComponentType {};
+
+  interface CCMObject;
+
+  interface Configurator
+  {
+    void configure (in CCMObject comp)
+      raises (WrongComponentType);
+  };
+};
+#endif /* CCM_CONFIGURATOR_IDLL */

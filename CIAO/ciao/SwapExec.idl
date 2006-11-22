@@ -1,7 +1,6 @@
 // $Id$
 
-#include "CCM_Container.idl"
-
+#include "CCM_EnterpriseComponent.idl"
 
 module CIAO
 {

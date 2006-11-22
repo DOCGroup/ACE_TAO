@@ -6,6 +6,16 @@
 
 module Deployment {
 
+  enum CCMComponentPortKind
+  {
+    Facet,
+    SimplexReceptacle,
+    MultiplexReceptacle,
+    EventEmitter,
+    EventPublisher,
+    EventConsumer
+  };
+
   struct ComponentPortDescription {
     string name;
     string specificType;
@@ -37,14 +47,6 @@ module Deployment {
     ComponentPropertyDescriptions property;
     Properties infoProperty;
   };
-
-  struct Requirement {
-    string resourceType;
-    string name;
-    Properties property;
-  };
-
-  typedef sequence < Requirement > Requirements;
 
   struct MonolithicDeploymentDescription {
     string name;
@@ -180,13 +182,6 @@ module Deployment {
     ImplementationDependencies dependsOn;
     ArtifactDeploymentDescriptions artifact;
     Properties infoProperty;
-  };
-
-  enum DomainUpdateKind {
-    Add,
-    Delete,
-    UpdateAll,
-    UpdateAvailable
   };
 
   struct ComponentPackageReference {

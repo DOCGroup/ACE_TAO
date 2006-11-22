@@ -12,15 +12,13 @@
 #define CIAO_COOKIES_H
 #include /**/ "ace/pre.h"
 
-#include "CCM_BaseC.h"
-
+#include "CCM_CookieC.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "CIAO_Container_Export.h"
-#include "CIAO_ValueC.h"
 #include "ace/Active_Map_Manager.h"
 
 namespace CIAO
