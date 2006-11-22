@@ -17,23 +17,6 @@ use English;
 $status = 0;
 $exflags = "";
 
-# Parse the arguments
-
-for ($i = 0; $i <= $#ARGV; $i++) {
-    if ($ARGV[$i] eq "-h" || $ARGV[$i] eq "-?") {
-        print "run_test [-d]\n";
-        print "\n";
-        print "-d                  -- set the debug flag\n";
-        exit;
-    }
-    elsif ($ARGV[$i] eq "-d") {
-        $exflags .= " -d ";
-    }
-    else {
-        print STDERR "ERROR: Unknown Option: ".$ARGV[$i]."\n";
-    }
-}
-
 # Run the test
 
 $EX = new PerlACE::Process ("EventAny");

@@ -4,7 +4,6 @@
 project(Display_Base_stub): ciao_client_dnc {
 
   sharedname = Display_Base_stub
-  idlflags -= -GT
   idlflags += -Wb,stub_export_macro=DISPLAY_BASE_STUB_Export \
               -Wb,stub_export_include=Display_Base_stub_export.h \
               -Wb,skel_export_macro=DISPLAY_BASE_SKEL_Export \
@@ -29,7 +28,6 @@ project(Display_Base_skel) : ciao_servant_dnc {
   sharedname  = Display_Base_skel
   libs    += Display_Base_stub
 
-  idlflags -= -GT
   idlflags += -Wb,stub_export_macro=DISPLAY_BASE_STUB_Export \
               -Wb,stub_export_include=Display_Base_stub_export.h \
               -Wb,skel_export_macro=DISPLAY_BASE_SKEL_Export \

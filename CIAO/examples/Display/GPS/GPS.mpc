@@ -4,7 +4,6 @@
 project(Display_Base_GPS_stub): ciao_client_dnc {
   after += Display_Base_stub
   sharedname = GPS_stub
-  idlflags -= -GT
   idlflags += -St \
               -Wb,stub_export_macro=GPS_STUB_Export \
               -Wb,stub_export_include=GPS_stub_export.h \
@@ -31,7 +30,6 @@ project(Display_Base_GPS_svnt) : ciao_servant_dnc {
   sharedname  = GPS_svnt
   libs    += GPS_stub Display_Base_stub Display_Base_skel
 
-  idlflags -= -GT
   idlflags  +=  -SS -St \
                 -Wb,export_macro=GPS_SVNT_Export \
                 -Wb,export_include=GPS_svnt_export.h
@@ -62,7 +60,6 @@ project(Display_Base_GPS_exec) : ciao_component_dnc {
   sharedname = GPS_exec
   libs      += GPS_stub GPS_svnt Display_Base_stub Display_Base_skel
 
-  idlflags -= -GT
   idlflags  +=  -SS -St \
                 -Wb,export_macro=GPS_EXEC_Export \
                 -Wb,export_include=GPS_exec_export.h

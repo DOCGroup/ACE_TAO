@@ -4,8 +4,7 @@
 project(Interactive_Input_Adapter_stub): ciao_deployment_stub {
   after += Input_Adapter_stub
   sharedname = Interactive_Input_Adapter_stub
-  idlflags += -Sc \
-              -Wb,stub_export_macro=INTERACTIVE_INPUT_ADAPTER_STUB_Export \
+  idlflags += -Wb,stub_export_macro=INTERACTIVE_INPUT_ADAPTER_STUB_Export \
               -Wb,stub_export_include=Interactive_Input_Adapter_stub_export.h \
               -Wb,skel_export_macro=INTERACTIVE_INPUT_ADAPTER_SVNT_Export \
               -Wb,skel_export_include=Interactive_Input_Adapter_svnt_export.h
@@ -39,8 +38,7 @@ project(Interactive_Input_Adapter_svnt) : ciao_servant_dnc {
              Input_Adapter_svnt \
              Plan_Analyzer_Interface_stub
 
-  idlflags  +=  -Sc \
-                -Wb,export_macro=INTERACTIVE_INPUT_ADAPTER_SVNT_Export \
+  idlflags  +=  -Wb,export_macro=INTERACTIVE_INPUT_ADAPTER_SVNT_Export \
                 -Wb,export_include=Interactive_Input_Adapter_svnt_export.h
 
   dynamicflags = INTERACTIVE_INPUT_ADAPTER_SVNT_BUILD_DLL
@@ -82,14 +80,13 @@ project(Interactive_Input_Adapter_exec) : ciao_component_dnc, ciao_config_handle
              Input_Adapter_svnt \
              Plan_Analyzer_Interface_stub \
              XSC_Config_Handlers
-  
-  idlflags  +=  -Sc \
-                -Wb,export_macro=INTERACTIVE_INPUT_ADAPTER_EXEC_Export \
+
+  idlflags  +=  -Wb,export_macro=INTERACTIVE_INPUT_ADAPTER_EXEC_Export \
                 -Wb,export_include=Interactive_Input_Adapter_exec_export.h
   dynamicflags   = INTERACTIVE_INPUT_ADAPTER_EXEC_BUILD_DLL
 
   IDL_Files {
-    
+
   }
 
   Source_Files {
