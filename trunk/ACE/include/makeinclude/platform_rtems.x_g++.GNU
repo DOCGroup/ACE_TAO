@@ -12,6 +12,7 @@ threads ?= 1
 
 shared_libs =
 static_libs = 1
+rwho = 0
 
 ifeq (,$(RTEMS_MAKEFILE_PATH))
   default:
