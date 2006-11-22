@@ -16,5 +16,5 @@ noinst_PROGRAMS = \
 rw_locks_SOURCES = rw_locks.cpp
 rw_locks_LDADD = \
   $(top_builddir)/netsvcs/lib/libnetsvcs.la \
-  $(top_builddir)/ace/libACE.la
+  $(top_builddir)/ace/$(ACE_BUILDDIR)/ace/libACE.la
 

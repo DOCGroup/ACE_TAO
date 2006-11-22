@@ -35,8 +35,8 @@ receiver_SOURCES = \
   Receiver_QoS_Event_Handler.h
 
 receiver_LDADD = \
-  $(ACE_BUILDDIR)/ace/QoS/libACE_QoS.la \
-  $(ACE_BUILDDIR)/ace/libACE.la
+  $(ACE_BUILDDIR)/ace/QoS/$(ACE_BUILDDIR)/ace/QoS/libACE_QoS.la \
+  $(ACE_BUILDDIR)/ace/$(ACE_BUILDDIR)/ace/libACE.la
 
 endif BUILD_QOS
 
@@ -62,8 +62,8 @@ sender_SOURCES = \
   Sender_QoS_Event_Handler.h
 
 sender_LDADD = \
-  $(ACE_BUILDDIR)/ace/QoS/libACE_QoS.la \
-  $(ACE_BUILDDIR)/ace/libACE.la
+  $(ACE_BUILDDIR)/ace/QoS/$(ACE_BUILDDIR)/ace/QoS/libACE_QoS.la \
+  $(ACE_BUILDDIR)/ace/$(ACE_BUILDDIR)/ace/libACE.la
 
 endif BUILD_QOS
 

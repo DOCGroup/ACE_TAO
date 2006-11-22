@@ -6,7 +6,7 @@
 ## this file will be lost the next time it is generated.
 ##
 ## MPC Command:
-## /acebuilds/ACE_wrappers-repository/bin/mwc.pl -include /acebuilds/MPC/config -include /acebuilds/MPC/templates -feature_file /acebuilds/ACE_wrappers-repository/local.features -noreldefs -type automake -exclude build,Kokyu
+## ./bin/mwc.pl -type automake -noreldefs ACE.mwc
 
 ACE_BUILDDIR = $(top_builddir)
 ACE_ROOT = $(top_srcdir)
@@ -18,7 +18,7 @@ noinst_PROGRAMS =
 ## Makefile.C++NPv2_AC_CLD.am
 
 if BUILD_SSL
-if !BUILD_ACE_FOR_TAO
+if BUILD_THREADS
 if !BUILD_USES_WCHAR
 
 noinst_LTLIBRARIES += libAC_CLD.la
@@ -43,13 +43,12 @@ noinst_HEADERS += \
   Reactor_Logging_Server_T.cpp
 
 endif !BUILD_USES_WCHAR
-endif !BUILD_ACE_FOR_TAO
+endif BUILD_THREADS
 endif BUILD_SSL
 
 ## Makefile.C++NPv2_AIO_CLD.am
 
 if BUILD_SSL
-if !BUILD_ACE_FOR_TAO
 
 noinst_LTLIBRARIES += libAIO_CLD.la
 
@@ -70,7 +69,6 @@ noinst_HEADERS += \
   AIO_Client_Logging_Daemon.h \
   Reactor_Logging_Server_T.cpp
 
-endif !BUILD_ACE_FOR_TAO
 endif BUILD_SSL
 
 ## Makefile.C++NPv2_CLD.am
@@ -303,7 +301,6 @@ endif !BUILD_ACE_FOR_TAO
 ## Makefile.C++NPv2_TPCLS.am
 
 if BUILD_SSL
-if !BUILD_ACE_FOR_TAO
 if !BUILD_USES_WCHAR
 
 noinst_LTLIBRARIES += libTPCLS.la
@@ -328,7 +325,6 @@ noinst_HEADERS += \
   TPC_Logging_Server.h
 
 endif !BUILD_USES_WCHAR
-endif !BUILD_ACE_FOR_TAO
 endif BUILD_SSL
 
 ## Makefile.C++NPv2_TPLS.am
