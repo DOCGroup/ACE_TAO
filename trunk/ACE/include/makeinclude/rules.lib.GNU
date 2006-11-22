@@ -79,12 +79,12 @@ else # VLIBS
   endif # IDL_SRC
 endif # !VLIBS
 
-VLOBJS = $(addprefix $(VDIR),$(foreach var, $(addsuffix .$(OBJEXT), $(basename $(LSRC)) $(RESOURCES)), $(if $(findstring ../,$(var)),$(notdir $(var)),$(var))))
+VLOBJS = $(addprefix $(VDIR),$(foreach var, $(addsuffix .$(OBJEXT), $(basename $(LSRC)) $(RESOURCES)), $(patsubst ../%,$(notdir %),$(var))))
 ifdef LSRC2
   LSRC += $(LSRC2)
 endif
 
-VSHOBJS = $(addprefix $(VSHDIR),$(foreach var, $(addsuffix .$(OBJEXT), $(basename $(LSRC)) $(RESOURCES)), $(if $(findstring ../,$(var)),$(notdir $(var)),$(var))))
+VSHOBJS = $(addprefix $(VSHDIR),$(foreach var, $(addsuffix .$(OBJEXT), $(basename $(LSRC)) $(RESOURCES)), $(patsubst ../%,$(notdir %),$(var))))
 
 ifneq ($(IDL_SRC),)
   $(VLOBJS) $(VSHOBJS): $(IDL_SRC)

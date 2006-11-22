@@ -90,28 +90,46 @@ endif # static_link = 1
 
 OS ?=
 
-$(VDIR)%.o: %.c $(VDIR)%.creation_stamp
+# Define a canned command set to create the output object directory if needed.
+ifeq ($(vxworks_ntbuild),1)
+define mk_obj_out_dir
+@if not exist $(dir $@) $(MKDIR) $(dir $@) $(ACE_NUL_STDERR)
+@echo > $(dir $@).creation_stamp
+endef
+else
+define mk_obj_out_dir
+@-test -d $(dir $@) || $(MKDIR) $(dir $@) $(ACE_NUL_STDERR)
+endef
+endif
+
+$(VDIR)%.o: %.c
+	$(mk_obj_out_dir)
 	$(COMPILE.c) $(CC_OUTPUT_FLAG) $@ $<
 	${MVCMD}
 
-$(VDIR)%.o: %.cpp $(VDIR)%.creation_stamp
+$(VDIR)%.o: %.cpp
+	$(mk_obj_out_dir)
 	$(COMPILE.cc) $(CC_OUTPUT_FLAG) $@ $<
 	${MVCMD}
 
-$(VDIR)%.o: %.C $(VDIR)%.creation_stamp
+$(VDIR)%.o: %.C
+	$(mk_obj_out_dir)
 	$(COMPILE.cc) $(CC_OUTPUT_FLAG) $@ $<
 	${MVCMD}
 
-$(VDIR)%.o: %.cc $(VDIR)%.creation_stamp
+$(VDIR)%.o: %.cc
+	$(mk_obj_out_dir)
 	$(COMPILE.cc) $(CC_OUTPUT_FLAG) $@ $<
 	${MVCMD}
 
-$(VDIR)%.o: %.cxx $(VDIR)%.creation_stamp
+$(VDIR)%.o: %.cxx
+	$(mk_obj_out_dir)
 	$(COMPILE.cc) $(CC_OUTPUT_FLAG) $@ $<
 	${MVCMD}
 
   ifneq (,$(COMPILE.rc))
-$(VDIR)%.rc.o: %.rc $(VDIR)%.creation_stamp
+$(VDIR)%.rc.o: %.rc
+	$(mk_obj_out_dir)
 	$(COMPILE.rc) $< $@
 	${MVCMD}
   endif # COMPILE.rc
@@ -126,66 +144,54 @@ ifndef SOLINK
 # that the service configurator needs to be able to function).
 # 970104 Marius Kjeldahl <mariusk@sn.no, marius@funcom.com>
   ifdef (ESOBUILD)
-$(VSHDIR)%.$(SOEXT): %.cpp $(VSHDIR)%.creation_stamp
+$(VSHDIR)%.$(SOEXT): %.cpp
+	$(mk_obj_out_dir)
 	$(ESOBUILD)
   else # ! ESOBUILD
-$(VSHDIR)%.$(SOEXT): %.cpp $(VSHDIR)%.creation_stamp
+$(VSHDIR)%.$(SOEXT): %.cpp
+	$(mk_obj_out_dir)
 	$(SOBUILD)
   endif # ESOBUILD
 
   ifeq ($(split), 1)
-$(VSHDIR)%.$(OBJEXT): %.cpp $(VSHDIR)%.creation_stamp
+$(VSHDIR)%.$(OBJEXT): %.cpp
+	$(mk_obj_out_dir)
 	$(COMPILE.cc) $(PIC) SPLIT/`echo $< | sed "s/.cpp/_S\*/"`
 	mv *.$(OBJEXT) $(VSHDIR)
   else # ! split
 
-$(VSHDIR)%.$(OBJEXT): %.cpp $(VSHDIR)%.creation_stamp
+$(VSHDIR)%.$(OBJEXT): %.cpp
+	$(mk_obj_out_dir)
 	$(COMPILE.cc) $(PIC) $(CC_OUTPUT_FLAG) $@ $<
 
   endif # split
 
-$(VSHDIR)%.$(OBJEXT): %.cc $(VSHDIR)%.creation_stamp
+$(VSHDIR)%.$(OBJEXT): %.cc
+	$(mk_obj_out_dir)
 	$(COMPILE.cc) $(PIC) $(CC_OUTPUT_FLAG) $@ $<
 
-$(VSHDIR)%.$(OBJEXT): %.C $(VSHDIR)%.creation_stamp
+$(VSHDIR)%.$(OBJEXT): %.C
+	$(mk_obj_out_dir)
 	$(COMPILE.cc) $(PIC) $(CC_OUTPUT_FLAG) $@ $<
 
-$(VSHDIR)%.$(OBJEXT): %.cxx $(VSHDIR)%.creation_stamp
+$(VSHDIR)%.$(OBJEXT): %.cxx
+	$(mk_obj_out_dir)
 	$(COMPILE.cc) $(PIC) $(CC_OUTPUT_FLAG) $@ $<
 
-$(VSHDIR)%.$(OBJEXT): %.c $(VSHDIR)%.creation_stamp
+$(VSHDIR)%.$(OBJEXT): %.c
+	$(mk_obj_out_dir)
 	$(COMPILE.c) $(PIC) $(CC_OUTPUT_FLAG) $@ $<
 
   ifneq (,$(COMPILE.rc))
-$(VSHDIR)%.rc.$(OBJEXT): %.rc $(VSHDIR)%.creation_stamp
+$(VSHDIR)%.rc.$(OBJEXT): %.rc
+	$(mk_obj_out_dir)
 	$(COMPILE.rc) $< $@
   endif # COMPILE.rc
 
-$(VSHDIR)%.$(SOEXT): $(VSHDIR)%.$(OBJEXT) $(VSHDIR)%.creation_stamp
+$(VSHDIR)%.$(SOEXT): $(VSHDIR)%.$(OBJEXT)
+	$(mk_obj_out_dir)
 	$(SOLINK)
 endif # SOLINK
-
-ifeq ($(vxworks_ntbuild),1)
-$(VDIR)%.creation_stamp:
-	@if not exist $(dir $@) $(MKDIR) $(dir $@) $(ACE_NUL_STDERR)
-	@echo > $@
-else
-.PHONY: $(VDIR)%.creation_stamp
-$(VDIR)%.creation_stamp:
-	@-test -d $(dir $@) || $(MKDIR) $(dir $@) $(ACE_NUL_STDERR)
-endif
-
-ifneq ($(VDIR),$(VSHDIR))
-  ifeq ($(vxworks_ntbuild),1)
-$(VSHDIR)%.creation_stamp:
-	@if not exist $(dir $@) $(MKDIR) $(dir $@) $(ACE_NUL_STDERR)
-	@echo > $@
-  else
-.PHONY: $(VSHDIR)%.creation_stamp
-$(VSHDIR)%.creation_stamp:
-	@-test -d $(dir $@) || $(MKDIR) $(dir $@) $(ACE_NUL_STDERR)
-  endif
-endif
 
 #----------------------------------------------------------------------------
 #       Library generation targets
