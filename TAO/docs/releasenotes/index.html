@@ -285,7 +285,7 @@ WFMO_Reactor_Test, Timer_Cancellation_Test</ul>
 <h3>
 <a NAME="idl"></a>IDL Compiler</h3>
 Point of contact: <a href="mailto:j.parsons@vanderbilt.edu">Jeff Parsons</a>
-<p>Current status: (As of May 4, 2006.)
+<p>Current status: (As of November 13, 2006.)
 <ul>
 <li>
 Generated code closely follows the C++ Mapping specified in the latest
@@ -677,6 +677,15 @@ all skeleton files, including TIE class files, if generated. Overrides
 Uninlined all generated TIE class code, since inlining could potentially
 cause a problem for RTTI.</li>
 
+<li>
+Added new command line option <tt>-Gse</tt> that causes generation of
+an explicit export of each sequence's template base class. This is
+occasionally necessary as a workaround for a bug in Visual Studio
+(.NET 2002, .NET 2003 and Express 2005) where the template instantiation
+used for the base class isn't automatically exported. See
+<a href="http://support.microsoft.com/default.aspx?scid=kb;en-us;309801">
+KB 309801</a> for more info</li>
+
 </ul>
 
 <h4>
@@ -699,7 +708,9 @@ have been found. One is to change the declaration of foo to be
 <p>and this has been done in all cases we could find in the IDL compiler
 source code. Another way to avoid the problem is to change the Release
 project Optimization setting to 'Minimize Size'. Reportedly the problem
-has been fixed in MSVC version 7.0.</ul>
+has been fixed in MSVC version 7.0.
+
+</ul>
 
 <h4>
 Future work:</h4>
