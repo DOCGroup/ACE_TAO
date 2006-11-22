@@ -743,7 +743,9 @@ BUILT_SOURCES += \
   CosEventCommC.inl \
   CosEventCommS.cpp \
   CosEventCommS.h \
-  CosEventCommS.inl
+  CosEventCommS.inl \
+  CosEventCommS_T.cpp \
+  CosEventCommS_T.h
 
 CLEANFILES += \
   CosEventComm-stamp \
@@ -752,12 +754,14 @@ CLEANFILES += \
   CosEventCommC.inl \
   CosEventCommS.cpp \
   CosEventCommS.h \
-  CosEventCommS.inl
+  CosEventCommS.inl \
+  CosEventCommS_T.cpp \
+  CosEventCommS_T.h
 
-CosEventCommC.cpp CosEventCommC.h CosEventCommC.inl CosEventCommS.cpp CosEventCommS.h CosEventCommS.inl: CosEventComm-stamp
+CosEventCommC.cpp CosEventCommC.h CosEventCommC.inl CosEventCommS.cpp CosEventCommS.h CosEventCommS.inl CosEventCommS_T.cpp CosEventCommS_T.h: CosEventComm-stamp
 
 CosEventComm-stamp: $(srcdir)/CosEventComm.idl $(TAO_IDL_DEP)
-	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs -Wb,versioning_begin=TAO_BEGIN_VERSIONED_NAMESPACE_DECL -Wb,versioning_end=TAO_END_VERSIONED_NAMESPACE_DECL -Wb,stub_export_macro=TAO_Event_Export -Wb,stub_export_include=orbsvcs/CosEvent/event_export.h -Wb,skel_export_macro=TAO_Event_Skel_Export -Wb,skel_export_include=orbsvcs/CosEvent/event_skel_export.h $(srcdir)/CosEventComm.idl
+	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs -Wb,versioning_begin=TAO_BEGIN_VERSIONED_NAMESPACE_DECL -Wb,versioning_end=TAO_END_VERSIONED_NAMESPACE_DECL -GT -Wb,stub_export_macro=TAO_Event_Export -Wb,stub_export_include=orbsvcs/CosEvent/event_export.h -Wb,skel_export_macro=TAO_Event_Skel_Export -Wb,skel_export_include=orbsvcs/CosEvent/event_skel_export.h $(srcdir)/CosEventComm.idl
 	@touch $@
 
 BUILT_SOURCES += \
@@ -766,7 +770,9 @@ BUILT_SOURCES += \
   CosEventChannelAdminC.inl \
   CosEventChannelAdminS.cpp \
   CosEventChannelAdminS.h \
-  CosEventChannelAdminS.inl
+  CosEventChannelAdminS.inl \
+  CosEventChannelAdminS_T.cpp \
+  CosEventChannelAdminS_T.h
 
 CLEANFILES += \
   CosEventChannelAdmin-stamp \
@@ -775,12 +781,14 @@ CLEANFILES += \
   CosEventChannelAdminC.inl \
   CosEventChannelAdminS.cpp \
   CosEventChannelAdminS.h \
-  CosEventChannelAdminS.inl
+  CosEventChannelAdminS.inl \
+  CosEventChannelAdminS_T.cpp \
+  CosEventChannelAdminS_T.h
 
-CosEventChannelAdminC.cpp CosEventChannelAdminC.h CosEventChannelAdminC.inl CosEventChannelAdminS.cpp CosEventChannelAdminS.h CosEventChannelAdminS.inl: CosEventChannelAdmin-stamp
+CosEventChannelAdminC.cpp CosEventChannelAdminC.h CosEventChannelAdminC.inl CosEventChannelAdminS.cpp CosEventChannelAdminS.h CosEventChannelAdminS.inl CosEventChannelAdminS_T.cpp CosEventChannelAdminS_T.h: CosEventChannelAdmin-stamp
 
 CosEventChannelAdmin-stamp: $(srcdir)/CosEventChannelAdmin.idl $(TAO_IDL_DEP)
-	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs -Wb,versioning_begin=TAO_BEGIN_VERSIONED_NAMESPACE_DECL -Wb,versioning_end=TAO_END_VERSIONED_NAMESPACE_DECL -Wb,stub_export_macro=TAO_Event_Export -Wb,stub_export_include=orbsvcs/CosEvent/event_export.h -Wb,skel_export_macro=TAO_Event_Skel_Export -Wb,skel_export_include=orbsvcs/CosEvent/event_skel_export.h $(srcdir)/CosEventChannelAdmin.idl
+	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs -Wb,versioning_begin=TAO_BEGIN_VERSIONED_NAMESPACE_DECL -Wb,versioning_end=TAO_END_VERSIONED_NAMESPACE_DECL -GT -Wb,stub_export_macro=TAO_Event_Export -Wb,stub_export_include=orbsvcs/CosEvent/event_export.h -Wb,skel_export_macro=TAO_Event_Skel_Export -Wb,skel_export_include=orbsvcs/CosEvent/event_skel_export.h $(srcdir)/CosEventChannelAdmin.idl
 	@touch $@
 
 
@@ -3614,69 +3622,77 @@ if BUILD_EXCEPTIONS
 BUILT_SOURCES += \
   RtecDefaultEventDataC.cpp \
   RtecDefaultEventDataC.h \
-  RtecDefaultEventDataC.inl
+  RtecDefaultEventDataC.inl \
+  RtecDefaultEventDataS_T.cpp
 
 CLEANFILES += \
   RtecDefaultEventData-stamp \
   RtecDefaultEventDataC.cpp \
   RtecDefaultEventDataC.h \
-  RtecDefaultEventDataC.inl
+  RtecDefaultEventDataC.inl \
+  RtecDefaultEventDataS_T.cpp
 
-RtecDefaultEventDataC.cpp RtecDefaultEventDataC.h RtecDefaultEventDataC.inl: RtecDefaultEventData-stamp
+RtecDefaultEventDataC.cpp RtecDefaultEventDataC.h RtecDefaultEventDataC.inl RtecDefaultEventDataS_T.cpp: RtecDefaultEventData-stamp
 
 RtecDefaultEventData-stamp: $(srcdir)/RtecDefaultEventData.idl $(TAO_IDL_DEP)
-	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs -Wb,versioning_begin=TAO_BEGIN_VERSIONED_NAMESPACE_DECL -Wb,versioning_end=TAO_END_VERSIONED_NAMESPACE_DECL -Wb,stub_export_macro=TAO_RTEvent_Export -Wb,stub_export_include=orbsvcs/Event/event_export.h -Wb,skel_export_macro=TAO_RTEvent_Skel_Export -Wb,skel_export_include=orbsvcs/Event/event_skel_export.h $(srcdir)/RtecDefaultEventData.idl
+	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs -Wb,versioning_begin=TAO_BEGIN_VERSIONED_NAMESPACE_DECL -Wb,versioning_end=TAO_END_VERSIONED_NAMESPACE_DECL -GT -Wb,stub_export_macro=TAO_RTEvent_Export -Wb,stub_export_include=orbsvcs/Event/event_export.h -Wb,skel_export_macro=TAO_RTEvent_Skel_Export -Wb,skel_export_include=orbsvcs/Event/event_skel_export.h $(srcdir)/RtecDefaultEventData.idl
 	@touch $@
 
 BUILT_SOURCES += \
   RtecEventCommC.cpp \
   RtecEventCommC.h \
-  RtecEventCommC.inl
+  RtecEventCommC.inl \
+  RtecEventCommS_T.cpp
 
 CLEANFILES += \
   RtecEventComm-stamp \
   RtecEventCommC.cpp \
   RtecEventCommC.h \
-  RtecEventCommC.inl
+  RtecEventCommC.inl \
+  RtecEventCommS_T.cpp
 
-RtecEventCommC.cpp RtecEventCommC.h RtecEventCommC.inl: RtecEventComm-stamp
+RtecEventCommC.cpp RtecEventCommC.h RtecEventCommC.inl RtecEventCommS_T.cpp: RtecEventComm-stamp
 
 RtecEventComm-stamp: $(srcdir)/RtecEventComm.idl $(TAO_IDL_DEP)
-	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs -Wb,versioning_begin=TAO_BEGIN_VERSIONED_NAMESPACE_DECL -Wb,versioning_end=TAO_END_VERSIONED_NAMESPACE_DECL -Wb,stub_export_macro=TAO_RTEvent_Export -Wb,stub_export_include=orbsvcs/Event/event_export.h -Wb,skel_export_macro=TAO_RTEvent_Skel_Export -Wb,skel_export_include=orbsvcs/Event/event_skel_export.h $(srcdir)/RtecEventComm.idl
+	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs -Wb,versioning_begin=TAO_BEGIN_VERSIONED_NAMESPACE_DECL -Wb,versioning_end=TAO_END_VERSIONED_NAMESPACE_DECL -GT -Wb,stub_export_macro=TAO_RTEvent_Export -Wb,stub_export_include=orbsvcs/Event/event_export.h -Wb,skel_export_macro=TAO_RTEvent_Skel_Export -Wb,skel_export_include=orbsvcs/Event/event_skel_export.h $(srcdir)/RtecEventComm.idl
 	@touch $@
 
 BUILT_SOURCES += \
   RtecEventChannelAdminC.cpp \
   RtecEventChannelAdminC.h \
-  RtecEventChannelAdminC.inl
+  RtecEventChannelAdminC.inl \
+  RtecEventChannelAdminS_T.cpp
 
 CLEANFILES += \
   RtecEventChannelAdmin-stamp \
   RtecEventChannelAdminC.cpp \
   RtecEventChannelAdminC.h \
-  RtecEventChannelAdminC.inl
+  RtecEventChannelAdminC.inl \
+  RtecEventChannelAdminS_T.cpp
 
-RtecEventChannelAdminC.cpp RtecEventChannelAdminC.h RtecEventChannelAdminC.inl: RtecEventChannelAdmin-stamp
+RtecEventChannelAdminC.cpp RtecEventChannelAdminC.h RtecEventChannelAdminC.inl RtecEventChannelAdminS_T.cpp: RtecEventChannelAdmin-stamp
 
 RtecEventChannelAdmin-stamp: $(srcdir)/RtecEventChannelAdmin.idl $(TAO_IDL_DEP)
-	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs -Wb,versioning_begin=TAO_BEGIN_VERSIONED_NAMESPACE_DECL -Wb,versioning_end=TAO_END_VERSIONED_NAMESPACE_DECL -Wb,stub_export_macro=TAO_RTEvent_Export -Wb,stub_export_include=orbsvcs/Event/event_export.h -Wb,skel_export_macro=TAO_RTEvent_Skel_Export -Wb,skel_export_include=orbsvcs/Event/event_skel_export.h $(srcdir)/RtecEventChannelAdmin.idl
+	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs -Wb,versioning_begin=TAO_BEGIN_VERSIONED_NAMESPACE_DECL -Wb,versioning_end=TAO_END_VERSIONED_NAMESPACE_DECL -GT -Wb,stub_export_macro=TAO_RTEvent_Export -Wb,stub_export_include=orbsvcs/Event/event_export.h -Wb,skel_export_macro=TAO_RTEvent_Skel_Export -Wb,skel_export_include=orbsvcs/Event/event_skel_export.h $(srcdir)/RtecEventChannelAdmin.idl
 	@touch $@
 
 BUILT_SOURCES += \
   RtecUDPAdminC.cpp \
   RtecUDPAdminC.h \
-  RtecUDPAdminC.inl
+  RtecUDPAdminC.inl \
+  RtecUDPAdminS_T.cpp
 
 CLEANFILES += \
   RtecUDPAdmin-stamp \
   RtecUDPAdminC.cpp \
   RtecUDPAdminC.h \
-  RtecUDPAdminC.inl
+  RtecUDPAdminC.inl \
+  RtecUDPAdminS_T.cpp
 
-RtecUDPAdminC.cpp RtecUDPAdminC.h RtecUDPAdminC.inl: RtecUDPAdmin-stamp
+RtecUDPAdminC.cpp RtecUDPAdminC.h RtecUDPAdminC.inl RtecUDPAdminS_T.cpp: RtecUDPAdmin-stamp
 
 RtecUDPAdmin-stamp: $(srcdir)/RtecUDPAdmin.idl $(TAO_IDL_DEP)
-	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs -Wb,versioning_begin=TAO_BEGIN_VERSIONED_NAMESPACE_DECL -Wb,versioning_end=TAO_END_VERSIONED_NAMESPACE_DECL -Wb,stub_export_macro=TAO_RTEvent_Export -Wb,stub_export_include=orbsvcs/Event/event_export.h -Wb,skel_export_macro=TAO_RTEvent_Skel_Export -Wb,skel_export_include=orbsvcs/Event/event_skel_export.h $(srcdir)/RtecUDPAdmin.idl
+	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs -Wb,versioning_begin=TAO_BEGIN_VERSIONED_NAMESPACE_DECL -Wb,versioning_end=TAO_END_VERSIONED_NAMESPACE_DECL -GT -Wb,stub_export_macro=TAO_RTEvent_Export -Wb,stub_export_include=orbsvcs/Event/event_export.h -Wb,skel_export_macro=TAO_RTEvent_Skel_Export -Wb,skel_export_include=orbsvcs/Event/event_skel_export.h $(srcdir)/RtecUDPAdmin.idl
 	@touch $@
 
 lib_LTLIBRARIES += libTAO_RTEvent.la
