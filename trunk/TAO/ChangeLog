@@ -1,3 +1,11 @@
+Wed Nov 22 18:42:53 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * orbsvcs/examples/Log/Event/run_test.pl:
+        * orbsvcs/examples/Log/RTEvent/run_test.pl:
+        * orbsvcs/examples/Log/Notify/run_test.pl:
+
+          Increase timeout so that test passes on slower systems.
+
 Wed Nov 22 15:38:40 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
 
         * tao/Version.h:
