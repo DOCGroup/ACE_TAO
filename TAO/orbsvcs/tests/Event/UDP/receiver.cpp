@@ -64,9 +64,9 @@ main (int argc, char* argv[])
 
       if (valuetype)
         {
-          ValueTypeData_init *vb_factory = 0;
+          Hello::ValueTypeData_init *vb_factory = 0;
           ACE_NEW_RETURN (vb_factory,
-                          ValueTypeData_init,
+                          Hello::ValueTypeData_init,
                           1); // supplied by mapping
 
           orb->register_value_factory (vb_factory->tao_repository_id (),

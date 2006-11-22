@@ -19,6 +19,7 @@
 
 #include "orbsvcs/RtecEventCommS.h"
 #include "orbsvcs/RtecEventChannelAdminC.h"
+#include "TestC.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -55,6 +56,8 @@ public:
   // The skeleton methods.
 
 private:
+  void insert_into_any (CORBA::Any& any, Components::EventBase* vb);
+
   RtecEventChannelAdmin::ProxyPushConsumer_var proxy_;
   // The proxy
 
