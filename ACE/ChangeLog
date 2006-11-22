@@ -1,3 +1,79 @@
+Wed Nov 22 13:45:43 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * configure.ac:
+
+          Update for HTBP unit test and TMCast example move.
+
+        * protocols/tests/HTBP/Reactor_Tests/Reactor_Tests.mpc:
+        * protocols/tests/HTBP/Reactor_Tests/client.cpp:
+        * protocols/tests/HTBP/Reactor_Tests/inside.conf:
+        * protocols/tests/HTBP/Reactor_Tests/server.cpp:
+        * protocols/tests/HTBP/Reactor_Tests/Makefile.am:
+        * protocols/tests/HTBP/Reactor_Tests/test_config.h:
+        * protocols/tests/HTBP/Reactor_Tests/run_test.pl:
+        * protocols/tests/HTBP/HTBP_Config.conf:
+        * protocols/tests/HTBP/Send_Large_Msg/client.cpp:
+        * protocols/tests/HTBP/Send_Large_Msg/Send_Large_Msg.mpc:
+        * protocols/tests/HTBP/Send_Large_Msg/server.cpp:
+        * protocols/tests/HTBP/Send_Large_Msg/Makefile.am:
+        * protocols/tests/HTBP/Send_Large_Msg/run_test.pl:
+        * protocols/tests/HTBP/Makefile.am:
+        * protocols/tests/HTBP/Send_Recv_Tests/SendRecv_Test.mpc:
+        * protocols/tests/HTBP/Send_Recv_Tests/Makefile.am:
+        * protocols/tests/HTBP/Send_Recv_Tests/SendRecv_Test.cpp:
+        * protocols/tests/HTBP/htbptest.mpb:
+        * protocols/tests/HTBP/ping/client.cpp:
+        * protocols/tests/HTBP/ping/server.cpp:
+        * protocols/tests/HTBP/ping/Makefile.am:
+        * protocols/tests/HTBP/ping/ping.mpc:
+        * protocols/tests/HTBP/ping/run_test.pl:
+        * protocols/tests/HTBP/README:
+
+          Move HTBP unit tests to protocols/tests/HTBP...
+
+        * tests/HTBP/Reactor_Tests/Reactor_Tests.mpc:
+        * tests/HTBP/Reactor_Tests/client.cpp:
+        * tests/HTBP/Reactor_Tests/inside.conf:
+        * tests/HTBP/Reactor_Tests/server.cpp:
+        * tests/HTBP/Reactor_Tests/Makefile.am:
+        * tests/HTBP/Reactor_Tests/test_config.h:
+        * tests/HTBP/Reactor_Tests/run_test.pl:
+        * tests/HTBP/HTBP_Config.conf:
+        * tests/HTBP/Send_Large_Msg/client.cpp:
+        * tests/HTBP/Send_Large_Msg/Send_Large_Msg.mpc:
+        * tests/HTBP/Send_Large_Msg/server.cpp:
+        * tests/HTBP/Send_Large_Msg/Makefile.am:
+        * tests/HTBP/Send_Large_Msg/run_test.pl:
+        * tests/HTBP/Makefile.am:
+        * tests/HTBP/Send_Recv_Tests/SendRecv_Test.mpc:
+        * tests/HTBP/Send_Recv_Tests/Makefile.am:
+        * tests/HTBP/Send_Recv_Tests/SendRecv_Test.cpp:
+        * tests/HTBP/htbptest.mpb:
+        * tests/HTBP/ping/client.cpp:
+        * tests/HTBP/ping/server.cpp:
+        * tests/HTBP/ping/Makefile.am:
+        * tests/HTBP/ping/ping.mpc:
+        * tests/HTBP/ping/run_test.pl:
+        * tests/HTBP/README:
+
+          ...from tests/HTBP.
+
+        * protocols/examples/TMCast/Member/Member.mpc:
+        * protocols/examples/TMCast/Member/member.cpp:
+        * protocols/examples/TMCast/Member/Makefile.am:
+        * protocols/examples/TMCast/Member/README:
+        * protocols/examples/TMCast/Makefile.am:
+
+          Moved TMCast examples to protocols/examples/TMCast...
+
+        * examples/TMCast/Member/Member.mpc:
+        * examples/TMCast/Member/member.cpp:
+        * examples/TMCast/Member/Makefile.am:
+        * examples/TMCast/Member/README:
+        * examples/TMCast/Makefile.am:
+
+          ...from examples/TMCast.
+
 Wed Nov 22 13:25:12 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/ace_for_tao.mpc:
