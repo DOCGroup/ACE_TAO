@@ -1,3 +1,9 @@
+Wed Nov 22 20:39:12 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ciao/Dynamic_Component_Servant_Base.h:
+          Removed the character c from the first line which drove the
+          compilers really crazy
+
 Wed Nov 22 19:31:12 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ciao/CCM_Home.idl:
