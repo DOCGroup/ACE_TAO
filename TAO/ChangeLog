@@ -1,3 +1,10 @@
+Wed Nov 22 19:17:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/orbsvcs/CosEvent.mpc:
+        * orbsvcs/orbsvcs/RTEvent.mpc:
+          Add -GT to the idlflags because we have some examples that use
+          the TIE files from these services
+
 Wed Nov 22 18:50:59 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
 
         * orbsvcs/orbsvcs/Log/Log_i.cpp:
