@@ -1,3 +1,21 @@
+Wed Nov 22 18:50:59 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * orbsvcs/orbsvcs/Log/Log_i.cpp:
+
+          Now the infinate recursion problem has been resolved, we invoke
+          TAO_LogMgr_i::create_log_reference() from TAO_Log_i::init() and
+          stash it away in a member variable.  This allows us to remove
+          the code that lazily obtained the object reference within the
+          active data path of the server.
+
+        * orbsvcs/orbsvcs/Log/LogMgr_i.cpp:
+
+          Changed TAO_LogMgr_i::create_log_reference() to use
+          _unchecked_narrow() while narrowing the object reference.  This
+          avoids the infinite recursion which occured with _narrow() when
+          this was called by the servant activator's incarnate() method.
+
+
 Wed Nov 22 18:48:02 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
 
         * orbsvcs/orbsvcs/Log/Hash_LogRecordStore.cpp:

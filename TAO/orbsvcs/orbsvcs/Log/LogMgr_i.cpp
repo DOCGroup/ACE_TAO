@@ -142,8 +142,11 @@ TAO_LogMgr_i::create_log_reference (DsLogAdmin::LogId id
 					      ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (DsLogAdmin::Log::_nil ());
 
+  // Use _unchecked_narrow() because this may be called from a servant
+  // activator's incarnate() method.  A plain _narrow() will result in
+  // infinate recursion.
   DsLogAdmin::Log_var log =
-    DsLogAdmin::Log::_narrow (obj.in () ACE_ENV_ARG_PARAMETER);
+    DsLogAdmin::Log::_unchecked_narrow (obj.in () ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (DsLogAdmin::Log::_nil ());
 
   return log._retn();
