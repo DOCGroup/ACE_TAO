@@ -20,6 +20,7 @@
 #include "ace/SOCK_Stream.h"
 #include "ace/Svc_Handler.h"
 #include "ace/Message_Block.h"
+#include "tao/Versioned_Namespace.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
