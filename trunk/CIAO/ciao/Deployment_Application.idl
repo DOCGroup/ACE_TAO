@@ -1,0 +1,34 @@
+// $Id$
+
+#if !defined (DEPLOYMENT_APPLICATION_IDL)
+#define DEPLOYMENT_APPLICATION_IDL
+
+#include "Deployment_Connection.idl"
+
+module Deployment
+{
+  exception StartError
+  {
+    string name;
+    string reason;
+  };
+
+  exception InvalidConnection
+  {
+    string name;
+    string reason;
+  };
+
+  interface Application
+  {
+    void finishLaunch (in Connections providedReference,
+                       in boolean start,
+                       in boolean is_ReDAC)
+      raises (StartError, InvalidConnection);
+    void start ()
+      raises (StartError);
+  };
+  typedef sequence < Application > Applications;
+};
+
+#endif /* DEPLOYMENT_APPLICATION_IDL */

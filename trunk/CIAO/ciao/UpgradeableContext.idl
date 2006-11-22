@@ -1,10 +1,7 @@
 // $Id$
 
 #include "CCM_Container.idl"
-#include "CCM_Base.idl"
-#include "CCM_Event.idl"
 #include "tao/PortableServer/PortableServer_include.pidl"
-#include <orb.idl>
 
 module CIAO
 {

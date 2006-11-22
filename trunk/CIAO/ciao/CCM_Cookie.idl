@@ -12,23 +12,18 @@
  *          CCM_Base.idl
  */
 
-//#define CIAO_HAS_IMPORT_KEYWORD
+#if !defined (CCM_COOKIE_IDL)
+#define CCM_COOKIE_IDL
 
-#ifdef CIAO_HAS_IMPORT_KEYWORD
-// import ::CORBA;
-#else
-#include <orb.idl>
-#endif /* CIAO_HAS_IMPORT_KEYWORD */
-
-#if !defined (CCM_BASE_IDL)
-#define CCM_BASE_IDL
+#include "tao/OctetSeq.pidl"
 
 module Components
 {
   typeprefix Components "omg.org";
 
-  exception InvalidConnection {};
-  exception AlreadyConnected {};
-  exception NoConnection {};
+  valuetype Cookie
+  {
+    private CORBA::OctetSeq cookieValue;
+  };
 };
-#endif /* CCM_BASE_IDL */
+#endif /* CCM_COOKIE_IDL */

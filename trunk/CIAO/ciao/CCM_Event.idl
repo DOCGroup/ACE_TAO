@@ -17,12 +17,21 @@
 #define CCM_EVENT_IDL
 
 #include "CCM_Base.idl"
+#include "CCM_Navigation.idl"
+#include "CCM_Receptacle.idl"
+#include "CCM_Cookie.idl"
+#include "tao/orb_types.pidl"
 
 module Components
 {
   typeprefix Components "omg.org";
 
   abstract valuetype EventBase {};
+
+  exception BadEventType
+  {
+    CORBA::RepositoryId expected_event_type;
+  };
 
   interface EventConsumerBase
   {

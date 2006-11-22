@@ -2,6 +2,7 @@
 #ifndef NODEAPPLICATIONMANAGER_IDL
 #define NODEAPPLICATIONMANAGER_IDL
 
+#include "Deployment_Core.idl"
 #include "Deployment.idl"
 
 module Deployment {
@@ -13,6 +14,21 @@ module Deployment {
     void destroyApplication (in Application app)
       raises (StopError);
   };
+
+  /**
+   * @struct Sched_Params
+   * @brief Carries Scheduling Params
+   * @description  CIAO specific structure to carry the scheduling params
+   *  to set the process, required by RACE
+   */
+  struct Sched_Params
+  {
+    long policy_;
+    long priority_;
+    long scope_;
+    long msec_;
+  };
+
 
   interface NodeApplicationManager :
     ApplicationManager
@@ -40,7 +56,7 @@ module Deployment {
     /// CIAO speicfic operation to set the information of
     /// "shared components" (through NodeManager)
     void set_shared_components (in ComponentPlans components);
-    
+
     /// CIAO specific function to set priority
     /// o component , required by RACE
     long set_priority (in string cid , in Sched_Params params);

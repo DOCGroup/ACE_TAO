@@ -3,7 +3,7 @@
 #include "Client_init.h"
 #include "CIAO_common.h"
 #include "CCM_ComponentC.h"
-#include "CIAO_ValueC.h"
+#include "CCM_StandardConfiguratorC.h"
 #include "ace/Env_Value_T.h"
 
 int
@@ -11,8 +11,6 @@ CIAO::Client_init (CORBA::ORB_ptr o)
 {
   CIAO_REGISTER_VALUE_FACTORY (o, Components::Cookie_init,
                                Components::Cookie);
-  CIAO_REGISTER_VALUE_FACTORY (o, Components::Cookie_init,
-                               CIAO::Cookie);
   CIAO_REGISTER_VALUE_FACTORY (o, Components::PortDescription_init,
                                Components::PortDescription);
   CIAO_REGISTER_VALUE_FACTORY (o, Components::FacetDescription_init,
