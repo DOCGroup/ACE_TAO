@@ -2,7 +2,7 @@
 
 #include "tao/TkResource/TkResource_Factory.h"
 #include "tao/debug.h"
-#include "ace/TkReactor.h"
+#include "ace/TkReactor/TkReactor.h"
 
 ACE_RCSID( TAO_TkResource,
            TkResource_Factory,

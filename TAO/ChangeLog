@@ -1,3 +1,16 @@
+Wed Nov 22 11:39:12 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/FlResource/FlResource_Factory.cpp:
+        * tao/FlResource/FlResource_Factory.h:
+        * tao/QtResource/QtResource_Factory.cpp:
+        * tao/QtResource/QtResource_Factory.h:
+        * tao/TkResource/TkResource_Factory.cpp:
+        * tao/TkResource/TkResource_Factory.h:
+        * tao/XtResource/XtResource_Factory.cpp:
+        * tao/XtResource/XtResource_Factory.h:
+          Updated these files because the reactors they use are moved
+          to their own directories in ACE.
+
 Wed Nov 22 10:54:12 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Strategies.mpc:

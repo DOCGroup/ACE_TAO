@@ -2,7 +2,7 @@
 
 #include "tao/FlResource/FlResource_Factory.h"
 #include "tao/debug.h"
-#include "ace/FlReactor.h"
+#include "ace/FlReactor/FlReactor.h"
 
 ACE_RCSID( TAO_FlResource,
            FlResource_Factory,
