@@ -1,3 +1,13 @@
+Wed Nov 22 10:48:12 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Log_Msg.cpp:
+          Refactored handling of %W. Added a check for a nill pointer
+          as we have for ascii strings. Fixes bugzilla 2277.
+
+        * tests/Log_Msg_Test.cpp:
+          Added test for %W with a string as argument and with a
+          nill pointer. Fixes bugzilla 2715.
+
 Wed Nov 22 10:38:12 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * examples/Misc/test_XtReactor1.cpp:
