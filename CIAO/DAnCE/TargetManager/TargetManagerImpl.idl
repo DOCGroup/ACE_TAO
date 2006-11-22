@@ -1,7 +1,7 @@
 // $Id$
 
 /**
- * @file TargetManager.idl
+ * @file TargetManagerImpl.idl
  * @brief TargetManager interface defintion
  *
  * @author Nilabja R <nilabjar@dre.vanderbilt.edu>
