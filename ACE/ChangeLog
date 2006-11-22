@@ -1,3 +1,37 @@
+Wed Nov 22 10:45:12 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/MakeProjectCreator/config/core_anytypecode.mpb:
+          Removed svn:executable property
+
+        * bin/MakeProjectCreator/config/core_strategies.mpb
+          New base project for the strategies library when build in
+          ace_for_tao configuration
+
+        * bin/MakeProjectCreator/config/orbsvcslib.mpb:
+          Removed -GT so that we also don't generate TIE files for the
+          orbsvcs anymore. Will speedup builds and simplify other mpc
+          files
+
+        * bin/MakeProjectCreator/config/strategies.mpb
+          Derive from core_strategies. Now the strategies library
+          does get build in an ace_for_tao configuration but
+          shmiop and uiop are not build at all, other protocols
+          can be build. This way we can build COIOP in an ace_for_tao
+          setup
+
+        * bin/make_release:
+          Removed dsp/dsw reference, corrected naming of the ACE
+          packages when the version number gets added.
+
+        * include/makeinclude/platform_hpux_aCC.GNU:
+          Removed HPUX 10.20 support
+
+        * include/makeinclude/platform_lynxos.GNU:
+          ACE_HAS_BROKEN_THREAD_KEYFREE is now set in the config file
+
+        * include/makeinclude/wrapper_macros.GNU:
+          Removed ACE_HAS_GNUG_PRE_2_8 checks
+
 Wed Nov 22 09:07:12 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * docs/run_test.txt:
