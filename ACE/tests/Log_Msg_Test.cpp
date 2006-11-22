@@ -503,14 +503,14 @@ Log_Spec_Verify::log (ACE_Log_Record &log_record)
       ACE_ERROR ((LM_ERROR,
                   ACE_TEXT ("Log_Spec_Verify, unrecognized test: %s\n"),
                   b));
-      this->fail_++;
+      ++this->fail_;
     }
 
   if (b != log_record.msg_data () && ACE_OS::strcmp (b, expect) != 0)
     {
       ACE_ERROR ((LM_ERROR, ACE_TEXT ("Test %s failed; expected %s\n"),
                   log_record.msg_data (), expect));
-      this->fail_++;
+      ++this->fail_;
     }
 
   return;
@@ -557,6 +557,9 @@ test_format_specs (void)
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("%}%ITWO\n")));
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("%}%IONE\n")));
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("%}%IENDINDENTING\n")));
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("%W\n"), ACE_TEXT_WIDE ("My string test\n")));
+  ACE_TCHAR* nill_string = 0;
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("%W\n"), nill_string));
   errno = ENOENT;
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("%m %p\n"), ACE_TEXT("perror")));
   return 0;
