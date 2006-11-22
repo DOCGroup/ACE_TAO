@@ -585,7 +585,7 @@ TAO_ECG_CDR_Message_Receiver::Mcast_Header::read (char *header,
     }
 
   // Validate.
-  size_t data_bytes_received =
+  size_t const data_bytes_received =
     bytes_received - TAO_ECG_CDR_Message_Sender::ECG_HEADER_SIZE;
 
   if (this->request_size < this->fragment_size
