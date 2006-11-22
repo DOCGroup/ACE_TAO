@@ -7,28 +7,32 @@ project(ACE_QtReactor) : acedefaults, core, acelib, ace_qt {
   dynamicflags = ACE_QTREACTOR_BUILD_DLL
 
   MOC_Files {
-    QtReactor.h
+    QtReactor
   }
 
   Source_Files {
-    QtReactor_moc.cpp
-    QtReactor.cpp
+
+    QtReactor/QtReactor_moc.cpp
+    QtReactor
   }
 
   Header_Files {
-    ACE_QtReactor_export.h
+    QtReactor
   }
 
   Inline_Files {
+    QtReactor
   }
 
   Template_Files {
+    QtReactor
   }
 
   Resource_Files {
+    QtReactor
   }
 
   Pkgconfig_Files {
-    ACE_QtReactor.pc.in
+    QtReactor
   }
 }
