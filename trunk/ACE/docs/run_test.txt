@@ -201,11 +201,29 @@ used when the server doesn't shut down itself.  WaitKill is used when
 it does (such as when the client calls a shutdown method).  Once
 again, we check the return status.
 
-
 @verbatim
 unlink $server_ior;
 
 exit $status;
+@endverbatim
+
+When you need the hostname the test is running on be aware of the
+fact that with VxWorks we do cross host testing, part of the test
+runs on the target, the other part on the host system. In your test
+program add functionality to handle a commandline argument to pass
+in the hostname of the target. In the run_test.pl script you can
+then use the following code as example.
+
+@verbatim
+$TARGETHOSTNAME = "localhost";
+if (PerlACE::is_vxworks_test()) {
+  $TARGETHOSTNAME = $ENV{'ACE_RUN_VX_TGT_HOST'};
+  $SV = new PerlACE::ProcessVX ("server", "-ORBEndpoint iiop://$TARGETHOSTNAME:43210");
+ }
+ else {
+  $SV = new PerlACE::Process ("server", "-ORBEndpoint iiop://$TARGETHOSTNAME:43210");
+ }
+$CL = new PerlACE::Process ("client", " -p 43210 -h $TARGETHOSTNAME");
 @endverbatim
 
 And finally, we unlink any files that were created and then just
