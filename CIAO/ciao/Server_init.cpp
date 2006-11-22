@@ -3,6 +3,7 @@
 #include "Server_init.h"
 #include "CIAO_common.h"
 #include "CCM_ComponentC.h"
+#include "CCM_StandardConfiguratorC.h"
 #include "Cookies.h"
 
 #include "ace/OS_NS_stdio.h"
@@ -13,8 +14,6 @@ namespace CIAO
   {
     CIAO_REGISTER_VALUE_FACTORY (o, CIAO::Map_Key_Cookie_init,
                                 Components::Cookie);
-    CIAO_REGISTER_VALUE_FACTORY (o, CIAO::Map_Key_Cookie_init,
-                                CIAO::Cookie);
     CIAO_REGISTER_VALUE_FACTORY (o, Components::PortDescription_init,
                                 Components::PortDescription);
     CIAO_REGISTER_VALUE_FACTORY (o, Components::FacetDescription_init,

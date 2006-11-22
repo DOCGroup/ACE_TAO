@@ -13,11 +13,12 @@
 #define CIAO_COSPERSISTENTSTATE_PIDL
 
 module CosPersistentState {
-        local interface CatalogBase
-          {
-          };
 
-        typedef sequence<octet> _TypeId;
-        typedef string Pid;
+  local interface CatalogBase
+  {
+  };
+
+  typedef sequence<octet> _TypeId;
+  typedef string Pid;
 };
 #endif /* CIAO_COSPERSISTENTSTATE_PIDL */

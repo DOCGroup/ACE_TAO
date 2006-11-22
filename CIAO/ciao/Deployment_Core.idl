@@ -4,7 +4,9 @@
 #define DEPLOYMENT_CORE_IDL
 
 #include "CCM_Component.idl"
-#include <ciaosvcs/Events/CIAO_Events_Base/CIAO_Events.idl>
+#include "Deployment_TargetData.idl"
+#include "Deployment_Data.idl"
+#include "Deployment_Application.idl"
 
 // *************** Packaging and Deployment ***************
 module Deployment
@@ -32,74 +34,10 @@ module Deployment
 
   //Below are from the OMG Deployment.idl
 
-  exception StartError
-  {
-    string name;
-    string reason;
-  };
-
   exception StopError {
     string name;
     string reason;
   };
-
-  exception InvalidConnection
-  {
-    string name;
-    string reason;
-  };
-
-  //==============property==================
-  struct Property
-  {
-    string name;
-    any value;
-  };
-
-  typedef sequence < Property > Properties;
-
-  //============connection==================
-
-  typedef sequence < Object > Endpoints;
-  //typedef Object Endpoint;
-
-  enum CCMComponentPortKind
-  {
-    Facet,
-    SimplexReceptacle,
-    MultiplexReceptacle,
-    EventEmitter,
-    EventPublisher,
-    EventConsumer
-  };
-
-  // CIAO's specific <Connection> type defition.
-  // To avoid the connection info in the plan being passed to the
-  // local node and to make the implementation not very cumbersome
-  // I changed the connection struct to include some extra informations.
-  struct Connection
-  {
-    string instanceName;
-    string portName;
-    CCMComponentPortKind kind;
-
-    string endpointInstanceName; // CIAO specific extension
-    string endpointPortName;     // CIAO specific extension
-
-    // the endpoints member is change to endpoint.
-    // Since we will not have more than 1 objref in there.
-    Object endpoint;
-
-    // A wrapper facade interface to provision different event
-    // communication mechanisms, including RTEC, etc.
-    CIAO::CIAO_Event_Service event_service;
-
-    // The properties of this connection, particularly useful
-    // to speicfy QoS properties of pub/sub service connections.
-    Properties config;
-  };
-
-  typedef sequence < Connection > Connections;
 
   //=======================================
   struct ComponentImplementationInfo
@@ -129,17 +67,6 @@ module Deployment
   {
     ContainerImplementationInfos impl_infos;
     Properties nodeapp_config;
-  };
-
-  //==================================
-  interface Application
-  {
-    void finishLaunch (in Connections providedReference,
-                       in boolean start,
-                       in boolean is_ReDAC)
-      raises (StartError, InvalidConnection);
-    void start ()
-      raises (StartError);
   };
 
   struct Component_Info

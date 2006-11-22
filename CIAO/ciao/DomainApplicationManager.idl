@@ -3,6 +3,7 @@
 #define DOMAINAPPLICATIONMANAGER_IDL
 
 #include "Deployment.idl"
+#include "Deployment_Core.idl"
 
 module Deployment {
   /// CIAO 's DomainApplicationManager interface differs spec-defined interface
