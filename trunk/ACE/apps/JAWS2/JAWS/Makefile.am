@@ -22,7 +22,7 @@ noinst_LTLIBRARIES = libJAWS2.la
 libJAWS2_la_CPPFLAGS = \
   -I$(ACE_ROOT) \
   -I$(ACE_BUILDDIR) \
-  -I.. \
+  -I$(srcdir)/.. \
   -DJAWS_BUILD_DLL
 
 libJAWS2_la_SOURCES = \

@@ -1,3 +1,29 @@
+Wed Nov 22 15:34:12 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * ace/Version.h:
+
+          Remove extraneous whitespace from ACE_VERSION macro definition.
+
+        * ace/Makefile.am:
+
+          Hand tweak.
+
+        * ace/QoS/Makefile.am:
+
+          Revert to earlier version until MPC generation issues are
+          resolved.
+
+        * apps/JAWS2/JAWS/Makefile.am:
+        * apps/JAWS3/jaws3/Makefile.am:
+
+          Regenerated.
+
+        * apps/JAWS2/JAWS/jaws2.mpc:
+        * apps/JAWS3/jaws3/jaws3.mpc:
+
+          Add automake specific includes definition to find headers
+          relative to source directory.
+
 Wed Nov 22 14:24:31 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
 
         * ace/Makefile.am:
