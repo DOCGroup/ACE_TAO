@@ -30,10 +30,7 @@ BUILT_SOURCES = \
   Federated_TestC.inl \
   Federated_TestS.cpp \
   Federated_TestS.h \
-  Federated_TestS.inl \
-  Federated_TestS_T.cpp \
-  Federated_TestS_T.h \
-  Federated_TestS_T.inl
+  Federated_TestS.inl
 
 CLEANFILES = \
   Federated_Test-stamp \
@@ -42,15 +39,12 @@ CLEANFILES = \
   Federated_TestC.inl \
   Federated_TestS.cpp \
   Federated_TestS.h \
-  Federated_TestS.inl \
-  Federated_TestS_T.cpp \
-  Federated_TestS_T.h \
-  Federated_TestS_T.inl
+  Federated_TestS.inl
 
-Federated_TestC.cpp Federated_TestC.h Federated_TestC.inl Federated_TestS.cpp Federated_TestS.h Federated_TestS.inl Federated_TestS_T.cpp Federated_TestS_T.h Federated_TestS_T.inl: Federated_Test-stamp
+Federated_TestC.cpp Federated_TestC.h Federated_TestC.inl Federated_TestS.cpp Federated_TestS.h Federated_TestS.inl: Federated_Test-stamp
 
 Federated_Test-stamp: $(srcdir)/Federated_Test.idl $(TAO_IDL_DEP)
-	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs -GT -Wb,export_macro=TAO_RTEC_Perf_Export -Wb,export_include=rtec_perf_export.h $(srcdir)/Federated_Test.idl
+	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs -Wb,export_macro=TAO_RTEC_Perf_Export -Wb,export_include=rtec_perf_export.h $(srcdir)/Federated_Test.idl
 	@touch $@
 
 noinst_LTLIBRARIES = libTAO_RTEC_Perf.la
@@ -113,9 +107,6 @@ noinst_HEADERS = \
   Federated_TestC.inl \
   Federated_TestS.h \
   Federated_TestS.inl \
-  Federated_TestS_T.cpp \
-  Federated_TestS_T.h \
-  Federated_TestS_T.inl \
   Implicit_Deactivator.h \
   Implicit_Deactivator.inl \
   Loopback.h \

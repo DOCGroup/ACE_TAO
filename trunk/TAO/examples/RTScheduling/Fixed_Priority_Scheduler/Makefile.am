@@ -65,7 +65,7 @@ CLEANFILES = \
 ../FP_SchedulingC.cpp ../FP_SchedulingC.h ../FP_SchedulingC.inl: ../FP_Scheduling-stamp
 
 ../FP_Scheduling-stamp: $(srcdir)/../FP_Scheduling.idl $(TAO_IDL_DEP)
-	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs -GT -SS -St -o .. $(srcdir)/../FP_Scheduling.idl
+	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs -SS -St -o .. $(srcdir)/../FP_Scheduling.idl
 	@touch $@
 
 noinst_PROGRAMS += test

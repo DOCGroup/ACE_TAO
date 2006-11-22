@@ -29,10 +29,7 @@ BUILT_SOURCES = \
   CountryC.inl \
   CountryS.cpp \
   CountryS.h \
-  CountryS.inl \
-  CountryS_T.cpp \
-  CountryS_T.h \
-  CountryS_T.inl
+  CountryS.inl
 
 CLEANFILES = \
   Country-stamp \
@@ -41,15 +38,12 @@ CLEANFILES = \
   CountryC.inl \
   CountryS.cpp \
   CountryS.h \
-  CountryS.inl \
-  CountryS_T.cpp \
-  CountryS_T.h \
-  CountryS_T.inl
+  CountryS.inl
 
-CountryC.cpp CountryC.h CountryC.inl CountryS.cpp CountryS.h CountryS.inl CountryS_T.cpp CountryS_T.h CountryS_T.inl: Country-stamp
+CountryC.cpp CountryC.h CountryC.inl CountryS.cpp CountryS.h CountryS.inl: Country-stamp
 
 Country-stamp: $(srcdir)/Country.idl $(TAO_IDL_DEP)
-	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs -GT $(srcdir)/Country.idl
+	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs $(srcdir)/Country.idl
 	@touch $@
 
 noinst_PROGRAMS += Consumer
@@ -72,8 +66,6 @@ Consumer_SOURCES = \
   CountryC.inl \
   CountryS.h \
   CountryS.inl \
-  CountryS_T.h \
-  CountryS_T.inl \
   Country_i.h
 
 Consumer_LDADD = \

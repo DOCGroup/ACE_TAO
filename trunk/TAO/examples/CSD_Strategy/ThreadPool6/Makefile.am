@@ -33,8 +33,7 @@ BUILT_SOURCES += \
   FooS.h \
   FooS.inl \
   FooS_T.cpp \
-  FooS_T.h \
-  FooS_T.inl
+  FooS_T.h
 
 CLEANFILES += \
   Foo-stamp \
@@ -45,10 +44,9 @@ CLEANFILES += \
   FooS.h \
   FooS.inl \
   FooS_T.cpp \
-  FooS_T.h \
-  FooS_T.inl
+  FooS_T.h
 
-FooC.cpp FooC.h FooC.inl FooS.cpp FooS.h FooS.inl FooS_T.cpp FooS_T.h FooS_T.inl: Foo-stamp
+FooC.cpp FooC.h FooC.inl FooS.cpp FooS.h FooS.inl FooS_T.cpp FooS_T.h: Foo-stamp
 
 Foo-stamp: $(srcdir)/Foo.idl $(TAO_IDL_DEP)
 	$(TAO_IDL) $(TAO_IDLFLAGS) -GT $(srcdir)/Foo.idl
@@ -74,7 +72,6 @@ server_main_SOURCES = \
   FooS.h \
   FooS.inl \
   FooS_T.h \
-  FooS_T.inl \
   Foo_i.h \
   OrbShutdownTask.h \
   ServerApp.h
