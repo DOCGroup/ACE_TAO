@@ -1,3 +1,12 @@
+Wed Nov 22 19:31:12 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ciao/CCM_Home.idl:
+        * ciao/CCM_Object.idl:
+          Moved CCMHome to CCMObject, when these are in seperate files
+          the generated code for components is not correct. We want to have
+          these interfaces in seperate files but we can sort out this
+          later.
+
 Wed Nov 22 14:45:12 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ciao/Dynamic_Component_Servant_Base.h:
