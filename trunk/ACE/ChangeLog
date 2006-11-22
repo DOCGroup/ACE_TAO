@@ -1,3 +1,18 @@
+Wed Nov 22 14:24:31 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * ace/Makefile.am:
+
+          Regenerated.
+
+        * ace/ace_xtreactor.mpc:
+        * ace/ace_tkreactor.mpc:
+        * ace/ace_flreactor.mpc:
+        * ace/ace_qtreactor.mpc:
+
+          Changed to specify full name of pkgconfig template file,
+          the MPC Custom spec does not automatically match *.pc.in
+          files.
+
 Wed Nov 22 14:16:40 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
 
         * examples/ConfigViewer/Makefile.am:

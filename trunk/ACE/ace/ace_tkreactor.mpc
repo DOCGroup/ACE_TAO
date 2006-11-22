@@ -27,6 +27,6 @@ project(ACE_TkReactor) : acedefaults, core, acelib, ace_tk {
   }
 
   Pkgconfig_Files {
-    TkReactor
+    TkReactor/ACE_TkReactor.pc.in
   }
 }

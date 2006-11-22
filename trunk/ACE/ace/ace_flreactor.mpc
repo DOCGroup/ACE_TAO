@@ -27,6 +27,6 @@ project(ACE_FlReactor) : acedefaults, core, acelib, ace_fl{
   }
 
   Pkgconfig_Files {
-    FlReactor
+    FlReactor/ACE_FlReactor.pc.in
   }
 }
