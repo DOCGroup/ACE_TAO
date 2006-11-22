@@ -1,7 +1,7 @@
 # $Id$
 #
-# LynxOS with g++.  Defaults to LynxOS Version 4.0.0.  For Version 3.1.0,
-# for example, add "VERSION=3.1.0" to your make invocation.
+# LynxOS with g++.  Defaults to LynxOS Version 4.0.0.  For Version 4.2.0,
+# for example, add "VERSION=4.2.0" to your make invocation.
 
 #### NOTE:  It's best to create a file that includes this one, instead
 #### of symlinking it.  That way, you can easily override the default
@@ -109,7 +109,6 @@ endif
 
 ifeq ($(shared_libs),1)
   CFLAGS  += -mshared -DACE_HAS_SVR4_DYNAMIC_LINKING
-  CFLAGS  += -DACE_HAS_BROKEN_THREAD_KEYFREE
   SOFLAGS += -mshared -DACE_HAS_SVR4_DYNAMIC_LINKING
   LIBS    += -ldl
 else
@@ -133,7 +132,7 @@ SOBUILD         = $(COMPILE.cc) $(PIC) -o $(VSHDIR)$*.so $<; \
                   $(SOLINK.cc) -o $@ $(LDFLAGS) $(VSHDIR)$*.o
 PRELIB          = @true
 
-# Test for template instantiation, add to SOFLAGS if SONAME set, 
+# Test for template instantiation, add to SOFLAGS if SONAME set,
 # add -E to LDFLAGS if using GNU ld
 #
 include $(ACE_ROOT)/include/makeinclude/platform_g++_common.GNU

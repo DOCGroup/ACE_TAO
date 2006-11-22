@@ -589,14 +589,12 @@ endif
 ec_typed_events ?= 1
 
 ifeq ($(exceptions),0)
-  ifeq ($(ACE_HAS_GNUG_PRE_2_8),0)
     #### Disable the default exception handling of g++ >= 2.8.0.
     ifneq ($(ACE_GNUG_ON_UNIXWARE),)
       CCFLAGS += -fcheck-new
     else
       CCFLAGS += -fno-exceptions -fcheck-new
     endif # ! ACE_GNUG_ON_UNIXWARE
-  endif # ! ACE_HAS_GNUG_PRE_2_8
 else  # exceptions
   CPPFLAGS += -DACE_HAS_EXCEPTIONS
   ifndef include_env
@@ -605,17 +603,6 @@ else  # exceptions
   ifeq ($(include_env),1)
     CPPFLAGS += -DACE_ENV_BKWD_COMPAT
   endif
-  ifeq ($(ACE_HAS_GNUG_PRE_2_8),1)
-    #### Enable exception handling with g++ < 2.8.0.  Not recommended,
-    #### but provided here for completeness.
-    CCFLAGS += -fhandle-exceptions
-#  else  # ! ACE_HAS_GNUG_PRE_2_8
-#  ifeq ($(ACE_HAS_GNUG_PRE_2_8),0)
-#    #### Disable this warning on g++ >= 2.8.0 if exceptions are enabled,
-#    #### it gets confused and reports too many bogus warnings.
-#    CCFLAGS += -Wno-uninitialized
-#  endif # g++ > 2.8.0
-  endif # ! ACE_HAS_GNUG_PRE_2_8
   ACE_MAKE_OPTIONS += exceptions
 endif # exceptions
 
