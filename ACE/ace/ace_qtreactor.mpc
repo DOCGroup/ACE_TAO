@@ -33,6 +33,6 @@ project(ACE_QtReactor) : acedefaults, core, acelib, ace_qt {
   }
 
   Pkgconfig_Files {
-    QtReactor
+    QtReactor/ACE_QtReactor.pc.in
   }
 }

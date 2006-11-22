@@ -27,6 +27,6 @@ project(ACE_XtReactor) : acedefaults, core, acelib, ace_xt {
   }
 
   Pkgconfig_Files {
-    XtReactor
+    XtReactor/ACE_XtReactor.pc.in
   }
 }
