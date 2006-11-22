@@ -1,36 +1,32 @@
-// $Id$
-
-#include "ace/XtReactor.h"
+#include "ace/TkReactor/TkReactor.h"
 
 #include "ace/SOCK_Acceptor.h"
 #include "ace/SOCK_Connector.h"
 
-ACE_RCSID(ace, XtReactor, "$Id$")
+ACE_RCSID(ace, TkReactor, "$Id$")
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
-ACE_ALLOC_HOOK_DEFINE (ACE_XtReactor)
+ACE_ALLOC_HOOK_DEFINE (ACE_TkReactor)
 
 // Must be called with lock held
-ACE_XtReactor::ACE_XtReactor (XtAppContext context,
-                              size_t size,
+ACE_TkReactor::ACE_TkReactor (size_t size,
                               int restart,
                               ACE_Sig_Handler *h)
   : ACE_Select_Reactor (size, restart, h),
-    context_ (context),
     ids_ (0),
     timeout_ (0)
 {
   // When the ACE_Select_Reactor is constructed it creates the notify
   // pipe and registers it with the register_handler_i() method. The
-  // XtReactor overloads this method BUT because the
+  // TkReactor overloads this method BUT because the
   // register_handler_i occurs when constructing the base class
   // ACE_Select_Reactor, the ACE_Select_Reactor register_handler_i()
-  // is called not the XtReactor register_handler_i().  This means
+  // is called not the TkReactor register_handler_i().  This means
   // that the notify pipe is registered with the ACE_Select_Reactor
-  // event handling code not the XtReactor and so notfications don't
+  // event handling code not the TkReactor and so notfications don't
   // work.  To get around this we simply close and re-opened the
-  // notification handler in the constructor of the XtReactor.
+  // notification handler in the constructor of the TkReactor.
 
 #if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
   this->notify_handler_->close ();
@@ -38,26 +34,26 @@ ACE_XtReactor::ACE_XtReactor (XtAppContext context,
 #endif /* ACE_MT_SAFE */
 }
 
-ACE_XtReactor::~ACE_XtReactor (void)
+ACE_TkReactor::~ACE_TkReactor (void)
 {
   // Delete the remaining items in the linked list.
 
   while (this->ids_)
     {
-      ACE_XtReactorID *XtID = this->ids_->next_;
+      ACE_TkReactorID *TkID = this->ids_->next_;
       delete this->ids_;
-      this->ids_ = XtID;
+      this->ids_ = TkID;
     }
 }
 
 // This is just the <wait_for_multiple_events> from ace/Reactor.cpp
-// but we use the Xt functions to wait for an event, not <select>
+// but we use the Tk functions to wait for an event, not <select>
 
 int
-ACE_XtReactor::wait_for_multiple_events (ACE_Select_Reactor_Handle_Set &handle_set,
+ACE_TkReactor::wait_for_multiple_events (ACE_Select_Reactor_Handle_Set &handle_set,
                                          ACE_Time_Value *max_wait_time)
 {
-  ACE_TRACE ("ACE_XtReactor::wait_for_multiple_events");
+  ACE_TRACE ("ACE_TkReactor::wait_for_multiple_events");
   int nfound;
 
   do
@@ -68,7 +64,7 @@ ACE_XtReactor::wait_for_multiple_events (ACE_Select_Reactor_Handle_Set &handle_s
       handle_set.rd_mask_ = this->wait_set_.rd_mask_;
       handle_set.wr_mask_ = this->wait_set_.wr_mask_;
       handle_set.ex_mask_ = this->wait_set_.ex_mask_;
-      nfound = XtWaitForMultipleEvents (width,
+      nfound = TkWaitForMultipleEvents (width,
                                         handle_set,
                                         max_wait_time);
 
@@ -86,9 +82,9 @@ ACE_XtReactor::wait_for_multiple_events (ACE_Select_Reactor_Handle_Set &handle_s
 }
 
 void
-ACE_XtReactor::TimerCallbackProc (XtPointer closure, XtIntervalId * /* id */)
+ACE_TkReactor::TimerCallbackProc (ClientData cd)
 {
-  ACE_XtReactor *self = (ACE_XtReactor *) closure;
+  ACE_TkReactor *self = (ACE_TkReactor *) cd;
   self->timeout_ = 0;
 
   // Deal with any timer events
@@ -97,17 +93,21 @@ ACE_XtReactor::TimerCallbackProc (XtPointer closure, XtIntervalId * /* id */)
   self->reset_timeout ();
 }
 
-// This could be made shorter if we know which *kind* of event we were
-// about to get.  Here we use <select> to find out which one might be
-// available.
-
+/**
+ * @todo the unused mask argument is probably quite useful, but we
+ *       ignore it, why?  In fact the following comment probably
+ *       relates to that:
+ *       This could be made shorter if we know which *kind* of event
+ *       we were about to get.  Here we use <select> to find out which
+ *       one might be available.
+ */
 void
-ACE_XtReactor::InputCallbackProc (XtPointer closure,
-                                  int *source,
-                                  XtInputId *)
+ACE_TkReactor::InputCallbackProc (ClientData cd,
+                                  int /* mask */)
 {
-  ACE_XtReactor *self = (ACE_XtReactor *) closure;
-  ACE_HANDLE handle = (ACE_HANDLE) *source;
+  ACE_TkReactor_Input_Callback *callback = (ACE_TkReactor_Input_Callback *) cd;
+  ACE_TkReactor *self = callback->reactor_;
+  ACE_HANDLE handle = callback->handle_;
 
   // my copy isn't const.
   ACE_Time_Value zero = ACE_Time_Value::zero;
@@ -124,7 +124,7 @@ ACE_XtReactor::InputCallbackProc (XtPointer closure,
   if (self->wait_set_.ex_mask_.is_set (handle))
     wait_set.ex_mask_.set_bit (handle);
 
-  int result = ACE_OS::select (*source + 1,
+  int result = ACE_OS::select (handle + 1,
                                wait_set.rd_mask_,
                                wait_set.wr_mask_,
                                wait_set.ex_mask_, &zero);
@@ -146,13 +146,10 @@ ACE_XtReactor::InputCallbackProc (XtPointer closure,
 }
 
 int
-ACE_XtReactor::XtWaitForMultipleEvents (int width,
+ACE_TkReactor::TkWaitForMultipleEvents (int width,
                                         ACE_Select_Reactor_Handle_Set &wait_set,
                                         ACE_Time_Value *)
 {
-  // Make sure we have a valid context
-  ACE_ASSERT (this->context_ != 0);
-
   // Check to make sure our handle's are all usable.
   ACE_Select_Reactor_Handle_Set temp_set = wait_set;
 
@@ -163,11 +160,11 @@ ACE_XtReactor::XtWaitForMultipleEvents (int width,
                       (ACE_Time_Value *) &ACE_Time_Value::zero) == -1)
     return -1; // Bad file arguments...
 
-  // Instead of waiting using <select>, just use the Xt mechanism to
+  // Instead of waiting using <select>, just use the Tk mechanism to
   // wait for a single event.
 
   // Wait for something to happen.
-  ::XtAppProcessEvent (this->context_, XtIMAll);
+  ::Tcl_DoOneEvent (0);
 
   // Reset the width, in case it changed during the upcalls.
   width = this->handler_rep_.max_handlep1 ();
@@ -181,27 +178,12 @@ ACE_XtReactor::XtWaitForMultipleEvents (int width,
                          (ACE_Time_Value *) &ACE_Time_Value::zero);
 }
 
-XtAppContext
-ACE_XtReactor::context (void) const
-{
-  return this->context_;
-}
-
-void
-ACE_XtReactor::context (XtAppContext context)
-{
-  this->context_ = context;
-}
-
 int
-ACE_XtReactor::register_handler_i (ACE_HANDLE handle,
+ACE_TkReactor::register_handler_i (ACE_HANDLE handle,
                                    ACE_Event_Handler *handler,
                                    ACE_Reactor_Mask mask)
 {
-  ACE_TRACE ("ACE_XtReactor::register_handler_i");
-
-  // Make sure we have a valid context
-  ACE_ASSERT (this->context_ != 0);
+  ACE_TRACE ("ACE_TkReactor::register_handler_i");
 
   int result = ACE_Select_Reactor::register_handler_i (handle,
                                                        handler, mask);
@@ -212,70 +194,81 @@ ACE_XtReactor::register_handler_i (ACE_HANDLE handle,
 
 #if !defined ACE_WIN32
   if (ACE_BIT_ENABLED (mask, ACE_Event_Handler::READ_MASK))
-    ACE_SET_BITS (condition, XtInputReadMask);
+    ACE_SET_BITS (condition, TK_READABLE);
   if (ACE_BIT_ENABLED (mask, ACE_Event_Handler::WRITE_MASK))
-    ACE_SET_BITS (condition, XtInputWriteMask);
+    ACE_SET_BITS (condition, TK_WRITABLE);
   if (ACE_BIT_ENABLED (mask, ACE_Event_Handler::EXCEPT_MASK))
-    ACE_SET_BITS (condition, XtInputExceptMask);
+    ACE_SET_BITS (condition, TK_EXCEPTION);
   if (ACE_BIT_ENABLED (mask, ACE_Event_Handler::ACCEPT_MASK))
-    ACE_SET_BITS (condition, XtInputReadMask);
+    ACE_SET_BITS (condition, TK_READABLE);
   if (ACE_BIT_ENABLED (mask, ACE_Event_Handler::CONNECT_MASK)){
-      ACE_SET_BITS (condition, XtInputWriteMask); // connected, you may write
-      ACE_SET_BITS (condition, XtInputReadMask);  // connected, you have data/err
+      ACE_SET_BITS (condition, TK_READABLE); // connected, you may write
+      ACE_SET_BITS (condition, TK_WRITABLE);  // connected, you have data/err
   }
 #else
   if (ACE_BIT_ENABLED (mask, ACE_Event_Handler::READ_MASK))
-    ACE_SET_BITS (condition, XtInputReadWinsock);
+    ACE_SET_BITS (condition, TK_READABLE);
   if (ACE_BIT_ENABLED (mask, ACE_Event_Handler::WRITE_MASK))
-    ACE_SET_BITS (condition, XtInputWriteWinsock);
+    ACE_SET_BITS (condition, TK_WRITABLE);
   if (ACE_BIT_ENABLED (mask, ACE_Event_Handler::EXCEPT_MASK))
     ACE_NOTSUP_RETURN(-1);
   if (ACE_BIT_ENABLED (mask, ACE_Event_Handler::ACCEPT_MASK))
-    ACE_SET_BITS (condition, XtInputReadWinsock);
+    ACE_SET_BITS (condition, TK_READABLE);
   if (ACE_BIT_ENABLED (mask, ACE_Event_Handler::CONNECT_MASK)){
-      ACE_SET_BITS (condition, XtInputWriteWinsock); // connected, you may write
-      ACE_SET_BITS (condition, XtInputReadWinsock);  // connected, you have data/err
+      ACE_SET_BITS (condition, TK_READABLE); // connected, you may write
+      ACE_SET_BITS (condition, TK_WRITABLE);  // connected, you have data/err
   }
 #endif /* !ACE_WIN32 */
 
   if (condition != 0)
     {
-      ACE_XtReactorID *XtID = this->ids_;
+      ACE_TkReactorID *TkID = this->ids_;
 
-      while(XtID)
+      while(TkID)
         {
-          if (XtID->handle_ == handle)
+          if (TkID->handle_ == handle)
             {
-              ::XtRemoveInput (XtID->id_);
+              ::Tk_DeleteFileHandler (TkID->handle_);
 
-              XtID->id_ = ::XtAppAddInput (this->context_,
-                                           (int) handle,
-                                           (XtPointer) condition,
-                                           InputCallbackProc,
-                                           (XtPointer) this);
+              ACE_TkReactor_Input_Callback *callback;
+              ACE_NEW_RETURN (callback,
+                              ACE_TkReactor_Input_Callback,
+                              -1);
+              callback->reactor_ = this;
+              callback->handle_ = handle;
+              ::Tk_CreateFileHandler ((int) handle,
+                                      condition,
+                                      InputCallbackProc,
+                                      (ClientData) callback);
               return 0;
             }
           else
-            XtID = XtID->next_;
+            TkID = TkID->next_;
         }
 
-      ACE_NEW_RETURN (XtID,
-                      ACE_XtReactorID,
+      ACE_NEW_RETURN (TkID,
+                      ACE_TkReactorID,
                       -1);
-      XtID->next_ = this->ids_;
-      XtID->handle_ = handle;
-      XtID->id_ = ::XtAppAddInput (this->context_,
-                                  (int) handle,
-                                  (XtPointer) condition,
-                                  InputCallbackProc,
-                                  (XtPointer) this);
-      this->ids_ = XtID;
+      TkID->next_ = this->ids_;
+      TkID->handle_ = handle;
+      ACE_TkReactor_Input_Callback *callback;
+      ACE_NEW_RETURN (callback,
+                      ACE_TkReactor_Input_Callback,
+                      -1);
+      callback->reactor_ = this;
+      callback->handle_ = handle;
+
+      ::Tk_CreateFileHandler ((int) handle,
+                              condition,
+                              InputCallbackProc,
+                              (ClientData) callback);
+      this->ids_ = TkID;
     }
   return 0;
 }
 
 int
-ACE_XtReactor::register_handler_i (const ACE_Handle_Set &handles,
+ACE_TkReactor::register_handler_i (const ACE_Handle_Set &handles,
                                    ACE_Event_Handler *handler,
                                    ACE_Reactor_Mask mask)
 {
@@ -285,17 +278,17 @@ ACE_XtReactor::register_handler_i (const ACE_Handle_Set &handles,
 }
 
 int
-ACE_XtReactor::remove_handler_i (ACE_HANDLE handle,
+ACE_TkReactor::remove_handler_i (ACE_HANDLE handle,
                                  ACE_Reactor_Mask mask)
 {
-  ACE_TRACE ("ACE_XtReactor::remove_handler_i");
+  ACE_TRACE ("ACE_TkReactor::remove_handler_i");
 
   // In the registration phase we registered first with
   // ACE_Select_Reactor and then with X.  Now we are now doing things
   // in reverse order.
 
   // First clean up the corresponding X11Input.
-  this->remove_XtInput (handle);
+  this->remove_TkFileHandler (handle);
 
   // Now let the reactor do its work.
   return ACE_Select_Reactor::remove_handler_i (handle,
@@ -303,36 +296,36 @@ ACE_XtReactor::remove_handler_i (ACE_HANDLE handle,
 }
 
 void
-ACE_XtReactor::remove_XtInput (ACE_HANDLE handle)
+ACE_TkReactor::remove_TkFileHandler (ACE_HANDLE handle)
 {
-  ACE_TRACE ("ACE_XtReactor::remove_XtInput");
+  ACE_TRACE ("ACE_TkReactor::remove_TkFileHandler");
 
-  ACE_XtReactorID *XtID = this->ids_;
+  ACE_TkReactorID *TkID = this->ids_;
 
-  if (XtID)
+  if (TkID)
     {
-      if (XtID->handle_ == handle)
+      if (TkID->handle_ == handle)
         {
-          ::XtRemoveInput (XtID->id_);
-          this->ids_ = XtID->next_;
-          delete XtID;
+          ::Tk_DeleteFileHandler (TkID->handle_);
+          this->ids_ = TkID->next_;
+          delete TkID;
           return;
         }
 
-      ACE_XtReactorID *NextID = XtID->next_;
+      ACE_TkReactorID *NextID = TkID->next_;
 
       while (NextID)
         {
           if (NextID->handle_ == handle)
             {
-              ::XtRemoveInput(NextID->id_);
-              XtID->next_ = NextID->next_;
+              ::Tk_DeleteFileHandler (NextID->handle_);
+              TkID->next_ = NextID->next_;
               delete NextID;
               return;
             }
           else
             {
-              XtID = NextID;
+              TkID = NextID;
               NextID = NextID->next_;
             }
         }
@@ -340,45 +333,41 @@ ACE_XtReactor::remove_XtInput (ACE_HANDLE handle)
 }
 
 int
-ACE_XtReactor::remove_handler_i (const ACE_Handle_Set &handles,
+ACE_TkReactor::remove_handler_i (const ACE_Handle_Set &handles,
                                  ACE_Reactor_Mask mask)
 {
   return ACE_Select_Reactor::remove_handler_i (handles,
                                                mask);
 }
 
-// The following functions ensure that there is an Xt timeout for the
+// The following functions ensure that there is an Tk timeout for the
 // first timeout in the Reactor's Timer_Queue.
 
 void
-ACE_XtReactor::reset_timeout (void)
+ACE_TkReactor::reset_timeout (void)
 {
-  // Make sure we have a valid context
-  ACE_ASSERT (this->context_ != 0);
-
-  if (timeout_)
-    ::XtRemoveTimeOut (timeout_);
+  if (this->timeout_)
+    ::Tk_DeleteTimerHandler (this->timeout_);
   timeout_ = 0;
 
   ACE_Time_Value *max_wait_time =
     this->timer_queue_->calculate_timeout (0);
 
   if (max_wait_time)
-    timeout_ = ::XtAppAddTimeOut (this->context_,
-                                  max_wait_time->msec (),
-                                  TimerCallbackProc,
-                                  (XtPointer) this);
+    timeout_ = ::Tk_CreateTimerHandler (max_wait_time->msec (),
+                                        TimerCallbackProc,
+                                        (ClientData) this);
 }
 
 int
-ACE_XtReactor::reset_timer_interval
+ACE_TkReactor::reset_timer_interval
   (long timer_id,
    const ACE_Time_Value &interval)
 {
-  ACE_TRACE ("ACE_XtReactor::reset_timer_interval");
+  ACE_TRACE ("ACE_TkReactor::reset_timer_interval");
   ACE_MT (ACE_GUARD_RETURN (ACE_Select_Reactor_Token, ace_mon, this->token_, -1));
 
-  int const result = ACE_Select_Reactor::timer_queue_->reset_interval
+  int result = ACE_Select_Reactor::timer_queue_->reset_interval
     (timer_id,
      interval);
 
@@ -392,18 +381,18 @@ ACE_XtReactor::reset_timer_interval
 }
 
 long
-ACE_XtReactor::schedule_timer (ACE_Event_Handler *event_handler,
-                const void *arg,
+ACE_TkReactor::schedule_timer (ACE_Event_Handler *event_handler,
+                               const void *arg,
                 const ACE_Time_Value &delay,
                                const ACE_Time_Value &interval)
 {
-  ACE_TRACE ("ACE_XtReactor::schedule_timer");
+  ACE_TRACE ("ACE_TkReactor::schedule_timer");
   ACE_MT (ACE_GUARD_RETURN (ACE_Select_Reactor_Token, ace_mon, this->token_, -1));
 
-  long const result = ACE_Select_Reactor::schedule_timer (event_handler,
-                                                          arg,
-                                                          delay,
-                                                          interval);
+  long result = ACE_Select_Reactor::schedule_timer (event_handler,
+                                                    arg,
+                                                    delay,
+                                                    interval);
   if (result == -1)
     return -1;
   else
@@ -414,10 +403,10 @@ ACE_XtReactor::schedule_timer (ACE_Event_Handler *event_handler,
 }
 
 int
-ACE_XtReactor::cancel_timer (ACE_Event_Handler *handler,
+ACE_TkReactor::cancel_timer (ACE_Event_Handler *handler,
                              int dont_call_handle_close)
 {
-  ACE_TRACE ("ACE_XtReactor::cancel_timer");
+  ACE_TRACE ("ACE_TkReactor::cancel_timer");
 
   if (ACE_Select_Reactor::cancel_timer (handler,
                                         dont_call_handle_close) == -1)
@@ -430,11 +419,11 @@ ACE_XtReactor::cancel_timer (ACE_Event_Handler *handler,
 }
 
 int
-ACE_XtReactor::cancel_timer (long timer_id,
+ACE_TkReactor::cancel_timer (long timer_id,
                              const void **arg,
                              int dont_call_handle_close)
 {
-  ACE_TRACE ("ACE_XtReactor::cancel_timer");
+  ACE_TRACE ("ACE_TkReactor::cancel_timer");
 
   if (ACE_Select_Reactor::cancel_timer (timer_id,
                                         arg,

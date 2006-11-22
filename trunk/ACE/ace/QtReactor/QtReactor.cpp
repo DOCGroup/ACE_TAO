@@ -1,6 +1,6 @@
 //$Id$
 
-#include "ace/QtReactor.h"
+#include "ace/QtReactor/QtReactor.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 

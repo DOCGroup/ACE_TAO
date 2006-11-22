@@ -7,24 +7,26 @@ project(ACE_FlReactor) : acedefaults, core, acelib, ace_fl{
   dynamicflags = ACE_FLREACTOR_BUILD_DLL
 
   Source_Files {
-    FlReactor.cpp
+    FlReactor
   }
 
   Header_Files {
-    ACE_FlReactor_export.h
-    FlReactor.h
+    FlReactor
   }
 
   Inline_Files {
+    FlReactor
   }
 
   Template_Files {
+    FlReactor
   }
 
   Resource_Files {
+    FlReactor
   }
 
   Pkgconfig_Files {
-    ACE_FlReactor.pc.in
+    FlReactor
   }
 }
