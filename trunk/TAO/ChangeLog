@@ -1,3 +1,38 @@
+Wed Nov 22 10:23:12 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * performance-tests/Callback/Callback.mpc:
+        * performance-tests/Cubit/TAO/IDL_Cubit/IDL_Cubit.mpc:
+        * performance-tests/Cubit/TAO/MT_Cubit/MT_Cubit.mpc:
+        * performance-tests/Latency/AMH_Single_Threaded/Single_Threaded.mpc:
+        * performance-tests/Latency/Collocation/Collocation.mpc:
+        * performance-tests/Latency/Deferred/Deferred.mpc:
+        * performance-tests/Latency/DII/DII.mpc:
+        * performance-tests/Latency/DSI/DSI.mpc:
+        * performance-tests/Latency/Single_Threaded/Single_Threaded.mpc:
+        * performance-tests/Sequence_Latency/AMH_Single_Threaded/Single_Threaded.mpc:
+        * performance-tests/Sequence_Latency/Deferred/Deferred.mpc:
+        * performance-tests/Sequence_Latency/DII/DII.mpc:
+        * performance-tests/Sequence_Latency/DSI/DSI.mpc:
+        * performance-tests/Sequence_Latency/Single_Threaded/Single_Threaded.mpc:
+        * orbsvcs/performance-tests/LoadBalancing/LBPerf/RPS/LoadBalancing.mpc:
+          Explicitly add avoids += ace_for_tao to these projects. At this
+          moment they are not build because the strategies library is not
+          available with ace_for_tao, but this is something I will change
+          but besides strategies these projects do use some ACE classes
+          which are not available in the ace_for_tao configuration
+
+        * orbsvcs/orbsvcs/Event/ECG_CDR_Message_Receiver.cpp:
+          Const improvement
+
+        * orbsvcs/tests/Event/UDP/Consumer.cpp:
+        * orbsvcs/tests/Event/UDP/receiver.cpp:
+        * orbsvcs/tests/Event/UDP/Supplier.cpp:
+        * orbsvcs/tests/Event/UDP/Supplier.h:
+        * orbsvcs/tests/Event/UDP/Test.idl:
+          Extended this test and reproduced the bug we had in CIAO. This
+          test now will fail until Jeff Parsons commits some related
+          valuetype changes.
+
 Wed Nov 22 10:17:12 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * Release:
