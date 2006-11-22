@@ -4,8 +4,6 @@
 #include "orbsvcs/RtecEventChannelAdminS.h"
 #include "orbsvcs/Event_Service_Constants.h"
 
-#include "TestC.h"
-
 ACE_RCSID (EC_Examples,
            Supplier,
            "$Id$")
@@ -67,6 +65,12 @@ Supplier::disconnect (ACE_ENV_SINGLE_ARG_DECL)
 }
 
 void
+Supplier::insert_into_any (CORBA::Any& any, Components::EventBase* vb)
+{
+  any <<= vb;
+}
+
+void
 Supplier::perform_push (ACE_ENV_SINGLE_ARG_DECL)
 {
   ACE_TRY
@@ -83,10 +87,10 @@ Supplier::perform_push (ACE_ENV_SINGLE_ARG_DECL)
 
       if (this->valuetype_)
         {
-          OBV_ValueTypeData * test_data = 0;
-          ACE_NEW (test_data, OBV_ValueTypeData ());
+          OBV_Hello::ValueTypeData * test_data = 0;
+          ACE_NEW (test_data, OBV_Hello::ValueTypeData ());
           test_data->data ("ACE/TAO/CIAO");
-          event[0].data.any_value <<= test_data;
+          insert_into_any (event[0].data.any_value, test_data);
         }
       else
         {
