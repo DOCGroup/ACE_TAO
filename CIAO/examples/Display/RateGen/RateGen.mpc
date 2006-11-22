@@ -4,7 +4,6 @@
 project(Display_Base_RateGen_stub): ciao_client_dnc {
   after += Display_Base_stub
   sharedname = RateGen_stub
-  idlflags -= -GT
   idlflags += -St \
               -Wb,stub_export_macro=RATEGEN_STUB_Export \
               -Wb,stub_export_include=RateGen_stub_export.h \
@@ -31,7 +30,6 @@ project(Display_Base_RateGen_svnt) : ciao_servant_dnc {
   sharedname  = RateGen_svnt
   libs    += RateGen_stub Display_Base_stub Display_Base_skel
 
-  idlflags -= -GT
   idlflags  +=  -SS -St \
                 -Wb,export_macro=RATEGEN_SVNT_Export \
                 -Wb,export_include=RateGen_svnt_export.h
