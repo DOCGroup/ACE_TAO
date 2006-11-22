@@ -1,3 +1,58 @@
+Wed Nov 22 09:07:12 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * docs/run_test.txt:
+          Document ACE_RUN_VX_TGT_HOST
+
+        * docs/bczar/bczar.html:
+          Updated this file
+
+        * ace/config-freebsd.h:
+        * ace/POSIX_Proactor.cpp:
+          Added ACE_HAS_SIGVAL_SIGVAL_INT, this fixes bugzilla
+          bug 2716. Thanks to Craig Rodrigues
+          <rodrigc at crodrigues dot org> for reporting this.
+
+        * ace/ace.mpc:
+          Added missing OS.inl. This fixes bugzilla bug 2705.
+          Thanks to Daniel Black <dragonheart at gentoo dot org>
+          for reporting this.
+
+        * Release:
+          Removed dsw files
+
+        * ace/config-rtems.h:
+        * ace/config-posix-nonetworking.h:
+          Moved the configuration to build without no networking
+          support to its own file so that we can reuse this for
+          example on linux
+
+        * ace/config-rtems.h:
+          Added support for rtems 4.7
+
+        * ace/config-unixware-7.1.0.udk.h:
+          Cleanup
+
+        * ace/config-lyxos.h:
+          Added support for LynxOS 4.2
+
+        * ace/config-linux.h:
+        * ace/config-linux-common.h:
+          Moved ACE_HAS_GETIFADDRS to the common file and added
+          support for ACE_LACKS_NETWORKING on linux
+
+        * ace/INET_Addr.cpp:
+        * ace/OS_NS_netdb.cpp
+          Fixed compile problem when using ACE_LACKS_NETWORKING on
+          linux
+
+        * ace/Obstack.h:
+          Use ACE_EXPORT_SINGLETON_DECLARATION to resolve link errors
+          on FC6. Thanks to Ken Sedgwick <ken at bonsai dot com> for
+          reporting this and testing out the patch.
+
+        * ace/OS_NS_string.inl:
+          Initialise pointer with 0
+
 Mon Nov 20 08:16:34 2006  Simon McQueen  <sm@prismtech.com>
 
         * ACE version 5.5.4 released.
