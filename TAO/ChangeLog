@@ -1,3 +1,26 @@
+Wed Nov 22 10:54:12 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Strategies.mpc:
+          Now build with ace_for_tao but derive from core_strategies
+
+        * tao/tao.mpc:
+          Added new HTTP files and moved all sequence.pidl files to one
+          group because soon they all will get a special tao_idl argument
+          to be used.
+
+        * tao/TAO_Internal.cpp:
+        * tao/default_resource.cpp:
+          Added HTTP
+
+        * tao/GUIResource_Factory.{h,cpp}:
+          Changed dynamically_allocated_reactor to bool
+
+        * tao/ORB_Core.{h,cpp,inl}:
+          Changed has_shutdown to a real bool
+
+        * tao/Valuetype/ValueBase.h:
+          Doxygen improvement
+
 Wed Nov 22 10:23:12 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * performance-tests/Callback/Callback.mpc:
