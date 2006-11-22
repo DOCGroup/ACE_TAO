@@ -1720,7 +1720,7 @@ int
 ACE_POSIX_SIG_Proactor::notify_completion (int sig_num)
 {
   // Get this process id.
-  pid_t pid = ACE_OS::getpid ();
+  pid_t const pid = ACE_OS::getpid ();
   if (pid == (pid_t) -1)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "Error:%N:%l(%P | %t):%p",
@@ -1729,11 +1729,11 @@ ACE_POSIX_SIG_Proactor::notify_completion (int sig_num)
 
   // Set the signal information.
   sigval value;
-#if defined (__FreeBSD__)
+#if defined (ACE_HAS_SIGVAL_SIGVAL_INT)
   value.sigval_int = -1;
 #else
   value.sival_int = -1;
-#endif /* __FreeBSD__ */
+#endif /* ACE_HAS_SIGVAL_SIGVAL_INT */
 
   // Queue the signal.
   if (sigqueue (pid, sig_num, value) == 0)
@@ -1870,11 +1870,11 @@ ACE_POSIX_SIG_Proactor::allocate_aio_slot (ACE_POSIX_Asynch_Result *result)
   // store index!!, not pointer in signal info
   result->aio_sigevent.sigev_notify = SIGEV_SIGNAL;
   result->aio_sigevent.sigev_signo = result->signal_number ();
-#if defined (__FreeBSD__)
+#if defined (ACE_HAS_SIGVAL_SIGVAL_INT)
   result->aio_sigevent.sigev_value.sigval_int = static_cast<int> (i);
 #else
   result->aio_sigevent.sigev_value.sival_int = static_cast<int> (i);
-#endif /* __FreeBSD__ */
+#endif /* ACE_HAS_SIGVAL_SIGVAL_INT */
 
   return static_cast<ssize_t> (i);
 }
@@ -1922,11 +1922,11 @@ ACE_POSIX_SIG_Proactor::handle_events_i (const ACE_Time_Value *timeout)
       flg_aio = 1;  // AIO signal received
       // define index to start
       // nothing will happen if it contains garbage
-#if defined (__FreeBSD__)
+#if defined (ACE_HAS_SIGVAL_SIGVAL_INT)
       index = static_cast<size_t> (sig_info.si_value.sigval_int);
 #else
       index = static_cast<size_t> (sig_info.si_value.sival_int);
-#endif
+#endif /* ACE_HAS_SIGVAL_SIGVAL_INT */
       // Assume we have a correctly-functioning implementation, and that
       // there is one I/O to process, and it's correctly specified in the
       // siginfo received. There are, however, some special situations
