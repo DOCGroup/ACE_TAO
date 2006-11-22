@@ -1,3 +1,9 @@
+Wed Nov 22 18:48:02 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * orbsvcs/orbsvcs/Log/Hash_LogRecordStore.cpp:
+
+          Remove extraneous ACE_DEBUG's in destructor.
+
 Wed Nov 22 18:42:53 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
 
         * orbsvcs/examples/Log/Event/run_test.pl:
