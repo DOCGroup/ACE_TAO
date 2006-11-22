@@ -22,7 +22,7 @@ noinst_LTLIBRARIES = libJAWS3.la
 libJAWS3_la_CPPFLAGS = \
   -I$(ACE_ROOT) \
   -I$(ACE_BUILDDIR) \
-  -I.. \
+  -I$(srcdir)/.. \
   -DJAWS_BUILD_DLL
 
 libJAWS3_la_SOURCES = \
@@ -90,7 +90,7 @@ noinst_PROGRAMS = main
 main_CPPFLAGS = \
   -I$(ACE_ROOT) \
   -I$(ACE_BUILDDIR) \
-  -I..
+  -I$(srcdir)/..
 
 main_SOURCES = \
   main.cpp \
