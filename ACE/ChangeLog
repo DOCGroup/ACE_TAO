@@ -1,3 +1,14 @@
+Wed Nov 22 13:25:12 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/ace_for_tao.mpc:
+          Add uuid as base project. For building COIOP as part of the
+          TAO strategies library we need uuid. The nicest solution would
+          be to make the uuid feature dependent on the ace_for_tao
+          feature and let the user overrule this but that is not
+          possible yet. If you are using ace_for_tao and don't want
+          to have uuid pulled in, set uuid explicitly to 0 in your
+          default.features file.
+
 Wed Nov 22 10:48:12 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Log_Msg.cpp:
