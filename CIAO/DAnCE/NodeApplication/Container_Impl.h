@@ -27,7 +27,6 @@
 
 #include "ciao/Deployment_CoreS.h"
 #include "ciao/Container_Base.h"
-//#include "ciao/Swapping_Container.h"
 #include "ace/SString.h"
 #include "ciao/Server_init.h"  // write_IOR function & NameUtility
 #include "ciao/CIAO_common.h" // CIAO::debug_level
@@ -126,11 +125,6 @@ namespace CIAO
                    ACE_ENV_ARG_DECL_WITH_DEFAULTS)
         ACE_THROW_SPEC ((CORBA::SystemException,
                          Components::RemoveFailure));
-
-    // Get all homes
-    virtual ::Components::CCMHomes *
-      get_homes (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
-        ACE_THROW_SPEC ((CORBA::SystemException));
 
     bool
     register_with_ns (const char * obj_name,
