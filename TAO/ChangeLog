@@ -1,3 +1,13 @@
+Wed Nov 22 11:51:49 UTC 2006  Simon McQueen  <sm@prismtech.com>
+
+        * orbsvcs/IFR_Service/IFR_Server.cpp:
+        * orbsvcs/IFR_Service/IFR_Service.cpp:
+        * orbsvcs/orbsvcs/IFRService/IFR_Service_Loader.cpp:
+        * orbsvcs/orbsvcs/IFRService/Options.cpp:
+
+          Make IFR exit when it receives an invalid startup option and improve
+          usage message. Fixes bugzilla #2720.
+
 Wed Nov 22 11:39:12 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/FlResource/FlResource_Factory.cpp:

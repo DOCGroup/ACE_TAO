@@ -73,7 +73,13 @@ Options::parse_args (int argc, ACE_TCHAR *argv[])
                            " [-l]"
                            " [-m] <0|1>"
                            " [-p]"
-                           " [-b] <persistence_file>"
+                           " [-b] <persistence_file>\n\n"
+                           "  -o  <filename> Output service IOR to <filename>\n"
+                           "  -r  Persist contents in the win32 registry\n"
+                           "  -l  Enable locking (off by default)\n"
+                           "  -m  <0|1> Enable multicast discovery of this service\n"
+                           "  -p  Persist contents using a memory mapped file\n"
+                           "  -b  <filename> Used with the file persistence option. Specifies the storage file name.\n"
                             "\n",
                            argv [0]),
                           1);
