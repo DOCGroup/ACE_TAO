@@ -18,13 +18,14 @@
 #ifndef TAO_HTTP_CLIENT_H
 #define TAO_HTTP_CLIENT_H
 
-
 #include "ace/INET_Addr.h"
 #include "ace/Svc_Handler.h"
 #include "ace/SOCK_Connector.h"
 #include "ace/Connector.h"
 #include "ace/Message_Block.h"
 #include "tao/HTTP_Handler.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
  * @class TAO_HTTP_Client
@@ -68,5 +69,7 @@ private:
   ACE_Connector<TAO_HTTP_Handler, ACE_SOCK_CONNECTOR> connector_;
 
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #endif /* TAO_HTTP_CLIENT_H */

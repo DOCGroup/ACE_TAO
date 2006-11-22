@@ -21,6 +21,8 @@
 #include "ace/Svc_Handler.h"
 #include "ace/Message_Block.h"
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 /**
  * @class TAO_HTTP_Handler
  * class to retrieve data via HTTP
@@ -79,5 +81,7 @@ private:
   const char *request_prefix_;
   const char *request_suffix_;
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #endif /* TAO_HTTP_HANDLER_H */
