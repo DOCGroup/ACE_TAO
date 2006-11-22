@@ -31,6 +31,12 @@ Wed Nov 22 20:18:50 UTC 2006  Jeff Parsons <j.parsons@vanderbilt.edu>
 
           Cosmetic changes.
 
+        * docs/releasenotes/index.html:
+        * docs/compiler.html:
+
+          Updated IDL compiler documentation with the new command line
+          option.
+
 Wed Nov 22 19:17:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/orbsvcs/CosEvent.mpc:
