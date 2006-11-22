@@ -2617,8 +2617,8 @@ BE_GlobalData::usage (void) const
     ));
   ACE_DEBUG ((
       LM_DEBUG,
-      ACE_TEXT (" -GA\t\t\tgenerate Any operator and type code bodies in *A.cpp")
-      ACE_TEXT (" (generated in *C.cpp by default)\n")
+      ACE_TEXT (" -GA\t\t\tgenerate Any operator and type codes in *A.{h,cpp}")
+      ACE_TEXT (" (generated in *C.{h,cpp} by default)\n")
     ));
   ACE_DEBUG ((
       LM_DEBUG,
