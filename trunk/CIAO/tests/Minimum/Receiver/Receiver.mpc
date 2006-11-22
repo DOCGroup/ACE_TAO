@@ -5,8 +5,7 @@ project(Minimum_Base_Receiver_DnC_stub): ciao_client_dnc {
   avoids += ace_for_tao
   after += Minimum_Base_DnC_stub
   sharedname = Minimum_Receiver_DnC_stub
-  idlflags += -Sc \
-              -Wb,stub_export_macro=RECEIVER_STUB_Export \
+  idlflags += -Wb,stub_export_macro=RECEIVER_STUB_Export \
               -Wb,stub_export_include=Receiver_stub_export.h \
               -Wb,skel_export_macro=RECEIVER_SVNT_Export \
               -Wb,skel_export_include=Receiver_svnt_export.h
@@ -20,11 +19,11 @@ project(Minimum_Base_Receiver_DnC_stub): ciao_client_dnc {
   Source_Files {
     ReceiverC.cpp
   }
-  
+
   Header_Files {
     ReceiverC.h
   }
-  
+
   Inline_Files {
     ReceiverC.inl
   }
@@ -38,9 +37,8 @@ project(Minimum_Base_Receiver_DnC_svnt) : ciao_servant_dnc {
   libs    += Minimum_Receiver_DnC_stub \
              Minimum_Base_DnC_stub \
              Minimum_Base_DnC_svnt
-  
-  idlflags  +=  -Sc \
-                -Wb,export_macro=RECEIVER_SVNT_Export \
+
+  idlflags  +=  -Wb,export_macro=RECEIVER_SVNT_Export \
                 -Wb,export_include=Receiver_svnt_export.h
   dynamicflags = RECEIVER_SVNT_BUILD_DLL
 
@@ -79,9 +77,8 @@ project(Minimum_Base_Receiver_DnC_exec) : ciao_component_dnc {
                Minimum_Receiver_DnC_svnt \
                Minimum_Base_DnC_stub \
                Minimum_Base_DnC_svnt
-  
-  idlflags  +=  -Sc \
-                -Wb,export_macro=RECEIVER_EXEC_Export \
+
+  idlflags  +=  -Wb,export_macro=RECEIVER_EXEC_Export \
                 -Wb,export_include=Receiver_exec_export.h
   dynamicflags   = RECEIVER_EXEC_BUILD_DLL
 
@@ -91,10 +88,10 @@ project(Minimum_Base_Receiver_DnC_exec) : ciao_component_dnc {
   Source_Files {
     Receiver_exec.cpp
   }
-  
+
   Header_Files {
   }
-  
+
   Inline_Files {
   }
 }

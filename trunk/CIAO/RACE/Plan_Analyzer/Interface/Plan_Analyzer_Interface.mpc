@@ -5,8 +5,7 @@
 project(Plan_Analyzer_Interface_stub): ciao_deployment_stub {
 
   sharedname = Plan_Analyzer_Interface_stub
-  idlflags += -Sc \
-              -Wb,stub_export_macro=PLAN_ANALYZER_INTERFACE_STUB_Export \
+  idlflags += -Wb,stub_export_macro=PLAN_ANALYZER_INTERFACE_STUB_Export \
               -Wb,stub_export_include=Plan_Analyzer_Interface_stub_export.h \
               -Wb,skel_export_macro=PLAN_ANALYZER_INTERFACE_SVNT_Export \
               -Wb,skel_export_include=Plan_Analyzer_Interface_svnt_export.h
@@ -35,8 +34,7 @@ project(Plan_Analyzer_Interface_svnt) : ciao_servant_dnc {
   sharedname  = Plan_Analyzer_Interface_svnt
   libs    += Plan_Analyzer_Interface_stub
 
-  idlflags += -Sc \
-              -Wb,stub_export_macro=PLAN_ANALYZER_INTERFACE_STUB_Export \
+  idlflags += -Wb,stub_export_macro=PLAN_ANALYZER_INTERFACE_STUB_Export \
               -Wb,stub_export_include=Plan_Analyzer_Interface_stub_export.h \
               -Wb,skel_export_macro=PLAN_ANALYZER_INTERFACE_SVNT_Export \
               -Wb,skel_export_include=Plan_Analyzer_Interface_svnt_export.h
