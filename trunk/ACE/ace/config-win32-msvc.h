@@ -65,12 +65,22 @@
 # error This version of Microsoft Visual C++ is not supported.
 #endif
 
-// MFC changes the behavior of operator new at all MSVC versions from 6 up,
-// see ace/OS_Memory.h (throws a static CMemoryException* instead of std::bad_alloc)
+// MFC changes the behavior of operator new at all MSVC versions from 6 up
+// by throwing a static CMemoryException* instead of std::bad_alloc
+// (see ace/OS_Memory.h). This MFC exception object needs to be cleaned up
+// by calling its Delete() method.
 #if defined (ACE_HAS_MFC) && (ACE_HAS_MFC == 1)
 #  if !defined (ACE_NEW_THROWS_EXCEPTIONS)
 #    define ACE_NEW_THROWS_EXCEPTIONS
 #  endif
+#  if defined (ACE_bad_alloc)
+#    undef ACE_bad_alloc
+#  endif
+#  define ACE_bad_alloc CMemoryException *e
+#  if defined (ACE_del_bad_alloc)
+#    undef ACE_del_bad_alloc
+#  endif
+#  define ACE_del_bad_alloc e->Delete();
 #endif /* ACE_HAS_MFC && ACE_HAS_MFC==1 */
 
 #if defined(ACE_MT_SAFE) && (ACE_MT_SAFE != 0)

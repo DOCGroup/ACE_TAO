@@ -33,6 +33,13 @@ ACE_String_Base<CHAR>::length (void) const
   return this->len_;
 }
 
+template <class CHAR> ACE_INLINE size_t
+ACE_String_Base<CHAR>::capacity (void) const
+{
+  ACE_TRACE ("ACE_String_Base<CHAR>::capacity");
+  return this->buf_len_;
+}
+
 template <class CHAR> ACE_INLINE bool
 ACE_String_Base<CHAR>::is_empty (void) const
 {
