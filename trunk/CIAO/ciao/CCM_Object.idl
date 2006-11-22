@@ -16,17 +16,45 @@
 
 #include "CCM_Event.idl"
 #include "CCM_Navigation.idl"
-#include "CCM_Home.idl"
+#include "tao/IFR_Client/IFR_Base.pidl"
 
 module Components
 {
   typeprefix Components "omg.org";
+
+  typedef unsigned long FailureReason;
 
   typedef FailureReason InvalidConfigurationReason;
   const InvalidConfigurationReason UnknownConfigValueName = 0;
   const InvalidConfigurationReason InvalidConfigValueType = 1;
   const InvalidConfigurationReason ConfigValueRequired = 2;
   const InvalidConfigurationReason ConfigValueNotExpected = 3;
+
+  exception CreateFailure {
+    FailureReason reason;
+  };
+  exception FinderFailure
+  {
+    FailureReason reason;
+  };
+  exception RemoveFailure
+  {
+    FailureReason reason;
+  };
+
+  exception DuplicateKeyValue {};
+  exception InvalidKey {};
+  exception UnknownKeyValue {};
+
+  interface CCMObject;
+
+  interface CCMHome
+  {
+    CORBA::IRObject get_component_def ();
+    CORBA::IRObject get_home_def ();
+    void remove_component ( in CCMObject comp)
+      raises (RemoveFailure);
+  };
 
   exception InvalidConfiguration
   {
