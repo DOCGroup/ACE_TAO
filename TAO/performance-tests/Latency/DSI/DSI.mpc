@@ -13,7 +13,7 @@ project(*latency server): taoserver, strategies, dynamicinterface, minimum_corba
 }
 
 project(*latency client): taoclient, strategies, minimum_corba {
-
+  avoids += ace_for_tao
   Source_Files {
     TestC.cpp
     client.cpp
