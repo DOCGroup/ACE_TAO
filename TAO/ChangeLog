@@ -14,7 +14,7 @@ Wed Nov 22 20:18:50 UTC 2006  Jeff Parsons <j.parsons@vanderbilt.edu>
           of the C++ class generated for an IDL sequence. This
           visitor is triggered by the new command line option
           described below, and is intended as a workaround for a
-          bug in Visual Studio.
+          bug in Visual Studio. This fixes bugzilla 2703.
 
         * TAO_IDL/be/be_visitor_root.cpp:
         * TAO_IDL/be/be_visitor_root/root.cpp:
@@ -31,7 +31,7 @@ Wed Nov 22 20:18:50 UTC 2006  Jeff Parsons <j.parsons@vanderbilt.edu>
             been used in this call but wasn't. Thanks to Johnny
             Willemsen <jwillemsen@remedy.nl> for reporting the
             resulting incorrect code generation in the copy
-            constructor for components.
+            constructor for components. This fixes bugzilla 2724.
 
         * TAO_IDL/be/be_interface.cpp:
 
