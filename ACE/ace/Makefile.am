@@ -1247,20 +1247,20 @@ nobase_include_HEADERS += \
   FlReactor/FlReactor.h
 
 pkgconfig_DATA += \
-  FlReactor
+  ACE_FlReactor.pc
 
 CLEANFILES += \
-  FlReactor
+  ACE_FlReactor.pc
 
-FlReactor: ${top_builddir}/config.status ${srcdir}/FlReactor
-	${top_builddir}/config.status --file $@:${srcdir}/FlReactor
+ACE_FlReactor.pc: ${top_builddir}/config.status ${srcdir}/FlReactor/ACE_FlReactor.pc.in
+	${top_builddir}/config.status --file $@:${srcdir}/FlReactor/ACE_FlReactor.pc.in
 
 endif BUILD_X11
 endif BUILD_GL
 endif BUILD_FL
 
 EXTRA_DIST += \
-  FlReactor
+  FlReactor/ACE_FlReactor.pc.in
 
 
 ## Makefile.ACE_QtReactor.am
@@ -1300,18 +1300,18 @@ nobase_include_HEADERS += \
   QtReactor/QtReactor.h
 
 pkgconfig_DATA += \
-  QtReactor
+  ACE_QtReactor.pc
 
 CLEANFILES += \
-  QtReactor
+  ACE_QtReactor.pc
 
-QtReactor: ${top_builddir}/config.status ${srcdir}/QtReactor
-	${top_builddir}/config.status --file $@:${srcdir}/QtReactor
+ACE_QtReactor.pc: ${top_builddir}/config.status ${srcdir}/QtReactor/ACE_QtReactor.pc.in
+	${top_builddir}/config.status --file $@:${srcdir}/QtReactor/ACE_QtReactor.pc.in
 
 endif BUILD_QT
 
 EXTRA_DIST += \
-  QtReactor
+  QtReactor/ACE_QtReactor.pc.in
 
 
 ## Makefile.ACE_TkReactor.am
@@ -1343,18 +1343,18 @@ nobase_include_HEADERS += \
   TkReactor/TkReactor.h
 
 pkgconfig_DATA += \
-  TkReactor
+  ACE_TkReactor.pc
 
 CLEANFILES += \
-  TkReactor
+  ACE_TkReactor.pc
 
-TkReactor: ${top_builddir}/config.status ${srcdir}/TkReactor
-	${top_builddir}/config.status --file $@:${srcdir}/TkReactor
+ACE_TkReactor.pc: ${top_builddir}/config.status ${srcdir}/TkReactor/ACE_TkReactor.pc.in
+	${top_builddir}/config.status --file $@:${srcdir}/TkReactor/ACE_TkReactor.pc.in
 
 endif BUILD_TK
 
 EXTRA_DIST += \
-  TkReactor
+  TkReactor/ACE_TkReactor.pc.in
 
 
 ## Makefile.ACE_XtReactor.am
@@ -1387,19 +1387,19 @@ nobase_include_HEADERS += \
   XtReactor/XtReactor.h
 
 pkgconfig_DATA += \
-  XtReactor
+  ACE_XtReactor.pc
 
 CLEANFILES += \
-  XtReactor
+  ACE_XtReactor.pc
 
-XtReactor: ${top_builddir}/config.status ${srcdir}/XtReactor
-	${top_builddir}/config.status --file $@:${srcdir}/XtReactor
+ACE_XtReactor.pc: ${top_builddir}/config.status ${srcdir}/XtReactor/ACE_XtReactor.pc.in
+	${top_builddir}/config.status --file $@:${srcdir}/XtReactor/ACE_XtReactor.pc.in
 
 endif BUILD_XT
 endif BUILD_X11
 
 EXTRA_DIST += \
-  XtReactor
+  XtReactor/ACE_XtReactor.pc.in
 
 
 ## Clean up template repositories, etc.
