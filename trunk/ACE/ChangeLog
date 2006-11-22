@@ -1,3 +1,13 @@
+Wed Nov 22 10:38:12 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * examples/Misc/test_XtReactor1.cpp:
+        * examples/Misc/test_XtReactor2.cpp:
+        * tests/FlReactor_Test.cpp:
+        * tests/XtReactor_Test.cpp:
+        * tests/TkReactor_Test.cpp:
+        * tests/QtReactor_Test.cpp:
+          Updated because of move below.
+
 Wed Nov 22 10:35:12 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/QtReactor*.*:

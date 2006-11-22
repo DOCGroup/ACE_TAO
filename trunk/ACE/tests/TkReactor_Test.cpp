@@ -34,7 +34,7 @@ ACE_RCSID (tests,
 #include "ace/SOCK_Connector.h"
 #include "ace/Service_Config.h"
 #include "ace/Thread_Manager.h"
-#include "ace/TkReactor.h"
+#include "ace/TkReactor/TkReactor.h"
 #include "ace/OS_NS_unistd.h"
 
 #include <tcl.h>

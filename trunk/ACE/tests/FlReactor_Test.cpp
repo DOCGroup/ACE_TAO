@@ -27,7 +27,7 @@
 ACE_RCSID(tests, FlReactor_Test, "$Id$")
 
 
-#include "ace/FlReactor.h"
+#include "ace/FlReactor/FlReactor.h"
 #include "ace/Event_Handler.h"
 #include "ace/Acceptor.h"
 #include "ace/SOCK_Acceptor.h"
