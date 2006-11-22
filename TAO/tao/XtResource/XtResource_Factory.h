@@ -15,7 +15,7 @@
 #include /**/ "ace/pre.h"
 #include /**/ <X11/Intrinsic.h>
 #include "tao/XtResource/TAO_XtResource_Export.h"
-#include "ace/XtReactor.h"
+#include "ace/XtReactor/XtReactor.h"
 #include "tao/GUIResource_Factory.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)

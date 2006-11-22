@@ -13,7 +13,7 @@
 #ifndef TAO_TKRESOURCE_FACTORY_H
 #define TAO_TKRESOURCE_FACTORY_H
 #include /**/ "ace/pre.h"
-#include "ace/TkReactor.h"
+#include "ace/TkReactor/TkReactor.h"
 #include "tao/TkResource/TAO_TkResource_Export.h"
 #include "tao/GUIResource_Factory.h"
 
