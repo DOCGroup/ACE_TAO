@@ -1704,10 +1704,7 @@ TAO_CodeGen::gen_stub_hdr_includes (void)
 
           ACE_CString pidl_checker (idl_name);
           bool got_pidl =
-            (pidl_checker.substr (pidl_checker.length () - 5) == ".pidl")
-            && (pidl_checker.find ("IFR_Client") == ACE_CString::npos);
-            // We can't use the -GA option on IFR_Client .pidl files,
-            // because there are decls inside interfaces.
+            (pidl_checker.substr (pidl_checker.length () - 5) == ".pidl");
 
           // If we're here and we have a .pidl file, we need to generate
           // the *A.h include from the AnyTypeCode library.
