@@ -7,6 +7,7 @@
  */
 
 #include "ciao/NodeManager.idl"
+#include "ciao/NodeApplicationManager.idl"
 
 module CIAO
 {
@@ -24,7 +25,7 @@ module CIAO
 
     // Shutdown the daemon process.
     oneway void shutdown ();
-    
+
     /// RACE specific extension.
     /// Modify the priority of a node application process.
     long set_priority (in string plan_id,

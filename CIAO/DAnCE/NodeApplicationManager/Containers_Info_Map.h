@@ -20,6 +20,7 @@
 #include "ace/Message_Block.h"      //for ACE_Message_Block
 
 #include "ciao/DeploymentC.h"
+#include "ciao/Deployment_CoreC.h"
 #include "ace/SString.h"
 #include "CIAO_NAM_Export.h"
 
