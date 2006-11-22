@@ -1,3 +1,26 @@
+Wed Nov 22 16:48:58 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * Makefile.am:
+
+          Hand tweak, HTBP tests depend on Test_Output library.  This
+          requires changing the build order so that the protocols dir
+          is built after tests.
+
+        * apps/gperf/tests/Makefile.am:
+
+          Hand tweak to find gperf executable on automake builds.  Chad
+          has given me info to make MPC generation work, which I'll add
+          in the near future.
+
+        * m4/ace.m4:
+
+          Placeholder for a BUILD_WXWINDOWS feature test.  For now it
+          always returns false.
+
+        * configure.ac:
+
+          Configure examples/ConfigViewer/Makefile.
+
 Wed Nov 22 15:34:12 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
 
         * ace/Version.h:
