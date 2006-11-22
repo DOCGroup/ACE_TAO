@@ -21,7 +21,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include <qapplication.h>
-#include "ace/QtReactor.h"
+#include "ace/QtReactor/QtReactor.h"
 #include "tao/GUIResource_Factory.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
