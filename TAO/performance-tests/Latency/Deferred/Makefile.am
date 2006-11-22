@@ -21,7 +21,6 @@ noinst_PROGRAMS =
 ## Makefile.Deferred_Latency_Idl.am
 
 if BUILD_EXCEPTIONS
-if !BUILD_ACE_FOR_TAO
 
 BUILT_SOURCES = \
   TestC.cpp \
@@ -50,7 +49,6 @@ Test-stamp: $(srcdir)/Test.idl $(TAO_IDL_DEP)
 noinst_HEADERS = \
   Test.idl
 
-endif !BUILD_ACE_FOR_TAO
 endif BUILD_EXCEPTIONS
 
 ## Makefile.Deferred_Latency_Client.am
@@ -91,7 +89,6 @@ endif BUILD_CORBA_MESSAGING
 ## Makefile.Deferred_Latency_Server.am
 
 if BUILD_EXCEPTIONS
-if !BUILD_ACE_FOR_TAO
 
 noinst_PROGRAMS += server
 
@@ -115,7 +112,6 @@ server_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
-endif !BUILD_ACE_FOR_TAO
 endif BUILD_EXCEPTIONS
 
 ## Clean up template repositories, etc.

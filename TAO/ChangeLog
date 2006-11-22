@@ -1,3 +1,68 @@
+Wed Nov 22 15:14:51 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * orbsvcs/orbsvcs/Makefile.am:
+	* orbsvcs/performance-tests/RTEvent/lib/Makefile.am:
+	* orbsvcs/performance-tests/RTEvent/RTCORBA_Callback/Makefile.am:
+	* orbsvcs/performance-tests/RTEvent/RTCORBA_Baseline/Makefile.am:
+	* orbsvcs/performance-tests/LoadBalancing/LBPerf/RPS/Makefile.am:
+	* orbsvcs/tests/Event/Makefile.am:
+	* orbsvcs/tests/Simple_Naming/Makefile.am:
+	* orbsvcs/tests/ImplRepo/Makefile.am:
+	* orbsvcs/tests/EC_Custom_Marshal/Makefile.am:
+	* orbsvcs/tests/Trading/Makefile.am:
+	* orbsvcs/tests/BiDir_CORBALOC/Makefile.am:
+	* orbsvcs/tests/Bug_2377_Regression/Makefile.am:
+	* orbsvcs/tests/Security/ssliop_corbaloc/Makefile.am:
+	* orbsvcs/tests/Redundant_Naming/Makefile.am:
+	* orbsvcs/tests/Interoperable_Naming/Makefile.am:
+	* orbsvcs/tests/Notify/performance-tests/Throughput/Makefile.am:
+	* orbsvcs/tests/Notify/lib/Makefile.am:
+	* orbsvcs/tests/FT_App/Makefile.am:
+	* orbsvcs/tests/LoadBalancing/GenericFactory/Manage_Object_Group/Makefile.am:
+	* orbsvcs/ImplRepo_Service/Makefile.am:
+	* orbsvcs/examples/CosEC/TypedSimple/Makefile.am:
+	* orbsvcs/examples/CosEC/Factory/Makefile.am:
+	* orbsvcs/examples/LoadBalancing/Makefile.am:
+	* tao/Makefile.am:
+	* docs/tutorials/Quoter/idl/Makefile.am:
+	* performance-tests/Sequence_Latency/DSI/Makefile.am:
+	* performance-tests/Sequence_Latency/Deferred/Makefile.am:
+	* performance-tests/Sequence_Latency/Thread_Pool/Makefile.am:
+	* performance-tests/Sequence_Latency/Single_Threaded/Makefile.am:
+	* performance-tests/Sequence_Latency/DII/Makefile.am:
+	* performance-tests/Sequence_Latency/AMH_Single_Threaded/Makefile.am:
+	* performance-tests/Sequence_Latency/AMI/Makefile.am:
+	* performance-tests/Sequence_Latency/Thread_Per_Connection/Makefile.am:
+	* performance-tests/RTCorba/Multiple_Endpoints/Single_Endpoint/Makefile.am:
+	* performance-tests/RTCorba/Multiple_Endpoints/Orb_Per_Priority/Makefile.am:
+	* performance-tests/Callback/Makefile.am:
+	* performance-tests/Latency/DSI/Makefile.am:
+	* performance-tests/Latency/Deferred/Makefile.am:
+	* performance-tests/Latency/Thread_Pool/Makefile.am:
+	* performance-tests/Latency/Single_Threaded/Makefile.am:
+	* performance-tests/Latency/DII/Makefile.am:
+	* performance-tests/Latency/AMH_Single_Threaded/Makefile.am:
+	* performance-tests/Latency/AMI/Makefile.am:
+	* performance-tests/Latency/Thread_Per_Connection/Makefile.am:
+	* performance-tests/Cubit/TAO/MT_Cubit/Makefile.am:
+	* performance-tests/Cubit/TAO/DII_Cubit/Makefile.am:
+	* performance-tests/Cubit/TAO/IDL_Cubit/Makefile.am:
+	* performance-tests/Throughput/Makefile.am:
+	* examples/POA/TIE/Makefile.am:
+	* examples/Kokyu_dsrt_schedulers/Makefile.am:
+	* examples/RTScheduling/Fixed_Priority_Scheduler/Makefile.am:
+	* examples/RTScheduling/MIF_Scheduler/Makefile.am:
+	* examples/CSD_Strategy/ThreadPool6/Makefile.am:
+	* examples/RTCORBA/Activity/Makefile.am:
+	* examples/AMH/Sink_Server/Makefile.am:
+	* examples/mfc/Makefile.am:
+	* examples/AMI/FL_Callback/Makefile.am:
+	* examples/PluggableUDP/tests/Basic/Makefile.am:
+	* examples/PluggableUDP/tests/Performance/Makefile.am:
+	* examples/PluggableUDP/tests/SimplePerformance/Makefile.am:
+
+          Regenerated.
+
 Wed Nov 22 12:34:29 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
 
         * orbsvcs/orbsvcs/FaultTolerance/FT_ClientPolicy_i.cpp:
