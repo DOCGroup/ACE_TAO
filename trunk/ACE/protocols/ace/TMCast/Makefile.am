@@ -6,7 +6,7 @@
 ## this file will be lost the next time it is generated.
 ##
 ## MPC Command:
-## /acebuilds/ACE_wrappers-repository/bin/mwc.pl -include /acebuilds/MPC/config -include /acebuilds/MPC/templates -feature_file /acebuilds/ACE_wrappers-repository/local.features -noreldefs -type automake -exclude build,Kokyu
+## ./bin/mwc.pl -type automake -noreldefs ACE.mwc
 
 includedir = @includedir@/ace/TMCast
 pkgconfigdir = @libdir@/pkgconfig
@@ -57,7 +57,7 @@ CLEANFILES = \
   ACE_TMCast.pc
 
 ACE_TMCast.pc: ${top_builddir}/config.status ${srcdir}/ACE_TMCast.pc.in
-	${top_builddir}/config.status --file "$@":${srcdir}/ACE_TMCast.pc.in
+	${top_builddir}/config.status --file $@:${srcdir}/ACE_TMCast.pc.in
 
 endif !BUILD_ACE_FOR_TAO
 endif BUILD_THREADS

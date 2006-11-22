@@ -6,7 +6,7 @@
 ## this file will be lost the next time it is generated.
 ##
 ## MPC Command:
-## /acebuilds/ACE_wrappers-repository/bin/mwc.pl -include /acebuilds/MPC/config -include /acebuilds/MPC/templates -feature_file /acebuilds/ACE_wrappers-repository/local.features -noreldefs -type automake -exclude build,Kokyu
+## ./bin/mwc.pl -type automake -noreldefs ACE.mwc
 
 ACE_BUILDDIR = $(top_builddir)
 ACE_ROOT = $(top_srcdir)
@@ -16,17 +16,26 @@ ACE_ROOT = $(top_srcdir)
 
 if !BUILD_ACE_FOR_TAO
 
-noinst_LTLIBRARIES = libSynch_Benchmarks_Base_Test.la
+noinst_LTLIBRARIES = libBase_Test.la
 
-libSynch_Benchmarks_Base_Test_la_CPPFLAGS = \
+libBase_Test_la_CPPFLAGS = \
   -I$(ACE_ROOT) \
   -I$(ACE_BUILDDIR) \
-  -I$(srcdir)/..
+  -I..
 
-libSynch_Benchmarks_Base_Test_la_SOURCES = \
+libBase_Test_la_SOURCES = \
   Baseline_Test.cpp \
   base_test.cpp \
   mutex_test.cpp
+
+../Synch_Lib:
+	mkdir -p ../Synch_Lib
+
+libBase_Test_la_DEPENDENCIES = \
+  ../Synch_Lib
+
+libBase_Test_la_LDFLAGS = \
+ -L../Synch_Lib
 
 noinst_HEADERS = \
   Baseline_Test.h \

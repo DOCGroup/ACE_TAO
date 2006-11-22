@@ -6,12 +6,16 @@
 ## this file will be lost the next time it is generated.
 ##
 ## MPC Command:
-## ./bin/mwc.pl -include /home/jtc/ACE/ACE-config3/MPC/config -include /home/jtc/ACE/ACE-config3/MPC/templates -type automake ACE.mwc
+## ./bin/mwc.pl -type automake -noreldefs ACE.mwc
 
 ACE_BUILDDIR = $(top_builddir)
 ACE_ROOT = $(top_srcdir)
 
-## Makefile.DSRT_MIF.am 
+
+## Makefile.DSRT_MIF.am
+
+if !BUILD_ACE_FOR_TAO
+
 noinst_PROGRAMS = MIF
 
 MIF_CPPFLAGS = \
@@ -23,8 +27,10 @@ MIF_SOURCES = \
   MIF.cpp
 
 MIF_LDADD = \
- $(ACE_BUILDDIR)/Kokyu/libKokyu.la \
- $(ACE_BUILDDIR)/ace/libACE.la
+  $(top_builddir)/Kokyu/libKokyu.la \
+  $(ACE_BUILDDIR)/ace/libACE.la
+
+endif !BUILD_ACE_FOR_TAO
 
 ## Clean up template repositories, etc.
 clean-local:
