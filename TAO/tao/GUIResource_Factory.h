@@ -59,7 +59,8 @@ namespace TAO
      */
     virtual ACE_Reactor *get_reactor (void) ;
 
-    /** Reclaim the reactor if allocated by this factory.
+    /**
+     * Reclaim the reactor if allocated by this factory.
      * Please note that this call is NOT synchronized. Left to the
      * higher level versions to synchronize access.
      */
@@ -67,7 +68,8 @@ namespace TAO
 
   protected:
 
-    /** Create or return current reactor instance.
+    /**
+     * Create or return current reactor instance.
      * Please note that this call is NOT synchronized. Left to the
      * get_reactor to synchronize access.
      */
@@ -76,9 +78,9 @@ namespace TAO
   private:
 
     /**
-     * Flag that is set to 1 if the reactor obtained from the
+     * Flag that is set to true if the reactor obtained from the
      * get_reactor() method is dynamically allocated.  If this flag is
-     * set to 1, then the reclaim_reactor() method with call the delete
+     * set to true, then the reclaim_reactor() method with call the delete
      * operator on the given reactor.  This flag is necessary to make
      * sure that a reactor not allocated by the default resource factory
      * is not reclaimed by the default resource factory.  Such a
@@ -86,7 +88,7 @@ namespace TAO
      * default one overrides the get_reactor() method but does not
      * override the reclaim_reactor() method.
      */
-    int dynamically_allocated_reactor_;
+    bool dynamically_allocated_reactor_;
 
     /// for internal locking.
     TAO_SYNCH_MUTEX lock_;

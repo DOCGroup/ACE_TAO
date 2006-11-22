@@ -601,7 +601,7 @@ TAO_Default_Resource_Factory::get_parser_names (char **&names,
     }
 
   // OK fallback on the hardcoded ones....
-  this->parser_names_count_ = 5; // HOW MANY DO WE HAVE?
+  this->parser_names_count_ = 6; // HOW MANY DO WE HAVE?
   ACE_NEW_RETURN (this->parser_names_,
                   char *[this->parser_names_count_],
                   -1);
@@ -621,6 +621,9 @@ TAO_Default_Resource_Factory::get_parser_names (char **&names,
   ++index;
 
   this->parser_names_[index] = CORBA::string_dup ("MCAST_Parser");
+  ++index;
+
+  this->parser_names_[index] = CORBA::string_dup ("HTTP_Parser");
   ++index;
 
   names = this->parser_names_;
