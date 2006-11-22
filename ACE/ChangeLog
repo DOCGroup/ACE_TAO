@@ -1,3 +1,41 @@
+Wed Nov 22 21:58:16 UTC 2006  Steve Huston  <shuston@riverace.com>
+
+        * tests/RB_Tree_Test.cpp: Don't use ACE_ASSERT for code - it doesn't
+          get executed in Release builds.
+
+        Pulled these in from the 5.5 stream:
+
+        Mon Nov 20 21:26:24 UTC 2006  Steve Huston  <shuston@riverace.com>
+
+        * ace/config-win32-msvc.h:
+        * ace/OS_Memory.h:
+          The MFC new/exception code needed the ability to delete a caught
+          CMemoryException object to prevent memory leaks (see
+          http://msdn2.microsoft.com/de-de/library/0e5twxsh(VS.80).aspx).
+          This necessitates that every platform other than Windows/MFC gets
+          an empty define for ACE_del_bad_alloc, and the ACE_NEW... macros
+          have ACE_del_bad_alloc expanded in the catch block.
+          For past history of this issue, see the trail starting at:
+          Tue Aug  8 09:15:00 UTC 2006  Simon Massey  <sma@prismtech.com>
+
+        Thu Nov 16 16:14:32 UTC 2006  Steve Huston  <shuston@riverace.com>
+
+        * ace/String_Base.{h inl}: Added a capacity() method that returns
+          the number of allocated CHAR units in the string object. Thanks to
+          Kelly Hickel <kfh at mqsoftware dot com> for supplying this.
+
+        * NEWS: Updated with recent ACE_String_Base and build additions.
+
+        Mon Nov 13 17:40:58 UTC 2006  Steve Huston  <shuston@riverace.com>
+
+        * ace/String_Base.{h cpp}: Added a fast_resize(size_t) method to
+          manage the sizing/reallocating of the string, but doesn't do the
+          memory setting of resize(). Changed resize() to call fast_resize()
+          then do the memory setting.
+          Thank you to Kelly Hickel <kfh at mqsoftware dot com> for these
+          additions.
+
+
 Wed Nov 22 21:53:17 UTC 2006  Steve Huston  <shuston@riverace.com>
 
         Pulled these in from the 5.5 stream:
