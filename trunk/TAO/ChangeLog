@@ -1,3 +1,36 @@
+Wed Nov 22 10:17:12 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * Release:
+          Removed dsw files
+
+        * docs/ORBEndpoint.html:
+          Added reuse_addr to the list of options, request has been made
+          to OCI to check and extend the documentation of this option
+          which has been available starting TAO 1.4.8
+
+        * TAO_IDL/be/be_codegen.cpp:
+          Removed check for IFR_Client, we do have an empty A.h file for
+          the IFR_Client files now
+
+        * TAO_IDL/be/be_global.cpp:
+          Updated help of -GA
+
+        * tao/AnyTypeCode/NVList.cpp:
+          Use true/false
+
+        * tao/HTTP_Client.{h,cpp}:
+        * tao/HTTP_Handler.{h,cpp}:
+        * tao/HTTP_Parser.{h,cpp}:
+          New files to support http:/ as IOR format
+
+        * tao/IIOP_Acceptor.cpp:
+          Removed check for priority, that is gone already a long time and
+          this takes footprint.
+
+        * tao/Stub.cpp:
+          Const changes and removed TAO_Synchronous_Cancellation_Required which
+          doesn't seem used at all.
+
 Mon Nov 20 08:16:34 2006  Simon McQueen  <sm@prismtech.com>
 
         * TAO version 1.5.4 released.
