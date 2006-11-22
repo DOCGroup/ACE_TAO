@@ -490,11 +490,11 @@ CORBA::NVList::_lazy_has_arguments (void) const
 {
   if (this->incoming_ != 0)
     {
-      return this->incoming_->length () == 0 ? 0 : 1;
+      return this->incoming_->length () <= 1 ? false : true;
     }
   else
     {
-      return this->count () == 0 ? 0 : 1;
+      return this->count () <= 1 ? false : true;
     }
 }
 
