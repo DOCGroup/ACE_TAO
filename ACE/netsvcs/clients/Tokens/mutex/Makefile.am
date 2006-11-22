@@ -16,6 +16,6 @@ noinst_PROGRAMS = \
 test_mutex_SOURCES = test_mutex.cpp
 test_mutex_LDADD = \
   $(top_builddir)/netsvcs/lib/libnetsvcs.la \
-  $(top_builddir)/ace/libACE.la
+  $(top_builddir)/ace/$(ACE_BUILDDIR)/ace/libACE.la
 
 

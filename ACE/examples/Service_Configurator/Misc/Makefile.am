@@ -6,21 +6,21 @@
 ## this file will be lost the next time it is generated.
 ##
 ## MPC Command:
-## /acebuilds/ACE_wrappers-repository/bin/mwc.pl -include /acebuilds/MPC/config -include /acebuilds/MPC/templates -feature_file /acebuilds/ACE_wrappers-repository/local.features -noreldefs -type automake -exclude build,Kokyu
+## ./bin/mwc.pl -type automake -noreldefs ACE.mwc
 
 ACE_BUILDDIR = $(top_builddir)
 ACE_ROOT = $(top_srcdir)
 
 ## Makefile.Service_Configurator_Misc_Timer.am
 
-noinst_LTLIBRARIES = libtimer.la
+noinst_LTLIBRARIES = libTimer.la
 
-libtimer_la_CPPFLAGS = \
+libTimer_la_CPPFLAGS = \
   -I$(ACE_ROOT) \
   -I$(ACE_BUILDDIR) \
   -DACE_BUILD_SVC_DLL
 
-libtimer_la_SOURCES = \
+libTimer_la_SOURCES = \
   Timer_Service.cpp
 
 noinst_HEADERS = \
@@ -38,7 +38,7 @@ main_SOURCES = \
   Timer_Service.h
 
 main_LDADD = \
-  libtimer.la \
+  libTimer.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
 ## Clean up template repositories, etc.

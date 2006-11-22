@@ -16,5 +16,5 @@ noinst_PROGRAMS = \
 invariant_SOURCES = invariant.cpp
 invariant_LDADD = \
   $(top_builddir)/netsvcs/lib/libnetsvcs.la \
-  $(top_builddir)/ace/libACE.la
+  $(top_builddir)/ace/$(ACE_BUILDDIR)/ace/libACE.la
 

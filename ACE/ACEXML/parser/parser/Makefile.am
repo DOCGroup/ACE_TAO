@@ -6,7 +6,7 @@
 ## this file will be lost the next time it is generated.
 ##
 ## MPC Command:
-## /acebuilds/ACE_wrappers-repository/bin/mwc.pl -include /acebuilds/MPC/config -include /acebuilds/MPC/templates -feature_file /acebuilds/ACE_wrappers-repository/local.features -noreldefs -type automake -exclude build,Kokyu
+## ./bin/mwc.pl -type automake -noreldefs ACE.mwc
 
 includedir = @includedir@/ACEXML/parser/parser
 pkgconfigdir = @libdir@/pkgconfig
@@ -56,7 +56,7 @@ CLEANFILES = \
   ACEXML_Parser.pc
 
 ACEXML_Parser.pc: ${top_builddir}/config.status ${srcdir}/ACEXML_Parser.pc.in
-	${top_builddir}/config.status --file "$@":${srcdir}/ACEXML_Parser.pc.in
+	${top_builddir}/config.status --file $@:${srcdir}/ACEXML_Parser.pc.in
 
 endif !BUILD_ACE_FOR_TAO
 
