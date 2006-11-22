@@ -16,36 +16,9 @@
 
 #include "tao/IFR_Client/IFR_Base.pidl"
 
-module Components
-{
-  typeprefix Components "omg.org";
+//module Components
+//{
+//  typeprefix Components "omg.org";
+//};
 
-  typedef unsigned long FailureReason;
-
-  exception CreateFailure {
-    FailureReason reason;
-  };
-  exception FinderFailure
-  {
-    FailureReason reason;
-  };
-  exception RemoveFailure
-  {
-    FailureReason reason;
-  };
-
-  exception DuplicateKeyValue {};
-  exception InvalidKey {};
-  exception UnknownKeyValue {};
-
-  interface CCMObject;
-
-  interface CCMHome
-  {
-    CORBA::IRObject get_component_def ();
-    CORBA::IRObject get_home_def ();
-    void remove_component ( in CCMObject comp)
-      raises (RemoveFailure);
-  };
-};
 #endif /* CCM_COMPONENT_IDL */
