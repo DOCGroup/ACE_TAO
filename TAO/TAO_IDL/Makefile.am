@@ -253,6 +253,7 @@ libTAO_IDL_BE_la_SOURCES = \
   be/be_visitor_sequence.cpp \
   be/be_visitor_structure.cpp \
   be/be_visitor_structure_fwd.cpp \
+  be/be_visitor_template_export.cpp \
   be/be_visitor_traits.cpp \
   be/be_visitor_typecode.cpp \
   be/be_visitor_typedef.cpp \
@@ -340,6 +341,7 @@ noinst_HEADERS += \
   be_include/be_visitor_sequence.h \
   be_include/be_visitor_structure.h \
   be_include/be_visitor_structure_fwd.h \
+  be_include/be_visitor_template_export.h \
   be_include/be_visitor_traits.h \
   be_include/be_visitor_typecode.h \
   be_include/be_visitor_typedef.h \
