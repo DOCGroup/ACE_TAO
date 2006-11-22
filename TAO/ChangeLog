@@ -102,7 +102,8 @@ Wed Nov 22 10:17:12 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
         * tao/HTTP_Client.{h,cpp}:
         * tao/HTTP_Handler.{h,cpp}:
         * tao/HTTP_Parser.{h,cpp}:
-          New files to support http:/ as IOR format
+          New files to support http:/ as IOR format. Fixes bugzilla bugs
+          2670 and 372
 
         * tao/IIOP_Acceptor.cpp:
           Removed check for priority, that is gone already a long time and
