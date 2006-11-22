@@ -1,3 +1,9 @@
+Wed Nov 22 15:38:40 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * tao/Version.h:
+
+          Remove extraneous whitespace from TAO_VERSION macro definition.
+
 Wed Nov 22 15:14:51 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
 
         * orbsvcs/orbsvcs/Makefile.am:
