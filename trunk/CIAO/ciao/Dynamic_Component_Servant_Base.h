@@ -1,4 +1,4 @@
-c// -*- C++ -*-
+// -*- C++ -*-
 
 //=============================================================================
 /**
@@ -10,12 +10,12 @@ c// -*- C++ -*-
 //=============================================================================
 
 
-#ifndef CIAO_DYNAMIC_COMPONENT_SERVANT_BASE_H
-#define CIAO_DYNAMIC_COMPONENT_SERVANT_BASE_H
+#ifndef CIAO_DYNAMIC_COMPONENT_SERVANT_BASE__H
+#define CIAO_DYNAMIC_COMPONENT_SERVANT_BASE__H
 
 #include /**/ "ace/pre.h"
 
-#include "CIAO_Server_Export.h"
+#include "ciao/CIAO_Server_Export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -52,4 +52,4 @@ namespace CIAO
 
 #include /**/ "ace/post.h"
 
-#endif /* CIAO_DYNAMIC_COMPONENT_SERVANT_BASE_H */
+#endif /* CIAO_DYNAMIC_COMPONENT_SERVANT_BASE__H */
