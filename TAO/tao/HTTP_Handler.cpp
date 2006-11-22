@@ -5,6 +5,8 @@
 #include "ace/OS_NS_string.h"
 #include "ace/OS_NS_strings.h"
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 TAO_HTTP_Handler::TAO_HTTP_Handler (void)
 {
 }
@@ -190,4 +192,6 @@ TAO_HTTP_Reader::receive_reply (void)
 
   return 0;
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 

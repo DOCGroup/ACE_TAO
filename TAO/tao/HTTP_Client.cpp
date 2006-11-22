@@ -4,6 +4,8 @@
 #include "tao/HTTP_Handler.h"
 #include "ace/OS_NS_string.h"
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 TAO_HTTP_Client::TAO_HTTP_Client (void)
 {
 }
@@ -50,4 +52,6 @@ TAO_HTTP_Client::close (void)
     }
   return 0;
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
