@@ -337,6 +337,15 @@ public:
   size_type length (void) const;
 
   /**
+   *  Return the number of allocated CHARs in the string object.
+   *  This may be greater than the current length of the string.
+   *
+   *  @return Maximum number of CHAR units that can be stored, including
+   *          any terminating nul that may be needed.
+   */
+  size_t capacity (void) const;
+
+  /**
    * Return @c true if the length of the string is zero, else @c false.
    */
   bool is_empty (void) const;
@@ -465,7 +474,7 @@ public:
   /**
    *  Inequality comparison operator.
    *
-   *  @param s Input ACE_String_Base string to compare against stored string.
+   *  @param s String to compare against stored string.
    *  @return @c true if not equal, @c false otherwise.
    */
   bool operator != (const ACE_String_Base<CHAR> &s) const;
@@ -505,10 +514,14 @@ public:
    * Rather than fix the method to work as documented, the code is
    * left as is, but the second parameter should probably not be used.
    *
+   * fast_resize just adjusts the buffer if needed and sets the length,
+   * it doesn't fill the buffer, so is much faster.
+   * 
    * @param len The number of CHARs to reserve
    * @param c The CHAR to use when filling the string.
    */
   void resize (size_type len, CHAR c = 0);
+  void fast_resize (size_t len);
 
   /// Swap the contents of this @c ACE_String_Base with @a str.
   /**
