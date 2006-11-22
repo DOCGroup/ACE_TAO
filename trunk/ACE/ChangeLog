@@ -1,3 +1,14 @@
+Wed Nov 22 16:57:55 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * performance-tests/Synch-Benchmarks/Perf_Test/Makefile.am:
+
+          Regenerated.
+
+        * performance-tests/Synch-Benchmarks/Perf_Test/Synch_Benchmarks_Perf_Test.mpc:
+
+          Add automake specific includes definition to find headers
+          relative to source directory.
+
 Wed Nov 22 16:48:58 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
 
         * Makefile.am:

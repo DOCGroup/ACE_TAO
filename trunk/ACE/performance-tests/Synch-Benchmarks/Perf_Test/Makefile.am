@@ -21,7 +21,7 @@ noinst_LTLIBRARIES = libPerf_Test.la
 libPerf_Test_la_CPPFLAGS = \
   -I$(ACE_ROOT) \
   -I$(ACE_BUILDDIR) \
-  -I..
+  -I$(srcdir)/..
 
 libPerf_Test_la_SOURCES = \
   Adaptive_Lock_Performance_Test_Base.cpp \
