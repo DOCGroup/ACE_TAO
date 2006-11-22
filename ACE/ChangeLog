@@ -1,3 +1,28 @@
+Wed Nov 22 21:53:17 UTC 2006  Steve Huston  <shuston@riverace.com>
+
+        Pulled these in from the 5.5 stream:
+
+        Thu Nov 16 21:56:37 UTC 2006  Steve Huston  <shuston@riverace.com>
+
+        * include/makeinclude/rules.local.GNU: For creating the object file
+          directories (e.g., VDIR and VSHDIR, and their subdirectories), change
+          from using the directory as a prerequisite and make that prereq
+          a PHONY target to embed the command(s) to check and create the
+          directory if needed. This accomplishes two things: 1) allows the
+          make to work with clearmake in GNU compatibility mode (clearmake
+          always saw the PHONY target as remade and remade every file in the
+          project), and 2) avoids using a PHONY target as a prerequisite,
+          something the GNU make manual says to avoid. Thank you to Howard
+          Finer <hfiner at sonusnet dot com> for motivating and assisting
+          in this effort.
+
+        Tue Nov 14 22:33:03 UTC 2006  Steve Huston  <shuston@riverace.com>
+
+        * include/makeinclude/rules.lib.GNU: Change VLOBJS and VSHOBJS to
+          use $(patsubst) instead of $(if) to look for entries that have
+          relative directories in them (../). Avoids $(if) which does not
+          work in Clearcase's clearmake GNU compatibility mode.
+
 Wed Nov 22 19:52:23 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
 
         * ace/Select_Reactor_T.inl:
