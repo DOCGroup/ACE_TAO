@@ -16,11 +16,13 @@ ACE_ROOT = $(top_srcdir)
 
 SUBDIRS = \
         . \
+	QoS \
         SSL
 
 CLEANFILES =
 lib_LTLIBRARIES =
 pkgconfig_DATA =
+nobase_include_HEADERS =
 
 ## Makefile.ACE.am
 
@@ -337,7 +339,7 @@ libACE_la_SOURCES = \
 libACE_la_LDFLAGS = \
  -release @ACE_VERSION_NAME@
 
-nobase_include_HEADERS = \
+nobase_include_HEADERS += \
   ACE.h \
   ACE.inl \
   ACE_export.h \
