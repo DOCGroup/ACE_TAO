@@ -28,10 +28,7 @@ BUILT_SOURCES = \
   Activation_ManagerC.inl \
   Activation_ManagerS.cpp \
   Activation_ManagerS.h \
-  Activation_ManagerS.inl \
-  Activation_ManagerS_T.cpp \
-  Activation_ManagerS_T.h \
-  Activation_ManagerS_T.inl
+  Activation_ManagerS.inl
 
 CLEANFILES = \
   Activation_Manager-stamp \
@@ -40,15 +37,12 @@ CLEANFILES = \
   Activation_ManagerC.inl \
   Activation_ManagerS.cpp \
   Activation_ManagerS.h \
-  Activation_ManagerS.inl \
-  Activation_ManagerS_T.cpp \
-  Activation_ManagerS_T.h \
-  Activation_ManagerS_T.inl
+  Activation_ManagerS.inl
 
-Activation_ManagerC.cpp Activation_ManagerC.h Activation_ManagerC.inl Activation_ManagerS.cpp Activation_ManagerS.h Activation_ManagerS.inl Activation_ManagerS_T.cpp Activation_ManagerS_T.h Activation_ManagerS_T.inl: Activation_Manager-stamp
+Activation_ManagerC.cpp Activation_ManagerC.h Activation_ManagerC.inl Activation_ManagerS.cpp Activation_ManagerS.h Activation_ManagerS.inl: Activation_Manager-stamp
 
 Activation_Manager-stamp: $(srcdir)/Activation_Manager.idl $(TAO_IDL_DEP)
-	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs -GT $(srcdir)/Activation_Manager.idl
+	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs $(srcdir)/Activation_Manager.idl
 	@touch $@
 
 noinst_LTLIBRARIES = libTAO_NotifyTests.la
@@ -108,9 +102,6 @@ noinst_HEADERS = \
   Activation_ManagerC.inl \
   Activation_ManagerS.h \
   Activation_ManagerS.inl \
-  Activation_ManagerS_T.cpp \
-  Activation_ManagerS_T.h \
-  Activation_ManagerS_T.inl \
   Application_Command.h \
   Command.h \
   Command_Builder.h \

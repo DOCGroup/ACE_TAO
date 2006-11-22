@@ -21,7 +21,6 @@ TAO_ROOT = $(top_srcdir)
 
 if BUILD_CORBA_MESSAGING
 if BUILD_EXCEPTIONS
-if !BUILD_ACE_FOR_TAO
 
 BUILT_SOURCES = \
   cubitC.cpp \
@@ -72,7 +71,6 @@ client_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
-endif !BUILD_ACE_FOR_TAO
 endif BUILD_EXCEPTIONS
 endif BUILD_CORBA_MESSAGING
 

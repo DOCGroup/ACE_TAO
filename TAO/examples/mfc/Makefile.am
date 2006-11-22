@@ -26,10 +26,7 @@ BUILT_SOURCES = \
   w32_testC.h \
   w32_testC.inl \
   w32_testS.h \
-  w32_testS.inl \
-  w32_testS_T.cpp \
-  w32_testS_T.h \
-  w32_testS_T.inl
+  w32_testS.inl
 
 CLEANFILES = \
   w32_test-stamp \
@@ -37,15 +34,12 @@ CLEANFILES = \
   w32_testC.h \
   w32_testC.inl \
   w32_testS.h \
-  w32_testS.inl \
-  w32_testS_T.cpp \
-  w32_testS_T.h \
-  w32_testS_T.inl
+  w32_testS.inl
 
-w32_testC.cpp w32_testC.h w32_testC.inl w32_testS.h w32_testS.inl w32_testS_T.cpp w32_testS_T.h w32_testS_T.inl: w32_test-stamp
+w32_testC.cpp w32_testC.h w32_testC.inl w32_testS.h w32_testS.inl: w32_test-stamp
 
 w32_test-stamp: $(srcdir)/w32_test.idl $(TAO_IDL_DEP)
-	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs -GT -Wb,pch_include=StdAfx.h $(srcdir)/w32_test.idl
+	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs -Wb,pch_include=StdAfx.h $(srcdir)/w32_test.idl
 	@touch $@
 
 noinst_PROGRAMS = client
@@ -64,9 +58,7 @@ client_SOURCES = \
   w32_testC.h \
   w32_testC.inl \
   w32_testS.h \
-  w32_testS.inl \
-  w32_testS_T.h \
-  w32_testS_T.inl
+  w32_testS.inl
 
 client_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO_PortableServer.la \
