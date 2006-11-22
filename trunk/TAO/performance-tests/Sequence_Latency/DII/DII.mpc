@@ -24,6 +24,7 @@ project(*sequence server): taoserver, strategies, minimum_corba {
 
 project(*sequence client): taoserver, strategies, dynamicinterface, minimum_corba {
   after += *sequence_idl
+  avoids += ace_for_tao
 
   exename = client
   Source_Files {
