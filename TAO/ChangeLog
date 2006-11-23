@@ -1,3 +1,9 @@
+Thu Nov 23 12:01:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/tao.mpc:
+          Removed -Gse for the sequence files, causes some problems
+          on the scoreboard.
+
 Thu Nov 23 11:11:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * Release:
