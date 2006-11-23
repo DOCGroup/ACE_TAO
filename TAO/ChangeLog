@@ -1,3 +1,32 @@
+Thu Nov 23 13:08:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/tao.mpc:
+          Readded -Gse again
+
+        * TAO_IDL/be/be_codegen.cpp:
+          Fixed wrong comment in A.h generation
+
+        * TAO_IDL/be/be_interface.cpp:
+          Const improvement
+
+        * TAO_IDL/be/be_visitor_component/component_cs.cpp:
+          Removed some unneeded c-style casts
+
+        * TAO_IDL/be/be_visitor_sequence/sequence_ch.cpp:
+          Small code change to define the local variable and assign
+          it on the same line.
+
+        * TAO_IDL/be/be_visitor_template_export.cpp:
+          Added special handling for octet/wstring and string sequences.
+          Removed generation of long comment why we explicitly
+          export the base templates, not usefull in generated code
+
+        * TAO_IDL/util/utl_global.cpp:
+          Removed spaces.
+
+        * tao/PolicyC.cpp:
+          Removed not needed Borland pragma option
+
 Thu Nov 23 12:01:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/tao.mpc:

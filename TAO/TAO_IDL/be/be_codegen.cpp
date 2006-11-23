@@ -849,12 +849,12 @@ TAO_CodeGen::start_anyop_header (const char *fname)
 
   const char *tao_prefix = "";
   ACE_CString pidl_checker (idl_global->filename ()->get_string ());
-  bool const got_pidl =
+  bool const got_tao_pidl =
     (pidl_checker.substr (pidl_checker.length () - 5) == ".pidl");
 
   // If we're here and we have a .pidl file, we need to generate
-  // the *A.h include from the AnyTypeCode library.
-  if (got_pidl)
+  // the *C.h include from the tao library.
+  if (got_tao_pidl)
     {
       tao_prefix = "tao/";
     }

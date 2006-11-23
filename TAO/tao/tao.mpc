@@ -620,7 +620,7 @@ project(TAO) : acelib, core, tao_output, taodefaults, pidl, extra_core, tao_vers
   }
 
   IDL_Files {
-    idlflags += -Sci
+    idlflags += -Sci -Gse
     BooleanSeq.pidl >> AnyTypeCode/BooleanSeqA.h AnyTypeCode/BooleanSeqA.cpp
     CharSeq.pidl >> AnyTypeCode/CharSeqA.h AnyTypeCode/CharSeqA.cpp
     DoubleSeq.pidl >> AnyTypeCode/DoubleSeqA.h AnyTypeCode/DoubleSeqA.cpp

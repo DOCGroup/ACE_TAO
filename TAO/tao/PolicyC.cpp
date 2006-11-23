@@ -39,10 +39,6 @@
 #include "tao/AnyTypeCode_Adapter.h"
 #include "ace/Dynamic_Service.h"
 
-#if defined (__BORLANDC__)
-#pragma option -w-rvl -w-rch -w-ccc -w-aus -w-sig
-#endif /* __BORLANDC__ */
-
 #if !defined (__ACE_INLINE__)
 #include "tao/PolicyC.inl"
 #endif /* !defined INLINE */
