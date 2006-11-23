@@ -91,14 +91,6 @@ project(CosNotification_Skel) : orbsvcslib, core, notification, event_skel, port
     CosNotifyChannelAdminS.h
     NotifyExtS.h
     Event_ForwarderS.h
-
-    CosNotificationS_T.h
-    CosNotifyCommS_T.h
-    CosNotifyFilterS_T.h
-    CosNotifyChannelAdminS_T.h
-    NotifyExtS_T.h
-    Event_ForwarderS_T.h
-
     Notify/notify_skel_export.h
   }
 
@@ -109,22 +101,9 @@ project(CosNotification_Skel) : orbsvcslib, core, notification, event_skel, port
     CosNotifyChannelAdminS.inl
     NotifyExtS.inl
     Event_ForwarderS.inl
-
-    CosNotificationS_T.inl
-    CosNotifyCommS_T.inl
-    CosNotifyFilterS_T.inl
-    CosNotifyChannelAdminS_T.inl
-    NotifyExtS_T.inl
-    Event_ForwarderS_T.inl
   }
 
   Template_Files {
-    CosNotificationS_T.cpp
-    CosNotifyCommS_T.cpp
-    CosNotifyFilterS_T.cpp
-    CosNotifyChannelAdminS_T.cpp
-    NotifyExtS_T.cpp
-    Event_ForwarderS_T.cpp
   }
 
   Pkgconfig_Files {

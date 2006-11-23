@@ -244,14 +244,8 @@ libTAO_CosProperty_Skel_la_LIBADD = \
 nobase_include_HEADERS += \
   CosPropertyS.h \
   CosPropertyS.inl \
-  CosPropertyS_T.cpp \
-  CosPropertyS_T.h \
-  CosPropertyS_T.inl \
   CosPropertyServiceS.h \
   CosPropertyServiceS.inl \
-  CosPropertyServiceS_T.cpp \
-  CosPropertyServiceS_T.h \
-  CosPropertyServiceS_T.inl \
   Property/property_skel_export.h
 
 pkgconfig_DATA += \
@@ -1680,9 +1674,6 @@ libTAO_CosNaming_Skel_la_LIBADD = \
 nobase_include_HEADERS += \
   CosNamingS.h \
   CosNamingS.inl \
-  CosNamingS_T.cpp \
-  CosNamingS_T.h \
-  CosNamingS_T.inl \
   Naming/naming_skel_export.h
 
 pkgconfig_DATA += \
@@ -2095,35 +2086,17 @@ libTAO_CosNotification_Skel_la_LIBADD = \
 nobase_include_HEADERS += \
   CosNotificationS.h \
   CosNotificationS.inl \
-  CosNotificationS_T.cpp \
-  CosNotificationS_T.h \
-  CosNotificationS_T.inl \
   CosNotifyChannelAdminS.h \
   CosNotifyChannelAdminS.inl \
-  CosNotifyChannelAdminS_T.cpp \
-  CosNotifyChannelAdminS_T.h \
-  CosNotifyChannelAdminS_T.inl \
   CosNotifyCommS.h \
   CosNotifyCommS.inl \
-  CosNotifyCommS_T.cpp \
-  CosNotifyCommS_T.h \
-  CosNotifyCommS_T.inl \
   CosNotifyFilterS.h \
   CosNotifyFilterS.inl \
-  CosNotifyFilterS_T.cpp \
-  CosNotifyFilterS_T.h \
-  CosNotifyFilterS_T.inl \
   Event_ForwarderS.h \
   Event_ForwarderS.inl \
-  Event_ForwarderS_T.cpp \
-  Event_ForwarderS_T.h \
-  Event_ForwarderS_T.inl \
   Notify/notify_skel_export.h \
   NotifyExtS.h \
-  NotifyExtS.inl \
-  NotifyExtS_T.cpp \
-  NotifyExtS_T.h \
-  NotifyExtS_T.inl
+  NotifyExtS.inl
 
 pkgconfig_DATA += \
   TAO_CosNotification_Skel.pc
@@ -2690,19 +2663,10 @@ libTAO_CosTrading_Skel_la_LIBADD = \
 nobase_include_HEADERS += \
   CosTradingDynamicS.h \
   CosTradingDynamicS.inl \
-  CosTradingDynamicS_T.cpp \
-  CosTradingDynamicS_T.h \
-  CosTradingDynamicS_T.inl \
   CosTradingReposS.h \
   CosTradingReposS.inl \
-  CosTradingReposS_T.cpp \
-  CosTradingReposS_T.h \
-  CosTradingReposS_T.inl \
   CosTradingS.h \
   CosTradingS.inl \
-  CosTradingS_T.cpp \
-  CosTradingS_T.h \
-  CosTradingS_T.inl \
   Trader/trading_skel_export.h
 
 pkgconfig_DATA += \
@@ -3028,14 +2992,8 @@ libTAO_DsLogAdmin_Skel_la_LIBADD = \
 nobase_include_HEADERS += \
   DsLogAdminS.h \
   DsLogAdminS.inl \
-  DsLogAdminS_T.cpp \
-  DsLogAdminS_T.h \
-  DsLogAdminS_T.inl \
   DsLogNotificationS.h \
   DsLogNotificationS.inl \
-  DsLogNotificationS_T.cpp \
-  DsLogNotificationS_T.h \
-  DsLogNotificationS_T.inl \
   Log/log_skel_export.h
 
 pkgconfig_DATA += \
@@ -3176,9 +3134,6 @@ libTAO_DsEventLogAdmin_Skel_la_LIBADD = \
 nobase_include_HEADERS += \
   DsEventLogAdminS.h \
   DsEventLogAdminS.inl \
-  DsEventLogAdminS_T.cpp \
-  DsEventLogAdminS_T.h \
-  DsEventLogAdminS_T.inl \
   Log/eventlog_skel_export.h
 
 pkgconfig_DATA += \
@@ -3395,9 +3350,6 @@ libTAO_DsNotifyLogAdmin_Skel_la_LIBADD = \
 nobase_include_HEADERS += \
   DsNotifyLogAdminS.h \
   DsNotifyLogAdminS.inl \
-  DsNotifyLogAdminS_T.cpp \
-  DsNotifyLogAdminS_T.h \
-  DsNotifyLogAdminS_T.inl \
   Log/notifylog_skel_export.h
 
 pkgconfig_DATA += \
@@ -5258,10 +5210,7 @@ libTAO_RTEventLogAdmin_Skel_la_LIBADD = \
 nobase_include_HEADERS += \
   Log/rteventlog_skel_export.h \
   RTEventLogAdminS.h \
-  RTEventLogAdminS.inl \
-  RTEventLogAdminS_T.cpp \
-  RTEventLogAdminS_T.h \
-  RTEventLogAdminS_T.inl
+  RTEventLogAdminS.inl
 
 pkgconfig_DATA += \
   TAO_RTEventLogAdmin_Skel.pc
