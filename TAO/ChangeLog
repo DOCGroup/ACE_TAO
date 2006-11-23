@@ -1,3 +1,26 @@
+Thu Nov 23 07:41:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/tao.mpc:
+          Simplified the idlflags to put the common flags for all pidl files
+          at the top of this file. Added regeneration of OctetSeq.pidl
+          and UShortSeq.pidl, these can now be regenerated using the new
+          -Gse option which is enabled for all sequence files
+
+        * tao/OctetSeqC.{h,cpp}:
+        * tao/UShortSeqC.{h,cpp}:
+        * tao/OctetSeqS.h:
+        * tao/UShortSeqS.h:
+        * tao/AnyTypeCode/OctetSeqA.{h,cpp}:
+        * tao/AnyTypeCode/UShortSeqA.{h,cpp}:
+        * tao/diffs/OctetSeq.diff:
+        * tao/diffs/UShortSeq.diff:
+          Removed all these files, they are not regenerated as part of the
+          build.
+
+        * tao/OctetSeq.pidl:
+        * tao/UShortSeq.pidl:
+          Removed remark about applying a diff
+
 Thu Nov 23 06:47:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * performance-tests/Cubit/TAO/IDL_Cubit/IDL_Cubit.mpc:
