@@ -248,7 +248,7 @@ be_visitor_component_cs::visit_component (be_component *node)
   while (ancestor != 0)
     {
       *os << "!ACE_OS::strcmp (" << be_idt << be_idt_nl
-          << "(char *)value," << be_nl
+          << "value," << be_nl
           << "\"" << ancestor->repoID () << "\"" << be_uidt_nl
           << ") ||" << be_uidt_nl;
 
@@ -256,7 +256,7 @@ be_visitor_component_cs::visit_component (be_component *node)
     }
 
   *os << "!ACE_OS::strcmp (" << be_idt << be_idt_nl
-      << "(char *)value," << be_nl
+      << "value," << be_nl
       << "\"IDL:omg.org/Components/CCMObject:1.0\"" << be_uidt_nl
       << ")" << be_uidt << be_uidt_nl
       << " )" << be_nl
