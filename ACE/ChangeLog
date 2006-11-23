@@ -1,3 +1,8 @@
+Thu Nov 23 14:09:17 UTC 2006  Steve Huston  <shuston@riverace.com>
+
+        * include/makeinclude/rules.lib.GNU: Corrected error introduced by
+          Wed Nov 22 21:53:17 UTC 2006  Steve Huston  <shuston@riverace.com>.
+
 Thu Nov 23 06:53:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/MakeProjectCreator/config/ace_for_tao.mpb:
