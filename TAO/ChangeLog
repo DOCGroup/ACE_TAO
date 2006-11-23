@@ -3,6 +3,9 @@ Thu Nov 23 06:47:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
         * performance-tests/Cubit/TAO/IDL_Cubit/IDL_Cubit.mpc:
           Also don't build the server when ace_for_tao is enabled
 
+        * performance-tests/Cubit/TAO/DII_Cubit/DII_Cubit.mpc:
+          Don't build in ace_for_tao
+
 Thu Nov 23 03:20:04 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
 
         * orbsvcs/orbsvcs/Makefile.am:
