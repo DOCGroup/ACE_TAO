@@ -1001,12 +1001,10 @@ nobase_include_HEADERS += \
   CosEventChannelAdminS.inl \
   CosEventChannelAdminS_T.cpp \
   CosEventChannelAdminS_T.h \
-  CosEventChannelAdminS_T.inl \
   CosEventCommS.h \
   CosEventCommS.inl \
   CosEventCommS_T.cpp \
   CosEventCommS_T.h \
-  CosEventCommS_T.inl \
   CosTypedEventChannelAdminS.h \
   CosTypedEventChannelAdminS.inl \
   CosTypedEventChannelAdminS_T.cpp \
