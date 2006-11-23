@@ -3,6 +3,7 @@
 
 project(*client): taoexe, portableserver, strategies, dynamicinterface, minimum_corba {
   after    += IDL_Cubit_Server
+  avoids   += ace_for_tao
   idlflags += -Gd
 
   Source_Files {
