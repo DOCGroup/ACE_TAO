@@ -1,3 +1,13 @@
+Thu Nov 23 14:15:47 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * orbsvcs/orbsvcs/Makefile.am:
+
+          Regenerated.
+
+        * orbsvcs/orbsvcs/CosEvent.mpc:
+
+          Removed *S_T.inl files from the Inline_Files section.
+
 Thu Nov 23 13:08:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/tao.mpc:
