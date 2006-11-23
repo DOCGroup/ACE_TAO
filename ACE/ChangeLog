@@ -1,3 +1,10 @@
+Thu Nov 23 06:53:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/MakeProjectCreator/config/ace_for_tao.mpb:
+          Added ACE_LACKS_MSG_WFMO as define, that prevents other projects
+          to try to use the msg wfmo reactor which is not available in the
+          ace_for_tao configuration
+
 Thu Nov 23 03:14:58 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
 
         * tests/Integer_Truncate_Test.cpp:
