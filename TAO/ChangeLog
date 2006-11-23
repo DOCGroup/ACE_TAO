@@ -1,3 +1,9 @@
+Thu Nov 23 01:05:04 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * orbsvcs/Logging_Service/Notify_Logging_Service/Notify_Logging_Service.cpp:
+          Fix typo in ACE_Get_Opt option specification which made it
+          impossible to specify the number of threads.
+
 Wed Nov 22 22:20:12 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
 
         * TAO_IDL/Makefile.am:
