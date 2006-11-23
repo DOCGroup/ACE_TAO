@@ -21,7 +21,7 @@ CONTROLLED_FILES = \
 	TAO/Release \
 	TAO/TAO-INSTALL.html \
 	TAO/TAO.mwc \
-	TAO/TAO_ACE* \
+        TAO/TAO_*.mwc \
 	TAO/TAO_IDL \
 	TAO/VERSION \
 	TAO/configure.ac \
