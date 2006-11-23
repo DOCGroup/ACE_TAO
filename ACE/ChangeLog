@@ -1,3 +1,10 @@
+Thu Nov 23 03:14:58 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * tests/Integer_Truncate_Test.cpp:
+        * apps/JAWS/clients/WebSTONE/src/README:
+
+          Removed svn:executable property.
+
 Wed Nov 22 23:16:22 UTC 2006  Steve Huston  <shuston@riverace.com>
 
         * examples/Timer_Queue/Async_Timer_Queue_Test.cpp: Ignore SIGQUIT code
