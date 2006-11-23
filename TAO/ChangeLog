@@ -1,3 +1,23 @@
+Thu Nov 23 03:20:04 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * orbsvcs/orbsvcs/Makefile.am:
+
+          Regenerated.
+
+        * orbsvcs/orbsvcs/CosTrading.mpc:
+        * orbsvcs/orbsvcs/RTEventLogAdmin.mpc:
+        * orbsvcs/orbsvcs/CosNotification.mpc:
+        * orbsvcs/orbsvcs/DsNotifyLogAdmin.mpc:
+        * orbsvcs/orbsvcs/DsLogAdmin.mpc:
+        * orbsvcs/orbsvcs/CosNaming_Skel.mpc:
+        * orbsvcs/orbsvcs/DsEventLogAdmin.mpc:
+        * orbsvcs/orbsvcs/CosProperty.mpc:
+
+          Removed *S_T.* files from the Header_Files, Inline_Files, and
+          Template_Files sections, cooresponding to the recent change to
+          orbsvcslib.mpb which removed -GT from the command line options
+          passed to tao_idl.
+
 Thu Nov 23 01:05:04 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
 
         * orbsvcs/Logging_Service/Notify_Logging_Service/Notify_Logging_Service.cpp:
