@@ -1,3 +1,9 @@
+Thu Nov 23 14:20:33 UTC 2006  Simon McQueen  <sm@prismtech.com>
+
+        * orbsvcs/orbsvcs/IFRService/IFR_Service_Loader.cpp:
+
+          (Hopefully) fix Borland warning.
+
 Thu Nov 23 14:15:47 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
 
         * orbsvcs/orbsvcs/Makefile.am:
