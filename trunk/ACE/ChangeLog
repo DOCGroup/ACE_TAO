@@ -1,3 +1,10 @@
+Thu Nov 23 17:06:17 UTC 2006  Simon McQueen  <sm@prismtech.com>
+
+        * ace/OS_Errno.h:
+        * ace/OS_Errno.cpp:
+
+          Fix compile errors with g++ on Solaris with NDEBUG.
+
 Thu Nov 23 14:09:17 UTC 2006  Steve Huston  <shuston@riverace.com>
 
         * include/makeinclude/rules.lib.GNU: Corrected error introduced by
@@ -95,7 +102,7 @@ Wed Nov 22 19:52:23 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
 
 Wed Nov 22 18:27:39 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* performance-tests/Synch-Benchmarks/Base_Test/Makefile.am:
+        * performance-tests/Synch-Benchmarks/Base_Test/Makefile.am:
 
           Regenerated.
 
