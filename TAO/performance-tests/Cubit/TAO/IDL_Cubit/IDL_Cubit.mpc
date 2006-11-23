@@ -12,6 +12,7 @@ project(*IDL): taoidldefaults, strategies {
 
 project(*Server): taoexe, utils, portableserver, strategies {
   after += *IDL
+  avoids += ace_for_tao
   Source_Files {
     RTI_IO.cpp
     Cubit_i.cpp
