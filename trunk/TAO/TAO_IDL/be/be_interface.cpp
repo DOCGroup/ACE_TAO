@@ -1428,7 +1428,7 @@ be_interface::traverse_inheritance_graph (
             {
               (void) this->insert_non_dup (base);
 
-              long n_supports = base->n_supports ();
+              long const n_supports = base->n_supports ();
               AST_Interface **supports = base->supports ();
 
               for (long j = 0; j < n_supports; ++j)

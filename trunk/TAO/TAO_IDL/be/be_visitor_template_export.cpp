@@ -18,6 +18,7 @@
 #include "be_sequence.h"
 #include "be_extern.h"
 #include "be_helper.h"
+#include "be_predefined_type.h"
 
 ACE_RCSID (be,
            be_visitor_template_export,
@@ -41,15 +42,7 @@ be_visitor_template_export::visit_root (be_root *node)
   *os << "// TAO_IDL - Generated from " << be_nl
       << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
 
-  *os << "// Workaround for a Visual Studio .NET bug where this class is not" << be_nl
-      << "// properly imported by an application if typedef'd or subclassed," << be_nl
-      << "// resulting in 'multiply defined' link errors. The export macro" << be_nl
-      << "// here forces an explicit import by the application. Please see" << be_nl
-      << "// http://support.microsoft.com/default.aspx?scid=kb;en-us;309801" << be_nl
-      << "// The problem stems from use of the type below in PortableServer," << be_nl
-      << "// but we put the instantiation here because the application will" << be_nl
-      << "// need to see it in *C.h to avoid the error." << be_nl
-      << "#if defined ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION_EXPORT" << be_idt;
+  *os << "#if defined ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION_EXPORT";
 
   if (this->visit_scope (node) == -1)
     {
@@ -59,8 +52,7 @@ be_visitor_template_export::visit_root (be_root *node)
                         -1);
     }
 
-  *os << be_uidt_nl
-      << "#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION_EXPORT */";
+  *os << be_nl << "#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION_EXPORT */";
 
   return 0;
 }
@@ -84,7 +76,45 @@ be_visitor_template_export::visit_sequence (be_sequence *node)
 {
   TAO_OutStream *os = this->ctx_->stream ();
 
-  *os << be_nl
+  be_type *bt = be_type::narrow_from_decl (node->base_type ());
+
+  // If this is a (w)string don't generate a thing
+  if ((node->managed_type () == be_sequence::MNG_STRING) ||
+      (node->managed_type () == be_sequence::MNG_WSTRING))
+  {
+    return 0;
+  }
+
+  // TAO provides extensions for octet sequences, first find out if
+  // the base type is an octet (or an alias for octet).
+  be_predefined_type *predef = 0;
+
+  if (bt->base_node_type () == AST_Type::NT_pre_defined)
+    {
+      be_typedef* alias =
+            be_typedef::narrow_from_decl (bt);
+
+      if (alias == 0)
+        {
+          predef = be_predefined_type::narrow_from_decl (bt);
+        }
+      else
+        {
+          predef =
+            be_predefined_type::narrow_from_decl (
+                alias->primitive_base_type ()
+              );
+        }
+    }
+
+  // When it is a sequence add a special guard
+  if (predef != 0 && predef->pt () == AST_PredefinedType::PT_octet
+      && node->unbounded ())
+    {
+      *os << "\n#if (TAO_NO_COPY_OCTET_SEQUENCES == 0)";
+    }
+
+  *os << be_idt << be_nl
       << "template class " << be_global->stub_export_macro ()
       << " ";
 
@@ -97,7 +127,13 @@ be_visitor_template_export::visit_sequence (be_sequence *node)
                         -1);
     }
 
-  *os << ";";
+  *os << ";" << be_uidt;
+
+  if (predef != 0 && predef->pt () == AST_PredefinedType::PT_octet
+      && node->unbounded ())
+    {
+      *os << "\n#endif /* TAO_NO_COPY_OCTET_SEQUENCE == 0 */";
+    }
 
   return 0;
 }
