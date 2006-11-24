@@ -1,3 +1,10 @@
+Fri Nov 24 13:27:55 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * bin/MakeProjectCreator/config/automake.features:
+
+          Set stl and boost.  We'll use automake conditionals to defer
+          this option to configure time.
+
 Fri Nov 24 13:05:01 UTC 2006  Olli Savia  <ops@iki.fi>
 
         * tests/OS_Test.cpp:
