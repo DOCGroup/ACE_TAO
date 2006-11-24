@@ -1,3 +1,15 @@
+Fri Nov 24 13:19:24 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * tao/Makefile.am:
+
+          Regenerated.
+
+        * tao/Strategies.mpc:
+
+          Clear PIDL_Files section as the Strategies *.pidl files are
+          processed within the IDL_Files section, and this results in
+          duplicate entries.
+
 Fri Nov 24 09:32:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Bounded_Basic_String_Sequence_T.h:
