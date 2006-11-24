@@ -1,3 +1,19 @@
+Fri Nov 24 14:04:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Sequence_Unit_Tests/Bounded_String.cpp:
+          Updated because of string sequence changes earlier today
+
+Fri Nov 24 13:45:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Portable_Interceptors/PICurrent/client.cpp:
+          Added a test for bugzilla 2656
+
+        * tao/Stub.cpp (get_policy_overrides):
+          When policies is zero, return an empty sequence instead of
+          a nill pointer. This fixes bugzilla 2656. Thanks to
+          Richard Ridgway <Richard_Ridgway at ml dot com> for
+          delevering the test extension and the patch for this file.
+
 Fri Nov 24 13:43:44 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
 
         * configure.ac:
