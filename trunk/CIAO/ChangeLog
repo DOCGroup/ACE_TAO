@@ -1,3 +1,8 @@
+Fri Nov 24 09:41:12 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * performance-tests/Benchmark/Multi_Threaded/Multi_Threaded.mpc:
+          Don't build this project in ace_for_tao configuration
+
 Thu Nov 23 12:34:12 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ciao/CCM_Home.idl:
