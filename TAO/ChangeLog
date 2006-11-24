@@ -1,3 +1,9 @@
+Fri Nov 24 06:28:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/tao.mpc:
+          Don't use -Gse for ULongLongSeq at this moment, vc8 seems to
+          have a problem with this file
+
 Thu Nov 23 14:51:05 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
 
         * tao/Makefile.am:
