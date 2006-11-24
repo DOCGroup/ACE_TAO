@@ -1,3 +1,32 @@
+Fri Nov 24 09:32:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Bounded_Basic_String_Sequence_T.h:
+        * tao/Unbounded_Basic_String_Sequence_T.h:
+          Moved these templates from TAO::details to TAO namespace because
+          we are going to move these templates directly
+
+        * tao/Bounded_String_Sequence_T.h:
+        * tao/Bounded_Wstring_Sequence_T.h:
+        * tao/Unbounded_String_Sequence_T.h:
+        * tao/Unbounded_Wstring_Sequence_T.h:
+          Removed, not used anymore, the IDL compiler uses the basic string
+          sequence directly.
+
+        * TAO_IDL/be/be_visitor_template_export.cpp:
+          Removed special handling for (w)string sequences
+
+        * TAO_IDL/be/be_sequence.cpp:
+          Changed generation to use basic string sequence template directly
+
+        * tao/Sequence_T.h:
+        * tao/tao.mpc:
+          Removed the files that got removed
+
+        * tao/Unbounded_Sequence_CDR_T.h:
+        * tao/Bounded_Sequence_CDR_T.h:
+          Updated because of the move of the basic string sequence files
+          from TAO::details to TAO
+
 Fri Nov 24 06:28:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/tao.mpc:

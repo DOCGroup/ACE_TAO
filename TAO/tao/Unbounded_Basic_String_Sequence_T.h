@@ -18,9 +18,6 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO
 {
-namespace details
-{
-
 template<typename charT>
 class unbounded_basic_string_sequence
 {
@@ -103,8 +100,6 @@ public:
 private:
   implementation_type impl_;
 };
-
-} // namespace details
 } // namespace TAO
 
 TAO_END_VERSIONED_NAMESPACE_DECL
