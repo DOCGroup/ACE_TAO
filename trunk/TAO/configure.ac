@@ -202,6 +202,7 @@ AC_CONFIG_FILES([
   docs/tutorials/Quoter/Makefile
   docs/tutorials/Quoter/Naming_Service/Makefile
   docs/tutorials/Quoter/On_Demand_Activation/Makefile
+  docs/tutorials/Quoter/RTCORBA/Makefile
   docs/tutorials/Quoter/RT_Event_Service/Makefile
   docs/tutorials/Quoter/Simple/Client/Makefile
   docs/tutorials/Quoter/Simple/Impl-Repo/Makefile
