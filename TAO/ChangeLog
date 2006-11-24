@@ -1,3 +1,10 @@
+Fri Nov 24 13:24:56 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * performance-tests/Cubit/TAO/DII_Cubit/Makefile.am:
+        * performance-tests/Cubit/TAO/IDL_Cubit/Makefile.am:
+
+          Regenerated.
+
 Fri Nov 24 13:21:52 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
 
         * configure.ac:
