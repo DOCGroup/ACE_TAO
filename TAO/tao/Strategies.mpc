@@ -25,7 +25,6 @@ project : taolib, core, core_anytypecode, core_strategies, tao_versioning_idl_de
   }
 
   PIDL_Files {
-    Strategies
   }
 
   IDL_Files {
