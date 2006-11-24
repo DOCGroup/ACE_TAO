@@ -12,10 +12,9 @@ SUBDIRS = \
         AMI \
         Event_Service \
         On_Demand_Activation \
+        RTCORBA \
         RT_Event_Service \
         idl \
         Simple \
         Naming_Service
-
-#	RTCORBA
 
