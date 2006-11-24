@@ -250,11 +250,11 @@ TAO_ORB_Core::TAO_ORB_Core (const char *orbid)
     tm_ (),
     tss_cleanup_funcs_ (),
     tss_resources_ (),
-    has_shutdown_ (true),  // Start the ORB in a  "shutdown" state.  Only
-                           // after CORBA::ORB_init() is called will the
-                           // ORB no longer be shutdown.  This does not
-                           // mean that the ORB can be reinitialized.  It
-                           // can only be initialized once.
+    has_shutdown_ (1),  // Start the ORB in a  "shutdown" state.  Only
+                        // after CORBA::ORB_init() is called will the
+                        // ORB no longer be shutdown.  This does not
+                        // mean that the ORB can be reinitialized.  It
+                        // can only be initialized once.
     thread_per_connection_use_timeout_ (1),
     open_lock_ (),
     endpoint_selector_factory_ (0),
@@ -1345,7 +1345,7 @@ TAO_ORB_Core::init (int &argc, char *argv[] ACE_ENV_ARG_DECL)
 
   // The ORB has been initialized, meaning that the ORB is no longer
   // in the shutdown state.
-  this->has_shutdown_ = false;
+  this->has_shutdown_ = 0;
 
   return 0;
 }
@@ -2178,7 +2178,7 @@ TAO_ORB_Core::run (ACE_Time_Value *tv,
   // We don't need to do this because we use the Reactor
   // mechanisms to shutdown in a thread-safe way.
 
-  while (this->has_shutdown () == false)
+  while (this->has_shutdown () == 0)
     {
       // Every time we perform an interation we have to become the
       // leader again, because it is possible that a client has
@@ -2250,7 +2250,7 @@ TAO_ORB_Core::run (ACE_Time_Value *tv,
       // Otherwise just continue..
     }
 
-  if (this->has_shutdown () == true &&
+  if (this->has_shutdown () == 1 &&
       this->server_factory_->activate_server_connections ())
       this->tm_.wait ();
 
@@ -2273,7 +2273,7 @@ TAO_ORB_Core::shutdown (CORBA::Boolean wait_for_completion
   {
     ACE_GUARD (TAO_SYNCH_MUTEX, monitor, this->lock_);
 
-    if (this->has_shutdown () == true)
+    if (this->has_shutdown () != 0)
       return;
 
     // Check if we are on the right state, i.e. do not accept
@@ -2285,7 +2285,7 @@ TAO_ORB_Core::shutdown (CORBA::Boolean wait_for_completion
 
     // Set the 'has_shutdown' flag, so any further attempt to shutdown
     // becomes a noop.
-    this->has_shutdown_ = true;
+    this->has_shutdown_ = 1;
 
     // need to release the mutex, because some of the shutdown
     // operations invoke application code, that could (and in practice

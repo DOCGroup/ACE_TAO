@@ -2,7 +2,7 @@
 
 #include "tao/QtResource/QtResource_Factory.h"
 #include "tao/debug.h"
-#include "ace/QtReactor/QtReactor.h"
+#include "ace/QtReactor.h"
 
 ACE_RCSID (TAO_QtResource,
            QtResource_Factory,
@@ -25,7 +25,7 @@ namespace TAO
       {
         ACE_ERROR ((LM_ERROR,
                     "TAO (%P|%t) - QApplication is undefined.",
-                    " Cannot create ACE_QtReactor \n"));
+                    " Cannot create ACE_XtReactor \n"));
         return 0;
       }
 

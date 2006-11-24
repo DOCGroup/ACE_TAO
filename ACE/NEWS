@@ -5,44 +5,6 @@ PLANNED MAJOR CHANGES "SOMETIME IN THE FUTURE" (i.e., exact beta not known)
 
 . (Remedy) RTEMS port
 
-PLANNED CHANGES FOR "ACE-5.5.5"
-===============================
-* (OO) Minor 64 bit file offset fixes for ACE AIO classes on HP-UX.
-* (OO) Various other fixes that have been piling up.
-
-USER VISIBLE CHANGES BETWEEN ACE-5.5.4 and ACE-5.5.5
-====================================================
-
-. There are a number of new methods defined on ACE_String_Base<CHAR>:
-
-        size_t capacity (void) const:  This method returns the number
-            of allocated CHAR units in the string object.
-
-        void fast_resize (size_t): This method manage the sizing/reallocating
-            of the string, but doesn't do the memory setting of resize().
-
-        bool operator!= (const CHAR *) const
-        bool operator== (const CHAR *) const: These methods compare the
-            string with a nul-terminated CHAR* string.
-
-        nonmember functions operator== and operator!= where also added
-            that compare const ACE_String_Base and const CHAR*; these make
-            it possible to switch ACE_String and CHAR* on either side of
-            the operator.
-
-  Thank you to Kelly Hickel <kfh at mqsoftware dot com> for these additions.
-
-. There are 2 new build options on the traditional make command:
-  dmalloc and mtrace. When specified at build time (e.g. make mtrace=1)
-  the PLATFORM_DMALLOC_CPPFLAGS and/or PLATFORM_MTRACE_CPPFLAGS values
-  are added to CPPFLAGS. For dmalloc, the PLATFORM_DMALLOC_LDFLAGS and
-  PLATFORM_DMALLOC_LIBS are added to LDFLAGS and LIBS, respectively.
-  Thank you to Howard Finer for supplying these additions.
-
-. Added the ability to specify additional purify and quantify command-line
-  options by setting PLATFORM_PURIFY_OPTIONS and PLATFORM_QUANTIFY_OPTIONS,
-  respectively. Thank you to Howard Finer for supplying these additions.
-
 USER VISIBLE CHANGES BETWEEN ACE-5.5.3 and ACE-5.5.4
 ====================================================
 

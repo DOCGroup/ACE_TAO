@@ -329,12 +329,6 @@ public:
   bool use_clonable_in_args (void) const;
   // Get the clonable_in_args setting.
 
-  bool gen_template_export (void) const;
-  // Get the gen_seq_template_export_ member.
-
-  void gen_template_export (bool val);
-  // Set the gen_seq_template_export_ member.
-
   const char* anyop_header_ending (void) const;
   // Get the anyop_header_ending.
 
@@ -794,10 +788,6 @@ private:
 
   bool use_clonable_in_args_;
   // Use in_clonable_arg_val instead of in_arg_val?
-
-  bool gen_template_export_;
-  // Generate explicit export for Visual Studio bug workaround,
-  // needed only in TAO basic sequence *C.h files.
 };
 
 #endif /* _BE_GLOBAL_H */

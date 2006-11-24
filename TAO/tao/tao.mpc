@@ -4,13 +4,6 @@ project(TAO) : acelib, core, tao_output, taodefaults, pidl, extra_core, tao_vers
   sharedname   = TAO
   dynamicflags = TAO_BUILD_DLL
 
-  idlflags += -SS -Sorb -GA -Ge 1 -Gp -Gd -oA AnyTypeCode \
-              -Wb,export_macro=TAO_Export \
-              -Wb,export_include=tao/TAO_Export.h \
-              -Wb,anyop_export_macro=TAO_AnyTypeCode_Export \
-              -Wb,anyop_export_include=tao/AnyTypeCode/TAO_AnyTypeCode_Export.h
-  idlflags -= -Sa -St
-
   Source_Files(TAO_COMPONENTS) {
     Abstract_Servant_Base.cpp
     Acceptor_Filter.cpp
@@ -85,9 +78,6 @@ project(TAO) : acelib, core, tao_output, taodefaults, pidl, extra_core, tao_vers
     GIOP_Message_State.cpp
     GIOP_Message_Version.cpp
     GIOPC.cpp
-    HTTP_Client.cpp
-    HTTP_Handler.cpp
-    HTTP_Parser.cpp
     IFR_Client_Adapter.cpp
     IIOP_Acceptor.cpp
     IIOP_Connection_Handler.cpp
@@ -278,8 +268,10 @@ project(TAO) : acelib, core, tao_output, taodefaults, pidl, extra_core, tao_vers
     Bounded_Object_Reference_Sequence_T.h
     Bounded_Reference_Allocation_Traits_T.h
     Bounded_Sequence_CDR_T.h
+    Bounded_String_Sequence_T.h
     Bounded_Value_Allocation_Traits_T.h
     Bounded_Value_Sequence_T.h
+    Bounded_Wstring_Sequence_T.h
     Buffer_Allocator_T.h
     Buffering_Constraint_Policy.h
     Cache_Entries.h
@@ -357,9 +349,6 @@ project(TAO) : acelib, core, tao_output, taodefaults, pidl, extra_core, tao_vers
     GIOPS.h
     GIOP_Utils.h
     GUIResource_Factory.h
-    HTTP_Client.h
-    HTTP_Handler.h
-    HTTP_Parser.h
     IFR_Client_Adapter.h
     IIOP_Acceptor.h
     IIOPC.h
@@ -548,8 +537,10 @@ project(TAO) : acelib, core, tao_output, taodefaults, pidl, extra_core, tao_vers
     Unbounded_Octet_Sequence_T.h
     Unbounded_Reference_Allocation_Traits_T.h
     Unbounded_Sequence_CDR_T.h
+    Unbounded_String_Sequence_T.h
     Unbounded_Value_Allocation_Traits_T.h
     Unbounded_Value_Sequence_T.h
+    Unbounded_Wstring_Sequence_T.h
     UserException.h
     UShortSeqC.h
     UShortSeqS.h
@@ -591,17 +582,35 @@ project(TAO) : acelib, core, tao_output, taodefaults, pidl, extra_core, tao_vers
   }
 
   IDL_Files {
+    idlflags += -Gp -Gd -SS -Sorb -GA -Ge 1 -oA AnyTypeCode \
+                -Wb,export_macro=TAO_Export \
+                -Wb,export_include=tao/TAO_Export.h \
+                -Wb,anyop_export_macro=TAO_AnyTypeCode_Export \
+                -Wb,anyop_export_include=tao/AnyTypeCode/TAO_AnyTypeCode_Export.h
+    idlflags -= -Sa -St
     GIOP.pidl >> AnyTypeCode/GIOPA.h AnyTypeCode/GIOPA.cpp
   }
 
   IDL_Files {
-    idlflags += -Sci
+    idlflags += -Gp -Gd -Sci -SS -Sorb -GA -Ge 1 -oA AnyTypeCode \
+                -Wb,export_macro=TAO_Export \
+                -Wb,export_include=tao/TAO_Export.h \
+                -Wb,anyop_export_macro=TAO_AnyTypeCode_Export \
+                -Wb,anyop_export_include=tao/AnyTypeCode/TAO_AnyTypeCode_Export.h
+    idlflags -= -Sa -St
+    BooleanSeq.pidl >> AnyTypeCode/BooleanSeqA.h AnyTypeCode/BooleanSeqA.cpp
+    CharSeq.pidl >> AnyTypeCode/CharSeqA.h AnyTypeCode/CharSeqA.cpp
     CONV_FRAME.pidl >> AnyTypeCode/CONV_FRAMEA.h AnyTypeCode/CONV_FRAMEA.cpp
     Current.pidl >> AnyTypeCode/CurrentA.h AnyTypeCode/CurrentA.cpp
+    DoubleSeq.pidl >> AnyTypeCode/DoubleSeqA.h AnyTypeCode/DoubleSeqA.cpp
+    FloatSeq.pidl >> AnyTypeCode/FloatSeqA.h AnyTypeCode/FloatSeqA.cpp
     IIOP.pidl >> AnyTypeCode/IIOPA.h AnyTypeCode/IIOPA.cpp
     IIOP_Endpoints.pidl >> AnyTypeCode/IIOP_EndpointsA.h AnyTypeCode/IIOP_EndpointsA.cpp
     IOP.pidl >> AnyTypeCode/IOPA.h AnyTypeCode/IOPA.cpp
     IOP_IOR.pidl >> AnyTypeCode/IOP_IORA.h AnyTypeCode/IOP_IORA.cpp
+    LongDoubleSeq.pidl >> AnyTypeCode/LongDoubleSeqA.h AnyTypeCode/LongDoubleSeqA.cpp
+    LongLongSeq.pidl >> AnyTypeCode/LongLongSeqA.h AnyTypeCode/LongLongSeqA.cpp
+    LongSeq.pidl >> AnyTypeCode/LongSeqA.h AnyTypeCode/LongSeqA.cpp
     Messaging_PolicyValue.pidl >> AnyTypeCode/Messaging_PolicyValueA.h AnyTypeCode/Messaging_PolicyValueA.cpp
     Messaging_SyncScope.pidl >> AnyTypeCode/Messaging_SyncScopeA.h AnyTypeCode/Messaging_SyncScopeA.cpp
     ObjectIdList.pidl >> AnyTypeCode/ObjectIdListA.h AnyTypeCode/ObjectIdListA.cpp
@@ -611,43 +620,25 @@ project(TAO) : acelib, core, tao_output, taodefaults, pidl, extra_core, tao_vers
     PI_Forward.pidl >> AnyTypeCode/PI_ForwardA.h AnyTypeCode/PI_ForwardA.cpp
     PortableInterceptor.pidl >> AnyTypeCode/PortableInterceptorA.h AnyTypeCode/PortableInterceptorA.cpp
     Services.pidl >> AnyTypeCode/ServicesA.h AnyTypeCode/ServicesA.cpp
-    TAO.pidl >> AnyTypeCode/TAOA.h AnyTypeCode/TAOA.cpp
-    TimeBase.pidl >> AnyTypeCode/TimeBaseA.h AnyTypeCode/TimeBaseA.cpp
-  }
-
-  IDL_Files {
-    idlflags += -Sci -Gse
-    BooleanSeq.pidl >> AnyTypeCode/BooleanSeqA.h AnyTypeCode/BooleanSeqA.cpp
-    CharSeq.pidl >> AnyTypeCode/CharSeqA.h AnyTypeCode/CharSeqA.cpp
-    DoubleSeq.pidl >> AnyTypeCode/DoubleSeqA.h AnyTypeCode/DoubleSeqA.cpp
-    FloatSeq.pidl >> AnyTypeCode/FloatSeqA.h AnyTypeCode/FloatSeqA.cpp
-    LongDoubleSeq.pidl >> AnyTypeCode/LongDoubleSeqA.h AnyTypeCode/LongDoubleSeqA.cpp
-    LongLongSeq.pidl >> AnyTypeCode/LongLongSeqA.h AnyTypeCode/LongLongSeqA.cpp
-    LongSeq.pidl >> AnyTypeCode/LongSeqA.h AnyTypeCode/LongSeqA.cpp
-    OctetSeq.pidl >> AnyTypeCode/OctetSeqA.h AnyTypeCode/OctetSeqA.cpp
     ShortSeq.pidl >> AnyTypeCode/ShortSeqA.h AnyTypeCode/ShortSeqA.cpp
     StringSeq.pidl >> AnyTypeCode/StringSeqA.h AnyTypeCode/StringSeqA.cpp
+    TAO.pidl >> AnyTypeCode/TAOA.h AnyTypeCode/TAOA.cpp
+    TimeBase.pidl >> AnyTypeCode/TimeBaseA.h AnyTypeCode/TimeBaseA.cpp
+    ULongLongSeq.pidl >> AnyTypeCode/ULongLongSeqA.h AnyTypeCode/ULongLongSeqA.cpp
     ULongSeq.pidl >> AnyTypeCode/ULongSeqA.h AnyTypeCode/ULongSeqA.cpp
-    UShortSeq.pidl >> AnyTypeCode/UShortSeqA.h AnyTypeCode/UShortSeqA.cpp
     WCharSeq.pidl >> AnyTypeCode/WCharSeqA.h AnyTypeCode/WCharSeqA.cpp
     WStringSeq.pidl >> AnyTypeCode/WStringSeqA.h AnyTypeCode/WStringSeqA.cpp
-  }
-
-  IDL_Files {
-    idlflags += -Sci
-    ULongLongSeq.pidl >> AnyTypeCode/ULongLongSeqA.h AnyTypeCode/ULongLongSeqA.cpp
   }
 
   // These headers are generated by the above *.pidl files.
   Header_Files {
     AnyTypeCode/GIOPA.h
-    AnyTypeCode/BooleanSeqA.h
+    AnyTypeCode/BooleanSeqA.h 
     AnyTypeCode/CONV_FRAMEA.h
     AnyTypeCode/CharSeqA.h
     AnyTypeCode/CurrentA.h
     AnyTypeCode/DoubleSeqA.h
     AnyTypeCode/FloatSeqA.h
-    AnyTypeCode/LongSeqA.h
     AnyTypeCode/IIOPA.h
     AnyTypeCode/IIOP_EndpointsA.h
     AnyTypeCode/IOPA.h
@@ -658,7 +649,6 @@ project(TAO) : acelib, core, tao_output, taodefaults, pidl, extra_core, tao_vers
     AnyTypeCode/Messaging_PolicyValueA.h
     AnyTypeCode/Messaging_SyncScopeA.h
     AnyTypeCode/ObjectIdListA.h
-    AnyTypeCode/OctetSeqA.h
     AnyTypeCode/PI_ForwardA.h
     AnyTypeCode/ParameterModeA.h
     AnyTypeCode/Policy_ForwardA.h
@@ -670,11 +660,10 @@ project(TAO) : acelib, core, tao_output, taodefaults, pidl, extra_core, tao_vers
     AnyTypeCode/TimeBaseA.h
     AnyTypeCode/ULongLongSeqA.h
     AnyTypeCode/ULongSeqA.h
-    AnyTypeCode/UShortSeqA.h
     AnyTypeCode/WCharSeqA.h
     AnyTypeCode/WStringSeqA.h
     AnyTypeCode/orb_typesA.h
-  }
+  } 
 
   Pkgconfig_Files {
     TAO.pc.in

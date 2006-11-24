@@ -76,7 +76,9 @@ TAO_Hash_LogRecordStore::TAO_Hash_LogRecordStore (
 
 TAO_Hash_LogRecordStore::~TAO_Hash_LogRecordStore (void)
 {
+  ACE_DEBUG((LM_DEBUG, "TAO_Hash_LogRecordStore::~TAO_Hash_LogRecordStore ()\n"));
   this->iterator_poa_->destroy (1, 0);
+  ACE_DEBUG((LM_DEBUG, "TAO_Hash_LogRecordStore::~TAO_Hash_LogRecordStore ()\n"));
 }
 
 int

@@ -27,7 +27,10 @@ BUILT_SOURCES = \
   test_objectC.inl \
   test_objectS.cpp \
   test_objectS.h \
-  test_objectS.inl
+  test_objectS.inl \
+  test_objectS_T.cpp \
+  test_objectS_T.h \
+  test_objectS_T.inl
 
 CLEANFILES = \
   test_object-stamp \
@@ -36,12 +39,15 @@ CLEANFILES = \
   test_objectC.inl \
   test_objectS.cpp \
   test_objectS.h \
-  test_objectS.inl
+  test_objectS.inl \
+  test_objectS_T.cpp \
+  test_objectS_T.h \
+  test_objectS_T.inl
 
-test_objectC.cpp test_objectC.h test_objectC.inl test_objectS.cpp test_objectS.h test_objectS.inl: test_object-stamp
+test_objectC.cpp test_objectC.h test_objectC.inl test_objectS.cpp test_objectS.h test_objectS.inl test_objectS_T.cpp test_objectS_T.h test_objectS_T.inl: test_object-stamp
 
 test_object-stamp: $(srcdir)/test_object.idl $(TAO_IDL_DEP)
-	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs $(srcdir)/test_object.idl
+	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs -GT $(srcdir)/test_object.idl
 	@touch $@
 
 noinst_PROGRAMS = client
@@ -61,7 +67,9 @@ client_SOURCES = \
   test_objectC.h \
   test_objectC.inl \
   test_objectS.h \
-  test_objectS.inl
+  test_objectS.inl \
+  test_objectS_T.h \
+  test_objectS_T.inl
 
 client_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO_PortableServer.la \

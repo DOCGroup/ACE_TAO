@@ -1701,26 +1701,33 @@ ACE_Log_Msg::log (const ACE_TCHAR *format_str,
 
                 case 'W':
                   {
-#if defined (ACE_HAS_WCHAR)
+#if defined (ACE_WIN32)
+                    ACE_TCHAR *wstr = va_arg (argp, ACE_TCHAR *);
+# if defined (ACE_USES_WCHAR)
+                    ACE_OS::strcpy (fp, ACE_LIB_TEXT ("s"));
+# else /* ACE_USES_WCHAR */
+                    ACE_OS::strcpy (fp, ACE_LIB_TEXT ("S"));
+# endif /* ACE_USES_WCHAR */
+                    if (can_check)
+                      this_len = ACE_OS::snprintf
+                        (bp, bspace, format, wstr ? wstr : ACE_LIB_TEXT ("(null)"));
+                    else
+                      this_len = ACE_OS::sprintf
+                        (bp, format, wstr ? wstr : ACE_LIB_TEXT ("(null)"));
+#elif defined (ACE_HAS_WCHAR)
                     wchar_t *wchar_str = va_arg (argp, wchar_t *);
 # if defined (HPUX)
                     ACE_OS::strcpy (fp, ACE_LIB_TEXT ("S"));
-# elif defined (ACE_WIN32)
-#   if defined (ACE_USES_WCHAR)
-                    ACE_OS::strcpy (fp, ACE_LIB_TEXT ("s"));
-#   else /* ACE_USES_WCHAR */
-                    ACE_OS::strcpy (fp, ACE_LIB_TEXT ("S"));
-#   endif /* ACE_USES_WCHAR */
 # else
                     ACE_OS::strcpy (fp, ACE_LIB_TEXT ("ls"));
 # endif /* HPUX */
                     if (can_check)
                       this_len = ACE_OS::snprintf
-                        (bp, bspace, format, wchar_str ? wchar_str : ACE_TEXT_WIDE("(null)"));
+                        (bp, bspace, format, wchar_str);
                     else
                       this_len = ACE_OS::sprintf
-                        (bp, format, wchar_str ? wchar_str : ACE_TEXT_WIDE("(null)"));
-#endif /* ACE_HAS_WCHAR */
+                        (bp, format, wchar_str);
+#endif /* ACE_WIN32 / ACE_HAS_WCHAR */
                     ACE_UPDATE_COUNT (bspace, this_len);
                   }
                   break;

@@ -29,7 +29,8 @@ BUILT_SOURCES = \
   QuoterS.h \
   QuoterS.inl \
   QuoterS_T.cpp \
-  QuoterS_T.h
+  QuoterS_T.h \
+  QuoterS_T.inl
 
 CLEANFILES = \
   Quoter-stamp \
@@ -40,9 +41,10 @@ CLEANFILES = \
   QuoterS.h \
   QuoterS.inl \
   QuoterS_T.cpp \
-  QuoterS_T.h
+  QuoterS_T.h \
+  QuoterS_T.inl
 
-QuoterC.cpp QuoterC.h QuoterC.inl QuoterS.cpp QuoterS.h QuoterS.inl QuoterS_T.cpp QuoterS_T.h: Quoter-stamp
+QuoterC.cpp QuoterC.h QuoterC.inl QuoterS.cpp QuoterS.h QuoterS.inl QuoterS_T.cpp QuoterS_T.h QuoterS_T.inl: Quoter-stamp
 
 Quoter-stamp: $(srcdir)/Quoter.idl $(TAO_IDL_DEP)
 	$(TAO_IDL) $(TAO_IDLFLAGS) -Wb,export_macro=QUOTER_COMMON_Export -Wb,export_include=quoter_common_export.h -GT $(srcdir)/Quoter.idl
@@ -69,6 +71,7 @@ noinst_HEADERS = \
   QuoterS.inl \
   QuoterS_T.cpp \
   QuoterS_T.h \
+  QuoterS_T.inl \
   quoter_common_export.h
 
 endif BUILD_EXCEPTIONS

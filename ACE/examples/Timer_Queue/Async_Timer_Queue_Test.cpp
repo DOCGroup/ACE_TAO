@@ -206,14 +206,12 @@ signal_handler (int signum)
       break;
       /* NOTREACHED */
 
-#if !defined (ACE_LACKS_UNIX_SIGNALS)
     case SIGQUIT:
       ACE_ERROR ((LM_ERROR,
                   "shutting down on SIGQUIT%a\n",
                   1));
       /* NOTREACHED */
       break;
-#endif
     }
 }
 
@@ -224,12 +222,10 @@ signal_handler (int signum)
 static void
 register_signal_handlers (void)
 {
-#if !defined (ACE_LACKS_UNIX_SIGNALS)
   // Register SIGQUIT (never blocked).
   ACE_Sig_Action sigquit ((ACE_SignalHandler) signal_handler,
 			  SIGQUIT);
   ACE_UNUSED_ARG (sigquit);
-#endif
 
   // Don't let the SIGALRM interrupt the SIGINT handler!
   ACE_Sig_Set ss;

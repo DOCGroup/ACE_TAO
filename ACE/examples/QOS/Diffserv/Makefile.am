@@ -28,8 +28,8 @@ client_SOURCES = \
   diffserv_test.cpp
 
 client_LDADD = \
-  $(ACE_BUILDDIR)/ace/QoS/$(ACE_BUILDDIR)/ace/QoS/libACE_QoS.la \
-  $(ACE_BUILDDIR)/ace/$(ACE_BUILDDIR)/ace/libACE.la
+  $(ACE_BUILDDIR)/ace/QoS/libACE_QoS.la \
+  $(ACE_BUILDDIR)/ace/libACE.la
 
 endif !BUILD_ACE_FOR_TAO
 endif BUILD_QOS
@@ -48,8 +48,8 @@ server_SOURCES = \
   server.cpp
 
 server_LDADD = \
-  $(ACE_BUILDDIR)/ace/QoS/$(ACE_BUILDDIR)/ace/QoS/libACE_QoS.la \
-  $(ACE_BUILDDIR)/ace/$(ACE_BUILDDIR)/ace/libACE.la
+  $(ACE_BUILDDIR)/ace/QoS/libACE_QoS.la \
+  $(ACE_BUILDDIR)/ace/libACE.la
 
 endif BUILD_QOS
 

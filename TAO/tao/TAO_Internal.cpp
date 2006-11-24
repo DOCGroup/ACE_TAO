@@ -10,7 +10,6 @@
 #include "tao/CORBANAME_Parser.h"
 #include "tao/CORBALOC_Parser.h"
 #include "tao/FILE_Parser.h"
-#include "tao/HTTP_Parser.h"
 #include "tao/DLL_Parser.h"
 #include "tao/ORB_Core.h"
 #include "tao/Adapter_Factory.h"
@@ -540,7 +539,6 @@ namespace
     pcfg->process_directive (ace_svc_desc_TAO_CORBALOC_Parser);
     pcfg->process_directive (ace_svc_desc_TAO_FILE_Parser);
     pcfg->process_directive (ace_svc_desc_TAO_DLL_Parser);
-    pcfg->process_directive (ace_svc_desc_TAO_HTTP_Parser);
     pcfg->process_directive (ace_svc_desc_TAO_Default_Stub_Factory);
     pcfg->process_directive (
       ace_svc_desc_TAO_Default_Endpoint_Selector_Factory);

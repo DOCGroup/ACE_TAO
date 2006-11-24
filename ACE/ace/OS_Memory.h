@@ -81,19 +81,6 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 #  endif
 #endif
 
-// The Windows MFC exception mechanism requires that a caught CException
-// (including the CMemoryException in use here) be freed using its Delete()
-// method. Thus, when MFC is in use and we're catching exceptions as a result
-// of new(), the exception's Delete() method has to be called. No other
-// platform imposes this sort of restriction/requirement. The Windows
-// config stuff (at least for MSVC/MFC) defines a ACE_del_bad_alloc macro
-// that works with its ACE_bad_alloc macro to implement this cleanup
-// requirement. Since no other platform requires this, define it as
-// empty here.
-#if !defined (ACE_del_bad_alloc)
-#  define ACE_del_bad_alloc
-#endif
-
 #if defined (ACE_NEW_THROWS_EXCEPTIONS)
 
 // Since new() throws exceptions, we need a way to avoid passing
@@ -158,7 +145,12 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 #  elif defined (ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB)
 #    include /**/ <new>
 #    if !defined (ACE_bad_alloc)
-#      define ACE_bad_alloc std::bad_alloc
+       // MFC changes the behavior of operator new at all MSVC versions from 6 up.
+#      if defined (ACE_HAS_MFC) && (ACE_HAS_MFC == 1)
+#        define ACE_bad_alloc CMemoryException*
+#      else
+#        define ACE_bad_alloc std::bad_alloc
+#      endif
 #    endif
 #    define ACE_nothrow   std::nothrow
 #    define ACE_nothrow_t std::nothrow_t
@@ -171,7 +163,12 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 #  else
 #    include /**/ <new>
 #    if !defined (ACE_bad_alloc)
-#      define ACE_bad_alloc bad_alloc
+       // MFC changes the behavior of operator new at all MSVC versions from 6 up.
+#      if defined (ACE_HAS_MFC) && (ACE_HAS_MFC == 1)
+#        define ACE_bad_alloc CMemoryException*
+#      else
+#        define ACE_bad_alloc bad_alloc
+#      endif
 #    endif
 #    define ACE_nothrow   nothrow
 #    define ACE_nothrow_t nothrow_t
@@ -201,17 +198,17 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 
 #    define ACE_NEW_RETURN(POINTER,CONSTRUCTOR,RET_VAL) \
    do { try { POINTER = new CONSTRUCTOR; } \
-     catch (ACE_bad_alloc) { ACE_del_bad_alloc errno = ENOMEM; POINTER = 0; return RET_VAL; } \
+        catch (ACE_bad_alloc) { errno = ENOMEM; POINTER = 0; return RET_VAL; } \
    } while (0)
 
 #    define ACE_NEW(POINTER,CONSTRUCTOR) \
    do { try { POINTER = new CONSTRUCTOR; } \
-     catch (ACE_bad_alloc) { ACE_del_bad_alloc errno = ENOMEM; POINTER = 0; return; } \
+        catch (ACE_bad_alloc) { errno = ENOMEM; POINTER = 0; return; } \
    } while (0)
 
 #    define ACE_NEW_NORETURN(POINTER,CONSTRUCTOR) \
    do { try { POINTER = new CONSTRUCTOR; } \
-     catch (ACE_bad_alloc) { ACE_del_bad_alloc errno = ENOMEM; POINTER = 0; } \
+        catch (ACE_bad_alloc) { errno = ENOMEM; POINTER = 0; } \
    } while (0)
 #  endif /* ACE_HAS_NEW_NOTHROW */
 

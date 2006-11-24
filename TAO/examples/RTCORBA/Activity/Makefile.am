@@ -28,7 +28,10 @@ BUILT_SOURCES = \
   JobC.inl \
   JobS.cpp \
   JobS.h \
-  JobS.inl
+  JobS.inl \
+  JobS_T.cpp \
+  JobS_T.h \
+  JobS_T.inl
 
 CLEANFILES = \
   Job-stamp \
@@ -37,12 +40,15 @@ CLEANFILES = \
   JobC.inl \
   JobS.cpp \
   JobS.h \
-  JobS.inl
+  JobS.inl \
+  JobS_T.cpp \
+  JobS_T.h \
+  JobS_T.inl
 
-JobC.cpp JobC.h JobC.inl JobS.cpp JobS.h JobS.inl: Job-stamp
+JobC.cpp JobC.h JobC.inl JobS.cpp JobS.h JobS.inl JobS_T.cpp JobS_T.h JobS_T.inl: Job-stamp
 
 Job-stamp: $(srcdir)/Job.idl $(TAO_IDL_DEP)
-	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs $(srcdir)/Job.idl
+	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs -GT $(srcdir)/Job.idl
 	@touch $@
 
 noinst_PROGRAMS = activity
@@ -72,6 +78,8 @@ activity_SOURCES = \
   JobC.inl \
   JobS.h \
   JobS.inl \
+  JobS_T.h \
+  JobS_T.inl \
   Job_i.h \
   POA_Holder.h \
   Periodic_Task.h \

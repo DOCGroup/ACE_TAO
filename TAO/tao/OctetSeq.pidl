@@ -17,6 +17,9 @@
  *          -Wb,anyop_export_macro=TAO_AnyTypeCode_Export
  *          -Wb,anyop_export_include=tao/AnyTypeCode/TAO_AnyTypeCode_Export.h
  *          OctetSeq.pidl
+ *
+ *   Patches for changes to the generated code are available in the
+ *   `diffs' directory.
  */
 
 

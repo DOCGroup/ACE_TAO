@@ -225,7 +225,7 @@ extern "C" { char * cuserid (char *s); }
 #define ACE_HAS_SIGWAIT
 
 // Platform has POSIX terminal interface.
-#define ACE_HAS_TERMIOS
+#define ACE_HAS_TERMIOS 
 
 #if (__FreeBSD_version > 400000)
 #define ACE_HAS_UCONTEXT_T
@@ -265,10 +265,6 @@ typedef union sigval sigval_t;
 
 #if (__FreeBSD_version >= 501000)
 #  define ACE_HAS_PTHREAD_SETSTACK
-#endif
-
-#if (__FreeBSD_version < 700007)
-# define ACE_HAS_SIGVAL_SIGVAL_INT
 #endif
 
 #include /**/ "ace/post.h"

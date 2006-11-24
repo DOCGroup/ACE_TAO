@@ -6,7 +6,7 @@
 ## this file will be lost the next time it is generated.
 ##
 ## MPC Command:
-## ./bin/mwc.pl -type automake -noreldefs ACE.mwc
+## /acebuilds/ACE_wrappers-repository/bin/mwc.pl -include /acebuilds/MPC/config -include /acebuilds/MPC/templates -feature_file /acebuilds/ACE_wrappers-repository/local.features -noreldefs -type automake -exclude build,Kokyu
 
 ACE_BUILDDIR = $(top_builddir)
 ACE_ROOT = $(top_srcdir)
@@ -16,22 +16,21 @@ ACE_ROOT = $(top_srcdir)
 
 if BUILD_ACE_FILECACHE
 if !BUILD_ACE_FOR_TAO
-noinst_PROGRAMS = http_client
+noinst_LTLIBRARIES = libhttp_client.la
 
-http_client_CPPFLAGS = \
+libhttp_client_la_CPPFLAGS = \
   -I$(ACE_ROOT) \
   -I$(ACE_BUILDDIR)
 
-http_client_SOURCES = \
+libhttp_client_la_SOURCES = \
   http_client.cpp \
-  http_handler.cpp \
+  http_handler.cpp
+
+noinst_HEADERS = \
   Local_Locator.inl \
   Locator_Request_Reply.inl \
   URL_Properties.inl \
   http_handler.h
-
-http_client_LDADD = \
-  $(ACE_BUILDDIR)/ace/libACE.la
 
 endif !BUILD_ACE_FOR_TAO
 endif BUILD_ACE_FILECACHE

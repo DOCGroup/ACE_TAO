@@ -524,74 +524,6 @@ string_emulation_test (void)
   return 0;
 }
 
-// Test ACE_OS::snprintf
-int
-snprintf_test (void)
-{
-  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Testing snprintf\n")));
-
-  int error_count = 0;
-  const int BUFSIZE = 4;
-  char buf[2*BUFSIZE];
-  int retval;
-
-  ACE_OS::memset(buf, 0xab, 2*BUFSIZE);
-  retval = ACE_OS::snprintf (buf, BUFSIZE, "%d", 123);
-  if (retval != 3)
-    {
-      ACE_ERROR ((LM_ERROR,
-		  ACE_TEXT ("[1] ACE_OS::snprintf() returns %d, should be 3\n"),
-                  retval));
-      ++error_count;
-    }
-
-  ACE_OS::memset(buf, 0xab, 2*BUFSIZE);
-  retval = ACE_OS::snprintf (buf, BUFSIZE, "%d", 1234);
-  if (retval != 4)
-    {
-      ACE_ERROR ((LM_ERROR,
-		  ACE_TEXT ("[2] ACE_OS::snprintf() returns %d, should be 4\n"),
-                  retval));
-      ++error_count;
-    }
-
-  if (buf[3] != 0)
-    {
-      ACE_ERROR ((LM_ERROR,
-		  ACE_TEXT ("[3] ACE_OS::snprintf() doesn't terminate string correctly\n")));
-      ++error_count;
-    }
-  else if (ACE_OS::strcmp(buf, "123") != 0)
-    {
-      ACE_ERROR ((LM_ERROR,
-		  ACE_TEXT ("[4] ACE_OS::snprintf() incorrect output\n")));
-      ++error_count;
-    }
-
-  ACE_OS::memset(buf, 0xab, 2*BUFSIZE);
-  retval = ACE_OS::snprintf (buf, BUFSIZE, "%d", 12345);
-  if (retval != 5)
-    {
-      ACE_ERROR ((LM_ERROR,
-		  ACE_TEXT ("[5] ACE_OS::snprintf() returns %d, should be 5\n"),
-                  retval));
-      ++error_count;
-    }
-  else if (buf[3] != 0)
-    {
-      ACE_ERROR ((LM_ERROR,
-		  ACE_TEXT ("[6] ACE_OS::snprintf() doesn't terminate string correctly\n")));
-      ++error_count;
-    }
-  else if (ACE_OS::strcmp(buf, "123") != 0)
-    {
-      ACE_ERROR ((LM_ERROR,
-		  ACE_TEXT ("[6] ACE_OS::snprintf() incorrect output\n")));
-      ++error_count;
-    }
-
-  return error_count;
-}
 
 static int
 ctime_r_test (void)
@@ -905,9 +837,6 @@ run_main (int, ACE_TCHAR *[])
     status = result;
 
   if ((result = string_emulation_test ()) != 0)
-    status = result;
-
-  if ((result = snprintf_test ()) != 0)
     status = result;
 
   if ((result = ctime_r_test ()) != 0)

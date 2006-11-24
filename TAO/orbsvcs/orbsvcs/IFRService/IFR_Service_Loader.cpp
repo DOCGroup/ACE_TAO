@@ -87,14 +87,12 @@ TAO_IFR_Service_Loader::create_object (CORBA::ORB_ptr orb,
   result = this->ifr_server_.init_with_orb (argc,
                                             argv,
                                             orb);
-  if (result != 0)
+  if (result == -1)
     {
-      ACE_THROW_RETURN (CORBA::BAD_PARAM (0,
-                                          CORBA::COMPLETED_NO),
-                        CORBA::Object::_nil ());
+      return CORBA::Object::_nil ();
     }
 
-  return CORBA::Object::_nil ();
+  return 0;
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL

@@ -21,6 +21,7 @@ noinst_PROGRAMS =
 ## Makefile.Callback_Perf_IDL.am
 
 if BUILD_EXCEPTIONS
+if !BUILD_ACE_FOR_TAO
 
 BUILT_SOURCES = \
   callbackC.cpp \
@@ -49,6 +50,7 @@ callback-stamp: $(srcdir)/callback.idl $(TAO_IDL_DEP)
 noinst_HEADERS = \
   callback.idl
 
+endif !BUILD_ACE_FOR_TAO
 endif BUILD_EXCEPTIONS
 
 ## Makefile.Callback_Client.am

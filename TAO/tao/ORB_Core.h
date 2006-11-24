@@ -596,7 +596,7 @@ public:
                  ACE_ENV_ARG_DECL);
 
   /// Get the shutdown flag value
-  bool has_shutdown (void) const;
+  int has_shutdown (void);
 
   /// Shutdown the ORB and free resources
   void destroy (ACE_ENV_SINGLE_ARG_DECL);
@@ -1183,7 +1183,7 @@ protected:
   ACE_TSS_TYPE (TAO_ORB_Core_TSS_Resources) tss_resources_;
 
   /// Flag which denotes that the ORB has been shutdown.
-  bool has_shutdown_;
+  int has_shutdown_;
 
   /// The value of the timeout if the flag above is not zero.
   //@{

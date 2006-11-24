@@ -65,16 +65,22 @@ project(CosProperty_Skel) : orbsvcslib, core, property, portableserver {
 
   Header_Files {
     CosPropertyS.h
+    CosPropertyS_T.h
     CosPropertyServiceS.h
+    CosPropertyServiceS_T.h
     Property/property_skel_export.h
   }
 
   Inline_Files {
     CosPropertyS.inl
+    CosPropertyS_T.inl
     CosPropertyServiceS.inl
+    CosPropertyServiceS_T.inl
   }
 
   Template_Files {
+    CosPropertyS_T.cpp
+    CosPropertyServiceS_T.cpp
   }
 
   Pkgconfig_Files {

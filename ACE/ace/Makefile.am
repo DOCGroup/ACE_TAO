@@ -6,7 +6,7 @@
 ## this file will be lost the next time it is generated.
 ##
 ## MPC Command:
-## ./bin/mwc.pl -type automake -noreldefs ACE.mwc
+## /acebuilds/ACE_wrappers-repository/bin/mwc.pl -include /acebuilds/MPC/config -include /acebuilds/MPC/templates -feature_file /acebuilds/ACE_wrappers-repository/local.features -noreldefs -type automake -exclude build,Kokyu
 
 includedir = @includedir@/ace
 pkgconfigdir = @libdir@/pkgconfig
@@ -16,7 +16,7 @@ ACE_ROOT = $(top_srcdir)
 
 SUBDIRS = \
         . \
-	QoS \
+        QoS \
         SSL
 
 CLEANFILES =
@@ -33,6 +33,8 @@ lib_LTLIBRARIES += libACE.la
 libACE_la_CPPFLAGS = \
   -I$(ACE_ROOT) \
   -I$(ACE_BUILDDIR) \
+  -DACE_HAS_ACE_TOKEN \
+  -DACE_HAS_ACE_SVCCONF \
   -DACE_BUILD_DLL
 
 libACE_la_SOURCES = \
@@ -239,7 +241,6 @@ libACE_la_SOURCES = \
   Registry_Name_Space.cpp \
   Remote_Name_Space.cpp \
   Remote_Tokens.cpp \
-  Rtems_init.c \
   SOCK.cpp \
   SOCK_Acceptor.cpp \
   SOCK_CODgram.cpp \
@@ -391,7 +392,6 @@ nobase_include_HEADERS += \
   Asynch_Pseudo_Task.h \
   Atomic_Op.h \
   Atomic_Op.inl \
-  Atomic_Op_Sparc.h \
   Atomic_Op_T.cpp \
   Atomic_Op_T.h \
   Atomic_Op_T.inl \
@@ -568,9 +568,6 @@ nobase_include_HEADERS += \
   Hash_Map_With_Allocator_T.cpp \
   Hash_Map_With_Allocator_T.h \
   Hash_Map_With_Allocator_T.inl \
-  Hash_Multi_Map_Manager_T.cpp \
-  Hash_Multi_Map_Manager_T.h \
-  Hash_Multi_Map_Manager_T.inl \
   Hashable.h \
   Hashable.inl \
   High_Res_Timer.h \
@@ -1211,7 +1208,7 @@ CLEANFILES += \
   ACE.pc
 
 ACE.pc: ${top_builddir}/config.status ${srcdir}/ACE.pc.in
-	${top_builddir}/config.status --file $@:${srcdir}/ACE.pc.in
+	${top_builddir}/config.status --file "$@":${srcdir}/ACE.pc.in
 
 endif !BUILD_ACE_FOR_TAO
 
@@ -1235,7 +1232,7 @@ libACE_FlReactor_la_CPPFLAGS = \
   -DACE_FLREACTOR_BUILD_DLL
 
 libACE_FlReactor_la_SOURCES = \
-  FlReactor/FlReactor.cpp
+  FlReactor.cpp
 
 libACE_FlReactor_la_LDFLAGS = \
  -release @ACE_VERSION_NAME@ $(ACE_FLTK_LDFLAGS)
@@ -1245,8 +1242,8 @@ libACE_FlReactor_la_LIBADD = \
   $(ACE_FLTK_LIBS)
 
 nobase_include_HEADERS += \
-  FlReactor/ACE_FlReactor_export.h \
-  FlReactor/FlReactor.h
+  ACE_FlReactor_export.h \
+  FlReactor.h
 
 pkgconfig_DATA += \
   ACE_FlReactor.pc
@@ -1254,15 +1251,15 @@ pkgconfig_DATA += \
 CLEANFILES += \
   ACE_FlReactor.pc
 
-ACE_FlReactor.pc: ${top_builddir}/config.status ${srcdir}/FlReactor/ACE_FlReactor.pc.in
-	${top_builddir}/config.status --file $@:${srcdir}/FlReactor/ACE_FlReactor.pc.in
+ACE_FlReactor.pc: ${top_builddir}/config.status ${srcdir}/ACE_FlReactor.pc.in
+	${top_builddir}/config.status --file "$@":${srcdir}/ACE_FlReactor.pc.in
 
 endif BUILD_X11
 endif BUILD_GL
 endif BUILD_FL
 
 EXTRA_DIST += \
-  FlReactor/ACE_FlReactor.pc.in
+  ACE_FlReactor.pc.in
 
 
 ## Makefile.ACE_QtReactor.am
@@ -1270,13 +1267,13 @@ EXTRA_DIST += \
 if BUILD_QT
 
 BUILT_SOURCES = \
-  QtReactor/QtReactor_moc.cpp
+  QtReactor_moc.cpp
 
 CLEANFILES += \
-  QtReactor/QtReactor_moc.cpp
+  QtReactor_moc.cpp
 
-QtReactor/QtReactor_moc.cpp: $(srcdir)/QtReactor/QtReactor.h
-	$(QTDIR)/bin/moc  $(srcdir)/QtReactor/QtReactor.h -o QtReactor/QtReactor_moc.cpp
+QtReactor_moc.cpp: $(srcdir)/QtReactor.h
+	$(QTDIR)/bin/moc  -o QtReactor_moc.cpp $(srcdir)/QtReactor.h
 
 lib_LTLIBRARIES += libACE_QtReactor.la
 
@@ -1287,8 +1284,8 @@ libACE_QtReactor_la_CPPFLAGS = \
   -DACE_QTREACTOR_BUILD_DLL
 
 libACE_QtReactor_la_SOURCES = \
-  QtReactor/QtReactor.cpp \
-  QtReactor/QtReactor_moc.cpp
+  QtReactor.cpp \
+  QtReactor_moc.cpp
 
 libACE_QtReactor_la_LDFLAGS = \
  -release @ACE_VERSION_NAME@ $(ACE_QT_LDFLAGS)
@@ -1298,8 +1295,8 @@ libACE_QtReactor_la_LIBADD = \
   $(ACE_QT_LIBS)
 
 nobase_include_HEADERS += \
-  QtReactor/ACE_QtReactor_export.h \
-  QtReactor/QtReactor.h
+  ACE_QtReactor_export.h \
+  QtReactor.h
 
 pkgconfig_DATA += \
   ACE_QtReactor.pc
@@ -1307,13 +1304,13 @@ pkgconfig_DATA += \
 CLEANFILES += \
   ACE_QtReactor.pc
 
-ACE_QtReactor.pc: ${top_builddir}/config.status ${srcdir}/QtReactor/ACE_QtReactor.pc.in
-	${top_builddir}/config.status --file $@:${srcdir}/QtReactor/ACE_QtReactor.pc.in
+ACE_QtReactor.pc: ${top_builddir}/config.status ${srcdir}/ACE_QtReactor.pc.in
+	${top_builddir}/config.status --file "$@":${srcdir}/ACE_QtReactor.pc.in
 
 endif BUILD_QT
 
 EXTRA_DIST += \
-  QtReactor/ACE_QtReactor.pc.in
+  ACE_QtReactor.pc.in
 
 
 ## Makefile.ACE_TkReactor.am
@@ -1330,7 +1327,7 @@ libACE_TkReactor_la_CPPFLAGS = \
   -DACE_TKREACTOR_BUILD_DLL
 
 libACE_TkReactor_la_SOURCES = \
-  TkReactor/TkReactor.cpp
+  TkReactor.cpp
 
 libACE_TkReactor_la_LDFLAGS = \
  -release @ACE_VERSION_NAME@ $(ACE_TK_LDFLAGS) $(ACE_TCL_LDFLAGS)
@@ -1341,8 +1338,8 @@ libACE_TkReactor_la_LIBADD = \
   $(ACE_TCL_LIBS)
 
 nobase_include_HEADERS += \
-  TkReactor/ACE_TkReactor_export.h \
-  TkReactor/TkReactor.h
+  ACE_TkReactor_export.h \
+  TkReactor.h
 
 pkgconfig_DATA += \
   ACE_TkReactor.pc
@@ -1350,13 +1347,13 @@ pkgconfig_DATA += \
 CLEANFILES += \
   ACE_TkReactor.pc
 
-ACE_TkReactor.pc: ${top_builddir}/config.status ${srcdir}/TkReactor/ACE_TkReactor.pc.in
-	${top_builddir}/config.status --file $@:${srcdir}/TkReactor/ACE_TkReactor.pc.in
+ACE_TkReactor.pc: ${top_builddir}/config.status ${srcdir}/ACE_TkReactor.pc.in
+	${top_builddir}/config.status --file "$@":${srcdir}/ACE_TkReactor.pc.in
 
 endif BUILD_TK
 
 EXTRA_DIST += \
-  TkReactor/ACE_TkReactor.pc.in
+  ACE_TkReactor.pc.in
 
 
 ## Makefile.ACE_XtReactor.am
@@ -1374,7 +1371,7 @@ libACE_XtReactor_la_CPPFLAGS = \
   -DACE_XTREACTOR_BUILD_DLL
 
 libACE_XtReactor_la_SOURCES = \
-  XtReactor/XtReactor.cpp
+  XtReactor.cpp
 
 libACE_XtReactor_la_LDFLAGS = \
  -release @ACE_VERSION_NAME@ $(ACE_X11_LDFLAGS) $(ACE_XT_LDFLAGS)
@@ -1385,8 +1382,8 @@ libACE_XtReactor_la_LIBADD = \
   $(ACE_X11_LIBS)
 
 nobase_include_HEADERS += \
-  XtReactor/ACE_XtReactor_export.h \
-  XtReactor/XtReactor.h
+  ACE_XtReactor_export.h \
+  XtReactor.h
 
 pkgconfig_DATA += \
   ACE_XtReactor.pc
@@ -1394,14 +1391,14 @@ pkgconfig_DATA += \
 CLEANFILES += \
   ACE_XtReactor.pc
 
-ACE_XtReactor.pc: ${top_builddir}/config.status ${srcdir}/XtReactor/ACE_XtReactor.pc.in
-	${top_builddir}/config.status --file $@:${srcdir}/XtReactor/ACE_XtReactor.pc.in
+ACE_XtReactor.pc: ${top_builddir}/config.status ${srcdir}/ACE_XtReactor.pc.in
+	${top_builddir}/config.status --file "$@":${srcdir}/ACE_XtReactor.pc.in
 
 endif BUILD_XT
 endif BUILD_X11
 
 EXTRA_DIST += \
-  XtReactor/ACE_XtReactor.pc.in
+  ACE_XtReactor.pc.in
 
 
 ## Clean up template repositories, etc.

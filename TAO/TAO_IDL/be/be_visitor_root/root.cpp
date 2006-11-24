@@ -272,8 +272,8 @@ int be_visitor_root::visit_root (be_root *node)
     {
       case TAO_CodeGen::TAO_ROOT_CH:
         {
-          be_visitor_traits traits_visitor (&ctx);
-          status = node->accept (&traits_visitor);
+          be_visitor_traits visitor (&ctx);
+          status = node->accept (&visitor);
 
           if (status == -1)
             {
@@ -282,21 +282,6 @@ int be_visitor_root::visit_root (be_root *node)
                                  "visit_root - "
                                  "failed to generate traits\n"),
                                 -1);
-            }
-
-          if (be_global->gen_template_export ())
-            {
-              be_visitor_template_export export_visitor (&ctx);
-              status = node->accept (&export_visitor);
-
-              if (status == -1)
-                {
-                  ACE_ERROR_RETURN ((LM_ERROR,
-                                     "(%N:%l) be_visitor_root::"
-                                     "visit_root - "
-                                     "failed to export templates\n"),
-                                    -1);
-                }
             }
         }
 

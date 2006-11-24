@@ -22,7 +22,6 @@ project(*latency server): taoserver, strategies {
 
 project(*latency client): taoclient, strategies {
   after += *latency_idl
-  avoids += ace_for_tao
   Source_Files {
     TestC.cpp
     client.cpp

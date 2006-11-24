@@ -849,12 +849,12 @@ TAO_CodeGen::start_anyop_header (const char *fname)
 
   const char *tao_prefix = "";
   ACE_CString pidl_checker (idl_global->filename ()->get_string ());
-  bool const got_tao_pidl =
+  bool const got_pidl =
     (pidl_checker.substr (pidl_checker.length () - 5) == ".pidl");
 
   // If we're here and we have a .pidl file, we need to generate
-  // the *C.h include from the tao library.
-  if (got_tao_pidl)
+  // the *A.h include from the AnyTypeCode library.
+  if (got_pidl)
     {
       tao_prefix = "tao/";
     }
@@ -1704,7 +1704,10 @@ TAO_CodeGen::gen_stub_hdr_includes (void)
 
           ACE_CString pidl_checker (idl_name);
           bool got_pidl =
-            (pidl_checker.substr (pidl_checker.length () - 5) == ".pidl");
+            (pidl_checker.substr (pidl_checker.length () - 5) == ".pidl")
+            && (pidl_checker.find ("IFR_Client") == ACE_CString::npos);
+            // We can't use the -GA option on IFR_Client .pidl files,
+            // because there are decls inside interfaces.
 
           // If we're here and we have a .pidl file, we need to generate
           // the *A.h include from the AnyTypeCode library.

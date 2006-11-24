@@ -6,7 +6,7 @@
 ## this file will be lost the next time it is generated.
 ##
 ## MPC Command:
-## ./bin/mwc.pl -type automake -noreldefs ACE.mwc
+## /acebuilds/ACE_wrappers-repository/bin/mwc.pl -include /acebuilds/MPC/config -include /acebuilds/MPC/templates -feature_file /acebuilds/ACE_wrappers-repository/local.features -noreldefs -type automake -exclude build,Kokyu
 
 ACE_BUILDDIR = $(top_builddir)
 ACE_ROOT = $(top_srcdir)
@@ -15,7 +15,7 @@ CLEANFILES =
 BUILT_SOURCES =
 noinst_PROGRAMS =
 
-## Makefile.adainset.am
+## Makefile.adainset.am 
 
 if !BUILD_USES_WCHAR
 
@@ -23,10 +23,14 @@ BUILT_SOURCES += \
   ada.cpp
 
 CLEANFILES += \
-  ada.cpp
+  ada.cpp \
+  ada-stamp
 
-ada.cpp: $(srcdir)/ada.gperf
+ada.cpp: ada-stamp
+
+ada-stamp: $(srcdir)/ada.gperf
 	../src/gperf -a -k1,4,$$ $(srcdir)/ada.gperf > ada.cpp
+	@touch $@
 
 noinst_PROGRAMS += aout
 
@@ -43,7 +47,7 @@ aout_LDADD = \
 
 endif !BUILD_USES_WCHAR
 
-## Makefile.cinset.am
+## Makefile.cinset.am 
 
 if !BUILD_USES_WCHAR
 
@@ -51,10 +55,14 @@ BUILT_SOURCES += \
   c.cpp
 
 CLEANFILES += \
-  c.cpp
+  c.cpp \
+  c-stamp
 
-c.cpp: $(srcdir)/c.gperf
+c.cpp: c-stamp
+
+c-stamp: $(srcdir)/c.gperf
 	../src/gperf -a -p -c -l -S1 -o $(srcdir)/c.gperf > c.cpp
+	@touch $@
 
 noinst_PROGRAMS += cout
 
@@ -71,7 +79,7 @@ cout_LDADD = \
 
 endif !BUILD_USES_WCHAR
 
-## Makefile.cppinset.am
+## Makefile.cppinset.am 
 
 if !BUILD_USES_WCHAR
 
@@ -79,10 +87,14 @@ BUILT_SOURCES += \
   cpp.cpp
 
 CLEANFILES += \
-  cpp.cpp
+  cpp.cpp \
+  cpp-stamp
 
-cpp.cpp: $(srcdir)/cpp.gperf
+cpp.cpp: cpp-stamp
+
+cpp-stamp: $(srcdir)/cpp.gperf
 	../src/gperf -a -D $(srcdir)/cpp.gperf > cpp.cpp
+	@touch $@
 
 noinst_PROGRAMS += cppout
 
@@ -99,7 +111,7 @@ cppout_LDADD = \
 
 endif !BUILD_USES_WCHAR
 
-## Makefile.iinset.am
+## Makefile.iinset.am 
 
 if !BUILD_USES_WCHAR
 
@@ -107,10 +119,14 @@ BUILT_SOURCES += \
   idl.cpp
 
 CLEANFILES += \
-  idl.cpp
+  idl.cpp \
+  idl-stamp
 
-idl.cpp: $(srcdir)/idl.gperf
+idl.cpp: idl-stamp
+
+idl-stamp: $(srcdir)/idl.gperf
 	../src/gperf -m -M -c -C -D -S1 -E -T -a -o -p $(srcdir)/idl.gperf > idl.cpp
+	@touch $@
 
 noinst_PROGRAMS += iout
 
@@ -127,7 +143,7 @@ iout_LDADD = \
 
 endif !BUILD_USES_WCHAR
 
-## Makefile.iinset2.am
+## Makefile.iinset2.am 
 
 if !BUILD_USES_WCHAR
 
@@ -135,11 +151,15 @@ BUILT_SOURCES += \
   iout2_gen/idl.cpp
 
 CLEANFILES += \
-  iout2_gen/idl.cpp
+  iout2_gen/idl.cpp \
+  iout2_gen/idl-stamp
 
-iout2_gen/idl.cpp: $(srcdir)/idl.gperf
+iout2_gen/idl.cpp: iout2_gen/idl-stamp
+
+iout2_gen/idl-stamp: $(srcdir)/idl.gperf
 	mkdir -p iout2_gen
 	../src/gperf -m -M -c -C -D -E -T -a -o -p $(srcdir)/idl.gperf > iout2_gen/idl.cpp
+	@touch $@
 
 noinst_PROGRAMS += iout2
 
@@ -156,7 +176,7 @@ iout2_LDADD = \
 
 endif !BUILD_USES_WCHAR
 
-## Makefile.m3inset.am
+## Makefile.m3inset.am 
 
 if !BUILD_USES_WCHAR
 
@@ -164,10 +184,14 @@ BUILT_SOURCES += \
   modula3.cpp
 
 CLEANFILES += \
-  modula3.cpp
+  modula3.cpp \
+  modula3-stamp
 
-modula3.cpp: $(srcdir)/modula3.gperf
+modula3.cpp: modula3-stamp
+
+modula3-stamp: $(srcdir)/modula3.gperf
 	../src/gperf -a -k1,2,$$ $(srcdir)/modula3.gperf > modula3.cpp
+	@touch $@
 
 noinst_PROGRAMS += m3out
 
@@ -184,7 +208,7 @@ m3out_LDADD = \
 
 endif !BUILD_USES_WCHAR
 
-## Makefile.pinset.am
+## Makefile.pinset.am 
 
 if !BUILD_USES_WCHAR
 
@@ -192,10 +216,14 @@ BUILT_SOURCES += \
   pascal.cpp
 
 CLEANFILES += \
-  pascal.cpp
+  pascal.cpp \
+  pascal-stamp
 
-pascal.cpp: $(srcdir)/pascal.gperf
+pascal.cpp: pascal-stamp
+
+pascal-stamp: $(srcdir)/pascal.gperf
 	../src/gperf -a -o -S2 -p $(srcdir)/pascal.gperf > pascal.cpp
+	@touch $@
 
 noinst_PROGRAMS += pout
 
@@ -212,7 +240,7 @@ pout_LDADD = \
 
 endif !BUILD_USES_WCHAR
 
-## Makefile.preinset.am
+## Makefile.preinset.am 
 
 if !BUILD_USES_WCHAR
 
@@ -220,10 +248,14 @@ BUILT_SOURCES += \
   adadefs.cpp
 
 CLEANFILES += \
-  adadefs.cpp
+  adadefs.cpp \
+  adadefs-stamp
 
-adadefs.cpp: $(srcdir)/adadefs.gperf
+adadefs.cpp: adadefs-stamp
+
+adadefs-stamp: $(srcdir)/adadefs.gperf
 	../src/gperf -a -p -D -k1,$$ -s 2 -o $(srcdir)/adadefs.gperf > adadefs.cpp
+	@touch $@
 
 noinst_PROGRAMS += preout
 
@@ -240,7 +272,7 @@ preout_LDADD = \
 
 endif !BUILD_USES_WCHAR
 
-## Makefile.taoinset.am
+## Makefile.taoinset.am 
 
 if !BUILD_USES_WCHAR
 
@@ -248,10 +280,14 @@ BUILT_SOURCES += \
   tao.cpp
 
 CLEANFILES += \
-  tao.cpp
+  tao.cpp \
+  tao-stamp
 
-tao.cpp: $(srcdir)/tao.gperf
+tao.cpp: tao-stamp
+
+tao-stamp: $(srcdir)/tao.gperf
 	../src/gperf -c -C -D -E -f 0 -a -o $(srcdir)/tao.gperf > tao.cpp
+	@touch $@
 
 noinst_PROGRAMS += taoout
 
@@ -268,7 +304,7 @@ taoout_LDADD = \
 
 endif !BUILD_USES_WCHAR
 
-## Makefile.tinset.am
+## Makefile.tinset.am 
 
 if !BUILD_USES_WCHAR
 
@@ -276,10 +312,14 @@ BUILT_SOURCES += \
   corba.cpp
 
 CLEANFILES += \
-  corba.cpp
+  corba.cpp \
+  corba-stamp
 
-corba.cpp: $(srcdir)/corba.gperf
+corba.cpp: corba-stamp
+
+corba-stamp: $(srcdir)/corba.gperf
 	../src/gperf -a -o $(srcdir)/corba.gperf > corba.cpp
+	@touch $@
 
 noinst_PROGRAMS += tout
 

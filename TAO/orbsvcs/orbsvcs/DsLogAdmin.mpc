@@ -66,15 +66,24 @@ project(DsLogAdmin_Skel) : orbsvcslib, core, dslogadmin, portableserver {
   Header_Files {
     DsLogAdminS.h
     DsLogNotificationS.h
+
+    DsLogAdminS_T.h
+    DsLogNotificationS_T.h
+
     Log/log_skel_export.h
   }
 
   Inline_Files {
     DsLogAdminS.inl
     DsLogNotificationS.inl
+
+    DsLogAdminS_T.inl
+    DsLogNotificationS_T.inl
   }
 
   Template_Files {
+    DsLogAdminS_T.cpp
+    DsLogNotificationS_T.cpp
   }
 
   Pkgconfig_Files {

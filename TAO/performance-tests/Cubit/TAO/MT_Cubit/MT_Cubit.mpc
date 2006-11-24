@@ -27,7 +27,7 @@ project(*server): taoexe, utils, portableserver, strategies {
 
 project(*client): taoexe, utils, portableserver, strategies {
   after += *IDL
-  avoids += ace_for_tao
+
   Source_Files {
     Timer.cpp
     Globals.cpp

@@ -139,7 +139,7 @@ No default printer<br>
 -bash-3.00$ svn co https://svn.dre.vanderbilt.edu/DOC/MPC/trunk DOC_ROOT/ACE/MPC<br>
 -bash-3.00$ cd DOC_ROOT/<br>
 -bash-3.00$ ACE/bin/make_release -v beta -u<br>
--bash-3.00$ ACE/bin/make_release -i -k ace+tao+ciao<br>
+-bash-3.00$ ACE/bin/make_release -k ace+tao+ciao<br>
 </code>
 <p>
 Feel free to cut and paste with suitable edits.
@@ -168,36 +168,29 @@ svn rm https://svn.dre.vanderbilt.edu/DOC/Middleware/tags/ACE+TAO+CIAO-X_Y_Z<br 
 
 Note that this <em>only</em> needs to be done if the <em>tagging</em> fails.  If kit creation
 fails, simply restart that process.
-<li>The packages and up by default under /export/doc/latest, you can copy them to the webserver using the following commands. At the moment 
-you execute these commands all users can download these packages.</li>
-<code>
-cp /export/doc/latest/ACE* /export/www/download.dre/ACE+TAO-distribution<br>
-cp /export/doc/previous-versions/ACE* /export/www/download.dre/previous_versions<br>
-</code>
+
 <li>Once the distribution is ready, get ready for creating doxygen
 documentation. This is slightly complicated than it requires. We will
 address the complexity soon.</li>
 <li>Login to naboo.dre.vanderbilt.edu as bczar</li>
-<ul><li>After login, ssh to bczar@download.dre.vanderbilt.edu as bczar and check whether ssh succeeds. If not fix the problem. The make script tries to copy the tar.gz files to the website using ssh.</li></ul>
-<li> go to /web/users/isisbuilds/tmp/ACE_wrappers and remove the contents of this directory</li>
+<ul><li>After login, ssh to deuce.doc.wustl.edu as bugzilla and check whether ssh succeeds. If not fix the problem. The make script tries to copy the tar.gz files to the website using ssh.</li></ul>
+<li> go to /web/users/isisbuilds/tmp/ACE_wrappers </li>
+<li> Set the environment variables pointed above. </li>
 <li> Update the workspace with the right version tag </li>
 <code>
 svn co svn://svn.dre.vanderbilt.edu/DOC/Middleware/tags/ACE+TAO+CIAO-X_Y_Z/ACE ACE_wrappers<br>
 svn co svn://svn.dre.vanderbilt.edu/DOC/Middleware/tags/ACE+TAO+CIAO-X_Y_Z/TAO ACE_wrappers/TAO<br>
 svn co svn://svn.dre.vanderbilt.edu/DOC/Middleware/tags/ACE+TAO+CIAO-X_Y_Z/CIAO ACE_wrappers/TAO/CIAO<br>
 </code>
-<li> Set the needed environment variables using</li>
-<code>
-export ACE_ROOT=/web/users/isisbuilds/tmp/ACE_wrappers/ACE_wrappers
-</code>
+
 <li> Run doxygen --version within the shell. </li>
-<li> Open up $ACE_ROOT/bin/generate_rel_manpages in your favorite editor.</li>
+<li> Open up $ACE_ROOT/bin/generate_rel_mangpages in your favorite editor.</li>
 <li> Search for the string 'doxy_version'. </li>
 <li> Check the version specified here. If it is the  same as the one
 you got using doxygen --version then you don't have to worry. </li>
 <li> If it is different change the value of the doxy_version to the one installed on naboo.dre.vanderbilt.edu.</li>
 <li> Now you are ready to create documentation </li>
-<li> Do a <code>cd $ACE_ROOT</code> and then run <tt>make -f Release manpages</tt> to create the doxygen
+<li> Run <tt>make -f Release manpages</tt> to create the doxygen
 documentation.</li>
 <ul><li><b>If you can't leave the terminal window active for 6-9 hours,
  consider prefixing this command with <tt>nohup</tt></b></li></ul>

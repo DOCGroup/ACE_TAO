@@ -65,7 +65,7 @@ CLEANFILES = \
 ../MIF_SchedulingC.cpp ../MIF_SchedulingC.h ../MIF_SchedulingC.inl: ../MIF_Scheduling-stamp
 
 ../MIF_Scheduling-stamp: $(srcdir)/../MIF_Scheduling.idl $(TAO_IDL_DEP)
-	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs -SS -St -o .. $(srcdir)/../MIF_Scheduling.idl
+	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs -GT -SS -St -o .. $(srcdir)/../MIF_Scheduling.idl
 	@touch $@
 
 noinst_PROGRAMS += test

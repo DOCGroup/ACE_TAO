@@ -73,6 +73,11 @@ project(CosTrading_Skel) : orbsvcslib, core, trading, portableserver {
     CosTradingS.h
     CosTradingReposS.h
     CosTradingDynamicS.h
+
+    CosTradingS_T.h
+    CosTradingReposS_T.h
+    CosTradingDynamicS_T.h
+
     Trader/trading_skel_export.h
   }
 
@@ -80,9 +85,16 @@ project(CosTrading_Skel) : orbsvcslib, core, trading, portableserver {
     CosTradingS.inl
     CosTradingReposS.inl
     CosTradingDynamicS.inl
+
+    CosTradingS_T.inl
+    CosTradingReposS_T.inl
+    CosTradingDynamicS_T.inl
   }
 
   Template_Files {
+    CosTradingS_T.cpp
+    CosTradingReposS_T.cpp
+    CosTradingDynamicS_T.cpp
   }
 
   Pkgconfig_Files {

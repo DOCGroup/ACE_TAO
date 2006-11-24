@@ -15,14 +15,17 @@ project(CosNaming_Skel) : orbsvcslib, core, naming, portableserver {
 
   Header_Files {
     CosNamingS.h
+    CosNamingS_T.h
     Naming/naming_skel_export.h
   }
 
   Inline_Files {
     CosNamingS.inl
+    CosNamingS_T.inl
   }
 
   Template_Files {
+    CosNamingS_T.cpp
   }
 
   Pkgconfig_Files {

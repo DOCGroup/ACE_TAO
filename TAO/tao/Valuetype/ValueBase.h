@@ -191,10 +191,10 @@ namespace CORBA
 
   public:  // otherwise these cannot be called from a static function
 
-    /// During marshal jump to the most derived part
+    /// during marshal jump to the most derived part
     virtual CORBA::Boolean _tao_marshal_v (TAO_OutputCDR &) const = 0;
 
-    /// Called after obtaining the fresh object from create_for_unmarshal ()
+    /// called after obtaining the fresh object from create_for_unmarshal ()
     virtual CORBA::Boolean _tao_unmarshal_v (TAO_InputCDR &) = 0;
 
     /// Notify the truncated parent valuetype to skip the rest of the chunks

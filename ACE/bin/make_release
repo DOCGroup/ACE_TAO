@@ -4,7 +4,7 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 
 # $Id$
 #
-# Creates an ACE or TAO kit.
+# Creates an ACE or TAO kit.  
 #
 # The first three lines above let this script run without specifying the
 # full path to perl, as long as it is in the user's PATH.
@@ -164,7 +164,7 @@ if ($kit eq 'ace') {
 
 sub which {
     my $command = shift;
-
+    
     my $cmd = `which $command`;
     chomp ($cmd);
     return $cmd;
@@ -261,7 +261,7 @@ if ($update_versions) {
     $status = &check_workspace () ||
 	&get_and_update_versions () ||
         &tag ();
-
+    
     if ($status != 0) {
 	print "Exited with an error!\n";
     }
@@ -289,56 +289,56 @@ if ($update_versions) {
 	    &ex ("$svn export $repo_root/MPC/tags/$kit_tag $stage_dir/ACE_wrappers/MPC") &&
 		die "$0: failed cvs export of MPC in $stage_dir\n";
 	} else {
-	    &ex ("$svn export ./ACE $stage_dir/ACE_wrappers") &&
+	    &ex ("$svn export ./ACE $stage_dir/ACE_wrappers") && 
 		die "$0: failed svn export of ACE to $stage_dir/ACE_wrappers\n";
 	    &ex ("$svn export ./ACE/MPC $stage_dir/ACE_wrappers/MPC") &&
 		die "$0: failed svn export of MPC to $stage_dir/ACE_wrapper/MPC\n";
 	}
-
+	
 	&ex ("cd $stage_dir/ACE_wrappers  &&  $make ACE-INSTALL")  &&
 	    die "$0: failed make ACE-INSTALL in $stage_dir/ACE_wrappers\n";
     }
-
+    
     if ($kit =~ /tao/) {
 	if ("$kit_tag") {
 	    &ex ("$svn export $repo_root/Middleware/tags/$kit_tag/TAO $stage_dir/ACE_wrappers/TAO > /dev/null") &&
 		die "$0: failed cvs export of $kit_tag in $stage_dir\n";
 	} else {
-	    &ex ("$svn export ./TAO $stage_dir/ACE_wrappers/TAO") &&
+	    &ex ("$svn export ./TAO $stage_dir/ACE_wrappers/TAO") && 
 		die "$0: failed svn export of TAO to $stage_dir/ACE_wrappers/TAO\n";
 	}
 	&ex ("cd $stage_dir/ACE_wrappers/TAO  &&  $make TAO-INSTALL")  &&
 	    die "$0: failed make INSTALL in " .
 	    "$stage_dir/ACE_wrappers/TAO\n";
     }
-
+    
     if ($kit =~ /ciao/) {
 	if ("$kit_tag") {
 	    &ex ("$svn export $repo_root/Middleware/tags/$kit_tag/CIAO $stage_dir/ACE_wrappers/TAO/CIAO > /dev/null") &&
 		die "$0: failed cvs export of $kit_tag in $stage_dir\n";
 	} else {
-	    &ex ("$svn export ./CIAO $stage_dir/ACE_wrappers/TAO/CIAO") &&
+	    &ex ("$svn export ./CIAO $stage_dir/ACE_wrappers/TAO/CIAO") && 
 		die "$0: failed svn export of CIAO to $stage_dir/ACE_wrappers/TAO/CIAO\n";
 	}
-
+	
 	&ex ("cd $stage_dir/ACE_wrappers/TAO/CIAO  &&  $make CIAO-INSTALL")  &&
 	    die "$0: failed make INSTALL in " .
 	    "$stage_dir/ACE_wrappers/TAO/CIAO\n";
-
+	
     }
-
+    
     chdir $stage_dir;
-
+    
     print "Creating source-only kits\n";
     $status = &create_kit (1);
 
     print "Generating makefiles\n";
     $status = &generate_makefiles ();
 
-    if ($status != 0) {
-        die "$0: failed to generate GNUmakefiles\n";
-    }
-
+   if ($status != 0) {
+       die "$0: failed to generate GNUmakefiles\n";
+   }
+    
     print "Creating kits with build files\n";
     $status = &create_kit ();
 
@@ -380,7 +380,7 @@ sub check_workspace () {
 	"MPC/trunk checked out as ACE_ROOT/MPC.\n";
 
     if ("$exec_prefix") {
-	print "$svn status $module\n";
+	print "$svn status $module\n";	
     } else {
 	open (SVNSTATUS, "$svn status $module 2>&1 |")  ||
 	    die "$0: unable to open $svn for status\n";
@@ -388,7 +388,7 @@ sub check_workspace () {
 	    next if m%^\? ACE/include/makeinclude/platform_macros.GNU$%;
 	    next if m%^\? ACE/ace/config.h$%;
 	    next if m%^\s*\?\s*ACE/MPC\s*$%;
-
+	    
 	    push (@out_of_date, $_) if "$_";
 	}
 	close SVNSTATUS;
@@ -406,7 +406,7 @@ sub check_workspace () {
 
 sub get_and_update_versions () {
     # Update the version numbers for the various components.
-    my $retval =
+    my $retval = 
 	get_version ("ACE", 1) ||
 	update_version_files ("ACE") ||
 	update_changelog ("ACE") ||
@@ -416,10 +416,10 @@ sub get_and_update_versions () {
 	get_version ("CIAO", 1) ||
 	update_version_files ("CIAO") ||
 	update_changelog ("CIAO");
-
+    
     # Commit changes
     &ex ("$svn commit -m '$log_line'");
-
+    
     $retval = 1 if $? >> 8;
     return $retval;
 }
@@ -428,7 +428,7 @@ sub get_version {
     my $component = shift;
     my $update_version = shift;
     print "Getting version information for $component\n";
-
+    
     open (VERSION, "< $component/VERSION") ||
 	die "$0: unable to open $component/VERSION: $!\n";
     while (<VERSION>) {
@@ -452,7 +452,7 @@ sub get_version {
         }
     }
     close VERSION;
-
+    
     if ($update_version) {
         # Increment the version count
         if ($release_type eq 'beta') {
@@ -461,12 +461,12 @@ sub get_version {
             $comp_versions{"$component" . "_beta"} = 0;
             ++$comp_versions{"$component" . "_minor"};
         } elsif ($release_type eq 'major' ) {
-            $comp_versions{"$component" . "_beta"} =
+            $comp_versions{"$component" . "_beta"} = 
                 $comp_versions{"$component" . "_minor"} = 0;
             ++$comp_versions{"$component" . "_major"};
         }
     }
-
+    
     if ($release_type eq 'beta') {
 	$comp_versions{"$component" . "_version"} =
 	    $comp_versions{"$component" . "_major"} . '.' .
@@ -477,7 +477,7 @@ sub get_version {
 	    $comp_versions{"$component" . "_major"} . '.' .
 	    $comp_versions{"$component" . "_minor"};
     }
-
+    
     return 0;
 }
 
@@ -490,14 +490,14 @@ sub update_version_files {
     print "Updating version files for $component\n";
 
     my $comp_version = $comp_versions{"$component" . "_version"};
-
+    
     chdir $component || die "Unable to chdir to $component\n";
-
+    
     # Needs to be done for all:
     &ex ("perl -pi -e " .
 	 "'s/$component version .*/$component version $comp_version, released $now./' VERSION");
     return 1 if $? >> 8;
-
+    
     if ("$exec_prefix") {
 	print "$component version " . $comp_versions{$component . "_version"} . "\n";
     } else {
@@ -515,7 +515,7 @@ sub update_version_files {
 
             close VERSION_H;
         }
-
+    
     # Component specific PRF.
     if ($component eq "CIAO") {
         # For CIAO we need to add ACE + TAO versions..
@@ -533,7 +533,7 @@ sub update_version_files {
 	     $comp_versions{"ACE_version"} .
 	     "/' PROBLEM-REPORT-FORM");
         return 1 if $? >> 8;
-
+	
 	chdir "../";
     }
 
@@ -543,12 +543,12 @@ sub update_version_files {
 	     "/' PROBLEM-REPORT-FORM");
         return 1 if $? >> 8;
 
-        &ex ("perl -pi -e 's/ACE VERSION:.*/ACE VERSION: " .
-	     $comp_versions{"ACE_version"} .
+        &ex ("perl -pi -e 's/ACE VERSION:.*/ACE VERSION: " . 
+	     $comp_versions{"ACE_version"} . 
 	     "/' PROBLEM-REPORT-FORM");
         return 1 if $? >> 8;
 
-
+	
 	chdir "../";
     }
 
@@ -557,7 +557,7 @@ sub update_version_files {
 	&ex ("perl -pi -e 's/$component VERSION:.*/$component VERSION: $comp_version/' " .
 	     "PROBLEM-REPORT-FORM");
 	return 1 if $? >> 8;
-
+	    
 	chdir "../";
     }
 
@@ -598,7 +598,7 @@ sub update_changelog {
         || return 1;
     rename "ChangeLog.bak", "ChangeLog"
         || return 1;
-
+    
     chdir "../";
 
     0;
@@ -715,11 +715,12 @@ sub create_kit {
 
     get_version ("ACE_wrappers", 0);
 
-    # Get version but don't update version count
+
+    # Get version but don't udpate version count
     (my $local_ace_tag = $comp_versions{"ACE_wrappers_version"}) =~ s|_|.|g;
 
     my $suffix = "";
-
+    
     if ($src_only) {
 	$suffix = "-src";
     }
@@ -728,17 +729,21 @@ sub create_kit {
 
     #### Create kits with group write permission.
     umask 002;
-
+    
     my $dest = $install  ?  "$export_dir"  :  'created';
     my $dispose = $install  ?  "$mv"  :  'echo';
-    my $checksum = "$md5sum";
+    my $checksum = $install  ?  "$md5sum"  :  'echo';
     my $cksum_ext = 'md5';
     my $redirect = $install  ?  '>'  :  '\>';
     my $shell_cd = $install  ?  'cd'  :  'echo cd';
 
+    
+#    (my $local_tao_tag = $kit_tag) =~ s|_|.|g;
+#    (my $local_ciao_tag = $kit_tag) =~ s|_|.|g;
+
     # These files don't get LF->CRLF conversions done when making the zip.
     my $bin_files =
-        "\"\\.mak|\\.mdp|\\.ide|\\.exe\|\\.ico\|\\.gz\|\\.zip\|\\.xls\|" .
+        "\"\\.dsp|\\.dsw|\\.mak|\\.mdp|\\.ide|\\.exe\|\\.ico\|\\.gz\|\\.zip\|\\.xls\|" .
         "\\.sxd|\\.gif|\\.vcp|\\.vcproj|\\.vcw|\\.sln\|\\.dfm\|\\.jpg\|\\.png\|\\.vsd\|\\.bz2\"";
 
     my $build_command;
@@ -791,18 +796,18 @@ sub create_kit {
     &ex ($checksum_command);
 
     if ($kit eq 'ace+tao' || $kit eq 'ace+tao+ciao') {
-        # Set the release files once again
+        # Set the relese files once again
         my $tmp_rel_file = '';
-
+	
 	if ($src_only == 0) {
 	    $status = &bootstrap_autotools ();
-
+	    
 	    if ($status != 0) {
 		die "$0: failed to bootstrap autotools\n";
 	    }
 	}
 
-        chomp ($tmp_rel_file = `$regmake -f $ace_root/Release show_release_files`);
+        chomp ($tmp_rel_file = `$regmake -f $tao_root/Release show_release_files`);
         $release_files = $base_release_files;
         $release_files .= ' ';
         $release_files .= $tmp_rel_file;
@@ -877,12 +882,12 @@ sub create_kit {
             "$package_dest/ACE$suffix.zip $package_dest/ACE$suffix-lib.zip && " .
             "$dispose $package_dest/ACE$suffix.zip $package_dest/ACE$suffix-lib.zip $dest && " .
             "$dispose $package_dest/ACE$suffix.tar.gz $package_dest/ACE$suffix-lib.tar.gz $package_dest/ACE$suffix.tar.bz2 $package_dest/ACE$suffix-lib.tar.bz2 $dest && " .
-            "$cp $dest/ACE$suffix.zip $old_versions_dir/ACE$suffix-$local_ace_tag.zip &&".
-            "$cp $dest/ACE$suffix-lib.zip $old_versions_dir/ACE$suffix-$local_ace_tag-lib.zip &&".
-            "$cp $dest/ACE$suffix.tar.gz $old_versions_dir/ACE$suffix-$local_ace_tag.tar.gz &&".
-            "$cp $dest/ACE$suffix-lib.tar.gz $old_versions_dir/ACE$suffix-$local_ace_tag-lib.tar.gz &&".
-            "$cp $dest/ACE$suffix.tar.bz2 $old_versions_dir/ACE$suffix-$local_ace_tag.tar.bz2 &&".
-            "$cp $dest/ACE$suffix-lib.tar.bz2 $old_versions_dir/ACEsuffix-$local_ace_tag-lib.tar.bz2;";
+            "$cp $dest/ACE$suffix.zip $old_versions_dir/$local_ace_tag.zip &&".
+            "$cp $dest/ACE$suffix-lib.zip $old_versions_dir/$local_ace_tag-lib.zip &&".
+            "$cp $dest/ACE$suffix.tar.gz $old_versions_dir/$local_ace_tag.tar.gz &&".
+            "$cp $dest/ACE$suffix-lib.tar.gz $old_versions_dir/$local_ace_tag-lib.tar.gz &&".
+            "$cp $dest/ACE$suffix.tar.bz2 $old_versions_dir/$local_ace_tag.tar.bz2 &&".
+            "$cp $dest/ACE$suffix-lib.tar.bz2 $old_versions_dir/$local_ace_tag-lib.tar.bz2;";
         $archives = " $package_dest/ACE$suffix.tar.gz $package_dest/ACE$suffix-lib.tar.gz ".
             "$package_dest/ACE$suffix.zip $package_dest/ACE$suffix-lib.zip $package_dest/ACE$suffix.tar.bz2 $package_dest/ACE$suffix-lib.tar.bz2 ";
     }

@@ -170,8 +170,6 @@ AM_CONDITIONAL(BUILD_EC_TYPED_EVENTS, true)
 AM_CONDITIONAL(BUILD_WFMO, false)
 AM_CONDITIONAL(BUILD_WINNT, false)
 AM_CONDITIONAL(BUILD_WXWINDOWS, false)
-AM_CONDITIONAL(BUILD_STL, false)
-AM_CONDITIONAL(BUILD_BOOST, false)
 
 ACE_ENABLE_ACEXML
 ACE_ENABLE_SSL
@@ -202,7 +200,6 @@ AC_CONFIG_FILES([
   docs/tutorials/Quoter/Makefile
   docs/tutorials/Quoter/Naming_Service/Makefile
   docs/tutorials/Quoter/On_Demand_Activation/Makefile
-  docs/tutorials/Quoter/RTCORBA/Makefile
   docs/tutorials/Quoter/RT_Event_Service/Makefile
   docs/tutorials/Quoter/Simple/Client/Makefile
   docs/tutorials/Quoter/Simple/Impl-Repo/Makefile
@@ -450,7 +447,6 @@ if test $tao_build_tests = yes; then
     orbsvcs/tests/Bug_2287_Regression/Makefile
     orbsvcs/tests/Bug_2316_Regression/Makefile
     orbsvcs/tests/Bug_2377_Regression/Makefile
-    orbsvcs/tests/Bug_2615_Regression/Makefile
     orbsvcs/tests/Concurrency/Makefile
     orbsvcs/tests/CosEvent/Basic/Makefile
     orbsvcs/tests/CosEvent/Makefile

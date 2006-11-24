@@ -395,12 +395,7 @@
 
 #define ACE_HAS_VOIDPTR_MMAP
 
-#if defined (ACE_LACKS_NETWORKING)
-# include "ace/config-posix-nonetworking.h"
-#else
-# define ACE_HAS_NETLINK
-# define ACE_HAS_GETIFADDRS
-#endif
+#define ACE_HAS_NETLINK
 
 #if !defined (ACE_GETNAME_RETURNS_RANDOM_SIN_ZERO)
 // Detect if getsockname() and getpeername() returns random values in

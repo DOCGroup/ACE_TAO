@@ -356,7 +356,7 @@ ACE_OS::getmacaddress (struct macaddr_node_t *node)
 
   return 0;
 
-#elif defined (linux) && !defined (ACE_LACKS_NETWORKING)
+#elif defined (linux)
 
   struct ifreq ifr;
 

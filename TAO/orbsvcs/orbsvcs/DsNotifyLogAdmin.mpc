@@ -60,14 +60,17 @@ project(DsNotifyLogAdmin_Skel) : orbsvcslib, core, dsnotifylogadmin, dseventloga
 
   Header_Files {
     DsNotifyLogAdminS.h
+    DsNotifyLogAdminS_T.h
     Log/notifylog_skel_export.h
   }
 
   Inline_Files {
     DsNotifyLogAdminS.inl
+    DsNotifyLogAdminS_T.inl
   }   
 
   Template_Files {
+    DsNotifyLogAdminS_T.cpp
   }
 
   Pkgconfig_Files {

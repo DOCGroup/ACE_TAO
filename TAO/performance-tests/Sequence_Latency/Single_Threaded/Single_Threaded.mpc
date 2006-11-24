@@ -22,7 +22,6 @@ project(*sequence server) : taoserver, strategies {
 
 project(*sequence client): taoclient, strategies {
   after += *sequence_idl
-  avoids += ace_for_tao
   Source_Files {
     TestC.cpp
     client.cpp

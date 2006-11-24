@@ -267,29 +267,19 @@ ACE_String_Base<CHAR>::resize (typename ACE_String_Base<CHAR>::size_type len,
 {
   ACE_TRACE ("ACE_String_Base<CHAR>::resize");
 
-  fast_resize(len);
-  ACE_OS::memset (this->rep_, c, this->buf_len_ * sizeof (CHAR));
-}
-
-template <class CHAR> void
-ACE_String_Base<CHAR>::fast_resize (size_t len)
-{
-  ACE_TRACE ("ACE_String_Base<CHAR>::fast_resize");
-
   // Only reallocate if we don't have enough space...
   if (this->buf_len_ <= len)
     {
-      if (this->buf_len_ != 0 && this->release_ != 0)
+    if (this->buf_len_ != 0 && this->release_ != 0)
         this->allocator_->free (this->rep_);
 
-      this->rep_ = static_cast<CHAR*>
-                     (this->allocator_->malloc ((len + 1) * sizeof (CHAR)));
+    this->rep_ = static_cast<CHAR*>(
+      this->allocator_->malloc ((len + 1) * sizeof (CHAR)));
       this->buf_len_ = len + 1;
       this->release_ = 1;
     }
   this->len_ = 0;
-  if (len > 0)
-    this->rep_[0] = 0;
+  ACE_OS::memset (this->rep_, c, this->buf_len_ * sizeof (CHAR));
 }
 
 template <class CHAR> void

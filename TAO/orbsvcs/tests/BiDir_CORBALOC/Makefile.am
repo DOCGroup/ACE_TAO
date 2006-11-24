@@ -27,7 +27,10 @@ BUILT_SOURCES = \
   TimeModuleC.inl \
   TimeModuleS.cpp \
   TimeModuleS.h \
-  TimeModuleS.inl
+  TimeModuleS.inl \
+  TimeModuleS_T.cpp \
+  TimeModuleS_T.h \
+  TimeModuleS_T.inl
 
 CLEANFILES = \
   TimeModule-stamp \
@@ -36,12 +39,15 @@ CLEANFILES = \
   TimeModuleC.inl \
   TimeModuleS.cpp \
   TimeModuleS.h \
-  TimeModuleS.inl
+  TimeModuleS.inl \
+  TimeModuleS_T.cpp \
+  TimeModuleS_T.h \
+  TimeModuleS_T.inl
 
-TimeModuleC.cpp TimeModuleC.h TimeModuleC.inl TimeModuleS.cpp TimeModuleS.h TimeModuleS.inl: TimeModule-stamp
+TimeModuleC.cpp TimeModuleC.h TimeModuleC.inl TimeModuleS.cpp TimeModuleS.h TimeModuleS.inl TimeModuleS_T.cpp TimeModuleS_T.h TimeModuleS_T.inl: TimeModule-stamp
 
 TimeModule-stamp: $(srcdir)/TimeModule.idl $(TAO_IDL_DEP)
-	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs $(srcdir)/TimeModule.idl
+	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs -GT $(srcdir)/TimeModule.idl
 	@touch $@
 
 noinst_PROGRAMS = TimeServer
@@ -61,7 +67,9 @@ TimeServer_SOURCES = \
   TimeModuleC.h \
   TimeModuleC.inl \
   TimeModuleS.h \
-  TimeModuleS.inl
+  TimeModuleS.inl \
+  TimeModuleS_T.h \
+  TimeModuleS_T.inl
 
 TimeServer_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO_Utils.la \

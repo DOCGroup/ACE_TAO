@@ -346,8 +346,8 @@ TAO_ORB_Core::tss_cleanup_funcs (void)
   return &(this->tss_cleanup_funcs_);
 }
 
-ACE_INLINE bool
-TAO_ORB_Core::has_shutdown (void) const
+ACE_INLINE int
+TAO_ORB_Core::has_shutdown (void)
 {
   return this->has_shutdown_;
 }

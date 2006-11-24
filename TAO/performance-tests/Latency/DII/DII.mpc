@@ -22,7 +22,6 @@ project(*latency server): taoserver, strategies, minimum_corba {
 
 project(*latency client): taoclient, strategies, dynamicinterface, minimum_corba {
   after += *latency_idl
-  avoids += ace_for_tao
   Source_Files {
     TestC.cpp
     client.cpp

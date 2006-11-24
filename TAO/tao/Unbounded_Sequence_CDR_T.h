@@ -317,8 +317,8 @@ namespace TAO {
   }
 
   template <typename stream, typename charT>
-  bool demarshal_sequence(stream & strm, TAO::unbounded_basic_string_sequence <charT> & target) {
-    typedef TAO::unbounded_basic_string_sequence <charT> sequence;
+  bool demarshal_sequence(stream & strm, TAO::details::unbounded_basic_string_sequence <charT> & target) {
+    typedef TAO::details::unbounded_basic_string_sequence <charT> sequence;
     typedef typename sequence::element_traits::string_var string_var;
     ::CORBA::ULong new_length = 0;
     if (!(strm >> new_length)) {
@@ -533,7 +533,7 @@ namespace TAO {
   }
 
   template <typename stream, typename charT>
-  bool marshal_sequence(stream & strm, const TAO::unbounded_basic_string_sequence <charT> & source) {
+  bool marshal_sequence(stream & strm, const TAO::details::unbounded_basic_string_sequence <charT> & source) {
     if (0 == &source)
       ACE_THROW_RETURN (::CORBA::BAD_PARAM(0, CORBA::COMPLETED_MAYBE), false);
     ::CORBA::ULong const length = source.length ();

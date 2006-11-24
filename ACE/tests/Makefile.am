@@ -6,13 +6,14 @@
 ## this file will be lost the next time it is generated.
 ##
 ## MPC Command:
-## ./bin/mwc.pl -type automake -noreldefs ACE.mwc
+## /acebuilds/ACE_wrappers-repository/bin/mwc.pl -include /acebuilds/MPC/config -include /acebuilds/MPC/templates -feature_file /acebuilds/ACE_wrappers-repository/local.features -noreldefs -type automake -exclude build,Kokyu
 
 ACE_BUILDDIR = $(top_builddir)
 ACE_ROOT = $(top_srcdir)
 
 SUBDIRS = \
         . \
+        HTBP \
         SSL
 
 
@@ -339,21 +340,6 @@ Bug_1576_Regression_Test_LDADD = \
   libTest_Output.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
-## Makefile.Bug_1890_Regression_Test.am
-noinst_PROGRAMS += Bug_1890_Regression_Test
-
-Bug_1890_Regression_Test_CPPFLAGS = \
-  -I$(ACE_ROOT) \
-  -I$(ACE_BUILDDIR)
-
-Bug_1890_Regression_Test_SOURCES = \
-  $(ACE_ROOT)/tests/Main.cpp \
-  Bug_1890_Regression_Test.cpp
-
-Bug_1890_Regression_Test_LDADD = \
-  libTest_Output.la \
-  $(ACE_BUILDDIR)/ace/libACE.la
-
 ## Makefile.Bug_2368_Regression_Test.am
 noinst_PROGRAMS += Bug_2368_Regression_Test
 
@@ -381,36 +367,6 @@ Bug_2497_Regression_Test_SOURCES = \
   Bug_2497_Regression_Test.cpp
 
 Bug_2497_Regression_Test_LDADD = \
-  libTest_Output.la \
-  $(ACE_BUILDDIR)/ace/libACE.la
-
-## Makefile.Bug_2540_Regression_Test.am
-noinst_PROGRAMS += Bug_2540_Regression_Test
-
-Bug_2540_Regression_Test_CPPFLAGS = \
-  -I$(ACE_ROOT) \
-  -I$(ACE_BUILDDIR)
-
-Bug_2540_Regression_Test_SOURCES = \
-  $(ACE_ROOT)/tests/Main.cpp \
-  Bug_2540_Regression_Test.cpp
-
-Bug_2540_Regression_Test_LDADD = \
-  libTest_Output.la \
-  $(ACE_BUILDDIR)/ace/libACE.la
-
-## Makefile.Bug_2653_Regression_Test.am
-noinst_PROGRAMS += Bug_2653_Regression_Test
-
-Bug_2653_Regression_Test_CPPFLAGS = \
-  -I$(ACE_ROOT) \
-  -I$(ACE_BUILDDIR)
-
-Bug_2653_Regression_Test_SOURCES = \
-  $(ACE_ROOT)/tests/Main.cpp \
-  Bug_2653_Regression_Test.cpp
-
-Bug_2653_Regression_Test_LDADD = \
   libTest_Output.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
@@ -1068,21 +1024,6 @@ IOStream_Test_LDADD = \
   libTest_Output.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
-## Makefile.Integer_Truncate_Test.am
-noinst_PROGRAMS += Integer_Truncate_Test
-
-Integer_Truncate_Test_CPPFLAGS = \
-  -I$(ACE_ROOT) \
-  -I$(ACE_BUILDDIR)
-
-Integer_Truncate_Test_SOURCES = \
-  $(ACE_ROOT)/tests/Main.cpp \
-  Integer_Truncate_Test.cpp
-
-Integer_Truncate_Test_LDADD = \
-  libTest_Output.la \
-  $(ACE_BUILDDIR)/ace/libACE.la
-
 ## Makefile.Lazy_Map_Manager_Test.am
 noinst_PROGRAMS += Lazy_Map_Manager_Test
 
@@ -1099,8 +1040,6 @@ Lazy_Map_Manager_Test_LDADD = \
   $(ACE_BUILDDIR)/ace/libACE.la
 
 ## Makefile.Library_Unload.am
-
-if !BUILD_WINCE
 noinst_PROGRAMS += UnloadLibACE
 
 UnloadLibACE_SOURCES = \
@@ -1149,8 +1088,6 @@ UnloadLibACE_SOURCES = \
   Thread_Pool_Reactor_Test.h \
   Upgradable_RW_Test.h \
   test_config.h
-
-endif !BUILD_WINCE
 
 ## Makefile.Log_Msg_Test.am
 
@@ -1978,7 +1915,7 @@ CLEANFILES = \
   QtReactor_Test_moc.cpp
 
 QtReactor_Test_moc.cpp: $(srcdir)/QtReactor_Test.h
-	$(QTDIR)/bin/moc  $(srcdir)/QtReactor_Test.h -o QtReactor_Test_moc.cpp
+	$(QTDIR)/bin/moc  -o QtReactor_Test_moc.cpp $(srcdir)/QtReactor_Test.h
 
 noinst_PROGRAMS += QtReactor_Test
 
@@ -2312,25 +2249,6 @@ SOCK_Dgram_Test_SOURCES = \
 SOCK_Dgram_Test_LDADD = \
   libTest_Output.la \
   $(ACE_BUILDDIR)/ace/libACE.la
-
-## Makefile.SOCK_Netlink_Test.am
-
-if !BUILD_ACE_FOR_TAO
-noinst_PROGRAMS += SOCK_Netlink_Test
-
-SOCK_Netlink_Test_CPPFLAGS = \
-  -I$(ACE_ROOT) \
-  -I$(ACE_BUILDDIR)
-
-SOCK_Netlink_Test_SOURCES = \
-  $(ACE_ROOT)/tests/Main.cpp \
-  SOCK_Netlink_Test.cpp
-
-SOCK_Netlink_Test_LDADD = \
-  libTest_Output.la \
-  $(ACE_BUILDDIR)/ace/libACE.la
-
-endif !BUILD_ACE_FOR_TAO
 
 ## Makefile.SOCK_SEQPACK_SCTP_Test.am
 

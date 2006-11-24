@@ -16,4 +16,4 @@ noinst_PROGRAMS = \
 deadlock_detection_test_SOURCES = deadlock_detection_test.cpp
 deadlock_detection_test_LDADD = \
                    $(top_builddir)/netsvcs/lib/libnetsvcs.la \
-                   $(top_builddir)/ace/$(ACE_BUILDDIR)/ace/libACE.la
+                   $(top_builddir)/ace/libACE.la

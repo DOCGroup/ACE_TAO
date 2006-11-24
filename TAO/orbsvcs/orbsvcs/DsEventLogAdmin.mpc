@@ -59,14 +59,17 @@ project(DsEventLogAdmin_Skel) : orbsvcslib, core, dseventlogadmin, dslogadmin_sk
 
   Header_Files {
     DsEventLogAdminS.h
+    DsEventLogAdminS_T.h
     Log/eventlog_skel_export.h
   }
 
   Inline_Files {
     DsEventLogAdminS.inl
+    DsEventLogAdminS_T.inl
   }
 
   Template_Files {
+    DsEventLogAdminS_T.cpp
   }
 
   Pkgconfig_Files {

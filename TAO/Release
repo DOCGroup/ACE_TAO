@@ -21,7 +21,7 @@ CONTROLLED_FILES = \
 	TAO/Release \
 	TAO/TAO-INSTALL.html \
 	TAO/TAO.mwc \
-        TAO/TAO_*.mwc \
+	TAO/TAO_ACE* \
 	TAO/TAO_IDL \
 	TAO/VERSION \
 	TAO/configure.ac \
@@ -39,6 +39,7 @@ CONTROLLED_FILES = \
 RELEASE_FILES = $(addprefix ACE_wrappers/,$(CONTROLLED_FILES)) \
                 ACE_wrappers/TAO/TAO-INSTALL \
 		ACE_wrappers/TAO/GNUmake* \
+		ACE_wrappers/TAO/*.dsw \
         	ACE_wrappers/TAO/*.sln \
         	ACE_wrappers/TAO/*.bor \
         	ACE_wrappers/TAO/Makefile.in \

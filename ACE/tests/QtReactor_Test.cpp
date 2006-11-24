@@ -51,7 +51,7 @@ ACE_RCSID (tests,
 
 #include "ace/OS_NS_time.h"
 #include "ace/Time_Value.h"
-#include "ace/QtReactor/QtReactor.h"
+#include "ace/QtReactor.h"
 #include "ace/Event_Handler.h"
 #include "ace/Acceptor.h"
 #include "ace/Connector.h"

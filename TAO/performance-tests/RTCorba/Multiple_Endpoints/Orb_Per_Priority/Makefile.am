@@ -19,6 +19,7 @@ noinst_PROGRAMS =
 
 if BUILD_EXCEPTIONS
 if BUILD_RT_CORBA
+if !BUILD_ACE_FOR_TAO
 
 noinst_PROGRAMS += client
 
@@ -44,6 +45,7 @@ client_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
+endif !BUILD_ACE_FOR_TAO
 endif BUILD_RT_CORBA
 endif BUILD_EXCEPTIONS
 
@@ -51,6 +53,7 @@ endif BUILD_EXCEPTIONS
 
 if BUILD_EXCEPTIONS
 if BUILD_RT_CORBA
+if !BUILD_ACE_FOR_TAO
 
 noinst_PROGRAMS += server
 
@@ -77,6 +80,7 @@ server_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
+endif !BUILD_ACE_FOR_TAO
 endif BUILD_RT_CORBA
 endif BUILD_EXCEPTIONS
 

@@ -32,7 +32,7 @@ ACE_RCSID (tests,
            XtAthenaReactor_Test,
            "$Id$")
 
-#include "ace/XtReactor/XtReactor.h"
+#include "ace/XtReactor.h"
 #include "ace/Event_Handler.h"
 #include "ace/Acceptor.h"
 #include "ace/SOCK_Acceptor.h"

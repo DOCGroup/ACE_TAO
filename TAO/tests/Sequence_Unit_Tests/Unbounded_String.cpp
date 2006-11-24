@@ -8,10 +8,10 @@
  *
  * @author Carlos O'Ryan
  */
-#include "tao/Unbounded_Basic_String_Sequence_T.h"
+#include "tao/Unbounded_String_Sequence_T.h"
 #include "tao/CORBA_String.h"
 
-typedef TAO::unbounded_basic_string_sequence<char> s_sequence;
+typedef TAO::unbounded_string_sequence s_sequence;
 
 int main(int,char*[])
 {

@@ -29,7 +29,10 @@ BUILT_SOURCES = \
   dataC.inl \
   dataS.cpp \
   dataS.h \
-  dataS.inl
+  dataS.inl \
+  dataS_T.cpp \
+  dataS_T.h \
+  dataS_T.inl
 
 CLEANFILES = \
   data-stamp \
@@ -38,12 +41,15 @@ CLEANFILES = \
   dataC.inl \
   dataS.cpp \
   dataS.h \
-  dataS.inl
+  dataS.inl \
+  dataS_T.cpp \
+  dataS_T.h \
+  dataS_T.inl
 
-dataC.cpp dataC.h dataC.inl dataS.cpp dataS.h dataS.inl: data-stamp
+dataC.cpp dataC.h dataC.inl dataS.cpp dataS.h dataS.inl dataS_T.cpp dataS_T.h dataS_T.inl: data-stamp
 
 data-stamp: $(srcdir)/data.idl $(TAO_IDL_DEP)
-	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs $(srcdir)/data.idl
+	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs -GT $(srcdir)/data.idl
 	@touch $@
 
 

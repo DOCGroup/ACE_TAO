@@ -20,7 +20,6 @@ project(*sequence server) : taoserver, strategies, dynamicinterface, minimum_cor
 }
 project(*sequence client): taoclient, strategies, minimum_corba {
   after += *idl
-  avoids += ace_for_tao
   Source_Files {
     TestC.cpp
     client.cpp

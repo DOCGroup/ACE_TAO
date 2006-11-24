@@ -8,7 +8,6 @@
 
 #include "ace/Get_Opt.h"
 #include "ace/Task.h"
-#include "ace/OS_NS_string.h"
 
 #include "ChildS.h"
 
@@ -46,7 +45,7 @@ public:
   NonRelatedChildHandler (void) {};
   ~NonRelatedChildHandler (void) {};
 };
-
+                    
 int
 main (int argc, char *argv[])
 {
@@ -81,23 +80,14 @@ main (int argc, char *argv[])
       // Create two handlers
       ChildHandler child_handler;
       NonRelatedChildHandler non_related_child_handler;
-
+      
       ChildModule::AMI_ChildInterfaceHandler_var the_child_handler_var =
         child_handler._this ();
-
-      const char * expectedid = "IDL:child.pragma.prefix/ChildModule/AMI_ChildInterfaceHandler:1.0";
-      if (ACE_OS::strcmp (the_child_handler_var->_interface_repository_id (), expectedid) != 0)
-        {
-          ACE_ERROR ((LM_ERROR, "Error: REGRESSION - ChildModule::repository id is "
-                                "incorrectly generated, received %s\n",
-                                the_child_handler_var->_interface_repository_id ()));
-          result = 1;
-        }
-
+      
       // This handler has no relationship with the above in IDL.
       AMI_ChildInterfaceHandler_var the_non_related_child_handler_var =
         non_related_child_handler._this ();
-
+      
       // Check that both handler objects narrow successfully to their parent
       // handler types...
       ParentModule::AMI_ParentInterfaceHandler_var the_parent_handler_var =
@@ -105,17 +95,17 @@ main (int argc, char *argv[])
 
       if (CORBA::is_nil (the_parent_handler_var.in ()))
         {
-          ACE_ERROR ((LM_ERROR, "Error: REGRESSION - Cannot narrow ChildModule::ChildInterface "
+          ACE_DEBUG ((LM_ERROR, "Error: REGRESSION - Cannot narrow ChildModule::ChildInterface "
                                 "reply handler to its parent handler type.\n"));
           result = 1;
         }
-
+      
       AMI_ParentInterfaceHandler_var the_non_related_parent_handler_var =
         AMI_ParentInterfaceHandler::_narrow (the_non_related_child_handler_var.in ());
 
       if (CORBA::is_nil (the_non_related_parent_handler_var.in ()))
         {
-          ACE_ERROR ((LM_ERROR, "Error: REGRESSION - Cannot narrow ChildInterface "
+          ACE_DEBUG ((LM_ERROR, "Error: REGRESSION - Cannot narrow ChildInterface "
                                 "reply handler to its parent handler type.\n"));
           result = 1;
         }
@@ -127,25 +117,25 @@ main (int argc, char *argv[])
 
       if (! CORBA::is_nil (the_parent_handler_var.in ()))
         {
-          ACE_ERROR ((LM_ERROR, "Error: REGRESSION - ChildModule::ChildInterface reply handler "
+          ACE_DEBUG ((LM_ERROR, "Error: REGRESSION - ChildModule::ChildInterface reply handler "
                                 "narrows to unrelated type.\n"));
           result = 1;
         }
-
+      
       the_non_related_parent_handler_var =
         AMI_ParentInterfaceHandler::_narrow (the_child_handler_var.in ());
 
       if (! CORBA::is_nil (the_non_related_parent_handler_var.in ()))
         {
-          ACE_ERROR ((LM_ERROR, "Error: REGRESSION - ChildModule::ChildInterface reply handler "
+          ACE_DEBUG ((LM_ERROR, "Error: REGRESSION - ChildModule::ChildInterface reply handler "
                                 "narrows to unrelated type.\n"));
           result = 1;
         }
 
       poa_var->destroy (1,0);
-
+      
       orb->destroy ();
-
+      
     }
   ACE_CATCHANY
     {

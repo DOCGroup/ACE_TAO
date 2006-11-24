@@ -6,7 +6,7 @@
 ## this file will be lost the next time it is generated.
 ##
 ## MPC Command:
-## ./bin/mwc.pl -type automake -noreldefs ACE.mwc
+## /acebuilds/ACE_wrappers-repository/bin/mwc.pl -include /acebuilds/MPC/config -include /acebuilds/MPC/templates -feature_file /acebuilds/ACE_wrappers-repository/local.features -noreldefs -type automake -exclude build,Kokyu
 
 includedir = @includedir@/ace/SSL
 pkgconfigdir = @libdir@/pkgconfig
@@ -18,7 +18,6 @@ ACE_ROOT = $(top_srcdir)
 ## Makefile.SSL.am
 
 if BUILD_SSL
-if !BUILD_ACE_FOR_TAO
 
 lib_LTLIBRARIES = libACE_SSL.la
 
@@ -67,9 +66,8 @@ CLEANFILES = \
   ACE_SSL.pc
 
 ACE_SSL.pc: ${top_builddir}/config.status ${srcdir}/ACE_SSL.pc.in
-	${top_builddir}/config.status --file $@:${srcdir}/ACE_SSL.pc.in
+	${top_builddir}/config.status --file "$@":${srcdir}/ACE_SSL.pc.in
 
-endif !BUILD_ACE_FOR_TAO
 endif BUILD_SSL
 
 EXTRA_DIST = \

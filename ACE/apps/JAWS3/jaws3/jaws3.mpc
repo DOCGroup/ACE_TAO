@@ -6,13 +6,7 @@ project(JAWS3) : acelib {
     dynamicflags = JAWS_BUILD_DLL
     avoids += uses_wchar
     avoids += ace_for_tao
-    
-    specific(automake) {
-      includes += $(srcdir)/..
-    } else {
-      includes += ..
-    }
-
+    includes += ..
     Source_Files {
         Asynch_IO.cpp
         Concurrency.cpp
@@ -78,13 +72,7 @@ project(JAWS3) : acelib {
 project(JAWS3_server) : aceexe {
     avoids += uses_wchar
     avoids += ace_for_tao
-
-    specific(automake) {
-      includes += $(srcdir)/..
-    } else {
-      includes += ..
-    }
-
+    includes += ..
     exename = main
     after += JAWS3
     libs  += JAWS3
