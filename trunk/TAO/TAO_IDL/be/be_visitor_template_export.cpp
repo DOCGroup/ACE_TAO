@@ -74,12 +74,6 @@ be_visitor_template_export::visit_module (be_module *node)
 int
 be_visitor_template_export::visit_sequence (be_sequence *node)
 {
-  // If this is a wstring don't generate a thing
-   if (node->managed_type () == be_sequence::MNG_STRING)
-     {
-       return 0;
-     }
-
   TAO_OutStream *os = this->ctx_->stream ();
 
   be_type *bt = be_type::narrow_from_decl (node->base_type ());
