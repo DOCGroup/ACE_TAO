@@ -1,3 +1,17 @@
+Fri Nov 24 13:43:44 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * configure.ac:
+
+          Configure Bug_2615_Regression unit test.
+
+        * orbsvcs/tests/Makefile.am:
+
+          Regenerated to include Bug_2615_Regression subdirectory.
+
+        * orbsvcs/tests/Bug_2615_Regression/Makefile.am:
+
+          New file, Makefile.am for new-ish unit test.
+
 Fri Nov 24 13:39:13 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
 
         * configure.ac:
