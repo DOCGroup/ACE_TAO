@@ -1,3 +1,10 @@
+Fri Nov 24 13:59:12 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * DAnCE/StaticConfigurator/StaticDAnCEParser.cpp:
+          Added check whether we got a valid NodeImplementationInfo back
+          and not a nill pointer. Fixes bugzilla bug 2692 finally.
+          Thanks to Abdul for pointing out the need for this check
+
 Fri Nov 24 09:41:12 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * performance-tests/Benchmark/Multi_Threaded/Multi_Threaded.mpc:
