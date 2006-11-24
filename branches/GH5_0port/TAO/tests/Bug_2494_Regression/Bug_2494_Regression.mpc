@@ -1,0 +1,19 @@
+// -*- MPC -*-
+// $Id$
+
+project(*Server): taoserver {
+  idlflags += -St
+  Source_Files {
+    test_i.cpp
+    server.cpp
+  }
+}
+
+project(*Client): taoclient {
+  idlflags += -St
+  after += *Server
+  Source_Files {
+    testC.cpp
+    client.cpp
+  }
+}
