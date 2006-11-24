@@ -124,6 +124,7 @@ endif BUILD_EXCEPTIONS
 ## Makefile.IDL_Cubit_Server.am
 
 if BUILD_EXCEPTIONS
+if !BUILD_ACE_FOR_TAO
 
 noinst_PROGRAMS += server
 
@@ -156,6 +157,7 @@ server_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
+endif !BUILD_ACE_FOR_TAO
 endif BUILD_EXCEPTIONS
 
 ## Clean up template repositories, etc.
