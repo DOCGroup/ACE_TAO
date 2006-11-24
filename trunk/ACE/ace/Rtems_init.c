@@ -205,6 +205,8 @@ struct rtems_bsdnet_config rtems_bsdnet_config = {
 
 #endif /* ACE_LACKS_NETWORKING */
 
+extern int ace_main_i (int, char *[]);
+
 /*
  * RTEMS Startup Task
  */
@@ -217,7 +219,7 @@ Init (rtems_task_argument not_used)
   rtems_bsdnet_initialize_network ();
   rtems_bsdnet_show_inet_routes ();
 #endif /* ACE_LACKS_NETWORKING */
-  exit (0);
+  int retval = ace_main_i (0, 0);
 }
 
 #elif !defined (__GNUC__)
