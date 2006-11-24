@@ -78,13 +78,6 @@ be_visitor_template_export::visit_sequence (be_sequence *node)
 
   be_type *bt = be_type::narrow_from_decl (node->base_type ());
 
-  // If this is a (w)string don't generate a thing
-  if ((node->managed_type () == be_sequence::MNG_STRING) ||
-      (node->managed_type () == be_sequence::MNG_WSTRING))
-  {
-    return 0;
-  }
-
   // TAO provides extensions for octet sequences, first find out if
   // the base type is an octet (or an alias for octet).
   be_predefined_type *predef = 0;

@@ -467,7 +467,7 @@ be_sequence::instance_name ()
       if (this->unbounded ())
         {
           ACE_OS::sprintf (namebuf,
-                           "TAO::unbounded_string_sequence");
+                           "TAO::unbounded_basic_string_sequence<char>");
         }
       else
         {
@@ -481,7 +481,7 @@ be_sequence::instance_name ()
       if (this->unbounded ())
         {
           ACE_OS::sprintf (namebuf,
-                           "TAO::unbounded_wstring_sequence");
+                           "TAO::unbounded_basic_string_sequence<CORBA::WChar>");
         }
       else
         {
@@ -587,11 +587,11 @@ be_sequence::gen_base_class_name (TAO_OutStream *os,
     case be_sequence::MNG_STRING:
       if (this->unbounded ())
         {
-          *os << "TAO::unbounded_string_sequence";
+          *os << "TAO::unbounded_basic_string_sequence<char>";
         }
       else
         {
-          *os << "TAO::bounded_string_sequence<"
+          *os << "TAO::bounded_basic_string_sequence<char, "
               << this->max_size ()->ev ()->u.ulval << ">";
         }
 
@@ -599,11 +599,11 @@ be_sequence::gen_base_class_name (TAO_OutStream *os,
     case be_sequence::MNG_WSTRING:
       if (this->unbounded ())
         {
-          *os << "TAO::unbounded_wstring_sequence";
+          *os << "TAO::unbounded_basic_string_sequence<CORBA::WChar>";
         }
       else
         {
-          *os << "TAO::bounded_wstring_sequence<"
+          *os << "TAO::bounded_basic_string_sequence<CORBA::WChar, "
               << this->max_size ()->ev ()->u.ulval << ">";
         }
 
