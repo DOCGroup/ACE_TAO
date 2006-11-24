@@ -607,27 +607,6 @@ StringSeq-stamp: $(srcdir)/StringSeq.pidl $(TAO_IDL_DEP)
 	@touch $@
 
 BUILT_SOURCES += \
-  AnyTypeCode/ULongLongSeqA.cpp \
-  AnyTypeCode/ULongLongSeqA.h \
-  ULongLongSeqC.cpp \
-  ULongLongSeqC.h \
-  ULongLongSeqS.h
-
-CLEANFILES += \
-  ULongLongSeq-stamp \
-  AnyTypeCode/ULongLongSeqA.cpp \
-  AnyTypeCode/ULongLongSeqA.h \
-  ULongLongSeqC.cpp \
-  ULongLongSeqC.h \
-  ULongLongSeqS.h
-
-AnyTypeCode/ULongLongSeqA.cpp AnyTypeCode/ULongLongSeqA.h ULongLongSeqC.cpp ULongLongSeqC.h ULongLongSeqS.h: ULongLongSeq-stamp
-
-ULongLongSeq-stamp: $(srcdir)/ULongLongSeq.pidl $(TAO_IDL_DEP)
-	$(TAO_IDL) $(TAO_IDLFLAGS) -Wb,versioning_begin=TAO_BEGIN_VERSIONED_NAMESPACE_DECL -Wb,versioning_end=TAO_END_VERSIONED_NAMESPACE_DECL -SS -Sorb -GA -Ge 1 -Gp -Gd -oA AnyTypeCode -Wb,export_macro=TAO_Export -Wb,export_include=tao/TAO_Export.h -Wb,anyop_export_macro=TAO_AnyTypeCode_Export -Wb,anyop_export_include=tao/AnyTypeCode/TAO_AnyTypeCode_Export.h -Sci -Gse $(srcdir)/ULongLongSeq.pidl
-	@touch $@
-
-BUILT_SOURCES += \
   AnyTypeCode/ULongSeqA.cpp \
   AnyTypeCode/ULongSeqA.h \
   ULongSeqC.cpp \
@@ -709,6 +688,27 @@ AnyTypeCode/WStringSeqA.cpp AnyTypeCode/WStringSeqA.h WStringSeqC.cpp WStringSeq
 
 WStringSeq-stamp: $(srcdir)/WStringSeq.pidl $(TAO_IDL_DEP)
 	$(TAO_IDL) $(TAO_IDLFLAGS) -Wb,versioning_begin=TAO_BEGIN_VERSIONED_NAMESPACE_DECL -Wb,versioning_end=TAO_END_VERSIONED_NAMESPACE_DECL -SS -Sorb -GA -Ge 1 -Gp -Gd -oA AnyTypeCode -Wb,export_macro=TAO_Export -Wb,export_include=tao/TAO_Export.h -Wb,anyop_export_macro=TAO_AnyTypeCode_Export -Wb,anyop_export_include=tao/AnyTypeCode/TAO_AnyTypeCode_Export.h -Sci -Gse $(srcdir)/WStringSeq.pidl
+	@touch $@
+
+BUILT_SOURCES += \
+  AnyTypeCode/ULongLongSeqA.cpp \
+  AnyTypeCode/ULongLongSeqA.h \
+  ULongLongSeqC.cpp \
+  ULongLongSeqC.h \
+  ULongLongSeqS.h
+
+CLEANFILES += \
+  ULongLongSeq-stamp \
+  AnyTypeCode/ULongLongSeqA.cpp \
+  AnyTypeCode/ULongLongSeqA.h \
+  ULongLongSeqC.cpp \
+  ULongLongSeqC.h \
+  ULongLongSeqS.h
+
+AnyTypeCode/ULongLongSeqA.cpp AnyTypeCode/ULongLongSeqA.h ULongLongSeqC.cpp ULongLongSeqC.h ULongLongSeqS.h: ULongLongSeq-stamp
+
+ULongLongSeq-stamp: $(srcdir)/ULongLongSeq.pidl $(TAO_IDL_DEP)
+	$(TAO_IDL) $(TAO_IDLFLAGS) -Wb,versioning_begin=TAO_BEGIN_VERSIONED_NAMESPACE_DECL -Wb,versioning_end=TAO_END_VERSIONED_NAMESPACE_DECL -SS -Sorb -GA -Ge 1 -Gp -Gd -oA AnyTypeCode -Wb,export_macro=TAO_Export -Wb,export_include=tao/TAO_Export.h -Wb,anyop_export_macro=TAO_AnyTypeCode_Export -Wb,anyop_export_include=tao/AnyTypeCode/TAO_AnyTypeCode_Export.h -Sci $(srcdir)/ULongLongSeq.pidl
 	@touch $@
 
 lib_LTLIBRARIES += libTAO.la
@@ -1039,10 +1039,8 @@ nobase_include_HEADERS = \
   Bounded_Object_Reference_Sequence_T.h \
   Bounded_Reference_Allocation_Traits_T.h \
   Bounded_Sequence_CDR_T.h \
-  Bounded_String_Sequence_T.h \
   Bounded_Value_Allocation_Traits_T.h \
   Bounded_Value_Sequence_T.h \
-  Bounded_Wstring_Sequence_T.h \
   Buffer_Allocator_T.cpp \
   Buffer_Allocator_T.h \
   Buffering_Constraint_Policy.h \
@@ -1469,10 +1467,8 @@ nobase_include_HEADERS = \
   Unbounded_Octet_Sequence_T.h \
   Unbounded_Reference_Allocation_Traits_T.h \
   Unbounded_Sequence_CDR_T.h \
-  Unbounded_String_Sequence_T.h \
   Unbounded_Value_Allocation_Traits_T.h \
   Unbounded_Value_Sequence_T.h \
-  Unbounded_Wstring_Sequence_T.h \
   UserException.h \
   UserException.inl \
   Value_Traits_T.h \
@@ -5490,7 +5486,6 @@ nobase_include_HEADERS += \
   Strategies/COIOP_Endpoint.h \
   Strategies/COIOP_Endpoint.inl \
   Strategies/COIOP_Endpoints.pidl \
-  Strategies/COIOP_Endpoints.pidl \
   Strategies/COIOP_EndpointsC.h \
   Strategies/COIOP_EndpointsS.h \
   Strategies/COIOP_Factory.h \
@@ -5542,11 +5537,9 @@ nobase_include_HEADERS += \
   Strategies/UIOP_Transport.h \
   Strategies/advanced_resource.h \
   Strategies/sciop_endpoints.pidl \
-  Strategies/sciop_endpoints.pidl \
   Strategies/sciop_endpointsC.h \
   Strategies/sciop_endpointsS.h \
   Strategies/strategies_export.h \
-  Strategies/uiop_endpoints.pidl \
   Strategies/uiop_endpoints.pidl \
   Strategies/uiop_endpointsC.h \
   Strategies/uiop_endpointsS.h
