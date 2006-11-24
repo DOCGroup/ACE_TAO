@@ -450,6 +450,7 @@ if test $tao_build_tests = yes; then
     orbsvcs/tests/Bug_2287_Regression/Makefile
     orbsvcs/tests/Bug_2316_Regression/Makefile
     orbsvcs/tests/Bug_2377_Regression/Makefile
+    orbsvcs/tests/Bug_2615_Regression/Makefile
     orbsvcs/tests/Concurrency/Makefile
     orbsvcs/tests/CosEvent/Basic/Makefile
     orbsvcs/tests/CosEvent/Makefile

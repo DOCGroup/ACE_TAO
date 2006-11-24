@@ -23,6 +23,7 @@ SUBDIRS = \
         Bug_2287_Regression \
         Bug_2316_Regression \
         Bug_2377_Regression \
+        Bug_2615_Regression \
         Concurrency \
         CosEvent \
         EC_Custom_Marshal \
@@ -54,4 +55,3 @@ SUBDIRS = \
         ior_corbaname \
         tests_svc_loader
 
-#	Bug_2615_Regression
