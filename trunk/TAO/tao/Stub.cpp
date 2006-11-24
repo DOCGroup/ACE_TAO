@@ -540,10 +540,20 @@ TAO_Stub::get_policy_overrides (const CORBA::PolicyTypeSeq &types
                                 ACE_ENV_ARG_DECL)
 {
   if (this->policies_ == 0)
-    return 0;
+    {
+      CORBA::PolicyList *policy_list_ptr = 0;
+      ACE_NEW_THROW_EX (policy_list_ptr,
+                        CORBA::PolicyList (),
+                        CORBA::NO_MEMORY ());
+      ACE_CHECK_RETURN (0);
 
-  return this->policies_->get_policy_overrides (types
-                                                ACE_ENV_ARG_PARAMETER);
+      return policy_list_ptr;
+    }
+  else
+    {
+      return this->policies_->get_policy_overrides (types
+                                                    ACE_ENV_ARG_PARAMETER);
+    }
 }
 
 #endif /* TAO_HAS_CORBA_MESSAGING == 1 */
