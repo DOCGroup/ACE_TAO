@@ -37,10 +37,6 @@
 
 #define ACE_HAS_NONSTATIC_OBJECT_MANAGER
 
-#if !defined (ACE_MAIN)
-# define ACE_MAIN ace_main
-#endif /* ! ACE_MAIN */
-
 #define ACE_LACKS_REGEX_H
 #define ACE_LACKS_STROPTS_H
 #define ACE_LACKS_DLFCN_H
