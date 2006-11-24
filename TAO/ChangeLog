@@ -1,3 +1,11 @@
+Fri Nov 24 13:21:52 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * configure.ac:
+
+          Added AM_CONDITIONAL for BUILD_STL and BUILD_BOOST, so we can
+          generate Makefile.am's with these options.  Default to false,
+          until we can write feature tests for these options.
+
 Fri Nov 24 13:21:00 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
 
         * orbsvcs/orbsvcs/Makefile.am:
