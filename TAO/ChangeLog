@@ -1,3 +1,13 @@
+Fri Nov 24 13:21:00 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * orbsvcs/orbsvcs/Makefile.am:
+
+          Regenerated.
+
+        * orbsvcs/orbsvcs/ec_typed_events_skel.mpb:
+
+          Removed *S_T.inl files from the Inline_Files section.
+
 Fri Nov 24 13:19:24 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
 
         * tao/Makefile.am:

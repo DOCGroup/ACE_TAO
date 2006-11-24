@@ -1009,12 +1009,10 @@ nobase_include_HEADERS += \
   CosTypedEventChannelAdminS.inl \
   CosTypedEventChannelAdminS_T.cpp \
   CosTypedEventChannelAdminS_T.h \
-  CosTypedEventChannelAdminS_T.inl \
   CosTypedEventCommS.h \
   CosTypedEventCommS.inl \
   CosTypedEventCommS_T.cpp \
-  CosTypedEventCommS_T.h \
-  CosTypedEventCommS_T.inl
+  CosTypedEventCommS_T.h
 
 pkgconfig_DATA += \
   TAO_CosEvent_Skel.pc
