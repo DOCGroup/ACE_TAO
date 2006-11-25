@@ -21,6 +21,7 @@
 
 #include "tao/Policy.pidl"
 #include "tao/TimeBase.pidl"
+#include "tao/WStringSeq.pidl"
 
 #pragma prefix "adiron.com"
 
