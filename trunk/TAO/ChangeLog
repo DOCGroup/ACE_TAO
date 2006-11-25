@@ -1,3 +1,15 @@
+Sat Nov 25 13:56:43 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * orbsvcs/orbsvcs/Makefile.am:
+
+          Regenerated.
+
+        * orbsvcs/orbsvcs/ec_typed_events_idl.mpb:
+
+          Add -GT to idlflags.  We generate tie classes for the untyped
+          CosEvent interfaces, we should do the same for the typed ones
+          for symmetry.
+
 Fri Nov 24 14:04:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Sequence_Unit_Tests/Bounded_String.cpp:

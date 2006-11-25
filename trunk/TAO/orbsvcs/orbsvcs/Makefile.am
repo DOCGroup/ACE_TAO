@@ -691,7 +691,9 @@ BUILT_SOURCES += \
   CosTypedEventCommC.inl \
   CosTypedEventCommS.cpp \
   CosTypedEventCommS.h \
-  CosTypedEventCommS.inl
+  CosTypedEventCommS.inl \
+  CosTypedEventCommS_T.cpp \
+  CosTypedEventCommS_T.h
 
 CLEANFILES += \
   CosTypedEventComm-stamp \
@@ -700,12 +702,14 @@ CLEANFILES += \
   CosTypedEventCommC.inl \
   CosTypedEventCommS.cpp \
   CosTypedEventCommS.h \
-  CosTypedEventCommS.inl
+  CosTypedEventCommS.inl \
+  CosTypedEventCommS_T.cpp \
+  CosTypedEventCommS_T.h
 
-CosTypedEventCommC.cpp CosTypedEventCommC.h CosTypedEventCommC.inl CosTypedEventCommS.cpp CosTypedEventCommS.h CosTypedEventCommS.inl: CosTypedEventComm-stamp
+CosTypedEventCommC.cpp CosTypedEventCommC.h CosTypedEventCommC.inl CosTypedEventCommS.cpp CosTypedEventCommS.h CosTypedEventCommS.inl CosTypedEventCommS_T.cpp CosTypedEventCommS_T.h: CosTypedEventComm-stamp
 
 CosTypedEventComm-stamp: $(srcdir)/CosTypedEventComm.idl $(TAO_IDL_DEP)
-	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs -Wb,stub_export_macro=TAO_Event_Export -Wb,stub_export_include=orbsvcs/CosEvent/event_export.h -Wb,skel_export_macro=TAO_Event_Skel_Export -Wb,skel_export_include=orbsvcs/CosEvent/event_skel_export.h $(srcdir)/CosTypedEventComm.idl
+	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs -GT -Wb,stub_export_macro=TAO_Event_Export -Wb,stub_export_include=orbsvcs/CosEvent/event_export.h -Wb,skel_export_macro=TAO_Event_Skel_Export -Wb,skel_export_include=orbsvcs/CosEvent/event_skel_export.h $(srcdir)/CosTypedEventComm.idl
 	@touch $@
 
 BUILT_SOURCES += \
@@ -714,7 +718,9 @@ BUILT_SOURCES += \
   CosTypedEventChannelAdminC.inl \
   CosTypedEventChannelAdminS.cpp \
   CosTypedEventChannelAdminS.h \
-  CosTypedEventChannelAdminS.inl
+  CosTypedEventChannelAdminS.inl \
+  CosTypedEventChannelAdminS_T.cpp \
+  CosTypedEventChannelAdminS_T.h
 
 CLEANFILES += \
   CosTypedEventChannelAdmin-stamp \
@@ -723,12 +729,14 @@ CLEANFILES += \
   CosTypedEventChannelAdminC.inl \
   CosTypedEventChannelAdminS.cpp \
   CosTypedEventChannelAdminS.h \
-  CosTypedEventChannelAdminS.inl
+  CosTypedEventChannelAdminS.inl \
+  CosTypedEventChannelAdminS_T.cpp \
+  CosTypedEventChannelAdminS_T.h
 
-CosTypedEventChannelAdminC.cpp CosTypedEventChannelAdminC.h CosTypedEventChannelAdminC.inl CosTypedEventChannelAdminS.cpp CosTypedEventChannelAdminS.h CosTypedEventChannelAdminS.inl: CosTypedEventChannelAdmin-stamp
+CosTypedEventChannelAdminC.cpp CosTypedEventChannelAdminC.h CosTypedEventChannelAdminC.inl CosTypedEventChannelAdminS.cpp CosTypedEventChannelAdminS.h CosTypedEventChannelAdminS.inl CosTypedEventChannelAdminS_T.cpp CosTypedEventChannelAdminS_T.h: CosTypedEventChannelAdmin-stamp
 
 CosTypedEventChannelAdmin-stamp: $(srcdir)/CosTypedEventChannelAdmin.idl $(TAO_IDL_DEP)
-	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs -Wb,stub_export_macro=TAO_Event_Export -Wb,stub_export_include=orbsvcs/CosEvent/event_export.h -Wb,skel_export_macro=TAO_Event_Skel_Export -Wb,skel_export_include=orbsvcs/CosEvent/event_skel_export.h $(srcdir)/CosTypedEventChannelAdmin.idl
+	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs -GT -Wb,stub_export_macro=TAO_Event_Export -Wb,stub_export_include=orbsvcs/CosEvent/event_export.h -Wb,skel_export_macro=TAO_Event_Skel_Export -Wb,skel_export_include=orbsvcs/CosEvent/event_skel_export.h $(srcdir)/CosTypedEventChannelAdmin.idl
 	@touch $@
 
 BUILT_SOURCES += \
