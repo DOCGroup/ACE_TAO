@@ -128,7 +128,13 @@ main (int argc, char *argv[])
         }
       else
         {
-          CORBA::ULong ListSize = policies->length();
+          CORBA::ULong const list_size = policies->length();
+          if (list_size != 0)
+            {
+              ACE_ERROR ((LM_ERROR,
+                          "(%P|%t) _get_policy_overrides returned list with size not equal 0\n"));
+              ACE_TRY_THROW (CORBA::INTERNAL ());
+            }
         }
 
       server->invoke_me (ACE_ENV_SINGLE_ARG_PARAMETER);
