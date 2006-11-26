@@ -7,6 +7,8 @@
  *
  */
 
+#include "tao/ULongLongSeq.pidl"
+
 module Federated_Test
 {
   interface Peer;
@@ -37,7 +39,7 @@ module Federated_Test
   };
 
   /// The results of a single experiment
-  typedef sequence<unsigned long long> Experiment_Results;
+  typedef CORBA::ULongLongSeq Experiment_Results;
 
   /**
    * @interface Peer
