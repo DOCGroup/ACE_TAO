@@ -1,3 +1,10 @@
+Sun Nov 26 02:41:57 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * orbsvcs/tests/Event/Makefile.am:
+        * orbsvcs/tests/ImplRepo/Makefile.am:
+
+          Hand tweak to avoid subdirectories that aren't yet supported.
+
 Sat Nov 25 13:56:43 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
 
         * orbsvcs/orbsvcs/Makefile.am:
