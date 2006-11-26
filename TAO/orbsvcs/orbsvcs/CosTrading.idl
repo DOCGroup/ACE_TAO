@@ -16,12 +16,14 @@
 #ifndef TAO_TRADING_IDL
 #define TAO_TRADING_IDL
 
+#include "tao/StringSeq.pidl"
+
 #pragma prefix "omg.org"
 
 module CosTrading
 {
   // forward references to our interfaces
-  
+
   interface Lookup;
   interface Register;
   interface Link;
@@ -29,15 +31,15 @@ module CosTrading
   interface Admin;
   interface OfferIterator;
   interface OfferIdIterator;
-  
-  // type definitions used in more than one interface  
+
+  // type definitions used in more than one interface
   typedef string Istring;
   typedef Object TypeRepository;
-  
+
   typedef Istring PropertyName;
   typedef sequence<PropertyName> PropertyNameSeq;
   typedef any PropertyValue;
-  
+
   struct Property
   {
     PropertyName name;
@@ -51,25 +53,25 @@ module CosTrading
     PropertySeq properties;
   };
   typedef sequence<Offer> OfferSeq;
-  
+
   typedef string OfferId;
   typedef sequence<OfferId> OfferIdSeq;
-  
+
   typedef Istring ServiceTypeName;  // similar structure to IR::Identifier
-  
+
   typedef Istring Constraint;
-  
+
   enum FollowOption
   {
     local_only,
     if_no_local,
     always
   };
-  
+
   typedef Istring LinkName;
   typedef sequence<LinkName> LinkNameSeq;
   typedef LinkNameSeq TraderName;
-  
+
   typedef string PolicyName;  // policy names restricted to Latin1
   typedef sequence<PolicyName> PolicyNameSeq;
   typedef any PolicyValue;
@@ -80,23 +82,23 @@ module CosTrading
     PolicyValue value;
   };
   typedef sequence<Policy> PolicySeq;
-  
+
   // exceptions used in more than one interface
-  
+
   exception UnknownMaxLeft {};
-  
+
   exception NotImplemented {};
-  
+
   exception IllegalServiceType
     {
       ServiceTypeName type;
     };
-    
+
   exception UnknownServiceType
     {
       ServiceTypeName type;
     };
-      
+
    exception IllegalPropertyName
      {
        PropertyName name;
@@ -151,9 +153,9 @@ module CosTrading
      };
 
      // the interfaces
-     
+
    interface TraderComponents
-     {       
+     {
        readonly attribute Lookup lookup_if;
        readonly attribute Register register_if;
        readonly attribute Link link_if;
@@ -162,7 +164,7 @@ module CosTrading
      };
 
    interface SupportAttributes
-     {       
+     {
        readonly attribute boolean supports_modifiable_properties;
        readonly attribute boolean supports_dynamic_properties;
        readonly attribute boolean supports_proxy_offers;
@@ -192,9 +194,9 @@ module CosTrading
    interface Lookup:TraderComponents,SupportAttributes,ImportAttributes
      {
        typedef Istring Preference;
-       
+
        enum HowManyProps { none, some, all };
-       
+
        union SpecifiedProps switch ( HowManyProps )
          {
          case some: PropertyNameSeq prop_names;
