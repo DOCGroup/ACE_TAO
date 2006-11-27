@@ -17,6 +17,12 @@
 #ifndef TAO_HTTP_HANDLER_H
 #define TAO_HTTP_HANDLER_H
 
+#include /**/ "tao/TAO_Export.h"
+
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+# pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
+
 #include "ace/SOCK_Stream.h"
 #include "ace/Svc_Handler.h"
 #include "ace/Message_Block.h"
@@ -28,7 +34,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
  * @class TAO_HTTP_Handler
  * class to retrieve data via HTTP
  */
-class TAO_HTTP_Handler : public ACE_Svc_Handler <ACE_SOCK_STREAM, ACE_NULL_SYNCH>
+class TAO_Export TAO_HTTP_Handler : public ACE_Svc_Handler <ACE_SOCK_STREAM, ACE_NULL_SYNCH>
 {
 public:
   /// Null constructor, insures that it works properly with Connector

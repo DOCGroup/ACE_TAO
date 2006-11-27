@@ -1,3 +1,11 @@
+Mon Nov 27 09:31:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/HTTP_Client.h:
+        * tao/HTTP_Handler.h:
+          Export these classes from the TAO lib. These can be reused then
+          by several parts in CIAO and that way we don't have code
+          duplication and smaller footprint
+
 Mon Nov 27 08:17:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * *.mpc:
