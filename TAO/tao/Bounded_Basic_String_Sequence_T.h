@@ -35,7 +35,7 @@ public:
 
   typedef details::generic_sequence<value_type, allocation_traits, element_traits> implementation_type;
 
-  /// @copydoc generic_sequence::generic_sequence
+  /// @copydoc details::generic_sequence::generic_sequence
   inline bounded_basic_string_sequence()
     : impl_()
   {}
