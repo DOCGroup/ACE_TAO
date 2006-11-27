@@ -1,3 +1,16 @@
+Mon Nov 27 12:30:28 UTC 2006  Chad Elliott  <elliott_c@ociweb.com>
+
+        * tests/Bug_2653_Regression_Test.cpp:
+
+          When a thread is started, you must wait() on it before exiting the
+          process to avoid a core dump.
+
+        * tests/run_test.pl:
+
+          Print out the test header before checking for the executable.  If
+          the executable is not there, it will appear as if the previous
+          test failed.
+
 Mon Nov 27 08:45:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/config-sunos5.5.h:

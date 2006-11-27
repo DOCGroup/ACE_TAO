@@ -211,6 +211,7 @@ run_main (int, ACE_TCHAR *[])
   wd.activate (THR_DETACHED);
   test_for_spin(tp_reactor);
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Testing for spin\n")));
+  wd.wait ();
 
   ACE_END_TEST;
   return 0;
