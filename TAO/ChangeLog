@@ -1,3 +1,15 @@
+Mon Nov 27 14:29:38 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * tao/tao.mpc:
+        * tao/AnyTypeCode.mpc:
+
+          Move list generated typecode (*A.h) header files from tao.mpc
+          to AnyTypeCode.mpc.  Even though the files are generated from
+          rules in tao.mpc, they belong in AnyTypeCode.mpc (the sources
+          are compiled there, etc.).  This also helps with a latent MPC
+          bug that expressed itself in the borland builds, where the
+          directory separator was not changed from '/' to '\'.
+
 Mon Nov 27 12:50:48 UTC 2006  Chad Elliott  <elliott_c@ociweb.com>
 
         * tao/Object.h:
