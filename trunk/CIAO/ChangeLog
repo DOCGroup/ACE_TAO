@@ -1,3 +1,32 @@
+Mon Nov 27 14:55:12 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ciao/CCM_Core.mpc:
+          Added new Deployment_DeploymentPlan
+
+        * ciao/Deployment_Data.idl
+        * ciao/Deployment_DeploymentPlan.idl:
+          Moved types related to DeploymentPlan to their own file
+
+        * ciao/Deployment_Data.idl
+          Removed RequirementSatisfier, it is superfluous.
+
+        * ciao/Deployment.idl:
+          No need to include Deployment_Data
+
+        * ciao/Target_Data.idl:
+          Removed not needed include
+
+        * ciao/Deployment_Connection.idl:
+        * ciao/TargetManager.idl:
+        * RACE/Output_Adapters/Interface/PlanEgress.idl:
+        * RACE/Plan_Analyzer/Interface/PlanIngress.idl:
+        * RACE/Planner_Manager/Interface/Planner_Manager_I.idl:
+        * RACE/Planners/Interface/Planner_I.idl:
+          Updated include because of move above
+
+        * tools/Config_Handlers/DnC_Dump.{h,cpp}:
+          Removed RequirementSatisfier
+
 Mon Nov 27 14:11:12 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ciao/Deployment.idl:

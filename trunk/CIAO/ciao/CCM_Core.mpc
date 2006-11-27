@@ -168,6 +168,7 @@ project(Deployment_stub) : taolib_with_idl, valuetype, ifr_client, ciao_events_b
     Deployment_Base.idl
     Deployment_Connection.idl
     Deployment_Data.idl
+    Deployment_DeploymentPlan.idl
     Deployment_TargetData.idl
     ServerResources.idl
     Deployment_Events.idl
@@ -193,6 +194,7 @@ project(Deployment_stub) : taolib_with_idl, valuetype, ifr_client, ciao_events_b
     Deployment_BaseC.cpp
     Deployment_ConnectionC.cpp
     Deployment_DataC.cpp
+    Deployment_DeploymentPlanC.cpp
     Deployment_TargetDataC.cpp
     Deployment_NodeApplicationC.cpp
     Deployment_ApplicationC.cpp
