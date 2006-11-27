@@ -1586,11 +1586,20 @@ CORBA::ORB::object_to_string (CORBA::Object_ptr obj
   this->check_shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
 
-  if (!CORBA::is_nil (obj) && obj->_is_local ())
-    ACE_THROW_RETURN (CORBA::MARSHAL (CORBA::OMGVMCID | 4,
-                                      CORBA::COMPLETED_NO),
-                      0);
+  if (!CORBA::is_nil (obj))
+    {
+      if (!obj->can_convert_to_ior ())
+        ACE_THROW_RETURN (CORBA::MARSHAL (CORBA::OMGVMCID | 4,
+                                          CORBA::COMPLETED_NO),
+                          0);
 
+      // Allow a user to provide custom object stringification
+      char* user_string =
+        obj->convert_to_ior (this->use_omg_ior_format_,
+                             ior_prefix);
+      if (user_string != 0)
+        return user_string;
+    }
 
   // Application writer controls what kind of objref strings they get,
   // maybe along with other things, by how they initialize the ORB.

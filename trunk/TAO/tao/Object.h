@@ -356,6 +356,15 @@ namespace CORBA
 
     //@} End of TAO-specific methods..
 
+    /// Can this object be stringified?
+    virtual bool can_convert_to_ior (void) const;
+
+    /// A hook to allow users to provide custom object stringification.
+    /// @note This method is intended to be used by classes that
+    /// implement Smart Proxies and no others.
+    virtual char* convert_to_ior (bool use_omg_ior_format,
+                                  const char* ior_prefix) const;
+
   protected:
 
     /// Initializing a local object.
