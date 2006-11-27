@@ -1,0 +1,26 @@
+// -*- MPC -*-
+// $Id:$
+
+project(*Client): taoserver, iortable, ftclientorb {
+  exename = client
+  Source_Files {
+    TestS.cpp    
+    TestC.cpp
+    client.cpp
+    Client_Task.cpp
+    Server_Task.cpp
+    TestImpl.cpp
+  }
+}
+
+project(*Server): taoserver, iortable {
+  exename = server
+  Source_Files {
+    TestC.cpp
+    TestS.cpp
+    server.cpp
+    Server_Task.cpp
+    TestImpl.cpp
+  }
+}
+
