@@ -287,10 +287,17 @@ be_visitor_typecode_defn::is_typecode_generation_required (be_type * node)
       || nt == AST_Decl::NT_valuetype
       || nt == AST_Decl::NT_valuetype_fwd)
     {
-      // interfaces, valuetypes, eventtypes and components
+      // Since all fwd decl 'full definition' members aren't updated when
+      // the full definition is seen, we need to make sure we have the
+      // full definition node (if it exists) on which to call is_defined().
+      // The last 'true' arg below filters out full-def members of fwd decls.
+      AST_Decl *d = node->defined_in ()->lookup_by_name (node->name (),
+                                                         true,
+                                                         true,
+                                                         true);
 
       be_interface * const intf =
-        be_interface::narrow_from_decl (node);
+        d != 0 ? be_interface::narrow_from_decl (d) : 0;
 
       if (intf && intf->is_defined ())
         {
