@@ -58,7 +58,7 @@ module Deployment {
     void set_shared_components (in ComponentPlans components);
 
     /// CIAO specific function to set priority
-    /// o component , required by RACE
+    /// of component, required by RACE
     long set_priority (in string cid , in Sched_Params params);
   };
 };
