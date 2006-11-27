@@ -1,6 +1,6 @@
 // $Id$
 
-#include "Deployment_CoreC.h"
+#include "Deployment_NodeApplicationC.h"
 #include "Client_init.h"
 #include "NodeAppTest_RoundTripC.h"
 #include "ace/Get_Opt.h"

@@ -9,7 +9,7 @@
  * NodeApplication.
  */
 
-#include "Deployment.idl"
+#include "Deployment_NodeApplication.idl"
 #include "NodeApplicationManager.idl"
 
 module CIAO

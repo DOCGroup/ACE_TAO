@@ -1,0 +1,56 @@
+// $Id$
+
+#if !defined (DEPLOYMENT_CONTAINER_IDL)
+#define DEPLOYMENT_CONTAINER_IDL
+
+#include "Deployment_Application.idl"
+#include "Deployment_Core.idl"
+
+// *************** Packaging and Deployment ***************
+module Deployment
+{
+  interface NodeApplication; // Forward decl.
+
+  /// CIAO specific interface, which could deal with installing multiple
+  /// containers into a single NodeApplication.
+  interface Container
+  {
+    readonly attribute ::Deployment::Properties properties;
+
+    /// Get the NodeApplication which created us
+    NodeApplication get_node_application ();
+
+    /// Initialize the container with policies
+    // long init (in ::CORBA::PolicyList policies);
+
+    // NW: The following should be component specific info because the
+    // container has already been created and initialized at this
+    // time.  So there's not much container configuration to be done
+    // at this stage.
+    //@@ The container_impl_info will contain
+    //1 component instance name as the key.
+    //2 dll/so name of the exec
+    //3 entry point of the exec
+    //4 dll/so name of the svnt
+    //5 entry point of the svnt
+    //6 Poosible other configuration for container/home/component
+
+    /// Install all homes and components
+    Deployment::ComponentInfos install (in ContainerImplementationInfo container_impl_info)
+        raises (UnknownImplId,
+                ImplEntryPointNotFound,
+                InstallationFailure,
+                ::Components::InvalidConfiguration);
+
+    /// Remove all homes and components
+    void remove ()
+      raises (::Components::RemoveFailure);
+
+    /// Remove a component instance
+    void remove_component (in string inst_name)
+      raises (::Components::RemoveFailure);
+  };
+
+  typedef sequence<Container> Containers;
+};
+#endif /* DEPLOYMENT_CONTAINER_IDL */

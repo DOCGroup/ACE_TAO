@@ -1,3 +1,26 @@
+Mon Nov 27 13:10:12 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ciao/Deployment_Core.idl
+        * ciao/Deployment_Container.idl
+        * ciao/Deployment_NodeApplication.idl
+          Moved some interfaces from Core to their own files
+
+        * ciao/CCM_Core.mpc:
+          Updated because of split above and added some more flags to
+          reduce the amount of generated files
+
+        * ciao/DomainApplicationManager.idl:
+        * ciao/NodeApplication_CallBack.idl
+          Updated include
+
+        * DAnCE/NodeApplication/Container_Impl.h:
+        * DAnCENodeApplication/NodeApplication_Impl.h:
+        * DAnCEtests/NodeApplicationTest/NodeApp_test_client.cpp:
+        * DAnCEtests/NodeApplicationTest/NodeApp_test_client_dynamic.cpp:
+        * DAnCEtests/NodeApplicationTest/NodeApp_test_client_ex.cpp:
+        * DAnCEtests/NodeApplicationTest/NodeApp_test_client_simple.cpp:
+          Updated includes because of refactoring above
+
 Mon Nov 27 09:40:12 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * DAnCE/RepositoryManager/RepositoryManager_Impl.cpp
