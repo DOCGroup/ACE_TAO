@@ -112,7 +112,7 @@ error_string (UTL_Error::ErrorCode c)
     case UTL_Error::EIDL_PREFIX_CONFLICT:
       return "prefix at declaration differs from prefix at definition or use, ";
     case UTL_Error::EIDL_ILLEGAL_VERSION:
-      return "illegal version number, ";
+      return "illegal #pragma version, ";
     case UTL_Error::EIDL_VERSION_RESET:
       return "version already set by #pragma version or #pragma id, ";
     case UTL_Error::EIDL_ID_RESET:
@@ -803,6 +803,18 @@ UTL_Error::version_number_error (char *n)
   ACE_ERROR ((LM_ERROR,
               "%s\n",
               n));
+  idl_global->set_err_count (idl_global->err_count () + 1);
+}
+
+void
+UTL_Error::version_syntax_error (char *msg)
+{
+  idl_error_header (EIDL_ILLEGAL_VERSION,
+                    idl_global->lineno (),
+                    idl_global->filename ()->get_string ());
+  ACE_ERROR ((LM_ERROR,
+              "%s\n",
+              msg));
   idl_global->set_err_count (idl_global->err_count () + 1);
 }
 
