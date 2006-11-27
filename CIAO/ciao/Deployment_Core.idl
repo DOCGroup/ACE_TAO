@@ -20,12 +20,12 @@ module Deployment
     string reason;
   };
 
-  exception InvalidLocation {};
   exception InstallationFailure
   {
     string name;
     string reason;
   };
+
   exception ImplEntryPointNotFound
   {
     string name;
