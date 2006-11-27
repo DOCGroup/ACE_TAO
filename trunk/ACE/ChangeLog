@@ -1,3 +1,9 @@
+Mon Nov 27 06:05:38 UTC 2006  Olli Savia  <ops@iki.fi>
+
+        * tests/OS_Test.cpp:
+          Fixed compile error on VxWorks. Thanks to Johnny Willemsen
+          for pointing out the problem and suggesting a fix.
+
 Fri Nov 24 13:27:55 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
 
         * bin/MakeProjectCreator/config/automake.features:
