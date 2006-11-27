@@ -3,8 +3,6 @@
 #ifndef TARGET_DATA_IDL
 #define TARGET_DATA_IDL
 
-#include "Deployment_Data.idl"
-
 module Deployment {
 
   exception PlanError {

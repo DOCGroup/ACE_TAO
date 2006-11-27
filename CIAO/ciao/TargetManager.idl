@@ -5,6 +5,7 @@
 
 #include "Target_Data.idl"
 #include "Deployment_TargetData.idl"
+#include "Deployment_DeploymentPlan.idl"
 
 module Deployment {
 
