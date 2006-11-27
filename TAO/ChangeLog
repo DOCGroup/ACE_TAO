@@ -1,3 +1,19 @@
+Mon Nov 27 14:46:18 UTC 2006  Vadym Ridosh <vridosh@prismtech.com>
+
+        * tests/Bug_2709_Regression/Bug_2709_Regression.mpc
+        * tests/Bug_2709_Regression/client.cpp
+        * tests/Bug_2709_Regression/Client_Task.cpp
+        * tests/Bug_2709_Regression/Client_Task.h
+        * tests/Bug_2709_Regression/README
+        * tests/Bug_2709_Regression/run_test.pl
+        * tests/Bug_2709_Regression/server.cpp
+        * tests/Bug_2709_Regression/Server_Task.cpp
+        * tests/Bug_2709_Regression/Server_Task.h
+        * tests/Bug_2709_Regression/Test.idl
+        * tests/Bug_2709_Regression/TestImpl.cpp
+        * tests/Bug_2709_Regression/TestImpl.h
+          Added a regression for bug 2709.
+
 Mon Nov 27 14:29:38 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
 
         * tao/tao.mpc:
