@@ -14,80 +14,36 @@ module Deployment
   // Typeprefix Components "omg.org";
   // OMG threw these things away, didn't it.
 
+  /// CIAO specific
   exception UnknownImplId
   {
     string name;
     string reason;
   };
 
+  /// CIAO specific
   exception InstallationFailure
   {
     string name;
     string reason;
   };
 
+  /// CIAO specific
   exception ImplEntryPointNotFound
   {
     string name;
     string reason;
   };
 
-  //Below are from the OMG Deployment.idl
-
+  /**
+   * The StopError exception is raised if a problem occurred while terminating
+   * an application, either during the terminate operation of the
+   * ApplicationManager or during the destroyManager operation of the
+   * ExecutionManager.
+   */
   exception StopError {
     string name;
     string reason;
   };
-
-  //=======================================
-  struct ComponentImplementationInfo
-  {
-    string component_instance_name;
-    string executor_dll;
-    string executor_entrypt;
-    string servant_dll;
-    string servant_entrypt;
-    Properties component_config;
-    //  Properties home_config;      //ignored for now.
-  };
-
-  typedef sequence <ComponentImplementationInfo> ComponentImplementationInfos;
-
-  // ContainerImplementationInfo contains a list of components to be installed and
-  // policy configuration for the container which hosts these components
-  struct ContainerImplementationInfo
-  {
-    ComponentImplementationInfos impl_infos;
-    Properties container_config;
-  };
-
-  typedef sequence <ContainerImplementationInfo> ContainerImplementationInfos;
-
-  struct NodeImplementationInfo
-  {
-    ContainerImplementationInfos impl_infos;
-    Properties nodeapp_config;
-  };
-
-  struct Component_Info
-  {
-    string component_instance_name;
-    Components::CCMObject component_ref;
-  };
-
-  typedef sequence < Component_Info > ComponentInfos;
-
-  // @@ (OO) You're altering an OMG defined interface below.  In
-  //         order to avoid confusion, it is probably better to create
-  //         another NodeApplication interface in the CIAO namespace
-  //         that inherits from Deployment::NodeApplication.  You'd
-  //         then use the CIAO::NodeApplication in your
-  //         implementation.
-  //
-  //         Alternatively, you should at least place a CIAO-specific
-  //         typeprefix within your altered NodeApplication interface
-  //         to prevent interoperability issues.
-
-  typedef sequence<CIAO::CIAO_Event_Service> CIAO_Event_Services;
 };
 #endif /* DEPLOYMENT_CORE_IDL */

@@ -21,6 +21,16 @@ module Deployment
     //Properties es_config;
   };
 
+  /// CIAO specific
+  struct NodeImplementationInfo
+  {
+    ContainerImplementationInfos impl_infos;
+    Properties nodeapp_config;
+  };
+
+  /// CIAO specific
+  typedef sequence<CIAO::CIAO_Event_Service> CIAO_Event_Services;
+
   /// CIAO specific extension
   typedef sequence<ESInstallationInfo> ESInstallationInfos;
 
