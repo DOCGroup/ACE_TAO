@@ -1,3 +1,28 @@
+Mon Nov 27 08:04:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        Document the changes I have done last weekend to resolve link
+        problems with vc8. With vc8 we now explicitly export the base
+        templates for the basic sequences. This also requires that
+        applications do import these base templates which in practice
+        means that when you use any of the sequences of basic types
+        you must include (in)directly the ones in the corba library.
+        If you don't do that you get compile/link errors related
+        to the basic sequences
+
+        * tao/tao.mpc:
+          Enabed -Gse for ULongLongSeq
+
+        * orbsvcs/performance-tests/RTEvent/lib/Federated_Test.idl:
+          Use the CORBA::ULongLongSeq predefined typedef
+
+        * orbsvcs/orbsvcs/CosTrading.idl:
+        * orbsvcs/orbsvcs/SecurityLevel3.idl:
+          Include a pidl file from core to get the import of the
+          base template
+
+        * tests/Portable_Interceptors/PICurrent/client.cpp:
+          Check also the length of the returned sequence
+
 Sun Nov 26 02:41:57 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
 
         * orbsvcs/tests/Event/Makefile.am:
