@@ -18,6 +18,12 @@
 #ifndef TAO_HTTP_CLIENT_H
 #define TAO_HTTP_CLIENT_H
 
+#include /**/ "tao/TAO_Export.h"
+
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+# pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
+
 #include "ace/INET_Addr.h"
 #include "ace/Svc_Handler.h"
 #include "ace/SOCK_Connector.h"
@@ -39,7 +45,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
  * use any protocol "under the hood" to do so. It currently
  * uses HTTP. See HTTP_Handler also.
  */
-class TAO_HTTP_Client
+class TAO_Export TAO_HTTP_Client
 {
 public:
   TAO_HTTP_Client (void);
