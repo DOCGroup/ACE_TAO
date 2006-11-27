@@ -3,7 +3,6 @@
 #include "NodeManager_Impl.h"
 #include "../NodeApplicationManager/NodeApplicationManager_Impl.h"
 #include "ace/Log_Msg.h"
-#include <errno.h>
 
 CIAO::NodeManager_Impl_Base::NodeManager_Impl_Base (const char *name,
                                                     CORBA::ORB_ptr orb,
