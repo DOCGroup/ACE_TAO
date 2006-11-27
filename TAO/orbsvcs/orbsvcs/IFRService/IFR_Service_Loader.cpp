@@ -80,13 +80,11 @@ TAO_IFR_Service_Loader::create_object (CORBA::ORB_ptr orb,
                                        ACE_ENV_ARG_DECL_NOT_USED)
    ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  int result;
-
   // Initializes the IFR_Service Service. Returns -1
   // on an error.
-  result = this->ifr_server_.init_with_orb (argc,
-                                            argv,
-                                            orb);
+  int result = this->ifr_server_.init_with_orb (argc,
+                                                argv,
+                                                orb);
   if (result != 0)
     {
       ACE_THROW_RETURN (CORBA::BAD_PARAM (0,
