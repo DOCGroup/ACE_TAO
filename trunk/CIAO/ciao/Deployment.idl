@@ -18,6 +18,7 @@ module Deployment {
   exception NoSuchName {
   };
 
+  /// Not used at all? Zap?
   exception LastConfiguration {
   };
 
