@@ -17,7 +17,7 @@ use English;
 use Getopt::Std;
 use Cwd;
 
-use Env qw(ACE_ROOT PATH);
+use Env qw(ACE_ROOT PATH TAO_ROOT CIAO_ROOT);
 
 ################################################################################
 
@@ -118,16 +118,21 @@ foreach my $test_lst (@file_list) {
             print "auto_run_tests: $test\n";
         }
 
-        $status = 0;
-        if (-d $ACE_ROOT."/$directory") {
-          $status = chdir ($ACE_ROOT."/$directory");
+        if ($directory =~ m:^TAO/(.*):) {
+          $directory = $1;
         }
-        elsif (-d $startdir."/$directory") {
-          $status = chdir ($startdir."/$directory");
+
+        $status = undef;
+        foreach my $path ($ACE_ROOT."/$directory",
+                          $startdir."/$directory",
+                          $TAO_ROOT."/$directory" )
+          {
+          if (-d $path) {
+            $status = chdir ($path);
+            last;
+          }
         }
-        else {
-          $status = chdir ($directory);
-        }
+        $status = chdir ($directory) if (! defined($status));
 
         if (!$status) {
           print STDERR "ERROR: Cannot chdir to $ACE_ROOT/$directory";
