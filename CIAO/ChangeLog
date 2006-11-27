@@ -1,3 +1,9 @@
+Mon Nov 27 14:11:12 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ciao/Deployment.idl:
+          Removed LastConfiguration, it is not used and has been zapped
+          from the DAnCE spec
+
 Mon Nov 27 14:04:12 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ciao/Deployment_Core.idl:
