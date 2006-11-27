@@ -54,6 +54,7 @@ parse_args (int argc, char *argv[])
 int
 main (int argc, char *argv[])
 {
+  int status = 0;
   ACE_TRY_NEW_ENV
     {
       CORBA::ORB_var orb =
@@ -96,6 +97,26 @@ main (int argc, char *argv[])
                            ior),
                           1);
 
+      try
+        {
+          CORBA::String_var sm_ior = orb->object_to_string (server.in ());
+          if (Smart_Test_Proxy::fake_ior () != sm_ior.in ())
+            {
+              status = 1;
+              ACE_ERROR ((LM_ERROR,
+                          "ERROR: The Smart Proxy IOR is:\n%s\n"
+                          "but should have been: %s\n",
+                          sm_ior.in (),
+                          Smart_Test_Proxy::fake_ior ().c_str ()));
+            }
+        }
+      catch (const CORBA::MARSHAL& ex)
+        {
+          status = 1;
+          ACE_PRINT_EXCEPTION (ex,
+                               "Unexpected MARSHAL exception:");
+        }
+
       server->method (0 ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
@@ -115,9 +136,9 @@ main (int argc, char *argv[])
     {
       ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
                            "Client-side exception:");
-      return 1;
+      status = 1;
     }
   ACE_ENDTRY;
 
-  return 0;
+  return status;
 }
