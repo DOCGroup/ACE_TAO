@@ -1,3 +1,15 @@
+Mon Nov 27 15:41:12 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ciao/Deployment_Core.idl:
+        * ciao/Deployment_Container.idl:
+        * ciao/Deployment_NodeApplication.idl:
+          Moved types from Core to the other files and added remarks
+          to all CIAO specific types
+
+        * DAnCE/NodeApplicationManager/Containers_Info_Map.h:
+        * DAnCE/NodeApplicationManager/ImplementationInfo.h:
+          Updated includes because of the move above
+
 Mon Nov 27 14:55:12 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ciao/CCM_Core.mpc:
