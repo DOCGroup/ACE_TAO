@@ -1,6 +1,6 @@
 // $Id$
 
-project(*IDL): orbsvcsexe, rtcorbaevent, strategies, minimum_corba {
+project(*IDL): orbsvcsexe, rtcorbaevent, strategies, avoids_minimum_corba {
 
   IDL_Files {
     Test.idl
@@ -9,7 +9,7 @@ project(*IDL): orbsvcsexe, rtcorbaevent, strategies, minimum_corba {
   custom_only = 1
 }
 
-project(*server): orbsvcsexe, rtcorbaevent, strategies, minimum_corba {
+project(*server): orbsvcsexe, rtcorbaevent, strategies, avoids_minimum_corba {
   after    += RTEC_Perf
   libs     += TAO_RTEC_Perf
 
@@ -31,7 +31,7 @@ project(*server): orbsvcsexe, rtcorbaevent, strategies, minimum_corba {
   }
 }
 
-project(*client): orbsvcsexe, rtcorbaevent, strategies, minimum_corba {
+project(*client): orbsvcsexe, rtcorbaevent, strategies, avoids_minimum_corba {
   after    += RTEC_Perf
   libs     += TAO_RTEC_Perf
 

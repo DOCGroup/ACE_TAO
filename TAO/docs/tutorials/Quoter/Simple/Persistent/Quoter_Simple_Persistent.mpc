@@ -1,7 +1,7 @@
 // -*- MPC -*-
 // $Id$
 
-project(*client) : taoexe, portableserver, exceptions {
+project(*client) : taoexe, portableserver {
   libs += Quoter_Idl_Lib
   after += Quoter_Idl_Lib
 
@@ -15,7 +15,7 @@ project(*client) : taoexe, portableserver, exceptions {
   }
 }
 
-project(*server) : taoserver, exceptions {
+project(*server) : taoserver {
   libs += Quoter_Idl_Lib
   after += Quoter_Idl_Lib
 

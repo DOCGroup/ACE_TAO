@@ -1,7 +1,7 @@
 // -*- MPC -*-
 // $Id$
 
-project: taoserver, minimum_corba {
+project: taoserver, avoids_minimum_corba {
   exename = FindPOA
 }
 

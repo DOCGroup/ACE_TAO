@@ -1,3 +1,9 @@
+Mon Nov 27 08:17:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * *.mpc:
+          Removed exceptions as base project because TAO already requires
+          exceptions and renamed minimum_corba to avoids_minimum_corba
+
 Mon Nov 27 08:04:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         Document the changes I have done last weekend to resolve link
