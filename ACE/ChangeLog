@@ -19,6 +19,7 @@ Mon Nov 27 08:09:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
         * bin/MakeProjectCreator/config/imr_locator.mpb:
         * bin/MakeProjectCreator/config/portablegroup.mpb:
         * bin/MakeProjectCreator/config/rtcorbacommon.mpb:
+          Updated for rename of minimum_corba
 
 Mon Nov 27 06:05:38 UTC 2006  Olli Savia  <ops@iki.fi>
 
