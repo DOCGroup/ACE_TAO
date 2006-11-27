@@ -7,7 +7,7 @@ project(*oneways idl RT): taoidldefaults {
   custom_only = 1
 }
 
-project(*oneways server RT): rt_server, messaging, minimum_corba {
+project(*oneways server RT): rt_server, messaging, avoids_minimum_corba {
   after += *oneways_idl_RT
   Source_Files {
     test_i.cpp
@@ -19,7 +19,7 @@ project(*oneways server RT): rt_server, messaging, minimum_corba {
   }
 }
 
-project(*oneways client RT): rt_client, messaging, minimum_corba {
+project(*oneways client RT): rt_client, messaging, avoids_minimum_corba {
   after += *oneways_idl_RT
   Source_Files {
     testC.cpp

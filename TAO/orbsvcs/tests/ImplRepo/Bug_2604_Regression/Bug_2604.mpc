@@ -1,6 +1,6 @@
 // $Id$
 
-project(*Server): taoserver, minimum_corba, imr_client {
+project(*Server): taoserver, avoids_minimum_corba, imr_client {
   idlflags += -Sa -St
   exename = MessengerServer
   Source_Files {
@@ -9,7 +9,7 @@ project(*Server): taoserver, minimum_corba, imr_client {
   }
 }
 
-project(*Client): taoexe, minimum_corba {
+project(*Client): taoexe, avoids_minimum_corba {
   idlflags += -Sa -St
   exename = MessengerClient
   Source_Files {

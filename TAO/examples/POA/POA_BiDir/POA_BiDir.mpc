@@ -1,6 +1,6 @@
 // -*- MPC -*-
 // $Id$
 
-project: taoserver, bidir_giop, minimum_corba {
+project: taoserver, bidir_giop, avoids_minimum_corba {
   exename = POA_BiDir
 }

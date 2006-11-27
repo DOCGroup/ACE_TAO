@@ -8,7 +8,7 @@ project(*idl) : taoidldefaults, anytypecode {
   custom_only = 1
 }
 
-project(*client) : orbsvcsexe, portableserver, event, event_skel, naming, minimum_corba, exceptions {
+project(*client) : orbsvcsexe, portableserver, event, event_skel, naming {
   after += *idl
   source_files {
     client.cpp
@@ -19,7 +19,7 @@ project(*client) : orbsvcsexe, portableserver, event, event_skel, naming, minimu
   }
 }
 
-project(*server) : orbsvcsexe, portableserver, event, event_skel, naming, minimum_corba, exceptions {
+project(*server) : orbsvcsexe, portableserver, event, event_skel, naming {
   after += *idl
   source_files {
     server.cpp

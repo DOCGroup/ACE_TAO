@@ -3,7 +3,6 @@
 
 project : namingexe, ace_mfc {
   exename    = NamingViewer
-  requires  += exceptions
   install    = $(ACE_ROOT)/bin
   pch_header = StdAfx.h
   pch_source = StdAfx.cpp

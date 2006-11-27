@@ -1,14 +1,14 @@
 // -*- MPC -*-
 // $Id$
 
-project(*Server): taoserver, minimum_corba {
+project(*Server): taoserver, avoids_minimum_corba {
   Source_Files {
     param_test_i.cpp
     server.cpp
   }
 }
 
-project(*Client): taoserver, minimum_corba, dynamicinterface {
+project(*Client): taoserver, avoids_minimum_corba, dynamicinterface {
   avoids += ace_for_tao
   exename = client
   after  += *Server
@@ -58,7 +58,7 @@ project(*Client): taoserver, minimum_corba, dynamicinterface {
   }
 }
 
-project(*Anyop): taoserver, minimum_corba {
+project(*Anyop): taoserver, avoids_minimum_corba {
   exename = anyop
   after += *Client
 
