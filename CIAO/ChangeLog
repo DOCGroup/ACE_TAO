@@ -1,3 +1,16 @@
+Mon Nov 27 14:04:12 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ciao/Deployment_Core.idl:
+        * ciao/Deployment_NodeApplication.idl:
+          Moved ESInstallationInfo to NodeApplication file
+
+        * ciao/Deployment.idl:
+          LastConfiguration doesn't seem used, added a comment to that
+          exception.
+
+        * ciao/NodeApplicationManager.idl:
+          Doxygen improvement
+
 Mon Nov 27 13:23:12 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ciao/NodeApplicationManager.idl:
