@@ -1,3 +1,25 @@
+Mon Nov 27 08:09:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/MakeProjectCreator/config/minimum_corba.mpb:
+        * bin/MakeProjectCreator/config/avoids_minimum_corba.mpb:
+          Renames minimum_corba to avoids_minimum_corba. Fixes bugzilla
+          2589.
+
+        * bin/MakeProjectCreator/config/avoids_corba_e_micro.mpb:
+          Fixed this file and made corba_e_compact its parent, when
+          we can't build a project in corba_e_compact then corba_e_micro
+          is also not an option.
+
+        * bin/MakeProjectCreator/config/event.mpb:
+        * bin/MakeProjectCreator/config/event_serv.mpb:
+        * bin/MakeProjectCreator/config/event_skel.mpb:
+        * bin/MakeProjectCreator/config/ftorbutils.mpb:
+        * bin/MakeProjectCreator/config/ftrtevent.mpb:
+        * bin/MakeProjectCreator/config/ifrservice.mpb:
+        * bin/MakeProjectCreator/config/imr_locator.mpb:
+        * bin/MakeProjectCreator/config/portablegroup.mpb:
+        * bin/MakeProjectCreator/config/rtcorbacommon.mpb:
+
 Mon Nov 27 06:05:38 UTC 2006  Olli Savia  <ops@iki.fi>
 
         * tests/OS_Test.cpp:
