@@ -1,7 +1,7 @@
 // -*- MPC -*-
 // $Id$
 
-project(*Server): messaging, taoserver, exceptions, ami {
+project(*Server): messaging, taoserver, ami {
   Source_Files {
     test_i.cpp
     common.cpp
@@ -9,7 +9,7 @@ project(*Server): messaging, taoserver, exceptions, ami {
   }
 }
 
-project(*Client): messaging, taoexe, portableserver, exceptions, ami {
+project(*Client): messaging, taoexe, portableserver, ami {
   after += *Server
   Source_Files {
     test_i.cpp

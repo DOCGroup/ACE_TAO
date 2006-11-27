@@ -1,14 +1,14 @@
 // -*- MPC -*-
 // $Id$
 
-project(*Server): taoserver, anytypecode, exceptions {
+project(*Server): taoserver, anytypecode {
   Source_Files {
     test_i.cpp
     server.cpp
   }
 }
 
-project(*Client): taoclient, anytypecode, exceptions {
+project(*Client): taoclient, anytypecode {
   after += *Server
   Source_Files {
     testC.cpp

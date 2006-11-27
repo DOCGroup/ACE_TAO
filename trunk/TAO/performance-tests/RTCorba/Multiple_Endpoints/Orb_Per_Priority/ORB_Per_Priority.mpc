@@ -1,7 +1,7 @@
 // -*- MPC -*-
 // $Id$
 
-project(*server): rt_server, strategies, rtcorbacommon, minimum_corba {
+project(*server): rt_server, strategies, rtcorbacommon, avoids_minimum_corba {
   Source_Files {
     server.cpp
   }

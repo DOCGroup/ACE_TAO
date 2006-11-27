@@ -1,6 +1,6 @@
 // $Id$
 
-project(*lib): orbsvcslib, notify_serv, exceptions {
+project(*lib): orbsvcslib, notify_serv {
   sharedname = NotifyPlugTop
   dynamicflags = PLUGTOP_BUILD_DLL
   source_files {
@@ -9,7 +9,7 @@ project(*lib): orbsvcslib, notify_serv, exceptions {
   }
 }
 
-project : orbsvcsexe, notify_serv, exceptions {
+project : orbsvcsexe, notify_serv {
   after += *lib
   source_files {
     main.cpp

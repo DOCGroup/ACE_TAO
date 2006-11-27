@@ -1,14 +1,14 @@
 // -*- MPC -*-
 // $Id$
 
-project(*Server): taoserver, anytypecode, minimum_corba, bidir_giop {
+project(*Server): taoserver, anytypecode, avoids_minimum_corba, bidir_giop {
   Source_Files {
     test_i.cpp
     server.cpp
   }
 }
 
-project(*Client): taoserver, anytypecode, minimum_corba, bidir_giop {
+project(*Client): taoserver, anytypecode, avoids_minimum_corba, bidir_giop {
   exename = client
   after += *Server
   Source_Files {

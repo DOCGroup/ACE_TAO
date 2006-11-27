@@ -1,6 +1,6 @@
 // $Id$
 
-project (CosEvent_IDL) : orbsvcslib, core, minimum_corba, ec_typed_events_idl, tao_versioning_idl_defaults {
+project (CosEvent_IDL) : orbsvcslib, core, avoids_minimum_corba, ec_typed_events_idl, tao_versioning_idl_defaults {
   custom_only = 1
   idlflags   += -GT -Wb,stub_export_macro=TAO_Event_Export -Wb,stub_export_include=orbsvcs/CosEvent/event_export.h -Wb,skel_export_macro=TAO_Event_Skel_Export -Wb,skel_export_include=orbsvcs/CosEvent/event_skel_export.h
 
@@ -10,7 +10,7 @@ project (CosEvent_IDL) : orbsvcslib, core, minimum_corba, ec_typed_events_idl, t
   }
 }
 
-project (CosEvent) : orbsvcslib, core, minimum_corba, ec_typed_events {
+project (CosEvent) : orbsvcslib, core, avoids_minimum_corba, ec_typed_events {
   sharedname   = TAO_CosEvent
   dynamicflags = TAO_EVENT_BUILD_DLL
   tagchecks   += CosEvent
@@ -49,7 +49,7 @@ project (CosEvent) : orbsvcslib, core, minimum_corba, ec_typed_events {
 }
 
 
-project (CosEvent_Skel) : orbsvcslib, core, minimum_corba, event, portableserver, ec_typed_events_skel {
+project (CosEvent_Skel) : orbsvcslib, core, avoids_minimum_corba, event, portableserver, ec_typed_events_skel {
   sharedname   = TAO_CosEvent_Skel
   dynamicflags = TAO_EVENT_SKEL_BUILD_DLL
   tagchecks   += CosEvent
@@ -86,7 +86,7 @@ project (CosEvent_Skel) : orbsvcslib, core, minimum_corba, event, portableserver
 }
 
 
-project (CosEvent_Serv) : orbsvcslib, core, minimum_corba, event_skel, ec_typed_events_serv, messaging_optional, naming, svc_utils {
+project (CosEvent_Serv) : orbsvcslib, core, avoids_minimum_corba, event_skel, ec_typed_events_serv, messaging_optional, naming, svc_utils {
   sharedname   = TAO_CosEvent_Serv
   dynamicflags = TAO_EVENT_SERV_BUILD_DLL
   tagchecks   += CosEvent

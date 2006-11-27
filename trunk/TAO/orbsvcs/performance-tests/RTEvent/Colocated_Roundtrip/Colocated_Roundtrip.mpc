@@ -1,5 +1,5 @@
 // $Id$
-project: orbsvcsexe, rtcorbaevent, strategies, minimum_corba {
+project: orbsvcsexe, rtcorbaevent, strategies, avoids_minimum_corba {
   after    += RTEC_Perf
   libs     += TAO_RTEC_Perf
 

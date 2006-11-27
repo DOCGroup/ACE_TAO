@@ -1,5 +1,5 @@
 // -*- MPC -*-
 // $Id$
 
-project(POA*): taoexe, portableserver, minimum_corba {
+project(POA*): taoexe, portableserver, avoids_minimum_corba {
 }

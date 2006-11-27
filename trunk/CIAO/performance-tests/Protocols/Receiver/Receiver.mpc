@@ -1,7 +1,7 @@
 // $Id$
 // This file is generated with "generate_component_mpc.pl -p Protocols Receiver"
 
-project(Protocols_Receiver_stub): ciao_client_dnc, exceptions {
+project(Protocols_Receiver_stub): ciao_client_dnc {
   avoids += ace_for_tao
   libs += Protocols_stub
   after += Protocols_stub
@@ -27,7 +27,7 @@ project(Protocols_Receiver_stub): ciao_client_dnc, exceptions {
   }
 }
 
-project(Protocols_Receiver_svnt) : ciao_servant_dnc, exceptions {
+project(Protocols_Receiver_svnt) : ciao_servant_dnc {
   avoids += ace_for_tao
   after += Protocols_skel Protocols_Receiver_stub
   sharedname  = Protocols_Receiver_svnt
@@ -58,7 +58,7 @@ project(Protocols_Receiver_svnt) : ciao_servant_dnc, exceptions {
 }
 
 
-project(Protocols_Receiver_exec) : ciao_component_dnc, exceptions {
+project(Protocols_Receiver_exec) : ciao_component_dnc {
   avoids += ace_for_tao
   after   += Protocols_Receiver_svnt
   sharedname = Protocols_Receiver_exec

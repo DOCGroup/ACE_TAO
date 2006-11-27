@@ -8,7 +8,7 @@ project(*IDL): taoidldefaults {
   custom_only = 1
 }
 
-project(*server): namingexe, lifecycle, minimum_corba, utils {
+project(*server): namingexe, lifecycle, avoids_minimum_corba, utils {
   after += *IDL
   Source_Files {
     server.cpp
@@ -20,7 +20,7 @@ project(*server): namingexe, lifecycle, minimum_corba, utils {
   }
 }
 
-project(*client): namingexe, lifecycle, minimum_corba {
+project(*client): namingexe, lifecycle, avoids_minimum_corba {
   after += *IDL
   Source_Files {
     client.cpp
@@ -30,7 +30,7 @@ project(*client): namingexe, lifecycle, minimum_corba {
   }
 }
 
-project(*Factory Finder): namingexe, lifecycle, minimum_corba, utils {
+project(*Factory Finder): namingexe, lifecycle, avoids_minimum_corba, utils {
   after += *IDL
   Source_Files {
     Factory_Finder.cpp
@@ -42,7 +42,7 @@ project(*Factory Finder): namingexe, lifecycle, minimum_corba, utils {
   }
 }
 
-project(*Generic Factory): namingexe, lifecycle, minimum_corba, utils {
+project(*Generic Factory): namingexe, lifecycle, avoids_minimum_corba, utils {
   after += *IDL
   Source_Files {
     Generic_Factory.cpp
