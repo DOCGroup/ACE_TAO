@@ -141,8 +141,6 @@ static void dump(const ResourceDeploymentDescription &rdd);
 
 static void dump (const ::Deployment::ComponentAssemblyDescription& cad);
 
-static void dump (const Deployment::RequirementSatisfier& rs);
-
 private:
 static void dump (const ::CORBA::Any &any);
 // Helper function to print an Any
