@@ -18,7 +18,6 @@
 
 #include "BaseMonitor.h"
 #include "ace/Auto_Ptr.h"
-#include <memory>
 
 /**
  * @namespace CIAO
