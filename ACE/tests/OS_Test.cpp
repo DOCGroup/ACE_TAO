@@ -531,12 +531,12 @@ snprintf_test (void)
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Testing snprintf\n")));
 
   int error_count = 0;
-  const int BUFSIZE = 4;
-  char buf[2*BUFSIZE];
+  const int BUFFER_SIZE = 4;
+  char buf[2*BUFFER_SIZE];
   int retval;
 
-  ACE_OS::memset(buf, 0xab, 2*BUFSIZE);
-  retval = ACE_OS::snprintf (buf, BUFSIZE, "%d", 123);
+  ACE_OS::memset(buf, 0xab, 2*BUFFER_SIZE);
+  retval = ACE_OS::snprintf (buf, BUFFER_SIZE, "%d", 123);
   if (retval != 3)
     {
       ACE_ERROR ((LM_ERROR,
@@ -545,8 +545,8 @@ snprintf_test (void)
       ++error_count;
     }
 
-  ACE_OS::memset(buf, 0xab, 2*BUFSIZE);
-  retval = ACE_OS::snprintf (buf, BUFSIZE, "%d", 1234);
+  ACE_OS::memset(buf, 0xab, 2*BUFFER_SIZE);
+  retval = ACE_OS::snprintf (buf, BUFFER_SIZE, "%d", 1234);
   if (retval != 4)
     {
       ACE_ERROR ((LM_ERROR,
@@ -568,8 +568,8 @@ snprintf_test (void)
       ++error_count;
     }
 
-  ACE_OS::memset(buf, 0xab, 2*BUFSIZE);
-  retval = ACE_OS::snprintf (buf, BUFSIZE, "%d", 12345);
+  ACE_OS::memset(buf, 0xab, 2*BUFFER_SIZE);
+  retval = ACE_OS::snprintf (buf, BUFFER_SIZE, "%d", 12345);
   if (retval != 5)
     {
       ACE_ERROR ((LM_ERROR,
