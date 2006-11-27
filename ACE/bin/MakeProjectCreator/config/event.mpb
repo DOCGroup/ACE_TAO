@@ -1,7 +1,7 @@
 // -*- MPC -*-
 // $Id$
 
-project : orbsvcslib, ec_use_typed_events, avoids_minimum_corba, avoids_corba_e_micro {
+project : orbsvcslib, ec_use_typed_events, avoids_minimum_corba {
   after     += CosEvent
   libs      += TAO_CosEvent
   tagchecks += CosEvent
