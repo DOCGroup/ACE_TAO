@@ -13,11 +13,12 @@ module Deployment {
 
     DomainApplicationManagers getManagers ();
 
-    DomainApplicationManager getManager (in string plan_uuid)
-      raises (PlanNotExist);
-
     void destroyManager (in DomainApplicationManager manager)
       raises (StopError);
+
+    /// CIAO Specific extension
+    DomainApplicationManager getManager (in string plan_uuid)
+      raises (PlanNotExist);
 
     /// CIAO specific extention
     /// Destroy ApplicationManagers by plan_uuid, the unique semantics of this
