@@ -1,3 +1,26 @@
+Mon Nov 27 12:50:48 UTC 2006  Chad Elliott  <elliott_c@ociweb.com>
+
+        * tao/Object.h:
+        * tao/Object.cpp:
+
+          Provide hooks to enable custom Object to IOR conversion or
+          allowing local objects (such as Smart Proxies) to be converted to
+          an IOR string.
+
+        * tao/ORB.cpp:
+
+          Utilize the new hooks when performing the Object to IOR string
+          conversion.
+
+        * tests/Smart_Proxies/Smart_Proxy_Impl.h:
+        * tests/Smart_Proxies/Smart_Proxy_Impl.cpp:
+        * tests/Smart_Proxies/client.cpp:
+        * tests/Smart_Proxies/run_test.pl:
+
+          This test has been modified to implement both aforementioned
+          hooks and perform comparisons to ensure that the right thing has
+          been done.
+
 Mon Nov 27 09:31:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/HTTP_Client.h:
