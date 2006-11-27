@@ -25,19 +25,27 @@ project (CIAO_DnC_Client) : taolib_with_idl, valuetype, ifr_client {
   }
 
   IDL_Files {
-    CCM_HomeConfigurator.idl
-    CCM_StandardConfigurator.idl
-    CCM_KeylessCCMHome.idl
-    CCM_Home.idl
-    CCM_Object.idl
-    CCM_HomeFinder.idl
-    CCM_Navigation.idl
-    CCM_Receptacle.idl
+    idlflags += -Ssi -Sci
     Components.idl
   }
 
   IDL_Files {
+    CCM_HomeConfigurator.idl
+    CCM_StandardConfigurator.idl
+    CCM_Home.idl
+    CCM_Object.idl
+  }
+
+  IDL_Files {
+    idlflags += -Ssi
+    CCM_HomeFinder.idl
     CCM_Configurator.idl
+    CCM_KeylessCCMHome.idl
+    CCM_Navigation.idl
+    CCM_Receptacle.idl
+  }
+
+  IDL_Files {
     CCM_Event.idl
   }
 
@@ -169,7 +177,9 @@ project(Deployment_stub) : taolib_with_idl, valuetype, ifr_client, ciao_events_b
     TargetManager.idl
     NodeApplication_CallBack.idl
     Deployment_Core.idl
+    Deployment_NodeApplication.idl
     Deployment_Application.idl
+    Deployment_Container.idl
     Deployment.idl
     NodeManager.idl
     NodeApplicationManager.idl
@@ -184,7 +194,9 @@ project(Deployment_stub) : taolib_with_idl, valuetype, ifr_client, ciao_events_b
     Deployment_ConnectionC.cpp
     Deployment_DataC.cpp
     Deployment_TargetDataC.cpp
+    Deployment_NodeApplicationC.cpp
     Deployment_ApplicationC.cpp
+    Deployment_ContainerC.cpp
     Packaging_DataC.cpp
     Target_DataC.cpp
     DeploymentC.cpp
@@ -219,6 +231,8 @@ project(Deployment_svnt) : taolib_with_idl, portableserver, valuetype, ifr_clien
   Source_Files {
     Deployment_CoreS.cpp
     Deployment_ApplicationS.cpp
+    Deployment_NodeApplicationS.cpp
+    Deployment_ContainerS.cpp
     DeploymentS.cpp
     RepositoryManagerS.cpp
     NodeManagerS.cpp
