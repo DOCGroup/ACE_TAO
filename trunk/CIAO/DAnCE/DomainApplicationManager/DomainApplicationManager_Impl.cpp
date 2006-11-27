@@ -1479,7 +1479,7 @@ start (ACE_ENV_SINGLE_ARG_DECL)
       for (i = 0; i < this->num_child_plans_; ++i)
         {
           // Get the NodeApplication object reference.
-          ACE_Hash_Map_Entry <ACE_CString, Chained_Artifacts> *entry;
+          ACE_Hash_Map_Entry <ACE_CString, Chained_Artifacts> *entry = 0;
 
           if (this->artifact_map_.find (this->node_manager_names_[i],
                                         entry) != 0)
