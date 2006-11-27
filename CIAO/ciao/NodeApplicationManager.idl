@@ -3,18 +3,10 @@
 #define NODEAPPLICATIONMANAGER_IDL
 
 #include "Deployment_Core.idl"
+#include "Deployment_ApplicationManager.idl"
 #include "Deployment.idl"
 
 module Deployment {
-  interface ApplicationManager {
-    Application startLaunch (in Properties configProperty,
-                             out Connections providedReference,
-                             in boolean start)
-      raises (ResourceNotAvailable, StartError, InvalidProperty);
-    void destroyApplication (in Application app)
-      raises (StopError);
-  };
-
   /**
    * @struct Sched_Params
    * @brief Carries Scheduling Params

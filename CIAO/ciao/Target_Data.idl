@@ -9,14 +9,6 @@ module Deployment {
     string name;
     string reason;
   };
-
-  exception ResourceNotAvailable {
-    string name;
-    string resourceType;
-    string propertyName;
-    string elementName;
-    string resourceName;
-  };
 };
 
 #endif /* TARGET_DATA_IDL */

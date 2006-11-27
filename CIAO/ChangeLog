@@ -1,3 +1,25 @@
+Mon Nov 27 18:34:12 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ciao/NodeApplicationManager.idl:
+        * ciao/Deployment_ApplicationManager.idl:
+          Moved ApplicationManager interface to its own file
+
+        * ciao/CCM_Core.mpc:
+          Added new file
+
+        * ciao/DomainApplicationManager.idl:
+        * ciao/TargetManager.idl:
+          Updated includes
+
+        * ciao/Target_Data.idl:
+          Moved ResourceNotAvailable also to the new
+          Deyloyment_ApplicationManger file
+
+        * DAnCE/NodeManager/CIAO_Monitor.h:
+          Removed include of memory, not portable and not used.
+          Fixes bugzilla bug 2730. Thanks to Abdul for reporting
+          this.
+
 Mon Nov 27 15:41:12 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ciao/Deployment_Core.idl:
