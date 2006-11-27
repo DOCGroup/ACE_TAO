@@ -1,3 +1,10 @@
+Mon Nov 27 09:33:12 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * DAnCE/NodeManager/NodeManager_Impl.cpp:
+          Removed include of errno.h. It is not portable, but it seems
+          it isn't needed at all. Thanks to Abdul for reporting this,
+          this fixes bugzilla bug 2726.
+
 Mon Nov 27 08:59:12 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * docs/tutorials/Quoter:
