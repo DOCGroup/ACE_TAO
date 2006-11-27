@@ -89,19 +89,5 @@ module Deployment
   //         to prevent interoperability issues.
 
   typedef sequence<CIAO::CIAO_Event_Service> CIAO_Event_Services;
-
-  /// CIAO specific extension
-  /// This struct captures the installation information of a particular
-  /// CIAO_Event_Service, as defined in <ciaosvcs/Events/CIAO_Events.idl>
-  struct ESInstallationInfo
-  {
-    string id;
-    CIAO::EventServiceType type;
-    string svcconf;
-    //Properties es_config;
-  };
-
-  /// CIAO specific extension
-  typedef sequence<ESInstallationInfo> ESInstallationInfos;
 };
 #endif /* DEPLOYMENT_CORE_IDL */
