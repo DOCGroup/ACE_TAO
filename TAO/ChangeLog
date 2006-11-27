@@ -1,3 +1,25 @@
+Mon Nov 27 21:03:53 UTC 2006  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_visitor_typecode/struct_typecode.cpp:
+
+          - Cosmetic changes to source code, mostly addition of
+            braces around single-line IF bodies.
+
+          - Cosmetic changes to generated code, to keep line
+            lengths less than 80 characters.
+
+        * TAO_IDLbe/be_visitor_typecode/typecode_defn.cpp:
+
+          Changed check to tell if interface or valuetype members
+          are defined, and thus if they need a forward declared
+          typecode generated. This need for this change is a
+          consequence of recent changes in the way forward
+          declared interfaces and valuetypes are handled.
+
+        * TAO_IDLast/ast_interface_fwd.cpp:
+
+          Removed an unnecessary line of source code.
+
 Mon Nov 27 17:34:21 UTC 2006  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/include/utl_err.h:
