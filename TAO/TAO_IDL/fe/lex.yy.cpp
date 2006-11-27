@@ -2823,6 +2823,15 @@ idl_store_pragma (char *buf)
           number = ACE_OS::strchr (tmp, '\t');
         }
 
+      // Most likely this means there is only a version number
+      // without an identifier to apply it to.
+      if (number == 0)
+        {
+          char *msg = "no identifier or scoped name";
+          idl_global->err ()->version_syntax_error (msg);
+          return;
+        }
+
       while (*number == ' ' || *number == '\t')
         {
           ++number;
