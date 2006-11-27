@@ -1,3 +1,19 @@
+Mon Nov 27 17:34:21 UTC 2006  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/include/utl_err.h:
+        * TAO_IDL/fe/lex.yy.cpp:
+        * TAO_IDL/fe/idl.ll:
+        * TAO_IDL/util/utl_err.cpp:
+
+          Added error check in #pragma version parsing, and a new
+          error message to output if an error is found with this
+          check. Since the only related error that was checked
+          for and reported before was an invalid version number,
+          an additional case was needed for a more general syntax
+          error. Thanks to Johnny Willemsen <jwillemsen@remedy.nl>
+          for supplying the example IDL that caused a crash due
+          to the lack of this error checking.
+
 Mon Nov 27 14:46:18 UTC 2006  Vadym Ridosh <vridosh@prismtech.com>
 
         * tests/Bug_2709_Regression/Bug_2709_Regression.mpc
