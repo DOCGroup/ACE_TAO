@@ -13,7 +13,7 @@ Mon Nov 27 17:34:21 UTC 2006  Jeff Parsons <j.parsons@vanderbilt.edu>
           error. Thanks to Johnny Willemsen <jwillemsen@remedy.nl>
           for supplying the example IDL that caused a crash due
           to the lack of this error checking. This fix closes
-          {BUGID:2728].
+          [BUGID:2728].
 
 Mon Nov 27 14:46:18 UTC 2006  Vadym Ridosh <vridosh@prismtech.com>
 
