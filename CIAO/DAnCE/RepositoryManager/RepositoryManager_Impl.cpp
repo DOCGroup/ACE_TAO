@@ -42,7 +42,7 @@
 #include "ace/OS_NS_stdlib.h"     //for itoa ()
 
 #include "URL_Parser.h"           //for parsing the URL
-#include "HTTP_Client.h"          //the HTTP client class to downloading packages
+#include "tao/HTTP_Client.h"      //the HTTP client class to downloading packages
 
 #include "PC_Updater.h"           //A visitor class to walk through the elements of the PC
 
@@ -251,7 +251,7 @@ void CIAO_RepositoryManagerDaemon_i::installPackage (
     {
 
       //TODO: how can I incorporate a Auto_Ptr is explicit release is needed
-      ACE_Message_Block* mb;
+      ACE_Message_Block* mb = 0;
       ACE_NEW_THROW_EX (mb, ACE_Message_Block (), CORBA::INTERNAL ());
       ACE_CHECK_RETURN (0);
 
@@ -947,7 +947,7 @@ int CIAO_RepositoryManagerDaemon_i::HTTP_Get (const char* URL, ACE_Message_Block
     return 0;
 
     // Create a client
-    HTTP_Client client;
+    TAO_HTTP_Client client;
 
     // Open the client
     if (client.open (parser->filename_,
