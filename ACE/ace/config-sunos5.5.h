@@ -384,9 +384,9 @@
 # endif /* __GNUC_MINOR__ */
 #endif /* __GNUG__ */
 
-#if defined (i386)
+#if defined (i386) && (_FILE_OFFSET_BITS==32)
 # define ACE_HAS_X86_STAT_MACROS
-#endif /* i386 */
+#endif /* i386 && _FILE_OFFSET_BITS==32 */
 
 #define ACE_MALLOC_ALIGN 8
 #define ACE_LACKS_SETREUID_PROTOTYPE
