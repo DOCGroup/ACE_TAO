@@ -1,3 +1,9 @@
+Mon Nov 27 08:59:12 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * docs/tutorials/Quoter:
+          Extended this tutorial with more documentations. Thanks to
+          Abdul for delivering these files. This fixes bugzilla 2717
+
 Fri Nov 24 13:59:12 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * DAnCE/StaticConfigurator/StaticDAnCEParser.cpp:
