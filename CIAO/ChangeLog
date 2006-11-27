@@ -1,3 +1,40 @@
+Mon Nov 27 09:40:12 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * DAnCE/RepositoryManager/RepositoryManager_Impl.cpp
+          Instead of the http files in this library, use the HTTP
+          classes from the TAO lib
+
+        * DAnCE/RepositoryManager/HTTP_Client.cpp
+        * DAnCE/RepositoryManager/HTTP_Client.h
+        * DAnCE/RepositoryManager/HTTP_Handler.cpp
+        * DAnCE/RepositoryManager/HTTP_Handler.h
+          Removed, not needed anymore, these files did move to the TAO
+          lib to support http:// ior and we are reusing them now in
+          CIAO
+
+        * DAnCE/RepositoryManager/RepositoryManager.mpc
+          Removed the files above
+
+Mon Nov 27 09:36:12 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * DAnCE/NodeApplicationManager/Containers_Info_Map.cpp:
+          Instead of the http files in this library, use the HTTP
+          classes from the TAO lib
+
+        * DAnCE/NodeApplicationManager/URL_Parser.h:
+          Doxygen improvements
+
+        * DAnCE/NodeApplicationManager/HTTP_Client.cpp:
+        * DAnCE/NodeApplicationManager/HTTP_Client.h:
+        * DAnCE/NodeApplicationManager/HTTP_Handler.cpp:
+        * DAnCE/NodeApplicationManager/HTTP_Handler.h:
+          Removed, not needed anymore, these files did move to the TAO
+          lib to support http:// ior and we are reusing them now in
+          CIAO
+
+        * DAnCE/NodeApplicationManager/NodeApplicationManager.mpc:
+          Removed the files above
+
 Mon Nov 27 09:33:12 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * DAnCE/NodeManager/NodeManager_Impl.cpp:
