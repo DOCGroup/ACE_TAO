@@ -1,0 +1,14 @@
+Mon Nov 27 14:01:07 2006  Chris Cleeland  <cleeland_c@ociweb.com>
+
+	* bin/tao_orb_tests.lst:
+
+	  Add in Bug_2702_Regression test.
+	
+	* bin/auto_run_tests.pl:
+
+	  Change the search logic for listed tests so that the script
+	  "finds" tests even when the layout isn't using the "traditional"
+	  layout where $TAO_ROOT == $ACE_ROOT/TAO.
+
+	  
+
