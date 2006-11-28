@@ -1016,18 +1016,20 @@ AST_Decl::set_id_with_typeid (char *value)
   {
     case AST_Decl::NT_field:
       {
-        AST_Interface *iface =
-          AST_Interface::narrow_from_scope (this->defined_in ());
+        AST_Decl::NodeType nt =
+          ScopeAsDecl (this->defined_in ())->node_type ();
 
-        if (iface == 0 || iface->node_type () == AST_Decl::NT_valuetype == 0)
+        if (nt == AST_Decl::NT_valuetype || nt == AST_Decl::NT_eventtype)
+          {
+            break;
+          }
+        else
           {
             idl_global->err ()->error1 (UTL_Error::EIDL_INVALID_TYPEID,
                                         this);
 
             return;
           }
-
-        break;
       }
     case AST_Decl::NT_module:
     case AST_Decl::NT_interface:

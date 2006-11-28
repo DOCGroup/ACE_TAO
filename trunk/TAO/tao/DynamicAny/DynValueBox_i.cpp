@@ -25,7 +25,7 @@ TAO_DynValueBox_i::get_boxed_value (
       DynamicAny::DynAny::InvalidValue
     ))
 {
-  return 0;
+  ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (), 0);
 }
 
 void
@@ -39,6 +39,7 @@ TAO_DynValueBox_i::set_boxed_value (
       DynamicAny::DynAny::InvalidValue
     ))
 {
+  ACE_THROW (CORBA::NO_IMPLEMENT ());
 }
 
 DynamicAny::DynAny_ptr
@@ -50,7 +51,8 @@ TAO_DynValueBox_i::get_boxed_value_as_dyn_any (
       DynamicAny::DynAny::InvalidValue
     ))
 {
-  return DynamicAny::DynAny::_nil ();
+  ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (),
+                    DynamicAny::DynAny::_nil ());
 }
 
 void
@@ -63,6 +65,7 @@ TAO_DynValueBox_i::set_boxed_value_as_dyn_any (
       DynamicAny::DynAny::TypeMismatch
     ))
 {
+  ACE_THROW (CORBA::NO_IMPLEMENT ());
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL
