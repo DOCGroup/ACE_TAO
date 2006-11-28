@@ -1,3 +1,17 @@
+Tue Nov 28 16:54:36 UTC 2006  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/include/utl_err.h (version_syntax_error):
+        * TAO_IDL/fe/lex.yy.cpp (idl_store_pragma):
+        * TAO_IDL/fe/idl.ll (idl_store_pragma):
+        * TAO_IDL/util/utl_err.cpp (version_syntax_error):
+
+          Qualified the char* parameter in the signature of the
+          recently-added version_syntax_error() with 'const'. Also
+          qualified the char* arg passed to it in idl_store_pragma()
+          similarly, since the rhs of this arg initialization is
+          a string literal, and thus causes a warning on some
+          compilers.
+
 Tue Nov 28 13:46:55 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
 
         * configure.ac:
@@ -10,12 +24,12 @@ Tue Nov 28 13:46:55 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
           Regenerate to descend into new test subdirectories.
 
         * orbsvcs/tests/Event/UDP/Makefile.am:
-	* orbsvcs/tests/ImplRepo/Bug_2604_Regression/Makefile.am:
+  * orbsvcs/tests/ImplRepo/Bug_2604_Regression/Makefile.am:
 
           New files, Makefile.am's for newly supported unit tests.
 
         * orbsvcs/tests/Event/UDP/RtEC_UDP.mpc:
-	* orbsvcs/tests/ImplRepo/Bug_2604_Regression/Bug_2604.mpc:
+  * orbsvcs/tests/ImplRepo/Bug_2604_Regression/Bug_2604.mpc:
 
           Split out IDL generation into separate MPC project.
 
