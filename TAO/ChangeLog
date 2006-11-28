@@ -1,3 +1,153 @@
+Tue Nov 28 19:32:46 UTC 2006  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tao/AnyTypeCode/BasicTypeTraits.cpp:
+        * tao/AnyTypeCode/BasicTypeTraits.h:
+        * tao/AnyTypeCode/BasicTypeTraits_T.h:
+
+          New files, defining and specializing template
+          utiities for using Anys and typecodes with
+          IDL basic types.
+
+        * tao/AnyTypeCode.mpc:
+
+          Added new files described above.
+
+        * tao/DynamicAny/DynAnyUtils_T.h:
+
+          New file containing templatized code factored
+          out from the insert_* and get_* methods, and
+          using the AnyTypeCode utilities described above.
+          Also contains code factored out from 
+          DynAnyFactory methods.
+
+        * tao/DynamicAny/DynValue_i.cpp:
+        * tao/DynamicAny/DynAnyFactory.h:
+        * tao/DynamicAny/DynArray_i.cpp:
+        * tao/DynamicAny/DynCommon.cpp:
+        * tao/DynamicAny/DynStruct_i.cpp:
+        * tao/DynamicAny/DynCommon.h:
+        * tao/DynamicAny/DynValueBox_i.cpp:
+        * tao/DynamicAny/DynValueCommon_i.cpp:
+        * tao/DynamicAny/DynAny_i.cpp:
+        * tao/DynamicAny/DynUnion_i.cpp:
+        * tao/DynamicAny/DynUnion_i.h:
+        * tao/DynamicAny/DynAnyFactory.cpp:
+        * tao/DynamicAny/DynSequence_i.cpp:
+
+          - Added implementations of get_*_seq()
+            and insert_*_seq(), spec-defined
+            methods for each IDL basic type.
+
+          - Added implementation of insert_abstract()
+            and get_abstract().
+
+          - Factored out code from existing insert_*
+            and get_* methods to templatized
+            utility code described above.
+
+          - Factored out code from DynAnyFactory
+            methods similarly.
+
+          - Fixed bug in get_reference() and get_val()
+            that (incorrectly) took ownership of the
+            dynamic any's contents. Thanks to Phil
+            Mesnier <mesnier_p@ociweb.com> for
+            reporting the bug.
+          
+        * tao/Valuetype/AbstractBase.h:
+        * tao/Valuetype/AbstractBase.cpp:
+
+          Added declaration and definition of typecode
+          for AbstractBase.
+
+        * tao/Valuetype/ValueBase.h:
+        * tao/Valuetype/ValueBase.cpp:
+
+          Added virtual _tao_type() method that returns
+          the associated typecode polymorphically. This
+          method is a TAO extension, and is for internal
+          use only (currently used in Any insertion
+          operators for valuetypes - see below). It
+          does not make a copy.
+
+        * docs/dynany/index.html:
+
+          Updated documentation to include the changes
+          described above.
+
+        * tests/DynAny_Test/test_dynstruct.cpp:
+        * tests/DynAny_Test/test_dynany.cpp:
+        * tests/DynAny_Test/test_dynunion.cpp:
+        * tests/DynAny_Test/data.cpp:
+        * tests/DynAny_Test/data.h:
+        * tests/DynAny_Test/test_dynenum.cpp:
+        * tests/DynAny_Test/test_dynsequence.cpp:
+        * tests/DynAny_Test/analyzer.cpp:
+        * tests/DynAny_Test/test_dynarray.cpp:
+        * tests/DynAny_Test/analyzer.h:
+        * tests/DynAny_Test/driver.cpp:
+        * tests/DynAny_Test/da_tests.idl:
+
+          Updated tests to cover some of the new Dynamic Any
+          methods described above.
+
+        * orbsvcs/orbsvcs/Log/Log_Constraint_Visitors.cpp:
+
+          Changed code that uses DynamicAnyFactory method,
+          a consequence of the refactoring in Dynamic Any
+          described above.
+
+        * TAO_IDL/be/be_visitor_typecode/typecode_defn.cpp:
+        * TAO_IDL/be/be_visitor_arg_traits.cpp:
+        * TAO_IDL/be/be_visitor_operation/operation.cpp:
+        * TAO_IDL/be/be_visitor_sequence/serializer_op_cs.cpp:
+        * TAO_IDL/be/be_visitor_array/cdr_op_cs.cpp:
+        * TAO_IDL/be/be_visitor_array/serializer_op_cs.cpp:
+        * TAO_IDL/be/be_visitor_valuebox/valuebox_ch.cpp:
+        * TAO_IDL/be/be_visitor_valuebox/valuebox_cs.cpp:
+        * TAO_IDL/be/be_visitor_valuetype/valuetype_cs.cpp:
+        * TAO_IDL/be/be_visitor_valuetype/any_op_cs.cpp:
+        * TAO_IDL/be/be_visitor_valuetype/valuetype_ch.cpp:
+        * TAO_IDL/be/be_visitor_field/field_ch.cpp:
+        * TAO_IDL/be/be_interface.cpp:
+        * TAO_IDL/ast/ast_interface.cpp:
+        * TAO_IDL/ast/ast_interface_fwd.cpp:
+        * TAO_IDL/ast/ast_decl.cpp:
+        * TAO_IDL/fe/lex.yy.cpp:.diff:
+        * TAO_IDL/fe/y.tab.cpp:
+        * TAO_IDL/fe/idl.yy:
+        * TAO_IDL/fe/lex.yy.cpp:
+        * TAO_IDL/fe/idl.ll:
+
+          - Fixed bugs in code generation for eventtypes. Thanks
+            to Ming Xiong <mxiong@dre.vanderbilt.edu> for 
+            reporting a problem with anonymous sequence eventtype
+            members that led to the discovery of the other
+            inconsistencies.
+
+          - Added patches to the lex file and to the corresponding
+            generated C++ file that (1) corrects inconsistencies
+            between these two files and (2) fixes problems with
+            the SunCC preprocessor. Also patched the corresponding
+            lex.yy.cpp.diff file. Thanks to Chad Elliott
+            <elliott_c@ociweb.com> for supplying the patches.
+
+          - Added generation of virtual _tao_type() method for
+            valuetypes (and eventtypes), as well as use of this
+            method in the corresponding Any insertion operators.
+            These changes make Any insertion completely polymorphic
+            for valuetypes and eventtypes. These changes include
+            boxed valuetypes.
+
+          - Fixed a bug in the handling of #pragma prefix directives
+            when they occur before included IDL files. Thanks to
+            Viola Wang <vwang@eso.org> for reporting the problem.
+            This change closes [BUGID:2714].
+          
+        * NEWS:
+
+          Added items listing the new Dynamic Any methods.
+
 Tue Nov 28 17:01:44 UTC 2006  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * tao/TAO_Internal.cpp:

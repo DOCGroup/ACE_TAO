@@ -285,7 +285,9 @@ be_visitor_typecode_defn::is_typecode_generation_required (be_type * node)
   if (nt == AST_Decl::NT_interface
       || nt == AST_Decl::NT_interface_fwd
       || nt == AST_Decl::NT_valuetype
-      || nt == AST_Decl::NT_valuetype_fwd)
+      || nt == AST_Decl::NT_valuetype_fwd
+      || nt == AST_Decl::NT_eventtype
+      || nt == AST_Decl::NT_eventtype_fwd)
     {
       // Since all fwd decl 'full definition' members aren't updated when
       // the full definition is seen, we need to make sure we have the

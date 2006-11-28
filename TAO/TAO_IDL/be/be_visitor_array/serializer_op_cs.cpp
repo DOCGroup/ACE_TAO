@@ -1047,7 +1047,10 @@ be_visitor_array_serializer_op_cs::visit_node (be_type *bt)
                 case AST_Decl::NT_string:
                 case AST_Decl::NT_wstring:
                 case AST_Decl::NT_valuetype:
+                case AST_Decl::NT_eventtype:
+                case AST_Decl::NT_eventtype_fwd:
                 case AST_Decl::NT_valuetype_fwd:
+                case AST_Decl::NT_valuebox:
                   *os << ".out ()";
                   break;
                 case AST_Decl::NT_pre_defined:
@@ -1156,7 +1159,10 @@ be_visitor_array_serializer_op_cs::visit_node (be_type *bt)
                 case AST_Decl::NT_string:
                 case AST_Decl::NT_wstring:
                 case AST_Decl::NT_valuetype:
+                case AST_Decl::NT_eventtype:
+                case AST_Decl::NT_eventtype_fwd:
                 case AST_Decl::NT_valuetype_fwd:
+                case AST_Decl::NT_valuebox:
                   *os << ".in ()";
                   break;
                 case AST_Decl::NT_pre_defined:

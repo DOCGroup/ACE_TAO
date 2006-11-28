@@ -11,6 +11,7 @@
 //=============================================================================
 
 #include "tao/AnyTypeCode/AnyTypeCode_methods.h"
+#include "tao/AnyTypeCode/ShortSeqA.h"
 #include "tao/DynamicAny/DynamicAny.h"
 
 #include "test_dynany.h"
@@ -68,7 +69,9 @@ Test_DynAny::run_test (void)
                             -1);
         }
 
-      DynAnyAnalyzer analyzer(this->orb_.in(), dynany_factory.in(), debug_);
+      DynAnyAnalyzer analyzer (this->orb_.in (),
+                               dynany_factory.in (),
+                               debug_);
 
       CORBA::Any in1;
       in1 <<= data.m_double2;
@@ -80,7 +83,8 @@ Test_DynAny::run_test (void)
                           ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      CORBA::Double d_out = fa1->get_double (ACE_ENV_SINGLE_ARG_PARAMETER);
+      CORBA::Double d_out =
+        fa1->get_double (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (d_out == data.m_double1)
@@ -106,7 +110,7 @@ Test_DynAny::run_test (void)
       ftc1->from_any (in_any1
                       ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
-      analyzer.analyze(ftc1.in() ACE_ENV_ARG_PARAMETER);
+      analyzer.analyze (ftc1.in() ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
       CORBA::Any_var out_any1 = ftc1->to_any (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
@@ -143,7 +147,8 @@ Test_DynAny::run_test (void)
       fa2->insert_typecode (data.m_typecode1
                             ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
-      CORBA::TypeCode_var tc_out = fa2->get_typecode (ACE_ENV_SINGLE_ARG_PARAMETER);
+      CORBA::TypeCode_var tc_out =
+        fa2->get_typecode (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (tc_out->equal (data.m_typecode1
@@ -171,7 +176,7 @@ Test_DynAny::run_test (void)
       ftc2->from_any (in_any2
                       ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
-      analyzer.analyze(ftc2.in() ACE_ENV_ARG_PARAMETER);
+      analyzer.analyze (ftc2.in() ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
       CORBA::Any_var out_any2 = ftc2->to_any (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
@@ -197,6 +202,107 @@ Test_DynAny::run_test (void)
       fa2->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
       ftc2->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+      
+      ACE_DEBUG ((LM_DEBUG,
+                 "\t*=*=*=*= %s =*=*=*=*\n",
+                 data.labels[16]));
+
+      ACE_DEBUG ((LM_DEBUG,
+                 "testing: constructor(Any)/insert/get\n"));
+
+      CORBA::Any in3;
+      CORBA::ShortSeq ss;
+      ss.length (0UL);
+      in3 <<= ss;
+      DynamicAny::DynAny_var fa3 =
+        dynany_factory->create_dyn_any (in3
+                                        ACE_ENV_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+      fa3->insert_short_seq (data.m_shortseq1
+                             ACE_ENV_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+      data.m_shortseq2 =
+        fa3->get_short_seq (ACE_ENV_SINGLE_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+      
+      bool good =
+        data.m_shortseq2->length () == data.m_shortseq1.length ();
+        
+      if (good)
+        {
+          for (CORBA::ULong i = 0; i < data.m_shortseq1.length (); ++i)
+            {
+              if (data.m_shortseq2[i] != data.m_shortseq1[i])
+                {
+                  good = false;
+                  break;
+                }
+            }
+        }
+
+     if (good)
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                     "++ OK ++\n"));
+        }
+      else
+        {
+          ++this->error_count_;
+        }
+
+      ACE_TRY_CHECK;
+
+      ACE_DEBUG ((LM_DEBUG,
+                 "testing: constructor(TypeCode)/from_any/to_any\n"));
+
+      DynamicAny::DynAny_var ftc3 =
+        dynany_factory->create_dyn_any_from_type_code (CORBA::_tc_ShortSeq
+                                                       ACE_ENV_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+      CORBA::Any in_any3;
+      in_any3 <<= data.m_shortseq1;
+      ftc3->from_any (in_any3
+                      ACE_ENV_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+      analyzer.analyze (ftc3.in () ACE_ENV_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+      CORBA::Any_var out_any3 = ftc3->to_any (ACE_ENV_SINGLE_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+      
+      CORBA::ShortSeq *outseq = 0;
+      out_any3.in () >>= outseq;
+
+      good =
+        outseq->length () == data.m_shortseq1.length ();
+        
+      if (good)
+        {
+          for (CORBA::ULong i = 0; i < data.m_shortseq1.length (); ++i)
+            {
+              if ((*outseq)[i] != data.m_shortseq1[i])
+                {
+                  good = false;
+                  break;
+                }
+            }
+        }
+
+      if (good)
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                     "++ OK ++\n"));
+        }
+      else
+        {
+          ++this->error_count_;
+        }
+
+      ACE_TRY_CHECK;
+
+      fa3->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+      ftc3->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
   ACE_CATCHANY

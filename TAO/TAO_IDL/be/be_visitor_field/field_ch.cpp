@@ -343,7 +343,9 @@ be_visitor_field_ch::visit_sequence (be_sequence *node)
       // If we are being reused by valutype, this would get generated
       // in the private section of the OBV_xx class, so we must
       // generate the typedef for that case elsewhere.
-      if (this->ctx_->scope ()->node_type () != AST_Decl::NT_valuetype)
+      AST_Decl::NodeType snt = this->ctx_->scope ()->node_type ();
+      
+      if (snt != AST_Decl::NT_valuetype && snt != AST_Decl::NT_eventtype)
         {
           // Generate the anonymous sequence member typedef.
           be_decl *bs = this->ctx_->scope ();
