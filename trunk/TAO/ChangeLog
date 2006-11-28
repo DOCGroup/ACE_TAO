@@ -1,3 +1,14 @@
+Tue Nov 28 22:44:08 UTC 2006  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tao/DynamicAny/DynStruct_i.cpp:
+
+          Fixed typo (case error) in #include directive.
+
+        * tao/AnyTypeCode/BasicTypeTraits.h:
+
+          Replace forward declaration of enum TCKind with #include of
+          tao/Typecode_typesC.h to eliminate gcc complaints.
+
 Tue Nov 28 22:17:08 UTC 2006  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tao/AnyTypeCode/BasicTypeTraits_T.h:
