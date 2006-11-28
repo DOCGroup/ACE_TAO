@@ -1,3 +1,14 @@
+Tue Nov 28 17:01:44 UTC 2006  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * tao/TAO_Internal.cpp:
+          Fix to restore processing of the -ORBNegotiateCodesets 1
+          option.
+
+        * tests/Oneway_Timeouts/client.cpp:
+          Reimplement the timeout evaluation to avoid the use of
+          std::abs() as that function is not available on 64-bit windows
+          builds using the intel c++ compiler with VC 7.1 IDE.
+
 Tue Nov 28 16:54:36 UTC 2006  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/include/utl_err.h (version_syntax_error):
@@ -844,4 +855,3 @@ mode: change-log
 add-log-time-format: (lambda () (progn (setq tz (getenv "TZ")) (set-time-zone-rule "UTC") (setq time (format-time-string "%a %b %e %H:%M:%S %Z %Y" (current-time))) (set-time-zone-rule tz) time))
 indent-tabs-mode: nil
 End:
-
