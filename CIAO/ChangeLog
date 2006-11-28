@@ -1,3 +1,8 @@
+Tue Nov 28 21:38:12 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * DAnCE/RTNodeApplication:
+          Zapped, not used anymore
+
 Tue Nov 28 19:33:12 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ciao/Deployment_DomainApplicationManager.idl:
