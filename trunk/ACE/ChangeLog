@@ -1,3 +1,10 @@
+Tue Nov 28 09:53:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/MakeProjectCreator/config/ciao_client_dnc.mpb:
+        * bin/MakeProjectCreator/config/ciao_events_dnc.mpb:
+          Removed security as base, for the moment we decoupled from
+          the security service.
+
 Tue Nov 28 00:28:28 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
 
         * protocols/tests/HTBP/htbptest.mpb:
