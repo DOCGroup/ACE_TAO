@@ -1,3 +1,9 @@
+Tue Nov 28 21:00:28 UTC 2006  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/fe/lex.yy.cpp.diff:
+        
+          Applied patch sent by Chad Elliott <elliott_c@ociweb.com>.
+
 Tue Nov 28 20:03:21 UTC 2006  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * orbsvcs/tests/ImplRepo/run_test.pl:
