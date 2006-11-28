@@ -1,8 +1,51 @@
+Tue Nov 28 19:33:12 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ciao/Deployment_DomainApplicationManager.idl:
+          Added comments about more details which are not compliant according
+          to the spec
+
+        * DAnCE/DomainApplicationManager/Deployment_Configuration.cpp:
+          Use native bool instead of int
+
+        * DAnCE/DomainApplicationManager/DomainApplicationManager_Impl.h:
+          Reordered includes and improved doxygen documentation
+
+        * DAnCE/NodeApplication/NodeApplication_Impl.cpp:
+          Const changes, use ACE_ERROR for error messages
+
+        * DAnCE/NodeManager/CIAO_Monitor.cpp:
+          Const changes, use more ACE and little cleanup
+
+        * DAnCE/NodeManager/CIAO_Monitor.h:
+          Doxygen improvement
+
+        * DAnCE/NodeManager/MonitorCB.cpp:
+          Code layout changes
+
+        * DAnCE/NodeManager/MonitorCB.h:
+          Doxygen changes and added some todo's
+
+        * DAnCE/NodeManager/MonitorController.cpp:
+          Use bool and small improvements
+
+        * DAnCE/NodeManager/Node_Manager.cpp:
+          Use the correct value for the lenght of the buffer passed
+          to hostname
+
+        * DAnCE/NodeManager/NodeManager_Impl.cpp:
+          Small improvements and added some todo's
+
+        * DAnCE/Plan_Launcher/Plan_Launcher.cpp:
+          Cleanup
+
+        * DAnCE/Plan_Launcher/Plan_Launcher_Impl.cpp:
+          Made some debug lines dependent on a debug level
+
 Tue Nov 28 16:11:32 UTC 2006  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * tools/Config_Handlers/Package_Handlers/Package_Handlers.mpc
         * DAnCE/NodeManager/Monitor.mpc
-        
+
           Fixes for link errors in OS X.
 
 Tue Nov 28 11:45:12 2006  Johnny Willemsen  <jwillemsen@remedy.nl>

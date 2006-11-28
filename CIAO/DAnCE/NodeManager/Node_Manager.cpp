@@ -251,7 +251,7 @@ main (int argc, char *argv[])
         {
           char name [MAXHOSTNAMELEN + 1];
 
-          if (ACE_OS::hostname (name, 100) == -1)
+          if (ACE_OS::hostname (name, MAXHOSTNAMELEN + 1) == -1)
             {
               ACE_ERROR ((LM_ERROR,
                           "gethostname call failed! \n"));

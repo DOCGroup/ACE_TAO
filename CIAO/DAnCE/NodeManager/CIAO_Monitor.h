@@ -45,8 +45,8 @@ namespace CIAO
 
     /** @function initialize_params
      *  @param domain The Initial Domain for this host
-     *  @param   target_manager TargetManager_ptr
-     *  @param   interval The time interval after whic updates need to be send.
+     *  @param target_manager TargetManager_ptr
+     *  @param interval The time interval after whic updates need to be send.
      *  @description This function is called by the controller to initialize
      *               parameters.
      */

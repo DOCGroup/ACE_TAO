@@ -10,9 +10,13 @@ module Deployment {
   /// CIAO 's DomainApplicationManager interface differs spec-defined interface
   /// in the same that it also integrates the spec-defined interface for
   /// DomainApplication into itself
+  /// This should be derived from ApplicationManager
   interface DomainApplicationManager
   {
     DeploymentPlan getPlan ();
+
+    /// This method is missing from CIAO but in the spec
+    /// Applications getApplications ();
 
     /// CIAO specific version of startLaunch implementation, this one
     /// differs with spec-defined operation in the sense that it doesn't
@@ -20,10 +24,12 @@ module Deployment {
     void startLaunch (in Properties configProperty, in boolean start)
       raises (ResourceNotAvailable, StartError, InvalidProperty);
 
+    /// This method has CIAO specific arguments and is not spec compliant
     void finishLaunch (in boolean start,
                        in boolean is_ReDAC)
       raises (StartError, InvalidConnection);
 
+    /// CIAO specific extension
     void start ()
       raises (StartError);
 
