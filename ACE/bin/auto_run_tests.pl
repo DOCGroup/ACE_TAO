@@ -130,7 +130,7 @@ foreach my $test_lst (@file_list) {
         }
 
         if (!$status) {
-          print STDERR "ERROR: Cannot chdir to $ACE_ROOT/$directory";
+          print STDERR "ERROR: Cannot chdir to $ACE_ROOT/$directory\n";
           next;
         }
 
