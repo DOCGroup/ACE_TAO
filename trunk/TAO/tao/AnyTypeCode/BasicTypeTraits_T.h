@@ -39,3 +39,4 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 #include /**/ "ace/post.h"
 
 #endif /* BASIC_TYPE_TRAITS_T_H */
+
