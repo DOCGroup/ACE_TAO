@@ -74,7 +74,7 @@ project (CIAO_DnC_Client) : taolib_with_idl, valuetype, ifr_client {
   }
 }
 
-project (CIAO_DnC_Container) : orbsvcslib, portableserver, security, valuetype, ifr_client, codecfactory, pi, ciao_client_dnc {
+project (CIAO_DnC_Container) : orbsvcslib, portableserver, valuetype, ifr_client, codecfactory, pi, ciao_client_dnc {
   sharedname  = CIAO_DnC_Container
   idlflags   += -Wb,export_include=CIAO_Container_Export.h
   idlflags   += -Wb,export_macro=CIAO_CONTAINER_Export
@@ -86,6 +86,7 @@ project (CIAO_DnC_Container) : orbsvcslib, portableserver, security, valuetype, 
   IDL_Files {
     idlflags += -SS -Sci
     CCM_Context.idl
+    Security.idl
     CCM_CCMException.idl
     CCM_EntityComponent.idl
     CCM_EntityContext.idl
@@ -116,6 +117,7 @@ project (CIAO_DnC_Container) : orbsvcslib, portableserver, security, valuetype, 
     CCM_SessionSynchronizationC.cpp
     CCM_CCMExceptionC.cpp
     CCM_ContextC.cpp
+    SecurityC.cpp
     CCM_Container_ExC.cpp
     CCM_ProxyHomeRegistrationC.cpp
     CCM_Session2ContextC.cpp
@@ -251,7 +253,7 @@ project(Deployment_svnt) : taolib_with_idl, portableserver, valuetype, ifr_clien
 
 }
 
-project (CIAO_DnC_Server) : orbsvcslib, portableserver, valuetype, naming, ifr_client, utils, security, ciao_container_dnc, ciao_client_dnc, ciao_deployment_svnt {
+project (CIAO_DnC_Server) : orbsvcslib, portableserver, valuetype, naming, ifr_client, utils, ciao_container_dnc, ciao_client_dnc, ciao_deployment_svnt {
   includes     += $(CIAO_ROOT)/ciao
   includes     += $(CIAO_ROOT)
   sharedname   =  CIAO_DnC_Server
