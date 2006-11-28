@@ -103,8 +103,7 @@ ZIP_Wrapper = 0
 
 // Feature for CORBA subsets
 corba_e_compact = 0
-corba_e_micro = 0
-minimum_corba = 0
+corba_e_micro   = 0
 
 // Option to disable iiop
 tao_no_iiop = 0
