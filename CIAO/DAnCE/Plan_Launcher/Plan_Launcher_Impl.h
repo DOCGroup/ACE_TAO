@@ -10,7 +10,6 @@
 #define PLAN_LAUNCHER_IMPL_H
 
 #include "Plan_Launcher_Impl_Export.h"
-#include "ciao/DeploymentS.h"
 #include "ciao/CIAO_common.h"
 #include "DAnCE/ExecutionManager/DAM_Map.h"
 #include "DAnCE/Interfaces/ExecutionManagerDaemonC.h"
@@ -33,7 +32,7 @@ namespace CIAO
           : error_ (error)
         {
         }
-        
+
         ACE_CString error_;
       };
 
@@ -50,7 +49,7 @@ namespace CIAO
       /**
        * @fn launch_plan
        * @brief Launch a plan, given a deployment plan URI
-       * @param plan_uri A uri that points ot a valid deployment plan
+       * @param deployment_plan_uri A uri that points ot a valid deployment plan
        * @returns a string containing the UUID of the plan. Null indicates failure.
        */
       const char * launch_plan (const char *deployment_plan_uri,
