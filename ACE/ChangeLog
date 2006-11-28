@@ -1,3 +1,14 @@
+Tue Nov 28 21:02:25 UTC 2006  Steve Huston  <shuston@riverace.com>
+
+        * ace/WIN32_Asynch_IO.cpp (ACE_WIN32_Asynch_Connect::post_result):
+          The 'result' pointer is invalid upon return from post_completion()
+          regardless of whether or not it succeeds. This fix prevents
+          dereferencing result on failure of post_completion(), such as at
+          proactor shutdown. Thank you to Ken Kane <kenneth dot kane at
+          ironmountain dot com> for the analysis and fix.
+
+        * THANKS: Updated Ken Kane's email address.
+
 Tue Nov 28 20:36:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/auto_run_tests.pl:
