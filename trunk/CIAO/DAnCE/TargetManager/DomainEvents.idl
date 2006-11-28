@@ -9,7 +9,7 @@
 #define DOMAIN_CHANGE_IDL
 
 #include "ciao/Deployment_TargetData.idl"
-#include "ciao/TargetManager.idl"
+#include "ciao/Deployment_TargetManager.idl"
 #include "ciao/CCM_Event.idl"
 
 module CIAO

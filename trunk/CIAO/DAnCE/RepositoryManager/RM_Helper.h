@@ -19,9 +19,9 @@
 #define RM_HELPER_H_
 
 
-#include "ciao/Packaging_DataC.h"    //for the PackageConfiguration declaration
-#include "tao/CDR.h"                 //for TAO CDR classes
-#include "ace/Message_Block.h"      //for ACE_Message_Block
+#include "ciao/Deployment_Packaging_DataC.h"
+#include "tao/CDR.h"
+#include "ace/Message_Block.h"
 
 
 class RM_Helper

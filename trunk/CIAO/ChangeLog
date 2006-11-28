@@ -1,3 +1,12 @@
+Tue Nov 28 10:42:12 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ciao/*:
+        * *:
+          Renamed a lot of idl files, if the file contains interfaces/types
+          from the DAnCE spec, added Deployment_ as prefix, if they are
+          containing CIAO specific interfaces, added CIAO_. This way we can
+          more easily see if we have spec compliant IDL or not.
+
 Tue Nov 28 09:50:12 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ciao/CCM_Home.idl:

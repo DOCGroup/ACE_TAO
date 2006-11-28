@@ -13,7 +13,7 @@
 
 
 #include "ciao/Components.idl"
-#include "ciao/Target_Data.idl"
+#include "ciao/Deployment_Target_Data.idl"
 #include "TargetManagerExt.idl"
 
 #include "DomainEvents.idl"

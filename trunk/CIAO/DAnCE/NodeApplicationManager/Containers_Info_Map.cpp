@@ -3,6 +3,7 @@
 #include "Containers_Info_Map.h"
 #include "ciao/CIAO_Config.h"
 #include "ciao/CIAO_common.h"
+#include "ciao/CIAO_ServerResourcesC.h"
 
 //Added for HTTP
 #include "URL_Parser.h"              //for parsing the URL

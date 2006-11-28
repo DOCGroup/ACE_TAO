@@ -1,7 +1,7 @@
 /**
  * $Id$
  * @file Plan_Generator_Impl.h
- * @author Shanshan Jiang <shanshan.jiang@vanderbilt.edu> 
+ * @author Shanshan Jiang <shanshan.jiang@vanderbilt.edu>
  *
  * Contains the Plan_Generator_i class, which can be used to generate/modify
  * DeploymentPlans.
@@ -10,7 +10,7 @@
 #ifndef PLAN_GENERATOR_IMPL_H
 #define PLAN_GENERATOR_IMPL_H
 
-#include "ciao/RepositoryManagerC.h"
+#include "ciao/Deployment_RepositoryManagerC.h"
 #include "Plan_Generator_Impl_Export.h"
 
 namespace CIAO
@@ -53,7 +53,7 @@ namespace CIAO
       bool generate_plan (Deployment::DeploymentPlan &plan,
                           const char *package_uri,
                           bool use_package_name);
-      
+
       /**
        * @fn generate_plan
        * @brief Use the specific type of a package to get the PackageConfiguration

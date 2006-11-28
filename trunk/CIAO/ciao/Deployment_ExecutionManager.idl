@@ -3,7 +3,7 @@
 #define EXECUTIONMANAGER_IDL
 
 #include "Deployment.idl"
-#include "DomainApplicationManager.idl"
+#include "Deployment_DomainApplicationManager.idl"
 
 module Deployment {
   interface ExecutionManager {

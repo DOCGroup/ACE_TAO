@@ -3,7 +3,6 @@
 #include "OC_Handler.h"
 #include "OR_Handler.h"
 #include "PS_Handler.h"
-#include "ciao/ServerResourcesC.h"
 #include "CIAOServerResources.hpp"
 
 namespace CIAO

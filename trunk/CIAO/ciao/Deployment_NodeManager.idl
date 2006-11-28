@@ -4,7 +4,7 @@
 
 #include "Deployment.idl"
 #include "Deployment_Core.idl"
-#include "TargetManager.idl"
+#include "Deployment_TargetManager.idl"
 
 module Deployment {
 

@@ -1,9 +1,6 @@
 // $Id$
 
 #include "RM_Helper.h"
-#include "ciao/Packaging_DataC.h"    //for the PackageConfiguration declaration
-#include "tao/CDR.h"                 //for TAO CDR classes
-#include "ace/Message_Block.h"       //for ACE_Message_Block
 #include "ace/Auto_Ptr.h"            //for Auto_Ptr
 #include "ace/OS_NS_fcntl.h"         //for open
 #include "ace/OS_NS_unistd.h"        //for close
