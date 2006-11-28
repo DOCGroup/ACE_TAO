@@ -2,7 +2,7 @@
 
 #include "tao/DynamicAny/DynStruct_i.h"
 #include "tao/DynamicAny/DynAnyFactory.h"
-#include "tao/Dynamicany/DynAnyUtils_T.h"
+#include "tao/DynamicAny/DynAnyUtils_T.h"
 
 #include "tao/AnyTypeCode/Marshal.h"
 #include "tao/AnyTypeCode/Any_Unknown_IDL_Type.h"
@@ -13,7 +13,6 @@
 ACE_RCSID (DynamicAny,
            DynStruct_i,
            "$Id$")
-
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
