@@ -485,8 +485,8 @@ int main (int ac, char *av[])
               ms = num_requests_sent * request_interval;
             }
 
-          if (std::abs (static_cast<int>(ms - connect_timeout))
-              > TIME_THRESHOLD)
+          if (ms - connect_timeout > TIME_THRESHOLD ||
+              connect_timeout - ms > TIME_THRESHOLD)
             {
               ACE_ERROR_RETURN ((LM_ERROR,
                                  "Error: Timeout expected in %d ms, "
@@ -526,8 +526,8 @@ int main (int ac, char *av[])
               ms = num_requests_sent * request_interval;
             }
 
-          if (std::abs (static_cast<int>(ms - connect_timeout))
-              > TIME_THRESHOLD)
+          if (ms - connect_timeout > TIME_THRESHOLD ||
+              connect_timeout - ms > TIME_THRESHOLD)
             {
               ACE_ERROR_RETURN ((LM_ERROR,
                                  "Error: Timeout expected in %d ms, "
