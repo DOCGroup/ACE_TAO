@@ -471,6 +471,7 @@ if test $tao_build_tests = yes; then
     orbsvcs/tests/Event/Mcast/Two_Way/Makefile
     orbsvcs/tests/Event/Performance/Makefile
     orbsvcs/tests/Event/ThreadFlags/Makefile
+    orbsvcs/tests/Event/UDP/Makefile
     orbsvcs/tests/Event/lib/Makefile
     orbsvcs/tests/FT_App/Makefile
     orbsvcs/tests/FaultTolerance/GroupRef_Manipulation/Makefile
@@ -484,6 +485,7 @@ if test $tao_build_tests = yes; then
     orbsvcs/tests/HTIOP/Makefile
     orbsvcs/tests/IOR_MCast/Makefile
     orbsvcs/tests/ImplRepo/Makefile
+    orbsvcs/tests/ImplRepo/Bug_2604_Regression/Makefile
     orbsvcs/tests/ImplRepo/NameService/Makefile
     orbsvcs/tests/ImplRepo/scale/Makefile
     orbsvcs/tests/InterfaceRepo/Application_Test/Makefile
