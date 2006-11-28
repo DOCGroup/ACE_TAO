@@ -14,6 +14,7 @@ project : taolib, core, extra_anytypecode, tao_versioning_idl_defaults {
     AnyTypeCode/Any_Unknown_IDL_Type.cpp
     AnyTypeCode/AnyTypeCode_Adapter_Impl.cpp
     AnyTypeCode/append.cpp
+    AnyTypeCode/BasicTypeTraits.cpp
     AnyTypeCode/BooleanSeqA.cpp
     AnyTypeCode/BoundsA.cpp
     AnyTypeCode/BoundsC.cpp

@@ -1196,7 +1196,7 @@ AST_Interface::redef_clash_populate_r (AST_Interface *t)
 
   AST_Decl::NodeType nt = t->node_type ();
 
-  if (nt == AST_Decl::NT_valuetype)
+  if (nt == AST_Decl::NT_valuetype || nt == AST_Decl::NT_eventtype)
     {
       AST_ValueType *v = AST_ValueType::narrow_from_decl (t);
       AST_Interface **supports = v->supports ();

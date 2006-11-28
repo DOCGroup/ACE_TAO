@@ -102,8 +102,12 @@ be_interface::be_interface (UTL_ScopedName *n,
 {
   ACE_NEW (this->strategy_,
            be_interface_default_strategy (this));
+           
+  AST_Decl::NodeType nt = this->node_type ();
 
-  if (this->imported () || this->node_type () == AST_Decl::NT_valuetype)
+  if (this->imported ()
+      || nt == AST_Decl::NT_valuetype
+      || nt == AST_Decl::NT_eventtype)
     {
       return ;
     }

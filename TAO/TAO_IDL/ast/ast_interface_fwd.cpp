@@ -116,9 +116,11 @@ AST_InterfaceFwd::is_local (void)
   return this->full_definition ()->is_local ();
 }
 
-bool AST_InterfaceFwd::is_valuetype (void)
+bool
+AST_InterfaceFwd::is_valuetype (void)
 {
-  return this->full_definition ()->node_type () == AST_Decl::NT_valuetype;
+  AST_Decl::NodeType nt = this->full_definition ()->node_type ();
+  return nt == AST_Decl::NT_valuetype || nt == AST_Decl::NT_eventtype;
 }
 
 bool

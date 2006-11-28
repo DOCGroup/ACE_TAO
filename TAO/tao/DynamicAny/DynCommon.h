@@ -682,6 +682,35 @@ public:
         CORBA::SystemException
       ));
 
+  // Utility functions.
+
+  DynamicAny::DynAny_ptr check_component (ACE_ENV_SINGLE_ARG_DECL)
+    ACE_THROW_SPEC ((
+        CORBA::SystemException,
+        DynamicAny::DynAny::TypeMismatch,
+        DynamicAny::DynAny::InvalidValue
+      ));
+      
+  void check_type (CORBA::TypeCode_ptr tc
+                   ACE_ENV_ARG_DECL)
+    ACE_THROW_SPEC ((
+        CORBA::SystemException,
+        DynamicAny::DynAny::TypeMismatch
+      ));
+      
+  static bool is_basic_type_seq (CORBA::TypeCode_ptr tc);
+
+  // Accessors
+  
+  const CORBA::Boolean has_components (void) const;
+  const CORBA::Boolean destroyed (void) const;
+  CORBA::Any &the_any (void);
+  
+  // Mutators
+  
+  void container_is_destroying (CORBA::Boolean val);
+  void ref_to_component (CORBA::Boolean val);
+
 protected:
   /// Were we created by current_component()?
   CORBA::Boolean ref_to_component_;
@@ -710,20 +739,6 @@ protected:
 
 private:
   // Utility functions used by insert_* and get_*.
-
-  DynamicAny::DynAny_ptr check_component (ACE_ENV_SINGLE_ARG_DECL)
-    ACE_THROW_SPEC ((
-        CORBA::SystemException,
-        DynamicAny::DynAny::TypeMismatch,
-        DynamicAny::DynAny::InvalidValue
-      ));
-
-  void check_type (CORBA::TypeCode_ptr tc
-                   ACE_ENV_ARG_DECL)
-    ACE_THROW_SPEC ((
-        CORBA::SystemException,
-        DynamicAny::DynAny::TypeMismatch
-      ));
 
   CORBA::TypeCode_ptr check_type_and_unalias (CORBA::TypeCode_ptr tc
                                               ACE_ENV_ARG_DECL)
