@@ -1,8 +1,13 @@
+Tue Nov 28 20:15:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/MakeProjectCreator/config/ciao_deployment_svnt.mpb:
+          Removed include path that didn't exist anymore
+
 Tue Nov 28 16:04:45 UTC 2006  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * bin/MakeProjectCreator/config/ciao_config_handlers_base.mpb
         * bin/MakeProjectCreator/config/ciao_nodemanager_svnt.mpb
-        
+
           Fix for linker warnings/errors on OS X.
 
 Tue Nov 28 14:08:23 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
