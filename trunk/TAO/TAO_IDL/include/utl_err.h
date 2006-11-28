@@ -201,7 +201,7 @@ public:
   void version_number_error (char *n);
 
   // Report an illegal #pragma version syntax
-  void version_syntax_error (char *msg);
+  void version_syntax_error (const char *msg);
 
   // Repost an attempt to reset the version.
   void version_reset_error (void);
