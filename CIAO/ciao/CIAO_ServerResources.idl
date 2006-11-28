@@ -1,7 +1,7 @@
 // $Id$
 
 /**
- * @file ServerResources.idl
+ * @file CIAO_ServerResources.idl
  *
  * @brief A collection of IDL data types for
  *
