@@ -3,7 +3,7 @@
 #ifndef TARGETMANAGER_IDL
 #define TARGETMANAGER_IDL
 
-#include "Target_Data.idl"
+#include "Deployment_Target_Data.idl"
 #include "Deployment_TargetData.idl"
 #include "Deployment_DeploymentPlan.idl"
 // Only needed for ResourceNotAvailable but that should go, so this include also

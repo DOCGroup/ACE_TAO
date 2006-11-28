@@ -90,8 +90,8 @@ project (CIAO_DnC_Container) : orbsvcslib, portableserver, valuetype, ifr_client
     CCM_CCMException.idl
     CCM_EntityComponent.idl
     CCM_EntityContext.idl
-    SwapExec.idl
-    UpgradeableContext.idl
+    CIAO_SwapExec.idl
+    CIAO_UpgradeableContext.idl
   }
 
   IDL_Files {
@@ -136,8 +136,8 @@ project (CIAO_DnC_Container) : orbsvcslib, portableserver, valuetype, ifr_client
     CCM_HomeFinderS.cpp
     CCM_NavigationS.cpp
     CCM_ReceptacleS.cpp
-    SwapExecC.cpp
-    UpgradeableContextC.cpp
+    CIAO_SwapExecC.cpp
+    CIAO_UpgradeableContextC.cpp
     Cookies.cpp
     ComponentsS.cpp
   }
@@ -161,8 +161,8 @@ project(Deployment_stub) : taolib_with_idl, valuetype, ifr_client, ciao_events_b
 
   IDL_Files {
     idlflags += -SS -Sci
-    Packaging_Data.idl
-    Target_Data.idl
+    Deployment_Packaging_Data.idl
+    Deployment_Target_Data.idl
   }
 
   IDL_Files {
@@ -172,24 +172,24 @@ project(Deployment_stub) : taolib_with_idl, valuetype, ifr_client, ciao_events_b
     Deployment_Data.idl
     Deployment_DeploymentPlan.idl
     Deployment_TargetData.idl
-    ServerResources.idl
     Deployment_Events.idl
+    CIAO_ServerResources.idl
   }
 
   IDL_Files {
-    TargetManager.idl
-    NodeApplication_CallBack.idl
+    Deployment_TargetManager.idl
+    CIAO_NodeApplication_CallBack.idl
     Deployment_Core.idl
     Deployment_NodeApplication.idl
     Deployment_Application.idl
     Deployment_Container.idl
     Deployment.idl
-    NodeManager.idl
+    Deployment_NodeManager.idl
     Deployment_ApplicationManager.idl
-    NodeApplicationManager.idl
-    DomainApplicationManager.idl
-    ExecutionManager.idl
-    RepositoryManager.idl
+    Deployment_NodeApplicationManager.idl
+    Deployment_DomainApplicationManager.idl
+    Deployment_ExecutionManager.idl
+    Deployment_RepositoryManager.idl
   }
 
   Source_Files {
@@ -202,18 +202,18 @@ project(Deployment_stub) : taolib_with_idl, valuetype, ifr_client, ciao_events_b
     Deployment_NodeApplicationC.cpp
     Deployment_ApplicationC.cpp
     Deployment_ContainerC.cpp
-    Packaging_DataC.cpp
-    Target_DataC.cpp
+    Deployment_Packaging_DataC.cpp
+    Deployment_Target_DataC.cpp
     DeploymentC.cpp
-    TargetManagerC.cpp
-    NodeManagerC.cpp
-    NodeApplicationManagerC.cpp
+    Deployment_TargetManagerC.cpp
+    Deployment_NodeManagerC.cpp
+    Deployment_NodeApplicationManagerC.cpp
     Deployment_ApplicationManagerC.cpp
-    DomainApplicationManagerC.cpp
-    ExecutionManagerC.cpp
-    RepositoryManagerC.cpp
-    NodeApplication_CallBackC.cpp
-    ServerResourcesC.cpp
+    Deployment_DomainApplicationManagerC.cpp
+    Deployment_ExecutionManagerC.cpp
+    Deployment_RepositoryManagerC.cpp
+    CIAO_NodeApplication_CallBackC.cpp
+    CIAO_ServerResourcesC.cpp
     Deployment_EventsC.cpp
   }
 }
@@ -240,15 +240,15 @@ project(Deployment_svnt) : taolib_with_idl, portableserver, valuetype, ifr_clien
     Deployment_NodeApplicationS.cpp
     Deployment_ContainerS.cpp
     DeploymentS.cpp
-    RepositoryManagerS.cpp
-    NodeManagerS.cpp
-    NodeApplicationManagerS.cpp
+    Deployment_RepositoryManagerS.cpp
+    Deployment_NodeManagerS.cpp
+    Deployment_NodeApplicationManagerS.cpp
     Deployment_ApplicationManagerS.cpp
-    DomainApplicationManagerS.cpp
-    ExecutionManagerS.cpp
+    Deployment_DomainApplicationManagerS.cpp
+    Deployment_ExecutionManagerS.cpp
     NodeApp_CB_Impl.cpp
-    TargetManagerS.cpp
-    NodeApplication_CallBackS.cpp
+    Deployment_TargetManagerS.cpp
+    CIAO_NodeApplication_CallBackS.cpp
   }
 
 }

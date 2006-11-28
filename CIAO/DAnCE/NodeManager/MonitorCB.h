@@ -14,9 +14,7 @@
 #ifndef MONITOR_CBH
 #define MONITOR_CBH
 
-#include "TargetManagerC.h"
-
-
+#include "ciao/Deployment_TargetManagerC.h"
 
 /**
  * @namespace CIAO

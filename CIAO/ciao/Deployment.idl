@@ -3,9 +3,8 @@
 #ifndef DEPLOYMENT_IDL
 #define DEPLOYMENT_IDL
 
-#include "Packaging_Data.idl"
-#include "Target_Data.idl"
-#include "ServerResources.idl"
+#include "Deployment_Packaging_Data.idl"
+#include "Deployment_Target_Data.idl"
 
 module Deployment {
 

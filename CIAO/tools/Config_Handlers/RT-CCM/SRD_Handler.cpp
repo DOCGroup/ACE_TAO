@@ -4,7 +4,6 @@
 #include "CIAOServerResources.hpp"
 #include "CLA_Handler.h"
 #include "OC_Handler.h"
-#include "ciao/ServerResourcesC.h"
 
 namespace CIAO
 {

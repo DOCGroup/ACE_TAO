@@ -8,7 +8,7 @@
  * to terminate the process cleanly.
  */
 
-#include "ciao/ExecutionManager.idl"
+#include "ciao/Deployment_ExecutionManager.idl"
 
 module CIAO
 {

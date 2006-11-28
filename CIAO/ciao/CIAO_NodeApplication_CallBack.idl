@@ -10,7 +10,7 @@
  */
 
 #include "Deployment_NodeApplication.idl"
-#include "NodeApplicationManager.idl"
+#include "Deployment_NodeApplicationManager.idl"
 
 module CIAO
 {
