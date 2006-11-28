@@ -1,7 +1,14 @@
+Tue Nov 28 22:17:08 UTC 2006  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tao/AnyTypeCode/BasicTypeTraits_T.h:
+
+          Added missing newline at the end of the file. Thanks to
+          Phil Mesnier <mesnier_p@ociweb.com> for reporting it.
+
 Tue Nov 28 21:00:28 UTC 2006  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/fe/lex.yy.cpp.diff:
-        
+
           Applied patch sent by Chad Elliott <elliott_c@ociweb.com>.
 
 Tue Nov 28 20:03:21 UTC 2006  Phil Mesnier  <mesnier_p@ociweb.com>
