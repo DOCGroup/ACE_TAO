@@ -1,3 +1,10 @@
+Tue Nov 28 20:36:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/auto_run_tests.pl:
+          Added \n after the message when we can't chdir to a certain
+          directory to prevent detecting the wrong test because this
+          message is then on the same line as the next test.
+
 Tue Nov 28 20:15:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/MakeProjectCreator/config/ciao_deployment_svnt.mpb:
