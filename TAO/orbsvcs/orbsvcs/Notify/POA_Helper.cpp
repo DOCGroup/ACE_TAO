@@ -87,7 +87,13 @@ TAO_Notify_POA_Helper::create_i (PortableServer::POA_ptr parent_poa, const char*
   ACE_CHECK;
 
   if (DEBUG_LEVEL > 0)
-    ACE_DEBUG ((LM_DEBUG, "Created POA : %s\n", this->poa_->the_name ()));
+    {
+      CORBA::String_var the_name = this->poa_->the_name (
+                                           ACE_ENV_SINGLE_ARG_PARAMETER);
+      ACE_CHECK;
+      ACE_DEBUG ((LM_DEBUG, "Created POA : %s\n", the_name.in ()));
+    }
+
   /*
   // Destroy the policies
   for (CORBA::ULong index = 0; index < policy_list.length (); ++index)
@@ -134,7 +140,13 @@ TAO_Notify_POA_Helper::activate (PortableServer::Servant servant, CORBA::Long& i
   id = this->id_factory_.id ();
 
   if (DEBUG_LEVEL > 0)
-    ACE_DEBUG ((LM_DEBUG, "Activating object with id = %d in  POA : %s\n", id, this->poa_->the_name ()));
+    {
+      CORBA::String_var the_name = this->poa_->the_name (
+                                           ACE_ENV_SINGLE_ARG_PARAMETER);
+      ACE_CHECK_RETURN (0);
+
+      ACE_DEBUG ((LM_DEBUG, "Activating object with id = %d in  POA : %s\n", id, the_name.in ()));
+    }
 
   // Convert CORBA::Long to ObjectId
   PortableServer::ObjectId_var oid =
@@ -154,7 +166,12 @@ CORBA::Object_ptr
 TAO_Notify_POA_Helper::activate_with_id (PortableServer::Servant servant, CORBA::Long id ACE_ENV_ARG_DECL)
 {
   if (DEBUG_LEVEL > 0)
-    ACE_DEBUG ((LM_DEBUG, "Activating object with existing id = %d in  POA : %s\n", id, this->poa_->the_name ()));
+    {
+      CORBA::String_var the_name = this->poa_->the_name (
+                                           ACE_ENV_SINGLE_ARG_PARAMETER);
+      ACE_CHECK_RETURN (0);
+      ACE_DEBUG ((LM_DEBUG, "Activating object with existing id = %d in  POA : %s\n", id, the_name.in ()));
+    }
   this->id_factory_.set_last_used (id);
 
   // Convert CORBA::Long to ObjectId
