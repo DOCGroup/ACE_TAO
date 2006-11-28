@@ -807,7 +807,7 @@ UTL_Error::version_number_error (char *n)
 }
 
 void
-UTL_Error::version_syntax_error (char *msg)
+UTL_Error::version_syntax_error (const char *msg)
 {
   idl_error_header (EIDL_ILLEGAL_VERSION,
                     idl_global->lineno (),
