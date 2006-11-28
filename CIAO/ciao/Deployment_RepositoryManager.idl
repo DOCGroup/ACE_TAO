@@ -2,7 +2,7 @@
 #ifndef REPOSITORY_MANAGER_IDL
 #define REPOSITORY_MANAGER_IDL
 
-#include "Packaging_Data.idl"
+#include "Deployment_Packaging_Data.idl"
 #include "Deployment.idl"
 
 module Deployment {
@@ -16,7 +16,7 @@ module Deployment {
   };
 
   interface RepositoryManager {
-    void installPackage (in string installationName, 
+    void installPackage (in string installationName,
                          in string location,
                          in boolean replace)
       raises (NameExists, PackageError);

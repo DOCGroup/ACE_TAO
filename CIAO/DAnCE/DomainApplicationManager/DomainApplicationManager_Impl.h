@@ -28,7 +28,7 @@
 #include "ace/Vector_T.h"
 #include "ace/Functor.h"
 #include "ace/OS_NS_string.h"
-#include "ciao/DomainApplicationManagerS.h"
+#include "ciao/Deployment_DomainApplicationManagerS.h"
 #include "ciao/Deployment_common.h"
 
 #include "tao/Valuetype/ValueBase.h"

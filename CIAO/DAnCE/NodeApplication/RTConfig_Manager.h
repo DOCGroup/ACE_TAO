@@ -25,7 +25,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "tao/RTCORBA/RTCORBA.h"
-#include "ciao/ServerResourcesC.h"
+#include "ciao/CIAO_ServerResourcesC.h"
 #include "ace/Null_Mutex.h"
 #include "ace/SString.h"
 #include "ace/Hash_Map_Manager_T.h"

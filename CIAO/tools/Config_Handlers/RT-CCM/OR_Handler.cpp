@@ -5,7 +5,6 @@
 #include "TPL_Handler.h"
 #include "CB_Handler.h"
 #include "CIAOServerResources.hpp"
-#include "ciao/ServerResourcesC.h"
 
 namespace CIAO
 {

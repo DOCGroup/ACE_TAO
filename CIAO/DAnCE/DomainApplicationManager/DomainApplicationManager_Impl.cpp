@@ -2,7 +2,7 @@
 
 #include "DomainApplicationManager_Impl.h"
 #include "ExecutionManager/Execution_Manager_Impl.h"
-#include "ciao/NodeApplicationManagerC.h"
+#include "ciao/Deployment_NodeApplicationManagerC.h"
 #include "ace/Null_Mutex.h"
 #include "ace/OS_NS_string.h"
 #include "ace/SString.h"

@@ -1,7 +1,7 @@
 // $Id$
 
 #include "RTNodeApp_Configurator.h"
-#include "ciao/ServerResourcesC.h"
+#include "ciao/CIAO_ServerResourcesC.h"
 #include "tao/RTPortableServer/RTPortableServer.h"
 
 CIAO::RTNodeApp_Configurator::~RTNodeApp_Configurator ()
