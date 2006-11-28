@@ -39,51 +39,51 @@ public:
   inline bounded_basic_string_sequence()
     : impl_()
   {}
-  /// @copydoc generic_sequence::generic_sequence
+  /// @copydoc details::generic_sequence::generic_sequence
   inline bounded_basic_string_sequence(
       CORBA::ULong length,
       value_type * data,
       CORBA::Boolean release)
     : impl_(MAX, length, data, release)
   {}
-  /// @copydoc generic_sequence::maximum
+  /// @copydoc details::generic_sequence::maximum
   inline CORBA::ULong maximum() const {
     return impl_.maximum();
   }
-  /// @copydoc generic_sequence::release
+  /// @copydoc details::generic_sequence::release
   inline CORBA::Boolean release() const {
     return impl_.release();
   }
-  /// @copydoc generic_sequence::length
+  /// @copydoc details::generic_sequence::length
   inline CORBA::ULong length() const {
     return impl_.length();
   }
 
-  /// @copydoc generic_sequence::length
+  /// @copydoc details::generic_sequence::length
   inline void length(CORBA::ULong length) {
     implementation_type::range::check_length(length, MAX);
     impl_.length(length);
   }
-  /// @copydoc generic_sequence::operator[]
+  /// @copydoc details::generic_sequence::operator[]
   inline const_value_type operator[](CORBA::ULong i) const {
     return impl_[i];
   }
-  /// @copydoc generic_sequence::operator[]
+  /// @copydoc details::generic_sequence::operator[]
   inline element_type operator[](CORBA::ULong i) {
     return element_type(impl_[i], release());
   }
-  /// @copydoc generic_sequence::get_buffer
+  /// @copydoc details::generic_sequence::get_buffer
   inline const_value_type const * get_buffer() const {
     return impl_.get_buffer();
   }
-  /// @copydoc generic_sequence::replace
+  /// @copydoc details::generic_sequence::replace
   inline void replace(
       CORBA::ULong length,
       value_type * data,
       CORBA::Boolean release = false) {
     impl_.replace(MAX, length, data, release);
   }
-  /// @copydoc generic_sequence::get_buffer(CORBA::Boolean)
+  /// @copydoc details::generic_sequence::get_buffer(CORBA::Boolean)
   inline value_type * get_buffer(CORBA::Boolean orphan = false) {
     return impl_.get_buffer(orphan);
   }
