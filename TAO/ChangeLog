@@ -1,3 +1,13 @@
+Tue Nov 28 20:03:21 UTC 2006  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * orbsvcs/tests/ImplRepo/run_test.pl:
+          Improvement to the script for running on platforms with many
+          endpoints, such as those with IPv6. These improvements were
+          motivated by the discovery that the use of environment variables
+          by the ImplRepo Activator leads to trouble if the IMR IOR is
+          particularly long, which can happen if multiple profiles are
+          included in the IOR.
+
 Tue Nov 28 19:32:46 UTC 2006  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tao/AnyTypeCode/BasicTypeTraits.cpp:
@@ -17,7 +27,7 @@ Tue Nov 28 19:32:46 UTC 2006  Jeff Parsons <j.parsons@vanderbilt.edu>
           New file containing templatized code factored
           out from the insert_* and get_* methods, and
           using the AnyTypeCode utilities described above.
-          Also contains code factored out from 
+          Also contains code factored out from
           DynAnyFactory methods.
 
         * tao/DynamicAny/DynValue_i.cpp:
@@ -53,7 +63,7 @@ Tue Nov 28 19:32:46 UTC 2006  Jeff Parsons <j.parsons@vanderbilt.edu>
             dynamic any's contents. Thanks to Phil
             Mesnier <mesnier_p@ociweb.com> for
             reporting the bug.
-          
+
         * tao/Valuetype/AbstractBase.h:
         * tao/Valuetype/AbstractBase.cpp:
 
@@ -119,7 +129,7 @@ Tue Nov 28 19:32:46 UTC 2006  Jeff Parsons <j.parsons@vanderbilt.edu>
         * TAO_IDL/fe/idl.ll:
 
           - Fixed bugs in code generation for eventtypes. Thanks
-            to Ming Xiong <mxiong@dre.vanderbilt.edu> for 
+            to Ming Xiong <mxiong@dre.vanderbilt.edu> for
             reporting a problem with anonymous sequence eventtype
             members that led to the discovery of the other
             inconsistencies.
@@ -142,7 +152,7 @@ Tue Nov 28 19:32:46 UTC 2006  Jeff Parsons <j.parsons@vanderbilt.edu>
             when they occur before included IDL files. Thanks to
             Viola Wang <vwang@eso.org> for reporting the problem.
             This change closes [BUGID:2714].
-          
+
         * NEWS:
 
           Added items listing the new Dynamic Any methods.
