@@ -113,7 +113,6 @@ Tue Nov 28 19:32:46 UTC 2006  Jeff Parsons <j.parsons@vanderbilt.edu>
         * TAO_IDL/ast/ast_interface.cpp:
         * TAO_IDL/ast/ast_interface_fwd.cpp:
         * TAO_IDL/ast/ast_decl.cpp:
-        * TAO_IDL/fe/lex.yy.cpp:.diff:
         * TAO_IDL/fe/y.tab.cpp:
         * TAO_IDL/fe/idl.yy:
         * TAO_IDL/fe/lex.yy.cpp:
