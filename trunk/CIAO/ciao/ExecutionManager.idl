@@ -7,6 +7,7 @@
 
 module Deployment {
   interface ExecutionManager {
+    /// @todo ResourceCommitmentManger is missing
     DomainApplicationManager preparePlan (in DeploymentPlan plan,
                                           in boolean commitResources)
       raises (ResourceNotAvailable, PlanError, StartError);
