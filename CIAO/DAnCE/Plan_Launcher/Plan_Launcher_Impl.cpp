@@ -95,7 +95,10 @@ namespace CIAO
                                   ACE_ENV_ARG_DECL)
       ACE_THROW_SPEC ((Plan_Launcher_i::Deployment_Failure))
     {
-      ACE_DEBUG ((LM_DEBUG, "Parsing plan...\n"));
+      if (CIAO::debug_level () > 9)
+        {
+          ACE_DEBUG ((LM_DEBUG, "Parsing plan...\n"));
+        }
 
       CIAO::Config_Handlers::XML_File_Intf intf (deployment_plan_uri);
 
@@ -109,7 +112,10 @@ namespace CIAO
           pg_.generate_plan (plan, package_uri, use_package_name);
         }
 
-      ACE_DEBUG ((LM_DEBUG, "Parsing complete....\n"));
+      if (CIAO::debug_level () > 9)
+        {
+          ACE_DEBUG ((LM_DEBUG, "Parsing complete....\n"));
+        }
 
       return this->launch_plan (plan.in ());
     }

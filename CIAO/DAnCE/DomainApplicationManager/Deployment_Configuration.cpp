@@ -40,7 +40,7 @@ CIAO::Deployment_Configuration::init (const char *filename)
     }
 
   char destination[NAME_BUFSIZE], ior[NAME_BUFSIZE];
-  int first = 1;
+  bool first = true;
 
   while (fscanf (inf, "%s %s", destination, ior ) != EOF)
     {
@@ -57,7 +57,7 @@ CIAO::Deployment_Configuration::init (const char *filename)
       if (first)
         {
           this->default_node_manager_.IOR_ = ior;
-          first = 0;
+          first = false;
         }
     }
   ACE_OS::fclose (inf);
@@ -120,7 +120,6 @@ CIAO::Deployment_Configuration::get_node_manager (const char *name
     {
       ACE_TRY
         {
-
           CORBA::Object_var temp = this->orb_->string_to_object
                                    (entry->int_id_.IOR_.c_str ()
                                     ACE_ENV_ARG_PARAMETER);
