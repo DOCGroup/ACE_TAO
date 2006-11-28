@@ -1,3 +1,18 @@
+Tue Nov 28 13:30:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/MakeProjectCreator/config/event.mpb:
+        * bin/MakeProjectCreator/config/event_serv.mpb:
+        * bin/MakeProjectCreator/config/event_skel.mpb:
+        * bin/MakeProjectCreator/config/ftorbutils.mpb:
+        * bin/MakeProjectCreator/config/ftrtevent.mpb:
+        * bin/MakeProjectCreator/config/ifrservice.mpb:
+        * bin/MakeProjectCreator/config/imr_locator.mpb:
+        * bin/MakeProjectCreator/config/portablegroup.mpb:
+        * bin/MakeProjectCreator/config/rtcorbacommon.mpb:
+          Added avoids_corba_e_compact as base project, if we have CORBA/e
+          compact we don't have the needed features available to build these
+          projects.
+
 Tue Nov 28 13:25:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/MakeProjectCreator/config/avoids_corba_e_micro.mpb:
