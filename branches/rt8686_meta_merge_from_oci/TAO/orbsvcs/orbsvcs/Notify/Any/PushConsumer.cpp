@@ -7,6 +7,7 @@ ACE_RCSID (Notify,
            "$Id$")
 
 #include "ace/Bound_Ptr.h"
+#include "tao/Stub.h" // For debug messages printing out ORBid.
 #include "orbsvcs/CosEventCommC.h"
 #include "orbsvcs/Notify/Event.h"
 #include "orbsvcs/Notify/Properties.h"
@@ -35,14 +36,60 @@ TAO_Notify_PushConsumer::init (CosEventComm::PushConsumer_ptr push_consumer
     ACE_THROW (CORBA::BAD_PARAM());
   }
 
-  this->push_consumer_ = CosEventComm::PushConsumer::_duplicate (push_consumer);
-
   ACE_TRY
+  {
+    if (!TAO_Notify_PROPERTIES::instance()->separate_dispatching_orb ())
+      {
+        this->push_consumer_ = CosEventComm::PushConsumer::_duplicate (push_consumer);
+
+        this->publish_ =
+          CosNotifyComm::NotifyPublish::_narrow (push_consumer ACE_ENV_ARG_PARAMETER);
+        ACE_TRY_CHECK;
+      }
+    else
+      {
+        // "Port" consumer's object reference from receiving ORB to dispatching ORB.
+        CORBA::String_var temp =
+          TAO_Notify_PROPERTIES::instance()->orb()->object_to_string(push_consumer);
+
+        CORBA::Object_var obj =
+          TAO_Notify_PROPERTIES::instance()->dispatching_orb()->string_to_object(temp.in());
+
+        CosEventComm::PushConsumer_var new_cos_comm_pc =
+          CosEventComm::PushConsumer::_unchecked_narrow(obj.in() ACE_ENV_ARG_PARAMETER);
+        ACE_TRY_CHECK;
+
+        this->push_consumer_ = 
+          CosEventComm::PushConsumer::_duplicate (new_cos_comm_pc.in());
+
+        //
+        // Note that here we do an _unchecked_narrow() in order to avoid
+        // making a call on the consumer b/c the consumer may not have activated
+        // its POA just yet.  That means that before we use this reference the first
+        // time, we'll actually need to call _is_a() on it, i.e., the equivalent
+        // of an _narrow().  At the time of this writing, the only use of
+        // this->publish_ is in TAO_NS_Consumer::dispatch_updates_i (the superclass).
+        // If any other use is made of this data member, then the code to validate
+        // the actual type of the target object must be refactored.
+        this->publish_ = 
+          CosNotifyComm::NotifyPublish::_unchecked_narrow (obj.in()
+                                                           ACE_ENV_ARG_PARAMETER);
+        ACE_TRY_CHECK;
+
+
+        //--cj verify dispatching ORB
+        if (TAO_debug_level >= 10)
+          {
+            ACE_DEBUG ((LM_DEBUG, "(%P|%t) Any push init dispatching ORB id is %s.\n",
+                        obj->_stubobj()->orb_core()->orbid()));
+          }
+        //--cj end
+      }
+  }
+  ACE_CATCH (CORBA::TRANSIENT, ex)
     {
-      this->publish_ =
-        CosNotifyComm::NotifyPublish::_narrow (push_consumer
-                                               ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      ACE_PRINT_EXCEPTION (ex, "Got a TRANSIENT in NS_PushConsumer::init");
+      ACE_DEBUG ((LM_DEBUG, "(%P|%t) got it for NS_PushConsumer %@\n", this));
     }
   ACE_CATCHANY
     {
@@ -61,6 +108,13 @@ TAO_Notify_PushConsumer::release (void)
 void
 TAO_Notify_PushConsumer::push (const CORBA::Any& payload ACE_ENV_ARG_DECL)
 {
+  //--cj verify dispatching ORB
+  if (TAO_debug_level >= 10) {
+    ACE_DEBUG ((LM_DEBUG, "(%P|%t) Any push dispatching ORB id is %s.\n",
+                this->push_consumer_->_stubobj()->orb_core()->orbid()));
+  }
+  //--cj end
+
   this->push_consumer_->push (payload ACE_ENV_ARG_PARAMETER);
 }
 

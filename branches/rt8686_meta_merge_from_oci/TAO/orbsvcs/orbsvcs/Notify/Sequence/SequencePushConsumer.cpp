@@ -6,6 +6,7 @@ ACE_RCSID (Notify, TAO_Notify_SequencePushConsumer, "$Id$")
 
 #include "ace/Reactor.h"
 #include "tao/debug.h"
+#include "tao/Stub.h" // For debug messages printing out ORBid.
 #include "orbsvcs/Notify/QoSProperties.h"
 #include "orbsvcs/Notify/ProxySupplier.h"
 #include "orbsvcs/Notify/Worker_Task.h"
@@ -42,8 +43,49 @@ TAO_Notify_SequencePushConsumer::init (CosNotifyComm::SequencePushConsumer_ptr p
     ACE_THROW (CORBA::BAD_PARAM());
   }
 
-  this->push_consumer_ = CosNotifyComm::SequencePushConsumer::_duplicate (push_consumer);
-  this->publish_ = CosNotifyComm::NotifyPublish::_duplicate (push_consumer);
+  if (!TAO_Notify_PROPERTIES::instance()->separate_dispatching_orb ())
+    {
+      this->push_consumer_ = CosNotifyComm::SequencePushConsumer::_duplicate (push_consumer);
+      this->publish_ = CosNotifyComm::NotifyPublish::_duplicate (push_consumer);
+    }
+  else
+    {
+      // "Port" consumer's object reference from receiving ORB to dispatching ORB.
+      CORBA::String_var temp =
+        TAO_Notify_PROPERTIES::instance()->orb()->object_to_string(push_consumer);
+
+      CORBA::Object_var obj =
+        TAO_Notify_PROPERTIES::instance()->dispatching_orb()->string_to_object(temp.in());
+
+      ACE_TRY
+        {
+          CosNotifyComm::SequencePushConsumer_var new_push_consumer =  
+            CosNotifyComm::SequencePushConsumer::_unchecked_narrow(obj.in());
+          ACE_TRY_CHECK;
+
+          this->push_consumer_ = CosNotifyComm::SequencePushConsumer::_duplicate (new_push_consumer);
+          this->publish_ = CosNotifyComm::NotifyPublish::_duplicate (new_push_consumer);
+
+          //--cj verify dispatching ORB
+          if (TAO_debug_level >= 10)
+            {
+              ACE_DEBUG ((LM_DEBUG,
+                          "(%P|%t) Sequence push init dispatching ORB id is %s.\n",
+                          obj->_stubobj()->orb_core()->orbid()));
+            }
+          //--cj end
+        }
+      ACE_CATCH (CORBA::TRANSIENT, ex)
+        {
+          ACE_PRINT_EXCEPTION (ex, "Got a TRANSIENT in NS_SequencePushConsumer::init");
+          ACE_DEBUG ((LM_DEBUG, "(%P|%t) got it for NS_SequencePushConsumer %@\n", this));
+        }
+      ACE_CATCHANY
+        {
+          // _narrow failed
+        }
+      ACE_ENDTRY;
+    }
 }
 
 void
@@ -259,6 +301,13 @@ TAO_Notify_SequencePushConsumer::push (const CosNotification::StructuredEvent& /
 void
 TAO_Notify_SequencePushConsumer::push (const CosNotification::EventBatch& event_batch ACE_ENV_ARG_DECL)
 {
+  //--cj verify dispatching ORB
+  if (TAO_debug_level >= 10) {
+    ACE_DEBUG ((LM_DEBUG, "(%P|%t) Sequence push dispatching ORB id is %s.\n",
+                this->push_consumer_->_stubobj()->orb_core()->orbid()));
+  }
+  //--cj end
+
   this->push_consumer_->push_structured_events (event_batch ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 }
