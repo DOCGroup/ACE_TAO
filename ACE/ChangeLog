@@ -1,3 +1,12 @@
+Tue Nov 28 13:25:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/MakeProjectCreator/config/avoids_corba_e_micro.mpb:
+        * bin/MakeProjectCreator/config/avoids_corba_e_compact.mpb:
+          Fixed incorrect feature name
+
+        * bin/MakeProjectCreator/config/global.features:
+          Removed duplicate minimum_corba
+
 Tue Nov 28 09:53:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/MakeProjectCreator/config/ciao_client_dnc.mpb:
