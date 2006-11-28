@@ -618,7 +618,7 @@ idl_store_pragma (char *buf)
       // without an identifier to apply it to.
       if (number == 0)
         {
-          char *msg = "no identifier or scoped name";
+          const char *msg = "no identifier or scoped name";
           idl_global->err ()->version_syntax_error (msg);
           return;
         }
