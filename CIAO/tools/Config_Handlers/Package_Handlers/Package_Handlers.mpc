@@ -19,7 +19,7 @@ project (Package_Config_Handlers) : acelib, ciao_deployment_stub, ciao_config_ha
               XSC_DynAny_Handler \
               XSC_XML_Handlers \
               CIAO_XML_Utils \
-              CIAO_Events_Handlers
+              CIAO_Events_Handlers RT_CCM_Config_Handlers
 
   Source_files {
     CAD_Handler.cpp
