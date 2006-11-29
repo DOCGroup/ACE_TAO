@@ -29,12 +29,13 @@
 #include "ace/Functor.h"
 #include "ace/OS_NS_string.h"
 
+#include "ciao/Deployment_DomainApplicationManagerS.h"
+#include "ciao/Deployment_common.h"
+
 #include "tao/Valuetype/ValueBase.h"
 #include "tao/Valuetype/Valuetype_Adapter_Impl.h"
 
 #include "ciao/CIAO_common.h"
-#include "ciao/Deployment_DomainApplicationManagerS.h"
-#include "ciao/Deployment_common.h"
 #include "ciao/Deployment_EventsC.h"
 
 #include "Deployment_Configuration.h"
