@@ -79,6 +79,7 @@ namespace TAO
     typedef CORBA::Char return_type;
   };
 
+#if (defined (ACE_HAS_WCHAR) || defined (ACE_HAS_XPG4_MULTIBYTE_CHAR)) && !defined (ACE_LACKS_NATIVE_WCHAR_T)
   template<>
   struct TAO_AnyTypeCode_Export BasicTypeTraits<CORBA::WChar>
   {
@@ -89,6 +90,7 @@ namespace TAO
     typedef CORBA::Any::to_wchar extract_type;
     typedef CORBA::WChar return_type;
   };
+#endif
 
   template<>
   struct TAO_AnyTypeCode_Export BasicTypeTraits<CORBA::Short>
