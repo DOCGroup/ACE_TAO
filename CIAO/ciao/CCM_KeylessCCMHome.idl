@@ -14,7 +14,7 @@
 #if !defined (CCM_KEYLESSCCMHOME_IDL)
 #define CCM_KEYLESSCCMHOME_IDL
 
-#include "CCM_Home.idl"
+#include "ciao/CCM_Home.idl"
 
 module Components
 {

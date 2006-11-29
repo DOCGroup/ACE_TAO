@@ -16,7 +16,7 @@
 #if !defined (CCM_PROXYHOMEREGISTRATION_IDL)
 #define CCM_PROXYHOMEREGISTRATION_IDL
 
-#include "CCM_HomeRegistration.idl"
+#include "ciao/CCM_HomeRegistration.idl"
 
 module Components
 {

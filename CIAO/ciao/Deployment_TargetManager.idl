@@ -3,11 +3,11 @@
 #ifndef TARGETMANAGER_IDL
 #define TARGETMANAGER_IDL
 
-#include "Deployment_Target_Data.idl"
-#include "Deployment_TargetData.idl"
-#include "Deployment_DeploymentPlan.idl"
+#include "ciao/Deployment_Target_Data.idl"
+#include "ciao/Deployment_TargetData.idl"
+#include "ciao/Deployment_DeploymentPlan.idl"
 // Only needed for ResourceNotAvailable but that should go, so this include also
-#include "Deployment_ApplicationManager.idl"
+#include "ciao/Deployment_ApplicationManager.idl"
 
 module Deployment {
 

@@ -3,10 +3,10 @@
 #if !defined (DEPLOYMENT_CORE_IDL)
 #define DEPLOYMENT_CORE_IDL
 
-#include "CCM_Component.idl"
-#include "Deployment_TargetData.idl"
-#include "Deployment_Data.idl"
-#include "Deployment_Application.idl"
+#include "ciao/CCM_Component.idl"
+#include "ciao/Deployment_TargetData.idl"
+#include "ciao/Deployment_Data.idl"
+#include "ciao/Deployment_Application.idl"
 
 // *************** Packaging and Deployment ***************
 module Deployment

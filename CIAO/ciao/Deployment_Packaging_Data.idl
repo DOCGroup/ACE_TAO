@@ -3,7 +3,7 @@
 #ifndef PACKAGING_DATA_IDL
 #define PACKAGING_DATA_IDL
 
-#include "Deployment_Data.idl"
+#include "ciao/Deployment_Data.idl"
 
 module Deployment
 {

@@ -14,7 +14,7 @@
 #if !defined (CCM_ENUMERATION_IDL)
 #define CCM_ENUMERATION_IDL
 
-#include "CCM_Object.idl"
+#include "ciao/CCM_Object.idl"
 
 module Components
 {
