@@ -1,3 +1,8 @@
+Wed Nov 29 11:03:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Malloc_T.{h,cpp}:
+          Changed delete_lock_ to a real bool
+
 Tue Nov 28 21:02:25 UTC 2006  Steve Huston  <shuston@riverace.com>
 
         * ace/WIN32_Asynch_IO.cpp (ACE_WIN32_Asynch_Connect::post_result):
