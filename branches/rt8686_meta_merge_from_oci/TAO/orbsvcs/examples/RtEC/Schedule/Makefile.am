@@ -17,6 +17,7 @@ TAO_ROOT = $(top_srcdir)
 ## Makefile.RtEC_Schedule.am
 
 if BUILD_CORBA_MESSAGING
+if BUILD_EXCEPTIONS
 if !BUILD_ACE_FOR_TAO
 
 noinst_PROGRAMS = Service
@@ -54,6 +55,7 @@ Service_LDADD = \
   $(ACE_BUILDDIR)/ace/libACE.la
 
 endif !BUILD_ACE_FOR_TAO
+endif BUILD_EXCEPTIONS
 endif BUILD_CORBA_MESSAGING
 
 ## Clean up template repositories, etc.

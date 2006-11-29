@@ -1,7 +1,5 @@
 // $Id$
 
-extern unsigned long TAO_EC_TPC_debug_level;
-
 #include "orbsvcs/Event/EC_TPC_Dispatching.h"
 #include "orbsvcs/Event/EC_Defaults.h"
 
@@ -14,6 +12,8 @@ ACE_RCSID(Event, EC_TPC_Dispatching, "$Id$")
 #endif
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
+extern unsigned long TAO_EC_TPC_debug_level;
 
 TAO_EC_TPC_Dispatching::TAO_EC_TPC_Dispatching (int nthreads,
                                                 int thread_creation_flags,

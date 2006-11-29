@@ -1,13 +1,13 @@
 // -*- MPC -*-
 // $Id$
 
-project(*Server): taoserver, iortable, ami, exceptions {
+project(*Server): taoserver, iortable, ami {
   Source_Files {
     server.cpp
   }
 }
 
-project(*Client): taoclient, ami, exceptions {
+project(*Client): taoclient, ami {
   Source_Files {
     client.cpp
   }

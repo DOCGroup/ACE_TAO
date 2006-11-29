@@ -16,7 +16,9 @@ TAO_IDL_DEP = $(TAO_BUILDDIR)/TAO_IDL/tao_idl
 TAO_IDLFLAGS = -Ge 1 -Wb,pre_include=ace/pre.h -Wb,post_include=ace/post.h -I$(TAO_ROOT) -I$(srcdir) -g $(ACE_BUILDDIR)/apps/gperf/src/gperf
 TAO_ROOT = $(top_srcdir)
 
-## Makefile.CSD_Test_ThreadPool_Server.am
+noinst_PROGRAMS =
+
+## Makefile.CSD_Test_ThreadPool_Idl.am
 
 BUILT_SOURCES = \
   FooC.cpp \
@@ -38,10 +40,19 @@ CLEANFILES = \
 FooC.cpp FooC.h FooC.inl FooS.cpp FooS.h FooS.inl: Foo-stamp
 
 Foo-stamp: $(srcdir)/Foo.idl $(TAO_IDL_DEP)
-	$(TAO_IDL) $(TAO_IDLFLAGS) $(srcdir)/Foo.idl
+	$(TAO_IDL) $(TAO_IDLFLAGS) -Sa -St $(srcdir)/Foo.idl
 	@touch $@
 
-noinst_PROGRAMS = server_main
+
+noinst_HEADERS = \
+  Foo.idl
+
+## Makefile.CSD_Test_ThreadPool_Server.am
+
+if BUILD_EXCEPTIONS
+if BUILD_THREADS
+
+noinst_PROGRAMS += server_main
 
 server_main_CPPFLAGS = \
   -I$(ACE_ROOT) \
@@ -56,10 +67,6 @@ server_main_SOURCES = \
   OrbShutdownTask.cpp \
   ServerApp.cpp \
   server_main.cpp \
-  FooC.h \
-  FooC.inl \
-  FooS.h \
-  FooS.inl \
   Foo_i.h \
   OrbShutdownTask.h \
   ServerApp.h
@@ -74,28 +81,12 @@ server_main_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
+endif BUILD_THREADS
+endif BUILD_EXCEPTIONS
+
 ## Makefile.CSD_Test_ThreadPool_Client.am
 
-BUILT_SOURCES += \
-  FooC.cpp \
-  FooC.h \
-  FooC.inl \
-  FooS.h \
-  FooS.inl
-
-CLEANFILES += \
-  Foo-stamp \
-  FooC.cpp \
-  FooC.h \
-  FooC.inl \
-  FooS.h \
-  FooS.inl
-
-FooC.cpp FooC.h FooC.inl FooS.h FooS.inl: Foo-stamp
-
-Foo-stamp: $(srcdir)/Foo.idl $(TAO_IDL_DEP)
-	$(TAO_IDL) $(TAO_IDLFLAGS) $(srcdir)/Foo.idl
-	@touch $@
+if BUILD_EXCEPTIONS
 
 noinst_PROGRAMS += client_main
 
@@ -109,16 +100,14 @@ client_main_SOURCES = \
   ClientApp.cpp \
   FooC.cpp \
   client_main.cpp \
-  ClientApp.h \
-  FooC.h \
-  FooC.inl \
-  FooS.h \
-  FooS.inl
+  ClientApp.h
 
 client_main_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO_AnyTypeCode.la \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
+
+endif BUILD_EXCEPTIONS
 
 ## Clean up template repositories, etc.
 clean-local:

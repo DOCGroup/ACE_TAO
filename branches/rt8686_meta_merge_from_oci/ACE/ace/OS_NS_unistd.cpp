@@ -484,9 +484,9 @@ ACE_OS::pread (ACE_HANDLE handle,
   if (altered_position == -1)
     return -1;
 
-  ssize_t bytes_read = ACE_OS::read (handle,
-                                     buf,
-                                     nbytes);
+  ssize_t const bytes_read = ACE_OS::read (handle,
+                                           buf,
+                                           nbytes);
 
   if (bytes_read == -1)
     return -1;
@@ -662,14 +662,14 @@ ACE_OS::string_to_argv (ACE_TCHAR *buf,
               // '\0' implies unmatched quote..
               if (*cp == ACE_LIB_TEXT ('\0'))
                 {
-                  argc--;
+                  --argc;
                   break;
                 }
               else
-                cp++;
+                ++cp;
             }
           else
-            cp++;
+            ++cp;
         }
     }
 
@@ -708,7 +708,7 @@ ACE_OS::string_to_argv (ACE_TCHAR *buf,
               *cp++ = *ptr++;
 
             if (*ptr == quote)
-              ptr++;
+              ++ptr;
           }
         else
           *cp++ = *ptr++;

@@ -81,7 +81,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
   Deployment::NodeImplementationInfo_var node_impl_info (handler.node_impl_info ());
 
-  if (!node_impl_info)
+  if (node_impl_info.ptr() == 0)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                   "DAnCE (%P|%t) StaticParser -"

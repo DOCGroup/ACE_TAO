@@ -10,20 +10,18 @@
 //=============================================================================
 
 
-#ifndef CIAO_DYNAMIC_COMPONENT_SERVANT_BASE_H
-#define CIAO_DYNAMIC_COMPONENT_SERVANT_BASE_H
+#ifndef CIAO_DYNAMIC_COMPONENT_SERVANT_BASE__H
+#define CIAO_DYNAMIC_COMPONENT_SERVANT_BASE__H
 
 #include /**/ "ace/pre.h"
 
-// @@ Jai, why is this includion necessary. Looks heavy weight to me.
-#include "CCM_ComponentS.h"
+#include "ciao/CIAO_Server_Export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "tao/PortableServer/PortableServer.h"
-#include "CIAO_Server_Export.h"
 
 namespace CIAO
 {
@@ -54,4 +52,4 @@ namespace CIAO
 
 #include /**/ "ace/post.h"
 
-#endif /* CIAO_DYNAMIC_COMPONENT_SERVANT_BASE_H */
+#endif /* CIAO_DYNAMIC_COMPONENT_SERVANT_BASE__H */

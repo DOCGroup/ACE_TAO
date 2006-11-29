@@ -32,9 +32,6 @@ project {
     optional(inline_pre_extension) {
       commandflags(!-Sci) += C
     }
-    optional(inline_pre_extension) {
-      commandflags(-GT && !-SS && !-oS) += S_T
-    }
 
     // Source related options
     optional(source_pre_extension) {

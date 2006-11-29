@@ -2460,8 +2460,12 @@ ACE_WIN32_Asynch_Connect::connect (ACE_HANDLE connect_handle,
 int ACE_WIN32_Asynch_Connect::post_result (ACE_WIN32_Asynch_Connect_Result * result,
                                            bool post_enable)
 {
+  ACE_HANDLE handle = result->connect_handle ();
   if (this->flg_open_ && post_enable)
     {
+      // NOTE: result is invalid after post_completion(). It's either deleted
+      // or will be shortly via the proactor dispatch, regardless of success
+      // or fail of the call.
       if (this->win32_proactor_ ->post_completion (result) == 0)
         return 0;
 
@@ -2470,13 +2474,14 @@ int ACE_WIN32_Asynch_Connect::post_result (ACE_WIN32_Asynch_Connect_Result * res
                   ACE_LIB_TEXT ("ACE_WIN32_Asynch_Connect::post_result: ")
                   ACE_LIB_TEXT (" <post_completion> failed")));
     }
-
-   ACE_HANDLE handle = result->connect_handle ();
+  else
+    {
+      // There was no call to post_completion() so manually delete result.
+      delete result;
+    }
 
    if (handle != ACE_INVALID_HANDLE)
      ACE_OS::closesocket (handle);
-
-   delete result;
 
    return -1;
 }

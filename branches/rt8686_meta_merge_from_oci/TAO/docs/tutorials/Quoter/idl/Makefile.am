@@ -16,7 +16,10 @@ TAO_IDL_DEP = $(TAO_BUILDDIR)/TAO_IDL/tao_idl
 TAO_IDLFLAGS = -Ge 1 -Wb,pre_include=ace/pre.h -Wb,post_include=ace/post.h -I$(TAO_ROOT) -I$(srcdir) -g $(ACE_BUILDDIR)/apps/gperf/src/gperf
 TAO_ROOT = $(top_srcdir)
 
+
 ## Makefile.Quoter_Idl_Lib.am
+
+if BUILD_EXCEPTIONS
 
 BUILT_SOURCES = \
   QuoterC.cpp \
@@ -26,8 +29,7 @@ BUILT_SOURCES = \
   QuoterS.h \
   QuoterS.inl \
   QuoterS_T.cpp \
-  QuoterS_T.h \
-  QuoterS_T.inl
+  QuoterS_T.h
 
 CLEANFILES = \
   Quoter-stamp \
@@ -38,10 +40,9 @@ CLEANFILES = \
   QuoterS.h \
   QuoterS.inl \
   QuoterS_T.cpp \
-  QuoterS_T.h \
-  QuoterS_T.inl
+  QuoterS_T.h
 
-QuoterC.cpp QuoterC.h QuoterC.inl QuoterS.cpp QuoterS.h QuoterS.inl QuoterS_T.cpp QuoterS_T.h QuoterS_T.inl: Quoter-stamp
+QuoterC.cpp QuoterC.h QuoterC.inl QuoterS.cpp QuoterS.h QuoterS.inl QuoterS_T.cpp QuoterS_T.h: Quoter-stamp
 
 Quoter-stamp: $(srcdir)/Quoter.idl $(TAO_IDL_DEP)
 	$(TAO_IDL) $(TAO_IDLFLAGS) -Wb,export_macro=QUOTER_COMMON_Export -Wb,export_include=quoter_common_export.h -GT $(srcdir)/Quoter.idl
@@ -68,8 +69,9 @@ noinst_HEADERS = \
   QuoterS.inl \
   QuoterS_T.cpp \
   QuoterS_T.h \
-  QuoterS_T.inl \
   quoter_common_export.h
+
+endif BUILD_EXCEPTIONS
 
 ## Clean up template repositories, etc.
 clean-local:

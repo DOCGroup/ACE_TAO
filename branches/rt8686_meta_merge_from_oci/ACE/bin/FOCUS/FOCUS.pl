@@ -48,7 +48,7 @@ sub usage
               . " \n --prefix-path=<path to module root>"
               . " [\n --reactor-spl=<select-mt, select-st, tp-reactor>"
               . " \n --protocol-spl=<iiop>"
-              . " \n --wait-strategy-spl=<rw>"
+              . " \n --wait-strategy-spl=<rw, lf>"
               . " \n --output-prefix=<output path>"
               . " \n --messaging-spl=<giop>"
               . " \n --context-specific-optimizations=<dispatch>"
@@ -94,6 +94,7 @@ my %specialization_table  = (
  "giop", $spl_prefix_path . "specializations/Messaging_Strategy/GIOP.spl",
  "iiop", $spl_prefix_path . "specializations/Protocol_Family/IIOP/iiop.spl",
  "rw",   $spl_prefix_path . "specializations/Wait_Strategy/Wait_On_Read.spl",
+ "lf",   $spl_prefix_path . "specializations/Wait_Strategy/Wait_On_Leader_Follower.spl",
  "dispatch", $spl_prefix_path . "specializations/Context-Specific-Optimizations/Dispatch-Resolution-Optimization.spl");
 
 # Get the command line options

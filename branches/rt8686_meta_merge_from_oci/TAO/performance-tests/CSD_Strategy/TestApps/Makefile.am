@@ -13,9 +13,14 @@ ACE_ROOT = $(top_srcdir)/..
 TAO_BUILDDIR = $(top_builddir)
 TAO_ROOT = $(top_srcdir)
 
+noinst_PROGRAMS =
+
 ## Makefile.csd_test_client.am
 
-noinst_PROGRAMS = client_main
+if BUILD_EXCEPTIONS
+if BUILD_THREADS
+
+noinst_PROGRAMS += client_main
 
 client_main_CPPFLAGS = \
   -I$(ACE_ROOT) \
@@ -41,7 +46,13 @@ client_main_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
+endif BUILD_THREADS
+endif BUILD_EXCEPTIONS
+
 ## Makefile.csd_test_server.am
+
+if BUILD_EXCEPTIONS
+if BUILD_THREADS
 
 noinst_PROGRAMS += server_main
 
@@ -68,6 +79,9 @@ server_main_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO_AnyTypeCode.la \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
+
+endif BUILD_THREADS
+endif BUILD_EXCEPTIONS
 
 ## Clean up template repositories, etc.
 clean-local:

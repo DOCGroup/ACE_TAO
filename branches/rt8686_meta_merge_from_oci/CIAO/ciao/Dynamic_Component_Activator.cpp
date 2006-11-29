@@ -1,5 +1,6 @@
-#include "Dynamic_Component_Activator.h"
-#include "CIAO_common.h"
+#include "ciao/Dynamic_Component_Activator.h"
+#include "ciao/Dynamic_Component_Servant_Base.h"
+#include "ciao/CIAO_common.h"
 #include "ace/Log_Msg.h"
 #include "ace/OS_NS_string.h"
 

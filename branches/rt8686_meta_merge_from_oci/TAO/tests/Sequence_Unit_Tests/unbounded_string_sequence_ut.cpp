@@ -12,9 +12,7 @@
 #include "testing_allocation_traits.hpp"
 #include "testing_range_checking.hpp"
 
-#include "tao/Unbounded_String_Sequence_T.h"
-#include "tao/Unbounded_Wstring_Sequence_T.h"
-#include "tao/Unbounded_Wstring_Sequence_T.h"
+#include "tao/Unbounded_Basic_String_Sequence_T.h"
 #include "tao/CORBA_String.h"
 
 #include "string_sequence_tester.hpp"
@@ -528,13 +526,13 @@ init_unit_test_suite(int, char*[])
       BOOST_TEST_SUITE("unbounded string sequence unit test");
 
   {
-    typedef Tester<unbounded_string_sequence> nTester;
+    typedef Tester<unbounded_basic_string_sequence <char> > nTester;
     boost::shared_ptr<nTester> tester(nTester::allocate());
     tester->add_all(ts);
   }
 
   {
-    typedef Tester<unbounded_wstring_sequence> wTester;
+    typedef Tester<unbounded_basic_string_sequence <CORBA::WChar> > wTester;
     boost::shared_ptr<wTester> tester(wTester::allocate());
     tester->add_all(ts);
   }

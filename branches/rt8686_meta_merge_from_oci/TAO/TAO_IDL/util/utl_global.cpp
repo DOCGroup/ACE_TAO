@@ -1538,7 +1538,7 @@ IDL_GlobalData::fini (void)
       delete this->pd_root;
       this->pd_root = 0;
     }
-    
+
   delete this->pd_err;
   this->pd_err = 0;
   delete this->pd_gen;
@@ -1621,7 +1621,7 @@ IDL_GlobalData::create_uses_multiple_stuff (
 
   if (d == 0)
     {
-      // This would happen if we haven't included Componennts.idl.
+      // This would happen if we haven't included Components.idl.
       idl_global->err ()->lookup_error (&scoped_name);
       return;
     }
@@ -1795,7 +1795,7 @@ IDL_GlobalData::add_dcps_data_key (const char* id, const char* key)
 {
   // Search the map for the type.
   DCPS_Data_Type_Info* newinfo = 0;
-  
+
   if (this->dcps_type_info_map_.find (id, newinfo) == 0)
     {
        // Add the new key field to the type.
@@ -1807,7 +1807,7 @@ IDL_GlobalData::add_dcps_data_key (const char* id, const char* key)
       ACE_ERROR((LM_ERROR,
                  ACE_TEXT ("missing previous #pragma DCPS_DATA_TYPE\n")));
     }
-    
+
   return false;
 }
 

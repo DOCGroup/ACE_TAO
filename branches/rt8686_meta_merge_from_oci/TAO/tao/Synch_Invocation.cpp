@@ -178,7 +178,7 @@ namespace TAO
 #if TAO_HAS_INTERCEPTORS == 1
         if (s == TAO_INVOKE_RESTART)
           {
-            Invocation_Status tmp =
+            Invocation_Status const tmp =
               this->receive_other_interception (ACE_ENV_SINGLE_ARG_PARAMETER);
             ACE_TRY_CHECK;
 
@@ -228,7 +228,7 @@ namespace TAO
     ACE_CATCHANY
       {
 #if TAO_HAS_INTERCEPTORS == 1
-        const PortableInterceptor::ReplyStatus status =
+        PortableInterceptor::ReplyStatus const status =
           this->handle_any_exception (&ACE_ANY_EXCEPTION
                                       ACE_ENV_ARG_PARAMETER);
         ACE_TRY_CHECK;
@@ -246,7 +246,7 @@ namespace TAO
     ACE_CATCHALL
       {
 #if TAO_HAS_INTERCEPTORS == 1
-        const PortableInterceptor::ReplyStatus st =
+        PortableInterceptor::ReplyStatus const st =
           this->handle_all_exception (ACE_ENV_SINGLE_ARG_PARAMETER);
         ACE_TRY_CHECK;
 
@@ -410,13 +410,13 @@ namespace TAO
         {
           // Unmarshal the location forward object and set the
           // variable this->forward_to_.
-          const Invocation_Status s
+          Invocation_Status const s
             = this->location_forward (cdr
                                       ACE_ENV_ARG_PARAMETER);
           if (s != TAO_INVOKE_FAILURE)
             {
               // de-marshalling of permanent object reference was successfull
-              const CORBA::Boolean permanent_forward_condition =
+              CORBA::Boolean const permanent_forward_condition =
                 this->orb_core ()->is_permanent_forward_condition
                   (this->forwarded_to_.in (),
                    this->request_service_context ());

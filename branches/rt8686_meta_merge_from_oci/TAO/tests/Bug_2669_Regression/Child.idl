@@ -5,9 +5,9 @@
  */
 //=============================================================================
 
-#include "Parent.idl"
-
 #pragma prefix "child.pragma.prefix"
+
+#include "Parent.idl"
 
 interface ChildInterface : ParentInterface {};
 

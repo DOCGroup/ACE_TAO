@@ -4,7 +4,6 @@ project (RT_CCM_Config_Handlers) : acelib, ciao_deployment_stub, xerces {
   sharedname = RT_CCM_Config_Handlers
   dynamicflags   = RT_CCM_HANDLERS_BUILD_DLL
   macros   += XML_USE_PTHREADS
-  requires += exceptions
   includes += $(CIAO_ROOT)/tools/Config_Handlers
   after    += CIAO_XML_Utils
   libs     += CIAO_XML_Utils
@@ -34,7 +33,6 @@ project (RT_CCM_Config_Handlers) : acelib, ciao_deployment_stub, xerces {
 //  after    += RT-CCM-Handlers
 //  dynamicflags   = CONFIG_HANDLERS_BUILD_DLL
 //  macros   += XML_USE_PTHREADS
-//  requires += exceptions
 //  includes += $(CIAO_ROOT)/tools/Config_Handlers
 //  libs     += CIAO_DnC_Server TAO_IFR_Client RT_CCM_Config_Handlers CIAO_XML_Utils
 

@@ -16,6 +16,7 @@
 #define TAO_DEFAULT_RESOURCE_H
 
 #include /**/ "ace/pre.h"
+#include "ace/Copy_Disabled.h"
 #include "ace/Service_Config.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
@@ -36,7 +37,7 @@ class TAO_LF_Strategy;
 class TAO_Codeset_Descriptor_Base;
 
 /**
- * @class TAO_Codeset_Parametes
+ * @class TAO_Codeset_Parameters
  *
  * @brief A simple storage class for the native codeset and any
  * translators that must be configured when creating an instance of
@@ -52,27 +53,32 @@ class TAO_Codeset_Descriptor_Base;
  *
  */
 class TAO_Export TAO_Codeset_Parameters
+  : ACE_Copy_Disabled
 {
-private:
-  ACE_Unbounded_Queue<ACE_TCHAR*> translators_;
-  ACE_TCHAR* native_;
-
-private:
-  TAO_Codeset_Parameters (const TAO_Codeset_Parameters&);
-  TAO_Codeset_Parameters& operator= (const TAO_Codeset_Parameters&);
-
-  typedef ACE_Unbounded_Queue_Iterator<ACE_TCHAR*> iterator;
-
 public:
   TAO_Codeset_Parameters (void);
   ~TAO_Codeset_Parameters (void);
+
+  /// The native codeset (getter)
   const ACE_TCHAR* native (void);
+
+  /// The native codeset (setter)
   void native (const ACE_TCHAR* n);
-  void add_translator (const ACE_TCHAR*name);
+
+  /// Add a new codeset
+  void add_translator (const ACE_TCHAR* name);
+
+  typedef ACE_Unbounded_Queue_Iterator<ACE_TCHAR*> iterator;
+
+  /// Iterate through the registered translators
   iterator translators (void);
 
   /// Apply the parameters to the said descriptor
   void apply_to (TAO_Codeset_Descriptor_Base *csd);
+
+private:
+  ACE_Unbounded_Queue<ACE_TCHAR*> translators_;
+  ACE_TCHAR* native_;
 };
 
 
@@ -275,8 +281,6 @@ protected:
   bool use_local_memory_pool_;
 
 private:
-  //  void init_codeset_descriptors (void);
-
   enum Lock_Type
   {
     TAO_NULL_LOCK,

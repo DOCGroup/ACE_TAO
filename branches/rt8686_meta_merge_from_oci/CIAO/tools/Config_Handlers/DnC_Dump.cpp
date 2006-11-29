@@ -736,16 +736,6 @@ namespace Deployment
     dump_sequence ("configProperty", pc.configProperty);
   }
 
-  // Requirement Satisfier
-  void DnC_Dump::dump (const Deployment::RequirementSatisfier& rs)
-  {
-    Dump_Obj dump_obj("RequirementSatisfier");
-
-    dump ("name", rs.name);
-    dump ("resourceType", rs.resourceType);
-    dump_sequence ("property", rs.property);
-  }
-
   // Property
   void DnC_Dump::dump (const Deployment::Property& property)
   {

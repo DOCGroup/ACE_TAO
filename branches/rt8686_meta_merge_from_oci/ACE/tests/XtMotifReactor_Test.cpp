@@ -31,7 +31,7 @@
 ACE_RCSID (tests,
            XtMotifReactor_Test,
            "$Id$")
-#include "ace/XtReactor.h"
+#include "ace/XtReactor/XtReactor.h"
 #include "ace/Event_Handler.h"
 #include "ace/Acceptor.h"
 #include "ace/SOCK_Acceptor.h"

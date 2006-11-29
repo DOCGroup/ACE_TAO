@@ -1,5 +1,5 @@
 // $Id$
-project : taoserver, minimum_corba, exceptions {
+project : taoserver, avoids_minimum_corba {
   libs += Quoter_Idl_Lib
   after += Quoter_Idl_Lib
 

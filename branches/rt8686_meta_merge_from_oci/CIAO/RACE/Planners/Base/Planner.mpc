@@ -6,8 +6,7 @@ project(Planner_stub): ciao_deployment_stub {
 
   after += Planner_Interface_stub RACE_common_stub
   sharedname = Planner_stub
-  idlflags += -Sc \
-              -Wb,stub_export_macro=PLANNER_STUB_Export \
+  idlflags += -Wb,stub_export_macro=PLANNER_STUB_Export \
               -Wb,stub_export_include=Planner_stub_export.h \
               -Wb,skel_export_macro=PLANNER_SVNT_Export \
               -Wb,skel_export_include=Planner_svnt_export.h
@@ -37,8 +36,7 @@ project(Planner_svnt) : ciao_servant_dnc {
   sharedname  = Planner_svnt
   libs    += Planner_Interface_stub Planner_Interface_svnt Planner_stub RACE_common_stub
 
-  idlflags += -Sc \
-              -Wb,stub_export_macro=PLANNER_STUB_Export \
+  idlflags += -Wb,stub_export_macro=PLANNER_STUB_Export \
               -Wb,stub_export_include=Planner_stub_export.h \
               -Wb,skel_export_macro=PLANNER_SVNT_Export \
               -Wb,skel_export_include=Planner_svnt_export.h

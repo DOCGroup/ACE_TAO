@@ -1,8 +1,8 @@
 // -*- MPC -*-
 // $Id$
 
-project : iormanip, portableserver, orbsvcslib, portablegroup, minimum_corba {
-  after     += FTORB_Utils 
-  libs      += TAO_FTORB_Utils 
+project : iormanip, portableserver, orbsvcslib, portablegroup, avoids_minimum_corba, avoids_corba_e_compact {
+  after     += FTORB_Utils
+  libs      += TAO_FTORB_Utils
   tagchecks += FTORB_Utils
 }

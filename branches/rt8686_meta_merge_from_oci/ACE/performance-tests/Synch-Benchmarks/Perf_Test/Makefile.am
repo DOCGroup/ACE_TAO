@@ -6,7 +6,7 @@
 ## this file will be lost the next time it is generated.
 ##
 ## MPC Command:
-## /acebuilds/ACE_wrappers-repository/bin/mwc.pl -include /acebuilds/MPC/config -include /acebuilds/MPC/templates -feature_file /acebuilds/ACE_wrappers-repository/local.features -noreldefs -type automake -exclude build,Kokyu
+## ./bin/mwc.pl -type automake -noreldefs ACE.mwc
 
 ACE_BUILDDIR = $(top_builddir)
 ACE_ROOT = $(top_srcdir)
@@ -16,14 +16,14 @@ ACE_ROOT = $(top_srcdir)
 
 if !BUILD_ACE_FOR_TAO
 
-noinst_LTLIBRARIES = libSynch_Benchmarks_Perf_Test.la
+noinst_LTLIBRARIES = libPerf_Test.la
 
-libSynch_Benchmarks_Perf_Test_la_CPPFLAGS = \
+libPerf_Test_la_CPPFLAGS = \
   -I$(ACE_ROOT) \
   -I$(ACE_BUILDDIR) \
   -I$(srcdir)/..
 
-libSynch_Benchmarks_Perf_Test_la_SOURCES = \
+libPerf_Test_la_SOURCES = \
   Adaptive_Lock_Performance_Test_Base.cpp \
   Benchmark_Performance.cpp \
   Performance_Test.cpp \
@@ -45,6 +45,15 @@ libSynch_Benchmarks_Perf_Test_la_SOURCES = \
   sema_test.cpp \
   sysvsema_test.cpp \
   token_test.cpp
+
+../Synch_Lib:
+	mkdir -p ../Synch_Lib
+
+libPerf_Test_la_DEPENDENCIES = \
+  ../Synch_Lib
+
+libPerf_Test_la_LDFLAGS = \
+ -L../Synch_Lib
 
 noinst_HEADERS = \
   Adaptive_Lock_Performance_Test_Base.h \

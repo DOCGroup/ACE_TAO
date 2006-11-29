@@ -47,7 +47,8 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 class TAO_Valuetype_Export TAO_ChunkInfo
 {
 public:
-  TAO_ChunkInfo(CORBA::Boolean do_chunking = 0, CORBA::Long init_level = 0);
+  TAO_ChunkInfo (CORBA::Boolean do_chunking = 0,
+                 CORBA::Long init_level = 0);
 
   /// Methods to support chunking.
   /// Note: These methods are called for both chunking and non-chunking
@@ -61,14 +62,14 @@ public:
   /// nesting level. The reservasion actually occurs the first time that
   /// the start_chunk is called if there are multiple continuous start_chunk()
   /// calls without the close_chunk() called in between.
-  CORBA::Boolean start_chunk(TAO_OutputCDR &strm);
+  CORBA::Boolean start_chunk (TAO_OutputCDR &strm);
 
   /// This is called in the _tao_marshal_state (). This method writes the
   /// actual chunk size to the reserved chunk size space and writes an end
   /// tag with the negation value of current nesting level. A start_chunk()
   /// needs an end_chunk() to close the current chunk. It's also needed for
   /// writing the outmost endtag to the stream.
-  CORBA::Boolean end_chunk(TAO_OutputCDR &strm);
+  CORBA::Boolean end_chunk (TAO_OutputCDR &strm);
 
   /// Methods for unmarshalling a valuetype.
 
@@ -81,12 +82,12 @@ public:
   CORBA::Boolean skip_chunks (TAO_InputCDR &strm);
   /// This is called in end_chunk(). It writes the actual chunk size to the
   /// reserved chunk size space.
-  CORBA::Boolean write_previous_chunk_size(TAO_OutputCDR &strm);
+  CORBA::Boolean write_previous_chunk_size (TAO_OutputCDR &strm);
   /// Reserve space for chunk size. The memory in the stream will be
   /// overwritten after all the chunk data is written. This method
   /// only allows the reservasion being made once if the reserved
   /// space has not been overwritten.
-  CORBA::Boolean reserve_chunk_size(TAO_OutputCDR &strm);
+  CORBA::Boolean reserve_chunk_size (TAO_OutputCDR &strm);
 
   /// A flag to indicate that this instance is actually involved in a chunked
   /// or truncatable valuetype.
@@ -142,10 +143,11 @@ namespace CORBA
     // dynamic casting
     static CORBA::ValueBase* _downcast (CORBA::ValueBase *);
 
+    /// TAO extension
+
     /// Used in the implementation of CORBA::Any
     static void _tao_any_destructor (void *);
-
-    /// TAO extension
+    virtual CORBA::TypeCode_ptr _tao_type (void) const = 0;
 
     /// Return the repository id of this valuetype.
     virtual const char * _tao_obv_repository_id (void) const = 0;
@@ -185,16 +187,16 @@ namespace CORBA
     /// Check repository id for value box type against what is
     /// in the CDR stream.
     static CORBA::Boolean _tao_validate_box_type (
-                                  TAO_InputCDR &strm,
-                                  const char * const repo_id_expected,
-                                  CORBA::Boolean & null_object);
+      TAO_InputCDR &strm,
+      const char * const repo_id_expected,
+      CORBA::Boolean & null_object);
 
   public:  // otherwise these cannot be called from a static function
 
-    /// during marshal jump to the most derived part
+    /// During marshal jump to the most derived part
     virtual CORBA::Boolean _tao_marshal_v (TAO_OutputCDR &) const = 0;
 
-    /// called after obtaining the fresh object from create_for_unmarshal ()
+    /// Called after obtaining the fresh object from create_for_unmarshal ()
     virtual CORBA::Boolean _tao_unmarshal_v (TAO_InputCDR &) = 0;
 
     /// Notify the truncated parent valuetype to skip the rest of the chunks

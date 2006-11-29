@@ -9,7 +9,7 @@ project(ICMG_Any_Bug_Hello_Server): taoserver {
   }
 }
 
-project(ICMG_Any_Bug_Hello_Client): taoclient, ifr_client, dynamicinterface, minimum_corba {
+project(ICMG_Any_Bug_Hello_Client): taoclient, ifr_client, dynamicinterface, avoids_minimum_corba {
   after += ICMG_Any_Bug_Hello_Server
   Source_Files {
     TestC.cpp

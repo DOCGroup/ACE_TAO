@@ -28,8 +28,7 @@ BUILT_SOURCES = \
   testS.h \
   testS.inl \
   testS_T.cpp \
-  testS_T.h \
-  testS_T.inl
+  testS_T.h
 
 CLEANFILES = \
   test-stamp \
@@ -40,10 +39,9 @@ CLEANFILES = \
   testS.h \
   testS.inl \
   testS_T.cpp \
-  testS_T.h \
-  testS_T.inl
+  testS_T.h
 
-testC.cpp testC.h testC.inl testS.cpp testS.h testS.inl testS_T.cpp testS_T.h testS_T.inl: test-stamp
+testC.cpp testC.h testC.inl testS.cpp testS.h testS.inl testS_T.cpp testS_T.h: test-stamp
 
 test-stamp: $(srcdir)/test.idl $(TAO_IDL_DEP)
 	$(TAO_IDL) $(TAO_IDLFLAGS) -Sa -St -GT $(srcdir)/test.idl
@@ -55,8 +53,8 @@ noinst_HEADERS = \
 
 ## Makefile.POA_TIE_Client.am
 
+if BUILD_EXCEPTIONS
 if !BUILD_ACE_FOR_TAO
-if !BUILD_MINIMUM_CORBA
 
 noinst_PROGRAMS += client
 
@@ -76,12 +74,12 @@ client_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
-endif !BUILD_MINIMUM_CORBA
 endif !BUILD_ACE_FOR_TAO
+endif BUILD_EXCEPTIONS
 
 ## Makefile.POA_TIE_Server.am
 
-if !BUILD_MINIMUM_CORBA
+if BUILD_EXCEPTIONS
 
 noinst_PROGRAMS += server
 
@@ -104,7 +102,7 @@ server_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
-endif !BUILD_MINIMUM_CORBA
+endif BUILD_EXCEPTIONS
 
 ## Clean up template repositories, etc.
 clean-local:

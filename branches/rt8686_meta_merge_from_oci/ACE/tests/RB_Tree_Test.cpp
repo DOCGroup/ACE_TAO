@@ -97,279 +97,413 @@ run_main (int, ACE_TCHAR *[])
   str_int_test.run_test ();
   str_str_test.run_test ();
 
-// ======= Stress Test contributed by Klaus H. Wolf <hw@cyland.com> ==================
+// ======= Stress Test contributed by Klaus H. Wolf <hw@cyland.com> =========
 
   ACE_RB_Tree<ACE_CString, int, ACE_Less_Than<ACE_CString>, ACE_Null_Mutex> tree;
 
   tree.bind (ACE_CString ("51"),  1);
-  ACE_ASSERT (tree.test_invariant () == 0);
+  if (0 != tree.test_invariant ())
+    ACE_ERROR ((LM_ERROR, ACE_TEXT ("Invariant failure at line %l\n")));
   tree.bind (ACE_CString ("13"),  2);
-  ACE_ASSERT (tree.test_invariant () == 0);
+  if (0 != tree.test_invariant ())
+    ACE_ERROR ((LM_ERROR, ACE_TEXT ("Invariant failure at line %l\n")));
   tree.bind (ACE_CString ("36"),  3);
-  ACE_ASSERT (tree.test_invariant () == 0);
+  if (0 != tree.test_invariant ())
+    ACE_ERROR ((LM_ERROR, ACE_TEXT ("Invariant failure at line %l\n")));
   tree.bind (ACE_CString ("15"),  4);
-  ACE_ASSERT (tree.test_invariant () == 0);
+  if (0 != tree.test_invariant ())
+    ACE_ERROR ((LM_ERROR, ACE_TEXT ("Invariant failure at line %l\n")));
   tree.bind (ACE_CString ("22"),  5);
-  ACE_ASSERT (tree.test_invariant () == 0);
+  if (0 != tree.test_invariant ())
+    ACE_ERROR ((LM_ERROR, ACE_TEXT ("Invariant failure at line %l\n")));
   tree.bind (ACE_CString ("25"),  6);
-  ACE_ASSERT (tree.test_invariant () == 0);
+  if (0 != tree.test_invariant ())
+    ACE_ERROR ((LM_ERROR, ACE_TEXT ("Invariant failure at line %l\n")));
   tree.bind (ACE_CString ("42"),  7);
-  ACE_ASSERT (tree.test_invariant () == 0);
+  if (0 != tree.test_invariant ())
+    ACE_ERROR ((LM_ERROR, ACE_TEXT ("Invariant failure at line %l\n")));
   tree.bind (ACE_CString ("48"),  8);
-  ACE_ASSERT (tree.test_invariant () == 0);
+  if (0 != tree.test_invariant ())
+    ACE_ERROR ((LM_ERROR, ACE_TEXT ("Invariant failure at line %l\n")));
   tree.bind (ACE_CString ("03"),  9);
-  ACE_ASSERT (tree.test_invariant () == 0);
+  if (0 != tree.test_invariant ())
+    ACE_ERROR ((LM_ERROR, ACE_TEXT ("Invariant failure at line %l\n")));
   tree.bind (ACE_CString ("56"), 10);
-  ACE_ASSERT (tree.test_invariant () == 0);
+  if (0 != tree.test_invariant ())
+    ACE_ERROR ((LM_ERROR, ACE_TEXT ("Invariant failure at line %l\n")));
   tree.bind (ACE_CString ("28"), 11);
-  ACE_ASSERT (tree.test_invariant () == 0);
+  if (0 != tree.test_invariant ())
+    ACE_ERROR ((LM_ERROR, ACE_TEXT ("Invariant failure at line %l\n")));
   tree.bind (ACE_CString ("55"), 12);
-  ACE_ASSERT (tree.test_invariant () == 0);
+  if (0 != tree.test_invariant ())
+    ACE_ERROR ((LM_ERROR, ACE_TEXT ("Invariant failure at line %l\n")));
   tree.bind (ACE_CString ("21"), 13);
-  ACE_ASSERT (tree.test_invariant () == 0);
+  if (0 != tree.test_invariant ())
+    ACE_ERROR ((LM_ERROR, ACE_TEXT ("Invariant failure at line %l\n")));
   tree.bind (ACE_CString ("62"), 14);
-  ACE_ASSERT (tree.test_invariant () == 0);
+  if (0 != tree.test_invariant ())
+    ACE_ERROR ((LM_ERROR, ACE_TEXT ("Invariant failure at line %l\n")));
   tree.bind (ACE_CString ("18"), 15);
-  ACE_ASSERT (tree.test_invariant () == 0);
+  if (0 != tree.test_invariant ())
+    ACE_ERROR ((LM_ERROR, ACE_TEXT ("Invariant failure at line %l\n")));
   tree.bind (ACE_CString ("20"), 16);
-  ACE_ASSERT (tree.test_invariant () == 0);
+  if (0 != tree.test_invariant ())
+    ACE_ERROR ((LM_ERROR, ACE_TEXT ("Invariant failure at line %l\n")));
   tree.bind (ACE_CString ("26"), 17);
-  ACE_ASSERT (tree.test_invariant () == 0);
+  if (0 != tree.test_invariant ())
+    ACE_ERROR ((LM_ERROR, ACE_TEXT ("Invariant failure at line %l\n")));
   tree.bind (ACE_CString ("29"), 18);
-  ACE_ASSERT (tree.test_invariant () == 0);
+  if (0 != tree.test_invariant ())
+    ACE_ERROR ((LM_ERROR, ACE_TEXT ("Invariant failure at line %l\n")));
   tree.bind (ACE_CString ("50"), 19);
-  ACE_ASSERT (tree.test_invariant () == 0);
+  if (0 != tree.test_invariant ())
+    ACE_ERROR ((LM_ERROR, ACE_TEXT ("Invariant failure at line %l\n")));
   tree.bind (ACE_CString ("05"), 20);
-  ACE_ASSERT (tree.test_invariant () == 0);
+  if (0 != tree.test_invariant ())
+    ACE_ERROR ((LM_ERROR, ACE_TEXT ("Invariant failure at line %l\n")));
   tree.bind (ACE_CString ("59"), 21);
-  ACE_ASSERT (tree.test_invariant () == 0);
+  if (0 != tree.test_invariant ())
+    ACE_ERROR ((LM_ERROR, ACE_TEXT ("Invariant failure at line %l\n")));
   tree.bind (ACE_CString ("65"), 22);
-  ACE_ASSERT (tree.test_invariant () == 0);
+  if (0 != tree.test_invariant ())
+    ACE_ERROR ((LM_ERROR, ACE_TEXT ("Invariant failure at line %l\n")));
   tree.bind (ACE_CString ("66"), 23);
-  ACE_ASSERT (tree.test_invariant () == 0);
+  if (0 != tree.test_invariant ())
+    ACE_ERROR ((LM_ERROR, ACE_TEXT ("Invariant failure at line %l\n")));
   tree.bind (ACE_CString ("45"), 24);
-  ACE_ASSERT (tree.test_invariant () == 0);
+  if (0 != tree.test_invariant ())
+    ACE_ERROR ((LM_ERROR, ACE_TEXT ("Invariant failure at line %l\n")));
   tree.bind (ACE_CString ("34"), 25);
-  ACE_ASSERT (tree.test_invariant () == 0);
+  if (0 != tree.test_invariant ())
+    ACE_ERROR ((LM_ERROR, ACE_TEXT ("Invariant failure at line %l\n")));
   tree.bind (ACE_CString ("27"), 26);
-  ACE_ASSERT (tree.test_invariant () == 0);
+  if (0 != tree.test_invariant ())
+    ACE_ERROR ((LM_ERROR, ACE_TEXT ("Invariant failure at line %l\n")));
   tree.bind (ACE_CString ("40"), 27);
-  ACE_ASSERT (tree.test_invariant () == 0);
+  if (0 != tree.test_invariant ())
+    ACE_ERROR ((LM_ERROR, ACE_TEXT ("Invariant failure at line %l\n")));
   tree.bind (ACE_CString ("30"), 28);
-  ACE_ASSERT (tree.test_invariant () == 0);
+  if (0 != tree.test_invariant ())
+    ACE_ERROR ((LM_ERROR, ACE_TEXT ("Invariant failure at line %l\n")));
   tree.bind (ACE_CString ("64"), 29);
-  ACE_ASSERT (tree.test_invariant () == 0);
+  if (0 != tree.test_invariant ())
+    ACE_ERROR ((LM_ERROR, ACE_TEXT ("Invariant failure at line %l\n")));
   tree.bind (ACE_CString ("11"), 30);
-  ACE_ASSERT (tree.test_invariant () == 0);
+  if (0 != tree.test_invariant ())
+    ACE_ERROR ((LM_ERROR, ACE_TEXT ("Invariant failure at line %l\n")));
   tree.bind (ACE_CString ("16"), 31);
-  ACE_ASSERT (tree.test_invariant () == 0);
+  if (0 != tree.test_invariant ())
+    ACE_ERROR ((LM_ERROR, ACE_TEXT ("Invariant failure at line %l\n")));
   tree.bind (ACE_CString ("47"), 32);
-  ACE_ASSERT (tree.test_invariant () == 0);
+  if (0 != tree.test_invariant ())
+    ACE_ERROR ((LM_ERROR, ACE_TEXT ("Invariant failure at line %l\n")));
   tree.bind (ACE_CString ("10"), 33);
-  ACE_ASSERT (tree.test_invariant () == 0);
+  if (0 != tree.test_invariant ())
+    ACE_ERROR ((LM_ERROR, ACE_TEXT ("Invariant failure at line %l\n")));
   tree.bind (ACE_CString ("37"), 34);
-  ACE_ASSERT (tree.test_invariant () == 0);
+  if (0 != tree.test_invariant ())
+    ACE_ERROR ((LM_ERROR, ACE_TEXT ("Invariant failure at line %l\n")));
   tree.bind (ACE_CString ("09"), 35);
-  ACE_ASSERT (tree.test_invariant () == 0);
+  if (0 != tree.test_invariant ())
+    ACE_ERROR ((LM_ERROR, ACE_TEXT ("Invariant failure at line %l\n")));
   tree.bind (ACE_CString ("54"), 36);
-  ACE_ASSERT (tree.test_invariant () == 0);
+  if (0 != tree.test_invariant ())
+    ACE_ERROR ((LM_ERROR, ACE_TEXT ("Invariant failure at line %l\n")));
   tree.bind (ACE_CString ("23"), 37);
-  ACE_ASSERT (tree.test_invariant () == 0);
+  if (0 != tree.test_invariant ())
+    ACE_ERROR ((LM_ERROR, ACE_TEXT ("Invariant failure at line %l\n")));
   tree.bind (ACE_CString ("44"), 38);
-  ACE_ASSERT (tree.test_invariant () == 0);
+  if (0 != tree.test_invariant ())
+    ACE_ERROR ((LM_ERROR, ACE_TEXT ("Invariant failure at line %l\n")));
   tree.bind (ACE_CString ("19"), 39);
-  ACE_ASSERT (tree.test_invariant () == 0);
+  if (0 != tree.test_invariant ())
+    ACE_ERROR ((LM_ERROR, ACE_TEXT ("Invariant failure at line %l\n")));
   tree.bind (ACE_CString ("00"), 40);
-  ACE_ASSERT (tree.test_invariant () == 0);
+  if (0 != tree.test_invariant ())
+    ACE_ERROR ((LM_ERROR, ACE_TEXT ("Invariant failure at line %l\n")));
   tree.bind (ACE_CString ("04"), 41);
-  ACE_ASSERT (tree.test_invariant () == 0);
+  if (0 != tree.test_invariant ())
+    ACE_ERROR ((LM_ERROR, ACE_TEXT ("Invariant failure at line %l\n")));
   tree.bind (ACE_CString ("63"), 42);
-  ACE_ASSERT (tree.test_invariant () == 0);
+  if (0 != tree.test_invariant ())
+    ACE_ERROR ((LM_ERROR, ACE_TEXT ("Invariant failure at line %l\n")));
   tree.bind (ACE_CString ("08"), 43);
-  ACE_ASSERT (tree.test_invariant () == 0);
+  if (0 != tree.test_invariant ())
+    ACE_ERROR ((LM_ERROR, ACE_TEXT ("Invariant failure at line %l\n")));
   tree.bind (ACE_CString ("39"), 44);
-  ACE_ASSERT (tree.test_invariant () == 0);
+  if (0 != tree.test_invariant ())
+    ACE_ERROR ((LM_ERROR, ACE_TEXT ("Invariant failure at line %l\n")));
   tree.bind (ACE_CString ("31"), 45);
-  ACE_ASSERT (tree.test_invariant () == 0);
+  if (0 != tree.test_invariant ())
+    ACE_ERROR ((LM_ERROR, ACE_TEXT ("Invariant failure at line %l\n")));
   tree.bind (ACE_CString ("02"), 46);
-  ACE_ASSERT (tree.test_invariant () == 0);
+  if (0 != tree.test_invariant ())
+    ACE_ERROR ((LM_ERROR, ACE_TEXT ("Invariant failure at line %l\n")));
   tree.bind (ACE_CString ("33"), 47);
-  ACE_ASSERT (tree.test_invariant () == 0);
+  if (0 != tree.test_invariant ())
+    ACE_ERROR ((LM_ERROR, ACE_TEXT ("Invariant failure at line %l\n")));
   tree.bind (ACE_CString ("60"), 48);
-  ACE_ASSERT (tree.test_invariant () == 0);
+  if (0 != tree.test_invariant ())
+    ACE_ERROR ((LM_ERROR, ACE_TEXT ("Invariant failure at line %l\n")));
   tree.bind (ACE_CString ("61"), 49);
-  ACE_ASSERT (tree.test_invariant () == 0);
+  if (0 != tree.test_invariant ())
+    ACE_ERROR ((LM_ERROR, ACE_TEXT ("Invariant failure at line %l\n")));
   tree.bind (ACE_CString ("57"), 50);
-  ACE_ASSERT (tree.test_invariant () == 0);
+  if (0 != tree.test_invariant ())
+    ACE_ERROR ((LM_ERROR, ACE_TEXT ("Invariant failure at line %l\n")));
   tree.bind (ACE_CString ("43"), 51);
-  ACE_ASSERT (tree.test_invariant () == 0);
+  if (0 != tree.test_invariant ())
+    ACE_ERROR ((LM_ERROR, ACE_TEXT ("Invariant failure at line %l\n")));
   tree.bind (ACE_CString ("46"), 52);
-  ACE_ASSERT (tree.test_invariant () == 0);
+  if (0 != tree.test_invariant ())
+    ACE_ERROR ((LM_ERROR, ACE_TEXT ("Invariant failure at line %l\n")));
   tree.bind (ACE_CString ("38"), 53);
-  ACE_ASSERT (tree.test_invariant () == 0);
+  if (0 != tree.test_invariant ())
+    ACE_ERROR ((LM_ERROR, ACE_TEXT ("Invariant failure at line %l\n")));
   tree.bind (ACE_CString ("01"), 54);
-  ACE_ASSERT (tree.test_invariant () == 0);
+  if (0 != tree.test_invariant ())
+    ACE_ERROR ((LM_ERROR, ACE_TEXT ("Invariant failure at line %l\n")));
   tree.bind (ACE_CString ("12"), 55);
-  ACE_ASSERT (tree.test_invariant () == 0);
+  if (0 != tree.test_invariant ())
+    ACE_ERROR ((LM_ERROR, ACE_TEXT ("Invariant failure at line %l\n")));
   tree.bind (ACE_CString ("24"), 56);
-  ACE_ASSERT (tree.test_invariant () == 0);
+  if (0 != tree.test_invariant ())
+    ACE_ERROR ((LM_ERROR, ACE_TEXT ("Invariant failure at line %l\n")));
   tree.bind (ACE_CString ("52"), 57);
-  ACE_ASSERT (tree.test_invariant () == 0);
+  if (0 != tree.test_invariant ())
+    ACE_ERROR ((LM_ERROR, ACE_TEXT ("Invariant failure at line %l\n")));
   tree.bind (ACE_CString ("07"), 58);
-  ACE_ASSERT (tree.test_invariant () == 0);
+  if (0 != tree.test_invariant ())
+    ACE_ERROR ((LM_ERROR, ACE_TEXT ("Invariant failure at line %l\n")));
   tree.bind (ACE_CString ("14"), 59);
-  ACE_ASSERT (tree.test_invariant () == 0);
+  if (0 != tree.test_invariant ())
+    ACE_ERROR ((LM_ERROR, ACE_TEXT ("Invariant failure at line %l\n")));
   tree.bind (ACE_CString ("06"), 60);
-  ACE_ASSERT (tree.test_invariant () == 0);
+  if (0 != tree.test_invariant ())
+    ACE_ERROR ((LM_ERROR, ACE_TEXT ("Invariant failure at line %l\n")));
   tree.bind (ACE_CString ("58"), 61);
-  ACE_ASSERT (tree.test_invariant () == 0);
+  if (0 != tree.test_invariant ())
+    ACE_ERROR ((LM_ERROR, ACE_TEXT ("Invariant failure at line %l\n")));
   tree.bind (ACE_CString ("49"), 62);
-  ACE_ASSERT (tree.test_invariant () == 0);
+  if (0 != tree.test_invariant ())
+    ACE_ERROR ((LM_ERROR, ACE_TEXT ("Invariant failure at line %l\n")));
   tree.bind (ACE_CString ("17"), 63);
-  ACE_ASSERT (tree.test_invariant () == 0);
+  if (0 != tree.test_invariant ())
+    ACE_ERROR ((LM_ERROR, ACE_TEXT ("Invariant failure at line %l\n")));
   tree.bind (ACE_CString ("53"), 64);
-  ACE_ASSERT (tree.test_invariant () == 0);
+  if (0 != tree.test_invariant ())
+    ACE_ERROR ((LM_ERROR, ACE_TEXT ("Invariant failure at line %l\n")));
   tree.bind (ACE_CString ("32"), 65);
-  ACE_ASSERT (tree.test_invariant () == 0);
+  if (0 != tree.test_invariant ())
+    ACE_ERROR ((LM_ERROR, ACE_TEXT ("Invariant failure at line %l\n")));
   tree.bind (ACE_CString ("35"), 66);
-  ACE_ASSERT (tree.test_invariant () == 0);
+  if (0 != tree.test_invariant ())
+    ACE_ERROR ((LM_ERROR, ACE_TEXT ("Invariant failure at line %l\n")));
   tree.bind (ACE_CString ("41"), 67);
-  ACE_ASSERT (tree.test_invariant () == 0);
+  if (0 != tree.test_invariant ())
+    ACE_ERROR ((LM_ERROR, ACE_TEXT ("Invariant failure at line %l\n")));
 
   tree.unbind (ACE_CString ("51"));
-  ACE_ASSERT (tree.test_invariant () == 0);
+  if (0 != tree.test_invariant ())
+    ACE_ERROR ((LM_ERROR, ACE_TEXT ("Invariant failure at line %l\n")));
   tree.unbind (ACE_CString ("13"));
-  ACE_ASSERT (tree.test_invariant () == 0);
+  if (0 != tree.test_invariant ())
+    ACE_ERROR ((LM_ERROR, ACE_TEXT ("Invariant failure at line %l\n")));
   tree.unbind (ACE_CString ("36"));
-  ACE_ASSERT (tree.test_invariant () == 0);
+  if (0 != tree.test_invariant ())
+    ACE_ERROR ((LM_ERROR, ACE_TEXT ("Invariant failure at line %l\n")));
   tree.unbind (ACE_CString ("15"));
-  ACE_ASSERT (tree.test_invariant () == 0);
+  if (0 != tree.test_invariant ())
+    ACE_ERROR ((LM_ERROR, ACE_TEXT ("Invariant failure at line %l\n")));
   tree.unbind (ACE_CString ("22"));
-  ACE_ASSERT (tree.test_invariant () == 0);
+  if (0 != tree.test_invariant ())
+    ACE_ERROR ((LM_ERROR, ACE_TEXT ("Invariant failure at line %l\n")));
   tree.unbind (ACE_CString ("25"));
-  ACE_ASSERT (tree.test_invariant () == 0);
+  if (0 != tree.test_invariant ())
+    ACE_ERROR ((LM_ERROR, ACE_TEXT ("Invariant failure at line %l\n")));
   tree.unbind (ACE_CString ("42"));
-  ACE_ASSERT (tree.test_invariant () == 0);
+  if (0 != tree.test_invariant ())
+    ACE_ERROR ((LM_ERROR, ACE_TEXT ("Invariant failure at line %l\n")));
   tree.unbind (ACE_CString ("48"));
-  ACE_ASSERT (tree.test_invariant () == 0);
+  if (0 != tree.test_invariant ())
+    ACE_ERROR ((LM_ERROR, ACE_TEXT ("Invariant failure at line %l\n")));
   tree.unbind (ACE_CString ("03"));
-  ACE_ASSERT (tree.test_invariant () == 0);
+  if (0 != tree.test_invariant ())
+    ACE_ERROR ((LM_ERROR, ACE_TEXT ("Invariant failure at line %l\n")));
   tree.unbind (ACE_CString ("56"));
-  ACE_ASSERT (tree.test_invariant () == 0);
+  if (0 != tree.test_invariant ())
+    ACE_ERROR ((LM_ERROR, ACE_TEXT ("Invariant failure at line %l\n")));
   tree.unbind (ACE_CString ("28"));
-  ACE_ASSERT (tree.test_invariant () == 0);
+  if (0 != tree.test_invariant ())
+    ACE_ERROR ((LM_ERROR, ACE_TEXT ("Invariant failure at line %l\n")));
   tree.unbind (ACE_CString ("55"));
-  ACE_ASSERT (tree.test_invariant () == 0);
+  if (0 != tree.test_invariant ())
+    ACE_ERROR ((LM_ERROR, ACE_TEXT ("Invariant failure at line %l\n")));
   tree.unbind (ACE_CString ("21"));
-  ACE_ASSERT (tree.test_invariant () == 0);
+  if (0 != tree.test_invariant ())
+    ACE_ERROR ((LM_ERROR, ACE_TEXT ("Invariant failure at line %l\n")));
   tree.unbind (ACE_CString ("62"));
-  ACE_ASSERT (tree.test_invariant () == 0);
+  if (0 != tree.test_invariant ())
+    ACE_ERROR ((LM_ERROR, ACE_TEXT ("Invariant failure at line %l\n")));
   tree.unbind (ACE_CString ("18"));
-  ACE_ASSERT (tree.test_invariant () == 0);
+  if (0 != tree.test_invariant ())
+    ACE_ERROR ((LM_ERROR, ACE_TEXT ("Invariant failure at line %l\n")));
   tree.unbind (ACE_CString ("20"));
-  ACE_ASSERT (tree.test_invariant () == 0);
+  if (0 != tree.test_invariant ())
+    ACE_ERROR ((LM_ERROR, ACE_TEXT ("Invariant failure at line %l\n")));
   tree.unbind (ACE_CString ("26"));
-  ACE_ASSERT (tree.test_invariant () == 0);
+  if (0 != tree.test_invariant ())
+    ACE_ERROR ((LM_ERROR, ACE_TEXT ("Invariant failure at line %l\n")));
   tree.unbind (ACE_CString ("29"));
-  ACE_ASSERT (tree.test_invariant () == 0);
+  if (0 != tree.test_invariant ())
+    ACE_ERROR ((LM_ERROR, ACE_TEXT ("Invariant failure at line %l\n")));
   tree.unbind (ACE_CString ("50"));
-  ACE_ASSERT (tree.test_invariant () == 0);
+  if (0 != tree.test_invariant ())
+    ACE_ERROR ((LM_ERROR, ACE_TEXT ("Invariant failure at line %l\n")));
   tree.unbind (ACE_CString ("05"));
-  ACE_ASSERT (tree.test_invariant () == 0);
+  if (0 != tree.test_invariant ())
+    ACE_ERROR ((LM_ERROR, ACE_TEXT ("Invariant failure at line %l\n")));
   tree.unbind (ACE_CString ("59"));
-  ACE_ASSERT (tree.test_invariant () == 0);
+  if (0 != tree.test_invariant ())
+    ACE_ERROR ((LM_ERROR, ACE_TEXT ("Invariant failure at line %l\n")));
   tree.unbind (ACE_CString ("65"));
-  ACE_ASSERT (tree.test_invariant () == 0);
+  if (0 != tree.test_invariant ())
+    ACE_ERROR ((LM_ERROR, ACE_TEXT ("Invariant failure at line %l\n")));
   tree.unbind (ACE_CString ("66"));
-  ACE_ASSERT (tree.test_invariant () == 0);
+  if (0 != tree.test_invariant ())
+    ACE_ERROR ((LM_ERROR, ACE_TEXT ("Invariant failure at line %l\n")));
   tree.unbind (ACE_CString ("45"));
-  ACE_ASSERT (tree.test_invariant () == 0);
+  if (0 != tree.test_invariant ())
+    ACE_ERROR ((LM_ERROR, ACE_TEXT ("Invariant failure at line %l\n")));
   tree.unbind (ACE_CString ("34"));
-  ACE_ASSERT (tree.test_invariant () == 0);
+  if (0 != tree.test_invariant ())
+    ACE_ERROR ((LM_ERROR, ACE_TEXT ("Invariant failure at line %l\n")));
   tree.unbind (ACE_CString ("27"));
-  ACE_ASSERT (tree.test_invariant () == 0);
+  if (0 != tree.test_invariant ())
+    ACE_ERROR ((LM_ERROR, ACE_TEXT ("Invariant failure at line %l\n")));
   tree.unbind (ACE_CString ("40"));
-  ACE_ASSERT (tree.test_invariant () == 0);
+  if (0 != tree.test_invariant ())
+    ACE_ERROR ((LM_ERROR, ACE_TEXT ("Invariant failure at line %l\n")));
   tree.unbind (ACE_CString ("30"));
-  ACE_ASSERT (tree.test_invariant () == 0);
+  if (0 != tree.test_invariant ())
+    ACE_ERROR ((LM_ERROR, ACE_TEXT ("Invariant failure at line %l\n")));
   tree.unbind (ACE_CString ("64"));
-  ACE_ASSERT (tree.test_invariant () == 0);
+  if (0 != tree.test_invariant ())
+    ACE_ERROR ((LM_ERROR, ACE_TEXT ("Invariant failure at line %l\n")));
   tree.unbind (ACE_CString ("11"));
-  ACE_ASSERT (tree.test_invariant () == 0);
+  if (0 != tree.test_invariant ())
+    ACE_ERROR ((LM_ERROR, ACE_TEXT ("Invariant failure at line %l\n")));
   tree.unbind (ACE_CString ("16"));
-  ACE_ASSERT (tree.test_invariant () == 0);
+  if (0 != tree.test_invariant ())
+    ACE_ERROR ((LM_ERROR, ACE_TEXT ("Invariant failure at line %l\n")));
   tree.unbind (ACE_CString ("47"));
-  ACE_ASSERT (tree.test_invariant () == 0);
+  if (0 != tree.test_invariant ())
+    ACE_ERROR ((LM_ERROR, ACE_TEXT ("Invariant failure at line %l\n")));
   tree.unbind (ACE_CString ("10"));
-  ACE_ASSERT (tree.test_invariant () == 0);
+  if (0 != tree.test_invariant ())
+    ACE_ERROR ((LM_ERROR, ACE_TEXT ("Invariant failure at line %l\n")));
   tree.unbind (ACE_CString ("37"));
-  ACE_ASSERT (tree.test_invariant () == 0);
+  if (0 != tree.test_invariant ())
+    ACE_ERROR ((LM_ERROR, ACE_TEXT ("Invariant failure at line %l\n")));
   tree.unbind (ACE_CString ("09"));
-  ACE_ASSERT (tree.test_invariant () == 0);
+  if (0 != tree.test_invariant ())
+    ACE_ERROR ((LM_ERROR, ACE_TEXT ("Invariant failure at line %l\n")));
   tree.unbind (ACE_CString ("54"));
-  ACE_ASSERT (tree.test_invariant () == 0);
+  if (0 != tree.test_invariant ())
+    ACE_ERROR ((LM_ERROR, ACE_TEXT ("Invariant failure at line %l\n")));
   tree.unbind (ACE_CString ("23"));
-  ACE_ASSERT (tree.test_invariant () == 0);
+  if (0 != tree.test_invariant ())
+    ACE_ERROR ((LM_ERROR, ACE_TEXT ("Invariant failure at line %l\n")));
   tree.unbind (ACE_CString ("44"));
-  ACE_ASSERT (tree.test_invariant () == 0);
+  if (0 != tree.test_invariant ())
+    ACE_ERROR ((LM_ERROR, ACE_TEXT ("Invariant failure at line %l\n")));
   tree.unbind (ACE_CString ("19"));
-  ACE_ASSERT (tree.test_invariant () == 0);
+  if (0 != tree.test_invariant ())
+    ACE_ERROR ((LM_ERROR, ACE_TEXT ("Invariant failure at line %l\n")));
   tree.unbind (ACE_CString ("00"));
-  ACE_ASSERT (tree.test_invariant () == 0);
+  if (0 != tree.test_invariant ())
+    ACE_ERROR ((LM_ERROR, ACE_TEXT ("Invariant failure at line %l\n")));
   tree.unbind (ACE_CString ("04"));
-  ACE_ASSERT (tree.test_invariant () == 0);
+  if (0 != tree.test_invariant ())
+    ACE_ERROR ((LM_ERROR, ACE_TEXT ("Invariant failure at line %l\n")));
   tree.unbind (ACE_CString ("63"));
-  ACE_ASSERT (tree.test_invariant () == 0);
+  if (0 != tree.test_invariant ())
+    ACE_ERROR ((LM_ERROR, ACE_TEXT ("Invariant failure at line %l\n")));
   tree.unbind (ACE_CString ("08"));
-  ACE_ASSERT (tree.test_invariant () == 0);
+  if (0 != tree.test_invariant ())
+    ACE_ERROR ((LM_ERROR, ACE_TEXT ("Invariant failure at line %l\n")));
   tree.unbind (ACE_CString ("39"));
-  ACE_ASSERT (tree.test_invariant () == 0);
+  if (0 != tree.test_invariant ())
+    ACE_ERROR ((LM_ERROR, ACE_TEXT ("Invariant failure at line %l\n")));
   tree.unbind (ACE_CString ("31"));
-  ACE_ASSERT (tree.test_invariant () == 0);
+  if (0 != tree.test_invariant ())
+    ACE_ERROR ((LM_ERROR, ACE_TEXT ("Invariant failure at line %l\n")));
   tree.unbind (ACE_CString ("02"));
-  ACE_ASSERT (tree.test_invariant () == 0);
+  if (0 != tree.test_invariant ())
+    ACE_ERROR ((LM_ERROR, ACE_TEXT ("Invariant failure at line %l\n")));
   tree.unbind (ACE_CString ("33"));
-  ACE_ASSERT (tree.test_invariant () == 0);
+  if (0 != tree.test_invariant ())
+    ACE_ERROR ((LM_ERROR, ACE_TEXT ("Invariant failure at line %l\n")));
   tree.unbind (ACE_CString ("60"));
-  ACE_ASSERT (tree.test_invariant () == 0);
+  if (0 != tree.test_invariant ())
+    ACE_ERROR ((LM_ERROR, ACE_TEXT ("Invariant failure at line %l\n")));
   tree.unbind (ACE_CString ("61"));
-  ACE_ASSERT (tree.test_invariant () == 0);
+  if (0 != tree.test_invariant ())
+    ACE_ERROR ((LM_ERROR, ACE_TEXT ("Invariant failure at line %l\n")));
   tree.unbind (ACE_CString ("57"));
-  ACE_ASSERT (tree.test_invariant () == 0);
+  if (0 != tree.test_invariant ())
+    ACE_ERROR ((LM_ERROR, ACE_TEXT ("Invariant failure at line %l\n")));
   tree.unbind (ACE_CString ("43"));
-  ACE_ASSERT (tree.test_invariant () == 0);
+  if (0 != tree.test_invariant ())
+    ACE_ERROR ((LM_ERROR, ACE_TEXT ("Invariant failure at line %l\n")));
   tree.unbind (ACE_CString ("46"));
-  ACE_ASSERT (tree.test_invariant () == 0);
+  if (0 != tree.test_invariant ())
+    ACE_ERROR ((LM_ERROR, ACE_TEXT ("Invariant failure at line %l\n")));
   tree.unbind (ACE_CString ("38"));
-  ACE_ASSERT (tree.test_invariant () == 0);
+  if (0 != tree.test_invariant ())
+    ACE_ERROR ((LM_ERROR, ACE_TEXT ("Invariant failure at line %l\n")));
   tree.unbind (ACE_CString ("01"));
-  ACE_ASSERT (tree.test_invariant () == 0);
+  if (0 != tree.test_invariant ())
+    ACE_ERROR ((LM_ERROR, ACE_TEXT ("Invariant failure at line %l\n")));
   tree.unbind (ACE_CString ("12"));
-  ACE_ASSERT (tree.test_invariant () == 0);
+  if (0 != tree.test_invariant ())
+    ACE_ERROR ((LM_ERROR, ACE_TEXT ("Invariant failure at line %l\n")));
   tree.unbind (ACE_CString ("24"));
-  ACE_ASSERT (tree.test_invariant () == 0);
+  if (0 != tree.test_invariant ())
+    ACE_ERROR ((LM_ERROR, ACE_TEXT ("Invariant failure at line %l\n")));
   tree.unbind (ACE_CString ("52"));
-  ACE_ASSERT (tree.test_invariant () == 0);
+  if (0 != tree.test_invariant ())
+    ACE_ERROR ((LM_ERROR, ACE_TEXT ("Invariant failure at line %l\n")));
   tree.unbind (ACE_CString ("07"));
-  ACE_ASSERT (tree.test_invariant () == 0);
+  if (0 != tree.test_invariant ())
+    ACE_ERROR ((LM_ERROR, ACE_TEXT ("Invariant failure at line %l\n")));
   tree.unbind (ACE_CString ("14"));
-  ACE_ASSERT (tree.test_invariant () == 0);
+  if (0 != tree.test_invariant ())
+    ACE_ERROR ((LM_ERROR, ACE_TEXT ("Invariant failure at line %l\n")));
   tree.unbind (ACE_CString ("06"));
-  ACE_ASSERT (tree.test_invariant () == 0);
+  if (0 != tree.test_invariant ())
+    ACE_ERROR ((LM_ERROR, ACE_TEXT ("Invariant failure at line %l\n")));
   tree.unbind (ACE_CString ("58"));
-  ACE_ASSERT (tree.test_invariant () == 0);
+  if (0 != tree.test_invariant ())
+    ACE_ERROR ((LM_ERROR, ACE_TEXT ("Invariant failure at line %l\n")));
   tree.unbind (ACE_CString ("49"));
-  ACE_ASSERT (tree.test_invariant () == 0);
+  if (0 != tree.test_invariant ())
+    ACE_ERROR ((LM_ERROR, ACE_TEXT ("Invariant failure at line %l\n")));
   tree.unbind (ACE_CString ("17"));
-  ACE_ASSERT (tree.test_invariant () == 0);
+  if (0 != tree.test_invariant ())
+    ACE_ERROR ((LM_ERROR, ACE_TEXT ("Invariant failure at line %l\n")));
   tree.unbind (ACE_CString ("53"));
-  ACE_ASSERT (tree.test_invariant () == 0);
+  if (0 != tree.test_invariant ())
+    ACE_ERROR ((LM_ERROR, ACE_TEXT ("Invariant failure at line %l\n")));
   tree.unbind (ACE_CString ("32"));
-  ACE_ASSERT (tree.test_invariant () == 0);
+  if (0 != tree.test_invariant ())
+    ACE_ERROR ((LM_ERROR, ACE_TEXT ("Invariant failure at line %l\n")));
   tree.unbind (ACE_CString ("35"));
-  ACE_ASSERT (tree.test_invariant () == 0);
+  if (0 != tree.test_invariant ())
+    ACE_ERROR ((LM_ERROR, ACE_TEXT ("Invariant failure at line %l\n")));
   tree.unbind (ACE_CString ("41"));
-  ACE_ASSERT (tree.test_invariant () == 0);
+  if (0 != tree.test_invariant ())
+    ACE_ERROR ((LM_ERROR, ACE_TEXT ("Invariant failure at line %l\n")));
 
 // ======== End Stress Test ===================
 
@@ -432,20 +566,32 @@ ACE_RB_Tree_Test<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::test_tree_insertion (v
     {
       INT_ID item;
       int k = order_index_ [i];
-      ACE_ASSERT (k >= 0 && k < entry_count_);
+      if (!(k >= 0 && k < entry_count_))
+        ACE_ERROR ((LM_ERROR, ACE_TEXT ("Assert failure at line %l\n")));
 
       // Test the new stable ACE_Hash_Map_Manager_Ex compliant interface.
-      ACE_ASSERT (stable_tree_.bind (key_array_ [k],
-                                     item_array_ [k]) == 0);
-      ACE_ASSERT (stable_tree_.find (key_array_ [k], item) == 0
-                  && item == item_array_ [k]);
+      if (0 != stable_tree_.bind (key_array_ [k], item_array_ [k]))
+        ACE_ERROR ((LM_ERROR,
+                    ACE_TEXT ("Stable bind %p\n"),
+                    ACE_TEXT ("failure")));
+
+      if (0 != stable_tree_.find (key_array_ [k], item) ||
+          item != item_array_ [k])
+        ACE_ERROR ((LM_ERROR,
+                    ACE_TEXT ("Stable find %p\n"),
+                    ACE_TEXT ("failure")));
 
       // Test the deprecated interface.
-      ACE_ASSERT (deprecated_tree_.insert (key_array_ [k],
-                                           item_array_ [k]) != 0);
-      ACE_ASSERT (deprecated_tree_.find (key_array_ [k]) != 0
-                  && *deprecated_tree_.find (key_array_ [k]) ==
-                     item_array_ [k]);
+      if (0 == deprecated_tree_.insert (key_array_ [k], item_array_ [k]))
+        ACE_ERROR ((LM_ERROR,
+                    ACE_TEXT ("Deprecated insert %p\n"),
+                    ACE_TEXT ("failure")));
+
+      if (0 == deprecated_tree_.find (key_array_ [k]) ||
+          *deprecated_tree_.find (key_array_ [k]) != item_array_ [k])
+        ACE_ERROR ((LM_ERROR,
+                    ACE_TEXT ("Deprecated find %p\n"),
+                    ACE_TEXT ("failure")));
    }
 }
 
@@ -469,16 +615,32 @@ ACE_RB_Tree_Test<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::test_post_insertion_it
       INT_ID item;
 
       item = (*stable_fwd_iter_).item ();
-      ACE_ASSERT (item == item_array_ [i]);
+      if (item != item_array_ [i])
+        ACE_ERROR ((LM_ERROR,
+                    ACE_TEXT ("Stable fwd iter, pass %d %p\n"),
+                    i,
+                    ACE_TEXT ("failure")));
 
       item = (*stable_rev_iter_).item ();
-      ACE_ASSERT (item == item_array_ [entry_count_ - i - 1]);
+      if (item != item_array_ [entry_count_ - i - 1])
+        ACE_ERROR ((LM_ERROR,
+                    ACE_TEXT ("Stable rev iter, pass %d %p\n"),
+                    i,
+                    ACE_TEXT ("failure")));
 
       item = (*deprecated_fwd_iter_).item ();
-      ACE_ASSERT (item == item_array_ [i]);
+      if (item != item_array_ [i])
+        ACE_ERROR ((LM_ERROR,
+                    ACE_TEXT ("Deprecated fwd iter, pass %d %p\n"),
+                    i,
+                    ACE_TEXT ("failure")));
 
       item = (*deprecated_rev_iter_).item ();
-      ACE_ASSERT (item == item_array_ [entry_count_ - i - 1]);
+      if (item != item_array_ [entry_count_ - i - 1])
+        ACE_ERROR ((LM_ERROR,
+                    ACE_TEXT ("Deprecated rev iter, pass %d %p\n"),
+                    i,
+                    ACE_TEXT ("failure")));
 
       // Advance each iterator.
       ++stable_fwd_iter_;
@@ -495,11 +657,18 @@ ACE_RB_Tree_Test<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::test_post_insertion_it
 
 
   // Make sure each item in each tree has been visited
-  ACE_ASSERT (stable_fwd_iter_.done () == 1);
-  ACE_ASSERT (stable_rev_iter_.done () == 1);
-  ACE_ASSERT (deprecated_fwd_iter_.done () == 1);
-  ACE_ASSERT (deprecated_rev_iter_.done () == 1);
-
+  if (stable_fwd_iter_.done () != 1)
+    ACE_ERROR ((LM_ERROR,
+                ACE_TEXT ("Stable fwd iter not done but should be\n")));
+  if (stable_rev_iter_.done () != 1)
+    ACE_ERROR ((LM_ERROR,
+                ACE_TEXT ("Stable fwd iter not done but should be\n")));
+  if (deprecated_fwd_iter_.done () != 1)
+    ACE_ERROR ((LM_ERROR,
+                ACE_TEXT ("Stable fwd iter not done but should be\n")));
+  if (deprecated_rev_iter_.done () != 1)
+    ACE_ERROR ((LM_ERROR,
+                ACE_TEXT ("Stable fwd iter not done but should be\n")));
 }
 
 template <class EXT_ID, class INT_ID, class COMPARE_KEYS, class ACE_LOCK> void
@@ -514,7 +683,11 @@ ACE_RB_Tree_Test<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::test_partial_iteration
       INT_ID item;
 
       item = (*part_rev_iter_).item ();
-      ACE_ASSERT (item == item_array_ [i]);
+      if (item != item_array_ [i])
+        ACE_ERROR ((LM_ERROR,
+                    ACE_TEXT ("Partial rev iter, pass %d %p\n"),
+                    i,
+                    ACE_TEXT ("failure")));
       part_rev_iter_++;
     }
 
@@ -524,7 +697,11 @@ ACE_RB_Tree_Test<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::test_partial_iteration
       INT_ID item;
 
       item = (*part_fwd_iter_).item ();
-      ACE_ASSERT (item == item_array_ [k]);
+      if (item != item_array_ [k])
+        ACE_ERROR ((LM_ERROR,
+                    ACE_TEXT ("Partial fwd iter, pass %d %p\n"),
+                    k,
+                    ACE_TEXT ("failure")));
       part_fwd_iter_++;
     }
 }
@@ -540,10 +717,18 @@ ACE_RB_Tree_Test<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::test_tree_deletion (vo
     {
       // Test the new stable ACE_Hash_Map_Manager_Ex compliant
       // interface.
-      ACE_ASSERT (stable_tree_.unbind (key_array_ [i]) == 0);
+      if (stable_tree_.unbind (key_array_ [i]) != 0)
+        ACE_ERROR ((LM_ERROR,
+                    ACE_TEXT ("Stable tree, failure pass %d %p\n"),
+                    i,
+                    ACE_TEXT ("unbind")));
 
       // Test the deprecated interface.
-      ACE_ASSERT (deprecated_tree_.remove (key_array_ [i]) == 1);
+      if (deprecated_tree_.remove (key_array_ [i]) != 1)
+        ACE_ERROR ((LM_ERROR,
+                    ACE_TEXT ("Deprecated tree, failure pass %d %p\n"),
+                    i,
+                    ACE_TEXT ("remove")));
     }
 }
 
@@ -568,17 +753,32 @@ ACE_RB_Tree_Test<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::test_post_deletion_ite
       INT_ID item;
 
       item = (*stable_fwd_iter_).item ();
-      ACE_ASSERT (item == item_array_ [i]);
-
+      if (item != item_array_ [i])
+        ACE_ERROR ((LM_ERROR,
+                    ACE_TEXT ("Stable fwd iter, pass %d %p\n"),
+                    i,
+                    ACE_TEXT ("failure")));
 
       item = (*stable_rev_iter_).item ();
-      ACE_ASSERT (item == item_array_ [entry_count_ - i]);
+      if (item != item_array_ [entry_count_ - i])
+        ACE_ERROR ((LM_ERROR,
+                    ACE_TEXT ("Stable rev iter, pass %d %p\n"),
+                    i,
+                    ACE_TEXT ("failure")));
 
       item = (*deprecated_fwd_iter_).item ();
-      ACE_ASSERT (item == item_array_ [i]);
+      if (item != item_array_ [i])
+        ACE_ERROR ((LM_ERROR,
+                    ACE_TEXT ("Deprecated fwd iter, pass %d %p\n"),
+                    i,
+                    ACE_TEXT ("failure")));
 
       item = (*deprecated_rev_iter_).item ();
-      ACE_ASSERT (item == item_array_ [entry_count_ - i]);
+      if (item != item_array_ [entry_count_ - i])
+        ACE_ERROR ((LM_ERROR,
+                    ACE_TEXT ("Deprecated rev iter, pass %d %p\n"),
+                    i,
+                    ACE_TEXT ("failure")));
 
       // Advance each iterator via postfix increment.
       stable_fwd_iter_++;
@@ -588,10 +788,18 @@ ACE_RB_Tree_Test<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::test_post_deletion_ite
     }
 
   // Make sure each item in each tree has been visited a second time.
-  ACE_ASSERT (stable_fwd_iter_.done () == 1);
-  ACE_ASSERT (stable_rev_iter_.done () == 1);
-  ACE_ASSERT (deprecated_fwd_iter_.done () == 1);
-  ACE_ASSERT (deprecated_rev_iter_.done () == 1);
+  if (stable_fwd_iter_.done () != 1)
+    ACE_ERROR ((LM_ERROR,
+                ACE_TEXT ("Stable fwd iter not done but should be\n")));
+  if (stable_rev_iter_.done () != 1)
+    ACE_ERROR ((LM_ERROR,
+                ACE_TEXT ("Stable rev iter not done but should be\n")));
+  if (deprecated_fwd_iter_.done () != 1)
+    ACE_ERROR ((LM_ERROR,
+                ACE_TEXT ("Deprecated fwd iter not done but should be\n")));
+  if (deprecated_rev_iter_.done () != 1)
+    ACE_ERROR ((LM_ERROR,
+                ACE_TEXT ("Deprecated rev iter not done but should be\n")));
 }
 
 

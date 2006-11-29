@@ -49,6 +49,7 @@ noinst_HEADERS = \
 
 ## Makefile.Protocols_Distributor.am
 
+if BUILD_EXCEPTIONS
 if BUILD_RT_CORBA
 
 noinst_PROGRAMS += distributor
@@ -75,9 +76,11 @@ distributor_LDADD = \
   $(ACE_BUILDDIR)/ace/libACE.la
 
 endif BUILD_RT_CORBA
+endif BUILD_EXCEPTIONS
 
 ## Makefile.Protocols_Receiver.am
 
+if BUILD_EXCEPTIONS
 if !BUILD_ACE_FOR_TAO
 
 noinst_PROGRAMS += receiver
@@ -100,9 +103,11 @@ receiver_LDADD = \
   $(ACE_BUILDDIR)/ace/libACE.la
 
 endif !BUILD_ACE_FOR_TAO
+endif BUILD_EXCEPTIONS
 
 ## Makefile.Protocols_Sender.am
 
+if BUILD_EXCEPTIONS
 if BUILD_RT_CORBA
 if !BUILD_ACE_FOR_TAO
 
@@ -129,6 +134,7 @@ sender_LDADD = \
 
 endif !BUILD_ACE_FOR_TAO
 endif BUILD_RT_CORBA
+endif BUILD_EXCEPTIONS
 
 ## Clean up template repositories, etc.
 clean-local:

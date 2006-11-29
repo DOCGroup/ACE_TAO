@@ -60,6 +60,7 @@ be_decl::be_decl (void)
     srv_skel_gen_ (false),
     impl_skel_gen_ (false),
     srv_inline_gen_ (false),
+    tie_skel_gen_ (false),
     cli_hdr_any_op_gen_ (false),
     cli_stub_any_op_gen_ (false),
     cli_hdr_cdr_op_gen_ (false),
@@ -111,6 +112,7 @@ be_decl::be_decl (AST_Decl::NodeType type,
     srv_skel_gen_ (false),
     impl_skel_gen_ (false),
     srv_inline_gen_ (false),
+    tie_skel_gen_ (false),
     cli_hdr_any_op_gen_ (false),
     cli_stub_any_op_gen_ (false),
     cli_hdr_cdr_op_gen_ (false),
@@ -587,6 +589,12 @@ be_decl::srv_inline_gen (void)
 }
 
 bool
+be_decl::tie_skel_gen (void)
+{
+  return this->tie_skel_gen_;
+}
+
+bool
 be_decl::ccm_pre_proc_gen (void)
 {
   return this->ccm_pre_proc_gen_;
@@ -832,6 +840,12 @@ void
 be_decl::srv_inline_gen (bool val)
 {
   this->srv_inline_gen_ = val;
+}
+
+void
+be_decl::tie_skel_gen (bool val)
+{
+  this->tie_skel_gen_ = val;
 }
 
 void

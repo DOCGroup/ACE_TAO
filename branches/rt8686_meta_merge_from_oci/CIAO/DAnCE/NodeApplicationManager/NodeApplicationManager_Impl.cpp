@@ -8,6 +8,7 @@
 #include "ace/Sched_Params.h"
 #include "ace/Vector_T.h"
 #include "ciao/Container_Base.h"
+#include "ciao/CIAO_ServerResourcesC.h"
 #include "NodeApplication/NodeApplication_Impl.h"
 #include "ace/Reactor.h"
 

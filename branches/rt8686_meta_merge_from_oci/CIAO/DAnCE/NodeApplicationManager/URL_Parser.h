@@ -9,7 +9,6 @@
  *
  *  Parses a URL into its logical chunks
  *
- *
  *  @author Stoyan Paunov
  */
 //=============================================================================
@@ -35,10 +34,10 @@ public:
 
   friend class ACE_Singleton <URL_Parser, ACE_Null_Mutex>;
 
-  /// parses commandline arguments
+  /// Parses commandline arguments
   bool parse_args (int argc, ACE_TCHAR *argv[]);
 
-  //return false on failure
+  // Return false on failure
   bool parseURL (char* url);
 
   void Error (void);
@@ -55,12 +54,12 @@ public:
   /// turns on verbosity
   int debug_;
 
-  //destructor
+  /// Destructor
   ~URL_Parser (void);
 
 protected:
+  /// protected constructor, singleton
   URL_Parser (void);
-  // protected constructor, singleton
 };
 
 

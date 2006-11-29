@@ -7,7 +7,7 @@ project(*IDL): taoidldefaults {
   custom_only = 1
 }
 
-project(*Manager): orbsvcsexe, portableserver, exceptions {
+project(*Manager): orbsvcsexe, portableserver {
   after += *IDL
   Source_Files {
     manager_main.cpp
@@ -25,7 +25,7 @@ project(*Manager): orbsvcsexe, portableserver, exceptions {
   }
 }
 
-project(*Server): orbsvcsexe, portableserver, iortable, exceptions {
+project(*Server): orbsvcsexe, portableserver, iortable {
   after += *IDL
   Source_Files {
     server_main.cpp
@@ -39,7 +39,7 @@ project(*Server): orbsvcsexe, portableserver, iortable, exceptions {
   }
 }
 
-project(*Client): orbsvcsexe, exceptions {
+project(*Client): orbsvcsexe {
   after += *IDL
   Source_Files {
     client_main.cpp

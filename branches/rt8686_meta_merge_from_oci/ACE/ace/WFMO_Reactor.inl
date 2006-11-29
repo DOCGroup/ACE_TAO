@@ -1132,7 +1132,7 @@ ACE_WFMO_Reactor::handler (ACE_HANDLE handle,
                                      event_handler);
 }
 
-ACE_INLINE int
+ACE_INLINE bool
 ACE_WFMO_Reactor::initialized (void)
 {
   return this->open_for_business_;

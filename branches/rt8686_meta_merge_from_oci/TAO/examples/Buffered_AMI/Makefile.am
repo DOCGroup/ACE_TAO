@@ -22,6 +22,7 @@ noinst_PROGRAMS =
 
 if BUILD_AMI
 if BUILD_CORBA_MESSAGING
+if BUILD_EXCEPTIONS
 
 BUILT_SOURCES = \
   testC.cpp \
@@ -50,6 +51,7 @@ test-stamp: $(srcdir)/test.idl $(TAO_IDL_DEP)
 noinst_HEADERS = \
   test.idl
 
+endif BUILD_EXCEPTIONS
 endif BUILD_CORBA_MESSAGING
 endif BUILD_AMI
 
@@ -57,6 +59,7 @@ endif BUILD_AMI
 
 if BUILD_AMI
 if BUILD_CORBA_MESSAGING
+if BUILD_EXCEPTIONS
 
 noinst_PROGRAMS += client
 
@@ -82,6 +85,7 @@ client_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
+endif BUILD_EXCEPTIONS
 endif BUILD_CORBA_MESSAGING
 endif BUILD_AMI
 
@@ -89,6 +93,7 @@ endif BUILD_AMI
 
 if BUILD_AMI
 if BUILD_CORBA_MESSAGING
+if BUILD_EXCEPTIONS
 
 noinst_PROGRAMS += server
 
@@ -115,6 +120,7 @@ server_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
+endif BUILD_EXCEPTIONS
 endif BUILD_CORBA_MESSAGING
 endif BUILD_AMI
 

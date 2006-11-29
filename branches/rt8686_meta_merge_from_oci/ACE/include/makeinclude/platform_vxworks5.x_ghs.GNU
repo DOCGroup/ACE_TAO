@@ -38,15 +38,9 @@
 VXWORKS = 1
 CROSS-COMPILE = 1
 
-ifndef debug
-  debug = 1
-endif
-ifndef optimize
-  optimize = 1
-endif
-ifndef rtti
-  rtti = 1
-endif # rtti
+debug ?= 1
+optimize ?= 1
+rtti ?= 1
 shared_libs =
 static_libs = 1
 

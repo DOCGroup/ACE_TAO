@@ -17,9 +17,9 @@ bin_PROGRAMS =
 
 ## Makefile.NT_Notify_Service.am
 
+if BUILD_EXCEPTIONS
 if BUILD_WINNT
 if !BUILD_ACE_FOR_TAO
-if !BUILD_MINIMUM_CORBA
 
 bin_PROGRAMS += NT_Notify_Service
 
@@ -56,13 +56,13 @@ NT_Notify_Service_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
-endif !BUILD_MINIMUM_CORBA
 endif !BUILD_ACE_FOR_TAO
 endif BUILD_WINNT
+endif BUILD_EXCEPTIONS
 
 ## Makefile.Notify_Service.am
 
-if !BUILD_MINIMUM_CORBA
+if BUILD_EXCEPTIONS
 
 bin_PROGRAMS += Notify_Service
 
@@ -97,7 +97,7 @@ Notify_Service_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
-endif !BUILD_MINIMUM_CORBA
+endif BUILD_EXCEPTIONS
 
 ## Clean up template repositories, etc.
 clean-local:

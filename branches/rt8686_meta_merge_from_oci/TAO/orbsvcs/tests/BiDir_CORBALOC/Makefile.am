@@ -16,7 +16,10 @@ TAO_IDL_DEP = $(TAO_BUILDDIR)/TAO_IDL/tao_idl
 TAO_IDLFLAGS = -Ge 1 -Wb,pre_include=ace/pre.h -Wb,post_include=ace/post.h -I$(TAO_ROOT) -I$(srcdir) -g $(ACE_BUILDDIR)/apps/gperf/src/gperf
 TAO_ROOT = $(top_srcdir)
 
+
 ## Makefile.BiDirCORBALOC_Server.am
+
+if BUILD_EXCEPTIONS
 
 BUILT_SOURCES = \
   TimeModuleC.cpp \
@@ -24,10 +27,7 @@ BUILT_SOURCES = \
   TimeModuleC.inl \
   TimeModuleS.cpp \
   TimeModuleS.h \
-  TimeModuleS.inl \
-  TimeModuleS_T.cpp \
-  TimeModuleS_T.h \
-  TimeModuleS_T.inl
+  TimeModuleS.inl
 
 CLEANFILES = \
   TimeModule-stamp \
@@ -36,15 +36,12 @@ CLEANFILES = \
   TimeModuleC.inl \
   TimeModuleS.cpp \
   TimeModuleS.h \
-  TimeModuleS.inl \
-  TimeModuleS_T.cpp \
-  TimeModuleS_T.h \
-  TimeModuleS_T.inl
+  TimeModuleS.inl
 
-TimeModuleC.cpp TimeModuleC.h TimeModuleC.inl TimeModuleS.cpp TimeModuleS.h TimeModuleS.inl TimeModuleS_T.cpp TimeModuleS_T.h TimeModuleS_T.inl: TimeModule-stamp
+TimeModuleC.cpp TimeModuleC.h TimeModuleC.inl TimeModuleS.cpp TimeModuleS.h TimeModuleS.inl: TimeModule-stamp
 
 TimeModule-stamp: $(srcdir)/TimeModule.idl $(TAO_IDL_DEP)
-	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs -GT $(srcdir)/TimeModule.idl
+	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs $(srcdir)/TimeModule.idl
 	@touch $@
 
 noinst_PROGRAMS = TimeServer
@@ -64,9 +61,7 @@ TimeServer_SOURCES = \
   TimeModuleC.h \
   TimeModuleC.inl \
   TimeModuleS.h \
-  TimeModuleS.inl \
-  TimeModuleS_T.h \
-  TimeModuleS_T.inl
+  TimeModuleS.inl
 
 TimeServer_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO_Utils.la \
@@ -78,6 +73,8 @@ TimeServer_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO_AnyTypeCode.la \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
+
+endif BUILD_EXCEPTIONS
 
 ## Clean up template repositories, etc.
 clean-local:

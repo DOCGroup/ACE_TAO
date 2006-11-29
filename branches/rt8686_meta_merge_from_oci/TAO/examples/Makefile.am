@@ -14,6 +14,7 @@ SUBDIRS = \
         Advanced \
         Buffered_AMI \
         Buffered_Oneways \
+        CSD_Strategy \
         Callback_Quoter \
         Content_Server \
         Event_Comm \
@@ -27,11 +28,10 @@ SUBDIRS = \
         PluggableUDP \
         Quoter \
         RTCORBA \
+        RTScheduling \
         Simple \
         Simulator \
         TypeCode_Creation \
         ior_corbaloc \
         mfc
 
-#	CSD_Strategy
-#	RTScheduling

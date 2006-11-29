@@ -22,19 +22,13 @@ There are several places the test can fail:
 - extraction from the Any
 - string compare of the sent and received eventtype members
 
-The command line option '-d', passed either to the
-executable directly or to the perl script, will turn on
-the debugging flag and cause a diagnostic meessage to
-be output if there is an error at any of these steps.
-
 Note that the test code registers a valuetype factory
-with the orb, a necessary step in extracting the 
+with the orb, a necessary step in extracting the
 eventtype from the Any. In a real-world use case (such
 as an event channel) such a factory would have to
 be registered with the orb anywhere the eventtype is
 to be demarshaled from a CDR stream or extracted from
 an Any that was itself demarshaled.
-
 
 Jeff Parsons
 

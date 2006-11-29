@@ -40,7 +40,7 @@ IFR_Service::init (int argc,
       result = this->my_ifr_server_.init_with_orb (argc,
                                                    argv,
                                                    this->orb_.in ());
-      if (result == -1)
+      if (result != 0)
         {
           return result;
         }

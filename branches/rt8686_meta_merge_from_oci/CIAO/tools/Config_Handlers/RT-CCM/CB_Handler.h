@@ -13,7 +13,7 @@
 #include /**/ "ace/pre.h"
 
 #include "RT_CCM_Handlers_Export.h"
-#include "ciao/ServerResourcesC.h"
+#include "ciao/CIAO_ServerResourcesC.h"
 #include "IDREF_Base.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)

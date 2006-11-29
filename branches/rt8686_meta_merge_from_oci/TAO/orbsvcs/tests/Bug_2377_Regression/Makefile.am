@@ -20,7 +20,7 @@ TAO_ROOT = $(top_srcdir)
 ## Makefile.Bug_2377_Regression_Test.am
 
 if BUILD_CORBA_MESSAGING
-if !BUILD_MINIMUM_CORBA
+if BUILD_EXCEPTIONS
 
 BUILT_SOURCES = \
   HelloC.cpp \
@@ -28,10 +28,7 @@ BUILT_SOURCES = \
   HelloC.inl \
   HelloS.cpp \
   HelloS.h \
-  HelloS.inl \
-  HelloS_T.cpp \
-  HelloS_T.h \
-  HelloS_T.inl
+  HelloS.inl
 
 CLEANFILES = \
   Hello-stamp \
@@ -40,15 +37,12 @@ CLEANFILES = \
   HelloC.inl \
   HelloS.cpp \
   HelloS.h \
-  HelloS.inl \
-  HelloS_T.cpp \
-  HelloS_T.h \
-  HelloS_T.inl
+  HelloS.inl
 
-HelloC.cpp HelloC.h HelloC.inl HelloS.cpp HelloS.h HelloS.inl HelloS_T.cpp HelloS_T.h HelloS_T.inl: Hello-stamp
+HelloC.cpp HelloC.h HelloC.inl HelloS.cpp HelloS.h HelloS.inl: Hello-stamp
 
 Hello-stamp: $(srcdir)/Hello.idl $(TAO_IDL_DEP)
-	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs -GT $(srcdir)/Hello.idl
+	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs $(srcdir)/Hello.idl
 	@touch $@
 
 noinst_PROGRAMS = uipmc_test
@@ -68,9 +62,7 @@ uipmc_test_SOURCES = \
   HelloC.h \
   HelloC.inl \
   HelloS.h \
-  HelloS.inl \
-  HelloS_T.h \
-  HelloS_T.inl
+  HelloS.inl
 
 uipmc_test_LDADD = \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_PortableGroup.la \
@@ -85,7 +77,7 @@ uipmc_test_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
-endif !BUILD_MINIMUM_CORBA
+endif BUILD_EXCEPTIONS
 endif BUILD_CORBA_MESSAGING
 
 ## Clean up template repositories, etc.

@@ -13,9 +13,13 @@ ACE_ROOT = $(top_srcdir)/..
 TAO_BUILDDIR = $(top_builddir)
 TAO_ROOT = $(top_srcdir)
 
+bin_PROGRAMS =
+
 ## Makefile.Time_Service_Clerk.am
 
-bin_PROGRAMS = Time_Service_Clerk
+if BUILD_EXCEPTIONS
+
+bin_PROGRAMS += Time_Service_Clerk
 
 Time_Service_Clerk_CPPFLAGS = \
   -I$(ACE_ROOT) \
@@ -42,7 +46,11 @@ Time_Service_Clerk_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
+endif BUILD_EXCEPTIONS
+
 ## Makefile.Time_Service_Server.am
+
+if BUILD_EXCEPTIONS
 
 bin_PROGRAMS += Time_Service_Server
 
@@ -70,6 +78,8 @@ Time_Service_Server_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO_AnyTypeCode.la \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
+
+endif BUILD_EXCEPTIONS
 
 ## Clean up template repositories, etc.
 clean-local:

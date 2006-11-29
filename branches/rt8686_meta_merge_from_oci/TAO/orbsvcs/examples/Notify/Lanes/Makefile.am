@@ -18,8 +18,8 @@ noinst_PROGRAMS =
 ## Makefile.Notify_Lanes_Consumer.am
 
 if BUILD_CORBA_MESSAGING
+if BUILD_EXCEPTIONS
 if BUILD_RT_CORBA
-if !BUILD_MINIMUM_CORBA
 
 noinst_PROGRAMS += Consumer
 
@@ -53,10 +53,10 @@ Consumer_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO_Messaging.la \
   $(TAO_BUILDDIR)/tao/libTAO_PI.la \
   $(TAO_BUILDDIR)/tao/libTAO_CodecFactory.la \
-  $(TAO_BUILDDIR)/tao/libTAO_Valuetype.la \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosNaming.la \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosNotification_Serv.la \
   $(TAO_BUILDDIR)/tao/libTAO_DynamicAny.la \
+  $(TAO_BUILDDIR)/tao/libTAO_Valuetype.la \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_ETCL.la \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_Svc_Utils.la \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosNotification_Skel.la \
@@ -68,14 +68,14 @@ Consumer_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
-endif !BUILD_MINIMUM_CORBA
 endif BUILD_RT_CORBA
+endif BUILD_EXCEPTIONS
 endif BUILD_CORBA_MESSAGING
 
 ## Makefile.Notify_Lanes_Supplier.am
 
+if BUILD_EXCEPTIONS
 if BUILD_RT_CORBA
-if !BUILD_MINIMUM_CORBA
 
 noinst_PROGRAMS += Supplier
 
@@ -103,6 +103,7 @@ Supplier_LDADD = \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_RT_Notification.la \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosNotification_Serv.la \
   $(TAO_BUILDDIR)/tao/libTAO_DynamicAny.la \
+  $(TAO_BUILDDIR)/tao/libTAO_Valuetype.la \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_ETCL.la \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosNotification_Skel.la \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosEvent_Skel.la \
@@ -117,8 +118,8 @@ Supplier_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
-endif !BUILD_MINIMUM_CORBA
 endif BUILD_RT_CORBA
+endif BUILD_EXCEPTIONS
 
 ## Clean up template repositories, etc.
 clean-local:

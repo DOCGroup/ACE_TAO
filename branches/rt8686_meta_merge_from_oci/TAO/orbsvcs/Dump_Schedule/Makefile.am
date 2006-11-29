@@ -13,7 +13,10 @@ ACE_ROOT = $(top_srcdir)/..
 TAO_BUILDDIR = $(top_builddir)
 TAO_ROOT = $(top_srcdir)
 
+
 ## Makefile.Dump_Schedule.am
+
+if BUILD_EXCEPTIONS
 
 bin_PROGRAMS = Dump_Schedule
 
@@ -37,6 +40,8 @@ Dump_Schedule_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO_AnyTypeCode.la \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
+
+endif BUILD_EXCEPTIONS
 
 ## Clean up template repositories, etc.
 clean-local:

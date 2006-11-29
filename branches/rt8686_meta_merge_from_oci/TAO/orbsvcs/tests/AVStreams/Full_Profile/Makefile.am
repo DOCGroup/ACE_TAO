@@ -17,6 +17,7 @@ noinst_PROGRAMS =
 
 ## Makefile.AVS_Full_Profile_Ftp.am
 
+if BUILD_EXCEPTIONS
 if !BUILD_ACE_FOR_TAO
 
 noinst_PROGRAMS += ftp
@@ -45,9 +46,11 @@ ftp_LDADD = \
   $(ACE_BUILDDIR)/ace/libACE.la
 
 endif !BUILD_ACE_FOR_TAO
+endif BUILD_EXCEPTIONS
 
 ## Makefile.AVS_Full_Profile_Server.am
 
+if BUILD_EXCEPTIONS
 if !BUILD_ACE_FOR_TAO
 
 noinst_PROGRAMS += server
@@ -76,6 +79,7 @@ server_LDADD = \
   $(ACE_BUILDDIR)/ace/libACE.la
 
 endif !BUILD_ACE_FOR_TAO
+endif BUILD_EXCEPTIONS
 
 ## Clean up template repositories, etc.
 clean-local:

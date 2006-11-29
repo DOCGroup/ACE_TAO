@@ -263,7 +263,7 @@ TAO_Stub::get_profile_ior_info (TAO_MProfile &profiles,
 
 
   // Get the number of elements
-  CORBA::ULong count = profiles.profile_count ();
+  CORBA::ULong const count = profiles.profile_count ();
 
   // Set the number of elements in the sequence of tagged_profile
   ior_info->profiles.length (count);
@@ -413,53 +413,6 @@ TAO_Stub::forward_back_one (void)
 // routines need only ensure that the data being passed in is not
 // being modified by any other thread.
 //
-// As an _experiment_ (to estimate the performance cost) remote calls
-// are currently deemed "cancel-safe".  That means that they can be
-// called by threads when they're in asynchronous cancellation mode.
-// The only effective way to do this is to disable async cancellation
-// for the duration of the call.  There are numerous rude interactions
-// with code generators for C++ ... cancellation handlers just do
-// normal stack unwinding like exceptions, but exceptions are purely
-// synchronous and sophisticated code generators rely on that to
-// generate better code, which in some cases may be very hard to
-// unwind.
-
-class TAO_Synchronous_Cancellation_Required
-// = TITLE
-//     Stick one of these at the beginning of a block that can't
-//     support asynchronous cancellation, and which must be
-//     cancel-safe.
-//
-// = EXAMPLE
-//     somefunc()
-//     {
-//       TAO_Synchronous_Cancellation_Required NOT_USED;
-//       ...
-//     }
-{
-public:
-  // These should probably be in a separate inline file, but they're
-  // only used within this one file right now, and we always want them
-  // inlined, so here they sit.
-  TAO_Synchronous_Cancellation_Required (void)
-    : old_type_ (0)
-  {
-#if !defined (VXWORKS)
-    ACE_OS::thr_setcanceltype (THR_CANCEL_DEFERRED, &old_type_);
-#endif /* ! VXWORKS */
-  }
-
-  ~TAO_Synchronous_Cancellation_Required (void)
-  {
-#if !defined (VXWORKS)
-    int dont_care;
-    ACE_OS::thr_setcanceltype(old_type_, &dont_care);
-#endif /* ! VXWORKS */
-  }
-private:
-  int old_type_;
-};
-
 // ****************************************************************
 
 #if (TAO_HAS_CORBA_MESSAGING == 1)
@@ -587,10 +540,20 @@ TAO_Stub::get_policy_overrides (const CORBA::PolicyTypeSeq &types
                                 ACE_ENV_ARG_DECL)
 {
   if (this->policies_ == 0)
-    return 0;
+    {
+      CORBA::PolicyList *policy_list_ptr = 0;
+      ACE_NEW_THROW_EX (policy_list_ptr,
+                        CORBA::PolicyList (),
+                        CORBA::NO_MEMORY ());
+      ACE_CHECK_RETURN (0);
 
-  return this->policies_->get_policy_overrides (types
-                                                ACE_ENV_ARG_PARAMETER);
+      return policy_list_ptr;
+    }
+  else
+    {
+      return this->policies_->get_policy_overrides (types
+                                                    ACE_ENV_ARG_PARAMETER);
+    }
 }
 
 #endif /* TAO_HAS_CORBA_MESSAGING == 1 */
@@ -629,7 +592,7 @@ TAO_Stub::marshal (TAO_OutputCDR &cdr)
     {
       const TAO_MProfile& mprofile = this->base_profiles_;
 
-      CORBA::ULong profile_count = mprofile.profile_count ();
+      CORBA::ULong const profile_count = mprofile.profile_count ();
       if ((cdr << profile_count) == 0)
         return 0;
 
@@ -658,7 +621,7 @@ TAO_Stub::marshal (TAO_OutputCDR &cdr)
         ? *(this->forward_profiles_perm_)
         : this->base_profiles_;
 
-      CORBA::ULong profile_count = mprofile.profile_count ();
+      CORBA::ULong const profile_count = mprofile.profile_count ();
       if ((cdr << profile_count) == 0)
            return 0;
 

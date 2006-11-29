@@ -6,10 +6,13 @@ CROSS-COMPILE = 1
 
 debug ?= 1
 optimize ?= 1
+exceptions ?= 1
 rtti ?= 1
+threads ?= 1
 
 shared_libs =
 static_libs = 1
+rwho = 0
 
 ifeq (,$(RTEMS_MAKEFILE_PATH))
   default:
@@ -33,7 +36,7 @@ endif
 
 CFLAGS          += -specs bsp_specs -qrtems -D_REENTRANT -fasm -fno-builtin -fno-defer-pop -fvolatile $(PIPE_OPT) -W -Wall -DACE_HAS_RTEMS -B$(RTEMS_MAKEFILE_PATH)/lib
 CCFLAGS         += -specs bsp_specs -qrtems -D_REENTRANT -fasm -fno-builtin -fno-defer-pop -fvolatile $(PIPE_OPT) -W -Wall -DACE_HAS_RTEMS -B$(RTEMS_MAKEFILE_PATH)/lib
-ifeq (,$(rtti))
+ifeq (0,$(rtti))
   CCFLAGS += -fno-rtti -DACE_LACKS_RTTI
 endif # rtti
 DCFLAGS         += -g

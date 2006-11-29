@@ -199,23 +199,8 @@
 /* Platform supports POSIX Threads */
 #define ACE_HAS_PTHREADS
 
-/* Platform supports POSIX Threads .4a Draft 4 */
-/* #undef ACE_HAS_PTHREADS_DRAFT4 */
-
-/* Platform supports POSIX Threads .4a Draft 6 */
-/* #undef ACE_HAS_PTHREADS_DRAFT6 */
-
-/* Platform supports POSIX Threads .1c Draft 7 */
-/* #undef ACE_HAS_PTHREADS_DRAFT7 */
-
 /* Platform supports POSIX.1c-1995 threads */
 #define ACE_HAS_PTHREADS_STD
-
-/* Platform has pthread_condattr_setkind_np(). */
-/* #undef ACE_HAS_PTHREAD_CONDATTR_SETKIND_NP */
-
-/* Platform has pthread_mutexattr_setkind_np(). */
-/* #undef ACE_HAS_PTHREAD_MUTEXATTR_SETKIND_NP */
 
 /* pthread.h declares an enum with PTHREAD_PROCESS_PRIVATE and
    PTHREAD_PROCESS_SHARED values */
@@ -408,9 +393,6 @@
 
 /* Platform needs to #include <sched.h> to get thread scheduling defs. */
 #define ACE_NEEDS_SCHED_H 1
-
-/* Turns off the LM_DEBUG and LM_ERROR logging macros... */
-/* #undef ACE_NLOGGING */
 
 /* The OS/platform supports the poll() event demultiplexor */
 #define ACE_USE_POLL 1

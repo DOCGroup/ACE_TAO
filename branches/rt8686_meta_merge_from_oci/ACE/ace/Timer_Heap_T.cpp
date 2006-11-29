@@ -94,7 +94,7 @@ ACE_Timer_Heap_Iterator_T<TYPE, FUNCTOR, ACE_LOCK>::item (void)
 // When it's time to wrap, the next ID given out will be 0.
 template <class TYPE, class FUNCTOR, class ACE_LOCK>
 ACE_Timer_Heap_T<TYPE, FUNCTOR, ACE_LOCK>::ACE_Timer_Heap_T (size_t size,
-                                                             int preallocate,
+                                                             bool preallocated,
                                                              FUNCTOR *upcall_functor,
                                                              ACE_Free_List<ACE_Timer_Node_T <TYPE> > *freelist)
   : ACE_Timer_Queue_T<TYPE,FUNCTOR,ACE_LOCK> (upcall_functor, freelist),
@@ -137,7 +137,7 @@ ACE_Timer_Heap_T<TYPE, FUNCTOR, ACE_LOCK>::ACE_Timer_Heap_T (size_t size,
   for (size_t i = 0; i < size; i++)
     this->timer_ids_[i] = -1;
 
-  if (preallocate)
+  if (preallocated)
     {
       ACE_NEW (this->preallocated_nodes_,
                ACE_Timer_Node_T<TYPE>[size]);

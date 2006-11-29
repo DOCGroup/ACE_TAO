@@ -8,7 +8,7 @@ project(*idl): taoidldefaults, ami {
   custom_only = 1
 }
 
-project(*client) : taoexe, portableserver, ami, exceptions  {
+project(*client) : taoexe, portableserver, ami  {
   after += *idl
   source_files {
     client.cpp
@@ -20,7 +20,7 @@ project(*client) : taoexe, portableserver, ami, exceptions  {
   }
 }
 
-project(*server) : taoserver, ami, exceptions {
+project(*server) : taoserver, ami {
   after += *idl
   source_files {
     server.cpp

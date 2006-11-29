@@ -13,7 +13,10 @@ ACE_ROOT = $(top_srcdir)/..
 TAO_BUILDDIR = $(top_builddir)
 TAO_ROOT = $(top_srcdir)
 
+
 ## Makefile.Bug_1393_Regression_Client.am
+
+if BUILD_EXCEPTIONS
 
 noinst_PROGRAMS = client
 
@@ -31,6 +34,8 @@ client_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO_AnyTypeCode.la \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
+
+endif BUILD_EXCEPTIONS
 
 ## Clean up template repositories, etc.
 clean-local:

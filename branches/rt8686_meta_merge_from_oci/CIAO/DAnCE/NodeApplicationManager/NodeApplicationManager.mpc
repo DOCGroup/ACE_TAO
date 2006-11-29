@@ -18,8 +18,6 @@ project(NodeApplicationManager): ciao_server_dnc, ciao_deployment_svnt, dance_ex
     ImplementationInfo.cpp
     Containers_Info_Map.cpp
     URL_Parser.cpp
-    HTTP_Handler.cpp
-    HTTP_Client.cpp
     ../NodeApplication/NodeApplication_Core.cpp
     ../NodeApplication/NodeApplication_Impl.cpp
     ../NodeApplication/Container_Impl.cpp
@@ -32,8 +30,6 @@ project(NodeApplicationManager): ciao_server_dnc, ciao_deployment_svnt, dance_ex
     ImplementationInfo.h
     Containers_Info_Map.h
     URL_Parser.h
-    HTTP_Handler.h
-    HTTP_Client.h
     NodeApplicationManager_Export.h
   }
 }

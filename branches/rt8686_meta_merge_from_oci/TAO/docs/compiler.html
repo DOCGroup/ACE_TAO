@@ -705,6 +705,15 @@ also receives other options that are specific to it.<p>
     or a valuetype never are - neither case is affected by this option.</td>
   </tr>
 
+  <tr><a name="Gse">
+    <td><tt>-Gse</tt></td>
+
+    <td>Generate explicit export of sequence's template base class</td>
+    <td>Occasionally needed as a workaround for a bug in Visual Studio
+        (.NET 2002, .NET 2003 and Express 2005) where the template
+        instantiation used for the base class isn't automatically exported</td>
+  </tr>
+
   <tr>
     <td><tt>-GI</tt></td>
 
@@ -871,7 +880,7 @@ also receives other options that are specific to it.<p>
     <td><tt>-Sorb</tt></td>
 
     <td>Suppress generation of the ORB.h include.</td>
-    <td>This option is usefull when regenerating pidl files in the core
+    <td>This option is useful when regenerating pidl files in the core
   TAO libs to prevent cyclic includes;</td>
   </tr>
 

@@ -5,7 +5,8 @@ project(Display_Base_NavDisplay_stub): ciao_client_dnc {
   after += Display_Base_stub
   sharedname = NavDisplay_stub
   libs += Display_Base_stub
-  idlflags += -Wb,stub_export_macro=NAVDISPLAY_STUB_Export \
+  idlflags += -St \
+              -Wb,stub_export_macro=NAVDISPLAY_STUB_Export \
               -Wb,stub_export_include=NavDisplay_stub_export.h \
               -Wb,skel_export_macro=NAVDISPLAY_SVNT_Export \
               -Wb,skel_export_include=NavDisplay_svnt_export.h
@@ -18,16 +19,21 @@ project(Display_Base_NavDisplay_stub): ciao_client_dnc {
   Source_Files {
     NavDisplayC.cpp
   }
+
+  Header_Files {
+    NavDisplay_stub_export.h
+  }
 }
 
 project(Display_Base_NavDisplay_svnt) : ciao_servant_dnc {
-  after += Display_Base_svnt Display_Base_NavDisplay_stub
+  after += Display_Base_skel Display_Base_NavDisplay_stub
   sharedname  = NavDisplay_svnt
   libs    += NavDisplay_stub \
              Display_Base_stub \
-             Display_Base_svnt
+             Display_Base_skel
 
-  idlflags  +=  -Wb,export_macro=NAVDISPLAY_SVNT_Export \
+  idlflags  +=  -SS -St \
+                -Wb,export_macro=NAVDISPLAY_SVNT_Export \
                 -Wb,export_include=NavDisplay_svnt_export.h
   dynamicflags = NAVDISPLAY_SVNT_BUILD_DLL
 
@@ -44,6 +50,10 @@ project(Display_Base_NavDisplay_svnt) : ciao_servant_dnc {
     NavDisplayS.cpp
     NavDisplay_svnt.cpp
   }
+
+  Header_Files {
+    NavDisplay_svnt_export.h
+  }
 }
 
 
@@ -53,19 +63,19 @@ project(Display_Base_NavDisplay_exec) : ciao_component_dnc {
   libs      += NavDisplay_stub \
                NavDisplay_svnt \
                Display_Base_stub \
-               Display_Base_svnt
+               Display_Base_skel
 
-  idlflags  +=  -Wb,export_macro=NAVDISPLAY_EXEC_Export \
-                -Wb,export_include=NavDisplay_exec_export.h
-  dynamicflags   = NAVDISPLAY_EXEC_BUILD_DLL
+  dynamicflags = NAVDISPLAY_EXEC_BUILD_DLL
 
   IDL_Files {
-
   }
 
   Source_Files {
-
     NavDisplay_exec.cpp
+  }
+
+  Header_Files {
+    NavDisplay_exec_export.h
   }
 }
 

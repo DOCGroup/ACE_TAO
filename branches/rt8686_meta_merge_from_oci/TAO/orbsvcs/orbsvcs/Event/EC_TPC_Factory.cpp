@@ -14,6 +14,8 @@
 
 ACE_RCSID(Event, EC_TPC_Factory, "$Id$")
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 unsigned long TAO_EC_TPC_debug_level;
 
 TAO_EC_TPC_Factory::TAO_EC_TPC_Factory (void)

@@ -49,6 +49,7 @@ noinst_HEADERS = \
 
 ## Makefile.fp_client.am
 
+if BUILD_EXCEPTIONS
 if BUILD_RT_CORBA
 
 noinst_PROGRAMS += fp_client
@@ -82,9 +83,11 @@ fp_client_LDADD = \
   $(ACE_BUILDDIR)/ace/libACE.la
 
 endif BUILD_RT_CORBA
+endif BUILD_EXCEPTIONS
 
 ## Makefile.fp_server.am
 
+if BUILD_EXCEPTIONS
 if BUILD_RT_CORBA
 
 noinst_PROGRAMS += fp_server
@@ -120,6 +123,7 @@ fp_server_LDADD = \
   $(ACE_BUILDDIR)/ace/libACE.la
 
 endif BUILD_RT_CORBA
+endif BUILD_EXCEPTIONS
 
 ## Clean up template repositories, etc.
 clean-local:

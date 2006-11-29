@@ -14,7 +14,6 @@
 #include "CIAO_common.h"
 #include "ace/OS_NS_stdio.h"
 
-
 extern "C" ACE_Proper_Export_Flag CIAO::MonitorBase * CIAO::createMonitor ()
 {
   return new CIAO::CIAO_Monitor ();
@@ -98,19 +97,11 @@ int CIAO::CIAO_Monitor::stop ()
       //read the cpu in idle time ..
       fscanf (load_file, "%ld", &idle_time);
 
-
-      if (CIAO::debug_level () > 9)
-      {
-        //  ACE_DEBUG ((LM_DEBUG , "Current load is %d\n",current_load));
-      }
-
       ACE_OS::fclose (load_file);
 
-
-   // Calculate the percent CPU
-
-      long current_user_cpu = user_cpu - prev_user_cpu_;
-      long total_cpu_usage = user_cpu + user_cpu_low + sys_cpu +
+      // Calculate the percent CPU
+      long const current_user_cpu = user_cpu - prev_user_cpu_;
+      long const total_cpu_usage = user_cpu + user_cpu_low + sys_cpu +
         idle_time - prev_user_cpu_ - prev_idle_time_ - prev_sys_cpu_
         - prev_user_cpu_low_;
 
@@ -138,19 +129,17 @@ int CIAO::CIAO_Monitor::stop ()
        i < current_domain_->node[0].resource.length ();
        i++)
     {
-      if (!strcmp (current_domain_->node[0].resource[i].name, "Processor"))
+      if (!ACE_OS::strcmp (current_domain_->node[0].resource[i].name, "Processor"))
         {
-          // ACE_DEBUG ((LM_DEBUG , "CIAO::Monitor::The Resource found\n"));
           for (unsigned int j = 0;
                j < current_domain_->node[0].resource[i].property.length ();
                j++)
             {
-              if (!strcmp (
+              if (!ACE_OS::strcmp (
                            current_domain_
                            ->node[0].resource[i].property[j].name.in (),
                            "LoadAverage"))
                 {
-                  //ACE_DEBUG ((LM_DEBUG , "CIAO::Monitor::The property found\n"));
                   current_domain_->node[0].resource[i].property[j].kind =
                     ::Deployment::Quantity;
                   current_domain_->node[0].resource[i].property[j].value =
@@ -158,12 +147,6 @@ int CIAO::CIAO_Monitor::stop ()
                 }
             }
         }
-    }
-
-
-  if (CIAO::debug_level () > 9)
-    {
-      //ACE_DEBUG ((LM_DEBUG , "CIAO::Monitor::Exiting from the get_current_data function\n"));
     }
 
   return current_domain_.get ();

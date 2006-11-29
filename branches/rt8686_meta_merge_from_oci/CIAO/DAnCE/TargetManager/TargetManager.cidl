@@ -10,7 +10,7 @@
 #define TARGETMANAGER_CIDL
 
 
-#include "TargetManager.idl"
+#include "TargetManagerImpl.idl"
 
 /*
  * @composition TargetManager_i

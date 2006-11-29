@@ -105,21 +105,25 @@ Test_DynSequence::run_test (void)
         dynany_factory->create_dyn_any (in_any1
                                         ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
+      
       DynamicAny::DynSequence_var fa1 =
         DynamicAny::DynSequence::_narrow (dp1.in ()
                                           ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
-      fa1->seek (1
-                 ACE_ENV_ARG_PARAMETER);
+      
+      fa1->seek (1 ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
+      
       fa1->insert_string (data.m_string1
                           ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
+      
       fa1->rewind (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
-      fa1->seek (1
-                 ACE_ENV_ARG_PARAMETER);
+      
+      fa1->seek (1 ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
+      
       CORBA::String_var out_str1 =
         fa1->get_string (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
@@ -179,7 +183,7 @@ Test_DynSequence::run_test (void)
           return -1;
         }
 
-      analyzer.analyze(fa1.in() ACE_ENV_ARG_PARAMETER);
+      analyzer.analyze (fa1.in() ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       CORBA::String_var out_str;
@@ -240,11 +244,13 @@ Test_DynSequence::run_test (void)
                       ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      analyzer.analyze(ftc1.in() ACE_ENV_ARG_PARAMETER);
+      analyzer.analyze (ftc1.in() ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      CORBA::Any_var out_any1 = ftc1->to_any (ACE_ENV_SINGLE_ARG_PARAMETER);
+      CORBA::Any_var out_any1 =
+        ftc1->to_any (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
+      
       DynAnyTests::test_seq *ts_out;
       out_any1.in () >>= ts_out;
 
@@ -283,8 +289,11 @@ Test_DynSequence::run_test (void)
       ftc1->set_elements (as_in
                           ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
-      DynamicAny::AnySeq_var as_out = ftc1->get_elements (ACE_ENV_SINGLE_ARG_PARAMETER);
+      
+      DynamicAny::AnySeq_var as_out =
+        ftc1->get_elements (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
+      
       CORBA::ULong index = 2;
       CORBA::Any out_any2 = as_out[index];
       char* out_str2;
@@ -303,6 +312,7 @@ Test_DynSequence::run_test (void)
 
       fa1->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
+      
       ftc1->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }

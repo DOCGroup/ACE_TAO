@@ -51,7 +51,7 @@ noinst_HEADERS = \
 
 if BUILD_AMI
 if BUILD_CORBA_MESSAGING
-if !BUILD_MINIMUM_CORBA
+if BUILD_EXCEPTIONS
 
 noinst_PROGRAMS += client
 
@@ -87,7 +87,7 @@ client_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
-endif !BUILD_MINIMUM_CORBA
+endif BUILD_EXCEPTIONS
 endif BUILD_CORBA_MESSAGING
 endif BUILD_AMI
 
@@ -95,7 +95,7 @@ endif BUILD_AMI
 
 if BUILD_AMI
 if BUILD_CORBA_MESSAGING
-if !BUILD_MINIMUM_CORBA
+if BUILD_EXCEPTIONS
 
 noinst_PROGRAMS += server
 
@@ -134,7 +134,7 @@ server_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
-endif !BUILD_MINIMUM_CORBA
+endif BUILD_EXCEPTIONS
 endif BUILD_CORBA_MESSAGING
 endif BUILD_AMI
 

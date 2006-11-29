@@ -4,22 +4,10 @@
 
 versioned_so = 1
 
-ifndef exceptions
-  exceptions = 1
-endif
-
-ifeq (,$(debug))
-  debug = 1
-endif
-
-ifeq (,$(optimize))
-  optimize = 1
-endif
-
-ifeq (,$(threads))
-  threads = 1
-endif
-
+exceptions ?= 1
+debug ?= 1
+optimize ?= 1
+threads ?= 1
 pipes ?= 1
 
 CC              = gcc
@@ -46,7 +34,7 @@ LDFLAGS         += -pthread
 CFLAGS          += -D_REENTRANT -DACE_HAS_THREADS
 endif # threads
 
-# Test for template instantiation, add to SOFLAGS if versioned_so set, 
+# Test for template instantiation, add to SOFLAGS if versioned_so set,
 # add -E to LDFLAGS if using GNU ld
 #
 include $(ACE_ROOT)/include/makeinclude/platform_g++_common.GNU

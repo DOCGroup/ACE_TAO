@@ -73,7 +73,7 @@ Notify_Logging_Service::init_ORB (int& argc, char *argv []
 int
 Notify_Logging_Service::parse_args (int argc, char *argv[])
 {
-  ACE_Get_Opt get_opt (argc, argv, ACE_TEXT("n:o:p:t::x"));
+  ACE_Get_Opt get_opt (argc, argv, ACE_TEXT("n:o:p:t:x"));
   int opt;
 
   while ((opt = get_opt ()) != EOF)

@@ -2228,12 +2228,12 @@ ACE_Dev_Poll_Reactor::handler (int signum,
   return 0;
 }
 
-int
+bool
 ACE_Dev_Poll_Reactor::initialized (void)
 {
   ACE_TRACE ("ACE_Dev_Poll_Reactor::initialized");
 
-  ACE_MT (ACE_GUARD_RETURN (ACE_Dev_Poll_Reactor_Token, mon, this->token_, -1));
+  ACE_MT (ACE_GUARD_RETURN (ACE_Dev_Poll_Reactor_Token, mon, this->token_, false));
 
   return this->initialized_;
 }

@@ -13,6 +13,7 @@
 #include /**/ "ace/pre.h"
 
 #include "ciao/DeploymentC.h"
+#include "ciao/Deployment_TargetDataC.h"
 #include "Config_Handlers_Export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
@@ -139,8 +140,6 @@ static void dump(const PlanSubcomponentPropertyReference &pspr);
 static void dump(const ResourceDeploymentDescription &rdd);
 
 static void dump (const ::Deployment::ComponentAssemblyDescription& cad);
-
-static void dump (const Deployment::RequirementSatisfier& rs);
 
 private:
 static void dump (const ::CORBA::Any &any);

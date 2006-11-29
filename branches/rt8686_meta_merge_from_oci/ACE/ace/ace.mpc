@@ -367,6 +367,7 @@ project(ACE) : acedefaults, core, other, codecs, token, svcconf, uuid, filecache
     Swap.inl
     TSS_T.inl
     ace_wchar.inl
+    OS.inl
   }
 
   Header_Files {

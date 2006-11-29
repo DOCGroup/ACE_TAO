@@ -8,6 +8,67 @@ PLANNED MAJOR CHANGES "SOMETIME IN THE FUTURE" (i.e., exact beta not known)
 
 . (Remedy) Add support for CORBA/e compact and micro
 
+PLANNED CHANGES FOR "TAO-5.5.5"
+===============================
+* (OO) Coverity error fixes for TAO.
+* (OO) Remove exception specifications from ORB mediated operations (C++
+       mapping requirement).
+* (OO) Various other fixes that have been piling up.
+
+USER VISIBLE CHANGES BETWEEN TAO-1.5.4 and TAO-1.5.5
+====================================================
+
+. Added implementation of Dynamic Any methods insert_*_seq() and
+  get_*_seq() (spec-defined for sequences of IDL basic types),
+  as well as implementation of insert and get methods for abstract
+  interfaces.
+
+USER VISIBLE CHANGES BETWEEN TAO-1.5.3 and TAO-1.5.4
+====================================================
+
+. Added support for ACE_Dev_Poll_Reactor to Advanced_Resource_Factory.
+
+. Improved tao_idl performance, particularly over networked
+  filesystems.
+
+. Added new option for the RTEC, -ECDispatchingThreadsFlags, that
+  allows the user to pass in a list of thread creation flags and
+  priority for dispatching threads.  These can be used for either the
+  MT dispatching strategy or the TPC dispatching strategy.  See
+  docs/ec_options.html for usage information.
+
+  Also added -ECDebug option to enable debugging output from the RTEC.
+  Only the option and variable was added, but no messages.  Therefore,
+  at the moment, this does not generate much output.
+
+. Resolved Bugzilla #2651 to eliminate incompatibility with the new
+  mechanism, allowing per-ORB configurations.
+
+. Fixed Bugzilla #2686, which involved correctly managing memory during
+  exceptional situations.  Throwing an exception during the creation of the
+  Root POA would cause a leak of a TAO_Adapter and POA manager related
+  objects.
+
+. Fixed Bugzilla #2699, by uninlining generated code for the
+  TIE template classes. Inlining of virtual functions in this
+  code was causing problems with RTTI on some compilers. As a side
+  result, the idl compiler doesn't generate a S_T.inl file anymore.
+
+. Fixed a bug where calling _set_policy_overrides() on a collocated servant
+  would return an unusable object reference.
+
+. Addressed a number of Coverity errors (CHECKED_RETURN, DEADCODE, LOCK,
+  USE_AFTER_FREE, RESOURCE_LEAK, FORWARD_NULL).  In particular, missing
+  return value checks and unreachable code in the ACE CDR stream
+  implementation were addressed.  Memory and resource management in the ACE
+  Configuration classes was corrected.  A potential deadlock upon error was
+  fixed in ACE_OS::rw_unlock().  Missing return value checks were addressed
+  in ACE_OS::open() on Windows and ACE_Thread_Manager::wait().  A potential
+  dereference of a null pointer in ACE_OS::scandir_emulation() was
+  corrected.  Lastly, the ACE_UUID::lock() accessor interface and
+  implementation was cleaned up so that it would not return a lock whose
+  memory had been freed.
+
 USER VISIBLE CHANGES BETWEEN TAO-1.5.2 and TAO-1.5.3
 ====================================================
 

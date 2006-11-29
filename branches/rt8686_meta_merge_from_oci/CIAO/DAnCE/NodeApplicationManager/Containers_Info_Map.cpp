@@ -3,10 +3,11 @@
 #include "Containers_Info_Map.h"
 #include "ciao/CIAO_Config.h"
 #include "ciao/CIAO_common.h"
+#include "ciao/CIAO_ServerResourcesC.h"
 
 //Added for HTTP
 #include "URL_Parser.h"              //for parsing the URL
-#include "HTTP_Client.h"             //the HTTP client class to downloading packages
+#include "tao/HTTP_Client.h"         //the HTTP client class to downloading packages
 #include "ace/Message_Block.h"       //for ACE_Message_Block
 #include "ace/OS_NS_fcntl.h"         //for open
 #include "ace/OS_NS_unistd.h"        //for close
@@ -506,7 +507,7 @@ is_shared_component (ACE_CString & name)
 #endif
     ACE_TString prefix (ACE_DLL_PREFIX);
     ACE_TString suffix (ACE_DLL_SUFFIX);
-    
+
     ACE_CString new_name (name);
     new_name = prefix + new_name;
 #if defined (ACE_WIN32) && defined (ACE_LD_DECORATOR_STR) && !defined (ACE_DISABLE_DEBUG_DLL_CHECK)
@@ -524,7 +525,7 @@ is_shared_component (ACE_CString & name)
       return false;
     }
 
-    mb->release ();    
+    mb->release ();
     return true;
   }
 
@@ -564,14 +565,14 @@ is_shared_component (ACE_CString & name)
       }
 
     ACE_CString name (name_);
-    loc = loc.substr (0, loc.length() - name.length ());    
+    loc = loc.substr (0, loc.length() - name.length ());
 
 #if defined (ACE_WIN32) && defined (ACE_LD_DECORATOR_STR) && !defined (ACE_DISABLE_DEBUG_DLL_CHECK)
     ACE_TString decorator (ACE_LD_DECORATOR_STR);
 #endif
     ACE_TString prefix (ACE_DLL_PREFIX);
     ACE_TString suffix (ACE_DLL_SUFFIX);
-    
+
     ACE_CString new_name (name);
     new_name = prefix + new_name;
 #if defined (ACE_WIN32) && defined (ACE_LD_DECORATOR_STR) && !defined (ACE_DISABLE_DEBUG_DLL_CHECK)
@@ -590,7 +591,7 @@ is_shared_component (ACE_CString & name)
       return false;
 
     // Create a client
-    HTTP_Client client;
+    TAO_HTTP_Client client;
 
     // Open the client
     if (client.open (parser->filename_,

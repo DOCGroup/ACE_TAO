@@ -17,52 +17,16 @@
 #define CCM_CONTAINER_IDL
 
 #include "CCM_Component.idl"
-#include "orbsvcs/SecurityLevel2.idl"
-#include "CCM_Transaction.idl"
+#include "CCM_Context.idl"
+#include "CCM_CCMException.idl"
+#include "CCM_EnterpriseComponent.idl"
+#include "CCM_HomeExecutorBase.idl"
 
 // *************** Basic Container interfaces ***************
 
 module Components
 {
   typeprefix Components "omg.org";
-
-  typedef SecurityLevel2::Credentials Principal;
-
-  local interface CCMContext
-  {
-    Principal get_caller_principal();
-
-    CCMHome get_CCM_home();
-
-    boolean get_rollback_only()
-      raises (IllegalState);
-
-    Transaction::UserTransaction get_user_transaction()
-      raises (IllegalState);
-
-    boolean is_caller_in_role (in string role);
-
-    void set_rollback_only()
-      raises (IllegalState);
-  };
-
-  enum CCMExceptionReason
-  {
-    SYSTEM_ERROR,
-    CREATE_ERROR,
-    REMOVE_ERROR,
-    DUPLICATE_KEY,
-    FIND_ERROR,
-    OBJECT_NOT_FOUND,
-    NO_SUCH_ENTITY
-  };
-
-  exception CCMException
-  {
-    CCMExceptionReason reason;
-  };
-
-  local interface EnterpriseComponent {};
 
   local interface SessionContext : CCMContext
   {
@@ -102,56 +66,6 @@ module Components
      */
     void ciao_postactivate ()
       raises (CCMException);
-  };
-
-  local interface SessionSynchronization
-  {
-    void after_begin ()
-      raises (CCMException);
-
-    void before_completion ()
-      raises (CCMException);
-
-    void after_completion (in boolean committed)
-      raises (CCMException);
-  };
-
-  local interface EntityContext : CCMContext
-  {
-    Object get_CCM_object ()
-      raises (IllegalState);
-
-    PrimaryKeyBase get_primary_key ()
-      raises (IllegalState);
-  };
-
-  local interface EntityComponent : EnterpriseComponent
-  {
-    void set_entity_context (in EntityContext ctx)
-      raises (CCMException);
-
-    void unset_entity_context ()
-      raises (CCMException);
-
-    void ccm_activate ()
-      raises (CCMException);
-
-    void ccm_load ()
-      raises (CCMException);
-
-    void ccm_store ()
-      raises (CCMException);
-
-    void ccm_passivate ()
-      raises (CCMException);
-
-    void ccm_remove ()
-      raises (CCMException);
-  };
-
-
-  local interface HomeExecutorBase
-  {
   };
 };
 #endif /* CCM_CONTAINER_IDL */

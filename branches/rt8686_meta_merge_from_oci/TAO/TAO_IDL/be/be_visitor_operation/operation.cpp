@@ -148,7 +148,9 @@ be_visitor_operation::gen_throw_spec (be_operation *node)
       int is_amh_exception_holder = this->is_amh_exception_holder (iface);
       AST_Decl::NodeType nt = iface->node_type ();
 
-      if (nt != AST_Decl::NT_valuetype || is_amh_exception_holder)
+      if (nt != AST_Decl::NT_valuetype
+          && nt != AST_Decl::NT_eventtype
+          || is_amh_exception_holder)
         {
           *os << be_nl << throw_spec_open;
           *os << be_idt_nl << "::CORBA::SystemException";
