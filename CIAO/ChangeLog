@@ -1,3 +1,20 @@
+Wed Nov 29 21:26:53 UTC 2006  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * docs/generate_component_mpc.html:
+
+          New file, documentation for the Perl script
+          generate_component_mpc.pl, in CIAO_ROOT/bin.
+
+        * bin/generate_component_mpc.pl:
+
+          Changes mainly to correct problems with MPC files
+          generated for non-component builds, i.e., from some IDL
+          file used in common by multiple component builds, such
+          as the definition of a port interface. Also made changes
+          and added a new command line option to help minimize the
+          amount of code generated from IDL and minimize the
+          dependencies of the generated makefile or project.
+
 Wed Nov 29 15:43:12 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * DAnCE/NodeManager/CIAO_Monitor.cpp:
