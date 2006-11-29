@@ -1,3 +1,11 @@
+Wed Nov 29 000:11:49 UTC 2006  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tao/DynamicAny/DynAnyUtils_T.h:
+
+          Removed some 'typename' qualifiers that Visual Studio seems
+          fine with either way, but which may be causing problems
+          with gcc.
+
 Tue Nov 28 22:44:08 UTC 2006  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tao/DynamicAny/DynStruct_i.cpp:
