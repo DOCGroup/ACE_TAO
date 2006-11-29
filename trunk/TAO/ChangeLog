@@ -1,6 +1,7 @@
 Wed Nov 29 16:31:26 UTC 2006  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tao/AnyTypeCode/BasicTypeTraits.cpp:
+        * tao/AnyTypeCode/BasicTypeTraits.h:
 
           Added a guard around code for wchars similar to that in
           tao/Unbounded_Sequence_CDR_T.h, as a workaround for LynxOS,
