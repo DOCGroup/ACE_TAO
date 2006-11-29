@@ -2,9 +2,9 @@
 #ifndef DOMAINAPPLICATIONMANAGER_IDL
 #define DOMAINAPPLICATIONMANAGER_IDL
 
-#include "Deployment.idl"
-#include "Deployment_NodeApplication.idl"
-#include "Deployment_ApplicationManager.idl"
+#include "ciao/Deployment.idl"
+#include "ciao/Deployment_NodeApplication.idl"
+#include "ciao/Deployment_ApplicationManager.idl"
 
 module Deployment {
   /// CIAO 's DomainApplicationManager interface differs spec-defined interface

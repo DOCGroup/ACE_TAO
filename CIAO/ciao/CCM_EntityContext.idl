@@ -16,8 +16,8 @@
 #if !defined (CCM_ENTITYCONTEXT_IDL)
 #define CCM_ENTITYCONTEXT_IDL
 
-#include "CCM_Context.idl"
-#include "CCM_Object.idl"
+#include "ciao/CCM_Context.idl"
+#include "ciao/CCM_Object.idl"
 
 module Components
 {

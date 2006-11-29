@@ -16,7 +16,7 @@
 #if !defined (CCM_SESSION2CONTEXT_IDL)
 #define CCM_SESSION2CONTEXT_IDL
 
-#include "CCM_CCM2Context.idl"
+#include "ciao/CCM_CCM2Context.idl"
 
 // *************** Extended Container Interfaces ***************
 

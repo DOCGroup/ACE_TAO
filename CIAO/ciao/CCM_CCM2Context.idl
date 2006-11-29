@@ -16,8 +16,8 @@
 #if !defined (CCM_2CONTEXT_IDL)
 #define CCM_2CONTEXT_IDL
 
-#include "CCM_Container.idl"
-#include "CCM_HomeRegistration.idl"
+#include "ciao/CCM_Container.idl"
+#include "ciao/CCM_HomeRegistration.idl"
 #include <CosPersistentState.idl>
 
 // *************** Extended Container Interfaces ***************

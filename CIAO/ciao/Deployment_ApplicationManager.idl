@@ -2,8 +2,8 @@
 #ifndef DEPLOYMENT_APPLICATIONMANAGER_IDL
 #define DEPLOYMENT_APPLICATIONMANAGER_IDL
 
-#include "Deployment_Core.idl"
-#include "Deployment.idl"
+#include "ciao/Deployment_Core.idl"
+#include "ciao/Deployment.idl"
 
 module Deployment {
   exception ResourceNotAvailable {

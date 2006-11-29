@@ -14,9 +14,9 @@
 #if !defined (CCM_OBJECT_IDL)
 #define CCM_OBJECT_IDL
 
-#include "CCM_Event.idl"
-#include "CCM_Navigation.idl"
-#include "CCM_Home.idl"
+#include "ciao/CCM_Event.idl"
+#include "ciao/CCM_Navigation.idl"
+#include "ciao/CCM_Home.idl"
 
 module Components
 {

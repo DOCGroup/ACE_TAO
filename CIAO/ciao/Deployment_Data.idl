@@ -2,7 +2,8 @@
 
 #ifndef DEPLOYMENT_DATA_IDL
 #define DEPLOYMENT_DATA_IDL
-#include "Deployment_DeploymentPlan.idl"
+
+#include "ciao/Deployment_DeploymentPlan.idl"
 
 module Deployment {
 

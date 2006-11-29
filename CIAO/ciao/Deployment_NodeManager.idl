@@ -2,9 +2,9 @@
 #ifndef NODEMANAGER_IDL
 #define NODEMANAGER_IDL
 
-#include "Deployment.idl"
-#include "Deployment_Core.idl"
-#include "Deployment_TargetManager.idl"
+#include "ciao/Deployment.idl"
+#include "ciao/Deployment_Core.idl"
+#include "ciao/Deployment_TargetManager.idl"
 
 module Deployment {
 
