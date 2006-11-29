@@ -523,7 +523,7 @@ public:
                        ACE_Event_Handler ** = 0);
 
   /// Returns true if we've been successfully initialized, else false.
-  virtual int initialized (void);
+  virtual bool initialized (void);
 
   /// Returns the current size of the Reactor's internal descriptor
   /// table.

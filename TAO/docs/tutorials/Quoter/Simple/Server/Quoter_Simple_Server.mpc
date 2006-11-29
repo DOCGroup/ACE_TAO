@@ -1,7 +1,7 @@
 // -*- MPC -*-
 // $Id$
 
-project : taoserver, exceptions {
+project : taoserver {
   libs += Quoter_Idl_Lib
   after += Quoter_Idl_Lib
 

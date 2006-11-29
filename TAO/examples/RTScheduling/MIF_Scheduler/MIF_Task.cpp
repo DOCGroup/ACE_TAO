@@ -1,16 +1,18 @@
 //$Id$
+
 #include "MIF_Task.h"
 #include "test.h"
+
 #include "ace/OS_NS_errno.h"
 #include "ace/Countdown_Time.h"
 
 MIF_Task::MIF_Task (int importance,
-		    int start_time,
-		    int load,
-		    int iter,
-		    int dist,
-		    char *job_name,
-		    DT_Creator *dt_creator)
+        int start_time,
+        int load,
+        int iter,
+        int dist,
+        char *job_name,
+        DT_Creator *dt_creator)
 {
   this->load_ = load;
   this->iter_ = iter;
@@ -45,16 +47,16 @@ MIF_Task::post_activate (void)
 
 int
 MIF_Task::activate_task (RTScheduling::Current_ptr current,
-			 CORBA::Policy_ptr sched_param,
-			 long flags,
-			 ACE_Time_Value* base_time
-			 ACE_ENV_ARG_DECL)
+       CORBA::Policy_ptr sched_param,
+       long flags,
+       ACE_Time_Value* base_time
+       ACE_ENV_ARG_DECL)
 {
 
   if (TAO_debug_level > 0)
     ACE_DEBUG ((LM_DEBUG,
-		"Thread_Task::activate %d\n",
-		importance_));
+    "Thread_Task::activate %d\n",
+    importance_));
 
   char msg [BUFSIZ];
   ACE_OS::sprintf (msg, "Thread_Task::activate task\n");
@@ -63,7 +65,7 @@ MIF_Task::activate_task (RTScheduling::Current_ptr current,
   base_time_ = base_time;
 
   current_ = RTScheduling::Current::_narrow (current
-					     ACE_ENV_ARG_PARAMETER);
+               ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
 
   sched_param_ = CORBA::Policy::_duplicate (sched_param);
@@ -71,12 +73,12 @@ MIF_Task::activate_task (RTScheduling::Current_ptr current,
   pre_activate ();
 
   if (this->activate (flags,
-		      1) == -1)
+          1) == -1)
     {
       if (ACE_OS::last_error () == EPERM)
-	ACE_ERROR_RETURN ((LM_ERROR,
-			   ACE_TEXT ("Insufficient privilege to run this test.\n")),
-			  -1);
+  ACE_ERROR_RETURN ((LM_ERROR,
+         ACE_TEXT ("Insufficient privilege to run this test.\n")),
+        -1);
     }
 
   post_activate ();
@@ -169,8 +171,8 @@ MIF_Task::perform_task (void)
 
   if (TAO_debug_level > 0)
     ACE_DEBUG ((LM_DEBUG,
-		"Thread %d\n",
-		this->count_));
+    "Thread %d\n",
+    this->count_));
 
   if (dist_)
     job_->shutdown ();

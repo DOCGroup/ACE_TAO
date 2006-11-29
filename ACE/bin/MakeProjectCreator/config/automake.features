@@ -30,3 +30,6 @@ ace_xtreactor=1
 tao_xtresource=1
 
 wxWindows=1
+
+stl=1
+boost=1

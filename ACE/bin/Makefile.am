@@ -29,7 +29,7 @@ envinfo_SOURCES = \
   envinfo.cpp
 
 envinfo_LDADD = \
-  $(ACE_BUILDDIR)/ace/libACE.la
+  $(ACE_BUILDDIR)/ace/$(ACE_BUILDDIR)/ace/libACE.la
 
 ## Clean up template repositories, etc.
 clean-local:

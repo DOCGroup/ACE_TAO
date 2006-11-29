@@ -21,7 +21,7 @@ project(*Server): orbsvcsexe, fault_tolerance, tmcast, pi_server, interceptors {
   }
 }
 
-project(*Client): taoclient, fault_tolerance, exceptions {
+project(*Client): taoclient, fault_tolerance {
   after += *idl
   Source_Files {
     RolyPolyC.cpp

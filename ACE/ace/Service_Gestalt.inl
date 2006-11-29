@@ -55,8 +55,14 @@ ACE_Service_Gestalt::find (const ACE_TCHAR name[],
                            const ACE_Service_Type **srp,
                            int ignore_suspended) const
 {
-  ACE_ASSERT (this->repo_ != 0);
-  return this->repo_->find (name, srp, ignore_suspended);
+  // Closing the gestalt will have disassociated it from the
+  // repository. If the repository used to be owned by the gestalt, it
+  // will also have been destroyed - so just check for repo_ before
+  // doing anything with it.
+  if (this->repo_ != 0)
+    return this->repo_->find (name, srp, ignore_suspended);
+
+  return 0;
 }
 
 

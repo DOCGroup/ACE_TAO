@@ -7863,9 +7863,6 @@ AC_CONFIG_FILES([
   protocols/ace/HTBP/Makefile
   protocols/ace/RMCast/Makefile
   protocols/ace/TMCast/Makefile
-  protocols/examples/Makefile
-  protocols/examples/RMCast/Makefile
-  protocols/examples/RMCast/Send_Msg/Makefile
   websvcs/Makefile
   websvcs/lib/Makefile
   websvcs/tests/Makefile
@@ -7905,6 +7902,7 @@ if test $ace_build_examples = yes; then
     examples/Bounded_Packet_Relay/Makefile
     examples/C++NPv1/Makefile
     examples/C++NPv2/Makefile
+    examples/ConfigViewer/Makefile
     examples/Connection/Makefile
     examples/Connection/blocking/Makefile
     examples/Connection/misc/Makefile
@@ -7967,11 +7965,14 @@ if test $ace_build_examples = yes; then
     examples/System_V_IPC/Makefile
     examples/System_V_IPC/SV_Message_Queues/Makefile
     examples/System_V_IPC/SV_Semaphores/Makefile
-    examples/TMCast/Makefile
-    examples/TMCast/Member/Makefile
     examples/Threads/Makefile
     examples/Timer_Queue/Makefile
     examples/Web_Crawler/Makefile
+    protocols/examples/Makefile
+    protocols/examples/RMCast/Makefile
+    protocols/examples/RMCast/Send_Msg/Makefile
+    protocols/examples/TMCast/Makefile
+    protocols/examples/TMCast/Member/Makefile
   ])
 fi
 
@@ -7981,23 +7982,23 @@ if test $ace_build_tests = yes; then
     performance-tests/Makefile
     performance-tests/Misc/Makefile
     performance-tests/SCTP/Makefile
-    performance-tests/Server_Concurrency/Makefile
     performance-tests/Server_Concurrency/Leader_Follower/Makefile
+    performance-tests/Server_Concurrency/Makefile
     performance-tests/Server_Concurrency/Queue_Based_Workers/Makefile
-    performance-tests/Synch-Benchmarks/Makefile
-    performance-tests/Synch-Benchmarks/Synch_Lib/Makefile
     performance-tests/Synch-Benchmarks/Base_Test/Makefile
+    performance-tests/Synch-Benchmarks/Makefile
     performance-tests/Synch-Benchmarks/Perf_Test/Makefile
+    performance-tests/Synch-Benchmarks/Synch_Lib/Makefile
     performance-tests/TCP/Makefile
     performance-tests/UDP/Makefile
+    protocols/tests/HTBP/Makefile
+    protocols/tests/HTBP/Reactor_Tests/Makefile
+    protocols/tests/HTBP/Send_Large_Msg/Makefile
+    protocols/tests/HTBP/Send_Recv_Tests/Makefile
+    protocols/tests/HTBP/ping/Makefile
     protocols/tests/Makefile
     protocols/tests/RMCast/Makefile
     tests/Makefile
-    tests/HTBP/Makefile
-    tests/HTBP/Reactor_Tests/Makefile
-    tests/HTBP/Send_Large_Msg/Makefile
-    tests/HTBP/Send_Recv_Tests/Makefile
-    tests/HTBP/ping/Makefile
     tests/SSL/Makefile
   ])
 fi

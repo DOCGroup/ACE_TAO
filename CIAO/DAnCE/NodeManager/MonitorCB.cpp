@@ -15,12 +15,13 @@
 #include "CIAO_common.h"
 
 
-CIAO::MonitorCB::MonitorCB (CORBA::ORB_ptr orb,
-                      Deployment::TargetManager_ptr target,
-                      int interval
-                      ):orb_ (orb),
-                        target_mgr_ (target),
-                        interval_ (interval)
+CIAO::MonitorCB::MonitorCB (
+  CORBA::ORB_ptr orb,
+  Deployment::TargetManager_ptr target,
+  int interval) :
+    orb_ (orb),
+    target_mgr_ (target),
+    interval_ (interval)
 {
 }
 

@@ -21,7 +21,6 @@
 #include "ace/OS_NS_unistd.h"
 #include "ace/Get_Opt.h"
 #include "ace/ARGV.h"
-#include "ace/Static_Object_Lock.h"
 
 ACE_RCSID (ace,
            Service_Config,
@@ -326,12 +325,19 @@ ACE_Service_Config::impl_ (void)
 
   static TSS_Service_Gestalt_Ptr * instance_ = 0;
 
+  // We can't possibly rely on ACE_STATIC_OBJECT_LOCK or any other
+  // object that may be managed by the Object Manager. It is very
+  // likely we are called in a static initializer context, before the
+  // ACE_Object_Manager has been instantiated. This of course only
+  // matters for threaded environments.
+  ACE_MT (static ACE_SYNCH_RECURSIVE_MUTEX guardian_);
+
   if (instance_ == 0)
     {
       // TSS not initialized yet - first thread to hit this, so doing
       // the double-checked locking thing
       ACE_MT (ACE_GUARD_RETURN (ACE_Recursive_Thread_Mutex, ace_mon,
-                                *ACE_Static_Object_Lock::instance (), 0));
+                                guardian_, 0));
 
       if (instance_ == 0)
         ACE_NEW_RETURN (instance_,
@@ -446,16 +452,7 @@ ACE_Service_Config::ACE_Service_Config (int ignore_static_svcs,
 {
   ACE_TRACE ("ACE_Service_Config::ACE_Service_Config");
 
-  //  this->no_static_svcs_ = (ignore_static_svcs);
-
   ACE_Service_Config::signum_ = signum;
-
-  // Make sure ACE_OS_Object_Manager is initialized.
-  (void)ACE_OS_Object_Manager::instance ();
-
-  // Initialize the ACE_Reactor (the ACE_Reactor should be the same
-  // size as the ACE_Service_Repository).
-  (void)ACE_Reactor::instance ();
 }
 
 
@@ -594,7 +591,7 @@ ACE_Service_Config::close_svcs (void)
   ACE_TRACE ("ACE_Service_Config::close_svcs");
 
   ACE_Service_Repository::close_singleton ();
-
+  ACE_Service_Config::current (0);
   return 0;
 }
 

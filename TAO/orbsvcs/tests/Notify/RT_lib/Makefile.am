@@ -17,8 +17,8 @@ TAO_ROOT = $(top_srcdir)
 ## Makefile.RT_Notify_lib.am
 
 if BUILD_CORBA_MESSAGING
+if BUILD_EXCEPTIONS
 if BUILD_RT_CORBA
-if !BUILD_MINIMUM_CORBA
 
 noinst_LTLIBRARIES = libTAO_RT_NotifyTests.la
 
@@ -44,8 +44,8 @@ noinst_HEADERS = \
   RT_POA_Command.h \
   RT_Priority_Mapping.h
 
-endif !BUILD_MINIMUM_CORBA
 endif BUILD_RT_CORBA
+endif BUILD_EXCEPTIONS
 endif BUILD_CORBA_MESSAGING
 
 ## Clean up template repositories, etc.

@@ -6,7 +6,7 @@
 ## this file will be lost the next time it is generated.
 ##
 ## MPC Command:
-## /acebuilds/ACE_wrappers-repository/bin/mwc.pl -include /acebuilds/MPC/config -include /acebuilds/MPC/templates -feature_file /acebuilds/ACE_wrappers-repository/local.features -noreldefs -type automake -exclude build,Kokyu
+## ./bin/mwc.pl -type automake -noreldefs ACE.mwc
 
 SUBDIRS = \
         APG \
@@ -14,6 +14,7 @@ SUBDIRS = \
         Bounded_Packet_Relay \
         C++NPv1 \
         C++NPv2 \
+        ConfigViewer \
         Connection \
         DLL \
         Export \
@@ -27,7 +28,6 @@ SUBDIRS = \
         NT_Service \
         Naming \
         OS \
-        QOS \
         Reactor \
         Registry \
         Service_Configurator \
@@ -36,7 +36,6 @@ SUBDIRS = \
         Smart_Pointers \
         Synch \
         System_V_IPC \
-        TMCast \
         Threads \
         Timer_Queue \
         Web_Crawler

@@ -1,6 +1,6 @@
 // $Id$
 
-project (CIAO_XML_Utils) : acelib, xerces, exceptions {
+project (CIAO_XML_Utils) : acelib, xerces {
   includes += $(CIAO_ROOT)/tools/Config_Handlers
   sharedname   += CIAO_XML_Utils
   dynamicflags  = CIAO_XML_UTILS_BUILD_DLL

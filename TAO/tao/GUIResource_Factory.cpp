@@ -8,7 +8,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 namespace TAO
 {
   GUIResource_Factory::GUIResource_Factory (void)
-    : dynamically_allocated_reactor_ (0)
+    : dynamically_allocated_reactor_ (false)
   {
   }
 
@@ -41,7 +41,7 @@ namespace TAO
       reactor = 0;
     }
     else
-      this->dynamically_allocated_reactor_ = 1;
+      this->dynamically_allocated_reactor_ = true;
 
     return reactor;
   }
@@ -51,7 +51,7 @@ namespace TAO
   {
     ACE_GUARD ( TAO_SYNCH_MUTEX, ace_mon, this->lock_ );
 
-    if (this->dynamically_allocated_reactor_ == 1)
+    if (this->dynamically_allocated_reactor_)
       delete reactor;
   }
 }

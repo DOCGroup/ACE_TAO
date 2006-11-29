@@ -6,7 +6,8 @@
  * @brief Controling interface for managing and controling CIAO daemon.
  */
 
-#include "ciao/NodeManager.idl"
+#include "ciao/Deployment_NodeManager.idl"
+#include "ciao/Deployment_NodeApplicationManager.idl"
 
 module CIAO
 {
@@ -24,7 +25,7 @@ module CIAO
 
     // Shutdown the daemon process.
     oneway void shutdown ();
-    
+
     /// RACE specific extension.
     /// Modify the priority of a node application process.
     long set_priority (in string plan_id,

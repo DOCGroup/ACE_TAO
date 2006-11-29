@@ -6,13 +6,13 @@
 
 project (RepositoryManager) : ciao_server_dnc, ciao_config_handlers, zlib {
 
-  includes += $(CIAO_ROOT)/tools/Config_Handlers $(ACE_ROOT)/contrib/minizip  
+  includes += $(CIAO_ROOT)/tools/Config_Handlers $(ACE_ROOT)/contrib/minizip
   //to circumvent an improper include resolution
   //in the Package_Handlers/PC_Intf.h
   exename = RepositoryManagerDaemon
   requires += zlib
   after += minizip
-  libs += Package_Config_Handlers minizip  
+  libs += Package_Config_Handlers minizip
 
   IDL_Files {
     RepositoryManagerDaemon.idl
@@ -26,8 +26,6 @@ project (RepositoryManager) : ciao_server_dnc, ciao_config_handlers, zlib {
     RepositoryManager_Impl.cpp
     RM_Helper.cpp
     URL_Parser.cpp
-    HTTP_Handler.cpp
-    HTTP_Client.cpp
     PC_Updater_T.cpp
     PC_Updater.cpp
   }

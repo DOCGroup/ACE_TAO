@@ -36,6 +36,13 @@
 
 </file>
 
+<file name="On_Demand_Fragmentation_Strategy.cpp">
+
+<!-- Remove Pluggable Messaging include directive -->
+<remove>#include "tao/Pluggable_Messaging.h"</remove>
+
+</file>
+
 <file name="GIOP_Message_Base.h">
 
 <!-- Remove Pluggable Messaging include directive -->
@@ -100,7 +107,7 @@ protected:
 <file name="TAO_Server_Request.cpp">
 
 <!-- Remove Pluggable messaging include altogether -->
-<remove>#include "Pluggable_Messaging.h"</remove>
+<remove>#include "tao/Pluggable_Messaging.h"</remove>
 
 </file>
 
@@ -113,7 +120,7 @@ protected:
 </file>
 
 <file name="Transport.cpp">
- <remove>#include "Pluggable_Messaging.h"</remove>
+ <remove>#include "tao/Pluggable_Messaging.h"</remove>
 </file>
 
 </module>
@@ -143,6 +150,7 @@ protected:
 
 <file name="Asynch_Invocation.cpp">
  <remove>#include "tao/Pluggable_Messaging.h"</remove>
+ <replace>#include "tao/GIOP_Message_Base.h"</replace>
 </file>
 
 </module>
@@ -170,6 +178,7 @@ protected:
  <data>
     ACE_NEW (this->messaging_object_,
                TAO_GIOP_Message_Base (orb_core,
+                                      this,
                                       ACE_MAX_DGRAM_SIZE));
  </data>
 </add>
@@ -196,7 +205,7 @@ protected:
  <data>
     ACE_NEW (this->messaging_object_,
                TAO_GIOP_Message_Base (orb_core,
-                                      ACE_MAX_DGRAM_SIZE));
+                                      this));
  </data>
 </add>
 
@@ -227,7 +236,7 @@ protected:
  <data>
     ACE_NEW (this->messaging_object_,
                TAO_GIOP_Message_Base (orb_core,
-                                      ACE_MAX_DGRAM_SIZE));
+                                      this));
  </data>
 </add>
  <remove>#include "tao/GIOP_Message_Lite.h"</remove>

@@ -16,6 +16,7 @@ TAO_ROOT = $(top_srcdir)
 
 ## Makefile.Alt_Resource.am
 
+if BUILD_EXCEPTIONS
 if BUILD_WFMO
 
 noinst_LTLIBRARIES = libAlt_Resource_Factory.la
@@ -35,6 +36,7 @@ noinst_HEADERS = \
   Resource_Factory.h
 
 endif BUILD_WFMO
+endif BUILD_EXCEPTIONS
 
 ## Clean up template repositories, etc.
 clean-local:

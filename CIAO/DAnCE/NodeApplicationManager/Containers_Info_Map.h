@@ -19,6 +19,7 @@
 //added for the HTTP support
 #include "ace/Message_Block.h"      //for ACE_Message_Block
 
+#include "ciao/Deployment_ContainerC.h"
 #include "ciao/DeploymentC.h"
 #include "ace/SString.h"
 #include "CIAO_NAM_Export.h"

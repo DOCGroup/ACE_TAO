@@ -16,17 +16,17 @@ TAO_IDL_DEP = $(TAO_BUILDDIR)/TAO_IDL/tao_idl
 TAO_IDLFLAGS = -Ge 1 -Wb,pre_include=ace/pre.h -Wb,post_include=ace/post.h -I$(TAO_ROOT) -I$(srcdir) -g $(ACE_BUILDDIR)/apps/gperf/src/gperf
 TAO_ROOT = $(top_srcdir)
 
+
 ## Makefile.MFC_client.am
+
+if BUILD_EXCEPTIONS
 
 BUILT_SOURCES = \
   w32_testC.cpp \
   w32_testC.h \
   w32_testC.inl \
   w32_testS.h \
-  w32_testS.inl \
-  w32_testS_T.cpp \
-  w32_testS_T.h \
-  w32_testS_T.inl
+  w32_testS.inl
 
 CLEANFILES = \
   w32_test-stamp \
@@ -34,15 +34,12 @@ CLEANFILES = \
   w32_testC.h \
   w32_testC.inl \
   w32_testS.h \
-  w32_testS.inl \
-  w32_testS_T.cpp \
-  w32_testS_T.h \
-  w32_testS_T.inl
+  w32_testS.inl
 
-w32_testC.cpp w32_testC.h w32_testC.inl w32_testS.h w32_testS.inl w32_testS_T.cpp w32_testS_T.h w32_testS_T.inl: w32_test-stamp
+w32_testC.cpp w32_testC.h w32_testC.inl w32_testS.h w32_testS.inl: w32_test-stamp
 
 w32_test-stamp: $(srcdir)/w32_test.idl $(TAO_IDL_DEP)
-	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs -GT -Wb,pch_include=StdAfx.h $(srcdir)/w32_test.idl
+	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs -Wb,pch_include=StdAfx.h $(srcdir)/w32_test.idl
 	@touch $@
 
 noinst_PROGRAMS = client
@@ -61,9 +58,7 @@ client_SOURCES = \
   w32_testC.h \
   w32_testC.inl \
   w32_testS.h \
-  w32_testS.inl \
-  w32_testS_T.h \
-  w32_testS_T.inl
+  w32_testS.inl
 
 client_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO_PortableServer.la \
@@ -71,6 +66,8 @@ client_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO_AnyTypeCode.la \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
+
+endif BUILD_EXCEPTIONS
 
 ## Clean up template repositories, etc.
 clean-local:

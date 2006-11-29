@@ -10,7 +10,7 @@
  */
 
 #include "Deployment_DataC.h"
-#include "TargetManagerC.h"
+#include "TargetManagerImplC.h"
 #include "ace/streams.h"
 #include "Config_Handlers/DnC_Dump.h"
 

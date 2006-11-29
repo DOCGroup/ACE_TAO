@@ -73,6 +73,7 @@ noinst_HEADERS = \
 
 ## Makefile.Load_Balancing_Balancer.am
 
+if BUILD_EXCEPTIONS
 if !BUILD_ACE_FOR_TAO
 if !BUILD_REPO
 
@@ -103,9 +104,11 @@ load_balancer_LDADD = \
 
 endif !BUILD_REPO
 endif !BUILD_ACE_FOR_TAO
+endif BUILD_EXCEPTIONS
 
 ## Makefile.Load_Balancing_Server.am
 
+if BUILD_EXCEPTIONS
 if !BUILD_REPO
 
 noinst_PROGRAMS += server
@@ -135,9 +138,11 @@ server_LDADD = \
   $(ACE_BUILDDIR)/ace/libACE.la
 
 endif !BUILD_REPO
+endif BUILD_EXCEPTIONS
 
 ## Makefile.Load_Balancing_Client.am
 
+if BUILD_EXCEPTIONS
 if !BUILD_REPO
 
 noinst_PROGRAMS += client
@@ -164,6 +169,7 @@ client_LDADD = \
   $(ACE_BUILDDIR)/ace/libACE.la
 
 endif !BUILD_REPO
+endif BUILD_EXCEPTIONS
 
 ## Clean up template repositories, etc.
 clean-local:

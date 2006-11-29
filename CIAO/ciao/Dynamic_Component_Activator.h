@@ -23,7 +23,6 @@
 
 #include "ciao/CCM_ContainerC.h"
 #include "ciao/Deployment_CoreC.h"
-#include "ciao/Dynamic_Component_Servant_Base.h"
 
 #include "tao/PortableServer/Key_Adapters.h"
 #include "tao/PortableServer/PortableServer.h"

@@ -22,6 +22,7 @@ noinst_PROGRAMS =
 
 if BUILD_AMI
 if BUILD_CORBA_MESSAGING
+if BUILD_EXCEPTIONS
 
 BUILT_SOURCES = \
   QuoterC.cpp \
@@ -50,6 +51,7 @@ Quoter-stamp: $(srcdir)/Quoter.idl $(TAO_IDL_DEP)
 noinst_HEADERS = \
   Quoter.idl
 
+endif BUILD_EXCEPTIONS
 endif BUILD_CORBA_MESSAGING
 endif BUILD_AMI
 
@@ -58,7 +60,6 @@ endif BUILD_AMI
 if BUILD_AMI
 if BUILD_CORBA_MESSAGING
 if BUILD_EXCEPTIONS
-if !BUILD_MINIMUM_CORBA
 
 noinst_PROGRAMS += client
 
@@ -88,7 +89,6 @@ client_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
-endif !BUILD_MINIMUM_CORBA
 endif BUILD_EXCEPTIONS
 endif BUILD_CORBA_MESSAGING
 endif BUILD_AMI
@@ -98,7 +98,6 @@ endif BUILD_AMI
 if BUILD_AMI
 if BUILD_CORBA_MESSAGING
 if BUILD_EXCEPTIONS
-if !BUILD_MINIMUM_CORBA
 
 noinst_PROGRAMS += server
 
@@ -132,7 +131,6 @@ server_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
-endif !BUILD_MINIMUM_CORBA
 endif BUILD_EXCEPTIONS
 endif BUILD_CORBA_MESSAGING
 endif BUILD_AMI

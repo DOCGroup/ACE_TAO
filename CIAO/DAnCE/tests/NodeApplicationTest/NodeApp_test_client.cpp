@@ -3,7 +3,7 @@
 // This test tries to install a set of components in 2 different containers, which
 // is hosted in the same NodeApplication.
 
-#include "Deployment_CoreC.h"
+#include "Deployment_NodeApplicationC.h"
 #include "Client_init.h"
 #include "NodeAppTest_RoundTripC.h"
 #include "ace/Get_Opt.h"

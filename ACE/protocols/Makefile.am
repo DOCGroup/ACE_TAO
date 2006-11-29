@@ -9,7 +9,13 @@
 ## /acebuilds/ACE_wrappers-repository/bin/mwc.pl -include /acebuilds/MPC/config -include /acebuilds/MPC/templates -feature_file /acebuilds/ACE_wrappers-repository/local.features -noreldefs -type automake -exclude build,Kokyu
 
 SUBDIRS = \
-        ace \
-        examples \
-        tests
+        ace 
+
+if BUILD_EXAMPLES
+SUBDIRS += examples
+endif
+
+if BUILD_TESTS
+SUBDIRS += tests
+endif
 

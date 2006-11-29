@@ -21,7 +21,7 @@ noinst_PROGRAMS =
 ## Makefile.CosEC_TypedSimple_Consumer.am
 
 if BUILD_EC_TYPED_EVENTS
-if !BUILD_MINIMUM_CORBA
+if BUILD_EXCEPTIONS
 
 BUILT_SOURCES = \
   CountryC.cpp \
@@ -29,10 +29,7 @@ BUILT_SOURCES = \
   CountryC.inl \
   CountryS.cpp \
   CountryS.h \
-  CountryS.inl \
-  CountryS_T.cpp \
-  CountryS_T.h \
-  CountryS_T.inl
+  CountryS.inl
 
 CLEANFILES = \
   Country-stamp \
@@ -41,15 +38,12 @@ CLEANFILES = \
   CountryC.inl \
   CountryS.cpp \
   CountryS.h \
-  CountryS.inl \
-  CountryS_T.cpp \
-  CountryS_T.h \
-  CountryS_T.inl
+  CountryS.inl
 
-CountryC.cpp CountryC.h CountryC.inl CountryS.cpp CountryS.h CountryS.inl CountryS_T.cpp CountryS_T.h CountryS_T.inl: Country-stamp
+CountryC.cpp CountryC.h CountryC.inl CountryS.cpp CountryS.h CountryS.inl: Country-stamp
 
 Country-stamp: $(srcdir)/Country.idl $(TAO_IDL_DEP)
-	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs -GT $(srcdir)/Country.idl
+	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs $(srcdir)/Country.idl
 	@touch $@
 
 noinst_PROGRAMS += Consumer
@@ -72,8 +66,6 @@ Consumer_SOURCES = \
   CountryC.inl \
   CountryS.h \
   CountryS.inl \
-  CountryS_T.h \
-  CountryS_T.inl \
   Country_i.h
 
 Consumer_LDADD = \
@@ -85,13 +77,13 @@ Consumer_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
-endif !BUILD_MINIMUM_CORBA
+endif BUILD_EXCEPTIONS
 endif BUILD_EC_TYPED_EVENTS
 
 ## Makefile.CosEC_TypedSimple_Supplier.am
 
 if BUILD_EC_TYPED_EVENTS
-if !BUILD_MINIMUM_CORBA
+if BUILD_EXCEPTIONS
 
 noinst_PROGRAMS += Supplier
 
@@ -118,7 +110,7 @@ Supplier_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
-endif !BUILD_MINIMUM_CORBA
+endif BUILD_EXCEPTIONS
 endif BUILD_EC_TYPED_EVENTS
 
 ## Clean up template repositories, etc.

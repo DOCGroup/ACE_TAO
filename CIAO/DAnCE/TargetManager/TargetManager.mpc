@@ -12,13 +12,13 @@ project(CIAO_TargetManager_stub): ciao_client_dnc, ciao_deployment_stub {
   libs +=  NodeManager_stub
 
   IDL_Files {
-    TargetManager.idl
+    TargetManagerImpl.idl
     TargetManagerExt.idl
     DomainEvents.idl
   }
 
   Source_Files {
-    TargetManagerC.cpp
+    TargetManagerImplC.cpp
     TargetManagerExtC.cpp
     DomainEventsC.cpp
   }
@@ -43,7 +43,7 @@ project(CIAO_TargetManager_svnt) : ciao_servant_dnc {
 
   Source_Files {
     TargetManagerEC.cpp
-    TargetManagerS.cpp
+    TargetManagerImplS.cpp
     TargetManagerExtS.cpp
     TargetManager_svnt.cpp
     DomainEventsS.cpp

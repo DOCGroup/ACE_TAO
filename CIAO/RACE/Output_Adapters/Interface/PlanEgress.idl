@@ -4,12 +4,12 @@
 
 #ifndef INCLUDED_DEPLOYMENT_DATA
 #define INCLUDED_DEPLOYMENT_DATA
-#include "Deployment_Data.idl"
+#include "Deployment_DeploymentPlan.idl"
 #endif
 
 module CIAO
 {
-  
+
   module RACE
   {
     interface PlanEgress

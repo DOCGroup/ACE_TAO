@@ -18,7 +18,7 @@
 #include "NodeManager_svnt_export.h"
 #include "Deployment_BaseC.h"
 
-#include "TargetManager/TargetManagerC.h"
+#include "TargetManager/TargetManagerImplC.h"
 #include "ace/Task.h"
 #include "ace/Auto_Ptr.h"
 

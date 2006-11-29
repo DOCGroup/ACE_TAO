@@ -1,14 +1,14 @@
 // -*- MPC -*-
 // $Id$
 
-project(*server): taoserver, exceptions {
+project(*server): taoserver {
   idlflags += -Sa -St
   Source_Files {
     server.cpp
   }
 }
 
-project(*client): taoclient, exceptions {
+project(*client): taoclient {
   after += *Server
   Source_Files {
     fooC.cpp

@@ -115,6 +115,28 @@ main (int argc, char *argv[])
                             1);
         }
 
+      // BUG 2656 testing - _get_policy_overrides() should return an empty
+      // sequence rather than nill.
+      CORBA::PolicyTypeSeq types;
+      CORBA::PolicyList_var policies = server->_get_policy_overrides(types);
+
+      if (policies.ptr () == 0)
+        {
+            ACE_ERROR ((LM_ERROR,
+                        "(%P|%t) _get_policy_overrides returned nill pointer\n"));
+            ACE_TRY_THROW (CORBA::INTERNAL ());
+        }
+      else
+        {
+          CORBA::ULong const list_size = policies->length();
+          if (list_size != 0)
+            {
+              ACE_ERROR ((LM_ERROR,
+                          "(%P|%t) _get_policy_overrides returned list with size not equal 0\n"));
+              ACE_TRY_THROW (CORBA::INTERNAL ());
+            }
+        }
+
       server->invoke_me (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 

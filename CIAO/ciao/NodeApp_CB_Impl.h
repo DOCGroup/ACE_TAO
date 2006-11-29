@@ -20,7 +20,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "NodeApplication_CallBackS.h"
+#include "CIAO_NodeApplication_CallBackS.h"
 
 namespace CIAO
 {

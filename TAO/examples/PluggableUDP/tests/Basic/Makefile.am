@@ -49,7 +49,7 @@ noinst_HEADERS = \
 
 ## Makefile.Basic_Client.am
 
-if !BUILD_ACE_FOR_TAO
+if BUILD_EXCEPTIONS
 
 noinst_PROGRAMS += client
 
@@ -75,11 +75,11 @@ client_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
-endif !BUILD_ACE_FOR_TAO
+endif BUILD_EXCEPTIONS
 
 ## Makefile.Basic_Server.am
 
-if !BUILD_ACE_FOR_TAO
+if BUILD_EXCEPTIONS
 
 noinst_PROGRAMS += server
 
@@ -105,7 +105,7 @@ server_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
-endif !BUILD_ACE_FOR_TAO
+endif BUILD_EXCEPTIONS
 
 ## Clean up template repositories, etc.
 clean-local:

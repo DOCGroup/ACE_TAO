@@ -7,24 +7,26 @@ project(ACE_XtReactor) : acedefaults, core, acelib, ace_xt {
   dynamicflags = ACE_XTREACTOR_BUILD_DLL
 
   Source_Files {
-    XtReactor.cpp
+    XtReactor
   }
 
   Header_Files {
-    XtReactor.h
-    ACE_XtReactor_export.h
+    XtReactor
   }
 
   Inline_Files {
+    XtReactor
   }
 
   Template_Files {
+    XtReactor
   }
 
   Resource_Files {
+    XtReactor
   }
 
   Pkgconfig_Files {
-    ACE_XtReactor.pc.in
+    XtReactor/ACE_XtReactor.pc.in
   }
 }

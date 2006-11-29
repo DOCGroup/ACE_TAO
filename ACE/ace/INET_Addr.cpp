@@ -322,7 +322,11 @@ ACE_INET_Addr::set (u_short port_number,
                       encode ? ntohl (addrv4.s_addr) : addrv4.s_addr,
                       encode);
 # else
-    return -1;
+    {
+      ACE_UNUSED_ARG (port_number);
+      ACE_UNUSED_ARG (encode);
+      return -1;
+    }
 # endif /* ACE_LACKS_NTOHL */
   else
     {
@@ -656,12 +660,18 @@ ACE_INET_Addr::ACE_INET_Addr (const wchar_t port_name[],
   : ACE_Addr (this->determine_type(), sizeof (inet_addr_))
 {
   ACE_TRACE ("ACE_INET_Addr::ACE_INET_Addr");
+#if !defined (ACE_LACKS_HTONL)
   this->reset ();
   if (this->set (port_name,
                  htonl (inet_address),
                  protocol) == -1)
     ACE_ERROR ((LM_ERROR,
                 ACE_LIB_TEXT ("ACE_INET_Addr::ACE_INET_Addr")));
+#else
+  ACE_UNUSED_ARG (port_name);
+  ACE_UNUSED_ARG (inet_address);
+  ACE_UNUSED_ARG (protocol);
+#endif
 }
 #endif /* ACE_HAS_WCHAR */
 

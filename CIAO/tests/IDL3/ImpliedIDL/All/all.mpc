@@ -2,20 +2,20 @@
 // $Id$
 
 project(ConvertIDL3) : taoidl3toidl2defaults, ciao_component_dnc {
-  idlflags += -Sc -Sm
-  
+  idlflags += -Sm
+
   IDL3TOIDL2_Files {
     convert.idl
     include.idl
     pass_through.idl
   }
-  
+
   IDL_Files {
     convert_IDL2.idl
     include_IDL2.idl
     pass_through_IDL2.idl << include_IDL2.idl
   }
-  
+
   Source_Files {
     convert_IDL2C.cpp
     convert_IDL2S.cpp

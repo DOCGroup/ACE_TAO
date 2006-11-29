@@ -241,12 +241,12 @@ CORBA::SystemException::_info (void) const
   info += this->_rep_id ();
   info += "'\n";
 
-  const CORBA::ULong VMCID = this->minor () & 0xFFFFF000u;
+  CORBA::ULong const VMCID = this->minor () & 0xFFFFF000u;
 
   if (VMCID == TAO::VMCID)
     {
       // @@ Move the following code to a subroutine, it is too long already!
-      const char *location;
+      const char *location = 0;
       switch (this->minor () & 0x00000F80u)
         {
         case TAO_INVOCATION_LOCATION_FORWARD_MINOR_CODE:
@@ -409,7 +409,7 @@ CORBA::SystemException::_info (void) const
     }
   else if (VMCID == CORBA::OMGVMCID)
     {
-      const CORBA::ULong minor_code = this->minor () & 0xFFFU;
+      CORBA::ULong const minor_code = this->minor () & 0xFFFU;
 
       const char *minor_description = 0;
 

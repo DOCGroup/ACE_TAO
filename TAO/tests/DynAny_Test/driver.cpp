@@ -100,31 +100,38 @@ Driver::parse_args (int argc, char* argv[])
 {
   if (argc == 1)
     ACE_ERROR_RETURN ((LM_ERROR,
-                       "usage:  %s"
-                       " -t [dynany|dynarray|dynenum|dynsequence|dynstruct|dynunion]"
-                       "\n",
+                       "usage:  %s\n"
+                       " -t [dynany|dynarray|dynenum|dynsequence|dynstruct|dynunion]\n"
+                       " -d\n",
                        argv [0]),
                       -1);
 
   ACE_Get_Opt get_opts (argc, argv, "t:d");
   int c;
+  const char *test_str = 0;
 
   while ((c = get_opts ()) != -1)
     switch (c)
       {
       case 't':
-        if (!ACE_OS::strcmp (get_opts.opt_arg (), "dynany"))
+        test_str = get_opts.opt_arg ();
+        
+        if (!ACE_OS::strcmp (test_str, "dynany"))
           this->test_type_ = TEST_DYNANY;
-        else if (!ACE_OS::strcmp (get_opts.opt_arg (), "dynarray"))
+        else if (!ACE_OS::strcmp (test_str, "dynarray"))
           this->test_type_ = TEST_DYNARRAY;
-        else if (!ACE_OS::strcmp (get_opts.opt_arg (), "dynenum"))
+        else if (!ACE_OS::strcmp (test_str, "dynenum"))
           this->test_type_ = TEST_DYNENUM;
-        else if (!ACE_OS::strcmp (get_opts.opt_arg (), "dynsequence"))
+        else if (!ACE_OS::strcmp (test_str, "dynsequence"))
           this->test_type_ = TEST_DYNSEQUENCE;
-        else if (!ACE_OS::strcmp (get_opts.opt_arg (), "dynstruct"))
+        else if (!ACE_OS::strcmp (test_str, "dynstruct"))
           this->test_type_ = TEST_DYNSTRUCT;
-        else if (!ACE_OS::strcmp (get_opts.opt_arg (), "dynunion"))
+        else if (!ACE_OS::strcmp (test_str, "dynunion"))
           this->test_type_ = TEST_DYNUNION;
+        else
+          ACE_DEBUG ((LM_DEBUG,
+                      "I don't recognize test type %s\n",
+                      test_str));
         break;
 
       case 'd':

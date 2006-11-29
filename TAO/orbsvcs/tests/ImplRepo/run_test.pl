@@ -272,7 +272,7 @@ sub airplane_ir_test
 
     my $imr_initref = "-ORBInitRef ImplRepoService=file://$imr_locator_ior";
 
-    $IMR_LOCATOR->Arguments ("-d 2 -o $imr_locator_ior");
+    $IMR_LOCATOR->Arguments ("-d 2 -o $imr_locator_ior $refstyle");
     $IMR_LOCATOR->Spawn ();
 
     if (PerlACE::waitforfile_timed ($imr_locator_ior, 5) == -1) {
@@ -372,7 +372,7 @@ sub nestea_ir_test
 
     my $imr_initref = "-orbobjrefstyle URL -ORBInitRef ImplRepoService=file://$imr_locator_ior";
 
-    $IMR_LOCATOR->Arguments ("-d 2 -o $imr_locator_ior");
+    $IMR_LOCATOR->Arguments ("-d 2 -o $imr_locator_ior $refstyle");
     $IMR_LOCATOR->Spawn ();
 
     if (PerlACE::waitforfile_timed ($imr_locator_ior, 10) == -1) {
@@ -510,7 +510,7 @@ sub perclient
     my $imr_initref = "-orbobjrefstyle URL -ORBInitRef ImplRepoService=file://$imr_locator_ior";
 
     # specify an endpoint so that we can use corbaloc url for the client.
-    $IMR_LOCATOR->Arguments ("-d 2 -orbendpoint iiop://:8888 -o $imr_locator_ior");
+    $IMR_LOCATOR->Arguments ("-d 2 -orbendpoint iiop://:8888 -o $imr_locator_ior $refstyle");
     $IMR_LOCATOR->Spawn ();
 
     if (PerlACE::waitforfile_timed ($imr_locator_ior, 10) == -1) {
@@ -605,7 +605,7 @@ sub shutdown_repo
 
     # Specify an endpoint so that we can restart on the same port.
     # Specify persistence so that we can test that shutdown-repo -a works after reconnect
-    $IMR_LOCATOR->Arguments ("-p test.repo -d 1 -orbendpoint iiop://:8888 -o $imr_locator_ior");
+    $IMR_LOCATOR->Arguments ("-p test.repo -d 1 -orbendpoint iiop://:8888 -o $imr_locator_ior $refstyle");
 
     unlink $imr_locator_ior;
     $IMR_LOCATOR->Spawn ();
@@ -685,7 +685,7 @@ sub persistent_ir_test
     unlink $imr_locator_ior;
     ## Be sure to start the ImR on a consistent endpoint, so that any created IORs
     ## remain valid even if the ImR restarts.
-    $IMR_LOCATOR->Arguments ("-orbendpoint iiop://:8888 -x $backing_store -d 2 -o $imr_locator_ior");
+    $IMR_LOCATOR->Arguments ("-orbendpoint iiop://:8888 -x $backing_store -d 2 -o $imr_locator_ior $refstyle");
     $IMR_LOCATOR->Spawn ();
     if (PerlACE::waitforfile_timed ($imr_locator_ior, 10) == -1) {
       print STDERR "ERROR: cannot find $imr_locator_ior\n";

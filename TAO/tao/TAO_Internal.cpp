@@ -10,6 +10,7 @@
 #include "tao/CORBANAME_Parser.h"
 #include "tao/CORBALOC_Parser.h"
 #include "tao/FILE_Parser.h"
+#include "tao/HTTP_Parser.h"
 #include "tao/DLL_Parser.h"
 #include "tao/ORB_Core.h"
 #include "tao/Adapter_Factory.h"
@@ -539,6 +540,7 @@ namespace
     pcfg->process_directive (ace_svc_desc_TAO_CORBALOC_Parser);
     pcfg->process_directive (ace_svc_desc_TAO_FILE_Parser);
     pcfg->process_directive (ace_svc_desc_TAO_DLL_Parser);
+    pcfg->process_directive (ace_svc_desc_TAO_HTTP_Parser);
     pcfg->process_directive (ace_svc_desc_TAO_Default_Stub_Factory);
     pcfg->process_directive (
       ace_svc_desc_TAO_Default_Endpoint_Selector_Factory);
@@ -718,63 +720,61 @@ namespace
     while (arg_shifter.is_anything_left ())
       {
         const ACE_TCHAR *current_arg = 0;
-        int result =
-          arg_shifter.cur_arg_strncasecmp (
-            ACE_TEXT ("-ORBSkipServiceConfigOpen"));
-
-        if (0 == result)  // Start with the parameterless flags.
+        if (0 == arg_shifter.cur_arg_strncasecmp
+            (ACE_TEXT ("-ORBSkipServiceConfigOpen")))
           {
             skip_service_config_open = true;
 
             arg_shifter.consume_arg ();
           }
-        else  // Continue with flags that accept parameters.
+        else if (0 != (current_arg = arg_shifter.get_the_parameter
+                       (ACE_TEXT ("-ORBSvcConfDirective"))))
           {
-            current_arg =
-              arg_shifter.get_the_parameter (
-                ACE_TEXT ("-ORBSvcConfDirective"));
+            len = svc_config_argv.length ();
+            svc_config_argv.length (len + 2);  // 2 arguments to add
 
-            if (0 != current_arg)
-              {
-                len = svc_config_argv.length ();
-                svc_config_argv.length (len + 2);  // 2 arguments to add
+            // This is used to pass arguments to the Service
+            // Configurator using the "command line" to provide
+            // configuration information rather than using a svc.conf
+            // file.  Pass the "-S" to the service configurator.
+            svc_config_argv[len] = CORBA::string_dup ("-S");
+            svc_config_argv[len + 1] =
+              CORBA::string_dup (ACE_TEXT_ALWAYS_CHAR (current_arg));
 
-                // This is used to pass arguments to the Service
-                // Configurator using the "command line" to provide
-                // configuration information rather than using a svc.conf
-                // file.  Pass the "-S" to the service configurator.
-                svc_config_argv[len] = CORBA::string_dup ("-S");
-                svc_config_argv[len + 1] =
-                  CORBA::string_dup (ACE_TEXT_ALWAYS_CHAR (current_arg));
+            arg_shifter.consume_arg ();
+          }
+        else if (0 != (current_arg = arg_shifter.get_the_parameter
+                       (ACE_TEXT ("-ORBServiceConfigLoggerKey"))))
+          {
+            len = svc_config_argv.length ();
+            svc_config_argv.length (len + 2);  // 2 arguments to add
 
-                arg_shifter.consume_arg ();
-              }
-            else
-              {
-                current_arg =
-                  arg_shifter.get_the_parameter (
-                    ACE_TEXT ("-ORBServiceConfigLoggerKey"));
+            svc_config_argv[len] = CORBA::string_dup ("-k");
+            svc_config_argv[len + 1] =
+              CORBA::string_dup (ACE_TEXT_ALWAYS_CHAR (current_arg));
 
-                if (0 != current_arg)
-                  {
-                    len = svc_config_argv.length ();
-                    svc_config_argv.length (len + 2);  // 2 arguments to add
+            arg_shifter.consume_arg ();
+          }
+        else if (0 == arg_shifter.cur_arg_strncasecmp
+                       (ACE_TEXT ("-ORBNegotiateCodesets")))
+          {
+            // Negotiate codesets must be evaluated prior to calling
+            // register_global_services_i.
 
-                    svc_config_argv[len] = CORBA::string_dup ("-k");
-                    svc_config_argv[len + 1] =
-                      CORBA::string_dup (ACE_TEXT_ALWAYS_CHAR (current_arg));
+            // Don't consume, the ORB_Core::init will use it again.
+            arg_shifter.ignore_arg();
 
-                    arg_shifter.consume_arg ();
-                  }
-                // Can't interpret this argument.
-                // Move on to the next argument.
-                else
-                  {
-                    // Any arguments that don't match are ignored so that
-                    // the caller can still use them.
-                    arg_shifter.ignore_arg ();
-                  }
-              }
+            if (0 != (current_arg = arg_shifter.get_current()))
+              negotiate_codesets = (ACE_OS::atoi (current_arg));
+            arg_shifter.ignore_arg();
+          }
+        // Can't interpret this argument.
+        // Move on to the next argument.
+        else
+          {
+            // Any arguments that don't match are ignored so that
+            // the caller can still use them.
+            arg_shifter.ignore_arg ();
           }
       }
 
@@ -823,10 +823,7 @@ namespace
     while (arg_shifter.is_anything_left ())
       {
         const ACE_TCHAR *current_arg = 0;
-        int strcmp_result =
-          arg_shifter.cur_arg_strncasecmp (ACE_TEXT ("-ORBDebug"));
-
-        if (0 == strcmp_result)
+        if (0 == arg_shifter.cur_arg_strncasecmp (ACE_TEXT ("-ORBDebug")))
           {
             if (apply_values)
               {
@@ -837,69 +834,41 @@ namespace
 
             arg_shifter.consume_arg ();
           }
+        else if (0 != (current_arg =
+                       arg_shifter.get_the_parameter
+                       (ACE_TEXT ("-ORBDebugLevel"))))
+          {
+            if (apply_values)
+              {
+                TAO_debug_level =
+                  ACE_OS::atoi (current_arg);
+              }
+            arg_shifter.consume_arg ();
+          }
+        else if (0 == arg_shifter.cur_arg_strncasecmp
+                 (ACE_TEXT ("-ORBDaemon")))
+          {
+            // Be a daemon.
+            if (apply_values)
+              {
+                len = svc_config_argv.length ();
+                svc_config_argv.length (len + 1);
+
+                svc_config_argv[len] =
+                  CORBA::string_dup ("-b");
+              }
+
+            arg_shifter.consume_arg ();
+          }
+        // Can't interpret this argument.
+        // Move on to the next argument.
         else
           {
-            current_arg =
-              arg_shifter.get_the_parameter (
-                ACE_TEXT ("-ORBNegotiateCodesets"));
-
-            if (0 != current_arg)
-              {
-                if (apply_values)
-                  {
-                    // Don't consume, the ORB_Core::init will use it again.
-                    negotiate_codesets = (ACE_OS::atoi (current_arg));
-                  }
-              }
-            else
-              {
-                current_arg =
-                  arg_shifter.get_the_parameter (
-                    ACE_TEXT ("-ORBDebugLevel"));
-
-                if (0 != current_arg)
-                  {
-                    if (apply_values)
-                      {
-                        TAO_debug_level =
-                          ACE_OS::atoi (current_arg);
-                      }
-
-                    arg_shifter.consume_arg ();
-                  }
-                else
-                  {
-                    strcmp_result =
-                      arg_shifter.cur_arg_strncasecmp (
-                        ACE_TEXT ("-ORBDaemon"));
-
-                    if (0 == strcmp_result)
-                      {
-                        // Be a daemon.
-                        if (apply_values)
-                          {
-                            len = svc_config_argv.length ();
-                            svc_config_argv.length (len + 1);
-
-                            svc_config_argv[len] =
-                              CORBA::string_dup ("-b");
-                          }
-
-                        arg_shifter.consume_arg ();
-                      }
-                    // Can't interpret this argument.
-                    // Move on to the next argument.
-                    else
-                      {
-                        // Any arguments that don't match are ignored so
-                        // that the caller can still use them.
-                        arg_shifter.ignore_arg ();
-                      }
-                  }
-              }
+            // Any arguments that don't match are ignored so
+            // that the caller can still use them.
+            arg_shifter.ignore_arg ();
           }
       }
-
     return 0;
   } /* parse_global_args_i */
 } // anonymous namespace.

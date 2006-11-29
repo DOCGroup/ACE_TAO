@@ -1,5 +1,6 @@
 // $Id$
 
+#include <Components.idl>
 #include "../common/Protocols.idl"
 
 module Protocols

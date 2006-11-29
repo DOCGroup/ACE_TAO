@@ -17,9 +17,8 @@ noinst_PROGRAMS =
 
 ## Makefile.Single_Endpoint_Client.am
 
+if BUILD_EXCEPTIONS
 if BUILD_RT_CORBA
-if !BUILD_ACE_FOR_TAO
-if !BUILD_MINIMUM_CORBA
 
 noinst_PROGRAMS += client
 
@@ -45,15 +44,13 @@ client_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
-endif !BUILD_MINIMUM_CORBA
-endif !BUILD_ACE_FOR_TAO
 endif BUILD_RT_CORBA
+endif BUILD_EXCEPTIONS
 
 ## Makefile.Single_Endpoint_Server.am
 
+if BUILD_EXCEPTIONS
 if BUILD_RT_CORBA
-if !BUILD_ACE_FOR_TAO
-if !BUILD_MINIMUM_CORBA
 
 noinst_PROGRAMS += server
 
@@ -80,9 +77,8 @@ server_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
-endif !BUILD_MINIMUM_CORBA
-endif !BUILD_ACE_FOR_TAO
 endif BUILD_RT_CORBA
+endif BUILD_EXCEPTIONS
 
 ## Clean up template repositories, etc.
 clean-local:

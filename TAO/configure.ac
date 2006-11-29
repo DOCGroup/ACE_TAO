@@ -170,6 +170,8 @@ AM_CONDITIONAL(BUILD_EC_TYPED_EVENTS, true)
 AM_CONDITIONAL(BUILD_WFMO, false)
 AM_CONDITIONAL(BUILD_WINNT, false)
 AM_CONDITIONAL(BUILD_WXWINDOWS, false)
+AM_CONDITIONAL(BUILD_STL, false)
+AM_CONDITIONAL(BUILD_BOOST, false)
 
 ACE_ENABLE_ACEXML
 ACE_ENABLE_SSL
@@ -200,6 +202,7 @@ AC_CONFIG_FILES([
   docs/tutorials/Quoter/Makefile
   docs/tutorials/Quoter/Naming_Service/Makefile
   docs/tutorials/Quoter/On_Demand_Activation/Makefile
+  docs/tutorials/Quoter/RTCORBA/Makefile
   docs/tutorials/Quoter/RT_Event_Service/Makefile
   docs/tutorials/Quoter/Simple/Client/Makefile
   docs/tutorials/Quoter/Simple/Impl-Repo/Makefile
@@ -253,6 +256,13 @@ if test $tao_build_examples = yes; then
     examples/Advanced/ch_3/Makefile
     examples/Buffered_AMI/Makefile
     examples/Buffered_Oneways/Makefile
+    examples/CSD_Strategy/Makefile
+    examples/CSD_Strategy/ThreadPool/Makefile
+    examples/CSD_Strategy/ThreadPool2/Makefile
+    examples/CSD_Strategy/ThreadPool3/Makefile
+    examples/CSD_Strategy/ThreadPool4/Makefile
+    examples/CSD_Strategy/ThreadPool5/Makefile
+    examples/CSD_Strategy/ThreadPool6/Makefile
     examples/Callback_Quoter/Makefile
     examples/Content_Server/AMI_Iterator/Makefile
     examples/Content_Server/AMI_Observer/Makefile
@@ -447,9 +457,11 @@ if test $tao_build_tests = yes; then
     orbsvcs/tests/Bug_2287_Regression/Makefile
     orbsvcs/tests/Bug_2316_Regression/Makefile
     orbsvcs/tests/Bug_2377_Regression/Makefile
+    orbsvcs/tests/Bug_2615_Regression/Makefile
     orbsvcs/tests/Concurrency/Makefile
     orbsvcs/tests/CosEvent/Basic/Makefile
     orbsvcs/tests/CosEvent/Makefile
+    orbsvcs/tests/CosEvent/Timeout/Makefile
     orbsvcs/tests/CosEvent/lib/Makefile
     orbsvcs/tests/EC_Custom_Marshal/Makefile
     orbsvcs/tests/EC_MT_Mcast/Makefile
@@ -461,9 +473,12 @@ if test $tao_build_tests = yes; then
     orbsvcs/tests/Event/Mcast/Common/Makefile
     orbsvcs/tests/Event/Mcast/Complex/Makefile
     orbsvcs/tests/Event/Mcast/Makefile
+    orbsvcs/tests/Event/Mcast/RTEC_MCast_Federated/Makefile
     orbsvcs/tests/Event/Mcast/Simple/Makefile
     orbsvcs/tests/Event/Mcast/Two_Way/Makefile
     orbsvcs/tests/Event/Performance/Makefile
+    orbsvcs/tests/Event/ThreadFlags/Makefile
+    orbsvcs/tests/Event/UDP/Makefile
     orbsvcs/tests/Event/lib/Makefile
     orbsvcs/tests/FT_App/Makefile
     orbsvcs/tests/FaultTolerance/GroupRef_Manipulation/Makefile
@@ -477,6 +492,7 @@ if test $tao_build_tests = yes; then
     orbsvcs/tests/HTIOP/Makefile
     orbsvcs/tests/IOR_MCast/Makefile
     orbsvcs/tests/ImplRepo/Makefile
+    orbsvcs/tests/ImplRepo/Bug_2604_Regression/Makefile
     orbsvcs/tests/ImplRepo/NameService/Makefile
     orbsvcs/tests/ImplRepo/scale/Makefile
     orbsvcs/tests/InterfaceRepo/Application_Test/Makefile

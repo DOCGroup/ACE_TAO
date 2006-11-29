@@ -4,22 +4,10 @@
 
 versioned_so = 1
 
-ifndef exceptions
-  exceptions = 1
-endif
-
-ifeq (,$(debug))
-  debug = 1
-endif
-
-ifeq (,$(optimize))
-  optimize = 1
-endif
-
-ifeq (,$(threads))
-  threads = 1
-endif
-
+exceptions ?= 1
+debug ?= 1
+optimize ?= 1
+threads ?= 1
 pipes ?= 1
 
 CC              = gcc
@@ -53,7 +41,7 @@ endif # threads
 # This tells platform_g++_common.GNU not to add these link options.
 with_ld = openbsd
 
-# Test for template instantiation, add to SOFLAGS if versioned_so set, 
+# Test for template instantiation, add to SOFLAGS if versioned_so set,
 # add -E to LDFLAGS if using GNU ld
 #
 include $(ACE_ROOT)/include/makeinclude/platform_g++_common.GNU

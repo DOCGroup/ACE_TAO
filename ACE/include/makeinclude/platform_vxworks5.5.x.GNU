@@ -161,15 +161,25 @@ ifeq ("$(VXWORKSLINK)","true")
   ifeq ($(SHARED_LIBS),1)
     ##LD_PARTIAL += -L$(ACE_ROOT)/lib -L./ $(LDLIBPATH) $(LD_LINK_PATH)
     PRJ_OBJS_FOR_LD_PARTIAL=$(addprefix $(VDIR), $(OBJS)) $(VSHOBJS)
-	ifeq ($(VX_SO_BUILD),1)
+	  ifeq ($(VX_SO_BUILD),1)
 	  ## Shared lib builds for VxWorks will also build 'import' libraries
-      LIB_INSTALL += $(VLIB:%=$(INSLIB)/%)
-      CLEANUP_INSTALL += $(CLEANUP_VLIB:%=$(INSLIB)/%)
+    LIB_INSTALL += $(VLIB:%=$(INSLIB)/%)
+    CLEANUP_INSTALL += $(CLEANUP_VLIB:%=$(INSLIB)/%)
 	  REALCLEAN_FILES += $(CLEANUP_LIB:%=%) $(CLEANUP_LIB:%=%_debug) $(CLEANUP_LIB:%=%_profile) $(CLEANUP_LIB:%=%_optimize)
-	endif
+	  endif
   else
     LD_PARTIAL += -L$(ACE_ROOT)/ace -L./ $(LDLIBPATH) $(LD_LINK_PATH)
-    PRJ_OBJS_FOR_LD_PARTIAL=$(addprefix $(VDIR), $(OBJS)) $(VSHOBJS) $(VLDLIBS) $(ACE_SHLIBS) $(LIBS)
+    ifeq (1,$(repo))
+    PRJ_OBJS_FOR_LD_PARTIAL=$(addprefix $(VDIR), $(OBJS)) $(VSHOBJS) $(shell set AR=$(AR) && set RANLIB=$(RANLIB) && perl $(ACE_ROOT)/bin/vx_repo_link.pl $(VLDLIBS)) $(ACE_SHLIBS)
+    ifneq (1,$(VX_KEEP_PRELINK_LIB))
+      POSTLINK = rmdir /s/q .lib && rmdir /s/q $(subst /,\,$(VDIR))
+      REALCLEAN_FILES += .lib
+    else
+      POSTLINK = rmdir /s/q $(subst /,\,$(VDIR))
+    endif
+    else
+    PRJ_OBJS_FOR_LD_PARTIAL=$(addprefix $(VDIR), $(OBJS)) $(VSHOBJS) $(VLDLIBS) $(ACE_SHLIBS)
+    endif
   endif
   PRJ_OBJS_FOR_LD=$(addprefix $(VDIR), $(OBJS)) $(VSHOBJS)
   PRJ_OBJS_FOR_NM=$(addprefix $(VDIR), $(OBJS)) $(VSHOBJS)
@@ -198,22 +208,22 @@ ifeq ("$(TOOL)","gnu")
 include $(ACE_ROOT)/include/makeinclude/platform_g++_common.GNU
 
 ifeq ("$(templates)","automatic")
-ifdef repo
-ifeq ("$(VXWORKSLINK)","true")
-  ifeq ($(VX_APP_BUILD),1)
-	ifneq ($(SHARED_LIBS),1)
-      LD_PARTIAL += -frepo
-	endif
-  endif
-else
-  ace_lib_prelink := 1
-  LINK.cc          = override
-  LINK.cc.override = $(LD_PARTIAL) -frepo -L$(ACE_ROOT)/ace -L$(INSLIB) -L./ $(LDLIBPATH) $(LD_LINK_PATH)
-  LDFLAGS          = $(ACE_SHLIBS)
-endif
-else
+	ifdef repo
+		ifeq ("$(VXWORKSLINK)","true")
+  		ifeq ($(VX_APP_BUILD),1)
+				ifneq ($(SHARED_LIBS),1)
+      	LD_PARTIAL += -frepo
+				endif
+  		endif
+		else
+  	#ace_lib_prelink := 1
+  	  LINK.cc          = override
+  	  LINK.cc.override = $(LD_PARTIAL) -frepo
+  	  LDFLAGS          = $(ACE_SHLIBS)
+		endif
+	else
   C++FLAGS += -fmerge-templates
-endif
+	endif
 endif
 
 # TEMPLATES_FLAG is set by platform_g++_common.GNU

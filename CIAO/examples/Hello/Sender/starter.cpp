@@ -3,17 +3,16 @@
 #include "SenderC.h"
 #include "ace/Get_Opt.h"
 
-//IOR file of the Sender
+// IOR file of the Sender
 const char * ior = 0;
 const char * message = 0;
-
 
 int
 parse_args (int argc, char *argv[])
 {
   ACE_Get_Opt get_opts (argc, argv, "k:m:");
   int c = 0;
-  
+
   while ((c = get_opts ()) != -1)
     {
       switch (c)
@@ -42,7 +41,7 @@ parse_args (int argc, char *argv[])
     {
       ior = "file://Sender.ior";
     }
-    
+
   return 0;
 }
 
@@ -73,7 +72,7 @@ main (int argc, char *argv[])
 
       if (CORBA::is_nil (sender.in ()))
         {
-          ACE_ERROR_RETURN ((LM_ERROR, 
+          ACE_ERROR_RETURN ((LM_ERROR,
                              "Unable to acquire Sender's objref\n"),
                             -1);
         }

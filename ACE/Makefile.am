@@ -19,8 +19,7 @@ endif
 SUBDIRS += \
         apps \
         bin \
-        netsvcs \
-        protocols 
+        netsvcs
 
 if BUILD_EXAMPLES
 SUBDIRS += examples
@@ -32,6 +31,7 @@ SUBDIRS += tests
 endif
 
 SUBDIRS += \
+        protocols \
         websvcs \
 	@KOKYU@ \
 	@TAO@

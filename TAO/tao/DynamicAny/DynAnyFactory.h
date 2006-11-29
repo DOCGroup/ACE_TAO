@@ -46,25 +46,6 @@ public:
   /// Constructor.
   TAO_DynAnyFactory (void);
 
-  /// Obtain the kind of object, after all aliasing has been removed.
-  static CORBA::TCKind unalias (CORBA::TypeCode_ptr tc
-                                ACE_ENV_ARG_DECL);
-
-  /// Same as above, but returns type code instead of TCKind. Caller
-  /// must release the return value.
-  static CORBA::TypeCode_ptr strip_alias (CORBA::TypeCode_ptr tc
-                                          ACE_ENV_ARG_DECL);
-
-  /// Create the correct type of DynAny object for <any>.
-  static DynamicAny::DynAny_ptr
-     make_dyn_any (const CORBA::Any &any
-                   ACE_ENV_ARG_DECL);
-
-  /// Create the correct type of DynAny object for <tc>
-  static DynamicAny::DynAny_ptr
-     make_dyn_any (CORBA::TypeCode_ptr tc
-                   ACE_ENV_ARG_DECL);
-
   // = The DynamicAnyFactory methods.
   virtual DynamicAny::DynAny_ptr create_dyn_any (
       const CORBA::Any & value
@@ -112,7 +93,18 @@ public:
     ACE_THROW_SPEC ((
         CORBA::SystemException
       ));
+      
+  /// TAO-specific methods.
     
+  /// Obtain the kind of object, after all aliasing has been removed.
+  static CORBA::TCKind unalias (CORBA::TypeCode_ptr tc
+                                ACE_ENV_ARG_DECL);
+
+  /// Same as above, but returns type code instead of TCKind. Caller
+  /// must release the return value.
+  static CORBA::TypeCode_ptr strip_alias (CORBA::TypeCode_ptr tc
+                                          ACE_ENV_ARG_DECL);
+
 private:
   // Not allowed.
   TAO_DynAnyFactory (const TAO_DynAnyFactory &src);

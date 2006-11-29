@@ -1,7 +1,6 @@
 //$Id$
 
-project : taolib, core, core_anytypecode, tao_versioning_idl_defaults {
-  avoids      += ace_for_tao    // Requires Unix domain sockets and MEM stuff
+project : taolib, core, core_anytypecode, core_strategies, tao_versioning_idl_defaults {
   sharedname   = TAO_Strategies
   dynamicflags = TAO_STRATEGIES_BUILD_DLL
 
@@ -26,7 +25,6 @@ project : taolib, core, core_anytypecode, tao_versioning_idl_defaults {
   }
 
   PIDL_Files {
-    Strategies
   }
 
   IDL_Files {

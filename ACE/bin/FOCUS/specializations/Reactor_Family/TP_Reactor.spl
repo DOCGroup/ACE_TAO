@@ -196,6 +196,13 @@ virtual int register_handler (ACE_HANDLE handle,
 <!-- Remove the Reactor_Timer_Interface include -->
 <remove>#include "ace/Reactor_Timer_Interface.h"</remove>
 
+<add>
+ <hook>REACTOR_SPL_INCLUDE_FORWARD_DECL_ADD_HOOK</hook>
+ <data>
+#include "ace/Reactor.h"
+ </data>
+</add>
+
 </file>
 
 <!-- Transformations to Reactor.inl -->
@@ -332,13 +339,11 @@ ACE_TP_Reactor::register_handler (int signum,
   <replace>// Dev_Poll_Reactor.cpp</replace>
 </substitute>
 
-
 <!-- Do not build the Msg_WFMO_Reactor -->
 <substitute>
   <search>Msg_WFMO_Reactor.cpp</search>
   <replace>// Msg_WFMO_Reactor.cpp</replace>
 </substitute>
-
 
 <!-- Do not build the priority Reactor -->
 <substitute>
@@ -374,6 +379,24 @@ ACE_TP_Reactor::register_handler (int signum,
 </file>
 
 <file name="default_resource.cpp">
+
+<substitute>
+ <search>ACE_Reactor_Impl</search>
+ <replace>ACE_TP_Reactor</replace>
+</substitute>
+
+</file>
+
+<file name="GUIResource_Factory.cpp">
+
+<substitute>
+ <search>ACE_Reactor_Impl</search>
+ <replace>ACE_TP_Reactor</replace>
+</substitute>
+
+</file>
+
+<file name="GUIResource_Factory.h">
 
 <substitute>
  <search>ACE_Reactor_Impl</search>

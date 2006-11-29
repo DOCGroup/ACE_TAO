@@ -19,6 +19,7 @@ TAO_ROOT = $(top_srcdir)
 
 ## Makefile.Activity.am
 
+if BUILD_EXCEPTIONS
 if BUILD_RT_CORBA
 
 BUILT_SOURCES = \
@@ -27,10 +28,7 @@ BUILT_SOURCES = \
   JobC.inl \
   JobS.cpp \
   JobS.h \
-  JobS.inl \
-  JobS_T.cpp \
-  JobS_T.h \
-  JobS_T.inl
+  JobS.inl
 
 CLEANFILES = \
   Job-stamp \
@@ -39,15 +37,12 @@ CLEANFILES = \
   JobC.inl \
   JobS.cpp \
   JobS.h \
-  JobS.inl \
-  JobS_T.cpp \
-  JobS_T.h \
-  JobS_T.inl
+  JobS.inl
 
-JobC.cpp JobC.h JobC.inl JobS.cpp JobS.h JobS.inl JobS_T.cpp JobS_T.h JobS_T.inl: Job-stamp
+JobC.cpp JobC.h JobC.inl JobS.cpp JobS.h JobS.inl: Job-stamp
 
 Job-stamp: $(srcdir)/Job.idl $(TAO_IDL_DEP)
-	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs -GT $(srcdir)/Job.idl
+	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs $(srcdir)/Job.idl
 	@touch $@
 
 noinst_PROGRAMS = activity
@@ -77,8 +72,6 @@ activity_SOURCES = \
   JobC.inl \
   JobS.h \
   JobS.inl \
-  JobS_T.h \
-  JobS_T.inl \
   Job_i.h \
   POA_Holder.h \
   Periodic_Task.h \
@@ -98,6 +91,7 @@ activity_LDADD = \
   $(ACE_BUILDDIR)/ace/libACE.la
 
 endif BUILD_RT_CORBA
+endif BUILD_EXCEPTIONS
 
 ## Clean up template repositories, etc.
 clean-local:

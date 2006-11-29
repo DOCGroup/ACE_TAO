@@ -10,6 +10,8 @@
 
 SUBDIRS = \
         Mcast \
+        ThreadFlags \
+        UDP \
         lib \
         Performance \
         Basic

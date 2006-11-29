@@ -16,7 +16,10 @@ TAO_IDL_DEP = $(TAO_BUILDDIR)/TAO_IDL/tao_idl
 TAO_IDLFLAGS = -Ge 1 -Wb,pre_include=ace/pre.h -Wb,post_include=ace/post.h -I$(TAO_ROOT) -I$(srcdir) -g $(ACE_BUILDDIR)/apps/gperf/src/gperf
 TAO_ROOT = $(top_srcdir)
 
+
 ## Makefile.Interoperable_Naming.am
+
+if BUILD_EXCEPTIONS
 
 BUILT_SOURCES = \
   Web_ServerC.cpp \
@@ -24,10 +27,7 @@ BUILT_SOURCES = \
   Web_ServerC.inl \
   Web_ServerS.cpp \
   Web_ServerS.h \
-  Web_ServerS.inl \
-  Web_ServerS_T.cpp \
-  Web_ServerS_T.h \
-  Web_ServerS_T.inl
+  Web_ServerS.inl
 
 CLEANFILES = \
   Web_Server-stamp \
@@ -36,15 +36,12 @@ CLEANFILES = \
   Web_ServerC.inl \
   Web_ServerS.cpp \
   Web_ServerS.h \
-  Web_ServerS.inl \
-  Web_ServerS_T.cpp \
-  Web_ServerS_T.h \
-  Web_ServerS_T.inl
+  Web_ServerS.inl
 
-Web_ServerC.cpp Web_ServerC.h Web_ServerC.inl Web_ServerS.cpp Web_ServerS.h Web_ServerS.inl Web_ServerS_T.cpp Web_ServerS_T.h Web_ServerS_T.inl: Web_Server-stamp
+Web_ServerC.cpp Web_ServerC.h Web_ServerC.inl Web_ServerS.cpp Web_ServerS.h Web_ServerS.inl: Web_Server-stamp
 
 Web_Server-stamp: $(srcdir)/Web_Server.idl $(TAO_IDL_DEP)
-	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs -GT $(srcdir)/Web_Server.idl
+	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs $(srcdir)/Web_Server.idl
 	@touch $@
 
 noinst_PROGRAMS = client
@@ -66,8 +63,6 @@ client_SOURCES = \
   Web_ServerC.inl \
   Web_ServerS.h \
   Web_ServerS.inl \
-  Web_ServerS_T.h \
-  Web_ServerS_T.inl \
   ncontextext_client_i.h
 
 client_LDADD = \
@@ -76,6 +71,8 @@ client_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO_AnyTypeCode.la \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
+
+endif BUILD_EXCEPTIONS
 
 ## Clean up template repositories, etc.
 clean-local:

@@ -3,7 +3,7 @@
 
 project(RTEvent) : orbsvcslib, core, svc_utils, tao_versioning_idl_defaults {
   sharedname   = TAO_RTEvent
-  idlflags    += -Wb,stub_export_macro=TAO_RTEvent_Export -Wb,stub_export_include=orbsvcs/Event/event_export.h -Wb,skel_export_macro=TAO_RTEvent_Skel_Export -Wb,skel_export_include=orbsvcs/Event/event_skel_export.h
+  idlflags    += -GT -Wb,stub_export_macro=TAO_RTEvent_Export -Wb,stub_export_include=orbsvcs/Event/event_export.h -Wb,skel_export_macro=TAO_RTEvent_Skel_Export -Wb,skel_export_include=orbsvcs/Event/event_skel_export.h
   dynamicflags = TAO_RTEVENT_BUILD_DLL
   tagchecks   += RTEvent
 

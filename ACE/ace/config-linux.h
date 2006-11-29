@@ -58,10 +58,6 @@
 
 #endif  /* ACE_MT_SAFE */
 
-// This is certainly true for newer distributions. I'm not sure how
-// far back this goes.
-#define ACE_HAS_GETIFADDRS
-
 #include /**/ "ace/post.h"
 
 #endif /* ACE_CONFIG_LINUX_H */

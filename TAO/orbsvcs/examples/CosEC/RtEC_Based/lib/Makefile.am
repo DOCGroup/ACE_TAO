@@ -17,8 +17,8 @@ TAO_ROOT = $(top_srcdir)
 ## Makefile.CosEC_RtEC_Based_lib.am
 
 if BUILD_CORBA_MESSAGING
+if BUILD_EXCEPTIONS
 if !BUILD_ACE_FOR_TAO
-if !BUILD_MINIMUM_CORBA
 
 noinst_LTLIBRARIES = libCosEC_RtEC_Based.la
 
@@ -49,8 +49,8 @@ noinst_HEADERS = \
   SupplierAdmin_i.h \
   rtec_cosec_export.h
 
-endif !BUILD_MINIMUM_CORBA
 endif !BUILD_ACE_FOR_TAO
+endif BUILD_EXCEPTIONS
 endif BUILD_CORBA_MESSAGING
 
 ## Clean up template repositories, etc.

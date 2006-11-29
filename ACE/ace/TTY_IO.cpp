@@ -371,8 +371,7 @@ int ACE_TTY_IO::control (Control_Mode cmd, Serial_Params *arg) const
             devpar.c_cc[VMIN] = static_cast<unsigned char>(arg->readmincharacters);
         }
 
-#if defined (TIOCMGET) && !defined (__Lynx__)
-      // This sets serial port under LynxOS to non-functional state
+#if defined (TIOCMGET)
       int status;
       this->ACE_IO_SAP::control (TIOCMGET, &status);
 

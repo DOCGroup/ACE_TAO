@@ -14,7 +14,7 @@
 #ifndef DOMAIN_DATA_MGRH
 #define DOMAIN_DATA_MGRH
 
-#include "TargetManagerC.h"
+#include "TargetManagerImplC.h"
 #include "Deployment_Configuration.h"
 
 /**

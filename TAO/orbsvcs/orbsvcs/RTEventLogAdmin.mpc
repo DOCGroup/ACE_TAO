@@ -58,17 +58,14 @@ project(RTEventLogAdmin_Skel) : orbsvcslib, core, rteventlogadmin, dslogadmin_sk
 
   Header_Files {
     RTEventLogAdminS.h
-    RTEventLogAdminS_T.h
     Log/rteventlog_skel_export.h
   }
 
   Inline_Files {
     RTEventLogAdminS.inl
-    RTEventLogAdminS_T.inl
   }
 
   Template_Files {
-    RTEventLogAdminS_T.cpp
   }
 
   Pkgconfig_Files {

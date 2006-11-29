@@ -879,7 +879,7 @@ ACE_Process_Options::setenv_i (ACE_TCHAR *assignment,
                                size_t len)
 {
   // Add one for the null char.
-  len++;
+  ++len;
 
   // If environment larger than allocated buffer return. Also check to
   // make sure we have enough room.

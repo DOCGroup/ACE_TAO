@@ -10,10 +10,7 @@
 debug ?= 1
 optimize ?= 1
 threads ?= 1
-
-ifndef templates
-  templates = implicit
-endif # templates
+templates ?= implicit
 
 include $(ACE_ROOT)/include/makeinclude/platform_irix6.x_common.GNU
 

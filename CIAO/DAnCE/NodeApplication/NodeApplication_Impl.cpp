@@ -29,7 +29,7 @@ CIAO::NodeApplication_Impl::create_all_containers (
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // Create all the containers here based on the input node_impl_info.
-  const CORBA::ULong len = container_infos.length ();
+  CORBA::ULong const len = container_infos.length ();
 
   for (CORBA::ULong i = 0; i < len; ++i)
     {
@@ -86,7 +86,7 @@ CIAO::NodeApplication_Impl::finishLaunch_i (
 
   ACE_TRY
     {
-      const CORBA::ULong length = connections.length ();
+      CORBA::ULong const length = connections.length ();
 
       // For every connection struct we finish the connection.
       for (CORBA::ULong i = 0; i < length; ++i)
@@ -309,7 +309,7 @@ CIAO::NodeApplication_Impl::install (
       // the ComponentInfo for components installed in each container.
       // Merge all the returned ComponentInfo, which will be used
       // as the return value of this method.
-      const CORBA::ULong num_containers = container_infos.length ();
+      CORBA::ULong const num_containers = container_infos.length ();
       for (CORBA::ULong i = 0; i < num_containers; ++i)
         {
           Deployment::ComponentInfos_var comp_infos =
@@ -331,7 +331,7 @@ CIAO::NodeApplication_Impl::install (
       // installed on this NodeApplication. I know we can delegates these to the
       // undelying containers, but in that case, we should loop
       // all the containers to find the component object reference. - Gan
-      const CORBA::ULong comp_len = retv->length ();
+      CORBA::ULong const comp_len = retv->length ();
       for (CORBA::ULong len = 0;
           len < comp_len;
           ++len)
@@ -446,7 +446,9 @@ CIAO::NodeApplication_Impl::activate_component (const char * name
 
   if (CORBA::is_nil (comp_state.objref_.in ()))
     {
-      ACE_DEBUG ((LM_DEBUG, "comp is nil\n"));
+      ACE_ERROR ((LM_ERROR,
+                  "CIAO (%P|%t) - NodeApplication_Impl.cpp, "
+                  "comp is nil\n"));
       throw Deployment::StartError ();
     }
 
@@ -471,23 +473,33 @@ CIAO::NodeApplication_Impl::remove (ACE_ENV_SINGLE_ARG_DECL)
     return;
 
   // For each container, invoke <remove> operation to remove home and components.
-  const CORBA::ULong set_size = this->container_set_.size ();
+  CORBA::ULong const set_size = this->container_set_.size ();
   for (CORBA::ULong i = 0; i < set_size; ++i)
     {
-      ACE_DEBUG ((LM_DEBUG, "NA: calling remove on container %i\n"));
+      if (CIAO::debug_level () > 5)
+        {
+          ACE_DEBUG ((LM_DEBUG, "NA: calling remove on container %i\n"));
+        }
+
       this->container_set_.at(i)->remove (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK;
     }
 
   // Remove all containers
   // Maybe we should also deactivate container object reference.
-  ACE_DEBUG ((LM_DEBUG, "NA: remove all\n"));
+  if (CIAO::debug_level () > 5)
+    {
+      ACE_DEBUG ((LM_DEBUG, "NA: remove all\n"));
+    }
+
   this->container_set_.remove_all ();
 
   if (CIAO::debug_level () > 1)
-    ACE_DEBUG ((LM_DEBUG, "Removed all containers from this NodeApplication!\n"));
+    {
+      ACE_DEBUG ((LM_DEBUG, "Removed all containers from this NodeApplication!\n"));
+    }
 
-  //For static deployment, ORB will be shutdown in the Static_NodeManager
+  // For static deployment, ORB will be shutdown in the Static_NodeManager
   if (this->static_entrypts_maps_ == 0)
     {
       this->orb_->shutdown (0 ACE_ENV_ARG_PARAMETER);
@@ -592,7 +604,6 @@ CIAO::NodeApplication_Impl::remove_container (::Deployment::Container_ptr cref
   ACE_CHECK;
 
   // Should we remove the server still, even if the previous call failed.
-
   if (this->container_set_.remove (cref) == -1)
     {
       ACE_THROW (::Components::RemoveFailure ());
@@ -621,9 +632,9 @@ ACE_THROW_SPEC ((::CORBA::SystemException,
                   Deployment::CIAO_Event_Services,
                   0);
 
-  CORBA::ULong total_lenth = es_infos.length ();
+  CORBA::ULong const total_length = es_infos.length ();
 
-  for (CORBA::ULong i = 0; i < total_lenth; ++i)
+  for (CORBA::ULong i = 0; i < total_length; ++i)
     {
       CIAO_Event_Service_var temp =
         es_factory_.create (es_infos[i].type);

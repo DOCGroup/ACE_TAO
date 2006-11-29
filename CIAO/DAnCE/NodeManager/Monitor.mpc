@@ -8,7 +8,7 @@ project(*monitorlib): ciao_client_dnc, ciao_events_base_dnc {
   includes += $(CIAO_ROOT)/DAnCE/TargetManager
   sharedname = ciaomonlib
 
-  libs += TargetManager_stub CIAO_Deployment_stub
+  libs += TargetManager_stub CIAO_Deployment_stub NodeManager_stub
 
   IDL_Files {
   }

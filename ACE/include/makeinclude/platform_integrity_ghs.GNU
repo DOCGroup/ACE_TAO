@@ -1,20 +1,13 @@
 # $Id$
 CROSS-COMPILE = 1
 
-ifndef debug
-  debug = 1
-endif
-ifndef optimize
-  optimize = 1
-endif
-ifndef rtti
-  rtti = 0
-endif # rtti
+debug ?= 1
+optimize ?= 1
+rtti ?= 0
+
 shared_libs =
 static_libs = 1
-ifndef exceptions
-  exceptions = 1
-endif
+exceptions ?= 1
 
 #### CPU type
 ifndef CPU

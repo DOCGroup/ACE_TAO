@@ -6,7 +6,7 @@
 ## this file will be lost the next time it is generated.
 ##
 ## MPC Command:
-## /acebuilds/ACE_wrappers-repository/bin/mwc.pl -include /acebuilds/MPC/config -include /acebuilds/MPC/templates -feature_file /acebuilds/ACE_wrappers-repository/local.features -noreldefs -type automake -exclude build,Kokyu
+## ./bin/mwc.pl -type automake -noreldefs ACE.mwc
 
 ACE_BUILDDIR = $(top_builddir)
 ACE_ROOT = $(top_srcdir)
@@ -98,6 +98,20 @@ test_sstring_SOURCES = \
   test_dump.h
 
 test_sstring_LDADD = \
+  $(ACE_BUILDDIR)/ace/libACE.la
+
+## Makefile.Misc_Test_Timestamp.am
+noinst_PROGRAMS += test_timestamp
+
+test_timestamp_CPPFLAGS = \
+  -I$(ACE_ROOT) \
+  -I$(ACE_BUILDDIR)
+
+test_timestamp_SOURCES = \
+  test_timestamp.cpp \
+  test_dump.h
+
+test_timestamp_LDADD = \
   $(ACE_BUILDDIR)/ace/libACE.la
 
 ## Makefile.Misc_Test_Trace.am

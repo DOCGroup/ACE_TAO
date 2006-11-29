@@ -49,6 +49,7 @@ noinst_HEADERS = \
 
 ## Makefile.muf_client.am
 
+if BUILD_EXCEPTIONS
 if BUILD_RT_CORBA
 
 noinst_PROGRAMS += muf_client
@@ -85,9 +86,11 @@ muf_client_LDADD = \
   $(ACE_BUILDDIR)/ace/libACE.la
 
 endif BUILD_RT_CORBA
+endif BUILD_EXCEPTIONS
 
 ## Makefile.muf_server.am
 
+if BUILD_EXCEPTIONS
 if BUILD_RT_CORBA
 
 noinst_PROGRAMS += muf_server
@@ -123,6 +126,7 @@ muf_server_LDADD = \
   $(ACE_BUILDDIR)/ace/libACE.la
 
 endif BUILD_RT_CORBA
+endif BUILD_EXCEPTIONS
 
 ## Clean up template repositories, etc.
 clean-local:
