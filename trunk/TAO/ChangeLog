@@ -1,3 +1,33 @@
+Wed Nov 29 02:51:19 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * configure.ac:
+
+          Configure Makefiles for new unit test subdirectories.
+
+        * examples/Makefile.am:
+
+          Regenerate to descend into CSD_Strategy subdirectory.
+
+        * examples/CSD_Strategy/ThreadPool/Makefile.am:
+        * examples/CSD_Strategy/ThreadPool2/Makefile.am:
+        * examples/CSD_Strategy/ThreadPool3/Makefile.am:
+        * examples/CSD_Strategy/ThreadPool5/Makefile.am:
+        * examples/CSD_Strategy/ThreadPool6/Makefile.am:
+
+          Regenerate.
+
+        * examples/CSD_Strategy/ThreadPool/CSD_Test_ThreadPool.mpc:
+        * examples/CSD_Strategy/ThreadPool2/CSD_Test_ThreadPool2.mpc:
+        * examples/CSD_Strategy/ThreadPool3/CSD_Test_ThreadPool3.mpc:
+        * examples/CSD_Strategy/ThreadPool5/CSD_Test_ThreadPool5.mpc:
+        * examples/CSD_Strategy/ThreadPool6/CSD_Test_ThreadPool6.mpc:
+
+          Split out IDL compilation into separate MPC project.
+
+        * tao/Makefile.am:
+
+          Regenerate.
+
 Wed Nov 29 000:11:49 UTC 2006  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tao/DynamicAny/DynAnyUtils_T.h:
@@ -226,14 +256,14 @@ Tue Nov 28 13:46:55 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
           Regenerate to descend into new test subdirectories.
 
         * orbsvcs/tests/Event/UDP/Makefile.am:
-  * orbsvcs/tests/ImplRepo/Bug_2604_Regression/Makefile.am:
+        * orbsvcs/tests/ImplRepo/Bug_2604_Regression/Makefile.am:
 
           New files, Makefile.am's for newly supported unit tests.
 
         * orbsvcs/tests/Event/UDP/RtEC_UDP.mpc:
-  * orbsvcs/tests/ImplRepo/Bug_2604_Regression/Bug_2604.mpc:
+        * orbsvcs/tests/ImplRepo/Bug_2604_Regression/Bug_2604.mpc:
 
-          Split out IDL generation into separate MPC project.
+          Split out IDL compilation into separate MPC project.
 
 Tue Nov 28 09:32:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 

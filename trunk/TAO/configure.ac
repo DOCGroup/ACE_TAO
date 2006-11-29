@@ -256,6 +256,13 @@ if test $tao_build_examples = yes; then
     examples/Advanced/ch_3/Makefile
     examples/Buffered_AMI/Makefile
     examples/Buffered_Oneways/Makefile
+    examples/CSD_Strategy/Makefile
+    examples/CSD_Strategy/ThreadPool/Makefile
+    examples/CSD_Strategy/ThreadPool2/Makefile
+    examples/CSD_Strategy/ThreadPool3/Makefile
+    examples/CSD_Strategy/ThreadPool4/Makefile
+    examples/CSD_Strategy/ThreadPool5/Makefile
+    examples/CSD_Strategy/ThreadPool6/Makefile
     examples/Callback_Quoter/Makefile
     examples/Content_Server/AMI_Iterator/Makefile
     examples/Content_Server/AMI_Observer/Makefile

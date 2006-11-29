@@ -16,14 +16,32 @@ TAO_IDL_DEP = $(TAO_BUILDDIR)/TAO_IDL/tao_idl
 TAO_IDLFLAGS = -Ge 1 -Wb,pre_include=ace/pre.h -Wb,post_include=ace/post.h -I$(TAO_ROOT) -I$(srcdir) -g $(ACE_BUILDDIR)/apps/gperf/src/gperf
 TAO_ROOT = $(top_srcdir)
 
-CLEANFILES =
 noinst_PROGRAMS =
-BUILT_SOURCES =
 
-## Makefile.CSD_Test_ThreadPool5_Server.am
+## Makefile.CSD_Test_ThreadPool5_Idl.am
 
-if BUILD_EXCEPTIONS
-if BUILD_THREADS
+BUILT_SOURCES = \
+  CallbackC.cpp \
+  CallbackC.h \
+  CallbackC.inl \
+  CallbackS.cpp \
+  CallbackS.h \
+  CallbackS.inl
+
+CLEANFILES = \
+  Callback-stamp \
+  CallbackC.cpp \
+  CallbackC.h \
+  CallbackC.inl \
+  CallbackS.cpp \
+  CallbackS.h \
+  CallbackS.inl
+
+CallbackC.cpp CallbackC.h CallbackC.inl CallbackS.cpp CallbackS.h CallbackS.inl: Callback-stamp
+
+Callback-stamp: $(srcdir)/Callback.idl $(TAO_IDL_DEP)
+	$(TAO_IDL) $(TAO_IDLFLAGS) -Sa -St $(srcdir)/Callback.idl
+	@touch $@
 
 BUILT_SOURCES += \
   FooC.cpp \
@@ -45,31 +63,18 @@ CLEANFILES += \
 FooC.cpp FooC.h FooC.inl FooS.cpp FooS.h FooS.inl: Foo-stamp
 
 Foo-stamp: $(srcdir)/Foo.idl $(TAO_IDL_DEP)
-	$(TAO_IDL) $(TAO_IDLFLAGS) $(srcdir)/Foo.idl
+	$(TAO_IDL) $(TAO_IDLFLAGS) -Sa -St $(srcdir)/Foo.idl
 	@touch $@
 
-BUILT_SOURCES += \
-  CallbackC.cpp \
-  CallbackC.h \
-  CallbackC.inl \
-  CallbackS.cpp \
-  CallbackS.h \
-  CallbackS.inl
 
-CLEANFILES += \
-  Callback-stamp \
-  CallbackC.cpp \
-  CallbackC.h \
-  CallbackC.inl \
-  CallbackS.cpp \
-  CallbackS.h \
-  CallbackS.inl
+noinst_HEADERS = \
+  Callback.idl \
+  Foo.idl
 
-CallbackC.cpp CallbackC.h CallbackC.inl CallbackS.cpp CallbackS.h CallbackS.inl: Callback-stamp
+## Makefile.CSD_Test_ThreadPool5_Server.am
 
-Callback-stamp: $(srcdir)/Callback.idl $(TAO_IDL_DEP)
-	$(TAO_IDL) $(TAO_IDLFLAGS) $(srcdir)/Callback.idl
-	@touch $@
+if BUILD_EXCEPTIONS
+if BUILD_THREADS
 
 noinst_PROGRAMS += server_main
 
@@ -92,16 +97,8 @@ server_main_SOURCES = \
   OrbTask.cpp \
   ServerApp.cpp \
   server_main.cpp \
-  CallbackC.h \
-  CallbackC.inl \
-  CallbackS.h \
-  CallbackS.inl \
   Callback_i.h \
   ClientTask.h \
-  FooC.h \
-  FooC.inl \
-  FooS.h \
-  FooS.inl \
   FooServantList.h \
   Foo_i.h \
   OrbShutdownTask.h \
@@ -126,50 +123,6 @@ endif BUILD_EXCEPTIONS
 if BUILD_EXCEPTIONS
 if BUILD_THREADS
 
-BUILT_SOURCES += \
-  FooC.cpp \
-  FooC.h \
-  FooC.inl \
-  FooS.h \
-  FooS.inl
-
-CLEANFILES += \
-  Foo-stamp \
-  FooC.cpp \
-  FooC.h \
-  FooC.inl \
-  FooS.h \
-  FooS.inl
-
-FooC.cpp FooC.h FooC.inl FooS.h FooS.inl: Foo-stamp
-
-Foo-stamp: $(srcdir)/Foo.idl $(TAO_IDL_DEP)
-	$(TAO_IDL) $(TAO_IDLFLAGS) $(srcdir)/Foo.idl
-	@touch $@
-
-BUILT_SOURCES += \
-  CallbackC.cpp \
-  CallbackC.h \
-  CallbackC.inl \
-  CallbackS.cpp \
-  CallbackS.h \
-  CallbackS.inl
-
-CLEANFILES += \
-  Callback-stamp \
-  CallbackC.cpp \
-  CallbackC.h \
-  CallbackC.inl \
-  CallbackS.cpp \
-  CallbackS.h \
-  CallbackS.inl
-
-CallbackC.cpp CallbackC.h CallbackC.inl CallbackS.cpp CallbackS.h CallbackS.inl: Callback-stamp
-
-Callback-stamp: $(srcdir)/Callback.idl $(TAO_IDL_DEP)
-	$(TAO_IDL) $(TAO_IDLFLAGS) $(srcdir)/Callback.idl
-	@touch $@
-
 noinst_PROGRAMS += client_main
 
 client_main_CPPFLAGS = \
@@ -186,17 +139,9 @@ client_main_SOURCES = \
   ClientTask.cpp \
   FooC.cpp \
   client_main.cpp \
-  CallbackC.h \
-  CallbackC.inl \
-  CallbackS.h \
-  CallbackS.inl \
   Callback_i.h \
   ClientApp.h \
-  ClientTask.h \
-  FooC.h \
-  FooC.inl \
-  FooS.h \
-  FooS.inl
+  ClientTask.h
 
 client_main_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO_CSD_ThreadPool.la \

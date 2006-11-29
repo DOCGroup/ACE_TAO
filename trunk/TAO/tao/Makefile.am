@@ -607,6 +607,27 @@ StringSeq-stamp: $(srcdir)/StringSeq.pidl $(TAO_IDL_DEP)
 	@touch $@
 
 BUILT_SOURCES += \
+  AnyTypeCode/ULongLongSeqA.cpp \
+  AnyTypeCode/ULongLongSeqA.h \
+  ULongLongSeqC.cpp \
+  ULongLongSeqC.h \
+  ULongLongSeqS.h
+
+CLEANFILES += \
+  ULongLongSeq-stamp \
+  AnyTypeCode/ULongLongSeqA.cpp \
+  AnyTypeCode/ULongLongSeqA.h \
+  ULongLongSeqC.cpp \
+  ULongLongSeqC.h \
+  ULongLongSeqS.h
+
+AnyTypeCode/ULongLongSeqA.cpp AnyTypeCode/ULongLongSeqA.h ULongLongSeqC.cpp ULongLongSeqC.h ULongLongSeqS.h: ULongLongSeq-stamp
+
+ULongLongSeq-stamp: $(srcdir)/ULongLongSeq.pidl $(TAO_IDL_DEP)
+	$(TAO_IDL) $(TAO_IDLFLAGS) -Wb,versioning_begin=TAO_BEGIN_VERSIONED_NAMESPACE_DECL -Wb,versioning_end=TAO_END_VERSIONED_NAMESPACE_DECL -SS -Sorb -GA -Ge 1 -Gp -Gd -oA AnyTypeCode -Wb,export_macro=TAO_Export -Wb,export_include=tao/TAO_Export.h -Wb,anyop_export_macro=TAO_AnyTypeCode_Export -Wb,anyop_export_include=tao/AnyTypeCode/TAO_AnyTypeCode_Export.h -Sci -Gse $(srcdir)/ULongLongSeq.pidl
+	@touch $@
+
+BUILT_SOURCES += \
   AnyTypeCode/ULongSeqA.cpp \
   AnyTypeCode/ULongSeqA.h \
   ULongSeqC.cpp \
@@ -688,27 +709,6 @@ AnyTypeCode/WStringSeqA.cpp AnyTypeCode/WStringSeqA.h WStringSeqC.cpp WStringSeq
 
 WStringSeq-stamp: $(srcdir)/WStringSeq.pidl $(TAO_IDL_DEP)
 	$(TAO_IDL) $(TAO_IDLFLAGS) -Wb,versioning_begin=TAO_BEGIN_VERSIONED_NAMESPACE_DECL -Wb,versioning_end=TAO_END_VERSIONED_NAMESPACE_DECL -SS -Sorb -GA -Ge 1 -Gp -Gd -oA AnyTypeCode -Wb,export_macro=TAO_Export -Wb,export_include=tao/TAO_Export.h -Wb,anyop_export_macro=TAO_AnyTypeCode_Export -Wb,anyop_export_include=tao/AnyTypeCode/TAO_AnyTypeCode_Export.h -Sci -Gse $(srcdir)/WStringSeq.pidl
-	@touch $@
-
-BUILT_SOURCES += \
-  AnyTypeCode/ULongLongSeqA.cpp \
-  AnyTypeCode/ULongLongSeqA.h \
-  ULongLongSeqC.cpp \
-  ULongLongSeqC.h \
-  ULongLongSeqS.h
-
-CLEANFILES += \
-  ULongLongSeq-stamp \
-  AnyTypeCode/ULongLongSeqA.cpp \
-  AnyTypeCode/ULongLongSeqA.h \
-  ULongLongSeqC.cpp \
-  ULongLongSeqC.h \
-  ULongLongSeqS.h
-
-AnyTypeCode/ULongLongSeqA.cpp AnyTypeCode/ULongLongSeqA.h ULongLongSeqC.cpp ULongLongSeqC.h ULongLongSeqS.h: ULongLongSeq-stamp
-
-ULongLongSeq-stamp: $(srcdir)/ULongLongSeq.pidl $(TAO_IDL_DEP)
-	$(TAO_IDL) $(TAO_IDLFLAGS) -Wb,versioning_begin=TAO_BEGIN_VERSIONED_NAMESPACE_DECL -Wb,versioning_end=TAO_END_VERSIONED_NAMESPACE_DECL -SS -Sorb -GA -Ge 1 -Gp -Gd -oA AnyTypeCode -Wb,export_macro=TAO_Export -Wb,export_include=tao/TAO_Export.h -Wb,anyop_export_macro=TAO_AnyTypeCode_Export -Wb,anyop_export_include=tao/AnyTypeCode/TAO_AnyTypeCode_Export.h -Sci $(srcdir)/ULongLongSeq.pidl
 	@touch $@
 
 lib_LTLIBRARIES += libTAO.la
@@ -969,39 +969,6 @@ nobase_include_HEADERS = \
   Adapter_Factory.h \
   Adapter_Registry.h \
   Allocator.h \
-  AnyTypeCode/BooleanSeqA.h \
-  AnyTypeCode/CONV_FRAMEA.h \
-  AnyTypeCode/CharSeqA.h \
-  AnyTypeCode/CurrentA.h \
-  AnyTypeCode/DoubleSeqA.h \
-  AnyTypeCode/FloatSeqA.h \
-  AnyTypeCode/GIOPA.h \
-  AnyTypeCode/IIOPA.h \
-  AnyTypeCode/IIOP_EndpointsA.h \
-  AnyTypeCode/IOPA.h \
-  AnyTypeCode/IOP_IORA.h \
-  AnyTypeCode/LongDoubleSeqA.h \
-  AnyTypeCode/LongLongSeqA.h \
-  AnyTypeCode/LongSeqA.h \
-  AnyTypeCode/Messaging_PolicyValueA.h \
-  AnyTypeCode/Messaging_SyncScopeA.h \
-  AnyTypeCode/ObjectIdListA.h \
-  AnyTypeCode/OctetSeqA.h \
-  AnyTypeCode/PI_ForwardA.h \
-  AnyTypeCode/ParameterModeA.h \
-  AnyTypeCode/Policy_ForwardA.h \
-  AnyTypeCode/PortableInterceptorA.h \
-  AnyTypeCode/ServicesA.h \
-  AnyTypeCode/ShortSeqA.h \
-  AnyTypeCode/StringSeqA.h \
-  AnyTypeCode/TAOA.h \
-  AnyTypeCode/TimeBaseA.h \
-  AnyTypeCode/ULongLongSeqA.h \
-  AnyTypeCode/ULongSeqA.h \
-  AnyTypeCode/UShortSeqA.h \
-  AnyTypeCode/WCharSeqA.h \
-  AnyTypeCode/WStringSeqA.h \
-  AnyTypeCode/orb_typesA.h \
   AnyTypeCode_Adapter.h \
   Any_Insert_Policy_T.h \
   Arg_Traits_T.h \
@@ -1706,6 +1673,7 @@ libTAO_AnyTypeCode_la_SOURCES = \
   AnyTypeCode/Any_Impl.cpp \
   AnyTypeCode/Any_SystemException.cpp \
   AnyTypeCode/Any_Unknown_IDL_Type.cpp \
+  AnyTypeCode/BasicTypeTraits.cpp \
   AnyTypeCode/BooleanSeqA.cpp \
   AnyTypeCode/BoundsA.cpp \
   AnyTypeCode/BoundsC.cpp \
@@ -1810,10 +1778,17 @@ nobase_include_HEADERS += \
   AnyTypeCode/Any_Special_Impl_T.inl \
   AnyTypeCode/Any_SystemException.h \
   AnyTypeCode/Any_Unknown_IDL_Type.h \
+  AnyTypeCode/BasicTypeTraits.h \
+  AnyTypeCode/BasicTypeTraits_T.h \
+  AnyTypeCode/BooleanSeqA.h \
   AnyTypeCode/Bounds.pidl \
   AnyTypeCode/BoundsA.h \
   AnyTypeCode/BoundsC.h \
+  AnyTypeCode/CONV_FRAMEA.h \
+  AnyTypeCode/CharSeqA.h \
+  AnyTypeCode/CurrentA.h \
   AnyTypeCode/DomainA.h \
+  AnyTypeCode/DoubleSeqA.h \
   AnyTypeCode/DynamicA.h \
   AnyTypeCode/DynamicC.h \
   AnyTypeCode/DynamicS.h \
@@ -1831,18 +1806,35 @@ nobase_include_HEADERS += \
   AnyTypeCode/Fixed_TypeCode.cpp \
   AnyTypeCode/Fixed_TypeCode.h \
   AnyTypeCode/Fixed_TypeCode.inl \
+  AnyTypeCode/FloatSeqA.h \
+  AnyTypeCode/GIOPA.h \
+  AnyTypeCode/IIOPA.h \
+  AnyTypeCode/IIOP_EndpointsA.h \
+  AnyTypeCode/IOPA.h \
+  AnyTypeCode/IOP_IORA.h \
+  AnyTypeCode/LongDoubleSeqA.h \
+  AnyTypeCode/LongLongSeqA.h \
+  AnyTypeCode/LongSeqA.h \
   AnyTypeCode/Marshal.h \
   AnyTypeCode/Marshal.inl \
+  AnyTypeCode/Messaging_PolicyValueA.h \
+  AnyTypeCode/Messaging_SyncScopeA.h \
   AnyTypeCode/NVList.h \
   AnyTypeCode/NVList.inl \
   AnyTypeCode/NVList_Adapter_Impl.h \
   AnyTypeCode/Null_RefCount_Policy.h \
+  AnyTypeCode/ObjectIdListA.h \
   AnyTypeCode/Objref_TypeCode.cpp \
   AnyTypeCode/Objref_TypeCode.h \
   AnyTypeCode/Objref_TypeCode.inl \
   AnyTypeCode/Objref_TypeCode_Static.h \
   AnyTypeCode/Objref_TypeCode_Static.inl \
+  AnyTypeCode/OctetSeqA.h \
+  AnyTypeCode/PI_ForwardA.h \
+  AnyTypeCode/ParameterModeA.h \
   AnyTypeCode/PolicyA.h \
+  AnyTypeCode/Policy_ForwardA.h \
+  AnyTypeCode/PortableInterceptorA.h \
   AnyTypeCode/Recursive_Type_TypeCode.cpp \
   AnyTypeCode/Recursive_Type_TypeCode.h \
   AnyTypeCode/Recursive_Type_TypeCode.inl \
@@ -1852,6 +1844,9 @@ nobase_include_HEADERS += \
   AnyTypeCode/Sequence_TypeCode.inl \
   AnyTypeCode/Sequence_TypeCode_Static.h \
   AnyTypeCode/Sequence_TypeCode_Static.inl \
+  AnyTypeCode/ServicesA.h \
+  AnyTypeCode/ShortSeqA.h \
+  AnyTypeCode/StringSeqA.h \
   AnyTypeCode/String_TypeCode.cpp \
   AnyTypeCode/String_TypeCode.h \
   AnyTypeCode/String_TypeCode.inl \
@@ -1864,8 +1859,10 @@ nobase_include_HEADERS += \
   AnyTypeCode/Struct_TypeCode_Static.h \
   AnyTypeCode/Struct_TypeCode_Static.inl \
   AnyTypeCode/SystemExceptionA.h \
+  AnyTypeCode/TAOA.h \
   AnyTypeCode/TAO_AnyTypeCode_Export.h \
   AnyTypeCode/TC_Constants_Forward.h \
+  AnyTypeCode/TimeBaseA.h \
   AnyTypeCode/True_RefCount_Policy.h \
   AnyTypeCode/True_RefCount_Policy.inl \
   AnyTypeCode/TypeCode.h \
@@ -1888,6 +1885,9 @@ nobase_include_HEADERS += \
   AnyTypeCode/TypeCode_Traits.h \
   AnyTypeCode/TypeCode_Value_Field.h \
   AnyTypeCode/Typecode_typesA.h \
+  AnyTypeCode/ULongLongSeqA.h \
+  AnyTypeCode/ULongSeqA.h \
+  AnyTypeCode/UShortSeqA.h \
   AnyTypeCode/Union_TypeCode.cpp \
   AnyTypeCode/Union_TypeCode.h \
   AnyTypeCode/Union_TypeCode.inl \
@@ -1904,7 +1904,10 @@ nobase_include_HEADERS += \
   AnyTypeCode/Visibility.pidl \
   AnyTypeCode/VisibilityA.h \
   AnyTypeCode/VisibilityC.h \
-  AnyTypeCode/WrongTransactionA.h
+  AnyTypeCode/WCharSeqA.h \
+  AnyTypeCode/WStringSeqA.h \
+  AnyTypeCode/WrongTransactionA.h \
+  AnyTypeCode/orb_typesA.h
 
 pkgconfig_DATA += \
   TAO_AnyTypeCode.pc
@@ -3791,6 +3794,7 @@ libTAO_DynamicAny_la_LIBADD = \
 
 nobase_include_HEADERS += \
   DynamicAny/DynAnyFactory.h \
+  DynamicAny/DynAnyUtils_T.h \
   DynamicAny/DynAny_i.h \
   DynamicAny/DynArray_i.h \
   DynamicAny/DynCommon.h \
