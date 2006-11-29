@@ -1,3 +1,9 @@
+Wed Nov 29 15:40:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/OS_NS_unistd.cpp (num_processors*):
+          Check the return value of sysctl, if it returns -1 then
+          also return the method with -1
+
 Wed Nov 29 12:47:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/MakeProjectCreator/config/ciao_client_dnc.mpb:
