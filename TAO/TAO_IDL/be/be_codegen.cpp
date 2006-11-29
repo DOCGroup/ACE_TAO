@@ -24,7 +24,7 @@
 #include "global_extern.h"
 #include "utl_string.h"
 #include "idl_defines.h"
- #include "ace/os_include/os_ctype.h"
+#include "ace/os_include/os_ctype.h"
 
 ACE_RCSID (be,
            be_codegen,
@@ -240,7 +240,6 @@ TAO_CodeGen::start_client_header (const char *fname)
 
           // Make sure this file was actually got included, not
           // ignored by some #if defined compiler directive.
-
 
           // Get the clnt header from the IDL file name.
           const char* client_hdr =
@@ -836,13 +835,13 @@ TAO_CodeGen::start_anyop_header (const char *fname)
   // If anyop macro hasn't been set, default to stub macro.
   if (be_global->anyop_export_include () != 0)
     {
-      *this->anyop_header_ << "\n#include \""
+      *this->anyop_header_ << "\n#include /**/ \""
                            << be_global->anyop_export_include ()
                            << "\"";
     }
   else if (be_global->stub_export_include () != 0)
     {
-      *this->anyop_header_ << "\n#include \""
+      *this->anyop_header_ << "\n#include /**/ \""
                            << be_global->stub_export_include ()
                            << "\"";
     }
@@ -874,22 +873,24 @@ TAO_CodeGen::start_anyop_header (const char *fname)
         {
           char* idl_name = idl_global->included_idl_files ()[j];
 
-          // Make a String out of it.
-          UTL_String idl_name_str = idl_name;
-
-          const char *anyop_hdr =
-            BE_GlobalData::be_get_anyop_header (&idl_name_str, 1);
-
-          idl_name_str.destroy ();
-
           ACE_CString pidl_checker (idl_name);
           bool const got_pidl =
             (pidl_checker.substr (pidl_checker.length () - 5) == ".pidl");
 
           // If we're here and we have a .pidl file, we need to generate
-          // the *A.h include from the AnyTypeCode library.
+          // the *A.h include, if it is not a .pidl file we don't generate
+          // a thing because the *C.h include is already generated in the
+          // C.h file
           if (got_pidl)
             {
+              // Make a String out of it.
+              UTL_String idl_name_str = idl_name;
+
+              const char *anyop_hdr =
+                BE_GlobalData::be_get_anyop_header (&idl_name_str, 1);
+
+              idl_name_str.destroy ();
+
               // Stripped off any scope in the name and add the
               // AnyTypeCode prefix.
               ACE_CString work_hdr (anyop_hdr);
@@ -921,11 +922,6 @@ TAO_CodeGen::start_anyop_header (const char *fname)
 
               this->anyop_header_->print ("\n#include \"%s\"",
                                           final_hdr.c_str ());
-            }
-          else
-            {
-              this->anyop_header_->print ("\n#include \"%s\"",
-                                          anyop_hdr);
             }
         }
     }
