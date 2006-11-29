@@ -9,14 +9,9 @@
 ## /acebuilds/ACE_wrappers-repository/bin/mwc.pl -include /acebuilds/MPC/config -include /acebuilds/MPC/templates -feature_file /acebuilds/ACE_wrappers-repository/local.features -noreldefs -type automake -exclude build,Kokyu
 
 SUBDIRS = \
-        ace \
-        ASNMP
-
-if BUILD_ACEXML
-SUBDIRS += ACEXML 
-endif
-
-SUBDIRS += \
+	ace \
+	@ACEXML@ \
+	@ASNMP@ \
         apps \
         bin \
         netsvcs
@@ -31,7 +26,7 @@ SUBDIRS += tests
 endif
 
 SUBDIRS += \
-        protocols \
+        @protocols@ \
         websvcs \
 	@KOKYU@ \
 	@TAO@
