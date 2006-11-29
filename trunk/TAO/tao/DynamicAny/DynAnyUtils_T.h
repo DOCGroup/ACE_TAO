@@ -30,7 +30,7 @@ namespace TAO
   template<typename T>
   struct DynAnyBasicTypeUtils
   {
-    static void 
+    static void
     insert_value (const T &val,
                   TAO_DynCommon *the_dynany)
       ACE_THROW_SPEC ((
@@ -46,7 +46,7 @@ namespace TAO
 
       if (the_dynany->has_components ())
         {
-          DynamicAny::DynAny_var cc = the_dynany->check_component ();        
+          DynamicAny::DynAny_var cc = the_dynany->check_component ();
           TAO_DynCommon *dc = dynamic_cast<TAO_DynCommon *> (cc.in ());
           TAO::DynAnyBasicTypeUtils<T>::insert_value (val, dc);
         }
@@ -54,7 +54,7 @@ namespace TAO
         {
           the_dynany->check_type (TAO::BasicTypeTraits<T>::tc_value);
           CORBA::Any &my_any = the_dynany->the_any ();
-          my_any <<= typename TAO::BasicTypeTraits<T>::insert_type (val);
+          my_any <<= TAO::BasicTypeTraits<T>::insert_type (val);
         }
     }
 
@@ -69,12 +69,12 @@ namespace TAO
       if (the_dynany->destroyed ())
         {
           ACE_THROW_RETURN (CORBA::OBJECT_NOT_EXIST (),
-                            typename TAO::BasicTypeTraits<T>::return_type ());
+                            TAO::BasicTypeTraits<T>::return_type ());
         }
 
       if (the_dynany->has_components ())
         {
-          DynamicAny::DynAny_var cc = the_dynany->check_component ();      
+          DynamicAny::DynAny_var cc = the_dynany->check_component ();
           TAO_DynCommon *dc = dynamic_cast<TAO_DynCommon *> (cc.in ());
           return TAO::DynAnyBasicTypeUtils<T>::get_value (dc);
         }
@@ -84,20 +84,20 @@ namespace TAO
             typename TAO::BasicTypeTraits<T>::return_type ();
           CORBA::Any &my_any = the_dynany->the_any ();
           CORBA::Boolean good_extract =
-            my_any >>= typename TAO::BasicTypeTraits<T>::extract_type (retval);
+            my_any >>= TAO::BasicTypeTraits<T>::extract_type (retval);
 
           if (!good_extract)
             {
               ACE_THROW_RETURN (DynamicAny::DynAny::TypeMismatch (),
-                                typename TAO::BasicTypeTraits<T>::return_type ());
+                                TAO::BasicTypeTraits<T>::return_type ());
             }
-            
+
           return retval;
         }
     }
   };
 
-  // Encapsulates code that would otherwise be repeated in 
+  // Encapsulates code that would otherwise be repeated in
   // TAO_DynCommon::set_flag(). Parameterized on the type
   // of dynany impl class that underlies the DynAny arg.
   template<typename T>
@@ -111,7 +111,7 @@ namespace TAO
         ))
     {
       T *tmp = T::_narrow (component);
-      
+
       if (destroying)
         {
           tmp->container_is_destroying (true);
