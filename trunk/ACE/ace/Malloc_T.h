@@ -661,7 +661,9 @@ private:
 
   /// Lock that ensures mutual exclusion for the memory pool.
   ACE_LOCK *lock_;
-  int delete_lock_;       // True if destructor should delete the lock
+
+  /// True if destructor should delete the lock
+  bool delete_lock_;
 
   /// Keep track of failure in constructor.
   int bad_flag_;
