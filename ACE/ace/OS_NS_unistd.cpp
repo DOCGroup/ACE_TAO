@@ -306,9 +306,10 @@ ACE_OS::num_processors (void)
   int num_processors;
   int mib[2] = { CTL_HW, HW_NCPU };
   size_t len = sizeof (num_processors);
-
-  sysctl(mib, 2, &num_processors, &len, NULL, 0);
-  return num_processors;
+  if (::sysctl(mib, 2, &num_processors, &len, NULL, 0) != -1)
+    return num_processors;
+  else
+    return -1;
 #else
   ACE_NOTSUP_RETURN (-1);
 #endif
@@ -331,9 +332,10 @@ ACE_OS::num_processors_online (void)
   int num_processors;
   int mib[2] = { CTL_HW, HW_NCPU };
   size_t len = sizeof (num_processors);
-
-  sysctl(mib, 2, &num_processors, &len, NULL, 0);
-  return num_processors;
+  if (::sysctl(mib, 2, &num_processors, &len, NULL, 0) != -1)
+    return num_processors;
+  else
+    return -1;
 #elif defined (__hpux)
   struct pst_dynamic psd;
   if (::pstat_getdynamic (&psd, sizeof (psd), (size_t) 1, 0) != -1)
