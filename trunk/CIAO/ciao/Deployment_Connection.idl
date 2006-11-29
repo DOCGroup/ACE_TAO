@@ -3,7 +3,7 @@
 #if !defined (DEPLOYMENT_CONNECTION_IDL)
 #define DEPLOYMENT_CONNECTION_IDL
 
-#include "Deployment_DeploymentPlan.idl"
+#include "ciao/Deployment_DeploymentPlan.idl"
 #include <ciaosvcs/Events/CIAO_Events_Base/CIAO_Events.idl>
 
 // *************** Packaging and Deployment ***************

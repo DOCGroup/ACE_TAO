@@ -14,8 +14,8 @@
 #if !defined (CCM_HOMECONFIGURATOR_IDL)
 #define CCM_HOMECONFIGURATOR_IDL
 
-#include "CCM_Configurator.idl"
-#include "CCM_StandardConfigurator.idl"
+#include "ciao/CCM_Configurator.idl"
+#include "ciao/CCM_StandardConfigurator.idl"
 
 module Components
 {

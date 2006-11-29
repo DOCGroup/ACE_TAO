@@ -3,7 +3,7 @@
 #if !defined (DEPLOYMENT_APPLICATION_IDL)
 #define DEPLOYMENT_APPLICATION_IDL
 
-#include "Deployment_Connection.idl"
+#include "ciao/Deployment_Connection.idl"
 
 module Deployment
 {

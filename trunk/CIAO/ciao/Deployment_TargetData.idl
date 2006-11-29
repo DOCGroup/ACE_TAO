@@ -4,6 +4,8 @@
 #define DEPLOYMENT_TARGETDATA_IDL
 
 #include "ciao/Deployment_Base.idl"
+#include "tao/StringSeq.pidl"
+#include "tao/ULongSeq.pidl"
 
 module Deployment {
 
