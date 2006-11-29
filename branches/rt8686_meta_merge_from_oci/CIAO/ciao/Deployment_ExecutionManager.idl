@@ -2,8 +2,8 @@
 #ifndef EXECUTIONMANAGER_IDL
 #define EXECUTIONMANAGER_IDL
 
-#include "Deployment.idl"
-#include "Deployment_DomainApplicationManager.idl"
+#include "ciao/Deployment.idl"
+#include "ciao/Deployment_DomainApplicationManager.idl"
 
 module Deployment {
   interface ExecutionManager {

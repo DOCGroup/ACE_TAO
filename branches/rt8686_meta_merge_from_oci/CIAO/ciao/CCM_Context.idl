@@ -3,9 +3,9 @@
 #if !defined (CCM_CONTEXT_IDL)
 #define CCM_CONTEXT_IDL
 
-#include "Security.idl"
-#include "CCM_Transaction.idl"
-#include "CCM_Home.idl"
+#include "ciao/Security.idl"
+#include "ciao/CCM_Transaction.idl"
+#include "ciao/CCM_Home.idl"
 
 // *************** Basic Container interfaces ***************
 

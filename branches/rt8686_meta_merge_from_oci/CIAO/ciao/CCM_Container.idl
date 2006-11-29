@@ -16,11 +16,11 @@
 #if !defined (CCM_CONTAINER_IDL)
 #define CCM_CONTAINER_IDL
 
-#include "CCM_Component.idl"
-#include "CCM_Context.idl"
-#include "CCM_CCMException.idl"
-#include "CCM_EnterpriseComponent.idl"
-#include "CCM_HomeExecutorBase.idl"
+#include "ciao/CCM_Component.idl"
+#include "ciao/CCM_Context.idl"
+#include "ciao/CCM_CCMException.idl"
+#include "ciao/CCM_EnterpriseComponent.idl"
+#include "ciao/CCM_HomeExecutorBase.idl"
 
 // *************** Basic Container interfaces ***************
 

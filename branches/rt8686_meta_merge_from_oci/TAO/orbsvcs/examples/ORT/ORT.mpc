@@ -1,6 +1,6 @@
 // $Id$
 
-project(*idl): taoidldefaults, avoids_minimum_corba {
+project(*idl): taoidldefaults, avoids_minimum_corba, avoids_corba_e_compact {
   idl_files {
     Gateway.idl
     ObjectReferenceFactory.idl
@@ -9,7 +9,7 @@ project(*idl): taoidldefaults, avoids_minimum_corba {
   custom_only = 1
 }
 
-project(*Gateway) : orbsvcsexe, dynamicinterface, ifr_client, avoids_minimum_corba {
+project(*Gateway) : orbsvcsexe, dynamicinterface, ifr_client, avoids_minimum_corba, avoids_corba_e_compact {
   after += *idl
 
   source_files {
@@ -41,7 +41,7 @@ project(*Server) : orbsvcsexe, dynamicinterface, ifr_client, avoids_minimum_corb
   }
 }
 
-project(*Client) : orbsvcsexe, event, avoids_minimum_corba {
+project(*Client) : orbsvcsexe, event, avoids_minimum_corba, avoids_corba_e_compact {
   after += *Idl *Server
   source_files {
     client.cpp

@@ -1,3 +1,27 @@
+Wed Nov 29 15:40:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/OS_NS_unistd.cpp (num_processors*):
+          Check the return value of sysctl, if it returns -1 then
+          also return the method with -1
+
+Wed Nov 29 12:47:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/MakeProjectCreator/config/ciao_client_dnc.mpb:
+          Simplified this file
+
+Wed Nov 29 11:03:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Malloc_T.{h,cpp}:
+          Changed delete_lock_ to a real bool
+
+Wed Nov 29 07:09:17 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * Makefile.am:
+        * configure.ac:
+
+          If ACEXML, ASNMP, or protocols subdirectories are not present,
+          don't try to configure or build them.
+
 Tue Nov 28 21:02:25 UTC 2006  Steve Huston  <shuston@riverace.com>
 
         * ace/WIN32_Asynch_IO.cpp (ACE_WIN32_Asynch_Connect::post_result):

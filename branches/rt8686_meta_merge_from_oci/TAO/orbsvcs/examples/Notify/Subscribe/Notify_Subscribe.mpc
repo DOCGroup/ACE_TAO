@@ -1,6 +1,6 @@
 // -*- MPC -*-
 // $Id$
 
-project : orbsvcsexe, notification, notification_skel, naming, avoids_minimum_corba {
+project : orbsvcsexe, notification, notification_skel, naming, avoids_minimum_corba, avoids_corba_e_compact {
   exename = Subscribe
 }

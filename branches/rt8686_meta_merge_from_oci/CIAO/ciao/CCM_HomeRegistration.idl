@@ -16,7 +16,7 @@
 #if !defined (CCM_HOMEREGISTRATION_IDL)
 #define CCM_HOMEREGISTRATION_IDL
 
-#include "CCM_Home.idl"
+#include "ciao/CCM_Home.idl"
 
 module Components
 {

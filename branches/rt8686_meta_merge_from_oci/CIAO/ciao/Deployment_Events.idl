@@ -11,7 +11,7 @@
 #if !defined (CIAO_DEPLOYMENT_EVENT_SERVICES_IDL)
 #define CIAO_DEPLOYMENT_EVENT_SERVICES_IDL
 
-#include <orb.idl>
+#include "tao/StringSeq.pidl"
 
 module CIAO
 {

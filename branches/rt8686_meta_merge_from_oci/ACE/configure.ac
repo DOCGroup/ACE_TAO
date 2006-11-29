@@ -7819,16 +7819,6 @@ AC_CONFIG_FILES([
   ace/Makefile
   ace/QoS/Makefile
   ace/SSL/Makefile
-  ASNMP/Makefile
-  ASNMP/asnmp/Makefile
-  ASNMP/agent/Makefile
-  ASNMP/examples/Makefile
-  ASNMP/examples/get/Makefile
-  ASNMP/examples/next/Makefile
-  ASNMP/examples/set/Makefile
-  ASNMP/examples/trap/Makefile
-  ASNMP/examples/walk/Makefile
-  ASNMP/tests/Makefile
   apps/Makefile
   apps/Gateway/Makefile
   apps/Gateway/Gateway/Makefile
@@ -7858,11 +7848,6 @@ AC_CONFIG_FILES([
   netsvcs/clients/Naming/Client/Makefile
   netsvcs/clients/Naming/Dump_Restore/Makefile
   netsvcs/servers/Makefile
-  protocols/Makefile
-  protocols/ace/Makefile
-  protocols/ace/HTBP/Makefile
-  protocols/ace/RMCast/Makefile
-  protocols/ace/TMCast/Makefile
   websvcs/Makefile
   websvcs/lib/Makefile
   websvcs/tests/Makefile
@@ -7968,15 +7953,10 @@ if test $ace_build_examples = yes; then
     examples/Threads/Makefile
     examples/Timer_Queue/Makefile
     examples/Web_Crawler/Makefile
-    protocols/examples/Makefile
-    protocols/examples/RMCast/Makefile
-    protocols/examples/RMCast/Send_Msg/Makefile
-    protocols/examples/TMCast/Makefile
-    protocols/examples/TMCast/Member/Makefile
   ])
 fi
 
-dnl Configure examples if configured...
+dnl Configure tests if configured...
 if test $ace_build_tests = yes; then
   AC_CONFIG_FILES([
     performance-tests/Makefile
@@ -7991,13 +7971,6 @@ if test $ace_build_tests = yes; then
     performance-tests/Synch-Benchmarks/Synch_Lib/Makefile
     performance-tests/TCP/Makefile
     performance-tests/UDP/Makefile
-    protocols/tests/HTBP/Makefile
-    protocols/tests/HTBP/Reactor_Tests/Makefile
-    protocols/tests/HTBP/Send_Large_Msg/Makefile
-    protocols/tests/HTBP/Send_Recv_Tests/Makefile
-    protocols/tests/HTBP/ping/Makefile
-    protocols/tests/Makefile
-    protocols/tests/RMCast/Makefile
     tests/Makefile
     tests/SSL/Makefile
   ])
@@ -8017,6 +7990,23 @@ if test -d $srcdir/ACEXML; then
     ACEXML/tests/Makefile
     ACEXML/tests/util/Makefile
   ])
+  AC_SUBST([ACEXML],[ACEXML])
+fi
+
+if test -d $srcdir/ASNMP; then
+  AC_CONFIG_FILES([
+    ASNMP/Makefile
+    ASNMP/asnmp/Makefile
+    ASNMP/agent/Makefile
+    ASNMP/examples/Makefile
+    ASNMP/examples/get/Makefile
+    ASNMP/examples/next/Makefile
+    ASNMP/examples/set/Makefile
+    ASNMP/examples/trap/Makefile
+    ASNMP/examples/walk/Makefile
+    ASNMP/tests/Makefile
+  ])
+  AC_SUBST([ASNMP],[ASNMP])
 fi
 
 if test -d $srcdir/Kokyu; then
@@ -8029,15 +8019,46 @@ if test -d $srcdir/Kokyu; then
   ])
   AC_SUBST([KOKYU],[Kokyu])
 fi
-AM_CONDITIONAL([BUILD_KOKYU],
-               [test -d $srcdir/Kokyu])
+
+if test -d $srcdir/protocols; then
+  AC_CONFIG_FILES([
+    protocols/Makefile
+    protocols/ace/Makefile
+    protocols/ace/HTBP/Makefile
+    protocols/ace/RMCast/Makefile
+    protocols/ace/TMCast/Makefile
+  ])
+
+  dnl Configure examples if configured...
+  if test $ace_build_examples = yes; then
+    AC_CONFIG_FILES([
+      protocols/examples/Makefile
+      protocols/examples/RMCast/Makefile
+      protocols/examples/RMCast/Send_Msg/Makefile
+      protocols/examples/TMCast/Makefile
+      protocols/examples/TMCast/Member/Makefile
+    ])
+  fi
+
+  dnl Configure tests if configured...
+  if test $ace_build_tests = yes; then
+    AC_CONFIG_FILES([
+      protocols/tests/HTBP/Makefile
+      protocols/tests/HTBP/Reactor_Tests/Makefile
+      protocols/tests/HTBP/Send_Large_Msg/Makefile
+      protocols/tests/HTBP/Send_Recv_Tests/Makefile
+      protocols/tests/HTBP/ping/Makefile
+      protocols/tests/Makefile
+      protocols/tests/RMCast/Makefile
+    ])
+  fi
+  AC_SUBST([protocols],[protocols])
+fi
 
 if test -d $srcdir/TAO -a X$ace_user_with_tao = Xyes; then
   AC_CONFIG_SUBDIRS([TAO])
   AC_SUBST([TAO],[TAO])
 fi
-AM_CONDITIONAL([BUILD_TAO],
-               [test -d $srcdir/TAO -a X$ace_user_with_tao = Xyes])
 
 dnl Note that the "ACE_VERSION" in the message below is an M4 macro
 dnl that expands to the version of ACE being configured.

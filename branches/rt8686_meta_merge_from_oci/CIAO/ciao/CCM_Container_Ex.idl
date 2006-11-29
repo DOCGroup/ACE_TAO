@@ -16,9 +16,9 @@
 #if !defined (CCM_CONTAINER_EX_IDL)
 #define CCM_CONTAINER_EX_IDL
 
-#include "CCM_Container.idl"
-#include "CCM_Session2Context.idl"
-#include "CCM_EntityContext.idl"
+#include "ciao/CCM_Container.idl"
+#include "ciao/CCM_Session2Context.idl"
+#include "ciao/CCM_EntityContext.idl"
 #include <CosPersistentState.idl>
 
 // *************** Extended Container Interfaces ***************

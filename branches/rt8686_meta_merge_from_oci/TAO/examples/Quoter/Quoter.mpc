@@ -20,7 +20,7 @@ project(*server): namingexe, lifecycle, avoids_minimum_corba, utils {
   }
 }
 
-project(*client): namingexe, lifecycle, avoids_minimum_corba {
+project(*client): namingexe, lifecycle, avoids_minimum_corba, avoids_corba_e_compact {
   after += *IDL
   Source_Files {
     client.cpp

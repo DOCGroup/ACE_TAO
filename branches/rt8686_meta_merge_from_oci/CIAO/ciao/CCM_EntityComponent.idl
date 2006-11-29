@@ -16,9 +16,9 @@
 #if !defined (CCM_ENTITYCOMPONENT_IDL)
 #define CCM_ENTITYCOMPONENT_IDL
 
-#include "CCM_CCMException.idl"
-#include "CCM_EnterpriseComponent.idl"
-#include "CCM_EntityContext.idl"
+#include "ciao/CCM_CCMException.idl"
+#include "ciao/CCM_EnterpriseComponent.idl"
+#include "ciao/CCM_EntityContext.idl"
 
 module Components
 {
