@@ -1,3 +1,9 @@
+Tue Nov 28 12:48:12 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ciao/*.idl:
+          Added ciao/ as prefix to the include path. This way it is clear
+          where we are including a file from.
+
 Tue Nov 28 21:38:12 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * DAnCE/RTNodeApplication:
