@@ -1,3 +1,17 @@
+Wed Nov 29 17:13:33 UTC 2006  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tao/DynamicAny/DynAnyUtils_T.h:
+
+          Put back some of the 'typename' qualifiers removed in
+
+          Wed Nov 29 000:11:49 UTC 2006  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+          since the lack is definitely causing problems with FC4
+          on the scoreboard. I had removed them because I thought
+          they were the cause of problems reported by Phil
+          Mesnier <mesnier_p@ociweb.com>, but perhaps those errors
+          stemmed from something else.
+
 Wed Nov 29 16:31:26 UTC 2006  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tao/AnyTypeCode/BasicTypeTraits.cpp:
