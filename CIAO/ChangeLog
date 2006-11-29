@@ -1,4 +1,10 @@
-Tue Nov 28 12:48:12 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+Wed Nov 29 15:43:12 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * DAnCE/NodeManager/CIAO_Monitor.cpp:
+          Don't use plain new, fixes bugzilla bug 2732. Thanks to Abdul
+          for reporting this
+
+Wed Nov 29 12:48:12 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ciao/*.idl:
           Added ciao/ as prefix to the include path. This way it is clear
