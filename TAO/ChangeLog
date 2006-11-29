@@ -1,3 +1,100 @@
+Wed Nov 29 13:25:46 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * docs/tutorials/Quoter/On_Demand_Activation/Quoter_On_Demand_Activation.mpc:
+        * docs/tutorials/Quoter/RT_Event_Service/Quoter_RT_Event_Service.mpc:
+        * docs/tutorials/Quoter/Simple/ImprovedServer/Quoter_Simple_ImprovedServer.mpc:
+        * examples/Load_Balancing_persistent/Load_Balancing_persistent.mpc:
+        * examples/OBV/Typed_Events/Typed_Events.mpc:
+        * examples/POA/Adapter_Activator/POA_Adapter_Activator.mpc:
+        * examples/POA/Default_Servant/POA_Default_Servant.mpc:
+        * examples/POA/DSI/POA_DSI.mpc:
+        * examples/POA/Explicit_Activation/POA_Explicit_Activation.mpc:
+        * examples/POA/FindPOA/POA_FindPOA.mpc:
+        * examples/POA/Forwarding/POA_Forwarding.mpc:
+        * examples/POA/Generic_Servant/POA_Generic_Servant.mpc:
+        * examples/POA/Loader/POA_Loader.mpc:
+        * examples/POA/NewPOA/POA_NewPOA.mpc:
+        * examples/POA/On_Demand_Activation/POA_On_Demand_Activation.mpc:
+        * examples/POA/On_Demand_Loading/POA_On_Demand_Loading.mpc:
+        * examples/POA/POA_BiDir/POA_BiDir.mpc:
+        * examples/POA/Reference_Counted_Servant/Reference_Counted_Servant.mpc:
+        * examples/POA/TIE/POA_TIE.mpc:
+        * examples/Quoter/Quoter.mpc:
+        * examples/TypeCode_Creation/TypeCode_Creation.mpc:
+        * orbsvcs/examples/Notify/Lanes/Notify_Lanes.mpc:
+        * orbsvcs/examples/Notify/Subscribe/Notify_Subscribe.mpc:
+        * orbsvcs/examples/Notify/ThreadPool/Notify_ThreadPool.mpc:
+        * orbsvcs/examples/ORT/ORT.mpc:
+        * orbsvcs/FT_ReplicationManager/FT_ReplicationManager.mpc:
+        * orbsvcs/IFR_Service/IFR_Service.mpc:
+        * orbsvcs/orbsvcs/IFRService.mpc:
+        * orbsvcs/performance-tests/RTEvent/Colocated_Roundtrip/Colocated_Roundtrip.mpc:
+        * orbsvcs/performance-tests/RTEvent/Federated_Roundtrip/Federated_Roundtrip.mpc:
+        * orbsvcs/performance-tests/RTEvent/lib/RTEC_Perf.mpc:
+        * orbsvcs/performance-tests/RTEvent/Roundtrip/Roundtrip.mpc:
+        * orbsvcs/performance-tests/RTEvent/RTCORBA_Baseline/RTCORBA_Baseline.mpc:
+        * orbsvcs/performance-tests/RTEvent/RTCORBA_Callback/RTCORBA_Callback.mpc:
+        * orbsvcs/performance-tests/RTEvent/TCP_Baseline/TCP_Baseline.mpc:
+        * orbsvcs/tests/Bug_2074_Regression/Bug_2074_Regression.mpc:
+        * orbsvcs/tests/Bug_2247_Regression/Bug_2247_Regression.mpc:
+        * orbsvcs/tests/Bug_2248_Regression/Bug_2248_Regression.mpc:
+        * orbsvcs/tests/FT_App/FT_App.mpc:
+        * orbsvcs/tests/ImplRepo/Bug_2604_Regression/Bug_2604.mpc:
+        * orbsvcs/tests/ImplRepo/NameService/ImplRepo_NameService.mpc:
+        * orbsvcs/tests/InterfaceRepo/Application_Test/IFR_Application_Test.mpc:
+        * orbsvcs/tests/InterfaceRepo/IDL3_Test/IFR_IDL3_Test.mpc:
+        * orbsvcs/tests/InterfaceRepo/IFR_Test/IFR_IFR_Test.mpc:
+        * orbsvcs/tests/InterfaceRepo/Persistence_Test/IFR_Persistence_Test.mpc:
+        * orbsvcs/tests/Notify/performance-tests/Filter/Filter.mpc:
+        * orbsvcs/tests/Notify/performance-tests/Throughput/Throughput.mpc:
+        * orbsvcs/tests/Notify/RT_lib/RT_Notify_lib.mpc:
+        * orbsvcs/tests/tests_svc_loader/tests_svc_loader.mpc:
+        * performance-tests/Cubit/TAO/DII_Cubit/DII_Cubit.mpc:
+        * performance-tests/Latency/Deferred/Deferred.mpc:
+        * performance-tests/Latency/DII/DII.mpc:
+        * performance-tests/Latency/DSI/DSI.mpc:
+        * performance-tests/RTCorba/Multiple_Endpoints/Common/Common.mpc:
+        * performance-tests/RTCorba/Multiple_Endpoints/Orb_Per_Priority/ORB_Per_Priority.mpc:
+        * performance-tests/RTCorba/Oneways/Reliable/Reliable.mpc:
+        * performance-tests/RTCorba/Thread_Pool/Thread_Pool.mpc:
+        * performance-tests/Sequence_Latency/Deferred/Deferred.mpc:
+        * performance-tests/Sequence_Latency/DII/DII.mpc:
+        * performance-tests/Sequence_Latency/DSI/DSI.mpc:
+        * tao/EndpointPolicy.mpc:
+        * tests/Bug_1535_Regression/Bug_1535_Regression.mpc:
+        * tests/Bug_1636_Regression/test.mpc:
+        * tests/Bug_2174_Regression/Bug_2174_Regression.mpc:
+        * tests/Faults/Faults.mpc:
+        * tests/File_IO/File_IO.mpc:
+        * tests/ICMG_Any_Bug/Hello.mpc:
+        * tests/MProfile_Forwarding/MProfile_Forwarding.mpc:
+        * tests/Param_Test/Param_Test.mpc:
+        * tests/POA/Bug_2511_Regression/Bug_2511_Regression.mpc:
+        * tests/POA/Default_Servant/Default_Servant.mpc:
+        * tests/POA/EndpointPolicy/EndpointPolicy.mpc:
+        * tests/POA/Etherealization/Etherealization.mpc:
+        * tests/POA/MT_Servant_Locator/MT_Servant_Locator.mpc:
+        * tests/POA/Nested_Non_Servant_Upcalls/Nested_Non_Servant_Upcalls.mpc:
+        * tests/POA/POAManagerFactory/POAManagerFactory.mpc:
+        * tests/POA/Single_Threaded_POA/Single_Threaded_POA.mpc:
+        * tests/RTCORBA/Diffserv/RTCORBA_Diffserv.mpc:
+        * tests/RTCORBA/Dynamic_Thread_Pool/RT_Dynamic_Thread_Pool.mpc:
+        * tests/RTCORBA/Explicit_Binding/RTCORBA_Explicit_Binding.mpc:
+        * tests/RTCORBA/Linear_Priority/RTCORBA_Linear_Priority.mpc:
+        * tests/RTCORBA/MT_Client_Protocol_Priority/RTCORBA_MT_Client_Proto_Prio.mpc:
+        * tests/RTCORBA/Persistent_IOR/RTCORBA_Persistent_IOR.mpc:
+        * tests/RTCORBA/Policies/Policies.mpc:
+        * tests/RTCORBA/Policy_Combinations/RTCORBA_Policy_Combinations.mpc:
+        * tests/RTCORBA/Priority_Inversion_With_Bands/Priority_Inversion_With_Bands.mpc:
+        * tests/RTCORBA/Private_Connection/RTCORBA_Private_Connection.mpc:
+        * tests/RTCORBA/Profile_And_Endpoint_Selection/PaE_Selection.mpc:
+        * tests/RTCORBA/Server_Protocol/RTCORBA_Server_Protocol.mpc:
+        * tests/RTCORBA/Thread_Pool/RTCORBA_Thread_Pool.mpc:
+        * tests/Servant_To_Reference_Test/Servant_to_Reference.mpc:
+          Added avoids_corba_e_compact as base project, these all
+          have also avoids_minimum_corba, so it was just a search/
+          replace.
+
 Wed Nov 29 12:07:46 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * TAO_IDL/be/be_codegen.cpp:
