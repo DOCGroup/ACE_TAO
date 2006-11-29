@@ -1,0 +1,83 @@
+Mon Nov 27 20:46:57 UTC 2006  Chris Cleeland  <cleeland_c@ociweb.com>
+
+          This entry merges in changes from OCI's distribution which
+	  originate from OCI request tickets [RT 8449] and [RT 8881].
+	  In their totality, these changes add a feature whereby the
+	  notification service implementation can utilize a separate ORB
+	  for dispatching events to consumers.
+	
+        * orbsvcs/Notify_Service/README:
+
+	  Add documentation for the new "-UseSeparateDispatchingORB"
+	  option.
+	
+        * orbsvcs/Notify_Service/Notify_Service.h:
+        * orbsvcs/Notify_Service/Notify_Service.cpp:
+
+	  Add new methods for creating the dispatching ORB and a flag for
+	  indicating whether a separate dispatching ORB should be used.
+
+        * orbsvcs/orbsvcs/Notify/Properties.h:
+        * orbsvcs/orbsvcs/Notify/Properties.inl:
+        * orbsvcs/orbsvcs/Notify/Properties.cpp:
+
+	  Added methods and data member related to managing the separate
+	  dispatching ORB.
+
+        * orbsvcs/orbsvcs/Notify/Properties.h (instance):
+        * orbsvcs/orbsvcs/Notify/Properties.cpp (instance):
+        * orbsvcs/orbsvcs/Notify/RT_Properties.h (instance):
+        * orbsvcs/orbsvcs/Notify/RT_Properties.cpp (instance):
+	  
+	  Merged in a change similar to "Thu May 19 00:29:35 2005  Ossama
+	  Othman  <ossama@dre.vanderbilt.edu>" that avoids multiple
+	  singleton instances of the Properties singleton.
+
+        * orbsvcs/orbsvcs/Notify/Any/PushConsumer.cpp (init):
+        * orbsvcs/orbsvcs/Notify/Sequence/SequencePushConsumer.cpp (init):
+        * orbsvcs/orbsvcs/Notify/Structured/StructuredPushConsumer.cpp (init):
+
+          Similar change in all three of these places substitutes
+          _unchecked_narrow() for _narrow() when using the "re-hosting"
+          technique for the a separate dispatching ORB.  For the reference
+          to the consumer itself, the _unchecked_narrow() is perfectly
+          fine because we had a reference to something of that type
+          already.  For the NotifyPublish narrowing, though, the
+          _unchecked_narrow() isn't completely sufficient.  However, we
+          want to avoid a normal _narrow() because the resulting _is_a()
+          invocation could end up deadlocking if the POA that's hosting
+          the object reference for the consumer has not yet been
+          activated.  Thus, we use pseudo-lazy evaluation for that,
+          described in the entry for Consumer.{h,cpp} below.
+
+        * orbsvcs/orbsvcs/Notify/Consumer.h:
+
+          Added a flag, have_not_yet_verified_publish_, that indicates
+          whether the type of this->publish_ has been verified to actually
+          be a reference to something implementing the NotifyPublish
+          interface.
+
+        * orbsvcs/orbsvcs/Notify/Consumer.cpp (CTOR, dispatch_updates_i):
+
+          Modified CTOR to initialize the aforementioned flag.  In
+          dispatch_updates_i, we assume that the reference is unverified
+          until we've checked it once.  I don't think we need to worry
+          about thread safety here...at least I hope not.
+
+        * orbsvcs/orbsvcs/Notify/CosNotify_Service.h (init_service2, init_i2):
+        * orbsvcs/orbsvcs/Notify/CosNotify_Service.cpp (init_service2, init_i2):
+
+	  Added code to parse the new option.
+	
+        * orbsvcs/orbsvcs/Notify/POA_Helper.cpp (create_i, activate):
+
+          Corrected some minor memory leaks when getting the name of a
+          POA.
+
+        * orbsvcs/tests/Notify/Basic/run_test.pl:
+        * orbsvcs/tests/Notify/Basic/run_test_ipv6.pl:
+
+          Added an outer loop that runs the basic tests with and without a
+          separate dispatching ORB.
+
+
