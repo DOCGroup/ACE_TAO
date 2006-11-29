@@ -1,3 +1,8 @@
+Wed Nov 29 12:47:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/MakeProjectCreator/config/ciao_client_dnc.mpb:
+          Simplified this file
+
 Wed Nov 29 11:03:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Malloc_T.{h,cpp}:
