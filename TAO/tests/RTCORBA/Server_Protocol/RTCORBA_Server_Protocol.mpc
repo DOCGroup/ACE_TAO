@@ -1,13 +1,13 @@
 // -*- MPC -*-
 // $Id$
 
-project(*Server): strategies, rt_server, avoids_minimum_corba {
+project(*Server): strategies, rt_server, avoids_minimum_corba, avoids_corba_e_compact {
   Source_Files {
     server.cpp
   }
 }
 
-project(*Client): strategies, rt_client, avoids_minimum_corba {
+project(*Client): strategies, rt_client, avoids_minimum_corba, avoids_corba_e_compact {
   after += *Server
   Source_Files {
     testC.cpp

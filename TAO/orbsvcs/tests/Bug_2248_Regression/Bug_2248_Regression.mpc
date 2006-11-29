@@ -10,7 +10,7 @@ project(*idl): taoidldefaults {
   custom_only = 1
 }
 
-project(*Server): taoserver, orbsvcsexe, iormanip, pi_server, ftorb, messaging, avoids_minimum_corba {
+project(*Server): taoserver, orbsvcsexe, iormanip, pi_server, ftorb, messaging, avoids_minimum_corba, avoids_corba_e_compact {
   after += *idl
 
   Source_Files {
@@ -28,7 +28,7 @@ project(*Server): taoserver, orbsvcsexe, iormanip, pi_server, ftorb, messaging, 
   }
 }
 
-project(*Client): taoclient, orbsvcsexe, iormanip, pi_server, ftorb, avoids_minimum_corba {
+project(*Client): taoclient, orbsvcsexe, iormanip, pi_server, ftorb, avoids_minimum_corba, avoids_corba_e_compact {
   after += *idl
 
   Source_Files {

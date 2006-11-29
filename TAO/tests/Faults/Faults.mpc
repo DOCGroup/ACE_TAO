@@ -1,7 +1,7 @@
 // -*- MPC -*-
 // $Id$
 
-project(*Server): taoserver, avoids_minimum_corba {
+project(*Server): taoserver, avoids_minimum_corba, avoids_corba_e_compact {
   IDL_Files {
     test.idl
   }
@@ -14,7 +14,7 @@ project(*Server): taoserver, avoids_minimum_corba {
   }
 }
 
-project(*Middle): taoexe, portableserver, avoids_minimum_corba {
+project(*Middle): taoexe, portableserver, avoids_minimum_corba, avoids_corba_e_compact {
   after += *Server
   IDL_Files {
     test.idl
@@ -28,7 +28,7 @@ project(*Middle): taoexe, portableserver, avoids_minimum_corba {
   }
 }
 
-project(*Client): taoexe, portableserver, avoids_minimum_corba {
+project(*Client): taoexe, portableserver, avoids_minimum_corba, avoids_corba_e_compact {
   after += *Middle
   IDL_Files {
     test.idl
@@ -42,7 +42,7 @@ project(*Client): taoexe, portableserver, avoids_minimum_corba {
   }
 }
 
-project(*Ping): taoexe, portableserver, avoids_minimum_corba {
+project(*Ping): taoexe, portableserver, avoids_minimum_corba, avoids_corba_e_compact {
   IDL_Files {
     ping.idl
   }
@@ -55,7 +55,7 @@ project(*Ping): taoexe, portableserver, avoids_minimum_corba {
   }
 }
 
-project(*Pong): taoexe, portableserver, avoids_minimum_corba {
+project(*Pong): taoexe, portableserver, avoids_minimum_corba, avoids_corba_e_compact {
   after += *Ping
   IDL_Files {
     ping.idl
