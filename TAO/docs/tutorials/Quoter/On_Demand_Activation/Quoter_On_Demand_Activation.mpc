@@ -8,7 +8,7 @@ project(*idl): taoidldefaults, ami {
   custom_only = 1
 }
 
-project(*client) : taoexe, portableserver, naming, ami, avoids_minimum_corba {
+project(*client) : taoexe, portableserver, naming, ami, avoids_minimum_corba, avoids_corba_e_compact {
   after += *idl
   source_files {
     client.cpp
@@ -20,7 +20,7 @@ project(*client) : taoexe, portableserver, naming, ami, avoids_minimum_corba {
   }
 }
 
-project(*server) : taoserver, naming, ami, avoids_minimum_corba {
+project(*server) : taoserver, naming, ami, avoids_minimum_corba, avoids_corba_e_compact {
   after += *idl
   source_files {
     server.cpp
