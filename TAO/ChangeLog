@@ -1,3 +1,15 @@
+Wed Nov 29 17:43:45 UTC 2006  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * examples/OBV/Typed_Events/Typed_Events.mpc:
+
+          Removed the IDL flag -St, which suppressed typecode generation,
+          so the _tao_type() method (which returns a typecode) can be
+          generated for the valuetypes in the IDL - necessary since
+          this method is pure virtual in ValueBase. This is a temporary
+          fix, some discussions are necessary to decide on an approach
+          to integrating _tao_type() with subsetted libraries, IDL
+          compiler command line options, and MPC settings.
+
 Wed Nov 29 17:13:33 UTC 2006  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tao/DynamicAny/DynAnyUtils_T.h:
