@@ -1,8 +1,17 @@
 // -*- MPC -*-
 // $Id$
 
+project(*idl): taoidldefaults {
+  IDL_Files {
+    Callback.idl
+    Foo.idl
+  }
+  custom_only = 1
+}
+
 project(*Server): csd_threadpool, taoserver, pi {
   exename = server_main
+  after += *idl
 
   Source_Files {
     server_main.cpp
@@ -17,6 +26,8 @@ project(*Server): csd_threadpool, taoserver, pi {
     FooServantList.cpp
     OrbTask.cpp
     OrbShutdownTask.cpp
+  }
+  IDL_Files {
   }
 }
 
@@ -33,5 +44,6 @@ project(*Client): csd_threadpool, taoserver, pi {
     ClientTask.cpp
     ClientApp.cpp
   }
+  IDL_Files {
+  }
 }
-
