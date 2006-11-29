@@ -1,15 +1,15 @@
 // $Id$
 
-project(*idl): taoidldefaults, avoids_minimum_corba {
+project(*idl): taoidldefaults, avoids_minimum_corba, avoids_corba_e_compact {
   idlflags += -Sa -St
-  
+
   IDL_Files {
     Messenger.idl
   }
 
   custom_only = 1
 }
-  
+
 
 project(*Server): taoserver, avoids_minimum_corba, imr_client {
   after += *idl
@@ -24,7 +24,7 @@ project(*Server): taoserver, avoids_minimum_corba, imr_client {
   }
 }
 
-project(*Client): taoexe, avoids_minimum_corba {
+project(*Client): taoexe, avoids_minimum_corba, avoids_corba_e_compact {
   after += *idl
   exename = MessengerClient
   Source_Files {

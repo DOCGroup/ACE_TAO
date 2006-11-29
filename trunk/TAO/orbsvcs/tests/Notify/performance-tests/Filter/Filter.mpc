@@ -1,13 +1,13 @@
 // $Id$
 
-project(*idl): taoidldefaults, avoids_minimum_corba {
+project(*idl): taoidldefaults, avoids_minimum_corba, avoids_corba_e_compact {
   IDL_Files {
     go.idl
   }
   custom_only = 1
 }
 
-project(*Ntf Perf Struct Supp): notifytest, avoids_minimum_corba {
+project(*Ntf Perf Struct Supp): notifytest, avoids_minimum_corba, avoids_corba_e_compact {
   after += *idl
   exename = Structured_Supplier
   Source_Files {
@@ -19,7 +19,7 @@ project(*Ntf Perf Struct Supp): notifytest, avoids_minimum_corba {
   }
 }
 
-project(*Ntf Perf Struct Cons): notifytest, avoids_minimum_corba {
+project(*Ntf Perf Struct Cons): notifytest, avoids_minimum_corba, avoids_corba_e_compact {
   after += *idl
   exename = Structured_Consumer
   Source_Files {
@@ -31,7 +31,7 @@ project(*Ntf Perf Struct Cons): notifytest, avoids_minimum_corba {
   }
 }
 
-project(*Ntf Perf Seq Supp): notifytest, avoids_minimum_corba {
+project(*Ntf Perf Seq Supp): notifytest, avoids_minimum_corba, avoids_corba_e_compact {
   after += *idl
   exename = Sequence_Supplier
   Source_Files {
@@ -43,7 +43,7 @@ project(*Ntf Perf Seq Supp): notifytest, avoids_minimum_corba {
   }
 }
 
-project(*notify perf Sequence Consumer): notifytest, avoids_minimum_corba {
+project(*notify perf Sequence Consumer): notifytest, avoids_minimum_corba, avoids_corba_e_compact {
   after += *idl
   exename = Sequence_Consumer
   Source_Files {

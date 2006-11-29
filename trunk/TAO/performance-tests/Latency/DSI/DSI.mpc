@@ -1,7 +1,7 @@
 // -*- MPC -*-
 // $Id$
 
-project(*latency server): taoserver, strategies, dynamicinterface, avoids_minimum_corba {
+project(*latency server): taoserver, strategies, dynamicinterface, avoids_minimum_corba, avoids_corba_e_compact {
 
   IDL_Files {
   }
@@ -12,7 +12,7 @@ project(*latency server): taoserver, strategies, dynamicinterface, avoids_minimu
   }
 }
 
-project(*latency client): taoclient, strategies, avoids_minimum_corba {
+project(*latency client): taoclient, strategies, avoids_minimum_corba, avoids_corba_e_compact {
   avoids += ace_for_tao
   Source_Files {
     TestC.cpp

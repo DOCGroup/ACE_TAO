@@ -1,7 +1,7 @@
 // -*- MPC -*-
 // $Id$
 
-project(*server): taoexe, portableserver, ifr_client, avoids_minimum_corba {
+project(*server): taoexe, portableserver, ifr_client, avoids_minimum_corba, avoids_corba_e_compact {
 
   Source_Files {
     test_i.cpp
@@ -9,7 +9,7 @@ project(*server): taoexe, portableserver, ifr_client, avoids_minimum_corba {
   }
 }
 
-project(*client): taoexe, portableserver, ifr_client, dynamicinterface, avoids_minimum_corba {
+project(*client): taoexe, portableserver, ifr_client, dynamicinterface, avoids_minimum_corba, avoids_corba_e_compact {
 
   IDL_Files {
   }
