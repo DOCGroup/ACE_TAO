@@ -1,7 +1,7 @@
 // -*- MPC -*-
 // $Id$
 
-project(IFRService) : orbsvcslib, core, typecodefactory, svc_utils, iortable, avoids_minimum_corba {
+project(IFRService) : orbsvcslib, core, typecodefactory, svc_utils, iortable, avoids_minimum_corba, avoids_corba_e_compact {
   avoids      += ace_for_tao    // Requires ace/Configuration
   sharedname   = TAO_IFRService
   dynamicflags = TAO_IFRSERVICE_BUILD_DLL

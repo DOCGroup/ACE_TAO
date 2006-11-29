@@ -8,7 +8,7 @@ project(*RTCorba idl): taoidldefaults {
   custom_only = 1
 }
 
-project(*RTCorba server): rt_server, avoids_minimum_corba {
+project(*RTCorba server): rt_server, avoids_minimum_corba, avoids_corba_e_compact {
   after += *RTCorba_idl
   Source_Files {
     server.cpp
@@ -19,7 +19,7 @@ project(*RTCorba server): rt_server, avoids_minimum_corba {
   }
 }
 
-project(*RTCorba client): rt_client, avoids_minimum_corba {
+project(*RTCorba client): rt_client, avoids_minimum_corba, avoids_corba_e_compact {
   avoids += ace_for_tao
   after  += *RTCorba_idl
   Source_Files {

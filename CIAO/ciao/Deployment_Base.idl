@@ -3,8 +3,6 @@
 #ifndef DEPLOYMENT_BASE_IDL
 #define DEPLOYMENT_BASE_IDL
 
-#include <orb.idl>
-
 module Deployment {
 
   struct Property

@@ -16,7 +16,9 @@
 
 extern "C" ACE_Proper_Export_Flag CIAO::MonitorBase * CIAO::createMonitor ()
 {
-  return new CIAO::CIAO_Monitor ();
+  CIAO::CIAO_Monitor* monitor = 0;
+  ACE_NEW_RETURN (monitor, CIAO::CIAO_Monitor, 0);
+  return monitor;
 }
 
 CIAO::CIAO_Monitor::CIAO_Monitor ()

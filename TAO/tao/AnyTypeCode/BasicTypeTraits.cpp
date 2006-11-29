@@ -37,7 +37,7 @@ namespace TAO
 
   CORBA::TCKind const
   BasicTypeTraits<CORBA::Boolean>::tckind_value = CORBA::tk_boolean;
-  
+
   //================================================================
 
   CORBA::TypeCode_ptr const
@@ -56,11 +56,15 @@ namespace TAO
 
   //================================================================
 
+#if (defined (ACE_HAS_WCHAR) || defined (ACE_HAS_XPG4_MULTIBYTE_CHAR)) && !defined (ACE_LACKS_NATIVE_WCHAR_T)
+
   CORBA::TypeCode_ptr const
   BasicTypeTraits<CORBA::WChar>::tc_value = CORBA::_tc_wchar;
 
   CORBA::TCKind const
-  BasicTypeTraits<CORBA::WChar>::tckind_value = CORBA::tk_wchar;  
+  BasicTypeTraits<CORBA::WChar>::tckind_value = CORBA::tk_wchar;
+
+#endif
 
   //================================================================
 
@@ -69,105 +73,105 @@ namespace TAO
 
   CORBA::TCKind const
   BasicTypeTraits<CORBA::Short>::tckind_value = CORBA::tk_short;
-  
+
   //================================================================
-  
+
   CORBA::TypeCode_ptr const
   BasicTypeTraits<CORBA::UShort>::tc_value = CORBA::_tc_ushort;
 
   CORBA::TCKind const
   BasicTypeTraits<CORBA::UShort>::tckind_value = CORBA::tk_ushort;
-  
+
   //================================================================
-  
+
   CORBA::TypeCode_ptr const
   BasicTypeTraits<CORBA::Long>::tc_value = CORBA::_tc_long;
 
   CORBA::TCKind const
   BasicTypeTraits<CORBA::Long>::tckind_value = CORBA::tk_long;
-  
+
   //================================================================
-  
+
   CORBA::TypeCode_ptr const
   BasicTypeTraits<CORBA::ULong>::tc_value = CORBA::_tc_ulong;
 
   CORBA::TCKind const
   BasicTypeTraits<CORBA::ULong>::tckind_value = CORBA::tk_ulong;
-  
+
   //================================================================
-  
+
   CORBA::TypeCode_ptr const
   BasicTypeTraits<CORBA::LongLong>::tc_value = CORBA::_tc_longlong;
 
   CORBA::TCKind const
   BasicTypeTraits<CORBA::LongLong>::tckind_value = CORBA::tk_longlong;
-  
+
   //================================================================
-  
+
   CORBA::TypeCode_ptr const
   BasicTypeTraits<CORBA::ULongLong>::tc_value = CORBA::_tc_ulonglong;
 
   CORBA::TCKind const
   BasicTypeTraits<CORBA::ULongLong>::tckind_value = CORBA::tk_ulonglong;
-  
+
   //================================================================
-  
+
   CORBA::TypeCode_ptr const
   BasicTypeTraits<CORBA::Float>::tc_value = CORBA::_tc_float;
 
   CORBA::TCKind const
   BasicTypeTraits<CORBA::Float>::tckind_value = CORBA::tk_float;
-  
+
   //================================================================
-  
+
   CORBA::TypeCode_ptr const
   BasicTypeTraits<CORBA::Double>::tc_value = CORBA::_tc_double;
 
   CORBA::TCKind const
   BasicTypeTraits<CORBA::Double>::tckind_value = CORBA::tk_double;
-  
+
   //================================================================
-  
+
   CORBA::TypeCode_ptr const
   BasicTypeTraits<CORBA::LongDouble>::tc_value = CORBA::_tc_longdouble;
 
   CORBA::TCKind const
   BasicTypeTraits<CORBA::LongDouble>::tckind_value = CORBA::tk_longdouble;
-  
+
   //================================================================
- 
+
   CORBA::TypeCode_ptr const
   BasicTypeTraits<CORBA::Char *>::tc_value = CORBA::_tc_string;
 
   CORBA::TCKind const
   BasicTypeTraits<CORBA::Char *>::tckind_value = CORBA::tk_string;
-  
+
   //================================================================
-  
+
   CORBA::TypeCode_ptr const
   BasicTypeTraits<CORBA::WChar *>::tc_value = CORBA::_tc_wstring;
 
   CORBA::TCKind const
   BasicTypeTraits<CORBA::WChar *>::tckind_value = CORBA::tk_wstring;
-  
+
   //================================================================
-  
+
   CORBA::TypeCode_ptr const
   BasicTypeTraits<CORBA::Any>::tc_value = CORBA::_tc_any;
 
   CORBA::TCKind const
   BasicTypeTraits<CORBA::Any>::tckind_value = CORBA::tk_any;
-  
+
   //================================================================
-  
+
   CORBA::TypeCode_ptr const
   BasicTypeTraits<CORBA::Object_ptr>::tc_value = CORBA::_tc_Object;
 
   CORBA::TCKind const
   BasicTypeTraits<CORBA::Object_ptr>::tckind_value = CORBA::tk_objref;
-  
+
   //================================================================
-  
+
   CORBA::TypeCode_ptr const
   BasicTypeTraits<CORBA::TypeCode_ptr>::tc_value = CORBA::_tc_TypeCode;
 
@@ -175,10 +179,10 @@ namespace TAO
   BasicTypeTraits<CORBA::TypeCode_ptr>::tckind_value = CORBA::tk_TypeCode;
 
   //================================================================
-  
+
   CORBA::TypeCode_ptr const
   BasicTypeTraits<CORBA::BooleanSeq>::tc_value = CORBA::_tc_BooleanSeq;
-  
+
   CORBA::TCKind const
   BasicTypeTraits<CORBA::BooleanSeq>::tckind_value = CORBA::tk_sequence;
 

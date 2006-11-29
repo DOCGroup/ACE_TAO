@@ -2,13 +2,14 @@
 // $Id$
 
 project(*IDL): taoidldefaults {
+  idlflags -= -St
   IDL_Files {
     Event_Types.idl
   }
   custom_only = 1
 }
 
-project(*server): taoserver, utils, valuetype, avoids_minimum_corba {
+project(*server): taoserver, utils, valuetype, avoids_minimum_corba, avoids_corba_e_compact {
   exename = server
   after += *IDL
   Source_Files {
@@ -23,7 +24,7 @@ project(*server): taoserver, utils, valuetype, avoids_minimum_corba {
   }
 }
 
-project(*client): taoserver, utils, valuetype, avoids_minimum_corba {
+project(*client): taoserver, utils, valuetype, avoids_minimum_corba, avoids_corba_e_compact {
   exename = client
   after += *IDL
   Source_Files {

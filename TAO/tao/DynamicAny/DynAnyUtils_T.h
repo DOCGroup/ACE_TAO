@@ -54,7 +54,7 @@ namespace TAO
         {
           the_dynany->check_type (TAO::BasicTypeTraits<T>::tc_value);
           CORBA::Any &my_any = the_dynany->the_any ();
-          my_any <<= TAO::BasicTypeTraits<T>::insert_type (val);
+          my_any <<= typename TAO::BasicTypeTraits<T>::insert_type (val);
         }
     }
 
@@ -84,7 +84,7 @@ namespace TAO
             typename TAO::BasicTypeTraits<T>::return_type ();
           CORBA::Any &my_any = the_dynany->the_any ();
           CORBA::Boolean good_extract =
-            my_any >>= TAO::BasicTypeTraits<T>::extract_type (retval);
+            my_any >>= typename TAO::BasicTypeTraits<T>::extract_type (retval);
 
           if (!good_extract)
             {

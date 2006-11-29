@@ -16,7 +16,7 @@
 #if !defined (CCM_SESSIONSYNCHRONIZATION_IDL)
 #define CCM_SESSIONSYNCHRONIZATION_IDL
 
-#include "CCM_CCMException.idl"
+#include "ciao/CCM_CCMException.idl"
 
 // *************** Basic Container interfaces ***************
 

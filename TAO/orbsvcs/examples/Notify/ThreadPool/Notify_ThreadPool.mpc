@@ -1,5 +1,5 @@
 // $Id$
-project(*Supplier): rtnotify, notifytest, rtportableserver, avoids_minimum_corba {
+project(*Supplier): rtnotify, notifytest, rtportableserver, avoids_minimum_corba, avoids_corba_e_compact {
   exename = Supplier
   Source_Files {
     Supplier.cpp
@@ -9,7 +9,7 @@ project(*Supplier): rtnotify, notifytest, rtportableserver, avoids_minimum_corba
   }
 }
 
-project(*Consumer): rtnotify, notifytest, rtportableserver, avoids_minimum_corba {
+project(*Consumer): rtnotify, notifytest, rtportableserver, avoids_minimum_corba, avoids_corba_e_compact {
   exename = Consumer
   Source_Files {
     Consumer.cpp
