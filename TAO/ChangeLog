@@ -1,3 +1,11 @@
+Thu Nov 30 14:48:57 UTC 2006  Vadym Ridosh <vridosh@prismtech.com>
+        * tao/PortableServer/Var_Size_SArgument_T.cpp
+        * tao/Bounded_Sequence_CDR_T.h
+        * tao/Unbounded_Sequence_CDR_T.h
+
+          Fix for bugzilla 1676 (uninitialized "out" param for sequence<string> 
+          can cause server to core). Old attempt to fix this was also removed.
+
 Thu Nov 30 14:17:22 UTC 2006  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * orbsvcs/orbsvcs/Notify/Notify_Constraint_Visitors.cpp (visito_union_pos):
