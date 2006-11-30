@@ -58,13 +58,9 @@ project(Output_Manager_exec) : ciao_component_dnc, ciao_race_component  {
                Output_Adapter_Interface_stub \
                Output_Adapter_Interface_svnt
 
-  idlflags  +=  -Wb,export_macro=OUTPUT_MANAGER_EXEC_Export \
-                -Wb,export_include=Output_Manager_exec_export.h
-
   dynamicflags   = OUTPUT_MANAGER_EXEC_BUILD_DLL
 
   IDL_Files {
-
   }
 
   Source_Files {

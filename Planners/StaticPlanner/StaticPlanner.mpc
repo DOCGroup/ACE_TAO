@@ -2,7 +2,11 @@ project(Planner_StaticPlanner_stub): ciao_deployment_stub, ciao_race_component {
   after += Planner_stub Planner_Interface_stub
   libs += Planner_stub Planner_Interface_stub
   sharedname = StaticPlanner_stub
-  idlflags += -Wb,stub_export_macro=STATICPLANNER_STUB_Export -Wb,stub_export_include=StaticPlanner_stub_export.h -Wb,skel_export_macro=STATICPLANNER_SVNT_Export -Wb,skel_export_include=StaticPlanner_svnt_export.h
+  idlflags += -Wb,stub_export_macro=STATICPLANNER_STUB_Export \
+               -Wb,stub_export_include=StaticPlanner_stub_export.h \
+               -Wb,skel_export_macro=STATICPLANNER_SVNT_Export \
+               -Wb,skel_export_include=StaticPlanner_svnt_export.h
+
   dynamicflags   = STATICPLANNER_STUB_BUILD_DLL
 
   IDL_Files {
@@ -17,9 +21,12 @@ project(Planner_StaticPlanner_stub): ciao_deployment_stub, ciao_race_component {
 project(Planner_StaticPlanner_svnt) : ciao_servant_dnc, ciao_race_component {
   after += Planner_svnt Planner_StaticPlanner_stub Planner_Interface_svnt
   sharedname  = StaticPlanner_svnt
-  libs    += StaticPlanner_stub Planner_stub Planner_svnt Planner_Interface_stub Planner_Interface_svnt
+  libs    += StaticPlanner_stub Planner_stub Planner_svnt \
+             Planner_Interface_stub Planner_Interface_svnt
 
-  idlflags  +=  -Wb,export_macro=STATICPLANNER_SVNT_Export -Wb,export_include=StaticPlanner_svnt_export.h
+  idlflags  +=  -Wb,export_macro=STATICPLANNER_SVNT_Export \
+                -Wb,export_include=StaticPlanner_svnt_export.h
+
   dynamicflags = STATICPLANNER_SVNT_BUILD_DLL
 
   CIDL_Files {
@@ -49,7 +56,6 @@ project(Planner_StaticPlanner_exec) : ciao_component_dnc, ciao_race_component {
                Planner_svnt \
                RACE_common_stub
 
-  idlflags  +=  -Wb,export_macro=STATICPLANNER_EXEC_Export -Wb,export_include=StaticPlanner_exec_export.h
   dynamicflags   = STATICPLANNER_EXEC_BUILD_DLL
 
   IDL_Files {
