@@ -1,3 +1,12 @@
+Thu Nov 30 13:28:22 UTC 2006  Chad Elliott  <elliott_c@ociweb.com>
+
+        * TAO_IDL/fe/lex.yy.cpp:
+        * TAO_IDL/fe/lex.yy.cpp.diff:
+
+          Recreated the diff file (and reprocessed idl.ll).  patch had
+          problems applying the diff that was in the repository (at least on
+          Linux).
+
 Thu Nov 30 13:06:46 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/DynamicAny/DynAny_i.cpp
@@ -33,29 +42,29 @@ Thu Nov 30 09:58:02 UTC 2006  Vadym Ridosh <vridosh@prismtech.com>
 
 Thu Nov 30 05:52:05 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* tests/Bug_2417_Regression/Makefile.am:
-	* tests/Bug_2654_Regression/Makefile.am:
-	* tests/Bug_2709_Regression/Makefile.am:
-	* tests/Hang_Shutdown/Makefile.am:
-	* tests/ICMG_Any_Bug/Makefile.am:
-	* tests/OctetSeq/Makefile.am:
-	* tests/Param_Test/Makefile.am:
-	* tests/Portable_Interceptors/ORB_Shutdown/Makefile.am:
-	* tests/RTCORBA/Client_Propagated/Makefile.am:
-	* tests/Timeout/Makefile.am:
+        * tests/Bug_2417_Regression/Makefile.am:
+        * tests/Bug_2654_Regression/Makefile.am:
+        * tests/Bug_2709_Regression/Makefile.am:
+        * tests/Hang_Shutdown/Makefile.am:
+        * tests/ICMG_Any_Bug/Makefile.am:
+        * tests/OctetSeq/Makefile.am:
+        * tests/Param_Test/Makefile.am:
+        * tests/Portable_Interceptors/ORB_Shutdown/Makefile.am:
+        * tests/RTCORBA/Client_Propagated/Makefile.am:
+        * tests/Timeout/Makefile.am:
 
           Regenerated.
 
-	* tests/Bug_2417_Regression/Bug_2417_Regression.mpc:
-	* tests/Bug_2654_Regression/Bug_2654_Regression.mpc:
-	* tests/Bug_2709_Regression/Bug_2709_Regression.mpc:
-	* tests/Hang_Shutdown/Hang.mpc:
-	* tests/ICMG_Any_Bug/Hello.mpc:
-	* tests/OctetSeq/OctetSeq.mpc:
-	* tests/Param_Test/Param_Test.mpc:
-	* tests/Portable_Interceptors/ORB_Shutdown/PI_ORB_Shutdown.mpc:
-	* tests/RTCORBA/Client_Propagated/RTCORBA_Client_Propagated.mpc:
-	* tests/Timeout/Timeout.mpc:
+        * tests/Bug_2417_Regression/Bug_2417_Regression.mpc:
+        * tests/Bug_2654_Regression/Bug_2654_Regression.mpc:
+        * tests/Bug_2709_Regression/Bug_2709_Regression.mpc:
+        * tests/Hang_Shutdown/Hang.mpc:
+        * tests/ICMG_Any_Bug/Hello.mpc:
+        * tests/OctetSeq/OctetSeq.mpc:
+        * tests/Param_Test/Param_Test.mpc:
+        * tests/Portable_Interceptors/ORB_Shutdown/PI_ORB_Shutdown.mpc:
+        * tests/RTCORBA/Client_Propagated/RTCORBA_Client_Propagated.mpc:
+        * tests/Timeout/Timeout.mpc:
 
           Split out IDL compilation into separate MPC project.
 
