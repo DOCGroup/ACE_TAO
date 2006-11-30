@@ -727,21 +727,8 @@ public:
    * services do make the selection they would return the selected
    * profile through <profile>.
    */
-  CORBA::Boolean service_profile_selection (TAO_MProfile &mprofile,
+  CORBA::Boolean service_profile_selection (const TAO_MProfile &mprofile,
                                             TAO_Profile  *&profile);
-
-  /**
-   * The loaded service in the ORB_Core would determine if the profile
-   * reselection is going to be made by the services or not. If the
-   * services do make the reselection they would return the selected
-   * profile through <profile>. The reselction is for the
-   * multi-profile IORS.
-   */
-  CORBA::Boolean service_profile_reselection (TAO_Stub *stub,
-                                              TAO_Profile *&profile);
-
-  /// Reset the flags in the loaded services.
-  void reset_service_profile_flags (void);
 
   /**
    * The loaded service would determine if the CORBA::Object_ptr is
