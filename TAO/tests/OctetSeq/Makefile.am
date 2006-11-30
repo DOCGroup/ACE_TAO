@@ -17,15 +17,10 @@ TAO_IDLFLAGS = -Ge 1 -Wb,pre_include=ace/pre.h -Wb,post_include=ace/post.h -I$(T
 TAO_ROOT = $(top_srcdir)
 
 noinst_PROGRAMS =
-CLEANFILES =
-BUILT_SOURCES =
 
-## Makefile.OctetSeq_Server.am
+## Makefile.OctetSeq_Idl.am
 
-if BUILD_EXCEPTIONS
-if !BUILD_ACE_FOR_TAO
-
-BUILT_SOURCES += \
+BUILT_SOURCES = \
   testC.cpp \
   testC.h \
   testC.inl \
@@ -33,7 +28,7 @@ BUILT_SOURCES += \
   testS.h \
   testS.inl
 
-CLEANFILES += \
+CLEANFILES = \
   test-stamp \
   testC.cpp \
   testC.h \
@@ -45,8 +40,17 @@ CLEANFILES += \
 testC.cpp testC.h testC.inl testS.cpp testS.h testS.inl: test-stamp
 
 test-stamp: $(srcdir)/test.idl $(TAO_IDL_DEP)
-	$(TAO_IDL) $(TAO_IDLFLAGS) $(srcdir)/test.idl
+	$(TAO_IDL) $(TAO_IDLFLAGS) -Sa -St $(srcdir)/test.idl
 	@touch $@
+
+
+noinst_HEADERS = \
+  test.idl
+
+## Makefile.OctetSeq_Server.am
+
+if BUILD_EXCEPTIONS
+if !BUILD_ACE_FOR_TAO
 
 noinst_PROGRAMS += server
 
@@ -61,10 +65,6 @@ server_SOURCES = \
   testC.cpp \
   testS.cpp \
   test_i.cpp \
-  testC.h \
-  testC.inl \
-  testS.h \
-  testS.inl \
   test_i.h \
   test_i.inl
 
@@ -82,27 +82,6 @@ endif BUILD_EXCEPTIONS
 if BUILD_EXCEPTIONS
 if !BUILD_ACE_FOR_TAO
 
-BUILT_SOURCES += \
-  testC.cpp \
-  testC.h \
-  testC.inl \
-  testS.h \
-  testS.inl
-
-CLEANFILES += \
-  test-stamp \
-  testC.cpp \
-  testC.h \
-  testC.inl \
-  testS.h \
-  testS.inl
-
-testC.cpp testC.h testC.inl testS.h testS.inl: test-stamp
-
-test-stamp: $(srcdir)/test.idl $(TAO_IDL_DEP)
-	$(TAO_IDL) $(TAO_IDLFLAGS) $(srcdir)/test.idl
-	@touch $@
-
 noinst_PROGRAMS += client
 
 client_CPPFLAGS = \
@@ -114,10 +93,8 @@ client_CPPFLAGS = \
 client_SOURCES = \
   client.cpp \
   testC.cpp \
-  testC.h \
-  testC.inl \
-  testS.h \
-  testS.inl
+  test_i.h \
+  test_i.inl
 
 client_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO_AnyTypeCode.la \
@@ -131,27 +108,6 @@ endif BUILD_EXCEPTIONS
 
 if BUILD_EXCEPTIONS
 
-BUILT_SOURCES += \
-  testC.cpp \
-  testC.h \
-  testC.inl \
-  testS.h \
-  testS.inl
-
-CLEANFILES += \
-  test-stamp \
-  testC.cpp \
-  testC.h \
-  testC.inl \
-  testS.h \
-  testS.inl
-
-testC.cpp testC.h testC.inl testS.h testS.inl: test-stamp
-
-test-stamp: $(srcdir)/test.idl $(TAO_IDL_DEP)
-	$(TAO_IDL) $(TAO_IDLFLAGS) $(srcdir)/test.idl
-	@touch $@
-
 noinst_PROGRAMS += OctetSeq
 
 OctetSeq_CPPFLAGS = \
@@ -163,10 +119,8 @@ OctetSeq_CPPFLAGS = \
 OctetSeq_SOURCES = \
   OctetSeq.cpp \
   testC.cpp \
-  testC.h \
-  testC.inl \
-  testS.h \
-  testS.inl
+  test_i.h \
+  test_i.inl
 
 OctetSeq_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO_AnyTypeCode.la \
