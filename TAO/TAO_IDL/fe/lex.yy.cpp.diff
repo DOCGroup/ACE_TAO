@@ -1,6 +1,6 @@
---- lex.yy.cpp.orig	2006-11-16 10:17:22.000000000 -0600
-+++ lex.yy.cpp	2006-11-16 10:18:54.000000000 -0600
-@@ -1600,42 +1600,42 @@
+--- lex.yy.cpp.orig	2006-11-30 07:19:39.000000000 -0600
++++ lex.yy.cpp	2006-11-30 07:18:28.000000000 -0600
+@@ -1602,42 +1602,42 @@
                    idl_global->set_lineno(idl_global->lineno() + 1);
                    idl_store_pragma(ace_tao_yytext);
                  }
@@ -49,7 +49,7 @@
  case 97:
  case 98:
  TAO_YY_RULE_SETUP
-+@@ -1643,14 +1643,14 @@
+@@ -1645,14 +1645,14 @@
                    /* ignore cpp ident */
                    idl_global->set_lineno(idl_global->lineno() + 1);
                  }
@@ -66,7 +66,7 @@
  case 100:
  TAO_YY_RULE_SETUP
  {
-@@ -1667,17 +1667,17 @@
+@@ -1669,17 +1669,17 @@
                      }
                    }
                  }
@@ -87,7 +87,7 @@
  case 103:
  TAO_YY_RULE_SETUP
  return ace_tao_yytext [0];
-@@ -1685,7 +1685,7 @@
+@@ -1687,7 +1687,7 @@
  case 104:
  TAO_YY_RULE_SETUP
  TAO_YY_ECHO;
@@ -95,4 +95,4 @@
 +        break;
  case TAO_YY_STATE_EOF(INITIAL):
          tao_yyterminate();
-  
+ 
