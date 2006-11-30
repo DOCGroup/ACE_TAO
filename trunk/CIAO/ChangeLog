@@ -1,3 +1,44 @@
+Thu Nov 30 12:45:12 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * DAnCE/ExecutionManager/Execution_Manager.cpp:
+          Removed not needed ACE_TRY_CHECK
+
+        * DAnCE/ExecutionManager/Execution_Manager_Impl.cpp:
+        * DAnCE/ExecutionManager/Execution_Manager_Impl.h:
+          Const improvement
+
+        * DAnCE/RepositoryManager/RepositoryManager.cpp:
+          Initialise pointer with 0, removed code after return
+          added added a todo
+
+        * DAnCE/RepositoryManager/RepositoryManager_Impl.h:
+          Doxygen improvement
+
+        * DAnCE/RepositoryManager/ZIP_Wrapper.cpp:
+          Lot of layout changes to make the code a little bit more
+          readable, more has to be done to this file
+
+        * DAnCE/RepositoryManager/ZIP_Wrapper.h:
+          Doyxgen improvements and removed not needed include
+
+        * DAnCE/TargetManager/CmpClient.cpp:
+          Use true/false for a bool
+
+        * DAnCE/TargetManager/Deployment_Configuration.cpp:
+          Use bool and use 0 instead of NULL
+
+        * DAnCE/TargetManager/DomainDataManager.h:
+          Doxygen changes
+
+        * DAnCE/TargetManager/DomainEvents.idl:
+          Removed not needed include
+
+        * DAnCE/TargetManager/TargetManager_exec.cpp:
+          Layout changes
+
+        * DAnCE/TargetManager/TM_Client.mpc:
+          Removed not needed includes
+
 Wed Nov 29 21:26:53 UTC 2006  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * docs/generate_component_mpc.html:

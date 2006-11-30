@@ -108,9 +108,10 @@ namespace CIDL_TargetManager_i
   {
     // Your code here.
     if (CIAO::debug_level () > 9)
-    {
-      ACE_DEBUG ((LM_DEBUG , ".. Update Domain called ...\n"));
-    }
+      {
+        ACE_DEBUG ((LM_DEBUG , ".. Update Domain called ...\n"));
+      }
+
     CIAO::DomainDataManager::
       get_data_manager ()->update_domain (
                     elements,
