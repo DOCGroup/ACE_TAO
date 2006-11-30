@@ -85,7 +85,7 @@ namespace TAO
           typedef typename TAO::BasicTypeTraits<T>::return_type ret_type;
           typedef typename TAO::BasicTypeTraits<T>::extract_type ext_type;
           ret_type retval = ret_type ();
-          CORBA::Any &my_any = the_dynany->the_any ();
+          CORBA::Any const &my_any = the_dynany->the_any ();
 
           if (!(my_any >>= ext_type (retval)))
             {
