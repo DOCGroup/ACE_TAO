@@ -40,7 +40,7 @@ CLEANFILES = \
 Event_TypesC.cpp Event_TypesC.h Event_TypesC.inl Event_TypesS.cpp Event_TypesS.h Event_TypesS.inl: Event_Types-stamp
 
 Event_Types-stamp: $(srcdir)/Event_Types.idl $(TAO_IDL_DEP)
-	$(TAO_IDL) $(TAO_IDLFLAGS) -Sa -St $(srcdir)/Event_Types.idl
+	$(TAO_IDL) $(TAO_IDLFLAGS) -Sa $(srcdir)/Event_Types.idl
 	@touch $@
 
 
