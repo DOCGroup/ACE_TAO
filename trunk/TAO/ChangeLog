@@ -1,3 +1,13 @@
+Thu Nov 30 13:06:46 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/DynamicAny/DynAny_i.cpp
+        * tao/DynamicAny/DynArray_i.cpp (init_common):
+        * tao/DynamicAny/DynEnum_i.cpp (init_common):
+        * tao/DynamicAny/DynSequence_i.cpp (init_common):
+        * tao/DynamicAny/DynStruct_i.cpp (init_common):
+        * tao/DynamicAny/DynUnion_i.cpp (init_common):
+          Use true/false for a bool
+
 Thu Nov 30 12:52:46 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/DynamicAny/DynCommon.cpp:
