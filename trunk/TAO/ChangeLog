@@ -1,3 +1,12 @@
+Thu Nov 30 14:17:22 UTC 2006  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * orbsvcs/orbsvcs/Notify/Notify_Constraint_Visitors.cpp (visito_union_pos):
+        
+          Change to use the new DynAnyFactory method similar to the
+          change to Log_Constraint_Visitors.cpp in
+          
+          Tue Nov 28 19:32:46 UTC 2006  Jeff Parsons <j.parsons@vanderbilt.edu>
+
 Thu Nov 30 13:28:22 UTC 2006  Chad Elliott  <elliott_c@ociweb.com>
 
         * TAO_IDL/fe/lex.yy.cpp:
