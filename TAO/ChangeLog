@@ -1,3 +1,17 @@
+Thu Nov 30 09:58:02 UTC 2006  Vadym Ridosh <vridosh@prismtech.com>
+
+        * tao/Stub.cpp
+        * tao/Stub.inl
+        * tao/Service_Callbacks.cpp
+        * tao/Service_Callbacks.h
+        * tao/ORB_Core.cpp
+        * tao/ORB_Core.inl
+        * tao/ORB_Core.h
+        * orbsvcs/orbsvcs/FaultTolerance/FT_Service_Callbacks.h
+        * orbsvcs/orbsvcs/FaultTolerance/FT_Service_Callbacks.cpp
+
+          Fix for bugzilla 2709.
+
 Thu Nov 30 05:52:05 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* tests/Bug_2417_Regression/Makefile.am:
