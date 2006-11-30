@@ -1,3 +1,9 @@
+Thu Nov 30 05:44:13 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * examples/OBV/Typed_Events/Makefile.am:
+
+          Regenerated.
+
 Wed Nov 29 17:43:45 UTC 2006  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * examples/OBV/Typed_Events/Typed_Events.mpc:
