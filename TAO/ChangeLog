@@ -1,18 +1,41 @@
+Thu Nov 30 18:01:43 UTC 2006  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tao/AnyTypeCode/BasicTypeTraits.cpp:
+        * tao/AnyTypeCode/BasicTypeTraits.h:
+
+          Added one-line convert() method to each specialization,
+          since returning the extraction type in
+          DynAnyBasicTypeUtils<>::get_value() is not correct for
+          chars, wchars, octets and booleans.
+
+        * tao/DynamicAny/DynAnyUtils_T.h:
+
+          Replaced an implicit temporary in
+          DynAnyBasicTypeUtils<>::get_value() with an explicit
+          constructor call, since the temporary was confused with a
+          cast by some compilers.
+
+        * tests/DynAny_Test/analyzer.cpp:
+
+          Replace a call to length() on an aliased array typecode
+          (which returned a BADKIND exception) to a call on the
+          unaliased typecode.
+
 Thu Nov 30 14:48:57 UTC 2006  Vadym Ridosh <vridosh@prismtech.com>
         * tao/PortableServer/Var_Size_SArgument_T.cpp
         * tao/Bounded_Sequence_CDR_T.h
         * tao/Unbounded_Sequence_CDR_T.h
 
-          Fix for bugzilla 1676 (uninitialized "out" param for sequence<string> 
+          Fix for bugzilla 1676 (uninitialized "out" param for sequence<string>
           can cause server to core). Old attempt to fix this was also removed.
 
 Thu Nov 30 14:17:22 UTC 2006  Jeff Parsons <j.parsons@vanderbilt.edu>
 
-        * orbsvcs/orbsvcs/Notify/Notify_Constraint_Visitors.cpp (visito_union_pos):
-        
+        * orbsvcs/orbsvcs/Notify/Notify_Constraint_Visitors.cpp (visit_union_pos):
+
           Change to use the new DynAnyFactory method similar to the
           change to Log_Constraint_Visitors.cpp in
-          
+
           Tue Nov 28 19:32:46 UTC 2006  Jeff Parsons <j.parsons@vanderbilt.edu>
 
 Thu Nov 30 13:28:22 UTC 2006  Chad Elliott  <elliott_c@ociweb.com>

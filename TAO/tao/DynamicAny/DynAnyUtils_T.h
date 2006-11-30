@@ -56,7 +56,8 @@ namespace TAO
           the_dynany->check_type (TAO::BasicTypeTraits<T>::tc_value);
           CORBA::Any &my_any = the_dynany->the_any ();
           typedef typename TAO::BasicTypeTraits<T>::insert_type i_type;
-          my_any <<= i_type (val);
+          i_type insert_arg (val);
+          my_any <<= insert_arg;
         }
     }
 
@@ -85,15 +86,16 @@ namespace TAO
           typedef typename TAO::BasicTypeTraits<T>::return_type ret_type;
           typedef typename TAO::BasicTypeTraits<T>::extract_type ext_type;
           ret_type retval = ret_type ();
+          ext_type extval (retval);
           const CORBA::Any &my_any = the_dynany->the_any ();
 
-          if (!(my_any >>= ext_type (retval)))
+          if (!(my_any >>= extval))
             {
               ACE_THROW_RETURN (DynamicAny::DynAny::TypeMismatch (),
                                 TAO::BasicTypeTraits<T>::return_type ());
             }
 
-          return retval;
+          return TAO::BasicTypeTraits<T>::convert (extval);
         }
     }
   };
