@@ -17,15 +17,10 @@ TAO_IDLFLAGS = -Ge 1 -Wb,pre_include=ace/pre.h -Wb,post_include=ace/post.h -I$(T
 TAO_ROOT = $(top_srcdir)
 
 noinst_PROGRAMS =
-CLEANFILES =
-BUILT_SOURCES =
 
-## Makefile.Bug_2654_Regression_Client.am
+## Makefile.Bug_2654_Regression_Idl.am
 
-if BUILD_CORBA_MESSAGING
-if BUILD_EXCEPTIONS
-
-BUILT_SOURCES += \
+BUILT_SOURCES = \
   HelloC.cpp \
   HelloC.h \
   HelloC.inl \
@@ -33,7 +28,7 @@ BUILT_SOURCES += \
   HelloS.h \
   HelloS.inl
 
-CLEANFILES += \
+CLEANFILES = \
   Hello-stamp \
   HelloC.cpp \
   HelloC.h \
@@ -45,66 +40,16 @@ CLEANFILES += \
 HelloC.cpp HelloC.h HelloC.inl HelloS.cpp HelloS.h HelloS.inl: Hello-stamp
 
 Hello-stamp: $(srcdir)/Hello.idl $(TAO_IDL_DEP)
-	$(TAO_IDL) $(TAO_IDLFLAGS) $(srcdir)/Hello.idl
+	$(TAO_IDL) $(TAO_IDLFLAGS) -Sa -St -Sa -St $(srcdir)/Hello.idl
 	@touch $@
 
-noinst_PROGRAMS += client
 
-client_CPPFLAGS = \
-  -I$(ACE_ROOT) \
-  -I$(ACE_BUILDDIR) \
-  -I$(TAO_ROOT) \
-  -I$(TAO_BUILDDIR)
-
-client_SOURCES = \
-  HelloC.cpp \
-  HelloS.cpp \
-  client.cpp \
-  HelloC.h \
-  HelloC.inl \
-  HelloS.h \
-  HelloS.inl
-
-client_LDADD = \
-  $(TAO_BUILDDIR)/tao/libTAO_BiDirGIOP.la \
-  $(TAO_BUILDDIR)/tao/libTAO_Messaging.la \
-  $(TAO_BUILDDIR)/tao/libTAO_PI.la \
-  $(TAO_BUILDDIR)/tao/libTAO_CodecFactory.la \
-  $(TAO_BUILDDIR)/tao/libTAO_PortableServer.la \
-  $(TAO_BUILDDIR)/tao/libTAO_Valuetype.la \
-  $(TAO_BUILDDIR)/tao/libTAO_AnyTypeCode.la \
-  $(TAO_BUILDDIR)/tao/libTAO.la \
-  $(ACE_BUILDDIR)/ace/libACE.la
-
-endif BUILD_EXCEPTIONS
-endif BUILD_CORBA_MESSAGING
+noinst_HEADERS = \
+  Hello.idl
 
 ## Makefile.Bug_2654_Regression_Server.am
 
 if BUILD_EXCEPTIONS
-
-BUILT_SOURCES += \
-  HelloC.cpp \
-  HelloC.h \
-  HelloC.inl \
-  HelloS.cpp \
-  HelloS.h \
-  HelloS.inl
-
-CLEANFILES += \
-  Hello-stamp \
-  HelloC.cpp \
-  HelloC.h \
-  HelloC.inl \
-  HelloS.cpp \
-  HelloS.h \
-  HelloS.inl
-
-HelloC.cpp HelloC.h HelloC.inl HelloS.cpp HelloS.h HelloS.inl: Hello-stamp
-
-Hello-stamp: $(srcdir)/Hello.idl $(TAO_IDL_DEP)
-	$(TAO_IDL) $(TAO_IDLFLAGS) -Sa -St $(srcdir)/Hello.idl
-	@touch $@
 
 noinst_PROGRAMS += server
 
@@ -119,11 +64,7 @@ server_SOURCES = \
   HelloC.cpp \
   HelloS.cpp \
   server.cpp \
-  Hello.h \
-  HelloC.h \
-  HelloC.inl \
-  HelloS.h \
-  HelloS.inl
+  Hello.h
 
 server_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO_BiDirGIOP.la \
@@ -135,6 +76,39 @@ server_LDADD = \
   $(ACE_BUILDDIR)/ace/libACE.la
 
 endif BUILD_EXCEPTIONS
+
+## Makefile.Bug_2654_Regression_Client.am
+
+if BUILD_CORBA_MESSAGING
+if BUILD_EXCEPTIONS
+
+noinst_PROGRAMS += client
+
+client_CPPFLAGS = \
+  -I$(ACE_ROOT) \
+  -I$(ACE_BUILDDIR) \
+  -I$(TAO_ROOT) \
+  -I$(TAO_BUILDDIR)
+
+client_SOURCES = \
+  HelloC.cpp \
+  HelloS.cpp \
+  client.cpp \
+  Hello.h
+
+client_LDADD = \
+  $(TAO_BUILDDIR)/tao/libTAO_BiDirGIOP.la \
+  $(TAO_BUILDDIR)/tao/libTAO_Messaging.la \
+  $(TAO_BUILDDIR)/tao/libTAO_PI.la \
+  $(TAO_BUILDDIR)/tao/libTAO_CodecFactory.la \
+  $(TAO_BUILDDIR)/tao/libTAO_PortableServer.la \
+  $(TAO_BUILDDIR)/tao/libTAO_Valuetype.la \
+  $(TAO_BUILDDIR)/tao/libTAO_AnyTypeCode.la \
+  $(TAO_BUILDDIR)/tao/libTAO.la \
+  $(ACE_BUILDDIR)/ace/libACE.la
+
+endif BUILD_EXCEPTIONS
+endif BUILD_CORBA_MESSAGING
 
 ## Clean up template repositories, etc.
 clean-local:

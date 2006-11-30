@@ -17,18 +17,10 @@ TAO_IDLFLAGS = -Ge 1 -Wb,pre_include=ace/pre.h -Wb,post_include=ace/post.h -I$(T
 TAO_ROOT = $(top_srcdir)
 
 noinst_PROGRAMS =
-CLEANFILES =
-BUILT_SOURCES =
 
-## Makefile.Bug_2709_Regression_Client.am
+## Makefile.Bug_2709_Regression_Idl.am
 
-if BUILD_ACE_UUID
-if BUILD_CORBA_MESSAGING
-if BUILD_EXCEPTIONS
-if BUILD_INTERCEPTORS
-if !BUILD_ACE_FOR_TAO
-
-BUILT_SOURCES += \
+BUILT_SOURCES = \
   TestC.cpp \
   TestC.h \
   TestC.inl \
@@ -36,7 +28,7 @@ BUILT_SOURCES += \
   TestS.h \
   TestS.inl
 
-CLEANFILES += \
+CLEANFILES = \
   Test-stamp \
   TestC.cpp \
   TestC.h \
@@ -48,8 +40,20 @@ CLEANFILES += \
 TestC.cpp TestC.h TestC.inl TestS.cpp TestS.h TestS.inl: Test-stamp
 
 Test-stamp: $(srcdir)/Test.idl $(TAO_IDL_DEP)
-	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs $(srcdir)/Test.idl
+	$(TAO_IDL) $(TAO_IDLFLAGS) -Sa -St $(srcdir)/Test.idl
 	@touch $@
+
+
+noinst_HEADERS = \
+  Test.idl
+
+## Makefile.Bug_2709_Regression_Client.am
+
+if BUILD_ACE_UUID
+if BUILD_CORBA_MESSAGING
+if BUILD_EXCEPTIONS
+if BUILD_INTERCEPTORS
+if !BUILD_ACE_FOR_TAO
 
 noinst_PROGRAMS += client
 
@@ -70,11 +74,7 @@ client_SOURCES = \
   client.cpp \
   Client_Task.h \
   Server_Task.h \
-  TestC.h \
-  TestC.inl \
-  TestImpl.h \
-  TestS.h \
-  TestS.inl
+  TestImpl.h
 
 client_LDADD = \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_FT_ClientORB.la \
@@ -102,29 +102,6 @@ endif BUILD_ACE_UUID
 
 if BUILD_EXCEPTIONS
 
-BUILT_SOURCES += \
-  TestC.cpp \
-  TestC.h \
-  TestC.inl \
-  TestS.cpp \
-  TestS.h \
-  TestS.inl
-
-CLEANFILES += \
-  Test-stamp \
-  TestC.cpp \
-  TestC.h \
-  TestC.inl \
-  TestS.cpp \
-  TestS.h \
-  TestS.inl
-
-TestC.cpp TestC.h TestC.inl TestS.cpp TestS.h TestS.inl: Test-stamp
-
-Test-stamp: $(srcdir)/Test.idl $(TAO_IDL_DEP)
-	$(TAO_IDL) $(TAO_IDLFLAGS) $(srcdir)/Test.idl
-	@touch $@
-
 noinst_PROGRAMS += server
 
 server_CPPFLAGS = \
@@ -140,11 +117,7 @@ server_SOURCES = \
   TestS.cpp \
   server.cpp \
   Server_Task.h \
-  TestC.h \
-  TestC.inl \
-  TestImpl.h \
-  TestS.h \
-  TestS.inl
+  TestImpl.h
 
 server_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO_IORTable.la \
