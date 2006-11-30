@@ -18,6 +18,7 @@
 #include "tao/DynamicAny/DynSequence_i.h"
 #include "tao/DynamicAny/DynStruct_i.h"
 #include "tao/DynamicAny/DynUnion_i.h"
+#include "tao/DynamicAny/DynAnyFactory.h"
 
 #include "tao/AnyTypeCode/BasicTypeTraits.h"
 
@@ -54,7 +55,7 @@ namespace TAO
         {
           the_dynany->check_type (TAO::BasicTypeTraits<T>::tc_value);
           CORBA::Any &my_any = the_dynany->the_any ();
-          my_any <<= typename TAO::BasicTypeTraits<T>::insert_type (val);
+          my_any <<= TAO::BasicTypeTraits<T>::insert_type (val);
         }
     }
 
@@ -81,12 +82,10 @@ namespace TAO
       else
         {
           typename TAO::BasicTypeTraits<T>::return_type retval =
-            typename TAO::BasicTypeTraits<T>::return_type ();
+            TAO::BasicTypeTraits<T>::return_type ();
           CORBA::Any &my_any = the_dynany->the_any ();
-          CORBA::Boolean good_extract =
-            my_any >>= typename TAO::BasicTypeTraits<T>::extract_type (retval);
 
-          if (!good_extract)
+          if (!(my_any >>= TAO::BasicTypeTraits<T>::extract_type (retval)))
             {
               ACE_THROW_RETURN (DynamicAny::DynAny::TypeMismatch (),
                                 TAO::BasicTypeTraits<T>::return_type ());
