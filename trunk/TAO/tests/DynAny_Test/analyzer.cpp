@@ -24,7 +24,7 @@
   if (debug_) \
     ACE_DEBUG ((LM_DEBUG, str , b)); \
   } break;
-  
+
 #define CASEBS(type,CT,str) case CORBA::tk_##type: \
   {\
     CORBA::CT##Seq_var seq = da->get_##type##_seq (); \
@@ -47,7 +47,7 @@
       } \
     --level_; \
   } \
-  break; 
+  break;
 
 DynAnyAnalyzer::DynAnyAnalyzer (CORBA::ORB_ptr orb,
                                 DynamicAny::DynAnyFactory_ptr dynany_factory,
@@ -87,7 +87,7 @@ void DynAnyAnalyzer::analyze (DynamicAny::DynAny_ptr da ACE_ENV_ARG_DECL)
   ACE_CHECK;
 
   CORBA::TypeCode_var dup = CORBA::TypeCode::_duplicate (tc.in ());
-      
+
   // strip aliases
   while (kind == CORBA::tk_alias)
     {
@@ -117,7 +117,7 @@ void DynAnyAnalyzer::analyze (DynamicAny::DynAny_ptr da ACE_ENV_ARG_DECL)
         if (da->seek (0) )
           {
             level_++;
-            
+
             do
               {
                 DynamicAny::DynAny_var cc =
@@ -143,7 +143,7 @@ void DynAnyAnalyzer::analyze (DynamicAny::DynAny_ptr da ACE_ENV_ARG_DECL)
                   }
 
               } while (da->next ());
-              
+
             level_--;
           }
       }
@@ -173,7 +173,7 @@ void DynAnyAnalyzer::analyze (DynamicAny::DynAny_ptr da ACE_ENV_ARG_DECL)
             if (ds->seek (0UL))
               {
                 level_++;
-                
+
                 do
                   {
                     tab(level_);
@@ -193,7 +193,7 @@ void DynAnyAnalyzer::analyze (DynamicAny::DynAny_ptr da ACE_ENV_ARG_DECL)
 
                     i++;
                   } while (da->next ());
-                  
+
                 level_--;
               }
           }
@@ -213,7 +213,7 @@ void DynAnyAnalyzer::analyze (DynamicAny::DynAny_ptr da ACE_ENV_ARG_DECL)
         level_++;
 
         CORBA::ULong const len =
-          tc->length (ACE_ENV_SINGLE_ARG_PARAMETER);
+          dup->length (ACE_ENV_SINGLE_ARG_PARAMETER);
         ACE_CHECK;
 
         for (CORBA::ULong i = 0 ; i < len; ++i)
@@ -310,7 +310,7 @@ void DynAnyAnalyzer::analyze (DynamicAny::DynAny_ptr da ACE_ENV_ARG_DECL)
       {
         CORBA::String_var b (da->get_string ());
         tab (level_);
-        
+
         if (debug_)
           {
             ACE_DEBUG ((LM_DEBUG, "  Value (string) = %s\n", b.in ()));
@@ -321,7 +321,7 @@ void DynAnyAnalyzer::analyze (DynamicAny::DynAny_ptr da ACE_ENV_ARG_DECL)
     case CORBA::tk_TypeCode:
       {
         tab (level_);
-        
+
         if (debug_)
           {
             CORBA::TCKind const kind =
@@ -338,7 +338,7 @@ void DynAnyAnalyzer::analyze (DynamicAny::DynAny_ptr da ACE_ENV_ARG_DECL)
     default:
       {
         tab (level_);
-        
+
         if (debug_)
           {
             CORBA::TCKind const kind =
@@ -365,9 +365,9 @@ DynAnyAnalyzer::analyze_basic_seq (CORBA::TypeCode_ptr tc,
 {
   CORBA::TypeCode_var ct = tc->content_type ();
   CORBA::TCKind tk = ct->kind ();
-  
+
   tab (level_);
-  
+
   if (debug_)
     {
       ACE_DEBUG ((LM_DEBUG,
@@ -377,28 +377,28 @@ DynAnyAnalyzer::analyze_basic_seq (CORBA::TypeCode_ptr tc,
   switch (tk)
     {
       CASEBS (boolean, Boolean, "  Value (bool) = %d\n");
-      CASEBS (octet, Octet, "  Value (octet) = %c\n"); 
-      CASEBS (char, Char, "  Value (char) = %c\n"); 
-      CASEBS (wchar, WChar, "  Value (wchar) = %u\n"); 
-      CASEBS (short, Short, "  Value (short) = %d\n"); 
-      CASEBS (ushort, UShort, "  Value (ushort) = %u\n"); 
-      CASEBS (long, Long, "  Value (long) = %d\n"); 
-      CASEBS (ulong, ULong, "  Value (ulong) = %u\n"); 
-      CASEBS (longlong, LongLong, "  Value (longlong) = %Ld\n"); 
-      CASEBS (ulonglong, ULongLong, "  Value (ulonglong) = %Lu\n"); 
-      CASEBS (float, Float, "  Value (float) = %f\n"); 
-      CASEBS (double, Double, "  Value (double) = %f\n"); 
+      CASEBS (octet, Octet, "  Value (octet) = %c\n");
+      CASEBS (char, Char, "  Value (char) = %c\n");
+      CASEBS (wchar, WChar, "  Value (wchar) = %u\n");
+      CASEBS (short, Short, "  Value (short) = %d\n");
+      CASEBS (ushort, UShort, "  Value (ushort) = %u\n");
+      CASEBS (long, Long, "  Value (long) = %d\n");
+      CASEBS (ulong, ULong, "  Value (ulong) = %u\n");
+      CASEBS (longlong, LongLong, "  Value (longlong) = %Ld\n");
+      CASEBS (ulonglong, ULongLong, "  Value (ulonglong) = %Lu\n");
+      CASEBS (float, Float, "  Value (float) = %f\n");
+      CASEBS (double, Double, "  Value (double) = %f\n");
       case CORBA::tk_longdouble:
       default:
         tab (level_);
-        
+
         if (debug_)
           {
             ACE_DEBUG ((LM_DEBUG,
                         "  unhandled typecode = %d\n",
                         static_cast<int> (tk)));
           }
-          
+
         break;
     }
 }
