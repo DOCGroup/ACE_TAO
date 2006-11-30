@@ -2,7 +2,7 @@
 
 project (DomainApplication) : ciao_deployment_svnt {
    sharedname = DomainApplication
-   
+   libs += CIAO_DnC_Utils
    dynamicflags = DOMAINAPPLICATION_BUILD_DLL
 
    Source_Files {

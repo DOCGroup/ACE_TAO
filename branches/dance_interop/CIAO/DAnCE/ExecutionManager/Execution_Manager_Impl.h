@@ -70,7 +70,8 @@ namespace CIAO
       // Below method is CIAO specific extension
       virtual Deployment::DomainApplicationManager_ptr
       getManager (const char * plan_uuid)
-        throw (CORBA::SystemException, Deployment::PlanNotExist);
+        throw (CORBA::SystemException, 
+	       Deployment::PlanNotExist);
 
       virtual void shutdown (void)
         throw (CORBA::SystemException);

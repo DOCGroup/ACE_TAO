@@ -19,7 +19,8 @@ module CIAO
    */
   interface ExecutionManagerDaemon : Deployment::ExecutionManager
   {
-    DomainApplicationManager getManager (in string plan_uuid);
+    Deployment::DomainApplicationManager getManager (in string plan_uuid)
+      raises (Deployment::PlanNotExist);
     // Shutdown the daemon process.
     oneway void shutdown ();
   };

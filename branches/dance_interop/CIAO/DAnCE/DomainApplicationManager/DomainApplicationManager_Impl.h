@@ -10,6 +10,7 @@
  *  @author Gan Deng <gan.deng@vanderbilt.edu>
  *  @author Arvind S. Krishna <arvindk@dre.vanderbilt.edu>
  *  @author Tao Lu <lu@dre.vanderbilt.edu>
+ *  @author William R. Otte <wotte@dre.vanderbilt.edu>
  */
 //=====================================================================
 
