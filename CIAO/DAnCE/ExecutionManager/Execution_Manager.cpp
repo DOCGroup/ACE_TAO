@@ -189,9 +189,6 @@ namespace CIAO
             daemon_servant->_this ();
 
           TAO::Utils::Implicit_Deactivator de (daemon_servant);
-
-          ACE_TRY_CHECK;
-
           bool retval = false;
 
           if (register_with_ns_)

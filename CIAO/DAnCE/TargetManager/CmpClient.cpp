@@ -9,8 +9,8 @@
  * TM to getAllResources and getAvailable resources
  */
 
-#include "Deployment_DataC.h"
-#include "TargetManagerImplC.h"
+#include "ciao/Deployment_DataC.h"
+#include "DAnCE/TargetManager/TargetManagerImplC.h"
 #include "ace/streams.h"
 #include "Config_Handlers/DnC_Dump.h"
 
@@ -105,7 +105,7 @@ int main (int argc, char* argv[])
 
     plan.instance[1] = instance_;
 
-    bool resource_available = 1;
+    bool resource_available = true;
 
     try
     {
@@ -141,11 +141,11 @@ int main (int argc, char* argv[])
     // Make a call to release resources , if resource < 0
     try
     {
-      if (resource_available == 0)
-      {
-        targetI->releaseResources(plan);
-        ACE_DEBUG ((LM_DEBUG , "\n\nreleaseResources Returned \n"));
-      }
+      if (!resource_available)
+        {
+          targetI->releaseResources(plan);
+          ACE_DEBUG ((LM_DEBUG , "\n\nreleaseResources Returned \n"));
+        }
     }
     catch(CORBA::NO_IMPLEMENT &)
     {
@@ -171,7 +171,7 @@ int main (int argc, char* argv[])
     ::CORBA::StringSeq elements;
     elements.length (0);
 
-    bool Add = 1;
+    bool Add = true;
     Add = ACE_OS::atoi (argv[3]);
 
     if (Add)

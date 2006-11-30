@@ -177,11 +177,11 @@ protected:
     ACE_CString& pcd_name);
 
 
-  ///function to remove the files extracted for parsing the PackageConfiguration
-  ///descriptor and populating the idl struct. It reads the names of the files
-  ///from the package. They correspond to the names on disk.
-  ///return 1 on success
-  ///       0 on error
+  /// Function to remove the files extracted for parsing the PackageConfiguration
+  /// descriptor and populating the idl struct. It reads the names of the files
+  /// from the package. They correspond to the names on disk.
+  /// @retval 1 on success
+  /// @retval 0 on error
 
   int remove_descriptor_files (char* package);
 
@@ -255,25 +255,32 @@ private:
   typedef CIEntry::VALUE_SET CISet;
   typedef CIEntry::VALUE_SET_ITERATOR CISet_Iterator;
 
-  //a hash map that associates the names of
-  //PackageConfigurations with their location
+  /// A hash map that associates the names of
+  /// PackageConfigurations with their location
   PCMap names_;
 
   /// a hash map that associates the UUIDs of
   /// PackageConfigurations with their location
   PCMap uuids_;
 
-  //a hash map which associates Component Interface
-  //UUIDs with their implementations
+  /// a hash map which associates Component Interface
+  /// UUIDs with their implementations
   CIMap types_;
 
   //the ORB
   CORBA::ORB_var the_orb_;
 
-  char cwd_ [TEMP_LEN];      //will hold the current working directory
-  ACE_CString install_root_;    //full path for the install directory
-  ACE_CString HTTP_server_;    //location of the server
-  ACE_CString install_path; //directory where the packages will be stored locally
+  //will hold the current working directory
+  char cwd_ [TEMP_LEN];
+
+  //full path for the install directory
+  ACE_CString install_root_;
+
+  //location of the server
+  ACE_CString HTTP_server_;
+
+  //directory where the packages will be stored locally
+  ACE_CString install_path;
 };
 
 #endif /* REPOSITORYMANAGER_H_  */

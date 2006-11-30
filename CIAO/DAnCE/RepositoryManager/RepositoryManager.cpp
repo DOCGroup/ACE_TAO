@@ -154,7 +154,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     mgr->activate ();
 
     //create a servant
-    CIAO_RepositoryManagerDaemon_i* repo;
+    CIAO_RepositoryManagerDaemon_i* repo = 0;
     ACE_NEW_RETURN (repo,
                     CIAO_RepositoryManagerDaemon_i (
                           orb.in (),
@@ -202,19 +202,10 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
     ACE_DEBUG ((LM_DEBUG, "event loop finished\n"));
 
-    //done
+    // done
     return 0;
 
-    //Start accepting requests
-    orb->run ();
-
-    //allow objects registered with the POA ot get cleaned-up
-    root_poa->destroy (1, 1);
-
-    //shutdown the orb
-    orb->shutdown (1);
-
-    return 0;
+    // todo shutdown orb
   }
   catch (CORBA::Exception &ex) {
     cerr << "CORBA Exception: " << ex << endl;
