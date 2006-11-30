@@ -1,3 +1,11 @@
+Thu Nov 30 05:48:30 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * configure.ac:
+
+          Added AM_CONDITIONAL for BUILD_JAVA, so we can handle
+          Makefile.am's with these options.  Default to false, until we
+          can write feature tests for this option.
+
 Thu Nov 30 05:44:13 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
 
         * examples/OBV/Typed_Events/Makefile.am:
