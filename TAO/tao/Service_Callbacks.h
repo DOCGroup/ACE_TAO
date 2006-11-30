@@ -77,16 +77,8 @@ public:
 
   /// Select the profile from MProfile as the needs of the services
   /// may be. Return the profile in <pfile>
-  virtual CORBA::Boolean select_profile (TAO_MProfile *mprofile,
+  virtual CORBA::Boolean select_profile (const TAO_MProfile &mprofile,
                                          TAO_Profile *&pfile);
-
-  /// Select the profile from MProfile as the needs of the services
-  /// may be. Return the profile in <pfile>
-  virtual CORBA::Boolean reselect_profile (TAO_Stub *stub,
-                                           TAO_Profile *&pfile);
-
-  /// Reset the profile flags that the services could have
-  virtual void reset_profile_flags (void);
 
   /// Check whether <obj> is nil or not.
   virtual CORBA::Boolean object_is_nil (CORBA::Object_ptr obj);

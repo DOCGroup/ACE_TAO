@@ -2102,13 +2102,21 @@ CORBA::Boolean
 TAO_ORB_Core::is_collocation_enabled (TAO_ORB_Core *orb_core,
                                       const TAO_MProfile &mp)
 {
+  TAO_MProfile mp_temp;
+
+  TAO_Profile* profile = 0;
+  if (this->service_profile_selection(mp, profile) && profile)
+  {
+    mp_temp.add_profile(profile);
+  }
+
   if (!orb_core->optimize_collocation_objects ())
     return 0;
 
   if (!orb_core->use_global_collocation () && orb_core != this)
     return 0;
 
-  if (!orb_core->is_collocated (mp))
+  if (!orb_core->is_collocated (profile ? mp_temp : mp))
     return 0;
 
   return 1;

@@ -152,10 +152,6 @@ TAO_Stub::add_forward_profiles (const TAO_MProfile &mprofiles,
   // Since we have been forwarded, we must set profile_success_ to false
   // since we are starting a new with a new set of profiles!
   this->profile_success_ = false;
-
-  // Reset any flags that may be appropriate in the services that
-  // selects profiles for invocation
-  this->orb_core_->reset_service_profile_flags ();
 }
 
 int
