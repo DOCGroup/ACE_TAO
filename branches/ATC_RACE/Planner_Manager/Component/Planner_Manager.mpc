@@ -3,8 +3,8 @@ project(Planner_Manager_stub): ciao_deployment_stub, ciao_race_component {
            Planner_Interface_stub \
            Output_Adapter_Interface_stub
   sharedname = Planner_Manager_stub
-  idlflags += -Sc \
-              -Wb,stub_export_macro=PLANNER_MANAGER_STUB_Export \
+
+  idlflags += -Wb,stub_export_macro=PLANNER_MANAGER_STUB_Export \
               -Wb,stub_export_include=Planner_Manager_stub_export.h \
               -Wb,skel_export_macro=PLANNER_MANAGER_SVNT_Export \
               -Wb,skel_export_include=Planner_Manager_svnt_export.h
@@ -46,8 +46,8 @@ project(Planner_Manager_svnt) : ciao_servant_dnc, ciao_race_component {
              TargetManager_stub \
              TargetManager_svnt \
              NodeManager_stub
-  idlflags  +=  -Sc \
-                -Wb,export_macro=PLANNER_MANAGER_SVNT_Export \
+
+  idlflags  +=  -Wb,export_macro=PLANNER_MANAGER_SVNT_Export \
                 -Wb,export_include=Planner_Manager_svnt_export.h
 
   dynamicflags = PLANNER_MANAGER_SVNT_BUILD_DLL
@@ -95,9 +95,6 @@ project(Planner_Manager_exec) : ciao_component_dnc, ciao_race_component {
              TargetManager_svnt \
              NodeManager_stub
 
-  idlflags  +=  -Sc \
-                -Wb,export_macro=PLANNER_MANAGER_EXEC_Export \
-                -Wb,export_include=Planner_Manager_exec_export.h
   dynamicflags   = PLANNER_MANAGER_EXEC_BUILD_DLL
 
   IDL_Files {

@@ -25,10 +25,6 @@ project(Monitor_svnt) : ciao_servant_dnc {
                 -Wb,export_include=Monitor_svnt_export.h
   dynamicflags = MONITOR_SVNT_BUILD_DLL
 
-//  cidlflags -= --
-
-//  cidlflags += -gen-exec-impl --
-
   CIDL_Files {
     Monitor.cidl
   }
@@ -50,8 +46,6 @@ project(Monitor_exec) : ciao_component_dnc {
   sharedname = Monitor_exec
   libs      += Monitor_stub Monitor_svnt
 
-  idlflags  +=  -Wb,export_macro=MONITOR_EXEC_Export \
-                -Wb,export_include=Monitor_exec_export.h
   dynamicflags   = MONITOR_EXEC_BUILD_DLL
 
   IDL_Files {
@@ -59,7 +53,6 @@ project(Monitor_exec) : ciao_component_dnc {
   }
 
   Source_Files {
-
     Monitor_exec.cpp
   }
 }

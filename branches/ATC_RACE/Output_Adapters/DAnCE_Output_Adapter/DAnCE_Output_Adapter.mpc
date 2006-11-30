@@ -82,9 +82,6 @@ project(DAnCE_Output_Adapter_exec) : ciao_component_dnc, ciao_race_component, ci
                NodeManager_stub \
                Monitor_stub
 
-  idlflags  +=  -Wb,export_macro=DANCE_OUTPUT_ADAPTER_EXEC_Export \
-                -Wb,export_include=DAnCE_Output_Adapter_exec_export.h
-
   dynamicflags   = DANCE_OUTPUT_ADAPTER_EXEC_BUILD_DLL
 
   IDL_Files {

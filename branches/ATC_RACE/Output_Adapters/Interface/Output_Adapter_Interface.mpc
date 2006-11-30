@@ -1,12 +1,7 @@
-// generate_component_mpc.pl,v 1.9 2003/12/22 21:56:27 boris Exp
-//Output_Adapter_Interface.mpc,v 1.2 2005/09/19 15:55:49 wotte Exp
-// This file is generated with "generate_component_mpc.pl -n Output_Adapter_Interface"
-
 project(Output_Adapter_Interface_stub): ciao_deployment_stub, ciao_race_component  {
 
   sharedname = Output_Adapter_Interface_stub
-  idlflags += -Sc \
-              -Wb,stub_export_macro=OUTPUT_ADAPTER_INTERFACE_STUB_Export \
+  idlflags += -Wb,stub_export_macro=OUTPUT_ADAPTER_INTERFACE_STUB_Export \
               -Wb,stub_export_include=Output_Adapter_Interface_stub_export.h \
               -Wb,skel_export_macro=OUTPUT_ADAPTER_INTERFACE_SVNT_Export \
               -Wb,skel_export_include=Output_Adapter_Interface_svnt_export.h
@@ -35,15 +30,9 @@ project(Output_Adapter_Interface_svnt) : ciao_servant_dnc, ciao_race_component  
   sharedname  = Output_Adapter_Interface_svnt
   libs    += Output_Adapter_Interface_stub
 
-  idlflags += -Sc \
-              -Wb,stub_export_macro=OUTPUT_ADAPTER_INTERFACE_STUB_Export \
-              -Wb,stub_export_include=Output_Adapter_Interface_stub_export.h \
-              -Wb,skel_export_macro=OUTPUT_ADAPTER_INTERFACE_SVNT_Export \
-              -Wb,skel_export_include=Output_Adapter_Interface_svnt_export.h
   dynamicflags = OUTPUT_ADAPTER_INTERFACE_SVNT_BUILD_DLL
 
   IDL_Files {
-    PlanEgress.idl
   }
 
   Source_Files {

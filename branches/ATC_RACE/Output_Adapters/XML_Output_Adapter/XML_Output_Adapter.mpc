@@ -65,6 +65,7 @@ project(XML_Output_Adapter_exec) : ciao_component_dnc, ciao_race_component, ciao
                 -Wb,export_include=XML_Output_Adapter_exec_export.h
   dynamicflags   = XML_OUTPUT_ADAPTER_EXEC_BUILD_DLL
   includes += $(CIAO_ROOT)/tools/Config_Handlers
+
   IDL_Files {
 
   }

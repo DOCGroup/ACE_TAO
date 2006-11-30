@@ -1,3 +1,23 @@
+Thu Nov 30 19:00:22 UTC 2006  Nishanth Shankaran  <nshankar@nospam.com>
+
+        * Controller/Component/Controller.mpc:
+        * Input_Adapters/Base/Input_Adapter.mpc:
+        * Input_Adapters/Interactive_Input_Adapter/Interactive_Input_Adapter.mpc:
+        * Monitor/Central_Monitor/Monitor.mpc:
+        * Output_Adapters/Component/Output_Manager.mpc:
+        * Output_Adapters/DAnCE_Output_Adapter/DAnCE_Output_Adapter.mpc:
+        * Output_Adapters/Interface/Output_Adapter_Interface.mpc:
+        * Output_Adapters/XML_Output_Adapter/XML_Output_Adapter.mpc:
+        * Plan_Analyzer/Component/Plan_Analyzer.mpc:
+        * Plan_Analyzer/Interface/Plan_Analyzer_Interface.mpc:
+        * Planner_Manager/Component/Planner_Manager.mpc:
+        * Planner_Manager/Interface/Planner_Manager_Interface.mpc:
+        * Planners/Base/Planner.mpc:
+        * Planners/Interface/Planner_Interface.mpc:
+        * Planners/StaticPlanner/StaticPlanner.mpc:
+        * common/RACE_common.mpc: Modified the mpc files to take care of
+          the export macro stuff.
+
 Tue Nov 14 18:52:38 UTC 2006  John S. Kinnebrew  <john.s.kinnebrew@vanderbilt.edu>
 
         * SA_POP/SPACE.san.xml: Removed

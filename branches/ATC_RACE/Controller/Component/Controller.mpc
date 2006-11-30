@@ -77,8 +77,6 @@ project(Controller_exec) : ciao_component_dnc, ciao_config_handlers {
                NodeManager_stub \
                Monitor_stub
 
-  idlflags  +=  -Wb,export_macro=CONTROLLER_EXEC_Export \
-                -Wb,export_include=Controller_exec_export.h
   dynamicflags   = CONTROLLER_EXEC_BUILD_DLL
 
   IDL_Files {

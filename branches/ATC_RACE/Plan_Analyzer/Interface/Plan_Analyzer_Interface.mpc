@@ -1,8 +1,7 @@
 project(Plan_Analyzer_Interface_stub): ciao_deployment_stub, ciao_race_component {
 
   sharedname = Plan_Analyzer_Interface_stub
-  idlflags += -Sc \
-              -Wb,stub_export_macro=PLAN_ANALYZER_INTERFACE_STUB_Export \
+  idlflags += -Wb,stub_export_macro=PLAN_ANALYZER_INTERFACE_STUB_Export \
               -Wb,stub_export_include=Plan_Analyzer_Interface_stub_export.h \
               -Wb,skel_export_macro=PLAN_ANALYZER_INTERFACE_SVNT_Export \
               -Wb,skel_export_include=Plan_Analyzer_Interface_svnt_export.h
@@ -31,15 +30,9 @@ project(Plan_Analyzer_Interface_svnt) : ciao_servant_dnc, ciao_race_component {
   sharedname  = Plan_Analyzer_Interface_svnt
   libs    += Plan_Analyzer_Interface_stub
 
-  idlflags += -Sc \
-              -Wb,stub_export_macro=PLAN_ANALYZER_INTERFACE_STUB_Export \
-              -Wb,stub_export_include=Plan_Analyzer_Interface_stub_export.h \
-              -Wb,skel_export_macro=PLAN_ANALYZER_INTERFACE_SVNT_Export \
-              -Wb,skel_export_include=Plan_Analyzer_Interface_svnt_export.h
   dynamicflags = PLAN_ANALYZER_INTERFACE_SVNT_BUILD_DLL
 
   IDL_Files {
-    PlanIngress.idl
   }
 
   Source_Files {
@@ -78,7 +71,7 @@ project(Analyzer_I_stub): ciao_deployment_stub, ciao_race_component {
   }
 
   Inline_Files {
-    AnalyzerC.inl
+    Analyzer_IC.inl
   }
 
 }
@@ -88,11 +81,21 @@ project(Analyzer_I_svnt) : ciao_servant_dnc, ciao_race_component {
   sharedname  = Analyzer_I_svnt
   libs    += Analyzer_I_stub
 
-  idlflags  +=  -Wb,export_macro=ANALYZER_I_SVNT_Export \
-                -Wb,export_include=Analyzer_I_svnt_export.h
   dynamicflags = ANALYZER_I_SVNT_BUILD_DLL
+
+  IDL_Files {
+  }
+
+  Header_Files {
+    Analyzer_IS.h
+  }
 
   Source_Files {
     Analyzer_IS.cpp
   }
+
+  Inline_Files {
+    Analyzer_IS.inl
+  }
+
 }

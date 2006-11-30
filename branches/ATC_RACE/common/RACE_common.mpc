@@ -1,10 +1,9 @@
-//project(RACE_common_stub): taolib_with_idl, anytypecode {
 project(RACE_common_stub): ciao_deployment_stub {
 
   sharedname = RACE_common_stub
   idlflags += -Wb,stub_export_macro=RACE_COMMON_STUB_Export \
-              -Wb,stub_export_include=RACE_common_stub_export.h \
-              -SS
+              -Wb,stub_export_include=RACE_common_stub_export.h
+
   dynamicflags   = RACE_COMMON_STUB_BUILD_DLL
 
   IDL_Files {
@@ -28,8 +27,7 @@ project(OpString_stub): ciao_deployment_stub {
 
   sharedname = OpString_stub
   idlflags += -Wb,stub_export_macro=OPSTRING_STUB_Export \
-              -Wb,stub_export_include=OpString_stub_export.h \
-              -SS
+              -Wb,stub_export_include=OpString_stub_export.h
 
   dynamicflags   = OPSTRING_STUB_BUILD_DLL
 

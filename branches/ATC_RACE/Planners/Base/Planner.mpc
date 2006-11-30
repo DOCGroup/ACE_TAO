@@ -1,13 +1,9 @@
-// generate_component_mpc.pl,v 1.9 2003/12/22 21:56:27 boris Exp
-//Planner.mpc,v 1.2 2005/09/19 15:55:49 wotte Exp
-// This file is generated with "generate_component_mpc.pl -n Planner"
-
 project(Planner_stub): ciao_deployment_stub, ciao_race_component {
 
   after += Planner_Interface_stub RACE_common_stub
   sharedname = Planner_stub
-  idlflags += -Sc \
-              -Wb,stub_export_macro=PLANNER_STUB_Export \
+
+  idlflags += -Wb,stub_export_macro=PLANNER_STUB_Export \
               -Wb,stub_export_include=Planner_stub_export.h \
               -Wb,skel_export_macro=PLANNER_SVNT_Export \
               -Wb,skel_export_include=Planner_svnt_export.h
@@ -37,15 +33,9 @@ project(Planner_svnt) : ciao_servant_dnc, ciao_race_component  {
   sharedname  = Planner_svnt
   libs    += Planner_Interface_stub Planner_Interface_svnt Planner_stub RACE_common_stub
 
-  idlflags += -Sc \
-              -Wb,stub_export_macro=PLANNER_STUB_Export \
-              -Wb,stub_export_include=Planner_stub_export.h \
-              -Wb,skel_export_macro=PLANNER_SVNT_Export \
-              -Wb,skel_export_include=Planner_svnt_export.h
   dynamicflags = PLANNER_SVNT_BUILD_DLL
 
   IDL_Files {
-    Planner.idl
   }
 
   Source_Files {
