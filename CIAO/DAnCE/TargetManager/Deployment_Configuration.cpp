@@ -30,7 +30,7 @@ CIAO::Deployment_Configuration::init (const char *filename)
 
   FILE *inf = ACE_OS::fopen (filename, "r");
 
-  if (inf == NULL)
+  if (inf == 0)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          "DAnCE (%P|%t) Deployment_Configuration.cpp:"
@@ -40,7 +40,7 @@ CIAO::Deployment_Configuration::init (const char *filename)
     }
 
   char destination[NAME_BUFSIZE], ior[NAME_BUFSIZE];
-  int first = 1;
+  bool first = true;
 
   while (fscanf (inf, "%s %s", destination, ior ) != EOF)
     {
@@ -58,7 +58,7 @@ CIAO::Deployment_Configuration::init (const char *filename)
       if (first)
         {
           this->default_node_manager_.IOR_ = ior;
-          first = 0;
+          first = false;
         }
     }
   return 0;
