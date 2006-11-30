@@ -43,10 +43,10 @@ TAO_DynStruct_i::check_typecode (CORBA::TypeCode_ptr tc
 void
 TAO_DynStruct_i::init_common (void)
 {
-  this->ref_to_component_ = 0;
-  this->container_is_destroying_ = 0;
-  this->has_components_ = 1;
-  this->destroyed_ = 0;
+  this->ref_to_component_ = false;
+  this->container_is_destroying_ = false;
+  this->has_components_ = true;
+  this->destroyed_ = false;
   this->component_count_ = static_cast <CORBA::ULong> (this->da_members_.size ());
   this->current_position_ = this->component_count_ ? 0 : -1;
 }

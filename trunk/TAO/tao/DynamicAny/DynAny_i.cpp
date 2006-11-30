@@ -165,10 +165,10 @@ TAO_DynAny_i::set_to_default_value (CORBA::TypeCode_ptr tc
 void
 TAO_DynAny_i::init_common (void)
 {
-  this->ref_to_component_ = 0;
-  this->container_is_destroying_ = 0;
-  this->has_components_ = 0;
-  this->destroyed_ = 0;
+  this->ref_to_component_ = false;
+  this->container_is_destroying_ = false;
+  this->has_components_ = false;
+  this->destroyed_ = false;
   this->current_position_ = -1;
   this->component_count_ = 0;
 }
