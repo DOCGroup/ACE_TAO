@@ -1,11 +1,23 @@
 // -*- MPC -*-
 // $Id$
 
+project(*idl): taoidldefaults {
+  IDL_Files {
+    test.idl
+  }
+  custom_only = 1
+}
+
 project(*Server): taoserver {
   avoids += ace_for_tao
+  after += *idl
   Source_Files {
     test_i.cpp
     server.cpp
+    testS.cpp
+    testC.cpp
+  }
+  IDL_Files {
   }
 }
 
@@ -16,6 +28,8 @@ project(*Client): taoclient, anytypecode {
     testC.cpp
     client.cpp
   }
+  IDL_Files {
+  }
 }
 
 project(*OctetSeq): taoclient, anytypecode {
@@ -25,5 +39,6 @@ project(*OctetSeq): taoclient, anytypecode {
     testC.cpp
     OctetSeq.cpp
   }
+  IDL_Files {
+  }
 }
-
