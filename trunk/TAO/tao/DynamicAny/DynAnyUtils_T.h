@@ -55,7 +55,7 @@ namespace TAO
         {
           the_dynany->check_type (TAO::BasicTypeTraits<T>::tc_value);
           CORBA::Any &my_any = the_dynany->the_any ();
-          typedef TAO::BasicTypeTraits<T>::insert_type i_type;
+          typedef typename TAO::BasicTypeTraits<T>::insert_type i_type;
           my_any <<= i_type (val);
         }
     }
