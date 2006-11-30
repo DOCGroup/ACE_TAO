@@ -14,6 +14,7 @@
 
 #include "ace/Hash_Map_Manager.h"
 #include "ciao/DeploymentC.h"
+#include "ciao/CIAO_Utils_Export.h"
 
 namespace CIAO
 {
@@ -21,7 +22,7 @@ namespace CIAO
    * @class Connection_Manager
    * @brief Manages connection data structures for deployments.
    */
-  class Connection_Manager
+  class CIAO_Utils_Export Connection_Manager
   {
   public:
     /// Constructor

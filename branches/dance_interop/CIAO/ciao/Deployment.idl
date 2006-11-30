@@ -20,13 +20,6 @@ module Deployment {
   exception PlanNotExist {
   };
 
-  // CIAO specific struct type used for shared component management
-  // mapping the name of component to its plan_uuid
-  struct ComponentPlan
-  {
-    string name;
-    string plan_uuid;
-  };
   /**
    * @struct Sched_Params
    * @brief Carries Scheduling Params
@@ -41,8 +34,6 @@ module Deployment {
     long scope_;
     long msec_;
   };
-
-  typedef sequence < ComponentPlan > ComponentPlans;
 
   interface Logger {
   };

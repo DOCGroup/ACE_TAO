@@ -3,6 +3,7 @@
 #define DOMAINAPPLICATION_IDL
 
 #include "Deployment.idl"
+#include "NodeApplicationManager.idl"
 
 module Deployment {
   interface DomainApplication : Application

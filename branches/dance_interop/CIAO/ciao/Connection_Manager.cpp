@@ -19,7 +19,7 @@ namespace CIAO
   void
   Connection_Manager::add_connection (const Deployment::Connection &conn)
   {
-    // We could hide logic here to substituting event service connections here.
+    // We could hide logic here to substitute event service connections here.
     Conn_Info cinfo (0);
     
     conns_.find (ACE_CString (conn.name),
