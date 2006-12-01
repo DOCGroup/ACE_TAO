@@ -32,7 +32,7 @@
 
 //for the PackageConfiguration parsing
 #include "ciao/Deployment_DataC.h"
-#include "ciao/Packaging_DataC.h"
+#include "ciao/Deployment_Packaging_DataC.h"
 #include "Package_Handlers/PCD_Handler.h"
 
 #include "RM_Helper.h"            //to be able to externalize/internalize a PackageConfiguration

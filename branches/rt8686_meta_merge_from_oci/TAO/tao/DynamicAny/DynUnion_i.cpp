@@ -27,10 +27,10 @@ TAO_DynUnion_i::~TAO_DynUnion_i (void)
 void
 TAO_DynUnion_i::init_common (void)
 {
-  this->ref_to_component_ = 0;
-  this->container_is_destroying_ = 0;
-  this->has_components_ = 1;
-  this->destroyed_ = 0;
+  this->ref_to_component_ = false;
+  this->container_is_destroying_ = false;
+  this->has_components_ = true;
+  this->destroyed_ = false;
   this->component_count_ = 2;
   this->current_position_ = 0;
   this->member_slot_ = 0;

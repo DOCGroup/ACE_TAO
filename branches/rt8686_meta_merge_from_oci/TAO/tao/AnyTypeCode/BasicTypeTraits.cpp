@@ -38,6 +38,13 @@ namespace TAO
   CORBA::TCKind const
   BasicTypeTraits<CORBA::Boolean>::tckind_value = CORBA::tk_boolean;
 
+  BasicTypeTraits<CORBA::Boolean>::return_type
+  BasicTypeTraits<CORBA::Boolean>::convert (
+    BasicTypeTraits<CORBA::Boolean>::extract_type& et)
+  {
+    return et.ref_;
+  }
+
   //================================================================
 
   CORBA::TypeCode_ptr const
@@ -46,6 +53,12 @@ namespace TAO
   CORBA::TCKind const
   BasicTypeTraits<CORBA::Octet>::tckind_value = CORBA::tk_octet;
 
+  BasicTypeTraits<CORBA::Octet>::return_type
+  BasicTypeTraits<CORBA::Octet>::convert (extract_type& et)
+  {
+    return et.ref_;
+  }
+
   //================================================================
 
   CORBA::TypeCode_ptr const
@@ -53,6 +66,12 @@ namespace TAO
 
   CORBA::TCKind const
   BasicTypeTraits<CORBA::Char>::tckind_value = CORBA::tk_char;
+
+  BasicTypeTraits<CORBA::Char>::return_type
+  BasicTypeTraits<CORBA::Char>::convert (extract_type& et)
+  {
+    return et.ref_;
+  }
 
   //================================================================
 
@@ -64,6 +83,12 @@ namespace TAO
   CORBA::TCKind const
   BasicTypeTraits<CORBA::WChar>::tckind_value = CORBA::tk_wchar;
 
+  BasicTypeTraits<CORBA::WChar>::return_type
+  BasicTypeTraits<CORBA::WChar>::convert (extract_type& et)
+  {
+    return et.ref_;
+  }
+
 #endif
 
   //================================================================
@@ -74,6 +99,12 @@ namespace TAO
   CORBA::TCKind const
   BasicTypeTraits<CORBA::Short>::tckind_value = CORBA::tk_short;
 
+  BasicTypeTraits<CORBA::Short>::return_type
+  BasicTypeTraits<CORBA::Short>::convert (extract_type& et)
+  {
+    return et;
+  }
+
   //================================================================
 
   CORBA::TypeCode_ptr const
@@ -81,6 +112,12 @@ namespace TAO
 
   CORBA::TCKind const
   BasicTypeTraits<CORBA::UShort>::tckind_value = CORBA::tk_ushort;
+
+  BasicTypeTraits<CORBA::UShort>::return_type
+  BasicTypeTraits<CORBA::UShort>::convert (extract_type& et)
+  {
+    return et;
+  }
 
   //================================================================
 
@@ -90,6 +127,12 @@ namespace TAO
   CORBA::TCKind const
   BasicTypeTraits<CORBA::Long>::tckind_value = CORBA::tk_long;
 
+  BasicTypeTraits<CORBA::Long>::return_type
+  BasicTypeTraits<CORBA::Long>::convert (extract_type& et)
+  {
+    return et;
+  }
+
   //================================================================
 
   CORBA::TypeCode_ptr const
@@ -97,6 +140,12 @@ namespace TAO
 
   CORBA::TCKind const
   BasicTypeTraits<CORBA::ULong>::tckind_value = CORBA::tk_ulong;
+
+  BasicTypeTraits<CORBA::ULong>::return_type
+  BasicTypeTraits<CORBA::ULong>::convert (extract_type& et)
+  {
+    return et;
+  }
 
   //================================================================
 
@@ -106,6 +155,12 @@ namespace TAO
   CORBA::TCKind const
   BasicTypeTraits<CORBA::LongLong>::tckind_value = CORBA::tk_longlong;
 
+  BasicTypeTraits<CORBA::LongLong>::return_type
+  BasicTypeTraits<CORBA::LongLong>::convert (extract_type& et)
+  {
+    return et;
+  }
+
   //================================================================
 
   CORBA::TypeCode_ptr const
@@ -113,6 +168,12 @@ namespace TAO
 
   CORBA::TCKind const
   BasicTypeTraits<CORBA::ULongLong>::tckind_value = CORBA::tk_ulonglong;
+
+  BasicTypeTraits<CORBA::ULongLong>::return_type
+  BasicTypeTraits<CORBA::ULongLong>::convert (extract_type& et)
+  {
+    return et;
+  }
 
   //================================================================
 
@@ -122,6 +183,12 @@ namespace TAO
   CORBA::TCKind const
   BasicTypeTraits<CORBA::Float>::tckind_value = CORBA::tk_float;
 
+  BasicTypeTraits<CORBA::Float>::return_type
+  BasicTypeTraits<CORBA::Float>::convert (extract_type& et)
+  {
+    return et;
+  }
+
   //================================================================
 
   CORBA::TypeCode_ptr const
@@ -129,6 +196,12 @@ namespace TAO
 
   CORBA::TCKind const
   BasicTypeTraits<CORBA::Double>::tckind_value = CORBA::tk_double;
+
+  BasicTypeTraits<CORBA::Double>::return_type
+  BasicTypeTraits<CORBA::Double>::convert (extract_type& et)
+  {
+    return et;
+  }
 
   //================================================================
 
@@ -138,6 +211,12 @@ namespace TAO
   CORBA::TCKind const
   BasicTypeTraits<CORBA::LongDouble>::tckind_value = CORBA::tk_longdouble;
 
+  BasicTypeTraits<CORBA::LongDouble>::return_type
+  BasicTypeTraits<CORBA::LongDouble>::convert (extract_type& et)
+  {
+    return et;
+  }
+
   //================================================================
 
   CORBA::TypeCode_ptr const
@@ -145,6 +224,12 @@ namespace TAO
 
   CORBA::TCKind const
   BasicTypeTraits<CORBA::Char *>::tckind_value = CORBA::tk_string;
+
+  BasicTypeTraits<CORBA::Char *>::return_type
+  BasicTypeTraits<CORBA::Char *>::convert (extract_type& et)
+  {
+    return et;
+  }
 
   //================================================================
 
@@ -154,6 +239,12 @@ namespace TAO
   CORBA::TCKind const
   BasicTypeTraits<CORBA::WChar *>::tckind_value = CORBA::tk_wstring;
 
+  BasicTypeTraits<CORBA::WChar *>::return_type
+  BasicTypeTraits<CORBA::WChar *>::convert (extract_type& et)
+  {
+    return et;
+  }
+
   //================================================================
 
   CORBA::TypeCode_ptr const
@@ -161,6 +252,12 @@ namespace TAO
 
   CORBA::TCKind const
   BasicTypeTraits<CORBA::Any>::tckind_value = CORBA::tk_any;
+
+  BasicTypeTraits<CORBA::Any>::return_type
+  BasicTypeTraits<CORBA::Any>::convert (extract_type& et)
+  {
+    return et;
+  }
 
   //================================================================
 
@@ -170,6 +267,12 @@ namespace TAO
   CORBA::TCKind const
   BasicTypeTraits<CORBA::Object_ptr>::tckind_value = CORBA::tk_objref;
 
+  BasicTypeTraits<CORBA::Object_ptr>::return_type
+  BasicTypeTraits<CORBA::Object_ptr>::convert (extract_type& et)
+  {
+    return et;
+  }
+
   //================================================================
 
   CORBA::TypeCode_ptr const
@@ -177,6 +280,12 @@ namespace TAO
 
   CORBA::TCKind const
   BasicTypeTraits<CORBA::TypeCode_ptr>::tckind_value = CORBA::tk_TypeCode;
+
+  BasicTypeTraits<CORBA::TypeCode_ptr>::return_type
+  BasicTypeTraits<CORBA::TypeCode_ptr>::convert (extract_type& et)
+  {
+    return et;
+  }
 
   //================================================================
 
@@ -186,6 +295,12 @@ namespace TAO
   CORBA::TCKind const
   BasicTypeTraits<CORBA::BooleanSeq>::tckind_value = CORBA::tk_sequence;
 
+  BasicTypeTraits<CORBA::BooleanSeq>::return_type
+  BasicTypeTraits<CORBA::BooleanSeq>::convert (extract_type& et)
+  {
+    return et;
+  }
+
   //================================================================
 
   CORBA::TypeCode_ptr const
@@ -193,6 +308,12 @@ namespace TAO
 
   CORBA::TCKind const
   BasicTypeTraits<CORBA::OctetSeq>::tckind_value = CORBA::tk_sequence;
+
+  BasicTypeTraits<CORBA::OctetSeq>::return_type
+  BasicTypeTraits<CORBA::OctetSeq>::convert (extract_type& et)
+  {
+    return et;
+  }
 
   //================================================================
 
@@ -202,6 +323,12 @@ namespace TAO
   CORBA::TCKind const
   BasicTypeTraits<CORBA::CharSeq>::tckind_value = CORBA::tk_sequence;
 
+  BasicTypeTraits<CORBA::CharSeq>::return_type
+  BasicTypeTraits<CORBA::CharSeq>::convert (extract_type& et)
+  {
+    return et;
+  }
+
   //================================================================
 
   CORBA::TypeCode_ptr const
@@ -209,6 +336,12 @@ namespace TAO
 
   CORBA::TCKind const
   BasicTypeTraits<CORBA::WCharSeq>::tckind_value = CORBA::tk_sequence;
+
+  BasicTypeTraits<CORBA::WCharSeq>::return_type
+  BasicTypeTraits<CORBA::WCharSeq>::convert (extract_type& et)
+  {
+    return et;
+  }
 
   //================================================================
 
@@ -218,6 +351,12 @@ namespace TAO
   CORBA::TCKind const
   BasicTypeTraits<CORBA::ShortSeq>::tckind_value = CORBA::tk_sequence;
 
+  BasicTypeTraits<CORBA::ShortSeq>::return_type
+  BasicTypeTraits<CORBA::ShortSeq>::convert (extract_type& et)
+  {
+    return et;
+  }
+
   //================================================================
 
   CORBA::TypeCode_ptr const
@@ -225,6 +364,12 @@ namespace TAO
 
   CORBA::TCKind const
   BasicTypeTraits<CORBA::UShortSeq>::tckind_value = CORBA::tk_sequence;
+
+  BasicTypeTraits<CORBA::UShortSeq>::return_type
+  BasicTypeTraits<CORBA::UShortSeq>::convert (extract_type& et)
+  {
+    return et;
+  }
 
   //================================================================
 
@@ -234,6 +379,12 @@ namespace TAO
   CORBA::TCKind const
   BasicTypeTraits<CORBA::LongSeq>::tckind_value = CORBA::tk_sequence;
 
+  BasicTypeTraits<CORBA::LongSeq>::return_type
+  BasicTypeTraits<CORBA::LongSeq>::convert (extract_type& et)
+  {
+    return et;
+  }
+
   //================================================================
 
   CORBA::TypeCode_ptr const
@@ -241,6 +392,12 @@ namespace TAO
 
   CORBA::TCKind const
   BasicTypeTraits<CORBA::ULongSeq>::tckind_value = CORBA::tk_sequence;
+
+  BasicTypeTraits<CORBA::ULongSeq>::return_type
+  BasicTypeTraits<CORBA::ULongSeq>::convert (extract_type& et)
+  {
+    return et;
+  }
 
   //================================================================
 
@@ -250,6 +407,12 @@ namespace TAO
   CORBA::TCKind const
   BasicTypeTraits<CORBA::LongLongSeq>::tckind_value = CORBA::tk_sequence;
 
+  BasicTypeTraits<CORBA::LongLongSeq>::return_type
+  BasicTypeTraits<CORBA::LongLongSeq>::convert (extract_type& et)
+  {
+    return et;
+  }
+
   //================================================================
 
   CORBA::TypeCode_ptr const
@@ -257,6 +420,12 @@ namespace TAO
 
   CORBA::TCKind const
   BasicTypeTraits<CORBA::ULongLongSeq>::tckind_value = CORBA::tk_sequence;
+
+  BasicTypeTraits<CORBA::ULongLongSeq>::return_type
+  BasicTypeTraits<CORBA::ULongLongSeq>::convert (extract_type& et)
+  {
+    return et;
+  }
 
   //================================================================
 
@@ -266,6 +435,12 @@ namespace TAO
   CORBA::TCKind const
   BasicTypeTraits<CORBA::FloatSeq>::tckind_value = CORBA::tk_sequence;
 
+  BasicTypeTraits<CORBA::FloatSeq>::return_type
+  BasicTypeTraits<CORBA::FloatSeq>::convert (extract_type& et)
+  {
+    return et;
+  }
+
   //================================================================
 
   CORBA::TypeCode_ptr const
@@ -273,6 +448,12 @@ namespace TAO
 
   CORBA::TCKind const
   BasicTypeTraits<CORBA::DoubleSeq>::tckind_value = CORBA::tk_sequence;
+
+  BasicTypeTraits<CORBA::DoubleSeq>::return_type
+  BasicTypeTraits<CORBA::DoubleSeq>::convert (extract_type& et)
+  {
+    return et;
+  }
 
   //================================================================
 
@@ -282,6 +463,12 @@ namespace TAO
   CORBA::TCKind const
   BasicTypeTraits<CORBA::LongDoubleSeq>::tckind_value = CORBA::tk_sequence;
 
+  BasicTypeTraits<CORBA::LongDoubleSeq>::return_type
+  BasicTypeTraits<CORBA::LongDoubleSeq>::convert (extract_type& et)
+  {
+    return et;
+  }
+
   //================================================================
 
   CORBA::TypeCode_ptr const
@@ -289,6 +476,12 @@ namespace TAO
 
   CORBA::TCKind const
   BasicTypeTraits<CORBA::AnySeq>::tckind_value = CORBA::tk_sequence;
+
+  BasicTypeTraits<CORBA::AnySeq>::return_type
+  BasicTypeTraits<CORBA::AnySeq>::convert (extract_type& et)
+  {
+    return et;
+  }
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL

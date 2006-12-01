@@ -17,35 +17,10 @@ TAO_IDLFLAGS = -Ge 1 -Wb,pre_include=ace/pre.h -Wb,post_include=ace/post.h -I$(T
 TAO_ROOT = $(top_srcdir)
 
 noinst_PROGRAMS =
-CLEANFILES =
-BUILT_SOURCES =
 
 ## Makefile.Param_Test_Server.am
 
 if BUILD_EXCEPTIONS
-
-BUILT_SOURCES += \
-  param_testC.cpp \
-  param_testC.h \
-  param_testC.inl \
-  param_testS.cpp \
-  param_testS.h \
-  param_testS.inl
-
-CLEANFILES += \
-  param_test-stamp \
-  param_testC.cpp \
-  param_testC.h \
-  param_testC.inl \
-  param_testS.cpp \
-  param_testS.h \
-  param_testS.inl
-
-param_testC.cpp param_testC.h param_testC.inl param_testS.cpp param_testS.h param_testS.inl: param_test-stamp
-
-param_test-stamp: $(srcdir)/param_test.idl $(TAO_IDL_DEP)
-	$(TAO_IDL) $(TAO_IDLFLAGS) $(srcdir)/param_test.idl
-	@touch $@
 
 noinst_PROGRAMS += server
 
@@ -60,10 +35,6 @@ server_SOURCES = \
   param_testS.cpp \
   param_test_i.cpp \
   server.cpp \
-  param_testC.h \
-  param_testC.inl \
-  param_testS.h \
-  param_testS.inl \
   param_test_i.h
 
 server_LDADD = \
@@ -79,29 +50,6 @@ endif BUILD_EXCEPTIONS
 if BUILD_CORBA_MESSAGING
 if BUILD_EXCEPTIONS
 if !BUILD_ACE_FOR_TAO
-
-BUILT_SOURCES += \
-  param_testC.cpp \
-  param_testC.h \
-  param_testC.inl \
-  param_testS.cpp \
-  param_testS.h \
-  param_testS.inl
-
-CLEANFILES += \
-  param_test-stamp \
-  param_testC.cpp \
-  param_testC.h \
-  param_testC.inl \
-  param_testS.cpp \
-  param_testS.h \
-  param_testS.inl
-
-param_testC.cpp param_testC.h param_testC.inl param_testS.cpp param_testS.h param_testS.inl: param_test-stamp
-
-param_test-stamp: $(srcdir)/param_test.idl $(TAO_IDL_DEP)
-	$(TAO_IDL) $(TAO_IDLFLAGS) $(srcdir)/param_test.idl
-	@touch $@
 
 noinst_PROGRAMS += client
 
@@ -135,7 +83,6 @@ client_SOURCES = \
   objref_struct.cpp \
   options.cpp \
   param_testC.cpp \
-  param_testS.cpp \
   recursive_struct.cpp \
   recursive_union.cpp \
   results.cpp \
@@ -177,10 +124,6 @@ client_SOURCES = \
   objref.h \
   objref_struct.h \
   options.h \
-  param_testC.h \
-  param_testC.inl \
-  param_testS.h \
-  param_testS.inl \
   recursive_struct.h \
   recursive_union.h \
   results.h \
@@ -220,27 +163,6 @@ endif BUILD_CORBA_MESSAGING
 
 if BUILD_EXCEPTIONS
 
-BUILT_SOURCES += \
-  param_testC.cpp \
-  param_testC.h \
-  param_testC.inl \
-  param_testS.h \
-  param_testS.inl
-
-CLEANFILES += \
-  param_test-stamp \
-  param_testC.cpp \
-  param_testC.h \
-  param_testC.inl \
-  param_testS.h \
-  param_testS.inl
-
-param_testC.cpp param_testC.h param_testC.inl param_testS.h param_testS.inl: param_test-stamp
-
-param_test-stamp: $(srcdir)/param_test.idl $(TAO_IDL_DEP)
-	$(TAO_IDL) $(TAO_IDLFLAGS) $(srcdir)/param_test.idl
-	@touch $@
-
 noinst_PROGRAMS += anyop
 
 anyop_CPPFLAGS = \
@@ -252,10 +174,49 @@ anyop_CPPFLAGS = \
 anyop_SOURCES = \
   anyop.cpp \
   param_testC.cpp \
-  param_testC.h \
-  param_testC.inl \
-  param_testS.h \
-  param_testS.inl
+  any.h \
+  bd_array_seq.h \
+  bd_long_seq.h \
+  bd_short_seq.h \
+  bd_str_seq.h \
+  bd_string.h \
+  bd_struct_seq.h \
+  bd_wstr_seq.h \
+  bd_wstring.h \
+  big_union.h \
+  client.h \
+  complex_any.h \
+  driver.h \
+  except.h \
+  fixed_array.h \
+  fixed_struct.h \
+  helper.h \
+  multdim_array.h \
+  nested_struct.h \
+  objref.h \
+  objref_struct.h \
+  options.h \
+  param_test_i.h \
+  recursive_struct.h \
+  recursive_union.h \
+  results.h \
+  short.h \
+  small_union.h \
+  tests.h \
+  typecode.h \
+  ub_any_seq.h \
+  ub_array_seq.h \
+  ub_long_seq.h \
+  ub_objref_seq.h \
+  ub_short_seq.h \
+  ub_str_seq.h \
+  ub_string.h \
+  ub_struct_seq.h \
+  ub_wstr_seq.h \
+  ub_wstring.h \
+  ulonglong.h \
+  var_array.h \
+  var_struct.h
 
 anyop_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO_PortableServer.la \
@@ -264,6 +225,35 @@ anyop_LDADD = \
   $(ACE_BUILDDIR)/ace/libACE.la
 
 endif BUILD_EXCEPTIONS
+
+## Makefile.Param_Test_Idl.am
+
+BUILT_SOURCES = \
+  param_testC.cpp \
+  param_testC.h \
+  param_testC.inl \
+  param_testS.cpp \
+  param_testS.h \
+  param_testS.inl
+
+CLEANFILES = \
+  param_test-stamp \
+  param_testC.cpp \
+  param_testC.h \
+  param_testC.inl \
+  param_testS.cpp \
+  param_testS.h \
+  param_testS.inl
+
+param_testC.cpp param_testC.h param_testC.inl param_testS.cpp param_testS.h param_testS.inl: param_test-stamp
+
+param_test-stamp: $(srcdir)/param_test.idl $(TAO_IDL_DEP)
+	$(TAO_IDL) $(TAO_IDLFLAGS) -Sa -St $(srcdir)/param_test.idl
+	@touch $@
+
+
+noinst_HEADERS = \
+  param_test.idl
 
 ## Clean up template repositories, etc.
 clean-local:

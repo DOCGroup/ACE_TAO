@@ -27,10 +27,10 @@ TAO_DynSequence_i::~TAO_DynSequence_i (void)
 void
 TAO_DynSequence_i::init_common (void)
 {
-  this->ref_to_component_ = 0;
-  this->container_is_destroying_ = 0;
-  this->has_components_ = 1;
-  this->destroyed_ = 0;
+  this->ref_to_component_ = false;
+  this->container_is_destroying_ = false;
+  this->has_components_ = true;
+  this->destroyed_ = false;
   this->current_position_ = -1;
   this->component_count_ = static_cast<CORBA::ULong> (this->da_members_.size ());
 }

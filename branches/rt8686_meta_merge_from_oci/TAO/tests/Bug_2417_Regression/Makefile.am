@@ -20,11 +20,9 @@ noinst_PROGRAMS =
 CLEANFILES =
 BUILT_SOURCES =
 
-## Makefile.Bug_2417_Regression_Server.am
+## Makefile.Bug_2417_Regression_Idl.am
 
-if BUILD_CORBA_MESSAGING
 if BUILD_EXCEPTIONS
-if BUILD_THREADS
 
 BUILT_SOURCES += \
   publisherC.cpp \
@@ -72,6 +70,19 @@ subscriber-stamp: $(srcdir)/subscriber.idl $(TAO_IDL_DEP)
 	$(TAO_IDL) $(TAO_IDLFLAGS) $(srcdir)/subscriber.idl
 	@touch $@
 
+
+noinst_HEADERS = \
+  publisher.idl \
+  subscriber.idl
+
+endif BUILD_EXCEPTIONS
+
+## Makefile.Bug_2417_Regression_Server.am
+
+if BUILD_CORBA_MESSAGING
+if BUILD_EXCEPTIONS
+if BUILD_THREADS
+
 noinst_PROGRAMS += server
 
 server_CPPFLAGS = \
@@ -86,16 +97,7 @@ server_SOURCES = \
   publisher_impl.cpp \
   server.cpp \
   subscriberC.cpp \
-  subscriberS.cpp \
-  publisherC.h \
-  publisherC.inl \
-  publisherS.h \
-  publisherS.inl \
-  publisher_impl.h \
-  subscriberC.h \
-  subscriberC.inl \
-  subscriberS.h \
-  subscriberS.inl
+  publisher_impl.h
 
 server_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO_Messaging.la \
@@ -116,52 +118,6 @@ endif BUILD_CORBA_MESSAGING
 if BUILD_EXCEPTIONS
 if BUILD_THREADS
 
-BUILT_SOURCES += \
-  publisherC.cpp \
-  publisherC.h \
-  publisherC.inl \
-  publisherS.cpp \
-  publisherS.h \
-  publisherS.inl
-
-CLEANFILES += \
-  publisher-stamp \
-  publisherC.cpp \
-  publisherC.h \
-  publisherC.inl \
-  publisherS.cpp \
-  publisherS.h \
-  publisherS.inl
-
-publisherC.cpp publisherC.h publisherC.inl publisherS.cpp publisherS.h publisherS.inl: publisher-stamp
-
-publisher-stamp: $(srcdir)/publisher.idl $(TAO_IDL_DEP)
-	$(TAO_IDL) $(TAO_IDLFLAGS) $(srcdir)/publisher.idl
-	@touch $@
-
-BUILT_SOURCES += \
-  subscriberC.cpp \
-  subscriberC.h \
-  subscriberC.inl \
-  subscriberS.cpp \
-  subscriberS.h \
-  subscriberS.inl
-
-CLEANFILES += \
-  subscriber-stamp \
-  subscriberC.cpp \
-  subscriberC.h \
-  subscriberC.inl \
-  subscriberS.cpp \
-  subscriberS.h \
-  subscriberS.inl
-
-subscriberC.cpp subscriberC.h subscriberC.inl subscriberS.cpp subscriberS.h subscriberS.inl: subscriber-stamp
-
-subscriber-stamp: $(srcdir)/subscriber.idl $(TAO_IDL_DEP)
-	$(TAO_IDL) $(TAO_IDLFLAGS) $(srcdir)/subscriber.idl
-	@touch $@
-
 noinst_PROGRAMS += client
 
 client_CPPFLAGS = \
@@ -173,18 +129,9 @@ client_CPPFLAGS = \
 client_SOURCES = \
   client.cpp \
   publisherC.cpp \
-  publisherS.cpp \
   subscriberC.cpp \
   subscriberS.cpp \
   subscriber_impl.cpp \
-  publisherC.h \
-  publisherC.inl \
-  publisherS.h \
-  publisherS.inl \
-  subscriberC.h \
-  subscriberC.inl \
-  subscriberS.h \
-  subscriberS.inl \
   subscriber_impl.h
 
 client_LDADD = \

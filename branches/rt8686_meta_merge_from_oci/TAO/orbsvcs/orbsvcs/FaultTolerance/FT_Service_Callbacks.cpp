@@ -37,6 +37,40 @@ TAO_FT_Service_Callbacks::~TAO_FT_Service_Callbacks (void)
   delete this->profile_lock_;
 }
 
+CORBA::Boolean 
+TAO_FT_Service_Callbacks::select_profile (const TAO_MProfile &mprofile,
+    TAO_Profile *&pfile)
+{  
+  CORBA::ULong sz =
+    mprofile.size ();
+
+  // Iterate through the list in a circular fashion. Stop one before
+  // the list instead of trying the same thing again.
+  for (CORBA::ULong i = 0;
+       i != sz;
+       ++i)
+    {
+      const TAO_Profile *curr_pfile = mprofile.get_profile (i);
+
+      IOP::TaggedComponent tagged_component;
+      tagged_component.tag = IOP::TAG_FT_PRIMARY;
+
+      // Get the tagged component from the  profile
+      const TAO_Tagged_Components &pfile_tagged =
+        curr_pfile->tagged_components ();
+
+      // Search for the TaggedComponent that we want
+      if (pfile_tagged.get_component (tagged_component) == 1)
+      {
+        // We have found a primary IOR
+        pfile = const_cast<TAO_Profile *>(curr_pfile);
+        return true;
+      }
+    }
+
+  return false;
+}
+
 CORBA::Boolean
 TAO_FT_Service_Callbacks::object_is_nil (CORBA::Object_ptr obj)
 {
