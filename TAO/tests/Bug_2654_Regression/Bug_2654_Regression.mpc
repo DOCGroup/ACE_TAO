@@ -1,21 +1,38 @@
 // -*- MPC -*-
 // $Id$
 
-project(*Server): taoserver, avoids_minimum_corba, bidir_giop {
+project(*idl): taoidldefaults {
   idlflags += -Sa -St
+
+  IDL_Files {
+    Hello.idl
+  }
+
+  custom_only = 1
+}
+
+project(*Server): taoserver, avoids_minimum_corba, bidir_giop {
+  after += *idl
 
   Source_Files {
     Hello.cpp
+    HelloS.cpp
+    HelloC.cpp
     server.cpp
+  }
+  IDL_Files {
   }
 }
 
 
 project(*Client): taoclient, avoids_minimum_corba, messaging, bidir_giop {
+  after += *Server
 
   Source_Files {
     HelloS.cpp
     HelloC.cpp
     client.cpp
+  }
+  IDL_Files {
   }
 }

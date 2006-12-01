@@ -218,7 +218,7 @@ namespace CIAO
           Deployment::DeploymentPlan_var plan = dam->getPlan ();
 
           // If any component is still running, then we return.
-          CORBA::ULong inst_lenth = plan->instance.length ();
+          CORBA::ULong const inst_lenth = plan->instance.length ();
           for (CORBA::ULong i = 0; i < inst_lenth; ++i)
             {
               if (this->is_component_running (plan->instance[i].name.in (),

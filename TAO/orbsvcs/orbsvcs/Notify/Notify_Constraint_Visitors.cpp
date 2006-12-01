@@ -3,13 +3,16 @@
 #include "orbsvcs/Notify/Notify_Constraint_Visitors.h"
 #include "orbsvcs/ETCL/ETCL_Constraint.h"
 #include "orbsvcs/ETCL/ETCL_y.h"
-#include "tao/AnyTypeCode/Any_Unknown_IDL_Type.h"
+
 #include "tao/DynamicAny/DynArray_i.h"
 #include "tao/DynamicAny/DynSequence_i.h"
 #include "tao/DynamicAny/DynStruct_i.h"
 #include "tao/DynamicAny/DynUnion_i.h"
 #include "tao/DynamicAny/DynEnum_i.h"
 #include "tao/DynamicAny/DynAnyFactory.h"
+#include "tao/DynamicAny/DynAnyUtils_T.h"
+
+#include "tao/AnyTypeCode/Any_Unknown_IDL_Type.h"
 #include "tao/CDR.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
@@ -267,8 +270,10 @@ TAO_Notify_Constraint_Visitor::visit_union_pos (
           }
 
           DynamicAny::DynAny_var dyn_any =
-            TAO_DynAnyFactory::make_dyn_any (disc_any
-            ACE_ENV_ARG_PARAMETER);
+            TAO::MakeDynAnyUtils<const CORBA::Any &>::make_dyn_any_t (
+              disc_tc.in (),
+              disc_any
+              ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
           dyn_union.set_discriminator (dyn_any.in ()
             ACE_ENV_ARG_PARAMETER);

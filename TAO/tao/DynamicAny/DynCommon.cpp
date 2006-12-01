@@ -64,7 +64,7 @@ TAO_DynCommon::assign (DynamicAny::DynAny_ptr dyn_any
   CORBA::TypeCode_var tc = dyn_any->type (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
-  CORBA::Boolean equivalent =
+  CORBA::Boolean const equivalent =
     this->type_.in ()->equivalent (tc.in ()
                                    ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
@@ -232,7 +232,7 @@ TAO_DynCommon::insert_string (const char * value
                                         ACE_ENV_ARG_PARAMETER);
       ACE_CHECK;
 
-      CORBA::TCKind kind =
+      CORBA::TCKind const kind =
         unaliased_tc->kind (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK;
 
@@ -241,7 +241,7 @@ TAO_DynCommon::insert_string (const char * value
           ACE_THROW (DynamicAny::DynAny::TypeMismatch ());
         }
 
-      CORBA::ULong bound =
+      CORBA::ULong const bound =
         unaliased_tc->length (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK;
 
@@ -282,7 +282,7 @@ TAO_DynCommon::insert_reference (CORBA::Object_ptr value
   else
     {
       CORBA::Boolean good_type = true;
-      CORBA::TCKind kind =
+      CORBA::TCKind const kind =
         TAO_DynAnyFactory::unalias (this->type_.in ()
                                     ACE_ENV_ARG_PARAMETER);
       ACE_CHECK;
@@ -439,7 +439,7 @@ TAO_DynCommon::insert_wstring (const CORBA::WChar * value
                                       ACE_ENV_ARG_PARAMETER);
       ACE_CHECK;
 
-      CORBA::ULong bound = unaliased_tc->length (ACE_ENV_SINGLE_ARG_PARAMETER);
+      CORBA::ULong const bound = unaliased_tc->length (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK;
 
       if (bound > 0 && bound < ACE_OS::wslen (value))
@@ -502,7 +502,7 @@ TAO_DynCommon::insert_val (CORBA::ValueBase *value
     {
       ACE_THROW (CORBA::OBJECT_NOT_EXIST ());
     }
-  
+
   if (this->has_components_)
     {
       DynamicAny::DynAny_var cc =
@@ -524,7 +524,7 @@ TAO_DynCommon::insert_val (CORBA::ValueBase *value
         {
           ACE_THROW (DynamicAny::DynAny::TypeMismatch ());
         }
-      
+
       // If the arg is 0 we can't do this kind of type checking,
       // and the call to _tao_marshal() below will handle the
       // null value correctly.
@@ -549,9 +549,9 @@ TAO_DynCommon::insert_val (CORBA::ValueBase *value
       // This will handle null values correctly, or otherwise
       // make a virtual call to marshal the state.
       TAO_OutputCDR out;
-      CORBA::Boolean good_insert =
+      CORBA::Boolean const good_insert =
         CORBA::ValueBase::_tao_marshal (out, value);
-      
+
       if (!good_insert)
         {
           ACE_THROW (DynamicAny::DynAny::InvalidValue ());
@@ -708,7 +708,7 @@ TAO_DynCommon::get_string (ACE_ENV_SINGLE_ARG_DECL)
 
       char *retval = 0;
 
-      CORBA::ULong bound =
+      CORBA::ULong const bound =
         unaliased_tc->length (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK_RETURN (0);
 
@@ -969,7 +969,7 @@ TAO_DynCommon::get_dyn_any (ACE_ENV_SINGLE_ARG_DECL)
   CORBA::Any_var any = this->get_any (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
 
-  return 
+  return
     TAO::MakeDynAnyUtils<const CORBA::Any&>::make_dyn_any_t (
       any.in ()._tao_get_typecode (),
       any.in ());
@@ -1002,7 +1002,7 @@ TAO_DynCommon::get_val (ACE_ENV_SINGLE_ARG_DECL)
         TAO_DynAnyFactory::unalias (this->type_.in ()
                                     ACE_ENV_ARG_PARAMETER);
       ACE_CHECK;
-      
+
       if (kind != CORBA::tk_value)
         {
           ACE_THROW_RETURN (DynamicAny::DynAny::TypeMismatch (), 0);
@@ -1010,28 +1010,28 @@ TAO_DynCommon::get_val (ACE_ENV_SINGLE_ARG_DECL)
 
       CORBA::ValueBase_var retval;
       TAO::Any_Impl *any_impl = this->any_.impl ();
-      
+
       if (any_impl == 0)
         {
           ACE_THROW_RETURN (DynamicAny::DynAny::InvalidValue (), 0);
         }
-      
-      // This should always be non-zero for dynamic anys.  
+
+      // This should always be non-zero for dynamic anys.
       TAO::Unknown_IDL_Type *unk =
         dynamic_cast<TAO::Unknown_IDL_Type *> (any_impl);
-        
-      // Demarshal from a copy so we can retain ownership of our contents.  
+
+      // Demarshal from a copy so we can retain ownership of our contents.
       TAO_InputCDR for_reading (unk->_tao_get_cdr ());
-        
+
       CORBA::Boolean good_extract =
         CORBA::ValueBase::_tao_unmarshal (for_reading,
                                           retval.inout ());
-        
+
       if (!good_extract)
         {
           ACE_THROW_RETURN (DynamicAny::DynAny::InvalidValue (), 0);
-        }  
-      
+        }
+
       return retval._retn ();
     }
 }
@@ -1048,24 +1048,24 @@ TAO_DynCommon::seek (CORBA::Long slot
   if (this->destroyed_)
     {
       ACE_THROW_RETURN (CORBA::OBJECT_NOT_EXIST (),
-                        0);
+                        false);
     }
 
   if (this->has_components_ == 0)
     {
       ACE_UNUSED_ARG (slot);
       this->current_position_ = -1;
-      return 0;
+      return false;
     }
   else if (slot < 0 || slot >= static_cast<CORBA::Long> (this->component_count_))
     {
       this->current_position_ = -1;
-      return 0;
+      return false;
     }
   else
     {
       this->current_position_ = slot;
-      return 1;
+      return true;
     }
 }
 
@@ -1102,12 +1102,12 @@ TAO_DynCommon::next (ACE_ENV_SINGLE_ARG_DECL)
                                           ))
     {
       this->current_position_ = -1;
-      return 0;
+      return false;
     }
   else
     {
       ++this->current_position_;
-      return 1;
+      return true;
     }
 }
 
@@ -1217,7 +1217,7 @@ TAO_DynCommon::insert_abstract (CORBA::AbstractBase_ptr value
       if (good_type)
         {
           TAO_OutputCDR out;
-          
+
           // The CDR insertion operator for AbstractBase handles
           // all cases - nil, objref and valuetype - polymorphically.
           if (!(out << value))
@@ -1267,7 +1267,7 @@ TAO_DynCommon::get_abstract (ACE_ENV_SINGLE_ARG_DECL)
         TAO_DynAnyFactory::unalias (this->type_.in ()
                                     ACE_ENV_ARG_PARAMETER);
       ACE_CHECK;
-      
+
       if (kind != CORBA::tk_abstract_interface)
         {
           ACE_THROW_RETURN (DynamicAny::DynAny::TypeMismatch (), 0);
@@ -1275,26 +1275,26 @@ TAO_DynCommon::get_abstract (ACE_ENV_SINGLE_ARG_DECL)
 
       CORBA::AbstractBase_var retval;
       TAO::Any_Impl *any_impl = this->any_.impl ();
-      
+
       if (any_impl == 0)
         {
           ACE_THROW_RETURN (DynamicAny::DynAny::InvalidValue (), 0);
         }
-      
-      // This should always be non-zero for dynamic anys.  
+
+      // This should always be non-zero for dynamic anys.
       TAO::Unknown_IDL_Type *unk =
         dynamic_cast<TAO::Unknown_IDL_Type *> (any_impl);
-        
-      // Make a copy to extract from so we retain ownership of contents.  
+
+      // Make a copy to extract from so we retain ownership of contents.
       TAO_InputCDR for_reading (unk->_tao_get_cdr ());
-       
+
       // The CDR extraction operator for AbstractBase handles
-      // all cases.  
+      // all cases.
       if (!(for_reading >> retval.inout ()))
         {
           ACE_THROW_RETURN (DynamicAny::DynAny::InvalidValue (), 0);
-        }  
-      
+        }
+
       return retval._retn ();
     }
 }
@@ -1314,7 +1314,7 @@ TAO_DynCommon::insert_boolean_seq (
   TAO::DynAnyBasicTypeUtils<CORBA::BooleanSeq>::insert_value (value,
                                                               this);
 }
-  
+
 void
 TAO_DynCommon::insert_octet_seq (
     const CORBA::OctetSeq &value
@@ -1695,7 +1695,7 @@ TAO_DynCommon::set_flag (DynamicAny::DynAny_ptr component,
                                                        destroying);
       break;
     case CORBA::tk_sequence:
-      if (TAO_DynCommon::is_basic_type_seq (tc))
+      if (TAO_DynCommon::is_basic_type_seq (tc.in ()))
         {
           TAO::DynAnyFlagUtils<TAO_DynAny_i>::set_flag_t (component,
                                                           destroying);
@@ -1763,7 +1763,7 @@ TAO_DynCommon::check_component (ACE_ENV_SINGLE_ARG_DECL)
       ACE_THROW_RETURN (DynamicAny::DynAny::TypeMismatch (),
                         DynamicAny::DynAny::_nil ());
     case CORBA::tk_sequence:
-      if (TAO_DynCommon::is_basic_type_seq (tc))
+      if (TAO_DynCommon::is_basic_type_seq (tc.in ()))
         {
           return cc._retn ();
         }
