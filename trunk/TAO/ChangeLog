@@ -1,4 +1,9 @@
-Fri Dec  1 12:27:43 UTC 2006  Jeff Parsons <j.parsons@vanderbilt.edu>
+Fri Dec  1 13:35:43 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * TAO-INSTALL.html:
+          Updated download location of ACE/TAO/CIAO
+
+Fri Dec  1 12:27:43 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/tests/Event/UDP/RtEC_UDP.mpc:
           Fixed invalid filenames in this test
