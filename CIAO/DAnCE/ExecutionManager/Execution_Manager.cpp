@@ -168,7 +168,7 @@ namespace CIAO
           ACE_TRY_CHECK;
 
 
-          if (poa.in () == 0)
+          if (CORBA::is_nil (poa.in ()))
             ACE_ERROR_RETURN ((LM_ERROR,
                                "(%P|%t) CIAO_ExecutionManager: "
                                "Nil POA panic error, returning \n"),
