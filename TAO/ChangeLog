@@ -1,3 +1,9 @@
+Fri Dec  1 13:49:43 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Param_Test/Param_Test.mpc:
+          Added explicit build order and removed -Sa and -St from the
+          idlflags
+
 Fri Dec  1 13:37:43 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * docs/Security/Download.html:
