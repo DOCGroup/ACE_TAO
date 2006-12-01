@@ -2,6 +2,7 @@
 // $Id$
 
 project(*IDL): taoidldefaults {
+  idlflags -= -St
   IDL_Files {
     OBV.idl
   }

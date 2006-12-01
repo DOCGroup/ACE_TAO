@@ -1,3 +1,11 @@
+Fri Dec  1 15:39:03 UTC 2006  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+
+        * tests/OBV/Simple/OBV_Simple.mpc:
+
+          Removed -St from IDL compiler command line options, since
+          valuetypes now require typecode support.
+
 Fri Dec  1 15:19:34 UTC 2006  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tests/ICMG_Any_Bug/Hello.mpc:
