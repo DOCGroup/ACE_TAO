@@ -18,6 +18,35 @@ TAO_ROOT = $(top_srcdir)
 
 noinst_PROGRAMS =
 
+## Makefile.Param_Test_Idl.am
+
+BUILT_SOURCES = \
+  param_testC.cpp \
+  param_testC.h \
+  param_testC.inl \
+  param_testS.cpp \
+  param_testS.h \
+  param_testS.inl
+
+CLEANFILES = \
+  param_test-stamp \
+  param_testC.cpp \
+  param_testC.h \
+  param_testC.inl \
+  param_testS.cpp \
+  param_testS.h \
+  param_testS.inl
+
+param_testC.cpp param_testC.h param_testC.inl param_testS.cpp param_testS.h param_testS.inl: param_test-stamp
+
+param_test-stamp: $(srcdir)/param_test.idl $(TAO_IDL_DEP)
+	$(TAO_IDL) $(TAO_IDLFLAGS) $(srcdir)/param_test.idl
+	@touch $@
+
+
+noinst_HEADERS = \
+  param_test.idl
+
 ## Makefile.Param_Test_Server.am
 
 if BUILD_EXCEPTIONS
@@ -225,35 +254,6 @@ anyop_LDADD = \
   $(ACE_BUILDDIR)/ace/libACE.la
 
 endif BUILD_EXCEPTIONS
-
-## Makefile.Param_Test_Idl.am
-
-BUILT_SOURCES = \
-  param_testC.cpp \
-  param_testC.h \
-  param_testC.inl \
-  param_testS.cpp \
-  param_testS.h \
-  param_testS.inl
-
-CLEANFILES = \
-  param_test-stamp \
-  param_testC.cpp \
-  param_testC.h \
-  param_testC.inl \
-  param_testS.cpp \
-  param_testS.h \
-  param_testS.inl
-
-param_testC.cpp param_testC.h param_testC.inl param_testS.cpp param_testS.h param_testS.inl: param_test-stamp
-
-param_test-stamp: $(srcdir)/param_test.idl $(TAO_IDL_DEP)
-	$(TAO_IDL) $(TAO_IDLFLAGS) -Sa -St $(srcdir)/param_test.idl
-	@touch $@
-
-
-noinst_HEADERS = \
-  param_test.idl
 
 ## Clean up template repositories, etc.
 clean-local:
