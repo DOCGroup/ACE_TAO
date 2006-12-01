@@ -1,3 +1,11 @@
+Fri Dec  1 15:19:34 UTC 2006  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tests/ICMG_Any_Bug/Hello.mpc:
+
+          Removed -Sa and -St from the IDL compiler command line options
+          (pulled in from taoidldefaults.mpb), since the client code
+          uses DII.
+
 Fri Dec  1 14:59:02 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
 
         * orbsvcs/tests/Event/UDP/Makefile.am:
