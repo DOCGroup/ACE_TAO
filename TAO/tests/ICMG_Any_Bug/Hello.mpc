@@ -2,6 +2,8 @@
 // $Id$
 
 project(ICMG_Any_Bug_Hello_IDL): taoidldefaults {
+  idlflags -= -St
+  idlflags -= -Sa
   IDL_Files {
     Test.idl
   }
