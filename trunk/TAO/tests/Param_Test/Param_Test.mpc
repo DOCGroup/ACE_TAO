@@ -3,12 +3,14 @@
 
 project(*idl): taoidldefaults {
   IDL_Files {
+    idlflags -= -Sa -St
     param_test.idl
   }
   custom_only = 1
 }
 
 project(*Server): taoserver, avoids_minimum_corba, avoids_corba_e_compact {
+  after  += *idl
   Source_Files {
     param_test_i.cpp
     param_testS.cpp
