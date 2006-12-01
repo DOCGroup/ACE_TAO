@@ -1,3 +1,9 @@
+Fri Dec  1 13:37:43 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * docs/Security/Download.html:
+        * docs/tutorials/Quoter/index.html:
+          Updated download location of ACE/TAO/CIAO
+
 Fri Dec  1 13:35:43 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * TAO-INSTALL.html:
