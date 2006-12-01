@@ -252,7 +252,7 @@ $command = "generate_export_file.pl $UCOM_NAME".'_STUB > '."$com_name".'_stub_ex
 print "\t$command"."\n";
 system ("$ACE_ROOT".'/bin/'."$command");
 
-$command = "generate_export_file.pl $UCOM_NAME".'_SVNT > '."$com_name".'_svnt_export.h';
+$command = "generate_export_file.pl $UCOM_NAME"."$USVR_SUFFIX".' > '."$com_name"."$svr_suffix".'_export.h';
 print "\t$command"."\n";
 system ("$ACE_ROOT".'/bin/'."$command");
 

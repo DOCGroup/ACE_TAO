@@ -1,3 +1,11 @@
+Fri Dec  1 16:27:34 UTC 2006  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * bin/generate_component_mpc.pl:
+
+          Fixed generation of export files. Thanks to Abdullah
+          Sowayan <abdullah.sowayan@lmco.com> for reporting
+          the problem.
+
 Fri Dec  1 13:39:12 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * docs/tutorials/CoSMIC/index.html:
