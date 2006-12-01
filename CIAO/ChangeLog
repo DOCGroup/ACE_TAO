@@ -1,3 +1,9 @@
+Fri Dec  1 09:01:12 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/generate_component_mpc.pl:
+          Layout improvements, thanks to Abdul for making this
+          update.
+
 Thu Nov 30 12:45:12 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * DAnCE/ExecutionManager/Execution_Manager.cpp:
