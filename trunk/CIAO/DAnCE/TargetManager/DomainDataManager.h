@@ -15,7 +15,7 @@
 #define DOMAIN_DATA_MGRH
 
 #include "TargetManagerImplC.h"
-#include "Deployment_Configuration.h"
+#include "DAnCE/DomainApplicationManager/Deployment_Configuration.h"
 
 /**
  * @namespace CIAO

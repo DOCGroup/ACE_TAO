@@ -9,7 +9,6 @@
 #ifndef TARGETMANAGER_CIDL
 #define TARGETMANAGER_CIDL
 
-
 #include "TargetManagerImpl.idl"
 
 /*
