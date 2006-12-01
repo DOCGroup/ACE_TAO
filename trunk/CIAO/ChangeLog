@@ -1,3 +1,9 @@
+Fri Dec  1 13:39:12 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * docs/tutorials/CoSMIC/index.html:
+        * docs/tutorials/Quoter/Simple/index.html:
+          Updated download location of ACE/TAO/CIAO
+
 Fri Dec  1 11:26:12 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * DAnCE/ExecutionManager/Execution_Manager.cpp:
