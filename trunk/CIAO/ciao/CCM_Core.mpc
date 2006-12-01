@@ -84,9 +84,15 @@ project (CIAO_DnC_Container) : orbsvcslib, portableserver, valuetype, ifr_client
   includes += $(CIAO_ROOT)
 
   IDL_Files {
+    idlflags += -SS -Sci \
+                -Wb,versioning_begin=TAO_BEGIN_VERSIONED_NAMESPACE_DECL \
+                -Wb,versioning_end=TAO_END_VERSIONED_NAMESPACE_DECL
+    Security.idl
+  }
+
+  IDL_Files {
     idlflags += -SS -Sci
     CCM_Context.idl
-    Security.idl
     CCM_CCMException.idl
     CCM_EntityComponent.idl
     CCM_EntityContext.idl
