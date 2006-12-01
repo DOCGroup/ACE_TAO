@@ -39,7 +39,8 @@ CIAO::Deployment_Configuration::init (const char *filename)
                          -1);
     }
 
-  char destination[NAME_BUFSIZE], ior[NAME_BUFSIZE];
+  char destination[NAME_BUFSIZE];
+  char ior[NAME_BUFSIZE];
   bool first = true;
 
   while (fscanf (inf, "%s %s", destination, ior ) != EOF)
@@ -48,10 +49,12 @@ CIAO::Deployment_Configuration::init (const char *filename)
       //
       if (this->deployment_info_.bind (destination, ior) != 0)
         {
-          ACE_ERROR ((LM_ERROR,
-                      "DAnCE (%P|%t) Deployment_Configuration.cpp:"
-                      "Reuse existing node in the cached map: [%s]\n",
-                      destination));
+          ACE_OS::fclose (inf);
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "DAnCE (%P|%t) Deployment_Configuration.cpp:"
+                             "Failed to bind destination [%s] : \n",
+                             destination),
+                             -1);
         }
 
       if (first)
@@ -60,7 +63,9 @@ CIAO::Deployment_Configuration::init (const char *filename)
           first = false;
         }
     }
+
   ACE_OS::fclose (inf);
+
   return 0;
 }
 

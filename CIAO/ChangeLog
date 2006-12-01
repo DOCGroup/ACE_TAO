@@ -1,3 +1,22 @@
+Fri Dec  1 11:17:12 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * DAnCE/TargetManager/Deployment_Configuration.{h,cpp}:
+          Removed these files, not used in the mpc file
+
+        * DAnCE/DomainApplicationManager/Deployment_Configuration.{h,cpp}:
+          Close the file handle, part of the fix for bugzilla bug 2733
+
+        * DAnCE/TargetManager/DomainDataManager.{h,cpp}:
+          Const changes, sequences have a CORBA::ULong as length, not int.
+          Added some todo's and use a little bit more ACE
+
+        * DAnCE/TargetManager/TargetManager.cidl:
+          Removed empty line
+
+        * DAnCE/TargetManager/TargetManager_exec.cpp:
+          Fixed memory management and the way we check for a nil
+          reference
+
 Fri Dec  1 09:01:12 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/generate_component_mpc.pl:

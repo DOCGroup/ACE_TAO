@@ -233,14 +233,15 @@ namespace CIDL_TargetManager_i
       ACE_DEBUG ((LM_DEBUG , "Calling TM constructor"));
     }
 
-    if (this->exec_object_.in () == 0)
-    {
-      this->exec_object_ = new TargetManager_exec_i(this,
-                    context_->_ciao_the_Container()->the_ORB(),
-                    context_
-                    );
-    }
-    return this->exec_object_.in ();
+    if (CORBA::is_nil (this->exec_ext_object_.in ()))
+      {
+        this->exec_object_ = new TargetManager_exec_i(this,
+                      context_->_ciao_the_Container()->the_ORB(),
+                      context_
+                      );
+      }
+
+    return ::Deployment::CCM_TargetManager::_duplicate (this->exec_object_.in ());
   }
 
   ::CIAO::CCM_TargetManagerExt_ptr TargetManagerImpl_exec_i
@@ -248,11 +249,12 @@ namespace CIDL_TargetManager_i
                             ACE_ENV_SINGLE_ARG_DECL_NOT_USED
                             ) ACE_THROW_SPEC ((CORBA::SystemException))
   {
-    if (this->exec_ext_object_.in () == 0)
-    {
-      this->exec_ext_object_ = new TargetManagerExt_exec_i();
-    }
-    return this->exec_ext_object_.in ();
+    if (CORBA::is_nil (this->exec_ext_object_.in ()))
+      {
+        this->exec_ext_object_ = new TargetManagerExt_exec_i();
+      }
+
+    return ::CIAO::CCM_TargetManagerExt::_duplicate (this->exec_ext_object_.in ());
   }
 
   // Operations from Components::SessionComponent
