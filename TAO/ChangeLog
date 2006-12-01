@@ -1,3 +1,8 @@
+Fri Dec  1 12:27:43 UTC 2006  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * orbsvcs/tests/Event/UDP/RtEC_UDP.mpc:
+          Fixed invalid filenames in this test
+
 Thu Nov 30 18:01:43 UTC 2006  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tao/AnyTypeCode/BasicTypeTraits.cpp:
