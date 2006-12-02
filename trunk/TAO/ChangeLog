@@ -1,3 +1,14 @@
+Sat Dec  2 23:02:13 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * Makefile.am:
+
+          Add tests subdirectory.
+
+        * tests/ICMG_Any_Bug/Makefile.am:
+        * tests/OBV/Simple/Makefile.am:
+
+          Regenerated.
+
 Fri Dec  1 20:18:47 UTC 2006  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/fe/fe_declarator.cpp (compose):
