@@ -28,10 +28,11 @@ SUBDIRS = \
         PluggableUDP \
         Quoter \
         RTCORBA \
-        RTScheduling \
         Simple \
         Simulator \
         TypeCode_Creation \
         ior_corbaloc \
         mfc
 
+# SUBDIRS += \
+# 	RTScheduling
