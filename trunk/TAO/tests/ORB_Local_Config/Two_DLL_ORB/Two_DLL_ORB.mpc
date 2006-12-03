@@ -54,7 +54,13 @@ project(ORB DLL Client) : taolib_with_idl, portableserver {
 project(*) : taoserver {
   after += lib ORB_DLL_Client ORB_DLL_Server
   exename = Test
-  includes += ../lib
+
+  specific (automake) {
+    includes += $(srcdir)/../lib
+  } else {
+    includes += ../lib
+  }
+
   Source_Files {
     Test.cpp
   }
