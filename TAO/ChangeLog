@@ -1,3 +1,8 @@
+Sun Dec  3 07:39:43 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/AnyTypeCode/BasicTypeTraits.cpp:
+          Fixed compile problems with Borland C++
+
 Sat Dec  2 23:11:45 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
 
         * examples/Makefile.am:
