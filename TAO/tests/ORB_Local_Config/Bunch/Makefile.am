@@ -25,7 +25,7 @@ Test_CPPFLAGS = \
   -I$(ACE_BUILDDIR) \
   -I$(TAO_ROOT) \
   -I$(TAO_BUILDDIR) \
-  -I../lib
+  -I$(srcdir)/../lib
 
 Test_SOURCES = \
   Test.cpp
