@@ -1,3 +1,26 @@
+Sun Dec  3 14:25:57 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* tests/ORB_Local_Config/Bug_1459/Makefile.am:
+	* tests/ORB_Local_Config/Bunch/Makefile.am:
+	* tests/ORB_Local_Config/Separation/Makefile.am:
+	* tests/ORB_Local_Config/Shared/Makefile.am:
+	* tests/ORB_Local_Config/Two_DLL_ORB/Makefile.am:
+	* tests/ORB_Local_Config/Simple/Makefile.am:
+	* tests/ORB_Local_Config/Service_Dependency/Makefile.am:
+
+          Regenerated.
+
+	* tests/ORB_Local_Config/Bug_1459/Bug_1459.mpc:
+	* tests/ORB_Local_Config/Bunch/Bunch.mpc:
+	* tests/ORB_Local_Config/Separation/Separation.mpc:
+	* tests/ORB_Local_Config/Shared/Shared.mpc:
+	* tests/ORB_Local_Config/Two_DLL_ORB/Two_DLL_ORB.mpc:
+	* tests/ORB_Local_Config/Simple/Simple.mpc:
+	* tests/ORB_Local_Config/Service_Dependency/Service_Dependency.mpc:
+
+          Add automake specific section so that includes is set relative
+          to $(srcdir).
+
 Sun Dec  3 07:39:43 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/AnyTypeCode/BasicTypeTraits.cpp:

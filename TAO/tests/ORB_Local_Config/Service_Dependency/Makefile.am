@@ -21,7 +21,7 @@ noinst_LTLIBRARIES = libService_Config_Dependent_DLL.la
 libService_Config_Dependent_DLL_la_CPPFLAGS = \
   -I$(ACE_ROOT) \
   -I$(ACE_BUILDDIR) \
-  -I../lib \
+  -I$(srcdir)/../lib \
   -DSERVICE_CONFIG_DLL_BUILD_DLL
 
 libService_Config_Dependent_DLL_la_SOURCES = \
@@ -42,7 +42,7 @@ Test_CPPFLAGS = \
   -I$(ACE_BUILDDIR) \
   -I$(TAO_ROOT) \
   -I$(TAO_BUILDDIR) \
-  -I../lib
+  -I$(srcdir)/../lib
 
 Test_SOURCES = \
   Test.cpp \
