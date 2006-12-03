@@ -39,8 +39,7 @@ namespace TAO
   BasicTypeTraits<CORBA::Boolean>::tckind_value = CORBA::tk_boolean;
 
   BasicTypeTraits<CORBA::Boolean>::return_type
-  BasicTypeTraits<CORBA::Boolean>::convert (
-    BasicTypeTraits<CORBA::Boolean>::extract_type& et)
+  BasicTypeTraits<CORBA::Boolean>::convert (extract_type& et)
   {
     return et.ref_;
   }
