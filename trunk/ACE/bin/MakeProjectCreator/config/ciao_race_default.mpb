@@ -1,3 +1,6 @@
+// -*- MPC -*-
+// $Id$
+
 project : ciaocidldefaults {
   includes += $(CIAO_ROOT)/RACE
   idlflags += -I$(CIAO_ROOT)/RACE

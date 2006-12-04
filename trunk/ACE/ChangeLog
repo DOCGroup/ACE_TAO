@@ -1,3 +1,21 @@
+Mon Dec  4 11:27:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/MakeProjectCreator/config/ciao_nodeapplication.mpb:
+          New base project for nodeapplication library
+
+        * bin/MakeProjectCreator/config/ciao_nodeapplicationmanager.mpb:
+          Derive from ciao_nodeapplication
+
+        * bin/MakeProjectCreator/config/ciao_nodemanager_stub.mpb:
+        * bin/MakeProjectCreator/config/ciao_nodemanager_svnt.mpb:
+        * bin/MakeProjectCreator/config/ciao_race_default.mpb:
+        * bin/MakeProjectCreator/config/ciao_race_monitor.mpb:
+        * bin/MakeProjectCreator/config/ciao_targetmanager_stub.mpb:
+          Fixed incorrect id tag
+
+        * bin/MakeProjectCreator/config/ciao_noop_configurator.mpb:
+          New base project
+
 Mon Dec  4 11:26:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/fuzz.pl:
