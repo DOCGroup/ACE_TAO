@@ -25,7 +25,7 @@ namespace CIAO
                  guard,
                  this->mutex_);
 
-      const size_t sz =  this->slot_index_;
+      size_t const sz =  this->slot_index_;
 
       for (size_t t = 0; t != sz; ++t)
         {
@@ -49,16 +49,16 @@ namespace CIAO
                         guard,
                         this->mutex_,
                         0);
-      const size_t sz = this->slot_index_;
+      size_t const sz = this->slot_index_;
       for (size_t t = 0; t != sz; ++t)
         {
           Port_Activator *&tmp = this->pa_[t];
-          if (ACE_OS::strcmp (tmp->name (), str.in ()) == 0)
-          {
-            tmp->set_name ("dummy");
-            //delete tmp;
-            //--this->slot_index_;
-          }
+          if (ACE_OS::strcmp (tmp->oid (), str.in ()) == 0)
+            {
+              tmp->oid ("dummy");
+              //delete tmp;
+              //--this->slot_index_;
+            }
         }
     }
     return true;
@@ -86,7 +86,7 @@ namespace CIAO
                         this->mutex_,
                         0);
 
-      const size_t sz = this->slot_index_;
+      size_t const sz = this->slot_index_;
 
       Port_Activator *tmp = 0;
 
@@ -104,7 +104,7 @@ namespace CIAO
                             " value from the array is null \n"));
               continue;
             }
-          if (ACE_OS::strcmp (tmp->name (),
+          if (ACE_OS::strcmp (tmp->oid (),
                               str.in ()) == 0)
             {
               // We should try avoiding making outbound calls with the
@@ -135,7 +135,7 @@ namespace CIAO
     CORBA::String_var str =
       PortableServer::ObjectId_to_string (oid);
 
-    const size_t sz = this->slot_index_;
+    size_t const sz = this->slot_index_;
 
     Port_Activator *tmp = 0;
 
@@ -152,7 +152,7 @@ namespace CIAO
             ACE_DEBUG ((LM_DEBUG, "Port Activator is NULL\n"));
             continue;
           }
-        if (ACE_OS::strcmp (tmp->name (),
+        if (ACE_OS::strcmp (tmp->oid (),
                             str.in ()) == 0)
           {
             ACE_DEBUG ((LM_DEBUG, "Deactivating Port %s\n",

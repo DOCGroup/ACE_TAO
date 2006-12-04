@@ -1,3 +1,80 @@
+Mon Dec  4 07:35:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * CIAO-INSTALL.html:
+          Updated build instructions
+
+        * ciao/Dynamic_Component_Activator.cpp:
+          Removed not needed return statements in a void method
+
+        * ciao/Dynamic_Component_Activator.h:
+          Changed guard in file to match filename
+
+        * ciao/Home_Servant_Impl_T.cpp:
+          Layout changes
+
+        * ciao/Port_Activator.{h,cpp}:
+          The name methods did really change oid, so renamed name
+          to oid and added a new name method to return the name
+          member
+
+        * ciao/Servant_Activator.cpp:
+          Const changes and updated for Port Activator changes
+
+        * ciao/Servant_Impl_Base.cpp:
+          Small code improvements
+
+        * DAnCE/DomainApplicationManager/DomainApplicationManager_Impl.cpp:
+          Const changes
+
+        * DAnCE/NodeApplication/Container_Impl.cpp:
+        * DAnCE/NodeApplicationManager/NodeApplicationManager_Impl.cpp:
+        * DAnCE/RepositoryManager/RepositoryManager_Impl.cpp:
+          Throw NO_MEMORY when allocation fails
+
+        * DAnCE/NodeApplication/RTConfig_Manager.cpp:
+          Throw BAD_PARAM when an incorrect method parameter has been passed
+
+        * DAnCE/NodeManager/BaseMonitor.h:
+        * DAnCE/NodeManager/CIAO_Monitor.h:
+        * DAnCE/NodeManager/NodeManager_Impl.h:
+          Doxygen changes
+
+        * DAnCE/NodeManager/NodeManager_Impl.cpp:
+          Fixed a comment
+
+        * DAnCE/Plan_Launcher/Plan_Launcher_Impl.h:
+          Use true/false for bool
+
+        * DAnCE/TargetManager/DomainDataManager.cpp:
+          Layout changes
+
+        * DAnCE/TargetManager/TargetManager_exec.cpp:
+          Removed not needed includes, made messages dependent
+          on the debug level, added missing duplicate
+
+        * DAnCE/TargetManager/TargetManager_exec.h:
+          Don't use std:: for auto_ptr
+
+        * DAnCE/TargetManager/TargetManagerExt.idl:
+          Removed commented out include
+
+        * DAnCE/TargetManager/TargetManagerImpl.idl:
+          Removed empty lines
+
+        * DAnCE/tests/NodeApplicationTest/run_test.pl:
+        * DAnCE/tests/NodeApplicationTest/run_test_ex.pl:
+        * DAnCE/tests/NodeApplicationTest/run_test_simple.pl:
+        * DAnCE/tests/scripts/BasicSP/basicNodeDaemon.pl:
+        * docs/tutorials/Quoter/Simple/descriptors/runNodeDaemons.pl:
+        * examples/Display/descriptors/basicNodeDaemon.pl:
+        * examples/Display/descriptors/run_NodeDaemons.pl:
+        * examples/Hello/descriptors/run_NodeDaemons.pl:
+          Use $ACE_ROOT/bin with use lib. This fixes bugzilla bug 2737,
+          thanks for Abdul for reporting this.
+
+        * docs/tutorials/Quoter/Simple/01.html:
+          Update from Abdul
+
 Fri Dec  1 16:27:34 UTC 2006  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * bin/generate_component_mpc.pl:
