@@ -28,29 +28,16 @@ add_path('SHLIB_PATH', '../lib');
 sub test($)
 {
     (my $executable, my $arguments) = @_;
-    chdir ($executable);
-    my $t1 = new PerlACE::Process ("Test", ($arguments ? $arguments : ""));
-    print STDERR "\nTest $executable is running ...\n";
+    my $t1 = new PerlACE::Process ($executable, ($arguments ? $arguments : ""));
     my $status = $t1->SpawnWaitKill (10);
-    chdir ("..");
     if ($status != 0) {
-        print STDERR "\nERROR: Test $executable failed, status=$status\n";
-        return -1;
+        print STDERR "ERROR: test failed, status=$status\n";
     }
-
-    print STDERR "Test $executable reported success.\n";
-    return 0;
+    return $status;
 } 
 
 my $status = 0;
-$status += test("Bug_1459");
-$status += test("Bug_2612");
-$status += test("Bunch");
-$status += test("Separation");
-$status += test("Service_Dependency");
-$status += test("Shared");
-$status += test("Simple");
-$status += test("Two_DLL_ORB");
+$status |= test("Test");
 
 if ($status == 0) {
     print STDERR "SUCCESS: All tests passed\n";
