@@ -1,3 +1,41 @@
+Mon Dec  4 13:16:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/MakeProjectCreator/config/MPC.cfg:
+          Set includes so that TAO and CIAO base projects could be
+          under TAO_ROOT and CIAO_ROOT
+
+        * bin/MakeProjectCreator/config/ciao_client_dnc.mpb:
+        * bin/MakeProjectCreator/config/ciao_component_dnc.mpb:
+        * bin/MakeProjectCreator/config/ciao_config_handlers.mpb:
+        * bin/MakeProjectCreator/config/ciao_config_handlers_base.mpb:
+        * bin/MakeProjectCreator/config/ciao_container_dnc.mpb:
+        * bin/MakeProjectCreator/config/ciao_deployment_stub.mpb:
+        * bin/MakeProjectCreator/config/ciao_deployment_svnt.mpb:
+        * bin/MakeProjectCreator/config/ciao_domainapplicationmanager_dnc.mpb:
+        * bin/MakeProjectCreator/config/ciao_events_base_dnc.mpb:
+        * bin/MakeProjectCreator/config/ciao_events_dnc.mpb:
+        * bin/MakeProjectCreator/config/ciao_executionmanager_stub.mpb:
+        * bin/MakeProjectCreator/config/ciao_nodeapplication.mpb:
+        * bin/MakeProjectCreator/config/ciao_nodeapplicationmanager.mpb:
+        * bin/MakeProjectCreator/config/ciao_nodemanager_stub.mpb:
+        * bin/MakeProjectCreator/config/ciao_nodemanager_svnt.mpb:
+        * bin/MakeProjectCreator/config/ciao_noop_configurator.mpb:
+        * bin/MakeProjectCreator/config/ciao_plan_generator.mpb:
+        * bin/MakeProjectCreator/config/ciao_race_component.mpb:
+        * bin/MakeProjectCreator/config/ciao_race_default.mpb:
+        * bin/MakeProjectCreator/config/ciao_race_monitor.mpb:
+        * bin/MakeProjectCreator/config/ciao_rtevent_dnc.mpb:
+        * bin/MakeProjectCreator/config/ciao_servant_dnc.mpb:
+        * bin/MakeProjectCreator/config/ciao_server_dnc.mpb:
+        * bin/MakeProjectCreator/config/ciao_static_dnc_app.mpb:
+        * bin/MakeProjectCreator/config/ciao_targetmanager_stub.mpb:
+        * bin/MakeProjectCreator/config/ciao_targetmanager_svnt.mpb:
+        * bin/MakeProjectCreator/config/ciao_xml_utils.mpb:
+        * bin/MakeProjectCreator/config/ciaocidldefaults.mpb:
+        * bin/MakeProjectCreator/config/cidlc.mpb:
+        * bin/MakeProjectCreator/config/dance_extension_stub.mpb:
+          Moved to CIAO_ROOT/MPC/config
+
 Mon Dec  4 13:13:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/tao_orb_tests.lst:
