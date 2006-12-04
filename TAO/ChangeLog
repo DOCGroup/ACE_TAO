@@ -1,3 +1,11 @@
+Mon Dec  4 12:36:57 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Oneway_Timeouts/*:
+          Added missing id tags
+
+        * Release:
+          Added MPC
+
 Mon Dec  4 12:24:57 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * MPC
