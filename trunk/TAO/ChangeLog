@@ -1,3 +1,16 @@
+Mon Dec  4 07:59:57 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/DynamicAny/DynCommon.{h,cpp}:
+          Removed not needed const qualifiers on the return type, fixes
+          icc warnings
+
+        * tao/Bounded_Value_Sequence_T.h:
+        * tao/Unbounded_Basic_String_Sequence_T.h:
+          Improved doxygen documentation
+
+        * tao/Policy_Set.cpp:
+          Const changes
+
 Sun Dec  3 14:25:57 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* tests/ORB_Local_Config/Bug_1459/Makefile.am:
