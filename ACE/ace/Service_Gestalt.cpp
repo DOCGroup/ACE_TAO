@@ -283,6 +283,7 @@ ACE_Service_Gestalt::ACE_Service_Gestalt (size_t size,
   , svc_queue_ (0)
   , svc_conf_file_queue_ (0)
   , static_svcs_ (0)
+  , processed_static_svcs_ (0)
 {
   (void)this->init_i ();
 
@@ -311,7 +312,6 @@ ACE_Service_Gestalt::init_i (void)
         ACE_Service_Repository::instance (this->svc_repo_size_);
     }
 
-  this->processed_static_svcs_ = 0;
   return 0;
 }
 
@@ -413,7 +413,7 @@ ACE_Service_Gestalt::add_processed_static_svc
   ///
   /// In contrast a "dynamic" directive, when processed through the
   /// overloaded process_directives(string) both creates the SO
-  /// locally and initializes it, where the statis directive must
+  /// locally and initializes it, where the statics directive must
   /// first locate the SO and then calls the init() method. This means
   /// that durig the "static" initialization there's no specific
   /// information about the hosting repository and the gestalt must
@@ -522,7 +522,7 @@ ACE_Service_Gestalt::initialize (const ACE_TCHAR *svc_name,
 #endif
 
   const ACE_Service_Type *srp = 0;
-  for (int i = 0; this->repo_->find (svc_name, &srp) == -1 && i < 2; i++)
+  for (int i = 0; this->find (svc_name, &srp) == -1 && i < 2; i++)
     //  if (this->repo_->find (svc_name, &srp) == -1)
     {
       const ACE_Static_Svc_Descriptor *assd =
