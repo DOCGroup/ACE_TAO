@@ -1,3 +1,20 @@
+Mon Dec  4 18:01:55 UTC 2006  Iliyan Jeliazkov  <iliyan@ociweb.com>
+
+        * tests/ORB_Local_Config/Bug_2612:
+        * tests/ORB_Local_Config/Bug_2612/Bug_2612.mpc:
+        * tests/ORB_Local_Config/Bug_2612/DllOrb.h:
+        * tests/ORB_Local_Config/Bug_2612/DllOrb.cpp:
+        * tests/ORB_Local_Config/Bug_2612/DllOrb_Export.h:
+        * tests/ORB_Local_Config/Bug_2612/Test.cpp:
+        * tests/ORB_Local_Config/Bug_2612/run_test.pl:
+
+          Added new regression test for bug#2612. It should also cover the
+          issue described in bug#2677.
+
+        * tests/ORB_Local_Config/run_tests_all.pl:
+
+          Added the new test to the list of tests for manual execution.
+
 Mon Dec  4 17:30:30 UTC 2006  Iliyan Jeliazkov  <iliyan@ociweb.com>
 
         * tao/Invocation_Adapter.cpp (invoke_i):
