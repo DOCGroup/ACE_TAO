@@ -1,5 +1,5 @@
 // -*- MPC -*-
-// $Id
+// $Id$
 
 project : ciao_deployment_stub {
   includes += $(CIAO_ROOT)/DAnCE/Interfaces
