@@ -1,3 +1,16 @@
+Mon Dec  4 17:30:30 UTC 2006  Iliyan Jeliazkov  <iliyan@ociweb.com>
+
+        * tao/Invocation_Adapter.cpp (invoke_i):
+        * tao/LocateRequest_Invocation_Adapter.cpp (invoke):
+
+          Added a service config guard to ensure the invocation is
+          processed, using the correct configuration repository.  The
+          change ensures that the ORB's repository is going to be
+          "current" for the duration of the invocation, which is needed if
+          timeouts and other policies are applied as expected.  Thanks to
+          Eider Oliveira <eider dot oliveira at gmail dot com> for
+          submitting the defect (bug# 2734)
+
 Mon Dec  4 16:17:07 UTC 2006  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/util/utl_err.cpp (syntax_error):
@@ -68,6 +81,15 @@ Mon Dec  4 07:59:57 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Sun Dec  3 14:25:57 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
 
+<<<<<<< .mine
+        * tests/ORB_Local_Config/Bug_1459/Makefile.am:
+        * tests/ORB_Local_Config/Bunch/Makefile.am:
+        * tests/ORB_Local_Config/Separation/Makefile.am:
+        * tests/ORB_Local_Config/Shared/Makefile.am:
+        * tests/ORB_Local_Config/Two_DLL_ORB/Makefile.am:
+        * tests/ORB_Local_Config/Simple/Makefile.am:
+        * tests/ORB_Local_Config/Service_Dependency/Makefile.am:
+=======
   * tests/ORB_Local_Config/Bug_1459/Makefile.am:
   * tests/ORB_Local_Config/Bunch/Makefile.am:
   * tests/ORB_Local_Config/Separation/Makefile.am:
@@ -75,9 +97,19 @@ Sun Dec  3 14:25:57 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
   * tests/ORB_Local_Config/Two_DLL_ORB/Makefile.am:
   * tests/ORB_Local_Config/Simple/Makefile.am:
   * tests/ORB_Local_Config/Service_Dependency/Makefile.am:
+>>>>>>> .r75788
 
           Regenerated.
 
+<<<<<<< .mine
+        * tests/ORB_Local_Config/Bug_1459/Bug_1459.mpc:
+        * tests/ORB_Local_Config/Bunch/Bunch.mpc:
+        * tests/ORB_Local_Config/Separation/Separation.mpc:
+        * tests/ORB_Local_Config/Shared/Shared.mpc:
+        * tests/ORB_Local_Config/Two_DLL_ORB/Two_DLL_ORB.mpc:
+        * tests/ORB_Local_Config/Simple/Simple.mpc:
+        * tests/ORB_Local_Config/Service_Dependency/Service_Dependency.mpc:
+=======
   * tests/ORB_Local_Config/Bug_1459/Bug_1459.mpc:
   * tests/ORB_Local_Config/Bunch/Bunch.mpc:
   * tests/ORB_Local_Config/Separation/Separation.mpc:
@@ -85,6 +117,7 @@ Sun Dec  3 14:25:57 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
   * tests/ORB_Local_Config/Two_DLL_ORB/Two_DLL_ORB.mpc:
   * tests/ORB_Local_Config/Simple/Simple.mpc:
   * tests/ORB_Local_Config/Service_Dependency/Service_Dependency.mpc:
+>>>>>>> .r75788
 
           Add automake specific section so that includes is set relative
           to $(srcdir).
