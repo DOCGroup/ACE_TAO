@@ -15,7 +15,7 @@
 #define NODEAPPLICATION_IMPL_H
 #include /**/ "ace/pre.h"
 
-#include "ace/config-all.h"
+#include "CIAO_NodeApplication_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -62,7 +62,7 @@ namespace CIAO
   // @@ Gan, as we discussed before can you please wrap this
   // implementation in a namespace Node_Application or whatever to
   // signify that it belongs to another software piece of CIAO?
-  class NodeApplication_Impl
+  class NODEAPPLICATION_Export NodeApplication_Impl
     : public virtual POA_Deployment::NodeApplication
   {
   public:
