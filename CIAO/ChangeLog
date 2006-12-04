@@ -1,3 +1,8 @@
+Mon Dec  4 12:35:57 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * DAnCE/TargetManager/TM_Client.mpc:
+          Simplified this file using more base projects
+
 Mon Dec  4 12:29:57 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * DAnCE/TargetManager/DomainDataManager.h:
