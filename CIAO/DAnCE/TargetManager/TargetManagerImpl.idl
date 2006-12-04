@@ -10,14 +10,10 @@
 #ifndef TARGETMGR_IDL
 #define TARGETMGR_IDL
 
-
-
 #include "ciao/Components.idl"
 #include "ciao/Deployment_Target_Data.idl"
 #include "TargetManagerExt.idl"
-
 #include "DomainEvents.idl"
-
 
 /**
  * @module CIAO

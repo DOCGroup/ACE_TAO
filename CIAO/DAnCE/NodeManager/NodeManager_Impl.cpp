@@ -31,7 +31,7 @@ CIAO::NodeManager_Impl_Base::init (ACE_ENV_SINGLE_ARG_DECL)
 {
   ACE_TRY
     {
-      //create the call back poa for NAM.
+      // Create the call back poa for NAM.
       PortableServer::POAManager_var mgr
         = this->poa_->the_POAManager (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;

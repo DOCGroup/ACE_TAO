@@ -33,13 +33,15 @@ CIAO::DomainDataManager * CIAO::DomainDataManager::create (CORBA::ORB_ptr orb,
 }
 
 
-CIAO::DomainDataManager* CIAO::DomainDataManager::get_data_manager ()
+CIAO::DomainDataManager*
+CIAO::DomainDataManager::get_data_manager ()
 {
   return global_data_manager_;
 }
 
 
-void CIAO::DomainDataManager::delete_data_manger ()
+void
+CIAO::DomainDataManager::delete_data_manger ()
 {
   if (global_data_manager_)
     delete global_data_manager_;

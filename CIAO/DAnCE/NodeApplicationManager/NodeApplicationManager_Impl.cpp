@@ -60,7 +60,7 @@ create_connections (ACE_ENV_SINGLE_ARG_DECL)
 
   ACE_NEW_THROW_EX (retv,
                     Deployment::Connections (),
-                    CORBA::INTERNAL ());
+                    CORBA::NO_MEMORY ());
   ACE_CHECK_RETURN (0);
 
   CORBA::ULong len = retv->length ();
@@ -941,7 +941,7 @@ create_node_application (const ACE_CString & options
 
   ACE_NEW_THROW_EX (prop,
                     Deployment::Properties,
-                    CORBA::INTERNAL ());
+                    CORBA::NO_MEMORY ());
   ACE_CHECK_RETURN (Deployment::NodeApplication::_nil());
 
   // @@ Create a new callback servant.
