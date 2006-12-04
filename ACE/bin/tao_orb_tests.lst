@@ -12,6 +12,7 @@
 
 TAO/tests/ORB_Local_Config/Bunch/run_test.pl:
 TAO/tests/ORB_Local_Config/Bug_1459/run_test.pl: SSL !STATIC
+TAO/tests/ORB_Local_Config/Bug_2612/run_test.pl: !STATIC !ACE_FOR_TAO
 TAO/tests/ORB_Local_Config/Separation/run_test.pl:
 TAO/tests/ORB_Local_Config/Service_Dependency/run_test.pl: !ST !STATIC
 TAO/tests/ORB_Local_Config/Shared/run_test.pl:
