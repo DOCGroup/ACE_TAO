@@ -234,7 +234,7 @@ struct Tester
     expected_calls f(tested_allocation_traits::freebuf_calls);
     expected_calls r(tested_element_traits::release_calls);
     {
-      tested_sequence a(8, 4, buffer);
+      tested_sequence a(8, 4, buffer, false);
       BOOST_CHECK_EQUAL(CORBA::ULong(8), a.maximum());
       BOOST_CHECK_EQUAL(CORBA::ULong(4), a.length());
       BOOST_CHECK_EQUAL(buffer, a.get_buffer());
@@ -419,7 +419,7 @@ struct Tester
     expected_calls f(tested_allocation_traits::freebuf_calls);
     expected_calls r(tested_element_traits::release_calls);
     {
-      tested_sequence a(8, 4, buffer);
+      tested_sequence a(8, 4, buffer, false);
       BOOST_CHECK_EQUAL(CORBA::ULong(8), a.maximum());
       BOOST_CHECK_EQUAL(CORBA::ULong(4), a.length());
       BOOST_CHECK_EQUAL(buffer, a.get_buffer());
