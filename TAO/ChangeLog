@@ -1,3 +1,8 @@
+Mon Dec  4 12:17:57 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Bug_2709_Regression/Client_Task.cpp:
+          Fixed conversion warning in vxworks builds
+
 Mon Dec  4 11:21:57 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/PI_Server/PortableServer_ORBInitializer.cpp:
