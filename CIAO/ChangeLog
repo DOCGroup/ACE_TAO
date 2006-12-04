@@ -1,3 +1,9 @@
+Mon Dec  4 12:14:57 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * MPC/config/*:
+          All CIAO base projects are moved from
+          ACE_wrappers/bin/MakeProjectCreator/config to this directory
+
 Mon Dec  4 12:35:57 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * DAnCE/TargetManager/TM_Client.mpc:
