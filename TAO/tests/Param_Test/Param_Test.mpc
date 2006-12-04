@@ -24,7 +24,7 @@ project(*Server): taoserver, avoids_minimum_corba, avoids_corba_e_compact {
 project(*Client): taoserver, avoids_minimum_corba, dynamicinterface {
   avoids += ace_for_tao
   exename = client
-  after  += *Server
+  after  += *idl
 
   Source_Files {
     param_testC.cpp
@@ -76,7 +76,7 @@ project(*Client): taoserver, avoids_minimum_corba, dynamicinterface {
 
 project(*Anyop): taoserver, avoids_minimum_corba, avoids_corba_e_compact {
   exename = anyop
-  after += *Client
+  after  += *idl
 
   Source_Files {
     param_testC.cpp
