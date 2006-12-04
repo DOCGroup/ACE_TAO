@@ -1,3 +1,9 @@
+Mon Dec  4 08:03:57 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Param_Test/Param_Test.mpc:
+          Build all projects after idl to get always the correct build
+          order
+
 Mon Dec  4 07:59:57 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/DynamicAny/DynCommon.{h,cpp}:
