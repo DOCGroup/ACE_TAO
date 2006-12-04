@@ -55,6 +55,8 @@ public:
   {}
 
   /* Use default ctor, operator= and dtor */
+
+  /// @copydoc details::generic_sequence::maximum
   inline CORBA::ULong maximum() const {
     return impl_.maximum();
   }
@@ -66,7 +68,6 @@ public:
   inline CORBA::ULong length() const {
     return impl_.length();
   }
-
   /// @copydoc details::generic_sequence::length
   inline void length(CORBA::ULong length) {
     impl_.length(length);
@@ -95,6 +96,7 @@ public:
   inline value_type * get_buffer(CORBA::Boolean orphan = false) {
     return impl_.get_buffer(orphan);
   }
+  /// @copydoc details::generic_sequence::swap
   inline void swap(unbounded_basic_string_sequence & rhs) throw() {
     impl_.swap(rhs.impl_);
   }
