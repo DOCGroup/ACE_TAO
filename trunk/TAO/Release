@@ -32,6 +32,7 @@ CONTROLLED_FILES = \
 	TAO/orbsvcs \
 	TAO/performance-tests \
 	TAO/rules.tao.GNU \
+        TAO/MPC \
 	TAO/tao \
 	TAO/tests \
 	TAO/utils
