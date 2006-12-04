@@ -1,3 +1,15 @@
+Mon Dec  4 23:13:12 UTC 2006  Iliyan Jeliazkov  <iliyan@ociweb.com>
+
+        * ace/Service_Gestalt.cpp (init_i):
+
+          Fixed bug#2735 and eliminated a potential memory leak of the
+          list of already processed static services. The failure scenario
+          is based on a case where static initializers register a bunch of
+          service objects and then later the gestalt::open() is called. At
+          that point, the abovementioned list is reinitialized and its
+          contents was lost. See also the other failure scenario
+          (bug#2701) for which a fix was put in on Nov 9 2006.
+
 Mon Dec  4 18:00:16 UTC 2006  Iliyan Jeliazkov  <iliyan@ociweb.com>
 
         * bin/tao_orb_tests.lst:
