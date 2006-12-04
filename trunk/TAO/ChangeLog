@@ -1,3 +1,9 @@
+Mon Dec  4 13:23:57 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * examples/Content_Server/AMI_Iterator/Content_Iterator_i.cpp:
+        * examples/Content_Server/SMI_Iterator/Content_Iterator_i.cpp:
+          Added static casts to get rid of warnings with vc
+
 Mon Dec  4 12:36:57 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Oneway_Timeouts/*:
