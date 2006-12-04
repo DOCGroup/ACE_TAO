@@ -1,7 +1,0 @@
-// -*- MPC -*-
-// $Id$
-
-project : ciao_client_dnc, ciao_deployment_svnt, utils, naming, ciao_events_dnc {
-  after += CIAO_DnC_Server
-  libs  += CIAO_DnC_Server
-}
