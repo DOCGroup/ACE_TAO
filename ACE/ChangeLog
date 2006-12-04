@@ -1,3 +1,8 @@
+Mon Dec  4 13:13:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/tao_orb_tests.lst:
+          Don't run Bug_2709_Regression with ACE_FOR_TAO
+
 Mon Dec  4 12:49:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Basic_Types.h:
