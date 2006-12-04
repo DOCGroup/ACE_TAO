@@ -123,7 +123,7 @@ sub store_file ($)
     elsif ($name =~ /\/GNUmakefile.*.[^~]$/) {
         push @files_makefile, ($name);
     }
-    elsif ($name =~ /\.(mpc|mwc|mpb|mpt)/i) {
+    elsif ($name =~ /\.(mpc|mwc|mpb|mpt)$/i) {
         push @files_mpc, ($name);
     }
     elsif ($name =~ /\.(icc|ncb|opt|zip)$/i) {
@@ -1448,7 +1448,7 @@ check_for_streams_include () if ($opt_l >= 6);
 check_for_dependency_file () if ($opt_l >= 1);
 check_for_makefile_variable () if ($opt_l >= 1);
 check_for_inline_in_cpp () if ($opt_l >= 2);
-# check_for_id_string () if ($opt_l >= 1);
+check_for_id_string () if ($opt_l >= 1);
 check_for_newline () if ($opt_l >= 1);
 check_for_inline () if ($opt_l >= 2);
 check_for_math_include () if ($opt_l >= 3);

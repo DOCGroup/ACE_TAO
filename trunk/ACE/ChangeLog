@@ -1,3 +1,9 @@
+Mon Dec  4 11:26:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/fuzz.pl:
+          Corrected the expression to fill the files_mpc array and
+          enabled the Id check again
+
 Fri Dec  1 13:36:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * Kokyu/docs/Kokyu.html:
