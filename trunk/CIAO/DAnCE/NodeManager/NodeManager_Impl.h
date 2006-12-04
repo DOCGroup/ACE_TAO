@@ -184,7 +184,7 @@ namespace CIAO
                              ACE_ENV_ARG_DECL)
       ACE_THROW_SPEC ((CORBA::SystemException))=0;
 
-    /// Actual implementation of the <get_shared_components> IDL operation
+    /// Actual implementation of the @c get_shared_components IDL operation
     virtual ::Deployment::ComponentPlans *
     get_shared_components_i (void);
 
