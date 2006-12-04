@@ -1,3 +1,9 @@
+Mon Dec  4 12:24:57 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * MPC
+        * MPC/config
+          New directory for the base projects specifically for CIAO
+
 Mon Dec  4 12:16:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * DAnCE/StaticConfigurator/StaticDAnCEParser.cpp:
