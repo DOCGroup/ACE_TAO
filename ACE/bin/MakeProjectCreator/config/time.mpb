@@ -1,8 +1,0 @@
-// -*- MPC -*-
-// $Id$
-
-project : orbsvcslib, svc_utils, portableserver {
-  after     += CosTime
-  libs      += TAO_CosTime
-  tagchecks += Time
-}
