@@ -1,8 +1,0 @@
-// $Id$
-
-typedef string MyString;
-
-interface MyInterface
-{
-    boolean myMethod (in MyString stringParam);
-};
