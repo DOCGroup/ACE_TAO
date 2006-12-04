@@ -1,3 +1,8 @@
+Mon Dec  4 15:42:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/MakeProjectCreator/config:
+          Moved TAO base projects to $TAO_ROOT/MPC/config
+
 Mon Dec  4 13:16:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/MakeProjectCreator/config/MPC.cfg:
@@ -34,7 +39,7 @@ Mon Dec  4 13:16:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
         * bin/MakeProjectCreator/config/ciaocidldefaults.mpb:
         * bin/MakeProjectCreator/config/cidlc.mpb:
         * bin/MakeProjectCreator/config/dance_extension_stub.mpb:
-          Moved to CIAO_ROOT/MPC/config
+          Moved to $CIAO_ROOT/MPC/config
 
 Mon Dec  4 13:13:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
