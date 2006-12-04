@@ -98,7 +98,6 @@ Mon Dec  4 07:59:57 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Sun Dec  3 14:25:57 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
 
-<<<<<<< .mine
         * tests/ORB_Local_Config/Bug_1459/Makefile.am:
         * tests/ORB_Local_Config/Bunch/Makefile.am:
         * tests/ORB_Local_Config/Separation/Makefile.am:
@@ -106,35 +105,6 @@ Sun Dec  3 14:25:57 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
         * tests/ORB_Local_Config/Two_DLL_ORB/Makefile.am:
         * tests/ORB_Local_Config/Simple/Makefile.am:
         * tests/ORB_Local_Config/Service_Dependency/Makefile.am:
-=======
-  * tests/ORB_Local_Config/Bug_1459/Makefile.am:
-  * tests/ORB_Local_Config/Bunch/Makefile.am:
-  * tests/ORB_Local_Config/Separation/Makefile.am:
-  * tests/ORB_Local_Config/Shared/Makefile.am:
-  * tests/ORB_Local_Config/Two_DLL_ORB/Makefile.am:
-  * tests/ORB_Local_Config/Simple/Makefile.am:
-  * tests/ORB_Local_Config/Service_Dependency/Makefile.am:
->>>>>>> .r75788
-
-          Regenerated.
-
-<<<<<<< .mine
-        * tests/ORB_Local_Config/Bug_1459/Bug_1459.mpc:
-        * tests/ORB_Local_Config/Bunch/Bunch.mpc:
-        * tests/ORB_Local_Config/Separation/Separation.mpc:
-        * tests/ORB_Local_Config/Shared/Shared.mpc:
-        * tests/ORB_Local_Config/Two_DLL_ORB/Two_DLL_ORB.mpc:
-        * tests/ORB_Local_Config/Simple/Simple.mpc:
-        * tests/ORB_Local_Config/Service_Dependency/Service_Dependency.mpc:
-=======
-  * tests/ORB_Local_Config/Bug_1459/Bug_1459.mpc:
-  * tests/ORB_Local_Config/Bunch/Bunch.mpc:
-  * tests/ORB_Local_Config/Separation/Separation.mpc:
-  * tests/ORB_Local_Config/Shared/Shared.mpc:
-  * tests/ORB_Local_Config/Two_DLL_ORB/Two_DLL_ORB.mpc:
-  * tests/ORB_Local_Config/Simple/Simple.mpc:
-  * tests/ORB_Local_Config/Service_Dependency/Service_Dependency.mpc:
->>>>>>> .r75788
 
           Add automake specific section so that includes is set relative
           to $(srcdir).
