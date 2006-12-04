@@ -12,7 +12,7 @@ project(*Client): taoserver, iortable, ftclientorb {
   after += *idl
   exename = client
   Source_Files {
-    TestS.cpp    
+    TestS.cpp
     TestC.cpp
     client.cpp
     Client_Task.cpp
@@ -24,7 +24,7 @@ project(*Client): taoserver, iortable, ftclientorb {
 }
 
 project(*Server): taoserver, iortable {
-  after += *Client
+  after += *idl
   exename = server
   Source_Files {
     TestC.cpp
