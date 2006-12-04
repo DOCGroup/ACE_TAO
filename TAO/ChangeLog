@@ -1,3 +1,12 @@
+Mon Dec  4 11:21:57 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/PI_Server/PortableServer_ORBInitializer.cpp:
+        * tao/PI_Server/PortableServer_PolicyFactory.cpp:
+          Fixed compile errors with CORBA/e compact
+
+        * tao/Bounded_Value_Sequence_T.h:
+          Improved doxygen documentation
+
 Mon Dec  4 08:03:57 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Param_Test/Param_Test.mpc:
@@ -10,7 +19,6 @@ Mon Dec  4 07:59:57 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
           Removed not needed const qualifiers on the return type, fixes
           icc warnings
 
-        * tao/Bounded_Value_Sequence_T.h:
         * tao/Unbounded_Basic_String_Sequence_T.h:
           Improved doxygen documentation
 
