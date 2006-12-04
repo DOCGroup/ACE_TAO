@@ -5,7 +5,7 @@
  *
  * @brief Maintains the Domain Information
  *
- * It contains the entire Domain information.Both the
+ * It contains the entire Domain information. Both the
  * initial domain as well as the current available domain.
  *
  * @author Nilabja Roy nilabjar@dre.vanderbilt.edu
@@ -181,7 +181,6 @@ namespace CIAO
        * @param deployed The deployed Properties
        * @param available The available Properties
        */
-
       void match_properties (
                         ::Deployment::Properties deployed,
                         ::Deployment::SatisfierProperties& available);
@@ -201,8 +200,7 @@ namespace CIAO
        *             when the deployed resources exceeds
        *             the available resource.
        */
-
-        void commit_release_resource (  ::Deployment::Property & deployed,
+      void commit_release_resource (  ::Deployment::Property & deployed,
                           ::Deployment::SatisfierProperty & available);
 
       /**
