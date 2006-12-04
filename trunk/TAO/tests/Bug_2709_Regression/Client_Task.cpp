@@ -1,4 +1,4 @@
-// $Id:$
+// $Id$
 
 #include "TestC.h"
 #include "Client_Task.h"
@@ -29,7 +29,7 @@ Client_Task::make_iogr (const char* domain_id, CORBA::ULongLong group_id, CORBA:
   if (CORBA::is_nil (remote_server.in ()))
     {
       ACE_ERROR ((LM_ERROR, "Error: Remote server is not started.\n"));
-      ACE_TRY_THROW (CORBA::INTERNAL ()); 
+      ACE_TRY_THROW (CORBA::INTERNAL ());
     }
 
   CORBA::Object_var collocated_server(
@@ -37,8 +37,8 @@ Client_Task::make_iogr (const char* domain_id, CORBA::ULongLong group_id, CORBA:
 
   if (CORBA::is_nil (collocated_server.in ()))
     {
-      ACE_ERROR ((LM_ERROR, "Error: Collocated server is not started.\n"));    
-      ACE_TRY_THROW (CORBA::INTERNAL ()); 
+      ACE_ERROR ((LM_ERROR, "Error: Collocated server is not started.\n"));
+      ACE_TRY_THROW (CORBA::INTERNAL ());
     }
 
   FT::TagFTGroupTaggedComponent ft_tag_component;
@@ -47,7 +47,7 @@ Client_Task::make_iogr (const char* domain_id, CORBA::ULongLong group_id, CORBA:
   TAO_IOP::TAO_IOR_Manipulation::IORList iors (1);
   iors.length (2);
   iors [0] = CORBA::Object::_duplicate (remote_server.ptr());
-  iors [1] = CORBA::Object::_duplicate (collocated_server.ptr());  
+  iors [1] = CORBA::Object::_duplicate (collocated_server.ptr());
 
   CORBA::Object_var new_ref =
     this->iorm_->merge_iors (iors ACE_ENV_ARG_PARAMETER);
@@ -113,7 +113,7 @@ int Client_Task::svc (void)
       ACE_TRY_CHECK;
 
       CORBA::Object_var object =
-        corb_->string_to_object (iorgr_string ACE_ENV_ARG_PARAMETER);
+        corb_->string_to_object (iorgr_string.in () ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       Test_var server =
@@ -150,7 +150,7 @@ int Client_Task::svc (void)
           {
             // Following call will fail if the problem is not fixed.
 
-            // Because we are using TRANSIENT objects with the SYSTEM_ID policy 
+            // Because we are using TRANSIENT objects with the SYSTEM_ID policy
             // the object keys won't match so the POA won't be able to dispatch locally.
             // This wouldn't work with 'direct' collocation strategy but the default is 'through poa'.
             server->myMethod (ACE_ENV_SINGLE_ARG_PARAMETER);
