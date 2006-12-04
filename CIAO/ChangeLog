@@ -1,3 +1,36 @@
+Mon Dec  4 11:37:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+          Converted the NodeApplication into a library and build
+          an exe using this library. Will prevent duplicate compilation
+          of part of the code. Fixes bugzilla bug 2739.
+
+        * DAnCE/NodeApplication/CIAO_NodeApplication_export.h:
+          New export file:
+
+        * DAnCE/NodeApplication/Configurator_Factory.h:
+        * DAnCE/NodeApplication/Container_Impl.h:
+        * DAnCE/NodeApplication/NodeApplication_Core.h:
+        * DAnCE/NodeApplication/NodeApplication_Impl.h:
+          Added export macro to export the class from the new NodeApplication
+          library.
+
+        * DAnCE/NodeApplication/NodeApplication.mpc:
+          Added new library project and use this in the executable.
+
+        * DAnCE/NodeApplicationManager/NodeApplicationManager.mpc:
+          Use the new NodeApplication library and the new base projects
+          I added for CIAO
+
+        * DAnCE/NodeApplicationManager/NodeApplicationManager_Impl.{h,cpp,inl}:
+          Moved destructor from inline to cpp method and small code improvements
+
+        * DAnCE/NodeManager/NodeManager.mpc:
+        * DAnCE/StaticConfigurator/StaticDAnCEParser.mpc:
+          Simplified by using the new base projects
+
+        * DAnCE/NodeManager/NodeManager_Impl.cpp:
+          Small improvements
+
 Mon Dec  4 07:35:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * CIAO-INSTALL.html:

@@ -1,26 +1,32 @@
 // -*- MPC -*-
 // $Id$
 
-project(NodeApplication): ciao_server_dnc, ciao_events_dnc {
-  after += NoOp_Configurator
-  libs  += CIAO_NoOp_Configurator
-  exename   = NodeApplication
-
-  Source_Files {
-    Configurator_Factory.cpp
-    Container_Impl.cpp
-    NodeApplication_Core.cpp
-    NodeApplication_Impl.cpp
-    NodeApplication.cpp
-  }
-}
-
 project(NoOp_Configurator): ciao_deployment_stub {
   sharedname   = CIAO_NoOp_Configurator
   dynamicflags = NOOP_CONFIGURATOR_BUILD_DLL
 
   Source_Files {
     NoOp_Configurator.cpp
+  }
+}
+
+project(NodeApplicationLib): ciao_server_dnc, ciao_events_dnc, ciao_noop_configurator {
+  sharedname   = CIAO_NodeApplication
+  dynamicflags = NODEAPPLICATION_BUILD_DLL
+
+  Source_Files {
+    Configurator_Factory.cpp
+    Container_Impl.cpp
+    NodeApplication_Core.cpp
+    NodeApplication_Impl.cpp
+  }
+}
+
+project(NodeApplication): ciao_server_dnc, ciao_events_dnc, ciao_nodeapplication, ciao_noop_configurator {
+  exename   = NodeApplication
+
+  Source_Files {
+    NodeApplication.cpp
   }
 }
 
