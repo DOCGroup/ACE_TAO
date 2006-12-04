@@ -4,6 +4,8 @@
    Version 1.01e, February 12th, 2005
 
    Copyright (C) 1998-2005 Gilles Vollant
+
+   $Id$
 */
 
 #include <stdio.h>
@@ -86,18 +88,18 @@ voidpf ZCALLBACK fopen_file_func ( voidpf opaque,const char* filename,int mode)
 
 
 uLong ZCALLBACK fread_file_func (voidpf opaque,voidpf stream,void* buf,uLong size)
-{   
+{
     uLong ret;
-    
+
     MINIZIP_UNUSED_ARG (opaque);
-    
+
     ret = (uLong)fread(buf, 1, (size_t)size, (FILE *)stream);
     return ret;
 }
 
 
 uLong ZCALLBACK fwrite_file_func (voidpf opaque,voidpf stream,const void* buf,uLong size)
-   
+
 {
     uLong ret;
     MINIZIP_UNUSED_ARG (opaque);
@@ -139,7 +141,7 @@ long ZCALLBACK fseek_file_func (voidpf opaque,voidpf stream,uLong offset,int ori
 }
 
 int ZCALLBACK fclose_file_func (voidpf opaque,voidpf stream)
-{ 
+{
     int ret;
     MINIZIP_UNUSED_ARG (opaque);
     ret = fclose((FILE *)stream);
@@ -147,7 +149,7 @@ int ZCALLBACK fclose_file_func (voidpf opaque,voidpf stream)
 }
 
 int ZCALLBACK ferror_file_func (voidpf opaque,voidpf stream)
-{ 
+{
     int ret;
     MINIZIP_UNUSED_ARG (opaque);
     ret = ferror((FILE *)stream);
@@ -155,7 +157,7 @@ int ZCALLBACK ferror_file_func (voidpf opaque,voidpf stream)
 }
 
 void fill_fopen_filefunc (zlib_filefunc_def* pzlib_filefunc_def)
- { 
+ {
     pzlib_filefunc_def->zopen_file = fopen_file_func;
     pzlib_filefunc_def->zread_file = fread_file_func;
     pzlib_filefunc_def->zwrite_file = fwrite_file_func;
