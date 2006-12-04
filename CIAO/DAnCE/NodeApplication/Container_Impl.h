@@ -19,7 +19,7 @@
 #define CIAO_CONTAINER_IMPL_H
 #include /**/ "ace/pre.h"
 
-#include "ace/config-all.h"
+#include "CIAO_NodeApplication_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -45,7 +45,7 @@ namespace CIAO
    * interface and is used to manage the lifecycle of the installed
    * components and homes.
    */
-  class Container_Impl
+  class NODEAPPLICATION_Export Container_Impl
     : public virtual POA_Deployment::Container
   {
   public:
