@@ -1,3 +1,8 @@
+Mon Dec  4 12:26:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/MakeProjectCreator/config/ciao_targetmanager_svnt.mpb:
+          New base project
+
 Mon Dec  4 11:27:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/MakeProjectCreator/config/ciao_nodeapplication.mpb:
