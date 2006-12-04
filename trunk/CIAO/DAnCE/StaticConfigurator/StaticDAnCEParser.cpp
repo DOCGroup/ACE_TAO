@@ -16,15 +16,13 @@
  */
 //=============================================================================
 
-#include "NodeApplicationManager/ImplementationInfo.h"
+#include "DAnCE/NodeApplicationManager/ImplementationInfo.h"
 #include "ace/OS_NS_stdio.h"
 #include "ace/streams.h"
 #include "ace/Get_Opt.h"
 #include "tao/IORTable/IORTable.h"
 #include "tao/CDR.h"
 #include "Config_Handlers/XML_File_Intf.h"
-
-using namespace CIAO;
 
 static void
 usage (const ACE_TCHAR* program)
@@ -77,7 +75,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   ::Deployment::ComponentPlans dummy;
   dummy.length (0);
 
-  NodeImplementationInfoHandler handler (plan, dummy);
+  CIAO::NodeImplementationInfoHandler handler (plan, dummy);
 
   Deployment::NodeImplementationInfo_var node_impl_info (handler.node_impl_info ());
 
