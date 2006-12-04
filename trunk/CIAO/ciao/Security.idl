@@ -3,6 +3,8 @@
  * service in its implementation but just using this local
  * interface below from the real security service pulls in
  * 250Kb of footprint
+ *
+ * $Id$
  */
 
 #if !defined (CIAO_SECURITY_IDL)
