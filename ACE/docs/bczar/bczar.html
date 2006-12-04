@@ -1,3 +1,5 @@
+<!-- $Id$ -->
+
 <html>
 <head>
 <title>The realm of the build czar</title>
@@ -102,7 +104,7 @@ part of the release.</li>
 The best place to create the workspace is under /export/anduriltmp/bczar. Don't use
 the home directory itself, it is an NFS share and not really fast.
 </li>
-<li>Checkout like this: 
+<li>Checkout like this:
 <ul><li>svn co https://svn.dre.vanderbilt.edu/DOC/Middleware/trunk DOC_ROOT</li>
     <li>svn co https://svn.dre.vanderbilt.edu/DOC/MPC/trunk DOC_ROOT/ACE/MPC</li>
 </ul>
@@ -118,7 +120,7 @@ is used to fill the mail id portion of the ChangeLog entry.</li>
 <li> Change directories to to <tt>$DOC_ROOT</tt> </li>
 <li> Tag the release by executing <code>ACE/bin/make_release -v beta -u</code> This will only
 take a couple minutes to complete.</li>
-<li> Create the kits by executing <code>ACE/bin/make_release -k ace+tao+ciao </code> 
+<li> Create the kits by executing <code>ACE/bin/make_release -k ace+tao+ciao </code>
 
 <ul><li>These commands only tags and creates the kits for the
  software itself, not documentation. </li>
@@ -168,7 +170,7 @@ svn rm https://svn.dre.vanderbilt.edu/DOC/Middleware/tags/ACE+TAO+CIAO-X_Y_Z<br 
 
 Note that this <em>only</em> needs to be done if the <em>tagging</em> fails.  If kit creation
 fails, simply restart that process.
-<li>The packages and up by default under /export/doc/latest, you can copy them to the webserver using the following commands. At the moment 
+<li>The packages and up by default under /export/doc/latest, you can copy them to the webserver using the following commands. At the moment
 you execute these commands all users can download these packages.</li>
 <code>
 cp /export/doc/latest/ACE* /export/www/download.dre/ACE+TAO-distribution<br>
