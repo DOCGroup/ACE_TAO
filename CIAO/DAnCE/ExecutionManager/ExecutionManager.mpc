@@ -1,11 +1,8 @@
 // -*- MPC -*-
 // $Id$
 
-project(ExecutionManager): ciao_server_dnc, dance_extension_stub, ciao_domainapplicationmanager_dnc {
+project(ExecutionManager): ciao_server_dnc, dance_extension_stub, ciao_domainapplicationmanager_dnc, ciao_executionmanager_stub {
   exename = Execution_Manager
-
-  after += ExecutionManager_stub
-  libs += ExecutionManager_stub
 
   IDL_Files {
   }
