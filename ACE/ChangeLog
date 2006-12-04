@@ -1,3 +1,9 @@
+Mon Dec  4 12:49:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Basic_Types.h:
+          Added check for __ia64__, then we assume we have little endian,
+          this define is set by the HP OpenVMS compiler
+
 Mon Dec  4 12:26:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/MakeProjectCreator/config/ciao_targetmanager_svnt.mpb:
