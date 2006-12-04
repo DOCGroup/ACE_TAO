@@ -72,6 +72,7 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "utl_string.h"
 #include "global_extern.h"
 #include "nr_extern.h"
+#include "fe_extern.h"
 #include "ast_interface.h"
 #include "ast_enum.h"
 #include "ast_union.h"
@@ -630,7 +631,11 @@ UTL_Error::syntax_error (IDL_GlobalData::ParseState ps)
   ACE_ERROR ((LM_ERROR,
               "%s\n",
               parse_state_to_error_message (ps)));
-  idl_global->set_err_count (idl_global->err_count () + 1);
+
+  // Better to bail here than to increment the error count and
+  // try to avoid further bogus error messages and crashes
+  // that may arise.
+  throw FE_Bailout ();
 }
 
 void
