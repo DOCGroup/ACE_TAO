@@ -1,3 +1,23 @@
+Tue Dec  5 21:51:46 UTC 2006  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_visitor_argument/arglist.cpp (visit_sequence):
+        
+          Added code to create the sequence node's name, if a check
+          determines that the node is from an included IDL file, and
+          is an anonymous sequence (not created with a typedef declaration).
+          This is the case in this particular visitor if a valuetype
+          inherits an anonymous sequence member from a valuetype 
+          declared in another IDL file, and this visitor is generating
+          the argument list for the OBV_* constructor with member
+          values. The node's name has not yet been set, since it
+          cannot be done in the node constructor - if the sequence
+          is declared with a typedef, the typedef node is created
+          after the sequence node, and it also sets the sequence
+          node's 'anonymous' flag to false (set to true by default
+          in the sequence node constructor). Thanks to Ossama
+          Othman <ossama.othman@symantec.com> for reporting the
+          bug.
+
 Tue Dec  5 18:36:57 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/DSI_Gateway/DSI_Gateway.mpc:
