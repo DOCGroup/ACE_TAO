@@ -1,3 +1,9 @@
+Tue Dec  5 11:35:57 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * TAO_IDL/be/be_codegen.cpp:
+          Added a check that -SSi is not a valid commandline argument, so
+          then we give an error, it is -SS, no third character at all
+
 Tue Dec  5 11:31:57 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * MPC/config/valuetype.mpb:
