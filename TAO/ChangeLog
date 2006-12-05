@@ -1,3 +1,8 @@
+Tue Dec  5 11:17:57 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * examples/CSD_Strategy/ThreadPool6/CSD_Test_ThreadPool6.mpc:
+          Don't build server with corba/e compact
+
 Tue Dec  5 08:28:57 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/OctetSeq/OctetSeq.mpc:
