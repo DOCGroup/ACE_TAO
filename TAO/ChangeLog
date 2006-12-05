@@ -1,4 +1,14 @@
+Tue Dec  5 18:36:57 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/DSI_Gateway/DSI_Gateway.mpc:
+          Don't build with corba_e_compact
+
+        * orbsvcs/orbsvcs/Log/LogActivator.{h,cpp}:
+        * orbsvcs/orbsvcs/Naming/Storable_Naming_Context_Activator.{h,cpp}:
+          Changes to resolve compile errors with CORBA/e compact
+
 Tue Dec  5 15:29:59 UTC 2006  Vadym Ridosh <vridosh@prismtech.com>
+
         * tests/Bug_2709_Regression/*:
         * orbsvcs/tests/Bug_2709_Regression/*:
           Regression test for bug#2709 was moved.
