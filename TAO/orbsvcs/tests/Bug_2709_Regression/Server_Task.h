@@ -1,4 +1,4 @@
-// $Id:$
+// $Id$
 
 #include "ace/Task.h"
 #include "ace/Manual_Event.h"

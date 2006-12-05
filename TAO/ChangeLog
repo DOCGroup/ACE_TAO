@@ -1,3 +1,8 @@
+Tue Dec  5 15:29:59 UTC 2006  Vadym Ridosh <vridosh@prismtech.com>
+        * tests/Bug_2709_Regression/*:
+        * orbsvcs/tests/Bug_2709_Regression/*:
+          Regression test for bug#2709 was moved.
+
 Tue Dec  5 15:02:37 UTC 2006 Vadym Ridosh <vridosh@prismtech.com>
         * tests/Bug_2709_Regression/Bug_2709_Regression.mpc:
           Added dependency to avoid problem with build on some OSes.
