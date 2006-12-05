@@ -1,3 +1,27 @@
+Tue Dec  5 19:44:43 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/config-freebsd.h:
+          Simplified ACE_HAS_SNPRINTF setting
+
+        * ace/config-irix6.x-common.h:
+        * ace/config-sco-5.0.0-mit-pthread.h:
+        * ace/config-tru64.h:
+          Removed commented out defines, makes it easier to search whether
+          a macro is defined in any config file or not
+
+        * ace/config-tru64.h:
+          Use config-posix.h
+
+        * ace/Read_Buffer.{h,cpp}:
+          Changed close_on_delete to a real bool
+
+        * ace/Service_Config.{h,inl}:
+        * ace/Service_Gestalt.{h,cpp,inl}:
+          Use bool for the ignore arguments
+
+        * ace/SOCK_Dgram.inl:
+          Const change
+
 Tue Dec  5 15:47:43 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * include/makeinclude/makeinclude/platform_osf1_3.2_cxx.GNU:

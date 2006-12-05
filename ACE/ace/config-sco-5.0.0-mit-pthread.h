@@ -37,9 +37,6 @@
 #define ACE_LACKS_PWD_FUNCTIONS
 #define ACE_HAS_BIG_FD_SET
 
-//#define ACE_LACKS_SYSCALL
-//#define ACE_LACKS_STRRECVFD
-//#define ACE_NEEDS_FTRUNCATE
 #define ACE_LACKS_RLIMIT
 #define ACE_LACKS_MADVISE
 
@@ -57,33 +54,17 @@
 // Platform supports recvmsg and sendmsg.
 #define ACE_HAS_MSG
 
-// Compiler/platform contains the <sys/syscall.h> file.
-//#define ACE_HAS_SYS_SYSCALL_H
-
-// Fixes a problem with HP/UX not wrapping the mmap(2) header files
-// with extern "C".
-//#define ACE_HAS_BROKEN_MMAP_H
-
 // Prototypes for both signal() and struct sigaction are consistent.
 #define ACE_HAS_CONSISTENT_SIGNAL_PROTOTYPES
 
 // Compiler/platform has correctly prototyped header files.
 #define ACE_HAS_CPLUSPLUS_HEADERS
 
-// Header files lack t_errno for ACE_TLI.
-//#define ACE_LACKS_T_ERRNO
-
-// Compiler/platform supports poll().
-// #define ACE_HAS_POLL
-
 // Platform supports POSIX O_NONBLOCK semantics.
 #define ACE_HAS_POSIX_NONBLOCK
 
 // Compiler/platform defines the sig_atomic_t typedef
 #define ACE_HAS_SIG_ATOMIC_T
-
-// Compiler supports the ssize_t typedef.
-//#define ACE_HAS_SSIZE_T
 
 // Defines the page size of the system.
 #define ACE_PAGE_SIZE 4096
@@ -95,22 +76,15 @@
 // #define ACE_HAS_VOIDPTR_GETTIMEOFDAY
 #define ACE_HAS_TIMEZONE_GETTIMEOFDAY
 
-// Note, this only works if the flag is set above!
-//#define ACE_HAS_GETRUSAGE
-
 // Platform uses int for select() rather than fd_set.
 #define ACE_HAS_SELECT_H
 
 // Platform has prototypes for ACE_TLI.
 #define ACE_HAS_TLI
-//#define       ACE_HAS_SVR4_TLI
 #define ACE_HAS_TLI_PROTOTYPES
 #define ACE_HAS_TIMOD_H
 #define ACE_HAS_TIUSER_H
 #define ACE_LACKS_T_ERRNO
-
-// Platform has the XLI version of ACE_TLI.
-// #define ACE_HAS_XLI
 
 #define ACE_HAS_GNU_CSTRING_H
 
@@ -121,7 +95,6 @@
 
 #define ACE_HAS_STRBUF_T
 #define ACE_HAS_STREAMS
-//#define       ACE_HAS_STREAM_PIPES
 #define ACE_HAS_IP_MULTICAST
 
 // Threads
