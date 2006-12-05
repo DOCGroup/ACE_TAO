@@ -1,3 +1,21 @@
+Tue Dec  5 04:10:47 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* tests/AMH_Exceptions/Makefile.am:
+	* tests/AMH_Oneway/Makefile.am:
+	* tests/AMI/Makefile.am:
+	* tests/AMI_Buffering/Makefile.am:
+	* tests/AMI_Timeouts/Makefile.am:
+
+          Regenerated.
+
+	* tests/AMH_Exceptions/AMH_Exceptions.mpc:
+	* tests/AMH_Oneway/AMH_Oneway.mpc:
+	* tests/AMI/AMI.mpc:
+	* tests/AMI_Buffering/AMI_Buffering.mpc:
+	* tests/AMI_Timeouts/AMI_Timeouts.mpc:
+
+          Split out IDL compilation into separate MPC project.
+
 Mon Dec  4 18:01:55 UTC 2006  Iliyan Jeliazkov  <iliyan@ociweb.com>
 
         * tests/ORB_Local_Config/Bug_2612:
