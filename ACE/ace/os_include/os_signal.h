@@ -185,9 +185,6 @@ extern "C"
 #elif defined (ACE_HAS_TANDEM_SIGNALS)
    typedef void (*ACE_SignalHandler)(...);
    typedef void (*ACE_SignalHandlerV)(...);
-#elif defined (ACE_HAS_IRIX_53_SIGNALS)
-   typedef void (*ACE_SignalHandler)(...);
-   typedef void (*ACE_SignalHandlerV)(...);
 #elif defined (ACE_HAS_SPARCWORKS_401_SIGNALS)
    typedef void (*ACE_SignalHandler)(int, ...);
    typedef void (*ACE_SignalHandlerV)(int,...);
