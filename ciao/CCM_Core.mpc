@@ -196,6 +196,7 @@ project(Deployment_stub) : taolib_with_idl, valuetype, ifr_client, ciao_events_b
     Deployment_DomainApplicationManager.idl
     Deployment_ExecutionManager.idl
     Deployment_RepositoryManager.idl
+    Deployment_ResourceCommitmentManager.idl
   }
 
   Source_Files {

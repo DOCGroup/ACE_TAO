@@ -1,0 +1,34 @@
+
+#ifndef RESOURCE_COMMITMENT_MANAGER_IDL
+#define RESOURCE_COMMITMENT_MANAGER_IDL
+
+module Deployment {
+
+  exception ResourceCommitmentFailure {
+    string reason;
+    short index;
+    string propertyName;
+    any propertyValue;
+  };
+  /**
+   * @interface ResourceAllocation
+   * @brief Identifies a resource within a domain that is 
+   *  allocated from and the amount it is allocated
+   */
+  interface ResourceAllocation
+  {
+    attribute string elementName;
+    attribute string resourceName;
+  };
+
+  /// The Resource Allocation Sequence
+  typedef sequence <ResourceAllocation> ResourceAllocationSeq;
+
+  interface ResourceCommitmentManager {
+    void commitResources (in ResourceAllocationSeq resources);
+    void releaseResources (in ResourceAllocationSeq resources);
+  };
+};
+
+
+#endif

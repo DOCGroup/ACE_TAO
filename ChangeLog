@@ -1,3 +1,13 @@
+Tue Dec  5 06:29:22 UTC 2006  Nilabja R  <nilabjar@dre.vanderbilt.edu>
+
+        * DAnCE/TargetManager/CmpClient.cpp:
+
+        * ciao/CCM_Core.mpc:
+        * ciao/Deployment_ResourceCommitmentManager.idl:
+        * ciao/Deployment_TargetManager.idl:
+          Added in order to introduce ResourceCommitmenManager
+          to TargetManager
+
 Mon Dec  4 12:14:57 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * MPC/config/*:
@@ -680,4 +690,3 @@ mode: change-log
 add-log-time-format: (lambda () (progn (setq tz (getenv "TZ")) (set-time-zone-rule "UTC") (setq time (format-time-string "%a %b %e %H:%M:%S %Z %Y" (current-time))) (set-time-zone-rule tz) time))
 indent-tabs-mode: nil
 End:
-
