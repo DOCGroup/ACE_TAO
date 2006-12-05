@@ -1,6 +1,13 @@
+Tue Dec  5 11:25:00 UTC 2006  Simon Massey  <sma@prismtech.com>
+
+        * ace/SStringfwd.h:
+
+          Provide for annoying HP aCC 3.xx template bug.
+
 Tue Dec  5 10:01:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/config-lynxos.h:
+
           Improved LynxOS 4.2 support
 
 Mon Dec  4 23:13:12 UTC 2006  Iliyan Jeliazkov  <iliyan@ociweb.com>
