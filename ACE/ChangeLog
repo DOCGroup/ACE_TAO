@@ -1,3 +1,8 @@
+Tue Dec  5 14:33:43 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/config-irix6.x-sgic++-nothreads.h:
+          Removed
+
 Tue Dec  5 14:30:43 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/config-sunos5.4-centerline-2.x.h:
