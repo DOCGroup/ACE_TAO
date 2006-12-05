@@ -74,7 +74,7 @@ project (CIAO_DnC_Client) : taolib_with_idl, valuetype, ifr_client {
   }
 }
 
-project (CIAO_DnC_Container) : orbsvcslib, portableserver, valuetype, ifr_client, codecfactory, pi, ciao_client_dnc {
+project (CIAO_DnC_Container) : orbsvcslib, portableserver, valuetype, ifr_client, codecfactory, pi, ciao_client_dnc, avoids_corba_e_compact {
   sharedname  = CIAO_DnC_Container
   idlflags   += -Wb,export_include=CIAO_Container_Export.h
   idlflags   += -Wb,export_macro=CIAO_CONTAINER_Export
