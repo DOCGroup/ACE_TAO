@@ -1,3 +1,9 @@
+Tue Dec  5 14:30:43 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/config-sunos5.4-centerline-2.x.h:
+        * include/makeinclude/platform_sunos5_centerline.GNU:
+          Removed centerline support
+
 Tue Dec  5 14:07:43 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * include/makeinclude/platform_sunos4_g++.GNU:
