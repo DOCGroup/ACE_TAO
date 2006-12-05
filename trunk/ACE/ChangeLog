@@ -1,10 +1,28 @@
+Tue Dec  5 13:41:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/config-irix5.2.h:
+        * ace/config-irix5.3-g++.h:
+        * ace/config-irix5.3-sgic++.h:
+        * include/makeinclude/platform_irix5.2.GNU:
+        * include/makeinclude/platform_irix5.3_g++.GNU:
+        * include/makeinclude/platform_irix5.3_sgic++.GNU:
+          Deleted
+
+        * include/makeinclude/platform_irix6.x_common.GNU:
+          Use operator ?=
+
+        * ace/os_include/os_signal.h:
+          Removed Irix 5 support, fixes bugzilla 2013.
+
 Tue Dec  5 13:31:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/config-m88k.h:
+        * include/makeinclude/platform_m88k.GNU:
+          Deleted
+
         * ace/os_include/os_signal.h:
         * ace/os_include/sys/os_resource.h:
         * ace/os_include/sys/os_time.h:
-        * include/makeinclude/platform_m88k.GNU:
           Removed support for m88k which isn't maintained for years now.
           Fixes bugzilla 2012
 
