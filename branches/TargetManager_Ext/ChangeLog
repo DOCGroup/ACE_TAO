@@ -1,3 +1,8 @@
+Tue Dec  5 17:44:49 UTC 2006  Nilabja R  <nilabjar@dre.vanderbilt.edu>
+
+        * ciao/Deployment_TargetManager.idl:
+          Deleted some extraneous comments
+
 Tue Dec  5 06:29:22 UTC 2006  Nilabja R  <nilabjar@dre.vanderbilt.edu>
 
         * DAnCE/TargetManager/CmpClient.cpp:
