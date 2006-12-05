@@ -1,3 +1,12 @@
+Tue Dec  5 11:31:57 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * MPC/config/valuetype.mpb:
+        * Valuetype.mpc:
+          Valuetype is not available with corba/e micro
+
+        * Valuetype/ValueBase.cpp:
+          Use ACE_ERROR for an error message
+
 Tue Dec  5 11:25:57 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Bug_2654_Regression/Bug_2654_Regression.mpc:
