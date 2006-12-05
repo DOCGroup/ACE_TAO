@@ -7,8 +7,12 @@ PLANNED MAJOR CHANGES "SOMETIME IN THE FUTURE" (i.e., exact beta not known)
 
 PLANNED CHANGES FOR "ACE-5.5.5"
 ===============================
-* (OO) Minor 64 bit file offset fixes for ACE AIO classes on HP-UX.
-* (OO) Various other fixes that have been piling up.
+
+. (OO) Minor 64 bit file offset fixes for ACE AIO classes on HP-UX.
+
+. (OO) Various other fixes that have been piling up.
+
+. (Remedy) VxWorks 6.4 support
 
 USER VISIBLE CHANGES BETWEEN ACE-5.5.4 and ACE-5.5.5
 ====================================================
@@ -42,6 +46,10 @@ USER VISIBLE CHANGES BETWEEN ACE-5.5.4 and ACE-5.5.5
 . Added the ability to specify additional purify and quantify command-line
   options by setting PLATFORM_PURIFY_OPTIONS and PLATFORM_QUANTIFY_OPTIONS,
   respectively. Thank you to Howard Finer for supplying these additions.
+
+. Removed Irix 5 and m88k support
+
+. Improved LynxOS 4.2 support
 
 USER VISIBLE CHANGES BETWEEN ACE-5.5.3 and ACE-5.5.4
 ====================================================
