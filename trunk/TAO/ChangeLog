@@ -1,3 +1,9 @@
+Tue Dec  5 08:28:57 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/OctetSeq/OctetSeq.mpc:
+          Changed build order to resolve build order problems in the ace_for_tao
+          builds
+
 Tue Dec  5 04:21:50 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
 
         * configure.ac:
