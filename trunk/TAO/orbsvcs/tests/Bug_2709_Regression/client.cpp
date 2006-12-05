@@ -1,4 +1,4 @@
-// $Id:$
+// $Id$
 
 #include "TestC.h"
 #include "TestImpl.h"
