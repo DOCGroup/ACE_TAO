@@ -728,6 +728,7 @@ if test $tao_build_tests = yes; then
     tests/OBV/Truncatable/Makefile
     tests/OBV/ValueBox/Makefile
     tests/ORB_Local_Config/Bug_1459/Makefile
+    tests/ORB_Local_Config/Bug_2612/Makefile
     tests/ORB_Local_Config/Bunch/Makefile
     tests/ORB_Local_Config/Makefile
     tests/ORB_Local_Config/Separation/Makefile
