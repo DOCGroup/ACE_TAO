@@ -1,14 +1,14 @@
 // -*- MPC -*-
 // $Id$
 
-project(*idl): taoidldefaults {
+project(*idl): taoidldefaults, fault_tolerance {
   IDL_Files {
     Test.idl
   }
   custom_only = 1
 }
 
-project(*Client): taoserver, iortable, ftclientorb {
+project(*Client): taoserver, iortable, ftclientorb, fault_tolerance {
   after += *idl
   exename = client
   Source_Files {
@@ -23,7 +23,7 @@ project(*Client): taoserver, iortable, ftclientorb {
   }
 }
 
-project(*Server): taoserver, iortable {
+project(*Server): taoserver, iortable, fault_tolerance {
   after += *idl
   exename = server
   Source_Files {
