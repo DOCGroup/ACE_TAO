@@ -17,10 +17,6 @@ module Deployment {
     UpdateAvailable
   };
 
-  /**
-   * @todo The ResourceCommitmentManager is part of 06-04-01 and this is not
-   * part of the Target Manager yet
-   */
   interface TargetManager {
     Domain getAllResources ();
     Domain getAvailableResources ();
