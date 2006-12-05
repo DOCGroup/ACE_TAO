@@ -1,3 +1,19 @@
+Tue Dec  5 13:58:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/config-sco-4.2-nothread.h:
+          Deleted, ancient
+
+Tue Dec  5 13:51:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/config-dgux-4.11-epc.h:
+        * ace/config-dgux-4.x-ghs.h:
+        * include/makeinclude/platform_dgux4_epc.GNU:
+        * include/makeinclude/platform_dgux4_ghs.GNU:
+          Deleted
+
+        * ace/OS_NS_Thread.cpp:
+          Removed dgux support. Fixes bugzilla 2011
+
 Tue Dec  5 13:41:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/config-irix5.2.h:
