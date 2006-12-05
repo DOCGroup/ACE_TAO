@@ -1,3 +1,8 @@
+Tue Dec  5 13:59:43 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/config-sco-5.0.0-fsu-pthread.h:
+          Deleted, fsu pthread is already removed some time ago.
+
 Tue Dec  5 13:58:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/config-sco-4.2-nothread.h:
