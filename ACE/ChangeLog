@@ -1,3 +1,16 @@
+Tue Dec  5 15:47:43 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * include/makeinclude/makeinclude/platform_osf1_3.2_cxx.GNU:
+        * include/makeinclude/makeinclude/platform_osf1_4.x_cxx.GNU:
+        * include/makeinclude/makeinclude/platform_osf1_4.x_g++.GNU:
+        * include/makeinclude/makeinclude/platform_osf1_4.x_rcc.GNU:
+          Removed, very old
+
+        * include/makeinclude/makeinclude/platform_tru64_cxx.GNU:
+        * include/makeinclude/makeinclude/platform_tru64_g++.GNU:
+          We should be able to build on tru64 but it isn't really maintained,
+          moved the contents of the osf files into these files
+
 Tue Dec  5 15:22:43 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * include/makeinclude/makeinclude/platform_aix4_cset++.GNU:
