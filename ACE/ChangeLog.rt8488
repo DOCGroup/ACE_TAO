@@ -1,0 +1,11 @@
+Tue Dec  5 16:57:01 UTC 2006  Chris Cleeland  <cleeland_c@ociweb.com>
+
+        * ace/CDR_Stream.inl (adjust):
+
+          Applied a one-line change from Dan Troesser <troesser_d at
+	  ociweb dot com>, originally committed to OCITAO 1.4a.  VC8
+	  detected that memory around a buffer was being modified.
+	  Changed a boundary check from <= check to < that some believed
+	  was causing a write past the end of the buffer.  After the
+	  change, there were no compilation problems with VC8 and all the
+	  ACE CDR-related tests passed.

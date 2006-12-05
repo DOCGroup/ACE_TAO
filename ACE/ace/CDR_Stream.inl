@@ -454,7 +454,7 @@ ACE_OutputCDR::adjust (size_t size,
 
   char *end = buf + size;
 
-  if (end <= this->current_->end () &&
+  if (end < this->current_->end () &&
       end >= buf)
     {
 #if !defined (ACE_LACKS_CDR_ALIGNMENT)
