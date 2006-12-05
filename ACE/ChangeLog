@@ -1,3 +1,11 @@
+Tue Dec  5 14:07:43 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * include/makeinclude/platform_sunos4_g++.GNU:
+        * include/makeinclude/platform_sunos4_lucid.GNU:
+        * include/makeinclude/platform_sunos4_sunc++3.x.GNU:
+        * include/makeinclude/platform_sunos4_sunc++4.x.GNU:
+          Removed, not supported anymore
+
 Tue Dec  5 13:59:43 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/config-sco-5.0.0-fsu-pthread.h:
