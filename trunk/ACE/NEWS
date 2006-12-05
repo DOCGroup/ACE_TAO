@@ -47,7 +47,7 @@ USER VISIBLE CHANGES BETWEEN ACE-5.5.4 and ACE-5.5.5
   options by setting PLATFORM_PURIFY_OPTIONS and PLATFORM_QUANTIFY_OPTIONS,
   respectively. Thank you to Howard Finer for supplying these additions.
 
-. Removed Irix 5 and m88k support
+. Removed Irix 5, DGUX, and m88k support
 
 . Improved LynxOS 4.2 support
 
