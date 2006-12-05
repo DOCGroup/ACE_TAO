@@ -5561,18 +5561,3 @@ vx_execae (FUNCPTR entry, char* arg, int prio, int opt, int stacksz, ...)
 }
 #endif /* ACE_VXWORKS && !__RTP__ */
 
-#if defined (__DGUX) && defined (ACE_HAS_THREADS) && defined (_POSIX4A_DRAFT10_SOURCE)
-extern "C" int __d6_sigwait (sigset_t *set);
-
-extern "C" int __d10_sigwait (const sigset_t *set, int *sig)
-{
-  sigset_t unconst_set = *set;
-  int caught_sig = __d6_sigwait (&unconst_set);
-
-  if (caught == -1)
-    return -1;
-
-  *sig = caught_sig;
-  return 0;
-}
-#endif /* __DGUX && PTHREADS && _POSIX4A_DRAFT10_SOURCE */
