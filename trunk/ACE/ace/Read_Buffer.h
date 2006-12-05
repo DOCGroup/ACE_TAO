@@ -39,7 +39,7 @@ class ACE_Allocator;
  * Processing.
  *
  * This implementation is optimized to do a single dynamic
- * allocation and make only one copy of the data.  It uses
+ * allocation and make only one copy of the data. It uses
  * recursion and the run-time stack to accomplish this
  * efficiently.
  */
@@ -49,7 +49,7 @@ public:
   // = Initialization and termination methods.
   /// Read from a FILE *.
   ACE_Read_Buffer (FILE *fp,
-                   int close_on_delete = 0,
+                   bool close_on_delete = false,
                    ACE_Allocator * = 0);
 
 #if !defined (ACE_HAS_WINCE)
@@ -57,7 +57,7 @@ public:
 
   /// Read from an open HANDLE.
   ACE_Read_Buffer (ACE_HANDLE handle,
-                   int close_on_delete = 0,
+                   bool close_on_delete = false,
                    ACE_Allocator * = 0);
 #endif  // ACE_HAS_WINCE
 
@@ -112,7 +112,7 @@ private:
 
   /// Keeps track of whether we should close the FILE in the
   /// destructor.
-  int close_on_delete_;
+  bool const close_on_delete_;
 
   /// Pointer to the allocator.
   ACE_Allocator *allocator_;

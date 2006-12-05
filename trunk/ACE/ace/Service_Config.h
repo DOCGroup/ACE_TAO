@@ -274,9 +274,9 @@ public:
    */
   static int open (const ACE_TCHAR program_name[],
                    const ACE_TCHAR *logger_key = ACE_DEFAULT_LOGGER_KEY,
-                   int ignore_static_svcs = 1,
-                   int ignore_default_svc_conf_file = 0,
-                   int ignore_debug_flag = 0);
+                   bool ignore_static_svcs = true,
+                   bool ignore_default_svc_conf_file = false,
+                   bool ignore_debug_flag = false);
 
   /**
    * This is the primary entry point into the ACE_Service_Config (the
@@ -331,9 +331,9 @@ public:
   static int open (int argc,
                    ACE_TCHAR *argv[],
                    const ACE_TCHAR *logger_key = ACE_DEFAULT_LOGGER_KEY,
-                   int ignore_static_svcs = 1,
-                   int ignore_default_svc_conf_file = 0,
-                   int ignore_debug_flag = 0);
+                   bool ignore_static_svcs = true,
+                   bool ignore_default_svc_conf_file = false,
+                   bool ignore_debug_flag = false);
 
   /// Tidy up and perform last rites when ACE_Service_Config is shut
   /// down.  This method calls <close_svcs>.  Returns 0.
