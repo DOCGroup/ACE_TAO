@@ -1,3 +1,10 @@
+Tue Dec  5 15:08:43 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/config-aix-4.1.x.h:
+        * ace/config-aix-4.2.x.h:
+        * ace/config-aix-4.3.x.h:
+          Removed, these AIX versions aren't supported anymore
+
 Tue Dec  5 14:33:43 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/config-irix6.x-sgic++-nothreads.h:
