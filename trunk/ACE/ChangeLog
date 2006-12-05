@@ -1,3 +1,10 @@
+Tue Dec  5 13:28:10 UTC 2006  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/MakeProjectCreator/templates/gnu.mpd:
+
+          If the gendir setting for the custom file is '.', then ommit the
+          gendir setting.  This is required for version 3.4.45 of MPC.    
+
 Tue Dec  5 12:20:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/os_include/sys/os_socket.h:
