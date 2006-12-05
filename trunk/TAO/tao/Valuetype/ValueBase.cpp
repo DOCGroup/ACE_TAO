@@ -239,7 +239,7 @@ CORBA::ValueBase::_tao_unmarshal_pre (TAO_InputCDR &strm,
                         ACE_TEXT ("TAO does not currently ")
                         ACE_TEXT ("support valuetype indirecton\n")));
           }
-          
+
       return false;
     }
   else if (TAO_OBV_GIOP_Flags::is_null_ref (valuetag))
@@ -274,7 +274,7 @@ CORBA::ValueBase::_tao_unmarshal_pre (TAO_InputCDR &strm,
                       ACE_TEXT ("TAO (%P|%t) unknown value tag: %x\n"),
                       valuetag));
         }
-        
+
       return false;
     }
 
@@ -296,14 +296,14 @@ CORBA::ValueBase::_tao_unmarshal_pre (TAO_InputCDR &strm,
   CORBA::Boolean const chunking =
     TAO_OBV_GIOP_Flags::is_chunked (valuetag);
   CORBA::ULong const num_ids = ids.size ();
-  
+
   // Find the registered factory for this unmarshalling valuetype. If any
   // factory for the valuetype in its truncatable derivation hierarchy
   // is registered, the factory is used to create value for unmarshalling.
   for (CORBA::ULong i = 0; i < num_ids; ++i)
     {
       factory = orb_core->orb ()->lookup_value_factory (ids[i].c_str ());
-      
+
       if (factory.in() != 0)
         {
           if (i != 0 && chunking)
@@ -318,12 +318,12 @@ CORBA::ValueBase::_tao_unmarshal_pre (TAO_InputCDR &strm,
     {
       if (TAO_debug_level > 0)
         {
-          ACE_DEBUG ((LM_DEBUG,
+          ACE_ERROR ((LM_ERROR,
                       ACE_TEXT ("TAO (%P|%t) OBV factory ")
                       ACE_TEXT ("is null, id = %s\n"),
                       repo_id));
         }
-        
+
       ACE_THROW_RETURN (CORBA::MARSHAL (CORBA::OMGVMCID | 1,
                                         CORBA::COMPLETED_MAYBE),
                                         false);
@@ -385,7 +385,7 @@ CORBA::ValueBase::_tao_validate_box_type (TAO_InputCDR &strm,
       null_object = true;
       return true;
     }
-    
+
   null_object = false;
 
   if (!TAO_OBV_GIOP_Flags::is_value_tag (value_tag))
@@ -542,7 +542,7 @@ CORBA::ValueBase::_tao_write_value_header (TAO_OutputCDR &strm,
                              !TAO_HAS_OPTIMIMIZED_VALUETYPE_MARSHALING
                              case */
       || num_ids > 1)
-    {    
+    {
 #endif  /* !TAO_HAS_OPTIMIMIZED_VALUETYPE_MARSHALING */
       // Marshal type information.
       for (CORBA::Long i = 0; i < num_ids; ++i )
@@ -571,10 +571,10 @@ TAO_ChunkInfo::start_chunk(TAO_OutputCDR &strm)
         {
           return false;
         }
-        
+
       this->value_nesting_level_ ++;
     }
-    
+
   return true;
 }
 
