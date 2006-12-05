@@ -15,11 +15,7 @@ ACE_OS::wait (int *status)
   ACE_UNUSED_ARG (status);
   ACE_NOTSUP_RETURN (0);
 #else
-# if defined (ACE_HAS_UNION_WAIT)
-  ACE_OSCALL_RETURN (::wait ((union wait *) status), pid_t, -1);
-# else
   ACE_OSCALL_RETURN (::wait (status), pid_t, -1);
-# endif /* ACE_HAS_UNION_WAIT */
 #endif /* ACE_LACKS_WAIT */
 }
 
