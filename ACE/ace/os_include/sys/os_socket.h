@@ -27,13 +27,7 @@
 #include "ace/os_include/sys/os_uio.h"
 
 #if !defined (ACE_LACKS_SYS_SOCKET_H)
-#  if defined (ACE_HAS_AIX_BROKEN_SOCKET_HEADER)
-#    undef __cplusplus
-#  endif /* ACE_HAS_AIX_BROKEN_SOCKET_HEADER */
 #  include /**/ <sys/socket.h>
-#  if defined (ACE_HAS_AIX_BROKEN_SOCKET_HEADER)
-#    define __cplusplus
-#  endif /* ACE_HAS_AIX_BROKEN_SOCKET_HEADER */
 #endif /* !ACE_LACKS_SYS_SOCKET_H */
 
 #if defined (ACE_VXWORKS) && (ACE_VXWORKS < 0x620)

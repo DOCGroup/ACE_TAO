@@ -1,3 +1,29 @@
+Tue Dec  5 15:22:43 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * include/makeinclude/makeinclude/platform_aix4_cset++.GNU:
+        * include/makeinclude/makeinclude/platform_aix.GNU:
+          Moved contents of cset++ method into the aix one, the aix
+          file just included the first one
+
+        * include/makeinclude/makeinclude/platform_aix4.2.GNU:
+          Removed, old
+
+        * ace/config-aix-4.x.h:
+        * ace/config-aix-5.x.h:
+          Moved contents of 4.x.h file into the 5.x.h file. Removed a lot
+          of old checks for AIX 4 so that we can maintain things easier.
+
+        * ace/ACE.cpp:
+        * ace/OS_NS_sys_wait.inl:
+          Removed ACE_HAS_UNION_WAIT, was only set for aix4
+
+        * ace/Log_Msg.cpp:
+        * ace/OS_NS_Thread.cpp:
+          Removed code for AIX 4.x to handle pthread_t
+
+        * ace/os_include/sys/os_socket.h:
+          Removed ACE_HAS_AIX_BROKEN_SOCKET_HEADER, was only set for aix 4
+
 Tue Dec  5 15:08:43 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/config-aix-4.1.x.h:
