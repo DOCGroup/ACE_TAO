@@ -22,14 +22,14 @@ int main (int argc, char* argv[])
     // First initialize the ORB, that will remove some arguments...
     CORBA::ORB_var orb =
       CORBA::ORB_init (argc, argv,
-          "" /* the ORB name, it can be anything! */);
+                       "" /* the ORB name, it can be anything! */);
 
     // There must be at least two arguments, the first is the factory
     // name, the rest are the names of the stock symbols we want to
     // get quotes for.
     if (argc < 2) {
       cerr << "Usage: " << argv[0]
-        << " Factory_IOR ..." << endl;
+           << " Factory_IOR ..." << endl;
       return 1;
     }
 
@@ -50,20 +50,20 @@ int main (int argc, char* argv[])
     // Now make calls on the Target Manager facet
 
     try
-    {
-      Deployment::Domain_var domainV = targetI->getAllResources ();
-      ACE_DEBUG ((LM_DEBUG , "\n\nGetAllResources Returned \n"));
-      ::Deployment::DnC_Dump::dump (domainV);
-    }
+      {
+        Deployment::Domain_var domainV = targetI->getAllResources ();
+        ACE_DEBUG ((LM_DEBUG , "\n\nGetAllResources Returned \n"));
+        ::Deployment::DnC_Dump::dump (domainV);
+      }
     catch(CORBA::NO_IMPLEMENT &)
-    {
-      ACE_DEBUG((LM_DEBUG ,"Error:TargetManager:CORBA::NO_IMPLEMENT thrown\n"));
-    }
+      {
+        ACE_DEBUG((LM_DEBUG ,"Error:TargetManager:CORBA::NO_IMPLEMENT thrown\n"));
+      }
     catch(CORBA::Exception &)
-    {
-      ACE_DEBUG((LM_DEBUG ,"Error:TargetManager:CORBA Generic Exception \n"));
-      ACE_DEBUG((LM_DEBUG ,"Error:TargetManager:Exception in TargetManager call\n"));
-    }
+      {
+        ACE_DEBUG((LM_DEBUG ,"Error:TargetManager:CORBA Generic Exception \n"));
+        ACE_DEBUG((LM_DEBUG ,"Error:TargetManager:Exception in TargetManager call\n"));
+      }
 
 
     // make a call to the commit resources .....
@@ -108,59 +108,59 @@ int main (int argc, char* argv[])
     bool resource_available = true;
 
     try
-    {
-      targetI->commitResources(plan);
-      ACE_DEBUG ((LM_DEBUG , "\n\ncommitResources Returned \n"));
-    }
+      {
+        //      targetI->commitResources(plan);
+        ACE_DEBUG ((LM_DEBUG , "\n\ncommitResources Returned \n"));
+      }
     catch(CORBA::NO_IMPLEMENT &)
-    {
-      cerr << "Error:TargetManager:CORBA::NO_IMPLEMENT thrown" << endl;
-    }
+      {
+        cerr << "Error:TargetManager:CORBA::NO_IMPLEMENT thrown" << endl;
+      }
     catch (Deployment::ResourceNotAvailable & e)
-    {
-      resource_available = 0;
-      cout << "TargetManager commitResources ResourceNotAvailable Exception" <<endl;
+      {
+        resource_available = 0;
+        cout << "TargetManager commitResources ResourceNotAvailable Exception" <<endl;
 
-      ACE_DEBUG ((LM_DEBUG ,
-            "ResourceNotAvailable\n name=[%s]\n elementName=[%s]\n resourceName=[%s]\n \
+        ACE_DEBUG ((LM_DEBUG ,
+                    "ResourceNotAvailable\n name=[%s]\n elementName=[%s]\n resourceName=[%s]\n \
             resourceType= [%s]\n propertyName=[%s]\n",
-            e.name.in (),
-            e.elementName.in (),
-            e.resourceName.in (),
-            e.resourceType.in (),
-            e.propertyName.in ()));
-    }
+                    e.name.in (),
+                    e.elementName.in (),
+                    e.resourceName.in (),
+                    e.resourceType.in (),
+                    e.propertyName.in ()));
+      }
     catch(CORBA::Exception & ex)
-    {
-      cout << "Error:TargetManager:commitResources Exception" <<endl;
-      cout << "Error:TargetManager:CORBA Generic Exception " << endl;
-      cerr << "Error:TargetManager:Exception in TargetManager call" << ex << endl;
-    }
+      {
+        cout << "Error:TargetManager:commitResources Exception" <<endl;
+        cout << "Error:TargetManager:CORBA Generic Exception " << endl;
+        cerr << "Error:TargetManager:Exception in TargetManager call" << ex << endl;
+      }
 
 
     // Make a call to release resources , if resource < 0
     try
-    {
-      if (!resource_available)
-        {
-          targetI->releaseResources(plan);
-          ACE_DEBUG ((LM_DEBUG , "\n\nreleaseResources Returned \n"));
-        }
-    }
+      {
+        if (!resource_available)
+          {
+            //          targetI->releaseResources(plan);
+            ACE_DEBUG ((LM_DEBUG , "\n\nreleaseResources Returned \n"));
+          }
+      }
     catch(CORBA::NO_IMPLEMENT &)
-    {
-      cerr << "Error:TargetManager:CORBA::NO_IMPLEMENT thrown" << endl;
-    }
+      {
+        cerr << "Error:TargetManager:CORBA::NO_IMPLEMENT thrown" << endl;
+      }
     catch (Deployment::ResourceNotAvailable &)
-    {
-      cout << "Error:TargetManager releaseResources ResourceNotAvailable Exception" <<endl;
-    }
+      {
+        cout << "Error:TargetManager releaseResources ResourceNotAvailable Exception" <<endl;
+      }
     catch(CORBA::Exception & ex)
-    {
-      cout << "Error:TargetManager:releaseResources Exception" <<endl;
-      cout << "Error:TargetManager:CORBA Generic Exception " << endl;
-      cerr << "Error:TargetManager:Exception in TargetManager call" << ex << endl;
-    }
+      {
+        cout << "Error:TargetManager:releaseResources Exception" <<endl;
+        cout << "Error:TargetManager:CORBA Generic Exception " << endl;
+        cerr << "Error:TargetManager:Exception in TargetManager call" << ex << endl;
+      }
 
     // Here make a call on the TM with update domain and node deletion
 
@@ -175,57 +175,57 @@ int main (int argc, char* argv[])
     Add = ACE_OS::atoi (argv[3]);
 
     if (Add)
-    {
-      try
       {
-        targetI->updateDomain (elements , updated, ::Deployment::Add);
+        try
+          {
+            targetI->updateDomain (elements , updated, ::Deployment::Add);
+          }
+        catch(CORBA::NO_IMPLEMENT &)
+          {
+            cerr << "Error:TargetManager:CORBA::NO_IMPLEMENT thrown" << endl;
+          }
+        catch(CORBA::Exception & ex)
+          {
+            cout << "Error:TargetManager:CORBA Generic Exception " << endl;
+            cerr << "Error:TargetManager:Exception in UpdateDomain call" << ex << endl;
+          }
       }
-      catch(CORBA::NO_IMPLEMENT &)
-      {
-        cerr << "Error:TargetManager:CORBA::NO_IMPLEMENT thrown" << endl;
-      }
-      catch(CORBA::Exception & ex)
-      {
-        cout << "Error:TargetManager:CORBA Generic Exception " << endl;
-        cerr << "Error:TargetManager:Exception in UpdateDomain call" << ex << endl;
-      }
-    }
     else
-    {
-      try
       {
-        targetI->updateDomain (elements , updated, ::Deployment::Delete);
+        try
+          {
+            targetI->updateDomain (elements , updated, ::Deployment::Delete);
+          }
+        catch(CORBA::NO_IMPLEMENT &)
+          {
+            cerr << "Error:TargetManager:CORBA::NO_IMPLEMENT thrown" << endl;
+          }
+        catch(CORBA::Exception & ex)
+          {
+            cout << "Error:TargetManager:CORBA Generic Exception " << endl;
+            cerr << "Error:TargetManager:Exception in UpdateDomain call" << ex << endl;
+          }
       }
-      catch(CORBA::NO_IMPLEMENT &)
-      {
-        cerr << "Error:TargetManager:CORBA::NO_IMPLEMENT thrown" << endl;
-      }
-      catch(CORBA::Exception & ex)
-      {
-        cout << "Error:TargetManager:CORBA Generic Exception " << endl;
-        cerr << "Error:TargetManager:Exception in UpdateDomain call" << ex << endl;
-      }
-    }
     // Now make a call of getAvailableResources on the TargetManager ...
     try
-    {
-      Deployment::Domain_var domainV = targetI->getAvailableResources();
+      {
+        Deployment::Domain_var domainV = targetI->getAvailableResources();
 
-      // here write things to file ...
-      write_to_file (domainV.in());
+        // here write things to file ...
+        write_to_file (domainV.in());
 
-      ACE_DEBUG ((LM_DEBUG , "\n\nGetAvailableResources Returned \n"));
-      ::Deployment::DnC_Dump::dump (domainV);
-    }
+        ACE_DEBUG ((LM_DEBUG , "\n\nGetAvailableResources Returned \n"));
+        ::Deployment::DnC_Dump::dump (domainV);
+      }
     catch(CORBA::NO_IMPLEMENT &)
-    {
-      cerr << "Error:TargetManager:CORBA::NO_IMPLEMENT thrown" << endl;
-    }
+      {
+        cerr << "Error:TargetManager:CORBA::NO_IMPLEMENT thrown" << endl;
+      }
     catch(CORBA::Exception & ex)
-    {
-      cout << "Error:TargetManager:CORBA Generic Exception " << endl;
-      cerr << "Error:TargetManager:Exception in TargetManager call" << ex << endl;
-    }
+      {
+        cout << "Error:TargetManager:CORBA Generic Exception " << endl;
+        cerr << "Error:TargetManager:Exception in TargetManager call" << ex << endl;
+      }
 
     // Finally destroy the ORB
     orb->destroy ();
@@ -239,33 +239,33 @@ int main (int argc, char* argv[])
 void write_to_file (::Deployment::Domain domain)
 {
   for (size_t i = 0;i < domain.node.length ();i++)
-  {
-    std::ofstream out (domain.node[i].name.in ());
-
-
-    // write in the node usage ...
-    for (size_t j = 0;j < domain.node[i].resource.length ();j++)
     {
+      std::ofstream out (domain.node[i].name.in ());
 
-      if (!strcmp (domain.node[i].resource[j].name.in (), "Processor"))
-      {
-        CORBA::Double node_cpu;
-        domain.node[i].resource[j].property[0].value >>= node_cpu;
-        out << node_cpu << std::endl;
-      }
-      if (!strcmp (domain.node[i].resource[j].name.in (), "NA_Monitor"))
-      {
-        std::string file_name = "NA_";
-        file_name += domain.node[i].name.in ();
-        std::ofstream na_out (file_name.c_str ());
-        CORBA::Double na_node_cpu;
-        domain.node[i].resource[j].property[0].value >>= na_node_cpu;
-        na_out << na_node_cpu << std::endl;
-        na_out.close ();
-      }
+
+      // write in the node usage ...
+      for (size_t j = 0;j < domain.node[i].resource.length ();j++)
+        {
+
+          if (!strcmp (domain.node[i].resource[j].name.in (), "Processor"))
+            {
+              CORBA::Double node_cpu;
+              domain.node[i].resource[j].property[0].value >>= node_cpu;
+              out << node_cpu << std::endl;
+            }
+          if (!strcmp (domain.node[i].resource[j].name.in (), "NA_Monitor"))
+            {
+              std::string file_name = "NA_";
+              file_name += domain.node[i].name.in ();
+              std::ofstream na_out (file_name.c_str ());
+              CORBA::Double na_node_cpu;
+              domain.node[i].resource[j].property[0].value >>= na_node_cpu;
+              na_out << na_node_cpu << std::endl;
+              na_out.close ();
+            }
+        }
+
+      out.close ();
     }
-
-    out.close ();
-  }
 
 }

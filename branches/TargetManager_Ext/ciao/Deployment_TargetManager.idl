@@ -6,8 +6,7 @@
 #include "ciao/Deployment_Target_Data.idl"
 #include "ciao/Deployment_TargetData.idl"
 #include "ciao/Deployment_DeploymentPlan.idl"
-// Only needed for ResourceNotAvailable but that should go, so this include also
-#include "ciao/Deployment_ApplicationManager.idl"
+#include "ciao/Deployment_ResourceCommitmentManager.idl"
 
 module Deployment {
 
@@ -25,11 +24,8 @@ module Deployment {
   interface TargetManager {
     Domain getAllResources ();
     Domain getAvailableResources ();
-    /// @todo 06-04-01 specifies this differently
-    void commitResources (in DeploymentPlan plan)
-      raises (ResourceNotAvailable, PlanError);
-    /// @todo This is not part of 06-04-01
-    void releaseResources (in DeploymentPlan argname);
+    ResourceCommitmentManager createResourceCommitment (in ResourceAllocationSeq manager);
+    void destroyResourceCommitment (in ResourceCommitmentManager resources);
     void updateDomain (in ::CORBA::StringSeq elements,
                        in Domain domainSubset,
                        in DomainUpdateKind updateKind);
