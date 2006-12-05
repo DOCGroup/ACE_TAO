@@ -2,7 +2,8 @@ Tue Dec  5 11:35:57 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * TAO_IDL/be/be_codegen.cpp:
           Added a check that -SSi is not a valid commandline argument, so
-          then we give an error, it is -SS, no third character at all
+          then we give an error, it is -SS, no third character at all.
+          This fixes bugzilla bug 2723.
 
 Tue Dec  5 11:31:57 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
