@@ -2888,13 +2888,8 @@ ACE::fork (const ACE_TCHAR *program_name,
         }
 
       // Parent process waits for child to terminate.
-#if defined (ACE_HAS_UNION_WAIT)
-      union wait status;
-      if (pid < 0 || ACE_OS::waitpid (pid, &(status.w_status), 0) < 0)
-#else
-        ACE_exitcode status;
+      ACE_exitcode status;
       if (pid < 0 || ACE_OS::waitpid (pid, &status, 0) < 0)
-#endif /* ACE_HAS_UNION_WAIT */
         return -1;
 
       // child terminated by calling exit()?
