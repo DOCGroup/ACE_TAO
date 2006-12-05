@@ -1,7 +1,22 @@
+Tue Dec  5 11:25:57 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Bug_2654_Regression/Bug_2654_Regression.mpc:
+        * orbsvcs/examples/ORT/ORT.mpc:
+          Don't build with corba/e compact
+
+        * orbsvcs/tests/ImplRepo/Bug_2604_Regression/Bug_2604.mpc:
+          Don't build the server with corba/e compact
+
+        * orbsvcs/orbsvcs/PortableGroup.mpc:
+          Don't build with corba/e compact
+
+        * orbsvcs/ImplRepo_Service/ImplRepo_Service.mpc:
+          Part can't be build with corba/e compact
+
 Tue Dec  5 11:19:57 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/MProfile_Forwarding/MProfile_Forwarding.mpc:
-          DOn't build the manager with corba/e compact
+          Don't build the manager with corba/e compact
 
 Tue Dec  5 11:17:57 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
