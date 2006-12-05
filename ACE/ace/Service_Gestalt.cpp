@@ -138,7 +138,7 @@ ACE_Service_Type_Dynamic_Guard::~ACE_Service_Type_Dynamic_Guard (void)
   // Lookup without ignoring suspended services. Making sure
   // not to ignore any inactive services, since those may be forward
   // declarations
-  int ret = this->repo_.find_i (this->name_, &tmp, 0);
+  int const ret = this->repo_.find_i (this->name_, &tmp, 0);
 
   // We inserted it (as inactive), so we expect to find it, right?
   if (ret < 0 && ret != -2)
@@ -1104,7 +1104,7 @@ ACE_Service_Gestalt::open_i (const ACE_TCHAR /*program_name*/[],
   if (this->init_i () != 0)
     return -1;
 
-  if (ignore_debug_flag == 0)
+  if (!ignore_debug_flag)
     {
       // If -d was included as a startup parameter, the user wants debug
       // information printed during service initialization.
@@ -1134,7 +1134,7 @@ ACE_Service_Gestalt::open_i (const ACE_TCHAR /*program_name*/[],
     // Make sure to save/restore errno properly.
     ACE_Errno_Guard error (errno);
 
-    if (ignore_debug_flag == 0)
+    if (!ignore_debug_flag)
       {
         log_msg->priority_mask (old_process_mask, ACE_Log_Msg::PROCESS);
         log_msg->priority_mask (old_thread_mask, ACE_Log_Msg::THREAD);
