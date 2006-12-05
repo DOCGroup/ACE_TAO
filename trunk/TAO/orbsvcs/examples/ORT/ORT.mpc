@@ -23,9 +23,9 @@ project(*Gateway) : orbsvcsexe, dynamicinterface, ifr_client, avoids_minimum_cor
   }
 }
 
-project(*Server) : orbsvcsexe, dynamicinterface, ifr_client, avoids_minimum_corba, iorinterceptor {
+project(*Server) : orbsvcsexe, dynamicinterface, ifr_client, avoids_minimum_corba, iorinterceptor, avoids_corba_e_compact {
   exename   = server
-  after    += *Gateway
+  after += *idl
   source_files {
     server.cpp
     GatewayC.cpp
@@ -42,7 +42,7 @@ project(*Server) : orbsvcsexe, dynamicinterface, ifr_client, avoids_minimum_corb
 }
 
 project(*Client) : orbsvcsexe, event, avoids_minimum_corba, avoids_corba_e_compact {
-  after += *Idl *Server
+  after += *idl
   source_files {
     client.cpp
     sum_serverC.cpp
