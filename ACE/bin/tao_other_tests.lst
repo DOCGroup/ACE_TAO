@@ -161,3 +161,4 @@ TAO/examples/ior_corbaloc/run_test.pl: !NO_MESSAGING !ACE_FOR_TAO
 TAO/utils/nslist/run_test.pl: !ST !SUNCC5_1 !NO_MESSAGING !ACE_FOR_TAO
 TAO/orbsvcs/tests/BiDir_CORBALOC/run_test.pl: !NO_MESSAGING !ACE_FOR_TAO
 TAO/orbsvcs/tests/IOR_MCast/run_test_ipv6.pl: IPV6 !MINIMUM
+TAO/orbsvcs/tests/Bug_2709_Regression/run_test.pl: !MINIMUM !ACE_FOR_TAO
