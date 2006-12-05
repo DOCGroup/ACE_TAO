@@ -70,10 +70,6 @@ extern "C"
      FILETIME ru_utime;
      FILETIME ru_stime;
    };
-#else /* !ACE_WIN32 */
-#   if defined (m88k)
-#     define RUSAGE_SELF 1
-#   endif  /*  m88k */
 #endif /* ACE_WIN32 */
 
 #if defined (ACE_LACKS_RLIMIT_PROTOTYPE)
