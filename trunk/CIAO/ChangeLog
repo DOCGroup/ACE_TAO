@@ -1,3 +1,12 @@
+Tue Dec  5 11:45:57 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ciao/CCM_Core.mpc:
+        * MPC/config/ciao_container_dnc.mpb:
+          Don't build Dnc_Container with corba/e compact has been enabled
+
+        * tools/Config_Handlers/RT-CCM/RT-CCM-Handlers.mpc:
+          Simplified this MPC file
+
 Mon Dec  4 12:14:57 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * MPC/config/*:

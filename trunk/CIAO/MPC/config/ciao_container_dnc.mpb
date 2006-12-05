@@ -1,7 +1,7 @@
 // -*- MPC -*-
 // $Id$
 
-project : portableserver, ciao_client_dnc {
+project : portableserver, ciao_client_dnc, avoids_corba_e_compact {
   after    += CIAO_DnC_Container
   libs     += CIAO_DnC_Container
 }
