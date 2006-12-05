@@ -1,3 +1,18 @@
+Tue Dec  5 12:20:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/os_include/sys/os_socket.h:
+          Removed check for ACE_LACKS_CMSG_DATA_MACRO which wasn't
+          set in any configuration file. This also resulted in the
+          removal of ACE_LACKS_CMSG_DATA_MEMBER because this define
+          was never checked
+
+        * ace/config-qnx-neutrino.h:
+        * ace/config-qnx-rtp-62x.h:
+        * ace/config-qnx-rtp-pre62x.h:
+        * ace/config-tandem-nsk-mips-v2.h:
+        * ace/config-tandem-nsk-mips-v3.h:
+          Removed ACE_LACKS_CMSG_DATA_MEMBER, it has no impact at all
+
 Tue Dec  5 11:25:00 UTC 2006  Simon Massey  <sma@prismtech.com>
 
         * ace/SStringfwd.h:
