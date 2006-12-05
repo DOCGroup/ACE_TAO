@@ -1,3 +1,17 @@
+Tue Dec  5 04:21:50 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * configure.ac:
+
+          Configure Makefile for new unit test subdirectory.
+
+        * tests/ORB_Local_Config/Makefile.am:
+
+          Regenerate to descend into CSD_Strategy subdirectory.
+
+        * tests/ORB_Local_Config/Bug_2612/Makefile.am:
+
+          New file.
+
 Tue Dec  5 04:10:47 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* tests/AMH_Exceptions/Makefile.am:
