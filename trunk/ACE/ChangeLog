@@ -1,3 +1,10 @@
+Tue Dec  5 23:53:34 UTC 2006  Ciju John  <johnc@ociweb.com>
+
+        * tests/Bug_2659_Regression_Test.cpp:
+        * tests/run_test.lst:
+        * tests/tests.mpc:
+          Adding regression test for Bug 2659.
+
 Tue Dec  5 19:44:43 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/config-freebsd.h:
