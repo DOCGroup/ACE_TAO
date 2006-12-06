@@ -88,7 +88,7 @@ public:
   /// threads up.
   void cleanup_rw_transports (void);
 
-  /// @named Accessors
+  /// @name Accessors
   //@{
 
   TAO_Acceptor_Registry &acceptor_registry (void);
