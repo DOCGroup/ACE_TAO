@@ -1,3 +1,9 @@
+Wed Dec  6 14:36:57 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/PortableServer/PortableServer.cpp:
+          Reduced the number of process directives call for CORBA/e compact
+          and micro
+
 Wed Dec  6 14:28:57 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/PortableServer/ServantRetentionStrategyNonRetain.{h,cpp}:
