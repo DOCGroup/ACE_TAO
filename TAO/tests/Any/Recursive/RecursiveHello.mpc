@@ -2,14 +2,31 @@
 //
 // $Id$
 
+project(*idl): taoidldefaults, valuetype {
+  IDL_Files {
+    NonRecursive.idl
+    Test.idl
+  }
+  custom_only = 1
+}
+
 project(*Server): taoserver, valuetype {
+  after += *idl
+
   Source_Files {
     Hello.cpp
     server.cpp
+    TestC.cpp
+    TestS.cpp
+    NonRecursiveC.cpp
+    NonRecursiveS.cpp
+  }
+  IDL_Files {
   }
 }
 
 project(*Client): taoclient, valuetype, typecodefactory, ifr_client {
+  after += *idl
   after += *Server
   
   Source_Files {
@@ -17,5 +34,6 @@ project(*Client): taoclient, valuetype, typecodefactory, ifr_client {
     NonRecursiveC.cpp
     client.cpp
   }
+  IDL_Files {
+  }
 }
-
