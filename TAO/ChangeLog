@@ -1,3 +1,51 @@
+Wed Dec  6 15:29:25 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * tests/Abstract_Interface/Makefile.am:
+	* tests/Any/Recursive/Makefile.am:
+	* tests/BiDirectional/Makefile.am:
+	* tests/BiDirectional_DelayedUpcall/Makefile.am:
+	* tests/BiDirectional_NestedUpcall/Makefile.am:
+	* tests/Big_AMI/Makefile.am:
+	* tests/Big_Oneways/Makefile.am:
+	* tests/Big_Reply/Makefile.am:
+	* tests/Big_Request_Muxing/Makefile.am:
+	* tests/Big_Twoways/Makefile.am:
+	* tests/Blocking_Sync_None/Makefile.am:
+	* tests/Bug_1020_Basic_Regression/Makefile.am:
+	* tests/Bug_1020_Regression/Makefile.am:
+	* tests/Bug_1254_Regression/Makefile.am:
+	* tests/Bug_1269_Regression/Makefile.am:
+	* tests/Bug_1270_Regression/Makefile.am:
+	* tests/Bug_1330_Regression/Makefile.am:
+	* tests/Bug_1361_Regression/Makefile.am:
+	* tests/Bug_1476_Regression/Makefile.am:
+	* tests/Bug_1482_Regression/Makefile.am:
+
+	  Regenerated.
+
+	* tests/Abstract_Interface/Abstract_Interface.mpc:
+	* tests/Any/Recursive/RecursiveHello.mpc:
+	* tests/BiDirectional/BiDirectional.mpc:
+	* tests/BiDirectional_DelayedUpcall/BiDir_DelayedUpcall.mpc:
+	* tests/BiDirectional_NestedUpcall/BiDir_NestedUpcall.mpc:
+	* tests/Big_AMI/Big_AMI.mpc:
+	* tests/Big_Oneways/Big_Oneways.mpc:
+	* tests/Big_Reply/Big_Reply.mpc:
+	* tests/Big_Request_Muxing/Big_Request_Muxing.mpc:
+	* tests/Big_Twoways/Big_Twoways.mpc:
+	* tests/Blocking_Sync_None/Blocking_Sync_None.mpc:
+	* tests/Bug_1020_Basic_Regression/Bug_1020_Basic_Regression.mpc:
+	* tests/Bug_1020_Regression/Bug_1020_Regression.mpc:
+	* tests/Bug_1254_Regression/Bug_1254_Regression.mpc:
+	* tests/Bug_1269_Regression/Bug_1269_Regression.mpc:
+	* tests/Bug_1270_Regression/Bug_1270_Regression.mpc:
+	* tests/Bug_1330_Regression/Bug_1330_Regression.mpc:
+	* tests/Bug_1361_Regression/Bug_1361_Regression.mpc:
+	* tests/Bug_1476_Regression/Bug_1476_Regression.mpc:
+	* tests/Bug_1482_Regression/Bug_1482_Regression.mpc:
+
+          Split out IDL compilation into separate MPC project.
+
 Wed Dec  6 14:36:57 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/PortableServer/PortableServer.cpp:

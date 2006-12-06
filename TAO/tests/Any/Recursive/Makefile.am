@@ -20,32 +20,9 @@ noinst_PROGRAMS =
 CLEANFILES =
 BUILT_SOURCES =
 
-## Makefile.RecursiveHello_Server.am
+## Makefile.RecursiveHello_Idl.am
 
 if BUILD_EXCEPTIONS
-
-BUILT_SOURCES += \
-  TestC.cpp \
-  TestC.h \
-  TestC.inl \
-  TestS.cpp \
-  TestS.h \
-  TestS.inl
-
-CLEANFILES += \
-  Test-stamp \
-  TestC.cpp \
-  TestC.h \
-  TestC.inl \
-  TestS.cpp \
-  TestS.h \
-  TestS.inl
-
-TestC.cpp TestC.h TestC.inl TestS.cpp TestS.h TestS.inl: Test-stamp
-
-Test-stamp: $(srcdir)/Test.idl $(TAO_IDL_DEP)
-	$(TAO_IDL) $(TAO_IDLFLAGS) $(srcdir)/Test.idl
-	@touch $@
 
 BUILT_SOURCES += \
   NonRecursiveC.cpp \
@@ -70,6 +47,40 @@ NonRecursive-stamp: $(srcdir)/NonRecursive.idl $(TAO_IDL_DEP)
 	$(TAO_IDL) $(TAO_IDLFLAGS) $(srcdir)/NonRecursive.idl
 	@touch $@
 
+BUILT_SOURCES += \
+  TestC.cpp \
+  TestC.h \
+  TestC.inl \
+  TestS.cpp \
+  TestS.h \
+  TestS.inl
+
+CLEANFILES += \
+  Test-stamp \
+  TestC.cpp \
+  TestC.h \
+  TestC.inl \
+  TestS.cpp \
+  TestS.h \
+  TestS.inl
+
+TestC.cpp TestC.h TestC.inl TestS.cpp TestS.h TestS.inl: Test-stamp
+
+Test-stamp: $(srcdir)/Test.idl $(TAO_IDL_DEP)
+	$(TAO_IDL) $(TAO_IDLFLAGS) $(srcdir)/Test.idl
+	@touch $@
+
+
+noinst_HEADERS = \
+  NonRecursive.idl \
+  Test.idl
+
+endif BUILD_EXCEPTIONS
+
+## Makefile.RecursiveHello_Server.am
+
+if BUILD_EXCEPTIONS
+
 noinst_PROGRAMS += server
 
 server_CPPFLAGS = \
@@ -85,15 +96,7 @@ server_SOURCES = \
   TestC.cpp \
   TestS.cpp \
   server.cpp \
-  Hello.h \
-  NonRecursiveC.h \
-  NonRecursiveC.inl \
-  NonRecursiveS.h \
-  NonRecursiveS.inl \
-  TestC.h \
-  TestC.inl \
-  TestS.h \
-  TestS.inl
+  Hello.h
 
 server_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO_Valuetype.la \
@@ -108,48 +111,6 @@ endif BUILD_EXCEPTIONS
 
 if BUILD_EXCEPTIONS
 
-BUILT_SOURCES += \
-  TestC.cpp \
-  TestC.h \
-  TestC.inl \
-  TestS.h \
-  TestS.inl
-
-CLEANFILES += \
-  Test-stamp \
-  TestC.cpp \
-  TestC.h \
-  TestC.inl \
-  TestS.h \
-  TestS.inl
-
-TestC.cpp TestC.h TestC.inl TestS.h TestS.inl: Test-stamp
-
-Test-stamp: $(srcdir)/Test.idl $(TAO_IDL_DEP)
-	$(TAO_IDL) $(TAO_IDLFLAGS) $(srcdir)/Test.idl
-	@touch $@
-
-BUILT_SOURCES += \
-  NonRecursiveC.cpp \
-  NonRecursiveC.h \
-  NonRecursiveC.inl \
-  NonRecursiveS.h \
-  NonRecursiveS.inl
-
-CLEANFILES += \
-  NonRecursive-stamp \
-  NonRecursiveC.cpp \
-  NonRecursiveC.h \
-  NonRecursiveC.inl \
-  NonRecursiveS.h \
-  NonRecursiveS.inl
-
-NonRecursiveC.cpp NonRecursiveC.h NonRecursiveC.inl NonRecursiveS.h NonRecursiveS.inl: NonRecursive-stamp
-
-NonRecursive-stamp: $(srcdir)/NonRecursive.idl $(TAO_IDL_DEP)
-	$(TAO_IDL) $(TAO_IDLFLAGS) $(srcdir)/NonRecursive.idl
-	@touch $@
-
 noinst_PROGRAMS += client
 
 client_CPPFLAGS = \
@@ -162,14 +123,7 @@ client_SOURCES = \
   NonRecursiveC.cpp \
   TestC.cpp \
   client.cpp \
-  NonRecursiveC.h \
-  NonRecursiveC.inl \
-  NonRecursiveS.h \
-  NonRecursiveS.inl \
-  TestC.h \
-  TestC.inl \
-  TestS.h \
-  TestS.inl
+  Hello.h
 
 client_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO_TypeCodeFactory.la \
