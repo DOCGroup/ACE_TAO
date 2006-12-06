@@ -22,8 +22,6 @@
 
 #include "tao/PortableServer/Servant_Location.h"
 
-#if (TAO_HAS_MINIMUM_POA == 0) && !defined (CORBA_E_COMPACT) && !defined (CORBA_E_MICRO)
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_Root_POA;
@@ -170,8 +168,6 @@ namespace TAO
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL
-
-#endif /* TAO_HAS_MINIMUM_POA == 0 && !CORBA_E_COMPACT && !CORBA_E_MICRO */
 
 #include /**/ "ace/post.h"
 #endif /* TAO_SERVANT_RETENTION_STRATEGY_NON_RETAIN_H */
