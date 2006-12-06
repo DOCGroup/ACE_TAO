@@ -455,12 +455,6 @@ ACE::recv (ACE_HANDLE handle,
     return ACE_OS::recv (handle, (char *) buf, len, flags);
   else
     {
-#if defined (ACE_HAS_RECV_TIMEDWAIT)
-      ACE_Time_Value copy = *timeout;
-      copy += ACE_OS::gettimeofday ();
-      timespec_t ts = copy;
-      return ::recv_timedwait (handle, buf, len, flags, &ts);
-#else
       int val = 0;
       if (ACE::enter_recv_timedwait (handle, timeout, val) ==-1)
         return -1;
@@ -471,7 +465,6 @@ ACE::recv (ACE_HANDLE handle,
           ACE::restore_non_blocking_mode (handle, val);
           return bytes_transferred;
         }
-#endif /* ACE_HAS_RECV_TIMEDWAIT */
     }
 }
 
@@ -513,12 +506,6 @@ ACE::recv (ACE_HANDLE handle,
     return ACE::recv_i (handle, buf, n);
   else
     {
-#if defined (ACE_HAS_READ_TIMEDWAIT)
-      ACE_Time_Value copy = *timeout;
-      copy += ACE_OS::gettimeofday ();
-      timespec_t ts = copy;
-      return ::read_timedwait (handle, buf, n, &ts);
-#else
       int val = 0;
       if (ACE::enter_recv_timedwait (handle, timeout, val) == -1)
         return -1;
@@ -528,7 +515,6 @@ ACE::recv (ACE_HANDLE handle,
           ACE::restore_non_blocking_mode (handle, val);
           return bytes_transferred;
         }
-#endif /* ACE_HAS_READ_TIMEDWAIT */
     }
 }
 
@@ -542,12 +528,6 @@ ACE::recvmsg (ACE_HANDLE handle,
     return ACE_OS::recvmsg (handle, msg, flags);
   else
     {
-#if defined (ACE_HAS_RECVMSG_TIMEDWAIT)
-      ACE_Time_Value copy = *timeout;
-      copy += ACE_OS::gettimeofday ();
-      timespec_t ts = copy;
-      return ::recvmsg_timedwait (handle, msg, flags, &ts);
-#else
       int val = 0;
       if (ACE::enter_recv_timedwait (handle, timeout, val) == -1)
         return -1;
@@ -557,7 +537,6 @@ ACE::recvmsg (ACE_HANDLE handle,
           ACE::restore_non_blocking_mode (handle, val);
           return bytes_transferred;
         }
-#endif /* ACE_HAS_RECVMSG_TIMEDWAIT */
     }
 }
 
@@ -574,12 +553,6 @@ ACE::recvfrom (ACE_HANDLE handle,
     return ACE_OS::recvfrom (handle, buf, len, flags, addr, addrlen);
   else
     {
-#if defined (ACE_HAS_RECVFROM_TIMEDWAIT)
-      ACE_Time_Value copy = *timeout;
-      copy += ACE_OS::gettimeofday ();
-      timespec_t ts = copy;
-      return ::recvfrom_timedwait (handle, buf, len, flags, addr, addrlen, &ts);
-#else
       int val = 0;
       if (ACE::enter_recv_timedwait (handle, timeout, val) == -1)
         return -1;
@@ -590,7 +563,6 @@ ACE::recvfrom (ACE_HANDLE handle,
           ACE::restore_non_blocking_mode (handle, val);
           return bytes_transferred;
         }
-#endif /* ACE_HAS_RECVFROM_TIMEDWAIT */
     }
 }
 
@@ -995,12 +967,6 @@ ACE::recvv (ACE_HANDLE handle,
     return ACE_OS::recvv (handle, iov, iovcnt);
   else
     {
-#if defined (ACE_HAS_READV_TIMEDWAIT)
-      ACE_Time_Value copy = *timeout;
-      copy += ACE_OS::gettimeofday ();
-      timespec_t ts = copy;
-      return ::readv_timedwait (handle, iov, iovcnt, &ts);
-#else
       int val = 0;
       if (ACE::enter_recv_timedwait (handle, timeout, val) == -1)
         return -1;
@@ -1010,7 +976,6 @@ ACE::recvv (ACE_HANDLE handle,
           ACE::restore_non_blocking_mode (handle, val);
           return bytes_transferred;
         }
-#endif /* ACE_HAS_READV_TIMEDWAIT */
     }
 }
 
@@ -1265,12 +1230,6 @@ ACE::send (ACE_HANDLE handle,
     return ACE_OS::send (handle, (const char *) buf, n, flags);
   else
     {
-#if defined (ACE_HAS_SEND_TIMEDWAIT)
-      ACE_Time_Value copy = *timeout;
-      copy += ACE_OS::gettimeofday();
-      timespec_t ts = copy;
-      return ::send_timedwait (handle, buf, n, flags, &ts);
-#else
       int val = 0;
       if (ACE::enter_send_timedwait (handle, timeout, val) == -1)
         return -1;
@@ -1280,7 +1239,6 @@ ACE::send (ACE_HANDLE handle,
           ACE::restore_non_blocking_mode (handle, val);
           return bytes_transferred;
         }
-#endif /* ACE_HAS_SEND_TIMEDWAIT */
     }
 }
 
@@ -1321,12 +1279,6 @@ ACE::send (ACE_HANDLE handle,
     return ACE::send_i (handle, buf, n);
   else
     {
-#if defined (ACE_HAS_WRITE_TIMEDWAIT)
-      ACE_Time_Value copy = *timeout;
-      copy += ACE_OS::gettimeofday ();
-      timespec_t ts = copy;
-      return ::write_timedwait (handle, buf, n, &ts);
-#else
       int val = 0;
       if (ACE::enter_send_timedwait (handle, timeout, val) == -1)
         return -1;
@@ -1336,7 +1288,6 @@ ACE::send (ACE_HANDLE handle,
           ACE::restore_non_blocking_mode (handle, val);
           return bytes_transferred;
         }
-#endif /* ACE_HAS_WRITE_TIMEDWAIT */
     }
 }
 
@@ -1350,12 +1301,6 @@ ACE::sendmsg (ACE_HANDLE handle,
     return ACE_OS::sendmsg (handle, msg, flags);
   else
     {
-#if defined (ACE_HAS_SENDMSG_TIMEDWAIT)
-      ACE_Time_Value copy = *timeout;
-      copy += ACE_OS::gettimeofday ();
-      timespec_t ts = copy;
-      return ::sendmsg_timedwait (handle, msg, flags, &ts);
-#else
       int val = 0;
       if (ACE::enter_send_timedwait (handle, timeout, val) == -1)
         return -1;
@@ -1365,7 +1310,6 @@ ACE::sendmsg (ACE_HANDLE handle,
           ACE::restore_non_blocking_mode (handle, val);
           return bytes_transferred;
         }
-#endif /* ACE_HAS_SENDMSG_TIMEDWAIT */
     }
 }
 
@@ -1382,12 +1326,6 @@ ACE::sendto (ACE_HANDLE handle,
     return ACE_OS::sendto (handle, buf, len, flags, addr, addrlen);
   else
     {
-#if defined (ACE_HAS_SENDTO_TIMEDWAIT)
-      ACE_Time_Value copy = *timeout;
-      copy += ACE_OS::gettimeofday ();
-      timespec_t ts = copy;
-      return ::sendto_timedwait (handle, buf, len, flags, addr, addrlen, ts);
-#else
       int val = 0;
       if (ACE::enter_send_timedwait (handle, timeout, val) == -1)
         return -1;
@@ -1398,7 +1336,6 @@ ACE::sendto (ACE_HANDLE handle,
           ACE::restore_non_blocking_mode (handle, val);
           return bytes_transferred;
         }
-#endif /* ACE_HAS_SENDTO_TIMEDWAIT */
     }
 }
 
@@ -1805,12 +1742,6 @@ ACE::sendv (ACE_HANDLE handle,
     return ACE_OS::sendv (handle, iov, iovcnt);
   else
     {
-#if defined (ACE_HAS_WRITEV_TIMEDWAIT)
-      ACE_Time_Value copy = *timeout;
-      copy += ACE_OS::gettimeofday ();
-      timespec_t ts = copy;
-      return ::sendv_timedwait (handle, iov, iovcnt, &ts);
-#else
       int val = 0;
       if (ACE::enter_send_timedwait (handle, timeout, val) == -1)
         return -1;
@@ -1820,7 +1751,6 @@ ACE::sendv (ACE_HANDLE handle,
           ACE::restore_non_blocking_mode (handle, val);
           return bytes_transferred;
         }
-#endif /* ACE_HAS_WRITEV_TIMEDWAIT */
     }
 }
 
