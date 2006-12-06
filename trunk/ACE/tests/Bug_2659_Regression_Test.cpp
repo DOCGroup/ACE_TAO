@@ -96,11 +96,8 @@ public:
 
     // Register a valid signal handler
     // so process doesn't die upon receiving signal
-    if (ACE_OS::signal (SIGUSR1, &::handle_signal) == SIG_ERR) {
-      ACE_ERROR_RETURN ((LM_ERROR,
-       ACE_TEXT ("(%P|%t) Failed in registering signal handler.\n"))
-      , -1);
-    }
+    ACE_Sig_Action sa ((ACE_SignalHandler) &::handle_signal, SIGUSR1);
+    ACE_UNUSED_ARG (sa);
 
     if (simulate_perform_work () == -1) {
       ACE_ERROR_RETURN ((LM_ERROR,
