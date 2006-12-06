@@ -1,3 +1,10 @@
+Wed Dec  6 16:10:57 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connection_Handler.h:
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Endpoint.h:
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_EVP_PKEY.h:
+          Fixed doxygen warnings
+
 Wed Dec  6 15:55:57 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Abstract_Servant_Base.h:
