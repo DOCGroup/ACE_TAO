@@ -86,7 +86,6 @@ SUBDIRS = \
         Bug_2654_Regression \
         Bug_2669_Regression \
         Bug_2683_Regression \
-        Bug_2709_Regression \
         CDR \
         COIOP \
         Cache_Growth_Test \

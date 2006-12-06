@@ -1,3 +1,23 @@
+Wed Dec  6 13:40:52 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* examples/CSD_Strategy/ThreadPool6/Makefile.am:
+	* examples/Simple/time-date/Makefile.am:
+	* orbsvcs/examples/ORT/Makefile.am:
+	* orbsvcs/tests/Bug_2709_Regression/Makefile.am:
+	* tests/Bug_2654_Regression/Makefile.am:
+	* tests/OctetSeq/Makefile.am:
+	* tests/Oneway_Timeouts/Makefile.am:
+	* tests/Param_Test/Makefile.am:
+	* tests/Portable_Interceptors/ORB_Shutdown/Makefile.am:
+
+          Regenerate.
+
+        * configure.ac:
+	* orbsvcs/tests/Makefile.am:
+        * tests/Makefile.am:
+
+          Changes for move of Bug_2709_Regression unit test.
+
 Wed Dec  6 08:30:57 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * *.mpc:
