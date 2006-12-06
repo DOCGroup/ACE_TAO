@@ -1,3 +1,9 @@
+Wed Dec  6 14:15:57 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * MPC/config/rtportableserver.mpb:
+        * tao/RTPortableServer.mpc:
+          Don't build RTPortableServer when CORBA/e micro has been enabled
+
 Wed Dec  6 13:40:52 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* examples/CSD_Strategy/ThreadPool6/Makefile.am:
