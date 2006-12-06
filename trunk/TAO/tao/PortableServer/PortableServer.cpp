@@ -76,7 +76,7 @@ TAO_POA_Initializer::init (void)
       ace_svc_desc_IdUniquenessStrategyUniqueFactoryImpl
     );
 
-#if !defined (CORBA_E_MICRO)
+#if !defined (CORBA_E_MICRO) && !defined (CORBA_E_COMPACT)
   ACE_Service_Config::process_directive (
       ace_svc_desc_ImplicitActivationStrategyExplicit
     );
@@ -92,7 +92,7 @@ TAO_POA_Initializer::init (void)
       ace_svc_desc_ThreadStrategyFactoryImpl
     );
 
-#if (TAO_HAS_MINIMUM_POA == 0)
+#if (TAO_HAS_MINIMUM_POA == 0) && !defined (CORBA_E_MICRO) && !defined (CORBA_E_COMPACT)
   ACE_Service_Config::process_directive (
       ace_svc_desc_ThreadStrategySingleFactoryImpl
     );
@@ -154,7 +154,7 @@ TAO_POA_Initializer::init (void)
       ace_svc_desc_ServantRetentionStrategyRetainFactoryImpl
     );
 
-#if (TAO_HAS_MINIMUM_POA == 0) && !defined (CORBA_E_MICRO)
+#if (TAO_HAS_MINIMUM_POA == 0) && !defined (CORBA_E_MICRO) && !defined (CORBA_E_COMPACT)
   ACE_Service_Config::process_directive (
       ace_svc_desc_ServantRetentionStrategyNonRetainFactoryImpl
     );
@@ -166,7 +166,7 @@ TAO_POA_Initializer::init (void)
       ace_svc_desc_ThreadStrategyORBControl
     );
 
-#if (TAO_HAS_MINIMUM_POA == 0) && !defined (CORBA_E_MICRO)
+#if (TAO_HAS_MINIMUM_POA == 0) && !defined (CORBA_E_MICRO) && !defined (CORBA_E_COMPACT)
   ACE_Service_Config::process_directive (
       ace_svc_desc_ThreadStrategySingle
     );
