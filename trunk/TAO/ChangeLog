@@ -1,3 +1,35 @@
+Wed Dec  6 19:24:57 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/PortableServer/Active_Object_Map.cpp:
+        * tao/PortableServer/Active_Object_Map.h:
+        * tao/PortableServer/Active_Object_Map.inl:
+        * tao/PortableServer/Active_Object_Map_Entry.cpp:
+        * tao/PortableServer/IdUniquenessStrategy.h:
+        * tao/PortableServer/IdUniquenessStrategyMultiple.cpp:
+        * tao/PortableServer/IdUniquenessStrategyMultiple.h:
+        * tao/PortableServer/IdUniquenessStrategyUnique.cpp:
+        * tao/PortableServer/IdUniquenessStrategyUnique.h:
+        * tao/PortableServer/RequestProcessingStrategy.h:
+        * tao/PortableServer/RequestProcessingStrategyAOMOnly.cpp:
+        * tao/PortableServer/RequestProcessingStrategyAOMOnly.h:
+        * tao/PortableServer/RequestProcessingStrategyDefaultServant.cpp:
+        * tao/PortableServer/RequestProcessingStrategyDefaultServant.h:
+        * tao/PortableServer/RequestProcessingStrategyServantActivator.cpp:
+        * tao/PortableServer/RequestProcessingStrategyServantActivator.h:
+        * tao/PortableServer/RequestProcessingStrategyServantLocator.cpp:
+        * tao/PortableServer/RequestProcessingStrategyServantLocator.h:
+        * tao/PortableServer/Root_POA.cpp:
+        * tao/PortableServer/Root_POA.h:
+        * tao/PortableServer/Servant_Upcall.cpp:
+        * tao/PortableServer/Servant_Upcall.h:
+        * tao/PortableServer/ServantRetentionStrategy.h:
+        * tao/PortableServer/ServantRetentionStrategyNonRetain.cpp:
+        * tao/PortableServer/ServantRetentionStrategyNonRetain.h:
+        * tao/PortableServer/ServantRetentionStrategyRetain.cpp:
+        * tao/PortableServer/ServantRetentionStrategyRetain.h:
+          Use bool instead of int for several flags, also then use true/false
+          instead of 0/1
+
 Wed Dec  6 16:15:58 UTC 2006  Iliyan Jeliazkov  <iliyan@ociweb.com>
 
         * tests/ORB_Local_Config/Bug_2612/Bug_2612.mpc:
