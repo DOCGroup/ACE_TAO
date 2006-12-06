@@ -1,3 +1,11 @@
+Wed Dec  6 19:33:57 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * examples/CSD_Strategy/ThreadPool2/CSD_Test_ThreadPool2.mpc:
+        * examples/CSD_Strategy/ThreadPool3/CSD_Test_ThreadPool3.mpc:
+        * examples/CSD_Strategy/ThreadPool4/CSD_Test_ThreadPool4.mpc:
+        * examples/CSD_Strategy/ThreadPool/CSD_Test_ThreadPool.mpc:
+          Don't build the server when CORBA/e micro has been enabled
+
 Wed Dec  6 19:24:57 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/PortableServer/Active_Object_Map.cpp:
