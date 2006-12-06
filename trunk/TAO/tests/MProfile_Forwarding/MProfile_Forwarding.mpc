@@ -1,14 +1,14 @@
 // -*- MPC -*-
 // $Id$
 
-project(*Server): taoserver, avoids_minimum_corba, avoids_corba_e_compact {
+project(*Server): taoserver, avoids_minimum_corba, avoids_corba_e_compact, avoids_corba_e_micro {
   Source_Files {
     test_i.cpp
     server.cpp
   }
 }
 
-project(*Client): taoclient, anytypecode, avoids_minimum_corba, avoids_corba_e_compact {
+project(*Client): taoclient, anytypecode, avoids_minimum_corba, avoids_corba_e_compact, avoids_corba_e_micro {
   exename = client
   after += *Server
   Source_Files {
@@ -17,7 +17,7 @@ project(*Client): taoclient, anytypecode, avoids_minimum_corba, avoids_corba_e_c
   }
 }
 
-project(*Manager): taoserver, avoids_minimum_corba, avoids_corba_e_compact, iormanip {
+project(*Manager): taoserver, avoids_minimum_corba, avoids_corba_e_compact, avoids_corba_e_micro, iormanip {
   exename = manager
   after += *Client
   Source_Files {

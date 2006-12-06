@@ -1,14 +1,14 @@
 // -*- MPC -*-
 // $Id$
 
-project(*client) : taoexe, portableserver, rtcorba, avoids_minimum_corba, avoids_corba_e_compact {
+project(*client) : taoexe, portableserver, rtcorba, avoids_minimum_corba, avoids_corba_e_compact, avoids_corba_e_micro {
   source_files {
     client.cpp
     Custom_Network_Priority_Mapping.cpp
   }
 }
 
-project(*server) : taoexe, rtportableserver, rtcorba, avoids_minimum_corba, avoids_corba_e_compact {
+project(*server) : taoexe, rtportableserver, rtcorba, avoids_minimum_corba, avoids_corba_e_compact, avoids_corba_e_micro {
   after += *client
   source_files {
     server.cpp

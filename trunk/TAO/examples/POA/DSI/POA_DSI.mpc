@@ -6,7 +6,7 @@ project(*IDL): taoidldefaults {
   custom_only = 1
 }
 
-project(*Client) : taoclient, messaging, avoids_minimum_corba, avoids_corba_e_compact {
+project(*Client) : taoclient, messaging, avoids_minimum_corba, avoids_corba_e_compact, avoids_corba_e_micro {
   after += *IDL
   source_files {
     DatabaseC.cpp
@@ -16,7 +16,7 @@ project(*Client) : taoclient, messaging, avoids_minimum_corba, avoids_corba_e_co
   }
 }
 
-project(*Server) : taoserver, messaging, dynamicinterface, avoids_minimum_corba, avoids_corba_e_compact {
+project(*Server) : taoserver, messaging, dynamicinterface, avoids_minimum_corba, avoids_corba_e_compact, avoids_corba_e_micro {
   after += *IDL
   source_files {
     Database_i.cpp

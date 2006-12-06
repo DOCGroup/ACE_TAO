@@ -10,7 +10,7 @@ project(*idl): taoidldefaults {
   custom_only = 1
 }
 
-project(*Server): csd_threadpool, taoserver, avoids_minimum_corba, avoids_corba_e_compact, pi {
+project(*Server): csd_threadpool, taoserver, avoids_minimum_corba, avoids_corba_e_compact, avoids_corba_e_micro, pi {
   exename = server_main
   after += *idl
 
