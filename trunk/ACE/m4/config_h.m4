@@ -573,16 +573,6 @@ AH_TEMPLATE([ACE_AUTO_PTR_LACKS_RESET],
 [Compiler/platform standard C++ auto_ptr implementation lacks
    reset() method])
 
-AH_TEMPLATE([ACE_LACKS_CMSG_DATA_MACRO],
-[Platform has ACE_HAS_4_4BSD_SENDMSG_RECVMSG but does not define
-   CMSG_DATA (cmsg) macro.])
-
-AH_TEMPLATE([ACE_LACKS_CMSG_DATA_MEMBER],
-[Platform has ACE_HAS_4_4BSD_SENDMSG_RECVMSG but its cmsghdr
-   structure does not contain an 'unsigned char cmsg_data[0]' member.
-   (This may be 'unsigned char __cmsg_data[0]' on some platforms, in
-   which case we need another macro.)])
-
 AH_TEMPLATE([ACE_LACKS_READDIR_R],[Platform lacks readdir_r()])
 
 AH_TEMPLATE([ACE_LACKS_INLINE_FUNCTIONS],
