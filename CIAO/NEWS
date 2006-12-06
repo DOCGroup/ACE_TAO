@@ -61,6 +61,11 @@ PLANNED MAJOR CHANGES "SOMETIME IN THE FUTURE" (i.e., exact beta not known)
 . Implement a planner to query the TargetManager and RepositoryManager
   and generate deployment plans on the fly.
 
+USER VISIBLE CHANGES BETWEEN CIAO-0.5.4 and CIAO-0.5.5
+======================================================
+
+. All IDL has been refactored to get a smaller footprint
+
 USER VISIBLE CHANGES BETWEEN CIAO-0.5.3 and CIAO-0.5.4
 ======================================================
 
@@ -91,7 +96,6 @@ USER VISIBLE CHANGES BETWEEN CIAO-0.5.3 and CIAO-0.5.4
 
 . A succesfull static deployment of the Hello example has been tested on
   VxWorks 6.3
-
 
 USER VISIBLE CHANGES BETWEEN CIAO-0.5.2 and CIAO-0.5.3
 ======================================================
