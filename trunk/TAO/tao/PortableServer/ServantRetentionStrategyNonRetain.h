@@ -46,7 +46,7 @@ namespace TAO
       PortableServer::ObjectId *
       activate_object (PortableServer::Servant servant,
                        CORBA::Short priority,
-                       int &wait_occurred_restart_call
+                       bool &wait_occurred_restart_call
                             ACE_ENV_ARG_DECL)
         ACE_THROW_SPEC ((CORBA::SystemException,
                          PortableServer::POA::ServantAlreadyActive,
@@ -58,7 +58,7 @@ namespace TAO
       activate_object_with_id (const PortableServer::ObjectId &id,
                                PortableServer::Servant servant,
                                CORBA::Short priority,
-                               int &wait_occurred_restart_call
+                               bool &wait_occurred_restart_call
                                ACE_ENV_ARG_DECL)
         ACE_THROW_SPEC ((CORBA::SystemException,
                    PortableServer::POA::ServantAlreadyActive,
@@ -74,7 +74,7 @@ namespace TAO
         ACE_ENV_ARG_DECL);
 
       virtual int is_servant_in_map (PortableServer::Servant servant,
-                                      int &wait_occurred_restart_call);
+                                     bool &wait_occurred_restart_call);
 
       virtual PortableServer::ObjectId *system_id_to_object_id (
         const PortableServer::ObjectId &system_id

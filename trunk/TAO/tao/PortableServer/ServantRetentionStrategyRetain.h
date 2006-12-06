@@ -41,13 +41,13 @@ namespace TAO
       virtual void strategy_cleanup(ACE_ENV_SINGLE_ARG_DECL);
 
       virtual int is_servant_in_map (PortableServer::Servant servant,
-                                     int &wait_occurred_restart_call);
+                                     bool &wait_occurred_restart_call);
 
       virtual
       PortableServer::ObjectId *
       activate_object (PortableServer::Servant servant,
                        CORBA::Short priority,
-                       int &wait_occurred_restart_call
+                       bool &wait_occurred_restart_call
                             ACE_ENV_ARG_DECL)
         ACE_THROW_SPEC ((CORBA::SystemException,
                          PortableServer::POA::ServantAlreadyActive,
@@ -59,7 +59,7 @@ namespace TAO
       activate_object_with_id (const PortableServer::ObjectId &id,
                                PortableServer::Servant servant,
                                CORBA::Short priority,
-                               int &wait_occurred_restart_call
+                               bool &wait_occurred_restart_call
                                ACE_ENV_ARG_DECL)
         ACE_THROW_SPEC ((CORBA::SystemException,
                    PortableServer::POA::ServantAlreadyActive,
@@ -153,8 +153,8 @@ namespace TAO
       int
       is_user_id_in_map (const PortableServer::ObjectId &id,
                          CORBA::Short priority,
-                         int &priorities_match,
-                         int &wait_occurred_restart_call);
+                         bool &priorities_match,
+                         bool &wait_occurred_restart_call);
 
       void
       deactivate_map_entry (TAO_Active_Object_Map_Entry *active_object_map_entry

@@ -250,7 +250,7 @@ TAO_Root_POA::TAO_Root_POA (const TAO_Root_POA::String &name,
 
 #if (TAO_HAS_MINIMUM_POA == 0) && !defined (CORBA_E_COMPACT) && !defined (CORBA_E_MICRO)
     filter_factory_ (0),
-#endif 
+#endif
 
     caller_key_to_object_ (0),
     servant_for_key_to_object_ (0)
@@ -430,7 +430,7 @@ TAO_Root_POA::create_POA_i (const char *adapter_name,
 
   if (CORBA::is_nil (poa_manager))
     {
-#if (TAO_HAS_MINIMUM_POA == 0) && !defined (CORBA_E_COMPACT) 
+#if (TAO_HAS_MINIMUM_POA == 0) && !defined (CORBA_E_COMPACT)
 
       PortableServer::POA_var poa = PortableServer::POA::_duplicate (this);
       PortableServer::POA_var root_poa;
@@ -457,7 +457,7 @@ TAO_Root_POA::create_POA_i (const char *adapter_name,
                                                       empty_policies
                                                       ACE_ENV_ARG_PARAMETER);
 #else
-  
+
       ACE_NEW_THROW_EX (the_poa_manager,
                         TAO_POA_Manager (this->object_adapter (), 0),
                         CORBA::NO_MEMORY ());
@@ -1222,7 +1222,7 @@ TAO_Root_POA::adapter_state_changed (
 PortableServer::ObjectId *
 TAO_Root_POA::activate_object_i (PortableServer::Servant servant,
                                  CORBA::Short priority,
-                                 int &wait_occurred_restart_call
+                                 bool &wait_occurred_restart_call
                                  ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    PortableServer::POA::ServantAlreadyActive,
@@ -1244,7 +1244,7 @@ TAO_Root_POA::activate_object (PortableServer::Servant servant
 {
   while (1)
     {
-      int wait_occurred_restart_call = 0;
+      bool wait_occurred_restart_call = false;
 
       // Lock access for the duration of this transaction.
       TAO_POA_GUARD_RETURN (0);
@@ -1278,7 +1278,7 @@ TAO_Root_POA::activate_object_with_id (const PortableServer::ObjectId &id,
 {
   while (1)
     {
-      int wait_occurred_restart_call = 0;
+      bool wait_occurred_restart_call = false;
 
       // Lock access for the duration of this transaction.
       TAO_POA_GUARD;
@@ -1306,7 +1306,7 @@ void
 TAO_Root_POA::activate_object_with_id_i (const PortableServer::ObjectId &id,
                                          PortableServer::Servant servant,
                                          CORBA::Short priority,
-                                         int &wait_occurred_restart_call
+                                         bool &wait_occurred_restart_call
                                          ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    PortableServer::POA::ServantAlreadyActive,
@@ -1776,7 +1776,7 @@ TAO_Root_POA::locate_servant_i (const char *operation,
                                 const PortableServer::ObjectId &system_id,
                                 TAO::Portable_Server::Servant_Upcall &servant_upcall,
                                 TAO::Portable_Server::POA_Current_Impl &poa_current_impl,
-                                int &wait_occurred_restart_call
+                                bool &wait_occurred_restart_call
                                 ACE_ENV_ARG_DECL)
 {
   return this->active_policy_strategies_.request_processing_strategy()->
@@ -2309,7 +2309,7 @@ TAO_Root_POA::key_to_stub_i (const TAO::ObjectKey &key,
     this->client_exposed_policies (priority
                                    ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
-  
+
   TAO_Acceptor_Filter* filter = 0;
 
 #if (TAO_HAS_MINIMUM_POA == 0) && !defined (CORBA_E_COMPACT) && !defined (CORBA_E_MICRO)
@@ -2737,7 +2737,7 @@ TAO_Root_POA::set_servant (PortableServer::Servant servant
 
 bool
 TAO_Root_POA::is_servant_activation_allowed (PortableServer::Servant servant,
-                                             int &wait_occurred_restart_call)
+                                             bool &wait_occurred_restart_call)
 {
   return this->active_policy_strategies_.id_uniqueness_strategy ()->
     is_servant_activation_allowed (servant, wait_occurred_restart_call);
@@ -2803,7 +2803,7 @@ TAO_Root_POA::server_priority (void) const
 int
 TAO_Root_POA::is_servant_active (
   PortableServer::Servant servant,
-  int &wait_occurred_restart_call)
+  bool &wait_occurred_restart_call)
 {
   return this->active_policy_strategies_.servant_retention_strategy ()->
     is_servant_in_map (servant, wait_occurred_restart_call);
