@@ -1,3 +1,11 @@
+Wed Dec  6 14:49:44 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * m4/config_h.m4:
+        * configure.ac:
+
+          Remove obsolete ACE_LACKS_CMSG_DATA_MACRO and
+          ACE_LACKS_CMSG_DATA_MEMBER feature test.
+
 Wed Dec  6 11:07:43 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/config-mit-pthread.h:
