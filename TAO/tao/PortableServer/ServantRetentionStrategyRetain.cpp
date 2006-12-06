@@ -105,7 +105,7 @@ namespace TAO
       ACE_ENV_ARG_DECL)
     {
       // Decrement the reference count.
-      CORBA::UShort new_count = --active_object_map_entry->reference_count_;
+      CORBA::UShort const new_count = --active_object_map_entry->reference_count_;
 
       // Inform the custom servant dispatching (CSD) strategy that the
       // servant is deactivated. This would be called just once when the
