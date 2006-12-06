@@ -1,12 +1,19 @@
+Wed Dec  6 08:30:57 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * *.mpc:
+          Added to all mpc files that have avoids_corba_e_compact also
+          avoids_corba_e_micro because they also can't be build with
+          CORBA/e micro
+
 Tue Dec  5 21:51:46 UTC 2006  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_visitor_argument/arglist.cpp (visit_sequence):
-        
+
           Added code to create the sequence node's name, if a check
           determines that the node is from an included IDL file, and
           is an anonymous sequence (not created with a typedef declaration).
           This is the case in this particular visitor if a valuetype
-          inherits an anonymous sequence member from a valuetype 
+          inherits an anonymous sequence member from a valuetype
           declared in another IDL file, and this visitor is generating
           the argument list for the OBV_* constructor with member
           values. The node's name has not yet been set, since it

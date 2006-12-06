@@ -16,7 +16,7 @@ project(IFR_Service) : orbsvcsexe, core, ifrservice, ifr_client, imr_client, cro
 }
 
 
-project(TAO_IFR_BE) : taolib, conv_lib, ifr_client, crosscompile, avoids_minimum_corba, avoids_corba_e_compact {
+project(TAO_IFR_BE) : taolib, conv_lib, ifr_client, crosscompile, avoids_minimum_corba, avoids_corba_e_compact, avoids_corba_e_micro {
   after       += TAO_IDL_FE
   sharedname   = TAO_IFR_BE
   libs        += TAO_IDL_FE
@@ -42,7 +42,7 @@ project(TAO_IFR_BE) : taolib, conv_lib, ifr_client, crosscompile, avoids_minimum
 }
 
 
-project(TAO_IFR_EXE) : aceexe, core, ifr_client, crosscompile, avoids_minimum_corba, avoids_corba_e_compact {
+project(TAO_IFR_EXE) : aceexe, core, ifr_client, crosscompile, avoids_minimum_corba, avoids_corba_e_compact, avoids_corba_e_micro {
   after          += TAO_IFR_BE TAO_IDL_FE
   exename         = tao_ifr
   libs           += TAO_IFR_BE TAO TAO_IDL_FE
