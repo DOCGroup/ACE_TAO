@@ -1377,3 +1377,10 @@ project(Library Unload) {
   Resource_Files {
   }
 }
+
+project(Bug_2659_Regression_Test) : acetest {
+  exename = Bug_2659_Regression_Test
+  Source_Files {
+    Bug_2659_Regression_Test.cpp
+  }
+}
