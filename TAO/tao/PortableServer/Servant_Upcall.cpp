@@ -57,7 +57,7 @@ namespace TAO
     {
       while (1)
         {
-          int wait_occurred_restart_call = 0;
+          bool wait_occurred_restart_call = false;
 
           int result =
             this->prepare_for_upcall_i (key,
@@ -90,7 +90,7 @@ namespace TAO
       const TAO::ObjectKey &key,
       const char *operation,
       CORBA::Object_out forward_to,
-      int &wait_occurred_restart_call
+      bool &wait_occurred_restart_call
       ACE_ENV_ARG_DECL)
     {
       // Acquire the object adapter lock first.
