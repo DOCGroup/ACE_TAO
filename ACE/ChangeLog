@@ -1,3 +1,11 @@
+Wed Dec  6 07:57:43 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/ciao_tests.lst:
+        * bin/tao_orb_tests.lst:
+        * bin/tao_other_tests.lst:
+          Disabled all tests that are disabled in a minimum_corba build also
+          when using CORBA/e compact and micro
+
 Tue Dec  5 23:53:34 UTC 2006  Ciju John  <johnc@ociweb.com>
 
         * tests/Bug_2659_Regression_Test.cpp:
