@@ -2,7 +2,7 @@
  * @author Iliyan jeliazkov <iliyan@ociweb.com>
  * @author Lothar Werzinger <lothar@tradescape.biz>
  *
- * $Id:$
+ * $Id$
  */
 
 
@@ -141,9 +141,9 @@ int DllOrb::fini (void)
   try
     {
       mv_orb->destroy();
-    mv_orb = CORBA::ORB::_nil();
+      mv_orb = CORBA::ORB::_nil();
     }
-  catch(CORBA::Exception const & rc_ex)
+  catch(CORBA::Exception const &)
     {
       return -1;
     }

@@ -1,4 +1,9 @@
-Wed Dec  6 19:58:57 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+Wed Dec  6 21:11:47 UTC 2006  Iliyan Jeliazkov  <iliyan@ociweb.com>
+
+        * tests/ORB_Local_Config/Bug_2612/DllOrb.cpp:
+          Fixing a windows build warning about unused variable.
+
+wed Dec  6 19:58:57 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/POA/Policies/Policies.mpc:
           Don't build when CORBA/e micro has been enabled
