@@ -10,7 +10,7 @@ ACE_RCSID (PortableServer,
            ServantRetentionStrategyNonRetainFactoryImpl,
            "$Id$")
 
-#if (TAO_HAS_MINIMUM_POA == 0)
+#if (TAO_HAS_MINIMUM_POA == 0) && !defined (CORBA_E_COMPACT) && !defined (CORBA_E_MICRO)
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -69,4 +69,4 @@ ACE_FACTORY_NAMESPACE_DEFINE (
   ServantRetentionStrategyNonRetainFactoryImpl,
   TAO::Portable_Server::ServantRetentionStrategyNonRetainFactoryImpl)
 
-#endif /* TAO_HAS_MINIMUM_POA == 0 */
+#endif /* TAO_HAS_MINIMUM_POA == 0 && !CORBA_E_COMPACT && !CORBA_E_MICRO */
