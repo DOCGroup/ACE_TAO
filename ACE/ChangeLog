@@ -1,3 +1,22 @@
+Wed Dec  6 11:07:43 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/config-mit-pthread.h:
+        * ace/config-sco-5.0.0-mit-pthread.h:
+          Removed MIT pthread config files, not supported for years
+          anymore
+
+        * ace/config-mklinux.h:
+          Removed, this linux version hasn't been maintained for years
+
+        * ace/ACE.cpp:
+          Removed all mit-pthread specific code
+
+        * configure.ac:
+          Removed mit-pthread checks
+
+        * ace/WFMO_Reactor.cpp:
+          Const/bool change
+
 Wed Dec  6 07:57:43 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/ciao_tests.lst:
