@@ -1,8 +1,8 @@
 /*
- * Copyright (c) 2005 Tradescape Inc.  All rights reserved.
- *
  * @author Iliyan jeliazkov <iliyan@ociweb.com>
  * @author Lothar Werzinger <lothar@tradescape.biz>
+ *
+ * $Id:$
  */
 
 
@@ -56,7 +56,7 @@ int DllOrb::init (int argc, char *argv[])
     if (m_failPrePostInit < 3)
       {
         ACE_DEBUG((LM_DEBUG, "TEST (%P|%t) Pre-ORB initialization ...\n"));
-        //      LOG4CPLUS_TRACE(ms_logger, "Pre-ORB initialization ...");
+
         // -----------------------------------------------------------------
         // Pre-ORB initialization steps necessary for proper DLL ORB
         // support.
@@ -116,7 +116,9 @@ int DllOrb::fini (void)
 
   try
     {
+#if !defined (CORBA_E_COMPACT) && !defined (CORBA_E_MICRO) && !defined (TAO_HAS_MINIMUM_POA)
       mv_poaManager->deactivate(1, 1);
+#endif
       mv_poaManager = PortableServer::POAManager::_nil();
 
       // attempt to protect against sporadic BAD_INV_ORDER exceptions
@@ -149,7 +151,7 @@ int DllOrb::fini (void)
   if (m_failPrePostInit < 3)
     {
       ACE_DEBUG((LM_DEBUG, "TEST (%P|%t) Post-ORB finalization ...\n"));
-      //LOG4CPLUS_TRACE(ms_logger, "Post-ORB finalization ...");
+
       // -----------------------------------------------------------------
       // Post-ORB finalization steps necessary for proper DLL ORB
       // support.

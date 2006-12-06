@@ -1,3 +1,14 @@
+Wed Dec  6 16:15:58 UTC 2006  Iliyan Jeliazkov  <iliyan@ociweb.com>
+
+        * tests/ORB_Local_Config/Bug_2612/Bug_2612.mpc:
+        * tests/ORB_Local_Config/Bug_2612/DllOrb.h:
+        * tests/ORB_Local_Config/Bug_2612/DllOrb.cpp:
+        * tests/ORB_Local_Config/Bug_2612/Test.cpp:
+
+          Fixing fuzz (missing $id$) and compile errors on
+          TAO_HAS_MINIMUM_CORBA builds, which define the POAManager
+          inteface without the deactivate() method.
+
 Wed Dec  6 16:10:57 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connection_Handler.h:
@@ -18,48 +29,48 @@ Wed Dec  6 15:55:57 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 Wed Dec  6 15:29:25 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
 
         * tests/Abstract_Interface/Makefile.am:
-	* tests/Any/Recursive/Makefile.am:
-	* tests/BiDirectional/Makefile.am:
-	* tests/BiDirectional_DelayedUpcall/Makefile.am:
-	* tests/BiDirectional_NestedUpcall/Makefile.am:
-	* tests/Big_AMI/Makefile.am:
-	* tests/Big_Oneways/Makefile.am:
-	* tests/Big_Reply/Makefile.am:
-	* tests/Big_Request_Muxing/Makefile.am:
-	* tests/Big_Twoways/Makefile.am:
-	* tests/Blocking_Sync_None/Makefile.am:
-	* tests/Bug_1020_Basic_Regression/Makefile.am:
-	* tests/Bug_1020_Regression/Makefile.am:
-	* tests/Bug_1254_Regression/Makefile.am:
-	* tests/Bug_1269_Regression/Makefile.am:
-	* tests/Bug_1270_Regression/Makefile.am:
-	* tests/Bug_1330_Regression/Makefile.am:
-	* tests/Bug_1361_Regression/Makefile.am:
-	* tests/Bug_1476_Regression/Makefile.am:
-	* tests/Bug_1482_Regression/Makefile.am:
+        * tests/Any/Recursive/Makefile.am:
+        * tests/BiDirectional/Makefile.am:
+        * tests/BiDirectional_DelayedUpcall/Makefile.am:
+        * tests/BiDirectional_NestedUpcall/Makefile.am:
+        * tests/Big_AMI/Makefile.am:
+        * tests/Big_Oneways/Makefile.am:
+        * tests/Big_Reply/Makefile.am:
+        * tests/Big_Request_Muxing/Makefile.am:
+        * tests/Big_Twoways/Makefile.am:
+        * tests/Blocking_Sync_None/Makefile.am:
+        * tests/Bug_1020_Basic_Regression/Makefile.am:
+        * tests/Bug_1020_Regression/Makefile.am:
+        * tests/Bug_1254_Regression/Makefile.am:
+        * tests/Bug_1269_Regression/Makefile.am:
+        * tests/Bug_1270_Regression/Makefile.am:
+        * tests/Bug_1330_Regression/Makefile.am:
+        * tests/Bug_1361_Regression/Makefile.am:
+        * tests/Bug_1476_Regression/Makefile.am:
+        * tests/Bug_1482_Regression/Makefile.am:
 
-	  Regenerated.
+          Regenerated.
 
-	* tests/Abstract_Interface/Abstract_Interface.mpc:
-	* tests/Any/Recursive/RecursiveHello.mpc:
-	* tests/BiDirectional/BiDirectional.mpc:
-	* tests/BiDirectional_DelayedUpcall/BiDir_DelayedUpcall.mpc:
-	* tests/BiDirectional_NestedUpcall/BiDir_NestedUpcall.mpc:
-	* tests/Big_AMI/Big_AMI.mpc:
-	* tests/Big_Oneways/Big_Oneways.mpc:
-	* tests/Big_Reply/Big_Reply.mpc:
-	* tests/Big_Request_Muxing/Big_Request_Muxing.mpc:
-	* tests/Big_Twoways/Big_Twoways.mpc:
-	* tests/Blocking_Sync_None/Blocking_Sync_None.mpc:
-	* tests/Bug_1020_Basic_Regression/Bug_1020_Basic_Regression.mpc:
-	* tests/Bug_1020_Regression/Bug_1020_Regression.mpc:
-	* tests/Bug_1254_Regression/Bug_1254_Regression.mpc:
-	* tests/Bug_1269_Regression/Bug_1269_Regression.mpc:
-	* tests/Bug_1270_Regression/Bug_1270_Regression.mpc:
-	* tests/Bug_1330_Regression/Bug_1330_Regression.mpc:
-	* tests/Bug_1361_Regression/Bug_1361_Regression.mpc:
-	* tests/Bug_1476_Regression/Bug_1476_Regression.mpc:
-	* tests/Bug_1482_Regression/Bug_1482_Regression.mpc:
+        * tests/Abstract_Interface/Abstract_Interface.mpc:
+        * tests/Any/Recursive/RecursiveHello.mpc:
+        * tests/BiDirectional/BiDirectional.mpc:
+        * tests/BiDirectional_DelayedUpcall/BiDir_DelayedUpcall.mpc:
+        * tests/BiDirectional_NestedUpcall/BiDir_NestedUpcall.mpc:
+        * tests/Big_AMI/Big_AMI.mpc:
+        * tests/Big_Oneways/Big_Oneways.mpc:
+        * tests/Big_Reply/Big_Reply.mpc:
+        * tests/Big_Request_Muxing/Big_Request_Muxing.mpc:
+        * tests/Big_Twoways/Big_Twoways.mpc:
+        * tests/Blocking_Sync_None/Blocking_Sync_None.mpc:
+        * tests/Bug_1020_Basic_Regression/Bug_1020_Basic_Regression.mpc:
+        * tests/Bug_1020_Regression/Bug_1020_Regression.mpc:
+        * tests/Bug_1254_Regression/Bug_1254_Regression.mpc:
+        * tests/Bug_1269_Regression/Bug_1269_Regression.mpc:
+        * tests/Bug_1270_Regression/Bug_1270_Regression.mpc:
+        * tests/Bug_1330_Regression/Bug_1330_Regression.mpc:
+        * tests/Bug_1361_Regression/Bug_1361_Regression.mpc:
+        * tests/Bug_1476_Regression/Bug_1476_Regression.mpc:
+        * tests/Bug_1482_Regression/Bug_1482_Regression.mpc:
 
           Split out IDL compilation into separate MPC project.
 
@@ -87,20 +98,20 @@ Wed Dec  6 14:15:57 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Wed Dec  6 13:40:52 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* examples/CSD_Strategy/ThreadPool6/Makefile.am:
-	* examples/Simple/time-date/Makefile.am:
-	* orbsvcs/examples/ORT/Makefile.am:
-	* orbsvcs/tests/Bug_2709_Regression/Makefile.am:
-	* tests/Bug_2654_Regression/Makefile.am:
-	* tests/OctetSeq/Makefile.am:
-	* tests/Oneway_Timeouts/Makefile.am:
-	* tests/Param_Test/Makefile.am:
-	* tests/Portable_Interceptors/ORB_Shutdown/Makefile.am:
+        * examples/CSD_Strategy/ThreadPool6/Makefile.am:
+        * examples/Simple/time-date/Makefile.am:
+        * orbsvcs/examples/ORT/Makefile.am:
+        * orbsvcs/tests/Bug_2709_Regression/Makefile.am:
+        * tests/Bug_2654_Regression/Makefile.am:
+        * tests/OctetSeq/Makefile.am:
+        * tests/Oneway_Timeouts/Makefile.am:
+        * tests/Param_Test/Makefile.am:
+        * tests/Portable_Interceptors/ORB_Shutdown/Makefile.am:
 
           Regenerate.
 
         * configure.ac:
-	* orbsvcs/tests/Makefile.am:
+        * orbsvcs/tests/Makefile.am:
         * tests/Makefile.am:
 
           Changes for move of Bug_2709_Regression unit test.
@@ -214,19 +225,19 @@ Tue Dec  5 04:21:50 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
 
 Tue Dec  5 04:10:47 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* tests/AMH_Exceptions/Makefile.am:
-	* tests/AMH_Oneway/Makefile.am:
-	* tests/AMI/Makefile.am:
-	* tests/AMI_Buffering/Makefile.am:
-	* tests/AMI_Timeouts/Makefile.am:
+        * tests/AMH_Exceptions/Makefile.am:
+        * tests/AMH_Oneway/Makefile.am:
+        * tests/AMI/Makefile.am:
+        * tests/AMI_Buffering/Makefile.am:
+        * tests/AMI_Timeouts/Makefile.am:
 
           Regenerated.
 
-	* tests/AMH_Exceptions/AMH_Exceptions.mpc:
-	* tests/AMH_Oneway/AMH_Oneway.mpc:
-	* tests/AMI/AMI.mpc:
-	* tests/AMI_Buffering/AMI_Buffering.mpc:
-	* tests/AMI_Timeouts/AMI_Timeouts.mpc:
+        * tests/AMH_Exceptions/AMH_Exceptions.mpc:
+        * tests/AMH_Oneway/AMH_Oneway.mpc:
+        * tests/AMI/AMI.mpc:
+        * tests/AMI_Buffering/AMI_Buffering.mpc:
+        * tests/AMI_Timeouts/AMI_Timeouts.mpc:
 
           Split out IDL compilation into separate MPC project.
 
