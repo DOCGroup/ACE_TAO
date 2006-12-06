@@ -1,3 +1,13 @@
+Wed Dec  6 14:28:57 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/PortableServer/ServantRetentionStrategyNonRetain.{h,cpp}:
+        * tao/PortableServer/ServantRetentionStrategyNonRetainFactoryImpl.{h,cpp}:
+          Added checks for CORBA/e compact and micro, no need to compile these
+          when these profiles are enabled.
+
+        * tao/PortableServer/ServantRetentionStrategyRetain.cpp:
+          Const improvement
+
 Wed Dec  6 14:15:57 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * MPC/config/rtportableserver.mpb:
