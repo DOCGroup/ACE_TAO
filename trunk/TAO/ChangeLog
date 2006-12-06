@@ -1,3 +1,13 @@
+Wed Dec  6 15:55:57 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Abstract_Servant_Base.h:
+        * tao/AnyTypeCode/Fixed_TypeCode.h:
+        * tao/AnyTypeCode/TypeCode.h:
+        * tao/Codeset_Manager_Factory_Base.h:
+        * tao/Pluggable_Messaging.h:
+        * tao/Thread_Lane_Resources.h:
+          Fixed doxygen warnings
+
 Wed Dec  6 15:29:25 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
 
         * tests/Abstract_Interface/Makefile.am:
