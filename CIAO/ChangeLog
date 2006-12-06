@@ -1,3 +1,18 @@
+Wed Dec  6 11:26:57 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ciao/CIAO_ServerResources.idl:
+        * ciao/Deployment_NodeApplicationManager.idl:
+        * DAnCE/NodeApplication/NodeApplication_Impl.h:
+        * DAnCE/NodeManager/MonitorCB.h:
+        * DAnCE/NodeManager/MonitorController.h:
+        * DAnCE/TargetManager/DomainDataManager.h:
+        * tools/Config_Handlers/DD_Handler.h:
+          Doxygen documentation updates
+
+        * MPC/config/ciao_container_dnc.mpb:
+        * ciao/CCM_Core.mpc:
+          Added avoids_corba_e_compact as base project
+
 Tue Dec  5 11:45:57 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ciao/CCM_Core.mpc:

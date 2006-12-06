@@ -67,12 +67,12 @@ namespace CIAO
 
 
       /**
-       * @brief     This function is called to create the Datamanager
+       * This function calls the constructor of the
+       * class Domain Data Manager
+       * @brief This function is called to create the Datamanager
        * @param orb The orb pointer
        * @param target The Target Manager Object Reference
        *
-       * @description This function calls the constructor of the
-       *              class Domain Data Manager
        */
       static DomainDataManager * create (CORBA::ORB_ptr orb,
                                   ::Deployment::TargetManager_ptr target
@@ -138,23 +138,19 @@ namespace CIAO
        const ::Deployment::DeploymentPlan& plan);
 
        /**
+        * The node manager in turn stops the monitor
         * @brief The function makes a call on the leaveDomain on the
         *        NodeManager
-        *
-        * @description The node manager in turn stops the monitor
-        *
         */
-
        void stop_monitors ();
 
     protected:
 
-
       /**
+       * The constructor made protected so that no one can create
+       * it.
        * @param orb The orb pointer
        * @param target The Target Manager Object Reference
-       * @description The constructor made proteccted so that no one can create
-       *              it.
        */
       DomainDataManager (CORBA::ORB_ptr orb,
                          ::Deployment::TargetManager_ptr target
