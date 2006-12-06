@@ -8,10 +8,10 @@
 
 module Deployment {
   /**
+   * CIAO specific structure to carry the scheduling params
+   * to set the process, required by RACE
    * @struct Sched_Params
    * @brief Carries Scheduling Params
-   * @description  CIAO specific structure to carry the scheduling params
-   *  to set the process, required by RACE
    */
   struct Sched_Params
   {
@@ -29,7 +29,7 @@ module Deployment {
     /// and reconfiguration
     /// This operation could handle dynamic redeployment for
     /// a node-level deployment plan within a node
-    /// @para add_or_remove If true, we add new components only, vice vesa.
+    /// @param add_or_remove If true, we add new components only, vice vesa.
     Application perform_redeployment (in Properties configProperty,
                                       out Connections providedReference,
                                       in boolean add_or_remove,
