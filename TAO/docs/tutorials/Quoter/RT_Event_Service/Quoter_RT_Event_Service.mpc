@@ -8,7 +8,7 @@ project(*idl): taoidldefaults, anytypecode {
   custom_only = 1
 }
 
-project(*client) : orbsvcsexe, portableserver, rtevent_serv, naming, avoids_minimum_corba, avoids_corba_e_compact {
+project(*client) : orbsvcsexe, portableserver, rtevent_serv, naming, avoids_minimum_corba, avoids_corba_e_compact, avoids_corba_e_micro {
   after += *idl
   source_files {
     client.cpp
@@ -19,7 +19,7 @@ project(*client) : orbsvcsexe, portableserver, rtevent_serv, naming, avoids_mini
   }
 }
 
-project(*server) : orbsvcsexe, portableserver, rtevent_serv, naming, avoids_minimum_corba, avoids_corba_e_compact {
+project(*server) : orbsvcsexe, portableserver, rtevent_serv, naming, avoids_minimum_corba, avoids_corba_e_compact, avoids_corba_e_micro {
   after += *idl
   source_files {
     server.cpp
