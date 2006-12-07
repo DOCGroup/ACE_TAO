@@ -259,14 +259,13 @@ project(Deployment_svnt) : taolib_with_idl, portableserver, valuetype, ifr_clien
 
 }
 
-project (CIAO_DnC_Server) : orbsvcslib, portableserver, valuetype, naming, ifr_client, utils, ciao_container_dnc, ciao_client_dnc, ciao_deployment_svnt {
+project (CIAO_DnC_Server) : orbsvcslib, portableserver, valuetype, naming, ifr_client, utils, ciao_container_dnc, ciao_client_dnc, ciao_deployment_svnt, avoids_minimum_corba, avoids_corba_e_compact, avoids_corba_e_micro {
   includes     += $(CIAO_ROOT)
   sharedname   =  CIAO_DnC_Server
   idlflags     += -Wb,export_include=CIAO_Server_Export.h -Wb,export_macro=CIAO_SERVER_Export
   dynamicflags =  CIAO_SERVER_BUILD_DLL
 
   IDL_Files {
-
   }
 
   Source_Files {
