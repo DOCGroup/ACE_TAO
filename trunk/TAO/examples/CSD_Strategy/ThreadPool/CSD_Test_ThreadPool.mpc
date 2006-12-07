@@ -26,7 +26,7 @@ project(*Server) : csd_threadpool, taoserver, pi, avoids_corba_e_micro {
 
 project(*Client): taoexe, anytypecode {
   exename = client_main
-  after += *Server
+  after += *idl
 
   Source_Files {
     FooC.cpp

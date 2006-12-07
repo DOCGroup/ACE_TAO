@@ -33,7 +33,7 @@ project(*Server): csd_threadpool, taoserver, pi {
 
 project(*Client): csd_threadpool, taoserver, pi {
   exename = client_main
-  after += *Server
+  after += *idl
 
   Source_Files {
     client_main.cpp
