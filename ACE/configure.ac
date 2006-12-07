@@ -6090,42 +6090,6 @@ if test "$ace_cv_lib_posix_sigaction_constp_2" = yes; then
   AC_DEFINE([ACE_HAS_SIGACTION_CONSTP2])
 fi
 
-dnl Check if the wait() system call takes a (union wait *) rather than int *
-ACE_CACHE_CHECK([if wait() takes a (union wait *) rather than int *],
-  [ace_cv_lib_wait_takes_union_wait_ptr],
-   [
-    AC_COMPILE_IFELSE([AC_LANG_PROGRAM([[
-#include <sys/wait.h>
-       ]], [[
-        int* status = 0;
-        int result = 0;
-        result=wait(status);
-       ]])],[
-        ace_cv_lib_wait_takes_union_wait_ptr=no
-       ],[
-        AC_COMPILE_IFELSE([AC_LANG_PROGRAM(
-          [[
-#include <sys/wait.h>
-          ]],
-          [[
-           union wait* status = 0;
-           int result = 0;
-           result=wait(status);
-          ]])],
-          [
-           ace_cv_lib_wait_takes_union_wait_ptr=yes
-          ],
-          [
-dnl If we get here then we're screwed! We can't use int* or union wait*.
-dnl It is very unlikely that we will ever get this far.  For the sake
-dnl of setting some result, we'll assume that we can actually use int*.
-           ace_cv_lib_wait_takes_union_wait_ptr=no
-           AC_MSG_WARN([wait() doesn't seem to take either int* or union wait*])
-           AC_MSG_WARN([as an argument.  Going to assume that int* will work.])
-          ])
-       ])
-  ], [AC_DEFINE([ACE_HAS_UNION_WAIT])],)
-
 dnl We need to use the ACE_CONVERT_WARNINGS_TO_ERRORS() macro since
 dnl passing a void * just caused implicit conversion warnings when
 dnl using GNU C++, for example.
