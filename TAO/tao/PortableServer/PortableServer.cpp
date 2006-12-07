@@ -76,15 +76,15 @@ TAO_POA_Initializer::init (void)
       ace_svc_desc_IdUniquenessStrategyUniqueFactoryImpl
     );
 
-#if !defined (CORBA_E_MICRO) && !defined (CORBA_E_COMPACT)
   ACE_Service_Config::process_directive (
       ace_svc_desc_ImplicitActivationStrategyExplicit
     );
-#endif /* CORBA_E_MICRO */
 
+#if !defined (CORBA_E_MICRO) && !defined (CORBA_E_COMPACT)
   ACE_Service_Config::process_directive (
       ace_svc_desc_ImplicitActivationStrategyImplicit
     );
+#endif /* CORBA_E_MICRO */
 
   // Strategy factories
 
