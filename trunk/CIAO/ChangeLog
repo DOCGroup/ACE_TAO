@@ -1,3 +1,12 @@
+Thu Dec  7 11:48:57 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ciao/CCM_Core.mpc:
+        * MPC/config/ciao_server_dnc.mpb:
+          Don't build DnC server with minimum corba and CORBA/e, this was
+          disabled in the past implicitly because we used security as
+          MPC base project but because that has been removed we now
+          have to explicitly disable this project
+
 Thu Dec  7 11:34:57 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * DAnCE/Plan_Generator/Plan_Generator_Impl.cpp:
