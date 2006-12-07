@@ -238,7 +238,7 @@ namespace CIAO
 
                   // Tear down the assembly
                   ACE_DEBUG ((LM_DEBUG,
-                              "Plan_Launcher: destroy the application....."));
+                              "Plan_Launcher: destroy the application.....\n"));
                   if (! launcher.teardown_plan (uuid))
                       ACE_DEBUG ((LM_DEBUG,
                                   "(%P|%t) CIAO_PlanLauncher:tear down assembly failed: "
@@ -248,7 +248,7 @@ namespace CIAO
           else if (mode == pl_mode_redeployment && new_deployment_plan_url != 0) // do redeployment
             {
               ACE_DEBUG ((LM_DEBUG,
-                          "Plan_Launcher: reconfigure application assembly....."));
+                          "Plan_Launcher: reconfigure application assembly.....\n"));
 
               CORBA::String_var uuid;
 
@@ -285,14 +285,14 @@ namespace CIAO
 
               // Tear down the assembly
               ACE_DEBUG ((LM_DEBUG,
-                          "Plan_Launcher: destroy the application....."));
+                          "Plan_Launcher: destroy the application.....\n"));
               launcher.teardown_plan (dapp_mgr.in ());
             }
           else if (mode == pl_mode_stop_by_uuid) // tear down by plan_uuid
             {
               // Tear down the assembly
               ACE_DEBUG ((LM_DEBUG,
-                          "Plan_Launcher: destroy the application....."));
+                          "Plan_Launcher: destroy the application.....\n"));
               if (! launcher.teardown_plan (plan_uuid))
                 {
                   ACE_ERROR ((LM_ERROR,
