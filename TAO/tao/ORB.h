@@ -121,7 +121,7 @@ namespace CORBA
 
   typedef CORBA::Short ValueModifier;
 
-#if (TAO_HAS_MINIMUM_POA == 0) && !defined (CORBA_E_COMPACT) && !defined (CORBA_E_MICRO)
+#if (TAO_HAS_MINIMUM_CORBA == 0) && !defined (CORBA_E_COMPACT) && !defined (CORBA_E_MICRO)
 
     // Typedefs for CORBA::RequestSeq, which is an argument of
     // send_multiple_requests_*().
@@ -246,7 +246,7 @@ namespace CORBA
         ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 #endif
 
-#if (TAO_HAS_MINIMUM_POA == 0) && !defined (CORBA_E_COMPACT) && !defined (CORBA_E_MICRO)
+#if (TAO_HAS_MINIMUM_CORBA == 0) && !defined (CORBA_E_COMPACT) && !defined (CORBA_E_MICRO)
 
     void create_list (CORBA::Long count,
                       CORBA::NVList_ptr &new_list
