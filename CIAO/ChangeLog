@@ -1,3 +1,20 @@
+Thu Dec  7 11:34:57 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * DAnCE/Plan_Generator/Plan_Generator_Impl.cpp:
+          Added some todo's, check whether the narrow on the NamingContext
+          did succeed, use CORBA::ULong for the sequence index
+
+        * DAnCE/Plan_Launcher/Plan_Launcher.cpp:
+          Use a CORBA::String_var to store the uuid string
+
+        * DAnCE/Plan_Launcher/Plan_Launcher_Impl.cpp:
+          Added some todo's, check whether the narrow on the NamingContext
+          did succeed, layout changes, fixed bugzilla bug 2729, thanks to Abdul
+          for reporting that.
+
+        * DAnCE/Plan_Launcher/Plan_Launcher_Impl.h:
+          Doxygen improvements
+
 Wed Dec  6 11:26:57 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ciao/CIAO_ServerResources.idl:
