@@ -1,3 +1,9 @@
+Thu Dec  7 00:25:44 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * tests/Big_AMI/Makefile.am:
+
+          Regenerated.
+
 Wed Dec  6 22:27:21 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
 
         * tests/Big_AMI/Big_AMI.mpc:

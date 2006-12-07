@@ -20,6 +20,10 @@ noinst_PROGRAMS =
 
 ## Makefile.Big_AMI_Idl.am
 
+if BUILD_AMI
+if BUILD_CORBA_MESSAGING
+if BUILD_EXCEPTIONS
+
 BUILT_SOURCES = \
   ami_testC.cpp \
   ami_testC.h \
@@ -40,12 +44,16 @@ CLEANFILES = \
 ami_testC.cpp ami_testC.h ami_testC.inl ami_testS.cpp ami_testS.h ami_testS.inl: ami_test-stamp
 
 ami_test-stamp: $(srcdir)/ami_test.idl $(TAO_IDL_DEP)
-	$(TAO_IDL) $(TAO_IDLFLAGS) -Sa -St $(srcdir)/ami_test.idl
+	$(TAO_IDL) $(TAO_IDLFLAGS) -GC $(srcdir)/ami_test.idl
 	@touch $@
 
 
 noinst_HEADERS = \
   ami_test.idl
+
+endif BUILD_EXCEPTIONS
+endif BUILD_CORBA_MESSAGING
+endif BUILD_AMI
 
 ## Makefile.Big_AMI_Server.am
 
