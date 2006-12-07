@@ -279,7 +279,7 @@ CORBA::ORB::work_pending (ACE_ENV_SINGLE_ARG_DECL)
   return 1;
 }
 
-#if (TAO_HAS_MINIMUM_CORBA == 0)
+#if (TAO_HAS_MINIMUM_POA == 0) && !defined (CORBA_E_COMPACT) && !defined (CORBA_E_MICRO)
 
 void
 CORBA::ORB::create_list (CORBA::Long count,
