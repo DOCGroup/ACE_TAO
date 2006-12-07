@@ -1,3 +1,9 @@
+Thu Dec  7 10:49:57 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/ORB.{h,cpp}:
+          Disable more of the ORB when building for CORBA/e, thanks to
+          Jeff for pointing out that these methods wheren't disabled
+
 Thu Dec  7 09:56:57 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * MPC/config/rtscheduling.mpb:
