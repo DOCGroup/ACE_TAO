@@ -1,3 +1,9 @@
+Thu Dec  7 14:13:43 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/DLL_Manager.cpp:
+          Made error message dependent on ACE::debug. Thanks to David Faure
+          <dfaure at klaralvdalens-datakonsult dot se> for reporting this.
+
 Thu Dec  7 14:09:43 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/ciao_tests.lst:
