@@ -154,7 +154,7 @@ $cli_idlflags ='
 ';
 
 $cli_base = "ciao_client_dnc";
-$svr_base = "ciao_server_dnc";
+$svr_base = "ciao_servant_dnc";
 
 if (defined $opt_n) {
     $svr_idlflags = $cli_idlflags;
