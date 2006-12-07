@@ -60,7 +60,7 @@ CIAO::Deployment_Configuration::init (const char *filename)
           ACE_ERROR_RETURN ((LM_ERROR,
                              "DAnCE (%P|%t) Deployment_Configuration, "
                              "failed to bind destination <%s>\n",
-                             destination),
+                             destination.c_str ()),
                              -1);
         }
 
