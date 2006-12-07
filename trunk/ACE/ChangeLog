@@ -1,3 +1,11 @@
+Thu Dec  7 12:47:43 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Read_Buffer.h:
+          Doxygen improvements
+
+        * ace/Read_Buffer.cpp:
+          Initialise pointer with 0 and use prefix increment
+
 Thu Dec  7 09:47:43 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ACE-INSTALL.html:

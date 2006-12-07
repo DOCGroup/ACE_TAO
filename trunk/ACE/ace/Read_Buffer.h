@@ -66,19 +66,19 @@ public:
 
   /**
    * Returns a pointer dynamically allocated with
-   * <ACE_Allocator::malloc> to data from the input stream up to (and
-   * including) the <terminator>.  If <search> is >= 0 then all
-   * occurrences of the <search> value are substituted with the
-   * <replace> value.  The last of the byte of data is a 0, so that
-   * <strlen> can be used on it.  The caller is responsible for
+   * ACE_Allocator::malloc to data from the input stream up to (and
+   * including) the @a terminator.  If @a search is >= 0 then all
+   * occurrences of the @a search value are substituted with the
+   * @a replace value.  The last of the byte of data is a 0, so that
+   * @c strlen can be used on it.  The caller is responsible for
    * freeing the pointer returned from this method using the
-   * <ACE_Allocator::free>.
+   * ACE_Allocator::free.
    */
   char *read (int terminator = EOF,
               int search = '\n',
               int replace = '\0');
 
-  /// Returns the number of characters replaced during a <read>.
+  /// Returns the number of characters replaced during a @c read.
   size_t replaced (void) const;
 
   /// Returns the size of the allocated buffer obtained during a
@@ -116,7 +116,6 @@ private:
 
   /// Pointer to the allocator.
   ACE_Allocator *allocator_;
-
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL
