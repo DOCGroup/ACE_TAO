@@ -1,3 +1,12 @@
+Thu Dec  7 14:18:57 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * examples/CSD_Strategy/ThreadPool2/CSD_Test_ThreadPool2.mpc:
+        * examples/CSD_Strategy/ThreadPool3/CSD_Test_ThreadPool3.mpc:
+        * examples/CSD_Strategy/ThreadPool5/CSD_Test_ThreadPool5.mpc:
+        * examples/CSD_Strategy/ThreadPool/CSD_Test_ThreadPool.mpc:
+          Build the clients after the idl project, not after server
+          to resolve build order problems in the CORBA/e builds
+
 Thu Dec  7 10:49:57 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/ORB.{h,cpp}:
