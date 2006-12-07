@@ -202,7 +202,7 @@ namespace CIAO
 
           if (mode == pl_mode_start || mode == pl_mode_interactive)  // initial deployment
             {
-              const char* uuid = 0;
+              CORBA::String_var uuid;
 
               if (package_names != 0)
                 uuid = launcher.launch_plan (deployment_plan_url,
@@ -215,14 +215,14 @@ namespace CIAO
                                              use_package_name,
                                              use_repoman);
 
-              if (uuid == 0)
+              if (uuid.in () == 0)
                 {
                   ACE_ERROR ((LM_ERROR, "(%P|%t) Plan_Launcher: Error launching plan\n"));
                   return -1;
                 }
 
-              ACE_DEBUG ((LM_DEBUG, "Plan_Launcher returned UUID is %s\n", uuid));
-              dapp_mgr = launcher.get_dam (uuid);
+              ACE_DEBUG ((LM_DEBUG, "Plan_Launcher returned UUID is %s\n", uuid.in ()));
+              dapp_mgr = launcher.get_dam (uuid.in ());
 
               // Write out DAM ior if requested
               if (mode == pl_mode_start)
@@ -250,7 +250,7 @@ namespace CIAO
               ACE_DEBUG ((LM_DEBUG,
                           "Plan_Launcher: reconfigure application assembly....."));
 
-              const char* uuid;
+              CORBA::String_var uuid;
 
               if (package_names != 0)
                 uuid = launcher.re_launch_plan (new_deployment_plan_url,
@@ -263,7 +263,7 @@ namespace CIAO
                                                 use_package_name,
                                                 use_repoman);
 
-              if (uuid == 0)
+              if (uuid.in () == 0)
                 {
                   ACE_ERROR ((LM_ERROR, "(%P|%t) Plan_Launcher: Error re-launching plan\n"));
                   return -1;
