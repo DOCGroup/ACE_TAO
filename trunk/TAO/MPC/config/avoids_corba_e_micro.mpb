@@ -1,6 +1,6 @@
 // -*- MPC -*-
 // $Id$
 
-feature(corba_e_micro) : taoidldefaults {
+feature(corba_e_micro) {
   avoids += corba_e_micro
 }
