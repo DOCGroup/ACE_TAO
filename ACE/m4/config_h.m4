@@ -730,9 +730,6 @@ AH_TEMPLATE([ACE_HAS_TSS_EMULATION],
 AH_TEMPLATE([ACE_HAS_UCONTEXT_T],
 [Platform supports ucontext_t (which is used in the extended signal API).])
 
-AH_TEMPLATE([ACE_HAS_UNION_WAIT],
-[The wait() system call takes a (union wait *) rather than int *])
-
 AH_TEMPLATE([ACE_HAS_UNIXWARE_SVR4_SIGNAL_T],
 [Has inconsistent SVR4 signal stuff, but not the same as the other
    platforms])
