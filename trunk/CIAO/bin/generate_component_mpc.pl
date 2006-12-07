@@ -216,7 +216,7 @@ project('."$unique_prefix"."$com_name".'_stub): '."$cli_base".' {'."
 }
 
 project('."$unique_prefix"."$com_name"."$svr_suffix".') : '."$svr_base".' {
-  after      += '."$svnt_depend"."$unique_prefix"."$com_name".'_stub
+  after      += '."$svnt_depend "."$unique_prefix"."$com_name".'_stub
   sharedname  = '."$com_name"."$svr_suffix".'
   libs       += '."$com_name".'_stub'." $lib_depend
   $lib_paths $svr_idlflags".'
