@@ -1,3 +1,10 @@
+Thu Dec  7 19:04:38 UTC 2006  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tools/Config_Handlers/DynAny_Handler.mpc:
+
+          Removed taolib and anytypecode base projects, since they are
+          already pulled in by typecodefactory.
+
 Thu Dec  7 13:47:57 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * DAnCE/DomainApplicationManager/Deployment_Configuration (init):
