@@ -4,8 +4,6 @@
 #include "Config_Handlers/XML_File_Intf.h"
 #include "Config_Handlers/DnC_Dump.h"
 
-#include <string>
-
 namespace CIAO
 {
   namespace Plan_Launcher
