@@ -12,12 +12,6 @@
 #include "ace/OS_NS_sys_stat.h"
 #include "ace/OS_Memory.h"
 
-#if defined (ACE_HAS_CHARPTR_SPRINTF)
-#  define ACE_SPRINTF_ADAPTER(X) ACE_OS::strlen (X)
-#else
-#  define ACE_SPRINTF_ADAPTER(X) X
-#endif /* ACE_HAS_CHARPTR_SPRINTF */
-
 /*****************************************************************************/
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
@@ -917,41 +911,50 @@ ACE_OS::tempnam (const wchar_t *dir, const wchar_t *pfx)
 ACE_INLINE int
 ACE_OS::vsprintf (char *buffer, const char *format, va_list argptr)
 {
-  return ACE_SPRINTF_ADAPTER (::vsprintf (buffer, format, argptr));
+  return ::vsprintf (buffer, format, argptr);
 }
 
 ACE_INLINE int
 ACE_OS::vsnprintf (char *buffer, size_t maxlen, const char *format, va_list ap)
 {
-#if defined (ACE_HAS_SNPRINTF)
+#if !defined (ACE_LACKS_VSNPRINTF)
 
-#  if !defined (ACE_WIN32) \
-   || (defined (__BORLANDC__) && (__BORLANDC__ >= 0x600))
-  return ACE_SPRINTF_ADAPTER (::vsnprintf (buffer, maxlen, format, ap));
+  int result;
+#  if !defined (ACE_WIN32) || (defined (__BORLANDC__) && (__BORLANDC__ >= 0x600))
+  result = ::vsnprintf (buffer, maxlen, format, ap);
 #  else
+  result = ::_vsnprintf (buffer, maxlen, format, ap);
 
-  int result =
-    ACE_SPRINTF_ADAPTER (::_vsnprintf (buffer, maxlen, format, ap));
-
-  // Win32 doesn't regard a full buffer with no 0-terminate as an
-  // overrun.
+  // Win32 doesn't regard a full buffer with no 0-terminate as an overrun.
   if (result == static_cast<int> (maxlen))
-    result = -1;
+    buffer[maxlen-1] = '\0';
 
   // Win32 doesn't 0-terminate the string if it overruns maxlen.
   if (result == -1)
     buffer[maxlen-1] = '\0';
+# endif
 
+  // In out-of-range conditions, C99 defines vsnprintf() to return the number
+  // of characters that would have been written if enough space was available.
+  // Earlier variants of the vsnprintf() (e.g. UNIX98) defined it to return
+  // -1. This method follows the C99 standard, but needs to guess at the
+  // value; uses maxlen + 1.
+  if (result == -1)
+    {
+      result = static_cast <int> (maxlen + 1);
+    }
+  
   return result;
 
-# endif
 #else
+
   ACE_UNUSED_ARG (buffer);
   ACE_UNUSED_ARG (maxlen);
   ACE_UNUSED_ARG (format);
   ACE_UNUSED_ARG (ap);
   ACE_NOTSUP_RETURN (-1);
-#endif /* ACE_HAS_SNPRINTF */
+
+#endif /* ACE_LACKS_VSNPRINTF */
 }
 
 #if defined (ACE_HAS_WCHAR)
@@ -997,8 +1000,7 @@ ACE_OS::vsnprintf (wchar_t *buffer, size_t maxlen, const wchar_t *format, va_lis
 
 # elif defined (ACE_WIN32)
 
-  int result =
-    ACE_SPRINTF_ADAPTER (::_vsnwprintf (buffer, maxlen, format, ap));
+  int result = ::_vsnwprintf (buffer, maxlen, format, ap);
 
   // Win32 doesn't regard a full buffer with no 0-terminate as an
   // overrun.

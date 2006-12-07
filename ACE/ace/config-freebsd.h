@@ -234,8 +234,6 @@ extern "C" { char * cuserid (char *s); }
 #define ACE_HAS_PTHREADS_UNIX98_EXT
 #endif
 
-#define ACE_HAS_SNPRINTF
-
 // Note, on FreeBSD 5, POSIX aio is now an optional kernel module which
 // must be loaded.
 // Read the aio(4) man page for what to do, otherwise any aio_* call
