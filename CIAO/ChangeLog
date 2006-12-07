@@ -1,3 +1,11 @@
+Thu Dec  7 20:22:57 UTC 2006  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * bin/generate_component_mpc.pl:
+
+          Fixed bug that omits necessary space between items in 'after'
+          line, if it contains more than one item. Thanks to Abdullah
+          Sowayan <abdullah.sowayan@lmco.com> for reporting the bug.
+
 Thu Dec  7 19:15:04 UTC 2006  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * bin/generate_component_mpc.pl:
