@@ -1,3 +1,28 @@
+Thu Dec  7 08:02:57 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/PortableServer/ImplicitActivationStrategyImplicit.cpp:
+        * tao/PortableServer/ImplicitActivationStrategyImplicit.h:
+        * tao/PortableServer/RequestProcessingPolicy.cpp:
+        * tao/PortableServer/RequestProcessingStrategyDefaultServant.cpp:
+        * tao/PortableServer/RequestProcessingStrategyDefaultServantFI.cpp:
+        * tao/PortableServer/RequestProcessingStrategyServantActivator.cpp:
+        * tao/PortableServer/RequestProcessingStrategyServantActivatorFI.cpp:
+        * tao/PortableServer/RequestProcessingStrategyServantLocator.cpp:
+        * tao/PortableServer/RequestProcessingStrategyServantLocatorFI.cpp:
+        * tao/PortableServer/RequestProcessingStrategyServantManager.cpp:
+        * tao/PortableServer/ServantRetentionPolicy.cpp:
+        * tao/PortableServer/ThreadPolicy.cpp:
+        * tao/PortableServer/ThreadStrategySingle.cpp:
+        * tao/PortableServer/ThreadStrategySingle.h:
+        * tao/PortableServer/ThreadStrategySingleFactoryImpl.cpp:
+        * tao/PortableServer/ThreadStrategySingleFactoryImpl.h:
+          Disable more strategies with CORBA/e but also reordered some includes.
+          At the moment the strategy is fully disabled in a minimum build we
+          include orbconf.h outside the internal ifdef check and all includes
+          of classes are inside this ifdef. This way we don't pull in a static
+          initializers which seem to take 112 bytes of footprint per file
+          which is not needed.
+
 Thu Dec  7 07:38:57 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/PortableServer/PortableServer.cpp:
