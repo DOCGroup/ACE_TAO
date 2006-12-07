@@ -1,3 +1,9 @@
+Thu Dec  7 07:38:57 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/PortableServer/PortableServer.cpp:
+          The wrong activation strategy was disabled when building for
+          CORBA/e
+
 Thu Dec  7 06:38:57 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/ImR_Client/IMR_Client.cpp:
