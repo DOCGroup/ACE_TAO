@@ -25,10 +25,10 @@ project(*Server): taoserver, valuetype {
   }
 }
 
-project(*Client): taoclient, valuetype, typecodefactory, ifr_client {
+project(*Client): taoclient, valuetype, typecodefactory {
   after += *idl
   after += *Server
-  
+
   Source_Files {
     TestC.cpp
     NonRecursiveC.cpp
