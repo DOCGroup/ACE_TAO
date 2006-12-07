@@ -6,6 +6,7 @@ ACE_RCSID (PortableServer,
            ImplicitActivationStrategyImplicit,
            "$Id$")
 
+#if !defined (CORBA_E_MICRO) && !defined (CORBA_E_COMPACT)
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -36,4 +37,4 @@ ACE_STATIC_SVC_DEFINE (
   ACE_Service_Type::DELETE_THIS | ACE_Service_Type::DELETE_OBJ,
   0)
 
-
+#endif
