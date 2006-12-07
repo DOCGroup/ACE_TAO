@@ -1,3 +1,17 @@
+Thu Dec  7 09:47:43 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ACE-INSTALL.html:
+          Improved rtems documentation
+
+        * MakeProjectCreator/config/avoids_ace_for_tao.mpb:
+          New base project for avoids ace_for_tao
+
+        * bin/ciao_tests.lst
+        * bin/tao_orb_tests.lst
+        * bin/tao_other_tests.lst
+          Disabled all tests that are disabled in a minimum_corba build also
+          when using CORBA/e compact and micro
+
 Thu Dec  7 07:49:24 UTC 2006  Olli Savia  <ops@iki.fi>
 
         * ace/OS_NS_stdio.h:
@@ -6,7 +20,7 @@ Thu Dec  7 07:49:24 UTC 2006  Olli Savia  <ops@iki.fi>
 
           Implemented ACE_OS::snprintf() by using ACE_OS::vsnprintf().
           Removed duplicate code and made maintaining easier.
-        
+
         * ace/README:
         * ace/config-cygwin32.h:
         * ace/config-freebsd.h:
@@ -32,7 +46,7 @@ Thu Dec  7 07:49:24 UTC 2006  Olli Savia  <ops@iki.fi>
           Removed ACE_HAS_SNPRINTF and added ACE_LACKS_VSNPRINTF
           if necessary (I probably missed some platforms, need to recheck
           after next scoreboard round).
-        
+
 Thu Dec  7 00:27:58 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
 
         * m4/config_h.m4:
