@@ -1,8 +1,6 @@
 // -*- MPC -*-
 // $Id$
 
-feature(minimum_corba) : taoidldefaults {
+feature(minimum_corba) {
   avoids += minimum_corba
-  idlflags += -DTAO_HAS_MINIMUM_POA
-  macros += TAO_HAS_MINIMUM_CORBA=1
 }
