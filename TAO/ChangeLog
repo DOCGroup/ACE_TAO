@@ -1,3 +1,17 @@
+Thu Dec  7 09:54:57 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * MPC/config/avoids_corba_e_compact.mpb:
+        * MPC/config/avoids_corba_e_micro.mpb:
+        * MPC/config/avoids_minimum_corba.mpb:
+          Simplified these files, thanks to Jeff to pointing out that
+          they contained to much
+
+        * MPC/config/concurrency_serv.mpb:
+          Don't build with CORBA/e micro
+
+        * orbsvcs/orbsvcs/CosConcurrency.mpc:
+          Don't build serv with CORBA/e micro
+
 Thu Dec  7 08:02:57 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/PortableServer/ImplicitActivationStrategyImplicit.cpp:
