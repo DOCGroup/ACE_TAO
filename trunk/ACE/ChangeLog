@@ -1,3 +1,10 @@
+Thu Dec  7 00:27:58 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * m4/config_h.m4:
+        * configure.ac:
+
+          Remove obsolete ACE_HAS_UNION_WAIT feature test.
+
 Wed Dec  6 21:06:37 UTC 2006  Ciju John  <johnc@ociweb.com>
 
         * tests/Bug_2659_Regression_Test.cpp:
