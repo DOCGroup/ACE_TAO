@@ -1,3 +1,34 @@
+Thu Dec  7 19:00:28 UTC 2006  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * MPC/config/typecodefactory.mpb:
+
+          Added avoids_minimum_corba, avoids_corba_e_compact, and
+          avoids_corba_e_micro to the base project list. Thanks to
+          Johnny Willemsen <jwillemsen@remedy.nl> for his input
+          that helped reach the decision that this is the right
+          thing to do.
+
+        * orbsvcs/orbsvcs/IFRService.mpc:
+
+          - Removed base projects that are already pulled in by
+            others, including the 3 added to typecodefactory's
+            base project list, described above.
+
+          - Removed the 'IFRService' tag and tagcheck line, this
+            stuff was never used.
+
+          - Revised Source_Files and Template_Files blocks, and
+            added Header_Files block, so that template files will
+            get displayed in the right place and all header files
+            will get displayed, in Visual Studio projects.
+
+        * tests/Any/Recursive/RecursiveHello.mpc:
+        * examples/TypeCode_Creation/TypeCode_Creation.mpc:
+
+          Removed avoids_minimum_corba, avoids_corba_e_compact, and
+          avoids_corba_e_micro base projects, since they are now
+          pulled in by typecodefactory.
+
 Thu Dec  7 18:55:57 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/ORB.{h,cpp}:
