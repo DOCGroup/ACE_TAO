@@ -1,3 +1,10 @@
+Thu Dec  7 13:47:57 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * DAnCE/DomainApplicationManager/Deployment_Configuration (init):
+          Use ACE_Read_Buffer to read the file and parse it contents. This way
+          we are independent of a fixed buffer length, especially on systems
+          with multiple network cards and IPv6 enabled the IORs can get huge.
+
 Thu Dec  7 11:48:57 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ciao/CCM_Core.mpc:
