@@ -1,3 +1,38 @@
+Thu Dec  7 07:49:24 UTC 2006  Olli Savia  <ops@iki.fi>
+
+        * ace/OS_NS_stdio.h:
+        * ace/OS_NS_stdio.inl:
+        * ace/OS_NS_stdio.cpp:
+
+          Implemented ACE_OS::snprintf() by using ACE_OS::vsnprintf().
+          Removed duplicate code and made maintaining easier.
+        
+        * ace/README:
+        * ace/config-cygwin32.h:
+        * ace/config-freebsd.h:
+        * ace/config-hpux-11.00.h:
+        * ace/config-irix6.x-common.h:
+        * ace/config-linux-common.h:
+        * ace/config-lynxos.h:
+        * ace/config-macosx-panther.h:
+        * ace/config-macosx-tiger.h:
+        * ace/config-macosx.h:
+        * ace/config-netbsd.h:
+        * ace/config-openbsd.h:
+        * ace/config-openvms.h:
+        * ace/config-posix.h:
+        * ace/config-qnx-rtp-62x.h:
+        * ace/config-sunos5.7.h:
+        * ace/config-tru64.h:
+        * ace/config-vxworks6.2.h:
+        * ace/config-vxworks6.3.h:
+        * ace/config-win32-common.h:
+        * ace/config-win32-interix.h:
+
+          Removed ACE_HAS_SNPRINTF and added ACE_LACKS_VSNPRINTF
+          if necessary (I probably missed some platforms, need to recheck
+          after next scoreboard round).
+        
 Thu Dec  7 00:27:58 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
 
         * m4/config_h.m4:
