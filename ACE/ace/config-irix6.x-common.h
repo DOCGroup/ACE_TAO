@@ -77,9 +77,6 @@
 // Compiler/platform contains the <sys/syscall.h> file.
 #define ACE_HAS_SYS_SYSCALL_H
 
-// Compiler/platform supports snprintf
-#define ACE_HAS_SNPRINTF
-
 // Compiler/platform supports alloca()
 // Although ACE does have alloca() on this compiler/platform combination, it is
 // disabled by default since it can be dangerous.  Uncomment the following line

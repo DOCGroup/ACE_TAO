@@ -69,11 +69,6 @@
 // SunOS 5.7 has socklen_t
 #define ACE_HAS_SOCKLEN_T
 
-// snprintf() is available at least from Solaris 7 on. If it can be determined
-// that it's also available in Solaris 2.6, this can be moved into
-// config-sunos5.6.h.
-#define ACE_HAS_SNPRINTF
-
 #if defined (__sparcv9)
 #define _LP64
 #define ACE_SIZEOF_LONG 8 /* Needed to circumvent compiler bug #4294969 */
