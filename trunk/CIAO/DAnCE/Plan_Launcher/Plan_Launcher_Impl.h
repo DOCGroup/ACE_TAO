@@ -47,7 +47,6 @@ namespace CIAO
                  ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
       /**
-       * @fn launch_plan
        * @brief Launch a plan, given a deployment plan URI
        * @param deployment_plan_uri A uri that points ot a valid deployment plan
        * @returns a string containing the UUID of the plan. Null indicates failure.
@@ -67,7 +66,6 @@ namespace CIAO
         ACE_THROW_SPEC ((Deployment_Failure));
 
       /**
-       * @fn launch_plan
        * @brief Launch a plan, given an IDL deployment plan
        * @param plan A valid IDL deployment plan
        * @returns a string containing the UUID of the plan. Null indicates failure.
