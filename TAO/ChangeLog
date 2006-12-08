@@ -1,3 +1,12 @@
+Fri Dec  8 22:30:46 UTC 2006  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tests/IDL_Test/included.idl:
+        * tests/IDL_Test/valuetype.idl:
+
+          Added IDL to the test to cover the bug fixed in
+
+          Tue Dec  5 21:51:46 UTC 2006  Jeff Parsons <j.parsons@vanderbilt.edu>
+
 Fri Dec  8 05:21:38 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
 
         * configure.ac:
