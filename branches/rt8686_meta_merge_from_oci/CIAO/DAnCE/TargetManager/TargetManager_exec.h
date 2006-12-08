@@ -190,7 +190,7 @@ namespace CIDL_TargetManager_i
     TargetManagerImpl_exec_i * _exec;
 
     ///The pointer to the Domain Manager
-    std::auto_ptr<CIAO::DomainDataManager> dataManager_;
+    auto_ptr<CIAO::DomainDataManager> dataManager_;
 
     /// The CORBA ORB ...
     CORBA::ORB_var orb_;

@@ -122,16 +122,6 @@
 # define ACE_LACKS_STRTOK_R_PROTOTYPE
 // @note  end of glibc 2.0 (0.961212-5)-specific configuration.
 
-// These macros determined by reading <stdio.h> on RH 7.1 and glibc's
-// <features.h>.
-# if defined (_BSD_SOURCE) \
-  || defined (_ISOC99_SOURCE) \
-  || defined (_ISOC9X_SOURCE) \
-  || (defined (__STDC_VERSION__) && (__STDC_VERSION__ >= 199901L)) \
-  || (defined _XOPEN_SOURCE && (_XOPEN_SOURCE - 0) >= 500)
-#   define ACE_HAS_SNPRINTF
-# endif
-
 # if __GLIBC__ > 1 && __GLIBC_MINOR__ >= 1
     // These were suggested by Robert Hanzlik <robi@codalan.cz> to get
     // ACE to compile on Linux using glibc 2.1 and libg++/gcc 2.8.

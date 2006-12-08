@@ -113,9 +113,6 @@
 #define ACE_HAS_IP_MULTICAST
 #define ACE_LACKS_PERFECT_MULTICAST_FILTERING 1
 
-//platform supports snprintf ()
-#define ACE_HAS_SNPRINTF
-
 // Compiler/platform has the getrusage() system call.
 #define ACE_HAS_GETRUSAGE
 

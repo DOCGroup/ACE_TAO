@@ -66,8 +66,8 @@ receiver_CPPFLAGS = \
 receiver_SOURCES = \
   AddrServer.cpp \
   Consumer.cpp \
-  TestC.idl \
-  TestS.idl \
+  TestC.cpp \
+  TestS.cpp \
   receiver.cpp \
   AddrServer.h \
   Consumer.h
@@ -111,8 +111,8 @@ sender_CPPFLAGS = \
 sender_SOURCES = \
   AddrServer.cpp \
   Supplier.cpp \
-  TestC.idl \
-  TestS.idl \
+  TestC.cpp \
+  TestS.cpp \
   sender.cpp \
   AddrServer.h \
   Supplier.h

@@ -73,7 +73,6 @@
 //
 //                ACE_LACKS Section
 /////////////////////////////////////////////////////////////////
-#define ACE_LACKS_CMSG_DATA_MEMBER
 #define ACE_LACKS_CONDATTR_PSHARED
 #define ACE_LACKS_CONST_TIMESPEC_PTR
 #define ACE_LACKS_LINEBUFFERED_STREAMBUF

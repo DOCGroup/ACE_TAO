@@ -154,7 +154,7 @@ $cli_idlflags ='
 ';
 
 $cli_base = "ciao_client_dnc";
-$svr_base = "ciao_server_dnc";
+$svr_base = "ciao_servant_dnc";
 
 if (defined $opt_n) {
     $svr_idlflags = $cli_idlflags;
@@ -175,7 +175,7 @@ else {
   '."$no_tie".'
   idlflags += '."$no_anys"." $no_skel".' \
               -Wb,export_macro='."$UCOM_NAME"."$USVR_SUFFIX".'_Export \
-              -Wb,export_include='."$com_name"."svr_suffix".'_export.h
+              -Wb,export_include='."$com_name"."$svr_suffix".'_export.h
 ';
 
     $cidl_block =
@@ -216,9 +216,9 @@ project('."$unique_prefix"."$com_name".'_stub): '."$cli_base".' {'."
 }
 
 project('."$unique_prefix"."$com_name"."$svr_suffix".') : '."$svr_base".' {
-  after += '."$svnt_depend "."$unique_prefix"."$com_name".'_stub
+  after      += '."$svnt_depend "."$unique_prefix"."$com_name".'_stub
   sharedname  = '."$com_name"."$svr_suffix".'
-  libs    += '."$com_name".'_stub'." $lib_depend
+  libs       += '."$com_name".'_stub'." $lib_depend
   $lib_paths $svr_idlflags".'
   dynamicflags = '."$UCOM_NAME"."$USVR_SUFFIX".'_BUILD_DLL
   '."$cidl_block".'
@@ -252,7 +252,7 @@ $command = "generate_export_file.pl $UCOM_NAME".'_STUB > '."$com_name".'_stub_ex
 print "\t$command"."\n";
 system ("$ACE_ROOT".'/bin/'."$command");
 
-$command = "generate_export_file.pl $UCOM_NAME".'_SVNT > '."$com_name".'_svnt_export.h';
+$command = "generate_export_file.pl $UCOM_NAME"."$USVR_SUFFIX".' > '."$com_name"."$svr_suffix".'_export.h';
 print "\t$command"."\n";
 system ("$ACE_ROOT".'/bin/'."$command");
 

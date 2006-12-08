@@ -1,7 +1,7 @@
 // -*- MPC -*-
 // $Id$
 
-project(*client): taoexe, portableserver, strategies, dynamicinterface, avoids_minimum_corba, avoids_corba_e_compact {
+project(*client): taoexe, portableserver, strategies, dynamicinterface, avoids_minimum_corba, avoids_corba_e_compact, avoids_corba_e_micro {
   after    += IDL_Cubit_Server
   avoids   += ace_for_tao
   idlflags += -Gd

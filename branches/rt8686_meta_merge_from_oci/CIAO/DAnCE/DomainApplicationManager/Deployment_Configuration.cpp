@@ -1,10 +1,11 @@
 // $Id$
 
 #include "Deployment_Configuration.h"
+#include "ciao/CIAO_common.h"
 
 #include "ace/OS_NS_stdio.h"
-
-const int NAME_BUFSIZE = 1024;
+#include "ace/OS_NS_string.h"
+#include "ace/Read_Buffer.h"
 
 CIAO::Deployment_Configuration::Deployment_Configuration (CORBA::ORB_ptr o)
   : orb_ (CORBA::ORB::_duplicate (o))
@@ -19,8 +20,6 @@ CIAO::Deployment_Configuration::~Deployment_Configuration (void)
 int
 CIAO::Deployment_Configuration::init (const char *filename)
 {
-  // @@ We should change to use ACE_Configuration here.
-
   if (filename == 0)
     {
       ACE_ERROR ((LM_ERROR, "DANCE (%P|%t) Deployment_Configuration.cpp"
@@ -34,24 +33,42 @@ CIAO::Deployment_Configuration::init (const char *filename)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          "DAnCE (%P|%t) Deployment_Configuration.cpp:"
-                         "Fail to open node manager map data file: %s : \n",
+                         "Fail to open node manager map data file: <%s>\n",
                          filename),
                          -1);
     }
 
-  char destination[NAME_BUFSIZE], ior[NAME_BUFSIZE];
-  bool first = true;
+  // Get a read buffer, this will close the stream when we are ready
+  ACE_Read_Buffer reader (inf, true);
 
-  while (fscanf (inf, "%s %s", destination, ior ) != EOF)
+  bool first = true;
+  char* string = 0;
+
+  // Read from the file line by line
+  while ((string = reader.read ('\n', '\0')) != 0)
     {
-      // This should not fail!!
-      //
-      if (this->deployment_info_.bind (destination, ior) != 0)
+      // Search from the right to the first space
+      const char* ior_start = ACE_OS::strrchr (string, ' ');
+      // Search from the left to the first space
+      const char* dest_end = ACE_OS::strchr (string, ' ');
+      // The destination is first followed by some spaces
+      ACE_CString destination (string, dest_end - string);
+      // And then the IOR
+      ACE_CString ior (ior_start + 1, ACE_OS::strlen (ior_start + 1) - 1);
+      if (this->deployment_info_.bind (destination.c_str (), ior.c_str ()) != 0)
         {
-          ACE_ERROR ((LM_ERROR,
-                      "DAnCE (%P|%t) Deployment_Configuration.cpp:"
-                      "Reuse existing node in the cached map: [%s]\n",
-                      destination));
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "DAnCE (%P|%t) Deployment_Configuration, "
+                             "failed to bind destination <%s>\n",
+                             destination.c_str ()),
+                             -1);
+        }
+
+      if (CIAO::debug_level () > 5)
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      "DAnCE (%P|%t) Deployment_Configuration, "
+                      "read <%s> <%s>\n", destination.c_str (), ior.c_str ()));
         }
 
       if (first)
@@ -60,7 +77,7 @@ CIAO::Deployment_Configuration::init (const char *filename)
           first = false;
         }
     }
-  ACE_OS::fclose (inf);
+
   return 0;
 }
 
@@ -68,7 +85,7 @@ const char *
 CIAO::Deployment_Configuration::get_node_manager_ior (const char *name) const
 {
   if (name == 0)
-    return get_default_node_manager_ior ();
+    return this->get_default_node_manager_ior ();
 
   ACE_Hash_Map_Entry
     <ACE_CString,
@@ -78,8 +95,8 @@ CIAO::Deployment_Configuration::get_node_manager_ior (const char *name) const
                                    entry) != 0)
     {
       ACE_ERROR ((LM_ERROR,
-                  "DAnCE (%P|%t) Deployment_Configuration.cpp:"
-                  "Failed to find IOR for destination [%s] : \n",
+                  "DAnCE (%P|%t) Deployment_Configuration, "
+                  "get_node_manager_ior, failed to find IOR for destination <%s>\n",
                   name));
       return 0;
     }
@@ -109,11 +126,11 @@ CIAO::Deployment_Configuration::get_node_manager (const char *name
   if (this->deployment_info_.find (ACE_CString (name),
                                    entry) != 0)
     {
-      ACE_ERROR ((LM_ERROR,
-                  "DAnCE (%P|%t) Deployment_Configuration.cpp:"
-                  "Failed to find IOR for destination [%s] : \n",
-                  name));
-      return 0;
+      ACE_ERROR_RETURN ((LM_ERROR,
+                        "DAnCE (%P|%t) Deployment_Configuration.cpp:"
+                        "Failed to find IOR for destination <%s>\n",
+                        name),
+                        0);
     }
 
   if (CORBA::is_nil (entry->int_id_.node_manager_.in ()))

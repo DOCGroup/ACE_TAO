@@ -1,9 +1,10 @@
+// $Id$
+
 #include "TestS.h"
 #include "tao/Strategies/advanced_resource.h"
 #include "tao/Messaging/Messaging.h"
 #include "tao/AnyTypeCode/TAOA.h"
 #include "tao/AnyTypeCode/Any.h"
-//#include "tao/IIOP_Connector.h"
 
 #include "ace/streams.h"
 #include "ace/High_Res_Timer.h"

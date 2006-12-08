@@ -1814,13 +1814,13 @@ TAO_DynCommon::is_basic_type_seq (CORBA::TypeCode_ptr tc)
           || tc == CORBA::_tc_LongDoubleSeq);
 }
 
-const CORBA::Boolean
+CORBA::Boolean
 TAO_DynCommon::has_components (void) const
 {
   return this->has_components_;
 }
 
-const CORBA::Boolean
+CORBA::Boolean
 TAO_DynCommon::destroyed (void) const
 {
   return this->destroyed_;

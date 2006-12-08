@@ -105,7 +105,7 @@ namespace TAO
       ACE_ENV_ARG_DECL)
     {
       // Decrement the reference count.
-      CORBA::UShort new_count = --active_object_map_entry->reference_count_;
+      CORBA::UShort const new_count = --active_object_map_entry->reference_count_;
 
       // Inform the custom servant dispatching (CSD) strategy that the
       // servant is deactivated. This would be called just once when the
@@ -173,7 +173,7 @@ namespace TAO
       TAO_Active_Object_Map_Entry *entry = 0;
       PortableServer::Servant servant = 0;
 
-      int result =
+      int const result =
         active_object_map_->
           find_servant_using_system_id_and_user_id (system_id,
                                                     user_id.in(),
@@ -224,7 +224,7 @@ namespace TAO
       // associated with that object in the Active Object Map.
       PortableServer::Servant servant = 0;
 
-      int result =
+      int const result =
         this->active_object_map_->find_servant_using_user_id (id,
                                                               servant);
 
@@ -297,7 +297,7 @@ namespace TAO
         }
 
       TAO_Active_Object_Map_Entry *entry = 0;
-      int result = this->active_object_map_->
+      int const result = this->active_object_map_->
         find_servant_using_system_id_and_user_id (system_id,
                                                   user_id.in(),
                                                   servant,
@@ -340,7 +340,7 @@ namespace TAO
       // POA invokes the appropriate method on the servant.
       PortableServer::Servant servant = 0;
       TAO_Active_Object_Map_Entry *active_object_map_entry = 0;
-      int result = this->active_object_map_->
+      int const result = this->active_object_map_->
         find_servant_using_system_id_and_user_id (system_id,
                                                   user_id,
                                                   servant,
@@ -381,7 +381,7 @@ namespace TAO
       // POA invokes the appropriate method on the servant.
       PortableServer::Servant servant = 0;
       TAO_Active_Object_Map_Entry *active_object_map_entry = 0;
-      int result = this->active_object_map_->
+      int const result = this->active_object_map_->
         find_servant_using_system_id_and_user_id (system_id,
                                                   user_id,
                                                   servant,
@@ -399,12 +399,12 @@ namespace TAO
     int
     ServantRetentionStrategyRetain::is_servant_in_map (
       PortableServer::Servant servant,
-      int &wait_occurred_restart_call)
+      bool &wait_occurred_restart_call)
     {
-      int deactivated = 0;
+      bool deactivated = false;
       int servant_in_map =
         this->active_object_map_->is_servant_in_map (servant,
-                                                      deactivated);
+                                                     deactivated);
 
       if (!servant_in_map)
         {
@@ -422,7 +422,7 @@ namespace TAO
               // state may change by the time we get the lock again.
               // Therefore, indicate to the caller that all conditions
               // need to be checked again.
-              wait_occurred_restart_call = 1;
+              wait_occurred_restart_call = true;
 
               ++this->waiting_servant_deactivation_;
 
@@ -444,11 +444,11 @@ namespace TAO
     ServantRetentionStrategyRetain::is_user_id_in_map (
       const PortableServer::ObjectId &id,
       CORBA::Short priority,
-      int &priorities_match,
-      int &wait_occurred_restart_call)
+      bool &priorities_match,
+      bool &wait_occurred_restart_call)
     {
-      int deactivated = 0;
-      int user_id_in_map =
+      bool deactivated = false;
+      bool user_id_in_map =
         this->active_object_map_->is_user_id_in_map (id,
                                                       priority,
                                                       priorities_match,
@@ -779,7 +779,7 @@ namespace TAO
     ServantRetentionStrategyRetain::activate_object (
       PortableServer::Servant servant,
       CORBA::Short priority,
-      int &wait_occurred_restart_call
+      bool &wait_occurred_restart_call
       ACE_ENV_ARG_DECL)
         ACE_THROW_SPEC ((CORBA::SystemException,
                          PortableServer::POA::ServantAlreadyActive,
@@ -851,7 +851,7 @@ namespace TAO
       const PortableServer::ObjectId &id,
       PortableServer::Servant servant,
       CORBA::Short priority,
-      int &wait_occurred_restart_call
+      bool &wait_occurred_restart_call
       ACE_ENV_ARG_DECL)
         ACE_THROW_SPEC ((CORBA::SystemException,
                          PortableServer::POA::ServantAlreadyActive,
@@ -876,8 +876,8 @@ namespace TAO
       // If the CORBA object denoted by the Object Id value is already
       // active in this POA (there is a servant bound to it in the Active
       // Object Map), the ObjectAlreadyActive exception is raised.
-      int priorities_match = 1;
-      int result =
+      bool priorities_match = true;
+      bool result =
         this->is_user_id_in_map (id,
                                  priority,
                                  priorities_match,
@@ -910,7 +910,7 @@ namespace TAO
                                            CORBA::COMPLETED_NO));
         }
 
-      bool may_activate =
+      bool const may_activate =
         this->poa_->is_servant_activation_allowed (servant, wait_occurred_restart_call);
 
       if (!may_activate)
@@ -929,8 +929,8 @@ namespace TAO
       // association between the specified Object Id and the specified
       // servant in the Active Object Map.
       if (this->active_object_map_->bind_using_user_id (servant,
-                                                         id,
-                                                         priority) != 0)
+                                                        id,
+                                                        priority) != 0)
         {
           ACE_THROW (CORBA::OBJ_ADAPTER ());
         }

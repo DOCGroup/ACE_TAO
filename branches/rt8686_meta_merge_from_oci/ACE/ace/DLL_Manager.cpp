@@ -281,7 +281,7 @@ ACE_DLL_Handle::close (int unload)
       this->handle_ = ACE_SHLIB_INVALID_HANDLE;
     }
 
-  if (retval != 0)
+  if (retval != 0 && ACE::debug ())
     ACE_ERROR ((LM_ERROR,
                 ACE_LIB_TEXT ("ACE (%P|%t) DLL_Handle::close - ")
                 ACE_LIB_TEXT ("Failed with: \"%s\".\n"),

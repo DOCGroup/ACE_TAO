@@ -16,8 +16,6 @@
 
 #include "DomainEventsC.h"
 
-using namespace std;
-
 namespace CIDL_TargetManager_i
 {
   //==================================================================
@@ -30,7 +28,7 @@ namespace CIDL_TargetManager_i
                         TargetManagerImpl_Context *context
                        )
     : _exec (exec),
-      orb_ (orb),
+      orb_ (CORBA::ORB::_duplicate (orb)),
       context_ (context)
   {
     // The DomainDataManager created here ...
@@ -62,7 +60,7 @@ namespace CIDL_TargetManager_i
   ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
   {
-    return  CIAO::DomainDataManager::
+    return CIAO::DomainDataManager::
       get_data_manager ()->get_initial_domain ();
   }
 
@@ -127,7 +125,10 @@ namespace CIDL_TargetManager_i
     if (updateKind == ::Deployment::Delete ||
         updateKind == ::Deployment::Add)
       {
-        ACE_DEBUG ((LM_DEBUG , "TM::Creating the changed event\n"));
+        if (CIAO::debug_level () > 9)
+          {
+            ACE_DEBUG ((LM_DEBUG , "TM::Creating the changed event\n"));
+          }
 
         CIAO::Domain_Changed_Event_var changed_event =
           new OBV_CIAO::Domain_Changed_Event ();
@@ -135,13 +136,25 @@ namespace CIDL_TargetManager_i
         ::Deployment::Domain_var temp_domain =
           new ::Deployment::Domain (domainSubset);
 
-        ACE_DEBUG ((LM_DEBUG , "TM::After getting the current domain\n"));
+        if (CIAO::debug_level () > 9)
+          {
+            ACE_DEBUG ((LM_DEBUG , "TM::After getting the current domain\n"));
+          }
+
         changed_event->changes (temp_domain);
         changed_event->change_kind (updateKind);
 
-        ACE_DEBUG ((LM_DEBUG , "TM::Sending the event to the Planner_Manager\n"));
+        if (CIAO::debug_level () > 9)
+          {
+            ACE_DEBUG ((LM_DEBUG , "TM::Sending the event to the Planner_Manager\n"));
+          }
+
         context_->push_changes (changed_event);
-        ACE_DEBUG ((LM_DEBUG , "TM::After   Sending the event to the Planner_Manager\n"));
+
+        if (CIAO::debug_level () > 9)
+          {
+            ACE_DEBUG ((LM_DEBUG , "TM::After   Sending the event to the Planner_Manager\n"));
+          }
       }
 
   }
@@ -191,6 +204,9 @@ namespace CIDL_TargetManager_i
   {
     // Your code here.
     ACE_DEBUG ((LM_DEBUG, "Get component cpu :: Skeleton Impl"));
+
+    // todo
+
     return 0;
   }
 
@@ -233,14 +249,15 @@ namespace CIDL_TargetManager_i
       ACE_DEBUG ((LM_DEBUG , "Calling TM constructor"));
     }
 
-    if (this->exec_object_.in () == 0)
-    {
-      this->exec_object_ = new TargetManager_exec_i(this,
-                    context_->_ciao_the_Container()->the_ORB(),
-                    context_
-                    );
-    }
-    return this->exec_object_.in ();
+    if (CORBA::is_nil (this->exec_ext_object_.in ()))
+      {
+        this->exec_object_ = new TargetManager_exec_i(this,
+                      context_->_ciao_the_Container()->the_ORB(),
+                      context_
+                      );
+      }
+
+    return ::Deployment::CCM_TargetManager::_duplicate (this->exec_object_.in ());
   }
 
   ::CIAO::CCM_TargetManagerExt_ptr TargetManagerImpl_exec_i
@@ -248,11 +265,12 @@ namespace CIDL_TargetManager_i
                             ACE_ENV_SINGLE_ARG_DECL_NOT_USED
                             ) ACE_THROW_SPEC ((CORBA::SystemException))
   {
-    if (this->exec_ext_object_.in () == 0)
-    {
-      this->exec_ext_object_ = new TargetManagerExt_exec_i();
-    }
-    return this->exec_ext_object_.in ();
+    if (CORBA::is_nil (this->exec_ext_object_.in ()))
+      {
+        this->exec_ext_object_ = new TargetManagerExt_exec_i();
+      }
+
+    return ::CIAO::CCM_TargetManagerExt::_duplicate (this->exec_ext_object_.in ());
   }
 
   // Operations from Components::SessionComponent
@@ -310,7 +328,7 @@ namespace CIDL_TargetManager_i
     {
       ACE_DEBUG ((LM_DEBUG , "Inside CCM_ACTIVATE\n"));
     }
-    get_targetMgr ();
+    this->get_targetMgr ();
   }
 
   void
@@ -370,7 +388,7 @@ namespace CIDL_TargetManager_i
   ::Components::CCMException))
   {
     ::Components::EnterpriseComponent_ptr retval =
-    ::Components::EnterpriseComponent::_nil ();
+      ::Components::EnterpriseComponent::_nil ();
 
     ACE_NEW_THROW_EX (
     retval,
@@ -385,7 +403,7 @@ namespace CIDL_TargetManager_i
   create_CIAO_TargetManagerHome_Impl (void)
   {
     ::Components::HomeExecutorBase_ptr retval =
-    ::Components::HomeExecutorBase::_nil ();
+      ::Components::HomeExecutorBase::_nil ();
 
     ACE_NEW_RETURN (
     retval,

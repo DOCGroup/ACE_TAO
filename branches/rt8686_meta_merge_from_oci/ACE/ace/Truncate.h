@@ -27,16 +27,16 @@
 #include "ace/If_Then_Else.h"
 #include "ace/Numeric_Limits.h"
 
-#if defined (__BORLANDC__) && __BORLANDC__ <= 0x582
+#if defined (__BORLANDC__) && __BORLANDC__ <= 0x590
 # include "ace/Basic_Types.h"
-#endif  /* __BORLANDC__ <= 0x582 */
+#endif  /* __BORLANDC__ <= 0x590 */
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace ACE_Utils
 {
 
-#if !defined (__BORLANDC__) || __BORLANDC__ > 0x582
+#if !defined (__BORLANDC__) || __BORLANDC__ > 0x590
 
   template<typename T> struct Sign_Check;
 
@@ -895,7 +895,7 @@ namespace ACE_Utils
     return truncator() (val);
   }
 
-#endif  /* !__BORLANDC__ || __BORLANDC__ > 0x582 */
+#endif  /* !__BORLANDC__ || __BORLANDC__ > 0x590 */
 
 } // namespace ACE_Utils
 

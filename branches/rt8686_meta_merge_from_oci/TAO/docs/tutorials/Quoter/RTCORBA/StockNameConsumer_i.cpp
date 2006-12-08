@@ -1,3 +1,4 @@
+// $Id$
 
 // local headers
 #include "StockNameConsumer_i.h"
@@ -23,7 +24,7 @@ void Stock_StockNameConsumer_i::push_StockName (::Stock::StockNames *the_stockna
        i < the_stockname->names ().length ();
        ++i)
     {
-      if (ACE_OS::strcmp (this->stock_name_, 
+      if (ACE_OS::strcmp (this->stock_name_,
                           the_stockname->names ()[i]) == 0)
         {
           // Get the quoter for the connection from the <context_>.
@@ -31,7 +32,7 @@ void Stock_StockNameConsumer_i::push_StockName (::Stock::StockNames *the_stockna
                       "*** message: getting the quoter connection\n"));
           Stock::StockQuoter_var quoter =
             this->context_.get_connection_quoter_info ();
-          
+
           try
             {
               // Request more information from the StockQuoter.
@@ -39,10 +40,10 @@ void Stock_StockNameConsumer_i::push_StockName (::Stock::StockNames *the_stockna
                           "*** message: requesting the stock info from the quoter\n"));
               Stock::StockInfo_var stock_info =
                 quoter->get_stock_info (the_stockname->names()[i]);
-              
+
               // Display the current value of the stock.
               ACE_DEBUG ((LM_DEBUG,
-                          "Current value of %s is $%d\n", 
+                          "Current value of %s is $%d\n",
                           stock_info->name.in (),
                           stock_info->last));
             }
@@ -59,14 +60,14 @@ void Stock_StockNameConsumer_i::push_StockName (::Stock::StockNames *the_stockna
 }
 
 
-::Stock::Cookie * 
+::Stock::Cookie *
 Stock_StockNameConsumer_i::cookie ()
   throw (::CORBA::SystemException)
 {
   return this->cookie_.in ();
 }
 
-void 
+void
 Stock_StockNameConsumer_i::cookie (::Stock::Cookie *cookie)
   throw (::CORBA::SystemException)
 {

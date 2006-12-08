@@ -40,7 +40,7 @@ CLEANFILES = \
 OBVC.cpp OBVC.h OBVC.inl OBVS.cpp OBVS.h OBVS.inl: OBV-stamp
 
 OBV-stamp: $(srcdir)/OBV.idl $(TAO_IDL_DEP)
-	$(TAO_IDL) $(TAO_IDLFLAGS) -Sa -St $(srcdir)/OBV.idl
+	$(TAO_IDL) $(TAO_IDLFLAGS) -Sa $(srcdir)/OBV.idl
 	@touch $@
 
 

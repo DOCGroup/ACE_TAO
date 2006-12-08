@@ -201,7 +201,6 @@ ACE_HAS_STDARG_THR_DEST                 Platform has void (*)(...)
                                         prototype for
                                         pthread_key_create()
                                         destructor (e.g., LynxOS).
-ACE_HAS_SNPRINTF                        Platform offers snprintf().
 ACE_HAS_STL_MAP_CONFLICT                Used when users want to
                                         compile ACE with STL and STL
                                         map class conflicts with
@@ -287,9 +286,6 @@ ACE_HAS_CHARPTR_DL                      OS/platform uses char * for
 ACE_HAS_CHARPTR_SOCKOPT                 OS/platform uses char * for
                                         sockopt, rather than const
                                         char *
-ACE_HAS_CHARPTR_SPRINTF                 sprintf() returns char *
-                                        rather than int (e.g., SunOS
-                                        4.x)
 ACE_HAS_CLOCK_GETTIME                   Platform supports POSIX.1b
                                         clock_gettime () at least for clock-id CLOCK_REALTIME
 ACE_HAS_CLOCK_GETTIME_MONOTONIC         Platform supports POSIX.1b

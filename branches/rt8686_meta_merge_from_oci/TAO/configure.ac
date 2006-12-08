@@ -11,7 +11,7 @@ dnl
 dnl Note that this macro removes the newline output by the M4
 dnl "esyscmd" built-in.  Unless you understand what you're doing,
 dnl particularly with M4, do not modify this macro definition.
-define([TAO_VERSION], patsubst(esyscmd(grep TAO_VERSION tao/Version.h | sed 's/.*\"\(.*\)\".*/\1/'), [
+define([TAO_VERSION], patsubst(esyscmd(grep TAO_VERSION tao/Version.h | sed 's/.*\" *\(.*\)\".*/\1/'), [
 ]))dnl remove newline ending every `esyscmd' answer
 
 AC_INIT([TAO],
@@ -459,6 +459,7 @@ if test $tao_build_tests = yes; then
     orbsvcs/tests/Bug_2316_Regression/Makefile
     orbsvcs/tests/Bug_2377_Regression/Makefile
     orbsvcs/tests/Bug_2615_Regression/Makefile
+    orbsvcs/tests/Bug_2709_Regression/Makefile
     orbsvcs/tests/Concurrency/Makefile
     orbsvcs/tests/CosEvent/Basic/Makefile
     orbsvcs/tests/CosEvent/Makefile
@@ -635,7 +636,6 @@ if test $tao_build_tests = yes; then
     tests/Bug_2654_Regression/Makefile
     tests/Bug_2669_Regression/Makefile
     tests/Bug_2683_Regression/Makefile
-    tests/Bug_2709_Regression/Makefile
     tests/CDR/Makefile
     tests/COIOP/Makefile
     tests/CSD_Strategy_Tests/Broken/Makefile
@@ -728,6 +728,7 @@ if test $tao_build_tests = yes; then
     tests/OBV/Truncatable/Makefile
     tests/OBV/ValueBox/Makefile
     tests/ORB_Local_Config/Bug_1459/Makefile
+    tests/ORB_Local_Config/Bug_2612/Makefile
     tests/ORB_Local_Config/Bunch/Makefile
     tests/ORB_Local_Config/Makefile
     tests/ORB_Local_Config/Separation/Makefile

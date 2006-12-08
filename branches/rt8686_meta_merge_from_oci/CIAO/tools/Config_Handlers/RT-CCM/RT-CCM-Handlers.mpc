@@ -1,12 +1,10 @@
 //$Id$
 
-project (RT_CCM_Config_Handlers) : acelib, ciao_deployment_stub, xerces {
+project (RT_CCM_Config_Handlers) : acelib, ciao_deployment_stub, ciao_xml_utils {
   sharedname = RT_CCM_Config_Handlers
   dynamicflags   = RT_CCM_HANDLERS_BUILD_DLL
   macros   += XML_USE_PTHREADS
   includes += $(CIAO_ROOT)/tools/Config_Handlers
-  after    += CIAO_XML_Utils
-  libs     += CIAO_XML_Utils
   includes += $(CIAO_ROOT)/ciao
 
   Source_Files {
@@ -25,7 +23,6 @@ project (RT_CCM_Config_Handlers) : acelib, ciao_deployment_stub, xerces {
   Header_Files {
   }
 }
-
 
 //project (RT-CCM_Config_Handlers_Tests) : ciao_component_dnc, xerces {
 //  requires += dummy_label

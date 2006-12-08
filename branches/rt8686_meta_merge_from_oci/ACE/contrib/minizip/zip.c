@@ -7,6 +7,7 @@
    Copyright (C) 1998-2005 Gilles Vollant
 
    Read zip.h for more info
+   $Id$
 */
 
 
@@ -172,7 +173,7 @@ local linkedlist_datablock_internal* allocate_new_datablock()
   return ldi;
 }
 
-local void free_datablock( linkedlist_datablock_internal* ldi)   
+local void free_datablock( linkedlist_datablock_internal* ldi)
 {
   while (ldi!=NULL)
     {
@@ -182,7 +183,7 @@ local void free_datablock( linkedlist_datablock_internal* ldi)
     }
 }
 
-local void init_linkedlist(linkedlist_data* ll)   
+local void init_linkedlist(linkedlist_data* ll)
 {
   ll->first_block = ll->last_block = NULL;
 }
@@ -195,7 +196,7 @@ local void init_linkedlist(linkedlist_data* ll)
 
 
 local int add_data_in_datablock(linkedlist_data* ll,const void* buf,uLong len)
-    
+
 {
   linkedlist_datablock_internal* ldi;
   const unsigned char* from_copy;

@@ -52,7 +52,6 @@
 #define ACE_HAS_SIG_ATOMIC_T
 #define ACE_HAS_SIG_MACROS
 #define ACE_HAS_SOCKADDR_IN_SIN_LEN
-#define ACE_HAS_SNPRINTF
 #define ACE_HAS_SOCKLEN_T
 #define ACE_HAS_SSIZE_T
 #define ACE_HAS_STRERROR
@@ -75,7 +74,6 @@
 //
 //                ACE_LACKS Section
 /////////////////////////////////////////////////////////////////
-#define ACE_LACKS_CMSG_DATA_MEMBER
 #define ACE_LACKS_CONST_TIMESPEC_PTR
 #define ACE_LACKS_LINEBUFFERED_STREAMBUF
 #define ACE_LACKS_MADVISE

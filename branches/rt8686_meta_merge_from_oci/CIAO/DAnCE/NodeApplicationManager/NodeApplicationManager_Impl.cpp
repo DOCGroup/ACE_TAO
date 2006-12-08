@@ -60,7 +60,7 @@ create_connections (ACE_ENV_SINGLE_ARG_DECL)
 
   ACE_NEW_THROW_EX (retv,
                     Deployment::Connections (),
-                    CORBA::INTERNAL ());
+                    CORBA::NO_MEMORY ());
   ACE_CHECK_RETURN (0);
 
   CORBA::ULong len = retv->length ();
@@ -78,9 +78,9 @@ create_connections (ACE_ENV_SINGLE_ARG_DECL)
       // Get all the facets first
       Components::FacetDescriptions_var facets;
 
-      if (is_shared_component (comp_name))
+      if (this->is_shared_component (comp_name))
         {
-          ACE_DEBUG ((LM_DEBUG, "NAMImpl::create_connections: Componsnt %s is shared\n",
+          ACE_DEBUG ((LM_DEBUG, "NAMImpl::create_connections: Component %s is shared\n",
                       comp_name.c_str ()));
           facets = this->node_manager_->get_all_facets (comp_name);
         }
@@ -106,9 +106,9 @@ create_connections (ACE_ENV_SINGLE_ARG_DECL)
       // Get all the event consumers
       Components::ConsumerDescriptions_var consumers;
 
-      if (is_shared_component (comp_name))
+      if (this->is_shared_component (comp_name))
         {
-          ACE_DEBUG ((LM_DEBUG, "NAMImpl::create_connections: Componsnt %s is shared\n",
+          ACE_DEBUG ((LM_DEBUG, "NAMImpl::create_connections: Component %s is shared\n",
                       comp_name.c_str ()));
           consumers = this->node_manager_->get_all_consumers (comp_name);
         }
@@ -941,7 +941,7 @@ create_node_application (const ACE_CString & options
 
   ACE_NEW_THROW_EX (prop,
                     Deployment::Properties,
-                    CORBA::INTERNAL ());
+                    CORBA::NO_MEMORY ());
   ACE_CHECK_RETURN (Deployment::NodeApplication::_nil());
 
   // @@ Create a new callback servant.
@@ -1220,3 +1220,8 @@ create_node_application (const ACE_CString & options
 
   return nodeapp_obj._retn ();
 }
+
+CIAO::NodeApplicationManager_Impl_Base::~NodeApplicationManager_Impl_Base (void)
+{
+}
+

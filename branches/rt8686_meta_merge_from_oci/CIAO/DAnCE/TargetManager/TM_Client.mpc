@@ -2,11 +2,7 @@
 
 // Client.mpc,v 1.6 2005/02/18 09:07:06 jwillemsen Exp
 
-
-project(TMClient): ciao_client_dnc,ciao_deployment_stub, ciao_config_handlers, ciao_events_dnc {
-  after += CIAO_TargetManager_stub
-  libs += TargetManager_stub NodeManager_stub
-
+project(TMClient): ciao_client_dnc,ciao_deployment_stub, ciao_config_handlers, ciao_events_dnc, ciao_targetmanager_stub {
   IDL_Files {
   }
 

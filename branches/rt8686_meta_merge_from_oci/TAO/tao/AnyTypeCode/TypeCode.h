@@ -423,7 +423,7 @@ namespace CORBA
      * @note This is a TAO-specific method that is not part of the
      *       standard @c CORBA::TypeCode interface.
      *
-     * @note If this method returns @false, the contents of the @a cdr
+     * @note If this method returns false, the contents of the @a cdr
      *       output CDR stream are undefined.
      */
     virtual bool tao_marshal (TAO_OutputCDR & cdr,

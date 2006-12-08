@@ -41,33 +41,31 @@ namespace CIAO
 
       bool init (const char *em_ior,
                  CORBA::ORB_ptr orb,
-                 bool use_repoman = 0,
-                 bool rm_use_naming = 0,
+                 bool use_repoman = false,
+                 bool rm_use_naming = false,
                  const char *rm_name = 0
                  ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
       /**
-       * @fn launch_plan
        * @brief Launch a plan, given a deployment plan URI
        * @param deployment_plan_uri A uri that points ot a valid deployment plan
        * @returns a string containing the UUID of the plan. Null indicates failure.
        */
       const char * launch_plan (const char *deployment_plan_uri,
                                 const char *package_uri = 0,
-                                bool use_package_name = 1,
-                                bool use_repoman = 0
+                                bool use_package_name = true,
+                                bool use_repoman = false
                                 ACE_ENV_ARG_DECL_WITH_DEFAULTS)
         ACE_THROW_SPEC ((Deployment_Failure));
 
       const char * re_launch_plan (const char *deployment_plan_uri,
                                    const char *package_uri = 0,
-                                   bool use_package_name = 1,
-                                   bool use_repoman = 0
+                                   bool use_package_name = true,
+                                   bool use_repoman = false
                                    ACE_ENV_ARG_DECL_WITH_DEFAULTS)
         ACE_THROW_SPEC ((Deployment_Failure));
 
       /**
-       * @fn launch_plan
        * @brief Launch a plan, given an IDL deployment plan
        * @param plan A valid IDL deployment plan
        * @returns a string containing the UUID of the plan. Null indicates failure.

@@ -18,8 +18,8 @@ project (*sender): orbsvcsexe, rtevent_serv, rtsched {
     AddrServer.cpp
     Supplier.cpp
     sender.cpp
-    TestS.idl
-    TestC.idl
+    TestS.cpp
+    TestC.cpp
   }
   IDL_Files {
   }
@@ -33,8 +33,8 @@ project (*receiver) : orbsvcsexe, rtevent_serv, rtsched {
     AddrServer.cpp
     Consumer.cpp
     receiver.cpp
-    TestS.idl
-    TestC.idl
+    TestS.cpp
+    TestC.cpp
   }
   IDL_Files {
   }

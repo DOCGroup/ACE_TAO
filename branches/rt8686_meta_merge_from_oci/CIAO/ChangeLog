@@ -1,3 +1,281 @@
+Fri Dec  8 000:09:04 UTC 2006  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * bin/generate_component_mpc.pl:
+
+          Another typo found by Abdullah Sowayan <abdullah.sowayan@lmco.com>.
+
+Thu Dec  7 20:22:57 UTC 2006  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * bin/generate_component_mpc.pl:
+
+          Fixed bug that omits necessary space between items in 'after'
+          line, if it contains more than one item. Thanks to Abdullah
+          Sowayan <abdullah.sowayan@lmco.com> for reporting the bug.
+
+Thu Dec  7 19:15:04 UTC 2006  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * bin/generate_component_mpc.pl:
+
+          Fixed typo, had 'ciao_server_dnc', should have been
+          'ciao_servant_dnc'. Thanks to Abdullah Sowayan
+          <abdullah.sowayan@lmco.com> for reporting the mistake.
+
+Thu Dec  7 19:04:38 UTC 2006  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tools/Config_Handlers/DynAny_Handler.mpc:
+
+          Removed taolib and anytypecode base projects, since they are
+          already pulled in by typecodefactory.
+
+Thu Dec  7 13:47:57 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * DAnCE/DomainApplicationManager/Deployment_Configuration (init):
+          Use ACE_Read_Buffer to read the file and parse it contents. This way
+          we are independent of a fixed buffer length, especially on systems
+          with multiple network cards and IPv6 enabled the IORs can get huge.
+
+Thu Dec  7 11:48:57 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ciao/CCM_Core.mpc:
+        * MPC/config/ciao_server_dnc.mpb:
+          Don't build DnC server with minimum corba and CORBA/e, this was
+          disabled in the past implicitly because we used security as
+          MPC base project but because that has been removed we now
+          have to explicitly disable this project
+
+Thu Dec  7 11:34:57 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * DAnCE/Plan_Generator/Plan_Generator_Impl.cpp:
+          Added some todo's, check whether the narrow on the NamingContext
+          did succeed, use CORBA::ULong for the sequence index
+
+        * DAnCE/Plan_Launcher/Plan_Launcher.cpp:
+          Use a CORBA::String_var to store the uuid string
+
+        * DAnCE/Plan_Launcher/Plan_Launcher_Impl.cpp:
+          Added some todo's, check whether the narrow on the NamingContext
+          did succeed, layout changes, fixed bugzilla bug 2729, thanks to Abdul
+          for reporting that.
+
+        * DAnCE/Plan_Launcher/Plan_Launcher_Impl.h:
+          Doxygen improvements
+
+Wed Dec  6 11:26:57 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ciao/CIAO_ServerResources.idl:
+        * ciao/Deployment_NodeApplicationManager.idl:
+        * DAnCE/NodeApplication/NodeApplication_Impl.h:
+        * DAnCE/NodeManager/MonitorCB.h:
+        * DAnCE/NodeManager/MonitorController.h:
+        * DAnCE/TargetManager/DomainDataManager.h:
+        * tools/Config_Handlers/DD_Handler.h:
+          Doxygen documentation updates
+
+        * MPC/config/ciao_container_dnc.mpb:
+        * ciao/CCM_Core.mpc:
+          Added avoids_corba_e_compact as base project
+
+Tue Dec  5 11:45:57 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ciao/CCM_Core.mpc:
+        * MPC/config/ciao_container_dnc.mpb:
+          Don't build Dnc_Container with corba/e compact has been enabled
+
+        * tools/Config_Handlers/RT-CCM/RT-CCM-Handlers.mpc:
+          Simplified this MPC file
+
+Mon Dec  4 12:14:57 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * MPC/config/*:
+          All CIAO base projects are moved from
+          ACE_wrappers/bin/MakeProjectCreator/config to this directory
+
+Mon Dec  4 12:35:57 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * DAnCE/TargetManager/TM_Client.mpc:
+          Simplified this file using more base projects
+
+Mon Dec  4 12:29:57 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * DAnCE/TargetManager/DomainDataManager.h:
+          Documentation changes
+
+        * DAnCE/TargetManager/TargetManager.mpc:
+          Simplified this file using more base projects
+
+Mon Dec  4 12:24:57 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * MPC
+        * MPC/config
+          New directory for the base projects specifically for CIAO
+
+Mon Dec  4 12:16:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * DAnCE/StaticConfigurator/StaticDAnCEParser.cpp:
+          Use include from CIAO_ROOT and removed using namespace
+
+        * DAnCE/StaticConfigurator/StaticDAnCEParser.mpc:
+          Simplified this file
+
+Mon Dec  4 11:41:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * DAnCE/ExecutionManager/ExecutionManager.mpc:
+          Simplified by using the base projects
+
+Mon Dec  4 11:37:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+          Converted the NodeApplication into a library and build
+          an exe using this library. Will prevent duplicate compilation
+          of part of the code. Fixes bugzilla bug 2739.
+
+        * DAnCE/NodeApplication/CIAO_NodeApplication_export.h:
+          New export file:
+
+        * DAnCE/NodeApplication/Configurator_Factory.h:
+        * DAnCE/NodeApplication/Container_Impl.h:
+        * DAnCE/NodeApplication/NodeApplication_Core.h:
+        * DAnCE/NodeApplication/NodeApplication_Impl.h:
+          Added export macro to export the class from the new NodeApplication
+          library.
+
+        * DAnCE/NodeApplication/NodeApplication.mpc:
+          Added new library project and use this in the executable.
+
+        * DAnCE/NodeApplicationManager/NodeApplicationManager.mpc:
+          Use the new NodeApplication library and the new base projects
+          I added for CIAO
+
+        * DAnCE/NodeApplicationManager/NodeApplicationManager_Impl.{h,cpp,inl}:
+          Moved destructor from inline to cpp method and small code improvements
+
+        * DAnCE/NodeManager/NodeManager.mpc:
+        * DAnCE/StaticConfigurator/StaticDAnCEParser.mpc:
+          Simplified by using the new base projects
+
+        * DAnCE/NodeManager/NodeManager_Impl.cpp:
+          Small improvements
+
+Mon Dec  4 07:35:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * CIAO-INSTALL.html:
+          Updated build instructions
+
+        * ciao/Dynamic_Component_Activator.cpp:
+          Removed not needed return statements in a void method
+
+        * ciao/Dynamic_Component_Activator.h:
+          Changed guard in file to match filename
+
+        * ciao/Home_Servant_Impl_T.cpp:
+          Layout changes
+
+        * ciao/Port_Activator.{h,cpp}:
+          The name methods did really change oid, so renamed name
+          to oid and added a new name method to return the name
+          member
+
+        * ciao/Servant_Activator.cpp:
+          Const changes and updated for Port Activator changes
+
+        * ciao/Servant_Impl_Base.cpp:
+          Small code improvements
+
+        * DAnCE/DomainApplicationManager/DomainApplicationManager_Impl.cpp:
+          Const changes
+
+        * DAnCE/NodeApplication/Container_Impl.cpp:
+        * DAnCE/NodeApplicationManager/NodeApplicationManager_Impl.cpp:
+        * DAnCE/RepositoryManager/RepositoryManager_Impl.cpp:
+          Throw NO_MEMORY when allocation fails
+
+        * DAnCE/NodeApplication/RTConfig_Manager.cpp:
+          Throw BAD_PARAM when an incorrect method parameter has been passed
+
+        * DAnCE/NodeManager/BaseMonitor.h:
+        * DAnCE/NodeManager/CIAO_Monitor.h:
+        * DAnCE/NodeManager/NodeManager_Impl.h:
+          Doxygen changes
+
+        * DAnCE/NodeManager/NodeManager_Impl.cpp:
+          Fixed a comment
+
+        * DAnCE/Plan_Launcher/Plan_Launcher_Impl.h:
+          Use true/false for bool
+
+        * DAnCE/TargetManager/DomainDataManager.cpp:
+          Layout changes
+
+        * DAnCE/TargetManager/TargetManager_exec.cpp:
+          Removed not needed includes, made messages dependent
+          on the debug level, added missing duplicate
+
+        * DAnCE/TargetManager/TargetManager_exec.h:
+          Don't use std:: for auto_ptr
+
+        * DAnCE/TargetManager/TargetManagerExt.idl:
+          Removed commented out include
+
+        * DAnCE/TargetManager/TargetManagerImpl.idl:
+          Removed empty lines
+
+        * DAnCE/tests/NodeApplicationTest/run_test.pl:
+        * DAnCE/tests/NodeApplicationTest/run_test_ex.pl:
+        * DAnCE/tests/NodeApplicationTest/run_test_simple.pl:
+        * DAnCE/tests/scripts/BasicSP/basicNodeDaemon.pl:
+        * docs/tutorials/Quoter/Simple/descriptors/runNodeDaemons.pl:
+        * examples/Display/descriptors/basicNodeDaemon.pl:
+        * examples/Display/descriptors/run_NodeDaemons.pl:
+        * examples/Hello/descriptors/run_NodeDaemons.pl:
+          Use $ACE_ROOT/bin with use lib. This fixes bugzilla bug 2737,
+          thanks for Abdul for reporting this.
+
+        * docs/tutorials/Quoter/Simple/01.html:
+          Update from Abdul
+
+Fri Dec  1 16:27:34 UTC 2006  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * bin/generate_component_mpc.pl:
+
+          Fixed generation of export files. Thanks to Abdullah
+          Sowayan <abdullah.sowayan@lmco.com> for reporting
+          the problem.
+
+Fri Dec  1 13:39:12 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * docs/tutorials/CoSMIC/index.html:
+        * docs/tutorials/Quoter/Simple/index.html:
+          Updated download location of ACE/TAO/CIAO
+
+Fri Dec  1 11:26:12 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * DAnCE/ExecutionManager/Execution_Manager.cpp:
+          Fixed invalid check whether we have a nil POA or not
+
+Fri Dec  1 11:17:12 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * DAnCE/TargetManager/Deployment_Configuration.{h,cpp}:
+          Removed these files, not used in the mpc file
+
+        * DAnCE/DomainApplicationManager/Deployment_Configuration.{h,cpp}:
+          Close the file handle, part of the fix for bugzilla bug 2733
+
+        * DAnCE/TargetManager/DomainDataManager.{h,cpp}:
+          Const changes, sequences have a CORBA::ULong as length, not int.
+          Added some todo's and use a little bit more ACE
+
+        * DAnCE/TargetManager/TargetManager.cidl:
+          Removed empty line
+
+        * DAnCE/TargetManager/TargetManager_exec.cpp:
+          Fixed memory management and the way we check for a nil
+          reference
+
+Fri Dec  1 09:01:12 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/generate_component_mpc.pl:
+          Layout improvements, thanks to Abdul for making this
+          update.
+
 Thu Nov 30 12:45:12 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * DAnCE/ExecutionManager/Execution_Manager.cpp:

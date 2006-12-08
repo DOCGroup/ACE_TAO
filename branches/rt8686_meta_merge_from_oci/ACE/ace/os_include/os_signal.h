@@ -185,9 +185,6 @@ extern "C"
 #elif defined (ACE_HAS_TANDEM_SIGNALS)
    typedef void (*ACE_SignalHandler)(...);
    typedef void (*ACE_SignalHandlerV)(...);
-#elif defined (ACE_HAS_IRIX_53_SIGNALS)
-   typedef void (*ACE_SignalHandler)(...);
-   typedef void (*ACE_SignalHandlerV)(...);
 #elif defined (ACE_HAS_SPARCWORKS_401_SIGNALS)
    typedef void (*ACE_SignalHandler)(int, ...);
    typedef void (*ACE_SignalHandlerV)(int,...);
@@ -197,11 +194,7 @@ extern "C"
 #elif defined (ACE_HAS_SVR4_SIGNAL_T)
    // SVR4 Signals are inconsistent (e.g., see struct sigaction)..
    typedef void (*ACE_SignalHandler)(int);
-#  if !defined (m88k)     /*  with SVR4_SIGNAL_T */
-     typedef void (*ACE_SignalHandlerV)(void);
-#  else
-     typedef void (*ACE_SignalHandlerV)(int);
-#  endif  /*  m88k */       /*  with SVR4_SIGNAL_T */
+   typedef void (*ACE_SignalHandlerV)(void);
 #elif defined (ACE_WIN32)
    typedef void (__cdecl *ACE_SignalHandler)(int);
    typedef void (__cdecl *ACE_SignalHandlerV)(int);

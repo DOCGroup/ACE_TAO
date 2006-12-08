@@ -45,7 +45,7 @@ CIAO::Container_Impl::init (const CORBA::PolicyList *policies
     {
       ACE_NEW_THROW_EX (this->container_,
                         CIAO::Session_Container (this->orb_.in (), this),
-                        CORBA::INTERNAL ());
+                        CORBA::NO_MEMORY ());
       ACE_CHECK_RETURN (-1);
     }
   else
@@ -53,7 +53,7 @@ CIAO::Container_Impl::init (const CORBA::PolicyList *policies
       ACE_NEW_THROW_EX (this->container_,
                         CIAO::Session_Container (this->orb_.in (), this, 1,
                                                  this->static_entrypts_maps_),
-                        CORBA::INTERNAL ());
+                        CORBA::NO_MEMORY ());
       ACE_CHECK_RETURN (-1);
     }
 
@@ -262,7 +262,7 @@ CIAO::Container_Impl::properties (ACE_ENV_SINGLE_ARG_DECL)
 
   ACE_NEW_THROW_EX (retval,
                     ::Deployment::Properties,
-                    CORBA::INTERNAL ());
+                    CORBA::NO_MEMORY ());
   ACE_CHECK_RETURN (0);
 
   *retval = this->properties_;
@@ -485,7 +485,7 @@ CIAO::Container_Impl::remove_component (const char * comp_ins_name
   if (this->naming_map_.find (str, naming_context) == 0)
     {
 
-      bool result =
+      bool const result =
         unregister_with_ns (
                             naming_context.c_str (),
                             this->orb_.in ()

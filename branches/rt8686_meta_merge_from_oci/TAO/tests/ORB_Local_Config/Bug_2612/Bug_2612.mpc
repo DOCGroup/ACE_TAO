@@ -1,0 +1,21 @@
+
+// $Id:$
+
+project (DllOrb) : taolib, portableserver {
+
+        dynamicflags = DLLORB_BUILD_DLL
+
+        source_files {
+                DllOrb.cpp
+        }
+        header_files {
+                DllOrb.h
+                DllOrb_Export.h
+        }
+}
+
+project (sig) : taoexe {
+        source_files {
+                Test.cpp
+        }
+}

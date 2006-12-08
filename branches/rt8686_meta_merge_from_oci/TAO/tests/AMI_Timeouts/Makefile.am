@@ -17,16 +17,14 @@ TAO_IDLFLAGS = -Ge 1 -Wb,pre_include=ace/pre.h -Wb,post_include=ace/post.h -I$(T
 TAO_ROOT = $(top_srcdir)
 
 noinst_PROGRAMS =
-CLEANFILES =
-BUILT_SOURCES =
 
-## Makefile.AMI_Timeouts_Client.am
+## Makefile.AMI_Timeouts_Idl.am
 
 if BUILD_AMI
 if BUILD_CORBA_MESSAGING
 if BUILD_EXCEPTIONS
 
-BUILT_SOURCES += \
+BUILT_SOURCES = \
   timeoutC.cpp \
   timeoutC.h \
   timeoutC.inl \
@@ -34,7 +32,7 @@ BUILT_SOURCES += \
   timeoutS.h \
   timeoutS.inl
 
-CLEANFILES += \
+CLEANFILES = \
   timeout-stamp \
   timeoutC.cpp \
   timeoutC.h \
@@ -49,36 +47,9 @@ timeout-stamp: $(srcdir)/timeout.idl $(TAO_IDL_DEP)
 	$(TAO_IDL) $(TAO_IDLFLAGS) -GC $(srcdir)/timeout.idl
 	@touch $@
 
-noinst_PROGRAMS += client
 
-client_CPPFLAGS = \
-  -I$(ACE_ROOT) \
-  -I$(ACE_BUILDDIR) \
-  -I$(TAO_ROOT) \
-  -I$(TAO_BUILDDIR)
-
-client_SOURCES = \
-  client.cpp \
-  timeoutC.cpp \
-  timeoutS.cpp \
-  timeout_client.cpp \
-  timeout_i.cpp \
-  timeoutC.h \
-  timeoutC.inl \
-  timeoutS.h \
-  timeoutS.inl \
-  timeout_client.h \
-  timeout_i.h
-
-client_LDADD = \
-  $(TAO_BUILDDIR)/tao/libTAO_Messaging.la \
-  $(TAO_BUILDDIR)/tao/libTAO_PI.la \
-  $(TAO_BUILDDIR)/tao/libTAO_CodecFactory.la \
-  $(TAO_BUILDDIR)/tao/libTAO_Valuetype.la \
-  $(TAO_BUILDDIR)/tao/libTAO_PortableServer.la \
-  $(TAO_BUILDDIR)/tao/libTAO_AnyTypeCode.la \
-  $(TAO_BUILDDIR)/tao/libTAO.la \
-  $(ACE_BUILDDIR)/ace/libACE.la
+noinst_HEADERS = \
+  timeout.idl
 
 endif BUILD_EXCEPTIONS
 endif BUILD_CORBA_MESSAGING
@@ -89,29 +60,6 @@ endif BUILD_AMI
 if BUILD_AMI
 if BUILD_CORBA_MESSAGING
 if BUILD_EXCEPTIONS
-
-BUILT_SOURCES += \
-  timeoutC.cpp \
-  timeoutC.h \
-  timeoutC.inl \
-  timeoutS.cpp \
-  timeoutS.h \
-  timeoutS.inl
-
-CLEANFILES += \
-  timeout-stamp \
-  timeoutC.cpp \
-  timeoutC.h \
-  timeoutC.inl \
-  timeoutS.cpp \
-  timeoutS.h \
-  timeoutS.inl
-
-timeoutC.cpp timeoutC.h timeoutC.inl timeoutS.cpp timeoutS.h timeoutS.inl: timeout-stamp
-
-timeout-stamp: $(srcdir)/timeout.idl $(TAO_IDL_DEP)
-	$(TAO_IDL) $(TAO_IDLFLAGS) -GC $(srcdir)/timeout.idl
-	@touch $@
 
 noinst_PROGRAMS += server
 
@@ -127,14 +75,47 @@ server_SOURCES = \
   timeoutS.cpp \
   timeout_client.cpp \
   timeout_i.cpp \
-  timeoutC.h \
-  timeoutC.inl \
-  timeoutS.h \
-  timeoutS.inl \
   timeout_client.h \
   timeout_i.h
 
 server_LDADD = \
+  $(TAO_BUILDDIR)/tao/libTAO_Messaging.la \
+  $(TAO_BUILDDIR)/tao/libTAO_PI.la \
+  $(TAO_BUILDDIR)/tao/libTAO_CodecFactory.la \
+  $(TAO_BUILDDIR)/tao/libTAO_Valuetype.la \
+  $(TAO_BUILDDIR)/tao/libTAO_PortableServer.la \
+  $(TAO_BUILDDIR)/tao/libTAO_AnyTypeCode.la \
+  $(TAO_BUILDDIR)/tao/libTAO.la \
+  $(ACE_BUILDDIR)/ace/libACE.la
+
+endif BUILD_EXCEPTIONS
+endif BUILD_CORBA_MESSAGING
+endif BUILD_AMI
+
+## Makefile.AMI_Timeouts_Client.am
+
+if BUILD_AMI
+if BUILD_CORBA_MESSAGING
+if BUILD_EXCEPTIONS
+
+noinst_PROGRAMS += client
+
+client_CPPFLAGS = \
+  -I$(ACE_ROOT) \
+  -I$(ACE_BUILDDIR) \
+  -I$(TAO_ROOT) \
+  -I$(TAO_BUILDDIR)
+
+client_SOURCES = \
+  client.cpp \
+  timeoutC.cpp \
+  timeoutS.cpp \
+  timeout_client.cpp \
+  timeout_i.cpp \
+  timeout_client.h \
+  timeout_i.h
+
+client_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO_Messaging.la \
   $(TAO_BUILDDIR)/tao/libTAO_PI.la \
   $(TAO_BUILDDIR)/tao/libTAO_CodecFactory.la \

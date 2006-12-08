@@ -33,7 +33,7 @@ ACE_Read_Buffer::dump (void) const
 }
 
 ACE_Read_Buffer::ACE_Read_Buffer (FILE *fp,
-                                  int close_on_delete,
+                                  bool close_on_delete,
                                   ACE_Allocator *alloc)
   : stream_ (fp),
     close_on_delete_ (close_on_delete),
@@ -46,7 +46,7 @@ ACE_Read_Buffer::ACE_Read_Buffer (FILE *fp,
 
 #if !defined (ACE_HAS_WINCE)
 ACE_Read_Buffer::ACE_Read_Buffer (ACE_HANDLE handle,
-                                  int close_on_delete,
+                                  bool close_on_delete,
                                   ACE_Allocator *alloc)
   : stream_ (ACE_OS::fdopen (handle, ACE_LIB_TEXT ("r"))),
     close_on_delete_ (close_on_delete),
@@ -121,7 +121,7 @@ ACE_Read_Buffer::rec_read (int term, int search, int replace)
       // Check for possible substitutions.
       if (c == search)
         {
-          this->occurrences_++;
+          ++this->occurrences_;
 
           if (replace >= 0)
             c = replace;
@@ -141,7 +141,7 @@ ACE_Read_Buffer::rec_read (int term, int search, int replace)
   if (this->size_ == 0)
     return 0;
 
-  char *result;
+  char *result = 0;
 
   // Recurse, when the recursion bottoms out, allocate the result
   // buffer.

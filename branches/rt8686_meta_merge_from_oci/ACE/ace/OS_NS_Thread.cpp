@@ -102,19 +102,6 @@ ACE_Thread_ID::to_string (char *thr_string) const
   ACE_OS::sprintf (thr_string,
                    format,
                    static_cast <unsigned> (thread_id_));
-#elif defined (ACE_AIX_VERS) && (ACE_AIX_VERS <= 402)
-                  // AIX's pthread_t (ACE_hthread_t) is a pointer, and it's
-                  // a little ugly to send that through a %u format.  So,
-                  // get the kernel thread ID (tid_t) via thread_self() and
-                  // display that instead.
-                  // This isn't conditionalized on ACE_HAS_THREAD_SELF because
-                  // 1. AIX 4.2 doesn't have that def anymore (it messes up
-                  //    other things)
-                  // 2. OSF/1 V3.2 has that def, and I'm not sure what affect
-                  //   this would have on that.
-                  // -Steve Huston, 19-Aug-97
-                  ACE_OS::strcpy (fp, "u");
-                  ACE_OS::sprintf (thr_string, format, thread_id_);
 #elif defined (DIGITAL_UNIX)
                   ACE_OS::strcpy (fp, "u");
                   ACE_OS::sprintf (thr_string, format,
@@ -5561,18 +5548,3 @@ vx_execae (FUNCPTR entry, char* arg, int prio, int opt, int stacksz, ...)
 }
 #endif /* ACE_VXWORKS && !__RTP__ */
 
-#if defined (__DGUX) && defined (ACE_HAS_THREADS) && defined (_POSIX4A_DRAFT10_SOURCE)
-extern "C" int __d6_sigwait (sigset_t *set);
-
-extern "C" int __d10_sigwait (const sigset_t *set, int *sig)
-{
-  sigset_t unconst_set = *set;
-  int caught_sig = __d6_sigwait (&unconst_set);
-
-  if (caught == -1)
-    return -1;
-
-  *sig = caught_sig;
-  return 0;
-}
-#endif /* __DGUX && PTHREADS && _POSIX4A_DRAFT10_SOURCE */

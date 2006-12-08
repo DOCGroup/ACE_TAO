@@ -1,4 +1,12 @@
 // $Id$
+#include "tao/orbconf.h"
+
+ACE_RCSID (PortableServer,
+           Request_Processing,
+           "$Id$")
+
+#if (TAO_HAS_MINIMUM_POA == 0) && !defined (CORBA_E_COMPACT) && !defined (CORBA_E_MICRO)
+
 #include "tao/ORB_Constants.h"
 #include "tao/PortableServer/ServantActivatorC.h"
 #include "tao/PortableServer/RequestProcessingStrategyServantActivator.h"
@@ -7,12 +15,6 @@
 #include "tao/PortableServer/Root_POA.h"
 #include "tao/PortableServer/POA_Current_Impl.h"
 #include "tao/PortableServer/Servant_Upcall.h"
-
-ACE_RCSID (PortableServer,
-           Request_Processing,
-           "$Id$")
-
-#if (TAO_HAS_MINIMUM_POA == 0) && !defined (CORBA_E_COMPACT) && !defined (CORBA_E_MICRO)
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -108,7 +110,7 @@ namespace TAO
       const PortableServer::ObjectId &system_id,
       TAO::Portable_Server::Servant_Upcall &servant_upcall,
       TAO::Portable_Server::POA_Current_Impl &poa_current_impl,
-      int &wait_occurred_restart_call
+      bool &wait_occurred_restart_call
       ACE_ENV_ARG_DECL)
     {
       PortableServer::Servant servant = 0;

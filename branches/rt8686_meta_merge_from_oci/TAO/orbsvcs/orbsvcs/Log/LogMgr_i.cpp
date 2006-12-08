@@ -70,7 +70,7 @@ TAO_LogMgr_i::init (CORBA::ORB_ptr orb,
 					       ACE_ENV_ARG_PARAMETER);
     ACE_CHECK;
 
-#if (TAO_HAS_MINIMUM_POA == 0)
+#if (TAO_HAS_MINIMUM_POA == 0) && !defined (CORBA_E_COMPACT)
     policies.length(4);
     policies[2] =
       this->poa_->create_servant_retention_policy (PortableServer::RETAIN
@@ -90,7 +90,7 @@ TAO_LogMgr_i::init (CORBA::ORB_ptr orb,
     ACE_CHECK;
   }
 
-#if (TAO_HAS_MINIMUM_POA == 0)
+#if (TAO_HAS_MINIMUM_POA == 0) && !defined (CORBA_E_COMPACT)
   PortableServer::ServantActivator* servant_activator = 0;
 
   ACE_NEW_THROW_EX (servant_activator,

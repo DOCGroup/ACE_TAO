@@ -1,7 +1,0 @@
-// -*- MPC -*-
-// $Id
-
-project : ciao_nodemanager_stub {
-  libs  += NodeManager CIAO_NoOp_Configurator
-  after += NodeManager_svnt
-}
