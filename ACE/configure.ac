@@ -11,7 +11,7 @@ dnl
 dnl Note that this macro removes the newline output by the M4
 dnl "esyscmd" built-in.  Unless you understand what you're doing,
 dnl particularly with M4, do not modify this macro definition.
-define([ACE_VERSION], patsubst(esyscmd(grep ACE_VERSION ace/Version.h | sed 's/.*\"\(.*\)\".*/\1/'), [
+define([ACE_VERSION], patsubst(esyscmd(grep ACE_VERSION ace/Version.h | sed 's/.*\" *\(.*\)\".*/\1/'), [
 ]))dnl remove newline ending every `esyscmd' answer
 
 AC_INIT([ACE],
