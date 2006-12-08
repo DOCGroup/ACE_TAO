@@ -1,3 +1,7 @@
+Fri Dec  8 20:15:40 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * THANKS: Add Ray Lischner.
+
 Fri Dec  8 16:39:51 UTC 2006  Steve Huston  <shuston@riverace.com>
 
         * ace/Null_Mutex.h: Added ACE_Export to the class declarations.
@@ -16,8 +20,8 @@ Fri Dec  8 05:21:38 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
 
           Changed code to extract version number from ace/Version.h to be
           more resilient to leading whitespace like was added by a bug in
-          the release script in the last beta.  Thanks to <rlischner at
-          proteus-technologies dot com> for this patch.
+          the release script in the last beta.  Thanks to Ray Lischner
+          <rlischner at proteus-technologies dot com> for this patch.
 
 Thu Dec  7 14:13:43 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
