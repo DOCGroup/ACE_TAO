@@ -1,3 +1,12 @@
+Fri Dec  8 05:21:38 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * configure.ac:
+
+          Changed code to extract version number from ace/Version.h to be
+          more resilient to leading whitespace like was added by a bug in
+          the release script in the last beta.  Thanks to <rlischner at
+          proteus-technologies dot com> for this patch.
+
 Thu Dec  7 14:13:43 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/DLL_Manager.cpp:
