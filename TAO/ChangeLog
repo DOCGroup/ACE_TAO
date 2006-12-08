@@ -1,3 +1,24 @@
+Fri Dec  8 04:45:52 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * orbsvcs/orbsvcs/Log/Hash_Iterator_i.cpp:
+        * orbsvcs/orbsvcs/Log/Hash_Iterator_i.h:
+        * orbsvcs/orbsvcs/Log/Hash_LogRecordStore.cpp:
+        * orbsvcs/orbsvcs/Log/Iterator_i.cpp:
+        * orbsvcs/orbsvcs/Log/Iterator_i.h:
+
+          The Iterator's destroy() method was using _default_POA() to
+          obtain the POA to deactivate the object, but that didn't do
+          anything because it was activated on a the iterator POA.
+          Changed to pass the iterator POA so we can self-destruct
+          properly.
+
+        * orbsvcs/orbsvcs/Log/Hash_LogRecordStore.cpp:
+
+          Create the iterator POA with the POAManager obtained from the
+          log POA.  We were passing POAManager::_nil(), which created a
+          new POAManager.  This resulted in all operations on iterators to
+          fail, since the POAManager was never activated.
+
 Thu Dec  7 19:00:28 UTC 2006  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * MPC/config/typecodefactory.mpb:
