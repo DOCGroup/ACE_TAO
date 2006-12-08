@@ -11,7 +11,7 @@ dnl
 dnl Note that this macro removes the newline output by the M4
 dnl "esyscmd" built-in.  Unless you understand what you're doing,
 dnl particularly with M4, do not modify this macro definition.
-define([TAO_VERSION], patsubst(esyscmd(grep TAO_VERSION tao/Version.h | sed 's/.*\"\(.*\)\".*/\1/'), [
+define([TAO_VERSION], patsubst(esyscmd(grep TAO_VERSION tao/Version.h | sed 's/.*\" *\(.*\)\".*/\1/'), [
 ]))dnl remove newline ending every `esyscmd' answer
 
 AC_INIT([TAO],
