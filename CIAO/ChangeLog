@@ -1,3 +1,9 @@
+Fri Dec  8 000:09:04 UTC 2006  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * bin/generate_component_mpc.pl:
+
+          Another typo found by Abdullah Sowayan <abdullah.sowayan@lmco.com>.
+
 Thu Dec  7 20:22:57 UTC 2006  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * bin/generate_component_mpc.pl:
