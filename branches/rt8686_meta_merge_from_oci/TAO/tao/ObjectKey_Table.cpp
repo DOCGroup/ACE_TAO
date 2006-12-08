@@ -11,32 +11,26 @@ ACE_RCSID(tao,
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-int
+bool
 TAO::Less_Than_ObjectKey::operator () (const TAO::ObjectKey &lhs,
                                        const TAO::ObjectKey &rhs) const
 {
-  if (lhs.length () < rhs.length ())
+  const CORBA::ULong rlen = rhs.length ();
+  const CORBA::ULong llen = lhs.length ();
+  if (llen < rlen)
     {
       return 1;
     }
-  else if (lhs.length () > rhs.length ())
+  else if (llen > rlen)
     {
       return 0;
     }
 
-  for (CORBA::ULong i = 0; i < rhs.length (); ++i)
-    {
-      if (lhs[i] < rhs[i])
-        {
-          return 1;
-        }
-      else if (lhs[i] > rhs[i])
-        {
-          return 0;
-        }
-    }
+  const CORBA::Octet * rhs_buff = rhs.get_buffer ();
+  const CORBA::Octet * lhs_buff = lhs.get_buffer ();
+  const bool result = (ACE_OS::memcmp (lhs_buff, rhs_buff, rlen) < 0);
 
-  return 0;
+  return result;
 }
 
 /********************************************************/
@@ -92,7 +86,7 @@ TAO::ObjectKey_Table::bind (const TAO::ObjectKey &key,
                              key_new);
       }
 
-    key_new->incr_refcount ();
+    (void) key_new->incr_refcount ();
   }
 
   return retval;

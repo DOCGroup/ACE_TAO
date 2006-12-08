@@ -1,0 +1,19 @@
+Fri Dec  8 04:40:03 UTC 2006  Chris Cleeland  <cleeland_c@ociweb.com>
+
+          This entry contains changed adapted from a change
+          originating from OCITAO 1.4a as part of RT 8571.
+
+        * tao/ObjectKey_Table.h:
+        * tao/ObjectKey_Table.cpp:
+        * tao/Unbounded_Octet_Sequence_T.h:
+
+          Added an optimization to servant activation.  This change
+	  removes the overhead of calling TAO::ObjectKey::operator[] and
+	  TAO::unbounded_value_sequence<CORBA::Octet>::operator[].  The
+	  main benefit of not calling these methods is that check_bounds
+	  () is not called.  check_bounds () is not required since the
+	  length of the two arrays are taken into account.  This change
+	  provides about 30% decrease in servant activation time for a
+	  debug build (tested on Windows VC71 and Linux gcc using OCITAO
+	  1.4a).  The implementation uses ACE_OS::memcmp which could
+	  possibly be optimized similar to ACE_HAS_SLOW_MEMSET.
