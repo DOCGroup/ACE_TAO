@@ -1,3 +1,10 @@
+Fri Dec  8 16:39:51 UTC 2006  Steve Huston  <shuston@riverace.com>
+
+        * ace/Null_Mutex.h: Added ACE_Export to the class declarations.
+          Although they are probably inlined, VS .NET 2005 (VC8) complains
+          in some cases when a dll-interface class inherits from a
+          non-dll-interface class.
+
 Fri Dec  8 15:36:23 UTC 2006  Ciju John  <johnc@ociweb.com>
 
         * tests/run_test.lst:
