@@ -175,7 +175,7 @@ else {
   '."$no_tie".'
   idlflags += '."$no_anys"." $no_skel".' \
               -Wb,export_macro='."$UCOM_NAME"."$USVR_SUFFIX".'_Export \
-              -Wb,export_include='."$com_name"."svr_suffix".'_export.h
+              -Wb,export_include='."$com_name"."$svr_suffix".'_export.h
 ';
 
     $cidl_block =
