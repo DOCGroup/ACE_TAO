@@ -1,3 +1,9 @@
+Fri Dec  8 22:59:14 UTC 2006  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tools/tools.mwc:
+        
+          Added IDL3_to_IDL2 directory to the list.
+
 Fri Dec  8 000:09:04 UTC 2006  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * bin/generate_component_mpc.pl:
