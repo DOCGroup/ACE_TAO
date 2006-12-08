@@ -1,3 +1,12 @@
+Fri Dec  8 20:20:09 UTC 2006  Iliyan Jeliazkov  <iliyan@ociweb.com>
+
+        * ace/Service_Config.cpp (parse_args_i):
+
+          Moving the "default:" label outside the block that handles the
+          "case 's':". Even though it should work correctly on allmost any
+          compiler, things like this are bad form. Thanks to Aaron
+          Scamehorn <Aaron dot Scamehorn at cogcap dot com> for noticing.
+
 Fri Dec  8 20:15:40 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
 
         * THANKS: Add Ray Lischner.
