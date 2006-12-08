@@ -42,7 +42,7 @@ namespace TAO
       virtual CORBA::ULong waiting_servant_deactivation (void) const = 0;
 
       virtual int is_servant_in_map (PortableServer::Servant servant,
-                                     int &wait_occurred_restart_call) = 0;
+                                     bool &wait_occurred_restart_call) = 0;
 
       virtual TAO_SERVANT_LOCATION servant_present (
         const PortableServer::ObjectId &system_id,
@@ -63,7 +63,7 @@ namespace TAO
       virtual PortableServer::ObjectId *activate_object (
         PortableServer::Servant servant,
         CORBA::Short priority,
-        int &wait_occurred_restart_call
+        bool &wait_occurred_restart_call
         ACE_ENV_ARG_DECL)
           ACE_THROW_SPEC ((CORBA::SystemException,
                            PortableServer::POA::ServantAlreadyActive,
@@ -74,7 +74,7 @@ namespace TAO
         const PortableServer::ObjectId &id,
         PortableServer::Servant servant,
         CORBA::Short priority,
-        int &wait_occurred_restart_call
+        bool &wait_occurred_restart_call
         ACE_ENV_ARG_DECL)
           ACE_THROW_SPEC ((CORBA::SystemException,
                            PortableServer::POA::ServantAlreadyActive,

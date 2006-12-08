@@ -2204,8 +2204,19 @@ BE_GlobalData::parse_args (long &i, char **av)
           }
         else if (av[i][2] == 'S')
           {
-            // Disable skeleton file generation.
-            be_global->gen_skel_files (false);
+            if ('\0' == av[i][3])
+              {
+                // Disable skeleton file generation.
+                be_global->gen_skel_files (false);
+              }
+            else
+              {
+                ACE_ERROR ((
+                    LM_ERROR,
+                    ACE_TEXT ("IDL: I don't understand the '%s' option\n"),
+                    av[i]
+                  ));
+              }
           }
         else if (av[i][2] == 's')
           {

@@ -1,14 +1,14 @@
 // -*- MPC -*-
 // $Id$
 
-project(*Server): taoserver, messaging, avoids_minimum_corba, dynamicinterface {
+project(*Server): taoserver, messaging, avoids_minimum_corba, avoids_corba_e_compact, avoids_corba_e_micro, dynamicinterface {
   Source_Files {
     test_i.cpp
     server.cpp
   }
 }
 
-project(*Client): taoclient, messaging, avoids_minimum_corba, dynamicinterface {
+project(*Client): taoclient, messaging, avoids_minimum_corba, avoids_corba_e_compact, avoids_corba_e_micro, dynamicinterface {
   after += *Server
   Source_Files {
     testC.cpp
@@ -16,7 +16,7 @@ project(*Client): taoclient, messaging, avoids_minimum_corba, dynamicinterface {
   }
 }
 
-project(*Gateway): taoexe, portableserver, messaging, avoids_minimum_corba, dynamicinterface {
+project(*Gateway): taoexe, portableserver, messaging, avoids_minimum_corba, avoids_corba_e_compact, avoids_corba_e_micro, dynamicinterface {
   after += *Client
   Source_Files {
     test_dsi.cpp

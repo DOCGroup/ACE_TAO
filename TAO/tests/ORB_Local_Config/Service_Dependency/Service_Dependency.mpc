@@ -4,7 +4,13 @@
 project(*) : taoserver {
   after += Service_Config_Dependent_DLL TAO
   exename = Test
-  includes += ../lib
+
+  specific (automake) {
+    includes += $(srcdir)/../lib
+  } else {
+    includes += ../lib
+  }
+
   Source_Files {
     Test.cpp
   }
@@ -14,7 +20,11 @@ project(Service Config Dependent DLL) : acelib {
   sharedname   = Service_Config_Dependent_DLL
   dynamicflags = SERVICE_CONFIG_DLL_BUILD_DLL
 
-  includes += ../lib
+  specific (automake) {
+    includes += $(srcdir)/../lib
+  } else {
+    includes += ../lib
+  }
 
   Source_Files {
     Service_Config_DLL.cpp

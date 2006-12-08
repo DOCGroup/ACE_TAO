@@ -41,7 +41,7 @@ module CIAO
     typedef string SvcconfURI;
 
     /**
-     * @breif enumeration of ORB Resource Types (ORT) supported in RT
+     * @brief enumeration of ORB Resource Types (ORT) supported in RT
      * extension.
      */
     enum ORBResourceType

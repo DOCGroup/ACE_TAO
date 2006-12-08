@@ -71,7 +71,7 @@ TAO_Hash_LogRecordStore::TAO_Hash_LogRecordStore (
     log_poa->the_POAManager ();
 
   this->iterator_poa_ =
-	log_poa->create_POA(buf, PortableServer::POAManager::_nil(), policies);
+	log_poa->create_POA(buf, poa_manager.in(), policies);
 }
 
 TAO_Hash_LogRecordStore::~TAO_Hash_LogRecordStore (void)
@@ -439,7 +439,8 @@ TAO_Hash_LogRecordStore::query_i (const char *constraint,
       // Create an iterator to pass out.
       TAO_Hash_Iterator_i *iter_query = 0;
       ACE_NEW_THROW_EX (iter_query,
-                        TAO_Hash_Iterator_i (this->reactor_,
+                        TAO_Hash_Iterator_i (this->iterator_poa_,
+					     this->reactor_,
 					     this,
                                              iter,
                                              iter_end,

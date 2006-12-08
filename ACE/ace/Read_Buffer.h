@@ -39,7 +39,7 @@ class ACE_Allocator;
  * Processing.
  *
  * This implementation is optimized to do a single dynamic
- * allocation and make only one copy of the data.  It uses
+ * allocation and make only one copy of the data. It uses
  * recursion and the run-time stack to accomplish this
  * efficiently.
  */
@@ -49,7 +49,7 @@ public:
   // = Initialization and termination methods.
   /// Read from a FILE *.
   ACE_Read_Buffer (FILE *fp,
-                   int close_on_delete = 0,
+                   bool close_on_delete = false,
                    ACE_Allocator * = 0);
 
 #if !defined (ACE_HAS_WINCE)
@@ -57,7 +57,7 @@ public:
 
   /// Read from an open HANDLE.
   ACE_Read_Buffer (ACE_HANDLE handle,
-                   int close_on_delete = 0,
+                   bool close_on_delete = false,
                    ACE_Allocator * = 0);
 #endif  // ACE_HAS_WINCE
 
@@ -66,19 +66,19 @@ public:
 
   /**
    * Returns a pointer dynamically allocated with
-   * <ACE_Allocator::malloc> to data from the input stream up to (and
-   * including) the <terminator>.  If <search> is >= 0 then all
-   * occurrences of the <search> value are substituted with the
-   * <replace> value.  The last of the byte of data is a 0, so that
-   * <strlen> can be used on it.  The caller is responsible for
+   * ACE_Allocator::malloc to data from the input stream up to (and
+   * including) the @a terminator.  If @a search is >= 0 then all
+   * occurrences of the @a search value are substituted with the
+   * @a replace value.  The last of the byte of data is a 0, so that
+   * @c strlen can be used on it.  The caller is responsible for
    * freeing the pointer returned from this method using the
-   * <ACE_Allocator::free>.
+   * ACE_Allocator::free.
    */
   char *read (int terminator = EOF,
               int search = '\n',
               int replace = '\0');
 
-  /// Returns the number of characters replaced during a <read>.
+  /// Returns the number of characters replaced during a @c read.
   size_t replaced (void) const;
 
   /// Returns the size of the allocated buffer obtained during a
@@ -112,11 +112,10 @@ private:
 
   /// Keeps track of whether we should close the FILE in the
   /// destructor.
-  int close_on_delete_;
+  bool const close_on_delete_;
 
   /// Pointer to the allocator.
   ACE_Allocator *allocator_;
-
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL

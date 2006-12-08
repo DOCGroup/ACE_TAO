@@ -364,7 +364,6 @@ namespace CIAO
   };
 
 
-
   struct Static_Config_EntryPoints_Maps;
 
   /**

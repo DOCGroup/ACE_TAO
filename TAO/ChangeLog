@@ -1,3 +1,644 @@
+Fri Dec  8 05:21:38 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * configure.ac:
+
+          Changed code to extract version number from tao/Version.h to be
+          more resilient to leading whitespace like was added by a bug in
+          the release script in the last beta.  Thanks to <rlischner at
+          proteus-technologies dot com> for this patch.
+
+Fri Dec  8 04:45:52 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * orbsvcs/orbsvcs/Log/Hash_Iterator_i.cpp:
+        * orbsvcs/orbsvcs/Log/Hash_Iterator_i.h:
+        * orbsvcs/orbsvcs/Log/Hash_LogRecordStore.cpp:
+        * orbsvcs/orbsvcs/Log/Iterator_i.cpp:
+        * orbsvcs/orbsvcs/Log/Iterator_i.h:
+
+          The Iterator's destroy() method was using _default_POA() to
+          obtain the POA to deactivate the object, but that didn't do
+          anything because it was activated on a the iterator POA.
+          Changed to pass the iterator POA so we can self-destruct
+          properly.
+
+        * orbsvcs/orbsvcs/Log/Hash_LogRecordStore.cpp:
+
+          Create the iterator POA with the POAManager obtained from the
+          log POA.  We were passing POAManager::_nil(), which created a
+          new POAManager.  This resulted in all operations on iterators to
+          fail, since the POAManager was never activated.
+
+Thu Dec  7 19:00:28 UTC 2006  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * MPC/config/typecodefactory.mpb:
+
+          Added avoids_minimum_corba, avoids_corba_e_compact, and
+          avoids_corba_e_micro to the base project list. Thanks to
+          Johnny Willemsen <jwillemsen@remedy.nl> for his input
+          that helped reach the decision that this is the right
+          thing to do.
+
+        * orbsvcs/orbsvcs/IFRService.mpc:
+
+          - Removed base projects that are already pulled in by
+            others, including the 3 added to typecodefactory's
+            base project list, described above.
+
+          - Removed the 'IFRService' tag and tagcheck line, this
+            stuff was never used.
+
+          - Revised Source_Files and Template_Files blocks, and
+            added Header_Files block, so that template files will
+            get displayed in the right place and all header files
+            will get displayed, in Visual Studio projects.
+
+        * tests/Any/Recursive/RecursiveHello.mpc:
+        * examples/TypeCode_Creation/TypeCode_Creation.mpc:
+
+          Removed avoids_minimum_corba, avoids_corba_e_compact, and
+          avoids_corba_e_micro base projects, since they are now
+          pulled in by typecodefactory.
+
+Thu Dec  7 18:55:57 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/ORB.{h,cpp}:
+          Fixed minimum defines
+
+        * tao/IFR_Client/IFR_Client_Adapter_Impl.cpp:
+          Exclude certain functionality for CORBA/e
+
+Thu Dec  7 14:18:57 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * examples/CSD_Strategy/ThreadPool2/CSD_Test_ThreadPool2.mpc:
+        * examples/CSD_Strategy/ThreadPool3/CSD_Test_ThreadPool3.mpc:
+        * examples/CSD_Strategy/ThreadPool5/CSD_Test_ThreadPool5.mpc:
+        * examples/CSD_Strategy/ThreadPool/CSD_Test_ThreadPool.mpc:
+          Build the clients after the idl project, not after server
+          to resolve build order problems in the CORBA/e builds
+
+Thu Dec  7 10:49:57 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/ORB.{h,cpp}:
+          Disable more of the ORB when building for CORBA/e, thanks to
+          Jeff for pointing out that these methods wheren't disabled
+
+Thu Dec  7 09:56:57 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * MPC/config/rtscheduling.mpb:
+        * tao/RTScheduler.mpc:
+          Don't build with CORBA/e micro
+
+Thu Dec  7 09:54:57 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * MPC/config/avoids_corba_e_compact.mpb:
+        * MPC/config/avoids_corba_e_micro.mpb:
+        * MPC/config/avoids_minimum_corba.mpb:
+          Simplified these files, thanks to Jeff to pointing out that
+          they contained to much
+
+        * MPC/config/concurrency_serv.mpb:
+          Don't build with CORBA/e micro
+
+        * orbsvcs/orbsvcs/CosConcurrency.mpc:
+          Don't build serv with CORBA/e micro
+
+Thu Dec  7 08:02:57 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/PortableServer/ImplicitActivationStrategyImplicit.cpp:
+        * tao/PortableServer/ImplicitActivationStrategyImplicit.h:
+        * tao/PortableServer/RequestProcessingPolicy.cpp:
+        * tao/PortableServer/RequestProcessingStrategyDefaultServant.cpp:
+        * tao/PortableServer/RequestProcessingStrategyDefaultServantFI.cpp:
+        * tao/PortableServer/RequestProcessingStrategyServantActivator.cpp:
+        * tao/PortableServer/RequestProcessingStrategyServantActivatorFI.cpp:
+        * tao/PortableServer/RequestProcessingStrategyServantLocator.cpp:
+        * tao/PortableServer/RequestProcessingStrategyServantLocatorFI.cpp:
+        * tao/PortableServer/RequestProcessingStrategyServantManager.cpp:
+        * tao/PortableServer/ServantRetentionPolicy.cpp:
+        * tao/PortableServer/ThreadPolicy.cpp:
+        * tao/PortableServer/ThreadStrategySingle.cpp:
+        * tao/PortableServer/ThreadStrategySingle.h:
+        * tao/PortableServer/ThreadStrategySingleFactoryImpl.cpp:
+        * tao/PortableServer/ThreadStrategySingleFactoryImpl.h:
+          Disable more strategies with CORBA/e but also reordered some includes.
+          At the moment the strategy is fully disabled in a minimum build we
+          include orbconf.h outside the internal ifdef check and all includes
+          of classes are inside this ifdef. This way we don't pull in a static
+          initializers which seem to take 112 bytes of footprint per file
+          which is not needed.
+
+Thu Dec  7 07:38:57 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/PortableServer/PortableServer.cpp:
+          The wrong activation strategy was disabled when building for
+          CORBA/e
+
+Thu Dec  7 06:38:57 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/ImR_Client/IMR_Client.cpp:
+        * tao/RTPortableServer/RT_POA.inl:
+          Some bool changes I missed in my previous commit
+
+Thu Dec  7 00:25:44 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * tests/Big_AMI/Makefile.am:
+
+          Regenerated.
+
+Wed Dec  6 22:27:21 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * tests/Big_AMI/Big_AMI.mpc:
+
+          Changed IDL project to inherit from ami.
+
+Wed Dec  6 21:11:47 UTC 2006  Iliyan Jeliazkov  <iliyan@ociweb.com>
+
+        * tests/ORB_Local_Config/Bug_2612/DllOrb.cpp:
+          Fixing a windows build warning about unused variable.
+
+wed Dec  6 19:58:57 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/POA/Policies/Policies.mpc:
+          Don't build when CORBA/e micro has been enabled
+
+Wed Dec  6 19:33:57 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * examples/CSD_Strategy/ThreadPool2/CSD_Test_ThreadPool2.mpc:
+        * examples/CSD_Strategy/ThreadPool3/CSD_Test_ThreadPool3.mpc:
+        * examples/CSD_Strategy/ThreadPool4/CSD_Test_ThreadPool4.mpc:
+        * examples/CSD_Strategy/ThreadPool/CSD_Test_ThreadPool.mpc:
+          Don't build the server when CORBA/e micro has been enabled
+
+Wed Dec  6 19:24:57 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/PortableServer/Active_Object_Map.cpp:
+        * tao/PortableServer/Active_Object_Map.h:
+        * tao/PortableServer/Active_Object_Map.inl:
+        * tao/PortableServer/Active_Object_Map_Entry.cpp:
+        * tao/PortableServer/IdUniquenessStrategy.h:
+        * tao/PortableServer/IdUniquenessStrategyMultiple.cpp:
+        * tao/PortableServer/IdUniquenessStrategyMultiple.h:
+        * tao/PortableServer/IdUniquenessStrategyUnique.cpp:
+        * tao/PortableServer/IdUniquenessStrategyUnique.h:
+        * tao/PortableServer/RequestProcessingStrategy.h:
+        * tao/PortableServer/RequestProcessingStrategyAOMOnly.cpp:
+        * tao/PortableServer/RequestProcessingStrategyAOMOnly.h:
+        * tao/PortableServer/RequestProcessingStrategyDefaultServant.cpp:
+        * tao/PortableServer/RequestProcessingStrategyDefaultServant.h:
+        * tao/PortableServer/RequestProcessingStrategyServantActivator.cpp:
+        * tao/PortableServer/RequestProcessingStrategyServantActivator.h:
+        * tao/PortableServer/RequestProcessingStrategyServantLocator.cpp:
+        * tao/PortableServer/RequestProcessingStrategyServantLocator.h:
+        * tao/PortableServer/Root_POA.cpp:
+        * tao/PortableServer/Root_POA.h:
+        * tao/PortableServer/Servant_Upcall.cpp:
+        * tao/PortableServer/Servant_Upcall.h:
+        * tao/PortableServer/ServantRetentionStrategy.h:
+        * tao/PortableServer/ServantRetentionStrategyNonRetain.cpp:
+        * tao/PortableServer/ServantRetentionStrategyNonRetain.h:
+        * tao/PortableServer/ServantRetentionStrategyRetain.cpp:
+        * tao/PortableServer/ServantRetentionStrategyRetain.h:
+          Use bool instead of int for several flags, also then use true/false
+          instead of 0/1
+
+Wed Dec  6 16:15:58 UTC 2006  Iliyan Jeliazkov  <iliyan@ociweb.com>
+
+        * tests/ORB_Local_Config/Bug_2612/Bug_2612.mpc:
+        * tests/ORB_Local_Config/Bug_2612/DllOrb.h:
+        * tests/ORB_Local_Config/Bug_2612/DllOrb.cpp:
+        * tests/ORB_Local_Config/Bug_2612/Test.cpp:
+
+          Fixing fuzz (missing $id$) and compile errors on
+          TAO_HAS_MINIMUM_CORBA builds, which define the POAManager
+          inteface without the deactivate() method.
+
+Wed Dec  6 16:10:57 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connection_Handler.h:
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Endpoint.h:
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_EVP_PKEY.h:
+          Fixed doxygen warnings
+
+Wed Dec  6 15:55:57 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Abstract_Servant_Base.h:
+        * tao/AnyTypeCode/Fixed_TypeCode.h:
+        * tao/AnyTypeCode/TypeCode.h:
+        * tao/Codeset_Manager_Factory_Base.h:
+        * tao/Pluggable_Messaging.h:
+        * tao/Thread_Lane_Resources.h:
+          Fixed doxygen warnings
+
+Wed Dec  6 15:29:25 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * tests/Abstract_Interface/Makefile.am:
+        * tests/Any/Recursive/Makefile.am:
+        * tests/BiDirectional/Makefile.am:
+        * tests/BiDirectional_DelayedUpcall/Makefile.am:
+        * tests/BiDirectional_NestedUpcall/Makefile.am:
+        * tests/Big_AMI/Makefile.am:
+        * tests/Big_Oneways/Makefile.am:
+        * tests/Big_Reply/Makefile.am:
+        * tests/Big_Request_Muxing/Makefile.am:
+        * tests/Big_Twoways/Makefile.am:
+        * tests/Blocking_Sync_None/Makefile.am:
+        * tests/Bug_1020_Basic_Regression/Makefile.am:
+        * tests/Bug_1020_Regression/Makefile.am:
+        * tests/Bug_1254_Regression/Makefile.am:
+        * tests/Bug_1269_Regression/Makefile.am:
+        * tests/Bug_1270_Regression/Makefile.am:
+        * tests/Bug_1330_Regression/Makefile.am:
+        * tests/Bug_1361_Regression/Makefile.am:
+        * tests/Bug_1476_Regression/Makefile.am:
+        * tests/Bug_1482_Regression/Makefile.am:
+
+          Regenerated.
+
+        * tests/Abstract_Interface/Abstract_Interface.mpc:
+        * tests/Any/Recursive/RecursiveHello.mpc:
+        * tests/BiDirectional/BiDirectional.mpc:
+        * tests/BiDirectional_DelayedUpcall/BiDir_DelayedUpcall.mpc:
+        * tests/BiDirectional_NestedUpcall/BiDir_NestedUpcall.mpc:
+        * tests/Big_AMI/Big_AMI.mpc:
+        * tests/Big_Oneways/Big_Oneways.mpc:
+        * tests/Big_Reply/Big_Reply.mpc:
+        * tests/Big_Request_Muxing/Big_Request_Muxing.mpc:
+        * tests/Big_Twoways/Big_Twoways.mpc:
+        * tests/Blocking_Sync_None/Blocking_Sync_None.mpc:
+        * tests/Bug_1020_Basic_Regression/Bug_1020_Basic_Regression.mpc:
+        * tests/Bug_1020_Regression/Bug_1020_Regression.mpc:
+        * tests/Bug_1254_Regression/Bug_1254_Regression.mpc:
+        * tests/Bug_1269_Regression/Bug_1269_Regression.mpc:
+        * tests/Bug_1270_Regression/Bug_1270_Regression.mpc:
+        * tests/Bug_1330_Regression/Bug_1330_Regression.mpc:
+        * tests/Bug_1361_Regression/Bug_1361_Regression.mpc:
+        * tests/Bug_1476_Regression/Bug_1476_Regression.mpc:
+        * tests/Bug_1482_Regression/Bug_1482_Regression.mpc:
+
+          Split out IDL compilation into separate MPC project.
+
+Wed Dec  6 14:36:57 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/PortableServer/PortableServer.cpp:
+          Reduced the number of process directives call for CORBA/e compact
+          and micro
+
+Wed Dec  6 14:28:57 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/PortableServer/ServantRetentionStrategyNonRetain.{h,cpp}:
+        * tao/PortableServer/ServantRetentionStrategyNonRetainFactoryImpl.{h,cpp}:
+          Added checks for CORBA/e compact and micro, no need to compile these
+          when these profiles are enabled.
+
+        * tao/PortableServer/ServantRetentionStrategyRetain.cpp:
+          Const improvement
+
+Wed Dec  6 14:15:57 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * MPC/config/rtportableserver.mpb:
+        * tao/RTPortableServer.mpc:
+          Don't build RTPortableServer when CORBA/e micro has been enabled
+
+Wed Dec  6 13:40:52 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * examples/CSD_Strategy/ThreadPool6/Makefile.am:
+        * examples/Simple/time-date/Makefile.am:
+        * orbsvcs/examples/ORT/Makefile.am:
+        * orbsvcs/tests/Bug_2709_Regression/Makefile.am:
+        * tests/Bug_2654_Regression/Makefile.am:
+        * tests/OctetSeq/Makefile.am:
+        * tests/Oneway_Timeouts/Makefile.am:
+        * tests/Param_Test/Makefile.am:
+        * tests/Portable_Interceptors/ORB_Shutdown/Makefile.am:
+
+          Regenerate.
+
+        * configure.ac:
+        * orbsvcs/tests/Makefile.am:
+        * tests/Makefile.am:
+
+          Changes for move of Bug_2709_Regression unit test.
+
+Wed Dec  6 08:30:57 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * *.mpc:
+          Added to all mpc files that have avoids_corba_e_compact also
+          avoids_corba_e_micro because they also can't be build with
+          CORBA/e micro
+
+Tue Dec  5 21:51:46 UTC 2006  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_visitor_argument/arglist.cpp (visit_sequence):
+
+          Added code to create the sequence node's name, if a check
+          determines that the node is from an included IDL file, and
+          is an anonymous sequence (not created with a typedef declaration).
+          This is the case in this particular visitor if a valuetype
+          inherits an anonymous sequence member from a valuetype
+          declared in another IDL file, and this visitor is generating
+          the argument list for the OBV_* constructor with member
+          values. The node's name has not yet been set, since it
+          cannot be done in the node constructor - if the sequence
+          is declared with a typedef, the typedef node is created
+          after the sequence node, and it also sets the sequence
+          node's 'anonymous' flag to false (set to true by default
+          in the sequence node constructor). Thanks to Ossama
+          Othman <ossama.othman@symantec.com> for reporting the
+          bug.
+
+Tue Dec  5 18:36:57 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/DSI_Gateway/DSI_Gateway.mpc:
+          Don't build with corba_e_compact
+
+        * orbsvcs/orbsvcs/Log/LogActivator.{h,cpp}:
+        * orbsvcs/orbsvcs/Naming/Storable_Naming_Context_Activator.{h,cpp}:
+          Changes to resolve compile errors with CORBA/e compact
+
+Tue Dec  5 15:29:59 UTC 2006  Vadym Ridosh <vridosh@prismtech.com>
+
+        * tests/Bug_2709_Regression/*:
+        * orbsvcs/tests/Bug_2709_Regression/*:
+          Regression test for bug#2709 was moved.
+
+Tue Dec  5 15:02:37 UTC 2006 Vadym Ridosh <vridosh@prismtech.com>
+        * tests/Bug_2709_Regression/Bug_2709_Regression.mpc:
+          Added dependency to avoid problem with build on some OSes.
+
+Tue Dec  5 11:35:57 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * TAO_IDL/be/be_codegen.cpp:
+          Added a check that -SSi is not a valid commandline argument, so
+          then we give an error, it is -SS, no third character at all.
+          This fixes bugzilla bug 2723.
+
+Tue Dec  5 11:31:57 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * MPC/config/valuetype.mpb:
+        * Valuetype.mpc:
+          Valuetype is not available with corba/e micro
+
+        * Valuetype/ValueBase.cpp:
+          Use ACE_ERROR for an error message
+
+Tue Dec  5 11:25:57 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Bug_2654_Regression/Bug_2654_Regression.mpc:
+        * orbsvcs/examples/ORT/ORT.mpc:
+          Don't build with corba/e compact
+
+        * orbsvcs/tests/ImplRepo/Bug_2604_Regression/Bug_2604.mpc:
+          Don't build the server with corba/e compact
+
+        * orbsvcs/orbsvcs/PortableGroup.mpc:
+          Don't build with corba/e compact
+
+        * orbsvcs/ImplRepo_Service/ImplRepo_Service.mpc:
+          Part can't be build with corba/e compact
+
+Tue Dec  5 11:19:57 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/MProfile_Forwarding/MProfile_Forwarding.mpc:
+          Don't build the manager with corba/e compact
+
+Tue Dec  5 11:17:57 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * examples/CSD_Strategy/ThreadPool6/CSD_Test_ThreadPool6.mpc:
+          Don't build server with corba/e compact
+
+Tue Dec  5 08:28:57 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/OctetSeq/OctetSeq.mpc:
+          Changed build order to resolve build order problems in the ace_for_tao
+          builds
+
+Tue Dec  5 04:21:50 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * configure.ac:
+
+          Configure Makefile for new unit test subdirectory.
+
+        * tests/ORB_Local_Config/Makefile.am:
+
+          Regenerate to descend into CSD_Strategy subdirectory.
+
+        * tests/ORB_Local_Config/Bug_2612/Makefile.am:
+
+          New file.
+
+Tue Dec  5 04:10:47 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * tests/AMH_Exceptions/Makefile.am:
+        * tests/AMH_Oneway/Makefile.am:
+        * tests/AMI/Makefile.am:
+        * tests/AMI_Buffering/Makefile.am:
+        * tests/AMI_Timeouts/Makefile.am:
+
+          Regenerated.
+
+        * tests/AMH_Exceptions/AMH_Exceptions.mpc:
+        * tests/AMH_Oneway/AMH_Oneway.mpc:
+        * tests/AMI/AMI.mpc:
+        * tests/AMI_Buffering/AMI_Buffering.mpc:
+        * tests/AMI_Timeouts/AMI_Timeouts.mpc:
+
+          Split out IDL compilation into separate MPC project.
+
+Mon Dec  4 18:01:55 UTC 2006  Iliyan Jeliazkov  <iliyan@ociweb.com>
+
+        * tests/ORB_Local_Config/Bug_2612:
+        * tests/ORB_Local_Config/Bug_2612/Bug_2612.mpc:
+        * tests/ORB_Local_Config/Bug_2612/DllOrb.h:
+        * tests/ORB_Local_Config/Bug_2612/DllOrb.cpp:
+        * tests/ORB_Local_Config/Bug_2612/DllOrb_Export.h:
+        * tests/ORB_Local_Config/Bug_2612/Test.cpp:
+        * tests/ORB_Local_Config/Bug_2612/run_test.pl:
+
+          Added new regression test for bug#2612. It should also cover the
+          issue described in bug#2677.
+
+        * tests/ORB_Local_Config/run_tests_all.pl:
+
+          Added the new test to the list of tests for manual execution.
+
+Mon Dec  4 17:30:30 UTC 2006  Iliyan Jeliazkov  <iliyan@ociweb.com>
+
+        * tao/Invocation_Adapter.cpp (invoke_i):
+        * tao/LocateRequest_Invocation_Adapter.cpp (invoke):
+
+          Added a service config guard to ensure the invocation is
+          processed, using the correct configuration repository.  The
+          change ensures that the ORB's repository is going to be
+          "current" for the duration of the invocation, which is needed if
+          timeouts and other policies are applied as expected.  Thanks to
+          Eider Oliveira <eider dot oliveira at gmail dot com> for
+          submitting the defect (bug# 2734)
+
+Mon Dec  4 16:17:07 UTC 2006  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/util/utl_err.cpp (syntax_error):
+
+          Replaced increment of error count with immediate bailout
+          on any kind of syntax error. Keeping the state of the IDL
+          compiler consistent in the face of any syntax error would
+          require extensive hacking of bison-generated code, and we
+          still wouldn't get any code generation if there are any
+          errors going into the backend. This fix closes [BUGID:2688].
+
+Mon Dec  4 15:42:57 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * MPC/config/*:
+          The MPC base projects for TAO
+
+Mon Dec  4 13:23:57 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * examples/Content_Server/AMI_Iterator/Content_Iterator_i.cpp:
+        * examples/Content_Server/SMI_Iterator/Content_Iterator_i.cpp:
+          Added static casts to get rid of warnings with vc
+
+Mon Dec  4 12:36:57 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Oneway_Timeouts/*:
+          Added missing id tags
+
+        * Release:
+          Added MPC
+
+Mon Dec  4 12:24:57 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * MPC
+        * MPC/config
+          New directory for the base projects specifically for TAO
+
+Mon Dec  4 12:17:57 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Bug_2709_Regression/Client_Task.cpp:
+          Fixed conversion warning in vxworks builds
+
+Mon Dec  4 11:21:57 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/PI_Server/PortableServer_ORBInitializer.cpp:
+        * tao/PI_Server/PortableServer_PolicyFactory.cpp:
+          Fixed compile errors with CORBA/e compact
+
+        * tao/Bounded_Value_Sequence_T.h:
+          Improved doxygen documentation
+
+Mon Dec  4 08:03:57 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Param_Test/Param_Test.mpc:
+          Build all projects after idl to get always the correct build
+          order
+
+Mon Dec  4 07:59:57 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/DynamicAny/DynCommon.{h,cpp}:
+          Removed not needed const qualifiers on the return type, fixes
+          icc warnings
+
+        * tao/Unbounded_Basic_String_Sequence_T.h:
+          Improved doxygen documentation
+
+        * tao/Policy_Set.cpp:
+          Const changes
+
+Sun Dec  3 14:25:57 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * tests/ORB_Local_Config/Bug_1459/Makefile.am:
+        * tests/ORB_Local_Config/Bunch/Makefile.am:
+        * tests/ORB_Local_Config/Separation/Makefile.am:
+        * tests/ORB_Local_Config/Shared/Makefile.am:
+        * tests/ORB_Local_Config/Two_DLL_ORB/Makefile.am:
+        * tests/ORB_Local_Config/Simple/Makefile.am:
+        * tests/ORB_Local_Config/Service_Dependency/Makefile.am:
+
+          Add automake specific section so that includes is set relative
+          to $(srcdir).
+
+Sun Dec  3 07:39:43 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/AnyTypeCode/BasicTypeTraits.cpp:
+          Fixed compile problems with Borland C++
+
+Sat Dec  2 23:11:45 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * examples/Makefile.am:
+
+          Skip RTScheduling subdirectory for now.
+
+        * tests/Makefile.am:
+
+          Skip Bug_2399_Regression and CSD_Strategy_Tests
+          subdirectories for now.
+
+Sat Dec  2 23:02:13 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * Makefile.am:
+
+          Add tests subdirectory.
+
+        * tests/ICMG_Any_Bug/Makefile.am:
+        * tests/OBV/Simple/Makefile.am:
+
+          Regenerated.
+
+Fri Dec  1 20:18:47 UTC 2006  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/fe/fe_declarator.cpp (compose):
+
+          Removed a prefix match check that was overlooked in the
+          #pragma prefix changes in
+
+          Tue Nov 28 19:32:46 UTC 2006  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+          but was caught only on Solaris platforms, since on all
+          others, one of the compared strings always has an uninitialized
+          value of 0, which short-circuited the check.
+
+Fri Dec  1 15:39:03 UTC 2006  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tests/OBV/Simple/OBV_Simple.mpc:
+
+          Removed -St from IDL compiler command line options, since
+          valuetypes now require typecode support.
+
+Fri Dec  1 15:19:34 UTC 2006  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tests/ICMG_Any_Bug/Hello.mpc:
+
+          Removed -Sa and -St from the IDL compiler command line options
+          (pulled in from taoidldefaults.mpb), since the client code
+          uses DII.
+
+Fri Dec  1 14:59:02 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * orbsvcs/tests/Event/UDP/Makefile.am:
+        * tests/Param_Test/Makefile.am:
+
+          Regenerated.
+
+Fri Dec  1 13:49:43 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Param_Test/Param_Test.mpc:
+          Added explicit build order and removed -Sa and -St from the
+          idlflags
+
+Fri Dec  1 13:37:43 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * docs/Security/Download.html:
+        * docs/tutorials/Quoter/index.html:
+          Updated download location of ACE/TAO/CIAO
+
+Fri Dec  1 13:35:43 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * TAO-INSTALL.html:
+          Updated download location of ACE/TAO/CIAO
+
+Fri Dec  1 12:27:43 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/tests/Event/UDP/RtEC_UDP.mpc:
+          Fixed invalid filenames in this test
+
 Thu Nov 30 18:01:43 UTC 2006  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tao/AnyTypeCode/BasicTypeTraits.cpp:
@@ -1328,65 +1969,65 @@ Wed Nov 22 15:38:40 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
 Wed Nov 22 15:14:51 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
 
         * orbsvcs/orbsvcs/Makefile.am:
-  * orbsvcs/performance-tests/RTEvent/lib/Makefile.am:
-  * orbsvcs/performance-tests/RTEvent/RTCORBA_Callback/Makefile.am:
-  * orbsvcs/performance-tests/RTEvent/RTCORBA_Baseline/Makefile.am:
-  * orbsvcs/performance-tests/LoadBalancing/LBPerf/RPS/Makefile.am:
-  * orbsvcs/tests/Event/Makefile.am:
-  * orbsvcs/tests/Simple_Naming/Makefile.am:
-  * orbsvcs/tests/ImplRepo/Makefile.am:
-  * orbsvcs/tests/EC_Custom_Marshal/Makefile.am:
-  * orbsvcs/tests/Trading/Makefile.am:
-  * orbsvcs/tests/BiDir_CORBALOC/Makefile.am:
-  * orbsvcs/tests/Bug_2377_Regression/Makefile.am:
-  * orbsvcs/tests/Security/ssliop_corbaloc/Makefile.am:
-  * orbsvcs/tests/Redundant_Naming/Makefile.am:
-  * orbsvcs/tests/Interoperable_Naming/Makefile.am:
-  * orbsvcs/tests/Notify/performance-tests/Throughput/Makefile.am:
-  * orbsvcs/tests/Notify/lib/Makefile.am:
-  * orbsvcs/tests/FT_App/Makefile.am:
-  * orbsvcs/tests/LoadBalancing/GenericFactory/Manage_Object_Group/Makefile.am:
-  * orbsvcs/ImplRepo_Service/Makefile.am:
-  * orbsvcs/examples/CosEC/TypedSimple/Makefile.am:
-  * orbsvcs/examples/CosEC/Factory/Makefile.am:
-  * orbsvcs/examples/LoadBalancing/Makefile.am:
-  * tao/Makefile.am:
-  * docs/tutorials/Quoter/idl/Makefile.am:
-  * performance-tests/Sequence_Latency/DSI/Makefile.am:
-  * performance-tests/Sequence_Latency/Deferred/Makefile.am:
-  * performance-tests/Sequence_Latency/Thread_Pool/Makefile.am:
-  * performance-tests/Sequence_Latency/Single_Threaded/Makefile.am:
-  * performance-tests/Sequence_Latency/DII/Makefile.am:
-  * performance-tests/Sequence_Latency/AMH_Single_Threaded/Makefile.am:
-  * performance-tests/Sequence_Latency/AMI/Makefile.am:
-  * performance-tests/Sequence_Latency/Thread_Per_Connection/Makefile.am:
-  * performance-tests/RTCorba/Multiple_Endpoints/Single_Endpoint/Makefile.am:
-  * performance-tests/RTCorba/Multiple_Endpoints/Orb_Per_Priority/Makefile.am:
-  * performance-tests/Callback/Makefile.am:
-  * performance-tests/Latency/DSI/Makefile.am:
-  * performance-tests/Latency/Deferred/Makefile.am:
-  * performance-tests/Latency/Thread_Pool/Makefile.am:
-  * performance-tests/Latency/Single_Threaded/Makefile.am:
-  * performance-tests/Latency/DII/Makefile.am:
-  * performance-tests/Latency/AMH_Single_Threaded/Makefile.am:
-  * performance-tests/Latency/AMI/Makefile.am:
-  * performance-tests/Latency/Thread_Per_Connection/Makefile.am:
-  * performance-tests/Cubit/TAO/MT_Cubit/Makefile.am:
-  * performance-tests/Cubit/TAO/DII_Cubit/Makefile.am:
-  * performance-tests/Cubit/TAO/IDL_Cubit/Makefile.am:
-  * performance-tests/Throughput/Makefile.am:
-  * examples/POA/TIE/Makefile.am:
-  * examples/Kokyu_dsrt_schedulers/Makefile.am:
-  * examples/RTScheduling/Fixed_Priority_Scheduler/Makefile.am:
-  * examples/RTScheduling/MIF_Scheduler/Makefile.am:
-  * examples/CSD_Strategy/ThreadPool6/Makefile.am:
-  * examples/RTCORBA/Activity/Makefile.am:
-  * examples/AMH/Sink_Server/Makefile.am:
-  * examples/mfc/Makefile.am:
-  * examples/AMI/FL_Callback/Makefile.am:
-  * examples/PluggableUDP/tests/Basic/Makefile.am:
-  * examples/PluggableUDP/tests/Performance/Makefile.am:
-  * examples/PluggableUDP/tests/SimplePerformance/Makefile.am:
+        * orbsvcs/performance-tests/RTEvent/lib/Makefile.am:
+        * orbsvcs/performance-tests/RTEvent/RTCORBA_Callback/Makefile.am:
+        * orbsvcs/performance-tests/RTEvent/RTCORBA_Baseline/Makefile.am:
+        * orbsvcs/performance-tests/LoadBalancing/LBPerf/RPS/Makefile.am:
+        * orbsvcs/tests/Event/Makefile.am:
+        * orbsvcs/tests/Simple_Naming/Makefile.am:
+        * orbsvcs/tests/ImplRepo/Makefile.am:
+        * orbsvcs/tests/EC_Custom_Marshal/Makefile.am:
+        * orbsvcs/tests/Trading/Makefile.am:
+        * orbsvcs/tests/BiDir_CORBALOC/Makefile.am:
+        * orbsvcs/tests/Bug_2377_Regression/Makefile.am:
+        * orbsvcs/tests/Security/ssliop_corbaloc/Makefile.am:
+        * orbsvcs/tests/Redundant_Naming/Makefile.am:
+        * orbsvcs/tests/Interoperable_Naming/Makefile.am:
+        * orbsvcs/tests/Notify/performance-tests/Throughput/Makefile.am:
+        * orbsvcs/tests/Notify/lib/Makefile.am:
+        * orbsvcs/tests/FT_App/Makefile.am:
+        * orbsvcs/tests/LoadBalancing/GenericFactory/Manage_Object_Group/Makefile.am:
+        * orbsvcs/ImplRepo_Service/Makefile.am:
+        * orbsvcs/examples/CosEC/TypedSimple/Makefile.am:
+        * orbsvcs/examples/CosEC/Factory/Makefile.am:
+        * orbsvcs/examples/LoadBalancing/Makefile.am:
+        * tao/Makefile.am:
+        * docs/tutorials/Quoter/idl/Makefile.am:
+        * performance-tests/Sequence_Latency/DSI/Makefile.am:
+        * performance-tests/Sequence_Latency/Deferred/Makefile.am:
+        * performance-tests/Sequence_Latency/Thread_Pool/Makefile.am:
+        * performance-tests/Sequence_Latency/Single_Threaded/Makefile.am:
+        * performance-tests/Sequence_Latency/DII/Makefile.am:
+        * performance-tests/Sequence_Latency/AMH_Single_Threaded/Makefile.am:
+        * performance-tests/Sequence_Latency/AMI/Makefile.am:
+        * performance-tests/Sequence_Latency/Thread_Per_Connection/Makefile.am:
+        * performance-tests/RTCorba/Multiple_Endpoints/Single_Endpoint/Makefile.am:
+        * performance-tests/RTCorba/Multiple_Endpoints/Orb_Per_Priority/Makefile.am:
+        * performance-tests/Callback/Makefile.am:
+        * performance-tests/Latency/DSI/Makefile.am:
+        * performance-tests/Latency/Deferred/Makefile.am:
+        * performance-tests/Latency/Thread_Pool/Makefile.am:
+        * performance-tests/Latency/Single_Threaded/Makefile.am:
+        * performance-tests/Latency/DII/Makefile.am:
+        * performance-tests/Latency/AMH_Single_Threaded/Makefile.am:
+        * performance-tests/Latency/AMI/Makefile.am:
+        * performance-tests/Latency/Thread_Per_Connection/Makefile.am:
+        * performance-tests/Cubit/TAO/MT_Cubit/Makefile.am:
+        * performance-tests/Cubit/TAO/DII_Cubit/Makefile.am:
+        * performance-tests/Cubit/TAO/IDL_Cubit/Makefile.am:
+        * performance-tests/Throughput/Makefile.am:
+        * examples/POA/TIE/Makefile.am:
+        * examples/Kokyu_dsrt_schedulers/Makefile.am:
+        * examples/RTScheduling/Fixed_Priority_Scheduler/Makefile.am:
+        * examples/RTScheduling/MIF_Scheduler/Makefile.am:
+        * examples/CSD_Strategy/ThreadPool6/Makefile.am:
+        * examples/RTCORBA/Activity/Makefile.am:
+        * examples/AMH/Sink_Server/Makefile.am:
+        * examples/mfc/Makefile.am:
+        * examples/AMI/FL_Callback/Makefile.am:
+        * examples/PluggableUDP/tests/Basic/Makefile.am:
+        * examples/PluggableUDP/tests/Performance/Makefile.am:
+        * examples/PluggableUDP/tests/SimplePerformance/Makefile.am:
 
           Regenerated.
 

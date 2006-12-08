@@ -18,6 +18,10 @@
 
 // All methods in this class are inline, so there is no
 // need to import or export on Windows. -- CAE 12/18/2003
+// Update... leaving off the ACE_Export causes compile warnings in some
+// cases with Microsoft Visual Studio .NET 2005, so I added the ACE_Export
+// to these class declarations.  Steve Huston, 12/8/2006.
+
 #include "ace/os_include/os_errno.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
@@ -38,7 +42,7 @@ class ACE_Time_Value;
  * @brief Implement a do nothing ACE_Mutex, i.e., all the methods are
  * no ops.
  */
-class ACE_Null_Mutex
+class ACE_Export ACE_Null_Mutex
 {
 public:
   ACE_Null_Mutex (const ACE_TCHAR * = 0)
@@ -97,7 +101,7 @@ public:
  * This class is obsolete and should be replaced by
  * ACE_Guard<ACE_Null_Mutex>.
  */
-class ACE_Null_Mutex_Guard
+class ACE_Export ACE_Null_Mutex_Guard
 {
 public:
   ACE_Null_Mutex_Guard (ACE_Null_Mutex &) {}
@@ -129,7 +133,7 @@ class ACE_Guard;
  * performance of the "Null_Mutex" considerably.
  */
 template<>
-class ACE_Guard<ACE_Null_Mutex>
+class ACE_Export ACE_Guard<ACE_Null_Mutex>
 {
 public:
   // = Initialization and termination methods.
@@ -164,7 +168,8 @@ class ACE_Write_Guard;
  *
  */
 template<>
-class ACE_Write_Guard<ACE_Null_Mutex> : public ACE_Guard<ACE_Null_Mutex>
+class ACE_Export ACE_Write_Guard<ACE_Null_Mutex>
+  : public ACE_Guard<ACE_Null_Mutex>
 {
 public:
   ACE_Write_Guard (ACE_Null_Mutex &m)
@@ -187,7 +192,8 @@ class ACE_Read_Guard;
  *
  */
 template<>
-class ACE_Read_Guard<ACE_Null_Mutex> : public ACE_Guard<ACE_Null_Mutex>
+class ACE_Export ACE_Read_Guard<ACE_Null_Mutex>
+  : public ACE_Guard<ACE_Null_Mutex>
 {
 public:
   ACE_Read_Guard (ACE_Null_Mutex &m)
@@ -209,7 +215,7 @@ template <class T> class ACE_Malloc_Lock_Adapter_T;
  *
  */
 template<>
-class ACE_Malloc_Lock_Adapter_T<ACE_Null_Mutex>
+class ACE_Export ACE_Malloc_Lock_Adapter_T<ACE_Null_Mutex>
 {
 public:
   ACE_Null_Mutex * operator () (const ACE_TCHAR *name)

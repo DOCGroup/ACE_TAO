@@ -110,10 +110,6 @@ typedef enum CMA_T_SCHED_POLICY {
 // Platform supports recvmsg and sendmsg
 #define ACE_HAS_MSG
 
-// Platform has ACE_HAS_4_4BSD_SENDMSG_RECVMSG but its cmsghdr
-// structure does not contain an 'unsigned char cmsg_data[0]' member.
-#define ACE_LACKS_CMSG_DATA_MEMBER
-
 //  Platform defines ACE_HAS_MSG, but lacks msg_accrights{,len}.
 #define ACE_LACKS_MSG_ACCRIGHTS
 

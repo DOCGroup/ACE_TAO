@@ -1,7 +1,7 @@
 # $Id$
 
-xt_reactor = 1
-exceptions = 1
+xt_reactor ?= 1
+exceptions ?= 1
 
 PLATFORM_XT_CPPFLAGS=
 PLATFORM_XT_LIBS=-lXm -lXt -lX11

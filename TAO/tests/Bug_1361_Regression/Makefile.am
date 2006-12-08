@@ -17,15 +17,10 @@ TAO_IDLFLAGS = -Ge 1 -Wb,pre_include=ace/pre.h -Wb,post_include=ace/post.h -I$(T
 TAO_ROOT = $(top_srcdir)
 
 noinst_PROGRAMS =
-CLEANFILES =
-BUILT_SOURCES =
 
-## Makefile.Bug_1361_Regression_Server.am
+## Makefile.Bug_1361_Regression_Idl.am
 
-if BUILD_CORBA_MESSAGING
-if BUILD_EXCEPTIONS
-
-BUILT_SOURCES += \
+BUILT_SOURCES = \
   TestC.cpp \
   TestC.h \
   TestC.inl \
@@ -33,7 +28,7 @@ BUILT_SOURCES += \
   TestS.h \
   TestS.inl
 
-CLEANFILES += \
+CLEANFILES = \
   Test-stamp \
   TestC.cpp \
   TestC.h \
@@ -45,8 +40,17 @@ CLEANFILES += \
 TestC.cpp TestC.h TestC.inl TestS.cpp TestS.h TestS.inl: Test-stamp
 
 Test-stamp: $(srcdir)/Test.idl $(TAO_IDL_DEP)
-	$(TAO_IDL) $(TAO_IDLFLAGS) $(srcdir)/Test.idl
+	$(TAO_IDL) $(TAO_IDLFLAGS) -Sa -St $(srcdir)/Test.idl
 	@touch $@
+
+
+noinst_HEADERS = \
+  Test.idl
+
+## Makefile.Bug_1361_Regression_Server.am
+
+if BUILD_CORBA_MESSAGING
+if BUILD_EXCEPTIONS
 
 noinst_PROGRAMS += server
 
@@ -65,11 +69,7 @@ server_SOURCES = \
   server.cpp \
   Echo_Caller.h \
   ORB_Task.h \
-  Server_Thread_Pool.h \
-  TestC.h \
-  TestC.inl \
-  TestS.h \
-  TestS.inl
+  Server_Thread_Pool.h
 
 server_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO_Messaging.la \
@@ -89,29 +89,6 @@ endif BUILD_CORBA_MESSAGING
 if BUILD_CORBA_MESSAGING
 if BUILD_EXCEPTIONS
 
-BUILT_SOURCES += \
-  TestC.cpp \
-  TestC.h \
-  TestC.inl \
-  TestS.cpp \
-  TestS.h \
-  TestS.inl
-
-CLEANFILES += \
-  Test-stamp \
-  TestC.cpp \
-  TestC.h \
-  TestC.inl \
-  TestS.cpp \
-  TestS.h \
-  TestS.inl
-
-TestC.cpp TestC.h TestC.inl TestS.cpp TestS.h TestS.inl: Test-stamp
-
-Test-stamp: $(srcdir)/Test.idl $(TAO_IDL_DEP)
-	$(TAO_IDL) $(TAO_IDLFLAGS) $(srcdir)/Test.idl
-	@touch $@
-
 noinst_PROGRAMS += client
 
 client_CPPFLAGS = \
@@ -127,11 +104,7 @@ client_SOURCES = \
   TestS.cpp \
   client.cpp \
   Echo.h \
-  ORB_Task.h \
-  TestC.h \
-  TestC.inl \
-  TestS.h \
-  TestS.inl
+  ORB_Task.h
 
 client_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO_Messaging.la \
@@ -151,29 +124,6 @@ endif BUILD_CORBA_MESSAGING
 if BUILD_CORBA_MESSAGING
 if BUILD_EXCEPTIONS
 
-BUILT_SOURCES += \
-  TestC.cpp \
-  TestC.h \
-  TestC.inl \
-  TestS.cpp \
-  TestS.h \
-  TestS.inl
-
-CLEANFILES += \
-  Test-stamp \
-  TestC.cpp \
-  TestC.h \
-  TestC.inl \
-  TestS.cpp \
-  TestS.h \
-  TestS.inl
-
-TestC.cpp TestC.h TestC.inl TestS.cpp TestS.h TestS.inl: Test-stamp
-
-Test-stamp: $(srcdir)/Test.idl $(TAO_IDL_DEP)
-	$(TAO_IDL) $(TAO_IDLFLAGS) $(srcdir)/Test.idl
-	@touch $@
-
 noinst_PROGRAMS += shutdown
 
 shutdown_CPPFLAGS = \
@@ -186,10 +136,11 @@ shutdown_SOURCES = \
   TestC.cpp \
   TestS.cpp \
   shutdown.cpp \
-  TestC.h \
-  TestC.inl \
-  TestS.h \
-  TestS.inl
+  Echo.h \
+  Echo_Caller.h \
+  ORB_Task.h \
+  Server_Thread_Pool.h \
+  Server_Timer.h
 
 shutdown_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO_Messaging.la \

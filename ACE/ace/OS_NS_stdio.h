@@ -367,7 +367,7 @@ namespace ACE_OS {
 
 # if defined (ACE_HAS_WCHAR)
   extern ACE_Export
-  int snprintf (wchar_t *buf, size_t maxlen, const wchar_t *format,...);
+  int snprintf (wchar_t *buf, size_t maxlen, const wchar_t *format, ...);
 # endif /* ACE_HAS_WCHAR */
 
   extern ACE_Export

@@ -1192,7 +1192,7 @@ ACE_WFMO_Reactor::open (size_t size,
   this->atomic_wait_array_[0] = this->lock_.lock ().proc_mutex_;
   this->atomic_wait_array_[1] = this->ok_to_wait_.handle ();
 
-  // Prevent memory leaks when the ACE_WFMO_Reactor is reopened. 
+  // Prevent memory leaks when the ACE_WFMO_Reactor is reopened.
   if (this->delete_handler_rep_)
     {
       if (this->handler_rep_.changes_required ())
@@ -2423,7 +2423,7 @@ ACE_WFMO_Reactor_Notify::handle_signal (int signum,
               ACE_Event_Handler *event_handler =
                 buffer->eh_;
 
-              int requires_reference_counting =
+              bool const requires_reference_counting =
                 event_handler->reference_counting_policy ().value () ==
                 ACE_Event_Handler::Reference_Counting_Policy::ENABLED;
 

@@ -11,7 +11,7 @@ dnl
 dnl Note that this macro removes the newline output by the M4
 dnl "esyscmd" built-in.  Unless you understand what you're doing,
 dnl particularly with M4, do not modify this macro definition.
-define([ACE_VERSION], patsubst(esyscmd(grep ACE_VERSION ace/Version.h | sed 's/.*\"\(.*\)\".*/\1/'), [
+define([ACE_VERSION], patsubst(esyscmd(grep ACE_VERSION ace/Version.h | sed 's/.*\" *\(.*\)\".*/\1/'), [
 ]))dnl remove newline ending every `esyscmd' answer
 
 AC_INIT([ACE],
@@ -210,7 +210,7 @@ dnl Determine which subsets to build
 dnl This is done using the autoconf "--enable-foobar" mechanism.
 ACE_CHECK_SUBSETS
 
-dnl Some of the third party libraries (X11, openssl, etc.) depend on 
+dnl Some of the third party libraries (X11, openssl, etc.) depend on
 dnl other libraries.  Check for those before the processing --enable
 dnl options.
 
@@ -492,7 +492,7 @@ AC_CHECK_HEADER([dlfcn.h],
 
      case "$host_os" in
      darwin*)
-	AC_DEFINE([ACE_LD_SEARCH_PATH], 
+	AC_DEFINE([ACE_LD_SEARCH_PATH],
 		  [ACE_LIB_TEXT ("DYLD_LIBRARY_PATH")],
 		  [Define to environment variable used for DLL search path])
 	AC_DEFINE([ACE_DLL_SUFFIX],
@@ -664,7 +664,7 @@ dnl Test for <sys/types.h> out of alphabetical order, since it must
 dnl be (conditionally) #included in other feature tests.
 ACE_CHECK_LACKS_HEADERS(sys/types.h)
 
-ACE_CHECK_LACKS_HEADERS(sys/sysctl.h, [], [], 
+ACE_CHECK_LACKS_HEADERS(sys/sysctl.h, [], [],
 [
 #ifndef ACE_LACKS_SYS_TYPES_H
 # include <sys/types.h>
@@ -3653,7 +3653,7 @@ ACE_CHECK_HAS_FUNCS(strnlen)
 
 ACE_CHECK_LACKS_FUNCS(strchr)
 
-# believe it or not, both ACE_LACKS_STRERROR and ACE_HAS_STRERROR 
+# believe it or not, both ACE_LACKS_STRERROR and ACE_HAS_STRERROR
 # feature test macros are currently used.
 ACE_CHECK_HAS_FUNCS(strerror)
 ACE_CHECK_LACKS_FUNCS(strerror)
@@ -4103,9 +4103,6 @@ ACE_CHECK_HAS_FUNCS(snprintf)
 
 ACE_CHECK_LACKS_FUNCS(tempnam truncate)
 
-dnl Check for MIT pthreads APIs for timed send/recv operations
-ACE_CHECK_HAS_FUNCS(read_timedwait readv_timedwait recv_timedwait recvfrom_timedwait recvmsg_timedwait send_timedwait sendmsg_timedwait sendto_timedwait write_timedwait writev_timedwait)
-
 dnl Save the cache for debugging purposes
 AC_CACHE_SAVE
 
@@ -4424,9 +4421,9 @@ dnl Check for Unix98 pthreads extensions
 
 dnl Linux's sched_{set,get}affinity interface has changed three times:
 dnl
-dnl In glibc 2.3.2, it was: 
+dnl In glibc 2.3.2, it was:
 dnl
-dnl   int sched_setaffinity(pid_t __pid, 
+dnl   int sched_setaffinity(pid_t __pid,
 dnl                         unsigned int __len, unsigned long * __mask);
 dnl
 dnl In glibc 2.3.3, it was changed to:
@@ -4435,7 +4432,7 @@ dnl   int sched_setaffinity(pid_t __pid, const cpu_set_t* __mask);
 dnl
 dnl And in glibc ?.?.?, it was changed again to:
 dnl
-dnl   int sched_setaffinity(pid_t __pid, size_t __cpusetsize, 
+dnl   int sched_setaffinity(pid_t __pid, size_t __cpusetsize,
 dnl                         const cpu_set_t* __cpuset);
 dnl
 dnl The following feature tests attempt to determine which (if any)
@@ -4481,7 +4478,7 @@ AC_LINK_IFELSE([AC_LANG_PROGRAM(
           ],
           [
            AC_MSG_RESULT([2])
-           AC_DEFINE([ACE_HAS_2_PARAM_SCHED_GETAFFINITY], 1, 
+           AC_DEFINE([ACE_HAS_2_PARAM_SCHED_GETAFFINITY], 1,
 		     [Define to 1 if platform has 2 parameter sched_getaffinity()])
           ])
 fi dnl test "$ac_cv_func_sched_getaffinity" = yes
@@ -4510,7 +4507,7 @@ AC_LINK_IFELSE([AC_LANG_PROGRAM(
           ],
           [
            AC_MSG_RESULT([2])
-           AC_DEFINE([ACE_HAS_2_PARAM_SCHED_SETAFFINITY], 1, 
+           AC_DEFINE([ACE_HAS_2_PARAM_SCHED_SETAFFINITY], 1,
 		     [Define to 1 if platform has 2 parameter sched_setaffinity()])
           ])
 fi dnl test "$ac_cv_func_sched_setaffinity" = yes
@@ -6093,42 +6090,6 @@ if test "$ace_cv_lib_posix_sigaction_constp_2" = yes; then
   AC_DEFINE([ACE_HAS_SIGACTION_CONSTP2])
 fi
 
-dnl Check if the wait() system call takes a (union wait *) rather than int *
-ACE_CACHE_CHECK([if wait() takes a (union wait *) rather than int *],
-  [ace_cv_lib_wait_takes_union_wait_ptr],
-   [
-    AC_COMPILE_IFELSE([AC_LANG_PROGRAM([[
-#include <sys/wait.h>
-       ]], [[
-        int* status = 0;
-        int result = 0;
-        result=wait(status);
-       ]])],[
-        ace_cv_lib_wait_takes_union_wait_ptr=no
-       ],[
-        AC_COMPILE_IFELSE([AC_LANG_PROGRAM(
-          [[
-#include <sys/wait.h>
-          ]],
-          [[
-           union wait* status = 0;
-           int result = 0;
-           result=wait(status);
-          ]])],
-          [
-           ace_cv_lib_wait_takes_union_wait_ptr=yes
-          ],
-          [
-dnl If we get here then we're screwed! We can't use int* or union wait*.
-dnl It is very unlikely that we will ever get this far.  For the sake
-dnl of setting some result, we'll assume that we can actually use int*.
-           ace_cv_lib_wait_takes_union_wait_ptr=no
-           AC_MSG_WARN([wait() doesn't seem to take either int* or union wait*])
-           AC_MSG_WARN([as an argument.  Going to assume that int* will work.])
-          ])
-       ])
-  ], [AC_DEFINE([ACE_HAS_UNION_WAIT])],)
-
 dnl We need to use the ACE_CONVERT_WARNINGS_TO_ERRORS() macro since
 dnl passing a void * just caused implicit conversion warnings when
 dnl using GNU C++, for example.
@@ -6306,94 +6267,6 @@ dnl The following test should only be run if the above two testsfail.
      AC_MSG_WARN([No supported msghdr structure was found.  ACE may not compile or function properly.])
     ])
   fi
-
-dnl Now check if CMSG_DATA is defined if and only if we have 4.4 BSD
-dnl style struct msghdr members.  If CMSG_DATA isn't defined, then
-dnl we try to figure out what it should be defined to.
-  if test "$ace_cv_lib_4_4bsd_msghdr" = yes; then
-    ACE_CACHE_CHECK([if CMSG_DATA is defined],
-      [ace_cv_lib_cmsg_data],
-      [
-       AC_COMPILE_IFELSE([AC_LANG_PROGRAM(
-         [[
-#ifndef ACE_LACKS_SYS_TYPES_H
-# include <sys/types.h>
-#endif
-#include <sys/socket.h>
-#include <sys/un.h>  /* @@ Is this header necessary? */
-         ]],
-         [[
-           cmsghdr ace_cmsg;
-           void * c = CMSG_DATA (&ace_cmsg);
-         ]])],
-         [
-          ace_cv_lib_cmsg_data=yes
-         ],
-         [
-          ace_cv_lib_cmsg_data=no
-dnl Now check which type of CMSG_DATA #define we need.
-          AC_COMPILE_IFELSE([AC_LANG_PROGRAM([[
-#ifndef ACE_LACKS_SYS_TYPES_H
-# include <sys/types.h>
-#endif
-#include <sys/socket.h>
-#include <sys/un.h>
-            ]], [[
-             /* This is sloppy.  Oh well. */
-             unsigned char ace_cmsg_data[0];
-
-             cmsghdr ace_cmsg;
-             ace_cmsg.cmsg_data = ace_cmsg_data;
-            ]])],,[
-             AC_COMPILE_IFELSE([AC_LANG_PROGRAM(
-               [[
-#ifndef ACE_LACKS_SYS_TYPES_H
-# include <sys/types.h>
-#endif
-#include <sys/socket.h>
-#include <sys/un.h>
-               ]],
-               [[
-                /* This is sloppy.  Oh well. */
-                unsigned char ace_cmsg_data[0];
-
-                cmsghdr ace_cmsg;
-                ace_cmsg.__cmsg_data = ace_cmsg_data;
-               ]])],
-               [
-                AC_MSG_ERROR([cmsgmdr member '__cmsg_data[0]' not supported by ACE's CMSG_DATA macro])
-               ],
-               [
-                AC_COMPILE_IFELSE([AC_LANG_PROGRAM(
-                  [[
-#ifndef ACE_LACKS_SYS_TYPES_H
-# include <sys/types.h>
-#endif
-#include <sys/socket.h>
-#include <sys/un.h>
-                  ]],
-                  [[
-                   cmsghdr ace_cmsg;
-                  ]])],
-                  [
-                   AC_CACHE_VAL([ace_cv_lib_cmsg_data_member],
-                                [ace_cv_lib_cmsg_data_member=no])
-                  ],
-                  [
-                   AC_MSG_ERROR([No supported cmsghdr structure exists.  ACE cannot be built without one.])
-                  ])
-               ])
-            ])
-         ])
-      ], ,
-      [
-       AC_DEFINE([ACE_LACKS_CMSG_DATA_MACRO])
-       if test "$ace_cv_lib_cmsg_data_member"=no; then
-         AC_DEFINE([ACE_LACKS_CMSG_DATA_MEMBER])
-       fi
-
-      ])
-  fi dnl test "$ace_cv_lib_4_4bsd_msghdr" = yes
 
 fi dnl End struct msghdr_stuff
 
@@ -6689,9 +6562,9 @@ smemcpy (void* dest, const void* src, const size_t n)
 
 // Function pointer
 void* (* test_func) (void *dst, const void* src, size_t);
-                                                                                
+
 namespace { enum { ITERATIONS = 100000 }; }
-                                                                                
+
 #include <sys/time.h>
 #include <time.h>
 
@@ -6700,35 +6573,35 @@ main(int argc, char* argv[])
 {
  struct timeval start, now;
  double value;
-                                                                                
+
  // Test buffer
  char dest [16];
  const void* src = " THIS IS A TEST";
-                                                                                
+
  // We want to test if the loop unrolling is faster for sizes
  // from 1..16
  for (size_t counter = 16; counter >=1; counter--)
  {
    test_func = smemcpy;
-                                                                                
+
    // Warm up
    for (int i = ITERATIONS ; i > 0 ; --i)
      test_func ((void *)dest, src, counter);
-                                                                                
+
    gettimeofday (&start, 0) ;
    for (int j = ITERATIONS ; j > 0 ; --j)
      test_func ((void *)dest, src, counter);
    gettimeofday (&now, 0);
-                                                                                
+
    double fast = 1000000 * (now.tv_sec - start.tv_sec) +
                             now.tv_usec - start.tv_usec ;
-                                                                                
+
    test_func = memcpy;
-                                                                                
+
    // Warm up
    for (int k = ITERATIONS ; k > 0 ; --k)
      test_func ((void *)dest, src, counter);
-                                                                                
+
   gettimeofday (&start, 0) ;
   for (int l = ITERATIONS ; l > 0 ; --l)
      test_func ((void *)dest, src, counter);
@@ -6738,7 +6611,7 @@ main(int argc, char* argv[])
                            now.tv_usec - start.tv_usec ;
   if (fast > slow)
     return 1; // Unrolling was slower than actual memcpy
-                                                                                
+
   if (1.10*fast > slow)
     return 1; // Unrolling was not faster by 10%
  }

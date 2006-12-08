@@ -1,6 +1,6 @@
 // $Id$
 
-project (XSC_DynAny_Handler) : taolib, xerces, dynamicany, anytypecode, typecodefactory, ciao_client_dnc {
+project (XSC_DynAny_Handler) : xerces, dynamicany, typecodefactory, ciao_client_dnc {
 after += XSC_XML_Handlers
 libs += XSC_XML_Handlers
 dynamicflags += DYNANY_HANDLER_BUILD_DLL

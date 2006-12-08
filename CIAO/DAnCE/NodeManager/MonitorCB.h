@@ -36,20 +36,18 @@ namespace CIAO
     {
     public:
       /**
-       *  @constructor
        *  @param orb The ORB pointer
        *  @param target The TargetManager reference
        *  @param interval The time interval to sent update
        */
       MonitorCB (CORBA::ORB_ptr orb, Deployment::TargetManager_ptr target, int interval);
       /**
-       *  @function update_data
-       *  @param  data Contains the updated Domain data
-       *  @return int indicates success.
-       *  @description This function is called by the monitor to
+       *  This function is called by the monitor to
        *               update Domain data, which is then sent to
        *               TM.
-       * @todo Check return value, seems not used at this moment
+       *  @param  data Contains the updated Domain data
+       *  @return int indicates success.
+       *  @todo Check return value, seems not used at this moment
        */
       int update_data (::Deployment::Domain& data);
     private:

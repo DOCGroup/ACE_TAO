@@ -147,7 +147,7 @@ TAO_IFR_Client_Adapter_Impl::get_interface_remote (
   return _tao_retval.retn ();
 }
 
-#if (TAO_HAS_MINIMUM_CORBA == 0)
+#if (TAO_HAS_MINIMUM_CORBA == 0) && !defined (CORBA_E_COMPACT) && !defined (CORBA_E_MICRO)
 void
 TAO_IFR_Client_Adapter_Impl::create_operation_list (
     CORBA::ORB_ptr orb,

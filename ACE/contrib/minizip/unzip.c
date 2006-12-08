@@ -4,6 +4,7 @@
    Copyright (C) 1998-2005 Gilles Vollant
 
    Read unzip.h for more info
+   $Id$
 */
 
 /* Decryption code comes from crypt.c by Info-ZIP but has been greatly reduced in terms of
@@ -169,7 +170,7 @@ local int unzlocal_getByte OF((
     int *pi));
 
 local int unzlocal_getByte(const zlib_filefunc_def* pzlib_filefunc_def,voidpf filestream,int *pi)
-    
+
 {
     unsigned char c;
     int err = (int)ZREAD(*pzlib_filefunc_def,filestream,&c,1);
@@ -197,7 +198,7 @@ local int unzlocal_getShort OF((
     uLong *pX));
 
 local int unzlocal_getShort (const zlib_filefunc_def* pzlib_filefunc_def,voidpf filestream,uLong *pX)
-    
+
 {
     uLong x ;
     int i;

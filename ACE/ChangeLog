@@ -1,3 +1,425 @@
+Fri Dec  8 16:39:51 UTC 2006  Steve Huston  <shuston@riverace.com>
+
+        * ace/Null_Mutex.h: Added ACE_Export to the class declarations.
+          Although they are probably inlined, VS .NET 2005 (VC8) complains
+          in some cases when a dll-interface class inherits from a
+          non-dll-interface class.
+
+Fri Dec  8 15:36:23 UTC 2006  Ciju John  <johnc@ociweb.com>
+
+        * tests/run_test.lst:
+          Bug_2659_Regression_Test cannot run in a single threaded build.
+
+Fri Dec  8 05:21:38 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * configure.ac:
+
+          Changed code to extract version number from ace/Version.h to be
+          more resilient to leading whitespace like was added by a bug in
+          the release script in the last beta.  Thanks to <rlischner at
+          proteus-technologies dot com> for this patch.
+
+Thu Dec  7 14:13:43 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/DLL_Manager.cpp:
+          Made error message dependent on ACE::debug. Thanks to David Faure
+          <dfaure at klaralvdalens-datakonsult dot se> for reporting this.
+
+Thu Dec  7 14:09:43 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/ciao_tests.lst:
+          Added RTCMM test
+
+Thu Dec  7 12:47:43 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Read_Buffer.h:
+          Doxygen improvements
+
+        * ace/Read_Buffer.cpp:
+          Initialise pointer with 0 and use prefix increment
+
+Thu Dec  7 09:47:43 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ACE-INSTALL.html:
+          Improved rtems documentation
+
+        * MakeProjectCreator/config/avoids_ace_for_tao.mpb:
+          New base project for avoids ace_for_tao
+
+        * bin/ciao_tests.lst
+        * bin/tao_orb_tests.lst
+        * bin/tao_other_tests.lst
+          Disabled all tests that are disabled in a minimum_corba build also
+          when using CORBA/e compact and micro
+
+Thu Dec  7 07:49:24 UTC 2006  Olli Savia  <ops@iki.fi>
+
+        * ace/OS_NS_stdio.h:
+        * ace/OS_NS_stdio.inl:
+        * ace/OS_NS_stdio.cpp:
+
+          Implemented ACE_OS::snprintf() by using ACE_OS::vsnprintf().
+          Removed duplicate code and made maintaining easier.
+
+        * ace/README:
+        * ace/config-cygwin32.h:
+        * ace/config-freebsd.h:
+        * ace/config-hpux-11.00.h:
+        * ace/config-irix6.x-common.h:
+        * ace/config-linux-common.h:
+        * ace/config-lynxos.h:
+        * ace/config-macosx-panther.h:
+        * ace/config-macosx-tiger.h:
+        * ace/config-macosx.h:
+        * ace/config-netbsd.h:
+        * ace/config-openbsd.h:
+        * ace/config-openvms.h:
+        * ace/config-posix.h:
+        * ace/config-qnx-rtp-62x.h:
+        * ace/config-sunos5.7.h:
+        * ace/config-tru64.h:
+        * ace/config-vxworks6.2.h:
+        * ace/config-vxworks6.3.h:
+        * ace/config-win32-common.h:
+        * ace/config-win32-interix.h:
+
+          Removed ACE_HAS_SNPRINTF and added ACE_LACKS_VSNPRINTF
+          if necessary (I probably missed some platforms, need to recheck
+          after next scoreboard round).
+
+Thu Dec  7 00:27:58 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * m4/config_h.m4:
+        * configure.ac:
+
+          Remove obsolete ACE_HAS_UNION_WAIT feature test.
+
+Wed Dec  6 21:06:37 UTC 2006  Ciju John  <johnc@ociweb.com>
+
+        * tests/Bug_2659_Regression_Test.cpp:
+          Compile failure on RTEMS due to non-ANSI signal API on the
+          platform. Fixed by casting function ptr to proper type.
+
+Wed Dec  6 14:49:44 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * m4/config_h.m4:
+        * configure.ac:
+
+          Remove obsolete ACE_LACKS_CMSG_DATA_MACRO and
+          ACE_LACKS_CMSG_DATA_MEMBER feature test.
+
+Wed Dec  6 11:07:43 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/config-mit-pthread.h:
+        * ace/config-sco-5.0.0-mit-pthread.h:
+          Removed MIT pthread config files, not supported for years
+          anymore
+
+        * ace/config-mklinux.h:
+          Removed, this linux version hasn't been maintained for years
+
+        * ace/ACE.cpp:
+          Removed all mit-pthread specific code
+
+        * configure.ac:
+          Removed mit-pthread checks
+
+        * ace/WFMO_Reactor.cpp:
+          Const/bool change
+
+Wed Dec  6 07:57:43 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/ciao_tests.lst:
+        * bin/tao_orb_tests.lst:
+        * bin/tao_other_tests.lst:
+          Disabled all tests that are disabled in a minimum_corba build also
+          when using CORBA/e compact and micro
+
+Tue Dec  5 23:53:34 UTC 2006  Ciju John  <johnc@ociweb.com>
+
+        * tests/Bug_2659_Regression_Test.cpp:
+        * tests/run_test.lst:
+        * tests/tests.mpc:
+          Adding regression test for Bug 2659.
+
+Tue Dec  5 19:44:43 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/config-freebsd.h:
+          Simplified ACE_HAS_SNPRINTF setting
+
+        * ace/config-irix6.x-common.h:
+        * ace/config-sco-5.0.0-mit-pthread.h:
+        * ace/config-tru64.h:
+          Removed commented out defines, makes it easier to search whether
+          a macro is defined in any config file or not
+
+        * ace/config-tru64.h:
+          Use config-posix.h
+
+        * ace/Read_Buffer.{h,cpp}:
+          Changed close_on_delete to a real bool
+
+        * ace/Service_Config.{h,inl}:
+        * ace/Service_Gestalt.{h,cpp,inl}:
+          Use bool for the ignore arguments
+
+        * ace/SOCK_Dgram.inl:
+          Const change
+
+Tue Dec  5 15:47:43 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * include/makeinclude/makeinclude/platform_osf1_3.2_cxx.GNU:
+        * include/makeinclude/makeinclude/platform_osf1_4.x_cxx.GNU:
+        * include/makeinclude/makeinclude/platform_osf1_4.x_g++.GNU:
+        * include/makeinclude/makeinclude/platform_osf1_4.x_rcc.GNU:
+          Removed, very old
+
+        * include/makeinclude/makeinclude/platform_tru64_cxx.GNU:
+        * include/makeinclude/makeinclude/platform_tru64_g++.GNU:
+          We should be able to build on tru64 but it isn't really maintained,
+          moved the contents of the osf files into these files
+
+Tue Dec  5 15:22:43 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * include/makeinclude/makeinclude/platform_aix4_cset++.GNU:
+        * include/makeinclude/makeinclude/platform_aix.GNU:
+          Moved contents of cset++ method into the aix one, the aix
+          file just included the first one
+
+        * include/makeinclude/makeinclude/platform_aix4.2.GNU:
+          Removed, old
+
+        * ace/config-aix-4.x.h:
+        * ace/config-aix-5.x.h:
+          Moved contents of 4.x.h file into the 5.x.h file. Removed a lot
+          of old checks for AIX 4 so that we can maintain things easier.
+
+        * ace/ACE.cpp:
+        * ace/OS_NS_sys_wait.inl:
+          Removed ACE_HAS_UNION_WAIT, was only set for aix4
+
+        * ace/Log_Msg.cpp:
+        * ace/OS_NS_Thread.cpp:
+          Removed code for AIX 4.x to handle pthread_t
+
+        * ace/os_include/sys/os_socket.h:
+          Removed ACE_HAS_AIX_BROKEN_SOCKET_HEADER, was only set for aix 4
+
+Tue Dec  5 15:08:43 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/config-aix-4.1.x.h:
+        * ace/config-aix-4.2.x.h:
+        * ace/config-aix-4.3.x.h:
+          Removed, these AIX versions aren't supported anymore
+
+Tue Dec  5 14:33:43 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/config-irix6.x-sgic++-nothreads.h:
+          Removed
+
+Tue Dec  5 14:30:43 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/config-sunos5.4-centerline-2.x.h:
+        * include/makeinclude/platform_sunos5_centerline.GNU:
+          Removed centerline support
+
+Tue Dec  5 14:07:43 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * include/makeinclude/platform_sunos4_g++.GNU:
+        * include/makeinclude/platform_sunos4_lucid.GNU:
+        * include/makeinclude/platform_sunos4_sunc++3.x.GNU:
+        * include/makeinclude/platform_sunos4_sunc++4.x.GNU:
+          Removed, not supported anymore
+
+Tue Dec  5 13:59:43 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/config-sco-5.0.0-fsu-pthread.h:
+          Deleted, fsu pthread is already removed some time ago.
+
+Tue Dec  5 13:58:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/config-sco-4.2-nothread.h:
+          Deleted, ancient
+
+Tue Dec  5 13:51:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/config-dgux-4.11-epc.h:
+        * ace/config-dgux-4.x-ghs.h:
+        * include/makeinclude/platform_dgux4_epc.GNU:
+        * include/makeinclude/platform_dgux4_ghs.GNU:
+          Deleted
+
+        * ace/OS_NS_Thread.cpp:
+          Removed dgux support. Fixes bugzilla 2011
+
+Tue Dec  5 13:41:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/config-irix5.2.h:
+        * ace/config-irix5.3-g++.h:
+        * ace/config-irix5.3-sgic++.h:
+        * include/makeinclude/platform_irix5.2.GNU:
+        * include/makeinclude/platform_irix5.3_g++.GNU:
+        * include/makeinclude/platform_irix5.3_sgic++.GNU:
+          Deleted
+
+        * include/makeinclude/platform_irix6.x_common.GNU:
+          Use operator ?=
+
+        * ace/os_include/os_signal.h:
+          Removed Irix 5 support, fixes bugzilla 2013.
+
+Tue Dec  5 13:31:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/config-m88k.h:
+        * include/makeinclude/platform_m88k.GNU:
+          Deleted
+
+        * ace/os_include/os_signal.h:
+        * ace/os_include/sys/os_resource.h:
+        * ace/os_include/sys/os_time.h:
+          Removed support for m88k which isn't maintained for years now.
+          Fixes bugzilla 2012
+
+Tue Dec  5 13:28:10 UTC 2006  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/MakeProjectCreator/templates/gnu.mpd:
+
+          If the gendir setting for the custom file is '.', then ommit the
+          gendir setting.  This is required for version 3.4.45 of MPC.
+
+Tue Dec  5 12:20:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/os_include/sys/os_socket.h:
+          Removed check for ACE_LACKS_CMSG_DATA_MACRO which wasn't
+          set in any configuration file. This also resulted in the
+          removal of ACE_LACKS_CMSG_DATA_MEMBER because this define
+          was never checked
+
+        * ace/config-qnx-neutrino.h:
+        * ace/config-qnx-rtp-62x.h:
+        * ace/config-qnx-rtp-pre62x.h:
+        * ace/config-tandem-nsk-mips-v2.h:
+        * ace/config-tandem-nsk-mips-v3.h:
+          Removed ACE_LACKS_CMSG_DATA_MEMBER, it has no impact at all
+
+Tue Dec  5 11:25:00 UTC 2006  Simon Massey  <sma@prismtech.com>
+
+        * ace/SStringfwd.h:
+
+          Provide for annoying HP aCC 3.xx template bug.
+
+Tue Dec  5 10:01:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/config-lynxos.h:
+
+          Improved LynxOS 4.2 support
+
+Mon Dec  4 23:13:12 UTC 2006  Iliyan Jeliazkov  <iliyan@ociweb.com>
+
+        * ace/Service_Gestalt.cpp (init_i):
+
+          Fixed bug#2735 and eliminated a potential memory leak of the
+          list of already processed static services. The failure scenario
+          is based on a case where static initializers register a bunch of
+          service objects and then later the gestalt::open() is called. At
+          that point, the abovementioned list is reinitialized and its
+          contents was lost. See also the other failure scenario
+          (bug#2701) for which a fix was put in on Nov 9 2006.
+
+Mon Dec  4 18:00:16 UTC 2006  Iliyan Jeliazkov  <iliyan@ociweb.com>
+
+        * bin/tao_orb_tests.lst:
+
+          Added a regression test for bug#2612
+
+Mon Dec  4 15:42:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/MakeProjectCreator/config:
+          Moved TAO base projects to $TAO_ROOT/MPC/config
+
+Mon Dec  4 13:16:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/MakeProjectCreator/config/MPC.cfg:
+          Set includes so that TAO and CIAO base projects could be
+          under TAO_ROOT and CIAO_ROOT
+
+        * bin/MakeProjectCreator/config/ciao_client_dnc.mpb:
+        * bin/MakeProjectCreator/config/ciao_component_dnc.mpb:
+        * bin/MakeProjectCreator/config/ciao_config_handlers.mpb:
+        * bin/MakeProjectCreator/config/ciao_config_handlers_base.mpb:
+        * bin/MakeProjectCreator/config/ciao_container_dnc.mpb:
+        * bin/MakeProjectCreator/config/ciao_deployment_stub.mpb:
+        * bin/MakeProjectCreator/config/ciao_deployment_svnt.mpb:
+        * bin/MakeProjectCreator/config/ciao_domainapplicationmanager_dnc.mpb:
+        * bin/MakeProjectCreator/config/ciao_events_base_dnc.mpb:
+        * bin/MakeProjectCreator/config/ciao_events_dnc.mpb:
+        * bin/MakeProjectCreator/config/ciao_executionmanager_stub.mpb:
+        * bin/MakeProjectCreator/config/ciao_nodeapplication.mpb:
+        * bin/MakeProjectCreator/config/ciao_nodeapplicationmanager.mpb:
+        * bin/MakeProjectCreator/config/ciao_nodemanager_stub.mpb:
+        * bin/MakeProjectCreator/config/ciao_nodemanager_svnt.mpb:
+        * bin/MakeProjectCreator/config/ciao_noop_configurator.mpb:
+        * bin/MakeProjectCreator/config/ciao_plan_generator.mpb:
+        * bin/MakeProjectCreator/config/ciao_race_component.mpb:
+        * bin/MakeProjectCreator/config/ciao_race_default.mpb:
+        * bin/MakeProjectCreator/config/ciao_race_monitor.mpb:
+        * bin/MakeProjectCreator/config/ciao_rtevent_dnc.mpb:
+        * bin/MakeProjectCreator/config/ciao_servant_dnc.mpb:
+        * bin/MakeProjectCreator/config/ciao_server_dnc.mpb:
+        * bin/MakeProjectCreator/config/ciao_static_dnc_app.mpb:
+        * bin/MakeProjectCreator/config/ciao_targetmanager_stub.mpb:
+        * bin/MakeProjectCreator/config/ciao_targetmanager_svnt.mpb:
+        * bin/MakeProjectCreator/config/ciao_xml_utils.mpb:
+        * bin/MakeProjectCreator/config/ciaocidldefaults.mpb:
+        * bin/MakeProjectCreator/config/cidlc.mpb:
+        * bin/MakeProjectCreator/config/dance_extension_stub.mpb:
+          Moved to $CIAO_ROOT/MPC/config
+
+Mon Dec  4 13:13:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/tao_orb_tests.lst:
+          Don't run Bug_2709_Regression with ACE_FOR_TAO
+
+Mon Dec  4 12:49:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Basic_Types.h:
+          Added check for __ia64__, then we assume we have little endian,
+          this define is set by the HP OpenVMS compiler
+
+Mon Dec  4 12:26:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/MakeProjectCreator/config/ciao_targetmanager_svnt.mpb:
+          New base project
+
+Mon Dec  4 11:27:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/MakeProjectCreator/config/ciao_nodeapplication.mpb:
+          New base project for nodeapplication library
+
+        * bin/MakeProjectCreator/config/ciao_nodeapplicationmanager.mpb:
+          Derive from ciao_nodeapplication
+
+        * bin/MakeProjectCreator/config/ciao_nodemanager_stub.mpb:
+        * bin/MakeProjectCreator/config/ciao_nodemanager_svnt.mpb:
+        * bin/MakeProjectCreator/config/ciao_race_default.mpb:
+        * bin/MakeProjectCreator/config/ciao_race_monitor.mpb:
+        * bin/MakeProjectCreator/config/ciao_targetmanager_stub.mpb:
+          Fixed incorrect id tag
+
+        * bin/MakeProjectCreator/config/ciao_noop_configurator.mpb:
+          New base project
+
+Mon Dec  4 11:26:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/fuzz.pl:
+          Corrected the expression to fill the files_mpc array and
+          enabled the Id check again
+
+Fri Dec  1 13:36:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * Kokyu/docs/Kokyu.html:
+          Updated download location of ACE/TAO/CIAO
+
 Wed Nov 29 15:40:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/OS_NS_unistd.cpp (num_processors*):

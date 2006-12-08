@@ -43,7 +43,7 @@ TAO_Naming_Server::TAO_Naming_Server (void)
     base_address_ (TAO_NAMING_BASE_ADDR),
     multicast_ (0),
     use_storable_context_ (0),
-    use_servant_activator_ (0),
+    use_servant_activator_ (false),
     servant_activator_ (0),
     use_redundancy_(0),
     round_trip_timeout_ (0),
@@ -73,7 +73,7 @@ TAO_Naming_Server::TAO_Naming_Server (CORBA::ORB_ptr orb,
     base_address_ (TAO_NAMING_BASE_ADDR),
     multicast_ (0),
     use_storable_context_ (use_storable_context),
-    use_servant_activator_ (0),
+    use_servant_activator_ (false),
     servant_activator_ (0),
     use_redundancy_(0),
     round_trip_timeout_ (0),
@@ -321,7 +321,7 @@ TAO_Naming_Server::init_with_orb (int argc,
 #if (TAO_HAS_MINIMUM_POA == 0)
       if (this->use_storable_context_)
         {
-          this->use_servant_activator_ = 1;
+          this->use_servant_activator_ = true;
         }
 
       if (this->use_servant_activator_) {
@@ -344,7 +344,7 @@ TAO_Naming_Server::init_with_orb (int argc,
                                                  ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-#if (TAO_HAS_MINIMUM_POA == 0)
+#if (TAO_HAS_MINIMUM_POA == 0) && !defined (CORBA_E_COMPACT)
       if (this->use_servant_activator_)
         {
           // Request Processing Policy
@@ -477,7 +477,7 @@ TAO_Naming_Server::init_new_naming (CORBA::ORB_ptr orb,
               return -1;
             }
 
-#if (TAO_HAS_MINIMUM_POA == 0)
+#if (TAO_HAS_MINIMUM_POA == 0) && !defined (CORBA_E_COMPACT)
           if (this->use_servant_activator_)
             {
               ACE_NEW_THROW_EX (this->servant_activator_,
@@ -654,7 +654,7 @@ TAO_Naming_Server::init_new_naming (CORBA::ORB_ptr orb,
   ACE_UNUSED_ARG (enable_multicast);
 #endif /* ACE_HAS_IP_MULTICAST */
 
-#if defined (TAO_HAS_CORBA_MESSAGING) && TAO_HAS_CORBA_MESSAGING != 0  
+#if defined (TAO_HAS_CORBA_MESSAGING) && TAO_HAS_CORBA_MESSAGING != 0
       if (use_round_trip_timeout == 1)
       {
         TimeBase::TimeT roundTripTimeoutVal = round_trip_timeout;
@@ -759,7 +759,7 @@ TAO_Naming_Server::operator-> (void) const
 
 TAO_Naming_Server::~TAO_Naming_Server (void)
 {
-#if (TAO_HAS_MINIMUM_POA == 0)
+#if (TAO_HAS_MINIMUM_POA == 0) && !defined (CORBA_E_COMPACT)
   if (this->use_servant_activator_)
     delete this->servant_activator_;
 #endif /* TAO_HAS_MINIMUM_POA */

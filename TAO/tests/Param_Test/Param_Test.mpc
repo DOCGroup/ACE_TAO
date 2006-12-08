@@ -3,12 +3,14 @@
 
 project(*idl): taoidldefaults {
   IDL_Files {
+    idlflags -= -Sa -St
     param_test.idl
   }
   custom_only = 1
 }
 
-project(*Server): taoserver, avoids_minimum_corba, avoids_corba_e_compact {
+project(*Server): taoserver, avoids_minimum_corba, avoids_corba_e_compact, avoids_corba_e_micro {
+  after  += *idl
   Source_Files {
     param_test_i.cpp
     param_testS.cpp
@@ -22,7 +24,7 @@ project(*Server): taoserver, avoids_minimum_corba, avoids_corba_e_compact {
 project(*Client): taoserver, avoids_minimum_corba, dynamicinterface {
   avoids += ace_for_tao
   exename = client
-  after  += *Server
+  after  += *idl
 
   Source_Files {
     param_testC.cpp
@@ -72,9 +74,9 @@ project(*Client): taoserver, avoids_minimum_corba, dynamicinterface {
   }
 }
 
-project(*Anyop): taoserver, avoids_minimum_corba, avoids_corba_e_compact {
+project(*Anyop): taoserver, avoids_minimum_corba, avoids_corba_e_compact, avoids_corba_e_micro {
   exename = anyop
-  after += *Client
+  after  += *idl
 
   Source_Files {
     param_testC.cpp

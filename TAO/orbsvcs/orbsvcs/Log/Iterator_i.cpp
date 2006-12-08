@@ -11,8 +11,10 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 ACE_Time_Value
 TAO_Iterator_i::timeout_(60 * 60);
 
-TAO_Iterator_i::TAO_Iterator_i (ACE_Reactor* reactor)
-  : reactor_ (reactor)
+TAO_Iterator_i::TAO_Iterator_i (PortableServer::POA_ptr poa,
+				ACE_Reactor* reactor)
+  : poa_ (PortableServer::POA::_duplicate (poa)),
+    reactor_ (reactor)
 {
    if (this->timeout_ != ACE_Time_Value::zero) 
      {
@@ -36,19 +38,14 @@ void
 TAO_Iterator_i::destroy (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  PortableServer::POA_ptr poa = 
-    this->_default_POA (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
-
   PortableServer::ObjectId_var oid =
-    poa->servant_to_id (this
-                        ACE_ENV_ARG_PARAMETER);
+    this->poa_->servant_to_id (this ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   // Goodbye cruel world...
   // deactivate from the poa.
-  poa->deactivate_object (oid.in ()
-                          ACE_ENV_ARG_PARAMETER);
+  this->poa_->deactivate_object (oid.in ()
+                                 ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
   return;
 }

@@ -252,7 +252,7 @@ void CIAO_RepositoryManagerDaemon_i::installPackage (
 
       //TODO: how can I incorporate a Auto_Ptr is explicit release is needed
       ACE_Message_Block* mb = 0;
-      ACE_NEW_THROW_EX (mb, ACE_Message_Block (), CORBA::INTERNAL ());
+      ACE_NEW_THROW_EX (mb, ACE_Message_Block (), CORBA::NO_MEMORY ());
       ACE_CHECK_RETURN (0);
 
       //get the remote file
@@ -456,7 +456,7 @@ void CIAO_RepositoryManagerDaemon_i::createPackage (
   {
     //TODO: how can I incorporate a Auto_Ptr is explicit release is needed
     ACE_Message_Block* mb;
-    ACE_NEW_THROW_EX (mb, ACE_Message_Block (), CORBA::INTERNAL ());
+    ACE_NEW_THROW_EX (mb, ACE_Message_Block (), CORBA::NO_MEMORY ());
     ACE_CHECK_RETURN (0);
 
     //get the remote file
@@ -589,7 +589,7 @@ CIAO_RepositoryManagerDaemon_i::findPackageByName (const char * name)
   Deployment::PackageConfiguration_var pc;
   ACE_NEW_THROW_EX (pc,
                     Deployment::PackageConfiguration (),
-                    CORBA::INTERNAL ());
+                    CORBA::NO_MEMORY ());
 
   ACE_CHECK_RETURN (0);
 
@@ -630,7 +630,7 @@ CIAO_RepositoryManagerDaemon_i::findPackageByUUID (const char * UUID)
   Deployment::PackageConfiguration_var pc;
   ACE_NEW_THROW_EX (pc,
                     Deployment::PackageConfiguration (),
-                    CORBA::INTERNAL ());
+                    CORBA::NO_MEMORY ());
 
   ACE_CHECK_RETURN (0);
 
@@ -661,7 +661,7 @@ CIAO_RepositoryManagerDaemon_i::findPackageByUUID (const char * UUID)
   {
     //return an empty sequence
     CORBA::StringSeq_var seq;
-    ACE_NEW_THROW_EX (seq, CORBA::StringSeq (0), CORBA::INTERNAL ());
+    ACE_NEW_THROW_EX (seq, CORBA::StringSeq (0), CORBA::NO_MEMORY ());
     ACE_CHECK_RETURN (0);
 
     return seq._retn ();
@@ -676,7 +676,7 @@ CIAO_RepositoryManagerDaemon_i::findPackageByUUID (const char * UUID)
     CORBA::StringSeq_var seq;
     ACE_NEW_THROW_EX (seq,
                       CORBA::StringSeq (len),
-                      CORBA::INTERNAL ());
+                      CORBA::NO_MEMORY ());
     seq->length (len);
 
     //store the elements in the string sequence
@@ -719,7 +719,7 @@ CIAO_RepositoryManagerDaemon_i::getAllNames ()
      ++num_entries;
 
   CORBA::StringSeq_var seq;
-  ACE_NEW_THROW_EX (seq, CORBA::StringSeq (num_entries), CORBA::INTERNAL ());
+  ACE_NEW_THROW_EX (seq, CORBA::StringSeq (num_entries), CORBA::NO_MEMORY ());
 
   ACE_CHECK_RETURN (0);
 
@@ -767,7 +767,7 @@ CIAO_RepositoryManagerDaemon_i::getAllNames ()
   CORBA::StringSeq_var seq;
   ACE_NEW_THROW_EX (seq,
                     CORBA::StringSeq (num_entries),
-                    CORBA::INTERNAL ());
+                    CORBA::NO_MEMORY ());
 
   ACE_CHECK_RETURN (0);
 
@@ -832,7 +832,7 @@ void CIAO_RepositoryManagerDaemon_i::deletePackage (
   Deployment::PackageConfiguration_var pc;
   ACE_NEW_THROW_EX (pc,
                     Deployment::PackageConfiguration (),
-                    CORBA::INTERNAL ());
+                    CORBA::NO_MEMORY ());
 
   ACE_CHECK_RETURN (0);
 

@@ -1,11 +1,14 @@
-#include "tao/PortableServer/ServantRetentionPolicy.h"
-#include "tao/PortableServer/PortableServer.h"
+
+#include "tao/orbconf.h"
 
 ACE_RCSID (PortableServer,
            ServantRetentionPolicy,
            "$Id$")
 
 #if (TAO_HAS_MINIMUM_POA == 0) && !defined (CORBA_E_COMPACT) && !defined (CORBA_E_MICRO)
+
+#include "tao/PortableServer/ServantRetentionPolicy.h"
+#include "tao/PortableServer/PortableServer.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

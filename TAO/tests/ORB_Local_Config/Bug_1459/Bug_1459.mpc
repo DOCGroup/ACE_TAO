@@ -4,7 +4,13 @@
 
 project(*) : taoserver {
   exename = Test
-  includes += ../lib
+
+  specific(automake) {
+    includes += $(srcdir)/../lib
+  } else {
+    includes += ../lib
+  }
+
   Source_Files {
     Test.cpp
   }

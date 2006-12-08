@@ -1,4 +1,4 @@
-// CmpClient.cpp,v 1.3 2006/01/25 00:10:27 dengg Exp
+// $Id$
 /**
  * @file CmpClient.cpp
  *

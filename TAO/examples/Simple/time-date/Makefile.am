@@ -63,6 +63,7 @@ libTime_Date_la_SOURCES = \
 
 noinst_HEADERS = \
   Alt_Resource_Factory.h \
+  Time_Date.h \
   Time_Date.idl \
   Time_DateC.h \
   Time_DateC.inl \

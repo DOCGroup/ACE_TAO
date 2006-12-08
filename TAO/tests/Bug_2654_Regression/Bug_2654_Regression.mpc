@@ -11,7 +11,7 @@ project(*idl): taoidldefaults {
   custom_only = 1
 }
 
-project(*Server): taoserver, avoids_minimum_corba, bidir_giop {
+project(*Server): taoserver, avoids_minimum_corba, avoids_corba_e_compact, avoids_corba_e_micro, bidir_giop {
   after += *idl
 
   Source_Files {
@@ -25,8 +25,8 @@ project(*Server): taoserver, avoids_minimum_corba, bidir_giop {
 }
 
 
-project(*Client): taoclient, avoids_minimum_corba, messaging, bidir_giop {
-  after += *Server
+project(*Client): taoclient, avoids_minimum_corba, avoids_corba_e_compact, avoids_corba_e_micro, messaging, bidir_giop {
+  after += *idl
 
   Source_Files {
     HelloS.cpp

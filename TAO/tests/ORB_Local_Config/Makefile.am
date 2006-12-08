@@ -10,6 +10,7 @@
 
 SUBDIRS = \
         Bug_1459 \
+        Bug_2612 \
         Bunch \
         Separation \
         Service_Dependency \

@@ -254,7 +254,7 @@ get_plan_info (void)
 
   // Error: If there are no nodes in the plan => No nodes to deploy the
   // components
-  const CORBA::ULong length = this->plan_.instance.length ();
+  CORBA::ULong const length = this->plan_.instance.length ();
 
   if (length == 0)
     {

@@ -71,7 +71,6 @@ SUBDIRS = \
         Bug_2345_Regression \
         Bug_2349_Regression \
         Bug_2375_Regression \
-        Bug_2399_Regression \
         Bug_2417_Regression \
         Bug_2419_Regression \
         Bug_2424_Regression \
@@ -87,10 +86,8 @@ SUBDIRS = \
         Bug_2654_Regression \
         Bug_2669_Regression \
         Bug_2683_Regression \
-        Bug_2709_Regression \
         CDR \
         COIOP \
-        CSD_Strategy_Tests \
         Cache_Growth_Test \
         CallbackTest \
         Client_Leaks \
@@ -186,3 +183,6 @@ SUBDIRS = \
         UNKNOWN_Exception \
         Xt_Stopwatch
 
+# SUBDIRS += \
+#         Bug_2399_Regression \
+#         CSD_Strategy_Tests 

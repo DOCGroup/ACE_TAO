@@ -38,7 +38,7 @@ Content_Iterator_i::next_chunk (CORBA::ULongLong offset,
 
   ACE_OFF_T real_offset =
     ACE_OS::lseek (this->file_io_.get_handle (),
-                   offset,
+                   static_cast <ACE_OFF_T> (offset),
                    SEEK_SET);
 
   if (real_offset == static_cast<ACE_OFF_T> (-1))

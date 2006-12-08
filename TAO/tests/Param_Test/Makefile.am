@@ -18,26 +18,95 @@ TAO_ROOT = $(top_srcdir)
 
 noinst_PROGRAMS =
 
-## Makefile.Param_Test_Server.am
+## Makefile.Param_Test_Idl.am
+
+BUILT_SOURCES = \
+  param_testC.cpp \
+  param_testC.h \
+  param_testC.inl \
+  param_testS.cpp \
+  param_testS.h \
+  param_testS.inl
+
+CLEANFILES = \
+  param_test-stamp \
+  param_testC.cpp \
+  param_testC.h \
+  param_testC.inl \
+  param_testS.cpp \
+  param_testS.h \
+  param_testS.inl
+
+param_testC.cpp param_testC.h param_testC.inl param_testS.cpp param_testS.h param_testS.inl: param_test-stamp
+
+param_test-stamp: $(srcdir)/param_test.idl $(TAO_IDL_DEP)
+	$(TAO_IDL) $(TAO_IDLFLAGS) $(srcdir)/param_test.idl
+	@touch $@
+
+
+noinst_HEADERS = \
+  param_test.idl
+
+## Makefile.Param_Test_Anyop.am
 
 if BUILD_EXCEPTIONS
 
-noinst_PROGRAMS += server
+noinst_PROGRAMS += anyop
 
-server_CPPFLAGS = \
+anyop_CPPFLAGS = \
   -I$(ACE_ROOT) \
   -I$(ACE_BUILDDIR) \
   -I$(TAO_ROOT) \
   -I$(TAO_BUILDDIR)
 
-server_SOURCES = \
+anyop_SOURCES = \
+  anyop.cpp \
   param_testC.cpp \
-  param_testS.cpp \
-  param_test_i.cpp \
-  server.cpp \
-  param_test_i.h
+  any.h \
+  bd_array_seq.h \
+  bd_long_seq.h \
+  bd_short_seq.h \
+  bd_str_seq.h \
+  bd_string.h \
+  bd_struct_seq.h \
+  bd_wstr_seq.h \
+  bd_wstring.h \
+  big_union.h \
+  client.h \
+  complex_any.h \
+  driver.h \
+  except.h \
+  fixed_array.h \
+  fixed_struct.h \
+  helper.h \
+  multdim_array.h \
+  nested_struct.h \
+  objref.h \
+  objref_struct.h \
+  options.h \
+  param_test_i.h \
+  recursive_struct.h \
+  recursive_union.h \
+  results.h \
+  short.h \
+  small_union.h \
+  tests.h \
+  typecode.h \
+  ub_any_seq.h \
+  ub_array_seq.h \
+  ub_long_seq.h \
+  ub_objref_seq.h \
+  ub_short_seq.h \
+  ub_str_seq.h \
+  ub_string.h \
+  ub_struct_seq.h \
+  ub_wstr_seq.h \
+  ub_wstring.h \
+  ulonglong.h \
+  var_array.h \
+  var_struct.h
 
-server_LDADD = \
+anyop_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO_PortableServer.la \
   $(TAO_BUILDDIR)/tao/libTAO_AnyTypeCode.la \
   $(TAO_BUILDDIR)/tao/libTAO.la \
@@ -159,101 +228,32 @@ endif !BUILD_ACE_FOR_TAO
 endif BUILD_EXCEPTIONS
 endif BUILD_CORBA_MESSAGING
 
-## Makefile.Param_Test_Anyop.am
+## Makefile.Param_Test_Server.am
 
 if BUILD_EXCEPTIONS
 
-noinst_PROGRAMS += anyop
+noinst_PROGRAMS += server
 
-anyop_CPPFLAGS = \
+server_CPPFLAGS = \
   -I$(ACE_ROOT) \
   -I$(ACE_BUILDDIR) \
   -I$(TAO_ROOT) \
   -I$(TAO_BUILDDIR)
 
-anyop_SOURCES = \
-  anyop.cpp \
+server_SOURCES = \
   param_testC.cpp \
-  any.h \
-  bd_array_seq.h \
-  bd_long_seq.h \
-  bd_short_seq.h \
-  bd_str_seq.h \
-  bd_string.h \
-  bd_struct_seq.h \
-  bd_wstr_seq.h \
-  bd_wstring.h \
-  big_union.h \
-  client.h \
-  complex_any.h \
-  driver.h \
-  except.h \
-  fixed_array.h \
-  fixed_struct.h \
-  helper.h \
-  multdim_array.h \
-  nested_struct.h \
-  objref.h \
-  objref_struct.h \
-  options.h \
-  param_test_i.h \
-  recursive_struct.h \
-  recursive_union.h \
-  results.h \
-  short.h \
-  small_union.h \
-  tests.h \
-  typecode.h \
-  ub_any_seq.h \
-  ub_array_seq.h \
-  ub_long_seq.h \
-  ub_objref_seq.h \
-  ub_short_seq.h \
-  ub_str_seq.h \
-  ub_string.h \
-  ub_struct_seq.h \
-  ub_wstr_seq.h \
-  ub_wstring.h \
-  ulonglong.h \
-  var_array.h \
-  var_struct.h
+  param_testS.cpp \
+  param_test_i.cpp \
+  server.cpp \
+  param_test_i.h
 
-anyop_LDADD = \
+server_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO_PortableServer.la \
   $(TAO_BUILDDIR)/tao/libTAO_AnyTypeCode.la \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
 endif BUILD_EXCEPTIONS
-
-## Makefile.Param_Test_Idl.am
-
-BUILT_SOURCES = \
-  param_testC.cpp \
-  param_testC.h \
-  param_testC.inl \
-  param_testS.cpp \
-  param_testS.h \
-  param_testS.inl
-
-CLEANFILES = \
-  param_test-stamp \
-  param_testC.cpp \
-  param_testC.h \
-  param_testC.inl \
-  param_testS.cpp \
-  param_testS.h \
-  param_testS.inl
-
-param_testC.cpp param_testC.h param_testC.inl param_testS.cpp param_testS.h param_testS.inl: param_test-stamp
-
-param_test-stamp: $(srcdir)/param_test.idl $(TAO_IDL_DEP)
-	$(TAO_IDL) $(TAO_IDLFLAGS) -Sa -St $(srcdir)/param_test.idl
-	@touch $@
-
-
-noinst_HEADERS = \
-  param_test.idl
 
 ## Clean up template repositories, etc.
 clean-local:

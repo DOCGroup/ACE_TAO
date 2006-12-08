@@ -1,9 +1,18 @@
 // -*- MPC -*-
 // $Id$
 
-project(*client) : taoclient, valuetype {
+project(*idl): taoidldefaults, valuetype {
   IDL_Files {
     test.idl
+  }
+
+  custom_only = 1
+}
+
+project(*client) : taoclient, valuetype {
+  after += *idl
+
+  IDL_Files {
   }
 
   Source_Files {
@@ -18,9 +27,9 @@ project(*client) : taoclient, valuetype {
 
 project(*server) : taoserver, valuetype {
   after += *client
+  after += *idl
 
   IDL_Files {
-    test.idl
   }
 
   Source_Files {

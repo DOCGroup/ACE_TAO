@@ -12,9 +12,9 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 ACE_INLINE int
 ACE_Service_Config::open (const ACE_TCHAR program_name[],
                           const ACE_TCHAR *logger_key,
-                          int ignore_static_svcs,
-                          int ignore_default_svc_conf,
-                          int ignore_debug_flag)
+                          bool ignore_static_svcs,
+                          bool ignore_default_svc_conf,
+                          bool ignore_debug_flag)
 {
   ACE_TRACE ("ACE_Service_Config::open");
   return ACE_Service_Config::current()->open (program_name,
@@ -29,9 +29,9 @@ ACE_INLINE int
 ACE_Service_Config::open (int argc,
                           ACE_TCHAR *argv[],
                           const ACE_TCHAR *logger_key,
-                          int ignore_static_svcs,
-                          int ignore_default_svc_conf,
-                          int ignore_debug_flag)
+                          bool ignore_static_svcs,
+                          bool ignore_default_svc_conf,
+                          bool ignore_debug_flag)
 {
   ACE_TRACE ("ACE_Service_Config::open");
   return ACE_Service_Config::current()->open (argc,

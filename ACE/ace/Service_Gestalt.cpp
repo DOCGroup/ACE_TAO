@@ -138,7 +138,7 @@ ACE_Service_Type_Dynamic_Guard::~ACE_Service_Type_Dynamic_Guard (void)
   // Lookup without ignoring suspended services. Making sure
   // not to ignore any inactive services, since those may be forward
   // declarations
-  int ret = this->repo_.find_i (this->name_, &tmp, 0);
+  int const ret = this->repo_.find_i (this->name_, &tmp, 0);
 
   // We inserted it (as inactive), so we expect to find it, right?
   if (ret < 0 && ret != -2)
@@ -283,6 +283,7 @@ ACE_Service_Gestalt::ACE_Service_Gestalt (size_t size,
   , svc_queue_ (0)
   , svc_conf_file_queue_ (0)
   , static_svcs_ (0)
+  , processed_static_svcs_ (0)
 {
   (void)this->init_i ();
 
@@ -311,7 +312,6 @@ ACE_Service_Gestalt::init_i (void)
         ACE_Service_Repository::instance (this->svc_repo_size_);
     }
 
-  this->processed_static_svcs_ = 0;
   return 0;
 }
 
@@ -413,7 +413,7 @@ ACE_Service_Gestalt::add_processed_static_svc
   ///
   /// In contrast a "dynamic" directive, when processed through the
   /// overloaded process_directives(string) both creates the SO
-  /// locally and initializes it, where the statis directive must
+  /// locally and initializes it, where the statics directive must
   /// first locate the SO and then calls the init() method. This means
   /// that durig the "static" initialization there's no specific
   /// information about the hosting repository and the gestalt must
@@ -522,7 +522,7 @@ ACE_Service_Gestalt::initialize (const ACE_TCHAR *svc_name,
 #endif
 
   const ACE_Service_Type *srp = 0;
-  for (int i = 0; this->repo_->find (svc_name, &srp) == -1 && i < 2; i++)
+  for (int i = 0; this->find (svc_name, &srp) == -1 && i < 2; i++)
     //  if (this->repo_->find (svc_name, &srp) == -1)
     {
       const ACE_Static_Svc_Descriptor *assd =
@@ -1104,7 +1104,7 @@ ACE_Service_Gestalt::open_i (const ACE_TCHAR /*program_name*/[],
   if (this->init_i () != 0)
     return -1;
 
-  if (ignore_debug_flag == 0)
+  if (!ignore_debug_flag)
     {
       // If -d was included as a startup parameter, the user wants debug
       // information printed during service initialization.
@@ -1134,7 +1134,7 @@ ACE_Service_Gestalt::open_i (const ACE_TCHAR /*program_name*/[],
     // Make sure to save/restore errno properly.
     ACE_Errno_Guard error (errno);
 
-    if (ignore_debug_flag == 0)
+    if (!ignore_debug_flag)
       {
         log_msg->priority_mask (old_process_mask, ACE_Log_Msg::PROCESS);
         log_msg->priority_mask (old_thread_mask, ACE_Log_Msg::THREAD);

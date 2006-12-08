@@ -23,7 +23,7 @@
 #include "tao/PortableServer/ServantActivatorC.h"
 #include "tao/LocalObject.h"
 
-#if (TAO_HAS_MINIMUM_POA == 0)
+#if (TAO_HAS_MINIMUM_POA == 0) && !defined (CORBA_E_COMPACT) && !defined (CORBA_E_MICRO)
 
 #include "orbsvcs/Naming/naming_serv_export.h"
 

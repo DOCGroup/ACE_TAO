@@ -74,7 +74,7 @@ project(CosConcurrency_Skel): orbsvcslib, core, concurrency, portableserver {
   }
 }
 
-project(CosConcurrency_Serv) : orbsvcslib, core, concurrency_skel {
+project(CosConcurrency_Serv) : orbsvcslib, core, concurrency_skel, avoids_corba_e_micro {
   sharedname   = TAO_CosConcurrency_Serv
   dynamicflags = TAO_CONCURRENCY_SERV_BUILD_DLL
   tagchecks   += Concurrency
@@ -88,8 +88,8 @@ project(CosConcurrency_Serv) : orbsvcslib, core, concurrency_skel {
 
   Header_Files {
     Concurrency
-    ^Concurrency/concurrency_export.h
-    ^Concurrency/concurrency_skel_export.h
+    Concurrency/concurrency_export.h
+    Concurrency/concurrency_skel_export.h
   }
 
   Inline_Files {

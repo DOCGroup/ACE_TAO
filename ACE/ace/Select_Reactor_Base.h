@@ -386,7 +386,7 @@ private:
   int unbind (ACE_HANDLE handle,
               map_type::iterator pos,
               ACE_Reactor_Mask mask);
-  
+
   /**
    * @return @c iterator corresponding @c ACE_Event_Handler*
    *         associated with @c ACE_HANDLE.

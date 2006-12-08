@@ -39,7 +39,7 @@ namespace TAO
 
       virtual bool is_servant_activation_allowed (
         PortableServer::Servant servant,
-        int &w);
+        bool &w);
 
       virtual bool allow_multiple_activations (void) const;
 

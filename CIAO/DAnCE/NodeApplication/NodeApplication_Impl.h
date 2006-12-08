@@ -15,7 +15,7 @@
 #define NODEAPPLICATION_IMPL_H
 #include /**/ "ace/pre.h"
 
-#include "ace/config-all.h"
+#include "CIAO_NodeApplication_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -62,7 +62,7 @@ namespace CIAO
   // @@ Gan, as we discussed before can you please wrap this
   // implementation in a namespace Node_Application or whatever to
   // signify that it belongs to another software piece of CIAO?
-  class NodeApplication_Impl
+  class NODEAPPLICATION_Export NodeApplication_Impl
     : public virtual POA_Deployment::NodeApplication
   {
   public:
@@ -86,8 +86,6 @@ namespace CIAO
     virtual ~NodeApplication_Impl (void);
 
     /**
-     * @method finishLaunch
-     *
      * @brief This operation dose 2 things.
      *        1. Get the external connction (facet and Event source)
      *           and connect them to the local receptacle/event sink.
@@ -106,9 +104,6 @@ namespace CIAO
                        Deployment::StartError,
                        Deployment::InvalidConnection));
 
-    /**
-     * @method start
-     */
     virtual void
     start (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
       ACE_THROW_SPEC ((CORBA::SystemException,
@@ -118,25 +113,16 @@ namespace CIAO
      *
      *-----------------------------------------------------------*/
 
-    /**
-     * @method ciao_preactivate
-     */
     virtual void
     ciao_preactivate (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
       ACE_THROW_SPEC ((CORBA::SystemException,
                        Deployment::StartError));
 
-    /**
-     * @method ciao_postactivate
-     */
     virtual void
     ciao_postactivate (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
       ACE_THROW_SPEC ((CORBA::SystemException,
                        Deployment::StartError));
 
-    /**
-     * @method ciao_passivate
-     */
     virtual void
     ciao_passivate (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
       ACE_THROW_SPEC ((CORBA::SystemException,

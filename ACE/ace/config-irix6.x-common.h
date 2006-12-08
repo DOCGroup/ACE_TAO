@@ -77,9 +77,6 @@
 // Compiler/platform contains the <sys/syscall.h> file.
 #define ACE_HAS_SYS_SYSCALL_H
 
-// Compiler/platform supports snprintf
-#define ACE_HAS_SNPRINTF
-
 // Compiler/platform supports alloca()
 // Although ACE does have alloca() on this compiler/platform combination, it is
 // disabled by default since it can be dangerous.  Uncomment the following line
@@ -104,10 +101,6 @@
 // Platform contains <poll.h>.
 #define ACE_HAS_POLL
 
-// No multi-threading so use poll() call
-// - for easier debugging, if nothing else
-// #define ACE_USE_POLL
-
 // Platform supports the /proc file system.
 #define ACE_HAS_PROC_FS
 
@@ -123,11 +116,6 @@
 
 // Platform supports STREAMS.
 #define ACE_HAS_STREAMS
-
-// Platform supports STREAM pipes (note that this is disabled by
-// default, see the manual page on pipe(2) to find out how to enable
-// it).
-// #define ACE_HAS_STREAM_PIPES
 
 // Compiler/platform supports strerror ().
 #define ACE_HAS_STRERROR

@@ -29,8 +29,6 @@ namespace CIAO
                      ::Components::NoKeyAvailable))
   {
     ACE_THROW_RETURN (::Components::NoKeyAvailable (), 0);
-
-    return 0;
   }
 
   CORBA::IRObject_ptr
@@ -67,9 +65,8 @@ namespace CIAO
         this->get_all_facets (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      const CORBA::ULong facet_len = facets->length ();
-      CORBA::ULong i = 0;
-      for (i = 0; i < facet_len; ++i)
+      CORBA::ULong const facet_len = facets->length ();
+      for (CORBA::ULong i = 0; i < facet_len; ++i)
       {
         PortableServer::ObjectId_var facet_id =
           this->container_->the_facet_cons_POA ()->reference_to_id
@@ -94,9 +91,8 @@ namespace CIAO
         this->get_all_consumers (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      const CORBA::ULong consumer_len = consumers->length ();
-      CORBA::ULong j = 0;
-      for (j = 0; j < consumer_len; ++j)
+      CORBA::ULong const consumer_len = consumers->length ();
+      for (CORBA::ULong j = 0; j < consumer_len; ++j)
       {
         PortableServer::ObjectId_var cons_id =
           this->container_->the_facet_cons_POA ()->reference_to_id
@@ -232,13 +228,13 @@ namespace CIAO
                     ::Components::FacetDescriptions,
                     0);
     Components::FacetDescriptions_var safe_retval = retval;
-    CORBA::ULong len = names.length ();
+    CORBA::ULong const len = names.length ();
     safe_retval->length (len);
-    ::Components::FacetDescription *tmp = 0;
 
     for (CORBA::ULong i = 0; i < len; ++i)
       {
-        tmp = this->lookup_facet_description (names[i]);
+        ::Components::FacetDescription *tmp =
+          this->lookup_facet_description (names[i]);
 
         if (0 == tmp)
           {
@@ -302,7 +298,6 @@ namespace CIAO
          iter != this->consumer_table_.end ();
          ++iter, ++i)
       {
-        // ACE_DEBUG ((LM_DEBUG, "EXECUTING \n"));
         ConsumerTable::const_reference entry = *iter;
         retval[i] = entry.second;
       }
@@ -350,13 +345,13 @@ namespace CIAO
                     ::Components::ConsumerDescriptions,
                     0);
     Components::ConsumerDescriptions_var safe_retval = retval;
-    CORBA::ULong len = names.length ();
+    CORBA::ULong const len = names.length ();
     safe_retval->length (len);
-    ::Components::ConsumerDescription *tmp = 0;
 
     for (CORBA::ULong i = 0; i < len; ++i)
       {
-        tmp = this->lookup_consumer_description (names[i]);
+        ::Components::ConsumerDescription *tmp =
+          this->lookup_consumer_description (names[i]);
 
         if (0 == tmp)
           {
@@ -439,7 +434,6 @@ namespace CIAO
   }
 
   /// Protected operations.
-
   void
   Servant_Impl_Base::add_facet (const char *port_name,
                                 ::CORBA::Object_ptr port_ref
@@ -454,20 +448,21 @@ namespace CIAO
 
     ::Components::FacetDescription *fd = 0;
     ACE_NEW (fd,
-             ::OBV_Components::FacetDescription);
+             ::OBV_Components::FacetDescription (
+              port_name,
+              port_ref->_interface_repository_id (),
+              port_ref));
     ::Components::FacetDescription_var safe = fd;
-
-    fd->name (port_name);
-    fd->type_id (port_ref->_interface_repository_id ());
-    fd->facet_ref (port_ref);
 
     FacetTable::value_type entry;
     entry.first = port_name;
     entry.second = safe._retn ();
 
-    ACE_WRITE_GUARD (TAO_SYNCH_MUTEX, mon, this->lock_);
+    {
+      ACE_WRITE_GUARD (TAO_SYNCH_MUTEX, mon, this->lock_);
 
-    (void) this->facet_table_.insert (entry);
+      (void) this->facet_table_.insert (entry);
+    }
   }
 
   CORBA::Object_ptr
@@ -504,15 +499,14 @@ namespace CIAO
       }
 
     ::Components::FacetDescription_var fd;
-    FacetTable::const_iterator iter;
 
     {
       ACE_READ_GUARD_RETURN (TAO_SYNCH_MUTEX,
                              mon,
                              this->lock_,
                              0);
-
-      iter = this->facet_table_.find (port_name);
+      FacetTable::const_iterator iter =
+        this->facet_table_.find (port_name);
 
       if (iter != this->facet_table_.end ())
         {
@@ -543,19 +537,17 @@ namespace CIAO
       safe = rd;
 
       rd->name (receptacle_name);
-      rd->type_id (recept_ref->_interface_repository_id ());
+      rd->type_id ();
       // The receptacle is a multiplex receptacle if and only if a
       // cookie was given.
       rd->is_multiple (cookie != 0);
 
       ::Components::ConnectionDescription *cd = 0;
       ACE_NEW (cd,
-               OBV_Components::ConnectionDescription);
+               OBV_Components::ConnectionDescription (
+                cookie,
+                recept_ref));
       ::Components::ConnectionDescription_var cd_safe = cd;
-
-      cd->ck (cookie);
-      cd->objref (recept_ref);
-
       ::Components::ConnectionDescriptions cds (1);
 
       cds.length (1);
@@ -569,12 +561,10 @@ namespace CIAO
 
       ::Components::ConnectionDescription *cd = 0;
       ACE_NEW (cd,
-               OBV_Components::ConnectionDescription);
+               OBV_Components::ConnectionDescription (
+                cookie,
+                recept_ref));
       ::Components::ConnectionDescription_var cd_safe = cd;
-
-      cd->ck (cookie);
-      cd->objref (recept_ref);
-
       ::Components::ConnectionDescriptions & cds = rd->connections ();
       CORBA::ULong old_length = cds.length ();
       ACE_DEBUG ((LM_DEBUG, "Old length was %d\n", old_length));

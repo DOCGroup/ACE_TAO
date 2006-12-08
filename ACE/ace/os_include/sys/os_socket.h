@@ -27,13 +27,7 @@
 #include "ace/os_include/sys/os_uio.h"
 
 #if !defined (ACE_LACKS_SYS_SOCKET_H)
-#  if defined (ACE_HAS_AIX_BROKEN_SOCKET_HEADER)
-#    undef __cplusplus
-#  endif /* ACE_HAS_AIX_BROKEN_SOCKET_HEADER */
 #  include /**/ <sys/socket.h>
-#  if defined (ACE_HAS_AIX_BROKEN_SOCKET_HEADER)
-#    define __cplusplus
-#  endif /* ACE_HAS_AIX_BROKEN_SOCKET_HEADER */
 #endif /* !ACE_LACKS_SYS_SOCKET_H */
 
 #if defined (ACE_VXWORKS) && (ACE_VXWORKS < 0x620)
@@ -95,13 +89,6 @@ extern "C"
 #if defined (ACE_HAS_4_4BSD_SENDMSG_RECVMSG)
    // Control message size to pass a file descriptor.
 #  define ACE_BSD_CONTROL_MSG_LEN sizeof (struct cmsghdr) + sizeof (ACE_HANDLE)
-#  if defined (ACE_LACKS_CMSG_DATA_MACRO)
-#    if defined (ACE_LACKS_CMSG_DATA_MEMBER)
-#      define CMSG_DATA(cmsg) ((unsigned char *) ((struct cmsghdr *) (cmsg) + 1))
-#    else
-#      define CMSG_DATA(cmsg) ((cmsg)->cmsg_data)
-#    endif /* ACE_LACKS_CMSG_DATA_MEMBER */
-#  endif /* ACE_LACKS_CMSG_DATA_MACRO */
 #endif /* ACE_HAS_4_4BSD_SENDMSG_RECVMSG */
 
 // Increase the range of "address families".  Please note that this

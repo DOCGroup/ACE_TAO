@@ -1,11 +1,13 @@
-#include "tao/PortableServer/RequestProcessingPolicy.h"
-#include "tao/PortableServer/PortableServer.h"
+#include "tao/orbconf.h"
 
 ACE_RCSID (PortableServer,
            RequestProcessingPolicy,
            "$Id$")
 
 #if (TAO_HAS_MINIMUM_POA == 0) && !defined (CORBA_E_COMPACT) && !defined (CORBA_E_MICRO)
+
+#include "tao/PortableServer/RequestProcessingPolicy.h"
+#include "tao/PortableServer/PortableServer.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
