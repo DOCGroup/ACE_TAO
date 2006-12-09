@@ -1,3 +1,8 @@
+Sat Dec  9 19:13:52 UTC 2006  Olli Savia  <ops@iki.fi>
+
+        * ace/config-vxworks5.x.h:
+          Added ACE_LACKS_VSNPRINTF.
+
 Fri Dec  8 20:20:09 UTC 2006  Iliyan Jeliazkov  <iliyan@ociweb.com>
 
         * ace/Service_Config.cpp (parse_args_i):
