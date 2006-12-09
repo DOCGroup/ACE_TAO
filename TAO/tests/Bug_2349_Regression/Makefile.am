@@ -17,14 +17,10 @@ TAO_IDLFLAGS = -Ge 1 -Wb,pre_include=ace/pre.h -Wb,post_include=ace/post.h -I$(T
 TAO_ROOT = $(top_srcdir)
 
 noinst_PROGRAMS =
-CLEANFILES =
-BUILT_SOURCES =
 
-## Makefile.Bug_2349_Regression_Server.am
+## Makefile.Bug_2349_Regression_Idl.am
 
-if BUILD_EXCEPTIONS
-
-BUILT_SOURCES += \
+BUILT_SOURCES = \
   fooC.cpp \
   fooC.h \
   fooC.inl \
@@ -32,7 +28,7 @@ BUILT_SOURCES += \
   fooS.h \
   fooS.inl
 
-CLEANFILES += \
+CLEANFILES = \
   foo-stamp \
   fooC.cpp \
   fooC.h \
@@ -47,6 +43,14 @@ foo-stamp: $(srcdir)/foo.idl $(TAO_IDL_DEP)
 	$(TAO_IDL) $(TAO_IDLFLAGS) -Sa -St $(srcdir)/foo.idl
 	@touch $@
 
+
+noinst_HEADERS = \
+  foo.idl
+
+## Makefile.Bug_2349_Regression_Server.am
+
+if BUILD_EXCEPTIONS
+
 noinst_PROGRAMS += server
 
 server_CPPFLAGS = \
@@ -58,11 +62,7 @@ server_CPPFLAGS = \
 server_SOURCES = \
   fooC.cpp \
   fooS.cpp \
-  server.cpp \
-  fooC.h \
-  fooC.inl \
-  fooS.h \
-  fooS.inl
+  server.cpp
 
 server_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO_PortableServer.la \
@@ -76,27 +76,6 @@ endif BUILD_EXCEPTIONS
 
 if BUILD_EXCEPTIONS
 
-BUILT_SOURCES += \
-  fooC.cpp \
-  fooC.h \
-  fooC.inl \
-  fooS.h \
-  fooS.inl
-
-CLEANFILES += \
-  foo-stamp \
-  fooC.cpp \
-  fooC.h \
-  fooC.inl \
-  fooS.h \
-  fooS.inl
-
-fooC.cpp fooC.h fooC.inl fooS.h fooS.inl: foo-stamp
-
-foo-stamp: $(srcdir)/foo.idl $(TAO_IDL_DEP)
-	$(TAO_IDL) $(TAO_IDLFLAGS) -Sa -St $(srcdir)/foo.idl
-	@touch $@
-
 noinst_PROGRAMS += client
 
 client_CPPFLAGS = \
@@ -107,11 +86,7 @@ client_CPPFLAGS = \
 
 client_SOURCES = \
   client.cpp \
-  fooC.cpp \
-  fooC.h \
-  fooC.inl \
-  fooS.h \
-  fooS.inl
+  fooC.cpp
 
 client_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO.la \
