@@ -67,6 +67,8 @@ server_CPPFLAGS = \
   -I$(TAO_BUILDDIR)
 
 server_SOURCES = \
+  TestC.cpp \
+  TestS.cpp \
   server.cpp
 
 server_LDADD = \
@@ -96,6 +98,8 @@ client_CPPFLAGS = \
   -I$(TAO_BUILDDIR)
 
 client_SOURCES = \
+  TestC.cpp \
+  TestS.cpp \
   client.cpp
 
 client_LDADD = \
