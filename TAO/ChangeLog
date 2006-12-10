@@ -1,3 +1,13 @@
+Sun Dec 10 00:33:57 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * tests/Bug_1670/Regression/Makefile.am:
+
+          Regenerated.
+
+        * tests/Bug_1670/Regression/Bug_1670_Regression.mpc:
+
+          Add generated source files to MPC Source_Files section.
+
 Sat Dec  9 23:18:53 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* tests/Bug_1495_Regression/Makefile.am:

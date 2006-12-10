@@ -13,6 +13,10 @@ project(*Server): taoserver, amh {
   Source_Files {
     server.cpp
   }
+  Source_Files {
+    TestC.cpp
+    TestS.cpp
+  }
   IDL_Files {
   }
 }
@@ -23,6 +27,10 @@ project(*Client): taoserver, amh {
   after += *Server
   Source_Files {
     client.cpp
+  }
+  Source_Files {
+    TestC.cpp
+    TestS.cpp
   }
   IDL_Files {
   }
