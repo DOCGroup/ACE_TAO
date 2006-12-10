@@ -17,14 +17,10 @@ TAO_IDLFLAGS = -Ge 1 -Wb,pre_include=ace/pre.h -Wb,post_include=ace/post.h -I$(T
 TAO_ROOT = $(top_srcdir)
 
 noinst_PROGRAMS =
-CLEANFILES =
-BUILT_SOURCES =
 
-## Makefile.Two_Objects_Server.am
+## Makefile.Two_Objects_Idl.am
 
-if BUILD_EXCEPTIONS
-
-BUILT_SOURCES += \
+BUILT_SOURCES = \
   Two_ObjectsC.cpp \
   Two_ObjectsC.h \
   Two_ObjectsC.inl \
@@ -32,7 +28,7 @@ BUILT_SOURCES += \
   Two_ObjectsS.h \
   Two_ObjectsS.inl
 
-CLEANFILES += \
+CLEANFILES = \
   Two_Objects-stamp \
   Two_ObjectsC.cpp \
   Two_ObjectsC.h \
@@ -44,8 +40,16 @@ CLEANFILES += \
 Two_ObjectsC.cpp Two_ObjectsC.h Two_ObjectsC.inl Two_ObjectsS.cpp Two_ObjectsS.h Two_ObjectsS.inl: Two_Objects-stamp
 
 Two_Objects-stamp: $(srcdir)/Two_Objects.idl $(TAO_IDL_DEP)
-	$(TAO_IDL) $(TAO_IDLFLAGS) $(srcdir)/Two_Objects.idl
+	$(TAO_IDL) $(TAO_IDLFLAGS) -Sa -St $(srcdir)/Two_Objects.idl
 	@touch $@
+
+
+noinst_HEADERS = \
+  Two_Objects.idl
+
+## Makefile.Two_Objects_Server.am
+
+if BUILD_EXCEPTIONS
 
 noinst_PROGRAMS += server
 
@@ -66,10 +70,6 @@ server_SOURCES = \
   First_i.h \
   Object_Factory_i.h \
   Second_i.h \
-  Two_ObjectsC.h \
-  Two_ObjectsC.inl \
-  Two_ObjectsS.h \
-  Two_ObjectsS.inl \
   worker.h
 
 server_LDADD = \
@@ -84,27 +84,6 @@ endif BUILD_EXCEPTIONS
 
 if BUILD_EXCEPTIONS
 
-BUILT_SOURCES += \
-  Two_ObjectsC.cpp \
-  Two_ObjectsC.h \
-  Two_ObjectsC.inl \
-  Two_ObjectsS.h \
-  Two_ObjectsS.inl
-
-CLEANFILES += \
-  Two_Objects-stamp \
-  Two_ObjectsC.cpp \
-  Two_ObjectsC.h \
-  Two_ObjectsC.inl \
-  Two_ObjectsS.h \
-  Two_ObjectsS.inl
-
-Two_ObjectsC.cpp Two_ObjectsC.h Two_ObjectsC.inl Two_ObjectsS.h Two_ObjectsS.inl: Two_Objects-stamp
-
-Two_Objects-stamp: $(srcdir)/Two_Objects.idl $(TAO_IDL_DEP)
-	$(TAO_IDL) $(TAO_IDLFLAGS) $(srcdir)/Two_Objects.idl
-	@touch $@
-
 noinst_PROGRAMS += client
 
 client_CPPFLAGS = \
@@ -116,10 +95,10 @@ client_CPPFLAGS = \
 client_SOURCES = \
   Two_ObjectsC.cpp \
   client.cpp \
-  Two_ObjectsC.h \
-  Two_ObjectsC.inl \
-  Two_ObjectsS.h \
-  Two_ObjectsS.inl
+  First_i.h \
+  Object_Factory_i.h \
+  Second_i.h \
+  worker.h
 
 client_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO_AnyTypeCode.la \

@@ -17,14 +17,10 @@ TAO_IDLFLAGS = -Ge 1 -Wb,pre_include=ace/pre.h -Wb,post_include=ace/post.h -I$(T
 TAO_ROOT = $(top_srcdir)
 
 noinst_PROGRAMS =
-CLEANFILES =
-BUILT_SOURCES =
 
-## Makefile.UNKNOWN_Exception_Server.am
+## Makefile.UNKNOWN_Exception_Idl.am
 
-if BUILD_EXCEPTIONS
-
-BUILT_SOURCES += \
+BUILT_SOURCES = \
   testC.cpp \
   testC.h \
   testC.inl \
@@ -32,7 +28,7 @@ BUILT_SOURCES += \
   testS.h \
   testS.inl
 
-CLEANFILES += \
+CLEANFILES = \
   test-stamp \
   testC.cpp \
   testC.h \
@@ -44,8 +40,16 @@ CLEANFILES += \
 testC.cpp testC.h testC.inl testS.cpp testS.h testS.inl: test-stamp
 
 test-stamp: $(srcdir)/test.idl $(TAO_IDL_DEP)
-	$(TAO_IDL) $(TAO_IDLFLAGS) $(srcdir)/test.idl
+	$(TAO_IDL) $(TAO_IDLFLAGS) -Sa -St $(srcdir)/test.idl
 	@touch $@
+
+
+noinst_HEADERS = \
+  test.idl
+
+## Makefile.UNKNOWN_Exception_Server.am
+
+if BUILD_EXCEPTIONS
 
 noinst_PROGRAMS += server
 
@@ -58,11 +62,7 @@ server_CPPFLAGS = \
 server_SOURCES = \
   server.cpp \
   testC.cpp \
-  testS.cpp \
-  testC.h \
-  testC.inl \
-  testS.h \
-  testS.inl
+  testS.cpp
 
 server_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO_PortableServer.la \
@@ -76,27 +76,6 @@ endif BUILD_EXCEPTIONS
 
 if BUILD_EXCEPTIONS
 
-BUILT_SOURCES += \
-  testC.cpp \
-  testC.h \
-  testC.inl \
-  testS.h \
-  testS.inl
-
-CLEANFILES += \
-  test-stamp \
-  testC.cpp \
-  testC.h \
-  testC.inl \
-  testS.h \
-  testS.inl
-
-testC.cpp testC.h testC.inl testS.h testS.inl: test-stamp
-
-test-stamp: $(srcdir)/test.idl $(TAO_IDL_DEP)
-	$(TAO_IDL) $(TAO_IDLFLAGS) $(srcdir)/test.idl
-	@touch $@
-
 noinst_PROGRAMS += client
 
 client_CPPFLAGS = \
@@ -107,11 +86,7 @@ client_CPPFLAGS = \
 
 client_SOURCES = \
   client.cpp \
-  testC.cpp \
-  testC.h \
-  testC.inl \
-  testS.h \
-  testS.inl
+  testC.cpp
 
 client_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO_AnyTypeCode.la \
