@@ -1,3 +1,13 @@
+Sun Dec 10 01:36:17 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * tests/Bug_2234_Regression/Makefile.am:
+
+          Regenerated.
+
+        * tests/Bug_2234_Regression/Bug_2234_Regression.mpc
+
+          Changed to inherit from anytypecode.
+
 Sun Dec 10 00:33:57 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
 
         * tests/Bug_1670/Regression/Makefile.am:
@@ -10,43 +20,43 @@ Sun Dec 10 00:33:57 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
 
 Sat Dec  9 23:18:53 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* tests/Bug_1495_Regression/Makefile.am:
-	* tests/Bug_1551_Regression/Makefile.am:
-	* tests/Bug_1568_Regression/Makefile.am:
-	* tests/Bug_1627_Regression/Makefile.am:
-	* tests/Bug_1670_Regression/Makefile.am:
-	* tests/Bug_1676_Regression/Makefile.am:
-	* tests/Bug_1869_Regression/Makefile.am:
-	* tests/Bug_2174_Regression/Makefile.am:
-	* tests/Bug_2183_Regression/Makefile.am:
-	* tests/Bug_2186_Regression/Makefile.am:
-	* tests/Bug_2188_Regression/Makefile.am:
-	* tests/Bug_2234_Regression/Makefile.am:
-	* tests/Bug_2289_Regression/Makefile.am:
-	* tests/Bug_2328_Regression/Makefile.am:
-	* tests/Bug_2349_Regression/Makefile.am:
-	* tests/Bug_2429_Regression/Makefile.am:
-	* tests/Bug_2494_Regression/Makefile.am:
+        * tests/Bug_1495_Regression/Makefile.am:
+        * tests/Bug_1551_Regression/Makefile.am:
+        * tests/Bug_1568_Regression/Makefile.am:
+        * tests/Bug_1627_Regression/Makefile.am:
+        * tests/Bug_1670_Regression/Makefile.am:
+        * tests/Bug_1676_Regression/Makefile.am:
+        * tests/Bug_1869_Regression/Makefile.am:
+        * tests/Bug_2174_Regression/Makefile.am:
+        * tests/Bug_2183_Regression/Makefile.am:
+        * tests/Bug_2186_Regression/Makefile.am:
+        * tests/Bug_2188_Regression/Makefile.am:
+        * tests/Bug_2234_Regression/Makefile.am:
+        * tests/Bug_2289_Regression/Makefile.am:
+        * tests/Bug_2328_Regression/Makefile.am:
+        * tests/Bug_2349_Regression/Makefile.am:
+        * tests/Bug_2429_Regression/Makefile.am:
+        * tests/Bug_2494_Regression/Makefile.am:
 
           Regenerated.
 
-       	* tests/Bug_1495_Regression/Bug_1495.mpc:
-	* tests/Bug_1551_Regression/Bug_1551_Regression.mpc:
-	* tests/Bug_1568_Regression/Bug_1568_Regression.mpc:
-	* tests/Bug_1627_Regression/Bug_1627_Regression.mpc:
-	* tests/Bug_1670_Regression/Bug_1670_Regression.mpc:
-	* tests/Bug_1676_Regression/Bug_1676_Regression.mpc:
-	* tests/Bug_1869_Regression/Bug_1869_Regression.mpc:
-	* tests/Bug_2174_Regression/Bug_2174_Regression.mpc:
-	* tests/Bug_2183_Regression/Bug_2183_Regression.mpc:
-	* tests/Bug_2186_Regression/Bug_2186_Regression.mpc:
-	* tests/Bug_2188_Regression/broken.mpc:
-	* tests/Bug_2234_Regression/Bug_2234_Regression.mpc:
-	* tests/Bug_2289_Regression/Bug_2289_Regression.mpc:
-	* tests/Bug_2328_Regression/Bug_2328_Regression.mpc:
-	* tests/Bug_2349_Regression/Bug_2349_Regression.mpc:
-	* tests/Bug_2429_Regression/Bug_2429_Regression.mpc:
-	* tests/Bug_2494_Regression/Bug_2494_Regression.mpc:
+        * tests/Bug_1495_Regression/Bug_1495.mpc:
+        * tests/Bug_1551_Regression/Bug_1551_Regression.mpc:
+        * tests/Bug_1568_Regression/Bug_1568_Regression.mpc:
+        * tests/Bug_1627_Regression/Bug_1627_Regression.mpc:
+        * tests/Bug_1670_Regression/Bug_1670_Regression.mpc:
+        * tests/Bug_1676_Regression/Bug_1676_Regression.mpc:
+        * tests/Bug_1869_Regression/Bug_1869_Regression.mpc:
+        * tests/Bug_2174_Regression/Bug_2174_Regression.mpc:
+        * tests/Bug_2183_Regression/Bug_2183_Regression.mpc:
+        * tests/Bug_2186_Regression/Bug_2186_Regression.mpc:
+        * tests/Bug_2188_Regression/broken.mpc:
+        * tests/Bug_2234_Regression/Bug_2234_Regression.mpc:
+        * tests/Bug_2289_Regression/Bug_2289_Regression.mpc:
+        * tests/Bug_2328_Regression/Bug_2328_Regression.mpc:
+        * tests/Bug_2349_Regression/Bug_2349_Regression.mpc:
+        * tests/Bug_2429_Regression/Bug_2429_Regression.mpc:
+        * tests/Bug_2494_Regression/Bug_2494_Regression.mpc:
 
           Split out IDL compilation into separate MPC project.
 
