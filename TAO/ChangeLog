@@ -1,3 +1,55 @@
+Sun Dec 10 20:43:26 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* tests/Bug_2503_Regression/Makefile.am:
+	* tests/Bug_2560_Regression/Makefile.am:
+	* tests/Bug_2593_Regression/Makefile.am:
+	* tests/Bug_2595_Regression/Makefile.am:
+	* tests/Bug_2683_Regression/Makefile.am:
+	* tests/Cache_Growth_Test/Makefile.am:
+	* tests/CallbackTest/Makefile.am:
+	* tests/Client_Leaks/Makefile.am:
+	* tests/CodeSets/simple/Makefile.am:
+	* tests/Connect_Strategy_Test/Makefile.am:
+	* tests/Connection_Purging/Makefile.am:
+	* tests/Crash_On_Write/Makefile.am:
+	* tests/Crashed_Callback/Makefile.am:
+	* tests/Strategies/Makefile.am:
+	* tests/Timed_Buffered_Oneways/Makefile.am:
+	* tests/Two_Objects/Makefile.am:
+	* tests/Typedef_String_Array/Makefile.am:
+	* tests/UNKNOWN_Exception/Makefile.am:
+
+          Regenerated.
+
+	* tests/Bug_2503_Regression/Bug_2503_Regression.mpc:
+	* tests/Bug_2560_Regression/Bug_2560_Regression.mpc:
+	* tests/Bug_2593_Regression/Bug_2593_Regression.mpc:
+	* tests/Bug_2595_Regression/Bug_2595_Regression.mpc:
+	* tests/Bug_2683_Regression/IORTable.mpc:
+	* tests/Cache_Growth_Test/Cache_Growth_Test.mpc:
+	* tests/CallbackTest/CallbackTest.mpc:
+	* tests/Client_Leaks/Client_Leaks.mpc:
+	* tests/CodeSets/simple/CodeSets_simple.mpc:
+	* tests/Connect_Strategy_Test/Connect_Strategy_Test.mpc:
+	* tests/Connection_Purging/Connection_Purging.mpc:
+	* tests/Crash_On_Write/Crash_On_Write.mpc:
+	* tests/Crashed_Callback/Crashed_Callback.mpc:
+	* tests/Strategies/Strategies.mpc:
+	* tests/Timed_Buffered_Oneways/Timed_Buffered_Oneways.mpc:
+	* tests/Two_Objects/Two_Objects.mpc:
+	* tests/Typedef_String_Array/typedef_string_array.mpc:
+	* tests/UNKNOWN_Exception/UNKNOWN_Exception.mpc:
+
+          Split out IDL compilation into separate MPC project.
+
+	* tests/Bug_2186_Regression/Makefile.am:
+
+          Regenerated.
+
+       	* tests/Bug_2186_Regression/Bug_2186_Regression.mpc:
+
+          Add empty IDL_Files sections to Client and Server projects.
+
 Sun Dec 10 01:36:17 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
 
         * tests/Bug_2234_Regression/Makefile.am:

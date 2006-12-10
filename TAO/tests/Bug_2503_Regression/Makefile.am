@@ -17,16 +17,14 @@ TAO_IDLFLAGS = -Ge 1 -Wb,pre_include=ace/pre.h -Wb,post_include=ace/post.h -I$(T
 TAO_ROOT = $(top_srcdir)
 
 noinst_PROGRAMS =
-CLEANFILES =
-BUILT_SOURCES =
 
-## Makefile.Bug_2503_Regression_Server.am
+## Makefile.Bug_2503_Regression_Idl.am
 
 if BUILD_AMI
 if BUILD_CORBA_MESSAGING
 if BUILD_EXCEPTIONS
 
-BUILT_SOURCES += \
+BUILT_SOURCES = \
   TestC.cpp \
   TestC.h \
   TestC.inl \
@@ -34,7 +32,7 @@ BUILT_SOURCES += \
   TestS.h \
   TestS.inl
 
-CLEANFILES += \
+CLEANFILES = \
   Test-stamp \
   TestC.cpp \
   TestC.h \
@@ -48,6 +46,20 @@ TestC.cpp TestC.h TestC.inl TestS.cpp TestS.h TestS.inl: Test-stamp
 Test-stamp: $(srcdir)/Test.idl $(TAO_IDL_DEP)
 	$(TAO_IDL) $(TAO_IDLFLAGS) -GC $(srcdir)/Test.idl
 	@touch $@
+
+
+noinst_HEADERS = \
+  Test.idl
+
+endif BUILD_EXCEPTIONS
+endif BUILD_CORBA_MESSAGING
+endif BUILD_AMI
+
+## Makefile.Bug_2503_Regression_Server.am
+
+if BUILD_AMI
+if BUILD_CORBA_MESSAGING
+if BUILD_EXCEPTIONS
 
 noinst_PROGRAMS += server
 
@@ -63,10 +75,6 @@ server_SOURCES = \
   common.cpp \
   server.cpp \
   test_i.cpp \
-  TestC.h \
-  TestC.inl \
-  TestS.h \
-  TestS.inl \
   common.h \
   test_i.h
 
@@ -90,29 +98,6 @@ if BUILD_AMI
 if BUILD_CORBA_MESSAGING
 if BUILD_EXCEPTIONS
 
-BUILT_SOURCES += \
-  TestC.cpp \
-  TestC.h \
-  TestC.inl \
-  TestS.cpp \
-  TestS.h \
-  TestS.inl
-
-CLEANFILES += \
-  Test-stamp \
-  TestC.cpp \
-  TestC.h \
-  TestC.inl \
-  TestS.cpp \
-  TestS.h \
-  TestS.inl
-
-TestC.cpp TestC.h TestC.inl TestS.cpp TestS.h TestS.inl: Test-stamp
-
-Test-stamp: $(srcdir)/Test.idl $(TAO_IDL_DEP)
-	$(TAO_IDL) $(TAO_IDLFLAGS) -GC $(srcdir)/Test.idl
-	@touch $@
-
 noinst_PROGRAMS += client
 
 client_CPPFLAGS = \
@@ -127,10 +112,6 @@ client_SOURCES = \
   client.cpp \
   common.cpp \
   test_i.cpp \
-  TestC.h \
-  TestC.inl \
-  TestS.h \
-  TestS.inl \
   common.h \
   test_i.h
 

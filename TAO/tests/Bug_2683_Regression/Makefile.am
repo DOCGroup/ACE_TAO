@@ -17,14 +17,10 @@ TAO_IDLFLAGS = -Ge 1 -Wb,pre_include=ace/pre.h -Wb,post_include=ace/post.h -I$(T
 TAO_ROOT = $(top_srcdir)
 
 noinst_PROGRAMS =
-CLEANFILES =
-BUILT_SOURCES =
 
-## Makefile.IORTable_Server.am
+## Makefile.IORTable_Idl.am
 
-if BUILD_EXCEPTIONS
-
-BUILT_SOURCES += \
+BUILT_SOURCES = \
   TestC.cpp \
   TestC.h \
   TestC.inl \
@@ -32,7 +28,7 @@ BUILT_SOURCES += \
   TestS.h \
   TestS.inl
 
-CLEANFILES += \
+CLEANFILES = \
   Test-stamp \
   TestC.cpp \
   TestC.h \
@@ -47,6 +43,14 @@ Test-stamp: $(srcdir)/Test.idl $(TAO_IDL_DEP)
 	$(TAO_IDL) $(TAO_IDLFLAGS) -Sa -St $(srcdir)/Test.idl
 	@touch $@
 
+
+noinst_HEADERS = \
+  Test.idl
+
+## Makefile.IORTable_Server.am
+
+if BUILD_EXCEPTIONS
+
 noinst_PROGRAMS += server
 
 server_CPPFLAGS = \
@@ -60,10 +64,6 @@ server_SOURCES = \
   TestS.cpp \
   server.cpp \
   test_i.cpp \
-  TestC.h \
-  TestC.inl \
-  TestS.h \
-  TestS.inl \
   test_i.h
 
 server_LDADD = \
@@ -79,27 +79,6 @@ endif BUILD_EXCEPTIONS
 
 if BUILD_EXCEPTIONS
 
-BUILT_SOURCES += \
-  TestC.cpp \
-  TestC.h \
-  TestC.inl \
-  TestS.h \
-  TestS.inl
-
-CLEANFILES += \
-  Test-stamp \
-  TestC.cpp \
-  TestC.h \
-  TestC.inl \
-  TestS.h \
-  TestS.inl
-
-TestC.cpp TestC.h TestC.inl TestS.h TestS.inl: Test-stamp
-
-Test-stamp: $(srcdir)/Test.idl $(TAO_IDL_DEP)
-	$(TAO_IDL) $(TAO_IDLFLAGS) -Sa -St $(srcdir)/Test.idl
-	@touch $@
-
 noinst_PROGRAMS += client
 
 client_CPPFLAGS = \
@@ -111,10 +90,7 @@ client_CPPFLAGS = \
 client_SOURCES = \
   TestC.cpp \
   client.cpp \
-  TestC.h \
-  TestC.inl \
-  TestS.h \
-  TestS.inl
+  test_i.h
 
 client_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO.la \
