@@ -20,6 +20,8 @@ noinst_PROGRAMS =
 
 ## Makefile.Bug_2234_Regression_Idl.am
 
+if BUILD_EXCEPTIONS
+
 BUILT_SOURCES = \
   TestC.cpp \
   TestC.h \
@@ -40,12 +42,14 @@ CLEANFILES = \
 TestC.cpp TestC.h TestC.inl TestS.cpp TestS.h TestS.inl: Test-stamp
 
 Test-stamp: $(srcdir)/Test.idl $(TAO_IDL_DEP)
-	$(TAO_IDL) $(TAO_IDLFLAGS) -Sa -St $(srcdir)/Test.idl
+	$(TAO_IDL) $(TAO_IDLFLAGS) $(srcdir)/Test.idl
 	@touch $@
 
 
 noinst_HEADERS = \
   Test.idl
+
+endif BUILD_EXCEPTIONS
 
 ## Makefile.Bug_2234_Regression_Client.am
 
