@@ -1,7 +1,15 @@
 // -*- MPC -*-
 // $Id$
 
+project(*idl): taoidldefaults {
+  IDL_Files {
+    Two_Objects.idl
+  }
+  custom_only = 1
+}
+
 project(*Server): taoserver {
+  after += *idl
   Source_Files {
     worker.cpp
     First_i.cpp
@@ -9,13 +17,24 @@ project(*Server): taoserver {
     Object_Factory_i.cpp
     server.cpp
   }
+  Source_Files {
+    Two_ObjectsC.cpp
+    Two_ObjectsS.cpp
+  }
+  IDL_Files {
+  }
 }
 
 project(*Client): taoclient, anytypecode {
+  after += *idl
   after += *Server
   Source_Files {
-    Two_ObjectsC.cpp
     client.cpp
+  }
+  Source_Files {
+    Two_ObjectsC.cpp
+  }
+  IDL_Files {
   }
 }
 

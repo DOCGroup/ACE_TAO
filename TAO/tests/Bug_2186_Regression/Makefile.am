@@ -51,29 +51,6 @@ noinst_HEADERS = \
 
 if BUILD_EXCEPTIONS
 
-BUILT_SOURCES += \
-  TestC.cpp \
-  TestC.h \
-  TestC.inl \
-  TestS.cpp \
-  TestS.h \
-  TestS.inl
-
-CLEANFILES += \
-  Test-stamp \
-  TestC.cpp \
-  TestC.h \
-  TestC.inl \
-  TestS.cpp \
-  TestS.h \
-  TestS.inl
-
-TestC.cpp TestC.h TestC.inl TestS.cpp TestS.h TestS.inl: Test-stamp
-
-Test-stamp: $(srcdir)/Test.idl $(TAO_IDL_DEP)
-	$(TAO_IDL) $(TAO_IDLFLAGS) $(srcdir)/Test.idl
-	@touch $@
-
 noinst_PROGRAMS += server
 
 server_CPPFLAGS = \
@@ -87,11 +64,7 @@ server_SOURCES = \
   TestC.cpp \
   TestS.cpp \
   server.cpp \
-  Hello.h \
-  TestC.h \
-  TestC.inl \
-  TestS.h \
-  TestS.inl
+  Hello.h
 
 server_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO_Strategies.la \
@@ -106,29 +79,6 @@ endif BUILD_EXCEPTIONS
 
 if BUILD_EXCEPTIONS
 
-BUILT_SOURCES += \
-  TestC.cpp \
-  TestC.h \
-  TestC.inl \
-  TestS.cpp \
-  TestS.h \
-  TestS.inl
-
-CLEANFILES += \
-  Test-stamp \
-  TestC.cpp \
-  TestC.h \
-  TestC.inl \
-  TestS.cpp \
-  TestS.h \
-  TestS.inl
-
-TestC.cpp TestC.h TestC.inl TestS.cpp TestS.h TestS.inl: Test-stamp
-
-Test-stamp: $(srcdir)/Test.idl $(TAO_IDL_DEP)
-	$(TAO_IDL) $(TAO_IDLFLAGS) $(srcdir)/Test.idl
-	@touch $@
-
 noinst_PROGRAMS += client
 
 client_CPPFLAGS = \
@@ -142,11 +92,7 @@ client_SOURCES = \
   TestC.cpp \
   TestS.cpp \
   client.cpp \
-  Hello.h \
-  TestC.h \
-  TestC.inl \
-  TestS.h \
-  TestS.inl
+  Hello.h
 
 client_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO_Strategies.la \

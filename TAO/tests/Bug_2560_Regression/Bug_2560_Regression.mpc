@@ -1,20 +1,38 @@
 // -*- MPC -*-
 // $Id$
 
+project(*idl): taoidldefaults {
+  IDL_Files {
+    Quoter.idl
+  }
+  custom_only = 1
+}
+
 project(*client) : taoclient {
+  after += *idl
   after += *Server
   exename = client
   source_files {
-    QuoterC.cpp
     client.cpp
+  }
+  source_files {
+    QuoterC.cpp
+  }
+  IDL_Files {
   }
 }
 
 project(*server) : taoserver {
-  idlflags += -Sa -St
+  after += *idl
   source_files {
     server.cpp
     Stock_Factory_i.cpp
     Stock_i.cpp
+  }
+  source_files {
+    QuoterC.cpp
+    QuoterS.cpp
+  }
+  IDL_Files {
   }
 }
