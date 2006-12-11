@@ -1,3 +1,11 @@
+Mon Dec 11 17:39:46 UTC 2006  James H. Hill  <hillj@isis.vanderbilt.edu>
+
+        * docs/ace_guidelines.vsmacros:
+
+          Fixed macros specification so the same file can be used
+          with both VS.NET 2003 and VS.NET 2005 development
+          environments.
+
 Mon Dec 11 15:23:08 UTC 2006  Chad Elliott  <elliott_c@ociweb.com>
 
         * bin/MakeProjectCreator/config/MPC.cfg:
