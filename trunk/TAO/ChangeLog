@@ -1,3 +1,13 @@
+Mon Dec 11 21:38:29 UTC 2006  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * tests/Bug_2683_Regression/client.cpp:
+        * tests/Bug_2683_Regression/run_test.pl:
+
+          This test requires a host name to plug into the corbaloc string.
+          For VxWorks testing, only the server side runs on the target,
+          the client runs on the test-driver host. For this reason,
+          "localhost" is unacceptable for use as a hostname.
+
 Sun Dec 10 20:43:26 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* tests/Bug_2503_Regression/Makefile.am:
