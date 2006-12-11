@@ -1101,9 +1101,9 @@ handle_es_consumer_connection (
     }
 
   // consumer ID
-  ACE_CString cid (connection.endpointInstanceName.in ());
+  ACE_CString cid (connection.instanceName.in ());
   cid += "_";
-  cid += connection.endpointPortName.in ();
+  cid += connection.portName.in ();
   cid += "_consumer";
 
   if (add_connection)
