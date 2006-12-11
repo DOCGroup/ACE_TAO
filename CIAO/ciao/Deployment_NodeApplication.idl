@@ -6,6 +6,7 @@
 #include "Deployment_Application.idl"
 #include "Deployment_Core.idl"
 #include "Deployment_Container.idl"
+#include "Deployment_Events.idl"
 
 // *************** Packaging and Deployment ***************
 module Deployment
@@ -61,7 +62,11 @@ module Deployment
     /// This operation will create one or more CIAO_Event_Service objects
     /// within the NodeApplication, which will be used to mediate the
     /// communication of CCM events
-    CIAO_Event_Services install_es (in ESInstallationInfos es_infos)
+    //CIAO_Event_Services install_es (in ESInstallationInfo es_info)
+    //  raises (InstallationFailure);
+
+    CIAO::CIAO_Event_Service install_es (
+      in CIAO::DAnCE::EventServiceDeploymentDescription es_info)
       raises (InstallationFailure);
 
     /// CIAO specific extensions

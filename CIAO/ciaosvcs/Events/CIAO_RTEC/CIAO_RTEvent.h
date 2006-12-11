@@ -28,6 +28,11 @@
 #include "orbsvcs/orbsvcs/Event_Utilities.h"
 #include "orbsvcs/orbsvcs/Event/EC_Event_Channel.h"
 #include "orbsvcs/orbsvcs/Event/EC_Default_Factory.h"
+#include "orbsvcs/Event/ECG_Mcast_EH.h"
+#include "orbsvcs/Event/ECG_UDP_Sender.h"
+#include "orbsvcs/Event/ECG_UDP_Receiver.h"
+#include "orbsvcs/Event/ECG_UDP_Out_Endpoint.h"
+#include "orbsvcs/Event/ECG_UDP_EH.h"
 #include "ace/Hash_Map_Manager.h"
 
 namespace CIAO
@@ -44,12 +49,14 @@ namespace CIAO
    *         first time initialized.
    */
   class CIAO_RTEVENT_Export RTEventService :
-    public virtual EventServiceBase
+    public virtual EventServiceBase,
+    public virtual POA_CIAO::CIAO_RT_Event_Service
   {
   public:
 
     RTEventService (CORBA::ORB_ptr orb,
-                    PortableServer::POA_ptr poa);
+                    PortableServer::POA_ptr poa,
+                    const char * ec_name);
 
     virtual ~RTEventService (void);
 
@@ -94,11 +101,46 @@ namespace CIAO
       ACE_THROW_SPEC ((
         CORBA::SystemException));
 
+    virtual void ciao_push_event (
+        Components::EventBase * evt,
+        const char * source_id,
+        CORBA::TypeCode_ptr tc
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+      ACE_THROW_SPEC ((
+        ::CORBA::SystemException,
+        ::Components::BadEventType));
+
+    virtual ::CORBA::Boolean create_addr_serv (
+        const char * name,
+        ::CORBA::UShort port,
+        const char * address
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+      ACE_THROW_SPEC ((
+        ::CORBA::SystemException));
+
+    virtual ::CORBA::Boolean create_sender (
+        const char * addr_serv_id
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+      ACE_THROW_SPEC ((
+        ::CORBA::SystemException));
+
+    virtual ::CORBA::Boolean create_receiver (
+        const char * addr_serv_id,
+        ::CORBA::Boolean is_multicast,
+        ::CORBA::UShort listen_port
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+      ACE_THROW_SPEC ((
+        ::CORBA::SystemException));
+
+    virtual ::RtecEventChannelAdmin::EventChannel_ptr tao_rt_event_channel (
+        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
+      )
+      ACE_THROW_SPEC ((::CORBA::SystemException));
+
   private:
     // @@ (GD) This is the place where use could provide a parameter
     //         which specifies the event channel service configuration file.
-    void create_rt_event_channel (
-        ACE_ENV_SINGLE_ARG_DECL)
+    void create_rt_event_channel (const char * ec_name)
       ACE_THROW_SPEC ((
         CORBA::SystemException));
 
@@ -118,27 +160,15 @@ namespace CIAO
     RtecEventChannelAdmin::EventChannel_var rt_event_channel_;
 
     /**
-     * @var RtecEventComm::EventType type_id_
+     * @var ACE_Hash_Map_Manager<> proxy_supplier_map_
      *
-     * The type of event.
+     * Mapping of each event sink to a proxy supplier for disconnect purposes.
      */
-    RtecEventComm::EventType type_id_;
-
-    /**
-     * @var RtecEventComm::EventSourceID source_id_
-     * @@@ Need to change this into a map, since multiple sources
-     * could be connected to the event channel.
-     *
-     * The supplier id.
-     */
-    RtecEventComm::EventSourceID source_id_;
-
-    /**
-     * @var RtecEventChannelAdmin::ProxyPushConsumer_var proxy_consumer_
-     *
-     * The proxy consumer to which events are pushed.
-     */
-    RtecEventChannelAdmin::ProxyPushConsumer_var proxy_consumer_;
+    ACE_Hash_Map_Manager_Ex<ACE_CString,
+                            RtecEventChannelAdmin::ProxyPushConsumer_var,
+                            ACE_Hash<ACE_CString>,
+                            ACE_Equal_To<ACE_CString>,
+                            ACE_Null_Mutex> proxy_consumer_map_;
 
     /**
      * @var ACE_Hash_Map_Manager<> proxy_supplier_map_
@@ -146,10 +176,22 @@ namespace CIAO
      * Mapping of each event sink to a proxy supplier for disconnect purposes.
      */
     ACE_Hash_Map_Manager_Ex<ACE_CString,
-                            RtecEventChannelAdmin::ProxyPushSupplier_ptr,
+                            RtecEventChannelAdmin::ProxyPushSupplier_var,
                             ACE_Hash<ACE_CString>,
                             ACE_Equal_To<ACE_CString>,
                             ACE_Null_Mutex> proxy_supplier_map_;
+
+    /**
+     * @var ACE_Hash_Map_Manager<> addr_serv_map_
+     *
+     * A map which managers a set of address servers for event channel
+     * federation purpose.
+     */
+    ACE_Hash_Map_Manager_Ex<ACE_CString,
+                            RtecUDPAdmin::AddrServer_var,
+                            ACE_Hash<ACE_CString>,
+                            ACE_Equal_To<ACE_CString>,
+                            ACE_Null_Mutex> addr_serv_map_;
 
   };
 
@@ -244,11 +286,11 @@ namespace CIAO
     virtual CONNECTION_ID consumer_id (ACE_ENV_SINGLE_ARG_DECL)
       ACE_THROW_SPEC ((CORBA::SystemException));
 
-    virtual void supplier_id (const char * supplier_id ACE_ENV_ARG_DECL)
-      ACE_THROW_SPEC ((CORBA::SystemException));
+    //virtual void supplier_id (const char * supplier_id ACE_ENV_ARG_DECL)
+    //  ACE_THROW_SPEC ((CORBA::SystemException));
 
-    virtual CONNECTION_ID supplier_id (ACE_ENV_SINGLE_ARG_DECL)
-      ACE_THROW_SPEC ((CORBA::SystemException));
+    //virtual CONNECTION_ID supplier_id (ACE_ENV_SINGLE_ARG_DECL)
+    //  ACE_THROW_SPEC ((CORBA::SystemException));
 
     virtual void consumer (Components::EventConsumerBase_ptr consumer ACE_ENV_ARG_DECL)
       ACE_THROW_SPEC ((CORBA::SystemException));
@@ -271,8 +313,6 @@ namespace CIAO
   private:
 
     ACE_CString consumer_id_;
-
-    ACE_CString supplier_id_;
 
     Components::EventConsumerBase_var consumer_;
 

@@ -1,3 +1,127 @@
+Mon Dec  11 20:55:39 UTC 2006  Gan Deng <gan.deng@vanderbilt.edu>
+
+        * ciao/CCM_Event.idl:
+        
+          Modified the "ciao_push_event" operation to pass in "source_id",
+          which is used to identify the sources of the publisher ports to 
+          support event filtering mechanism.
+
+        * ciao/Deployment_Events.idl:
+        
+          Added new IDL definitions to support RTEC federation, such as
+          AddrServer, UDPSender, UPDReceiver, etc.
+                  
+        * ciao/Deployment_NodeApplication.idl:
+        
+          Modified the "install_es" operation to install one service object
+          per invocation, instead of a sequence of objects.
+          
+        * DAnCE/NodeApplication/NodeApplication_Impl.cpp:
+        * DAnCE/NodeApplication/NodeApplication_Impl.h:
+        * DAnCE/DomainApplicationManager/DomainApplicationManager_Impl.cpp:
+        * DAnCE/DomainApplicationManager/DomainApplicationManager_Impl.h:
+        
+          Modified to accomodate the changes made above by adding only
+          one ciao event service object reference to the map.
+          
+        * ciaosvcs/Events/CIAO_Events_Base/CIAO_Events.idl:
+        
+          Removed the inheritance relationsihp between Consumer_Config and
+          Supplier_Config object. The reason why it was there is because
+          of a tightly coupled design long time ago.
+          
+        * ciaosvcs/Events/CIAO_Events_Base/CIAO_EventServiceBase.cpp:
+        * ciaosvcs/Events/CIAO_Events_Base/CIAO_EventServiceBase.h:
+        
+          Added a virtual function "ciao_push_event" and provides a
+          default implementation, which is essentially a no_op impl.
+          
+        * ciaosvcs/Events/CIAO_EventService_Factory_impl.cpp:
+        * ciaosvcs/Events/CIAO_EventService_Factory_impl.h:
+        
+          Modified the factory method "create" by passing in the 
+          string identifier for the service object.
+          
+        * ciaosvcs/Events/CIAO_RTEC/CIAO_RTEvent.idl:
+        
+          Added new operations to create gateways object to support
+          event channel federations.          
+          
+        * ciaosvcs/Events/CIAO_RTEC/CIAO_RTEvent.cpp:
+        * ciaosvcs/Events/CIAO_RTEC/CIAO_RTEvent.h:
+        * ciaosvcs/Events/CIAO_RTEC/CIAO_RTEvent.mpc:
+        * ciaosvcs/Events/CIAO_RTEC/SimpleAddressServer.cpp:
+        * ciaosvcs/Events/CIAO_RTEC/SimpleAddressServer.h:
+                
+          Added the implementation and MPC files to support event
+          channel federations in CIAO_Event_Service.
+                
+        * CIDLC/ServantHeaderGenerator.cpp:
+        * CIDLC/ServantSourceGenerator.cpp:
+        
+          Automatically generate the implementation code of
+          ciao_push_event for component in the servant code.        
+
+        * DAnCE/NodeApplication/NodeApplication.cpp:
+
+          Explicitly add the init_svcs() operation to the
+          NA component server implementation. We should figure
+          out a way to see whether we can avoid doing this at
+          this level.
+          
+        * DAnCE/NodeManager/Node_Manager.cpp:
+        
+          Enhanced NM to pass in service configuration file explicitly.
+          Also fixed a bug about controlling ORBDebugLevel.
+          
+        * docs/schema/CIAOEvents.xsd:
+        
+          Enhanced the CIAOEvents schema to support event channel
+          federation configuration.          
+
+        * tools/Config_Handlers/CIAO_Events/CIAOEvents.cpp:
+        * tools/Config_Handlers/CIAO_Events/CIAOEvents.hpp:
+        * tools/Config_Handlers/CIAO_Events/CIAOEvents_Handler.cpp:
+        
+          Config handlers enhancement to support the above
+          schema changes.    
+          
+        * DAnCE/tests/NodeApplicationTest/run_test.pl:
+        * DAnCE/tests/NodeApplicationTest/run_test_ex.pl:
+        * DAnCE/tests/NodeApplicationTest/run_test_simple.pl:
+        
+          Modified to use environment variables instead of relative paths.
+        
+        * examples/Hello/Sender/Sender_exec.cpp:
+        * examples/Hello/Receiver/Receiver_exec.cpp:
+        
+          Modified to explicitly print out the contents of the received msgs.
+
+        * examples/Hello/descriptors_events/ciao-events-example-collocated.ced:
+        * examples/Hello/descriptors_events/ciao-events-example-with-federation.ced:
+        * examples/Hello/descriptors_events/ciao-events-example-with-filters.ced:
+        * examples/Hello/descriptors_events/ciao-events-example.ced:
+        * examples/Hello/descriptors_events/ciao-events-federation-mcast.ced:
+        * examples/Hello/descriptors_events/ciao-events-federation-udp-collocated.ced:
+        * examples/Hello/descriptors_events/ciao-events-federation-udp-two-hosts.ced:
+        * examples/Hello/descriptors_events/ciao-events-federation-udp.ced:
+        * examples/Hello/descriptors_events/flattened_deploymentplan_events.cdp:
+        * examples/Hello/descriptors_events/flattened_deploymentplan_events_collocated.cdp:
+        * examples/Hello/descriptors_events/flattened_deploymentplan_federation.cdp:
+        * examples/Hello/descriptors_events/flattened_deploymentplan_federation_mcast.cdp:
+        * examples/Hello/descriptors_events/flattened_deploymentplan_federation_udp.cdp:
+        * examples/Hello/descriptors_events/flattened_deploymentplan_federation_udp_collocated.cdp:
+        * examples/Hello/descriptors_events/flattened_deploymentplan_federation_udp_two_hosts.cdp:
+        * examples/Hello/descriptors_events/flattened_deploymentplan_with_filters.cdp:
+        * examples/Hello/descriptors_events/NodeManagerMap.dat:
+        * examples/Hello/descriptors_events/NodeManagerMapTwoHosts.dat:
+        * examples/Hello/descriptors_events/rtec.conf:
+        * examples/Hello/descriptors_events/run_NodeDaemons.pl:
+        * examples/Hello/descriptors_events/run_NodeDaemons_svc_conf.pl:
+        * examples/Hello/descriptors_events/run_NodeDaemons_with_ip.pl:
+
+          Added a bunch of test cases for CIAO Event Service.
+
 Fri Dec  8 22:59:14 UTC 2006  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tools/tools.mwc:
