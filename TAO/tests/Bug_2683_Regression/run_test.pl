@@ -18,15 +18,17 @@ foreach $i (@ARGV) {
 }
 
 unlink $iorfile;
+$TARGETHOSTNAME = "localhost";
 
 if (PerlACE::is_vxworks_test()) {
-    $SV = new PerlACE::ProcessVX ("server", "-ORBEndpoint iiop://localhost:43210");
+    $TARGETHOSTNAME = $ENV{'ACE_RUN_VX_TGT_HOST'};
+    $SV = new PerlACE::ProcessVX ("server", "-ORBEndpoint iiop://$TARGETHOSTNAME:43210");
 }
 else {
-    $SV = new PerlACE::Process ("server", "-ORBEndpoint iiop://localhost:43210");
+    $SV = new PerlACE::Process ("server", "-ORBEndpoint iiop://$TARGETHOSTNAME:43210");
 }
 
-$CL = new PerlACE::Process ("client", " -p 43210");
+$CL = new PerlACE::Process ("client", " -p 43210 -h $TARGETHOSTNAME");
 
 $server = $SV->Spawn ();
 
