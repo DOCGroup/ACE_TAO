@@ -1,3 +1,13 @@
+Mon Dec 11 15:23:08 UTC 2006  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/MakeProjectCreator/config/MPC.cfg:
+        * bin/mpc.pl:
+        * bin/mwc.pl:
+
+          Removed the code that specifically added the gnuace and borland
+          project types and rely on the dynamic_types directive in the
+          MPC.cfg to have the MPC core add them.
+
 Sat Dec  9 19:13:52 UTC 2006  Olli Savia  <ops@iki.fi>
 
         * ace/config-vxworks5.x.h:
