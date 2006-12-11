@@ -9,6 +9,9 @@
  * @brief Interfaces for configuring CIAO's event mechanism.
  */
 
+#if !defined (CIAO_EVENTS_IDL)
+#define CIAO_EVENTS_IDL
+
 #include "ciao/CCM_Event.idl"
 
 module CIAO
@@ -18,7 +21,6 @@ module CIAO
 
   enum EventServiceType
   {
-    DIRECT,
     EC,
     RTEC,
     NOTIFY,
@@ -34,9 +36,12 @@ module CIAO
     void destroy ();
   };
 
-  interface Consumer_Config : Supplier_Config
+  interface Consumer_Config
   {
     attribute CONNECTION_ID consumer_id;
+
+    readonly attribute EventServiceType service_type;
+
     attribute Components::EventConsumerBase consumer;
 
     void start_conjunction_group (in long size);
@@ -46,6 +51,8 @@ module CIAO
     void insert_source (in CONNECTION_ID source_id);
 
     void insert_type (in long event_type);
+
+    void destroy ();
   };
 
   interface CIAO_Event_Service : Components::EventConsumerBase
@@ -67,3 +74,5 @@ module CIAO
     //void push_event (in Components::EventBase ev);
   };
 };
+
+#endif /* CIAO_EVENTS_IDL */

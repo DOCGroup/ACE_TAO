@@ -46,6 +46,7 @@
     -->
   </implementation>
 
+
   <instance id="Hello-Sender-idd">
     <name>Hello-Sender-idd</name>
     <node>SenderNode</node>
@@ -99,7 +100,7 @@
       </value>
     </configProperty>
   </instance>
-
+  
   <instance id="Hello-Receiver-idd">
     <name>Hello-Receiver-idd</name>
     <node>ReceiverNode</node>
@@ -118,7 +119,6 @@
     </configProperty>
   </instance>
 
-
   <connection>
     <name>hello_facet_connection</name>
     <internalEndpoint>
@@ -133,22 +133,7 @@
     </internalEndpoint>
   </connection>
 
-<!--
-  <connection>
-    <name>hello_event_connection</name>
-    <internalEndpoint>
-      <portName>click_out</portName>
-      <kind>EventPublisher</kind>
-      <instance>Hello-Sender-idd</instance>
-    </internalEndpoint>
-    <internalEndpoint>
-      <portName>click_in</portName>
-      <kind>EventConsumer</kind>
-      <instance>Hello-Receiver-idd</instance>
-    </internalEndpoint>
-  </connection>
--->
-
+  <!-- The Sender Component connects to "ES_01" -->
   <connection>
     <name>hello_event_ec_publisher_connection</name>
     <internalEndpoint>
@@ -160,7 +145,8 @@
       <location>ES_01</location>
     </externalReference>
   </connection>
-
+  
+  <!-- The Receiver Component connects to "ES_02" -->    
   <connection>
     <name>hello_event_ec_consumer_connection</name>
     <internalEndpoint>
@@ -169,9 +155,9 @@
       <instance>Hello-Receiver-idd</instance>
     </internalEndpoint>
     <externalReference>
-      <location>ES_01</location>
+      <location>ES_02</location>
     </externalReference>
-  </connection>
+  </connection> 
 
   <!-- @@ Runtime library name must match exactly in "location" tag -->
   <artifact id="Hello-Sender_exec">
@@ -253,7 +239,7 @@
         <kind>tk_string</kind>
       </type>
       <value>
-        <string>ciao-events-example.ced</string>
+        <string>ciao-events-federation-udp.ced</string>
       </value>
     </value>
   </infoProperty>  
