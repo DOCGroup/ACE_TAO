@@ -69,11 +69,12 @@ public:
 };
 
 int port = 0;
+char const * target_host = "localhost";
 
 int
 parse_args (int argc, char *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, "p:");
+  ACE_Get_Opt get_opts (argc, argv, "p:h:");
   int c;
 
   while ((c = get_opts ()) != -1)
@@ -82,7 +83,9 @@ parse_args (int argc, char *argv[])
       case 'p':
         port = ACE_OS::atoi (get_opts.opt_arg ());
         break;
-
+      case 'h':
+        target_host = get_opts.opt_arg ();
+        break;
       case '?':
       default:
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -109,7 +112,7 @@ main (int argc, char *argv[])
         return 1;
 
       char ior[100];
-      ACE_OS::sprintf (ior,"corbaloc::localhost:%d/Racer",port);
+      ACE_OS::sprintf (ior,"corbaloc::%s:%d/Racer",target_host,port);
 
       Pinger pinger(orb, ior);
 
