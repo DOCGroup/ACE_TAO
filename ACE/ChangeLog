@@ -1,3 +1,19 @@
+Mon Dec 11 20:21:14 UTC 2006  Steve Huston  <shuston@riverace.com>
+
+        * ace/CDR_Stream.{h cpp} (ACE_OutputCDR): Added a new method,
+          int consolidate (void) which consolidates any continuation
+          message blocks into the start block, ensuring that all data
+          is located in one block on return. This is useful for situations
+          which require the entire encoded stream to be available in one
+          buffer, regardless of length.
+
+        * tests/CDR_Test.cpp: Added a test for consolidate().
+        
+        * NEWS: Added notice for new consolidate() method.
+        
+        Thanks to Howard Finer <hfiner at sonusnet dot com> for supplying
+        the new ACE_OutputCDR::consolidate() method.
+
 Mon Dec 11 20:03:04 UTC 2006  Chad Elliott  <elliott_c@ociweb.com>
 
         * bin/MakeProjectCreator/templates/gnu.mpd:

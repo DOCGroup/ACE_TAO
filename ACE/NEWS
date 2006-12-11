@@ -14,8 +14,17 @@ PLANNED CHANGES FOR "ACE-5.5.5"
 
 . (Remedy) VxWorks 6.4 support
 
+. (Riverace) Pharlap ETS 13 qualification.
+
 USER VISIBLE CHANGES BETWEEN ACE-5.5.4 and ACE-5.5.5
 ====================================================
+
+. The int ACE_OutputCDR::consolidate(void) method was contributed by
+  Howard Finer at Sonus Networks. This method consolidates any continuation
+  blocks used by an ACE_OutputCDR object into a single block. It's useful for
+  situations which require access to a single memory area containing the
+  encoded stream, regardless of its length, when the length cannot be known
+  in advance.
 
 . There are a number of new methods defined on ACE_String_Base<CHAR>:
 
