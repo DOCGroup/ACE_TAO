@@ -26,11 +26,11 @@ HTTP_Base::receive (ACE_Message_Block &mb)
 
   switch (this->info_.status ())
     {
-    case JAWS_Header_Info::OK:
+    case JAWS_Header_Info::STATUS_CODE_OK:
       break;
 
-    case JAWS_Header_Info::NO_MEMORY:
-    case JAWS_Header_Info::TOO_LONG:
+    case JAWS_Header_Info::STATUS_CODE_NO_MEMORY:
+    case JAWS_Header_Info::STATUS_CODE_TOO_LONG:
     default:
       this->status_ = STATUS_INTERNAL_SERVER_ERROR;
       break;
