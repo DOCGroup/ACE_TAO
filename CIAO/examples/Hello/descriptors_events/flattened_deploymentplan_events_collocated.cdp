@@ -102,7 +102,7 @@
 
   <instance id="Hello-Receiver-idd">
     <name>Hello-Receiver-idd</name>
-    <node>ReceiverNode</node>
+    <node>SenderNode</node>
     <source><!-- @@ What goes here --></source>
     <implementation>Hello-Receiver-mdd</implementation>
     <configProperty>
@@ -253,7 +253,7 @@
         <kind>tk_string</kind>
       </type>
       <value>
-        <string>ciao-events-example.ced</string>
+        <string>ciao-events-example-collocated.ced</string>
       </value>
     </value>
   </infoProperty>  

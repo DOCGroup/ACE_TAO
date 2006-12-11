@@ -670,16 +670,6 @@ install_all_es (void)
     {
       for (CORBA::ULong j = 0; j < this->esd_->length (); ++j)
         {
-          // Construct the ESInstallationInfos data
-          Deployment::ESInstallationInfos_var es_infos;
-          ACE_NEW (es_infos,
-                   Deployment::ESInstallationInfos);
-
-          es_infos->length (1);
-          (*es_infos)[0].id = this->esd_[j].name.in ();
-          (*es_infos)[0].type = CIAO::RTEC;  //only RTEC is supported so far
-          (*es_infos)[0].svcconf = this->esd_[j].svc_cfg_file.in ();
-
           // Find NA, and then invoke operation on it
           ACE_Hash_Map_Entry <ACE_CString, Chained_Artifacts> *entry = 0;
 
@@ -707,11 +697,11 @@ install_all_es (void)
           ::Deployment::NodeApplication_ptr my_na =
               (entry->int_id_).node_application_.in ();
 
-          ::Deployment::CIAO_Event_Services_var event_services =
-              my_na->install_es (es_infos);
+          ::CIAO::CIAO_Event_Service_var ciao_es =
+              my_na->install_es (this->esd_[j]);
 
           // Add these returned ES objects into the cached map
-          this->add_es_to_map (es_infos, event_services);
+          this->add_es_to_map (this->esd_[j].name.in (), ciao_es.in ());
         }
     }
   ACE_CATCHANY
@@ -727,21 +717,16 @@ install_all_es (void)
 
 void
 CIAO::DomainApplicationManager_Impl::
-add_es_to_map (Deployment::ESInstallationInfos * es_infos,
-               Deployment::CIAO_Event_Services * event_services)
+add_es_to_map (const char * node_name,
+               CIAO::CIAO_Event_Service * ciao_es)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Deployment::StartError))
 {
   ACE_TRY
     {
-      CORBA::ULong es_length = event_services->length ();
-
-      for (CORBA::ULong i = 0; i < es_length; ++i)
-        {
-          this->es_map_.bind (
-            (*es_infos)[i].id.in (),
-            CIAO::CIAO_Event_Service::_duplicate ((*event_services)[i]));
-        }
+      this->es_map_.bind (
+        node_name,
+        CIAO::CIAO_Event_Service::_duplicate (ciao_es));
     }
   ACE_CATCHANY
     {
@@ -1311,7 +1296,7 @@ handle_es_connection (
   if (binding.deployRequirement.length () != 0)
     {
       retv[len].config =
-        this->get_connection_QoS_configuration (binding.deployRequirement[0]);
+        * (this->get_connection_QoS_configuration (binding.deployRequirement[0]));
     }
 
   // If we didnt find the objref of the connection ...
@@ -2055,13 +2040,13 @@ purge_connections (Deployment::Connections_var & connections,
     }
 }
 
-const Deployment::Properties &
+Deployment::Properties *
 CIAO::DomainApplicationManager_Impl::
 get_connection_QoS_configuration (const Deployment::Requirement & requirement)
 {
   // Get the name/identifier of the filter associated with
   // this connection
-  Deployment::Properties_var retv;
+  Deployment::Properties * retv;
   ACE_NEW_NORETURN (retv, Deployment::Properties);
 
   CORBA::ULong len = retv->length ();
@@ -2093,12 +2078,12 @@ get_connection_QoS_configuration (const Deployment::Requirement & requirement)
                                   filter_name) == 0)
                 {
                   retv->length (len + 1);
-                  retv[len].name =  CORBA::string_dup ("EventFilter");
-                  retv[len].value <<= this->esd_[j].filters[k];
+                  (*retv)[len].name =  CORBA::string_dup ("EventFilter");
+                  (*retv)[len].value <<= this->esd_[j].filters[k];
                   break;
                 }
             }
         }
     }
-  return retv.inout ();
+  return retv;
 }

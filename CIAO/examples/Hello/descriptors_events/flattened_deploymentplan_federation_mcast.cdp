@@ -46,6 +46,7 @@
     -->
   </implementation>
 
+
   <instance id="Hello-Sender-idd">
     <name>Hello-Sender-idd</name>
     <node>SenderNode</node>
@@ -99,10 +100,10 @@
       </value>
     </configProperty>
   </instance>
-
+  
   <instance id="Hello-Receiver-idd">
     <name>Hello-Receiver-idd</name>
-    <node>ReceiverNode</node>
+    <node>SenderNode</node>
     <source><!-- @@ What goes here --></source>
     <implementation>Hello-Receiver-mdd</implementation>
     <configProperty>
@@ -120,36 +121,6 @@
 
 
   <connection>
-    <name>hello_facet_connection</name>
-    <internalEndpoint>
-      <portName>push_message</portName>
-      <kind>Facet</kind>
-      <instance>Hello-Sender-idd</instance>
-    </internalEndpoint>
-    <internalEndpoint>
-      <portName>read_message</portName>
-      <kind>SimplexReceptacle</kind>
-      <instance>Hello-Receiver-idd</instance>
-    </internalEndpoint>
-  </connection>
-
-<!--
-  <connection>
-    <name>hello_event_connection</name>
-    <internalEndpoint>
-      <portName>click_out</portName>
-      <kind>EventPublisher</kind>
-      <instance>Hello-Sender-idd</instance>
-    </internalEndpoint>
-    <internalEndpoint>
-      <portName>click_in</portName>
-      <kind>EventConsumer</kind>
-      <instance>Hello-Receiver-idd</instance>
-    </internalEndpoint>
-  </connection>
--->
-
-  <connection>
     <name>hello_event_ec_publisher_connection</name>
     <internalEndpoint>
       <portName>click_out</portName>
@@ -160,7 +131,7 @@
       <location>ES_01</location>
     </externalReference>
   </connection>
-
+  
   <connection>
     <name>hello_event_ec_consumer_connection</name>
     <internalEndpoint>
@@ -169,10 +140,10 @@
       <instance>Hello-Receiver-idd</instance>
     </internalEndpoint>
     <externalReference>
-      <location>ES_01</location>
+      <location>ES_02</location>
     </externalReference>
   </connection>
-
+  
   <!-- @@ Runtime library name must match exactly in "location" tag -->
   <artifact id="Hello-Sender_exec">
     <name>Sender_exec</name>
@@ -253,7 +224,7 @@
         <kind>tk_string</kind>
       </type>
       <value>
-        <string>ciao-events-example.ced</string>
+        <string>ciao-events-federation-mcast.ced</string>
       </value>
     </value>
   </infoProperty>  

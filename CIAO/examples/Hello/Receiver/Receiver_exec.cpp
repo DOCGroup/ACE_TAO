@@ -19,13 +19,14 @@ namespace CIDL_Receiver_Impl
   }
 
   void
-  Receiver_exec_i::push_click_in (Hello::TimeOut *
+  Receiver_exec_i::push_click_in (Hello::TimeOut * ev
                                   ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException))
   {
     //Get the message from the Sender first.
     ACE_DEBUG ((LM_DEBUG,
-                "Receiver - Informed by the Sender \n"));
+                "Receiver - Informed by the Sender with message [%s]\n", 
+                ev->data ()));
 
     Hello::ReadMessage_var rev
       = this->context_->get_connection_read_message 
