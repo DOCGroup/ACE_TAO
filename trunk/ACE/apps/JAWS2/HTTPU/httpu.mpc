@@ -1,0 +1,21 @@
+// -*- MPC -*-
+// $Id$
+
+project(HTTPU) : acelib {
+    sharedname = HTTPU
+    avoids += uses_wchar ace_for_tao
+    includes += ..
+    Source_Files {
+        *.cpp
+    }
+
+    Template_Files{
+    }
+
+    Header_Files{
+        *.h
+    }
+
+    Inline_Files{
+    }
+}
