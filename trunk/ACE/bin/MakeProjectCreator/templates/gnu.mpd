@@ -453,13 +453,13 @@ lib_warning:
 
 <%if(requires)%>
 require_warning:
-	@echo <%project_name%> will not be built due to one of the following disabled features:
+	@echo <%project_name%> will not be built due to one of the following disabled make macros:
 	@echo<%foreach(requires)%> <%require%><%endfor%>
 
 <%endif%>
 <%if(avoids)%>
 avoid_warning:
-	@echo <%project_name%> will not be built due to one of the following enabled features:
+	@echo <%project_name%> will not be built due to one of the following enabled make macros:
 	@echo<%foreach(avoids)%> <%avoid%><%endfor%>
 
 <%endif%>

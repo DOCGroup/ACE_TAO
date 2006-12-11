@@ -1,3 +1,10 @@
+Mon Dec 11 20:03:04 UTC 2006  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/MakeProjectCreator/templates/gnu.mpd:
+
+          Changed the template to use the words "make macros" instead of
+          features.  There may have be some confusion with MPC features.
+
 Mon Dec 11 17:39:46 UTC 2006  James H. Hill  <hillj@isis.vanderbilt.edu>
 
         * docs/ace_guidelines.vsmacros:
