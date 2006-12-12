@@ -947,10 +947,11 @@ ACE_LACKS_MEMORY_H                      Platform lacks memory.h (e.g.,
                                         VxWorks and Chorus)
 ACE_LACKS_MKFIFO                        Platform lacks mkfifo() e.g.,
                                         VxWorks, Chorus, pSoS, and WinNT.
-ACE_LACKS_MKTEMP                        ACE has no mktemp()
+ACE_LACKS_MKTEMP                        Platform lacks the mktemp() function.
 ACE_LACKS_MKTEMP_PROTOTYPE              Platform/compiler lacks the
                                         mktemp() prototype (e.g.,
                                         LynxOS)
+ACE_LACKS_MKSTEMP			Platform lacks the mkstemp() function.
 ACE_LACKS_MKSTEMP_PROTOTYPE             Platform/compiler lacks the
                                         mkstemp() prototype (e.g.,
                                         LynxOS)

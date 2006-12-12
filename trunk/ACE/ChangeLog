@@ -1,3 +1,14 @@
+Tue Dec 12 05:13:33 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * configure.ac:
+
+          Add ACE_LACKS_MKTEMP_PROTOTYPE and ACE_LACKS_MKSTEMP_PROTOTYPE
+          feature tests.
+
+        * ace/README:
+
+          Document ACE_LACKS_MKSTEMP feature test macro.
+
 Mon Dec 11 20:51:59 UTC 2006  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
 
         * apps/JAWS2/HTTPU/httpu.mpc: Added a new MPC file.  Thanks to
@@ -17,9 +28,9 @@ Mon Dec 11 20:21:14 UTC 2006  Steve Huston  <shuston@riverace.com>
           regardless of length.
 
         * tests/CDR_Test.cpp: Added a test for consolidate().
-        
+
         * NEWS: Added notice for new consolidate() method.
-        
+
         Thanks to Howard Finer <hfiner at sonusnet dot com> for supplying
         the new ACE_OutputCDR::consolidate() method.
 
