@@ -86,7 +86,7 @@ create_connections (ACE_ENV_SINGLE_ARG_DECL)
         }
       else
         {
-          ACE_DEBUG ((LM_DEBUG, "NAMImpl::create_connections: Component %s is not shared, getting and setting"
+          ACE_DEBUG ((LM_DEBUG, "NAMImpl::create_connections: Component %s is not shared, getting and setting "
                       "all facets\n",
                       comp_name.c_str ()));
           facets = ((*iter).int_id_)->get_all_facets (ACE_ENV_SINGLE_ARG_PARAMETER);
@@ -114,7 +114,7 @@ create_connections (ACE_ENV_SINGLE_ARG_DECL)
         }
       else
         {
-          ACE_DEBUG ((LM_DEBUG, "NAMImpl::create_connections: Component %s is not shared, getting and setting"
+          ACE_DEBUG ((LM_DEBUG, "NAMImpl::create_connections: Component %s is not shared, getting and setting "
                       "all facets\n",
                       comp_name.c_str ()));
           consumers =
@@ -132,10 +132,10 @@ create_connections (ACE_ENV_SINGLE_ARG_DECL)
                       comp_name.c_str ()));
         }
 
-      CORBA::ULong facet_len = facets->length ();
-      CORBA::ULong consumer_len = consumers->length ();
+      CORBA::ULong const facet_len = facets->length ();
+      CORBA::ULong const consumer_len = consumers->length ();
 
-      CORBA::ULong curr_len = retv->length ();
+      CORBA::ULong const curr_len = retv->length ();
       retv->length (curr_len + facet_len + consumer_len);
 
       CORBA::ULong i = 0;

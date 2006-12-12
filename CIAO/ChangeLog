@@ -1,3 +1,36 @@
+Tue Dec 12 14:48:57 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ciao/CCM_Base.idl:
+        * ciao/CCM_CCM2Context.idl:
+        * ciao/CCM_ComponentId.idl:
+        * ciao/CCM_Configurator.idl:
+        * ciao/CCM_Container.idl:
+        * ciao/CCM_Container_Ex.idl:
+        * ciao/CCM_Core.mpc:
+        * ciao/CCM_Entity2Context.idl:
+        * ciao/CCM_Event.idl:
+        * ciao/CCM_ExecutorLocator.idl:
+        * ciao/CCM_HomeConfigurator.idl:
+        * ciao/CCM_SessionComponent.idl:
+        * ciao/CCM_SessionContext.idl:
+        * ciao/CCM_StandardConfigurator.idl:
+        * ciao/CCM_StateIdFactory.idl:
+        * ciao/Deployment_NodeApplication.idl:
+          Moved more interfaces to their own file
+
+        * DAnCE/DomainApplicationManager/Deployment_Configuration.h:
+          Removed virtual keywords, not needed
+
+        * DAnCE/NodeApplicationManager/NodeApplicationManager_Impl.cpp:
+          Const changes and improved some messages
+
+        * DAnCE/Plan_Generator/PCVisitor.h:
+        * DAnCE/Plan_Generator/PCVisitorBase.h:
+          Doxygen changes
+
+        * tools/Config_Handlers/DynAny_Handler.mpc:
+          layout changes
+
 Tue Dec 12 10:08:57 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * MPC/config/taoidl3toidl2defaults.mpb:

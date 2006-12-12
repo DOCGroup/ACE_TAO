@@ -13,7 +13,7 @@
  *  operations which involve sequences and delegates the calls to
  *  the operations which handle single elements from the sequence type.
  *
- *  author Stoyan Paunov <spaunov@isis.vanderbilt.edu> 
+ *  author Stoyan Paunov <spaunov@isis.vanderbilt.edu>
  */
 //========================================================================
 
@@ -40,14 +40,13 @@
 class  PCVisitorBase
 {
 public:
-  //constructor
+  /// Constructor
   PCVisitorBase (void);
 
-  //destructor
-  virtual
-  ~PCVisitorBase (void);
+  /// Destructor
+  virtual ~PCVisitorBase (void);
 
-  ///function what dispatches sequences
+  /// Function what dispatches sequences
   template <typename SEQ>
   friend void visit_sequence (SEQ &seq, PCVisitorBase& v);
 
@@ -58,7 +57,7 @@ public:
   void Visit (Deployment::PackageConfiguration &pc) = 0;
   void Visit (Deployment::PackageConfigurations &pcs);
 
-  //ComponentPackageDescription descendents
+  /// ComponentPackageDescription descendents
   virtual
   void Visit (Deployment::ComponentPackageDescription &cpd) = 0;
   void Visit (Deployment::ComponentPackageDescriptions &cpds);
@@ -155,7 +154,7 @@ void Accept (PCVisitorBase &v, T& element_to_visit)
 template <typename SEQ>
 void visit_sequence (SEQ &seq, PCVisitorBase& v)
 {
-   const CORBA::ULong size = seq.length ();
+   CORBA::ULong const size = seq.length ();
 
    for (CORBA::ULong i = 0; i < size; ++i)
    {

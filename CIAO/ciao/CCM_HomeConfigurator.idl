@@ -16,6 +16,7 @@
 
 #include "ciao/CCM_Configurator.idl"
 #include "ciao/CCM_StandardConfigurator.idl"
+#include "ciao/CCM_Home.idl"
 
 module Components
 {

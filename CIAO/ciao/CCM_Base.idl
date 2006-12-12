@@ -12,14 +12,6 @@
  *          CCM_Base.idl
  */
 
-//#define CIAO_HAS_IMPORT_KEYWORD
-
-#ifdef CIAO_HAS_IMPORT_KEYWORD
-// import ::CORBA;
-#else
-#include <orb.idl>
-#endif /* CIAO_HAS_IMPORT_KEYWORD */
-
 #if !defined (CCM_BASE_IDL)
 #define CCM_BASE_IDL
 
