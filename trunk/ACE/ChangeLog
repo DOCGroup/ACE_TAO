@@ -1,7 +1,11 @@
+Tue Dec 12 22:38:06 UTC 2006  Steve Huston  <shuston@riverace.com>
+
+        * apps/JAWS2/HTTPU/parse_url.h: Made the char* members const to
+          resolve compile warnings about assignment of char* literals.
+
 Tue Dec 12 19:54:05 UTC 2006  Steve Huston  <shuston@riverace.com>
 
         * apps/JAWS2/HTTPU/httpu.mpc: Must build HTTPU after JAWS2.
-
 
 Tue Dec 12 19:54:04 UTC 2006  Chad Elliott  <elliott_c@ociweb.com>
 
