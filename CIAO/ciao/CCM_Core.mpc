@@ -108,7 +108,13 @@ project (CIAO_DnC_Container) : orbsvcslib, portableserver, valuetype, ifr_client
     CCM_Transaction.idl
     CosPersistentState.idl
     CCM_Container.idl
+    CCM_SessionContext.idl
+    CCM_SessionComponent.idl
     CCM_Container_Ex.idl
+    CCM_StateIdFactory.idl
+    CCM_Entity2Context.idl
+    CCM_ComponentId.idl
+    CCM_ExecutorLocator.idl
     CCM_EnterpriseComponent.idl
     CCM_SessionSynchronization.idl
     CCM_HomeRegistration.idl
@@ -119,12 +125,18 @@ project (CIAO_DnC_Container) : orbsvcslib, portableserver, valuetype, ifr_client
     CCM_TransactionC.cpp
     CosPersistentStateC.cpp
     CCM_ContainerC.cpp
+    CCM_SessionContextC.cpp
+    CCM_SessionComponentC.cpp
     CCM_EnterpriseComponentC.cpp
     CCM_SessionSynchronizationC.cpp
     CCM_CCMExceptionC.cpp
     CCM_ContextC.cpp
     SecurityC.cpp
     CCM_Container_ExC.cpp
+    CCM_StateIdFactoryC.cpp
+    CCM_ComponentIdC.cpp
+    CCM_Entity2ContextC.cpp
+    CCM_ExecutorLocatorC.cpp
     CCM_ProxyHomeRegistrationC.cpp
     CCM_Session2ContextC.cpp
     CCM_CCM2ContextC.cpp
