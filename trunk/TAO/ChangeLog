@@ -1,3 +1,59 @@
+Tue Dec 12 17:34:25 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* tests/Explicit_Event_Loop/Makefile.am:
+	* tests/Exposed_Policies/Makefile.am:
+	* tests/Faults/Makefile.am:
+	* tests/File_IO/Makefile.am:
+	* tests/Forwarding/Makefile.am:
+	* tests/Hello/Makefile.am:
+	* tests/IPV6/Makefile.am:
+	* tests/InterOp-Naming/Makefile.am:
+	* tests/Leader_Followers/Makefile.am:
+	* tests/LongUpcalls/Makefile.am:
+	* tests/MProfile_Forwarding/Makefile.am:
+	* tests/MT_BiDir/Makefile.am:
+	* tests/MT_Client/Makefile.am:
+	* tests/MT_Server/Makefile.am:
+	* tests/MT_Timeout/Makefile.am:
+	* tests/Multiple/Makefile.am:
+	* tests/Multiple_Inheritance/Makefile.am:
+	* tests/Muxed_GIOP_Versions/Makefile.am:
+	* tests/Muxing/Makefile.am:
+	* tests/Native_Exceptions/Makefile.am:
+	* tests/NestedUpcall/MT_Client_Test/Makefile.am:
+	* tests/NestedUpcall/Simple/Makefile.am:
+	* tests/NestedUpcall/Triangle_Test/Makefile.am:
+	* tests/Nested_Event_Loop/Makefile.am:
+
+          Regenerated.
+
+       	* tests/Explicit_Event_Loop/Explicit_Event_Loop.mpc:
+	* tests/Exposed_Policies/Exposed_Policies.mpc:
+	* tests/Faults/Faults.mpc:
+	* tests/File_IO/File_IO.mpc:
+	* tests/Forwarding/Forwarding.mpc:
+	* tests/Hello/Hello.mpc:
+	* tests/IPV6/IPV6_Hello.mpc:
+	* tests/InterOp-Naming/InterOp-Naming.mpc:
+	* tests/Leader_Followers/Leader_Followers.mpc:
+	* tests/LongUpcalls/LongUpcalls.mpc:
+	* tests/MProfile_Forwarding/MProfile_Forwarding.mpc:
+	* tests/MT_BiDir/MT_BiDir.mpc:
+	* tests/MT_Client/MT_Client.mpc:
+	* tests/MT_Server/MT_Server.mpc:
+	* tests/MT_Timeout/MT_Timeout.mpc:
+	* tests/Multiple/Multiple.mpc:
+	* tests/Multiple_Inheritance/Multiple_Inheritance.mpc:
+	* tests/Muxed_GIOP_Versions/Muxed_GIOP_Versions.mpc:
+	* tests/Muxing/Muxing.mpc:
+	* tests/Native_Exceptions/Native_Exceptions.mpc:
+	* tests/NestedUpcall/MT_Client_Test/MT_Client_Test.mpc:
+	* tests/NestedUpcall/Simple/Simple.mpc:
+	* tests/NestedUpcall/Triangle_Test/TT.mpc:
+	* tests/Nested_Event_Loop/Nested_Event_Loop.mpc:
+
+          Split out IDL compilation into separate MPC project.
+
 Tue Dec 12 17:28:14 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
 
         * Configure Makefiles for new subdirectories.

@@ -1,71 +1,88 @@
 // -*- MPC -*-
 // $Id$
 
-project(*Server): taoserver, avoids_minimum_corba, avoids_corba_e_compact, avoids_corba_e_micro {
+project(*idl): taoidldefaults {
   IDL_Files {
     test.idl
+    ping.idl
   }
+  custom_only = 1
+}
 
+project(*Server): taoserver, avoids_minimum_corba, avoids_corba_e_compact, avoids_corba_e_micro {
+  after += *idl
+
+  Source_Files {
+    test_i.cpp
+    server.cpp
+  }
   Source_Files {
     testC.cpp
     testS.cpp
-    test_i.cpp
-    server.cpp
+  }
+  IDL_Files {
   }
 }
 
 project(*Middle): taoexe, portableserver, avoids_minimum_corba, avoids_corba_e_compact, avoids_corba_e_micro {
+  after += *idl
   after += *Server
-  IDL_Files {
-    test.idl
-  }
 
+  Source_Files {
+    test_i.cpp
+    middle.cpp
+  }
   Source_Files {
     testC.cpp
     testS.cpp
-    test_i.cpp
-    middle.cpp
+  }
+  IDL_Files {
   }
 }
 
 project(*Client): taoexe, portableserver, avoids_minimum_corba, avoids_corba_e_compact, avoids_corba_e_micro {
+  after += *idl
   after += *Middle
-  IDL_Files {
-    test.idl
-  }
 
+  Source_Files {
+    test_i.cpp
+    client.cpp
+  }
   Source_Files {
     testC.cpp
     testS.cpp
-    test_i.cpp
-    client.cpp
+  }
+  IDL_Files {
   }
 }
 
 project(*Ping): taoexe, portableserver, avoids_minimum_corba, avoids_corba_e_compact, avoids_corba_e_micro {
-  IDL_Files {
-    ping.idl
-  }
+  after += *idl
 
+  Source_Files {
+    ping_i.cpp
+    ping.cpp
+  }
   Source_Files {
     pingC.cpp
     pingS.cpp
-    ping_i.cpp
-    ping.cpp
+  }
+  IDL_Files {
   }
 }
 
 project(*Pong): taoexe, portableserver, avoids_minimum_corba, avoids_corba_e_compact, avoids_corba_e_micro {
+  after += *idl
   after += *Ping
-  IDL_Files {
-    ping.idl
-  }
 
   Source_Files {
-    pingC.cpp
-    pingS.cpp
     ping_i.cpp
     pong.cpp
   }
+  Source_Files {
+    pingC.cpp
+    pingS.cpp
+  }
+  IDL_Files {
+  }
 }
-
