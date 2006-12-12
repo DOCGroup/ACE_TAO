@@ -11,12 +11,14 @@
  *          CCM_Component.idl
  */
 
-#if !defined (CCM_COMPONENT_IDL)
-#define CCM_COMPONENT_IDL
+#if !defined (CCM_PRIMARYKEYBASE_IDL)
+#define CCM_PRIMARYKEYBASE_IDL
 
-#include "ciao/CCM_Events.idl"
-#include "ciao/CCM_Home.idl"
-#include "ciao/CCM_Object.idl"
-#include "ciao/CCM_Enumeration.idl"
+module Components
+{
+  typeprefix Components "omg.org";
 
-#endif /* CCM_COMPONENT_IDL */
+  abstract valuetype PrimaryKeyBase {};
+
+};
+#endif /* CCM_PRIMARYKEYBASE_IDL */

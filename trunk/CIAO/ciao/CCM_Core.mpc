@@ -30,10 +30,11 @@ project (CIAO_DnC_Client) : taolib_with_idl, valuetype, ifr_client {
   }
 
   IDL_Files {
-    CCM_HomeConfigurator.idl
+    CCM_HomeConfiguration.idl
     CCM_StandardConfigurator.idl
     CCM_Home.idl
     CCM_Object.idl
+    CCM_PrimaryKeyBase.idl
   }
 
   IDL_Files {
@@ -46,17 +47,21 @@ project (CIAO_DnC_Client) : taolib_with_idl, valuetype, ifr_client {
   }
 
   IDL_Files {
-    CCM_Event.idl
+    CCM_Events.idl
+    CCM_EventBase.idl
+    CCM_EventConsumerBase.idl
   }
 
   Source_Files {
     CCM_BaseC.cpp
-    CCM_EventC.cpp
+    CCM_EventsC.cpp
+    CCM_EventBaseC.cpp
+    CCM_EventConsumerBaseC.cpp
     CCM_ComponentC.cpp
     CCM_EnumerationC.cpp
     CCM_HomeC.cpp
     CCM_ConfiguratorC.cpp
-    CCM_HomeConfiguratorC.cpp
+    CCM_HomeConfigurationC.cpp
     CCM_KeylessCCMHomeC.cpp
     CCM_StandardConfiguratorC.cpp
     CCM_HomeFinderC.cpp
@@ -64,6 +69,7 @@ project (CIAO_DnC_Client) : taolib_with_idl, valuetype, ifr_client {
     CCM_ReceptacleC.cpp
     CCM_CookieC.cpp
     CCM_ObjectC.cpp
+    CCM_PrimaryKeyBaseC.cpp
     Client_init.cpp
     ComponentsC.cpp
   }
@@ -144,13 +150,16 @@ project (CIAO_DnC_Container) : orbsvcslib, portableserver, valuetype, ifr_client
     CCM_HomeExecutorBaseC.cpp
     CCM_EntityContextC.cpp
     CCM_EntityComponentC.cpp
-    CCM_EventS.cpp
+    CCM_EventsS.cpp
+    CCM_EventConsumerBaseS.cpp
+    CCM_EventBaseS.cpp
     CCM_ConfiguratorS.cpp
-    CCM_HomeConfiguratorS.cpp
+    CCM_HomeConfigurationS.cpp
     CCM_KeylessCCMHomeS.cpp
     CCM_StandardConfiguratorS.cpp
     CCM_HomeS.cpp
     CCM_ObjectS.cpp
+    CCM_PrimaryKeyBaseS.cpp
     CCM_HomeFinderS.cpp
     CCM_NavigationS.cpp
     CCM_ReceptacleS.cpp

@@ -11,7 +11,7 @@
 #define DOMAIN_CHANGE_IDL
 
 #include "ciao/Deployment_TargetManager.idl"
-#include "ciao/CCM_Event.idl"
+#include "ciao/CCM_Events.idl"
 
 module CIAO
 {

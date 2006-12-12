@@ -37,7 +37,6 @@ module Components
     void ccm_passivate()
       raises (CCMException);
 
-
     void ccm_remove ()
       raises (CCMException);
 
