@@ -1,3 +1,14 @@
+Tue Dec 12 17:24:02 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* orbsvcs/orbsvcs/Makefile.am:
+
+          Regenerated.
+
+        * orbsvcs/orbsvcs/CosConcurrency.mpc:
+
+          Don't include concurrency_export.h and concurrency_skel_export.h
+          in server library's MPC project.
+
 Tue Dec 12 16:13:34 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
 
         * orbsvcs/orbsvcs/Log/Hash_LogRecordStore.cpp:
