@@ -439,7 +439,7 @@ TAO_Hash_LogRecordStore::query_i (const char *constraint,
       // Create an iterator to pass out.
       TAO_Hash_Iterator_i *iter_query = 0;
       ACE_NEW_THROW_EX (iter_query,
-                        TAO_Hash_Iterator_i (this->iterator_poa_,
+                        TAO_Hash_Iterator_i (this->iterator_poa_.in (),
 					     this->reactor_,
 					     this,
                                              iter,
