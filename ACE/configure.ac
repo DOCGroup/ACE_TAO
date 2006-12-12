@@ -3563,7 +3563,27 @@ fi
 
 ACE_CHECK_HAS_FUNCS(memchr)
 
-ACE_CHECK_LACKS_FUNCS(mkfifo mkstemp mktemp)
+ACE_CHECK_LACKS_FUNCS(mkfifo)
+
+ACE_CHECK_LACKS_FUNCS(mkstemp)
+if test $ac_cv_func_mkstemp = yes; then
+  AC_CHECK_DECL([mkstemp],
+                [],
+                [AC_DEFINE([ACE_LACKS_MKSTEMP_PROTOTYPE], 1,
+                           [Define to 1 if platform lacks the declaration
+                           of mkstemp().])],
+                [#include <stdlib.h>])
+fi
+
+ACE_CHECK_LACKS_FUNCS(mktemp)
+if test $ac_cv_func_mktemp = yes; then
+  AC_CHECK_DECL([mktemp],
+                [],
+                [AC_DEFINE([ACE_LACKS_MKTEMP_PROTOTYPE], 1,
+                           [Define to 1 if platform lacks the declaration
+                           of mktemp().])],
+                [#include <stdlib.h>])
+fi
 
 ACE_CHECK_LACKS_FUNCS(msync mprotect)
 
