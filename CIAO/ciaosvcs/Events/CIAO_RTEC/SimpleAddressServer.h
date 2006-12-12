@@ -1,4 +1,14 @@
-// SimpleAddressServer.h
+// -*- C++ -*-
+
+//=============================================================================
+/**
+ *  @file SimpleAddressServer.h
+ *
+ *  $Id$
+ *
+ *  @author Gan Deng <dengg@dre.vanderbilt.edu>
+ */
+//=============================================================================
 
 #ifndef SIMPLEADDRESSSERVER_H
 #define SIMPLEADDRESSSERVER_H
