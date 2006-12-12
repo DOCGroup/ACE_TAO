@@ -31,7 +31,7 @@ Mon Dec  11 20:55:39 UTC 2006  Gan Deng <gan.deng@vanderbilt.edu>
 
         * ciaosvcs/Events/CIAO_Events_Base/CIAO_Events.idl:
 
-          Removed the inheritance relationsihp between Consumer_Config and
+          Removed the inheritance relationship between Consumer_Config and
           Supplier_Config object. The reason why it was there is because
           of a tightly coupled design long time ago.
 
