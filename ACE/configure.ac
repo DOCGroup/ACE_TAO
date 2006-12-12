@@ -4284,6 +4284,15 @@ dnl backwards compatibility with Pthread Draft 4 functions of the same
 dnl name.
 
   ACE_CHECK_LACKS_FUNCS(pthread_sigmask)
+  if test $ac_cv_func_pthread_sigmask = yes; then
+    AC_CHECK_DECL([pthread_sigmask],
+		  [AC_DEFINE([ACE_HAS_PTHREAD_SIGMASK_PROTOTYPE], 1,
+			     [Define to 1 if platform has the declaration
+			     of pthread_sigmask().])],
+		  [],
+		  [#include <pthread.h>
+                   #include <signal.h>])
+  fi
 
   AC_CHECK_FUNC([pthread_key_create],
     [AC_DEFINE([ACE_HAS_THREAD_SPECIFIC_STORAGE])],
