@@ -277,12 +277,12 @@ sub check_for_newline ()
 }
 
 
-# This test checks for files that are not allowed to be in cvs
+# This test checks for files that are not allowed to be in svn
 sub check_for_noncvs_files ()
 {
-    print "Running non cvs files check\n";
+    print "Running non svn files check\n";
     foreach $file (@files_noncvs, @files_dsp, @files_dsw, @files_makefile) {
-        print_error ("File $file should not be in cvs!");
+        print_error ("File $file should not be in svn!");
     }
 }
 
@@ -589,7 +589,7 @@ sub check_for_dependency_file ()
                     $depend = $path . $depend;
                     unless (open (DFILE, $depend)) {
                         print_error ("DEPENDENCY_FILE \"$depend\" not found");
-                        print " Either add \"$depend\" to cvs ";
+                        print " Either add \"$depend\" to svn ";
                         print "or remove DEPENDENCY_FILE variable\n";
                         print " from $file\n\n";
                     }
@@ -747,7 +747,8 @@ sub check_for_versioned_namespace_begin_end ()
         if (/^\s*\w+_END_VERSIONED_NAMESPACE_DECL/) {
           ++$end_count;
         }
-        if ($begin_count > $end_count and /^\s*#\s*include\s*/) {
+        if ($begin_count > $end_count and
+            /^\s*#\s*include\s*["<](ace|tao|ciao)\//i) {
           print_error ("$file:$.: #include directive within Versioned namespace block");
         }
       }
