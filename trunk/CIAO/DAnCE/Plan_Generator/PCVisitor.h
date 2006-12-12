@@ -11,7 +11,7 @@
  *  PackagingData.idl
  *
  *  author Stoyan Paunov <spaunov@isis.vanderbilt.edu>
- *         Shanshan Jiang <shanshan.jiang@vanderbilt.edu> 
+ *         Shanshan Jiang <shanshan.jiang@vanderbilt.edu>
  */
 //========================================================================
 
@@ -35,12 +35,12 @@
 class  PCVisitor : public PCVisitorBase
 {
 public:
-  //constructor
+  /// Constructor
   PCVisitor (Deployment::DeploymentPlan &plan,
              Deployment::PackageConfiguration &pc,
              bool modify);
 
-  ///Entry point to protected Visitor functions
+  /// Entry point to protected Visitor functions
   int Visit ();
 
 protected:
@@ -115,7 +115,7 @@ protected:
 protected:
   void update_execParameter (Deployment::ImplementationArtifactDescription& iad,
                              Deployment::ArtifactDeploymentDescription& add);
-                              
+
 private:
   Deployment::DeploymentPlan& plan_;
   Deployment::PackageConfiguration& pc_;
