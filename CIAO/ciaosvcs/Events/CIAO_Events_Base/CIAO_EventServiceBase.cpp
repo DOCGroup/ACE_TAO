@@ -24,7 +24,8 @@ namespace CIAO
    void
      EventServiceBase::ciao_push_event (
       ::Components::EventBase * evt,
-      const char * source_id
+      const char * source_id,
+      ::CORBA::TypeCode_ptr tc
       ACE_ENV_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((
       ::CORBA::SystemException,

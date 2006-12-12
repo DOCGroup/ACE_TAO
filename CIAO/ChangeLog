@@ -1,3 +1,11 @@
+Tue Dec 12 20:55:02 UTC 2006    Gan Deng <gan.deng@vanderbilt.edu>
+
+        * ciaosvcs/Events/CIAO_Events_Base/CIAO_EventServiceBase.cpp:
+        * ciaosvcs/Events/CIAO_Events_Base/CIAO_EventServiceBase.h:
+
+          Modified the ciao_push_event() in this base class to fix
+          BCC warnings.
+
 Tue Dec 12 20:21:03 UTC 2006    Gan Deng <gan.deng@vanderbilt.edu>
 
         * ciaosvcs/Events/CIAO_RTEC/SimpleAddressServer.h:
