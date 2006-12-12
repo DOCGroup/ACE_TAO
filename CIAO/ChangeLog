@@ -1,3 +1,29 @@
+Tue Dec 12 20:15:57 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ciao/CCM_Component.idl:
+        * ciao/CCM_Core.mpc:
+        * ciao/CCM_EventBase.idl:
+        * ciao/CCM_EventConsumerBase.idl:
+        * ciao/CCM_HomeConfiguration.idl:
+        * ciao/CCM_HomeConfigurator.idl:
+        * ciao/CCM_Object.idl:
+        * ciao/CCM_PrimaryKeyBase.idl:
+        * ciao/CCM_SessionComponent.idl:
+        * ciao/CCM_StateIdFactory.idl:
+        * ciao/Servant_Impl_Base.h:
+        * ciaosvcs/Events/CIAO_Events_Base/CIAO_Events.idl:
+        * DAnCE/TargetManager/DomainEvents.idl:
+          Added remarks about compliance and another set of splitting
+          idl files in smaller ones
+
+        * ciao/CCM_Event.idl:
+        * ciao/CCM_Events.idl:
+          Renamed Event to Events
+
+        * ciao/CCM_HomeConfigurator.idl:
+        * ciao/CCM_HomeConfiguration.idl:
+          Renamed Configurator to Configuration
+
 Tue Dec 12 14:48:57 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ciao/CCM_Base.idl:
