@@ -36,8 +36,6 @@ TAO_ServerRequest::TAO_ServerRequest (void)
   , reply_status_ (-1)
 #endif  /* TAO_HAS_INTERCEPTORS == 1 */
 {
-  if (this->release_operation_)
-    CORBA::string_free (const_cast<char*> (this->operation_));
 }
 
 ACE_INLINE TAO_ORB_Core *
