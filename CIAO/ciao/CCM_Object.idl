@@ -14,27 +14,29 @@
 #if !defined (CCM_OBJECT_IDL)
 #define CCM_OBJECT_IDL
 
-#include "ciao/CCM_Event.idl"
+#include "ciao/CCM_Events.idl"
 #include "ciao/CCM_Navigation.idl"
 #include "ciao/CCM_Home.idl"
+#include "ciao/CCM_PrimaryKeyBase.idl"
 
 module Components
 {
   typeprefix Components "omg.org";
 
+  /// This typedef and consts shouldn't be here but are here because of CIAO
+  /// specific additions
   typedef FailureReason InvalidConfigurationReason;
   const InvalidConfigurationReason UnknownConfigValueName = 0;
   const InvalidConfigurationReason InvalidConfigValueType = 1;
   const InvalidConfigurationReason ConfigValueRequired = 2;
   const InvalidConfigurationReason ConfigValueNotExpected = 3;
 
+  /// Shouldn't be here but is now here because of CIAO additions
   exception InvalidConfiguration
   {
     InvalidConfigurationReason reason;
     FeatureName name;
   };
-
-  abstract valuetype PrimaryKeyBase {};
 
   valuetype ComponentPortDescription
   {
@@ -45,6 +47,7 @@ module Components
     public PublisherDescriptions publishers;
   };
 
+  /// CIAO specific forward declaration, shouldn't be here
   interface StandardConfigurator;
 
   exception NoKeyAvailable {};
@@ -55,11 +58,14 @@ module Components
     CCMHome get_ccm_home( );
     PrimaryKeyBase get_primary_key( )
       raises (NoKeyAvailable);
+    void configuration_complete ()
+      raises (InvalidConfiguration);
     void remove()
       raises (RemoveFailure);
     ComponentPortDescription get_all_ports ();
 
-    /// Factory method to return a StandardConfigurator interface. CIAO specific
+    /// Factory method to return a StandardConfigurator interface.
+    /// CIAO specific
     StandardConfigurator get_standard_configurator ( );
 
     /// CIAO specific operations to have some control on when and how
@@ -84,16 +90,16 @@ module Components
     void ciao_preactivate ()
       raises (InvalidConfiguration);
 
+    /// CIAO specific
     void ciao_activate ()
       raises (InvalidConfiguration);
 
+    /// CIAO specific
     void ciao_postactivate ()
       raises (InvalidConfiguration);
 
+    /// CIAO specific
     void ciao_passivate ()
-      raises (InvalidConfiguration);
-
-    void configuration_complete ()
       raises (InvalidConfiguration);
   };
 };
