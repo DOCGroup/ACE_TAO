@@ -3528,6 +3528,16 @@ ACE_CHECK_LACKS_FUNCS(inet_aton)
 
 ACE_CHECK_LACKS_FUNCS(isatty)
 
+AC_CHECK_FUNC(isastream)
+if test $ac_cv_func_isastream = yes; then
+  AC_CHECK_DECL([isastream],
+                [AC_DEFINE([ACE_HAS_ISASTREAM_PROTOTYPE], 1,
+                           [Define to 1 if platform has the declaration
+                            of isastream().])],
+                [],
+                [#include <stropts.h>])
+fi
+
 ACE_CHECK_HAS_FUNCS(itoa)
 
 dnl Check for 64 bit llseek() or lseek64()
