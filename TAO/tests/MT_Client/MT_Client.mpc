@@ -1,19 +1,36 @@
 // -*- MPC -*-
 // $Id$
 
+project(*idl): taoidldefaults {
+  IDL_Files {
+    test.idl
+  }
+  custom_only = 1
+}
+
 project(*Server): taoserver {
-  idlflags += -Sa -St
+  after += *idl
   Source_Files {
     test_i.cpp
     server.cpp
   }
-}
-
-project(*Client): taoclient {
-  after += *Server
   Source_Files {
     testC.cpp
-    client.cpp
+    testS.cpp
+  }
+  IDL_Files {
   }
 }
 
+project(*Client): taoclient {
+  after += *idl
+  after += *Server
+  Source_Files {
+    client.cpp
+  }
+  Source_Files {
+    testC.cpp
+  }
+  IDL_Files {
+  }
+}

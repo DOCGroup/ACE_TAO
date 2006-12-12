@@ -17,14 +17,10 @@ TAO_IDLFLAGS = -Ge 1 -Wb,pre_include=ace/pre.h -Wb,post_include=ace/post.h -I$(T
 TAO_ROOT = $(top_srcdir)
 
 noinst_PROGRAMS =
-CLEANFILES =
-BUILT_SOURCES =
 
-## Makefile.Multiple_Server.am
+## Makefile.Multiple_Idl.am
 
-if BUILD_EXCEPTIONS
-
-BUILT_SOURCES += \
+BUILT_SOURCES = \
   MultipleC.cpp \
   MultipleC.h \
   MultipleC.inl \
@@ -32,7 +28,7 @@ BUILT_SOURCES += \
   MultipleS.h \
   MultipleS.inl
 
-CLEANFILES += \
+CLEANFILES = \
   Multiple-stamp \
   MultipleC.cpp \
   MultipleC.h \
@@ -44,8 +40,16 @@ CLEANFILES += \
 MultipleC.cpp MultipleC.h MultipleC.inl MultipleS.cpp MultipleS.h MultipleS.inl: Multiple-stamp
 
 Multiple-stamp: $(srcdir)/Multiple.idl $(TAO_IDL_DEP)
-	$(TAO_IDL) $(TAO_IDLFLAGS) -Gd $(srcdir)/Multiple.idl
+	$(TAO_IDL) $(TAO_IDLFLAGS) -Sa -St -Gd $(srcdir)/Multiple.idl
 	@touch $@
+
+
+noinst_HEADERS = \
+  Multiple.idl
+
+## Makefile.Multiple_Server.am
+
+if BUILD_EXCEPTIONS
 
 noinst_PROGRAMS += server
 
@@ -62,10 +66,6 @@ server_SOURCES = \
   Multiple_Impl.cpp \
   server.cpp \
   Collocation_Tester.h \
-  MultipleC.h \
-  MultipleC.inl \
-  MultipleS.h \
-  MultipleS.inl \
   Multiple_Impl.h
 
 server_LDADD = \
@@ -79,29 +79,6 @@ endif BUILD_EXCEPTIONS
 ## Makefile.Multiple_Client.am
 
 if BUILD_EXCEPTIONS
-
-BUILT_SOURCES += \
-  MultipleC.cpp \
-  MultipleC.h \
-  MultipleC.inl \
-  MultipleS.cpp \
-  MultipleS.h \
-  MultipleS.inl
-
-CLEANFILES += \
-  Multiple-stamp \
-  MultipleC.cpp \
-  MultipleC.h \
-  MultipleC.inl \
-  MultipleS.cpp \
-  MultipleS.h \
-  MultipleS.inl
-
-MultipleC.cpp MultipleC.h MultipleC.inl MultipleS.cpp MultipleS.h MultipleS.inl: Multiple-stamp
-
-Multiple-stamp: $(srcdir)/Multiple.idl $(TAO_IDL_DEP)
-	$(TAO_IDL) $(TAO_IDLFLAGS) -Gd $(srcdir)/Multiple.idl
-	@touch $@
 
 noinst_PROGRAMS += client
 
@@ -118,10 +95,6 @@ client_SOURCES = \
   Multiple_Impl.cpp \
   client.cpp \
   Collocation_Tester.h \
-  MultipleC.h \
-  MultipleC.inl \
-  MultipleS.h \
-  MultipleS.inl \
   Multiple_Impl.h
 
 client_LDADD = \

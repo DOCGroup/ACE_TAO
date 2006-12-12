@@ -17,15 +17,10 @@ TAO_IDLFLAGS = -Ge 1 -Wb,pre_include=ace/pre.h -Wb,post_include=ace/post.h -I$(T
 TAO_ROOT = $(top_srcdir)
 
 noinst_PROGRAMS =
-CLEANFILES =
-BUILT_SOURCES =
 
-## Makefile.Exposed_Policies_Server.am
+## Makefile.Exposed_Policies_Idl.am
 
-if BUILD_EXCEPTIONS
-if BUILD_RT_CORBA
-
-BUILT_SOURCES += \
+BUILT_SOURCES = \
   CounterC.cpp \
   CounterC.h \
   CounterC.inl \
@@ -33,7 +28,7 @@ BUILT_SOURCES += \
   CounterS.h \
   CounterS.inl
 
-CLEANFILES += \
+CLEANFILES = \
   Counter-stamp \
   CounterC.cpp \
   CounterC.h \
@@ -45,8 +40,17 @@ CLEANFILES += \
 CounterC.cpp CounterC.h CounterC.inl CounterS.cpp CounterS.h CounterS.inl: Counter-stamp
 
 Counter-stamp: $(srcdir)/Counter.idl $(TAO_IDL_DEP)
-	$(TAO_IDL) $(TAO_IDLFLAGS) $(srcdir)/Counter.idl
+	$(TAO_IDL) $(TAO_IDLFLAGS) -Sa -St $(srcdir)/Counter.idl
 	@touch $@
+
+
+noinst_HEADERS = \
+  Counter.idl
+
+## Makefile.Exposed_Policies_Server.am
+
+if BUILD_EXCEPTIONS
+if BUILD_RT_CORBA
 
 noinst_PROGRAMS += server
 
@@ -63,10 +67,6 @@ server_SOURCES = \
   Policy_Verifier.cpp \
   RT_Properties.cpp \
   server.cpp \
-  CounterC.h \
-  CounterC.inl \
-  CounterS.h \
-  CounterS.inl \
   Policy_Tester.h \
   Policy_Verifier.h \
   RT_Properties.h
@@ -90,27 +90,6 @@ endif BUILD_EXCEPTIONS
 if BUILD_EXCEPTIONS
 if BUILD_RT_CORBA
 
-BUILT_SOURCES += \
-  CounterC.cpp \
-  CounterC.h \
-  CounterC.inl \
-  CounterS.h \
-  CounterS.inl
-
-CLEANFILES += \
-  Counter-stamp \
-  CounterC.cpp \
-  CounterC.h \
-  CounterC.inl \
-  CounterS.h \
-  CounterS.inl
-
-CounterC.cpp CounterC.h CounterC.inl CounterS.h CounterS.inl: Counter-stamp
-
-Counter-stamp: $(srcdir)/Counter.idl $(TAO_IDL_DEP)
-	$(TAO_IDL) $(TAO_IDLFLAGS) $(srcdir)/Counter.idl
-	@touch $@
-
 noinst_PROGRAMS += client
 
 client_CPPFLAGS = \
@@ -125,10 +104,6 @@ client_SOURCES = \
   Policy_Verifier.cpp \
   RT_Properties.cpp \
   client.cpp \
-  CounterC.h \
-  CounterC.inl \
-  CounterS.h \
-  CounterS.inl \
   Policy_Tester.h \
   Policy_Verifier.h \
   RT_Properties.h
