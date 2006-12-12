@@ -2040,7 +2040,7 @@ purge_connections (Deployment::Connections_var & connections,
     }
 }
 
-Deployment::Properties *
+const Deployment::Properties *
 CIAO::DomainApplicationManager_Impl::
 get_connection_QoS_configuration (const Deployment::Requirement & requirement)
 {
