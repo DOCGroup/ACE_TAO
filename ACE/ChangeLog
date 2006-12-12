@@ -1,3 +1,9 @@
+Tue Dec 12 15:08:32 UTC 2006  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/tao_other_tests.lst:
+
+          Added the Trading unit test to the list.
+
 Tue Dec 12 13:47:44 UTC 2006  Steve Huston  <shuston@riverace.com>
 
         * apps/JAWS2/HTTPU/httpu.mpc: Corrected build flags and added required
