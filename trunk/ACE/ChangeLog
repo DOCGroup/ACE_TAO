@@ -1,3 +1,12 @@
+Tue Dec 12 17:01:42 UTC 2006  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * bin/MakeProjectCreator/config/MPC.cfg:
+        
+          Added $DDS_ROOT/MPC/config to the includes, since the
+          .mpb files in DDS have been moved to this location, making
+          them consistent with the location of similar files in
+          TAO and CIAO.
+
 Tue Dec 12 15:08:32 UTC 2006  Chad Elliott  <elliott_c@ociweb.com>
 
         * bin/tao_other_tests.lst:
