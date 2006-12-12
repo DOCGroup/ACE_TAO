@@ -14,9 +14,9 @@
 #include "CIAO_RTEvent.h"
 #include "ciao/CIAO_common.h"
 #include "SimpleAddressServer.h"
-#include <tao/ORB_Core.h>
+#include "tao/ORB_Core.h"
 #include "tao/AnyTypeCode/Any_Unknown_IDL_Type.h"
-#include <orbsvcs/CosNamingC.h>
+#include "orbsvcs/CosNamingC.h"
 
 #include <sstream>
 
