@@ -3,8 +3,16 @@
 
 project(HTTPU) : acelib {
     sharedname = HTTPU
+    dynamicflags += HTTPU_BUILD_DLL
     avoids += uses_wchar ace_for_tao
-    includes += ..
+    libs += JAWS2
+
+    specific (automake) {
+      includes += $(srcdir)/..
+    } else {
+      includes += ..
+    }
+
     Source_Files {
         *.cpp
     }

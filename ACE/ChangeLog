@@ -1,3 +1,8 @@
+Tue Dec 12 13:47:44 UTC 2006  Steve Huston  <shuston@riverace.com>
+
+        * apps/JAWS2/HTTPU/httpu.mpc: Corrected build flags and added required
+          link library JAWS2.
+
 Tue Dec 12 06:05:38 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
 
         * configure.ac:
