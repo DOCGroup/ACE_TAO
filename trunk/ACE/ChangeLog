@@ -1,9 +1,16 @@
+Tue Dec 12 19:54:04 UTC 2006  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/fuzz.pl:
+
+          Changed the regular expression to recognize #include's of files
+          with double quotes within a version block.
+
 Tue Dec 12 19:31:39 UTC 2006  Chad Elliott  <elliott_c@ociweb.com>
 
         * bin/fuzz.pl:
 
           Corrected a bug where a non-ACE/TAO/CIAO file included within a
-          versioned block was being marked as an error.
+          version block was being marked as an error.
 
 Tue Dec 12 17:01:42 UTC 2006  Jeff Parsons <j.parsons@vanderbilt.edu>
 

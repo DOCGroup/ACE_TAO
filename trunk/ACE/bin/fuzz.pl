@@ -748,7 +748,7 @@ sub check_for_versioned_namespace_begin_end ()
           ++$end_count;
         }
         if ($begin_count > $end_count and
-            /^\s*#\s*include\s*["<](ace|tao|ciao)\//i) {
+            /^\s*#\s*include(\s*\/\*\*\/)?\s*"/) {
           print_error ("$file:$.: #include directive within Versioned namespace block");
         }
       }
