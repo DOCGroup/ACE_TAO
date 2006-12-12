@@ -5,6 +5,7 @@ project(HTTPU) : acelib {
     sharedname = HTTPU
     dynamicflags += HTTPU_BUILD_DLL
     avoids += uses_wchar ace_for_tao
+    after += JAWS2
     libs += JAWS2
 
     specific (automake) {
