@@ -1,3 +1,17 @@
+Tue Dec 12 17:28:14 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * Configure Makefiles for new subdirectories.
+
+        * orbsvcs/tests/Makefile.am:
+
+          Regenerate to descend into unit test subdirectory.
+
+        * orbsvcs/tests/unit/Trading/Interpreter/Makefile.am:
+        * orbsvcs/tests/unit/Trading/Makefile.am:
+        * orbsvcs/tests/unit/Makefile.am:
+
+          New Makefile.am's for trading service unit tests.
+
 Tue Dec 12 17:24:02 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* orbsvcs/orbsvcs/Makefile.am:
