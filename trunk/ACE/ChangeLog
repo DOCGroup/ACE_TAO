@@ -1,3 +1,9 @@
+Tue Dec 12 06:00:09 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * configure.ac:
+
+          Add ACE_HAS_PTHREAD_SIGMASK_PROTOTYPE feature test.
+
 Tue Dec 12 05:13:33 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
 
         * configure.ac:
