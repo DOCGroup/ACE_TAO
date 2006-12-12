@@ -1,3 +1,8 @@
+Tue Dec 12 14:21:57 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/IFR_Client/IFR_Client_Adapter_Impl.h:
+          Fixed link problems with CORBA/e
+
 Tue Dec 12 12:31:45 UTC 2006  Chad Elliott  <elliott_c@ociweb.com>
 
         * tao/TAO_Server_Request.inl:
