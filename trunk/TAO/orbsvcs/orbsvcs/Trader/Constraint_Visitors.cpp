@@ -3,6 +3,7 @@
 #include "orbsvcs/Trader/Constraint_Visitors.h"
 #include "orbsvcs/Trader/Constraint_Nodes.h"
 #include "orbsvcs/Trader/Interpreter_Utils_T.h"
+#include "orbsvcs/Trader/Constraint_Tokens.h"
 
 #include "tao/DynamicAny/DynSequence_i.h"
 
@@ -132,7 +133,7 @@ TAO_Constraint_Evaluator::visit_max (TAO_Unary_Constraint* unary_max)
 int
 TAO_Constraint_Evaluator::visit_random (TAO_Noop_Constraint *)
 {
-  TAO_Literal_Constraint random ((CORBA::Long) (ACE_OS::rand ()));
+  TAO_Literal_Constraint random (static_cast<CORBA::LongLong> (ACE_OS::rand ()));
   this->queue_.enqueue_head (random);
   return 0;
 }
@@ -140,7 +141,7 @@ TAO_Constraint_Evaluator::visit_random (TAO_Noop_Constraint *)
 int
 TAO_Constraint_Evaluator::visit_first (TAO_Noop_Constraint *)
 {
-  TAO_Literal_Constraint first ((CORBA::Long) 0);
+  TAO_Literal_Constraint first (static_cast<CORBA::LongLong> (0));
   this->queue_.enqueue_head (first);
   return 0;
 }
@@ -540,25 +541,37 @@ sequence_does_contain (CORBA::Any* sequence,
     {
     case CORBA::tk_short:
       {
-        CORBA::Long value = element;
+        CORBA::LongLong value = element;
         return_value = ::TAO_find (*sequence, static_cast<CORBA::Short> (value));
       }
     break;
     case CORBA::tk_ushort:
       {
-        CORBA::ULong value = element;
+        CORBA::ULongLong value = element;
         return_value = ::TAO_find (*sequence, static_cast<CORBA::UShort> (value));
       }
       break;
     case CORBA::tk_long:
       {
-        CORBA::Long value = element;
-        return_value = ::TAO_find (*sequence, value);
+        CORBA::LongLong value = element;
+        return_value = ::TAO_find (*sequence, static_cast<CORBA::Long> (value));
       }
       break;
     case CORBA::tk_ulong:
       {
-        CORBA::ULong value = element;
+        CORBA::ULongLong value = element;
+        return_value = ::TAO_find (*sequence, static_cast<CORBA::ULong> (value));
+      }
+      break;
+    case CORBA::tk_longlong:
+      {
+        CORBA::LongLong value = element;
+        return_value = ::TAO_find (*sequence, value);
+      }
+      break;
+    case CORBA::tk_ulonglong:
+      {
+        CORBA::ULongLong value = element;
         return_value = ::TAO_find (*sequence, value);
       }
       break;
@@ -661,6 +674,44 @@ operator () (TAO_DynSequence_i& dyn_any,
   ACE_TRY_NEW_ENV
     {
       CORBA::ULong value = dyn_any.get_ulong (ACE_ENV_SINGLE_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+      return_value = (value == element);
+    }
+  ACE_CATCHANY
+    {
+    }
+  ACE_ENDTRY;
+  return return_value;
+}
+
+int
+TAO_Element_Equal<CORBA::LongLong>::
+operator () (TAO_DynSequence_i& dyn_any,
+             CORBA::LongLong element) const
+{
+  int return_value = 0;
+  ACE_TRY_NEW_ENV
+    {
+      CORBA::LongLong value = dyn_any.get_longlong (ACE_ENV_SINGLE_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+      return_value = (value == element);
+    }
+  ACE_CATCHANY
+    {
+    }
+  ACE_ENDTRY;
+  return return_value;
+}
+
+int
+TAO_Element_Equal<CORBA::ULongLong>::
+operator () (TAO_DynSequence_i& dyn_any,
+             CORBA::ULongLong element) const
+{
+  int return_value = 0;
+  ACE_TRY_NEW_ENV
+    {
+      CORBA::ULongLong value = dyn_any.get_ulonglong (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
       return_value = (value == element);
     }
@@ -944,15 +995,18 @@ visit_div (TAO_Binary_Constraint* boolean_div)
         {
         case TAO_UNSIGNED:
           right_isnt_zero =
-            ((CORBA::ULong) (*((TAO_Literal_Constraint*) right)) != 0);
+            (static_cast<CORBA::ULongLong>
+               (*dynamic_cast<TAO_Literal_Constraint*> (right)) != 0);
           break;
         case TAO_SIGNED:
           right_isnt_zero =
-            ((CORBA::Long) (*((TAO_Literal_Constraint*) right)) != 0);
+            (static_cast<CORBA::LongLong>
+               (*dynamic_cast<TAO_Literal_Constraint*> (right)) != 0);
           break;
         case TAO_DOUBLE:
           right_isnt_zero =
-            ((CORBA::Double) (*((TAO_Literal_Constraint*) right)) != 0.0);
+            (static_cast<CORBA::Double>
+               (*dynamic_cast<TAO_Literal_Constraint*> (right)) != 0.0);
           break;
         }
 
@@ -1182,7 +1236,7 @@ TAO_Constraint_Validator::expr_returns_number (TAO_Expression_Type expr_type)
   int return_value = 0;
 
   if ((expr_type >= TAO_PLUS && expr_type <= TAO_NUMBER) ||
-      (expr_type >= TAO_UNSIGNED && expr_type <= TAO_DOUBLE))
+      (expr_type >= TAO_SIGNED && expr_type <= TAO_DOUBLE))
     return_value = 1;
 
   return return_value;

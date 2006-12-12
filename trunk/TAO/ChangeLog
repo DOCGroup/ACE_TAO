@@ -1,3 +1,68 @@
+Tue Dec 12 15:05:04 UTC 2006  Chad Elliott  <elliott_c@ociweb.com>
+
+        * NEWS:
+
+          Provided an overview of the following changes.
+
+        * orbsvcs/orbsvcs/CosTrading.mpc:
+
+          Added a verbatim section to automate the regeneration of the lex
+          file for the Trader Server library.  Which includes running the 
+          lex output through sed and then patching at the end.           
+
+        * orbsvcs/orbsvcs/Trader/Constraint_Nodes.h:
+        * orbsvcs/orbsvcs/Trader/Constraint_Nodes.cpp:
+
+          Switched from using CORBA::Long/CORBA::ULong to
+          CORBA::LongLong/CORBA::ULongLong to support 64-bit integers.  The
+          union contains various integral types and to support both Long and
+          LongLong would be redundant.                                      
+        
+        * orbsvcs/orbsvcs/Trader/Constraint_Visitors.h:
+        * orbsvcs/orbsvcs/Trader/Constraint_Visitors.cpp:
+
+          Added support dynamic sequences of CORBA::LongLong/
+          CORBA::ULongLong.
+
+        * orbsvcs/orbsvcs/Trader/Constraint_l.cpp.diff:
+        * orbsvcs/orbsvcs/Trader/Constraint_l.cpp:
+        * orbsvcs/orbsvcs/Trader/constraint.l:
+
+          Updated the {float} regular expression to allow negative values
+          for floating point numbers.
+
+          Added support for CORBA::LongLong and CORBA::ULongLong.  Since all
+          integers are stored as 64-bit values instead of 32-bit values two 
+          conversion functions (trader_stroll and trader_stroull) are used  
+          to convert text into CORBA::LongLong and CORBA::ULongLong.  They  
+          are good candidates for moving into ACE as emulation for platforms
+          that do not natively support strtoll and stroull.
+
+          Also, fixed an issue where negative integers were being stored and
+          compared as unsigned integers.
+
+        * orbsvcs/orbsvcs/Trader/Constraint_Interpreter.cpp:
+        * orbsvcs/orbsvcs/Trader/Interpreter.h:
+        * orbsvcs/orbsvcs/Trader/Constraint_Tokens.h:
+        * orbsvcs/orbsvcs/Trader/Constraint_y.cpp:
+        * orbsvcs/orbsvcs/Trader/constraint.y:
+
+          Switched the order of the TAO_SIGNED and TAO_UNSIGNED tokens which
+          are used by the TAO_Literal_Constraint to determine the widest    
+          integral type.
+
+        * orbsvcs/tests/Trading/TT_Info.cpp:
+
+          Added a query to use a negative floating point number and a query
+          to use a number that would exceed the size of a CORBA::Long.
+
+        * orbsvcs/tests/unit/Trading/Interpreter/Interpreter.cpp:
+        * orbsvcs/tests/unit/Trading/Interpreter/Interpreter.mpc:
+        * orbsvcs/tests/unit/Trading/Interpreter/run_test.pl:
+
+          This unit test exercises the lexer for literal constraints as well
+          as the comparison of various mixed literal constraints.           
+
 Tue Dec 12 14:21:57 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/IFR_Client/IFR_Client_Adapter_Impl.h:
