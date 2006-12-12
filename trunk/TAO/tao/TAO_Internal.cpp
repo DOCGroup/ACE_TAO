@@ -177,14 +177,8 @@ class TAO_Ubergestalt_Ready_Condition
 public:
   static TAO_Ubergestalt_Ready_Condition* instance (void)
   {
-    // The first thread to get here will initialize the static
-    // local. Any subsequent threads synchronizaton will be handled by
-    // TAO_Singleton
-    static TAO_Ubergestalt_Ready_Condition *i_ =
-      TAO_Singleton <TAO_Ubergestalt_Ready_Condition,
-                     TAO_SYNCH_RECURSIVE_MUTEX>::instance ();
-
-    return i_;
+    return TAO_Singleton <TAO_Ubergestalt_Ready_Condition,
+      TAO_SYNCH_RECURSIVE_MUTEX>::instance ();
   };
 
   TAO_Ubergestalt_Ready_Condition (void)
