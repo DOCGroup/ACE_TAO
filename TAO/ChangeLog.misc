@@ -1,0 +1,31 @@
+Mon Dec 11 23:06:43 UTC 2006  Chris Cleeland  <cleeland_c@ociweb.com>
+
+        * orbsvcs/tests/Bug_1393_Regression/run_test.pl:
+        * orbsvcs/tests/Bug_1395_Regression/run_test.pl:
+        * orbsvcs/tests/Bug_1436_Regression/run_test.pl:
+        * orbsvcs/tests/Bug_1437_Regression/run_test.pl:
+        * orbsvcs/tests/Bug_2615_Regression/run_test.pl:
+        * orbsvcs/tests/Event/Performance/run_test.pl:
+        * orbsvcs/tests/ImplRepo/NameService/run_test.pl:
+        * orbsvcs/tests/ImplRepo/locked/run_test.pl:
+        * orbsvcs/tests/ImplRepo/run_test.pl:
+        * orbsvcs/tests/InterfaceRepo/Application_Test/run_test.pl:
+        * orbsvcs/tests/InterfaceRepo/IFR_Inheritance_Test/run_test.pl:
+        * orbsvcs/tests/RTCosScheduling/run_test.pl:
+        * orbsvcs/tests/Security/Big_Request/run_test.pl:
+        * orbsvcs/tests/Security/Callback/run_test.pl:
+        * orbsvcs/tests/Security/Secure_Invocation/run_test.pl:
+        * tests/COIOP/run_test.pl:
+        * tests/DLL_ORB/run_test.pl:
+        * tests/Portable_Interceptors/IORInterceptor/run_test.pl:
+        * tests/Portable_Interceptors/PICurrent/run_test.pl:
+        * tests/Portable_Interceptors/PolicyFactory/run_test.pl:
+        * tests/Portable_Interceptors/Request_Interceptor_Flow/run_test.pl:
+        * utils/nslist/run_test.pl:
+
+          Changed relative paths to $ACE_ROOT/bin in these scripts to
+          reference directly via the ACE_ROOT environment variable so
+          that the scripts would work properly when run in a workspace
+	  that does not use the traditional everything-under-ACE_wrappers
+	  directory hierarchy.
+
