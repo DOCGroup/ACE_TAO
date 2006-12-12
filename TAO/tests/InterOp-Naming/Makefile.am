@@ -17,14 +17,10 @@ TAO_IDLFLAGS = -Ge 1 -Wb,pre_include=ace/pre.h -Wb,post_include=ace/post.h -I$(T
 TAO_ROOT = $(top_srcdir)
 
 noinst_PROGRAMS =
-CLEANFILES =
-BUILT_SOURCES =
 
-## Makefile.InterOp_Naming_Server.am
+## Makefile.InterOp_Naming_Idl.am
 
-if BUILD_EXCEPTIONS
-
-BUILT_SOURCES += \
+BUILT_SOURCES = \
   INSC.cpp \
   INSC.h \
   INSC.inl \
@@ -32,7 +28,7 @@ BUILT_SOURCES += \
   INSS.h \
   INSS.inl
 
-CLEANFILES += \
+CLEANFILES = \
   INS-stamp \
   INSC.cpp \
   INSC.h \
@@ -44,8 +40,16 @@ CLEANFILES += \
 INSC.cpp INSC.h INSC.inl INSS.cpp INSS.h INSS.inl: INS-stamp
 
 INS-stamp: $(srcdir)/INS.idl $(TAO_IDL_DEP)
-	$(TAO_IDL) $(TAO_IDLFLAGS) $(srcdir)/INS.idl
+	$(TAO_IDL) $(TAO_IDLFLAGS) -Sa -St $(srcdir)/INS.idl
 	@touch $@
+
+
+noinst_HEADERS = \
+  INS.idl
+
+## Makefile.InterOp_Naming_Server.am
+
+if BUILD_EXCEPTIONS
 
 noinst_PROGRAMS += INS_test_server
 
@@ -61,10 +65,6 @@ INS_test_server_SOURCES = \
   INS_i.cpp \
   INS_test_server.cpp \
   Server_i.cpp \
-  INSC.h \
-  INSC.inl \
-  INSS.h \
-  INSS.inl \
   INS_i.h \
   Server_i.h
 
@@ -84,27 +84,6 @@ endif BUILD_EXCEPTIONS
 
 if BUILD_EXCEPTIONS
 
-BUILT_SOURCES += \
-  INSC.cpp \
-  INSC.h \
-  INSC.inl \
-  INSS.h \
-  INSS.inl
-
-CLEANFILES += \
-  INS-stamp \
-  INSC.cpp \
-  INSC.h \
-  INSC.inl \
-  INSS.h \
-  INSS.inl
-
-INSC.cpp INSC.h INSC.inl INSS.h INSS.inl: INS-stamp
-
-INS-stamp: $(srcdir)/INS.idl $(TAO_IDL_DEP)
-	$(TAO_IDL) $(TAO_IDLFLAGS) $(srcdir)/INS.idl
-	@touch $@
-
 noinst_PROGRAMS += INS_test_client
 
 INS_test_client_CPPFLAGS = \
@@ -116,10 +95,8 @@ INS_test_client_CPPFLAGS = \
 INS_test_client_SOURCES = \
   INSC.cpp \
   INS_test_client.cpp \
-  INSC.h \
-  INSC.inl \
-  INSS.h \
-  INSS.inl
+  INS_i.h \
+  Server_i.h
 
 INS_test_client_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO_AnyTypeCode.la \

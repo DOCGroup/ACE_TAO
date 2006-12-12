@@ -1,26 +1,54 @@
 // -*- MPC -*-
 // $Id$
 
+project(*Nested_Upcall_Server_Idl): taoidldefaults {
+  IDL_Files {
+    Triangle_Test.idl
+  }
+  custom_only = 1
+}
+
 project(*Nested_Upcall_Server_A): taoexe, utils, portableserver {
+  after += *Nested_Upcall_Server_Idl
   Source_Files {
     Object_A_i.cpp
     server_A.cpp
   }
+  Source_Files {
+    Triangle_TestC.cpp
+    Triangle_TestS.cpp
+  }
+  IDL_Files {
+  }
 }
 
 project(*Nested_Upcall_Server_B): taoexe, utils, portableserver {
-  after += *Nested_Upcal_Server_A
+  after += *Nested_Upcall_Server_Idl
+  after += *Nested_Upcall_Server_A
   Source_Files {
     Object_B_i.cpp
     server_B.cpp
   }
+  Source_Files {
+    Triangle_TestC.cpp
+    Triangle_TestS.cpp
+  }
+  IDL_Files {
+  }
 }
 
 project(*Nested_Upcall_Initiator): taoexe, utils, portableserver {
+  after += *Nested_Upcall_Server_Idl
   after += *Nested_Upcall_Server_B
   Source_Files {
     Initiator_i.cpp
     initiator.cpp
+  }
+  Source_Files {
+    Triangle_TestC.cpp
+    Triangle_TestS.cpp
+  }
+  IDL_Files {
   }
 }
 

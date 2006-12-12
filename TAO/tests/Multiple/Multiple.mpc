@@ -1,18 +1,32 @@
 // -*- MPC -*-
 // $Id$
 
-project(*Server): taoserver {
+project(*idl): taoidldefaults {
   idlflags += -Gd
+  IDL_Files {
+    Multiple.idl
+  }
+  custom_only = 1
+}
+
+project(*Server): taoserver {
+  after += *idl
 
   Source_Files {
     Multiple_Impl.cpp
     Collocation_Tester.cpp
     server.cpp
   }
+  Source_Files {
+     MultipleC.cpp    
+     MultipleS.cpp
+  }
+  IDL_Files {
+  }
 }
 
 project(*Client): taoexe, portableserver {
-  idlflags += -Gd
+  after += *idl
   after += *Server
 
   Source_Files {
@@ -20,5 +34,10 @@ project(*Client): taoexe, portableserver {
     Collocation_Tester.cpp
     client.cpp
   }
+  Source_Files {
+     MultipleC.cpp    
+     MultipleS.cpp
+  }
+  IDL_Files {
+  }
 }
-

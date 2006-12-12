@@ -17,14 +17,10 @@ TAO_IDLFLAGS = -Ge 1 -Wb,pre_include=ace/pre.h -Wb,post_include=ace/post.h -I$(T
 TAO_ROOT = $(top_srcdir)
 
 noinst_PROGRAMS =
-CLEANFILES =
-BUILT_SOURCES =
 
-## Makefile.MT_Client_Test_Nested_Upcall_Server.am
+## Makefile.MT_Client_Test_Nested_Upcall_Idl.am
 
-if BUILD_EXCEPTIONS
-
-BUILT_SOURCES += \
+BUILT_SOURCES = \
   MT_Client_TestC.cpp \
   MT_Client_TestC.h \
   MT_Client_TestC.inl \
@@ -32,7 +28,7 @@ BUILT_SOURCES += \
   MT_Client_TestS.h \
   MT_Client_TestS.inl
 
-CLEANFILES += \
+CLEANFILES = \
   MT_Client_Test-stamp \
   MT_Client_TestC.cpp \
   MT_Client_TestC.h \
@@ -44,8 +40,16 @@ CLEANFILES += \
 MT_Client_TestC.cpp MT_Client_TestC.h MT_Client_TestC.inl MT_Client_TestS.cpp MT_Client_TestS.h MT_Client_TestS.inl: MT_Client_Test-stamp
 
 MT_Client_Test-stamp: $(srcdir)/MT_Client_Test.idl $(TAO_IDL_DEP)
-	$(TAO_IDL) $(TAO_IDLFLAGS) $(srcdir)/MT_Client_Test.idl
+	$(TAO_IDL) $(TAO_IDLFLAGS) -Sa -St $(srcdir)/MT_Client_Test.idl
 	@touch $@
+
+
+noinst_HEADERS = \
+  MT_Client_Test.idl
+
+## Makefile.MT_Client_Test_Nested_Upcall_Server.am
+
+if BUILD_EXCEPTIONS
 
 noinst_PROGRAMS += server
 
@@ -60,10 +64,6 @@ server_SOURCES = \
   MT_Client_TestS.cpp \
   MT_Object_i.cpp \
   server.cpp \
-  MT_Client_TestC.h \
-  MT_Client_TestC.inl \
-  MT_Client_TestS.h \
-  MT_Client_TestS.inl \
   MT_Object_i.h \
   server.h
 
@@ -82,29 +82,6 @@ endif BUILD_EXCEPTIONS
 
 if BUILD_EXCEPTIONS
 
-BUILT_SOURCES += \
-  MT_Client_TestC.cpp \
-  MT_Client_TestC.h \
-  MT_Client_TestC.inl \
-  MT_Client_TestS.cpp \
-  MT_Client_TestS.h \
-  MT_Client_TestS.inl
-
-CLEANFILES += \
-  MT_Client_Test-stamp \
-  MT_Client_TestC.cpp \
-  MT_Client_TestC.h \
-  MT_Client_TestC.inl \
-  MT_Client_TestS.cpp \
-  MT_Client_TestS.h \
-  MT_Client_TestS.inl
-
-MT_Client_TestC.cpp MT_Client_TestC.h MT_Client_TestC.inl MT_Client_TestS.cpp MT_Client_TestS.h MT_Client_TestS.inl: MT_Client_Test-stamp
-
-MT_Client_Test-stamp: $(srcdir)/MT_Client_Test.idl $(TAO_IDL_DEP)
-	$(TAO_IDL) $(TAO_IDLFLAGS) $(srcdir)/MT_Client_Test.idl
-	@touch $@
-
 noinst_PROGRAMS += client
 
 client_CPPFLAGS = \
@@ -119,10 +96,6 @@ client_SOURCES = \
   MT_Object_i.cpp \
   client.cpp \
   local_server.cpp \
-  MT_Client_TestC.h \
-  MT_Client_TestC.inl \
-  MT_Client_TestS.h \
-  MT_Client_TestS.inl \
   MT_Object_i.h \
   client.h \
   local_server.h

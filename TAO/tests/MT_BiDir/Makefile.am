@@ -17,12 +17,31 @@ TAO_IDLFLAGS = -Ge 1 -Wb,pre_include=ace/pre.h -Wb,post_include=ace/post.h -I$(T
 TAO_ROOT = $(top_srcdir)
 
 noinst_PROGRAMS =
-CLEANFILES =
-BUILT_SOURCES =
 
-## Makefile.MT_BiDir_Server.am
+## Makefile.MT_BiDir_Idl.am
 
-if BUILD_EXCEPTIONS
+BUILT_SOURCES = \
+  ReceiverC.cpp \
+  ReceiverC.h \
+  ReceiverC.inl \
+  ReceiverS.cpp \
+  ReceiverS.h \
+  ReceiverS.inl
+
+CLEANFILES = \
+  Receiver-stamp \
+  ReceiverC.cpp \
+  ReceiverC.h \
+  ReceiverC.inl \
+  ReceiverS.cpp \
+  ReceiverS.h \
+  ReceiverS.inl
+
+ReceiverC.cpp ReceiverC.h ReceiverC.inl ReceiverS.cpp ReceiverS.h ReceiverS.inl: Receiver-stamp
+
+Receiver-stamp: $(srcdir)/Receiver.idl $(TAO_IDL_DEP)
+	$(TAO_IDL) $(TAO_IDLFLAGS) -Sa -St $(srcdir)/Receiver.idl
+	@touch $@
 
 BUILT_SOURCES += \
   SenderC.cpp \
@@ -44,29 +63,17 @@ CLEANFILES += \
 SenderC.cpp SenderC.h SenderC.inl SenderS.cpp SenderS.h SenderS.inl: Sender-stamp
 
 Sender-stamp: $(srcdir)/Sender.idl $(TAO_IDL_DEP)
-	$(TAO_IDL) $(TAO_IDLFLAGS) $(srcdir)/Sender.idl
+	$(TAO_IDL) $(TAO_IDLFLAGS) -Sa -St $(srcdir)/Sender.idl
 	@touch $@
 
-BUILT_SOURCES += \
-  ReceiverC.cpp \
-  ReceiverC.h \
-  ReceiverC.inl \
-  ReceiverS.h \
-  ReceiverS.inl
 
-CLEANFILES += \
-  Receiver-stamp \
-  ReceiverC.cpp \
-  ReceiverC.h \
-  ReceiverC.inl \
-  ReceiverS.h \
-  ReceiverS.inl
+noinst_HEADERS = \
+  Receiver.idl \
+  Sender.idl
 
-ReceiverC.cpp ReceiverC.h ReceiverC.inl ReceiverS.h ReceiverS.inl: Receiver-stamp
+## Makefile.MT_BiDir_Server.am
 
-Receiver-stamp: $(srcdir)/Receiver.idl $(TAO_IDL_DEP)
-	$(TAO_IDL) $(TAO_IDLFLAGS) $(srcdir)/Receiver.idl
-	@touch $@
+if BUILD_EXCEPTIONS
 
 noinst_PROGRAMS += server
 
@@ -83,14 +90,6 @@ server_SOURCES = \
   Sender_i.cpp \
   Server_Task.cpp \
   server.cpp \
-  ReceiverC.h \
-  ReceiverC.inl \
-  ReceiverS.h \
-  ReceiverS.inl \
-  SenderC.h \
-  SenderC.inl \
-  SenderS.h \
-  SenderS.inl \
   Sender_i.h \
   Server_Task.h
 
@@ -109,50 +108,6 @@ endif BUILD_EXCEPTIONS
 
 if BUILD_EXCEPTIONS
 
-BUILT_SOURCES += \
-  SenderC.cpp \
-  SenderC.h \
-  SenderC.inl \
-  SenderS.h \
-  SenderS.inl
-
-CLEANFILES += \
-  Sender-stamp \
-  SenderC.cpp \
-  SenderC.h \
-  SenderC.inl \
-  SenderS.h \
-  SenderS.inl
-
-SenderC.cpp SenderC.h SenderC.inl SenderS.h SenderS.inl: Sender-stamp
-
-Sender-stamp: $(srcdir)/Sender.idl $(TAO_IDL_DEP)
-	$(TAO_IDL) $(TAO_IDLFLAGS) $(srcdir)/Sender.idl
-	@touch $@
-
-BUILT_SOURCES += \
-  ReceiverC.cpp \
-  ReceiverC.h \
-  ReceiverC.inl \
-  ReceiverS.cpp \
-  ReceiverS.h \
-  ReceiverS.inl
-
-CLEANFILES += \
-  Receiver-stamp \
-  ReceiverC.cpp \
-  ReceiverC.h \
-  ReceiverC.inl \
-  ReceiverS.cpp \
-  ReceiverS.h \
-  ReceiverS.inl
-
-ReceiverC.cpp ReceiverC.h ReceiverC.inl ReceiverS.cpp ReceiverS.h ReceiverS.inl: Receiver-stamp
-
-Receiver-stamp: $(srcdir)/Receiver.idl $(TAO_IDL_DEP)
-	$(TAO_IDL) $(TAO_IDLFLAGS) $(srcdir)/Receiver.idl
-	@touch $@
-
 noinst_PROGRAMS += client
 
 client_CPPFLAGS = \
@@ -169,15 +124,7 @@ client_SOURCES = \
   SenderC.cpp \
   client.cpp \
   Client_Task.h \
-  ReceiverC.h \
-  ReceiverC.inl \
-  ReceiverS.h \
-  ReceiverS.inl \
-  Receiver_i.h \
-  SenderC.h \
-  SenderC.inl \
-  SenderS.h \
-  SenderS.inl
+  Receiver_i.h
 
 client_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO_BiDirGIOP.la \
