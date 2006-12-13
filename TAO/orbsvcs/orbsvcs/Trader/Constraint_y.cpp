@@ -285,7 +285,7 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 /* allocate initial stack or double stack size, up to YYMAXDEPTH */
 static int yygrowstack()
 {
-    int newsize, i;
+    size_t newsize, i;
     short *newss;
     YYSTYPE *newvs;
 
