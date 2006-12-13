@@ -161,10 +161,20 @@ namespace ACE_Utils
                              );
           }
 
-        ACE_NEW_RETURN (this->as_string_,
-                        ACE_CString (buf, UUID_STRING_LENGTH),
-                        0);
+        // We allocated 'buf' above dynamically, so we shouldn't use
+        // ACE_NEW_RETURN here to avoid a possible memory leak.
+        ACE_NEW_NORETURN (this->as_string_,
+                          ACE_CString (buf, UUID_STRING_LENGTH));
+
+        // we first free the dynamically allocated 'buf'.
         delete [] buf;
+
+        // then we test that ACE_NEW succeded for 'as_string_'
+        // if not, we return 0 (NULL) to indicate failure.
+        if( this->as_string_ == 0 )
+        {
+           return 0;
+        }
       }
 
     return as_string_;
