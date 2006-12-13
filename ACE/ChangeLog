@@ -1,3 +1,15 @@
+Tue Dec 12 23:50:43 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * NEWS:
+        
+          Document --enable-ace-reactor-notification-queue.
+
+        * m4/ace.m4:
+        
+          Add autoconf support for --enable-ace-reactor-notification-queue.  
+          Configuring with this option sets ACE_HAS_REACTOR_NOTIFICATION_QUEUE
+          in config.h.
+
 Wed Dec 13 01:41:19 UTC 2006  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
 
         * ace/UUID.cpp:

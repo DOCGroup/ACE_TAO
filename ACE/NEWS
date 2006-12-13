@@ -19,6 +19,11 @@ PLANNED CHANGES FOR "ACE-5.5.5"
 USER VISIBLE CHANGES BETWEEN ACE-5.5.4 and ACE-5.5.5
 ====================================================
 
+. Added --enable-ace-reactor-notification-queue configure script
+  option to the autoconf build for enabling the Reactor's userspace
+  notification queue (defines ACE_HAS_REACTOR_NOTIFICATION_QUEUE in
+  config.h).
+
 . The int ACE_OutputCDR::consolidate(void) method was contributed by
   Howard Finer at Sonus Networks. This method consolidates any continuation
   blocks used by an ACE_OutputCDR object into a single block. It's useful for
