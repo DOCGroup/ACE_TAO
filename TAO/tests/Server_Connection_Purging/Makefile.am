@@ -17,35 +17,10 @@ TAO_IDLFLAGS = -Ge 1 -Wb,pre_include=ace/pre.h -Wb,post_include=ace/post.h -I$(T
 TAO_ROOT = $(top_srcdir)
 
 noinst_PROGRAMS =
-CLEANFILES =
-BUILT_SOURCES =
 
 ## Makefile.Server_Connection_Purging_Server.am
 
 if BUILD_EXCEPTIONS
-
-BUILT_SOURCES += \
-  TestC.cpp \
-  TestC.h \
-  TestC.inl \
-  TestS.cpp \
-  TestS.h \
-  TestS.inl
-
-CLEANFILES += \
-  Test-stamp \
-  TestC.cpp \
-  TestC.h \
-  TestC.inl \
-  TestS.cpp \
-  TestS.h \
-  TestS.inl
-
-TestC.cpp TestC.h TestC.inl TestS.cpp TestS.h TestS.inl: Test-stamp
-
-Test-stamp: $(srcdir)/Test.idl $(TAO_IDL_DEP)
-	$(TAO_IDL) $(TAO_IDLFLAGS) $(srcdir)/Test.idl
-	@touch $@
 
 noinst_PROGRAMS += server
 
@@ -60,10 +35,6 @@ server_SOURCES = \
   TestS.cpp \
   Test_i.cpp \
   server.cpp \
-  TestC.h \
-  TestC.inl \
-  TestS.h \
-  TestS.inl \
   Test_i.h
 
 server_LDADD = \
@@ -78,27 +49,6 @@ endif BUILD_EXCEPTIONS
 
 if BUILD_EXCEPTIONS
 
-BUILT_SOURCES += \
-  TestC.cpp \
-  TestC.h \
-  TestC.inl \
-  TestS.h \
-  TestS.inl
-
-CLEANFILES += \
-  Test-stamp \
-  TestC.cpp \
-  TestC.h \
-  TestC.inl \
-  TestS.h \
-  TestS.inl
-
-TestC.cpp TestC.h TestC.inl TestS.h TestS.inl: Test-stamp
-
-Test-stamp: $(srcdir)/Test.idl $(TAO_IDL_DEP)
-	$(TAO_IDL) $(TAO_IDLFLAGS) $(srcdir)/Test.idl
-	@touch $@
-
 noinst_PROGRAMS += client
 
 client_CPPFLAGS = \
@@ -110,10 +60,7 @@ client_CPPFLAGS = \
 client_SOURCES = \
   TestC.cpp \
   client.cpp \
-  TestC.h \
-  TestC.inl \
-  TestS.h \
-  TestS.inl
+  Test_i.h
 
 client_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO_AnyTypeCode.la \
@@ -121,6 +68,35 @@ client_LDADD = \
   $(ACE_BUILDDIR)/ace/libACE.la
 
 endif BUILD_EXCEPTIONS
+
+## Makefile.Server_Connection_Purging_Tao.am
+
+BUILT_SOURCES = \
+  TestC.cpp \
+  TestC.h \
+  TestC.inl \
+  TestS.cpp \
+  TestS.h \
+  TestS.inl
+
+CLEANFILES = \
+  Test-stamp \
+  TestC.cpp \
+  TestC.h \
+  TestC.inl \
+  TestS.cpp \
+  TestS.h \
+  TestS.inl
+
+TestC.cpp TestC.h TestC.inl TestS.cpp TestS.h TestS.inl: Test-stamp
+
+Test-stamp: $(srcdir)/Test.idl $(TAO_IDL_DEP)
+	$(TAO_IDL) $(TAO_IDLFLAGS) -Sa -St $(srcdir)/Test.idl
+	@touch $@
+
+
+noinst_HEADERS = \
+  Test.idl
 
 ## Clean up template repositories, etc.
 clean-local:
