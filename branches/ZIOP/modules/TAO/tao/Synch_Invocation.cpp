@@ -87,10 +87,10 @@ namespace TAO
                                 TAO_Transport::TAO_TWOWAY_REQUEST,
                                 max_wait_time);
 
-        if (true)
+        // If the ORB has compression enabled and we do have arguments
+        if (this->orb_core ()->compression_enabled () && this->details_.argument_flag ())
           {
 // @todo We marshal the data here, so we should compress here
-// if there are no arguments no need to do compression stuff at all!
             TAO_OutputCDR compression_stream;
             this->marshal_data (compression_stream);
 
@@ -303,12 +303,12 @@ namespace TAO
      * exception. Success alone is returned through the return value.
      */
 
-    const int reply_error =
+    int const reply_error =
       this->resolver_.transport ()->wait_strategy ()->wait (max_wait_time,
                                                             rd);
     if (TAO_debug_level > 0 && max_wait_time != 0)
       {
-        const CORBA::ULong msecs = max_wait_time->msec ();
+        CORBA::ULong const msecs = max_wait_time->msec ();
 
         ACE_DEBUG ((LM_DEBUG,
                     "TAO (%P|%t) - Synch_Twoway_Invocation::wait_for_reply, "

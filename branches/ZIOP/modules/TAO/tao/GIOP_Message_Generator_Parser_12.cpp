@@ -349,7 +349,7 @@ TAO_GIOP_Message_Generator_Parser_12::parse_locate_header (
   // Get the stream .
   TAO_InputCDR &msg = request.incoming_stream ();
 
-  CORBA::Boolean hdr_status = 1;
+  CORBA::Boolean hdr_status = true;
 
   // Get the request id.
   CORBA::ULong req_id = 0;
