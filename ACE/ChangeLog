@@ -1,12 +1,20 @@
+Wed Dec 13 15:04:57 UTC 2006  Iliyan Jeliazkov  <iliyan@ociweb.com>
+
+        * bin/tao_orb_tests.lst:
+
+          Updated the configuration for ORB_Local_Config/Bug_2612 to
+          require a multithreaded build to reflect the design goals of the
+          test.
+
 Tue Dec 12 23:50:43 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
 
         * NEWS:
-        
+
           Document --enable-ace-reactor-notification-queue.
 
         * m4/ace.m4:
-        
-          Add autoconf support for --enable-ace-reactor-notification-queue.  
+
+          Add autoconf support for --enable-ace-reactor-notification-queue.
           Configuring with this option sets ACE_HAS_REACTOR_NOTIFICATION_QUEUE
           in config.h.
 
