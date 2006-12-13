@@ -1,3 +1,20 @@
+Wed Dec 13 12:43:04 UTC 2006  Chad Elliott  <elliott_c@ociweb.com>
+
+        * orbsvcs/orbsvcs/CosTrading.mpc:
+
+          Added search and replacement to both Constraint_l and Contraint_y
+          rules to avoid build warnings about conversion from long to int.
+
+        * orbsvcs/orbsvcs/Trader/Constraint_l.cpp:
+        * orbsvcs/orbsvcs/Trader/Constraint_y.cpp:
+
+          Regenerated.
+
+        * orbsvcs/orbsvcs/Trader/Interpreter.cpp:
+
+          Added a static_cast to avoid build warnings about conversion from
+          long to int.
+
 Wed Dec 13 07:19:26 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* tests/Server_Connection_Purging/Makefile.am:
