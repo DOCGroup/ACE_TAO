@@ -2097,15 +2097,19 @@ TAO_GIOP_Message_Base::set_giop_flags (TAO_OutputCDR & msg) const
   // Least significant bit:        Byte order
   ACE_SET_BITS (flags, TAO_ENCAP_BYTE_ORDER ^ msg.do_byte_swap ());
 
-// @todo Set the compression flag
-//  if (!(major <= 1 && minor <= 1))
-//     ACE_SET_BITS (flags, msg.more_fragments () << 2);
-
   // Second least significant bit: More fragments
   //
   // Only supported in GIOP 1.1 or better.
   if (!(major <= 1 && minor == 0))
     ACE_SET_BITS (flags, msg.more_fragments () << 1);
+
+  // Set the compression flag, at this moment we use bit 7, probably somewhere
+  // in the future compression will get standardized and get a different
+  // bit and then we can easily make sure we don't get problems with older
+  // versions that are then at that moment not spec compliant
+  // Only supported in GIOP 1.2 or better.
+  if (!(major <= 1 && minor <= 1))
+     ACE_SET_BITS (flags, msg.compressed () << 7);
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL

@@ -114,6 +114,9 @@ private:
   /// fragments.
   CORBA::Octet more_fragments_;
 
+  /// Do we have compressed data or not
+  CORBA::Octet compressed_;
+
   /// Missing data
   CORBA::ULong missing_data_;
 };

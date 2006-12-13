@@ -23,6 +23,7 @@ TAO_GIOP_Message_State::TAO_GIOP_Message_State (void)
     message_type_ (0),
     message_size_ (0),
     more_fragments_ (0),
+    compressed_ (0),
     missing_data_ (0)
 {
 }
@@ -203,6 +204,10 @@ TAO_GIOP_Message_State::get_byte_order_info (char *buf)
       // Read the fragment bit
       this->more_fragments_ =
         (CORBA::Octet) (buf[TAO_GIOP_MESSAGE_FLAGS_OFFSET]& 0x02);
+
+      // Read the compression bit
+      this->compressed_ =
+        (CORBA::Octet) (buf[TAO_GIOP_MESSAGE_FLAGS_OFFSET]& 0x08);
 
       if ((buf[TAO_GIOP_MESSAGE_FLAGS_OFFSET] & ~0x3) != 0)
         {

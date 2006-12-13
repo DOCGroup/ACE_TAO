@@ -22,6 +22,18 @@ TAO_OutputCDR::more_fragments (bool more)
 }
 
 ACE_INLINE void
+TAO_OutputCDR::compressed (bool set_compressed)
+{
+  this->compressed_ = set_compressed;
+}
+
+ACE_INLINE bool
+TAO_OutputCDR::compressed (void) const
+{
+  return this->compressed_;
+}
+
+ACE_INLINE void
 TAO_OutputCDR::message_attributes (CORBA::ULong request_id,
                                    TAO_Stub * stub,
                                    int message_semantics,

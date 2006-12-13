@@ -191,6 +191,12 @@ public:
   /// Specify whether there are more data fragments to come.
   void more_fragments (bool more);
 
+  /// Do we contain compressed data
+  bool compressed (void) const;
+
+  /// Specify whether we have compressed data or not
+  void compressed (bool set_compressed);
+
   /// Set fragmented message attributes.
   void message_attributes (CORBA::ULong request_id,
                            TAO_Stub * stub,
@@ -231,6 +237,9 @@ private:
 
   /// Are there more data fragments to come?
   bool more_fragments_;
+
+  /// Do we contain compressed data
+  bool compressed_;
 
   /// Request ID for the request currently being marshaled.
   CORBA::ULong request_id_;
