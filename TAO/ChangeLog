@@ -1,3 +1,29 @@
+Wed Dec 13 07:19:26 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* tests/Server_Connection_Purging/Makefile.am:
+	* tests/Server_Leaks/Makefile.am:
+	* tests/Single_Read/Makefile.am:
+	* tests/Smart_Proxies/Benchmark/Makefile.am:
+	* tests/Smart_Proxies/Makefile.am:
+	* tests/Smart_Proxies/On_Demand/Makefile.am:
+	* tests/Smart_Proxies/Policy/Makefile.am:
+	* tests/Smart_Proxies/dtor/Makefile.am:
+	* tests/Stack_Recursion/Makefile.am:
+
+          Regenerated.
+
+	* tests/Server_Connection_Purging/Server_Connection_Purging.mpc:
+	* tests/Server_Leaks/Server_Leaks.mpc:
+	* tests/Single_Read/Single_Read.mpc:
+	* tests/Smart_Proxies/Benchmark/SP_Benchmark.mpc:
+	* tests/Smart_Proxies/On_Demand/SP_On_Demand.mpc:
+	* tests/Smart_Proxies/Policy/SP_Policy.mpc:
+	* tests/Smart_Proxies/Smart_Proxies.mpc:
+	* tests/Smart_Proxies/dtor/dtor.mpc:
+	* tests/Stack_Recursion/Stack_Recursion.mpc:
+
+          Split out IDL compilation into separate MPC project.
+
 Wed Dec 13 06:53:57 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * examples/CSD_Strategy/ThreadPool5/CSD_Test_ThreadPool5.mpc:
