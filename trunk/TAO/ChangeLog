@@ -1,3 +1,10 @@
+Wed Dec 13 13:05:21 UTC 2006  Chad Elliott  <elliott_c@ociweb.com>
+
+        * orbsvcs/orbsvcs/Trader/Trader_Interfaces.cpp:
+
+          Added ACE_NOTREACHED around to returns that coult not possibly be
+          reached.
+
 Wed Dec 13 12:43:04 UTC 2006  Chad Elliott  <elliott_c@ociweb.com>
 
         * orbsvcs/orbsvcs/CosTrading.mpc:
@@ -17,27 +24,27 @@ Wed Dec 13 12:43:04 UTC 2006  Chad Elliott  <elliott_c@ociweb.com>
 
 Wed Dec 13 07:19:26 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* tests/Server_Connection_Purging/Makefile.am:
-	* tests/Server_Leaks/Makefile.am:
-	* tests/Single_Read/Makefile.am:
-	* tests/Smart_Proxies/Benchmark/Makefile.am:
-	* tests/Smart_Proxies/Makefile.am:
-	* tests/Smart_Proxies/On_Demand/Makefile.am:
-	* tests/Smart_Proxies/Policy/Makefile.am:
-	* tests/Smart_Proxies/dtor/Makefile.am:
-	* tests/Stack_Recursion/Makefile.am:
+        * tests/Server_Connection_Purging/Makefile.am:
+        * tests/Server_Leaks/Makefile.am:
+        * tests/Single_Read/Makefile.am:
+        * tests/Smart_Proxies/Benchmark/Makefile.am:
+        * tests/Smart_Proxies/Makefile.am:
+        * tests/Smart_Proxies/On_Demand/Makefile.am:
+        * tests/Smart_Proxies/Policy/Makefile.am:
+        * tests/Smart_Proxies/dtor/Makefile.am:
+        * tests/Stack_Recursion/Makefile.am:
 
           Regenerated.
 
-	* tests/Server_Connection_Purging/Server_Connection_Purging.mpc:
-	* tests/Server_Leaks/Server_Leaks.mpc:
-	* tests/Single_Read/Single_Read.mpc:
-	* tests/Smart_Proxies/Benchmark/SP_Benchmark.mpc:
-	* tests/Smart_Proxies/On_Demand/SP_On_Demand.mpc:
-	* tests/Smart_Proxies/Policy/SP_Policy.mpc:
-	* tests/Smart_Proxies/Smart_Proxies.mpc:
-	* tests/Smart_Proxies/dtor/dtor.mpc:
-	* tests/Stack_Recursion/Stack_Recursion.mpc:
+        * tests/Server_Connection_Purging/Server_Connection_Purging.mpc:
+        * tests/Server_Leaks/Server_Leaks.mpc:
+        * tests/Single_Read/Single_Read.mpc:
+        * tests/Smart_Proxies/Benchmark/SP_Benchmark.mpc:
+        * tests/Smart_Proxies/On_Demand/SP_On_Demand.mpc:
+        * tests/Smart_Proxies/Policy/SP_Policy.mpc:
+        * tests/Smart_Proxies/Smart_Proxies.mpc:
+        * tests/Smart_Proxies/dtor/dtor.mpc:
+        * tests/Stack_Recursion/Stack_Recursion.mpc:
 
           Split out IDL compilation into separate MPC project.
 
