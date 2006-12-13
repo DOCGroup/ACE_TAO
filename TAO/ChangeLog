@@ -1,3 +1,20 @@
+Wed Dec 13 16:49:05 UTC 2006  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_visitor_argument/arglist.cpp:
+        * TAO_IDL/be/be_visitor_operation/arglist.cpp:
+        * TAO_IDL/be/be_visitor_operation/tie_sh.cpp:
+        * TAO_IDL/be_include/be_codegen.h:
+        
+          Changed code generation for operation parameters in
+          tie class declarations to omit the parameter name. If
+          this name happened to be "T", some HP compilers would
+          have trouble disambiguating it from the tie class
+          template parameter typename. In the tie class operation
+          body, where the parameter name must be used, there is
+          already a code generation mechanism in place to avoid
+          the name clash. Thanks to Simon Massey <Simon.Massey@prismtech.com>
+          for reporting the problem.
+
 Wed Dec 13 14:24:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/tests/Bug_1630_Regression/test.mpc:

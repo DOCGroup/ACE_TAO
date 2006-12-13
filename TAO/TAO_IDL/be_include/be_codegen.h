@@ -96,6 +96,7 @@ public:
 
       TAO_OPERATION_ARGLIST_CH,               // parameter list in op signature
       TAO_OPERATION_ARGLIST_SH,               // ... for server header
+      TAO_TIE_OPERATION_ARGLIST_SH,           // ... for TIE class header
 
       TAO_OPERATION_ARGLIST_PROXY_IMPL_XH,    // Proxy impl arg list generation
       // in client/server  header
