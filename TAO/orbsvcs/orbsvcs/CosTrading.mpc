@@ -131,6 +131,7 @@ project(CosTrading_Serv) : orbsvcslib, core, trading_skel, dynamicany, svc_utils
     "	echo '#define YY_NO_UNPUT' > Trader/Constraint_l.cpp"
     "	$(LEX) -L -t Trader/constraint.l | \\"
     "	sed -e 's/ NULL/ 0/g' \\"
+    "	    -e 's/int offset /size_t offset /g' \\"
     "	    -e 's/isatty/ACE_OS::isatty/g' \\"
     "	    -e 's/YY_BREAK break;/YY_BREAK ACE_NOTREACHED (break;)/g' \\"
     "	    -e 's/ECHO/TAO_TRADER_ECHO/' \\"
@@ -151,6 +152,7 @@ project(CosTrading_Serv) : orbsvcslib, core, trading_skel, dynamicany, svc_utils
     Constraint_y:
     "	yacc -l -d Trader/constraint.y"
     "	sed -e 's/	/        /g' \\"
+    "	    -e 's/int newsize, i/size_t newsize, i/g' \\"
     "	    -e 's/  *$$\/\/g' \\"
     "	    -e 's/\|\| defined(__GNUC__)/|| defined(__GNUC__) || defined (WIN32) || defined (__HP_aCC)/g' \\"
     "	    -e 's/memcpy/ACE_OS::memcpy/g' \\"
