@@ -1,3 +1,13 @@
+Wed Dec 13 18:16:28 UTC 2006  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tests/IDL_Test/IDL_Test.mpc:
+        
+          Added -GT to all IDL compiler command lines, since generation
+          of tie classes is no longer the default behavior, and we
+          want this test to cover it. Also added a block for
+          Template_Files, so the generated *S_T.cpp files will be
+          displayed in a separate folder in Visual Studio.
+
 Wed Dec 13 16:49:05 UTC 2006  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_visitor_argument/arglist.cpp:
