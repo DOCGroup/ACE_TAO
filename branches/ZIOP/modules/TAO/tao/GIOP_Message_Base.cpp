@@ -2097,6 +2097,10 @@ TAO_GIOP_Message_Base::set_giop_flags (TAO_OutputCDR & msg) const
   // Least significant bit:        Byte order
   ACE_SET_BITS (flags, TAO_ENCAP_BYTE_ORDER ^ msg.do_byte_swap ());
 
+// @todo Set the compression flag
+//  if (!(major <= 1 && minor <= 1))
+//     ACE_SET_BITS (flags, msg.more_fragments () << 2);
+
   // Second least significant bit: More fragments
   //
   // Only supported in GIOP 1.1 or better.

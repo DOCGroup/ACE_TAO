@@ -55,11 +55,7 @@ TAO_BiDir_ORBInitializer::register_policy_factories (
   /// Bind the same policy factory to all BiDir related policy
   /// types since a single policy factory is used to create each of
   /// the different types of BiDir policies.
-
-  CORBA::PolicyType type;
-
-  type = BiDirPolicy::BIDIRECTIONAL_POLICY_TYPE;
-  info->register_policy_factory (type,
+  info->register_policy_factory (BiDirPolicy::BIDIRECTIONAL_POLICY_TYPE,
                                  policy_factory.in ()
                                  ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;

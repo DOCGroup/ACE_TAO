@@ -33,7 +33,7 @@ TAO_Tagged_Profile::extract_object_key (IOP::TaggedProfile &profile)
   if (acceptor)
     {
       // Get the object key
-      int retval =
+      int const retval =
         acceptor->object_key (profile,
                               this->object_key_);
       if (retval == -1)
@@ -113,7 +113,7 @@ TAO_Tagged_Profile::unmarshall_object_key_i (
                                  0);
       input.skip_bytes (key_length);
 
-      this->object_key_extracted_ = 1;
+      this->object_key_extracted_ = true;
     }
 
   return hdr_status;

@@ -1052,7 +1052,7 @@ CORBA::ORB::resolve_initial_references (const char *name
                                         ACE_ENV_ARG_DECL)
 {
   return this->resolve_initial_references (name,
-                                           0
+                                             0
                                            ACE_ENV_ARG_PARAMETER);
 }
 

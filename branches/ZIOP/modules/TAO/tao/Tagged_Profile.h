@@ -74,7 +74,7 @@ public:
 
   /// Get the profile index, that needs to be used in the
   /// sequnce of TaggedProfiles contained  IOP::IOR that is
-  /// receivedfrom the client.
+  /// received from the client.
   CORBA::ULong profile_index (void) const;
 
   /// Accessor to the type_id contained in the IOP::IOR received from
