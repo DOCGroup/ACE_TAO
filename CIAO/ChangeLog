@@ -1,3 +1,10 @@
+Wed Dec 13 07:29:10 UTC 2006    Gan Deng <gan.deng@vanderbilt.edu>
+
+        * tools/Config_Handlers/CIAO_Events/CIAOEvents.hpp:
+        
+          Fixed Debian_GCC_4.0 compilation error by removing
+          unnecessary common for enum definition.
+
 Wed Dec 13 07:19:13 UTC 2006    Gan Deng <gan.deng@vanderbilt.edu>
 
         * ciaosvcs/Events/CIAO_RTEC/SimpleAddressServer.h:
