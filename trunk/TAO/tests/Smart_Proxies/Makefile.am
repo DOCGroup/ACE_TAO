@@ -25,14 +25,12 @@ SUBDIRS = \
         dtor
 
 noinst_PROGRAMS =
-CLEANFILES =
-BUILT_SOURCES =
 
-## Makefile.Smart_Proxies_Server.am
+## Makefile.Smart_Proxies_Idl.am
 
 if BUILD_EXCEPTIONS
 
-BUILT_SOURCES += \
+BUILT_SOURCES = \
   testC.cpp \
   testC.h \
   testC.inl \
@@ -40,7 +38,7 @@ BUILT_SOURCES += \
   testS.h \
   testS.inl
 
-CLEANFILES += \
+CLEANFILES = \
   test-stamp \
   testC.cpp \
   testC.h \
@@ -52,8 +50,18 @@ CLEANFILES += \
 testC.cpp testC.h testC.inl testS.cpp testS.h testS.inl: test-stamp
 
 test-stamp: $(srcdir)/test.idl $(TAO_IDL_DEP)
-	$(TAO_IDL) $(TAO_IDLFLAGS) -Gsp $(srcdir)/test.idl
+	$(TAO_IDL) $(TAO_IDLFLAGS) -Sa -St -Gsp $(srcdir)/test.idl
 	@touch $@
+
+
+noinst_HEADERS = \
+  test.idl
+
+endif BUILD_EXCEPTIONS
+
+## Makefile.Smart_Proxies_Server.am
+
+if BUILD_EXCEPTIONS
 
 noinst_PROGRAMS += server
 
@@ -67,10 +75,7 @@ server_SOURCES = \
   server.cpp \
   testC.cpp \
   testS.cpp \
-  testC.h \
-  testC.inl \
-  testS.h \
-  testS.inl
+  Smart_Proxy_Impl.h
 
 server_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO_SmartProxies.la \
@@ -85,27 +90,6 @@ endif BUILD_EXCEPTIONS
 
 if BUILD_EXCEPTIONS
 
-BUILT_SOURCES += \
-  testC.cpp \
-  testC.h \
-  testC.inl \
-  testS.h \
-  testS.inl
-
-CLEANFILES += \
-  test-stamp \
-  testC.cpp \
-  testC.h \
-  testC.inl \
-  testS.h \
-  testS.inl
-
-testC.cpp testC.h testC.inl testS.h testS.inl: test-stamp
-
-test-stamp: $(srcdir)/test.idl $(TAO_IDL_DEP)
-	$(TAO_IDL) $(TAO_IDLFLAGS) -Gsp $(srcdir)/test.idl
-	@touch $@
-
 noinst_PROGRAMS += client
 
 client_CPPFLAGS = \
@@ -118,16 +102,10 @@ client_SOURCES = \
   Smart_Proxy_Impl.cpp \
   client.cpp \
   testC.cpp \
-  Smart_Proxy_Impl.h \
-  testC.h \
-  testC.inl \
-  testS.h \
-  testS.inl
+  Smart_Proxy_Impl.h
 
 client_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO_SmartProxies.la \
-  $(TAO_BUILDDIR)/tao/libTAO_PortableServer.la \
-  $(TAO_BUILDDIR)/tao/libTAO_AnyTypeCode.la \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
