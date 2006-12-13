@@ -641,7 +641,7 @@ ACE_THROW_SPEC ((::CORBA::SystemException,
         {
           // Narrow the event service to CIAO_RT_Event_Service
           ::CIAO::CIAO_RT_Event_Service_var ciao_rtes =
-            ::CIAO::CIAO_RT_Event_Service::_narrow (ciao_es);
+            ::CIAO::CIAO_RT_Event_Service::_narrow (ciao_es.in ());
 
           if (CORBA::is_nil (ciao_rtes.in ()))
             ACE_THROW (::Deployment::InstallationFailure ());

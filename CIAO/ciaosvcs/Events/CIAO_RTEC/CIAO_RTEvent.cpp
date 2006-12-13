@@ -529,7 +529,7 @@ namespace CIAO
   RTEventService::tao_rt_event_channel (ACE_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((::CORBA::SystemException))
   {
-    return this->rt_event_channel_;
+    return this->rt_event_channel_.in ();
   }
 
   //////////////////////////////////////////////////////////////////////
