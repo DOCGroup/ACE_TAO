@@ -77,9 +77,10 @@ be_visitor_operation_tie_sh::visit_operation (be_operation *node)
   // STEP 3: generate the argument list with the appropriate mapping. For these
   // we grab a visitor that generates the parameter listing
   ctx = *this->ctx_;
-  // we use the _CH state here because the _SH state produces pure virtual
-  // methods.
-  ctx.state (TAO_CodeGen::TAO_OPERATION_ARGLIST_CH);
+  // We use this state here as a flag to leave out the param names in the
+  // arglist, to avoid a possible clash with the TIE class template
+  // parameter name.
+  ctx.state (TAO_CodeGen::TAO_TIE_OPERATION_ARGLIST_SH);
   be_visitor_operation_arglist oa_visitor (&ctx);
 
   if (node->accept (&oa_visitor) == -1)
