@@ -1,3 +1,8 @@
+Wed Dec 13 14:24:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/tests/Bug_1630_Regression/test.mpc:
+          Don't build with CORBA/e
+
 Wed Dec 13 13:05:21 UTC 2006  Chad Elliott  <elliott_c@ociweb.com>
 
         * orbsvcs/orbsvcs/Trader/Trader_Interfaces.cpp:
