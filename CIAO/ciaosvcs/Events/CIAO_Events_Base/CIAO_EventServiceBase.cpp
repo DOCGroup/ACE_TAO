@@ -33,5 +33,6 @@ namespace CIAO
    {
       ACE_UNUSED_ARG (evt);
       ACE_UNUSED_ARG (source_id);
+      ACE_UNUSED_ARG (tc);
    }
 }
