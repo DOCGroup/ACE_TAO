@@ -1,3 +1,8 @@
+Wed Dec 13 06:53:57 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/IFR_Client_Adapter.h:
+          Fixed compile problem with CORBA/e
+
 Tue Dec 12 21:56:03 UTC 2006  Iliyan Jeliazkov  <iliyan@ociweb.com>
 
         * tao/TAO_Internal.cpp (instance):
