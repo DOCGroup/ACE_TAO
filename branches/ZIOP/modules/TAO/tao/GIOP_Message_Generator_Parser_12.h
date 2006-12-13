@@ -114,11 +114,16 @@ private:
   /// initiate action.
   /// @note At somepoint this may be needed for future versions of
   /// GIOP and we may have to share this
-  int check_bidirectional_context (TAO_ServerRequest &);
+  int check_bidirectional_context (TAO_ServerRequest &request);
+
+  int check_compression_context (TAO_ServerRequest &request);
 
   /// Process the BiDirContext info that we have received.
   int process_bidir_context (TAO_Service_Context &,
                              TAO_Transport *transport);
+
+  int process_compression_context (TAO_Service_Context &,
+                                   TAO_Transport *transport);
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

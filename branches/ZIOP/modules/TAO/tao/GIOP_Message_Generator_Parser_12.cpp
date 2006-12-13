@@ -327,6 +327,10 @@ TAO_GIOP_Message_Generator_Parser_12::parse_request_header (
   if (request.orb_core ()->bidir_giop_policy ())
     this->check_bidirectional_context (request);
 
+  // Check an process if compression contexts are available
+  if (request.orb_core ()->compression_enabled ())
+    this->check_compression_context (request);
+
   if (input.length () > 0)
     {
       // Reset the read_ptr to an 8-byte boundary.
@@ -553,6 +557,25 @@ TAO_GIOP_Message_Generator_Parser_12::check_bidirectional_context (
 }
 
 int
+TAO_GIOP_Message_Generator_Parser_12::check_compression_context (
+    TAO_ServerRequest &request)
+{
+  TAO_Service_Context &service_context = request.request_service_context ();
+
+  // Check whether we have the Compression service context info available in
+  // the ServiceContextList
+  if (service_context.is_service_id (1230266182)
+      == 1)
+    {
+      return this->process_compression_context (service_context,
+                                                request.transport ());
+    }
+
+  return 0;
+}
+
+
+int
 TAO_GIOP_Message_Generator_Parser_12::process_bidir_context (
     TAO_Service_Context &service_context,
     TAO_Transport *transport)
@@ -571,6 +594,38 @@ TAO_GIOP_Message_Generator_Parser_12::process_bidir_context (
                     context.context_data.length ());
 
   return transport->tear_listen_point_list (cdr);
+}
+
+int
+TAO_GIOP_Message_Generator_Parser_12::process_compression_context (
+    TAO_Service_Context &service_context,
+    TAO_Transport *transport)
+{
+  // Get the context info
+  IOP::ServiceContext context;
+  context.context_id = 1230266182;
+
+  if (service_context.get_context (context) != 1)
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("(%P|%t) Context info not found \n")),
+                        -1);
+
+  TAO_InputCDR cdr (reinterpret_cast<const char*> (
+                      context.context_data.get_buffer ()),
+                    context.context_data.length ());
+
+  CORBA::Boolean byte_order;
+  if ((cdr >> ACE_InputCDR::to_boolean (byte_order)) == 0)
+    return -1;
+
+  cdr.reset_byte_order (static_cast<int> (byte_order));
+
+  CORBA::ULong message_length;
+  if (!(cdr >> message_length))
+    return -1;
+
+  ACE_DEBUG ((LM_DEBUG, "Message %d\n",message_length));
+  return 0;
 }
 
 size_t

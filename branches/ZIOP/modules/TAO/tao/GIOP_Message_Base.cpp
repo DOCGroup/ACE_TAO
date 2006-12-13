@@ -1595,6 +1595,9 @@ TAO_GIOP_Message_Base::dump_msg (const char *label,
       // Byte order.
       int byte_order = ptr[TAO_GIOP_MESSAGE_FLAGS_OFFSET] & 0x01;
 
+      // Compressed.
+      int compressed = (ptr[TAO_GIOP_MESSAGE_FLAGS_OFFSET] & 0x04) >> 2;
+
       // Get the version info
       CORBA::Octet major = ptr[TAO_GIOP_VERSION_MAJOR_OFFSET];
       CORBA::Octet minor = ptr[TAO_GIOP_VERSION_MINOR_OFFSET];
@@ -1635,13 +1638,14 @@ TAO_GIOP_Message_Base::dump_msg (const char *label,
       // Print.
       ACE_DEBUG ((LM_DEBUG,
                   "TAO (%P|%t) - GIOP_Message_Base::dump_msg, "
-                  "%s GIOP v%c.%c msg, %d data bytes, %s endian, "
+                  "%s GIOP v%c.%c msg, %d data bytes, %s endian, %s compressed, "
                   "Type %s[%u]\n",
                   ACE_TEXT_CHAR_TO_TCHAR (label),
                   digits[ptr[TAO_GIOP_VERSION_MAJOR_OFFSET]],
                   digits[ptr[TAO_GIOP_VERSION_MINOR_OFFSET]],
                   len - TAO_GIOP_MESSAGE_HEADER_LEN ,
                   (byte_order == TAO_ENCAP_BYTE_ORDER) ? ACE_TEXT("my") : ACE_TEXT("other"),
+                  (compressed == 1) ? ACE_TEXT("is") : ACE_TEXT("not"),
                   ACE_TEXT_CHAR_TO_TCHAR(message_name),
                   *id));
 
@@ -2103,13 +2107,10 @@ TAO_GIOP_Message_Base::set_giop_flags (TAO_OutputCDR & msg) const
   if (!(major <= 1 && minor == 0))
     ACE_SET_BITS (flags, msg.more_fragments () << 1);
 
-  // Set the compression flag, at this moment we use bit 7, probably somewhere
-  // in the future compression will get standardized and get a different
-  // bit and then we can easily make sure we don't get problems with older
-  // versions that are then at that moment not spec compliant
+  // Set the compression flag
   // Only supported in GIOP 1.2 or better.
   if (!(major <= 1 && minor <= 1))
-     ACE_SET_BITS (flags, msg.compressed () << 7);
+     ACE_SET_BITS (flags, msg.compressed () << 2);
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL

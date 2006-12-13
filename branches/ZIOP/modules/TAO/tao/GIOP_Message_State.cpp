@@ -207,14 +207,15 @@ TAO_GIOP_Message_State::get_byte_order_info (char *buf)
 
       // Read the compression bit
       this->compressed_ =
-        (CORBA::Octet) (buf[TAO_GIOP_MESSAGE_FLAGS_OFFSET]& 0x08);
+        (CORBA::Octet) (buf[TAO_GIOP_MESSAGE_FLAGS_OFFSET]& 0x04);
 
-      if ((buf[TAO_GIOP_MESSAGE_FLAGS_OFFSET] & ~0x3) != 0)
+      if ((buf[TAO_GIOP_MESSAGE_FLAGS_OFFSET] & ~0x7) != 0)
         {
           if (TAO_debug_level > 2)
             {
               ACE_DEBUG ((LM_DEBUG,
-                          ACE_TEXT ("TAO (%P|%t) - invalid flags for <%d> ")
+                          ACE_TEXT ("TAO (%P|%t) - GIOP_Message_State::get_byte_order_info, ")
+                          ACE_TEXT ("invalid flags for <%d> ")
                           ACE_TEXT ("for version <%d %d> \n"),
                           buf[TAO_GIOP_MESSAGE_FLAGS_OFFSET],
                           this->giop_version_.major,

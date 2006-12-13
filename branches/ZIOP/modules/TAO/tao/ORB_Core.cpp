@@ -277,7 +277,8 @@ TAO_ORB_Core::TAO_ORB_Core (const char *orbid)
     bidir_adapter_ (0),
     bidir_giop_policy_ (0),
     flushing_strategy_ (0),
-    codeset_manager_ (0)
+    codeset_manager_ (0),
+    compression_enabled_ (true)
 {
 #if (TAO_HAS_BUFFERING_CONSTRAINT_POLICY == 1)
 

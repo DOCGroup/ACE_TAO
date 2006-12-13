@@ -9,11 +9,7 @@ namespace TAO
     {
       public:
       BaseCompressor (::ZIOP::CompressionLevel compression_level,
-                      ::ZIOP::CompressorFactory_ptr compressor_factory) :
-        compression_level_ (compression_level),
-        compressor_factory_ (::ZIOP::CompressorFactory::_duplicate (compressor_factory))
-      {
-      }
+                      ::ZIOP::CompressorFactory_ptr compressor_factory);
 
       virtual void compress (
           const ::CORBA::OctetSeq & source,
@@ -33,23 +29,15 @@ namespace TAO
           ::ZIOP::CompressionException
         )) = 0;
 
-      virtual ::ZIOP::CompressorFactory_ptr compressor_factory (
-        )
+      virtual ::ZIOP::CompressorFactory_ptr compressor_factory (void)
         ACE_THROW_SPEC ((
           ::CORBA::SystemException
-        ))
-      {
-        return ::ZIOP::CompressorFactory::_duplicate (compressor_factory_.in ());
-      }
+        ));
 
-      virtual ::ZIOP::CompressionLevel compression_level (
-        )
+      virtual ::ZIOP::CompressionLevel compression_level (void)
         ACE_THROW_SPEC ((
           ::CORBA::SystemException
-        ))
-      {
-        return compression_level_;
-      }
+        ));
 
       private:
         ::ZIOP::CompressionLevel compression_level_;

@@ -863,6 +863,12 @@ public:
   CORBA::Boolean bidir_giop_policy (void);
   void bidir_giop_policy (CORBA::Boolean);
 
+  /// Get whether compression is enabled or not
+  CORBA::Boolean compression_enabled (void);
+
+  /// Set whether compression is enabled or not
+  void compression_enabled (CORBA::Boolean);
+
   /// Return the table that maps object key/name to de-stringified
   /// object reference.  It is needed for supporting local objects in
   /// the resolve_initial_references() mechanism.
@@ -1266,6 +1272,9 @@ protected:
 
   /// ORB's service configuration
   ACE_Service_Gestalt *config_;
+
+  /// Compression enabled?
+  CORBA::Boolean compression_enabled_;
 };
 
 // ****************************************************************

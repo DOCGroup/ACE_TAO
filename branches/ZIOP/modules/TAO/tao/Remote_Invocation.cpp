@@ -149,7 +149,7 @@ namespace TAO
     TAO_Protocols_Hooks *tph =
       this->resolver_.stub ()->orb_core ()->get_protocols_hooks ();
 
-    CORBA::Boolean set_client_network_priority =
+    CORBA::Boolean const set_client_network_priority =
       tph->set_client_network_priority (this->resolver_.transport ()->tag (),
                                         this->resolver_.stub ()
                                         ACE_ENV_ARG_PARAMETER);

@@ -46,6 +46,18 @@ TAO_ORB_Core::bidir_giop_policy (void)
 }
 
 ACE_INLINE void
+TAO_ORB_Core::compression_enabled (CORBA::Boolean val)
+{
+  this->compression_enabled_ = val;
+}
+
+ACE_INLINE CORBA::Boolean
+TAO_ORB_Core::compression_enabled (void)
+{
+  return this->compression_enabled_;
+}
+
+ACE_INLINE void
 TAO_ORB_Core::bidir_giop_policy (CORBA::Boolean val)
 {
   this->bidir_giop_policy_ = val;

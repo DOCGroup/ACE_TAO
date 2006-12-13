@@ -162,6 +162,9 @@ public:
   void ft_retention_id (CORBA::Long request_id);
   CORBA::Long ft_retention_id (void) const;
 
+  void compressed (CORBA::Boolean compressed);
+  CORBA::Boolean compressed (void) const;
+
 private:
 
   /// Name of the operation being invoked.
@@ -207,6 +210,9 @@ private:
 
   /// Count of the exceptions that operations can throw.
   CORBA::ULong ex_count_;
+
+  /// Compressed operation or not
+  CORBA::Boolean compressed_;
 #if TAO_HAS_INTERCEPTORS == 1
   /// FT request expiration time (absolute gregorian)
   TimeBase::TimeT ft_expiration_time_;

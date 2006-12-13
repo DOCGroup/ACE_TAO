@@ -87,14 +87,37 @@ namespace TAO
                                 TAO_Transport::TAO_TWOWAY_REQUEST,
                                 max_wait_time);
 
-        this->write_header (tspec,
+        if (true)
+          {
+// @todo We marshal the data here, so we should compress here
+// if there are no arguments no need to do compression stuff at all!
+            TAO_OutputCDR compression_stream;
+            this->marshal_data (compression_stream);
+
+            // Compress stream, dependent on bigger or smaller we use
+            // the compressed stream or the non compressed
+            this->details_.compressed (true);
+            cdr.compressed (true);
+
+            /// @todo write length of original data in the service context list
+            this->write_header (tspec,
+                                cdr
+                                ACE_ENV_ARG_PARAMETER);
+            ACE_TRY_CHECK;
+
+            const_cast <ACE_Message_Block*>(cdr.begin ())->next (const_cast <ACE_Message_Block*>(compression_stream.begin ()));
+          }
+        else
+          {
+            this->write_header (tspec,
                             cdr
                             ACE_ENV_ARG_PARAMETER);
-        ACE_TRY_CHECK;
+            ACE_TRY_CHECK;
 
-        this->marshal_data (cdr
-                            ACE_ENV_ARG_PARAMETER);
-        ACE_TRY_CHECK;
+            this->marshal_data (cdr
+                                ACE_ENV_ARG_PARAMETER);
+            ACE_TRY_CHECK;
+          }
 
         // Register a reply dispatcher for this invocation. Use the
         // preallocated reply dispatcher.
