@@ -23,6 +23,10 @@
 #include "ace/OS_NS_string.h"
 #include "ace/Countdown_Time.h"
 
+#if !defined (__BORLANDC__)
+#include "zlib.h"
+#endif
+
 #if !defined (__ACE_INLINE__)
 # include "tao/Synch_Invocation.inl"
 #endif /* __ACE_INLINE__ */
@@ -88,24 +92,34 @@ namespace TAO
                                 max_wait_time);
 
         // If the ORB has compression enabled and we do have arguments
-        if (this->orb_core ()->compression_enabled () && this->details_.argument_flag ())
+	//	if (false)
+        if (this->orb_core ()->compression_enabled ())// && this->details_.argument_flag ())
           {
 // @todo We marshal the data here, so we should compress here
             TAO_OutputCDR compression_stream;
             this->marshal_data (compression_stream);
 
+
+#if !defined (__BORLANDC__)
+            Bytef* LargBuffer = new Bytef [1000];
+			uLongf length = 100;
+            int retval = compress (LargBuffer,   &length,
+                                 reinterpret_cast <const Bytef*>(compression_stream.buffer ()), compression_stream.total_length ());
+#endif
             // Compress stream, dependent on bigger or smaller we use
             // the compressed stream or the non compressed
             this->details_.compressed (true);
             cdr.compressed (true);
 
             /// @todo write length of original data in the service context list
+			this->details_.uncompressed_size_ = compression_stream.total_length();
             this->write_header (tspec,
                                 cdr
                                 ACE_ENV_ARG_PARAMETER);
             ACE_TRY_CHECK;
-
-            const_cast <ACE_Message_Block*>(cdr.begin ())->next (const_cast <ACE_Message_Block*>(compression_stream.begin ()));
+ACE_Message_Block *newblock = new ACE_Message_Block ((const char*)LargBuffer, (size_t)length);
+//            const_cast <ACE_Message_Block*>(cdr.begin ())->next (const_cast <ACE_Message_Block*>(compression_stream.begin ()));
+            const_cast <ACE_Message_Block*>(cdr.begin ())->next (newblock);
           }
         else
           {

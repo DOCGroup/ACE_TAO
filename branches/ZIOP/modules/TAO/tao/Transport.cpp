@@ -395,7 +395,9 @@ TAO_Transport::generate_request_header (
       TAO_OutputCDR cdr;
 
       // Marshal the original message length into the stream.
-      CORBA::ULong length = 98;
+
+	  // must be ULongLong
+      CORBA::ULong length = opdetails.uncompressed_size_;
       if ((cdr << ACE_OutputCDR::from_boolean (TAO_ENCAP_BYTE_ORDER) == 0)
           || (cdr << length) == 0)
         return -1;

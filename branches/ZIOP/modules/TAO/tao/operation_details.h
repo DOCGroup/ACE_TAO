@@ -165,6 +165,9 @@ public:
   void compressed (CORBA::Boolean compressed);
   CORBA::Boolean compressed (void) const;
 
+  /// Temporarily @todo remove
+  CORBA::ULong uncompressed_size_;
+
 private:
 
   /// Name of the operation being invoked.
