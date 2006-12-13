@@ -1,5 +1,11 @@
 Wed Dec 13 06:53:57 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
+        * examples/CSD_Strategy/ThreadPool5/CSD_Test_ThreadPool5.mpc:
+        * docs/tutorials/Quoter/Simple/Persistent/Quoter_Simple_Persistent.mpc:
+          Don't build with CORBA/e micro
+
+Wed Dec 13 06:53:57 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
         * tao/IFR_Client_Adapter.h:
           Fixed compile problem with CORBA/e
 
