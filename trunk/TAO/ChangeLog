@@ -1,3 +1,44 @@
+Thu Dec 14 08:47:25 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * orbsvcs/Logging_Service/Basic_Logging_Service/Basic_Logging_Service.cpp
+        * orbsvcs/Logging_Service/Basic_Logging_Service/Basic_Logging_Service.h:
+        * orbsvcs/Logging_Service/Event_Logging_Service/Event_Logging_Service.cpp:
+        * orbsvcs/Logging_Service/Event_Logging_Service/Event_Logging_Service.h:
+        * orbsvcs/Logging_Service/Notify_Logging_Service/Notify_Logging_Service.cpp:
+        * orbsvcs/Logging_Service/Notify_Logging_Service/Notify_Logging_Service.h:
+        * orbsvcs/Logging_Service/RTEvent_Logging_Service/RTEvent_Logging_Service.cpp:
+        * orbsvcs/Logging_Service/RTEvent_Logging_Service/RTEvent_Logging_Service.h:
+
+          Align subtle differences (like using an explicit this-> (or not)
+          for invoking methods and accessing member variables.  This makes
+          diff betweens between the wrapper classes highlight the real and
+          substantial differences.  This too should make future maintenance
+          easier.
+
+          Removed #if 0'd out code that deactivated factory objects in the
+          shutdown() method.  This was originally #if'd out because the
+          factory objects aren't activated on the root POA (the factory
+          creates a POA with PERSISTENT lifespan policy for the factory
+          object activation, a POA that is not accessible from outside the
+          factory object).  While we could refactor things to gain access
+          to the factory POA, it really doesn't buy us much as the next
+          thing is done is the ORB is shutdown(), which will delete the
+          POAs, which will delete the objects, etc.
+
+        * orbsvcs/Logging_Service/RTEvent_Logging_Service/RTEvent_Logging_Server.cpp:
+        * orbsvcs/Logging_Service/RTEvent_Logging_Service/RTEvent_Logging_Service.h:
+        * orbsvcs/Logging_Service/RTEvent_Logging_Service/RTEvent_Logging_Service.cpp:
+
+          Overhaul the RTEvent_Logging_Service class to follow the idiom
+          used by the other three Logging Service implementations.  It had
+          lots of dead (commented out and/or #if 0'd) code for setting up
+          a scheduler; yet was missing support for supressing binding the
+          log factory to the naming service and spinning up a thread pool
+          for ORB threads.  Aligning this should make future maintenance
+          easier.
+
+          Split out main() into new file RTEvent_Logging_Server.cpp.
+
 Thu Dec 14 08:27:45 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* tests/OBV/Any/Makefile.am:
