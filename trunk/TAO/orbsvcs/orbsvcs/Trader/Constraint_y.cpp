@@ -280,7 +280,6 @@ short *yysslim;
 YYSTYPE *yyvs;
 int yystacksize;
 
-TAO_END_VERSIONED_NAMESPACE_DECL
 //extern int yydebug = 1;
 /* allocate initial stack or double stack size, up to YYMAXDEPTH */
 static int yygrowstack()
@@ -643,3 +642,4 @@ yyabort:
 yyaccept:
     return (0);
 }
+TAO_END_VERSIONED_NAMESPACE_DECL
