@@ -1,7 +1,37 @@
+Thu Dec 14 07:01:51 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* tests/MProfile/Makefile.am:
+	* tests/MProfile_Connection_Timeout/Makefile.am:
+	* tests/No_Server_MT_Connect_Test/Makefile.am:
+	* tests/OBV/Any/Makefile.am:
+	* tests/OBV/Factory/Makefile.am:
+	* tests/OBV/Forward/Makefile.am:
+	* tests/OBV/TC_Alignment/Makefile.am:
+	* tests/OBV/Truncatable/Makefile.am:
+	* tests/OBV/ValueBox/Makefile.am:
+
+          Regenerated.
+
+	* tests/MProfile/MProfile.mpc:
+	* tests/MProfile_Connection_Timeout/MProfile_Connection_Timeout.mpc:
+	* tests/No_Server_MT_Connect_Test/No_Server_Connect_Test.mpc:
+	* tests/OBV/Any/OBV_Any.mpc:
+	* tests/OBV/Factory/OBV_Factory.mpc:
+	* tests/OBV/Forward/OBV_Forward.mpc:
+	* tests/OBV/TC_Alignment/OBV_TC_Alignment.mpc:
+	* tests/OBV/Truncatable/OBV_Truncatable.mpc:
+	* tests/OBV/ValueBox/valuebox.mpc:
+
+          Split out IDL compilation into separate MPC project.
+
+	* tests/IDL_Test/Makefile.am:
+
+          Regenerated.
+
 Wed Dec 13 18:16:28 UTC 2006  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tests/IDL_Test/IDL_Test.mpc:
-        
+
           Added -GT to all IDL compiler command lines, since generation
           of tie classes is no longer the default behavior, and we
           want this test to cover it. Also added a block for
@@ -14,7 +44,7 @@ Wed Dec 13 16:49:05 UTC 2006  Jeff Parsons <j.parsons@vanderbilt.edu>
         * TAO_IDL/be/be_visitor_operation/arglist.cpp:
         * TAO_IDL/be/be_visitor_operation/tie_sh.cpp:
         * TAO_IDL/be_include/be_codegen.h:
-        
+
           Changed code generation for operation parameters in
           tie class declarations to omit the parameter name. If
           this name happened to be "T", some HP compilers would

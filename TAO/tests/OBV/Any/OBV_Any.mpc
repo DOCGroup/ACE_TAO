@@ -1,17 +1,36 @@
 // -*- MPC -*-
 // $Id$
 
+project(*idl): taoidldefaults {
+  IDL_Files {
+    Any.idl
+  }
+  custom_only = 1
+}
+
 project(*Server): taoexe, portableserver, valuetype {
+  after += *idl
   Source_Files {
     AnyS_impl.cpp
     server.cpp
   }
+  Source_Files {
+    AnyC.cpp
+    AnyS.cpp
+  }
+  IDL_Files {
+  }
 }
 
 project(*Client): taoexe, valuetype {
+  after += *idl
   after += *Server
   Source_Files {
-    AnyC.cpp
     client.cpp
+  }
+  Source_Files {
+    AnyC.cpp
+  }
+  IDL_Files {
   }
 }

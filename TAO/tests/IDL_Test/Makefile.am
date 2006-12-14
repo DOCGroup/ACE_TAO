@@ -30,7 +30,9 @@ BUILT_SOURCES += \
   arrayC.inl \
   arrayS.cpp \
   arrayS.h \
-  arrayS.inl
+  arrayS.inl \
+  arrayS_T.cpp \
+  arrayS_T.h
 
 CLEANFILES += \
   array-stamp \
@@ -39,12 +41,14 @@ CLEANFILES += \
   arrayC.inl \
   arrayS.cpp \
   arrayS.h \
-  arrayS.inl
+  arrayS.inl \
+  arrayS_T.cpp \
+  arrayS_T.h
 
-arrayC.cpp arrayC.h arrayC.inl arrayS.cpp arrayS.h arrayS.inl: array-stamp
+arrayC.cpp arrayC.h arrayC.inl arrayS.cpp arrayS.h arrayS.inl arrayS_T.cpp arrayS_T.h: array-stamp
 
 array-stamp: $(srcdir)/array.idl $(TAO_IDL_DEP)
-	$(TAO_IDL) $(TAO_IDLFLAGS) -GC -GH -Gd $(srcdir)/array.idl
+	$(TAO_IDL) $(TAO_IDLFLAGS) -GC -GH -Gd -GT $(srcdir)/array.idl
 	@touch $@
 
 BUILT_SOURCES += \
@@ -53,7 +57,9 @@ BUILT_SOURCES += \
   Bug_2577_RegressionC.inl \
   Bug_2577_RegressionS.cpp \
   Bug_2577_RegressionS.h \
-  Bug_2577_RegressionS.inl
+  Bug_2577_RegressionS.inl \
+  Bug_2577_RegressionS_T.cpp \
+  Bug_2577_RegressionS_T.h
 
 CLEANFILES += \
   Bug_2577_Regression-stamp \
@@ -62,12 +68,14 @@ CLEANFILES += \
   Bug_2577_RegressionC.inl \
   Bug_2577_RegressionS.cpp \
   Bug_2577_RegressionS.h \
-  Bug_2577_RegressionS.inl
+  Bug_2577_RegressionS.inl \
+  Bug_2577_RegressionS_T.cpp \
+  Bug_2577_RegressionS_T.h
 
-Bug_2577_RegressionC.cpp Bug_2577_RegressionC.h Bug_2577_RegressionC.inl Bug_2577_RegressionS.cpp Bug_2577_RegressionS.h Bug_2577_RegressionS.inl: Bug_2577_Regression-stamp
+Bug_2577_RegressionC.cpp Bug_2577_RegressionC.h Bug_2577_RegressionC.inl Bug_2577_RegressionS.cpp Bug_2577_RegressionS.h Bug_2577_RegressionS.inl Bug_2577_RegressionS_T.cpp Bug_2577_RegressionS_T.h: Bug_2577_Regression-stamp
 
 Bug_2577_Regression-stamp: $(srcdir)/Bug_2577_Regression.idl $(TAO_IDL_DEP)
-	$(TAO_IDL) $(TAO_IDLFLAGS) -GC -GH -Gd $(srcdir)/Bug_2577_Regression.idl
+	$(TAO_IDL) $(TAO_IDLFLAGS) -GC -GH -Gd -GT $(srcdir)/Bug_2577_Regression.idl
 	@touch $@
 
 BUILT_SOURCES += \
@@ -76,7 +84,9 @@ BUILT_SOURCES += \
   Bug_2582_RegressionC.inl \
   Bug_2582_RegressionS.cpp \
   Bug_2582_RegressionS.h \
-  Bug_2582_RegressionS.inl
+  Bug_2582_RegressionS.inl \
+  Bug_2582_RegressionS_T.cpp \
+  Bug_2582_RegressionS_T.h
 
 CLEANFILES += \
   Bug_2582_Regression-stamp \
@@ -85,12 +95,14 @@ CLEANFILES += \
   Bug_2582_RegressionC.inl \
   Bug_2582_RegressionS.cpp \
   Bug_2582_RegressionS.h \
-  Bug_2582_RegressionS.inl
+  Bug_2582_RegressionS.inl \
+  Bug_2582_RegressionS_T.cpp \
+  Bug_2582_RegressionS_T.h
 
-Bug_2582_RegressionC.cpp Bug_2582_RegressionC.h Bug_2582_RegressionC.inl Bug_2582_RegressionS.cpp Bug_2582_RegressionS.h Bug_2582_RegressionS.inl: Bug_2582_Regression-stamp
+Bug_2582_RegressionC.cpp Bug_2582_RegressionC.h Bug_2582_RegressionC.inl Bug_2582_RegressionS.cpp Bug_2582_RegressionS.h Bug_2582_RegressionS.inl Bug_2582_RegressionS_T.cpp Bug_2582_RegressionS_T.h: Bug_2582_Regression-stamp
 
 Bug_2582_Regression-stamp: $(srcdir)/Bug_2582_Regression.idl $(TAO_IDL_DEP)
-	$(TAO_IDL) $(TAO_IDLFLAGS) -GC -GH -Gd $(srcdir)/Bug_2582_Regression.idl
+	$(TAO_IDL) $(TAO_IDLFLAGS) -GC -GH -Gd -GT $(srcdir)/Bug_2582_Regression.idl
 	@touch $@
 
 BUILT_SOURCES += \
@@ -99,7 +111,9 @@ BUILT_SOURCES += \
   Bug_2583_RegressionC.inl \
   Bug_2583_RegressionS.cpp \
   Bug_2583_RegressionS.h \
-  Bug_2583_RegressionS.inl
+  Bug_2583_RegressionS.inl \
+  Bug_2583_RegressionS_T.cpp \
+  Bug_2583_RegressionS_T.h
 
 CLEANFILES += \
   Bug_2583_Regression-stamp \
@@ -108,12 +122,14 @@ CLEANFILES += \
   Bug_2583_RegressionC.inl \
   Bug_2583_RegressionS.cpp \
   Bug_2583_RegressionS.h \
-  Bug_2583_RegressionS.inl
+  Bug_2583_RegressionS.inl \
+  Bug_2583_RegressionS_T.cpp \
+  Bug_2583_RegressionS_T.h
 
-Bug_2583_RegressionC.cpp Bug_2583_RegressionC.h Bug_2583_RegressionC.inl Bug_2583_RegressionS.cpp Bug_2583_RegressionS.h Bug_2583_RegressionS.inl: Bug_2583_Regression-stamp
+Bug_2583_RegressionC.cpp Bug_2583_RegressionC.h Bug_2583_RegressionC.inl Bug_2583_RegressionS.cpp Bug_2583_RegressionS.h Bug_2583_RegressionS.inl Bug_2583_RegressionS_T.cpp Bug_2583_RegressionS_T.h: Bug_2583_Regression-stamp
 
 Bug_2583_Regression-stamp: $(srcdir)/Bug_2583_Regression.idl $(TAO_IDL_DEP)
-	$(TAO_IDL) $(TAO_IDLFLAGS) -GC -GH -Gd $(srcdir)/Bug_2583_Regression.idl
+	$(TAO_IDL) $(TAO_IDLFLAGS) -GC -GH -Gd -GT $(srcdir)/Bug_2583_Regression.idl
 	@touch $@
 
 BUILT_SOURCES += \
@@ -122,7 +138,9 @@ BUILT_SOURCES += \
   Bug_2616_RegressionC.inl \
   Bug_2616_RegressionS.cpp \
   Bug_2616_RegressionS.h \
-  Bug_2616_RegressionS.inl
+  Bug_2616_RegressionS.inl \
+  Bug_2616_RegressionS_T.cpp \
+  Bug_2616_RegressionS_T.h
 
 CLEANFILES += \
   Bug_2616_Regression-stamp \
@@ -131,12 +149,14 @@ CLEANFILES += \
   Bug_2616_RegressionC.inl \
   Bug_2616_RegressionS.cpp \
   Bug_2616_RegressionS.h \
-  Bug_2616_RegressionS.inl
+  Bug_2616_RegressionS.inl \
+  Bug_2616_RegressionS_T.cpp \
+  Bug_2616_RegressionS_T.h
 
-Bug_2616_RegressionC.cpp Bug_2616_RegressionC.h Bug_2616_RegressionC.inl Bug_2616_RegressionS.cpp Bug_2616_RegressionS.h Bug_2616_RegressionS.inl: Bug_2616_Regression-stamp
+Bug_2616_RegressionC.cpp Bug_2616_RegressionC.h Bug_2616_RegressionC.inl Bug_2616_RegressionS.cpp Bug_2616_RegressionS.h Bug_2616_RegressionS.inl Bug_2616_RegressionS_T.cpp Bug_2616_RegressionS_T.h: Bug_2616_Regression-stamp
 
 Bug_2616_Regression-stamp: $(srcdir)/Bug_2616_Regression.idl $(TAO_IDL_DEP)
-	$(TAO_IDL) $(TAO_IDLFLAGS) -GC -GH -Gd $(srcdir)/Bug_2616_Regression.idl
+	$(TAO_IDL) $(TAO_IDLFLAGS) -GC -GH -Gd -GT $(srcdir)/Bug_2616_Regression.idl
 	@touch $@
 
 BUILT_SOURCES += \
@@ -145,7 +165,9 @@ BUILT_SOURCES += \
   Bug_2619_RegressionC.inl \
   Bug_2619_RegressionS.cpp \
   Bug_2619_RegressionS.h \
-  Bug_2619_RegressionS.inl
+  Bug_2619_RegressionS.inl \
+  Bug_2619_RegressionS_T.cpp \
+  Bug_2619_RegressionS_T.h
 
 CLEANFILES += \
   Bug_2619_Regression-stamp \
@@ -154,12 +176,14 @@ CLEANFILES += \
   Bug_2619_RegressionC.inl \
   Bug_2619_RegressionS.cpp \
   Bug_2619_RegressionS.h \
-  Bug_2619_RegressionS.inl
+  Bug_2619_RegressionS.inl \
+  Bug_2619_RegressionS_T.cpp \
+  Bug_2619_RegressionS_T.h
 
-Bug_2619_RegressionC.cpp Bug_2619_RegressionC.h Bug_2619_RegressionC.inl Bug_2619_RegressionS.cpp Bug_2619_RegressionS.h Bug_2619_RegressionS.inl: Bug_2619_Regression-stamp
+Bug_2619_RegressionC.cpp Bug_2619_RegressionC.h Bug_2619_RegressionC.inl Bug_2619_RegressionS.cpp Bug_2619_RegressionS.h Bug_2619_RegressionS.inl Bug_2619_RegressionS_T.cpp Bug_2619_RegressionS_T.h: Bug_2619_Regression-stamp
 
 Bug_2619_Regression-stamp: $(srcdir)/Bug_2619_Regression.idl $(TAO_IDL_DEP)
-	$(TAO_IDL) $(TAO_IDLFLAGS) -GC -GH -Gd $(srcdir)/Bug_2619_Regression.idl
+	$(TAO_IDL) $(TAO_IDLFLAGS) -GC -GH -Gd -GT $(srcdir)/Bug_2619_Regression.idl
 	@touch $@
 
 BUILT_SOURCES += \
@@ -168,7 +192,9 @@ BUILT_SOURCES += \
   enum_in_structC.inl \
   enum_in_structS.cpp \
   enum_in_structS.h \
-  enum_in_structS.inl
+  enum_in_structS.inl \
+  enum_in_structS_T.cpp \
+  enum_in_structS_T.h
 
 CLEANFILES += \
   enum_in_struct-stamp \
@@ -177,12 +203,14 @@ CLEANFILES += \
   enum_in_structC.inl \
   enum_in_structS.cpp \
   enum_in_structS.h \
-  enum_in_structS.inl
+  enum_in_structS.inl \
+  enum_in_structS_T.cpp \
+  enum_in_structS_T.h
 
-enum_in_structC.cpp enum_in_structC.h enum_in_structC.inl enum_in_structS.cpp enum_in_structS.h enum_in_structS.inl: enum_in_struct-stamp
+enum_in_structC.cpp enum_in_structC.h enum_in_structC.inl enum_in_structS.cpp enum_in_structS.h enum_in_structS.inl enum_in_structS_T.cpp enum_in_structS_T.h: enum_in_struct-stamp
 
 enum_in_struct-stamp: $(srcdir)/enum_in_struct.idl $(TAO_IDL_DEP)
-	$(TAO_IDL) $(TAO_IDLFLAGS) -GC -GH -Gd $(srcdir)/enum_in_struct.idl
+	$(TAO_IDL) $(TAO_IDLFLAGS) -GC -GH -Gd -GT $(srcdir)/enum_in_struct.idl
 	@touch $@
 
 BUILT_SOURCES += \
@@ -191,7 +219,9 @@ BUILT_SOURCES += \
   fullC.inl \
   fullS.cpp \
   fullS.h \
-  fullS.inl
+  fullS.inl \
+  fullS_T.cpp \
+  fullS_T.h
 
 CLEANFILES += \
   full-stamp \
@@ -200,12 +230,14 @@ CLEANFILES += \
   fullC.inl \
   fullS.cpp \
   fullS.h \
-  fullS.inl
+  fullS.inl \
+  fullS_T.cpp \
+  fullS_T.h
 
-fullC.cpp fullC.h fullC.inl fullS.cpp fullS.h fullS.inl: full-stamp
+fullC.cpp fullC.h fullC.inl fullS.cpp fullS.h fullS.inl fullS_T.cpp fullS_T.h: full-stamp
 
 full-stamp: $(srcdir)/full.idl $(TAO_IDL_DEP)
-	$(TAO_IDL) $(TAO_IDLFLAGS) -GC -GH -Gd $(srcdir)/full.idl
+	$(TAO_IDL) $(TAO_IDLFLAGS) -GC -GH -Gd -GT $(srcdir)/full.idl
 	@touch $@
 
 BUILT_SOURCES += \
@@ -214,7 +246,9 @@ BUILT_SOURCES += \
   fwdC.inl \
   fwdS.cpp \
   fwdS.h \
-  fwdS.inl
+  fwdS.inl \
+  fwdS_T.cpp \
+  fwdS_T.h
 
 CLEANFILES += \
   fwd-stamp \
@@ -223,12 +257,14 @@ CLEANFILES += \
   fwdC.inl \
   fwdS.cpp \
   fwdS.h \
-  fwdS.inl
+  fwdS.inl \
+  fwdS_T.cpp \
+  fwdS_T.h
 
-fwdC.cpp fwdC.h fwdC.inl fwdS.cpp fwdS.h fwdS.inl: fwd-stamp
+fwdC.cpp fwdC.h fwdC.inl fwdS.cpp fwdS.h fwdS.inl fwdS_T.cpp fwdS_T.h: fwd-stamp
 
 fwd-stamp: $(srcdir)/fwd.idl $(TAO_IDL_DEP)
-	$(TAO_IDL) $(TAO_IDLFLAGS) -GC -GH -Gd $(srcdir)/fwd.idl
+	$(TAO_IDL) $(TAO_IDLFLAGS) -GC -GH -Gd -GT $(srcdir)/fwd.idl
 	@touch $@
 
 BUILT_SOURCES += \
@@ -237,7 +273,9 @@ BUILT_SOURCES += \
   gperfC.inl \
   gperfS.cpp \
   gperfS.h \
-  gperfS.inl
+  gperfS.inl \
+  gperfS_T.cpp \
+  gperfS_T.h
 
 CLEANFILES += \
   gperf-stamp \
@@ -246,12 +284,14 @@ CLEANFILES += \
   gperfC.inl \
   gperfS.cpp \
   gperfS.h \
-  gperfS.inl
+  gperfS.inl \
+  gperfS_T.cpp \
+  gperfS_T.h
 
-gperfC.cpp gperfC.h gperfC.inl gperfS.cpp gperfS.h gperfS.inl: gperf-stamp
+gperfC.cpp gperfC.h gperfC.inl gperfS.cpp gperfS.h gperfS.inl gperfS_T.cpp gperfS_T.h: gperf-stamp
 
 gperf-stamp: $(srcdir)/gperf.idl $(TAO_IDL_DEP)
-	$(TAO_IDL) $(TAO_IDLFLAGS) -GC -GH -Gd $(srcdir)/gperf.idl
+	$(TAO_IDL) $(TAO_IDLFLAGS) -GC -GH -Gd -GT $(srcdir)/gperf.idl
 	@touch $@
 
 BUILT_SOURCES += \
@@ -260,7 +300,9 @@ BUILT_SOURCES += \
   includingC.inl \
   includingS.cpp \
   includingS.h \
-  includingS.inl
+  includingS.inl \
+  includingS_T.cpp \
+  includingS_T.h
 
 CLEANFILES += \
   including-stamp \
@@ -269,12 +311,14 @@ CLEANFILES += \
   includingC.inl \
   includingS.cpp \
   includingS.h \
-  includingS.inl
+  includingS.inl \
+  includingS_T.cpp \
+  includingS_T.h
 
-includingC.cpp includingC.h includingC.inl includingS.cpp includingS.h includingS.inl: including-stamp
+includingC.cpp includingC.h includingC.inl includingS.cpp includingS.h includingS.inl includingS_T.cpp includingS_T.h: including-stamp
 
 including-stamp: $(srcdir)/including.idl $(TAO_IDL_DEP)
-	$(TAO_IDL) $(TAO_IDLFLAGS) -GC -GH -Gd $(srcdir)/including.idl
+	$(TAO_IDL) $(TAO_IDLFLAGS) -GC -GH -Gd -GT $(srcdir)/including.idl
 	@touch $@
 
 BUILT_SOURCES += \
@@ -283,7 +327,9 @@ BUILT_SOURCES += \
   interfaceC.inl \
   interfaceS.cpp \
   interfaceS.h \
-  interfaceS.inl
+  interfaceS.inl \
+  interfaceS_T.cpp \
+  interfaceS_T.h
 
 CLEANFILES += \
   interface-stamp \
@@ -292,12 +338,14 @@ CLEANFILES += \
   interfaceC.inl \
   interfaceS.cpp \
   interfaceS.h \
-  interfaceS.inl
+  interfaceS.inl \
+  interfaceS_T.cpp \
+  interfaceS_T.h
 
-interfaceC.cpp interfaceC.h interfaceC.inl interfaceS.cpp interfaceS.h interfaceS.inl: interface-stamp
+interfaceC.cpp interfaceC.h interfaceC.inl interfaceS.cpp interfaceS.h interfaceS.inl interfaceS_T.cpp interfaceS_T.h: interface-stamp
 
 interface-stamp: $(srcdir)/interface.idl $(TAO_IDL_DEP)
-	$(TAO_IDL) $(TAO_IDLFLAGS) -GC -GH -Gd $(srcdir)/interface.idl
+	$(TAO_IDL) $(TAO_IDLFLAGS) -GC -GH -Gd -GT $(srcdir)/interface.idl
 	@touch $@
 
 BUILT_SOURCES += \
@@ -306,7 +354,9 @@ BUILT_SOURCES += \
   includedC.inl \
   includedS.cpp \
   includedS.h \
-  includedS.inl
+  includedS.inl \
+  includedS_T.cpp \
+  includedS_T.h
 
 CLEANFILES += \
   included-stamp \
@@ -315,12 +365,14 @@ CLEANFILES += \
   includedC.inl \
   includedS.cpp \
   includedS.h \
-  includedS.inl
+  includedS.inl \
+  includedS_T.cpp \
+  includedS_T.h
 
-includedC.cpp includedC.h includedC.inl includedS.cpp includedS.h includedS.inl: included-stamp
+includedC.cpp includedC.h includedC.inl includedS.cpp includedS.h includedS.inl includedS_T.cpp includedS_T.h: included-stamp
 
 included-stamp: $(srcdir)/included.idl $(TAO_IDL_DEP)
-	$(TAO_IDL) $(TAO_IDLFLAGS) -GC -GH -Gd $(srcdir)/included.idl
+	$(TAO_IDL) $(TAO_IDLFLAGS) -GC -GH -Gd -GT $(srcdir)/included.idl
 	@touch $@
 
 BUILT_SOURCES += \
@@ -329,7 +381,9 @@ BUILT_SOURCES += \
   unionC.inl \
   unionS.cpp \
   unionS.h \
-  unionS.inl
+  unionS.inl \
+  unionS_T.cpp \
+  unionS_T.h
 
 CLEANFILES += \
   union-stamp \
@@ -338,12 +392,14 @@ CLEANFILES += \
   unionC.inl \
   unionS.cpp \
   unionS.h \
-  unionS.inl
+  unionS.inl \
+  unionS_T.cpp \
+  unionS_T.h
 
-unionC.cpp unionC.h unionC.inl unionS.cpp unionS.h unionS.inl: union-stamp
+unionC.cpp unionC.h unionC.inl unionS.cpp unionS.h unionS.inl unionS_T.cpp unionS_T.h: union-stamp
 
 union-stamp: $(srcdir)/union.idl $(TAO_IDL_DEP)
-	$(TAO_IDL) $(TAO_IDLFLAGS) -GC -GH -Gd $(srcdir)/union.idl
+	$(TAO_IDL) $(TAO_IDLFLAGS) -GC -GH -Gd -GT $(srcdir)/union.idl
 	@touch $@
 
 BUILT_SOURCES += \
@@ -352,7 +408,9 @@ BUILT_SOURCES += \
   nested_scopeC.inl \
   nested_scopeS.cpp \
   nested_scopeS.h \
-  nested_scopeS.inl
+  nested_scopeS.inl \
+  nested_scopeS_T.cpp \
+  nested_scopeS_T.h
 
 CLEANFILES += \
   nested_scope-stamp \
@@ -361,12 +419,14 @@ CLEANFILES += \
   nested_scopeC.inl \
   nested_scopeS.cpp \
   nested_scopeS.h \
-  nested_scopeS.inl
+  nested_scopeS.inl \
+  nested_scopeS_T.cpp \
+  nested_scopeS_T.h
 
-nested_scopeC.cpp nested_scopeC.h nested_scopeC.inl nested_scopeS.cpp nested_scopeS.h nested_scopeS.inl: nested_scope-stamp
+nested_scopeC.cpp nested_scopeC.h nested_scopeC.inl nested_scopeS.cpp nested_scopeS.h nested_scopeS.inl nested_scopeS_T.cpp nested_scopeS_T.h: nested_scope-stamp
 
 nested_scope-stamp: $(srcdir)/nested_scope.idl $(TAO_IDL_DEP)
-	$(TAO_IDL) $(TAO_IDLFLAGS) -GC -GH -Gd $(srcdir)/nested_scope.idl
+	$(TAO_IDL) $(TAO_IDLFLAGS) -GC -GH -Gd -GT $(srcdir)/nested_scope.idl
 	@touch $@
 
 BUILT_SOURCES += \
@@ -375,7 +435,9 @@ BUILT_SOURCES += \
   paramsC.inl \
   paramsS.cpp \
   paramsS.h \
-  paramsS.inl
+  paramsS.inl \
+  paramsS_T.cpp \
+  paramsS_T.h
 
 CLEANFILES += \
   params-stamp \
@@ -384,12 +446,14 @@ CLEANFILES += \
   paramsC.inl \
   paramsS.cpp \
   paramsS.h \
-  paramsS.inl
+  paramsS.inl \
+  paramsS_T.cpp \
+  paramsS_T.h
 
-paramsC.cpp paramsC.h paramsC.inl paramsS.cpp paramsS.h paramsS.inl: params-stamp
+paramsC.cpp paramsC.h paramsC.inl paramsS.cpp paramsS.h paramsS.inl paramsS_T.cpp paramsS_T.h: params-stamp
 
 params-stamp: $(srcdir)/params.idl $(TAO_IDL_DEP)
-	$(TAO_IDL) $(TAO_IDLFLAGS) -GC -GH -Gd $(srcdir)/params.idl
+	$(TAO_IDL) $(TAO_IDLFLAGS) -GC -GH -Gd -GT $(srcdir)/params.idl
 	@touch $@
 
 BUILT_SOURCES += \
@@ -398,7 +462,9 @@ BUILT_SOURCES += \
   reopened_modulesC.inl \
   reopened_modulesS.cpp \
   reopened_modulesS.h \
-  reopened_modulesS.inl
+  reopened_modulesS.inl \
+  reopened_modulesS_T.cpp \
+  reopened_modulesS_T.h
 
 CLEANFILES += \
   reopened_modules-stamp \
@@ -407,12 +473,14 @@ CLEANFILES += \
   reopened_modulesC.inl \
   reopened_modulesS.cpp \
   reopened_modulesS.h \
-  reopened_modulesS.inl
+  reopened_modulesS.inl \
+  reopened_modulesS_T.cpp \
+  reopened_modulesS_T.h
 
-reopened_modulesC.cpp reopened_modulesC.h reopened_modulesC.inl reopened_modulesS.cpp reopened_modulesS.h reopened_modulesS.inl: reopened_modules-stamp
+reopened_modulesC.cpp reopened_modulesC.h reopened_modulesC.inl reopened_modulesS.cpp reopened_modulesS.h reopened_modulesS.inl reopened_modulesS_T.cpp reopened_modulesS_T.h: reopened_modules-stamp
 
 reopened_modules-stamp: $(srcdir)/reopened_modules.idl $(TAO_IDL_DEP)
-	$(TAO_IDL) $(TAO_IDLFLAGS) -GC -GH -Gd $(srcdir)/reopened_modules.idl
+	$(TAO_IDL) $(TAO_IDLFLAGS) -GC -GH -Gd -GT $(srcdir)/reopened_modules.idl
 	@touch $@
 
 BUILT_SOURCES += \
@@ -421,7 +489,9 @@ BUILT_SOURCES += \
   sequenceC.inl \
   sequenceS.cpp \
   sequenceS.h \
-  sequenceS.inl
+  sequenceS.inl \
+  sequenceS_T.cpp \
+  sequenceS_T.h
 
 CLEANFILES += \
   sequence-stamp \
@@ -430,12 +500,14 @@ CLEANFILES += \
   sequenceC.inl \
   sequenceS.cpp \
   sequenceS.h \
-  sequenceS.inl
+  sequenceS.inl \
+  sequenceS_T.cpp \
+  sequenceS_T.h
 
-sequenceC.cpp sequenceC.h sequenceC.inl sequenceS.cpp sequenceS.h sequenceS.inl: sequence-stamp
+sequenceC.cpp sequenceC.h sequenceC.inl sequenceS.cpp sequenceS.h sequenceS.inl sequenceS_T.cpp sequenceS_T.h: sequence-stamp
 
 sequence-stamp: $(srcdir)/sequence.idl $(TAO_IDL_DEP)
-	$(TAO_IDL) $(TAO_IDLFLAGS) -GC -GH -Gd $(srcdir)/sequence.idl
+	$(TAO_IDL) $(TAO_IDLFLAGS) -GC -GH -Gd -GT $(srcdir)/sequence.idl
 	@touch $@
 
 BUILT_SOURCES += \
@@ -444,7 +516,9 @@ BUILT_SOURCES += \
   reopen_include1C.inl \
   reopen_include1S.cpp \
   reopen_include1S.h \
-  reopen_include1S.inl
+  reopen_include1S.inl \
+  reopen_include1S_T.cpp \
+  reopen_include1S_T.h
 
 CLEANFILES += \
   reopen_include1-stamp \
@@ -453,12 +527,14 @@ CLEANFILES += \
   reopen_include1C.inl \
   reopen_include1S.cpp \
   reopen_include1S.h \
-  reopen_include1S.inl
+  reopen_include1S.inl \
+  reopen_include1S_T.cpp \
+  reopen_include1S_T.h
 
-reopen_include1C.cpp reopen_include1C.h reopen_include1C.inl reopen_include1S.cpp reopen_include1S.h reopen_include1S.inl: reopen_include1-stamp
+reopen_include1C.cpp reopen_include1C.h reopen_include1C.inl reopen_include1S.cpp reopen_include1S.h reopen_include1S.inl reopen_include1S_T.cpp reopen_include1S_T.h: reopen_include1-stamp
 
 reopen_include1-stamp: $(srcdir)/reopen_include1.idl $(TAO_IDL_DEP)
-	$(TAO_IDL) $(TAO_IDLFLAGS) -GC -GH -Gd $(srcdir)/reopen_include1.idl
+	$(TAO_IDL) $(TAO_IDLFLAGS) -GC -GH -Gd -GT $(srcdir)/reopen_include1.idl
 	@touch $@
 
 BUILT_SOURCES += \
@@ -467,7 +543,9 @@ BUILT_SOURCES += \
   reopen_include2C.inl \
   reopen_include2S.cpp \
   reopen_include2S.h \
-  reopen_include2S.inl
+  reopen_include2S.inl \
+  reopen_include2S_T.cpp \
+  reopen_include2S_T.h
 
 CLEANFILES += \
   reopen_include2-stamp \
@@ -476,12 +554,14 @@ CLEANFILES += \
   reopen_include2C.inl \
   reopen_include2S.cpp \
   reopen_include2S.h \
-  reopen_include2S.inl
+  reopen_include2S.inl \
+  reopen_include2S_T.cpp \
+  reopen_include2S_T.h
 
-reopen_include2C.cpp reopen_include2C.h reopen_include2C.inl reopen_include2S.cpp reopen_include2S.h reopen_include2S.inl: reopen_include2-stamp
+reopen_include2C.cpp reopen_include2C.h reopen_include2C.inl reopen_include2S.cpp reopen_include2S.h reopen_include2S.inl reopen_include2S_T.cpp reopen_include2S_T.h: reopen_include2-stamp
 
 reopen_include2-stamp: $(srcdir)/reopen_include2.idl $(TAO_IDL_DEP)
-	$(TAO_IDL) $(TAO_IDLFLAGS) -GC -GH -Gd $(srcdir)/reopen_include2.idl
+	$(TAO_IDL) $(TAO_IDLFLAGS) -GC -GH -Gd -GT $(srcdir)/reopen_include2.idl
 	@touch $@
 
 BUILT_SOURCES += \
@@ -490,7 +570,9 @@ BUILT_SOURCES += \
   typeprefixC.inl \
   typeprefixS.cpp \
   typeprefixS.h \
-  typeprefixS.inl
+  typeprefixS.inl \
+  typeprefixS_T.cpp \
+  typeprefixS_T.h
 
 CLEANFILES += \
   typeprefix-stamp \
@@ -499,12 +581,14 @@ CLEANFILES += \
   typeprefixC.inl \
   typeprefixS.cpp \
   typeprefixS.h \
-  typeprefixS.inl
+  typeprefixS.inl \
+  typeprefixS_T.cpp \
+  typeprefixS_T.h
 
-typeprefixC.cpp typeprefixC.h typeprefixC.inl typeprefixS.cpp typeprefixS.h typeprefixS.inl: typeprefix-stamp
+typeprefixC.cpp typeprefixC.h typeprefixC.inl typeprefixS.cpp typeprefixS.h typeprefixS.inl typeprefixS_T.cpp typeprefixS_T.h: typeprefix-stamp
 
 typeprefix-stamp: $(srcdir)/typeprefix.idl $(TAO_IDL_DEP)
-	$(TAO_IDL) $(TAO_IDLFLAGS) -GC -GH -Gd $(srcdir)/typeprefix.idl
+	$(TAO_IDL) $(TAO_IDLFLAGS) -GC -GH -Gd -GT $(srcdir)/typeprefix.idl
 	@touch $@
 
 BUILT_SOURCES += \
@@ -515,7 +599,9 @@ BUILT_SOURCES += \
   anonymousC.inl \
   anonymousS.cpp \
   anonymousS.h \
-  anonymousS.inl
+  anonymousS.inl \
+  anonymousS_T.cpp \
+  anonymousS_T.h
 
 CLEANFILES += \
   anonymous-stamp \
@@ -526,12 +612,14 @@ CLEANFILES += \
   anonymousC.inl \
   anonymousS.cpp \
   anonymousS.h \
-  anonymousS.inl
+  anonymousS.inl \
+  anonymousS_T.cpp \
+  anonymousS_T.h
 
-anonymousA.cpp anonymousA.h anonymousC.cpp anonymousC.h anonymousC.inl anonymousS.cpp anonymousS.h anonymousS.inl: anonymous-stamp
+anonymousA.cpp anonymousA.h anonymousC.cpp anonymousC.h anonymousC.inl anonymousS.cpp anonymousS.h anonymousS.inl anonymousS_T.cpp anonymousS_T.h: anonymous-stamp
 
 anonymous-stamp: $(srcdir)/anonymous.idl $(TAO_IDL_DEP)
-	$(TAO_IDL) $(TAO_IDLFLAGS) -GC -GH -Gd -GA $(srcdir)/anonymous.idl
+	$(TAO_IDL) $(TAO_IDLFLAGS) -GC -GH -Gd -GA -GT $(srcdir)/anonymous.idl
 	@touch $@
 
 BUILT_SOURCES += \
@@ -542,7 +630,9 @@ BUILT_SOURCES += \
   constantsC.inl \
   constantsS.cpp \
   constantsS.h \
-  constantsS.inl
+  constantsS.inl \
+  constantsS_T.cpp \
+  constantsS_T.h
 
 CLEANFILES += \
   constants-stamp \
@@ -553,12 +643,14 @@ CLEANFILES += \
   constantsC.inl \
   constantsS.cpp \
   constantsS.h \
-  constantsS.inl
+  constantsS.inl \
+  constantsS_T.cpp \
+  constantsS_T.h
 
-constantsA.cpp constantsA.h constantsC.cpp constantsC.h constantsC.inl constantsS.cpp constantsS.h constantsS.inl: constants-stamp
+constantsA.cpp constantsA.h constantsC.cpp constantsC.h constantsC.inl constantsS.cpp constantsS.h constantsS.inl constantsS_T.cpp constantsS_T.h: constants-stamp
 
 constants-stamp: $(srcdir)/constants.idl $(TAO_IDL_DEP)
-	$(TAO_IDL) $(TAO_IDLFLAGS) -GC -GH -Gd -GA $(srcdir)/constants.idl
+	$(TAO_IDL) $(TAO_IDLFLAGS) -GC -GH -Gd -GA -GT $(srcdir)/constants.idl
 	@touch $@
 
 BUILT_SOURCES += \
@@ -569,7 +661,9 @@ BUILT_SOURCES += \
   generic_objectC.inl \
   generic_objectS.cpp \
   generic_objectS.h \
-  generic_objectS.inl
+  generic_objectS.inl \
+  generic_objectS_T.cpp \
+  generic_objectS_T.h
 
 CLEANFILES += \
   generic_object-stamp \
@@ -580,12 +674,14 @@ CLEANFILES += \
   generic_objectC.inl \
   generic_objectS.cpp \
   generic_objectS.h \
-  generic_objectS.inl
+  generic_objectS.inl \
+  generic_objectS_T.cpp \
+  generic_objectS_T.h
 
-generic_objectA.cpp generic_objectA.h generic_objectC.cpp generic_objectC.h generic_objectC.inl generic_objectS.cpp generic_objectS.h generic_objectS.inl: generic_object-stamp
+generic_objectA.cpp generic_objectA.h generic_objectC.cpp generic_objectC.h generic_objectC.inl generic_objectS.cpp generic_objectS.h generic_objectS.inl generic_objectS_T.cpp generic_objectS_T.h: generic_object-stamp
 
 generic_object-stamp: $(srcdir)/generic_object.idl $(TAO_IDL_DEP)
-	$(TAO_IDL) $(TAO_IDLFLAGS) -GC -GH -Gd -GA $(srcdir)/generic_object.idl
+	$(TAO_IDL) $(TAO_IDLFLAGS) -GC -GH -Gd -GA -GT $(srcdir)/generic_object.idl
 	@touch $@
 
 BUILT_SOURCES += \
@@ -596,7 +692,9 @@ BUILT_SOURCES += \
   keywordsC.inl \
   keywordsS.cpp \
   keywordsS.h \
-  keywordsS.inl
+  keywordsS.inl \
+  keywordsS_T.cpp \
+  keywordsS_T.h
 
 CLEANFILES += \
   keywords-stamp \
@@ -607,12 +705,14 @@ CLEANFILES += \
   keywordsC.inl \
   keywordsS.cpp \
   keywordsS.h \
-  keywordsS.inl
+  keywordsS.inl \
+  keywordsS_T.cpp \
+  keywordsS_T.h
 
-keywordsA.cpp keywordsA.h keywordsC.cpp keywordsC.h keywordsC.inl keywordsS.cpp keywordsS.h keywordsS.inl: keywords-stamp
+keywordsA.cpp keywordsA.h keywordsC.cpp keywordsC.h keywordsC.inl keywordsS.cpp keywordsS.h keywordsS.inl keywordsS_T.cpp keywordsS_T.h: keywords-stamp
 
 keywords-stamp: $(srcdir)/keywords.idl $(TAO_IDL_DEP)
-	$(TAO_IDL) $(TAO_IDLFLAGS) -GC -GH -Gd -GA $(srcdir)/keywords.idl
+	$(TAO_IDL) $(TAO_IDLFLAGS) -GC -GH -Gd -GA -GT $(srcdir)/keywords.idl
 	@touch $@
 
 BUILT_SOURCES += \
@@ -623,7 +723,9 @@ BUILT_SOURCES += \
   pragmaC.inl \
   pragmaS.cpp \
   pragmaS.h \
-  pragmaS.inl
+  pragmaS.inl \
+  pragmaS_T.cpp \
+  pragmaS_T.h
 
 CLEANFILES += \
   pragma-stamp \
@@ -634,12 +736,14 @@ CLEANFILES += \
   pragmaC.inl \
   pragmaS.cpp \
   pragmaS.h \
-  pragmaS.inl
+  pragmaS.inl \
+  pragmaS_T.cpp \
+  pragmaS_T.h
 
-pragmaA.cpp pragmaA.h pragmaC.cpp pragmaC.h pragmaC.inl pragmaS.cpp pragmaS.h pragmaS.inl: pragma-stamp
+pragmaA.cpp pragmaA.h pragmaC.cpp pragmaC.h pragmaC.inl pragmaS.cpp pragmaS.h pragmaS.inl pragmaS_T.cpp pragmaS_T.h: pragma-stamp
 
 pragma-stamp: $(srcdir)/pragma.idl $(TAO_IDL_DEP)
-	$(TAO_IDL) $(TAO_IDLFLAGS) -GC -GH -Gd -GA $(srcdir)/pragma.idl
+	$(TAO_IDL) $(TAO_IDLFLAGS) -GC -GH -Gd -GA -GT $(srcdir)/pragma.idl
 	@touch $@
 
 BUILT_SOURCES += \
@@ -650,7 +754,9 @@ BUILT_SOURCES += \
   repo_id_modC.inl \
   repo_id_modS.cpp \
   repo_id_modS.h \
-  repo_id_modS.inl
+  repo_id_modS.inl \
+  repo_id_modS_T.cpp \
+  repo_id_modS_T.h
 
 CLEANFILES += \
   repo_id_mod-stamp \
@@ -661,12 +767,14 @@ CLEANFILES += \
   repo_id_modC.inl \
   repo_id_modS.cpp \
   repo_id_modS.h \
-  repo_id_modS.inl
+  repo_id_modS.inl \
+  repo_id_modS_T.cpp \
+  repo_id_modS_T.h
 
-repo_id_modA.cpp repo_id_modA.h repo_id_modC.cpp repo_id_modC.h repo_id_modC.inl repo_id_modS.cpp repo_id_modS.h repo_id_modS.inl: repo_id_mod-stamp
+repo_id_modA.cpp repo_id_modA.h repo_id_modC.cpp repo_id_modC.h repo_id_modC.inl repo_id_modS.cpp repo_id_modS.h repo_id_modS.inl repo_id_modS_T.cpp repo_id_modS_T.h: repo_id_mod-stamp
 
 repo_id_mod-stamp: $(srcdir)/repo_id_mod.idl $(TAO_IDL_DEP)
-	$(TAO_IDL) $(TAO_IDLFLAGS) -GC -GH -Gd -GA $(srcdir)/repo_id_mod.idl
+	$(TAO_IDL) $(TAO_IDLFLAGS) -GC -GH -Gd -GA -GT $(srcdir)/repo_id_mod.idl
 	@touch $@
 
 BUILT_SOURCES += \
@@ -677,7 +785,9 @@ BUILT_SOURCES += \
   typedefC.inl \
   typedefS.cpp \
   typedefS.h \
-  typedefS.inl
+  typedefS.inl \
+  typedefS_T.cpp \
+  typedefS_T.h
 
 CLEANFILES += \
   typedef-stamp \
@@ -688,12 +798,14 @@ CLEANFILES += \
   typedefC.inl \
   typedefS.cpp \
   typedefS.h \
-  typedefS.inl
+  typedefS.inl \
+  typedefS_T.cpp \
+  typedefS_T.h
 
-typedefA.cpp typedefA.h typedefC.cpp typedefC.h typedefC.inl typedefS.cpp typedefS.h typedefS.inl: typedef-stamp
+typedefA.cpp typedefA.h typedefC.cpp typedefC.h typedefC.inl typedefS.cpp typedefS.h typedefS.inl typedefS_T.cpp typedefS_T.h: typedef-stamp
 
 typedef-stamp: $(srcdir)/typedef.idl $(TAO_IDL_DEP)
-	$(TAO_IDL) $(TAO_IDLFLAGS) -GC -GH -Gd -GA $(srcdir)/typedef.idl
+	$(TAO_IDL) $(TAO_IDLFLAGS) -GC -GH -Gd -GA -GT $(srcdir)/typedef.idl
 	@touch $@
 
 BUILT_SOURCES += \
@@ -704,7 +816,9 @@ BUILT_SOURCES += \
   valuetypeC.inl \
   valuetypeS.cpp \
   valuetypeS.h \
-  valuetypeS.inl
+  valuetypeS.inl \
+  valuetypeS_T.cpp \
+  valuetypeS_T.h
 
 CLEANFILES += \
   valuetype-stamp \
@@ -715,12 +829,14 @@ CLEANFILES += \
   valuetypeC.inl \
   valuetypeS.cpp \
   valuetypeS.h \
-  valuetypeS.inl
+  valuetypeS.inl \
+  valuetypeS_T.cpp \
+  valuetypeS_T.h
 
-valuetypeA.cpp valuetypeA.h valuetypeC.cpp valuetypeC.h valuetypeC.inl valuetypeS.cpp valuetypeS.h valuetypeS.inl: valuetype-stamp
+valuetypeA.cpp valuetypeA.h valuetypeC.cpp valuetypeC.h valuetypeC.inl valuetypeS.cpp valuetypeS.h valuetypeS.inl valuetypeS_T.cpp valuetypeS_T.h: valuetype-stamp
 
 valuetype-stamp: $(srcdir)/valuetype.idl $(TAO_IDL_DEP)
-	$(TAO_IDL) $(TAO_IDLFLAGS) -GC -GH -Gd -GA $(srcdir)/valuetype.idl
+	$(TAO_IDL) $(TAO_IDLFLAGS) -GC -GH -Gd -GA -GT $(srcdir)/valuetype.idl
 	@touch $@
 
 BUILT_SOURCES += \
@@ -731,7 +847,9 @@ BUILT_SOURCES += \
   array_onlyC.inl \
   array_onlyS.cpp \
   array_onlyS.h \
-  array_onlyS.inl
+  array_onlyS.inl \
+  array_onlyS_T.cpp \
+  array_onlyS_T.h
 
 CLEANFILES += \
   array_only-stamp \
@@ -742,12 +860,14 @@ CLEANFILES += \
   array_onlyC.inl \
   array_onlyS.cpp \
   array_onlyS.h \
-  array_onlyS.inl
+  array_onlyS.inl \
+  array_onlyS_T.cpp \
+  array_onlyS_T.h
 
-array_onlyA.cpp array_onlyA.h array_onlyC.cpp array_onlyC.h array_onlyC.inl array_onlyS.cpp array_onlyS.h array_onlyS.inl: array_only-stamp
+array_onlyA.cpp array_onlyA.h array_onlyC.cpp array_onlyC.h array_onlyC.inl array_onlyS.cpp array_onlyS.h array_onlyS.inl array_onlyS_T.cpp array_onlyS_T.h: array_only-stamp
 
 array_only-stamp: $(srcdir)/array_only.idl $(TAO_IDL_DEP)
-	$(TAO_IDL) $(TAO_IDLFLAGS) -GC -GH -Gd -GA $(srcdir)/array_only.idl
+	$(TAO_IDL) $(TAO_IDLFLAGS) -GC -GH -Gd -GA -GT $(srcdir)/array_only.idl
 	@touch $@
 
 noinst_PROGRAMS = main
@@ -833,131 +953,161 @@ main_SOURCES = \
   Bug_2577_RegressionC.inl \
   Bug_2577_RegressionS.h \
   Bug_2577_RegressionS.inl \
+  Bug_2577_RegressionS_T.h \
   Bug_2582_RegressionC.h \
   Bug_2582_RegressionC.inl \
   Bug_2582_RegressionS.h \
   Bug_2582_RegressionS.inl \
+  Bug_2582_RegressionS_T.h \
   Bug_2583_RegressionC.h \
   Bug_2583_RegressionC.inl \
   Bug_2583_RegressionS.h \
   Bug_2583_RegressionS.inl \
+  Bug_2583_RegressionS_T.h \
   Bug_2616_RegressionC.h \
   Bug_2616_RegressionC.inl \
   Bug_2616_RegressionS.h \
   Bug_2616_RegressionS.inl \
+  Bug_2616_RegressionS_T.h \
   Bug_2619_RegressionC.h \
   Bug_2619_RegressionC.inl \
   Bug_2619_RegressionS.h \
   Bug_2619_RegressionS.inl \
+  Bug_2619_RegressionS_T.h \
   anonymousA.h \
   anonymousC.h \
   anonymousC.inl \
   anonymousS.h \
   anonymousS.inl \
+  anonymousS_T.h \
   arrayC.h \
   arrayC.inl \
   arrayS.h \
   arrayS.inl \
+  arrayS_T.h \
   array_onlyA.h \
   array_onlyC.h \
   array_onlyC.inl \
   array_onlyS.h \
   array_onlyS.inl \
+  array_onlyS_T.h \
   constantsA.h \
   constantsC.h \
   constantsC.inl \
   constantsS.h \
   constantsS.inl \
+  constantsS_T.h \
   enum_in_structC.h \
   enum_in_structC.inl \
   enum_in_structS.h \
   enum_in_structS.inl \
+  enum_in_structS_T.h \
   fullC.h \
   fullC.inl \
   fullS.h \
   fullS.inl \
+  fullS_T.h \
   fwdC.h \
   fwdC.inl \
   fwdS.h \
   fwdS.inl \
+  fwdS_T.h \
   generic_objectA.h \
   generic_objectC.h \
   generic_objectC.inl \
   generic_objectS.h \
   generic_objectS.inl \
+  generic_objectS_T.h \
   gperfC.h \
   gperfC.inl \
   gperfS.h \
   gperfS.inl \
+  gperfS_T.h \
   includedC.h \
   includedC.inl \
   includedS.h \
   includedS.inl \
+  includedS_T.h \
   includingC.h \
   includingC.inl \
   includingS.h \
   includingS.inl \
+  includingS_T.h \
   interfaceC.h \
   interfaceC.inl \
   interfaceS.h \
   interfaceS.inl \
+  interfaceS_T.h \
   keywordsA.h \
   keywordsC.h \
   keywordsC.inl \
   keywordsS.h \
   keywordsS.inl \
+  keywordsS_T.h \
   nested_scopeC.h \
   nested_scopeC.inl \
   nested_scopeS.h \
   nested_scopeS.inl \
+  nested_scopeS_T.h \
   paramsC.h \
   paramsC.inl \
   paramsS.h \
   paramsS.inl \
+  paramsS_T.h \
   pragmaA.h \
   pragmaC.h \
   pragmaC.inl \
   pragmaS.h \
   pragmaS.inl \
+  pragmaS_T.h \
   reopen_include1C.h \
   reopen_include1C.inl \
   reopen_include1S.h \
   reopen_include1S.inl \
+  reopen_include1S_T.h \
   reopen_include2C.h \
   reopen_include2C.inl \
   reopen_include2S.h \
   reopen_include2S.inl \
+  reopen_include2S_T.h \
   reopened_modulesC.h \
   reopened_modulesC.inl \
   reopened_modulesS.h \
   reopened_modulesS.inl \
+  reopened_modulesS_T.h \
   repo_id_modA.h \
   repo_id_modC.h \
   repo_id_modC.inl \
   repo_id_modS.h \
   repo_id_modS.inl \
+  repo_id_modS_T.h \
   sequenceC.h \
   sequenceC.inl \
   sequenceS.h \
   sequenceS.inl \
+  sequenceS_T.h \
   typedefA.h \
   typedefC.h \
   typedefC.inl \
   typedefS.h \
   typedefS.inl \
+  typedefS_T.h \
   typeprefixC.h \
   typeprefixC.inl \
   typeprefixS.h \
   typeprefixS.inl \
+  typeprefixS_T.h \
   unionC.h \
   unionC.inl \
   unionS.h \
   unionS.inl \
+  unionS_T.h \
   valuetypeA.h \
   valuetypeC.h \
   valuetypeC.inl \
   valuetypeS.h \
-  valuetypeS.inl
+  valuetypeS.inl \
+  valuetypeS_T.h
 
 main_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO_Messaging.la \
