@@ -136,5 +136,4 @@ factor:		TAO_LPAREN bool_or TAO_RPAREN
 
 %%
 
-TAO_END_VERSIONED_NAMESPACE_DECL
 //extern int yydebug = 1;

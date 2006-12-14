@@ -160,6 +160,7 @@ project(CosTrading_Serv) : orbsvcslib, core, trading_skel, dynamicany, svc_utils
     "	    -e 's/free/ACE_OS::free/g' \\"
     "	    -e 's/malloc/ACE_OS::malloc/g' \\"
     "	    -e 's/realloc/ACE_OS::realloc/g' < y.tab.c > Trader/Constraint_y.cpp"
+    "	echo TAO_END_VERSIONED_NAMESPACE_DECL >> Trader/Constraint_y.cpp"
     "	echo '\/\/ $$I''d$$' > Trader/Constraint_Tokens.h"
     "	echo '' >> Trader/Constraint_Tokens.h"
     "	echo '#ifndef CONSTRAINT_TOKEN_H' >> Trader/Constraint_Tokens.h"
