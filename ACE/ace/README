@@ -1196,6 +1196,10 @@ ACE_ONLY_LATEST_AND_GREATEST            A macro that indicates that
                                         which has the opposite meaning
                                         but serves the same purpose.
 
+ACE_SHM_OPEN_REQUIRES_ONE_SLASH         The path specified on shm_open() must
+                                        have a leading, single slash and not
+                                        have any other slashes.
+
 ACE_WSTRING_HAS_USHORT_SUPPORT          If a platform has wchar_t as a
                                         separate type, then
                                         ACE_WString doesn't have a
