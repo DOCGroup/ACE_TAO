@@ -1,3 +1,8 @@
+Thu Dec 14 12:36:43 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/config-qnx-neutrino.h:
+          Added several missing defines to build with QNX
+
 Thu Dec 14 11:57:43 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * include/makeinclude/platform_qnx_neutrino.GNU:
