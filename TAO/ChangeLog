@@ -1,3 +1,14 @@
+Thu Dec 14 13:21:46 UTC 2006  Chad Elliott  <elliott_c@ociweb.com>
+
+        * orbsvcs/orbsvcs/CosTrading.mpc:
+
+          Modified the rule to output the end version block at the end.
+
+        * orbsvcs/orbsvcs/Trader/Constraint_y.cpp:
+        * orbsvcs/orbsvcs/Trader/constraint.y:
+
+          Removed the end version block in the .y file and regenerated.
+
 Thu Dec 14 08:47:25 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
 
         * orbsvcs/Logging_Service/Basic_Logging_Service/Basic_Logging_Service.cpp
@@ -41,52 +52,52 @@ Thu Dec 14 08:47:25 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
 
 Thu Dec 14 08:27:45 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* tests/OBV/Any/Makefile.am:
-	* tests/OBV/Factory/Makefile.am:
-	* tests/OBV/Forward/Makefile.am:
-	* tests/OBV/TC_Alignment/Makefile.am:
-	* tests/OBV/Truncatable/Makefile.am:
-	* tests/OBV/ValueBox/Makefile.am:
+        * tests/OBV/Any/Makefile.am:
+        * tests/OBV/Factory/Makefile.am:
+        * tests/OBV/Forward/Makefile.am:
+        * tests/OBV/TC_Alignment/Makefile.am:
+        * tests/OBV/Truncatable/Makefile.am:
+        * tests/OBV/ValueBox/Makefile.am:
 
           Regenerated.
 
-	* tests/OBV/Any/OBV_Any.mpc:
-	* tests/OBV/Factory/OBV_Factory.mpc:
-	* tests/OBV/Forward/OBV_Forward.mpc:
-	* tests/OBV/TC_Alignment/OBV_TC_Alignment.mpc:
-	* tests/OBV/Truncatable/OBV_Truncatable.mpc:
-	* tests/OBV/ValueBox/valuebox.mpc:
+        * tests/OBV/Any/OBV_Any.mpc:
+        * tests/OBV/Factory/OBV_Factory.mpc:
+        * tests/OBV/Forward/OBV_Forward.mpc:
+        * tests/OBV/TC_Alignment/OBV_TC_Alignment.mpc:
+        * tests/OBV/Truncatable/OBV_Truncatable.mpc:
+        * tests/OBV/ValueBox/valuebox.mpc:
 
           Changed IDL projects to inherit from valuetype, to
           avoid suppressing typecodes and anys.
 
 Thu Dec 14 07:01:51 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* tests/MProfile/Makefile.am:
-	* tests/MProfile_Connection_Timeout/Makefile.am:
-	* tests/No_Server_MT_Connect_Test/Makefile.am:
-	* tests/OBV/Any/Makefile.am:
-	* tests/OBV/Factory/Makefile.am:
-	* tests/OBV/Forward/Makefile.am:
-	* tests/OBV/TC_Alignment/Makefile.am:
-	* tests/OBV/Truncatable/Makefile.am:
-	* tests/OBV/ValueBox/Makefile.am:
+        * tests/MProfile/Makefile.am:
+        * tests/MProfile_Connection_Timeout/Makefile.am:
+        * tests/No_Server_MT_Connect_Test/Makefile.am:
+        * tests/OBV/Any/Makefile.am:
+        * tests/OBV/Factory/Makefile.am:
+        * tests/OBV/Forward/Makefile.am:
+        * tests/OBV/TC_Alignment/Makefile.am:
+        * tests/OBV/Truncatable/Makefile.am:
+        * tests/OBV/ValueBox/Makefile.am:
 
           Regenerated.
 
-	* tests/MProfile/MProfile.mpc:
-	* tests/MProfile_Connection_Timeout/MProfile_Connection_Timeout.mpc:
-	* tests/No_Server_MT_Connect_Test/No_Server_Connect_Test.mpc:
-	* tests/OBV/Any/OBV_Any.mpc:
-	* tests/OBV/Factory/OBV_Factory.mpc:
-	* tests/OBV/Forward/OBV_Forward.mpc:
-	* tests/OBV/TC_Alignment/OBV_TC_Alignment.mpc:
-	* tests/OBV/Truncatable/OBV_Truncatable.mpc:
-	* tests/OBV/ValueBox/valuebox.mpc:
+        * tests/MProfile/MProfile.mpc:
+        * tests/MProfile_Connection_Timeout/MProfile_Connection_Timeout.mpc:
+        * tests/No_Server_MT_Connect_Test/No_Server_Connect_Test.mpc:
+        * tests/OBV/Any/OBV_Any.mpc:
+        * tests/OBV/Factory/OBV_Factory.mpc:
+        * tests/OBV/Forward/OBV_Forward.mpc:
+        * tests/OBV/TC_Alignment/OBV_TC_Alignment.mpc:
+        * tests/OBV/Truncatable/OBV_Truncatable.mpc:
+        * tests/OBV/ValueBox/valuebox.mpc:
 
           Split out IDL compilation into separate MPC project.
 
-	* tests/IDL_Test/Makefile.am:
+        * tests/IDL_Test/Makefile.am:
 
           Regenerated.
 
