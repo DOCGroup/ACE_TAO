@@ -59,7 +59,6 @@ namespace TAO
       public virtual TAO_Local_RefCounted_Object
   {
   public:
-
     /// Constructor.
     PICurrent (TAO_ORB_Core &orb_core);
 
@@ -101,10 +100,12 @@ namespace TAO
                          ACE_ENV_ARG_DECL);
 
     /// Initialize the PICurrent object.
-    int initialize (PortableInterceptor::SlotId sc ACE_ENV_ARG_DECL);
+    void initialize (PortableInterceptor::SlotId sc ACE_ENV_ARG_DECL);
+
+    /// Clean-up the memory allocated to any PICurrent_impl created.
+    static void cleanup (void *object, void *unused_param);
 
   protected:
-
     /// Destructor
     /**
      * Protected destructor to enforce the fact this class is reference
@@ -114,7 +115,6 @@ namespace TAO
     virtual ~PICurrent (void);
 
   private:
-
     /// Prevent copying through the copy constructor and the assignment
     /// operator.
     //@{
@@ -126,12 +126,14 @@ namespace TAO
     /// Reference to the orb core.
     TAO_ORB_Core &orb_core_;
 
-    /// TSS slot assigned to this object.
+   	/// TSS slot assigned to PICurrent_Impl objects in the OrbCore.
+    /// Allocated by the orb_core_.add_tss_cleanup_func() when our
+    /// initialize() method is called.
     size_t tss_slot_;
 
-    /// The number of allocated slots.
+    /// The number of allocated PICurrent slots end user wants. (0 is
+    /// uninitialized or PICurrent is not used as no data is to be stored).
     PortableInterceptor::SlotId slot_count_;
-
   };
 }
 
