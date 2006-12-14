@@ -964,23 +964,27 @@ TAO_GIOP_Message_Base::process_request (
       parse_error =
         parser->parse_request_header (request);
 
-      TAO_Codeset_Manager *csm = request.orb_core ()->codeset_manager ();
+      // Throw an exception if the
+      if (parse_error != 0)
+        ACE_TRY_THROW (CORBA::MARSHAL (0,
+                                       CORBA::COMPLETED_NO));
+
+	  TAO_Codeset_Manager *csm = request.orb_core ()->codeset_manager ();
       if (csm)
         {
           csm->process_service_context (request);
           transport->assign_translators (&cdr, &output);
         }
-
-      // Throw an exception if the
-      if (parse_error != 0)
-        ACE_TRY_THROW (CORBA::MARSHAL (0,
-                                       CORBA::COMPLETED_NO));
-      request_id = request.request_id ();
+  
+	  request_id = request.request_id ();
 
       response_required = request.response_expected ();
 
       CORBA::Object_var forward_to;
-
+if (request.compressed_)
+{
+	// do decompression
+}
       /*
        * Hook to specialize request processing within TAO
        * This hook will be replaced by specialized request

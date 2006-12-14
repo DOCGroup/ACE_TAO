@@ -118,8 +118,11 @@ namespace TAO
                                 ACE_ENV_ARG_PARAMETER);
             ACE_TRY_CHECK;
 ACE_Message_Block *newblock = new ACE_Message_Block ((const char*)LargBuffer, (size_t)length);
+newblock->wr_ptr ((size_t)length);
+            cdr.write_octet_array_mb (newblock);
+
 //            const_cast <ACE_Message_Block*>(cdr.begin ())->next (const_cast <ACE_Message_Block*>(compression_stream.begin ()));
-            const_cast <ACE_Message_Block*>(cdr.begin ())->next (newblock);
+            //const_cast <ACE_Message_Block*>(cdr.begin ())->cont (newblock);
           }
         else
           {

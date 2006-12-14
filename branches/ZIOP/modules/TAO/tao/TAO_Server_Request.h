@@ -278,6 +278,9 @@ public:
 
 #endif  /* TAO_HAS_INTERCEPTORS == 1 */
 
+  CORBA::Boolean compressed_;
+  CORBA::ULong original_message_length_;
+
 private:
   /// Default ctor only used to create a TAO_ServerRequest that is about
   /// to be the target of a clone operation.

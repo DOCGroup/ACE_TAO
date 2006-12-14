@@ -122,7 +122,8 @@ private:
   int process_bidir_context (TAO_Service_Context &,
                              TAO_Transport *transport);
 
-  int process_compression_context (TAO_Service_Context &,
+  int process_compression_context (TAO_ServerRequest &request,
+                                   TAO_Service_Context &,
                                    TAO_Transport *transport);
 };
 

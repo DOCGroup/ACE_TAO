@@ -567,7 +567,7 @@ TAO_GIOP_Message_Generator_Parser_12::check_compression_context (
   if (service_context.is_service_id (1230266182)
       == 1)
     {
-      return this->process_compression_context (service_context,
+      return this->process_compression_context (request, service_context,
                                                 request.transport ());
     }
 
@@ -598,6 +598,7 @@ TAO_GIOP_Message_Generator_Parser_12::process_bidir_context (
 
 int
 TAO_GIOP_Message_Generator_Parser_12::process_compression_context (
+	TAO_ServerRequest &request,
     TAO_Service_Context &service_context,
     TAO_Transport *transport)
 {
@@ -624,6 +625,12 @@ TAO_GIOP_Message_Generator_Parser_12::process_compression_context (
   if (!(cdr >> message_length))
     return -1;
 
+  request.compressed_ = true;
+  request.original_message_length_ = message_length;
+
+  // Do decompression, the original data is accessed
+  // as following stream: *request.incoming (), decompress
+  // the stream
   ACE_DEBUG ((LM_DEBUG, "Message %d\n",message_length));
   return 0;
 }

@@ -53,7 +53,10 @@ TAO_ServerRequest::TAO_ServerRequest (TAO_Pluggable_Messaging *mesg_base,
                                       TAO_OutputCDR &output,
                                       TAO_Transport *transport,
                                       TAO_ORB_Core *orb_core)
-  : mesg_base_ (mesg_base),
+  :
+                                      compressed_ (false),
+                                      original_message_length_ (0),
+                                      mesg_base_ (mesg_base),
     operation_ (0),
     operation_len_ (0),
     release_operation_ (false),

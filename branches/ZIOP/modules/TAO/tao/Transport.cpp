@@ -2259,7 +2259,7 @@ TAO_Transport::process_queue_head (TAO_Resume_Handle &rh)
 
             }
 
-          const int retval = this->notify_reactor ();
+          int const retval = this->notify_reactor ();
 
           if (retval == 1)
             {
@@ -2315,7 +2315,7 @@ TAO_Transport::notify_reactor (void)
 
 
   // Send a notification to the reactor...
-  const int retval = reactor->notify (eh,
+  int const retval = reactor->notify (eh,
                                       ACE_Event_Handler::READ_MASK);
 
   if (retval < 0 && TAO_debug_level > 2)
