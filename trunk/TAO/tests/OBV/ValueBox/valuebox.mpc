@@ -1,12 +1,21 @@
 // -*- MPC -*-
 // $Id$
 
-project(*Server): taoserver, valuetype {
+project(*idl): taoidldefaults {
   IDL_Files {
     vb_basic.idl
     vb_struct.idl
     vb_union.idl
     valuebox.idl
+  }
+  custom_only = 1
+}
+
+project(*Server): taoserver, valuetype {
+  after += *idl
+  Source_Files {
+    Test_impl.cpp
+    server.cpp
   }
   Source_Files {
     vb_basicC.cpp
@@ -17,18 +26,23 @@ project(*Server): taoserver, valuetype {
     vb_unionS.cpp
     valueboxC.cpp
     valueboxS.cpp
-    Test_impl.cpp
-    server.cpp
+  }
+  IDL_Files {
   }
 }
 
 project(*Client): taoclient, valuetype {
+  after += *idl
   after += *Server
+  Source_Files {
+    client.cpp
+  }
   Source_Files {
     vb_basicC.cpp
     vb_structC.cpp
     vb_unionC.cpp
     valueboxC.cpp
-    client.cpp
+  }
+  IDL_Files {
   }
 }
