@@ -2599,15 +2599,31 @@ ACE_OS::event_init (ACE_event_t *event,
 
   if (type == USYNC_PROCESS)
     {
+      const char *name_p = 0;
+#  if defined (ACE_SHM_OPEN_REQUIRES_ONE_SLASH)
+      char adj_name[MAXPATHLEN];
+      if (name[0] != '/')
+        {
+          adj_name[0] = '/';
+          ACE_OS::strsncpy (&adj_name[1], name, MAXPATHLEN-1);
+          name_p = adj_name;
+        }
+      else
+        {
+          name_p = name;
+        }
+#  else
+      name_p = name;
+#  endif /* ACE_SHM_OPEN_REQUIRES_ONE_SLASH */
       int owner = 0;
       // Let's see if the shared memory entity already exists.
-      ACE_HANDLE fd = ACE_OS::shm_open (ACE_TEXT_CHAR_TO_TCHAR (name),
+      ACE_HANDLE fd = ACE_OS::shm_open (ACE_TEXT_CHAR_TO_TCHAR (name_p),
                                         O_RDWR | O_CREAT | O_EXCL,
                                         ACE_DEFAULT_FILE_PERMS);
       if (fd == ACE_INVALID_HANDLE)
         {
           if (errno == EEXIST)
-            fd = ACE_OS::shm_open (ACE_TEXT_CHAR_TO_TCHAR (name),
+            fd = ACE_OS::shm_open (ACE_TEXT_CHAR_TO_TCHAR (name_p),
                                    O_RDWR | O_CREAT,
                                    ACE_DEFAULT_FILE_PERMS);
           if (fd == ACE_INVALID_HANDLE)   // Still can't get it.
@@ -2635,16 +2651,16 @@ ACE_OS::event_init (ACE_event_t *event,
       if (evtdata == MAP_FAILED)
         {
           if (owner)
-            ACE_OS::shm_unlink (ACE_TEXT_CHAR_TO_TCHAR (name));
+            ACE_OS::shm_unlink (ACE_TEXT_CHAR_TO_TCHAR (name_p));
           return -1;
         }
 
       if (owner)
         {
-          event->name_ = ACE_OS::strdup (name);
+          event->name_ = ACE_OS::strdup (name_p);
           if (event->name_ == 0)
             {
-              ACE_OS::shm_unlink (ACE_TEXT_CHAR_TO_TCHAR (name));
+              ACE_OS::shm_unlink (ACE_TEXT_CHAR_TO_TCHAR (name_p));
               return -1;
             }
           event->eventdata_ = evtdata;

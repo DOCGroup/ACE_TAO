@@ -1,3 +1,23 @@
+Thu Dec 14 00:12:49 UTC 2006  Steve Huston  <shuston@riverace.com>
+
+        * ace/OS_NS_Thread.cpp (event_init): Solaris's shm_open() requires a
+          single '/' on the name argument. I opted to put that logic here
+          rather than the lower-level ACE_OS::shm_open(), but that point
+          is debatable. In any case, look for a leading / on the name if
+          ACE_SHM_OPEN_REQUIRES_ONE_SLASH is defined; if it's not there,
+          add it.
+
+        * ace/config-sunos5.8.h: Added ACE_SHM_OPEN_REQUIRES_ONE_SLASH.
+
+        * ace/README: Add description of ACE_SHM_OPEN_REQUIRES_ONE_SLASH.
+
+        * configure.ac: Added check for ACE_SHM_OPEN_REQUIRES_ONE_SLASH.
+          Fixed check for ACE_LACKS_NUMERIC_LIMITS to display the findings
+          when configuring.
+
+        * m4/config_h.m4: Added ACE_SHM_OPEN_REQUIRES_ONE_SLASH and
+          ACE_LACKS_NUMERIC_LIMITS.
+
 Wed Dec 13 15:04:57 UTC 2006  Iliyan Jeliazkov  <iliyan@ociweb.com>
 
         * bin/tao_orb_tests.lst:

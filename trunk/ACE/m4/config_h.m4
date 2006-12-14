@@ -593,6 +593,7 @@ AH_TEMPLATE([ACE_HAS_SEMUN],
 [Compiler/platform defines a union semun for SysV shared memory ])
 
 AH_TEMPLATE([ACE_HAS_SHM_OPEN],[Platform has shm_open()])
+AH_TEMPLATE([ACE_SHM_OPEN_REQUIRES_ONE_SLASH],[shm_open() requires a leading slash in name])
 
 AH_TEMPLATE([ACE_HAS_SIGISMEMBER_BUG],
 [Platform has bug with sigismember() (HP/UX 11).])
@@ -958,6 +959,8 @@ AH_TEMPLATE([ACE_LACKS_CHAR_RIGHT_SHIFTS],
 AH_TEMPLATE([ACE_LACKS_CHAR_STAR_RIGHT_SHIFTS],
 [Compiler does not have operator>> (istream &, u_char *) or
    operator>> (istream &, signed char *)])
+
+AH_TEMPLATE([ACE_LACKS_NUMERIC_LIMITS],[Platform lacks std::numeric_limits<>])
 
 AH_TEMPLATE([ACE_LACKS_UNIX_DOMAIN_SOCKETS],
 [ACE platform has no UNIX domain sockets])
