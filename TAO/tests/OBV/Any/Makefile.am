@@ -17,14 +17,10 @@ TAO_IDLFLAGS = -Ge 1 -Wb,pre_include=ace/pre.h -Wb,post_include=ace/post.h -I$(T
 TAO_ROOT = $(top_srcdir)
 
 noinst_PROGRAMS =
-CLEANFILES =
-BUILT_SOURCES =
 
-## Makefile.OBV_Any_Server.am
+## Makefile.OBV_Any_Idl.am
 
-if BUILD_EXCEPTIONS
-
-BUILT_SOURCES += \
+BUILT_SOURCES = \
   AnyC.cpp \
   AnyC.h \
   AnyC.inl \
@@ -32,7 +28,7 @@ BUILT_SOURCES += \
   AnyS.h \
   AnyS.inl
 
-CLEANFILES += \
+CLEANFILES = \
   Any-stamp \
   AnyC.cpp \
   AnyC.h \
@@ -44,8 +40,16 @@ CLEANFILES += \
 AnyC.cpp AnyC.h AnyC.inl AnyS.cpp AnyS.h AnyS.inl: Any-stamp
 
 Any-stamp: $(srcdir)/Any.idl $(TAO_IDL_DEP)
-	$(TAO_IDL) $(TAO_IDLFLAGS) $(srcdir)/Any.idl
+	$(TAO_IDL) $(TAO_IDLFLAGS) -Sa -St $(srcdir)/Any.idl
 	@touch $@
+
+
+noinst_HEADERS = \
+  Any.idl
+
+## Makefile.OBV_Any_Server.am
+
+if BUILD_EXCEPTIONS
 
 noinst_PROGRAMS += server
 
@@ -60,10 +64,6 @@ server_SOURCES = \
   AnyS.cpp \
   AnyS_impl.cpp \
   server.cpp \
-  AnyC.h \
-  AnyC.inl \
-  AnyS.h \
-  AnyS.inl \
   AnyS_impl.h
 
 server_LDADD = \
@@ -79,27 +79,6 @@ endif BUILD_EXCEPTIONS
 
 if BUILD_EXCEPTIONS
 
-BUILT_SOURCES += \
-  AnyC.cpp \
-  AnyC.h \
-  AnyC.inl \
-  AnyS.h \
-  AnyS.inl
-
-CLEANFILES += \
-  Any-stamp \
-  AnyC.cpp \
-  AnyC.h \
-  AnyC.inl \
-  AnyS.h \
-  AnyS.inl
-
-AnyC.cpp AnyC.h AnyC.inl AnyS.h AnyS.inl: Any-stamp
-
-Any-stamp: $(srcdir)/Any.idl $(TAO_IDL_DEP)
-	$(TAO_IDL) $(TAO_IDLFLAGS) $(srcdir)/Any.idl
-	@touch $@
-
 noinst_PROGRAMS += client
 
 client_CPPFLAGS = \
@@ -111,10 +90,7 @@ client_CPPFLAGS = \
 client_SOURCES = \
   AnyC.cpp \
   client.cpp \
-  AnyC.h \
-  AnyC.inl \
-  AnyS.h \
-  AnyS.inl
+  AnyS_impl.h
 
 client_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO_Valuetype.la \
