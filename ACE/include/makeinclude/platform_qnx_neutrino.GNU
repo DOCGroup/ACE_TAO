@@ -11,8 +11,8 @@ repo ?= 1
 
 pipes ?= 1
 
-CC      = i386-nto-gcc
-CXX     = i386-nto-g++
+CC      ?= i386-nto-gcc
+CXX     ?= i386-nto-g++
 
 CFLAGS  += -W -Wall -Wpointer-arith
 DCFLAGS += -g
@@ -22,9 +22,9 @@ LDFLAGS +=
 LIBS    += -lsocket -lstdc++
 OCFLAGS += -O2
 PIC     = -fPIC
-AR      = i386-nto-ar
+AR     ?= i386-nto-ar
 ARFLAGS = ruv
-RANLIB  = i386-nto-ranlib
+RANLIB ?= i386-nto-ranlib
 SOFLAGS += -G $(CPPFLAGS) -shared
 SOBUILD = $(COMPILE.cc) $(PIC) -o $(VSHDIR)$*.so $<
 PRELIB  = @true
