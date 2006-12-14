@@ -1,7 +1,7 @@
 // -*- MPC -*-
 // $Id$
 
-project(*idl): taoidldefaults {
+project(*idl): taoidldefaults, iormanip {
   IDL_Files {
     test.idl
   }
@@ -30,7 +30,6 @@ project(*Client): taoclient, iormanip {
   }
   Source_Files {
     testC.cpp
-    testS.cpp
   }
   IDL_Files {
   }
