@@ -88,7 +88,7 @@ protected:
   const char* pid_file_name_;
   // The name of the file where we output the process id.
 
-  int bind_to_naming_service_;
+  bool bind_to_naming_service_;
   // If true, bind to naming service
 
   int nthreads_;
