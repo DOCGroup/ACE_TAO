@@ -1,3 +1,13 @@
+Thu Dec 14 13:52:00 UTC 2006  Simon Massey  <sma@prismtech.com>
+
+        * tao/PI/PICurrent.cpp:
+        * tao/PI/PICurrent.h:
+        * tests/Portable_Interceptors/PICurrent/run_test.pl:
+
+          Bugfix Bugzilla 2510 & 2547 - multi-threading issues for PICurrent.
+          Bugzilla 2552 - PICurrent_Impl, needs to be checked for
+          multi-threaded lazy copying. (Still work to do.)
+
 Thu Dec 14 13:21:46 UTC 2006  Chad Elliott  <elliott_c@ociweb.com>
 
         * orbsvcs/orbsvcs/CosTrading.mpc:
