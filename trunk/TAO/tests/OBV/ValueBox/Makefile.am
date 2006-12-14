@@ -40,7 +40,7 @@ CLEANFILES = \
 vb_basicC.cpp vb_basicC.h vb_basicC.inl vb_basicS.cpp vb_basicS.h vb_basicS.inl: vb_basic-stamp
 
 vb_basic-stamp: $(srcdir)/vb_basic.idl $(TAO_IDL_DEP)
-	$(TAO_IDL) $(TAO_IDLFLAGS) -Sa -St $(srcdir)/vb_basic.idl
+	$(TAO_IDL) $(TAO_IDLFLAGS) $(srcdir)/vb_basic.idl
 	@touch $@
 
 BUILT_SOURCES += \
@@ -63,7 +63,7 @@ CLEANFILES += \
 vb_structC.cpp vb_structC.h vb_structC.inl vb_structS.cpp vb_structS.h vb_structS.inl: vb_struct-stamp
 
 vb_struct-stamp: $(srcdir)/vb_struct.idl $(TAO_IDL_DEP)
-	$(TAO_IDL) $(TAO_IDLFLAGS) -Sa -St $(srcdir)/vb_struct.idl
+	$(TAO_IDL) $(TAO_IDLFLAGS) $(srcdir)/vb_struct.idl
 	@touch $@
 
 BUILT_SOURCES += \
@@ -86,7 +86,7 @@ CLEANFILES += \
 vb_unionC.cpp vb_unionC.h vb_unionC.inl vb_unionS.cpp vb_unionS.h vb_unionS.inl: vb_union-stamp
 
 vb_union-stamp: $(srcdir)/vb_union.idl $(TAO_IDL_DEP)
-	$(TAO_IDL) $(TAO_IDLFLAGS) -Sa -St $(srcdir)/vb_union.idl
+	$(TAO_IDL) $(TAO_IDLFLAGS) $(srcdir)/vb_union.idl
 	@touch $@
 
 BUILT_SOURCES += \
@@ -109,7 +109,7 @@ CLEANFILES += \
 valueboxC.cpp valueboxC.h valueboxC.inl valueboxS.cpp valueboxS.h valueboxS.inl: valuebox-stamp
 
 valuebox-stamp: $(srcdir)/valuebox.idl $(TAO_IDL_DEP)
-	$(TAO_IDL) $(TAO_IDLFLAGS) -Sa -St $(srcdir)/valuebox.idl
+	$(TAO_IDL) $(TAO_IDLFLAGS) $(srcdir)/valuebox.idl
 	@touch $@
 
 

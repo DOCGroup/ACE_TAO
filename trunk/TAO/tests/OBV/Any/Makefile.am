@@ -40,7 +40,7 @@ CLEANFILES = \
 AnyC.cpp AnyC.h AnyC.inl AnyS.cpp AnyS.h AnyS.inl: Any-stamp
 
 Any-stamp: $(srcdir)/Any.idl $(TAO_IDL_DEP)
-	$(TAO_IDL) $(TAO_IDLFLAGS) -Sa -St $(srcdir)/Any.idl
+	$(TAO_IDL) $(TAO_IDLFLAGS) $(srcdir)/Any.idl
 	@touch $@
 
 
