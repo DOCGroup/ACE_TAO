@@ -1,7 +1,7 @@
 // -*- MPC -*-
 // $Id$
 
-project(*idl): taoidldefaults {
+project(*idl): taoidldefaults, valuetype {
   IDL_Files {
     TreeBase.idl
     TreeController.idl

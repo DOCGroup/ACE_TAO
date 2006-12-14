@@ -40,7 +40,7 @@ CLEANFILES = \
 TreeBaseC.cpp TreeBaseC.h TreeBaseC.inl TreeBaseS.cpp TreeBaseS.h TreeBaseS.inl: TreeBase-stamp
 
 TreeBase-stamp: $(srcdir)/TreeBase.idl $(TAO_IDL_DEP)
-	$(TAO_IDL) $(TAO_IDLFLAGS) -Sa -St $(srcdir)/TreeBase.idl
+	$(TAO_IDL) $(TAO_IDLFLAGS) $(srcdir)/TreeBase.idl
 	@touch $@
 
 BUILT_SOURCES += \
@@ -63,7 +63,7 @@ CLEANFILES += \
 TreeControllerC.cpp TreeControllerC.h TreeControllerC.inl TreeControllerS.cpp TreeControllerS.h TreeControllerS.inl: TreeController-stamp
 
 TreeController-stamp: $(srcdir)/TreeController.idl $(TAO_IDL_DEP)
-	$(TAO_IDL) $(TAO_IDLFLAGS) -Sa -St $(srcdir)/TreeController.idl
+	$(TAO_IDL) $(TAO_IDLFLAGS) $(srcdir)/TreeController.idl
 	@touch $@
 
 BUILT_SOURCES += \
@@ -86,7 +86,7 @@ CLEANFILES += \
 TreeNodeC.cpp TreeNodeC.h TreeNodeC.inl TreeNodeS.cpp TreeNodeS.h TreeNodeS.inl: TreeNode-stamp
 
 TreeNode-stamp: $(srcdir)/TreeNode.idl $(TAO_IDL_DEP)
-	$(TAO_IDL) $(TAO_IDLFLAGS) -Sa -St $(srcdir)/TreeNode.idl
+	$(TAO_IDL) $(TAO_IDLFLAGS) $(srcdir)/TreeNode.idl
 	@touch $@
 
 

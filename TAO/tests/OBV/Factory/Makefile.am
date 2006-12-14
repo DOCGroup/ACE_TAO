@@ -40,7 +40,7 @@ CLEANFILES = \
 FactoryC.cpp FactoryC.h FactoryC.inl FactoryS.cpp FactoryS.h FactoryS.inl: Factory-stamp
 
 Factory-stamp: $(srcdir)/Factory.idl $(TAO_IDL_DEP)
-	$(TAO_IDL) $(TAO_IDLFLAGS) -Sa -St $(srcdir)/Factory.idl
+	$(TAO_IDL) $(TAO_IDLFLAGS) $(srcdir)/Factory.idl
 	@touch $@
 
 
