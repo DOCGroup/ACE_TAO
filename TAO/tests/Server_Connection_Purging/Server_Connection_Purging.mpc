@@ -1,7 +1,7 @@
 // -*- MPC -*-
 // $Id$
 
-project(*tao): taoidldefaults {
+project(*idl): taoidldefaults {
   IDL_Files {
     Test.idl
   }
