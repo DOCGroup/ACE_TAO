@@ -3,7 +3,7 @@
 
 project(JAWS2) : acelib {
     sharedname = JAWS2
-    dynamicflags = JAWS_BUILD_DLL
+    dynamicflags += JAWS_BUILD_DLL
     avoids += uses_wchar ace_for_tao
 
     specific (automake) {

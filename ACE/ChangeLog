@@ -1,3 +1,21 @@
+Thu Dec 14 21:08:19 UTC 2006  Steve Huston  <shuston@riverace.com>
+
+        * apps/JAWS2/JAWS/jaws2.mpc: Corrected compiler defines to add
+          JAWS_BUILD_DLL, not replace previous.
+
+        * apps/JAWS2/JAWS/Export.h: Replaced contents with new content
+          generated from generate_export_file.pl. Previous content was
+          generated from GenerateExportH.BAT and was missing lots of
+          stuff, some of which prevented generation of .lib, .exp files.
+
+        * apps/JAWS2/JAWS/JAWS.h: Removed; it only had JAWS_TRACE defined
+          which is properly defined in Export.h now.
+
+        * apps/JAWS2/JAWS/Pipeline_Tasks.cpp:
+        * apps/JAWS2/JAWS/IO_Handler.cpp:
+        * apps/JAWS2/JAWS/IO.cpp:
+        * apps/JAWS2/JAWS/Concurrency.cpp: Removed #include "JAWS/JAWS.h"
+
 Thu Dec 14 12:36:43 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/config-qnx-neutrino.h:

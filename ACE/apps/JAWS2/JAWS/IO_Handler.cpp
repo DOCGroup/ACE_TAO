@@ -4,7 +4,6 @@
 #include "ace/Filecache.h"
 #include "ace/OS_NS_unistd.h"
 
-#include "JAWS/JAWS.h"
 #include "JAWS/IO.h"
 #include "JAWS/IO_Handler.h"
 #include "JAWS/IO_Acceptor.h"
