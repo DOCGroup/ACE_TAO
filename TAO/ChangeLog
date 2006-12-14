@@ -1,3 +1,9 @@
+Thu Dec 14 16:18:00 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * tests/Server_Connection_Purging/Server_Connection_Purging.mpc:
+
+          Fix typo in IDL project name that broke build dependencies.
+
 Thu Dec 14 16:10:02 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
 
         * orbsvcs/Logging_Service/RTEvent_Logging_Service/Makefile.am:
