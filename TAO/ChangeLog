@@ -1,3 +1,9 @@
+Thu Dec 14 16:10:02 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * orbsvcs/Logging_Service/RTEvent_Logging_Service/Makefile.am:
+
+          Regenerated.
+
 Thu Dec 14 13:52:00 UTC 2006  Simon Massey  <sma@prismtech.com>
 
         * tao/PI/PICurrent.cpp:
