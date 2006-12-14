@@ -4,7 +4,7 @@
 
 nto_version := $(shell uname -a | awk '{ gsub("\\.","", $$3 ); print $$3;}')
 
-inline = 1
+inline ?= 1
 debug ?= 1
 optimize ?= 0
 exceptions ?= 1
@@ -30,8 +30,8 @@ else # debug excludes optimize due to g++ internal compiler error
 	OCFLAGS += -O3
   endif #optimize
 endif #debug
-CC      = gcc
-CXX     = g++
+CC      ?= gcc
+CXX     ?= g++
 
 CFLAGS  += -pipe -W -Wall -Wpointer-arith -DACE_NTO_VERS=$(nto_version)
 CPPFLAGS += -DACE_NTO_VERS=$(nto_version)
@@ -41,14 +41,13 @@ LD      = $(CXX)
 LIBS    += -lsocket -lstdc++ -lm
 
 PIC     = -fPIC
-AR      = ar
+AR      ?= ar
 ARFLAGS = ruv
-#RANLIB  = ranlib
 SOFLAGS += $(CPPFLAGS) -shared
 SOBUILD = $(COMPILE.cc) $(PIC) -o $(VSHDIR)$*.so $<
 PRELIB  = @true
 
-# Test for template  instantiation, add to SOFLAGS if SONAME set,   
+# Test for template  instantiation, add to SOFLAGS if SONAME set,
 # add -E to LDFLAGS if using GNU ld
 #
 include $(ACE_ROOT)/include/makeinclude/platform_g++_common.GNU
