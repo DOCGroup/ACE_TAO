@@ -40,7 +40,7 @@ CLEANFILES = \
 ExtraC.cpp ExtraC.h ExtraC.inl ExtraS.cpp ExtraS.h ExtraS.inl: Extra-stamp
 
 Extra-stamp: $(srcdir)/Extra.idl $(TAO_IDL_DEP)
-	$(TAO_IDL) $(TAO_IDLFLAGS) -Sa -St $(srcdir)/Extra.idl
+	$(TAO_IDL) $(TAO_IDLFLAGS) $(srcdir)/Extra.idl
 	@touch $@
 
 BUILT_SOURCES += \
@@ -63,7 +63,7 @@ CLEANFILES += \
 TruncatableC.cpp TruncatableC.h TruncatableC.inl TruncatableS.cpp TruncatableS.h TruncatableS.inl: Truncatable-stamp
 
 Truncatable-stamp: $(srcdir)/Truncatable.idl $(TAO_IDL_DEP)
-	$(TAO_IDL) $(TAO_IDLFLAGS) -Sa -St $(srcdir)/Truncatable.idl
+	$(TAO_IDL) $(TAO_IDLFLAGS) $(srcdir)/Truncatable.idl
 	@touch $@
 
 

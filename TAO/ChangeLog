@@ -1,3 +1,24 @@
+Thu Dec 14 08:27:45 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* tests/OBV/Any/Makefile.am:
+	* tests/OBV/Factory/Makefile.am:
+	* tests/OBV/Forward/Makefile.am:
+	* tests/OBV/TC_Alignment/Makefile.am:
+	* tests/OBV/Truncatable/Makefile.am:
+	* tests/OBV/ValueBox/Makefile.am:
+
+          Regenerated.
+
+	* tests/OBV/Any/OBV_Any.mpc:
+	* tests/OBV/Factory/OBV_Factory.mpc:
+	* tests/OBV/Forward/OBV_Forward.mpc:
+	* tests/OBV/TC_Alignment/OBV_TC_Alignment.mpc:
+	* tests/OBV/Truncatable/OBV_Truncatable.mpc:
+	* tests/OBV/ValueBox/valuebox.mpc:
+
+          Changed IDL projects to inherit from valuetype, to
+          avoid suppressing typecodes and anys.
+
 Thu Dec 14 07:01:51 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* tests/MProfile/Makefile.am:
