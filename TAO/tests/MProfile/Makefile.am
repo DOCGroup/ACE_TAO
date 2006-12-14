@@ -20,6 +20,8 @@ noinst_PROGRAMS =
 
 ## Makefile.MProfile_Idl.am
 
+if BUILD_EXCEPTIONS
+
 BUILT_SOURCES = \
   testC.cpp \
   testC.h \
@@ -40,12 +42,14 @@ CLEANFILES = \
 testC.cpp testC.h testC.inl testS.cpp testS.h testS.inl: test-stamp
 
 test-stamp: $(srcdir)/test.idl $(TAO_IDL_DEP)
-	$(TAO_IDL) $(TAO_IDLFLAGS) -Sa -St $(srcdir)/test.idl
+	$(TAO_IDL) $(TAO_IDLFLAGS) $(srcdir)/test.idl
 	@touch $@
 
 
 noinst_HEADERS = \
   test.idl
+
+endif BUILD_EXCEPTIONS
 
 ## Makefile.MProfile_Server.am
 
@@ -90,7 +94,6 @@ client_CPPFLAGS = \
 client_SOURCES = \
   client.cpp \
   testC.cpp \
-  testS.cpp \
   test_i.h
 
 client_LDADD = \

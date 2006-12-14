@@ -1,3 +1,14 @@
+Thu Dec 14 16:58:18 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * tests/MProfile/Makefile.am:
+
+          Regenerated.
+
+        * tests/MProfile/MProfile.mpc:
+
+          Changed IDL project to inherit from iormanip.
+          Changed Client project to not include testS.cpp.
+
 Thu Dec 14 16:18:00 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
 
         * tests/Server_Connection_Purging/Server_Connection_Purging.mpc:
