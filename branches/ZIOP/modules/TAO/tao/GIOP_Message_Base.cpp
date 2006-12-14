@@ -13,6 +13,10 @@
 #include "tao/Codeset_Manager.h"
 #include "tao/SystemException.h"
 
+#if !defined (__BORLANDC__)
+#include "zlib.h"
+#endif
+
 /*
  * Hook to add additional include files during specializations.
  */
@@ -981,10 +985,22 @@ TAO_GIOP_Message_Base::process_request (
       response_required = request.response_expected ();
 
       CORBA::Object_var forward_to;
-if (request.compressed_)
-{
+//if (request.compressed_)
+//{
+#if !defined (__BORLANDC__)
+            Bytef* LargBuffer = new Bytef [request.original_message_length_ * 2];
+			uLongf length = request.original_message_length_ * 2;
+            int retval = uncompress (LargBuffer,   &length,
+				(const Bytef*)cdr.rd_ptr(), cdr.length ());
+                          //       reinterpret_cast <const Bytef*>(compression_stream.buffer ()), compression_stream.total_length ());
+			char* buf = (char*)LargBuffer;
+
+TAO_InputCDR* newstream = new TAO_InputCDR (buf, (size_t)length);
+request.incoming_ = newstream;
+#endif
+
 	// do decompression
-}
+//}
       /*
        * Hook to specialize request processing within TAO
        * This hook will be replaced by specialized request

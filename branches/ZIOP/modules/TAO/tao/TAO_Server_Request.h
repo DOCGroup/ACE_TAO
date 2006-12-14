@@ -298,10 +298,10 @@ private:
   bool release_operation_;
 
   CORBA::Object_var forward_location_;
-
+public:
   /// Incoming stream.
   TAO_InputCDR *incoming_;
-
+private:
   /// Outgoing stream.
   TAO_OutputCDR *outgoing_;
 
