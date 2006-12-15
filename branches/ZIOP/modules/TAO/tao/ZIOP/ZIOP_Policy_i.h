@@ -6,7 +6,7 @@
  *
  *  $Id$
  *
- *  @author Balachandran Natarajan <bala@cs.wustl.edu>
+ *  @author Johnny Willemsen  <jwillemsen@remedy.nl>
  */
 // ===================================================================
 

@@ -8,56 +8,25 @@ namespace TAO
     class CompressorFactory : public ::ZIOP::CompressorFactory
     {
       public:
-        virtual ::ZIOP::CompressorId compressor_id (
-          )
+        virtual ::ZIOP::CompressorId compressor_id (void)
           ACE_THROW_SPEC ((
             ::CORBA::SystemException
-          ))
-        {
-            return compressor_id_;
-        }
+          ));
 
-        virtual ::CORBA::ULongLong compressed_bytes (
-          )
+        virtual ::CORBA::ULongLong compressed_bytes (void)
           ACE_THROW_SPEC ((
             ::CORBA::SystemException
-          ))
-        {
-          ::CORBA::ULongLong return_value;
-          {
-            ACE_Guard <ACE_SYNCH_MUTEX> guard (mutex_);
-            return_value = compressed_bytes_;
-          }
-          return return_value;
-        }
+          ));
 
-        virtual ::CORBA::ULongLong uncompressed_bytes (
-          )
+        virtual ::CORBA::ULongLong uncompressed_bytes (void)
           ACE_THROW_SPEC ((
             ::CORBA::SystemException
-          ))
-        {
-          ::CORBA::ULongLong return_value;
-          {
-            ACE_Guard <ACE_SYNCH_MUTEX> guard (mutex_);
-            return_value = uncompressed_bytes_;
-          }
-          return return_value;
-        }
+          ));
 
-        virtual ::CORBA::Double average_compression (
-          )
+        virtual ::CORBA::Double average_compression (void)
           ACE_THROW_SPEC ((
             ::CORBA::SystemException
-          ))
-        {
-          ::CORBA::Double return_value;
-          {
-            ACE_Guard <ACE_SYNCH_MUTEX> guard (mutex_);
-            // @tido
-          }
-          return return_value;
-        }
+          ));
 
         virtual ::ZIOP::Compressor_ptr get_compressor (
             ::ZIOP::CompressionLevel compression_level
@@ -72,12 +41,8 @@ namespace TAO
           )
           ACE_THROW_SPEC ((
             ::CORBA::SystemException
-          ))
-        {
-          ACE_Guard <ACE_SYNCH_MUTEX> guard (mutex_);
-          compressed_bytes_ += compressed_bytes;
-          uncompressed_bytes_ += uncompressed_bytes;
-        }
+          ));
+
       private:
         ACE_SYNCH_MUTEX mutex_;
         ::ZIOP::CompressorId compressor_id_;

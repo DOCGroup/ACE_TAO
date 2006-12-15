@@ -6,8 +6,7 @@ namespace TAO
   {
 
 ::ZIOP::CompressorFactory_ptr
-BaseCompressor::compressor_factory (
-        )
+BaseCompressor::compressor_factory (void)
         ACE_THROW_SPEC ((
           ::CORBA::SystemException
         ))
@@ -16,8 +15,7 @@ BaseCompressor::compressor_factory (
 }
 
 ::ZIOP::CompressionLevel
-BaseCompressor::compression_level (
-        )
+BaseCompressor::compression_level (void)
         ACE_THROW_SPEC ((
           ::CORBA::SystemException
         ))
@@ -25,10 +23,11 @@ BaseCompressor::compression_level (
   return compression_level_;
 }
 
-BaseCompressor::BaseCompressor (::ZIOP::CompressionLevel compression_level,
-                      ::ZIOP::CompressorFactory_ptr compressor_factory) :
-        compression_level_ (compression_level),
-        compressor_factory_ (::ZIOP::CompressorFactory::_duplicate (compressor_factory))
+BaseCompressor::BaseCompressor (
+  ::ZIOP::CompressionLevel compression_level,
+  ::ZIOP::CompressorFactory_ptr compressor_factory) :
+    compression_level_ (compression_level),
+    compressor_factory_ (::ZIOP::CompressorFactory::_duplicate (compressor_factory))
 {
 }
 

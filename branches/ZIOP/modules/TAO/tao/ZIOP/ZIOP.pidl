@@ -79,7 +79,7 @@ module ZIOP
          * The (implementation and algorithm specific) compression level
          * associated with this Compressor.
          */
-        readonly attribute long compression_level;
+        readonly attribute CompressionLevel compression_level;
     };
 
     local interface CompressorFactory
@@ -156,7 +156,7 @@ module ZIOP
      * The ZIOP IOR Component. Has an CompressorId attribute indicating the
      * compression algorithm supported by the server side.
      */
-    interface CompressionComponent : IOR::Component
+    interface CompressionComponent //: IOR::Component
     {
        readonly attribute ZIOP::CompressorId compressor_id;
     };
