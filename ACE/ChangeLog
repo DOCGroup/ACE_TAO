@@ -1,3 +1,15 @@
+Fri Dec 15 15:03:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * include/makeinclude/platform_vxworks6.3.GNU:
+        * include/makeinclude/platform_vxworks6.4.GNU:
+        * ace/config-vxworks6.4.h:
+        * ace/config-vxworks6.3.h:
+        * ace/OS_NS_unistd.inl:
+        * ace/OS_NS_arpa_inet.cpp:
+        * ace/os_include/os_stdio.h:
+        * ace/os_include/sys/os_types.h:
+          Added support for VxWorks 6.4
+
 Thu Dec 14 21:08:19 UTC 2006  Steve Huston  <shuston@riverace.com>
 
         * apps/JAWS2/JAWS/jaws2.mpc: Corrected compiler defines to add
