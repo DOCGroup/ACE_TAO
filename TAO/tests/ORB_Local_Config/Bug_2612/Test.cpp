@@ -2,7 +2,7 @@
  * @author Iliyan jeliazkov <iliyan@ociweb.com>
  * @author Lothar Werzinger <lothar@tradescape.biz>
  *
- * $Id:$
+ * $Id$
  */
 
 #include "ace/OS.h"
@@ -13,13 +13,13 @@ char const * const scpc_loadOrb =
   ACE_DYNAMIC_SERVICE_DIRECTIVE ("testDllOrb",
                                  "DllOrb",
                                  "_make_DllOrb",
-                                 "DllOrb -ORBDebugLevel 30 -ORBId testORB -ORBInitRef "
+                                 "DllOrb -t 1 -ORBDebugLevel 3 -ORBId testORB -ORBInitRef "
                                  "NameService=file:///tmp/test-ns.ior -ORBDottedDecimalAddresses 1"
                                  );
 
 char const * const scpc_unloadOrb = ACE_REMOVE_SERVICE_DIRECTIVE ("testDllOrb");
 
-int main(int, char **)
+int ACE_TMAIN(int, char **)
 {
   if (0 > ACE_Service_Config::process_directive(scpc_loadOrb))
     return -1;

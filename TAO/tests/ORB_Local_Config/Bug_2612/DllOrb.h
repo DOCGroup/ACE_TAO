@@ -2,7 +2,7 @@
  * @author Iliyan jeliazkov <iliyan@ociweb.com>
  * @author Lothar Werzinger <lothar@tradescape.biz>
  *
- * $Id:$
+ * $Id$
  */
 
 #ifndef DllOrb_h
@@ -10,6 +10,7 @@
 
 #include "ace/Barrier.h"
 #include "ace/Task.h"
+
 #include "tao/ORB.h"
 #include "tao/PortableServer/PortableServer.h"
 
@@ -24,13 +25,12 @@ class DllOrb_Export DllOrb
 {
   public:
     /// Default constructor.
-    DllOrb ( );
+    DllOrb (int nthreads = 1);
 
     /// Destructor.
-    ~DllOrb ( )
-      throw ();
+    ~DllOrb (void) throw ();
 
-    CORBA::ORB_ptr orb ( ) const;
+    CORBA::ORB_ptr orb (void) const;
 
     virtual int init (int argc, char *argv[]);
 
@@ -42,8 +42,13 @@ class DllOrb_Export DllOrb
 
   // private methods and instance variables
   private:
+    int                            m_nthreads_;
     unsigned int                   m_failPrePostInit;
+
+#if defined (ACE_HAS_THREADS)
     ACE_Thread_Barrier *           mp_barrier;
+#endif
+
     CORBA::ORB_var                 mv_orb;
     PortableServer::POA_var        mv_rootPOA;
     PortableServer::POAManager_var mv_poaManager;
