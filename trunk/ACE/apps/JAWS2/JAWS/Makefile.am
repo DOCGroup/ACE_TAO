@@ -68,7 +68,6 @@ noinst_HEADERS = \
   IO.h \
   IO_Acceptor.h \
   IO_Handler.h \
-  JAWS.h \
   Parse_Headers.h \
   Pipeline.h \
   Pipeline_Handler_T.cpp \
