@@ -171,7 +171,9 @@ ifeq ($(rtp),1)
   include $(WIND_USR)/make/defs.default
   include $(WIND_USR)/make/defs.$(WIND_HOST_TYPE)
   include $(WIND_USR)/tool/$(TOOL_FAMILY)/make.$(CPU)$(TOOL)
-  CPPFLAGS += -mrtp
+  ifeq ("$(TOOL_FAMILY)","gnu")
+    CPPFLAGS += -mrtp
+  endif
   LDFLAGS := $(filter-out -X, $(LDFLAGS))
   LDFLAGS := $(filter-out -N, $(LDFLAGS))
   LD := $(CPLUS)
