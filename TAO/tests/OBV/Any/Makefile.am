@@ -20,6 +20,8 @@ noinst_PROGRAMS =
 
 ## Makefile.OBV_Any_Idl.am
 
+if BUILD_EXCEPTIONS
+
 BUILT_SOURCES = \
   AnyC.cpp \
   AnyC.h \
@@ -46,6 +48,8 @@ Any-stamp: $(srcdir)/Any.idl $(TAO_IDL_DEP)
 
 noinst_HEADERS = \
   Any.idl
+
+endif BUILD_EXCEPTIONS
 
 ## Makefile.OBV_Any_Server.am
 

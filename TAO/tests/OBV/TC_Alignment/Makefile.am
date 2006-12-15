@@ -20,6 +20,8 @@ noinst_PROGRAMS =
 
 ## Makefile.OBV_TC_Alignment_Idl.am
 
+if BUILD_EXCEPTIONS
+
 BUILT_SOURCES = \
   testC.cpp \
   testC.h \
@@ -46,6 +48,8 @@ test-stamp: $(srcdir)/test.idl $(TAO_IDL_DEP)
 
 noinst_HEADERS = \
   test.idl
+
+endif BUILD_EXCEPTIONS
 
 ## Makefile.OBV_TC_Alignment_Server.am
 

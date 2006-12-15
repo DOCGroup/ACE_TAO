@@ -17,10 +17,14 @@ TAO_IDLFLAGS = -Ge 1 -Wb,pre_include=ace/pre.h -Wb,post_include=ace/post.h -I$(T
 TAO_ROOT = $(top_srcdir)
 
 noinst_PROGRAMS =
+CLEANFILES =
+BUILT_SOURCES =
 
 ## Makefile.OBV_Truncatable_Idl.am
 
-BUILT_SOURCES = \
+if BUILD_EXCEPTIONS
+
+BUILT_SOURCES += \
   ExtraC.cpp \
   ExtraC.h \
   ExtraC.inl \
@@ -28,7 +32,7 @@ BUILT_SOURCES = \
   ExtraS.h \
   ExtraS.inl
 
-CLEANFILES = \
+CLEANFILES += \
   Extra-stamp \
   ExtraC.cpp \
   ExtraC.h \
@@ -70,6 +74,8 @@ Truncatable-stamp: $(srcdir)/Truncatable.idl $(TAO_IDL_DEP)
 noinst_HEADERS = \
   Extra.idl \
   Truncatable.idl
+
+endif BUILD_EXCEPTIONS
 
 ## Makefile.OBV_Truncatable_Server.am
 
