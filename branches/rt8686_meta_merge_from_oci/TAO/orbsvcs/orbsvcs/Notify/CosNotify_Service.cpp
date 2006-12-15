@@ -112,9 +112,27 @@ TAO_CosNotify_Service::init (int argc, ACE_TCHAR *argv[])
         }
       else if (arg_shifter.cur_arg_strncasecmp (ACE_TEXT("-UseSeparateDispatchingORB")) == 0)
         {
-          properties->separate_dispatching_orb (true);
-          ACE_DEBUG((LM_DEBUG, ACE_TEXT("Using separate Dispatching ORB. \n")));
-          arg_shifter.consume_arg ();
+          current_arg = arg_shifter.get_the_parameter
+                                (ACE_TEXT("-UseSeparateDispatchingORB"));
+          if (current_arg != 0 &&
+              (ACE_OS::strcmp(ACE_TEXT ("0"), current_arg) == 0 ||
+               ACE_OS::strcmp(ACE_TEXT ("1"), current_arg) == 0))
+            {
+              properties->separate_dispatching_orb (
+                            static_cast<bool> (ACE_OS::atoi(current_arg)));
+              ACE_DEBUG ((LM_DEBUG,
+                          ACE_TEXT ("Using separate Dispatching ORB\n")));
+            }
+          else
+            {
+              ACE_DEBUG ((LM_DEBUG,
+                          ACE_TEXT ("(%P|%t) WARNING: Unrecognized ")
+                          ACE_TEXT ("argument (%s).  Ignoring invalid ")
+                          ACE_TEXT ("-UseSeparateDispatchingORB usage.\n"),
+                          (current_arg == 0 ? ACE_TEXT ("''") : current_arg)));
+            }
+          if (current_arg != 0)
+            arg_shifter.consume_arg ();
         }
       else if (arg_shifter.cur_arg_strncasecmp (ACE_TEXT("-AllowReconnect")) == 0)
       {
