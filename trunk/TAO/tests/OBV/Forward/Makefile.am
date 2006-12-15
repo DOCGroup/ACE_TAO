@@ -17,10 +17,14 @@ TAO_IDLFLAGS = -Ge 1 -Wb,pre_include=ace/pre.h -Wb,post_include=ace/post.h -I$(T
 TAO_ROOT = $(top_srcdir)
 
 noinst_PROGRAMS =
+CLEANFILES =
+BUILT_SOURCES =
 
 ## Makefile.OBV_Forward_Idl.am
 
-BUILT_SOURCES = \
+if BUILD_EXCEPTIONS
+
+BUILT_SOURCES += \
   TreeBaseC.cpp \
   TreeBaseC.h \
   TreeBaseC.inl \
@@ -28,7 +32,7 @@ BUILT_SOURCES = \
   TreeBaseS.h \
   TreeBaseS.inl
 
-CLEANFILES = \
+CLEANFILES += \
   TreeBase-stamp \
   TreeBaseC.cpp \
   TreeBaseC.h \
@@ -94,6 +98,8 @@ noinst_HEADERS = \
   TreeBase.idl \
   TreeController.idl \
   TreeNode.idl
+
+endif BUILD_EXCEPTIONS
 
 ## Makefile.OBV_Forward_Server.am
 

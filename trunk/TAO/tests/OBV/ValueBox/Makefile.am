@@ -17,10 +17,14 @@ TAO_IDLFLAGS = -Ge 1 -Wb,pre_include=ace/pre.h -Wb,post_include=ace/post.h -I$(T
 TAO_ROOT = $(top_srcdir)
 
 noinst_PROGRAMS =
+CLEANFILES =
+BUILT_SOURCES =
 
 ## Makefile.valuebox_idl.am
 
-BUILT_SOURCES = \
+if BUILD_EXCEPTIONS
+
+BUILT_SOURCES += \
   vb_basicC.cpp \
   vb_basicC.h \
   vb_basicC.inl \
@@ -28,7 +32,7 @@ BUILT_SOURCES = \
   vb_basicS.h \
   vb_basicS.inl
 
-CLEANFILES = \
+CLEANFILES += \
   vb_basic-stamp \
   vb_basicC.cpp \
   vb_basicC.h \
@@ -118,6 +122,8 @@ noinst_HEADERS = \
   vb_basic.idl \
   vb_struct.idl \
   vb_union.idl
+
+endif BUILD_EXCEPTIONS
 
 ## Makefile.Valuebox_Server.am
 
