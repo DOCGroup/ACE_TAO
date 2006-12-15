@@ -46,8 +46,9 @@ project(*Main): taoserver, messaging {
     main.cpp
     *C.cpp
     *S.cpp
+    *A.cpp
   }
-  
+
   Template_Files {
     *S_T.cpp
   }
