@@ -2,7 +2,7 @@
 // $Id$
 
 // The following configuration file is designed to work for VxWorks
-// 6.2 platforms using one of these compilers:
+// 6.3 platforms using one of these compilers:
 // 1) The GNU g++ compiler that is shipped with VxWorks 6.3
 
 #ifndef ACE_CONFIG_H
