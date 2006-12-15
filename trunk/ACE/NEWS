@@ -12,8 +12,6 @@ PLANNED CHANGES FOR "ACE-5.5.5"
 
 . (OO) Various other fixes that have been piling up.
 
-. (Remedy) VxWorks 6.4 support
-
 . (Riverace) Pharlap ETS 13 qualification.
 
 USER VISIBLE CHANGES BETWEEN ACE-5.5.4 and ACE-5.5.5
@@ -64,6 +62,8 @@ USER VISIBLE CHANGES BETWEEN ACE-5.5.4 and ACE-5.5.5
 . Removed Irix 5, DGUX, and m88k support
 
 . Improved LynxOS 4.2 support
+
+. VxWorks 6.4 support
 
 USER VISIBLE CHANGES BETWEEN ACE-5.5.3 and ACE-5.5.4
 ====================================================
