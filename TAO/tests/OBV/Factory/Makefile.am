@@ -20,6 +20,8 @@ noinst_PROGRAMS =
 
 ## Makefile.OBV_Factory_Idl.am
 
+if BUILD_EXCEPTIONS
+
 BUILT_SOURCES = \
   FactoryC.cpp \
   FactoryC.h \
@@ -46,6 +48,8 @@ Factory-stamp: $(srcdir)/Factory.idl $(TAO_IDL_DEP)
 
 noinst_HEADERS = \
   Factory.idl
+
+endif BUILD_EXCEPTIONS
 
 ## Makefile.OBV_Factory_Server.am
 
