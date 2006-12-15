@@ -357,9 +357,27 @@ TAO_Notify_Service_Driver::parse_args (int &argc, ACE_TCHAR *argv[])
         }
       else if (arg_shifter.cur_arg_strncasecmp (ACE_TEXT("-UseSeparateDispatchingORB")) == 0)
         {
-          ACE_DEBUG((LM_DEBUG, "Using separate dispatching ORB\n"));
-          this->separate_dispatching_orb_ = true;
-          arg_shifter.consume_arg ();
+      current_arg = arg_shifter.get_the_parameter
+                            (ACE_TEXT("-UseSeparateDispatchingORB"));
+      if (current_arg != 0 &&
+          (ACE_OS::strcmp(ACE_TEXT ("0"), current_arg) == 0 ||
+           ACE_OS::strcmp(ACE_TEXT ("1"), current_arg) == 0))
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      ACE_TEXT ("Using separate dispatching ORB\n")));
+          this->separate_dispatching_orb_ =
+                        static_cast<bool> (ACE_OS::atoi(current_arg));
+        }
+      else
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      ACE_TEXT ("WARNING: Unrecognized ")
+                      ACE_TEXT ("argument (%s) to ")
+                      ACE_TEXT ("-UseSeparateDispatchingORB.\n"),
+                      (current_arg == 0 ? ACE_TEXT ("''") : current_arg)));
+        }
+      if (current_arg != 0)
+        arg_shifter.consume_arg ();
         }
       else if (arg_shifter.cur_arg_strncasecmp (ACE_TEXT("-Boot")) == 0)
         {
