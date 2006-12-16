@@ -182,6 +182,7 @@
 #else
   // We are building for kernel mode
   #define ACE_LACKS_SUSECONDS_T
+  #define ACE_LACKS_INTPTR_T
   #define ACE_LACKS_INTTYPES_H
   #define ACE_LACKS_STDINT_H
   #define ACE_LACKS_UNAME
@@ -238,7 +239,9 @@
 # define ACE_HAS_PTHREADS_STD
 # define ACE_HAS_THREAD_SPECIFIC_STORAGE
 # define ACE_HAS_POSIX_SEM
-# define ACE_LACKS_MUTEXATTR_PSHARED
+# if !defined (__RTP__)
+#  define ACE_LACKS_MUTEXATTR_PSHARED
+# endif
 # define ACE_LACKS_CONDATTR_PSHARED
 // Include this file, the sys/stat.h file shipped with VxWorks has old types
 // and without this include we get a lot of compile errors. A TSR has been filed
