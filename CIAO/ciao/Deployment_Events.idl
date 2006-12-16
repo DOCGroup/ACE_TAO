@@ -13,19 +13,13 @@
 
 #include "tao/StringSeq.pidl"
 
+// EventServiceType definition
+#include <ciaosvcs/Events/CIAO_Events_Base/CIAO_Events.idl>
+
 module CIAO
 {
   module DAnCE
   {
-    /// CIAO specific extension to describe pub/sub services in the deployment
-    enum EventServiceType
-    {
-      EC,
-      RTEC,
-      NOTIFY,
-      RTNOTIFY
-    };
-
     /// Each element in the EventSourceSet denotes a event source id
     typedef string EventSourceId;
 
@@ -46,8 +40,39 @@ module CIAO
       FilterType type;
       EventSourceSet sources;
     };
+    typedef sequence<EventFilter> EventFilters;
 
-    typedef sequence < EventFilter > EventFilters;
+    struct AddrServer
+    {
+      string name;
+      unsigned short port;
+      string address;
+    };
+    typedef sequence<AddrServer> AddrServers;
+
+    struct UDPSender
+    {
+      string name;
+      string addr_serv_id;
+    };
+    typedef sequence<UDPSender> UDPSenders;
+
+    struct UPDReceiver
+    {
+      string name;
+      string addr_serv_id;
+      boolean is_multicast;
+      unsigned short listen_port;
+    };
+    typedef sequence<UPDReceiver> UPDReceivers;
+/*
+    struct EventHandler
+    {
+      string name;
+      boolean is_multicast;
+    };
+    typedef sequence<EventHandler> EventHandlers;
+    */
 
     /// CIAO specific extension to describe pub/sub services in the deployment
     struct EventServiceDeploymentDescription
@@ -58,8 +83,10 @@ module CIAO
       string svc_cfg_file;
 
       EventFilters filters;
+      AddrServers addr_servs;
+      UDPSenders senders;
+      UPDReceivers receivers;
     };
-
     typedef sequence < EventServiceDeploymentDescription >
       EventServiceDeploymentDescriptions;
   };

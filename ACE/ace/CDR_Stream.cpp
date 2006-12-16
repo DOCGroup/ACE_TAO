@@ -677,6 +677,51 @@ ACE_OutputCDR::write_boolean_array (const ACE_CDR::Boolean* x,
   return this->good_bit ();
 }
 
+ 
+int
+ACE_OutputCDR::consolidate (void)
+{
+  // Optimize by only doing something if we need to
+  if (this->current_ != &this->start_)
+    {
+      // Set the number of bytes in the top-level block, reallocating
+      // if necessary.  The rd_ptr and wr_ptr remain at the original offsets
+      // into the buffer, even if it is reallocated.
+      // Return an error if the allocation failed.
+      size_t newsize =
+        ACE_CDR::first_size (this->total_length ()
+                             + ACE_CDR::MAX_ALIGNMENT);
+      if (this->start_.size (newsize) < 0)
+        {
+          return -1;
+        }
+
+      // Consolidate the chain into the first block.  NOTE that
+      // ACE_CDR::consolidate can not be used since we don't want to
+      // overwrite what is already in the first block. We just append it since
+      // the read and write pointers weren't affected by the resizing above.
+      // We also don't have to worry about alignment since the start block is
+      // already aligned.
+      // NOTE also we know there is a continuation since we checked for it
+      // above.  There is therefore no reason to check for a 0 continuation
+      // field here.
+      ACE_Message_Block *cont = this->start_.cont ();
+      for (const ACE_Message_Block* i = cont; i != 0; i = i->cont ())
+        {
+          this->start_.copy (i->rd_ptr (), i->length ());
+        }
+      
+      // Release the old blocks that were consolidated and reset the
+      // current_ and current_is_writable_ to reflect the single used block.
+      ACE_Message_Block::release (cont);
+      this->start_.cont (0);
+      this->current_ = &this->start_;
+      this->current_is_writable_ = true;
+    }
+  
+  return 0;
+}
+
 
 ACE_Message_Block*
 ACE_OutputCDR::find (char* loc)

@@ -1961,17 +1961,13 @@ AC_CHECK_TYPE([uint64_t],
 #include <inttypes.h>
 #endif])
 
-AC_CACHE_CHECK([for std::numeric_limits<>],
-[ace_func_numeric_limits],
+ACE_CACHE_CHECK([for std::numeric_limits<>],
+[ace_cv_func_numeric_limits],
 [AC_COMPILE_IFELSE([AC_LANG_PROGRAM([#include <limits>],
 		  [return std::numeric_limits<int>::max();])],
 		  [ace_cv_func_numeric_limits=yes],
-		  [ace_cv_func_numeric_limits=no])])
-if test $ace_cv_func_numeric_limits = no; then
-  AC_DEFINE([ACE_LACKS_NUMERIC_LIMITS], 1,
-	    [Define to 1 if platfom lacks std::numeric_limits<>.])
-fi
-
+		  [ace_cv_func_numeric_limits=no])
+],,[AC_DEFINE([ACE_LACKS_NUMERIC_LIMITS])])
 
 dnl Other checks
 
@@ -2384,7 +2380,7 @@ ACE_CACHE_CHECK([for C++ typename keyword],
   ],
   [AC_DEFINE([ACE_HAS_TYPENAME_KEYWORD])],
   [
-   AC_MSG_WARN([$CXX does not support the C++ \"typename\" keyword.
+   AC_MSG_WARN([$CXX does not support the C++ "typename" keyword.
 ACE will require it in the near future.])
   ])
 
@@ -3528,6 +3524,16 @@ ACE_CHECK_LACKS_FUNCS(inet_aton)
 
 ACE_CHECK_LACKS_FUNCS(isatty)
 
+AC_CHECK_FUNC(isastream)
+if test $ac_cv_func_isastream = yes; then
+  AC_CHECK_DECL([isastream],
+                [AC_DEFINE([ACE_HAS_ISASTREAM_PROTOTYPE], 1,
+                           [Define to 1 if platform has the declaration
+                            of isastream().])],
+                [],
+                [#include <stropts.h>])
+fi
+
 ACE_CHECK_HAS_FUNCS(itoa)
 
 dnl Check for 64 bit llseek() or lseek64()
@@ -3563,7 +3569,27 @@ fi
 
 ACE_CHECK_HAS_FUNCS(memchr)
 
-ACE_CHECK_LACKS_FUNCS(mkfifo mkstemp mktemp)
+ACE_CHECK_LACKS_FUNCS(mkfifo)
+
+ACE_CHECK_LACKS_FUNCS(mkstemp)
+if test $ac_cv_func_mkstemp = yes; then
+  AC_CHECK_DECL([mkstemp],
+                [],
+                [AC_DEFINE([ACE_LACKS_MKSTEMP_PROTOTYPE], 1,
+                           [Define to 1 if platform lacks the declaration
+                           of mkstemp().])],
+                [#include <stdlib.h>])
+fi
+
+ACE_CHECK_LACKS_FUNCS(mktemp)
+if test $ac_cv_func_mktemp = yes; then
+  AC_CHECK_DECL([mktemp],
+                [],
+                [AC_DEFINE([ACE_LACKS_MKTEMP_PROTOTYPE], 1,
+                           [Define to 1 if platform lacks the declaration
+                           of mktemp().])],
+                [#include <stdlib.h>])
+fi
 
 ACE_CHECK_LACKS_FUNCS(msync mprotect)
 
@@ -4094,10 +4120,59 @@ AC_LINK_IFELSE([AC_LANG_PROGRAM(
           [
            AC_DEFINE([ACE_HAS_SHM_OPEN])
            AC_MSG_RESULT([yes])
+
+           dnl Now see if running it requires a leading slash.
+           ACE_CACHE_CHECK([if shm_open requires one slash],
+             [ace_cv_shm_open_requires_one_slash],
+             [
+              AC_RUN_IFELSE([AC_LANG_SOURCE([[
+#ifndef ACE_LACKS_SYS_TYPES_H
+# include <sys/types.h>
+#endif
+#include <fcntl.h>
+#include <unistd.h>
+#include <sys/stat.h>
+#include <sys/mman.h>
+
+int main (int argc, char *argv[])
+{
+  const char name[] = "ACE_Foo";
+  const char name2[] = "/ACE_Foo";
+  const int oflag = O_RDWR | O_CREAT;
+  const mode_t mode = 0400;  /* Whatever */
+  int fd = shm_open (name, oflag, mode);
+  if (fd != -1)
+  {
+    close (fd);
+    shm_unlink (name);
+    return 1;    /* Don't need the slash */
+  }
+  fd = shm_open (name2, oflag, mode);
+  if (fd != -1)
+  {
+    close (fd);
+    shm_unlink (name2);
+    return 0;
+  }
+  return 1;  /* Nothing worked, so say 'no' */
+}
+              ]])],[
+               ace_cv_shm_open_requires_one_slash=yes
+              ],[
+               ace_cv_shm_open_requires_one_slash=no
+              ],[
+               dnl action if cross-compiling
+               ace_cv_shm_open_requires_one_slash=no
+              ])
+           ],AC_DEFINE([ACE_SHM_OPEN_REQUIRES_ONE_SLASH]),)
           ],
           [
            AC_MSG_RESULT([no])
           ])
+
+dnl if test "$ace_cv_shm_open_requires_one_slash" = yes; then
+dnl   AC_DEFINE([ACE_SHM_OPEN_REQUIRES_ONE_SLASH])
+dnl fi
 
 ACE_CHECK_HAS_FUNCS(snprintf)
 
@@ -4264,6 +4339,15 @@ dnl backwards compatibility with Pthread Draft 4 functions of the same
 dnl name.
 
   ACE_CHECK_LACKS_FUNCS(pthread_sigmask)
+  if test $ac_cv_func_pthread_sigmask = yes; then
+    AC_CHECK_DECL([pthread_sigmask],
+		  [AC_DEFINE([ACE_HAS_PTHREAD_SIGMASK_PROTOTYPE], 1,
+			     [Define to 1 if platform has the declaration
+			     of pthread_sigmask().])],
+		  [],
+		  [#include <pthread.h>
+                   #include <signal.h>])
+  fi
 
   AC_CHECK_FUNC([pthread_key_create],
     [AC_DEFINE([ACE_HAS_THREAD_SPECIFIC_STORAGE])],
@@ -7727,7 +7811,7 @@ AC_CONFIG_FILES([
 ])
 
 dnl Configure examples if configured...
-if test $ace_build_examples = yes; then
+if test "$ace_build_examples" = yes; then
   AC_CONFIG_FILES([
     examples/Makefile
     examples/APG/Makefile
@@ -7830,7 +7914,7 @@ if test $ace_build_examples = yes; then
 fi
 
 dnl Configure tests if configured...
-if test $ace_build_tests = yes; then
+if test "$ace_build_tests" = yes; then
   AC_CONFIG_FILES([
     performance-tests/Makefile
     performance-tests/Misc/Makefile
@@ -7903,7 +7987,7 @@ if test -d $srcdir/protocols; then
   ])
 
   dnl Configure examples if configured...
-  if test $ace_build_examples = yes; then
+  if test "$ace_build_examples" = yes; then
     AC_CONFIG_FILES([
       protocols/examples/Makefile
       protocols/examples/RMCast/Makefile
@@ -7914,7 +7998,7 @@ if test -d $srcdir/protocols; then
   fi
 
   dnl Configure tests if configured...
-  if test $ace_build_tests = yes; then
+  if test "$ace_build_tests" = yes; then
     AC_CONFIG_FILES([
       protocols/tests/HTBP/Makefile
       protocols/tests/HTBP/Reactor_Tests/Makefile

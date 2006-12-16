@@ -17,13 +17,31 @@ TAO_IDLFLAGS = -Ge 1 -Wb,pre_include=ace/pre.h -Wb,post_include=ace/post.h -I$(T
 TAO_ROOT = $(top_srcdir)
 
 noinst_PROGRAMS =
-CLEANFILES =
-BUILT_SOURCES =
 
-## Makefile.Bug_2429_Regression_Client.am
+## Makefile.Bug_2429_Regression_Idl.am
 
-if BUILD_CORBA_MESSAGING
-if BUILD_EXCEPTIONS
+BUILT_SOURCES = \
+  ChildC.cpp \
+  ChildC.h \
+  ChildC.inl \
+  ChildS.cpp \
+  ChildS.h \
+  ChildS.inl
+
+CLEANFILES = \
+  Child-stamp \
+  ChildC.cpp \
+  ChildC.h \
+  ChildC.inl \
+  ChildS.cpp \
+  ChildS.h \
+  ChildS.inl
+
+ChildC.cpp ChildC.h ChildC.inl ChildS.cpp ChildS.h ChildS.inl: Child-stamp
+
+Child-stamp: $(srcdir)/Child.idl $(TAO_IDL_DEP)
+	$(TAO_IDL) $(TAO_IDLFLAGS) -Sa -St -Ge 1 -GC $(srcdir)/Child.idl
+	@touch $@
 
 BUILT_SOURCES += \
   ParentC.cpp \
@@ -45,118 +63,18 @@ CLEANFILES += \
 ParentC.cpp ParentC.h ParentC.inl ParentS.cpp ParentS.h ParentS.inl: Parent-stamp
 
 Parent-stamp: $(srcdir)/Parent.idl $(TAO_IDL_DEP)
-	$(TAO_IDL) $(TAO_IDLFLAGS) -Ge 1 -GC $(srcdir)/Parent.idl
+	$(TAO_IDL) $(TAO_IDLFLAGS) -Sa -St -Ge 1 -GC $(srcdir)/Parent.idl
 	@touch $@
 
-BUILT_SOURCES += \
-  ChildC.cpp \
-  ChildC.h \
-  ChildC.inl \
-  ChildS.cpp \
-  ChildS.h \
-  ChildS.inl
 
-CLEANFILES += \
-  Child-stamp \
-  ChildC.cpp \
-  ChildC.h \
-  ChildC.inl \
-  ChildS.cpp \
-  ChildS.h \
-  ChildS.inl
-
-ChildC.cpp ChildC.h ChildC.inl ChildS.cpp ChildS.h ChildS.inl: Child-stamp
-
-Child-stamp: $(srcdir)/Child.idl $(TAO_IDL_DEP)
-	$(TAO_IDL) $(TAO_IDLFLAGS) -Ge 1 -GC $(srcdir)/Child.idl
-	@touch $@
-
-noinst_PROGRAMS += client
-
-client_CPPFLAGS = \
-  -I$(ACE_ROOT) \
-  -I$(ACE_BUILDDIR) \
-  -I$(TAO_ROOT) \
-  -I$(TAO_BUILDDIR)
-
-client_SOURCES = \
-  ChildC.cpp \
-  ChildS.cpp \
-  ParentC.cpp \
-  ParentS.cpp \
-  client.cpp \
-  ChildC.h \
-  ChildC.inl \
-  ChildS.h \
-  ChildS.inl \
-  ParentC.h \
-  ParentC.inl \
-  ParentS.h \
-  ParentS.inl
-
-client_LDADD = \
-  $(TAO_BUILDDIR)/tao/libTAO_Messaging.la \
-  $(TAO_BUILDDIR)/tao/libTAO_PI.la \
-  $(TAO_BUILDDIR)/tao/libTAO_CodecFactory.la \
-  $(TAO_BUILDDIR)/tao/libTAO_PortableServer.la \
-  $(TAO_BUILDDIR)/tao/libTAO_Valuetype.la \
-  $(TAO_BUILDDIR)/tao/libTAO_AnyTypeCode.la \
-  $(TAO_BUILDDIR)/tao/libTAO.la \
-  $(ACE_BUILDDIR)/ace/libACE.la
-
-endif BUILD_EXCEPTIONS
-endif BUILD_CORBA_MESSAGING
+noinst_HEADERS = \
+  Child.idl \
+  Parent.idl
 
 ## Makefile.Bug_2429_Regression_Server.am
 
 if BUILD_CORBA_MESSAGING
 if BUILD_EXCEPTIONS
-
-BUILT_SOURCES += \
-  ParentC.cpp \
-  ParentC.h \
-  ParentC.inl \
-  ParentS.cpp \
-  ParentS.h \
-  ParentS.inl
-
-CLEANFILES += \
-  Parent-stamp \
-  ParentC.cpp \
-  ParentC.h \
-  ParentC.inl \
-  ParentS.cpp \
-  ParentS.h \
-  ParentS.inl
-
-ParentC.cpp ParentC.h ParentC.inl ParentS.cpp ParentS.h ParentS.inl: Parent-stamp
-
-Parent-stamp: $(srcdir)/Parent.idl $(TAO_IDL_DEP)
-	$(TAO_IDL) $(TAO_IDLFLAGS) -Ge 1 -GC $(srcdir)/Parent.idl
-	@touch $@
-
-BUILT_SOURCES += \
-  ChildC.cpp \
-  ChildC.h \
-  ChildC.inl \
-  ChildS.cpp \
-  ChildS.h \
-  ChildS.inl
-
-CLEANFILES += \
-  Child-stamp \
-  ChildC.cpp \
-  ChildC.h \
-  ChildC.inl \
-  ChildS.cpp \
-  ChildS.h \
-  ChildS.inl
-
-ChildC.cpp ChildC.h ChildC.inl ChildS.cpp ChildS.h ChildS.inl: Child-stamp
-
-Child-stamp: $(srcdir)/Child.idl $(TAO_IDL_DEP)
-	$(TAO_IDL) $(TAO_IDLFLAGS) -Ge 1 -GC $(srcdir)/Child.idl
-	@touch $@
 
 noinst_PROGRAMS += server
 
@@ -173,15 +91,7 @@ server_SOURCES = \
   ParentC.cpp \
   ParentS.cpp \
   server.cpp \
-  ChildC.h \
-  ChildC.inl \
-  ChildS.h \
-  ChildS.inl \
-  ChildServant.h \
-  ParentC.h \
-  ParentC.inl \
-  ParentS.h \
-  ParentS.inl
+  ChildServant.h
 
 server_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO_Messaging.la \
@@ -189,6 +99,40 @@ server_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO_CodecFactory.la \
   $(TAO_BUILDDIR)/tao/libTAO_Valuetype.la \
   $(TAO_BUILDDIR)/tao/libTAO_PortableServer.la \
+  $(TAO_BUILDDIR)/tao/libTAO_AnyTypeCode.la \
+  $(TAO_BUILDDIR)/tao/libTAO.la \
+  $(ACE_BUILDDIR)/ace/libACE.la
+
+endif BUILD_EXCEPTIONS
+endif BUILD_CORBA_MESSAGING
+
+## Makefile.Bug_2429_Regression_Client.am
+
+if BUILD_CORBA_MESSAGING
+if BUILD_EXCEPTIONS
+
+noinst_PROGRAMS += client
+
+client_CPPFLAGS = \
+  -I$(ACE_ROOT) \
+  -I$(ACE_BUILDDIR) \
+  -I$(TAO_ROOT) \
+  -I$(TAO_BUILDDIR)
+
+client_SOURCES = \
+  ChildC.cpp \
+  ChildS.cpp \
+  ParentC.cpp \
+  ParentS.cpp \
+  client.cpp \
+  ChildServant.h
+
+client_LDADD = \
+  $(TAO_BUILDDIR)/tao/libTAO_Messaging.la \
+  $(TAO_BUILDDIR)/tao/libTAO_PI.la \
+  $(TAO_BUILDDIR)/tao/libTAO_CodecFactory.la \
+  $(TAO_BUILDDIR)/tao/libTAO_PortableServer.la \
+  $(TAO_BUILDDIR)/tao/libTAO_Valuetype.la \
   $(TAO_BUILDDIR)/tao/libTAO_AnyTypeCode.la \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la

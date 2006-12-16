@@ -77,7 +77,7 @@ typedef double ACE_timer_t;
 #else
   typedef off_t ACE_OFF_T;
 #endif
-  
+
 #if defined (ACE_SIZEOF_LONG) && ACE_SIZEOF_LONG == 8
    typedef off_t ACE_LOFF_T;
 #elif defined (ACE_HAS_RTEMS) || defined (__FreeBSD__) || defined (__NetBSD__) || defined (__OpenBSD__) || defined (__APPLE__) || \
@@ -89,7 +89,7 @@ typedef double ACE_timer_t;
    typedef offset_t ACE_LOFF_T;
 #elif defined (WIN32)
    typedef __int64  ACE_LOFF_T;
-#elif (defined (ACE_VXWORKS) && (ACE_VXWORKS == 0x630 || ACE_VXWORKS == 0x620 || ACE_VXWORKS == 0x551)) || \
+#elif (defined (ACE_VXWORKS) && (ACE_VXWORKS == 0x640 || ACE_VXWORKS == 0x630 || ACE_VXWORKS == 0x620 || ACE_VXWORKS == 0x551)) || \
   defined (ACE_LYNXOS_MAJOR) || \
   (defined (ACE_OPENVMS) && !defined (_LARGEFILE))
    typedef long long ACE_LOFF_T;

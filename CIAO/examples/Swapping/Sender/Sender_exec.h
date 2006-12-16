@@ -15,7 +15,7 @@
 #include "Sender_exec_export.h"
 #include "tao/LocalObject.h"
 #include "ace/DLL.h"
-#include "ciao/CCM_EventC.h"
+#include "ciao/CCM_EventsC.h"
 
 namespace CIDL_Sender_Impl
 {

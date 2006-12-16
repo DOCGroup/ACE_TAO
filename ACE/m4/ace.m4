@@ -622,6 +622,7 @@ AC_DEFUN([ACE_CONFIGURATION_OPTIONS],
  ACE_ENABLE_CDR_SWAP_ON_READ
  ACE_ENABLE_CDR_SWAP_ON_WRITE
  ACE_ENABLE_CDR_ALIGNMENT
+ ACE_ENABLE_REACTOR_NOTIFICATION_QUEUE
  ACE_ENABLE_STRDUP_EMULATION
  ACE_ENABLE_WCSDUP_EMULATION
 ])
@@ -1005,6 +1006,32 @@ if test X$ace_user_cdr_alignment = Xno; then
 	    [Define to 1 to support unaligned CDR])
 fi
 ])
+
+# ACE_ENABLE_REACTOR_NOTIFICATION_QUEUE
+#---------------------------------------------------------------------------
+AC_DEFUN([ACE_ENABLE_REACTOR_NOTIFICATION_QUEUE],
+[AC_ARG_ENABLE([ace-reactor-notification-queue],
+               AS_HELP_STRING([--enable-ace-reactor-notification-queue],
+                              [configure Reactor to use a user-space queue for notifications [[no]]]),
+	       [case "${enableval}" in
+		 yes)
+		  ace_user_reactor_notification_queue=yes
+		  ;;
+		 no)
+		  ace_user_reactor_notification_queue=no
+		  ;;
+		 *)
+		  AC_MSG_ERROR(bad value ${enableval} for --enable-ace-reactor-notification-queue)
+		  ;;
+		esac],[
+		  ace_user_reactor_notification_queue=no
+		])
+if test X$ace_user_reactor_notification_queue = Xyes; then
+  AC_DEFINE([ACE_HAS_REACTOR_NOTIFICATION_QUEUE], 1,
+	    [Define to 1 to configure Reactor to use a user-space queue for notifications])
+fi
+])
+
 
 # ACE_ENABLE_STRDUP_EMULATION
 #---------------------------------------------------------------------------

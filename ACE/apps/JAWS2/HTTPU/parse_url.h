@@ -49,12 +49,12 @@ private:
 private:
   char *url_;
 
-  char *scheme_;
-  char *user_;
-  char *passwd_;
-  char *host_;
+  const char *scheme_;
+  const char *user_;
+  const char *passwd_;
+  const char *host_;
   int port_;
-  char *url_path_;
+  const char *url_path_;
 
   int error_;
   int is_cgi_;

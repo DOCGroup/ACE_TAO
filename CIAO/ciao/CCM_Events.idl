@@ -13,35 +13,19 @@
 
 //#define CIAO_HAS_IMPORT_KEYWORD
 
-#if !defined (CCM_EVENT_IDL)
-#define CCM_EVENT_IDL
+#if !defined (CCM_EVENTS_IDL)
+#define CCM_EVENTS_IDL
 
 #include "ciao/CCM_Base.idl"
 #include "ciao/CCM_Navigation.idl"
 #include "ciao/CCM_Receptacle.idl"
 #include "ciao/CCM_Cookie.idl"
-#include "tao/orb_types.pidl"
+#include "ciao/CCM_EventBase.idl"
+#include "ciao/CCM_EventConsumerBase.idl"
 
 module Components
 {
   typeprefix Components "omg.org";
-
-  abstract valuetype EventBase {};
-
-  exception BadEventType
-  {
-    CORBA::RepositoryId expected_event_type;
-  };
-
-  interface EventConsumerBase
-  {
-    void push_event (in EventBase evt) raises (BadEventType);
-
-    /// CIAO-specific operation to help support the capability
-    /// to subscribe to eventtypes more derived than the type
-    /// consumed.
-    boolean ciao_is_substitutable (in string event_repo_id);
-  };
 
   valuetype ConsumerDescription : PortDescription
   {
@@ -75,7 +59,7 @@ module Components
 
     /**
      * @todo Mismatch with 06-04-01, AlreadyConnected is not listed in the
-     * spec with this operation
+     * spec with this operation.
      */
     Cookie subscribe (in FeatureName publisher_name,
                       in EventConsumerBase subscriber)

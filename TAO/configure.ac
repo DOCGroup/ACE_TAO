@@ -557,6 +557,9 @@ if test $tao_build_tests = yes; then
     orbsvcs/tests/Trading/Makefile
     orbsvcs/tests/ior_corbaname/Makefile
     orbsvcs/tests/tests_svc_loader/Makefile
+    orbsvcs/tests/unit/Makefile
+    orbsvcs/tests/unit/Trading/Makefile
+    orbsvcs/tests/unit/Trading/Interpreter/Makefile
     tests/AMH_Exceptions/Makefile
     tests/AMH_Oneway/Makefile
     tests/AMI/Makefile

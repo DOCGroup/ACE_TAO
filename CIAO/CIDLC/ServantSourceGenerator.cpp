@@ -549,18 +549,20 @@ namespace
     // Nested classes used by ContextEmitter.
   private:
     struct ContextPortsEmitter : Traversal::SingleUserData,
-    Traversal::MultiUserData,
-    Traversal::PublisherData,
-    Traversal::EmitterData,
-    EmitterBase
+                                 Traversal::MultiUserData,
+                                 Traversal::PublisherData,
+                                 Traversal::EmitterData,
+                                 EmitterBase
     {
       ContextPortsEmitter (Context& c, SemanticGraph::Component& scope)
         : EmitterBase (c),
           type_name_emitter_ (c),
+          enclosing_type_name_emitter_ (c),
           simple_type_name_emitter_ (c),
           scope_ (scope)
       {
         belongs_.node_traverser (type_name_emitter_);
+        enclosing_belongs_.node_traverser (enclosing_type_name_emitter_);
         simple_belongs_.node_traverser (simple_type_name_emitter_);
       }
 
@@ -822,6 +824,13 @@ namespace
            << "ACE_CHECK;" << endl
            << "}";
 
+        // @@ GD Modified Code Below
+
+        os << endl;
+        os << "ACE_CString source_id = this->_ciao_instance_id ();";
+        os << "source_id += \"_\";" << endl;
+        os << "source_id += \"" << p.name () << "\";//port name" << endl << endl;
+
         os << "for (ACE_Active_Map_Manager< " << endl
            << "  " << STRS[COMP_ECB] << "_var>::iterator giter =" << endl
            << "    this->ciao_publishes_" << p.name ()
@@ -830,8 +839,17 @@ namespace
            << "_generic_map_.end ();" << endl
            << "++giter)" << endl
            << "{"
-           << "(*giter).int_id_->push_event" << " (" << endl
-           << "ev" << endl
+           << "(*giter).int_id_->ciao_push_event" << " (" << endl
+           << "ev," << endl
+           << "source_id.c_str ()," << endl;
+
+        Traversal::PublisherData::belongs (p, enclosing_belongs_);
+
+        os << "::_tc_";
+
+        Traversal::PublisherData::belongs (p, simple_belongs_);
+
+        os << endl
            << STRS[ENV_ARG] << ");"
            << "ACE_CHECK;" << endl
            << "}"
@@ -1033,8 +1051,10 @@ namespace
 
     private:
       FullTypeNameEmitter type_name_emitter_;
+      EnclosingTypeNameEmitter enclosing_type_name_emitter_;
       SimpleTypeNameEmitter simple_type_name_emitter_;
       Traversal::Belongs belongs_;
+      Traversal::Belongs enclosing_belongs_;
       Traversal::Belongs simple_belongs_;
       SemanticGraph::Component& scope_;
     };
@@ -2217,6 +2237,30 @@ namespace
            << "}"
            << "ACE_THROW ( " << STRS[EXCP_BET] << " ());" << endl
            << "}";
+
+        // GD Added below code
+        // Begin
+
+        os << "// Inherited from " << STRS[COMP_ECB] << "." << endl
+           << "void" << endl
+           << scope_.name  () << "_Servant::";
+
+        Traversal::ConsumerData::belongs (c, simple_belongs_);
+
+        os << "Consumer_" << c.name ()
+           << "_Servant::ciao_push_event (" << endl
+           << "::Components::EventBase *ev," << endl
+           << "const char * /* source_id */," << endl
+           << "::CORBA::TypeCode_ptr /* tc */" << endl
+           << STRS[ENV_SRC] << ")" << endl
+           << STRS[EXCP_START] << " "
+           << STRS[EXCP_SYS] << "," << endl
+           << STRS[EXCP_BET] << "))" << endl
+           << "{"
+           << "this->push_event (ev);" << endl
+           << "}";
+
+         // End
 
         os << "CORBA::Boolean" << endl
            << scope_.name () << "_Servant::";

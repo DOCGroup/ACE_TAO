@@ -4898,18 +4898,28 @@ nobase_include_HEADERS += \
   IFRService/IFR_BaseS.h \
   IFRService/IFR_BaseS.inl \
   IFRService/IFR_BaseS_T.cpp \
+  IFRService/IFR_BaseS_T.h \
+  IFRService/IFR_BaseS_T.inl \
   IFRService/IFR_BasicS.h \
   IFRService/IFR_BasicS.inl \
   IFRService/IFR_BasicS_T.cpp \
+  IFRService/IFR_BasicS_T.h \
+  IFRService/IFR_BasicS_T.inl \
   IFRService/IFR_ComponentsS.h \
   IFRService/IFR_ComponentsS.inl \
   IFRService/IFR_ComponentsS_T.cpp \
+  IFRService/IFR_ComponentsS_T.h \
+  IFRService/IFR_ComponentsS_T.inl \
   IFRService/IFR_ExtendedS.h \
   IFRService/IFR_ExtendedS.inl \
   IFRService/IFR_ExtendedS_T.cpp \
+  IFRService/IFR_ExtendedS_T.h \
+  IFRService/IFR_ExtendedS_T.inl \
   IFRService/IFR_Service_Loader.h \
   IFRService/IFR_Service_Utils.h \
   IFRService/IFR_Service_Utils_T.cpp \
+  IFRService/IFR_Service_Utils_T.h \
+  IFRService/IFR_macro.h \
   IFRService/IRObject_i.h \
   IFRService/InterfaceAttrExtension_i.h \
   IFRService/InterfaceDef_i.h \
@@ -4932,7 +4942,9 @@ nobase_include_HEADERS += \
   IFRService/ValueBoxDef_i.h \
   IFRService/ValueDef_i.h \
   IFRService/ValueMemberDef_i.h \
-  IFRService/WstringDef_i.h
+  IFRService/WstringDef_i.h \
+  IFRService/concrete_classes.h \
+  IFRService/ifr_service_export.h
 
 endif !BUILD_ACE_FOR_TAO
 endif BUILD_EXCEPTIONS

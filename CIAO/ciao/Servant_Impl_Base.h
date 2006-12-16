@@ -28,7 +28,7 @@
 #include "ace/Active_Map_Manager_T.h"
 #include "ace/Thread_Mutex.h"
 
-#include "CCM_EventC.h"
+#include "CCM_EventsC.h"
 #include "CIAO_Server_Export.h"
 #include "CCM_ContainerC.h"
 #include "CCM_ObjectS.h"

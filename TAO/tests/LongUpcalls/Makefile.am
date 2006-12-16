@@ -17,16 +17,14 @@ TAO_IDLFLAGS = -Ge 1 -Wb,pre_include=ace/pre.h -Wb,post_include=ace/post.h -I$(T
 TAO_ROOT = $(top_srcdir)
 
 noinst_PROGRAMS =
-CLEANFILES =
-BUILT_SOURCES =
 
-## Makefile.LongUpcalls_Server.am
+## Makefile.LongUpcalls_Idl.am
 
 if BUILD_AMI
 if BUILD_CORBA_MESSAGING
 if BUILD_EXCEPTIONS
 
-BUILT_SOURCES += \
+BUILT_SOURCES = \
   TestC.cpp \
   TestC.h \
   TestC.inl \
@@ -34,7 +32,7 @@ BUILT_SOURCES += \
   TestS.h \
   TestS.inl
 
-CLEANFILES += \
+CLEANFILES = \
   Test-stamp \
   TestC.cpp \
   TestC.h \
@@ -49,6 +47,20 @@ Test-stamp: $(srcdir)/Test.idl $(TAO_IDL_DEP)
 	$(TAO_IDL) $(TAO_IDLFLAGS) -GC $(srcdir)/Test.idl
 	@touch $@
 
+
+noinst_HEADERS = \
+  Test.idl
+
+endif BUILD_EXCEPTIONS
+endif BUILD_CORBA_MESSAGING
+endif BUILD_AMI
+
+## Makefile.LongUpcalls_Server.am
+
+if BUILD_AMI
+if BUILD_CORBA_MESSAGING
+if BUILD_EXCEPTIONS
+
 noinst_PROGRAMS += blocking_server
 
 blocking_server_CPPFLAGS = \
@@ -62,11 +74,7 @@ blocking_server_SOURCES = \
   TestC.cpp \
   TestS.cpp \
   blocking_server.cpp \
-  Manager.h \
-  TestC.h \
-  TestC.inl \
-  TestS.h \
-  TestS.inl
+  Manager.h
 
 blocking_server_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO_Messaging.la \
@@ -88,29 +96,6 @@ if BUILD_AMI
 if BUILD_CORBA_MESSAGING
 if BUILD_EXCEPTIONS
 
-BUILT_SOURCES += \
-  TestC.cpp \
-  TestC.h \
-  TestC.inl \
-  TestS.cpp \
-  TestS.h \
-  TestS.inl
-
-CLEANFILES += \
-  Test-stamp \
-  TestC.cpp \
-  TestC.h \
-  TestC.inl \
-  TestS.cpp \
-  TestS.h \
-  TestS.inl
-
-TestC.cpp TestC.h TestC.inl TestS.cpp TestS.h TestS.inl: Test-stamp
-
-Test-stamp: $(srcdir)/Test.idl $(TAO_IDL_DEP)
-	$(TAO_IDL) $(TAO_IDLFLAGS) -GC $(srcdir)/Test.idl
-	@touch $@
-
 noinst_PROGRAMS += blocking_client
 
 blocking_client_CPPFLAGS = \
@@ -124,11 +109,7 @@ blocking_client_SOURCES = \
   TestC.cpp \
   TestS.cpp \
   blocking_client.cpp \
-  Controller.h \
-  TestC.h \
-  TestC.inl \
-  TestS.h \
-  TestS.inl
+  Controller.h
 
 blocking_client_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO_Messaging.la \
@@ -150,29 +131,6 @@ if BUILD_AMI
 if BUILD_CORBA_MESSAGING
 if BUILD_EXCEPTIONS
 
-BUILT_SOURCES += \
-  TestC.cpp \
-  TestC.h \
-  TestC.inl \
-  TestS.cpp \
-  TestS.h \
-  TestS.inl
-
-CLEANFILES += \
-  Test-stamp \
-  TestC.cpp \
-  TestC.h \
-  TestC.inl \
-  TestS.cpp \
-  TestS.h \
-  TestS.inl
-
-TestC.cpp TestC.h TestC.inl TestS.cpp TestS.h TestS.inl: Test-stamp
-
-Test-stamp: $(srcdir)/Test.idl $(TAO_IDL_DEP)
-	$(TAO_IDL) $(TAO_IDLFLAGS) -GC $(srcdir)/Test.idl
-	@touch $@
-
 noinst_PROGRAMS += ami_server
 
 ami_server_CPPFLAGS = \
@@ -186,11 +144,7 @@ ami_server_SOURCES = \
   TestC.cpp \
   TestS.cpp \
   ami_server.cpp \
-  AMI_Manager.h \
-  TestC.h \
-  TestC.inl \
-  TestS.h \
-  TestS.inl
+  AMI_Manager.h
 
 ami_server_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO_Messaging.la \
@@ -212,29 +166,6 @@ if BUILD_AMI
 if BUILD_CORBA_MESSAGING
 if BUILD_EXCEPTIONS
 
-BUILT_SOURCES += \
-  TestC.cpp \
-  TestC.h \
-  TestC.inl \
-  TestS.cpp \
-  TestS.h \
-  TestS.inl
-
-CLEANFILES += \
-  Test-stamp \
-  TestC.cpp \
-  TestC.h \
-  TestC.inl \
-  TestS.cpp \
-  TestS.h \
-  TestS.inl
-
-TestC.cpp TestC.h TestC.inl TestS.cpp TestS.h TestS.inl: Test-stamp
-
-Test-stamp: $(srcdir)/Test.idl $(TAO_IDL_DEP)
-	$(TAO_IDL) $(TAO_IDLFLAGS) -GC $(srcdir)/Test.idl
-	@touch $@
-
 noinst_PROGRAMS += ami_client
 
 ami_client_CPPFLAGS = \
@@ -250,11 +181,7 @@ ami_client_SOURCES = \
   TestS.cpp \
   ami_client.cpp \
   Controller.h \
-  Manager_Handler.h \
-  TestC.h \
-  TestC.inl \
-  TestS.h \
-  TestS.inl
+  Manager_Handler.h
 
 ami_client_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO_Messaging.la \

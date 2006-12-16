@@ -20,7 +20,7 @@ noinst_PROGRAMS =
 CLEANFILES =
 BUILT_SOURCES =
 
-## Makefile.OBV_Forward_Server.am
+## Makefile.OBV_Forward_Idl.am
 
 if BUILD_EXCEPTIONS
 
@@ -93,6 +93,18 @@ TreeNode-stamp: $(srcdir)/TreeNode.idl $(TAO_IDL_DEP)
 	$(TAO_IDL) $(TAO_IDLFLAGS) $(srcdir)/TreeNode.idl
 	@touch $@
 
+
+noinst_HEADERS = \
+  TreeBase.idl \
+  TreeController.idl \
+  TreeNode.idl
+
+endif BUILD_EXCEPTIONS
+
+## Makefile.OBV_Forward_Server.am
+
+if BUILD_EXCEPTIONS
+
 noinst_PROGRAMS += server
 
 server_CPPFLAGS = \
@@ -110,19 +122,7 @@ server_SOURCES = \
   TreeNodeC.cpp \
   TreeNodeS.cpp \
   server.cpp \
-  Test_impl.h \
-  TreeBaseC.h \
-  TreeBaseC.inl \
-  TreeBaseS.h \
-  TreeBaseS.inl \
-  TreeControllerC.h \
-  TreeControllerC.inl \
-  TreeControllerS.h \
-  TreeControllerS.inl \
-  TreeNodeC.h \
-  TreeNodeC.inl \
-  TreeNodeS.h \
-  TreeNodeS.inl
+  Test_impl.h
 
 server_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO_Valuetype.la \
@@ -137,69 +137,6 @@ endif BUILD_EXCEPTIONS
 
 if BUILD_EXCEPTIONS
 
-BUILT_SOURCES += \
-  TreeControllerC.cpp \
-  TreeControllerC.h \
-  TreeControllerC.inl \
-  TreeControllerS.h \
-  TreeControllerS.inl
-
-CLEANFILES += \
-  TreeController-stamp \
-  TreeControllerC.cpp \
-  TreeControllerC.h \
-  TreeControllerC.inl \
-  TreeControllerS.h \
-  TreeControllerS.inl
-
-TreeControllerC.cpp TreeControllerC.h TreeControllerC.inl TreeControllerS.h TreeControllerS.inl: TreeController-stamp
-
-TreeController-stamp: $(srcdir)/TreeController.idl $(TAO_IDL_DEP)
-	$(TAO_IDL) $(TAO_IDLFLAGS) $(srcdir)/TreeController.idl
-	@touch $@
-
-BUILT_SOURCES += \
-  TreeBaseC.cpp \
-  TreeBaseC.h \
-  TreeBaseC.inl \
-  TreeBaseS.h \
-  TreeBaseS.inl
-
-CLEANFILES += \
-  TreeBase-stamp \
-  TreeBaseC.cpp \
-  TreeBaseC.h \
-  TreeBaseC.inl \
-  TreeBaseS.h \
-  TreeBaseS.inl
-
-TreeBaseC.cpp TreeBaseC.h TreeBaseC.inl TreeBaseS.h TreeBaseS.inl: TreeBase-stamp
-
-TreeBase-stamp: $(srcdir)/TreeBase.idl $(TAO_IDL_DEP)
-	$(TAO_IDL) $(TAO_IDLFLAGS) $(srcdir)/TreeBase.idl
-	@touch $@
-
-BUILT_SOURCES += \
-  TreeNodeC.cpp \
-  TreeNodeC.h \
-  TreeNodeC.inl \
-  TreeNodeS.h \
-  TreeNodeS.inl
-
-CLEANFILES += \
-  TreeNode-stamp \
-  TreeNodeC.cpp \
-  TreeNodeC.h \
-  TreeNodeC.inl \
-  TreeNodeS.h \
-  TreeNodeS.inl
-
-TreeNodeC.cpp TreeNodeC.h TreeNodeC.inl TreeNodeS.h TreeNodeS.inl: TreeNode-stamp
-
-TreeNode-stamp: $(srcdir)/TreeNode.idl $(TAO_IDL_DEP)
-	$(TAO_IDL) $(TAO_IDLFLAGS) $(srcdir)/TreeNode.idl
-	@touch $@
-
 noinst_PROGRAMS += client
 
 client_CPPFLAGS = \
@@ -213,18 +150,7 @@ client_SOURCES = \
   TreeControllerC.cpp \
   TreeNodeC.cpp \
   client.cpp \
-  TreeBaseC.h \
-  TreeBaseC.inl \
-  TreeBaseS.h \
-  TreeBaseS.inl \
-  TreeControllerC.h \
-  TreeControllerC.inl \
-  TreeControllerS.h \
-  TreeControllerS.inl \
-  TreeNodeC.h \
-  TreeNodeC.inl \
-  TreeNodeS.h \
-  TreeNodeS.inl
+  Test_impl.h
 
 client_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO_Valuetype.la \

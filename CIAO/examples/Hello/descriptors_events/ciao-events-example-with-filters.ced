@@ -18,13 +18,27 @@
       <source>Hello-Sender-idd_click_out</source>
       <source>Hello-Sender-idd-02_click_out</source>
     </filter>
-	  
+    
     <filter>
       <name>my_filter_02</name>
+      <type>DISJUNCTION</type>
+      <source>Hello-Sender-idd_click_out</source>
+    </filter>    
+	  
+    <filter>
+      <name>my_filter_03</name>
       <type>CONJUNCTION</type>
       <source>Hello-Sender-idd_click_out</source>
       <source>Hello-Sender-idd-02_click_out</source>
-     </filter>	  
+     </filter>	 
+     
+    <filter>
+      <name>my_filter_04</name>
+      <type>CONJUNCTION</type>
+      <source>Hello-Sender-idd_click_out</source>
+     </filter>	       
+     
+     
   </eventServiceConfiguration>
   
   <eventServiceConfiguration id="es_configuration-02">

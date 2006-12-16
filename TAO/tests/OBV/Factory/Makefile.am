@@ -17,14 +17,12 @@ TAO_IDLFLAGS = -Ge 1 -Wb,pre_include=ace/pre.h -Wb,post_include=ace/post.h -I$(T
 TAO_ROOT = $(top_srcdir)
 
 noinst_PROGRAMS =
-CLEANFILES =
-BUILT_SOURCES =
 
-## Makefile.OBV_Factory_Server.am
+## Makefile.OBV_Factory_Idl.am
 
 if BUILD_EXCEPTIONS
 
-BUILT_SOURCES += \
+BUILT_SOURCES = \
   FactoryC.cpp \
   FactoryC.h \
   FactoryC.inl \
@@ -32,7 +30,7 @@ BUILT_SOURCES += \
   FactoryS.h \
   FactoryS.inl
 
-CLEANFILES += \
+CLEANFILES = \
   Factory-stamp \
   FactoryC.cpp \
   FactoryC.h \
@@ -46,6 +44,16 @@ FactoryC.cpp FactoryC.h FactoryC.inl FactoryS.cpp FactoryS.h FactoryS.inl: Facto
 Factory-stamp: $(srcdir)/Factory.idl $(TAO_IDL_DEP)
 	$(TAO_IDL) $(TAO_IDLFLAGS) $(srcdir)/Factory.idl
 	@touch $@
+
+
+noinst_HEADERS = \
+  Factory.idl
+
+endif BUILD_EXCEPTIONS
+
+## Makefile.OBV_Factory_Server.am
+
+if BUILD_EXCEPTIONS
 
 noinst_PROGRAMS += server
 
@@ -61,11 +69,7 @@ server_SOURCES = \
   FactoryS.cpp \
   FactoryS_impl.cpp \
   server.cpp \
-  FactoryC.h \
-  FactoryC.inl \
   FactoryC_impl.h \
-  FactoryS.h \
-  FactoryS.inl \
   FactoryS_impl.h
 
 server_LDADD = \
@@ -81,27 +85,6 @@ endif BUILD_EXCEPTIONS
 
 if BUILD_EXCEPTIONS
 
-BUILT_SOURCES += \
-  FactoryC.cpp \
-  FactoryC.h \
-  FactoryC.inl \
-  FactoryS.h \
-  FactoryS.inl
-
-CLEANFILES += \
-  Factory-stamp \
-  FactoryC.cpp \
-  FactoryC.h \
-  FactoryC.inl \
-  FactoryS.h \
-  FactoryS.inl
-
-FactoryC.cpp FactoryC.h FactoryC.inl FactoryS.h FactoryS.inl: Factory-stamp
-
-Factory-stamp: $(srcdir)/Factory.idl $(TAO_IDL_DEP)
-	$(TAO_IDL) $(TAO_IDLFLAGS) $(srcdir)/Factory.idl
-	@touch $@
-
 noinst_PROGRAMS += client
 
 client_CPPFLAGS = \
@@ -114,11 +97,7 @@ client_SOURCES = \
   FactoryC.cpp \
   FactoryC_impl.cpp \
   client.cpp \
-  FactoryC.h \
-  FactoryC.inl \
-  FactoryC_impl.h \
-  FactoryS.h \
-  FactoryS.inl
+  FactoryC_impl.h
 
 client_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO_Valuetype.la \

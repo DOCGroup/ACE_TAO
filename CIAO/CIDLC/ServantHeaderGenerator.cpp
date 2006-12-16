@@ -722,6 +722,18 @@ namespace
            << STRS[EXCP_SYS] << "," << endl
            << STRS[EXCP_BET] << "));" << endl;
 
+        // @@ GD added below code.
+
+        os << "// CIAO-specific in " << STRS[COMP_ECB] << "." << endl
+           << "virtual void" << endl
+           << "ciao_push_event ( ::Components::EventBase *ev," << endl
+           << "const char * source_id," << endl
+           << "::CORBA::TypeCode_ptr tc" << endl
+           << STRS[ENV_HDR] << ")" << endl
+           << STRS[EXCP_START] << " "
+           << STRS[EXCP_SYS] << "," << endl
+           << STRS[EXCP_BET] << "));" << endl;
+
         os << "// CIAO-specific in " << STRS[COMP_ECB] << "." << endl
            << "virtual CORBA::Boolean" << endl
            << "ciao_is_substitutable (" << endl

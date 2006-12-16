@@ -5,6 +5,7 @@
 #include "ace/OS_NS_errno.h"
 #include "ciao/CIAO_common.h"
 
+#include <orbsvcs/Event/EC_Default_Factory.h>
 
 void print_arg (int argc, char *argv[])
 {
@@ -17,6 +18,8 @@ main (int argc, char *argv[])
 {
   ACE_TRY_NEW_ENV
     {
+      TAO_EC_Default_Factory::init_svcs ();
+
       ACE_DEBUG ((LM_DEBUG, "*** Starting NodeApplication\n"));
 
       CIAO::NodeApplication_Options nodeapp_options;

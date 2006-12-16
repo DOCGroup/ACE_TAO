@@ -14,9 +14,6 @@
 #if !defined (CCM_CONFIGURATOR_IDL)
 #define CCM_CONFIGURATOR_IDL
 
-#include "ciao/CCM_Event.idl"
-#include "ciao/CCM_Home.idl"
-
 module Components
 {
   typeprefix Components "omg.org";

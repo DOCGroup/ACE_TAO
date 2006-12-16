@@ -9,16 +9,20 @@
 #include "ace/Arg_Shifter.h"
 #include "ace/SString.h"
 #include "ace/OS_NS_unistd.h"
+
 #include "tao/corba.h"
 #include "tao/TAO_Singleton_Manager.h"
 
 #include "DllOrb.h"
 
 
-DllOrb::DllOrb ( )
+DllOrb::DllOrb (int nthreads)
 :
+  m_nthreads_ (nthreads),
   m_failPrePostInit(0),
+#if defined (ACE_HAS_THREADS)
   mp_barrier(0),
+#endif
   mv_orb(),
   mv_rootPOA()
 {
@@ -27,14 +31,16 @@ DllOrb::DllOrb ( )
 DllOrb::~DllOrb ( )
   throw ()
 {
+#if defined (ACE_HAS_THREADS)
   delete mp_barrier;
+#endif
 }
 
 
 int DllOrb::init (int argc, char *argv[])
 {
   int result = 0;
-  int threadCnt = 1;
+  int threadCnt = this->m_nthreads_;
 
   try
   {
@@ -93,11 +99,20 @@ int DllOrb::init (int argc, char *argv[])
 
     mv_poaManager->activate();
   }
-  catch(...)
+  catch(CORBA::Exception& ex)
   {
+    ACE_PRINT_EXCEPTION (ex,
+                         ACE_TEXT ("(%P|%t) init failed:"));
     return -1;
   }
+  catch(...)
+  {
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       ACE_TEXT ("(%P|%t) init failed\n")),
+                      -1);
+  }
 
+#if defined (ACE_HAS_THREADS)
   mp_barrier = new ACE_Thread_Barrier(threadCnt + 1);
 
   this->activate(
@@ -105,6 +120,7 @@ int DllOrb::init (int argc, char *argv[])
                  threadCnt
                  );
   mp_barrier->wait();
+#endif
 
   return 0;
 }
@@ -126,27 +142,39 @@ int DllOrb::fini (void)
 
       mv_orb->shutdown(1);
     }
+  catch(CORBA::Exception& ex)
+  {
+    ACE_PRINT_EXCEPTION (ex,
+                         ACE_TEXT ("(%P|%t) fini failed:"));
+    return -1;
+  }
   catch(...)
     {
-      return -1;
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("(%P|%t) fini failed to deactivate/shutdown\n")),
+                        -1);
     }
 
 
   // wait for our threads to finish
   wait();
 
+#if defined (ACE_HAS_THREADS)
   delete mp_barrier;
   mp_barrier = 0;
+#endif
 
   try
     {
       mv_orb->destroy();
       mv_orb = CORBA::ORB::_nil();
     }
-  catch(CORBA::Exception const &)
-    {
-      return -1;
-    }
+  catch(CORBA::Exception& ex)
+  {
+    ACE_PRINT_EXCEPTION (ex,
+                         ACE_TEXT ("(%P|%t) init failed to destroy the orb:"));
+    return -1;
+  }
 
   if (m_failPrePostInit < 3)
     {
@@ -161,7 +189,9 @@ int DllOrb::fini (void)
       TAO_Singleton_Manager * p_tsm = TAO_Singleton_Manager::instance();
       result = p_tsm->fini();
       if (result == -1 && m_failPrePostInit == 0)
-        return -1;
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           ACE_TEXT ("(%P|%t) fini failed to destroy TAO_Singleton_Manager\n")),
+                          -1);
     } /* end of if */
 
   return 0;
@@ -170,7 +200,10 @@ int DllOrb::fini (void)
 
 int DllOrb::svc (void)
 {
+#if defined (ACE_HAS_THREADS)
   mp_barrier->wait();
+#endif
+
   try
     {
       mv_orb->run();
@@ -180,11 +213,21 @@ int DllOrb::svc (void)
       const CORBA::ULong VMCID = rc_ex.minor() & 0xFFFFF000U;
       const CORBA::ULong minorCode = rc_ex.minor() & 0xFFFU;
       if (VMCID != CORBA::OMGVMCID || minorCode != 4)
-        return -1;
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           ACE_TEXT ("(%P|%t) svc exits (-1)\n")),
+                          -1);
     }
+  catch(CORBA::Exception& ex)
+  {
+    ACE_PRINT_EXCEPTION (ex,
+                         ACE_TEXT ("(%P|%t) svc - orb->run() failed:"));
+    return -1;
+  }
   catch(...)
     {
-      return -1;
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("(%P|%t) svc got some exception\n")),
+                        -1);
     }
   return 0;
 }

@@ -87,9 +87,12 @@ project(CosConcurrency_Serv) : orbsvcslib, core, concurrency_skel, avoids_corba_
   }
 
   Header_Files {
+    // We want all the headers in the Concurrency subdirectory, except
+    // concurrency_export.h and concurrency_skel_export.h, since those
+    // are bundled in the stub and skeleton projects.
     Concurrency
-    Concurrency/concurrency_export.h
-    Concurrency/concurrency_skel_export.h
+    ^Concurrency/concurrency_export.h
+    ^Concurrency/concurrency_skel_export.h
   }
 
   Inline_Files {
