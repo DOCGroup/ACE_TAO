@@ -25,7 +25,16 @@
    // ACE_OS::gethrtime () can use the RDTSC instruction.
     # define ACE_HAS_PENTIUM
   #endif
-  #define ACE_LACKS_INTPTR_T
 #endif
+
+#if defined __RTP__
+# undef ACE_LACKS_PUTENV
+#else
+# undef ACE_LACKS_GETPID
+# undef ACE_LACKS_GETPPID
+#endif
+
+#undef ACE_LACKS_STRCASECMP
+#undef ACE_LACKS_READDIR_R
 
 #endif /* ACE_CONFIG_H */
