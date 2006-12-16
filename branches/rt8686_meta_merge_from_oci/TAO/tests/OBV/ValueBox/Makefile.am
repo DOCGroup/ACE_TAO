@@ -20,7 +20,7 @@ noinst_PROGRAMS =
 CLEANFILES =
 BUILT_SOURCES =
 
-## Makefile.Valuebox_Server.am
+## Makefile.valuebox_idl.am
 
 if BUILD_EXCEPTIONS
 
@@ -116,6 +116,19 @@ valuebox-stamp: $(srcdir)/valuebox.idl $(TAO_IDL_DEP)
 	$(TAO_IDL) $(TAO_IDLFLAGS) $(srcdir)/valuebox.idl
 	@touch $@
 
+
+noinst_HEADERS = \
+  valuebox.idl \
+  vb_basic.idl \
+  vb_struct.idl \
+  vb_union.idl
+
+endif BUILD_EXCEPTIONS
+
+## Makefile.Valuebox_Server.am
+
+if BUILD_EXCEPTIONS
+
 noinst_PROGRAMS += server
 
 server_CPPFLAGS = \
@@ -135,23 +148,7 @@ server_SOURCES = \
   vb_structS.cpp \
   vb_unionC.cpp \
   vb_unionS.cpp \
-  Test_impl.h \
-  valueboxC.h \
-  valueboxC.inl \
-  valueboxS.h \
-  valueboxS.inl \
-  vb_basicC.h \
-  vb_basicC.inl \
-  vb_basicS.h \
-  vb_basicS.inl \
-  vb_structC.h \
-  vb_structC.inl \
-  vb_structS.h \
-  vb_structS.inl \
-  vb_unionC.h \
-  vb_unionC.inl \
-  vb_unionS.h \
-  vb_unionS.inl
+  Test_impl.h
 
 server_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO_Valuetype.la \
@@ -165,90 +162,6 @@ endif BUILD_EXCEPTIONS
 ## Makefile.Valuebox_Client.am
 
 if BUILD_EXCEPTIONS
-
-BUILT_SOURCES += \
-  vb_basicC.cpp \
-  vb_basicC.h \
-  vb_basicC.inl \
-  vb_basicS.h \
-  vb_basicS.inl
-
-CLEANFILES += \
-  vb_basic-stamp \
-  vb_basicC.cpp \
-  vb_basicC.h \
-  vb_basicC.inl \
-  vb_basicS.h \
-  vb_basicS.inl
-
-vb_basicC.cpp vb_basicC.h vb_basicC.inl vb_basicS.h vb_basicS.inl: vb_basic-stamp
-
-vb_basic-stamp: $(srcdir)/vb_basic.idl $(TAO_IDL_DEP)
-	$(TAO_IDL) $(TAO_IDLFLAGS) $(srcdir)/vb_basic.idl
-	@touch $@
-
-BUILT_SOURCES += \
-  vb_structC.cpp \
-  vb_structC.h \
-  vb_structC.inl \
-  vb_structS.h \
-  vb_structS.inl
-
-CLEANFILES += \
-  vb_struct-stamp \
-  vb_structC.cpp \
-  vb_structC.h \
-  vb_structC.inl \
-  vb_structS.h \
-  vb_structS.inl
-
-vb_structC.cpp vb_structC.h vb_structC.inl vb_structS.h vb_structS.inl: vb_struct-stamp
-
-vb_struct-stamp: $(srcdir)/vb_struct.idl $(TAO_IDL_DEP)
-	$(TAO_IDL) $(TAO_IDLFLAGS) $(srcdir)/vb_struct.idl
-	@touch $@
-
-BUILT_SOURCES += \
-  vb_unionC.cpp \
-  vb_unionC.h \
-  vb_unionC.inl \
-  vb_unionS.h \
-  vb_unionS.inl
-
-CLEANFILES += \
-  vb_union-stamp \
-  vb_unionC.cpp \
-  vb_unionC.h \
-  vb_unionC.inl \
-  vb_unionS.h \
-  vb_unionS.inl
-
-vb_unionC.cpp vb_unionC.h vb_unionC.inl vb_unionS.h vb_unionS.inl: vb_union-stamp
-
-vb_union-stamp: $(srcdir)/vb_union.idl $(TAO_IDL_DEP)
-	$(TAO_IDL) $(TAO_IDLFLAGS) $(srcdir)/vb_union.idl
-	@touch $@
-
-BUILT_SOURCES += \
-  valueboxC.cpp \
-  valueboxC.h \
-  valueboxC.inl \
-  valueboxS.h \
-  valueboxS.inl
-
-CLEANFILES += \
-  valuebox-stamp \
-  valueboxC.cpp \
-  valueboxC.h \
-  valueboxC.inl \
-  valueboxS.h \
-  valueboxS.inl
-
-valueboxC.cpp valueboxC.h valueboxC.inl valueboxS.h valueboxS.inl: valuebox-stamp
-
-valuebox-stamp: $(srcdir)/valuebox.idl $(TAO_IDL_DEP)
-	$(TAO_IDL) $(TAO_IDLFLAGS) $(srcdir)/valuebox.idl
-	@touch $@
 
 noinst_PROGRAMS += client
 
@@ -264,22 +177,7 @@ client_SOURCES = \
   vb_basicC.cpp \
   vb_structC.cpp \
   vb_unionC.cpp \
-  valueboxC.h \
-  valueboxC.inl \
-  valueboxS.h \
-  valueboxS.inl \
-  vb_basicC.h \
-  vb_basicC.inl \
-  vb_basicS.h \
-  vb_basicS.inl \
-  vb_structC.h \
-  vb_structC.inl \
-  vb_structS.h \
-  vb_structS.inl \
-  vb_unionC.h \
-  vb_unionC.inl \
-  vb_unionS.h \
-  vb_unionS.inl
+  Test_impl.h
 
 client_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO_Valuetype.la \

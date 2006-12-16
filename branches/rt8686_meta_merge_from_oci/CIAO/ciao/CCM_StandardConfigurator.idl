@@ -15,6 +15,7 @@
 #define CCM_STANDARDCONFIGURATOR_IDL
 
 #include "ciao/CCM_Configurator.idl"
+#include "ciao/CCM_Navigation.idl"
 
 module Components
 {

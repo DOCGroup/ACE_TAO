@@ -79,8 +79,9 @@ namespace CIDL_Sender_Impl
     ACE_THROW_SPEC ((CORBA::SystemException))
   {
     Hello::TimeOut_var event = new OBV_Hello::TimeOut;
+    event->data ("ACE/TAO/CIAO");
     ACE_DEBUG ((LM_DEBUG, "Sender initiates the process.\n"));
-    this->context_->push_click_out (event ACE_ENV_ARG_PARAMETER);
+    this->context_->push_click_out (event.in () ACE_ENV_ARG_PARAMETER);
     ACE_CHECK;
 
     ACE_DEBUG ((LM_DEBUG, "My current color is:"));

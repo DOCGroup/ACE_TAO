@@ -17,14 +17,10 @@ TAO_IDLFLAGS = -Ge 1 -Wb,pre_include=ace/pre.h -Wb,post_include=ace/post.h -I$(T
 TAO_ROOT = $(top_srcdir)
 
 noinst_PROGRAMS =
-CLEANFILES =
-BUILT_SOURCES =
 
-## Makefile.Multiple_Inheritance_Server.am
+## Makefile.Multiple_Inheritance_Idl.am
 
-if BUILD_EXCEPTIONS
-
-BUILT_SOURCES += \
+BUILT_SOURCES = \
   Multiple_InheritanceC.cpp \
   Multiple_InheritanceC.h \
   Multiple_InheritanceC.inl \
@@ -32,7 +28,7 @@ BUILT_SOURCES += \
   Multiple_InheritanceS.h \
   Multiple_InheritanceS.inl
 
-CLEANFILES += \
+CLEANFILES = \
   Multiple_Inheritance-stamp \
   Multiple_InheritanceC.cpp \
   Multiple_InheritanceC.h \
@@ -44,8 +40,16 @@ CLEANFILES += \
 Multiple_InheritanceC.cpp Multiple_InheritanceC.h Multiple_InheritanceC.inl Multiple_InheritanceS.cpp Multiple_InheritanceS.h Multiple_InheritanceS.inl: Multiple_Inheritance-stamp
 
 Multiple_Inheritance-stamp: $(srcdir)/Multiple_Inheritance.idl $(TAO_IDL_DEP)
-	$(TAO_IDL) $(TAO_IDLFLAGS) $(srcdir)/Multiple_Inheritance.idl
+	$(TAO_IDL) $(TAO_IDLFLAGS) -Sa -St $(srcdir)/Multiple_Inheritance.idl
 	@touch $@
+
+
+noinst_HEADERS = \
+  Multiple_Inheritance.idl
+
+## Makefile.Multiple_Inheritance_Server.am
+
+if BUILD_EXCEPTIONS
 
 noinst_PROGRAMS += server
 
@@ -59,10 +63,7 @@ server_SOURCES = \
   Multiple_InheritanceC.cpp \
   Multiple_InheritanceS.cpp \
   server.cpp \
-  Multiple_InheritanceC.h \
-  Multiple_InheritanceC.inl \
-  Multiple_InheritanceS.h \
-  Multiple_InheritanceS.inl
+  Multiple_Inheritance_i.h
 
 server_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO_Utils.la \
@@ -79,27 +80,6 @@ endif BUILD_EXCEPTIONS
 
 if BUILD_EXCEPTIONS
 
-BUILT_SOURCES += \
-  Multiple_InheritanceC.cpp \
-  Multiple_InheritanceC.h \
-  Multiple_InheritanceC.inl \
-  Multiple_InheritanceS.h \
-  Multiple_InheritanceS.inl
-
-CLEANFILES += \
-  Multiple_Inheritance-stamp \
-  Multiple_InheritanceC.cpp \
-  Multiple_InheritanceC.h \
-  Multiple_InheritanceC.inl \
-  Multiple_InheritanceS.h \
-  Multiple_InheritanceS.inl
-
-Multiple_InheritanceC.cpp Multiple_InheritanceC.h Multiple_InheritanceC.inl Multiple_InheritanceS.h Multiple_InheritanceS.inl: Multiple_Inheritance-stamp
-
-Multiple_Inheritance-stamp: $(srcdir)/Multiple_Inheritance.idl $(TAO_IDL_DEP)
-	$(TAO_IDL) $(TAO_IDLFLAGS) $(srcdir)/Multiple_Inheritance.idl
-	@touch $@
-
 noinst_PROGRAMS += client
 
 client_CPPFLAGS = \
@@ -111,10 +91,7 @@ client_CPPFLAGS = \
 client_SOURCES = \
   Multiple_InheritanceC.cpp \
   client.cpp \
-  Multiple_InheritanceC.h \
-  Multiple_InheritanceC.inl \
-  Multiple_InheritanceS.h \
-  Multiple_InheritanceS.inl
+  Multiple_Inheritance_i.h
 
 client_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO_AnyTypeCode.la \

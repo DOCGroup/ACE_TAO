@@ -2,7 +2,7 @@
 // $Id$
 
 // The following configuration file is designed to work for VxWorks
-// 6.2 platforms using one of these compilers:
+// 6.3 platforms using one of these compilers:
 // 1) The GNU g++ compiler that is shipped with VxWorks 6.3
 
 #ifndef ACE_CONFIG_H
@@ -263,12 +263,14 @@
 # define ACE_MT_SAFE 1
 #endif
 
-// Needed include to get all VxWorks CPU types
-#include "types/vxCpu.h"
-#if (CPU == PENTIUM || CPU == PENTIUM2 || CPU == PENTIUM3 || CPU == PENTIUM4)
-// If running an Intel Pentium the
-// ACE_OS::gethrtime () can use the RDTSC instruction.
-# define ACE_HAS_PENTIUM
+#if (ACE_VXWORKS == 0x630)
+  // Needed include to get all VxWorks CPU types
+  #include "types/vxCpu.h"
+  #if defined (CPU) && (CPU == PENTIUM || CPU == PENTIUM2 || CPU == PENTIUM3 || CPU == PENTIUM4)
+   // If running an Intel Pentium the
+   // ACE_OS::gethrtime () can use the RDTSC instruction.
+    # define ACE_HAS_PENTIUM
+  #endif
 #endif
 
 // VxWorks defines the CPU define MAP, undef it to prevent problems with

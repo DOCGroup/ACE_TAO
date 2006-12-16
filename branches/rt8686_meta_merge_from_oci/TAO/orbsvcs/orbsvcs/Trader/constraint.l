@@ -1,4 +1,6 @@
 %{
+TAO_END_VERSIONED_NAMESPACE_DECL
+
 // $Id$
 // ========================================================================
 //
@@ -13,14 +15,15 @@
 //
 // ========================================================================
 
-#include "ace/OS.h"
-#include "Constraint_Interpreter.h"
-#include "Constraint_Nodes.h"
-#include "Constraint_Tokens.h"
+#include "orbsvcs/Trader/Constraint_Interpreter.h"
+#include "orbsvcs/Trader/Constraint_Nodes.h"
+#include "orbsvcs/Trader/Constraint_Tokens.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 static TAO_Literal_Constraint* extract_string(const char*);
+static CORBA::LongLong trader_strtoll(const char* str, unsigned int base);
+static CORBA::ULongLong trader_strtoull(const char* str, unsigned int base);
 
 #define TAO_YY_LEX_DEBUG
 
@@ -36,7 +39,7 @@ letter		[a-zA-Z]
 digit		[0-9]
 alpha_num	({letter}|{digit})
 integer		[-+]?{digit}+
-float		({digit}*\.{digit}+)([eE][-+]?{digit}+)?
+float		[-+]?({digit}*\.{digit}+)([eE][-+]?{digit}+)?
 string		'(([^'\\]*)|([^'\\]*\\')|([^'\\]*\\\\))*'
 ident		{letter}({alpha_num}|[_])*
 newline		\n
@@ -78,14 +81,23 @@ FALSE		{
 		  TAO_YY_LEX_DEBUG; return TAO_BOOLEAN;
 		}
 {integer}	{
-		  yylval.constraint_ =
-		    new TAO_Literal_Constraint((yytext[0] == '-' ?
-                    (CORBA::Long)atoi(yytext) : (CORBA::ULong)atoi(yytext)));
+                  if (yytext[0] == '-')
+                    {
+                      yylval.constraint_ =
+		        new TAO_Literal_Constraint(
+                              trader_strtoll(yytext, 0));
+                    }
+                  else
+                    {
+                       yylval.constraint_ =
+                         new TAO_Literal_Constraint(
+                               trader_strtoull(yytext, 0));
+                    }
 		  TAO_YY_LEX_DEBUG; return TAO_NUMBER;
 		}
 {float}		{
 		  yylval.constraint_ =
-		    new TAO_Literal_Constraint((CORBA::Double)atof(yytext));
+		    new TAO_Literal_Constraint(ACE_OS::strtod(yytext, 0));
 		  TAO_YY_LEX_DEBUG; return TAO_NUMBER;
 		}
 {string}	{
@@ -131,6 +143,110 @@ extract_string(const char* total)
 
   str[ctr - 1] = '\0';
   return new TAO_Literal_Constraint(str);
+}
+
+CORBA::ULongLong
+trader_strtoull(const char* s, unsigned int base)
+{
+  CORBA::ULongLong result = 0;
+  CORBA::ULongLong previous = 0;
+
+  // Check for a valid base
+  if (!(base == 0 || base == 8 || base == 10 || base == 16))
+    {
+      errno = EINVAL;
+      return result;
+    }
+
+  if (*s == '+')
+    {
+      s++;
+    }
+
+  if ((base == 0 || base == 16) &&
+      *s == '0' && (*(s + 1) == 'x' || *(s + 1) == 'X'))
+    {
+      s += 2;
+      base = 16;
+    }
+  else if ((base == 0 || base == 8) && *s == '0')
+    {
+      s++;
+      base = 8;
+    }
+  else
+    {
+      base = 10;
+    }
+
+  for (; *s; ++s)
+    {
+      if (base == 8 && *s <= '7' && *s >= '0')
+        {
+          result = (result * base) + (*s - '0');
+        }
+      else if (base > 8 && *s <= '9' && *s >= '0')
+        {
+          result = (result * base) + (*s - '0');
+        }
+      else if (base > 10 && *s <= 'f' && *s >= 'a')
+        {
+          result = (result * base) + (*s - 'a' + 10);
+        }
+      else if (base > 10 && *s <= 'F' && *s >= 'A')
+        {
+          result = (result * base) + (*s - 'A' + 10);
+        }
+      else
+        { 
+          break;
+        }
+
+      // If the previous value is greater than result, then we have
+      // exceeded the size of a CORBA::ULongLong and the result
+      // will be ACE_UINT64_MAX.  However, errno will be set to ERANGE
+      if (previous > result)
+        {
+          errno = ERANGE;
+          result = ACE_UINT64_MAX;
+          break;
+        }
+      previous = result;
+    }
+
+  return result;
+}
+
+CORBA::LongLong
+trader_strtoll(const char* s, unsigned int base)
+{
+  // Check for the negative sign
+  bool negative = false;
+  if (*s == '-')
+    {
+      negative = true;
+      s++;
+    }
+
+  // Convert the raw text into a CORBA::LongLong
+  CORBA::LongLong result = static_cast<CORBA::LongLong> (
+                                         trader_strtoull(s, base));
+
+  // If the result that comes back is negative, then the value exceeded
+  // the maximum for CORBA::LongLong
+  if (result < 0)
+    {
+      errno = ERANGE;
+      return (negative ? ACE_INT64_MIN : ACE_INT64_MAX);
+    }
+
+  return (negative ? -result : result);
+}
+
+int
+yywrap (void)
+{
+  return 1;
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL

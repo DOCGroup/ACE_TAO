@@ -31,6 +31,7 @@ RTEvent_Logging_Service_CPPFLAGS = \
   -I$(TAO_BUILDDIR)/orbsvcs
 
 RTEvent_Logging_Service_SOURCES = \
+  RTEvent_Logging_Server.cpp \
   RTEvent_Logging_Service.cpp \
   RTEvent_Logging_Service.h
 

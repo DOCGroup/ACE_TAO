@@ -17,68 +17,80 @@
 #ifndef RTEVENT_LOGGING_SERVICE_H
 #define RTEVENT_LOGGING_SERVICE_H
 
-#include "orbsvcs/RtecEventChannelAdminS.h"
-#include "orbsvcs/RtecSchedulerS.h"
-
-#include "orbsvcs/RTEventLogAdminS.h"
-
+#include "ace/Task.h"
+#include "orbsvcs/CosNamingC.h"
 #include "orbsvcs/Log/RTEventLogFactory_i.h"
 
-#include "orbsvcs/CosNamingC.h"
-#include "orbsvcs/Naming/Naming_Client.h"
-
-#if !defined (ACE_LACKS_PRAGMA_ONCE)
-# pragma once
-#endif /* ACE_LACKS_PRAGMA_ONCE */
-
 class RTEvent_Logging_Service
+  : public ACE_Task_Base
 {
+  // = TITLE
+  //   RTEvent_Logging_Service
+  //
+  // = DESCRIPTION
+  //   Implementation of the Telecom Log Service
+
 public:
+  // = Initialization and termination methods.
   RTEvent_Logging_Service (void);
+  // Constructor.
+  
   virtual ~RTEvent_Logging_Service (void);
+  // Destructor.
 
-  int run (int argc, char* argv[]);
-  // Run the event service.
+  int init (int argc, char* argv[]);
+  // Initializes the Telecom Log Service.
 
-private:
+  int run (ACE_ENV_SINGLE_ARG_DECL);
+    // Run the Telecom Log Service.
+  // Returns 0 on success, -1 on error.
+
+  void shutdown (ACE_ENV_SINGLE_ARG_DECL);
+  // Shutdown the Telecom Log Service.
+  // Returns 0 on success, -1 on error.
+
+protected:
+  void init_ORB (int& argc, char *argv []
+		 ACE_ENV_ARG_DECL);
+  // initializes the ORB.
+
   int parse_args (int argc, char* argv[]);
   // parse the command line args
 
+  void resolve_naming_service (ACE_ENV_SINGLE_ARG_DECL);
+  // Resolve the naming service.
+
+  int svc ();
+  // Run worker threads.
+
 private:
-  POA_RtecScheduler::Scheduler *sched_impl_;
-  // The Scheduler implementation.
+  // = Data members
+  TAO_RTEventLogFactory_i *rtevent_log_factory_;
+  // The RTEvent Log Factory.
+
+  CORBA::ORB_var orb_;
+  // The ORB that we use.
+
+  PortableServer::POA_var poa_;
+  // Reference to the root poa.
+
+  CosNaming::NamingContext_var naming_;
+  // A naming context.
 
   const char* service_name_;
   // The name we use to bind with the NameService
 
   const char* ior_file_name_;
-  // The name of the file were we output the Event_Service IOR.
+  // The name of the file were we output the factory IOR.
 
   const char* pid_file_name_;
   // The name of a file where the process stores its pid
 
-  int global_scheduler_;
-  // Should we use a global scheduler or a local one?
-
-  const char* rtevent_log_factory_name_;
-  // The name of the factory registered with the naming service.
-
-  const char* child_poa_name_;
-  // The name of the Child POA.
-
-  TAO_RTEventLogFactory_i *factory_servant_;
-  // The factory servant.
-
-  CORBA::ORB_var orb_;
-  // The ORB that we use.
-
-  PortableServer::POA_var root_poa_;
-  // Reference to the root poa.
-
-  RTEventLogAdmin::EventLogFactory_var factory_;
-  // The corba object after activation.
-
-  TAO_Naming_Client naming_client_;
+  bool bind_to_naming_service_;
+  // If true, bind to naming service
+	
+  int nthreads_;
+  // Number of worker threads.
 };
 
 #endif /* RTEVENT_LOGGING_SERVICE_H */

@@ -17,15 +17,10 @@ TAO_IDLFLAGS = -Ge 1 -Wb,pre_include=ace/pre.h -Wb,post_include=ace/post.h -I$(T
 TAO_ROOT = $(top_srcdir)
 
 noinst_PROGRAMS =
-CLEANFILES =
-BUILT_SOURCES =
 
-## Makefile.Test_ORT_Server.am
+## Makefile.Test_ORT_IDL.am
 
-if BUILD_EXCEPTIONS
-if BUILD_INTERCEPTORS
-
-BUILT_SOURCES += \
+BUILT_SOURCES = \
   ORT_testC.cpp \
   ORT_testC.h \
   ORT_testC.inl \
@@ -33,7 +28,7 @@ BUILT_SOURCES += \
   ORT_testS.h \
   ORT_testS.inl
 
-CLEANFILES += \
+CLEANFILES = \
   ORT_test-stamp \
   ORT_testC.cpp \
   ORT_testC.h \
@@ -45,29 +40,37 @@ CLEANFILES += \
 ORT_testC.cpp ORT_testC.h ORT_testC.inl ORT_testS.cpp ORT_testS.h ORT_testS.inl: ORT_test-stamp
 
 ORT_test-stamp: $(srcdir)/ORT_test.idl $(TAO_IDL_DEP)
-	$(TAO_IDL) $(TAO_IDLFLAGS) $(srcdir)/ORT_test.idl
+	$(TAO_IDL) $(TAO_IDLFLAGS) -Sa -St $(srcdir)/ORT_test.idl
 	@touch $@
 
 BUILT_SOURCES += \
   ObjectReferenceFactoryC.cpp \
   ObjectReferenceFactoryC.h \
   ObjectReferenceFactoryC.inl \
-  ObjectReferenceFactoryS.h \
-  ObjectReferenceFactoryS.inl
+  ObjectReferenceFactoryS.h
 
 CLEANFILES += \
   ObjectReferenceFactory-stamp \
   ObjectReferenceFactoryC.cpp \
   ObjectReferenceFactoryC.h \
   ObjectReferenceFactoryC.inl \
-  ObjectReferenceFactoryS.h \
-  ObjectReferenceFactoryS.inl
+  ObjectReferenceFactoryS.h
 
-ObjectReferenceFactoryC.cpp ObjectReferenceFactoryC.h ObjectReferenceFactoryC.inl ObjectReferenceFactoryS.h ObjectReferenceFactoryS.inl: ObjectReferenceFactory-stamp
+ObjectReferenceFactoryC.cpp ObjectReferenceFactoryC.h ObjectReferenceFactoryC.inl ObjectReferenceFactoryS.h: ObjectReferenceFactory-stamp
 
 ObjectReferenceFactory-stamp: $(srcdir)/ObjectReferenceFactory.idl $(TAO_IDL_DEP)
-	$(TAO_IDL) $(TAO_IDLFLAGS) $(srcdir)/ObjectReferenceFactory.idl
+	$(TAO_IDL) $(TAO_IDLFLAGS) -Sa -St -SS $(srcdir)/ObjectReferenceFactory.idl
 	@touch $@
+
+
+noinst_HEADERS = \
+  ORT_test.idl \
+  ObjectReferenceFactory.idl
+
+## Makefile.Test_ORT_Server.am
+
+if BUILD_EXCEPTIONS
+if BUILD_INTERCEPTORS
 
 noinst_PROGRAMS += server
 
@@ -87,17 +90,9 @@ server_SOURCES = \
   ServerORBInitializer.cpp \
   ServerRequestInterceptor.cpp \
   server.cpp \
-  ORT_testC.h \
-  ORT_testC.inl \
-  ORT_testS.h \
-  ORT_testS.inl \
   ORT_test_IORInterceptor.h \
   ORT_test_i.h \
   ObjectReferenceFactory.h \
-  ObjectReferenceFactoryC.h \
-  ObjectReferenceFactoryC.inl \
-  ObjectReferenceFactoryS.h \
-  ObjectReferenceFactoryS.inl \
   ServerORBInitializer.h \
   ServerRequestInterceptor.h
 
@@ -121,27 +116,6 @@ endif BUILD_EXCEPTIONS
 if BUILD_EXCEPTIONS
 if BUILD_INTERCEPTORS
 
-BUILT_SOURCES += \
-  ORT_testC.cpp \
-  ORT_testC.h \
-  ORT_testC.inl \
-  ORT_testS.h \
-  ORT_testS.inl
-
-CLEANFILES += \
-  ORT_test-stamp \
-  ORT_testC.cpp \
-  ORT_testC.h \
-  ORT_testC.inl \
-  ORT_testS.h \
-  ORT_testS.inl
-
-ORT_testC.cpp ORT_testC.h ORT_testC.inl ORT_testS.h ORT_testS.inl: ORT_test-stamp
-
-ORT_test-stamp: $(srcdir)/ORT_test.idl $(TAO_IDL_DEP)
-	$(TAO_IDL) $(TAO_IDLFLAGS) $(srcdir)/ORT_test.idl
-	@touch $@
-
 noinst_PROGRAMS += client
 
 client_CPPFLAGS = \
@@ -153,10 +127,11 @@ client_CPPFLAGS = \
 client_SOURCES = \
   ORT_testC.cpp \
   client.cpp \
-  ORT_testC.h \
-  ORT_testC.inl \
-  ORT_testS.h \
-  ORT_testS.inl
+  ORT_test_IORInterceptor.h \
+  ORT_test_i.h \
+  ObjectReferenceFactory.h \
+  ServerORBInitializer.h \
+  ServerRequestInterceptor.h
 
 client_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO_AnyTypeCode.la \

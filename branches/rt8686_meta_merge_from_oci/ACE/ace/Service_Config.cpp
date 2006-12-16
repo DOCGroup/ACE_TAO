@@ -130,9 +130,9 @@ ACE_Service_Config::parse_args_i (int argc, ACE_TCHAR *argv[])
                               -1);
 #endif /* ACE_LACKS_UNIX_SIGNALS */
           break;
-      default:
-          superargv.add ( argv[getopt.opt_ind () - 1]);
         }
+      default:
+        superargv.add ( argv[getopt.opt_ind () - 1]);
       }
 
   // Collect any argumets that were left

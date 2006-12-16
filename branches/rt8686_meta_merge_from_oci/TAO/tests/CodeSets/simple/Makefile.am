@@ -17,14 +17,10 @@ TAO_IDLFLAGS = -Ge 1 -Wb,pre_include=ace/pre.h -Wb,post_include=ace/post.h -I$(T
 TAO_ROOT = $(top_srcdir)
 
 noinst_PROGRAMS =
-CLEANFILES =
-BUILT_SOURCES =
 
-## Makefile.CodeSets_Simple_Server.am
+## Makefile.CodeSets_Simple_Idl.am
 
-if BUILD_EXCEPTIONS
-
-BUILT_SOURCES += \
+BUILT_SOURCES = \
   simpleC.cpp \
   simpleC.h \
   simpleC.inl \
@@ -32,7 +28,7 @@ BUILT_SOURCES += \
   simpleS.h \
   simpleS.inl
 
-CLEANFILES += \
+CLEANFILES = \
   simple-stamp \
   simpleC.cpp \
   simpleC.h \
@@ -44,8 +40,16 @@ CLEANFILES += \
 simpleC.cpp simpleC.h simpleC.inl simpleS.cpp simpleS.h simpleS.inl: simple-stamp
 
 simple-stamp: $(srcdir)/simple.idl $(TAO_IDL_DEP)
-	$(TAO_IDL) $(TAO_IDLFLAGS) $(srcdir)/simple.idl
+	$(TAO_IDL) $(TAO_IDLFLAGS) -Sa -St $(srcdir)/simple.idl
 	@touch $@
+
+
+noinst_HEADERS = \
+  simple.idl
+
+## Makefile.CodeSets_Simple_Server.am
+
+if BUILD_EXCEPTIONS
 
 noinst_PROGRAMS += server
 
@@ -58,11 +62,7 @@ server_CPPFLAGS = \
 server_SOURCES = \
   server.cpp \
   simpleC.cpp \
-  simpleS.cpp \
-  simpleC.h \
-  simpleC.inl \
-  simpleS.h \
-  simpleS.inl
+  simpleS.cpp
 
 server_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO_PortableServer.la \
@@ -76,25 +76,6 @@ endif BUILD_EXCEPTIONS
 
 if BUILD_EXCEPTIONS
 
-BUILT_SOURCES += \
-  simpleC.cpp \
-  simpleC.h \
-  simpleC.inl \
-  simpleS.inl
-
-CLEANFILES += \
-  simple-stamp \
-  simpleC.cpp \
-  simpleC.h \
-  simpleC.inl \
-  simpleS.inl
-
-simpleC.cpp simpleC.h simpleC.inl simpleS.inl: simple-stamp
-
-simple-stamp: $(srcdir)/simple.idl $(TAO_IDL_DEP)
-	$(TAO_IDL) $(TAO_IDLFLAGS) $(srcdir)/simple.idl
-	@touch $@
-
 noinst_PROGRAMS += client
 
 client_CPPFLAGS = \
@@ -105,10 +86,7 @@ client_CPPFLAGS = \
 
 client_SOURCES = \
   client.cpp \
-  simpleC.cpp \
-  simpleC.h \
-  simpleC.inl \
-  simpleS.inl
+  simpleC.cpp
 
 client_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO_AnyTypeCode.la \

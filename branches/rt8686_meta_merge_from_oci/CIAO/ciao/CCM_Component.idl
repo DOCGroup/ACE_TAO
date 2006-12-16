@@ -14,7 +14,7 @@
 #if !defined (CCM_COMPONENT_IDL)
 #define CCM_COMPONENT_IDL
 
-#include "ciao/CCM_Event.idl"
+#include "ciao/CCM_Events.idl"
 #include "ciao/CCM_Home.idl"
 #include "ciao/CCM_Object.idl"
 #include "ciao/CCM_Enumeration.idl"

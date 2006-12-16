@@ -109,6 +109,7 @@ be_visitor_operation_arglist::visit_operation (be_operation *node)
 
       break;
     case TAO_CodeGen::TAO_OPERATION_ARGLIST_PROXY_IMPL_XH:
+    case TAO_CodeGen::TAO_TIE_OPERATION_ARGLIST_SH:
       break;
     case TAO_CodeGen::TAO_OPERATION_ARGLIST_SH:
       *os << " = 0";

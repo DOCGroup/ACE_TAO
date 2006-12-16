@@ -399,8 +399,8 @@ namespace CIAO
      * Add all CIAO_Event_Service objects into the cached map.
      */
     virtual void
-    add_es_to_map (Deployment::ESInstallationInfos * es_infos,
-                   Deployment::CIAO_Event_Services * event_services)
+    add_es_to_map (const char* node_name,
+                   CIAO::CIAO_Event_Service * ciao_es)
       ACE_THROW_SPEC ((CORBA::SystemException,
                       Deployment::StartError));
 
@@ -409,7 +409,7 @@ namespace CIAO
      * deployment requirement. The deployment requirement only specifies
      * an identifier/reference to the EventServiceDeploymentDescriptions.
      */
-    virtual const Deployment::Properties &
+    virtual const Deployment::Properties *
     get_connection_QoS_configuration (
       const Deployment::Requirement & requirement);
 

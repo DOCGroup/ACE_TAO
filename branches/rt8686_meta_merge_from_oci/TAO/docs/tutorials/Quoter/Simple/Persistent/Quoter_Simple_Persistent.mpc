@@ -15,7 +15,7 @@ project(*client) : taoexe, portableserver {
   }
 }
 
-project(*server) : taoserver {
+project(*server) : taoserver, avoids_corba_e_micro {
   libs += Quoter_Idl_Lib
   after += Quoter_Idl_Lib
 

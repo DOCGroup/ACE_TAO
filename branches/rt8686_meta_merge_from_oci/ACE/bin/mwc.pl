@@ -15,7 +15,6 @@ eval '(exit $?0)' && eval 'exec perl -w -S $0 ${1+"$@"}'
 require 5.006;
 
 use strict;
-use Config;
 use FindBin;
 use File::Spec;
 use File::Basename;
@@ -26,7 +25,6 @@ if ($^O eq 'VMS') {
   $basePath = VMS::Filespec::unixify($basePath);
 }
 $basePath .= '/MakeProjectCreator';
-unshift(@INC, $basePath . '/modules');
 
 my($mpcroot) = $ENV{MPC_ROOT};
 my($mpcpath) = (defined $mpcroot ? $mpcroot :
@@ -50,15 +48,7 @@ if (! -d "$mpcpath/modules") {
   exit(255);
 }
 
-require MWC;
-
-# ************************************************************
-# Data Section
-# ************************************************************
-
-my(@creators) = ('GNUACEWorkspaceCreator',
-                 'BorlandWorkspaceCreator',
-                );
+require Driver;
 
 # ************************************************************
 # Subroutine Section
@@ -72,18 +62,5 @@ sub getBasePath {
 # Main Section
 # ************************************************************
 
-## Allocate a driver
-my($driver) = new MWC();
-
-## Add our creators to the front of the list
-my($creators) = $driver->getCreatorList();
-unshift(@$creators, @creators);
-
-## Add the mpc path to the include paths, but preserve
-## the original @ARGV as it is included in the output of
-## most of the workspace creators.
-my(@args) = ('-include', "$mpcpath/config",
-             '-include', "$mpcpath/templates", @ARGV);
-
-## Execute the driver
-exit($driver->execute($basePath, basename($0), \@args));
+my($driver) = new Driver($basePath, basename($0));
+exit($driver->run(@ARGV));

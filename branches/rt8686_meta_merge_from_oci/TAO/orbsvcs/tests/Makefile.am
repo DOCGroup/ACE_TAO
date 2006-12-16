@@ -54,5 +54,6 @@ SUBDIRS = \
         Time \
         Trading \
         ior_corbaname \
-        tests_svc_loader
+        tests_svc_loader \
+        unit
 

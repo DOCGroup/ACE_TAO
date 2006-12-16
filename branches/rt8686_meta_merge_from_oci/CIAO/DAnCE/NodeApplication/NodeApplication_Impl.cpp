@@ -1,9 +1,10 @@
-//$Id$
+// $Id$
 
 #include "NodeApplication_Impl.h"
 #include "ace/SString.h"
 #include "Container_Impl.h"
 #include "Deployment_EventsC.h"
+#include "ciaosvcs/Events/CIAO_RTEC/CIAO_RTEventC.h"
 
 #if !defined (__ACE_INLINE__)
 # include "NodeApplication_Impl.inl"
@@ -12,6 +13,7 @@
 CIAO::NodeApplication_Impl::~NodeApplication_Impl (void)
 {
 }
+
 
 CORBA::Long
 CIAO::NodeApplication_Impl::init (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
@@ -620,32 +622,84 @@ CIAO::NodeApplication_Impl::get_containers (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   return 0;
 }
 
-::Deployment::CIAO_Event_Services *
+CIAO::CIAO_Event_Service *
 CIAO::NodeApplication_Impl::
-install_es (const ::Deployment::ESInstallationInfos & es_infos
+install_es (const ::CIAO::DAnCE::EventServiceDeploymentDescription & es_info
             ACE_ENV_ARG_DECL)
 ACE_THROW_SPEC ((::CORBA::SystemException,
                  ::Deployment::InstallationFailure))
 {
-  Deployment::CIAO_Event_Services_var retv;
-  ACE_NEW_RETURN (retv,
-                  Deployment::CIAO_Event_Services,
-                  0);
-
-  CORBA::ULong const total_length = es_infos.length ();
-
-  for (CORBA::ULong i = 0; i < total_length; ++i)
+  ACE_TRY
     {
-      CIAO_Event_Service_var temp =
-        es_factory_.create (es_infos[i].type);
+      ACE_DEBUG ((LM_DEBUG, "\nNodeApplication_Impl::install_es() called.\n\n"));
 
-      CORBA::ULong curr_len = retv->length ();
-      retv->length (curr_len + 1);
+      CIAO_Event_Service_var ciao_es =
+        es_factory_.create (es_info.type, es_info.name.in ());
 
-      retv[curr_len] =
-        CIAO::CIAO_Event_Service::_duplicate (temp.in ());
+		  // Set up the event channel federations
+      if (es_info.type == CIAO::RTEC)
+        {
+          // Narrow the event service to CIAO_RT_Event_Service
+          ::CIAO::CIAO_RT_Event_Service_var ciao_rtes =
+            ::CIAO::CIAO_RT_Event_Service::_narrow (ciao_es.in ());
+
+          if (CORBA::is_nil (ciao_rtes.in ()))
+            ACE_THROW (::Deployment::InstallationFailure ());
+
+          // Set up the event channel federations
+          for (CORBA::ULong j = 0; j < es_info.addr_servs.length (); ++j)
+		        {
+			        bool retv = 
+			        ciao_rtes->create_addr_serv (
+				        es_info.addr_servs[j].name.in (),
+				        es_info.addr_servs[j].port,
+				        es_info.addr_servs[j].address);
+
+			        if (retv == false)
+			        {
+				        ACE_DEBUG ((LM_ERROR, "RTEC failed to create addr serv object\t\n"));
+				        ACE_THROW_RETURN (::Deployment::InstallationFailure (), 0);
+			        }
+		        }
+
+		      for (CORBA::ULong j = 0; j < es_info.senders.length (); ++j)
+		        {
+			        bool retv = 
+			        ciao_rtes->create_sender (
+				        es_info.senders[j].addr_serv_id.in ());
+
+			        if (retv == false)
+			        {
+				        ACE_DEBUG ((LM_ERROR, "RTEC failed to create UDP sender object\t\n"));
+				        ACE_THROW_RETURN (::Deployment::InstallationFailure (), 0);
+			        }
+		        }
+
+		      for (CORBA::ULong j = 0; j < es_info.receivers.length (); ++j)
+		        {
+			        bool retv = 
+			        ciao_rtes->create_receiver (
+				        es_info.receivers[j].addr_serv_id.in (),
+				        es_info.receivers[j].is_multicast,
+				        es_info.receivers[j].listen_port);
+
+			        if (retv == false)
+			        {
+				        ACE_DEBUG ((LM_ERROR, "RTEC failed to create UDP receiver object\t\n"));
+				        ACE_THROW_RETURN (::Deployment::InstallationFailure (), 0);
+			        }
+		        }
+        }
+      return ciao_es._retn ();
     }
-  return retv._retn ();
+  ACE_CATCHANY
+    {
+      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
+                           "NodeApplication_Impl::finishLaunch\t\n");
+      ACE_THROW_RETURN (::Deployment::InstallationFailure (), 0);
+    }
+
+  ACE_ENDTRY;
 }
 
 
@@ -949,7 +1003,6 @@ handle_publisher_es_connection (
   ACE_CString sid (connection.instanceName.in ());
   sid += "_";
   sid += connection.portName.in ();
-  sid += "_publisher";
 
   if (add_connection)
     {
@@ -1058,16 +1111,10 @@ handle_es_consumer_connection (
       ACE_THROW (Deployment::InvalidConnection ());
     }
 
-  // supplier ID
-  ACE_CString sid (connection.instanceName.in ());
-  sid += "_";
-  sid += connection.portName.in ();
-  sid += "_publisher";
-
   // consumer ID
-  ACE_CString cid (connection.endpointInstanceName.in ());
+  ACE_CString cid (connection.instanceName.in ());
   cid += "_";
-  cid += connection.endpointPortName.in ();
+  cid += connection.portName.in ();
   cid += "_consumer";
 
   if (add_connection)
@@ -1075,8 +1122,6 @@ handle_es_consumer_connection (
       CIAO::Consumer_Config_var consumer_config =
         event_service->create_consumer_config ();
 
-      consumer_config->supplier_id ("Hello-Sender-idd_click_out_publisher");
-      //consumer_config->supplier_id (sid.c_str ());
       consumer_config->consumer_id (cid.c_str ());
       consumer_config->consumer (consumer.in ());
 
@@ -1092,7 +1137,11 @@ handle_es_consumer_connection (
           connection.config[i].value >>=  filter;
 
           CORBA::ULong size = (*filter).sources.length ();
-          consumer_config->start_disjunction_group (size);
+
+          if ((*filter).type == DAnCE::CONJUNCTION)
+            consumer_config->start_conjunction_group (size);
+          else if ((*filter).type == DAnCE::DISJUNCTION)
+            consumer_config->start_disjunction_group (size);
 
           for (CORBA::ULong j = 0; j < size; ++j)
             {
@@ -1204,7 +1253,6 @@ CIAO::NodeApplication_Impl::build_event_connection (
     ACE_CString sid (connection.instanceName.in ());
     sid += "_";
     sid += connection.portName.in ();
-    sid += "_publisher";
 
     // consumer ID
     ACE_CString cid (connection.endpointInstanceName.in ());
@@ -1221,15 +1269,13 @@ CIAO::NodeApplication_Impl::build_event_connection (
         CIAO::Supplier_Config_var supplier_config =
           event_service->create_supplier_config ();
 
-        //supplier_config->supplier_id (sid.c_str ());
+        supplier_config->supplier_id (sid.c_str ());
         event_service->connect_event_supplier (supplier_config.in ());
         supplier_config->destroy ();
 
         CIAO::Consumer_Config_var consumer_config =
           event_service->create_consumer_config ();
 
-        //@@@
-        consumer_config->supplier_id ("dummy");
         consumer_config->consumer_id (cid.c_str ());
         consumer_config->consumer (consumer.in ());
 

@@ -138,8 +138,8 @@ public:
   /**
    * Create an output stream from an arbitrary data block, care must be
    * exercised with alignment, because this contructor will align if
-   * needed.  In this case the <data_block> buffer will not point to the
-   * start off the output stream. begin()->rd_prt() points to the start
+   * needed.  In this case @a data_block will not point to the
+   * start of the output stream. begin()->rd_ptr() points to the start
    * off the output stream.  See ACE_ptr_align_binary() to properly align a
    * pointer and use ACE_CDR::MAX_ALIGNMENT for the correct alignment.
    */
@@ -338,6 +338,15 @@ public:
   /// Return the <current_> message block in chain.
   const ACE_Message_Block *current (void) const;
 
+  /// Replace the message block chain with a single message block.
+  /**
+   * Upon successful completion, there will be a single message block
+   * containing the data from the complete message block chain.
+   *
+   * @note The only expected error is to run out of memory.
+   */
+  int consolidate (void);
+
   /**
    * Access the underlying buffer (read only).  @note This
    * method only returns a pointer to the first block in the
@@ -346,7 +355,7 @@ public:
   const char *buffer (void) const;
 
   /**
-   * Return the start and size of the internal buffer.@note This
+   * Return the size of first message block in the block chain. @note This
    * method only returns information about the first block in the
    * chain.
    */
@@ -472,7 +481,7 @@ private:
   /// The start of the chain of message blocks.
   ACE_Message_Block start_;
 
-  /// The current block in the chain were we are writing.
+  /// The current block in the chain where we are writing.
   ACE_Message_Block *current_;
 
 #if !defined (ACE_LACKS_CDR_IALIGNMENT)

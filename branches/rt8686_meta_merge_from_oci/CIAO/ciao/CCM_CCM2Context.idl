@@ -11,8 +11,6 @@
  *          CCM_Container_Ex.idl
  */
 
-//#define CIAO_HAS_IMPORT_KEYWORD
-
 #if !defined (CCM_2CONTEXT_IDL)
 #define CCM_2CONTEXT_IDL
 

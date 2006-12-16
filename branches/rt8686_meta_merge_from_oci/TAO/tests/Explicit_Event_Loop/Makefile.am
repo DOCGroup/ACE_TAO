@@ -17,14 +17,10 @@ TAO_IDLFLAGS = -Ge 1 -Wb,pre_include=ace/pre.h -Wb,post_include=ace/post.h -I$(T
 TAO_ROOT = $(top_srcdir)
 
 noinst_PROGRAMS =
-CLEANFILES =
-BUILT_SOURCES =
 
-## Makefile.Explicit_Event_Loop_Server.am
+## Makefile.Explicit_Event_Loop_Idl.am
 
-if BUILD_EXCEPTIONS
-
-BUILT_SOURCES += \
+BUILT_SOURCES = \
   timeC.cpp \
   timeC.h \
   timeC.inl \
@@ -32,7 +28,7 @@ BUILT_SOURCES += \
   timeS.h \
   timeS.inl
 
-CLEANFILES += \
+CLEANFILES = \
   time-stamp \
   timeC.cpp \
   timeC.h \
@@ -44,8 +40,16 @@ CLEANFILES += \
 timeC.cpp timeC.h timeC.inl timeS.cpp timeS.h timeS.inl: time-stamp
 
 time-stamp: $(srcdir)/time.idl $(TAO_IDL_DEP)
-	$(TAO_IDL) $(TAO_IDLFLAGS) $(srcdir)/time.idl
+	$(TAO_IDL) $(TAO_IDLFLAGS) -Sa -St $(srcdir)/time.idl
 	@touch $@
+
+
+noinst_HEADERS = \
+  time.idl
+
+## Makefile.Explicit_Event_Loop_Server.am
+
+if BUILD_EXCEPTIONS
 
 noinst_PROGRAMS += server
 
@@ -59,11 +63,7 @@ server_SOURCES = \
   server.cpp \
   timeC.cpp \
   timeS.cpp \
-  server.h \
-  timeC.h \
-  timeC.inl \
-  timeS.h \
-  timeS.inl
+  server.h
 
 server_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO_PortableServer.la \
@@ -77,27 +77,6 @@ endif BUILD_EXCEPTIONS
 
 if BUILD_EXCEPTIONS
 
-BUILT_SOURCES += \
-  timeC.cpp \
-  timeC.h \
-  timeC.inl \
-  timeS.h \
-  timeS.inl
-
-CLEANFILES += \
-  time-stamp \
-  timeC.cpp \
-  timeC.h \
-  timeC.inl \
-  timeS.h \
-  timeS.inl
-
-timeC.cpp timeC.h timeC.inl timeS.h timeS.inl: time-stamp
-
-time-stamp: $(srcdir)/time.idl $(TAO_IDL_DEP)
-	$(TAO_IDL) $(TAO_IDLFLAGS) $(srcdir)/time.idl
-	@touch $@
-
 noinst_PROGRAMS += client
 
 client_CPPFLAGS = \
@@ -109,10 +88,7 @@ client_CPPFLAGS = \
 client_SOURCES = \
   client.cpp \
   timeC.cpp \
-  timeC.h \
-  timeC.inl \
-  timeS.h \
-  timeS.inl
+  server.h
 
 client_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO_AnyTypeCode.la \

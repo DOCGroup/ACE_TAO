@@ -11,11 +11,12 @@
  *          CCM_Component.idl
  */
 
-#if !defined (CCM_HOMECONFIGURATOR_IDL)
-#define CCM_HOMECONFIGURATOR_IDL
+#if !defined (CCM_HOMECONFIGURATION_IDL)
+#define CCM_HOMECONFIGURATION_IDL
 
 #include "ciao/CCM_Configurator.idl"
 #include "ciao/CCM_StandardConfigurator.idl"
+#include "ciao/CCM_Home.idl"
 
 module Components
 {

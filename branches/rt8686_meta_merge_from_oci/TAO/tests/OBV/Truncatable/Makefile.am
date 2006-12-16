@@ -20,32 +20,9 @@ noinst_PROGRAMS =
 CLEANFILES =
 BUILT_SOURCES =
 
-## Makefile.OBV_Truncatable_Server.am
+## Makefile.OBV_Truncatable_Idl.am
 
 if BUILD_EXCEPTIONS
-
-BUILT_SOURCES += \
-  TruncatableC.cpp \
-  TruncatableC.h \
-  TruncatableC.inl \
-  TruncatableS.cpp \
-  TruncatableS.h \
-  TruncatableS.inl
-
-CLEANFILES += \
-  Truncatable-stamp \
-  TruncatableC.cpp \
-  TruncatableC.h \
-  TruncatableC.inl \
-  TruncatableS.cpp \
-  TruncatableS.h \
-  TruncatableS.inl
-
-TruncatableC.cpp TruncatableC.h TruncatableC.inl TruncatableS.cpp TruncatableS.h TruncatableS.inl: Truncatable-stamp
-
-Truncatable-stamp: $(srcdir)/Truncatable.idl $(TAO_IDL_DEP)
-	$(TAO_IDL) $(TAO_IDLFLAGS) $(srcdir)/Truncatable.idl
-	@touch $@
 
 BUILT_SOURCES += \
   ExtraC.cpp \
@@ -70,6 +47,40 @@ Extra-stamp: $(srcdir)/Extra.idl $(TAO_IDL_DEP)
 	$(TAO_IDL) $(TAO_IDLFLAGS) $(srcdir)/Extra.idl
 	@touch $@
 
+BUILT_SOURCES += \
+  TruncatableC.cpp \
+  TruncatableC.h \
+  TruncatableC.inl \
+  TruncatableS.cpp \
+  TruncatableS.h \
+  TruncatableS.inl
+
+CLEANFILES += \
+  Truncatable-stamp \
+  TruncatableC.cpp \
+  TruncatableC.h \
+  TruncatableC.inl \
+  TruncatableS.cpp \
+  TruncatableS.h \
+  TruncatableS.inl
+
+TruncatableC.cpp TruncatableC.h TruncatableC.inl TruncatableS.cpp TruncatableS.h TruncatableS.inl: Truncatable-stamp
+
+Truncatable-stamp: $(srcdir)/Truncatable.idl $(TAO_IDL_DEP)
+	$(TAO_IDL) $(TAO_IDLFLAGS) $(srcdir)/Truncatable.idl
+	@touch $@
+
+
+noinst_HEADERS = \
+  Extra.idl \
+  Truncatable.idl
+
+endif BUILD_EXCEPTIONS
+
+## Makefile.OBV_Truncatable_Server.am
+
+if BUILD_EXCEPTIONS
+
 noinst_PROGRAMS += server
 
 server_CPPFLAGS = \
@@ -85,14 +96,6 @@ server_SOURCES = \
   TruncatableS.cpp \
   TruncatableS_impl.cpp \
   server.cpp \
-  ExtraC.h \
-  ExtraC.inl \
-  ExtraS.h \
-  ExtraS.inl \
-  TruncatableC.h \
-  TruncatableC.inl \
-  TruncatableS.h \
-  TruncatableS.inl \
   TruncatableS_impl.h
 
 server_LDADD = \
@@ -108,48 +111,6 @@ endif BUILD_EXCEPTIONS
 
 if BUILD_EXCEPTIONS
 
-BUILT_SOURCES += \
-  TruncatableC.cpp \
-  TruncatableC.h \
-  TruncatableC.inl \
-  TruncatableS.h \
-  TruncatableS.inl
-
-CLEANFILES += \
-  Truncatable-stamp \
-  TruncatableC.cpp \
-  TruncatableC.h \
-  TruncatableC.inl \
-  TruncatableS.h \
-  TruncatableS.inl
-
-TruncatableC.cpp TruncatableC.h TruncatableC.inl TruncatableS.h TruncatableS.inl: Truncatable-stamp
-
-Truncatable-stamp: $(srcdir)/Truncatable.idl $(TAO_IDL_DEP)
-	$(TAO_IDL) $(TAO_IDLFLAGS) $(srcdir)/Truncatable.idl
-	@touch $@
-
-BUILT_SOURCES += \
-  ExtraC.cpp \
-  ExtraC.h \
-  ExtraC.inl \
-  ExtraS.h \
-  ExtraS.inl
-
-CLEANFILES += \
-  Extra-stamp \
-  ExtraC.cpp \
-  ExtraC.h \
-  ExtraC.inl \
-  ExtraS.h \
-  ExtraS.inl
-
-ExtraC.cpp ExtraC.h ExtraC.inl ExtraS.h ExtraS.inl: Extra-stamp
-
-Extra-stamp: $(srcdir)/Extra.idl $(TAO_IDL_DEP)
-	$(TAO_IDL) $(TAO_IDLFLAGS) $(srcdir)/Extra.idl
-	@touch $@
-
 noinst_PROGRAMS += client
 
 client_CPPFLAGS = \
@@ -162,14 +123,7 @@ client_SOURCES = \
   ExtraC.cpp \
   TruncatableC.cpp \
   client.cpp \
-  ExtraC.h \
-  ExtraC.inl \
-  ExtraS.h \
-  ExtraS.inl \
-  TruncatableC.h \
-  TruncatableC.inl \
-  TruncatableS.h \
-  TruncatableS.inl
+  TruncatableS_impl.h
 
 client_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO_Valuetype.la \

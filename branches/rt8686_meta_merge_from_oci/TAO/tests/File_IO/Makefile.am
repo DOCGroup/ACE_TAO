@@ -17,14 +17,10 @@ TAO_IDLFLAGS = -Ge 1 -Wb,pre_include=ace/pre.h -Wb,post_include=ace/post.h -I$(T
 TAO_ROOT = $(top_srcdir)
 
 noinst_PROGRAMS =
-CLEANFILES =
-BUILT_SOURCES =
 
-## Makefile.File_IO_Server.am
+## Makefile.File_IO_Idl.am
 
-if BUILD_EXCEPTIONS
-
-BUILT_SOURCES += \
+BUILT_SOURCES = \
   FileC.cpp \
   FileC.h \
   FileC.inl \
@@ -32,7 +28,7 @@ BUILT_SOURCES += \
   FileS.h \
   FileS.inl
 
-CLEANFILES += \
+CLEANFILES = \
   File-stamp \
   FileC.cpp \
   FileC.h \
@@ -44,8 +40,16 @@ CLEANFILES += \
 FileC.cpp FileC.h FileC.inl FileS.cpp FileS.h FileS.inl: File-stamp
 
 File-stamp: $(srcdir)/File.idl $(TAO_IDL_DEP)
-	$(TAO_IDL) $(TAO_IDLFLAGS) $(srcdir)/File.idl
+	$(TAO_IDL) $(TAO_IDLFLAGS) -Sa -St $(srcdir)/File.idl
 	@touch $@
+
+
+noinst_HEADERS = \
+  File.idl
+
+## Makefile.File_IO_Server.am
+
+if BUILD_EXCEPTIONS
 
 noinst_PROGRAMS += server
 
@@ -60,10 +64,6 @@ server_SOURCES = \
   FileS.cpp \
   File_i.cpp \
   server.cpp \
-  FileC.h \
-  FileC.inl \
-  FileS.h \
-  FileS.inl \
   File_i.h
 
 server_LDADD = \
@@ -78,27 +78,6 @@ endif BUILD_EXCEPTIONS
 
 if BUILD_EXCEPTIONS
 
-BUILT_SOURCES += \
-  FileC.cpp \
-  FileC.h \
-  FileC.inl \
-  FileS.h \
-  FileS.inl
-
-CLEANFILES += \
-  File-stamp \
-  FileC.cpp \
-  FileC.h \
-  FileC.inl \
-  FileS.h \
-  FileS.inl
-
-FileC.cpp FileC.h FileC.inl FileS.h FileS.inl: File-stamp
-
-File-stamp: $(srcdir)/File.idl $(TAO_IDL_DEP)
-	$(TAO_IDL) $(TAO_IDLFLAGS) $(srcdir)/File.idl
-	@touch $@
-
 noinst_PROGRAMS += client
 
 client_CPPFLAGS = \
@@ -110,10 +89,7 @@ client_CPPFLAGS = \
 client_SOURCES = \
   FileC.cpp \
   client.cpp \
-  FileC.h \
-  FileC.inl \
-  FileS.h \
-  FileS.inl
+  File_i.h
 
 client_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO_AnyTypeCode.la \

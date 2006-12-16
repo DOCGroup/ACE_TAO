@@ -1,5 +1,5 @@
 
-// $Id:$
+// $Id$
 
 project (DllOrb) : taolib, portableserver {
 
@@ -14,7 +14,12 @@ project (DllOrb) : taolib, portableserver {
         }
 }
 
-project (sig) : taoexe {
+project : taoexe {
+
+        exename = Test
+
+        after += DllOrb
+
         source_files {
                 Test.cpp
         }

@@ -17,15 +17,10 @@ TAO_IDLFLAGS = -Ge 1 -Wb,pre_include=ace/pre.h -Wb,post_include=ace/post.h -I$(T
 TAO_ROOT = $(top_srcdir)
 
 noinst_PROGRAMS =
-CLEANFILES =
-BUILT_SOURCES =
 
-## Makefile.Strategies_Server.am
+## Makefile.Strategies_Idl.am
 
-if BUILD_CORBA_MESSAGING
-if BUILD_EXCEPTIONS
-
-BUILT_SOURCES += \
+BUILT_SOURCES = \
   simple_testC.cpp \
   simple_testC.h \
   simple_testC.inl \
@@ -33,7 +28,7 @@ BUILT_SOURCES += \
   simple_testS.h \
   simple_testS.inl
 
-CLEANFILES += \
+CLEANFILES = \
   simple_test-stamp \
   simple_testC.cpp \
   simple_testC.h \
@@ -45,8 +40,17 @@ CLEANFILES += \
 simple_testC.cpp simple_testC.h simple_testC.inl simple_testS.cpp simple_testS.h simple_testS.inl: simple_test-stamp
 
 simple_test-stamp: $(srcdir)/simple_test.idl $(TAO_IDL_DEP)
-	$(TAO_IDL) $(TAO_IDLFLAGS) $(srcdir)/simple_test.idl
+	$(TAO_IDL) $(TAO_IDLFLAGS) -Sa -St $(srcdir)/simple_test.idl
 	@touch $@
+
+
+noinst_HEADERS = \
+  simple_test.idl
+
+## Makefile.Strategies_Server.am
+
+if BUILD_CORBA_MESSAGING
+if BUILD_EXCEPTIONS
 
 noinst_PROGRAMS += server
 
@@ -61,10 +65,6 @@ server_SOURCES = \
   simple_testC.cpp \
   simple_testS.cpp \
   simple_test_i.cpp \
-  simple_testC.h \
-  simple_testC.inl \
-  simple_testS.h \
-  simple_testS.inl \
   simple_test_i.h \
   simple_test_i.inl
 
@@ -87,27 +87,6 @@ endif BUILD_CORBA_MESSAGING
 if BUILD_CORBA_MESSAGING
 if BUILD_EXCEPTIONS
 
-BUILT_SOURCES += \
-  simple_testC.cpp \
-  simple_testC.h \
-  simple_testC.inl \
-  simple_testS.h \
-  simple_testS.inl
-
-CLEANFILES += \
-  simple_test-stamp \
-  simple_testC.cpp \
-  simple_testC.h \
-  simple_testC.inl \
-  simple_testS.h \
-  simple_testS.inl
-
-simple_testC.cpp simple_testC.h simple_testC.inl simple_testS.h simple_testS.inl: simple_test-stamp
-
-simple_test-stamp: $(srcdir)/simple_test.idl $(TAO_IDL_DEP)
-	$(TAO_IDL) $(TAO_IDLFLAGS) $(srcdir)/simple_test.idl
-	@touch $@
-
 noinst_PROGRAMS += client
 
 client_CPPFLAGS = \
@@ -119,10 +98,8 @@ client_CPPFLAGS = \
 client_SOURCES = \
   client.cpp \
   simple_testC.cpp \
-  simple_testC.h \
-  simple_testC.inl \
-  simple_testS.h \
-  simple_testS.inl
+  simple_test_i.h \
+  simple_test_i.inl
 
 client_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO_Messaging.la \

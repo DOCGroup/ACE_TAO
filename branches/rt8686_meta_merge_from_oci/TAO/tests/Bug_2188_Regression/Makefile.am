@@ -17,14 +17,10 @@ TAO_IDLFLAGS = -Ge 1 -Wb,pre_include=ace/pre.h -Wb,post_include=ace/post.h -I$(T
 TAO_ROOT = $(top_srcdir)
 
 noinst_PROGRAMS =
-CLEANFILES =
-BUILT_SOURCES =
 
-## Makefile.Broken_Server.am
+## Makefile.broken_idl.am
 
-if BUILD_EXCEPTIONS
-
-BUILT_SOURCES += \
+BUILT_SOURCES = \
   brokenC.cpp \
   brokenC.h \
   brokenC.inl \
@@ -32,7 +28,7 @@ BUILT_SOURCES += \
   brokenS.h \
   brokenS.inl
 
-CLEANFILES += \
+CLEANFILES = \
   broken-stamp \
   brokenC.cpp \
   brokenC.h \
@@ -47,6 +43,14 @@ broken-stamp: $(srcdir)/broken.idl $(TAO_IDL_DEP)
 	$(TAO_IDL) $(TAO_IDLFLAGS) -Sa -St $(srcdir)/broken.idl
 	@touch $@
 
+
+noinst_HEADERS = \
+  broken.idl
+
+## Makefile.Broken_Server.am
+
+if BUILD_EXCEPTIONS
+
 noinst_PROGRAMS += server
 
 server_CPPFLAGS = \
@@ -60,10 +64,6 @@ server_SOURCES = \
   brokenS.cpp \
   broken_i.cpp \
   server.cpp \
-  brokenC.h \
-  brokenC.inl \
-  brokenS.h \
-  brokenS.inl \
   broken_i.h
 
 server_LDADD = \
@@ -78,27 +78,6 @@ endif BUILD_EXCEPTIONS
 
 if BUILD_EXCEPTIONS
 
-BUILT_SOURCES += \
-  brokenC.cpp \
-  brokenC.h \
-  brokenC.inl \
-  brokenS.h \
-  brokenS.inl
-
-CLEANFILES += \
-  broken-stamp \
-  brokenC.cpp \
-  brokenC.h \
-  brokenC.inl \
-  brokenS.h \
-  brokenS.inl
-
-brokenC.cpp brokenC.h brokenC.inl brokenS.h brokenS.inl: broken-stamp
-
-broken-stamp: $(srcdir)/broken.idl $(TAO_IDL_DEP)
-	$(TAO_IDL) $(TAO_IDLFLAGS) -Sa -St $(srcdir)/broken.idl
-	@touch $@
-
 noinst_PROGRAMS += client
 
 client_CPPFLAGS = \
@@ -110,10 +89,7 @@ client_CPPFLAGS = \
 client_SOURCES = \
   brokenC.cpp \
   client.cpp \
-  brokenC.h \
-  brokenC.inl \
-  brokenS.h \
-  brokenS.inl
+  broken_i.h
 
 client_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO.la \
