@@ -22,19 +22,19 @@ Fri Dec 15 17:26:59 UTC 2006  Jeff Parsons <j.parsons@vanderbilt.edu>
 
 Fri Dec 15 16:32:35 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
 
-  * tests/ORT/Makefile.am:
-  * tests/Objref_Sequence_Test/Makefile.am:
-  * tests/Ondemand_Write/Makefile.am:
-  * tests/Oneway_Buffering/Makefile.am:
-  * tests/Oneways_Invoking_Twoways/Makefile.am:
+        * tests/ORT/Makefile.am:
+        * tests/Objref_Sequence_Test/Makefile.am:
+        * tests/Ondemand_Write/Makefile.am:
+        * tests/Oneway_Buffering/Makefile.am:
+        * tests/Oneways_Invoking_Twoways/Makefile.am:
 
           Regenerated.
 
-  * tests/ORT/ORT.mpc:
-  * tests/Objref_Sequence_Test/Objref_Sequence_Test.mpc:
-  * tests/Ondemand_Write/Ondemand_Write.mpc:
-  * tests/Oneway_Buffering/Oneway_Buffering.mpc:
-  * tests/Oneways_Invoking_Twoways/Oneways_Invoking_Twoways.mpc:
+        * tests/ORT/ORT.mpc:
+        * tests/Objref_Sequence_Test/Objref_Sequence_Test.mpc:
+        * tests/Ondemand_Write/Ondemand_Write.mpc:
+        * tests/Oneway_Buffering/Oneway_Buffering.mpc:
+        * tests/Oneways_Invoking_Twoways/Oneways_Invoking_Twoways.mpc:
 
           Split out IDL compilation into separate MPC project.
 
