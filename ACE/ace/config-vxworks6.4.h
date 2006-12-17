@@ -114,6 +114,8 @@
 #define ACE_LACKS_USECONDS_T
 #define ACE_LACKS_UMASK
 #define ACE_LACKS_STRPTIME
+#define ACE_LACKS_MKTEMP
+#define ACE_LACKS_TEMPNAM
 #define ACE_PAGE_SIZE 4096
 #define ACE_THR_PRI_FIFO_DEF 101
 #define ACE_THR_PRI_OTHER_DEF ACE_THR_PRI_FIFO_DEF
@@ -176,8 +178,6 @@
   #endif
 #else
   // We are building for kernel mode
-  #define ACE_LACKS_MKTEMP
-  #define ACE_LACKS_TEMPNAM
   #define ACE_LACKS_SUSECONDS_T
   #define ACE_LACKS_INTPTR_T
   #define ACE_LACKS_INTTYPES_H
