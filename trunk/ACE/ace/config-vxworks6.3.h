@@ -238,7 +238,7 @@
 # define ACE_HAS_PTHREADS_STD
 # define ACE_HAS_THREAD_SPECIFIC_STORAGE
 # define ACE_HAS_POSIX_SEM
-# define ACE_LACKS_MUTEXATTR_PSHARED
+# define ace_LACKS_MUTEXATTR_PSHARED
 # define ACE_LACKS_CONDATTR_PSHARED
 // Include this file, the sys/stat.h file shipped with VxWorks has old types
 // and without this include we get a lot of compile errors. A TSR has been filed
@@ -263,14 +263,12 @@
 # define ACE_MT_SAFE 1
 #endif
 
-#if (ACE_VXWORKS == 0x630)
-  // Needed include to get all VxWorks CPU types
-  #include "types/vxCpu.h"
-  #if defined (CPU) && (CPU == PENTIUM || CPU == PENTIUM2 || CPU == PENTIUM3 || CPU == PENTIUM4)
-   // If running an Intel Pentium the
-   // ACE_OS::gethrtime () can use the RDTSC instruction.
-    # define ACE_HAS_PENTIUM
-  #endif
+// Needed include to get all VxWorks CPU types
+#include "types/vxCpu.h"
+#if defined (CPU) && (CPU == PENTIUM || CPU == PENTIUM2 || CPU == PENTIUM3 || CPU == PENTIUM4)
+ // If running an Intel Pentium the
+ // ACE_OS::gethrtime () can use the RDTSC instruction.
+  # define ACE_HAS_PENTIUM
 #endif
 
 // VxWorks defines the CPU define MAP, undef it to prevent problems with
