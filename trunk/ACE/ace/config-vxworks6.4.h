@@ -1,4 +1,4 @@
-/* -*- C++ -*- */
+//* -*- C++ -*- */
 // $Id$
 
 // The following configuration file is designed to work for VxWorks
@@ -195,6 +195,7 @@
   #define ACE_HAS_SIZET_PTR_ASCTIME_R_AND_CTIME_R
   #define ACE_LACKS_SEARCH_H
   #define ACE_LACKS_SYSCONF
+  #define ACE_LACKS_GETPPID
   #define ACE_LACKS_WCHAR_H
   #define ACE_LACKS_WCTYPE_H
   #define ACE_LACKS_WCSCAT
