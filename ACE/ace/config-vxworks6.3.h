@@ -122,9 +122,6 @@
 #define ACE_THR_PRI_OTHER_DEF ACE_THR_PRI_FIFO_DEF
 #define ACE_HAS_SIGTIMEDWAIT
 #define ACE_HAS_SIGSUSPEND
-#if !defined (ACE_VXWORKS_SPARE)
-# define ACE_VXWORKS_SPARE spare4
-#endif /* ! ACE_VXWORKS_SPARE */
 #define ACE_HAS_GETIFADDRS
 
 #define ACE_LACKS_SETEGID
@@ -250,6 +247,9 @@
 // Only when building for kernel mode we can use TSS emulation, in rtp mode
 // we can't use the WIND_TCB struct anymore
 #  define ACE_HAS_TSS_EMULATION
+#  if !defined (ACE_VXWORKS_SPARE)
+#   define ACE_VXWORKS_SPARE spare4
+#  endif /* ! ACE_VXWORKS_SPARE */
 # endif
 // VxWorks has no recursive mutexes. This was set in the past but it doesn't
 // work with the pthread support, so only set it for the time being when pthread
