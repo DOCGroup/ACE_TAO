@@ -82,19 +82,7 @@ public:
             const char *orb_name
             ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
-  /**
-   * Creates a child poa under the root poa with PERSISTENT and
-   * USER_ID policies.  Call this if you want a @c child_poa with the
-   * above policies, otherwise call init.
-   *
-   * @retval -1 Failure
-   * @retval 0 Success
-   */
-  int init_child_poa (int &argc,
-                      char *argv[],
-                      const char *poa_name
-                      ACE_ENV_ARG_DECL_WITH_DEFAULTS);
-
+#if !defined (CORBA_E_MICRO)
   /**
    * Creates a child poa under the root poa with PERSISTENT and
    * USER_ID policies.  Call this if you want a @a child_poa with the
@@ -106,8 +94,9 @@ public:
   int init_child_poa (int &argc,
                       char *argv[],
                       const char *poa_name,
-                      const char *orb_name
+                      const char *orb_name = 0
                       ACE_ENV_ARG_DECL_WITH_DEFAULTS);
+#endif /* CORBA_E_MICRO */
 
   /**
    * Shut down.  Invoke the destroy() methods on the orb and poa.
@@ -153,6 +142,7 @@ public:
   void deactivate (const char *id
                    ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
+#if !defined (CORBA_E_MICRO)
   /**
    * Precondition: init_child_poa has been called.  Activate <servant>
    * using the POA <activate_object_with_id> created from the string
@@ -179,6 +169,7 @@ public:
    */
   void deactivate_under_child_poa (const char *id
                                    ACE_ENV_ARG_DECL_WITH_DEFAULTS);
+#endif /* CORBA_E_MICRO */
 
   /**
    * Run the ORB event loop with the specified @a tv time value.
