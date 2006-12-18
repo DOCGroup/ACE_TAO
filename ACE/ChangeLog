@@ -1,3 +1,17 @@
+Mon Dec 18 13:48:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ACEXML/common/common.mpc:
+        * bin/MakeProjectCreator/configs/acexml.mpb:
+          Added zzip as base, this project really uses zzip
+
+        * bin/MakeProjectCreator/configs/acedefaults.mpb:
+          Removed zzip and zlib as base projects. Any project that uses
+          zzip or zlib should derive from the correct project, but not
+          acedefaults. When making them a base from acedefaults any
+          project links with zzip/zlib even when they don't use it.
+
+          This fixes bugzilla bug 2751.
+
 Mon Dec 18 10:59:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * apps/JAWS2/HTTPU/parse_url.h:
