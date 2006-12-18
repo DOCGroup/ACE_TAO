@@ -520,10 +520,12 @@ TAO_Literal_Constraint::comparable_type (CORBA::TypeCode_ptr type)
     {
     case CORBA::tk_ushort:
     case CORBA::tk_ulong:
+    case CORBA::tk_ulonglong:
       return_value = TAO_UNSIGNED;
       break;
     case CORBA::tk_long:
     case CORBA::tk_short:
+    case CORBA::tk_longlong:
       return_value = TAO_SIGNED;
       break;
     case CORBA::tk_boolean:
