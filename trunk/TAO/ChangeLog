@@ -1,3 +1,15 @@
+Mon Dec 18 10:30:00 UTC 2006  Simon Massey  <sma@prismtech.com>
+
+        * tests/Portable_Interceptors/PICurrent/client.cpp:
+        * tests/Portable_Interceptors/PICurrent/server.cpp:
+        * tests/Portable_Interceptors/PICurrent/run_test.pl:
+
+          Bugfix Bugzilla 2510 & 2547 - multi-threading issues for PICurrent.
+          Multi-Threaded servers take longer to shutdown. Increase the
+          length of kill time to wait for the server shutdown. Also
+          provide sleep(1) before orb->destroy() to allow comms to
+          proceed at shutdown (precausion only).
+
 Fri Dec 15 18:17:36 UTC 2006  Iliyan Jeliazkov  <iliyan@ociweb.com>
 
           Updating the test to make it behave appropriately for
