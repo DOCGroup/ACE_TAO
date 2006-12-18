@@ -1,3 +1,11 @@
+Mon Dec 18 19:34:42 UTC 2006  Chad Elliott  <elliott_c@ociweb.com>
+
+        * orbsvcs/orbsvcs/Trader/Constraint_Nodes.cpp:
+        * orbsvcs/orbsvcs/Trader/Constraint_Visitors.cpp:
+
+          Added missing typecodes for supporting CORBA::ULongLong and
+          CORBA::LongLong.                                           
+
 Mon Dec 18 12:50:00 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Utils/ORB_Manager.{cpp,h}:

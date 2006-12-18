@@ -1085,6 +1085,8 @@ visit_in (TAO_Binary_Constraint* binary_in)
                              seq_type == CORBA::tk_ushort ||
                              seq_type == CORBA::tk_long ||
                              seq_type == CORBA::tk_ulong ||
+                             seq_type == CORBA::tk_longlong ||
+                             seq_type == CORBA::tk_ulonglong ||
                              seq_type == CORBA::tk_float ||
                              seq_type == CORBA::tk_double);
             }
