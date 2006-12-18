@@ -130,10 +130,12 @@ public:
   /// power of 2, as defined by the enums in <ACE_Log_Priority>).
   void priority (u_long num);
 
-  /// Get the length of the <Log_Record>.
+  /// Get the total length of the <Log_Record>, which includes the 
+  /// size of the various data member fields.
   long length (void) const;
 
-  /// Set the length of the <Log_Record>.
+  /// Set the total length of the <Log_Record>, which needs to account for
+  /// the size of the various data member fields.
   void length (long);
 
   /// Get the time stamp of the <Log_Record>.
