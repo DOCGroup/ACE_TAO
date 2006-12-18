@@ -3,7 +3,7 @@ Mon Dec 18 22:28:48 UTC 2006  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
         * ace/Log_Msg_NT_Event_Log.cpp (log): Iterate for i <
           log_record.msg_data_len() rather than i < log_record.length ()
           to avoid nasty overrun errors.  Thanks to Paxton Mason <PMason
-          at wolve dot com> for reporting this.
+          at wolve dot com> for reporting this.  This fixes bugid 2754.
 
 Mon Dec 18 22:28:18 UTC 2006  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
 
