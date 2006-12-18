@@ -1,3 +1,10 @@
+Mon Dec 18 12:50:00 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Utils/ORB_Manager.{cpp,h}:
+          Removed one init_child_poa method, using a default argument
+          we don't need two seperate ones. Fixed compile errors with
+          CORBA/e micro
+
 Mon Dec 18 10:30:00 UTC 2006  Simon Massey  <sma@prismtech.com>
 
         * tests/Portable_Interceptors/PICurrent/client.cpp:
