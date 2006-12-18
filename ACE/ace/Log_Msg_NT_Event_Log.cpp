@@ -103,13 +103,15 @@ int
 ACE_Log_Msg_NT_Event_Log::log (ACE_Log_Record &log_record)
 {
   // Make a copy of the log text and replace any newlines with
-  // CR-LF. Newline characters on their own do not appear correctly
-  // in the event viewer. We allow for a doubling in the size of
-  // the msg data for the worst case of all newlines.
+  // CR-LF. Newline characters on their own do not appear correctly in
+  // the event viewer. We allow for a doubling in the size of the msg
+  // data for the worst case of all newlines.
   const ACE_TCHAR* src_msg_data = log_record.msg_data ();
   ACE_TCHAR msg_data [ACE_Log_Record::MAXLOGMSGLEN * 2];
 
-  for (long i = 0, j = 0; i < log_record.length (); ++i)
+  for (long i = 0, j = 0;
+       i < log_record.msg_data_len ();
+       ++i)
     {
       if (src_msg_data[i] == '\n')
         {
