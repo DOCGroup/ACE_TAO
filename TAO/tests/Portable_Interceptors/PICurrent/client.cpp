@@ -1,6 +1,7 @@
 // -*- C++ -*-
 
 #include "ace/Get_Opt.h"
+#include "ace/OS_NS_unistd.h"
 
 #include "testC.h"
 #include "ClientORBInitializer.h"
@@ -171,6 +172,7 @@ main (int argc, char *argv[])
       server->shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
+      ACE_OS::sleep(1);
       orb->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
