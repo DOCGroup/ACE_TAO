@@ -66,7 +66,6 @@ Parent-stamp: $(srcdir)/Parent.idl $(TAO_IDL_DEP)
 	$(TAO_IDL) $(TAO_IDLFLAGS) -Sa -St -Ge 1 -GC $(srcdir)/Parent.idl
 	@touch $@
 
-
 noinst_HEADERS = \
   Child.idl \
   Parent.idl

@@ -43,7 +43,6 @@ time-stamp: $(srcdir)/time.idl $(TAO_IDL_DEP)
 	$(TAO_IDL) $(TAO_IDLFLAGS) -Sa -St $(srcdir)/time.idl
 	@touch $@
 
-
 noinst_HEADERS = \
   time.idl
 

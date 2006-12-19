@@ -42,8 +42,9 @@ Consumer_SOURCES = \
 ../../lib:
 	mkdir -p ../../lib
 
+
 Consumer_DEPENDENCIES = \
-  ../../lib
+ ../../lib
 
 Consumer_LDFLAGS = \
   -L../../lib
@@ -98,8 +99,9 @@ Supplier_SOURCES = \
 ../../lib:
 	mkdir -p ../../lib
 
+
 Supplier_DEPENDENCIES = \
-  ../../lib
+ ../../lib
 
 Supplier_LDFLAGS = \
   -L../../lib

@@ -67,7 +67,6 @@ noinst_HEADERS = \
   QuoterC.inl \
   QuoterS.h \
   QuoterS.inl \
-  QuoterS_T.cpp \
   QuoterS_T.h \
   quoter_common_export.h
 

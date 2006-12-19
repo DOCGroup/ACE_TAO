@@ -43,7 +43,6 @@ Quoter-stamp: $(srcdir)/Quoter.idl $(TAO_IDL_DEP)
 	$(TAO_IDL) $(TAO_IDLFLAGS) -Sa -St $(srcdir)/Quoter.idl
 	@touch $@
 
-
 noinst_HEADERS = \
   Quoter.idl
 

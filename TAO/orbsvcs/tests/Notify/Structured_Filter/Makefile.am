@@ -43,7 +43,6 @@ go-stamp: $(srcdir)/go.idl $(TAO_IDL_DEP)
 	$(TAO_IDL) $(TAO_IDLFLAGS) -Sa -St $(srcdir)/go.idl
 	@touch $@
 
-
 noinst_HEADERS = \
   go.idl
 

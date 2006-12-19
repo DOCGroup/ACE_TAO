@@ -43,7 +43,6 @@ OBV-stamp: $(srcdir)/OBV.idl $(TAO_IDL_DEP)
 	$(TAO_IDL) $(TAO_IDLFLAGS) -Sa $(srcdir)/OBV.idl
 	@touch $@
 
-
 noinst_HEADERS = \
   OBV.idl
 

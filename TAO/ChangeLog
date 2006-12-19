@@ -1,3 +1,9 @@
+Tue Dec 19 18:44:02 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * */Makefile.am:
+
+          Baseline regeneration to match recent MPC changes.
+
 Tue Dec 19 15:29:00 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Bug_2345_Regression/Bug_2345_Regression.mpc:

@@ -43,7 +43,6 @@ Two_Objects-stamp: $(srcdir)/Two_Objects.idl $(TAO_IDL_DEP)
 	$(TAO_IDL) $(TAO_IDLFLAGS) -Sa -St $(srcdir)/Two_Objects.idl
 	@touch $@
 
-
 noinst_HEADERS = \
   Two_Objects.idl
 

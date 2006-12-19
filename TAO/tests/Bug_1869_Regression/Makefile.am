@@ -47,7 +47,6 @@ AMI-stamp: $(srcdir)/AMI.idl $(TAO_IDL_DEP)
 	$(TAO_IDL) $(TAO_IDLFLAGS) -GC $(srcdir)/AMI.idl
 	@touch $@
 
-
 noinst_HEADERS = \
   AMI.idl
 

@@ -43,7 +43,6 @@ Echo-stamp: $(srcdir)/Echo.idl $(TAO_IDL_DEP)
 	$(TAO_IDL) $(TAO_IDLFLAGS) -Sa -St $(srcdir)/Echo.idl
 	@touch $@
 
-
 noinst_HEADERS = \
   Echo.idl
 

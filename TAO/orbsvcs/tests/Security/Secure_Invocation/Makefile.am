@@ -43,7 +43,6 @@ Foo-stamp: $(srcdir)/Foo.idl $(TAO_IDL_DEP)
 	$(TAO_IDL) $(TAO_IDLFLAGS) -Sa -St $(srcdir)/Foo.idl
 	@touch $@
 
-
 noinst_HEADERS = \
   Foo.idl
 

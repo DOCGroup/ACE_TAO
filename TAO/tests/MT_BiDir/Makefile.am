@@ -66,7 +66,6 @@ Sender-stamp: $(srcdir)/Sender.idl $(TAO_IDL_DEP)
 	$(TAO_IDL) $(TAO_IDLFLAGS) -Sa -St $(srcdir)/Sender.idl
 	@touch $@
 
-
 noinst_HEADERS = \
   Receiver.idl \
   Sender.idl

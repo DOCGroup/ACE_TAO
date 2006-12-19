@@ -43,7 +43,6 @@ demux_test-stamp: $(srcdir)/demux_test.idl $(TAO_IDL_DEP)
 	$(TAO_IDL) $(TAO_IDLFLAGS) -Sa -St $(srcdir)/demux_test.idl
 	@touch $@
 
-
 noinst_HEADERS = \
   demux_test.idl
 

@@ -53,7 +53,6 @@ test-stamp: $(srcdir)/test.idl $(TAO_IDL_DEP)
 	$(TAO_IDL) $(TAO_IDLFLAGS) -Sa -St -Gsp $(srcdir)/test.idl
 	@touch $@
 
-
 noinst_HEADERS = \
   test.idl
 

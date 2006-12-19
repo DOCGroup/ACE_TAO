@@ -47,7 +47,6 @@ Web_Server-stamp: $(srcdir)/Web_Server.idl $(TAO_IDL_DEP)
 	$(TAO_IDL) $(TAO_IDLFLAGS) -GC $(srcdir)/Web_Server.idl
 	@touch $@
 
-
 noinst_HEADERS = \
   Web_Server.idl
 

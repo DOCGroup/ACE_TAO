@@ -47,7 +47,6 @@ timeout-stamp: $(srcdir)/timeout.idl $(TAO_IDL_DEP)
 	$(TAO_IDL) $(TAO_IDLFLAGS) -GC $(srcdir)/timeout.idl
 	@touch $@
 
-
 noinst_HEADERS = \
   timeout.idl
 

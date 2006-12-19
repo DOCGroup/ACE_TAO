@@ -43,38 +43,8 @@ Test-stamp: $(srcdir)/Test.idl $(TAO_IDL_DEP)
 	$(TAO_IDL) $(TAO_IDLFLAGS) $(srcdir)/Test.idl
 	@touch $@
 
-
 noinst_HEADERS = \
   Test.idl
-
-## Makefile.ICMG_Any_Bug_Hello_Server.am
-
-if BUILD_EXCEPTIONS
-
-noinst_PROGRAMS += server
-
-server_CPPFLAGS = \
-  -I$(ACE_ROOT) \
-  -I$(ACE_BUILDDIR) \
-  -I$(TAO_ROOT) \
-  -I$(TAO_BUILDDIR)
-
-server_SOURCES = \
-  Hello.cpp \
-  HelloWorld.cpp \
-  TestC.cpp \
-  TestS.cpp \
-  server.cpp \
-  Hello.h \
-  HelloWorld.h
-
-server_LDADD = \
-  $(TAO_BUILDDIR)/tao/libTAO_PortableServer.la \
-  $(TAO_BUILDDIR)/tao/libTAO_AnyTypeCode.la \
-  $(TAO_BUILDDIR)/tao/libTAO.la \
-  $(ACE_BUILDDIR)/ace/libACE.la
-
-endif BUILD_EXCEPTIONS
 
 ## Makefile.ICMG_Any_Bug_Hello_Client.am
 
@@ -109,6 +79,35 @@ client_LDADD = \
 
 endif BUILD_EXCEPTIONS
 endif BUILD_CORBA_MESSAGING
+
+## Makefile.ICMG_Any_Bug_Hello_Server.am
+
+if BUILD_EXCEPTIONS
+
+noinst_PROGRAMS += server
+
+server_CPPFLAGS = \
+  -I$(ACE_ROOT) \
+  -I$(ACE_BUILDDIR) \
+  -I$(TAO_ROOT) \
+  -I$(TAO_BUILDDIR)
+
+server_SOURCES = \
+  Hello.cpp \
+  HelloWorld.cpp \
+  TestC.cpp \
+  TestS.cpp \
+  server.cpp \
+  Hello.h \
+  HelloWorld.h
+
+server_LDADD = \
+  $(TAO_BUILDDIR)/tao/libTAO_PortableServer.la \
+  $(TAO_BUILDDIR)/tao/libTAO_AnyTypeCode.la \
+  $(TAO_BUILDDIR)/tao/libTAO.la \
+  $(ACE_BUILDDIR)/ace/libACE.la
+
+endif BUILD_EXCEPTIONS
 
 ## Clean up template repositories, etc.
 clean-local:

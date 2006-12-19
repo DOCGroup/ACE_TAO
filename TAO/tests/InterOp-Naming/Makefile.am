@@ -43,7 +43,6 @@ INS-stamp: $(srcdir)/INS.idl $(TAO_IDL_DEP)
 	$(TAO_IDL) $(TAO_IDLFLAGS) -Sa -St $(srcdir)/INS.idl
 	@touch $@
 
-
 noinst_HEADERS = \
   INS.idl
 
