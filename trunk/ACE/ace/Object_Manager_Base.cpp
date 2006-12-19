@@ -407,7 +407,7 @@ ACE_OS_Object_Manager::print_error_message (unsigned int line_number,
 {
   // To avoid duplication of these const strings in OS.o.
 #if !defined (ACE_HAS_WINCE)
-  fprintf (stderr, "ace/OS.cpp, line %u: %s ",
+  fprintf (stderr, "ace/Object_Manager_Base.cpp, line %u: %s ",
            line_number,
            ACE_TEXT_ALWAYS_CHAR (message));
   perror ("failed");
