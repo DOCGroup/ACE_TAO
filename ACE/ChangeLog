@@ -1,3 +1,10 @@
+Tue Dec 19 09:11:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/OS_NS_unistd.inl (readdir_r):
+          Refactored this method to make it easier to maintain and at the
+          same moment fixed compile error when building ACE on VxWorks 6.4
+          in kernel mode without pthread support
+
 Mon Dec 18 22:28:48 UTC 2006  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
 
         * ace/Log_Msg_NT_Event_Log.cpp (log): Iterate for i <
