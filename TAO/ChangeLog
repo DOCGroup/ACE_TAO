@@ -1,3 +1,208 @@
+Tue Dec 19 22:09:34 UTC 2006  Iliyan Jeliazkov  <iliyan@ociweb.com>
+
+          Introducing the Transport::Current - an optional feature with an
+          IDL interface, which enables users to obtain information about
+          the Transports used to send or receive a message.
+
+          The implementation uses a TSS based stack of pointers to
+          Transport class instances, which an ORB selects on the critical
+          path.  The structure is used to update message and endpoint
+          related statistical information for the correct Transport. An
+          IDL interface available through ORB::resolve_initial_references,
+          provides access to the accumulated data inside servant up-calls
+          and interceptor invocations.
+
+        * docs/transport_current:
+
+          A new directory for the Transport Current documentation to
+          inhabit.
+
+        * docs/transport_current/index.html:
+        * docs/transport_current/transport_current.css:
+
+          Added reference and user-guide documentation for the Transport
+          Current.
+
+        * tao/orbconf.h:
+
+          Enabled the Transport::Current feature by default, by defining
+          TAO_HAS_TRANSPORT_CURRENT.  In recognition that this is very
+          likely an overkill for everybody but the few interested in the
+          feature, the plan is to reverse this default before the next
+          beta release.
+
+        * tao/ORB_Core.h:
+        * tao/Profile_Transport_Resolver.h:
+        * tao/Profile_Transport_Resolver.inl:
+        * tao/Profile_Transport_Resolver.cpp:
+
+          Replaced the "naked" Transport pointer with a smart-pointer-like
+          TAO::Transport_Selection_Guard, which has ctor and dtor that
+          help keep a TSS-based stack of Transport instances when
+          TAO_HAS_TRANSPORT_CURRENT is defined as 1. If the latter is
+          disabled, the TSS access overhead goes away.
+
+        * tao/TAO_Server_Request.h:
+        * tao/TAO_Server_Request.inl:
+        * tao/TAO_Server_Request.cpp:
+
+          Similar to the client-side code in Profile_Transport_Resolver,
+          this is where the server-side pieces of Transport Current
+          functionality plugs in. A Server_Request encapsulates knowledge
+          about the specific Transport on which an invocation
+          arrived. Adding a Transport_Selection_Guard instance member
+          (transport_selection_guard_) to keep track of the current
+          Transport, using TSS. This overhead is only present when
+          TAO_HAS_TRANSPORT_CURRENT is defined as 1.
+
+        * tao/TSS_Resources.h:
+        * tao/TSS_Resources.cpp:
+
+          Adding a Transport_Selection_Guard member pointer tsg_, which
+          when Transport Current feature is enabled, always points to the
+          most-recently selected (incoming or outgoing) Transport in the
+          current thread. This overhead is only present when
+          TAO_HAS_TRANSPORT_CURRENT is defined as 1.
+
+        * tao/Transport.h:
+        * tao/Transport.inl:
+        * tao/Transport.cpp (send_message_shared_i):
+
+          Introduced a new class TAO::Transport::Stats and added a member
+          pointer of that base type to the declaration of Transport. It
+          can only be non-null when Transport Current is enabled, whereby
+          it points to a TAO::Transport::Stats.  The send_message_shared_i
+          has been modified to update the statistics.  Also added the
+          requisite mutators and successor's.
+
+        * tao/Transport_Selection_Guard.h:
+        * tao/Transport_Selection_Guard.cpp:
+
+          The implementation of the TSS-pointed, stack-like chain of
+          Transport instances selected (potentially, in multiple nested up
+          calls). The TSS overhead is only present when
+          TAO_HAS_TRANSPORT_CURRENT is defined as 1, otherwise the methods
+          are trivial.
+
+        * tao/tao.mpc:
+
+          Updated to include the new source files.
+
+        * tao/TransportCurrent:
+
+          A new directory for the Transport Current implementation to
+          inhabit.  Currently, there are two implementations: a generic
+          one and an IIOP-specific one. The reason these two share this
+          location is that the generic Current is too generic to be useful
+          on its own, while providing almost all the required
+          infrastructure for the IIOP-specific one.
+
+        * tao/TransportCurrent/Current_Impl.h:
+        * tao/TransportCurrent/Current_Impl.cpp:
+
+          The generic Current implementation.
+
+        * tao/TransportCurrent/Current_Loader.h:
+        * tao/TransportCurrent/Current_Loader.cpp:
+
+          A loader, to handle registration with the Service repository.
+
+        * tao/TransportCurrent/Current_ORBInitializer.h:
+        * tao/TransportCurrent/Current_ORBInitializer.cpp:
+        * tao/TransportCurrent/Current_ORBInitializer_Base.h:
+        * tao/TransportCurrent/Current_ORBInitializer_Base.cpp:
+
+          An ORB initializer, to handle the registration of the name for
+          which resolve_initial_references() will return you a Current
+          pointer.
+
+        * tao/TransportCurrent/IIOP_Current_Impl.h:
+        * tao/TransportCurrent/IIOP_Current_Impl.cpp:
+
+          The IIOP-specific Current implementation, complete with its own
+          derivative of TAO::Transport::Stats.
+
+        * tao/TransportCurrent/IIOP_Current_Loader.h:
+        * tao/TransportCurrent/IIOP_Current_Loader.cpp:
+
+          A loader, to handle registration with the Service repository.
+
+        * tao/TransportCurrent/IIOP_Transport_Current.h:
+
+          A client-side interface for the IIOP-specific Transport Current.
+
+        * tao/TransportCurrent/TC.idl:
+
+          A client-side interface for the generic Transport Current.
+
+        * tao/TransportCurrent/TC.mpc:
+
+          We need this to actually build the generic TC into a
+          self-contained service object library (DLL).
+
+        * tao/TransportCurrent/TC_IIOP.idl:
+
+          A client-side interface for the IIOP-specific Transport Current.
+
+        * tao/TransportCurrent/TC_IIOP.mpc:
+
+          We need this to actually build the IIOP-specific TC into a
+          self-contained service object library (DLL).
+
+        * tao/TransportCurrent/Transport_Current.h:
+
+          Basic declarations.
+
+        * tao/TransportCurrent/Transport_Current_Export.h:
+
+          Library export helpers.
+
+        * tests/TransportCurrent:
+
+          A new directory for the Transport Current tests to inhabit.
+
+        * tests/TransportCurrent/Framework:
+
+          A new directory for the test exercising the generic Transport Current.
+
+        * tests/TransportCurrent/Framework/Client_Request_Interceptor.h:
+        * tests/TransportCurrent/Framework/Client_Request_Interceptor.cpp:
+        * tests/TransportCurrent/Framework/Current_Test.idl:
+        * tests/TransportCurrent/Framework/Current_Test_Impl.h:
+        * tests/TransportCurrent/Framework/Current_Test_Impl.cpp:
+        * tests/TransportCurrent/Framework/Framework.mpc:
+        * tests/TransportCurrent/Framework/ORBInitializer_T.h:
+        * tests/TransportCurrent/Framework/README:
+        * tests/TransportCurrent/Framework/Server_Main.cpp:
+        * tests/TransportCurrent/Framework/Server_Request_Interceptor.h:
+        * tests/TransportCurrent/Framework/Server_Request_Interceptor.cpp:
+        * tests/TransportCurrent/Framework/Tester.cpp:
+        * tests/TransportCurrent/Framework/client-static.conf:
+        * tests/TransportCurrent/Framework/client.conf:
+        * tests/TransportCurrent/Framework/client.cpp:
+        * tests/TransportCurrent/Framework/run_test.pl:
+        * tests/TransportCurrent/Framework/server-static.conf:
+        * tests/TransportCurrent/Framework/server.conf:
+        * tests/TransportCurrent/Framework/server.cpp:
+        * tests/TransportCurrent/Framework/simple.cpp:
+
+        * tests/TransportCurrent/IIOP:
+
+          A new directory for the test exercising the IIOP-specific Transport Current.
+
+        * tests/TransportCurrent/IIOP/Current_Test_Impl.cpp:
+        * tests/TransportCurrent/IIOP/IIOP.mpc:
+        * tests/TransportCurrent/IIOP/IIOP_Server_Main.cpp:
+        * tests/TransportCurrent/IIOP/IIOP_Server_Request_Interceptor.h:
+        * tests/TransportCurrent/IIOP/IIOP_Server_Request_Interceptor.cpp:
+        * tests/TransportCurrent/IIOP/IIOP_Tester.cpp:
+        * tests/TransportCurrent/IIOP/README:
+        * tests/TransportCurrent/IIOP/client_dynamic.conf:
+        * tests/TransportCurrent/IIOP/client_static.conf:
+        * tests/TransportCurrent/IIOP/run_test.pl:
+        * tests/TransportCurrent/IIOP/server_dynamic.conf:
+        * tests/TransportCurrent/IIOP/server_static.conf:
+
 Tue Dec 19 18:44:02 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
 
         * */Makefile.am:

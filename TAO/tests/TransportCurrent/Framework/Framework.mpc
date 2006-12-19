@@ -1,0 +1,27 @@
+// -*- MPC -*-
+// $Id$
+
+project(*Server): taoserver, tc, pi_server {
+  Source_Files {
+    server.cpp
+    Current_Test_Impl.cpp
+    Server_Request_Interceptor.cpp
+    Tester.cpp
+    Server_Main.cpp
+  }
+  IDL_Files {
+    Current_Test.idl
+  }
+}
+
+project(*Client): taoclient, tc, pi, dynamicinterface {
+  after += *Server
+  Source_Files {
+    Client_Request_Interceptor.cpp
+    client.cpp
+    Tester.cpp
+  }
+  IDL_Files {
+    Current_Test.idl
+  }
+}

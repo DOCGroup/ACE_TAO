@@ -160,6 +160,13 @@ TAO_Transport::TAO_Transport (CORBA::ULong tag,
   // Create TMS now.
   this->tms_ = cf->create_transport_mux_strategy (this);
 
+#if TAO_HAS_TRANSPORT_CURRENT == 1
+  // Allocate stats
+  ACE_NEW_THROW_EX (this->stats_,
+                    TAO::Transport::Stats,
+                    CORBA::NO_MEMORY ());
+#endif /* TAO_HAS_TRANSPORT_CURRENT == 1 */
+
   /*
    * Hook to add code that initializes components that
    * belong to the concrete protocol implementation.
@@ -1209,21 +1216,33 @@ TAO_Transport::send_message_shared_i (TAO_Stub *stub,
                                       const ACE_Message_Block *message_block,
                                       ACE_Time_Value *max_wait_time)
 {
+  int ret = 0;
+  size_t message_length = message_block->length ();
+
   switch (message_semantics)
     {
       case TAO_Transport::TAO_TWOWAY_REQUEST:
-        return this->send_synchronous_message_i (message_block,
-                                                 max_wait_time);
+        ret = this->send_synchronous_message_i (message_block,
+                                                max_wait_time);
+        break;
+
       case TAO_Transport::TAO_REPLY:
-        return this->send_reply_message_i (message_block,
-                                           max_wait_time);
+        ret = this->send_reply_message_i (message_block,
+                                          max_wait_time);
+        break;
+
       case TAO_Transport::TAO_ONEWAY_REQUEST:
-        return this->send_asynchronous_message_i (stub,
-                                                  message_block,
-                                                  max_wait_time);
+        ret = this->send_asynchronous_message_i (stub,
+                                                 message_block,
+                                                 max_wait_time);
+        break;
     }
 
-  return -1;
+  // "Count" the message, only if no error was encountered.
+  if (ret != -1 && this->stats_ != 0)
+    this->stats_->messages_sent (message_length);
+
+  return ret;
 }
 
 int
@@ -2193,7 +2212,9 @@ TAO_Transport::process_parsed_messages (TAO_Queued_Data *qd,
   // Get the <message_type> that we have received
   const TAO_Pluggable_Message_Type t = qd->msg_type_;
 
-  // int result = 0;
+  // Update stats, if any
+  if (this->stats_ != 0)
+    this->stats_->messages_received (qd->msg_block_->length ());
 
   if (t == TAO_PLUGGABLE_MESSAGE_CLOSECONNECTION)
     {
