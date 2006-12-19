@@ -1,3 +1,8 @@
+Tue Dec 19 20:05:42 UTC 2006  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * docs/Download.html:
+          Added link to SVN documentation.
+
 Tue Dec 19 14:19:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * include/makeinclude/platform_rtems.x_g++.GNU:
