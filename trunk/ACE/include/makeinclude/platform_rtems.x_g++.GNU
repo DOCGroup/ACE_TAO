@@ -44,7 +44,7 @@ DLD             = $(LD)
 INCLDIRS        +=
 
 LD              = $(CXX)
-LDFLAGS         += -Wl,--allow-multiple-definition -B$(RTEMS_MAKEFILE_PATH)/lib
+LDFLAGS         += -Wl,--allow-multiple-definition -B$(RTEMS_MAKEFILE_PATH)/lib -Wl,-Ttext,0x00100000
 OCFLAGS         += -O
 PIC             =
 
