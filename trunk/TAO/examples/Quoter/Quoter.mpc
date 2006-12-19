@@ -8,7 +8,7 @@ project(*IDL): taoidldefaults {
   custom_only = 1
 }
 
-project(*server): namingexe, lifecycle, avoids_minimum_corba, utils {
+project(*server): namingexe, lifecycle, avoids_minimum_corba, utils, avoids_corba_e_micro {
   after += *IDL
   Source_Files {
     server.cpp
