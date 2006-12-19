@@ -1,3 +1,8 @@
+Tue Dec 19 14:19:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * include/makeinclude/platform_rtems.x_g++.GNU:
+          Set load address
+
 Tue Dec 19 14:18:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Object_Manager_Base.cpp (print_error_message):
