@@ -24,6 +24,7 @@
 #include "ace/CORBA_macros.h"
 
 #include "tao/SystemException.h"
+#include "tao/Transport_Selection_Guard.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_Time_Value;
@@ -178,7 +179,10 @@ namespace TAO
     TAO_Stub *stub_;
 
     /// The transport selected for this invocation.
-    TAO_Transport *transport_;
+
+    /// Using the wrapper guard ensures it is available for use with
+    /// the Transport Current interfaces.
+    TAO::Transport_Selection_Guard transport_;
 
     /// The profile that has been selected for this invocation.
     TAO_Profile *profile_;
