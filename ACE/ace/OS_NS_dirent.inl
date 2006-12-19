@@ -87,7 +87,7 @@ readdir_r (ACE_DIR *dirp,
                          defined (_POSIX_SOURCE) || \
                          defined (__FreeBSD__) || \
                          defined (HPUX_11)) || \
-                         defined (__GNUC__) && defined (_AIX) ||
+                         defined (__GNUC__) && defined (_AIX) || \
                          defined (ACE_VXWORKS))
        return ::readdir_r (dirp, entry, result);
 #  else
