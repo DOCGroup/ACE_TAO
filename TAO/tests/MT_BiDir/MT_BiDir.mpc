@@ -9,7 +9,7 @@ project(*idl): taoidldefaults {
   custom_only = 1
 }
 
-project(*Server): taoexe, portableserver, avoids_minimum_corba, bidir_giop {
+project(*Server): taoexe, portableserver, avoids_minimum_corba, bidir_giop, avoids_corba_e_micro {
   after += *idl
   Source_Files {
     Sender_i.cpp

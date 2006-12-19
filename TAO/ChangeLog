@@ -1,3 +1,21 @@
+Tue Dec 19 15:29:00 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Bug_2345_Regression/Bug_2345_Regression.mpc:
+        * tests/Collocation_Opportunities/Collocation_Opportunities.mpc:
+        * tests/CSD_Strategy_Tests/TP_Common/CSD_TP_Test_Lib.mpc:
+        * tests/GIOP_Fragments/PMB_With_Fragments/PMB_With_Fragments.mpc:
+        * tests/InterOp-Naming/InterOp-Naming.mpc:
+        * tests/MT_BiDir/MT_BiDir.mpc:
+        * tests/Multiple_Inheritance/Multiple_Inheritance.mpc:
+        * tests/NestedUpcall/MT_Client_Test/MT_Client_Test.mpc:
+        * tests/NestedUpcall/Triangle_Test/TT.mpc:
+        * tests/POA/Excessive_Object_Deactivations/Excessive_Object_Deactivations.mpc:
+        * tests/POA/Identity/Identity.mpc:
+        * tests/POA/Object_Reactivation/Object_Reactivation.mpc:
+        * tests/POA/Persistent_ID/Persistent_ID.mpc:
+          Disabled some projects that can't compile when CORBA/e
+          micro has been enabled
+
 Tue Dec 19 12:32:41 UTC 2006  Chad Elliott  <elliott_c@ociweb.com>
 
         * orbsvcs/orbsvcs/CosTrading.mpc:
