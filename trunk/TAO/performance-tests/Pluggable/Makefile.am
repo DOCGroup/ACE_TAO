@@ -43,7 +43,6 @@ PP_Test-stamp: $(srcdir)/PP_Test.idl $(TAO_IDL_DEP)
 	$(TAO_IDL) $(TAO_IDLFLAGS) -Sa -St $(srcdir)/PP_Test.idl
 	@touch $@
 
-
 noinst_HEADERS = \
   PP_Test.idl
 

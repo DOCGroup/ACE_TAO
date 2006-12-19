@@ -43,7 +43,6 @@ UDP-stamp: $(srcdir)/UDP.idl $(TAO_IDL_DEP)
 	$(TAO_IDL) $(TAO_IDLFLAGS) -Sa -St -Sd -Sp $(srcdir)/UDP.idl
 	@touch $@
 
-
 noinst_HEADERS = \
   UDP.idl
 

@@ -43,7 +43,6 @@ MCast-stamp: $(srcdir)/MCast.idl $(TAO_IDL_DEP)
 	$(TAO_IDL) $(TAO_IDLFLAGS) -Sa -St $(srcdir)/MCast.idl
 	@touch $@
 
-
 noinst_HEADERS = \
   MCast.idl
 

@@ -45,7 +45,6 @@ File-stamp: $(srcdir)/File.idl $(TAO_IDL_DEP)
 	$(TAO_IDL) $(TAO_IDLFLAGS) $(srcdir)/File.idl
 	@touch $@
 
-
 noinst_HEADERS = \
   File.idl
 

@@ -43,7 +43,6 @@ Grid-stamp: $(srcdir)/Grid.idl $(TAO_IDL_DEP)
 	$(TAO_IDL) $(TAO_IDLFLAGS) -Sa -St $(srcdir)/Grid.idl
 	@touch $@
 
-
 noinst_HEADERS = \
   Grid.idl
 

@@ -43,7 +43,6 @@ Multiple-stamp: $(srcdir)/Multiple.idl $(TAO_IDL_DEP)
 	$(TAO_IDL) $(TAO_IDLFLAGS) -Sa -St -Gd $(srcdir)/Multiple.idl
 	@touch $@
 
-
 noinst_HEADERS = \
   Multiple.idl
 

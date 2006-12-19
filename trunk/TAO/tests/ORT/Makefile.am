@@ -62,7 +62,6 @@ ObjectReferenceFactory-stamp: $(srcdir)/ObjectReferenceFactory.idl $(TAO_IDL_DEP
 	$(TAO_IDL) $(TAO_IDLFLAGS) -Sa -St -SS $(srcdir)/ObjectReferenceFactory.idl
 	@touch $@
 
-
 noinst_HEADERS = \
   ORT_test.idl \
   ObjectReferenceFactory.idl

@@ -45,7 +45,6 @@ Bank-stamp: $(srcdir)/Bank.idl $(TAO_IDL_DEP)
 	$(TAO_IDL) $(TAO_IDLFLAGS) $(srcdir)/Bank.idl
 	@touch $@
 
-
 noinst_HEADERS = \
   Bank.idl
 

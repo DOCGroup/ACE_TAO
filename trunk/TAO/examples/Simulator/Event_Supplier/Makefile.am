@@ -46,7 +46,6 @@ CLEANFILES = \
 	$(TAO_IDL) $(TAO_IDLFLAGS) $(srcdir)/../NavWeap.idl
 	@touch $@
 
-
 noinst_HEADERS = \
   ../NavWeap.idl
 

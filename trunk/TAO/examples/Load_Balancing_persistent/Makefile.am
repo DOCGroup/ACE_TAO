@@ -66,7 +66,6 @@ Load_Balancer-stamp: $(srcdir)/Load_Balancer.idl $(TAO_IDL_DEP)
 	$(TAO_IDL) $(TAO_IDLFLAGS) -Sa -St $(srcdir)/Load_Balancer.idl
 	@touch $@
 
-
 noinst_HEADERS = \
   Identity.idl \
   Load_Balancer.idl

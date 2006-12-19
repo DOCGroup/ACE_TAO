@@ -101,7 +101,6 @@ FT_TestReplica-stamp: $(srcdir)/FT_TestReplica.idl $(TAO_IDL_DEP)
 	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs $(srcdir)/FT_TestReplica.idl
 	@touch $@
 
-
 noinst_HEADERS = \
   FT_TestReplica.idl
 

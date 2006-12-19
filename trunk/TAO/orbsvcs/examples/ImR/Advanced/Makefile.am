@@ -66,7 +66,6 @@ Messenger-stamp: $(srcdir)/Messenger.idl $(TAO_IDL_DEP)
 	$(TAO_IDL) $(TAO_IDLFLAGS) -Sa -St $(srcdir)/Messenger.idl
 	@touch $@
 
-
 noinst_HEADERS = \
   Manager.idl \
   Messenger.idl
