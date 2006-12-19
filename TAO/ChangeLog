@@ -1,3 +1,13 @@
+Tue Dec 19 12:32:41 UTC 2006  Chad Elliott  <elliott_c@ociweb.com>
+
+        * orbsvcs/orbsvcs/CosTrading.mpc:
+        * orbsvcs/orbsvcs/Trader/Constraint_y.cpp:
+
+          gcc gets confused when a static function is forward declared.  It
+          complains that the function is declared but never defined.  The
+          sed portion of the yacc regeneration rule just removes the forward
+          declaration (which was unnecessary anyway).
+
 Tue Dec 19 11:35:00 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/BiDirectional/BiDirectional.mpc:
