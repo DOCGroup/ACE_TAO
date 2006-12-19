@@ -1,3 +1,10 @@
+Tue Dec 19 22:09:34 UTC 2006  Iliyan Jeliazkov  <iliyan@ociweb.com>
+
+        * bin/MakeProjectCreator/config/tc.mpb:
+
+          Added a new project type for projects using the Transport
+          Current functionality.
+
 Tue Dec 19 20:05:42 UTC 2006  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * docs/Download.html:
