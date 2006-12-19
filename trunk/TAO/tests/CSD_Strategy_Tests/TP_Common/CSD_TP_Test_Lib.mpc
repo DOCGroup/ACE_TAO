@@ -9,8 +9,8 @@ project : taolib_with_idl, csd_threadpool {
   IDL_Files {
     FooException.idl
     TestAppException.idl
-    CancelledException.idl  
-    CustomException.idl     
+    CancelledException.idl
+    CustomException.idl
   }
 
   Source_Files {
@@ -29,8 +29,8 @@ project : taolib_with_idl, csd_threadpool {
     TestAppExceptionS.cpp
     CancelledExceptionC.cpp
     CancelledExceptionS.cpp
-    CustomExceptionC.cpp  
-    CustomExceptionS.cpp  
+    CustomExceptionC.cpp
+    CustomExceptionS.cpp
   }
 
   Template_Files {
