@@ -1,7 +1,7 @@
 // -*- MPC -*-
 // $Id$
 
-project: taoserver, anytypecode, bidir_giop {
+project: taoserver, anytypecode, bidir_giop, avoids_corba_e_micro {
   exename = destroy
   Source_Files {
     destroy.cpp
