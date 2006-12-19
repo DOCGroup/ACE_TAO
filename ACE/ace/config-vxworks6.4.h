@@ -17,6 +17,15 @@
 # define ACE_VXWORKS 0x640
 #endif /* ! ACE_VXWORKS */
 
+#if !defined (__RTP__)
+  // Fix for wrong typedef of time_t in kernel mode
+  #ifndef _TIME_T
+  #define _TIME_T
+  typedef long time_t;
+  #endif
+#endif
+
+
 #if ! defined (__ACE_INLINE__)
 # define __ACE_INLINE__
 #endif /* ! __ACE_INLINE__ */
