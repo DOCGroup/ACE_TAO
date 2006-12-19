@@ -25,7 +25,7 @@ project(*Manager): orbsvcsexe, portableserver {
   }
 }
 
-project(*Server): orbsvcsexe, portableserver, iortable {
+project(*Server): orbsvcsexe, portableserver, iortable, avoids_corba_e_micro {
   after += *IDL
   Source_Files {
     server_main.cpp
