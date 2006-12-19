@@ -8,7 +8,7 @@ project(*IDL): taoidldefaults, strategies {
   custom_only = 1
 }
 
-project(*server): taoexe, utils, portableserver, strategies {
+project(*server): taoexe, utils, portableserver, strategies, avoids_corba_e_micro {
   after += *IDL
 
   Source_Files {

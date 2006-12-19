@@ -1,3 +1,15 @@
+Tue Dec 19 11:32:00 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * performance-tests/CSD_Strategy/TestInf/csd_pt_testinf.mpc:
+        * performance-tests/Cubit/TAO/IDL_Cubit/IDL_Cubit.mpc:
+        * performance-tests/Cubit/TAO/MT_Cubit/MT_Cubit.mpc:
+        * performance-tests/Pluggable/Pluggable.mpc:
+        * performance-tests/POA/Create_Reference/Create_Reference.mpc:
+        * performance-tests/POA/Demux/Demux.mpc:
+        * performance-tests/POA/Object_Creation_And_Registration/Object_Creation_And_Registration.mpc:
+          Disabled some projects that can't compile when CORBA/e
+          micro has been enabled
+
 Tue Dec 19 11:27:00 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/examples/ImR/Advanced/Advanced.mpc:
