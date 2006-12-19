@@ -1,7 +1,7 @@
 // -*- MPC -*-
 // $Id$
 
-project(*server): namingexe, property_serv, utils {
+project(*server): namingexe, property_serv, utils, avoids_corba_e_micro {
   Source_Files {
     server.cpp
   }

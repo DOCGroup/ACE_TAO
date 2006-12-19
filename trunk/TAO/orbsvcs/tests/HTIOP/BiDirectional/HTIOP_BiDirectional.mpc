@@ -22,7 +22,7 @@ project(*Server): taoexe, portableserver, bidir_giop {
   }
 }
 
-project(*Client): taoexe, portableserver, avoids_minimum_corba, bidir_giop {
+project(*Client): taoexe, portableserver, avoids_minimum_corba, bidir_giop, avoids_corba_e_micro {
   after += *idl
   Source_Files {
     testC.cpp

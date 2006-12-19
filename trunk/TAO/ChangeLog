@@ -1,4 +1,19 @@
-Tue Dec 10 11:19:00 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+Tue Dec 19 11:27:00 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/examples/ImR/Advanced/Advanced.mpc:
+        * orbsvcs/examples/ImR/Combined_Service/ImR_Combined_Service.mpc:
+        * orbsvcs/tests/BiDir_CORBALOC/BiDirCORBALOC.mpc:
+        * orbsvcs/tests/Bug_1395_Regression/Bug_1395_Regression.mpc:
+        * orbsvcs/tests/HTIOP/BiDirectional/HTIOP_BiDirectional.mpc:
+        * orbsvcs/tests/ImplRepo/ImplRepo.mpc:
+        * orbsvcs/tests/ImplRepo/scale/scaletest.mpc:
+        * orbsvcs/tests/Property/Property.mpc:
+        * orbsvcs/tests/Security/BiDirectional/Secure_BiDir.mpc:
+        * orbsvcs/Time_Service/Time_Service.mpc:
+          Disabled some projects that can't compile when CORBA/e
+          micro has been enabled
+
+Tue Dec 19 11:19:00 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * examples/CSD_Strategy/ThreadPool5/CSD_Test_ThreadPool5.mpc:
         * examples/Event_Comm/Event_Comm.mpc:
