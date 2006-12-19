@@ -43,7 +43,6 @@ Grid-stamp: $(srcdir)/Grid.idl $(TAO_IDL_DEP)
 	$(TAO_IDL) $(TAO_IDLFLAGS) -Sa -St $(srcdir)/Grid.idl
 	@touch $@
 
-
 noinst_HEADERS = \
   Grid.idl
 
@@ -111,7 +110,6 @@ endif BUILD_EXCEPTIONS
 ## Makefile.Persistent_Grid_Server.am
 
 if BUILD_EXCEPTIONS
-if !BUILD_ACE_FOR_TAO
 
 noinst_PROGRAMS += server
 
@@ -139,7 +137,6 @@ server_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
-endif !BUILD_ACE_FOR_TAO
 endif BUILD_EXCEPTIONS
 
 ## Clean up template repositories, etc.

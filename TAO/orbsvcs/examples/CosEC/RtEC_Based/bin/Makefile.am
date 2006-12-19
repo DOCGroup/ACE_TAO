@@ -39,8 +39,9 @@ RtEC_Based_CosEC_SOURCES = \
 ../lib:
 	mkdir -p ../lib
 
+
 RtEC_Based_CosEC_DEPENDENCIES = \
-  ../lib
+ ../lib
 
 RtEC_Based_CosEC_LDFLAGS = \
   -L../lib

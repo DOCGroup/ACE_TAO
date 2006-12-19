@@ -46,7 +46,6 @@ data-stamp: $(srcdir)/data.idl $(TAO_IDL_DEP)
 	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs $(srcdir)/data.idl
 	@touch $@
 
-
 noinst_HEADERS = \
   data.idl
 

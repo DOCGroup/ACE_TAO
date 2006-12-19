@@ -70,7 +70,6 @@ subscriber-stamp: $(srcdir)/subscriber.idl $(TAO_IDL_DEP)
 	$(TAO_IDL) $(TAO_IDLFLAGS) $(srcdir)/subscriber.idl
 	@touch $@
 
-
 noinst_HEADERS = \
   publisher.idl \
   subscriber.idl

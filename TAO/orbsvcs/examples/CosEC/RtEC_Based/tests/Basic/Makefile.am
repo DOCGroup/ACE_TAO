@@ -43,8 +43,9 @@ Basic_SOURCES = \
 ../../lib:
 	mkdir -p ../../lib
 
+
 Basic_DEPENDENCIES = \
-  ../../lib
+ ../../lib
 
 Basic_LDFLAGS = \
   -L../../lib

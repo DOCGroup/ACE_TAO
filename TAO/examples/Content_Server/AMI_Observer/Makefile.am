@@ -47,7 +47,6 @@ Push_Web_Server-stamp: $(srcdir)/Push_Web_Server.idl $(TAO_IDL_DEP)
 	$(TAO_IDL) $(TAO_IDLFLAGS) -GC $(srcdir)/Push_Web_Server.idl
 	@touch $@
 
-
 noinst_HEADERS = \
   Push_Web_Server.idl
 

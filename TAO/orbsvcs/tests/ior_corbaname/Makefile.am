@@ -43,7 +43,6 @@ corbaname-stamp: $(srcdir)/corbaname.idl $(TAO_IDL_DEP)
 	$(TAO_IDL) $(TAO_IDLFLAGS) -Sa -St $(srcdir)/corbaname.idl
 	@touch $@
 
-
 noinst_HEADERS = \
   corbaname.idl
 

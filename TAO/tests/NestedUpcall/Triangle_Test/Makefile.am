@@ -43,7 +43,6 @@ Triangle_Test-stamp: $(srcdir)/Triangle_Test.idl $(TAO_IDL_DEP)
 	$(TAO_IDL) $(TAO_IDLFLAGS) -Sa -St $(srcdir)/Triangle_Test.idl
 	@touch $@
 
-
 noinst_HEADERS = \
   Triangle_Test.idl
 

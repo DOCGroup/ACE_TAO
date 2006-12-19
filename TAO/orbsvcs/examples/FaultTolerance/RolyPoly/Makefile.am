@@ -43,7 +43,6 @@ RolyPoly-stamp: $(srcdir)/RolyPoly.idl $(TAO_IDL_DEP)
 	$(TAO_IDL) $(TAO_IDLFLAGS) -Sa -St $(srcdir)/RolyPoly.idl
 	@touch $@
 
-
 noinst_HEADERS = \
   RolyPoly.idl
 

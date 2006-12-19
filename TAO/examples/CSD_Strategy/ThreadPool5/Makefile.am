@@ -66,10 +66,47 @@ Foo-stamp: $(srcdir)/Foo.idl $(TAO_IDL_DEP)
 	$(TAO_IDL) $(TAO_IDLFLAGS) -Sa -St $(srcdir)/Foo.idl
 	@touch $@
 
-
 noinst_HEADERS = \
   Callback.idl \
   Foo.idl
+
+## Makefile.CSD_Test_ThreadPool5_Client.am
+
+if BUILD_EXCEPTIONS
+if BUILD_THREADS
+
+noinst_PROGRAMS += client_main
+
+client_main_CPPFLAGS = \
+  -I$(ACE_ROOT) \
+  -I$(ACE_BUILDDIR) \
+  -I$(TAO_ROOT) \
+  -I$(TAO_BUILDDIR)
+
+client_main_SOURCES = \
+  CallbackC.cpp \
+  CallbackS.cpp \
+  Callback_i.cpp \
+  ClientApp.cpp \
+  ClientTask.cpp \
+  FooC.cpp \
+  client_main.cpp \
+  Callback_i.h \
+  ClientApp.h \
+  ClientTask.h
+
+client_main_LDADD = \
+  $(TAO_BUILDDIR)/tao/libTAO_CSD_ThreadPool.la \
+  $(TAO_BUILDDIR)/tao/libTAO_CSD_Framework.la \
+  $(TAO_BUILDDIR)/tao/libTAO_PI.la \
+  $(TAO_BUILDDIR)/tao/libTAO_CodecFactory.la \
+  $(TAO_BUILDDIR)/tao/libTAO_PortableServer.la \
+  $(TAO_BUILDDIR)/tao/libTAO_AnyTypeCode.la \
+  $(TAO_BUILDDIR)/tao/libTAO.la \
+  $(ACE_BUILDDIR)/ace/libACE.la
+
+endif BUILD_THREADS
+endif BUILD_EXCEPTIONS
 
 ## Makefile.CSD_Test_ThreadPool5_Server.am
 
@@ -106,44 +143,6 @@ server_main_SOURCES = \
   ServerApp.h
 
 server_main_LDADD = \
-  $(TAO_BUILDDIR)/tao/libTAO_CSD_ThreadPool.la \
-  $(TAO_BUILDDIR)/tao/libTAO_CSD_Framework.la \
-  $(TAO_BUILDDIR)/tao/libTAO_PI.la \
-  $(TAO_BUILDDIR)/tao/libTAO_CodecFactory.la \
-  $(TAO_BUILDDIR)/tao/libTAO_PortableServer.la \
-  $(TAO_BUILDDIR)/tao/libTAO_AnyTypeCode.la \
-  $(TAO_BUILDDIR)/tao/libTAO.la \
-  $(ACE_BUILDDIR)/ace/libACE.la
-
-endif BUILD_THREADS
-endif BUILD_EXCEPTIONS
-
-## Makefile.CSD_Test_ThreadPool5_Client.am
-
-if BUILD_EXCEPTIONS
-if BUILD_THREADS
-
-noinst_PROGRAMS += client_main
-
-client_main_CPPFLAGS = \
-  -I$(ACE_ROOT) \
-  -I$(ACE_BUILDDIR) \
-  -I$(TAO_ROOT) \
-  -I$(TAO_BUILDDIR)
-
-client_main_SOURCES = \
-  CallbackC.cpp \
-  CallbackS.cpp \
-  Callback_i.cpp \
-  ClientApp.cpp \
-  ClientTask.cpp \
-  FooC.cpp \
-  client_main.cpp \
-  Callback_i.h \
-  ClientApp.h \
-  ClientTask.h
-
-client_main_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO_CSD_ThreadPool.la \
   $(TAO_BUILDDIR)/tao/libTAO_CSD_Framework.la \
   $(TAO_BUILDDIR)/tao/libTAO_PI.la \

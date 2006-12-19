@@ -66,7 +66,6 @@ client-stamp: $(srcdir)/client.idl $(TAO_IDL_DEP)
 	$(TAO_IDL) $(TAO_IDLFLAGS) -Sa -St $(srcdir)/client.idl
 	@touch $@
 
-
 noinst_HEADERS = \
   client.idl \
   server.idl
