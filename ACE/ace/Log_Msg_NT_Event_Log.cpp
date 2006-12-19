@@ -109,7 +109,7 @@ ACE_Log_Msg_NT_Event_Log::log (ACE_Log_Record &log_record)
   const ACE_TCHAR* src_msg_data = log_record.msg_data ();
   ACE_TCHAR msg_data [ACE_Log_Record::MAXLOGMSGLEN * 2];
 
-  for (long i = 0, j = 0;
+  for (size_t i = 0, j = 0;
        i < log_record.msg_data_len ();
        ++i)
     {
