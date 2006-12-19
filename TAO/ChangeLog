@@ -1,10 +1,26 @@
+Tue Dec 10 11:19:00 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * examples/CSD_Strategy/ThreadPool5/CSD_Test_ThreadPool5.mpc:
+        * examples/Event_Comm/Event_Comm.mpc:
+        * examples/Logging/Logging.mpc:
+        * examples/Persistent_Grid/Persistent_Grid.mpc:
+        * examples/PluggableUDP/tests/Basic/Basic.mpc:
+        * examples/PluggableUDP/tests/Performance/Performance.mpc:
+        * examples/Quoter/Quoter.mpc:
+        * examples/Simple/bank/bank.mpc:
+        * examples/Simple/echo/echo.mpc:
+        * examples/Simple/grid/grid.mpc:
+        * examples/Simple/time/time.mpc:
+          Disabled some projects that can't compile when CORBA/e
+          micro has been enabled
+
 Mon Dec 18 19:34:42 UTC 2006  Chad Elliott  <elliott_c@ociweb.com>
 
         * orbsvcs/orbsvcs/Trader/Constraint_Nodes.cpp:
         * orbsvcs/orbsvcs/Trader/Constraint_Visitors.cpp:
 
           Added missing typecodes for supporting CORBA::ULongLong and
-          CORBA::LongLong.                                           
+          CORBA::LongLong.
 
 Mon Dec 18 12:50:00 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 

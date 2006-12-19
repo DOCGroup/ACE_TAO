@@ -8,7 +8,7 @@ project(*IDL): taoidldefaults {
   custom_only = 1
 }
 
-project(*server): namingexe, iortable, utils {
+project(*server): namingexe, iortable, utils, avoids_corba_e_micro {
   exename = server
   after += *IDL
   Source_Files {

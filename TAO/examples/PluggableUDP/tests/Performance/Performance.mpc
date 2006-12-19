@@ -11,7 +11,7 @@ project(*IDL): taoidldefaults {
   custom_only = 1
 }
 
-project(*server): taoserver, strategies {
+project(*server): taoserver, strategies, avoids_corba_e_micro {
   exename = server
   after += *IDL
   Source_Files {

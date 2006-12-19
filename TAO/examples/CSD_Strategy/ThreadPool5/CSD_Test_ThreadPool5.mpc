@@ -31,7 +31,7 @@ project(*Server): csd_threadpool, taoserver, pi, avoids_corba_e_micro {
   }
 }
 
-project(*Client): csd_threadpool, taoserver, pi {
+project(*Client): csd_threadpool, taoserver, pi, avoids_corba_e_micro {
   exename = client_main
   after += *idl
 
