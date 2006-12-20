@@ -1,3 +1,16 @@
+Wed Dec 20 16:35:53 UTC 2006  Iliyan Jeliazkov  <iliyan@ociweb.com>
+
+          These are fixes correcting scoreboard issues pertaining to the
+          checkin from Tue Dec 19 22:09:34 UTC 2006.
+
+        * bin/tao_orb_tests.lst:
+
+          Added the two Transport::Current tests to the scoreboard.
+
+        * bin/MakeProjectCreator/config/tc.mpb:
+
+          Moved this file to $TAO_ROOT/MPC/config where it belongs.
+
 Wed Dec 20 12:31:04 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/test_config.h:
