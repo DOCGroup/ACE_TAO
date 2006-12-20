@@ -1,3 +1,9 @@
+Wed Dec 20 22:06:14 UTC 2006  Olli Savia  <ops@iki.fi>
+
+        * tests/OS_Test.cpp:
+          HP-UX has broken vsnprintf function. Changed the test not
+          to fail on HP-UX.
+
 Wed Dec 20 16:35:53 UTC 2006  Iliyan Jeliazkov  <iliyan@ociweb.com>
 
           These are fixes correcting scoreboard issues pertaining to the
