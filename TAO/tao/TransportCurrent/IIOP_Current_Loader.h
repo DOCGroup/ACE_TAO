@@ -35,6 +35,8 @@ namespace TAO
       public:
         /// Initializes object when dynamic linking occurs.
         virtual int init (int argc, ACE_TCHAR *argv[]);
+        virtual ~Current_Loader ();
+        Current_Loader ();
       };
     }
   }

@@ -38,7 +38,7 @@ namespace TAO
     return 0;
 
 #endif  /* TAO_HAS_TRANSPORT_CURRENT == 1 */
-  };
+  }
 
 
 
@@ -59,7 +59,7 @@ namespace TAO
 
 #endif  /* TAO_HAS_TRANSPORT_CURRENT == 1 */
 
-  };
+  }
 
 
 
@@ -74,7 +74,7 @@ namespace TAO
 
 #endif  /* TAO_HAS_TRANSPORT_CURRENT == 1 */
     this->curr_ = 0;
-  };
+  }
 
 } /* namespace TAO */
 

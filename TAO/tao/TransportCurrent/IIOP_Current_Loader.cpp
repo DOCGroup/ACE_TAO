@@ -55,13 +55,27 @@ namespace TAO
 
         return 0;
       }
+
+      Current_Loader::Current_Loader ()
+      {
+      }
+
+      Current_Loader::~Current_Loader ()
+      {
+      }
+
     }
 
   }
 }
+TAO_END_VERSIONED_NAMESPACE_DECL
+
 
 
 #if defined (TAO_AS_STATIC_LIBS)
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 ACE_STATIC_SVC_REQUIRE (TAO_Transport_IIOP_Current_Loader);
 
 namespace TAO
@@ -77,11 +91,12 @@ namespace TAO
       }
     }
   }
+
+TAO_END_VERSIONED_NAMESPACE_DECL
+
 }
 #endif /* defined (TAO_AS_STATIC_LIBS) */
 
-
-TAO_END_VERSIONED_NAMESPACE_DECL
 
 ACE_STATIC_SVC_DEFINE (TAO_Transport_IIOP_Current_Loader,
                        ACE_TEXT ("TAO_Transport_IIOP_Current_Loader"),
