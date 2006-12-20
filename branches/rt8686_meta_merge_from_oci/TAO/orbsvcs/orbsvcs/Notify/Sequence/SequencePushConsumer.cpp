@@ -7,6 +7,7 @@ ACE_RCSID (Notify, TAO_Notify_SequencePushConsumer, "$Id$")
 #include "ace/Reactor.h"
 #include "tao/debug.h"
 #include "tao/Stub.h" // For debug messages printing out ORBid.
+#include "tao/ORB_Core.h"
 #include "orbsvcs/Notify/QoSProperties.h"
 #include "orbsvcs/Notify/ProxySupplier.h"
 #include "orbsvcs/Notify/Worker_Task.h"

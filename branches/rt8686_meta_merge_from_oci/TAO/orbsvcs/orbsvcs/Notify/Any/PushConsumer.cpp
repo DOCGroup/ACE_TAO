@@ -8,6 +8,7 @@ ACE_RCSID (Notify,
 
 #include "ace/Bound_Ptr.h"
 #include "tao/Stub.h" // For debug messages printing out ORBid.
+#include "tao/ORB_Core.h"
 #include "orbsvcs/CosEventCommC.h"
 #include "orbsvcs/Notify/Event.h"
 #include "orbsvcs/Notify/Properties.h"
