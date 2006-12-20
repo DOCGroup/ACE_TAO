@@ -10,7 +10,6 @@ project(*idl): taoidldefaults {
 
 project(*client) : taoclient {
   after += *idl
-  after += *Server
   exename = client
   source_files {
     client.cpp
@@ -22,7 +21,7 @@ project(*client) : taoclient {
   }
 }
 
-project(*server) : taoserver {
+project(*server) : taoserver, avoids_corba_e_micro {
   after += *idl
   source_files {
     server.cpp

@@ -2,6 +2,7 @@
 // $Id$
 
 project(*Server): taoserver, tc, pi_server {
+  includes += .
   Source_Files {
     server.cpp
     Current_Test_Impl.cpp
@@ -16,6 +17,7 @@ project(*Server): taoserver, tc, pi_server {
 
 project(*Client): taoclient, tc, pi, dynamicinterface {
   after += *Server
+  includes += .
   Source_Files {
     Client_Request_Interceptor.cpp
     client.cpp

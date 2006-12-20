@@ -15,7 +15,7 @@
 
 ACE_RCSID (PICurrent,
            client,
-           "$Id:$")
+           "$Id$")
 
 // Prototype
 

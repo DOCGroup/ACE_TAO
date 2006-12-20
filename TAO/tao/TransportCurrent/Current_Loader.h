@@ -21,6 +21,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "ace/Service_Object.h"
+#include "ace/Service_Config.h"
 #include "tao/Versioned_Namespace.h"
 #include "tao/TransportCurrent/Transport_Current_Export.h"
 
@@ -37,12 +38,6 @@ namespace TAO
     class TAO_Transport_Current_Export Current_Loader
       : public ACE_Service_Object
     {
-    public:
-
-      /// A helper method for obtaining access to the the Transport
-      /// Factory Manager instance.
-      static Current_Loader* instance (void);
-
     public:
 
       /// Initializes object when dynamic linking occurs.
@@ -74,11 +69,9 @@ namespace TAO
   };
 };
 
-
-TAO_END_VERSIONED_NAMESPACE_DECL
-
 #endif /* defined (TAO_AS_STATIC_LIBS) */
 
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 ACE_STATIC_SVC_DECLARE_EXPORT (TAO_Transport_Current,
                                TAO_Transport_Current_Loader)

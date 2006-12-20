@@ -205,19 +205,6 @@ virtual int register_handler (ACE_HANDLE handle,
 
 </file>
 
-<!-- Transformations to Reactor.inl -->
-<file name="Reactor.inl">
-
-<add>
- <hook>REACTOR_SPL_INCLUDE_FORWARD_DECL_ADD_HOOK</hook>
- <data>
-// Check if this is necessary
-#include "ace/Select_Reactor.h"
- </data>
-</add>
-
-</file>
-
 <file name="Reactor.cpp">
 
 <!-- Replace ACE_Reactor_Impl with ACE_TP_Reactor -->

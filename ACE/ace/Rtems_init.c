@@ -1,22 +1,4 @@
 /*
- * RTEMS Network configuration/initialization
- *
- *  This file is a merger of the netdemo/init.c and networkconfig.h
- *  with some modifications to support loopback only.  This file
- *  is OK for a starting point for a real networked application.
- *     --joel sherrill 16 Mar 2001
- *
- * This program may be distributed and used for any purpose.
- * I ask only that you:
- *	1. Leave this author information intact.
- *	2. Document any changes you make.
- *
- * W. Eric Norum
- * Saskatchewan Accelerator Laboratory
- * University of Saskatchewan
- * Saskatoon, Saskatchewan, CANADA
- * eric@skatter.usask.ca
- *
  *  $Id$
  */
 
@@ -104,7 +86,7 @@ static char ethernet_address[6] = { 0x00, 0x80, 0x7F, 0x22, 0x61, 0x77 };
 #endif
 
 #define RTEMS_USE_LOOPBACK
-#define RTEMS_USE_LOOPBACK_ONLY
+
 #ifdef RTEMS_USE_LOOPBACK
 /*
  * Loopback interface
@@ -209,7 +191,6 @@ struct rtems_bsdnet_config rtems_bsdnet_config = {
 #endif
 
 #endif /* _RTEMS_NETWORKCONFIG_H_ */
-/* end of #include "../networkconfig.h" */
 
 #endif /* ACE_LACKS_NETWORKING */
 
@@ -221,13 +202,14 @@ extern int main (int, char *[]);
 rtems_task
 Init (rtems_task_argument not_used)
 {
-  int doSocket(void);
-
+  int retval = 0;
 #if !defined (ACE_LACKS_NETWORKING)
-  rtems_bsdnet_initialize_network ();
-  rtems_bsdnet_show_inet_routes ();
+  retval = rtems_bsdnet_initialize_network ();
 #endif /* ACE_LACKS_NETWORKING */
-  int retval = main (0, 0);
+  if (retval == 0)
+    {
+      retval = main (0, 0);
+    }
 }
 
 #elif !defined (__GNUC__)

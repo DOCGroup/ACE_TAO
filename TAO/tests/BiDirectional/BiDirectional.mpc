@@ -20,10 +20,9 @@ project(*Server): taoserver, anytypecode, avoids_minimum_corba, bidir_giop, avoi
   }
 }
 
-project(*Client): taoserver, anytypecode, avoids_minimum_corba, bidir_giop {
+project(*Client): taoserver, anytypecode, avoids_minimum_corba, bidir_giop, avoids_corba_e_micro {
   exename = client
   after += *idl
-  after += *Server
   Source_Files {
     test_i.cpp
     client.cpp

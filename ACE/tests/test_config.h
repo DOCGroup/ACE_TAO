@@ -72,16 +72,20 @@ const size_t ACE_MAX_ITERATIONS = 10;
 const size_t ACE_MAX_PROCESSES = 10;
 const size_t ACE_MAX_THREADS = 4;
 
+#ifndef ACE_START_TEST
 #define ACE_START_TEST(NAME) \
   const ACE_TCHAR *program = NAME; \
   ACE_LOG_MSG->open (program, ACE_Log_Msg::OSTREAM | ACE_Log_Msg::VERBOSE_LITE); \
   if (ace_file_stream::instance()->set_output (program) != 0) \
     ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("set_output failed")), -1); \
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%P|%t) Starting %s test at %D\n"), program))
+#endif /* ACE_START_TEST */
 
+#ifndef ACE_END_TEST
 #define ACE_END_TEST \
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%P|%t) Ending %s test at %D\n"), program)); \
   ace_file_stream::instance()->close ()
+#endif /* ACE_END_TEST */
 
 #define ACE_CLOSE_TEST_LOG ace_file_stream::instance()->close ()
 
@@ -97,9 +101,9 @@ const size_t ACE_MAX_THREADS = 4;
   ACE_LOG_MSG->set_flags(ACE_Log_Msg::SILENT); \
   ace_file_stream::instance()->close ();
 
-#if defined (VXWORKS)
+#if defined (ACE_VXWORKS)
   // This is the only way I could figure out to avoid an error
-  // about attempting to unlink a non-existant file.
+  // about attempting to unlink a non-existent file.
 
 #include "ace/OS_NS_fcntl.h"
 
