@@ -54,7 +54,9 @@ namespace TAO
     IIOP_Current_Impl::id (ACE_ENV_SINGLE_ARG_DECL)
       ACE_THROW_SPEC ((::CORBA::SystemException, NoContext))
     {
-      return this->handler ()->get_handle ();
+      // Need to use cast to pacify windows compilers complaining
+      // about the implicit HANDLE -> CORBA::Long conversion.
+      return (CORBA::Long) this->handler ()->get_handle ();
     }
 
     ::SSLIOP::Current_ptr

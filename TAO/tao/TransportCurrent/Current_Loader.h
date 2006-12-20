@@ -40,12 +40,6 @@ namespace TAO
     {
     public:
 
-//       /// A helper method for obtaining access to the the Transport
-//       /// Factory Manager instance.
-//       static Current_Loader* instance (void);
-
-    public:
-
       /// Initializes object when dynamic linking occurs.
       virtual int init (int argc, ACE_TCHAR *argv[]);
 
