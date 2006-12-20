@@ -1,3 +1,13 @@
+Wed Dec 20 09:31:00 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * examples/Callback_Quoter/Callback_Quoter.mpc:
+        * orbsvcs/examples/ImR/Combined_Service/ImR_Combined_Service.mpc:
+        * orbsvcs/tests/HTIOP/BiDirectional/HTIOP_BiDirectional.mpc:
+        * orbsvcs/tests/Security/BiDirectional/Secure_BiDir.mpc:
+        * performance-tests/CSD_Strategy/TestServant/csd_pt_testservant.mpc:
+          Disabled some projects that can't compile when CORBA/e
+          micro has been enabled
+
 Tue Dec 19 22:51:09 UTC 2006  Iliyan Jeliazkov  <iliyan@ociweb.com>
 
         * NEWS:

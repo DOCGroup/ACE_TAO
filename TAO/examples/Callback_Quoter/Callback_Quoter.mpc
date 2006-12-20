@@ -9,7 +9,7 @@ project(*IDL): taoidldefaults {
   custom_only = 1
 }
 
-project(Callback_Quoter notifier): namingexe, utils {
+project(Callback_Quoter notifier): namingexe, utils, avoids_corba_e_micro {
   after += *IDL
   Source_Files {
     Notifier_i.cpp
