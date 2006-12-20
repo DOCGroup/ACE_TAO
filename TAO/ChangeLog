@@ -1,3 +1,57 @@
+Wed Dec 20 16:22:29 UTC 2006  Iliyan Jeliazkov  <iliyan@ociweb.com>
+
+          These are fixes correcting scoreboard issues pertaining to the
+          checkin from Tue Dec 19 22:09:34 UTC 2006.
+
+        * MPC/config/tc.mpb:
+
+          Moved from $ACE_ROOT/bin/MakeProjectCreator/config according to
+          the new project configuration layout.
+
+        * tao/TransportCurrent/Current_Loader.h:
+        * tao/TransportCurrent/Current_Loader.cpp:
+        * tao/TransportCurrent/IIOP_Current_Loader.h:
+        * tao/TransportCurrent/IIOP_Current_Loader.cpp:
+
+        * tao/Transport_Selection_Guard.cpp:
+
+          Removed errand semicolons after definitions which were breaking
+          some of the scoreboard builds.
+
+        * tests/TransportCurrent/Framework/Current_Test.idl:
+
+          Fixed a FUZZ warning about mismatched @file.
+
+        * tests/TransportCurrent/Framework/Framework.mpc:
+
+          Added the current directory to the include path.
+
+        * tests/TransportCurrent/Framework/Tester.cpp:
+        * tests/TransportCurrent/Framework/client.cpp:
+        * tests/TransportCurrent/Framework/server.cpp:
+        * tests/TransportCurrent/IIOP/IIOP_Tester.cpp:
+        * tests/TransportCurrent/IIOP/Current_Test_Impl.cpp:
+        * tests/TransportCurrent/IIOP/client_static.conf:
+
+          Fixing a service initialization problem encountered in static
+          builds that prevented the tests from runnig. Also fixed include
+          file locations.
+
+Wed Dec 20 15:28:24 UTC 2006  Iliyan Jeliazkov  <iliyan@ociweb.com>
+
+        * MPC/config/tc.mpb:
+
+        * tao/Transport_Selection_Guard.cpp:
+
+        * tests/TransportCurrent/Framework/Current_Test.idl:
+
+        * tests/TransportCurrent/Framework/Framework.mpc:
+
+        * tests/TransportCurrent/Framework/server.cpp:
+
+        * tests/TransportCurrent/IIOP/Current_Test_Impl.cpp:
+
+
 Wed Dec 20 09:36:00 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/BiDirectional/BiDirectional.mpc:

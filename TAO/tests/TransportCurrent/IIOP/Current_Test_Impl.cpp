@@ -1,13 +1,13 @@
 // -*- C++ -*-
 
-#include "Current_Test_Impl.h"
+#include "tao/Transport_Current/TC_IIOPC.h"
+#include "tao/Transport_Current/TCC.h"
 
-#include "orbsvcs/Transport_Current/TC_IIOPC.h"
-#include "orbsvcs/Transport_Current/TCC.h"
+#include "Current_Test_Impl.h"
 
 ACE_RCSID (Transport_Current,
            Current_Test_Impl,
-           "$Id:$")
+           "$Id$")
 
 
 Current_Test_Impl::Current_Test_Impl (CORBA::ORB_ptr orb,

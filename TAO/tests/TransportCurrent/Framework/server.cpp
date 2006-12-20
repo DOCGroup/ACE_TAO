@@ -13,15 +13,6 @@ ACE_RCSID (Transport_Current,
            server,
            "$Id$")
 
-#if defined (TAO_AS_STATIC_LIBS)
-
-// Create an object that will insert the <Current_Loader> into the
-// list of statically linked services that the <ACE_Service_Config>
-// will initialize at run-time.
-#include "orbsvcs/Transport_Current/Current_Loader.h"
-ACE_STATIC_SVC_REQUIRE (TAO_Transport_Current_Loader);
-#endif
-
 const char *ior_output_file = "server.ior";
 int nthreads = 1;
 int use_collocated_call = 1;

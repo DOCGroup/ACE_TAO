@@ -34,45 +34,45 @@ namespace TAO
   namespace Transport
   {
 
-    /// A helper method for obtaining access to the the Transport
-    /// Factory Manager instance.
+//     /// A helper method for obtaining access to the the Transport
+//     /// Factory Manager instance.
 
-    Current_Loader*
-    Current_Loader::instance (void)
-    {
-      Current_Loader *cl =
-        ACE_Dynamic_Service <Current_Loader>::instance (ACE_TEXT ("TAO_Transport_Current_Loader"));
+//     Current_Loader*
+//     Current_Loader::instance (void)
+//     {
+//       Current_Loader *cl =
+//         ACE_Dynamic_Service <Current_Loader>::instance (ACE_TEXT ("TAO_Transport_Current_Loader"));
 
-      if (cl == 0)
-#if defined (TAO_AS_STATIC_LIBS)
-        {
-          if (TAO_debug_level > 0)
-            ACE_ERROR_RETURN ((LM_ERROR,
-                               ACE_TEXT ("(%P|%t) Unable to obtain Current::Loader instance: %m\n")),
-                              0);
-          return 0;
-        }
-#else
-      {
-        // In case we build shared, try to load the appropriate library.
-        ACE_Service_Config::process_directive
-          (ACE_DYNAMIC_SERVICE_DIRECTIVE("TAO_Transport_Current_Loader",
-                                         "TAO_TC",
-                                         "_make_TAO_Transport_Current_Loader",
-                                         ""));
-        cl = ACE_Dynamic_Service<Current_Loader>::instance (ACE_TEXT ("TAO_Transport_Current_Loader"));
-      }
-#endif /* TAO_AS_STATIC_LIBS */
+//       if (cl == 0)
+// #if defined (TAO_AS_STATIC_LIBS)
+//         {
+//           if (TAO_debug_level > 0)
+//             ACE_ERROR_RETURN ((LM_ERROR,
+//                                ACE_TEXT ("(%P|%t) Unable to obtain Current::Loader instance: %m\n")),
+//                               0);
+//           return 0;
+//         }
+// #else
+//       {
+//         // In case we build shared, try to load the appropriate library.
+//         ACE_Service_Config::process_directive
+//           (ACE_DYNAMIC_SERVICE_DIRECTIVE("TAO_Transport_Current_Loader",
+//                                          "TAO_TC",
+//                                          "_make_TAO_Transport_Current_Loader",
+//                                          ""));
+//         cl = ACE_Dynamic_Service<Current_Loader>::instance (ACE_TEXT ("TAO_Transport_Current_Loader"));
+//       }
+// #endif /* TAO_AS_STATIC_LIBS */
 
-      if (cl != 0)
-        return cl;
+//       if (cl != 0)
+//         return cl;
 
-      if (TAO_debug_level > 0)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           ACE_TEXT ("(%P|%t) Unable to obtain Current::Loader instance: %m\n")),
-                          0);
-      return 0;
-    }
+//       if (TAO_debug_level > 0)
+//         ACE_ERROR_RETURN ((LM_ERROR,
+//                            ACE_TEXT ("(%P|%t) Unable to obtain Current::Loader instance: %m\n")),
+//                           0);
+//       return 0;
+//     }
 
 
     /// dtor
