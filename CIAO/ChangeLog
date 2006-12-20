@@ -1,3 +1,12 @@
+Wed Dec 20 06:37:27 UTC 2006  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * MPC/config/ciao_rtevent_dnc.mpb:
+        * MPC/config/ciao_events_dnc.mpb:
+        * DAnCE/DomainApplicationManager/DomainApplicationManager.mpc:
+        * ciao/CCM_Core.mpc:
+        
+          Fixed linking errors on OS X. 
+
 Wed Dec 13 08:35:48 UTC 2006    Gan Deng <gan.deng@vanderbilt.edu>
 
         * DAnCE/NodeApplication/NodeApplication_Impl.cpp:
