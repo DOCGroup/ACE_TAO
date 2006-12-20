@@ -104,7 +104,7 @@ static char ethernet_address[6] = { 0x00, 0x80, 0x7F, 0x22, 0x61, 0x77 };
 #endif
 
 #define RTEMS_USE_LOOPBACK
-#define RTEMS_USE_LOOPBACK_ONLY
+
 #ifdef RTEMS_USE_LOOPBACK
 /*
  * Loopback interface
@@ -209,7 +209,6 @@ struct rtems_bsdnet_config rtems_bsdnet_config = {
 #endif
 
 #endif /* _RTEMS_NETWORKCONFIG_H_ */
-/* end of #include "../networkconfig.h" */
 
 #endif /* ACE_LACKS_NETWORKING */
 
@@ -221,11 +220,8 @@ extern int main (int, char *[]);
 rtems_task
 Init (rtems_task_argument not_used)
 {
-  int doSocket(void);
-
 #if !defined (ACE_LACKS_NETWORKING)
   rtems_bsdnet_initialize_network ();
-  rtems_bsdnet_show_inet_routes ();
 #endif /* ACE_LACKS_NETWORKING */
   int retval = main (0, 0);
 }
