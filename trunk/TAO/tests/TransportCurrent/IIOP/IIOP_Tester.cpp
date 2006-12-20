@@ -4,6 +4,17 @@
 
 #include "tao/TransportCurrent/IIOP_Transport_Current.h"
 
+#if defined (TAO_AS_STATIC_LIBS)
+#include "tao/TransportCurrent/IIOP_Current_Loader.h"
+
+// Create an object that will insert the <Current_Loader> into the
+// list of statically linked services that the <ACE_Service_Config>
+// will initialize at run-time.
+ACE_STATIC_SVC_REQUIRE (TAO_Transport_Current_Loader);
+ACE_STATIC_SVC_REQUIRE (TAO_Transport_IIOP_Current_Loader);
+#endif /* TAO_AS_STATIC_LIBS */
+
+
 using namespace TAO;
 
 
