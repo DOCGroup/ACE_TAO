@@ -1,3 +1,10 @@
+Wed Dec 20 21:14:11 UTC 2006  Iliyan Jeliazkov  <iliyan@ociweb.com>
+
+        * tao/TransportCurrent/Current_Loader.h:
+
+          Fixing an error in builds that use versioned namespaces due to
+          incorect placement of TAO_END_VERSIONED_NAMESPACE_DECL.
+
 Wed Dec 20 20:59:39 UTC 2006  Iliyan Jeliazkov  <iliyan@ociweb.com>
 
           These are fixes correcting scoreboard issues pertaining to the
