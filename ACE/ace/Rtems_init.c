@@ -220,10 +220,14 @@ extern int main (int, char *[]);
 rtems_task
 Init (rtems_task_argument not_used)
 {
+  int retval = 0;
 #if !defined (ACE_LACKS_NETWORKING)
-  rtems_bsdnet_initialize_network ();
+  retval = rtems_bsdnet_initialize_network ();
 #endif /* ACE_LACKS_NETWORKING */
-  int retval = main (0, 0);
+  if (retval == 0)
+    {
+      retval = main (0, 0);
+    }
 }
 
 #elif !defined (__GNUC__)
