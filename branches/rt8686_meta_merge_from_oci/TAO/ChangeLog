@@ -1,3 +1,144 @@
+Wed Dec 20 21:14:11 UTC 2006  Iliyan Jeliazkov  <iliyan@ociweb.com>
+
+        * tao/TransportCurrent/Current_Loader.h:
+
+          Fixing an error in builds that use versioned namespaces due to
+          incorect placement of TAO_END_VERSIONED_NAMESPACE_DECL.
+
+Wed Dec 20 20:59:39 UTC 2006  Iliyan Jeliazkov  <iliyan@ociweb.com>
+
+          These are fixes correcting scoreboard issues pertaining to the
+          checkin from Tue Dec 19 22:09:34 UTC 2006.
+
+        * tao/TC.mpc:
+        * tao/TC_IIOP.mpc:
+
+          Updated the IDL compile options and include file path to reflect
+          the new position of these files (since Wed Dec 20 17:34:07)
+
+        * tao/TransportCurrent/Current_Loader.h:
+        * tao/TransportCurrent/Current_Loader.cpp:
+
+          Eliminated unnecessary code.
+
+        * tao/TransportCurrent/Current_ORBInitializer_Base.cpp:
+
+          Removed unnecessary #include "ace/post.h"
+
+        * tao/TransportCurrent/IIOP_Current_Impl.cpp:
+
+          Added an explicit cast to silence Windows builds complaining
+          about implicit conversion between HANDLE and CORBA::Long.
+
+Wed Dec 20 17:34:07 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * configure.ac:
+
+          Configure Makefiles for new subdirectories.
+
+        * orbsvcs/tests/Makefile.am:
+
+          Regenerate to descend into TransportCurrent subdirectory.
+
+        * tests/TransportCurrent/Makefile.am:
+        * tests/TransportCurrent/IIOP/Makefile.am:
+        * tests/TransportCurrent/Framework/Makefile.am:
+
+          New Makefile.am's for TransportCurrent unit tests.
+
+        * tao/Makefile.am:
+
+          Regenerated.
+
+        * tao/TC.mpc:
+        * tao/TC_IIOP.mpc:
+
+          ...to here, to match convention established by other core TAO
+          library projects.  This also makes the generated Makefile.am
+          for the autoconf build a little more sane.
+
+        * tao/TransportCurrent/TC.mpc:
+        * tao/TransportCurrent/TC_IIOP.mpc:
+
+          Move TransportCurrent *.mpc projects from here...
+
+Wed Dec 20 16:22:29 UTC 2006  Iliyan Jeliazkov  <iliyan@ociweb.com>
+
+          These are fixes correcting scoreboard issues pertaining to the
+          checkin from Tue Dec 19 22:09:34 UTC 2006.
+
+        * MPC/config/tc.mpb:
+
+          Moved from $ACE_ROOT/bin/MakeProjectCreator/config according to
+          the new project configuration layout.
+
+        * tao/TransportCurrent/Current_Loader.h:
+        * tao/TransportCurrent/Current_Loader.cpp:
+        * tao/TransportCurrent/IIOP_Current_Loader.h:
+        * tao/TransportCurrent/IIOP_Current_Loader.cpp:
+
+        * tao/Transport_Selection_Guard.cpp:
+
+          Removed errand semicolons after definitions which were breaking
+          some of the scoreboard builds.
+
+        * tests/TransportCurrent/Framework/Current_Test.idl:
+
+          Fixed a FUZZ warning about mismatched @file.
+
+        * tests/TransportCurrent/Framework/Framework.mpc:
+
+          Added the current directory to the include path.
+
+        * tests/TransportCurrent/Framework/Tester.cpp:
+        * tests/TransportCurrent/Framework/client.cpp:
+        * tests/TransportCurrent/Framework/server.cpp:
+        * tests/TransportCurrent/IIOP/IIOP_Tester.cpp:
+        * tests/TransportCurrent/IIOP/Current_Test_Impl.cpp:
+        * tests/TransportCurrent/IIOP/client_static.conf:
+
+          Fixing a service initialization problem encountered in static
+          builds that prevented the tests from runnig. Also fixed include
+          file locations.
+
+Wed Dec 20 15:28:24 UTC 2006  Iliyan Jeliazkov  <iliyan@ociweb.com>
+
+        * MPC/config/tc.mpb:
+
+        * tao/Transport_Selection_Guard.cpp:
+
+        * tests/TransportCurrent/Framework/Current_Test.idl:
+
+        * tests/TransportCurrent/Framework/Framework.mpc:
+
+        * tests/TransportCurrent/Framework/server.cpp:
+
+        * tests/TransportCurrent/IIOP/Current_Test_Impl.cpp:
+
+
+Wed Dec 20 09:36:00 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/BiDirectional/BiDirectional.mpc:
+        * tests/BiDirectional_DelayedUpcall/BiDir_DelayedUpcall.mpc:
+        * tests/BiDirectional_NestedUpcall/BiDir_NestedUpcall.mpc:
+        * tests/Bug_2417_Regression/Bug_2417_Regression.mpc:
+        * tests/Bug_2560_Regression/Bug_2560_Regression.mpc:
+        * tests/MT_BiDir/MT_BiDir.mpc:
+        * tests/NestedUpcall/Triangle_Test/TT.mpc:
+          Disabled some projects that can't compile when CORBA/e
+          micro has been enabled. Also removed some after usage because
+          there is now a seperate idl project
+
+Wed Dec 20 09:31:00 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * examples/Callback_Quoter/Callback_Quoter.mpc:
+        * orbsvcs/examples/ImR/Combined_Service/ImR_Combined_Service.mpc:
+        * orbsvcs/tests/HTIOP/BiDirectional/HTIOP_BiDirectional.mpc:
+        * orbsvcs/tests/Security/BiDirectional/Secure_BiDir.mpc:
+        * performance-tests/CSD_Strategy/TestServant/csd_pt_testservant.mpc:
+          Disabled some projects that can't compile when CORBA/e
+          micro has been enabled
+
 Tue Dec 19 22:51:09 UTC 2006  Iliyan Jeliazkov  <iliyan@ociweb.com>
 
         * NEWS:
@@ -658,7 +799,9 @@ Tue Dec 12 17:34:25 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
 
 Tue Dec 12 17:28:14 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
 
-        * Configure Makefiles for new subdirectories.
+        * configure.ac:
+
+          Configure Makefiles for new subdirectories.
 
         * orbsvcs/tests/Makefile.am:
 

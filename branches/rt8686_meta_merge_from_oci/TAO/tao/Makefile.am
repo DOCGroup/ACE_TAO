@@ -926,6 +926,7 @@ libTAO_la_SOURCES = \
   Transport_Descriptor_Interface.cpp \
   Transport_Mux_Strategy.cpp \
   Transport_Queueing_Strategies.cpp \
+  Transport_Selection_Guard.cpp \
   Transport_Timer.cpp \
   TypeCodeFactory_Adapter.cpp \
   Typecode_typesC.cpp \
@@ -1406,6 +1407,7 @@ nobase_include_HEADERS = \
   Transport_Descriptor_Interface.inl \
   Transport_Mux_Strategy.h \
   Transport_Queueing_Strategies.h \
+  Transport_Selection_Guard.h \
   Transport_Timer.h \
   TypeCodeFactory_Adapter.h \
   Typecode_types.pidl \
@@ -5725,6 +5727,143 @@ endif BUILD_XT
 endif BUILD_X11
 endif BUILD_EXCEPTIONS
 endif BUILD_ACE_XTREACTOR
+
+## Makefile.TC.am
+
+if BUILD_EXCEPTIONS
+if BUILD_INTERCEPTORS
+
+BUILT_SOURCES += \
+  TransportCurrent/TCC.cpp \
+  TransportCurrent/TCC.h \
+  TransportCurrent/TCC.inl \
+  TransportCurrent/TCS.cpp \
+  TransportCurrent/TCS.h \
+  TransportCurrent/TCS.inl
+
+CLEANFILES += \
+  TransportCurrent/TC-stamp \
+  TransportCurrent/TCC.cpp \
+  TransportCurrent/TCC.h \
+  TransportCurrent/TCC.inl \
+  TransportCurrent/TCS.cpp \
+  TransportCurrent/TCS.h \
+  TransportCurrent/TCS.inl
+
+TransportCurrent/TCC.cpp TransportCurrent/TCC.h TransportCurrent/TCC.inl TransportCurrent/TCS.cpp TransportCurrent/TCS.h TransportCurrent/TCS.inl: TransportCurrent/TC-stamp
+
+TransportCurrent/TC-stamp: $(srcdir)/TransportCurrent/TC.idl $(TAO_IDL_DEP)
+	$(TAO_IDL) $(TAO_IDLFLAGS) -Wb,versioning_begin=TAO_BEGIN_VERSIONED_NAMESPACE_DECL -Wb,versioning_end=TAO_END_VERSIONED_NAMESPACE_DECL -Wb,export_include=tao/TransportCurrent/Transport_Current_Export.h -Wb,export_macro=TAO_Transport_Current_Export $(srcdir)/TransportCurrent/TC.idl
+	@touch $@
+
+lib_LTLIBRARIES += libTAO_TC.la
+
+libTAO_TC_la_CPPFLAGS = \
+  -I$(ACE_ROOT) \
+  -I$(ACE_BUILDDIR) \
+  -I$(TAO_ROOT) \
+  -I$(TAO_BUILDDIR) \
+  -DTAO_TRANSPORT_CURRENT_BUILD_DLL
+
+libTAO_TC_la_SOURCES = \
+  TransportCurrent/Current_Impl.cpp \
+  TransportCurrent/Current_Loader.cpp \
+  TransportCurrent/Current_ORBInitializer_Base.cpp \
+  TransportCurrent/TCC.cpp \
+  TransportCurrent/TCS.cpp
+
+libTAO_TC_la_LDFLAGS = \
+ -version-number @TAO_MAJOR@:@TAO_MINOR@:@TAO_BETA@
+
+libTAO_TC_la_LIBADD = \
+  libTAO_PI.la \
+  libTAO_CodecFactory.la \
+  libTAO_AnyTypeCode.la \
+  libTAO.la \
+  $(ACE_BUILDDIR)/ace/libACE.la
+
+nobase_include_HEADERS += \
+  TransportCurrent/Current_Impl.h \
+  TransportCurrent/Current_Loader.h \
+  TransportCurrent/Current_ORBInitializer.cpp \
+  TransportCurrent/Current_ORBInitializer.h \
+  TransportCurrent/Current_ORBInitializer_Base.h \
+  TransportCurrent/TC.idl \
+  TransportCurrent/TCC.h \
+  TransportCurrent/TCC.inl \
+  TransportCurrent/TCS.h \
+  TransportCurrent/TCS.inl \
+  TransportCurrent/Transport_Current.h
+
+endif BUILD_INTERCEPTORS
+endif BUILD_EXCEPTIONS
+
+## Makefile.TC_IIOP.am
+
+if BUILD_EXCEPTIONS
+if BUILD_INTERCEPTORS
+
+BUILT_SOURCES += \
+  TransportCurrent/TC_IIOPC.cpp \
+  TransportCurrent/TC_IIOPC.h \
+  TransportCurrent/TC_IIOPC.inl \
+  TransportCurrent/TC_IIOPS.cpp \
+  TransportCurrent/TC_IIOPS.h \
+  TransportCurrent/TC_IIOPS.inl
+
+CLEANFILES += \
+  TransportCurrent/TC_IIOP-stamp \
+  TransportCurrent/TC_IIOPC.cpp \
+  TransportCurrent/TC_IIOPC.h \
+  TransportCurrent/TC_IIOPC.inl \
+  TransportCurrent/TC_IIOPS.cpp \
+  TransportCurrent/TC_IIOPS.h \
+  TransportCurrent/TC_IIOPS.inl
+
+TransportCurrent/TC_IIOPC.cpp TransportCurrent/TC_IIOPC.h TransportCurrent/TC_IIOPC.inl TransportCurrent/TC_IIOPS.cpp TransportCurrent/TC_IIOPS.h TransportCurrent/TC_IIOPS.inl: TransportCurrent/TC_IIOP-stamp
+
+TransportCurrent/TC_IIOP-stamp: $(srcdir)/TransportCurrent/TC_IIOP.idl $(TAO_IDL_DEP)
+	$(TAO_IDL) $(TAO_IDLFLAGS) -Wb,versioning_begin=TAO_BEGIN_VERSIONED_NAMESPACE_DECL -Wb,versioning_end=TAO_END_VERSIONED_NAMESPACE_DECL -Wb,export_include=tao/TransportCurrent/Transport_Current_Export.h -Wb,export_macro=TAO_Transport_Current_Export $(srcdir)/TransportCurrent/TC_IIOP.idl
+	@touch $@
+
+lib_LTLIBRARIES += libTAO_TC_IIOP.la
+
+libTAO_TC_IIOP_la_CPPFLAGS = \
+  -I$(ACE_ROOT) \
+  -I$(ACE_BUILDDIR) \
+  -I$(TAO_ROOT) \
+  -I$(TAO_BUILDDIR) \
+  -DTAO_TRANSPORT_CURRENT_BUILD_DLL
+
+libTAO_TC_IIOP_la_SOURCES = \
+  TransportCurrent/IIOP_Current_Impl.cpp \
+  TransportCurrent/IIOP_Current_Loader.cpp \
+  TransportCurrent/TC_IIOPC.cpp \
+  TransportCurrent/TC_IIOPS.cpp
+
+libTAO_TC_IIOP_la_LDFLAGS = \
+ -version-number @TAO_MAJOR@:@TAO_MINOR@:@TAO_BETA@
+
+libTAO_TC_IIOP_la_LIBADD = \
+  libTAO_TC.la \
+  libTAO_PI.la \
+  libTAO_CodecFactory.la \
+  libTAO_AnyTypeCode.la \
+  libTAO.la \
+  $(ACE_BUILDDIR)/ace/libACE.la
+
+nobase_include_HEADERS += \
+  TransportCurrent/IIOP_Current_Impl.h \
+  TransportCurrent/IIOP_Current_Loader.h \
+  TransportCurrent/IIOP_Transport_Current.h \
+  TransportCurrent/TC_IIOP.idl \
+  TransportCurrent/TC_IIOPC.h \
+  TransportCurrent/TC_IIOPC.inl \
+  TransportCurrent/TC_IIOPS.h \
+  TransportCurrent/TC_IIOPS.inl
+
+endif BUILD_INTERCEPTORS
+endif BUILD_EXCEPTIONS
 
 ## Makefile.TypeCodeFactory.am
 

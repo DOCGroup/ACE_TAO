@@ -25,9 +25,8 @@ project(*Server): taoexe, portableserver, avoids_minimum_corba, bidir_giop, avoi
   }
 }
 
-project(*Client): taoexe, portableserver, avoids_minimum_corba, bidir_giop {
+project(*Client): taoexe, portableserver, avoids_minimum_corba, bidir_giop, avoids_corba_e_micro {
   after += *idl
-  after += *Server
   Source_Files {
     Client_Task.cpp
     Receiver_i.cpp

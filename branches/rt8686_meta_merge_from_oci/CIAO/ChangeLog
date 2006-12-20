@@ -1,3 +1,254 @@
+Wed Dec 20 06:37:27 UTC 2006  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * MPC/config/ciao_rtevent_dnc.mpb:
+        * MPC/config/ciao_events_dnc.mpb:
+        * DAnCE/DomainApplicationManager/DomainApplicationManager.mpc:
+        * ciao/CCM_Core.mpc:
+        
+          Fixed linking errors on OS X. 
+
+Wed Dec 13 08:35:48 UTC 2006    Gan Deng <gan.deng@vanderbilt.edu>
+
+        * DAnCE/NodeApplication/NodeApplication_Impl.cpp:
+        * tools/Config_Handlers/CIAO_Events/CIAOEvents.cpp:
+        
+          Fixed warnings on NoInterceptors_Core build related to
+          type conversion.
+        
+Wed Dec 13 07:57:02 UTC 2006    Gan Deng <gan.deng@vanderbilt.edu>
+
+        * ciaosvcs/Events/CIAO_RTEC/SimpleAddressServer.cpp:
+        
+          Fixed a fuzz error.
+        
+Wed Dec 13 07:29:10 UTC 2006    Gan Deng <gan.deng@vanderbilt.edu>
+
+        * tools/Config_Handlers/CIAO_Events/CIAOEvents.hpp:
+        
+          Fixed Debian_GCC_4.0 compilation error by removing
+          unnecessary common for enum definition.
+
+Wed Dec 13 07:19:13 UTC 2006    Gan Deng <gan.deng@vanderbilt.edu>
+
+        * ciaosvcs/Events/CIAO_RTEC/SimpleAddressServer.h:
+        
+          Fixed a compilation error in Win2003_VC71_Versioned_Namespace 
+          build by removing the unnecessary declaration.
+
+Wed Dec 13 06:45:57 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * examples/Swapping/Sender/Sender_exec.h:
+          Fixed include because of file name changes
+
+Tue Dec 12 20:55:02 UTC 2006    Gan Deng <gan.deng@vanderbilt.edu>
+
+        * ciaosvcs/Events/CIAO_Events_Base/CIAO_EventServiceBase.cpp:
+        * ciaosvcs/Events/CIAO_Events_Base/CIAO_EventServiceBase.h:
+
+          Modified the ciao_push_event() in this base class to fix
+          BCC warnings.
+
+Tue Dec 12 20:21:03 UTC 2006    Gan Deng <gan.deng@vanderbilt.edu>
+
+        * ciaosvcs/Events/CIAO_RTEC/SimpleAddressServer.h:
+        * ciaosvcs/Events/CIAO_RTEC/CIAO_RTEvent.cpp:
+
+          Fixed the fuzz errors.
+
+Tue Dec 12 20:15:57 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ciao/CCM_Component.idl:
+        * ciao/CCM_Core.mpc:
+        * ciao/CCM_EventBase.idl:
+        * ciao/CCM_EventConsumerBase.idl:
+        * ciao/CCM_HomeConfiguration.idl:
+        * ciao/CCM_HomeConfigurator.idl:
+        * ciao/CCM_Object.idl:
+        * ciao/CCM_PrimaryKeyBase.idl:
+        * ciao/CCM_SessionComponent.idl:
+        * ciao/CCM_StateIdFactory.idl:
+        * ciao/Servant_Impl_Base.h:
+        * ciaosvcs/Events/CIAO_Events_Base/CIAO_Events.idl:
+        * DAnCE/TargetManager/DomainEvents.idl:
+          Added remarks about compliance and another set of splitting
+          idl files in smaller ones
+
+        * ciao/CCM_Event.idl:
+        * ciao/CCM_Events.idl:
+          Renamed Event to Events
+
+        * ciao/CCM_HomeConfigurator.idl:
+        * ciao/CCM_HomeConfiguration.idl:
+          Renamed Configurator to Configuration
+
+Tue Dec 12 14:48:57 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ciao/CCM_Base.idl:
+        * ciao/CCM_CCM2Context.idl:
+        * ciao/CCM_ComponentId.idl:
+        * ciao/CCM_Configurator.idl:
+        * ciao/CCM_Container.idl:
+        * ciao/CCM_Container_Ex.idl:
+        * ciao/CCM_Core.mpc:
+        * ciao/CCM_Entity2Context.idl:
+        * ciao/CCM_Event.idl:
+        * ciao/CCM_ExecutorLocator.idl:
+        * ciao/CCM_HomeConfigurator.idl:
+        * ciao/CCM_SessionComponent.idl:
+        * ciao/CCM_SessionContext.idl:
+        * ciao/CCM_StandardConfigurator.idl:
+        * ciao/CCM_StateIdFactory.idl:
+        * ciao/Deployment_NodeApplication.idl:
+          Moved more interfaces to their own file
+
+        * DAnCE/DomainApplicationManager/Deployment_Configuration.h:
+          Removed virtual keywords, not needed
+
+        * DAnCE/NodeApplicationManager/NodeApplicationManager_Impl.cpp:
+          Const changes and improved some messages
+
+        * DAnCE/Plan_Generator/PCVisitor.h:
+        * DAnCE/Plan_Generator/PCVisitorBase.h:
+          Doxygen changes
+
+        * tools/Config_Handlers/DynAny_Handler.mpc:
+          layout changes
+
+Tue Dec 12 10:08:57 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * MPC/config/taoidl3toidl2defaults.mpb:
+          Moved from TAO to here
+
+Mon Dec  11 20:55:39 UTC 2006  Gan Deng <gan.deng@vanderbilt.edu>
+
+        * ciao/CCM_Event.idl:
+
+          Modified the "ciao_push_event" operation to pass in "source_id",
+          which is used to identify the sources of the publisher ports to
+          support event filtering mechanism.
+
+        * ciao/Deployment_Events.idl:
+
+          Added new IDL definitions to support RTEC federation, such as
+          AddrServer, UDPSender, UPDReceiver, etc.
+
+        * ciao/Deployment_NodeApplication.idl:
+
+          Modified the "install_es" operation to install one service object
+          per invocation, instead of a sequence of objects.
+
+        * DAnCE/NodeApplication/NodeApplication_Impl.cpp:
+        * DAnCE/NodeApplication/NodeApplication_Impl.h:
+        * DAnCE/DomainApplicationManager/DomainApplicationManager_Impl.cpp:
+        * DAnCE/DomainApplicationManager/DomainApplicationManager_Impl.h:
+
+          Modified to accomodate the changes made above by adding only
+          one ciao event service object reference to the map.
+
+        * ciaosvcs/Events/CIAO_Events_Base/CIAO_Events.idl:
+
+          Removed the inheritance relationship between Consumer_Config and
+          Supplier_Config object. The reason why it was there is because
+          of a tightly coupled design long time ago.
+
+        * ciaosvcs/Events/CIAO_Events_Base/CIAO_EventServiceBase.cpp:
+        * ciaosvcs/Events/CIAO_Events_Base/CIAO_EventServiceBase.h:
+
+          Added a virtual function "ciao_push_event" and provides a
+          default implementation, which is essentially a no_op impl.
+
+        * ciaosvcs/Events/CIAO_EventService_Factory_impl.cpp:
+        * ciaosvcs/Events/CIAO_EventService_Factory_impl.h:
+
+          Modified the factory method "create" by passing in the
+          string identifier for the service object.
+
+        * ciaosvcs/Events/CIAO_RTEC/CIAO_RTEvent.idl:
+
+          Added new operations to create gateways object to support
+          event channel federations.
+
+        * ciaosvcs/Events/CIAO_RTEC/CIAO_RTEvent.cpp:
+        * ciaosvcs/Events/CIAO_RTEC/CIAO_RTEvent.h:
+        * ciaosvcs/Events/CIAO_RTEC/CIAO_RTEvent.mpc:
+        * ciaosvcs/Events/CIAO_RTEC/SimpleAddressServer.cpp:
+        * ciaosvcs/Events/CIAO_RTEC/SimpleAddressServer.h:
+
+          Added the implementation and MPC files to support event
+          channel federations in CIAO_Event_Service.
+
+        * CIDLC/ServantHeaderGenerator.cpp:
+        * CIDLC/ServantSourceGenerator.cpp:
+
+          Automatically generate the implementation code of
+          ciao_push_event for component in the servant code.
+
+        * DAnCE/NodeApplication/NodeApplication.cpp:
+
+          Explicitly add the init_svcs() operation to the
+          NA component server implementation. We should figure
+          out a way to see whether we can avoid doing this at
+          this level.
+
+        * DAnCE/NodeManager/Node_Manager.cpp:
+
+          Enhanced NM to pass in service configuration file explicitly.
+          Also fixed a bug about controlling ORBDebugLevel.
+
+        * docs/schema/CIAOEvents.xsd:
+
+          Enhanced the CIAOEvents schema to support event channel
+          federation configuration.
+
+        * tools/Config_Handlers/CIAO_Events/CIAOEvents.cpp:
+        * tools/Config_Handlers/CIAO_Events/CIAOEvents.hpp:
+        * tools/Config_Handlers/CIAO_Events/CIAOEvents_Handler.cpp:
+
+          Config handlers enhancement to support the above
+          schema changes.
+
+        * DAnCE/tests/NodeApplicationTest/run_test.pl:
+        * DAnCE/tests/NodeApplicationTest/run_test_ex.pl:
+        * DAnCE/tests/NodeApplicationTest/run_test_simple.pl:
+
+          Modified to use environment variables instead of relative paths.
+
+        * examples/Hello/Sender/Sender_exec.cpp:
+        * examples/Hello/Receiver/Receiver_exec.cpp:
+
+          Modified to explicitly print out the contents of the received msgs.
+
+        * examples/Hello/descriptors_events/ciao-events-example-collocated.ced:
+        * examples/Hello/descriptors_events/ciao-events-example-with-federation.ced:
+        * examples/Hello/descriptors_events/ciao-events-example-with-filters.ced:
+        * examples/Hello/descriptors_events/ciao-events-example.ced:
+        * examples/Hello/descriptors_events/ciao-events-federation-mcast.ced:
+        * examples/Hello/descriptors_events/ciao-events-federation-udp-collocated.ced:
+        * examples/Hello/descriptors_events/ciao-events-federation-udp-two-hosts.ced:
+        * examples/Hello/descriptors_events/ciao-events-federation-udp.ced:
+        * examples/Hello/descriptors_events/flattened_deploymentplan_events.cdp:
+        * examples/Hello/descriptors_events/flattened_deploymentplan_events_collocated.cdp:
+        * examples/Hello/descriptors_events/flattened_deploymentplan_federation.cdp:
+        * examples/Hello/descriptors_events/flattened_deploymentplan_federation_mcast.cdp:
+        * examples/Hello/descriptors_events/flattened_deploymentplan_federation_udp.cdp:
+        * examples/Hello/descriptors_events/flattened_deploymentplan_federation_udp_collocated.cdp:
+        * examples/Hello/descriptors_events/flattened_deploymentplan_federation_udp_two_hosts.cdp:
+        * examples/Hello/descriptors_events/flattened_deploymentplan_with_filters.cdp:
+        * examples/Hello/descriptors_events/NodeManagerMap.dat:
+        * examples/Hello/descriptors_events/NodeManagerMapTwoHosts.dat:
+        * examples/Hello/descriptors_events/rtec.conf:
+        * examples/Hello/descriptors_events/run_NodeDaemons.pl:
+        * examples/Hello/descriptors_events/run_NodeDaemons_svc_conf.pl:
+        * examples/Hello/descriptors_events/run_NodeDaemons_with_ip.pl:
+
+          Added a bunch of test cases for CIAO Event Service.
+
+Fri Dec  8 22:59:14 UTC 2006  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tools/tools.mwc:
+
+          Added IDL3_to_IDL2 directory to the list.
+
 Fri Dec  8 000:09:04 UTC 2006  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * bin/generate_component_mpc.pl:
