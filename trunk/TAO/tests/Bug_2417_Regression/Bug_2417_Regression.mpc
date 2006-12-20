@@ -24,7 +24,7 @@ project(*Server): taoserver, messaging, threads {
 
 project(*Client): taoserver, threads {
   exename = client
-  after += *Server
+  after += *idl
   Source_Files {
     subscriber_impl.cpp
     subscriberS.cpp
