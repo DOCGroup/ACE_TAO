@@ -178,6 +178,7 @@ SUBDIRS = \
         Strategies \
         Timed_Buffered_Oneways \
         Timeout \
+        TransportCurrent \
         Two_Objects \
         Typedef_String_Array \
         UNKNOWN_Exception \

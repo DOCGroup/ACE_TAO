@@ -1,3 +1,35 @@
+Wed Dec 20 17:34:07 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * configure.ac:
+
+          Configure Makefiles for new subdirectories.
+
+        * orbsvcs/tests/Makefile.am:
+
+          Regenerate to descend into TransportCurrent subdirectory.
+
+        * tests/TransportCurrent/Makefile.am:
+        * tests/TransportCurrent/IIOP/Makefile.am:
+        * tests/TransportCurrent/Framework/Makefile.am:
+
+          New Makefile.am's for TransportCurrent unit tests.
+
+        * tao/Makefile.am:
+
+          Regenerated.
+
+        * tao/TC.mpc:
+        * tao/TC_IIOP.mpc:
+
+          ...to here, to match convention established by other core TAO
+          library projects.  This also makes the generated Makefile.am
+          for the autoconf build a little more sane.
+
+        * tao/TransportCurrent/TC.mpc:
+        * tao/TransportCurrent/TC_IIOP.mpc:
+
+          Move TransportCurrent *.mpc projects from here...
+
 Wed Dec 20 16:22:29 UTC 2006  Iliyan Jeliazkov  <iliyan@ociweb.com>
 
           These are fixes correcting scoreboard issues pertaining to the
@@ -735,7 +767,9 @@ Tue Dec 12 17:34:25 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
 
 Tue Dec 12 17:28:14 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
 
-        * Configure Makefiles for new subdirectories.
+        * configure.ac:
+
+          Configure Makefiles for new subdirectories.
 
         * orbsvcs/tests/Makefile.am:
 
