@@ -66,7 +66,6 @@ Notifier-stamp: $(srcdir)/Notifier.idl $(TAO_IDL_DEP)
 	$(TAO_IDL) $(TAO_IDLFLAGS) -Sa -St $(srcdir)/Notifier.idl
 	@touch $@
 
-
 noinst_HEADERS = \
   Consumer.idl \
   Notifier.idl

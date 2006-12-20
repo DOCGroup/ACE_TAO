@@ -1,11 +1,916 @@
+Tue Dec 19 22:51:09 UTC 2006  Iliyan Jeliazkov  <iliyan@ociweb.com>
+
+        * NEWS:
+
+          Updating the file with information about Transport::Current.
+
+Tue Dec 19 22:09:34 UTC 2006  Iliyan Jeliazkov  <iliyan@ociweb.com>
+
+          Introducing the Transport::Current - an optional feature with an
+          IDL interface, which enables users to obtain information about
+          the Transports used to send or receive a message.
+
+          The implementation uses a TSS based stack of pointers to
+          Transport class instances, which an ORB selects on the critical
+          path.  The structure is used to update message and endpoint
+          related statistical information for the correct Transport. An
+          IDL interface available through ORB::resolve_initial_references,
+          provides access to the accumulated data inside servant up-calls
+          and interceptor invocations.
+
+        * docs/transport_current:
+
+          A new directory for the Transport Current documentation to
+          inhabit.
+
+        * docs/transport_current/index.html:
+        * docs/transport_current/transport_current.css:
+
+          Added reference and user-guide documentation for the Transport
+          Current.
+
+        * tao/orbconf.h:
+
+          Enabled the Transport::Current feature by default, by defining
+          TAO_HAS_TRANSPORT_CURRENT.  In recognition that this is very
+          likely an overkill for everybody but the few interested in the
+          feature, the plan is to reverse this default before the next
+          beta release.
+
+        * tao/ORB_Core.h:
+        * tao/Profile_Transport_Resolver.h:
+        * tao/Profile_Transport_Resolver.inl:
+        * tao/Profile_Transport_Resolver.cpp:
+
+          Replaced the "naked" Transport pointer with a smart-pointer-like
+          TAO::Transport_Selection_Guard, which has ctor and dtor that
+          help keep a TSS-based stack of Transport instances when
+          TAO_HAS_TRANSPORT_CURRENT is defined as 1. If the latter is
+          disabled, the TSS access overhead goes away.
+
+        * tao/TAO_Server_Request.h:
+        * tao/TAO_Server_Request.inl:
+        * tao/TAO_Server_Request.cpp:
+
+          Similar to the client-side code in Profile_Transport_Resolver,
+          this is where the server-side pieces of Transport Current
+          functionality plugs in. A Server_Request encapsulates knowledge
+          about the specific Transport on which an invocation
+          arrived. Adding a Transport_Selection_Guard instance member
+          (transport_selection_guard_) to keep track of the current
+          Transport, using TSS. This overhead is only present when
+          TAO_HAS_TRANSPORT_CURRENT is defined as 1.
+
+        * tao/TSS_Resources.h:
+        * tao/TSS_Resources.cpp:
+
+          Adding a Transport_Selection_Guard member pointer tsg_, which
+          when Transport Current feature is enabled, always points to the
+          most-recently selected (incoming or outgoing) Transport in the
+          current thread. This overhead is only present when
+          TAO_HAS_TRANSPORT_CURRENT is defined as 1.
+
+        * tao/Transport.h:
+        * tao/Transport.inl:
+        * tao/Transport.cpp (send_message_shared_i):
+
+          Introduced a new class TAO::Transport::Stats and added a member
+          pointer of that base type to the declaration of Transport. It
+          can only be non-null when Transport Current is enabled, whereby
+          it points to a TAO::Transport::Stats.  The send_message_shared_i
+          has been modified to update the statistics.  Also added the
+          requisite mutators and successor's.
+
+        * tao/Transport_Selection_Guard.h:
+        * tao/Transport_Selection_Guard.cpp:
+
+          The implementation of the TSS-pointed, stack-like chain of
+          Transport instances selected (potentially, in multiple nested up
+          calls). The TSS overhead is only present when
+          TAO_HAS_TRANSPORT_CURRENT is defined as 1, otherwise the methods
+          are trivial.
+
+        * tao/tao.mpc:
+
+          Updated to include the new source files.
+
+        * tao/TransportCurrent:
+
+          A new directory for the Transport Current implementation to
+          inhabit.  Currently, there are two implementations: a generic
+          one and an IIOP-specific one. The reason these two share this
+          location is that the generic Current is too generic to be useful
+          on its own, while providing almost all the required
+          infrastructure for the IIOP-specific one.
+
+        * tao/TransportCurrent/Current_Impl.h:
+        * tao/TransportCurrent/Current_Impl.cpp:
+
+          The generic Current implementation.
+
+        * tao/TransportCurrent/Current_Loader.h:
+        * tao/TransportCurrent/Current_Loader.cpp:
+
+          A loader, to handle registration with the Service repository.
+
+        * tao/TransportCurrent/Current_ORBInitializer.h:
+        * tao/TransportCurrent/Current_ORBInitializer.cpp:
+        * tao/TransportCurrent/Current_ORBInitializer_Base.h:
+        * tao/TransportCurrent/Current_ORBInitializer_Base.cpp:
+
+          An ORB initializer, to handle the registration of the name for
+          which resolve_initial_references() will return you a Current
+          pointer.
+
+        * tao/TransportCurrent/IIOP_Current_Impl.h:
+        * tao/TransportCurrent/IIOP_Current_Impl.cpp:
+
+          The IIOP-specific Current implementation, complete with its own
+          derivative of TAO::Transport::Stats.
+
+        * tao/TransportCurrent/IIOP_Current_Loader.h:
+        * tao/TransportCurrent/IIOP_Current_Loader.cpp:
+
+          A loader, to handle registration with the Service repository.
+
+        * tao/TransportCurrent/IIOP_Transport_Current.h:
+
+          A client-side interface for the IIOP-specific Transport Current.
+
+        * tao/TransportCurrent/TC.idl:
+
+          A client-side interface for the generic Transport Current.
+
+        * tao/TransportCurrent/TC.mpc:
+
+          We need this to actually build the generic TC into a
+          self-contained service object library (DLL).
+
+        * tao/TransportCurrent/TC_IIOP.idl:
+
+          A client-side interface for the IIOP-specific Transport Current.
+
+        * tao/TransportCurrent/TC_IIOP.mpc:
+
+          We need this to actually build the IIOP-specific TC into a
+          self-contained service object library (DLL).
+
+        * tao/TransportCurrent/Transport_Current.h:
+
+          Basic declarations.
+
+        * tao/TransportCurrent/Transport_Current_Export.h:
+
+          Library export helpers.
+
+        * tests/TransportCurrent:
+
+          A new directory for the Transport Current tests to inhabit.
+
+        * tests/TransportCurrent/Framework:
+
+          A new directory for the test exercising the generic Transport Current.
+
+        * tests/TransportCurrent/Framework/Client_Request_Interceptor.h:
+        * tests/TransportCurrent/Framework/Client_Request_Interceptor.cpp:
+        * tests/TransportCurrent/Framework/Current_Test.idl:
+        * tests/TransportCurrent/Framework/Current_Test_Impl.h:
+        * tests/TransportCurrent/Framework/Current_Test_Impl.cpp:
+        * tests/TransportCurrent/Framework/Framework.mpc:
+        * tests/TransportCurrent/Framework/ORBInitializer_T.h:
+        * tests/TransportCurrent/Framework/README:
+        * tests/TransportCurrent/Framework/Server_Main.cpp:
+        * tests/TransportCurrent/Framework/Server_Request_Interceptor.h:
+        * tests/TransportCurrent/Framework/Server_Request_Interceptor.cpp:
+        * tests/TransportCurrent/Framework/Tester.cpp:
+        * tests/TransportCurrent/Framework/client-static.conf:
+        * tests/TransportCurrent/Framework/client.conf:
+        * tests/TransportCurrent/Framework/client.cpp:
+        * tests/TransportCurrent/Framework/run_test.pl:
+        * tests/TransportCurrent/Framework/server-static.conf:
+        * tests/TransportCurrent/Framework/server.conf:
+        * tests/TransportCurrent/Framework/server.cpp:
+        * tests/TransportCurrent/Framework/simple.cpp:
+
+        * tests/TransportCurrent/IIOP:
+
+          A new directory for the test exercising the IIOP-specific Transport Current.
+
+        * tests/TransportCurrent/IIOP/Current_Test_Impl.cpp:
+        * tests/TransportCurrent/IIOP/IIOP.mpc:
+        * tests/TransportCurrent/IIOP/IIOP_Server_Main.cpp:
+        * tests/TransportCurrent/IIOP/IIOP_Server_Request_Interceptor.h:
+        * tests/TransportCurrent/IIOP/IIOP_Server_Request_Interceptor.cpp:
+        * tests/TransportCurrent/IIOP/IIOP_Tester.cpp:
+        * tests/TransportCurrent/IIOP/README:
+        * tests/TransportCurrent/IIOP/client_dynamic.conf:
+        * tests/TransportCurrent/IIOP/client_static.conf:
+        * tests/TransportCurrent/IIOP/run_test.pl:
+        * tests/TransportCurrent/IIOP/server_dynamic.conf:
+        * tests/TransportCurrent/IIOP/server_static.conf:
+
+Tue Dec 19 18:44:02 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * */Makefile.am:
+
+          Baseline regeneration to match recent MPC changes.
+
+Tue Dec 19 15:29:00 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Bug_2345_Regression/Bug_2345_Regression.mpc:
+        * tests/Collocation_Opportunities/Collocation_Opportunities.mpc:
+        * tests/CSD_Strategy_Tests/TP_Common/CSD_TP_Test_Lib.mpc:
+        * tests/GIOP_Fragments/PMB_With_Fragments/PMB_With_Fragments.mpc:
+        * tests/InterOp-Naming/InterOp-Naming.mpc:
+        * tests/MT_BiDir/MT_BiDir.mpc:
+        * tests/Multiple_Inheritance/Multiple_Inheritance.mpc:
+        * tests/NestedUpcall/MT_Client_Test/MT_Client_Test.mpc:
+        * tests/NestedUpcall/Triangle_Test/TT.mpc:
+        * tests/POA/Excessive_Object_Deactivations/Excessive_Object_Deactivations.mpc:
+        * tests/POA/Identity/Identity.mpc:
+        * tests/POA/Object_Reactivation/Object_Reactivation.mpc:
+        * tests/POA/Persistent_ID/Persistent_ID.mpc:
+          Disabled some projects that can't compile when CORBA/e
+          micro has been enabled
+
+Tue Dec 19 12:32:41 UTC 2006  Chad Elliott  <elliott_c@ociweb.com>
+
+        * orbsvcs/orbsvcs/CosTrading.mpc:
+        * orbsvcs/orbsvcs/Trader/Constraint_y.cpp:
+
+          gcc gets confused when a static function is forward declared.  It
+          complains that the function is declared but never defined.  The
+          sed portion of the yacc regeneration rule just removes the forward
+          declaration (which was unnecessary anyway).
+
+Tue Dec 19 11:35:00 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/BiDirectional/BiDirectional.mpc:
+        * tests/BiDirectional_DelayedUpcall/BiDir_DelayedUpcall.mpc:
+        * tests/BiDirectional_MultipleORB/destroy.mpc:
+        * tests/BiDirectional_NestedUpcall/BiDir_NestedUpcall.mpc:
+          Disabled some projects that can't compile when CORBA/e
+          micro has been enabled
+
+Tue Dec 19 11:32:00 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * performance-tests/CSD_Strategy/TestInf/csd_pt_testinf.mpc:
+        * performance-tests/Cubit/TAO/IDL_Cubit/IDL_Cubit.mpc:
+        * performance-tests/Cubit/TAO/MT_Cubit/MT_Cubit.mpc:
+        * performance-tests/Pluggable/Pluggable.mpc:
+        * performance-tests/POA/Create_Reference/Create_Reference.mpc:
+        * performance-tests/POA/Demux/Demux.mpc:
+        * performance-tests/POA/Object_Creation_And_Registration/Object_Creation_And_Registration.mpc:
+          Disabled some projects that can't compile when CORBA/e
+          micro has been enabled
+
+Tue Dec 19 11:27:00 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/examples/ImR/Advanced/Advanced.mpc:
+        * orbsvcs/examples/ImR/Combined_Service/ImR_Combined_Service.mpc:
+        * orbsvcs/tests/BiDir_CORBALOC/BiDirCORBALOC.mpc:
+        * orbsvcs/tests/Bug_1395_Regression/Bug_1395_Regression.mpc:
+        * orbsvcs/tests/HTIOP/BiDirectional/HTIOP_BiDirectional.mpc:
+        * orbsvcs/tests/ImplRepo/ImplRepo.mpc:
+        * orbsvcs/tests/ImplRepo/scale/scaletest.mpc:
+        * orbsvcs/tests/Property/Property.mpc:
+        * orbsvcs/tests/Security/BiDirectional/Secure_BiDir.mpc:
+        * orbsvcs/Time_Service/Time_Service.mpc:
+          Disabled some projects that can't compile when CORBA/e
+          micro has been enabled
+
+Tue Dec 19 11:19:00 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * examples/CSD_Strategy/ThreadPool5/CSD_Test_ThreadPool5.mpc:
+        * examples/Event_Comm/Event_Comm.mpc:
+        * examples/Logging/Logging.mpc:
+        * examples/Persistent_Grid/Persistent_Grid.mpc:
+        * examples/PluggableUDP/tests/Basic/Basic.mpc:
+        * examples/PluggableUDP/tests/Performance/Performance.mpc:
+        * examples/Quoter/Quoter.mpc:
+        * examples/Simple/bank/bank.mpc:
+        * examples/Simple/echo/echo.mpc:
+        * examples/Simple/grid/grid.mpc:
+        * examples/Simple/time/time.mpc:
+          Disabled some projects that can't compile when CORBA/e
+          micro has been enabled
+
+Mon Dec 18 19:34:42 UTC 2006  Chad Elliott  <elliott_c@ociweb.com>
+
+        * orbsvcs/orbsvcs/Trader/Constraint_Nodes.cpp:
+        * orbsvcs/orbsvcs/Trader/Constraint_Visitors.cpp:
+
+          Added missing typecodes for supporting CORBA::ULongLong and
+          CORBA::LongLong.
+
+Mon Dec 18 12:50:00 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Utils/ORB_Manager.{cpp,h}:
+          Removed one init_child_poa method, using a default argument
+          we don't need two seperate ones. Fixed compile errors with
+          CORBA/e micro
+
+Mon Dec 18 10:30:00 UTC 2006  Simon Massey  <sma@prismtech.com>
+
+        * tests/Portable_Interceptors/PICurrent/client.cpp:
+        * tests/Portable_Interceptors/PICurrent/server.cpp:
+        * tests/Portable_Interceptors/PICurrent/run_test.pl:
+
+          Bugfix Bugzilla 2510 & 2547 - multi-threading issues for PICurrent.
+          Multi-Threaded servers take longer to shutdown. Increase the
+          length of kill time to wait for the server shutdown. Also
+          provide sleep(1) before orb->destroy() to allow comms to
+          proceed at shutdown (precausion only).
+
+Fri Dec 15 18:17:36 UTC 2006  Iliyan Jeliazkov  <iliyan@ociweb.com>
+
+          Updating the test to make it behave appropriately for
+          multi-threaded and for single-threaded (thread unsafe?)
+          configurations.
+
+        * tests/ORB_Local_Config/Bug_2612/Bug_2612.mpc:
+        * tests/ORB_Local_Config/Bug_2612/DllOrb.h:
+        * tests/ORB_Local_Config/Bug_2612/DllOrb.cpp:
+        * tests/ORB_Local_Config/Bug_2612/Test.cpp:
+        * tests/ORB_Local_Config/ORB_Local_Config.mwc:
+
+Fri Dec 15 17:26:59 UTC 2006  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tests/IDL_Test/IDL_Test.mpc:
+
+          Fixed previous change to this file in
+
+          Wed Dec 13 18:16:28 UTC 2006  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+          that was excluding the *A.cpp file from the build.
+
+Fri Dec 15 16:32:35 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * tests/ORT/Makefile.am:
+        * tests/Objref_Sequence_Test/Makefile.am:
+        * tests/Ondemand_Write/Makefile.am:
+        * tests/Oneway_Buffering/Makefile.am:
+        * tests/Oneways_Invoking_Twoways/Makefile.am:
+
+          Regenerated.
+
+        * tests/ORT/ORT.mpc:
+        * tests/Objref_Sequence_Test/Objref_Sequence_Test.mpc:
+        * tests/Ondemand_Write/Ondemand_Write.mpc:
+        * tests/Oneway_Buffering/Oneway_Buffering.mpc:
+        * tests/Oneways_Invoking_Twoways/Oneways_Invoking_Twoways.mpc:
+
+          Split out IDL compilation into separate MPC project.
+
+Thu Dec 14 16:58:18 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * tests/MProfile/Makefile.am:
+
+          Regenerated.
+
+        * tests/MProfile/MProfile.mpc:
+
+          Changed IDL project to inherit from iormanip.
+          Changed Client project to not include testS.cpp.
+
+Thu Dec 14 16:18:00 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * tests/Server_Connection_Purging/Server_Connection_Purging.mpc:
+
+          Fix typo in IDL project name that broke build dependencies.
+
+Thu Dec 14 16:10:02 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * orbsvcs/Logging_Service/RTEvent_Logging_Service/Makefile.am:
+
+          Regenerated.
+
+Thu Dec 14 13:52:00 UTC 2006  Simon Massey  <sma@prismtech.com>
+
+        * tao/PI/PICurrent.cpp:
+        * tao/PI/PICurrent.h:
+        * tests/Portable_Interceptors/PICurrent/run_test.pl:
+
+          Bugfix Bugzilla 2510 & 2547 - multi-threading issues for PICurrent.
+          Bugzilla 2552 - PICurrent_Impl, needs to be checked for
+          multi-threaded lazy copying. (Still work to do.)
+
+Thu Dec 14 13:21:46 UTC 2006  Chad Elliott  <elliott_c@ociweb.com>
+
+        * orbsvcs/orbsvcs/CosTrading.mpc:
+
+          Modified the rule to output the end version block at the end.
+
+        * orbsvcs/orbsvcs/Trader/Constraint_y.cpp:
+        * orbsvcs/orbsvcs/Trader/constraint.y:
+
+          Removed the end version block in the .y file and regenerated.
+
+Thu Dec 14 08:47:25 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * orbsvcs/Logging_Service/Basic_Logging_Service/Basic_Logging_Service.cpp
+        * orbsvcs/Logging_Service/Basic_Logging_Service/Basic_Logging_Service.h:
+        * orbsvcs/Logging_Service/Event_Logging_Service/Event_Logging_Service.cpp:
+        * orbsvcs/Logging_Service/Event_Logging_Service/Event_Logging_Service.h:
+        * orbsvcs/Logging_Service/Notify_Logging_Service/Notify_Logging_Service.cpp:
+        * orbsvcs/Logging_Service/Notify_Logging_Service/Notify_Logging_Service.h:
+        * orbsvcs/Logging_Service/RTEvent_Logging_Service/RTEvent_Logging_Service.cpp:
+        * orbsvcs/Logging_Service/RTEvent_Logging_Service/RTEvent_Logging_Service.h:
+
+          Align subtle differences (like using an explicit this-> (or not)
+          for invoking methods and accessing member variables.  This makes
+          diff betweens between the wrapper classes highlight the real and
+          substantial differences.  This too should make future maintenance
+          easier.
+
+          Removed #if 0'd out code that deactivated factory objects in the
+          shutdown() method.  This was originally #if'd out because the
+          factory objects aren't activated on the root POA (the factory
+          creates a POA with PERSISTENT lifespan policy for the factory
+          object activation, a POA that is not accessible from outside the
+          factory object).  While we could refactor things to gain access
+          to the factory POA, it really doesn't buy us much as the next
+          thing is done is the ORB is shutdown(), which will delete the
+          POAs, which will delete the objects, etc.
+
+        * orbsvcs/Logging_Service/RTEvent_Logging_Service/RTEvent_Logging_Server.cpp:
+        * orbsvcs/Logging_Service/RTEvent_Logging_Service/RTEvent_Logging_Service.h:
+        * orbsvcs/Logging_Service/RTEvent_Logging_Service/RTEvent_Logging_Service.cpp:
+
+          Overhaul the RTEvent_Logging_Service class to follow the idiom
+          used by the other three Logging Service implementations.  It had
+          lots of dead (commented out and/or #if 0'd) code for setting up
+          a scheduler; yet was missing support for supressing binding the
+          log factory to the naming service and spinning up a thread pool
+          for ORB threads.  Aligning this should make future maintenance
+          easier.
+
+          Split out main() into new file RTEvent_Logging_Server.cpp.
+
+Thu Dec 14 08:27:45 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * tests/OBV/Any/Makefile.am:
+        * tests/OBV/Factory/Makefile.am:
+        * tests/OBV/Forward/Makefile.am:
+        * tests/OBV/TC_Alignment/Makefile.am:
+        * tests/OBV/Truncatable/Makefile.am:
+        * tests/OBV/ValueBox/Makefile.am:
+
+          Regenerated.
+
+        * tests/OBV/Any/OBV_Any.mpc:
+        * tests/OBV/Factory/OBV_Factory.mpc:
+        * tests/OBV/Forward/OBV_Forward.mpc:
+        * tests/OBV/TC_Alignment/OBV_TC_Alignment.mpc:
+        * tests/OBV/Truncatable/OBV_Truncatable.mpc:
+        * tests/OBV/ValueBox/valuebox.mpc:
+
+          Changed IDL projects to inherit from valuetype, to
+          avoid suppressing typecodes and anys.
+
+Thu Dec 14 07:01:51 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * tests/MProfile/Makefile.am:
+        * tests/MProfile_Connection_Timeout/Makefile.am:
+        * tests/No_Server_MT_Connect_Test/Makefile.am:
+        * tests/OBV/Any/Makefile.am:
+        * tests/OBV/Factory/Makefile.am:
+        * tests/OBV/Forward/Makefile.am:
+        * tests/OBV/TC_Alignment/Makefile.am:
+        * tests/OBV/Truncatable/Makefile.am:
+        * tests/OBV/ValueBox/Makefile.am:
+
+          Regenerated.
+
+        * tests/MProfile/MProfile.mpc:
+        * tests/MProfile_Connection_Timeout/MProfile_Connection_Timeout.mpc:
+        * tests/No_Server_MT_Connect_Test/No_Server_Connect_Test.mpc:
+        * tests/OBV/Any/OBV_Any.mpc:
+        * tests/OBV/Factory/OBV_Factory.mpc:
+        * tests/OBV/Forward/OBV_Forward.mpc:
+        * tests/OBV/TC_Alignment/OBV_TC_Alignment.mpc:
+        * tests/OBV/Truncatable/OBV_Truncatable.mpc:
+        * tests/OBV/ValueBox/valuebox.mpc:
+
+          Split out IDL compilation into separate MPC project.
+
+        * tests/IDL_Test/Makefile.am:
+
+          Regenerated.
+
+Wed Dec 13 18:16:28 UTC 2006  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tests/IDL_Test/IDL_Test.mpc:
+
+          Added -GT to all IDL compiler command lines, since generation
+          of tie classes is no longer the default behavior, and we
+          want this test to cover it. Also added a block for
+          Template_Files, so the generated *S_T.cpp files will be
+          displayed in a separate folder in Visual Studio.
+
+Wed Dec 13 16:49:05 UTC 2006  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_visitor_argument/arglist.cpp:
+        * TAO_IDL/be/be_visitor_operation/arglist.cpp:
+        * TAO_IDL/be/be_visitor_operation/tie_sh.cpp:
+        * TAO_IDL/be_include/be_codegen.h:
+
+          Changed code generation for operation parameters in
+          tie class declarations to omit the parameter name. If
+          this name happened to be "T", some HP compilers would
+          have trouble disambiguating it from the tie class
+          template parameter typename. In the tie class operation
+          body, where the parameter name must be used, there is
+          already a code generation mechanism in place to avoid
+          the name clash. Thanks to Simon Massey <Simon.Massey@prismtech.com>
+          for reporting the problem.
+
+Wed Dec 13 14:24:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/tests/Bug_1630_Regression/test.mpc:
+          Don't build with CORBA/e
+
+Wed Dec 13 13:05:21 UTC 2006  Chad Elliott  <elliott_c@ociweb.com>
+
+        * orbsvcs/orbsvcs/Trader/Trader_Interfaces.cpp:
+
+          Added ACE_NOTREACHED around to returns that coult not possibly be
+          reached.
+
+Wed Dec 13 12:43:04 UTC 2006  Chad Elliott  <elliott_c@ociweb.com>
+
+        * orbsvcs/orbsvcs/CosTrading.mpc:
+
+          Added search and replacement to both Constraint_l and Contraint_y
+          rules to avoid build warnings about conversion from long to int.
+
+        * orbsvcs/orbsvcs/Trader/Constraint_l.cpp:
+        * orbsvcs/orbsvcs/Trader/Constraint_y.cpp:
+
+          Regenerated.
+
+        * orbsvcs/orbsvcs/Trader/Interpreter.cpp:
+
+          Added a static_cast to avoid build warnings about conversion from
+          long to int.
+
+Wed Dec 13 07:19:26 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * tests/Server_Connection_Purging/Makefile.am:
+        * tests/Server_Leaks/Makefile.am:
+        * tests/Single_Read/Makefile.am:
+        * tests/Smart_Proxies/Benchmark/Makefile.am:
+        * tests/Smart_Proxies/Makefile.am:
+        * tests/Smart_Proxies/On_Demand/Makefile.am:
+        * tests/Smart_Proxies/Policy/Makefile.am:
+        * tests/Smart_Proxies/dtor/Makefile.am:
+        * tests/Stack_Recursion/Makefile.am:
+
+          Regenerated.
+
+        * tests/Server_Connection_Purging/Server_Connection_Purging.mpc:
+        * tests/Server_Leaks/Server_Leaks.mpc:
+        * tests/Single_Read/Single_Read.mpc:
+        * tests/Smart_Proxies/Benchmark/SP_Benchmark.mpc:
+        * tests/Smart_Proxies/On_Demand/SP_On_Demand.mpc:
+        * tests/Smart_Proxies/Policy/SP_Policy.mpc:
+        * tests/Smart_Proxies/Smart_Proxies.mpc:
+        * tests/Smart_Proxies/dtor/dtor.mpc:
+        * tests/Stack_Recursion/Stack_Recursion.mpc:
+
+          Split out IDL compilation into separate MPC project.
+
+Wed Dec 13 06:53:57 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * examples/CSD_Strategy/ThreadPool5/CSD_Test_ThreadPool5.mpc:
+        * docs/tutorials/Quoter/Simple/Persistent/Quoter_Simple_Persistent.mpc:
+          Don't build with CORBA/e micro
+
+Wed Dec 13 06:53:57 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/IFR_Client_Adapter.h:
+          Fixed compile problem with CORBA/e
+
+Tue Dec 12 21:56:03 UTC 2006  Iliyan Jeliazkov  <iliyan@ociweb.com>
+
+        * tao/TAO_Internal.cpp (instance):
+
+          This change eliminates unnecessary caching of the
+          TAO_Ubergestalt_Ready_Condition, which used to cause problems
+          with accessing stale memory. My thanks goes to Johnny Willemsen
+          and Chad Elliott.
+
+Tue Dec 12 17:34:25 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * tests/Explicit_Event_Loop/Makefile.am:
+        * tests/Exposed_Policies/Makefile.am:
+        * tests/Faults/Makefile.am:
+        * tests/File_IO/Makefile.am:
+        * tests/Forwarding/Makefile.am:
+        * tests/Hello/Makefile.am:
+        * tests/IPV6/Makefile.am:
+        * tests/InterOp-Naming/Makefile.am:
+        * tests/Leader_Followers/Makefile.am:
+        * tests/LongUpcalls/Makefile.am:
+        * tests/MProfile_Forwarding/Makefile.am:
+        * tests/MT_BiDir/Makefile.am:
+        * tests/MT_Client/Makefile.am:
+        * tests/MT_Server/Makefile.am:
+        * tests/MT_Timeout/Makefile.am:
+        * tests/Multiple/Makefile.am:
+        * tests/Multiple_Inheritance/Makefile.am:
+        * tests/Muxed_GIOP_Versions/Makefile.am:
+        * tests/Muxing/Makefile.am:
+        * tests/Native_Exceptions/Makefile.am:
+        * tests/NestedUpcall/MT_Client_Test/Makefile.am:
+        * tests/NestedUpcall/Simple/Makefile.am:
+        * tests/NestedUpcall/Triangle_Test/Makefile.am:
+        * tests/Nested_Event_Loop/Makefile.am:
+
+          Regenerated.
+
+        * tests/Explicit_Event_Loop/Explicit_Event_Loop.mpc:
+        * tests/Exposed_Policies/Exposed_Policies.mpc:
+        * tests/Faults/Faults.mpc:
+        * tests/File_IO/File_IO.mpc:
+        * tests/Forwarding/Forwarding.mpc:
+        * tests/Hello/Hello.mpc:
+        * tests/IPV6/IPV6_Hello.mpc:
+        * tests/InterOp-Naming/InterOp-Naming.mpc:
+        * tests/Leader_Followers/Leader_Followers.mpc:
+        * tests/LongUpcalls/LongUpcalls.mpc:
+        * tests/MProfile_Forwarding/MProfile_Forwarding.mpc:
+        * tests/MT_BiDir/MT_BiDir.mpc:
+        * tests/MT_Client/MT_Client.mpc:
+        * tests/MT_Server/MT_Server.mpc:
+        * tests/MT_Timeout/MT_Timeout.mpc:
+        * tests/Multiple/Multiple.mpc:
+        * tests/Multiple_Inheritance/Multiple_Inheritance.mpc:
+        * tests/Muxed_GIOP_Versions/Muxed_GIOP_Versions.mpc:
+        * tests/Muxing/Muxing.mpc:
+        * tests/Native_Exceptions/Native_Exceptions.mpc:
+        * tests/NestedUpcall/MT_Client_Test/MT_Client_Test.mpc:
+        * tests/NestedUpcall/Simple/Simple.mpc:
+        * tests/NestedUpcall/Triangle_Test/TT.mpc:
+        * tests/Nested_Event_Loop/Nested_Event_Loop.mpc:
+
+          Split out IDL compilation into separate MPC project.
+
+Tue Dec 12 17:28:14 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * Configure Makefiles for new subdirectories.
+
+        * orbsvcs/tests/Makefile.am:
+
+          Regenerate to descend into unit test subdirectory.
+
+        * orbsvcs/tests/unit/Trading/Interpreter/Makefile.am:
+        * orbsvcs/tests/unit/Trading/Makefile.am:
+        * orbsvcs/tests/unit/Makefile.am:
+
+          New Makefile.am's for trading service unit tests.
+
+Tue Dec 12 17:24:02 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * orbsvcs/orbsvcs/Makefile.am:
+
+          Regenerated.
+
+        * orbsvcs/orbsvcs/CosConcurrency.mpc:
+
+          Don't include concurrency_export.h and concurrency_skel_export.h
+          in server library's MPC project.
+
+Tue Dec 12 16:13:34 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * orbsvcs/orbsvcs/Log/Hash_LogRecordStore.cpp:
+
+          Use .in() to squelch conversion warning.
+
+Tue Dec 12 15:05:04 UTC 2006  Chad Elliott  <elliott_c@ociweb.com>
+
+        * NEWS:
+
+          Provided an overview of the following changes.
+
+        * orbsvcs/orbsvcs/CosTrading.mpc:
+
+          Added a verbatim section to automate the regeneration of the lex
+          file for the Trader Server library.  Which includes running the
+          lex output through sed and then patching at the end.
+
+        * orbsvcs/orbsvcs/Trader/Constraint_Nodes.h:
+        * orbsvcs/orbsvcs/Trader/Constraint_Nodes.cpp:
+
+          Switched from using CORBA::Long/CORBA::ULong to
+          CORBA::LongLong/CORBA::ULongLong to support 64-bit integers.  The
+          union contains various integral types and to support both Long and
+          LongLong would be redundant.
+
+        * orbsvcs/orbsvcs/Trader/Constraint_Visitors.h:
+        * orbsvcs/orbsvcs/Trader/Constraint_Visitors.cpp:
+
+          Added support dynamic sequences of CORBA::LongLong/
+          CORBA::ULongLong.
+
+        * orbsvcs/orbsvcs/Trader/Constraint_l.cpp.diff:
+        * orbsvcs/orbsvcs/Trader/Constraint_l.cpp:
+        * orbsvcs/orbsvcs/Trader/constraint.l:
+
+          Updated the {float} regular expression to allow negative values
+          for floating point numbers.
+
+          Added support for CORBA::LongLong and CORBA::ULongLong.  Since all
+          integers are stored as 64-bit values instead of 32-bit values two
+          conversion functions (trader_stroll and trader_stroull) are used
+          to convert text into CORBA::LongLong and CORBA::ULongLong.  They
+          are good candidates for moving into ACE as emulation for platforms
+          that do not natively support strtoll and stroull.
+
+          Also, fixed an issue where negative integers were being stored and
+          compared as unsigned integers.
+
+        * orbsvcs/orbsvcs/Trader/Constraint_Interpreter.cpp:
+        * orbsvcs/orbsvcs/Trader/Interpreter.h:
+        * orbsvcs/orbsvcs/Trader/Constraint_Tokens.h:
+        * orbsvcs/orbsvcs/Trader/Constraint_y.cpp:
+        * orbsvcs/orbsvcs/Trader/constraint.y:
+
+          Switched the order of the TAO_SIGNED and TAO_UNSIGNED tokens which
+          are used by the TAO_Literal_Constraint to determine the widest
+          integral type.
+
+        * orbsvcs/tests/Trading/TT_Info.cpp:
+
+          Added a query to use a negative floating point number and a query
+          to use a number that would exceed the size of a CORBA::Long.
+
+        * orbsvcs/tests/unit/Trading/Interpreter/Interpreter.cpp:
+        * orbsvcs/tests/unit/Trading/Interpreter/Interpreter.mpc:
+        * orbsvcs/tests/unit/Trading/Interpreter/run_test.pl:
+
+          This unit test exercises the lexer for literal constraints as well
+          as the comparison of various mixed literal constraints.
+
+Tue Dec 12 14:21:57 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/IFR_Client/IFR_Client_Adapter_Impl.h:
+          Fixed link problems with CORBA/e
+
+Tue Dec 12 12:31:45 UTC 2006  Chad Elliott  <elliott_c@ociweb.com>
+
+        * tao/TAO_Server_Request.inl:
+        * tao/TAO_Server_Request.cpp:
+
+          Corrected a very bad merge on my part.  Thanks to Chris Reed <cr
+          at progress dot com> for reporting this and providing a patch.
+
+Tue Dec 12 10:08:57 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * MPC/config/taoidl3toidl2defaults.mpb:
+          Moved to CIAO
+
+Mon Dec 11 21:38:29 UTC 2006  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * tests/Bug_2683_Regression/client.cpp:
+        * tests/Bug_2683_Regression/run_test.pl:
+
+          This test requires a host name to plug into the corbaloc string.
+          For VxWorks testing, only the server side runs on the target,
+          the client runs on the test-driver host. For this reason,
+          "localhost" is unacceptable for use as a hostname.
+
+Sun Dec 10 20:43:26 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * tests/Bug_2503_Regression/Makefile.am:
+        * tests/Bug_2560_Regression/Makefile.am:
+        * tests/Bug_2593_Regression/Makefile.am:
+        * tests/Bug_2595_Regression/Makefile.am:
+        * tests/Bug_2683_Regression/Makefile.am:
+        * tests/Cache_Growth_Test/Makefile.am:
+        * tests/CallbackTest/Makefile.am:
+        * tests/Client_Leaks/Makefile.am:
+        * tests/CodeSets/simple/Makefile.am:
+        * tests/Connect_Strategy_Test/Makefile.am:
+        * tests/Connection_Purging/Makefile.am:
+        * tests/Crash_On_Write/Makefile.am:
+        * tests/Crashed_Callback/Makefile.am:
+        * tests/Strategies/Makefile.am:
+        * tests/Timed_Buffered_Oneways/Makefile.am:
+        * tests/Two_Objects/Makefile.am:
+        * tests/Typedef_String_Array/Makefile.am:
+        * tests/UNKNOWN_Exception/Makefile.am:
+
+          Regenerated.
+
+        * tests/Bug_2503_Regression/Bug_2503_Regression.mpc:
+        * tests/Bug_2560_Regression/Bug_2560_Regression.mpc:
+        * tests/Bug_2593_Regression/Bug_2593_Regression.mpc:
+        * tests/Bug_2595_Regression/Bug_2595_Regression.mpc:
+        * tests/Bug_2683_Regression/IORTable.mpc:
+        * tests/Cache_Growth_Test/Cache_Growth_Test.mpc:
+        * tests/CallbackTest/CallbackTest.mpc:
+        * tests/Client_Leaks/Client_Leaks.mpc:
+        * tests/CodeSets/simple/CodeSets_simple.mpc:
+        * tests/Connect_Strategy_Test/Connect_Strategy_Test.mpc:
+        * tests/Connection_Purging/Connection_Purging.mpc:
+        * tests/Crash_On_Write/Crash_On_Write.mpc:
+        * tests/Crashed_Callback/Crashed_Callback.mpc:
+        * tests/Strategies/Strategies.mpc:
+        * tests/Timed_Buffered_Oneways/Timed_Buffered_Oneways.mpc:
+        * tests/Two_Objects/Two_Objects.mpc:
+        * tests/Typedef_String_Array/typedef_string_array.mpc:
+        * tests/UNKNOWN_Exception/UNKNOWN_Exception.mpc:
+
+          Split out IDL compilation into separate MPC project.
+
+        * tests/Bug_2186_Regression/Makefile.am:
+
+          Regenerated.
+
+        * tests/Bug_2186_Regression/Bug_2186_Regression.mpc:
+
+          Add empty IDL_Files sections to Client and Server projects.
+
+Sun Dec 10 01:36:17 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * tests/Bug_2234_Regression/Makefile.am:
+
+          Regenerated.
+
+        * tests/Bug_2234_Regression/Bug_2234_Regression.mpc
+
+          Changed to inherit from anytypecode.
+
+Sun Dec 10 00:33:57 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * tests/Bug_1670/Regression/Makefile.am:
+
+          Regenerated.
+
+        * tests/Bug_1670/Regression/Bug_1670_Regression.mpc:
+
+          Add generated source files to MPC Source_Files section.
+
+Sat Dec  9 23:18:53 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * tests/Bug_1495_Regression/Makefile.am:
+        * tests/Bug_1551_Regression/Makefile.am:
+        * tests/Bug_1568_Regression/Makefile.am:
+        * tests/Bug_1627_Regression/Makefile.am:
+        * tests/Bug_1670_Regression/Makefile.am:
+        * tests/Bug_1676_Regression/Makefile.am:
+        * tests/Bug_1869_Regression/Makefile.am:
+        * tests/Bug_2174_Regression/Makefile.am:
+        * tests/Bug_2183_Regression/Makefile.am:
+        * tests/Bug_2186_Regression/Makefile.am:
+        * tests/Bug_2188_Regression/Makefile.am:
+        * tests/Bug_2234_Regression/Makefile.am:
+        * tests/Bug_2289_Regression/Makefile.am:
+        * tests/Bug_2328_Regression/Makefile.am:
+        * tests/Bug_2349_Regression/Makefile.am:
+        * tests/Bug_2429_Regression/Makefile.am:
+        * tests/Bug_2494_Regression/Makefile.am:
+
+          Regenerated.
+
+        * tests/Bug_1495_Regression/Bug_1495.mpc:
+        * tests/Bug_1551_Regression/Bug_1551_Regression.mpc:
+        * tests/Bug_1568_Regression/Bug_1568_Regression.mpc:
+        * tests/Bug_1627_Regression/Bug_1627_Regression.mpc:
+        * tests/Bug_1670_Regression/Bug_1670_Regression.mpc:
+        * tests/Bug_1676_Regression/Bug_1676_Regression.mpc:
+        * tests/Bug_1869_Regression/Bug_1869_Regression.mpc:
+        * tests/Bug_2174_Regression/Bug_2174_Regression.mpc:
+        * tests/Bug_2183_Regression/Bug_2183_Regression.mpc:
+        * tests/Bug_2186_Regression/Bug_2186_Regression.mpc:
+        * tests/Bug_2188_Regression/broken.mpc:
+        * tests/Bug_2234_Regression/Bug_2234_Regression.mpc:
+        * tests/Bug_2289_Regression/Bug_2289_Regression.mpc:
+        * tests/Bug_2328_Regression/Bug_2328_Regression.mpc:
+        * tests/Bug_2349_Regression/Bug_2349_Regression.mpc:
+        * tests/Bug_2429_Regression/Bug_2429_Regression.mpc:
+        * tests/Bug_2494_Regression/Bug_2494_Regression.mpc:
+
+          Split out IDL compilation into separate MPC project.
+
+Fri Dec  8 22:30:46 UTC 2006  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tests/IDL_Test/included.idl:
+        * tests/IDL_Test/valuetype.idl:
+
+          Added IDL to the test to cover the bug fixed in
+
+          Tue Dec  5 21:51:46 UTC 2006  Jeff Parsons <j.parsons@vanderbilt.edu>
+
 Fri Dec  8 05:21:38 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
 
         * configure.ac:
 
           Changed code to extract version number from tao/Version.h to be
           more resilient to leading whitespace like was added by a bug in
-          the release script in the last beta.  Thanks to <rlischner at
-          proteus-technologies dot com> for this patch.
+          the release script in the last beta.  Thanks to Ray Lischner
+          <rlischner at proteus-technologies dot com> for this patch.
 
 Fri Dec  8 04:45:52 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
 

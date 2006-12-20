@@ -169,8 +169,8 @@ endif
 
 ifeq ($(rtp),1)
   include $(WIND_USR)/make/defs.default
-  include $(WIND_USR)/make/defs.$(WIND_HOST_TYPE)
   include $(WIND_USR)/tool/$(TOOL_FAMILY)/make.$(CPU)$(TOOL)
+  include $(WIND_USR)/make/defs.$(WIND_HOST_TYPE)
   ifeq ("$(TOOL_FAMILY)","gnu")
     CPPFLAGS += -mrtp
   endif
@@ -294,6 +294,10 @@ else
   C++FLAGS += -Xrtti-off
 endif
 endif # rtti
+
+ifeq ("$(TOOL_FAMILY)","diab")
+  LDLIBS += -lstlstd
+endif
 
 ifneq ($(findstring $(VX_CPU_FAMILY),ppc arm),)
 ifeq ("$(TOOL_FAMILY)","diab")

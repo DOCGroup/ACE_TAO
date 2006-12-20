@@ -49,7 +49,7 @@ report process</a>.<p>
   </li><li><a href="#MPC">General MPC Information</a>
   </li><li><a href="#eclipse">Working with ACE in Eclipse</a>
   </li><li><a href="#advanced">Advanced Topics</a>
-  </li><li><a href="#power">Building from subversion</a>
+  </li><li><a href="#power">Building from Subversion</a>
 </li></ul>
 
 
@@ -2917,17 +2917,27 @@ show_uninit        Lists all uninitialized in object files built for
 </pre>
 
 </p><hr><p>
-</p><h2><a name="power">Building from anonymous subversion</a></h2>
-If users are building from our <a href="https://svn.dre.vanderbilt.edu/viewvc/Middleware/trunk/"> svn</a> the
+</p><h2><a name="power">Building from Subversion (anonymous access)</a></h2>
+If users are building from our <a href="https://svn.dre.vanderbilt.edu/viewvc/Middleware/trunk/">Subversion repository</a> the
 GNUmakefiles, and project files for building on various platforms will
-not be available. Users from subversion are expected to generate them
+not be available.  Subversion users are expected to <a href="#generate_using_mpc">generate them</a>
 using <a href="https://svn.dre.vanderbilt.edu/viewvc/MPC/trunk/docs/README?revision=HEAD">MPC</a> before building ACE, TAO or
 CIAO. We point out some suggestions below to get bootstrapped
 quickly.
 
 <ul>
-	<li>You can checkout ACE+TAO+CIAO together with MPC with the following command: <p>
-	<code>svn co svn://svn.dre.vanderbilt.edu/DOC/Middleware/sets-anon/ACE+TAO+CIAO .</code>
+	<li>You can checkout different subsets from the Subversion repository.
+	<ul>
+	<li>To checkout ACE with MPC:<p>
+	<code>svn co svn://svn.dre.vanderbilt.edu/DOC/Middleware/sets-anon/ACE.</code>
+	</li>
+	<li>To checkout ACE+TAO with MPC:<p>
+	<code>svn co svn://svn.dre.vanderbilt.edu/DOC/Middleware/sets-anon/ACE+TAO.</code>
+	</li>
+	<li>To checkout ACE+TAO+CIAO with MPC:<p>
+	<code>svn co svn://svn.dre.vanderbilt.edu/DOC/Middleware/sets-anon/ACE+TAO+CIAO.</code>
+	</li>
+	</ul>
   </p></li><li>Please make sure that you have <a href="http://www.perl.org/">
   perl</a> installed, preferably perl
   5.8 or higher. Users on Win32 based platforms are recommended to use
@@ -2935,18 +2945,19 @@ quickly.
   State Perl</a>. We use active state perl without problems. We have
   ran into problems trying to use the cygwin version of perl on Win32
   based platforms. <p>
-  </p></li><li>If you just want to build ACE and associated tests, examples,
-  and associated utility libraries, we recommend that you do <p>
-  <code> $ACE_ROOT/bin/mwc.pl -type gnuace ACE.mwc</code> </p><p>
-
-  from <code> $ACE_ROOT </code> to generate GNUmakefiles. Please use
+  </p></li>
+  <a name="generate_using_mpc"></a>
+  <li>To build ACE and associated tests, examples,
+  and associated utility libraries with GNUmakefiles, you must
+  generate GNUmakefiles with MPC:<p>
+  <code> $ACE_ROOT/bin/mwc.pl -type gnuace ACE.mwc</code> </p>
+  <p>On Windows, with Visual C++ 8, you must generate solution and project files with MPC:<p>
 
   <code> $ACE_ROOT/bin/mwc.pl -type vc8 ACE.mwc </code> </p><p>
 
-  to generate VC8 project and solution files. Please use <code>-type
-  vc71</code> to generate VC71 project and solution files.
-
-  </p></li><li>If you want to build TAO+CIAO and its associated libraries
+  On Windows, with Visual C++ 7, you must generate solution and project files with MPC:<p>
+  <code> $ACE_ROOT/bin/mwc.pl -type vc71 ACE.mwc </code> </p>
+  </li><li>If you want to build TAO+CIAO and its associated libraries
   please see <a href="TAO/TAO-INSTALL.html">TAO-INSTALL</a><a> and
   </a><a href="TAO/CIAO/CIAO-INSTALL.html">CIAO-INSTALL</a> for details.
 </li></ul>

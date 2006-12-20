@@ -73,6 +73,7 @@ generate_ior_LDADD = \
 endif BUILD_EXCEPTIONS
 
 ## Makefile.list_interfaces.am
+
 noinst_PROGRAMS += list_interfaces
 
 list_interfaces_CPPFLAGS = \

@@ -1409,9 +1409,6 @@ public:
 
 private:
 
-  /// The singleton instance.
-//   static TAO_ORB_Core_Static_Resources* instance_;
-
   /// Mostly unused variable whose sole purpose is to enforce
   /// the instantiation of a TAO_ORB_Core_Static_Resources instance
   /// at initialization time.

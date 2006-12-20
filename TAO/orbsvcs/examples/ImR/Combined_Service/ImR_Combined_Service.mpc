@@ -42,7 +42,7 @@ project(*Test) : orbsvcsexe {
 }
 
 // A server to use with the imr
-project(*TestServer) : orbsvcsexe, portableserver, iortable {
+project(*TestServer) : orbsvcsexe, portableserver, iortable, avoids_corba_e_micro {
   after += *IDL
   // The gnuace specific portion is to prevent invalid object files from
   // IDL generated files being compiled simultaneously with parallel builds.

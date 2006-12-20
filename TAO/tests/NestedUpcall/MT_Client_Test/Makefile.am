@@ -43,7 +43,6 @@ MT_Client_Test-stamp: $(srcdir)/MT_Client_Test.idl $(TAO_IDL_DEP)
 	$(TAO_IDL) $(TAO_IDLFLAGS) -Sa -St $(srcdir)/MT_Client_Test.idl
 	@touch $@
 
-
 noinst_HEADERS = \
   MT_Client_Test.idl
 

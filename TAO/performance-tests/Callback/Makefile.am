@@ -45,7 +45,6 @@ callback-stamp: $(srcdir)/callback.idl $(TAO_IDL_DEP)
 	$(TAO_IDL) $(TAO_IDLFLAGS) $(srcdir)/callback.idl
 	@touch $@
 
-
 noinst_HEADERS = \
   callback.idl
 

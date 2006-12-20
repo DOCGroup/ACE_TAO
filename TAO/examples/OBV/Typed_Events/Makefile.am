@@ -43,7 +43,6 @@ Event_Types-stamp: $(srcdir)/Event_Types.idl $(TAO_IDL_DEP)
 	$(TAO_IDL) $(TAO_IDLFLAGS) -Sa $(srcdir)/Event_Types.idl
 	@touch $@
 
-
 noinst_HEADERS = \
   Event_Types.idl
 

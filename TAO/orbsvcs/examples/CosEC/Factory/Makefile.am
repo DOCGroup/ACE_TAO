@@ -45,7 +45,6 @@ CosEventChannelFactory-stamp: $(srcdir)/CosEventChannelFactory.idl $(TAO_IDL_DEP
 	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs $(srcdir)/CosEventChannelFactory.idl
 	@touch $@
 
-
 noinst_HEADERS = \
   CosEventChannelFactory.idl
 

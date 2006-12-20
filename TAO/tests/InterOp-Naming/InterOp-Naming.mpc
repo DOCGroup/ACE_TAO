@@ -8,7 +8,7 @@ project(*idl): taoidldefaults {
   custom_only = 1
 }
 
-project(*Server): taoserver, utils, iortable {
+project(*Server): taoserver, utils, iortable, avoids_corba_e_micro {
   exename = INS_test_server
   after += *idl
   Source_Files {

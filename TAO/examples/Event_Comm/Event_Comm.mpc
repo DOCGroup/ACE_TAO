@@ -8,7 +8,7 @@ project(*IDL): taoidldefaults {
   custom_only = 1
 }
 
-project(*notifier): namingexe, utils {
+project(*notifier): namingexe, utils, avoids_corba_e_micro {
   after += *IDL
   Source_Files {
     Event_Comm_i.cpp

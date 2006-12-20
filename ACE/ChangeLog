@@ -1,3 +1,315 @@
+Wed Dec 20 04:52:04 UTC 2006  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * ACE-INSTALL.html:
+        * docs/Download.html:
+        
+          Fleshed out SVN instructions a bit more, corrected link mistake in
+          Download.html.  
+        
+          Thanks to Craig Rodrigues <rodrigc at crodrigues dot org> for the patch.
+        
+Tue Dec 19 22:09:34 UTC 2006  Iliyan Jeliazkov  <iliyan@ociweb.com>
+
+        * bin/MakeProjectCreator/config/tc.mpb:
+
+          Added a new project type for projects using the Transport
+          Current functionality.
+
+Tue Dec 19 20:05:42 UTC 2006  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * docs/Download.html:
+          Added link to SVN documentation.
+
+Tue Dec 19 14:19:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * include/makeinclude/platform_rtems.x_g++.GNU:
+          Set load address
+
+Tue Dec 19 14:18:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Object_Manager_Base.cpp (print_error_message):
+          Fixed invalid filename
+
+Tue Dec 19 13:16:38 UTC 2006  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
+
+        * ace/Log_Msg_NT_Event_Log.cpp (log): Changed the loop iterator to
+          be size_t rather than long to silence a warning about comparing
+          signed and unsigned values.  Thanks to Johnny for reporting
+          this.
+
+Tue Dec 19 09:11:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/OS_NS_unistd.inl (readdir_r):
+          Refactored this method to make it easier to maintain and at the
+          same moment fixed compile error when building ACE on VxWorks 6.4
+          in kernel mode without pthread support
+
+Mon Dec 18 22:28:48 UTC 2006  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
+
+        * ace/Log_Msg_NT_Event_Log.cpp (log): Iterate for i <
+          log_record.msg_data_len() rather than i < log_record.length ()
+          to avoid nasty overrun errors.  Thanks to Paxton Mason <PMason
+          at wolve dot com> for reporting this.  This fixes bugid 2754.
+
+Mon Dec 18 22:28:18 UTC 2006  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
+
+        * ace/Log_Record.h: Clarify the meaning of length() in the
+          comments.  Thanks to Paxton Mason <PMason at wolve dot com> for
+          motivating this.
+
+Mon Dec 18 13:48:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ACEXML/common/common.mpc:
+        * bin/MakeProjectCreator/configs/acexml.mpb:
+          Added zzip as base, this project really uses zzip
+
+        * bin/MakeProjectCreator/configs/acedefaults.mpb:
+          Removed zzip and zlib as base projects. Any project that uses
+          zzip or zlib should derive from the correct project, but not
+          acedefaults. When making them a base from acedefaults any
+          project links with zzip/zlib even when they don't use it.
+
+          This fixes bugzilla bug 2751.
+
+Mon Dec 18 10:59:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * apps/JAWS2/HTTPU/parse_url.h:
+          Added prefix to the members of the URL_ERROR enum, NONE is a macro
+          on some platforms like VxWorks
+
+Mon Dec 18 10:04:19 UTC 2006  Olli Savia  <ops@iki.fi>
+
+        * tests/OS_Test.cpp:
+          Do not execute snprintf test if ACE_LACKS_VSNPRINTF is defined.
+
+Fri Dec 15 23:09:29 UTC 2006  Steve Huston  <shuston@riverace.com>
+
+        * apps/JAWS2/JAWS/Makefile.am: Removed JAWS.h; see
+          Thu Dec 14 21:08:19 UTC 2006  Steve Huston  <shuston@riverace.com>
+
+Fri Dec 15 15:03:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * include/makeinclude/platform_vxworks6.3.GNU:
+        * include/makeinclude/platform_vxworks6.4.GNU:
+        * ace/config-vxworks6.4.h:
+        * ace/config-vxworks6.3.h:
+        * ace/OS_NS_unistd.inl:
+        * ace/OS_NS_arpa_inet.cpp:
+        * ace/os_include/os_stdio.h:
+        * ace/os_include/sys/os_types.h:
+          Added support for VxWorks 6.4
+
+Thu Dec 14 21:08:19 UTC 2006  Steve Huston  <shuston@riverace.com>
+
+        * apps/JAWS2/JAWS/jaws2.mpc: Corrected compiler defines to add
+          JAWS_BUILD_DLL, not replace previous.
+
+        * apps/JAWS2/JAWS/Export.h: Replaced contents with new content
+          generated from generate_export_file.pl. Previous content was
+          generated from GenerateExportH.BAT and was missing lots of
+          stuff, some of which prevented generation of .lib, .exp files.
+
+        * apps/JAWS2/JAWS/JAWS.h: Removed; it only had JAWS_TRACE defined
+          which is properly defined in Export.h now.
+
+        * apps/JAWS2/JAWS/Pipeline_Tasks.cpp:
+        * apps/JAWS2/JAWS/IO_Handler.cpp:
+        * apps/JAWS2/JAWS/IO.cpp:
+        * apps/JAWS2/JAWS/Concurrency.cpp: Removed #include "JAWS/JAWS.h"
+
+Thu Dec 14 12:36:43 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/config-qnx-neutrino.h:
+          Added several missing defines to build with QNX
+
+Thu Dec 14 11:57:43 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * include/makeinclude/platform_qnx_neutrino.GNU:
+          Set all tools using ?= so that we can override the name
+          from the platform_macros.GNU file
+
+Thu Dec 14 00:12:49 UTC 2006  Steve Huston  <shuston@riverace.com>
+
+        * ace/OS_NS_Thread.cpp (event_init): Solaris's shm_open() requires a
+          single '/' on the name argument. I opted to put that logic here
+          rather than the lower-level ACE_OS::shm_open(), but that point
+          is debatable. In any case, look for a leading / on the name if
+          ACE_SHM_OPEN_REQUIRES_ONE_SLASH is defined; if it's not there,
+          add it.
+
+        * ace/config-sunos5.8.h: Added ACE_SHM_OPEN_REQUIRES_ONE_SLASH.
+
+        * ace/README: Add description of ACE_SHM_OPEN_REQUIRES_ONE_SLASH.
+
+        * configure.ac: Added check for ACE_SHM_OPEN_REQUIRES_ONE_SLASH.
+          Fixed check for ACE_LACKS_NUMERIC_LIMITS to display the findings
+          when configuring.
+
+        * m4/config_h.m4: Added ACE_SHM_OPEN_REQUIRES_ONE_SLASH and
+          ACE_LACKS_NUMERIC_LIMITS.
+
+Wed Dec 13 15:04:57 UTC 2006  Iliyan Jeliazkov  <iliyan@ociweb.com>
+
+        * bin/tao_orb_tests.lst:
+
+          Updated the configuration for ORB_Local_Config/Bug_2612 to
+          require a multithreaded build to reflect the design goals of the
+          test.
+
+Tue Dec 12 23:50:43 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * NEWS:
+
+          Document --enable-ace-reactor-notification-queue.
+
+        * m4/ace.m4:
+
+          Add autoconf support for --enable-ace-reactor-notification-queue.
+          Configuring with this option sets ACE_HAS_REACTOR_NOTIFICATION_QUEUE
+          in config.h.
+
+Wed Dec 13 01:41:19 UTC 2006  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
+
+        * ace/UUID.cpp:
+
+          Fixed a potential memory leak. Dynamic memory was allocated but
+          not freed under special circumstances. For details, check BUGID
+          2746. This closes BUGID 2746.
+
+Tue Dec 12 22:38:06 UTC 2006  Steve Huston  <shuston@riverace.com>
+
+        * apps/JAWS2/HTTPU/parse_url.h: Made the char* members const to
+          resolve compile warnings about assignment of char* literals.
+
+Tue Dec 12 19:54:05 UTC 2006  Steve Huston  <shuston@riverace.com>
+
+        * apps/JAWS2/HTTPU/httpu.mpc: Must build HTTPU after JAWS2.
+
+Tue Dec 12 19:54:04 UTC 2006  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/fuzz.pl:
+
+          Changed the regular expression to recognize #include's of files
+          with double quotes within a version block.
+
+Tue Dec 12 19:31:39 UTC 2006  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/fuzz.pl:
+
+          Corrected a bug where a non-ACE/TAO/CIAO file included within a
+          version block was being marked as an error.
+
+Tue Dec 12 17:01:42 UTC 2006  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * bin/MakeProjectCreator/config/MPC.cfg:
+
+          Added $DDS_ROOT/MPC/config to the includes, since the
+          .mpb files in DDS have been moved to this location, making
+          them consistent with the location of similar files in
+          TAO and CIAO.
+
+Tue Dec 12 15:08:32 UTC 2006  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/tao_other_tests.lst:
+
+          Added the Trading unit test to the list.
+
+Tue Dec 12 13:47:44 UTC 2006  Steve Huston  <shuston@riverace.com>
+
+        * apps/JAWS2/HTTPU/httpu.mpc: Corrected build flags and added required
+          link library JAWS2.
+
+Tue Dec 12 06:05:38 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * configure.ac:
+
+          Add ACE_HAS_ISASTREAM_PROTOTYPE feature test.
+
+Tue Dec 12 06:00:09 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * configure.ac:
+
+          Add ACE_HAS_PTHREAD_SIGMASK_PROTOTYPE feature test.
+
+Tue Dec 12 05:13:33 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * configure.ac:
+
+          Add ACE_LACKS_MKTEMP_PROTOTYPE and ACE_LACKS_MKSTEMP_PROTOTYPE
+          feature tests.
+
+        * ace/README:
+
+          Document ACE_LACKS_MKSTEMP feature test macro.
+
+Mon Dec 11 20:51:59 UTC 2006  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
+
+        * apps/JAWS2/HTTPU/httpu.mpc: Added a new MPC file.  Thanks to
+          Sergey for this.
+
+        * apps/JAWS2/HTTPU/http_base.cpp (receive): Made this work with
+          HTTPU.  Thanks to Sergey Kosenko <sergey dot kosenko at gmail
+          dot com> for these patches.
+
+Mon Dec 11 20:21:14 UTC 2006  Steve Huston  <shuston@riverace.com>
+
+        * ace/CDR_Stream.{h cpp} (ACE_OutputCDR): Added a new method, int
+          consolidate (void) which consolidates any continuation message
+          blocks into the start block, ensuring that all data is located
+          in one block on return. This is useful for situations which
+          require the entire encoded stream to be available in one buffer,
+          regardless of length.
+
+        * tests/CDR_Test.cpp: Added a test for consolidate().
+
+        * NEWS: Added notice for new consolidate() method.
+
+        Thanks to Howard Finer <hfiner at sonusnet dot com> for supplying
+        the new ACE_OutputCDR::consolidate() method.
+
+Mon Dec 11 20:03:04 UTC 2006  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/MakeProjectCreator/templates/gnu.mpd:
+
+          Changed the template to use the words "make macros" instead of
+          features.  There may have be some confusion with MPC features.
+
+Mon Dec 11 17:39:46 UTC 2006  James H. Hill  <hillj@isis.vanderbilt.edu>
+
+        * docs/ace_guidelines.vsmacros:
+
+          Fixed macros specification so the same file can be used
+          with both VS.NET 2003 and VS.NET 2005 development
+          environments.
+
+Mon Dec 11 15:23:08 UTC 2006  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/MakeProjectCreator/config/MPC.cfg:
+        * bin/mpc.pl:
+        * bin/mwc.pl:
+
+          Removed the code that specifically added the gnuace and borland
+          project types and rely on the dynamic_types directive in the
+          MPC.cfg to have the MPC core add them.
+
+Sat Dec  9 19:13:52 UTC 2006  Olli Savia  <ops@iki.fi>
+
+        * ace/config-vxworks5.x.h:
+          Added ACE_LACKS_VSNPRINTF.
+
+Fri Dec  8 20:20:09 UTC 2006  Iliyan Jeliazkov  <iliyan@ociweb.com>
+
+        * ace/Service_Config.cpp (parse_args_i):
+
+          Moving the "default:" label outside the block that handles the
+          "case 's':". Even though it should work correctly on allmost any
+          compiler, things like this are bad form. Thanks to Aaron
+          Scamehorn <Aaron dot Scamehorn at cogcap dot com> for noticing.
+
+Fri Dec  8 20:15:40 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * THANKS: Add Ray Lischner.
+
 Fri Dec  8 16:39:51 UTC 2006  Steve Huston  <shuston@riverace.com>
 
         * ace/Null_Mutex.h: Added ACE_Export to the class declarations.
@@ -16,8 +328,8 @@ Fri Dec  8 05:21:38 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
 
           Changed code to extract version number from ace/Version.h to be
           more resilient to leading whitespace like was added by a bug in
-          the release script in the last beta.  Thanks to <rlischner at
-          proteus-technologies dot com> for this patch.
+          the release script in the last beta.  Thanks to Ray Lischner
+          <rlischner at proteus-technologies dot com> for this patch.
 
 Thu Dec  7 14:13:43 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -442,7 +754,8 @@ Wed Nov 29 07:09:17 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
         * configure.ac:
 
           If ACEXML, ASNMP, or protocols subdirectories are not present,
-          don't try to configure or build them.
+          don't try to configure or build them.  Thanks to Stephen Torri
+          <storri at cse dot wustl dot edu> for reporting this.
 
 Tue Nov 28 21:02:25 UTC 2006  Steve Huston  <shuston@riverace.com>
 

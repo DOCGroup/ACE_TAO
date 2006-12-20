@@ -70,7 +70,6 @@ Truncatable-stamp: $(srcdir)/Truncatable.idl $(TAO_IDL_DEP)
 	$(TAO_IDL) $(TAO_IDLFLAGS) $(srcdir)/Truncatable.idl
 	@touch $@
 
-
 noinst_HEADERS = \
   Extra.idl \
   Truncatable.idl

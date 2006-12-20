@@ -8,7 +8,7 @@ project(*idl): taoidldefaults {
   custom_only = 1
 }
 
-project(*SSL Server): taoexe, portableserver, avoids_minimum_corba, bidir_giop {
+project(*SSL Server): taoexe, portableserver, avoids_minimum_corba, bidir_giop, avoids_corba_e_micro {
   after += *idl
   Source_Files {
     test_i.cpp

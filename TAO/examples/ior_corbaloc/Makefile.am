@@ -43,7 +43,6 @@ corbaloc-stamp: $(srcdir)/corbaloc.idl $(TAO_IDL_DEP)
 	$(TAO_IDL) $(TAO_IDLFLAGS) -Sa -St $(srcdir)/corbaloc.idl
 	@touch $@
 
-
 noinst_HEADERS = \
   corbaloc.idl
 

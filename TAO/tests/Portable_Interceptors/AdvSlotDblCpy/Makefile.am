@@ -43,7 +43,6 @@ InvokeMe-stamp: $(srcdir)/InvokeMe.idl $(TAO_IDL_DEP)
 	$(TAO_IDL) $(TAO_IDLFLAGS) -Sa -St $(srcdir)/InvokeMe.idl
 	@touch $@
 
-
 noinst_HEADERS = \
   InvokeMe.idl
 

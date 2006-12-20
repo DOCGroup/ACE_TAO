@@ -43,7 +43,6 @@ param_test-stamp: $(srcdir)/param_test.idl $(TAO_IDL_DEP)
 	$(TAO_IDL) $(TAO_IDLFLAGS) $(srcdir)/param_test.idl
 	@touch $@
 
-
 noinst_HEADERS = \
   param_test.idl
 

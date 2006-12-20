@@ -45,7 +45,6 @@ interop_wchar-stamp: $(srcdir)/interop_wchar.idl $(TAO_IDL_DEP)
 	$(TAO_IDL) $(TAO_IDLFLAGS) $(srcdir)/interop_wchar.idl
 	@touch $@
 
-
 noinst_HEADERS = \
   interop_wchar.idl
 

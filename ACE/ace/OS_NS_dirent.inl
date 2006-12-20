@@ -86,21 +86,15 @@ readdir_r (ACE_DIR *dirp,
                          defined (ACE_HAS_PTHREADS_DRAFT7) || \
                          defined (_POSIX_SOURCE) || \
                          defined (__FreeBSD__) || \
-                         defined (HPUX_11)))
-#    if defined (__GNUG__) && defined (DIGITAL_UNIX)
-  return readdir_r (dirp, entry, result);
-#    else
-  return ::readdir_r (dirp, entry, result);
-#    endif /* defined (__GNUG__) && defined (DIGITAL_UNIX) */
-#  else  /* ! POSIX.1c - this is draft 4 or draft 6 */
-#    if defined(__GNUC__) && defined (_AIX)
-        return ::readdir_r (dirp, entry, result);
-#    else
-    // <result> had better not be 0!
-    *result = ::readdir_r (dirp, entry);
-    return 0;
-#    endif /* AIX */
-#  endif /* ! POSIX.1c */
+                         defined (HPUX_11)) || \
+                         defined (__GNUC__) && defined (_AIX) || \
+                         defined (ACE_VXWORKS))
+       return ::readdir_r (dirp, entry, result);
+#  else
+       // <result> had better not be 0!
+       *result = ::readdir_r (dirp, entry);
+       return 0;
+#  endif /* sun */
 #else  /* ! ACE_HAS_DIRENT  ||  ACE_LACKS_READDIR_R */
   ACE_UNUSED_ARG (dirp);
   ACE_UNUSED_ARG (entry);

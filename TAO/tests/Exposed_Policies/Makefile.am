@@ -43,7 +43,6 @@ Counter-stamp: $(srcdir)/Counter.idl $(TAO_IDL_DEP)
 	$(TAO_IDL) $(TAO_IDLFLAGS) -Sa -St $(srcdir)/Counter.idl
 	@touch $@
 
-
 noinst_HEADERS = \
   Counter.idl
 

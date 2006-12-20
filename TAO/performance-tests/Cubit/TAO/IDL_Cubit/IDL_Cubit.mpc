@@ -10,9 +10,8 @@ project(*IDL): taoidldefaults, strategies {
   custom_only = 1
 }
 
-project(*Server): taoexe, utils, portableserver, strategies {
+project(*Server): taoexe, utils, portableserver, strategies, avoids_corba_e_micro, avoids_ace_for_tao {
   after += *IDL
-  avoids += ace_for_tao
   Source_Files {
     RTI_IO.cpp
     Cubit_i.cpp

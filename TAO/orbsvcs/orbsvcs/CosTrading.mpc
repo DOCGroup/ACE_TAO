@@ -153,6 +153,7 @@ project(CosTrading_Serv) : orbsvcslib, core, trading_skel, dynamicany, svc_utils
     "	yacc -l -d Trader/constraint.y"
     "	sed -e 's/	/        /g' \\"
     "	    -e 's/int newsize, i/size_t newsize, i/g' \\"
+    "	    -e 's/static  *int  *yygrowstack();/ /g' \\"
     "	    -e 's/  *$$\/\/g' \\"
     "	    -e 's/\|\| defined(__GNUC__)/|| defined(__GNUC__) || defined (WIN32) || defined (__HP_aCC)/g' \\"
     "	    -e 's/memcpy/ACE_OS::memcpy/g' \\"

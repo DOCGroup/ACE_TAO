@@ -43,7 +43,6 @@ Multiple_Inheritance-stamp: $(srcdir)/Multiple_Inheritance.idl $(TAO_IDL_DEP)
 	$(TAO_IDL) $(TAO_IDLFLAGS) -Sa -St $(srcdir)/Multiple_Inheritance.idl
 	@touch $@
 
-
 noinst_HEADERS = \
   Multiple_Inheritance.idl
 
