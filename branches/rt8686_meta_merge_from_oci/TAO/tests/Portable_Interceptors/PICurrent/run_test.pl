@@ -43,7 +43,7 @@ sub DoTest
       $status = 1;
   }
 
-  $serverexit = $SV->WaitKill (5);
+  $serverexit = $SV->WaitKill (20);
 
   if ($serverexit != 0) {
       print STDERR "ERROR: server returned $serverexit\n";

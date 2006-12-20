@@ -907,8 +907,10 @@ run_main (int, ACE_TCHAR *[])
   if ((result = string_emulation_test ()) != 0)
     status = result;
 
+#if !defined (ACE_LACKS_VSNPRINTF)
   if ((result = snprintf_test ()) != 0)
     status = result;
+#endif /* !ACE_LACKS_VSNPRINTF */
 
   if ((result = ctime_r_test ()) != 0)
     status = result;

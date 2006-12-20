@@ -45,7 +45,6 @@ cubit-stamp: $(srcdir)/cubit.idl $(TAO_IDL_DEP)
 	$(TAO_IDL) $(TAO_IDLFLAGS) $(srcdir)/cubit.idl
 	@touch $@
 
-
 noinst_HEADERS = \
   cubit.idl
 

@@ -20,7 +20,6 @@ TAO_ROOT = $(top_srcdir)
 ## Makefile.registration.am
 
 if BUILD_EXCEPTIONS
-if !BUILD_ACE_FOR_TAO
 
 BUILT_SOURCES = \
   testC.cpp \
@@ -68,7 +67,6 @@ registration_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
-endif !BUILD_ACE_FOR_TAO
 endif BUILD_EXCEPTIONS
 
 ## Clean up template repositories, etc.

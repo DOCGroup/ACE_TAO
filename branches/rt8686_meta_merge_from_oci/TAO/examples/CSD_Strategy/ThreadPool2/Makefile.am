@@ -43,9 +43,33 @@ Foo-stamp: $(srcdir)/Foo.idl $(TAO_IDL_DEP)
 	$(TAO_IDL) $(TAO_IDLFLAGS) -Sa -St $(srcdir)/Foo.idl
 	@touch $@
 
-
 noinst_HEADERS = \
   Foo.idl
+
+## Makefile.CSD_Test_ThreadPool2_Client.am
+
+if BUILD_EXCEPTIONS
+
+noinst_PROGRAMS += client_main
+
+client_main_CPPFLAGS = \
+  -I$(ACE_ROOT) \
+  -I$(ACE_BUILDDIR) \
+  -I$(TAO_ROOT) \
+  -I$(TAO_BUILDDIR)
+
+client_main_SOURCES = \
+  ClientApp.cpp \
+  FooC.cpp \
+  client_main.cpp \
+  ClientApp.h
+
+client_main_LDADD = \
+  $(TAO_BUILDDIR)/tao/libTAO_AnyTypeCode.la \
+  $(TAO_BUILDDIR)/tao/libTAO.la \
+  $(ACE_BUILDDIR)/ace/libACE.la
+
+endif BUILD_EXCEPTIONS
 
 ## Makefile.CSD_Test_ThreadPool2_Server.am
 
@@ -84,31 +108,6 @@ server_main_LDADD = \
   $(ACE_BUILDDIR)/ace/libACE.la
 
 endif BUILD_THREADS
-endif BUILD_EXCEPTIONS
-
-## Makefile.CSD_Test_ThreadPool2_Client.am
-
-if BUILD_EXCEPTIONS
-
-noinst_PROGRAMS += client_main
-
-client_main_CPPFLAGS = \
-  -I$(ACE_ROOT) \
-  -I$(ACE_BUILDDIR) \
-  -I$(TAO_ROOT) \
-  -I$(TAO_BUILDDIR)
-
-client_main_SOURCES = \
-  ClientApp.cpp \
-  FooC.cpp \
-  client_main.cpp \
-  ClientApp.h
-
-client_main_LDADD = \
-  $(TAO_BUILDDIR)/tao/libTAO_AnyTypeCode.la \
-  $(TAO_BUILDDIR)/tao/libTAO.la \
-  $(ACE_BUILDDIR)/ace/libACE.la
-
 endif BUILD_EXCEPTIONS
 
 ## Clean up template repositories, etc.

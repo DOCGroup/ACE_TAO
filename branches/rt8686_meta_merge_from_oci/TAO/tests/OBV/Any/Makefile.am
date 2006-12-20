@@ -45,7 +45,6 @@ Any-stamp: $(srcdir)/Any.idl $(TAO_IDL_DEP)
 	$(TAO_IDL) $(TAO_IDLFLAGS) $(srcdir)/Any.idl
 	@touch $@
 
-
 noinst_HEADERS = \
   Any.idl
 

@@ -66,7 +66,6 @@ test-stamp: $(srcdir)/test.idl $(TAO_IDL_DEP)
 	$(TAO_IDL) $(TAO_IDLFLAGS) -Sa -St $(srcdir)/test.idl
 	@touch $@
 
-
 noinst_HEADERS = \
   service_config.idl \
   test.idl

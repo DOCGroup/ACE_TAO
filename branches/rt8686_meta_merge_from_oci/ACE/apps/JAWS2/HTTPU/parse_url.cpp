@@ -13,7 +13,7 @@ HTTP_Parse_URL::HTTP_Parse_URL (const char *url)
     host_ (0),
     port_ (-1),
     url_path_ (0),
-    error_ (NONE),
+    error_ (URL_ERROR_NONE),
     is_cgi_ (0)
 {
   this->init (url);
@@ -47,7 +47,7 @@ HTTP_Parse_URL::init( const char *url )
    url_ = ACE_OS::strdup( url );
    if ( url_ == 0 )
    {
-      error_ = STRDUP;
+      error_ = URL_ERROR_STRDUP;
       return;
    }
 
@@ -77,14 +77,14 @@ HTTP_Parse_URL::parse_url (void)
   this->parse_scheme (p);
   if (*p == '\0')
     {
-      this->error_ = SCHEME;
+      this->error_ = URL_ERROR_SCHEME;
       return;
     }
 
   // Parse past "//"
   if (*p != '/' || *(p+1) != '/')
     {
-      this->error_ = SLASHSLASH;
+      this->error_ = URL_ERROR_SLASHSLASH;
       return;
     }
   p += 2;

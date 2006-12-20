@@ -8,7 +8,7 @@ project(*poa idl): taoidldefaults {
   custom_only = 1
 }
 
-project(*poa server): namingexe, portableserver {
+project(*poa server): namingexe, portableserver, avoids_corba_e_micro {
   after += *poa_idl
   Source_Files {
     demux_test_server.cpp

@@ -49,7 +49,6 @@ Airplane-stamp: $(srcdir)/Airplane.idl $(TAO_IDL_DEP)
 	$(TAO_IDL) $(TAO_IDLFLAGS) -Sa -St $(srcdir)/Airplane.idl
 	@touch $@
 
-
 noinst_HEADERS = \
   Airplane.idl
 
@@ -137,7 +136,6 @@ Nestea-stamp: $(srcdir)/Nestea.idl $(TAO_IDL_DEP)
 	$(TAO_IDL) $(TAO_IDLFLAGS) -Sa -St $(srcdir)/Nestea.idl
 	@touch $@
 
-
 noinst_HEADERS += \
   Nestea.idl
 
@@ -172,7 +170,6 @@ endif BUILD_EXCEPTIONS
 ## Makefile.nestea_server.am
 
 if BUILD_EXCEPTIONS
-if !BUILD_ACE_FOR_TAO
 
 noinst_PROGRAMS += nestea_server
 
@@ -199,7 +196,6 @@ nestea_server_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
-endif !BUILD_ACE_FOR_TAO
 endif BUILD_EXCEPTIONS
 
 ## Clean up template repositories, etc.

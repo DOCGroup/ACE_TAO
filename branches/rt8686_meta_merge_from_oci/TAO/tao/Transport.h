@@ -28,6 +28,7 @@
 #include "tao/Incoming_Message_Queue.h"
 #include "tao/Incoming_Message_Stack.h"
 #include "ace/Time_Value.h"
+#include "ace/Basic_Stats.h"
 
 struct iovec;
 
@@ -60,6 +61,13 @@ namespace TAO
       TAO_SERVER_ROLE = 1,
       TAO_CLIENT_ROLE = 2
     };
+
+  namespace Transport
+  {
+    /// Transport-level statistics. Initially introduced to support
+    /// the "Transport Current" functionality.
+    class Stats;
+  }
 }
 
 /*
@@ -770,6 +778,9 @@ public:
   /// connection is closed.
   void send_connection_closed_notifications (void);
 
+  /// Transport statistics
+  TAO::Transport::Stats* stats (void) const;
+
 private:
 
   /// Helper method that returns the Transport Cache Manager.
@@ -1065,6 +1076,9 @@ private:
   TAO_MMAP_Allocator * const mmap_allocator_;
 #endif  /* TAO_HAS_SENDFILE==1 */
 
+  /// Statistics
+  TAO::Transport::Stats* stats_;
+
   /*
    * specialization hook to add class members from concrete
    * transport class onto the base transport class. Please
@@ -1079,6 +1093,61 @@ private:
  */
 
 //@@ TAO_TRANSPORT_SPL_EXTERN_ADD_HOOK
+
+namespace TAO
+{
+  namespace Transport
+  {
+    /*
+     * @class Stats
+     *
+     * @brief Used to collect stats on a transport.
+     *
+     * The base class in (potentialy) extensible hierarchy used to
+     * specialize the information available for a specific protocol.
+     *
+     * This class is necessary for the implementation of the Transport
+     * Current feature.
+     *
+     * <B>See Also:</B>
+     *
+     * https://svn.dre.vanderbilt.edu/viewvc/Middleware/trunk/TAO/docs/transport_current/index.html?revision=HEAD
+     *
+     */
+    class TAO_Export Stats
+    {
+    public:
+      Stats ();
+
+      void messages_sent (size_t message_length);
+      CORBA::LongLong messages_sent (void) const;
+      CORBA::LongLong bytes_sent (void) const;
+
+      void messages_received (size_t message_length);
+      CORBA::LongLong messages_received (void) const;
+      CORBA::LongLong bytes_received (void) const;
+
+      void opened_since (const ACE_Time_Value& tv);
+      const ACE_Time_Value& opened_since (void) const;
+
+    private:
+      // @NOTE: I could have used bytes_rcvd_.samples_count() instead,
+      // however there was a suspicion that 32 bits would be
+      // insufficient.
+      CORBA::LongLong messages_rcvd_;
+
+      // @NOTE: I could have used bytes_sent_.samples_count() instead,
+      // however there was a suspicion that 32 bits would be
+      // insufficient.
+      CORBA::LongLong messages_sent_;
+
+      ACE_Basic_Stats bytes_rcvd_;
+      ACE_Basic_Stats bytes_sent_;
+
+      ACE_Time_Value  opened_since_;
+    };
+  }
+}
 
 TAO_END_VERSIONED_NAMESPACE_DECL
 

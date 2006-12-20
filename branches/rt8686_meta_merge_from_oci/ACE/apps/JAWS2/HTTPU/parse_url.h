@@ -31,7 +31,7 @@ public:
   int port (void) const;
   const char *url_path (void) const;
 
-  enum URL_ERROR { NONE, STRDUP, SCHEME, SLASHSLASH };
+  enum URL_ERROR { URL_ERROR_NONE, URL_ERROR_STRDUP, URL_ERROR_SCHEME, URL_ERROR_SLASHSLASH };
 
   int error (void) const { return( error_ ); }
 

@@ -89,7 +89,6 @@ sum_server-stamp: $(srcdir)/sum_server.idl $(TAO_IDL_DEP)
 	$(TAO_IDL) $(TAO_IDLFLAGS) -Sa -St $(srcdir)/sum_server.idl
 	@touch $@
 
-
 noinst_HEADERS = \
   Gateway.idl \
   ObjectReferenceFactory.idl \

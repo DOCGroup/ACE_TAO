@@ -93,7 +93,6 @@ TreeNode-stamp: $(srcdir)/TreeNode.idl $(TAO_IDL_DEP)
 	$(TAO_IDL) $(TAO_IDLFLAGS) $(srcdir)/TreeNode.idl
 	@touch $@
 
-
 noinst_HEADERS = \
   TreeBase.idl \
   TreeController.idl \

@@ -49,7 +49,6 @@
 #define ACE_HAS_4_4BSD_SENDMSG_RECVMSG
 #define ACE_HAS_NONCONST_GETBY
 #define ACE_HAS_NONCONST_SWAB
-#define ACE_HAS_NONCONST_READV
 #define ACE_LACKS_UNIX_SYSLOG
 #define ACE_DEFAULT_MAX_SOCKET_BUFSIZ 32768
 #define ACE_DEFAULT_THREAD_KEYS 16
@@ -123,9 +122,6 @@
 #define ACE_THR_PRI_OTHER_DEF ACE_THR_PRI_FIFO_DEF
 #define ACE_HAS_SIGTIMEDWAIT
 #define ACE_HAS_SIGSUSPEND
-#if !defined (ACE_VXWORKS_SPARE)
-# define ACE_VXWORKS_SPARE spare4
-#endif /* ! ACE_VXWORKS_SPARE */
 #define ACE_HAS_GETIFADDRS
 
 #define ACE_LACKS_SETEGID
@@ -182,6 +178,7 @@
 #else
   // We are building for kernel mode
   #define ACE_LACKS_SUSECONDS_T
+  #define ACE_LACKS_INTPTR_T
   #define ACE_LACKS_INTTYPES_H
   #define ACE_LACKS_STDINT_H
   #define ACE_LACKS_UNAME
@@ -250,6 +247,9 @@
 // Only when building for kernel mode we can use TSS emulation, in rtp mode
 // we can't use the WIND_TCB struct anymore
 #  define ACE_HAS_TSS_EMULATION
+#  if !defined (ACE_VXWORKS_SPARE)
+#   define ACE_VXWORKS_SPARE spare4
+#  endif /* ! ACE_VXWORKS_SPARE */
 # endif
 // VxWorks has no recursive mutexes. This was set in the past but it doesn't
 // work with the pthread support, so only set it for the time being when pthread
@@ -263,14 +263,12 @@
 # define ACE_MT_SAFE 1
 #endif
 
-#if (ACE_VXWORKS == 0x630)
-  // Needed include to get all VxWorks CPU types
-  #include "types/vxCpu.h"
-  #if defined (CPU) && (CPU == PENTIUM || CPU == PENTIUM2 || CPU == PENTIUM3 || CPU == PENTIUM4)
-   // If running an Intel Pentium the
-   // ACE_OS::gethrtime () can use the RDTSC instruction.
-    # define ACE_HAS_PENTIUM
-  #endif
+// Needed include to get all VxWorks CPU types
+#include "types/vxCpu.h"
+#if defined (CPU) && (CPU == PENTIUM || CPU == PENTIUM2 || CPU == PENTIUM3 || CPU == PENTIUM4)
+ // If running an Intel Pentium the
+ // ACE_OS::gethrtime () can use the RDTSC instruction.
+  # define ACE_HAS_PENTIUM
 #endif
 
 // VxWorks defines the CPU define MAP, undef it to prevent problems with

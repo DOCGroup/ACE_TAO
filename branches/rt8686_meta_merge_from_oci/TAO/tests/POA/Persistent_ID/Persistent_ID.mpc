@@ -1,7 +1,7 @@
 // -*- MPC -*-
 // $Id$
 
-project(POA_server*): taoserver {
+project(POA_server*): taoserver, avoids_corba_e_micro {
   Source_Files {
     server.cpp
   }

@@ -36,7 +36,7 @@ noinst_HEADERS = \
 
 endif BUILD_EXCEPTIONS
 
-## Makefile.sig.am
+## Makefile.Bug_2612.am
 
 if BUILD_EXCEPTIONS
 

@@ -222,6 +222,7 @@ project(TAO) : acelib, core, tao_output, taodefaults, pidl, extra_core, tao_vers
     Transport_Descriptor_Interface.cpp
     Transport_Mux_Strategy.cpp
     Transport_Queueing_Strategies.cpp
+    Transport_Selection_Guard.cpp
     Transport_Timer.cpp
     TSS_Resources.cpp
     TypeCodeFactory_Adapter.cpp
@@ -529,6 +530,7 @@ project(TAO) : acelib, core, tao_output, taodefaults, pidl, extra_core, tao_vers
     Transport.h
     Transport_Mux_Strategy.h
     Transport_Queueing_Strategies.h
+    Transport_Selection_Guard.h
     Transport_Timer.h
     TSS_Resources.h
     TypeCodeFactory_Adapter.h

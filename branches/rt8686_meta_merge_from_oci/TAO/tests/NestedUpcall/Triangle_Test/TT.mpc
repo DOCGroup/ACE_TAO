@@ -8,7 +8,7 @@ project(*Nested_Upcall_Server_Idl): taoidldefaults {
   custom_only = 1
 }
 
-project(*Nested_Upcall_Server_A): taoexe, utils, portableserver {
+project(*Nested_Upcall_Server_A): taoexe, utils, portableserver, avoids_corba_e_micro {
   after += *Nested_Upcall_Server_Idl
   Source_Files {
     Object_A_i.cpp

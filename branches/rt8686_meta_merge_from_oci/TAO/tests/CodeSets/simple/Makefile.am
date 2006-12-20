@@ -43,7 +43,6 @@ simple-stamp: $(srcdir)/simple.idl $(TAO_IDL_DEP)
 	$(TAO_IDL) $(TAO_IDLFLAGS) -Sa -St $(srcdir)/simple.idl
 	@touch $@
 
-
 noinst_HEADERS = \
   simple.idl
 

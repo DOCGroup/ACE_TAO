@@ -43,7 +43,6 @@ StateTransfer-stamp: $(srcdir)/StateTransfer.idl $(TAO_IDL_DEP)
 	$(TAO_IDL) $(TAO_IDLFLAGS) -Sa -St $(srcdir)/StateTransfer.idl
 	@touch $@
 
-
 noinst_HEADERS = \
   StateTransfer.idl
 

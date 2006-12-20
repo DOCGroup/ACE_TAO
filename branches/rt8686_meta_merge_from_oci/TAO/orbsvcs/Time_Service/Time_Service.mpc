@@ -1,7 +1,7 @@
 // -*- MPC -*-
 // $Id$
 
-project(Time_Service_Server) : orbsvcsexe, core, time, naming, utils {
+project(Time_Service_Server) : orbsvcsexe, core, time, naming, utils, avoids_corba_e_micro {
   exename  = Time_Service_Server
   Source_Files {
     Server_i.cpp
@@ -9,7 +9,7 @@ project(Time_Service_Server) : orbsvcsexe, core, time, naming, utils {
   }
 }
 
-project(Time_Service_Clerk) : orbsvcsexe, core, time, naming, utils {
+project(Time_Service_Clerk) : orbsvcsexe, core, time, naming, utils, avoids_corba_e_micro {
   exename  = Time_Service_Clerk
   Source_Files {
     Clerk_i.cpp

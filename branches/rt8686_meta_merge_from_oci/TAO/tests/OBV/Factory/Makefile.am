@@ -45,7 +45,6 @@ Factory-stamp: $(srcdir)/Factory.idl $(TAO_IDL_DEP)
 	$(TAO_IDL) $(TAO_IDLFLAGS) $(srcdir)/Factory.idl
 	@touch $@
 
-
 noinst_HEADERS = \
   Factory.idl
 
