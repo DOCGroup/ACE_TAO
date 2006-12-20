@@ -1,3 +1,28 @@
+Wed Dec 20 20:59:39 UTC 2006  Iliyan Jeliazkov  <iliyan@ociweb.com>
+
+          These are fixes correcting scoreboard issues pertaining to the
+          checkin from Tue Dec 19 22:09:34 UTC 2006.
+
+        * tao/TC.mpc:
+        * tao/TC_IIOP.mpc:
+
+          Updated the IDL compile options and include file path to reflect
+          the new position of these files (since Wed Dec 20 17:34:07)
+
+        * tao/TransportCurrent/Current_Loader.h:
+        * tao/TransportCurrent/Current_Loader.cpp:
+
+          Eliminated unnecessary code.
+
+        * tao/TransportCurrent/Current_ORBInitializer_Base.cpp:
+
+          Removed unnecessary #include "ace/post.h"
+
+        * tao/TransportCurrent/IIOP_Current_Impl.cpp:
+
+          Added an explicit cast to silence Windows builds complaining
+          about implicit conversion between HANDLE and CORBA::Long.
+
 Wed Dec 20 17:34:07 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
 
         * configure.ac:
