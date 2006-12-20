@@ -1,7 +1,0 @@
-// -*- MPC -*-
-// $Id$
-
-project {
-  after   += TC
-  libs    += TAO_TC
-}
