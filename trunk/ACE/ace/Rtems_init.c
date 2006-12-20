@@ -1,22 +1,4 @@
 /*
- * RTEMS Network configuration/initialization
- *
- *  This file is a merger of the netdemo/init.c and networkconfig.h
- *  with some modifications to support loopback only.  This file
- *  is OK for a starting point for a real networked application.
- *     --joel sherrill 16 Mar 2001
- *
- * This program may be distributed and used for any purpose.
- * I ask only that you:
- *	1. Leave this author information intact.
- *	2. Document any changes you make.
- *
- * W. Eric Norum
- * Saskatchewan Accelerator Laboratory
- * University of Saskatchewan
- * Saskatoon, Saskatchewan, CANADA
- * eric@skatter.usask.ca
- *
  *  $Id$
  */
 
