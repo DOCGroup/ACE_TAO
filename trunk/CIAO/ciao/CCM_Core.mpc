@@ -247,7 +247,7 @@ project(Deployment_stub) : taolib_with_idl, valuetype, ifr_client, ciao_events_b
 
 // CIAO_DnC_Client library must be linked for this project.
 // Please don't remove.
-project(Deployment_svnt) : taolib_with_idl, portableserver, valuetype, ifr_client, ciao_deployment_stub, ciao_events_dnc, ciao_client_dnc {
+project(Deployment_svnt) : taolib_with_idl, portableserver, valuetype, ifr_client, ciao_deployment_stub, ciao_events_dnc, ciao_client_dnc, naming {
   sharedname   =  CIAO_Deployment_svnt
   dynamicflags =  DEPLOYMENT_SVNT_BUILD_DLL
   idlflags     += -Wb,stub_export_macro=Deployment_stub_Export

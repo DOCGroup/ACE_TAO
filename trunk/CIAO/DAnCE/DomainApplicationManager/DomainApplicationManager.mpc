@@ -1,7 +1,7 @@
 // -*- MPC -*-
 // $Id$
 
-project (DomainApplicationManager): ciao_deployment_svnt  {
+project (DomainApplicationManager): ciao_deployment_svnt, naming  {
   sharedname = DomainApplicationManager
   after += ExecutionManager_stub
 
