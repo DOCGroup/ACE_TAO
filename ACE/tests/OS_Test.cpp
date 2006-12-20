@@ -547,6 +547,9 @@ snprintf_test (void)
 
   ACE_OS::memset(buf, 0xab, 2*BUFFER_SIZE);
   retval = ACE_OS::snprintf (buf, BUFFER_SIZE, "%d", 1234);
+
+  // HP-UX has broken vsnprintf
+#if !defined (HPUX)
   if (retval != 4)
     {
       ACE_ERROR ((LM_ERROR,
@@ -554,6 +557,7 @@ snprintf_test (void)
                   retval));
       ++error_count;
     }
+#endif /* !HPUX */
 
   if (buf[3] != 0)
     {
