@@ -1,13 +1,22 @@
+Wed Dec 20 12:31:04 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/test_config.h:
+          Only define ACE_START_TEST and ACE_END_TEST when they are not
+          defined yet. This way we can set our own define in the config.h
+          file and for example just do logging to stdout instead of a file
+          which can be problematic when the test target doesn't have a
+          file system
+
 Wed Dec 20 04:52:04 UTC 2006  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * ACE-INSTALL.html:
         * docs/Download.html:
-        
+
           Fleshed out SVN instructions a bit more, corrected link mistake in
-          Download.html.  
-        
+          Download.html.
+
           Thanks to Craig Rodrigues <rodrigc at crodrigues dot org> for the patch.
-        
+
 Tue Dec 19 22:09:34 UTC 2006  Iliyan Jeliazkov  <iliyan@ociweb.com>
 
         * bin/MakeProjectCreator/config/tc.mpb:
