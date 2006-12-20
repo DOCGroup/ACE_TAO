@@ -1,3 +1,16 @@
+Wed Dec 20 09:36:00 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/BiDirectional/BiDirectional.mpc:
+        * tests/BiDirectional_DelayedUpcall/BiDir_DelayedUpcall.mpc:
+        * tests/BiDirectional_NestedUpcall/BiDir_NestedUpcall.mpc:
+        * tests/Bug_2417_Regression/Bug_2417_Regression.mpc:
+        * tests/Bug_2560_Regression/Bug_2560_Regression.mpc:
+        * tests/MT_BiDir/MT_BiDir.mpc:
+        * tests/NestedUpcall/Triangle_Test/TT.mpc:
+          Disabled some projects that can't compile when CORBA/e
+          micro has been enabled. Also removed some after usage because
+          there is now a seperate idl project
+
 Wed Dec 20 09:31:00 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * examples/Callback_Quoter/Callback_Quoter.mpc:
