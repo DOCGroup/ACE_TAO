@@ -1012,7 +1012,7 @@ get_ip_interfaces_win32 (size_t &count,
           addrs[j].set (0,
                         devp->nwIPAddress,
                         0); // Already in net order.
-          j++;
+          ++j;
         }
       // There's no call to close the DEVHANDLE.
     }
@@ -1491,7 +1491,7 @@ get_ip_interfaces_aix (size_t &count,
         || req->ifr_addr.sa_family == AF_INET6
 # endif
         )
-       num_ifs++;
+       ++num_ifs;
     }
   ACE_NEW_RETURN (addrs,ACE_INET_Addr[num_ifs], -1);
 
@@ -1702,13 +1702,13 @@ ACE::get_ip_interfaces (size_t &count,
 #  endif
               )
             {
-	      int addrlen = static_cast<int> (sizeof (struct sockaddr_in));
+              int addrlen = static_cast<int> (sizeof (struct sockaddr_in));
 #  if defined (ACE_HAS_IPV6)
               if (addr->sin_family == AF_INET6)
                 addrlen = static_cast<int> (sizeof (struct sockaddr_in6));
 #  endif
               addrs[count].set (addr, addrlen);
-              count++;
+              ++count;
             }
 # else /* ! _UNICOS */
           // need to explicitly copy on the Cray, since the bitfields kinda
@@ -1729,7 +1729,7 @@ ACE::get_ip_interfaces (size_t &count,
 # endif /* ! _UNICOS */
         }
 
-#if !defined (__QNX__) && !defined (__FreeBSD__) && !defined(__NetBSD__)
+#if !defined (__QNX__) && !defined (__FreeBSD__) && !defined(__NetBSD__) && !defined (ACE_HAS_RTEMS)
       ++pcur;
 #else
       if (pcur->ifr_addr.sa_len <= sizeof (struct sockaddr))
@@ -1889,13 +1889,13 @@ return 0;
       if (ifcfg.ifc_len < 0)
         break;
 
-      if_count++;
-#if !defined (__QNX__) && !defined (__FreeBSD__) && !defined(__NetBSD__)
-      p_ifs++;
+      ++if_count;
+#if !defined (__QNX__) && !defined (__FreeBSD__) && !defined(__NetBSD__) && !defined (ACE_HAS_RTEMS)
+      ++p_ifs;
 #else
      if (p_ifs->ifr_addr.sa_len <= sizeof (struct sockaddr))
        {
-          p_ifs++;
+          ++p_ifs;
        }
        else
        {
@@ -1908,14 +1908,14 @@ return 0;
   ACE_OS::free (ifcfg.ifc_req);
 
 # if defined (ACE_HAS_IPV6)
-  FILE* fp;
+  FILE* fp = 0;
 
   if ((fp = ACE_OS::fopen (ACE_LIB_TEXT ("/proc/net/if_inet6"), ACE_LIB_TEXT ("r"))) != NULL)
     {
       // Scan the lines according to the expected format but don't really read any input
       while (fscanf (fp, "%*32s %*02x %*02x %*02x %*02x %*8s\n") != EOF)
         {
-          if_count++;
+          ++if_count;
         }
       ACE_OS::fclose (fp);
     }
