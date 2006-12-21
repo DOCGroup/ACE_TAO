@@ -1,3 +1,11 @@
+Thu Dec 21 14:46:46 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * tao/TransportCurrent/TC.idl:
+        * tao/TransportCurrent/TC_IIOP.idl:
+
+          Change #include files to be relative to ${TAO_ROOT} like the
+          other *.idl / *.pidl files.
+
 Thu Dec 21 14:00:11 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
 
         * tao/Makefile.am:
