@@ -267,6 +267,11 @@ typedef union sigval sigval_t;
 # define ACE_HAS_SIGVAL_SIGVAL_INT
 #endif
 
+#if (__FreeBSD_version >= 700028)
+# define ACE_HAS_SCTP
+# define ACE_HAS_LKSCTP
+#endif
+
 #include /**/ "ace/post.h"
 
 #endif /* ACE_CONFIG_H */
