@@ -54,6 +54,8 @@ namespace TAO
       Current_var current (this->make_current_instance (tao_info->orb_core (),
                                                         tss_slot
                                                         ACE_ENV_ARG_PARAMETER));
+      ACE_CHECK;
+
 
       info->register_initial_reference (ACE_TEXT_ALWAYS_CHAR (this->id_.fast_rep ()),
                                         current.in ());
