@@ -1,3 +1,9 @@
+Thu Dec 21 21:54:51 UTC 2006  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
+
+        * ace/config-freebsd.h: Added support for SCTP in FreeBSD version
+          700028 and greater.  Thanks to Craig Rodrigues <rodrigc at
+          crodrigues dot org> for reporting this.
+
 Thu Dec 21 20:19:04 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Sock_Connect.cpp:
