@@ -9,6 +9,7 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
+
 namespace TAO
 {
   namespace Transport
@@ -24,6 +25,7 @@ namespace TAO
     IIOP_Current_Impl::handler (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
       ACE_THROW_SPEC ((::CORBA::SystemException, NoContext))
     {
+#if defined (TAO_HAS_IIOP) && (TAO_HAS_IIOP != 0)
       const TAO_Transport* t = this->transport ();
       if (t == 0)
         ACE_THROW_RETURN (::CORBA::NO_IMPLEMENT (), 0);
@@ -33,6 +35,9 @@ namespace TAO
         ACE_THROW_RETURN (::CORBA::NO_IMPLEMENT (), 0);
 
       return static_cast <TAO_IIOP_Connection_Handler*> (ch);
+#else
+      ACE_THROW_RETURN (::CORBA::NO_IMPLEMENT (), 0);
+#endif
     }
 
 
@@ -54,9 +59,13 @@ namespace TAO
     IIOP_Current_Impl::id (ACE_ENV_SINGLE_ARG_DECL)
       ACE_THROW_SPEC ((::CORBA::SystemException, NoContext))
     {
+#if defined (TAO_HAS_IIOP) && (TAO_HAS_IIOP != 0)
       // Need to use cast to pacify windows compilers complaining
       // about the implicit HANDLE -> CORBA::Long conversion.
       return (CORBA::Long) this->handler ()->get_handle ();
+#else
+      ACE_THROW_RETURN (::CORBA::NO_IMPLEMENT (), 0);
+#endif
     }
 
     ::SSLIOP::Current_ptr
@@ -71,6 +80,7 @@ namespace TAO
     IIOP_Current_Impl::remote_port (ACE_ENV_SINGLE_ARG_DECL)
       ACE_THROW_SPEC ((::CORBA::SystemException, NoContext))
     {
+#if defined (TAO_HAS_IIOP) && (TAO_HAS_IIOP != 0)
       TAO_IIOP_Connection_Handler *iiopch =
         this->handler ();
 
@@ -78,12 +88,16 @@ namespace TAO
       iiopch->peer ().get_remote_addr (a);
 
       return a.get_port_number ();
+#else
+      ACE_THROW_RETURN (::CORBA::NO_IMPLEMENT (), 0);
+#endif
     }
 
     char*
     IIOP_Current_Impl::remote_host (ACE_ENV_SINGLE_ARG_DECL)
       ACE_THROW_SPEC ((::CORBA::SystemException, NoContext))
     {
+#if defined (TAO_HAS_IIOP) && (TAO_HAS_IIOP != 0)
       TAO_IIOP_Connection_Handler *iiopch =
         this->handler ();
 
@@ -91,12 +105,16 @@ namespace TAO
       iiopch->peer ().get_remote_addr (a);
 
       return CORBA::string_dup (a.get_host_addr ());
+#else
+      ACE_THROW_RETURN (::CORBA::NO_IMPLEMENT (), 0);
+#endif
     }
 
     CORBA::Long
     IIOP_Current_Impl::local_port (ACE_ENV_SINGLE_ARG_DECL)
       ACE_THROW_SPEC ((::CORBA::SystemException, NoContext))
     {
+#if defined (TAO_HAS_IIOP) && (TAO_HAS_IIOP != 0)
       TAO_IIOP_Connection_Handler *iiopch =
         this->handler ();
 
@@ -104,12 +122,16 @@ namespace TAO
       iiopch->peer ().get_local_addr (a);
 
       return a.get_port_number ();
+#else
+      ACE_THROW_RETURN (::CORBA::NO_IMPLEMENT (), 0);
+#endif
     }
 
     char*
     IIOP_Current_Impl::local_host (ACE_ENV_SINGLE_ARG_DECL)
       ACE_THROW_SPEC ((::CORBA::SystemException, NoContext))
     {
+#if defined (TAO_HAS_IIOP) && (TAO_HAS_IIOP != 0)
       TAO_IIOP_Connection_Handler *iiopch =
         this->handler ();
 
@@ -117,6 +139,9 @@ namespace TAO
       iiopch->peer ().get_local_addr (a);
 
       return CORBA::string_dup (a.get_host_addr ());
+#else
+      ACE_THROW_RETURN (::CORBA::NO_IMPLEMENT (), 0);
+#endif
     }
 
   }
