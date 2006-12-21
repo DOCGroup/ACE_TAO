@@ -130,10 +130,6 @@ namespace Test
   void ORBInitializer<PortableInterceptor::ServerRequestInterceptor>::post_init
     (PortableInterceptor::ORBInitInfo* oii ACE_ENV_ARG_DECL_WITH_DEFAULTS)
       ACE_THROW_SPEC ((CORBA::SystemException));
-};
-
-#if defined(_MSC_VER)
-#pragma warning(pop)
-#endif /* _MSC_VER */
+}
 
 #endif  /* SERVER_REQUEST_INTERCEPTOR_H */

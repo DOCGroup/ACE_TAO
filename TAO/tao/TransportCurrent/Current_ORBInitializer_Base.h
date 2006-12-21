@@ -59,8 +59,9 @@ namespace TAO
         const ACE_TString id_;
       };
 
-  };
-};
+  }
+
+}
 
 TAO_END_VERSIONED_NAMESPACE_DECL
 

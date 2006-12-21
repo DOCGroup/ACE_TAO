@@ -10,13 +10,6 @@ ACE_RCSID (ForwardRequest,
 #include "Client_Request_Interceptor.h"
 #include "ORBInitializer_T.h"
 
-//   // A specialization to handle client-side interceptors
-//   template <>
-//   void ORBInitializer<PortableInterceptor::ClientRequestInterceptor>::post_init
-//     (PortableInterceptor::ORBInitInfo* oii ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-//       ACE_THROW_SPEC ((CORBA::SystemException));
-
-
 namespace Test
 {
 
@@ -25,12 +18,13 @@ namespace Test
   // A specialization to handle client-side interceptors
   template <>
   void
-  ORBInitializer<PortableInterceptor::ClientRequestInterceptor>::post_init (PortableInterceptor::ORBInitInfo* oii
-                                                                            ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+  ORBInitializer<PortableInterceptor::ClientRequestInterceptor>::post_init
+    (PortableInterceptor::ORBInitInfo* oii
+     ACE_ENV_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException))
   {
     oii->add_client_request_interceptor (this->interceptor_.in ());
-  };
+  }
 
   Client_Request_Interceptor::Client_Request_Interceptor (const char *orb_id,
                                                           TEST test)
