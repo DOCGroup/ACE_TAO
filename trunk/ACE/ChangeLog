@@ -1,3 +1,8 @@
+Thu Dec 21 10:17:04 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/UUID.cpp:
+          Fixed initialisation warning
+
 Thu Dec 21 09:45:00 UTC 2006  Simon Massey  <sma@prismtech.com>
 
         * ace/OS_TLI.inl:
