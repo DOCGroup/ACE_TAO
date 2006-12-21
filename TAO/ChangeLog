@@ -1,3 +1,12 @@
+Thu Dec 21 21:29:47 UTC 2006  Iliyan Jeliazkov  <iliyan@ociweb.com>
+
+        * tao/TransportCurrent/Current_ORBInitializer_Base.cpp:
+        * tests/TransportCurrent/Framework/Client_Request_Interceptor.h:
+        * tests/TransportCurrent/Framework/Server_Request_Interceptor.h:
+        * tests/TransportCurrent/Framework/simple.cpp:
+
+          Fixed FUZZ problems.
+
 Thu Dec 21 17:49:24 UTC 2006  Iliyan Jeliazkov  <iliyan@ociweb.com>
 
         * tests/TransportCurrent/IIOP/Current_Test_Impl.cpp:
