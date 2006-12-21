@@ -7,7 +7,7 @@
 #endif /* ACE_HAS_INLINED_OSCALLS */
 
 ACE_INLINE
-HTTP_Hdr_Node::operator const int (void) const
+HTTP_Hdr_Node::operator int (void) const
 {
   return this->index_;
 }

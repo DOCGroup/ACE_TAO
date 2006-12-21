@@ -26,7 +26,7 @@ class HTTPU_Export HTTP_Hdr_Node
   friend class HTTP_HCodes;
 
 public:
-  operator const int (void) const;
+  operator int (void) const;
   operator const char * (void) const;
   const char * format (void) const;
 
