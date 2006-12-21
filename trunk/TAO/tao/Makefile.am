@@ -5753,7 +5753,7 @@ CLEANFILES += \
 TransportCurrent/TCC.cpp TransportCurrent/TCC.h TransportCurrent/TCC.inl TransportCurrent/TCS.cpp TransportCurrent/TCS.h TransportCurrent/TCS.inl: TransportCurrent/TC-stamp
 
 TransportCurrent/TC-stamp: $(srcdir)/TransportCurrent/TC.idl $(TAO_IDL_DEP)
-	$(TAO_IDL) $(TAO_IDLFLAGS) -Wb,versioning_begin=TAO_BEGIN_VERSIONED_NAMESPACE_DECL -Wb,versioning_end=TAO_END_VERSIONED_NAMESPACE_DECL -Wb,export_include=tao/TransportCurrent/Transport_Current_Export.h -Wb,export_macro=TAO_Transport_Current_Export $(srcdir)/TransportCurrent/TC.idl
+	$(TAO_IDL) $(TAO_IDLFLAGS) -Wb,versioning_begin=TAO_BEGIN_VERSIONED_NAMESPACE_DECL -Wb,versioning_end=TAO_END_VERSIONED_NAMESPACE_DECL -Wb,export_include=tao/TransportCurrent/Transport_Current_Export.h -Wb,export_macro=TAO_Transport_Current_Export -o TransportCurrent -I./TransportCurrent $(srcdir)/TransportCurrent/TC.idl
 	@touch $@
 
 lib_LTLIBRARIES += libTAO_TC.la
@@ -5823,7 +5823,7 @@ CLEANFILES += \
 TransportCurrent/TC_IIOPC.cpp TransportCurrent/TC_IIOPC.h TransportCurrent/TC_IIOPC.inl TransportCurrent/TC_IIOPS.cpp TransportCurrent/TC_IIOPS.h TransportCurrent/TC_IIOPS.inl: TransportCurrent/TC_IIOP-stamp
 
 TransportCurrent/TC_IIOP-stamp: $(srcdir)/TransportCurrent/TC_IIOP.idl $(TAO_IDL_DEP)
-	$(TAO_IDL) $(TAO_IDLFLAGS) -Wb,versioning_begin=TAO_BEGIN_VERSIONED_NAMESPACE_DECL -Wb,versioning_end=TAO_END_VERSIONED_NAMESPACE_DECL -Wb,export_include=tao/TransportCurrent/Transport_Current_Export.h -Wb,export_macro=TAO_Transport_Current_Export $(srcdir)/TransportCurrent/TC_IIOP.idl
+	$(TAO_IDL) $(TAO_IDLFLAGS) -Wb,versioning_begin=TAO_BEGIN_VERSIONED_NAMESPACE_DECL -Wb,versioning_end=TAO_END_VERSIONED_NAMESPACE_DECL -Wb,export_include=tao/TransportCurrent/Transport_Current_Export.h -Wb,export_macro=TAO_Transport_Current_Export -o TransportCurrent -I./TransportCurrent $(srcdir)/TransportCurrent/TC_IIOP.idl
 	@touch $@
 
 lib_LTLIBRARIES += libTAO_TC_IIOP.la
