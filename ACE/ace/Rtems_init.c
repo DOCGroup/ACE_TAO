@@ -4,9 +4,9 @@
 
 #if defined (ACE_HAS_RTEMS)
 
-#include <bsp.h>
-
-char *rtems_progname;
+#define RTEMS_BSP_NETWORK_DRIVER_NAME "ne1"
+#define RTEMS_BSP_NETWORK_DRIVER_ATTACH rtems_ne_driver_attach
+#define CONFIGURE_LIBIO_MAXIMUM_FILE_DESCRIPTORS 256
 
 #define CONFIGURE_MAXIMUM_POSIX_THREADS 50
 #define CONFIGURE_MAXIMUM_POSIX_MUTEXES 300
@@ -32,6 +32,10 @@ char *rtems_progname;
                                            RTEMS_NO_TIMESLICE | \
                                            RTEMS_NO_ASR | \
                                            RTEMS_INTERRUPT_LEVEL(0))
+
+#include <bsp.h>
+
+char *rtems_progname;
 
 #define CONFIGURE_INIT
 rtems_task Init (rtems_task_argument argument);
