@@ -47,7 +47,6 @@ rtems_task Init (rtems_task_argument argument);
 #if !defined (ACE_LACKS_NETWORKING)
 
 #include <rtems/rtems_bsdnet.h>
-/* start of #include "../networkconfig.h" */
 
 /*
  * Network configuration
@@ -56,8 +55,6 @@ rtems_task Init (rtems_task_argument argument);
  * EDIT THIS FILE TO REFLECT YOUR NETWORK CONFIGURATION     *
  * BEFORE RUNNING ANY RTEMS PROGRAMS WHICH USE THE NETWORK! *
  ************************************************************
- *
- *  $Id$
  */
 
 #ifndef _RTEMS_NETWORKCONFIG_H_
