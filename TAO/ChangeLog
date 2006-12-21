@@ -1,3 +1,21 @@
+Thu Dec 21 15:32:49 UTC 2006  Iliyan Jeliazkov  <iliyan@ociweb.com>
+
+        * tao/TransportCurrent/Current_Impl.h:
+        * tao/TransportCurrent/Current_Impl.cpp:
+        * tao/TransportCurrent/Current_Loader.h:
+        * tao/TransportCurrent/Current_ORBInitializer.h:
+        * tao/TransportCurrent/Current_ORBInitializer_Base.h:
+        * tao/TransportCurrent/IIOP_Current_Impl.h:
+
+        * tests/TransportCurrent/Framework/Client_Request_Interceptor.h:
+        * tests/TransportCurrent/Framework/Client_Request_Interceptor.cpp:
+        * tests/TransportCurrent/Framework/ORBInitializer_T.h:
+        * tests/TransportCurrent/Framework/Server_Request_Interceptor.h:
+        * tests/TransportCurrent/IIOP/IIOP_Server_Request_Interceptor.h:
+
+          Removed a ';' after the closing curly brace of a namespace
+          declaration which caused hiccups with gcc 4.0.2.
+
 Thu Dec 21 14:46:46 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
 
         * tao/TransportCurrent/TC.idl:
