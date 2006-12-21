@@ -108,8 +108,9 @@ ifeq ($(threads),1)
 endif
 
 ifeq ($(shared_libs),1)
-  CFLAGS  += -mshared -DACE_HAS_SVR4_DYNAMIC_LINKING
-  SOFLAGS += -mshared -DACE_HAS_SVR4_DYNAMIC_LINKING
+  CPPFLAGS += -DACE_HAS_SVR4_DYNAMIC_LINKING
+  CFLAGS   += -mshared
+  SOFLAGS  += -mshared
   LIBS    += -ldl
 else
   LIBS    += -lnetinet -lnsl
@@ -118,7 +119,7 @@ endif
 CC              = gcc
 CXX             = g++
 CFLAGS          += -Wpointer-arith -Wall
-CFLAGS          += -DACE_LYNXOS_MAJOR=$(LYNXOS_MAJOR) -DACE_LYNXOS_MINOR=$(LYNXOS_MINOR)
+CPPFLAGS        += -DACE_LYNXOS_MAJOR=$(LYNXOS_MAJOR) -DACE_LYNXOS_MINOR=$(LYNXOS_MINOR)
 DCFLAGS         += -g
 PIC             = -fPIC
 DLD             = $(CXX)
