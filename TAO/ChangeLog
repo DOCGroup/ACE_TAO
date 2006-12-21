@@ -1,3 +1,9 @@
+Thu Dec 21 14:00:11 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * tao/Makefile.am:
+
+          Regenerated.
+
 Wed Dec 20 21:14:11 UTC 2006  Iliyan Jeliazkov  <iliyan@ociweb.com>
 
         * tao/TransportCurrent/Current_Loader.h:
