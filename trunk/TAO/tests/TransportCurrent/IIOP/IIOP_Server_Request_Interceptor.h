@@ -23,8 +23,9 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "Server_Request_Interceptor.h"
 #include "tao/TransportCurrent/IIOP_Transport_Current.h"
+
+#include "tests/TransportCurrent/Framework/Server_Request_Interceptor.h"
 
 namespace Test
 {

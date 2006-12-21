@@ -1,3 +1,11 @@
+Thu Dec 21 17:49:24 UTC 2006  Iliyan Jeliazkov  <iliyan@ociweb.com>
+
+        * tests/TransportCurrent/IIOP/Current_Test_Impl.cpp:
+        * tests/TransportCurrent/IIOP/IIOP_Server_Request_Interceptor.h:
+
+          Updated the include files' path to resolve a compilation problem
+          in an autoconf (FC4_autoconf) build.
+
 Thu Dec 21 16:03:08 UTC 2006  Iliyan Jeliazkov  <iliyan@ociweb.com>
 
         * tao/TransportCurrent/IIOP_Current_Impl.cpp:
