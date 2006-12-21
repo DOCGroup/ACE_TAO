@@ -1,3 +1,10 @@
+Thu Dec 21 16:12:16 UTC 2006  Iliyan Jeliazkov  <iliyan@ociweb.com>
+
+        * bin/tao_orb_tests.lst:
+
+          Fixing the condition for running the Transport::Current tests
+          (note that ST = Single Threaded, not STATIC).
+
 Thu Dec 21 14:31:04 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Sock_Connect.cpp:
