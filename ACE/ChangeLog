@@ -1,3 +1,8 @@
+Thu Dec 21 13:32:08 UTC 2006  Olli Savia  <ops@iki.fi>
+
+        * include/makeinclude/platform_lynxos.GNU:
+          Moved macro definitions from CFLAGS to CPPFLAGS.
+
 Thu Dec 21 12:12:04 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * include/makeinclude/rules.bin.GNU:
