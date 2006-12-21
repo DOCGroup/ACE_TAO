@@ -135,10 +135,6 @@ namespace Test
     TEST test_;
   };
 
-}; // namespace Test
-
-#if defined(_MSC_VER)
-#pragma warning(pop)
-#endif /* _MSC_VER */
+} // namespace Test
 
 #endif  /* CLIENT_REQUEST_INTERCEPTOR_H */

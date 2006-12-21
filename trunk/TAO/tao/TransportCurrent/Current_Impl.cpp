@@ -1,4 +1,4 @@
-// $Id:$
+// $Id$
 
 #include "tao/Transport.h"
 #include "tao/Transport_Selection_Guard.h"
@@ -98,9 +98,9 @@ namespace TAO
       return msecs;
     }
 
-  };
+  }
 
-};
+}
 
 TAO_END_VERSIONED_NAMESPACE_DECL
 

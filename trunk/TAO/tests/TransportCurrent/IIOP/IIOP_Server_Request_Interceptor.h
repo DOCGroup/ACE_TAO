@@ -26,11 +26,6 @@
 #include "Server_Request_Interceptor.h"
 #include "tao/TransportCurrent/IIOP_Transport_Current.h"
 
-#if defined(_MSC_VER)
-#pragma warning(push)
-#pragma warning(disable:4250)
-#endif /* _MSC_VER */
-
 namespace Test
 {
 
@@ -153,10 +148,6 @@ namespace Test
     EndPoint endPoints_[1001];
   };
 
-}; /* namespace Test */
-
-#if defined(_MSC_VER)
-#pragma warning(pop)
-#endif /* _MSC_VER */
+} // namespace Test
 
 #endif  /* ISERVER_REQUEST_INTERCEPTOR_H */
