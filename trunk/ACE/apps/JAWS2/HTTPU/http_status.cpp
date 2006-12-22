@@ -5,28 +5,33 @@
 const char *
 HTTP_SCode::table_ [HTTP_SCode::SC_TABLE_SIZE];
 
-HTTP_SCode_Node
+HTTP_SCode_Node HTTP_SCode_Base::STATUS_OK (200, "OK");
+HTTP_SCode_Node HTTP_SCode_Base::STATUS_CREATED (201, "Created");
+HTTP_SCode_Node HTTP_SCode_Base::STATUS_ACCEPTED (202, "Accepted");
+HTTP_SCode_Node HTTP_SCode_Base::STATUS_NO_CONTENT (204, "No Content");
+HTTP_SCode_Node HTTP_SCode_Base::STATUS_MULTIPLE_CHOICES (300,
+                                                          "Multiple Choices");
+HTTP_SCode_Node HTTP_SCode_Base::STATUS_MOVED_PERMANENTLY (301,
+                                                           "Moved Permanently");
+HTTP_SCode_Node HTTP_SCode_Base::STATUS_MOVED_TEMPORARILY (302,
+                                                           "Moved Temporarily");
+HTTP_SCode_Node HTTP_SCode_Base::STATUS_NOT_MODIFIED (304, "Not Modified");
+HTTP_SCode_Node HTTP_SCode_Base::STATUS_INSUFFICIENT_DATA (399,
+                                                           "Insufficient Data");
+HTTP_SCode_Node HTTP_SCode_Base::STATUS_BAD_REQUEST (400, "Bad Request");
+HTTP_SCode_Node HTTP_SCode_Base::STATUS_UNAUTHORIZED (401, "Unauthorized");
+HTTP_SCode_Node HTTP_SCode_Base::STATUS_FORBIDDEN (403, "Forbidden");
+HTTP_SCode_Node HTTP_SCode_Base::STATUS_NOT_FOUND (404, "Not Found");
+HTTP_SCode_Node HTTP_SCode_Base::STATUS_INTERNAL_SERVER_ERROR (500,
+                                                               "Internal Server Error");
+HTTP_SCode_Node HTTP_SCode_Base::STATUS_NOT_IMPLEMENTED (501,
+                                                         "Not Implemented");
+HTTP_SCode_Node HTTP_SCode_Base::STATUS_BAD_GATEWAY (502, "Bad Gateway");
+HTTP_SCode_Node HTTP_SCode_Base::STATUS_SERVICE_UNAVAILABLE (503,
+                                                             "Service Unavailable");
+HTTP_SCode_Node HTTP_SCode_Base::STATUS_QUIT (599, "Quit");
 
-  HTTP_SCode_Base::STATUS_OK (200, "OK"),
-  HTTP_SCode_Base::STATUS_CREATED (201, "Created"),
-  HTTP_SCode_Base::STATUS_ACCEPTED (202, "Accepted"),
-  HTTP_SCode_Base::STATUS_NO_CONTENT (204, "No Content"),
-  HTTP_SCode_Base::STATUS_MULTIPLE_CHOICES (300, "Multiple Choices"),
-  HTTP_SCode_Base::STATUS_MOVED_PERMANENTLY (301, "Moved Permanently"),
-  HTTP_SCode_Base::STATUS_MOVED_TEMPORARILY (302, "Moved Temporarily"),
-  HTTP_SCode_Base::STATUS_NOT_MODIFIED (304, "Not Modified"),
-  HTTP_SCode_Base::STATUS_INSUFFICIENT_DATA (399, "Insufficient Data"),
-  HTTP_SCode_Base::STATUS_BAD_REQUEST (400, "Bad Request"),
-  HTTP_SCode_Base::STATUS_UNAUTHORIZED (401, "Unauthorized"),
-  HTTP_SCode_Base::STATUS_FORBIDDEN (403, "Forbidden"),
-  HTTP_SCode_Base::STATUS_NOT_FOUND (404, "Not Found"),
-  HTTP_SCode_Base::STATUS_INTERNAL_SERVER_ERROR (500, "Internal Server Error"),
-  HTTP_SCode_Base::STATUS_NOT_IMPLEMENTED (501, "Not Implemented"),
-  HTTP_SCode_Base::STATUS_BAD_GATEWAY (502, "Bad Gateway"),
-  HTTP_SCode_Base::STATUS_SERVICE_UNAVAILABLE (503, "Service Unavailable"),
-  HTTP_SCode_Base::STATUS_QUIT (599, "Quit"),
-
-  HTTP_SCode_Base::DUMMY (0, 0);
+HTTP_SCode_Node HTTP_SCode_Base::DUMMY (0, 0);
 
 HTTP_SCode_Node::HTTP_SCode_Node (int code, const char *code_str)
   : code_ (code),
