@@ -67,15 +67,7 @@ endif # ! LynxOS
 LYNXOS_MAJOR = $(shell echo $(VERSION) | awk -F. '{print $$1;}')
 LYNXOS_MINOR = $(shell echo $(VERSION) | awk -F. '{print $$2;}')
 
-ifeq ($(shared_libs_only),1)
-  shared_libs = 1
-  static_libs =
-endif
-ifeq ($(static_libs_only),1)
-  shared_libs =
-  static_libs = 1
-endif
-
+shared_libs ?= 1
 optimize ?= 1
 debug ?= 1
 pipes ?= 1
