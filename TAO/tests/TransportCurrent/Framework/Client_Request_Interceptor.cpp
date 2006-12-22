@@ -109,7 +109,8 @@ namespace Test
     IOP::ServiceContext sc;
     sc.context_id = TAO::Transport::CurrentTest::ContextTag;
 
-    char temp[100];
+    char temp[32];
+
     {
       ACE_GUARD (TAO_SYNCH_MUTEX, monitor, this->lock_);
 
@@ -119,7 +120,7 @@ namespace Test
 
     CORBA::ULong string_len = ACE_OS::strlen (temp) + 1;
     CORBA::Octet *buf = CORBA::OctetSeq::allocbuf (string_len);
-    ACE_OS::strcpy (ACE_reinterpret_cast (char *, buf), temp);
+    ACE_OS::strcpy (reinterpret_cast <char *> (buf), temp);
 
     sc.context_data.replace (string_len, string_len, buf, 1);
 
