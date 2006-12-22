@@ -71,6 +71,7 @@
 // ... and the final standard even!
 #define ACE_HAS_PTHREADS_STD
 #define ACE_HAS_THREAD_SPECIFIC_STORAGE
+#define ACE_HAS_PTHREAD_SCHEDPARAM
 
 // XXX thread defines go here
 #define ACE_MT_SAFE 1
