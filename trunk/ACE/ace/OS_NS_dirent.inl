@@ -86,6 +86,7 @@ readdir_r (ACE_DIR *dirp,
                          defined (ACE_HAS_PTHREADS_DRAFT7) || \
                          defined (_POSIX_SOURCE) || \
                          defined (__FreeBSD__) || \
+			 defined (__NetBSD__) || \
                          defined (HPUX_11)) || \
                          defined (__GNUC__) && defined (_AIX) || \
                          defined (ACE_VXWORKS))

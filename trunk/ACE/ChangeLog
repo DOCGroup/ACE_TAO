@@ -1,3 +1,17 @@
+Fri Dec 22 17:35:53 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * ace/OS_NS_dirent.inl:
+
+          Add a __NetBSD__ to the preprocessor conditional to select the
+          three argument version of readdir_r.  While this what was done
+          for FreeBSD, HPUX, etc., it really points out a need for a new
+          feature test macro.
+
+        * ace/config-netbsd.h:
+
+          Only define thread-related feature test macros if ACE_MT_SAFE is
+          defined (with a non-zero value).
+
 Fri Dec 22 13:56:15 UTC 2006  Steve Huston  <shuston@riverace.com>
 
         * apps/JAWS2/HTTPU/http_heders.cpp:
