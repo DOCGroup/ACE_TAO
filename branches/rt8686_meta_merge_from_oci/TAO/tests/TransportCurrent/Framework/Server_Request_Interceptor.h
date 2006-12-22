@@ -30,11 +30,6 @@
 #include "tao/LocalObject.h"
 #include "tao/PI_Server/PI_Server.h"
 
-#if defined(_MSC_VER)
-#pragma warning(push)
-#pragma warning(disable:4250)
-#endif /* _MSC_VER */
-
 #include "ORBInitializer_T.h"
 
 namespace Test
@@ -130,10 +125,6 @@ namespace Test
   void ORBInitializer<PortableInterceptor::ServerRequestInterceptor>::post_init
     (PortableInterceptor::ORBInitInfo* oii ACE_ENV_ARG_DECL_WITH_DEFAULTS)
       ACE_THROW_SPEC ((CORBA::SystemException));
-};
-
-#if defined(_MSC_VER)
-#pragma warning(pop)
-#endif /* _MSC_VER */
+}
 
 #endif  /* SERVER_REQUEST_INTERCEPTOR_H */

@@ -71,6 +71,7 @@
 // ... and the final standard even!
 #define ACE_HAS_PTHREADS_STD
 #define ACE_HAS_THREAD_SPECIFIC_STORAGE
+#define ACE_HAS_PTHREAD_SCHEDPARAM
 
 // XXX thread defines go here
 #define ACE_MT_SAFE 1
@@ -134,7 +135,6 @@
 #define ACE_NEEDS_HUGE_THREAD_STACKSIZE 65536
 #define ACE_NEEDS_SCHED_H
 #define ACE_HAS_POSIX_NONBLOCK
-#define ACE_LACKS_FDOPEN
 #define ACE_HAS_TERMIOS
 
 // rtems 4.7 or higher
