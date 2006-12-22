@@ -1,3 +1,9 @@
+Fri Dec 22 09:31:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Service_Manager.h:
+          Improved doxygen documentation, thanks to Stefan Naewe
+          <stefan at naewe dot de> for delivering the patch
+
 Thu Dec 21 21:54:51 UTC 2006  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
 
         * ace/config-freebsd.h: Added support for SCTP in FreeBSD version
