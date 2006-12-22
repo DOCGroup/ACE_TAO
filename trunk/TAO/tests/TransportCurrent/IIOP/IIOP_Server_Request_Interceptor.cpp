@@ -172,7 +172,7 @@ namespace Test {
         ACE_TRY_CHECK;
 
         const char *buf =
-          ACE_reinterpret_cast (const char *, sc->context_data.get_buffer ());
+          reinterpret_cast <const char *> (sc->context_data.get_buffer ());
 
         long requestID = ACE_OS::atoi (buf);
 
@@ -204,7 +204,7 @@ namespace Test {
     ACE_CHECK;
 
     const char *buf =
-      ACE_reinterpret_cast (const char *, sc->context_data.get_buffer ());
+      reinterpret_cast <const char *> (sc->context_data.get_buffer ());
 
     this->pop_request_info (ACE_OS::atoi (buf));
   }
