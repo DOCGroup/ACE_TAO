@@ -127,7 +127,7 @@ static struct rtems_bsdnet_ifconfig netdriver_config = {
 	NULL,				/* BOOTP supplies IP address */
 	NULL,				/* BOOTP supplies IP net mask */
 #else
-	"XXX.YYY.ZZZ.XYZ",		/* IP address */
+  "128.233.17.179",   /* IP address */
 	"255.255.255.0",		/* IP net mask */
 #endif /* !RTEMS_USE_BOOTP */
 
@@ -159,9 +159,9 @@ struct rtems_bsdnet_config rtems_bsdnet_config = {
 #if (!defined (RTEMS_USE_BOOTP))
 	"rtems_host",		/* Host name */
 	"nodomain.com",		/* Domain name */
-	"XXX.YYY.ZZZ.1",	/* Gateway */
+  "10.5.0.2", /* Gateway */
 	"XXX.YYY.ZZZ.1",	/* Log host */
-	{"XXX.YYY.ZZZ.1" },	/* Name server(s) */
+  {"10.5.0.1" },  /* Name server(s) */
 	{"XXX.YYY.ZZZ.1" },	/* NTP server(s) */
 
 	/*
