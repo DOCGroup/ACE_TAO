@@ -1,12 +1,11 @@
 // -*- MPC -*-
 // $Id$
 
-project(*Server): taoserver, tc, pi_server {
+project(*Server): taoserver, tc_iiop, pi_server {
 
-  idlflags += -o ../Framework
-
-  libs    += TAO_TC_IIOP
+  after += Framework_Server
   includes += ../Framework
+  idlflags += -o ../Framework
 
   Source_Files {
     ../Framework/server.cpp
@@ -22,13 +21,10 @@ project(*Server): taoserver, tc, pi_server {
   }
 }
 
-project(*Client): taoclient, tc, pi, dynamicinterface {
+project(*Client): taoclient, tc_iiop, pi, dynamicinterface {
 
-  after += *Server*
-
+  after += *Server
   includes += ../Framework
-  libs    += TAO_TC_IIOP
-
   idlflags += -o ../Framework
 
   Source_Files {
@@ -36,6 +32,7 @@ project(*Client): taoclient, tc, pi, dynamicinterface {
     ../Framework/client.cpp
     IIOP_Tester.cpp
   }
+
   IDL_Files {
     ../Framework/Current_Test.idl
   }

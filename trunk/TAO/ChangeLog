@@ -1,3 +1,16 @@
+Fri Dec 22 20:54:44 UTC 2006  Iliyan Jeliazkov  <iliyan@ociweb.com>
+
+        * MPC/config/tc.mpb:
+        * MPC/config/tc_iiop.mpb:
+
+          Split the tc.mpb in two projects (adding the tc_iiop). Updated
+          the dependencies in a bid to fix what seems to be a build order
+          issue on some scoreboard builds.
+
+        * tests/TransportCurrent/IIOP/IIOP.mpc:
+
+          Updated to inherit from the new tc_iiop.
+
 Fri Dec 22 18:55:29 UTC 2006  Iliyan Jeliazkov  <iliyan@ociweb.com>
 
         * tests/TransportCurrent/Framework/Client_Request_Interceptor.cpp:
