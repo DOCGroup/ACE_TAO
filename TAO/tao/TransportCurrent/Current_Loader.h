@@ -56,8 +56,8 @@ namespace TAO
       ORBInitializer_Registry_Adapter* oir_;
     };
 
-  };
-};
+  }
+}
 
 
 #if defined (TAO_AS_STATIC_LIBS)
@@ -66,8 +66,8 @@ namespace TAO
   namespace Transport
   {
     int current_static_initializer (void);
-  };
-};
+  }
+}
 
 #endif /* defined (TAO_AS_STATIC_LIBS) */
 

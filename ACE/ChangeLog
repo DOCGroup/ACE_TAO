@@ -1,3 +1,92 @@
+Fri Dec 22 17:35:53 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * ace/OS_NS_dirent.inl:
+
+          Add a __NetBSD__ to the preprocessor conditional to select the
+          three argument version of readdir_r.  While this what was done
+          for FreeBSD, HPUX, etc., it really points out a need for a new
+          feature test macro.
+
+        * ace/config-netbsd.h:
+
+          Only define thread-related feature test macros if ACE_MT_SAFE is
+          defined (with a non-zero value).
+
+Fri Dec 22 13:56:15 UTC 2006  Steve Huston  <shuston@riverace.com>
+
+        * apps/JAWS2/HTTPU/http_heders.cpp:
+        * apps/JAWS2/HTTPU/http_status.cpp: Specify type and class separately
+          for each static member instance to allow HP aC++ 03.* (PA-RISC
+          compiler) to grok it. At least the Itanium compilers could handle
+          this... there's hope.
+
+Fri Dec 22 12:52:05 UTC 2006  Olli Savia  <ops@iki.fi>
+
+        * include/makeinclude/platform_lynxos.GNU:
+          Build shared libs by default.
+
+Fri Dec 22 09:31:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Service_Manager.h:
+          Improved doxygen documentation, thanks to Stefan Naewe
+          <stefan at naewe dot de> for delivering the patch
+
+Thu Dec 21 21:54:51 UTC 2006  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
+
+        * ace/config-freebsd.h: Added support for SCTP in FreeBSD version
+          700028 and greater.  Thanks to Craig Rodrigues <rodrigc at
+          crodrigues dot org> for reporting this.
+
+Thu Dec 21 20:19:04 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Sock_Connect.cpp:
+          Use prefix increment and made get_interfaces working with rtems
+
+Thu Dec 21 16:12:16 UTC 2006  Iliyan Jeliazkov  <iliyan@ociweb.com>
+
+        * bin/tao_orb_tests.lst:
+
+          Fixing the condition for running the Transport::Current tests
+          (note that ST = Single Threaded, not STATIC).
+
+Thu Dec 21 14:31:04 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Sock_Connect.cpp:
+          Added support for get_interfaces for rtems
+
+Thu Dec 21 13:32:08 UTC 2006  Olli Savia  <ops@iki.fi>
+
+        * include/makeinclude/platform_lynxos.GNU:
+          Moved macro definitions from CFLAGS to CPPFLAGS.
+
+Thu Dec 21 12:12:04 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * include/makeinclude/rules.bin.GNU:
+          Removed old chorus rules
+
+Thu Dec 21 10:17:04 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/UUID.cpp:
+          Fixed initialisation warning
+
+Thu Dec 21 09:45:00 UTC 2006  Simon Massey  <sma@prismtech.com>
+
+        * ace/OS_TLI.inl:
+        * ace/OS_NS_signal.h:
+
+          Updated some HPUX Acc version bug fixes.....
+
+Thu Dec 21 08:47:04 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * apps/JAWS2/HPPTU/http_headers.{h,inl}:
+          Fixed const warnings with Intel C++
+
+Wed Dec 20 22:06:14 UTC 2006  Olli Savia  <ops@iki.fi>
+
+        * tests/OS_Test.cpp:
+          HP-UX has broken vsnprintf function. Changed the test not
+          to fail on HP-UX.
+
 Wed Dec 20 16:35:53 UTC 2006  Iliyan Jeliazkov  <iliyan@ociweb.com>
 
           These are fixes correcting scoreboard issues pertaining to the

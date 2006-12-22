@@ -11,8 +11,8 @@
 #ifndef TAO_TRANSPORT_CURRENT_IDL
 #define TAO_TRANSPORT_CURRENT_IDL
 
-#include <IOP.pidl>
-#include <TimeBase.pidl>
+#include "tao/IOP.pidl"
+#include "tao/TimeBase.pidl"
 
 module TAO
 {

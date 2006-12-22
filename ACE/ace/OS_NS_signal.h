@@ -81,7 +81,7 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 // Also see ChangeLog entries:
 // Mon Jan 23 16:35:40 UTC 2006  Steve Huston  <shuston@riverace.com>
 // Mon Jan 23 22:08:56 UTC 2006  Steve Huston  <shuston@riverace.com>
-#if defined (__HP_aCC) && (__HP_aCC <= 36500)
+#if defined (__HP_aCC) && (__HP_aCC <= 37300)
 typedef extern "C" struct sigaction  ACE_SIGACTION;
 #else
 typedef struct sigaction ACE_SIGACTION;

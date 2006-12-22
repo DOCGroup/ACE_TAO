@@ -21,9 +21,6 @@
 
 #include "tao/PI/PI.h"
 #include "tao/PortableInterceptorC.h"
-/* #include "tao/LocalObject.h" */
-/* #include "tao/ORB.h" */
-/* #include "tao/CORBA_String.h" */
 
 namespace Test
 {
@@ -55,7 +52,7 @@ namespace Test
     typename Interceptor::_var_type interceptor_;
   };
 
-};
+}
 
 #endif  /* ORBINITIALIZER_T_H */
 

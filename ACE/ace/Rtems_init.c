@@ -4,9 +4,9 @@
 
 #if defined (ACE_HAS_RTEMS)
 
-#include <bsp.h>
-
-char *rtems_progname;
+#define RTEMS_BSP_NETWORK_DRIVER_NAME "ne1"
+#define RTEMS_BSP_NETWORK_DRIVER_ATTACH rtems_ne_driver_attach
+#define CONFIGURE_LIBIO_MAXIMUM_FILE_DESCRIPTORS 256
 
 #define CONFIGURE_MAXIMUM_POSIX_THREADS 50
 #define CONFIGURE_MAXIMUM_POSIX_MUTEXES 300
@@ -33,6 +33,10 @@ char *rtems_progname;
                                            RTEMS_NO_ASR | \
                                            RTEMS_INTERRUPT_LEVEL(0))
 
+#include <bsp.h>
+
+char *rtems_progname;
+
 #define CONFIGURE_INIT
 rtems_task Init (rtems_task_argument argument);
 
@@ -43,7 +47,6 @@ rtems_task Init (rtems_task_argument argument);
 #if !defined (ACE_LACKS_NETWORKING)
 
 #include <rtems/rtems_bsdnet.h>
-/* start of #include "../networkconfig.h" */
 
 /*
  * Network configuration
@@ -52,8 +55,6 @@ rtems_task Init (rtems_task_argument argument);
  * EDIT THIS FILE TO REFLECT YOUR NETWORK CONFIGURATION     *
  * BEFORE RUNNING ANY RTEMS PROGRAMS WHICH USE THE NETWORK! *
  ************************************************************
- *
- *  $Id$
  */
 
 #ifndef _RTEMS_NETWORKCONFIG_H_
@@ -126,7 +127,7 @@ static struct rtems_bsdnet_ifconfig netdriver_config = {
 	NULL,				/* BOOTP supplies IP address */
 	NULL,				/* BOOTP supplies IP net mask */
 #else
-	"XXX.YYY.ZZZ.XYZ",		/* IP address */
+  "128.233.17.179",   /* IP address */
 	"255.255.255.0",		/* IP net mask */
 #endif /* !RTEMS_USE_BOOTP */
 
@@ -158,9 +159,9 @@ struct rtems_bsdnet_config rtems_bsdnet_config = {
 #if (!defined (RTEMS_USE_BOOTP))
 	"rtems_host",		/* Host name */
 	"nodomain.com",		/* Domain name */
-	"XXX.YYY.ZZZ.1",	/* Gateway */
+  "10.5.0.2", /* Gateway */
 	"XXX.YYY.ZZZ.1",	/* Log host */
-	{"XXX.YYY.ZZZ.1" },	/* Name server(s) */
+  {"10.5.0.1" },  /* Name server(s) */
 	{"XXX.YYY.ZZZ.1" },	/* NTP server(s) */
 
 	/*

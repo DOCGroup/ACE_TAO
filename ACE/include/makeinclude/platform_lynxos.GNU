@@ -67,15 +67,7 @@ endif # ! LynxOS
 LYNXOS_MAJOR = $(shell echo $(VERSION) | awk -F. '{print $$1;}')
 LYNXOS_MINOR = $(shell echo $(VERSION) | awk -F. '{print $$2;}')
 
-ifeq ($(shared_libs_only),1)
-  shared_libs = 1
-  static_libs =
-endif
-ifeq ($(static_libs_only),1)
-  shared_libs =
-  static_libs = 1
-endif
-
+shared_libs ?= 1
 optimize ?= 1
 debug ?= 1
 pipes ?= 1
@@ -108,8 +100,9 @@ ifeq ($(threads),1)
 endif
 
 ifeq ($(shared_libs),1)
-  CFLAGS  += -mshared -DACE_HAS_SVR4_DYNAMIC_LINKING
-  SOFLAGS += -mshared -DACE_HAS_SVR4_DYNAMIC_LINKING
+  CPPFLAGS += -DACE_HAS_SVR4_DYNAMIC_LINKING
+  CFLAGS   += -mshared
+  SOFLAGS  += -mshared
   LIBS    += -ldl
 else
   LIBS    += -lnetinet -lnsl
@@ -118,7 +111,7 @@ endif
 CC              = gcc
 CXX             = g++
 CFLAGS          += -Wpointer-arith -Wall
-CFLAGS          += -DACE_LYNXOS_MAJOR=$(LYNXOS_MAJOR) -DACE_LYNXOS_MINOR=$(LYNXOS_MINOR)
+CPPFLAGS        += -DACE_LYNXOS_MAJOR=$(LYNXOS_MAJOR) -DACE_LYNXOS_MINOR=$(LYNXOS_MINOR)
 DCFLAGS         += -g
 PIC             = -fPIC
 DLD             = $(CXX)
