@@ -1,7 +1,7 @@
 // -*- MPC -*-
 // $Id$
 
-project {
+project: taolib_with_idl {
   after   += TC
   libs    += TAO_TC
 }
