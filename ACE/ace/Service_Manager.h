@@ -34,11 +34,11 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
  *
  * This implementation is simple and just handles each client
  * request one at a time.  There are currently 3 types of requests:
- * + List services: If the string "help" is sent, return a list of all
+ * - List services: If the string "help" is sent, return a list of all
  *   the services supported by the Service Configurator.
- * + Reconfigure: If the string "reconfigure" is sent trigger a
+ * - Reconfigure: If the string "reconfigure" is sent trigger a
  *   reconfiguration, which will re-read the local <svc.conf> file.
- * + Process directive: If neither "help" nor "reconfigure" is sent,
+ * - Process directive: If neither "help" nor "reconfigure" is sent,
  *   simply treat the incoming string as a process directive and pass
  *   it along to <ACE_Service_Config::process_directive>.  This allows
  *   remote configuration via command-line instructions like
