@@ -1,3 +1,11 @@
+Fri Dec 22 13:56:15 UTC 2006  Steve Huston  <shuston@riverace.com>
+
+        * apps/JAWS2/HTTPU/http_heders.cpp:
+        * apps/JAWS2/HTTPU/http_status.cpp: Specify type and class separately
+          for each static member instance to allow HP aC++ 03.* (PA-RISC
+          compiler) to grok it. At least the Itanium compilers could handle
+          this... there's hope.
+
 Fri Dec 22 12:52:05 UTC 2006  Olli Savia  <ops@iki.fi>
 
         * include/makeinclude/platform_lynxos.GNU:
