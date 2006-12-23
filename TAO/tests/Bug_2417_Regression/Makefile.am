@@ -76,6 +76,36 @@ noinst_HEADERS = \
 
 endif BUILD_EXCEPTIONS
 
+## Makefile.Bug_2417_Regression_Client.am
+
+if BUILD_EXCEPTIONS
+if BUILD_THREADS
+
+noinst_PROGRAMS += client
+
+client_CPPFLAGS = \
+  -I$(ACE_ROOT) \
+  -I$(ACE_BUILDDIR) \
+  -I$(TAO_ROOT) \
+  -I$(TAO_BUILDDIR)
+
+client_SOURCES = \
+  client.cpp \
+  publisherC.cpp \
+  subscriberC.cpp \
+  subscriberS.cpp \
+  subscriber_impl.cpp \
+  subscriber_impl.h
+
+client_LDADD = \
+  $(TAO_BUILDDIR)/tao/libTAO_PortableServer.la \
+  $(TAO_BUILDDIR)/tao/libTAO_AnyTypeCode.la \
+  $(TAO_BUILDDIR)/tao/libTAO.la \
+  $(ACE_BUILDDIR)/ace/libACE.la
+
+endif BUILD_THREADS
+endif BUILD_EXCEPTIONS
+
 ## Makefile.Bug_2417_Regression_Server.am
 
 if BUILD_CORBA_MESSAGING
@@ -111,36 +141,6 @@ server_LDADD = \
 endif BUILD_THREADS
 endif BUILD_EXCEPTIONS
 endif BUILD_CORBA_MESSAGING
-
-## Makefile.Bug_2417_Regression_Client.am
-
-if BUILD_EXCEPTIONS
-if BUILD_THREADS
-
-noinst_PROGRAMS += client
-
-client_CPPFLAGS = \
-  -I$(ACE_ROOT) \
-  -I$(ACE_BUILDDIR) \
-  -I$(TAO_ROOT) \
-  -I$(TAO_BUILDDIR)
-
-client_SOURCES = \
-  client.cpp \
-  publisherC.cpp \
-  subscriberC.cpp \
-  subscriberS.cpp \
-  subscriber_impl.cpp \
-  subscriber_impl.h
-
-client_LDADD = \
-  $(TAO_BUILDDIR)/tao/libTAO_PortableServer.la \
-  $(TAO_BUILDDIR)/tao/libTAO_AnyTypeCode.la \
-  $(TAO_BUILDDIR)/tao/libTAO.la \
-  $(ACE_BUILDDIR)/ace/libACE.la
-
-endif BUILD_THREADS
-endif BUILD_EXCEPTIONS
 
 ## Clean up template repositories, etc.
 clean-local:

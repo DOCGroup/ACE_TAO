@@ -1,11 +1,29 @@
 // -*- MPC -*-
 // $Id$
 
+project(*idl): taoidldefaults {
+  after += Framework_IDL
+
+  idlflags += -o ../Framework
+  
+  IDL_Files {
+    ../Framework/Current_Test.idl
+  }
+  custom_only = 1
+}
+
 project(*Server): taoserver, tc_iiop, pi_server {
 
+  after += *idl
   after += Framework_Server
-  includes += ../Framework
-  idlflags += -o ../Framework
+
+  // With the automake build, header files are relative to the 
+  // source directory
+  specific(automake) {
+    includes += $(srcdir)/../Framework
+  } else {
+    includes += ../Framework
+  }
 
   Source_Files {
     ../Framework/server.cpp
@@ -15,25 +33,37 @@ project(*Server): taoserver, tc_iiop, pi_server {
     IIOP_Server_Main.cpp
     IIOP_Tester.cpp
   }
+  Source_Files {
+    ../Framework/Current_TestC.cpp
+    ../Framework/Current_TestS.cpp
+  }
 
   IDL_Files {
-    ../Framework/Current_Test.idl
   }
 }
 
 project(*Client): taoclient, tc_iiop, pi, dynamicinterface {
 
+  after += *idl
   after += *Server
-  includes += ../Framework
-  idlflags += -o ../Framework
+
+  // With the automake build, header files are relative to the 
+  // source directory
+  specific(automake) {
+    includes += $(srcdir)/../Framework
+  } else {
+    includes += ../Framework
+  }
 
   Source_Files {
     ../Framework/Client_Request_Interceptor.cpp
     ../Framework/client.cpp
     IIOP_Tester.cpp
   }
+  Source_Files {
+    ../Framework/Current_TestC.cpp
+  }
 
   IDL_Files {
-    ../Framework/Current_Test.idl
   }
 }

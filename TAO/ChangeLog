@@ -1,3 +1,25 @@
+Sat Dec 23 00:23:25 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* tests/BiDirectional/Makefile.am:
+	* tests/BiDirectional_DelayedUpcall/Makefile.am:
+	* tests/BiDirectional_NestedUpcall/Makefile.am:
+	* tests/Bug_2417_Regression/Makefile.am:
+	* tests/Bug_2560_Regression/Makefile.am:
+	* tests/MT_BiDir/Makefile.am:
+	* tests/NestedUpcall/Triangle_Test/Makefile.am:
+
+          Regenerate to account for misc recent *.mpc changes.
+
+        * tests/TransportCurrent/IIOP/Makefile.am:
+        * tests/TransportCurrent/Framework/Makefile.am:
+
+          Regenerated.
+
+        * tests/TransportCurrent/IIOP/IIOP.mpc:
+        * tests/TransportCurrent/Framework/Framework.mpc:
+
+          Split out IDL compilation into separate MPC project.
+
 Fri Dec 22 20:54:44 UTC 2006  Iliyan Jeliazkov  <iliyan@ociweb.com>
 
         * MPC/config/tc.mpb:
