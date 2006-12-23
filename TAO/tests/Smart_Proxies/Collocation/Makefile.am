@@ -17,34 +17,38 @@ TAO_IDLFLAGS = -Ge 1 -Wb,pre_include=ace/pre.h -Wb,post_include=ace/post.h -I$(T
 TAO_ROOT = $(top_srcdir)
 
 noinst_LTLIBRARIES =
-noinst_HEADERS =
-CLEANFILES =
-BUILT_SOURCES =
 
-## Makefile.SP_Collocation_TestStubsLib.am
+## Makefile.SP_Collocation_Idl.am
 
-if BUILD_EXCEPTIONS
-
-BUILT_SOURCES += \
+BUILT_SOURCES = \
   DiamondC.cpp \
   DiamondC.h \
   DiamondC.inl \
+  DiamondS.cpp \
   DiamondS.h \
   DiamondS.inl
 
-CLEANFILES += \
+CLEANFILES = \
   Diamond-stamp \
   DiamondC.cpp \
   DiamondC.h \
   DiamondC.inl \
+  DiamondS.cpp \
   DiamondS.h \
   DiamondS.inl
 
-DiamondC.cpp DiamondC.h DiamondC.inl DiamondS.h DiamondS.inl: Diamond-stamp
+DiamondC.cpp DiamondC.h DiamondC.inl DiamondS.cpp DiamondS.h DiamondS.inl: Diamond-stamp
 
 Diamond-stamp: $(srcdir)/Diamond.idl $(TAO_IDL_DEP)
-	$(TAO_IDL) $(TAO_IDLFLAGS) -Sa -St -Gsp -Wb,stub_export_macro=MY_Stub_Export -Wb,stub_export_include=stub_export.h -Wb,skel_export_macro=Diamond_Export -Wb,skel_export_include=diamond_export.h -Gd $(srcdir)/Diamond.idl
+	$(TAO_IDL) $(TAO_IDLFLAGS) -Sa -St -Wb,stub_export_macro=MY_Stub_Export -Wb,stub_export_include=stub_export.h -Wb,skel_export_macro=Diamond_Export -Wb,skel_export_include=diamond_export.h -Gd $(srcdir)/Diamond.idl
 	@touch $@
+
+noinst_HEADERS = \
+  Diamond.idl
+
+## Makefile.SP_Collocation_TestStubsLib.am
+
+if BUILD_EXCEPTIONS
 
 noinst_LTLIBRARIES += libColl_Test_Stubs.la
 
@@ -60,11 +64,6 @@ libColl_Test_Stubs_la_SOURCES = \
   Smart_Proxy_Impl.cpp
 
 noinst_HEADERS += \
-  Diamond.idl \
-  DiamondC.h \
-  DiamondC.inl \
-  DiamondS.h \
-  DiamondS.inl \
   Smart_Proxy_Impl.h
 
 endif BUILD_EXCEPTIONS
@@ -72,27 +71,6 @@ endif BUILD_EXCEPTIONS
 ## Makefile.SP_Collocation_DiamondLib.am
 
 if BUILD_EXCEPTIONS
-
-BUILT_SOURCES += \
-  DiamondC.h \
-  DiamondC.inl \
-  DiamondS.cpp \
-  DiamondS.h \
-  DiamondS.inl
-
-CLEANFILES += \
-  Diamond-stamp \
-  DiamondC.h \
-  DiamondC.inl \
-  DiamondS.cpp \
-  DiamondS.h \
-  DiamondS.inl
-
-DiamondC.h DiamondC.inl DiamondS.cpp DiamondS.h DiamondS.inl: Diamond-stamp
-
-Diamond-stamp: $(srcdir)/Diamond.idl $(TAO_IDL_DEP)
-	$(TAO_IDL) $(TAO_IDLFLAGS) -Gsp -Wb,stub_export_macro=MY_Stub_Export -Wb,stub_export_include=stub_export.h -Wb,skel_export_macro=Diamond_Export -Wb,skel_export_include=diamond_export.h -Gd $(srcdir)/Diamond.idl
-	@touch $@
 
 noinst_LTLIBRARIES += libDiamond.la
 
@@ -108,11 +86,6 @@ libDiamond_la_SOURCES = \
   Diamond_i.cpp
 
 noinst_HEADERS += \
-  Diamond.idl \
-  DiamondC.h \
-  DiamondC.inl \
-  DiamondS.h \
-  DiamondS.inl \
   Diamond_i.h
 
 endif BUILD_EXCEPTIONS

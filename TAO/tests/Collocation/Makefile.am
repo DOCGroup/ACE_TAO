@@ -17,34 +17,38 @@ TAO_IDLFLAGS = -Ge 1 -Wb,pre_include=ace/pre.h -Wb,post_include=ace/post.h -I$(T
 TAO_ROOT = $(top_srcdir)
 
 noinst_LTLIBRARIES =
-noinst_HEADERS =
-CLEANFILES =
-BUILT_SOURCES =
 
-## Makefile.Collocation_Test_Stub.am
+## Makefile.Collocation_Idl.am
 
-if BUILD_EXCEPTIONS
-
-BUILT_SOURCES += \
+BUILT_SOURCES = \
   DiamondC.cpp \
   DiamondC.h \
   DiamondC.inl \
+  DiamondS.cpp \
   DiamondS.h \
   DiamondS.inl
 
-CLEANFILES += \
+CLEANFILES = \
   Diamond-stamp \
   DiamondC.cpp \
   DiamondC.h \
   DiamondC.inl \
+  DiamondS.cpp \
   DiamondS.h \
   DiamondS.inl
 
-DiamondC.cpp DiamondC.h DiamondC.inl DiamondS.h DiamondS.inl: Diamond-stamp
+DiamondC.cpp DiamondC.h DiamondC.inl DiamondS.cpp DiamondS.h DiamondS.inl: Diamond-stamp
 
 Diamond-stamp: $(srcdir)/Diamond.idl $(TAO_IDL_DEP)
 	$(TAO_IDL) $(TAO_IDLFLAGS) -Sa -St -Wb,skel_export_macro=Diamond_Export -Wb,stub_export_macro=MY_Stub_Export -Wb,skel_export_include=diamond_export.h -Wb,stub_export_include=stub_export.h -Gd -St -Sa $(srcdir)/Diamond.idl
 	@touch $@
+
+noinst_HEADERS = \
+  Diamond.idl
+
+## Makefile.Collocation_Test_Stub.am
+
+if BUILD_EXCEPTIONS
 
 noinst_LTLIBRARIES += libCollocation_Test_Stub.la
 
@@ -59,38 +63,16 @@ libCollocation_Test_Stub_la_SOURCES = \
   DiamondC.cpp
 
 noinst_HEADERS += \
-  Diamond.idl \
-  DiamondC.h \
-  DiamondC.inl \
-  DiamondS.h \
-  DiamondS.inl
+  Collocation_Tester.h \
+  Diamond_i.h \
+  diamond_export.h \
+  stub_export.h
 
 endif BUILD_EXCEPTIONS
 
 ## Makefile.Collocation_Diamond.am
 
 if BUILD_EXCEPTIONS
-
-BUILT_SOURCES += \
-  DiamondC.h \
-  DiamondC.inl \
-  DiamondS.cpp \
-  DiamondS.h \
-  DiamondS.inl
-
-CLEANFILES += \
-  Diamond-stamp \
-  DiamondC.h \
-  DiamondC.inl \
-  DiamondS.cpp \
-  DiamondS.h \
-  DiamondS.inl
-
-DiamondC.h DiamondC.inl DiamondS.cpp DiamondS.h DiamondS.inl: Diamond-stamp
-
-Diamond-stamp: $(srcdir)/Diamond.idl $(TAO_IDL_DEP)
-	$(TAO_IDL) $(TAO_IDLFLAGS) -Wb,skel_export_macro=Diamond_Export -Wb,stub_export_macro=MY_Stub_Export -Wb,skel_export_include=diamond_export.h -Wb,stub_export_include=stub_export.h -Gd -St -Sa $(srcdir)/Diamond.idl
-	@touch $@
 
 noinst_LTLIBRARIES += libCollocation_Diamond.la
 
@@ -106,11 +88,6 @@ libCollocation_Diamond_la_SOURCES = \
   Diamond_i.cpp
 
 noinst_HEADERS += \
-  Diamond.idl \
-  DiamondC.h \
-  DiamondC.inl \
-  DiamondS.h \
-  DiamondS.inl \
   Diamond_i.h
 
 endif BUILD_EXCEPTIONS
