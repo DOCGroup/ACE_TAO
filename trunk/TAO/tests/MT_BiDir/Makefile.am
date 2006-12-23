@@ -70,39 +70,6 @@ noinst_HEADERS = \
   Receiver.idl \
   Sender.idl
 
-## Makefile.MT_BiDir_Server.am
-
-if BUILD_EXCEPTIONS
-
-noinst_PROGRAMS += server
-
-server_CPPFLAGS = \
-  -I$(ACE_ROOT) \
-  -I$(ACE_BUILDDIR) \
-  -I$(TAO_ROOT) \
-  -I$(TAO_BUILDDIR)
-
-server_SOURCES = \
-  ReceiverC.cpp \
-  SenderC.cpp \
-  SenderS.cpp \
-  Sender_i.cpp \
-  Server_Task.cpp \
-  server.cpp \
-  Sender_i.h \
-  Server_Task.h
-
-server_LDADD = \
-  $(TAO_BUILDDIR)/tao/libTAO_BiDirGIOP.la \
-  $(TAO_BUILDDIR)/tao/libTAO_PI.la \
-  $(TAO_BUILDDIR)/tao/libTAO_CodecFactory.la \
-  $(TAO_BUILDDIR)/tao/libTAO_PortableServer.la \
-  $(TAO_BUILDDIR)/tao/libTAO_AnyTypeCode.la \
-  $(TAO_BUILDDIR)/tao/libTAO.la \
-  $(ACE_BUILDDIR)/ace/libACE.la
-
-endif BUILD_EXCEPTIONS
-
 ## Makefile.MT_BiDir_Client.am
 
 if BUILD_EXCEPTIONS
@@ -126,6 +93,39 @@ client_SOURCES = \
   Receiver_i.h
 
 client_LDADD = \
+  $(TAO_BUILDDIR)/tao/libTAO_BiDirGIOP.la \
+  $(TAO_BUILDDIR)/tao/libTAO_PI.la \
+  $(TAO_BUILDDIR)/tao/libTAO_CodecFactory.la \
+  $(TAO_BUILDDIR)/tao/libTAO_PortableServer.la \
+  $(TAO_BUILDDIR)/tao/libTAO_AnyTypeCode.la \
+  $(TAO_BUILDDIR)/tao/libTAO.la \
+  $(ACE_BUILDDIR)/ace/libACE.la
+
+endif BUILD_EXCEPTIONS
+
+## Makefile.MT_BiDir_Server.am
+
+if BUILD_EXCEPTIONS
+
+noinst_PROGRAMS += server
+
+server_CPPFLAGS = \
+  -I$(ACE_ROOT) \
+  -I$(ACE_BUILDDIR) \
+  -I$(TAO_ROOT) \
+  -I$(TAO_BUILDDIR)
+
+server_SOURCES = \
+  ReceiverC.cpp \
+  SenderC.cpp \
+  SenderS.cpp \
+  Sender_i.cpp \
+  Server_Task.cpp \
+  server.cpp \
+  Sender_i.h \
+  Server_Task.h
+
+server_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO_BiDirGIOP.la \
   $(TAO_BUILDDIR)/tao/libTAO_PI.la \
   $(TAO_BUILDDIR)/tao/libTAO_CodecFactory.la \

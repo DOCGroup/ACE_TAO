@@ -17,15 +17,10 @@ TAO_IDLFLAGS = -Ge 1 -Wb,pre_include=ace/pre.h -Wb,post_include=ace/post.h -I$(T
 TAO_ROOT = $(top_srcdir)
 
 noinst_PROGRAMS =
-CLEANFILES =
-BUILT_SOURCES =
 
-## Makefile.IIOP_Client.am
+## Makefile.IIOP_Idl.am
 
-if BUILD_CORBA_MESSAGING
-if BUILD_EXCEPTIONS
-
-BUILT_SOURCES += \
+BUILT_SOURCES = \
   ../Framework/Current_TestC.cpp \
   ../Framework/Current_TestC.h \
   ../Framework/Current_TestC.inl \
@@ -33,7 +28,7 @@ BUILT_SOURCES += \
   ../Framework/Current_TestS.h \
   ../Framework/Current_TestS.inl
 
-CLEANFILES += \
+CLEANFILES = \
   ../Framework/Current_Test-stamp \
   ../Framework/Current_TestC.cpp \
   ../Framework/Current_TestC.h \
@@ -45,72 +40,15 @@ CLEANFILES += \
 ../Framework/Current_TestC.cpp ../Framework/Current_TestC.h ../Framework/Current_TestC.inl ../Framework/Current_TestS.cpp ../Framework/Current_TestS.h ../Framework/Current_TestS.inl: ../Framework/Current_Test-stamp
 
 ../Framework/Current_Test-stamp: $(srcdir)/../Framework/Current_Test.idl $(TAO_IDL_DEP)
-	$(TAO_IDL) $(TAO_IDLFLAGS) -o ../Framework $(srcdir)/../Framework/Current_Test.idl
+	$(TAO_IDL) $(TAO_IDLFLAGS) -Sa -St -o ../Framework $(srcdir)/../Framework/Current_Test.idl
 	@touch $@
 
-noinst_PROGRAMS += client
-
-client_CPPFLAGS = \
-  -I$(ACE_ROOT) \
-  -I$(ACE_BUILDDIR) \
-  -I$(TAO_ROOT) \
-  -I$(TAO_BUILDDIR) \
-  -I../Framework
-
-client_SOURCES = \
-  ../Framework/Client_Request_Interceptor.cpp \
-  ../Framework/Current_TestC.cpp \
-  ../Framework/Current_TestS.cpp \
-  ../Framework/client.cpp \
-  IIOP_Tester.cpp \
-  ../Framework/Client_Request_Interceptor.h \
-  ../Framework/Current_TestC.h \
-  ../Framework/Current_TestC.inl \
-  ../Framework/Current_TestS.h \
-  ../Framework/Current_TestS.inl
-
-client_LDADD = \
-  $(TAO_BUILDDIR)/tao/libTAO_TC_IIOP.la \
-  $(TAO_BUILDDIR)/tao/libTAO_DynamicInterface.la \
-  $(TAO_BUILDDIR)/tao/libTAO_Messaging.la \
-  $(TAO_BUILDDIR)/tao/libTAO_PortableServer.la \
-  $(TAO_BUILDDIR)/tao/libTAO_Valuetype.la \
-  $(TAO_BUILDDIR)/tao/libTAO_PI.la \
-  $(TAO_BUILDDIR)/tao/libTAO_CodecFactory.la \
-  $(TAO_BUILDDIR)/tao/libTAO_AnyTypeCode.la \
-  $(TAO_BUILDDIR)/tao/libTAO_TC.la \
-  $(TAO_BUILDDIR)/tao/libTAO.la \
-  $(ACE_BUILDDIR)/ace/libACE.la
-
-endif BUILD_EXCEPTIONS
-endif BUILD_CORBA_MESSAGING
+noinst_HEADERS = \
+  ../Framework/Current_Test.idl
 
 ## Makefile.IIOP_Server.am
 
 if BUILD_EXCEPTIONS
-
-BUILT_SOURCES += \
-  ../Framework/Current_TestC.cpp \
-  ../Framework/Current_TestC.h \
-  ../Framework/Current_TestC.inl \
-  ../Framework/Current_TestS.cpp \
-  ../Framework/Current_TestS.h \
-  ../Framework/Current_TestS.inl
-
-CLEANFILES += \
-  ../Framework/Current_Test-stamp \
-  ../Framework/Current_TestC.cpp \
-  ../Framework/Current_TestC.h \
-  ../Framework/Current_TestC.inl \
-  ../Framework/Current_TestS.cpp \
-  ../Framework/Current_TestS.h \
-  ../Framework/Current_TestS.inl
-
-../Framework/Current_TestC.cpp ../Framework/Current_TestC.h ../Framework/Current_TestC.inl ../Framework/Current_TestS.cpp ../Framework/Current_TestS.h ../Framework/Current_TestS.inl: ../Framework/Current_Test-stamp
-
-../Framework/Current_Test-stamp: $(srcdir)/../Framework/Current_Test.idl $(TAO_IDL_DEP)
-	$(TAO_IDL) $(TAO_IDLFLAGS) -o ../Framework $(srcdir)/../Framework/Current_Test.idl
-	@touch $@
 
 noinst_PROGRAMS += server
 
@@ -119,7 +57,7 @@ server_CPPFLAGS = \
   -I$(ACE_BUILDDIR) \
   -I$(TAO_ROOT) \
   -I$(TAO_BUILDDIR) \
-  -I../Framework
+  -I$(srcdir)/../Framework
 
 server_SOURCES = \
   ../Framework/Current_TestC.cpp \
@@ -130,18 +68,14 @@ server_SOURCES = \
   IIOP_Server_Main.cpp \
   IIOP_Server_Request_Interceptor.cpp \
   IIOP_Tester.cpp \
-  ../Framework/Current_TestC.h \
-  ../Framework/Current_TestC.inl \
-  ../Framework/Current_TestS.h \
-  ../Framework/Current_TestS.inl \
   ../Framework/Server_Request_Interceptor.h \
   IIOP_Server_Request_Interceptor.h
 
 server_LDADD = \
-  $(TAO_BUILDDIR)/tao/libTAO_TC_IIOP.la \
   $(TAO_BUILDDIR)/tao/libTAO_PI_Server.la \
   $(TAO_BUILDDIR)/tao/libTAO_PI.la \
   $(TAO_BUILDDIR)/tao/libTAO_CodecFactory.la \
+  $(TAO_BUILDDIR)/tao/libTAO_TC_IIOP.la \
   $(TAO_BUILDDIR)/tao/libTAO_TC.la \
   $(TAO_BUILDDIR)/tao/libTAO_PortableServer.la \
   $(TAO_BUILDDIR)/tao/libTAO_AnyTypeCode.la \
@@ -149,6 +83,43 @@ server_LDADD = \
   $(ACE_BUILDDIR)/ace/libACE.la
 
 endif BUILD_EXCEPTIONS
+
+## Makefile.IIOP_Client.am
+
+if BUILD_CORBA_MESSAGING
+if BUILD_EXCEPTIONS
+
+noinst_PROGRAMS += client
+
+client_CPPFLAGS = \
+  -I$(ACE_ROOT) \
+  -I$(ACE_BUILDDIR) \
+  -I$(TAO_ROOT) \
+  -I$(TAO_BUILDDIR) \
+  -I$(srcdir)/../Framework
+
+client_SOURCES = \
+  ../Framework/Client_Request_Interceptor.cpp \
+  ../Framework/Current_TestC.cpp \
+  ../Framework/client.cpp \
+  IIOP_Tester.cpp \
+  ../Framework/Client_Request_Interceptor.h
+
+client_LDADD = \
+  $(TAO_BUILDDIR)/tao/libTAO_DynamicInterface.la \
+  $(TAO_BUILDDIR)/tao/libTAO_Messaging.la \
+  $(TAO_BUILDDIR)/tao/libTAO_PortableServer.la \
+  $(TAO_BUILDDIR)/tao/libTAO_Valuetype.la \
+  $(TAO_BUILDDIR)/tao/libTAO_PI.la \
+  $(TAO_BUILDDIR)/tao/libTAO_CodecFactory.la \
+  $(TAO_BUILDDIR)/tao/libTAO_AnyTypeCode.la \
+  $(TAO_BUILDDIR)/tao/libTAO_TC_IIOP.la \
+  $(TAO_BUILDDIR)/tao/libTAO_TC.la \
+  $(TAO_BUILDDIR)/tao/libTAO.la \
+  $(ACE_BUILDDIR)/ace/libACE.la
+
+endif BUILD_EXCEPTIONS
+endif BUILD_CORBA_MESSAGING
 
 ## Clean up template repositories, etc.
 clean-local:

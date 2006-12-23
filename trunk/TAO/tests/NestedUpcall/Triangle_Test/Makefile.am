@@ -46,6 +46,37 @@ Triangle_Test-stamp: $(srcdir)/Triangle_Test.idl $(TAO_IDL_DEP)
 noinst_HEADERS = \
   Triangle_Test.idl
 
+## Makefile.TT_Nested_Upcall_Initiator.am
+
+if BUILD_EXCEPTIONS
+
+noinst_PROGRAMS += initiator
+
+initiator_CPPFLAGS = \
+  -I$(ACE_ROOT) \
+  -I$(ACE_BUILDDIR) \
+  -I$(TAO_ROOT) \
+  -I$(TAO_BUILDDIR)
+
+initiator_SOURCES = \
+  Initiator_i.cpp \
+  Triangle_TestC.cpp \
+  Triangle_TestS.cpp \
+  initiator.cpp \
+  Initiator_i.h \
+  initiator.h
+
+initiator_LDADD = \
+  $(TAO_BUILDDIR)/tao/libTAO_Utils.la \
+  $(TAO_BUILDDIR)/tao/libTAO_PI.la \
+  $(TAO_BUILDDIR)/tao/libTAO_CodecFactory.la \
+  $(TAO_BUILDDIR)/tao/libTAO_PortableServer.la \
+  $(TAO_BUILDDIR)/tao/libTAO_AnyTypeCode.la \
+  $(TAO_BUILDDIR)/tao/libTAO.la \
+  $(ACE_BUILDDIR)/ace/libACE.la
+
+endif BUILD_EXCEPTIONS
+
 ## Makefile.TT_Nested_Upcall_Server_A.am
 
 if BUILD_EXCEPTIONS
@@ -98,37 +129,6 @@ server_B_SOURCES = \
   server_B.h
 
 server_B_LDADD = \
-  $(TAO_BUILDDIR)/tao/libTAO_Utils.la \
-  $(TAO_BUILDDIR)/tao/libTAO_PI.la \
-  $(TAO_BUILDDIR)/tao/libTAO_CodecFactory.la \
-  $(TAO_BUILDDIR)/tao/libTAO_PortableServer.la \
-  $(TAO_BUILDDIR)/tao/libTAO_AnyTypeCode.la \
-  $(TAO_BUILDDIR)/tao/libTAO.la \
-  $(ACE_BUILDDIR)/ace/libACE.la
-
-endif BUILD_EXCEPTIONS
-
-## Makefile.TT_Nested_Upcall_Initiator.am
-
-if BUILD_EXCEPTIONS
-
-noinst_PROGRAMS += initiator
-
-initiator_CPPFLAGS = \
-  -I$(ACE_ROOT) \
-  -I$(ACE_BUILDDIR) \
-  -I$(TAO_ROOT) \
-  -I$(TAO_BUILDDIR)
-
-initiator_SOURCES = \
-  Initiator_i.cpp \
-  Triangle_TestC.cpp \
-  Triangle_TestS.cpp \
-  initiator.cpp \
-  Initiator_i.h \
-  initiator.h
-
-initiator_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO_Utils.la \
   $(TAO_BUILDDIR)/tao/libTAO_PI.la \
   $(TAO_BUILDDIR)/tao/libTAO_CodecFactory.la \
