@@ -17,15 +17,10 @@ TAO_IDLFLAGS = -Ge 1 -Wb,pre_include=ace/pre.h -Wb,post_include=ace/post.h -I$(T
 TAO_ROOT = $(top_srcdir)
 
 noinst_PROGRAMS =
-CLEANFILES =
-BUILT_SOURCES =
 
-## Makefile.Scheduler_Interceptor_Server.am
+## Makefile.Scheduler_Interceptor_Idl.am
 
-if BUILD_EXCEPTIONS
-if BUILD_RT_CORBA
-
-BUILT_SOURCES += \
+BUILT_SOURCES = \
   testC.cpp \
   testC.h \
   testC.inl \
@@ -33,7 +28,7 @@ BUILT_SOURCES += \
   testS.h \
   testS.inl
 
-CLEANFILES += \
+CLEANFILES = \
   test-stamp \
   testC.cpp \
   testC.h \
@@ -45,8 +40,16 @@ CLEANFILES += \
 testC.cpp testC.h testC.inl testS.cpp testS.h testS.inl: test-stamp
 
 test-stamp: $(srcdir)/test.idl $(TAO_IDL_DEP)
-	$(TAO_IDL) $(TAO_IDLFLAGS) $(srcdir)/test.idl
+	$(TAO_IDL) $(TAO_IDLFLAGS) -Sa -St $(srcdir)/test.idl
 	@touch $@
+
+noinst_HEADERS = \
+  test.idl
+
+## Makefile.Scheduler_Interceptor_Server.am
+
+if BUILD_EXCEPTIONS
+if BUILD_RT_CORBA
 
 noinst_PROGRAMS += Scheduler_Interceptor_Server
 
@@ -61,11 +64,7 @@ Scheduler_Interceptor_Server_SOURCES = \
   testC.cpp \
   testS.cpp \
   test_server.cpp \
-  ../Scheduler.h \
-  testC.h \
-  testC.inl \
-  testS.h \
-  testS.inl
+  ../Scheduler.h
 
 Scheduler_Interceptor_Server_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO_RTScheduler.la \
@@ -87,27 +86,6 @@ endif BUILD_EXCEPTIONS
 if BUILD_EXCEPTIONS
 if BUILD_RT_CORBA
 
-BUILT_SOURCES += \
-  testC.cpp \
-  testC.h \
-  testC.inl \
-  testS.h \
-  testS.inl
-
-CLEANFILES += \
-  test-stamp \
-  testC.cpp \
-  testC.h \
-  testC.inl \
-  testS.h \
-  testS.inl
-
-testC.cpp testC.h testC.inl testS.h testS.inl: test-stamp
-
-test-stamp: $(srcdir)/test.idl $(TAO_IDL_DEP)
-	$(TAO_IDL) $(TAO_IDLFLAGS) $(srcdir)/test.idl
-	@touch $@
-
 noinst_PROGRAMS += Scheduler_Interceptor_Client
 
 Scheduler_Interceptor_Client_CPPFLAGS = \
@@ -120,11 +98,7 @@ Scheduler_Interceptor_Client_SOURCES = \
   ../Scheduler.cpp \
   testC.cpp \
   test_client.cpp \
-  ../Scheduler.h \
-  testC.h \
-  testC.inl \
-  testS.h \
-  testS.inl
+  ../Scheduler.h
 
 Scheduler_Interceptor_Client_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO_RTScheduler.la \
