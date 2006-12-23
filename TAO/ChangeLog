@@ -1,3 +1,10 @@
+Sat Dec 23 04:48:50 UTC 2006  Iliyan Jeliazkov  <iliyan@ociweb.com>
+
+        * tao/TransportCurrent/Current_Loader.cpp:
+
+          Fixing an pedantic complaint about an extra ';' at the end of
+          the line, after ACE_STATIC_SVC_REQUIRE.
+        
 Sat Dec 23 03:53:08 UTC 2006  Iliyan Jeliazkov  <iliyan@ociweb.com>
 
         * tao/TransportCurrent/Current_ORBInitializer.cpp:
