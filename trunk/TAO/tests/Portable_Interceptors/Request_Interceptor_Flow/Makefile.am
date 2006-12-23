@@ -103,7 +103,6 @@ client_SOURCES = \
   Request_Interceptor.cpp \
   client.cpp \
   testC.cpp \
-  testS.cpp \
   Client_ORBInitializer.h \
   Client_Request_Interceptor.h \
   Request_Interceptor.h
