@@ -1,4 +1,4 @@
-// $Id:$
+// $Id$
 
 #ifndef CURRENT_ORBINITIALIZER_CPP
 #define CURRENT_ORBINITIALIZER_CPP
@@ -45,7 +45,5 @@ namespace TAO
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL
-
-#include /**/ "ace/post.h"
 
 #endif /* CURRENT_ORBINITIALIZER_CPP */
