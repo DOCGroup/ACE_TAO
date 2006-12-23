@@ -17,14 +17,10 @@ TAO_IDLFLAGS = -Ge 1 -Wb,pre_include=ace/pre.h -Wb,post_include=ace/post.h -I$(T
 TAO_ROOT = $(top_srcdir)
 
 noinst_PROGRAMS =
-CLEANFILES =
-BUILT_SOURCES =
 
-## Makefile.Framework_Server.am
+## Makefile.Framework_Idl.am
 
-if BUILD_EXCEPTIONS
-
-BUILT_SOURCES += \
+BUILT_SOURCES = \
   Current_TestC.cpp \
   Current_TestC.h \
   Current_TestC.inl \
@@ -32,7 +28,7 @@ BUILT_SOURCES += \
   Current_TestS.h \
   Current_TestS.inl
 
-CLEANFILES += \
+CLEANFILES = \
   Current_Test-stamp \
   Current_TestC.cpp \
   Current_TestC.h \
@@ -44,8 +40,15 @@ CLEANFILES += \
 Current_TestC.cpp Current_TestC.h Current_TestC.inl Current_TestS.cpp Current_TestS.h Current_TestS.inl: Current_Test-stamp
 
 Current_Test-stamp: $(srcdir)/Current_Test.idl $(TAO_IDL_DEP)
-	$(TAO_IDL) $(TAO_IDLFLAGS) $(srcdir)/Current_Test.idl
+	$(TAO_IDL) $(TAO_IDLFLAGS) -Sa -St $(srcdir)/Current_Test.idl
 	@touch $@
+
+noinst_HEADERS = \
+  Current_Test.idl
+
+## Makefile.Framework_Server.am
+
+if BUILD_EXCEPTIONS
 
 noinst_PROGRAMS += server
 
@@ -53,7 +56,8 @@ server_CPPFLAGS = \
   -I$(ACE_ROOT) \
   -I$(ACE_BUILDDIR) \
   -I$(TAO_ROOT) \
-  -I$(TAO_BUILDDIR)
+  -I$(TAO_BUILDDIR) \
+  -I.
 
 server_SOURCES = \
   Current_TestC.cpp \
@@ -63,10 +67,6 @@ server_SOURCES = \
   Server_Request_Interceptor.cpp \
   Tester.cpp \
   server.cpp \
-  Current_TestC.h \
-  Current_TestC.inl \
-  Current_TestS.h \
-  Current_TestS.inl \
   Current_Test_Impl.h \
   Server_Request_Interceptor.h
 
@@ -87,48 +87,21 @@ endif BUILD_EXCEPTIONS
 if BUILD_CORBA_MESSAGING
 if BUILD_EXCEPTIONS
 
-BUILT_SOURCES += \
-  Current_TestC.cpp \
-  Current_TestC.h \
-  Current_TestC.inl \
-  Current_TestS.cpp \
-  Current_TestS.h \
-  Current_TestS.inl
-
-CLEANFILES += \
-  Current_Test-stamp \
-  Current_TestC.cpp \
-  Current_TestC.h \
-  Current_TestC.inl \
-  Current_TestS.cpp \
-  Current_TestS.h \
-  Current_TestS.inl
-
-Current_TestC.cpp Current_TestC.h Current_TestC.inl Current_TestS.cpp Current_TestS.h Current_TestS.inl: Current_Test-stamp
-
-Current_Test-stamp: $(srcdir)/Current_Test.idl $(TAO_IDL_DEP)
-	$(TAO_IDL) $(TAO_IDLFLAGS) $(srcdir)/Current_Test.idl
-	@touch $@
-
 noinst_PROGRAMS += client
 
 client_CPPFLAGS = \
   -I$(ACE_ROOT) \
   -I$(ACE_BUILDDIR) \
   -I$(TAO_ROOT) \
-  -I$(TAO_BUILDDIR)
+  -I$(TAO_BUILDDIR) \
+  -I.
 
 client_SOURCES = \
   Client_Request_Interceptor.cpp \
   Current_TestC.cpp \
-  Current_TestS.cpp \
   Tester.cpp \
   client.cpp \
-  Client_Request_Interceptor.h \
-  Current_TestC.h \
-  Current_TestC.inl \
-  Current_TestS.h \
-  Current_TestS.inl
+  Client_Request_Interceptor.h
 
 client_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO_DynamicInterface.la \
