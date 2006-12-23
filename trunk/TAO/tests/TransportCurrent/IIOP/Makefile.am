@@ -57,7 +57,7 @@ server_CPPFLAGS = \
   -I$(ACE_BUILDDIR) \
   -I$(TAO_ROOT) \
   -I$(TAO_BUILDDIR) \
-  -I$(srcdir)/../Framework
+  -I../Framework
 
 server_SOURCES = \
   ../Framework/Current_TestC.cpp \
@@ -96,7 +96,7 @@ client_CPPFLAGS = \
   -I$(ACE_BUILDDIR) \
   -I$(TAO_ROOT) \
   -I$(TAO_BUILDDIR) \
-  -I$(srcdir)/../Framework
+  -I../Framework
 
 client_SOURCES = \
   ../Framework/Client_Request_Interceptor.cpp \
