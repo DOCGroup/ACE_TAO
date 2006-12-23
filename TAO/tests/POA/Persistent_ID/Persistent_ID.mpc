@@ -14,8 +14,8 @@ project(POA_server*): taoserver, avoids_corba_e_micro {
     server.cpp
   }
   Source_Files {
-    TestC.cpp
-    TestS.cpp
+    testC.cpp
+    testS.cpp
   }
   IDL_Files {
   }
@@ -29,7 +29,7 @@ project(POA_client*): taoserver {
     client.cpp
   }
   Source_Files {
-    TestC.cpp
+    testC.cpp
   }
   IDL_Files {
   }
