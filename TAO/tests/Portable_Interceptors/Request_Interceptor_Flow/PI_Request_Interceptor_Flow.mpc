@@ -36,7 +36,6 @@ project(*Client): taoclient, pi, interceptors {
   }
   Source_Files {
     testC.cpp
-    testS.cpp
   }
   IDL_Files {
   }
