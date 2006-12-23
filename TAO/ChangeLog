@@ -1,78 +1,85 @@
+Sat Dec 23 03:53:08 UTC 2006  Iliyan Jeliazkov  <iliyan@ociweb.com>
+
+        * tao/TransportCurrent/Current_ORBInitializer.cpp:
+        * tests/TransportCurrent/IIOP/IIOP_Server_Request_Interceptor.h:
+
+          Fixing compilation warnings.
+
 Sat Dec 23 02:01:44 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* tests/POA/EndpointPolicy/Makefile.am:
-	* tests/POA/Persistent_ID/Makefile.am:
-	* tests/Portable_Interceptors/AMI/Makefile.am:
-	* tests/Portable_Interceptors/Benchmark/Makefile.am:
-	* tests/Portable_Interceptors/Bug_1559/Makefile.am:
-	* tests/Portable_Interceptors/Bug_2510_Regression/Makefile.am:
-	* tests/Portable_Interceptors/Dynamic/Makefile.am:
-	* tests/Portable_Interceptors/ForwardRequest/Makefile.am:
-	* tests/Portable_Interceptors/IORInterceptor/Makefile.am:
-	* tests/Portable_Interceptors/PICurrent/Makefile.am:
-	* tests/Portable_Interceptors/Processing_Mode_Policy/Remote/Makefile.am:
-	* tests/Portable_Interceptors/Request_Interceptor_Flow/Makefile.am:
-	* tests/Portable_Interceptors/Service_Context_Manipulation/Makefile.am:
-	* tests/RTCORBA/Banded_Connections/Makefile.am:
-	* tests/RTCORBA/Client_Protocol/Makefile.am:
-	* tests/RTCORBA/Diffserv/Makefile.am:
-	* tests/RTCORBA/Dynamic_Thread_Pool/Makefile.am:
-	* tests/RTCORBA/Explicit_Binding/Makefile.am:
-	* tests/RTCORBA/Linear_Priority/Makefile.am:
-	* tests/RTCORBA/MT_Client_Protocol_Priority/Makefile.am:
-	* tests/RTCORBA/Persistent_IOR/Makefile.am:
-	* tests/RTCORBA/Policy_Combinations/Makefile.am:
-	* tests/RTCORBA/Priority_Inversion_With_Bands/Makefile.am:
-	* tests/RTCORBA/Private_Connection/Makefile.am:
-	* tests/RTCORBA/Profile_And_Endpoint_Selection/Makefile.am:
-	* tests/RTCORBA/Server_Declared/Makefile.am:
-	* tests/RTCORBA/Server_Protocol/Makefile.am:
-	* tests/RTCORBA/Thread_Pool/Makefile.am:
-	* tests/RTScheduling/Scheduling_Interceptor/Makefile.am:
+        * tests/POA/EndpointPolicy/Makefile.am:
+        * tests/POA/Persistent_ID/Makefile.am:
+        * tests/Portable_Interceptors/AMI/Makefile.am:
+        * tests/Portable_Interceptors/Benchmark/Makefile.am:
+        * tests/Portable_Interceptors/Bug_1559/Makefile.am:
+        * tests/Portable_Interceptors/Bug_2510_Regression/Makefile.am:
+        * tests/Portable_Interceptors/Dynamic/Makefile.am:
+        * tests/Portable_Interceptors/ForwardRequest/Makefile.am:
+        * tests/Portable_Interceptors/IORInterceptor/Makefile.am:
+        * tests/Portable_Interceptors/PICurrent/Makefile.am:
+        * tests/Portable_Interceptors/Processing_Mode_Policy/Remote/Makefile.am:
+        * tests/Portable_Interceptors/Request_Interceptor_Flow/Makefile.am:
+        * tests/Portable_Interceptors/Service_Context_Manipulation/Makefile.am:
+        * tests/RTCORBA/Banded_Connections/Makefile.am:
+        * tests/RTCORBA/Client_Protocol/Makefile.am:
+        * tests/RTCORBA/Diffserv/Makefile.am:
+        * tests/RTCORBA/Dynamic_Thread_Pool/Makefile.am:
+        * tests/RTCORBA/Explicit_Binding/Makefile.am:
+        * tests/RTCORBA/Linear_Priority/Makefile.am:
+        * tests/RTCORBA/MT_Client_Protocol_Priority/Makefile.am:
+        * tests/RTCORBA/Persistent_IOR/Makefile.am:
+        * tests/RTCORBA/Policy_Combinations/Makefile.am:
+        * tests/RTCORBA/Priority_Inversion_With_Bands/Makefile.am:
+        * tests/RTCORBA/Private_Connection/Makefile.am:
+        * tests/RTCORBA/Profile_And_Endpoint_Selection/Makefile.am:
+        * tests/RTCORBA/Server_Declared/Makefile.am:
+        * tests/RTCORBA/Server_Protocol/Makefile.am:
+        * tests/RTCORBA/Thread_Pool/Makefile.am:
+        * tests/RTScheduling/Scheduling_Interceptor/Makefile.am:
 
           Regenerated.
 
-       	* tests/POA/EndpointPolicy/EndpointPolicy.mpc:
-	* tests/POA/Persistent_ID/Persistent_ID.mpc:
-	* tests/Portable_Interceptors/AMI/PI_AMI.mpc:
-	* tests/Portable_Interceptors/Benchmark/PI_Benchmark.mpc:
-	* tests/Portable_Interceptors/Bug_1559/Bug_1559.mpc:
-	* tests/Portable_Interceptors/Bug_2510_Regression/Bug_2510_Regression.mpc:
-	* tests/Portable_Interceptors/Dynamic/PI_Dynamic.mpc:
-	* tests/Portable_Interceptors/ForwardRequest/PI_ForwardRequest.mpc:
-	* tests/Portable_Interceptors/IORInterceptor/PI_IORInterceptor.mpc:
-	* tests/Portable_Interceptors/PICurrent/PI_PICurrent.mpc:
-	* tests/Portable_Interceptors/Processing_Mode_Policy/Remote/PI_ProcMode_Remote.mpc:
-	* tests/Portable_Interceptors/Request_Interceptor_Flow/PI_Request_Interceptor_Flow.mpc:
-	* tests/Portable_Interceptors/Service_Context_Manipulation/PI_Svc_Context_Manip.mpc:
-	* tests/RTCORBA/Banded_Connections/RTCORBA_Banded_Conn.mpc:
-	* tests/RTCORBA/Client_Protocol/RTCORBA_Client_Protocol.mpc:
-	* tests/RTCORBA/Diffserv/RTCORBA_Diffserv.mpc:
-	* tests/RTCORBA/Dynamic_Thread_Pool/RT_Dynamic_Thread_Pool.mpc:
-	* tests/RTCORBA/Explicit_Binding/RTCORBA_Explicit_Binding.mpc:
-	* tests/RTCORBA/Linear_Priority/RTCORBA_Linear_Priority.mpc:
-	* tests/RTCORBA/MT_Client_Protocol_Priority/RTCORBA_MT_Client_Proto_Prio.mpc:
-	* tests/RTCORBA/Persistent_IOR/RTCORBA_Persistent_IOR.mpc:
-	* tests/RTCORBA/Policy_Combinations/RTCORBA_Policy_Combinations.mpc:
-	* tests/RTCORBA/Priority_Inversion_With_Bands/Priority_Inversion_With_Bands.mpc:
-	* tests/RTCORBA/Private_Connection/RTCORBA_Private_Connection.mpc:
-	* tests/RTCORBA/Profile_And_Endpoint_Selection/PaE_Selection.mpc:
-	* tests/RTCORBA/Server_Declared/RTCORBA_Server_Declared.mpc:
-	* tests/RTCORBA/Server_Protocol/RTCORBA_Server_Protocol.mpc:
-	* tests/RTCORBA/Thread_Pool/RTCORBA_Thread_Pool.mpc:
-	* tests/RTScheduling/Scheduling_Interceptor/Scheduler_Interceptor.mpc:
+        * tests/POA/EndpointPolicy/EndpointPolicy.mpc:
+        * tests/POA/Persistent_ID/Persistent_ID.mpc:
+        * tests/Portable_Interceptors/AMI/PI_AMI.mpc:
+        * tests/Portable_Interceptors/Benchmark/PI_Benchmark.mpc:
+        * tests/Portable_Interceptors/Bug_1559/Bug_1559.mpc:
+        * tests/Portable_Interceptors/Bug_2510_Regression/Bug_2510_Regression.mpc:
+        * tests/Portable_Interceptors/Dynamic/PI_Dynamic.mpc:
+        * tests/Portable_Interceptors/ForwardRequest/PI_ForwardRequest.mpc:
+        * tests/Portable_Interceptors/IORInterceptor/PI_IORInterceptor.mpc:
+        * tests/Portable_Interceptors/PICurrent/PI_PICurrent.mpc:
+        * tests/Portable_Interceptors/Processing_Mode_Policy/Remote/PI_ProcMode_Remote.mpc:
+        * tests/Portable_Interceptors/Request_Interceptor_Flow/PI_Request_Interceptor_Flow.mpc:
+        * tests/Portable_Interceptors/Service_Context_Manipulation/PI_Svc_Context_Manip.mpc:
+        * tests/RTCORBA/Banded_Connections/RTCORBA_Banded_Conn.mpc:
+        * tests/RTCORBA/Client_Protocol/RTCORBA_Client_Protocol.mpc:
+        * tests/RTCORBA/Diffserv/RTCORBA_Diffserv.mpc:
+        * tests/RTCORBA/Dynamic_Thread_Pool/RT_Dynamic_Thread_Pool.mpc:
+        * tests/RTCORBA/Explicit_Binding/RTCORBA_Explicit_Binding.mpc:
+        * tests/RTCORBA/Linear_Priority/RTCORBA_Linear_Priority.mpc:
+        * tests/RTCORBA/MT_Client_Protocol_Priority/RTCORBA_MT_Client_Proto_Prio.mpc:
+        * tests/RTCORBA/Persistent_IOR/RTCORBA_Persistent_IOR.mpc:
+        * tests/RTCORBA/Policy_Combinations/RTCORBA_Policy_Combinations.mpc:
+        * tests/RTCORBA/Priority_Inversion_With_Bands/Priority_Inversion_With_Bands.mpc:
+        * tests/RTCORBA/Private_Connection/RTCORBA_Private_Connection.mpc:
+        * tests/RTCORBA/Profile_And_Endpoint_Selection/PaE_Selection.mpc:
+        * tests/RTCORBA/Server_Declared/RTCORBA_Server_Declared.mpc:
+        * tests/RTCORBA/Server_Protocol/RTCORBA_Server_Protocol.mpc:
+        * tests/RTCORBA/Thread_Pool/RTCORBA_Thread_Pool.mpc:
+        * tests/RTScheduling/Scheduling_Interceptor/Scheduler_Interceptor.mpc:
 
           Split out IDL compilation into separate MPC project.
 
 Sat Dec 23 00:23:25 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* tests/BiDirectional/Makefile.am:
-	* tests/BiDirectional_DelayedUpcall/Makefile.am:
-	* tests/BiDirectional_NestedUpcall/Makefile.am:
-	* tests/Bug_2417_Regression/Makefile.am:
-	* tests/Bug_2560_Regression/Makefile.am:
-	* tests/MT_BiDir/Makefile.am:
-	* tests/NestedUpcall/Triangle_Test/Makefile.am:
+        * tests/BiDirectional/Makefile.am:
+        * tests/BiDirectional_DelayedUpcall/Makefile.am:
+        * tests/BiDirectional_NestedUpcall/Makefile.am:
+        * tests/Bug_2417_Regression/Makefile.am:
+        * tests/Bug_2560_Regression/Makefile.am:
+        * tests/MT_BiDir/Makefile.am:
+        * tests/NestedUpcall/Triangle_Test/Makefile.am:
 
           Regenerate to account for misc recent *.mpc changes.
 
