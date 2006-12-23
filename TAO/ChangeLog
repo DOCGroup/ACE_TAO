@@ -1,3 +1,20 @@
+Sat Dec 23 15:05:23 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* tests/Portable_Interceptors/Dynamic/Makefile.am:
+	* tests/Portable_Interceptors/Benchmark/Makefile.am:
+	* tests/Portable_Interceptors/Request_Interceptor_Flow/Makefile.am:
+
+          Regenerated.
+
+	* tests/Portable_Interceptors/Dynamic/PI_Dynamic.mpc:
+	* tests/Portable_Interceptors/Benchmark/PI_Benchmark.mpc:
+
+          Don't suppress any/typecode generation.
+
+	* tests/Portable_Interceptors/Request_Interceptor_Flow/PI_Request_Interceptor_Flow.mpc:
+
+          Don't include server skeleton in client.
+
 Sat Dec 23 14:35:09 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
 
         * tests/POA/Persistent_ID/Makefile.am:
