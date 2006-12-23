@@ -17,74 +17,10 @@ TAO_IDLFLAGS = -Ge 1 -Wb,pre_include=ace/pre.h -Wb,post_include=ace/post.h -I$(T
 TAO_ROOT = $(top_srcdir)
 
 noinst_PROGRAMS =
-CLEANFILES =
-BUILT_SOURCES =
 
-## Makefile.PI_ProcMode_Remote_RemoteClient.am
+## Makefile.PI_ProcMode_Remote_Idl.am
 
-if BUILD_EXCEPTIONS
-if BUILD_INTERCEPTORS
-
-BUILT_SOURCES += \
-  testC.cpp \
-  testC.h \
-  testC.inl \
-  testS.h \
-  testS.inl
-
-CLEANFILES += \
-  test-stamp \
-  testC.cpp \
-  testC.h \
-  testC.inl \
-  testS.h \
-  testS.inl
-
-testC.cpp testC.h testC.inl testS.h testS.inl: test-stamp
-
-test-stamp: $(srcdir)/test.idl $(TAO_IDL_DEP)
-	$(TAO_IDL) $(TAO_IDLFLAGS) $(srcdir)/test.idl
-	@touch $@
-
-noinst_PROGRAMS += PI_ProcMode_Remote_TestClient
-
-PI_ProcMode_Remote_TestClient_CPPFLAGS = \
-  -I$(ACE_ROOT) \
-  -I$(ACE_BUILDDIR) \
-  -I$(TAO_ROOT) \
-  -I$(TAO_BUILDDIR)
-
-PI_ProcMode_Remote_TestClient_SOURCES = \
-  Client_Task.cpp \
-  Echo_Client_ORBInitializer.cpp \
-  client_interceptor.cpp \
-  client_main.cpp \
-  testC.cpp \
-  Client_Task.h \
-  Echo_Client_ORBInitializer.h \
-  client_interceptor.h \
-  testC.h \
-  testC.inl \
-  testS.h \
-  testS.inl
-
-PI_ProcMode_Remote_TestClient_LDADD = \
-  $(TAO_BUILDDIR)/tao/libTAO_PI.la \
-  $(TAO_BUILDDIR)/tao/libTAO_CodecFactory.la \
-  $(TAO_BUILDDIR)/tao/libTAO_PortableServer.la \
-  $(TAO_BUILDDIR)/tao/libTAO_AnyTypeCode.la \
-  $(TAO_BUILDDIR)/tao/libTAO.la \
-  $(ACE_BUILDDIR)/ace/libACE.la
-
-endif BUILD_INTERCEPTORS
-endif BUILD_EXCEPTIONS
-
-## Makefile.PI_ProcMode_Remote_RemoteServer.am
-
-if BUILD_EXCEPTIONS
-if BUILD_INTERCEPTORS
-
-BUILT_SOURCES += \
+BUILT_SOURCES = \
   testC.cpp \
   testC.h \
   testC.inl \
@@ -92,7 +28,7 @@ BUILT_SOURCES += \
   testS.h \
   testS.inl
 
-CLEANFILES += \
+CLEANFILES = \
   test-stamp \
   testC.cpp \
   testC.h \
@@ -104,8 +40,16 @@ CLEANFILES += \
 testC.cpp testC.h testC.inl testS.cpp testS.h testS.inl: test-stamp
 
 test-stamp: $(srcdir)/test.idl $(TAO_IDL_DEP)
-	$(TAO_IDL) $(TAO_IDLFLAGS) $(srcdir)/test.idl
+	$(TAO_IDL) $(TAO_IDLFLAGS) -Sa -St $(srcdir)/test.idl
 	@touch $@
+
+noinst_HEADERS = \
+  test.idl
+
+## Makefile.PI_ProcMode_Remote_RemoteServer.am
+
+if BUILD_EXCEPTIONS
+if BUILD_INTERCEPTORS
 
 noinst_PROGRAMS += PI_ProcMode_Remote_TestServer
 
@@ -126,14 +70,44 @@ PI_ProcMode_Remote_TestServer_SOURCES = \
   Echo_Server_ORBInitializer.h \
   Server_Task.h \
   server_interceptor.h \
-  testC.h \
-  testC.inl \
-  testS.h \
-  testS.inl \
   test_i.h
 
 PI_ProcMode_Remote_TestServer_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO_PI_Server.la \
+  $(TAO_BUILDDIR)/tao/libTAO_PI.la \
+  $(TAO_BUILDDIR)/tao/libTAO_CodecFactory.la \
+  $(TAO_BUILDDIR)/tao/libTAO_PortableServer.la \
+  $(TAO_BUILDDIR)/tao/libTAO_AnyTypeCode.la \
+  $(TAO_BUILDDIR)/tao/libTAO.la \
+  $(ACE_BUILDDIR)/ace/libACE.la
+
+endif BUILD_INTERCEPTORS
+endif BUILD_EXCEPTIONS
+
+## Makefile.PI_ProcMode_Remote_RemoteClient.am
+
+if BUILD_EXCEPTIONS
+if BUILD_INTERCEPTORS
+
+noinst_PROGRAMS += PI_ProcMode_Remote_TestClient
+
+PI_ProcMode_Remote_TestClient_CPPFLAGS = \
+  -I$(ACE_ROOT) \
+  -I$(ACE_BUILDDIR) \
+  -I$(TAO_ROOT) \
+  -I$(TAO_BUILDDIR)
+
+PI_ProcMode_Remote_TestClient_SOURCES = \
+  Client_Task.cpp \
+  Echo_Client_ORBInitializer.cpp \
+  client_interceptor.cpp \
+  client_main.cpp \
+  testC.cpp \
+  Client_Task.h \
+  Echo_Client_ORBInitializer.h \
+  client_interceptor.h
+
+PI_ProcMode_Remote_TestClient_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO_PI.la \
   $(TAO_BUILDDIR)/tao/libTAO_CodecFactory.la \
   $(TAO_BUILDDIR)/tao/libTAO_PortableServer.la \
