@@ -17,13 +17,7 @@ project(*Server): taoserver, tc_iiop, pi_server {
   after += *idl
   after += Framework_Server
 
-  // With the automake build, header files are relative to the 
-  // source directory
-  specific(automake) {
-    includes += $(srcdir)/../Framework
-  } else {
-    includes += ../Framework
-  }
+  includes += ../Framework
 
   Source_Files {
     ../Framework/server.cpp
@@ -47,13 +41,7 @@ project(*Client): taoclient, tc_iiop, pi, dynamicinterface {
   after += *idl
   after += *Server
 
-  // With the automake build, header files are relative to the 
-  // source directory
-  specific(automake) {
-    includes += $(srcdir)/../Framework
-  } else {
-    includes += ../Framework
-  }
+  includes += ../Framework
 
   Source_Files {
     ../Framework/Client_Request_Interceptor.cpp
