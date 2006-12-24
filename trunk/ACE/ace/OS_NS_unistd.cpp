@@ -2,7 +2,7 @@
 
 #include "ace/OS_NS_unistd.h"
 
-ACE_RCSID(ace, OS_NS_unistd, "$Id$")
+ACE_RCSID (ace, OS_NS_unistd, "$Id$")
 
 #if !defined (ACE_HAS_INLINED_OSCALLS)
 # include "ace/OS_NS_unistd.inl"
@@ -48,35 +48,83 @@ ACE_OS::argv_to_string (ACE_TCHAR **argv,
 
   // Determine the length of the buffer.
 
-  for (int i = 0; argv[i] != 0; i++)
+  int argc;
+  for (argc = 0; argv[argc] != 0; ) ++argc;
+  ACE_TCHAR **argv_p = argv;
+
+  for (int i = 0; i < argc; ++i)
     {
 #if !defined (ACE_LACKS_ENV)
       // Account for environment variables.
-      if (substitute_env_args && argv[i][0] == ACE_LIB_TEXT ('$'))
+      if (substitute_env_args 
+          && ACE_OS::strchr (argv[i], ACE_LIB_TEXT ('$')) != 0)
         {
-#  if defined (ACE_WIN32) || !defined (ACE_HAS_WCHAR)
-          ACE_TCHAR *temp = 0;
-          // Win32 is the only platform with a wide-char ACE_OS::getenv().
-          if ((temp = ACE_OS::getenv (&argv[i][1])) != 0)
-            buf_len += ACE_OS::strlen (temp);
-          else
-            buf_len += ACE_OS::strlen (argv[i]);
-#  else
-          // This is an ACE_HAS_WCHAR platform and not ACE_WIN32.
-          // Convert the env variable name for getenv(), then add
-          // the length of the returned char *string. Later, when we
-          // actually use the returned env variable value, convert it
-          // as well.
-          char *ctemp = ACE_OS::getenv (ACE_TEXT_ALWAYS_CHAR (&argv[i][1]));
-          if (ctemp == 0)
-            buf_len += ACE_OS::strlen (argv[i]);
-          else
-            buf_len += ACE_OS::strlen (ctemp);
-#  endif /* ACE_WIN32 || !ACE_HAS_WCHAR */
+          if (argv_p == argv)
+            {
+              argv_p = (ACE_TCHAR **)ACE_OS::malloc (argc * sizeof (ACE_TCHAR *));
+              if (argv_p == 0)
+                {
+                  errno = ENOMEM;
+                  return 0;
+                }
+              ACE_OS::memcpy (argv_p, argv, argc * sizeof (ACE_TCHAR *));
+            }
+          argv_p[i] = ACE_OS::strenvdup (argv[i]);
+          if (argv_p[i] == 0)
+            {
+              ACE_OS::free (argv_p);
+              errno = ENOMEM;
+              return 0;
+            }
         }
-      else
 #endif /* ACE_LACKS_ENV */
-        buf_len += ACE_OS::strlen (argv[i]);
+      if (ACE_OS::strchr (argv_p[i], ACE_LIB_TEXT (' ')) != 0)
+        {
+          if (argv_p == argv)
+            {
+              argv_p = (ACE_TCHAR **) ACE_OS::malloc (argc * sizeof (ACE_TCHAR *));
+              if (argv_p == 0)
+                {
+                  errno = ENOMEM;
+                  return 0;
+                }
+              ACE_OS::memcpy (argv_p, argv, argc * sizeof (ACE_TCHAR *));
+            }
+          int quotes = 0;
+          ACE_TCHAR *temp = argv_p[i];
+          if (ACE_OS::strchr (temp, ACE_LIB_TEXT ('"')) != 0)
+            {
+              for (int j = 0; temp[j] != 0; ++j)
+                if (temp[j] == ACE_LIB_TEXT ('"')) ++quotes;
+            }
+          argv_p[i] = 
+            (ACE_TCHAR *) ACE_OS::malloc (ACE_OS::strlen (temp) * sizeof (ACE_TCHAR) + quotes + 3);
+          if (argv_p[i] == 0)
+            {
+              ACE_OS::free (argv_p);
+              errno = ENOMEM;
+              return 0;
+            }
+          ACE_TCHAR *end = argv_p[i];
+          *end++ = ACE_LIB_TEXT ('"');
+          if (quotes > 0)
+            {
+              ACE_TCHAR *p = temp;
+              while (*p != 0)
+                {
+                  if (*p == ACE_LIB_TEXT ('"')) *end++ = ACE_LIB_TEXT ('\\');
+                  *end++ = *p++;
+                }
+              *end++ = ACE_LIB_TEXT ('\0');
+            }
+          else
+            end = ACE_OS::strecpy (end, temp);
+          end[-1] = ACE_LIB_TEXT ('"');
+          *end = ACE_LIB_TEXT ('\0');
+          if (temp != argv[i])
+            ACE_OS::free (temp);
+        }
+      buf_len += ACE_OS::strlen (argv_p[i]);
 
       // Add one for the extra space between each string.
       buf_len++;
@@ -90,48 +138,27 @@ ACE_OS::argv_to_string (ACE_TCHAR **argv,
                   0);
 
   // Initial null charater to make it a null string.
-  buf[0] = '\0';
+  buf[0] = ACE_LIB_TEXT ('\0');
   ACE_TCHAR *end = buf;
-  int j;
 
-  for (j = 0; argv[j] != 0; j++)
+  for (int i = 0; i < argc; ++i)
     {
-
-#if !defined (ACE_LACKS_ENV)
-      // Account for environment variables.
-      if (substitute_env_args && argv[j][0] == ACE_LIB_TEXT ('$'))
-        {
-#  if defined (ACE_WIN32) || !defined (ACE_HAS_WCHAR)
-          // Win32 is the only platform with a wide-char ACE_OS::getenv().
-          ACE_TCHAR *temp = ACE_OS::getenv (&argv[j][1]);
-          if (temp != 0)
-            end = ACE_OS::strecpy (end, temp);
-          else
-            end = ACE_OS::strecpy (end, argv[j]);
-#  else
-          // This is an ACE_HAS_WCHAR platform and not ACE_WIN32.
-          // Convert the env variable name for getenv(), then convert
-          // the returned char *string back to wchar_t.
-          char *ctemp = ACE_OS::getenv (ACE_TEXT_ALWAYS_CHAR (&argv[j][1]));
-          if (ctemp == 0)
-            end = ACE_OS::strecpy (end, argv[j]);
-          else
-            end = ACE_OS::strecpy (end, ACE_TEXT_CHAR_TO_TCHAR (ctemp));
-#  endif /* ACE_WIN32 || !ACE_HAS_WCHAR */
-        }
-      else
-#endif /* ACE_LACKS_ENV */
-        end = ACE_OS::strecpy (end, argv[j]);
+      end = ACE_OS::strecpy (end, argv_p[i]);
+      if (argv_p[i] != argv[i])
+        ACE_OS::free (argv_p[i]);
 
       // Replace the null char that strecpy put there with white
       // space.
-      end[-1] = ' ';
+      end[-1] = ACE_LIB_TEXT (' ');
     }
-
   // Null terminate the string.
-  *end = '\0';
+  *end = ACE_LIB_TEXT ('\0');
+
+  if (argv_p != argv)
+    ACE_OS::free (argv_p);
+
   // The number of arguments.
-  return j;
+  return argc;
 }
 
 int
@@ -243,7 +270,7 @@ ACE_OS::fork_exec (ACE_TCHAR *argv[])
 
 #   if defined (ACE_USES_WCHAR)
       // Wide-char builds need to convert the command-line args to
-      // narrow char strings for execv().
+      // narrow char strings for execv ().
       char **cargv = 0;
       int arg_count;
 #   endif /* ACE_HAS_WCHAR */
@@ -306,7 +333,7 @@ ACE_OS::num_processors (void)
   int num_processors;
   int mib[2] = { CTL_HW, HW_NCPU };
   size_t len = sizeof (num_processors);
-  if (::sysctl(mib, 2, &num_processors, &len, NULL, 0) != -1)
+  if (::sysctl (mib, 2, &num_processors, &len, NULL, 0) != -1)
     return num_processors;
   else
     return -1;
@@ -332,7 +359,7 @@ ACE_OS::num_processors_online (void)
   int num_processors;
   int mib[2] = { CTL_HW, HW_NCPU };
   size_t len = sizeof (num_processors);
-  if (::sysctl(mib, 2, &num_processors, &len, NULL, 0) != -1)
+  if (::sysctl (mib, 2, &num_processors, &len, NULL, 0) != -1)
     return num_processors;
   else
     return -1;
@@ -362,7 +389,7 @@ ACE_OS::read_n (ACE_HANDLE handle,
        bytes_transferred += n)
     {
       n = ACE_OS::read (handle,
-                        (char *) buf + bytes_transferred,
+ (char *) buf + bytes_transferred,
                         len - bytes_transferred);
 
       if (n == -1 || n == 0)
@@ -391,7 +418,7 @@ ACE_OS::pread (ACE_HANDLE handle,
                                                   FILE_CURRENT);
 
   if (original_low_position == INVALID_SET_FILE_POINTER
-      && GetLastError() != NO_ERROR)
+      && GetLastError () != NO_ERROR)
     return -1;
 
   // Go to the correct position
@@ -402,7 +429,7 @@ ACE_OS::pread (ACE_HANDLE handle,
                                              &high_offset,
                                              FILE_BEGIN);
   if (altered_position == INVALID_SET_FILE_POINTER
-      && GetLastError() != NO_ERROR)
+      && GetLastError () != NO_ERROR)
     return -1;
 
   DWORD bytes_read;
@@ -455,7 +482,7 @@ ACE_OS::pread (ACE_HANDLE handle,
                         original_low_position,
                         &original_high_position,
                         FILE_BEGIN) == INVALID_SET_FILE_POINTER
-      && GetLastError() != NO_ERROR)
+      && GetLastError () != NO_ERROR)
     return -1;
 
   return (ssize_t) bytes_read;
@@ -658,7 +685,8 @@ ACE_OS::string_to_argv (ACE_TCHAR *buf,
               ACE_TCHAR quote = *cp;
 
               // Scan past the string..
-              for (cp++; *cp != ACE_LIB_TEXT ('\0') && *cp != quote; cp++)
+              for (cp++; *cp != ACE_LIB_TEXT ('\0')
+                   && (*cp != quote || cp[-1] == ACE_LIB_TEXT ('\\')); cp++)
                 continue;
 
               // '\0' implies unmatched quote..
@@ -706,8 +734,12 @@ ACE_OS::string_to_argv (ACE_TCHAR *buf,
           {
             ACE_TCHAR quote = *ptr++;
 
-            while (*ptr != ACE_LIB_TEXT ('\0') && *ptr != quote)
-              *cp++ = *ptr++;
+            while (*ptr != ACE_LIB_TEXT ('\0')
+                   && (*ptr != quote || ptr[-1] == ACE_LIB_TEXT ('\\')))
+              {
+                if (*ptr == quote && ptr[-1] == ACE_LIB_TEXT ('\\')) --cp;
+                *cp++ = *ptr++;
+              }
 
             if (*ptr == quote)
               ++ptr;
@@ -720,7 +752,7 @@ ACE_OS::string_to_argv (ACE_TCHAR *buf,
 #if !defined (ACE_LACKS_ENV)
       // Check for environment variable substitution here.
       if (substitute_env_args) {
-          argv[i] = ACE_OS::strenvdup(argp);
+          argv[i] = ACE_OS::strenvdup (argp);
 
           if (argv[i] == 0)
             {
@@ -733,7 +765,7 @@ ACE_OS::string_to_argv (ACE_TCHAR *buf,
       else
 #endif /* ACE_LACKS_ENV */
         {
-          argv[i] = ACE_OS::strdup(argp);
+          argv[i] = ACE_OS::strdup (argp);
 
           if (argv[i] == 0)
             {
@@ -770,7 +802,7 @@ ACE_OS::write_n (ACE_HANDLE handle,
        bytes_transferred += n)
     {
       n = ACE_OS::write (handle,
-                         (char *) buf + bytes_transferred,
+ (char *) buf + bytes_transferred,
                          len - bytes_transferred);
 
       if (n == -1 || n == 0)

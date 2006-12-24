@@ -21,10 +21,10 @@
 #include "ace/Argv_Type_Converter.h"
 #include "test_config.h"
 
-ACE_RCSID(tests, ARGV_Test, "$Id$")
+ACE_RCSID (tests, ARGV_Test, "$Id$")
 
 static void
-consume_arg (int &argc, ACE_TCHAR *argv[])
+consume_arg (int argc, ACE_TCHAR *argv[])
 {
   ACE_Arg_Shifter arg_shifter (argc, argv);
 
@@ -33,6 +33,36 @@ consume_arg (int &argc, ACE_TCHAR *argv[])
   // Once we initialize an arg_shifter, we must iterate through it all!
   while ((arg_shifter.is_anything_left ())) 
     arg_shifter.ignore_arg (1);
+}
+
+static int
+test_simple_argv (char *argv[])
+{
+  // From command line.
+  ACE_ARGV cl (argv);
+
+  // My own stuff.
+  ACE_ARGV my;
+
+  // Add to my stuff.
+  my.add (ACE_TEXT ("-ORBEndpoint iiop://localhost:12345"));
+
+  // Combine the two (see the ace/ARGV.h constructors documentation).
+  ACE_ARGV a (cl.argv (),
+              my.argv ());
+
+  ACE_DEBUG ((LM_DEBUG,
+              ACE_TEXT ("argc = %d\n"),
+              a.argc ()));
+
+  // Print the contents of the combined <ACE_ARGV>.
+  for (int i = 0; i < a.argc (); i++)
+    ACE_DEBUG ((LM_DEBUG,
+                ACE_TEXT (" (%d) %s\n"),
+                i,
+                a.argv ()[i]));
+
+  return 0;
 }
 
 static int
@@ -100,12 +130,12 @@ test_argv_type_converter2 (void)
     consume_arg ( ct.get_argc (), ct.get_TCHAR_argv ());
   }
 
-  consume_arg ( argc, argv);
+  consume_arg (argc, argv);
 
   {
     for (size_t i = 0; i < 4; i++)
       ACE_DEBUG ((LM_DEBUG,
-				  ACE_TEXT (" (%d) %s\n"),
+                  ACE_TEXT (" (%d) %s\n"),
                   i,
                   argv[i]));
   }
@@ -116,37 +146,59 @@ test_argv_type_converter2 (void)
   return 0;
 }
 
+static int
+test_argv_quotes (void)
+{
+  char *argv[] = { "first",
+                   "'second in single quotes'",
+                   "\"third in double quotes\""
+                 };
+  int argc = 3;                   
+
+  // (argc, argv)
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("\n*** argv ***\n")));
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("argc: %d\n"), argc));
+
+  for (int i = 0; i < argc; ++i)
+    ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("argv[%02d] = %s\n"), i, argv[i]));
+ 
+  // args
+  ACE_ARGV args;
+  for (int i = 0; i < argc; ++i) 
+    args.add (argv[i]);
+  args.add (ACE_TEXT ("'fourth in single quotes'"));
+  args.add (ACE_TEXT ("\"fifth in double quotes\""));
+  args.add (ACE_TEXT ("sixth without any quotes"));
+ 
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("\n*** args-1 ***\n")));
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("args.argc (): %d\n"), args.argc ()));
+
+  for (int i = 0; i < args.argc (); ++i)
+    ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("args[%02d]: %s\n"), i, args[i]));
+
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("args.argc (): %d\n"), args.argc ()));
+ 
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("\n*** args-2 ***\n")));
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("args.argc (): %d\n"), args.argc ()));
+
+  for (int i = 0; i < args.argc (); ++i)
+    ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("args.argv ()[%02d]: %s\n"),
+                i, args.argv ()[i]));
+
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("args.argc (): %d\n"), args.argc ()));
+ 
+  return 0;
+}
+
 int
 run_main (int, ACE_TCHAR *argv[])
 {
   ACE_START_TEST (ACE_TEXT ("ARGV_Test"));
 
-  // From command line.
-  ACE_ARGV cl (argv);
-
-  // My own stuff.
-  ACE_ARGV my;
-
-  // Add to my stuff.
-  my.add (ACE_TEXT ("-ORBEndpoint iiop://localhost:12345"));
-
-  // Combine the two (see the ace/ARGV.h constructors documentation).
-  ACE_ARGV a (cl.argv (),
-              my.argv ());
-
-  ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("argc = %d\n"),
-              a.argc ()));
-
-  // Print the contents of the combined <ACE_ARGV>.
-  for (int i = 0; i < a.argc (); i++)
-    ACE_DEBUG ((LM_DEBUG,
-                ACE_TEXT (" (%d) %s\n"),
-                i,
-                a.argv ()[i]));
-
+  test_simple_argv (argv);
   test_argv_type_converter2 ();
   test_argv_type_converter ();
+  test_argv_quotes ();
 
   ACE_END_TEST;
   return 0;
