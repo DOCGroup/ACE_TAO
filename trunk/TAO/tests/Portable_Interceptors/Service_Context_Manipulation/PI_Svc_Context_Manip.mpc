@@ -9,6 +9,7 @@ project(*idl): taoidldefaults {
 }
 
 project(*Server): taoserver, pi_server, interceptors {
+  after += *idl
   Source_Files {
     test_i.cpp
     Server_ORBInitializer.cpp
