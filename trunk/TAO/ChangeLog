@@ -1,3 +1,15 @@
+Sun Dec 24 15:38:15 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * tests/Smart_Proxies/Collocation/Makefile.am:
+
+          Regenerated.
+
+        * tests/Smart_Proxies/Collocation/SP_Collocation.mpc:
+
+          Changed IDL project to inherit from smart_proxies.
+
+          Changed *Test project to depend on *idl for build order.
+
 Sun Dec 24 00:04:19 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* tests/CollocationLockup/Makefile.am:
