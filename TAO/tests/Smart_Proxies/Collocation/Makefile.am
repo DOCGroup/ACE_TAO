@@ -17,8 +17,11 @@ TAO_IDLFLAGS = -Ge 1 -Wb,pre_include=ace/pre.h -Wb,post_include=ace/post.h -I$(T
 TAO_ROOT = $(top_srcdir)
 
 noinst_LTLIBRARIES =
+noinst_HEADERS =
 
 ## Makefile.SP_Collocation_Idl.am
+
+if BUILD_EXCEPTIONS
 
 BUILT_SOURCES = \
   DiamondC.cpp \
@@ -40,11 +43,13 @@ CLEANFILES = \
 DiamondC.cpp DiamondC.h DiamondC.inl DiamondS.cpp DiamondS.h DiamondS.inl: Diamond-stamp
 
 Diamond-stamp: $(srcdir)/Diamond.idl $(TAO_IDL_DEP)
-	$(TAO_IDL) $(TAO_IDLFLAGS) -Sa -St -Wb,stub_export_macro=MY_Stub_Export -Wb,stub_export_include=stub_export.h -Wb,skel_export_macro=Diamond_Export -Wb,skel_export_include=diamond_export.h -Gd $(srcdir)/Diamond.idl
+	$(TAO_IDL) $(TAO_IDLFLAGS) -Sa -St -Gsp -Wb,stub_export_macro=MY_Stub_Export -Wb,stub_export_include=stub_export.h -Wb,skel_export_macro=Diamond_Export -Wb,skel_export_include=diamond_export.h -Gd $(srcdir)/Diamond.idl
 	@touch $@
 
-noinst_HEADERS = \
+noinst_HEADERS += \
   Diamond.idl
+
+endif BUILD_EXCEPTIONS
 
 ## Makefile.SP_Collocation_TestStubsLib.am
 
