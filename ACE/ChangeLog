@@ -1,3 +1,16 @@
+Sun Dec 24 23:13:37 UTC 2006  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
+
+        * tests/ARGV_Test.cpp: Updated the test to ensure that Pavel's
+          patches work properly.
+
+Sun Dec 24 22:29:24 UTC 2006  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
+
+        * ace/OS_NS_stdlib.inl,
+        * ace/OS_NS_unistd.cpp: Modified ACE_OS::strenvdup() and
+          ACE_OS::argv_to_string() so they split the arguments containing
+          spaces in accordance with the documentation.  Thanks to Pavel
+          Zaichenko <zpf at ivl dot ua> for these patches.
+
 Fri Dec 22 17:35:53 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
 
         * ace/OS_NS_dirent.inl:
