@@ -1,3 +1,17 @@
+Sun Dec 24 00:04:19 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* tests/CollocationLockup/Makefile.am:
+	* tests/DSI_Gateway/Makefile.am:
+	* tests/Nested_Upcall_Crash/Makefile.am:
+
+          Regenerated.
+
+	* tests/CollocationLockup/CollocationLockup.mpc:
+	* tests/DSI_Gateway/DSI_Gateway.mpc:
+	* tests/Nested_Upcall_Crash/Nested_Upcall_Crash.mpc:
+
+          Split out IDL compilation into separate MPC project.
+
 Sat Dec 23 16:53:57 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* tests/Collocation/Makefile.am:
