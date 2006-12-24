@@ -1,3 +1,15 @@
+Sun Dec 24 15:39:43 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * tests/Parallel_Connect_Strategy/Makefile.am:
+        * tests/Reliable_Oneways/Makefile.am:
+
+          Regenerated.
+
+        * tests/Parallel_Connect_Strategy/Parallel_Connect_Strategy.mpc:
+        * tests/Reliable_Oneways/Reliable_Oneways.mpc:
+
+          Split out IDL compilation into separate MPC project.
+
 Sun Dec 24 15:38:15 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
 
         * tests/Smart_Proxies/Collocation/Makefile.am:
