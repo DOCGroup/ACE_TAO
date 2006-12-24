@@ -84,7 +84,7 @@ namespace Test {
 
   /// queries the status of the test
   bool
-  Server_Request_Interceptor::self_test () const
+  Server_Request_Interceptor::self_test ()
   {
     return true;
   }
