@@ -1,7 +1,7 @@
 // -*- MPC -*-
 // $Id$
 
-project(*idl): taoidldefaults {
+project(*idl): taoidldefaults, smart_proxies {
   idlflags     += -Wb,stub_export_macro=MY_Stub_Export -Wb,stub_export_include=stub_export.h -Wb,skel_export_macro=Diamond_Export -Wb,skel_export_include=diamond_export.h -Gd
 
   IDL_Files {
@@ -42,6 +42,7 @@ project(*DiamondLib) : taolib_with_idl, smart_proxies, portableserver {
 }
 
 project(*Test): taoexe, smart_proxies, portableserver, strategies {
+  after += *idl
   after += *TestStubsLib *DiamondLib
   libs  += Coll_Test_Stubs Diamond
   Source_Files {
