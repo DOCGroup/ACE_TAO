@@ -43,7 +43,7 @@ namespace Test
     virtual ~IIOP_Server_Request_Interceptor ();
 
     /// queries the status of the test
-    virtual bool self_test () const;
+    virtual bool self_test ();
 
     /**
      * @name Methods Required by the Server Request Interceptor

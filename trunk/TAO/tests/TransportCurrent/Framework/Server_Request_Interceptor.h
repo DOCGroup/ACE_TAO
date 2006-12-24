@@ -62,7 +62,7 @@ namespace Test
                                  ACE_ENV_ARG_DECL_WITH_DEFAULTS)
       ACE_THROW_SPEC ((CORBA::SystemException));
 
-    virtual bool self_test (void) const;
+    virtual bool self_test (void);
 
     /**
      * @name Methods Required by the Server Request Interceptor

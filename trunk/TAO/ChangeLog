@@ -1,3 +1,11 @@
+Sun Dec 24 15:44:40 UTC 2006  Iliyan Jeliazkov  <iliyan@ociweb.com>
+
+        * tests/TransportCurrent/Framework/Server_Request_Interceptor.h:
+        * tests/TransportCurrent/Framework/Server_Request_Interceptor.cpp:
+        * tests/TransportCurrent/IIOP/IIOP_Server_Request_Interceptor.h:
+
+          Getting the const-ness right.
+
 Sun Dec 24 15:39:43 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
 
         * tests/Parallel_Connect_Strategy/Makefile.am:
@@ -24,27 +32,27 @@ Sun Dec 24 15:38:15 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
 
 Sun Dec 24 00:04:19 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* tests/CollocationLockup/Makefile.am:
-	* tests/DSI_Gateway/Makefile.am:
-	* tests/Nested_Upcall_Crash/Makefile.am:
+        * tests/CollocationLockup/Makefile.am:
+        * tests/DSI_Gateway/Makefile.am:
+        * tests/Nested_Upcall_Crash/Makefile.am:
 
           Regenerated.
 
-	* tests/CollocationLockup/CollocationLockup.mpc:
-	* tests/DSI_Gateway/DSI_Gateway.mpc:
-	* tests/Nested_Upcall_Crash/Nested_Upcall_Crash.mpc:
+        * tests/CollocationLockup/CollocationLockup.mpc:
+        * tests/DSI_Gateway/DSI_Gateway.mpc:
+        * tests/Nested_Upcall_Crash/Nested_Upcall_Crash.mpc:
 
           Split out IDL compilation into separate MPC project.
 
 Sat Dec 23 16:53:57 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* tests/Collocation/Makefile.am:
-	* tests/Smart_Proxies/Collocation/Makefile.am:
+        * tests/Collocation/Makefile.am:
+        * tests/Smart_Proxies/Collocation/Makefile.am:
 
           Regenerated.
 
         * tests/Collocation/Collocation.mpc:
-	* tests/Smart_Proxies/Collocation/SP_Collocation.mpc:
+        * tests/Smart_Proxies/Collocation/SP_Collocation.mpc:
 
           Split out IDL compilation into separate MPC project.
 
@@ -62,18 +70,18 @@ Sat Dec 23 15:48:43 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
 
 Sat Dec 23 15:05:23 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* tests/Portable_Interceptors/Dynamic/Makefile.am:
-	* tests/Portable_Interceptors/Benchmark/Makefile.am:
-	* tests/Portable_Interceptors/Request_Interceptor_Flow/Makefile.am:
+        * tests/Portable_Interceptors/Dynamic/Makefile.am:
+        * tests/Portable_Interceptors/Benchmark/Makefile.am:
+        * tests/Portable_Interceptors/Request_Interceptor_Flow/Makefile.am:
 
           Regenerated.
 
-	* tests/Portable_Interceptors/Dynamic/PI_Dynamic.mpc:
-	* tests/Portable_Interceptors/Benchmark/PI_Benchmark.mpc:
+        * tests/Portable_Interceptors/Dynamic/PI_Dynamic.mpc:
+        * tests/Portable_Interceptors/Benchmark/PI_Benchmark.mpc:
 
           Don't suppress any/typecode generation.
 
-	* tests/Portable_Interceptors/Request_Interceptor_Flow/PI_Request_Interceptor_Flow.mpc:
+        * tests/Portable_Interceptors/Request_Interceptor_Flow/PI_Request_Interceptor_Flow.mpc:
 
           Don't include server skeleton in client.
 
