@@ -1,3 +1,10 @@
+Sun Dec 24 23:03:46 UTC 2006  Iliyan Jeliazkov  <iliyan@ociweb.com>
+
+        * tests/Portable_Interceptors/Service_Context_Manipulation/PI_Svc_Context_Manip.mpc:
+
+          Adding "after" keyword to makesure IDL is built first in
+          parallel builds.
+
 Sun Dec 24 15:44:40 UTC 2006  Iliyan Jeliazkov  <iliyan@ociweb.com>
 
         * tests/TransportCurrent/Framework/Server_Request_Interceptor.h:
