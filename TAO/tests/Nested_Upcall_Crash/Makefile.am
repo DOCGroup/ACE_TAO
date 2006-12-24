@@ -17,36 +17,11 @@ TAO_IDLFLAGS = -Ge 1 -Wb,pre_include=ace/pre.h -Wb,post_include=ace/post.h -I$(T
 TAO_ROOT = $(top_srcdir)
 
 noinst_PROGRAMS =
-CLEANFILES =
-BUILT_SOURCES =
 
 ## Makefile.Nested_Upcall_Crash_Server.am
 
 if BUILD_CORBA_MESSAGING
 if BUILD_EXCEPTIONS
-
-BUILT_SOURCES += \
-  TestC.cpp \
-  TestC.h \
-  TestC.inl \
-  TestS.cpp \
-  TestS.h \
-  TestS.inl
-
-CLEANFILES += \
-  Test-stamp \
-  TestC.cpp \
-  TestC.h \
-  TestC.inl \
-  TestS.cpp \
-  TestS.h \
-  TestS.inl
-
-TestC.cpp TestC.h TestC.inl TestS.cpp TestS.h TestS.inl: Test-stamp
-
-Test-stamp: $(srcdir)/Test.idl $(TAO_IDL_DEP)
-	$(TAO_IDL) $(TAO_IDLFLAGS) $(srcdir)/Test.idl
-	@touch $@
 
 noinst_PROGRAMS += server
 
@@ -63,11 +38,7 @@ server_SOURCES = \
   TestS.cpp \
   server.cpp \
   Clock_Ticks.h \
-  Server_Peer.h \
-  TestC.h \
-  TestC.inl \
-  TestS.h \
-  TestS.inl
+  Server_Peer.h
 
 server_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO_Messaging.la \
@@ -87,29 +58,6 @@ endif BUILD_CORBA_MESSAGING
 if BUILD_CORBA_MESSAGING
 if BUILD_EXCEPTIONS
 
-BUILT_SOURCES += \
-  TestC.cpp \
-  TestC.h \
-  TestC.inl \
-  TestS.cpp \
-  TestS.h \
-  TestS.inl
-
-CLEANFILES += \
-  Test-stamp \
-  TestC.cpp \
-  TestC.h \
-  TestC.inl \
-  TestS.cpp \
-  TestS.h \
-  TestS.inl
-
-TestC.cpp TestC.h TestC.inl TestS.cpp TestS.h TestS.inl: Test-stamp
-
-Test-stamp: $(srcdir)/Test.idl $(TAO_IDL_DEP)
-	$(TAO_IDL) $(TAO_IDLFLAGS) $(srcdir)/Test.idl
-	@touch $@
-
 noinst_PROGRAMS += scavenger
 
 scavenger_CPPFLAGS = \
@@ -122,10 +70,9 @@ scavenger_SOURCES = \
   TestC.cpp \
   TestS.cpp \
   scavenger.cpp \
-  TestC.h \
-  TestC.inl \
-  TestS.h \
-  TestS.inl
+  Client_Peer.h \
+  Clock_Ticks.h \
+  Server_Peer.h
 
 scavenger_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO_Messaging.la \
@@ -145,29 +92,6 @@ endif BUILD_CORBA_MESSAGING
 if BUILD_CORBA_MESSAGING
 if BUILD_EXCEPTIONS
 
-BUILT_SOURCES += \
-  TestC.cpp \
-  TestC.h \
-  TestC.inl \
-  TestS.cpp \
-  TestS.h \
-  TestS.inl
-
-CLEANFILES += \
-  Test-stamp \
-  TestC.cpp \
-  TestC.h \
-  TestC.inl \
-  TestS.cpp \
-  TestS.h \
-  TestS.inl
-
-TestC.cpp TestC.h TestC.inl TestS.cpp TestS.h TestS.inl: Test-stamp
-
-Test-stamp: $(srcdir)/Test.idl $(TAO_IDL_DEP)
-	$(TAO_IDL) $(TAO_IDLFLAGS) $(srcdir)/Test.idl
-	@touch $@
-
 noinst_PROGRAMS += client
 
 client_CPPFLAGS = \
@@ -183,11 +107,7 @@ client_SOURCES = \
   TestS.cpp \
   client.cpp \
   Client_Peer.h \
-  Clock_Ticks.h \
-  TestC.h \
-  TestC.inl \
-  TestS.h \
-  TestS.inl
+  Clock_Ticks.h
 
 client_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO_Messaging.la \
@@ -201,6 +121,34 @@ client_LDADD = \
 
 endif BUILD_EXCEPTIONS
 endif BUILD_CORBA_MESSAGING
+
+## Makefile.Nested_Upcall_Crash_Tao.am
+
+BUILT_SOURCES = \
+  TestC.cpp \
+  TestC.h \
+  TestC.inl \
+  TestS.cpp \
+  TestS.h \
+  TestS.inl
+
+CLEANFILES = \
+  Test-stamp \
+  TestC.cpp \
+  TestC.h \
+  TestC.inl \
+  TestS.cpp \
+  TestS.h \
+  TestS.inl
+
+TestC.cpp TestC.h TestC.inl TestS.cpp TestS.h TestS.inl: Test-stamp
+
+Test-stamp: $(srcdir)/Test.idl $(TAO_IDL_DEP)
+	$(TAO_IDL) $(TAO_IDLFLAGS) -Sa -St $(srcdir)/Test.idl
+	@touch $@
+
+noinst_HEADERS = \
+  Test.idl
 
 ## Clean up template repositories, etc.
 clean-local:
