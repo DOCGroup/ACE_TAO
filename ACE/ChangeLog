@@ -1,3 +1,19 @@
+Tue Dec 26 22:47:57 UTC 2006  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
+
+        * ace/OS_NS_unistd.cpp: Reverted the changes to ACE_OS::argv_to_string()
+          from here:
+  
+          Sun Dec 24 22:29:24 UTC 2006  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
+          
+          so that Signal_Test.cpp tests don't break.  In a nutshell, each
+          argv[i] argument to ACE_ARGV is not supposed to be quoted.
+          Thanks to Steve Huston for reporting this.
+  
+Tue Dec 26 22:46:34 UTC 2006  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
+
+        * tests/ARGV_Test.cpp (run_main): Updated the test to test how the
+          conversion from char *argv[] to a char * works.
+
 Mon Dec 25 16:19:42 UTC 2006  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
 
         * Merry Christmas everyone!!!
