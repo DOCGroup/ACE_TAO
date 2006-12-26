@@ -147,6 +147,38 @@ test_argv_type_converter2 (void)
 }
 
 static int
+test_argv_buf (void)
+{
+  pid_t parent_pid = ACE_OS::getpid ();
+
+  ACE_TCHAR *l_argv[3];
+  ACE_TCHAR pid_str[100];
+  // Store the parent's process id so we can pass it to the child
+  // portably.  Also, pass the test number, as well.
+  ACE_OS::sprintf (pid_str,
+                   ACE_TEXT ("-p %ld -t %d"),
+                   static_cast <long> (parent_pid),
+                   1);
+
+  // We're going to create a new process that runs this program again,
+  // so we need to indicate that it's the child.
+  const ACE_TCHAR *t = ACE_TEXT (".")
+                       ACE_DIRECTORY_SEPARATOR_STR
+                       ACE_TEXT ("Signal_Test")
+                       ACE_PLATFORM_EXE_SUFFIX
+                       ACE_TEXT (" -c");
+  l_argv[0] = const_cast <ACE_TCHAR *> (t);
+  l_argv[1] = pid_str;
+  l_argv[2] = 0;
+
+  ACE_ARGV my_argv (l_argv);
+  
+  // This shouldn't have any quotes in it.
+  ACE_DEBUG ((LM_DEBUG, "%s\n", my_argv.buf ()));
+  return 0;
+}
+
+static int
 test_argv_quotes (void)
 {
   char *argv[] = { "first",
@@ -199,6 +231,7 @@ run_main (int, ACE_TCHAR *argv[])
   test_argv_type_converter2 ();
   test_argv_type_converter ();
   test_argv_quotes ();
+  test_argv_buf ();
 
   ACE_END_TEST;
   return 0;

@@ -425,8 +425,8 @@ ACE_OS::strenvdup (const ACE_TCHAR *str)
   ACE_UNUSED_ARG (str);
   ACE_NOTSUP_RETURN (0);
 #else
-  const ACE_TCHAR * start = 0;
-  if ((start = ACE_OS::strchr (str, ACE_LIB_TEXT ('$'))) != 0)
+  const ACE_TCHAR * start = ACE_OS::strchr (str, ACE_LIB_TEXT ('$'));
+  if (start != 0)
     {
       ACE_TCHAR buf[ACE_DEFAULT_ARGV_BUFSIZ];
       size_t var_len = ACE_OS::strcspn (&start[1],
