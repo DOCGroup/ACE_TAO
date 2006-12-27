@@ -1,3 +1,9 @@
+Wed Dec 27 16:10:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * os_include/net/os_if.h:
+          Only define the IFF_x defines when ACE_LACKS_NETWORKING is
+          defined to resolve redefinition warnings on windows
+
 Wed Dec 27 14:06:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/config-posix-nonetworking.h:
