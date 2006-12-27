@@ -1,3 +1,8 @@
+Wed Dec 27 14:06:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/config-posix-nonetworking.h:
+          Added ACE_LACKS_GETHOSTENT
+
 Wed Dec 27 12:42:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Atomic_Op_T.h:
