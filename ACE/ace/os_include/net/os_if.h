@@ -100,17 +100,17 @@ struct  ifconf {
         };
 #endif /* ACE_LACKS_IFCONF */
 
-#if !defined (IFF_UP)
+#if !defined (IFF_UP) && defined (ACE_LACKS_NETWORKING)
 # define IFF_UP 0x1
-#endif /* IFF_UP */
+#endif /* IFF_UP && ACE_LACKS_NETWORKING */
 
-#if !defined (IFF_LOOPBACK)
+#if !defined (IFF_LOOPBACK) && defined (ACE_LACKS_NETWORKING)
 # define IFF_LOOPBACK 0x8
-#endif /* IFF_LOOPBACK */
+#endif /* IFF_LOOPBACK && ACE_LACKS_NETWORKING */
 
-#if !defined (IFF_BROADCAST)
+#if !defined (IFF_BROADCAST) && defined (ACE_LACKS_NETWORKING)
 # define IFF_BROADCAST 0x2
-#endif /* IFF_BROADCAST */
+#endif /* IFF_BROADCAST && ACE_LACKS_NETWORKING */
 
 #ifdef __cplusplus
 }
