@@ -16,6 +16,8 @@
 
 #include "DomainEventsC.h"
 
+#include "ResourceCommitmentManager.h"
+
 namespace CIDL_TargetManager_i
 {
   //==================================================================
@@ -159,6 +161,42 @@ namespace CIDL_TargetManager_i
 
   }
 
+  ::Deployment::ResourceCommitmentManager_ptr
+  TargetManager_exec_i::createResourceCommitment (
+  const ::Deployment::ResourceAllocationSeq & manager
+  ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+  ACE_THROW_SPEC ((::CORBA::SystemException,
+                   ::Deployment::ResourceCommitmentFailure))
+  {
+    ACE_DEBUG ((LM_DEBUG, "Create Resource Commitment called \n\n"));
+    
+    CIAO::ResourceCommitmentManager_i *commit_servant =
+      new CIAO::ResourceCommitmentManager_i ();
+
+    // Standard owner transfer mechanisms.
+    //
+    PortableServer::ServantBase_var safe_daemon (commit_servant);
+
+    commit_servant->commitResources (manager);
+
+    Deployment::ResourceCommitmentManager_var mgrv =
+      commit_servant->_this ();
+
+    ACE_DEBUG ((LM_DEBUG, "Returning from Create Resource Commitment \n\n"));
+    return mgrv._retn ();
+  }
+
+  void
+  TargetManager_exec_i::destroyResourceCommitment (
+  ::Deployment::ResourceCommitmentManager_ptr resources
+  ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+  ACE_THROW_SPEC ((::CORBA::SystemException))
+  {
+    ::Deployment::ResourceAllocationSeq res;
+    res.length (0);
+    resources->releaseResources (res);
+    return;
+  }
   //==================================================================
   // Facet Executor Implementation Class:   TargetManagerExt_exec_i
   // required for RACE

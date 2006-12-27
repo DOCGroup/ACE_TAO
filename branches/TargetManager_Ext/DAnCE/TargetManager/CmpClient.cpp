@@ -68,66 +68,48 @@ int main (int argc, char* argv[])
 
     // make a call to the commit resources .....
 
-
-    Deployment::DeploymentPlan plan;
-
-    plan.instance.length (2);
-
-    ::Deployment::InstanceDeploymentDescription instance_;
-    instance_.node = CORBA::string_dup ("foil");
-    instance_.deployedResource.length (1);
-    instance_.deployedResource[0].requirementName =
-      CORBA::string_dup ("Processor");
-    instance_.deployedResource[0].resourceName =
-      CORBA::string_dup ("CPULoad");
-
-    instance_.deployedResource[0].property.length (1);
-    instance_.deployedResource[0].property[0].name =
-      CORBA::string_dup ("LoadAverage");
-    CORBA::Long d = 20;
-    instance_.deployedResource[0].property[0].value <<= d;
-
-    plan.instance[0] = instance_;
-
-    instance_.node = CORBA::string_dup ("blade30");
-    instance_.deployedResource.length (1);
-    instance_.deployedResource[0].requirementName =
-      CORBA::string_dup ("Processor");
-    instance_.deployedResource[0].resourceName =
-      CORBA::string_dup ("CPULoad");
-
-    instance_.deployedResource[0].property.length (1);
-    instance_.deployedResource[0].property[0].name =
-      CORBA::string_dup ("LoadAverage");
-    d = 50;
-
-    instance_.deployedResource[0].property[0].value <<= d;
-
-    plan.instance[1] = instance_;
-
     bool resource_available = true;
+
+    ::Deployment::ResourceAllocationSeq resource_seq;
+
+    resource_seq.length (1);
+
+    resource_seq[0].elementName = CORBA::string_dup ("TargetManagerNode_1");
+
+    resource_seq[0].resourceName = CORBA::string_dup ("Processor");
+
+    resource_seq[0].property.length (1);
+    resource_seq[0].property[0].name =
+      CORBA::string_dup ("LoadAverage");
+
+    CORBA::Long d = 20;
+    resource_seq[0].property[0].value <<= d;
+
+    ::Deployment::ResourceCommitmentManager_ptr manager;
 
     try
       {
         //      targetI->commitResources(plan);
+        manager = targetI->createResourceCommitment (resource_seq);
+
+        manager->commitResources (resource_seq);
+
         ACE_DEBUG ((LM_DEBUG , "\n\ncommitResources Returned \n"));
       }
     catch(CORBA::NO_IMPLEMENT &)
       {
         cerr << "Error:TargetManager:CORBA::NO_IMPLEMENT thrown" << endl;
       }
-    catch (Deployment::ResourceNotAvailable & e)
+    catch (::Deployment::ResourceCommitmentFailure& e)
       {
         resource_available = 0;
-        cout << "TargetManager commitResources ResourceNotAvailable Exception" <<endl;
+        cout << "TargetManager commitResources ResourceCommitmentFailure Exception" <<endl;
 
         ACE_DEBUG ((LM_DEBUG ,
-                    "ResourceNotAvailable\n name=[%s]\n elementName=[%s]\n resourceName=[%s]\n \
-            resourceType= [%s]\n propertyName=[%s]\n",
-                    e.name.in (),
-                    e.elementName.in (),
-                    e.resourceName.in (),
-                    e.resourceType.in (),
+                    "ResourceCommitmentFailure\n reason=[%s]\n elementName=[%s]\n resourceName=[%s]\n propertyName=[%s]\n",
+                    e.reason.in (),
+                    resource_seq[e.index].elementName.in (),
+                    resource_seq[e.index].resourceName.in (),
                     e.propertyName.in ()));
       }
     catch(CORBA::Exception & ex)
@@ -141,9 +123,12 @@ int main (int argc, char* argv[])
     // Make a call to release resources , if resource < 0
     try
       {
-        if (!resource_available)
+//        if (!resource_available)
           {
-            //          targetI->releaseResources(plan);
+            d = 10;
+            resource_seq[0].property[0].value <<= d;
+            //manager->releaseResources (resource_seq);
+            targetI->destroyResourceCommitment (manager);
             ACE_DEBUG ((LM_DEBUG , "\n\nreleaseResources Returned \n"));
           }
       }
