@@ -13,21 +13,6 @@ ACE_RCSID(ace, OS_NS_dirent, "$Id$")
 #include "ace/Log_Msg.h"
 #include "ace/OS_NS_stdlib.h"
 
-
-/*
-   These definitions are missing on the original VC6 distribution.  The new
-   headers that define these are available in the Platform SDK and are defined
-   for those that don't have it.
- */
-#if defined (ACE_WIN32)
-#  if !defined (INVALID_FILE_ATTRIBUTES)
-#    define INVALID_FILE_ATTRIBUTES ((DWORD)-1)
-#  endif /* INVALID_FILE_ATTRIBUTES */
-#  if !defined (INVALID_SET_FILE_POINTER)
-#    define INVALID_SET_FILE_POINTER ((DWORD)-1)
-#  endif /* INVALID_SET_FILE_POINTER */
-#endif /* ACE_WIN32 */
-
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 #if defined (ACE_LACKS_CLOSEDIR)

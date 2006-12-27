@@ -47,8 +47,7 @@ opendir (const ACE_TCHAR *filename)
 #endif /* ACE_HAS_DIRENT */
 }
 
-ACE_INLINE
-struct ACE_DIRENT *
+ACE_INLINE struct ACE_DIRENT *
 readdir (ACE_DIR *d)
 {
 #if defined (ACE_HAS_DIRENT)
@@ -67,8 +66,8 @@ readdir (ACE_DIR *d)
 
 ACE_INLINE int
 readdir_r (ACE_DIR *dirp,
-                   struct ACE_DIRENT *entry,
-                   struct ACE_DIRENT **result)
+           struct ACE_DIRENT *entry,
+           struct ACE_DIRENT **result)
 {
 #if !defined (ACE_HAS_REENTRANT_FUNCTIONS)
   ACE_UNUSED_ARG (entry);

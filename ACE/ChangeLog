@@ -1,3 +1,11 @@
+Wed Dec 27 09:32:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/OS_NS_dirent.cpp:
+          Removed workaround for vc6
+
+        * ace/OS_NS_dirent.inl:
+          Layout change
+
 Wed Dec 27 09:27:06 UTC 2006  Olli Savia  <ops@iki.fi>
 
         * tests/Log_Msg_Test.cpp:
