@@ -135,9 +135,10 @@ namespace Test {
           {
             has_remaining_endpoints = true;
             ACE_ERROR ((LM_ERROR,
-                        ACE_TEXT ("%s (%S|%t) Endpoint at ")
-                        ACE_TEXT ("index=%d is not been removed yet\n"),
-                        name.in ()));
+                        ACE_TEXT ("%s (%P|%t) Endpoint at ")
+                        ACE_TEXT ("index=%d has not been removed yet\n"),
+                        name.in (),
+                        count));
           }
       }
 

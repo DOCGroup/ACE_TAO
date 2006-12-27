@@ -1,7 +1,18 @@
+Wed Dec 27 05:35:06 UTC 2006  Iliyan Jeliazkov  <iliyan@ociweb.com>
+
+        * tests/TransportCurrent/Framework/Server_Request_Interceptor.cpp:
+
+          Fixing an ambiguous reference to TAO namespace in builds with
+          versioned namespaces enabled.
+
+        * tests/TransportCurrent/IIOP/IIOP_Server_Request_Interceptor.cpp:
+
+          Clarifying some debugging statements.
+
 Mon Dec 25 16:19:42 UTC 2006  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
 
         * Merry Christmas everyone!!!
-  
+
 Sun Dec 24 23:22:41 UTC 2006  Iliyan Jeliazkov  <iliyan@ociweb.com>
 
         * tests/Nested_Upcall_Crash/Nested_Upcall_Crash.mpc:
