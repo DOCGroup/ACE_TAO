@@ -17,7 +17,7 @@ $daemons = 2;
 @iorfiles = ( "NodeApp1.ior", "NodeApp2.ior" );
 $status = 0;
 $dat_file = "NodeManagerMap.dat";
-$cdp_file = "DeploymentPlan.cdp";
+$cdp_file = "flattened_deploymentplan_without_ns.cdp";
 $controller_exec = "$CIAO_ROOT/examples/Hello/Sender/starter";
 
 $E = 0;
@@ -114,7 +114,7 @@ $em_running = 1;
 print "Invoking executor - start the application -\n";
 $E =
   new PerlACE::Process ("$DAnCE/Plan_Launcher/plan_launcher",
-                        "-p flattened_deploymentplan_without_ns.cdp -k file://EM.ior -o DAM.ior");
+                        "-p $cdp_file -k file://EM.ior -o DAM.ior");
 
 $E->SpawnWaitKill (5000);
 

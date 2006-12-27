@@ -1,0 +1,18 @@
+ README for RTCCM example -- $Id$ --
+
+This subdirectory contains a simple example showing how to use the
+RTCCM extension supported by CIAO.  This example doesn't really use
+any of the RT capability, rather, it only shows how to associate
+component instances with sets of RT policies we wish to apply.  See
+$CIAO_ROOT/docs/schema/ServerResourceUsage.txt for more details on how
+to put together a ServerResource file (such as the
+rt-config-example.scr in this example) to define sets of policies and
+how to associate these policy sets with component instances (as in
+rt-example.cdp.)
+
+Because the test uses RT scheduling policies to run the
+NodeApplication, you will need administrator privilege to successfully
+execute the test script, rt_run_test.pl.  Remember to set up the
+environment variables (LD_LIBRARY_PATH, ACE_ROOT, and CIAO_ROOT) for
+the script to execute okay.
+
