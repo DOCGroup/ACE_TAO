@@ -225,7 +225,7 @@ namespace ACE_OS {
   void srand (u_int seed);
 
   // not in spec
-  ACE_NAMESPACE_INLINE_FUNCTION
+  extern ACE_Export
   ACE_TCHAR *strenvdup (const ACE_TCHAR *str);
 
 #if !defined (ACE_LACKS_STRTOD)

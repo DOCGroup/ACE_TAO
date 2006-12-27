@@ -181,10 +181,11 @@ test_argv_buf (void)
 static int
 test_argv_quotes (void)
 {
-  const char *argv[] = { "first",
-                         "'second in single quotes'",
-                         "\"third in double quotes\""
-                       };
+  char *argv[] = { "first without quotes",
+                   "'second in single quotes'",
+                   "\"third in double quotes\"",
+                   0
+                 };
   int argc = 3;
 
   // (argc, argv)
@@ -219,6 +220,42 @@ test_argv_quotes (void)
 
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("args.argc (): %d\n"), args.argc ()));
 
+  // args2
+  ACE_ARGV args2;
+  for (int i = 0; i < argc; ++i) 
+    args2.add (argv[i], true);
+  args2.add (ACE_TEXT ("'fourth in single quotes'"), true);
+  args2.add (ACE_TEXT ("\"fifth in double quotes\""), true);
+  args2.add (ACE_TEXT ("sixth without any quotes"), true);
+ 
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("\n*** args-3 ***\n")));
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("args.argc (): %d\n"), args2.argc ()));
+
+  for (int i = 0; i < args2.argc (); ++i)
+    ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("args[%02d]: %s\n"), i, args2[i]));
+
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("args.argc (): %d\n"), args2.argc ()));
+ 
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("\n*** args-4 ***\n")));
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("args.argc (): %d\n"), args2.argc ()));
+
+  for (int i = 0; i < args2.argc (); ++i)
+    ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("args.argv ()[%02d]: %s\n"),
+                i, args2.argv ()[i]));
+
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("args.argc (): %d\n"), args2.argc ()));
+ 
+  // args3
+  ACE_ARGV args3(argv);
+ 
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("\n*** args-5 ***\n")));
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("args.argc (): %d\n"), args3.argc ()));
+
+  for (int i = 0; i < args3.argc (); ++i)
+    ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("args[%02d]: %s\n"), i, args3[i]));
+
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("args.argc (): %d\n"), args3.argc ()));
+ 
   return 0;
 }
 
