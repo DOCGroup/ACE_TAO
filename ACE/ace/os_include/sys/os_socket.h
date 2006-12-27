@@ -169,6 +169,10 @@ extern "C"
 #  define SO_RCVBUF 0x1002
 #endif /* SO_RCVBUF */
 
+#if !defined (SO_BROADCAST)
+#  define SO_RCVBUF 0x0020
+#endif /* SO_RCVBUF */
+
 #if defined (ACE_HAS_IPV6)
 #  if defined (ACE_USES_IPV4_IPV6_MIGRATION)
 #    define ACE_ADDRESS_FAMILY_INET  AF_UNSPEC
