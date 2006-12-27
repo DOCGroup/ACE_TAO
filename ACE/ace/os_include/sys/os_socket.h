@@ -64,6 +64,13 @@ extern "C"
     };
 # endif /* ACE_LACKS_SOCKADDR */
 
+# if defined (ACE_LACKS_LINGER)
+    struct  linger {
+          int     l_onoff;                /* option on/off */
+          int     l_linger;               /* linger time */
+    };
+# endif /* ACE_LACKS_LINGER */
+
 #if defined (ACE_WIN32)
    struct msghdr
    {
@@ -164,6 +171,10 @@ extern "C"
 #if !defined (SO_REUSEADDR)
 #  define SO_REUSEADDR 0x0004
 #endif /* SO_REUSEADDR */
+
+#if !defined (SO_LINGER)
+#  define SO_LINGER 0x0080
+#endif /* SO_LINGER */
 
 #if !defined (SO_SNDBUF)
 #  define SO_SNDBUF 0x1001

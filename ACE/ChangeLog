@@ -1,3 +1,11 @@
+Wed Dec 27 10:34:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/os_include/sys/os_socket.h:
+          Added ACE_LACKS_LINGER support
+
+        * ace/config-posix-nonetworking.h:
+          Added ACE_LACKS_LINGER
+
 Wed Dec 27 10:30:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/os_include/sys/os_socket.h:

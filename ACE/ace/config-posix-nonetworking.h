@@ -34,6 +34,7 @@
 # define ACE_LACKS_SERVENT
 # define ACE_LACKS_IFREQ
 # define ACE_LACKS_IFCONF
+# define ACE_LACKS_LINGER
 
 // Missing methods
 # define ACE_LACKS_GETHOSTBYADDR
