@@ -64,7 +64,8 @@ namespace ACE_OS
   extern ACE_Export
   int argv_to_string (ACE_TCHAR **argv,
                       ACE_TCHAR *&buf,
-                      bool substitute_env_args = true);
+                      bool substitute_env_args = true,
+                      bool quote_args = false);
 
 #if !defined (ACE_LACKS_CHDIR)
   ACE_NAMESPACE_INLINE_FUNCTION
