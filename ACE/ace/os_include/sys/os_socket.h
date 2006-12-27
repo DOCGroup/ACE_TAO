@@ -113,6 +113,10 @@ extern "C"
 #  define AF_LOCAL 1
 #endif /* AF_LOCAL */
 
+#if !defined (AF_UNIX)
+#  define AF_UNIX AF_LOCAL
+#endif /* AF_UNIX */
+
 #if !defined (AF_INET)
 #  define AF_INET 2
 #endif /* AF_INET */
