@@ -130,11 +130,11 @@ ACE_Time_Request::encode (void *&buf)
   // Compute the length *before* doing the marshaling.
 
   buf = (void *) &this->transfer_;
-  this->transfer_.block_forever_ = htonl (this->transfer_.block_forever_);
-  this->transfer_.usec_timeout_  = htonl (this->transfer_.usec_timeout_);
-  this->transfer_.sec_timeout_   = htonl (this->transfer_.sec_timeout_);
-  this->transfer_.msg_type_      = htonl (this->transfer_.msg_type_);
-  this->transfer_.time_          = htonl (this->transfer_.time_);
+  this->transfer_.block_forever_ = ACE_HTONL (this->transfer_.block_forever_);
+  this->transfer_.usec_timeout_  = ACE_HTONL (this->transfer_.usec_timeout_);
+  this->transfer_.sec_timeout_   = ACE_HTONL (this->transfer_.sec_timeout_);
+  this->transfer_.msg_type_      = ACE_HTONL (this->transfer_.msg_type_);
+  this->transfer_.time_          = ACE_HTONL (this->transfer_.time_);
 
   return this->size ();  // Always fixed
 }
