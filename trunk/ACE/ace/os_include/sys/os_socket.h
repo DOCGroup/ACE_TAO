@@ -153,6 +153,10 @@ extern "C"
 #  define SOCK_DGRAM 2
 #endif /* SOCK_DGRAM */
 
+#if !defined (SOCK_SEQPACKET)
+#  define SOCK_SEQPACKET 5
+#endif /* SOCK_SEQPACKET */
+
 #if !defined (SOL_SOCKET)
 #  define SOL_SOCKET 0xffff
 #endif /* SOL_SOCKET */
