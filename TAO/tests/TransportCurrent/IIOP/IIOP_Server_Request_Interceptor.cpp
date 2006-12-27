@@ -72,8 +72,17 @@ namespace Test {
     CORBA::String_var host (tc->remote_host());
     EndPoint ep (tc->remote_port(), host.in ());
 
-    if (requestID < sizeof (endPoints_))
-      endPoints_[requestID] = ep;
+    if (requestID < sizeof (this->endPoints_) / sizeof (*this->endPoints_))
+      {
+        endPoints_[requestID] = ep;
+
+        if (TAO_debug_level > 1)
+          ACE_DEBUG ((LM_DEBUG,
+                      ACE_TEXT ("%s (%P|%t) ")
+                      ACE_TEXT ("push_request_info: %d ...\n"),
+                      name.in (),
+                      requestID));
+      }
     else
       ACE_ERROR ((LM_ERROR,
                   ACE_TEXT ("%s (%P|%t) ")
@@ -89,7 +98,14 @@ namespace Test {
     static EndPoint dummy;
     CORBA::String_var name (this->name ());
 
-    if (requestID >= sizeof (endPoints_))
+    if (TAO_debug_level > 1)
+      ACE_DEBUG ((LM_DEBUG,
+                  ACE_TEXT ("%s (%P|%t) ")
+                  ACE_TEXT ("pop_request_info: %d ...\n"),
+                  name.in (),
+                  requestID));
+
+    if (requestID >= sizeof (this->endPoints_) / sizeof (*this->endPoints_))
       {
         ACE_ERROR ((LM_ERROR,
                     ACE_TEXT ("%s (%P|%t) ")
@@ -99,22 +115,34 @@ namespace Test {
         return;
       }
 
-    TAO::Transport::IIOP::Current_var tc =
-      resolve_iiop_transport_current (this->orb_id_.in ()
-                                      ACE_ENV_ARG_PARAMETER);
 
-    CORBA::String_var host (tc->remote_host());
-    EndPoint ep (tc->remote_port(), host.in ());
-
-    if (ep != endPoints_[requestID])
+    ACE_TRY
       {
-        ACE_ERROR ((LM_ERROR,
-                    ACE_TEXT ("%s (%P|%t) ")
-                    ACE_TEXT ("pop_request_info: The expected host and port don't match for request %d\n"),
-                    name.in (),
-                    requestID));
-        return;
+        TAO::Transport::IIOP::Current_var tc =
+          resolve_iiop_transport_current (this->orb_id_.in ()
+                                          ACE_ENV_ARG_PARAMETER);
+
+        CORBA::String_var host (tc->remote_host());
+        EndPoint ep (tc->remote_port(), host.in ());
+
+        if (ep != endPoints_[requestID])
+          {
+            ACE_ERROR ((LM_ERROR,
+                        ACE_TEXT ("%s (%P|%t) ")
+                        ACE_TEXT ("pop_request_info: The expected host and port don't match for request %d\n"),
+                        name.in (),
+                        requestID));
+            return;
+          }
       }
+    ACE_CATCH (CORBA::BAD_INV_ORDER, ex)
+      {
+        // Last reply after the orb has been shut down. Calling
+        // resolve_iiop_transport_current in this case will cause
+        // BAD_INV_ORDER, so instead we swallow the exception and bid
+        // goodbye.
+      }
+    ACE_ENDTRY;
 
     endPoints_[requestID] = dummy;
   }
@@ -128,7 +156,7 @@ namespace Test {
     CORBA::String_var name (this->name ());
     bool has_remaining_endpoints = false;
     for (size_t count = 0;
-         count < sizeof (endPoints_);
+         count < (sizeof (this->endPoints_) / sizeof (*this->endPoints_));
          count ++)
       {
         if (endPoints_[count].port_ != 0)
