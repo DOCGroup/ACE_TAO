@@ -1,7 +1,6 @@
 // -*- C++ -*-
 
 #include "ace/Log_Msg.h"
-//#include "ace/Global_Macros.h"
 #include "tao/ORB_Constants.h"
 
 
@@ -13,7 +12,11 @@ ACE_RCSID (ForwardRequest,
 
 namespace Test {
 
+#if defined (TAO_HAS_VERSIONED_NAMESPACE) && TAO_HAS_VERSIONED_NAMESPACE == 1
+  using namespace TAO_VERSIONED_NAMESPACE_NAME::TAO;
+#else
   using namespace TAO;
+#endif
 
   // A specialization to handle server-side interceptors
   template <>
