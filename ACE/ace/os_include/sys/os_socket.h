@@ -190,7 +190,11 @@ extern "C"
 
 #if !defined (SO_BROADCAST)
 #  define SO_BROADCAST 0x0020
-#endif /* SO_RCVBUF */
+#endif /* SO_BROADCAST */
+
+#if !defined (SO_ERROR)
+#  define SO_ERROR 0x1007
+#endif /* SO_ERROR */
 
 #if defined (ACE_HAS_IPV6)
 #  if defined (ACE_USES_IPV4_IPV6_MIGRATION)
