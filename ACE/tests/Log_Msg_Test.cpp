@@ -231,7 +231,7 @@ test_log_msg_features (const ACE_TCHAR *program)
                 cleanup));
 
 // Don't try this on VxWorks, it will result in an overflow and end the test.
-// Platforms that don't define ACE_HAS_SNPRINTF are candidates to fail here.
+// Platforms that define ACE_LACKS_VSNPRINTF are candidates to fail here.
 // This then proves that logging to big messages is problematic but on VxWorks
 // we know this and we want to rest of the test to continue
 #if !defined (VXWORKS)

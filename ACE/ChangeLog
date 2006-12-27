@@ -1,3 +1,8 @@
+Wed Dec 27 09:27:06 UTC 2006  Olli Savia  <ops@iki.fi>
+
+        * tests/Log_Msg_Test.cpp:
+          Updated comment.
+
 Wed Dec 27 09:24:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/OS_NS_dirent.inl (readdir_r):
