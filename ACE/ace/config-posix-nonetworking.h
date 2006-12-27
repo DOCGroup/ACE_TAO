@@ -33,6 +33,7 @@
 # define ACE_LACKS_PROTOENT
 # define ACE_LACKS_SERVENT
 # define ACE_LACKS_IFREQ
+# define ACE_LACKS_IFCONF
 
 // Missing methods
 # define ACE_LACKS_GETHOSTBYADDR

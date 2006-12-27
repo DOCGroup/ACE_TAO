@@ -1,3 +1,18 @@
+Wed Dec 27 10:27:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/config-posix-nonetworking.h:
+          Added ACE_LACKS_IFCONF
+
+        * os_include/net/os_if.h:
+          Added some more types that need to be defined by ACE when
+          we compile without network support
+
+        * ace/SOCK_Dgram.cpp:
+          Removed check for ACE_LACKS_IFREQ
+
+        * ace/SOCK_Dgram_Bcast.cpp:
+          Layout changes
+
 Wed Dec 27 10:15:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/os_include/sys/os_socket.h:
