@@ -123,6 +123,8 @@
 #   endif /* _REENTRANT */
 # endif /* !ACE_MT_SAFE */
 
+#define ACE_HAS_3_PARAM_READDIR_R
+
 #else  /* ! __xlC__ && ! __GNUG__ */
 #  ifdef __cplusplus  /* Let it slide for C compilers. */
 #    error unsupported compiler in ace/config-aix-5.x.h
@@ -329,8 +331,8 @@
 
 #define ACE_HAS_POSIX_GETPWNAM_R
 #define ACE_HAS_SCANDIR
-# define ACE_SCANDIR_CMP_USES_VOIDPTR
-# define ACE_SCANDIR_SEL_LACKS_CONST
+#define ACE_SCANDIR_CMP_USES_VOIDPTR
+#define ACE_SCANDIR_SEL_LACKS_CONST
 #define ACE_HAS_SIGSUSPEND
 #define ACE_HAS_TIMEZONE  /* Call tzset() to set timezone */
 

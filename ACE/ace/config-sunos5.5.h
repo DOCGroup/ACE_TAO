@@ -402,5 +402,10 @@
 #undef ACE_HAS_PROC_FS
 #undef ACE_HAS_PRUSAGE_T
 #endif /* (_LARGEFILE_SOURCE) || (_FILE_OFFSET_BITS==64) */
+
+#if defined (_POSIX_PTHREAD_SEMANTICS) || (_FILE_OFFSET_BITS == 64) || (_POSIX_C_SOURCE - 0 >= 199506L)
+#  define ACE_HAS_3_PARAM_READDIR_R
+#endif
+
 #include /**/ "ace/post.h"
 #endif /* ACE_CONFIG_H */

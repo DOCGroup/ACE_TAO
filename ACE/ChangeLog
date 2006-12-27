@@ -1,3 +1,44 @@
+Wed Dec 27 09:24:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/OS_NS_dirent.inl (readdir_r):
+          Simplified the OS checks in this method, use the new
+          define ACE_HAS_3_PARAM_READDIR_R. This is then set in the
+          config files below, maybe it has to be set in more, but the
+          scoreboard will show that.
+
+        * ace/config-aix-5.x.h:
+        * ace/config-cygwin32.h:
+        * ace/config-freebsd.h:
+        * ace/config-hpux-11.00.h:
+        * ace/config-linux-common.h:
+        * ace/config-netbsd.h:
+        * ace/config-rtems.h:
+        * ace/config-sunos5.5.h:
+        * ace/config-vxworks6.4.h:
+          Added ACE_HAS_3_PARAM_READDIR_R
+
+        * ace/config-linux-common.h:
+          Added new ACE_LACKS_LINUX_VERSION_H around include of linux/version.h.
+          This file isn't present with BlueCAT 4 Linux from LynuxWorks.
+
+        * ace/config-posix.h:
+          Layout changes
+
+        * ACE-INSTALL.html:
+          Updated supported platforms by Remedy IT
+
+        * ace/INET_Addr.cpp:
+          Use the ACE_NTOHL macro and remove the check for ACE_LACKS_NTOHL
+
+        * ace/Map_Manager.{h,cpp}:
+          Changed free_ to a real bool
+
+        * ace/Name_Proxy.cpp:
+        * ace/Name_Request_Reply.cpp:
+        * ace/Time_Request_Reply.cpp
+          Use the ACE_NTOHL macro so that this file compiles without networking
+          support
+
 Wed Dec 27 09:10:27 UTC 2006  Olli Savia  <ops@iki.fi>
 
         * ace/Process.cpp:
