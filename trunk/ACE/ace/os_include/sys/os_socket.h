@@ -170,7 +170,7 @@ extern "C"
 #endif /* SO_RCVBUF */
 
 #if !defined (SO_BROADCAST)
-#  define SO_RCVBUF 0x0020
+#  define SO_BROADCAST 0x0020
 #endif /* SO_RCVBUF */
 
 #if defined (ACE_HAS_IPV6)
