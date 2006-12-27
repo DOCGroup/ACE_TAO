@@ -163,9 +163,9 @@ server_main (int argc,
       obj = server_impl._this (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      TAO::Transport::CurrentTest_var server =
-        TAO::Transport::CurrentTest::_narrow (obj.in ()
-                                              ACE_ENV_ARG_PARAMETER);
+      Test::Transport::CurrentTest_var server =
+        Test::Transport::CurrentTest::_narrow (obj.in ()
+                                               ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (CORBA::is_nil (server.in ()))

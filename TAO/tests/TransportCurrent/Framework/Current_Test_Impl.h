@@ -26,7 +26,7 @@
  *
  * This class implements the "test" interface used in this test.
  */
-class Current_Test_Impl : public virtual POA_TAO::Transport::CurrentTest
+class Current_Test_Impl : public virtual POA_Test::Transport::CurrentTest
 {
 public:
 

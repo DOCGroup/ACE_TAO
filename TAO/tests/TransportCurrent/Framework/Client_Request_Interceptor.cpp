@@ -107,7 +107,7 @@ namespace Test
     // Make the context to send the context to the target
 
     IOP::ServiceContext sc;
-    sc.context_id = TAO::Transport::CurrentTest::ContextTag;
+    sc.context_id = Test::Transport::CurrentTest::ContextTag;
 
     char temp[32];
 
