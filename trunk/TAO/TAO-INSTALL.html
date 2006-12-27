@@ -198,13 +198,17 @@ It is not possible to use TAO with explicit templates. Your compiler
 must support implicit templates. <P>
 
 <HR><P>
-<h3>For Cross-Compiled Targets, such as VxWorks and LynxOS</h3>
+<h3>Using cross compilation</h3>
+
+With cross compilation you build on the so called host system for a certain
+target system. The host system can for example be linux and the target
+can for example be VxWorks, LynxOS or Linux.
 
 If you are building TAO for a VxWorks target, please see the detailed
 instructions for building and installing ACE and TAO in <a
 href="../ACE-INSTALL.html#vxworks">$ACE_ROOT/ACE-INSTALL.html</a>.<p>
 
-    <P>Cross-compiling TAO is not much different than building it for
+    <P>Cross-compiling TAO is not much different than building it for a
       self-host.  The one major difference is that TAO's IDL compiler
       must be built and run on the host; it's not necessary to run it
       on the target.
@@ -256,7 +260,7 @@ $ echo 'static_libs_only=1' \
 $ cd build/HOST
 $ export ACE_ROOT=$PWD
 $ make -C ace
-$ make -C apps/gperf
+$ make -C apps/gperf/src
 $ make -C TAO/TAO_IDL
 </PRE>
 
