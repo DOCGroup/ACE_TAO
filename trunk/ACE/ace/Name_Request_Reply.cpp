@@ -513,9 +513,9 @@ ACE_Name_Reply::encode (void *&buf)
   ACE_TRACE ("ACE_Name_Reply::encode");
   int len = this->length (); // Get length *before* marshaling.
 
-  this->transfer_.length_ = htonl (this->transfer_.length_);
-  this->transfer_.type_ = htonl (this->transfer_.type_);
-  this->transfer_.errno_ = htonl (this->transfer_.errno_);
+  this->transfer_.length_ = ACE_HTONL (this->transfer_.length_);
+  this->transfer_.type_ = ACE_HTONL (this->transfer_.type_);
+  this->transfer_.errno_ = ACE_HTONL (this->transfer_.errno_);
   buf = (void *) &this->transfer_;
   return len;
 }
