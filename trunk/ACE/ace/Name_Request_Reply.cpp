@@ -307,7 +307,7 @@ ACE_Name_Request::decode (void)
 
   for (size_t i = 0; i < nv_data_len; i++)
     this->transfer_.data_[i] =
-      ntohs (this->transfer_.data_[i]);
+      ACE_NTOHS (this->transfer_.data_[i]);
 
   this->name_ = this->transfer_.data_;
   this->value_ = &this->name_[this->transfer_.name_len_ / sizeof (ACE_WCHAR_T)];
