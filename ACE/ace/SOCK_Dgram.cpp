@@ -615,8 +615,6 @@ ACE_SOCK_Dgram::make_multicast_ifaddr (ip_mreq *ret_mreq,
         return -1;
       lmreq.imr_interface.s_addr =
         ACE_HTONL (interface_addr.get_ip_address ());
-#elif defined (ACE_LACKS_IFREQ)
-      // Do nothing
 #else
       ifreq if_address;
 
