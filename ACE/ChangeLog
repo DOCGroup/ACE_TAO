@@ -1,6 +1,14 @@
+Wed Dec 27 16:14:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/os_include/netinet/os_in.h:
+          Define IPPROTO_TCP when not defined yet
+
+        * ace/os_include/netinet/os_tcp.h:
+          Define TCP_NODELAY when not defined yet
+
 Wed Dec 27 16:10:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-        * os_include/net/os_if.h:
+        * ace/os_include/net/os_if.h:
           Only define the IFF_x defines when ACE_LACKS_NETWORKING is
           defined to resolve redefinition warnings on windows
 
@@ -37,7 +45,7 @@ Wed Dec 27 10:27:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
         * ace/config-posix-nonetworking.h:
           Added ACE_LACKS_IFCONF
 
-        * os_include/net/os_if.h:
+        * ace/os_include/net/os_if.h:
           Added some more types that need to be defined by ACE when
           we compile without network support
 

@@ -169,6 +169,10 @@ extern "C"
 #   define IPPROTO_IP 0
 # endif /* IPPROTO_IP */
 
+# if !defined (IPPROTO_TCP)
+#   define IPPROTO_TCP 6
+# endif /* IPPROTO_TCP */
+
 # if !defined (INADDR_ANY)
 #   define INADDR_ANY (u_long)0x00000000
 # endif /* INADDR_ANY */
