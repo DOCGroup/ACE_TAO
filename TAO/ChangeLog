@@ -1,3 +1,8 @@
+Wed Dec 27 10:51:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * TAO-INSTALL.html:
+          Use more html keyword for layout and document how to use CORBA/e
+
 Wed Dec 27 05:35:06 UTC 2006  Iliyan Jeliazkov  <iliyan@ociweb.com>
 
         * tests/TransportCurrent/Framework/Server_Request_Interceptor.cpp:
