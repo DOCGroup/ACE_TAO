@@ -156,7 +156,7 @@
 
 
   <connection>
-    <name>hell_event_connection</name>
+    <name>hello_event_connection</name>
     <internalEndpoint>
       <portName>click_out</portName>
       <kind>EventPublisher</kind>

@@ -1,3 +1,19 @@
+Wed Dec 27 20:15:29 UTC 2006  Nanbor Wang  <nanbor (at) txcorp (dot) com>       
+
+        * examples/Hello/descriptors/run_test_without_ns.pl:
+          Variable cdp_file is now actually used in the script.
+        
+        * examples/Hello/descriptors_RTCCM/rt_run_test.pl:
+          Variable cdp_file is now actually used in the script.
+          Fixed broken environment variable usage.  
+          Enable the svn:executable property.
+        
+        * examples/Hello/descriptors_RTCCM/rt-example.cdp:
+          Fixed a typo.
+        
+        * examples/Hello/descriptors_RTCCM/README:
+          Added a short description on how to use this example.        
+        
 Fri Nov  3 03:03:24 UTC 2006  Shanshan Jiang <shanshan.jiang@vanderbilt.edu>
 
         * DAnCE/NodeApplicationManager/Containers_Info_Map.cpp

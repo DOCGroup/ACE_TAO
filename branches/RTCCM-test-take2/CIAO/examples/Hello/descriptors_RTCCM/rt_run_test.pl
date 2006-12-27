@@ -8,7 +8,7 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 use lib "$ENV{'ACE_ROOT'}/bin";
 use PerlACE::Run_Test;
 $CIAO_ROOT = "$ENV{'CIAO_ROOT'}";
-$DAnCE = "$ENV{'ACE_ROOT'}/TAO/CIAO/DAnCE";
+$DAnCE = "$ENV{'CIAO_ROOT'}/DAnCE";
 
 $daemons_running = 0;
 $em_running = 0;
@@ -17,7 +17,7 @@ $daemons = 2;
 @iorfiles = ( "NodeApp1.ior", "NodeApp2.ior" );
 $status = 0;
 $dat_file = "NodeManagerMap.dat";
-$cdp_file = "DeploymentPlan.cdp";
+$cdp_file = "rt-example.cdp";
 $controller_exec = "$CIAO_ROOT/examples/Hello/Sender/starter";
 
 $E = 0;
@@ -119,7 +119,7 @@ $em_running = 1;
 print "Invoking executor - start the application -\n";
 $E =
   new PerlACE::Process ("$DAnCE/Plan_Launcher/plan_launcher",
-                        "-p rt-example.cdp -k file://EM.ior -o DAM.ior");
+                        "-p $cdp_file -k file://EM.ior -o DAM.ior");
  
 $E->SpawnWaitKill (5000);
 
