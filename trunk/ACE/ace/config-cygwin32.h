@@ -80,6 +80,7 @@
 #define ACE_HAS_POSITION_INDEPENDENT_POINTERS 1
 #define ACE_HAS_SOCKADDR_MSG_NAME 1
 #define ACE_LACKS_PRI_T 1
+#define ACE_HAS_3_PARAM_READDIR_R
 
 // Compiler/platform supports alloca().
 // Although ACE does have alloca() on this compiler/platform combination, it is

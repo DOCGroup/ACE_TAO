@@ -269,17 +269,17 @@ ACE_Name_Request::encode (void *&buf)
 
   for (size_t i = 0; i < nv_data_len; i++)
     this->transfer_.data_[i] =
-      htons (this->transfer_.data_[i]);
+      ACE_HTONS (this->transfer_.data_[i]);
 
   buf = (void *) &this->transfer_;
-  this->transfer_.block_forever_ = htonl (this->transfer_.block_forever_);
-  this->transfer_.usec_timeout_  = htonl (this->transfer_.usec_timeout_);
-  this->transfer_.sec_timeout_ = htonl (this->transfer_.sec_timeout_);
-  this->transfer_.length_ = htonl (this->transfer_.length_);
-  this->transfer_.msg_type_ = htonl (this->transfer_.msg_type_);
-  this->transfer_.name_len_ = htonl (this->transfer_.name_len_);
-  this->transfer_.value_len_ = htonl (this->transfer_.value_len_);
-  this->transfer_.type_len_ = htonl (this->transfer_.type_len_);
+  this->transfer_.block_forever_ = ACE_HTONL (this->transfer_.block_forever_);
+  this->transfer_.usec_timeout_  = ACE_HTONL (this->transfer_.usec_timeout_);
+  this->transfer_.sec_timeout_ = ACE_HTONL (this->transfer_.sec_timeout_);
+  this->transfer_.length_ = ACE_HTONL (this->transfer_.length_);
+  this->transfer_.msg_type_ = ACE_HTONL (this->transfer_.msg_type_);
+  this->transfer_.name_len_ = ACE_HTONL (this->transfer_.name_len_);
+  this->transfer_.value_len_ = ACE_HTONL (this->transfer_.value_len_);
+  this->transfer_.type_len_ = ACE_HTONL (this->transfer_.type_len_);
 
   return len;
 }
@@ -292,14 +292,14 @@ ACE_Name_Request::decode (void)
 {
   ACE_TRACE ("ACE_Name_Request::decode");
   // Decode the fixed-sized portion first.
-  this->transfer_.block_forever_ = ntohl (this->transfer_.block_forever_);
-  this->transfer_.usec_timeout_  = ntohl (this->transfer_.usec_timeout_);
-  this->transfer_.sec_timeout_ = ntohl (this->transfer_.sec_timeout_);
-  this->transfer_.length_ = ntohl (this->transfer_.length_);
-  this->transfer_.msg_type_ = ntohl (this->transfer_.msg_type_);
-  this->transfer_.name_len_ = ntohl (this->transfer_.name_len_);
-  this->transfer_.value_len_ = ntohl (this->transfer_.value_len_);
-  this->transfer_.type_len_ = ntohl (this->transfer_.type_len_);
+  this->transfer_.block_forever_ = ACE_NTOHL (this->transfer_.block_forever_);
+  this->transfer_.usec_timeout_  = ACE_NTOHL (this->transfer_.usec_timeout_);
+  this->transfer_.sec_timeout_ = ACE_NTOHL (this->transfer_.sec_timeout_);
+  this->transfer_.length_ = ACE_NTOHL (this->transfer_.length_);
+  this->transfer_.msg_type_ = ACE_NTOHL (this->transfer_.msg_type_);
+  this->transfer_.name_len_ = ACE_NTOHL (this->transfer_.name_len_);
+  this->transfer_.value_len_ = ACE_NTOHL (this->transfer_.value_len_);
+  this->transfer_.type_len_ = ACE_NTOHL (this->transfer_.type_len_);
 
   size_t nv_data_len =
     (this->transfer_.name_len_ + this->transfer_.value_len_)
@@ -527,9 +527,9 @@ int
 ACE_Name_Reply::decode (void)
 {
   ACE_TRACE ("ACE_Name_Reply::decode");
-  this->transfer_.length_ = ntohl (this->transfer_.length_);
-  this->transfer_.type_ = ntohl (this->transfer_.type_);
-  this->transfer_.errno_ = ntohl (this->transfer_.errno_);
+  this->transfer_.length_ = ACE_NTOHL (this->transfer_.length_);
+  this->transfer_.type_ = ACE_NTOHL (this->transfer_.type_);
+  this->transfer_.errno_ = ACE_NTOHL (this->transfer_.errno_);
   return 0;
 }
 

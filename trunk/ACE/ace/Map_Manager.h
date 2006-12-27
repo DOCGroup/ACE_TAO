@@ -79,7 +79,7 @@ public:
 #if defined (ACE_HAS_LAZY_MAP_MANAGER)
 
   /// Is this entry free?
-  int free_;
+  bool free_;
 
 #endif /* ACE_HAS_LAZY_MAP_MANAGER */
 

@@ -258,6 +258,7 @@ typedef union sigval sigval_t;
 #define ACE_LACKS_WCSDUP
 #define ACE_LACKS_ITOW
 #define ACE_HAS_3_PARAM_WCSTOK
+#define ACE_HAS_3_PARAM_READDIR_R
 
 #if (__FreeBSD_version >= 501000)
 #  define ACE_HAS_PTHREAD_SETSTACK

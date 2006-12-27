@@ -52,13 +52,13 @@ struct ACE_DIRENT *
 readdir (ACE_DIR *d)
 {
 #if defined (ACE_HAS_DIRENT)
-#    if defined (ACE_WIN32) && defined (ACE_LACKS_READDIR)
-  return ACE_OS::readdir_emulation (d);
+#  if defined (ACE_WIN32) && defined (ACE_LACKS_READDIR)
+     return ACE_OS::readdir_emulation (d);
 #  elif defined (ACE_HAS_WREADDIR) && defined (ACE_USES_WCHAR)
-  return ::wreaddir (d);
-#    else /* ACE_WIN32 && ACE_LACKS_READDIR */
-  return ::readdir (d);
-#    endif /* ACE_WIN32 && ACE_LACKS_READDIR */
+     return ::wreaddir (d);
+#  else /* ACE_WIN32 && ACE_LACKS_READDIR */
+     return ::readdir (d);
+#  endif /* ACE_WIN32 && ACE_LACKS_READDIR */
 #else
   ACE_UNUSED_ARG (d);
   ACE_NOTSUP_RETURN (0);
@@ -78,18 +78,8 @@ readdir_r (ACE_DIR *dirp,
     return 0; // Keep iterating
   else
     return 1; // Oops, some type of error!
-#elif defined (ACE_HAS_DIRENT)  &&  !defined (ACE_LACKS_READDIR_R)
-#  if (defined (sun) && (defined (_POSIX_PTHREAD_SEMANTICS) || \
-                        (_FILE_OFFSET_BITS == 64) || \
-                        (_POSIX_C_SOURCE - 0 >= 199506L))) || \
-      (!defined (sun) && (defined (ACE_HAS_PTHREADS_STD) || \
-                         defined (ACE_HAS_PTHREADS_DRAFT7) || \
-                         defined (_POSIX_SOURCE) || \
-                         defined (__FreeBSD__) || \
-			 defined (__NetBSD__) || \
-                         defined (HPUX_11)) || \
-                         defined (__GNUC__) && defined (_AIX) || \
-                         defined (ACE_VXWORKS))
+#elif defined (ACE_HAS_DIRENT) && !defined (ACE_LACKS_READDIR_R)
+#  if defined (ACE_HAS_3_PARAM_READDIR_R)
        return ::readdir_r (dirp, entry, result);
 #  else
        // <result> had better not be 0!
@@ -156,7 +146,7 @@ scandir (const ACE_TCHAR *dirname,
 ACE_INLINE void
 seekdir (ACE_DIR *d, long loc)
 {
-#if defined (ACE_HAS_DIRENT)  &&  !defined (ACE_LACKS_SEEKDIR)
+#if defined (ACE_HAS_DIRENT) && !defined (ACE_LACKS_SEEKDIR)
   ::seekdir (d, loc);
 #else  /* ! ACE_HAS_DIRENT  ||  ACE_LACKS_SEEKDIR */
   ACE_UNUSED_ARG (d);
@@ -167,7 +157,7 @@ seekdir (ACE_DIR *d, long loc)
 ACE_INLINE long
 telldir (ACE_DIR *d)
 {
-#if defined (ACE_HAS_DIRENT)  &&  !defined (ACE_LACKS_TELLDIR)
+#if defined (ACE_HAS_DIRENT) && !defined (ACE_LACKS_TELLDIR)
   return ::telldir (d);
 #else  /* ! ACE_HAS_DIRENT  ||  ACE_LACKS_TELLDIR */
   ACE_UNUSED_ARG (d);
