@@ -317,17 +317,9 @@ ACE_INET_Addr::set (u_short port_number,
   struct in_addr addrv4;
   if (ACE_OS::inet_aton (host_name,
                          &addrv4) == 1)
-# if !defined (ACE_LACKS_NTOHL)
     return this->set (port_number,
-                      encode ? ntohl (addrv4.s_addr) : addrv4.s_addr,
+                      encode ? ACE_NTOHL (addrv4.s_addr) : addrv4.s_addr,
                       encode);
-# else
-    {
-      ACE_UNUSED_ARG (port_number);
-      ACE_UNUSED_ARG (encode);
-      return -1;
-    }
-# endif /* ACE_LACKS_NTOHL */
   else
     {
 #  if defined (ACE_VXWORKS) && defined (ACE_LACKS_GETHOSTBYNAME)
@@ -350,13 +342,9 @@ ACE_INET_Addr::set (u_short port_number,
           (void) ACE_OS::memcpy ((void *) &addrv4.s_addr,
                                  hp->h_addr,
                                  hp->h_length);
-#  if !defined (ACE_LACKS_NTOHL)
           return this->set (port_number,
-                            encode ? ntohl (addrv4.s_addr) : addrv4.s_addr,
+                            encode ? ACE_NTOHL (addrv4.s_addr) : addrv4.s_addr,
                             encode);
-#  else
-          return -1;
-#  endif /* ACE_LACKS_NTOHL */
         }
     }
 #endif /* ACE_HAS_IPV6 */
@@ -369,7 +357,6 @@ static int get_port_number_from_name (const char port_name[],
 {
   int port_number = 0;
 
-#if !defined (ACE_LACKS_HTONS)
   // Maybe port_name is directly a port number?
   char *endp = 0;
   port_number = static_cast<int> (ACE_OS::strtol (port_name, &endp, 10));
@@ -380,10 +367,9 @@ static int get_port_number_from_name (const char port_name[],
       // store that value as the port number.  NOTE: this number must
       // be returned in network byte order!
       u_short n = static_cast<u_short> (port_number);
-      n = htons (n);
+      n = ACE_HTONS (n);
       return n;
     }
-#endif
 
   // We try to resolve port number from its name.
 
@@ -756,12 +742,8 @@ ACE_INET_Addr::set_port_number (u_short port_number,
 {
   ACE_TRACE ("ACE_INET_Addr::set_port_number");
 
-#if !defined (ACE_LACKS_HTONS)
   if (encode)
-    port_number = htons (port_number);
-#else
-  ACE_UNUSED_ARG (encode);
-#endif /* ACE_LACKS_HTONS */
+    port_number = ACE_HTONS (port_number);
 
 #if defined (ACE_HAS_IPV6)
   if (this->get_type () == AF_INET6)
@@ -1113,11 +1095,8 @@ ACE_INET_Addr::get_ip_address (void) const
       return 0;
     }
 #endif /* ACE_HAS_IPV6 */
-#if !defined (ACE_LACKS_NTOHL)
-  return ntohl (ACE_UINT32 (this->inet_addr_.in4_.sin_addr.s_addr));
-#else
+  return ACE_NTOHL (ACE_UINT32 (this->inet_addr_.in4_.sin_addr.s_addr));
   return 0;
-#endif /* ACE_LACKS_NTOHL */
 }
 
 ACE_END_VERSIONED_NAMESPACE_DECL

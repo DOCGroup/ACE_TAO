@@ -170,7 +170,7 @@ ACE_Map_Manager<EXT_ID, INT_ID, ACE_LOCK>::move_all_free_slots_from_occupied_lis
       if (current_slot.free_)
         {
           // Reset free flag to zero before moving to free list.
-          current_slot.free_ = 0;
+          current_slot.free_ = false;
 
           // Move from occupied list to free list.
           this->move_from_occupied_list_to_free_list (position_of_current_slot);
@@ -461,7 +461,7 @@ ACE_Map_Manager<EXT_ID, INT_ID, ACE_LOCK>::unbind_slot (ACE_UINT32 slot)
   // run out of free slots in the free list.
   //
 
-  this->search_structure_[slot].free_ = 1;
+  this->search_structure_[slot].free_ = true;
 
 #else
 
@@ -530,7 +530,7 @@ ACE_Map_Manager<EXT_ID, INT_ID, ACE_LOCK>::resize_i (ACE_UINT32 new_size)
       // flag to be zero so that we don't have to set it when the slot
       // is moved to the occupied list.  In addition, this flag has no
       // meaning while this slot is in the free list.
-      temp[i].free_ = 0;
+      temp[i].free_ = false;
 
 #endif /* ACE_HAS_LAZY_MAP_MANAGER */
 

@@ -413,6 +413,9 @@
 #  define ACE_HAS_3_PARAM_WCSTOK
 #endif
 
+#define ACE_HAS_3_PARAM_READDIR_R
+
+
 //////////////////////////////////////////////////////////////////////////
 //
 // STREAMS information

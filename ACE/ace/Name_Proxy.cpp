@@ -166,7 +166,7 @@ ACE_Name_Proxy::recv_reply (ACE_Name_Request &reply)
     case sizeof (ACE_UINT32):
       {
         // Transform the length into host byte order.
-        ssize_t length = ntohl (reply.length ());
+        ssize_t length = ACE_NTOHL (reply.length ());
 
         // Receive the rest of the request message.
         // @@ beware of blocking read!!!.

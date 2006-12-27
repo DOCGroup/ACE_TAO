@@ -49,17 +49,18 @@
 #   undef ACE_HAS_THREADS
 # else
 #   if defined(_POSIX_THREADS) && (_POSIX_THREADS-0 != -1 )
-#   if !defined(ACE_HAS_THREADS)
-#     define ACE_HAS_THREADS
-#   endif /* ACE_HAS_THREADS */
+#     if !defined(ACE_HAS_THREADS)
+#       define ACE_HAS_THREADS
+#     endif /* ACE_HAS_THREADS */
 
-#   if !defined(ACE_HAS_PTHREADS)
-#     define ACE_HAS_PTHREADS
-#   endif /* ACE_HAS_PTHREADS */
+#     if !defined(ACE_HAS_PTHREADS)
+#       define ACE_HAS_PTHREADS
+#     endif /* ACE_HAS_PTHREADS */
 
-#   if !defined(ACE_HAS_PTHREADS_STD)
-#     define ACE_HAS_PTHREADS_STD
-#   endif /* ACE_HAS_PTHREADS_STD */
+#     if !defined(ACE_HAS_PTHREADS_STD)
+#       define ACE_HAS_PTHREADS_STD
+#     endif /* ACE_HAS_PTHREADS_STD */
+
 #   endif /* _POSIX_THREADS */
 # endif /* ACE_HAS_THREADS */
 #endif /* !ACE_MT_SAFE */
