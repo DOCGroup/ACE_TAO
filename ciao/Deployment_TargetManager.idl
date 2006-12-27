@@ -20,7 +20,8 @@ module Deployment {
   interface TargetManager {
     Domain getAllResources ();
     Domain getAvailableResources ();
-    ResourceCommitmentManager createResourceCommitment (in ResourceAllocationSeq manager);
+    ResourceCommitmentManager createResourceCommitment (in ResourceAllocationSeq manager)
+      raises (ResourceCommitmentFailure);
     void destroyResourceCommitment (in ResourceCommitmentManager resources);
     void updateDomain (in ::CORBA::StringSeq elements,
                        in Domain domainSubset,

@@ -348,8 +348,8 @@ void CIAO::DomainDataManager
                   "TM::commitResource::Host name matched\n"));
             try {
               match_requirement_resource (
-                                          plan.instance[i].deployedResource,
-                                          temp_provisioned_data.node[j].resource);
+                                plan.instance[i].deployedResource,
+                                temp_provisioned_data.node[j].resource);
             }
             catch (::Deployment::ResourceNotAvailable& ex)
               {
@@ -457,9 +457,14 @@ match_properties (
       ::Deployment::Properties deployed,
       ::Deployment::SatisfierProperties & available)
 {
+  bool property_found;
+
   for (CORBA::ULong i = 0;i < deployed.length ();i++)
     {
+      property_found = false;
+
       for (CORBA::ULong j = 0;j < available.length ();j++)
+      {
         if (!ACE_OS::strcmp (deployed[i].name , available[j].name))
           {
             // check kind here ....and then subtract ....
@@ -472,9 +477,20 @@ match_properties (
                           "TM::commitResource::Property name matched\n"));
 
               commit_release_resource (deployed[i] , available[j]);
-
+              property_found = true;
           }
-    }
+      } // internal for ....
+
+      // check if property was found or not
+      if (property_found == false)
+      {
+        // throw an error since property was not found in the Resource
+        ::Deployment::ResourceCommitmentFailure failure;
+
+        failure.reason = CORBA::string_dup ("Property Not Found\n");
+        failure.propertyName = CORBA::string_dup (deployed[i].name);
+      }
+    } // outside for ...
 }
 
 void CIAO::DomainDataManager::commit_release_resource (
@@ -507,14 +523,14 @@ void CIAO::DomainDataManager::commit_release_resource (
         {
           ACE_DEBUG ((LM_DEBUG, "Insufficient resources! Available: %d, Required %d\n",
                       available_d, required_d));
-          throw ::Deployment::ResourceNotAvailable ("",
-                                                    "",
-                                                    deployed.name.in (),
-                                                    "",
-                                                    "");
+          ::Deployment::ResourceCommitmentFailure failure;
+
+          failure.reason = CORBA::string_dup ("Insufficient resources!");
+          failure.propertyName = CORBA::string_dup (available.name);
+          failure.propertyValue = available.value;
+
+          throw failure;
         }
-
-
     }
   else
     {
@@ -735,4 +751,86 @@ bool CIAO::DomainDataManager::update_node_status ()
 {
   // update the node status here ...
   return 0;
+}
+
+int CIAO::DomainDataManager::commitResourceAllocation (
+          const ::Deployment::ResourceAllocationSeq & resources)
+{
+  // commit the resources
+  // parse into the plan and commit resources ...
+
+  // set the action value
+  current_action_ = commit;
+
+  return this->commit_release_RA (resources);
+}
+
+int CIAO::DomainDataManager::releaseResourceAllocation (
+    const ::Deployment::ResourceAllocationSeq & resources)
+{
+  // set the action value
+  current_action_ = release;
+
+  return this->commit_release_RA (resources);
+}
+
+
+int CIAO::DomainDataManager::
+commit_release_RA (const ::Deployment::ResourceAllocationSeq & resources)
+{
+  // temporary used to guard against exceptions
+  temp_provisioned_data_ = provisioned_data_;
+
+
+  for (CORBA::ULong i = 0;i < resources.length ();i++)
+  {
+    try
+    {
+      ::Deployment::Resource& res = find_resource (resources[i]);
+
+      match_properties (resources[i].property , res.property);
+    }
+    catch (::Deployment::ResourceCommitmentFailure& ex)
+    {
+      // catch the exception and add parameters
+      ACE_DEBUG ((LM_DEBUG, "Caught the Exception in releaseResourceAllocation\n"));
+      ex.index = i;
+      throw ex;
+    }
+  }
+
+  // here commit the commitresources
+  provisioned_data_ = temp_provisioned_data_;
+
+  return 0;
+}
+
+::Deployment::Resource&
+CIAO::DomainDataManager::find_resource (
+    const ::Deployment::ResourceAllocation& resource)
+{
+  // for now search the resource in the Node sequence; Later need
+  // to add it to the Bridges and Interconnects too according to the
+  // spec
+    for (CORBA::ULong j = 0;j < this->temp_provisioned_data_.node.length ();j++)
+    {
+      if (!strcmp (resource.elementName.in () ,
+            this->temp_provisioned_data_.node[j].name.in ()))
+      {
+        if (CIAO::debug_level () > 9)
+          ACE_DEBUG ((LM_DEBUG ,
+                "TM::commitResource::Element name matched\n"));
+        for (CORBA::ULong k =0;
+              k < this->temp_provisioned_data_.node[j].resource.length ();
+              k++)
+        {
+          if (!strcmp (this->temp_provisioned_data_.node[j].resource[k].name.in (),
+                resource.resourceName.in ()))
+            return this->temp_provisioned_data_.node[j].resource[k];//resource found here, return
+        }
+
+        // resource not found
+        throw ::Deployment::ResourceCommitmentFailure ().reason = CORBA::string_dup ("Resource Not Found\n");
+      }
+    }
 }

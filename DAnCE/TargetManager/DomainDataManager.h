@@ -144,10 +144,33 @@ namespace CIAO
         * @description The node manager in turn stops the monitor
         *
         */
-
        void stop_monitors ();
 
-    protected:
+       /**
+        * @function commitResourceAllocation
+        *
+        * @brief The function allocates resources specified in the
+        * parameter
+        *
+        * @description This function is for the ResourceCommitmentManager
+        *
+        */
+       int commitResourceAllocation (
+           const ::Deployment::ResourceAllocationSeq & resources);
+
+       /**
+        * @function releaseResourceAllocation
+        *
+        * @brief The function releases resources specified in the
+        * parameter
+        *
+        * @description This function is for the ResourceCommitmentManager
+        *
+        */
+       int releaseResourceAllocation (
+           const ::Deployment::ResourceAllocationSeq & resources);
+
+      protected:
 
 
       /**
@@ -256,6 +279,18 @@ namespace CIAO
        */
       bool update_node_status ();
 
+      /**
+       * @function find_resource
+       * @brief It finds the Resource structure which is respresents the
+       * ResourceAllocation
+       */
+      ::Deployment::Resource& find_resource (
+          const ::Deployment::ResourceAllocation& resource);
+
+      int commit_release_RA (
+          const ::Deployment::ResourceAllocationSeq & resources);
+
+
       /// The ORB pointer
       CORBA::ORB_var orb_;
 
@@ -284,6 +319,10 @@ namespace CIAO
        * The static provisioned Domain data
        */
       ::Deployment::Domain provisioned_data_;
+
+      /// temporary domain used in commit/release to
+      /// guard against exceptions
+      ::Deployment::Domain temp_provisioned_data_;
 
       /// The current action
       Action current_action_;

@@ -186,6 +186,20 @@ namespace CIDL_TargetManager_i
     ACE_ENV_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
+    virtual ::Deployment::ResourceCommitmentManager_ptr 
+    createResourceCommitment (
+    const ::Deployment::ResourceAllocationSeq & manager
+    ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+    ACE_THROW_SPEC ((
+    ::CORBA::SystemException,
+    ::Deployment::ResourceCommitmentFailure));
+
+    virtual void 
+    destroyResourceCommitment (
+    ::Deployment::ResourceCommitmentManager_ptr resources
+    ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+    ACE_THROW_SPEC ((::CORBA::SystemException));
+
   private:
     TargetManagerImpl_exec_i * _exec;
 
