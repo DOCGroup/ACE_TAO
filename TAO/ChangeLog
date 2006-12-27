@@ -1,3 +1,9 @@
+Wed Dec 27 20:42:48 UTC 2006  Iliyan Jeliazkov  <iliyan@ociweb.com>
+
+        * tests/TransportCurrent/IIOP/IIOP_Server_Request_Interceptor.cpp:
+
+          Fixing test failures because of incorrect counting.
+
 Wed Dec 27 11:12:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * TAO-INSTALL.html:
