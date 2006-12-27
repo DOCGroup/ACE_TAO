@@ -1,3 +1,8 @@
+Wed Dec 27 09:35:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/ARGV_Test.cpp:
+          Fixed deprecated conversion warnings
+
 Wed Dec 27 09:32:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/OS_NS_dirent.cpp:
