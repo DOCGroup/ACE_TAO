@@ -1,3 +1,16 @@
+Wed Dec 27 22:48:30 UTC 2006  Iliyan Jeliazkov  <iliyan@ociweb.com>
+
+        * tests/TransportCurrent/Framework/Client_Request_Interceptor.cpp:
+        * tests/TransportCurrent/Framework/Current_Test.idl:
+        * tests/TransportCurrent/Framework/Current_Test_Impl.h:
+        * tests/TransportCurrent/Framework/Current_Test_Impl.cpp:
+        * tests/TransportCurrent/Framework/client.cpp:
+        * tests/TransportCurrent/Framework/server.cpp:
+
+          Changed the modulename from "TAO" to "Test" in order to fixing
+          an ambiguous reference to "TAO" namespace in builds with
+          versioned namespaces enabled.
+
 Wed Dec 27 20:42:48 UTC 2006  Iliyan Jeliazkov  <iliyan@ociweb.com>
 
         * tests/TransportCurrent/IIOP/IIOP_Server_Request_Interceptor.cpp:

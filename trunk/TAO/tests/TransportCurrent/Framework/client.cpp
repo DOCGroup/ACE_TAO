@@ -75,12 +75,12 @@ parse_args (int argc, ACE_TCHAR *argv[])
 class Worker : public ACE_Task_Base
 {
 public:
-  Worker (TAO::Transport::CurrentTest_ptr server, int niterations, int use_dii_too);
+  Worker (Test::Transport::CurrentTest_ptr server, int niterations, int use_dii_too);
   virtual int svc (void);
 
 private:
   // The server.
-   TAO::Transport::CurrentTest_var server_;
+   Test::Transport::CurrentTest_var server_;
 
   // The number of iterations on each client thread.
   int niterations_;
@@ -92,10 +92,10 @@ private:
 
 /// Ctor
 
-Worker::Worker (TAO::Transport::CurrentTest_ptr server,
+Worker::Worker (Test::Transport::CurrentTest_ptr server,
                 int niterations,
                 int use_dii_too)
-  :  server_ (TAO::Transport::CurrentTest::_duplicate (server))
+  :  server_ (Test::Transport::CurrentTest::_duplicate (server))
   ,  niterations_ (niterations)
   , use_dii_too_ (use_dii_too)
 {
@@ -213,8 +213,8 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       CORBA::Object_var obj = orb->string_to_object (ior ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      Transport::CurrentTest_var server =
-        Transport::CurrentTest::_narrow (obj.in () ACE_ENV_ARG_PARAMETER);
+      Test::Transport::CurrentTest_var server =
+        Test::Transport::CurrentTest::_narrow (obj.in () ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (CORBA::is_nil (server.in ()))
