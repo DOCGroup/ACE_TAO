@@ -175,6 +175,7 @@ test_argv_buf (void)
 
   // This shouldn't have any quotes in it.
   ACE_DEBUG ((LM_DEBUG, "%s\n", my_argv.buf ()));
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("argc: %d\n"), my_argv.argc ()));
   return 0;
 }
 
