@@ -10,7 +10,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 CORBA::Object_ptr
 TAO_Compression_Loader::create_object (
-  CORBA::ORB_ptr orb,
+  CORBA::ORB_ptr,
   int,
   ACE_TCHAR *[]
   ACE_ENV_ARG_DECL_NOT_USED)
