@@ -64,7 +64,7 @@ CompressorFactory::average_compression (void)
     ACE_Guard <ACE_SYNCH_MUTEX> guard (mutex_);
     if (this->uncompressed_bytes_ > 0)
       {
-        return_value = static_cast <::CORBA::Double>((this->uncompressed_bytes_ - this->compressed_bytes_) / this->uncompressed_bytes_);
+        return_value = static_cast < ::CORBA::Double>((this->uncompressed_bytes_ - this->compressed_bytes_) / this->uncompressed_bytes_);
       }
   }
   return return_value;
