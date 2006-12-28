@@ -1,42 +1,47 @@
+Thu Dec 28 12:22:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * DAnCE/RepositoryManager/RepositoryManager_Impl.h:
+          Doxygen improvements
+
 Mon Dec 25 16:19:42 UTC 2006  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
 
         * Merry Christmas everyone!!!
-  
+
 Wed Dec 20 06:37:27 UTC 2006  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * MPC/config/ciao_rtevent_dnc.mpb:
         * MPC/config/ciao_events_dnc.mpb:
         * DAnCE/DomainApplicationManager/DomainApplicationManager.mpc:
         * ciao/CCM_Core.mpc:
-        
-          Fixed linking errors on OS X. 
+
+          Fixed linking errors on OS X.
 
 Wed Dec 13 08:35:48 UTC 2006    Gan Deng <gan.deng@vanderbilt.edu>
 
         * DAnCE/NodeApplication/NodeApplication_Impl.cpp:
         * tools/Config_Handlers/CIAO_Events/CIAOEvents.cpp:
-        
+
           Fixed warnings on NoInterceptors_Core build related to
           type conversion.
-        
+
 Wed Dec 13 07:57:02 UTC 2006    Gan Deng <gan.deng@vanderbilt.edu>
 
         * ciaosvcs/Events/CIAO_RTEC/SimpleAddressServer.cpp:
-        
+
           Fixed a fuzz error.
-        
+
 Wed Dec 13 07:29:10 UTC 2006    Gan Deng <gan.deng@vanderbilt.edu>
 
         * tools/Config_Handlers/CIAO_Events/CIAOEvents.hpp:
-        
+
           Fixed Debian_GCC_4.0 compilation error by removing
           unnecessary common for enum definition.
 
 Wed Dec 13 07:19:13 UTC 2006    Gan Deng <gan.deng@vanderbilt.edu>
 
         * ciaosvcs/Events/CIAO_RTEC/SimpleAddressServer.h:
-        
-          Fixed a compilation error in Win2003_VC71_Versioned_Namespace 
+
+          Fixed a compilation error in Win2003_VC71_Versioned_Namespace
           build by removing the unnecessary declaration.
 
 Wed Dec 13 06:45:57 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
