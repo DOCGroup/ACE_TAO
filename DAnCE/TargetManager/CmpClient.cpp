@@ -70,7 +70,7 @@ int main (int argc, char* argv[])
 
     bool resource_available = true;
 
-    ::Deployment::ResourceAllocationSeq resource_seq;
+    ::Deployment::ResourceAllocations resource_seq;
 
     resource_seq.length (1);
 
@@ -127,8 +127,8 @@ int main (int argc, char* argv[])
           {
             d = 10;
             resource_seq[0].property[0].value <<= d;
-            //manager->releaseResources (resource_seq);
-            targetI->destroyResourceCommitment (manager);
+            manager->releaseResources (resource_seq);
+//            targetI->destroyResourceCommitment (manager);
             ACE_DEBUG ((LM_DEBUG , "\n\nreleaseResources Returned \n"));
           }
       }

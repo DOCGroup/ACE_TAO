@@ -1,3 +1,14 @@
+Thu Dec 28 22:59:45 UTC 2006  Nilabja R  <nilabjar@dre.vanderbilt.edu>
+
+        * DAnCE/TargetManager/CmpClient.cpp:
+        * DAnCE/TargetManager/DomainDataManager.h:
+        * DAnCE/TargetManager/DomainDataManager.cpp:
+        * DAnCE/TargetManager/TargetManager_exec.h:
+        * DAnCE/TargetManager/TargetManager_exec.cpp:
+
+        * ciao/Deployment_ResourceCommitmentManager.idl:
+        * ciao/Deployment_TargetManager.idl:
+
 Wed Dec 27 19:59:32 UTC 2006  Nilabja R  <nilabjar@dre.vanderbilt.edu>
 
         * DAnCE/TargetManager/CmpClient.cpp:

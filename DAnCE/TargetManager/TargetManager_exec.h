@@ -188,7 +188,7 @@ namespace CIDL_TargetManager_i
 
     virtual ::Deployment::ResourceCommitmentManager_ptr 
     createResourceCommitment (
-    const ::Deployment::ResourceAllocationSeq & manager
+    const ::Deployment::ResourceAllocations& manager
     ACE_ENV_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((
     ::CORBA::SystemException,

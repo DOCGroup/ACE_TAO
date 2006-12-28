@@ -489,6 +489,9 @@ match_properties (
 
         failure.reason = CORBA::string_dup ("Property Not Found\n");
         failure.propertyName = CORBA::string_dup (deployed[i].name);
+        failure.propertyValue.length (0);
+        
+        throw failure;
       }
     } // outside for ...
 }
@@ -527,7 +530,8 @@ void CIAO::DomainDataManager::commit_release_resource (
 
           failure.reason = CORBA::string_dup ("Insufficient resources!");
           failure.propertyName = CORBA::string_dup (available.name);
-          failure.propertyValue = available.value;
+          failure.propertyValue.length (1);
+          failure.propertyValue[0] = available.value;
 
           throw failure;
         }
@@ -754,7 +758,7 @@ bool CIAO::DomainDataManager::update_node_status ()
 }
 
 int CIAO::DomainDataManager::commitResourceAllocation (
-          const ::Deployment::ResourceAllocationSeq & resources)
+          const ::Deployment::ResourceAllocations & resources)
 {
   // commit the resources
   // parse into the plan and commit resources ...
@@ -766,7 +770,7 @@ int CIAO::DomainDataManager::commitResourceAllocation (
 }
 
 int CIAO::DomainDataManager::releaseResourceAllocation (
-    const ::Deployment::ResourceAllocationSeq & resources)
+    const ::Deployment::ResourceAllocations & resources)
 {
   // set the action value
   current_action_ = release;
@@ -776,7 +780,7 @@ int CIAO::DomainDataManager::releaseResourceAllocation (
 
 
 int CIAO::DomainDataManager::
-commit_release_RA (const ::Deployment::ResourceAllocationSeq & resources)
+commit_release_RA (const ::Deployment::ResourceAllocations& resources)
 {
   // temporary used to guard against exceptions
   temp_provisioned_data_ = provisioned_data_;
