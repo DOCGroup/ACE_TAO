@@ -1,3 +1,47 @@
+Thu Dec 28 22:47:05 UTC 2006  Steve Huston  <shuston@riverace.com>
+
+        * ace/SOCK_IO.{h, inl}: Changed the
+          recvv(iovec[], size_t, const ACE_Time_Value* = 0) and
+          sendv (const iovec[], size_t, const ACE_Time_Value*=0) methods
+          to specify the iovec count argument as int instead of size_t
+          since it gets reduced to int in the underlying OS calls (usually).
+          Removed the following deprecated methods:
+
+            ssize_t recv (iovec iov[],
+                          size_t n,
+                          const ACE_Time_Value *timeout = 0) const;
+
+            ssize_t recv (iovec *io_vec,
+                          const ACE_Time_Value *timeout = 0) const;
+
+            ssize_t send (const iovec iov[],
+                          size_t n,
+                          const ACE_Time_Value *timeout = 0) const;
+
+          These were previously replaced with more specific ...v() methods.
+
+        * ace/SOCK_Dgram.cpp (recv): Resolved ssize_t to u_long truncation
+          warning.
+
+        * ace/Service_Repository.{h cpp} (find, find_i): Changed the
+          ignore_suspended argument from int to bool to reflect it's true/false
+          nature.
+          Changed find_i() to return the located name's index in a size_t
+          argument when located - this allows it to pass indices as big as the
+          table can hold. The return value -1, -2 is not changed, but >= 0
+          is no longer returned; it's == 0 for success, and the caller needs
+          to get the index from the 'slot' argument. This should cause no
+          issues since find_i() is private and internal use has been adjusted
+          to match; callers of find() have no use for an index value for a
+          table internal to ACE_Service_Repository.
+
+        * ace/Service_Gestalt.cpp (~ACE_Service_Type_Dynamic_Guard): Use of
+          ACE_Service_Repository::find_i() adjusted per above.
+
+        * ace/Msg_WFMO_Reactor.cpp: Resolve truncation warning for 64-bit.
+
+        * NEWS: Updated with API changes noted above.
+
 Thu Dec 28 20:56:28 UTC 2006  Iliyan Jeliazkov  <iliyan@ociweb.com>
 
         * bin/tao_orb_tests.lst:

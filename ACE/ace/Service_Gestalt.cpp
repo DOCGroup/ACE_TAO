@@ -138,12 +138,13 @@ ACE_Service_Type_Dynamic_Guard::~ACE_Service_Type_Dynamic_Guard (void)
   // Lookup without ignoring suspended services. Making sure
   // not to ignore any inactive services, since those may be forward
   // declarations
-  int const ret = this->repo_.find_i (this->name_, &tmp, 0);
+  size_t slot = 0;
+  int const ret = this->repo_.find_i (this->name_, slot, &tmp, false);
 
   // We inserted it (as inactive), so we expect to find it, right?
   if (ret < 0 && ret != -2)
     {
-      if(ACE::debug ())
+      if (ACE::debug ())
         ACE_ERROR ((LM_WARNING,
                     ACE_LIB_TEXT ("ACE (%P|%t) STDG::<dtor> - Failed (%d) to find %s\n"),
                     ret, this->name_));

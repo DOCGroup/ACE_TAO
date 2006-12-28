@@ -17,6 +17,33 @@ PLANNED CHANGES FOR "ACE-5.5.5"
 USER VISIBLE CHANGES BETWEEN ACE-5.5.4 and ACE-5.5.5
 ====================================================
 
+. ACE_SOCK_IO::recvv(iovec[], size_t, const ACE_Time_Value* = 0) and
+  ACE_SOCK_IO::sendv (const iovec[], size_t, const ACE_Time_Value* = 0) methods
+  were changed to specify the iovec count argument as int instead of size_t
+  since it gets reduced to int in the underlying OS calls (usually).
+
+. The following deprecated methods were removed:
+
+    ssize_t ACE_SOCK_IO::recv (iovec iov[],
+                               size_t n,
+                               const ACE_Time_Value *timeout = 0) const;
+
+    ssize_t ACE_SOCK_IO::recv (iovec *io_vec,
+                               const ACE_Time_Value *timeout = 0) const;
+
+    ssize_t ACE_SOCK_IO::send (const iovec iov[],
+                               size_t n,
+                               const ACE_Time_Value *timeout = 0) const;
+
+    These were previously replaced with more specific recvv() and sendv()
+    methods.
+
+. The ACE_Service_Repository::find(const ACE_TCHAR name[],
+                                   const ACE_Service_Type **srp = 0,
+                                   int ignore_suspended = true) const
+  method's 'ignore_suspended' parameter was changed from int to bool to
+  reflect it's purpose as a yes/no indicator.
+
 . Added --enable-ace-reactor-notification-queue configure script
   option to the autoconf build for enabling the Reactor's userspace
   notification queue (defines ACE_HAS_REACTOR_NOTIFICATION_QUEUE in
