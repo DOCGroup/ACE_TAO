@@ -70,20 +70,9 @@ public:
                 const ACE_Time_Value *timeout = 0) const;
 
   /// Recv an <iovec> of size <n> from the connected socket.
-  /**
-   * @note The value of @a n will be silently reduced to the maximum
-   * value an @c int can hold if needed. This is due to the underlying
-   * system calls on many OSes limiting the number of @c iovec structures
-   * that can be passed in one call.
-   */
   ssize_t recvv (iovec iov[],
-                 size_t n,
+                 int n,
                  const ACE_Time_Value *timeout = 0) const;
-
-  /// @deprecated Same as above.  Deprecated.
-  ssize_t recv (iovec iov[],
-                size_t n,
-                const ACE_Time_Value *timeout = 0) const;
 
   /**
    * Allows a client to read from a socket without having to provide a
@@ -95,10 +84,6 @@ public:
    */
   ssize_t recvv (iovec *io_vec,
                  const ACE_Time_Value *timeout = 0) const;
-
-  /// Same as above.  Deprecated.
-  ssize_t recv (iovec *io_vec,
-                const ACE_Time_Value *timeout = 0) const;
 
   /// Recv <n> varargs messages to the connected socket.
   ssize_t recv (size_t n,
@@ -121,20 +106,9 @@ public:
                 const ACE_Time_Value *timeout = 0) const;
 
   /// Send an <iovec> of size <n> to the connected socket.
-  /**
-   * @note The value of @a n will be silently reduced to the maximum
-   * value an @c int can hold if needed. This is due to the underlying
-   * system calls on many OSes limiting the number of @c iovec structures
-   * that can be passed in one call.
-   */
   ssize_t sendv (const iovec iov[],
-                 size_t n,
+                 int n,
                  const ACE_Time_Value *timeout = 0) const;
-
-  /// Same as above.  Deprecated.
-  ssize_t send (const iovec iov[],
-                size_t n,
-                const ACE_Time_Value *timeout = 0) const;
 
   /// Send <n> varargs messages to the connected socket.
   ssize_t send (size_t n,

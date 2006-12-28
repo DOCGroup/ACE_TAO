@@ -68,7 +68,7 @@ ACE_Msg_WFMO_Reactor::dispatch_window_messages (void)
       if (msg.message == WM_QUIT)
         {
           // Should inform the main thread
-          ::PostQuitMessage (msg.wParam);
+          ::PostQuitMessage (LOWORD (msg.wParam));
           return -1;
         }
 

@@ -9,6 +9,7 @@
 #include "ace/OS_NS_sys_select.h"
 #include "ace/OS_NS_ctype.h"
 #include "ace/os_include/net/os_if.h"
+#include "ace/Truncate.h"
 
 #if !defined (__ACE_INLINE__)
 #  include "ace/SOCK_Dgram.inl"
@@ -97,14 +98,23 @@ ACE_SOCK_Dgram::recv (iovec *io_vec,
       ACE_NEW_RETURN (io_vec->iov_base,
                       char[inlen],
                       -1);
-      io_vec->iov_len = ACE_OS::recvfrom (this->get_handle (),
+      ssize_t rcv_len = ACE_OS::recvfrom (this->get_handle (),
                                           (char *) io_vec->iov_base,
                                           inlen,
                                           flags,
                                           (sockaddr *) saddr,
                                           &addr_len);
-      addr.set_size (addr_len);
-      return io_vec->iov_len;
+      if (rcv_len < 0)
+        {
+          delete [] io_vec->iov_base;
+          io_vec->iov_base = 0;
+        }
+      else
+        {
+          io_vec->iov_len = ACE_Utils::Truncate<size_t> (rcv_len);
+          addr.set_size (addr_len);
+        }
+      return rcv_len;
     }
   else
     return 0;
