@@ -95,16 +95,24 @@ public:
   int insert (const ACE_Service_Type *);
 
   /**
-   * Locate an entry with <name> in the table.  If <ignore_suspended>
-   * is set then only consider services marked as resumed.  If the
-   * caller wants the located entry, pass back a pointer to the
-   * located entry via <srp>.  If <name> is not found, -1 is returned.
-   * If <name> is found, but it is suspended and the caller wants to
-   * ignore suspended services a -2 is returned.
+   * Locate a named entry in the service table, optionally ignoring
+   * suspended entries.
+   *
+   * @param service_name The name of the service to search for.
+   * @param srp          Optional; if not 0, it is a pointer to a location
+   *                     to receive the ACE_Service_Type pointer for the
+   *                     located service. Meaningless if this method
+   *                     returns -1.
+   * @param ignore_suspended If true, the search ignores suspended services.
+   *
+   * @retval  0 Named service was located.
+   * @retval -1 Named service was not found.
+   * @retval -2 Named service was found, but is suspended and
+   *            @a ignore_suspended is true.
    */
   int find (const ACE_TCHAR name[],
             const ACE_Service_Type **srp = 0,
-            int ignore_suspended = 1) const;
+            bool ignore_suspended = true) const;
 
   /// Remove an existing service record. If @a sr == 0, the service record
   /// is deleted before control is returned to the caller. If @a sr != 0,
@@ -141,12 +149,30 @@ private:
   /// responsible for properly disposing of it.
   int remove_i (const ACE_TCHAR[], ACE_Service_Type **sr);
 
-  /// Locates <service_name>.  Must be called without locks being
-  /// held...
-
+  /**
+   * Locate a named entry in the service table, optionally ignoring
+   * suspended entries.
+   *
+   * @param service_name The name of the service to search for.
+   * @param slot         Receives the position index of the service if it
+   *                     is found. Contents are meaningless if this method
+   *                     returns -1.
+   * @param srp          Optional; if not 0, it is a pointer to a location
+   *                     to receive the ACE_Service_Type pointer for the
+   *                     located service. Meaningless if this method
+   *                     returns -1.
+   * @param ignore_suspended If true, the search ignores suspended services.
+   *
+   * @retval  0 Named service was located; index in the table is set in
+   *            @a slot.
+   * @retval -1 Named service was not found.
+   * @retval -2 Named service was found, but is suspended and
+   *            @a ignore_suspended is true.
+   */
   int find_i (const ACE_TCHAR service_name[],
-              const ACE_Service_Type ** = 0,
-              int ignore_suspended = 1) const;
+              size_t &slot,
+              const ACE_Service_Type **srp = 0,
+              bool ignore_suspended = true) const;
 
   /// @brief Relocate (static) services to another DLL.
   ///
