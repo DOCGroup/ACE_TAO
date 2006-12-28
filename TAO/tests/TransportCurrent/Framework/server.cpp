@@ -195,20 +195,29 @@ server_main (int argc,
       // Spawn a number of clients doing the same thing for a
       // predetermined number of times
       Worker worker (orb.in ());
+
+#if defined (ACE_HAS_THREADS)
       if (worker.activate (THR_NEW_LWP | THR_JOINABLE,
                            nthreads) != 0)
         ACE_ERROR_RETURN ((LM_ERROR,
-                           ACE_TEXT ("Server (%P|%t) Cannot activate %d server threads\n"),
+                           ACE_TEXT ("Server (%P|%t) Cannot activate %d threads\n"),
                            nthreads),
                           -1);
       worker.thr_mgr ()->wait ();
+#else
+      if (nthreads > 1)
+        ACE_ERROR ((LM_WARNING,
+                    ACE_TEXT ("Server (%P|%t) Cannot use threads other than ")
+                    ACE_TEXT ("the only one available.\n")));
+      worker.svc ();
+#endif
 
       if (TAO_debug_level >= 1)
         ACE_DEBUG ((LM_INFO, ACE_TEXT ("Server (%P|%t) Event loop finished.\n")));
 
       if (!cri->self_test ())
         ACE_ERROR ((LM_ERROR,
-                    ACE_TEXT ("Server (%P|%t) Interceptor self_test failed\n")));
+                    ACE_TEXT ("Server (%P|%t) ERROR: Interceptor self_test failed\n")));
 
       server->shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;

@@ -90,8 +90,8 @@ Current_Test_Impl::invoked_by_client (ACE_ENV_SINGLE_ARG_DECL)
                                     ACE_ENV_SINGLE_ARG_DECL);
       ACE_TRY_CHECK;
 
-      TAO::Transport::CurrentTest_var self =
-        TAO::Transport::CurrentTest::_narrow (selfobject.in ()
+      Test::Transport::CurrentTest_var self =
+        Test::Transport::CurrentTest::_narrow (selfobject.in ()
                                                ACE_ENV_SINGLE_ARG_DECL);
       ACE_TRY_CHECK;
 

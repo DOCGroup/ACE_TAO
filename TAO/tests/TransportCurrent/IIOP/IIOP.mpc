@@ -5,14 +5,14 @@ project(*idl): taoidldefaults {
   after += Framework_IDL
 
   idlflags += -o ../Framework
-  
+
   IDL_Files {
     ../Framework/Current_Test.idl
   }
   custom_only = 1
 }
 
-project(*Server): taoserver, tc_iiop, pi_server {
+project(*Server): taoserver, tc_iiop, interceptors, pi_server {
 
   after += *idl
   after += Framework_Server
@@ -36,7 +36,7 @@ project(*Server): taoserver, tc_iiop, pi_server {
   }
 }
 
-project(*Client): taoclient, tc_iiop, pi, dynamicinterface {
+project(*Client): taoclient, tc_iiop, interceptors, pi, dynamicinterface {
 
   after += *idl
   after += *Server

@@ -31,7 +31,6 @@ namespace TAO
 
     template <typename Impl>
     class TAO_Transport_Current_Export Current_ORBInitializer
-    //class Current_ORBInitializer
       : public Current_ORBInitializer_Base
     {
     public:
