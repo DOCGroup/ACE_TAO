@@ -16,7 +16,7 @@
 #define TAO_COMPRESSION_GIOP_H
 #include /**/ "ace/pre.h"
 
-#include "tao/Compression/Compression_export.h"
+#include "tao/Compression/compression_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
