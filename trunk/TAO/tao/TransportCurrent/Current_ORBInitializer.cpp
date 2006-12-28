@@ -6,6 +6,10 @@
 #include "tao/ORB_Constants.h"
 #include "tao/TransportCurrent/Current_ORBInitializer.h"
 
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+# pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO

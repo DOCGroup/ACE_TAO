@@ -1,6 +1,6 @@
 
 // -*- C++ -*-
-// $Id$
+// $Id:$
 // Definition for Win32 Export directives.
 // This file is generated automatically by generate_export_file.pl -d TAO_Transport_Current
 // ------------------------------
@@ -8,6 +8,10 @@
 #define TAO_TRANSPORT_CURRENT_EXPORT_H
 
 #include "ace/config-all.h"
+
+#if defined (ACE_AS_STATIC_LIBS) && !defined (TAO_TRANSPORT_CURRENT_HAS_DLL)
+#  define TAO_TRANSPORT_CURRENT_HAS_DLL 0
+#endif /* ACE_AS_STATIC_LIBS && TAO_TRANSPORT_CURRENT_HAS_DLL */
 
 #if !defined (TAO_TRANSPORT_CURRENT_HAS_DLL)
 #  define TAO_TRANSPORT_CURRENT_HAS_DLL 1

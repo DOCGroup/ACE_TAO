@@ -19,7 +19,6 @@
 #include "ace/SString.h"
 #include "tao/PI/PI.h"
 
-#include "tao/TransportCurrent/Transport_Current_Export.h"
 #include "tao/TransportCurrent/TCC.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)

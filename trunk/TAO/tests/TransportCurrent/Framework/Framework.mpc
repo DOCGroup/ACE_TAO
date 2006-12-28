@@ -8,7 +8,7 @@ project(*idl): taoidldefaults {
   custom_only = 1
 }
 
-project(*Server): taoserver, tc, pi_server {
+project(*Server): taoserver, tc, interceptors, pi_server {
   after += *idl
   includes += .
   Source_Files {
@@ -26,7 +26,7 @@ project(*Server): taoserver, tc, pi_server {
   }
 }
 
-project(*Client): taoclient, tc, pi, dynamicinterface {
+project(*Client): taoclient, tc, interceptors, pi, dynamicinterface {
   after += *idl
   after += *Server
   includes += .
