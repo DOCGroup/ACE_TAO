@@ -1,3 +1,10 @@
+Thu Dec 28 12:49:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/CSD_Strategy_Tests/TP_Common/CSD_TP_Test_Lib.mpc:
+        * tests/NestedUpcall/MT_Client_Test/MT_Client_Test.mpc:
+        * tests/NestedUpcall/Triangle_Test/TT.mpc:
+          Disable part of the projects when CORBA/e micro is enabled
+
 Thu Dec 28 12:22:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * docs/Libraries.html:
