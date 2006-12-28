@@ -49,6 +49,10 @@
 #  endif /* HPUX && IOR */
 #endif /* !ACE_LACKS_NET_IF_H */
 
+#if defined (ACE_HAS_WINSOCK2) && (ACE_HAS_WINSOCK2 != 0)
+#  include /**/ <ws2tcpip.h>
+#endif /* ACE_HAS_WINSOCK2 */
+
 // Place all additions (especially function declarations) within extern "C" {}
 #ifdef __cplusplus
 extern "C"
@@ -100,17 +104,17 @@ struct  ifconf {
         };
 #endif /* ACE_LACKS_IFCONF */
 
-#if !defined (IFF_UP) && defined (ACE_LACKS_NETWORKING)
+#if !defined (IFF_UP)
 # define IFF_UP 0x1
-#endif /* IFF_UP && ACE_LACKS_NETWORKING */
+#endif /* IFF_UP */
 
-#if !defined (IFF_LOOPBACK) && defined (ACE_LACKS_NETWORKING)
+#if !defined (IFF_LOOPBACK)
 # define IFF_LOOPBACK 0x8
-#endif /* IFF_LOOPBACK && ACE_LACKS_NETWORKING */
+#endif /* IFF_LOOPBACK */
 
-#if !defined (IFF_BROADCAST) && defined (ACE_LACKS_NETWORKING)
+#if !defined (IFF_BROADCAST)
 # define IFF_BROADCAST 0x2
-#endif /* IFF_BROADCAST && ACE_LACKS_NETWORKING */
+#endif /* IFF_BROADCAST */
 
 #ifdef __cplusplus
 }
