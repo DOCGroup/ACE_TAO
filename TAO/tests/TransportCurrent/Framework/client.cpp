@@ -228,14 +228,24 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       // Spawn a number of clients doing the same thing for a
       // predetermined number of times
       Worker client (server.in (), niterations, use_dii);
+
+#if defined (ACE_HAS_THREADS)
       if (client.activate (THR_NEW_LWP | THR_JOINABLE,
                            nthreads) != 0)
         ACE_ERROR_RETURN ((LM_ERROR,
-                           ACE_TEXT ("Client (%P|%t) Cannot activate the threads\n")),
+                           ACE_TEXT ("Client (%P|%t) Cannot activate %d client threads\n"),
+                           nthreads),
                           -1);
       client.thr_mgr ()->wait ();
+#else
+      if (nthreads > 1)
+        ACE_ERROR ((LM_WARNING,
+                    ACE_TEXT ("Client (%P|%t) Cannot use threads other than ")
+                    ACE_TEXT ("the only one available.\n")));
+      client.svc ();
+#endif
 
-      ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Client (%P|%t) Collected all threads\n")));
+      ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Client (%P|%t) Collected any threads\n")));
 
       CORBA::Long result = 0;
 

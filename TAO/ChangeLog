@@ -1,3 +1,57 @@
+Thu Dec 28 19:29:58 UTC 2006  Iliyan Jeliazkov  <iliyan@ociweb.com>
+
+        * tao/TC.mpc:
+        * tao/TC_IIOP.mpc:
+
+          Removed interceptors and pi from the list of base projects. The
+          Transport::Current feature isnot itself dependent on these
+          features. The tests however are, and their *.mpc files have been
+          modifiedaccordingly to add interceptors explicitely.
+
+        * tao/TransportCurrent/Current_ORBInitializer.h:
+
+          Removed commented code.
+
+        * tao/TransportCurrent/Current_ORBInitializer.cpp:
+
+          Added "#pragma once".
+
+        * tao/TransportCurrent/Current_ORBInitializer_Base.h:
+
+          Removed unnecessary *_Export.h include since TCC.h already
+          includes it.
+
+        * tao/TransportCurrent/IIOP_Current_Loader.cpp:
+
+          Removed an extra ';' after ACE_STATIC_SVC_REQUIRE.
+
+        * tao/TransportCurrent/Transport_Current_Export.h:
+
+          Regenerated this file to fix DLL export problems in static
+          builds.
+
+        * tests/TransportCurrent/Framework/Framework.mpc:
+
+          Added interceptors to the base projects list to ensure this test
+          builds only when interceptors are supported.
+
+        * tests/TransportCurrent/Framework/Tester.cpp:
+        * tests/TransportCurrent/Framework/client.cpp:
+        * tests/TransportCurrent/Framework/server.cpp:
+
+          Added code to handle single-threaded builds correctly.
+
+        * tests/TransportCurrent/IIOP/Current_Test_Impl.cpp:
+
+          Changed the modulename from "TAO" to "Test" in order to fixing
+          an ambiguous reference to "TAO" namespace in builds with
+          versioned namespaces enabled.
+
+        * tests/TransportCurrent/IIOP/IIOP.mpc:
+
+          Added interceptors to the base projects list to ensure this test
+          builds only when interceptors are supported.
+
 Thu Dec 28 19:14:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Compression/Compression.cpp:

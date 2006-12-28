@@ -1,11 +1,10 @@
 //$Id$
 
-project(*) : taolib_with_idl, tao_versioning_idl_defaults, core, interceptors, pi, tc {
+project(*) : taolib_with_idl, tao_versioning_idl_defaults, core, tc {
 
   sharedname   = TAO_TC_IIOP
 
   dynamicflags = TAO_TRANSPORT_CURRENT_BUILD_DLL
-  libs += TAO_TC
 
   Source_Files {
     TransportCurrent/IIOP_Current_Impl.cpp
