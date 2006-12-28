@@ -1,3 +1,24 @@
+Thu Dec 28 12:37:21 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/DLL_Manager.cpp (get_handle):
+          Simplified this method a little
+
+        * ace/Dynamic_Service_Base.cpp:
+          Layout change
+
+        * ace/os_include/net/os_if.h:
+          Include ws2tcpip.h on windows as we do in the other files, this
+          way we don't get redefinitions on windows
+
+        * ace/Service_Gestalt.cpp (process_directive):
+          No need to use an intermediate variable
+
+        * tests/ARGV_Test.cpp:
+          Fixed deprecated conversion warnings
+
+        * tests/Time_Value_Test.cpp:
+          Added another test
+
 Thu Dec 28 11:13:21 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/config-aix-5.x.h:
