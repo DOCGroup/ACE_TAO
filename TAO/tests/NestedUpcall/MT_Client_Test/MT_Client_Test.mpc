@@ -22,7 +22,7 @@ project(*Nested_Upcall_Server): taoserver, utils, avoids_corba_e_micro {
   }
 }
 
-project(*Nested_Upcall_Client): taoexe, utils, portableserver {
+project(*Nested_Upcall_Client): taoexe, utils, portableserver, avoids_corba_e_micro {
   after += *Nested_Upcall_Idl
   after += *Nested_Upcall_Server
   Source_Files {
