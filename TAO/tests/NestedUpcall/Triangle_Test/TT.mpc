@@ -36,7 +36,7 @@ project(*Nested_Upcall_Server_B): taoexe, utils, portableserver, avoids_corba_e_
   }
 }
 
-project(*Nested_Upcall_Initiator): taoexe, utils, portableserver {
+project(*Nested_Upcall_Initiator): taoexe, utils, portableserver, avoids_corba_e_micro {
   after += *Nested_Upcall_Server_Idl
   Source_Files {
     Initiator_i.cpp
