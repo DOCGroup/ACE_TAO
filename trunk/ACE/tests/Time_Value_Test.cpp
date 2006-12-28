@@ -227,6 +227,10 @@ run_main (int, ACE_TCHAR *[])
   ACE_ASSERT (tv7 == tv8); // That's right!  See above . . .
   ACE_ASSERT (tv9 == tv6);
 
+  ACE_Time_Value tv10 (1);
+
+  ACE_ASSERT (tv10.sec() == 1);
+
   // test multiplication by double
   // test simple multiplication
   tv1.set (1, 1);

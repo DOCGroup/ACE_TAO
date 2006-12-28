@@ -1017,9 +1017,7 @@ ACE_Service_Gestalt::process_directive (const ACE_TCHAR directive[])
 
   ACE_Svc_Conf_Param d (this, directive);
 
-  int result = this->process_directives_i (&d);
-
-  return result;
+  return this->process_directives_i (&d);
 #else
   ACE_DLL dll;
 

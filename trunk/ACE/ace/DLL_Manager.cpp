@@ -339,8 +339,6 @@ ACE_DLL_Handle::get_handle (int become_owner)
   ACE_TRACE ("ACE_DLL_Handle::get_handle");
   ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->lock_, 0));
 
-  ACE_SHLIB_HANDLE handle = ACE_SHLIB_INVALID_HANDLE;
-
   if (this->refcount_ == 0 && become_owner != 0)
     {
       if (ACE::debug ())
@@ -351,7 +349,7 @@ ACE_DLL_Handle::get_handle (int become_owner)
       return ACE_SHLIB_INVALID_HANDLE;
     }
 
-  handle = this->handle_;
+  ACE_SHLIB_HANDLE handle = this->handle_;
 
   if (become_owner != 0)
     {
