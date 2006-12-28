@@ -673,6 +673,9 @@ public:
   /// Resolve the CodecFactory DLL.
   CORBA::Object_ptr resolve_codecfactory (ACE_ENV_SINGLE_ARG_DECL);
 
+  /// Resolve the Compression DLL.
+  CORBA::Object_ptr resolve_compression_manager (ACE_ENV_SINGLE_ARG_DECL);
+
   /// Resolve the Dynamic Any Factory
   CORBA::Object_ptr resolve_dynanyfactory (ACE_ENV_SINGLE_ARG_DECL);
 
@@ -956,6 +959,9 @@ protected:
   /// Obtain and cache the codec factory object reference.
   void resolve_codecfactory_i (ACE_ENV_SINGLE_ARG_DECL);
 
+  /// Obtain and cache the compression manager object reference.
+  void resolve_compression_manager_i (ACE_ENV_SINGLE_ARG_DECL);
+
   /// Obtain and cache the dynamic any factory object reference.
   void resolve_dynanyfactory_i (ACE_ENV_SINGLE_ARG_DECL);
 
@@ -1047,6 +1053,9 @@ protected:
 
   /// The cached IOR for the CodecFactory DLL.
   CORBA::Object_ptr codec_factory_;
+
+  /// The cached IOR for the Compression DLL.
+  CORBA::Object_ptr compression_manager_;
 
   /// The cached object reference for the DynAnyFactory.
   CORBA::Object_ptr dynany_factory_;
