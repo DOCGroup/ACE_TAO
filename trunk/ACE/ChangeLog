@@ -1,3 +1,9 @@
+Thu Dec 28 12:57:21 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/MakeProjectCreator/config/global.features:
+          Removed the settings that are already set in the MPC
+          global.features file, no need to duplicate that info.
+
 Thu Dec 28 12:37:21 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/DLL_Manager.cpp (get_handle):
