@@ -154,7 +154,7 @@ ACE_ARGV_T<CHAR_TYPE>::ACE_ARGV_T (CHAR_TYPE *first_argv[],
                                        quote_args);
 
   // convert the second argv to a string
-  second_argc = ACE_OS::argv_to_string (second_argv, 
+  second_argc = ACE_OS::argv_to_string (second_argv,
                                         second_buf,
                                         substitute_env_args,
                                         quote_args);
@@ -249,10 +249,10 @@ ACE_ARGV_T<CHAR_TYPE>::add (const CHAR_TYPE *next_arg, bool quote_arg)
 
 template <typename CHAR_TYPE>
 int
-ACE_ARGV_T<CHAR_TYPE>::add (CHAR_TYPE *argv[])
+ACE_ARGV_T<CHAR_TYPE>::add (CHAR_TYPE *argv[], bool quote_args)
 {
   for (int i = 0; argv[i] != 0; i++)
-    if (this->add (argv[i], true) == -1)
+    if (this->add (argv[i], quote_args) == -1)
       return -1;
 
   return 0;

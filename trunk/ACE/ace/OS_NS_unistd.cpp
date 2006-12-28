@@ -80,7 +80,8 @@ ACE_OS::argv_to_string (ACE_TCHAR **argv,
             }
         }
 #endif /* ACE_LACKS_ENV */
-      if (ACE_OS::strchr (argv_p[i], ACE_LIB_TEXT (' ')) != 0)
+      if (quote_args
+          && ACE_OS::strchr (argv_p[i], ACE_LIB_TEXT (' ')) != 0)
         {
           if (argv_p == argv)
             {
@@ -97,7 +98,7 @@ ACE_OS::argv_to_string (ACE_TCHAR **argv,
           if (ACE_OS::strchr (temp, ACE_LIB_TEXT ('"')) != 0)
             {
               for (int j = 0; temp[j] != 0; ++j)
-                if (temp[j] == ACE_LIB_TEXT ('"')) 
+                if (temp[j] == ACE_LIB_TEXT ('"'))
                   ++quotes;
             }
           argv_p[i] =
@@ -110,8 +111,7 @@ ACE_OS::argv_to_string (ACE_TCHAR **argv,
             }
           ACE_TCHAR *end = argv_p[i];
 
-          if (quote_args)
-            *end++ = ACE_LIB_TEXT ('"');
+          *end++ = ACE_LIB_TEXT ('"');
 
           if (quotes > 0)
             {
@@ -126,8 +126,7 @@ ACE_OS::argv_to_string (ACE_TCHAR **argv,
           else
             end = ACE_OS::strecpy (end, temp);
 
-          if (quote_args)
-            end[-1] = ACE_LIB_TEXT ('"');
+          end[-1] = ACE_LIB_TEXT ('"');
 
           *end = ACE_LIB_TEXT ('\0');
           if (temp != argv[i])

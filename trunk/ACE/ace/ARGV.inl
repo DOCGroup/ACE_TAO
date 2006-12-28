@@ -43,6 +43,10 @@ ACE_INLINE int
 ACE_ARGV_T<CHAR_TYPE>::argc (void) const
 {
   ACE_TRACE ("ACE_ARGV_T::argc");
+ // Try to create the argv_ if it isn't there
+  ACE_ARGV_T<CHAR_TYPE> *nonconst_this =
+    const_cast <ACE_ARGV_T<CHAR_TYPE> *> (this);
+ (void) nonconst_this->argv ();
   return this->argc_;
 }
 
