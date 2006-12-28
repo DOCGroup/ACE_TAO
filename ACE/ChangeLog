@@ -1,3 +1,15 @@
+Thu Dec 28 14:54:00 UTC 2006  Pavel Zaichenko <zpf at ivl dot ua>
+
+        * ace/OS_NS_unistd.cpp,
+        * ace/ARGV.cpp,
+        * ace/ARGV.h: Completed the integration of the quote_args feature
+          throughout the code.
+
+Thu Dec 28 14:49:50 UTC 2006  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
+
+        * ace/ARGV.inl (argc): This method now first calls argv() before
+          returning the argc count.
+
 Thu Dec 28 12:57:21 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/MakeProjectCreator/config/global.features:
@@ -37,10 +49,13 @@ Wed Dec 27 21:15:50 UTC 2006  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
           that it can optionally be directed to quote args or not, which
           is consistent with the ACE_ARGV_T<CHAR_TYPE>::add() method
           described below.
+  
+        * ace/OS_NS_unistd.{h,cpp}: ACE_OS::argv_to_string() was updated
+          to implement the feature described above.
 
 Wed Dec 27 21:19:57 UTC 2006  Pavel Zaichenko <zpf at ivl dot ua>
 
-        * ace/OS_NS_stdlib.cpp: ACE_OS::strenvdup() noew correctly expands
+        * ace/OS_NS_stdlib.cpp: ACE_OS::strenvdup() now correctly expands
           environment variables are correctly expanded in strings of form
           "$ACE_ROOT/subdir", "/some/dir/$ARCH/subdir" as well as
           "$ACE_ROOT".
