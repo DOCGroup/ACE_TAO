@@ -163,7 +163,7 @@ namespace CIDL_TargetManager_i
 
   ::Deployment::ResourceCommitmentManager_ptr
   TargetManager_exec_i::createResourceCommitment (
-  const ::Deployment::ResourceAllocationSeq & manager
+  const ::Deployment::ResourceAllocations& manager
   ACE_ENV_ARG_DECL_WITH_DEFAULTS)
   ACE_THROW_SPEC ((::CORBA::SystemException,
                    ::Deployment::ResourceCommitmentFailure))
@@ -192,7 +192,7 @@ namespace CIDL_TargetManager_i
   ACE_ENV_ARG_DECL_WITH_DEFAULTS)
   ACE_THROW_SPEC ((::CORBA::SystemException))
   {
-    ::Deployment::ResourceAllocationSeq res;
+    ::Deployment::ResourceAllocations res;
     res.length (0);
     resources->releaseResources (res);
     return;

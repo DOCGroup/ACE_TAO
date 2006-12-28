@@ -1,14 +1,17 @@
 
 #ifndef RESOURCE_COMMITMENT_MANAGER_IDL
 #define RESOURCE_COMMITMENT_MANAGER_IDL
+
 #include "Deployment_Base.idl"
+#include "tao/AnyTypeCode/AnySeq.pidl"
+
 module Deployment {
 
   exception ResourceCommitmentFailure {
     string reason;
-    short index;
+    long index;
     string propertyName;
-    any propertyValue;
+    ::CORBA::AnySeq propertyValue;
   };
   /**
    * @struct ResourceAllocation
@@ -23,12 +26,12 @@ module Deployment {
   };
 
   /// The Resource Allocation Sequence
-  typedef sequence <ResourceAllocation> ResourceAllocationSeq;
+  typedef sequence <ResourceAllocation> ResourceAllocations;
 
   interface ResourceCommitmentManager {
-    void commitResources (in ResourceAllocationSeq resources)
+    void commitResources (in ResourceAllocations resources)
       raises (ResourceCommitmentFailure);
-    void releaseResources (in ResourceAllocationSeq resources)
+    void releaseResources (in ResourceAllocations resources)
       raises (ResourceCommitmentFailure);
   };
 };

@@ -156,7 +156,7 @@ namespace CIAO
         *
         */
        int commitResourceAllocation (
-           const ::Deployment::ResourceAllocationSeq & resources);
+           const ::Deployment::ResourceAllocations & resources);
 
        /**
         * @function releaseResourceAllocation
@@ -168,7 +168,7 @@ namespace CIAO
         *
         */
        int releaseResourceAllocation (
-           const ::Deployment::ResourceAllocationSeq & resources);
+           const ::Deployment::ResourceAllocations & resources);
 
       protected:
 
@@ -288,7 +288,7 @@ namespace CIAO
           const ::Deployment::ResourceAllocation& resource);
 
       int commit_release_RA (
-          const ::Deployment::ResourceAllocationSeq & resources);
+          const ::Deployment::ResourceAllocations& resources);
 
 
       /// The ORB pointer
