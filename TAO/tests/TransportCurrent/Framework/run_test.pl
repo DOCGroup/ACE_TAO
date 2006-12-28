@@ -8,13 +8,23 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 use lib "$ENV{ACE_ROOT}/bin";
 use PerlACE::Run_Test;
 
-$status = 0;
+my $status = 0;
+my $confmod = "";
 
-#$confmod = "-static";
+my $mode = shift (@ARGV);
+if ( $mode =~ /-dynamic/) {
+}
+elsif  ( $mode =~ /-static/) {
+    $confmod = "-static";
+}
+else {
+    print STDERR "Unknown $mode. Specify -static or -dynamic\n";
+    exit 1;
+}
 
-$iorfile = PerlACE::LocalFile ("server.ior");
-$confserver = PerlACE::LocalFile ("server$confmod.conf");
-$confclient = PerlACE::LocalFile ("client$confmod.conf");
+my $iorfile = PerlACE::LocalFile ("server.ior");
+my $confserver = PerlACE::LocalFile ("server$confmod.conf");
+my $confclient = PerlACE::LocalFile ("client$confmod.conf");
 unlink $iorfile;
 
 if (PerlACE::is_vxworks_test()) {
