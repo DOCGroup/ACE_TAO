@@ -1,3 +1,9 @@
+Thu Dec 28 15:35:11 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * configure.ac:
+
+          Add ACE_HAS_3_PARAM_READDIR_R feature test.
+
 Thu Dec 28 14:54:00 UTC 2006  Pavel Zaichenko <zpf at ivl dot ua>
 
         * ace/OS_NS_unistd.cpp,
@@ -49,7 +55,7 @@ Wed Dec 27 21:15:50 UTC 2006  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
           that it can optionally be directed to quote args or not, which
           is consistent with the ACE_ARGV_T<CHAR_TYPE>::add() method
           described below.
-  
+
         * ace/OS_NS_unistd.{h,cpp}: ACE_OS::argv_to_string() was updated
           to implement the feature described above.
 
