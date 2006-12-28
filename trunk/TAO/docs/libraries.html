@@ -273,6 +273,27 @@ and the dependencies outlined below are the same. <P>
    <td>csd_threadpool.mpb</td>
    </tr>
    <tr align=left>
+   <th>libTAO_TC.so</th>
+   <td>Support for TAO::Transport::Current - a generic fremework for aplications that 
+   need access to statistical information about the currently used Transport. See <a 
+   href="transport_current/index.html"> Transport::Current</a>. 
+   This library can be loaded statically or dynamically. Applications are required to
+    <code> #include "tao/TransportCurrent/Transport_Current.h"
+    </code> for static loading.
+   </td>
+   <td>tc.mpb</td>
+   </tr>
+   <tr align=left>
+   <th>libTAO_TC_IIOP.so</th>
+   <td>Support for TAO::Transport::IIOP::Current - an IIOP-specific plug-in for 
+   Transport::Current. See <a href="transport_current/index.html"> Transport::Current</a>.
+   This library can be loaded statically or dynamically. 
+   Applications are required to <code> #include "tao/TransportCurrent/IIOP_Transport_Current.h"
+    </code> for static loading. Depends on libTAO_TC.so.
+   </td>
+   <td>tc_iiop.mpb</td>
+   </tr>
+   <tr align=left>
    <th>libTAO_Compression.so</th>
    <td>Support for Compression. This library can
     be loaded statically or dynamically. Applications are required to

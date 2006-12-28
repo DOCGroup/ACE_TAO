@@ -15,15 +15,16 @@
 #define CURRENT_ORBINITIALIZER_BASE_H
 
 #include /**/ "ace/pre.h"
+#include /**/ "tao/TransportCurrent/Transport_Current_Export.h"
+
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+# pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "ace/SString.h"
 #include "tao/PI/PI.h"
 
 #include "tao/TransportCurrent/TCC.h"
-
-#if !defined (ACE_LACKS_PRAGMA_ONCE)
-# pragma once
-#endif /* ACE_LACKS_PRAGMA_ONCE */
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
