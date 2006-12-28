@@ -1116,6 +1116,12 @@ CORBA::ORB::resolve_initial_references (const char *name,
         (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK_RETURN (CORBA::Object::_nil ());
     }
+  else if (ACE_OS::strcmp (name, TAO_OBJID_COMPRESSIONMANAGER) == 0)
+    {
+      result = this->orb_core ()->resolve_compression_manager
+        (ACE_ENV_SINGLE_ARG_PARAMETER);
+      ACE_CHECK_RETURN (CORBA::Object::_nil ());
+    }
 #if TAO_HAS_INTERCEPTORS == 1
   else if (ACE_OS::strcmp (name, TAO_OBJID_PICurrent) == 0)
     {

@@ -219,6 +219,7 @@ TAO_ORB_Core::TAO_ORB_Core (const char *orbid)
     imr_endpoints_in_ior_ (1),
     typecode_factory_ (CORBA::Object::_nil ()),
     codec_factory_ (CORBA::Object::_nil ()),
+    compression_manager_ (CORBA::Object::_nil ()), 
     dynany_factory_ (CORBA::Object::_nil ()),
     ior_manip_factory_ (CORBA::Object::_nil ()),
     ior_table_ (CORBA::Object::_nil ()),
@@ -1092,9 +1093,11 @@ TAO_ORB_Core::init (int &argc, char *argv[] ACE_ENV_ARG_DECL)
       // ok, we can't interpret this argument, move to next argument//
       ////////////////////////////////////////////////////////////////
       else
-        // Any arguments that don't match are ignored so that the
-        // caller can still use them.
-        arg_shifter.ignore_arg ();
+        {
+          // Any arguments that don't match are ignored so that the
+          // caller can still use them.
+          arg_shifter.ignore_arg ();
+        }
     }
 
   const char *env_endpoint =
@@ -2496,6 +2499,34 @@ TAO_ORB_Core::resolve_codecfactory_i (ACE_ENV_SINGLE_ARG_DECL)
   if (loader != 0)
     {
       this->codec_factory_ =
+        loader->create_object (this->orb_, 0, 0 ACE_ENV_ARG_PARAMETER);
+      ACE_CHECK;
+    }
+}
+
+void
+TAO_ORB_Core::resolve_compression_manager_i (ACE_ENV_SINGLE_ARG_DECL)
+{
+  TAO_Object_Loader *loader =
+    ACE_Dynamic_Service<TAO_Object_Loader>::instance
+      (this->configuration (),
+       ACE_TEXT ("Compression_Loader"));
+
+  if (loader == 0)
+    {
+      this->configuration()->process_directive
+        (ACE_DYNAMIC_SERVICE_DIRECTIVE("Compression",
+                                       "TAO_Compression",
+                                       "_make_TAO_Compression_Loader",
+                                       ""));
+      loader =
+        ACE_Dynamic_Service<TAO_Object_Loader>::instance
+          (this->configuration (), ACE_TEXT ("Compression_Loader"));
+    }
+
+  if (loader != 0)
+    {
+      this->compression_manager_ =
         loader->create_object (this->orb_, 0, 0 ACE_ENV_ARG_PARAMETER);
       ACE_CHECK;
     }

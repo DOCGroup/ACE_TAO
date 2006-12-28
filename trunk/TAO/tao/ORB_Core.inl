@@ -394,6 +394,19 @@ TAO_ORB_Core::resolve_codecfactory (ACE_ENV_SINGLE_ARG_DECL)
   return CORBA::Object::_duplicate (this->codec_factory_);
 }
 
+ACE_INLINE CORBA::Object_ptr
+TAO_ORB_Core::resolve_compression_manager (ACE_ENV_SINGLE_ARG_DECL)
+{
+  ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, mon, this->lock_,
+                    CORBA::Object::_nil ());
+  if (CORBA::is_nil (this->compression_manager_))
+    {
+      this->resolve_compression_manager_i (ACE_ENV_SINGLE_ARG_PARAMETER);
+      ACE_CHECK_RETURN (CORBA::Object::_nil ());
+    }
+  return CORBA::Object::_duplicate (this->compression_manager_);
+}
+
 ACE_INLINE const char *
 TAO_ORB_Core::server_id (void) const
 {

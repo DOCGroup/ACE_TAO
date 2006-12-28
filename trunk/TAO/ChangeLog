@@ -1,3 +1,84 @@
+Thu Dec 28 11:33:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+          This is the first commit for a new part for TAO which hopefully
+          gets standardized next year. The final goal is to implement
+          Zipped GIOP (ZIOP). At the moment an ORB supports ZIOP the application
+          programmer can specify using policies that compression can be
+          applied on the application data send over the wire. This first
+          commit is the Compression module that delivers the infrastructure
+          classes with which data can be compressed. This can be used
+          by regular applications but then also by the ORB in the future.
+
+          This effort is supported by multiple parties, IONA did the
+          initial effort for Orbix and triggered this step, Remedy IT
+          will do the implementation for TAO, Andre Spiegel will do
+          the implementation for JacORB, IONA then for Orbix and PrismTech
+          will assist when needed and will keep an eye on the OMG process.
+
+          This commit adds first initial support, it is not 100% ready
+          but it is usable. This way we can share the code with the other
+          parties more easily and attract more people to this effort. Be
+          aware that the IDL can change, this is work in progress, not
+          a final spec.
+
+        * MPC/config/compression.mpb:
+          New base project for the compresion library
+
+        * MPC/config/zlibcompressor.mpb:
+          New base project for the zlib compressor
+
+        * docs/Libraries.html:
+          Corrected link to MPC readme
+
+        * docs/ORBEndpoint.html:
+          Small layout change
+
+        * tao/Compression/Base_Compressor.cpp:
+        * tao/Compression/Base_Compressor.h:
+        * tao/Compression/Compression.cpp:
+        * tao/Compression/Compression.h:
+        * tao/Compression/Compression.pidl:
+        * tao/Compression/compression_export.h:
+        * tao/Compression/Compression_Manager.cpp:
+        * tao/Compression/Compression_Manager.h:
+        * tao/Compression/Compressor_Factory.cpp:
+        * tao/Compression/Compressor_Factory.h:
+        * tao/Compression/TAO_Compression.pc.in:
+        * tao/Compression/TAO_Compression.rc:
+          New Compression library
+
+        * Compression/zlib/TAO_ZlibCompressor.pc.in:
+        * Compression/zlib/TAO_ZlibCompressor.rc:
+        * Compression/zlib/ZlibCompressor.cpp:
+        * Compression/zlib/ZlibCompressor.h:
+        * Compression/zlib/ZlibCompressor_export.h:
+        * Compression/zlib/ZlibCompressor_Factory.cpp:
+        * Compression/zlib/ZlibCompressor_Factory.h:
+          New Compressor that uses zlib to compress/uncompress data
+
+        * tao/File_Parser.cpp:
+          Use true for bool
+
+        * tao/objectid.h:
+          Added CompressionManager defines
+
+        * tao/ORB.cpp:
+          Added resolve_initial_references support for the CompressionManager
+
+        * tao/ORB_Core.{h,cpp,inl}:
+          Added support for CompressionManager
+
+        * tao/PI/Interceptor_List_T.cpp:
+          Const change
+
+        * tao/ZlibCompressor.mpc:
+        * tao/Compression.mpc:
+          New base projects
+
+        * tests/Compression/Compression_Test.mpc:
+        * tests/Compression/server.cpp:
+          First initial test of the Compression library
+
 Wed Dec 27 22:48:30 UTC 2006  Iliyan Jeliazkov  <iliyan@ociweb.com>
 
         * tests/TransportCurrent/Framework/Client_Request_Interceptor.cpp:
