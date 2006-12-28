@@ -1,3 +1,9 @@
+Thu Dec 28 11:13:21 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/config-aix-5.x.h:
+          Define ACE_HAS_3_PARAM_READDIR_R always independent of the compiler
+          used.
+
 Wed Dec 27 21:15:50 UTC 2006  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
 
         * ace/ARGV.{h,cpp} Generalized the constructor for ACE_ARGV_T so
@@ -8,9 +14,9 @@ Wed Dec 27 21:15:50 UTC 2006  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
 Wed Dec 27 21:19:57 UTC 2006  Pavel Zaichenko <zpf at ivl dot ua>
 
         * ace/OS_NS_stdlib.cpp: ACE_OS::strenvdup() noew correctly expands
-          environment variables are correctly expanded in strings of form  
+          environment variables are correctly expanded in strings of form
           "$ACE_ROOT/subdir", "/some/dir/$ARCH/subdir" as well as
-          "$ACE_ROOT". 
+          "$ACE_ROOT".
 
         * ace/OS_NS_unistd.cpp: ACE_OS::argv_to_string() and
           ACE_OS::string_to_argv() now converts arguments list argv[] to
@@ -18,7 +24,7 @@ Wed Dec 27 21:19:57 UTC 2006  Pavel Zaichenko <zpf at ivl dot ua>
           quoted/unquoted during conversion.
 
         * ace/ARGV.{h,inl,cpp}: Made the following enhancements:
-  
+
           ACE_ARGV_T<CHAR_TYPE>::add(const CHAR_TYPE *next_arg, bool quote_arg = false)
           Now takes an additional argument
           * @param quote_arg   The argument @a next_arg need to be quoted while
@@ -32,13 +38,13 @@ Wed Dec 27 21:19:57 UTC 2006  Pavel Zaichenko <zpf at ivl dot ua>
           ACE_ARGV_T<CHAR_TYPE>::create_buf_from_queue()
           Creates a command line using arguments (next_arg, quote_arg) queued
           with add() method. Quotes double quote symbols (") if needed.
-  
+
 Wed Dec 27 21:14:34 UTC 2006  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
 
         * ace/ARGV.{h,cpp}: Removed the
-  
+
           int argv_to_string (CHAR_TYPE **argv, CHAR_TYPE *&buf);
-          
+
           method since it's redundant with what's in ACE_OS::argv_to_string().
 
 Wed Dec 27 20:27:29 UTC 2006  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
