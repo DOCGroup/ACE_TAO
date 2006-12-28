@@ -1,3 +1,15 @@
+Thu Dec 28 19:11:21 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        Reverted my change below this broke a lot of builds, seems
+        the settings in MPC are not used for ACE/TAO/CIAO so we need
+        to have them also in ACE duplicated
+
+        Thu Dec 28 12:57:21 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/MakeProjectCreator/config/global.features:
+          Removed the settings that are already set in the MPC
+          global.features file, no need to duplicate that info.
+
 Thu Dec 28 15:35:11 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
 
         * configure.ac:
