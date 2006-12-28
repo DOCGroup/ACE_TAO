@@ -1,3 +1,11 @@
+Thu Dec 28 23:10:52 UTC 2006  Iliyan Jeliazkov  <iliyan@ociweb.com>
+
+        * tao/TC.mpc:
+        * tao/TC_IIOP.mpc:
+
+          Apparently, interceptors and pi are still needed for the
+          build. Reverting my change from Thu Dec 28 19:29:58 UTC 2006.
+
 Thu Dec 28 20:30:14 UTC 2006  Iliyan Jeliazkov  <iliyan@ociweb.com>
 
         * docs/libraries.html:
