@@ -25,7 +25,7 @@ project(*server): taoexe, utils, portableserver, strategies, avoids_corba_e_micr
   }
 }
 
-project(*client): taoexe, utils, portableserver, strategies {
+project(*client): taoexe, utils, portableserver, strategies, avoids_corba_e_micro {
   after += *IDL
   avoids += ace_for_tao
   Source_Files {
