@@ -267,19 +267,19 @@ private:
   /// UUIDs with their implementations
   CIMap types_;
 
-  //the ORB
+  /// The ORB
   CORBA::ORB_var the_orb_;
 
-  //will hold the current working directory
+  /// Will hold the current working directory
   char cwd_ [TEMP_LEN];
 
-  //full path for the install directory
+  /// Full path for the install directory
   ACE_CString install_root_;
 
-  //location of the server
+  /// Location of the server
   ACE_CString HTTP_server_;
 
-  //directory where the packages will be stored locally
+  /// Directory where the packages will be stored locally
   ACE_CString install_path;
 };
 
