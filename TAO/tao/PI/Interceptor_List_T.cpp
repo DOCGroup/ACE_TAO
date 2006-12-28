@@ -49,7 +49,7 @@ namespace TAO
   {
     if (!CORBA::is_nil (interceptor))
       {
-        const size_t old_len = this->interceptors_.size ();
+        size_t const old_len = this->interceptors_.size ();
 
         // Don't bother checking the name for duplicates if no
         // interceptors have been registered.  This saves an
@@ -94,7 +94,7 @@ namespace TAO
           }
 
         /// Increase the length of the Interceptor sequence by one.
-        const size_t new_len = old_len + 1;
+        size_t const new_len = old_len + 1;
         this->interceptors_.size (new_len);
 
         // Add the interceptor
@@ -124,7 +124,7 @@ namespace TAO
   {
     if (!CORBA::is_nil (interceptor))
       {
-        const size_t old_len = this->interceptors_.size ();
+        size_t const old_len = this->interceptors_.size ();
 
         // Don't bother checking the name for duplicates if no
         // interceptors have been registered.  This saves an
@@ -203,7 +203,7 @@ namespace TAO
   Interceptor_List<InterceptorType,DetailsType>::destroy_interceptors (
     ACE_ENV_SINGLE_ARG_DECL)
   {
-    const size_t len = this->interceptors_.size ();
+    size_t const len = this->interceptors_.size ();
     size_t ilen = len;
 
     ACE_TRY

@@ -634,7 +634,6 @@ namespace
       {
         rtscheduler_loader->init (0, 0);
       }
-
   } /* register_additional_services_i */
 
   int

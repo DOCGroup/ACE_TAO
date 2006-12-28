@@ -1,0 +1,7 @@
+// -*- MPC -*-
+// $Id$
+
+project : taolib, pi {
+  after   += Compression
+  libs    += TAO_Compression
+}

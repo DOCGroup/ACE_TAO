@@ -512,7 +512,7 @@ CORBA::SystemException::_tao_get_omg_exception_description (
       "ORB output stream does not support ValueOutputStream interface.", // 40
       "ORB input stream does not support ValueInputStream interface.",    // 41
       "Character support limited to ISO 8859-1 for this object reference", // 42
-      "Attempt to add a Pollable to a second PollableSet."
+      "Attempt to add a Pollable to a second PollableSet." // 43
     };
 
   static const char *IMP_LIMIT_TABLE[] =
