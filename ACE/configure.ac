@@ -4963,6 +4963,26 @@ fi dnl End checks for reentrant functions
 
 
 ACE_CHECK_LACKS_FUNCS(readdir_r)
+if test "$ac_cv_func_readdir_r" = yes; then
+dnl The readdir_r() function varies with standards. Check which one we have.
+AC_MSG_CHECKING([for 2- or 3-param readdir_r])
+AC_LINK_IFELSE([AC_LANG_PROGRAM(
+          [[
+#include <dirent.h>
+          ]],
+          [[
+readdir_r(0, 0, 0);
+          ]])],
+          [
+           AC_DEFINE([ACE_HAS_3_PARAM_READDIR_R], 1,
+		     [Define to 1 if platform has 3 parameter readdir_r()])
+           AC_MSG_RESULT([3])
+          ],
+          [
+           AC_MSG_RESULT([2])
+          ])
+fi dnl test "$ac_cv_func_readdir" = yes
+
 
 dnl Disabled until we figure out what to do with the comparator
 dnl function argument inconsistencies between different platforms.
