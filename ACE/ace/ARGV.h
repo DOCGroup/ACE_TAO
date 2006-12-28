@@ -129,7 +129,7 @@ public:
    *              in place of the environment variable name.
    *
    * @param quote_args  If non-zero each argument @a argv[i] needs to
-   *                   be enclosed in double quotes ('"').  
+   *                    be enclosed in double quotes ('"').
    */
   ACE_ARGV_T (CHAR_TYPE *argv[],
               bool substitute_env_args = true,
@@ -148,6 +148,10 @@ public:
    *              reference (e.g., @c $VAR) will have its environment
    *              variable value in the resultant vector in place
    *              of the environment variable name.
+   *
+   * @param quote_args  If non-zero each arguments @a first_argv[i] and
+   *                    @a second_argv[i] needs to be enclosed
+   *                    in double quotes ('"').
    */
   ACE_ARGV_T (CHAR_TYPE *first_argv[],
               CHAR_TYPE *second_argv[],
@@ -234,11 +238,14 @@ public:
    * @param argv    Pointers to the arguments to add to the vector.
    *                @a argv must be terminated by a 0 pointer.
    *
+   * @param quote_args  If non-zero each argument @a argv[i] needs to
+   *                    be enclosed in double quotes ('"').
+   *
    * @retval 0 on success; -1 on failure. Most likely @c errno values are:
    *       - EINVAL: This object is not in iterative mode.
    *       - ENOMEM: Not enough memory available to save @a next_arg.
    */
-  int add (CHAR_TYPE *argv[]);
+  int add (CHAR_TYPE *argv[], bool quote_args = false);
 
 private:
   /// Copy constructor not implemented.
