@@ -59,9 +59,9 @@ server_CPPFLAGS = \
   -I$(TAO_BUILDDIR)
 
 server_SOURCES = \
+  server.cpp \
   testC.cpp \
-  testS.cpp \
-  server.cpp
+  testS.cpp
 
 server_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO_PortableServer.la \
@@ -84,8 +84,8 @@ client_CPPFLAGS = \
   -I$(TAO_BUILDDIR)
 
 client_SOURCES = \
-  testC.cpp \
-  client.cpp
+  client.cpp \
+  testC.cpp
 
 client_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO_PortableServer.la \

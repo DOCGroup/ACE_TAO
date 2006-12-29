@@ -18,6 +18,34 @@ TAO_ROOT = $(top_srcdir)
 
 noinst_PROGRAMS =
 
+## Makefile.Nested_Upcall_Crash_Idl.am
+
+BUILT_SOURCES = \
+  TestC.cpp \
+  TestC.h \
+  TestC.inl \
+  TestS.cpp \
+  TestS.h \
+  TestS.inl
+
+CLEANFILES = \
+  Test-stamp \
+  TestC.cpp \
+  TestC.h \
+  TestC.inl \
+  TestS.cpp \
+  TestS.h \
+  TestS.inl
+
+TestC.cpp TestC.h TestC.inl TestS.cpp TestS.h TestS.inl: Test-stamp
+
+Test-stamp: $(srcdir)/Test.idl $(TAO_IDL_DEP)
+	$(TAO_IDL) $(TAO_IDLFLAGS) -Sa -St $(srcdir)/Test.idl
+	@touch $@
+
+noinst_HEADERS = \
+  Test.idl
+
 ## Makefile.Nested_Upcall_Crash_Server.am
 
 if BUILD_CORBA_MESSAGING
@@ -121,34 +149,6 @@ client_LDADD = \
 
 endif BUILD_EXCEPTIONS
 endif BUILD_CORBA_MESSAGING
-
-## Makefile.Nested_Upcall_Crash_Tao.am
-
-BUILT_SOURCES = \
-  TestC.cpp \
-  TestC.h \
-  TestC.inl \
-  TestS.cpp \
-  TestS.h \
-  TestS.inl
-
-CLEANFILES = \
-  Test-stamp \
-  TestC.cpp \
-  TestC.h \
-  TestC.inl \
-  TestS.cpp \
-  TestS.h \
-  TestS.inl
-
-TestC.cpp TestC.h TestC.inl TestS.cpp TestS.h TestS.inl: Test-stamp
-
-Test-stamp: $(srcdir)/Test.idl $(TAO_IDL_DEP)
-	$(TAO_IDL) $(TAO_IDLFLAGS) -Sa -St $(srcdir)/Test.idl
-	@touch $@
-
-noinst_HEADERS = \
-  Test.idl
 
 ## Clean up template repositories, etc.
 clean-local:

@@ -99,6 +99,7 @@ SUBDIRS = \
         Collocation_Oneway_Tests \
         Collocation_Opportunities \
         Collocation_Tests \
+        Compression \ 
         Connect_Strategy_Test \
         Connection_Failure \
         Connection_Purging \
