@@ -18,7 +18,7 @@
 /**
  * @module CIAO
  *
- * @brief TargetManagenr interface defintion
+ * @brief TargetManager interface defintion
  *
  */
 module CIAO
