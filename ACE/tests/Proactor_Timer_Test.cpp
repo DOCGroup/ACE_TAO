@@ -38,7 +38,7 @@ ACE_RCSID (tests,
 #include "ace/Asynch_IO.h"
 
 static int    done = 0;
-static size_t count = 0;
+static size_t counter = 0;
 static int    odd = 0;
 
 class Time_Handler : public ACE_Handler
@@ -100,29 +100,29 @@ Time_Handler::Time_Handler (void)
 void
 Time_Handler::handle_time_out (const ACE_Time_Value &, const void *arg)
 {
-  size_t current_count = *(reinterpret_cast<const size_t *> (arg));
-  if (current_count != count)
+  size_t current_counter = *(reinterpret_cast<const size_t *> (arg));
+  if (current_counter != counter)
     ACE_ERROR ((LM_ERROR,
                 ACE_TEXT ("Expected timer %d, not %d\n"),
-                count,
-                current_count));
+                counter,
+                current_counter));
 
   ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("[%@] Timer id %d with count #%d|%d expired.\n"),
+              ACE_TEXT ("[%@] Timer id %d with counter #%d|%d expired.\n"),
               this,
               this->timer_id (),
-              count,
-              current_count));
+              counter,
+              current_counter));
 
-  if (current_count == (ACE_MAX_TIMERS - 1))
+  if (current_counter == (ACE_MAX_TIMERS - 1))
     done = 1;
-  else if (count == ACE_MAX_TIMERS - 1)
+  else if (counter == ACE_MAX_TIMERS - 1)
     {
       done = 1;
       return;
     }
 
-  count += (1 + odd);
+  counter += (1 + odd);
   return;
 }
 
@@ -213,7 +213,7 @@ test_registering_one_handler (void)
   size_t which[ACE_MAX_TIMERS];
 
   done = 0;
-  count = 0;
+  counter = 0;
   long secs = 0;
   size_t i = 0;
   for ( ; i < ACE_MAX_TIMERS; i++, secs++)
@@ -241,7 +241,7 @@ test_canceling_odd_timers (void)
   size_t which[ACE_MAX_TIMERS];
 
   done = 0;
-  count = 1;
+  counter = 1;
   odd = 1;
   size_t i = 0;
   long secs = 0;

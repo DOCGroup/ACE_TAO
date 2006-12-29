@@ -1,3 +1,8 @@
+Fri Dec 29 08:41:35 UTC 2006  Olli Savia  <ops@iki.fi>
+
+        * tests/Proactor_Timer_Test.cpp:
+          Fixed compile error on LynxOS with 2.95.3.
+
 Fri Dec 29 08:31:21 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/os_include/os_signal.h:
