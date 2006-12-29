@@ -1,3 +1,9 @@
+Fri Dec 29 16:57:10 UTC 2006  Steve Huston  <shuston@riverace.com>
+
+        * ace/SOCK_Dgram.cpp (recv): Corrected a "can't delete void*" warning
+          that entered with
+          Thu Dec 28 22:47:05 UTC 2006  Steve Huston  <shuston@riverace.com>
+
 Fri Dec 29 08:41:35 UTC 2006  Olli Savia  <ops@iki.fi>
 
         * tests/Proactor_Timer_Test.cpp:

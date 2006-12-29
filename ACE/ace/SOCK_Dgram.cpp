@@ -106,7 +106,7 @@ ACE_SOCK_Dgram::recv (iovec *io_vec,
                                           &addr_len);
       if (rcv_len < 0)
         {
-          delete [] io_vec->iov_base;
+          delete [] (char *)io_vec->iov_base;
           io_vec->iov_base = 0;
         }
       else
