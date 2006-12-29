@@ -33,7 +33,6 @@ Test/: $(srcdir)/Test.idl
 	mkdir -p Test
 	idlj  $(srcdir)/Test.idl
 
-
 endif BUILD_JAVA
 
 ## Makefile.Java_Big_Request.am
@@ -96,7 +95,7 @@ server_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO_PortableServer.la \
   $(TAO_BUILDDIR)/tao/libTAO_AnyTypeCode.la \
   $(TAO_BUILDDIR)/tao/libTAO.la \
-  $(ACE_BUILDDIR)/ace/$(ACE_BUILDDIR)/ace/$(ACE_BUILDDIR)/ace/$(ACE_BUILDDIR)/ace/$(ACE_BUILDDIR)/ace/$(ACE_BUILDDIR)/ace/$(ACE_BUILDDIR)/ace/$(ACE_BUILDDIR)/ace/$(ACE_BUILDDIR)/ace/$(ACE_BUILDDIR)/ace/$(ACE_BUILDDIR)/ace/$(ACE_BUILDDIR)/ace/$(ACE_BUILDDIR)/ace/$(ACE_BUILDDIR)/ace/$(ACE_BUILDDIR)/ace/$(ACE_BUILDDIR)/ace/libACE.la
+  $(ACE_BUILDDIR)/ace/libACE.la
 
 endif BUILD_JAVA
 endif BUILD_EXCEPTIONS
