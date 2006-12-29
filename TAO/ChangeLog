@@ -1,26 +1,33 @@
+Fri Dec 29 14:49:24 UTC 2006  Chad Elliott  <elliott_c@ociweb.com>
+
+        * MPC/config/trading_serv.mpb:
+
+          Added the utils base project.  It is used by the CosTrading_Serv
+          project and should have been in this base project.
+
 Fri Dec 29 08:09:46 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* performance-tests/Cubit/TAO/IDL_Cubit/Makefile.am:
-	* tests/GIOP_Fragments/Java_Big_Reply/Makefile.am:
-	* tests/GIOP_Fragments/Java_Big_Request/Makefile.am:
-	* tests/GIOP_Fragments/Makefile.am:
-	* tests/Nested_Upcall_Crash/Makefile.am:
-	* tests/POA/Persistent_ID/Makefile.am:
-	* tests/Portable_Interceptors/Service_Context_Manipulation/Makefile.am:
-	* tests/TransportCurrent/Framework/Makefile.am:
-	* tests/TransportCurrent/IIOP/Makefile.am:
+        * performance-tests/Cubit/TAO/IDL_Cubit/Makefile.am:
+        * tests/GIOP_Fragments/Java_Big_Reply/Makefile.am:
+        * tests/GIOP_Fragments/Java_Big_Request/Makefile.am:
+        * tests/GIOP_Fragments/Makefile.am:
+        * tests/Nested_Upcall_Crash/Makefile.am:
+        * tests/POA/Persistent_ID/Makefile.am:
+        * tests/Portable_Interceptors/Service_Context_Manipulation/Makefile.am:
+        * tests/TransportCurrent/Framework/Makefile.am:
+        * tests/TransportCurrent/IIOP/Makefile.am:
 
           Regenerate for misc *.mpc and *.mpb changes.
 
-	* tao/Makefile.am:
+        * tao/Makefile.am:
 
           Regenerate for new Compression projects.
 
-	* configure.ac:
+        * configure.ac:
 
           Configure Makefiles for new subdirectory.
 
-	* tests/Makefile.am:
+        * tests/Makefile.am:
 
           Regenerate to descend into Compression subdirectory.
 
@@ -28,8 +35,8 @@ Fri Dec 29 08:09:46 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
 
           New Makefile.am for Compression unit tests.
 
-	* orbsvcs/ImplRepo_Service/Makefile.am:
-	* orbsvcs/orbsvcs/Makefile.am:
+        * orbsvcs/ImplRepo_Service/Makefile.am:
+        * orbsvcs/orbsvcs/Makefile.am:
 
           Hand-add automake conditionals for BUILD_ZZIP.  Unfortunately
           MPC resolves options, files, etc. set by "features" at project
