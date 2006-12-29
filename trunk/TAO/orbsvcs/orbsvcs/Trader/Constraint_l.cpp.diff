@@ -1,5 +1,5 @@
---- Constraint_l.cpp.orig	2006-12-11 08:23:38.000000000 -0600
-+++ Constraint_l.cpp	2006-12-11 08:23:19.000000000 -0600
+--- Constraint_l.cpp.orig	2006-12-29 11:48:44.000000000 -0600
++++ Constraint_l.cpp	2006-12-29 11:48:44.000000000 -0600
 @@ -11,6 +11,7 @@
  
  #include "ace/os_include/os_stdio.h"
@@ -35,8 +35,17 @@
  YY_DECL
  	{
  	register yy_state_type yy_current_state;
-@@ -837,7 +844,7 @@
+@@ -831,7 +838,7 @@
+ case 30:
+ YY_RULE_SETUP
+ {}
+-	YY_BREAK
++	break;
  case 31:
+ YY_RULE_SETUP
+ {
+@@ -841,7 +848,7 @@
+ case 32:
  YY_RULE_SETUP
  TAO_TRADER_ECHO;
 -	YY_BREAK

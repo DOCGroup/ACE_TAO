@@ -109,6 +109,7 @@ FALSE		{
 		    new TAO_Property_Constraint(yytext);
 		  TAO_YY_LEX_DEBUG; return TAO_IDENT;
 		}
+{white_space}   {}
 {unknown}       {
                   TAO_YY_LEX_DEBUG; return TAO_UNKNOWN;
                 }
