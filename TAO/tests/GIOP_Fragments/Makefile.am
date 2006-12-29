@@ -9,5 +9,7 @@
 ## ../bin/mwc.pl -type automake -noreldefs TAO.mwc
 
 SUBDIRS = \
+        Java_Big_Reply \
+        Java_Big_Request \
         PMB_With_Fragments
 

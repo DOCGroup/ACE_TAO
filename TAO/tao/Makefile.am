@@ -3439,6 +3439,80 @@ EXTRA_DIST += \
   CSD_ThreadPool/TAO_CSD_ThreadPool.pc.in
 
 
+## Makefile.Compression.am
+
+if BUILD_EXCEPTIONS
+
+BUILT_SOURCES += \
+  Compression/CompressionC.cpp \
+  Compression/CompressionC.h \
+  Compression/CompressionS.h
+
+CLEANFILES += \
+  Compression/Compression-stamp \
+  Compression/CompressionC.cpp \
+  Compression/CompressionC.h \
+  Compression/CompressionS.h
+
+Compression/CompressionC.cpp Compression/CompressionC.h Compression/CompressionS.h: Compression/Compression-stamp
+
+Compression/Compression-stamp: $(srcdir)/Compression/Compression.pidl $(TAO_IDL_DEP)
+	$(TAO_IDL) $(TAO_IDLFLAGS) -Wb,versioning_begin=TAO_BEGIN_VERSIONED_NAMESPACE_DECL -Wb,versioning_end=TAO_END_VERSIONED_NAMESPACE_DECL -Gp -Gd -Ge 1 -Sci -SS -Sorb -Sa -St -Wb,export_macro=TAO_Compression_Export -Wb,export_include=tao/Compression/compression_export.h -Wb,include_guard=TAO_COMPRESSION_SAFE_INCLUDE -Wb,safe_include=tao/Compression/Compression.h -o Compression $(srcdir)/Compression/Compression.pidl
+	@touch $@
+
+lib_LTLIBRARIES += libTAO_Compression.la
+
+libTAO_Compression_la_CPPFLAGS = \
+  -I$(ACE_ROOT) \
+  -I$(ACE_BUILDDIR) \
+  -I$(TAO_ROOT) \
+  -I$(TAO_BUILDDIR) \
+  -DTAO_COMPRESSION_BUILD_DLL
+
+libTAO_Compression_la_SOURCES = \
+  Compression/Base_Compressor.cpp \
+  Compression/Compression.cpp \
+  Compression/CompressionC.cpp \
+  Compression/Compression_Manager.cpp \
+  Compression/Compressor_Factory.cpp
+
+libTAO_Compression_la_LDFLAGS = \
+ -version-number @TAO_MAJOR@:@TAO_MINOR@:@TAO_BETA@
+
+libTAO_Compression_la_LIBADD = \
+  libTAO_PI.la \
+  libTAO_CodecFactory.la \
+  libTAO_AnyTypeCode.la \
+  libTAO.la \
+  $(ACE_BUILDDIR)/ace/libACE.la
+
+nobase_include_HEADERS += \
+  Compression/Base_Compressor.h \
+  Compression/Compression.h \
+  Compression/Compression.pidl \
+  Compression/Compression.pidl \
+  Compression/CompressionC.h \
+  Compression/CompressionS.h \
+  Compression/Compression_Manager.h \
+  Compression/Compressor_Factory.h \
+  Compression/compression_export.h
+
+pkgconfig_DATA += \
+  TAO_Compression.pc
+
+CLEANFILES += \
+  TAO_Compression.pc
+
+TAO_Compression.pc: ${top_builddir}/config.status ${srcdir}/Compression/TAO_Compression.pc.in
+	${top_builddir}/config.status --file $@:${srcdir}/Compression/TAO_Compression.pc.in
+
+endif BUILD_EXCEPTIONS
+
+EXTRA_DIST += \
+  Compression/TAO_Compression.pc.in \
+  Compression/TAO_Compression.rc
+
+
 ## Makefile.IFR_Client.am
 
 if BUILD_EXCEPTIONS
@@ -5845,10 +5919,10 @@ libTAO_TC_IIOP_la_LDFLAGS = \
  -version-number @TAO_MAJOR@:@TAO_MINOR@:@TAO_BETA@
 
 libTAO_TC_IIOP_la_LIBADD = \
-  libTAO_TC.la \
   libTAO_PI.la \
   libTAO_CodecFactory.la \
   libTAO_AnyTypeCode.la \
+  libTAO_TC.la \
   libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
@@ -6002,6 +6076,60 @@ endif BUILD_EXCEPTIONS
 
 EXTRA_DIST += \
   TAO_Utils.pc.in
+
+
+## Makefile.ZlibCompressor.am
+
+if BUILD_EXCEPTIONS
+if BUILD_ZLIB
+
+lib_LTLIBRARIES += libTAO_ZlibCompressor.la
+
+libTAO_ZlibCompressor_la_CPPFLAGS = \
+  -I$(ACE_ROOT) \
+  -I$(ACE_BUILDDIR) \
+  -I$(TAO_ROOT) \
+  -I$(TAO_BUILDDIR) \
+  -I$(ZLIB_ROOT)/include \
+  -DZLIB \
+  -DTAO_ZLIBCOMPRESSOR_BUILD_DLL
+
+libTAO_ZlibCompressor_la_SOURCES = \
+  Compression/zlib/ZlibCompressor.cpp \
+  Compression/zlib/ZlibCompressor_Factory.cpp
+
+libTAO_ZlibCompressor_la_LDFLAGS = \
+ -version-number @TAO_MAJOR@:@TAO_MINOR@:@TAO_BETA@ -L$(ZLIB_ROOT)/lib
+
+libTAO_ZlibCompressor_la_LIBADD = \
+  libTAO_Compression.la \
+  libTAO_PI.la \
+  libTAO_CodecFactory.la \
+  libTAO_AnyTypeCode.la \
+  libTAO.la \
+  $(ACE_BUILDDIR)/ace/libACE.la \
+  -lz
+
+nobase_include_HEADERS += \
+  Compression/zlib/ZlibCompressor.h \
+  Compression/zlib/ZlibCompressor_Factory.h \
+  Compression/zlib/ZlibCompressor_export.h
+
+pkgconfig_DATA += \
+  TAO_ZlibCompressor.pc
+
+CLEANFILES += \
+  TAO_ZlibCompressor.pc
+
+TAO_ZlibCompressor.pc: ${top_builddir}/config.status ${srcdir}/Compression/zlib/TAO_ZlibCompressor.pc.in
+	${top_builddir}/config.status --file $@:${srcdir}/Compression/zlib/TAO_ZlibCompressor.pc.in
+
+endif BUILD_ZLIB
+endif BUILD_EXCEPTIONS
+
+EXTRA_DIST += \
+  Compression/zlib/TAO_ZlibCompressor.pc.in \
+  Compression/zlib/TAO_ZlibCompressor.rc
 
 
 ## Clean up template repositories, etc.

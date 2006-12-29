@@ -670,6 +670,7 @@ if test $tao_build_tests = yes; then
     tests/Collocation_Oneway_Tests/Makefile
     tests/Collocation_Opportunities/Makefile
     tests/Collocation_Tests/Makefile
+    tests/Compression/Makefile
     tests/Connect_Strategy_Test/Makefile
     tests/Connection_Failure/Makefile
     tests/Connection_Purging/Makefile

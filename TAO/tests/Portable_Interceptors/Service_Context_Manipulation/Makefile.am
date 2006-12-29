@@ -18,6 +18,34 @@ TAO_ROOT = $(top_srcdir)
 
 noinst_PROGRAMS =
 
+## Makefile.PI_Svc_Context_Manip_Idl.am
+
+BUILT_SOURCES = \
+  testC.cpp \
+  testC.h \
+  testC.inl \
+  testS.cpp \
+  testS.h \
+  testS.inl
+
+CLEANFILES = \
+  test-stamp \
+  testC.cpp \
+  testC.h \
+  testC.inl \
+  testS.cpp \
+  testS.h \
+  testS.inl
+
+testC.cpp testC.h testC.inl testS.cpp testS.h testS.inl: test-stamp
+
+test-stamp: $(srcdir)/test.idl $(TAO_IDL_DEP)
+	$(TAO_IDL) $(TAO_IDLFLAGS) -Sa -St $(srcdir)/test.idl
+	@touch $@
+
+noinst_HEADERS = \
+  test.idl
+
 ## Makefile.PI_Svc_Context_Manip_Server.am
 
 if BUILD_EXCEPTIONS
@@ -84,34 +112,6 @@ client_LDADD = \
 
 endif BUILD_INTERCEPTORS
 endif BUILD_EXCEPTIONS
-
-## Makefile.PI_Svc_Context_Manip_Idl.am
-
-BUILT_SOURCES = \
-  testC.cpp \
-  testC.h \
-  testC.inl \
-  testS.cpp \
-  testS.h \
-  testS.inl
-
-CLEANFILES = \
-  test-stamp \
-  testC.cpp \
-  testC.h \
-  testC.inl \
-  testS.cpp \
-  testS.h \
-  testS.inl
-
-testC.cpp testC.h testC.inl testS.cpp testS.h testS.inl: test-stamp
-
-test-stamp: $(srcdir)/test.idl $(TAO_IDL_DEP)
-	$(TAO_IDL) $(TAO_IDLFLAGS) -Sa -St $(srcdir)/test.idl
-	@touch $@
-
-noinst_HEADERS = \
-  test.idl
 
 ## Clean up template repositories, etc.
 clean-local:
