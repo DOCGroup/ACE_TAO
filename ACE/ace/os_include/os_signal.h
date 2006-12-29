@@ -171,24 +171,9 @@ extern "C"
 
 #if defined (ACE_HAS_CONSISTENT_SIGNAL_PROTOTYPES)
    // Prototypes for both signal() and struct sigaction are consistent..
-  //#  if defined (ACE_HAS_SIG_C_FUNC)
-  //   extern "C" {
-  //#  endif /* ACE_HAS_SIG_C_FUNC */
   typedef void (*ACE_SignalHandler)(int);
   typedef void (*ACE_SignalHandlerV)(int);
-  //#  if defined (ACE_HAS_SIG_C_FUNC)
-  //   }
-  //#  endif /* ACE_HAS_SIG_C_FUNC */
-#elif defined (ACE_HAS_LYNXOS_SIGNALS)
-   typedef void (*ACE_SignalHandler)(...);
-   typedef void (*ACE_SignalHandlerV)(...);
-#elif defined (ACE_HAS_TANDEM_SIGNALS)
-   typedef void (*ACE_SignalHandler)(...);
-   typedef void (*ACE_SignalHandlerV)(...);
-#elif defined (ACE_HAS_SPARCWORKS_401_SIGNALS)
-   typedef void (*ACE_SignalHandler)(int, ...);
-   typedef void (*ACE_SignalHandlerV)(int,...);
-#elif defined (ACE_HAS_SUNOS4_SIGNAL_T)
+#elif defined (ACE_HAS_LYNXOS_SIGNALS) || defined (ACE_HAS_TANDEM_SIGNALS)
    typedef void (*ACE_SignalHandler)(...);
    typedef void (*ACE_SignalHandlerV)(...);
 #elif defined (ACE_HAS_SVR4_SIGNAL_T)
@@ -227,19 +212,15 @@ extern "C"
 
 // Defining POSIX4 real-time signal range.
 #if defined(ACE_HAS_POSIX_REALTIME_SIGNALS)
-#define ACE_SIGRTMIN SIGRTMIN
-#define ACE_SIGRTMAX SIGRTMAX
-
+#  define ACE_SIGRTMIN SIGRTMIN
+#  define ACE_SIGRTMAX SIGRTMAX
 #else /* !ACE_HAS_POSIX_REALTIME_SIGNALS */
-
-#ifndef ACE_SIGRTMIN
-#define ACE_SIGRTMIN 0
-#endif /* ACE_SIGRTMIN */
-
-#ifndef ACE_SIGRTMAX
-#define ACE_SIGRTMAX 0
-#endif /* ACE_SIGRTMAX */
-
+#  ifndef ACE_SIGRTMIN
+#    define ACE_SIGRTMIN 0
+#  endif /* ACE_SIGRTMIN */
+#  ifndef ACE_SIGRTMAX
+#    define ACE_SIGRTMAX 0
+#  endif /* ACE_SIGRTMAX */
 #endif /* ACE_HAS_POSIX_REALTIME_SIGNALS */
 
 #if defined (DIGITAL_UNIX)
