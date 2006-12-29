@@ -283,12 +283,12 @@ static void yy_fatal_error YY_PROTO(( yyconst char msg[] ));
 	*yy_cp = '\0'; \
 	yy_c_buf_p = yy_cp;
 
-#define YY_NUM_RULES 31
-#define YY_END_OF_BUFFER 32
+#define YY_NUM_RULES 32
+#define YY_END_OF_BUFFER 33
 static yyconst short int yy_accept[81] =
     {   0,
-        0,    0,   32,   30,   31,   30,   30,   22,   23,   14,
-       12,   13,   30,   15,   26,   16,   30,   18,   29,   29,
+        0,    0,   33,   31,   30,   31,   31,   22,   23,   14,
+       12,   13,   31,   15,   26,   16,   31,   18,   29,   29,
        29,   29,   29,   29,   29,   29,   29,   29,   29,   29,
        11,   21,    0,   28,    0,    0,   26,   27,   17,   20,
        19,   29,   29,   29,   29,   29,   29,   10,   29,   29,
@@ -837,11 +837,15 @@ YY_RULE_SETUP
 	YY_BREAK
 case 30:
 YY_RULE_SETUP
+{}
+	break;
+case 31:
+YY_RULE_SETUP
 {
                   TAO_YY_LEX_DEBUG; return TAO_UNKNOWN;
                 }
 	YY_BREAK
-case 31:
+case 32:
 YY_RULE_SETUP
 TAO_TRADER_ECHO;
 	break;
