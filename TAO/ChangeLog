@@ -1,3 +1,9 @@
+Fri Dec 29 07:37:15 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * docs/libraries.html:
+
+          Fix typos.
+
 Thu Dec 28 23:10:52 UTC 2006  Iliyan Jeliazkov  <iliyan@ociweb.com>
 
         * tao/TC.mpc:
@@ -107,7 +113,7 @@ Thu Dec 28 12:49:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Thu Dec 28 12:22:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-        * docs/Libraries.html:
+        * docs/libraries.html:
           Documented the new compression libraries
 
 Thu Dec 28 11:33:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
