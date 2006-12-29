@@ -1,3 +1,11 @@
+Fri Dec 29 07:45:11 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * configure.ac:
+
+          Added AM_CONDITIONALs for BUILD_ZLIB and BUILD_ZZIP, so we can
+          handle Makefile.am's with these options.  Default to false,
+          until we can write feature tests for these options.
+
 Fri Dec 29 07:37:15 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
 
         * docs/libraries.html:
