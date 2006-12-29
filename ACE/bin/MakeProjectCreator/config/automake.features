@@ -33,3 +33,6 @@ wxWindows=1
 
 stl=1
 boost=1
+java=1
+zlib=1
+zzip=1

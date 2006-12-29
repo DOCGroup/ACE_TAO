@@ -1,3 +1,10 @@
+Fri Dec 29 07:33:58 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * bin/MakeProjectCreator/config/automake.features:
+
+          Set java, zlib, and zzip.  We'll use automake conditionals to
+          defer these options to configure time.
+
 Thu Dec 28 22:47:05 UTC 2006  Steve Huston  <shuston@riverace.com>
 
         * ace/SOCK_IO.{h, inl}: Changed the
@@ -1340,7 +1347,7 @@ Fri Nov 24 13:27:55 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
         * bin/MakeProjectCreator/config/automake.features:
 
           Set stl and boost.  We'll use automake conditionals to defer
-          this option to configure time.
+          these options to configure time.
 
 Fri Nov 24 13:05:01 UTC 2006  Olli Savia  <ops@iki.fi>
 
