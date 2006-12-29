@@ -103,7 +103,7 @@ and the dependencies outlined below are the same. <P>
    <td>Support for the TAO-specific Endpoint Policy. This is used
     to set up constraints on endpoints placed in IORs. The endpoint
     policy is applied to a POAManager via the POAManagerFactory and
-    affects all POAs associated with that mananger. Examples of use
+    affects all POAs associated with that manager. Examples of use
     are in $TAO_ROOT/tests/POA/EndpointPolicy. Applications have to
     <code> #include "tao/EndpointPolicy/EndpointPolicy.h" </code> to
     get the right symbols.</td>
@@ -181,18 +181,18 @@ and the dependencies outlined below are the same. <P>
    </tr>
    <tr align=left>
    <th>libTAO_PI.so</th>
-   <td>Support for Portalbe Interceptors. This library is automagically
+   <td>Support for Portable Interceptors. This library is automagically
     loaded by
     the ORB when the application uses the PolicyFactory or ORBInitializer
     . Just linking this library should be sufficient to
     get all the features that are required to write applications
-    using portable intercetpros. </td>
+    using portable interceptors. </td>
    <td>pi.mpb</td>
    </tr>
    <tr align=left>
    <th>libTAO_PortableServer.so</th>
    <td>Support for POA. This library is automagically loaded by
-    the ORB when the application calls resolve_intial_references
+    the ORB when the application calls resolve_initial_references
     ("RootPOA"); Just linking this library should be sufficient to
     get all the features that are required to write powerful
     servers. </td>
