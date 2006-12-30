@@ -1,3 +1,16 @@
+Sat Dec 30 06:20:18 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * ACEXML/tests/Makefile.am:
+        * ACEXML/tests/util/Makefile.am:
+        * ACEXML/apps/svcconf/Makefile.am:
+        * ACEXML/common/Makefile.am:
+        * ACEXML/examples/SAXPrint/Makefile.am:
+
+          Hand-add automake conditionals for BUILD_ZZIP and BUILD_ZLIB.
+          Unfortunately MPC resolves options, files, etc. set by
+          "features" at project generation time, but we want them to be
+          configure time options.
+
 Sat Dec 30 06:16:53 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
 
         * configure.ac:

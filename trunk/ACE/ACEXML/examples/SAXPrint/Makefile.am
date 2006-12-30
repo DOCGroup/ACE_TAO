@@ -16,12 +16,23 @@ ACE_ROOT = $(top_srcdir)
 
 if BUILD_ACEXML
 if !BUILD_ACE_FOR_TAO
+
 noinst_PROGRAMS = SAXPrint
 
 SAXPrint_CPPFLAGS = \
   -I$(ACE_ROOT) \
   -I$(ACE_BUILDDIR) \
   -I$(ACE_ROOT)/ACEXML/common
+
+if BUILD_ZLIB
+if BUILD_ZZIP
+SAXPrint_CPPFLAGS += \
+  -I$(ZZIP_ROOT)/include \
+  -I$(ZLIB_ROOT)/include \
+  -DUSE_ZZIP \
+  -DZLIB
+endif BUILD_ZZIP
+endif BUILD_ZLIB
 
 SAXPrint_SOURCES = \
   Print_Handler.cpp \
@@ -31,10 +42,28 @@ SAXPrint_SOURCES = \
   SAXPrint_Handler.h \
   SAXPrint_Handler.inl
 
+SAXPrint_LDFLAGS =
+
+if BUILD_ZLIB
+if BUILD_ZZIP
+SAXPrint_LDFLAGS += \
+  -L$(ZZIP_ROOT)/lib \
+  -L$(ZLIB_ROOT)/lib
+endif BUILD_ZZIP
+endif BUILD_ZLIB
+
 SAXPrint_LDADD = \
   $(ACE_BUILDDIR)/ACEXML/parser/parser/libACEXML_Parser.la \
   $(ACE_BUILDDIR)/ACEXML/common/libACEXML.la \
   $(ACE_BUILDDIR)/ace/libACE.la
+
+if BUILD_ZLIB
+if BUILD_ZZIP
+SAXPrint_LDADD += \
+  -lzzip \
+  -lz
+endif BUILD_ZZIP
+endif BUILD_ZLIB
 
 endif !BUILD_ACE_FOR_TAO
 endif BUILD_ACEXML
