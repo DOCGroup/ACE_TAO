@@ -16,6 +16,7 @@ noinst_PROGRAMS =
 ## Makefile.Svr_Conc_Leader_Follower.am
 
 if !BUILD_ACE_FOR_TAO
+
 noinst_PROGRAMS += leader_follower
 
 leader_follower_CPPFLAGS = \
@@ -34,6 +35,7 @@ endif !BUILD_ACE_FOR_TAO
 ## Makefile.Svr_Conc_Leader_Follower_RT_CORBA.am
 
 if !BUILD_ACE_FOR_TAO
+
 noinst_PROGRAMS += RT_CORBA_Leader_Follower
 
 RT_CORBA_Leader_Follower_CPPFLAGS = \

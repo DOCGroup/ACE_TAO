@@ -15,6 +15,7 @@ ACE_ROOT = $(top_srcdir)
 ## Makefile.UDP.am
 
 if !BUILD_ACE_FOR_TAO
+
 noinst_PROGRAMS = udp_test
 
 udp_test_CPPFLAGS = \

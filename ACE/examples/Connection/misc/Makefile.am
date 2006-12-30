@@ -13,6 +13,7 @@ ACE_ROOT = $(top_srcdir)
 
 
 ## Makefile.Connection_Misc_Handler.am
+
 noinst_PROGRAMS = handler
 
 handler_CPPFLAGS = \
@@ -29,6 +30,7 @@ handler_LDADD = \
 ## Makefile.Connection_Misc_Test_Upipe.am
 
 if !BUILD_ACE_FOR_TAO
+
 noinst_PROGRAMS += test_upipe
 
 test_upipe_CPPFLAGS = \

@@ -16,6 +16,7 @@ noinst_PROGRAMS =
 ## Makefile.asnmp_example_get.am
 
 if !BUILD_USES_WCHAR
+
 noinst_PROGRAMS += get
 
 get_CPPFLAGS = \
@@ -35,6 +36,7 @@ endif !BUILD_USES_WCHAR
 ## Makefile.asnmp_example_get_async.am
 
 if !BUILD_USES_WCHAR
+
 noinst_PROGRAMS += get_async
 
 get_async_CPPFLAGS = \

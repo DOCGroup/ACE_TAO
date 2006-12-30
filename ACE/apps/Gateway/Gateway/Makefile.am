@@ -44,6 +44,7 @@ noinst_HEADERS = \
   Options.h
 
 ## Makefile.gatewayd.am
+
 noinst_PROGRAMS = gatewayd
 
 gatewayd_CPPFLAGS = \

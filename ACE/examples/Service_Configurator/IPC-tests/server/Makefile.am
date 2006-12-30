@@ -61,6 +61,7 @@ endif !BUILD_ACE_FOR_TAO
 ## Makefile.Svc_Cfg_IPC_Server_Test.am
 
 if !BUILD_ACE_FOR_TAO
+
 noinst_PROGRAMS = server_test
 
 server_test_CPPFLAGS = \

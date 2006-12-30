@@ -15,6 +15,7 @@ ACE_ROOT = $(top_srcdir)
 ## Makefile.asnmp_example_walk.am
 
 if !BUILD_USES_WCHAR
+
 noinst_PROGRAMS = walk
 
 walk_CPPFLAGS = \

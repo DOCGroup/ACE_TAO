@@ -16,6 +16,7 @@ noinst_PROGRAMS =
 ## Makefile.Shared_Memory_MM.am
 
 if !BUILD_ACE_FOR_TAO
+
 noinst_PROGRAMS += testmm
 
 testmm_CPPFLAGS = \
@@ -33,6 +34,7 @@ endif !BUILD_ACE_FOR_TAO
 ## Makefile.Shared_Memory_SV.am
 
 if !BUILD_ACE_FOR_TAO
+
 noinst_PROGRAMS += testsv
 
 testsv_CPPFLAGS = \

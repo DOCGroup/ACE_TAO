@@ -13,6 +13,7 @@ ACE_ROOT = $(top_srcdir)
 
 
 ## Makefile.Reactor_Dgram.am
+
 noinst_PROGRAMS = dgram
 
 dgram_CPPFLAGS = \
@@ -28,6 +29,7 @@ dgram_LDADD = \
 ## Makefile.Reactor_Dgram_CO.am
 
 if !BUILD_ACE_FOR_TAO
+
 noinst_PROGRAMS += codgram
 
 codgram_CPPFLAGS = \

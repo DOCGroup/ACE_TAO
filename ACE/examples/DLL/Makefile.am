@@ -40,6 +40,7 @@ noinst_HEADERS += \
   Newsweek.h
 
 ## Makefile.DLL_Main.am
+
 noinst_PROGRAMS = test_dll
 
 test_dll_CPPFLAGS = \

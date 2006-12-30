@@ -16,6 +16,7 @@ noinst_PROGRAMS =
 ## Makefile.Futures.am
 
 if !BUILD_ACE_FOR_TAO
+
 noinst_PROGRAMS += Futures
 
 Futures_CPPFLAGS = \
@@ -32,6 +33,7 @@ Futures_LDADD = \
 endif !BUILD_ACE_FOR_TAO
 
 ## Makefile.LF_ThreadPool.am
+
 noinst_PROGRAMS += LF_ThreadPool
 
 LF_ThreadPool_CPPFLAGS = \
@@ -46,6 +48,7 @@ LF_ThreadPool_LDADD = \
   $(ACE_BUILDDIR)/ace/libACE.la
 
 ## Makefile.TP_Reactor.am
+
 noinst_PROGRAMS += TP_Reactor
 
 TP_Reactor_CPPFLAGS = \
@@ -60,6 +63,7 @@ TP_Reactor_LDADD = \
   $(ACE_BUILDDIR)/ace/libACE.la
 
 ## Makefile.Task_ThreadPool.am
+
 noinst_PROGRAMS += Task_ThreadPool
 
 Task_ThreadPool_CPPFLAGS = \
@@ -74,6 +78,7 @@ Task_ThreadPool_LDADD = \
   $(ACE_BUILDDIR)/ace/libACE.la
 
 ## Makefile.ThreadPool.am
+
 noinst_PROGRAMS += ThreadPool
 
 ThreadPool_CPPFLAGS = \

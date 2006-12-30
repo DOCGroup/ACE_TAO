@@ -17,6 +17,7 @@ noinst_PROGRAMS =
 
 if BUILD_WINREGISTRY
 if !BUILD_ACE_FOR_TAO
+
 noinst_PROGRAMS += iterator
 
 iterator_CPPFLAGS = \
@@ -36,6 +37,7 @@ endif BUILD_WINREGISTRY
 
 if BUILD_WINREGISTRY
 if !BUILD_ACE_FOR_TAO
+
 noinst_PROGRAMS += update
 
 update_CPPFLAGS = \

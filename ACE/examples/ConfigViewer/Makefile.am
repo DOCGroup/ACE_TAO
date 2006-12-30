@@ -15,6 +15,7 @@ ACE_ROOT = $(top_srcdir)
 ## Makefile.ConfigViewer.am
 
 if BUILD_WXWINDOWS
+
 noinst_LTLIBRARIES = libConfigViewer.la
 
 libConfigViewer_la_CPPFLAGS = \

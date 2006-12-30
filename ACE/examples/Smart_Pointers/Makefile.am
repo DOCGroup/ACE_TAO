@@ -12,6 +12,7 @@ ACE_BUILDDIR = $(top_builddir)
 ACE_ROOT = $(top_srcdir)
 
 ## Makefile.Smart_Pointers_Gadget.am
+
 noinst_PROGRAMS = gadget
 
 gadget_CPPFLAGS = \
@@ -37,6 +38,7 @@ gadget_LDADD = \
   $(ACE_BUILDDIR)/ace/libACE.la
 
 ## Makefile.Smart_Pointers_Widget.am
+
 noinst_PROGRAMS += Widget
 
 Widget_CPPFLAGS = \

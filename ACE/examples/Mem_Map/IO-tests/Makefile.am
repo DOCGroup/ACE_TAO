@@ -15,6 +15,7 @@ ACE_ROOT = $(top_srcdir)
 ## Makefile.Mem_Map_IO_Tests.am
 
 if !BUILD_ACE_FOR_TAO
+
 noinst_PROGRAMS = test_io
 
 test_io_CPPFLAGS = \

@@ -16,6 +16,7 @@ noinst_PROGRAMS =
 ## Makefile.Process_Manager_Death.am
 
 if !BUILD_ACE_FOR_TAO
+
 noinst_PROGRAMS += Process_Manager_Death
 
 Process_Manager_Death_CPPFLAGS = \
@@ -33,6 +34,7 @@ endif !BUILD_ACE_FOR_TAO
 ## Makefile.Process_Manager_Spawn.am
 
 if !BUILD_ACE_FOR_TAO
+
 noinst_PROGRAMS += Process_Manager_Spawn
 
 Process_Manager_Spawn_CPPFLAGS = \
@@ -50,6 +52,7 @@ endif !BUILD_ACE_FOR_TAO
 ## Makefile.Process_Mutex.am
 
 if !BUILD_ACE_FOR_TAO
+
 noinst_PROGRAMS += Process_Mutex
 
 Process_Mutex_CPPFLAGS = \
@@ -67,6 +70,7 @@ endif !BUILD_ACE_FOR_TAO
 ## Makefile.Spawn.am
 
 if !BUILD_ACE_FOR_TAO
+
 noinst_PROGRAMS += Spawn
 
 Spawn_CPPFLAGS = \

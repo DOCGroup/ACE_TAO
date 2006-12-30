@@ -16,6 +16,7 @@ noinst_PROGRAMS =
 ## Makefile.Malloc.am
 
 if !BUILD_ACE_FOR_TAO
+
 noinst_PROGRAMS += Malloc
 
 Malloc_CPPFLAGS = \
@@ -34,6 +35,7 @@ endif !BUILD_ACE_FOR_TAO
 ## Makefile.Mem_Map.am
 
 if !BUILD_ACE_FOR_TAO
+
 noinst_PROGRAMS += Mem_Map
 
 Mem_Map_CPPFLAGS = \
@@ -52,6 +54,7 @@ endif !BUILD_ACE_FOR_TAO
 ## Makefile.PI_Malloc.am
 
 if !BUILD_ACE_FOR_TAO
+
 noinst_PROGRAMS += PI_Malloc
 
 PI_Malloc_CPPFLAGS = \
@@ -70,6 +73,7 @@ endif !BUILD_ACE_FOR_TAO
 ## Makefile.Pool_Growth.am
 
 if !BUILD_ACE_FOR_TAO
+
 noinst_PROGRAMS += Pool_Growth
 
 Pool_Growth_CPPFLAGS = \
@@ -88,6 +92,7 @@ endif !BUILD_ACE_FOR_TAO
 ## Makefile.Shared_Memory_Hash_Map.am
 
 if !BUILD_ACE_FOR_TAO
+
 noinst_PROGRAMS += Hash_Map
 
 Hash_Map_CPPFLAGS = \

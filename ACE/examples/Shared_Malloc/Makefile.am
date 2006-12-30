@@ -16,6 +16,7 @@ noinst_PROGRAMS =
 ## Makefile.Shared_Malloc.am
 
 if !BUILD_ACE_FOR_TAO
+
 noinst_PROGRAMS += malloc
 
 malloc_CPPFLAGS = \
@@ -37,6 +38,7 @@ endif !BUILD_ACE_FOR_TAO
 ## Makefile.Shared_Malloc_Multiple.am
 
 if !BUILD_ACE_FOR_TAO
+
 noinst_PROGRAMS += multiple
 
 multiple_CPPFLAGS = \
@@ -58,6 +60,7 @@ endif !BUILD_ACE_FOR_TAO
 ## Makefile.Shared_Malloc_Persistence.am
 
 if !BUILD_ACE_FOR_TAO
+
 noinst_PROGRAMS += persistence
 
 persistence_CPPFLAGS = \
@@ -78,6 +81,7 @@ endif !BUILD_ACE_FOR_TAO
 ## Makefile.Shared_Malloc_Posind.am
 
 if !BUILD_ACE_FOR_TAO
+
 noinst_PROGRAMS += posind
 
 posind_CPPFLAGS = \

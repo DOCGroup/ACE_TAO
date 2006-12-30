@@ -12,6 +12,7 @@ ACE_BUILDDIR = $(top_builddir)
 ACE_ROOT = $(top_srcdir)
 
 ## Makefile.TLI_SAP_ATM_Client.am
+
 noinst_PROGRAMS = ATM-client
 
 ATM_client_CPPFLAGS = \
@@ -25,6 +26,7 @@ ATM_client_LDADD = \
   $(ACE_BUILDDIR)/ace/libACE.la
 
 ## Makefile.TLI_SAP_ATM_Server.am
+
 noinst_PROGRAMS += ATM-server
 
 ATM_server_CPPFLAGS = \
@@ -38,6 +40,7 @@ ATM_server_LDADD = \
   $(ACE_BUILDDIR)/ace/libACE.la
 
 ## Makefile.TLI_SAP_CPP_Client.am
+
 noinst_PROGRAMS += CPP-client
 
 CPP_client_CPPFLAGS = \
@@ -51,6 +54,7 @@ CPP_client_LDADD = \
   $(ACE_BUILDDIR)/ace/libACE.la
 
 ## Makefile.TLI_SAP_CPP_Server.am
+
 noinst_PROGRAMS += CPP-server
 
 CPP_server_CPPFLAGS = \
@@ -64,6 +68,7 @@ CPP_server_LDADD = \
   $(ACE_BUILDDIR)/ace/libACE.la
 
 ## Makefile.TLI_SAP_Db_Client.am
+
 noinst_PROGRAMS += db-client
 
 db_client_CPPFLAGS = \
@@ -77,6 +82,7 @@ db_client_LDADD = \
   $(ACE_BUILDDIR)/ace/libACE.la
 
 ## Makefile.TLI_SAP_Db_Server.am
+
 noinst_PROGRAMS += db-server
 
 db_server_CPPFLAGS = \
@@ -90,6 +96,7 @@ db_server_LDADD = \
   $(ACE_BUILDDIR)/ace/libACE.la
 
 ## Makefile.TLI_SAP_Ftp_Client.am
+
 noinst_PROGRAMS += ftp-client
 
 ftp_client_CPPFLAGS = \
@@ -103,6 +110,7 @@ ftp_client_LDADD = \
   $(ACE_BUILDDIR)/ace/libACE.la
 
 ## Makefile.TLI_SAP_Ftp_Server.am
+
 noinst_PROGRAMS += ftp-server
 
 ftp_server_CPPFLAGS = \

@@ -15,6 +15,7 @@ ACE_ROOT = $(top_srcdir)
 ## Makefile.Event_Server.am
 
 if !BUILD_ACE_FOR_TAO
+
 noinst_PROGRAMS = Event_Server
 
 Event_Server_CPPFLAGS = \

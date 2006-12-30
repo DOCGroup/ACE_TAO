@@ -13,6 +13,7 @@ ACE_ROOT = $(top_srcdir)
 
 
 ## Makefile.Fifo_Sap_Msg_Client.am
+
 noinst_PROGRAMS = FIFO-Msg-client
 
 FIFO_Msg_client_CPPFLAGS = \
@@ -26,6 +27,7 @@ FIFO_Msg_client_LDADD = \
   $(ACE_BUILDDIR)/ace/libACE.la
 
 ## Makefile.Fifo_Sap_Msg_Server.am
+
 noinst_PROGRAMS += FIFO-Msg-server
 
 FIFO_Msg_server_CPPFLAGS = \
@@ -41,6 +43,7 @@ FIFO_Msg_server_LDADD = \
 ## Makefile.fifo_sap_client.am
 
 if !BUILD_ACE_FOR_TAO
+
 noinst_PROGRAMS += FIFO-client
 
 FIFO_client_CPPFLAGS = \
@@ -58,6 +61,7 @@ endif !BUILD_ACE_FOR_TAO
 ## Makefile.fifo_sap_server.am
 
 if !BUILD_ACE_FOR_TAO
+
 noinst_PROGRAMS += FIFO-server
 
 FIFO_server_CPPFLAGS = \
@@ -75,6 +79,7 @@ endif !BUILD_ACE_FOR_TAO
 ## Makefile.fifo_sap_test.am
 
 if !BUILD_ACE_FOR_TAO
+
 noinst_PROGRAMS += FIFO-test
 
 FIFO_test_CPPFLAGS = \

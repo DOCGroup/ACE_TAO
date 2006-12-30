@@ -12,6 +12,7 @@ ACE_BUILDDIR = $(top_builddir)
 ACE_ROOT = $(top_srcdir)
 
 ## Makefile.atm_sap_client.am
+
 noinst_PROGRAMS = client
 
 client_CPPFLAGS = \
@@ -25,6 +26,7 @@ client_LDADD = \
   $(ACE_BUILDDIR)/ace/libACE.la
 
 ## Makefile.atm_sap_server.am
+
 noinst_PROGRAMS += server
 
 server_CPPFLAGS = \

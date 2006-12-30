@@ -12,6 +12,7 @@ ACE_BUILDDIR = $(top_builddir)
 ACE_ROOT = $(top_srcdir)
 
 ## Makefile.SPIPE_SAP_Client.am
+
 noinst_PROGRAMS = client
 
 client_CPPFLAGS = \
@@ -26,6 +27,7 @@ client_LDADD = \
   $(ACE_BUILDDIR)/ace/libACE.la
 
 ## Makefile.SPIPE_SAP_Consumer_Msg.am
+
 noinst_PROGRAMS += consumer_msg
 
 consumer_msg_CPPFLAGS = \
@@ -40,6 +42,7 @@ consumer_msg_LDADD = \
   $(ACE_BUILDDIR)/ace/libACE.la
 
 ## Makefile.SPIPE_SAP_Consumer_Read.am
+
 noinst_PROGRAMS += consumer_read
 
 consumer_read_CPPFLAGS = \
@@ -54,6 +57,7 @@ consumer_read_LDADD = \
   $(ACE_BUILDDIR)/ace/libACE.la
 
 ## Makefile.SPIPE_SAP_NPClient.am
+
 noinst_PROGRAMS += NPClient
 
 NPClient_CPPFLAGS = \
@@ -68,6 +72,7 @@ NPClient_LDADD = \
   $(ACE_BUILDDIR)/ace/libACE.la
 
 ## Makefile.SPIPE_SAP_NPServer.am
+
 noinst_PROGRAMS += NPServer
 
 NPServer_CPPFLAGS = \
@@ -82,6 +87,7 @@ NPServer_LDADD = \
   $(ACE_BUILDDIR)/ace/libACE.la
 
 ## Makefile.SPIPE_SAP_Producer_Msg.am
+
 noinst_PROGRAMS += producer_msg
 
 producer_msg_CPPFLAGS = \
@@ -96,6 +102,7 @@ producer_msg_LDADD = \
   $(ACE_BUILDDIR)/ace/libACE.la
 
 ## Makefile.SPIPE_SAP_Producer_Read.am
+
 noinst_PROGRAMS += producer_read
 
 producer_read_CPPFLAGS = \
@@ -110,6 +117,7 @@ producer_read_LDADD = \
   $(ACE_BUILDDIR)/ace/libACE.la
 
 ## Makefile.SPIPE_SAP_Server.am
+
 noinst_PROGRAMS += server
 
 server_CPPFLAGS = \

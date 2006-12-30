@@ -12,6 +12,7 @@ ACE_BUILDDIR = $(top_builddir)
 ACE_ROOT = $(top_srcdir)
 
 ## Makefile.Reactor_Multicast_Client.am
+
 noinst_PROGRAMS = client
 
 client_CPPFLAGS = \
@@ -27,6 +28,7 @@ client_LDADD = \
   $(ACE_BUILDDIR)/ace/libACE.la
 
 ## Makefile.Reactor_Multicast_Server.am
+
 noinst_PROGRAMS += server
 
 server_CPPFLAGS = \

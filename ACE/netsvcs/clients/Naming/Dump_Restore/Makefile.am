@@ -34,6 +34,7 @@ endif !BUILD_ACE_FOR_TAO
 ## Makefile.Netsvcs_Dump_Restore.am
 
 if !BUILD_ACE_FOR_TAO
+
 noinst_PROGRAMS = main
 
 main_CPPFLAGS = \

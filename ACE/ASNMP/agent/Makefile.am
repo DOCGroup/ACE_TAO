@@ -15,6 +15,7 @@ ACE_ROOT = $(top_srcdir)
 ## Makefile.asnmp_agent.am
 
 if !BUILD_USES_WCHAR
+
 noinst_PROGRAMS = agent
 
 agent_CPPFLAGS = \

@@ -16,6 +16,7 @@ noinst_PROGRAMS =
 ## Makefile.Svc_Cfg_IPC_Client_Bcast.am
 
 if !BUILD_ACE_FOR_TAO
+
 noinst_PROGRAMS += remote_broadcast_test
 
 remote_broadcast_test_CPPFLAGS = \
@@ -33,6 +34,7 @@ endif !BUILD_ACE_FOR_TAO
 ## Makefile.Svc_Cfg_IPC_Client_Loc_Dgram.am
 
 if !BUILD_ACE_FOR_TAO
+
 noinst_PROGRAMS += local_dgram_test
 
 local_dgram_test_CPPFLAGS = \
@@ -50,6 +52,7 @@ endif !BUILD_ACE_FOR_TAO
 ## Makefile.Svc_Cfg_IPC_Client_Loc_Fifo.am
 
 if !BUILD_ACE_FOR_TAO
+
 noinst_PROGRAMS += local_fifo_test
 
 local_fifo_test_CPPFLAGS = \
@@ -67,6 +70,7 @@ endif !BUILD_ACE_FOR_TAO
 ## Makefile.Svc_Cfg_IPC_Client_Loc_Pipe.am
 
 if !BUILD_ACE_FOR_TAO
+
 noinst_PROGRAMS += local_pipe_test
 
 local_pipe_test_CPPFLAGS = \
@@ -82,6 +86,7 @@ local_pipe_test_LDADD = \
 endif !BUILD_ACE_FOR_TAO
 
 ## Makefile.Svc_Cfg_IPC_Client_Loc_Spipe.am
+
 noinst_PROGRAMS += local_spipe_test
 
 local_spipe_test_CPPFLAGS = \
@@ -97,6 +102,7 @@ local_spipe_test_LDADD = \
 ## Makefile.Svc_Cfg_IPC_Client_Loc_Stream.am
 
 if !BUILD_ACE_FOR_TAO
+
 noinst_PROGRAMS += local_stream_test
 
 local_stream_test_CPPFLAGS = \
@@ -114,6 +120,7 @@ endif !BUILD_ACE_FOR_TAO
 ## Makefile.Svc_Cfg_IPC_Client_Rem_Dgram.am
 
 if !BUILD_ACE_FOR_TAO
+
 noinst_PROGRAMS += remote_dgram_test
 
 remote_dgram_test_CPPFLAGS = \
@@ -131,6 +138,7 @@ endif !BUILD_ACE_FOR_TAO
 ## Makefile.Svc_Cfg_IPC_Client_Rem_Stream.am
 
 if !BUILD_ACE_FOR_TAO
+
 noinst_PROGRAMS += remote_stream_test
 
 remote_stream_test_CPPFLAGS = \
@@ -146,6 +154,7 @@ remote_stream_test_LDADD = \
 endif !BUILD_ACE_FOR_TAO
 
 ## Makefile.Svc_Cfg_IPC_Client_Rem_Svc_Dir.am
+
 noinst_PROGRAMS += remote_service_directory_test
 
 remote_service_directory_test_CPPFLAGS = \
@@ -159,6 +168,7 @@ remote_service_directory_test_LDADD = \
   $(ACE_BUILDDIR)/ace/libACE.la
 
 ## Makefile.Svc_Cfg_IPC_Client_Rem_Thr_Stream.am
+
 noinst_PROGRAMS += remote_thr_stream_test
 
 remote_thr_stream_test_CPPFLAGS = \

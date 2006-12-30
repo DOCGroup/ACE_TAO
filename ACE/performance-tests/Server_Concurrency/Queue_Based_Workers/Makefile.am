@@ -16,6 +16,7 @@ noinst_PROGRAMS =
 ## Makefile.Svr_Conc_Queue_Based_Workers.am
 
 if !BUILD_ACE_FOR_TAO
+
 noinst_PROGRAMS += workers
 
 workers_CPPFLAGS = \
@@ -34,6 +35,7 @@ endif !BUILD_ACE_FOR_TAO
 ## Makefile.Svr_Conc_Queue_Based_Workers_RTCorba.am
 
 if !BUILD_ACE_FOR_TAO
+
 noinst_PROGRAMS += RT_CORBA_Workers
 
 RT_CORBA_Workers_CPPFLAGS = \
