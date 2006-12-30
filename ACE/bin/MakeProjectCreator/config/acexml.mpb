@@ -1,7 +1,7 @@
 // -*- MPC -*-
 // $Id$
 
-project: zzip {
+project: zzip, zlib {
   avoids   += ace_for_tao
   after    += ACEXML_Parser ACEXML
   libs     += ACEXML_Parser ACEXML

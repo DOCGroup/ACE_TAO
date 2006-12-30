@@ -489,6 +489,10 @@ AC_DEFUN([ACE_CONFIGURATION_OPTIONS],
 
  # placeholder for WxWindows/wxWidgets support
  AM_CONDITIONAL([BUILD_WXWINDOWS], false)
+ # placeholder for zziplib support
+ AM_CONDITIONAL([BUILD_ZZIP], false)
+ # placeholder for zlib support
+ AM_CONDITIONAL([BUILD_ZLIB], false)
 
  AC_ARG_ENABLE([gperf],
   AS_HELP_STRING(--enable-gperf,compile the gperf program [[[yes]]]),
