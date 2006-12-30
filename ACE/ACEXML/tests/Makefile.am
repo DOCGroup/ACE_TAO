@@ -21,6 +21,7 @@ noinst_PROGRAMS =
 
 if BUILD_ACEXML
 if !BUILD_ACE_FOR_TAO
+
 noinst_PROGRAMS += ContentHandler_Test
 
 ContentHandler_Test_CPPFLAGS = \
@@ -28,13 +29,41 @@ ContentHandler_Test_CPPFLAGS = \
   -I$(ACE_BUILDDIR) \
   -I$(ACE_ROOT)/ACEXML/common
 
+if BUILD_ZLIB
+if BUILD_ZZIP
+ContentHandler_Test_CPPFLAGS += \
+  -I$(ZZIP_ROOT)/include \
+  -I$(ZLIB_ROOT)/include \
+  -DUSE_ZZIP \
+  -DZLIB
+endif BUILD_ZZIP
+endif BUILD_ZLIB
+
 ContentHandler_Test_SOURCES = \
   ContentHandler_Test.cpp
+
+ContentHandler_Test_LDFLAGS =
+
+if BUILD_ZLIB
+if BUILD_ZZIP
+ContentHandler_Test_LDFLAGS += \
+  -L$(ZZIP_ROOT)/lib \
+  -L$(ZLIB_ROOT)/lib
+endif BUILD_ZZIP
+endif BUILD_ZLIB
 
 ContentHandler_Test_LDADD = \
   $(ACE_BUILDDIR)/ACEXML/parser/parser/libACEXML_Parser.la \
   $(ACE_BUILDDIR)/ACEXML/common/libACEXML.la \
   $(ACE_BUILDDIR)/ace/libACE.la
+
+if BUILD_ZLIB
+if BUILD_ZZIP
+ContentHandler_Test_LDADD += \
+  -lzzip \
+  -lz
+endif BUILD_ZZIP
+endif BUILD_ZLIB
 
 endif !BUILD_ACE_FOR_TAO
 endif BUILD_ACEXML
@@ -43,6 +72,7 @@ endif BUILD_ACEXML
 
 if BUILD_ACEXML
 if !BUILD_ACE_FOR_TAO
+
 noinst_PROGRAMS += HttpCharStream_Test
 
 HttpCharStream_Test_CPPFLAGS = \
@@ -50,13 +80,41 @@ HttpCharStream_Test_CPPFLAGS = \
   -I$(ACE_BUILDDIR) \
   -I$(ACE_ROOT)/ACEXML/common
 
+if BUILD_ZLIB
+if BUILD_ZZIP
+HttpCharStream_Test_CPPFLAGS += \
+  -I$(ZZIP_ROOT)/include \
+  -I$(ZLIB_ROOT)/include \
+  -DUSE_ZZIP \
+  -DZLIB
+endif BUILD_ZZIP
+endif BUILD_ZLIB
+
 HttpCharStream_Test_SOURCES = \
   HttpCharStream_Test.cpp
+
+HttpCharStream_Test_LDFLAGS =
+
+if BUILD_ZLIB
+if BUILD_ZZIP
+HttpCharStream_Test_LDFLAGS += \
+  -L$(ZZIP_ROOT)/lib \
+  -L$(ZLIB_ROOT)/lib
+endif BUILD_ZZIP
+endif BUILD_ZLIB
 
 HttpCharStream_Test_LDADD = \
   $(ACE_BUILDDIR)/ACEXML/parser/parser/libACEXML_Parser.la \
   $(ACE_BUILDDIR)/ACEXML/common/libACEXML.la \
   $(ACE_BUILDDIR)/ace/libACE.la
+
+if BUILD_ZLIB
+if BUILD_ZZIP
+HttpCharStream_Test_LDADD += \
+  -lzzip \
+  -lz
+endif BUILD_ZZIP
+endif BUILD_ZLIB
 
 endif !BUILD_ACE_FOR_TAO
 endif BUILD_ACEXML
@@ -65,6 +123,7 @@ endif BUILD_ACEXML
 
 if BUILD_ACEXML
 if !BUILD_ACE_FOR_TAO
+
 noinst_PROGRAMS += NamespaceSupport_Test
 
 NamespaceSupport_Test_CPPFLAGS = \
@@ -72,13 +131,41 @@ NamespaceSupport_Test_CPPFLAGS = \
   -I$(ACE_BUILDDIR) \
   -I$(ACE_ROOT)/ACEXML/common
 
+if BUILD_ZLIB
+if BUILD_ZZIP
+NamespaceSupport_Test_CPPFLAGS += \
+  -I$(ZZIP_ROOT)/include \
+  -I$(ZLIB_ROOT)/include \
+  -DUSE_ZZIP \
+  -DZLIB
+endif BUILD_ZZIP
+endif BUILD_ZLIB
+
 NamespaceSupport_Test_SOURCES = \
   NamespaceSupport_Test.cpp
+
+NamespaceSupport_Test_LDFLAGS =
+
+if BUILD_ZLIB
+if BUILD_ZZIP
+NamespaceSupport_Test_LDFLAGS += \
+  -L$(ZZIP_ROOT)/lib \
+  -L$(ZLIB_ROOT)/lib
+endif BUILD_ZZIP
+endif BUILD_ZLIB
 
 NamespaceSupport_Test_LDADD = \
   $(ACE_BUILDDIR)/ACEXML/parser/parser/libACEXML_Parser.la \
   $(ACE_BUILDDIR)/ACEXML/common/libACEXML.la \
   $(ACE_BUILDDIR)/ace/libACE.la
+
+if BUILD_ZLIB
+if BUILD_ZZIP
+NamespaceSupport_Test_LDADD += \
+  -lzzip \
+  -lz
+endif BUILD_ZZIP
+endif BUILD_ZLIB
 
 endif !BUILD_ACE_FOR_TAO
 endif BUILD_ACEXML
@@ -87,6 +174,7 @@ endif BUILD_ACEXML
 
 if BUILD_ACEXML
 if !BUILD_ACE_FOR_TAO
+
 noinst_PROGRAMS += Transcoder_Test
 
 Transcoder_Test_CPPFLAGS = \
@@ -94,13 +182,41 @@ Transcoder_Test_CPPFLAGS = \
   -I$(ACE_BUILDDIR) \
   -I$(ACE_ROOT)/ACEXML/common
 
+if BUILD_ZLIB
+if BUILD_ZZIP
+Transcoder_Test_CPPFLAGS += \
+  -I$(ZZIP_ROOT)/include \
+  -I$(ZLIB_ROOT)/include \
+  -DUSE_ZZIP \
+  -DZLIB
+endif BUILD_ZZIP
+endif BUILD_ZLIB
+
 Transcoder_Test_SOURCES = \
   Transcoder_Test.cpp
+
+Transcoder_Test_LDFLAGS = 
+
+if BUILD_ZLIB
+if BUILD_ZZIP
+Transcoder_Test_LDFLAGS += \
+  -L$(ZZIP_ROOT)/lib \
+  -L$(ZLIB_ROOT)/lib
+endif BUILD_ZZIP
+endif BUILD_ZLIB
 
 Transcoder_Test_LDADD = \
   $(ACE_BUILDDIR)/ACEXML/parser/parser/libACEXML_Parser.la \
   $(ACE_BUILDDIR)/ACEXML/common/libACEXML.la \
   $(ACE_BUILDDIR)/ace/libACE.la
+
+if BUILD_ZLIB
+if BUILD_ZZIP
+Transcoder_Test_LDADD += \
+  -lzzip \
+  -lz
+endif BUILD_ZZIP
+endif BUILD_ZLIB
 
 endif !BUILD_ACE_FOR_TAO
 endif BUILD_ACEXML

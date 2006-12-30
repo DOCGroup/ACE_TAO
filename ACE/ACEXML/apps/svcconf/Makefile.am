@@ -26,6 +26,16 @@ libACEXML_XML_Svc_Conf_Parser_la_CPPFLAGS = \
   -I$(ACE_BUILDDIR) \
   -I$(ACE_ROOT)/ACEXML/common
 
+if BUILD_ZLIB
+if BUILD_ZZIP
+libACEXML_XML_Svc_Conf_Parser_la_CPPFLAGS += \
+  -I$(ZZIP_ROOT)/include \
+  -I$(ZLIB_ROOT)/include \
+  -DUSE_ZZIP \
+  -DZLIB
+endif BUILD_ZZIP
+endif BUILD_ZLIB
+
 libACEXML_XML_Svc_Conf_Parser_la_SOURCES = \
   Svcconf.cpp \
   Svcconf_Handler.cpp
@@ -33,10 +43,26 @@ libACEXML_XML_Svc_Conf_Parser_la_SOURCES = \
 libACEXML_XML_Svc_Conf_Parser_la_LDFLAGS = \
  -release @ACE_VERSION_NAME@
 
+if BUILD_ZLIB
+if BUILD_ZZIP
+libACEXML_XML_Svc_Conf_Parser_la_LDFLAGS += \
+  -L$(ZZIP_ROOT)/lib \
+  -L$(ZLIB_ROOT)/lib
+endif BUILD_ZZIP
+endif BUILD_ZLIB
+
 libACEXML_XML_Svc_Conf_Parser_la_LIBADD = \
   $(ACE_BUILDDIR)/ACEXML/parser/parser/libACEXML_Parser.la \
   $(ACE_BUILDDIR)/ACEXML/common/libACEXML.la \
   $(ACE_BUILDDIR)/ace/libACE.la
+
+if BUILD_ZLIB
+if BUILD_ZZIP
+libACEXML_XML_Svc_Conf_Parser_la_LIBADD += \
+  -lzzip \
+  -lz
+endif BUILD_ZZIP
+endif BUILD_ZLIB
 
 nobase_include_HEADERS = \
   Svcconf.h \
