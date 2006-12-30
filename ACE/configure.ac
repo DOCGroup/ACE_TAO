@@ -7806,6 +7806,7 @@ AC_CONFIG_FILES([
   apps/JAWS/clients/Caching/Makefile
   apps/JAWS/server/Makefile
   apps/JAWS2/Makefile
+  apps/JAWS2/HTTPU/Makefile
   apps/JAWS2/JAWS/Makefile
   apps/JAWS3/Makefile
   apps/JAWS3/jaws3/Makefile

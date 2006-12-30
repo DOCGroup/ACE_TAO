@@ -1,3 +1,17 @@
+Sat Dec 30 06:16:53 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * configure.ac:
+
+          Configure Makefiles for new subdirectory.
+
+        * apps/JAWS2/Makefile.am:
+
+          Regenerate to descend into HTTPU subdirectory.
+
+        * apps/JAWS2/HTTPU/Makefile.am:
+
+          New Makefile.am.
+
 Sat Dec 30 06:12:59 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
 
         * m4/ace.m4:
