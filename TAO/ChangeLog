@@ -1,3 +1,9 @@
+Sat Dec 30 03:55:42 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * tests/Makefile.am:
+
+          Fix stray trailing whitespace after \ continuation.
+
 Fri Dec 29 17:50:16 UTC 2006  Chad Elliott  <elliott_c@ociweb.com>
 
         * orbsvcs/orbsvcs/Trader/Constraint_l.cpp.diff:
@@ -1640,6 +1646,8 @@ Fri Dec  8 05:21:38 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
           more resilient to leading whitespace like was added by a bug in
           the release script in the last beta.  Thanks to Ray Lischner
           <rlischner at proteus-technologies dot com> for this patch.
+          Also thanks to Paul Riley <paul at riley dot net> for reporting
+          this problem.
 
 Fri Dec  8 04:45:52 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
 
