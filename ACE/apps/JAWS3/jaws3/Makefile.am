@@ -85,6 +85,7 @@ endif !BUILD_ACE_FOR_TAO
 
 if !BUILD_ACE_FOR_TAO
 if !BUILD_USES_WCHAR
+
 noinst_PROGRAMS = main
 
 main_CPPFLAGS = \

@@ -16,6 +16,7 @@ noinst_PROGRAMS =
 ## Makefile.Misc_Basic_Perf.am
 
 if !BUILD_ACE_FOR_TAO
+
 noinst_PROGRAMS += basic_perf
 
 basic_perf_CPPFLAGS = \
@@ -35,6 +36,7 @@ endif !BUILD_ACE_FOR_TAO
 ## Makefile.Misc_Childbirth_Time.am
 
 if !BUILD_ACE_FOR_TAO
+
 noinst_PROGRAMS += childbirth_time
 
 childbirth_time_CPPFLAGS = \
@@ -54,6 +56,7 @@ endif !BUILD_ACE_FOR_TAO
 ## Makefile.Misc_Context_Switch_Time.am
 
 if !BUILD_ACE_FOR_TAO
+
 noinst_PROGRAMS += context_switch_time
 
 context_switch_time_CPPFLAGS = \
@@ -71,6 +74,7 @@ context_switch_time_LDADD = \
 endif !BUILD_ACE_FOR_TAO
 
 ## Makefile.Misc_Preempt.am
+
 noinst_PROGRAMS += preempt
 
 preempt_CPPFLAGS = \
@@ -88,6 +92,7 @@ preempt_LDADD = \
 ## Makefile.Misc_Test_Mutex.am
 
 if !BUILD_ACE_FOR_TAO
+
 noinst_PROGRAMS += test_mutex
 
 test_mutex_CPPFLAGS = \
@@ -107,6 +112,7 @@ endif !BUILD_ACE_FOR_TAO
 ## Makefile.Misc_Test_Naming.am
 
 if !BUILD_ACE_FOR_TAO
+
 noinst_PROGRAMS += test_naming
 
 test_naming_CPPFLAGS = \
@@ -126,6 +132,7 @@ endif !BUILD_ACE_FOR_TAO
 ## Makefile.Misc_Test_Singleton.am
 
 if !BUILD_ACE_FOR_TAO
+
 noinst_PROGRAMS += test_singleton
 
 test_singleton_CPPFLAGS = \

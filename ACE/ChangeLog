@@ -1,3 +1,10 @@
+Sat Dec 30 06:23:13 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * */Makefile.am:
+
+          Baseline regeneration to match recent MPC, *.mpc, and *.mpb
+          changes.
+
 Sat Dec 30 06:20:18 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
 
         * ACEXML/tests/Makefile.am:

@@ -101,6 +101,7 @@ endif !BUILD_ACE_FOR_TAO
 ## Makefile.C++NPv2_Configurable_Log_Server.am
 
 if !BUILD_USES_WCHAR
+
 noinst_PROGRAMS += configurable_logging_server
 
 configurable_logging_server_CPPFLAGS = \
@@ -120,6 +121,7 @@ endif !BUILD_USES_WCHAR
 ## Makefile.C++NPv2_Display_Logfile.am
 
 if !BUILD_ACE_FOR_TAO
+
 noinst_PROGRAMS += display_logfile
 
 display_logfile_CPPFLAGS = \
@@ -157,6 +159,7 @@ endif !BUILD_ACE_FOR_TAO
 
 if !BUILD_ACE_FOR_TAO
 if !BUILD_USES_WCHAR
+
 noinst_PROGRAMS += reactor_logging_server
 
 reactor_logging_server_CPPFLAGS = \
@@ -240,6 +243,7 @@ endif !BUILD_USES_WCHAR
 endif !BUILD_ACE_FOR_TAO
 
 ## Makefile.C++NPv2_SR_Configurable_Log_Server.am
+
 noinst_PROGRAMS += sr_configurable_logging_server
 
 sr_configurable_logging_server_CPPFLAGS = \
@@ -275,6 +279,7 @@ sr_configurable_logging_server_LDADD = \
 
 if !BUILD_ACE_FOR_TAO
 if !BUILD_USES_WCHAR
+
 noinst_PROGRAMS += select_reactor_logging_server
 
 select_reactor_logging_server_CPPFLAGS = \
@@ -359,6 +364,7 @@ endif !BUILD_ACE_FOR_TAO
 
 if !BUILD_ACE_FOR_TAO
 if !BUILD_USES_WCHAR
+
 noinst_PROGRAMS += tp_reactor_logging_server
 
 tp_reactor_logging_server_CPPFLAGS = \
@@ -387,6 +393,7 @@ endif !BUILD_ACE_FOR_TAO
 if BUILD_WFMO
 if !BUILD_ACE_FOR_TAO
 if !BUILD_USES_WCHAR
+
 noinst_PROGRAMS += wfmo_reactor_logging_server
 
 wfmo_reactor_logging_server_CPPFLAGS = \

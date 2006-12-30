@@ -16,6 +16,7 @@ noinst_PROGRAMS =
 ## Makefile.Naming_Multiple_Contexts.am
 
 if !BUILD_ACE_FOR_TAO
+
 noinst_PROGRAMS += multiple_contexts
 
 multiple_contexts_CPPFLAGS = \
@@ -33,6 +34,7 @@ endif !BUILD_ACE_FOR_TAO
 ## Makefile.Naming_Non_Existent.am
 
 if !BUILD_ACE_FOR_TAO
+
 noinst_PROGRAMS += non_existent
 
 non_existent_CPPFLAGS = \
@@ -50,6 +52,7 @@ endif !BUILD_ACE_FOR_TAO
 ## Makefile.Naming_Open.am
 
 if !BUILD_ACE_FOR_TAO
+
 noinst_PROGRAMS += open
 
 open_CPPFLAGS = \
@@ -67,6 +70,7 @@ endif !BUILD_ACE_FOR_TAO
 ## Makefile.Naming_Writers.am
 
 if !BUILD_ACE_FOR_TAO
+
 noinst_PROGRAMS += writers
 
 writers_CPPFLAGS = \

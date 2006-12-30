@@ -18,7 +18,6 @@ SUBDIRS = \
 
 man_MANS = gperf.1
 
-
 ## Clean up template repositories, etc.
 clean-local:
 	-rm -f *~ *.bak *.rpo *.sym lib*.*_pure_* core core.*

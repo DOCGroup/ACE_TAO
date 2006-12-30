@@ -15,6 +15,7 @@ ACE_ROOT = $(top_srcdir)
 ## Makefile.dev_sap_reader.am
 
 if !BUILD_ACE_FOR_TAO
+
 noinst_PROGRAMS = reader
 
 reader_CPPFLAGS = \

@@ -16,6 +16,7 @@ noinst_PROGRAMS =
 ## Makefile.OS_Process_Imore.am
 
 if !BUILD_ACE_FOR_TAO
+
 noinst_PROGRAMS += imore
 
 imore_CPPFLAGS = \
@@ -31,6 +32,7 @@ imore_LDADD = \
 endif !BUILD_ACE_FOR_TAO
 
 ## Makefile.OS_Process_Process.am
+
 noinst_PROGRAMS += process
 
 process_CPPFLAGS = \

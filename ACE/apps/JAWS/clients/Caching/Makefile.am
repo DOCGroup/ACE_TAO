@@ -16,6 +16,7 @@ ACE_ROOT = $(top_srcdir)
 
 if BUILD_ACE_FILECACHE
 if !BUILD_ACE_FOR_TAO
+
 noinst_PROGRAMS = http_client
 
 http_client_CPPFLAGS = \

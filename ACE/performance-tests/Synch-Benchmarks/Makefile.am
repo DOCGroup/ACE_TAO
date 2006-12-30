@@ -18,6 +18,7 @@ SUBDIRS = \
         .
 
 ## Makefile.Synch_Benchmarks.am
+
 noinst_PROGRAMS = synch_driver
 
 synch_driver_CPPFLAGS = \

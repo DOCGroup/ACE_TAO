@@ -16,6 +16,7 @@ ACE_ROOT = $(top_srcdir)
 
 if !BUILD_ACE_FOR_TAO
 if !BUILD_USES_WCHAR
+
 noinst_PROGRAMS = soreduce
 
 soreduce_CPPFLAGS = \

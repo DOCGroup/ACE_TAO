@@ -12,6 +12,7 @@ ACE_BUILDDIR = $(top_builddir)
 ACE_ROOT = $(top_srcdir)
 
 ## Makefile.Logger_client.am
+
 noinst_PROGRAMS = logging_app
 
 logging_app_CPPFLAGS = \

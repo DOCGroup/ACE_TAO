@@ -13,6 +13,7 @@ ACE_ROOT = $(top_srcdir)
 
 
 ## Makefile.Misc_Test_Dump.am
+
 noinst_PROGRAMS = test_dump
 
 test_dump_CPPFLAGS = \
@@ -27,6 +28,7 @@ test_dump_LDADD = \
   $(ACE_BUILDDIR)/ace/libACE.la
 
 ## Makefile.Misc_Test_Get_Opt.am
+
 noinst_PROGRAMS += test_get_opt
 
 test_get_opt_CPPFLAGS = \
@@ -43,6 +45,7 @@ test_get_opt_LDADD = \
 ## Makefile.Misc_Test_Profile_Timer.am
 
 if !BUILD_ACE_FOR_TAO
+
 noinst_PROGRAMS += test_profile_timer
 
 test_profile_timer_CPPFLAGS = \
@@ -59,6 +62,7 @@ test_profile_timer_LDADD = \
 endif !BUILD_ACE_FOR_TAO
 
 ## Makefile.Misc_Test_Read_Buffer.am
+
 noinst_PROGRAMS += test_read_buffer
 
 test_read_buffer_CPPFLAGS = \
@@ -73,6 +77,7 @@ test_read_buffer_LDADD = \
   $(ACE_BUILDDIR)/ace/libACE.la
 
 ## Makefile.Misc_Test_Set.am
+
 noinst_PROGRAMS += test_set
 
 test_set_CPPFLAGS = \
@@ -87,6 +92,7 @@ test_set_LDADD = \
   $(ACE_BUILDDIR)/ace/libACE.la
 
 ## Makefile.Misc_Test_Sstring.am
+
 noinst_PROGRAMS += test_sstring
 
 test_sstring_CPPFLAGS = \
@@ -101,6 +107,7 @@ test_sstring_LDADD = \
   $(ACE_BUILDDIR)/ace/libACE.la
 
 ## Makefile.Misc_Test_Timestamp.am
+
 noinst_PROGRAMS += test_timestamp
 
 test_timestamp_CPPFLAGS = \
@@ -115,6 +122,7 @@ test_timestamp_LDADD = \
   $(ACE_BUILDDIR)/ace/libACE.la
 
 ## Makefile.Misc_Test_Trace.am
+
 noinst_PROGRAMS += test_trace
 
 test_trace_CPPFLAGS = \

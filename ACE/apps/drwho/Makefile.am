@@ -18,6 +18,7 @@ noinst_PROGRAMS =
 if BUILD_RWHO
 if !BUILD_ACE_FOR_TAO
 if !BUILD_USES_WCHAR
+
 noinst_PROGRAMS += client
 
 client_CPPFLAGS = \
@@ -113,6 +114,7 @@ endif BUILD_RWHO
 if BUILD_RWHO
 if !BUILD_ACE_FOR_TAO
 if !BUILD_USES_WCHAR
+
 noinst_PROGRAMS += server
 
 server_CPPFLAGS = \

@@ -15,6 +15,7 @@ ACE_ROOT = $(top_srcdir)
 ## Makefile.file_sap_client.am
 
 if !BUILD_ACE_FOR_TAO
+
 noinst_PROGRAMS = client
 
 client_CPPFLAGS = \

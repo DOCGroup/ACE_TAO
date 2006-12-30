@@ -13,6 +13,7 @@ ACE_ROOT = $(top_srcdir)
 
 
 ## Makefile.Allocator.am
+
 noinst_PROGRAMS = Allocator
 
 Allocator_CPPFLAGS = \
@@ -30,6 +31,7 @@ Allocator_LDADD = \
   $(ACE_BUILDDIR)/ace/libACE.la
 
 ## Makefile.Array.am
+
 noinst_PROGRAMS += Array
 
 Array_CPPFLAGS = \
@@ -47,6 +49,7 @@ Array_LDADD = \
   $(ACE_BUILDDIR)/ace/libACE.la
 
 ## Makefile.Containers_Hash_Map.am
+
 noinst_PROGRAMS += Hash_Map
 
 Hash_Map_CPPFLAGS = \
@@ -64,6 +67,7 @@ Hash_Map_LDADD = \
   $(ACE_BUILDDIR)/ace/libACE.la
 
 ## Makefile.Containers_Map_Manager.am
+
 noinst_PROGRAMS += Map_Manager
 
 Map_Manager_CPPFLAGS = \
@@ -83,6 +87,7 @@ Map_Manager_LDADD = \
 ## Makefile.DLList.am
 
 if !BUILD_ACE_FOR_TAO
+
 noinst_PROGRAMS += DLList
 
 DLList_CPPFLAGS = \
@@ -102,6 +107,7 @@ DLList_LDADD = \
 endif !BUILD_ACE_FOR_TAO
 
 ## Makefile.Hash_Map_Hash.am
+
 noinst_PROGRAMS += Hash_Map_Hash
 
 Hash_Map_Hash_CPPFLAGS = \
@@ -116,6 +122,7 @@ Hash_Map_Hash_LDADD = \
   $(ACE_BUILDDIR)/ace/libACE.la
 
 ## Makefile.Map_Manager_Specialization.am
+
 noinst_PROGRAMS += Map_Manager_Specialization
 
 Map_Manager_Specialization_CPPFLAGS = \
@@ -133,6 +140,7 @@ Map_Manager_Specialization_LDADD = \
   $(ACE_BUILDDIR)/ace/libACE.la
 
 ## Makefile.Queues.am
+
 noinst_PROGRAMS += Queues
 
 Queues_CPPFLAGS = \
@@ -150,6 +158,7 @@ Queues_LDADD = \
   $(ACE_BUILDDIR)/ace/libACE.la
 
 ## Makefile.RB_Tree.am
+
 noinst_PROGRAMS += RB_Tree
 
 RB_Tree_CPPFLAGS = \
@@ -167,6 +176,7 @@ RB_Tree_LDADD = \
   $(ACE_BUILDDIR)/ace/libACE.la
 
 ## Makefile.RB_Tree_Functors.am
+
 noinst_PROGRAMS += RB_Tree_Functors
 
 RB_Tree_Functors_CPPFLAGS = \
@@ -181,6 +191,7 @@ RB_Tree_Functors_LDADD = \
   $(ACE_BUILDDIR)/ace/libACE.la
 
 ## Makefile.Sets.am
+
 noinst_PROGRAMS += Sets
 
 Sets_CPPFLAGS = \
@@ -198,6 +209,7 @@ Sets_LDADD = \
   $(ACE_BUILDDIR)/ace/libACE.la
 
 ## Makefile.Stacks.am
+
 noinst_PROGRAMS += Stacks
 
 Stacks_CPPFLAGS = \

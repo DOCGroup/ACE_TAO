@@ -28,6 +28,7 @@ noinst_HEADERS = \
   Peer.h
 
 ## Makefile.gateway_peerd.am
+
 noinst_PROGRAMS = peerd
 
 peerd_CPPFLAGS = \

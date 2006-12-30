@@ -15,6 +15,7 @@ ACE_ROOT = $(top_srcdir)
 ## Makefile.mkcsregdb.am
 
 if !BUILD_USES_WCHAR
+
 noinst_PROGRAMS = mkcsregdb
 
 mkcsregdb_CPPFLAGS = \

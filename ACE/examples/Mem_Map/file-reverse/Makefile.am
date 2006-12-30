@@ -15,6 +15,7 @@ ACE_ROOT = $(top_srcdir)
 ## Makefile.Mem_Map_File_Reverse.am
 
 if !BUILD_ACE_FOR_TAO
+
 noinst_PROGRAMS = file-reverse
 
 file_reverse_CPPFLAGS = \

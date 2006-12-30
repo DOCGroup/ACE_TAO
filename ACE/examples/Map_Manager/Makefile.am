@@ -12,6 +12,7 @@ ACE_BUILDDIR = $(top_builddir)
 ACE_ROOT = $(top_srcdir)
 
 ## Makefile.Map_Manager.am
+
 noinst_PROGRAMS = Map_Manager
 
 Map_Manager_CPPFLAGS = \

@@ -15,6 +15,7 @@ ACE_ROOT = $(top_srcdir)
 ## Makefile.gperf.am
 
 if !BUILD_USES_WCHAR
+
 bin_PROGRAMS = gperf
 
 gperf_CPPFLAGS = \

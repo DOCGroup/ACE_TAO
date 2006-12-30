@@ -15,6 +15,7 @@ ACE_ROOT = $(top_srcdir)
 ## Makefile.UPIPE_Event_Server.am
 
 if !BUILD_ACE_FOR_TAO
+
 noinst_PROGRAMS = UPIPE_Event_Server
 
 UPIPE_Event_Server_CPPFLAGS = \

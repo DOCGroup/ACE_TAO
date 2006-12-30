@@ -17,6 +17,7 @@ ACE_ROOT = $(top_srcdir)
 if BUILD_WINREGISTRY
 if !BUILD_ACE_FOR_TAO
 if !BUILD_WINCE
+
 noinst_PROGRAMS = main
 
 main_CPPFLAGS = \

@@ -16,6 +16,7 @@ noinst_PROGRAMS =
 ## Makefile.SV_Semaphores_1.am
 
 if !BUILD_ACE_FOR_TAO
+
 noinst_PROGRAMS += sem1
 
 sem1_CPPFLAGS = \
@@ -33,6 +34,7 @@ endif !BUILD_ACE_FOR_TAO
 ## Makefile.SV_Semaphores_2.am
 
 if !BUILD_ACE_FOR_TAO
+
 noinst_PROGRAMS += sem2
 
 sem2_CPPFLAGS = \

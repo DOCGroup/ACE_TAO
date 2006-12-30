@@ -12,6 +12,7 @@ ACE_BUILDDIR = $(top_builddir)
 ACE_ROOT = $(top_srcdir)
 
 ## Makefile.Reactor_Ntalker.am
+
 noinst_PROGRAMS = ntalker
 
 ntalker_CPPFLAGS = \

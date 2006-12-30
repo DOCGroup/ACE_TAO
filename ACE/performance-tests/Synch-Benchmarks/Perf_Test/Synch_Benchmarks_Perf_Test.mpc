@@ -9,7 +9,7 @@ project : acelib {
   libpaths += ../Synch_Lib
 
   specific (automake) {
-    includes += $(srcdirs)/..
+    includes += $(srcdir)/..
   } else {
     includes += ..
   }
