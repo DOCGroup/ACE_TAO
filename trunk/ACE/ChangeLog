@@ -1,3 +1,14 @@
+Sat Dec 30 06:12:59 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * m4/ace.m4:
+
+          Add placeholder automake conditionals for BUILD_ZLIB and
+          BUILD_ZZIP.
+
+        * bin/MakeProjectCreator/acexml.mpb:
+
+          Derive from both zlib and zzip.
+
 Fri Dec 29 16:57:10 UTC 2006  Steve Huston  <shuston@riverace.com>
 
         * ace/SOCK_Dgram.cpp (recv): Corrected a "can't delete void*" warning
@@ -808,6 +819,8 @@ Fri Dec  8 05:21:38 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
           more resilient to leading whitespace like was added by a bug in
           the release script in the last beta.  Thanks to Ray Lischner
           <rlischner at proteus-technologies dot com> for this patch.
+          Also thanks to Paul Riley <paul at riley dot net> for reporting
+          this problem.
 
 Thu Dec  7 14:13:43 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
