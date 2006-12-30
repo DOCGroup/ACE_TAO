@@ -12,6 +12,7 @@ ACE_BUILDDIR = $(top_builddir)
 ACE_ROOT = $(top_srcdir)
 
 ## Makefile.blobby.am
+
 noinst_PROGRAMS = blobby
 
 blobby_CPPFLAGS = \

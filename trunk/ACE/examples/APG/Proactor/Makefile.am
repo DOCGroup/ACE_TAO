@@ -15,6 +15,7 @@ ACE_ROOT = $(top_srcdir)
 ## Makefile.HA_Proactive_Status.am
 
 if !BUILD_ACE_FOR_TAO
+
 noinst_PROGRAMS = HA_Proactive_Status
 
 HA_Proactive_Status_CPPFLAGS = \

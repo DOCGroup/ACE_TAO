@@ -16,6 +16,7 @@ noinst_PROGRAMS =
 ## Makefile.AO.am
 
 if !BUILD_ACE_FOR_TAO
+
 noinst_PROGRAMS += AO
 
 AO_CPPFLAGS = \
@@ -33,6 +34,7 @@ endif !BUILD_ACE_FOR_TAO
 ## Makefile.AO2.am
 
 if !BUILD_ACE_FOR_TAO
+
 noinst_PROGRAMS += AO2
 
 AO2_CPPFLAGS = \

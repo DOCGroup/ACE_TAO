@@ -16,6 +16,7 @@ noinst_PROGRAMS =
 ## Makefile.Connection_Blocking_Acceptor.am
 
 if !BUILD_ACE_FOR_TAO
+
 noinst_PROGRAMS += acceptor
 
 acceptor_CPPFLAGS = \
@@ -35,6 +36,7 @@ endif !BUILD_ACE_FOR_TAO
 ## Makefile.Connection_Blocking_Connector.am
 
 if !BUILD_ACE_FOR_TAO
+
 noinst_PROGRAMS += connector
 
 connector_CPPFLAGS = \

@@ -13,6 +13,7 @@ ACE_ROOT = $(top_srcdir)
 
 
 ## Makefile.Atomic_Op.am
+
 noinst_PROGRAMS = Atomic_Op
 
 Atomic_Op_CPPFLAGS = \
@@ -27,6 +28,7 @@ Atomic_Op_LDADD = \
   $(ACE_BUILDDIR)/ace/libACE.la
 
 ## Makefile.Barrier.am
+
 noinst_PROGRAMS += Barrier
 
 Barrier_CPPFLAGS = \
@@ -41,6 +43,7 @@ Barrier_LDADD = \
   $(ACE_BUILDDIR)/ace/libACE.la
 
 ## Makefile.Mutex.am
+
 noinst_PROGRAMS += Mutex
 
 Mutex_CPPFLAGS = \
@@ -57,6 +60,7 @@ Mutex_LDADD = \
 ## Makefile.RW_Lock.am
 
 if !BUILD_ACE_FOR_TAO
+
 noinst_PROGRAMS += RW_Lock
 
 RW_Lock_CPPFLAGS = \
@@ -75,6 +79,7 @@ endif !BUILD_ACE_FOR_TAO
 ## Makefile.Semaphore.am
 
 if !BUILD_ACE_FOR_TAO
+
 noinst_PROGRAMS += Semaphore
 
 Semaphore_CPPFLAGS = \
@@ -91,6 +96,7 @@ Semaphore_LDADD = \
 endif !BUILD_ACE_FOR_TAO
 
 ## Makefile.TSS.am
+
 noinst_PROGRAMS += TSS
 
 TSS_CPPFLAGS = \
@@ -105,6 +111,7 @@ TSS_LDADD = \
   $(ACE_BUILDDIR)/ace/libACE.la
 
 ## Makefile.Tokens.am
+
 noinst_PROGRAMS += Tokens
 
 Tokens_CPPFLAGS = \
@@ -119,6 +126,7 @@ Tokens_LDADD = \
   $(ACE_BUILDDIR)/ace/libACE.la
 
 ## Makefile.Tokens_Deadlock.am
+
 noinst_PROGRAMS += Tokens_Deadlock
 
 Tokens_Deadlock_CPPFLAGS = \

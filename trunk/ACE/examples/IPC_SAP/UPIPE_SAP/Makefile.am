@@ -16,6 +16,7 @@ noinst_PROGRAMS =
 ## Makefile.UPIPE_SAP_Ex1.am
 
 if !BUILD_ACE_FOR_TAO
+
 noinst_PROGRAMS += ex1
 
 ex1_CPPFLAGS = \
@@ -33,6 +34,7 @@ endif !BUILD_ACE_FOR_TAO
 ## Makefile.UPIPE_SAP_Ex2.am
 
 if !BUILD_ACE_FOR_TAO
+
 noinst_PROGRAMS += ex2
 
 ex2_CPPFLAGS = \
@@ -50,6 +52,7 @@ endif !BUILD_ACE_FOR_TAO
 ## Makefile.UPIPE_SAP_Ex3.am
 
 if !BUILD_ACE_FOR_TAO
+
 noinst_PROGRAMS += ex3
 
 ex3_CPPFLAGS = \

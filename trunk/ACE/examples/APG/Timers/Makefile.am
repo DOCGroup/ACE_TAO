@@ -12,6 +12,7 @@ ACE_BUILDDIR = $(top_builddir)
 ACE_ROOT = $(top_srcdir)
 
 ## Makefile.Alarm.am
+
 noinst_PROGRAMS = Alarm
 
 Alarm_CPPFLAGS = \
@@ -30,6 +31,7 @@ Alarm_LDADD = \
   $(ACE_BUILDDIR)/ace/libACE.la
 
 ## Makefile.Task.am
+
 noinst_PROGRAMS += Task
 
 Task_CPPFLAGS = \
@@ -48,6 +50,7 @@ Task_LDADD = \
   $(ACE_BUILDDIR)/ace/libACE.la
 
 ## Makefile.Timers.am
+
 noinst_PROGRAMS += Timers
 
 Timers_CPPFLAGS = \
@@ -65,6 +68,7 @@ Timers_LDADD = \
   $(ACE_BUILDDIR)/ace/libACE.la
 
 ## Makefile.Upcall.am
+
 noinst_PROGRAMS += Upcall
 
 Upcall_CPPFLAGS = \

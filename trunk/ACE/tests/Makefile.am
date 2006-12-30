@@ -19,10 +19,10 @@ SUBDIRS = \
 ## Makefile.Test_Output.am
 
 noinst_SCRIPTS = run_test.pl run_test.lst
-
 dist_check_SCRIPTS = run_test.pl run_test.lst
 TESTS = $(noinst_PROGRAMS)
 TESTS_ENVIRONMENT = $(srcdir)/run_test.pl -t
+
 
 noinst_LTLIBRARIES = libTest_Output.la
 
@@ -39,6 +39,7 @@ noinst_HEADERS = \
   test_config.h
 
 ## Makefile.ACE_Init_Test.am
+
 noinst_PROGRAMS = ACE_Init_Test
 
 ACE_Init_Test_CPPFLAGS = \
@@ -59,6 +60,7 @@ EXTRA_DIST = \
 
 
 ## Makefile.ACE_Test.am
+
 noinst_PROGRAMS += ACE_Test
 
 ACE_Test_CPPFLAGS = \
@@ -74,6 +76,7 @@ ACE_Test_LDADD = \
   $(ACE_BUILDDIR)/ace/libACE.la
 
 ## Makefile.ARGV_Test.am
+
 noinst_PROGRAMS += ARGV_Test
 
 ARGV_Test_CPPFLAGS = \
@@ -89,6 +92,7 @@ ARGV_Test_LDADD = \
   $(ACE_BUILDDIR)/ace/libACE.la
 
 ## Makefile.Aio_Platform_Test.am
+
 noinst_PROGRAMS += Aio_Platform_Test
 
 Aio_Platform_Test_CPPFLAGS = \
@@ -104,6 +108,7 @@ Aio_Platform_Test_LDADD = \
   $(ACE_BUILDDIR)/ace/libACE.la
 
 ## Makefile.Arg_Shifter_Test.am
+
 noinst_PROGRAMS += Arg_Shifter_Test
 
 Arg_Shifter_Test_CPPFLAGS = \
@@ -119,6 +124,7 @@ Arg_Shifter_Test_LDADD = \
   $(ACE_BUILDDIR)/ace/libACE.la
 
 ## Makefile.Array_Map_Test.am
+
 noinst_PROGRAMS += Array_Map_Test
 
 Array_Map_Test_CPPFLAGS = \
@@ -134,6 +140,7 @@ Array_Map_Test_LDADD = \
   $(ACE_BUILDDIR)/ace/libACE.la
 
 ## Makefile.Atomic_Op_Test.am
+
 noinst_PROGRAMS += Atomic_Op_Test
 
 Atomic_Op_Test_CPPFLAGS = \
@@ -149,6 +156,7 @@ Atomic_Op_Test_LDADD = \
   $(ACE_BUILDDIR)/ace/libACE.la
 
 ## Makefile.Auto_Event_Test.am
+
 noinst_PROGRAMS += Auto_Event_Test
 
 Auto_Event_Test_CPPFLAGS = \
@@ -164,6 +172,7 @@ Auto_Event_Test_LDADD = \
   $(ACE_BUILDDIR)/ace/libACE.la
 
 ## Makefile.Auto_IncDec_Test.am
+
 noinst_PROGRAMS += Auto_IncDec_Test
 
 Auto_IncDec_Test_CPPFLAGS = \
@@ -179,6 +188,7 @@ Auto_IncDec_Test_LDADD = \
   $(ACE_BUILDDIR)/ace/libACE.la
 
 ## Makefile.Barrier_Test.am
+
 noinst_PROGRAMS += Barrier_Test
 
 Barrier_Test_CPPFLAGS = \
@@ -258,6 +268,7 @@ endif !BUILD_ACE_FOR_TAO
 ## Makefile.Based_Pointer_Test.am
 
 if !BUILD_ACE_FOR_TAO
+
 noinst_PROGRAMS += Based_Pointer_Test
 
 Based_Pointer_Test_CPPFLAGS = \
@@ -275,6 +286,7 @@ Based_Pointer_Test_LDADD = \
 endif !BUILD_ACE_FOR_TAO
 
 ## Makefile.Basic_Types_Test.am
+
 noinst_PROGRAMS += Basic_Types_Test
 
 Basic_Types_Test_CPPFLAGS = \
@@ -292,6 +304,7 @@ Basic_Types_Test_LDADD = \
 ## Makefile.Bound_Ptr_Test.am
 
 if !BUILD_ACE_FOR_TAO
+
 noinst_PROGRAMS += Bound_Ptr_Test
 
 Bound_Ptr_Test_CPPFLAGS = \
@@ -310,6 +323,7 @@ Bound_Ptr_Test_LDADD = \
 endif !BUILD_ACE_FOR_TAO
 
 ## Makefile.Buffer_Stream_Test.am
+
 noinst_PROGRAMS += Buffer_Stream_Test
 
 Buffer_Stream_Test_CPPFLAGS = \
@@ -325,6 +339,7 @@ Buffer_Stream_Test_LDADD = \
   $(ACE_BUILDDIR)/ace/libACE.la
 
 ## Makefile.Bug_1576_Regression_Test.am
+
 noinst_PROGRAMS += Bug_1576_Regression_Test
 
 Bug_1576_Regression_Test_CPPFLAGS = \
@@ -340,6 +355,7 @@ Bug_1576_Regression_Test_LDADD = \
   $(ACE_BUILDDIR)/ace/libACE.la
 
 ## Makefile.Bug_1890_Regression_Test.am
+
 noinst_PROGRAMS += Bug_1890_Regression_Test
 
 Bug_1890_Regression_Test_CPPFLAGS = \
@@ -355,6 +371,7 @@ Bug_1890_Regression_Test_LDADD = \
   $(ACE_BUILDDIR)/ace/libACE.la
 
 ## Makefile.Bug_2368_Regression_Test.am
+
 noinst_PROGRAMS += Bug_2368_Regression_Test
 
 Bug_2368_Regression_Test_CPPFLAGS = \
@@ -370,6 +387,7 @@ Bug_2368_Regression_Test_LDADD = \
   $(ACE_BUILDDIR)/ace/libACE.la
 
 ## Makefile.Bug_2497_Regression_Test.am
+
 noinst_PROGRAMS += Bug_2497_Regression_Test
 
 Bug_2497_Regression_Test_CPPFLAGS = \
@@ -385,6 +403,7 @@ Bug_2497_Regression_Test_LDADD = \
   $(ACE_BUILDDIR)/ace/libACE.la
 
 ## Makefile.Bug_2540_Regression_Test.am
+
 noinst_PROGRAMS += Bug_2540_Regression_Test
 
 Bug_2540_Regression_Test_CPPFLAGS = \
@@ -400,6 +419,7 @@ Bug_2540_Regression_Test_LDADD = \
   $(ACE_BUILDDIR)/ace/libACE.la
 
 ## Makefile.Bug_2653_Regression_Test.am
+
 noinst_PROGRAMS += Bug_2653_Regression_Test
 
 Bug_2653_Regression_Test_CPPFLAGS = \
@@ -414,9 +434,26 @@ Bug_2653_Regression_Test_LDADD = \
   libTest_Output.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
+## Makefile.Bug_2659_Regression_Test.am
+
+noinst_PROGRAMS += Bug_2659_Regression_Test
+
+Bug_2659_Regression_Test_CPPFLAGS = \
+  -I$(ACE_ROOT) \
+  -I$(ACE_BUILDDIR)
+
+Bug_2659_Regression_Test_SOURCES = \
+  $(ACE_ROOT)/tests/Main.cpp \
+  Bug_2659_Regression_Test.cpp
+
+Bug_2659_Regression_Test_LDADD = \
+  libTest_Output.la \
+  $(ACE_BUILDDIR)/ace/libACE.la
+
 ## Makefile.CDR_Array_Test.am
 
 if !BUILD_ACE_FOR_TAO
+
 noinst_PROGRAMS += CDR_Array_Test
 
 CDR_Array_Test_CPPFLAGS = \
@@ -436,6 +473,7 @@ endif !BUILD_ACE_FOR_TAO
 ## Makefile.CDR_File_Test.am
 
 if !BUILD_ACE_FOR_TAO
+
 noinst_PROGRAMS += CDR_File_Test
 
 CDR_File_Test_CPPFLAGS = \
@@ -455,6 +493,7 @@ CDR_File_Test_LDADD = \
 endif !BUILD_ACE_FOR_TAO
 
 ## Makefile.CDR_Test.am
+
 noinst_PROGRAMS += CDR_Test
 
 CDR_Test_CPPFLAGS = \
@@ -470,6 +509,7 @@ CDR_Test_LDADD = \
   $(ACE_BUILDDIR)/ace/libACE.la
 
 ## Makefile.Cache_Map_Manager_Test.am
+
 noinst_PROGRAMS += Cache_Map_Manager_Test
 
 Cache_Map_Manager_Test_CPPFLAGS = \
@@ -488,6 +528,7 @@ Cache_Map_Manager_Test_LDADD = \
 ## Makefile.Cached_Accept_Conn_Test.am
 
 if !BUILD_ACE_FOR_TAO
+
 noinst_PROGRAMS += Cached_Accept_Conn_Test
 
 Cached_Accept_Conn_Test_CPPFLAGS = \
@@ -508,6 +549,7 @@ endif !BUILD_ACE_FOR_TAO
 ## Makefile.Cached_Allocator_Test.am
 
 if !BUILD_ACE_FOR_TAO
+
 noinst_PROGRAMS += Cached_Allocator_Test
 
 Cached_Allocator_Test_CPPFLAGS = \
@@ -527,6 +569,7 @@ endif !BUILD_ACE_FOR_TAO
 ## Makefile.Cached_Conn_Test.am
 
 if !BUILD_ACE_FOR_TAO
+
 noinst_PROGRAMS += Cached_Conn_Test
 
 Cached_Conn_Test_CPPFLAGS = \
@@ -547,6 +590,7 @@ endif !BUILD_ACE_FOR_TAO
 ## Makefile.Capabilities_Test.am
 
 if !BUILD_ACE_FOR_TAO
+
 noinst_PROGRAMS += Capabilities_Test
 
 Capabilities_Test_CPPFLAGS = \
@@ -567,6 +611,7 @@ endif !BUILD_ACE_FOR_TAO
 
 if BUILD_ACE_CODECS
 if !BUILD_ACE_FOR_TAO
+
 noinst_PROGRAMS += Codecs_Test
 
 Codecs_Test_CPPFLAGS = \
@@ -585,6 +630,7 @@ endif !BUILD_ACE_FOR_TAO
 endif BUILD_ACE_CODECS
 
 ## Makefile.Collection_Test.am
+
 noinst_PROGRAMS += Collection_Test
 
 Collection_Test_CPPFLAGS = \
@@ -603,6 +649,7 @@ Collection_Test_LDADD = \
 ## Makefile.Config_Test.am
 
 if !BUILD_ACE_FOR_TAO
+
 noinst_PROGRAMS += Config_Test
 
 Config_Test_CPPFLAGS = \
@@ -623,6 +670,7 @@ endif !BUILD_ACE_FOR_TAO
 ## Makefile.Conn_Test.am
 
 if !BUILD_ACE_FOR_TAO
+
 noinst_PROGRAMS += Conn_Test
 
 Conn_Test_CPPFLAGS = \
@@ -674,6 +722,7 @@ noinst_HEADERS += \
   test_config.h
 
 ## Makefile.DLL_Test.am
+
 noinst_PROGRAMS += DLL_Test
 
 DLL_Test_CPPFLAGS = \
@@ -694,6 +743,7 @@ DLL_Test_LDADD = \
 ## Makefile.DLList_Test.am
 
 if !BUILD_ACE_FOR_TAO
+
 noinst_PROGRAMS += DLList_Test
 
 DLList_Test_CPPFLAGS = \
@@ -713,6 +763,7 @@ endif !BUILD_ACE_FOR_TAO
 ## Makefile.Date_Time_Test.am
 
 if !BUILD_ACE_FOR_TAO
+
 noinst_PROGRAMS += Date_Time_Test
 
 Date_Time_Test_CPPFLAGS = \
@@ -730,6 +781,7 @@ Date_Time_Test_LDADD = \
 endif !BUILD_ACE_FOR_TAO
 
 ## Makefile.Dev_Poll_Reactor_Test.am
+
 noinst_PROGRAMS += Dev_Poll_Reactor_Test
 
 Dev_Poll_Reactor_Test_CPPFLAGS = \
@@ -745,6 +797,7 @@ Dev_Poll_Reactor_Test_LDADD = \
   $(ACE_BUILDDIR)/ace/libACE.la
 
 ## Makefile.Dirent_Test.am
+
 noinst_PROGRAMS += Dirent_Test
 
 Dirent_Test_CPPFLAGS = \
@@ -760,6 +813,7 @@ Dirent_Test_LDADD = \
   $(ACE_BUILDDIR)/ace/libACE.la
 
 ## Makefile.Dynamic_Priority_Test.am
+
 noinst_PROGRAMS += Dynamic_Priority_Test
 
 Dynamic_Priority_Test_CPPFLAGS = \
@@ -775,6 +829,7 @@ Dynamic_Priority_Test_LDADD = \
   $(ACE_BUILDDIR)/ace/libACE.la
 
 ## Makefile.Enum_Interfaces_Test.am
+
 noinst_PROGRAMS += Enum_Interfaces_Test
 
 Enum_Interfaces_Test_CPPFLAGS = \
@@ -790,6 +845,7 @@ Enum_Interfaces_Test_LDADD = \
   $(ACE_BUILDDIR)/ace/libACE.la
 
 ## Makefile.Env_Value_Test.am
+
 noinst_PROGRAMS += Env_Value_Test
 
 Env_Value_Test_CPPFLAGS = \
@@ -807,6 +863,7 @@ Env_Value_Test_LDADD = \
 ## Makefile.FIFO_Test.am
 
 if !BUILD_ACE_FOR_TAO
+
 noinst_PROGRAMS += FIFO_Test
 
 FIFO_Test_CPPFLAGS = \
@@ -872,6 +929,7 @@ noinst_HEADERS += \
   Framework_Component_DLL_Export.h
 
 ## Makefile.Framework_Component_Test.am
+
 noinst_PROGRAMS += Framework_Component_Test
 
 Framework_Component_Test_CPPFLAGS = \
@@ -890,6 +948,7 @@ Framework_Component_Test_LDADD = \
 ## Makefile.Future_Set_Test.am
 
 if !BUILD_ACE_FOR_TAO
+
 noinst_PROGRAMS += Future_Set_Test
 
 Future_Set_Test_CPPFLAGS = \
@@ -909,6 +968,7 @@ endif !BUILD_ACE_FOR_TAO
 ## Makefile.Future_Test.am
 
 if !BUILD_ACE_FOR_TAO
+
 noinst_PROGRAMS += Future_Test
 
 Future_Test_CPPFLAGS = \
@@ -926,6 +986,7 @@ Future_Test_LDADD = \
 endif !BUILD_ACE_FOR_TAO
 
 ## Makefile.Get_Opt_Test.am
+
 noinst_PROGRAMS += Get_Opt_Test
 
 Get_Opt_Test_CPPFLAGS = \
@@ -943,6 +1004,7 @@ Get_Opt_Test_LDADD = \
 ## Makefile.Handle_Set_Test.am
 
 if !BUILD_ACE_FOR_TAO
+
 noinst_PROGRAMS += Handle_Set_Test
 
 Handle_Set_Test_CPPFLAGS = \
@@ -960,6 +1022,7 @@ Handle_Set_Test_LDADD = \
 endif !BUILD_ACE_FOR_TAO
 
 ## Makefile.Hash_Map_Bucket_Iterator_Test.am
+
 noinst_PROGRAMS += Hash_Map_Bucket_Iterator_Test
 
 Hash_Map_Bucket_Iterator_Test_CPPFLAGS = \
@@ -975,6 +1038,7 @@ Hash_Map_Bucket_Iterator_Test_LDADD = \
   $(ACE_BUILDDIR)/ace/libACE.la
 
 ## Makefile.Hash_Map_Manager_Test.am
+
 noinst_PROGRAMS += Hash_Map_Manager_Test
 
 Hash_Map_Manager_Test_CPPFLAGS = \
@@ -990,6 +1054,7 @@ Hash_Map_Manager_Test_LDADD = \
   $(ACE_BUILDDIR)/ace/libACE.la
 
 ## Makefile.Hash_Multi_Map_Manager_Test.am
+
 noinst_PROGRAMS += Hash_Multi_Map_Manager_Test
 
 Hash_Multi_Map_Manager_Test_CPPFLAGS = \
@@ -1007,6 +1072,7 @@ Hash_Multi_Map_Manager_Test_LDADD = \
 ## Makefile.High_Res_Timer_Test.am
 
 if !BUILD_ACE_FOR_TAO
+
 noinst_PROGRAMS += High_Res_Timer_Test
 
 High_Res_Timer_Test_CPPFLAGS = \
@@ -1024,6 +1090,7 @@ High_Res_Timer_Test_LDADD = \
 endif !BUILD_ACE_FOR_TAO
 
 ## Makefile.INET_Addr_Test.am
+
 noinst_PROGRAMS += INET_Addr_Test
 
 INET_Addr_Test_CPPFLAGS = \
@@ -1039,6 +1106,7 @@ INET_Addr_Test_LDADD = \
   $(ACE_BUILDDIR)/ace/libACE.la
 
 ## Makefile.INET_Addr_Test_IPV6.am
+
 noinst_PROGRAMS += INET_Addr_Test_IPV6
 
 INET_Addr_Test_IPV6_CPPFLAGS = \
@@ -1054,6 +1122,7 @@ INET_Addr_Test_IPV6_LDADD = \
   $(ACE_BUILDDIR)/ace/libACE.la
 
 ## Makefile.IOStream_Test.am
+
 noinst_PROGRAMS += IOStream_Test
 
 IOStream_Test_CPPFLAGS = \
@@ -1069,6 +1138,7 @@ IOStream_Test_LDADD = \
   $(ACE_BUILDDIR)/ace/libACE.la
 
 ## Makefile.Integer_Truncate_Test.am
+
 noinst_PROGRAMS += Integer_Truncate_Test
 
 Integer_Truncate_Test_CPPFLAGS = \
@@ -1084,6 +1154,7 @@ Integer_Truncate_Test_LDADD = \
   $(ACE_BUILDDIR)/ace/libACE.la
 
 ## Makefile.Lazy_Map_Manager_Test.am
+
 noinst_PROGRAMS += Lazy_Map_Manager_Test
 
 Lazy_Map_Manager_Test_CPPFLAGS = \
@@ -1101,6 +1172,7 @@ Lazy_Map_Manager_Test_LDADD = \
 ## Makefile.Library_Unload.am
 
 if !BUILD_WINCE
+
 noinst_PROGRAMS += UnloadLibACE
 
 UnloadLibACE_SOURCES = \
@@ -1155,6 +1227,7 @@ endif !BUILD_WINCE
 ## Makefile.Log_Msg_Test.am
 
 if !BUILD_ACE_FOR_TAO
+
 noinst_PROGRAMS += Log_Msg_Test
 
 Log_Msg_Test_CPPFLAGS = \
@@ -1172,6 +1245,7 @@ Log_Msg_Test_LDADD = \
 endif !BUILD_ACE_FOR_TAO
 
 ## Makefile.Logging_Strategy_Test.am
+
 noinst_PROGRAMS += Logging_Strategy_Test
 
 Logging_Strategy_Test_CPPFLAGS = \
@@ -1189,6 +1263,7 @@ Logging_Strategy_Test_LDADD = \
 ## Makefile.MEM_Stream_Test.am
 
 if !BUILD_ACE_FOR_TAO
+
 noinst_PROGRAMS += MEM_Stream_Test
 
 MEM_Stream_Test_CPPFLAGS = \
@@ -1209,6 +1284,7 @@ endif !BUILD_ACE_FOR_TAO
 ## Makefile.MM_Shared_Memory_Test.am
 
 if !BUILD_ACE_FOR_TAO
+
 noinst_PROGRAMS += MM_Shared_Memory_Test
 
 MM_Shared_Memory_Test_CPPFLAGS = \
@@ -1226,6 +1302,7 @@ MM_Shared_Memory_Test_LDADD = \
 endif !BUILD_ACE_FOR_TAO
 
 ## Makefile.MT_Reactor_Timer_Test.am
+
 noinst_PROGRAMS += MT_Reactor_Timer_Test
 
 MT_Reactor_Timer_Test_CPPFLAGS = \
@@ -1242,6 +1319,7 @@ MT_Reactor_Timer_Test_LDADD = \
   $(ACE_BUILDDIR)/ace/libACE.la
 
 ## Makefile.MT_Reactor_Upcall_Test.am
+
 noinst_PROGRAMS += MT_Reactor_Upcall_Test
 
 MT_Reactor_Upcall_Test_CPPFLAGS = \
@@ -1257,6 +1335,7 @@ MT_Reactor_Upcall_Test_LDADD = \
   $(ACE_BUILDDIR)/ace/libACE.la
 
 ## Makefile.MT_Ref_Counted_Event_Handler_Test.am
+
 noinst_PROGRAMS += MT_Reference_Counted_Event_Handler_Test
 
 MT_Reference_Counted_Event_Handler_Test_CPPFLAGS = \
@@ -1272,6 +1351,7 @@ MT_Reference_Counted_Event_Handler_Test_LDADD = \
   $(ACE_BUILDDIR)/ace/libACE.la
 
 ## Makefile.MT_Reference_Counted_Notify_Test.am
+
 noinst_PROGRAMS += MT_Reference_Counted_Notify_Test
 
 MT_Reference_Counted_Notify_Test_CPPFLAGS = \
@@ -1287,6 +1367,7 @@ MT_Reference_Counted_Notify_Test_LDADD = \
   $(ACE_BUILDDIR)/ace/libACE.la
 
 ## Makefile.MT_SOCK_Test.am
+
 noinst_PROGRAMS += MT_SOCK_Test
 
 MT_SOCK_Test_CPPFLAGS = \
@@ -1304,6 +1385,7 @@ MT_SOCK_Test_LDADD = \
 ## Makefile.Malloc_Test.am
 
 if !BUILD_ACE_FOR_TAO
+
 noinst_PROGRAMS += Malloc_Test
 
 Malloc_Test_CPPFLAGS = \
@@ -1322,6 +1404,7 @@ Malloc_Test_LDADD = \
 endif !BUILD_ACE_FOR_TAO
 
 ## Makefile.Manual_Event_Test.am
+
 noinst_PROGRAMS += Manual_Event_Test
 
 Manual_Event_Test_CPPFLAGS = \
@@ -1339,6 +1422,7 @@ Manual_Event_Test_LDADD = \
 ## Makefile.Map_Manager_Test.am
 
 if !BUILD_ACE_FOR_TAO
+
 noinst_PROGRAMS += Map_Manager_Test
 
 Map_Manager_Test_CPPFLAGS = \
@@ -1358,6 +1442,7 @@ endif !BUILD_ACE_FOR_TAO
 ## Makefile.Map_Test.am
 
 if !BUILD_ACE_FOR_TAO
+
 noinst_PROGRAMS += Map_Test
 
 Map_Test_CPPFLAGS = \
@@ -1376,6 +1461,7 @@ Map_Test_LDADD = \
 endif !BUILD_ACE_FOR_TAO
 
 ## Makefile.Max_Default_Port_Test.am
+
 noinst_PROGRAMS += Max_Default_Port_Test
 
 Max_Default_Port_Test_CPPFLAGS = \
@@ -1392,6 +1478,7 @@ Max_Default_Port_Test_LDADD = \
   $(ACE_BUILDDIR)/ace/libACE.la
 
 ## Makefile.Max_Default_Port_Test_IPV6.am
+
 noinst_PROGRAMS += Max_Default_Port_Test_IPV6
 
 Max_Default_Port_Test_IPV6_CPPFLAGS = \
@@ -1409,6 +1496,7 @@ Max_Default_Port_Test_IPV6_LDADD = \
 ## Makefile.Mem_Map_Test.am
 
 if !BUILD_ACE_FOR_TAO
+
 noinst_PROGRAMS += Mem_Map_Test
 
 Mem_Map_Test_CPPFLAGS = \
@@ -1428,6 +1516,7 @@ endif !BUILD_ACE_FOR_TAO
 ## Makefile.Memcpy_Test.am
 
 if !BUILD_ACE_FOR_TAO
+
 noinst_PROGRAMS += Memcpy_Test
 
 Memcpy_Test_CPPFLAGS = \
@@ -1447,6 +1536,7 @@ endif !BUILD_ACE_FOR_TAO
 ## Makefile.Message_Block_Test.am
 
 if !BUILD_ACE_FOR_TAO
+
 noinst_PROGRAMS += Message_Block_Test
 
 Message_Block_Test_CPPFLAGS = \
@@ -1464,6 +1554,7 @@ Message_Block_Test_LDADD = \
 endif !BUILD_ACE_FOR_TAO
 
 ## Makefile.Message_Queue_Notifications_Test.am
+
 noinst_PROGRAMS += Message_Queue_Notifications_Test
 
 Message_Queue_Notifications_Test_CPPFLAGS = \
@@ -1481,6 +1572,7 @@ Message_Queue_Notifications_Test_LDADD = \
 ## Makefile.Message_Queue_Test.am
 
 if !BUILD_ACE_FOR_TAO
+
 noinst_PROGRAMS += Message_Queue_Test
 
 Message_Queue_Test_CPPFLAGS = \
@@ -1500,6 +1592,7 @@ endif !BUILD_ACE_FOR_TAO
 ## Makefile.Message_Queue_Test_Ex.am
 
 if !BUILD_ACE_FOR_TAO
+
 noinst_PROGRAMS += Message_Queue_Test_Ex
 
 Message_Queue_Test_Ex_CPPFLAGS = \
@@ -1518,6 +1611,7 @@ Message_Queue_Test_Ex_LDADD = \
 endif !BUILD_ACE_FOR_TAO
 
 ## Makefile.Multicast_Test.am
+
 noinst_PROGRAMS += Multicast_Test
 
 Multicast_Test_CPPFLAGS = \
@@ -1533,6 +1627,7 @@ Multicast_Test_LDADD = \
   $(ACE_BUILDDIR)/ace/libACE.la
 
 ## Makefile.Multicast_Test_IPV6.am
+
 noinst_PROGRAMS += Multicast_Test_IPV6
 
 Multicast_Test_IPV6_CPPFLAGS = \
@@ -1550,6 +1645,7 @@ Multicast_Test_IPV6_LDADD = \
 ## Makefile.Multihomed_INET_Addr_Test.am
 
 if !BUILD_ACE_FOR_TAO
+
 noinst_PROGRAMS += Multihomed_INET_Addr_Test
 
 Multihomed_INET_Addr_Test_CPPFLAGS = \
@@ -1569,6 +1665,7 @@ endif !BUILD_ACE_FOR_TAO
 ## Makefile.Multihomed_INET_Addr_Test_IPV6.am
 
 if !BUILD_ACE_FOR_TAO
+
 noinst_PROGRAMS += Multihomed_INET_Addr_Test_IPV6
 
 Multihomed_INET_Addr_Test_IPV6_CPPFLAGS = \
@@ -1589,6 +1686,7 @@ endif !BUILD_ACE_FOR_TAO
 
 if BUILD_ACE_OTHER
 if !BUILD_ACE_FOR_TAO
+
 noinst_PROGRAMS += Naming_Test
 
 Naming_Test_CPPFLAGS = \
@@ -1607,6 +1705,7 @@ endif !BUILD_ACE_FOR_TAO
 endif BUILD_ACE_OTHER
 
 ## Makefile.Network_Adapters_Test.am
+
 noinst_PROGRAMS += Network_Adapters_Test
 
 Network_Adapters_Test_CPPFLAGS = \
@@ -1623,6 +1722,7 @@ Network_Adapters_Test_LDADD = \
   $(ACE_BUILDDIR)/ace/libACE.la
 
 ## Makefile.New_Fail_Test.am
+
 noinst_PROGRAMS += New_Fail_Test
 
 New_Fail_Test_CPPFLAGS = \
@@ -1638,6 +1738,7 @@ New_Fail_Test_LDADD = \
   $(ACE_BUILDDIR)/ace/libACE.la
 
 ## Makefile.NonBlocking_Conn_Test.am
+
 noinst_PROGRAMS += NonBlocking_Conn_Test
 
 NonBlocking_Conn_Test_CPPFLAGS = \
@@ -1656,6 +1757,7 @@ NonBlocking_Conn_Test_LDADD = \
 ## Makefile.Notify_Performance_Test.am
 
 if !BUILD_ACE_FOR_TAO
+
 noinst_PROGRAMS += Notify_Performance_Test
 
 Notify_Performance_Test_CPPFLAGS = \
@@ -1673,6 +1775,7 @@ Notify_Performance_Test_LDADD = \
 endif !BUILD_ACE_FOR_TAO
 
 ## Makefile.OS_Test.am
+
 noinst_PROGRAMS += OS_Test
 
 OS_Test_CPPFLAGS = \
@@ -1688,6 +1791,7 @@ OS_Test_LDADD = \
   $(ACE_BUILDDIR)/ace/libACE.la
 
 ## Makefile.Object_Manager_Test.am
+
 noinst_PROGRAMS += Object_Manager_Test
 
 Object_Manager_Test_CPPFLAGS = \
@@ -1703,6 +1807,7 @@ Object_Manager_Test_LDADD = \
   $(ACE_BUILDDIR)/ace/libACE.la
 
 ## Makefile.Obstack_Test.am
+
 noinst_PROGRAMS += Obstack_Test
 
 Obstack_Test_CPPFLAGS = \
@@ -1718,6 +1823,7 @@ Obstack_Test_LDADD = \
   $(ACE_BUILDDIR)/ace/libACE.la
 
 ## Makefile.OrdMultiSet_Test.am
+
 noinst_PROGRAMS += OrdMultiSet_Test
 
 OrdMultiSet_Test_CPPFLAGS = \
@@ -1733,6 +1839,7 @@ OrdMultiSet_Test_LDADD = \
   $(ACE_BUILDDIR)/ace/libACE.la
 
 ## Makefile.Pipe_Test.am
+
 noinst_PROGRAMS += Pipe_Test
 
 Pipe_Test_CPPFLAGS = \
@@ -1748,6 +1855,7 @@ Pipe_Test_LDADD = \
   $(ACE_BUILDDIR)/ace/libACE.la
 
 ## Makefile.Priority_Buffer_Test.am
+
 noinst_PROGRAMS += Priority_Buffer_Test
 
 Priority_Buffer_Test_CPPFLAGS = \
@@ -1765,6 +1873,7 @@ Priority_Buffer_Test_LDADD = \
 ## Makefile.Priority_Reactor_Test.am
 
 if !BUILD_ACE_FOR_TAO
+
 noinst_PROGRAMS += Priority_Reactor_Test
 
 Priority_Reactor_Test_CPPFLAGS = \
@@ -1783,6 +1892,7 @@ Priority_Reactor_Test_LDADD = \
 endif !BUILD_ACE_FOR_TAO
 
 ## Makefile.Priority_Task_Test.am
+
 noinst_PROGRAMS += Priority_Task_Test
 
 Priority_Task_Test_CPPFLAGS = \
@@ -1800,6 +1910,7 @@ Priority_Task_Test_LDADD = \
 ## Makefile.Proactor_Scatter_Gather_Test.am
 
 if !BUILD_ACE_FOR_TAO
+
 noinst_PROGRAMS += Proactor_Scatter_Gather_Test
 
 Proactor_Scatter_Gather_Test_CPPFLAGS = \
@@ -1819,6 +1930,7 @@ endif !BUILD_ACE_FOR_TAO
 ## Makefile.Proactor_Test.am
 
 if !BUILD_ACE_FOR_TAO
+
 noinst_PROGRAMS += Proactor_Test
 
 Proactor_Test_CPPFLAGS = \
@@ -1839,6 +1951,7 @@ endif !BUILD_ACE_FOR_TAO
 ## Makefile.Proactor_Test_IPV6.am
 
 if !BUILD_ACE_FOR_TAO
+
 noinst_PROGRAMS += Proactor_Test_IPV6
 
 Proactor_Test_IPV6_CPPFLAGS = \
@@ -1858,6 +1971,7 @@ endif !BUILD_ACE_FOR_TAO
 ## Makefile.Proactor_Timer_Test.am
 
 if !BUILD_ACE_FOR_TAO
+
 noinst_PROGRAMS += Proactor_Timer_Test
 
 Proactor_Timer_Test_CPPFLAGS = \
@@ -1877,6 +1991,7 @@ endif !BUILD_ACE_FOR_TAO
 ## Makefile.Process_Manager_Test.am
 
 if !BUILD_ACE_FOR_TAO
+
 noinst_PROGRAMS += Process_Manager_Test
 
 Process_Manager_Test_CPPFLAGS = \
@@ -1894,6 +2009,7 @@ Process_Manager_Test_LDADD = \
 endif !BUILD_ACE_FOR_TAO
 
 ## Makefile.Process_Manual_Event_Test.am
+
 noinst_PROGRAMS += Process_Manual_Event_Test
 
 Process_Manual_Event_Test_CPPFLAGS = \
@@ -1911,6 +2027,7 @@ Process_Manual_Event_Test_LDADD = \
 ## Makefile.Process_Mutex_Test.am
 
 if !BUILD_ACE_FOR_TAO
+
 noinst_PROGRAMS += Process_Mutex_Test
 
 Process_Mutex_Test_CPPFLAGS = \
@@ -1930,6 +2047,7 @@ endif !BUILD_ACE_FOR_TAO
 ## Makefile.Process_Semaphore_Test.am
 
 if !BUILD_ACE_FOR_TAO
+
 noinst_PROGRAMS += Process_Semaphore_Test
 
 Process_Semaphore_Test_CPPFLAGS = \
@@ -1949,6 +2067,7 @@ endif !BUILD_ACE_FOR_TAO
 ## Makefile.Process_Strategy_Test.am
 
 if !BUILD_ACE_FOR_TAO
+
 noinst_PROGRAMS += Process_Strategy_Test
 
 Process_Strategy_Test_CPPFLAGS = \
@@ -2006,6 +2125,7 @@ endif BUILD_QT
 endif BUILD_ACE_QTREACTOR
 
 ## Makefile.RB_Tree_Test.am
+
 noinst_PROGRAMS += RB_Tree_Test
 
 RB_Tree_Test_CPPFLAGS = \
@@ -2022,6 +2142,7 @@ RB_Tree_Test_LDADD = \
   $(ACE_BUILDDIR)/ace/libACE.la
 
 ## Makefile.Reactor_Dispatch_Order_Test.am
+
 noinst_PROGRAMS += Reactor_Dispatch_Order_Test
 
 Reactor_Dispatch_Order_Test_CPPFLAGS = \
@@ -2037,6 +2158,7 @@ Reactor_Dispatch_Order_Test_LDADD = \
   $(ACE_BUILDDIR)/ace/libACE.la
 
 ## Makefile.Reactor_Exceptions_Test.am
+
 noinst_PROGRAMS += Reactor_Exceptions_Test
 
 Reactor_Exceptions_Test_CPPFLAGS = \
@@ -2052,6 +2174,7 @@ Reactor_Exceptions_Test_LDADD = \
   $(ACE_BUILDDIR)/ace/libACE.la
 
 ## Makefile.Reactor_Notification_Queue_Test.am
+
 noinst_PROGRAMS += Reactor_Notification_Queue_Test
 
 Reactor_Notification_Queue_Test_CPPFLAGS = \
@@ -2069,6 +2192,7 @@ Reactor_Notification_Queue_Test_LDADD = \
 ## Makefile.Reactor_Notify_Test.am
 
 if !BUILD_ACE_FOR_TAO
+
 noinst_PROGRAMS += Reactor_Notify_Test
 
 Reactor_Notify_Test_CPPFLAGS = \
@@ -2088,6 +2212,7 @@ endif !BUILD_ACE_FOR_TAO
 ## Makefile.Reactor_Performance_Test.am
 
 if !BUILD_ACE_FOR_TAO
+
 noinst_PROGRAMS += Reactor_Performance_Test
 
 Reactor_Performance_Test_CPPFLAGS = \
@@ -2106,6 +2231,7 @@ Reactor_Performance_Test_LDADD = \
 endif !BUILD_ACE_FOR_TAO
 
 ## Makefile.Reactor_Registration_Test.am
+
 noinst_PROGRAMS += Reactor_Registration_Test
 
 Reactor_Registration_Test_CPPFLAGS = \
@@ -2123,6 +2249,7 @@ Reactor_Registration_Test_LDADD = \
 ## Makefile.Reactor_Timer_Test.am
 
 if !BUILD_ACE_FOR_TAO
+
 noinst_PROGRAMS += Reactor_Timer_Test
 
 Reactor_Timer_Test_CPPFLAGS = \
@@ -2140,6 +2267,7 @@ Reactor_Timer_Test_LDADD = \
 endif !BUILD_ACE_FOR_TAO
 
 ## Makefile.Reactors_Test.am
+
 noinst_PROGRAMS += Reactors_Test
 
 Reactors_Test_CPPFLAGS = \
@@ -2155,6 +2283,7 @@ Reactors_Test_LDADD = \
   $(ACE_BUILDDIR)/ace/libACE.la
 
 ## Makefile.Reader_Writer_Test.am
+
 noinst_PROGRAMS += Reader_Writer_Test
 
 Reader_Writer_Test_CPPFLAGS = \
@@ -2170,6 +2299,7 @@ Reader_Writer_Test_LDADD = \
   $(ACE_BUILDDIR)/ace/libACE.la
 
 ## Makefile.Recursive_Condition_Bug_Test.am
+
 noinst_PROGRAMS += Recursive_Condition_Bug_Test
 
 Recursive_Condition_Bug_Test_CPPFLAGS = \
@@ -2185,6 +2315,7 @@ Recursive_Condition_Bug_Test_LDADD = \
   $(ACE_BUILDDIR)/ace/libACE.la
 
 ## Makefile.Recursive_Condition_Test.am
+
 noinst_PROGRAMS += Recursive_Condition_Test
 
 Recursive_Condition_Test_CPPFLAGS = \
@@ -2200,6 +2331,7 @@ Recursive_Condition_Test_LDADD = \
   $(ACE_BUILDDIR)/ace/libACE.la
 
 ## Makefile.Recursive_Mutex_Test.am
+
 noinst_PROGRAMS += Recursive_Mutex_Test
 
 Recursive_Mutex_Test_CPPFLAGS = \
@@ -2217,6 +2349,7 @@ Recursive_Mutex_Test_LDADD = \
 ## Makefile.Refcounted_Auto_Ptr_Test.am
 
 if !BUILD_ACE_FOR_TAO
+
 noinst_PROGRAMS += Refcounted_Auto_Ptr_Test
 
 Refcounted_Auto_Ptr_Test_CPPFLAGS = \
@@ -2235,6 +2368,7 @@ Refcounted_Auto_Ptr_Test_LDADD = \
 endif !BUILD_ACE_FOR_TAO
 
 ## Makefile.Reference_Counted_Event_Handler_Test.am
+
 noinst_PROGRAMS += Reference_Counted_Event_Handler_Test
 
 Reference_Counted_Event_Handler_Test_CPPFLAGS = \
@@ -2250,6 +2384,7 @@ Reference_Counted_Event_Handler_Test_LDADD = \
   $(ACE_BUILDDIR)/ace/libACE.la
 
 ## Makefile.Reverse_Lock_Test.am
+
 noinst_PROGRAMS += Reverse_Lock_Test
 
 Reverse_Lock_Test_CPPFLAGS = \
@@ -2265,6 +2400,7 @@ Reverse_Lock_Test_LDADD = \
   $(ACE_BUILDDIR)/ace/libACE.la
 
 ## Makefile.SOCK_Connector_Test.am
+
 noinst_PROGRAMS += SOCK_Connector_Test
 
 SOCK_Connector_Test_CPPFLAGS = \
@@ -2282,6 +2418,7 @@ SOCK_Connector_Test_LDADD = \
 ## Makefile.SOCK_Dgram_Bcast_Test.am
 
 if !BUILD_ACE_FOR_TAO
+
 noinst_PROGRAMS += SOCK_Dgram_Bcast_Test
 
 SOCK_Dgram_Bcast_Test_CPPFLAGS = \
@@ -2299,6 +2436,7 @@ SOCK_Dgram_Bcast_Test_LDADD = \
 endif !BUILD_ACE_FOR_TAO
 
 ## Makefile.SOCK_Dgram_Test.am
+
 noinst_PROGRAMS += SOCK_Dgram_Test
 
 SOCK_Dgram_Test_CPPFLAGS = \
@@ -2316,6 +2454,7 @@ SOCK_Dgram_Test_LDADD = \
 ## Makefile.SOCK_Netlink_Test.am
 
 if !BUILD_ACE_FOR_TAO
+
 noinst_PROGRAMS += SOCK_Netlink_Test
 
 SOCK_Netlink_Test_CPPFLAGS = \
@@ -2335,6 +2474,7 @@ endif !BUILD_ACE_FOR_TAO
 ## Makefile.SOCK_SEQPACK_SCTP_Test.am
 
 if !BUILD_ACE_FOR_TAO
+
 noinst_PROGRAMS += SOCK_SEQPACK_SCTP_Test
 
 SOCK_SEQPACK_SCTP_Test_CPPFLAGS = \
@@ -2352,6 +2492,7 @@ SOCK_SEQPACK_SCTP_Test_LDADD = \
 endif !BUILD_ACE_FOR_TAO
 
 ## Makefile.SOCK_Send_Recv_Test.am
+
 noinst_PROGRAMS += SOCK_Send_Recv_Test
 
 SOCK_Send_Recv_Test_CPPFLAGS = \
@@ -2367,6 +2508,7 @@ SOCK_Send_Recv_Test_LDADD = \
   $(ACE_BUILDDIR)/ace/libACE.la
 
 ## Makefile.SOCK_Send_Recv_Test_IPV6.am
+
 noinst_PROGRAMS += SOCK_Send_Recv_Test_IPV6
 
 SOCK_Send_Recv_Test_IPV6_CPPFLAGS = \
@@ -2382,6 +2524,7 @@ SOCK_Send_Recv_Test_IPV6_LDADD = \
   $(ACE_BUILDDIR)/ace/libACE.la
 
 ## Makefile.SOCK_Test.am
+
 noinst_PROGRAMS += SOCK_Test
 
 SOCK_Test_CPPFLAGS = \
@@ -2397,6 +2540,7 @@ SOCK_Test_LDADD = \
   $(ACE_BUILDDIR)/ace/libACE.la
 
 ## Makefile.SOCK_Test_IPv6.am
+
 noinst_PROGRAMS += SOCK_Test_IPv6
 
 SOCK_Test_IPv6_CPPFLAGS = \
@@ -2414,6 +2558,7 @@ SOCK_Test_IPv6_LDADD = \
 ## Makefile.SPIPE_Test.am
 
 if !BUILD_ACE_FOR_TAO
+
 noinst_PROGRAMS += SPIPE_Test
 
 SPIPE_Test_CPPFLAGS = \
@@ -2431,6 +2576,7 @@ SPIPE_Test_LDADD = \
 endif !BUILD_ACE_FOR_TAO
 
 ## Makefile.SString_Test.am
+
 noinst_PROGRAMS += SString_Test
 
 SString_Test_CPPFLAGS = \
@@ -2448,6 +2594,7 @@ SString_Test_LDADD = \
 ## Makefile.SV_Shared_Memory_Test.am
 
 if !BUILD_ACE_FOR_TAO
+
 noinst_PROGRAMS += SV_Shared_Memory_Test
 
 SV_Shared_Memory_Test_CPPFLAGS = \
@@ -2467,6 +2614,7 @@ endif !BUILD_ACE_FOR_TAO
 ## Makefile.Semaphore_Test.am
 
 if !BUILD_ACE_FOR_TAO
+
 noinst_PROGRAMS += Semaphore_Test
 
 Semaphore_Test_CPPFLAGS = \
@@ -2484,6 +2632,7 @@ Semaphore_Test_LDADD = \
 endif !BUILD_ACE_FOR_TAO
 
 ## Makefile.Sendfile_Test.am
+
 noinst_PROGRAMS += Sendfile_Test
 
 Sendfile_Test_CPPFLAGS = \
@@ -2515,6 +2664,7 @@ noinst_HEADERS += \
   Service_Config_DLL_Export.h
 
 ## Makefile.Service_Config_Test.am
+
 noinst_PROGRAMS += Service_Config_Test
 
 Service_Config_Test_CPPFLAGS = \
@@ -2530,6 +2680,7 @@ Service_Config_Test_LDADD = \
   $(ACE_BUILDDIR)/ace/libACE.la
 
 ## Makefile.Signal_Test.am
+
 noinst_PROGRAMS += Signal_Test
 
 Signal_Test_CPPFLAGS = \
@@ -2545,6 +2696,7 @@ Signal_Test_LDADD = \
   $(ACE_BUILDDIR)/ace/libACE.la
 
 ## Makefile.Sigset_Ops_Test.am
+
 noinst_PROGRAMS += Sigset_Ops_Test
 
 Sigset_Ops_Test_CPPFLAGS = \
@@ -2560,6 +2712,7 @@ Sigset_Ops_Test_LDADD = \
   $(ACE_BUILDDIR)/ace/libACE.la
 
 ## Makefile.Simple_Message_Block_Test.am
+
 noinst_PROGRAMS += Simple_Message_Block_Test
 
 Simple_Message_Block_Test_CPPFLAGS = \
@@ -2577,6 +2730,7 @@ Simple_Message_Block_Test_LDADD = \
 ## Makefile.Svc_Handler_Test.am
 
 if !BUILD_ACE_FOR_TAO
+
 noinst_PROGRAMS += Svc_Handler_Test
 
 Svc_Handler_Test_CPPFLAGS = \
@@ -2596,6 +2750,7 @@ endif !BUILD_ACE_FOR_TAO
 ## Makefile.TP_Reactor_Test.am
 
 if !BUILD_ACE_FOR_TAO
+
 noinst_PROGRAMS += TP_Reactor_Test
 
 TP_Reactor_Test_CPPFLAGS = \
@@ -2614,6 +2769,7 @@ TP_Reactor_Test_LDADD = \
 endif !BUILD_ACE_FOR_TAO
 
 ## Makefile.TSS_Static_Test.am
+
 noinst_PROGRAMS += TSS_Static_Test
 
 TSS_Static_Test_CPPFLAGS = \
@@ -2629,6 +2785,7 @@ TSS_Static_Test_LDADD = \
   $(ACE_BUILDDIR)/ace/libACE.la
 
 ## Makefile.TSS_Test.am
+
 noinst_PROGRAMS += TSS_Test
 
 TSS_Test_CPPFLAGS = \
@@ -2644,6 +2801,7 @@ TSS_Test_LDADD = \
   $(ACE_BUILDDIR)/ace/libACE.la
 
 ## Makefile.Task_Ex_Test.am
+
 noinst_PROGRAMS += Task_Ex_Test
 
 Task_Ex_Test_CPPFLAGS = \
@@ -2660,6 +2818,7 @@ Task_Ex_Test_LDADD = \
   $(ACE_BUILDDIR)/ace/libACE.la
 
 ## Makefile.Task_Test.am
+
 noinst_PROGRAMS += Task_Test
 
 Task_Test_CPPFLAGS = \
@@ -2675,6 +2834,7 @@ Task_Test_LDADD = \
   $(ACE_BUILDDIR)/ace/libACE.la
 
 ## Makefile.Thread_Manager_Test.am
+
 noinst_PROGRAMS += Thread_Manager_Test
 
 Thread_Manager_Test_CPPFLAGS = \
@@ -2690,6 +2850,7 @@ Thread_Manager_Test_LDADD = \
   $(ACE_BUILDDIR)/ace/libACE.la
 
 ## Makefile.Thread_Mutex_Test.am
+
 noinst_PROGRAMS += Thread_Mutex_Test
 
 Thread_Mutex_Test_CPPFLAGS = \
@@ -2707,6 +2868,7 @@ Thread_Mutex_Test_LDADD = \
 ## Makefile.Thread_Pool_Reactor_Resume_Test.am
 
 if BUILD_ACE_OTHER
+
 noinst_PROGRAMS += Thread_Pool_Reactor_Resume_Test
 
 Thread_Pool_Reactor_Resume_Test_CPPFLAGS = \
@@ -2727,6 +2889,7 @@ endif BUILD_ACE_OTHER
 ## Makefile.Thread_Pool_Reactor_Test.am
 
 if BUILD_ACE_OTHER
+
 noinst_PROGRAMS += Thread_Pool_Reactor_Test
 
 Thread_Pool_Reactor_Test_CPPFLAGS = \
@@ -2745,6 +2908,7 @@ Thread_Pool_Reactor_Test_LDADD = \
 endif BUILD_ACE_OTHER
 
 ## Makefile.Thread_Pool_Test.am
+
 noinst_PROGRAMS += Thread_Pool_Test
 
 Thread_Pool_Test_CPPFLAGS = \
@@ -2760,6 +2924,7 @@ Thread_Pool_Test_LDADD = \
   $(ACE_BUILDDIR)/ace/libACE.la
 
 ## Makefile.Time_Service_Test.am
+
 noinst_PROGRAMS += Time_Service_Test
 
 Time_Service_Test_CPPFLAGS = \
@@ -2775,6 +2940,7 @@ Time_Service_Test_LDADD = \
   $(ACE_BUILDDIR)/ace/libACE.la
 
 ## Makefile.Time_Value_Test.am
+
 noinst_PROGRAMS += Time_Value_Test
 
 Time_Value_Test_CPPFLAGS = \
@@ -2790,6 +2956,7 @@ Time_Value_Test_LDADD = \
   $(ACE_BUILDDIR)/ace/libACE.la
 
 ## Makefile.Timeprobe_Test.am
+
 noinst_PROGRAMS += Timeprobe_Test
 
 Timeprobe_Test_CPPFLAGS = \
@@ -2805,6 +2972,7 @@ Timeprobe_Test_LDADD = \
   $(ACE_BUILDDIR)/ace/libACE.la
 
 ## Makefile.Timer_Cancellation_Test.am
+
 noinst_PROGRAMS += Timer_Cancellation_Test
 
 Timer_Cancellation_Test_CPPFLAGS = \
@@ -2820,6 +2988,7 @@ Timer_Cancellation_Test_LDADD = \
   $(ACE_BUILDDIR)/ace/libACE.la
 
 ## Makefile.Timer_Queue_Reference_Counting_Test.am
+
 noinst_PROGRAMS += Timer_Queue_Reference_Counting_Test
 
 Timer_Queue_Reference_Counting_Test_CPPFLAGS = \
@@ -2837,6 +3006,7 @@ Timer_Queue_Reference_Counting_Test_LDADD = \
 ## Makefile.Timer_Queue_Test.am
 
 if !BUILD_ACE_FOR_TAO
+
 noinst_PROGRAMS += Timer_Queue_Test
 
 Timer_Queue_Test_CPPFLAGS = \
@@ -2884,6 +3054,7 @@ endif BUILD_TK
 endif BUILD_ACE_TKREACTOR
 
 ## Makefile.Token_Strategy_Test.am
+
 noinst_PROGRAMS += Token_Strategy_Test
 
 Token_Strategy_Test_CPPFLAGS = \
@@ -2901,6 +3072,7 @@ Token_Strategy_Test_LDADD = \
 ## Makefile.Tokens_Test.am
 
 if BUILD_ACE_TOKEN
+
 noinst_PROGRAMS += Tokens_Test
 
 Tokens_Test_CPPFLAGS = \
@@ -2920,6 +3092,7 @@ endif BUILD_ACE_TOKEN
 ## Makefile.UPIPE_SAP_Test.am
 
 if !BUILD_ACE_FOR_TAO
+
 noinst_PROGRAMS += UPIPE_SAP_Test
 
 UPIPE_SAP_Test_CPPFLAGS = \
@@ -2940,6 +3113,7 @@ endif !BUILD_ACE_FOR_TAO
 
 if BUILD_ACE_UUID
 if !BUILD_ACE_FOR_TAO
+
 noinst_PROGRAMS += UUIDTest
 
 UUIDTest_CPPFLAGS = \
@@ -2958,6 +3132,7 @@ endif !BUILD_ACE_FOR_TAO
 endif BUILD_ACE_UUID
 
 ## Makefile.Unbounded_Set_Test.am
+
 noinst_PROGRAMS += Unbounded_Set_Test
 
 Unbounded_Set_Test_CPPFLAGS = \
@@ -2975,6 +3150,7 @@ Unbounded_Set_Test_LDADD = \
 ## Makefile.Upgradable_RW_Test.am
 
 if !BUILD_ACE_FOR_TAO
+
 noinst_PROGRAMS += Upgradable_RW_Test
 
 Upgradable_RW_Test_CPPFLAGS = \
@@ -2993,6 +3169,7 @@ Upgradable_RW_Test_LDADD = \
 endif !BUILD_ACE_FOR_TAO
 
 ## Makefile.Vector_Test.am
+
 noinst_PROGRAMS += Vector_Test
 
 Vector_Test_CPPFLAGS = \
@@ -3008,6 +3185,7 @@ Vector_Test_LDADD = \
   $(ACE_BUILDDIR)/ace/libACE.la
 
 ## Makefile.WFMO_Reactor_Test.am
+
 noinst_PROGRAMS += WFMO_Reactor_Test
 
 WFMO_Reactor_Test_CPPFLAGS = \

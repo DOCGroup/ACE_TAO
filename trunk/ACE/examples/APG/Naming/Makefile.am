@@ -16,6 +16,7 @@ noinst_PROGRAMS =
 ## Makefile.Netlocal.am
 
 if !BUILD_ACE_FOR_TAO
+
 noinst_PROGRAMS += Netlocal
 
 Netlocal_CPPFLAGS = \
@@ -35,6 +36,7 @@ endif !BUILD_ACE_FOR_TAO
 ## Makefile.Netlocal_Reader.am
 
 if !BUILD_ACE_FOR_TAO
+
 noinst_PROGRAMS += Netlocal_reader
 
 Netlocal_reader_CPPFLAGS = \
@@ -56,6 +58,7 @@ endif !BUILD_ACE_FOR_TAO
 ## Makefile.Nodelocal.am
 
 if !BUILD_ACE_FOR_TAO
+
 noinst_PROGRAMS += Nodelocal
 
 Nodelocal_CPPFLAGS = \
@@ -75,6 +78,7 @@ endif !BUILD_ACE_FOR_TAO
 ## Makefile.Nodelocal_Shared.am
 
 if !BUILD_ACE_FOR_TAO
+
 noinst_PROGRAMS += Nodelocal_shared
 
 Nodelocal_shared_CPPFLAGS = \
@@ -94,6 +98,7 @@ endif !BUILD_ACE_FOR_TAO
 ## Makefile.Nodelocal_Shared_Reader.am
 
 if !BUILD_ACE_FOR_TAO
+
 noinst_PROGRAMS += Nodelocal_shared_reader
 
 Nodelocal_shared_reader_CPPFLAGS = \

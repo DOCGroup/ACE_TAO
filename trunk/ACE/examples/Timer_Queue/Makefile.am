@@ -33,6 +33,7 @@ noinst_HEADERS = \
   Thread_Timer_Queue_Test.h
 
 ## Makefile.Timer_Queue_Async.am
+
 noinst_PROGRAMS = Asynch_Timer_Queue_Test
 
 Asynch_Timer_Queue_Test_CPPFLAGS = \
@@ -51,6 +52,7 @@ Asynch_Timer_Queue_Test_LDADD = \
   $(ACE_BUILDDIR)/ace/libACE.la
 
 ## Makefile.Timer_Queue_Reactor.am
+
 noinst_PROGRAMS += Reactor_Timer_Queue_Test
 
 Reactor_Timer_Queue_Test_CPPFLAGS = \
@@ -69,6 +71,7 @@ Reactor_Timer_Queue_Test_LDADD = \
   $(ACE_BUILDDIR)/ace/libACE.la
 
 ## Makefile.Timer_Queue_Thread.am
+
 noinst_PROGRAMS += Thread_Timer_Queue_Test
 
 Thread_Timer_Queue_Test_CPPFLAGS = \

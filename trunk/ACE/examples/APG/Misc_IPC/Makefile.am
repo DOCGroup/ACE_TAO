@@ -16,6 +16,7 @@ noinst_PROGRAMS =
 ## Makefile.UDP_Broadcast.am
 
 if !BUILD_ACE_FOR_TAO
+
 noinst_PROGRAMS += UDP_Broadcast
 
 UDP_Broadcast_CPPFLAGS = \
@@ -31,6 +32,7 @@ UDP_Broadcast_LDADD = \
 endif !BUILD_ACE_FOR_TAO
 
 ## Makefile.UDP_Multicast.am
+
 noinst_PROGRAMS += UDP_Multicast
 
 UDP_Multicast_CPPFLAGS = \
@@ -46,6 +48,7 @@ UDP_Multicast_LDADD = \
 ## Makefile.UDP_Unicast.am
 
 if !BUILD_ACE_FOR_TAO
+
 noinst_PROGRAMS += UDP_Unicast
 
 UDP_Unicast_CPPFLAGS = \

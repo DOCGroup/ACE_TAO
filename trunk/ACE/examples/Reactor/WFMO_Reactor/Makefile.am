@@ -17,6 +17,7 @@ noinst_PROGRAMS =
 
 if BUILD_WFMO
 if !BUILD_WINCE
+
 noinst_PROGRAMS += apc
 
 apc_CPPFLAGS = \
@@ -35,6 +36,7 @@ endif BUILD_WFMO
 ## Makefile.WFMO_Reactor_Abandoned.am
 
 if BUILD_WFMO
+
 noinst_PROGRAMS += abandoned
 
 abandoned_CPPFLAGS = \
@@ -52,6 +54,7 @@ endif BUILD_WFMO
 ## Makefile.WFMO_Reactor_Console_Input.am
 
 if BUILD_WFMO
+
 noinst_PROGRAMS += console_input
 
 console_input_CPPFLAGS = \
@@ -69,6 +72,7 @@ endif BUILD_WFMO
 ## Makefile.WFMO_Reactor_Directory_Changes.am
 
 if BUILD_WFMO
+
 noinst_PROGRAMS += directory_changes
 
 directory_changes_CPPFLAGS = \
@@ -86,6 +90,7 @@ endif BUILD_WFMO
 ## Makefile.WFMO_Reactor_Exceptions.am
 
 if BUILD_WFMO
+
 noinst_PROGRAMS += exceptions
 
 exceptions_CPPFLAGS = \
@@ -103,6 +108,7 @@ endif BUILD_WFMO
 ## Makefile.WFMO_Reactor_Handle_Close.am
 
 if BUILD_WFMO
+
 noinst_PROGRAMS += handle_close
 
 handle_close_CPPFLAGS = \
@@ -120,6 +126,7 @@ endif BUILD_WFMO
 ## Makefile.WFMO_Reactor_Multithreading.am
 
 if BUILD_WFMO
+
 noinst_PROGRAMS += multithreading
 
 multithreading_CPPFLAGS = \
@@ -137,6 +144,7 @@ endif BUILD_WFMO
 ## Makefile.WFMO_Reactor_Network_Events.am
 
 if BUILD_WFMO
+
 noinst_PROGRAMS += network_events
 
 network_events_CPPFLAGS = \
@@ -154,6 +162,7 @@ endif BUILD_WFMO
 ## Makefile.WFMO_Reactor_Prerun_State_Changes.am
 
 if BUILD_WFMO
+
 noinst_PROGRAMS += prerun_state_changes
 
 prerun_state_changes_CPPFLAGS = \
@@ -171,6 +180,7 @@ endif BUILD_WFMO
 ## Makefile.WFMO_Reactor_Registration.am
 
 if BUILD_WFMO
+
 noinst_PROGRAMS += registration
 
 registration_CPPFLAGS = \
@@ -190,6 +200,7 @@ endif BUILD_WFMO
 if BUILD_WFMO
 if !BUILD_ACE_FOR_TAO
 if !BUILD_WINCE
+
 noinst_PROGRAMS += registry_changes
 
 registry_changes_CPPFLAGS = \
@@ -209,6 +220,7 @@ endif BUILD_WFMO
 ## Makefile.WFMO_Reactor_Removals.am
 
 if BUILD_WFMO
+
 noinst_PROGRAMS += removals
 
 removals_CPPFLAGS = \
@@ -226,6 +238,7 @@ endif BUILD_WFMO
 ## Makefile.WFMO_Reactor_Suspended_Removals.am
 
 if BUILD_WFMO
+
 noinst_PROGRAMS += suspended_removals
 
 suspended_removals_CPPFLAGS = \
@@ -245,6 +258,7 @@ endif BUILD_WFMO
 if BUILD_WFMO
 if !BUILD_ACE_FOR_TAO
 if !BUILD_WINCE
+
 noinst_PROGRAMS += talker
 
 talker_CPPFLAGS = \
@@ -264,6 +278,7 @@ endif BUILD_WFMO
 ## Makefile.WFMO_Reactor_Timeouts.am
 
 if BUILD_WFMO
+
 noinst_PROGRAMS += timeouts
 
 timeouts_CPPFLAGS = \
@@ -283,6 +298,7 @@ endif BUILD_WFMO
 if BUILD_WFMO
 if !BUILD_ACE_FOR_TAO
 if !BUILD_WINCE
+
 noinst_PROGRAMS += window_messages
 
 window_messages_CPPFLAGS = \

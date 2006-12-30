@@ -15,6 +15,7 @@ ACE_ROOT = $(top_srcdir)
 ## Makefile.Web_Crawler.am
 
 if !BUILD_ACE_FOR_TAO
+
 noinst_PROGRAMS = main
 
 main_CPPFLAGS = \

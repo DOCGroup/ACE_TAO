@@ -16,6 +16,7 @@ noinst_PROGRAMS =
 ## Makefile.HA_Configurable_Server_Dynamic.am
 
 if !BUILD_ACE_FOR_TAO
+
 noinst_PROGRAMS += HA_Configurable_Server_Dynamic
 
 HA_Configurable_Server_Dynamic_CPPFLAGS = \
@@ -36,6 +37,7 @@ endif !BUILD_ACE_FOR_TAO
 ## Makefile.HA_Configurable_Server_Static.am
 
 if !BUILD_ACE_FOR_TAO
+
 noinst_PROGRAMS += HA_Configurable_Server_Static
 
 HA_Configurable_Server_Static_CPPFLAGS = \

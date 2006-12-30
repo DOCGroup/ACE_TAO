@@ -15,6 +15,7 @@ ACE_ROOT = $(top_srcdir)
 ## Makefile.asnmp_example_trap.am
 
 if !BUILD_USES_WCHAR
+
 noinst_PROGRAMS = trap
 
 trap_CPPFLAGS = \

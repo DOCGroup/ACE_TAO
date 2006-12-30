@@ -12,6 +12,7 @@ ACE_BUILDDIR = $(top_builddir)
 ACE_ROOT = $(top_srcdir)
 
 ## Makefile.asnmp_tests_Address_Test.am
+
 noinst_PROGRAMS = Address_Test
 
 Address_Test_CPPFLAGS = \
@@ -28,6 +29,7 @@ Address_Test_LDADD = \
   $(ACE_BUILDDIR)/ace/libACE.la
 
 ## Makefile.asnmp_tests_Counter64_Test.am
+
 noinst_PROGRAMS += Counter64_Test
 
 Counter64_Test_CPPFLAGS = \
@@ -44,6 +46,7 @@ Counter64_Test_LDADD = \
   $(ACE_BUILDDIR)/ace/libACE.la
 
 ## Makefile.asnmp_tests_Counter_Test.am
+
 noinst_PROGRAMS += Counter_Test
 
 Counter_Test_CPPFLAGS = \
@@ -60,6 +63,7 @@ Counter_Test_LDADD = \
   $(ACE_BUILDDIR)/ace/libACE.la
 
 ## Makefile.asnmp_tests_Gauge_Test.am
+
 noinst_PROGRAMS += Gauge_Test
 
 Gauge_Test_CPPFLAGS = \
@@ -76,6 +80,7 @@ Gauge_Test_LDADD = \
   $(ACE_BUILDDIR)/ace/libACE.la
 
 ## Makefile.asnmp_tests_Integer_Test.am
+
 noinst_PROGRAMS += Integer_Test
 
 Integer_Test_CPPFLAGS = \
@@ -92,6 +97,7 @@ Integer_Test_LDADD = \
   $(ACE_BUILDDIR)/ace/libACE.la
 
 ## Makefile.asnmp_tests_Octet_Test.am
+
 noinst_PROGRAMS += Octet_Test
 
 Octet_Test_CPPFLAGS = \
@@ -108,6 +114,7 @@ Octet_Test_LDADD = \
   $(ACE_BUILDDIR)/ace/libACE.la
 
 ## Makefile.asnmp_tests_Oid_Test.am
+
 noinst_PROGRAMS += Oid_Test
 
 Oid_Test_CPPFLAGS = \
@@ -124,6 +131,7 @@ Oid_Test_LDADD = \
   $(ACE_BUILDDIR)/ace/libACE.la
 
 ## Makefile.asnmp_tests_Target_Test.am
+
 noinst_PROGRAMS += Target_Test
 
 Target_Test_CPPFLAGS = \
@@ -140,6 +148,7 @@ Target_Test_LDADD = \
   $(ACE_BUILDDIR)/ace/libACE.la
 
 ## Makefile.asnmp_tests_Varbind_Test.am
+
 noinst_PROGRAMS += Varbind_Test
 
 Varbind_Test_CPPFLAGS = \

@@ -16,6 +16,7 @@ noinst_PROGRAMS =
 ## Makefile.direct_logging.am
 
 if !BUILD_ACE_FOR_TAO
+
 noinst_PROGRAMS += direct_logging
 
 direct_logging_CPPFLAGS = \
@@ -34,6 +35,7 @@ endif !BUILD_ACE_FOR_TAO
 ## Makefile.indirect_logging.am
 
 if !BUILD_ACE_FOR_TAO
+
 noinst_PROGRAMS += indirect_logging
 
 indirect_logging_CPPFLAGS = \

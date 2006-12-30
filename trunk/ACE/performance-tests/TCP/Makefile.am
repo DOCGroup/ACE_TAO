@@ -15,6 +15,7 @@ ACE_ROOT = $(top_srcdir)
 ## Makefile.TCP.am
 
 if !BUILD_ACE_FOR_TAO
+
 noinst_PROGRAMS = tcp_test
 
 tcp_test_CPPFLAGS = \

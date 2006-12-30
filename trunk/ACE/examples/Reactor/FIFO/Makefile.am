@@ -16,6 +16,7 @@ noinst_PROGRAMS =
 ## Makefile.Reactor_FIFO_Client.am
 
 if !BUILD_ACE_FOR_TAO
+
 noinst_PROGRAMS += client
 
 client_CPPFLAGS = \
@@ -33,6 +34,7 @@ endif !BUILD_ACE_FOR_TAO
 ## Makefile.Reactor_FIFO_Server.am
 
 if !BUILD_ACE_FOR_TAO
+
 noinst_PROGRAMS += server
 
 server_CPPFLAGS = \

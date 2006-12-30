@@ -12,6 +12,7 @@ ACE_BUILDDIR = $(top_builddir)
 ACE_ROOT = $(top_srcdir)
 
 ## Makefile.Logger_Acceptor_Server.am
+
 noinst_PROGRAMS = server_loggerd
 
 server_loggerd_CPPFLAGS = \
