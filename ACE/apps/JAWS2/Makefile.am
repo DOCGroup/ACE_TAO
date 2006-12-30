@@ -9,5 +9,6 @@
 ## ./bin/mwc.pl -type automake -noreldefs ACE.mwc
 
 SUBDIRS = \
-        JAWS
+        JAWS \
+        HTTPU
 
