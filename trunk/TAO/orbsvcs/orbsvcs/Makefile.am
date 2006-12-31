@@ -2374,11 +2374,15 @@ libTAO_CosNotification_Persist_la_CPPFLAGS = \
   -DTAO_HAS_TYPED_EVENT_CHANNEL \
   -DTAO_NOTIFY_PERSIST_BUILD_DLL
 
+if BUILD_ZLIB
 if BUILD_ZZIP
 libTAO_CosNotification_Persist_la_CPPFLAGS += \
   -I$(ZZIP_ROOT)/include \
-  -DUSE_ZZIP
+  -I$(ZLIB_ROOT)/include \
+  -DUSE_ZZIP \
+  -DZLIB
 endif BUILD_ZZIP
+endif BUILD_ZLIB
 
 libTAO_CosNotification_Persist_la_SOURCES = \
   Notify/XML_Loader.cpp \
@@ -2388,10 +2392,13 @@ libTAO_CosNotification_Persist_la_SOURCES = \
 libTAO_CosNotification_Persist_la_LDFLAGS = \
  -version-number @TAO_MAJOR@:@TAO_MINOR@:@TAO_BETA@
 
+if BUILD_ZLIB
 if BUILD_ZZIP
 libTAO_CosNotification_Persist_la_LDFLAGS += \
-  -L$(ZZIP_ROOT)/lib
+  -L$(ZZIP_ROOT)/lib \
+  -L$(ZLIB_ROOT)/lib
 endif BUILD_ZZIP
+endif BUILD_ZLIB
 
 libTAO_CosNotification_Persist_la_LIBADD = \
   $(ACE_BUILDDIR)/ACEXML/parser/parser/libACEXML_Parser.la \
@@ -2410,10 +2417,13 @@ libTAO_CosNotification_Persist_la_LIBADD = \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
+if BUILD_ZLIB
 if BUILD_ZZIP
 libTAO_CosNotification_Persist_la_LIBADD += \
-  -lzzip
+  -lzzip \
+  -lz
 endif BUILD_ZZIP
+endif BUILD_ZLIB
 
 nobase_include_HEADERS += \
   Notify/XML_Loader.h \

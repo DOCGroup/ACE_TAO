@@ -1,3 +1,13 @@
+Sun Dec 31 23:12:36 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * orbsvcs/orbsvcs/Makefile.am:
+        * orbsvcs/ImplRepo_Service/Makefile.am:
+
+          It seems BUILD_ZZIP depends on BUILD_ZLIB, so add BUILD_ZLIB
+          conditionals, etc. everywhere we added BUILD_ZZIP support in:
+
+          Fri Dec 29 08:09:46 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
+
 Sun Dec 31 18:15:00 UTC 2006  Iliyan Jeliazkov  <iliyan@ociweb.com>
 
         * tests/TransportCurrent/Framework/ORBInitializer_T.cpp:
