@@ -34,7 +34,7 @@ namespace TAO
       if (ch == 0)
         ACE_THROW_RETURN (::CORBA::NO_IMPLEMENT (), 0);
 
-      return static_cast <TAO_IIOP_Connection_Handler*> (ch);
+      return dynamic_cast <TAO_IIOP_Connection_Handler*> (ch);
 #else
       ACE_THROW_RETURN (::CORBA::NO_IMPLEMENT (), 0);
 #endif

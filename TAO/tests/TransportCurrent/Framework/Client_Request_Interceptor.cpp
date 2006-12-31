@@ -13,14 +13,11 @@ ACE_RCSID (ForwardRequest,
 namespace Test
 {
 
-  using namespace TAO;
-
   // A specialization to handle client-side interceptors
   template <>
   void
-  ORBInitializer<PortableInterceptor::ClientRequestInterceptor>::post_init
-    (PortableInterceptor::ORBInitInfo* oii
-     ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+  ORBInitializer<PortableInterceptor::ClientRequestInterceptor>::post_init (PortableInterceptor::ORBInitInfo* oii
+                                                                            ACE_ENV_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException))
   {
     oii->add_client_request_interceptor (this->interceptor_.in ());

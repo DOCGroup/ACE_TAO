@@ -2,15 +2,19 @@
 // $Id$
 
 project(*idl): taoidldefaults {
+
   IDL_Files {
     Current_Test.idl
   }
+
   custom_only = 1
 }
 
 project(*Server): taoserver, tc, interceptors, pi_server {
+
   after += *idl
   includes += .
+
   Source_Files {
     server.cpp
     Current_Test_Impl.cpp
@@ -18,26 +22,34 @@ project(*Server): taoserver, tc, interceptors, pi_server {
     Tester.cpp
     Server_Main.cpp
   }
+
   Source_Files {
     Current_TestC.cpp
     Current_TestS.cpp
   }
+
   IDL_Files {
   }
+
 }
 
 project(*Client): taoclient, tc, interceptors, pi, dynamicinterface {
+
   after += *idl
   after += *Server
   includes += .
+
   Source_Files {
     Client_Request_Interceptor.cpp
     client.cpp
     Tester.cpp
   }
+
   Source_Files {
     Current_TestC.cpp
   }
+
   IDL_Files {
   }
+
 }

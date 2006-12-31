@@ -114,6 +114,10 @@ Worker::svc (void)
       for (int i = 0; i < this->niterations_; ++i)
         {
 
+  // Minimum CORBA does not define Object::_request, so we're just
+  // skipping the DII part in those cases.
+#if (TAO_HAS_MINIMUM_CORBA != 0)
+
           if (this->use_dii_too_)
             {
               ACE_DEBUG ((LM_DEBUG,
@@ -129,6 +133,8 @@ Worker::svc (void)
               request->invoke (ACE_ENV_SINGLE_ARG_PARAMETER);
               ACE_CHECK;
             }
+
+#endif /* (TAO_HAS_MINIMUM_CORBA != 0) */
 
           ACE_DEBUG ((LM_DEBUG,
                       ACE_TEXT ("Client (%P|%t) Invoking server->invoked_by_client() via SII\n")));

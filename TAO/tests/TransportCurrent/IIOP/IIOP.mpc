@@ -27,6 +27,7 @@ project(*Server): taoserver, tc_iiop, interceptors, pi_server {
     IIOP_Server_Main.cpp
     IIOP_Tester.cpp
   }
+
   Source_Files {
     ../Framework/Current_TestC.cpp
     ../Framework/Current_TestS.cpp
@@ -48,6 +49,7 @@ project(*Client): taoclient, tc_iiop, interceptors, pi, dynamicinterface {
     ../Framework/client.cpp
     IIOP_Tester.cpp
   }
+
   Source_Files {
     ../Framework/Current_TestC.cpp
   }
