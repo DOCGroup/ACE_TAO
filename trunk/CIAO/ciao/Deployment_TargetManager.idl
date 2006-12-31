@@ -11,6 +11,7 @@
 
 module Deployment {
 
+  /// @todo, UpdateAvailable is not in the spec, must be UpdateDynamic
   enum DomainUpdateKind {
     Add,
     Delete,
