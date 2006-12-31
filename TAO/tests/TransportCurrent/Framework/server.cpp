@@ -8,6 +8,8 @@
 
 #include "Current_Test_Impl.h"
 #include "Server_Request_Interceptor.h"
+#include "ORBInitializer_T.h"
+
 
 ACE_RCSID (Transport_Current,
            server,

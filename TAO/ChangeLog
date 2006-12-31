@@ -1,3 +1,20 @@
+Sun Dec 31 17:27:27 UTC 2006  Iliyan Jeliazkov  <iliyan@ociweb.com>
+
+        * tests/TransportCurrent/Framework/ORBInitializer_T.cpp:
+
+          Adding a trivial default implementation of post_init.
+
+        * tests/TransportCurrent/Framework/Server_Request_Interceptor.h:
+        * tests/TransportCurrent/Framework/server.cpp:
+
+          Moved an #include from the header to the cpp file, where it
+          belongs.
+
+        * tests/TransportCurrent/IIOP/IIOP.mpc:
+
+              Added a "Template_Files" section to explicitely make
+          ORBInitializer.cpp available.
+
 Fri Dec 29 22:31:08 UTC 2006  Iliyan Jeliazkov  <iliyan@ociweb.com>
 
         * tao/TransportCurrent/Current_Loader.cpp:
