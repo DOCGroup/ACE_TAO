@@ -1,24 +1,17 @@
 // -*- C++ -*-
 
 #include "ace/Log_Msg.h"
-#include "tao/ORB_Constants.h"
 
-
-ACE_RCSID (ForwardRequest,
+ACE_RCSID (Framework,
            Server_Request_Interceptor,
            "$Id$")
 
 #include "Server_Request_Interceptor.h"
+#include "ORBInitializer_T.h"
 
-namespace Test {
+namespace Test
+{
 
-#if defined (TAO_HAS_VERSIONED_NAMESPACE) && TAO_HAS_VERSIONED_NAMESPACE == 1
-  using namespace TAO_VERSIONED_NAMESPACE_NAME::TAO;
-#else
-  using namespace TAO;
-#endif
-
-  // A specialization to handle server-side interceptors
   template <>
   void
   ORBInitializer<PortableInterceptor::ServerRequestInterceptor>::post_init (PortableInterceptor::ORBInitInfo* oii

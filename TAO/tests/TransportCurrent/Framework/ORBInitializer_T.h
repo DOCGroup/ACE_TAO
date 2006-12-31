@@ -12,6 +12,7 @@
 
 #ifndef ORBINITIALIZER_T_H
 #define ORBINITIALIZER_T_H
+#include /**/ "ace/pre.h"
 
 #include "ace/config-all.h"
 
@@ -27,32 +28,36 @@ namespace Test
   // A template class for ORBInitializer, which registers
   // interceptors. Partial specializations exist to handle client and
   // server request interceptors.
-  template <typename Interceptor>
+  template <typename I>
   class ORBInitializer : public PortableInterceptor::ORBInitializer
   {
   public:
-    ORBInitializer (typename Interceptor::_ptr_type interceptor)
-      : interceptor_ (Interceptor::_duplicate (interceptor))
-    {
-    };
+    ORBInitializer (typename I::_ptr_type interceptor);
+    ~ORBInitializer (void);
 
-    ~ORBInitializer (void)
-    {
-    };
+    virtual void pre_init(PortableInterceptor::ORBInitInfo*
+                          ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+      ACE_THROW_SPEC ((CORBA::SystemException));
 
-    virtual void pre_init(PortableInterceptor::ORBInitInfo* ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-      ACE_THROW_SPEC ((CORBA::SystemException))
-    {
-    };
-
-    virtual void post_init(PortableInterceptor::ORBInitInfo* ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+    virtual void post_init(PortableInterceptor::ORBInitInfo*
+                           ACE_ENV_ARG_DECL_WITH_DEFAULTS)
       ACE_THROW_SPEC ((CORBA::SystemException));
 
   private:
-    typename Interceptor::_var_type interceptor_;
+    typename I::_var_type interceptor_;
   };
 
 }
+
+#if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
+#include "ORBInitializer_T.cpp"
+#endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
+
+#if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
+#pragma implementation ("ORBInitializer_T.cpp")
+#endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
+
+#include /**/ "ace/post.h"
 
 #endif  /* ORBINITIALIZER_T_H */
 

@@ -16,14 +16,11 @@
 
 #include "tao/ORB_Constants.h"
 #include "tao/ORBInitializer_Registry.h"
-
-#include "tao/PI/PI.h"
-
 #include "tao/TransportCurrent/Current_ORBInitializer.h"
 #include "tao/TransportCurrent/Current_Loader.h"
 #include "tao/TransportCurrent/Current_Impl.h"
 
-ACE_RCSID (Transport_Current,
+ACE_RCSID (TC,
            Current_Loader,
            "$Id$")
 
