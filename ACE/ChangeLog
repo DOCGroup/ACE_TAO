@@ -1,3 +1,15 @@
+Sun Dec 31 18:56:05 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * docs/svn/config:
+        * docs/svn/svn-prefs.reg:
+          Added some more file extensions
+
+        * bin/generate_doxygen.pl:
+        * etc/tao_compression.doxygen:
+        * etc/tao_transportcurrent.doxygen:
+        * html/index.html:
+          Added doxygen generations for transport current and compression
+
 Sun Dec 31 16:11:05 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
 
         * ACEXML/common/Makefile.am:
