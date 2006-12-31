@@ -30,8 +30,6 @@
 #include "tao/LocalObject.h"
 #include "tao/PI_Server/PI_Server.h"
 
-#include "ORBInitializer_T.h"
-
 namespace Test
 {
 
