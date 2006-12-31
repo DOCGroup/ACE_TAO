@@ -32,7 +32,7 @@ libACEXML_la_CPPFLAGS += \
   -I$(ZZIP_ROOT)/include \
   -I$(ZLIB_ROOT)/include \
   -DUSE_ZZIP \
-  -DZLIB \
+  -DZLIB
 endif BUILD_ZZIP
 endif BUILD_ZLIB
 
