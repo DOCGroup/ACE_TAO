@@ -1,3 +1,10 @@
+Sun Dec 31 16:11:05 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * ACEXML/common/Makefile.am:
+
+          Fix stray trailing \ introduced in:
+          Sat Dec 30 06:20:18 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
+
 Sat Dec 30 06:23:13 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
 
         * */Makefile.am:
