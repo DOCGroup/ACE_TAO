@@ -1,3 +1,10 @@
+Sun Dec 31 18:08:16 UTC 2006  Iliyan Jeliazkov  <jeliazkov_i@>
+
+        * tests/TransportCurrent/IIOP/IIOP_Server_Request_Interceptor.cpp:
+
+          Disambiguating Transport::CurrentTest::ContextTag to
+          Test::Transport::CurrentTest::ContextTag to aid Borland's compiler.
+
 Sun Dec 31 17:27:27 UTC 2006  Iliyan Jeliazkov  <iliyan@ociweb.com>
 
         * tests/TransportCurrent/Framework/ORBInitializer_T.cpp:
