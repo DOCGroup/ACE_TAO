@@ -31,6 +31,8 @@ $html_output_dir = '.';
              ,'tao_pi'
              ,'tao_pi_server'
              ,'tao_rtportableserver'
+             ,'tao_compression'
+             ,'tao_transportcurrent'
              ,'tao_rtcorba'
              ,'tao_dynamicany'
              ,'tao_dynamicinterface'
