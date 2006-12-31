@@ -41,6 +41,15 @@ namespace Test
     ACE_THROW_SPEC ((CORBA::SystemException))
   {
   }
+  
+  
+  template <typename I>
+  void
+  ORBInitializer<I>::post_init(PortableInterceptor::ORBInitInfo*
+                              ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+    ACE_THROW_SPEC ((CORBA::SystemException))
+  {
+  }
 
 }
 #endif /* ORBINITIALIZER_T_CPP */
