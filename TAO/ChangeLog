@@ -1,4 +1,10 @@
-Sun Dec 31 18:08:16 UTC 2006  Iliyan Jeliazkov  <jeliazkov_i@>
+Sun Dec 31 18:15:00 UTC 2006  Iliyan Jeliazkov  <iliyan@ociweb.com>
+
+        * tests/TransportCurrent/Framework/ORBInitializer_T.cpp:
+
+          Updating the @file to fix a fuzz error.
+
+Sun Dec 31 18:08:16 UTC 2006  Iliyan Jeliazkov  <iliyan@ociweb.com>
 
         * tests/TransportCurrent/IIOP/IIOP_Server_Request_Interceptor.cpp:
 

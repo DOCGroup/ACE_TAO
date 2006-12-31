@@ -2,7 +2,7 @@
 
 //=============================================================================
 /**
- * @file ORBInitializer_T.h
+ * @file ORBInitializer_T.cpp
  *
  * $Id$
  *
@@ -41,8 +41,8 @@ namespace Test
     ACE_THROW_SPEC ((CORBA::SystemException))
   {
   }
-  
-  
+
+
   template <typename I>
   void
   ORBInitializer<I>::post_init(PortableInterceptor::ORBInitInfo*
