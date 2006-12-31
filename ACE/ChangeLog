@@ -1,3 +1,12 @@
+Sun Dec 31 22:33:14 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * tests/SV_Shared_Memory_Test.cpp:
+
+          Check and exit if allocator was not successfully initialized
+          (other processes could be using all the kernel's SysV shared
+          memory pages).  Otherwise the test's child process will be stuck
+          in a spinloop while filling up the filesystem with log messages.
+
 Sun Dec 31 18:56:05 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * docs/svn/config:
