@@ -120,11 +120,6 @@ namespace Test
 
   };
 
-  // A specialization to handle server-side interceptor registration
-  template <>
-  void ORBInitializer<PortableInterceptor::ServerRequestInterceptor>::post_init
-    (PortableInterceptor::ORBInitInfo* oii ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-      ACE_THROW_SPEC ((CORBA::SystemException));
 }
 
 #endif  /* SERVER_REQUEST_INTERCEPTOR_H */

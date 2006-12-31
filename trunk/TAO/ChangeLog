@@ -1,3 +1,41 @@
+Fri Dec 29 22:31:08 UTC 2006  Iliyan Jeliazkov  <iliyan@ociweb.com>
+
+        * tao/TransportCurrent/Current_Loader.cpp:
+
+          Cleanup.
+
+        * tao/TransportCurrent/IIOP_Current_Impl.cpp:
+
+          Replaced static_cast<>with a dynamic_cast<> in handler().
+
+        * tests/TransportCurrent/Framework/Client_Request_Interceptor.cpp:
+        * tests/TransportCurrent/Framework/Framework.mpc:
+
+          Whitespace cleanup.
+
+        * tests/TransportCurrent/Framework/ORBInitializer_T.h:
+        * tests/TransportCurrent/Framework/ORBInitializer_T.cpp:
+
+          Cleaned up template declarations and moved themplate code to a
+          cpp file.
+
+        * tests/TransportCurrent/Framework/Server_Request_Interceptor.h:
+        * tests/TransportCurrent/Framework/Server_Request_Interceptor.cpp:
+
+          Updated includes and removed unnecessary code.
+
+        * tests/TransportCurrent/Framework/client.cpp:
+
+          Added code to handle TAO_HAS_MINIMUM_CORBA by disabling DII.
+
+        * tests/TransportCurrent/IIOP/IIOP.mpc:
+
+          Whitespace cleanup.
+
+        * tests/TransportCurrent/IIOP/IIOP_Tester.cpp:
+
+          Removing extra ';' from ACE_STATIC_SVC_REQUIRE.
+
 Sat Dec 30 03:55:42 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
 
         * tests/Makefile.am:
