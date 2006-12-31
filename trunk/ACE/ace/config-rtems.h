@@ -33,6 +33,8 @@
 #  endif  /* __cplusplus */
 #endif /* ! __GNUG__ && ! __KCC */
 
+#include "ace/config-posix.h"
+
 // Completely common part :-)
 
 #define ACE_HAS_NONSTATIC_OBJECT_MANAGER
@@ -58,7 +60,6 @@
 #define ACE_LACKS_RAND_REENTRANT_FUNCTIONS
 #define ACE_LACKS_REALPATH
 #define ACE_LACKS_TEMPNAM
-#define ACE_LACKS_INTPTR_T
 
 // Temporarily, enabling this results in compile errors with
 // rtems 4.6.6.
@@ -141,6 +142,12 @@
 // rtems 4.7 or higher
 #if (__RTEMS_MAJOR__ > 4) || (__RTEMS_MAJOR__ == 4 && __RTEMS_MINOR__ > 6)
 # define ACE_HAS_UALARM
+#else
+# define ACE_LACKS_INTPTR_T
+#endif
+
+#if !defined (_POSIX_REALTIME_SIGNALS)
+# define ACE_HAS_CONSISTENT_SIGNAL_PROTOTYPES
 #endif
 
 #if defined (ACE_LACKS_NETWORKING)
