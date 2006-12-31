@@ -33,6 +33,10 @@ project(*Server): taoserver, tc_iiop, interceptors, pi_server {
     ../Framework/Current_TestS.cpp
   }
 
+  Template_Files {
+    ../Framework/ORBInitializer_T.cpp
+  }
+
   IDL_Files {
   }
 }
@@ -52,6 +56,10 @@ project(*Client): taoclient, tc_iiop, interceptors, pi, dynamicinterface {
 
   Source_Files {
     ../Framework/Current_TestC.cpp
+  }
+
+  Template_Files {
+    ../Framework/ORBInitializer_T.cpp
   }
 
   IDL_Files {
