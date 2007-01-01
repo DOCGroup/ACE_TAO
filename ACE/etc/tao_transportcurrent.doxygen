@@ -72,7 +72,7 @@ IGNORE_PREFIX         =
 #---------------------------------------------------------------------------
 
 GENERATE_HTML         = YES
-HTML_OUTPUT           = html/tao/pi
+HTML_OUTPUT           = html/tao/transportcurrent
 HTML_HEADER           =
 HTML_FOOTER           =
 HTML_STYLESHEET       =
