@@ -144,6 +144,7 @@
 # define ACE_HAS_UALARM
 #else
 # define ACE_LACKS_INTPTR_T
+# undef ACE_HAS_SHM_OPEN
 #endif
 
 #if !defined (_POSIX_REALTIME_SIGNALS)
