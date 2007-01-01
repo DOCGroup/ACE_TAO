@@ -1,3 +1,24 @@
+Mon Jan  1 06:39:05 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/POSIX_CB_Proactor.h:
+          Introduced new ACE_LACKS_SIGVAL_T, when this is defined then ACE
+          does a typedef for sigval_t
+
+        * ace/config-aix-5.x.h:
+        * ace/config-macosx.h:
+        * ace/config-rtems.h:
+        * ace/config-sunos5.4-g++.h:
+        * ace/config-sunos5.4-sunc++-4.x.h:
+        * ace/config-sunos5.5.h:
+        * ace/config-vxworks5.x.h:
+        * ace/config-vxworks6.2.h:
+        * ace/config-vxworks6.3.h:
+        * ace/config-vxworks6.4.h:
+          Added ACE_LACKS_SIGVAL_T
+
+        * ace/POSIX_Asynch_IO.h:
+          Doxygen improvement
+
 Sun Dec 31 22:33:14 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
 
         * tests/SV_Shared_Memory_Test.cpp:
