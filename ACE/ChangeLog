@@ -1,4 +1,10 @@
-Mon Jan  1 06:39:05 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+Mon Jan  1 18:51:05 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/os_include/os_errno.h:
+          Defined ECANCELED when it has not been defined yet, fixes problems
+          with rtems
+
+Mon Jan  1 18:39:05 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/POSIX_CB_Proactor.h:
           Introduced new ACE_LACKS_SIGVAL_T, when this is defined then ACE
