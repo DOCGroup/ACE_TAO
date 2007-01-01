@@ -1,3 +1,10 @@
+Mon Jan  1 21:56:50 UTC 2007  James H. Hill  <hillj@isis.vanderbilt.edu>
+
+        * docs/ace_guidelines.vsmacros:
+
+          Fixed bug that was causing the previous find and replace
+          values to be used when the current document is being saved.
+
 Mon Jan  1 18:51:05 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/os_include/os_errno.h:
