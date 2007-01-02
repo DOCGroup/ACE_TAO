@@ -81,7 +81,6 @@ rtems_task Init (rtems_task_argument argument);
  */
 #define RTEMS_SET_ETHERNET_ADDRESS
 #if (defined (RTEMS_SET_ETHERNET_ADDRESS))
-/* static char ethernet_address[6] = { 0x08, 0x00, 0x3e, 0x12, 0x28, 0xb1 }; */
 static char ethernet_address[6] = { 0x00, 0x80, 0x7F, 0x22, 0x61, 0x77 };
 
 #endif
@@ -127,7 +126,7 @@ static struct rtems_bsdnet_ifconfig netdriver_config = {
 	NULL,				/* BOOTP supplies IP address */
 	NULL,				/* BOOTP supplies IP net mask */
 #else
-  "128.233.17.179",   /* IP address */
+  "XXX.YYY.ZZZ.XYZ",   /* IP address */
 	"255.255.255.0",		/* IP net mask */
 #endif /* !RTEMS_USE_BOOTP */
 
@@ -159,9 +158,9 @@ struct rtems_bsdnet_config rtems_bsdnet_config = {
 #if (!defined (RTEMS_USE_BOOTP))
 	"rtems_host",		/* Host name */
 	"nodomain.com",		/* Domain name */
-  "10.5.0.2", /* Gateway */
+  "XXX.YYY.ZZZ.1", /* Gateway */
 	"XXX.YYY.ZZZ.1",	/* Log host */
-  {"10.5.0.1" },  /* Name server(s) */
+  {"XXX.YYY.ZZZ.1" },  /* Name server(s) */
 	{"XXX.YYY.ZZZ.1" },	/* NTP server(s) */
 
 	/*
