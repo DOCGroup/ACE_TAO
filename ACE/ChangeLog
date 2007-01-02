@@ -1,3 +1,13 @@
+Tue Jan  2 12:38:05 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/config-rtems.h:
+          Added ACE_LACKS_THREAD_PROCESS_SCOPING, rtems only supports
+          PTHREAD_SCOPE_PROCESS, setting another value will result in a
+          notsup error
+
+        * ace/OS_NS_Thread.cpp:
+          Removed some old FSU thread code
+
 Tue Jan  2 11:38:05 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/config-rtems.h:
