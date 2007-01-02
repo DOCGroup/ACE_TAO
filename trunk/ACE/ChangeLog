@@ -1,3 +1,8 @@
+Tue Jan  2 09:44:05 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/ARGV_Test.cpp:
+          Fixed compile errors in unicode build
+
 Mon Jan  1 21:56:50 UTC 2007  James H. Hill  <hillj@isis.vanderbilt.edu>
 
         * docs/ace_guidelines.vsmacros:
