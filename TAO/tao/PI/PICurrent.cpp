@@ -56,10 +56,12 @@ TAO::PICurrent::set_slot (PortableInterceptor::SlotId identifier,
   ACE_CHECK;
 }
 
-void
-TAO::PICurrent::cleanup (void *object, void *)
+namespace
 {
-  delete static_cast<TAO::PICurrent_Impl *> (object);
+  extern "C" void CleanUpPICurrent(void *object, void *)
+  {
+    delete static_cast<TAO::PICurrent_Impl *> (object);
+  }
 }
 
 TAO::PICurrent_Impl *
@@ -122,7 +124,7 @@ TAO::PICurrent::initialize (PortableInterceptor::SlotId sc
     // but ALSO allocates the TSS slot PICurrent is to use.
     // It MUST be called BEFORE we attempt to get/set any
     // PICurrent slot data.
-    if (0 != orb_core_.add_tss_cleanup_func (cleanup, this->tss_slot_))
+    if (0 != orb_core_.add_tss_cleanup_func (CleanUpPICurrent, this->tss_slot_))
       ACE_THROW (CORBA::NO_MEMORY (
                    CORBA::SystemException::_tao_minor_code (
                      TAO::VMCID,

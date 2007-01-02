@@ -1,3 +1,9 @@
+Tue Jan  2 16:32:36 UTC 2006  Simon Massey  <sma@prismtech.com>
+
+        * tao/PI/PICurrent.h:
+        * tao/PI/PICurrent.cpp:
+          extern "C" linkage CANNOT be added to a class member.
+
 Tue Jan  2 14:07:36 UTC 2006  Simon Massey  <sma@prismtech.com>
 
         * tao/PI/PICurrent.h:

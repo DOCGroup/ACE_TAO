@@ -102,9 +102,6 @@ namespace TAO
     /// Initialize the PICurrent object.
     void initialize (PortableInterceptor::SlotId sc ACE_ENV_ARG_DECL);
 
-    /// Clean-up the memory allocated to any PICurrent_impl created.
-    extern "C" static void cleanup (void *object, void *unused_param);
-
   protected:
     /// Destructor
     /**
