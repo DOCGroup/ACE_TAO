@@ -21,7 +21,7 @@ project(SSLIOP) : orbsvcslib, core, security, ssl, pi_server, interceptors, tao_
   }
 
   IDL_Files {
-    idlflags += -Sci -Gp -Gd -Ge 1 -Sa -Sorb \
+    idlflags += -Sci -Gp -Gd -Sa -Sorb \
                 -o SSLIOP
     idlflags -= -St
     SSLIOP/ssl_endpoints.pidl

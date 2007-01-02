@@ -25,7 +25,7 @@ project : taolib, core, core_anytypecode, tao_versioning_idl_defaults {
   }
 
   IDL_Files {
-    idlflags += -Gp -Gd -Sci -SS -Sorb -GA -Ge 1 \
+    idlflags += -Gp -Gd -Sci -SS -Sorb -GA \
                 -Wb,export_macro=TAO_PortableServer_Export \
                 -Wb,export_include=tao/PortableServer/portableserver_export.h \
                 -o PortableServer
@@ -34,7 +34,7 @@ project : taolib, core, core_anytypecode, tao_versioning_idl_defaults {
   }
 
   IDL_Files {
-    idlflags += -Gp -Gd -Ge 1 -Sci -SS -Sorb -GA -Sal \
+    idlflags += -Gp -Gd -Sci -SS -Sorb -GA -Sal \
                 -Wb,export_macro=TAO_PortableServer_Export \
                 -Wb,export_include=tao/PortableServer/portableserver_export.h \
                 -o PortableServer
@@ -53,7 +53,7 @@ project : taolib, core, core_anytypecode, tao_versioning_idl_defaults {
   }
 
   IDL_Files {
-    idlflags += -Gp -Gd -Ge 1 -Sci -SS -Sorb \
+    idlflags += -Gp -Gd -Sci -SS -Sorb \
                 -Wb,export_macro=TAO_PortableServer_Export \
                 -Wb,export_include=tao/PortableServer/portableserver_export.h \
                 -o PortableServer
@@ -65,7 +65,7 @@ project : taolib, core, core_anytypecode, tao_versioning_idl_defaults {
   }
 
   IDL_Files {
-    idlflags += -Ge 1 -Sci -SS -Sorb -Sa -GX \
+    idlflags += -Sci -SS -Sorb -Sa -GX \
                 -Wb,export_macro=TAO_PortableServer_Export \
                 -Wb,export_include=tao/PortableServer/portableserver_export.h \
                 -Wb,unique_include=tao/PortableServer/PortableServer.h \
@@ -74,7 +74,7 @@ project : taolib, core, core_anytypecode, tao_versioning_idl_defaults {
   }
 
   IDL_Files {
-    idlflags += -Ge 1 -Sci -SS -Sorb -Sa -GX \
+    idlflags += -Sci -SS -Sorb -Sa -GX \
                 -Wb,export_macro=TAO_PortableServer_Export \
                 -Wb,export_include=tao/PortableServer/portableserver_export.h \
                 -Wb,include_guard=TAO_PORTABLESERVER_SAFE_INCLUDE \

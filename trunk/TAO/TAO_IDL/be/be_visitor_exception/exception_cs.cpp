@@ -239,12 +239,11 @@ int be_visitor_exception_cs::visit_exception (be_exception *node)
       << "}" << be_nl << be_nl;
 
   *os << "void " << node->name ()
-      << "::_tao_encode (" << be_idt << be_idt_nl;
+      << "::_tao_encode (";
 
   if (!node->is_local ())
     {
-      *os << "TAO_OutputCDR &cdr" << env_decl << be_uidt_nl
-          << ") const" << be_uidt_nl
+      *os << "TAO_OutputCDR &cdr) const" << be_nl
           << "{" << be_idt_nl
           << "if (cdr << *this)" << be_idt_nl
           << "{" << be_idt_nl
@@ -264,8 +263,7 @@ int be_visitor_exception_cs::visit_exception (be_exception *node)
     }
   else
     {
-      *os << "TAO_OutputCDR &" << env_decl << be_uidt_nl
-          << ") const" << be_uidt_nl
+      *os << "TAO_OutputCDR &) const" << be_nl
           << "{" << be_idt_nl;
 
       if (be_global->use_raw_throw ())
@@ -281,12 +279,11 @@ int be_visitor_exception_cs::visit_exception (be_exception *node)
     }
 
   *os << "void " << node->name ()
-      << "::_tao_decode (" << be_idt << be_idt_nl;
+      << "::_tao_decode (";
 
   if (!node->is_local ())
     {
-      *os << "TAO_InputCDR &cdr" << env_decl << be_uidt_nl
-          << ")" << be_uidt_nl
+      *os << "TAO_InputCDR &cdr)" << be_nl
           << "{" << be_idt_nl
           << "if (cdr >> *this)" << be_idt_nl
           << "{" << be_idt_nl
@@ -306,8 +303,7 @@ int be_visitor_exception_cs::visit_exception (be_exception *node)
     }
   else
     {
-      *os << "TAO_InputCDR &" << env_decl << be_uidt_nl
-          << ")" << be_uidt_nl
+      *os << "TAO_InputCDR &)" << be_nl
           << "{" << be_idt_nl;
 
       if (be_global->use_raw_throw ())

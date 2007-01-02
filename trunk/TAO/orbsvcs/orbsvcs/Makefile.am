@@ -16,7 +16,7 @@ ACE_ROOT = $(top_srcdir)/..
 TAO_BUILDDIR = $(top_builddir)
 TAO_IDL = ACE_ROOT=$(ACE_ROOT) TAO_ROOT=$(TAO_ROOT) $(TAO_BUILDDIR)/TAO_IDL/tao_idl
 TAO_IDL_DEP = $(TAO_BUILDDIR)/TAO_IDL/tao_idl
-TAO_IDLFLAGS = -Ge 1 -Wb,pre_include=ace/pre.h -Wb,post_include=ace/post.h -I$(TAO_ROOT) -I$(srcdir) -g $(ACE_BUILDDIR)/apps/gperf/src/gperf
+TAO_IDLFLAGS = -Wb,pre_include=ace/pre.h -Wb,post_include=ace/post.h -I$(TAO_ROOT) -I$(srcdir) -g $(ACE_BUILDDIR)/apps/gperf/src/gperf
 TAO_ROOT = $(top_srcdir)
 
 lib_LTLIBRARIES =
@@ -4734,7 +4734,7 @@ CLEANFILES += \
 HTIOP/htiop_endpointsC.cpp HTIOP/htiop_endpointsC.h HTIOP/htiop_endpointsS.h: HTIOP/htiop_endpoints-stamp
 
 HTIOP/htiop_endpoints-stamp: $(srcdir)/HTIOP/htiop_endpoints.pidl $(TAO_IDL_DEP)
-	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs -Wb,versioning_begin=TAO_BEGIN_VERSIONED_NAMESPACE_DECL -Wb,versioning_end=TAO_END_VERSIONED_NAMESPACE_DECL -Wb,export_macro=HTIOP_Export -Wb,export_include=orbsvcs/HTIOP/HTIOP_Export.h -SS -Sci -Gp -Gd -Ge 1 -Sa -Sorb -o HTIOP $(srcdir)/HTIOP/htiop_endpoints.pidl
+        $(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs -Wb,versioning_begin=TAO_BEGIN_VERSIONED_NAMESPACE_DECL -Wb,versioning_end=TAO_END_VERSIONED_NAMESPACE_DECL -Wb,export_macro=HTIOP_Export -Wb,export_include=orbsvcs/HTIOP/HTIOP_Export.h -SS -Sci -Gp -Gd -Sa -Sorb -o HTIOP $(srcdir)/HTIOP/htiop_endpoints.pidl
 	@touch $@
 
 lib_LTLIBRARIES += libTAO_HTIOP.la
@@ -5819,7 +5819,7 @@ CLEANFILES += \
 SSLIOP/ssl_endpointsC.cpp SSLIOP/ssl_endpointsC.h SSLIOP/ssl_endpointsS.h: SSLIOP/ssl_endpoints-stamp
 
 SSLIOP/ssl_endpoints-stamp: $(srcdir)/SSLIOP/ssl_endpoints.pidl $(TAO_IDL_DEP)
-	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs -Wb,versioning_begin=TAO_BEGIN_VERSIONED_NAMESPACE_DECL -Wb,versioning_end=TAO_END_VERSIONED_NAMESPACE_DECL -Wb,export_macro=TAO_SSLIOP_Export -Wb,export_include=orbsvcs/SSLIOP/SSLIOP_Export.h -SS -Sci -Gp -Gd -Ge 1 -Sa -Sorb -o SSLIOP $(srcdir)/SSLIOP/ssl_endpoints.pidl
+        $(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs -Wb,versioning_begin=TAO_BEGIN_VERSIONED_NAMESPACE_DECL -Wb,versioning_end=TAO_END_VERSIONED_NAMESPACE_DECL -Wb,export_macro=TAO_SSLIOP_Export -Wb,export_include=orbsvcs/SSLIOP/SSLIOP_Export.h -SS -Sci -Gp -Gd -Sa -Sorb -o SSLIOP $(srcdir)/SSLIOP/ssl_endpoints.pidl
 	@touch $@
 
 lib_LTLIBRARIES += libTAO_SSLIOP.la

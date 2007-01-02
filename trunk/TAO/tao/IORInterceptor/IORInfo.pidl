@@ -20,7 +20,7 @@
  * The command used to generate code is:
  *
  *  tao_idl
- *     -o orig -Gp -SS -Gd -Ge 1 -Sa -St -Sci
+ *     -o orig -Gp -SS -Gd -Sa -St -Sci
  *          -I$(TAO_ROOT)
  *          -Wb,export_macro=TAO_IORInterceptor_Export
  *          -Wb,export_include="iorinterceptor_export.h"

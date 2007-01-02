@@ -10,7 +10,7 @@
  * CSD_FrameworkC.{h,inl,cpp}, using the following command:
  *
  * $ACE_ROOT/bin/tao_idl \
- *     -o orig -Gp -Gd -Ge 1 -Gt -GA -I$TAO_ROOT -Sci \
+ *     -o orig -Gp -Gd -Gt -GA -I$TAO_ROOT -Sci \
  *          -Wb,export_macro=TAO_CSD_FW_Export \
  *          -Wb,export_include="CSD_FW_Export.h" \
  *          -Wb,pre_include="ace/pre.h" \

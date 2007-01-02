@@ -102,7 +102,7 @@ be_interface::be_interface (UTL_ScopedName *n,
 {
   ACE_NEW (this->strategy_,
            be_interface_default_strategy (this));
-           
+
   AST_Decl::NodeType nt = this->node_type ();
 
   if (this->imported ()
@@ -1301,7 +1301,7 @@ be_interface::gen_collocated_skel_body (be_interface *derived,
       << be_idt << be_idt_nl
       << "TAO_Abstract_ServantBase *servant," << be_nl
       << "TAO::Argument ** args," << be_nl
-      << "int num_args" << env_decl << be_uidt_nl
+      << "int num_args" << be_uidt_nl
       << ")";
 
   be_interface::gen_throw_spec (list, os);
@@ -1313,7 +1313,7 @@ be_interface::gen_collocated_skel_body (be_interface *derived,
       << be_idt << be_idt_nl
       << "servant," << be_nl
       << "args," << be_nl
-      << "num_args" << env_arg << be_uidt_nl
+      << "num_args" << be_uidt_nl
       << ");" << be_uidt << be_uidt_nl
       << "}"<< be_nl;
 
@@ -1993,7 +1993,7 @@ be_interface::gen_skel_helper (be_interface *derived,
                       << "_skel (" << be_idt << be_idt_nl
                       << "TAO_ServerRequest & server_request, " << be_nl
                       << "void * servant_upcall," << be_nl
-                      << "void * servant" << env_dflts << be_uidt_nl
+                      << "void * servant" << be_uidt_nl
                       << ");" << be_uidt;
                 }
               else
@@ -2006,7 +2006,7 @@ be_interface::gen_skel_helper (be_interface *derived,
                       << "_skel (" << be_idt << be_idt_nl
                       << "TAO_ServerRequest & server_request," << be_nl
                       << "void * servant_upcall," << be_nl
-                      << "void * servant" << env_decl << be_uidt_nl
+                      << "void * servant" << be_uidt_nl
                       << ")" << be_uidt_nl
                       << "{" << be_idt_nl;
 
@@ -2020,7 +2020,7 @@ be_interface::gen_skel_helper (be_interface *derived,
                       << "_skel (" << be_idt << be_idt_nl
                       << "server_request," << be_nl
                       << "servant_upcall," << be_nl
-                      << "impl" << env_arg << be_uidt_nl
+                      << "impl" << be_uidt_nl
                       << ");" << be_uidt << be_uidt_nl
                       << "}";
                 }
@@ -2044,7 +2044,7 @@ be_interface::gen_skel_helper (be_interface *derived,
                       << "_skel (" << be_idt << be_idt_nl
                       << "TAO_ServerRequest & server_request," << be_nl
                       << "void * servant_upcall," << be_nl
-                      << "void * servant" << env_dflts << be_uidt_nl
+                      << "void * servant" << be_uidt_nl
                       << ");" << be_uidt;
                 }
               else
@@ -2057,7 +2057,7 @@ be_interface::gen_skel_helper (be_interface *derived,
                       << "_skel (" << be_idt << be_idt_nl
                       << "TAO_ServerRequest & server_request," << be_nl
                       << "void * servant_upcall," << be_nl
-                      << "void * servant" << env_decl << be_uidt_nl
+                      << "void * servant" << be_uidt_nl
                       << ")" << be_uidt_nl
                       << "{" << be_idt_nl;
 
@@ -2071,7 +2071,7 @@ be_interface::gen_skel_helper (be_interface *derived,
                       << "_skel (" << be_idt << be_idt_nl
                       << "server_request," << be_nl
                       << "servant_upcall," << be_nl
-                      << "impl" << env_arg << be_uidt_nl
+                      << "impl" << be_uidt_nl
                       << ");" << be_uidt << be_uidt_nl
                       << "}";
                 }
@@ -2089,7 +2089,7 @@ be_interface::gen_skel_helper (be_interface *derived,
                           << "_skel (" << be_idt << be_idt_nl
                           << "TAO_ServerRequest & server_request," << be_nl
                           << "void * servant_upcall," << be_nl
-                          << "void * servant" << env_dflts << be_uidt_nl
+                          << "void * servant" << be_uidt_nl
                           << ");" << be_uidt;
                     }
                   else
@@ -2103,7 +2103,7 @@ be_interface::gen_skel_helper (be_interface *derived,
                           << "_skel (" << be_idt << be_idt_nl
                           << "TAO_ServerRequest & server_request," << be_nl
                           << "void * servant_upcall," << be_nl
-                          << "void * servant" << env_decl << be_uidt_nl
+                          << "void * servant" << be_uidt_nl
                           << ")" << be_uidt_nl
                           << "{" << be_idt_nl;
 
@@ -2117,7 +2117,7 @@ be_interface::gen_skel_helper (be_interface *derived,
                           << "_skel (" << be_idt << be_idt_nl
                           << "server_request," << be_nl
                           << "servant_upcall," << be_nl
-                          << "impl" << env_arg << be_uidt_nl
+                          << "impl" << be_uidt_nl
                           << ");" << be_uidt << be_uidt_nl
                           << "}";
                     }
@@ -2170,7 +2170,7 @@ be_interface::gen_colloc_op_decl_helper (be_interface *derived,
               << d->local_name () << " (" << be_idt << be_idt_nl
               << "TAO_Abstract_ServantBase *servant, " << be_nl
               << "TAO::Argument ** args," << be_nl
-              << "int num_args" << env_dflts << be_uidt_nl
+              << "int num_args" << be_uidt_nl
               << ")";
 
           list = be_operation::narrow_from_decl (d)->exceptions ();
@@ -2192,7 +2192,7 @@ be_interface::gen_colloc_op_decl_helper (be_interface *derived,
               << "_get_" << d->local_name () << " (" << be_idt << be_idt_nl
               << "TAO_Abstract_ServantBase *servant, " << be_nl
               << "TAO::Argument ** args," << be_nl
-              << "int num_args" << env_dflts << be_uidt_nl
+              << "int num_args" << be_uidt_nl
               << ")";
 
           list = attr->get_get_exceptions ();
@@ -2211,7 +2211,7 @@ be_interface::gen_colloc_op_decl_helper (be_interface *derived,
                   << be_idt << be_idt_nl
                   << "TAO_Abstract_ServantBase *servant, " << be_nl
                   << "TAO::Argument ** args," << be_nl
-                  << "int num_args" << env_dflts << be_uidt_nl
+                  << "int num_args" << be_uidt_nl
                   << ")";
 
               list = attr->get_set_exceptions ();

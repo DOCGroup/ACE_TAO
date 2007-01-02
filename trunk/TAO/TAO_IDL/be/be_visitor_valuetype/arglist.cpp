@@ -72,7 +72,7 @@ be_visitor_obv_operation_arglist::visit_operation (be_operation *node)
 
   *os << " (";
 
-  if (!be_global->exception_support () || node->nmembers () > 0)
+  if (node->nmembers () > 0)
     {
       *os << be_idt << be_idt_nl;
 
@@ -84,59 +84,6 @@ be_visitor_obv_operation_arglist::visit_operation (be_operation *node)
                             "visit_operation - "
                             "codegen for scope failed\n"),
                             -1);
-        }
-
-      // Generate the ACE_ENV_ARG_DECL parameter for the alternative mapping.
-      if (!be_global->exception_support ())
-        {
-          /***********************************************************/
-          // If it ian an AMHExceptionHolder we are going to generate the
-          // function definition "in-place" right here.  Also all
-          // AMHExceptionHolder 'raise' methods do not take any
-          // parameters.  So always declare
-          // ACE_ENV_SINGLE_ARG_DECL_NOT_USED when generating argument
-          // list for AMHExceptioHolders
-          /***********************************************************/
-          if (amh_valuetype)
-            {
-              *os << (be_global->use_raw_throw ()
-                        ? ""
-                        : "ACE_ENV_SINGLE_ARG_DECL");
-            }
-          /***********************************************************/
-          else
-            {
-              // Use ACE_ENV_SINGLE_ARG_DECL or ACE_ENV_ARG_DECL
-              // depending on whether the operation node has parameters.
-
-              if (node->argument_count () == 0)
-                {
-                  *os << (be_global->use_raw_throw ()
-                            ? ""
-                            : " ACE_ENV_SINGLE_ARG_DECL");
-                }
-              else
-                {
-                  *os << (be_global->use_raw_throw ()
-                            ? ""
-                            : " ACE_ENV_ARG_DECL");
-                }
-            }
-
-          if (!amh_valuetype)
-            {
-              switch (this->ctx_->state ())
-                {
-                case TAO_CodeGen::TAO_OBV_OPERATION_ARGLIST_CH:
-                  // Last argument - is always ACE_ENV_ARG_DECL.
-                  *os << (be_global->use_raw_throw ()
-                            ? ""
-                            : "_WITH_DEFAULTS");
-                  break;
-                default:
-                  break;
-                }
-            }
         }
 
       *os << be_uidt_nl

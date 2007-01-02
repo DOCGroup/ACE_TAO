@@ -58,7 +58,7 @@ be_visitor_interface_remote_proxy_broker_ch::visit_interface (
       << "select_proxy ("
       << be_idt << be_idt_nl;
 
-  *os << node->local_name () << " *object" << env_decl << be_uidt_nl
+  *os << node->local_name () << " *object" << be_uidt_nl
       << ");" << be_uidt_nl << be_uidt_nl;
 
   *os << "private:" << be_idt_nl

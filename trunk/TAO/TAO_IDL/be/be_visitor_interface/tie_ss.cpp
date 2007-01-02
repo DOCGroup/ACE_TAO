@@ -180,9 +180,7 @@ be_visitor_interface_tie_ss::visit_interface (be_interface *node)
   *os << "template <class T> "
       << "PortableServer::POA_ptr" << be_nl
       << fulltiename
-      << "<T>::_default_POA ("
-      << (be_global->use_raw_throw () ? "" : "ACE_ENV_SINGLE_ARG_DECL")
-      << ")" << be_nl
+      << "<T>::_default_POA ()" << be_nl
       << "{" << be_idt_nl
       << "if (! ::CORBA::is_nil (this->poa_.in ()))" << be_idt_nl
       << "{" << be_idt_nl
@@ -190,9 +188,7 @@ be_visitor_interface_tie_ss::visit_interface (be_interface *node)
       << be_uidt_nl
       << "}" << be_uidt_nl << be_nl
       << "return this->" << localskelname
-      << "::_default_POA ("
-      << (be_global->use_raw_throw () ? "" : "ACE_ENV_SINGLE_ARG_PARAMETER")
-      << ");" << be_uidt_nl
+      << "::_default_POA ();" << be_uidt_nl
       << "}";
 
   int status =

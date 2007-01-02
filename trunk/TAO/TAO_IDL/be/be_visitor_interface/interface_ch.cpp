@@ -219,16 +219,12 @@ be_visitor_interface_ch::visit_interface (be_interface *node)
     {
       *os << "// These two are inherited from SessionComponent."
           << be_nl << be_nl
-          << "virtual void ciao_preactivate (" << be_idt << be_idt
-          << env_sngl_dflts << be_uidt_nl
-          << ")" << be_nl
+          << "virtual void ciao_preactivate (void)" << be_nl
           << "ACE_THROW_SPEC ((" << be_idt_nl
           << "::CORBA::SystemException," << be_nl
           << "::Components::CCMException" << be_uidt_nl
           << "));" << be_uidt_nl << be_nl
-          << "virtual void ciao_postactivate (" << be_idt << be_idt
-          << env_sngl_dflts << be_uidt_nl
-          << ")" << be_nl
+          << "virtual void ciao_postactivate (void)" << be_nl
           << "ACE_THROW_SPEC ((" << be_idt_nl
           << "::CORBA::SystemException," << be_nl
           << "::Components::CCMException" << be_uidt_nl
@@ -243,9 +239,7 @@ be_visitor_interface_ch::visit_interface (be_interface *node)
     }
 
   // The _is_a method
-  *os << "virtual ::CORBA::Boolean _is_a (" << be_idt << be_idt_nl
-      << "const char *type_id" << env_dflts << be_uidt_nl
-      << ");" << be_uidt_nl << be_nl;
+  *os << "virtual ::CORBA::Boolean _is_a (const char *type_id);" << be_nl;
 
   // The _interface_repository_id method.
   *os << "virtual const char* _interface_repository_id (void) const;";
@@ -445,7 +439,7 @@ be_visitor_interface_ch::gen_xxx_narrow (const char *nar,
                                          TAO_OutStream *os)
 {
   *os << "static " << node->local_name () << "_ptr "
-      << nar << " (" << be_idt << be_idt_nl;
+      << nar << " (";
 
   if (node->is_abstract ())
     {
@@ -456,8 +450,7 @@ be_visitor_interface_ch::gen_xxx_narrow (const char *nar,
       *os << "::CORBA::Object_ptr obj";
     }
 
-  *os << env_dflts << be_uidt_nl
-      << ");" << be_uidt_nl << be_nl;
+  *os << ");" << be_nl;
 
   return true;
 }
