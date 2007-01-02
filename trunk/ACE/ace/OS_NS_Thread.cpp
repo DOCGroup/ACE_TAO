@@ -4073,25 +4073,6 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
           else
             spolicy = SCHED_RR;
 
-#       if defined (ACE_HAS_FSU_PTHREADS)
-          int ret;
-          switch (spolicy)
-            {
-            case SCHED_FIFO:
-            case SCHED_RR:
-              ret = 0;
-              break;
-            default:
-              ret = 22;
-              break;
-            }
-          if (ret != 0)
-            {
-              ::pthread_attr_destroy (&attr);
-              return -1;
-            }
-#       endif    /*  ACE_HAS_FSU_PTHREADS */
-
 #     endif /* ACE_HAS_ONLY_SCHED_OTHER */
 
 #     if defined (ACE_HAS_PTHREADS_DRAFT4)
@@ -4164,17 +4145,6 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
           sparam.sched_priority = priority;
 #     endif /* ACE_HAS_IRIX62_THREADS */
 
-#     if defined (ACE_HAS_FSU_PTHREADS)
-          if (sparam.sched_priority >= PTHREAD_MIN_PRIORITY
-              && sparam.sched_priority <= PTHREAD_MAX_PRIORITY)
-            attr.prio = sparam.sched_priority;
-          else
-            {
-              pthread_attr_destroy (&attr);
-              errno = EINVAL;
-              return -1;
-            }
-#     else
           {
 #       if defined (sun)  &&  defined (ACE_HAS_ONLY_SCHED_OTHER)
             // SunOS, through 5.6, POSIX only allows priorities > 0 to
@@ -4201,7 +4171,6 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
                   }
               }
           }
-#     endif    /* ACE_HAS_FSU_PTHREADS */
         }
 
       // *** Set scheduling explicit or inherited
@@ -5131,16 +5100,6 @@ ACE_OS::thr_setspecific_native (ACE_OS_thread_key_t key, void *data)
   // ACE_OS_TRACE ("ACE_OS::thr_setspecific_native");
 #   if defined (ACE_HAS_THREADS)
 #     if defined (ACE_HAS_PTHREADS)
-#       if defined (ACE_HAS_FSU_PTHREADS)
-      // Call pthread_init() here to initialize threads package.  FSU
-      // threads need an initialization before the first thread constructor.
-      // This seems to be the one; however, a segmentation fault may
-      // indicate that another pthread_init() is necessary, perhaps in
-      // Synch.cpp or Synch_T.cpp.  FSU threads will not reinit if called
-      // more than once, so another call to pthread_init will not adversely
-      // affect existing threads.
-      pthread_init ();
-#       endif /*  ACE_HAS_FSU_PTHREADS */
 #      if defined (ACE_HAS_PTHREADS_DRAFT4) || defined (ACE_HAS_PTHREADS_DRAFT6)
     ACE_OSCALL_RETURN (::pthread_setspecific (key, data), int, -1);
 #       else
