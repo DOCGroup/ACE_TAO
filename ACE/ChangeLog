@@ -1,3 +1,10 @@
+Tue Jan  2 16:02:25 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/MakeProjectCreator/modules/GNUACEWorkspaceCreator.pm:
+
+          Use the MakeWorkspaceBase module to reduce the amount of
+          duplicated code.
+
 Tue Jan  2 14:27:05 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Based_Pointer_Repository.h:
