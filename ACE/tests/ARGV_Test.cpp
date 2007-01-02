@@ -36,7 +36,7 @@ consume_arg (int argc, ACE_TCHAR *argv[])
 }
 
 static int
-test_simple_argv (char *argv[])
+test_simple_argv (ACE_TCHAR *argv[])
 {
   // From command line.
   ACE_ARGV cl (argv);
@@ -182,9 +182,9 @@ test_argv_buf (void)
 static int
 test_argv_quotes (void)
 {
-  const char *argv[] = { "first without quotes",
-                         "'second in single quotes'",
-                         "\"third in double quotes\"",
+  const ACE_TCHAR *argv[] = { ACE_TEXT ("first without quotes"),
+                              ACE_TEXT ("'second in single quotes'"),
+                              ACE_TEXT ("\"third in double quotes\""),
                          0
                        };
   int argc = 3;
