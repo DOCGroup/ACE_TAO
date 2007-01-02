@@ -1,3 +1,17 @@
+Tue Jan  2 11:38:05 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/config-rtems.h:
+          Removed ACE_LACKS_MKFIFO, rtems has this API
+
+        * ace/config-win32-borland.h:
+        * ace/OS_NS_stdio.inl:
+          Removed support for the Borland C++ preview compiler that shipped
+          with CBuilderX
+
+        * ace/os_include/os_signal.h:
+          Removed Borland C++ preview support and fixed ACE_NSIG define
+          for rtems
+
 Tue Jan  2 11:18:05 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/config-macosx-panther.h:
