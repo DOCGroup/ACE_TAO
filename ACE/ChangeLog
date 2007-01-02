@@ -1,3 +1,9 @@
+Tue Jan  2 11:15:05 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * config-rtems.h:
+          Removed ACE_LACKS_PUTENV, rtems has this method, fixes the
+          Env_Value_Test failure
+
 Tue Jan  2 11:06:05 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/ARGV.cpp:
