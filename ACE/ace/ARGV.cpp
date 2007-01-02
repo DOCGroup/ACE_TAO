@@ -141,23 +141,29 @@ ACE_ARGV_T<CHAR_TYPE>::ACE_ARGV_T (CHAR_TYPE *first_argv[],
 {
   ACE_TRACE ("ACE_ARGV_T::ACE_ARGV_T CHAR_TYPE*[] + CHAR_TYPE *[] to CHAR_TYPE[]");
 
-  int first_argc;
-  int second_argc;
+  int first_argc = 0;
+  int second_argc = 0;
 
-  CHAR_TYPE *first_buf;
-  CHAR_TYPE *second_buf;
+  CHAR_TYPE *first_buf = 0;
+  CHAR_TYPE *second_buf = 0;
 
   // convert the first argv to a string
-  first_argc = ACE_OS::argv_to_string (first_argv,
-                                       first_buf,
-                                       substitute_env_args,
-                                       quote_args);
+  if (first_argv != 0 && first_argv[0] != 0)
+    {
+      first_argc = ACE_OS::argv_to_string (first_argv,
+                                           first_buf,
+                                           substitute_env_args,
+                                           quote_args);
+    }
 
   // convert the second argv to a string
-  second_argc = ACE_OS::argv_to_string (second_argv,
-                                        second_buf,
-                                        substitute_env_args,
-                                        quote_args);
+  if (second_argv != 0 && second_argv[0] != 0)
+    {
+      second_argc = ACE_OS::argv_to_string (second_argv,
+                                            second_buf,
+                                            substitute_env_args,
+                                            quote_args);
+    }
 
   // Add the number of arguments in both the argvs.
   this->argc_ = first_argc + second_argc;
@@ -176,9 +182,7 @@ ACE_ARGV_T<CHAR_TYPE>::ACE_ARGV_T (CHAR_TYPE *first_argv[],
   ACE_OS::strcat (this->buf_, second_buf);
 
   //   Delete the first and second buffers
-
   delete [] first_buf;
-
   delete [] second_buf;
 }
 
