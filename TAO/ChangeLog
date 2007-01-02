@@ -1,3 +1,11 @@
+Tue Jan  2 11:50:57 UTC 2007  Iliyan Jeliazkov  <iliyan@ociweb.com>
+
+        * tests/TransportCurrent/Framework/ORBInitializer_T.cpp:
+
+          Removing the trivial post_init() template implementation added
+          on Sun Dec 31 17:27:27 UTC 2006 because it confuses the Windows
+          builds.
+
 Tue Jan  2 09:13:36 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         Removed support from the IDL compiler for -Ge 0 and -Ge 1. We
