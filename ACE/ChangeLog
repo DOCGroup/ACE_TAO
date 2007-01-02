@@ -1,3 +1,11 @@
+Tue Jan  2 10:23:05 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/config-rtems.h:
+          RTEMS does have aio support but there are several errors in the
+          rtems header files and it looks also that the behaviour is not
+          correct, reported this to the rtems maintainers and for the
+          rtems 4.6 version we disable the AIO support in ACE
+
 Tue Jan  2 09:44:05 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/ARGV_Test.cpp:
