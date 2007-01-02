@@ -1,3 +1,10 @@
+Tue Jan  2 14:27:05 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Based_Pointer_Repository.h:
+          Use ACE_EXPORT_SINGLETON_DECLARATION to resolve link errors
+          on FC6. Thanks to Olli Savia  <ops@iki.fi> for
+          reporting this and testing out the patch.
+
 Tue Jan  2 12:38:05 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/config-rtems.h:

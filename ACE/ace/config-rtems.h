@@ -148,6 +148,9 @@
 # undef ACE_HAS_AIO_CALLS
 #endif
 
+// __RTEMS_REVISION__ could also be used but this is broken according
+// to the rtems people
+
 #if !defined (_POSIX_REALTIME_SIGNALS)
 # define ACE_HAS_CONSISTENT_SIGNAL_PROTOTYPES
 #endif
