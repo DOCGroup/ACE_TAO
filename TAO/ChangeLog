@@ -1,3 +1,8 @@
+Tue Jan  2 14:07:36 UTC 2006  Simon Massey  <sma@prismtech.com>
+
+        * tao/PI/PICurrent.h:
+          Add extern "C" linkage to the cleanup function.
+
 Tue Jan  2 14:07:36 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/CSD_Strategy_Tests/TP_Foo_A/csd_tp_foo_a_lib.mpc:
