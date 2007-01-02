@@ -146,6 +146,7 @@
 #else
 # define ACE_LACKS_INTPTR_T
 # undef ACE_HAS_SHM_OPEN
+# undef ACE_HAS_AIO_CALLS
 #endif
 
 #if !defined (_POSIX_REALTIME_SIGNALS)
