@@ -1,3 +1,13 @@
+Tue Jan  2 14:07:36 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/CSD_Strategy_Tests/TP_Foo_A/csd_tp_foo_a_lib.mpc:
+        * tests/CSD_Strategy_Tests/TP_Foo_B/csd_tp_foo_b_lib.mpc:
+        * tests/CSD_Strategy_Tests/TP_Foo_C/csd_tp_foo_c_lib.mpc:
+        * MPC/config/csd_tp_foo_a_lib.mpb:
+        * MPC/config/csd_tp_foo_b_lib.mpb:
+        * MPC/config/csd_tp_foo_c_lib.mpb:
+          Disabled with CORBA/e micro
+
 Tue Jan  2 12:45:36 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * TAO_IDL/be/be_visitor_operation/argument.cpp:
