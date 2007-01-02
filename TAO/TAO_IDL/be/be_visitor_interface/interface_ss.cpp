@@ -210,7 +210,7 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
         << "::_is_a_skel (" << be_idt << be_idt_nl
         << "TAO_ServerRequest & server_request, " << be_nl
         << "void * TAO_INTERCEPTOR (servant_upcall)," << be_nl
-        << "void * servant" << env_decl << be_uidt_nl
+        << "void * servant" << be_uidt_nl
         << ")" << be_uidt_nl;
     *os << "{" << be_idt;
 
@@ -277,14 +277,12 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
         << "                       , exceptions" << be_nl
         << "                       , nexceptions"
         << "\n#endif  /* TAO_HAS_INTERCEPTORS == 1 */" << be_nl
-        << "                       "
-        << (be_global->use_raw_throw () ? "" : "ACE_ENV_ARG_PARAMETER")
-        << ");" << TAO_ACE_CHECK ();
+        << "                       );";
 
     this->generate_send_reply (os);
 
     *os << be_uidt_nl
-        << "}";
+        << "}" << be_nl << be_nl;
 
     is_a.destroy ();
     rt.destroy ();
@@ -319,7 +317,7 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
         << "::_non_existent_skel (" << be_idt << be_idt_nl
         << "TAO_ServerRequest & server_request, " << be_nl
         << "void * TAO_INTERCEPTOR (servant_upcall)," << be_nl
-        << "void * servant" << env_decl << be_uidt_nl
+        << "void * servant" << be_uidt_nl
         << ")" << be_uidt_nl;
     *os << "{" << be_idt;
 
@@ -385,9 +383,7 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
         << "                       , exceptions" << be_nl
         << "                       , nexceptions"
         << "\n#endif  /* TAO_HAS_INTERCEPTORS == 1 */" << be_nl
-        << "                       "
-        << (be_global->use_raw_throw () ? "" : "ACE_ENV_ARG_PARAMETER")
-        << ");" << TAO_ACE_CHECK ();
+        << "                       );";
 
     this->generate_send_reply (os);
 
@@ -430,7 +426,7 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
         << "::_repository_id_skel (" << be_idt << be_idt_nl
         << "TAO_ServerRequest & server_request, " << be_nl
         << "void * TAO_INTERCEPTOR (servant_upcall)," << be_nl
-        << "void * servant" << env_decl << be_uidt_nl
+        << "void * servant" << be_uidt_nl
         << ")" << be_uidt_nl;
     *os << "{" << be_idt;
 
@@ -496,9 +492,7 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
         << "                       , exceptions" << be_nl
         << "                       , nexceptions"
         << "\n#endif  /* TAO_HAS_INTERCEPTORS == 1 */" << be_nl
-        << "                       "
-        << (be_global->use_raw_throw () ? "" : "ACE_ENV_ARG_PARAMETER")
-        << ");" << TAO_ACE_CHECK ();
+        << "                       );";
 
     this->generate_send_reply (os);
 
@@ -517,7 +511,7 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
       << "::_interface_skel (" << be_idt << be_idt_nl
       << "TAO_ServerRequest & server_request, " << be_nl
       << "void * /* servant_upcall */," << be_nl
-      << "void * servant" << env_decl << be_uidt_nl
+      << "void * servant" << be_uidt_nl
       << ")" << be_uidt_nl;
   *os << "{" << be_idt_nl;
   *os << "TAO_IFR_Client_Adapter *_tao_adapter =" << be_idt_nl
@@ -540,12 +534,7 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
       << be_uidt_nl;
 
   *os << "::CORBA::InterfaceDef_ptr _tao_retval = " << be_idt_nl
-      << "impl->_get_interface ("
-      << (be_global->use_raw_throw ()
-            ? ""
-            : "ACE_ENV_SINGLE_ARG_PARAMETER")
-      << ");" << be_uidt
-      << TAO_ACE_CHECK () << be_nl << be_nl
+      << "impl->_get_interface ();" << be_uidt
       << "server_request.init_reply ();" << be_nl
       << "TAO_OutputCDR &_tao_out = *server_request.outgoing ();"
       << be_nl << be_nl
@@ -564,7 +553,7 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
   this->generate_send_reply (os);
 
   *os << be_uidt_nl
-      << "}";
+      << "}" << be_nl << be_nl;
 
 
   // Generate code for the _component skeleton.
@@ -597,7 +586,7 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
         << "::_component_skel (" << be_idt << be_idt_nl
         << "TAO_ServerRequest & server_request, " << be_nl
         << "void * TAO_INTERCEPTOR (servant_upcall)," << be_nl
-        << "void * servant" << env_decl << be_uidt_nl
+        << "void * servant" << be_uidt_nl
         << ")" << be_uidt_nl;
     *os << "{" << be_idt;
 
@@ -662,9 +651,7 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
         << "                       , exceptions" << be_nl
         << "                       , nexceptions"
         << "\n#endif  /* TAO_HAS_INTERCEPTORS == 1 */" << be_nl
-        << "                       "
-        << (be_global->use_raw_throw () ? "" : "ACE_ENV_ARG_PARAMETER")
-        << ");" << TAO_ACE_CHECK () << be_uidt_nl
+        << "                       );" << be_uidt_nl
         << "}";
 
     get_component.destroy ();
@@ -675,9 +662,7 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
 
   *os << be_nl << be_nl
       << "::CORBA::Boolean " << full_skel_name
-      << "::_is_a (" << be_idt << be_idt_nl
-      << "const char* value" << env_not << be_uidt_nl
-      << ")" << be_uidt_nl
+      << "::_is_a (const char* value)" << be_nl
       << "{" << be_idt_nl
       << "return" << be_idt_nl
       << "(" << be_idt_nl;
@@ -719,10 +704,8 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
   if (node->is_event_consumer ())
     {
       *os << be_nl << be_nl
-          << "::CORBA::Boolean " << full_skel_name
-          << "::ciao_is_substitutable (" << be_idt << be_idt_nl
-          << "const char * /* event_repo_id */" << env_not << be_uidt_nl
-          << ")" << be_nl
+          << "::CORBA::Boolean " << be_nl << full_skel_name
+          << "::ciao_is_substitutable (const char *)" << be_idt_nl
           << "ACE_THROW_SPEC (( ::CORBA::SystemException))" << be_uidt_nl
           << "{" << be_idt_nl
           << "return true;" << be_uidt_nl
@@ -874,14 +857,10 @@ be_visitor_interface_ss::this_method (be_interface *node)
   // the _this () operation.
   *os << node->full_name () << " *" << be_nl
       << node->full_skel_name ()
-      << "::_this ("
-      << (be_global->use_raw_throw () ? "void" : "ACE_ENV_SINGLE_ARG_DECL")
-      << ")" << be_nl
+      << "::_this (void)" << be_nl
       << "{" << be_idt_nl
-      << "TAO_Stub *stub = this->_create_stub ("
-      << (be_global->use_raw_throw () ? "" : "ACE_ENV_SINGLE_ARG_PARAMETER")
-      << ");"
-      << TAO_ACE_CHECK ("0") << be_nl << be_nl
+      << "TAO_Stub *stub = this->_create_stub ();"
+      << be_nl << be_nl
       << "TAO_Stub_Auto_Ptr safe_stub (stub);" << be_nl;
 
   *os << "::CORBA::Object_ptr tmp = CORBA::Object::_nil ();"
@@ -926,15 +905,12 @@ be_visitor_interface_ss::dispatch_method (be_interface *node)
   *os << "void " << node->full_skel_name ()
       << "::_dispatch (" << be_idt << be_idt_nl
       << "TAO_ServerRequest & req," << be_nl
-      << "void * servant_upcall" << env_decl << be_uidt_nl
+      << "void * servant_upcall" << be_uidt_nl
       << ")" << be_uidt_nl;
   *os << "{" << be_idt_nl;
   *os << "this->synchronous_upcall_dispatch (req," << be_nl
       << "                                   servant_upcall," << be_nl
-      << "                                   this" << be_nl
-      << "                                   "
-      << (be_global->use_raw_throw () ? "" : "ACE_ENV_ARG_PARAMETER")
-      << ");"
+      << "                                   this);"
       << be_uidt_nl;
   *os << "}";
 }

@@ -6,7 +6,7 @@
  * @brief Pre-compiled IDL source for the PortableServer module.
  *
   $ACE_ROOT/bin/tao_idl \
-  -Gp -Gd -Ge 1 -Sci -I$TAO_ROOT \
+  -Gp -Gd -Sci -I$TAO_ROOT \
   -Wb,export_macro=TAO_PortableServer_Export \
   -Wb,export_include="tao/PortableServer/portableserver_export.h" \
   -Wb,pre_include="ace/pre.h" \

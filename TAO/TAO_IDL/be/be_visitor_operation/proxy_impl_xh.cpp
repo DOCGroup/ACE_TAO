@@ -42,7 +42,7 @@ int be_visitor_operation_proxy_impl_xh::visit_operation (be_operation *node)
   *os << node->local_name () << " (" << be_idt << be_idt_nl
       << "TAO_Abstract_ServantBase *servant," << be_nl
       << "TAO::Argument ** args," << be_nl
-      << "int num_args" << env_decl << be_uidt_nl
+      << "int num_args" << be_uidt_nl
       << ")";
 
   if (this->gen_throw_spec (node) != 0)

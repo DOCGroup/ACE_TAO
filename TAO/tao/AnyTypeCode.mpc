@@ -143,7 +143,7 @@ project : taolib, core, extra_anytypecode, tao_versioning_idl_defaults {
   }
 
   IDL_Files {
-    idlflags += -Gp -Gd -Sci -SS -Sorb -GA -Ge 1 \
+    idlflags += -Gp -Gd -Sci -SS -Sorb -GA \
                 -Wb,export_macro=TAO_AnyTypeCode_Export \
                 -Wb,export_include=tao/AnyTypeCode/TAO_AnyTypeCode_Export.h \
                 -o AnyTypeCode
@@ -155,7 +155,7 @@ project : taolib, core, extra_anytypecode, tao_versioning_idl_defaults {
   }
 
   IDL_Files {
-    idlflags += -Gp -Gd -Sci -SS -GA -Ge 1 \
+    idlflags += -Gp -Gd -Sci -SS -GA \
                 -Wb,export_macro=TAO_AnyTypeCode_Export \
                 -Wb,export_include=tao/AnyTypeCode/TAO_AnyTypeCode_Export.h \
                 -o AnyTypeCode

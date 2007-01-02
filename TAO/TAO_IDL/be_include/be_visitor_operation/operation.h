@@ -61,16 +61,7 @@ public:
   virtual int gen_throw_spec (be_operation *node);
   // generate the throw specification
 
-  virtual int gen_environment_decl (int argument_emitted,
-                                    be_operation *node);
-  // generate the ACE_ENV_ARG declaration, needs to know if there was
-  // at least one argument emitted to deal with all the commas.
-
-  virtual const char *gen_environment_var (void);
-  // generate the environment variable declaration
-
-  virtual int gen_raise_exception (be_type *return_type,
-                                   const char *exception_name,
+  virtual int gen_raise_exception (const char *exception_name,
                                    const char *exception_arguments);
   // helper that generates code for raising an exception
 

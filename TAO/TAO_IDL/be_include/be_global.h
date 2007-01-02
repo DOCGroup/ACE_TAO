@@ -424,12 +424,6 @@ public:
   bool gen_direct_collocation (void) const;
   // Check if we want to generate Direct collocation stubs.
 
-  void exception_support (bool);
-  // Set real C++ exception support.
-
-  bool exception_support (void) const;
-  // Check if real C++ exception support is enabled.
-
   void use_raw_throw (bool);
   // Set replacement of 'ACE_THROW_SPEC' with 'throw'.
 
@@ -703,9 +697,6 @@ private:
 
   bool gen_direct_collocation_;
   // are we generating Direct collocated stubs?
-
-  bool exception_support_;
-  // do we support real C++ exceptions (strict mapping) for stubs/skeletons?
 
   bool use_raw_throw_;
   // Another possible option if the above is TRUE.

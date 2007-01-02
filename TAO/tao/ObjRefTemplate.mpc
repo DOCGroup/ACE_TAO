@@ -28,7 +28,7 @@ project : valuetype, portableserver, core, tao_versioning_idl_defaults {
   }
 
   IDL_Files {
-    idlflags += -Gp -Gd -Ge 1 -SS -Sorb -GX \
+    idlflags += -Gp -Gd -SS -Sorb -GX \
                 -Wb,export_macro=TAO_ORT_Export \
                 -Wb,export_include=tao/ObjRefTemplate/ort_export.h \
                 -Wb,include_guard=TAO_OBJREF_TEMPLATE_SAFE_INCLUDE \
@@ -39,7 +39,7 @@ project : valuetype, portableserver, core, tao_versioning_idl_defaults {
   }
 
   IDL_Files {
-    idlflags += -Ge 1 -SS -Sorb -GX -Sci \
+    idlflags += -SS -Sorb -GX -Sci \
                 -Wb,export_macro=TAO_ORT_Export \
                 -Wb,export_include=tao/ObjRefTemplate/ort_export.h \
                 -Wb,unique_include=tao/ObjRefTemplate/ObjectReferenceTemplate.h \
@@ -48,7 +48,7 @@ project : valuetype, portableserver, core, tao_versioning_idl_defaults {
   }
 
   IDL_Files {
-    idlflags += -Gp -Gd -Ge 1 -SS -GA -Sorb  \
+    idlflags += -Gp -Gd -SS -GA -Sorb  \
                 -Wb,export_macro=TAO_ORT_Export \
                 -Wb,export_include=tao/ObjRefTemplate/ort_export.h \
                 -o ObjRefTemplate

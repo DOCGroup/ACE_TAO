@@ -71,13 +71,9 @@ be_visitor_amh_interface_ss::this_method (be_interface *node)
 
   *os << non_amh_name.c_str () << "*" << be_nl
       << full_skel_name
-      << "::_this ("
-      << (be_global->use_raw_throw () ? "void" : "ACE_ENV_SINGLE_ARG_DECL")
-      << ")" << be_nl
+      << "::_this (void)" << be_nl
       << "{" << be_idt_nl
-      << "TAO_Stub *stub = this->_create_stub ("
-      << (be_global->use_raw_throw () ? "" : "ACE_ENV_SINGLE_ARG_PARAMETER")
-      << ");" << TAO_ACE_CHECK ("0") << be_nl << be_nl;
+      << "TAO_Stub *stub = this->_create_stub ();" << be_nl << be_nl;
 
   *os << "TAO_Stub_Auto_Ptr safe_stub (stub);" << be_nl
       << "::CORBA::Object_ptr tmp = CORBA::Object::_nil ();" << be_nl
@@ -130,13 +126,13 @@ be_visitor_amh_interface_ss::dispatch_method (be_interface *node)
   *os << "void" << be_nl
       << full_skel_name << "::_dispatch (" << be_idt << be_idt_nl
       << "TAO_ServerRequest & req," << be_nl
-      << "void * context" << env_decl << be_uidt_nl
+      << "void * context" << be_uidt_nl
       << ")" << be_uidt_nl
       << "{" << be_idt_nl
       << "this->asynchronous_upcall_dispatch (" << be_idt << be_idt_nl
       << "req," << be_nl
       << "context," << be_nl
-      << "this" << env_arg << be_uidt_nl
+      << "this" << be_uidt_nl
       << ");" << be_uidt << be_uidt_nl
       << "}";
 }

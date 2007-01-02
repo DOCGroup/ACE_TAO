@@ -68,7 +68,7 @@ be_visitor_operation_direct_proxy_impl_ss::visit_operation (
     }
 
   *os << "," << be_nl
-      << "int" << env_decl << be_uidt_nl
+      << "int" << be_uidt_nl
       << ")";
 
   if (this->gen_throw_spec (node) != 0)
@@ -117,10 +117,6 @@ be_visitor_operation_direct_proxy_impl_ss::visit_operation (
 
   *os << be_uidt << be_uidt_nl;
 
-  if (!be_global->exception_support ())
-    {
-      *os << "ACE_CHECK;";
-    }
   *os << be_uidt_nl
       << "}" << be_nl;
 
@@ -145,7 +141,7 @@ be_visitor_operation_direct_proxy_impl_ss::gen_invoke (
 
   if (si.is_done ())
     {
-      *os << env_sngl_arg << be_uidt_nl
+      *os << be_uidt_nl
           << ");";
 
       return 0;
@@ -185,7 +181,7 @@ be_visitor_operation_direct_proxy_impl_ss::gen_invoke (
     }
 
   // End the upcall
-  *os << env_arg << be_uidt_nl
+  *os << be_uidt_nl
       << ");";
 
   return 0;

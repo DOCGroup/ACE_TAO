@@ -84,7 +84,7 @@ be_visitor_interface_remote_proxy_broker_cs::visit_interface (
   *os << node->full_base_proxy_impl_name () << "&" << be_nl
       <<node->full_remote_proxy_broker_name () << "::"
       << "select_proxy (" << be_idt << be_idt_nl
-      << "::" << node->full_name () << " *" << env_not << be_uidt_nl
+      << "::" << node->full_name () << " *" << be_uidt_nl
       << ")" << be_uidt_nl
       << "{" << be_idt_nl // idt = 1
       << "return this->remote_proxy_impl_;"

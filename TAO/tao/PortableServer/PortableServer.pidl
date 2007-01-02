@@ -9,7 +9,7 @@
  * PortableServerC.{h,inl,cpp}, using the following command:
  *
  * tao_idl.exe \
- *     -o orig -Sci -Gp -Gd -Ge 1 -GA -I$(TAO_ROOT)
+ *     -o orig -Sci -Gp -Gd -GA -I$(TAO_ROOT)
  *          -Wb,export_macro=TAO_PortableServer_Export \
  *          -Wb,export_include="portableserver_export.h" \
  *          -Wb,pre_include="ace/pre.h" \

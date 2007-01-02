@@ -10,7 +10,7 @@
  * command:
  *
  *   tao_idl.exe
- *        -o orig -Ge 1 -GA
+ *        -o orig -GA
  *        -I../..
  *        -Wb,export_macro=TAO_ORT_Export \
  *        -Wb,export_include="ort_export.h" \

@@ -27,7 +27,7 @@ project : taolib, core, core_anytypecode, avoids_corba_e_micro, tao_versioning_i
   }
 
   IDL_Files {
-    idlflags += -SS -Ge 1 -Sorb \
+    idlflags += -SS -Sorb \
                 -Wb,export_macro=TAO_Valuetype_Export \
                 -Wb,export_include=tao/Valuetype/valuetype_export.h \
                 -o Valuetype

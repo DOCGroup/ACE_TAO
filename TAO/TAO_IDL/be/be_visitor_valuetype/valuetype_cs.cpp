@@ -446,16 +446,9 @@ be_visitor_valuetype_cs::visit_operation (be_operation *node)
   // and without native exception support).
   *os << be_nl
       << "{" << be_nl
-      << "#if defined (TAO_HAS_EXCEPTIONS)" << be_idt_nl
       << "auto_ptr< ::CORBA::Exception> safety (this->exception);"
       << be_nl
-      << "// Direct throw because we don't have the ACE_TRY_ENV."
-      << be_nl
       << "this->exception->_raise ();" << be_uidt_nl
-      << "#else" << be_idt_nl
-      << "// We can not use ACE_THROW here." << be_nl
-      << "ACE_TRY_ENV.exception (this->exception);" << be_uidt_nl
-      << "#endif" << be_nl
       << "}"
       << be_uidt_nl;
 
