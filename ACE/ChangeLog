@@ -1,3 +1,9 @@
+Tue Jan  2 11:18:05 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/config-macosx-panther.h:
+        * ace/config-macosx-tiger.h:
+          Added ACE_LACKS_SIGVAL_T
+
 Tue Jan  2 11:15:05 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * config-rtems.h:
