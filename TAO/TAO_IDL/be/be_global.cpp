@@ -83,11 +83,6 @@ BE_GlobalData::BE_GlobalData (void)
     gen_assign_op_ (false),
     gen_thru_poa_collocation_ (true), // Default is thru_poa.
     gen_direct_collocation_ (false),
-#ifdef ACE_HAS_EXCEPTIONS
-    exception_support_ (true),
-#else
-    exception_support_ (false),
-#endif /* ACE_HAS_EXCEPTIONS */
     use_raw_throw_ (false),
     opt_tc_ (false),
     ami_call_back_ (false),
@@ -1030,18 +1025,6 @@ BE_GlobalData::gen_direct_collocation (void) const
 }
 
 void
-BE_GlobalData::exception_support (bool val)
-{
-  this->exception_support_ = val;
-}
-
-bool
-BE_GlobalData::exception_support (void) const
-{
-  return this->exception_support_;
-}
-
-void
 BE_GlobalData::use_raw_throw (bool val)
 {
   this->use_raw_throw_ = val;
@@ -1973,10 +1956,6 @@ BE_GlobalData::parse_args (long &i, char **av)
             idl_global->append_idl_flag (av[i + 1]);
             int option = ACE_OS::atoi (av[i + 1]);
 
-            // Exception support.
-            be_global->exception_support (option == 0
-                                          || option == 2);
-
             // Use of raw 'throw'.
             be_global->use_raw_throw (option == 2);
             ++i;
@@ -2572,12 +2551,6 @@ BE_GlobalData::usage (void) const
       LM_DEBUG,
       ACE_TEXT (" -Gd \t\t\tGenerate the code for direct collocation. Default ")
       ACE_TEXT ("is thru-POA collocation\n")
-    ));
-  ACE_DEBUG ((
-      LM_DEBUG,
-      ACE_TEXT (" -Ge [0|1]\t\tDisable/Enable generation of")
-      ACE_TEXT (" CORBA::Environment arguments (disabled by default")
-      ACE_TEXT (" if ACE_HAS_EXCEPTIONS)\n")
     ));
   ACE_DEBUG ((
       LM_DEBUG,

@@ -17,7 +17,7 @@
  *   command used for this is:
  *
  *     tao_idl.exe
- *        -o orig -Gp -Gd -Ge 1 -GA -Ssi
+ *        -o orig -Gp -Gd -GA -Ssi
  *          -Wb,stub_export_macro=TAO_Export
  *          -Wb,stub_export_include="tao/TAO_Export.h"
  *          -Wb,skel_export_macro=TAO_PortableServer_Export

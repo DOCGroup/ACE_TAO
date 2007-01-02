@@ -157,7 +157,7 @@ be_visitor_valuetype_marshal_cs::visit_valuetype (be_valuetype *node)
 
   if (inh)
     {
-      *os << "if (! ci.handle_chunking (strm))" << be_idt_nl;
+      *os << "if (!ci.handle_chunking (strm))" << be_idt_nl;
       *os << "return false;" << be_uidt_nl << be_nl;
 
       if (inh->opt_accessor ())
@@ -173,7 +173,7 @@ be_visitor_valuetype_marshal_cs::visit_valuetype (be_valuetype *node)
         }
       else // only can access base class via virtual function
         {
-          *os << "if (! this->_tao_unmarshal__"
+          *os << "if (!this->_tao_unmarshal__"
               <<       inh->flat_name ()
               << " (strm, ci))" << be_idt_nl
               << "{" << be_idt_nl
@@ -187,7 +187,7 @@ be_visitor_valuetype_marshal_cs::visit_valuetype (be_valuetype *node)
 
   if (node->data_members_count () > 0)
     {
-      *os << "if (! ci.handle_chunking (strm))" << be_idt_nl;
+      *os << "if (!ci.handle_chunking (strm))" << be_idt_nl;
       *os << "return false;" << be_uidt_nl << be_nl;
       *os << "CORBA::Boolean const ret = " << be_idt << be_idt_nl;
 
@@ -197,7 +197,7 @@ be_visitor_valuetype_marshal_cs::visit_valuetype (be_valuetype *node)
 
       *os << ";" << be_uidt << be_uidt_nl;
 
-      *os << "if ( ! ret) " << be_idt_nl;
+      *os << "if (!ret) " << be_idt_nl;
       *os << "return false; " << be_uidt_nl << be_nl;
       *os << "if (this->require_truncation_)" << be_idt_nl;
       *os << "return ci.skip_chunks (strm);" << be_uidt_nl << be_nl;

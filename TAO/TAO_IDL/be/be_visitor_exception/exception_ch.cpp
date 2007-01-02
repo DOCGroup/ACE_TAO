@@ -98,12 +98,8 @@ int be_visitor_exception_ch::visit_exception (be_exception *node)
   *os << "virtual ::CORBA::Exception *"
       << "_tao_duplicate (void) const;\n" << be_nl
       << "virtual void _raise (void) const;\n" << be_nl
-      << "virtual void _tao_encode (" << be_idt << be_idt_nl
-      << "TAO_OutputCDR &cdr" << env_decl << be_uidt_nl
-      << ") const;" << be_uidt_nl << be_nl
-      << "virtual void _tao_decode (" << be_idt << be_idt_nl
-      << "TAO_InputCDR &cdr" << env_decl << be_uidt_nl
-      << ");" << be_uidt;
+      << "virtual void _tao_encode (TAO_OutputCDR &cdr) const;" << be_nl
+      << "virtual void _tao_decode (TAO_InputCDR &cdr);" << be_nl;
 
   // Generate constructor that takes each member as a parameter. We need a
   // new state. Such a constructor exists if we have members.

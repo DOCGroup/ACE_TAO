@@ -13,7 +13,7 @@
  *
  *   The command used to generate code from this file is:
  *
- *     tao_idl -o orig -Ge 1 -Sa -St -Sci \
+ *     tao_idl -o orig -Sa -St -Sci \
  *          -Wb,export_macro=TAO_IORTable_Export \
  *          -Wb,export_include=iortable_export.h \
  *          -Wb,pre_include="ace/pre.h" \

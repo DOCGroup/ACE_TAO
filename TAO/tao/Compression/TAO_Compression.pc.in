@@ -5,7 +5,7 @@ includedir=@includedir@
 
 Name: TAO_Compression
 Description: TAO Compression Library
-Requires: TAO_PI, TAO_CodecFactory, TAO_AnyTypeCode, TAO
+Requires: TAO_CodecFactory, TAO_AnyTypeCode, TAO
 Version: @VERSION@
 Libs: -L${libdir} -lTAO_Compression
 Cflags: -I${includedir}

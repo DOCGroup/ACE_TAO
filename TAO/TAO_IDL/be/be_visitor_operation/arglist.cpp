@@ -18,8 +18,8 @@
 //
 // ============================================================================
 
-ACE_RCSID (be_visitor_operation, 
-           arglist, 
+ACE_RCSID (be_visitor_operation,
+           arglist,
            "$Id$")
 
 // ************************************************************
@@ -46,8 +46,6 @@ be_visitor_operation_arglist::visit_operation (be_operation *node)
 
   *os << " (" << be_idt << be_idt_nl;
 
-  int arg_emitted = 0;
-
   switch (this->ctx_->state ())
     {
     case TAO_CodeGen::TAO_OPERATION_ARGLIST_PROXY_IMPL_XH:
@@ -59,7 +57,6 @@ be_visitor_operation_arglist::visit_operation (be_operation *node)
           *os << "," << be_nl;
         }
 
-      arg_emitted = 1;
       break;
     default:
       break;
@@ -75,17 +72,12 @@ be_visitor_operation_arglist::visit_operation (be_operation *node)
                         -1);
     }
 
-  if (this->gen_environment_decl (arg_emitted, node) == -1)
+  if (node->argument_count () == 0)
     {
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         "(%N:%l) be_visitor_operation_arglist::"
-                         "visit_operation - "
-                         "gen_environment_decl failed\n"),
-                        -1);
+      *os << "void";
     }
 
-  *os << be_uidt_nl
-      << ")";
+  *os << be_uidt_nl<< ")";
 
   // Now generate the throw specs.
   if (this->gen_throw_spec (node) == -1)
@@ -117,7 +109,7 @@ be_visitor_operation_arglist::visit_operation (be_operation *node)
     default:
       return 0;
     }
-    
+
   *os << ";";
 
   return 0;
@@ -148,8 +140,7 @@ be_visitor_operation_arglist::visit_argument (be_argument *node)
   // We need the interface node in which this operation was defined. However,
   // if this operation node was an attribute node in disguise, we get this
   // information from the context
-  be_interface *intf;
-  intf = this->ctx_->attribute ()
+  be_interface *intf = this->ctx_->attribute ()
     ? be_interface::narrow_from_scope (this->ctx_->attribute ()->defined_in ())
     : be_interface::narrow_from_scope (op->defined_in ());
 

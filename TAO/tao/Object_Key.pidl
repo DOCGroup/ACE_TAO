@@ -6,7 +6,7 @@
 //   The command used to generate code is:
 //
 //     tao_idl
-//        -o orig -Ge 1 -St -Gp -Gd -Sci
+//        -o orig -St -Gp -Gd -Sci
 //          -Wb,export_macro=TAO_Export
 //          -Wb,export_macro="tao/TAO_Export"
 //          -Wb,pre_include="ace/pre.h"

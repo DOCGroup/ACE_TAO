@@ -189,9 +189,7 @@ be_visitor_operation_upcall_command_ss::visit (be_operation * node,
      << "}" << be_nl << be_nl;
 
   // Generate execute() method.
-  os << "virtual void execute ("
-     << (be_global->use_raw_throw () ? "void" : "ACE_ENV_SINGLE_ARG_DECL")
-     << ")" << be_nl
+  os << "virtual void execute (void)" << be_nl
      << "{" << be_idt_nl;
 
   if (!node->void_return_type ())
@@ -387,15 +385,6 @@ be_visitor_operation_upcall_command_ss::gen_upcall (be_operation * node)
          << (i == 0 ? "" : ", ") << "arg_" << i + 1;
     }
 
-  if (count > 0)
-    {
-      os << env_arg;
-    }
-  else
-    {
-      os << env_sngl_arg;
-    }
-
   os << ");";
 
   if (!node->void_return_type ())
@@ -404,7 +393,7 @@ be_visitor_operation_upcall_command_ss::gen_upcall (be_operation * node)
     }
 
   os << be_uidt
-     << TAO_ACE_CHECK () << be_uidt_nl;
+     << be_uidt_nl;
 
   return 0;
 }

@@ -158,44 +158,28 @@ be_visitor_amh_rh_operation_ss::visit_operation (be_operation *node)
       operation_name[idx] = '\0';
 
       *os << be_nl << "{" << be_idt_nl
-          << (be_global->use_raw_throw () ? "try" : "ACE_TRY") << be_nl
+          << "try" << be_nl
           << "{" << be_idt_nl
           << "holder->raise_" << operation_name.c_str ()
-          << " ("
-          << (be_global->use_raw_throw ()
-                ? ""
-                : "ACE_ENV_SINGLE_ARG_PARAMETER")
-          << ");" << ace_try_check << be_uidt_nl
+          << " ();" << be_uidt_nl
           << "}" << be_nl
-          << (be_global->use_raw_throw ()
-                ? "catch ( ::CORBA::Exception& ex)"
-                : "ACE_CATCH ( ::CORBA::Exception, ex)")
+          << "catch ( ::CORBA::Exception& ex)"
           << be_nl
           << "{" << be_idt_nl
-          << "this->_tao_rh_send_exception (ex"
-          << (be_global->use_raw_throw () ? "" : " ACE_ENV_ARG_PARAMETER")
-          << ");" << TAO_ACE_CHECK () << be_uidt_nl
-          << "}" << ace_endtry << be_uidt_nl
+          << "this->_tao_rh_send_exception (ex);" << be_uidt_nl
+          << "}" << be_uidt_nl
           << "}";
     }
   else
     {
       // Step 3: Generate actual code for the method
       *os << be_nl << "{" << be_idt_nl
-          << "this->_tao_rh_init_reply ("
-          << (be_global->use_raw_throw ()
-                ? ""
-                : "ACE_ENV_SINGLE_ARG_PARAMETER")
-          << ");" << TAO_ACE_CHECK () << be_nl << be_nl;
+          << "this->_tao_rh_init_reply ();" << be_nl << be_nl;
 
       this->marshal_params (node);
 
       *os << be_nl
-          << "this->_tao_rh_send_reply ("
-          << (be_global->use_raw_throw ()
-                ? ""
-                : "ACE_ENV_SINGLE_ARG_PARAMETER")
-          << ");" << be_uidt_nl
+          << "this->_tao_rh_send_reply ();" << be_uidt_nl
           << "}";
     }
 
@@ -236,8 +220,7 @@ be_visitor_amh_rh_operation_ss::marshal_params (be_operation *node)
           << "{" << be_idt_nl;
 
       // If marshaling fails, raise exception.
-      if (this->gen_raise_exception (0,
-                                     "::CORBA::MARSHAL",
+      if (this->gen_raise_exception ("::CORBA::MARSHAL",
                                      "") == -1)
         {
           ACE_ERROR_RETURN ((LM_ERROR,

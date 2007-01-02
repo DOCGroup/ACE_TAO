@@ -209,7 +209,7 @@ be_visitor_operation_ss::gen_skel_operation_body (be_operation * node,
       << "_skel (" << be_idt << be_idt_nl
       << "TAO_ServerRequest & server_request," << be_nl
       << "void * TAO_INTERCEPTOR (servant_upcall)," << be_nl
-      << "void * servant" << env_decl << be_uidt_nl
+      << "void * servant" << be_uidt_nl
       << ")" << be_uidt_nl;
 
   // Generate the actual code for the skeleton. However, if any of the
@@ -298,10 +298,8 @@ be_visitor_operation_ss::gen_skel_operation_body (be_operation * node,
       << "                       , exceptions" << be_nl
       << "                       , nexceptions"
       << "\n#endif  /* TAO_HAS_INTERCEPTORS == 1 */" << be_nl
-      << "                       "
-      << (be_global->use_raw_throw () ? "" : "ACE_ENV_ARG_PARAMETER")
-      << ");" << TAO_ACE_CHECK () << be_uidt_nl
-      << "}";
+      << "                       );" << be_uidt_nl
+      << "}" << be_nl << be_nl;
 
   return 0;
 }
