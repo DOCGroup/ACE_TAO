@@ -74,8 +74,6 @@ be_visitor_operation_argument::post_process (be_decl *bd)
 int
 be_visitor_operation_argument::visit_operation (be_operation *node)
 {
-  TAO_OutStream *os = this->ctx_->stream ();
-
   // All we do is hand over code generation to our scope.
   if (this->visit_scope (node) == -1)
     {
