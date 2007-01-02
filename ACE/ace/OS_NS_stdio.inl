@@ -920,7 +920,7 @@ ACE_OS::vsnprintf (char *buffer, size_t maxlen, const char *format, va_list ap)
 #if !defined (ACE_LACKS_VSNPRINTF)
 
   int result;
-#  if !defined (ACE_WIN32) || (defined (__BORLANDC__) && (__BORLANDC__ >= 0x600))
+#  if !defined (ACE_WIN32)
   result = ::vsnprintf (buffer, maxlen, format, ap);
 #  else
   result = ::_vsnprintf (buffer, maxlen, format, ap);
@@ -943,7 +943,7 @@ ACE_OS::vsnprintf (char *buffer, size_t maxlen, const char *format, va_list ap)
     {
       result = static_cast <int> (maxlen + 1);
     }
-  
+
   return result;
 
 #else

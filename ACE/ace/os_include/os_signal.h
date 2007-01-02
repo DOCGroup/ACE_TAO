@@ -157,12 +157,8 @@ extern "C"
 
 #if defined (ACE_VXWORKS)
 #  define ACE_NSIG (_NSIGS + 1)
-#elif defined (__Lynx__)
+#elif defined (__Lynx__) || defined (ACE_HAS_RTEMS)
 #  define ACE_NSIG (NSIG + 1)
-#elif defined (ACE_HAS_RTEMS)
-#  define ACE_NSIG (SIGRTMAX)
-#elif defined(__BORLANDC__) && (__BORLANDC__ >= 0x600)
-#  define ACE_NSIG _NSIG
 #else
    // All other platforms set NSIG to one greater than the
    // highest-numbered signal.
