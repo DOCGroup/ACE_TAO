@@ -1,3 +1,10 @@
+Tue Jan  2 11:06:05 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/ARGV.cpp:
+          Fixed constructor that combines two argv arrays to handle
+          an empty array as we can have with embedded platforms like
+          VxWorks and RTEMS
+
 Tue Jan  2 10:49:05 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/run_test.lst:
