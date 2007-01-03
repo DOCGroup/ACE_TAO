@@ -1,3 +1,10 @@
+Wed Jan  3 07:47:05 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ASNMP/tests/test_config.h:
+          Only define ACE_START_TEST and ACE_END_TEST when they are not
+          defined yet. Removed some old code at the same time
+
+
 Wed Jan  3 06:47:58 UTC 2007  J.T. Conklin  <jtc@acorntoolworks.com>
 
         * configure.ac:
