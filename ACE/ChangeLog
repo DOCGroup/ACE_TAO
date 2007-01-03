@@ -1,3 +1,13 @@
+Wed Jan  3 09:36:13 UTC 2007  Olli Savia  <ops@iki.fi>
+
+        * include/makeinclude/wrapper_macros.GNU:
+        * ace/OS_NS_stdio.inl:
+        * tests/OS_Test.cpp:
+
+          Added the ability to use trio (http://sourceforge.net/projects/ctrio/)
+          if platform lacks decent support for vsnprintf. trio support is
+          enabled by defining trio=1 in plaform_macros.GNU
+        
 Wed Jan  3 07:52:05 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         Reverted my change below, it breaks the singleton on windows, the EXPORT
@@ -51,22 +61,22 @@ Wed Jan  3 05:53:04 UTC 2007  Chris Cleeland  <cleeland_c@ociweb.com>
         * ace/CDR_Stream.inl (adjust):
 
           Applied a one-line change from Dan Troesser <troesser_d at
-	  ociweb dot com>, originally committed to OCITAO 1.4a.  VC8
-	  detected that memory around a buffer was being modified.
-	  Changed a boundary check from <= check to < that some believed
-	  was causing a write past the end of the buffer.  After the
-	  change, there were no compilation problems with VC8 and all the
-	  ACE CDR-related tests passed.
+          ociweb dot com>, originally committed to OCITAO 1.4a.  VC8
+          detected that memory around a buffer was being modified.
+          Changed a boundary check from <= check to < that some believed
+          was causing a write past the end of the buffer.  After the
+          change, there were no compilation problems with VC8 and all the
+          ACE CDR-related tests passed.
 
-	* bin/tao_orb_tests.lst:
+        * bin/tao_orb_tests.lst:
 
-	  Add in Bug_2702_Regression test.
+          Add in Bug_2702_Regression test.
 
-	* bin/auto_run_tests.pl:
+        * bin/auto_run_tests.pl:
 
-	  Change the search logic for listed tests so that the script
-	  "finds" tests even when the layout isn't using the "traditional"
-	  layout where $TAO_ROOT == $ACE_ROOT/TAO.
+          Change the search logic for listed tests so that the script
+          "finds" tests even when the layout isn't using the "traditional"
+          layout where $TAO_ROOT == $ACE_ROOT/TAO.
 
         * NEWS: Updated to reflect these changes.
 

@@ -12,6 +12,10 @@
 #include "ace/OS_NS_sys_stat.h"
 #include "ace/OS_Memory.h"
 
+#if defined (ACE_HAS_TRIO)
+#  include <trio.h>
+#endif /* ACE_HAS_TRIO */
+
 /*****************************************************************************/
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
@@ -918,7 +922,6 @@ ACE_INLINE int
 ACE_OS::vsnprintf (char *buffer, size_t maxlen, const char *format, va_list ap)
 {
 #if !defined (ACE_LACKS_VSNPRINTF)
-
   int result;
 #  if !defined (ACE_WIN32)
   result = ::vsnprintf (buffer, maxlen, format, ap);
@@ -933,7 +936,6 @@ ACE_OS::vsnprintf (char *buffer, size_t maxlen, const char *format, va_list ap)
   if (result == -1)
     buffer[maxlen-1] = '\0';
 # endif
-
   // In out-of-range conditions, C99 defines vsnprintf() to return the number
   // of characters that would have been written if enough space was available.
   // Earlier variants of the vsnprintf() (e.g. UNIX98) defined it to return
@@ -945,15 +947,14 @@ ACE_OS::vsnprintf (char *buffer, size_t maxlen, const char *format, va_list ap)
     }
 
   return result;
-
+#elif defined (ACE_HAS_TRIO)
+  return trio_vsnprintf (buffer, maxlen, format, ap);
 #else
-
   ACE_UNUSED_ARG (buffer);
   ACE_UNUSED_ARG (maxlen);
   ACE_UNUSED_ARG (format);
   ACE_UNUSED_ARG (ap);
   ACE_NOTSUP_RETURN (-1);
-
 #endif /* ACE_LACKS_VSNPRINTF */
 }
 
