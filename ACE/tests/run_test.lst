@@ -151,6 +151,7 @@ Thread_Mutex_Test: !DISABLE_ToFix_LynxOS_PPC
 Thread_Pool_Reactor_Resume_Test: !DISABLE_ToFix_LynxOS_PPC !ST
 Thread_Pool_Reactor_Test: !DISABLE_ToFix_LynxOS_PPC
 Thread_Pool_Test: !DISABLE_ToFix_LynxOS_PPC
+Thread_Creation_Threshold_Test
 Time_Service_Test: !STATIC !DISABLED !missing_netsvcs TOKEN !Unicos
 Time_Value_Test
 Timeprobe_Test

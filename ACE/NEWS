@@ -17,6 +17,11 @@ PLANNED CHANGES FOR "ACE-5.5.5"
 USER VISIBLE CHANGES BETWEEN ACE-5.5.4 and ACE-5.5.5
 ====================================================
 
+. Fixed a problem where, on Solaris 9 onwards, calling
+  ACE_OS::thr_create(THR_NEW_LWP) more than 2^15 (65535) times in a
+  process will fail.  See changelog entry from "Wed Jan 3 22:31:05 UTC
+  2007 Chris Cleeland <cleeland_c@ociweb.com>" for more information.
+
 . Fixed a bug in ACE_QtReactor where the two select() calls in that function
   might select on different handler sets.
 

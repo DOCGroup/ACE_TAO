@@ -1111,6 +1111,17 @@ ACE_LACKS_TELLDIR                       Platform uses ACE_HAS_DIRENT
 ACE_LACKS_THREAD_STACK_SIZE             Platform lacks
                                         pthread_attr_setstacksize()
                                         (e.g., Linux pthreads)
+ACE_LACKS_THR_CONCURRENCY_FUNCS		(ONLY APPLIES TO SOLARIS)
+					Platform does not support
+					thr_getconcurrency/thr_setconcurrency
+					functions, or their implementation
+					is effectively a "no-op".  This
+					notably applies for Solaris >= 5.9.
+					Note that if you build on Solaris 8
+					and run on Solaris 9+, you can
+					encounter thread creation errors
+					unless you rebuild on the target
+					platform.
 ACE_LACKS_TIMEDWAIT_PROTOTYPES          MIT pthreads platform lacks
                                         the timedwait prototypes
 ACE_LACKS_TIMESPEC_T                    Platform does not define

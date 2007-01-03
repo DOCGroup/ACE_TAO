@@ -4241,6 +4241,7 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
         }
 #   endif /* !ACE_HAS_PTHREAD_ATTR_SETCREATESUSPEND_NP */
 
+#   if ! defined(ACE_LACKS_THR_CONCURRENCY_FUNCS)
       if (ACE_BIT_ENABLED (flags, THR_NEW_LWP))
         {
           // Increment the number of LWPs by one to emulate the
@@ -4267,6 +4268,7 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
                 return -1;
             }
         }
+#   endif /* ! ACE_LACKS_THR_CONCURRENCY_FUNCS */
     }
 
 #   if defined (ACE_HAS_PTHREADS_DRAFT4)
