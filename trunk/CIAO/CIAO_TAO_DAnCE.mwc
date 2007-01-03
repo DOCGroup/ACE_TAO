@@ -4,6 +4,7 @@
 workspace {
   $(ACE_ROOT)/ace
   $(ACE_ROOT)/apps/gperf/src
+  $(ACE_ROOT)/contrib/minizip
   $(ACE_ROOT)/ACEXML
   $(TAO_ROOT)/tao
   $(TAO_ROOT)/TAO_IDL
