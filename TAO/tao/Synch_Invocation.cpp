@@ -785,7 +785,7 @@ namespace TAO
     ACE_CATCHANY
       {
 #if TAO_HAS_INTERCEPTORS == 1
-        PortableInterceptor::ReplyStatus status =
+        PortableInterceptor::ReplyStatus const status =
           this->handle_any_exception (&ACE_ANY_EXCEPTION
                                       ACE_ENV_ARG_PARAMETER);
         ACE_TRY_CHECK;
@@ -803,7 +803,7 @@ namespace TAO
     ACE_CATCHALL
       {
 #if TAO_HAS_INTERCEPTORS == 1
-        PortableInterceptor::ReplyStatus st =
+        PortableInterceptor::ReplyStatus const st =
           this->handle_all_exception (ACE_ENV_SINGLE_ARG_PARAMETER);
         ACE_TRY_CHECK;
 

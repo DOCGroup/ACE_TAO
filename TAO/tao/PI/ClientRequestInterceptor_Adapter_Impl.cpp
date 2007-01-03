@@ -72,7 +72,7 @@ namespace TAO
     // This is an "ending" interception point so we only process the
     // interceptors pushed on to the flow stack.
 
-    bool is_remote_request = invocation.is_remote_request();
+    bool const is_remote_request = invocation.is_remote_request();
 
     // Notice that the interceptors are processed in the opposite order
     // they were pushed onto the stack since this is an "ending"
@@ -81,7 +81,7 @@ namespace TAO
     TAO_ClientRequestInfo ri (&invocation);
 
     // Unwind the stack.
-    const size_t len = invocation.stack_size ();
+    size_t const len = invocation.stack_size ();
     for (size_t i = 0; i < len; ++i)
       {
         // Pop the interceptor off of the flow stack before it is
@@ -117,7 +117,7 @@ namespace TAO
     // This is an "ending" interception point so we only process the
     // interceptors pushed on to the flow stack.
 
-    bool is_remote_request = invocation.is_remote_request();
+    bool const is_remote_request = invocation.is_remote_request();
 
     // Notice that the interceptors are processed in the opposite order
     // they were pushed onto the stack since this is an "ending"
@@ -127,7 +127,7 @@ namespace TAO
         TAO_ClientRequestInfo ri (&invocation);
 
         // Unwind the flow stack.
-        const size_t len = invocation.stack_size ();
+        size_t const len = invocation.stack_size ();
         for (size_t i = 0; i < len; ++i)
           {
             // Pop the interceptor off of the flow stack before it is
@@ -196,7 +196,7 @@ namespace TAO
     // This is an "ending" interception point so we only process the
     // interceptors pushed on to the flow stack.
 
-    bool is_remote_request = invocation.is_remote_request();
+    bool const is_remote_request = invocation.is_remote_request();
 
     // Notice that the interceptors are processed in the opposite order
     // they were pushed onto the stack since this is an "ending"
@@ -207,7 +207,7 @@ namespace TAO
         TAO_ClientRequestInfo ri (&invocation);
 
         // Unwind the stack.
-        const size_t len = invocation.stack_size ();
+        size_t const len = invocation.stack_size ();
         for (size_t i = 0; i < len; ++i)
         {
           // Pop the interceptor off of the flow stack before it is
