@@ -269,17 +269,16 @@ namespace TAO
     TAO::Transport_Cache_Manager & cache =
       this->profile_->orb_core()->lane_resources ().transport_cache();
 
-    // the cache increments the reference count on the transport if the
-    // find is successful. Find_transport uses negative logic in its return,
-    // 0 for success
+    // the cache increments the reference count on the transport if
+    // the find is successful. Cache.find_transport returns 0 on success.
+    // but we want to return a "boolean" of 0 for failure, 1 for success.
     TAO_Transport* tmp = this->transport_.get ();
     if (cache.find_transport(desc, tmp) != 0)
-      return -1;
+      return 0;
 
     this->transport_.set (tmp);
-    return 0;
+    return 1;
   }
-
 
 }
 
