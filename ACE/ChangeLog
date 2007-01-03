@@ -1,3 +1,11 @@
+Wed Jan  3 19:34:47 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/tao_orb_tests.lst:
+
+          TAO/tests/Any/Recursive also does not work when the build is
+          static.  It uses ACE_Dynamic_Service to locate the
+          TAO_TypeCodeFactory_Adapter which fails.
+
 Wed Jan  3 18:35:02 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
 
         * bin/tao_orb_tests.lst:
