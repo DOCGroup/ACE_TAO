@@ -3624,6 +3624,8 @@ ACE_CHECK_LACKS_FUNCS(pipe)
 
 ACE_CHECK_LACKS_FUNCS(qsort)
 
+ACE_CHECK_LACKS_FUNCS(realpath)
+
 ACE_CHECK_LACKS_FUNCS(setegid seteuid setgid)
 
 ACE_CHECK_LACKS_FUNCS([setpgid])
