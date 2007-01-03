@@ -1,3 +1,8 @@
+Wed Jan  3 15:25:05 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/tao_orb_tests.lst:
+          Added new PI test
+
 Wed Jan  3 14:57:49 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
 
         * bin/MakeProjectCreator/config/ipv6.mpb:
