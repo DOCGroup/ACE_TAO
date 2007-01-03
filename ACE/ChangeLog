@@ -1,3 +1,11 @@
+Wed Jan  3 18:35:02 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/tao_orb_tests.lst:
+
+          Do not run TAO/tests/Any/Recursive if minimum_corba,
+          corba_e_compact or corba_e_micro are enabled.  Not all portions of
+          the test build with any one of these enabled.
+
 Wed Jan  3 15:50:39 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
 
         * ACEXML/apps/svcconf/svcconf.mpc:
