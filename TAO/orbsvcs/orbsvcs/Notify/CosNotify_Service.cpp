@@ -110,6 +110,30 @@ TAO_CosNotify_Service::init (int argc, ACE_TCHAR *argv[])
           task_per_proxy = 1;
           arg_shifter.consume_arg ();
         }
+      else if (arg_shifter.cur_arg_strncasecmp (ACE_TEXT("-UseSeparateDispatchingORB")) == 0)
+        {
+          current_arg = arg_shifter.get_the_parameter
+                                (ACE_TEXT("-UseSeparateDispatchingORB"));
+          if (current_arg != 0 &&
+              (ACE_OS::strcmp(ACE_TEXT ("0"), current_arg) == 0 ||
+               ACE_OS::strcmp(ACE_TEXT ("1"), current_arg) == 0))
+            {
+              properties->separate_dispatching_orb (
+                            static_cast<bool> (ACE_OS::atoi(current_arg)));
+              ACE_DEBUG ((LM_DEBUG,
+                          ACE_TEXT ("Using separate Dispatching ORB\n")));
+            }
+          else
+            {
+              ACE_DEBUG ((LM_DEBUG,
+                          ACE_TEXT ("(%P|%t) WARNING: Unrecognized ")
+                          ACE_TEXT ("argument (%s).  Ignoring invalid ")
+                          ACE_TEXT ("-UseSeparateDispatchingORB usage.\n"),
+                          (current_arg == 0 ? ACE_TEXT ("''") : current_arg)));
+            }
+          if (current_arg != 0)
+            arg_shifter.consume_arg ();
+        }
       else if (arg_shifter.cur_arg_strncasecmp (ACE_TEXT("-AllowReconnect")) == 0)
       {
         arg_shifter.consume_arg ();
@@ -198,7 +222,36 @@ TAO_CosNotify_Service::init_service (CORBA::ORB_ptr orb ACE_ENV_ARG_DECL)
 {
   ACE_DEBUG ((LM_DEBUG, "Loading the Cos Notification Service...\n"));
 
-  this->init_i (orb ACE_ENV_ARG_PARAMETER);
+  if (TAO_Notify_PROPERTIES::instance()->separate_dispatching_orb())
+    {
+      // got here by way of svc.conf. no second orb supplied so create one
+      if (NULL == TAO_Notify_PROPERTIES::instance()->dispatching_orb())
+        {
+          ACE_DEBUG ((LM_DEBUG, "No dispatching orb supplied. Creating default one.\n"));
+
+          int argc = 0;
+          char *argv0 = 0;
+          char **argv = &argv0;  // ansi requires argv be null terminated.
+          CORBA::ORB_var dispatcher = CORBA::ORB_init (argc, argv,
+                                                       "default_dispatcher" ACE_ENV_ARG_PARAMETER);
+          //ACE_CHECK_RETURN (-1);
+
+          TAO_Notify_PROPERTIES::instance()->dispatching_orb(dispatcher.in());
+        }
+
+      this->init_i2 (orb, TAO_Notify_PROPERTIES::instance()->dispatching_orb() ACE_ENV_ARG_PARAMETER);
+
+    }
+  else
+    {
+      this->init_i (orb ACE_ENV_ARG_PARAMETER);
+    }
+}
+
+void
+TAO_CosNotify_Service::init_service2 (CORBA::ORB_ptr orb, CORBA::ORB_ptr dispatching_orb ACE_ENV_ARG_DECL)
+{
+  this->init_i2 (orb, dispatching_orb ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 }
 
@@ -217,22 +270,57 @@ TAO_CosNotify_Service::init_i (CORBA::ORB_ptr orb ACE_ENV_ARG_DECL)
   PortableServer::POA_var default_poa = PortableServer::POA::_narrow (object.in () ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
-  /// Set the properties
-    TAO_Notify_Properties* properties = TAO_Notify_PROPERTIES::instance();
+  // Set the properties
+  TAO_Notify_Properties* properties = TAO_Notify_PROPERTIES::instance();
 
-    properties->orb (orb);
-    properties->default_poa (default_poa.in ());
+  properties->orb (orb);
+  properties->default_poa (default_poa.in ());
 
-    // Init the factory
-    this->factory_.reset (this->create_factory (ACE_ENV_SINGLE_ARG_PARAMETER));
-    ACE_CHECK;
-    ACE_ASSERT( this->factory_.get() != 0 );
-    TAO_Notify_PROPERTIES::instance()->factory (this->factory_.get());
+  // Init the factory
+  this->factory_.reset (this->create_factory (ACE_ENV_SINGLE_ARG_PARAMETER));
+  ACE_CHECK;
+  ACE_ASSERT( this->factory_.get() != 0 );
+  TAO_Notify_PROPERTIES::instance()->factory (this->factory_.get());
 
-    this->builder_.reset (this->create_builder (ACE_ENV_SINGLE_ARG_PARAMETER));
-    ACE_CHECK;
-    ACE_ASSERT( this->builder_.get() != 0 );
-    TAO_Notify_PROPERTIES::instance()->builder (this->builder_.get());
+  this->builder_.reset (this->create_builder (ACE_ENV_SINGLE_ARG_PARAMETER));
+  ACE_CHECK;
+  ACE_ASSERT( this->builder_.get() != 0 );
+  TAO_Notify_PROPERTIES::instance()->builder (this->builder_.get());
+}
+
+void
+TAO_CosNotify_Service::init_i2 (CORBA::ORB_ptr orb, CORBA::ORB_ptr dispatching_orb ACE_ENV_ARG_DECL)
+{
+  // Obtain the Root POA
+  CORBA::Object_var object  =
+    orb->resolve_initial_references("RootPOA" ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK;
+
+  if (CORBA::is_nil (object.in ()))
+    ACE_ERROR ((LM_ERROR, " (%P|%t) Unable to resolve the RootPOA.\n"));
+
+  PortableServer::POA_var default_poa = PortableServer::POA::_narrow (object.in () ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK;
+
+  // Set the properties
+  TAO_Notify_Properties* properties = TAO_Notify_PROPERTIES::instance();
+
+  properties->orb (orb);
+  properties->dispatching_orb (dispatching_orb);
+  properties->separate_dispatching_orb (true);
+
+  properties->default_poa (default_poa.in ());
+
+  // Init the factory and builder
+  this->factory_.reset (this->create_factory (ACE_ENV_SINGLE_ARG_PARAMETER));
+  ACE_CHECK;
+  ACE_ASSERT( this->factory_.get() != 0 );
+  TAO_Notify_PROPERTIES::instance()->factory (this->factory_.get());
+
+  this->builder_.reset (this->create_builder (ACE_ENV_SINGLE_ARG_PARAMETER));
+  ACE_CHECK;
+  ACE_ASSERT( this->builder_.get() != 0 );
+  TAO_Notify_PROPERTIES::instance()->builder (this->builder_.get());
 }
 
 TAO_Notify_Factory*

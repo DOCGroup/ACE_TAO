@@ -51,6 +51,9 @@ public:
 
   virtual int fini (void);
 
+  /// separate dispatching orb Init
+  virtual void init_service2 (CORBA::ORB_ptr orb, CORBA::ORB_ptr dispatching_orb ACE_ENV_ARG_DECL);
+
   /// Create the Channel Factory.
   virtual CosNotifyChannelAdmin::EventChannelFactory_ptr create (PortableServer::POA_ptr default_POA ACE_ENV_ARG_DECL);
 
@@ -60,6 +63,8 @@ public:
 protected:
   /// Init the data members
   virtual void init_i (CORBA::ORB_ptr orb ACE_ENV_ARG_DECL);
+  /// Init the data members separate dispatching orb
+  virtual void init_i2 (CORBA::ORB_ptr orb, CORBA::ORB_ptr dispatching_orb ACE_ENV_ARG_DECL);
 
 private:
 

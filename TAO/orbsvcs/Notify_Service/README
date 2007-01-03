@@ -46,8 +46,13 @@ Command line arguments:
                               Naming Service.
                               The default is "NotifyEventChannel".
 
-"-ORBRunThreads"            : Number of threads to run the
+"-ORBRunThreads nthreads"   : Number of threads to run the
                               ORB::run method.
+
+"-UseSeparateDispatchingORB 1|0"
+                            : Indicates whether the service should create and
+                              and use a separate ORB dedicated to dispatching of
+                              events.
 
 !! The -Notify_TPReactor option is deprecated!! use the -ORBRunThreads
 option instead.
@@ -85,7 +90,7 @@ if you are using the "-NameSvc" options.
 
    $TAO_ROOT/orbsvcs/Naming_Service/Naming_Service -o naming.ior
 
-   and the CosEvent_Service as
+   and the Notify_Service as
 
    $ Notify_Service -ORBInitRef NameService=file://naming.ior
 
@@ -113,7 +118,8 @@ The svc.conf options:
 
 The "Notify_Default_Event_Manager_Objects_Factory" service object accepts the following options:
 
-"-DispatchingThreads [thread_count]" : How many threads for MT dispatching.
+"-DispatchingThreads [thread_count]" : Enables MT dispatching with the specified number
+                                       of threads.
 
 "-ListenerThreads"                   : How many threads for listener filter evaluation.
 

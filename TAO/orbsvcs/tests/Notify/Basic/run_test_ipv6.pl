@@ -87,11 +87,14 @@ if (PerlACE::waitforfile_timed ($namingior, $startup_timeout) == -1) {
   exit 1;
 }
 
+for $dispatch_opt ("", "-UseSeparateDispatchingOrb 1")
+{
 for $config (@test_configs)
   {
     print STDERR "\nTesting Notification Service with config file = $config ....\n\n";
 
     $Notification = new PerlACE::Process ("../../../Notify_Service/Notify_Service",
+					  ' '.$dispatch_opt.' '.
                                           "-ORBInitRef NameService=file://$namingior " .
                                           "-IORoutput $notifyior " .
                                           "-ORBSvcConf $config " .
@@ -136,6 +139,7 @@ for $config (@test_configs)
 
     $Notification->Kill ();
   }
+}
 
 $Naming->Kill ();
 

@@ -32,6 +32,7 @@ PLANNED CHANGES FOR "TAO-5.5.5"
         a value != 0. For more details of how the feature is intended
         to be used, see docs/transport_current/index.html
 
+
 USER VISIBLE CHANGES BETWEEN TAO-1.5.4 and TAO-1.5.5
 ====================================================
 
@@ -57,6 +58,23 @@ USER VISIBLE CHANGES BETWEEN TAO-1.5.4 and TAO-1.5.5
 . Removed support for -Ge 0 and -Ge 1 from the IDL compiler. In practice
   this means that the IDL compiler doesn't generate any environment macros
   anymore.
+
+. Fixed a problem where TAO mistakenly considered ALL messages
+  with zero-length payload to be errors and was thus not properly
+  parsing and handling the GIOP CloseConnection message.  This is
+  tested via Bug_2702_Regression.
+
+. Added an optimization to servant activation to eliminate calls to
+  check_bounds() on the object key sequence.  This has been observed
+  to yield a 30% decrease in activation time for debug builds on VC71
+  and linux gcc.
+
+. Merged in changes from OCI's distribution which originate from
+  OCI request tickets [RT 8449] and [RT 8881]. In their totality,
+  these changes add a feature whereby the notification service
+  implementation can utilize a separate ORB for dispatching events to
+  consumers.
+
 
 USER VISIBLE CHANGES BETWEEN TAO-1.5.3 and TAO-1.5.4
 ====================================================
