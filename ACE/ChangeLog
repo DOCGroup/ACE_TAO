@@ -1,3 +1,15 @@
+Wed Jan  3 22:10:54 UTC 2007  Chris Cleeland  <cleeland_c@ociweb.com>
+
+        * ace/CDR_Stream.inl (adjust):
+        
+          Reverted one-line change committed in r76279 and as part of
+          entry from "Wed Jan 3 05:53:04 UTC 2007 Chris Cleeland
+          <cleeland_c@ociweb.com>".  After getting some questions from
+          Johnny and posing them to the originators of the change, the
+          originators indicated that, over time, the problem may have been
+          application-related as they could never isolate a test case that
+          provoked it.
+
 Wed Jan  3 19:52:05 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/tao_orb_tests.lst:
