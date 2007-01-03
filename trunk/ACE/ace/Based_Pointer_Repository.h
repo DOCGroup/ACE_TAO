@@ -76,9 +76,9 @@ private:
 // ----------------------------------
 
 /// Declare a process wide singleton
-ACE_EXPORT_SINGLETON_DECLARE (ACE_Singleton,
-                              ACE_Based_Pointer_Repository,
-                              ACE_SYNCH_RW_MUTEX)
+ACE_SINGLETON_DECLARE (ACE_Singleton,
+                       ACE_Based_Pointer_Repository,
+                       ACE_SYNCH_RW_MUTEX)
 
 /// Provide a Singleton access point to the based pointer repository.
 typedef ACE_Singleton<ACE_Based_Pointer_Repository, ACE_SYNCH_RW_MUTEX>
