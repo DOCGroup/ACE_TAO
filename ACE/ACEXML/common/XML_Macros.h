@@ -32,10 +32,6 @@
 
 #include "ace/Exception_Macros.h"
 
-// The following macros assume that an environment variable is passed
-// in/out of each function that can throw an exception. The type of the
-// environment variable is defined by ACEXML_ENV_TYPE.
-
 // The Windows MFC exception mechanism requires that a caught CException
 // (including the CMemoryException in use here) be freed using its Delete()
 // method. Thus, when MFC is in use and we're catching exceptions as a result
@@ -48,6 +44,10 @@
 #if !defined (ACE_del_bad_alloc)
 #  define ACE_del_bad_alloc
 #endif
+
+// The following macros assume that an environment variable is passed
+// in/out of each function that can throw an exception. The type of the
+// environment variable is defined by ACEXML_ENV_TYPE.
 
 #if !defined (ACEXML_ENV_TYPE)
 # define ACEXML_ENV_TYPE  ACEXML_Env
