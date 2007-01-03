@@ -273,3 +273,4 @@ TAO/tests/Permanent_Forward/run_test.pl:
 TAO/tests/Parallel_Connect_Strategy/run_test.pl:
 TAO/tests/DII_Collocation_Tests/oneway/run_test.pl: !ST !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO
 TAO/tests/DII_Collocation_Tests/twoway/run_test.pl: !ST !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO
+TAO/tests/Compression/run_test.pl: ZLIB
