@@ -602,7 +602,13 @@ else
     ACE_MAKE_OPTIONS += ssl
   endif
 endif
+
+## These are related to MPC.  When 'requires' is used in a project
+## it controls whether or not the project is generated.  There is also
+## a second level of control in platform macros and thus requires
+## some features to be set here as well.
 ec_typed_events ?= 1
+zlib ?= 1
 
 ifeq ($(exceptions),0)
     #### Disable the default exception handling of g++ >= 2.8.0.
