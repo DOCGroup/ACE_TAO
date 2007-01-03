@@ -1,3 +1,10 @@
+Wed Jan  3 16:18:36 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
+
+        * tools/IDL3_to_IDL2/IDL3_to_IDL2.mpc:
+
+          Use the install base project instead of the deprecated core base
+          project.
+
 Thu Dec 28 12:22:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * DAnCE/RepositoryManager/RepositoryManager_Impl.h:
