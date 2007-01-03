@@ -1367,7 +1367,7 @@ project(Based Pointer Test) : acetest {
   }
 }
 
-project(Library Unload) {
+project(Library Unload): unload_libace {
   avoids += wince
   exename = UnloadLibACE
   staticflags += ACE_AS_STATIC_LIBS
