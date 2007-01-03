@@ -1,3 +1,8 @@
+Wed Jan  3 13:19:03 UTC 2007  Chris Cleeland  <cleeland_c@ociweb.com>
+
+        * tests/Bug_2702_Regression/fakeserver2.pl: Added $Id$ string to
+          fix fuzz build.
+
 Wed Jan  3 05:58:08 UTC 2007  Chris Cleeland  <cleeland_c@ociweb.com>
 
           This entry documents the merge of several small bug fixes from

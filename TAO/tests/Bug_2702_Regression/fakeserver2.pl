@@ -1,7 +1,6 @@
 #!/usr/bin/perl
 
-use Socket;
-use IO::Socket;
+# $Id$
 
 $filebits = '';
 
