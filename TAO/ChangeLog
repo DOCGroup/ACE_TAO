@@ -3,6 +3,7 @@ Wed Jan  3 19:04:36 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
         * tao/Invocation_Adapter.cpp:
         * tao/Messaging/Asynch_Invocation.cpp:
         * tao/PI/ClientRequestInterceptor_Adapter_Impl.cpp:
+        * tao/Synch_Invocation.cpp:
           Const improvements
 
         * tao/Invocation_Base.cpp (handle_any_exception):
@@ -10,8 +11,6 @@ Wed Jan  3 19:04:36 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
           LOCATION_FORWARD. This fixes bugzilla bug 2763. Thanks to
           Jaiganesh Balasubramanian for reporting this and testing
           the patch
-
-        * tao/Synch_Invocation.cpp:
 
 Wed Jan  3 18:47:36 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
