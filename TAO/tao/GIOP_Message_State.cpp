@@ -77,18 +77,21 @@ TAO_GIOP_Message_State::parse_message_header_i (ACE_Message_Block &incoming)
 
   if (this->message_size_ == 0)
     {
-      if (this->message_type_ == TAO_GIOP_MESSAGERROR)
+      switch (this->message_type_)
         {
+        case TAO_GIOP_MESSAGERROR:
+        case TAO_GIOP_CLOSECONNECTION:
           if (TAO_debug_level > 0)
             {
+              CORBA::Octet& t = this->message_type_;
+              const char* which =
+                (t == TAO_GIOP_CLOSECONNECTION) ? "CloseConnection" :
+                (t == TAO_GIOP_MESSAGERROR) ? "MessageError" : "unknown";
               ACE_DEBUG ((LM_DEBUG,
-                          "TAO (%P|%t) -"
-                          "GIOP_MESSAGE_ERROR received \n"));
+                          "TAO (%P|%t) - GIOP %s received \n", which));
             }
           return 0;
-        }
-      else
-        {
+        default:
           if (TAO_debug_level > 0)
             ACE_DEBUG ((LM_DEBUG,
                         "TAO (%P|%t) - "

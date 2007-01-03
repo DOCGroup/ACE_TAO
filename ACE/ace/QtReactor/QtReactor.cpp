@@ -565,6 +565,12 @@ ACE_QtReactor::QtWaitForMultipleEvents (int width,
                                         ACE_Select_Reactor_Handle_Set &wait_set,
                                         ACE_Time_Value * /*max_wait_time*/)
 {
+  // Keep a copy of the wait set in case the wait_set be changed 
+  // between the two select calls in this function. It could happen
+  // while waiting for an event, another event is handled and dispatched
+  // which changes the dispatch_set_/wait_set.
+  ACE_Select_Reactor_Handle_Set orig_wait_set = wait_set;
+
   // Check to make sure our handle's are all usable.
   ACE_Select_Reactor_Handle_Set temp_set = wait_set;
 
@@ -584,9 +590,9 @@ ACE_QtReactor::QtWaitForMultipleEvents (int width,
   // Now actually read the result needed by the <Select_Reactor> using
   // <select>.
   return ACE_OS::select(width,
-                        wait_set.rd_mask_,
-                        wait_set.wr_mask_,
-                        wait_set.ex_mask_,
+                        orig_wait_set.rd_mask_,
+                        orig_wait_set.wr_mask_,
+                        orig_wait_set.ex_mask_,
                         (ACE_Time_Value *) &ACE_Time_Value::zero);
 }
 

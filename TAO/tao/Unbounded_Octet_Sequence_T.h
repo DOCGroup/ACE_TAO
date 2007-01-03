@@ -220,15 +220,11 @@ public:
         return false;
       }
 
-    for (::CORBA::ULong i = 0; i < rlen; ++i)
-      {
-        if (rhs[i] != this->buffer_[i])
-          {
-            return false;
-          }
-      }
+    const CORBA::Octet * rhs_buff = rhs.get_buffer ();
+    const CORBA::Octet * lhs_buff = this->get_buffer ();
+    const bool result = (ACE_OS::memcmp (lhs_buff, rhs_buff, rlen) == 0);
 
-    return true;
+    return result;
   }
 
   inline bool operator!= (const unbounded_value_sequence<CORBA::Octet> & rhs) const
@@ -342,15 +338,11 @@ operator== (const TAO_VERSIONED_NAMESPACE_NAME::TAO::unbounded_value_sequence<CO
       return false;
     }
 
-  for (::CORBA::ULong i = 0; i < rlen; ++i)
-    {
-      if (rhs[i] != lhs[i])
-        {
-          return false;
-        }
-    }
+  const CORBA::Octet * rhs_buff = rhs.get_buffer ();
+  const CORBA::Octet * lhs_buff = lhs.get_buffer ();
+  const bool result = (ACE_OS::memcmp (lhs_buff, rhs_buff, rlen) == 0);
 
-  return true;
+  return result;
 }
 
 inline

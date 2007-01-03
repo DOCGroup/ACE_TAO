@@ -45,7 +45,7 @@ my $endpoint = "-ORBEndpoint " . "$protocol" . "://:" . $port;
 
 my $IMR_LOCATOR = new PerlACE::Process ("../../ImplRepo_Service/ImplRepo_Service");
 my $IMR_ACTIVATOR = new PerlACE::Process ("../../ImplRepo_Service/ImR_Activator");
-my $TAO_IMR = new PerlACE::Process("../../../../bin/tao_imr");
+my $TAO_IMR = new PerlACE::Process("$ENV{ACE_ROOT}/bin/tao_imr");
 
 # We want the tao_imr executable to be found exactly in the path
 # given, without being modified by the value of -ExeSubDir.

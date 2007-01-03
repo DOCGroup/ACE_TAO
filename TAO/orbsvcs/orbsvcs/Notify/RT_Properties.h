@@ -18,7 +18,6 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/TAO_Singleton.h"
 #include "tao/RTCORBA/RTCORBA.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
@@ -31,14 +30,14 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
  */
 class TAO_RT_Notify_Export TAO_Notify_RT_Properties
 {
-  friend class TAO_Singleton<TAO_Notify_RT_Properties, TAO_SYNCH_MUTEX>;
-
 public:
   /// Constuctor
   TAO_Notify_RT_Properties (void);
 
   /// Destructor
   ~TAO_Notify_RT_Properties ();
+  /// Return singleton instance of this class.
+  static TAO_Notify_RT_Properties * instance (void);
 
   RTCORBA::RTORB_ptr rt_orb (void);
   void rt_orb (RTCORBA::RTORB_ptr rt_orb);
@@ -54,9 +53,10 @@ protected:
   RTCORBA::Current_var current_;
 };
 
-TAO_RT_NOTIFY_SINGLETON_DECLARE (TAO_Singleton, TAO_Notify_RT_Properties, TAO_SYNCH_MUTEX)
-
-typedef TAO_Singleton<TAO_Notify_RT_Properties, TAO_SYNCH_MUTEX> TAO_Notify_RT_PROPERTIES;
+/**
+ * @todo Remove this legacy TAO_Notify_RT_Properties typedef.
+ */
+typedef TAO_Notify_RT_Properties TAO_Notify_RT_PROPERTIES;
 
 TAO_END_VERSIONED_NAMESPACE_DECL
 
