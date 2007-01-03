@@ -1,3 +1,26 @@
+Wed Jan  3 15:50:39 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
+
+        * ACEXML/apps/svcconf/svcconf.mpc:
+        * ACEXML/common/common.mpc:
+        * ACEXML/parser/parser/parser.mpc:
+        * Kokyu/Kokyu.mpc:
+        * ace/QoS/qos.mpc:
+        * ace/SSL/ssl.mpc:
+        * ace/SSL/ssl_for_tao.mpc:
+        * ace/ace.mpc:
+        * ace/ace_flreactor.mpc:
+        * ace/ace_for_tao.mpc:
+        * ace/ace_qtreactor.mpc:
+        * ace/ace_tkreactor.mpc:
+        * ace/ace_xtreactor.mpc:
+        * apps/gperf/src/gperf.mpc:
+        * protocols/ace/HTBP/HTBP.mpc:
+        * protocols/ace/RMCast/RMCast.mpc:
+        * protocols/ace/TMCast/TMCast.mpc:
+
+          Use the install base project instead of the deprecated core base
+          project.
+
 Wed Jan  3 15:25:05 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/tao_orb_tests.lst:

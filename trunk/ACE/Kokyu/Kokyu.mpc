@@ -1,7 +1,7 @@
 //  -*- MPC -*- now wouldn't this be cool...
 // $Id$
 
-project(Kokyu) : acelib, core {
+project(Kokyu) : acelib, install {
   sharedname  = Kokyu
   dynamicflags = KOKYU_BUILD_DLL
 

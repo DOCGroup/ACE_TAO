@@ -1,7 +1,7 @@
 //  -*- MPC -*- now wouldn't this be cool...
 // $Id$
 
-project(ACE_QtReactor) : acedefaults, core, acelib, ace_qt {
+project(ACE_QtReactor) : acedefaults, install, acelib, ace_qt {
 
   sharedname   = ACE_QtReactor
   dynamicflags = ACE_QTREACTOR_BUILD_DLL
