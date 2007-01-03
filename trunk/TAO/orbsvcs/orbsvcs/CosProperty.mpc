@@ -1,7 +1,7 @@
 // -*- MPC -*-
 // $Id$
 
-project(CosProperty_IDL) : orbsvcslib, core, tao_versioning_idl_defaults {
+project(CosProperty_IDL) : orbsvcslib, install, tao_versioning_idl_defaults {
   custom_only = 1
   idlflags   += -Wb,stub_export_macro=TAO_Property_Export -Wb,stub_export_include=orbsvcs/Property/property_export.h -Wb,skel_export_macro=TAO_Property_Skel_Export -Wb,skel_export_include=orbsvcs/Property/property_skel_export.h
 
@@ -13,7 +13,7 @@ project(CosProperty_IDL) : orbsvcslib, core, tao_versioning_idl_defaults {
   }
 }
 
-project(CosProperty) : orbsvcslib, core {
+project(CosProperty) : orbsvcslib, install {
   sharedname   = TAO_CosProperty
   dynamicflags = TAO_PROPERTY_BUILD_DLL
   tagchecks   += Property
@@ -50,7 +50,7 @@ project(CosProperty) : orbsvcslib, core {
   }
 }
 
-project(CosProperty_Skel) : orbsvcslib, core, property, portableserver {
+project(CosProperty_Skel) : orbsvcslib, install, property, portableserver {
   sharedname   = TAO_CosProperty_Skel
   dynamicflags = TAO_PROPERTY_SKEL_BUILD_DLL
   tagchecks   += Property
@@ -82,7 +82,7 @@ project(CosProperty_Skel) : orbsvcslib, core, property, portableserver {
   }
 }
 
-project(CosProperty_Serv) : orbsvcslib, core, property_skel {
+project(CosProperty_Serv) : orbsvcslib, install, property_skel {
   sharedname   = TAO_CosProperty_Serv
   dynamicflags = TAO_PROPERTY_SERV_BUILD_DLL
   tagchecks   += Property

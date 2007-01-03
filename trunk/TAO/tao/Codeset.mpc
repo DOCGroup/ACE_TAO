@@ -1,6 +1,6 @@
 //$Id$
 
-project : taolib, core, tao_versioning_idl_defaults {
+project : taolib, install, tao_versioning_idl_defaults {
   sharedname   = TAO_Codeset
   dynamicflags = TAO_CODESET_BUILD_DLL
   pch_header   =

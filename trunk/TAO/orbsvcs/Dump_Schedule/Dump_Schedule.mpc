@@ -1,6 +1,6 @@
 // -*- MPC -*-
 // $Id$
 
-project : orbsvcsexe, core, rtsched, naming, svc_utils, iortable, portableserver {
+project : orbsvcsexe, install, rtsched, naming, svc_utils, iortable, portableserver {
   exename  = Dump_Schedule
 }

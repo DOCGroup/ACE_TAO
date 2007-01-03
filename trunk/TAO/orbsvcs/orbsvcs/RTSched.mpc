@@ -1,7 +1,7 @@
 // -*- MPC -*-
 // $Id$
 
-project(RTSched) : orbsvcslib, core, naming, portableserver, svc_utils, tao_versioning_idl_defaults {
+project(RTSched) : orbsvcslib, install, naming, portableserver, svc_utils, tao_versioning_idl_defaults {
   sharedname   = TAO_RTSched
   idlflags    += -Wb,export_macro=TAO_RTSched_Export -Wb,export_include=orbsvcs/Sched/sched_export.h
   dynamicflags = TAO_RTSCHED_BUILD_DLL
