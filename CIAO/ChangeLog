@@ -1,3 +1,10 @@
+Wed Jan  3 19:32:05 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
+
+        * CIAO_TAO_DAnCE.mwc:
+
+          Added $(ACE_ROOT)/contrib/minizip since the RepositoryManager can
+          use minizip if the zlib feature is enabled.
+
 Wed Jan  3 07:01:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * DAnCE/RepositoryManager/RepositoryManager.cpp:
