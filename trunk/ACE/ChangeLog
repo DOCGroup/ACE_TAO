@@ -1,3 +1,8 @@
+Wed Jan 03 14:20:00 UTC 2007  Simon Massey  <sma@prismtech.com>
+
+        * ace/CORBA_macros.h:
+          With MFC, must delete any caught and eaten "out of memory" exceptions.
+
 Wed Jan  3 13:25:06 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
 
         * bin/msvc_static_order.lst:

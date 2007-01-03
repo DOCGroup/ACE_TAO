@@ -1,3 +1,8 @@
+Wed Jan 03 14:20:00 UTC 2007  Simon Massey  <sma@prismtech.com>
+
+        * common/XML_Macros.h:
+          With MFC, must delete any caught and eaten "out of memory" exceptions.
+
 Fri Oct 28 02:29:57 UTC 2006  Ossama Othman  <ossama_othman at symantec dot com>
 
         From Russell Mora <russell_mora at symantec dot com>
