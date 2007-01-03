@@ -1,3 +1,9 @@
+Wed Jan  3 14:57:49 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/MakeProjectCreator/config/ipv6.mpb:
+
+          The cbx project type was replaced by the bds4 project type.
+
 Wed Jan 03 14:20:00 UTC 2007  Simon Massey  <sma@prismtech.com>
 
         * ace/CORBA_macros.h:
