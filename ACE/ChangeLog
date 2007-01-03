@@ -4,7 +4,7 @@ Wed Jan  3 06:09:39 UTC 2007  J.T. Conklin  <jtc@acorntoolworks.com>
 
           Added feature test for ACE_HAS_SIGVAL_SIGVAL_INT and, for
           completeness, ACE_HAS_SIGVAL_SIGVAL_PTR.  Fixes bugzilla bug
-          2613.
+          2710.
 
 Wed Jan  3 05:53:04 UTC 2007  Chris Cleeland  <cleeland_c@ociweb.com>
 
