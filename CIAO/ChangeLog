@@ -1,3 +1,11 @@
+Wed Jan  3 07:01:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * DAnCE/RepositoryManager/RepositoryManager.cpp:
+          Fixed conversion warnings
+
+        * DAnCE/RepositoryManager/URL_Parser.cpp:
+          Initialise pointer with 0
+
 Wed Jan  3 16:18:36 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
 
         * tools/IDL3_to_IDL2/IDL3_to_IDL2.mpc:

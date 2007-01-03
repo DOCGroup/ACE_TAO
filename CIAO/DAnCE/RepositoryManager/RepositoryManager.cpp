@@ -34,10 +34,10 @@ namespace CIAO
     const char * RMior = "RepositoryManagerDaemon.ior";
 
     // Name of RepoMan
-    char * repoman_name_ = "RepositoryManager";
+    const char * repoman_name_ = "RepositoryManager";
 
     //Name service of the RM
-    char * RMname_service = "RepositoryManager";
+    const char * RMname_service = "RepositoryManager";
 
     /// Default number of worker threads to run in the multi-threaded RM
     static unsigned int nthreads = 3;

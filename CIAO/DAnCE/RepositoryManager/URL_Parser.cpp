@@ -43,7 +43,7 @@ URL_Parser::URL_Parser (void)
 
 bool URL_Parser::parseURL (char* url)
 {
-  char* ptr;
+  char* ptr = 0;
   bool success = true;
   ptr = ACE_OS::strstr (url, "http://");
   if (ptr)
@@ -84,7 +84,6 @@ bool URL_Parser::parseURL (char* url)
 void URL_Parser::Error (void)
 {
   ACE_DEBUG ((LM_DEBUG, "./http_client -u http://hostname:port/filename [-d]\n"));
-
 }
 
 
