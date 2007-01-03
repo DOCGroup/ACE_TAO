@@ -155,7 +155,7 @@ namespace TAO
         ACE_ENDTRY;
         ACE_CHECK_RETURN (TAO_INVOKE_FAILURE);
 
-        const PortableInterceptor::ReplyStatus status =
+        PortableInterceptor::ReplyStatus const status =
           this->adapter_->reply_status (*this);
 
         if (status == PortableInterceptor::LOCATION_FORWARD ||
@@ -222,8 +222,14 @@ namespace TAO
                                            ACE_ENV_ARG_PARAMETER);
         ACE_CHECK_RETURN (PortableInterceptor::UNKNOWN);
 
-        status =
-          this->adapter_->reply_status (*this);
+        if (this->forwarded_to_.in ())
+          {
+            status = PortableInterceptor::LOCATION_FORWARD;
+          }
+        else
+          {
+            status = this->adapter_->reply_status (*this);
+          }
       }
 
     return status;
