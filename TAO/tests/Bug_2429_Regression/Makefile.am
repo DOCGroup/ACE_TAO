@@ -40,7 +40,7 @@ CLEANFILES = \
 ChildC.cpp ChildC.h ChildC.inl ChildS.cpp ChildS.h ChildS.inl: Child-stamp
 
 Child-stamp: $(srcdir)/Child.idl $(TAO_IDL_DEP)
-        $(TAO_IDL) $(TAO_IDLFLAGS) -Sa -St -GC $(srcdir)/Child.idl
+	$(TAO_IDL) $(TAO_IDLFLAGS) -Sa -St -GC $(srcdir)/Child.idl
 	@touch $@
 
 BUILT_SOURCES += \
@@ -63,7 +63,7 @@ CLEANFILES += \
 ParentC.cpp ParentC.h ParentC.inl ParentS.cpp ParentS.h ParentS.inl: Parent-stamp
 
 Parent-stamp: $(srcdir)/Parent.idl $(TAO_IDL_DEP)
-        $(TAO_IDL) $(TAO_IDLFLAGS) -Sa -St -GC $(srcdir)/Parent.idl
+	$(TAO_IDL) $(TAO_IDLFLAGS) -Sa -St -GC $(srcdir)/Parent.idl
 	@touch $@
 
 noinst_HEADERS = \

@@ -4734,7 +4734,7 @@ CLEANFILES += \
 HTIOP/htiop_endpointsC.cpp HTIOP/htiop_endpointsC.h HTIOP/htiop_endpointsS.h: HTIOP/htiop_endpoints-stamp
 
 HTIOP/htiop_endpoints-stamp: $(srcdir)/HTIOP/htiop_endpoints.pidl $(TAO_IDL_DEP)
-        $(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs -Wb,versioning_begin=TAO_BEGIN_VERSIONED_NAMESPACE_DECL -Wb,versioning_end=TAO_END_VERSIONED_NAMESPACE_DECL -Wb,export_macro=HTIOP_Export -Wb,export_include=orbsvcs/HTIOP/HTIOP_Export.h -SS -Sci -Gp -Gd -Sa -Sorb -o HTIOP $(srcdir)/HTIOP/htiop_endpoints.pidl
+	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs -Wb,versioning_begin=TAO_BEGIN_VERSIONED_NAMESPACE_DECL -Wb,versioning_end=TAO_END_VERSIONED_NAMESPACE_DECL -Wb,export_macro=HTIOP_Export -Wb,export_include=orbsvcs/HTIOP/HTIOP_Export.h -SS -Sci -Gp -Gd -Sa -Sorb -o HTIOP $(srcdir)/HTIOP/htiop_endpoints.pidl
 	@touch $@
 
 lib_LTLIBRARIES += libTAO_HTIOP.la
@@ -5819,7 +5819,7 @@ CLEANFILES += \
 SSLIOP/ssl_endpointsC.cpp SSLIOP/ssl_endpointsC.h SSLIOP/ssl_endpointsS.h: SSLIOP/ssl_endpoints-stamp
 
 SSLIOP/ssl_endpoints-stamp: $(srcdir)/SSLIOP/ssl_endpoints.pidl $(TAO_IDL_DEP)
-        $(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs -Wb,versioning_begin=TAO_BEGIN_VERSIONED_NAMESPACE_DECL -Wb,versioning_end=TAO_END_VERSIONED_NAMESPACE_DECL -Wb,export_macro=TAO_SSLIOP_Export -Wb,export_include=orbsvcs/SSLIOP/SSLIOP_Export.h -SS -Sci -Gp -Gd -Sa -Sorb -o SSLIOP $(srcdir)/SSLIOP/ssl_endpoints.pidl
+	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs -Wb,versioning_begin=TAO_BEGIN_VERSIONED_NAMESPACE_DECL -Wb,versioning_end=TAO_END_VERSIONED_NAMESPACE_DECL -Wb,export_macro=TAO_SSLIOP_Export -Wb,export_include=orbsvcs/SSLIOP/SSLIOP_Export.h -SS -Sci -Gp -Gd -Sa -Sorb -o SSLIOP $(srcdir)/SSLIOP/ssl_endpoints.pidl
 	@touch $@
 
 lib_LTLIBRARIES += libTAO_SSLIOP.la
