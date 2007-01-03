@@ -1,3 +1,15 @@
+Wed Jan  3 13:16:16 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/tao_other_tests.lst:
+
+          Added !NO_MCAST to those tests that use multicast.
+
+        * tests/Unload_libACE.cpp:
+        * tests/tests.mpc:
+        * tests/unload_libace.mpb:
+
+          Added support for running this test when ace_for_tao is enabled.
+
 Wed Jan  3 12:33:33 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
 
         * include/makeinclude/wrapper_macros.GNU:
