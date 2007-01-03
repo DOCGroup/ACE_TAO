@@ -1,7 +1,7 @@
 // -*- MPC -*-
 // $Id$
 
-project : orbsvcsexe, core, naming_serv, imr_client {
+project : orbsvcsexe, install, naming_serv, imr_client {
   exename  = Naming_Service
   Source_Files {
     Naming_Server.cpp
@@ -9,7 +9,7 @@ project : orbsvcsexe, core, naming_serv, imr_client {
   }
 }
 
-project(NT_Naming_Service) : orbsvcsexe, core, naming_serv {
+project(NT_Naming_Service) : orbsvcsexe, install, naming_serv {
   requires += winnt
   exename  = NT_Naming_Service
   Source_Files {

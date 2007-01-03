@@ -1,5 +1,5 @@
 //$Id$
-project : taolib, portableserver, objreftemplate, pi, core, tao_versioning_idl_defaults {
+project : taolib, portableserver, objreftemplate, pi, install, tao_versioning_idl_defaults {
   sharedname    = TAO_IORInterceptor
   dynamicflags  = TAO_IORINTERCEPTOR_BUILD_DLL
 

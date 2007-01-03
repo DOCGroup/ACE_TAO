@@ -1,5 +1,5 @@
 // $Id$
-project : taoserver, orbsvcsexe, core, fault_tolerance, notification_serv {
+project : taoserver, orbsvcsexe, install, fault_tolerance, notification_serv {
   exename  = Fault_Notifier
   Source_Files {
     FT_Notifier_i.cpp

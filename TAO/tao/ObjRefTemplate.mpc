@@ -1,5 +1,5 @@
 //$Id$
-project : valuetype, portableserver, core, tao_versioning_idl_defaults {
+project : valuetype, portableserver, install, tao_versioning_idl_defaults {
   sharedname   = TAO_ObjRefTemplate
   dynamicflags = TAO_ORT_BUILD_DLL
 
