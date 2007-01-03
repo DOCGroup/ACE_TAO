@@ -13,7 +13,7 @@ project(*idl): taoidldefaults {
   custom_only = 1
 }
 
-project(*Test Stub): taolib_with_idl {
+project(*Test_Stub): taolib_with_idl {
   after += *idl
 
   sharedname   = Collocation_Test_Stub
@@ -27,7 +27,7 @@ project(*Test Stub): taolib_with_idl {
 }
 
 project(*Diamond) : taolib_with_idl, portableserver {
-  after       += *idl
+  after       += *idl *Test_Stub
   after       += Collocation_Test_Stub
 
   sharedname   = Collocation_Diamond
@@ -44,7 +44,7 @@ project(*Diamond) : taolib_with_idl, portableserver {
 }
 
 project(*Server) : taoserver, strategies {
-  after   += Collocation_Test_Stub Collocation_Diamond
+  after   += *Test_Stub *Diamond
   libs    += Collocation_Test_Stub Collocation_Diamond
   exename  = Collocation
   IDL_Files {
