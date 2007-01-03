@@ -19,8 +19,8 @@ use PerlACE::Run_Test;
 my $iorfile = PerlACE::LocalFile ("ns.ior");
 my $NS = new PerlACE::Process ("../../orbsvcs/Naming_Service/Naming_Service");
 my $CL = new PerlACE::Process ("../../orbsvcs/tests/Simple_Naming/client");
-my $LS = new PerlACE::Process ("../../../bin/nslist");
-my $AD = new PerlACE::Process ("../../../bin/nsadd");
+my $LS = new PerlACE::Process ("$ENV{ACE_ROOT}/bin/nslist");
+my $AD = new PerlACE::Process ("$ENV{ACE_ROOT}/bin/nsadd");
 my $status = 0;
 
 # We want the nslist and nsadd executables to be found exactly in the path

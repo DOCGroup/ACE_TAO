@@ -1,3 +1,42 @@
+Wed Jan  3 05:53:04 UTC 2007  Chris Cleeland  <cleeland_c@ociweb.com>
+
+          This entry documents the merge of several small bug fixes from
+          the OCI distribution.
+        
+        * ace/QtReactor/QtReactor.cpp:
+
+          Merged in a change from OCITAO 1.4a that fixed a bug in
+          ACE_QtReactor::QtWaitForMultipleEvents() where
+          the two select() calls in that function might select on different
+          handler sets. The problem is the dispatch_set/wait_set can be
+          changed during the two select() calls. This could happen while
+          waiting for an event, another event is handled and dispatched
+          which changes the dispatch_set/wait_set.
+
+          This bug was found on a single thread Qt application [RT 8751].
+
+        * ace/CDR_Stream.inl (adjust):
+
+          Applied a one-line change from Dan Troesser <troesser_d at
+	  ociweb dot com>, originally committed to OCITAO 1.4a.  VC8
+	  detected that memory around a buffer was being modified.
+	  Changed a boundary check from <= check to < that some believed
+	  was causing a write past the end of the buffer.  After the
+	  change, there were no compilation problems with VC8 and all the
+	  ACE CDR-related tests passed.
+
+	* bin/tao_orb_tests.lst:
+
+	  Add in Bug_2702_Regression test.
+	
+	* bin/auto_run_tests.pl:
+
+	  Change the search logic for listed tests so that the script
+	  "finds" tests even when the layout isn't using the "traditional"
+	  layout where $TAO_ROOT == $ACE_ROOT/TAO.
+
+        * NEWS: Updated to reflect these changes.
+        
 Wed Jan  3 05:26:07 UTC 2007  J.T. Conklin  <jtc@acorntoolworks.com>
 
         * configure.ac:

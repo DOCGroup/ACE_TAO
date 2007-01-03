@@ -15,7 +15,7 @@ $imr_locator_ior = PerlACE::LocalFile ("imr_locator.ior");
 $pfile = PerlACE::LocalFile ("persistence.dat");
 
 $IMR_LOCATOR = new PerlACE::Process ("../../../ImplRepo_Service/ImplRepo_Service");
-$TAO_IMR = new PerlACE::Process ("../../../../../bin/tao_imr");
+$TAO_IMR = new PerlACE::Process ("$ENV{ACE_ROOT}/bin/tao_imr");
 
 # We want the tao_imr executable to be found exactly in the path
 # given, without being modified by the value of -ExeSubDir.
