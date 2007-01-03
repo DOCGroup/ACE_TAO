@@ -1,7 +1,7 @@
 // -*- MPC -*-
 // $Id$
 
-project(DsNotifyLogAdmin_IDL) : orbsvcslib, core, dslogadmin, dseventlogadmin, event, notification, tao_versioning_idl_defaults {
+project(DsNotifyLogAdmin_IDL) : orbsvcslib, install, dslogadmin, dseventlogadmin, event, notification, tao_versioning_idl_defaults {
   custom_only = 1
   idlflags   += -Wb,stub_export_macro=TAO_NotifyLog_Export -Wb,stub_export_include=orbsvcs/Log/notifylog_export.h -Wb,skel_export_macro=TAO_NotifyLog_Skel_Export -Wb,skel_export_include=orbsvcs/Log/notifylog_skel_export.h
 
@@ -10,7 +10,7 @@ project(DsNotifyLogAdmin_IDL) : orbsvcslib, core, dslogadmin, dseventlogadmin, e
   }
 }
 
-project(DsNotifyLogAdmin) : orbsvcslib, core, dslogadmin, dseventlogadmin, event, notification {
+project(DsNotifyLogAdmin) : orbsvcslib, install, dslogadmin, dseventlogadmin, event, notification {
   sharedname   = TAO_DsNotifyLogAdmin
   dynamicflags = TAO_NOTIFYLOG_BUILD_DLL
   tagchecks   += Log
@@ -46,7 +46,7 @@ project(DsNotifyLogAdmin) : orbsvcslib, core, dslogadmin, dseventlogadmin, event
 }
 
 
-project(DsNotifyLogAdmin_Skel) : orbsvcslib, core, dsnotifylogadmin, dseventlogadmin_skel, dslogadmin_skel, event_skel, notification_skel, portableserver {
+project(DsNotifyLogAdmin_Skel) : orbsvcslib, install, dsnotifylogadmin, dseventlogadmin_skel, dslogadmin_skel, event_skel, notification_skel, portableserver {
   sharedname   = TAO_DsNotifyLogAdmin_Skel
   dynamicflags = TAO_NOTIFYLOG_SKEL_BUILD_DLL
   tagchecks   += Log
@@ -76,7 +76,7 @@ project(DsNotifyLogAdmin_Skel) : orbsvcslib, core, dsnotifylogadmin, dseventloga
 }
 
 
-project(DsNotifyLogAdmin_Serv) : orbsvcslib, core, dsnotifylogadmin_skel, dslogadmin_serv {
+project(DsNotifyLogAdmin_Serv) : orbsvcslib, install, dsnotifylogadmin_skel, dslogadmin_serv {
   sharedname   = TAO_DsNotifyLogAdmin_Serv
   dynamicflags = TAO_NOTIFYLOG_SERV_BUILD_DLL
   tagchecks   += Log

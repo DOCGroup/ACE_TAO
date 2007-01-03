@@ -1,6 +1,6 @@
 //$Id$
 
-project(*) : taolib_with_idl, tao_versioning_idl_defaults, core, tc, interceptors, pi {
+project(*) : taolib_with_idl, tao_versioning_idl_defaults, install, tc, interceptors, pi {
 
   sharedname   = TAO_TC_IIOP
 

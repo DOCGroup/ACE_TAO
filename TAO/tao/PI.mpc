@@ -1,5 +1,5 @@
 //$Id$
-project : taolib, codecfactory, core, tao_versioning_idl_defaults {
+project : taolib, codecfactory, install, tao_versioning_idl_defaults {
   sharedname   = TAO_PI
   dynamicflags = TAO_PI_BUILD_DLL
 

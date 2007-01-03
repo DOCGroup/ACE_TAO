@@ -1,6 +1,6 @@
 //$Id$
 
-project(*) : taolib_with_idl, tao_versioning_idl_defaults, core, interceptors, pi {
+project(*) : taolib_with_idl, tao_versioning_idl_defaults, install, interceptors, pi {
 
   sharedname   = TAO_TC
   dynamicflags = TAO_TRANSPORT_CURRENT_BUILD_DLL

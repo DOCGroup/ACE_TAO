@@ -1,3 +1,104 @@
+Wed Jan  3 16:05:58 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
+
+        * MPC/config/endpointpolicy.mpb:
+        * TAO_IDL/tao_idl.mpc:
+        * orbsvcs/Concurrency_Service/Concurrency_Service.mpc:
+        * orbsvcs/CosEvent_Service/CosEvent_Service.mpc:
+        * orbsvcs/Dump_Schedule/Dump_Schedule.mpc:
+        * orbsvcs/Event_Service/Event_Service.mpc:
+        * orbsvcs/FT_ReplicationManager/FT_ReplicationManager.mpc:
+        * orbsvcs/Fault_Detector/Fault_Detector.mpc:
+        * orbsvcs/Fault_Notifier/Fault_Notifier.mpc:
+        * orbsvcs/IFR_Service/IFR_Service.mpc:
+        * orbsvcs/LoadBalancer/LoadBalancer.mpc:
+        * orbsvcs/Logging_Service/Basic_Logging_Service/Basic_Logging_Service.mpc:
+        * orbsvcs/Logging_Service/Event_Logging_Service/Event_Logging_Service.mpc:
+        * orbsvcs/Logging_Service/Notify_Logging_Service/Notify_Logging_Service.mpc:
+        * orbsvcs/Logging_Service/RTEvent_Logging_Service/RTEvent_Logging_Service.mpc:
+        * orbsvcs/Naming_Service/Naming_Service.mpc:
+        * orbsvcs/Notify_Service/Notify_Service.mpc:
+        * orbsvcs/Scheduling_Service/Scheduling_Service.mpc:
+        * orbsvcs/TAO_Service/TAO_Service.mpc:
+        * orbsvcs/Time_Service/Time_Service.mpc:
+        * orbsvcs/Trading_Service/Trading_Service.mpc:
+        * orbsvcs/orbsvcs/AV.mpc:
+        * orbsvcs/orbsvcs/CosConcurrency.mpc:
+        * orbsvcs/orbsvcs/CosEvent.mpc:
+        * orbsvcs/orbsvcs/CosLifeCycle.mpc:
+        * orbsvcs/orbsvcs/CosLoadBalancing.mpc:
+        * orbsvcs/orbsvcs/CosNaming.mpc:
+        * orbsvcs/orbsvcs/CosNaming_Serv.mpc:
+        * orbsvcs/orbsvcs/CosNaming_Skel.mpc:
+        * orbsvcs/orbsvcs/CosNotification.mpc:
+        * orbsvcs/orbsvcs/CosProperty.mpc:
+        * orbsvcs/orbsvcs/CosTime.mpc:
+        * orbsvcs/orbsvcs/CosTrading.mpc:
+        * orbsvcs/orbsvcs/DsEventLogAdmin.mpc:
+        * orbsvcs/orbsvcs/DsLogAdmin.mpc:
+        * orbsvcs/orbsvcs/DsNotifyLogAdmin.mpc:
+        * orbsvcs/orbsvcs/ETCL.mpc:
+        * orbsvcs/orbsvcs/FTORB.mpc:
+        * orbsvcs/orbsvcs/FaultTolerance.mpc:
+        * orbsvcs/orbsvcs/FtRtEvent.mpc:
+        * orbsvcs/orbsvcs/HTIOP.mpc:
+        * orbsvcs/orbsvcs/IFRService.mpc:
+        * orbsvcs/orbsvcs/PortableGroup.mpc:
+        * orbsvcs/orbsvcs/RTCORBAEvent.mpc:
+        * orbsvcs/orbsvcs/RTCosScheduling.mpc:
+        * orbsvcs/orbsvcs/RTEvent.mpc:
+        * orbsvcs/orbsvcs/RTEventLogAdmin.mpc:
+        * orbsvcs/orbsvcs/RTEvent_Serv.mpc:
+        * orbsvcs/orbsvcs/RTEvent_Skel.mpc:
+        * orbsvcs/orbsvcs/RTKokyuEvent.mpc:
+        * orbsvcs/orbsvcs/RTSched.mpc:
+        * orbsvcs/orbsvcs/RTSchedEvent.mpc:
+        * orbsvcs/orbsvcs/RT_Notification.mpc:
+        * orbsvcs/orbsvcs/SSLIOP.mpc:
+        * orbsvcs/orbsvcs/Security.mpc:
+        * orbsvcs/orbsvcs/Svc_Utils.mpc:
+        * tao/AnyTypeCode.mpc:
+        * tao/BiDir_GIOP.mpc:
+        * tao/CSD_Framework.mpc:
+        * tao/CSD_ThreadPool.mpc:
+        * tao/CodecFactory.mpc:
+        * tao/Codeset.mpc:
+        * tao/Compression.mpc:
+        * tao/Domain.mpc:
+        * tao/DynamicAny.mpc:
+        * tao/DynamicInterface.mpc:
+        * tao/EndpointPolicy.mpc:
+        * tao/FlResource.mpc:
+        * tao/IFR_Client.mpc:
+        * tao/IORInterceptor.mpc:
+        * tao/IORManipulation.mpc:
+        * tao/IORTable.mpc:
+        * tao/ImR_Client.mpc:
+        * tao/Messaging.mpc:
+        * tao/ObjRefTemplate.mpc:
+        * tao/PI.mpc:
+        * tao/PI_Server.mpc:
+        * tao/PortableServer.mpc:
+        * tao/QtResource.mpc:
+        * tao/RTCORBA.mpc:
+        * tao/RTPortableServer.mpc:
+        * tao/RTScheduler.mpc:
+        * tao/SmartProxies.mpc:
+        * tao/Strategies.mpc:
+        * tao/TC.mpc:
+        * tao/TC_IIOP.mpc:
+        * tao/TkResource.mpc:
+        * tao/TypeCodeFactory.mpc:
+        * tao/Utils.mpc:
+        * tao/Valuetype.mpc:
+        * tao/XtResource.mpc:
+        * tao/ZlibCompressor.mpc:
+        * tao/tao.mpc:
+        * utils/catior/catior.mpc:
+        * utils/nslist/nslist.mpc:
+
+          Use the install base project instead of the deprecated core base
+          project.
+
 Wed Jan  3 15:18:36 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Portable_Interceptors/Redirection/*:
@@ -173,8 +274,8 @@ Wed Jan  3 05:58:08 UTC 2007  Chris Cleeland  <cleeland_c@ociweb.com>
           Changed relative paths to $ACE_ROOT/bin in these scripts to
           reference directly via the ACE_ROOT environment variable so
           that the scripts would work properly when run in a workspace
-	  that does not use the traditional everything-under-ACE_wrappers
-	  directory hierarchy.
+          that does not use the traditional everything-under-ACE_wrappers
+          directory hierarchy.
 
 Wed Jan  3 00:51:49 UTC 2007  Iliyan Jeliazkov  <iliyan@ociweb.com>
 
