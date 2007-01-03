@@ -1,3 +1,8 @@
+Wed Jan  3 19:52:05 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/tao_orb_tests.lst:
+          Run the compression test when ZLIB is part of the config list
+
 Wed Jan  3 19:34:47 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
 
         * bin/tao_orb_tests.lst:
