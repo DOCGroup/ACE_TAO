@@ -1,3 +1,12 @@
+Wed Jan  3 12:33:33 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
+
+        * include/makeinclude/wrapper_macros.GNU:
+
+          Since the zzip base project now 'requires' zlib, we can default
+          zlib to 1.  This will cause no harm to those that do not have zlib
+          since zlib is a "feature" project and will not be included in any
+          project unless it is explicitly enabled.
+
 Wed Jan  3 09:36:13 UTC 2007  Olli Savia  <ops@iki.fi>
 
         * include/makeinclude/wrapper_macros.GNU:
@@ -7,7 +16,7 @@ Wed Jan  3 09:36:13 UTC 2007  Olli Savia  <ops@iki.fi>
           Added the ability to use trio (http://sourceforge.net/projects/ctrio/)
           if platform lacks decent support for vsnprintf. trio support is
           enabled by defining trio=1 in plaform_macros.GNU
-        
+
 Wed Jan  3 07:52:05 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         Reverted my change below, it breaks the singleton on windows, the EXPORT
