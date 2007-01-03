@@ -1,7 +1,21 @@
+Wed Jan  3 22:23:57 UTC 2007  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * tao/Profile_Transport_Resolver.cpp:
+
+          Corrected the return value for find_transport. The comment in
+          the method wasn't very clear and so when the new safe transport
+          pointer code was added, the return value for success and failure
+          were inadvertently altered, which broke the optimized connection
+          strategy's endpoint selector
+
+        * tao/Strategies/Optimized_Connection_Endpoint_Selector.cpp:
+
+          Fixed the name used in the ACE_RCSID tag.
+
 Wed Jan  3 19:53:43 UTC 2007  Chris Cleeland  <cleeland_c@ociweb.com>
 
         * tao/tests/Bug_2702_Regression/server_on_localhost_1192.ior:
-        
+
           Added this file, which was somehow missed during the merge.
           This should address test failures across all platforms.
 

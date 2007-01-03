@@ -12,7 +12,7 @@
 #include "tao/Profile_Transport_Resolver.h"
 
 ACE_RCSID (tao,
-           Invocation_Endpoint_Selectors,
+           Optimized_Connection_Endpoint_Selector,
            "$Id$")
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
