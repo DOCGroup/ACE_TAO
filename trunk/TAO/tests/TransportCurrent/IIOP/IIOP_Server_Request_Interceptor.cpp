@@ -226,7 +226,7 @@ namespace Test {
                                                              ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException))
   {
-    IOP::ServiceId id = Transport::CurrentTest::ContextTag;
+    IOP::ServiceId id = Test::Transport::CurrentTest::ContextTag;
 
     IOP::ServiceContext_var sc =
       ri->get_request_service_context (id ACE_ENV_ARG_PARAMETER);
