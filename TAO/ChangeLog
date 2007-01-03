@@ -1,3 +1,13 @@
+Wed Jan  3 00:51:49 UTC 2007  Iliyan Jeliazkov  <iliyan@ociweb.com>
+
+        * tests/TransportCurrent/Framework/client.cpp:
+        
+          Clarified the conditional compilation for TAO_HAS_MINIMUM_CORBA.
+        
+        * tests/TransportCurrent/IIOP/IIOP_Server_Request_Interceptor.cpp:
+
+          Qualified a constant with the Test:: workspace prefix.
+        
 Tue Jan  2 16:32:36 UTC 2006  Simon Massey  <sma@prismtech.com>
 
         * tao/PI/PICurrent.h:
