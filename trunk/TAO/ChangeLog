@@ -1,3 +1,17 @@
+
+        * tao/Invocation_Adapter.cpp:
+        * tao/Messaging/Asynch_Invocation.cpp:
+        * tao/PI/ClientRequestInterceptor_Adapter_Impl.cpp:
+          Const improvements
+
+        * tao/Invocation_Base.cpp (handle_any_exception):
+          Check whether we had a location forward, if so, return
+          LOCATION_FORWARD. This fixes bugzilla bug 2763. Thanks to
+          Jaiganesh Balasubramanian for reporting this and testing
+          the patch
+
+        * tao/Synch_Invocation.cpp:
+
 Wed Jan  3 18:47:36 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Portable_Interceptors/Redirection/test.idl:
