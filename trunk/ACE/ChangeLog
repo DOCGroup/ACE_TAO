@@ -1,3 +1,38 @@
+Wed Jan  3 22:31:05 UTC 2007  Chris Cleeland  <cleeland_c@ociweb.com>
+
+          This entry merges in changes from OCITAO 1.4a which were
+          originally part of RT 8678.
+        
+        * ace/README:
+        * ace/config-sunos5.9.h:
+
+	  Added new compiler macro, ACE_LACKS_THR_CONCURRENCY_FUNCS, to
+	  accomodate the deprecation of thr_concurrency() in Solaris 9
+	  onwards.  The functions still exist, but the call semantics have
+	  changed slightly such that values for which they would
+	  previously succeed now fail despite the fact that they are
+	  effectively no-ops in Solaris >= 9.  This would cause
+	  thr_create(THR_NEW_LWP) to fail in a process when invoked for
+	  the 65536th (or greater) time.
+
+	  Currently this macro is only defined on Solaris 9+, but, since I
+	  believ this function was only ever present on Solaris anyway, it
+	  could probably be defined in general, and simply #undef'd on
+	  Solaris 8 and prior.
+
+        * ace/OS_NS_Thread.cpp (thr_create):
+
+	  Conditionally removed THR_NEW_LWP section when
+	  ACE_LACKS_THR_CONCURRENCY_FUNCS is defined.
+
+        * tests/Thread_Creation_Threshold_Test.cpp:
+        * tests/run_test.lst:
+        * tests/tests.mpc:
+
+	  Added a new test to check the threshold of thread creation.
+	  This simply verifies that more than 2^15 threads can be created
+	  sequentially (not simultaneously).
+
 Wed Jan  3 22:10:54 UTC 2007  Chris Cleeland  <cleeland_c@ociweb.com>
 
         * ace/CDR_Stream.inl (adjust):
