@@ -1,3 +1,8 @@
+Wed Jan  3 18:47:36 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Portable_Interceptors/Redirection/test.idl:
+          Added missing Id tag
+
 Wed Jan  3 16:05:58 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
 
         * MPC/config/endpointpolicy.mpb:
