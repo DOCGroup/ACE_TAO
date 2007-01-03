@@ -1173,6 +1173,26 @@ AC_CHECK_TYPE([sigval_t],
 			 [Define to 1 if the system lacks the type 'sigval_t'.])],
 	      [#include <signal.h>])
 
+if test "$ac_cv_type_sigval_t" = yes; then
+  dnl Depending on the system, the field names of union sigval have
+  dnl either a sival_ (POSIX) or sigval_ (older versions of FreeBSD)
+  dnl prefix.  Define ACE_HAS_SIGVAL_SIGVAL_INT accordingly.
+  AC_CHECK_MEMBER([sigval_t.sigval_int],
+		  [AC_DEFINE([ACE_HAS_SIGVAL_SIGVAL_INT], 1,
+			     [Define to 1 if `sigval_int' is a member of `sigval_t'.])],
+		  [],
+		  [#include <signal.h>])
+
+  dnl Depending on the system, the field names of union sigval have
+  dnl either a sival_ (POSIX) or sigval_ (older versions of FreeBSD)
+  dnl prefix.  Define ACE_HAS_SIGVAL_SIGVAL_PTR accordingly.
+  AC_CHECK_MEMBER([sigval_t.sigval_ptr],
+		  [AC_DEFINE([ACE_HAS_SIGVAL_SIGVAL_PTR], 1,
+			     [Define to 1 if `sigval_ptr' is a member of `sigval_t'.])],
+		  [],
+		  [#include <signal.h>])
+fi
+
 AC_CHECK_TYPE([ssize_t],
 	      [AC_DEFINE([ACE_HAS_SSIZE_T], 1,
 			 [Define to 1 if the system has the type `ssize_t'.])],
@@ -1368,6 +1388,7 @@ if test "$ac_cv_type_siginfo_t" = yes; then
 #include <siginfo.h>
 #endif])
 fi
+
 
 dnl Some platforms need to include sys/types.h before sys/socket.h
 dnl in order for struct msghdr to work.
