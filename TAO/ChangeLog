@@ -1,3 +1,11 @@
+Wed Jan  3 15:18:36 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Portable_Interceptors/Redirection/*:
+          New regression created by Jaiganesh Balasubramanian
+          <jai at dre dot vanderbilt dot edu> that reproduces a bug
+          in the handling of the PortableInterceptor::ForwardRequest
+          exception. Fix will follow later, see also bugzilla 2763
+
 Wed Jan  3 14:25:26 UTC 2007  J.T. Conklin  <jtc@acorntoolworks.com>
 
         * orbsvcs/orbsvcs/Makefile.am:
