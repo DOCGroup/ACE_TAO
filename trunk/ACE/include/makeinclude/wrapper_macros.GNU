@@ -57,6 +57,10 @@
 #  templates	    Type of template instantiation to perform. Can be one of
 #                   automatic, used. Defaults to automatic.
 #  threads          Build with thread support.
+#  trio             Indicate build with trio; adds PLATFORM_TRIO_CPPFLAGS
+#                   to CPPFLAGS, PLATFORM_TRIO_LDFLAGS to LDFLAGS, and
+#                   PLATFORM_TRIO_LIBS to LIBS. For more information on
+#                   trio, see http://sourceforge.net/projects/ctrio/
 #  xt               Build with Xt (X11 Toolkit) support.
 #  fl               Build with FlTk (Fast Light Toolkit) support.
 #  tk               Build with Tk (Tcl/Tk) support.
@@ -458,6 +462,18 @@ ifeq ($(threads),0)
   override threads =
 endif # threads
 
+trio ?=
+ifeq ($(trio),0)
+  override trio =
+endif # trio
+
+ifdef trio
+  CPPFLAGS += -DACE_HAS_TRIO $(PLATFORM_TRIO_CPPFLAGS)
+  LDFLAGS += $(PLATFORM_TRIO_LDFLAGS)
+  LIBS += -ltrio $(PLATFORM_TRIO_LIBS)
+  ACE_MAKE_OPTIONS += trio
+endif # trio
+
 # ace_for_tao subsetting is disabled by default.
 ace_for_tao ?=
 ifeq ($(ace_for_tao),0)
@@ -541,7 +557,7 @@ endif
 
 rapi ?=
 ifeq ($(rapi),0)
-     override rapi =
+   override rapi =
 endif #rapi
 
 ifneq ($(rapi),)
@@ -558,9 +574,9 @@ endif #rapi
 
 # if any sctp implementation is present then add
 ifneq ($(sctp),)
- CPPFLAGS += -DACE_HAS_SCTP $(PLATFORM_SCTP_CPPFLAGS)
- LDFLAGS  += $(PLATFORM_SCTP_LDFLAGS)
- LIBS     += $(PLATFORM_SCTP_LIBS)
+  CPPFLAGS += -DACE_HAS_SCTP $(PLATFORM_SCTP_CPPFLAGS)
+  LDFLAGS  += $(PLATFORM_SCTP_LDFLAGS)
+  LIBS     += $(PLATFORM_SCTP_LIBS)
   ACE_MAKE_OPTIONS += sctp
 endif
 

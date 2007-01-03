@@ -911,10 +911,10 @@ run_main (int, ACE_TCHAR *[])
   if ((result = string_emulation_test ()) != 0)
     status = result;
 
-#if !defined (ACE_LACKS_VSNPRINTF)
+#if !defined (ACE_LACKS_VSNPRINTF) || defined (ACE_HAS_TRIO)
   if ((result = snprintf_test ()) != 0)
     status = result;
-#endif /* !ACE_LACKS_VSNPRINTF */
+#endif /* !ACE_LACKS_VSNPRINTF || ACE_HAS_TRIO */
 
   if ((result = ctime_r_test ()) != 0)
     status = result;
