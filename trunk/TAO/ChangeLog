@@ -1,3 +1,12 @@
+Wed Jan  3 14:25:26 UTC 2007  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * orbsvcs/orbsvcs/Makefile.am:
+        * tao/Makefile.am:
+        * tests/Bug_2429_Regression/Makefile.am:
+
+          Fix tabs that were changed to eight spaces in some previous
+          checkin.
+
 Wed Jan  3 14:19:15 UTC 2007  Iliyan Jeliazkov  <iliyan@ociweb.com>
 
         * tests/Collocation/Collocation.mpc:
@@ -6,14 +15,14 @@ Wed Jan  3 14:19:15 UTC 2007  Iliyan Jeliazkov  <iliyan@ociweb.com>
 
 Wed Jan  3 13:19:03 UTC 2007  Chris Cleeland  <cleeland_c@ociweb.com>
 
-        * tests/Bug_2702_Regression/fakeserver2.pl: Added $Id$ string to
+        * tests/Bug_2702_Regression/fakeserver2.pl: Added Id string to
           fix fuzz build.
 
 Wed Jan  3 05:58:08 UTC 2007  Chris Cleeland  <cleeland_c@ociweb.com>
 
           This entry documents the merge of several small bug fixes from
           the OCI distribution.
-        
+
         * orbsvcs/Notify_Service/README:
 
           Add documentation for the new "-UseSeparateDispatchingORB"
