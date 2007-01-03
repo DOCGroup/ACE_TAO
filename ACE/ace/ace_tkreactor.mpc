@@ -1,7 +1,7 @@
 //  -*- MPC -*- now wouldn't this be cool...
 // $Id$
 
-project(ACE_TkReactor) : acedefaults, core, acelib, ace_tk {
+project(ACE_TkReactor) : acedefaults, install, acelib, ace_tk {
 
   sharedname   = ACE_TkReactor
   dynamicflags = ACE_TKREACTOR_BUILD_DLL

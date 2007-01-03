@@ -2,7 +2,7 @@
 //
 // $Id$
 
-project(SSL_FOR_TAO) : acelib, core, ace_openssl {
+project(SSL_FOR_TAO) : acelib, install, ace_openssl {
   requires    += ssl ace_for_tao
   sharedname   = ACE_SSL_FOR_TAO
   dynamicflags = ACE_SSL_BUILD_DLL

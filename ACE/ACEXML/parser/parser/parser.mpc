@@ -1,7 +1,7 @@
 //  -*- MPC -*-
 // $Id$
 
-project(ACEXML_Parser): acelib, core {
+project(ACEXML_Parser): acelib, install {
   avoids       += ace_for_tao
   sharedname    = ACEXML_Parser
   after        += ACEXML

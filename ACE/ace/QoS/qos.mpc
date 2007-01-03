@@ -1,7 +1,7 @@
 //  -*- MPC -*-
 // $Id$
 
-project(QoS) : acelib, core {
+project(QoS) : acelib, install {
   requires    += qos
   sharedname   = ACE_QoS
   dynamicflags = ACE_QoS_BUILD_DLL
