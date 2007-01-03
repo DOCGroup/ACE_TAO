@@ -1,3 +1,10 @@
+Wed Jan  3 06:47:58 UTC 2007  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * configure.ac:
+
+          Added feature test for ACE_LACKS_REALPATH.  Fixes bugzilla bug
+          2613.
+
 Wed Jan  3 06:09:39 UTC 2007  J.T. Conklin  <jtc@acorntoolworks.com>
 
         * configure.ac:
@@ -10,7 +17,7 @@ Wed Jan  3 05:53:04 UTC 2007  Chris Cleeland  <cleeland_c@ociweb.com>
 
           This entry documents the merge of several small bug fixes from
           the OCI distribution.
-        
+
         * ace/QtReactor/QtReactor.cpp:
 
           Merged in a change from OCITAO 1.4a that fixed a bug in
@@ -36,7 +43,7 @@ Wed Jan  3 05:53:04 UTC 2007  Chris Cleeland  <cleeland_c@ociweb.com>
 	* bin/tao_orb_tests.lst:
 
 	  Add in Bug_2702_Regression test.
-	
+
 	* bin/auto_run_tests.pl:
 
 	  Change the search logic for listed tests so that the script
@@ -44,7 +51,7 @@ Wed Jan  3 05:53:04 UTC 2007  Chris Cleeland  <cleeland_c@ociweb.com>
 	  layout where $TAO_ROOT == $ACE_ROOT/TAO.
 
         * NEWS: Updated to reflect these changes.
-        
+
 Wed Jan  3 05:26:07 UTC 2007  J.T. Conklin  <jtc@acorntoolworks.com>
 
         * configure.ac:
