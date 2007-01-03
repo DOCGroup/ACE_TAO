@@ -1,3 +1,9 @@
+Wed Jan  3 14:19:15 UTC 2007  Iliyan Jeliazkov  <iliyan@ociweb.com>
+
+        * tests/Collocation/Collocation.mpc:
+
+          Fixing build dependencies.
+
 Wed Jan  3 13:19:03 UTC 2007  Chris Cleeland  <cleeland_c@ociweb.com>
 
         * tests/Bug_2702_Regression/fakeserver2.pl: Added $Id$ string to
@@ -156,13 +162,13 @@ Wed Jan  3 05:58:08 UTC 2007  Chris Cleeland  <cleeland_c@ociweb.com>
 Wed Jan  3 00:51:49 UTC 2007  Iliyan Jeliazkov  <iliyan@ociweb.com>
 
         * tests/TransportCurrent/Framework/client.cpp:
-        
+
           Clarified the conditional compilation for TAO_HAS_MINIMUM_CORBA.
-        
+
         * tests/TransportCurrent/IIOP/IIOP_Server_Request_Interceptor.cpp:
 
           Qualified a constant with the Test:: workspace prefix.
-        
+
 Tue Jan  2 16:32:36 UTC 2006  Simon Massey  <sma@prismtech.com>
 
         * tao/PI/PICurrent.h:
