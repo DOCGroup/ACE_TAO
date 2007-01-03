@@ -1,3 +1,10 @@
+Wed Jan  3 05:26:07 UTC 2007  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * configure.ac:
+
+          Added feature test for ACE_LACKS_SIGVAL_T.  Fixes bugzilla bug
+          2761.
+
 Tue Jan  2 16:02:25 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
 
         * bin/MakeProjectCreator/modules/GNUACEWorkspaceCreator.pm:

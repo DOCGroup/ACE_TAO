@@ -1167,6 +1167,12 @@ AC_CHECK_TYPE([sig_atomic_t],
 	      [],
 	      [#include <signal.h>])
 
+AC_CHECK_TYPE([sigval_t],
+	      [],
+	      [AC_DEFINE([ACE_LACKS_SIGVAL_T], 1,
+			 [Define to 1 if the system lacks the type 'sigval_t'.])],
+	      [#include <signal.h>])
+
 AC_CHECK_TYPE([ssize_t],
 	      [AC_DEFINE([ACE_HAS_SSIZE_T], 1,
 			 [Define to 1 if the system has the type `ssize_t'.])],
