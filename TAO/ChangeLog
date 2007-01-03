@@ -1,7 +1,14 @@
+Wed Jan  3 19:53:43 UTC 2007  Chris Cleeland  <cleeland_c@ociweb.com>
+
+        * tao/tests/Bug_2702_Regression/server_on_localhost_1192.ior:
+        
+          Added this file, which was somehow missed during the merge.
+          This should address test failures across all platforms.
+
 Wed Jan  3 19:50:36 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Compression/run_test.pl:
-          Added perl script to run this test automatically
+          Added perl script to run this test automatically.
 
 Wed Jan  3 19:04:36 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -15,12 +22,12 @@ Wed Jan  3 19:04:36 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
           Check whether we had a location forward, if so, return
           LOCATION_FORWARD. This fixes bugzilla bug 2763. Thanks to
           Jaiganesh Balasubramanian for reporting this and testing
-          the patch
+          the patch.
 
 Wed Jan  3 18:47:36 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Portable_Interceptors/Redirection/test.idl:
-          Added missing Id tag
+          Added missing Id tag.
 
 Wed Jan  3 16:05:58 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
 
