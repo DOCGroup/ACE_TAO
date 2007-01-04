@@ -1,30 +1,47 @@
 Thu Jan  4 20:10:38 UTC 2007  Iliyan Jeliazkov  <iliyan@ociweb.com>
 
           This is in addition to the change from "Thu Jan 4 04:11:02 UTC
-          2007"
+         2007". The aim is to resolve the linking problems on some
+         builds. Basically, I had a templatized ORB initializer (for
+         client and server side) which used to be pretty simple
+         anyway. This change eliminates the template and replaces it with
+         two simple classes.
+
+         The problem was that the Borland compiler was not seeing the
+         template instantiations. When I tried to fix that, the Windows VC
+         broke complaining about duplicate instantiations. In the end,
+         instead of mucking about with such a simple template I just
+         zapped it.
 
         * tests/TransportCurrent/Framework/client.cpp:
         * tests/TransportCurrent/Framework/server.cpp:
         * tests/TransportCurrent/IIOP/client.cpp:
         * tests/TransportCurrent/IIOP/server.cpp:
+
+          Eliminated the trivial template usage for the ORB initializers,
+         where a simple class is sufficient.
+
         * tests/TransportCurrent/lib/Client_ORBInitializer.h:
         * tests/TransportCurrent/lib/Client_ORBInitializer.cpp:
         * tests/TransportCurrent/lib/Server_ORBInitializer.cpp:
         * tests/TransportCurrent/lib/Server_ORBInitializer.h:
 
-          Eliminated trivial template usage for the ORB initializers,
-          where a simple class is sufficient.
+         Added as a replacement of the template.
 
         * tests/TransportCurrent/Framework/run_test.pl:
         * tests/TransportCurrent/IIOP/run_test.pl:
 
-          Modified so they now run on Windows, too.
+          Modified so they now run on Windows, too. The problem was that
+         the ../lib was not part of the DLL search path on Windows and
+         there again, the path separator is ';'. The change ensures ../lib
+         is added to the PATH and introduces Config to pick the correct
+         separator.
 
         * tests/TransportCurrent/lib/Client_Request_Interceptor.cpp:
         * tests/TransportCurrent/lib/Server_Request_Interceptor.cpp:
 
-          Removed superfluous template and replaced with two simple
-          classes.
+          Removed the partial template instantiation and replaced with two
+         simple classes. See above.
 
         * tests/TransportCurrent/lib/Current_Test_Lib.mpc:
 
