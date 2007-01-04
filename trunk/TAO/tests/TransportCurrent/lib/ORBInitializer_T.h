@@ -13,8 +13,8 @@
 #ifndef ORBINITIALIZER_T_H
 #define ORBINITIALIZER_T_H
 #include /**/ "ace/pre.h"
-
-#include "ace/config-all.h"
+#include /**/ "ace/config-all.h"
+#include /**/ "Current_Test_Export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -29,7 +29,7 @@ namespace Test
   // interceptors. Partial specializations exist to handle client and
   // server request interceptors.
   template <typename I>
-  class ORBInitializer : public PortableInterceptor::ORBInitializer
+  class Current_Test_Export ORBInitializer : public PortableInterceptor::ORBInitializer
   {
   public:
     ORBInitializer (typename I::_ptr_type interceptor);

@@ -16,7 +16,8 @@
 #ifndef CLIENT_REQUEST_INTERCEPTOR_H
 #define CLIENT_REQUEST_INTERCEPTOR_H
 
-#include "ace/config-all.h"
+#include /**/ "ace/config-all.h"
+#include /**/ "Current_Test_Export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -49,7 +50,7 @@ namespace Test
    * only forwards the initial request.  See the README file for
    * details.
    */
-  class Client_Request_Interceptor
+  class Current_Test_Export Client_Request_Interceptor
     : public virtual PortableInterceptor::ClientRequestInterceptor,
       public virtual TAO_Local_RefCounted_Object
   {
