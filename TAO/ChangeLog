@@ -1,3 +1,20 @@
+Thu Jan  4 14:00:16 UTC 2007  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* orbsvcs/orbsvcs/Makefile.am:
+	* orbsvcs/ImplRepo_Service/Makefile.am:
+	* tao/Makefile.am:
+	* tests/Compression/Makefile.am:
+
+          Tweak to use ACE_{ZLIB,ZZIP}_{CPPFLAGS,LDFLAGS,LIBS}
+          instead of -I${ZLIB_ROOT}/include, etc.  The former
+          are substituted by the configure script.
+
+	* configure.ac:
+
+          Use ACE_PATH_ZLIB and ACE_PATH_ZZIP autoconf macros.
+          zlib and zzip can now be enabled at configure time
+          with --with-zlib and --with-zzip.
+
 Thu Jan  4 13:55:18 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
 
         * tests/Portable_Interceptors/Processing_Mode_Policy/Remote/PI_ProcMode_Remote.mpc:

@@ -6090,16 +6090,15 @@ libTAO_ZlibCompressor_la_CPPFLAGS = \
   -I$(ACE_BUILDDIR) \
   -I$(TAO_ROOT) \
   -I$(TAO_BUILDDIR) \
-  -I$(ZLIB_ROOT)/include \
-  -DZLIB \
-  -DTAO_ZLIBCOMPRESSOR_BUILD_DLL
+  -DTAO_ZLIBCOMPRESSOR_BUILD_DLL \
+  $(ACE_ZLIB_CPPFLAGS)
 
 libTAO_ZlibCompressor_la_SOURCES = \
   Compression/zlib/ZlibCompressor.cpp \
   Compression/zlib/ZlibCompressor_Factory.cpp
 
 libTAO_ZlibCompressor_la_LDFLAGS = \
- -version-number @TAO_MAJOR@:@TAO_MINOR@:@TAO_BETA@ -L$(ZLIB_ROOT)/lib
+ -version-number @TAO_MAJOR@:@TAO_MINOR@:@TAO_BETA@ $(ACE_ZLIB_LDFLAGS)
 
 libTAO_ZlibCompressor_la_LIBADD = \
   libTAO_Compression.la \
@@ -6108,7 +6107,7 @@ libTAO_ZlibCompressor_la_LIBADD = \
   libTAO_AnyTypeCode.la \
   libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la \
-  -lz
+  $(ACE_ZLIB_LIBS)
 
 nobase_include_HEADERS += \
   Compression/zlib/ZlibCompressor.h \
