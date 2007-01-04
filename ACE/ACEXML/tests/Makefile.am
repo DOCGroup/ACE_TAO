@@ -32,10 +32,8 @@ ContentHandler_Test_CPPFLAGS = \
 if BUILD_ZLIB
 if BUILD_ZZIP
 ContentHandler_Test_CPPFLAGS += \
-  -I$(ZZIP_ROOT)/include \
-  -I$(ZLIB_ROOT)/include \
-  -DUSE_ZZIP \
-  -DZLIB
+  $(ACE_ZZIP_CPPFLAGS) \
+  $(ACE_ZLIB_CPPFLAGS)
 endif BUILD_ZZIP
 endif BUILD_ZLIB
 
@@ -47,8 +45,8 @@ ContentHandler_Test_LDFLAGS =
 if BUILD_ZLIB
 if BUILD_ZZIP
 ContentHandler_Test_LDFLAGS += \
-  -L$(ZZIP_ROOT)/lib \
-  -L$(ZLIB_ROOT)/lib
+  $(ACE_ZZIP_LDFLAGS) \
+  $(ACE_ZLIB_LDFLAGS)
 endif BUILD_ZZIP
 endif BUILD_ZLIB
 
@@ -60,8 +58,8 @@ ContentHandler_Test_LDADD = \
 if BUILD_ZLIB
 if BUILD_ZZIP
 ContentHandler_Test_LDADD += \
-  -lzzip \
-  -lz
+  $(ACE_ZZIP_LIBS) \
+  $(ACE_ZLIB_LIBS)
 endif BUILD_ZZIP
 endif BUILD_ZLIB
 
@@ -83,10 +81,8 @@ HttpCharStream_Test_CPPFLAGS = \
 if BUILD_ZLIB
 if BUILD_ZZIP
 HttpCharStream_Test_CPPFLAGS += \
-  -I$(ZZIP_ROOT)/include \
-  -I$(ZLIB_ROOT)/include \
-  -DUSE_ZZIP \
-  -DZLIB
+  $(ACE_ZZIP_CPPFLAGS) \
+  $(ACE_ZLIB_CPPFLAGS)
 endif BUILD_ZZIP
 endif BUILD_ZLIB
 
@@ -98,8 +94,8 @@ HttpCharStream_Test_LDFLAGS =
 if BUILD_ZLIB
 if BUILD_ZZIP
 HttpCharStream_Test_LDFLAGS += \
-  -L$(ZZIP_ROOT)/lib \
-  -L$(ZLIB_ROOT)/lib
+  $(ACE_ZZIP_LDFLAGS) \
+  $(ACE_ZLIB_LDFLAGS)
 endif BUILD_ZZIP
 endif BUILD_ZLIB
 
@@ -111,8 +107,8 @@ HttpCharStream_Test_LDADD = \
 if BUILD_ZLIB
 if BUILD_ZZIP
 HttpCharStream_Test_LDADD += \
-  -lzzip \
-  -lz
+  $(ACE_ZZIP_LIBS) \
+  $(ACE_ZLIB_LIBS)
 endif BUILD_ZZIP
 endif BUILD_ZLIB
 
@@ -134,10 +130,8 @@ NamespaceSupport_Test_CPPFLAGS = \
 if BUILD_ZLIB
 if BUILD_ZZIP
 NamespaceSupport_Test_CPPFLAGS += \
-  -I$(ZZIP_ROOT)/include \
-  -I$(ZLIB_ROOT)/include \
-  -DUSE_ZZIP \
-  -DZLIB
+  $(ACE_ZZIP_CPPFLAGS) \
+  $(ACE_ZLIB_CPPFLAGS)
 endif BUILD_ZZIP
 endif BUILD_ZLIB
 
@@ -149,8 +143,8 @@ NamespaceSupport_Test_LDFLAGS =
 if BUILD_ZLIB
 if BUILD_ZZIP
 NamespaceSupport_Test_LDFLAGS += \
-  -L$(ZZIP_ROOT)/lib \
-  -L$(ZLIB_ROOT)/lib
+  $(ACE_ZZIP_LDFLAGS) \
+  $(ACE_ZLIB_LDFLAGS)
 endif BUILD_ZZIP
 endif BUILD_ZLIB
 
@@ -162,8 +156,8 @@ NamespaceSupport_Test_LDADD = \
 if BUILD_ZLIB
 if BUILD_ZZIP
 NamespaceSupport_Test_LDADD += \
-  -lzzip \
-  -lz
+  $(ACE_ZZIP_LIBS) \
+  $(ACE_ZLIB_LIBS)
 endif BUILD_ZZIP
 endif BUILD_ZLIB
 
@@ -185,10 +179,8 @@ Transcoder_Test_CPPFLAGS = \
 if BUILD_ZLIB
 if BUILD_ZZIP
 Transcoder_Test_CPPFLAGS += \
-  -I$(ZZIP_ROOT)/include \
-  -I$(ZLIB_ROOT)/include \
-  -DUSE_ZZIP \
-  -DZLIB
+  $(ACE_ZZIP_CPPFLAGS) \
+  $(ACE_ZLIB_CPPFLAGS)
 endif BUILD_ZZIP
 endif BUILD_ZLIB
 
@@ -200,8 +192,8 @@ Transcoder_Test_LDFLAGS =
 if BUILD_ZLIB
 if BUILD_ZZIP
 Transcoder_Test_LDFLAGS += \
-  -L$(ZZIP_ROOT)/lib \
-  -L$(ZLIB_ROOT)/lib
+  $(ACE_ZZIP_LDFLAGS) \
+  $(ACE_ZLIB_LDFLAGS)
 endif BUILD_ZZIP
 endif BUILD_ZLIB
 
@@ -213,8 +205,8 @@ Transcoder_Test_LDADD = \
 if BUILD_ZLIB
 if BUILD_ZZIP
 Transcoder_Test_LDADD += \
-  -lzzip \
-  -lz
+  $(ACE_ZZIP_LIBS) \
+  $(ACE_ZLIB_LIBS)
 endif BUILD_ZZIP
 endif BUILD_ZLIB
 
