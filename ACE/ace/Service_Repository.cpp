@@ -312,6 +312,8 @@ ACE_Service_Repository::relocate_i (size_t begin,
                     this, i, this->total_size_, type->name (),
                     old_handle,
                     new_handle));
+#else
+  ACE_UNUSED_ARG (new_handle);
 #endif
       type->dll (adll);
     }
