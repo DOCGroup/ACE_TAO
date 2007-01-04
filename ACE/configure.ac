@@ -6279,36 +6279,28 @@ fi dnl test "$ace_cv_lib_voidptr_gettimeofday" = no
 dnl Check for gettimeofday() protoype
 if test "$ace_cv_lib_voidptr_gettimeofday" = yes ||
    test "$ace_cv_lib_timezone_gettimeofday" = yes; then
-  ACE_CACHE_CHECK([for gettimeofday() protoype],
-    [ace_cv_lib_has_gettimeofday_prototype],
-    [
-     AC_EGREP_CPP([gettimeofday],
-       [
-#include <time.h>
-       ],
-       [
-dnl We have a gettimeofday prototype
-        ace_cv_lib_has_gettimeofday_prototype=yes
-       ],
-       [
-dnl We don't have a gettimeofday prototype
-        ace_cv_lib_has_gettimeofday_prototype=no
-       ])
-    ],
-    [
-     if test "$ace_cv_lib_voidptr_gettimeofday" = yes; then
-       AC_DEFINE([ACE_HAS_VOIDPTR_GETTIMEOFDAY])
-     else
-       AC_DEFINE([ACE_HAS_TIMEZONE_GETTIMEOFDAY])
-     fi
-    ],
-    [
-     if test "$ace_cv_lib_voidptr_gettimeofday" = yes; then
-       AC_DEFINE([ACE_HAS_SVR4_GETTIMEOFDAY])
-     else
-       AC_DEFINE([ACE_HAS_OSF1_GETTIMEOFDAY])
-     fi
-    ])
+
+AC_CHECK_DECL([gettimeofday],
+              [
+if test "$ace_cv_lib_voidptr_gettimeofday" = yes; then
+  AC_DEFINE([ACE_HAS_VOIDPTR_GETTIMEOFDAY])
+else
+  AC_DEFINE([ACE_HAS_TIMEZONE_GETTIMEOFDAY])
+fi
+	      ],[
+if test "$ace_cv_lib_voidptr_gettimeofday" = yes; then
+  AC_DEFINE([ACE_HAS_SVR4_GETTIMEOFDAY])
+else
+  AC_DEFINE([ACE_HAS_OSF1_GETTIMEOFDAY])
+fi
+	      ],
+              [
+#include <sys/time.h>
+#ifndef ACE_LACKS_UNISTD_H
+# include <unistd.h>
+#endif
+	      ])
+
 fi dnl Check for gettimeofday() protoype
 
 
