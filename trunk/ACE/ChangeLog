@@ -1,3 +1,11 @@
+Thu Jan  4 15:33:08 UTC 2007  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * configure.ac:
+
+          Check <sys/time.h> instead of <time.h> for gettimeofday()
+          prototype.  Also use AC_CHECK_DECL instead of AC_EGREP_CPP.
+          This fixes bugzilla bug 2764.
+
 Thu Jan  4 13:53:33 UTC 2007  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* ACEXML/tests/Makefile.am:
