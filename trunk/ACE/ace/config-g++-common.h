@@ -67,7 +67,7 @@
 
 // Take advantage of G++ (>= 4.x) visibility attributes to generate
 // improved shared library binaries.
-#if (__GNUC__ > 3)
+#if (__GNUC__ >= 4)
 
 # if defined (ACE_HAS_CUSTOM_EXPORT_MACROS) && ACE_HAS_CUSTOM_EXPORT_MACROS == 0
 #  undef ACE_HAS_CUSTOM_EXPORT_MACROS
@@ -78,12 +78,17 @@
 #  define ACE_Proper_Export_Flag __attribute__ ((visibility("default")))
 #  define ACE_Proper_Import_Flag
 
+# if (__GNUC__ > 4) || ((__GNUC__ == 4) && (__GNUC_MINOR__ > 1)) || ((__GNUC__ == 4) && (__GNUC_MINOR__ == 1) && (__GNUC_PATCHLEVEL__ >= 1))
 // Sadly, G++ 4.x silently ignores visibility attributes on
 // template instantiations, which breaks singletons.
 // As a workaround, we use the GCC visibility pragmas.
 // And to make them fit in a macro, we use C99's _Pragma()
 // http://gcc.gnu.org/bugzilla/show_bug.cgi?id=17470
-#  if 0 /* ... replace if/when gcc bug 17470 is fixed */
+// This has been fixed in GCC 4.1.1
+# define GCC_HAS_TEMPLATE_INSTANTIATION_VISIBILITY_ATTRS
+# endif
+
+#  if defined (GCC_HAS_TEMPLATE_INSTANTIATION_VISIBILITY_ATTR)
 #   define ACE_EXPORT_SINGLETON_DECLARATION(T) template class ACE_Proper_Export_Flag T
 #   define ACE_EXPORT_SINGLETON_DECLARE(SINGLETON_TYPE, CLASS, LOCK) template class ACE_Proper_Export_Flag SINGLETON_TYPE <CLASS, LOCK>;
 #  else  /* ! GCC_HAS_TEMPLATE_INSTANTIATION_VISIBILITY_ATTRS */
@@ -102,9 +107,8 @@
 #  define ACE_IMPORT_SINGLETON_DECLARATION(T) __extension__ extern template class T
 #  define ACE_IMPORT_SINGLETON_DECLARE(SINGLETON_TYPE, CLASS, LOCK) __extension__ extern template class SINGLETON_TYPE<CLASS, LOCK>;
 
-
 # endif  /* ACE_HAS_CUSTOM_EXPORT_MACROS == 0 */
-#endif  /* __GNU__ > 3 */
+#endif  /* __GNU__ >= 4 */
 
 #if defined (ACE_HAS_GNU_REPO)
   // -frepo causes unresolved symbols of basic_string left- and
