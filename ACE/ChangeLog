@@ -1,3 +1,10 @@
+Thu Jan  4 15:51:41 UTC 2007  Chris Cleeland  <cleeland_c@ociweb.com>
+
+        * tests/Thread_Creation_Threshold_Test.cpp: Changed name of
+          anonymous namespace constant from DEBUG to PRINT_DEBUG_MSGS to
+          avoid potential conflicts with #defines.  This should clean up
+          at least one Windows build, and possibly others as well.
+
 Thu Jan  4 15:33:08 UTC 2007  J.T. Conklin  <jtc@acorntoolworks.com>
 
         * configure.ac:

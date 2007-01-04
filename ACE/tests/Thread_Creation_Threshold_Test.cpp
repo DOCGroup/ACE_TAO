@@ -41,7 +41,7 @@ const unsigned long MAX_THREAD = 100000;
 namespace
 {
   // Change this to 'true' if you want lots of debugging messages in the log
-  const bool DEBUG = true;
+  const bool PRINT_DEBUG_MSGS = true;
 };
 
 class Thread_Pool : public ACE_Task<ACE_MT_SYNCH>
@@ -136,7 +136,7 @@ int
 Thread_Pool::svc (void)
 {
   unsigned long t = ++this->total_activated_threads_;
-  if (DEBUG) // change this to 'true' for debugging
+  if (PRINT_DEBUG_MSGS) // change this to 'true' for debugging
     this->doprint_ = (t > 65530);
 
   if (this->doprint_)
@@ -154,7 +154,7 @@ namespace {
 int
 Thread_Pool::open (void *)
 {
-  if (DEBUG)
+  if (PRINT_DEBUG_MSGS)
     ACE_DEBUG ((LM_DEBUG,
 		ACE_TEXT ("(%P|%t) pool start %d threads..."),
 		this->n_threads_));
@@ -205,7 +205,7 @@ run_main (int, ACE_TCHAR *[])
       if (thread_pool.wait () == -1)
         return 1;
 
-      if (DEBUG)
+      if (PRINT_DEBUG_MSGS)
 	ACE_DEBUG ((LM_DEBUG,
 		    ACE_TEXT ("%u total threads\n"),
 		    thread_pool.total_threads()));
