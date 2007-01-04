@@ -7,21 +7,10 @@ ACE_RCSID (Framework,
            "$Id$")
 
 #include "Server_Request_Interceptor.h"
-#include "ORBInitializer_T.h"
+#include "Server_ORBInitializer.h"
 
 namespace Test
 {
-
-  template <>
-  void
-  ORBInitializer<PortableInterceptor::ServerRequestInterceptor>::post_init (PortableInterceptor::ORBInitInfo* oii
-                                                                            ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException))
-  {
-    oii->add_server_request_interceptor (this->interceptor_.in ());
-  }
-
-
 
   Server_Request_Interceptor::Server_Request_Interceptor (const char* orbid, TEST test)
     : request_count_ (0)
