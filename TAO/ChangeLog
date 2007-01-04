@@ -1,3 +1,12 @@
+Thu Jan  4 13:55:18 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
+
+        * tests/Portable_Interceptors/Processing_Mode_Policy/Remote/PI_ProcMode_Remote.mpc:
+        * tests/Portable_Interceptors/Request_Interceptor_Flow/PI_Request_Interceptor_Flow.mpc:
+
+          Subtracted the -St option from idlflags in the custom_only idl
+          projects.  Prior to the split, the -St option was subtracted off
+          by the anytypecode base project.
+
 Thu Jan  4 11:33:36 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Compression/server.cpp:
