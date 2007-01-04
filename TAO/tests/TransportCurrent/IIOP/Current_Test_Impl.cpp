@@ -3,7 +3,7 @@
 #include "tao/TransportCurrent/TC_IIOPC.h"
 #include "tao/TransportCurrent/TCC.h"
 
-#include "tests/TransportCurrent/Framework/Current_Test_Impl.h"
+#include "Current_Test_Impl.h"
 
 ACE_RCSID (Transport_Current,
            Current_Test_Impl,

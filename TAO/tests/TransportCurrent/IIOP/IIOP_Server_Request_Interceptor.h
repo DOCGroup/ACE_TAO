@@ -25,7 +25,7 @@
 
 #include "tao/TransportCurrent/IIOP_Transport_Current.h"
 
-#include "tests/TransportCurrent/Framework/Server_Request_Interceptor.h"
+#include "Server_Request_Interceptor.h"
 
 namespace Test
 {

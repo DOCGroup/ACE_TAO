@@ -1,40 +1,21 @@
 // -*- MPC -*-
 // $Id$
 
-project(*idl): taoidldefaults {
-  after += Framework_IDL
-
-  idlflags += -o ../Framework
-
-  IDL_Files {
-    ../Framework/Current_Test.idl
-  }
-  custom_only = 1
-}
-
 project(*Server): taoserver, tc_iiop, interceptors, pi_server {
 
-  after += *idl
-  after += Framework_Server
-
-  includes += ../Framework
+  after += Curren_Test_Lib_Client Current_Test_Lib_Server
+  includes += .
+  includes += ../lib
+  libs += Current_Test_Lib_Client Current_Test_Lib_Server
+  libpaths += ../lib
 
   Source_Files {
-    ../Framework/server.cpp
-    ../Framework/Server_Request_Interceptor.cpp
+    server.cpp
+//    Server_Request_Interceptor.cpp
     Current_Test_Impl.cpp
     IIOP_Server_Request_Interceptor.cpp
     IIOP_Server_Main.cpp
     IIOP_Tester.cpp
-  }
-
-  Source_Files {
-    ../Framework/Current_TestC.cpp
-    ../Framework/Current_TestS.cpp
-  }
-
-  Template_Files {
-    ../Framework/ORBInitializer_T.cpp
   }
 
   IDL_Files {
@@ -43,23 +24,15 @@ project(*Server): taoserver, tc_iiop, interceptors, pi_server {
 
 project(*Client): taoclient, tc_iiop, interceptors, pi, dynamicinterface {
 
-  after += *idl
-  after += *Server
-
-  includes += ../Framework
+  after += *Server Current_Test_Lib_Client Current_Test_Lib_Server
+  includes += . ../lib
+  libs += Current_Test_Lib_Client Current_Test_Lib_Server
+  libpaths += ../lib
 
   Source_Files {
-    ../Framework/Client_Request_Interceptor.cpp
-    ../Framework/client.cpp
+//    Client_Request_Interceptor.cpp
+    client.cpp
     IIOP_Tester.cpp
-  }
-
-  Source_Files {
-    ../Framework/Current_TestC.cpp
-  }
-
-  Template_Files {
-    ../Framework/ORBInitializer_T.cpp
   }
 
   IDL_Files {

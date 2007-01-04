@@ -1,3 +1,43 @@
+Thu Jan  4 04:11:02 UTC 2007  Iliyan Jeliazkov  <iliyan@ociweb.com>
+
+        * tests/TransportCurrent/Framework/Framework.mpc:
+        * tests/TransportCurrent/Framework/run_test.pl:
+        * tests/TransportCurrent/IIOP/Current_Test_Impl.cpp:
+        * tests/TransportCurrent/IIOP/IIOP.mpc:
+        * tests/TransportCurrent/IIOP/IIOP_Server_Request_Interceptor.h:
+        * tests/TransportCurrent/IIOP/client.cpp:
+        * tests/TransportCurrent/IIOP/run_test.pl:
+        * tests/TransportCurrent/IIOP/server.cpp:
+        * tests/TransportCurrent/lib:
+        * tests/TransportCurrent/lib/Client_Request_Interceptor.h:
+        * tests/TransportCurrent/lib/Client_Request_Interceptor.cpp:
+        * tests/TransportCurrent/lib/Current_Test.idl:
+        * tests/TransportCurrent/lib/Current_Test_Export.h:
+        * tests/TransportCurrent/lib/Current_Test_Impl.h:
+        * tests/TransportCurrent/lib/Current_Test_Lib.mpc:
+        * tests/TransportCurrent/lib/ORBInitializer_T.h:
+        * tests/TransportCurrent/lib/ORBInitializer_T.cpp:
+        * tests/TransportCurrent/lib/Server_Request_Interceptor.h:
+        * tests/TransportCurrent/lib/Server_Request_Interceptor.cpp:
+
+          Split off the IDL and the common stuff fro the two tests into a
+          lib directory and adjusted the references. This will hopefully
+          deal with the build dependency issues we have been seeing
+          recently and will eliminate the cases of duplicate compilation
+          of the IDL. Thanks to Johnny Willemsen and J.T. Conklin for the
+          ideas.
+
+        * tests/TransportCurrent/Framework/Client_Request_Interceptor.h:
+        * tests/TransportCurrent/Framework/Client_Request_Interceptor.cpp:
+        * tests/TransportCurrent/Framework/Current_Test.idl:
+        * tests/TransportCurrent/Framework/Current_Test_Impl.h:
+        * tests/TransportCurrent/Framework/ORBInitializer_T.h:
+        * tests/TransportCurrent/Framework/ORBInitializer_T.cpp:
+        * tests/TransportCurrent/Framework/Server_Request_Interceptor.h:
+        * tests/TransportCurrent/Framework/Server_Request_Interceptor.cpp:
+
+          Moved these files to lib directory.
+
 Wed Jan  3 22:23:57 UTC 2007  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * tao/Profile_Transport_Resolver.cpp:
