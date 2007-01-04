@@ -34,10 +34,10 @@ namespace CIAO
     const char * RMior = "RepositoryManagerDaemon.ior";
 
     // Name of RepoMan
-    const char * repoman_name_ = "RepositoryManager";
+    char * repoman_name_ = "RepositoryManager";
 
     //Name service of the RM
-    const char * RMname_service = "RepositoryManager";
+    char * RMname_service = "RepositoryManager";
 
     /// Default number of worker threads to run in the multi-threaded RM
     static unsigned int nthreads = 3;
@@ -48,7 +48,7 @@ namespace CIAO
   }
 }
 
-//forward declaration
+// Forward declaration
 bool parse_args (int argc, char *argv[]);
 
 /**
