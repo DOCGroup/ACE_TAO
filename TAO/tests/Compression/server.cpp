@@ -10,9 +10,41 @@ ACE_RCSID (Hello,
            server,
            "$Id$")
 
+bool
+test_invalid_compression_factory (Compression::CompressionManager_ptr cm)
+{
+  bool succeed = false;
+  ACE_TRY_NEW_ENV
+    {
+      // Get an invalid compression factory
+      Compression::CompressorFactory_var factory = 
+        cm->get_factory (100);
+      ACE_TRY_CHECK;
+    }
+  ACE_CATCH (Compression::UnknownCompressorId, ex)
+    {
+      ACE_UNUSED_ARG (ex);
+      succeed = true;
+    }
+  ACE_CATCHANY
+    {
+    }
+  ACE_ENDTRY;
+
+  if (!succeed)
+  {
+    ACE_ERROR ((LM_ERROR,
+                "(%t) ERROR, get invalid compression factory failed\n"));
+  }
+
+  return succeed;
+}
+
+
 int
 main (int argc, char *argv[])
 {
+  int retval = 0;
   ACE_TRY_NEW_ENV
     {
       CORBA::ORB_var orb =
@@ -60,6 +92,10 @@ main (int argc, char *argv[])
         {
           ACE_DEBUG ((LM_DEBUG, "Compression worked, original size %d, compressed size %d\n", mytest.length(), myout.length ()));
         }
+  
+      if (!test_invalid_compression_factory (manager.in ()))
+        retval = 1;
+
       orb->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
@@ -67,9 +103,9 @@ main (int argc, char *argv[])
     {
       ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
                            "Exception caught:");
-      return 1;
+      retval = 1;
     }
   ACE_ENDTRY;
 
-  return 0;
+  return retval;
 }
