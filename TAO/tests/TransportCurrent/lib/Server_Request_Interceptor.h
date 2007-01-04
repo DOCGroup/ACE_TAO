@@ -16,7 +16,8 @@
 #ifndef SERVER_REQUEST_INTERCEPTOR_H
 #define SERVER_REQUEST_INTERCEPTOR_H
 
-#include "ace/config-all.h"
+#include /**/ "ace/config-all.h"
+#include /**/ "Current_Test_Export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -44,7 +45,7 @@ namespace Test
    * @brief Simple concrete server request interceptor.
    *
    */
-  class Server_Request_Interceptor
+  class Current_Test_Export Server_Request_Interceptor
     : public virtual PortableInterceptor::ServerRequestInterceptor,
       public virtual TAO_Local_RefCounted_Object
   {

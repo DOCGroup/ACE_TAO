@@ -1,31 +1,19 @@
 // -*- MPC -*-
 // $Id$
 
-project(*idl): taoidldefaults {
-
-  IDL_Files {
-    Current_Test.idl
-  }
-
-  custom_only = 1
-}
-
 project(*Server): taoserver, tc, interceptors, pi_server {
 
-  after += *idl
+  after += Curren_Test_Lib_Client Current_Test_Lib_Server
   includes += .
+  includes += ../lib
+  libs += Current_Test_Lib_Client Current_Test_Lib_Server
+  libpaths += ../lib
 
   Source_Files {
     server.cpp
     Current_Test_Impl.cpp
-    Server_Request_Interceptor.cpp
     Tester.cpp
     Server_Main.cpp
-  }
-
-  Source_Files {
-    Current_TestC.cpp
-    Current_TestS.cpp
   }
 
   IDL_Files {
@@ -35,18 +23,14 @@ project(*Server): taoserver, tc, interceptors, pi_server {
 
 project(*Client): taoclient, tc, interceptors, pi, dynamicinterface {
 
-  after += *idl
-  after += *Server
-  includes += .
+  after += *Server Current_Test_Lib_Client Current_Test_Lib_Server
+  includes += . ../lib
+  libs += Current_Test_Lib_Client Current_Test_Lib_Server
+  libpaths += ../lib
 
   Source_Files {
-    Client_Request_Interceptor.cpp
     client.cpp
     Tester.cpp
-  }
-
-  Source_Files {
-    Current_TestC.cpp
   }
 
   IDL_Files {

@@ -1,0 +1,65 @@
+// -*- MPC -*-
+// $Id$
+
+project(*idl): taoidldefaults {
+
+  dynamicflags += CURRENT_TEST_BUILD_DLL
+  idlflags += -Wb,export_include=Current_Test_Export.h \
+              -Wb,export_macro=Current_Test_Export
+
+  idlflags -= -Sa -St
+
+  IDL_Files {
+    Current_Test.idl
+  }
+
+  custom_only = 1
+}
+
+project(*Client): taolib_with_idl, tao_versioning_idl_defaults {
+
+  after += *idl
+  includes += .
+  libout = .
+  dynamicflags += CURRENT_TEST_BUILD_DLL
+
+  Source_Files {
+    Client_Request_Interceptor.cpp
+  }
+
+  Source_Files {
+    Current_TestC.cpp
+  }
+
+  Template_Files {
+    ORBInitializer_T.cpp
+  }
+
+  IDL_Files {
+  }
+}
+
+project(*Server): taolib_with_idl, tao_versioning_idl_defaults, pi_server {
+
+  after += *idl
+  includes += .
+  libout = .
+  dynamicflags += CURRENT_TEST_BUILD_DLL
+
+  Source_Files {
+    Server_Request_Interceptor.cpp
+  }
+
+  Source_Files {
+    Current_TestC.cpp
+    Current_TestS.cpp
+  }
+
+  Template_Files {
+    ORBInitializer_T.cpp
+  }
+
+  IDL_Files {
+  }
+}
+

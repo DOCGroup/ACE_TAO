@@ -8,6 +8,23 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 use lib "$ENV{ACE_ROOT}/bin";
 use PerlACE::Run_Test;
 
+sub add_path {
+    my($name)  = shift;
+    my($value) = shift;
+    if (defined $ENV{$name}) {
+        $ENV{$name} .= ':' . $value
+        }
+    else {
+        $ENV{$name} = $value;
+    }
+}
+
+# Set the library path for the client to be able to load
+# the commom library.
+add_path('LD_LIBRARY_PATH', '../lib');
+add_path('LIBPATH', '../lib');
+add_path('SHLIB_PATH', '../lib');
+
 my $status = 0;
 my $confmod = "";
 
