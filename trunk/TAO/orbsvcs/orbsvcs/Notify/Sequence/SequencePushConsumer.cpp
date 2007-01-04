@@ -64,8 +64,8 @@ TAO_Notify_SequencePushConsumer::init (CosNotifyComm::SequencePushConsumer_ptr p
             CosNotifyComm::SequencePushConsumer::_unchecked_narrow(obj.in());
           ACE_TRY_CHECK;
 
-          this->push_consumer_ = CosNotifyComm::SequencePushConsumer::_duplicate (new_push_consumer);
-          this->publish_ = CosNotifyComm::NotifyPublish::_duplicate (new_push_consumer);
+          this->push_consumer_ = CosNotifyComm::SequencePushConsumer::_duplicate (new_push_consumer.in());
+          this->publish_ = CosNotifyComm::NotifyPublish::_duplicate (new_push_consumer.in());
 
           //--cj verify dispatching ORB
           if (TAO_debug_level >= 10)
