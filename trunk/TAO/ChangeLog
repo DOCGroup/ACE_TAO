@@ -1,14 +1,51 @@
+Thu Jan  4 20:10:38 UTC 2007  Iliyan Jeliazkov  <iliyan@ociweb.com>
+
+          This is in addition to the change from "Thu Jan 4 04:11:02 UTC
+          2007"
+
+        * tests/TransportCurrent/Framework/client.cpp:
+        * tests/TransportCurrent/Framework/server.cpp:
+        * tests/TransportCurrent/IIOP/client.cpp:
+        * tests/TransportCurrent/IIOP/server.cpp:
+        * tests/TransportCurrent/lib/Client_ORBInitializer.h:
+        * tests/TransportCurrent/lib/Client_ORBInitializer.cpp:
+        * tests/TransportCurrent/lib/Server_ORBInitializer.cpp:
+        * tests/TransportCurrent/lib/Server_ORBInitializer.h:
+
+          Eliminated trivial template usage for the ORB initializers,
+          where a simple class is sufficient.
+
+        * tests/TransportCurrent/Framework/run_test.pl:
+        * tests/TransportCurrent/IIOP/run_test.pl:
+
+          Modified so they now run on Windows, too.
+
+        * tests/TransportCurrent/lib/Client_Request_Interceptor.cpp:
+        * tests/TransportCurrent/lib/Server_Request_Interceptor.cpp:
+
+          Removed superfluous template and replaced with two simple
+          classes.
+
+        * tests/TransportCurrent/lib/Current_Test_Lib.mpc:
+
+          Updated to add pi to the list of base projects.
+
+        * tests/TransportCurrent/lib/ORBInitializer_T.h:
+        * tests/TransportCurrent/lib/ORBInitializer_T.cpp:
+
+          Removed these files.
+
 Thu Jan  4 19:55:35 UTC 2007  Chris Cleeland  <cleeland_c@ociweb.com>
 
         * orbsvcs/orbsvcs/Notify/Sequence/SequencePushConsumer.cpp (init):
-        
+
           Fixed conversion warnings in RTEMS build...the old .in() for a
           _var problem.
 
 Thu Jan  4 16:32:38 UTC 2007  Chris Cleeland  <cleeland_c@ociweb.com>
 
         * tests/Bug_2702_Regression/fakeserver2.pl:
-        
+
           Added "use" for Socket and IO::Socket packages.  The script
           works just fine on many platforms without this for some reason,
           but gave errors on the BCB build.
@@ -22,16 +59,16 @@ Thu Jan  4 14:08:45 UTC 2007  J.T. Conklin  <jtc@acorntoolworks.com>
 
 Thu Jan  4 14:00:16 UTC 2007  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* orbsvcs/orbsvcs/Makefile.am:
-	* orbsvcs/ImplRepo_Service/Makefile.am:
-	* tao/Makefile.am:
-	* tests/Compression/Makefile.am:
+        * orbsvcs/orbsvcs/Makefile.am:
+        * orbsvcs/ImplRepo_Service/Makefile.am:
+        * tao/Makefile.am:
+        * tests/Compression/Makefile.am:
 
           Tweak to use ACE_{ZLIB,ZZIP}_{CPPFLAGS,LDFLAGS,LIBS}
           instead of -I${ZLIB_ROOT}/include, etc.  The former
           are substituted by the configure script.
 
-	* configure.ac:
+        * configure.ac:
 
           Use ACE_PATH_ZLIB and ACE_PATH_ZZIP autoconf macros.
           zlib and zzip can now be enabled at configure time
