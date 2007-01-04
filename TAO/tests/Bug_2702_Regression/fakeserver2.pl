@@ -2,6 +2,9 @@
 
 # $Id$
 
+use Socket;
+use IO::Socket;
+
 $filebits = '';
 
 OpenServer();
