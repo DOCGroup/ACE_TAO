@@ -1,3 +1,11 @@
+Thu Jan  4 16:32:38 UTC 2007  Chris Cleeland  <cleeland_c@ociweb.com>
+
+        * tests/Bug_2702_Regression/fakeserver2.pl:
+        
+          Added "use" for Socket and IO::Socket packages.  The script
+          works just fine on many platforms without this for some reason,
+          but gave errors on the BCB build.
+
 Thu Jan  4 14:08:45 UTC 2007  J.T. Conklin  <jtc@acorntoolworks.com>
 
         * tests/Portable_Interceptors/Processing_Mode_Policy/Remote/Makefile.am:
