@@ -2377,10 +2377,8 @@ libTAO_CosNotification_Persist_la_CPPFLAGS = \
 if BUILD_ZLIB
 if BUILD_ZZIP
 libTAO_CosNotification_Persist_la_CPPFLAGS += \
-  -I$(ZZIP_ROOT)/include \
-  -I$(ZLIB_ROOT)/include \
-  -DUSE_ZZIP \
-  -DZLIB
+  $(ACE_ZZIP_CPPFLAGS) \
+  $(ACE_ZLIB_CPPFLAGS)
 endif BUILD_ZZIP
 endif BUILD_ZLIB
 
@@ -2395,8 +2393,8 @@ libTAO_CosNotification_Persist_la_LDFLAGS = \
 if BUILD_ZLIB
 if BUILD_ZZIP
 libTAO_CosNotification_Persist_la_LDFLAGS += \
-  -L$(ZZIP_ROOT)/lib \
-  -L$(ZLIB_ROOT)/lib
+  $(ACE_ZZIP_LDFLAGS) \
+  $(ACE_ZLIB_LDFLAGS)
 endif BUILD_ZZIP
 endif BUILD_ZLIB
 
@@ -2420,8 +2418,8 @@ libTAO_CosNotification_Persist_la_LIBADD = \
 if BUILD_ZLIB
 if BUILD_ZZIP
 libTAO_CosNotification_Persist_la_LIBADD += \
-  -lzzip \
-  -lz
+  $(ACE_ZZIP_LIBS) \
+  $(ACE_ZLIB_LIBS)
 endif BUILD_ZZIP
 endif BUILD_ZLIB
 
