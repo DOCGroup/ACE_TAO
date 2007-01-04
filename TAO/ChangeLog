@@ -1,3 +1,9 @@
+Thu Jan  4 11:33:36 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Compression/server.cpp:
+          Extended this test to test whether the correct exception
+          is thrown when we request an invalid compressor factory
+
 Thu Jan  4 04:11:02 UTC 2007  Iliyan Jeliazkov  <iliyan@ociweb.com>
 
         * tests/TransportCurrent/Framework/Framework.mpc:
