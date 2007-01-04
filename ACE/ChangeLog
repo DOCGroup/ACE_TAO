@@ -1,8 +1,23 @@
+Thu Jan  4 08:55:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/config-g++-common.h:
+          With gcc 4.{0,1} we couldn't use visibility attributes for singletons
+          because of a bug in GCC. This has been fixed in GCC 4.1.1 that
+          gets shipped with FC6. This change enables the visibily
+          attributes again for GCC 4.1.1 or newer.
+
+        * ace/Obstack.h:
+          Reverted the change below, it is an incorrect change
+          Wed Nov 22 09:07:12 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+          Use ACE_EXPORT_SINGLETON_DECLARATION to resolve link errors
+          on FC6. Thanks to Ken Sedgwick <ken at bonsai dot com> for
+          reporting this and testing out the patch.
+
 Wed Jan  3 22:31:05 UTC 2007  Chris Cleeland  <cleeland_c@ociweb.com>
 
           This entry merges in changes from OCITAO 1.4a which were
           originally part of RT 8678.
-        
+
         * ace/README:
         * ace/config-sunos5.9.h:
 
@@ -36,7 +51,7 @@ Wed Jan  3 22:31:05 UTC 2007  Chris Cleeland  <cleeland_c@ociweb.com>
 Wed Jan  3 22:10:54 UTC 2007  Chris Cleeland  <cleeland_c@ociweb.com>
 
         * ace/CDR_Stream.inl (adjust):
-        
+
           Reverted one-line change committed in r76279 and as part of
           entry from "Wed Jan 3 05:53:04 UTC 2007 Chris Cleeland
           <cleeland_c@ociweb.com>".  After getting some questions from
