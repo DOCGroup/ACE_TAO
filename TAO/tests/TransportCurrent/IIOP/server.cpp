@@ -8,7 +8,7 @@
 
 #include "Current_Test_Impl.h"
 #include "Server_Request_Interceptor.h"
-#include "ORBInitializer_T.h"
+#include "Server_ORBInitializer.h"
 
 
 ACE_RCSID (Transport_Current,
@@ -115,7 +115,7 @@ server_main (int argc,
         PortableInterceptor::ORBInitializer::_nil ();
 
       ACE_NEW_RETURN (temp_initializer,
-                      Test::ORBInitializer <PortableInterceptor::ServerRequestInterceptor> (cri),
+                      Test::Server_ORBInitializer (cri),
                       -1);  // No exceptions yet!
 
       PortableInterceptor::ORBInitializer_var orb_initializer =

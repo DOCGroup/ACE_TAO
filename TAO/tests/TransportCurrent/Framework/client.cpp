@@ -11,7 +11,7 @@
 #include "Client_Request_Interceptor.h"
 #include "Current_TestC.h"
 
-#include "ORBInitializer_T.h"
+#include "Client_ORBInitializer.h"
 
 ACE_RCSID (PICurrent,
            client,
@@ -170,7 +170,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         PortableInterceptor::ORBInitializer::_nil ();
 
       ACE_NEW_RETURN (temp_initializer,
-                      Test::ORBInitializer<PortableInterceptor::ClientRequestInterceptor> (&cri),
+                      Test::Client_ORBInitializer (&cri),
                       -1);
 
       PortableInterceptor::ORBInitializer_var orb_initializer =
