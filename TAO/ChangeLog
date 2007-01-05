@@ -1,3 +1,8 @@
+Fri Jan  5 18:26:43 UTC 2007  Ciju John  <johnc@ociweb.com>
+
+        * docs/ORBEndpoint.html:
+	  Update documentation for ORBEndpoint reuse_addr option.
+
 Fri Jan  5 17:09:35 UTC 2007  Iliyan Jeliazkov  <iliyan@ociweb.com>
 
         * tests/Portable_Interceptors/Redirection/run_test.pl:
