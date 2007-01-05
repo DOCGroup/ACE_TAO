@@ -54,7 +54,7 @@ template <class TQ> int
 ACE_Async_Timer_Queue_Adapter<TQ>::schedule_ualarm (void)
 {
   ACE_Time_Value tv = this->timer_queue_.earliest_time ()
-    - ACE_OS::gettimeofday ();
+    - this->timer_queue_.gettimeofday ();
 
   // Beware of negative times and zero times (which cause problems for
   // <ualarm>).
