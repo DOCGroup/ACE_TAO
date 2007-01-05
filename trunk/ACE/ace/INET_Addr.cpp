@@ -36,27 +36,37 @@ ACE_INET_Addr::addr_to_string (ACE_TCHAR s[],
   ACE_TRACE ("ACE_INET_Addr::addr_to_string");
 
   // XXX Can we (should we) include the scope id for IPv6 addresses?
+  char  hoststr[MAXHOSTNAMELEN+1];
 
-  size_t const total_len =
-    (ipaddr_format == 0
-     ? ACE_OS::strlen (this->get_host_name ())
-     : ACE_OS::strlen (this->get_host_addr ()))
-    + ACE_OS::strlen ("65536") // Assume the max port number.
-    + sizeof (':')
-    + sizeof ('\0'); // For trailing '\0'.
+  bool result = false;
+  if (ipaddr_format == 0)
+    result = (this->get_host_name (hoststr,MAXHOSTNAMELEN+1) == 0);
+  else
+    result = (this->get_host_addr (hoststr,MAXHOSTNAMELEN+1) != 0);
+
+  if (!result)
+    return -1;
+
+  size_t total_len =
+    ACE_OS::strlen (hoststr)
+    + 5 // ACE_OS::strlen ("65535"), Assuming the max port number.
+    + 1 // sizeof (':'), addr/port sep
+    + 1; // sizeof ('\0'), terminating NUL
+  ACE_TCHAR const *format = ACE_LIB_TEXT("%s:%d");
+#if ACE_HAS_IPV6
+  if (ACE_OS::strchr(hoststr,':') != 0)
+    {
+      total_len += 2; // ACE_OS::strlen ("[]") IPv6 addr frames
+      format = ACE_LIB_TEXT("[%s]:%d");
+    }
+#endif // ACE_HAS_IPV6
 
   if (size < total_len)
     return -1;
   else
-    {
-      ACE_OS::sprintf (s,
-                       ACE_LIB_TEXT ("%s:%d"),
-                       ACE_TEXT_CHAR_TO_TCHAR (ipaddr_format == 0
-                                               ? this->get_host_name ()
-                                               : this->get_host_addr ()),
-                       this->get_port_number ());
-      return 0;
-    }
+      ACE_OS::sprintf (s, format,
+                       ACE_TEXT_CHAR_TO_TCHAR (hoststr), this->get_port_number ());
+  return 0;
 }
 
 void
