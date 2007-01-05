@@ -1,3 +1,19 @@
+Fri Jan  5 12:44:18 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/OS_NS_stdio.cpp:
+          When ACE_HAS_WCHAR is defined include os_wchar.h to get the
+          wchar methods which is needed on for example HPUX
+
+        * ace/config-hpux-11.00.h:
+        * ace/config-linux-common.h:
+        * ace/config-vxworks6.2.h:
+        * ace/config-vxworks6.3.h:
+        * ace/config-vxworks6.4.h:
+          Added ACE_HAS_VFWPRINTF
+
+        * ace/config-win32-common.h:
+          Removed ACE_HAS_VSWPRINTF, isn't used anymore
+
 Fri Jan  5 11:09:18 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/config-hpux-11.00.h:
