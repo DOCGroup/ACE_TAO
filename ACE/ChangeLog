@@ -1,3 +1,12 @@
+Fri Jan  5 21:46:16 UTC 2007  Wallace Zhang  <zhang_w@ociweb.com>
+
+        * ace/Process.cpp:
+
+         Improved the implementation of ACE_Process_Options::setenv(...)
+         to address the potential buffer overflow when invoking
+         sprintf and/or vsprintf. This fixes bug 2660 and 2762. More
+         discussions have been accumulated in RT 9198.
+
 Fri Jan  5 19:06:17 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
 
         * bin/msvc_static_order.lst:
