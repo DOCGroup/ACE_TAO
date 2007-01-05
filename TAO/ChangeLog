@@ -1,3 +1,25 @@
+Fri Jan  5 06:42:17 UTC 2007  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * tests/TransportCurrent/IIOP/Makefile.am:
+        * tests/TransportCurrent/Framework/Makefile.am
+
+          Regenerate.
+
+        * configure.ac:
+
+          Configure Makefiles for new subdirectory.
+
+        * tests/TransportCurrent/Makefile.am:
+
+          Regenerate to descend into lib subdirectory.
+
+        * tests/TransportCurrent/lib/Makefile.am:
+
+          New Makefile.am for library of common code for TransportCurrent
+          tests.
+
+        * tests/TransportCurrent/Framework/Framework.mpc
+
 Fri Jan  5 04:09:08 UTC 2007  Iliyan Jeliazkov  <iliyan@ociweb.com>
 
         * tests/TransportCurrent/lib/Client_ORBInitializer.h:

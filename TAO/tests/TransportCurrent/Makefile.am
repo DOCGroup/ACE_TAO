@@ -9,6 +9,7 @@
 ## ../bin/mwc.pl -type automake -noreldefs TAO.mwc
 
 SUBDIRS = \
-        Framework \
-        IIOP
+        lib \
+        IIOP \
+        Framework
 
