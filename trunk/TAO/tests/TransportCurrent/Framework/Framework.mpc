@@ -3,7 +3,7 @@
 
 project(*Server): taoserver, tc, interceptors, pi_server {
 
-  after += Curren_Test_Lib_Client Current_Test_Lib_Server
+  after += Current_Test_Lib_Client Current_Test_Lib_Server
   includes += .
   includes += ../lib
   libs += Current_Test_Lib_Client Current_Test_Lib_Server
