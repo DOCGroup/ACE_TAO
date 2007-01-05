@@ -169,6 +169,7 @@
   #define ACE_HAS_SETENV
   #define ACE_HAS_3_PARAM_WCSTOK
   #define ACE_HAS_WCHAR
+  #define ACE_HAS_VFWPRINTF
   #define ACE_SIZEOF_WCHAR 2
   #define ACE_HAS_SHM_OPEN
   #define ACE_HAS_AIO_CALLS

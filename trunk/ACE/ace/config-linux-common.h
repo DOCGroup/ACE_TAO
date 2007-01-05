@@ -237,6 +237,7 @@
 #if __GLIBC__ >= 2
 // glibc 2 and higher has wchar support
 # define ACE_HAS_XPG4_MULTIBYTE_CHAR
+# define ACE_HAS_VFWPRINTF
 #endif
 
 #if __GLIBC__ < 2
