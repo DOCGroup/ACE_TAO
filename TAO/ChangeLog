@@ -1,3 +1,16 @@
+Fri Jan  5 03:35:00 UTC 2007  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * orbsvcs/tests/EC_Mcast/EC_Mcast.cpp:
+
+          Refactor the status message output in the open_senders() method
+          to make use of updated ACE_INET_Addr::addr_to_string() when
+          reporting IPv6 sender addresses.
+
+          Also, changed ECM_Federation::ECM_Federation() to force mapping
+          of supplier and consumer names to IPv4 format as the rest of the
+          code makes use of the now-obsolete assumption that an IP addr
+          fits into a long.
+
 Fri Jan  5 00:53:34 UTC 2007  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * tao/Transport_Connector.cpp:
