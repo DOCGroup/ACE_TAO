@@ -67,7 +67,7 @@ namespace TAO
         ::CORBA::SystemException
       ));
 
-    private:
+    protected:
       ::Compression::CompressionLevel compression_level_;
       ::Compression::CompressorFactory_var compressor_factory_;
   };
