@@ -853,9 +853,10 @@ if test $tao_build_tests = yes; then
     tests/Strategies/Makefile
     tests/Timed_Buffered_Oneways/Makefile
     tests/Timeout/Makefile
-    tests/TransportCurrent/Makefile
-    tests/TransportCurrent/IIOP/Makefile
     tests/TransportCurrent/Framework/Makefile
+    tests/TransportCurrent/IIOP/Makefile
+    tests/TransportCurrent/Makefile
+    tests/TransportCurrent/lib/Makefile
     tests/Two_Objects/Makefile
     tests/Typedef_String_Array/Makefile
     tests/UNKNOWN_Exception/Makefile

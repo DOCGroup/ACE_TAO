@@ -11,40 +11,9 @@
 ACE_BUILDDIR = $(top_builddir)/..
 ACE_ROOT = $(top_srcdir)/..
 TAO_BUILDDIR = $(top_builddir)
-TAO_IDL = ACE_ROOT=$(ACE_ROOT) TAO_ROOT=$(TAO_ROOT) $(TAO_BUILDDIR)/TAO_IDL/tao_idl
-TAO_IDL_DEP = $(TAO_BUILDDIR)/TAO_IDL/tao_idl
-TAO_IDLFLAGS = -Wb,pre_include=ace/pre.h -Wb,post_include=ace/post.h -I$(TAO_ROOT) -I$(srcdir) -g $(ACE_BUILDDIR)/apps/gperf/src/gperf
 TAO_ROOT = $(top_srcdir)
 
 noinst_PROGRAMS =
-
-## Makefile.IIOP_Idl.am
-
-BUILT_SOURCES = \
-  ../Framework/Current_TestC.cpp \
-  ../Framework/Current_TestC.h \
-  ../Framework/Current_TestC.inl \
-  ../Framework/Current_TestS.cpp \
-  ../Framework/Current_TestS.h \
-  ../Framework/Current_TestS.inl
-
-CLEANFILES = \
-  ../Framework/Current_Test-stamp \
-  ../Framework/Current_TestC.cpp \
-  ../Framework/Current_TestC.h \
-  ../Framework/Current_TestC.inl \
-  ../Framework/Current_TestS.cpp \
-  ../Framework/Current_TestS.h \
-  ../Framework/Current_TestS.inl
-
-../Framework/Current_TestC.cpp ../Framework/Current_TestC.h ../Framework/Current_TestC.inl ../Framework/Current_TestS.cpp ../Framework/Current_TestS.h ../Framework/Current_TestS.inl: ../Framework/Current_Test-stamp
-
-../Framework/Current_Test-stamp: $(srcdir)/../Framework/Current_Test.idl $(TAO_IDL_DEP)
-	$(TAO_IDL) $(TAO_IDLFLAGS) -Sa -St -o ../Framework $(srcdir)/../Framework/Current_Test.idl
-	@touch $@
-
-noinst_HEADERS = \
-  ../Framework/Current_Test.idl
 
 ## Makefile.IIOP_Server.am
 
@@ -58,21 +27,30 @@ server_CPPFLAGS = \
   -I$(ACE_BUILDDIR) \
   -I$(TAO_ROOT) \
   -I$(TAO_BUILDDIR) \
-  -I../Framework
+  -I. \
+  -I../lib
 
 server_SOURCES = \
-  ../Framework/Current_TestC.cpp \
-  ../Framework/Current_TestS.cpp \
-  ../Framework/Server_Request_Interceptor.cpp \
-  ../Framework/server.cpp \
   Current_Test_Impl.cpp \
   IIOP_Server_Main.cpp \
   IIOP_Server_Request_Interceptor.cpp \
   IIOP_Tester.cpp \
-  ../Framework/Server_Request_Interceptor.h \
+  server.cpp \
   IIOP_Server_Request_Interceptor.h
 
+../lib:
+	mkdir -p ../lib
+
+
+server_DEPENDENCIES = \
+ ../lib
+
+server_LDFLAGS = \
+  -L../lib
+
 server_LDADD = \
+  $(top_builddir)/tests/TransportCurrent/lib/libCurrent_Test_Lib_Client.la \
+  $(top_builddir)/tests/TransportCurrent/lib/libCurrent_Test_Lib_Server.la \
   $(TAO_BUILDDIR)/tao/libTAO_PI_Server.la \
   $(TAO_BUILDDIR)/tao/libTAO_PI.la \
   $(TAO_BUILDDIR)/tao/libTAO_CodecFactory.la \
@@ -99,16 +77,27 @@ client_CPPFLAGS = \
   -I$(ACE_BUILDDIR) \
   -I$(TAO_ROOT) \
   -I$(TAO_BUILDDIR) \
-  -I../Framework
+  -I. \
+  -I../lib
 
 client_SOURCES = \
-  ../Framework/Client_Request_Interceptor.cpp \
-  ../Framework/Current_TestC.cpp \
-  ../Framework/client.cpp \
   IIOP_Tester.cpp \
-  ../Framework/Client_Request_Interceptor.h
+  client.cpp \
+  IIOP_Server_Request_Interceptor.h
+
+../lib:
+	mkdir -p ../lib
+
+
+client_DEPENDENCIES = \
+ ../lib
+
+client_LDFLAGS = \
+  -L../lib
 
 client_LDADD = \
+  $(top_builddir)/tests/TransportCurrent/lib/libCurrent_Test_Lib_Client.la \
+  $(top_builddir)/tests/TransportCurrent/lib/libCurrent_Test_Lib_Server.la \
   $(TAO_BUILDDIR)/tao/libTAO_DynamicInterface.la \
   $(TAO_BUILDDIR)/tao/libTAO_Messaging.la \
   $(TAO_BUILDDIR)/tao/libTAO_PortableServer.la \
