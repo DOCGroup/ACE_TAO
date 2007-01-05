@@ -1,17 +1,17 @@
 // -*- MPC -*-
 // $Id$
 
-project(*Server): taoserver, tc_iiop, interceptors, pi_server {
+project(*Server): taoserver, tc_iiop, pi_server {
 
   after += Curren_Test_Lib_Client Current_Test_Lib_Server
-  includes += .
-  includes += ../lib
+
+  includes += . ../lib
+
   libs += Current_Test_Lib_Client Current_Test_Lib_Server
   libpaths += ../lib
 
   Source_Files {
     server.cpp
-//    Server_Request_Interceptor.cpp
     Current_Test_Impl.cpp
     IIOP_Server_Request_Interceptor.cpp
     IIOP_Server_Main.cpp
@@ -22,15 +22,16 @@ project(*Server): taoserver, tc_iiop, interceptors, pi_server {
   }
 }
 
-project(*Client): taoclient, tc_iiop, interceptors, pi, dynamicinterface {
+project(*Client): taoclient, tc_iiop, dynamicinterface {
 
   after += *Server Current_Test_Lib_Client Current_Test_Lib_Server
+
   includes += . ../lib
+
   libs += Current_Test_Lib_Client Current_Test_Lib_Server
   libpaths += ../lib
 
   Source_Files {
-//    Client_Request_Interceptor.cpp
     client.cpp
     IIOP_Tester.cpp
   }

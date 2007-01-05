@@ -14,7 +14,7 @@ project(*idl): taoidldefaults {
   custom_only = 1
 }
 
-project(*Client): taolib_with_idl, tao_versioning_idl_defaults, pi {
+project(*Client): tc {
 
   after += *idl TAO_TC
   includes += .
@@ -34,7 +34,7 @@ project(*Client): taolib_with_idl, tao_versioning_idl_defaults, pi {
   }
 }
 
-project(*Server): taolib_with_idl, tao_versioning_idl_defaults, pi_server {
+project(*Server): tc, pi_server {
 
   after += *Client
   includes += .
