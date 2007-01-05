@@ -1,3 +1,8 @@
+Fri Jan  5 10:40:18 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Thread_Creation_Threshold_Test.cpp:
+          Removed not needed semicolon after namespace closure
+
 Fri Jan  5 10:30:18 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * contrib/minizip/unzip.c:
