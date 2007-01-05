@@ -12,10 +12,6 @@ ACE_RCSID (ace,
 # include "ace/OS_NS_stdio.inl"
 #endif /* ACE_HAS_INLINED_OSCALLS */
 
-#if defined (ACE_HAS_WCHAR)
-#include "ace/os_include/os_wchar.h"
-#endif
-
 # if defined (ACE_WIN32)
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
