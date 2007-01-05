@@ -26,7 +26,7 @@ PLANNED MAJOR CHANGES "SOMETIME IN THE FUTURE" (i.e., exact beta not known)
 . Enhance DAnCE to support OpenCCM components.
 
 . Update DAnCE IDL data structures and interfaces to comply with the
-  06-02-01 version of the DnC specification, and perform
+  06-04-01 version of the DnC specification, and perform
   interoperability testing with other DnC implementations.  Note this
   work may change the functionality and semantics of some proprietary
   DAnCE extensions, notably ReDaC, Shared Compoents, and RTEC
