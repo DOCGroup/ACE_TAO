@@ -1,3 +1,17 @@
+Fri Jan  5 10:04:18 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/config-g++-common.h:
+          A change related to my commit of:
+          Thu Jan  4 08:55:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+          With FC6 a bug in GCC has been fixed. This is then fixed in
+          GCC 4.1.1 but only in the RedHat codebase, not in other
+          GCC 4.x compilers. The HP GCC 4.1.1 compiler hasn't this
+          fix but also the SuSE 10.2 GCC 4.1.2 compiler has not this
+          fix. We assume at this moment that GCC 4.2 will have this
+          fix. If you have FC6 you must add the following define to
+          your config.h file:
+          ACE_GCC_HAS_TEMPLATE_INSTANTIATION_VISIBILITY_ATTRS 1
+
 Fri Jan  5 07:05:18 UTC 2007  J.T. Conklin  <jtc@acorntoolworks.com>
 
         * bin/MakeProjectCreator/modules/AutomakeWorkspaceHelper.pm:
