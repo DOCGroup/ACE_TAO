@@ -42,7 +42,7 @@ namespace
 {
   // Change this to 'true' if you want lots of debugging messages in the log
   const bool PRINT_DEBUG_MSGS = true;
-};
+}
 
 class Thread_Pool : public ACE_Task<ACE_MT_SYNCH>
 {
@@ -62,7 +62,7 @@ public:
   void start();
   // Start the threads in the pool.
 
-  unsigned long total_threads() 
+  unsigned long total_threads()
     {
       return this->total_activated_threads_.value();
     }
@@ -149,7 +149,7 @@ Thread_Pool::svc (void)
 
 namespace {
   void no_op() { }
-};
+}
 
 int
 Thread_Pool::open (void *)
