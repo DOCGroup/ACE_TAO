@@ -802,6 +802,7 @@ if test $tao_build_tests = yes; then
     tests/Portable_Interceptors/Processing_Mode_Policy/Makefile
     tests/Portable_Interceptors/Processing_Mode_Policy/Remote/Makefile
     tests/Portable_Interceptors/Recursive_ORBInitializer/Makefile
+    tests/Portable_Interceptors/Redirection/Makefile
     tests/Portable_Interceptors/Register_Initial_References/Makefile
     tests/Portable_Interceptors/Request_Interceptor_Flow/Makefile
     tests/Portable_Interceptors/Service_Context_Manipulation/Makefile
