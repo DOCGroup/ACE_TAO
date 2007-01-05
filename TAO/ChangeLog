@@ -1,3 +1,9 @@
+Fri Jan  5 11:00:00 UTC 2007  Simon Massey  <sma@prismtech.com>
+
+        * tests/Portable_Interceptors/Processing_Mode_Policy/Remote/server_interceptor.cpp:
+
+          Error if the typecode info is not available to display.
+
 Fri Jan  5 10:10:18 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * MPC/config/compression.mpb:
