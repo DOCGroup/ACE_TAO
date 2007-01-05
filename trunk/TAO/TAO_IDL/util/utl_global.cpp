@@ -1157,9 +1157,7 @@ IDL_GlobalData::update_prefix (char *filename)
   ACE_CString tmp ("", 0, 0);
   char *main_filename = this->pd_main_filename->get_string ();
 
-//  ACE_CString ext_id (filename);
   char *prefix = 0;
-
   int status = this->file_prefixes_.find (filename, prefix);
 
   if (status == 0)
@@ -1189,9 +1187,20 @@ IDL_GlobalData::update_prefix (char *filename)
     {
       if (!this->pd_in_main_file)
         {
-          char *trash = 0;
-          this->pragma_prefixes_.pop (trash);
-          delete [] trash;
+          status =
+            this->file_prefixes_.find (this->pd_filename->get_string (),
+                                       prefix);
+          
+          // This function is called just before we transition to a
+          // new file at global scope. If there is a non-null prefix
+          // stored in the table under our not-yet-changed filename,
+          // pop it.
+          if (status == 0 && ACE_OS::strcmp (prefix, "") != 0)
+            {
+              char *trash = 0;
+              this->pragma_prefixes_.pop (trash);
+              delete [] trash;
+            }
         }
     }
   else

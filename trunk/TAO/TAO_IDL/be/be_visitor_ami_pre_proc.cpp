@@ -377,6 +377,14 @@ be_visitor_ami_pre_proc::create_reply_handler (be_interface *node,
 
   reply_handler->set_name (reply_handler_name);
   reply_handler->set_defined_in (s);
+  
+  // Set repo id to 0, so it will be recomputed on the next access,
+  // and set the prefix to the node's prefix. All this is
+  // necessary in case the node's prefix was modified after
+  // its declaration.
+  reply_handler->AST_Decl::repoID (0);
+  reply_handler->prefix (const_cast<char*> (node->prefix ()));
+  
   reply_handler->gen_fwd_helper_name ();
 
   // Now our customized reply handler is created, we have to

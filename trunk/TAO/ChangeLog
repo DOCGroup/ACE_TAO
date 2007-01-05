@@ -1,3 +1,30 @@
+Fri Jan  5 22:51:37 UTC 2007  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/include/ast_decl.h:
+        
+          Small change to comment.
+          
+        * TAO_IDL/fe/lex.yy.cpp:
+        * TAO_IDL/fe/idl.ll:
+        * TAO_IDL/util/utl_global.cpp:
+        
+          Changed logic of pushing/popping prefixes to/from
+          the IDL compiler's dedicated stack, to fix a 
+          problem reported by Martin Corino <mcorino@remedy.nl>
+          related to #pragma prefix directives from included
+          IDL files and how they interact with the IDL
+          compiler's preprocessor.
+          
+        * TAO_IDL/be/be_visitor_amh_pre_proc.cpp:
+        * TAO_IDL/be/be_visitor_ami_pre_proc.cpp:
+        
+          Copied lines of code from the CCM preprocessing
+          visitor, which ensures that implied IDL nodes
+          will have the correct repository ids even if 
+          the original node has its prefix modified later
+          in the IDL file. The same logic is now applied
+          to the AMI and AMH preprocessing visitors.
+
 Fri Jan  5 18:26:43 UTC 2007  Ciju John  <johnc@ociweb.com>
 
         * docs/ORBEndpoint.html:
