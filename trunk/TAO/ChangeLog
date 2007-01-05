@@ -1,3 +1,13 @@
+Fri Jan  5 13:07:32 UTC 2007  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * orbsvcs/tests/EC_Mcast/EC_Mcast.cpp (open_senders):
+
+          Switched from using a macro for the buffer length used in
+          gathering the ingore address as a string to using a literal
+          constant. This is consistent with common usage of addr_to_string
+          throughout the ACE/TAO codebase, and avoids adding potentially
+          system-specific includes at the application level.
+
 Fri Jan  5 13:04:18 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/OBV/ValueBox/client.cpp:

@@ -269,8 +269,8 @@ ECM_Driver::open_senders (RtecEventChannelAdmin::EventChannel_ptr ec
 
   ACE_INET_Addr ignore_from;
   this->endpoint_.dgram ().get_local_addr (ignore_from);
-  ACE_TCHAR buffer[MAXHOSTNAMELEN+16];
-  ignore_from.addr_to_string (buffer,MAXHOSTNAMELEN+16);
+  ACE_TCHAR buffer[256];
+  ignore_from.addr_to_string (buffer,256);
   ACE_DEBUG ((LM_DEBUG, "(%P) ECM_Driver::open_senders - "
               "local endpoint = (%s)\n",
               ACE_TEXT_ALWAYS_CHAR (buffer)));
