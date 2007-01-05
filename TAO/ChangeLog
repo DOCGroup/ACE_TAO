@@ -1,3 +1,11 @@
+Fri Jan  5 17:09:35 UTC 2007  Iliyan Jeliazkov  <iliyan@ociweb.com>
+
+        * tests/Portable_Interceptors/Redirection/run_test.pl:
+
+          The sudden death of the first server is expected and is part of
+          the test. Changing the script to interpret the event
+          accordingly.
+
 Fri Jan  5 15:37:18 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/AnyTypeCode/DynamicC.h:
