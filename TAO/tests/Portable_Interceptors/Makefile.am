@@ -26,6 +26,7 @@ SUBDIRS = \
         PolicyFactory \
         Processing_Mode_Policy \
         Recursive_ORBInitializer \
+        Redirection \
         Register_Initial_References \
         Request_Interceptor_Flow \
         Service_Context_Manipulation \

@@ -1,3 +1,17 @@
+Fri Jan  5 06:54:42 UTC 2007  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * configure.ac:
+
+          Configure Makefiles for new subdirectory.
+
+        * tests/Portable_Interceptors/Makefile.am:
+
+          Regenerate to descend into Redirection subdirectory.
+
+        * tests/Portable_Interceptors/Redirection/Makefile.am:
+
+          New Makefile.am.
+
 Fri Jan  5 06:51:11 UTC 2007  J.T. Conklin  <jtc@acorntoolworks.com>
 
         * configure.ac:
