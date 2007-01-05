@@ -94,15 +94,6 @@ TAO_UIOP_Connector::corbaloc_scan (const char *str, size_t &len
                     str));
       return 0;
     }
-  if (*(separator+1) != ',' && *(separator+1) != '/')
-    {
-      if (TAO_debug_level)
-        ACE_DEBUG ((LM_DEBUG,
-                    "(%P|%t) TAO_UIOP_CONNECTOR::corbaloc_scan warning: "
-                    "terminating charactor '|' should be followed by a ','"
-                    "or a '/' in <%s>",
-                    str));
-    }
   len = (separator - str) + 1;
   return this->make_profile (ACE_ENV_SINGLE_ARG_PARAMETER);
 }
