@@ -53,7 +53,7 @@ ACE_INET_Addr::addr_to_string (ACE_TCHAR s[],
     + 1 // sizeof (':'), addr/port sep
     + 1; // sizeof ('\0'), terminating NUL
   ACE_TCHAR const *format = ACE_LIB_TEXT("%s:%d");
-#if ACE_HAS_IPV6
+#if defined (ACE_HAS_IPV6)
   if (ACE_OS::strchr(hoststr,':') != 0)
     {
       total_len += 2; // ACE_OS::strlen ("[]") IPv6 addr frames
