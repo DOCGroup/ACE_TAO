@@ -570,11 +570,23 @@ idl_store_pragma (char *buf)
           int status = idl_global->file_prefixes ().find (ext_id,
                                                           int_id);
 
-          if (status == 0 && ACE_OS::strcmp (int_id, "") != 0)
+          if (status == 0)
             {
-              char *trash = 0;
-              idl_global->pragma_prefixes ().pop (trash);
-              delete [] trash;
+              if (ACE_OS::strcmp (int_id, "") != 0)
+                {
+                  char *trash = 0;
+                  idl_global->pragma_prefixes ().pop (trash);
+                  delete [] trash;
+                }
+              else if (depth == 1)
+                {
+                  // Remove the default "" and bind the new prefix.
+                  (void) idl_global->file_prefixes ().unbind (ext_id);
+                  ext_id = ACE::strnew (ext_id);
+                  int_id = ACE::strnew (new_prefix);
+                  (void) idl_global->file_prefixes ().bind (ext_id,
+                                                            int_id);
+                }
             }
 
           UTL_Scope *top_scope = idl_global->scopes ().top ();
@@ -587,9 +599,13 @@ idl_store_pragma (char *buf)
 
           idl_global->pragma_prefixes ().push (new_prefix);
 
-          if (idl_global->in_main_file ())
+          if (depth == 1)
             {
               idl_global->root ()->prefix (new_prefix);
+            }
+                
+          if (idl_global->in_main_file ())
+            {
               idl_global->root ()->set_imported (false);
               top_scope->has_prefix (true);
             }
