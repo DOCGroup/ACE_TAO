@@ -16,7 +16,7 @@
 #ifndef CLIENT_REQUEST_INTERCEPTOR_H
 #define CLIENT_REQUEST_INTERCEPTOR_H
 
-#include /**/ "ace/config-all.h"
+#include /**/ "ace/config.h"
 #include /**/ "Current_Test_Export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
@@ -34,8 +34,7 @@ namespace Test
 
   /// A metod doing the actual testing, so we could change it for the
   /// different traits implementations
-
-  typedef int (*TEST) (CORBA::ORB_ptr ACE_ENV_ARG_DECL_WITH_DEFAULTS);
+  typedef int (*TEST) (CORBA::ORB_ptr);
 
 
   /**
@@ -69,41 +68,35 @@ namespace Test
      */
     //@{
     /// Return the name of this ClientRequestinterceptor.
-    virtual char * name (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
-      ACE_THROW_SPEC ((CORBA::SystemException));
+    virtual char * name (void) throw (CORBA::SystemException);
 
-    virtual void destroy (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
-      ACE_THROW_SPEC ((CORBA::SystemException));
+    virtual void destroy (void) throw (CORBA::SystemException);
 
-    virtual void send_request (PortableInterceptor::ClientRequestInfo_ptr ri
-                               ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-      ACE_THROW_SPEC ((CORBA::SystemException,
-                       PortableInterceptor::ForwardRequest));
+    virtual void send_request (PortableInterceptor::ClientRequestInfo_ptr ri)
+      throw (CORBA::SystemException, PortableInterceptor::ForwardRequest);
 
-    virtual void send_poll (PortableInterceptor::ClientRequestInfo_ptr ri
-                            ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-      ACE_THROW_SPEC ((CORBA::SystemException));
+    virtual void send_poll (PortableInterceptor::ClientRequestInfo_ptr ri)
+      throw (CORBA::SystemException);
 
-    virtual void receive_reply (PortableInterceptor::ClientRequestInfo_ptr ri
-                                ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-      ACE_THROW_SPEC ((CORBA::SystemException));
+    virtual void receive_reply (PortableInterceptor::ClientRequestInfo_ptr ri)
+      throw (CORBA::SystemException);
 
-    virtual void receive_exception (PortableInterceptor::ClientRequestInfo_ptr ri
-                                    ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-      ACE_THROW_SPEC ((CORBA::SystemException,
-                       PortableInterceptor::ForwardRequest));
 
-    virtual void receive_other (PortableInterceptor::ClientRequestInfo_ptr ri
-                                ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-      ACE_THROW_SPEC ((CORBA::SystemException,
-                       PortableInterceptor::ForwardRequest));
+    virtual void receive_exception (PortableInterceptor::ClientRequestInfo_ptr ri)
+      throw (CORBA::SystemException, PortableInterceptor::ForwardRequest);
+
+    virtual void receive_other (PortableInterceptor::ClientRequestInfo_ptr ri)
+      throw (CORBA::SystemException, PortableInterceptor::ForwardRequest);
     //@}
 
+    // Number of interceptions
     CORBA::Long interceptions (void);
 
   private:
-    void test_transport_current (const ACE_TCHAR* amethod ACE_ENV_ARG_DECL)
-      ACE_THROW_SPEC ((CORBA::SystemException, CORBA::UserException));
+    // Implementation method, every inteception point will have to
+    // call it, supplying a name.
+    void test_transport_current (const ACE_TCHAR* amethod)
+      throw (CORBA::SystemException, CORBA::UserException);
 
   private:
     ///The ID of the ORB this interceptor is registered with.

@@ -12,8 +12,10 @@ ACE_RCSID (Current_Test_Lib,
 namespace Test
 {
 
-  Server_ORBInitializer::Server_ORBInitializer (PortableInterceptor::ServerRequestInterceptor_ptr interceptor)
-    : interceptor_ (PortableInterceptor::ServerRequestInterceptor::_duplicate (interceptor))
+  Server_ORBInitializer::Server_ORBInitializer
+    (PortableInterceptor::ServerRequestInterceptor_ptr interceptor)
+      : interceptor_
+          (PortableInterceptor::ServerRequestInterceptor::_duplicate (interceptor))
   {
     /* no-op */
   }
@@ -24,17 +26,15 @@ namespace Test
   }
 
   void
-  Server_ORBInitializer::pre_init(PortableInterceptor::ORBInitInfo*
-                                  ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException))
+  Server_ORBInitializer::pre_init(PortableInterceptor::ORBInitInfo*)
+    throw (CORBA::SystemException)
   {
     /* no-op */
   }
 
   // A specialization to handle client-side interceptors
-  void Server_ORBInitializer::post_init (PortableInterceptor::ORBInitInfo* oii
-                                         ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException))
+  void Server_ORBInitializer::post_init (PortableInterceptor::ORBInitInfo* oii)
+    throw (CORBA::SystemException)
   {
     oii->add_server_request_interceptor (this->interceptor_.in ());
   }
