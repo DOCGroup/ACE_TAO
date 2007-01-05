@@ -1,3 +1,10 @@
+Fri Jan  5 13:34:18 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/OS_NS_stdio.cpp:
+        * ace/config-hpux-11.00.h:
+          Disable ACE_HAS_VFWPRINTF again for HPUX, takes more time,
+          something for the future
+
 Fri Jan  5 13:15:16 UTC 2007  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * ace/INET_Addr.cpp:
@@ -16,7 +23,6 @@ Fri Jan  5 12:44:18 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
           When ACE_HAS_WCHAR is defined include os_wchar.h to get the
           wchar methods which is needed on for example HPUX
 
-        * ace/config-hpux-11.00.h:
         * ace/config-linux-common.h:
         * ace/config-vxworks6.2.h:
         * ace/config-vxworks6.3.h:
