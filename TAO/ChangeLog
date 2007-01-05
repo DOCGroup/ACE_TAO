@@ -1,3 +1,10 @@
+Fri Jan  5 15:37:18 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/AnyTypeCode/DynamicC.h:
+          Added typedef for _out_type to ParameterList, the IDL does
+          generate this but this file is handcrafted and not updated
+          when the IDL compiler was changed
+
 Fri Jan  5 15:07:46 UTC 2007  Iliyan Jeliazkov  <iliyan@ociweb.com>
 
         * tests/TransportCurrent/IIOP/client.cpp:
