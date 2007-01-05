@@ -1,3 +1,19 @@
+Fri Jan  5 13:35:47 UTC 2007  Iliyan Jeliazkov  <iliyan@ociweb.com>
+
+        * MPC/config/tc.mpb:
+
+          Added interceptors and pi as bases to ensure the derived
+          projects are not built prior, or without their prerequisites.
+
+        * tests/TransportCurrent/Framework/Framework.mpc:
+        * tests/TransportCurrent/IIOP/IIOP.mpc:
+        * tests/TransportCurrent/lib/Current_Test_Lib.mpc:
+
+          Added tc (which derives from pi and interceptors) as base and
+          also simplified the base project lists. This ensures the tests
+          are skipped if TC is not built (for instance with
+          corba_e_compact).
+
 Fri Jan  5 13:07:32 UTC 2007  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * orbsvcs/tests/EC_Mcast/EC_Mcast.cpp (open_senders):

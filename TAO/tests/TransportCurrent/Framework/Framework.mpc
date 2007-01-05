@@ -1,11 +1,12 @@
 // -*- MPC -*-
 // $Id$
 
-project(*Server): taoserver, tc, interceptors, pi_server {
+project(*Server): taoserver, tc, pi_server {
 
   after += Current_Test_Lib_Client Current_Test_Lib_Server
-  includes += .
-  includes += ../lib
+
+  includes += . ../lib
+
   libs += Current_Test_Lib_Client Current_Test_Lib_Server
   libpaths += ../lib
 
@@ -18,13 +19,14 @@ project(*Server): taoserver, tc, interceptors, pi_server {
 
   IDL_Files {
   }
-
 }
 
-project(*Client): taoclient, tc, interceptors, pi, dynamicinterface {
+project(*Client): taoclient, tc, dynamicinterface {
 
   after += *Server Current_Test_Lib_Client Current_Test_Lib_Server
+
   includes += . ../lib
+
   libs += Current_Test_Lib_Client Current_Test_Lib_Server
   libpaths += ../lib
 
@@ -35,5 +37,4 @@ project(*Client): taoclient, tc, interceptors, pi, dynamicinterface {
 
   IDL_Files {
   }
-
 }
