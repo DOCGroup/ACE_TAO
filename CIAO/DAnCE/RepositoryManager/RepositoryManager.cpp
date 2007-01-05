@@ -34,10 +34,10 @@ namespace CIAO
     const char * RMior = "RepositoryManagerDaemon.ior";
 
     // Name of RepoMan
-    char * repoman_name_ = "RepositoryManager";
+    const char * repoman_name_ = "RepositoryManager";
 
     //Name service of the RM
-    char * RMname_service = "RepositoryManager";
+    const char * RMname_service = "RepositoryManager";
 
     /// Default number of worker threads to run in the multi-threaded RM
     static unsigned int nthreads = 3;
@@ -143,17 +143,17 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     if (!parse_args (argc, argv))
        return -1;
 
-    //Get the root POA object
+    // Get the root POA object
     CORBA::Object_var obj = orb->resolve_initial_references ("RootPOA");
 
-    //downcast to POA type
+    // Downcast to POA type
     PortableServer::POA_var root_poa = PortableServer::POA::_narrow (obj.in ());
 
     //activate the POA manager
     PortableServer::POAManager_var mgr = root_poa->the_POAManager ();
     mgr->activate ();
 
-    //create a servant
+    // Create a servant
     CIAO_RepositoryManagerDaemon_i* repo = 0;
     ACE_NEW_RETURN (repo,
                     CIAO_RepositoryManagerDaemon_i (
@@ -162,7 +162,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                           CIAO::RepositoryManager::repoman_name_),
                     1);
 
-    //trasfer ownership to the POA
+    //transfer ownership to the POA
     PortableServer::ServantBase_var owner_transfer(repo);
 
     //register and implicitly activate servant
