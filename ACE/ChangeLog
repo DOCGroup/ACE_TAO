@@ -1,3 +1,9 @@
+Fri Jan  5 07:05:18 UTC 2007  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * bin/MakeProjectCreator/modules/AutomakeWorkspaceHelper.pm:
+
+          Remove "-Ge 1" from initial TAO_IDLFLAGS definition.
+
 Fri Jan  5 03:34:00 UTC 2007  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * ace/INET_Addr.cpp:
