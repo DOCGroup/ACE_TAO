@@ -1,3 +1,9 @@
+Fri Jan  5 13:04:18 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/OBV/ValueBox/client.cpp:
+          Renamed VERIFY to OBV_VERIFY to resolve redefinition warnings
+          in the MFC builds
+
 Fri Jan  5 11:00:00 UTC 2007  Simon Massey  <sma@prismtech.com>
 
         * tests/Portable_Interceptors/Processing_Mode_Policy/Remote/server_interceptor.cpp:
