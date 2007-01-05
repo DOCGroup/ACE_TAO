@@ -1,3 +1,10 @@
+Fri Jan  5 19:06:17 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/msvc_static_order.lst:
+
+          Added project names to correct the build order for
+          TAO/tests/Collocation and TAO/tests/TransportCurrent.
+
 Fri Jan  5 14:03:12 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
 
         * apps/JAWS2/HTTPU/http_headers.h:
