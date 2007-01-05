@@ -27,7 +27,7 @@ ZlibCompressor::compress (
     ::Compression::CompressionException
   ))
 {
-	::CORBA::Long max_length = static_cast <CORBA::ULong> (source.length () * 1.1) + 12;
+  ::CORBA::ULong max_length = static_cast <CORBA::ULong> (source.length () * 1.1) + 12;
   target.length (max_length);
 
   int const retval = ::compress2 (reinterpret_cast <Bytef*>(target.get_buffer ()),

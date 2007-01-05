@@ -1,3 +1,14 @@
+Fri Jan  5 10:10:18 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * MPC/config/compression.mpb:
+          Removed pi as base, not needed. Thanks to JT for noticing this
+
+        * tao/Compression/Base_Compressor.h:
+          Make the members protected so that derived classes can access them
+
+        * tao/Compression/zlib/ZlibCompressor.cpp:
+          Fixed type of local variable
+
 Fri Jan  5 06:54:42 UTC 2007  J.T. Conklin  <jtc@acorntoolworks.com>
 
         * configure.ac:
