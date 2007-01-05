@@ -641,6 +641,7 @@ if test $tao_build_tests = yes; then
     tests/Bug_2654_Regression/Makefile
     tests/Bug_2669_Regression/Makefile
     tests/Bug_2683_Regression/Makefile
+    tests/Bug_2702_Regression/Makefile
     tests/CDR/Makefile
     tests/COIOP/Makefile
     tests/CSD_Strategy_Tests/Broken/Makefile
