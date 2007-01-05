@@ -1,3 +1,9 @@
+Fri Jan  5 14:03:12 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
+
+        * apps/JAWS2/HTTPU/http_headers.h:
+
+          For the sake of compiling on HP-UX, #undef SERVER if it's defined.
+
 Fri Jan  5 13:34:18 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/OS_NS_stdio.cpp:
@@ -113,17 +119,17 @@ Thu Jan  4 15:33:08 UTC 2007  J.T. Conklin  <jtc@acorntoolworks.com>
 
 Thu Jan  4 13:53:33 UTC 2007  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* ACEXML/tests/Makefile.am:
-	* ACEXML/tests/util/Makefile.am:
-	* ACEXML/apps/svcconf/Makefile.am:
-	* ACEXML/common/Makefile.am:
-	* ACEXML/examples/SAXPrint/Makefile.am:
+        * ACEXML/tests/Makefile.am:
+        * ACEXML/tests/util/Makefile.am:
+        * ACEXML/apps/svcconf/Makefile.am:
+        * ACEXML/common/Makefile.am:
+        * ACEXML/examples/SAXPrint/Makefile.am:
 
           Tweak to use ACE_{ZLIB,ZZIP}_{CPPFLAGS,LDFLAGS,LIBS}
           instead of -I${ZLIB_ROOT}/include, etc.  The former
           are substituted by the configure script.
 
-	* m4/ace.m4:
+        * m4/ace.m4:
 
           Add ACE_PATH_ZLIB and ACE_PATH_ZZIP autoconf macros.
           zlib and zzip can now be enabled at configure time
