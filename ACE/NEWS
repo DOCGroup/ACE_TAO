@@ -3,14 +3,15 @@ PLANNED MAJOR CHANGES "SOMETIME IN THE FUTURE" (i.e., exact beta not known)
 
 . (Remedy) OpenVMS 8.3 on IA64 port
 
-. (Remedy) RTEMS port
-
-PLANNED CHANGES FOR "ACE-5.5.5"
+PLANNED CHANGES FOR "ACE-5.5.6"
 ===============================
 
 . (OO) Minor 64 bit file offset fixes for ACE AIO classes on HP-UX.
 
 . (OO) Various other fixes that have been piling up.
+
+PLANNED CHANGES FOR "ACE-5.5.5"
+===============================
 
 . (Riverace) Pharlap ETS 13 qualification.
 
@@ -108,6 +109,15 @@ USER VISIBLE CHANGES BETWEEN ACE-5.5.4 and ACE-5.5.5
 . Improved LynxOS 4.2 support
 
 . VxWorks 6.4 support
+
+. Added support for FC6. Because the GCC 4.1.1 version that gets shipped
+  has a fix for the visibility attribute we use for the singletons
+  you will need to define the following in your config.h file. This can't be
+  done automatically because SuSE 10.2 gets shipped with GCC 4.1.2 but
+  doesn't have the same fix
+  ACE_GCC_HAS_TEMPLATE_INSTANTIATION_VISIBILITY_ATTRS 1
+
+. RTEMS port
 
 USER VISIBLE CHANGES BETWEEN ACE-5.5.3 and ACE-5.5.4
 ====================================================
