@@ -1,3 +1,21 @@
+Fri Jan  5 00:51:22 UTC 2007  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * ace/INET_Addr.h:
+        * ace/INET_Addr.inl:
+
+          Added a new method, is_multicast(), to assist applications in
+          determining if the inet address is or is not a multicast address
+          regardless of it being an IPv4 or IPv6 format.
+
+        * ace/Timer_Queue_Adapters.cpp:
+
+          Fixed a bug in
+          ACE_Async_Timer_Queue_Adapter<TQ>::schedule_ualarm() wherein the
+          time value for the alarm was computed using
+          ACE_OS::gettimeofday() rather than using the timer queue's
+          gettimeofday implementation. Thus situations where an alternate
+          time source were used, the scheduled alarm would be wrong.
+
 Thu Jan  4 15:51:41 UTC 2007  Chris Cleeland  <cleeland_c@ociweb.com>
 
         * tests/Thread_Creation_Threshold_Test.cpp: Changed name of
