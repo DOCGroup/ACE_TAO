@@ -1,3 +1,12 @@
+Fri Jan  5 03:34:00 UTC 2007  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * ace/INET_Addr.cpp:
+
+          Refactored the addr_to_string() method to format numeric IPv6
+          addresses using [addr]:port to disambiguate addresses such as
+          [fe80::1:2:3]:12345. This should be benign as string_to_addr()
+          already parses [ipv6addr]:port formatted strings.
+
 Fri Jan  5 00:51:22 UTC 2007  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * ace/INET_Addr.h:
