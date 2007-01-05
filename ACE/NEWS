@@ -17,6 +17,15 @@ PLANNED CHANGES FOR "ACE-5.5.5"
 USER VISIBLE CHANGES BETWEEN ACE-5.5.4 and ACE-5.5.5
 ====================================================
 
+. Reformat stringified IPv6 addresses to use [addr]:port when printing
+  addresses that contain ':' such as "::1".
+
+. Added method to ACE_INET_Addr to determine if address is IPv6 or
+  IPv4 multicast.
+
+. Fixed a bug in ACE_Async_Timer_Adapter_Timer_Queue_Adapter<TQ> where the
+  gettimeofday function of the timer queue was ignored when setting the alarm.
+
 . Fixed a problem where, on Solaris 9 onwards, calling
   ACE_OS::thr_create(THR_NEW_LWP) more than 2^15 (65535) times in a
   process will fail.  See changelog entry from "Wed Jan 3 22:31:05 UTC
