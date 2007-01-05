@@ -29,17 +29,15 @@ namespace Test
   }
 
   char *
-  Client_Request_Interceptor::name (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
-    ACE_THROW_SPEC ((CORBA::SystemException))
+  Client_Request_Interceptor::name (void)
+    throw (CORBA::SystemException)
   {
     return CORBA::string_dup ("Client_Request_Interceptor");
   }
 
   void
-  Client_Request_Interceptor::test_transport_current (const ACE_TCHAR* amethod
-                                                      ACE_ENV_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     CORBA::UserException))
+  Client_Request_Interceptor::test_transport_current (const ACE_TCHAR* amethod)
+    throw (CORBA::SystemException, CORBA::UserException)
   {
     ACE_DEBUG ((LM_DEBUG,
                 ACE_TEXT ("CRI    (%P|%t) Test accessing Transport Current from %s\n"),
@@ -50,13 +48,11 @@ namespace Test
     int tmp = 0;
     CORBA::ORB_var orb = CORBA::ORB_init (tmp,
                                           0,
-                                          orb_id_.in ()
-                                          ACE_ENV_ARG_PARAMETER);
-    ACE_TRY_CHECK;
+                                          orb_id_.in ());
 
-
-    (*this->test_) (orb.in () ACE_ENV_ARG_PARAMETER);
-    ACE_TRY_CHECK;
+    // Call the test function, which will throw an exception on
+    // failure
+    (*this->test_) (orb.in ());
 
     ACE_DEBUG ((LM_DEBUG,
                 ACE_TEXT ("CRI    (%P|%t) Successfully tested Transport Current from %s\n"),
@@ -64,26 +60,20 @@ namespace Test
   }
 
   void
-  Client_Request_Interceptor::destroy (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
-    ACE_THROW_SPEC ((CORBA::SystemException))
+  Client_Request_Interceptor::destroy (void)
+    throw (CORBA::SystemException)
   {
   }
 
   void
-  Client_Request_Interceptor::send_request (PortableInterceptor::ClientRequestInfo_ptr ri
-                                            ACE_ENV_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     PortableInterceptor::ForwardRequest))
+  Client_Request_Interceptor::send_request (PortableInterceptor::ClientRequestInfo_ptr ri)
+    throw (CORBA::SystemException, PortableInterceptor::ForwardRequest)
   {
     //Test TC
-
-    test_transport_current ("send_request"
-                            ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK;
+    test_transport_current ("send_request");
 
     CORBA::Boolean response_expected =
-      ri->response_expected (ACE_ENV_SINGLE_ARG_PARAMETER);
-    ACE_CHECK;
+      ri->response_expected ();
 
     // Oneway?
     if (response_expected)
@@ -92,12 +82,11 @@ namespace Test
       ACE_DEBUG ((LM_DEBUG, ACE_TEXT("CRI    (%P|%t) Sending a one-way\n")));
 
     // Make the context to send the context to the target
-
     IOP::ServiceContext sc;
     sc.context_id = Test::Transport::CurrentTest::ContextTag;
 
+    // How long can a number really get?
     char temp[32];
-
     {
       ACE_GUARD (TAO_SYNCH_MUTEX, monitor, this->lock_);
 
@@ -112,53 +101,35 @@ namespace Test
     sc.context_data.replace (string_len, string_len, buf, 1);
 
     // Add this context to the service context list.
-    ri->add_request_service_context (sc, 0 ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK;
-
+    ri->add_request_service_context (sc, 0);
   }
 
   void
-  Client_Request_Interceptor::send_poll (PortableInterceptor::ClientRequestInfo_ptr
-                                         ACE_ENV_ARG_DECL_NOT_USED)
-    ACE_THROW_SPEC ((CORBA::SystemException))
+  Client_Request_Interceptor::send_poll (PortableInterceptor::ClientRequestInfo_ptr)
+    throw (CORBA::SystemException)
   {
-    test_transport_current ("send_poll"
-                            ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK;
+    test_transport_current ("send_poll");
   }
 
   void
-  Client_Request_Interceptor::receive_reply (PortableInterceptor::ClientRequestInfo_ptr
-                                             ACE_ENV_ARG_DECL_NOT_USED)
-    ACE_THROW_SPEC ((CORBA::SystemException))
+  Client_Request_Interceptor::receive_reply (PortableInterceptor::ClientRequestInfo_ptr)
+    throw (CORBA::SystemException)
   {
-    test_transport_current ("receive_reply"
-                            ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK;
+    test_transport_current ("receive_reply");
   }
 
   void
-  Client_Request_Interceptor::receive_exception (PortableInterceptor::ClientRequestInfo_ptr
-                                                 ACE_ENV_ARG_DECL_NOT_USED)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     PortableInterceptor::ForwardRequest))
+  Client_Request_Interceptor::receive_exception (PortableInterceptor::ClientRequestInfo_ptr)
+    throw (CORBA::SystemException, PortableInterceptor::ForwardRequest)
   {
-    test_transport_current ("receive_exception"
-                            ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK;
+    test_transport_current ("receive_exception");
   }
 
   void
-  Client_Request_Interceptor::receive_other (PortableInterceptor::ClientRequestInfo_ptr
-                                             ACE_ENV_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     PortableInterceptor::ForwardRequest))
+  Client_Request_Interceptor::receive_other (PortableInterceptor::ClientRequestInfo_ptr)
+    throw (CORBA::SystemException, PortableInterceptor::ForwardRequest)
   {
-
-    test_transport_current ("receive_other"
-                            ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK;
-
+    test_transport_current ("receive_other");
   }
 
 }

@@ -1,3 +1,19 @@
+Fri Jan  5 04:09:08 UTC 2007  Iliyan Jeliazkov  <iliyan@ociweb.com>
+
+        * tests/TransportCurrent/lib/Client_ORBInitializer.h:
+        * tests/TransportCurrent/lib/Client_ORBInitializer.cpp:
+        * tests/TransportCurrent/lib/Client_Request_Interceptor.h:
+        * tests/TransportCurrent/lib/Client_Request_Interceptor.cpp:
+        * tests/TransportCurrent/lib/Current_Test_Impl.h:
+        * tests/TransportCurrent/lib/Server_ORBInitializer.h:
+        * tests/TransportCurrent/lib/Server_ORBInitializer.cpp:
+        * tests/TransportCurrent/lib/Server_Request_Interceptor.h:
+        * tests/TransportCurrent/lib/Server_Request_Interceptor.cpp:
+
+          Thanks to Johnny Willemsen and Chris Cleeland for reminding
+          me. This change eliminates the use of the now deprecated ACE
+          exceptions macros.
+
 Fri Jan  5 03:35:00 UTC 2007  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * orbsvcs/tests/EC_Mcast/EC_Mcast.cpp:
