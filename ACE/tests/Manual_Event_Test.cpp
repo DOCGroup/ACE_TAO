@@ -47,9 +47,6 @@ static int test_result = 0;
 // state is 0).
 static ACE_Manual_Event evt ((unsigned int) 0);
 
-// Default number of iterations.
-static int n_iterations = 10;
-
 // Number of worker threads.
 static long n_workers = 10;
 
@@ -74,7 +71,7 @@ print_usage_and_die (void)
 static void
 parse_args (int argc, ACE_TCHAR *argv[])
 {
-  ACE_Get_Opt get_opt (argc, argv, ACE_TEXT ("w:n:"));
+  ACE_Get_Opt get_opt (argc, argv, ACE_TEXT ("w:"));
 
   int c;
 
@@ -83,9 +80,6 @@ parse_args (int argc, ACE_TCHAR *argv[])
     {
     case 'w':
       n_workers = ACE_OS::atoi (get_opt.opt_arg ());
-      break;
-    case 'n':
-      n_iterations = ACE_OS::atoi (get_opt.opt_arg ());
       break;
     default:
       print_usage_and_die ();
