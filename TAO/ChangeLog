@@ -1,3 +1,10 @@
+Fri Jan  5 15:07:46 UTC 2007  Iliyan Jeliazkov  <iliyan@ociweb.com>
+
+        * tests/TransportCurrent/IIOP/client.cpp:
+
+          Testing for minimum corba was wrong, causing invalid reference
+          to Object::_request member in minimum corba builds.
+
 Fri Jan  5 13:35:47 UTC 2007  Iliyan Jeliazkov  <iliyan@ociweb.com>
 
         * MPC/config/tc.mpb:
