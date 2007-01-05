@@ -269,10 +269,11 @@ ECM_Driver::open_senders (RtecEventChannelAdmin::EventChannel_ptr ec
 
   ACE_INET_Addr ignore_from;
   this->endpoint_.dgram ().get_local_addr (ignore_from);
-  ACE_DEBUG ((LM_DEBUG, "ECM_Driver::open_senders - "
-              "local endpoint = (%u:%d)\n",
-              ignore_from.get_ip_address (),
-              ignore_from.get_port_number ()));
+  ACE_TCHAR buffer[MAXHOSTNAMELEN+16];
+  ignore_from.addr_to_string (buffer,MAXHOSTNAMELEN+16);
+  ACE_DEBUG ((LM_DEBUG, "(%P) ECM_Driver::open_senders - "
+              "local endpoint = (%s)\n",
+              ACE_TEXT_ALWAYS_CHAR (buffer)));
   for (int i = 0; i < this->all_federations_count_; ++i)
     {
       TAO_ECG_UDP_Out_Endpoint* clone;
@@ -586,12 +587,12 @@ ECM_Federation::ECM_Federation (char* name,
   int i;
   for (i = 0; i < this->supplier_types_; ++i)
     {
-      ACE_INET_Addr addr (u_short(0), this->supplier_names_[i]);
+      ACE_INET_Addr addr (u_short(0), this->supplier_names_[i], AF_INET);
       this->supplier_ipaddr_[i] = addr.get_ip_address ();
     }
   for (i = 0; i < this->consumer_types_; ++i)
     {
-      ACE_INET_Addr addr (u_short(0), this->consumer_names_[i]);
+      ACE_INET_Addr addr (u_short(0), this->consumer_names_[i], AF_INET);
       this->consumer_ipaddr_[i] = addr.get_ip_address ();
     }
 }
