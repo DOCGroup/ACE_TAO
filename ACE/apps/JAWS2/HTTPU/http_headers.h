@@ -18,6 +18,11 @@
 #include "JAWS/Parse_Headers.h"
 #include "HTTPU/http_export.h"
 
+// A header file on HP-UX defines SERVER
+#if defined (SERVER)
+#undef SERVER
+#endif /* SERVER */
+
 class HTTP_Headers;
 
 class HTTPU_Export HTTP_Hdr_Node
