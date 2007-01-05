@@ -1,3 +1,9 @@
+Fri Jan  5 10:30:18 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * contrib/minizip/unzip.c:
+        * contrib/minizip/zip.c:
+          Fixed unitialized warnings
+
 Fri Jan  5 10:04:18 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/config-g++-common.h:
