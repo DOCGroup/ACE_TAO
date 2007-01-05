@@ -49,13 +49,14 @@ if ($client != 0) {
 $server1 = $SV1->WaitKill (5);
 
 if ($server1 != 0) {
+    print STDERR "ERROR: server1 returned $server1\n";
     $status = 1;
 }
 
 $server2 = $SV2->WaitKill (5);
 
 if ($server2 != 0) {
-    print STDERR "ERROR: server returned $server\n";
+    print STDERR "ERROR: server2 returned $server2\n";
     $status = 1;
 }
 
