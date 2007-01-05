@@ -16,7 +16,7 @@
 #ifndef SERVER_REQUEST_INTERCEPTOR_H
 #define SERVER_REQUEST_INTERCEPTOR_H
 
-#include /**/ "ace/config-all.h"
+#include /**/ "ace/config.h"
 #include /**/ "Current_Test_Export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
@@ -26,7 +26,6 @@
 #include "Current_TestC.h"
 
 #include "tao/TransportCurrent/TCC.h"
-
 #include "tao/PortableInterceptorC.h"
 #include "tao/LocalObject.h"
 #include "tao/PI_Server/PI_Server.h"
@@ -37,7 +36,7 @@ namespace Test
   /// A metod doing the actual testing, so we could change it for the
   /// different traits implementations
 
-  typedef int (*TEST) (CORBA::ORB_ptr ACE_ENV_ARG_DECL_WITH_DEFAULTS);
+  typedef int (*TEST) (CORBA::ORB_ptr);
 
   /**
    * @class Server_Request_Interceptor
@@ -52,15 +51,16 @@ namespace Test
   public:
 
     /// Constructor.
-    Server_Request_Interceptor (const char*orb_id, TEST test);
+    Server_Request_Interceptor (const char*orb_id,
+                                TEST test);
 
     /// Destructor.
     virtual ~Server_Request_Interceptor (void);
 
-    virtual void test_transport_current (const char* amethod
-                                 ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-      ACE_THROW_SPEC ((CORBA::SystemException));
+    virtual void test_transport_current (const char* amethod)
+      throw (CORBA::SystemException);
 
+    /// Coherency test
     virtual bool self_test (void);
 
     /**
@@ -73,39 +73,24 @@ namespace Test
      */
     //@{
     /// Return the name of this ServerRequestinterceptor.
-    virtual char * name (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
-      ACE_THROW_SPEC ((CORBA::SystemException));
+    virtual char * name (void) throw (CORBA::SystemException);
 
-    virtual void destroy (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
-      ACE_THROW_SPEC ((CORBA::SystemException));
+    virtual void destroy (void) throw (CORBA::SystemException);
 
-    virtual void receive_request_service_contexts (PortableInterceptor::ServerRequestInfo_ptr ri
-                                                   ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-      ACE_THROW_SPEC ((CORBA::SystemException,
-                       PortableInterceptor::ForwardRequest));
+    virtual void receive_request_service_contexts (PortableInterceptor::ServerRequestInfo_ptr ri)
+      throw (CORBA::SystemException, PortableInterceptor::ForwardRequest);
 
-    virtual void receive_request (
-                                  PortableInterceptor::ServerRequestInfo_ptr ri
-                                  ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-      ACE_THROW_SPEC ((CORBA::SystemException,
-                       PortableInterceptor::ForwardRequest));
+    virtual void receive_request (PortableInterceptor::ServerRequestInfo_ptr ri)
+      throw (CORBA::SystemException, PortableInterceptor::ForwardRequest);
 
-    virtual void send_reply (
-                             PortableInterceptor::ServerRequestInfo_ptr ri
-                             ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-      ACE_THROW_SPEC ((CORBA::SystemException));
+    virtual void send_reply (PortableInterceptor::ServerRequestInfo_ptr ri)
+      throw (CORBA::SystemException);
 
-    virtual void send_exception (
-                                 PortableInterceptor::ServerRequestInfo_ptr ri
-                                 ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-      ACE_THROW_SPEC ((CORBA::SystemException,
-                       PortableInterceptor::ForwardRequest));
+    virtual void send_exception (PortableInterceptor::ServerRequestInfo_ptr ri)
+      throw (CORBA::SystemException, PortableInterceptor::ForwardRequest);
 
-    virtual void send_other (
-                             PortableInterceptor::ServerRequestInfo_ptr ri
-                             ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-      ACE_THROW_SPEC ((CORBA::SystemException,
-                       PortableInterceptor::ForwardRequest));
+    virtual void send_other (PortableInterceptor::ServerRequestInfo_ptr ri)
+      throw (CORBA::SystemException, PortableInterceptor::ForwardRequest);
     //@}
 
   protected:
