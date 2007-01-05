@@ -55,7 +55,7 @@ public:
   /// Constructor
   CIAO_RepositoryManagerDaemon_i (CORBA::ORB_ptr the_orb,
                   const char* server = "localhost:5432",
-                  char* install_dir = "RepositoryManager");
+                  const char* install_dir = "RepositoryManager");
 
   /// Destructor
   virtual ~CIAO_RepositoryManagerDaemon_i (void);
@@ -163,7 +163,6 @@ protected:
   /// stores the file in the passed preallocated ACE_Message_Block
   /// @retval 1 success
   /// @retval 0 error
-
   int HTTP_Get (const char* URL, ACE_Message_Block &mb);
 
   /// Function to extract all necessary files for parsing the
@@ -172,7 +171,6 @@ protected:
   /// @retval 0 error
   ///
   /// @note ACE_CString& pcd_name is an out parameter
-
   int extract_descriptor_files (char* package,
     ACE_CString& pcd_name);
 
@@ -182,37 +180,33 @@ protected:
   /// from the package. They correspond to the names on disk.
   /// @retval 1 on success
   /// @retval 0 on error
-
   int remove_descriptor_files (char* package);
 
 
-  ///function to remove the files extracted from the package upon istallation
-  ///It reads the names of the files from the package. They correspond to the
-  ///names on disk. It deletes each file, then it deletes the directories that
-  ///contain them.
-  ///NOTE: extraction location is path/*archive_name*/
-  ///returns 1 on success
-  ///        0 on error
-
+  /// Function to remove the files extracted from the package upon istallation
+  /// It reads the names of the files from the package. They correspond to the
+  /// names on disk. It deletes each file, then it deletes the directories that
+  /// contain them.
+  /// @note extraction location is path/*archive_name*/
+  /// @retval 1 on success
+  /// @retval 0 on error
   int remove_extracted_package (const char* package_path, const char* extraction_location);
 
-  ///function to extract the type of the component from
-  ///the PackageConfiguration and update the interface map
-  ///returns 1 on success
-  ///        0 on error
-
+  /// Function to extract the type of the component from
+  /// the PackageConfiguration and update the interface map
+  /// @retval 1 on success
+  /// @retval 0 on error
   int add_type (::Deployment::PackageConfiguration& pc,
                 const char* name);
 
-  ///function to remove the interface type of the component
-  ///being removed from the interface map
-  ///returns 1 on success
-  ///        0 on error
-
+  /// Function to remove the interface type of the component
+  /// being removed from the interface map
+  /// @retval 1 on success
+  /// @retval 0 on error
   int remove_type (::Deployment::PackageConfiguration& pc,
                    const char* name);
 
-  ///function to dump the state of the RepositoryManager
+  /// Function to dump the state of the RepositoryManager
   void dump (void);
 
 private:

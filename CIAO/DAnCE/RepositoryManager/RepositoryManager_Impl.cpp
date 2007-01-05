@@ -63,7 +63,7 @@ namespace
 //-----------------------------------------------------------------
 
 CIAO_RepositoryManagerDaemon_i::CIAO_RepositoryManagerDaemon_i
-  (CORBA::ORB_ptr the_orb, const char* server, char* install_dir)
+  (CORBA::ORB_ptr the_orb, const char* server, const char* install_dir)
   : the_orb_ (CORBA::ORB::_duplicate (the_orb)),
     install_root_ (""),
     HTTP_server_ ("http://"),

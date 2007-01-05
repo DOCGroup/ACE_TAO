@@ -1,3 +1,15 @@
+Fri Jan  5 12:14:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * DAnCE/RepositoryManager/RepositoryManager.cpp:
+        * DAnCE/RepositoryManager/RepositoryManager_Impl.cpp:
+        * DAnCE/RepositoryManager/RepositoryManager_Impl.h:
+          Fixed conversion warnings
+
+        * DAnCE/RepositoryManager/PC_Updater.cpp:
+        * DAnCE/RepositoryManager/RMadmin.cpp:
+        * DAnCE/RepositoryManager/URL_Parser.cpp:
+          Improved layout and documentation
+
 Wed Jan  3 19:32:05 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
 
         * CIAO_TAO_DAnCE.mwc:

@@ -169,7 +169,7 @@ void PC_Updater::clear_list ()
   {
     const char* location = CORBA::string_dup (iad.location[0]);
 
-    //create an interator
+    //create an iterator
     ACE_Double_Linked_List_Iterator<ZIP_File_Info> iter (this->file_list_);
 
     //find the correct path and return

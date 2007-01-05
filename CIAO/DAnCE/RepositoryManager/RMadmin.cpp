@@ -1,4 +1,3 @@
-
 /* -*- C++ -*- */
 
 /***
@@ -101,9 +100,9 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         }
 
     if (options->shutdown_)
-    {
-      rm->shutdown ();
-    }
+      {
+        rm->shutdown ();
+      }
     else if (options->all_names_)
     {
       try
