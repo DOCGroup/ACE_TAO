@@ -13,7 +13,7 @@
 
 #include "Client_ORBInitializer.h"
 
-ACE_RCSID (PICurrent,
+ACE_RCSID (IIOP,
            client,
            "$Id$")
 
@@ -116,7 +116,7 @@ Worker::svc (void)
 
   // Minimum CORBA does not define Object::_request, so we're just
   // skipping the DII part in those cases.
-#if (TAO_HAS_MINIMUM_CORBA != 0)
+#if (!defined(TAO_HAS_MINIMUM_CORBA) || (TAO_HAS_MINIMUM_CORBA == 0))
 
           if (this->use_dii_too_)
             {
@@ -134,7 +134,7 @@ Worker::svc (void)
               ACE_CHECK;
             }
 
-#endif /* (TAO_HAS_MINIMUM_CORBA != 0) */
+#endif /* (!defined(TAO_HAS_MINIMUM_CORBA) || (TAO_HAS_MINIMUM_CORBA == 0)) */
 
           ACE_DEBUG ((LM_DEBUG,
                       ACE_TEXT ("Client (%P|%t) Invoking server->invoked_by_client() via SII\n")));
