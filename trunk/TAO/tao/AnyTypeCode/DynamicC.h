@@ -129,6 +129,7 @@ namespace Dynamic
     static void _tao_any_destructor (void *);
 
     typedef ParameterList_var _var_type;
+    typedef ParameterList_out _out_type;
   };
 
 #endif /* end #if !defined */
