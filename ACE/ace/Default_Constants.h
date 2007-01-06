@@ -278,18 +278,11 @@
 
 // Default file permissions.
 # if !defined (ACE_DEFAULT_FILE_PERMS)
-#   if defined (ACE_WIN32)
-#     if defined (ACE_HAS_WINNT4) && (ACE_HAS_WINNT4 == 1)
-#       define ACE_DEFAULT_FILE_PERMS (FILE_SHARE_READ | FILE_SHARE_WRITE | \
-                                       FILE_SHARE_DELETE)
-#     else
-#       define ACE_DEFAULT_FILE_PERMS (FILE_SHARE_READ | FILE_SHARE_WRITE)
-#     endif /* ACE_HAS_WINNT4 */
-#   elif defined (ACE_VXWORKS)
+#   if defined (ACE_VXWORKS)
 #     define ACE_DEFAULT_FILE_PERMS (S_IRUSR | S_IWUSR| S_IRGRP| S_IROTH)
 #   else
 #     define ACE_DEFAULT_FILE_PERMS 0644
-#   endif /* ACE_WIN32 */
+#   endif /* ACE_VXWORKS */
 # endif /* ACE_DEFAULT_FILE_PERMS */
 
 // Default directory permissions.

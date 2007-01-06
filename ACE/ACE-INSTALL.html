@@ -182,7 +182,7 @@ document</a>.</p><p>
         IRIX 6.x; UnixWare 7.1.0;
         Linux on PPC; OpenMVS;
         Tandem; SCO; FreeBSD; NetBSD; OpenBSD;
-        Macintosh OS X; OS/9; PharLap TNT Embedded ToolSuite 9.1;
+        Macintosh OS X; OS/9; PharLap TNT Embedded ToolSuite 13;
         QNX RTP and Neutrino 2.0; Interix (Windows Services for Unix)
     </td>
   </tr><tr>
@@ -624,15 +624,6 @@ https://msdn.microsoft.com/visualc/downloads/default.aspx</a> for information.
   programs that uses ACE.  Otherwise you may experience problems
   finding ace.dll or aced.dll.<br>
       <br>
-  </li><li>If you are building for Windows NT 4 or later (Windows 2000, XP, etc.)
-      then you can start building without anymore changes. If you are building
-      on Windows 9x/Me, then you should add the line <br>
-      <br>
-      <code>#define ACE_HAS_WINNT4 0</code><br>
-      <br>
-      before the #include statement in ACE_ROOT\ace\config.h and it
-      will turn off some WinNT/Win2K-specific code in ACE.<br>
-      <br>
   </li><li>If you want to use the standard C++ headers (iostream, cstdio, ...
       as defined by the C++ Standard Draft 2) that comes with MSVC,
       then add the line: <br>
@@ -784,15 +775,6 @@ to check <a href="#win32nonic">here</a> first. <p>
       <br>
       <code>#include "ace/config-win32.h"</code><br>
       <br>
-      If you are building for Windows NT 4, Windows 2000, or Windows XP,
-      then you can start without any more changes.  If you are building
-      on Windows 9x/Me, then you should add the line <br>
-      <br>
-      <code>#define ACE_HAS_WINNT4 0</code><br>
-      <br>
-      before the #include statement in ACE_ROOT\ace\config.h and it
-      will turn off some WinNT/Win2K-specific code in ACE.<br>
-      <br>
   </li><li>Open a Command Prompt (DOS Box).<br>
       <br>
   </li><li>Set the ACE_ROOT environment variable to point to the ACE_wrappers
@@ -935,15 +917,6 @@ For our build we require the packages
 
        <blockquote><code></code><pre>       #include "ace/config-win32.h"
        </pre></blockquote>
-
-       If you are building for Windows 9X/Me (ie, <em>not</em> WinNT or
-       Win2K), you will need to add:
-
-       <blockquote><code></code><pre>       #define ACE_HAS_WINNT4 0
-       </pre></blockquote>
-
-       before the <code>#include</code> line.
-       <br><br>
 
   </li><li> Create a file called <tt>platform_macros.GNU</tt> in the
        <tt>$ACE_ROOT/include/makeinclude</tt> directory containing:
@@ -2407,15 +2380,27 @@ libraries.
       to your <code>bin/MakeProjectCreator/config</code> file and regenerate the
       GNU makefiles as described <a href="#power">here</a>.</p><p>
 
-  </p></li><li><strong>PharLap TNT Embedded ToolSuite (ETS)</strong><p>
+  </p></li><li><strong>PharLap ETS</strong><p>
 
-      ACE has been ported to <a href="http://www.pharlap.com/">PharLap's</a> TNT Embedded
-      ToolSuite (ETS) version 9.1. The port is being tested with
-      Microsoft Visual C++ 6.</p><p> To build for PharLap, use the
-      ace/config-pharlap.h configuration file, and the instructions
+      ACE has been ported to Ardence's
+      <a href="http://www.ardence.com/embedded/products.aspx?ID=71">PharLap ETS</a>
+      version 13. The port was originally done for Pharlap 9.1 and MSVC 6,
+      but has been updated to Pharlap ETS 13 with Visual Studio .NET 2003
+      (VC7.1).</p><p> To build for PharLap, you'll need to use MPC to
+      generate .sln/.vcproj files with the ETS configurations. For example:
+      <pre>
+cd \ace\ACE_wrappers
+perl bin/mwc.pl  -type vc71 -relative ACE_ROOT=C:/ace/ACE_wrappers -relative TAO_ROOT=C:/ace/ACE_wrappers/TAO -value_template configurations='"ETS Debug"' -value_template configurations+='"ETS Release"' -name_modifier *_ETS TAO_ACE.mwc
+      </pre>
+      That command will generate the same .sln and .vproj files as for
+      regular Windows builds with VC7.1, but they'll have names with an
+      <code>_ETS</code> suffix and will include the "ETS Debug" and
+      "ETS Release" configurations.</p><p>
+      After generating the needed VC7.1 files, use the ace/config-pharlap.h
+      configuration file, and the instructions
       for building on Windows. Building the ACE library is the same as
       for regular Windows platforms, except you choose one of the PharLap
-      ETS configurations to build within Visual C++. Only static
+      ETS configurations to build within Visual Studio. Only static
       library configurations are available for PharLap at this time.
       For an example of how to build
       binaries, see the tests directory. The tests_pharlap_msvc.lnk

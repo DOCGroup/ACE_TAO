@@ -37,24 +37,8 @@
 #  endif  /* !_FILE_OFFSET_BITS */
 #endif /* _WIN64 || WIN64 */
 
-// Define this if you're running NT >= 4.0 (Win2K == NT 5).
-//  Setting applies to  : building ACE
-//  Runtime restrictions: System must be Windows NT => 4.0
-#if !defined (ACE_HAS_WINNT4)
-# define ACE_HAS_WINNT4 1      /* assuming Win NT 4.0 or greater */
-#endif
-
-#if (defined (ACE_HAS_WINNT4) && ACE_HAS_WINNT4 != 0)
-# if !defined (_WIN32_WINNT)
-#  define _WIN32_WINNT 0x0400
-# endif
-#else
-// On Win9X, a shared address SHOULD be between the 2nd and 3rd Gb.
-// Note this will not work for NT: The addresses above 2Gb are
-// reserved for the system, so this one will fail.
-# if !defined (ACE_DEFAULT_BASE_ADDR)
-#   define ACE_DEFAULT_BASE_ADDR ((char*) ((2048UL+512UL)*1024UL*1024UL))
-# endif
+#if !defined (_WIN32_WINNT)
+# define _WIN32_WINNT 0x0400
 #endif
 
 // If the invoking procedure turned off debugging by setting NDEBUG, then
@@ -201,14 +185,8 @@
 // probably don't want too big a value for ACE_IOV_MAX since it may
 // mostly go to waste or the size of the activation record may become
 // excessively large.
-
 #if !defined (ACE_IOV_MAX)
-#if (defined (ACE_HAS_WINNT4) && (ACE_HAS_WINNT4 != 0))
 # define ACE_IOV_MAX 64
-#else
-// Win 95/98/me need a smaller value than WinNT versions of Windows.
-# define ACE_IOV_MAX 16
-#endif /* #if (defined (ACE_HAS_WINNT4) && (ACE_HAS_WINNT4 != 0)) */
 #endif /* ACE_IOV_MAX */
 
 #if !defined (ACE_HAS_WINCE)
@@ -324,10 +302,8 @@
 // Platform supports the /proc file system.
 //define ACE_HAS_PROC_FS
 
-#if (defined (ACE_HAS_WINNT4) && (ACE_HAS_WINNT4 != 0))
 // Platform supports the rusage struct.
 #define ACE_HAS_GETRUSAGE
-#endif /* (defined (ACE_HAS_WINNT4) && (ACE_HAS_WINNT4 != 0)) */
 
 // Compiler/platform supports SVR4 signal typedef.
 //define ACE_HAS_SVR4_SIGNAL_T
@@ -548,20 +524,19 @@
 # define ACE_HAS_IP_MULTICAST
 #endif /* ACE_HAS_WINSOCK2 */
 
-#if (defined (ACE_HAS_WINNT4) && (ACE_HAS_WINNT4 != 0)) || \
-    defined (ACE_HAS_WINCE)            /* WinCE 3 has these */
-#  if !defined (ACE_HAS_WINCE) || defined (PPC)   /* CE only on some CPUs */
-#    define ACE_HAS_INTERLOCKED_EXCHANGEADD
-#  endif
-# define ACE_HAS_WIN32_TRYLOCK
+#if !defined (ACE_HAS_WINCE) || defined (PPC)   /* CE only on some CPUs */
+#  define ACE_HAS_INTERLOCKED_EXCHANGEADD
 #endif
+#define ACE_HAS_WIN32_TRYLOCK
 
-#if (defined (ACE_HAS_WINNT4) && (ACE_HAS_WINNT4 != 0)) && !defined (ACE_USES_WINCE_SEMA_SIMULATION)
+#if !defined (ACE_HAS_WINCE) && !defined (ACE_HAS_PHARLAP)
 # define ACE_HAS_SIGNAL_OBJECT_AND_WAIT
 
 // If CancelIO is undefined get the updated sp2-sdk from MS
 # define ACE_HAS_CANCEL_IO
-#endif /* (defined (ACE_HAS_WINNT4) && (ACE_HAS_WINNT4 != 0)) && !defined (ACE_USES_WINCE_SEMA_SIMULATION) */
+# define ACE_HAS_WIN32_OVERLAPPED_IO
+# define ACE_HAS_WIN32_NAMED_PIPES
+#endif /* !defined (ACE_USES_WINCE_SEMA_SIMULATION) && !ACE_HAS_PHARLAP */
 
 #if !defined (ACE_SEH_DEFAULT_EXCEPTION_HANDLING_ACTION)
 # define ACE_SEH_DEFAULT_EXCEPTION_HANDLING_ACTION EXCEPTION_CONTINUE_SEARCH
@@ -574,6 +549,15 @@
 #  define ACE_HAS_WINSOCK2_GQOS 1
 # endif /* WINSOCK_VERSION */
 #endif /* ACE_HAS_WINSOCK2_GQOS */
+
+// These are the defaults and can be overridden by a user's config.h
+#if !defined (ACE_DEFAULT_FILE_PERMS)
+#  define ACE_DEFAULT_FILE_PERMS (FILE_SHARE_READ | FILE_SHARE_WRITE | \
+                                  FILE_SHARE_DELETE)
+// This alternate used to be used for pre-NT4 systems; may still be needed
+// by knock-offs such as CE and Pharlap.
+//#       define ACE_DEFAULT_FILE_PERMS (FILE_SHARE_READ | FILE_SHARE_WRITE)
+#endif /* !defined (ACE_DEFAULT_FILE_PERMS) */
 
 #define ACE_SIZEOF_WCHAR 2
 #define ACE_HAS_MUTEX_TIMEOUTS

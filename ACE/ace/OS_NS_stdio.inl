@@ -794,7 +794,7 @@ ACE_OS::rename (const char *old_name,
                      ACE_TEXT_CHAR_TO_TCHAR (new_name)))
     ACE_FAIL_RETURN (-1);
   return 0;
-# elif defined (ACE_WIN32) && defined (ACE_HAS_WINNT4) && (ACE_HAS_WINNT4 == 1)
+# elif defined (ACE_WIN32) && !defined (ACE_LACKS_WIN32_MOVEFILEEX)
   // NT4 (and up) provides a way to rename/move a file with similar semantics
   // to what's usually done on UNIX - if there's an existing file with
   // <new_name> it is removed before the file is renamed/moved. The
@@ -826,7 +826,7 @@ ACE_OS::rename (const wchar_t *old_name,
   if (MoveFileW (old_name, new_name) != 0)
     ACE_FAIL_RETURN (-1);
   return 0;
-# elif defined (ACE_WIN32) && defined (ACE_HAS_WINNT4) && (ACE_HAS_WINNT4 == 1)
+# elif defined (ACE_WIN32) && !defined (ACE_LACKS_WIN32_MOVEFILEEX)
   // NT4 (and up) provides a way to rename/move a file with similar semantics
   // to what's usually done on UNIX - if there's an existing file with
   // <new_name> it is removed before the file is renamed/moved. The

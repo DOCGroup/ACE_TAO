@@ -25,7 +25,7 @@
 #pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#if ((defined (ACE_WIN32) && !defined (ACE_HAS_WINCE)) || (defined (ACE_HAS_AIO_CALLS)))
+#if defined (ACE_HAS_WIN32_OVERLAPPED_IO) || defined (ACE_HAS_AIO_CALLS)
 // This only works on Win32 platforms and on Unix platforms supporting
 // POSIX aio calls.
 
@@ -684,7 +684,7 @@ public:
 
 ACE_END_VERSIONED_NAMESPACE_DECL
 
-#endif /* ACE_WIN32 && !ACE_HAS_WINCE || ACE_HAS_AIO_CALLS*/
+#endif /* ACE_HAS_WIN32_OVERLAPPED_IO || ACE_HAS_AIO_CALLS */
 
 #include /**/ "ace/post.h"
 

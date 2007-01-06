@@ -576,47 +576,12 @@ ACE_Configuration_Win32Registry::remove_section (const ACE_Configuration_Section
     }
 
   int errnum;
-#if (ACE_HAS_WINNT4 != 0)
   errnum = ACE_TEXT_RegDeleteKey (base_key, sub_section);
   if (errnum != ERROR_SUCCESS)
     {
       errno = errnum;
       return -1;
     }
-#else
-  if (!recursive)
-    {
-      ACE_Configuration_Section_Key section;
-      if (open_section (key, sub_section, 0, section))
-        return -1;
-
-      HKEY sub_key;
-      if (load_key (section, sub_key))
-        return -1;
-
-      ACE_TCHAR name_buffer[ACE_DEFAULT_BUFSIZE];
-      DWORD buffer_size = ACE_DEFAULT_BUFSIZE;
-      // Check for a an entry under the sub_key
-      if (ACE_TEXT_RegEnumKeyEx (sub_key,
-                                 0,
-                                 name_buffer,
-                                 &buffer_size,
-                                 0,
-                                 0,
-                                 0,
-                                 0) == ERROR_SUCCESS)
-        {
-          errno = ERROR_DIR_NOT_EMPTY;
-          return -1;
-        }
-    }
-  errnum = ACE_TEXT_RegDeleteKey (base_key, sub_section);
-  if (errnum != ERROR_SUCCESS)
-    {
-      errno = errnum;
-      return -1;
-    }
-#endif
 
   return 0;
 }

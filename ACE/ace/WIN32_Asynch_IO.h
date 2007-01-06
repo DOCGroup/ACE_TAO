@@ -32,7 +32,8 @@
 #pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#if (defined (ACE_WIN32) && !defined (ACE_HAS_WINCE))
+#if defined (ACE_HAS_WIN32_OVERLAPPED_IO) && \
+    (defined (ACE_HAS_WINSOCK2) && (ACE_HAS_WINSOCK2 == 1))
 
 #include "ace/Asynch_IO_Impl.h"
 #include "ace/Addr.h"
@@ -1931,6 +1932,6 @@ protected:
 
 ACE_END_VERSIONED_NAMESPACE_DECL
 
-#endif /* ACE_WIN32 && !ACE_HAS_WINCE */
+#endif /* ACE_HAS_WIN32_OVERLAPPED_IO && ACE_HAS_WINSOCK2 */
 #include /**/ "ace/post.h"
 #endif /* ACE_WIN32_ASYNCH_IO_H */

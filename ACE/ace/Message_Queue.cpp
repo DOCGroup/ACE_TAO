@@ -379,7 +379,7 @@ ACE_Message_Queue_Vx::peek_dequeue_head (ACE_Message_Block *&,
 
 #endif /* ACE_VXWORKS */
 
-#if defined (ACE_WIN32) && (ACE_HAS_WINNT4 != 0)
+#if defined (ACE_HAS_WIN32_OVERLAPPED_IO)
 
 ACE_Message_Queue_NT::ACE_Message_Queue_NT (DWORD max_threads)
   : max_cthrs_ (max_threads),
@@ -597,6 +597,6 @@ ACE_Message_Queue_NT::dump (void) const
 #endif /* ACE_HAS_DUMP */
 }
 
-#endif /* ACE_WIN32 && ACE_HAS_WINNT4 != 0 */
+#endif /* ACE_HAS_WIN32_OVERLAPPED_IO */
 
 ACE_END_VERSIONED_NAMESPACE_DECL

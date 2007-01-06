@@ -104,7 +104,7 @@ ACE_Dev_Poll_Reactor_Notify::open (ACE_Reactor_Impl *r,
 #endif /* ACE_HAS_REACTOR_NOTIFICATION_QUEUE */
 
       // Set the read handle into non-blocking mode since we need to
-      // perform a "speculative" read when determining if their are
+      // perform a "speculative" read when determining if there are
       // notifications to dispatch.
       if (ACE::set_flags (this->notification_pipe_.read_handle (),
                           ACE_NONBLOCK) == -1)
