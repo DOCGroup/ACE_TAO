@@ -1,3 +1,9 @@
+Sat Jan  6 00:06:52 UTC 2007  Steve Huston  <shuston@riverace.com>
+
+        * TAO_IDL/driver/drv_preproc.cpp: Removed the ACE_HAS_WINNT4 block -
+          everything runs on NT4 or up now, even when running TAO IDL for
+          building on Pharlap or CE.
+
 Fri Jan  5 22:51:37 UTC 2007  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/include/ast_decl.h:
