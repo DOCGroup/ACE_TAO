@@ -19,3 +19,4 @@ clobber:          clobber.nested clobber.local
 depend:	          depend.nested depend.local
 rcs_info:         rcs_info.nested rcs_info.local
 idl_stubs:        idl_stubs.nested idl_stubs.local
+svnignore:	  svnignore.nested svnignore.local
