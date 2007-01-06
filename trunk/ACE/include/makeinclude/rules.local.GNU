@@ -497,3 +497,10 @@ SPLIT:
 	@echo "Splitting source files..."
 	@$(ACE_ROOT)/bin/split-cpp -s Svc_Conf_l.cpp -s Svc_Conf_y.cpp $(LSRC)
 	@echo "done."
+
+svnignore.local:
+	if [ "n$(BIN)" != "n" ]; then \
+	  (svn propget svn:ignore .; echo $(BIN)) | sort | uniq | sed '/^$$/d' >SvNiGnOrE; \
+	  svn propset svn:ignore -F SvNiGnOrE .; \
+	  rm SvNiGnOrE; \
+	fi
