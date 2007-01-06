@@ -3629,6 +3629,8 @@ ACE_OS::sched_params (const ACE_Sched_Params &sched_params,
       return -1;
     }
 
+# endif /* ACE_HAS_PHARLAP_RT */
+
   if (sched_params.scope () == ACE_SCOPE_THREAD)
     {
 
@@ -3649,13 +3651,16 @@ ACE_OS::sched_params (const ACE_Sched_Params &sched_params,
         }
 #endif /* ACE_DISABLE_WIN32_INCREASE_PRIORITY */
 
-# endif /* ACE_HAS_PHARLAP_RT */
       // Now that we have set the priority class of the process, set the
       // priority of the current thread to the desired value.
       return ACE_OS::thr_setprio (sched_params.priority ());
     }
   else if (sched_params.scope () == ACE_SCOPE_PROCESS)
     {
+
+# if defined (ACE_HAS_PHARLAP_RT)
+      ACE_NOTSUP_RETURN (-1);
+# else
       HANDLE hProcess = ::OpenProcess (PROCESS_SET_INFORMATION,
                                        FALSE,
                                        id);
@@ -3682,6 +3687,8 @@ ACE_OS::sched_params (const ACE_Sched_Params &sched_params,
         }
       ::CloseHandle (hProcess);
       return 0;
+#endif /* ACE_HAS_PHARLAP_RT */
+
     }
   else
     {

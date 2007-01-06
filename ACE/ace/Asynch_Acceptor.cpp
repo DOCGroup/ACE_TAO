@@ -12,7 +12,7 @@
 
 ACE_RCSID(ace, Asynch_Acceptor, "$Id$")
 
-#if (defined (ACE_WIN32) || defined (ACE_HAS_AIO_CALLS)) && !defined(ACE_HAS_WINCE)
+#if defined (ACE_HAS_WIN32_OVERLAPPED_IO) || defined (ACE_HAS_AIO_CALLS)
 // This only works on platforms that support async i/o.
 
 #include "ace/OS_Errno.h"
@@ -239,8 +239,6 @@ ACE_Asynch_Acceptor<HANDLER>::accept (size_t bytes_to_read, const void *act)
 template <class HANDLER> void
 ACE_Asynch_Acceptor<HANDLER>::handle_accept (const ACE_Asynch_Accept::Result &result)
 {
-#if (defined (ACE_HAS_WINNT4) && (ACE_HAS_WINNT4 != 0)) || (defined (ACE_HAS_WINSOCK2) && (ACE_HAS_WINSOCK2 != 0)) || defined (ACE_HAS_AIO_CALLS)
-
   ACE_TRACE ("ACE_Asynch_Acceptor<>::handle_accept");
 
   // Variable for error tracking
@@ -252,7 +250,7 @@ ACE_Asynch_Acceptor<HANDLER>::handle_accept (const ACE_Asynch_Accept::Result &re
       error = 1;
     }
 
-#if !defined (ACE_HAS_AIO_CALLS)
+#if defined (ACE_WIN32)
   // In order to use accept handle with other Window Sockets 1.1
   // functions, we call the setsockopt function with the
   // SO_UPDATE_ACCEPT_CONTEXT option. This option initializes the
@@ -267,7 +265,7 @@ ACE_Asynch_Acceptor<HANDLER>::handle_accept (const ACE_Asynch_Accept::Result &re
     {
       error = 1;
     }
-#endif /* ACE_HAS_AIO_CALLS */
+#endif /* ACE_WIN32 */
 
   // Parse address.
   ACE_INET_Addr local_address;
@@ -342,7 +340,6 @@ ACE_Asynch_Acceptor<HANDLER>::handle_accept (const ACE_Asynch_Accept::Result &re
 #endif
       )
     this->accept (this->bytes_to_read_);
-#endif /* (defined (ACE_HAS_WINNT4) && (ACE_HAS_WINNT4 != 0)) || (defined (ACE_HAS_WINSOCK2) && (ACE_HAS_WINSOCK2 != 0)) || defined (ACE_HAS_AIO_CALLS */
 }
 
 template <class HANDLER> int
@@ -370,14 +367,14 @@ ACE_Asynch_Acceptor<HANDLER>::cancel (void)
   // All I/O operations that are canceled will complete with the error
   // ERROR_OPERATION_ABORTED. All completion notifications for the I/O
   // operations will occur normally.
-#if (defined (ACE_HAS_WINNT4) && (ACE_HAS_WINNT4 != 0)) \
-    && (    defined (_MSC_VER) || (defined (__BORLANDC__)))
+#if defined (ACE_HAS_WIN32_OVERLAPPED_IO) && \
+    (defined (_MSC_VER) || defined (__BORLANDC__))
   return (int) ::CancelIo (this->listen_handle_);
 #else
   // Supported now
   return this->asynch_accept_.cancel();
 
-#endif /* (defined (ACE_HAS_WINNT4) && (ACE_HAS_WINNT4 != 0)) && ((defined (_MSC_VER)) || (defined (__BORLANDC__))) */
+#endif /* defined (ACE_HAS_WIN32_OVERLAPPED_IO) && (defined (_MSC_VER)) || defined (__BORLANDC__)) */
 }
 
 template <class HANDLER> void
@@ -396,7 +393,7 @@ ACE_Asynch_Acceptor<HANDLER>::parse_address (const
   str.get_local_addr (local_address);
   str.get_remote_addr (remote_address);
 
-#elif (defined (ACE_HAS_WINNT4) && (ACE_HAS_WINNT4 != 0)) || (defined (ACE_HAS_WINSOCK2) && (ACE_HAS_WINSOCK2 != 0))
+#elif defined (ACE_HAS_WINSOCK2) && (ACE_HAS_WINSOCK2 != 0)
 
   ACE_Message_Block &message_block = result.message_block ();
 
@@ -427,7 +424,7 @@ ACE_Asynch_Acceptor<HANDLER>::parse_address (const
 #else
   // just in case
   errno = ENOTSUP;
-#endif /* (defined (ACE_HAS_WINNT4) && (ACE_HAS_WINNT4 != 0)) || (defined (ACE_HAS_WINSOCK2) && (ACE_HAS_WINSOCK2 != 0)) */
+#endif /* defined (ACE_HAS_WINSOCK2) && (ACE_HAS_WINSOCK2 != 0) */
   return;
 }
 

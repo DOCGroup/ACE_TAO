@@ -442,7 +442,7 @@ ACE_OS::pread (ACE_HANDLE handle,
 
   DWORD bytes_read;
 
-#     if defined (ACE_HAS_WINNT4) && (ACE_HAS_WINNT4 != 0)
+#     if defined (ACE_HAS_WIN32_OVERLAPPED_IO)
 
   OVERLAPPED overlapped;
   overlapped.Internal = 0;
@@ -473,7 +473,7 @@ ACE_OS::pread (ACE_HANDLE handle,
         }
     }
 
-#     else /* ACE_HAS_WINNT4 && (ACE_HAS_WINNT4 != 0) */
+#     else /* ACE_HAS_WIN32_OVERLAPPED_IO */
 
   BOOL result = ::ReadFile (handle,
                             buf,
@@ -483,7 +483,7 @@ ACE_OS::pread (ACE_HANDLE handle,
   if (result == FALSE)
     return -1;
 
-#     endif /* ACE_HAS_WINNT4 && (ACE_HAS_WINNT4 != 0) */
+#     endif /* ACE_HAS_WIN32_OVERLAPPED_IO */
 
   // Reset the original file pointer position
   if (::SetFilePointer (handle,
@@ -564,7 +564,7 @@ ACE_OS::pwrite (ACE_HANDLE handle,
   LARGE_INTEGER loffset;
   loffset.QuadPart = offset;
 
-#     if defined (ACE_HAS_WINNT4) && (ACE_HAS_WINNT4 != 0)
+#     if defined (ACE_HAS_WIN32_OVERLAPPED_IO)
 
   OVERLAPPED overlapped;
   overlapped.Internal = 0;
@@ -592,7 +592,7 @@ ACE_OS::pwrite (ACE_HANDLE handle,
         return -1;
     }
 
-#     else /* ACE_HAS_WINNT4 && (ACE_HAS_WINNT4 != 0) */
+#     else /* ACE_HAS_WIN32_OVERLAPPED_IO */
 
   // Go to the correct position
   if (! ::SetFilePointerEx (handle, loffset, 0, FILE_BEGIN))
@@ -609,7 +609,7 @@ ACE_OS::pwrite (ACE_HANDLE handle,
   if (result == FALSE)
     return -1;
 
-#     endif /* ACE_HAS_WINNT4 && (ACE_HAS_WINNT4 != 0) */
+#     endif /* ACE_HAS_WIN32_OVERLAPPED_IO */
 
   // Reset the original file pointer position
   if (::SetFilePointer (handle,

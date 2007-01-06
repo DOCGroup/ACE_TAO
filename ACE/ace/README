@@ -829,6 +829,8 @@ ACE_HAS_VOIDPTR_SOCKOPT                 OS/compiler uses void * arg 4
                                         setsockopt() rather than const
                                         char *
 ACE_HAS_WCSNLEN                         Platform supports wcsnlen(3).
+ACE_HAS_WIN32_OVERLAPPED_IO             Platform has Windows overlapped I/O;
+                                        requires I/O completion ports.
 ACE_HAS_WIN32_TRYLOCK                   The Win32 platform support
                                         TryEnterCriticalSection()
                                         (WinNT 4.0 and beyond)
@@ -1162,7 +1164,10 @@ ACE_LACKS_UNAME                         Platform lacks uname calls
 ACE_LACKS_WAIT                          The platform lacks wait
 ACE_LACKS_WILDCARD_BIND                 The bind() call will not
                                         select the port if it's 0.
-
+ACE_LACKS_WIN32_MOVEFILEEX              The Windows platforms doesn't have
+                                        MoveFileEx().
+ACE_LACKS_WIN32_SECURITY_DESCRIPTORS    The Windows platform doesn't have
+                                        security descriptor support.
 ACE_LACKS_WRITEV                        Platform doesn't define
                                         writev, so use our own
 

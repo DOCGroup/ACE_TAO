@@ -24,7 +24,7 @@
 #pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#if (defined (ACE_WIN32) && !defined (ACE_HAS_WINCE))
+#if defined (ACE_WIN32) && defined (ACE_HAS_WIN32_OVERLAPPED_IO)
 // WIN32 implementation of the Proactor.
 
 #include "ace/WIN32_Asynch_IO.h"

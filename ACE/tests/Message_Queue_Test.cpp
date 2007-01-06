@@ -299,7 +299,7 @@ single_thread_performance_test (int queue_type = 0)
                       -1);
       message = "ACE_Message_Queue_Vx, single thread test";
     }
-#elif defined (ACE_WIN32) && (ACE_HAS_WINNT4 != 0)
+#elif defined (ACE_WIN32) && defined (ACE_HAS_WIN32_OVERLAPPED_IO)
   else
     {
       ACE_NEW_RETURN (msgq,
@@ -495,7 +495,7 @@ performance_test (int queue_type = 0)
                       -1);
       message = "ACE_Message_Queue_Vx";
     }
-#elif defined (ACE_WIN32) && (ACE_HAS_WINNT4 != 0)
+#elif defined (ACE_WIN32) && defined (ACE_HAS_WIN32_OVERLAPPED_IO)
   else
     {
       ACE_NEW_RETURN (queue_wrapper.q_,
@@ -659,7 +659,7 @@ run_main (int argc, ACE_TCHAR *argv[])
   if (status == 0)
     status = single_thread_performance_test ();
 
-# if defined (VXWORKS) || (defined (ACE_WIN32) && (ACE_HAS_WINNT4 != 0))
+# if defined (VXWORKS) || defined (ACE_HAS_WIN32_OVERLAPPED_IO)
   // Test ACE_Message_Queue_Vx. or ACE_Message_Queue_NT
   if (status == 0)
     status = single_thread_performance_test (1);
@@ -668,7 +668,7 @@ run_main (int argc, ACE_TCHAR *argv[])
   if (status == 0)
     status = performance_test ();
 
-# if defined (VXWORKS) || (defined (ACE_WIN32) && (ACE_HAS_WINNT4 != 0))
+# if defined (VXWORKS) || defined (ACE_HAS_WIN32_OVERLAPPED_IO)
   // Test ACE_Message_Queue_Vx or ACE_Message_Queue_NT
   if (status == 0)
     status = performance_test (1);

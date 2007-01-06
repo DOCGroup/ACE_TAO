@@ -4,7 +4,7 @@
 
 ACE_RCSID(ace, Asynch_IO, "$Id$")
 
-#if (defined (ACE_WIN32) && !defined (ACE_HAS_WINCE)) || (defined (ACE_HAS_AIO_CALLS))
+#if defined (ACE_HAS_WIN32_OVERLAPPED_IO) || defined (ACE_HAS_AIO_CALLS)
 // This only works on platforms with Asynchronous IO
 
 #include "ace/Proactor.h"
@@ -187,7 +187,7 @@ ACE_Asynch_Read_Stream::read (ACE_Message_Block &message_block,
                                       signal_number);
 }
 
-#if (defined (ACE_WIN32) && !defined (ACE_HAS_WINCE) && (ACE_HAS_WINNT4) && (ACE_HAS_WINNT4 != 0))
+#if defined (ACE_HAS_WIN32_OVERLAPPED_IO)
 int
 ACE_Asynch_Read_Stream::readv (ACE_Message_Block &message_block,
                                size_t bytes_to_read,
@@ -201,7 +201,7 @@ ACE_Asynch_Read_Stream::readv (ACE_Message_Block &message_block,
                                        priority,
                                        signal_number);
 }
-#endif /* (defined (ACE_WIN32) && !defined (ACE_HAS_WINCE) && (ACE_HAS_WINNT4) && (ACE_HAS_WINNT4 != 0)) */
+#endif /* ACE_HAS_WIN32_OVERLAPPED_IO */
 
 ACE_Asynch_Operation_Impl *
 ACE_Asynch_Read_Stream::implementation (void) const
@@ -295,7 +295,7 @@ ACE_Asynch_Write_Stream::write (ACE_Message_Block &message_block,
                                        signal_number);
 }
 
-#if (defined (ACE_WIN32) && !defined (ACE_HAS_WINCE) && (ACE_HAS_WINNT4) && (ACE_HAS_WINNT4 != 0))
+#if defined (ACE_HAS_WIN32_OVERLAPPED_IO)
 int
 ACE_Asynch_Write_Stream::writev (ACE_Message_Block &message_block,
                                  size_t bytes_to_write,
@@ -309,7 +309,7 @@ ACE_Asynch_Write_Stream::writev (ACE_Message_Block &message_block,
                                         priority,
                                         signal_number);
 }
-#endif /* (defined (ACE_WIN32) && !defined (ACE_HAS_WINCE) && (ACE_HAS_WINNT4) && (ACE_HAS_WINNT4 != 0)) */
+#endif /* ACE_HAS_WIN32_OVERLAPPED_IO */
 
 ACE_Asynch_Operation_Impl *
 ACE_Asynch_Write_Stream::implementation (void) const
@@ -1330,6 +1330,6 @@ ACE_Asynch_Write_Dgram::Result::~Result (void)
 {
 }
 
-#endif /* ACE_WIN32 || ACE_HAS_AIO_CALLS */
+#endif /* ACE_HAS_WIN32_OVERLAPPED_IO || ACE_HAS_AIO_CALLS */
 
 ACE_END_VERSIONED_NAMESPACE_DECL

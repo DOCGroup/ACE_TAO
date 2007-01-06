@@ -4,7 +4,7 @@
 
 #include "ace/WIN32_Proactor.h"
 
-#if (defined (ACE_WIN32) && !defined (ACE_HAS_WINCE))
+#if defined (ACE_WIN32) && defined (ACE_HAS_WIN32_OVERLAPPED_IO)
 // WIN implemenatation of the Proactor.
 
 #include "ace/Log_Msg.h"

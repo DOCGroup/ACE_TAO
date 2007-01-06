@@ -1,3 +1,108 @@
+Sat Jan  6 00:06:52 UTC 2007  Steve Huston  <shuston@riverace.com>
+
+        * ace/config-WinCE.h: Removed the ACE_HAS_WINNT4 stuff.
+
+        * ace/config-pharlap.h: Removed the ACE_HAS_WINNT4 stuff and added
+          ACE_LACKS_WIN32_SECURITY_DESCRIPTORS and ACE_LACKS_WIN32_MOVEFILEEX.
+          Added ACE_HAS_IP_MULTICAST.
+          Thanks to David Hauck for helping with these changes.
+
+        * ace/config-lite.h: Removed another vestige of MSVC 6 support.
+
+        * ace/Default_Constants.h:
+        * ace/config-win32-common.h: Moved the Win32 ACE_DEFAULT_FILE_PERMS
+          settings to config-win32-common.h
+          Also removed all the pre-NT4 stuff from config-win32-common.h.
+
+        * ace/Asynch_Acceptor.{h cpp}:
+        * ace/Asynch_IO.{h cpp}:
+        * ace/Asynch_IO_Impl.{h cpp}:
+        * ace/Message_Queue.{h cpp inl}:
+        * ace/Message_Queue_T.{h cpp}:
+        * ace/Proactor.{h cpp}:
+        * ace/Proactor_Impl.{h cpp}:
+        * ace/WIN32_Asynch_IO.{h cpp}:
+        * ace/WIN32_Proactor.{h cpp}:
+          ACE_Message_Queue_NT and ACE_Asynch_IO switched from using
+          ACE_HAS_WINNT4==1 and maybe some other platforms to using the new
+          ACE_HAS_WIN32_OVERLAPPED_IO setting. It's now incumbent on the
+          config maintainer to keep config-win32-*.h, config-WinCE.h,
+          config-pharlap.h, etc. up to date on these features as the
+          various versions do or don't support them.
+
+        * ace/config-win32-mingw.h: Removed ACE_HAS_WINNT4 section.
+
+        * ace/Configuration.cpp (ACE_Configuration_Win32Registry::remove_section):
+          Removed the pre-NT4 section that checked for non-empty section.
+
+        * ace/Mem_Map.cpp: Removed all the support for ACE_USE_MAPPING_NAME
+          since it was used only for pre-NT4 Windows.
+
+        * ace/Msg_WFMO_Reactor.cpp (wait_for_multiple_events): Removed the
+          pre-NT4 code block that switched to MsgWaitForMultipleObjectsEx.
+          All Win platforms without ACE_LACKS_MSG_WMFO can do this now.
+
+        * ace/OS_NS_stdio.inl (rename):
+        * tests/OS_Test.cpp: The ability to rename a file to one that exists
+          without removing the 'to' file first is now detected by the new
+          feature macro ACE_LACKS_WIN32_MOVEFILEEX instead of ACE_HAS_WINNT4.
+
+        * ace/OS_NS_unistd.cpp (pread, pwrite): The Windows code that can do
+          overlapped is now built based on ACE_HAS_WIN32_OVERLAPPED_IO instead
+          of ACE_HAS_WINNT4.
+
+        * ace/Pagefile_Memory_Pool.cpp: Setting up a security descriptor for
+          the file mapping is now determined by the lack of
+          ACE_LACKS_WIN32_SECURITY_DESCRIPTORS, not ACE_HAS_WINNT4.
+
+        * ace/README: Added descriptions for ACE_HAS_WIN32_OVERLAPPED_IO,
+          ACE_HAS_WIN32_NAMED_PIPES, ACE_LACKS_WIN32_SECURITY_DESCRIPTORS,
+          ACE_LACKS_WIN32_MOVEFILEEX.
+
+        * ace/Sock_Connect.cpp: Removed all the code that rummaged through
+          the registry looking for net interfaces on Windows. Getting
+          interface info now requires WinCE, Pharlap, or Winsock2. This removes
+          support for Win95, Win98, etc.
+
+        * ace/SPIPE_Acceptor.{cpp h} (ACE_SPIPE_Acceptor): Now useable on
+          Windows when ACE_HAS_WIN32_NAMED_PIPES is set, not ACE_HAS_WINNT4.
+          Similar to above with ACE_HAS_WIN32_OVERLAPPED_IO - config
+          maintainers need to manage this setting.
+
+        * ace/OS_NS_Thread.cpp (sched_params): Fix mis-aligned #if block
+          for ACE_HAS_PHARLAP_RT. Also, for scope == ACE_SCOPE_PROCESS, return
+          -1, ENOTSUP for Pharlap; it doesn't have SetPriorityClass().
+
+        * ACE-INSTALL.html: Removed mention of ACE_HAS_WINNT4 and building
+          for Win95/98/Me - ACE now requires WinNT 4 or later.
+          Updated the information for building for Pharlap ETS.
+
+        * tests/CDR_File_Test.cpp:
+        * tests/Svc_Handler_Test.cpp: Removed the check for NT4 or better when
+          setting TEST_CAN_UNLINK_IN_ADVANCE. VxWorks is the only case
+          remaining where this needs to be set.
+
+        * tests/Malloc_Test.cpp: Removed the Win NT4 case checks for setting
+          ACE_TEST_REMAP_ON_FAULT; Win9x is no longer supported. Also, when
+          deciding address ranges for testing, decide at run time based on
+          GetVersionInfo() on Windows, not on preprocessor checks.
+
+        * tests/Message_Queue_Test.cpp: Use ACE_HAS_WIN32_OVERLAPPED_IO to
+          decide whether or not to test ACE_Message_Queue_NT.
+
+        * tests/Proactor_Scatter_Gather_Test.cpp: Decide whether or not to
+          run this test based on ACE_HAS_WIN32_OVERLAPPED_IO instead of
+          ACE_HAS_WINNT4.
+
+        * ace/Proactor_Timer_Test.cpp: Run this test on Windows based on
+          ACE_HAS_WIN32_OVERLAPPED_IO instead of !ACE_HAS_WINCE.
+
+        * tests/SPIPE_Test.cpp:
+        * tests/UPIPE_SAP_Test.cpp: Manage which features to test on Windows
+          based on ACE_HAS_WIN32_NAMED_PIPES instead of ACE_HAS_WINNT4.
+
+        * ace/Dev_Poll_Reactor.cpp: Fixed spelling error in a comment.
+
 Fri Jan  5 21:46:16 UTC 2007  Wallace Zhang  <zhang_w@ociweb.com>
 
         * ace/Process.cpp:

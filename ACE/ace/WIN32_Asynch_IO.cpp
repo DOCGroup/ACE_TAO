@@ -6,7 +6,8 @@ ACE_RCSID (ace,
            Win32_Asynch_IO,
            "$Id$")
 
-#if (defined (ACE_WIN32) && !defined (ACE_HAS_WINCE))
+#if defined (ACE_HAS_WIN32_OVERLAPPED_IO) && \
+    (defined (ACE_HAS_WINSOCK2) && (ACE_HAS_WINSOCK2 == 1))
 
 #include "ace/WIN32_Proactor.h"
 #include "ace/Message_Block.h"
@@ -166,7 +167,7 @@ ACE_WIN32_Asynch_Operation::open (const ACE_Handler::Proxy_Ptr &handler_proxy,
 int
 ACE_WIN32_Asynch_Operation::cancel (void)
 {
-#if (defined (ACE_HAS_WINNT4) && (ACE_HAS_WINNT4 != 0)) \
+#if defined (ACE_HAS_WIN32_OVERLAPPED_IO) \
     && (   (defined (_MSC_VER)) \
         || (defined (__BORLANDC__)) \
         || (defined (__MINGW32)))
@@ -186,7 +187,7 @@ ACE_WIN32_Asynch_Operation::cancel (void)
   // result is non-zero. All the operations are cancelled then.
   return 0;
 
-#else /* Not ACE_HAS_WINNT4 && ACE_HAS_WINNT4!=0 && _MSC... */
+#else /* Not ACE_HAS_WIN32_OVERLAPPED_IO && _MSC... */
   ACE_NOTSUP_RETURN (-1);
 #endif /* ACE_HAS_AIO_CALLS */
 }
@@ -1299,7 +1300,7 @@ ACE_WIN32_Asynch_Read_File::readv (ACE_Message_Block &message_block,
                                    int priority,
                                    int signal_number)
 {
-#if ((ACE_HAS_WINNT4) && (ACE_HAS_WINNT4 != 0))
+#if defined (ACE_HAS_WIN32_OVERLAPPED_IO)
   static const size_t page_size = ACE_OS::getpagesize();
 
   FILE_SEGMENT_ELEMENT buffer_pointers[ACE_IOV_MAX + 1];
@@ -1399,9 +1400,9 @@ ACE_WIN32_Asynch_Read_File::readv (ACE_Message_Block &message_block,
   }
 
   return initiate_result;
-#else /*#if ( (ACE_HAS_WINNT4) && (ACE_HAS_WINNT4 != 0))*/
+#else
   ACE_NOTSUP_RETURN (-1);
-#endif /*#if ( (ACE_HAS_WINNT4) && (ACE_HAS_WINNT4 != 0))*/
+#endif /* ACE_WIN32_OVERLAPPED_IO */
 }
 
 
@@ -1699,7 +1700,7 @@ ACE_WIN32_Asynch_Write_File::writev (ACE_Message_Block &message_block,
                                      int priority,
                                      int signal_number)
 {
-#if ((ACE_HAS_WINNT4) && (ACE_HAS_WINNT4 != 0))
+#if defined (ACE_HAS_WIN32_OVERLAPPED_IO)
   static const size_t page_size = ACE_OS::getpagesize();
 
   FILE_SEGMENT_ELEMENT buffer_pointers[ACE_IOV_MAX + 1];
@@ -1804,11 +1805,11 @@ ACE_WIN32_Asynch_Write_File::writev (ACE_Message_Block &message_block,
   }
 
   return initiate_result;
-#else /*#if ((ACE_HAS_WINNT4) && (ACE_HAS_WINNT4 != 0))*/
+#else
 
   ACE_NOTSUP_RETURN (-1);
 
-#endif /* */
+#endif /* ACE_HAS_WIN32_OVERLAPPED_IO */
 }
 
 
@@ -2041,7 +2042,7 @@ ACE_WIN32_Asynch_Accept::accept (ACE_Message_Block &message_block,
                                  int signal_number,
                                  int addr_family)
 {
-#if (defined (ACE_HAS_WINNT4) && (ACE_HAS_WINNT4 != 0)) || (defined (ACE_HAS_WINSOCK2) && (ACE_HAS_WINSOCK2 != 0))
+#if defined (ACE_HAS_WIN32_OVERLAPPED_IO) || (defined (ACE_HAS_WINSOCK2) && (ACE_HAS_WINSOCK2 != 0))
   // Sanity check: make sure that enough space has been allocated by
   // the caller.
   size_t address_size =
@@ -2145,7 +2146,7 @@ ACE_WIN32_Asynch_Accept::accept (ACE_Message_Block &message_block,
         }
       return -1;
     }
-#else /* ACE_HAS_WINNT4 .......|| ACE_HAS_AIO_CALLS */
+#else
   ACE_UNUSED_ARG (message_block);
   ACE_UNUSED_ARG (bytes_to_read);
   ACE_UNUSED_ARG (accept_handle);
@@ -2154,7 +2155,7 @@ ACE_WIN32_Asynch_Accept::accept (ACE_Message_Block &message_block,
   ACE_UNUSED_ARG (signal_number);
   ACE_UNUSED_ARG (addr_family);
   ACE_NOTSUP_RETURN (-1);
-#endif /* (defined (ACE_HAS_WINNT4) && (ACE_HAS_WINNT4 != 0)) || (defined (ACE_HAS_WINSOCK2) && (ACE_HAS_WINSOCK2 != 0)) || (defined (ACE_HAS_AIO_CALLS) */
+#endif /* defined (ACE_HAS_WIN32_OVERLAPPED_IO) || (defined (ACE_HAS_WINSOCK2) && (ACE_HAS_WINSOCK2 != 0)) */
 }
 
 ACE_WIN32_Asynch_Accept::~ACE_WIN32_Asynch_Accept (void)
@@ -2956,7 +2957,7 @@ ACE_WIN32_Asynch_Transmit_File::transmit_file (ACE_HANDLE file,
                                                int priority,
                                                int signal_number)
 {
-#if (defined (ACE_HAS_WINNT4) && (ACE_HAS_WINNT4 != 0)) || (defined (ACE_HAS_WINSOCK2) && (ACE_HAS_WINSOCK2 != 0))
+#if defined (ACE_HAS_WIN32_OVERLAPPED_IO) || (defined (ACE_HAS_WINSOCK2) && (ACE_HAS_WINSOCK2 != 0))
 
   // TransmitFile API limits us to DWORD range.
   if (bytes_to_write > MAXDWORD || bytes_per_send > MAXDWORD)
@@ -3024,7 +3025,7 @@ ACE_WIN32_Asynch_Transmit_File::transmit_file (ACE_HANDLE file,
         }
       return -1;
     }
-#else /* (defined (ACE_HAS_WINNT4) && (ACE_HAS_WINNT4 != 0)) || (defined (ACE_HAS_WINSOCK2) && (ACE_HAS_WINSOCK2 != 0)) */
+#else
   ACE_UNUSED_ARG (file);
   ACE_UNUSED_ARG (header_and_trailer);
   ACE_UNUSED_ARG (bytes_to_write);
@@ -3036,7 +3037,7 @@ ACE_WIN32_Asynch_Transmit_File::transmit_file (ACE_HANDLE file,
   ACE_UNUSED_ARG (priority);
   ACE_UNUSED_ARG (signal_number);
   ACE_NOTSUP_RETURN (-1);
-#endif /* ACE_HAS_AIO_CALLS */
+#endif /* ACE_HAS_WIN32_OVERLAPPED_IO || ACE_HAS_WINSOCK2 */
 }
 
 ACE_WIN32_Asynch_Transmit_File::~ACE_WIN32_Asynch_Transmit_File (void)
@@ -3757,4 +3758,4 @@ ACE_WIN32_Asynch_Write_Dgram::ACE_WIN32_Asynch_Write_Dgram (ACE_WIN32_Proactor *
 
 ACE_END_VERSIONED_NAMESPACE_DECL
 
-#endif /* ACE_WIN32 || ACE_HAS_WINCE */
+#endif /* ACE_HAS_WIN32_OVERLAPPED_IO && ACE_HAS_WINSOCK2 */
