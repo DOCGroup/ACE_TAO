@@ -21,7 +21,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "ace/IO_Cntl_Msg.h"
-#if defined (ACE_WIN32) && (ACE_HAS_WINNT4 != 0)
+#if defined (ACE_HAS_WIN32_OVERLAPPED_IO)
 # include "ace/Thread_Mutex.h"   /* Needed in ACE_Message_Queue_NT */
 #endif
 
@@ -425,7 +425,7 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
-#if defined (ACE_WIN32) && (ACE_HAS_WINNT4 != 0)
+#if defined (ACE_HAS_WIN32_OVERLAPPED_IO)
 /**
  * @class ACE_Message_Queue_NT
  *
@@ -617,7 +617,7 @@ private:
   ACE_HANDLE completion_port_;
 
 };
-#endif /* ACE_WIN32 && ACE_HAS_WINNT4 != 0 */
+#endif /* ACE_HAS_WIN32_OVERLAPPED_IO */
 
 ACE_END_VERSIONED_NAMESPACE_DECL
 

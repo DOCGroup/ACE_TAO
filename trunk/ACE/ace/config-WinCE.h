@@ -68,12 +68,6 @@
 
 #define ACE_HAS_POSITION_INDEPENDENT_POINTERS 1
 
-// CE is not NT.
-#if defined (ACE_HAS_WINNT4)
-# undef ACE_HAS_WINNT4
-#endif  // ACE_HAS_WINNT4
-#define ACE_HAS_WINNT4 0
-
 #define ACE_LACKS_MSG_WFMO
 #define ACE_LACKS_UMASK
 

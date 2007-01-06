@@ -91,41 +91,19 @@ ACE_OS::mmap (void *addr,
   // Only create a new handle if we didn't have a valid one passed in.
   if (*file_mapping == ACE_INVALID_HANDLE)
     {
-#  if !defined(ACE_HAS_WINCE) && (!defined (ACE_HAS_WINNT4) || (ACE_HAS_WINNT4 == 0))
-      int try_create = 1;
-      if ((file_mapping_name != 0) && (*file_mapping_name != 0))
-        {
-          // On Win9x, we first try to OpenFileMapping to
-          // file_mapping_name. Only if there is no mapping object
-          // with that name, and the desired name is valid, do we try
-          // CreateFileMapping.
+      SECURITY_ATTRIBUTES sa_buffer;
+      SECURITY_DESCRIPTOR sd_buffer;
+      const LPSECURITY_ATTRIBUTES attr =
+        ACE_OS::default_win32_security_attributes_r (sa,
+                                                     &sa_buffer,
+                                                     &sd_buffer);
 
-          *file_mapping = ACE_TEXT_OpenFileMapping (nt_flags,
-                                                    0,
-                                                    file_mapping_name);
-          if (*file_mapping != 0
-              || (::GetLastError () == ERROR_INVALID_NAME
-                  && ::GetLastError () == ERROR_FILE_NOT_FOUND))
-            try_create = 0;
-        }
-
-      if (try_create)
-#  endif /* !ACE_HAS_WINCE && (ACE_HAS_WINNT4 || ACE_HAS_WINNT4 == 0) */
-        {
-          SECURITY_ATTRIBUTES sa_buffer;
-          SECURITY_DESCRIPTOR sd_buffer;
-          const LPSECURITY_ATTRIBUTES attr =
-            ACE_OS::default_win32_security_attributes_r (sa,
-                                                         &sa_buffer,
-                                                         &sd_buffer);
-
-          *file_mapping = ACE_TEXT_CreateFileMapping (file_handle,
-                                                      attr,
-                                                      prot,
-                                                      0,
-                                                      0,
-                                                      file_mapping_name);
-        }
+      *file_mapping = ACE_TEXT_CreateFileMapping (file_handle,
+                                                  attr,
+                                                  prot,
+                                                  0,
+                                                  0,
+                                                  file_mapping_name);
     }
 
   if (*file_mapping == 0)

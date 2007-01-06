@@ -18,8 +18,8 @@
 
 #include /**/ "ace/config-all.h"
 
-#if ((defined (ACE_WIN32) && !defined (ACE_HAS_WINCE)) || (defined (ACE_HAS_AIO_CALLS)))
-// This only works on Win32 platforms and on Unix platforms supporting
+#if defined (ACE_HAS_WIN32_OVERLAPPED_IO) || defined (ACE_HAS_AIO_CALLS)
+// This only works on standard Win32 platforms and on Unix platforms supporting
 // aio calls.
 
 #include "ace/Asynch_IO.h"
@@ -260,6 +260,6 @@ public:
 
 ACE_END_VERSIONED_NAMESPACE_DECL
 
-#endif /* (ACE_WIN32 && ACE_HAS_WINCE) || ACE_HAS_AIO_CALLS */
+#endif /* ACE_HAS_WIN32_OVERLAPPED_IO || ACE_HAS_AIO_CALLS */
 #include /**/ "ace/post.h"
 #endif /* ACE_PROACTOR_IMPL_H */

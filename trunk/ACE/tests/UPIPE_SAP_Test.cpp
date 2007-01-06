@@ -27,9 +27,8 @@
 
 ACE_RCSID(tests, UPIPE_SAP_Test, "$Id$")
 
-#if defined (ACE_HAS_THREADS) && (defined (ACE_HAS_STREAM_PIPES) || \
-        (defined (ACE_WIN32) && \
-         defined (ACE_HAS_WINNT4) && (ACE_HAS_WINNT4 != 0)))
+#if defined (ACE_HAS_THREADS) && \
+    (defined (ACE_HAS_STREAM_PIPES) || defined (ACE_HAS_WIN32_NAMED_PIPES))
 
 // Global pattern
 static ACE_UPIPE_Addr addr (ACE_TEXT ("pattern"));
@@ -138,16 +137,15 @@ acceptor (void *args)
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%t) exiting thread\n")));
   return 0;
 }
-#endif /* ACE_HAS_THREADS && defined ACE_HAS_STREAM_PIPES || (ACE_WIN32&&NT4)*/
+#endif /* ACE_HAS_THREADS && (ACE_HAS_STREAM_PIPES || ACE_HAS_WIN32_NAMED_PIPES) */
 
 int
 run_main (int, ACE_TCHAR *[])
 {
   ACE_START_TEST (ACE_TEXT ("UPIPE_SAP_Test"));
 
-#if defined (ACE_HAS_THREADS) && (defined (ACE_HAS_STREAM_PIPES) || \
-        (defined (ACE_WIN32) && \
-         defined (ACE_HAS_WINNT4) && (ACE_HAS_WINNT4 != 0)))
+#if defined (ACE_HAS_THREADS) && \
+    (defined (ACE_HAS_STREAM_PIPES) || defined (ACE_HAS_WIN32_NAMED_PIPES))
 
   ACE_UPIPE_Acceptor acc (addr);
 
@@ -178,7 +176,7 @@ run_main (int, ACE_TCHAR *[])
 #else
   ACE_ERROR ((LM_INFO, ACE_TEXT ("UPIPE is not supported on this platform\n")));
 #endif /* !defined (ACE_HAS_THREADS) */
-#endif /* defined (ACE_HAS_THREADS) && (defined (ACE_HAS_STREAM_PIPES) || defined (ACE_WIN32) && NT4) */
+#endif /* ACE_HAS_THREADS && (ACE_HAS_STREAM_PIPES || ACE_HAS_WIN32_NAMED_PIPES) */
 
   ACE_END_TEST;
   return 0;

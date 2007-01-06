@@ -129,7 +129,7 @@ ACE_END_VERSIONED_NAMESPACE_DECL
   // the _RWSTD_NO_CLASS_PARTIAL_SPEC feature test macro below.
 # include <Cstd/stdcomp.h>
 #endif /* __SUNPRO_CC <= 0x580 */
-#if defined (_MSC_VER) && !defined (_CPPLIB_VER)
+#if defined (_MSC_VER) && (_MSC_VER < 1310) && !defined (_CPPLIB_VER)
   // MSVC++ 6 and the latest platform SDKs don't define a standard
   // compliant reverse_iterator adapter.
   //

@@ -39,20 +39,11 @@ ACE_Msg_WFMO_Reactor::wait_for_multiple_events (int timeout,
   // ReadFile and WriteFile operations. QS_ALLINPUT allows
   // <MsgWaitForMultipleObjectsEx> to wait for any message is in the
   // queue.
-#if (defined (ACE_HAS_WINNT4) && (ACE_HAS_WINNT4 != 0))
   return ::MsgWaitForMultipleObjectsEx (this->handler_rep_.max_handlep1 (),
                                         this->handler_rep_.handles (),
                                         timeout,
                                         QS_ALLINPUT,
                                         alertable);
-#else
-  ACE_UNUSED_ARG (alertable);
-  return ::MsgWaitForMultipleObjects (this->handler_rep_.max_handlep1 (),
-                                      this->handler_rep_.handles (),
-                                      FALSE,
-                                      timeout,
-                                      QS_ALLINPUT);
-#endif /* (defined (ACE_HAS_WINNT4) && (ACE_HAS_WINNT4 != 0)) */
 }
 
 int

@@ -28,7 +28,7 @@
 
 #include "test_config.h"
 
-#if ((defined (ACE_HAS_WINNT4) && (ACE_HAS_WINNT4 != 0)) && !defined (ACE_HAS_WINCE))
+#if defined (ACE_HAS_WIN32_OVERLAPPED_IO)
   // This currently only works on Win32 platforms (NT SP2 and above).
   // Support for Unix platforms supporting POSIX aio calls should be added in future.
 
@@ -1482,4 +1482,4 @@ run_main (int, ACE_TCHAR *[])
   return 0;
 }
 
-#endif  /* (ACE_HAS_WINNT4 && ACE_HAS_WINNT4 != 0) && !ACE_HAS_WINCE) */
+#endif  /* ACE_HAS_WIN32_OVERLAPPED_IO */
