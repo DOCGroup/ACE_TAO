@@ -1,3 +1,180 @@
+Sat Jan  6 04:41:30 UTC 2007  Chris Cleeland  <cleeland_c@ociweb.com>
+
+        * include/makeinclude/macros.GNU:
+        * include/makeinclude/rules.common.GNU:
+        * include/makeinclude/rules.local.GNU:
+        
+          Added new phony target, "svnignore", which takes a good guess at
+          what files are generated in a directory and adds them to
+          svn:ignore property on the containing directory.
+        
+        * apps/gperf/src:
+        * apps/gperf/tests:
+        * bin:
+        * examples/APG/Active_Objects:
+        * examples/APG/Config:
+        * examples/APG/Containers:
+        * examples/APG/Logging:
+        * examples/APG/Misc_IPC:
+        * examples/APG/Naming:
+        * examples/APG/Proactor:
+        * examples/APG/Processes:
+        * examples/APG/Reactor:
+        * examples/APG/Shared_Memory:
+        * examples/APG/Signals:
+        * examples/APG/Sockets:
+        * examples/APG/Streams:
+        * examples/APG/Svc_Config:
+        * examples/APG/ThreadManagement:
+        * examples/APG/ThreadPools:
+        * examples/APG/ThreadSafety:
+        * examples/APG/Threads:
+        * examples/APG/Timers:
+        * examples/ASX:
+        * examples/ASX/CCM_App:
+        * examples/ASX/Message_Queue:
+        * examples/Bounded_Packet_Relay:
+        * examples/C++NPv1:
+        * examples/C++NPv2:
+        * examples/Connection/blocking:
+        * examples/Connection/misc:
+        * examples/Connection/non_blocking:
+        * examples/DLL:
+        * examples/Export:
+        * examples/IOStream/client:
+        * examples/IOStream/server:
+        * examples/IPC_SAP/ATM_SAP:
+        * examples/IPC_SAP/DEV_SAP/reader:
+        * examples/IPC_SAP/DEV_SAP/writer:
+        * examples/IPC_SAP/FIFO_SAP:
+        * examples/IPC_SAP/FILE_SAP:
+        * examples/IPC_SAP/SOCK_SAP:
+        * examples/IPC_SAP/SPIPE_SAP:
+        * examples/IPC_SAP/TLI_SAP:
+        * examples/IPC_SAP/UPIPE_SAP:
+        * examples/Log_Msg:
+        * examples/Logger/Acceptor-server:
+        * examples/Logger/client:
+        * examples/Logger/simple-server:
+        * examples/Mem_Map/IO-tests:
+        * examples/Mem_Map/file-reverse:
+        * examples/Misc:
+        * examples/Naming:
+        * examples/OS/Process:
+        * examples/Reactor/Dgram:
+        * examples/Reactor/FIFO:
+        * examples/Reactor/Misc:
+        * examples/Reactor/Multicast:
+        * examples/Reactor/Ntalker:
+        * examples/Reactor/Proactor:
+        * examples/Service_Configurator/IPC-tests/client:
+        * examples/Service_Configurator/IPC-tests/server:
+        * examples/Service_Configurator/Misc:
+        * examples/Shared_Malloc:
+        * examples/Shared_Memory:
+        * examples/Smart_Pointers:
+        * examples/Synch:
+        * examples/System_V_IPC/SV_Message_Queues:
+        * examples/System_V_IPC/SV_Semaphores:
+        * examples/Threads:
+        * examples/Timer_Queue:
+        * examples/Web_Crawler:
+        * protocols/examples/RMCast/Send_Msg:
+        * protocols/examples/TMCast/Member:
+        * protocols/tests/HTBP/Reactor_Tests:
+        * protocols/tests/HTBP/Send_Large_Msg:
+        * protocols/tests/HTBP/Send_Recv_Tests:
+        * protocols/tests/HTBP/ping:
+        * protocols/tests/RMCast:
+        * tests:
+        * tests/log:
+          
+          Added subversion svn:ignore properties on all these directories
+          comparable to the values previously in the vertigial .cvsignore
+          files, as well as updated them commensurate with the new svnignore
+          gnuace make target.
+        
+        * apps/gperf/src/.cvsignore:
+        * apps/gperf/tests/.cvsignore:
+        * examples/APG/Active_Objects/.cvsignore:
+        * examples/APG/Config/.cvsignore:
+        * examples/APG/Containers/.cvsignore:
+        * examples/APG/Logging/.cvsignore:
+        * examples/APG/Misc_IPC/.cvsignore:
+        * examples/APG/Naming/.cvsignore:
+        * examples/APG/Proactor/.cvsignore:
+        * examples/APG/Processes/.cvsignore:
+        * examples/APG/Reactor/.cvsignore:
+        * examples/APG/Shared_Memory/.cvsignore:
+        * examples/APG/Signals/.cvsignore:
+        * examples/APG/Sockets/.cvsignore:
+        * examples/APG/Streams/.cvsignore:
+        * examples/APG/Svc_Config/.cvsignore:
+        * examples/APG/ThreadManagement/.cvsignore:
+        * examples/APG/ThreadPools/.cvsignore:
+        * examples/APG/ThreadSafety/.cvsignore:
+        * examples/APG/Threads/.cvsignore:
+        * examples/APG/Timers/.cvsignore:
+        * examples/ASX/.cvsignore:
+        * examples/ASX/CCM_App/.cvsignore:
+        * examples/ASX/Message_Queue/.cvsignore:
+        * examples/Bounded_Packet_Relay/.cvsignore:
+        * examples/C++NPv1/.cvsignore:
+        * examples/C++NPv2/.cvsignore:
+        * examples/Connection/blocking/.cvsignore:
+        * examples/Connection/misc/.cvsignore:
+        * examples/Connection/non_blocking/.cvsignore:
+        * examples/DLL/.cvsignore:
+        * examples/Export/.cvsignore:
+        * examples/IOStream/client/.cvsignore:
+        * examples/IOStream/server/.cvsignore:
+        * examples/IPC_SAP/ATM_SAP/.cvsignore:
+        * examples/IPC_SAP/DEV_SAP/reader/.cvsignore:
+        * examples/IPC_SAP/DEV_SAP/writer/.cvsignore:
+        * examples/IPC_SAP/FIFO_SAP/.cvsignore:
+        * examples/IPC_SAP/FILE_SAP/.cvsignore:
+        * examples/IPC_SAP/SOCK_SAP/.cvsignore:
+        * examples/IPC_SAP/SPIPE_SAP/.cvsignore:
+        * examples/IPC_SAP/TLI_SAP/.cvsignore:
+        * examples/IPC_SAP/UPIPE_SAP/.cvsignore:
+        * examples/Log_Msg/.cvsignore:
+        * examples/Logger/Acceptor-server/.cvsignore:
+        * examples/Logger/client/.cvsignore:
+        * examples/Logger/simple-server/.cvsignore:
+        * examples/Mem_Map/IO-tests/.cvsignore:
+        * examples/Mem_Map/file-reverse/.cvsignore:
+        * examples/Misc/.cvsignore:
+        * examples/Naming/.cvsignore:
+        * examples/OS/Process/.cvsignore:
+        * examples/Reactor/Dgram/.cvsignore:
+        * examples/Reactor/FIFO/.cvsignore:
+        * examples/Reactor/Misc/.cvsignore:
+        * examples/Reactor/Multicast/.cvsignore:
+        * examples/Reactor/Ntalker/.cvsignore:
+        * examples/Reactor/Proactor/.cvsignore:
+        * examples/Service_Configurator/IPC-tests/client/.cvsignore:
+        * examples/Service_Configurator/IPC-tests/server/.cvsignore:
+        * examples/Service_Configurator/Misc/.cvsignore:
+        * examples/Shared_Malloc/.cvsignore:
+        * examples/Shared_Memory/.cvsignore:
+        * examples/Smart_Pointers/.cvsignore:
+        * examples/Synch/.cvsignore:
+        * examples/System_V_IPC/SV_Message_Queues/.cvsignore:
+        * examples/System_V_IPC/SV_Semaphores/.cvsignore:
+        * examples/Threads/.cvsignore:
+        * examples/Timer_Queue/.cvsignore:
+        * examples/Web_Crawler/.cvsignore:
+        * protocols/examples/TMCast/Member/.cvsignore:
+        * protocols/tests/HTBP/Reactor_Tests/.cvsignore:
+        * protocols/tests/HTBP/Send_Large_Msg/.cvsignore:
+        * protocols/tests/HTBP/Send_Recv_Tests/.cvsignore:
+        * protocols/tests/HTBP/ping/.cvsignore:
+        * tests/.cvsignore:
+        * tests/log/.cvsignore:
+
+          Removed these files in favor of svn:ignore properties on the
+          parent directory.
+
 Sat Jan  6 00:06:52 UTC 2007  Steve Huston  <shuston@riverace.com>
 
         * ace/config-WinCE.h: Removed the ACE_HAS_WINNT4 stuff.
