@@ -1,3 +1,12 @@
+Sun Jan  7 12:06:55 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/PortableServer/Acceptor_Filter_Factory.h:
+          Fixed problem with CORBA/e
+
+        * tao/PortableServer/Object_Adapter.cpp:
+        * tao/PortableServer/Root_POA.cpp:
+          Fixed compile problems when building CORBA/e compact with Borland C++
+
 Sat Jan  6 19:16:55 UTC 2007  Chris Cleeland  <cleeland_c@ociweb.com>
 
         * TAO_IDL:

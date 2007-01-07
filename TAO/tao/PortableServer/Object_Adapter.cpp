@@ -309,7 +309,7 @@ TAO_Object_Adapter::~TAO_Object_Adapter (void)
   delete this->servant_dispatcher_;
 
   // This cleanup may have already occurred in the close() method.  If
-  // that is the case then this won't cause any harm since root_ and 
+  // that is the case then this won't cause any harm since root_ and
   // poa_manager_factory_ would have been set to zero.  But, if close
   // wasn't called, then these would be leaked.  It may be better if
   // these pointers had a corresponding _var version so that this cleanup
@@ -648,17 +648,18 @@ TAO_Object_Adapter::open (ACE_ENV_SINGLE_ARG_DECL)
                                               ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 #else
-  PortableServer::POAManager_var poa_manager;
+  PortableServer::POAManager_ptr poa_manager_ptr;
   ::CORBA::PolicyList policy_list;
-  ACE_NEW_THROW_EX (poa_manager,
+  ACE_NEW_THROW_EX (poa_manager_ptr,
                     TAO_POA_Manager (*this, TAO_DEFAULT_ROOTPOAMANAGER_NAME),
                     CORBA::NO_MEMORY
                     (CORBA::SystemException::_tao_minor_code (0, ENOMEM),
                       CORBA::COMPLETED_NO));
   ACE_CHECK;
 
-  // Keep reference of POAManager in TAO_Object_Adapter so the POAManager 
-  // object is detructed after RootPOA is destructed.
+  PortableServer::POAManager_var poa_manager = poa_manager_ptr;
+  // Keep reference of POAManager in TAO_Object_Adapter so the POAManager
+  // object is destructed after RootPOA is destructed.
   the_poa_manager_ = poa_manager;
 
 #endif
