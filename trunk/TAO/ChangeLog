@@ -1,3 +1,8 @@
+Sun Jan  7 18:48:55 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Oneway_Timeouts/client.cpp:
+          Removed create_poa method, it is not used at all
+
 Sun Jan  7 12:06:55 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/PortableServer/Acceptor_Filter_Factory.h:
