@@ -458,9 +458,11 @@ TAO_Root_POA::create_POA_i (const char *adapter_name,
                                                       ACE_ENV_ARG_PARAMETER);
 #else
 
-      ACE_NEW_THROW_EX (the_poa_manager,
+      PortableServer::POAManager_ptr the_poa_manager_ptr;
+      ACE_NEW_THROW_EX (the_poa_manager_ptr,
                         TAO_POA_Manager (this->object_adapter (), 0),
                         CORBA::NO_MEMORY ());
+      the_poa_manager = the_poa_manager_ptr;
 #endif /* TAO_HAS_MINIMUM_POA == 0 && ! CORBA_E_COMPACT) */
 
       ACE_CHECK_RETURN (PortableServer::POA::_nil ());
