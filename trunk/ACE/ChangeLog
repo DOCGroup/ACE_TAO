@@ -1,13 +1,21 @@
+Sun Jan  7 19:02:30 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/config-hpux-11.00.h:
+          Don't set ACE_SIZEOF_WCHAR, let Basic_Types just do this. Fixes
+          the difference between ACE_SIZEOF_WCHAR and sizeof(wchar_t) on
+          the HP aCC test on the IA64 aCC build which runs on the Sep 2006
+          version of HPUX
+
 Sat Jan  6 04:41:30 UTC 2007  Chris Cleeland  <cleeland_c@ociweb.com>
 
         * include/makeinclude/macros.GNU:
         * include/makeinclude/rules.common.GNU:
         * include/makeinclude/rules.local.GNU:
-        
+
           Added new phony target, "svnignore", which takes a good guess at
           what files are generated in a directory and adds them to
           svn:ignore property on the containing directory.
-        
+
         * apps/gperf/src:
         * apps/gperf/tests:
         * bin:
@@ -88,12 +96,12 @@ Sat Jan  6 04:41:30 UTC 2007  Chris Cleeland  <cleeland_c@ociweb.com>
         * protocols/tests/RMCast:
         * tests:
         * tests/log:
-          
+
           Added subversion svn:ignore properties on all these directories
           comparable to the values previously in the vertigial .cvsignore
           files, as well as updated them commensurate with the new svnignore
           gnuace make target.
-        
+
         * apps/gperf/src/.cvsignore:
         * apps/gperf/tests/.cvsignore:
         * examples/APG/Active_Objects/.cvsignore:
