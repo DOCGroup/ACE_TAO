@@ -1,3 +1,11 @@
+Sun Jan  7 18:44:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * DAnCE/NodeApplicationManager/URL_Parser.cpp:
+          No need to set members to 0 in destructor
+
+        * DAnCE/RepositoryManager/URL_Parser.cpp:
+          Fixed conversion warning and memory leak
+
 Sun Jan  7 12:14:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ciao/CCM_ClientContainerInterceptor.idl:
