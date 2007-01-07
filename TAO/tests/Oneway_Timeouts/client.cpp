@@ -205,20 +205,6 @@ namespace
     return true;
   }
 
-
-  POA_ptr create_poa (ORB_ptr orb)
-  {
-    POA_var poa;
-    PolicyList pols;
-    Object_var obj = orb->resolve_initial_references ("RootPOA");
-    POA_var root = POA::_narrow (obj.in ());
-    ACE_ASSERT (! is_nil (root.in ()));
-    POAManager_var man = root->the_POAManager ();
-    poa = root->create_POA ("X", man.in (), pols);
-    return poa._retn ();
-  }
-
-
   Tester_ptr set_request_timeout (Tester_ptr tst, ORB_ptr orb)
   {
     if (request_timeout <= 0)
