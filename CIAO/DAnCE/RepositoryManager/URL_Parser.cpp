@@ -4,6 +4,7 @@
 #include "ace/ARGV.h"
 #include "URL_Parser.h"
 
+#include "ace/ACE.h"
 #include "ace/OS_NS_string.h"
 
 bool
@@ -37,7 +38,7 @@ URL_Parser::parse_args (int argc, ACE_TCHAR *argv[])
 }
 
 URL_Parser::URL_Parser (void)
-  : hostname_ ("127.0.0.1"),
+  : hostname_ (ACE::strnew ("127.0.0.1")),
     port_ (ACE_DEFAULT_HTTP_SERVER_PORT),
     filename_ (0),
     debug_ (false)
@@ -69,6 +70,7 @@ bool URL_Parser::parseURL (char* url)
       else
         {
           size_t host_len = ptr - url;
+          ACE::strdelete (this->hostname_);
           ACE_NEW_RETURN (this->hostname_, char [host_len + 1], false);
           ACE_OS::strncpy (this->hostname_, url, host_len);
           this->hostname_ [host_len] = '\0';
@@ -94,12 +96,6 @@ void URL_Parser::Error (void)
 
 URL_Parser::~URL_Parser()
 {
-  if(this->hostname_)
-    {
-      delete [] this->hostname_;
-    }
-  if (this->filename_)
-    {
-      ACE_OS::free (this->filename_);
-    }
+  delete [] this->hostname_;
+  ACE_OS::free (this->filename_);
 }
