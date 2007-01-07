@@ -137,7 +137,6 @@
 
 // Platform has XPG4 wide character support
 #    define ACE_HAS_XPG4_MULTIBYTE_CHAR
-#    define ACE_SIZEOF_WCHAR _WCHAR_T
 
 #  endif /* __cplusplus < 199707L */
 
