@@ -1,3 +1,27 @@
+Sun Jan  7 12:14:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ciao/CCM_ClientContainerInterceptor.idl:
+        * ciao/CCM_ClientContainerInterceptorRegistration.idl:
+        * ciao/CCM_ContainerClientRequestInfo.idl:
+        * ciao/CCM_ContainerInterceptor.idl:
+        * ciao/CCM_ContainerRequestInfo.idl:
+        * ciao/CCM_ContainerServantRequestInfo.idl:
+        * ciao/CCM_ContainerServerRequestInfo.idl:
+        * ciao/CCM_ContainerStubRequestInfo.idl:
+        * ciao/CCM_ExtensionComponent.idl:
+        * ciao/CCM_ExtensionContext.idl:
+        * ciao/CCM_InvalidRegistration.idl:
+        * ciao/CCM_QoS.idl:
+        * ciao/CCM_ServantContainerInterceptor.idl:
+        * ciao/CCM_ServantContainerInterceptorRegistration.idl:
+        * ciao/CCM_ServerContainerInterceptor.idl:
+        * ciao/CCM_ServerContainerInterceptorRegistration.idl:
+        * ciao/CCM_StubContainerInterceptor.idl:
+        * ciao/CCM_StubContainerInterceptorRegistration.idl:
+          Added interfaces from QoS for CCM spec (OMG 06-04-15). We
+          don't have an implementation yet, just the interfaces at
+          this moment
+
 Fri Jan  5 12:14:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * DAnCE/RepositoryManager/RepositoryManager.cpp:

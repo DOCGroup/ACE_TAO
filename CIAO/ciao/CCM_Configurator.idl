@@ -28,4 +28,4 @@ module Components
       raises (WrongComponentType);
   };
 };
-#endif /* CCM_CONFIGURATOR_IDLL */
+#endif /* CCM_CONFIGURATOR_IDL */
