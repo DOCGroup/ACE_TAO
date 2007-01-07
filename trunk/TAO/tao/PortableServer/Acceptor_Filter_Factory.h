@@ -71,8 +71,8 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 ACE_STATIC_SVC_DECLARE (TAO_Acceptor_Filter_Factory)
 ACE_FACTORY_DECLARE (TAO_PortableServer, TAO_Acceptor_Filter_Factory)
 
-#include /**/ "ace/post.h"
-
 #endif /* #if (TAO_HAS_MINIMUM_POA == 0) && !defined (CORBA_E_COMPACT) && !defined (CORBA_E_MICRO)*/
+
+#include /**/ "ace/post.h"
 
 #endif /* TAO_ACCEPTOR_FILTER_FACTORY_H */
