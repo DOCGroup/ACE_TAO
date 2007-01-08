@@ -26,6 +26,7 @@ add_path('LD_LIBRARY_PATH', '../lib');
 add_path('LIBPATH', '../lib');
 add_path('SHLIB_PATH', '../lib');
 add_path('PATH', '../lib');
+add_path('DYLD_LIBRARY_PATH', '../lib');
 
 $status = 0;
 
