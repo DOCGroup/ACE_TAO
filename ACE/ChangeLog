@@ -1,3 +1,10 @@
+Mon Jan  8 18:43:36 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
+
+        * tests/Bug_2540_Regression_Test.cpp:
+
+          This test had the same problem as Bug_1890_Regression_Test.cpp.
+          Explicitly use the ACE_Select_Reactor.
+
 Mon Jan  8 17:58:46 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
 
         * tests/Bug_1890_Regression_Test.cpp:
