@@ -265,6 +265,7 @@ namespace TAO
     else if (CORBA::UserException::_downcast (exception) != 0)
       this->invoke_status_ = TAO::TAO_INVOKE_USER_EXCEPTION;
 
+    this->forwarded_to_ = CORBA::Object::_nil ();      
     this->caught_exception_ = exception;
   }
 
