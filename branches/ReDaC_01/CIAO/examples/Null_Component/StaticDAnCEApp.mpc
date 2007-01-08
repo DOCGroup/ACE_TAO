@@ -1,0 +1,21 @@
+// -*- MPC -*-
+// $Id$
+
+project(StaticDAnCEApp *): ciao_static_dnc_app, iortable {
+  after    += Null_Interface_Null_Component_exec
+  exename   = StaticDAnCEApp
+
+  libs     += Null_Interface_stub
+  libs     += Null_Interface_svnt
+  libs     += Null_Component_stub
+  libs     += Null_Component_svnt
+  libs     += Null_Component_exec
+
+  IDL_Files {
+  }
+
+  Source_Files {
+    StaticDAnCEApp.cpp
+  }
+}
+

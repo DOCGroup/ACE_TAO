@@ -1,0 +1,6 @@
+// -*- MPC -*-
+// $Id$
+
+workspace {
+        Config_Handlers
+}

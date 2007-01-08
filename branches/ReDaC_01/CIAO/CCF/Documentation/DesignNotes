@@ -1,0 +1,459 @@
+
+Note: this file is somewhat outdated
+
+Intention of this file is to capture and document CIDL complier design
+ideas/decisions.
+
+Conceptual parts of CIDL compiler design
+----------------------------------------
+
+Option Parser                       Consists of option parser and option
+                                    database.
+
+C Preprocessor Interfacing          Represents mechanism of preprocessing
+                                    cidl files.
+
+IDL Compiler Interfacing            Represents mechanism of invoking IDL
+                                    compiler.
+
+Scanner                             Scanner for preprocessed cidl file.
+
+Parser                              CIDL grammar parser. Consists of grammar
+                                    and semantic rules.
+
+Syntax Tree                         Intermediate representation of cidl file.
+                                    Consists of syntax tree nodes itself and
+                                    perhaps symbol tables.
+
+Semantic Analyzer                   Traverses Syntax Tree and performs
+                                    semantic analysis as well as some
+                                    semantic expansions.
+
+
+Code Generation Stream              Stream to output generated code to. Used
+                                    by concrete Code Generators
+
+Code Generators
+{
+
+  Executor Mapping Generator          Generator for local executor mapping.
+
+  Executor Implementation Generator   Generator for partial implementation
+                                      of local executor mapping.
+
+  Skeleton Thunk Generator            Generator for skeleton thunks i.e.
+                                      code that implements skeleton and
+                                      thunks user-defined functions to
+                                      executor mapping.
+}
+
+Compiler driver                     Establishes order of execution of
+                                    different components as part of
+                                    compilation process.
+
+
+How everything works together
+-----------------------------
+
+(1) Compiler Driver executes Option Parser to populate Option Database
+
+(2) Compiler Driver executes C Preprocessor on a supplied cidl file
+
+(3) Compiler Driver executes Parser which uses Scanner to scan preprocessed
+    cidl file and generates Syntax Tree by means of semantic rules.
+
+(4) At this point we have Syntax Tree corresponding to the original cidl
+    file. Compiler Driver executes Executor Mapping Generator,
+    Executor Implementation Generator and Skeleton Thunk Generator on
+    Syntax Tree.
+
+
+
+General Design Ideas/Decision
+-------------
+
+[IDEA]: There is an effort to use autoconf/automake in ACE/TAO. Maybe it's
+        a good idea to start using it with CIDLC? There is one side advantage
+        of this approach: if we decide to embed GCC CPP then we will have to
+        use configure (or otherwise ACE-ify the code which doesn't sound like
+        a right solution).
+
+[IDEA]: CIDLC is a prototype for a new IDLC, PSDLC and IfR model. Here are
+        basic concepts:
+
+          - use common IDL grammar, semantic rules and syntax tree nodes
+            for IDLC, CIDLC, PSDLC and IfR. Possibly have several libraries
+            for example ast_idl-2.so, ast_idl-3.so, scaner_idl-2.so
+            scaner_idl-3.so, parser_idl-2.so, parser_idl-3.so. Dependency
+            graph would look like this:
+
+
+                 ast_idl-2.so                     scanner_idl-2.so
+                      |                                 |
+                      |---------------------------------|
+                      |               |                 |
+                      |               |                 |
+                      |         parser_idl-2.so         |
+                      |               |                 |
+                 ast_idl-3.so         |           scanner_idl-3.so
+                      |               |                 |
+                      |               |                 |
+                      |               |                 |
+                       ---------parser_idl-3.so---------
+
+            Same idea applies for CIDL and PSDL.
+
+
+          - use the same internal representation (syntax tree) in all
+            compilers and IfR. This way at some stage if we will need
+            to make one of the compilers IfR-integrated (import keyword?)
+            then it will be a much easier task than it's now. This internal
+            representation may also be usable in typecodes
+
+            @@ boris: not clear to me.
+
+            @@ jeff: A typecode is like a piece of the Syntax Tree with these
+               exceptions -
+
+                (1) There is no typecode for an IDL module.
+
+                (2) Typecodes for interfaces and valuetypes lack some of the
+                    information in the corresponding Syntax Tree nodes.
+
+               With these exceptions in mind, a typecode can be composed and
+               traversed in the same manner as a Syntax Tree, perhaps with
+               different classes than used to compose the ST itself.
+
+            @@ boris: Ok, let me see if I got it right. So when typecode
+               is kept in parsed state (as opposite to binary) (btw, when
+               does it happen?) it makes sense to apply the same techniques
+               (if in fact not the same ST nodes and traversal mechs) as
+               for XIDL compilation.
+
+[IDEA]: We should be consistent with the way external compilers that we call
+        report errors. For now those are CPP and IDLC.
+
+Option Parser
+-------------
+
+[IDEA]: Use Spirit parser framework to generate option parser.
+
+[IDEA]: Option Database is probably a singleton.
+
+        @@ jeff: This is a good idea, especially when passing some of the
+           options to a preprocessor or spawned IDL compier. But I think we
+           will still need 'state' classes for the front and back ends (to
+           hold values set by command line options and default values) so
+           we can keep them decoupled).
+
+
+        @@ boris: I understand what you mean. Though I think we will be
+           able to do with one 'runtime database'. Each 'compiler module'
+           will be able to populate its 'namespace' with (1) default
+           values, (2) with module-specific options and (3) arbitrary
+           runtime information. I will present prototopy design shortly.
+
+
+[IDEA]: It seems we will have to execute at least two external programs
+        as part of CIDLC execution: CPP and IDLC. Why wouldn't we follow
+        GCC specs model (gcc -dumpspecs). Here are candidates to be put into
+        specs:
+
+          - default CPP name and options
+          - default  IDLC name and options
+          - default file extensions and formats for different mappings
+          - other ideas?
+
+[IDEA]: Provide short and long option names (e.g. -o and --output-dir)
+        for every option (maybe except -I, -D, etc).
+
+
+C Preprocessor Interfacing
+--------------------------
+
+[IDEA]: Embed/require GCC CPP
+
+[IDEA]: We need a new model of handling includes in CIDLC (as well as IDLC).
+        Right now I'm mentally testing a new model (thanks to Carlos for the
+        comments). Soon I will put the description here.
+
+[IDEA]: We cannot move cidl file being preprocessed to for example /tmp
+        as it's currently the case with IDLC.
+
+[IDEA]: Can we use pipes (ACE Pipes) portably to avoid temporary files?
+        (Kitty, you had some ideas about that?)
+
+
+
+IDL Compiler Interfacing
+------------------------
+
+[IDEA]: Same as for CPP: Can we use pipes?
+
+        @@ jeff: check with Nanbor on this. I think there may be CCM/CIAO
+           use cases where we need the intermediate IDL file.
+
+[IDEA]: Will need a mechanism to pass options to IDLC from CIDLC command
+        line (would be nice to have this ability for CPP as well).
+        Something like -x in xterm? Better ideas?
+
+
+
+Scanner
+------
+
+[IDEA]: Use Spirit framework to construct scanner. The resulting sequence
+        can be sequence of objects? BTW, Spirit parser expects a "forward
+        iterator"-based scanner. So this basically mean that we may have to
+        keep the whole sequence in memory. BTW, this is another good reason
+        to have scanner: if we manage to make scanner a predictable parser
+        (i.e. no backtracking) then we don't have to keep the whole
+        preprocessed cidl file in memory.
+
+
+
+Parser
+------
+
+[IDEA]: Use Spirit framework to construct parser.
+
+[IDEA]: Define IDL grammar as a number of grammar capsules. This way it's
+        much easier to reuse/inherit even dynamically. Need to elaborate
+        this idea.
+
+[IDEA]: Use functors as semantic actions. This way we can specify (via
+        functor's data member) on which Syntax Tree they are working.
+        Bad side: semantic rules are defined during grammar construction.
+        However we can use a modification of the factory method pattern.
+        Better ideas?
+
+        @@ jeff: I think ST node creation with a factory
+           is a good idea - another ST implementation could be plugged in,
+           as long as it uses a factory with the same method names.
+
+        @@ boris: Right. In fact it's our 'improved' way of handling 'BE'
+           usecases.
+
+
+
+Syntax Tree
+-----------
+
+[IDEA]: Use interface repository model as a base for Syntax Tree hierarchy.
+
+[IDEA]: Currently (in IDLC) symbol lookup is accomplished by AST navigation,
+        and is probably the biggest single bottleneck in performance. Perhaps
+        a separate symbol table would be preferable. Also, lookups could be
+        specialized, e.g., for declaration, for references, and perhaps a
+        third type for argument-related lookups.
+
+[NOTE]: If we are to implement symbol tables then we need to think how we
+        are going to inherit (extend) this tables.
+
+[NOTE]: Inheritance/supports graphs: these graphs need to be traversed at
+        several points in the back end. Currently they are rebuilt for each
+        use, using an n-squared algorithm. We could at least build them only
+        once for each interface/valuetype, perhaps even with a better
+        algorithm. It could be integrated into inheritance/supports error
+        checking at node creation time, which also be streamlined.
+
+        @@ boris: Well, I think we should design our Syntax Tree so that
+           every interface/valuetype has a list (flat?) of interfaces it
+           inherits from/supports.
+
+[IDEA]: We will probably want to use factories to instantiate Syntax Tree
+        Nodes (STN). This will allow a concrete code generators to alter (i.e.
+        inherit off and extend) vanilla STNs (i.e. alternative to BE nodes
+        in current IDLC design).
+
+
+Common Syntax Tree traversal Design Ideas/Decision
+--------------------------------------------------
+
+[IDEA] If we specify Syntax Tree traversal facility then we will be able
+       to specify (or even plug dynamically) Syntax Tree traversal agents
+       that may not only generate something but also annotate or modify
+       Syntax Tree. We are already using this technique for a number of
+       features (e.g. AMI, IDL3 extension, what else?) but all these agents
+       are hardwired inside TAO IDLC. If we have this facility then we will
+       be able to produce modular and highly extensible design. Notes:
+
+       - Some traversal agents can change Syntax Tree so that it will be
+         unusable by some later traversal agents. So maybe the more
+         generic approach would be to produce new Syntax Tree?
+
+         @@ jeff: Yes, say for example that we were using a common ST
+            representation for the IDL compiler and the IFR. We would not
+            want to send the extra AMI nodes to the IFR so in that case
+            simple modification of the ST might not be best.
+
+[IDEA] Need a generic name for "Syntax Tree Traversal Agents". What about
+       "Syntax Tree Traverser"?
+
+
+Code Generation Stream
+----------------------
+
+[IDEA] Use language indentation engines for code generation (like a c-mode
+       in emacs). The idea is that code like this
+
+       out << "long foo (long arg0,  "  << endl
+           << "          long arg1)  "  << endl
+           << "{                     "  << endl
+           << "  return arg0 + arg1; "  << endl
+           << "}                     "  << endl;
+
+	will result in a generated code like this:
+
+       namespace N
+       {
+         ...
+
+         long foo (long arg0,
+                   long arg1)
+         {
+           return arg0 + arg1;
+         }
+
+         ...
+       }
+
+       Note that no special actions were taken to ensure proper indentation.
+       Instead the stream's indentation engine is responsible for that.
+       The same mech can be used for different languages (e.g. XML).
+
+
+Code Generators
+---------------
+
+[IDEA] It makes sense to establish a general concept of code generators.
+       "Executor Mapping Generator", "Executor Implementation Generator"
+       and "Skeleton Thunk Generator" would be a concrete code generators.
+
+[IDEA] Expression evaluation: currently the result (not the expression)
+       is generated, which may not always be necessary.
+
+       @@ boris: I would say may not always be correct
+
+
+       However, for purposes of type coercion and other checking (such as
+       for positive integer values in string, array and sequence bounds)
+       evaluation must be done internally.
+
+       @@ boris: note that evaluation is needed to only verify that things
+          are correct. You don't have to (shouldn't?) substitute original
+          (const) expression with what's been evaluated.
+
+
+       @@ jeff: it may be necessary in some cases to append 'f' or 'U' to
+          a generated number to avoid a C++ compiler warning.
+
+       @@ boris: shouldn't this 'f' and 'U' be in IDL as well?
+
+[IDEA] I wonder if it's a good idea to use a separate pass over syntax tree
+       for semantic checking (e.g. type coercion, positive values for
+       sequence bounds).
+
+       @@ jeff: This may hurt performance a little - more lookups - but it
+          will improve error reporting.
+
+       @@ boris:  As we dicussed earlier this pass could be used to do
+          'semantic expansions' (e.g. calculate a flat list of interface's
+          children, etc). Also I don't think we should worry about speed
+          very much here (of course I don't say we have to be stupid ;-)
+          In fact if we are trading better design vs faster compilation
+          at this stage we should always go for better design.
+
+
+Executor Mapping Generator
+--------------------------
+
+
+
+Executor Implementation Generator
+--------------------------------
+
+[IDEA]: Translate CIDL composition to C++ namespace.
+
+
+
+Skeleton Thunk Generator
+------------------------
+
+
+
+
+Compiler driver
+---------------
+
+
+
+Vault
+-----
+
+Some thoughts from Jeff that I are not directly related to CIDLC and are
+rather current IDLC design defects:
+
+* AMI/AMH implied IDL: more can be done in the BE preprocessing pass,
+  hopefully eliminating a big chunk of the huge volume of AMI/AMH visitor
+  code. The implied IDL generated for CCM types, for example, leaves almost
+  nothing extra for the visitors to do.
+
+* Fwd decl redefinition: forward declaration nodes all initially contain a
+  heap-allocated dummy full-definition member, later replaced by a copy
+  of the full definition. This needs to be streamlined.
+
+* Memory leaks: inconsistent copying/passing policies make it almost
+  impossible to eliminate the huge number of leaks. The front end will be
+  more and more reused, and it may be desirable to make it executable as a
+  function call, in which case it will important to eliminate the leaks.
+  Perhaps copying of AST nodes can be eliminated with reference counting or
+  just with careful management, similarly for string identifiers and literals.
+  Destroy() methods have been put in all the node classes, and are called
+  recursively from the AST root at destruction time, but they are far from
+  doing a complete job.
+
+* Visitor instantiation: the huge visitor factory has already been much
+  reduced, and the huge enum of context state values is being reduced.
+  However there will still be an abundance of switch statements at nearly
+  every instance of visitor creation at scope nesting. We could make better
+  use of polymorphism to get rid of them.
+
+* Node narrowing: instead of the impenetrable macros we use now, we
+  could either generate valuetype-like downcast methods for the (C)IDL
+  types, or we could just use dynamic_cast.
+
+* Error reporting: making error messages more informative, and error recovery
+  could both be a lot better, as they are in most other IDL compilers. If a
+  recursive descent parser is used (such as Spirit), there is a simple
+  generic algorithm for error recovery.
+
+
+* FE/BE node classes: if BE node classes are implemented at all, there should
+  be a complete separation of concerns - BE node classes should contain only
+  info related to code generation, and FE node classes should contain only
+  info related to the AST representation. As the front end becomes more
+  modular and reusable, this will become more and more necessary.
+
+  @@ boris: It doesn't seem we will need two separate and parallel hierarhies.
+
+* Undefined fwd decls: now that we have dropped support for platforms without
+  namespaces, the code generated for fwd declarations not defined in the same
+  translation unit can be much improved, most likely by the elimination of
+  generated flat-name global methods, and perhaps other improvements as well.
+
+* Strategized code generation: many places now have either lots of
+  duplication, or an explosion of branching in a single visitor. Adding code
+  generation for use cases incrementally may give us an opportunity to
+  refactor and strategize it better.
+
+* Node generator: this class does nothing more than call 'new' and pass
+  unchanged the arguments it gets to the appropriate constructor - it can be
+  eliminated.
+
+* Virtual methods: there are many member functions in the IDL compiler that
+  are needlessly virtual.
+
+* Misc. leveraging: redesign of mechanisms listed above can have an effect
+  on other mechanisms, such as the handling of pragma prefix, typeprefix, and
+  reopened modules.

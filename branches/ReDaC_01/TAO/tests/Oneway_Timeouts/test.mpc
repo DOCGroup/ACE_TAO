@@ -1,0 +1,26 @@
+project (*client) : taoexe, messaging, portableserver, strategies {
+  exename = client
+  after = *server
+  source_files {
+    client.cpp
+    TestC.cpp
+  }
+  header_files {
+    TestC.h
+  }
+  idl_files {
+  }
+}
+
+project (*server) : taoexe, messaging, portableserver, strategies {
+  exename = server
+  source_files {
+    server.cpp
+    TestS.cpp
+    TestC.cpp
+  }
+  header_files {
+    TestS.h
+    TestC.h
+  }
+}

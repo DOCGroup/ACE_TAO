@@ -1,0 +1,19 @@
+// $Id$
+
+project(*Server): taoserver, minimum_corba, imr_client {
+  idlflags += -Sa -St
+  exename = MessengerServer
+  Source_Files {
+    Messenger_i.cpp
+    MessengerServer.cpp
+  }
+}
+
+project(*Client): taoexe, minimum_corba {
+  idlflags += -Sa -St
+  exename = MessengerClient
+  Source_Files {
+    MessengerC.cpp
+    MessengerClient.cpp
+  }
+}
