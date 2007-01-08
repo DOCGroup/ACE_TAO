@@ -1,3 +1,10 @@
+Mon Jan  8 00:10:52 UTC 2007  Iliyan Jeliazkov  <iliyan@ociweb.com>
+
+        * bin/tao_orb_tests.lst:
+
+          Adding "!MINIMUM" for the TransportCurrent tests, since it
+          precludes the use of the TC functionality.
+
 Sun Jan  7 19:02:30 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/config-hpux-11.00.h:
