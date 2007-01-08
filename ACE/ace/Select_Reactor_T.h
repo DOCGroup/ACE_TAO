@@ -67,7 +67,7 @@ public:
   /// fine if your application doesn't use the reactor to handle signals).
   ACE_Select_Reactor_T (ACE_Sig_Handler * = 0,
                         ACE_Timer_Queue * = 0,
-                        int disable_notify_pipe = 0,
+                        int disable_notify_pipe = ACE_DISABLE_NOTIFY_PIPE_DEFAULT,
                         ACE_Reactor_Notify *notify = 0,
                         int mask_signals = 1,
                         int s_queue = ACE_SELECT_TOKEN::FIFO);
@@ -92,7 +92,7 @@ public:
                         int restart = 0,
                         ACE_Sig_Handler * = 0,
                         ACE_Timer_Queue * = 0,
-                        int disable_notify_pipe = 0,
+                        int disable_notify_pipe = ACE_DISABLE_NOTIFY_PIPE_DEFAULT,
                         ACE_Reactor_Notify *notify = 0,
                         int mask_signals = 1,
                         int s_queue = ACE_SELECT_TOKEN::FIFO);
