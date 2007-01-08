@@ -56,7 +56,7 @@ namespace TAO
 CORBA::Boolean
 RTCORBA::ProtocolProperties::_tao_encode (TAO_OutputCDR &)
 {
-  return 1;
+  return true;
 }
 // TAO_IDL - Generated from
 // be/be_visitor_arg_traits.cpp:60
@@ -64,7 +64,7 @@ RTCORBA::ProtocolProperties::_tao_encode (TAO_OutputCDR &)
 CORBA::Boolean
 RTCORBA::ProtocolProperties::_tao_decode (TAO_InputCDR &)
 {
-  return 1;
+  return true;
 }
 
 // TAO_IDL - Generated from

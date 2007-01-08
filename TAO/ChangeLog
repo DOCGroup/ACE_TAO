@@ -1,3 +1,12 @@
+Mon Jan  8 19:40:55 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/GIOP_Message_Locate_Header.h:
+          No need to export TAO_GIOP_Locate_Request_Header from the TAO library
+
+        * tao/RTCORBA/RTCORBAC.cpp:
+        * tao/RTCORBA/diffs/RTCORBA.diff
+          Use true/false
+
 Mon Jan  8 18:56:55 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/AnyTypeCode.mpc:
