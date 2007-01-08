@@ -1,0 +1,111 @@
+// $Id$
+
+#include "ace/Get_Opt.h"
+#include "ace/OS_NS_stdio.h"
+#include "tao/ORB.h"
+#include "tao/Compression/Compression.h"
+#include "tao/Compression/zlib/ZlibCompressor_Factory.h"
+
+ACE_RCSID (Hello,
+           server,
+           "$Id$")
+
+bool
+test_invalid_compression_factory (Compression::CompressionManager_ptr cm)
+{
+  bool succeed = false;
+  ACE_TRY_NEW_ENV
+    {
+      // Get an invalid compression factory
+      Compression::CompressorFactory_var factory = 
+        cm->get_factory (100);
+      ACE_TRY_CHECK;
+    }
+  ACE_CATCH (Compression::UnknownCompressorId, ex)
+    {
+      ACE_UNUSED_ARG (ex);
+      succeed = true;
+    }
+  ACE_CATCHANY
+    {
+    }
+  ACE_ENDTRY;
+
+  if (!succeed)
+  {
+    ACE_ERROR ((LM_ERROR,
+                "(%t) ERROR, get invalid compression factory failed\n"));
+  }
+
+  return succeed;
+}
+
+
+int
+main (int argc, char *argv[])
+{
+  int retval = 0;
+  ACE_TRY_NEW_ENV
+    {
+      CORBA::ORB_var orb =
+        CORBA::ORB_init (argc, argv, "" ACE_ENV_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+
+      CORBA::Object_var compression_manager =
+        orb->resolve_initial_references("CompressionManager");
+
+      Compression::CompressionManager_var manager =
+        Compression::CompressionManager::_narrow (compression_manager.in ());
+
+      if (CORBA::is_nil(manager.in ()))
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           " (%P|%t) Panic: nil compression manager\n"),
+                          1);
+
+      manager->register_factory(new TAO::Zlib_CompressorFactory ());
+
+      CORBA::ULong const nelements = 1024;
+      CORBA::OctetSeq mytest;
+      mytest.length (1024);
+      for (CORBA::ULong j = 0; j != nelements; ++j)
+        {
+          mytest[j] = 'a';
+        }
+
+      Compression::Compressor_var compressor = manager->get_compressor (4, 6);
+
+      CORBA::OctetSeq myout;
+      myout.length (1300);
+
+      compressor->compress (mytest, myout);
+
+      CORBA::OctetSeq decompress;
+      decompress.length (1024);
+
+      compressor->decompress (myout, decompress);
+
+      if (decompress != mytest)
+        {
+          ACE_ERROR ((LM_ERROR, "Error, decompress not working\n"));
+        }
+      else
+        {
+          ACE_DEBUG ((LM_DEBUG, "Compression worked, original size %d, compressed size %d\n", mytest.length(), myout.length ()));
+        }
+  
+      if (!test_invalid_compression_factory (manager.in ()))
+        retval = 1;
+
+      orb->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+    }
+  ACE_CATCHANY
+    {
+      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
+                           "Exception caught:");
+      retval = 1;
+    }
+  ACE_ENDTRY;
+
+  return retval;
+}

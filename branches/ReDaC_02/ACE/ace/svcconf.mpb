@@ -1,0 +1,64 @@
+// -*- MPC -*-
+// $Id$
+
+feature(ace_svcconf) {
+  macros -= ACE_LACKS_ACE_SVCCONF
+
+  Source_Files(ACE_COMPONENTS) {
+    DLL.cpp
+    Dynamic_Service_Base.cpp
+    Dynamic_Service_Dependency.cpp
+    Parse_Node.cpp
+    Service_Config.cpp
+    Service_Gestalt.cpp
+    Service_Manager.cpp
+    Service_Object.cpp
+    Service_Repository.cpp
+    Service_Types.cpp
+    Shared_Object.cpp
+    Svc_Conf_Lexer.cpp
+    Svc_Conf_y.cpp
+    Encoding_Converter.cpp
+    Encoding_Converter_Factory.cpp
+    UTF8_Encoding_Converter.cpp
+    UTF16_Encoding_Converter.cpp
+    UTF32_Encoding_Converter.cpp
+    XML_Svc_Conf.cpp
+  }
+
+  verbatim(gnuace, local) {
+    "Svc_Conf_y.cpp: Svc_Conf.y"
+    "ifeq ($(notdir $(YACC)), bison)"
+    "	$(YACC) -l -d Svc_Conf.y"
+    "	sed -e 's/char \\*getenv/char *ace_foo/g' \\"    // Eliminates getenv prototype, use ACE's
+    "       -e 's/= getenv/= ACE_OS::getenv/g' \\"     // ... like this - qualified.
+    "       -e 's/fprintf/ACE_OS::fprintf/g' \\"       // Use ACE's fprintf, not library's
+    "       -e 's/yy/ace_yy/g' \\"
+    "       -e 's/->ace_yyerrno/->yyerrno/g' \\"       // These reverse the unwanted ace_ prefix
+    "       -e 's/->ace_yylineno/->yylineno/g' \\"     // added by the substitution, above.
+    "       -e 's/YY/ACE_YY/g' \\"
+    "       -e 's/^char /ACE_TCHAR /g' \\"
+    "       -e 's/\([^d]\) char /\$1 ACE_TCHAR /g' \\"
+    "       -e 's/(char/(ACE_TCHAR/g' \\"
+    "       -e 's/ NULL/ 0/g' \\"
+    "       -e 's/ace_yyerror[ ]*(\"/ace_yyerror (ACE_SVC_CONF_PARAM->yyerrno, ACE_SVC_CONF_PARAM->yylineno, \"/g' \\"
+    "       -e 's/ace_yyerror[ ]*(ace_yymsg/ace_yyerror (ACE_SVC_CONF_PARAM->yyerrno, ACE_SVC_CONF_PARAM->yylineno, ace_yymsg/g' \\"
+    "       -e 's/ace_yyerror (int ace_yyerrno, int ace_yylineno, const ACE_TCHAR/ace_yyerror (int ace_yyerrno, int ace_yylineno, const char/' \\"
+    "       -e 's@#include <stdio\.h>@@' \\"
+    "       -e 's/Svc_Conf\\.tab\\.c/Svc_Conf_y.cpp/g' < Svc_Conf.tab.c > /tmp/$@"
+    "	cp /tmp/$@ $@"
+    "	echo \/\/ '$$I''d:$$' >Svc_Conf_Tokens.h"
+    "	echo '#ifndef BISON_SVC_CONF_TAB_H' >>Svc_Conf_Tokens.h"    // Inclusion protection macros
+    "	echo '# define BISON_SVC_CONF_TAB_H' >>Svc_Conf_Tokens.h"   // ... same ...
+    "	echo '# define ACE_YYSTYPE_IS_DECLARED 1' >>Svc_Conf_Tokens.h" // Don't use Svc_Conf_y.cpp's
+    "	sed -e 's/yy/ace_yy/g' \\"
+    "     -e 's/YY/ACE_YY/g'  <Svc_Conf.tab.h >>Svc_Conf_Tokens.h"
+    "	echo '#endif \/\* ifndef BISON_SVC_CONF_TAB_H \*\/' >>Svc_Conf_Tokens.h"
+    "	$(RM) -f /tmp/$@ Svc_Conf.tab.c Svc_Conf.tab.h Svc_Conf_y.cpp.orig"
+    "else"
+    "	@echo 'ERROR: You must use bison 1.35 or higher to process this file'"
+    "	@/bin/false"
+    "endif"
+
+  }
+}
