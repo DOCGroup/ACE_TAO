@@ -111,11 +111,13 @@ run_main (int, ACE_TCHAR *[])
 
   if (!handleA_close_called)
     ACE_ERROR ((LM_ERROR,
-                "Handle close hasn't been called for A\n"));
+                "Handle close hasn't been called for A. "
+                "This test failure caused by the unresolved bug is EXPECTED!\n"));
 
   if (!handleB_close_called)
     ACE_ERROR ((LM_ERROR,
-                "Handle close hasn't been called for B\n"));
+                "Handle close hasn't been called for B. "
+                "This test failure caused by the unresolved bug is EXPECTED!\n"));
 
   ACE_END_TEST;
 
