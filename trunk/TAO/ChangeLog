@@ -1,3 +1,7 @@
+Mon Jan  8 16:02:13 UTC 2007  Ciju John  <johnc@ociweb.com>
+
+        * docs/ORBEndpoint.html:
+          Update documentation for ORBEndpoint reuse_addr option.
 Mon Jan  8 13:55:00 UTC 2007  Simon Massey  <sma@prismtech.com>
 
         * orbsvcs/tests/Bug_1630_Regression/testclient.cpp:
