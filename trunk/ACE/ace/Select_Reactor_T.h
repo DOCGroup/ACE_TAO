@@ -118,11 +118,11 @@ public:
                     int restart = 0,
                     ACE_Sig_Handler * = 0,
                     ACE_Timer_Queue * = 0,
-                    int disable_notify_pipe = 0,
+                    int disable_notify_pipe = ACE_DISABLE_NOTIFY_PIPE_DEFAULT,
                     ACE_Reactor_Notify * = 0);
 
   /// Returns -1 (not used in this implementation);
-  virtual int current_info (ACE_HANDLE, size_t & /* size */);
+  virtual int current_info (ACE_HANDLE, size_t &size);
 
   /// Use a user specified signal handler instead.
   virtual int set_sig_handler (ACE_Sig_Handler *signal_handler);
@@ -146,7 +146,7 @@ public:
    * but does not actually dispatch the event handlers.  By default,
    * don't block while checking this, i.e., "poll".
    */
-  virtual int work_pending (const ACE_Time_Value &max_wait_time =  ACE_Time_Value::zero);
+  virtual int work_pending (const ACE_Time_Value &max_wait_time = ACE_Time_Value::zero);
 
   /**
    * This event loop driver that blocks for @a max_wait_time before
@@ -200,7 +200,7 @@ public:
 
   // = Register and remove ACE_Event_Handlers.
   /**
-   * Register a <eh> with a particular <mask>.  Note that the
+   * Register a @a eh with a particular @a mask.  Note that the
    * <Select_Reactor> will call <ACE_Event_Handler::get_handle> to
    * extract the underlying I/O handle.
    */
@@ -244,9 +244,9 @@ public:
                                 ACE_Reactor_Mask mask);
 
   /**
-   * Register <new_sh> to handle the signal <signum> using the
-   * <new_disp>.  Returns the <old_sh> that was previously registered
-   * (if any), along with the <old_disp> of the signal handler.
+   * Register @a new_sh to handle the signal @a signum using the
+   * @a new_disp. Returns the @a old_sh that was previously registered
+   * (if any), along with the @a old_disp of the signal handler.
    */
   virtual int register_handler (int signum,
                                 ACE_Event_Handler *new_sh,
@@ -254,8 +254,8 @@ public:
                                 ACE_Event_Handler **old_sh = 0,
                                 ACE_Sig_Action *old_disp = 0);
 
-  /// Registers <new_sh> to handle a set of signals <sigset> using the
-  /// <new_disp>.
+  /// Registers @a new_sh to handle a set of signals @a sigset using the
+  /// @a new_disp.
   virtual int register_handler (const ACE_Sig_Set &sigset,
                                 ACE_Event_Handler *new_sh,
                                 ACE_Sig_Action *new_disp = 0);
