@@ -1,3 +1,11 @@
+Mon Jan  8 11:23:30 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Select_Reactor_T.h (open):
+          Also use ACE_DISABLE_NOTIFY_PIPE_DEFAULT as default for disable_notify_pipe
+
+        * ace/Select_Reactor_T.h:
+          Doxygen improvements
+
 Mon Jan  8 10:45:30 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Select_Reactor_Base.h:
