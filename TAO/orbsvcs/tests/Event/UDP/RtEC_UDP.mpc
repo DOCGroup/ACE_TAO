@@ -1,41 +1,26 @@
 // -*- MPC -*-
 // $Id$
 
-project (*idl): taoidldefaults {
-  idlflags -= -Sa -St
-
-  IDL_Files {
-    Test.idl
-  }
-  custom_only = 1
-}
-
-project (*sender): orbsvcsexe, rtevent_serv, rtsched {
-  after += *idl
-
+project (* sender): orbsvcsexe, rtevent_serv, rtsched {
   exename = sender
   Source_Files {
     AddrServer.cpp
     Supplier.cpp
     sender.cpp
-    TestS.cpp
-    TestC.cpp
   }
   IDL_Files {
+    Test.idl
   }
 }
 
-project (*receiver) : orbsvcsexe, rtevent_serv, rtsched {
-  after += *idl;
-
+project (* receiver) : orbsvcsexe, rtevent_serv, rtsched {
   exename = receiver
   Source_Files {
     AddrServer.cpp
     Consumer.cpp
     receiver.cpp
-    TestS.cpp
-    TestC.cpp
   }
   IDL_Files {
+    Test.idl
   }
 }

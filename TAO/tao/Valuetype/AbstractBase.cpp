@@ -3,7 +3,6 @@
 #include "tao/Valuetype/AbstractBase.h"
 #include "tao/Valuetype/ValueBase.h"
 #include "tao/Valuetype/ValueFactory.h"
-#include "tao/AnyTypeCode/Objref_TypeCode_Static.h"
 #include "tao/Stub.h"
 #include "tao/ORB_Core.h"
 #include "tao/Profile.h"
@@ -173,18 +172,10 @@ CORBA::AbstractBase::_to_value (void)
 
 CORBA::Boolean
 CORBA::AbstractBase::_is_a (const char *type_id
-                            ACE_ENV_ARG_DECL)
+                            ACE_ENV_ARG_DECL_NOT_USED)
 {
-  if (! CORBA::is_nil (this->equivalent_obj_.in ()))
-    {
-      return this->equivalent_obj_->_is_a (type_id
-                                           ACE_ENV_ARG_PARAMETER);
-    }
-    
-  int cmp = ACE_OS::strcmp (type_id,
-                            "IDL:omg.org/CORBA/AbstractBase:1.0");
-                            
-  return (cmp == 0);
+  return ! ACE_OS::strcmp (type_id,
+                           "IDL:omg.org/CORBA/AbstractBase:1.0");
 }
 
 const char *
@@ -441,25 +432,5 @@ CORBA::AbstractBase::equivalent_objref (void)
   return this->equivalent_obj_.in ();
 }
 
-// ================== Typecode initializations ==================
-
-namespace TAO
-{
-  namespace TypeCode
-  {
-    char const tc_object_id[]   = "IDL:omg.org/CORBA/AbstractBase:1.0";
-    char const tc_object_name[] = "AbstractBase";
-    Objref<char const *,
-           TAO::Null_RefCount_Policy>
-      tc_AbstractBase (CORBA::tk_abstract_interface,
-                       tc_object_id,
-                       tc_object_name);
-  }
-}
-
-namespace CORBA
-{
-  TypeCode_ptr const _tc_AbstractBase = &TAO::TypeCode::tc_AbstractBase;
-}
 
 TAO_END_VERSIONED_NAMESPACE_DECL

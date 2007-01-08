@@ -24,7 +24,8 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 TAO_IIOP_Connection_Handler::TAO_IIOP_Connection_Handler (ACE_Thread_Manager *t)
   : TAO_IIOP_SVC_HANDLER (t, 0 , 0),
     TAO_Connection_Handler (0),
-    dscp_codepoint_ (IPDSFIELD_DSCP_DEFAULT << 2)
+    dscp_codepoint_ (IPDSFIELD_DSCP_DEFAULT << 2),
+    connection_pending_ (false)
 {
   // This constructor should *never* get called, it is just here to
   // make the compiler happy: the default implementation of the
@@ -40,7 +41,8 @@ TAO_IIOP_Connection_Handler::TAO_IIOP_Connection_Handler (
   CORBA::Boolean flag)
   : TAO_IIOP_SVC_HANDLER (orb_core->thr_mgr (), 0, 0),
     TAO_Connection_Handler (orb_core),
-    dscp_codepoint_ (IPDSFIELD_DSCP_DEFAULT << 2)
+    dscp_codepoint_ (IPDSFIELD_DSCP_DEFAULT << 2),
+    connection_pending_ (false)
 {
   TAO_IIOP_Transport* specific_transport = 0;
   ACE_NEW (specific_transport,
@@ -53,7 +55,8 @@ TAO_IIOP_Connection_Handler::TAO_IIOP_Connection_Handler (
 TAO_IIOP_Connection_Handler::TAO_IIOP_Connection_Handler (TAO_ORB_Core *orb_core)
   : TAO_IIOP_SVC_HANDLER (orb_core->thr_mgr (), 0, 0),
     TAO_Connection_Handler (orb_core),
-    dscp_codepoint_ (IPDSFIELD_DSCP_DEFAULT << 2)
+    dscp_codepoint_ (IPDSFIELD_DSCP_DEFAULT << 2),
+    connection_pending_ (false)
 {
 }
 
@@ -88,9 +91,6 @@ TAO_IIOP_Connection_Handler::open_handler (void *v)
 int
 TAO_IIOP_Connection_Handler::open (void*)
 {
-  if (this->shared_open() == -1)
-    return -1;
-
   TAO_IIOP_Protocol_Properties protocol_properties;
 
   // Initialize values from ORB params.
@@ -264,10 +264,25 @@ TAO_IIOP_Connection_Handler::open (void*)
   // compilers
   if (!this->transport ()->post_open ((size_t) this->get_handle ()))
     return -1;
+  if (this->connection_pending_)
+    {
+      this->connection_pending_ = false;
+      this->remove_reference();
+    }
   this->state_changed (TAO_LF_Event::LFS_SUCCESS,
                        this->orb_core ()->leader_follower ());
 
   return 0;
+}
+
+void
+TAO_IIOP_Connection_Handler::connection_pending (void)
+{
+  if (!this->connection_pending_)
+    {
+      this->connection_pending_ = true;
+      this->add_reference();
+    }
 }
 
 int

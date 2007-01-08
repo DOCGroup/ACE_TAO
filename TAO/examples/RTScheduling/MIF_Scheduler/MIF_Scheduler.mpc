@@ -1,23 +1,30 @@
 // -*- MPC -*-
 // $Id$
 
-project(*Starter): portableserver, namingexe {
-  after += RTSchedSynch
-  libs += RTSchedSynch
+project(*Starter): namingexe, rtscheduling_server {
+  idlflags += -o ..
+
+  IDL_Files {
+    ../Synch.idl
+  }
 
   Source_Files {
     ../Starter.cpp
+    ../Synch_i.cpp
+    ../SynchC.cpp
+    ../SynchS.cpp
   }
 
   exename = Starter
 }
 
 project(*test) : namingexe, rtscheduling_server {
-  after += *Starter RTSchedTestLib
-  libs += RTSchedTestLib Job RTSchedSynch
-  idlflags += -SS -St -o ..
+  after += *Starter
+  idlflags += -o ..
 
   IDL_Files {
+    ../Synch.idl
+    ../Job.idl
     ../MIF_Scheduling.idl
   }
 
@@ -27,10 +34,16 @@ project(*test) : namingexe, rtscheduling_server {
     MIF_Task.cpp
     MIF_Scheduler.cpp
     ../MIF_SchedulingC.cpp
-  }
-
-  Header_Files {
-    mif_dt_creator_export.h
+    ../Thread_Task.cpp
+    ../DT_Creator.cpp
+    ../JobC.cpp
+    ../JobS.cpp
+    ../Job_i.cpp
+    ../POA_Holder.cpp
+    ../Task_Stats.cpp
+    ../SynchC.cpp
+    ../SynchS.cpp
+    ../Synch_i.cpp
   }
 
   exename = test

@@ -110,9 +110,9 @@ public:
    */
   int open (const ACE_TCHAR program_name[],
             const ACE_TCHAR *logger_key = ACE_DEFAULT_LOGGER_KEY,
-            bool ignore_static_svcs = true,
-            bool ignore_default_svc_conf_file = false,
-            bool ignore_debug_flag = false);
+            int ignore_static_svcs = 1,
+            int ignore_default_svc_conf_file = 0,
+            int ignore_debug_flag = 0);
 
   /**
    * This is the primary entry point into the ACE_Service_Config (the
@@ -150,11 +150,11 @@ public:
    * @param logger_key   Indicates where to write the logging output,
    *                     which is typically either a STREAM pipe or a
    *                     socket address.
-   * @param ignore_static_svcs   If true then static services are not loaded,
+   * @param ignore_static_svcs   If 1 then static services are not loaded,
    *                             otherwise, they are loaded.
-   * @param ignore_default_svc_conf_file  If false then the @c svc.conf
+   * @param ignore_default_svc_conf_file  If non-0 then the @c svc.conf
    *                                      configuration file will be ignored.
-   * @param ignore_debug_flag If false then the application is responsible
+   * @param ignore_debug_flag If non-0 then the application is responsible
    *                          for setting the @c ACE_Log_Msg::priority_mask
    *                          appropriately.
    *
@@ -167,9 +167,9 @@ public:
   int open (int argc,
             ACE_TCHAR *argv[],
             const ACE_TCHAR *logger_key = ACE_DEFAULT_LOGGER_KEY,
-            bool ignore_static_svcs = true,
-            bool ignore_default_svc_conf_file = false,
-            bool ignore_debug_flag = false);
+            int ignore_static_svcs = 1,
+            int ignore_default_svc_conf_file = 0,
+            int ignore_debug_flag = 0);
 
   /// Has it been opened?  Returns the difference between the times
   /// open and close have been called on this instance
@@ -367,14 +367,10 @@ protected:
   // the designated shared object in this file.
   int initialize_i (const ACE_Service_Type *sr, const ACE_TCHAR *parameters);
 
-  const ACE_Static_Svc_Descriptor* find_processed_static_svc (const ACE_TCHAR*);
-  void add_processed_static_svc (const ACE_Static_Svc_Descriptor *);
+const ACE_Static_Svc_Descriptor*
+   find_processed_static_svc (const ACE_TCHAR* );
 
-  /// Performs the common initialization tasks for a new or previously
-  /// closed instance. Must not be virtual, as it is called from the
-  /// constructor.
-  int init_i (void);
-
+void add_processed_static_svc (const ACE_Static_Svc_Descriptor *);
 
 protected:
 
@@ -402,13 +398,9 @@ protected:
 
 protected:
 
-  /// Do we own the service repository instance, or have only been
-  /// given a ptr to the singleton?
+  /// Do we own the service repository instance or have only been given a ptr
+  /// to the singleton one?
   bool svc_repo_is_owned_;
-
-  /// Repository size is necessary, so that we can close (which may
-  /// destroy the repository instance), and then re-open again.
-  size_t svc_repo_size_;
 
   /// Keep track of the number of times the instance has been
   /// initialized (opened). "If so, we can't allow <yyparse> to be called since
@@ -423,7 +415,7 @@ protected:
   const ACE_TCHAR *logger_key_;
 
   /// Should we avoid loading the static services?
-  bool no_static_svcs_;
+  int no_static_svcs_;
 
   /// Queue of services specified on the command-line.
   ACE_SVC_QUEUE* svc_queue_;

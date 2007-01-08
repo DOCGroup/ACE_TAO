@@ -133,8 +133,8 @@ namespace PortableServer
      * It is safe to pass in a null pointer, the pointer is simply
      * returned in that case.
      *
-     * @todo We might want to catch all (potential) exceptions in
-     *       _add_ref().
+     * @todo We might want to add a throw spec and catch all (potential)
+     *       exceptions in _add_ref()
      *
      * @todo It might be useful to add a _release() method that handles
      *       any potential exceptions...

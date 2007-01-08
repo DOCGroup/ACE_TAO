@@ -1,7 +1,7 @@
 //  -*- MPC -*-
 // $Id$
 
-project(SSL) : acelib, install, ace_openssl {
+project(SSL) : acelib, core, ace_openssl {
   avoids      += ace_for_tao
   requires    += ssl
   sharedname   = ACE_SSL

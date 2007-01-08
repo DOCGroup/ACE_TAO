@@ -18,6 +18,7 @@ TAO_ROOT = $(top_srcdir)
 
 if BUILD_CORBA_MESSAGING
 if BUILD_EXCEPTIONS
+if !BUILD_MINIMUM_CORBA
 
 noinst_LTLIBRARIES = libNotifyPlugTop.la
 
@@ -39,6 +40,7 @@ noinst_HEADERS = \
   Test_Saver.h \
   Test_Topology_Factory.h
 
+endif !BUILD_MINIMUM_CORBA
 endif BUILD_EXCEPTIONS
 endif BUILD_CORBA_MESSAGING
 
@@ -46,6 +48,7 @@ endif BUILD_CORBA_MESSAGING
 
 if BUILD_CORBA_MESSAGING
 if BUILD_EXCEPTIONS
+if !BUILD_MINIMUM_CORBA
 
 noinst_PROGRAMS = main
 
@@ -83,6 +86,7 @@ main_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
+endif !BUILD_MINIMUM_CORBA
 endif BUILD_EXCEPTIONS
 endif BUILD_CORBA_MESSAGING
 

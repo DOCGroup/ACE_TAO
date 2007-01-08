@@ -1,14 +1,14 @@
 // -*- MPC -*-
 // $Id$
 
-project(*latency_idl): taoidldefaults, strategies, avoids_minimum_corba, avoids_corba_e_compact, avoids_corba_e_micro {
+project(*latency_idl): taoidldefaults, strategies, minimum_corba {
   IDL_Files {
     Test.idl
   }
   custom_only = 1
 }
 
-project(*latency server): taoserver, strategies, avoids_minimum_corba, avoids_corba_e_compact, avoids_corba_e_micro {
+project(*latency server): taoserver, strategies, minimum_corba {
   after += *latency_idl
   Source_Files {
     Roundtrip.cpp
@@ -20,9 +20,8 @@ project(*latency server): taoserver, strategies, avoids_minimum_corba, avoids_co
   }
 }
 
-project(*latency client): taoclient, strategies, dynamicinterface, avoids_minimum_corba, avoids_corba_e_compact, avoids_corba_e_micro {
+project(*latency client): taoclient, strategies, dynamicinterface, minimum_corba {
   after += *latency_idl
-  avoids += ace_for_tao
   Source_Files {
     TestC.cpp
     client.cpp

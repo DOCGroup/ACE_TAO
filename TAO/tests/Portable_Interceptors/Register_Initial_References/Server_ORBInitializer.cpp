@@ -4,9 +4,8 @@
 //
 
 #include "Server_ORBInitializer.h"
-#include "test_i.h"
 #include "tao/ORBInitializer_Registry.h"
-#include "tao/ORB_Constants.h"
+#include "test_i.h"
 
 ACE_RCSID (Recursive_ORBInitializer,
            Server_ORBInitializer,
@@ -89,7 +88,7 @@ Server_ORBInitializer::pre_init (
     }
   ACE_CATCH (CORBA::BAD_PARAM , ex)
     {
-      if (ex.minor () == (CORBA::OMGVMCID | 27))
+      if ((ex.minor() & 0xFFFU) == 27)
         {
           invalid_object = true;
         }
@@ -101,7 +100,7 @@ Server_ORBInitializer::pre_init (
 
   if (!invalid_object)
     ACE_ERROR ((LM_ERROR, "ERROR: Registering with a nil object to ORBInitInfo "
-                          "doesn't throw bad param with OMG minor code 27\n"));
+                          "doesn't throw bad param with minor code 27\n"));
 }
 
 void

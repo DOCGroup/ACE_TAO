@@ -46,57 +46,57 @@ class ACE_Atomic_Op_Ex
 public:
   // = Initialization methods.
 
-  /// Initialize @c value_ to 0.
+  /// Initialize <value_> to 0.
   ACE_Atomic_Op_Ex (ACE_LOCK &mtx);
 
-  /// Initialize @c value_ to c.
+  /// Initialize <value_> to c.
   ACE_Atomic_Op_Ex (ACE_LOCK &mtx, const TYPE &c);
 
   // = Accessors.
 
-  /// Atomically pre-increment @c value_.
+  /// Atomically pre-increment <value_>.
   TYPE operator++ (void);
 
-  /// Atomically post-increment @c value_.
+  /// Atomically post-increment <value_>.
   TYPE operator++ (int);
 
-  /// Atomically increment @c value_ by rhs.
+  /// Atomically increment <value_> by rhs.
   TYPE operator+= (const TYPE &rhs);
 
-  /// Atomically pre-decrement @c value_.
+  /// Atomically pre-decrement <value_>.
   TYPE operator-- (void);
 
-  /// Atomically post-decrement @c value_.
+  /// Atomically post-decrement <value_>.
   TYPE operator-- (int);
 
-  /// Atomically decrement @c value_ by rhs.
+  /// Atomically decrement <value_> by rhs.
   TYPE operator-= (const TYPE &rhs);
 
-  /// Atomically compare @c value_ with rhs.
+  /// Atomically compare <value_> with rhs.
   bool operator== (const TYPE &rhs) const;
 
-  /// Atomically compare @c value_ with rhs.
+  /// Atomically compare <value_> with rhs.
   bool operator!= (const TYPE &rhs) const;
 
-  /// Atomically check if @c value_ greater than or equal to rhs.
+  /// Atomically check if <value_> greater than or equal to rhs.
   bool operator>= (const TYPE &rhs) const;
 
-  /// Atomically check if @c value_ greater than rhs.
+  /// Atomically check if <value_> greater than rhs.
   bool operator> (const TYPE &rhs) const;
 
-  /// Atomically check if @c value_ less than or equal to rhs.
+  /// Atomically check if <value_> less than or equal to rhs.
   bool operator<= (const TYPE &rhs) const;
 
-  /// Atomically check if @c value_ less than rhs.
+  /// Atomically check if <value_> less than rhs.
   bool operator< (const TYPE &rhs) const;
 
-  /// Atomically assign rhs to @c value_.
+  /// Atomically assign rhs to <value_>.
   ACE_Atomic_Op_Ex<ACE_LOCK, TYPE> &operator= (const TYPE &rhs);
 
-  /// Atomically assign <rhs> to @c value_.
+  /// Atomically assign <rhs> to <value_>.
   ACE_Atomic_Op_Ex<ACE_LOCK, TYPE> &operator= (const ACE_Atomic_Op_Ex<ACE_LOCK, TYPE> &rhs);
 
-  /// Explicitly return @c value_.
+  /// Explicitly return <value_>.
   TYPE value (void) const;
 
   /// Dump the state of an object.
@@ -118,7 +118,7 @@ public:
   ACE_LOCK &mutex (void);
 
   /**
-   * Explicitly return @c value_ (by reference).  This gives the user
+   * Explicitly return <value_> (by reference).  This gives the user
    * full, unrestricted access to the underlying value.  This method
    * will usually be used in conjunction with explicit access to the
    * lock.  Use with care ;-)
@@ -151,58 +151,58 @@ template <class ACE_LOCK, class TYPE>
 class ACE_Atomic_Op
 {
 public:
-  /// Initialize @c value_ to 0.
+  /// Initialize <value_> to 0.
   ACE_Atomic_Op (void);
 
-  /// Initialize @c value_ to c.
+  /// Initialize <value_> to c.
   ACE_Atomic_Op (const TYPE &c);
 
   /// Manage copying...
   ACE_Atomic_Op (const ACE_Atomic_Op<ACE_LOCK, TYPE> &c);
 
-  /// Atomically assign rhs to @c value_.
+  /// Atomically assign rhs to <value_>.
   ACE_Atomic_Op<ACE_LOCK, TYPE> &operator= (const TYPE &rhs);
 
-  /// Atomically assign <rhs> to @c value_.
+  /// Atomically assign <rhs> to <value_>.
   ACE_Atomic_Op<ACE_LOCK, TYPE> &operator= (const ACE_Atomic_Op<ACE_LOCK, TYPE> &rhs);
 
-  /// Atomically pre-increment @c value_.
+  /// Atomically pre-increment <value_>.
   TYPE operator++ (void);
 
-  /// Atomically post-increment @c value_.
+  /// Atomically post-increment <value_>.
   TYPE operator++ (int);
 
-  /// Atomically increment @c value_ by rhs.
+  /// Atomically increment <value_> by rhs.
   TYPE operator+= (const TYPE &rhs);
 
-  /// Atomically pre-decrement @c value_.
+  /// Atomically pre-decrement <value_>.
   TYPE operator-- (void);
 
-  /// Atomically post-decrement @c value_.
+  /// Atomically post-decrement <value_>.
   TYPE operator-- (int);
 
-  /// Atomically decrement @c value_ by rhs.
+  /// Atomically decrement <value_> by rhs.
   TYPE operator-= (const TYPE &rhs);
 
-  /// Atomically compare @c value_ with rhs.
+  /// Atomically compare <value_> with rhs.
   bool operator== (const TYPE &rhs) const;
 
-  /// Atomically compare @c value_ with rhs.
+  /// Atomically compare <value_> with rhs.
   bool operator!= (const TYPE &rhs) const;
 
-  /// Atomically check if @c value_ greater than or equal to rhs.
+  /// Atomically check if <value_> greater than or equal to rhs.
   bool operator>= (const TYPE &rhs) const;
 
-  /// Atomically check if @c value_ greater than rhs.
+  /// Atomically check if <value_> greater than rhs.
   bool operator> (const TYPE &rhs) const;
 
-  /// Atomically check if @c value_ less than or equal to rhs.
+  /// Atomically check if <value_> less than or equal to rhs.
   bool operator<= (const TYPE &rhs) const;
 
-  /// Atomically check if @c value_ less than rhs.
+  /// Atomically check if <value_> less than rhs.
   bool operator< (const TYPE &rhs) const;
 
-  /// Explicitly return @c value_.
+  /// Explicitly return <value_>.
   TYPE value (void) const;
 
   /// Dump the state of an object.
@@ -221,7 +221,7 @@ public:
   ACE_LOCK &mutex (void);
 
   /**
-   * Explicitly return @c value_ (by reference).  This gives the user
+   * Explicitly return <value_> (by reference).  This gives the user
    * full, unrestricted access to the underlying value.  This method
    * will usually be used in conjunction with explicit access to the
    * lock.  Use with care ;-)

@@ -15,7 +15,6 @@
 
 #if (TAO_NO_COPY_OCTET_SEQUENCES == 1)
 
-#include /**/ "tao/TAO_Export.h"
 #include "tao/Unbounded_Value_Allocation_Traits_T.h"
 #include "tao/Value_Traits_T.h"
 #include "tao/Range_Checking_T.h"
@@ -30,7 +29,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 namespace TAO
 {
 template<>
-class TAO_Export unbounded_value_sequence<CORBA::Octet>
+class unbounded_value_sequence<CORBA::Octet>
 {
 public:
   typedef CORBA::Octet value_type;
@@ -220,11 +219,15 @@ public:
         return false;
       }
 
-    const CORBA::Octet * rhs_buff = rhs.get_buffer ();
-    const CORBA::Octet * lhs_buff = this->get_buffer ();
-    const bool result = (ACE_OS::memcmp (lhs_buff, rhs_buff, rlen) == 0);
+    for (::CORBA::ULong i = 0; i < rlen; ++i)
+      {
+        if (rhs[i] != this->buffer_[i])
+          {
+            return false;
+          }
+      }
 
-    return result;
+    return true;
   }
 
   inline bool operator!= (const unbounded_value_sequence<CORBA::Octet> & rhs) const
@@ -338,11 +341,15 @@ operator== (const TAO_VERSIONED_NAMESPACE_NAME::TAO::unbounded_value_sequence<CO
       return false;
     }
 
-  const CORBA::Octet * rhs_buff = rhs.get_buffer ();
-  const CORBA::Octet * lhs_buff = lhs.get_buffer ();
-  const bool result = (ACE_OS::memcmp (lhs_buff, rhs_buff, rlen) == 0);
+  for (::CORBA::ULong i = 0; i < rlen; ++i)
+    {
+      if (rhs[i] != lhs[i])
+        {
+          return false;
+        }
+    }
 
-  return result;
+  return true;
 }
 
 inline

@@ -3,7 +3,6 @@
 #define CIAO_IMPLEMENTATION_INFO_CPP
 
 #include "ImplementationInfo.h"
-#include "ciao/CIAO_ServerResourcesC.h"
 #include "ace/SString.h"
 
 CIAO::NodeImplementationInfoHandler::
@@ -31,8 +30,10 @@ CIAO::NodeImplementationInfoHandler::node_impl_info (void) const
 void
 CIAO::NodeImplementationInfoHandler::populate_server_resource_def (void)
 {
-  CORBA::ULong const instance_len = plan_.instance.length ();
+  const CORBA::ULong instance_len = plan_.instance.length ();
   const char * target_resource_id = 0;
+
+  CORBA::ULong i;
 
   // Iterate over the instance list to find whether any server resource
   // has been specified
@@ -47,7 +48,7 @@ CIAO::NodeImplementationInfoHandler::populate_server_resource_def (void)
   // ServerResource file will be deployed in the same NA.  However,
   // those using different ServerResource files should be deployed to
   // different NAs.  Something to be fixed later.
-  for (CORBA::ULong i = 0; i < instance_len; ++i)
+  for (i = 0; i < instance_len; ++i)
     {
       if (this->plan_.instance[i].deployedResource.length () != 0)
         {

@@ -6,14 +6,13 @@
 ## this file will be lost the next time it is generated.
 ##
 ## MPC Command:
-## ./bin/mwc.pl -type automake -noreldefs ACE.mwc
+## /acebuilds/ACE_wrappers-repository/bin/mwc.pl -include /acebuilds/MPC/config -include /acebuilds/MPC/templates -feature_file /acebuilds/ACE_wrappers-repository/local.features -noreldefs -type automake -exclude build,Kokyu
 
 ACE_BUILDDIR = $(top_builddir)
 ACE_ROOT = $(top_srcdir)
 
 
 ## Makefile.Misc_Test_Dump.am
-
 noinst_PROGRAMS = test_dump
 
 test_dump_CPPFLAGS = \
@@ -28,7 +27,6 @@ test_dump_LDADD = \
   $(ACE_BUILDDIR)/ace/libACE.la
 
 ## Makefile.Misc_Test_Get_Opt.am
-
 noinst_PROGRAMS += test_get_opt
 
 test_get_opt_CPPFLAGS = \
@@ -45,7 +43,6 @@ test_get_opt_LDADD = \
 ## Makefile.Misc_Test_Profile_Timer.am
 
 if !BUILD_ACE_FOR_TAO
-
 noinst_PROGRAMS += test_profile_timer
 
 test_profile_timer_CPPFLAGS = \
@@ -62,7 +59,6 @@ test_profile_timer_LDADD = \
 endif !BUILD_ACE_FOR_TAO
 
 ## Makefile.Misc_Test_Read_Buffer.am
-
 noinst_PROGRAMS += test_read_buffer
 
 test_read_buffer_CPPFLAGS = \
@@ -77,7 +73,6 @@ test_read_buffer_LDADD = \
   $(ACE_BUILDDIR)/ace/libACE.la
 
 ## Makefile.Misc_Test_Set.am
-
 noinst_PROGRAMS += test_set
 
 test_set_CPPFLAGS = \
@@ -92,7 +87,6 @@ test_set_LDADD = \
   $(ACE_BUILDDIR)/ace/libACE.la
 
 ## Makefile.Misc_Test_Sstring.am
-
 noinst_PROGRAMS += test_sstring
 
 test_sstring_CPPFLAGS = \
@@ -106,23 +100,7 @@ test_sstring_SOURCES = \
 test_sstring_LDADD = \
   $(ACE_BUILDDIR)/ace/libACE.la
 
-## Makefile.Misc_Test_Timestamp.am
-
-noinst_PROGRAMS += test_timestamp
-
-test_timestamp_CPPFLAGS = \
-  -I$(ACE_ROOT) \
-  -I$(ACE_BUILDDIR)
-
-test_timestamp_SOURCES = \
-  test_timestamp.cpp \
-  test_dump.h
-
-test_timestamp_LDADD = \
-  $(ACE_BUILDDIR)/ace/libACE.la
-
 ## Makefile.Misc_Test_Trace.am
-
 noinst_PROGRAMS += test_trace
 
 test_trace_CPPFLAGS = \

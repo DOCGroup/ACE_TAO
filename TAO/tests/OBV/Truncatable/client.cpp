@@ -12,10 +12,6 @@ int fail = 0;
 int pretest = 0;
 int verbose = 0;
 
-#if defined (VERIFY)
-#undef VERIFY
-#endif /* VERIFY */
-
 #define VERIFY(Condition) \
 { \
     if ((Condition)==0) \

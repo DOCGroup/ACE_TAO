@@ -16,7 +16,7 @@ TAO_ROOT = $(top_srcdir)
 
 ## Makefile.Create_Reference.am
 
-if BUILD_EXCEPTIONS
+if !BUILD_ACE_FOR_TAO
 
 noinst_PROGRAMS = create_reference
 
@@ -35,7 +35,7 @@ create_reference_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
-endif BUILD_EXCEPTIONS
+endif !BUILD_ACE_FOR_TAO
 
 ## Clean up template repositories, etc.
 clean-local:

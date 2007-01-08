@@ -16,7 +16,7 @@
 
 #include "orbsvcs/DsLogAdminC.h"
 
-#if (TAO_HAS_MINIMUM_POA == 0) && !defined (CORBA_E_COMPACT) && !defined (CORBA_E_MICRO)
+#if (TAO_HAS_MINIMUM_POA == 0)
 
 #include "orbsvcs/Log/log_serv_export.h"
 
@@ -31,7 +31,7 @@ class TAO_LogMgr_i;
 /// @class TAO_LogActivator
 /// @brief Log Servant Activator
 ///
-/// A servant activator to create Log servants.  Permits servants to
+/// A servant activator to create Log servants.  Permits servants to 
 /// be "lazily" created on demand.  This allows persistent logging
 /// strategies to avoid creating servants for each log when the
 /// service is started.

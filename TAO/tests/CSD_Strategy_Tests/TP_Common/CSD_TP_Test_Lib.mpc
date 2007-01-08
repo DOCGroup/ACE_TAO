@@ -1,5 +1,5 @@
 //$Id$
-project : taolib_with_idl, csd_threadpool, avoids_corba_e_micro {
+project : taolib_with_idl, csd_threadpool {
   sharedname   = CSD_TP_Test
   dynamicflags = CSD_TP_TEST_BUILD_DLL
   idlflags  += -Wb,export_macro=CSD_TP_Test_Export \
@@ -9,8 +9,8 @@ project : taolib_with_idl, csd_threadpool, avoids_corba_e_micro {
   IDL_Files {
     FooException.idl
     TestAppException.idl
-    CancelledException.idl
-    CustomException.idl
+    CancelledException.idl  
+    CustomException.idl     
   }
 
   Source_Files {
@@ -29,8 +29,8 @@ project : taolib_with_idl, csd_threadpool, avoids_corba_e_micro {
     TestAppExceptionS.cpp
     CancelledExceptionC.cpp
     CancelledExceptionS.cpp
-    CustomExceptionC.cpp
-    CustomExceptionS.cpp
+    CustomExceptionC.cpp  
+    CustomExceptionS.cpp  
   }
 
   Template_Files {

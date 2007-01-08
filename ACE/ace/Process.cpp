@@ -18,7 +18,6 @@
 #include "ace/OS_NS_unistd.h"
 #include "ace/OS_Memory.h"
 #include "ace/Countdown_Time.h"
-#include "ace/Truncate.h"
 
 #if defined (ACE_VXWORKS) && (ACE_VXWORKS > 0x600) && defined (__RTP__)
 # include <rtpLib.h>
@@ -842,72 +841,29 @@ int
 ACE_Process_Options::setenv (const ACE_TCHAR *variable_name,
                              const ACE_TCHAR *format, ...)
 {
-  // To address the potential buffer overflow,
-  // we now allocate the buffer on heap with a variable size.
-  size_t const buflen = ACE_OS::strlen (variable_name) + ACE_OS::strlen (format) + 2;
-  ACE_TCHAR *newformat = 0;
-  ACE_NEW_RETURN (newformat, ACE_TCHAR[buflen], -1);
-  ACE_Auto_Basic_Array_Ptr<ACE_TCHAR> safe_newformat (newformat);
+  ACE_TCHAR newformat[DEFAULT_COMMAND_LINE_BUF_LEN];
 
   // Add in the variable name.
-  ACE_OS::sprintf (safe_newformat.get (),
+  ACE_OS::sprintf (newformat,
                    ACE_LIB_TEXT ("%s=%s"),
                    variable_name,
                    format);
+
+  ACE_TCHAR stack_buf[DEFAULT_COMMAND_LINE_BUF_LEN];
 
   // Start varargs.
   va_list argp;
   va_start (argp, format);
 
   // Add the rest of the varargs.
-  size_t tmp_buflen = DEFAULT_COMMAND_LINE_BUF_LEN > buflen 
-                      ? static_cast<size_t> (DEFAULT_COMMAND_LINE_BUF_LEN) : buflen;
-  int retval = 0;
-
-  ACE_TCHAR *stack_buf = 0;
-  ACE_NEW_RETURN (stack_buf, ACE_TCHAR[tmp_buflen], -1);
-  ACE_Auto_Basic_Array_Ptr<ACE_TCHAR> safe_stack_buf (stack_buf);
-
-  do 
-    {
-      retval = ACE_OS::vsnprintf (safe_stack_buf.get (), tmp_buflen, safe_newformat.get (), argp);
-      if (retval > ACE_Utils::Truncate<int> (tmp_buflen))
-        {
-          tmp_buflen *= 2;
-          ACE_NEW_RETURN (stack_buf, ACE_TCHAR[tmp_buflen], -1);
-          safe_stack_buf.reset (stack_buf);
-        }
-      else
-        break;
-    }
-  while (1);
-
-  if (retval == -1)
-    {
-      // In case that vsnprintf is not supported,
-      // e.g., LynxOS and VxWorks 5, we have to
-      // fall back to vsprintf.
-      if (errno == ENOTSUP)
-        { 
-          // ALERT: Since we have to use vsprintf here, there is still a chance that
-          // the stack_buf overflows, i.e., the length of the resulting string
-          // can still possibly go beyond the allocated stack_buf.
-          retval = ACE_OS::vsprintf (safe_stack_buf.get (), safe_newformat.get (), argp);
-          if (retval == -1)
-            // vsprintf is failed.
-            return -1;
-        }
-      else
-        // vsnprintf is failed.
-        return -1;
-    }
+  ACE_OS::vsprintf (stack_buf, newformat, argp);
 
   // End varargs.
   va_end (argp);
 
   // Append the string to our environment buffer.
-  if (this->setenv_i (safe_stack_buf.get (),
-                      ACE_OS::strlen (safe_stack_buf.get ())) == -1)
+  if (this->setenv_i (stack_buf,
+                      ACE_OS::strlen (stack_buf)) == -1)
     return -1;
 
 #if defined (ACE_WIN32)
@@ -923,7 +879,7 @@ ACE_Process_Options::setenv_i (ACE_TCHAR *assignment,
                                size_t len)
 {
   // Add one for the null char.
-  ++len;
+  len++;
 
   // If environment larger than allocated buffer return. Also check to
   // make sure we have enough room.
@@ -1066,7 +1022,7 @@ ACE_Process_Options::command_line (const ACE_TCHAR *format, ...)
   if (command_line_buf_len_ < 1)
     return -1;
 
-#if !defined (ACE_LACKS_VSNPRINTF)
+#if defined (ACE_HAS_SNPRINTF)
   // sprintf the format and args into command_line_buf__.
   ACE_OS::vsnprintf (command_line_buf_,
                      command_line_buf_len_ - 1,

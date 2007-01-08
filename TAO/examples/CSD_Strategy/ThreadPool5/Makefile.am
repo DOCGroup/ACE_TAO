@@ -13,12 +13,10 @@ ACE_ROOT = $(top_srcdir)/..
 TAO_BUILDDIR = $(top_builddir)
 TAO_IDL = ACE_ROOT=$(ACE_ROOT) TAO_ROOT=$(TAO_ROOT) $(TAO_BUILDDIR)/TAO_IDL/tao_idl
 TAO_IDL_DEP = $(TAO_BUILDDIR)/TAO_IDL/tao_idl
-TAO_IDLFLAGS = -Wb,pre_include=ace/pre.h -Wb,post_include=ace/post.h -I$(TAO_ROOT) -I$(srcdir) -g $(ACE_BUILDDIR)/apps/gperf/src/gperf
+TAO_IDLFLAGS = -Ge 1 -Wb,pre_include=ace/pre.h -Wb,post_include=ace/post.h -I$(TAO_ROOT) -I$(srcdir) -g $(ACE_BUILDDIR)/apps/gperf/src/gperf
 TAO_ROOT = $(top_srcdir)
 
-noinst_PROGRAMS =
-
-## Makefile.CSD_Test_ThreadPool5_Idl.am
+## Makefile.CSD_Test_ThreadPool5_Server.am
 
 BUILT_SOURCES = \
   CallbackC.cpp \
@@ -40,7 +38,7 @@ CLEANFILES = \
 CallbackC.cpp CallbackC.h CallbackC.inl CallbackS.cpp CallbackS.h CallbackS.inl: Callback-stamp
 
 Callback-stamp: $(srcdir)/Callback.idl $(TAO_IDL_DEP)
-	$(TAO_IDL) $(TAO_IDLFLAGS) -Sa -St $(srcdir)/Callback.idl
+	$(TAO_IDL) $(TAO_IDLFLAGS) $(srcdir)/Callback.idl
 	@touch $@
 
 BUILT_SOURCES += \
@@ -63,57 +61,10 @@ CLEANFILES += \
 FooC.cpp FooC.h FooC.inl FooS.cpp FooS.h FooS.inl: Foo-stamp
 
 Foo-stamp: $(srcdir)/Foo.idl $(TAO_IDL_DEP)
-	$(TAO_IDL) $(TAO_IDLFLAGS) -Sa -St $(srcdir)/Foo.idl
+	$(TAO_IDL) $(TAO_IDLFLAGS) $(srcdir)/Foo.idl
 	@touch $@
 
-noinst_HEADERS = \
-  Callback.idl \
-  Foo.idl
-
-## Makefile.CSD_Test_ThreadPool5_Client.am
-
-if BUILD_EXCEPTIONS
-if BUILD_THREADS
-
-noinst_PROGRAMS += client_main
-
-client_main_CPPFLAGS = \
-  -I$(ACE_ROOT) \
-  -I$(ACE_BUILDDIR) \
-  -I$(TAO_ROOT) \
-  -I$(TAO_BUILDDIR)
-
-client_main_SOURCES = \
-  CallbackC.cpp \
-  CallbackS.cpp \
-  Callback_i.cpp \
-  ClientApp.cpp \
-  ClientTask.cpp \
-  FooC.cpp \
-  client_main.cpp \
-  Callback_i.h \
-  ClientApp.h \
-  ClientTask.h
-
-client_main_LDADD = \
-  $(TAO_BUILDDIR)/tao/libTAO_CSD_ThreadPool.la \
-  $(TAO_BUILDDIR)/tao/libTAO_CSD_Framework.la \
-  $(TAO_BUILDDIR)/tao/libTAO_PI.la \
-  $(TAO_BUILDDIR)/tao/libTAO_CodecFactory.la \
-  $(TAO_BUILDDIR)/tao/libTAO_PortableServer.la \
-  $(TAO_BUILDDIR)/tao/libTAO_AnyTypeCode.la \
-  $(TAO_BUILDDIR)/tao/libTAO.la \
-  $(ACE_BUILDDIR)/ace/libACE.la
-
-endif BUILD_THREADS
-endif BUILD_EXCEPTIONS
-
-## Makefile.CSD_Test_ThreadPool5_Server.am
-
-if BUILD_EXCEPTIONS
-if BUILD_THREADS
-
-noinst_PROGRAMS += server_main
+noinst_PROGRAMS = server_main
 
 server_main_CPPFLAGS = \
   -I$(ACE_ROOT) \
@@ -134,8 +85,16 @@ server_main_SOURCES = \
   OrbTask.cpp \
   ServerApp.cpp \
   server_main.cpp \
+  CallbackC.h \
+  CallbackC.inl \
+  CallbackS.h \
+  CallbackS.inl \
   Callback_i.h \
   ClientTask.h \
+  FooC.h \
+  FooC.inl \
+  FooS.h \
+  FooS.inl \
   FooServantList.h \
   Foo_i.h \
   OrbShutdownTask.h \
@@ -152,8 +111,89 @@ server_main_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
-endif BUILD_THREADS
-endif BUILD_EXCEPTIONS
+## Makefile.CSD_Test_ThreadPool5_Client.am
+
+BUILT_SOURCES += \
+  CallbackC.cpp \
+  CallbackC.h \
+  CallbackC.inl \
+  CallbackS.cpp \
+  CallbackS.h \
+  CallbackS.inl
+
+CLEANFILES += \
+  Callback-stamp \
+  CallbackC.cpp \
+  CallbackC.h \
+  CallbackC.inl \
+  CallbackS.cpp \
+  CallbackS.h \
+  CallbackS.inl
+
+CallbackC.cpp CallbackC.h CallbackC.inl CallbackS.cpp CallbackS.h CallbackS.inl: Callback-stamp
+
+Callback-stamp: $(srcdir)/Callback.idl $(TAO_IDL_DEP)
+	$(TAO_IDL) $(TAO_IDLFLAGS) $(srcdir)/Callback.idl
+	@touch $@
+
+BUILT_SOURCES += \
+  FooC.cpp \
+  FooC.h \
+  FooC.inl \
+  FooS.h \
+  FooS.inl
+
+CLEANFILES += \
+  Foo-stamp \
+  FooC.cpp \
+  FooC.h \
+  FooC.inl \
+  FooS.h \
+  FooS.inl
+
+FooC.cpp FooC.h FooC.inl FooS.h FooS.inl: Foo-stamp
+
+Foo-stamp: $(srcdir)/Foo.idl $(TAO_IDL_DEP)
+	$(TAO_IDL) $(TAO_IDLFLAGS) $(srcdir)/Foo.idl
+	@touch $@
+
+noinst_PROGRAMS += client_main
+
+client_main_CPPFLAGS = \
+  -I$(ACE_ROOT) \
+  -I$(ACE_BUILDDIR) \
+  -I$(TAO_ROOT) \
+  -I$(TAO_BUILDDIR)
+
+client_main_SOURCES = \
+  CallbackC.cpp \
+  CallbackS.cpp \
+  Callback_i.cpp \
+  ClientApp.cpp \
+  ClientTask.cpp \
+  FooC.cpp \
+  client_main.cpp \
+  CallbackC.h \
+  CallbackC.inl \
+  CallbackS.h \
+  CallbackS.inl \
+  Callback_i.h \
+  ClientApp.h \
+  ClientTask.h \
+  FooC.h \
+  FooC.inl \
+  FooS.h \
+  FooS.inl
+
+client_main_LDADD = \
+  $(TAO_BUILDDIR)/tao/libTAO_CSD_ThreadPool.la \
+  $(TAO_BUILDDIR)/tao/libTAO_CSD_Framework.la \
+  $(TAO_BUILDDIR)/tao/libTAO_PI.la \
+  $(TAO_BUILDDIR)/tao/libTAO_CodecFactory.la \
+  $(TAO_BUILDDIR)/tao/libTAO_PortableServer.la \
+  $(TAO_BUILDDIR)/tao/libTAO_AnyTypeCode.la \
+  $(TAO_BUILDDIR)/tao/libTAO.la \
+  $(ACE_BUILDDIR)/ace/libACE.la
 
 ## Clean up template repositories, etc.
 clean-local:

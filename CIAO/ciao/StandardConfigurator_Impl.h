@@ -18,7 +18,7 @@
 #define CIAO_STANDARDCONFIGURATOR_IMPL_H
 # include /**/ "ace/pre.h"
 
-#include "CCM_StandardConfiguratorS.h"
+#include "CCM_ComponentS.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once

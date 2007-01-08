@@ -1702,7 +1702,7 @@ Craig Watcham <craigw at ananzi dot co dot za>
 Pit Linnartz <Pit dot Linnartz at t-mobile dot de>
 Peder Norgaard <pcn at pogt dot dk>
 David Ohlemacher <ohlemacher at bbn dot com>
-Ken Kane <kenneth dot kane at ironmountain dot com>
+Ken Kane <kkane at livevault dot com>
 Bill Church <wchurch at ara dot com>
 Udo Berninger <udo dot berninger at siemens dot com>
 Vincent Korkos <vincent dot korkos at fr dot thalesgroup dot com>
@@ -1733,7 +1733,7 @@ Roland Schimmack <Roland dot Schimmack at gmx dot de>
 Roy Pollock <rpollock at ghs dot com>
 Eric Held <Eric dot Held at harris dot com>
 Kees van Marle <kvmarle at remedy dot nl>
-Dieter Knueppel <Dieter dot Knueppel at batm dot de>
+Dieter Knueppel <dknueppel at datus dot com>
 Amol Tambe <Amol dot Tambe at ideas dot com>
 Emiliano Berenbaum <eberenb at yahoo dot com>
 Scott Clarke <sclarke at ideorlando dot org>
@@ -1765,6 +1765,7 @@ Onopin V. Mikhail <kool at garant dot ru>
 Edward R. Mulholland  <emulholl at atl dot lmco dot com>
 Brian Buesker <bbuesker at qualcomm dot com>
 Vladimir Naylov <vladimir at monosphere dot com>
+David Faure <faure at kde dot org>
 Ted Mules <ned at technisyst dot com dot au>
 Mike Hepburn <mike at anvil dot com>
 Dale Wilson  <wilson_d at ociweb dot com>
@@ -2036,7 +2037,7 @@ Hubert Talbot <Hubert dot Talbot at criq dot qc dot ca>
 Oh Yoon Sik <boom at estsoft dot com>
 Anton Bakanovskiy <Anton dot Bakanovskiy at bercut dot ru>
 Toha Bakanovsky <im-scooter at yandex dot ru>
-David Faure <dfaure at klaralvdalens-datakonsult dot se> <faure at kde dot org>
+David Faure <dfaure at klaralvdalens-datakonsult dot se>
 Robert Hancock <hancockr at shaw dot ca>
 Peter Oslej <peter dot oslej at vrm dot sk>
 Yongming Wang <wangym at gmail dot com>
@@ -2131,7 +2132,7 @@ Michael Reed <mnr102 at yahoo dot com>
 Heesuk Shin <heesuks at econz dot com>
 Hong Xing <hongxing777 at gmail dot com>
 Winston Zhang <winston_ace at kubao-inc dot com>
-Stefan Naewe <naewe dot s at atlas dot de> <stefan at naewe dot de>
+Stefan Naewe <naewe dot s at atlas dot de>
 Graeme Bell <graemeb at econz dot com>
 Eric Danielou <eric dot danielou at eads dot com>
 Wei Jiang <sdjiangwei at sina dot com>
@@ -2159,14 +2160,6 @@ N Johnson <nj at artesys dot info>
 Adam Nagel <nagelar at isis dot vanderbilt dot edu>
 Robert Neumann <robert dot neumann at gmail dot com>
 Venkat <swara101 at yahoo dot com>
-Juraj Ivancic <juraj dot ivancic at gmail dot com>
-Daniel Black <dragonheart at gentoo dot org>
-Richard Ridgway <Richard_Ridgway at ml dot com>
-Vadym Ridosh <vridosh at prismtech dot com>
-Viola Wang <vwang at eso dot org>
-Ray Lischner <rlischner at proteus-technologies dot com>
-Sergey Kosenko <sergey dot kosenko at gmail dot com>
-Pavel Zaichenko <zpf at ivl dot ua>
 
 I would particularly like to thank Paul Stephenson, who worked with me
 at Ericsson in the early 1990's.  Paul devised the recursive Makefile

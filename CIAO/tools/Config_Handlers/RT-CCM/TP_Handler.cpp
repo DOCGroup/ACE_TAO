@@ -1,6 +1,7 @@
 // $Id$Exp lseibert
 
 #include "TP_Handler.h"
+#include "ciao/ServerResourcesC.h"
 #include "CIAOServerResources.hpp"
 
 namespace CIAO

@@ -6,7 +6,7 @@ project(*idl) : taoidldefaults, anytypecode {
   custom_only = 1
 }
 
-project(*Server): taoexe, loadbalancing, pi_server {
+project(*Server): taoexe, loadbalancing, pi_server, exceptions {
   avoids += ace_for_tao
   after  += *idl
   Source_Files {

@@ -58,14 +58,14 @@ public:
 
   /// Must be used with UNIQUE_ID policy.
   int is_servant_in_map (PortableServer::Servant servant,
-                         bool &deactivated);
+                         int &deactivated);
 
   /// Can be used with any policy.  With the SYSTEM_ID policy,
   /// user_id is actually system_id.
-  bool is_user_id_in_map (const PortableServer::ObjectId &user_id,
-                          CORBA::Short priority,
-                          bool &priorities_match,
-                          bool &deactivated);
+  int is_user_id_in_map (const PortableServer::ObjectId &user_id,
+                         CORBA::Short priority,
+                         int &priorities_match,
+                         int &deactivated);
 
   /// Must be used with SYSTEM_ID policy.
   int bind_using_system_id_returning_system_id (PortableServer::Servant servant,
@@ -250,7 +250,7 @@ public:
 
   /// Must be used with UNIQUE_ID policy.
   virtual int is_servant_in_map (PortableServer::Servant servant,
-                                 bool &deactivated) = 0;
+                                 int &deactivated) = 0;
 
   /// Can be used with any policy.  With the SYSTEM_ID policy,
   /// <user_id> is actually <system_id>.
@@ -300,7 +300,7 @@ public:
 
   /// Must be used with UNIQUE_ID policy.
   virtual int is_servant_in_map (PortableServer::Servant servant,
-                                 bool &deactivated);
+                                 int &deactivated);
 
   /// Can be used with any policy.  With the SYSTEM_ID policy,
   /// <user_id> is actually <system_id>.
@@ -342,7 +342,7 @@ public:
 
   /// Must be used with UNIQUE_ID policy.
   virtual int is_servant_in_map (PortableServer::Servant servant,
-                                 bool &deactivated);
+                                 int &deactivated);
 
   /// Can be used with any policy.  With the SYSTEM_ID policy,
   /// <user_id> is actually <system_id>.

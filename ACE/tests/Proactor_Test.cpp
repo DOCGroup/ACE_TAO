@@ -20,7 +20,7 @@ ACE_RCSID (tests,
            Proactor_Test,
            "$Id$")
 
-#if defined (ACE_HAS_THREADS) && (defined (ACE_HAS_WIN32_OVERLAPPED_IO) || defined (ACE_HAS_AIO_CALLS))
+#if defined (ACE_HAS_THREADS) && ((defined (ACE_WIN32) && !defined (ACE_HAS_WINCE)) || (defined (ACE_HAS_AIO_CALLS)))
   // This only works on Win32 platforms and on Unix platforms
   // supporting POSIX aio calls.
 
@@ -50,7 +50,7 @@ ACE_RCSID (tests,
 #include "ace/Atomic_Op.h"
 #include "ace/Synch_Traits.h"
 
-#if defined (ACE_WIN32)
+#if defined (ACE_WIN32) && !defined (ACE_HAS_WINCE)
 
 #  include "ace/WIN32_Proactor.h"
 
@@ -60,7 +60,7 @@ ACE_RCSID (tests,
 #  include "ace/POSIX_CB_Proactor.h"
 #  include "ace/SUN_Proactor.h"
 
-#endif /* ACE_WIN32 */
+#endif /* defined (ACE_WIN32) && !defined (ACE_HAS_WINCE) */
 
 #include "Proactor_Test.h"
 
@@ -205,7 +205,7 @@ MyTask::create_proactor (ProactorType type_proactor, size_t max_op)
 
   ACE_ASSERT (this->proactor_ == 0);
 
-#if defined (ACE_WIN32)
+#if defined (ACE_WIN32) && !defined (ACE_HAS_WINCE)
 
   ACE_UNUSED_ARG (type_proactor);
   ACE_UNUSED_ARG (max_op);
@@ -269,7 +269,7 @@ MyTask::create_proactor (ProactorType type_proactor, size_t max_op)
       break;
   }
 
-#endif /* ACE_WIN32 */
+#endif // (ACE_WIN32) && !defined (ACE_HAS_WINCE)
 
   // always delete implementation  1 , not  !(proactor_impl == 0)
   ACE_NEW_RETURN (this->proactor_,
@@ -1281,7 +1281,7 @@ Client::initiate_write_stream (void)
 
   static const size_t complete_message_length = ACE_OS::strlen (complete_message);
 
-#if defined (ACE_WIN32)
+#if (defined (ACE_WIN32) && !defined (ACE_HAS_WINCE))
 
   ACE_Message_Block *mb1 = 0,
                     *mb2 = 0,
@@ -1319,7 +1319,7 @@ Client::initiate_write_stream (void)
                         ACE_TEXT ("Client::ACE_Asynch_Stream::writev")),
                        -1);
     }
-#else /* ACE_WIN32 */
+#else /* (defined (ACE_WIN32) && !defined (ACE_HAS_WINCE)) */
 
   ACE_Message_Block *mb = 0;
 
@@ -1346,7 +1346,7 @@ Client::initiate_write_stream (void)
                         ACE_TEXT ("write")),
                        -1);
     }
-#endif /* ACE_WIN32 */
+#endif /* (defined (ACE_WIN32) && !defined (ACE_HAS_WINCE)) */
 
   this->io_count_++;
   this->total_w_++;
@@ -1362,7 +1362,7 @@ Client::initiate_read_stream (void)
   static const size_t complete_message_length =
     ACE_OS::strlen (complete_message);
 
-#if defined (ACE_HAS_WIN32_OVERLAPPED_IO)
+#if (defined (ACE_WIN32) && !defined (ACE_HAS_WINCE) && (ACE_HAS_WINNT4) && (ACE_HAS_WINNT4 != 0))
   ACE_Message_Block *mb1 = 0,
                     *mb2 = 0,
                     *mb3 = 0,
@@ -1411,7 +1411,7 @@ Client::initiate_read_stream (void)
                          ACE_TEXT ("Client::ACE_Asynch_Read_Stream::readv")),
                         -1);
     }
-#else /* ACE_HAS_WIN32_OVERLAPPED_IO */
+#else /* (defined (ACE_WIN32) && !defined (ACE_HAS_WINCE)) */
 
   // Try to read more chunks
   size_t blksize = ( complete_message_length > BUFSIZ ) ?
@@ -1444,7 +1444,7 @@ Client::initiate_read_stream (void)
                          ACE_TEXT ("read")),
                         -1);
     }
-#endif /* ACE_HAS_WIN32_OVERLAPPED_IO */
+#endif /* (defined (ACE_WIN32) && !defined (ACE_HAS_WINCE)) */
 
   this->io_count_++;
   this->total_r_++;
@@ -1495,7 +1495,7 @@ Client::handle_write_stream (const ACE_Asynch_Write_Stream::Result &result)
                     ACE_TEXT ("error"),
                     result.error ()));
 
-#if defined (ACE_WIN32)
+#if (defined (ACE_WIN32) && !defined (ACE_HAS_WINCE))
         size_t bytes_transferred = result.bytes_transferred ();
         char index = 0;
         for (ACE_Message_Block* mb_i = &mb;
@@ -1526,7 +1526,7 @@ Client::handle_write_stream (const ACE_Asynch_Write_Stream::Result &result)
                         index,
                         mb_i->rd_ptr ()));
           }
-#else /* ACE_WIN32 */
+#else /* (defined (ACE_WIN32) && !defined (ACE_HAS_WINCE)) */
         // write 0 at string end for proper printout (if end of mb, it's 0 already)
         mb.rd_ptr()[0]  = '\0';
         // move rd_ptr backwards as required for printout
@@ -1535,7 +1535,7 @@ Client::handle_write_stream (const ACE_Asynch_Write_Stream::Result &result)
                     ACE_TEXT ("%s = %s\n"),
                     ACE_TEXT ("message_block"),
                     mb.rd_ptr ()));
-#endif /* ACE_WIN32 */
+#endif /* (defined (ACE_WIN32) && !defined (ACE_HAS_WINCE)) */
 
         ACE_DEBUG ((LM_DEBUG,
                     ACE_TEXT ("**** end of message ****************\n")));
@@ -1638,7 +1638,7 @@ Client::handle_read_stream (const ACE_Asynch_Read_Stream::Result &result)
                     ACE_TEXT ("error"),
                     result.error ()));
 
-#if defined (ACE_WIN32)
+#if (defined (ACE_WIN32) && !defined (ACE_HAS_WINCE))
         char index = 0;
         for (ACE_Message_Block* mb_i = &mb;
              mb_i != 0;
@@ -1654,14 +1654,14 @@ Client::handle_read_stream (const ACE_Asynch_Read_Stream::Result &result)
                         index,
                         mb_i->rd_ptr ()));
           }
-#else /* ACE_WIN32 */
+#else /* (defined (ACE_WIN32) && !defined (ACE_HAS_WINCE)) */
         // write 0 at string end for proper printout
         mb.rd_ptr()[result.bytes_transferred ()]  = '\0'; // for proper printout
         ACE_DEBUG ((LM_DEBUG,
                     ACE_TEXT ("%s = %s\n"),
                     ACE_TEXT ("message_block"),
                     mb.rd_ptr ()));
-#endif /* ACE_WIN32 */
+#endif /* (defined (ACE_WIN32) && !defined (ACE_HAS_WINCE)) */
 
         ACE_DEBUG ((LM_DEBUG,
                     ACE_TEXT ("**** end of message ****************\n")));
@@ -1934,4 +1934,4 @@ run_main (int, ACE_TCHAR *[])
   return 0;
 }
 
-#endif  /* ACE_HAS_WIN32_OVERLAPPED_IO || ACE_HAS_AIO_CALLS */
+#endif  /* ACE_WIN32 && !ACE_HAS_WINCE || ACE_HAS_AIO_CALLS */

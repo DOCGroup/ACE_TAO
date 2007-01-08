@@ -18,7 +18,7 @@ noinst_PROGRAMS =
 ## Makefile.Basic_Notify_AdminProperties.am
 
 if BUILD_CORBA_MESSAGING
-if BUILD_EXCEPTIONS
+if !BUILD_MINIMUM_CORBA
 
 noinst_PROGRAMS += AdminProperties
 
@@ -44,10 +44,10 @@ AdminProperties_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO_Messaging.la \
   $(TAO_BUILDDIR)/tao/libTAO_PI.la \
   $(TAO_BUILDDIR)/tao/libTAO_CodecFactory.la \
+  $(TAO_BUILDDIR)/tao/libTAO_Valuetype.la \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosNaming.la \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosNotification_Serv.la \
   $(TAO_BUILDDIR)/tao/libTAO_DynamicAny.la \
-  $(TAO_BUILDDIR)/tao/libTAO_Valuetype.la \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_ETCL.la \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_Svc_Utils.la \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosNotification_Skel.la \
@@ -59,13 +59,13 @@ AdminProperties_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
-endif BUILD_EXCEPTIONS
+endif !BUILD_MINIMUM_CORBA
 endif BUILD_CORBA_MESSAGING
 
 ## Makefile.Basic_Notify_ConnectDisconnect.am
 
 if BUILD_CORBA_MESSAGING
-if BUILD_EXCEPTIONS
+if !BUILD_MINIMUM_CORBA
 
 noinst_PROGRAMS += ConnectDisconnect
 
@@ -91,10 +91,10 @@ ConnectDisconnect_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO_Messaging.la \
   $(TAO_BUILDDIR)/tao/libTAO_PI.la \
   $(TAO_BUILDDIR)/tao/libTAO_CodecFactory.la \
+  $(TAO_BUILDDIR)/tao/libTAO_Valuetype.la \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosNaming.la \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosNotification_Serv.la \
   $(TAO_BUILDDIR)/tao/libTAO_DynamicAny.la \
-  $(TAO_BUILDDIR)/tao/libTAO_Valuetype.la \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_ETCL.la \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_Svc_Utils.la \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosNotification_Skel.la \
@@ -106,13 +106,13 @@ ConnectDisconnect_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
-endif BUILD_EXCEPTIONS
+endif !BUILD_MINIMUM_CORBA
 endif BUILD_CORBA_MESSAGING
 
 ## Makefile.Basic_Notify_Events.am
 
 if BUILD_CORBA_MESSAGING
-if BUILD_EXCEPTIONS
+if !BUILD_MINIMUM_CORBA
 
 noinst_PROGRAMS += Events
 
@@ -138,10 +138,10 @@ Events_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO_Messaging.la \
   $(TAO_BUILDDIR)/tao/libTAO_PI.la \
   $(TAO_BUILDDIR)/tao/libTAO_CodecFactory.la \
+  $(TAO_BUILDDIR)/tao/libTAO_Valuetype.la \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosNaming.la \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosNotification_Serv.la \
   $(TAO_BUILDDIR)/tao/libTAO_DynamicAny.la \
-  $(TAO_BUILDDIR)/tao/libTAO_Valuetype.la \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_ETCL.la \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_Svc_Utils.la \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosNotification_Skel.la \
@@ -153,13 +153,13 @@ Events_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
-endif BUILD_EXCEPTIONS
+endif !BUILD_MINIMUM_CORBA
 endif BUILD_CORBA_MESSAGING
 
 ## Makefile.Basic_Notify_Filter.am
 
 if BUILD_CORBA_MESSAGING
-if BUILD_EXCEPTIONS
+if !BUILD_MINIMUM_CORBA
 
 noinst_PROGRAMS += Filter
 
@@ -185,10 +185,10 @@ Filter_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO_Messaging.la \
   $(TAO_BUILDDIR)/tao/libTAO_PI.la \
   $(TAO_BUILDDIR)/tao/libTAO_CodecFactory.la \
+  $(TAO_BUILDDIR)/tao/libTAO_Valuetype.la \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosNaming.la \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosNotification_Serv.la \
   $(TAO_BUILDDIR)/tao/libTAO_DynamicAny.la \
-  $(TAO_BUILDDIR)/tao/libTAO_Valuetype.la \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_ETCL.la \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_Svc_Utils.la \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosNotification_Skel.la \
@@ -200,13 +200,13 @@ Filter_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
-endif BUILD_EXCEPTIONS
+endif !BUILD_MINIMUM_CORBA
 endif BUILD_CORBA_MESSAGING
 
 ## Makefile.Basic_Notify_IdAssignment.am
 
 if BUILD_CORBA_MESSAGING
-if BUILD_EXCEPTIONS
+if !BUILD_MINIMUM_CORBA
 
 noinst_PROGRAMS += IdAssignment
 
@@ -232,10 +232,10 @@ IdAssignment_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO_Messaging.la \
   $(TAO_BUILDDIR)/tao/libTAO_PI.la \
   $(TAO_BUILDDIR)/tao/libTAO_CodecFactory.la \
+  $(TAO_BUILDDIR)/tao/libTAO_Valuetype.la \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosNaming.la \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosNotification_Serv.la \
   $(TAO_BUILDDIR)/tao/libTAO_DynamicAny.la \
-  $(TAO_BUILDDIR)/tao/libTAO_Valuetype.la \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_ETCL.la \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_Svc_Utils.la \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosNotification_Skel.la \
@@ -247,13 +247,13 @@ IdAssignment_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
-endif BUILD_EXCEPTIONS
+endif !BUILD_MINIMUM_CORBA
 endif BUILD_CORBA_MESSAGING
 
 ## Makefile.Basic_Notify_LifeCycle.am
 
 if BUILD_CORBA_MESSAGING
-if BUILD_EXCEPTIONS
+if !BUILD_MINIMUM_CORBA
 
 noinst_PROGRAMS += LifeCycle
 
@@ -279,10 +279,10 @@ LifeCycle_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO_Messaging.la \
   $(TAO_BUILDDIR)/tao/libTAO_PI.la \
   $(TAO_BUILDDIR)/tao/libTAO_CodecFactory.la \
+  $(TAO_BUILDDIR)/tao/libTAO_Valuetype.la \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosNaming.la \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosNotification_Serv.la \
   $(TAO_BUILDDIR)/tao/libTAO_DynamicAny.la \
-  $(TAO_BUILDDIR)/tao/libTAO_Valuetype.la \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_ETCL.la \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_Svc_Utils.la \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosNotification_Skel.la \
@@ -294,13 +294,13 @@ LifeCycle_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
-endif BUILD_EXCEPTIONS
+endif !BUILD_MINIMUM_CORBA
 endif BUILD_CORBA_MESSAGING
 
 ## Makefile.Basic_Notify_MultiTypes.am
 
 if BUILD_CORBA_MESSAGING
-if BUILD_EXCEPTIONS
+if !BUILD_MINIMUM_CORBA
 
 noinst_PROGRAMS += MultiTypes
 
@@ -326,10 +326,10 @@ MultiTypes_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO_Messaging.la \
   $(TAO_BUILDDIR)/tao/libTAO_PI.la \
   $(TAO_BUILDDIR)/tao/libTAO_CodecFactory.la \
+  $(TAO_BUILDDIR)/tao/libTAO_Valuetype.la \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosNaming.la \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosNotification_Serv.la \
   $(TAO_BUILDDIR)/tao/libTAO_DynamicAny.la \
-  $(TAO_BUILDDIR)/tao/libTAO_Valuetype.la \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_ETCL.la \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_Svc_Utils.la \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosNotification_Skel.la \
@@ -341,13 +341,13 @@ MultiTypes_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
-endif BUILD_EXCEPTIONS
+endif !BUILD_MINIMUM_CORBA
 endif BUILD_CORBA_MESSAGING
 
 ## Makefile.Basic_Notify_Sequence.am
 
 if BUILD_CORBA_MESSAGING
-if BUILD_EXCEPTIONS
+if !BUILD_MINIMUM_CORBA
 
 noinst_PROGRAMS += Sequence
 
@@ -373,10 +373,10 @@ Sequence_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO_Messaging.la \
   $(TAO_BUILDDIR)/tao/libTAO_PI.la \
   $(TAO_BUILDDIR)/tao/libTAO_CodecFactory.la \
+  $(TAO_BUILDDIR)/tao/libTAO_Valuetype.la \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosNaming.la \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosNotification_Serv.la \
   $(TAO_BUILDDIR)/tao/libTAO_DynamicAny.la \
-  $(TAO_BUILDDIR)/tao/libTAO_Valuetype.la \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_ETCL.la \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_Svc_Utils.la \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosNotification_Skel.la \
@@ -388,13 +388,13 @@ Sequence_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
-endif BUILD_EXCEPTIONS
+endif !BUILD_MINIMUM_CORBA
 endif BUILD_CORBA_MESSAGING
 
 ## Makefile.Basic_Notify_Simple.am
 
 if BUILD_CORBA_MESSAGING
-if BUILD_EXCEPTIONS
+if !BUILD_MINIMUM_CORBA
 
 noinst_PROGRAMS += Simple
 
@@ -420,10 +420,10 @@ Simple_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO_Messaging.la \
   $(TAO_BUILDDIR)/tao/libTAO_PI.la \
   $(TAO_BUILDDIR)/tao/libTAO_CodecFactory.la \
+  $(TAO_BUILDDIR)/tao/libTAO_Valuetype.la \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosNaming.la \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosNotification_Serv.la \
   $(TAO_BUILDDIR)/tao/libTAO_DynamicAny.la \
-  $(TAO_BUILDDIR)/tao/libTAO_Valuetype.la \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_ETCL.la \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_Svc_Utils.la \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosNotification_Skel.la \
@@ -435,13 +435,13 @@ Simple_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
-endif BUILD_EXCEPTIONS
+endif !BUILD_MINIMUM_CORBA
 endif BUILD_CORBA_MESSAGING
 
 ## Makefile.Basic_Notify_Updates.am
 
 if BUILD_CORBA_MESSAGING
-if BUILD_EXCEPTIONS
+if !BUILD_MINIMUM_CORBA
 
 noinst_PROGRAMS += Updates
 
@@ -467,10 +467,10 @@ Updates_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO_Messaging.la \
   $(TAO_BUILDDIR)/tao/libTAO_PI.la \
   $(TAO_BUILDDIR)/tao/libTAO_CodecFactory.la \
+  $(TAO_BUILDDIR)/tao/libTAO_Valuetype.la \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosNaming.la \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosNotification_Serv.la \
   $(TAO_BUILDDIR)/tao/libTAO_DynamicAny.la \
-  $(TAO_BUILDDIR)/tao/libTAO_Valuetype.la \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_ETCL.la \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_Svc_Utils.la \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosNotification_Skel.la \
@@ -482,7 +482,7 @@ Updates_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
-endif BUILD_EXCEPTIONS
+endif !BUILD_MINIMUM_CORBA
 endif BUILD_CORBA_MESSAGING
 
 ## Clean up template repositories, etc.

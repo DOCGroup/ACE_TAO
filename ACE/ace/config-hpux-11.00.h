@@ -135,8 +135,17 @@
 // Compiler supports template specialization.
 #    define ACE_HAS_TEMPLATE_SPECIALIZATION
 
+// Preprocessor needs some help with data types
+#    if defined (__LP64__)
+#      define ACE_SIZEOF_LONG 8
+#    else
+#      define ACE_SIZEOF_LONG 4
+#    endif
+
 // Platform has XPG4 wide character support
 #    define ACE_HAS_XPG4_MULTIBYTE_CHAR
+#    define ACE_HAS_WCHAR
+#    define ACE_SIZEOF_WCHAR _WCHAR_T
 
 #  endif /* __cplusplus < 199707L */
 
@@ -165,6 +174,10 @@
 #endif
 
 #include /**/ <sys/stdsyms.h>
+
+#if defined (_INCLUDE_HPUX_SOURCE)
+#  define ACE_HAS_SNPRINTF
+#endif
 
 // HP-UX is a POSIX-compliant system - see what's available.
 #include "ace/config-posix.h"
@@ -199,13 +212,6 @@
 #else
 #  define ACE_DEFAULT_BASE_ADDR ((char *) 0x80000000)
 #endif  /* __LP64__ */
-
-// Preprocessor needs some help with data types
-#if defined (__LP64__)
-#  define ACE_SIZEOF_LONG 8
-#else
-#  define ACE_SIZEOF_LONG 4
-#endif
 
 // Platform can do async I/O (aio_*) (set up in config-posix.h)
 // ... but seems to require this in order to keep from hanging.  Needs some
@@ -410,9 +416,6 @@
 #if defined (_INCLUDE__STDC_A1_SOURCE)
 #  define ACE_HAS_3_PARAM_WCSTOK
 #endif
-
-#define ACE_HAS_3_PARAM_READDIR_R
-
 
 //////////////////////////////////////////////////////////////////////////
 //

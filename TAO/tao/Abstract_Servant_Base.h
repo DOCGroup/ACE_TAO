@@ -93,11 +93,11 @@ public:
       ACE_ENV_SINGLE_ARG_DECL
     ) = 0;
 
-  /// Default @c _get_component: always returns nil.
+  /// Default @c_get_component: always returns nil.
   virtual CORBA::Object_ptr _get_component (
     ACE_ENV_SINGLE_ARG_DECL) = 0;
 
-  /// Default @c _repository_id
+  /// Default @c_repository_id
   virtual char * _repository_id (
     ACE_ENV_SINGLE_ARG_DECL) = 0;
 

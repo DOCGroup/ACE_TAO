@@ -34,10 +34,10 @@ namespace CIAO
     const char * RMior = "RepositoryManagerDaemon.ior";
 
     // Name of RepoMan
-    const char * repoman_name_ = "RepositoryManager";
+    char * repoman_name_ = "RepositoryManager";
 
     //Name service of the RM
-    const char * RMname_service = "RepositoryManager";
+    char * RMname_service = "RepositoryManager";
 
     /// Default number of worker threads to run in the multi-threaded RM
     static unsigned int nthreads = 3;
@@ -48,7 +48,7 @@ namespace CIAO
   }
 }
 
-// Forward declaration
+//forward declaration
 bool parse_args (int argc, char *argv[]);
 
 /**
@@ -143,18 +143,18 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     if (!parse_args (argc, argv))
        return -1;
 
-    // Get the root POA object
+    //Get the root POA object
     CORBA::Object_var obj = orb->resolve_initial_references ("RootPOA");
 
-    // Downcast to POA type
+    //downcast to POA type
     PortableServer::POA_var root_poa = PortableServer::POA::_narrow (obj.in ());
 
     //activate the POA manager
     PortableServer::POAManager_var mgr = root_poa->the_POAManager ();
     mgr->activate ();
 
-    // Create a servant
-    CIAO_RepositoryManagerDaemon_i* repo = 0;
+    //create a servant
+    CIAO_RepositoryManagerDaemon_i* repo;
     ACE_NEW_RETURN (repo,
                     CIAO_RepositoryManagerDaemon_i (
                           orb.in (),
@@ -162,7 +162,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                           CIAO::RepositoryManager::repoman_name_),
                     1);
 
-    //transfer ownership to the POA
+    //trasfer ownership to the POA
     PortableServer::ServantBase_var owner_transfer(repo);
 
     //register and implicitly activate servant
@@ -202,10 +202,19 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
     ACE_DEBUG ((LM_DEBUG, "event loop finished\n"));
 
-    // done
+    //done
     return 0;
 
-    // todo shutdown orb
+    //Start accepting requests
+    orb->run ();
+
+    //allow objects registered with the POA ot get cleaned-up
+    root_poa->destroy (1, 1);
+
+    //shutdown the orb
+    orb->shutdown (1);
+
+    return 0;
   }
   catch (CORBA::Exception &ex) {
     cerr << "CORBA Exception: " << ex << endl;

@@ -1157,7 +1157,9 @@ IDL_GlobalData::update_prefix (char *filename)
   ACE_CString tmp ("", 0, 0);
   char *main_filename = this->pd_main_filename->get_string ();
 
+//  ACE_CString ext_id (filename);
   char *prefix = 0;
+
   int status = this->file_prefixes_.find (filename, prefix);
 
   if (status == 0)
@@ -1187,20 +1189,9 @@ IDL_GlobalData::update_prefix (char *filename)
     {
       if (!this->pd_in_main_file)
         {
-          status =
-            this->file_prefixes_.find (this->pd_filename->get_string (),
-                                       prefix);
-          
-          // This function is called just before we transition to a
-          // new file at global scope. If there is a non-null prefix
-          // stored in the table under our not-yet-changed filename,
-          // pop it.
-          if (status == 0 && ACE_OS::strcmp (prefix, "") != 0)
-            {
-              char *trash = 0;
-              this->pragma_prefixes_.pop (trash);
-              delete [] trash;
-            }
+          char *trash = 0;
+          this->pragma_prefixes_.pop (trash);
+          delete [] trash;
         }
     }
   else
@@ -1547,7 +1538,7 @@ IDL_GlobalData::fini (void)
       delete this->pd_root;
       this->pd_root = 0;
     }
-
+    
   delete this->pd_err;
   this->pd_err = 0;
   delete this->pd_gen;
@@ -1630,7 +1621,7 @@ IDL_GlobalData::create_uses_multiple_stuff (
 
   if (d == 0)
     {
-      // This would happen if we haven't included Components.idl.
+      // This would happen if we haven't included Componennts.idl.
       idl_global->err ()->lookup_error (&scoped_name);
       return;
     }
@@ -1804,7 +1795,7 @@ IDL_GlobalData::add_dcps_data_key (const char* id, const char* key)
 {
   // Search the map for the type.
   DCPS_Data_Type_Info* newinfo = 0;
-
+  
   if (this->dcps_type_info_map_.find (id, newinfo) == 0)
     {
        // Add the new key field to the type.
@@ -1816,7 +1807,7 @@ IDL_GlobalData::add_dcps_data_key (const char* id, const char* key)
       ACE_ERROR((LM_ERROR,
                  ACE_TEXT ("missing previous #pragma DCPS_DATA_TYPE\n")));
     }
-
+    
   return false;
 }
 

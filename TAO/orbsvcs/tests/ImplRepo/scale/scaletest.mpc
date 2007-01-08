@@ -7,7 +7,7 @@ project(*idl): taoidldefaults {
   custom_only = 1
 }
 
-project(*server) : portableserver, orbsvcsexe, avoids_minimum_corba, iortable, imr_client, avoids_corba_e_micro {
+project(*server) : portableserver, orbsvcsexe, minimum_corba, iortable, imr_client {
   after += *idl
 
   IDL_Files {
@@ -21,7 +21,7 @@ project(*server) : portableserver, orbsvcsexe, avoids_minimum_corba, iortable, i
   }
 }
 
-project(*client) : portableserver, orbsvcsexe, avoids_minimum_corba, iortable {
+project(*client) : portableserver, orbsvcsexe, minimum_corba, iortable {
   after += *idl
 
   IDL_Files {

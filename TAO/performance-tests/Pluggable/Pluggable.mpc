@@ -8,7 +8,7 @@ project(*idl): taoidldefaults {
   custom_only = 1
 }
 
-project(*server): taoserver, utils, avoids_corba_e_micro {
+project(*server): taoserver, utils {
   after += *idl
   Source_Files {
     PP_Test_Server.cpp

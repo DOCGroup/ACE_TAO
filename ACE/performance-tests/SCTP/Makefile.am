@@ -6,7 +6,7 @@
 ## this file will be lost the next time it is generated.
 ##
 ## MPC Command:
-## ./bin/mwc.pl -type automake -noreldefs ACE.mwc
+## /acebuilds/ACE_wrappers-repository/bin/mwc.pl -include /acebuilds/MPC/config -include /acebuilds/MPC/templates -feature_file /acebuilds/ACE_wrappers-repository/local.features -noreldefs -type automake -exclude build,Kokyu
 
 ACE_BUILDDIR = $(top_builddir)
 ACE_ROOT = $(top_srcdir)
@@ -16,7 +16,6 @@ noinst_PROGRAMS =
 ## Makefile.SCTP_SOCK_SEQPACK_Association_Test.am
 
 if !BUILD_ACE_FOR_TAO
-
 noinst_PROGRAMS += SOCK_SEQPACK_Association_Test
 
 SOCK_SEQPACK_Association_Test_CPPFLAGS = \
@@ -36,7 +35,6 @@ endif !BUILD_ACE_FOR_TAO
 ## Makefile.SCTP_SOCK_SEQPACK_Clt.am
 
 if !BUILD_ACE_FOR_TAO
-
 noinst_PROGRAMS += SOCK_SEQPACK_clt
 
 SOCK_SEQPACK_clt_CPPFLAGS = \
@@ -58,7 +56,6 @@ endif !BUILD_ACE_FOR_TAO
 ## Makefile.SCTP_SOCK_SEQPACK_Srv.am
 
 if !BUILD_ACE_FOR_TAO
-
 noinst_PROGRAMS += SOCK_SEQPACK_srv
 
 SOCK_SEQPACK_srv_CPPFLAGS = \
@@ -78,7 +75,6 @@ endif !BUILD_ACE_FOR_TAO
 ## Makefile.SCTP_SOCK_STREAM_Clt.am
 
 if !BUILD_ACE_FOR_TAO
-
 noinst_PROGRAMS += SOCK_STREAM_clt
 
 SOCK_STREAM_clt_CPPFLAGS = \
@@ -98,7 +94,6 @@ SOCK_STREAM_clt_LDADD = \
 endif !BUILD_ACE_FOR_TAO
 
 ## Makefile.SCTP_SOCK_STREAM_Srv.am
-
 noinst_PROGRAMS += SOCK_STREAM_srv
 
 SOCK_STREAM_srv_CPPFLAGS = \

@@ -1,7 +1,7 @@
 // $Id$
 #include "tao/AnyTypeCode/AnyTypeCode_methods.h"
 #include "ciao/CIAO_common.h"
-#include "ciao/Deployment_Packaging_DataC.h"
+#include "ciao/Packaging_DataC.h"
 #include "Utils/XML_Helper.h"
 #include "Utils/XercesString.h"
 #include "Utils/Exceptions.h"
@@ -41,10 +41,10 @@ namespace CIAO
 	    TopLevelPackageDescription tpd (foo);
 
             tpd = topLevelPackageDescription (dom);
-
+            
             PCD_Handler::package_config (tpd.package (),
                                          toconfig);
-
+	    
           }
         else if (root == XStr ("Deployment:packageConfiguration"))
           {

@@ -64,9 +64,6 @@ public:
   /// Init the service.
   virtual void init_service (CORBA::ORB_ptr orb ACE_ENV_ARG_DECL) = 0;
 
-  /// Init the service with separate dispatching orb.
-  virtual void init_service2 (CORBA::ORB_ptr orb, CORBA::ORB_ptr dispatching_orb ACE_ENV_ARG_DECL) = 0;
-
   /// Create the Channel Factory.
   virtual CosNotifyChannelAdmin::EventChannelFactory_ptr create (
       PortableServer::POA_ptr default_POA ACE_ENV_ARG_DECL

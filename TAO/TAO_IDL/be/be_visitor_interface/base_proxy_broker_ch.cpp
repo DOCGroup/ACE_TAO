@@ -50,7 +50,7 @@ be_visitor_interface_base_proxy_broker_ch::visit_interface (
       << "select_proxy ("
       << be_idt << be_idt_nl;
 
-  *os << node->local_name () << " *object" << be_uidt_nl
+  *os << node->local_name () << " *object" << env_dflts << be_uidt_nl
       << ") = 0;"
       << be_uidt_nl  // idt = 1
       << be_uidt_nl; // idt = 0

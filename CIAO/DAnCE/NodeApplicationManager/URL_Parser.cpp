@@ -111,5 +111,8 @@ void URL_Parser::Error (void)
 URL_Parser::~URL_Parser (void)
 {
   delete [] this->hostname_;
+  this->hostname_ = 0;
+
   ACE_OS::free (this->filename_);
+  this->filename_ = 0;
 }

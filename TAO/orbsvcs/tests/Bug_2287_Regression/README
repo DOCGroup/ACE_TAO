@@ -8,7 +8,7 @@ The server installs a server request interceptor and persistent servant and writ
 The client installs client side FT support and invokes the method "throw_location_forward" on the IOGR.
 The server request interceptor detects invocations of this method and in response either:
 a/ Throws a location forward back to the original IOGR if cannot determine (from the expiration_time member of the FT request service context) thatthe client must have despatched the request after the expiration time.
-b/ Allows the request to be completed if it can determine absolutely that the request was dispatched after the expiration time. This indicates a regression to the client.
+b/ Allows the request to be completed if it can determine absolutely that the request was despatched after the expiration time. This indicates a regression to the client.
 
 A successful outcome is if the client stops following the location forwards once it detects that the expiration time has passed, and a TRANSIENT system exception is recived in the application code.
 

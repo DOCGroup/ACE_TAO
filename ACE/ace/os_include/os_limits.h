@@ -102,11 +102,11 @@ extern "C"
 #  define ACE_IOV_MAX IOV_MAX
 #endif /* ACE_IOV_MAX */
 
-#if defined (ACE_VXWORKS) && ((ACE_VXWORKS == 0x620) || (ACE_VXWORKS == 0x630) || (ACE_VXWORKS == 0x640)) && !defined (__RTP__)
+#if defined (ACE_VXWORKS) && (ACE_VXWORKS == 0x620)
 #  if defined (PIPE_BUF) && (PIPE_BUF == -1)
 #    undef PIPE_BUF
 #  endif
-#endif /* ACE_VXWORKS */
+#endif /* ACE_VXWORKS == 0x620 */
 
 #if !defined (PIPE_BUF)
 #  define PIPE_BUF 5120

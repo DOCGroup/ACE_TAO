@@ -1,88 +1,71 @@
 // -*- MPC -*-
 // $Id$
 
-project(*idl): taoidldefaults {
+project(*Server): taoserver, minimum_corba {
   IDL_Files {
     test.idl
-    ping.idl
   }
-  custom_only = 1
-}
-
-project(*Server): taoserver, avoids_minimum_corba, avoids_corba_e_compact, avoids_corba_e_micro {
-  after += *idl
 
   Source_Files {
+    testC.cpp
+    testS.cpp
     test_i.cpp
     server.cpp
   }
+}
+
+project(*Middle): taoexe, portableserver, minimum_corba {
+  after += *Server
+  IDL_Files {
+    test.idl
+  }
+
   Source_Files {
     testC.cpp
     testS.cpp
-  }
-  IDL_Files {
-  }
-}
-
-project(*Middle): taoexe, portableserver, avoids_minimum_corba, avoids_corba_e_compact, avoids_corba_e_micro {
-  after += *idl
-  after += *Server
-
-  Source_Files {
     test_i.cpp
     middle.cpp
   }
+}
+
+project(*Client): taoexe, portableserver, minimum_corba {
+  after += *Middle
+  IDL_Files {
+    test.idl
+  }
+
   Source_Files {
     testC.cpp
     testS.cpp
-  }
-  IDL_Files {
-  }
-}
-
-project(*Client): taoexe, portableserver, avoids_minimum_corba, avoids_corba_e_compact, avoids_corba_e_micro {
-  after += *idl
-  after += *Middle
-
-  Source_Files {
     test_i.cpp
     client.cpp
   }
-  Source_Files {
-    testC.cpp
-    testS.cpp
-  }
-  IDL_Files {
-  }
 }
 
-project(*Ping): taoexe, portableserver, avoids_minimum_corba, avoids_corba_e_compact, avoids_corba_e_micro {
-  after += *idl
+project(*Ping): taoexe, portableserver, minimum_corba {
+  IDL_Files {
+    ping.idl
+  }
 
   Source_Files {
+    pingC.cpp
+    pingS.cpp
     ping_i.cpp
     ping.cpp
   }
+}
+
+project(*Pong): taoexe, portableserver, minimum_corba {
+  after += *Ping
+  IDL_Files {
+    ping.idl
+  }
+
   Source_Files {
     pingC.cpp
     pingS.cpp
-  }
-  IDL_Files {
-  }
-}
-
-project(*Pong): taoexe, portableserver, avoids_minimum_corba, avoids_corba_e_compact, avoids_corba_e_micro {
-  after += *idl
-  after += *Ping
-
-  Source_Files {
     ping_i.cpp
     pong.cpp
   }
-  Source_Files {
-    pingC.cpp
-    pingS.cpp
-  }
-  IDL_Files {
-  }
 }
+

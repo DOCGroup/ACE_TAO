@@ -5,12 +5,7 @@ project(Stock_Base_Broker_stub): ciao_client_dnc {
   avoids += ace_for_tao
   after += Stock_Base_stub
   sharedname = Broker_stub
-  idlflags -= -GT
-  idlflags += -St \
-              -Wb,stub_export_macro=BROKER_STUB_Export \
-              -Wb,stub_export_include=Broker_stub_export.h \
-              -Wb,skel_export_macro=BROKER_SVNT_Export \
-              -Wb,skel_export_include=Broker_svnt_export.h
+  idlflags += -Wb,stub_export_macro=BROKER_STUB_Export -Wb,stub_export_include=Broker_stub_export.h -Wb,skel_export_macro=BROKER_SVNT_Export -Wb,skel_export_include=Broker_svnt_export.h
   dynamicflags   = BROKER_STUB_BUILD_DLL
   libs += Stock_Base_stub
 
@@ -25,14 +20,11 @@ project(Stock_Base_Broker_stub): ciao_client_dnc {
 
 project(Stock_Base_Broker_svnt) : ciao_servant_dnc {
   avoids += ace_for_tao
-  after += Stock_Base_skel Stock_Base_Broker_stub
+  after += Stock_Base_svnt Stock_Base_Broker_stub
   sharedname  = Broker_svnt
-  libs    += Broker_stub Stock_Base_stub Stock_Base_skel
+  libs    += Broker_stub Stock_Base_stub Stock_Base_svnt
 
-  idlflags -= -GT
-  idlflags  +=  -SS -St \
-                -Wb,export_macro=BROKER_SVNT_Export \
-                -Wb,export_include=Broker_svnt_export.h
+  idlflags  +=  -Wb,export_macro=BROKER_SVNT_Export -Wb,export_include=Broker_svnt_export.h
   dynamicflags = BROKER_SVNT_BUILD_DLL
 
   CIDL_Files {
@@ -55,14 +47,17 @@ project(Stock_Base_Broker_exec) : ciao_component_dnc {
   avoids += ace_for_tao
   after   += Stock_Base_Broker_svnt
   sharedname = Broker_exec
-  libs      += Broker_stub Broker_svnt Stock_Base_stub Stock_Base_skel
+  libs      += Broker_stub Broker_svnt Stock_Base_stub Stock_Base_svnt
 
+  idlflags  +=  -Wb,export_macro=BROKER_EXEC_Export -Wb,export_include=Broker_exec_export.h
   dynamicflags   = BROKER_EXEC_BUILD_DLL
 
   IDL_Files {
+
   }
 
   Source_Files {
+
     Broker_exec.cpp
   }
 }

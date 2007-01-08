@@ -18,7 +18,7 @@ $activator_ior = PerlACE::LocalFile("activator.ior");
 $IMR = new PerlACE::Process ("../../../ImplRepo_Service/ImplRepo_Service");
 $ACTIVATOR = new PerlACE::Process("../../../ImplRepo_Service/ImR_Activator");
 $NS  = new PerlACE::Process ("../../../Naming_Service/Naming_Service");
-$TAO_IMR = new PerlACE::Process ("$ENV{ACE_ROOT}/bin/tao_imr");
+$TAO_IMR = new PerlACE::Process ("../../../../../bin/tao_imr");
 
 # We want the tao_imr executable to be found exactly in the path
 # given, without being modified by the value of -ExeSubDir.

@@ -5,7 +5,7 @@ interface A
   string method1 ();
 };
 
-interface intB : A
+interface B : A
 {
   string method2 ();
 };
@@ -15,7 +15,7 @@ interface C : A
   string method3 ();
 };
 
-interface D : intB, C
+interface D : B, C
 {
   string method4 ();
 };

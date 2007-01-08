@@ -20,22 +20,15 @@ namespace CIAO
   }
 
   const char*
-  Port_Activator::oid (void) const
+  Port_Activator::name (void) const
   {
     // @@ TODO, need to be inlined.
     return this->oid_.in ();
   }
 
   void
-  Port_Activator::oid (const char* oid)
+  Port_Activator::set_name (const char* name)
   {
-    this->oid_ = oid;
-  }
-
-  const char*
-  Port_Activator::name (void) const
-  {
-    // @@ TODO, need to be inlined.
-    return this->name_.in ();
+    this->oid_ = name;
   }
 }

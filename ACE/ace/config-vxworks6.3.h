@@ -2,7 +2,7 @@
 // $Id$
 
 // The following configuration file is designed to work for VxWorks
-// 6.3 platforms using one of these compilers:
+// 6.2 platforms using one of these compilers:
 // 1) The GNU g++ compiler that is shipped with VxWorks 6.3
 
 #ifndef ACE_CONFIG_H
@@ -49,6 +49,7 @@
 #define ACE_HAS_4_4BSD_SENDMSG_RECVMSG
 #define ACE_HAS_NONCONST_GETBY
 #define ACE_HAS_NONCONST_SWAB
+#define ACE_HAS_NONCONST_READV
 #define ACE_LACKS_UNIX_SYSLOG
 #define ACE_DEFAULT_MAX_SOCKET_BUFSIZ 32768
 #define ACE_DEFAULT_THREAD_KEYS 16
@@ -73,6 +74,7 @@
 #define ACE_HAS_SIGINFO_T
 #define ACE_HAS_SIGWAIT
 #define ACE_HAS_SIG_ATOMIC_T
+#define ACE_HAS_SNPRINTF
 #define ACE_HAS_STRERROR
 #define ACE_HAS_THREADS
 #define ACE_HAS_SYSCTL
@@ -103,7 +105,6 @@
 #define ACE_LACKS_RWLOCK_T
 #define ACE_LACKS_SBRK
 #define ACE_LACKS_SEEKDIR
-#define ACE_LACKS_SIGVAL_T
 #define ACE_LACKS_SEMBUF_T
 #define ACE_LACKS_SIGINFO_H
 #define ACE_LACKS_SI_ADDR
@@ -123,6 +124,9 @@
 #define ACE_THR_PRI_OTHER_DEF ACE_THR_PRI_FIFO_DEF
 #define ACE_HAS_SIGTIMEDWAIT
 #define ACE_HAS_SIGSUSPEND
+#if !defined (ACE_VXWORKS_SPARE)
+# define ACE_VXWORKS_SPARE spare4
+#endif /* ! ACE_VXWORKS_SPARE */
 #define ACE_HAS_GETIFADDRS
 
 #define ACE_LACKS_SETEGID
@@ -169,7 +173,6 @@
   #define ACE_HAS_SETENV
   #define ACE_HAS_3_PARAM_WCSTOK
   #define ACE_HAS_WCHAR
-  #define ACE_HAS_VFWPRINTF
   #define ACE_SIZEOF_WCHAR 2
   #define ACE_HAS_SHM_OPEN
   #define ACE_HAS_AIO_CALLS
@@ -180,7 +183,6 @@
 #else
   // We are building for kernel mode
   #define ACE_LACKS_SUSECONDS_T
-  #define ACE_LACKS_INTPTR_T
   #define ACE_LACKS_INTTYPES_H
   #define ACE_LACKS_STDINT_H
   #define ACE_LACKS_UNAME
@@ -249,9 +251,6 @@
 // Only when building for kernel mode we can use TSS emulation, in rtp mode
 // we can't use the WIND_TCB struct anymore
 #  define ACE_HAS_TSS_EMULATION
-#  if !defined (ACE_VXWORKS_SPARE)
-#   define ACE_VXWORKS_SPARE spare4
-#  endif /* ! ACE_VXWORKS_SPARE */
 # endif
 // VxWorks has no recursive mutexes. This was set in the past but it doesn't
 // work with the pthread support, so only set it for the time being when pthread
@@ -267,10 +266,10 @@
 
 // Needed include to get all VxWorks CPU types
 #include "types/vxCpu.h"
-#if defined (CPU) && (CPU == PENTIUM || CPU == PENTIUM2 || CPU == PENTIUM3 || CPU == PENTIUM4)
- // If running an Intel Pentium the
- // ACE_OS::gethrtime () can use the RDTSC instruction.
-  # define ACE_HAS_PENTIUM
+#if (CPU == PENTIUM || CPU == PENTIUM2 || CPU == PENTIUM3 || CPU == PENTIUM4)
+// If running an Intel Pentium the
+// ACE_OS::gethrtime () can use the RDTSC instruction.
+# define ACE_HAS_PENTIUM
 #endif
 
 // VxWorks defines the CPU define MAP, undef it to prevent problems with

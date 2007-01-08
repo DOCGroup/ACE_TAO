@@ -81,7 +81,7 @@ namespace TAO
       // Since this method is called from the POA constructor, there
       // shouldn't be any waiting required.  Therefore,
       // <wait_occurred_restart_call_ignored> can be ignored.
-      bool wait_occurred_restart_call_ignored = false;
+      int wait_occurred_restart_call_ignored = 0;
 
       // Activate the servant in the root poa.
       PortableServer::ObjectId_var id =

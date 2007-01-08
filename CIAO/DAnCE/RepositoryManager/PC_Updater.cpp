@@ -6,6 +6,10 @@
 #include "PC_Updater_T.h"
 #include "ace/Containers_T.h"        //for ACE_Double_Linked_List
 
+
+#include <iostream>
+using namespace std;
+
 namespace
 {
   const size_t TEMP_LEN = 1024;
@@ -167,9 +171,7 @@ void PC_Updater::clear_list ()
 
   void PC_Updater::update (::Deployment::ImplementationArtifactDescription &iad)
   {
-    const char* location = CORBA::string_dup (iad.location[0]);
-
-    //create an iterator
+    //create an interator
     ACE_Double_Linked_List_Iterator<ZIP_File_Info> iter (this->file_list_);
 
     //find the correct path and return
@@ -188,8 +190,8 @@ void PC_Updater::clear_list ()
         if (name)
         {
           ACE_CString loc (this->server_path_);
-          loc += "/implementations/";
-          loc += location;
+          loc += "/";
+          loc += full_path;
 
           iad.location[0] = CORBA::string_dup (loc.c_str ());
 
@@ -199,6 +201,7 @@ void PC_Updater::clear_list ()
       }
       iter++;
     }
+    const char* location = iad.location[0];
 
     ACE_ERROR ((LM_ERROR,
                "[PC_Updater::update] Unable to update: %s!\n",

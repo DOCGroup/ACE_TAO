@@ -65,11 +65,7 @@ int be_visitor_args_arglist::visit_argument (be_argument *node)
                         -1);
     }
 
-  if (this->ctx_->state () != TAO_CodeGen::TAO_TIE_OPERATION_ARGLIST_SH)
-    {
-      *os << " " << node->local_name ();
-    }
-    
+  *os << " " << node->local_name ();
   return 0;
 }
 
@@ -276,24 +272,8 @@ int be_visitor_args_arglist::visit_predefined_type (be_predefined_type *node)
 
 int be_visitor_args_arglist::visit_sequence (be_sequence *node)
 {
-  // There seems to be one case where the two conditions below
-  // are true - in generating get/set operations for an
-  // inherited valuetype member, which is included from
-  // another IDL file, and whose type is an anonymous 
-  // sequence. There is also no better place to make the
-  // call to create_name() - the node constructor sets the
-  // 'anonymous' flag to false, the typedef that resets it
-  // to true is created afterward. And any member of an
-  // included IDL declaration is not processed as part of
-  // the AST traversal. If create_name() is never called,
-  // then 'type_name' below will output 'sequence'.
-  if (node->imported () && node->anonymous ())
-    {
-      (void) node->create_name (0);
-    }
-
   TAO_OutStream *os = this->ctx_->stream ();
-  
+
   switch (this->direction ())
     {
     case AST_Argument::dir_IN:

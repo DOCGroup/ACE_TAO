@@ -15,45 +15,18 @@
 
 #include "analyzer.h"
 
-#include "tao/DynamicAny/DynCommon.h"
-#include "tao/DynamicAny/DynAnyFactory.h"
-
 #define CASEE(type,CT,str) case CORBA::tk_##type: {\
   CORBA::CT b = da->get_##type() ; \
-  tab (level_); \
+  tab(level_);\
   if (debug_) \
     ACE_DEBUG ((LM_DEBUG, str , b)); \
   } break;
 
-#define CASEBS(type,CT,str) case CORBA::tk_##type: \
-  {\
-    CORBA::CT##Seq_var seq = da->get_##type##_seq (); \
-    ++level_; \
-    CORBA::ULong len = seq->length (); \
-    tab (level_); \
-    if (debug_) \
-      { \
-        ACE_DEBUG ((LM_DEBUG, "length = %u\n", len)); \
-      } \
-    for (CORBA::ULong i = 0; i < len; ++i) \
-      { \
-        CORBA::CT b = seq[i]; \
-        tab (level_); \
-        if (debug_) \
-          { \
-            ACE_DEBUG ((LM_DEBUG, "[%d]\n", i)); \
-            ACE_DEBUG ((LM_DEBUG, str, b)); \
-          } \
-      } \
-    --level_; \
-  } \
-  break;
-
 DynAnyAnalyzer::DynAnyAnalyzer (CORBA::ORB_ptr orb,
                                 DynamicAny::DynAnyFactory_ptr dynany_factory,
                                 int debug)
-  : orb_ (CORBA::ORB::_duplicate (orb)),
-    dynany_factory_ (DynamicAny::DynAnyFactory::_duplicate (dynany_factory)),
+  : orb_ (CORBA::ORB::_duplicate(orb)),
+    dynany_factory_ (DynamicAny::DynAnyFactory::_duplicate(dynany_factory)),
     level_ (0),
     debug_ (debug)
 {
@@ -63,38 +36,35 @@ void DynAnyAnalyzer::tab (int t)
 {
   if (debug_)
     {
-      for (int i = 0 ; i < t ; ++i)
-        {
-          ACE_DEBUG ((LM_DEBUG, "\t"));
-        }
+      for( int i = 0 ; i < t ; i++ )
+          ACE_DEBUG ((LM_DEBUG,
+                      "\t"));
     }
 }
 
-DynAnyAnalyzer::~DynAnyAnalyzer (void)
+DynAnyAnalyzer::~DynAnyAnalyzer()
 {
 }
 
-void DynAnyAnalyzer::resetTab (void)
+void DynAnyAnalyzer::resetTab()
 {
   level_ = 0;
 }
 
 void DynAnyAnalyzer::analyze (DynamicAny::DynAny_ptr da ACE_ENV_ARG_DECL)
 {
-  CORBA::TypeCode_var tc = da->type ();
+  CORBA::TypeCode_var tc = da->type();
 
   CORBA::TCKind kind = tc->kind (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
-  CORBA::TypeCode_var dup = CORBA::TypeCode::_duplicate (tc.in ());
-
   // strip aliases
   while (kind == CORBA::tk_alias)
     {
-      dup = dup->content_type (ACE_ENV_SINGLE_ARG_PARAMETER);
+      tc = tc->content_type (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK;
 
-      kind = dup->kind (ACE_ENV_SINGLE_ARG_PARAMETER);
+      kind = tc->kind (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK;
     }
 
@@ -103,302 +73,230 @@ void DynAnyAnalyzer::analyze (DynamicAny::DynAny_ptr da ACE_ENV_ARG_DECL)
      case CORBA::tk_struct:
       {
         DynamicAny::DynStruct_var ds
-          = DynamicAny::DynStruct::_narrow (da ACE_ENV_ARG_PARAMETER);
+          = DynamicAny::DynStruct::_narrow(da ACE_ENV_ARG_PARAMETER);
         ACE_CHECK;
 
-        tab (level_);
+        tab(level_);
 
         if (debug_)
-          {
-            ACE_DEBUG ((LM_DEBUG,
-                      "STRUCT\n"));
-          }
+          ACE_DEBUG ((LM_DEBUG,
+                     "STRUCT\n"));
 
-        if (da->seek (0) )
+        if( da->seek(0) )
           {
             level_++;
-
             do
               {
-                DynamicAny::DynAny_var cc =
-                  ds->current_component (ACE_ENV_SINGLE_ARG_PARAMETER);
+                DynamicAny::DynAny_var cc    = ds->current_component(ACE_ENV_SINGLE_ARG_PARAMETER);
                 ACE_CHECK;
 
-                DynamicAny::FieldName_var fn =
-                  ds->current_member_name (ACE_ENV_SINGLE_ARG_PARAMETER);
+                DynamicAny::FieldName_var fn = ds->current_member_name(ACE_ENV_SINGLE_ARG_PARAMETER);
                 ACE_CHECK;
 
                 tab(level_);
 
                 if (debug_)
-                  {
-                    ACE_DEBUG ((LM_DEBUG,
-                              "Member = %s\n", fn.in ()));
-                  }
+                  ACE_DEBUG ((LM_DEBUG,
+                             "Member = %s\n", fn.in()));
 
                 if (!CORBA::is_nil (cc.in ()))
                   {
-                    this->analyze (cc.in () ACE_ENV_ARG_PARAMETER);
+                    this->analyze (cc.in() ACE_ENV_ARG_PARAMETER);
                     ACE_CHECK;
                   }
 
-              } while (da->next ());
-
+              } while( da->next() );
             level_--;
           }
       }
       break; // end tk_struct
 
-    case CORBA::tk_sequence:
-      {
-        if (TAO_DynCommon::is_basic_type_seq (tc.in ()))
+     case CORBA::tk_sequence:
+       {
+         DynamicAny::DynSequence_var ds
+           = DynamicAny::DynSequence::_narrow(da ACE_ENV_ARG_PARAMETER);
+        ACE_CHECK;
+
+        int i = 0;
+
+        tab(level_);
+
+        if (debug_)
+          ACE_DEBUG ((LM_DEBUG,
+                      "SEQUENCE\n"));
+
+        if( ds->seek(0) )
           {
-            this->analyze_basic_seq (dup.in (), da);
-          }
-        else
-          {
-            DynamicAny::DynSequence_var ds =
-              DynamicAny::DynSequence::_narrow (da ACE_ENV_ARG_PARAMETER);
-            ACE_CHECK;
-
-            int i = 0;
-            tab(level_);
-
-            if (debug_)
+            level_++;
+            do
               {
-                ACE_DEBUG ((LM_DEBUG,
-                            "SEQUENCE\n"));
-              }
+                tab(level_);
 
-            if (ds->seek (0UL))
-              {
-                level_++;
+                if (debug_)
+                  ACE_DEBUG ((LM_DEBUG,
+                              "[%d]\n", i));
 
-                do
+                DynamicAny::DynAny_var cc( ds->current_component() );
+                ACE_CHECK;
+
+                if (!CORBA::is_nil (cc.in ()))
                   {
-                    tab(level_);
-
-                    if (debug_)
-                      ACE_DEBUG ((LM_DEBUG,
-                                  "[%d]\n", i));
-
-                    DynamicAny::DynAny_var cc (ds->current_component ());
+                    analyze(cc.in() ACE_ENV_ARG_PARAMETER);
                     ACE_CHECK;
+                  }
 
-                    if (!CORBA::is_nil (cc.in ()))
-                      {
-                        analyze (cc.in () ACE_ENV_ARG_PARAMETER);
-                        ACE_CHECK;
-                      }
+                i++;
+              } while( da->next() );
+            level_--;
+         }
+       }
+       break; // end tk_sequence
 
-                    i++;
-                  } while (da->next ());
+     case CORBA::tk_array:
+       {
+          tab(level_);
 
-                level_--;
-              }
-          }
-      }
-      break; // end tk_sequence
-
-    case CORBA::tk_array:
-      {
-        tab (level_);
-
-        if (debug_)
-          {
+          if (debug_)
             ACE_DEBUG ((LM_DEBUG,
-                        "ARRAY\n"));
-          }
+                       "ARRAY\n"));
 
-        level_++;
+          level_++;
 
-        CORBA::ULong const len =
-          dup->length (ACE_ENV_SINGLE_ARG_PARAMETER);
-        ACE_CHECK;
+          CORBA::ULong const len =
+            tc->length (ACE_ENV_SINGLE_ARG_PARAMETER);
+          ACE_CHECK;
 
-        for (CORBA::ULong i = 0 ; i < len; ++i)
-          {
-            tab (level_);
+          for( unsigned int i = 0 ; i < len; ++i)
+            {
+              tab(level_);
 
-            if (debug_)
-              {
-                ACE_DEBUG ((LM_DEBUG, "[%d]\n", i));
-              }
+              if (debug_)
+                ACE_DEBUG ((LM_DEBUG,
+                            "[%d]\n", i));
 
-            DynamicAny::DynAny_var cc = da->current_component();
+              DynamicAny::DynAny_var cc = da->current_component();
 
-            if (!CORBA::is_nil (cc.in ()))
-              {
-                analyze (cc.in () ACE_ENV_ARG_PARAMETER);
-                ACE_CHECK;
-              }
+              if (!CORBA::is_nil (cc.in ()))
+                {
+                  analyze(cc.in() ACE_ENV_ARG_PARAMETER);
+                  ACE_CHECK;
+                }
 
-            da->next ();
-          }
-        level_--;
-      }
-      break;
+              da->next();
+            }
+          level_--;
+       }
+       break;
 
-    case CORBA::tk_union:
-      {
-        DynamicAny::DynUnion_var value =
-          DynamicAny::DynUnion::_narrow (da ACE_ENV_ARG_PARAMETER);
-        ACE_CHECK;
+     case CORBA::tk_union:
+       {
+         DynamicAny::DynUnion_var value
+           = DynamicAny::DynUnion::_narrow(da ACE_ENV_ARG_PARAMETER);
+         ACE_CHECK;
 
-        if (!value->has_no_active_member ())
-          {
-            DynamicAny::DynAny_var disc = value->member ();
+         if( !value->has_no_active_member() )
+           {
+             DynamicAny::DynAny_var disc = value->member();
 
-            if (!CORBA::is_nil (disc.in ()))
-              {
-                this->analyze (disc.in () ACE_ENV_ARG_PARAMETER);
-                ACE_CHECK;
-              }
-          }
-      }
-      break;
+              if (!CORBA::is_nil (disc.in ()))
+                {
+                  this->analyze(disc.in() ACE_ENV_ARG_PARAMETER);
+                  ACE_CHECK;
+                }
+           }
+       }
+       break;
 
-    case CORBA::tk_any:
-      {
-        DynamicAny::DynAny_var dynany;
-        CORBA::Any_var any = da->get_any ();
+     case CORBA::tk_any:
+       {
+         DynamicAny::DynAny_var dynany;
+         CORBA::Any_var any = da->get_any();
 
-        dynany =
-          dynany_factory_->create_dyn_any (any.in ()
-                                           ACE_ENV_ARG_PARAMETER);
-        ACE_CHECK;
+         dynany = dynany_factory_->create_dyn_any(any.in() ACE_ENV_ARG_PARAMETER);
+         ACE_CHECK;
 
-        if (!CORBA::is_nil (dynany.in ()))
-          {
-            this->analyze (dynany.in () ACE_ENV_ARG_PARAMETER);
-            ACE_CHECK;
-          }
+         if (!CORBA::is_nil (dynany.in ()))
+           {
+             this->analyze(dynany.in() ACE_ENV_ARG_PARAMETER);
+             ACE_CHECK;
+           }
 
-        dynany->destroy ();
-      }
-      break;
+         dynany->destroy();
+       }
+       break;
 
-    case CORBA::tk_enum:
-      {
-        DynamicAny::DynEnum_var value =
-          DynamicAny::DynEnum::_narrow (da ACE_ENV_ARG_PARAMETER);
-        ACE_CHECK;
+     case CORBA::tk_enum:
+       {
+         DynamicAny::DynEnum_var value
+           = DynamicAny::DynEnum::_narrow(da ACE_ENV_ARG_PARAMETER);
+         ACE_CHECK;
 
-        CORBA::String_var s = value->get_as_string ();
-        tab (level_);
+          CORBA::String_var s = value->get_as_string();
+          tab(level_);
 
-        if (debug_)
-          {
-            ACE_DEBUG ((LM_DEBUG, "  Value (enum) = %s\n", s.in()));
-          }
-      }
-      break;
-
-    CASEE (boolean, Boolean, "  Value (bool) = %d\n");
-    CASEE (short, Short, "  Value (short) = %d\n");
-    CASEE (ushort, UShort, "  Value (ushort) = %u\n");
-    CASEE (long, Long, "  Value (long) = %d\n");
-    CASEE (ulong, ULong, "  Value (ulong) = %u\n");
-    CASEE (longlong, LongLong, "  Value (longlong) %Ld\n");
-    CASEE (ulonglong, ULongLong, "  Value (ulonglong) %Lu\n");
-    CASEE (char, Char, "  Value (char) = %c\n");
-    CASEE (float, Float, "  Value (float) = %f\n");
-    CASEE (double, Double, "  Value (double) = %f\n");
-    CASEE (octet, Octet, "  Value (octet) = %c\n");
-
-    case CORBA::tk_string:
-      {
-        CORBA::String_var b (da->get_string ());
-        tab (level_);
-
-        if (debug_)
-          {
-            ACE_DEBUG ((LM_DEBUG, "  Value (string) = %s\n", b.in ()));
-          }
-      }
-      break;
-
-    case CORBA::tk_TypeCode:
-      {
-        tab (level_);
-
-        if (debug_)
-          {
-            CORBA::TCKind const kind =
-              da->get_typecode ()->kind (ACE_ENV_SINGLE_ARG_PARAMETER);
-            ACE_CHECK;
-
+          if (debug_)
             ACE_DEBUG ((LM_DEBUG,
-                        "  Value (TypeCode) = %d\n",
-                        static_cast<int> (kind)));
-          }
-      }
-      break;
+                       "  Value (enum) = %s\n", s.in()));
+       }
+       break;
 
-    default:
-      {
-        tab (level_);
+     CASEE(boolean,Boolean,"  Value (bool) = %d\n");
+     CASEE(short,Short,"  Value (short) = %d\n");
+     CASEE(ushort,UShort,"  Value (ushort) = %u\n");
+     CASEE(long,Long,"  Value (long) = %d\n");
+     CASEE(ulong,ULong,"  Value (ulong) = %u\n");
+     CASEE(longlong,LongLong,"  Value (longlong) %Ld\n");
+     CASEE(ulonglong,ULongLong,"  Value (ulonglong) %Lu\n");
+     CASEE(char,Char,"  Value (char) = %c\n");
+     CASEE(float,Float,"  Value (float) = %f\n");
+     CASEE(double,Double,"  Value (double) = %f\n");
+     CASEE(octet,Octet,"  Value (octet) = %c\n");
 
-        if (debug_)
-          {
-            CORBA::TCKind const kind =
-              tc->kind (ACE_ENV_SINGLE_ARG_PARAMETER);
-            ACE_CHECK;
+     case CORBA::tk_string:
+       {
+         CORBA::String_var b( da->get_string() );
 
-            ACE_DEBUG ((LM_DEBUG,
-                        "  unhandled typecode = %d\n",
-                        static_cast<int> (kind)));
-          }
-      }
-      break;
-  }
+         tab(level_);
+         if (debug_)
+           ACE_DEBUG ((LM_DEBUG,
+                      "  Value (string) = %s\n", b.in()));
+       }
+       break;
 
-  if (debug_)
-    {
-      ACE_DEBUG ((LM_DEBUG, "\n"));
-    }
-}
+     case CORBA::tk_TypeCode:
+       {
+         tab(level_);
+         if (debug_)
+           {
+             CORBA::TCKind const kind =
+               da->get_typecode ()->kind (ACE_ENV_SINGLE_ARG_PARAMETER);
+             ACE_CHECK;
 
-void
-DynAnyAnalyzer::analyze_basic_seq (CORBA::TypeCode_ptr tc,
-                                   DynamicAny::DynAny_ptr da)
-{
-  CORBA::TypeCode_var ct = tc->content_type ();
-  CORBA::TCKind tk = ct->kind ();
+             ACE_DEBUG ((LM_DEBUG,
+                         "  Value (TypeCode) = %d\n",
+                         static_cast<int> (kind)));
+           }
+       }
+       break;
 
-  tab (level_);
+     default:
+       {
+         tab(level_);
+         if (debug_)
+           {
+             CORBA::TCKind const kind =
+               tc->kind (ACE_ENV_SINGLE_ARG_PARAMETER);
+             ACE_CHECK;
 
-  if (debug_)
-    {
-      ACE_DEBUG ((LM_DEBUG,
-                  "BASIC TYPE SEQUENCE\n"));
-    }
+             ACE_DEBUG ((LM_DEBUG,
+                         "  unhandled typecode = %d\n",
+                         static_cast<int> (kind)));
+           }
+       }
+       break;
+   }
 
-  switch (tk)
-    {
-      CASEBS (boolean, Boolean, "  Value (bool) = %d\n");
-      CASEBS (octet, Octet, "  Value (octet) = %c\n");
-      CASEBS (char, Char, "  Value (char) = %c\n");
-      CASEBS (wchar, WChar, "  Value (wchar) = %u\n");
-      CASEBS (short, Short, "  Value (short) = %d\n");
-      CASEBS (ushort, UShort, "  Value (ushort) = %u\n");
-      CASEBS (long, Long, "  Value (long) = %d\n");
-      CASEBS (ulong, ULong, "  Value (ulong) = %u\n");
-      CASEBS (longlong, LongLong, "  Value (longlong) = %Ld\n");
-      CASEBS (ulonglong, ULongLong, "  Value (ulonglong) = %Lu\n");
-      CASEBS (float, Float, "  Value (float) = %f\n");
-      CASEBS (double, Double, "  Value (double) = %f\n");
-      case CORBA::tk_longdouble:
-      default:
-        tab (level_);
-
-        if (debug_)
-          {
-            ACE_DEBUG ((LM_DEBUG,
-                        "  unhandled typecode = %d\n",
-                        static_cast<int> (tk)));
-          }
-
-        break;
-    }
+   if (debug_)
+     ACE_DEBUG ((LM_DEBUG,
+                 "\n"));
 }

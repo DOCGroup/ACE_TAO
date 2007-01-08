@@ -6,13 +6,12 @@
 ## this file will be lost the next time it is generated.
 ##
 ## MPC Command:
-## ./bin/mwc.pl -type automake -noreldefs ACE.mwc
+## /acebuilds/ACE_wrappers-repository/bin/mwc.pl -include /acebuilds/MPC/config -include /acebuilds/MPC/templates -feature_file /acebuilds/ACE_wrappers-repository/local.features -noreldefs -type automake -exclude build,Kokyu
 
 ACE_BUILDDIR = $(top_builddir)
 ACE_ROOT = $(top_srcdir)
 
 ## Makefile.Reactor_Misc_Demuxing.am
-
 noinst_PROGRAMS = demuxing
 
 demuxing_CPPFLAGS = \
@@ -26,7 +25,6 @@ demuxing_LDADD = \
   $(ACE_BUILDDIR)/ace/libACE.la
 
 ## Makefile.Reactor_Misc_Early_Timeouts.am
-
 noinst_PROGRAMS += early_timeouts
 
 early_timeouts_CPPFLAGS = \
@@ -40,7 +38,6 @@ early_timeouts_LDADD = \
   $(ACE_BUILDDIR)/ace/libACE.la
 
 ## Makefile.Reactor_Misc_Event_Handler_t.am
-
 noinst_PROGRAMS += event_handler_t
 
 event_handler_t_CPPFLAGS = \
@@ -54,7 +51,6 @@ event_handler_t_LDADD = \
   $(ACE_BUILDDIR)/ace/libACE.la
 
 ## Makefile.Reactor_Misc_Notification.am
-
 noinst_PROGRAMS += notification
 
 notification_CPPFLAGS = \
@@ -68,7 +64,6 @@ notification_LDADD = \
   $(ACE_BUILDDIR)/ace/libACE.la
 
 ## Makefile.Reactor_Misc_Pingpong.am
-
 noinst_PROGRAMS += pingpong
 
 pingpong_CPPFLAGS = \
@@ -82,7 +77,6 @@ pingpong_LDADD = \
   $(ACE_BUILDDIR)/ace/libACE.la
 
 ## Makefile.Reactor_Misc_Reactors.am
-
 noinst_PROGRAMS += reactors
 
 reactors_CPPFLAGS = \
@@ -96,7 +90,6 @@ reactors_LDADD = \
   $(ACE_BUILDDIR)/ace/libACE.la
 
 ## Makefile.Reactor_Misc_Signals_1.am
-
 noinst_PROGRAMS += signals_1
 
 signals_1_CPPFLAGS = \
@@ -110,7 +103,6 @@ signals_1_LDADD = \
   $(ACE_BUILDDIR)/ace/libACE.la
 
 ## Makefile.Reactor_Misc_Signals_2.am
-
 noinst_PROGRAMS += signals_2
 
 signals_2_CPPFLAGS = \
@@ -124,7 +116,6 @@ signals_2_LDADD = \
   $(ACE_BUILDDIR)/ace/libACE.la
 
 ## Makefile.Reactor_Misc_Timer_Queue.am
-
 noinst_PROGRAMS += timer_queue
 
 timer_queue_CPPFLAGS = \

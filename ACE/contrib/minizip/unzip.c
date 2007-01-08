@@ -4,7 +4,6 @@
    Copyright (C) 1998-2005 Gilles Vollant
 
    Read unzip.h for more info
-   $Id$
 */
 
 /* Decryption code comes from crypt.c by Info-ZIP but has been greatly reduced in terms of
@@ -170,7 +169,7 @@ local int unzlocal_getByte OF((
     int *pi));
 
 local int unzlocal_getByte(const zlib_filefunc_def* pzlib_filefunc_def,voidpf filestream,int *pi)
-
+    
 {
     unsigned char c;
     int err = (int)ZREAD(*pzlib_filefunc_def,filestream,&c,1);
@@ -198,10 +197,10 @@ local int unzlocal_getShort OF((
     uLong *pX));
 
 local int unzlocal_getShort (const zlib_filefunc_def* pzlib_filefunc_def,voidpf filestream,uLong *pX)
-
+    
 {
     uLong x ;
-    int i = 0;
+    int i;
     int err;
 
     err = unzlocal_getByte(pzlib_filefunc_def,filestream,&i);
@@ -224,10 +223,10 @@ local int unzlocal_getLong OF((
     uLong *pX));
 
 local int unzlocal_getLong (const zlib_filefunc_def* pzlib_filefunc_def,voidpf filestream,uLong *pX)
-
+    
 {
     uLong x ;
-    int i = 0;
+    int i;
     int err;
 
     err = unzlocal_getByte(pzlib_filefunc_def,filestream,&i);
@@ -255,7 +254,7 @@ local int unzlocal_getLong (const zlib_filefunc_def* pzlib_filefunc_def,voidpf f
 
 /* My own strcmpi / strcasecmp */
 local int strcmpcasenosensitive_internal(const char* fileName1,const char* fileName2)
-
+   
 {
     for (;;)
     {
@@ -297,7 +296,7 @@ local int strcmpcasenosensitive_internal(const char* fileName1,const char* fileN
 
 */
 extern MINIZIP_EXPORT int unzStringFileNameCompare (const char* fileName1,const char* fileName2,int iCaseSensitivity)
-
+   
 {
     if (iCaseSensitivity==0)
         iCaseSensitivity=CASESENSITIVITYDEFAULTVALUE;
@@ -321,7 +320,7 @@ local uLong unzlocal_SearchCentralDir OF((
     voidpf filestream));
 
 local uLong unzlocal_SearchCentralDir(const zlib_filefunc_def* pzlib_filefunc_def,voidpf filestream)
-
+    
 {
     unsigned char* buf;
     uLong uSizeFile;
@@ -487,7 +486,7 @@ extern MINIZIP_EXPORT unzFile unzOpen2 (const char *path, zlib_filefunc_def* pzl
 
 
 extern MINIZIP_EXPORT unzFile unzOpen (const char *path)
-
+   
 {
     return unzOpen2(path, NULL);
 }
@@ -564,7 +563,7 @@ local int unzlocal_GetCurrentFileInfoInternal (unzFile file,
                                               char *szFileName,uLong fileNameBufferSize,
                                               void *extraField,uLong extraFieldBufferSize,
                                               char *szComment,uLong commentBufferSize)
-
+   
 {
     unz_s* s;
     unz_file_info file_info;
@@ -669,7 +668,7 @@ local int unzlocal_GetCurrentFileInfoInternal (unzFile file,
             else
                 err=UNZ_ERRNO;
 		}
-        if ((file_info.size_file_extra>0) && (extraFieldBufferSize>0))
+        if ((file_info.size_file_extra>0) && (extraFieldBufferSize>0))            
 	    {   if (ZREAD(s->z_filefunc, s->filestream,extraField,uSizeRead)!=uSizeRead)
                 err=UNZ_ERRNO;
                 lSeek += file_info.size_file_extra - uSizeRead;

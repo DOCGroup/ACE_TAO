@@ -1,7 +1,7 @@
 // -*- MPC -*-
 // $Id$
 
-project(*client) : orbsvcsexe, portableserver, naming  {
+project(*client) : orbsvcsexe, portableserver, naming, exceptions  {
   libs += Quoter_Idl_Lib
   after += Quoter_Idl_Lib
 
@@ -15,7 +15,7 @@ project(*client) : orbsvcsexe, portableserver, naming  {
   }
 }
 
-project(*server) : orbsvcsexe, portableserver, naming {
+project(*server) : orbsvcsexe, portableserver, naming, exceptions {
   libs += Quoter_Idl_Lib
   after += Quoter_Idl_Lib
 

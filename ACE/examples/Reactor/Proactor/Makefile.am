@@ -6,7 +6,7 @@
 ## this file will be lost the next time it is generated.
 ##
 ## MPC Command:
-## ./bin/mwc.pl -type automake -noreldefs ACE.mwc
+## /acebuilds/ACE_wrappers-repository/bin/mwc.pl -include /acebuilds/MPC/config -include /acebuilds/MPC/templates -feature_file /acebuilds/ACE_wrappers-repository/local.features -noreldefs -type automake -exclude build,Kokyu
 
 ACE_BUILDDIR = $(top_builddir)
 ACE_ROOT = $(top_srcdir)
@@ -16,7 +16,6 @@ noinst_PROGRAMS =
 ## Makefile.Proactor_Cancel.am
 
 if !BUILD_ACE_FOR_TAO
-
 noinst_PROGRAMS += test_cancel
 
 test_cancel_CPPFLAGS = \
@@ -35,7 +34,6 @@ endif !BUILD_ACE_FOR_TAO
 ## Makefile.Proactor_End_Event_Loops.am
 
 if !BUILD_ACE_FOR_TAO
-
 noinst_PROGRAMS += test_end_event_loop
 
 test_end_event_loop_CPPFLAGS = \
@@ -55,7 +53,6 @@ endif !BUILD_ACE_FOR_TAO
 ## Makefile.Proactor_Multiple_Loops.am
 
 if !BUILD_ACE_FOR_TAO
-
 noinst_PROGRAMS += test_multiple_loops
 
 test_multiple_loops_CPPFLAGS = \
@@ -75,7 +72,6 @@ endif !BUILD_ACE_FOR_TAO
 ## Makefile.Proactor_Post_Completions.am
 
 if !BUILD_ACE_FOR_TAO
-
 noinst_PROGRAMS += test_post_completions
 
 test_post_completions_CPPFLAGS = \
@@ -95,7 +91,6 @@ endif !BUILD_ACE_FOR_TAO
 ## Makefile.Proactor_Proactor.am
 
 if !BUILD_ACE_FOR_TAO
-
 noinst_PROGRAMS += test_proactor
 
 test_proactor_CPPFLAGS = \
@@ -114,7 +109,6 @@ endif !BUILD_ACE_FOR_TAO
 ## Makefile.Proactor_Timeout.am
 
 if !BUILD_ACE_FOR_TAO
-
 noinst_PROGRAMS += test_timeout
 
 test_timeout_CPPFLAGS = \
@@ -134,7 +128,6 @@ endif !BUILD_ACE_FOR_TAO
 ## Makefile.Proactor_Udp_Proactor.am
 
 if !BUILD_ACE_FOR_TAO
-
 noinst_PROGRAMS += test_udp_proactor
 
 test_udp_proactor_CPPFLAGS = \

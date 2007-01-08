@@ -1,6 +1,7 @@
 //$Id$
 
-project : taolib, install, core_anytypecode, core_strategies, tao_versioning_idl_defaults {
+project : taolib, core, core_anytypecode, tao_versioning_idl_defaults {
+  avoids      += ace_for_tao    // Requires Unix domain sockets and MEM stuff
   sharedname   = TAO_Strategies
   dynamicflags = TAO_STRATEGIES_BUILD_DLL
 
@@ -25,10 +26,11 @@ project : taolib, install, core_anytypecode, core_strategies, tao_versioning_idl
   }
 
   PIDL_Files {
+    Strategies
   }
 
   IDL_Files {
-    idlflags += -Sci -SS -Gp -Gd -Sorb -DCORBA3 \
+    idlflags += -Sci -SS -Gp -Gd -Ge 1 -Sorb -DCORBA3 \
                 -Wb,export_macro=TAO_Strategies_Export \
                 -Wb,export_include=tao/Strategies/strategies_export.h \
                 -o Strategies

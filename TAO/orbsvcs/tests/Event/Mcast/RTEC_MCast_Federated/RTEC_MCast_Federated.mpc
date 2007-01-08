@@ -2,13 +2,9 @@
 // $Id$
 
 project(*Supplier): namingexe, rteventexe, rtevent_serv {
+  requires += exceptions
   exename   = EchoEventSupplier
-
-  specific(automake) {
-    includes += $(srcdir)/../Common
-  } else {
-    includes += ../Common
-  }
+  includes += ../common
 
   Source_Files {
     EchoEventSupplierMain.cpp
@@ -18,13 +14,9 @@ project(*Supplier): namingexe, rteventexe, rtevent_serv {
 }
 
 project(*Consumer): namingexe, rteventexe,  {
+  requires += exceptions
   exename   = EchoEventConsumer
-
-  specific(automake) {
-    includes += $(srcdir)/../Common
-  } else {
-    includes += ../Common
-  }
+  includes += ../common
 
   Source_Files {
     EchoEventConsumerMain.cpp

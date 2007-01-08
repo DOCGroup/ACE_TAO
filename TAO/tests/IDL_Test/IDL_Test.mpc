@@ -5,7 +5,7 @@ project(*Main): taoserver, messaging {
   exename = main
 
   IDL_Files {
-    idlflags += -GC -GH -Gd -GT
+    idlflags += -GC -GH -Gd
     array.idl
     Bug_2577_Regression.idl
     Bug_2582_Regression.idl
@@ -30,7 +30,7 @@ project(*Main): taoserver, messaging {
   }
 
   IDL_Files {
-    idlflags += -GC -GH -Gd -GA -GT
+    idlflags += -GC -GH -Gd -GA
     anonymous.idl
     constants.idl
     generic_object.idl
@@ -44,12 +44,5 @@ project(*Main): taoserver, messaging {
 
   Source_Files {
     main.cpp
-    *C.cpp
-    *S.cpp
-    *A.cpp
-  }
-
-  Template_Files {
-    *S_T.cpp
   }
 }

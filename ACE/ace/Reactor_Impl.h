@@ -500,7 +500,7 @@ public:
 
   /// Returns true if Reactor has been successfully initialized, else
   /// false.
-  virtual bool initialized (void) = 0;
+  virtual int initialized (void) = 0;
 
   /// Returns the current size of the Reactor's internal descriptor
   /// table.

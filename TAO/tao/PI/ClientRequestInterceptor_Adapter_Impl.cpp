@@ -29,7 +29,7 @@ namespace TAO
     // This method implements one of the "starting" client side
     // interception point.
 
-    bool const is_remote_request = invocation.is_remote_request();
+    bool is_remote_request = invocation.is_remote_request();
 
     ACE_TRY
       {
@@ -72,7 +72,7 @@ namespace TAO
     // This is an "ending" interception point so we only process the
     // interceptors pushed on to the flow stack.
 
-    bool const is_remote_request = invocation.is_remote_request();
+    bool is_remote_request = invocation.is_remote_request();
 
     // Notice that the interceptors are processed in the opposite order
     // they were pushed onto the stack since this is an "ending"
@@ -81,7 +81,7 @@ namespace TAO
     TAO_ClientRequestInfo ri (&invocation);
 
     // Unwind the stack.
-    size_t const len = invocation.stack_size ();
+    const size_t len = invocation.stack_size ();
     for (size_t i = 0; i < len; ++i)
       {
         // Pop the interceptor off of the flow stack before it is
@@ -117,7 +117,7 @@ namespace TAO
     // This is an "ending" interception point so we only process the
     // interceptors pushed on to the flow stack.
 
-    bool const is_remote_request = invocation.is_remote_request();
+    bool is_remote_request = invocation.is_remote_request();
 
     // Notice that the interceptors are processed in the opposite order
     // they were pushed onto the stack since this is an "ending"
@@ -127,7 +127,7 @@ namespace TAO
         TAO_ClientRequestInfo ri (&invocation);
 
         // Unwind the flow stack.
-        size_t const len = invocation.stack_size ();
+        const size_t len = invocation.stack_size ();
         for (size_t i = 0; i < len; ++i)
           {
             // Pop the interceptor off of the flow stack before it is
@@ -196,7 +196,7 @@ namespace TAO
     // This is an "ending" interception point so we only process the
     // interceptors pushed on to the flow stack.
 
-    bool const is_remote_request = invocation.is_remote_request();
+    bool is_remote_request = invocation.is_remote_request();
 
     // Notice that the interceptors are processed in the opposite order
     // they were pushed onto the stack since this is an "ending"
@@ -207,7 +207,7 @@ namespace TAO
         TAO_ClientRequestInfo ri (&invocation);
 
         // Unwind the stack.
-        size_t const len = invocation.stack_size ();
+        const size_t len = invocation.stack_size ();
         for (size_t i = 0; i < len; ++i)
         {
           // Pop the interceptor off of the flow stack before it is
@@ -237,35 +237,8 @@ namespace TAO
                                        ACE_ENV_ARG_PARAMETER);
         ACE_TRY_CHECK;
       }
-    ACE_CATCHANY
-      {
-        // The receive_exception() interception point in the remaining
-        // interceptors must be called so call this method (not the
-        // interceptor's corresponding method) recursively.  The call is
-        // made recursively since the caught exception must survive
-        // until the remaining interceptors have been called.
-
-        // Note that the recursion will stop once the flow stack size
-        // drops to zero, i.e., once each interceptor has been invoked.
-        // This prevents infinite recursion from occuring.
-
-        invocation.exception (&ACE_ANY_EXCEPTION);
-
-        this->receive_exception (invocation ACE_ENV_ARG_PARAMETER);
-        ACE_TRY_CHECK;
-
-        PortableInterceptor::ReplyStatus status =
-          this->reply_status (invocation);
-
-        // Only re-throw the exception if it hasn't been transformed by
-        // the receive_exception() interception point (e.g. to a
-        // LOCATION_FORWARD).
-        if (status == PortableInterceptor::SYSTEM_EXCEPTION
-            || status == PortableInterceptor::USER_EXCEPTION)
-          ACE_RE_THROW;
-      }
     ACE_ENDTRY;
-    ACE_CHECK;                                      
+    ACE_CHECK;
   }
 
   void

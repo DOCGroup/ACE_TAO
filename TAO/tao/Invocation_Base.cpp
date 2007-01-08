@@ -155,7 +155,7 @@ namespace TAO
         ACE_ENDTRY;
         ACE_CHECK_RETURN (TAO_INVOKE_FAILURE);
 
-        PortableInterceptor::ReplyStatus const status =
+        const PortableInterceptor::ReplyStatus status =
           this->adapter_->reply_status (*this);
 
         if (status == PortableInterceptor::LOCATION_FORWARD ||
@@ -222,14 +222,8 @@ namespace TAO
                                            ACE_ENV_ARG_PARAMETER);
         ACE_CHECK_RETURN (PortableInterceptor::UNKNOWN);
 
-        if (this->forwarded_to_.in ())
-          {
-            status = PortableInterceptor::LOCATION_FORWARD;
-          }
-        else
-          {
-            status = this->adapter_->reply_status (*this);
-          }
+        status =
+          this->adapter_->reply_status (*this);
       }
 
     return status;
@@ -265,7 +259,6 @@ namespace TAO
     else if (CORBA::UserException::_downcast (exception) != 0)
       this->invoke_status_ = TAO::TAO_INVOKE_USER_EXCEPTION;
 
-    this->forwarded_to_ = CORBA::Object::_nil ();      
     this->caught_exception_ = exception;
   }
 

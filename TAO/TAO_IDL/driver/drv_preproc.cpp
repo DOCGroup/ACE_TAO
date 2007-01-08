@@ -1308,6 +1308,8 @@ DRV_pre_proc (const char *myfile)
       throw FE_Bailout ();
     }
 
+#if !defined (ACE_WIN32) || defined (ACE_HAS_WINNT4) && (ACE_HAS_WINNT4 != 0)
+
   if (ACE_OS::unlink (t_file) == -1)
     {
       ACE_ERROR ((LM_ERROR,
@@ -1318,6 +1320,7 @@ DRV_pre_proc (const char *myfile)
       idl_global->set_err_count (idl_global->err_count () + 1);
       throw FE_Bailout ();
     }
+#endif /* ACE_HAS_WINNT4 && ACE_HAS_WINNT4 != 0 */
 
   if (idl_global->compile_flags () & IDL_CF_ONLY_PREPROC)
     {

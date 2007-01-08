@@ -17,7 +17,7 @@ noinst_PROGRAMS =
 
 ## Makefile.Log_Event_Consumer.am
 
-if BUILD_EXCEPTIONS
+if !BUILD_MINIMUM_CORBA
 
 noinst_PROGRAMS += Event_Consumer
 
@@ -45,11 +45,11 @@ Event_Consumer_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
-endif BUILD_EXCEPTIONS
+endif !BUILD_MINIMUM_CORBA
 
 ## Makefile.Log_Event_Supplier.am
 
-if BUILD_EXCEPTIONS
+if !BUILD_MINIMUM_CORBA
 
 noinst_PROGRAMS += Event_Supplier
 
@@ -77,7 +77,7 @@ Event_Supplier_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
-endif BUILD_EXCEPTIONS
+endif !BUILD_MINIMUM_CORBA
 
 ## Clean up template repositories, etc.
 clean-local:

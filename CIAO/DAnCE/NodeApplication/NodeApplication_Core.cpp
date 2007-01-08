@@ -1,6 +1,6 @@
 // $Id$
 
-#include "ciao/CIAO_NodeApplication_CallBackC.h"
+#include "ciao/NodeApplication_CallBackC.h"
 #include "ace/Sched_Params.h"
 #include "NodeApplication_Impl.h"
 #include "NodeApplication_Core.h"

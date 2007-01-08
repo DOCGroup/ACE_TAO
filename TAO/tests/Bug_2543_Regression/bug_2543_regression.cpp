@@ -31,6 +31,7 @@ int main (int argc, char* argv[])
 
        IOP::Codec_var codec = codec_factory->create_codec(e);
 
+
        CORBA::Any any_o;
        BaseSeq values;
        values.length(1);
@@ -54,7 +55,7 @@ int main (int argc, char* argv[])
             ACE_ERROR_RETURN ((LM_ERROR, "Error: wrong type!\n"), 1);
          }
 
-         orb->destroy();
+       orb->destroy();
      }
   ACE_CATCHANY
     {

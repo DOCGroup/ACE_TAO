@@ -46,9 +46,6 @@ public:
   /// Destructor
   ~TAO_Notify_Properties ();
 
-  /// Return a singleton instance of this class.
-  static TAO_Notify_Properties * instance (void);
-
   // = Property Accessors
   TAO_Notify_Factory* factory (void);
   void factory (TAO_Notify_Factory* factory);
@@ -58,8 +55,6 @@ public:
 
   CORBA::ORB_ptr orb (void);
   void orb (CORBA::ORB_ptr orb);
-  CORBA::ORB_ptr dispatching_orb (void);
-  void dispatching_orb (CORBA::ORB_ptr dispatching_orb);
 
   PortableServer::POA_ptr default_poa (void);
   void default_poa (PortableServer::POA_ptr default_poa);
@@ -73,8 +68,6 @@ public:
   // Turn on/off update messages.
   CORBA::Boolean updates (void);
   void updates (CORBA::Boolean updates);
-  bool separate_dispatching_orb (void);
-  void separate_dispatching_orb (bool b);
 
   // The QoS Property that must be applied to each newly created Event Channel
   const CosNotification::QoSProperties& default_event_channel_qos_properties (void);
@@ -116,9 +109,6 @@ protected:
   /// ORB
   CORBA::ORB_var orb_;
 
-  /// dispatching orb
-  CORBA::ORB_var dispatching_orb_;
-
   // POA
   PortableServer::POA_var default_poa_;
 
@@ -127,9 +117,6 @@ protected:
 
   /// True if clients can reconnect to proxies.
   bool allow_reconnect_;
-
-  /// True is separate dispatching orb
-  bool separate_dispatching_orb_;
 
   /// True if updates are enabled (default).
   CORBA::Boolean updates_;
@@ -153,10 +140,9 @@ protected:
   CosNotification::QoSProperties pc_qos_;
 };
 
-/**
- * @todo Remove this legacy TAO_Notify_Properties typedef.
- */
-typedef TAO_Notify_Properties TAO_Notify_PROPERTIES;
+TAO_NOTIFY_SERV_SINGLETON_DECLARE (TAO_Singleton, TAO_Notify_Properties, TAO_SYNCH_MUTEX)
+
+typedef TAO_Singleton<TAO_Notify_Properties, TAO_SYNCH_MUTEX> TAO_Notify_PROPERTIES;
 
 TAO_END_VERSIONED_NAMESPACE_DECL
 

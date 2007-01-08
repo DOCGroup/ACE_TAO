@@ -342,13 +342,19 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
       *os << "// These two are inherited from SessionComponent."
           << be_nl << be_nl
           << "void" << be_nl
-          << node->full_name () << "::ciao_preactivate (void)" << be_idt_nl
+          << node->full_name () << "::ciao_preactivate ("
+          << be_idt << be_idt
+          << env_sngl_not << be_uidt_nl
+          << ")" << be_uidt_nl
           << "ACE_THROW_SPEC (( ::CORBA::SystemException," << be_nl
           << "                 ::Components::CCMException))" << be_uidt_nl
           << "{" << be_nl
           << "}" << be_nl << be_nl
           << "void" << be_nl
-          << node->full_name () << "::ciao_postactivate (void)" << be_idt_nl
+          << node->full_name () << "::ciao_postactivate ("
+          << be_idt << be_idt
+          << env_sngl_not << be_uidt_nl
+          << ")" << be_uidt_nl
           << "ACE_THROW_SPEC (( ::CORBA::SystemException," << be_nl
           << "                 ::Components::CCMException))" << be_uidt_nl
           << "{" << be_nl
@@ -356,12 +362,23 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
     }
 
   *os << "::CORBA::Boolean" << be_nl
-      << node->full_name () << "::_is_a (const char *value)" << be_nl;
+      << node->full_name () << "::_is_a (" << be_idt << be_idt_nl
+      << "const char *value";
 
-  *os << "{" << be_idt_nl
+  if (node->is_local () || node->is_abstract ())
+    {
+      *os << env_not;
+    }
+  else
+    {
+      *os << env_decl;
+    }
+
+  *os << be_uidt_nl << ")" << be_uidt_nl
+      << "{" << be_idt_nl
       << "if (" << be_idt << be_idt_nl;
 
-  int const status =
+  int status =
     node->traverse_inheritance_graph (be_interface::is_a_helper,
                                       os);
 
@@ -419,7 +436,10 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
     }
   else
     {
-      *os << "return this->::CORBA::Object::_is_a (value);" << be_uidt_nl;
+      *os << "return this->::CORBA::Object::_is_a ("
+          << be_idt << be_idt_nl
+          << "value" << env_arg << be_uidt_nl
+          << ");" << be_uidt << be_uidt_nl;
     }
 
   *os << "}" << be_uidt << be_uidt_nl
@@ -512,6 +532,7 @@ be_visitor_interface_cs::gen_xxx_narrow (const char *pre,
     }
 
   *os << " _tao_objref"
+      << (node->is_local () ? env_not : env_decl)
       << be_uidt_nl
       << ")" << be_uidt_nl
       << "{" << be_idt_nl;
@@ -539,7 +560,7 @@ be_visitor_interface_cs::gen_xxx_narrow (const char *pre,
           << "\"" << node->repoID () << "\"," << be_nl
           << node->flat_client_enclosing_scope ()
           << node->base_proxy_broker_name ()
-          << "_Factory_function_pointer" << be_uidt_nl
+          << "_Factory_function_pointer" << env_arg << be_uidt_nl
           << ");" << be_uidt << be_nl
           << "return TAO_" << node->flat_name ()
           << "_PROXY_FACTORY_ADAPTER::instance ()->create_proxy (proxy);"
@@ -566,7 +587,7 @@ be_visitor_interface_cs::gen_xxx_narrow (const char *pre,
           << "\"" << node->repoID () << "\"," << be_nl
           << node->flat_client_enclosing_scope ()
           << node->base_proxy_broker_name ()
-          << "_Factory_function_pointer" << be_uidt_nl
+          << "_Factory_function_pointer" << env_arg << be_uidt_nl
           << ");" << be_uidt << be_uidt << be_uidt_nl
           << "}" << be_nl << be_nl;
     }
@@ -616,18 +637,18 @@ be_visitor_interface_cs::gen_abstract_ops_helper (be_interface *node,
           UTL_ScopedName *new_op_name =
             (UTL_ScopedName *)node->name ()->copy ();
           new_op_name->nconc (item_new_name);
-
+          
           be_operation *op = be_operation::narrow_from_decl (d);
           UTL_ScopedName *old_op_name =
             (UTL_ScopedName *) op->name ()->copy ();
           op->set_name (new_op_name);
           op->set_defined_in (node);
           op->is_abstract (node->is_abstract ());
-
+          
           ctx.state (TAO_CodeGen::TAO_OPERATION_CS);
           be_visitor_operation_cs op_visitor (&ctx);
           op_visitor.visit_operation (op);
-
+          
           op->set_name (old_op_name);
           op->set_defined_in (base);
           op->is_abstract (base->is_abstract ());

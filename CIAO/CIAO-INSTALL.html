@@ -86,7 +86,10 @@
     <ul>
       <li>
         Open up <code>$ACE_ROOT/bin/MakeProjectCreator/config/default.features</code>
-      and set <code>cidl=1</code> and <code>boost=1</code>, each on its own line.
+      and set cidl=1.
+      <li>
+        Open up <code>$ACE_ROOT/bin/MakeProjectCreator/config/global.features</code>
+      and set boost=1.
       <li>
         Make sure you set cidl=1, boost=1, and exceptions=1 in <code>$ACE_ROOT/include/makeinclude/platfrom_macros.GNU</code>.
       <li>
@@ -108,7 +111,10 @@
       <li>
         If you have not created it already, create the file <code>%ACE_ROOT%/bin/MakeProjectCreator/config/default.features</code>
         and add <code>cidl=1</code> and <code>boost=1</code> to it, each on its own 
-        line.
+        line. An easy way to do this is to copy the file <code>global.features</code> (in the 
+        same directory) as <code>default.features</code>
+        and modify the appropriate lines in the new file, leaving everything else the 
+        same.
       <li>
         Install the <a href="http://www.boost.org">Boost</a>
       libraries on your machine. For Windows, you can download either the 

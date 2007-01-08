@@ -212,6 +212,24 @@ TAO_Stub::next_profile_retry (void)
     }
 
   return false;
+#if 0
+  else
+    {
+      // Check whether the loaded services have something to say about
+      // this condition
+      TAO_Profile *prof = 0;
+      this->orb_core_->service_profile_reselection (this,
+                                                    prof);
+
+      // If the service is loaded and has a profile then try it.
+      if (prof)
+        {
+          return true;
+        }
+      this->reset_profiles_i ();
+      return false;
+    }
+#endif /*If 0 */
 }
 
 ACE_INLINE const TAO_MProfile&

@@ -24,7 +24,6 @@ TAO_Notify_Service_Driver::TAO_Notify_Service_Driver (void)
 , notify_channel_name_ (NOTIFY_CHANNEL_NAME)
 , register_event_channel_ (0)
 , nthreads_ (1)
-, separate_dispatching_orb_ (false)
 {
   // No-Op.
 }
@@ -74,22 +73,6 @@ TAO_Notify_Service_Driver::init_ORB (int& argc, ACE_TCHAR *argv []
 }
 
 int
-TAO_Notify_Service_Driver::init_dispatching_ORB (int& argc, ACE_TCHAR *argv []
-                              ACE_ENV_ARG_DECL)
-{
-  // Copy command line parameter.
-  ACE_Argv_Type_Converter command_line(argc, argv);
-
-  this->dispatching_orb_ = CORBA::ORB_init (command_line.get_argc(),
-                                command_line.get_ASCII_argv(),
-                                "dispatcher"
-                                ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
-
-  return 0;
-}
-
-int
 TAO_Notify_Service_Driver::init (int argc, ACE_TCHAR *argv[]
                                  ACE_ENV_ARG_DECL)
 {
@@ -114,22 +97,8 @@ TAO_Notify_Service_Driver::init (int argc, ACE_TCHAR *argv[]
       return -1;
     }
 
-  if (this->separate_dispatching_orb_)
-    {
-      if (this->init_dispatching_ORB (argc, argv
-                                      ACE_ENV_ARG_PARAMETER) != 0)
-        {
-          return -1;
-        }
-
-      this->notify_service_->init_service2 (this->orb_.in (), this->dispatching_orb_.in() ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK_RETURN (-1);
-    }
-  else
-    {
-      this->notify_service_->init_service (this->orb_.in () ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK_RETURN (-1);
-    }
+  this->notify_service_->init_service (this->orb_.in () ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK_RETURN (-1);
 
   if (this->nthreads_ > 0) // we have chosen to run in a thread pool.
     {
@@ -334,12 +303,6 @@ TAO_Notify_Service_Driver::shutdown (ACE_ENV_SINGLE_ARG_DECL)
   // shutdown the ORB.
   if (!CORBA::is_nil (this->orb_.in ()))
     this->orb_->shutdown ();
-
-  /// Release all the _vars as the ORB is gone now.
-  notify_factory_._retn ();
-  orb_._retn ();
-  poa_._retn ();
-  naming_._retn ();
 }
 
 int
@@ -354,30 +317,6 @@ TAO_Notify_Service_Driver::parse_args (int &argc, ACE_TCHAR *argv[])
         {
           this->notify_factory_name_.set (ACE_TEXT_ALWAYS_CHAR(current_arg));
           arg_shifter.consume_arg ();
-        }
-      else if (arg_shifter.cur_arg_strncasecmp (ACE_TEXT("-UseSeparateDispatchingORB")) == 0)
-        {
-      current_arg = arg_shifter.get_the_parameter
-                            (ACE_TEXT("-UseSeparateDispatchingORB"));
-      if (current_arg != 0 &&
-          (ACE_OS::strcmp(ACE_TEXT ("0"), current_arg) == 0 ||
-           ACE_OS::strcmp(ACE_TEXT ("1"), current_arg) == 0))
-        {
-          ACE_DEBUG ((LM_DEBUG,
-                      ACE_TEXT ("Using separate dispatching ORB\n")));
-          this->separate_dispatching_orb_ =
-                        static_cast<bool> (ACE_OS::atoi(current_arg));
-        }
-      else
-        {
-          ACE_DEBUG ((LM_DEBUG,
-                      ACE_TEXT ("WARNING: Unrecognized ")
-                      ACE_TEXT ("argument (%s) to ")
-                      ACE_TEXT ("-UseSeparateDispatchingORB.\n"),
-                      (current_arg == 0 ? ACE_TEXT ("''") : current_arg)));
-        }
-      if (current_arg != 0)
-        arg_shifter.consume_arg ();
         }
       else if (arg_shifter.cur_arg_strncasecmp (ACE_TEXT("-Boot")) == 0)
         {

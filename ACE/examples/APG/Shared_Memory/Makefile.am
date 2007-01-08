@@ -6,7 +6,7 @@
 ## this file will be lost the next time it is generated.
 ##
 ## MPC Command:
-## ./bin/mwc.pl -type automake -noreldefs ACE.mwc
+## /acebuilds/ACE_wrappers-repository/bin/mwc.pl -include /acebuilds/MPC/config -include /acebuilds/MPC/templates -feature_file /acebuilds/ACE_wrappers-repository/local.features -noreldefs -type automake -exclude build,Kokyu
 
 ACE_BUILDDIR = $(top_builddir)
 ACE_ROOT = $(top_srcdir)
@@ -16,7 +16,6 @@ noinst_PROGRAMS =
 ## Makefile.Malloc.am
 
 if !BUILD_ACE_FOR_TAO
-
 noinst_PROGRAMS += Malloc
 
 Malloc_CPPFLAGS = \
@@ -35,7 +34,6 @@ endif !BUILD_ACE_FOR_TAO
 ## Makefile.Mem_Map.am
 
 if !BUILD_ACE_FOR_TAO
-
 noinst_PROGRAMS += Mem_Map
 
 Mem_Map_CPPFLAGS = \
@@ -54,7 +52,6 @@ endif !BUILD_ACE_FOR_TAO
 ## Makefile.PI_Malloc.am
 
 if !BUILD_ACE_FOR_TAO
-
 noinst_PROGRAMS += PI_Malloc
 
 PI_Malloc_CPPFLAGS = \
@@ -73,7 +70,6 @@ endif !BUILD_ACE_FOR_TAO
 ## Makefile.Pool_Growth.am
 
 if !BUILD_ACE_FOR_TAO
-
 noinst_PROGRAMS += Pool_Growth
 
 Pool_Growth_CPPFLAGS = \
@@ -92,7 +88,6 @@ endif !BUILD_ACE_FOR_TAO
 ## Makefile.Shared_Memory_Hash_Map.am
 
 if !BUILD_ACE_FOR_TAO
-
 noinst_PROGRAMS += Hash_Map
 
 Hash_Map_CPPFLAGS = \

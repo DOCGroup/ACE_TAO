@@ -19,8 +19,8 @@
 //
 // ============================================================================
 
-ACE_RCSID (be_visitor_union_branch,
-           private_ch,
+ACE_RCSID (be_visitor_union_branch, 
+           private_ch, 
            "$Id$")
 
 // **********************************************
@@ -387,8 +387,9 @@ be_visitor_union_branch_private_ch::visit_predefined_type (
   *os << be_nl << "// TAO_IDL - Generated from" << be_nl
       << "// " << __FILE__ << ":" << __LINE__;
 
-  *os << be_nl;
-
+  *os << be_nl
+      << (td == 0 ? "::" : "");
+      
   AST_PredefinedType::PredefinedType pt = node->pt ();
 
   if (pt == AST_PredefinedType::PT_object
@@ -399,7 +400,7 @@ be_visitor_union_branch_private_ch::visit_predefined_type (
     }
   else if (pt == AST_PredefinedType::PT_pseudo)
     {
-      *os << bt->nested_type_name (bu, "_ptr")
+      *os << bt->nested_type_name (bu, "_ptr") 
           << " " << ub->local_name () << "_;";
     }
   else if (pt == AST_PredefinedType::PT_value)

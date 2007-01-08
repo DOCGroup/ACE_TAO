@@ -22,9 +22,9 @@ else {
 @ace_core_dirs = ("$ACE_ROOT\\ace",
                   "$ACE_ROOT\\Kokyu",
                   "$ACE_ROOT\\ACEXML",
+                  "$ACE_ROOT\\protocols",
                   "$ACE_ROOT\\examples",
-                  "$ACE_ROOT\\tests",
-                  "$ACE_ROOT\\protocols");
+                  "$ACE_ROOT\\tests");
 
 @tao_core_dirs = ("$ACE_ROOT\\apps",
                   "$ACE_ROOT\\TAO\\TAO_IDL",

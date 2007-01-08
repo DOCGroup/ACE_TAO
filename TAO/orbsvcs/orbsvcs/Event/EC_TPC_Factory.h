@@ -56,7 +56,7 @@ public:
       create_proxy_push_consumer (TAO_EC_Event_Channel_Base*);
 };
 
-extern unsigned long TAO_EC_TPC_debug_level;
+extern unsigned long EC_TPC_debug_level;
 
 TAO_END_VERSIONED_NAMESPACE_DECL
 

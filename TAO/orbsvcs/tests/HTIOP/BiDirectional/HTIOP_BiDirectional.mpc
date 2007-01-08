@@ -10,7 +10,7 @@ project(*idl): taoidldefaults {
   custom_only = 1
 }
 
-project(*Server): taoexe, portableserver, bidir_giop, avoids_corba_e_micro {
+project(*Server): taoexe, portableserver, bidir_giop {
   after += *idl
   Source_Files {
     testC.cpp
@@ -22,7 +22,7 @@ project(*Server): taoexe, portableserver, bidir_giop, avoids_corba_e_micro {
   }
 }
 
-project(*Client): taoexe, portableserver, avoids_minimum_corba, bidir_giop, avoids_corba_e_micro {
+project(*Client): taoexe, portableserver, minimum_corba, bidir_giop {
   after += *idl
   Source_Files {
     testC.cpp

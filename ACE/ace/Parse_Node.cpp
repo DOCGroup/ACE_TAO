@@ -669,8 +669,6 @@ ACE_Dummy_Node::apply (ACE_Service_Gestalt *, int &yyerrno)
                 ACE_LIB_TEXT ("did operations on stream %s, error = %d\n"),
                 this->name (),
                 yyerrno));
-#else
-  ACE_UNUSED_ARG (yyerrno);
 #endif /* ACE_NLOGGING */
 }
 

@@ -200,9 +200,6 @@ public:
   // Report an illegal #pragma version.
   void version_number_error (char *n);
 
-  // Report an illegal #pragma version syntax
-  void version_syntax_error (const char *msg);
-
   // Repost an attempt to reset the version.
   void version_reset_error (void);
 
@@ -340,7 +337,7 @@ public:
   // Improper use of -Sm option.
   void ignore_idl3_error (AST_Decl *d);
 
-  // Valuetype violates a spec-defined constraint on a
+  // Valuetype violates a spec-defined constraint on a 
   // valuetype used as a primary key.
   void illegal_primary_key (AST_Decl *d);
 };

@@ -15,6 +15,8 @@
 #define TAO_CONSTRAINT_NODES_H
 #include /**/ "ace/pre.h"
 
+#include "orbsvcs/Trader/Constraint_Tokens.h"
+
 #include "tao/Basic_Types.h"
 #include "tao/String_Manager_T.h"
 
@@ -199,7 +201,8 @@ public:
 
   virtual int accept (TAO_Constraint_Visitor* visitor);
 
-  virtual TAO_Expression_Type expr_type (void) const;
+  virtual TAO_Expression_Type expr_type (void) const
+    { return TAO_IDENT; }
 
   /// Returns the name of the property.
   const char* name (void) const;
@@ -223,13 +226,14 @@ class TAO_Trading_Serv_Export TAO_Literal_Constraint : public TAO_Constraint
 {
  public:
 
-  TAO_Literal_Constraint (void);
+  TAO_Literal_Constraint (void)
+    : type_ (TAO_UNKNOWN) {}
 
   // = Constructors for each of the various types of literals.
 
   TAO_Literal_Constraint (CORBA::Any* any);
-  TAO_Literal_Constraint (CORBA::ULongLong uinteger);
-  TAO_Literal_Constraint (CORBA::LongLong integer);
+  TAO_Literal_Constraint (CORBA::ULong uinteger);
+  TAO_Literal_Constraint (CORBA::Long integer);
   TAO_Literal_Constraint (CORBA::Boolean boolean);
   TAO_Literal_Constraint (CORBA::Double doub);
   TAO_Literal_Constraint (const char* str);
@@ -251,8 +255,8 @@ class TAO_Trading_Serv_Export TAO_Literal_Constraint : public TAO_Constraint
 
   // Conversion routines.
   operator CORBA::Boolean (void) const;
-  operator CORBA::ULongLong (void) const;
-  operator CORBA::LongLong (void) const;
+  operator CORBA::ULong (void) const;
+  operator CORBA::Long (void) const;
   operator CORBA::Double (void) const;
   operator const char* (void) const;
   operator const CORBA::Any* (void) const;
@@ -261,57 +265,57 @@ class TAO_Trading_Serv_Export TAO_Literal_Constraint : public TAO_Constraint
 
   // = Comparison operators.
 
-  friend TAO_Trading_Serv_Export bool
+  friend bool
     operator< (const TAO_Literal_Constraint& left,
                const TAO_Literal_Constraint& right);
 
-  friend TAO_Trading_Serv_Export bool
+  friend bool
     operator<= (const TAO_Literal_Constraint& left,
                 const TAO_Literal_Constraint& right);
 
-  friend TAO_Trading_Serv_Export bool
+  friend bool
     operator> (const TAO_Literal_Constraint& left,
                const TAO_Literal_Constraint& right);
 
-  friend TAO_Trading_Serv_Export bool
+  friend bool
     operator>= (const TAO_Literal_Constraint& left,
                 const TAO_Literal_Constraint& right);
 
-  friend TAO_Trading_Serv_Export bool
+  friend bool
     operator== (const TAO_Literal_Constraint& left,
                 const TAO_Literal_Constraint& right);
 
-  friend TAO_Trading_Serv_Export bool
+  friend bool
     operator!= (const TAO_Literal_Constraint& left,
                 const TAO_Literal_Constraint& right);
 
-  friend TAO_Trading_Serv_Export bool
+  friend bool
     operator== (double left,
                 const TAO_Literal_Constraint& right);
 
-  friend TAO_Trading_Serv_Export bool
+  friend bool
     operator== (const TAO::String_Manager& left,
                 const TAO_Literal_Constraint& right);
 
   // = Arithmetic operators.
 
-  friend TAO_Trading_Serv_Export TAO_Literal_Constraint
+  friend TAO_Literal_Constraint
     operator+ (const TAO_Literal_Constraint& left,
                const TAO_Literal_Constraint& right);
 
-  friend TAO_Trading_Serv_Export TAO_Literal_Constraint
+  friend TAO_Literal_Constraint
     operator- (const TAO_Literal_Constraint& left,
                const TAO_Literal_Constraint& right);
 
-  friend TAO_Trading_Serv_Export TAO_Literal_Constraint
+  friend TAO_Literal_Constraint
     operator* (const TAO_Literal_Constraint& left,
                const TAO_Literal_Constraint& right);
 
-  friend TAO_Trading_Serv_Export TAO_Literal_Constraint
+  friend TAO_Literal_Constraint
     operator/ (const TAO_Literal_Constraint& left,
                const TAO_Literal_Constraint& right);
 
-  friend TAO_Trading_Serv_Export TAO_Literal_Constraint
+  friend TAO_Literal_Constraint
     operator- (const TAO_Literal_Constraint& operand);
 
   /// Ensure both operands are of the same simple numeric type.
@@ -332,8 +336,8 @@ class TAO_Trading_Serv_Export TAO_Literal_Constraint : public TAO_Constraint
   {
     char* str_;
     CORBA::Any_ptr any_;
-    CORBA::ULongLong uinteger_;
-    CORBA::LongLong integer_;
+    CORBA::ULong uinteger_;
+    CORBA::Long integer_;
     CORBA::Boolean bool_;
     CORBA::Double double_;
   } op_;

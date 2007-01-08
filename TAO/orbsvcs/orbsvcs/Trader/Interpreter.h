@@ -93,7 +93,6 @@ private:
 };
 
 // The union used by lex and yacc to build the Abstract Syntax Tree.
-#define YYSTYPE_IS_DECLARED
 typedef union
 {
   TAO_Constraint* constraint_;

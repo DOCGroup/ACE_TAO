@@ -16,7 +16,7 @@ TAO_ROOT = $(top_srcdir)
 
 ## Makefile.ImplRepo_NameService.am
 
-if BUILD_EXCEPTIONS
+if !BUILD_MINIMUM_CORBA
 
 noinst_PROGRAMS = test
 
@@ -37,7 +37,7 @@ test_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
-endif BUILD_EXCEPTIONS
+endif !BUILD_MINIMUM_CORBA
 
 ## Clean up template repositories, etc.
 clean-local:

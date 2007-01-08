@@ -75,7 +75,7 @@ int be_visitor_interface_smart_proxy_ch::visit_interface (be_interface *node)
       << "virtual "<< node->local_name ()
       << "_ptr create_proxy (" << be_idt << be_idt_nl
       << node->local_name ()
-      << "_ptr proxy" << be_uidt_nl
+      << "_ptr proxy" << env_dflts << be_uidt_nl
       << ");" << be_uidt << be_uidt_nl
       << "};\n\n";
 
@@ -88,12 +88,14 @@ int be_visitor_interface_smart_proxy_ch::visit_interface (be_interface *node)
       << "_Proxy_Factory_Adapter, TAO_SYNCH_RECURSIVE_MUTEX>;" << be_nl << be_nl
       << "void register_proxy_factory (" << be_idt << be_idt_nl
       << "TAO_" << node->flat_name () << "_Default_Proxy_Factory *df,"<< be_nl
-      << "bool one_shot_factory = true" << be_uidt_nl
+      << "int one_shot_factory = 1" << env_dflts << be_uidt_nl
       << ");" << be_uidt_nl << be_nl
-      << "void unregister_proxy_factory (void);" << be_nl << be_nl
+      << "void unregister_proxy_factory (" << be_idt << be_idt
+      << env_dflts << be_uidt_nl
+      << ");" << be_uidt_nl << be_nl
       << node->local_name ()
       << "_ptr create_proxy (" << be_idt << be_idt_nl
-      << node->local_name () << "_ptr proxy" << be_uidt_nl
+      << node->local_name () << "_ptr proxy" << env_dflts << be_uidt_nl
       << ");" << be_uidt << be_uidt_nl << be_nl
       << "protected:" << be_idt_nl
       << "TAO_" << node->flat_name ()
@@ -107,8 +109,8 @@ int be_visitor_interface_smart_proxy_ch::visit_interface (be_interface *node)
       << ");" << be_uidt_nl
       << "TAO_" << node->flat_name ()
       << "_Default_Proxy_Factory *proxy_factory_;" << be_nl
-      << "bool one_shot_factory_;" << be_nl
-      << "bool disable_factory_;"<<be_nl
+      << "int one_shot_factory_;" << be_nl
+      << "int disable_factory_;"<<be_nl
       << "TAO_SYNCH_RECURSIVE_MUTEX lock_;" << be_uidt_nl
       << "};";
 

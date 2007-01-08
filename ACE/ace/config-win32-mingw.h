@@ -88,6 +88,15 @@
 # define ACE_HAS_PENTIUM
 #endif
 
+#if !defined (ACE_HAS_WINNT4)
+# if (defined (WINNT) && WINNT == 1) \
+     || (defined (__WINNT__) && __WINNT__ == 1)
+#  define ACE_HAS_WINNT4 1
+# else
+#  define ACE_HAS_WINNT4 0
+# endif
+#endif
+
 #define ACE_INT64_FORMAT_SPECIFIER ACE_LIB_TEXT ("%I64d")
 #define ACE_UINT64_FORMAT_SPECIFIER ACE_LIB_TEXT ("%I64u")
 

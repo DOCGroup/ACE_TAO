@@ -5,7 +5,7 @@
  *
  * @brief Maintains the Domain Information
  *
- * It contains the entire Domain information. Both the
+ * It contains the entire Domain information.Both the
  * initial domain as well as the current available domain.
  *
  * @author Nilabja Roy nilabjar@dre.vanderbilt.edu
@@ -14,8 +14,8 @@
 #ifndef DOMAIN_DATA_MGRH
 #define DOMAIN_DATA_MGRH
 
-#include "TargetManagerImplC.h"
-#include "DAnCE/DomainApplicationManager/Deployment_Configuration.h"
+#include "TargetManagerC.h"
+#include "Deployment_Configuration.h"
 
 /**
  * @namespace CIAO
@@ -38,6 +38,7 @@ namespace CIAO
 
       public :
         /**
+         * @operation updateDomain
          * @brief     This function is called by the other classes to update
          *            current domain data.
          * @param     elements The string sequence of elements
@@ -51,6 +52,7 @@ namespace CIAO
                            ::Deployment::DomainUpdateKind updateKind
                            );
       /**
+       * @operation    getInitialDomain
        * @brief        This function is called the Executor code
        *               to get the Original Domain data.
        * @return       Domain* The Initial Domain
@@ -59,6 +61,7 @@ namespace CIAO
       ::Deployment::Domain* get_initial_domain ();
 
       /**
+       * @operation   getCurrentDomain
        * @brief       This function is called the Executor code
        *              to get the Current Domain data.
        * @return      Domain* The Current Domain
@@ -67,18 +70,20 @@ namespace CIAO
 
 
       /**
-       * This function calls the constructor of the
-       * class Domain Data Manager
-       * @brief This function is called to create the Datamanager
+       * @operation create
+       * @brief     This function is called to create the Datamanager
        * @param orb The orb pointer
        * @param target The Target Manager Object Reference
        *
+       * @description This function calls the constructor of the
+       *              class Domain Data Manager
        */
       static DomainDataManager * create (CORBA::ORB_ptr orb,
                                   ::Deployment::TargetManager_ptr target
                                   );
 
       /**
+       * @operation get_data_manager
        * @brief Returns the static pointer to the
        *        data manager.
        * @return DomainDataManager*
@@ -88,18 +93,23 @@ namespace CIAO
       static DomainDataManager* get_data_manager ();
 
       /**
+       * @operation delete_data_manager
        * @brief deletes the data manager
        */
+
       static void delete_data_manger ();
 
       /**
+       * @operation get_node_managers
        * @brief returns the sequence of node managers
        * object reference
        */
+
       CIAO::Host_NodeManager_seq *
         get_node_managers ();
 
       /**
+       * @operation get_cpu_info
        * @brief returns the node specific cpu utilization
        *
        * @return CIAO::Host_Infos*
@@ -108,6 +118,7 @@ namespace CIAO
        CIAO::Host_Infos* get_cpu_info ();
 
        /**
+        * @operation get_pid
         * @brief returns the pid of the component id submitted
         * @param cmp The component id
         *
@@ -116,6 +127,7 @@ namespace CIAO
        CORBA::Long get_pid (ACE_CString cmp);
 
        /**
+        * @operation commitResources
         * @brief commits the resources that are specified
         * in the plan.
         * @param plan ::Deployment::DeploymentPlan
@@ -130,39 +142,49 @@ namespace CIAO
        const ::Deployment::DeploymentPlan & plan);
 
        /**
+        * @operation releaseResources
         * @brief The function releases the resources held by a plan
-        * @param plan ::Deployment::DeploymentPlan the plan whose
+        *
+        * @param argname ::Deployment::DeploymentPlan the plan whose
         *                resources are to be released
         */
        void releaseResources (
        const ::Deployment::DeploymentPlan& plan);
 
        /**
-        * The node manager in turn stops the monitor
+        * @operation stop_monitors
         * @brief The function makes a call on the leaveDomain on the
         *        NodeManager
+        *
+        * @description The node manager in turn stops the monitor
+        *
         */
+
        void stop_monitors ();
 
     protected:
 
+
       /**
-       * The constructor made protected so that no one can create
-       * it.
+       * @operation   Constructor
        * @param orb The orb pointer
        * @param target The Target Manager Object Reference
+       * @description The constructor made proteccted so that no one can create
+       *              it.
        */
       DomainDataManager (CORBA::ORB_ptr orb,
                          ::Deployment::TargetManager_ptr target
                          );
 
       /**
+       * @operation readinDomainData
        * @brief   It will read the initial Domain data from
        *          XML files.
        */
       int readin_domain_data ();
 
       /**
+       * @operation match_requirement_resource
        * @brief Match the deployed resources to the
        * available resource
        */
@@ -172,20 +194,23 @@ namespace CIAO
          );
 
       /**
+       * @operation match_properties
        * @brief Match the properties of a Requirement to the
        * properties of available resource
        * @param deployed The deployed Properties
        * @param available The available Properties
        */
+
       void match_properties (
                         ::Deployment::Properties deployed,
                         ::Deployment::SatisfierProperties& available);
 
 
-      /// The different actiona that can take place
-      enum  Action {commit , release};
+        /// The different actiona that can take place
+        enum  Action {commit , release};
 
       /**
+       * @operation commit_release_resource
        * @brief Either commits or releases the given resource
        * based on the current Action set.
        * @param deployed ::Deployment::Property is the resource
@@ -196,16 +221,19 @@ namespace CIAO
        *             when the deployed resources exceeds
        *             the available resource.
        */
-      void commit_release_resource (  ::Deployment::Property & deployed,
+
+        void commit_release_resource (  ::Deployment::Property & deployed,
                           ::Deployment::SatisfierProperty & available);
 
       /**
+       * @operation call_all_node_managers
        * @brief This function calls all NM and gives them
        * the sub-domain
        */
       int call_all_node_managers ();
 
       /**
+       * @operation add_to_domain
        * @brief This function add new elements to the
        * already existing domain
        *
@@ -215,6 +243,7 @@ namespace CIAO
       int add_to_domain (const ::Deployment::Domain& domain);
 
       /**
+       *  @operation delete_from_domain
        *  @brief This function deletes elements from the domain
        *
        *  @param domain ::Deployment::Domain contains the new elements
@@ -223,6 +252,7 @@ namespace CIAO
       int delete_from_domain (const ::Deployment::Domain& domain);
 
       /**
+       *  @operation intimate_planner
        *  @brief This function intimates the planner about a domain
        *  change
        *
@@ -232,6 +262,7 @@ namespace CIAO
       int intimate_planner (const ::Deployment::Domain& domain);
 
       /**
+       *  @operation find_in_initial_domain
        *  @brief This function finds a new node in the initial_domain
        *
        *  @param node The name of the node which is to be searched
@@ -240,16 +271,20 @@ namespace CIAO
       bool find_in_initial_domain (const char* node_name,
                               ::Deployment::Node& node);
       /**
+       *  @operation find_in_provisioned_domain
        *  @brief This function finds a new node in the proviosiond_domain
        *
        *  @param node The name of the node which is to be searched
        */
+
       bool find_in_provisioned_domain (const char* node_name,
                                   ::Deployment::Node& node);
 
       /**
+       *  @operation update_node_status
        *  @brief updates the node status by reading it from a file
        */
+
       bool update_node_status ();
 
       /// The ORB pointer
@@ -281,7 +316,7 @@ namespace CIAO
        */
       ::Deployment::Domain provisioned_data_;
 
-      /// The current action
+      ///The current action
       Action current_action_;
     };
 

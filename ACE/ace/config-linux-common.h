@@ -43,11 +43,9 @@
   // with shm_open/shm_unlink pairing in ACE which  needs to be fixed when I have time.
 # if defined (ACE_HAS_SHM_OPEN)
 #   undef ACE_HAS_SHM_OPEN
-# endif /* ACE_HAS_SHM_OPEN */
+# endif
 
-# if !defined (ACE_LACKS_LINUX_VERSION_H)
-#  include <linux/version.h>
-# endif /* !ACE_LACKS_LINUX_VERSION_H */
+# include <linux/version.h>
 
 # if defined (ACE_USES_FIFO_SEM)
     // Don't use this for Linux NPTL since this has complete
@@ -123,6 +121,16 @@
 // prototypes visible.
 # define ACE_LACKS_STRTOK_R_PROTOTYPE
 // @note  end of glibc 2.0 (0.961212-5)-specific configuration.
+
+// These macros determined by reading <stdio.h> on RH 7.1 and glibc's
+// <features.h>.
+# if defined (_BSD_SOURCE) \
+  || defined (_ISOC99_SOURCE) \
+  || defined (_ISOC9X_SOURCE) \
+  || (defined (__STDC_VERSION__) && (__STDC_VERSION__ >= 199901L)) \
+  || (defined _XOPEN_SOURCE && (_XOPEN_SOURCE - 0) >= 500)
+#   define ACE_HAS_SNPRINTF
+# endif
 
 # if __GLIBC__ > 1 && __GLIBC_MINOR__ >= 1
     // These were suggested by Robert Hanzlik <robi@codalan.cz> to get
@@ -237,7 +245,6 @@
 #if __GLIBC__ >= 2
 // glibc 2 and higher has wchar support
 # define ACE_HAS_XPG4_MULTIBYTE_CHAR
-# define ACE_HAS_VFWPRINTF
 #endif
 
 #if __GLIBC__ < 2
@@ -253,8 +260,6 @@
 #if __GLIBC__ >= 2
 # define ACE_HAS_3_PARAM_WCSTOK
 #endif
-
-#define ACE_HAS_3_PARAM_READDIR_R
 
 #if !defined (ACE_DEFAULT_BASE_ADDR)
 #  define ACE_DEFAULT_BASE_ADDR ((char *) 0x80000000)
@@ -390,20 +395,13 @@
 
 #define ACE_HAS_VOIDPTR_MMAP
 
-#if defined (ACE_LACKS_NETWORKING)
-# include "ace/config-posix-nonetworking.h"
-#else
-# define ACE_HAS_NETLINK
-# define ACE_HAS_GETIFADDRS
-#endif
+#define ACE_HAS_NETLINK
 
 #if !defined (ACE_GETNAME_RETURNS_RANDOM_SIN_ZERO)
 // Detect if getsockname() and getpeername() returns random values in
 // the sockaddr_in::sin_zero field by evaluation of the kernel
 // version. Since version 2.5.47 this problem is fixed.
-#  if !defined (ACE_LACKS_LINUX_VERSION_H)
-#    include <linux/version.h>
-#  endif /* !ACE_LACKS_LINUX_VERSION_H */
+#include <linux/version.h>
 #  if (LINUX_VERSION_CODE >= KERNEL_VERSION(2,5,47))
 #    define ACE_GETNAME_RETURNS_RANDOM_SIN_ZERO 0
 #  else

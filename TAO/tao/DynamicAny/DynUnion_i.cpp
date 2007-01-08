@@ -1,13 +1,10 @@
 // $Id$
 
-#include "tao/DynamicAny/DynUnion_i.h"
-#include "tao/DynamicAny/DynAnyFactory.h"
-#include "tao/DynamicAny/DynAnyUtils_T.h"
-
 #include "tao/AnyTypeCode/Marshal.h"
 #include "tao/AnyTypeCode/Any_Unknown_IDL_Type.h"
 #include "tao/AnyTypeCode/AnyTypeCode_methods.h"
-
+#include "tao/DynamicAny/DynUnion_i.h"
+#include "tao/DynamicAny/DynAnyFactory.h"
 #include "tao/CDR.h"
 
 ACE_RCSID (DynamicAny,
@@ -27,10 +24,10 @@ TAO_DynUnion_i::~TAO_DynUnion_i (void)
 void
 TAO_DynUnion_i::init_common (void)
 {
-  this->ref_to_component_ = false;
-  this->container_is_destroying_ = false;
-  this->has_components_ = true;
-  this->destroyed_ = false;
+  this->ref_to_component_ = 0;
+  this->container_is_destroying_ = 0;
+  this->has_components_ = 1;
+  this->destroyed_ = 0;
   this->component_count_ = 2;
   this->current_position_ = 0;
   this->member_slot_ = 0;
@@ -58,7 +55,8 @@ TAO_DynUnion_i::init (const CORBA::Any& any
 
   // Set the from_factory arg to TRUE, so any problems will throw
   // InconsistentTypeCode.
-  this->set_from_any (any
+  this->set_from_any (any,
+                      1
                       ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 }
@@ -94,9 +92,9 @@ TAO_DynUnion_i::init (CORBA::TypeCode_ptr tc
 
   // Initialize the discriminator to the label value of the first member.
   this->discriminator_ =
-    TAO::MakeDynAnyUtils<const CORBA::Any&>::make_dyn_any_t (
-      first_label.in ()._tao_get_typecode (),
-      first_label.in ());
+    TAO_DynAnyFactory::make_dyn_any (first_label.in ()
+                                     ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK;
 
   CORBA::TypeCode_var first_type =
     unaliased_tc->member_type (this->current_position_
@@ -104,10 +102,9 @@ TAO_DynUnion_i::init (CORBA::TypeCode_ptr tc
   ACE_CHECK;
 
   // Recursively initialize the member to its default value.
-  this->member_ =
-    TAO::MakeDynAnyUtils<CORBA::TypeCode_ptr>::make_dyn_any_t (
-      first_type.in (),
-      first_type.in ());
+  this->member_ = TAO_DynAnyFactory::make_dyn_any (first_type.in ()
+                                                   ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK;
 }
 
 // ****************************************************************
@@ -127,7 +124,8 @@ TAO_DynUnion_i::_narrow (CORBA::Object_ptr _tao_objref
 // This code is common to from_any() and the init() overload that takes
 // an Any argument.
 void
-TAO_DynUnion_i::set_from_any (const CORBA::Any & any
+TAO_DynUnion_i::set_from_any (const CORBA::Any & any,
+                              CORBA::Boolean /* from_factory */
                               ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((
       CORBA::SystemException,
@@ -139,7 +137,7 @@ TAO_DynUnion_i::set_from_any (const CORBA::Any & any
   // only on unions, so strip the alias out of the type code
   //
   CORBA::TypeCode_var tc =
-   TAO_DynAnyFactory::strip_alias (any._tao_get_typecode ()
+   TAO_DynAnyFactory::strip_alias (any.type ()
                                    ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
@@ -185,9 +183,9 @@ TAO_DynUnion_i::set_from_any (const CORBA::Any & any
 
   // Set the discriminator.
   this->discriminator_ =
-    TAO::MakeDynAnyUtils<const CORBA::Any&>::make_dyn_any_t (
-      disc_any._tao_get_typecode (),
-      disc_any);
+    TAO_DynAnyFactory::make_dyn_any (disc_any
+                                     ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK;
 
   // Move to the next field in the CDR stream.
   (void) TAO_Marshal_Object::perform_skip (disc_tc.in (),
@@ -247,9 +245,9 @@ TAO_DynUnion_i::set_from_any (const CORBA::Any & any
       member_any.replace (unk);
 
       this->member_ =
-        TAO::MakeDynAnyUtils<const CORBA::Any&>::make_dyn_any_t (
-          member_any._tao_get_typecode (),
-          member_any);
+        TAO_DynAnyFactory::make_dyn_any (member_any
+                                         ACE_ENV_ARG_PARAMETER);
+      ACE_CHECK;
 
       this->member_slot_ = i;
     }
@@ -290,9 +288,9 @@ TAO_DynUnion_i::set_from_any (const CORBA::Any & any
           default_any.replace (unk);
 
           this->member_ =
-            TAO::MakeDynAnyUtils<const CORBA::Any&>::make_dyn_any_t (
-              default_any._tao_get_typecode (),
-              default_any);
+            TAO_DynAnyFactory::make_dyn_any (default_any
+                                             ACE_ENV_ARG_PARAMETER);
+          ACE_CHECK;
 
           this->member_slot_ = index;
         }
@@ -411,9 +409,9 @@ TAO_DynUnion_i::set_discriminator (DynamicAny::DynAny_ptr value
 
       // Initialize member to default value.
       this->member_ =
-        TAO::MakeDynAnyUtils<CORBA::TypeCode_ptr>::make_dyn_any_t (
-          member_tc.in (),
-          member_tc.in ());
+        TAO_DynAnyFactory::make_dyn_any (member_tc.in ()
+                                         ACE_ENV_ARG_PARAMETER);
+      ACE_CHECK;
 
       // Named active member (CORBA 2.3.1).
       this->current_position_ = 1;
@@ -499,9 +497,9 @@ TAO_DynUnion_i::set_to_default_member (ACE_ENV_SINGLE_ARG_DECL)
       ACE_CHECK;
 
       this->member_ =
-        TAO::MakeDynAnyUtils<CORBA::TypeCode_ptr>::make_dyn_any_t (
-          default_tc.in (),
-          default_tc.in ());
+        TAO_DynAnyFactory::make_dyn_any (default_tc.in ()
+                                         ACE_ENV_ARG_PARAMETER);
+      ACE_CHECK;
 
       // Default member active (CORBA 2.3.1).
       this->current_position_ = 0;
@@ -741,7 +739,8 @@ TAO_DynUnion_i::from_any (const CORBA::Any& any
 
       // Set the from_factory arg to FALSE, so any problems will throw
       // TypeMismatch.
-      this->set_from_any (any
+      this->set_from_any (any,
+                          0
                           ACE_ENV_ARG_PARAMETER);
       ACE_CHECK;
     }

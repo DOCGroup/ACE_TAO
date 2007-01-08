@@ -72,7 +72,7 @@ namespace CIAO
         return;
       }
 
-    typedef typename COMP_SVNT::_stub_type stub_type;
+	typedef typename COMP_SVNT::_stub_type stub_type;
     typename COMP_SVNT::_stub_var_type _ciao_comp =
       stub_type::_narrow (ccm_obj_var.in ()
                           ACE_ENV_ARG_PARAMETER);
@@ -149,10 +149,10 @@ namespace CIAO
     CIAO_TRACE ("Home_Servant_Impl<>::create");
 
     if (this->executor_.in () == 0)
-      {
-        ACE_THROW_RETURN (CORBA::INTERNAL (),
-                          COMP_SVNT::_stub_type::_nil ());
-      }
+    {
+      ACE_THROW_RETURN (CORBA::INTERNAL (),
+                        COMP_SVNT::_stub_type::_nil ());
+    }
 
     ::Components::EnterpriseComponent_var _ciao_ec =
       this->executor_->create (ACE_ENV_SINGLE_ARG_PARAMETER);

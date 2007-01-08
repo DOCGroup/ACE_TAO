@@ -20,7 +20,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#if defined (ACE_HAS_WIN32_OVERLAPPED_IO) || defined (ACE_HAS_AIO_CALLS)
+#if (defined (ACE_WIN32) || defined (ACE_HAS_AIO_CALLS)) && !defined(ACE_HAS_WINCE)
 // This only works on platforms that support async i/o.
 
 #include "ace/Default_Constants.h"
@@ -291,6 +291,6 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 #pragma implementation ("Asynch_Acceptor.cpp")
 #endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
-#endif /* ACE_HAS_WIN32_OVERLAPPED_IO || ACE_HAS_AIO_CALLS */
+#endif /* ACE_WIN32 || ACE_HAS_AIO_CALLS */
 #include /**/ "ace/post.h"
 #endif /* ACE_ASYNCH_ACCEPTOR_H */

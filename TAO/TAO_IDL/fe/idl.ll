@@ -212,22 +212,22 @@ oneway          return IDL_ONEWAY;
     }
   else
     {
-      yylval.strval = ACE::strnew (ace_yytext);
+      yylval.strval = ACE:strnew (ace_yytext);
     }
 
   return IDENTIFIER;
 }
 
-("-"[ \t]*)?(([0-9]+"."[0-9]*)|("."[0-9]+))([eE][+-]?[0-9]+)?[lLfF]?      {
+"-"?(([0-9]+"."[0-9]*)|("."[0-9]+))([eE][+-]?[0-9]+)?[lLfF]?      {
                   yylval.dval = idl_atof(ace_yytext);
                   return IDL_FLOATING_PT_LITERAL;
                 }
-("-"[ \t]*)?[0-9]+[eE][+-]?[0-9]+[lLfF]?  {
+"-"?[0-9]+[eE][+-]?[0-9]+[lLfF]?  {
                   yylval.dval = idl_atof(ace_yytext);
                   return IDL_FLOATING_PT_LITERAL;
                 }
 
-"-"[ \t]*[1-9][0-9]* {
+"-"[1-9][0-9]*  {
                   yylval.ival = idl_atoi(ace_yytext, 10);
                   return IDL_INTEGER_LITERAL;
                 }
@@ -235,15 +235,15 @@ oneway          return IDL_ONEWAY;
                   yylval.uival = idl_atoui(ace_yytext, 10);
                   return IDL_UINTEGER_LITERAL;
                 }
-"-"[ \t]*0[xX][a-fA-F0-9]+ {
+"-"0[xX][a-fA-F0-9]+ {
                   yylval.ival = idl_atoi(ace_yytext, 16);
                   return IDL_INTEGER_LITERAL;
                 }
-0[xX][a-fA-F0-9]+ {
+0[xX][a-fA-F0-9]+    {
                   yylval.uival = idl_atoui(ace_yytext, 16);
                   return IDL_UINTEGER_LITERAL;
                 }
-"-"[ \t]*0[0-7]* {
+"-"0[0-7]*      {
                   yylval.ival = idl_atoi(ace_yytext, 8);
                   return IDL_INTEGER_LITERAL;
                 }
@@ -563,30 +563,14 @@ idl_store_pragma (char *buf)
         {
           unsigned long depth = idl_global->scopes ().depth ();
 
-          // We replace the prefix only if there is a prefix already
-          // associated with this file, otherwise we add the prefix.
-          char *ext_id = idl_global->filename ()->get_string ();
-          char *int_id = 0;
-          int status = idl_global->file_prefixes ().find (ext_id,
-                                                          int_id);
-
-          if (status == 0)
+          // At global scope, we always replace the prefix. For all
+          // other scopes, we replace only if there is a prefix already
+          // associated with that scope, otherwise we add the prefix.
+          if (depth == 1 || idl_global->scopes ().top ()->has_prefix ())
             {
-              if (ACE_OS::strcmp (int_id, "") != 0)
-                {
-                  char *trash = 0;
-                  idl_global->pragma_prefixes ().pop (trash);
-                  delete [] trash;
-                }
-              else if (depth == 1)
-                {
-                  // Remove the default "" and bind the new prefix.
-                  (void) idl_global->file_prefixes ().unbind (ext_id);
-                  ext_id = ACE::strnew (ext_id);
-                  int_id = ACE::strnew (new_prefix);
-                  (void) idl_global->file_prefixes ().bind (ext_id,
-                                                            int_id);
-                }
+              char *trash = 0;
+              idl_global->pragma_prefixes ().pop (trash);
+              delete [] trash;
             }
 
           UTL_Scope *top_scope = idl_global->scopes ().top ();
@@ -599,24 +583,19 @@ idl_store_pragma (char *buf)
 
           idl_global->pragma_prefixes ().push (new_prefix);
 
-          if (depth == 1)
-            {
-              idl_global->root ()->prefix (new_prefix);
-            }
-                
           if (idl_global->in_main_file ())
             {
+              idl_global->root ()->prefix (new_prefix);
               idl_global->root ()->set_imported (false);
               top_scope->has_prefix (true);
             }
 
-          if (status != 0)
-            {
-              ext_id = ACE::strnew (ext_id);
-              int_id = ACE::strnew (new_prefix);
-              (void) idl_global->file_prefixes ().bind (ext_id,
-                                                        int_id);
-            }
+          ACE_CString ext_id;
+          ext_id.set (idl_global->filename ()->get_string (),
+                      0);
+          char *int_id = ACE::strnew (new_prefix);
+          (void) idl_global->file_prefixes ().rebind (ext_id,
+                                                      int_id);
         }
     }
   else if (ACE_OS::strncmp (buf + 8, "version", 7) == 0)
@@ -633,15 +612,6 @@ idl_store_pragma (char *buf)
       if (number == 0)
         {
           number = ACE_OS::strchr (tmp, '\t');
-        }
-
-      // Most likely this means there is only a version number
-      // without an identifier to apply it to.
-      if (number == 0)
-        {
-          const char *msg = "no identifier or scoped name";
-          idl_global->err ()->version_syntax_error (msg);
-          return;
         }
 
       while (*number == ' ' || *number == '\t')
@@ -746,12 +716,7 @@ static long
 idl_atoi(char *s, long b)
 {
   long    r = 0;
-
-  // Skip over the dash and possibly spaces after the dash
-  while (*s == '-' || *s == ' ' || *s == '\t')
-    {
-      s++;
-    }
+  s++;
 
   if (b == 8 && *s == '0')
     {
@@ -838,12 +803,7 @@ idl_atof (char *s)
   if (*s == '-')
     {
       neg = 1;
-      
-      // Skip over the dash and possibly spaces after the dash
-      while (*s == '-' || *s == ' ' || *s == '\t')
-        {
-          s++;
-        }
+      s++;
     }
 
   while (*s >= '0' && *s <= '9')
@@ -1121,10 +1081,10 @@ idl_find_node (char *s)
   if (d == 0)
     {
       idl_global->err ()->lookup_error (node);
+      node->destroy ();
+      delete node;
+      node = 0;
     }
 
-  node->destroy ();
-  delete node;
-  node = 0;
   return d;
 }

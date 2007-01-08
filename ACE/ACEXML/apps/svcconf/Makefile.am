@@ -6,7 +6,7 @@
 ## this file will be lost the next time it is generated.
 ##
 ## MPC Command:
-## ./bin/mwc.pl -type automake -noreldefs ACE.mwc
+## /acebuilds/ACE_wrappers-repository/bin/mwc.pl -include /acebuilds/MPC/config -include /acebuilds/MPC/templates -feature_file /acebuilds/ACE_wrappers-repository/local.features -noreldefs -type automake -exclude build,Kokyu
 
 includedir = @includedir@/ACEXML/apps/svcconf
 
@@ -26,14 +26,6 @@ libACEXML_XML_Svc_Conf_Parser_la_CPPFLAGS = \
   -I$(ACE_BUILDDIR) \
   -I$(ACE_ROOT)/ACEXML/common
 
-if BUILD_ZLIB
-if BUILD_ZZIP
-libACEXML_XML_Svc_Conf_Parser_la_CPPFLAGS += \
-  $(ACE_ZZIP_CPPFLAGS) \
-  $(ACE_ZLIB_CPPFLAGS)
-endif BUILD_ZZIP
-endif BUILD_ZLIB
-
 libACEXML_XML_Svc_Conf_Parser_la_SOURCES = \
   Svcconf.cpp \
   Svcconf_Handler.cpp
@@ -41,26 +33,10 @@ libACEXML_XML_Svc_Conf_Parser_la_SOURCES = \
 libACEXML_XML_Svc_Conf_Parser_la_LDFLAGS = \
  -release @ACE_VERSION_NAME@
 
-if BUILD_ZLIB
-if BUILD_ZZIP
-libACEXML_XML_Svc_Conf_Parser_la_LDFLAGS += \
-  $(ACE_ZZIP_LDFLAGS) \
-  $(ACE_ZLIB_LDFLAGS)
-endif BUILD_ZZIP
-endif BUILD_ZLIB
-
 libACEXML_XML_Svc_Conf_Parser_la_LIBADD = \
   $(ACE_BUILDDIR)/ACEXML/parser/parser/libACEXML_Parser.la \
   $(ACE_BUILDDIR)/ACEXML/common/libACEXML.la \
   $(ACE_BUILDDIR)/ace/libACE.la
-
-if BUILD_ZLIB
-if BUILD_ZZIP
-libACEXML_XML_Svc_Conf_Parser_la_LIBADD += \
-  $(ACE_ZZIP_LIBS) \
-  $(ACE_ZLIB_LIBS)
-endif BUILD_ZZIP
-endif BUILD_ZLIB
 
 nobase_include_HEADERS = \
   Svcconf.h \

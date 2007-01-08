@@ -10,7 +10,7 @@
 #include "ace/os_include/os_errno.h"
 #include "ace/os_include/os_search.h"
 
-#if defined (ACE_WCHAR_IN_STD_NAMESPACE)
+#if defined(ACE_WCHAR_IN_STD_NAMESPACE)
 # define ACE_WCHAR_STD_NAMESPACE std
 #else
 # define ACE_WCHAR_STD_NAMESPACE ACE_STD_NAMESPACE
@@ -64,7 +64,7 @@ ACE_OS::atoi (const wchar_t *s)
 #if defined (ACE_WIN32)
   ACE_OSCALL_RETURN (::_wtoi (s), int, -1);
 #else /* ACE_WIN32 */
-  return ACE_OS::atoi (ACE_Wide_To_Ascii (s).char_rep ());
+  return ACE_OS::atoi (ACE_Wide_To_Ascii(s).char_rep());
 #endif /* ACE_WIN32 */
 }
 #endif /* ACE_HAS_WCHAR */
@@ -221,7 +221,7 @@ ACE_OS::mktemp (wchar_t *s)
   return ::_wmktemp (s);
 #    else
   // For narrow-char filesystems, we must convert the wide-char input to
-  // a narrow-char string for mktemp (), then convert the name back to
+  // a narrow-char string for mktemp(), then convert the name back to
   // wide-char for the caller.
   ACE_Wide_To_Ascii narrow_s (s);
   if (::mktemp (narrow_s.char_rep ()) == 0)
@@ -235,9 +235,9 @@ ACE_OS::mktemp (wchar_t *s)
 
 #endif /* !ACE_LACKS_MKTEMP */
 
-#if defined (INTEGRITY)
+#if defined(INTEGRITY)
 extern "C" {
-  int putenv (char *string);
+  int putenv(char *string);
 }
 #endif
 
@@ -251,14 +251,14 @@ ACE_OS::putenv (const char *string)
   ACE_NOTSUP_RETURN (-1);
 #elif defined (ACE_LACKS_PUTENV) && defined (ACE_HAS_SETENV)
   int result = 0;
-  char *sp = ACE_OS::strchr (const_cast <char *> (string), '=');
+  char* sp = ACE_OS::strchr (const_cast <char *> (string), '=');
   if (sp)
     {
-      char *stmp = ACE_OS::strdup (string);
+      char* stmp = ACE_OS::strdup (string);
       if (stmp)
         {
           stmp[sp - string] = '\0';
-          ACE_OSCALL (::setenv (stmp, sp+sizeof (char), 1), int, -1, result);
+          ACE_OSCALL (::setenv(stmp, sp+sizeof(char), 1), int, -1, result);
           ACE_OS::free (stmp);
         }
       else
@@ -268,8 +268,9 @@ ACE_OS::putenv (const char *string)
         }
     }
   else
-    ACE_OSCALL (::setenv (string, "", 1), int, -1, result);
-
+    {
+      ACE_OSCALL (::setenv(string, "", 1), int, -1, result);
+    }
   return result;
 #elif defined (ACE_LACKS_ENV) || defined (ACE_LACKS_PUTENV)
   ACE_UNUSED_ARG (string);
@@ -345,15 +346,15 @@ ACE_OS::rand_r (ACE_RANDR_TYPE& seed)
 {
   ACE_OS_TRACE ("ACE_OS::rand_r");
 
-  long new_seed = (long) (seed);
+  long new_seed = (long)(seed);
   if (new_seed == 0)
     new_seed = 0x12345987;
   long temp = new_seed / 127773;
   new_seed = 16807 * (new_seed - temp * 127773) - 2836 * temp;
   if (new_seed < 0)
     new_seed += 2147483647;
- (seed) = (unsigned int)new_seed;
-  return (int) (new_seed & RAND_MAX);
+  (seed) = (unsigned int)new_seed;
+  return (int)(new_seed & RAND_MAX);
 }
 
 #endif /* !ACE_WIN32 */
@@ -407,6 +408,41 @@ ACE_OS::srand (u_int seed)
 {
   ACE_OS_TRACE ("ACE_OS::srand");
   ::srand (seed);
+}
+
+// Return a dynamically allocated duplicate of <str>, substituting the
+// environment variable if <str[0] == '$'>.  Note that the pointer is
+// allocated with <ACE_OS::malloc> and must be freed by
+// <ACE_OS::free>.
+
+ACE_INLINE ACE_TCHAR *
+ACE_OS::strenvdup (const ACE_TCHAR *str)
+{
+#if defined (ACE_HAS_WINCE)
+  // WinCE doesn't have environment variables so we just skip it.
+  return ACE_OS::strdup (str);
+#elif defined (ACE_LACKS_ENV)
+  ACE_UNUSED_ARG (str);
+  ACE_NOTSUP_RETURN (0);
+#else
+  if (str[0] == ACE_LIB_TEXT ('$'))
+    {
+#  if defined (ACE_WIN32)
+      // Always use the ACE_TCHAR for Windows.
+      ACE_TCHAR *temp = 0;
+      if ((temp = ACE_OS::getenv (&str[1])) != 0)
+        return ACE_OS::strdup (temp);
+#  else
+      // Use char * for environment on non-Windows.
+      char *temp = 0;
+      if ((temp = ACE_OS::getenv (ACE_TEXT_ALWAYS_CHAR (&str[1]))) != 0)
+        return ACE_OS::strdup (ACE_TEXT_CHAR_TO_TCHAR (temp));
+#  endif /* ACE_WIN32 */
+      return ACE_OS::strdup (str);
+    }
+  else
+    return ACE_OS::strdup (str);
+#endif /* ACE_HAS_WINCE */
 }
 
 #if !defined (ACE_LACKS_STRTOD)
@@ -470,7 +506,7 @@ ACE_OS::system (const ACE_TCHAR *s)
   ACE_NOTSUP_RETURN (-1);
 #elif defined (ACE_WIN32) && defined (ACE_USES_WCHAR)
   ACE_OSCALL_RETURN (::_wsystem (s), int, -1);
-#elif defined (ACE_TANDEM_T1248_PTHREADS)
+#elif defined(ACE_TANDEM_T1248_PTHREADS)
   ACE_OSCALL_RETURN (::spt_system (s), int, -1);
 #else
   ACE_OSCALL_RETURN (::system (ACE_TEXT_ALWAYS_CHAR (s)), int, -1);

@@ -6,14 +6,13 @@
 ## this file will be lost the next time it is generated.
 ##
 ## MPC Command:
-## ./bin/mwc.pl -type automake -noreldefs ACE.mwc
+## /acebuilds/ACE_wrappers-repository/bin/mwc.pl -include /acebuilds/MPC/config -include /acebuilds/MPC/templates -feature_file /acebuilds/ACE_wrappers-repository/local.features -noreldefs -type automake -exclude build,Kokyu
 
 ACE_BUILDDIR = $(top_builddir)
 ACE_ROOT = $(top_srcdir)
 
 
 ## Makefile.ASX_Message_Queue_Bounded_Buffer.am
-
 noinst_PROGRAMS = bounded_buffer
 
 bounded_buffer_CPPFLAGS = \
@@ -29,7 +28,6 @@ bounded_buffer_LDADD = \
 ## Makefile.ASX_Message_Queue_Buffer_Stream.am
 
 if !BUILD_USES_WCHAR
-
 noinst_PROGRAMS += buffer_stream
 
 buffer_stream_CPPFLAGS = \
@@ -45,7 +43,6 @@ buffer_stream_LDADD = \
 endif !BUILD_USES_WCHAR
 
 ## Makefile.ASX_Message_Queue_Priority_Buffer.am
-
 noinst_PROGRAMS += priority_buffer
 
 priority_buffer_CPPFLAGS = \

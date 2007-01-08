@@ -5,7 +5,7 @@
 
 #include "SynchS.h"
 
-class SYNCH_Export Synch_i : public POA_Synch
+class Synch_i : public POA_Synch
 {
  public:
 

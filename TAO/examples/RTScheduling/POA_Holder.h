@@ -15,11 +15,9 @@
 #ifndef POA_HOLDER_H
 #define POA_HOLDER_H
 
-#include "rtschedtestlib_export.h"
-
 #include "tao/RTCORBA/RTCORBA.h"
 #include "tao/PortableServer/PortableServer.h"
-
+//#include "activity_export.h"
 #include "ace/SString.h"
 #include "ace/Arg_Shifter.h"
 
@@ -29,7 +27,7 @@
  * @brief An options holder for parameters to creating a poa.
  *
  */
-class RTSCHEDTESTLIB_Export POA_Holder
+class POA_Holder
 {
 public:
   /// Constructor

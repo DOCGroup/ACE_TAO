@@ -1,7 +1,7 @@
 //  -*- MPC -*- now wouldn't this be cool...
 // $Id$
 
-project(ACE) : acedefaults, install, other, codecs, token, svcconf, uuid, filecache, versioned_namespace, pkgconfig {
+project(ACE) : acedefaults, core, other, codecs, token, svcconf, uuid, filecache, versioned_namespace, pkgconfig {
   avoids       = ace_for_tao
   libout       = $(ACE_ROOT)/lib
   sharedname   = ACE
@@ -367,7 +367,6 @@ project(ACE) : acedefaults, install, other, codecs, token, svcconf, uuid, fileca
     Swap.inl
     TSS_T.inl
     ace_wchar.inl
-    OS.inl
   }
 
   Header_Files {

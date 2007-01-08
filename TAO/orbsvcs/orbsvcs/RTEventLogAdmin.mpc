@@ -1,7 +1,7 @@
 // -*- MPC -*-
 // $Id$
 
-project(RTEventLogAdmin_IDL) : orbsvcslib, install, dslogadmin, rtevent, tao_versioning_idl_defaults {
+project(RTEventLogAdmin_IDL) : orbsvcslib, core, dslogadmin, rtevent, tao_versioning_idl_defaults {
   custom_only = 1
   idlflags   += -Wb,stub_export_macro=TAO_RTEventLog_Export -Wb,stub_export_include=orbsvcs/Log/rteventlog_export.h -Wb,skel_export_macro=TAO_RTEventLog_Skel_Export -Wb,skel_export_include=orbsvcs/Log/rteventlog_skel_export.h
 
@@ -10,7 +10,7 @@ project(RTEventLogAdmin_IDL) : orbsvcslib, install, dslogadmin, rtevent, tao_ver
   }
 }
 
-project(RTEventLogAdmin) : orbsvcslib, install, dslogadmin, rtevent {
+project(RTEventLogAdmin) : orbsvcslib, core, dslogadmin, rtevent {
   sharedname   = TAO_RTEventLogAdmin
   dynamicflags = TAO_RTEVENTLOG_BUILD_DLL
   tagchecks   += RTEventLog
@@ -44,7 +44,7 @@ project(RTEventLogAdmin) : orbsvcslib, install, dslogadmin, rtevent {
   }
 }
 
-project(RTEventLogAdmin_Skel) : orbsvcslib, install, rteventlogadmin, dslogadmin_skel, rtevent_skel, portableserver {
+project(RTEventLogAdmin_Skel) : orbsvcslib, core, rteventlogadmin, dslogadmin_skel, rtevent_skel, portableserver {
   sharedname   = TAO_RTEventLogAdmin_Skel
   dynamicflags = TAO_RTEVENTLOG_SKEL_BUILD_DLL
   tagchecks   += RTEventLog
@@ -58,14 +58,17 @@ project(RTEventLogAdmin_Skel) : orbsvcslib, install, rteventlogadmin, dslogadmin
 
   Header_Files {
     RTEventLogAdminS.h
+    RTEventLogAdminS_T.h
     Log/rteventlog_skel_export.h
   }
 
   Inline_Files {
     RTEventLogAdminS.inl
+    RTEventLogAdminS_T.inl
   }
 
   Template_Files {
+    RTEventLogAdminS_T.cpp
   }
 
   Pkgconfig_Files {
@@ -73,7 +76,7 @@ project(RTEventLogAdmin_Skel) : orbsvcslib, install, rteventlogadmin, dslogadmin
   }
 }
 
-project(RTEventLogAdmin_Serv) : orbsvcslib, install, rteventlogadmin_skel, dslogadmin_serv, rtevent_serv, rtsched {
+project(RTEventLogAdmin_Serv) : orbsvcslib, core, rteventlogadmin_skel, dslogadmin_serv, rtevent_serv, rtsched {
   sharedname   = TAO_RTEventLogAdmin_Serv
   dynamicflags = TAO_RTEVENTLOG_SERV_BUILD_DLL
   tagchecks   += RTEventLog

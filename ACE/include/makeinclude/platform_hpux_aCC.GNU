@@ -135,6 +135,14 @@ ifneq ($(exceptions),1)
   CCFLAGS  += +noeh
 endif
 
+# Additionally, on HP-UX 10.20, suppress 495 to shut up the warnings from
+# the system header files.  667 is also suppressed, but the compiler still
+# tells you there was a future error, but at least you can pick out any real
+# errors by quickly scanning the output. 829 is suppressed because the
+# system headers have offending string literals assigned to char *.
+ifeq ($(word 2,$(HPVERS_WORDS)), 10)
+CCFLAGS         += +W495,667,829,908
+endif
 DCCFLAGS        += -g
 DLD             = $(CXX) $(CCFLAGS)
 LD              = $(CXX)
@@ -150,6 +158,9 @@ SOFLAGS         += -b
 
 ifeq ($(distrib),1)
 
+ifeq ($(word 2,$(HPVERS_WORDS)), 10)
+SOFLAGS         += -Wl,-x -Wl,+h/usr/lib/$(@F)
+else
 ifeq ($(buildbits),32)
 SOFLAGS         += -Wl,-x -Wl,+h$(@F) -Wl,+b/usr/lib
 endif
@@ -159,6 +170,7 @@ ifeq ($(buildbits),64)
   else
     SOFLAGS     += -Wl,-x -Wl,+h$(@F) -Wl,+b/usr/lib/pa20_64
   endif
+endif
 endif
 
 endif
@@ -202,13 +214,29 @@ else
 endif
 endif
 
-#11.x:
-ifeq ($(threads),1)
-  # If -mt is in CCFLAGS, we don't need to add anything to LIBS; -mt does it.
-  ifeq ($(findstring -mt,$(CCFLAGS)),)
-    ## -L./ must directly preceed the system libraries for 64-bit builds
-    ## with aCC 3.27.  Without this change, libpthread.sl can not be found.
-    LIBS += -L./ -lpthread
+#
+# Grab the appropriate libraries based on the version of HP-UX we're building
+# on and whether or not thread support is being used.
+#
+ifeq ($(word 2,$(HPVERS_WORDS)), 11)
+
+  #11.x:
+  ifeq ($(threads),1)
+    # If -mt is in CCFLAGS, we don't need to add anything to LIBS; -mt does it.
+    ifeq ($(findstring -mt,$(CCFLAGS)),)
+      ## -L./ must directly preceed the system libraries for 64-bit builds
+      ## with aCC 3.27.  Without this change, libpthread.sl can not be found.
+      LIBS += -L./ -lpthread
+    endif
   endif
+  LIBS          += -lxti -lrt -ldld
+
+else
+
+  # 10.x:
+  LIBS          += -lxti -ldld
+  ifeq ($(threads),1)
+    LIBS                += -lcma
+  endif
+
 endif
-LIBS          += -lxti -lrt -ldld

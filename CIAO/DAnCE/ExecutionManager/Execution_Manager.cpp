@@ -168,7 +168,7 @@ namespace CIAO
           ACE_TRY_CHECK;
 
 
-          if (CORBA::is_nil (poa.in ()))
+          if (poa.in () == 0)
             ACE_ERROR_RETURN ((LM_ERROR,
                                "(%P|%t) CIAO_ExecutionManager: "
                                "Nil POA panic error, returning \n"),
@@ -189,6 +189,9 @@ namespace CIAO
             daemon_servant->_this ();
 
           TAO::Utils::Implicit_Deactivator de (daemon_servant);
+
+          ACE_TRY_CHECK;
+
           bool retval = false;
 
           if (register_with_ns_)

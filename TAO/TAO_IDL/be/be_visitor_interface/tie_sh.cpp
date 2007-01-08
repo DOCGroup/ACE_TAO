@@ -117,7 +117,9 @@ be_visitor_interface_tie_sh::visit_interface (be_interface *node)
       << "/// set the ownership" << be_nl << be_nl
       << "void _is_owner ( ::CORBA::Boolean b);" << be_nl
       << "// overridden ServantBase operations" << be_nl
-      << "PortableServer::POA_ptr _default_POA (void);";
+      << "PortableServer::POA_ptr _default_POA (" << be_idt << be_idt
+      << env_sngl_dflts << be_uidt_nl
+      << ");" << be_uidt;
 
   int status =
     node->traverse_inheritance_graph (
@@ -168,8 +170,8 @@ be_visitor_interface_tie_sh::method_helper (be_interface *,
     }
 
   be_visitor_context ctx;
-  ctx.stream (os);
   ctx.state (TAO_CodeGen::TAO_ROOT_TIE_SH);
+  ctx.stream (os);
   be_visitor_interface_tie_sh visitor (&ctx);
 
   if (visitor.visit_scope (node) == -1)

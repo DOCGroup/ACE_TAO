@@ -2,8 +2,6 @@
  * @file Null_Component.idl
  *
  * @author Abdul Sowayan <abdullah.sowayan@lmco.com>
- *
- * $Id$
  */
 
 #ifndef NULL_COMPONENT_IDL

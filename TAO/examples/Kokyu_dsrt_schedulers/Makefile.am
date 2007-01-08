@@ -13,7 +13,7 @@ ACE_ROOT = $(top_srcdir)/..
 TAO_BUILDDIR = $(top_builddir)
 TAO_IDL = ACE_ROOT=$(ACE_ROOT) TAO_ROOT=$(TAO_ROOT) $(TAO_BUILDDIR)/TAO_IDL/tao_idl
 TAO_IDL_DEP = $(TAO_BUILDDIR)/TAO_IDL/tao_idl
-TAO_IDLFLAGS = -Wb,pre_include=ace/pre.h -Wb,post_include=ace/post.h -I$(TAO_ROOT) -I$(srcdir) -g $(ACE_BUILDDIR)/apps/gperf/src/gperf
+TAO_IDLFLAGS = -Ge 1 -Wb,pre_include=ace/pre.h -Wb,post_include=ace/post.h -I$(TAO_ROOT) -I$(srcdir) -g $(ACE_BUILDDIR)/apps/gperf/src/gperf
 TAO_ROOT = $(top_srcdir)
 
 SUBDIRS = \
@@ -27,102 +27,131 @@ BUILT_SOURCES =
 
 ## Makefile.Kokyu_DSRT_Schedulers.am
 
-if BUILD_EXCEPTIONS
 if BUILD_RT_CORBA
-
-BUILT_SOURCES += \
-  FP_SchedulingC.cpp \
-  FP_SchedulingC.h \
-  FP_SchedulingC.inl \
-  FP_SchedulingS.inl
-
-CLEANFILES += \
-  FP_Scheduling-stamp \
-  FP_SchedulingC.cpp \
-  FP_SchedulingC.h \
-  FP_SchedulingC.inl \
-  FP_SchedulingS.inl
-
-FP_SchedulingC.cpp FP_SchedulingC.h FP_SchedulingC.inl FP_SchedulingS.inl: FP_Scheduling-stamp
-
-FP_Scheduling-stamp: $(srcdir)/FP_Scheduling.idl $(TAO_IDL_DEP)
-	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs -Wb,export_macro=Kokyu_DSRT_Schedulers_Export -Wb,export_include=Kokyu_dsrt_schedulers_export.h $(srcdir)/FP_Scheduling.idl
-	@touch $@
-
-BUILT_SOURCES += \
-  MIF_SchedulingC.cpp \
-  MIF_SchedulingC.h \
-  MIF_SchedulingC.inl \
-  MIF_SchedulingS.inl
-
-CLEANFILES += \
-  MIF_Scheduling-stamp \
-  MIF_SchedulingC.cpp \
-  MIF_SchedulingC.h \
-  MIF_SchedulingC.inl \
-  MIF_SchedulingS.inl
-
-MIF_SchedulingC.cpp MIF_SchedulingC.h MIF_SchedulingC.inl MIF_SchedulingS.inl: MIF_Scheduling-stamp
-
-MIF_Scheduling-stamp: $(srcdir)/MIF_Scheduling.idl $(TAO_IDL_DEP)
-	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs -Wb,export_macro=Kokyu_DSRT_Schedulers_Export -Wb,export_include=Kokyu_dsrt_schedulers_export.h $(srcdir)/MIF_Scheduling.idl
-	@touch $@
-
-BUILT_SOURCES += \
-  Kokyu_qosC.cpp \
-  Kokyu_qosC.h \
-  Kokyu_qosC.inl \
-  Kokyu_qosS.inl
-
-CLEANFILES += \
-  Kokyu_qos-stamp \
-  Kokyu_qosC.cpp \
-  Kokyu_qosC.h \
-  Kokyu_qosC.inl \
-  Kokyu_qosS.inl
-
-Kokyu_qosC.cpp Kokyu_qosC.h Kokyu_qosC.inl Kokyu_qosS.inl: Kokyu_qos-stamp
-
-Kokyu_qos-stamp: $(srcdir)/Kokyu_qos.idl $(TAO_IDL_DEP)
-	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs -Wb,export_macro=Kokyu_DSRT_Schedulers_Export -Wb,export_include=Kokyu_dsrt_schedulers_export.h $(srcdir)/Kokyu_qos.idl
-	@touch $@
-
-BUILT_SOURCES += \
-  MUF_SchedulingC.cpp \
-  MUF_SchedulingC.h \
-  MUF_SchedulingC.inl \
-  MUF_SchedulingS.inl
-
-CLEANFILES += \
-  MUF_Scheduling-stamp \
-  MUF_SchedulingC.cpp \
-  MUF_SchedulingC.h \
-  MUF_SchedulingC.inl \
-  MUF_SchedulingS.inl
-
-MUF_SchedulingC.cpp MUF_SchedulingC.h MUF_SchedulingC.inl MUF_SchedulingS.inl: MUF_Scheduling-stamp
-
-MUF_Scheduling-stamp: $(srcdir)/MUF_Scheduling.idl $(TAO_IDL_DEP)
-	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs -Wb,export_macro=Kokyu_DSRT_Schedulers_Export -Wb,export_include=Kokyu_dsrt_schedulers_export.h $(srcdir)/MUF_Scheduling.idl
-	@touch $@
 
 BUILT_SOURCES += \
   EDF_SchedulingC.cpp \
   EDF_SchedulingC.h \
   EDF_SchedulingC.inl \
-  EDF_SchedulingS.inl
+  EDF_SchedulingS.inl \
+  EDF_SchedulingS_T.cpp \
+  EDF_SchedulingS_T.h \
+  EDF_SchedulingS_T.inl
 
 CLEANFILES += \
   EDF_Scheduling-stamp \
   EDF_SchedulingC.cpp \
   EDF_SchedulingC.h \
   EDF_SchedulingC.inl \
-  EDF_SchedulingS.inl
+  EDF_SchedulingS.inl \
+  EDF_SchedulingS_T.cpp \
+  EDF_SchedulingS_T.h \
+  EDF_SchedulingS_T.inl
 
-EDF_SchedulingC.cpp EDF_SchedulingC.h EDF_SchedulingC.inl EDF_SchedulingS.inl: EDF_Scheduling-stamp
+EDF_SchedulingC.cpp EDF_SchedulingC.h EDF_SchedulingC.inl EDF_SchedulingS.inl EDF_SchedulingS_T.cpp EDF_SchedulingS_T.h EDF_SchedulingS_T.inl: EDF_Scheduling-stamp
 
 EDF_Scheduling-stamp: $(srcdir)/EDF_Scheduling.idl $(TAO_IDL_DEP)
-	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs -Wb,export_macro=Kokyu_DSRT_Schedulers_Export -Wb,export_include=Kokyu_dsrt_schedulers_export.h $(srcdir)/EDF_Scheduling.idl
+	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs -GT -Wb,export_macro=Kokyu_DSRT_Schedulers_Export -Wb,export_include=Kokyu_dsrt_schedulers_export.h $(srcdir)/EDF_Scheduling.idl
+	@touch $@
+
+BUILT_SOURCES += \
+  FP_SchedulingC.cpp \
+  FP_SchedulingC.h \
+  FP_SchedulingC.inl \
+  FP_SchedulingS.inl \
+  FP_SchedulingS_T.cpp \
+  FP_SchedulingS_T.h \
+  FP_SchedulingS_T.inl
+
+CLEANFILES += \
+  FP_Scheduling-stamp \
+  FP_SchedulingC.cpp \
+  FP_SchedulingC.h \
+  FP_SchedulingC.inl \
+  FP_SchedulingS.inl \
+  FP_SchedulingS_T.cpp \
+  FP_SchedulingS_T.h \
+  FP_SchedulingS_T.inl
+
+FP_SchedulingC.cpp FP_SchedulingC.h FP_SchedulingC.inl FP_SchedulingS.inl FP_SchedulingS_T.cpp FP_SchedulingS_T.h FP_SchedulingS_T.inl: FP_Scheduling-stamp
+
+FP_Scheduling-stamp: $(srcdir)/FP_Scheduling.idl $(TAO_IDL_DEP)
+	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs -GT -Wb,export_macro=Kokyu_DSRT_Schedulers_Export -Wb,export_include=Kokyu_dsrt_schedulers_export.h $(srcdir)/FP_Scheduling.idl
+	@touch $@
+
+BUILT_SOURCES += \
+  Kokyu_qosC.cpp \
+  Kokyu_qosC.h \
+  Kokyu_qosC.inl \
+  Kokyu_qosS.inl \
+  Kokyu_qosS_T.cpp \
+  Kokyu_qosS_T.h \
+  Kokyu_qosS_T.inl
+
+CLEANFILES += \
+  Kokyu_qos-stamp \
+  Kokyu_qosC.cpp \
+  Kokyu_qosC.h \
+  Kokyu_qosC.inl \
+  Kokyu_qosS.inl \
+  Kokyu_qosS_T.cpp \
+  Kokyu_qosS_T.h \
+  Kokyu_qosS_T.inl
+
+Kokyu_qosC.cpp Kokyu_qosC.h Kokyu_qosC.inl Kokyu_qosS.inl Kokyu_qosS_T.cpp Kokyu_qosS_T.h Kokyu_qosS_T.inl: Kokyu_qos-stamp
+
+Kokyu_qos-stamp: $(srcdir)/Kokyu_qos.idl $(TAO_IDL_DEP)
+	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs -GT -Wb,export_macro=Kokyu_DSRT_Schedulers_Export -Wb,export_include=Kokyu_dsrt_schedulers_export.h $(srcdir)/Kokyu_qos.idl
+	@touch $@
+
+BUILT_SOURCES += \
+  MIF_SchedulingC.cpp \
+  MIF_SchedulingC.h \
+  MIF_SchedulingC.inl \
+  MIF_SchedulingS.inl \
+  MIF_SchedulingS_T.cpp \
+  MIF_SchedulingS_T.h \
+  MIF_SchedulingS_T.inl
+
+CLEANFILES += \
+  MIF_Scheduling-stamp \
+  MIF_SchedulingC.cpp \
+  MIF_SchedulingC.h \
+  MIF_SchedulingC.inl \
+  MIF_SchedulingS.inl \
+  MIF_SchedulingS_T.cpp \
+  MIF_SchedulingS_T.h \
+  MIF_SchedulingS_T.inl
+
+MIF_SchedulingC.cpp MIF_SchedulingC.h MIF_SchedulingC.inl MIF_SchedulingS.inl MIF_SchedulingS_T.cpp MIF_SchedulingS_T.h MIF_SchedulingS_T.inl: MIF_Scheduling-stamp
+
+MIF_Scheduling-stamp: $(srcdir)/MIF_Scheduling.idl $(TAO_IDL_DEP)
+	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs -GT -Wb,export_macro=Kokyu_DSRT_Schedulers_Export -Wb,export_include=Kokyu_dsrt_schedulers_export.h $(srcdir)/MIF_Scheduling.idl
+	@touch $@
+
+BUILT_SOURCES += \
+  MUF_SchedulingC.cpp \
+  MUF_SchedulingC.h \
+  MUF_SchedulingC.inl \
+  MUF_SchedulingS.inl \
+  MUF_SchedulingS_T.cpp \
+  MUF_SchedulingS_T.h \
+  MUF_SchedulingS_T.inl
+
+CLEANFILES += \
+  MUF_Scheduling-stamp \
+  MUF_SchedulingC.cpp \
+  MUF_SchedulingC.h \
+  MUF_SchedulingC.inl \
+  MUF_SchedulingS.inl \
+  MUF_SchedulingS_T.cpp \
+  MUF_SchedulingS_T.h \
+  MUF_SchedulingS_T.inl
+
+MUF_SchedulingC.cpp MUF_SchedulingC.h MUF_SchedulingC.inl MUF_SchedulingS.inl MUF_SchedulingS_T.cpp MUF_SchedulingS_T.h MUF_SchedulingS_T.inl: MUF_Scheduling-stamp
+
+MUF_Scheduling-stamp: $(srcdir)/MUF_Scheduling.idl $(TAO_IDL_DEP)
+	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs -GT -Wb,export_macro=Kokyu_DSRT_Schedulers_Export -Wb,export_include=Kokyu_dsrt_schedulers_export.h $(srcdir)/MUF_Scheduling.idl
 	@touch $@
 
 noinst_LTLIBRARIES = libKokyu_DSRT_Schedulers.la
@@ -154,32 +183,46 @@ noinst_HEADERS = \
   EDF_SchedulingC.h \
   EDF_SchedulingC.inl \
   EDF_SchedulingS.inl \
+  EDF_SchedulingS_T.cpp \
+  EDF_SchedulingS_T.h \
+  EDF_SchedulingS_T.inl \
   FP_Scheduler.h \
   FP_Scheduling.idl \
   FP_SchedulingC.h \
   FP_SchedulingC.inl \
   FP_SchedulingS.inl \
+  FP_SchedulingS_T.cpp \
+  FP_SchedulingS_T.h \
+  FP_SchedulingS_T.inl \
   Kokyu_dsrt_schedulers_export.h \
   Kokyu_qos.idl \
   Kokyu_qosC.h \
   Kokyu_qosC.inl \
   Kokyu_qosS.inl \
+  Kokyu_qosS_T.cpp \
+  Kokyu_qosS_T.h \
+  Kokyu_qosS_T.inl \
   MIF_Scheduler.h \
   MIF_Scheduling.idl \
   MIF_SchedulingC.h \
   MIF_SchedulingC.inl \
   MIF_SchedulingS.inl \
+  MIF_SchedulingS_T.cpp \
+  MIF_SchedulingS_T.h \
+  MIF_SchedulingS_T.inl \
   MUF_Scheduler.h \
   MUF_Scheduling.idl \
   MUF_SchedulingC.h \
   MUF_SchedulingC.inl \
   MUF_SchedulingS.inl \
+  MUF_SchedulingS_T.cpp \
+  MUF_SchedulingS_T.h \
+  MUF_SchedulingS_T.inl \
   Task_Stats.h \
   Task_Stats.inl \
   utils.h
 
 endif BUILD_RT_CORBA
-endif BUILD_EXCEPTIONS
 
 ## Clean up template repositories, etc.
 clean-local:

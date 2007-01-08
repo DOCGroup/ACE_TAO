@@ -1,7 +1,7 @@
 // -*- MPC -*-
 // $Id$
 
-project(TAO_IDL3_TO_IDL2_BE) : acelib, install, tao_output, crosscompile {
+project(TAO_IDL3_TO_IDL2_BE) : acelib, core, tao_output, crosscompile {
   after       += TAO_IDL_FE
   sharedname   = TAO_IDL3_TO_IDL2_BE
   libs        += TAO_IDL_FE
@@ -31,7 +31,7 @@ project(TAO_IDL3_TO_IDL2_BE) : acelib, install, tao_output, crosscompile {
 }
 
 
-project(TAO_IDL3_TO_IDL2_EXE) : aceexe, install, tao_output, crosscompile {
+project(TAO_IDL3_TO_IDL2_EXE) : aceexe, core, tao_output, crosscompile {
   after          += TAO_IDL3_TO_IDL2_BE TAO_IDL_FE
   exename         = tao_idl3_to_idl2
   libs           += TAO_IDL3_TO_IDL2_BE TAO_IDL_FE

@@ -3,15 +3,12 @@
  * @brief Contains Events in the Domain
  *
  * @author Nilabja R <nilabjar@dre.vanderbilt.edu>
- *
- * $Id$
  */
 
 #ifndef DOMAIN_CHANGE_IDL
 #define DOMAIN_CHANGE_IDL
 
-#include "ciao/Deployment_TargetManager.idl"
-#include "ciao/CCM_Events.idl"
+#include "ciao/Target_Data.idl"
 
 module CIAO
 {

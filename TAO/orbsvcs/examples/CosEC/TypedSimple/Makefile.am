@@ -13,7 +13,7 @@ ACE_ROOT = $(top_srcdir)/..
 TAO_BUILDDIR = $(top_builddir)
 TAO_IDL = ACE_ROOT=$(ACE_ROOT) TAO_ROOT=$(TAO_ROOT) $(TAO_BUILDDIR)/TAO_IDL/tao_idl
 TAO_IDL_DEP = $(TAO_BUILDDIR)/TAO_IDL/tao_idl
-TAO_IDLFLAGS = -Wb,pre_include=ace/pre.h -Wb,post_include=ace/post.h -I$(TAO_ROOT) -I$(srcdir) -g $(ACE_BUILDDIR)/apps/gperf/src/gperf
+TAO_IDLFLAGS = -Ge 1 -Wb,pre_include=ace/pre.h -Wb,post_include=ace/post.h -I$(TAO_ROOT) -I$(srcdir) -g $(ACE_BUILDDIR)/apps/gperf/src/gperf
 TAO_ROOT = $(top_srcdir)
 
 noinst_PROGRAMS =
@@ -21,7 +21,7 @@ noinst_PROGRAMS =
 ## Makefile.CosEC_TypedSimple_Consumer.am
 
 if BUILD_EC_TYPED_EVENTS
-if BUILD_EXCEPTIONS
+if !BUILD_MINIMUM_CORBA
 
 BUILT_SOURCES = \
   CountryC.cpp \
@@ -29,7 +29,10 @@ BUILT_SOURCES = \
   CountryC.inl \
   CountryS.cpp \
   CountryS.h \
-  CountryS.inl
+  CountryS.inl \
+  CountryS_T.cpp \
+  CountryS_T.h \
+  CountryS_T.inl
 
 CLEANFILES = \
   Country-stamp \
@@ -38,12 +41,15 @@ CLEANFILES = \
   CountryC.inl \
   CountryS.cpp \
   CountryS.h \
-  CountryS.inl
+  CountryS.inl \
+  CountryS_T.cpp \
+  CountryS_T.h \
+  CountryS_T.inl
 
-CountryC.cpp CountryC.h CountryC.inl CountryS.cpp CountryS.h CountryS.inl: Country-stamp
+CountryC.cpp CountryC.h CountryC.inl CountryS.cpp CountryS.h CountryS.inl CountryS_T.cpp CountryS_T.h CountryS_T.inl: Country-stamp
 
 Country-stamp: $(srcdir)/Country.idl $(TAO_IDL_DEP)
-	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs $(srcdir)/Country.idl
+	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs -GT $(srcdir)/Country.idl
 	@touch $@
 
 noinst_PROGRAMS += Consumer
@@ -66,6 +72,8 @@ Consumer_SOURCES = \
   CountryC.inl \
   CountryS.h \
   CountryS.inl \
+  CountryS_T.h \
+  CountryS_T.inl \
   Country_i.h
 
 Consumer_LDADD = \
@@ -77,13 +85,13 @@ Consumer_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
-endif BUILD_EXCEPTIONS
+endif !BUILD_MINIMUM_CORBA
 endif BUILD_EC_TYPED_EVENTS
 
 ## Makefile.CosEC_TypedSimple_Supplier.am
 
 if BUILD_EC_TYPED_EVENTS
-if BUILD_EXCEPTIONS
+if !BUILD_MINIMUM_CORBA
 
 noinst_PROGRAMS += Supplier
 
@@ -110,7 +118,7 @@ Supplier_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
-endif BUILD_EXCEPTIONS
+endif !BUILD_MINIMUM_CORBA
 endif BUILD_EC_TYPED_EVENTS
 
 ## Clean up template repositories, etc.

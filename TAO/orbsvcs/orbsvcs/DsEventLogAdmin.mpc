@@ -1,7 +1,7 @@
 // -*- MPC -*-
 // $Id$
 
-project(DsEventLogAdmin_IDL) : orbsvcslib, install, dslogadmin, event, tao_versioning_idl_defaults {
+project(DsEventLogAdmin_IDL) : orbsvcslib, core, dslogadmin, event, tao_versioning_idl_defaults {
   custom_only = 1
   idlflags   += -Wb,stub_export_macro=TAO_EventLog_Export -Wb,stub_export_include=orbsvcs/Log/eventlog_export.h -Wb,skel_export_macro=TAO_EventLog_Skel_Export -Wb,skel_export_include=orbsvcs/Log/eventlog_skel_export.h
 
@@ -10,7 +10,7 @@ project(DsEventLogAdmin_IDL) : orbsvcslib, install, dslogadmin, event, tao_versi
   }
 }
 
-project(DsEventLogAdmin) : orbsvcslib, install, dslogadmin, event {
+project(DsEventLogAdmin) : orbsvcslib, core, dslogadmin, event {
   sharedname   = TAO_DsEventLogAdmin
   dynamicflags = TAO_EVENTLOG_BUILD_DLL
   tagchecks   += EventLog
@@ -45,7 +45,7 @@ project(DsEventLogAdmin) : orbsvcslib, install, dslogadmin, event {
   }
 }
 
-project(DsEventLogAdmin_Skel) : orbsvcslib, install, dseventlogadmin, dslogadmin_skel, event_skel, portableserver {
+project(DsEventLogAdmin_Skel) : orbsvcslib, core, dseventlogadmin, dslogadmin_skel, event_skel, portableserver {
   sharedname   = TAO_DsEventLogAdmin_Skel
   dynamicflags = TAO_EVENTLOG_SKEL_BUILD_DLL
   tagchecks   += EventLog
@@ -59,14 +59,17 @@ project(DsEventLogAdmin_Skel) : orbsvcslib, install, dseventlogadmin, dslogadmin
 
   Header_Files {
     DsEventLogAdminS.h
+    DsEventLogAdminS_T.h
     Log/eventlog_skel_export.h
   }
 
   Inline_Files {
     DsEventLogAdminS.inl
+    DsEventLogAdminS_T.inl
   }
 
   Template_Files {
+    DsEventLogAdminS_T.cpp
   }
 
   Pkgconfig_Files {
@@ -74,7 +77,7 @@ project(DsEventLogAdmin_Skel) : orbsvcslib, install, dseventlogadmin, dslogadmin
   }
 }
 
-project(DsEventLogAdmin_Serv) : orbsvcslib, install, dseventlogadmin_skel, dslogadmin_serv, event_serv {
+project(DsEventLogAdmin_Serv) : orbsvcslib, core, dseventlogadmin_skel, dslogadmin_serv, event_serv {
   sharedname   = TAO_DsEventLogAdmin_Serv
   dynamicflags = TAO_EVENTLOG_SERV_BUILD_DLL
   tagchecks   += EventLog

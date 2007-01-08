@@ -166,7 +166,7 @@ namespace CIAO
       PortableServer::POA_var poa_;
 
       /// Path to the initialization file
-      ACE_CString const init_file_;
+      const ACE_CString init_file_;
 
       /// A map which caches the DomainApplicationManager object ref.
       DAM_Map map_;

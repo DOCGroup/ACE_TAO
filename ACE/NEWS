@@ -3,125 +3,10 @@ PLANNED MAJOR CHANGES "SOMETIME IN THE FUTURE" (i.e., exact beta not known)
 
 . (Remedy) OpenVMS 8.3 on IA64 port
 
-PLANNED CHANGES FOR "ACE-5.5.6"
-===============================
-
-. (OO) Minor 64 bit file offset fixes for ACE AIO classes on HP-UX.
-
-. (OO) Various other fixes that have been piling up.
-
-PLANNED CHANGES FOR "ACE-5.5.5"
-===============================
-
-. (Riverace) Pharlap ETS 13 qualification.
-
-USER VISIBLE CHANGES BETWEEN ACE-5.5.4 and ACE-5.5.5
-====================================================
-
-. Reformat stringified IPv6 addresses to use [addr]:port when printing
-  addresses that contain ':' such as "::1".
-
-. Added method to ACE_INET_Addr to determine if address is IPv6 or
-  IPv4 multicast.
-
-. Fixed a bug in ACE_Async_Timer_Adapter_Timer_Queue_Adapter<TQ> where the
-  gettimeofday function of the timer queue was ignored when setting the alarm.
-
-. Fixed a problem where, on Solaris 9 onwards, calling
-  ACE_OS::thr_create(THR_NEW_LWP) more than 2^15 (65535) times in a
-  process will fail.  See changelog entry from "Wed Jan 3 22:31:05 UTC
-  2007 Chris Cleeland <cleeland_c@ociweb.com>" for more information.
-
-. Fixed a bug in ACE_QtReactor where the two select() calls in that function
-  might select on different handler sets.
-
-. ACE_SOCK_IO::recvv(iovec[], size_t, const ACE_Time_Value* = 0) and
-  ACE_SOCK_IO::sendv (const iovec[], size_t, const ACE_Time_Value* = 0) methods
-  were changed to specify the iovec count argument as int instead of size_t
-  since it gets reduced to int in the underlying OS calls (usually).
-
-. The following deprecated methods were removed:
-
-    ssize_t ACE_SOCK_IO::recv (iovec iov[],
-                               size_t n,
-                               const ACE_Time_Value *timeout = 0) const;
-
-    ssize_t ACE_SOCK_IO::recv (iovec *io_vec,
-                               const ACE_Time_Value *timeout = 0) const;
-
-    ssize_t ACE_SOCK_IO::send (const iovec iov[],
-                               size_t n,
-                               const ACE_Time_Value *timeout = 0) const;
-
-    These were previously replaced with more specific recvv() and sendv()
-    methods.
-
-. The ACE_Service_Repository::find(const ACE_TCHAR name[],
-                                   const ACE_Service_Type **srp = 0,
-                                   int ignore_suspended = true) const
-  method's 'ignore_suspended' parameter was changed from int to bool to
-  reflect it's purpose as a yes/no indicator.
-
-. Added --enable-ace-reactor-notification-queue configure script
-  option to the autoconf build for enabling the Reactor's userspace
-  notification queue (defines ACE_HAS_REACTOR_NOTIFICATION_QUEUE in
-  config.h).
-
-. The int ACE_OutputCDR::consolidate(void) method was contributed by
-  Howard Finer at Sonus Networks. This method consolidates any continuation
-  blocks used by an ACE_OutputCDR object into a single block. It's useful for
-  situations which require access to a single memory area containing the
-  encoded stream, regardless of its length, when the length cannot be known
-  in advance.
-
-. There are a number of new methods defined on ACE_String_Base<CHAR>:
-
-        size_t capacity (void) const:  This method returns the number
-            of allocated CHAR units in the string object.
-
-        void fast_resize (size_t): This method manage the sizing/reallocating
-            of the string, but doesn't do the memory setting of resize().
-
-        bool operator!= (const CHAR *) const
-        bool operator== (const CHAR *) const: These methods compare the
-            string with a nul-terminated CHAR* string.
-
-        nonmember functions operator== and operator!= where also added
-            that compare const ACE_String_Base and const CHAR*; these make
-            it possible to switch ACE_String and CHAR* on either side of
-            the operator.
-
-  Thank you to Kelly Hickel <kfh at mqsoftware dot com> for these additions.
-
-. There are 2 new build options on the traditional make command:
-  dmalloc and mtrace. When specified at build time (e.g. make mtrace=1)
-  the PLATFORM_DMALLOC_CPPFLAGS and/or PLATFORM_MTRACE_CPPFLAGS values
-  are added to CPPFLAGS. For dmalloc, the PLATFORM_DMALLOC_LDFLAGS and
-  PLATFORM_DMALLOC_LIBS are added to LDFLAGS and LIBS, respectively.
-  Thank you to Howard Finer for supplying these additions.
-
-. Added the ability to specify additional purify and quantify command-line
-  options by setting PLATFORM_PURIFY_OPTIONS and PLATFORM_QUANTIFY_OPTIONS,
-  respectively. Thank you to Howard Finer for supplying these additions.
-
-. Removed Irix 5, DGUX, and m88k support
-
-. Improved LynxOS 4.2 support
-
-. VxWorks 6.4 support
-
-. Added support for FC6. Because the GCC 4.1.1 version that gets shipped
-  has a fix for the visibility attribute we use for the singletons
-  you will need to define the following in your config.h file. This can't be
-  done automatically because SuSE 10.2 gets shipped with GCC 4.1.2 but
-  doesn't have the same fix
-  ACE_GCC_HAS_TEMPLATE_INSTANTIATION_VISIBILITY_ATTRS 1
-
-. RTEMS port
+. (Remedy) RTEMS port
 
 USER VISIBLE CHANGES BETWEEN ACE-5.5.3 and ACE-5.5.4
 ====================================================
-
 . Added appropriate intptr_t and uintptr_t typedefs on platforms that
   don't provide them (i.e. when ACE_LACKS_INTPTR_T is defined).
 
@@ -133,7 +18,7 @@ USER VISIBLE CHANGES BETWEEN ACE-5.5.3 and ACE-5.5.4
   Windows.  Use the new ACE_OFF_T typedef to refer to file offsets
   across UNIX and Windows portably.
 
-. 64-bit file offsets are now enabled by default in Win64
+. 64 bit file offsets are now enabled by default in Win64
   configurations.
 
 . Improved support for 64 bit platforms (64 bit addresses, etc).
@@ -148,7 +33,7 @@ USER VISIBLE CHANGES BETWEEN ACE-5.5.3 and ACE-5.5.4
 
 . Greatly improved event handler dispatch performance in
   select()-based reactors (e.g. ACE_Select_Reactor and ACE_TP_Reactor)
-  for large handle sets on Windows. Previous event handler search
+  for large handle sets on Windows.  Previous event handler search
   were linear, and are now constant on average.
 
 . Addressed a number of Coverity errors (CHECKED_RETURN, DEADCODE,
@@ -158,13 +43,6 @@ USER VISIBLE CHANGES BETWEEN ACE-5.5.3 and ACE-5.5.4
   templates.
 
 . Removed support for LynxOS 3.x.
-
-. Resolved Bugzilla #2701 to ensure fini() is called for all
-  Service Objects upon calling ACE_Service_Config::close()
-
-. VxWorks 5.5.2 has been tested, for ACE the support is exactly
-  the same as for VxWorks 5.5.1. No specific defines or flags have
-  to be used.
 
 USER VISIBLE CHANGES BETWEEN ACE-5.5.2 and ACE-5.5.3
 ====================================================

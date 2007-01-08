@@ -23,7 +23,7 @@ $CL2 = new PerlACE::Process ("client", " -k file://$iorfile");
 
 $SV->Spawn ();
 
-if (PerlACE::waitforfile_timed ($iorfile, $PerlACE::wait_interval_for_process_creation) == -1) {
+if (PerlACE::waitforfile_timed ($iorfile, 15) == -1) {
     print STDERR "ERROR: cannot find file <$iorfile>\n";
     $SV->Kill (); $SV->TimedWait (1);
     exit 1;
@@ -32,31 +32,21 @@ if (PerlACE::waitforfile_timed ($iorfile, $PerlACE::wait_interval_for_process_cr
 $CL1->Spawn (60);
 $CL2->Spawn (60);
 
-$max_wait = 60;
-if ($^O == 'VMS') {
-    $max_wait = 360;
-}
-
-$client1 = $CL1->WaitKill ($max_wait);
+$client1 = $CL1->WaitKill (60);
 
 if ($client1 != 0) {
     print STDERR "ERROR: client 1 returned $client1\n";
     $status = 1;
 }
 
-$client2 = $CL2->WaitKill ($max_wait);
+$client2 = $CL2->WaitKill (60);
 
 if ($client2 != 0) {
     print STDERR "ERROR: client 2 returned $client2\n";
     $status = 1;
 }
 
-# shutdown
-$CLx = new PerlACE::Process ("client", " -k file://$iorfile -x");
-$CLx->Spawn (60);
-$CLx->WaitKill (15);
-
-$server = $SV->WaitKill (15);
+$server = $SV->TerminateWaitKill (5);
 
 if ($server != 0) {
     print STDERR "ERROR: server returned $server\n";

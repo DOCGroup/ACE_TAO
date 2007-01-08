@@ -140,7 +140,7 @@ Test_DynUnion::run_test (void)
       ACE_DEBUG ((LM_DEBUG,
                  "testing: constructor(TypeCode)/from_any/to_any\n"));
 
-      analyzer.analyze (fa1.in() ACE_ENV_ARG_PARAMETER);
+      analyzer.analyze(fa1.in() ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       CORBA::Any_var out_any1 = fa1->to_any (ACE_ENV_SINGLE_ARG_PARAMETER);
@@ -152,7 +152,7 @@ Test_DynUnion::run_test (void)
 
       DynamicAny::DynUnion_var ftc1 =
         DynamicAny::DynUnion::_narrow (ftc1_base.in ()
-                                       ACE_ENV_ARG_PARAMETER);
+                                          ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (CORBA::is_nil (ftc1.in ()))
@@ -165,10 +165,9 @@ Test_DynUnion::run_test (void)
       ftc1->from_any (out_any1.in ()
                       ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
-      
-      ftc1->seek (1 ACE_ENV_ARG_PARAMETER);
+      ftc1->seek (1
+                 ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
-      
       CORBA::TypeCode_var s_out2 =
         ftc1->get_typecode (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
@@ -191,7 +190,7 @@ Test_DynUnion::run_test (void)
       ACE_DEBUG ((LM_DEBUG,
                  "testing: constructor(TypeCode alias)/from_any/to_any\n"));
 
-      analyzer.analyze( fa1.in() ACE_ENV_ARG_PARAMETER);
+      analyzer.analyze(fa1.in() ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       CORBA::Any_var out_any2 = fa1->to_any (ACE_ENV_SINGLE_ARG_PARAMETER);
@@ -205,7 +204,6 @@ Test_DynUnion::run_test (void)
             dynany_factory->create_dyn_any_from_type_code
             (DynAnyTests::_tc_test_union_alias ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK_EX (bad_kind);
-          
           DynamicAny::DynUnion_var ftc2 =
             DynamicAny::DynUnion::_narrow (ftc2_base.in ()
                                            ACE_ENV_ARG_PARAMETER);
@@ -221,10 +219,9 @@ Test_DynUnion::run_test (void)
           ftc2->from_any (out_any2.in ()
                           ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK_EX (bad_kind);
-          
-          ftc2->seek (1 ACE_ENV_ARG_PARAMETER);
+          ftc2->seek (1
+                      ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK_EX (bad_kind);
-          
           s_out3 = ftc2->get_typecode (ACE_ENV_SINGLE_ARG_PARAMETER);
           ACE_TRY_CHECK_EX (bad_kind);
         }
@@ -260,18 +257,14 @@ Test_DynUnion::run_test (void)
       ACE_DEBUG ((LM_DEBUG,
                  "testing:discriminator/discriminator_kind\n"));
 
-      DynamicAny::DynAny_var dp2 =
-        ftc1->get_discriminator (ACE_ENV_SINGLE_ARG_PARAMETER);
+      DynamicAny::DynAny_var dp2 = ftc1->get_discriminator (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      CORBA::TypeCode_var tc2 =
-        dp2->type (ACE_ENV_SINGLE_ARG_PARAMETER);
+      CORBA::TypeCode_var tc2 = dp2->type (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      CORBA::TCKind tc1kind =
-        ftc1->discriminator_kind (ACE_ENV_SINGLE_ARG_PARAMETER);
+      CORBA::TCKind tc1kind = ftc1->discriminator_kind (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
-      
       CORBA::TCKind tc2kind = tc2->kind (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
@@ -288,20 +281,13 @@ Test_DynUnion::run_test (void)
       ACE_DEBUG ((LM_DEBUG,
                  "testing:member/member_kind/member_name\n"));
 
-      DynamicAny::DynAny_var dp3 =
-        ftc1->member (ACE_ENV_SINGLE_ARG_PARAMETER);
+      DynamicAny::DynAny_var dp3 = ftc1->member (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
-      
-      CORBA::String_var m_nm =
-        ftc1->member_name (ACE_ENV_SINGLE_ARG_PARAMETER);
+      CORBA::String_var m_nm = ftc1->member_name (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
-      
-      CORBA::TCKind tk =
-        ftc1->member_kind (ACE_ENV_SINGLE_ARG_PARAMETER);
+      CORBA::TCKind tk = ftc1->member_kind (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
-      
-      CORBA::TypeCode_var tc3 =
-        dp3->get_typecode (ACE_ENV_SINGLE_ARG_PARAMETER);
+      CORBA::TypeCode_var tc3 = dp3->get_typecode (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       CORBA::Boolean const equal_tc3 =
@@ -327,21 +313,15 @@ Test_DynUnion::run_test (void)
 
       ftc1->set_to_default_member (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
-      
       ftc1->seek (1
                   ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
-      
       ftc1->insert_short (data.m_short1
                           ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
-      
-      DynamicAny::DynAny_var mem =
-        ftc1->member (ACE_ENV_SINGLE_ARG_PARAMETER);
+      DynamicAny::DynAny_var mem = ftc1->member (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
-      
-      CORBA::Short out_s =
-        mem->get_short (ACE_ENV_SINGLE_ARG_PARAMETER);
+      CORBA::Short out_s = mem->get_short (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (out_s == data.m_short1)
@@ -356,7 +336,6 @@ Test_DynUnion::run_test (void)
 
       fa1->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
-      
       ftc1->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
@@ -367,7 +346,6 @@ Test_DynUnion::run_test (void)
 
       test_implicit_def_union._default();
       ACE_TRY_CHECK;
-      
       any_union <<= test_implicit_def_union;
       ACE_TRY_CHECK;
 

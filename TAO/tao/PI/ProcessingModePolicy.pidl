@@ -7,7 +7,7 @@
  * the PortableInterceptor module.
  *
  * tao_idl \
- *     -o orig -Gp -Gd -GT -GA \
+ *     -o orig -Gp -Gd -Ge 1 -GT -GA \
  *          -Wb,export_include="tao/TAO_Export.h" \
  *          -Wb,export_macro=TAO_Export \
  *          -Wb,pre_include="ace/pre.h" \

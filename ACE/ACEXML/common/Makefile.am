@@ -6,7 +6,7 @@
 ## this file will be lost the next time it is generated.
 ##
 ## MPC Command:
-## ./bin/mwc.pl -type automake -noreldefs ACE.mwc
+## /acebuilds/ACE_wrappers-repository/bin/mwc.pl -include /acebuilds/MPC/config -include /acebuilds/MPC/templates -feature_file /acebuilds/ACE_wrappers-repository/local.features -noreldefs -type automake -exclude build,Kokyu
 
 includedir = @includedir@/ACEXML/common
 pkgconfigdir = @libdir@/pkgconfig
@@ -25,14 +25,6 @@ libACEXML_la_CPPFLAGS = \
   -I$(ACE_ROOT) \
   -I$(ACE_BUILDDIR) \
   -DACEXML_BUILD_DLL
-
-if BUILD_ZLIB
-if BUILD_ZZIP
-libACEXML_la_CPPFLAGS += \
-  $(ACE_ZZIP_CPPFLAGS) \
-  $(ACE_ZLIB_CPPFLAGS)
-endif BUILD_ZZIP
-endif BUILD_ZLIB
 
 libACEXML_la_SOURCES = \
   Attributes.cpp \
@@ -71,24 +63,8 @@ libACEXML_la_SOURCES = \
 libACEXML_la_LDFLAGS = \
  -release @ACE_VERSION_NAME@
 
-if BUILD_ZLIB
-if BUILD_ZZIP
-libACEXML_la_LDFLAGS += \
-  $(ACE_ZZIP_LDFLAGS) \
-  $(ACE_ZLIB_LDFLAGS)
-endif BUILD_ZZIP
-endif BUILD_ZLIB
-
 libACEXML_la_LIBADD = \
   $(ACE_BUILDDIR)/ace/libACE.la
-
-if BUILD_ZLIB
-if BUILD_ZZIP
-libACEXML_la_LIBADD += \
-  $(ACE_ZZIP_LIBS) \
-  $(ACE_ZLIB_LIBS)
-endif BUILD_ZZIP
-endif BUILD_ZLIB
 
 nobase_include_HEADERS = \
   ACEXML_Export.h \
@@ -142,7 +118,7 @@ CLEANFILES = \
   ACEXML.pc
 
 ACEXML.pc: ${top_builddir}/config.status ${srcdir}/ACEXML.pc.in
-	${top_builddir}/config.status --file $@:${srcdir}/ACEXML.pc.in
+	${top_builddir}/config.status --file "$@":${srcdir}/ACEXML.pc.in
 
 endif !BUILD_ACE_FOR_TAO
 

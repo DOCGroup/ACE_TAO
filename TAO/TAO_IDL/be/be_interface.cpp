@@ -103,11 +103,7 @@ be_interface::be_interface (UTL_ScopedName *n,
   ACE_NEW (this->strategy_,
            be_interface_default_strategy (this));
 
-  AST_Decl::NodeType nt = this->node_type ();
-
-  if (this->imported ()
-      || nt == AST_Decl::NT_valuetype
-      || nt == AST_Decl::NT_eventtype)
+  if (this->imported () || this->node_type () == AST_Decl::NT_valuetype)
     {
       return ;
     }
@@ -480,10 +476,12 @@ be_interface::redefine (AST_Interface *from)
 void
 be_interface::gen_def_ctors (TAO_OutStream *os)
 {
-  (void) this->traverse_inheritance_graph (
+  this->traverse_inheritance_graph (
       be_interface::gen_def_ctors_helper,
       os
     );
+
+  return;
 }
 
 
@@ -506,8 +504,7 @@ be_interface::gen_def_ctors_helper (be_interface* node,
         }
       else
         {
-          *os << ", " << be_global->impl_class_prefix ()
-              << base->flat_name ()
+          *os << ", " << be_global->impl_class_prefix () << base->flat_name ()
               << be_global->impl_class_suffix () << " ()";
         }
     }
@@ -767,8 +764,8 @@ Pure_Virtual_Regenerator::emit (be_interface *derived_interface,
           if (d->accept (this->visitor_) == -1)
             {
               ACE_ERROR_RETURN ((LM_ERROR,
-                                 "(%N:%l) Pure_Virtual_Regenerator::emit - "
-                                 "visit base interface operation failed\n"),
+                                "(%N:%l) Pure_Virtual_Regenerator::emit - "
+                                "visit base interface operation failed\n"),
                                 -1);
             }
 
@@ -926,8 +923,7 @@ be_interface::gen_operation_table (const char *flat_name,
         // interface.
 
         // Retrieve the singleton instance to the outstream factory.
-        TAO_OutStream_Factory *factory =
-          TAO_OUTSTREAM_FACTORY::instance ();
+        TAO_OutStream_Factory *factory = TAO_OUTSTREAM_FACTORY::instance ();
 
         // Get a new instance for the temp file.
         TAO_OutStream *os = factory->make_outstream ();
@@ -1297,11 +1293,10 @@ be_interface::gen_collocated_skel_body (be_interface *derived,
   *os << be_nl << be_nl
       << "ACE_INLINE void" << be_nl
       << derived->full_direct_proxy_impl_name ()
-      << "::" << prefix << d->local_name () << " ("
-      << be_idt << be_idt_nl
+      << "::" << prefix << d->local_name () << " (" << be_idt << be_idt_nl
       << "TAO_Abstract_ServantBase *servant," << be_nl
       << "TAO::Argument ** args," << be_nl
-      << "int num_args" << be_uidt_nl
+      << "int num_args" << env_decl << be_uidt_nl
       << ")";
 
   be_interface::gen_throw_spec (list, os);
@@ -1309,11 +1304,10 @@ be_interface::gen_collocated_skel_body (be_interface *derived,
   *os << be_uidt_nl
       << "{" << be_idt_nl
       << ancestor->full_direct_proxy_impl_name ()
-      << "::" << prefix << d->local_name () << " ("
-      << be_idt << be_idt_nl
+      << "::" << prefix << d->local_name () << " (" << be_idt << be_idt_nl
       << "servant," << be_nl
       << "args," << be_nl
-      << "num_args" << be_uidt_nl
+      << "num_args" << env_arg << be_uidt_nl
       << ");" << be_uidt << be_uidt_nl
       << "}"<< be_nl;
 
@@ -1388,8 +1382,8 @@ be_interface::traverse_inheritance_graph (be_interface::tao_code_emitter gen,
   if (insert_queue.enqueue_tail (this) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                         "(%N:%l) be_interface::traverse_inheritance_graph"
-                         " - error generating entries\n"),
+                         "(%N:%l) be_interface::traverse_inheritance_graph - "
+                         "error generating entries\n"),
                         -1);
     }
 
@@ -1432,7 +1426,7 @@ be_interface::traverse_inheritance_graph (
             {
               (void) this->insert_non_dup (base);
 
-              long const n_supports = base->n_supports ();
+              long n_supports = base->n_supports ();
               AST_Interface **supports = base->supports ();
 
               for (long j = 0; j < n_supports; ++j)
@@ -1661,14 +1655,11 @@ be_interface::gen_gperf_lookup_methods (const char *flat_name)
                          "fclose"),
                         -1);
     }
-
+    
   // Open the temp file.
 #if defined (ACE_OPENVMS)
-  ACE_HANDLE input = ::open (tao_cg->gperf_input_filename (),
-                             O_RDONLY,
-                             "shr=get,put,upd",
-                             "ctx=rec",
-                             "fop=dfw");
+  ACE_HANDLE input = ::open(tao_cg->gperf_input_filename(), O_RDONLY,
+                            "shr=get,put,upd", "ctx=rec", "fop=dfw");
 #else
   ACE_HANDLE input = ACE::open_temp_file (tao_cg->gperf_input_filename (),
                                           O_RDONLY);
@@ -1682,31 +1673,19 @@ be_interface::gen_gperf_lookup_methods (const char *flat_name)
                         -1);
     }
 
-#ifndef ACE_OPENVMS
-  // Flush the output stream.  Gperf also uses it as output.  Ensure
-  // current contents are written before gperf writes.
-  ACE_OS::fflush (this->strategy_->get_out_stream ()->file ());
-#endif  /* !ACE_OPENVMS */
-
   // Stdout is server skeleton.  Do *not* close the file, just open
   // again with <ACE_OS::open> with WRITE + APPEND option.. After
   // this, remember to update the file offset to the correct location.
 
 #if defined (ACE_OPENVMS)
-  char* gperfOutput = tempnam (0, "idl_");
-
-  if (gperfOutput == 0)
+  char* gperfOutput = tempnam(NULL, "idl_");
+  if (gperfOutput == NULL)
     {
-      ACE_OS::close (input);
-      ACE_ERROR_RETURN ((LM_ERROR, "failed to allocate memory\n"), -1);
+    ACE_OS::close(input);
+    ACE_ERROR_RETURN ((LM_ERROR, "failed to allocate memory\n"), -1);
     }
-
-  ACE_HANDLE output = ::open (gperfOutput,
-                              O_WRONLY | O_CREAT | O_EXCL,
-                              ACE_DEFAULT_FILE_PERMS ,
-                              "shr=get,put,upd",
-                              "ctx=rec",
-                              "fop=dfw");
+  ACE_HANDLE output = ::open(gperfOutput, O_WRONLY | O_CREAT | O_EXCL,
+                             ACE_DEFAULT_FILE_PERMS , "shr=get,put,upd", "ctx=rec", "fop=dfw");
 #else
   ACE_HANDLE output = ACE_OS::open (this->strategy_->get_out_stream_fname (),
                                     O_WRONLY | O_APPEND);
@@ -1802,8 +1781,7 @@ be_interface::gen_gperf_lookup_methods (const char *flat_name)
 
     default:
       ACE_ERROR ((LM_ERROR,
-                  "tao_idl:ERROR:%N:%l:Unknown "
-                  "Operation Lookup Strategy\n"));
+                  "tao_idl:ERROR:%N:%l:Unknown Operation Lookup Strategy\n"));
 
       result = -1;
   }
@@ -1824,8 +1802,7 @@ be_interface::gen_gperf_lookup_methods (const char *flat_name)
       else if (process.wait () == -1)
         {
           ACE_ERROR ((LM_ERROR,
-                      "Error:%p:Error on waiting for "
-                      "completion of gperf program.\n",
+                      "Error:%p:Error on waiting for completion of gperf program.\n",
                       "process.wait"));
 
           result = -1;
@@ -1833,7 +1810,7 @@ be_interface::gen_gperf_lookup_methods (const char *flat_name)
 
       // Adjust the file offset to the EOF for the server skeleton
       // file.
-      ACE_OS::fseek (this->strategy_->get_out_stream ()->file (),
+      ACE_OS::fseek (this->strategy_->get_out_stream()->file (),
                      0,
                      SEEK_END);
     }
@@ -1841,15 +1818,13 @@ be_interface::gen_gperf_lookup_methods (const char *flat_name)
   ACE_OS::close (output);
   ACE_OS::close (input);
 
-#if defined (ACE_OPENVMS)
-  ACE_OS::unlink(tao_cg->gperf_input_filename ());
-  process_options.release_handles ();
-
+#if defined(ACE_OPENVMS)
+  ACE_OS::unlink(tao_cg->gperf_input_filename());
+  process_options.release_handles();
   if (result != -1)
     {
       FILE* gperfOutputFile;
-      gperfOutputFile = ::fopen (gperfOutput, "r");
-
+      gperfOutputFile = ::fopen(gperfOutput, "r");
       if (gperfOutputFile == 0)
         {
           ACE_ERROR ((LM_ERROR,
@@ -1859,28 +1834,24 @@ be_interface::gen_gperf_lookup_methods (const char *flat_name)
         }
       else
         {
-          FILE* out = this->strategy_->get_out_stream ()->file ();
+          FILE* out = this->strategy_->get_out_stream()->file();
           int c;
-
           while ((c = fgetc(gperfOutputFile)) != EOF)
             {
-              fputc (c, out);
+              fputc(c, out);
             }
-
-          if (ferror (gperfOutputFile) || ferror (out))
+          if (ferror(gperfOutputFile) || ferror(out))
             {
               ACE_ERROR ((LM_ERROR,
                           "Error:%p:Couldn't open gperf output file\n",
                           "get/put"));
               result = -1;
             }
-
-          fclose (gperfOutputFile);
+          fclose(gperfOutputFile);
         }
     }
-
-  ACE_OS::unlink (gperfOutput);
-  free (gperfOutput);
+  ACE_OS::unlink(gperfOutput);
+  free(gperfOutput);
 #endif /* ACE_OPENVMS */
 
   return result;
@@ -1967,9 +1938,9 @@ be_interface::gen_skel_helper (be_interface *derived,
   if (ancestor->nmembers () > 0)
     {
       // If there are elements in ancestor scope i.e., any operations and
-      // attributes defined by "ancestor", become methods on the derived
-      // class which call the corresponding method of the base class by
-      // doing the proper casting.
+      // attributes defined by "ancestor", become methods on the derived class
+      // which call the corresponding method of the base class by doing the
+      // proper casting.
 
       for (UTL_ScopeActiveIterator si (ancestor, UTL_Scope::IK_decls);
            !si.is_done ();
@@ -1980,10 +1951,10 @@ be_interface::gen_skel_helper (be_interface *derived,
 
           if (d->node_type () == AST_Decl::NT_op)
             {
-              *os << be_nl << be_nl
-                  << "// TAO_IDL - Generated from" << be_nl
-                  << "// " << __FILE__ << ":" << __LINE__
-                  << be_nl << be_nl;
+              *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
+                  << "// " << __FILE__ << ":" << __LINE__;
+
+              *os << be_nl << be_nl;
 
               if (os->stream_type () == TAO_OutStream::TAO_SVR_HDR)
                 {
@@ -1993,7 +1964,7 @@ be_interface::gen_skel_helper (be_interface *derived,
                       << "_skel (" << be_idt << be_idt_nl
                       << "TAO_ServerRequest & server_request, " << be_nl
                       << "void * servant_upcall," << be_nl
-                      << "void * servant" << be_uidt_nl
+                      << "void * servant" << env_dflts << be_uidt_nl
                       << ");" << be_uidt;
                 }
               else
@@ -2006,7 +1977,7 @@ be_interface::gen_skel_helper (be_interface *derived,
                       << "_skel (" << be_idt << be_idt_nl
                       << "TAO_ServerRequest & server_request," << be_nl
                       << "void * servant_upcall," << be_nl
-                      << "void * servant" << be_uidt_nl
+                      << "void * servant" << env_decl << be_uidt_nl
                       << ")" << be_uidt_nl
                       << "{" << be_idt_nl;
 
@@ -2020,7 +1991,7 @@ be_interface::gen_skel_helper (be_interface *derived,
                       << "_skel (" << be_idt << be_idt_nl
                       << "server_request," << be_nl
                       << "servant_upcall," << be_nl
-                      << "impl" << be_uidt_nl
+                      << "impl" << env_arg << be_uidt_nl
                       << ");" << be_uidt << be_uidt_nl
                       << "}";
                 }
@@ -2044,7 +2015,7 @@ be_interface::gen_skel_helper (be_interface *derived,
                       << "_skel (" << be_idt << be_idt_nl
                       << "TAO_ServerRequest & server_request," << be_nl
                       << "void * servant_upcall," << be_nl
-                      << "void * servant" << be_uidt_nl
+                      << "void * servant" << env_dflts << be_uidt_nl
                       << ");" << be_uidt;
                 }
               else
@@ -2057,7 +2028,7 @@ be_interface::gen_skel_helper (be_interface *derived,
                       << "_skel (" << be_idt << be_idt_nl
                       << "TAO_ServerRequest & server_request," << be_nl
                       << "void * servant_upcall," << be_nl
-                      << "void * servant" << be_uidt_nl
+                      << "void * servant" << env_decl << be_uidt_nl
                       << ")" << be_uidt_nl
                       << "{" << be_idt_nl;
 
@@ -2071,7 +2042,7 @@ be_interface::gen_skel_helper (be_interface *derived,
                       << "_skel (" << be_idt << be_idt_nl
                       << "server_request," << be_nl
                       << "servant_upcall," << be_nl
-                      << "impl" << be_uidt_nl
+                      << "impl" << env_arg << be_uidt_nl
                       << ");" << be_uidt << be_uidt_nl
                       << "}";
                 }
@@ -2089,7 +2060,7 @@ be_interface::gen_skel_helper (be_interface *derived,
                           << "_skel (" << be_idt << be_idt_nl
                           << "TAO_ServerRequest & server_request," << be_nl
                           << "void * servant_upcall," << be_nl
-                          << "void * servant" << be_uidt_nl
+                          << "void * servant" << env_dflts << be_uidt_nl
                           << ");" << be_uidt;
                     }
                   else
@@ -2103,7 +2074,7 @@ be_interface::gen_skel_helper (be_interface *derived,
                           << "_skel (" << be_idt << be_idt_nl
                           << "TAO_ServerRequest & server_request," << be_nl
                           << "void * servant_upcall," << be_nl
-                          << "void * servant" << be_uidt_nl
+                          << "void * servant" << env_decl << be_uidt_nl
                           << ")" << be_uidt_nl
                           << "{" << be_idt_nl;
 
@@ -2117,7 +2088,7 @@ be_interface::gen_skel_helper (be_interface *derived,
                           << "_skel (" << be_idt << be_idt_nl
                           << "server_request," << be_nl
                           << "servant_upcall," << be_nl
-                          << "impl" << be_uidt_nl
+                          << "impl" << env_arg << be_uidt_nl
                           << ");" << be_uidt << be_uidt_nl
                           << "}";
                     }
@@ -2170,7 +2141,7 @@ be_interface::gen_colloc_op_decl_helper (be_interface *derived,
               << d->local_name () << " (" << be_idt << be_idt_nl
               << "TAO_Abstract_ServantBase *servant, " << be_nl
               << "TAO::Argument ** args," << be_nl
-              << "int num_args" << be_uidt_nl
+              << "int num_args" << env_dflts << be_uidt_nl
               << ")";
 
           list = be_operation::narrow_from_decl (d)->exceptions ();
@@ -2192,7 +2163,7 @@ be_interface::gen_colloc_op_decl_helper (be_interface *derived,
               << "_get_" << d->local_name () << " (" << be_idt << be_idt_nl
               << "TAO_Abstract_ServantBase *servant, " << be_nl
               << "TAO::Argument ** args," << be_nl
-              << "int num_args" << be_uidt_nl
+              << "int num_args" << env_dflts << be_uidt_nl
               << ")";
 
           list = attr->get_get_exceptions ();
@@ -2207,11 +2178,10 @@ be_interface::gen_colloc_op_decl_helper (be_interface *derived,
               // Generate the static method corresponding to
               // this method.
               *os << "static void" << be_nl
-                  << "_set_" << d->local_name () << " ("
-                  << be_idt << be_idt_nl
+                  << "_set_" << d->local_name () << " (" << be_idt << be_idt_nl
                   << "TAO_Abstract_ServantBase *servant, " << be_nl
                   << "TAO::Argument ** args," << be_nl
-                  << "int num_args" << be_uidt_nl
+                  << "int num_args" << env_dflts << be_uidt_nl
                   << ")";
 
               list = attr->get_set_exceptions ();
@@ -2460,7 +2430,7 @@ be_interface::destroy (void)
       delete this->strategy_;
       this->strategy_ = 0;
     }
-
+    
   // Call the destroy methods of our base classes.
   this->AST_Interface::destroy ();
   this->be_scope::destroy ();
@@ -2483,8 +2453,7 @@ be_interface::next_state (TAO_CodeGen::CG_STATE current_state,
 }
 
 int
-be_interface::has_extra_code_generation (
-  TAO_CodeGen::CG_STATE current_state)
+be_interface::has_extra_code_generation (TAO_CodeGen::CG_STATE current_state)
 {
   return this->strategy_->has_extra_code_generation (current_state);
 }
@@ -2516,7 +2485,7 @@ be_interface::has_mixed_parentage (void)
     }
 
   AST_Decl::NodeType nt = this->node_type ();
-
+  
   if (AST_Decl::NT_component == nt || AST_Decl::NT_home == nt)
     {
       return 0;

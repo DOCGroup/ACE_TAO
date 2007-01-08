@@ -453,13 +453,13 @@ lib_warning:
 
 <%if(requires)%>
 require_warning:
-	@echo <%project_name%> will not be built due to one of the following disabled make macros:
+	@echo <%project_name%> will not be built due to one of the following disabled features:
 	@echo<%foreach(requires)%> <%require%><%endfor%>
 
 <%endif%>
 <%if(avoids)%>
 avoid_warning:
-	@echo <%project_name%> will not be built due to one of the following enabled make macros:
+	@echo <%project_name%> will not be built due to one of the following enabled features:
 	@echo<%foreach(avoids)%> <%avoid%><%endfor%>
 
 <%endif%>
@@ -484,7 +484,7 @@ PATH              := $(PATH):<%custom_type->libpath%>
 <%endif%>
 <%foreach(custom_type->input_files)%>
 <%if(custom_type->input_file->output_files)%>
-GENERATED_DIRTY +=<%foreach(custom_type->input_file->output_files)%> <%if(flag_overrides(custom_type->input_file, gendir))%><%if(!compares(flag_overrides(custom_type->input_file, gendir),.))%><%flag_overrides(custom_type->input_file, gendir)%>/<%endif%><%basename(custom_type->input_file->output_file)%><%else%><%custom_type->input_file->output_file%><%endif%><%endfor%>
+GENERATED_DIRTY +=<%foreach(custom_type->input_file->output_files)%> <%if(flag_overrides(custom_type->input_file, gendir))%><%flag_overrides(custom_type->input_file, gendir)%>/<%basename(custom_type->input_file->output_file)%><%else%><%custom_type->input_file->output_file%><%endif%><%endfor%>
 <%if(custom_type->input_file->non_source_output_files)%>
 OBJS_DEPEND_ON_GENERATED = 1
 <%endif%>
@@ -533,11 +533,9 @@ else
 endif
 <%endif%>
 <%endfor%>
-<%foreach(custom_type->input_file->output_files)%><%if(flag_overrides(custom_type->input_file, gendir))%><%if(!compares(flag_overrides(custom_type->input_file, gendir),.))%><%flag_overrides(custom_type->input_file, gendir)%>/<%endif%><%basename(custom_type->input_file->output_file)%><%else%><%custom_type->input_file->output_file%><%endif%><%fornotlast(" ")%><%endfor%>: <%custom_type->input_file%><%if(custom_type->input_file->dependencies)%> <%custom_type->input_file->dependencies%><%endif%><%if(flag_overrides(custom_type->input_file, dependent))%> <%flag_overrides(custom_type->input_file, dependent)%><%else%><%if(custom_type->dependent)%> <%custom_type->dependent%><%endif%><%endif%>
+<%foreach(custom_type->input_file->output_files)%><%if(flag_overrides(custom_type->input_file, gendir))%><%flag_overrides(custom_type->input_file, gendir)%>/<%basename(custom_type->input_file->output_file)%><%else%><%custom_type->input_file->output_file%><%endif%><%fornotlast(" ")%><%endfor%>: <%custom_type->input_file%><%if(custom_type->input_file->dependencies)%> <%custom_type->input_file->dependencies%><%endif%><%if(flag_overrides(custom_type->input_file, dependent))%> <%flag_overrides(custom_type->input_file, dependent)%><%else%><%if(custom_type->dependent)%> <%custom_type->dependent%><%endif%><%endif%>
 <%if(flag_overrides(custom_type->input_file, gendir))%>
-<%if(!compares(flag_overrides(custom_type->input_file, gendir),.))%>
 	$(MKDIR) <%flag_overrides(custom_type->input_file, gendir)%>
-<%endif%>
 <%endif%>
 	<%if(flag_overrides(custom_type->input_file, command))%><%flag_overrides(custom_type->input_file, command)%><%else%><%custom_type->command%><%endif%> <%if(flag_overrides(custom_type->input_file, commandflags))%><%flag_overrides(custom_type->input_file, commandflags)%><%else%><%custom_type->commandflags%><%endif%> <%if(custom_type->output_option)%><%custom_type->input_file%> <%custom_type->output_option%> $@<%else%><%custom_type->input_file%><%endif%>
 <%if(flag_overrides(custom_type->input_file, postcommand))%>
@@ -591,7 +589,7 @@ endif
 
 <%endif%>
 <%if(idl_files)%>
-ADDITIONAL_IDL_TARGETS +=<%foreach(idl_files)%> <%if(flag_overrides(idl_file, gendir))%><%if(!compares(flag_overrides(idl_file, gendir),.))%><%flag_overrides(idl_file, gendir)%>/<%endif%><%basenoextension(idl_file)%>$(IDL_CLIENT_HDR_EXT)<%else%><%noextension(idl_file)%>$(IDL_CLIENT_HDR_EXT)<%endif%><%endfor%>
+ADDITIONAL_IDL_TARGETS +=<%foreach(idl_files)%> <%if(flag_overrides(idl_file, gendir))%><%flag_overrides(idl_file, gendir)%>/<%basenoextension(idl_file)%>$(IDL_CLIENT_HDR_EXT)<%else%><%noextension(idl_file)%>$(IDL_CLIENT_HDR_EXT)<%endif%><%endfor%>
 idl_stubs: $(ADDITIONAL_IDL_TARGETS)
 <%if(source_files)%>
 
@@ -602,7 +600,7 @@ FORCED_IDL_STUBS = <%source_files%>
 <%foreach(custom_type->input_files)%>
 <%if(custom_type->input_file->source_output_files)%>
 <%foreach(custom_type->input_file->source_output_files)%>
-FORCED_IDL_STUBS := $(FORCED_IDL_STUBS:<%if(flag_overrides(custom_type->input_file, gendir))%><%if(!compares(flag_overrides(custom_type->input_file, gendir),.))%><%flag_overrides(custom_type->input_file, gendir)%>/<%endif%><%basename(custom_type->input_file->source_output_file)%><%else%><%custom_type->input_file->source_output_file%><%endif%>=)
+FORCED_IDL_STUBS := $(FORCED_IDL_STUBS:<%if(flag_overrides(custom_type->input_file, gendir))%><%flag_overrides(custom_type->input_file, gendir)%>/<%basename(custom_type->input_file->source_output_file)%><%else%><%custom_type->input_file->source_output_file%><%endif%>=)
 <%endfor%>
 <%endif%>
 <%endfor%>

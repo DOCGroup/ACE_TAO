@@ -1,3 +1,4 @@
+
 /* -*- C++ -*- */
 
 /***
@@ -17,9 +18,11 @@
 #include "ace/OS_NS_fcntl.h"      //for open
 #include "ace/OS_NS_unistd.h"        //for close
 #include "ace/OS_NS_sys_stat.h"        //for filesize and fstat and mkdir
-#include "ace/streams.h"
 
 #include "Config_Handlers/DnC_Dump.h"
+
+#include <iostream>
+using namespace std;
 
 #include "RM_Helper.h"          //to be able to externalize/internalize a PackageConfiguration
 #include "tao/CDR.h"          //for TAO CDR classes
@@ -100,9 +103,9 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         }
 
     if (options->shutdown_)
-      {
-        rm->shutdown ();
-      }
+    {
+      rm->shutdown ();
+    }
     else if (options->all_names_)
     {
       try

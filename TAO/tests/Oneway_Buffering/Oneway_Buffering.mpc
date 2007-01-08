@@ -1,53 +1,35 @@
 // -*- MPC -*-
 // $Id$
 
-project(*idl): taoidldefaults {
-  IDL_Files {
-    Test.idl
-  }
-  custom_only = 1
-}
-
 project(*Server): messaging, taoexe, portableserver {
-  after += *idl
   Source_Files {
     Oneway_Buffering.cpp
     server.cpp
   }  
-  Source_Files {
-    TestC.cpp
-    TestS.cpp
-  }
-  IDL_Files {
-  }
 }
 
+// These next two projects depend on *Server (the above project)
+// due to the possibility of parallelism for the GNUACE type.  If
+// -j 2 or more is used to build this project, multiple instances
+// of tao_idl are invoked for Test.idl.  They begin to overwrite the
+// generated source files and cause problems for the processes that
+// have gone on to build the generated files. By depending on *Server,
+// only one process is allowed to compile Test.idl and thus the build
+// succeeds.
 project(*Client): messaging, taoexe, portableserver {
   requires += corba_messaging
-  after += *idl
   after += *Server
 
   Source_Files {
+    TestC.cpp
     client.cpp
   }  
-  Source_Files {
-    TestC.cpp
-  }
-  IDL_Files {
-  }
 }
 
 project(*Admin): messaging, taoexe, portableserver {
-  after += *idl
   after += *Client
   Source_Files {
     Oneway_Buffering_Admin.cpp
     admin.cpp
   }  
-  Source_Files {
-    TestC.cpp
-    TestS.cpp
-  }
-  IDL_Files {
-  }
 }

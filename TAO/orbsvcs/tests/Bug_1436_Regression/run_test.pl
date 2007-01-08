@@ -12,7 +12,7 @@ use PerlACE::Run_Test;
 $ifr_bin_path = "../../IFR_Service";
 
 # The location of the tao_ifr IFR utility
-$tao_ifr_bin_path = "$ENV{ACE_ROOT}/bin";
+$tao_ifr_bin_path = "../../../../bin";
 
 # IOR file names
 $ifr_ior_file = PerlACE::LocalFile("ifr.ior");

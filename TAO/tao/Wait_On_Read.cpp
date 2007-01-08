@@ -76,7 +76,7 @@ TAO_Wait_On_Read::wait (ACE_Time_Value * max_wait_time,
 
   if (rd.successful ())
      {
-       TAO_ORB_Core * const oc =
+       TAO_ORB_Core *oc =
          this->transport_->orb_core ();
 
        if (!oc->client_factory ()->use_cleanup_options ())

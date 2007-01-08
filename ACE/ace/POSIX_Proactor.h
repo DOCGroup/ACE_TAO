@@ -523,7 +523,7 @@ public:
    */
   ACE_POSIX_SIG_Proactor (size_t nmaxop = ACE_AIO_DEFAULT_SIZE);
 
-  virtual Proactor_Type get_impl_type (void);
+  virtual Proactor_Type  get_impl_type (void);
 
   /**
    * This constructor should be used to tell the Proactor to mask and

@@ -18,6 +18,7 @@
  * @brief The CIAO module
  */
 
+//#include <ciao/Deployment.idl>
 #include "DAnCE/Interfaces/NodeManagerDaemon.idl"
 
 module CIAO

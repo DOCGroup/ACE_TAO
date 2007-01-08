@@ -127,7 +127,7 @@ sigemptyset (sigset_t *s)
       return -1;
     }
   *s = 0 ;
-  return 0;
+  return 0 ;
 #else
   ACE_OSCALL_RETURN (::sigemptyset (s), int, -1);
 #endif /* ACE_LACKS_SIGSET || ACE_LACKS_SIGSET_DEFINITIONS */

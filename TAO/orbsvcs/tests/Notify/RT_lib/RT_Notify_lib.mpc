@@ -1,7 +1,7 @@
 // -*- MPC -*-
 // $Id$
 
-project: orbsvcslib, notification, rtcorba, rtportableserver, notifytest, avoids_minimum_corba, avoids_corba_e_compact, avoids_corba_e_micro {
+project: orbsvcslib, notification, rtcorba, rtportableserver, notifytest, minimum_corba {
 
   sharedname = TAO_RT_NotifyTests
 

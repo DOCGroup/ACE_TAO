@@ -201,6 +201,7 @@ ACE_HAS_STDARG_THR_DEST                 Platform has void (*)(...)
                                         prototype for
                                         pthread_key_create()
                                         destructor (e.g., LynxOS).
+ACE_HAS_SNPRINTF                        Platform offers snprintf().
 ACE_HAS_STL_MAP_CONFLICT                Used when users want to
                                         compile ACE with STL and STL
                                         map class conflicts with
@@ -286,6 +287,9 @@ ACE_HAS_CHARPTR_DL                      OS/platform uses char * for
 ACE_HAS_CHARPTR_SOCKOPT                 OS/platform uses char * for
                                         sockopt, rather than const
                                         char *
+ACE_HAS_CHARPTR_SPRINTF                 sprintf() returns char *
+                                        rather than int (e.g., SunOS
+                                        4.x)
 ACE_HAS_CLOCK_GETTIME                   Platform supports POSIX.1b
                                         clock_gettime () at least for clock-id CLOCK_REALTIME
 ACE_HAS_CLOCK_GETTIME_MONOTONIC         Platform supports POSIX.1b
@@ -829,8 +833,6 @@ ACE_HAS_VOIDPTR_SOCKOPT                 OS/compiler uses void * arg 4
                                         setsockopt() rather than const
                                         char *
 ACE_HAS_WCSNLEN                         Platform supports wcsnlen(3).
-ACE_HAS_WIN32_OVERLAPPED_IO             Platform has Windows overlapped I/O;
-                                        requires I/O completion ports.
 ACE_HAS_WIN32_TRYLOCK                   The Win32 platform support
                                         TryEnterCriticalSection()
                                         (WinNT 4.0 and beyond)
@@ -949,11 +951,10 @@ ACE_LACKS_MEMORY_H                      Platform lacks memory.h (e.g.,
                                         VxWorks and Chorus)
 ACE_LACKS_MKFIFO                        Platform lacks mkfifo() e.g.,
                                         VxWorks, Chorus, pSoS, and WinNT.
-ACE_LACKS_MKTEMP                        Platform lacks the mktemp() function.
+ACE_LACKS_MKTEMP                        ACE has no mktemp()
 ACE_LACKS_MKTEMP_PROTOTYPE              Platform/compiler lacks the
                                         mktemp() prototype (e.g.,
                                         LynxOS)
-ACE_LACKS_MKSTEMP			Platform lacks the mkstemp() function.
 ACE_LACKS_MKSTEMP_PROTOTYPE             Platform/compiler lacks the
                                         mkstemp() prototype (e.g.,
                                         LynxOS)
@@ -1113,17 +1114,6 @@ ACE_LACKS_TELLDIR                       Platform uses ACE_HAS_DIRENT
 ACE_LACKS_THREAD_STACK_SIZE             Platform lacks
                                         pthread_attr_setstacksize()
                                         (e.g., Linux pthreads)
-ACE_LACKS_THR_CONCURRENCY_FUNCS		(ONLY APPLIES TO SOLARIS)
-					Platform does not support
-					thr_getconcurrency/thr_setconcurrency
-					functions, or their implementation
-					is effectively a "no-op".  This
-					notably applies for Solaris >= 5.9.
-					Note that if you build on Solaris 8
-					and run on Solaris 9+, you can
-					encounter thread creation errors
-					unless you rebuild on the target
-					platform.
 ACE_LACKS_TIMEDWAIT_PROTOTYPES          MIT pthreads platform lacks
                                         the timedwait prototypes
 ACE_LACKS_TIMESPEC_T                    Platform does not define
@@ -1164,10 +1154,7 @@ ACE_LACKS_UNAME                         Platform lacks uname calls
 ACE_LACKS_WAIT                          The platform lacks wait
 ACE_LACKS_WILDCARD_BIND                 The bind() call will not
                                         select the port if it's 0.
-ACE_LACKS_WIN32_MOVEFILEEX              The Windows platforms doesn't have
-                                        MoveFileEx().
-ACE_LACKS_WIN32_SECURITY_DESCRIPTORS    The Windows platform doesn't have
-                                        security descriptor support.
+
 ACE_LACKS_WRITEV                        Platform doesn't define
                                         writev, so use our own
 
@@ -1211,10 +1198,6 @@ ACE_ONLY_LATEST_AND_GREATEST            A macro that indicates that
                                         replaced by ACE_LEGACY_MODE,
                                         which has the opposite meaning
                                         but serves the same purpose.
-
-ACE_SHM_OPEN_REQUIRES_ONE_SLASH         The path specified on shm_open() must
-                                        have a leading, single slash and not
-                                        have any other slashes.
 
 ACE_WSTRING_HAS_USHORT_SUPPORT          If a platform has wchar_t as a
                                         separate type, then

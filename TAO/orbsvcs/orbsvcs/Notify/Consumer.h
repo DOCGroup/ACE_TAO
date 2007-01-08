@@ -165,7 +165,6 @@ protected:
 
   /// Interface that accepts offer_changes
   CosNotifyComm::NotifyPublish_var publish_;
-  bool have_not_yet_verified_publish_;
 
   /// The Pacing Interval
   const TAO_Notify_Property_Time & pacing_;

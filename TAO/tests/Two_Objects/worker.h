@@ -25,7 +25,7 @@ private:
   // The orb
   CORBA::ORB_var orb_;
 
-  int orb_timeout_;
+  int timeout_;
 };
 
 #endif  /* TAO_TWO_OBJECTS_WORKER_H */

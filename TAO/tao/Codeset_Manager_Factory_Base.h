@@ -37,7 +37,7 @@ class TAO_Codeset_Manager;
  *
  * @brief Base class for creating instances of the codeset manager.
  *
- * The base also provides a default implementation which
+ * @description The base also provides a default implementation which
  * instantiates nothing. This default impl is replaced by the actual
  * implementation if libTAO_Codeset is loaded.
  *

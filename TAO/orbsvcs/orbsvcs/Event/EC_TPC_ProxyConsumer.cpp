@@ -9,7 +9,7 @@ ACE_RCSID(Event, EC_TPC_ProxyConsumer, "$Id$")
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-extern unsigned long TAO_EC_TPC_debug_level;
+extern unsigned long EC_TPC_debug_level;
 
 TAO_EC_TPC_ProxyPushConsumer::TAO_EC_TPC_ProxyPushConsumer (TAO_EC_Event_Channel_Base* ec)
 : TAO_EC_Default_ProxyPushConsumer (ec)
@@ -31,7 +31,7 @@ TAO_EC_TPC_ProxyPushConsumer::~TAO_EC_TPC_ProxyPushConsumer (void)
   // dispatch map in here?  I'm not sure...  But, if I do, then I need
   // to fact that "remove" code out of just the
   // disconnect_push_consumer.
-  if (TAO_EC_TPC_debug_level > 0)
+  if (EC_TPC_debug_level > 0)
     ACE_DEBUG ((LM_DEBUG, "RTEC (%P|%t): inside ~TAO_EC_TPC_ProxyPushConsumer (%x)\n", this));
 }
 

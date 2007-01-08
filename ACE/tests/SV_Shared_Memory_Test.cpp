@@ -140,15 +140,6 @@ run_main (int, ACE_TCHAR *[])
 
 #if defined (ACE_HAS_SYSV_IPC) && !defined (ACE_LACKS_FORK) && \
     !defined(ACE_LACKS_SYSV_SHMEM)
-
-  // Check whether allocator was initialized.
-  if (myallocator ().bad ()) 
-    {
-      ACE_ERROR_RETURN ((LM_ERROR,
-			 ACE_TEXT ("Unable to initialize allocator\n")),
-			 -1);
-    }
-
   char *shm = reinterpret_cast<char *> (myallocator ().malloc (SHMSZ));
 
   // Create the mutex and synch before spawning the child process, to

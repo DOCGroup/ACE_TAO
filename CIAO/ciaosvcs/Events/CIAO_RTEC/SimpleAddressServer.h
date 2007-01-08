@@ -1,19 +1,11 @@
-// -*- C++ -*-
-
-//=============================================================================
-/**
- *  @file SimpleAddressServer.h
- *
- *  $Id$
- *
- *  @author Gan Deng <dengg@dre.vanderbilt.edu>
- */
-//=============================================================================
+// SimpleAddressServer.h
 
 #ifndef SIMPLEADDRESSSERVER_H
 #define SIMPLEADDRESSSERVER_H
 
 #include <orbsvcs/RtecUDPAdminS.h>
+
+class ACE_INET_Addr;
 
 class SimpleAddressServer : public POA_RtecUDPAdmin::AddrServer {
 public:

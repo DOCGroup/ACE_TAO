@@ -1891,7 +1891,7 @@ export_proxy (CosTrading::Lookup_ptr,
 {
   ACE_THROW_RETURN (CORBA::UNKNOWN (), 0);
 
-  ACE_NOTREACHED (return 0;)
+  return 0;
 }
 
 template <class TRADER_LOCK_TYPE, class MAP_LOCK_TYPE>
@@ -1919,7 +1919,7 @@ describe_proxy (const char *
 {
   ACE_THROW_RETURN (CORBA::UNKNOWN (), 0);
 
-  ACE_NOTREACHED (return 0;)
+  return 0;
 }
 
 template <class TRADER_LOCK_TYPE, class MAP_LOCK_TYPE>

@@ -6,14 +6,13 @@
 ## this file will be lost the next time it is generated.
 ##
 ## MPC Command:
-## ./bin/mwc.pl -type automake -noreldefs ACE.mwc
+## /acebuilds/ACE_wrappers-repository/bin/mwc.pl -include /acebuilds/MPC/config -include /acebuilds/MPC/templates -feature_file /acebuilds/ACE_wrappers-repository/local.features -noreldefs -type automake -exclude build,Kokyu
 
 ACE_BUILDDIR = $(top_builddir)
 ACE_ROOT = $(top_srcdir)
 
 
 ## Makefile.Sock_Sap_CPP_Inclient.am
-
 noinst_PROGRAMS = CPP-inclient
 
 CPP_inclient_CPPFLAGS = \
@@ -30,7 +29,6 @@ CPP_inclient_LDADD = \
 ## Makefile.Sock_Sap_CPP_Inserver.am
 
 if !BUILD_ACE_FOR_TAO
-
 noinst_PROGRAMS += CPP-inserver
 
 CPP_inserver_CPPFLAGS = \
@@ -50,7 +48,6 @@ endif !BUILD_ACE_FOR_TAO
 ## Makefile.Sock_Sap_CPP_Memclient.am
 
 if !BUILD_ACE_FOR_TAO
-
 noinst_PROGRAMS += CPP-memclient
 
 CPP_memclient_CPPFLAGS = \
@@ -70,7 +67,6 @@ endif !BUILD_ACE_FOR_TAO
 ## Makefile.Sock_Sap_CPP_Memserver.am
 
 if !BUILD_ACE_FOR_TAO
-
 noinst_PROGRAMS += CPP-memserver
 
 CPP_memserver_CPPFLAGS = \
@@ -90,7 +86,6 @@ endif !BUILD_ACE_FOR_TAO
 ## Makefile.Sock_Sap_CPP_Unclient.am
 
 if !BUILD_ACE_FOR_TAO
-
 noinst_PROGRAMS += CPP-unclient
 
 CPP_unclient_CPPFLAGS = \
@@ -110,7 +105,6 @@ endif !BUILD_ACE_FOR_TAO
 ## Makefile.Sock_Sap_CPP_Unserver.am
 
 if !BUILD_ACE_FOR_TAO
-
 noinst_PROGRAMS += CPP-unserver
 
 CPP_unserver_CPPFLAGS = \
@@ -128,7 +122,6 @@ CPP_unserver_LDADD = \
 endif !BUILD_ACE_FOR_TAO
 
 ## Makefile.Sock_Sap_C_Inclient.am
-
 noinst_PROGRAMS += C-inclient
 
 C_inclient_CPPFLAGS = \
@@ -144,7 +137,6 @@ C_inclient_LDADD = \
   $(ACE_BUILDDIR)/ace/libACE.la
 
 ## Makefile.Sock_Sap_C_Inserver.am
-
 noinst_PROGRAMS += C-inserver
 
 C_inserver_CPPFLAGS = \
@@ -162,7 +154,6 @@ C_inserver_LDADD = \
 ## Makefile.Sock_Sap_FD_Unclient.am
 
 if !BUILD_ACE_FOR_TAO
-
 noinst_PROGRAMS += FD-unclient
 
 FD_unclient_CPPFLAGS = \

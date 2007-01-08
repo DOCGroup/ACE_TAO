@@ -69,7 +69,6 @@ class TAO_RTEvent_Serv_Export TAO_EC_Factory : public ACE_Service_Object
 {
 public:
   /// destructor...
-  TAO_EC_Factory (void);
   virtual ~TAO_EC_Factory (void);
 
   /// Create and destroy the dispatching module.
@@ -162,8 +161,6 @@ public:
   virtual void
       destroy_supplier_control (TAO_EC_SupplierControl*) = 0;
 };
-
-TAO_RTEvent_Serv_Export extern unsigned short TAO_EC_debug_level;
 
 TAO_END_VERSIONED_NAMESPACE_DECL
 

@@ -82,9 +82,6 @@ TAO::SSLIOP::Connection_Handler::open_handler (void *v)
 int
 TAO::SSLIOP::Connection_Handler::open (void *)
 {
-  if (this->shared_open() == -1)
-    return -1;
-
   TAO_IIOP_Protocol_Properties protocol_properties;
 
   // Initialize values from ORB params.

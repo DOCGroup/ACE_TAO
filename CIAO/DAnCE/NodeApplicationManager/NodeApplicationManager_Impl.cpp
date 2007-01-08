@@ -8,7 +8,6 @@
 #include "ace/Sched_Params.h"
 #include "ace/Vector_T.h"
 #include "ciao/Container_Base.h"
-#include "ciao/CIAO_ServerResourcesC.h"
 #include "NodeApplication/NodeApplication_Impl.h"
 #include "ace/Reactor.h"
 
@@ -60,7 +59,7 @@ create_connections (ACE_ENV_SINGLE_ARG_DECL)
 
   ACE_NEW_THROW_EX (retv,
                     Deployment::Connections (),
-                    CORBA::NO_MEMORY ());
+                    CORBA::INTERNAL ());
   ACE_CHECK_RETURN (0);
 
   CORBA::ULong len = retv->length ();
@@ -78,15 +77,15 @@ create_connections (ACE_ENV_SINGLE_ARG_DECL)
       // Get all the facets first
       Components::FacetDescriptions_var facets;
 
-      if (this->is_shared_component (comp_name))
+      if (is_shared_component (comp_name))
         {
-          ACE_DEBUG ((LM_DEBUG, "NAMImpl::create_connections: Component %s is shared\n",
+          ACE_DEBUG ((LM_DEBUG, "NAMImpl::create_connections: Componsnt %s is shared\n",
                       comp_name.c_str ()));
           facets = this->node_manager_->get_all_facets (comp_name);
         }
       else
         {
-          ACE_DEBUG ((LM_DEBUG, "NAMImpl::create_connections: Component %s is not shared, getting and setting "
+          ACE_DEBUG ((LM_DEBUG, "NAMImpl::create_connections: Component %s is not shared, getting and setting"
                       "all facets\n",
                       comp_name.c_str ()));
           facets = ((*iter).int_id_)->get_all_facets (ACE_ENV_SINGLE_ARG_PARAMETER);
@@ -106,15 +105,15 @@ create_connections (ACE_ENV_SINGLE_ARG_DECL)
       // Get all the event consumers
       Components::ConsumerDescriptions_var consumers;
 
-      if (this->is_shared_component (comp_name))
+      if (is_shared_component (comp_name))
         {
-          ACE_DEBUG ((LM_DEBUG, "NAMImpl::create_connections: Component %s is shared\n",
+          ACE_DEBUG ((LM_DEBUG, "NAMImpl::create_connections: Componsnt %s is shared\n",
                       comp_name.c_str ()));
           consumers = this->node_manager_->get_all_consumers (comp_name);
         }
       else
         {
-          ACE_DEBUG ((LM_DEBUG, "NAMImpl::create_connections: Component %s is not shared, getting and setting "
+          ACE_DEBUG ((LM_DEBUG, "NAMImpl::create_connections: Component %s is not shared, getting and setting"
                       "all facets\n",
                       comp_name.c_str ()));
           consumers =
@@ -132,10 +131,10 @@ create_connections (ACE_ENV_SINGLE_ARG_DECL)
                       comp_name.c_str ()));
         }
 
-      CORBA::ULong const facet_len = facets->length ();
-      CORBA::ULong const consumer_len = consumers->length ();
+      CORBA::ULong facet_len = facets->length ();
+      CORBA::ULong consumer_len = consumers->length ();
 
-      CORBA::ULong const curr_len = retv->length ();
+      CORBA::ULong curr_len = retv->length ();
       retv->length (curr_len + facet_len + consumer_len);
 
       CORBA::ULong i = 0;
@@ -941,7 +940,7 @@ create_node_application (const ACE_CString & options
 
   ACE_NEW_THROW_EX (prop,
                     Deployment::Properties,
-                    CORBA::NO_MEMORY ());
+                    CORBA::INTERNAL ());
   ACE_CHECK_RETURN (Deployment::NodeApplication::_nil());
 
   // @@ Create a new callback servant.
@@ -1220,8 +1219,3 @@ create_node_application (const ACE_CString & options
 
   return nodeapp_obj._retn ();
 }
-
-CIAO::NodeApplicationManager_Impl_Base::~NodeApplicationManager_Impl_Base (void)
-{
-}
-

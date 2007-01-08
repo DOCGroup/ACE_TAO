@@ -69,6 +69,7 @@ BE_GlobalData::BE_GlobalData (void)
     server_skeleton_ending_ (ACE::strnew ("S.cpp")),
     server_template_skeleton_ending_ (ACE::strnew ("S_T.cpp")),
     server_inline_ending_ (ACE::strnew ("S.inl")),
+    server_template_inline_ending_ (ACE::strnew ("S_T.inl")),
     anyop_hdr_ending_ (ACE::strnew ("A.h")),
     anyop_src_ending_ (ACE::strnew ("A.cpp")),
     output_dir_ (0),
@@ -83,6 +84,11 @@ BE_GlobalData::BE_GlobalData (void)
     gen_assign_op_ (false),
     gen_thru_poa_collocation_ (true), // Default is thru_poa.
     gen_direct_collocation_ (false),
+#ifdef ACE_HAS_EXCEPTIONS
+    exception_support_ (true),
+#else
+    exception_support_ (false),
+#endif /* ACE_HAS_EXCEPTIONS */
     use_raw_throw_ (false),
     opt_tc_ (false),
     ami_call_back_ (false),
@@ -107,8 +113,7 @@ BE_GlobalData::BE_GlobalData (void)
     gen_client_stub_ (true),
     gen_server_skeleton_ (true),
     gen_local_iface_anyops_ (true),
-    use_clonable_in_args_ (false),
-    gen_template_export_ (false)
+    use_clonable_in_args_ (false)
 {
 }
 
@@ -354,6 +359,17 @@ BE_GlobalData::be_get_server_inline (UTL_String *idl_file_name,
 }
 
 const char *
+BE_GlobalData::be_get_server_template_inline (UTL_String *idl_file_name,
+                                              bool base_name_only)
+{
+  return be_change_idl_file_extension (idl_file_name,
+                                       be_global->server_template_inline_ending (),
+                                       base_name_only,
+                                       false,
+                                       true);
+}
+
+const char *
 BE_GlobalData::be_get_anyop_header (UTL_String *idl_file_name,
                                     bool base_name_only)
 {
@@ -445,6 +461,13 @@ BE_GlobalData::be_get_server_inline_fname (bool base_name_only)
 {
   return be_get_server_inline (idl_global->stripped_filename (),
                                base_name_only);
+}
+
+const char *
+BE_GlobalData::be_get_server_template_inline_fname (bool base_name_only)
+{
+  return be_get_server_template_inline (idl_global->stripped_filename (),
+                                        base_name_only);
 }
 
 const char *
@@ -828,6 +851,19 @@ BE_GlobalData::server_inline_ending (void) const
 }
 
 void
+BE_GlobalData::server_template_inline_ending (const char* s)
+{
+  delete [] this->server_template_inline_ending_;
+  this->server_template_inline_ending_ = ACE::strnew (s);
+}
+
+const char*
+BE_GlobalData::server_template_inline_ending (void) const
+{
+  return this->server_template_inline_ending_;
+}
+
+void
 BE_GlobalData::anyop_header_ending (const char* s)
 {
   delete [] this->anyop_hdr_ending_;
@@ -844,18 +880,6 @@ bool
 BE_GlobalData::use_clonable_in_args (void) const
 {
   return this->use_clonable_in_args_;
-}
-
-bool
-BE_GlobalData::gen_template_export (void) const
-{
-  return this->gen_template_export_;
-}
-
-void
-BE_GlobalData::gen_template_export (bool val)
-{
-  this->gen_template_export_ = val;
 }
 
 const char*
@@ -1022,6 +1046,18 @@ bool
 BE_GlobalData::gen_direct_collocation (void) const
 {
   return this->gen_direct_collocation_;
+}
+
+void
+BE_GlobalData::exception_support (bool val)
+{
+  this->exception_support_ = val;
+}
+
+bool
+BE_GlobalData::exception_support (void) const
+{
+  return this->exception_support_;
 }
 
 void
@@ -1213,6 +1249,9 @@ BE_GlobalData::destroy (void)
   delete [] this->server_inline_ending_;
   this->server_inline_ending_ = 0;
 
+  delete [] this->server_template_inline_ending_;
+  this->server_template_inline_ending_ = 0;
+
   delete [] this->anyop_hdr_ending_;
   this->anyop_hdr_ending_ = 0;
 
@@ -1290,8 +1329,6 @@ BE_GlobalData::ccmobject (void)
 
       AST_Decl *d =
         idl_global->scopes ().top_non_null ()->lookup_by_name (&sn,
-                                                               true,
-                                                               true,
                                                                true);
 
       sn.destroy ();
@@ -1627,7 +1664,7 @@ BE_GlobalData::parse_args (long &i, char **av)
             be_global->use_clonable_in_args(true);
           }
         else
-          {
+          { 
             ACE_ERROR ((
                 LM_ERROR,
                 ACE_TEXT ("IDL: I don't understand")
@@ -1674,6 +1711,8 @@ BE_GlobalData::parse_args (long &i, char **av)
         //      Default is "S_T.cpp".
         // <-si Server's inline file name ending>
         //      Default is "S.inl".
+        // <-st Server's template inline file name ending>
+        //      Default is "S_T.inl".
         // <-sI Server's implementation skeleton file name ending>
         //      Default is "I.cpp".
 
@@ -1693,6 +1732,12 @@ BE_GlobalData::parse_args (long &i, char **av)
           {
             idl_global->append_idl_flag (av[i + 1]);
             be_global->server_inline_ending (av[i + 1]);
+            ++i;
+          }
+        else if (av[i][2] == 't')
+          {
+            idl_global->append_idl_flag (av[i + 1]);
+            be_global->server_template_inline_ending (av[i + 1]);
             ++i;
           }
         else if (av[i][2] == 'I')
@@ -1956,6 +2001,10 @@ BE_GlobalData::parse_args (long &i, char **av)
             idl_global->append_idl_flag (av[i + 1]);
             int option = ACE_OS::atoi (av[i + 1]);
 
+            // Exception support.
+            be_global->exception_support (option == 0
+                                          || option == 2);
+
             // Use of raw 'throw'.
             be_global->use_raw_throw (option == 2);
             ++i;
@@ -1966,11 +2015,6 @@ BE_GlobalData::parse_args (long &i, char **av)
               {
                 // Smart proxies.
                 be_global->gen_smart_proxies (true);
-              }
-            else if (av[i][3] == 'e')
-              {
-                // Explicit sequence base class template export.
-                be_global->gen_template_export (true);
               }
             else
               {
@@ -2183,19 +2227,8 @@ BE_GlobalData::parse_args (long &i, char **av)
           }
         else if (av[i][2] == 'S')
           {
-            if ('\0' == av[i][3])
-              {
-                // Disable skeleton file generation.
-                be_global->gen_skel_files (false);
-              }
-            else
-              {
-                ACE_ERROR ((
-                    LM_ERROR,
-                    ACE_TEXT ("IDL: I don't understand the '%s' option\n"),
-                    av[i]
-                  ));
-              }
+            // Disable skeleton file generation.
+            be_global->gen_skel_files (false);
           }
         else if (av[i][2] == 's')
           {
@@ -2554,6 +2587,12 @@ BE_GlobalData::usage (void) const
     ));
   ACE_DEBUG ((
       LM_DEBUG,
+      ACE_TEXT (" -Ge [0|1]\t\tDisable/Enable generation of")
+      ACE_TEXT (" CORBA::Environment arguments (disabled by default")
+      ACE_TEXT (" if ACE_HAS_EXCEPTIONS)\n")
+    ));
+  ACE_DEBUG ((
+      LM_DEBUG,
       ACE_TEXT (" -Ge 2\t\t\tUse raw throw instead of ACE_THROW macro")
       ACE_TEXT (" (disabled by default)\n")
     ));
@@ -2621,18 +2660,14 @@ BE_GlobalData::usage (void) const
     ));
   ACE_DEBUG ((
       LM_DEBUG,
-      ACE_TEXT (" -GA\t\t\tgenerate Any operator and type codes in *A.{h,cpp}")
-      ACE_TEXT (" (generated in *C.{h,cpp} by default)\n")
+      ACE_TEXT (" -GA\t\t\tgenerate Any operator and type code bodies in *A.cpp")
+      ACE_TEXT (" (generated in *C.cpp by default)\n")
     ));
   ACE_DEBUG ((
       LM_DEBUG,
       ACE_TEXT (" -Guc\t\t\tgenerate uninlined constant if declared ")
-      ACE_TEXT ("in a module (inlined by default)\n")
-    ));
-  ACE_DEBUG ((
-      LM_DEBUG,
-      ACE_TEXT (" -Gse\t\t\tgenerate explicit export of sequence's ")
-      ACE_TEXT ("template base class (not generated by default)\n")
+      ACE_TEXT ("in a module")
+      ACE_TEXT (" (inlined by default)\n")
     ));
   ACE_DEBUG ((
       LM_DEBUG,
@@ -2703,6 +2738,11 @@ BE_GlobalData::usage (void) const
       LM_DEBUG,
       ACE_TEXT (" -ss\t\t\tServer's skeleton file name ending.")
       ACE_TEXT (" Default is S.cpp\n")
+    ));
+  ACE_DEBUG ((
+      LM_DEBUG,
+      ACE_TEXT (" -st\t\t\tServer's template inline file name ending.")
+      ACE_TEXT (" Default S_T.inl\n")
     ));
   ACE_DEBUG ((
       LM_DEBUG,

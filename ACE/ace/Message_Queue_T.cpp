@@ -2791,7 +2791,7 @@ ACE_Message_Queue_Factory<ACE_SYNCH_USE>::create_Vx_message_queue (size_t max_me
 }
   // factory method for a wrapped VxWorks message queue
 
-#if defined (ACE_HAS_WIN32_OVERLAPPED_IO)
+#if defined (ACE_WIN32) && (ACE_HAS_WINNT4 != 0)
 
 template <ACE_SYNCH_DECL>
 ACE_Message_Queue_NT *
@@ -2805,7 +2805,7 @@ ACE_Message_Queue_Factory<ACE_SYNCH_USE>::create_NT_message_queue (size_t max_th
   return tmp;
 }
 
-#endif /* ACE_HAS_WIN32_OVERLAPPED_IO */
+#endif /* ACE_WIN32 && ACE_HAS_WINNT4 != 0 */
 #endif /* defined (ACE_VXWORKS) */
 
 ACE_END_VERSIONED_NAMESPACE_DECL

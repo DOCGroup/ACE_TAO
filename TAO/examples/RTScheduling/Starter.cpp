@@ -1,16 +1,16 @@
 //$Id$
 
 #include "Starter.h"
-
 #include "ace/OS_NS_sys_time.h"
+
 
 Starter::Starter (CORBA::ORB_ptr orb)
 {
   // Initialize the naming service
   if (this->naming_client_.init (orb) != 0)
     ACE_ERROR ((LM_ERROR,
-    " (%P|%t) Unable to initialize "
-    "the TAO_Naming_Client. \n"));
+		" (%P|%t) Unable to initialize "
+		"the TAO_Naming_Client. \n"));
 }
 
 void
@@ -46,7 +46,7 @@ Starter::resolve_synch_objs (ACE_ENV_SINGLE_ARG_DECL)
 
   CORBA::Object_var object =
     this->naming_client_->resolve (name
-           ACE_ENV_ARG_PARAMETER);
+				   ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   this->synch_context_ =
@@ -59,14 +59,14 @@ Starter::resolve_synch_objs (ACE_ENV_SINGLE_ARG_DECL)
 
   // Get the list of synchs registered for this sender.
   this->synch_context_->list (chunk,
-            binding_list,
-            iterator
-            ACE_ENV_ARG_PARAMETER);
+			      binding_list,
+			      iterator
+			      ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   // Add the receivers found in the bindinglist to the <receivers>.
   this->add_to_synchs (binding_list
-           ACE_ENV_ARG_PARAMETER);
+		       ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   if (!CORBA::is_nil (iterator.in ()))
@@ -82,7 +82,7 @@ Starter::resolve_synch_objs (ACE_ENV_SINGLE_ARG_DECL)
           ACE_CHECK;
 
           this->add_to_synchs (binding_list
-             ACE_ENV_ARG_PARAMETER);
+			       ACE_ENV_ARG_PARAMETER);
           ACE_CHECK;
         }
     }
@@ -92,7 +92,7 @@ Starter::resolve_synch_objs (ACE_ENV_SINGLE_ARG_DECL)
 
 void
 Starter::add_to_synchs (CosNaming::BindingList &binding_list
-      ACE_ENV_ARG_DECL)
+			ACE_ENV_ARG_DECL)
 {
   ACE_Time_Value base_time = ACE_OS::gettimeofday ();
   for (CORBA::ULong i = 0;
@@ -104,8 +104,8 @@ Starter::add_to_synchs (CosNaming::BindingList &binding_list
         binding_list [i].binding_name [0].id.in ();
 
       ACE_DEBUG ((LM_DEBUG,
-      "Synch Name %s\n",
-      synch_name.c_str ()));
+		  "Synch Name %s\n",
+		  synch_name.c_str ()));
 
       CosNaming::Name name (1);
       name.length (1);
@@ -116,7 +116,7 @@ Starter::add_to_synchs (CosNaming::BindingList &binding_list
       // context.
       CORBA::Object_var obj =
         this->synch_context_->resolve (name
-               ACE_ENV_ARG_PARAMETER);
+				       ACE_ENV_ARG_PARAMETER);
 
       Synch_var synch_obj =
         Synch::_narrow (obj.in ());
@@ -126,7 +126,7 @@ Starter::add_to_synchs (CosNaming::BindingList &binding_list
 
 //        // Add this receiver to the receiver map.
 //        this->synchs_.bind (synch_name,
-//          synch_obj);
+//  			  synch_obj);
     }
 }
 
@@ -137,9 +137,9 @@ main (int argc, char** argv)
   ACE_TRY_NEW_ENV
     {
       CORBA::ORB_var orb = CORBA::ORB_init (argc,
-              argv,
-              ""
-              ACE_ENV_ARG_PARAMETER);
+					    argv,
+					    ""
+					    ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       Starter starter (orb.in ());

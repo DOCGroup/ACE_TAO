@@ -13,14 +13,14 @@ ACE_ROOT = $(top_srcdir)/..
 TAO_BUILDDIR = $(top_builddir)
 TAO_IDL = ACE_ROOT=$(ACE_ROOT) TAO_ROOT=$(TAO_ROOT) $(TAO_BUILDDIR)/TAO_IDL/tao_idl
 TAO_IDL_DEP = $(TAO_BUILDDIR)/TAO_IDL/tao_idl
-TAO_IDLFLAGS = -Wb,pre_include=ace/pre.h -Wb,post_include=ace/post.h -I$(TAO_ROOT) -I$(srcdir) -g $(ACE_BUILDDIR)/apps/gperf/src/gperf
+TAO_IDLFLAGS = -Ge 1 -Wb,pre_include=ace/pre.h -Wb,post_include=ace/post.h -I$(TAO_ROOT) -I$(srcdir) -g $(ACE_BUILDDIR)/apps/gperf/src/gperf
 TAO_ROOT = $(top_srcdir)
 
 noinst_PROGRAMS =
 
 ## Makefile.Single_Threaded_Sequence_Idl.am
 
-if BUILD_EXCEPTIONS
+if !BUILD_ACE_FOR_TAO
 
 BUILT_SOURCES = \
   TestC.cpp \
@@ -45,14 +45,14 @@ Test-stamp: $(srcdir)/Test.idl $(TAO_IDL_DEP)
 	$(TAO_IDL) $(TAO_IDLFLAGS) $(srcdir)/Test.idl
 	@touch $@
 
+
 noinst_HEADERS = \
   Test.idl
 
-endif BUILD_EXCEPTIONS
+endif !BUILD_ACE_FOR_TAO
 
 ## Makefile.Single_Threaded_Sequence_Client.am
 
-if BUILD_EXCEPTIONS
 if !BUILD_ACE_FOR_TAO
 
 noinst_PROGRAMS += client
@@ -75,11 +75,10 @@ client_LDADD = \
   $(ACE_BUILDDIR)/ace/libACE.la
 
 endif !BUILD_ACE_FOR_TAO
-endif BUILD_EXCEPTIONS
 
 ## Makefile.Single_Threaded_Sequence_Server.am
 
-if BUILD_EXCEPTIONS
+if !BUILD_ACE_FOR_TAO
 
 noinst_PROGRAMS += server
 
@@ -103,7 +102,7 @@ server_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
-endif BUILD_EXCEPTIONS
+endif !BUILD_ACE_FOR_TAO
 
 ## Clean up template repositories, etc.
 clean-local:

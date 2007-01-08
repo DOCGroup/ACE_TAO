@@ -1,34 +1,18 @@
 // -*- MPC -*-
 // $Id$
 
-project(*idl): taoidldefaults {
-  IDL_Files {
-    test.idl
-  }
-  custom_only = 1
-}
-
-project(*Server): taoserver, avoids_minimum_corba, bidir_giop, avoids_corba_e_micro {
-  after += *idl
+project(*Server): taoserver, minimum_corba, bidir_giop {
   Source_Files {
     test_i.cpp
     server.cpp
-    testC.cpp
-    testS.cpp
-  }
-  IDL_Files {
   }
 }
 
-project(*Client): taoexe, portableserver, avoids_minimum_corba, bidir_giop, avoids_corba_e_micro {
-  after += *idl
+project(*Client): taoexe, portableserver, minimum_corba, bidir_giop {
+  after += *Server
   Source_Files {
     test_i.cpp
     client.cpp
-    testC.cpp
-    testS.cpp
-  }
-  IDL_Files {
   }
 }
 

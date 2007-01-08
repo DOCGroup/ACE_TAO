@@ -55,11 +55,12 @@ int be_visitor_sequence_ch::visit_sequence (be_sequence *node)
       return 0;
     }
 
+  be_type *bt = 0;
   TAO_OutStream *os = this->ctx_->stream ();
 
   // Retrieve the base type since we may need to do some code
   // generation for the base type.
-  be_type *bt = be_type::narrow_from_decl (node->base_type ());
+  bt = be_type::narrow_from_decl (node->base_type ());
 
   if (bt == 0)
     {
@@ -73,7 +74,7 @@ int be_visitor_sequence_ch::visit_sequence (be_sequence *node)
   bt->seen_in_sequence (true);
   AST_Decl::NodeType nt = bt->node_type ();
 
-  // If our base type is an anonymous sequence, we must create a name
+  // If our base type is an anonymouse sequence, we must create a  name
   // and generate a class declaration for it as well.
   if (nt == AST_Decl::NT_sequence)
     {

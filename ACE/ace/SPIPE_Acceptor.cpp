@@ -14,9 +14,9 @@ ACE_RCSID(ace, SPIPE_Acceptor, "$Id$")
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_SPIPE_Acceptor::ACE_SPIPE_Acceptor (void)
-#if defined (ACE_HAS_WIN32_NAMED_PIPES)
+#if (defined (ACE_WIN32) && defined (ACE_HAS_WINNT4) && (ACE_HAS_WINNT4 != 0))
   : sa_ (0), pipe_handle_ (ACE_INVALID_HANDLE)
-#endif /* ACE_HAS_WIN32_NAMED_PIPES */
+#endif /* ACE_WIN32 */
 {
   ACE_TRACE ("ACE_SPIPE_Acceptor::ACE_SPIPE_Acceptor");
 }
@@ -61,13 +61,13 @@ ACE_SPIPE_Acceptor::open (const ACE_SPIPE_Addr &local_sap,
 
   this->local_addr_ = local_sap;
   this->set_handle (ACE_INVALID_HANDLE);
-#if defined (ACE_HAS_WIN32_NAMED_PIPES)
+#if (defined (ACE_WIN32) && defined (ACE_HAS_WINNT4) && (ACE_HAS_WINNT4 != 0))
   this->sa_ = sa;
   this->pipe_mode_ = pipe_mode;
 #else
   ACE_UNUSED_ARG (sa);
   ACE_UNUSED_ARG (pipe_mode);
-#endif /* ACE_HAS_WIN32_NAMED_PIPES */
+#endif /* ACE_WIN32 */
 
   return this->create_new_instance (perms);
 }
@@ -100,7 +100,7 @@ ACE_SPIPE_Acceptor::create_new_instance (int perms)
   this->set_handle (spipe[1]);
   return 0;
 
-#elif defined (ACE_HAS_WIN32_NAMED_PIPES)
+#elif (defined (ACE_WIN32) && defined (ACE_HAS_WINNT4) && (ACE_HAS_WINNT4 != 0))
   // Create a new instance of the Named Pipe (WIN32).  A new instance
   // of the named pipe must be created for every client process.  If
   // an instance of the named pipe that is already connected to a
@@ -183,7 +183,7 @@ ACE_SPIPE_Acceptor::close (void)
 {
   ACE_TRACE ("ACE_SPIPE_Acceptor::close");
 
-#if defined (ACE_HAS_WIN32_NAMED_PIPES)
+#if (defined (ACE_WIN32) && defined (ACE_HAS_WINNT4) && (ACE_HAS_WINNT4 != 0))
 
   // Check to see if we have a valid pipe; if not, nothing to do.
   if (this->pipe_handle_ == ACE_INVALID_HANDLE)
@@ -194,7 +194,7 @@ ACE_SPIPE_Acceptor::close (void)
   // hanging overlapped operation afterwards.
   this->set_handle (this->pipe_handle_);
 
-#endif /* ACE_HAS_WIN32_NAMED_PIPES */
+#endif /* ACE_WIN32 */
 
   // This behavior is shared by UNIX and Win32...
   int result = this->ACE_SPIPE::close ();
@@ -202,7 +202,7 @@ ACE_SPIPE_Acceptor::close (void)
 
 #if defined (ACE_HAS_STREAM_PIPES)
   ACE_OS::fdetach (ACE_TEXT_ALWAYS_CHAR (this->local_addr_.get_path_name ()));
-#elif defined (ACE_HAS_WIN32_NAMED_PIPES)
+#elif (defined (ACE_WIN32) && defined (ACE_HAS_WINNT4) && (ACE_HAS_WINNT4 != 0))
 
   // open () started the Connect in asynchronous mode, and accept() restarts
   // the ConnectNamedPipe in overlapped mode.  To avoid leaving a hanging
@@ -283,7 +283,7 @@ ACE_SPIPE_Acceptor::accept (ACE_SPIPE_Stream &new_io,
     *remote_addr = new_io.remote_addr_;
 
   return 0;
-#elif defined (ACE_HAS_WIN32_NAMED_PIPES)
+#elif (defined (ACE_WIN32) && defined (ACE_HAS_WINNT4) && (ACE_HAS_WINNT4 != 0))
   ACE_UNUSED_ARG (restart);
   ACE_UNUSED_ARG (remote_addr);
 

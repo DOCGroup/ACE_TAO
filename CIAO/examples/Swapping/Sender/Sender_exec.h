@@ -10,12 +10,12 @@
 #ifndef SENDER_EXEC_H
 #define SENDER_EXEC_H
 
-#include "ciao/CIAO_SwapExecC.h"
+#include "SwapExecC.h"
 #include "SenderEC.h"
 #include "Sender_exec_export.h"
 #include "tao/LocalObject.h"
 #include "ace/DLL.h"
-#include "ciao/CCM_EventsC.h"
+#include "ciao/CCM_EventC.h"
 
 namespace CIDL_Sender_Impl
 {

@@ -13,14 +13,14 @@ ACE_ROOT = $(top_srcdir)/..
 TAO_BUILDDIR = $(top_builddir)
 TAO_IDL = ACE_ROOT=$(ACE_ROOT) TAO_ROOT=$(TAO_ROOT) $(TAO_BUILDDIR)/TAO_IDL/tao_idl
 TAO_IDL_DEP = $(TAO_BUILDDIR)/TAO_IDL/tao_idl
-TAO_IDLFLAGS = -Wb,pre_include=ace/pre.h -Wb,post_include=ace/post.h -I$(TAO_ROOT) -I$(srcdir) -g $(ACE_BUILDDIR)/apps/gperf/src/gperf
+TAO_IDLFLAGS = -Ge 1 -Wb,pre_include=ace/pre.h -Wb,post_include=ace/post.h -I$(TAO_ROOT) -I$(srcdir) -g $(ACE_BUILDDIR)/apps/gperf/src/gperf
 TAO_ROOT = $(top_srcdir)
 
 
 ## Makefile.Bug_2377_Regression_Test.am
 
 if BUILD_CORBA_MESSAGING
-if BUILD_EXCEPTIONS
+if !BUILD_MINIMUM_CORBA
 
 BUILT_SOURCES = \
   HelloC.cpp \
@@ -28,7 +28,10 @@ BUILT_SOURCES = \
   HelloC.inl \
   HelloS.cpp \
   HelloS.h \
-  HelloS.inl
+  HelloS.inl \
+  HelloS_T.cpp \
+  HelloS_T.h \
+  HelloS_T.inl
 
 CLEANFILES = \
   Hello-stamp \
@@ -37,12 +40,15 @@ CLEANFILES = \
   HelloC.inl \
   HelloS.cpp \
   HelloS.h \
-  HelloS.inl
+  HelloS.inl \
+  HelloS_T.cpp \
+  HelloS_T.h \
+  HelloS_T.inl
 
-HelloC.cpp HelloC.h HelloC.inl HelloS.cpp HelloS.h HelloS.inl: Hello-stamp
+HelloC.cpp HelloC.h HelloC.inl HelloS.cpp HelloS.h HelloS.inl HelloS_T.cpp HelloS_T.h HelloS_T.inl: Hello-stamp
 
 Hello-stamp: $(srcdir)/Hello.idl $(TAO_IDL_DEP)
-	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs $(srcdir)/Hello.idl
+	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs -GT $(srcdir)/Hello.idl
 	@touch $@
 
 noinst_PROGRAMS = uipmc_test
@@ -62,7 +68,9 @@ uipmc_test_SOURCES = \
   HelloC.h \
   HelloC.inl \
   HelloS.h \
-  HelloS.inl
+  HelloS.inl \
+  HelloS_T.h \
+  HelloS_T.inl
 
 uipmc_test_LDADD = \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_PortableGroup.la \
@@ -77,7 +85,7 @@ uipmc_test_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
-endif BUILD_EXCEPTIONS
+endif !BUILD_MINIMUM_CORBA
 endif BUILD_CORBA_MESSAGING
 
 ## Clean up template repositories, etc.

@@ -30,7 +30,7 @@
 #include "ace/OS_NS_sys_wait.h"
 #include "ace/Process_Manager.h"
 #include "ciao/NodeApp_CB_Impl.h"
-#include "ciao/Deployment_NodeApplicationManagerS.h"
+#include "ciao/NodeApplicationManagerS.h"
 #include "ciao/CIAO_common.h"
 #include "CIAO_NAM_Export.h"
 #include "ImplementationInfo.h"
@@ -362,6 +362,7 @@ namespace CIAO
     /// The signal handler
     NAM_Handler child_handler_;
   };
+
 
 
   struct Static_Config_EntryPoints_Maps;

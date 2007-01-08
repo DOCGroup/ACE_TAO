@@ -55,7 +55,7 @@ public:
   /// Constructor
   CIAO_RepositoryManagerDaemon_i (CORBA::ORB_ptr the_orb,
                   const char* server = "localhost:5432",
-                  const char* install_dir = "RepositoryManager");
+                  char* install_dir = "RepositoryManager");
 
   /// Destructor
   virtual ~CIAO_RepositoryManagerDaemon_i (void);
@@ -163,6 +163,7 @@ protected:
   /// stores the file in the passed preallocated ACE_Message_Block
   /// @retval 1 success
   /// @retval 0 error
+
   int HTTP_Get (const char* URL, ACE_Message_Block &mb);
 
   /// Function to extract all necessary files for parsing the
@@ -171,42 +172,47 @@ protected:
   /// @retval 0 error
   ///
   /// @note ACE_CString& pcd_name is an out parameter
+
   int extract_descriptor_files (char* package,
     ACE_CString& pcd_name);
 
 
-  /// Function to remove the files extracted for parsing the PackageConfiguration
-  /// descriptor and populating the idl struct. It reads the names of the files
-  /// from the package. They correspond to the names on disk.
-  /// @retval 1 on success
-  /// @retval 0 on error
+  ///function to remove the files extracted for parsing the PackageConfiguration
+  ///descriptor and populating the idl struct. It reads the names of the files
+  ///from the package. They correspond to the names on disk.
+  ///return 1 on success
+  ///       0 on error
+
   int remove_descriptor_files (char* package);
 
 
-  /// Function to remove the files extracted from the package upon istallation
-  /// It reads the names of the files from the package. They correspond to the
-  /// names on disk. It deletes each file, then it deletes the directories that
-  /// contain them.
-  /// @note extraction location is path/*archive_name*/
-  /// @retval 1 on success
-  /// @retval 0 on error
+  ///function to remove the files extracted from the package upon istallation
+  ///It reads the names of the files from the package. They correspond to the
+  ///names on disk. It deletes each file, then it deletes the directories that
+  ///contain them.
+  ///NOTE: extraction location is path/*archive_name*/
+  ///returns 1 on success
+  ///        0 on error
+
   int remove_extracted_package (const char* package_path, const char* extraction_location);
 
-  /// Function to extract the type of the component from
-  /// the PackageConfiguration and update the interface map
-  /// @retval 1 on success
-  /// @retval 0 on error
+  ///function to extract the type of the component from
+  ///the PackageConfiguration and update the interface map
+  ///returns 1 on success
+  ///        0 on error
+
   int add_type (::Deployment::PackageConfiguration& pc,
                 const char* name);
 
-  /// Function to remove the interface type of the component
-  /// being removed from the interface map
-  /// @retval 1 on success
-  /// @retval 0 on error
+  ///function to remove the interface type of the component
+  ///being removed from the interface map
+  ///returns 1 on success
+  ///        0 on error
+
   int remove_type (::Deployment::PackageConfiguration& pc,
                    const char* name);
 
-  /// Function to dump the state of the RepositoryManager
+  ///function to dump the state of the RepositoryManager
   void dump (void);
 
 private:
@@ -249,32 +255,25 @@ private:
   typedef CIEntry::VALUE_SET CISet;
   typedef CIEntry::VALUE_SET_ITERATOR CISet_Iterator;
 
-  /// A hash map that associates the names of
-  /// PackageConfigurations with their location
+  //a hash map that associates the names of
+  //PackageConfigurations with their location
   PCMap names_;
 
   /// a hash map that associates the UUIDs of
   /// PackageConfigurations with their location
   PCMap uuids_;
 
-  /// a hash map which associates Component Interface
-  /// UUIDs with their implementations
+  //a hash map which associates Component Interface
+  //UUIDs with their implementations
   CIMap types_;
 
-  /// The ORB
+  //the ORB
   CORBA::ORB_var the_orb_;
 
-  /// Will hold the current working directory
-  char cwd_ [TEMP_LEN];
-
-  /// Full path for the install directory
-  ACE_CString install_root_;
-
-  /// Location of the server
-  ACE_CString HTTP_server_;
-
-  /// Directory where the packages will be stored locally
-  ACE_CString install_path;
+  char cwd_ [TEMP_LEN];      //will hold the current working directory
+  ACE_CString install_root_;    //full path for the install directory
+  ACE_CString HTTP_server_;    //location of the server
+  ACE_CString install_path; //directory where the packages will be stored locally
 };
 
 #endif /* REPOSITORYMANAGER_H_  */

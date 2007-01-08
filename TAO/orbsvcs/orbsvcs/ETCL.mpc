@@ -1,7 +1,7 @@
 // -*- MPC -*-
 // $Id$
 
-project(ETCL) : orbsvcslib, install {
+project(ETCL) : orbsvcslib, core {
   sharedname   = TAO_ETCL
   dynamicflags = TAO_ETCL_BUILD_DLL
   tagchecks   += Notify

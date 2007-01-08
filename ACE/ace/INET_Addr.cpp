@@ -36,37 +36,27 @@ ACE_INET_Addr::addr_to_string (ACE_TCHAR s[],
   ACE_TRACE ("ACE_INET_Addr::addr_to_string");
 
   // XXX Can we (should we) include the scope id for IPv6 addresses?
-  char  hoststr[MAXHOSTNAMELEN+1];
 
-  bool result = false;
-  if (ipaddr_format == 0)
-    result = (this->get_host_name (hoststr,MAXHOSTNAMELEN+1) == 0);
-  else
-    result = (this->get_host_addr (hoststr,MAXHOSTNAMELEN+1) != 0);
-
-  if (!result)
-    return -1;
-
-  size_t total_len =
-    ACE_OS::strlen (hoststr)
-    + 5 // ACE_OS::strlen ("65535"), Assuming the max port number.
-    + 1 // sizeof (':'), addr/port sep
-    + 1; // sizeof ('\0'), terminating NUL
-  ACE_TCHAR const *format = ACE_LIB_TEXT("%s:%d");
-#if defined (ACE_HAS_IPV6)
-  if (ACE_OS::strchr(hoststr,':') != 0)
-    {
-      total_len += 2; // ACE_OS::strlen ("[]") IPv6 addr frames
-      format = ACE_LIB_TEXT("[%s]:%d");
-    }
-#endif // ACE_HAS_IPV6
+  size_t const total_len =
+    (ipaddr_format == 0
+     ? ACE_OS::strlen (this->get_host_name ())
+     : ACE_OS::strlen (this->get_host_addr ()))
+    + ACE_OS::strlen ("65536") // Assume the max port number.
+    + sizeof (':')
+    + sizeof ('\0'); // For trailing '\0'.
 
   if (size < total_len)
     return -1;
   else
-      ACE_OS::sprintf (s, format,
-                       ACE_TEXT_CHAR_TO_TCHAR (hoststr), this->get_port_number ());
-  return 0;
+    {
+      ACE_OS::sprintf (s,
+                       ACE_LIB_TEXT ("%s:%d"),
+                       ACE_TEXT_CHAR_TO_TCHAR (ipaddr_format == 0
+                                               ? this->get_host_name ()
+                                               : this->get_host_addr ()),
+                       this->get_port_number ());
+      return 0;
+    }
 }
 
 void
@@ -327,9 +317,13 @@ ACE_INET_Addr::set (u_short port_number,
   struct in_addr addrv4;
   if (ACE_OS::inet_aton (host_name,
                          &addrv4) == 1)
+# if !defined (ACE_LACKS_NTOHL)
     return this->set (port_number,
-                      encode ? ACE_NTOHL (addrv4.s_addr) : addrv4.s_addr,
+                      encode ? ntohl (addrv4.s_addr) : addrv4.s_addr,
                       encode);
+# else
+    return -1;
+# endif /* ACE_LACKS_NTOHL */
   else
     {
 #  if defined (ACE_VXWORKS) && defined (ACE_LACKS_GETHOSTBYNAME)
@@ -352,9 +346,13 @@ ACE_INET_Addr::set (u_short port_number,
           (void) ACE_OS::memcpy ((void *) &addrv4.s_addr,
                                  hp->h_addr,
                                  hp->h_length);
+#  if !defined (ACE_LACKS_NTOHL)
           return this->set (port_number,
-                            encode ? ACE_NTOHL (addrv4.s_addr) : addrv4.s_addr,
+                            encode ? ntohl (addrv4.s_addr) : addrv4.s_addr,
                             encode);
+#  else
+          return -1;
+#  endif /* ACE_LACKS_NTOHL */
         }
     }
 #endif /* ACE_HAS_IPV6 */
@@ -367,6 +365,7 @@ static int get_port_number_from_name (const char port_name[],
 {
   int port_number = 0;
 
+#if !defined (ACE_LACKS_HTONS)
   // Maybe port_name is directly a port number?
   char *endp = 0;
   port_number = static_cast<int> (ACE_OS::strtol (port_name, &endp, 10));
@@ -377,9 +376,10 @@ static int get_port_number_from_name (const char port_name[],
       // store that value as the port number.  NOTE: this number must
       // be returned in network byte order!
       u_short n = static_cast<u_short> (port_number);
-      n = ACE_HTONS (n);
+      n = htons (n);
       return n;
     }
+#endif
 
   // We try to resolve port number from its name.
 
@@ -656,18 +656,12 @@ ACE_INET_Addr::ACE_INET_Addr (const wchar_t port_name[],
   : ACE_Addr (this->determine_type(), sizeof (inet_addr_))
 {
   ACE_TRACE ("ACE_INET_Addr::ACE_INET_Addr");
-#if !defined (ACE_LACKS_HTONL)
   this->reset ();
   if (this->set (port_name,
                  htonl (inet_address),
                  protocol) == -1)
     ACE_ERROR ((LM_ERROR,
                 ACE_LIB_TEXT ("ACE_INET_Addr::ACE_INET_Addr")));
-#else
-  ACE_UNUSED_ARG (port_name);
-  ACE_UNUSED_ARG (inet_address);
-  ACE_UNUSED_ARG (protocol);
-#endif
 }
 #endif /* ACE_HAS_WCHAR */
 
@@ -752,8 +746,12 @@ ACE_INET_Addr::set_port_number (u_short port_number,
 {
   ACE_TRACE ("ACE_INET_Addr::set_port_number");
 
+#if !defined (ACE_LACKS_HTONS)
   if (encode)
-    port_number = ACE_HTONS (port_number);
+    port_number = htons (port_number);
+#else
+  ACE_UNUSED_ARG (encode);
+#endif /* ACE_LACKS_HTONS */
 
 #if defined (ACE_HAS_IPV6)
   if (this->get_type () == AF_INET6)
@@ -1105,8 +1103,11 @@ ACE_INET_Addr::get_ip_address (void) const
       return 0;
     }
 #endif /* ACE_HAS_IPV6 */
-  return ACE_NTOHL (ACE_UINT32 (this->inet_addr_.in4_.sin_addr.s_addr));
+#if !defined (ACE_LACKS_NTOHL)
+  return ntohl (ACE_UINT32 (this->inet_addr_.in4_.sin_addr.s_addr));
+#else
   return 0;
+#endif /* ACE_LACKS_NTOHL */
 }
 
 ACE_END_VERSIONED_NAMESPACE_DECL

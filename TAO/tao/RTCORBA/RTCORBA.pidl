@@ -24,7 +24,7 @@
  *   1. Run the tao_idl compiler on the pidl file.  The command used for
  *   this is:
  *
- *     tao_idl -o orig -Gp -Gd -Sci -I../..
+ *     tao_idl -o orig -Gp -Gd -Ge 1 -Sci -I../..
  *          -Wb,export_macro=TAO_RTCORBA_Export
  *          -Wb,export_include="rtcorba_export.h"
  *          -Wb,pre_include="ace/pre.h"

@@ -127,6 +127,4 @@ enable-auto-props = yes
 *.ps=svn:mime-type=application/postscript
 *.pdf=svn:mime-type=application/postscript
 *.tab=svn:eol-style=native;svn:keywords=Author Date Id Revision
-*.doxygen=svn:eol-style=native;svn:keywords=Author Date Id Revision
-*.rc=svn:eol-style=native;svn:keywords=Author Date Id Revision
 Change?og*=svn:eol-style=native;svn:keywords=Author Date Id Revision

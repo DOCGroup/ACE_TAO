@@ -7,7 +7,8 @@ project(Planner_Manager_stub): ciao_deployment_stub {
            Planner_Interface_stub \
            Output_Adapter_Interface_stub
   sharedname = Planner_Manager_stub
-  idlflags += -Wb,stub_export_macro=PLANNER_MANAGER_STUB_Export \
+  idlflags += -Sc \
+              -Wb,stub_export_macro=PLANNER_MANAGER_STUB_Export \
               -Wb,stub_export_include=Planner_Manager_stub_export.h \
               -Wb,skel_export_macro=PLANNER_MANAGER_SVNT_Export \
               -Wb,skel_export_include=Planner_Manager_svnt_export.h
@@ -44,7 +45,8 @@ project(Planner_Manager_svnt) : ciao_servant_dnc {
              Planner_Manager_Interface_svnt \
              Planner_Interface_stub \
              Output_Adapter_Interface_stub
-  idlflags  +=  -Wb,export_macro=PLANNER_MANAGER_SVNT_Export \
+  idlflags  +=  -Sc \
+                -Wb,export_macro=PLANNER_MANAGER_SVNT_Export \
                 -Wb,export_include=Planner_Manager_svnt_export.h
 
   dynamicflags = PLANNER_MANAGER_SVNT_BUILD_DLL
@@ -88,13 +90,14 @@ project(Planner_Manager_exec) : ciao_component_dnc {
              Planner_Interface_stub \
              Planner_stub \
              Output_Adapter_Interface_stub
-
-  idlflags  +=  -Wb,export_macro=PLANNER_MANAGER_EXEC_Export \
+  
+  idlflags  +=  -Sc \
+                -Wb,export_macro=PLANNER_MANAGER_EXEC_Export \
                 -Wb,export_include=Planner_Manager_exec_export.h
   dynamicflags   = PLANNER_MANAGER_EXEC_BUILD_DLL
 
   IDL_Files {
-
+    
   }
 
   Source_Files {

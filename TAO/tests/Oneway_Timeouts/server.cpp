@@ -1,5 +1,3 @@
-// $Id$
-
 #include "TestS.h"
 
 #include "tao/Strategies/advanced_resource.h"
@@ -23,12 +21,12 @@ int elapsed_min = 0;
 int first_min = 0;
 int first_max = 0;
 
-class Tester_i
+class Tester_i 
   : public virtual POA_Tester
   , public virtual ACE_Event_Handler
 {
 public:
-  Tester_i (CORBA::ORB_ptr orb)
+  Tester_i (CORBA::ORB_ptr orb) 
     : orb_ (orb)
     , id1_ (0)
     , id2_ (0)
@@ -68,14 +66,14 @@ public:
         // Signals the end of a test run
         if (num_expected > 0 && count_ != num_expected)
           {
-            cerr << "Error: Expected " << num_expected
+            cerr << "Error: Expected " << num_expected 
                  << ", but received " << count_ << endl;
             this->failed_ = true;
           }
         long ms = (last_ - first_).msec ();
         if (elapsed_max > 0 && ms > elapsed_max)
           {
-            cerr << "Error: Expected  < " << elapsed_max
+            cerr << "Error: Expected  < " << elapsed_max 
                  << "ms, but was " << ms << "ms" << endl;
             this->failed_ = true;
           }
@@ -88,7 +86,7 @@ public:
         ms = (first_ - start_).msec ();
         if (first_max > 0 && ms > first_max)
           {
-            cerr << "Error: Expected first < " << first_max
+            cerr << "Error: Expected first < " << first_max 
                  << "ms, but was " << ms << "ms" << endl;
             this->failed_ = true;
           }
@@ -161,9 +159,9 @@ namespace {
       "\t[-expected n=0] [-elapsed_max ms=0] [-elapsed_min ms=0] "
       "[-first_min ms=0]\n"
       "\t[-first_max ms=0]\n"
-      "\tactivate_delay Millisecond delay before POAManager::activate.\n"
-      "\trun_delay Millisecond delay before ORB::run ().\n"
-      "\trequest_delay Millisecond delay within each servant request.\n"
+      "\tactivate_delay Millisecond delay before POAManager::activate.\n" 
+      "\trun_delay Millisecond delay before ORB::run ().\n" 
+      "\trequest_delay Millisecond delay within each servant request.\n" 
       "\tabort_after abort () after N requests.\n" << endl;
   }
 

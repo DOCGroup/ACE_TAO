@@ -11,7 +11,7 @@
 #if !defined (CIAO_DEPLOYMENT_EVENT_SERVICES_IDL)
 #define CIAO_DEPLOYMENT_EVENT_SERVICES_IDL
 
-#include "tao/StringSeq.pidl"
+#include <orb.idl>
 
 // EventServiceType definition
 #include <ciaosvcs/Events/CIAO_Events_Base/CIAO_Events.idl>

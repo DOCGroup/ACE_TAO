@@ -6,7 +6,7 @@
 ## this file will be lost the next time it is generated.
 ##
 ## MPC Command:
-## ./bin/mwc.pl -type automake -noreldefs ACE.mwc
+## /acebuilds/ACE_wrappers-repository/bin/mwc.pl -include /acebuilds/MPC/config -include /acebuilds/MPC/templates -feature_file /acebuilds/ACE_wrappers-repository/local.features -noreldefs -type automake -exclude build,Kokyu
 
 ACE_BUILDDIR = $(top_builddir)
 ACE_ROOT = $(top_srcdir)
@@ -16,7 +16,6 @@ noinst_PROGRAMS =
 ## Makefile.asnmp_example_get.am
 
 if !BUILD_USES_WCHAR
-
 noinst_PROGRAMS += get
 
 get_CPPFLAGS = \
@@ -36,7 +35,6 @@ endif !BUILD_USES_WCHAR
 ## Makefile.asnmp_example_get_async.am
 
 if !BUILD_USES_WCHAR
-
 noinst_PROGRAMS += get_async
 
 get_async_CPPFLAGS = \

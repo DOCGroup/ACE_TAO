@@ -37,11 +37,11 @@ namespace TAO
     bool
     IdUniquenessStrategyUnique::is_servant_activation_allowed (
       PortableServer::Servant servant,
-      bool &wait_occurred_restart_call)
+      int &wait_occurred_restart_call)
     {
       // If the specified servant is already in the Active Object Map, the
       // ServantAlreadyActive exception is raised.
-      int const result =
+      int result =
         this->poa_->is_servant_active (servant,
                                        wait_occurred_restart_call);
 

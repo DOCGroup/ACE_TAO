@@ -12,7 +12,7 @@
  *   this is:
  *
  *     tao_idl
- *          -o orig -GA -Sci
+ *          -o orig -Ge 1 -GA -Sci
  *          -Wb,export_macro=TAO_RTPortableServer_Export
  *          -Wb,export_include="rtportableserver_export.h"
  *          -Wb,pre_include="ace/pre.h"

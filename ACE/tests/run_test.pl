@@ -107,11 +107,6 @@ sub run_program ($)
 {
     my $program = shift;
 
-    ## Print it out before we check for the executable
-    ## if the executable doesn't exist, the error will show
-    ## up as part of the previous test.
-    print "auto_run_tests: tests/$program\n";
-
     unlink <log/$program*.log>;
     unlink "core";
 
@@ -133,6 +128,7 @@ sub run_program ($)
        }
     }
 
+    print "auto_run_tests: tests/$program\n";
     my $start_time = time();
     $status = $P->SpawnWaitKill (400);
     my $time = time() - $start_time;

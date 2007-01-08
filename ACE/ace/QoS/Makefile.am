@@ -57,7 +57,7 @@ CLEANFILES = \
   ACE_QoS.pc
 
 ACE_QoS.pc: ${top_builddir}/config.status ${srcdir}/ACE_QoS.pc.in
-	${top_builddir}/config.status --file $@:${srcdir}/ACE_QoS.pc.in
+	${top_builddir}/config.status --file "$@":${srcdir}/ACE_QoS.pc.in
 
 endif BUILD_QOS
 

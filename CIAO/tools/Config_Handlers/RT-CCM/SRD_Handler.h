@@ -14,8 +14,9 @@
 #include /**/ "ace/pre.h"
 
 #include "RT_CCM_Handlers_Export.h"
-#include "ciao/CIAO_ServerResourcesC.h"
+#include "ciao/ServerResourcesC.h"
 #include "ace/Auto_Ptr.h"
+// #include "Utils/XML_Helper.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once

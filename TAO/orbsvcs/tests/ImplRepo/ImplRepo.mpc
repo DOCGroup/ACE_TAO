@@ -9,8 +9,8 @@ project(airplane_idl) : taoidldefaults {
 }
 
 
-project(airplane server) : portableserver, orbsvcsexe, avoids_minimum_corba, iortable, imr_client, avoids_corba_e_micro {
-  after += airplane_idl
+project(airplane server) : portableserver, orbsvcsexe, minimum_corba, iortable, imr_client {
+  after += airplane_idl 
 
   IDL_Files {
   }
@@ -24,8 +24,8 @@ project(airplane server) : portableserver, orbsvcsexe, avoids_minimum_corba, ior
   }
 }
 
-project(airplane client) : portableserver, orbsvcsexe, avoids_minimum_corba, iortable {
-  after += airplane_idl
+project(airplane client) : portableserver, orbsvcsexe, minimum_corba, iortable {
+  after += airplane_idl 
 
   IDL_Files {
   }
@@ -46,7 +46,8 @@ project(nestea_idl): taoidldefaults {
   custom_only = 1
 }
 
-project(nestea server) : portableserver, orbsvcsexe, avoids_minimum_corba, iortable, imr_client, avoids_corba_e_micro, avoids_ace_for_tao {
+project(nestea server) : portableserver, orbsvcsexe, minimum_corba, iortable, imr_client {
+  avoids += ace_for_tao
   after  += nestea_idl
 
   IDL_Files {
@@ -67,7 +68,7 @@ project(nestea server) : portableserver, orbsvcsexe, avoids_minimum_corba, iorta
   }
 }
 
-project(nestea client) : portableserver, orbsvcsexe, avoids_minimum_corba, iortable {
+project(nestea client) : portableserver, orbsvcsexe, minimum_corba, iortable {
   after += nestea_idl
 
   IDL_Files {

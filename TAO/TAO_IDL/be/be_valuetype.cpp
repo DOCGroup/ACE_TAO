@@ -135,7 +135,7 @@ be_valuetype::be_valuetype (UTL_ScopedName *n,
     {
       be_interface *intf =
         be_interface::narrow_from_decl (this->pd_supports[i]);
-
+        
       if (intf->has_mixed_parentage ())
         {
           this->supports_abstract_ = true;
@@ -900,7 +900,7 @@ be_valuetype::gen_skel_helper (be_interface *concrete,
                       << "_skel (" << be_idt << be_idt_nl
                       << "TAO_ServerRequest &req, " << be_nl
                       << "void *obj," << be_nl
-                      << "void *context" << be_uidt_nl
+                      << "void *context" << env_dflts << be_uidt_nl
                       << ");" << be_uidt << "\n\n";
                 }
               else
@@ -912,7 +912,7 @@ be_valuetype::gen_skel_helper (be_interface *concrete,
                       << "_skel (" << be_idt << be_idt_nl
                       << "TAO_ServerRequest &req," << be_nl
                       << "void *obj," << be_nl
-                      << "void *context" << be_uidt_nl
+                      << "void *context" << env_decl << be_uidt_nl
                       << ")" << be_uidt_nl
                       << "{" << be_idt_nl;
                   *os << ancestor->full_skel_name ()
@@ -925,7 +925,7 @@ be_valuetype::gen_skel_helper (be_interface *concrete,
                       << "req," << be_nl
                       << "(" << ancestor->full_skel_name ()
                       << "_ptr) impl," << be_nl
-                      << "context" << be_uidt_nl
+                      << "context" << env_arg << be_uidt_nl
                       << ");" << be_uidt << be_uidt_nl
                       << "}\n";
                 }

@@ -23,7 +23,8 @@
 #define ACE_LACKS_CLEARERR
 #endif /* ACE_MT_SAFE == 0 */
 
-#include "ace/config-posix.h"
+// Include unistd.h to define _POSIX_C_SOURCE.
+#include <unistd.h>
 
 // Configuration-specific #defines:
 // 1) g++ or cxx
@@ -168,6 +169,9 @@
 #define ACE_HAS_NONSTATIC_OBJECT_MANAGER
 
 #if DIGITAL_UNIX >= 0x500
+# ifndef ACE_HAS_SNPRINTF
+#   define ACE_HAS_SNPRINTF
+# endif /* ACE_HAS_SNPRINTF */
 # define ACE_HAS_XPG4_MULTIBYTE_CHAR 1
 #endif /* DIGITAL_UNIX >= 0x500 */
 

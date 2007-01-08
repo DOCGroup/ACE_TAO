@@ -71,9 +71,7 @@ Test_DynArray::run_test (void)
                             -1);
         }
 
-      DynAnyAnalyzer analyzer (this->orb_.in (),
-                               dynany_factory.in (),
-                               debug_);
+      DynAnyAnalyzer analyzer(this->orb_.in(), dynany_factory.in(), debug_);
 
       CORBA::Any in_any1;
       in_any1 <<= DynAnyTests::test_array_forany (ta);
@@ -81,26 +79,21 @@ Test_DynArray::run_test (void)
         dynany_factory->create_dyn_any (in_any1
                                         ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
-      
-      DynamicAny::DynArray_var fa1 =
-        DynamicAny::DynArray::_narrow (dp1.in ()
-                                       ACE_ENV_ARG_PARAMETER);
+      DynamicAny::DynArray_var fa1 = DynamicAny::DynArray::_narrow (dp1.in ()
+                                                        ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
-      
-      fa1->seek (1 ACE_ENV_ARG_PARAMETER);
+      fa1->seek (1
+                 ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
-      
       fa1->insert_long (data.m_long1
                         ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
-      
       fa1->rewind (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
-      
       CORBA::Long l_out1 = data.m_long2;
-      fa1->seek (1 ACE_ENV_ARG_PARAMETER);
+      fa1->seek (1
+                 ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
-      
       l_out1 = fa1->get_long (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
@@ -143,11 +136,10 @@ Test_DynArray::run_test (void)
 
       ACE_TRY_CHECK;
 
-      analyzer.analyze (ftc1.in () ACE_ENV_ARG_PARAMETER);
+      analyzer.analyze(ftc1.in() ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      CORBA::Any_var out_any1 =
-        ftc1->to_any (ACE_ENV_SINGLE_ARG_PARAMETER);
+      CORBA::Any_var out_any1 = ftc1->to_any (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       DynAnyTests::test_array_forany ta_out;
@@ -175,9 +167,7 @@ Test_DynArray::run_test (void)
       ftc1->set_elements (as_in
                           ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
-      
-      DynamicAny::AnySeq_var as_out =
-        ftc1->get_elements (ACE_ENV_SINGLE_ARG_PARAMETER);
+      DynamicAny::AnySeq_var as_out = ftc1->get_elements (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
       CORBA::Any out_any2 = as_out[1U];
       CORBA::Long l_out2;
@@ -195,7 +185,6 @@ Test_DynArray::run_test (void)
 
       fa1->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
-      
       ftc1->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }

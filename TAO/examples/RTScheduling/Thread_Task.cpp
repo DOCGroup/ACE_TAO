@@ -1,13 +1,10 @@
 //$Id$
 
 #include "Thread_Task.h"
-#include "DT_Creator.h"
-#include "Task_Stats.h"
-
-#include "tao/ORB_Core.h"
-
-#include "ace/High_Res_Timer.h"
 #include "ace/Atomic_Op.h"
+#include "Task_Stats.h"
+#include "tao/ORB_Core.h"
+#include "ace/High_Res_Timer.h"
 
 Thread_Task::Thread_Task (void)
  : start_time_ (0),
@@ -29,11 +26,9 @@ Thread_Task::svc (void)
   ACE_TRY_NEW_ENV
     {
       if (TAO_debug_level > 0)
-        {
-          ACE_DEBUG ((LM_DEBUG,
-                      "Thread_Task::svc %d\n",
-                      importance_));
-        }
+        ACE_DEBUG ((LM_DEBUG,
+                    "Thread_Task::svc %d\n",
+                    importance_));
 
       const char * name = 0;
       CORBA::Policy_var implicit_sched_param = CORBA::Policy::_duplicate (sched_param_.in ());;
@@ -122,8 +117,8 @@ Thread_Task::dump_stats (void)
 
   if (TAO_debug_level > 0)
     ACE_DEBUG ((LM_DEBUG,
-    "File name %s\n",
-    fname));
+		"File name %s\n",
+		fname));
 
   char msg [BUFSIZ];
   ACE_OS::sprintf (msg,
@@ -132,6 +127,6 @@ Thread_Task::dump_stats (void)
                    count_);
 
   task_stats_->dump_samples (fname,
-                             msg,
-                             ACE_High_Res_Timer::global_scale_factor ());
+			     msg,
+			     ACE_High_Res_Timer::global_scale_factor ());
 }

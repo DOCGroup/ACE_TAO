@@ -109,6 +109,7 @@
 #define ACE_HAS_SIGINFO_T
 #define ACE_HAS_SIGWAIT
 #define ACE_HAS_SIG_ATOMIC_T
+#define ACE_HAS_SNPRINTF
 #define ACE_HAS_STRERROR
 #define ACE_HAS_THREADS
 #define ACE_HAS_SYSCTL
@@ -131,7 +132,6 @@
 #define ACE_LACKS_MPROTECT
 #define ACE_LACKS_MSYNC
 #define ACE_LACKS_NETDB_REENTRANT_FUNCTIONS
-#define ACE_LACKS_SIGVAL_T
 #define ACE_LACKS_SYS_PARAM_H
 #define ACE_LACKS_PWD_FUNCTIONS
 #define ACE_LACKS_READDIR_R
@@ -210,7 +210,6 @@
   #define ACE_HAS_SETENV
   #define ACE_HAS_3_PARAM_WCSTOK
   #define ACE_HAS_WCHAR
-  #define ACE_HAS_VFWPRINTF
   #define ACE_SIZEOF_WCHAR 2
 #else
   // We are building for kernel mode

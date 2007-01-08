@@ -288,6 +288,9 @@ AST_Type::nested_name (const char* local_name,
                       0);
     }
 
+  // Our defining scope.
+  AST_Decl *def_scope = 0;
+
   // Hold the fully scoped name.
   char def_name [NAMEBUFSIZE];
   char use_name [NAMEBUFSIZE];
@@ -321,22 +324,13 @@ AST_Type::nested_name (const char* local_name,
   // macro. Whenever there is no match, the remaining components of the
   // def_scope form the second argument.
 
-  // This adds the global double colon for type names using the canonical
-  // CORBA namespace, replacing the ad hoc spot
-  // generations of "::" here and there, which have now been removed.
   UTL_Scope *s = this->defined_in ();
-  AST_Decl *def_scope = s != 0 ? ScopeAsDecl (s) : 0;
-  bool in_root =
-    def_scope != 0 && def_scope->node_type () == AST_Decl::NT_root;
-  ACE_CString fname (this->full_name ());
-  bool corba_type = fname.find ("CORBA::") == 0;
 
-  if (in_root && corba_type)
-    {
-      ACE_OS::strcat (this->nested_type_name_, "::");
-    }
+  def_scope = s ? ScopeAsDecl (s) : 0;
 
-  if (def_scope != 0 && !in_root && use_scope != 0)
+  if (def_scope
+      && def_scope->node_type () != AST_Decl::NT_root
+      && use_scope)
     // If both scopes exist and that we are not in the root scope.
     {
       ACE_OS::strcpy (def_name,

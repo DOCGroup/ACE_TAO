@@ -71,7 +71,7 @@ enhancement requests in our
 <a href="../docs/usage-bugzilla.html">bug tracking system</a>.<P>
 
 TAO can be obtained <A
-HREF="http://download.dre.vanderbilt.edu">electronically</A>
+HREF="http://deuce.doc.wustl.edu/Download.html">electronically</A>
 via the WWW and ftp.  <A
 HREF="http://www.dre.vanderbilt.edu/TAO">TAO</A> is bundled
 with the <A
@@ -94,7 +94,7 @@ bundle as a single piece instead of trying to mix and match things up.<P>
       <UL>
         <LI>Change directory to <CODE>$ACE_ROOT/ace</CODE> and execute
             <CODE><A HREF="#makenotes">make</A></CODE>.<P>
-        <LI>Also build GPERF under <CODE>$ACE_ROOT/apps/gperf/src</CODE><P>
+        <LI>Also build GPERF under <CODE>$ACE_ROOT/apps/gperf</CODE><P>
       </UL>
 
   <LI>Set <CODE>TAO_ROOT</CODE> environment variable to
@@ -134,22 +134,14 @@ bundle as a single piece instead of trying to mix and match things up.<P>
         </P>
         <P> If you wish to compile all the core tao and orbsvcs,
           including its dependencies in ACE and ACEXML, you can do the
-          following <OL>
-          <LI>
-          Unpack the distribution from DOC group's
-          website.</LI>
-          <LI>
-          Set the environment variables $ACE_ROOT and
-          $TAO_ROOT.</LI>
-          <LI>Create config.h and platform_macros.GNU at
-          the right places</LI>
-          <LI>Delete all the GNUmakefiles (or sln and
+          following (1) Unpack the distribution from DOC group's
+          website. (2) Set the environment variables $ACE_ROOT and
+          $TAO_ROOT. (3) Create config.h and platform_macros.GNU at
+          the right places (4) Delete all the GNUmakefiles (or sln and
           vproj file as the case may be) from the TAO distrbution using
-          the 'find' command.</LI>
-          <LI>Change directory to $TAO_ROOT.</LI>
-          <LI>Run MPC like this, $ACE_ROOT/bin/mwc.pl TAO_ACE.mwc -type gnuace </LI>
-          <LI>Run
-          'make'.</LI> </OL></P><P> This will create all the required libraries for TAO
+          the 'find' command. (5) Change directory to $TAO_ROOT. (6)
+          Run MPC like this, $ACE_ROOT/bin/mwc.pl TAO_ACE.mwc. (7) Run
+          'make'. This will create all the required libraries for TAO
           and TAO orbsvcs. In step 6, use -type vc71 if you want to
           generate VC71 project and workspace files for Win32. Please
           see <A href="../MPC/docs/USAGE"> MPC USAGE </A> document for
@@ -198,17 +190,13 @@ It is not possible to use TAO with explicit templates. Your compiler
 must support implicit templates. <P>
 
 <HR><P>
-<h3>Using cross compilation</h3>
-
-With cross compilation you build on the so called host system for a certain
-target system. The host system can for example be linux and the target
-can for example be VxWorks, LynxOS or Linux.
+<h3>For Cross-Compiled Targets, such as VxWorks and LynxOS</h3>
 
 If you are building TAO for a VxWorks target, please see the detailed
 instructions for building and installing ACE and TAO in <a
 href="../ACE-INSTALL.html#vxworks">$ACE_ROOT/ACE-INSTALL.html</a>.<p>
 
-    <P>Cross-compiling TAO is not much different than building it for a
+    <P>Cross-compiling TAO is not much different than building it for
       self-host.  The one major difference is that TAO's IDL compiler
       must be built and run on the host; it's not necessary to run it
       on the target.
@@ -260,7 +248,7 @@ $ echo 'static_libs_only=1' \
 $ cd build/HOST
 $ export ACE_ROOT=$PWD
 $ make -C ace
-$ make -C apps/gperf/src
+$ make -C apps/gperf
 $ make -C TAO/TAO_IDL
 </PRE>
 
@@ -489,10 +477,10 @@ compiler flags must also be given to the compiler to enable them.</P>
 <P>By default, all components in TAO will be compiled.  If you only
 want support for <A HREF="docs/minimumTAO.html">minimumTAO</A>, define
 TAO_HAS_MINIMUM_CORBA. This can be accomplished by the following:
-create <code>ACE_wrappers/bin/MakeProjectCreator/config/default.features</code>
+create <code>ACE_wrappers/bin/MakeProjectCreator/config/default.features</code> 
 with the contents:</p>
 <code>minimum_corba=1</code><p>
-Then regenerate the project files with MPC using <code>perl bin/mwc.pl</code>,
+Then regenerate the project files with MPC using <code>perl bin/mwc.pl</code>, 
 see also <A HREF="../ACE-INSTALL.html#MPC">ACE-INSTALL.html</A> for more info
 about the MPC generation. This <code>miminum_corba=1</code> will add compiler
 flags to the C++ compiler and the IDL compiler to indicate that minimum corba
@@ -507,32 +495,11 @@ build the core libraries with minimum_corba=1!<P>
 <HR>
 <P>
 
-<H3>CORBA/e compact and micro</H3>
-
-<P>By default, all components in TAO will be compiled.  If you only
-want support for CORBA/e compact or micro you must regenerate the
-makefiles shipped with the distribution.
-This can be accomplished by the following:
-create <code>ACE_wrappers/bin/MakeProjectCreator/config/default.features</code>
-with the contents:</p>
-<code>corba_e_compact=1</code><p>
-or</p>
-<code>corba_e_micro=1</code><p>
-Then regenerate the project files with MPC using <code>perl bin/mwc.pl</code>,
-see also <A HREF="../ACE-INSTALL.html#MPC">ACE-INSTALL.html</A> for more info
-about the MPC generation. This <code>corba_e_x=1</code> will add compiler
-flags to the C++ compiler and the IDL compiler to indicate that CORBA/e
-is enabled.
-For your own project code you can define <code>CORBA_E_COMPACT</code> or
-<code>CORBA_E_MICRO</code>
-in the ace/config.h file.</P>
-<P>
-
 <HR><P>
 <H3><A NAME="resource_requirements">System Resource Requirements</A></H3>
 Please see the
-<a href="../ACE-INSTALL.html#resource_requirements">ACE-INSTALL.html</a> System
-Resource Requirements discussion for information on system resources
+<a href="../ACE-INSTALL.html#resource_requirements">ACE-INSTALL.html System
+Resource Requirements discussion</a> for information on system resources
 required to build ACE and TAO.<p>
 
 <HR>
@@ -565,7 +532,7 @@ quickly.
   href="../ACE-INSTALL.html#MPC">ACE-INSTALL</a>. GNUmakefiles and
   project files for TAO can be generated by using the following
   commands:<p>
-    <CODE> $ACE_ROOT/bin/mwc.pl TAO.mwc -type gnuace </CODE> <p>
+    <CODE> $ACE_ROOT/bin/mwc.pl TAO.mwc </CODE> <p>
    from <CODE> $TAO_ROOT </CODE> to generate GNUmakefiles. Use <CODE>
   -type vc71 </CODE> or <CODE>-type vc8</CODE> to generate VC71 and
   VC8 project and solution files.<p>

@@ -13,7 +13,7 @@
 #ifndef MONITOR_BASEH
 #define MONITOR_BASEH
 #include "tao/ORB.h"
-#include "ciao/Deployment_TargetManagerC.h"
+#include "TargetManagerC.h"
 
 namespace CIAO
 {
@@ -23,33 +23,33 @@ namespace CIAO
     public:
       virtual ~MonitorBase () {};
 
-      /**
-       * This function is called by the controller to initialize
-       * parameters.
-       * @param  domain The Initital domain for this host
-       * @param  target_manager  TargetManager_ptr
-       * @param  interval The time interval after which updates need to be send.
+      /** @function initialize_params
+       *  @param  domain The Initital domain for this host
+       *  @param  target_manager  TargetManager_ptr
+       *  @param  interval The time interval after whic updates need to be send.
+       *  @description  This function is called by the controller to initialize
+       *                parameters.
        */
       virtual int initialize_params (
                                      ::Deployment::Domain& domain,
                                      ::Deployment::TargetManager_ptr target_manager,
                                      int interval
                                      )=0;
-      /**
-       * This function is called by the controller
-       *  to start up the monitor.
-       * @param orb The ORB pointer
+      /** @function start
+       *  @param  ORB_ptr The ORB pointer
+       *  @description  This function is called by the controller
+       *                to start up the monitor.
        */
-      virtual int start (CORBA::ORB_ptr orb) = 0;
-      /**
-       * This function is called by the controller
-       * to stop the monitor.
+      virtual int start (CORBA::ORB_ptr)=0;
+      /** @function stop
+       *  @description  This function is called by the controller
+       *                to stop the monitor.
        */
       virtual int stop ()=0;
-      /**
-       * This function is called by the controller
-       * to get the current data.
-       * @return The current Domain data
+      /** @function get_current_data
+       *  @return ::Deployment::Domain* The current Domain data
+       *  @description  This function is called by the controller
+       *                to get the current data.
        */
       virtual ::Deployment::Domain* get_current_data ()=0;
     };

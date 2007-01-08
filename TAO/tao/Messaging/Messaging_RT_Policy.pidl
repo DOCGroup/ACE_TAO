@@ -12,7 +12,7 @@
  * The command used to generate code from this file is:
  *
  *   tao_idl
- *        -o orig -Gp -Gd -GA -Sci -SS
+ *        -o orig -Gp -Gd -Ge 1 -GA -Sci -SS
  *        -Wb,export_macro=TAO_Messaging_Export
  *        -Wb,export_include=messaging_export.h
  *        -Wb,pre_include="ace/pre.h"

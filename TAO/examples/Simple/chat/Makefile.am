@@ -13,10 +13,8 @@ ACE_ROOT = $(top_srcdir)/..
 TAO_BUILDDIR = $(top_builddir)
 TAO_IDL = ACE_ROOT=$(ACE_ROOT) TAO_ROOT=$(TAO_ROOT) $(TAO_BUILDDIR)/TAO_IDL/tao_idl
 TAO_IDL_DEP = $(TAO_BUILDDIR)/TAO_IDL/tao_idl
-TAO_IDLFLAGS = -Wb,pre_include=ace/pre.h -Wb,post_include=ace/post.h -I$(TAO_ROOT) -I$(srcdir) -g $(ACE_BUILDDIR)/apps/gperf/src/gperf
+TAO_IDLFLAGS = -Ge 1 -Wb,pre_include=ace/pre.h -Wb,post_include=ace/post.h -I$(TAO_ROOT) -I$(srcdir) -g $(ACE_BUILDDIR)/apps/gperf/src/gperf
 TAO_ROOT = $(top_srcdir)
-
-noinst_PROGRAMS =
 
 ## Makefile.chat_IDL.am
 
@@ -66,15 +64,14 @@ Broadcaster-stamp: $(srcdir)/Broadcaster.idl $(TAO_IDL_DEP)
 	$(TAO_IDL) $(TAO_IDLFLAGS) -Sa -St $(srcdir)/Broadcaster.idl
 	@touch $@
 
+
 noinst_HEADERS = \
   Broadcaster.idl \
   Receiver.idl
 
 ## Makefile.chat_client.am
 
-if BUILD_EXCEPTIONS
-
-noinst_PROGRAMS += client
+noinst_PROGRAMS = client
 
 client_CPPFLAGS = \
   -I$(ACE_ROOT) \
@@ -101,11 +98,7 @@ client_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
-endif BUILD_EXCEPTIONS
-
 ## Makefile.chat_server.am
-
-if BUILD_EXCEPTIONS
 
 noinst_PROGRAMS += server
 
@@ -134,8 +127,6 @@ server_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO_AnyTypeCode.la \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
-
-endif BUILD_EXCEPTIONS
 
 ## Clean up template repositories, etc.
 clean-local:

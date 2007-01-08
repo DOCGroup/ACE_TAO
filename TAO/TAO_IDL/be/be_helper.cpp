@@ -77,6 +77,44 @@ const TAO_INDENT be_idt_nl (1);
 const TAO_UNINDENT be_uidt;
 const TAO_UNINDENT be_uidt_nl (1);
 
+TAO_ENV_ARG::TAO_ENV_ARG (bool with_defaults,
+                          bool single,
+                          bool arg,
+                          bool not_used)
+  : with_defaults_ (with_defaults),
+    single_ (single),
+    arg_ (arg),
+    not_used_ (not_used)
+{
+}
+
+const TAO_ENV_ARG env_decl;
+const TAO_ENV_ARG env_dflts (true);
+const TAO_ENV_ARG env_sngl (false, true);
+const TAO_ENV_ARG env_sngl_dflts (true, true);
+const TAO_ENV_ARG env_not (false, false, false, true);
+const TAO_ENV_ARG env_sngl_not (false, true, false, true);
+const TAO_ENV_ARG env_arg (false, false, true);
+const TAO_ENV_ARG env_sngl_arg (false, true, true);
+
+TAO_ACE_CHECK::TAO_ACE_CHECK (const char *retval,
+                              bool do_return)
+  : retval_ (retval),
+    do_return_ (retval != 0 || do_return)
+{
+}
+
+TAO_ACE_TRY_CHECK::TAO_ACE_TRY_CHECK (void)
+{
+}
+
+TAO_ACE_ENDTRY::TAO_ACE_ENDTRY (void)
+{
+}
+
+const TAO_ACE_TRY_CHECK ace_try_check;
+const TAO_ACE_ENDTRY ace_endtry;
+
 // Methods of the TAO_OutStream class.
 
 TAO_OutStream::TAO_OutStream (void)
@@ -116,6 +154,8 @@ TAO_OutStream::open (const char *fname,
               ACE_OS::fprintf (this->fp_,
                                "%s\n",
                                copyright);
+
+              ACE_OS::fflush (this->fp_);
             }
 
           return 0;
@@ -155,7 +195,7 @@ TAO_OutStream::file (void)
 int
 TAO_OutStream::incr_indent (unsigned short flag)
 {
-  ++indent_level_;
+  indent_level_++;
 
   if (flag != 0)
     {
@@ -172,7 +212,7 @@ TAO_OutStream::incr_indent (unsigned short flag)
 int
 TAO_OutStream::decr_indent (unsigned short flag)
 {
-  --this->indent_level_;
+  this->indent_level_--;
   // Just in case somebody gets "unindent happy".
   if (this->indent_level_ < 0)
     {
@@ -208,6 +248,9 @@ TAO_OutStream::indent (void)
       for (int i = 0; i < this->indent_level_; i++)
         {
           ACE_OS::fprintf (this->fp_, "  ");
+#if !defined (ACE_OPENVMS)
+          ACE_OS::fflush (this->fp_);
+#endif
         }
     }
 
@@ -308,6 +351,9 @@ TAO_OutStream::print (const char *format, ...)
               int,
               -1,
               result);
+#if !defined (ACE_OPENVMS)
+  ACE_OS::fflush (this->fp_);
+#endif
   va_end (ap);
 
   return result;
@@ -317,6 +363,9 @@ TAO_OutStream &
 TAO_OutStream::operator<< (const char *str)
 {
   ACE_OS::fprintf (this->fp_, "%s", str);
+#if !defined (ACE_OPENVMS)
+  ACE_OS::fflush (this->fp_);
+#endif
   return *this;
 }
 
@@ -326,6 +375,10 @@ TAO_OutStream::operator<< (const ACE_CDR::UShort num)
   ACE_OS::fprintf (this->fp_,
                    "%hu",
                    num);
+
+#if !defined (ACE_OPENVMS)
+  ACE_OS::fflush (this->fp_);
+#endif
 
   return *this;
 }
@@ -337,6 +390,10 @@ TAO_OutStream::operator<< (const ACE_CDR::Short num)
                    "%hd",
                    num);
 
+#if !defined (ACE_OPENVMS)
+  ACE_OS::fflush (this->fp_);
+#endif
+
   return *this;
 }
 
@@ -347,6 +404,10 @@ TAO_OutStream::operator<< (const ACE_CDR::ULong num)
                    "%lu",
                    (unsigned long) num);
 
+#if !defined (ACE_OPENVMS)
+  ACE_OS::fflush (this->fp_);
+#endif
+
   return *this;
 }
 
@@ -356,6 +417,10 @@ TAO_OutStream::operator<< (const ACE_CDR::Long num)
   ACE_OS::fprintf (this->fp_,
                    "%ld",
                    (long) num);
+
+#if !defined (ACE_OPENVMS)
+  ACE_OS::fflush (this->fp_);
+#endif
 
   return *this;
 }
@@ -368,6 +433,10 @@ TAO_OutStream::operator<< (const ACE_CDR::ULongLong num)
                    ACE_UINT64_FORMAT_SPECIFIER,
                    num);
 
+#if !defined (ACE_OPENVMS)
+  ACE_OS::fflush (this->fp_);
+#endif
+
   return *this;
 }
 
@@ -377,6 +446,10 @@ TAO_OutStream::operator<< (const ACE_CDR::LongLong num)
   ACE_OS::fprintf (this->fp_,
                    ACE_INT64_FORMAT_SPECIFIER,
                    num);
+
+#if !defined (ACE_OPENVMS)
+  ACE_OS::fflush (this->fp_);
+#endif
 
   return *this;
 }
@@ -389,6 +462,10 @@ TAO_OutStream::operator<< (const unsigned long num)
                    "%lu",
                    num);
 
+#if !defined (ACE_OPENVMS)
+  ACE_OS::fflush (this->fp_);
+#endif
+
   return *this;
 }
 
@@ -398,6 +475,10 @@ TAO_OutStream::operator<< (const long num)
   ACE_OS::fprintf (this->fp_,
                    "%ld",
                    num);
+
+#if !defined (ACE_OPENVMS)
+  ACE_OS::fflush (this->fp_);
+#endif
 
   return *this;
 }
@@ -433,6 +514,63 @@ TAO_OutStream::operator<< (const TAO_UNINDENT& i)
   if (i.do_now_)
     {
       this->nl ();
+    }
+
+  return *this;
+}
+
+TAO_OutStream &
+TAO_OutStream::operator<< (const TAO_ENV_ARG& i)
+{
+  if (!be_global->use_raw_throw ())
+    {
+      (*this) << be_nl
+              << "ACE_ENV_"
+              << (i.single_ ? "SINGLE_" : "")
+              << "ARG_"
+              << (i.arg_ ? "PARAMETER" : "DECL")
+              << (i.with_defaults_ ? "_WITH_DEFAULTS" : "")
+              << (i.not_used_ ? "_NOT_USED" : "");
+    }
+
+  return *this;
+}
+
+TAO_OutStream &
+TAO_OutStream::operator<< (const TAO_ACE_CHECK& i)
+{
+  if (!be_global->use_raw_throw ())
+    {
+      (*this) << be_nl
+              << "ACE_CHECK"
+              << (i.do_return_ ? "_RETURN (" : "")
+              << (i.retval_ ? i.retval_ : "")
+              << (i.do_return_ ? ")" : "")
+              << ";";
+    }
+
+  return *this;
+}
+
+TAO_OutStream &
+TAO_OutStream::operator<< (const TAO_ACE_TRY_CHECK&)
+{
+  if (!be_global->use_raw_throw ())
+    {
+      (*this) << be_nl
+              << "ACE_TRY_CHECK;";
+    }
+
+  return *this;
+}
+
+TAO_OutStream &
+TAO_OutStream::operator<< (const TAO_ACE_ENDTRY&)
+{
+  if (!be_global->use_raw_throw ())
+    {
+      (*this) << be_nl
+              << "ACE_ENDTRY;";
     }
 
   return *this;

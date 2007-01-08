@@ -53,12 +53,12 @@ ACE_SOCK_Dgram::recv (void *buf,
   sockaddr *saddr = (sockaddr *) addr.get_addr ();
   int addr_len = addr.get_size ();
 
-  ssize_t const status = ACE_OS::recvfrom (this->get_handle (),
-                                           (char *) buf,
-                                           n,
-                                           flags,
-                                           (sockaddr *) saddr,
-                                           &addr_len);
+  ssize_t status = ACE_OS::recvfrom (this->get_handle (),
+                                     (char *) buf,
+                                     n,
+                                     flags,
+                                     (sockaddr *) saddr,
+                                     &addr_len);
   addr.set_size (addr_len);
   addr.set_type (reinterpret_cast<sockaddr_in *> (saddr)->sin_family);
   return status;

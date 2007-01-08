@@ -225,13 +225,17 @@ extern "C" { char * cuserid (char *s); }
 #define ACE_HAS_SIGWAIT
 
 // Platform has POSIX terminal interface.
-#define ACE_HAS_TERMIOS
+#define ACE_HAS_TERMIOS 
 
 #if (__FreeBSD_version > 400000)
 #define ACE_HAS_UCONTEXT_T
 #define ACE_HAS_SOCKLEN_T
 #define ACE_HAS_GETIFADDRS
 #define ACE_HAS_PTHREADS_UNIX98_EXT
+#endif
+
+#ifndef ACE_HAS_SNPRINTF
+#define ACE_HAS_SNPRINTF
 #endif
 
 // Note, on FreeBSD 5, POSIX aio is now an optional kernel module which
@@ -258,19 +262,9 @@ typedef union sigval sigval_t;
 #define ACE_LACKS_WCSDUP
 #define ACE_LACKS_ITOW
 #define ACE_HAS_3_PARAM_WCSTOK
-#define ACE_HAS_3_PARAM_READDIR_R
 
 #if (__FreeBSD_version >= 501000)
 #  define ACE_HAS_PTHREAD_SETSTACK
-#endif
-
-#if (__FreeBSD_version < 700007)
-# define ACE_HAS_SIGVAL_SIGVAL_INT
-#endif
-
-#if (__FreeBSD_version >= 700028)
-# define ACE_HAS_SCTP
-# define ACE_HAS_LKSCTP
 #endif
 
 #include /**/ "ace/post.h"

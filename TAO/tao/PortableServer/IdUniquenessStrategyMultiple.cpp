@@ -29,7 +29,7 @@ namespace TAO
     bool
     IdUniquenessStrategyMultiple::is_servant_activation_allowed (
       PortableServer::Servant /*servant*/,
-      bool & /*wait_occurred_restart_call*/)
+      int & /*wait_occurred_restart_call*/)
     {
       // With the multiple id strategy we can always activate the servant
       // another time

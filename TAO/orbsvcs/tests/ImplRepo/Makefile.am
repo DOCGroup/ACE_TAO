@@ -13,12 +13,11 @@ ACE_ROOT = $(top_srcdir)/..
 TAO_BUILDDIR = $(top_builddir)
 TAO_IDL = ACE_ROOT=$(ACE_ROOT) TAO_ROOT=$(TAO_ROOT) $(TAO_BUILDDIR)/TAO_IDL/tao_idl
 TAO_IDL_DEP = $(TAO_BUILDDIR)/TAO_IDL/tao_idl
-TAO_IDLFLAGS = -Wb,pre_include=ace/pre.h -Wb,post_include=ace/post.h -I$(TAO_ROOT) -I$(srcdir) -g $(ACE_BUILDDIR)/apps/gperf/src/gperf
+TAO_IDLFLAGS = -Ge 1 -Wb,pre_include=ace/pre.h -Wb,post_include=ace/post.h -I$(TAO_ROOT) -I$(srcdir) -g $(ACE_BUILDDIR)/apps/gperf/src/gperf
 TAO_ROOT = $(top_srcdir)
 
 SUBDIRS = \
         . \
-        Bug_2604_Regression \
         NameService \
         scale
 
@@ -49,12 +48,13 @@ Airplane-stamp: $(srcdir)/Airplane.idl $(TAO_IDL_DEP)
 	$(TAO_IDL) $(TAO_IDLFLAGS) -Sa -St $(srcdir)/Airplane.idl
 	@touch $@
 
+
 noinst_HEADERS = \
   Airplane.idl
 
 ## Makefile.airplane_client.am
 
-if BUILD_EXCEPTIONS
+if !BUILD_MINIMUM_CORBA
 
 noinst_PROGRAMS += airplane_client
 
@@ -78,11 +78,11 @@ airplane_client_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
-endif BUILD_EXCEPTIONS
+endif !BUILD_MINIMUM_CORBA
 
 ## Makefile.airplane_server.am
 
-if BUILD_EXCEPTIONS
+if !BUILD_MINIMUM_CORBA
 
 noinst_PROGRAMS += airplane_server
 
@@ -109,7 +109,7 @@ airplane_server_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
-endif BUILD_EXCEPTIONS
+endif !BUILD_MINIMUM_CORBA
 
 ## Makefile.nestea_idl.am
 
@@ -136,12 +136,13 @@ Nestea-stamp: $(srcdir)/Nestea.idl $(TAO_IDL_DEP)
 	$(TAO_IDL) $(TAO_IDLFLAGS) -Sa -St $(srcdir)/Nestea.idl
 	@touch $@
 
+
 noinst_HEADERS += \
   Nestea.idl
 
 ## Makefile.nestea_client.am
 
-if BUILD_EXCEPTIONS
+if !BUILD_MINIMUM_CORBA
 
 noinst_PROGRAMS += nestea_client
 
@@ -165,11 +166,12 @@ nestea_client_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
-endif BUILD_EXCEPTIONS
+endif !BUILD_MINIMUM_CORBA
 
 ## Makefile.nestea_server.am
 
-if BUILD_EXCEPTIONS
+if !BUILD_ACE_FOR_TAO
+if !BUILD_MINIMUM_CORBA
 
 noinst_PROGRAMS += nestea_server
 
@@ -196,7 +198,8 @@ nestea_server_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
-endif BUILD_EXCEPTIONS
+endif !BUILD_MINIMUM_CORBA
+endif !BUILD_ACE_FOR_TAO
 
 ## Clean up template repositories, etc.
 clean-local:

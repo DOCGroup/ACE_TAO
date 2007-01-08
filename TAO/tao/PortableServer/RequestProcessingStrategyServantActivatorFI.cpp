@@ -1,18 +1,16 @@
 // $Id$
 
-#include "tao/orbconf.h"
+#include "tao/PortableServer/RequestProcessingStrategyServantActivatorFI.h"
+#include "tao/PortableServer/RequestProcessingStrategy.h"
+#include "tao/PortableServer/RequestProcessingStrategyServantActivator.h"
+#include "ace/Dynamic_Service.h"
+#include "ace/Log_Msg.h"
 
 ACE_RCSID (PortableServer,
            RequestProcessingStrategyServantActivatorFactoryImpl,
            "$Id$")
 
 #if (TAO_HAS_MINIMUM_POA == 0) && !defined (CORBA_E_COMPACT) && !defined (CORBA_E_MICRO)
-
-#include "tao/PortableServer/RequestProcessingStrategyServantActivatorFI.h"
-#include "tao/PortableServer/RequestProcessingStrategy.h"
-#include "tao/PortableServer/RequestProcessingStrategyServantActivator.h"
-#include "ace/Dynamic_Service.h"
-#include "ace/Log_Msg.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

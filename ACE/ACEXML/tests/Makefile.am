@@ -6,7 +6,7 @@
 ## this file will be lost the next time it is generated.
 ##
 ## MPC Command:
-## ./bin/mwc.pl -type automake -noreldefs ACE.mwc
+## /acebuilds/ACE_wrappers-repository/bin/mwc.pl -include /acebuilds/MPC/config -include /acebuilds/MPC/templates -feature_file /acebuilds/ACE_wrappers-repository/local.features -noreldefs -type automake -exclude build,Kokyu
 
 ACE_BUILDDIR = $(top_builddir)
 ACE_ROOT = $(top_srcdir)
@@ -21,7 +21,6 @@ noinst_PROGRAMS =
 
 if BUILD_ACEXML
 if !BUILD_ACE_FOR_TAO
-
 noinst_PROGRAMS += ContentHandler_Test
 
 ContentHandler_Test_CPPFLAGS = \
@@ -29,39 +28,13 @@ ContentHandler_Test_CPPFLAGS = \
   -I$(ACE_BUILDDIR) \
   -I$(ACE_ROOT)/ACEXML/common
 
-if BUILD_ZLIB
-if BUILD_ZZIP
-ContentHandler_Test_CPPFLAGS += \
-  $(ACE_ZZIP_CPPFLAGS) \
-  $(ACE_ZLIB_CPPFLAGS)
-endif BUILD_ZZIP
-endif BUILD_ZLIB
-
 ContentHandler_Test_SOURCES = \
   ContentHandler_Test.cpp
-
-ContentHandler_Test_LDFLAGS =
-
-if BUILD_ZLIB
-if BUILD_ZZIP
-ContentHandler_Test_LDFLAGS += \
-  $(ACE_ZZIP_LDFLAGS) \
-  $(ACE_ZLIB_LDFLAGS)
-endif BUILD_ZZIP
-endif BUILD_ZLIB
 
 ContentHandler_Test_LDADD = \
   $(ACE_BUILDDIR)/ACEXML/parser/parser/libACEXML_Parser.la \
   $(ACE_BUILDDIR)/ACEXML/common/libACEXML.la \
   $(ACE_BUILDDIR)/ace/libACE.la
-
-if BUILD_ZLIB
-if BUILD_ZZIP
-ContentHandler_Test_LDADD += \
-  $(ACE_ZZIP_LIBS) \
-  $(ACE_ZLIB_LIBS)
-endif BUILD_ZZIP
-endif BUILD_ZLIB
 
 endif !BUILD_ACE_FOR_TAO
 endif BUILD_ACEXML
@@ -70,7 +43,6 @@ endif BUILD_ACEXML
 
 if BUILD_ACEXML
 if !BUILD_ACE_FOR_TAO
-
 noinst_PROGRAMS += HttpCharStream_Test
 
 HttpCharStream_Test_CPPFLAGS = \
@@ -78,39 +50,13 @@ HttpCharStream_Test_CPPFLAGS = \
   -I$(ACE_BUILDDIR) \
   -I$(ACE_ROOT)/ACEXML/common
 
-if BUILD_ZLIB
-if BUILD_ZZIP
-HttpCharStream_Test_CPPFLAGS += \
-  $(ACE_ZZIP_CPPFLAGS) \
-  $(ACE_ZLIB_CPPFLAGS)
-endif BUILD_ZZIP
-endif BUILD_ZLIB
-
 HttpCharStream_Test_SOURCES = \
   HttpCharStream_Test.cpp
-
-HttpCharStream_Test_LDFLAGS =
-
-if BUILD_ZLIB
-if BUILD_ZZIP
-HttpCharStream_Test_LDFLAGS += \
-  $(ACE_ZZIP_LDFLAGS) \
-  $(ACE_ZLIB_LDFLAGS)
-endif BUILD_ZZIP
-endif BUILD_ZLIB
 
 HttpCharStream_Test_LDADD = \
   $(ACE_BUILDDIR)/ACEXML/parser/parser/libACEXML_Parser.la \
   $(ACE_BUILDDIR)/ACEXML/common/libACEXML.la \
   $(ACE_BUILDDIR)/ace/libACE.la
-
-if BUILD_ZLIB
-if BUILD_ZZIP
-HttpCharStream_Test_LDADD += \
-  $(ACE_ZZIP_LIBS) \
-  $(ACE_ZLIB_LIBS)
-endif BUILD_ZZIP
-endif BUILD_ZLIB
 
 endif !BUILD_ACE_FOR_TAO
 endif BUILD_ACEXML
@@ -119,7 +65,6 @@ endif BUILD_ACEXML
 
 if BUILD_ACEXML
 if !BUILD_ACE_FOR_TAO
-
 noinst_PROGRAMS += NamespaceSupport_Test
 
 NamespaceSupport_Test_CPPFLAGS = \
@@ -127,39 +72,13 @@ NamespaceSupport_Test_CPPFLAGS = \
   -I$(ACE_BUILDDIR) \
   -I$(ACE_ROOT)/ACEXML/common
 
-if BUILD_ZLIB
-if BUILD_ZZIP
-NamespaceSupport_Test_CPPFLAGS += \
-  $(ACE_ZZIP_CPPFLAGS) \
-  $(ACE_ZLIB_CPPFLAGS)
-endif BUILD_ZZIP
-endif BUILD_ZLIB
-
 NamespaceSupport_Test_SOURCES = \
   NamespaceSupport_Test.cpp
-
-NamespaceSupport_Test_LDFLAGS =
-
-if BUILD_ZLIB
-if BUILD_ZZIP
-NamespaceSupport_Test_LDFLAGS += \
-  $(ACE_ZZIP_LDFLAGS) \
-  $(ACE_ZLIB_LDFLAGS)
-endif BUILD_ZZIP
-endif BUILD_ZLIB
 
 NamespaceSupport_Test_LDADD = \
   $(ACE_BUILDDIR)/ACEXML/parser/parser/libACEXML_Parser.la \
   $(ACE_BUILDDIR)/ACEXML/common/libACEXML.la \
   $(ACE_BUILDDIR)/ace/libACE.la
-
-if BUILD_ZLIB
-if BUILD_ZZIP
-NamespaceSupport_Test_LDADD += \
-  $(ACE_ZZIP_LIBS) \
-  $(ACE_ZLIB_LIBS)
-endif BUILD_ZZIP
-endif BUILD_ZLIB
 
 endif !BUILD_ACE_FOR_TAO
 endif BUILD_ACEXML
@@ -168,7 +87,6 @@ endif BUILD_ACEXML
 
 if BUILD_ACEXML
 if !BUILD_ACE_FOR_TAO
-
 noinst_PROGRAMS += Transcoder_Test
 
 Transcoder_Test_CPPFLAGS = \
@@ -176,39 +94,13 @@ Transcoder_Test_CPPFLAGS = \
   -I$(ACE_BUILDDIR) \
   -I$(ACE_ROOT)/ACEXML/common
 
-if BUILD_ZLIB
-if BUILD_ZZIP
-Transcoder_Test_CPPFLAGS += \
-  $(ACE_ZZIP_CPPFLAGS) \
-  $(ACE_ZLIB_CPPFLAGS)
-endif BUILD_ZZIP
-endif BUILD_ZLIB
-
 Transcoder_Test_SOURCES = \
   Transcoder_Test.cpp
-
-Transcoder_Test_LDFLAGS = 
-
-if BUILD_ZLIB
-if BUILD_ZZIP
-Transcoder_Test_LDFLAGS += \
-  $(ACE_ZZIP_LDFLAGS) \
-  $(ACE_ZLIB_LDFLAGS)
-endif BUILD_ZZIP
-endif BUILD_ZLIB
 
 Transcoder_Test_LDADD = \
   $(ACE_BUILDDIR)/ACEXML/parser/parser/libACEXML_Parser.la \
   $(ACE_BUILDDIR)/ACEXML/common/libACEXML.la \
   $(ACE_BUILDDIR)/ace/libACE.la
-
-if BUILD_ZLIB
-if BUILD_ZZIP
-Transcoder_Test_LDADD += \
-  $(ACE_ZZIP_LIBS) \
-  $(ACE_ZLIB_LIBS)
-endif BUILD_ZZIP
-endif BUILD_ZLIB
 
 endif !BUILD_ACE_FOR_TAO
 endif BUILD_ACEXML

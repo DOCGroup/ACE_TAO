@@ -48,16 +48,14 @@ CIAO::MonitorController::MonitorController (
     orb_ (orb),
     initial_domain_ (domain),
     node_mgr_ (node_mgr),
-    monitor_cpu_usage_ (false),
-    add_component_pid_ (true)
+    monitor_cpu_usage_ (0),
+    add_component_pid_ (1)
 {
 }
 
 int
 CIAO::MonitorController::svc (void)
 {
-  // @todo. Investigate whether we can't use the reactor with a timer
-  // eventhandler for this monitor controller, would safe us a thread
   ACE_DLL dll;
 
   // Forming the library name.
@@ -107,11 +105,12 @@ CIAO::MonitorController::svc (void)
     for (unsigned int i = 0;i < initial_domain_.node[0].resource.length ();i++)
       {
         if (!strcmp (initial_domain_.node[0].resource[i].name, "Processor"))
-          monitor_cpu_usage_ = true;
+          monitor_cpu_usage_ = 1;
       }
 
     // Wait for system to stabilize itself
     ACE_OS::sleep (interval);
+
 
     // The loop in which UpdateData is called
     while (!terminating ())
@@ -122,12 +121,14 @@ CIAO::MonitorController::svc (void)
 
         // if monitoring of cpu is enable , monitor , else dont do
         // anything
-        ::Deployment::Domain* domain = 0;
+        ::Deployment::Domain* domain;
 
         if (monitor_cpu_usage_)
           domain = monitor_->get_current_data ();
         else
           domain = &initial_domain_;
+
+
 
         // ****** add component data *******************
 
@@ -173,7 +174,7 @@ CIAO::MonitorController::svc (void)
                 //                            CORBA::Long (cids.process_id_)));
               }
             // set the add_component_pid_ to 0
-            add_component_pid_ = false;
+            add_component_pid_ = 0;
           }
 
         //******add compoennt data

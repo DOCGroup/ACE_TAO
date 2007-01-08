@@ -117,7 +117,9 @@ be_visitor_component_ch::visit_component (be_component *node)
       << "static " << node->local_name () << "_ptr " << "_duplicate ("
       << node->local_name () << "_ptr obj);" << be_nl << be_nl
       << "static " << node->local_name () << "_ptr "
-      << "_narrow (::CORBA::Object_ptr obj);" << be_nl;
+      << "_narrow (" << be_idt << be_idt_nl
+      << "::CORBA::Object_ptr obj" << env_dflts << be_uidt_nl
+      << ");" << be_uidt_nl << be_nl;
 
   // This method is defined in the header file to workaround old
   // g++ problems.
@@ -164,7 +166,9 @@ be_visitor_component_ch::visit_component (be_component *node)
     }
 
   *os << be_nl << be_nl
-      << "virtual ::CORBA::Boolean _is_a (const char *type_id);";
+      << "virtual ::CORBA::Boolean _is_a (" << be_idt << be_idt_nl
+      << "const char *type_id" << env_dflts << be_uidt_nl
+      << ");" << be_uidt;
 
   // The _interface_repository_id method.
   *os << be_nl << be_nl

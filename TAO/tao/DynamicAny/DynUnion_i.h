@@ -178,7 +178,8 @@ public:
 private:
   /// Code common to the constructor from an Any arg and the member
   /// function from_any().
-  void set_from_any (const CORBA::Any &any
+  void set_from_any (const CORBA::Any &any,
+                     CORBA::Boolean from_factory
                      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((
         CORBA::SystemException,

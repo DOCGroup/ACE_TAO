@@ -13,14 +13,18 @@ ACE_ROOT = $(top_srcdir)/..
 TAO_BUILDDIR = $(top_builddir)
 TAO_IDL = ACE_ROOT=$(ACE_ROOT) TAO_ROOT=$(TAO_ROOT) $(TAO_BUILDDIR)/TAO_IDL/tao_idl
 TAO_IDL_DEP = $(TAO_BUILDDIR)/TAO_IDL/tao_idl
-TAO_IDLFLAGS = -Wb,pre_include=ace/pre.h -Wb,post_include=ace/post.h -I$(TAO_ROOT) -I$(srcdir) -g $(ACE_BUILDDIR)/apps/gperf/src/gperf
+TAO_IDLFLAGS = -Ge 1 -Wb,pre_include=ace/pre.h -Wb,post_include=ace/post.h -I$(TAO_ROOT) -I$(srcdir) -g $(ACE_BUILDDIR)/apps/gperf/src/gperf
 TAO_ROOT = $(top_srcdir)
 
+CLEANFILES =
 noinst_PROGRAMS =
+BUILT_SOURCES =
 
 ## Makefile.ORT_Idl.am
 
-BUILT_SOURCES = \
+if !BUILD_MINIMUM_CORBA
+
+BUILT_SOURCES += \
   GatewayC.cpp \
   GatewayC.h \
   GatewayC.inl \
@@ -28,7 +32,7 @@ BUILT_SOURCES = \
   GatewayS.h \
   GatewayS.inl
 
-CLEANFILES = \
+CLEANFILES += \
   Gateway-stamp \
   GatewayC.cpp \
   GatewayC.h \
@@ -89,48 +93,18 @@ sum_server-stamp: $(srcdir)/sum_server.idl $(TAO_IDL_DEP)
 	$(TAO_IDL) $(TAO_IDLFLAGS) -Sa -St $(srcdir)/sum_server.idl
 	@touch $@
 
+
 noinst_HEADERS = \
   Gateway.idl \
   ObjectReferenceFactory.idl \
   sum_server.idl
 
-## Makefile.ORT_Client.am
-
-if BUILD_EXCEPTIONS
-
-noinst_PROGRAMS += client
-
-client_CPPFLAGS = \
-  -I$(ACE_ROOT) \
-  -I$(ACE_BUILDDIR) \
-  -I$(TAO_ROOT) \
-  -I$(TAO_BUILDDIR) \
-  -I$(TAO_ROOT)/orbsvcs \
-  -I$(TAO_BUILDDIR)/orbsvcs \
-  -DTAO_HAS_TYPED_EVENT_CHANNEL
-
-client_SOURCES = \
-  client.cpp \
-  sum_serverC.cpp \
-  Gateway_ObjRef_Factory.h \
-  Gateway_i.h \
-  Object_Factory_i.h \
-  Server_IORInterceptor.h \
-  Server_IORInterceptor_ORBInitializer.h \
-  sum_server_i.h
-
-client_LDADD = \
-  $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosEvent.la \
-  $(TAO_BUILDDIR)/tao/libTAO_AnyTypeCode.la \
-  $(TAO_BUILDDIR)/tao/libTAO.la \
-  $(ACE_BUILDDIR)/ace/libACE.la
-
-endif BUILD_EXCEPTIONS
+endif !BUILD_MINIMUM_CORBA
 
 ## Makefile.ORT_Gateway.am
 
 if BUILD_CORBA_MESSAGING
-if BUILD_EXCEPTIONS
+if !BUILD_MINIMUM_CORBA
 
 noinst_PROGRAMS += gateway_server
 
@@ -161,13 +135,13 @@ gateway_server_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
-endif BUILD_EXCEPTIONS
+endif !BUILD_MINIMUM_CORBA
 endif BUILD_CORBA_MESSAGING
 
 ## Makefile.ORT_Server.am
 
 if BUILD_CORBA_MESSAGING
-if BUILD_EXCEPTIONS
+if !BUILD_MINIMUM_CORBA
 
 noinst_PROGRAMS += server
 
@@ -206,8 +180,41 @@ server_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
-endif BUILD_EXCEPTIONS
+endif !BUILD_MINIMUM_CORBA
 endif BUILD_CORBA_MESSAGING
+
+## Makefile.ORT_Client.am
+
+if !BUILD_MINIMUM_CORBA
+
+noinst_PROGRAMS += client
+
+client_CPPFLAGS = \
+  -I$(ACE_ROOT) \
+  -I$(ACE_BUILDDIR) \
+  -I$(TAO_ROOT) \
+  -I$(TAO_BUILDDIR) \
+  -I$(TAO_ROOT)/orbsvcs \
+  -I$(TAO_BUILDDIR)/orbsvcs \
+  -DTAO_HAS_TYPED_EVENT_CHANNEL
+
+client_SOURCES = \
+  client.cpp \
+  sum_serverC.cpp \
+  Gateway_ObjRef_Factory.h \
+  Gateway_i.h \
+  Object_Factory_i.h \
+  Server_IORInterceptor.h \
+  Server_IORInterceptor_ORBInitializer.h \
+  sum_server_i.h
+
+client_LDADD = \
+  $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosEvent.la \
+  $(TAO_BUILDDIR)/tao/libTAO_AnyTypeCode.la \
+  $(TAO_BUILDDIR)/tao/libTAO.la \
+  $(ACE_BUILDDIR)/ace/libACE.la
+
+endif !BUILD_MINIMUM_CORBA
 
 ## Clean up template repositories, etc.
 clean-local:

@@ -1,8 +1,7 @@
 // $Id$
 
 #include "Container_Impl.h"
-#include "ciao/CCM_StandardConfiguratorC.h"
-#include "ciao/CCM_KeylessCCMHomeC.h"
+#include "ciao/CCM_ComponentC.h" // for calling StandardConfigurator interface
 
 #include "orbsvcs/CosNamingC.h"
 
@@ -45,7 +44,7 @@ CIAO::Container_Impl::init (const CORBA::PolicyList *policies
     {
       ACE_NEW_THROW_EX (this->container_,
                         CIAO::Session_Container (this->orb_.in (), this),
-                        CORBA::NO_MEMORY ());
+                        CORBA::INTERNAL ());
       ACE_CHECK_RETURN (-1);
     }
   else
@@ -53,7 +52,7 @@ CIAO::Container_Impl::init (const CORBA::PolicyList *policies
       ACE_NEW_THROW_EX (this->container_,
                         CIAO::Session_Container (this->orb_.in (), this, 1,
                                                  this->static_entrypts_maps_),
-                        CORBA::NO_MEMORY ());
+                        CORBA::INTERNAL ());
       ACE_CHECK_RETURN (-1);
     }
 
@@ -262,7 +261,7 @@ CIAO::Container_Impl::properties (ACE_ENV_SINGLE_ARG_DECL)
 
   ACE_NEW_THROW_EX (retval,
                     ::Deployment::Properties,
-                    CORBA::NO_MEMORY ());
+                    CORBA::INTERNAL ());
   ACE_CHECK_RETURN (0);
 
   *retval = this->properties_;
@@ -367,6 +366,35 @@ CIAO::Container_Impl::remove_home (const char * comp_ins_name
   // @@ Still need to remove the home if the previous operation fails?
   if (this->home_map_.unbind (str) == -1)
     ACE_THROW (::Components::RemoveFailure ());
+}
+
+::Components::CCMHomes *
+CIAO::Container_Impl::get_homes (ACE_ENV_SINGLE_ARG_DECL)
+  ACE_THROW_SPEC ((CORBA::SystemException))
+{
+  CIAO_TRACE ("CIAO::Container_Impl::get_homes");
+  Components::CCMHomes * tmp = 0;
+  ACE_NEW_THROW_EX (tmp,
+                    Components::CCMHomes (),
+                    CORBA::NO_MEMORY ());
+  ACE_CHECK_RETURN (0);
+
+  Components::CCMHomes_var retval (tmp);
+
+  CORBA::ULong const len = this->home_map_.current_size ();
+  retval->length (len);
+
+
+  CORBA::ULong i = 0;
+  const Home_Iterator end = this->home_map_.end ();
+  for (Home_Iterator iter (this->home_map_.begin ());
+       iter != end;
+       ++iter, ++i)
+  {
+    retval[i] = Components::CCMHome::_duplicate ( (*iter).int_id_);
+  }
+
+  return retval._retn ();
 }
 
 // Remove all homes and components
@@ -485,7 +513,7 @@ CIAO::Container_Impl::remove_component (const char * comp_ins_name
   if (this->naming_map_.find (str, naming_context) == 0)
     {
 
-      bool const result =
+      bool result =
         unregister_with_ns (
                             naming_context.c_str (),
                             this->orb_.in ()

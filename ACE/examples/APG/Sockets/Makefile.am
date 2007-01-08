@@ -6,13 +6,12 @@
 ## this file will be lost the next time it is generated.
 ##
 ## MPC Command:
-## ./bin/mwc.pl -type automake -noreldefs ACE.mwc
+## /acebuilds/ACE_wrappers-repository/bin/mwc.pl -include /acebuilds/MPC/config -include /acebuilds/MPC/templates -feature_file /acebuilds/ACE_wrappers-repository/local.features -noreldefs -type automake -exclude build,Kokyu
 
 ACE_BUILDDIR = $(top_builddir)
 ACE_ROOT = $(top_srcdir)
 
 ## Makefile.Sockets_Basic.am
-
 noinst_PROGRAMS = Basic
 
 Basic_CPPFLAGS = \
@@ -26,7 +25,6 @@ Basic_LDADD = \
   $(ACE_BUILDDIR)/ace/libACE.la
 
 ## Makefile.Sockets_Basic_Robust.am
-
 noinst_PROGRAMS += Basic_Robust
 
 Basic_Robust_CPPFLAGS = \
@@ -40,7 +38,6 @@ Basic_Robust_LDADD = \
   $(ACE_BUILDDIR)/ace/libACE.la
 
 ## Makefile.Sockets_Iovec.am
-
 noinst_PROGRAMS += Iovec
 
 Iovec_CPPFLAGS = \
@@ -54,7 +51,6 @@ Iovec_LDADD = \
   $(ACE_BUILDDIR)/ace/libACE.la
 
 ## Makefile.Sockets_Server.am
-
 noinst_PROGRAMS += Server
 
 Server_CPPFLAGS = \

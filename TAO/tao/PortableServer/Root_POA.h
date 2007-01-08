@@ -471,7 +471,7 @@ public:
    */
   bool is_servant_activation_allowed (
     PortableServer::Servant servant,
-    bool &wait_occurred_restart_call);
+    int &wait_occurred_restart_call);
 
   int rebind_using_user_id_and_system_id (
     PortableServer::Servant servant,
@@ -488,7 +488,7 @@ public:
 
   int is_servant_active (
     PortableServer::Servant servant,
-    bool &wait_occurred_restart_call);
+    int &wait_occurred_restart_call);
 
   void deactivate_object_i (const PortableServer::ObjectId &oid
                             ACE_ENV_ARG_DECL)
@@ -547,7 +547,7 @@ public:
   PortableServer::ObjectId *activate_object_i (
       PortableServer::Servant p_servant,
       CORBA::Short priority,
-      bool &wait_occurred_restart_call
+      int &wait_occurred_restart_call
       ACE_ENV_ARG_DECL
     )
     ACE_THROW_SPEC ((CORBA::SystemException,
@@ -720,7 +720,7 @@ protected:
   void activate_object_with_id_i (const PortableServer::ObjectId &id,
                                   PortableServer::Servant p_servant,
                                   CORBA::Short priority,
-                                  bool &wait_occurred_restart_call
+                                  int &wait_occurred_restart_call
                                   ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      PortableServer::POA::ServantAlreadyActive,
@@ -837,7 +837,7 @@ protected:
       const PortableServer::ObjectId &id,
       TAO::Portable_Server::Servant_Upcall &servant_upcall,
       TAO::Portable_Server::POA_Current_Impl &poa_current_impl,
-      bool &wait_occurred_restart_call
+      int &wait_occurred_restart_call
       ACE_ENV_ARG_DECL
     );
 

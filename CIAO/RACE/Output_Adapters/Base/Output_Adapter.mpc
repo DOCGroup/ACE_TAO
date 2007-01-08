@@ -6,7 +6,8 @@ project(Output_Adapter_stub): ciao_deployment_stub {
 
   after += Output_Adapter_Interface_stub
   sharedname = Output_Adapter_stub
-  idlflags += -Wb,stub_export_macro=OUTPUT_ADAPTER_STUB_Export \
+  idlflags += -Sc \
+              -Wb,stub_export_macro=OUTPUT_ADAPTER_STUB_Export \
               -Wb,stub_export_include=Output_Adapter_stub_export.h \
               -Wb,skel_export_macro=OUTPUT_ADAPTER_SVNT_Export \
               -Wb,skel_export_include=Output_Adapter_svnt_export.h
@@ -36,7 +37,8 @@ project(Output_Adapter_svnt) : ciao_servant_dnc {
   sharedname  = Output_Adapter_svnt
   libs  +=  Output_Adapter_stub Output_Adapter_Interface_svnt Output_Adapter_Interface_stub
 
-  idlflags += -Wb,stub_export_macro=OUTPUT_ADAPTER_STUB_Export \
+  idlflags += -Sc \
+              -Wb,stub_export_macro=OUTPUT_ADAPTER_STUB_Export \
               -Wb,stub_export_include=Output_Adapter_stub_export.h \
               -Wb,skel_export_macro=OUTPUT_ADAPTER_SVNT_Export \
               -Wb,skel_export_include=Output_Adapter_svnt_export.h

@@ -98,6 +98,9 @@ public:
   static const char *be_get_server_inline_fname (
       bool base_name_only = 0
     );
+  static const char *be_get_server_template_inline_fname (
+      bool base_name_only = 0
+    );
   static const char *be_get_anyop_source_fname (
       bool base_name_only = 0
     );
@@ -130,6 +133,8 @@ public:
     );
   static const char *be_get_server_inline (UTL_String *idl_file_name,
                                            bool base_name_only = 0);
+  static const char *be_get_server_template_inline (UTL_String *idl_file_name,
+                                                    bool base_name_only = 0);
   static const char *be_get_anyop_header (UTL_String *idl_file_name,
                                           bool base_name_only = 0);
   static const char *be_get_anyop_source (UTL_String *idl_file_name,
@@ -320,6 +325,12 @@ public:
   const char* server_inline_ending (void) const;
   // Get the server_inline_ending.
 
+  void server_template_inline_ending (const char* s);
+  //  Set the server_template_inline_ending.
+
+  const char* server_template_inline_ending (void) const;
+  // Get the server_template_inline_ending.
+
   void anyop_header_ending (const char* s);
   // Set the anyop_header_ending.
 
@@ -328,12 +339,6 @@ public:
 
   bool use_clonable_in_args (void) const;
   // Get the clonable_in_args setting.
-
-  bool gen_template_export (void) const;
-  // Get the gen_seq_template_export_ member.
-
-  void gen_template_export (bool val);
-  // Set the gen_seq_template_export_ member.
 
   const char* anyop_header_ending (void) const;
   // Get the anyop_header_ending.
@@ -423,6 +428,12 @@ public:
 
   bool gen_direct_collocation (void) const;
   // Check if we want to generate Direct collocation stubs.
+
+  void exception_support (bool);
+  // Set real C++ exception support.
+
+  bool exception_support (void) const;
+  // Check if real C++ exception support is enabled.
 
   void use_raw_throw (bool);
   // Set replacement of 'ACE_THROW_SPEC' with 'throw'.
@@ -650,6 +661,9 @@ private:
   // Server's inline file name ending. Default is "S.i".
   char* server_inline_ending_;
 
+  // Server's template inline file name ending. Default is "S_T.i".
+  char* server_template_inline_ending_;
+
   // Anyop header file name ending. Default is "A.h".
   char* anyop_hdr_ending_;
 
@@ -697,6 +711,9 @@ private:
 
   bool gen_direct_collocation_;
   // are we generating Direct collocated stubs?
+
+  bool exception_support_;
+  // do we support real C++ exceptions (strict mapping) for stubs/skeletons?
 
   bool use_raw_throw_;
   // Another possible option if the above is TRUE.
@@ -785,10 +802,6 @@ private:
 
   bool use_clonable_in_args_;
   // Use in_clonable_arg_val instead of in_arg_val?
-
-  bool gen_template_export_;
-  // Generate explicit export for Visual Studio bug workaround,
-  // needed only in TAO basic sequence *C.h files.
 };
 
 #endif /* _BE_GLOBAL_H */

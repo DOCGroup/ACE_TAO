@@ -1,5 +1,5 @@
 //$Id$
-project : taolib, install, core_anytypecode, tao_versioning_idl_defaults {
+project : taolib, core, core_anytypecode, tao_versioning_idl_defaults {
   sharedname    = TAO_CodecFactory
   dynamicflags  = TAO_CODECFACTORY_BUILD_DLL
 
@@ -28,7 +28,7 @@ project : taolib, install, core_anytypecode, tao_versioning_idl_defaults {
   }
 
   IDL_Files {
-    idlflags += -Gp -Gd -Sci -SS -Sorb -Sal -GX \
+    idlflags += -Gp -Gd -Ge 1 -Sci -SS -Sorb -Sal -GX \
                 -Wb,export_macro=TAO_CodecFactory_Export \
                 -Wb,export_include=tao/CodecFactory/codecfactory_export.h \
                 -Wb,include_guard=TAO_CODECFACTORY_SAFE_INCLUDE \
@@ -39,7 +39,7 @@ project : taolib, install, core_anytypecode, tao_versioning_idl_defaults {
   }
 
   IDL_Files {
-    idlflags += -Sci -SS -Sorb -Sa -GX \
+    idlflags += -Ge 1 -Sci -SS -Sorb -Sa -GX \
                 -Wb,export_macro=TAO_CodecFactory_Export \
                 -Wb,export_include=tao/CodecFactory/codecfactory_export.h \
                 -Wb,unique_include=tao/CodecFactory/CodecFactory.h \

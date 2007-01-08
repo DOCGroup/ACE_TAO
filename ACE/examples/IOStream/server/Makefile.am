@@ -6,25 +6,23 @@
 ## this file will be lost the next time it is generated.
 ##
 ## MPC Command:
-## ./bin/mwc.pl -type automake -noreldefs ACE.mwc
+## /acebuilds/ACE_wrappers-repository/bin/mwc.pl -include /acebuilds/MPC/config -include /acebuilds/MPC/templates -feature_file /acebuilds/ACE_wrappers-repository/local.features -noreldefs -type automake -exclude build,Kokyu
 
 ACE_BUILDDIR = $(top_builddir)
 ACE_ROOT = $(top_srcdir)
 
 ## Makefile.IOStream_Server.am
+noinst_LTLIBRARIES = libIOStream_Server.la
 
-noinst_PROGRAMS = iostream_server
-
-iostream_server_CPPFLAGS = \
+libIOStream_Server_la_CPPFLAGS = \
   -I$(ACE_ROOT) \
   -I$(ACE_BUILDDIR)
 
-iostream_server_SOURCES = \
-  iostream_server.cpp \
-  iostream_server.h
+libIOStream_Server_la_SOURCES = \
+  iostream_server.cpp
 
-iostream_server_LDADD = \
-  $(ACE_BUILDDIR)/ace/libACE.la
+noinst_HEADERS = \
+  iostream_server.h
 
 ## Clean up template repositories, etc.
 clean-local:

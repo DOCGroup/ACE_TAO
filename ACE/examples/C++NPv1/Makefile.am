@@ -6,7 +6,7 @@
 ## this file will be lost the next time it is generated.
 ##
 ## MPC Command:
-## ./bin/mwc.pl -type automake -noreldefs ACE.mwc
+## /acebuilds/ACE_wrappers-repository/bin/mwc.pl -include /acebuilds/MPC/config -include /acebuilds/MPC/templates -feature_file /acebuilds/ACE_wrappers-repository/local.features -noreldefs -type automake -exclude build,Kokyu
 
 ACE_BUILDDIR = $(top_builddir)
 ACE_ROOT = $(top_srcdir)
@@ -17,7 +17,6 @@ noinst_PROGRAMS =
 
 if !BUILD_ACE_FOR_TAO
 if !BUILD_USES_WCHAR
-
 noinst_PROGRAMS += iterative_logging_server
 
 iterative_logging_server_CPPFLAGS = \
@@ -41,7 +40,6 @@ endif !BUILD_ACE_FOR_TAO
 ## Makefile.C++NPv1_Logging_Client.am
 
 if !BUILD_USES_WCHAR
-
 noinst_PROGRAMS += logging_client
 
 logging_client_CPPFLAGS = \
@@ -68,7 +66,6 @@ endif !BUILD_USES_WCHAR
 
 if !BUILD_ACE_FOR_TAO
 if !BUILD_USES_WCHAR
-
 noinst_PROGRAMS += ppc_logging_server
 
 ppc_logging_server_CPPFLAGS = \
@@ -93,7 +90,6 @@ endif !BUILD_ACE_FOR_TAO
 
 if !BUILD_ACE_FOR_TAO
 if !BUILD_USES_WCHAR
-
 noinst_PROGRAMS += RTTPC_logging_server
 
 RTTPC_logging_server_CPPFLAGS = \
@@ -118,7 +114,6 @@ endif !BUILD_ACE_FOR_TAO
 
 if !BUILD_ACE_FOR_TAO
 if !BUILD_USES_WCHAR
-
 noinst_PROGRAMS += reactive_logging_server
 
 reactive_logging_server_CPPFLAGS = \
@@ -143,7 +138,6 @@ endif !BUILD_ACE_FOR_TAO
 
 if !BUILD_ACE_FOR_TAO
 if !BUILD_USES_WCHAR
-
 noinst_PROGRAMS += reactive_logging_server_ex
 
 reactive_logging_server_ex_CPPFLAGS = \
@@ -168,7 +162,6 @@ endif !BUILD_ACE_FOR_TAO
 
 if !BUILD_ACE_FOR_TAO
 if !BUILD_USES_WCHAR
-
 noinst_PROGRAMS += tpc_logging_server
 
 tpc_logging_server_CPPFLAGS = \

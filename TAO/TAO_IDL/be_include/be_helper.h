@@ -71,6 +71,30 @@ extern const TAO_UNINDENT be_uidt;
 extern const TAO_UNINDENT be_uidt_nl;
 
 // A structure to inform TAO_OutStream's << operator to
+// conditionally output a newline and some form of "ACE_ENV_*".
+struct TAO_ENV_ARG
+{
+  TAO_ENV_ARG (bool with_defaults = false,
+               bool single = false,
+               bool arg = false,
+               bool not_used = false);
+
+  bool with_defaults_;
+  bool single_;
+  bool arg_;
+  bool not_used_;
+};
+
+extern const TAO_ENV_ARG env_decl;
+extern const TAO_ENV_ARG env_dflts;
+extern const TAO_ENV_ARG env_sngl;
+extern const TAO_ENV_ARG env_sngl_dflts;
+extern const TAO_ENV_ARG env_not;
+extern const TAO_ENV_ARG env_sngl_not;
+extern const TAO_ENV_ARG env_arg;
+extern const TAO_ENV_ARG env_sngl_arg;
+
+// A structure to inform TAO_OutStream's << operator to
 // conditionally output a newline and some form of "ACE_CHECK".
 struct TAO_ACE_CHECK
 {
@@ -80,6 +104,23 @@ struct TAO_ACE_CHECK
   const char *retval_;
   bool do_return_;
 };
+
+// A dummy structure to inform TAO_OutStream's << operator to
+// conditionally output a newline and "ACE_TRY_CHECK".
+struct TAO_ACE_TRY_CHECK
+{
+  TAO_ACE_TRY_CHECK (void);
+};
+
+// A structure to inform TAO_OutStream's << operator to
+// conditionally output a newline and "ACE_ENDTRY.
+struct TAO_ACE_ENDTRY
+{
+  TAO_ACE_ENDTRY (void);
+};
+
+extern const TAO_ACE_TRY_CHECK ace_try_check;
+extern const TAO_ACE_ENDTRY ace_endtry;
 
 class TAO_OutStream
 {
@@ -194,6 +235,18 @@ public:
   TAO_OutStream &operator<< (const TAO_NL& nl);
   TAO_OutStream &operator<< (const TAO_INDENT& i);
   TAO_OutStream &operator<< (const TAO_UNINDENT& i);
+
+  TAO_OutStream &operator<< (const TAO_ENV_ARG& i);
+  // Conditional and generic output for all forms of "ACE_ENV_*".
+
+  TAO_OutStream &operator<< (const TAO_ACE_CHECK& i);
+  // Conditional and generic output for all forms of "ACE_CHECK".
+
+  TAO_OutStream &operator<< (const TAO_ACE_TRY_CHECK& i);
+  // Conditional and generic output for all forms of "ACE_ENV_*".
+
+  TAO_OutStream &operator<< (const TAO_ACE_ENDTRY& i);
+  // Conditional and generic output for all forms of "ACE_CHECK".
 
   // The following will be provided by specialized classes
 

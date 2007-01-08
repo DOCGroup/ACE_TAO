@@ -21,7 +21,7 @@ TAO_Transport_Descriptor_Interface *
 TAO_Base_Transport_Property::duplicate (void)
 {
   // Get a copy of the underlying endpoint
-  TAO_Endpoint * const endpt = this->endpoint_->duplicate ();
+  TAO_Endpoint *endpt = this->endpoint_->duplicate ();
   if (endpt == 0)
     return 0;
 

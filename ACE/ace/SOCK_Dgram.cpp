@@ -9,7 +9,6 @@
 #include "ace/OS_NS_sys_select.h"
 #include "ace/OS_NS_ctype.h"
 #include "ace/os_include/net/os_if.h"
-#include "ace/Truncate.h"
 
 #if !defined (__ACE_INLINE__)
 #  include "ace/SOCK_Dgram.inl"
@@ -98,23 +97,14 @@ ACE_SOCK_Dgram::recv (iovec *io_vec,
       ACE_NEW_RETURN (io_vec->iov_base,
                       char[inlen],
                       -1);
-      ssize_t rcv_len = ACE_OS::recvfrom (this->get_handle (),
+      io_vec->iov_len = ACE_OS::recvfrom (this->get_handle (),
                                           (char *) io_vec->iov_base,
                                           inlen,
                                           flags,
                                           (sockaddr *) saddr,
                                           &addr_len);
-      if (rcv_len < 0)
-        {
-          delete [] (char *)io_vec->iov_base;
-          io_vec->iov_base = 0;
-        }
-      else
-        {
-          io_vec->iov_len = ACE_Utils::Truncate<size_t> (rcv_len);
-          addr.set_size (addr_len);
-        }
-      return rcv_len;
+      addr.set_size (addr_len);
+      return io_vec->iov_len;
     }
   else
     return 0;
@@ -625,6 +615,8 @@ ACE_SOCK_Dgram::make_multicast_ifaddr (ip_mreq *ret_mreq,
         return -1;
       lmreq.imr_interface.s_addr =
         ACE_HTONL (interface_addr.get_ip_address ());
+#elif defined (ACE_LACKS_IFREQ)
+      // Do nothing
 #else
       ifreq if_address;
 

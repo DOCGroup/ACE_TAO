@@ -18,8 +18,8 @@ noinst_PROGRAMS =
 ## Makefile.CosEC_RtEC_Based_Mult_Cons.am
 
 if BUILD_CORBA_MESSAGING
-if BUILD_EXCEPTIONS
 if !BUILD_ACE_FOR_TAO
+if !BUILD_MINIMUM_CORBA
 
 noinst_PROGRAMS += Consumer
 
@@ -38,16 +38,6 @@ Consumer_SOURCES = \
   Multiple.cpp \
   Consumer.h \
   Multiple.h
-
-../../lib:
-	mkdir -p ../../lib
-
-
-Consumer_DEPENDENCIES = \
- ../../lib
-
-Consumer_LDFLAGS = \
-  -L../../lib
 
 Consumer_LDADD = \
   $(top_builddir)/orbsvcs/examples/CosEC/RtEC_Based/lib/libCosEC_RtEC_Based.la \
@@ -68,15 +58,15 @@ Consumer_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
+endif !BUILD_MINIMUM_CORBA
 endif !BUILD_ACE_FOR_TAO
-endif BUILD_EXCEPTIONS
 endif BUILD_CORBA_MESSAGING
 
 ## Makefile.CosEC_RtEC_Based_Mult_Supp.am
 
 if BUILD_CORBA_MESSAGING
-if BUILD_EXCEPTIONS
 if !BUILD_ACE_FOR_TAO
+if !BUILD_MINIMUM_CORBA
 
 noinst_PROGRAMS += Supplier
 
@@ -95,16 +85,6 @@ Supplier_SOURCES = \
   Supplier.cpp \
   Multiple.h \
   Supplier.h
-
-../../lib:
-	mkdir -p ../../lib
-
-
-Supplier_DEPENDENCIES = \
- ../../lib
-
-Supplier_LDFLAGS = \
-  -L../../lib
 
 Supplier_LDADD = \
   $(top_builddir)/orbsvcs/examples/CosEC/RtEC_Based/lib/libCosEC_RtEC_Based.la \
@@ -125,8 +105,8 @@ Supplier_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
+endif !BUILD_MINIMUM_CORBA
 endif !BUILD_ACE_FOR_TAO
-endif BUILD_EXCEPTIONS
 endif BUILD_CORBA_MESSAGING
 
 ## Clean up template repositories, etc.

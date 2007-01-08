@@ -49,11 +49,6 @@ public:
   /// Dtor
   virtual ~TAO_FT_Service_Callbacks (void);
 
-  /// Select the profile from MProfile as the needs of the services
-  /// may be. Return the profile in <pfile>
-  virtual CORBA::Boolean select_profile (const TAO_MProfile &mprofile,
-                                         TAO_Profile *&pfile);
-
   /// Check whether <obj> is nil or not. FT spec suggests some
   /// extensions for a CORBA::is_nil () operation.
   virtual CORBA::Boolean object_is_nil (CORBA::Object_ptr obj);

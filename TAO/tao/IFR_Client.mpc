@@ -1,5 +1,5 @@
 //$Id$
-project : taolib, install, core_anytypecode, tao_versioning_idl_defaults {
+project : taolib, core, core_anytypecode, tao_versioning_idl_defaults {
   sharedname   = TAO_IFR_Client
   dynamicflags = TAO_IFR_CLIENT_BUILD_DLL
 
@@ -28,7 +28,7 @@ project : taolib, install, core_anytypecode, tao_versioning_idl_defaults {
   }
 
   IDL_Files {
-    idlflags += -SS -GX \
+    idlflags += -SS -Ge 1 -GX \
                 -Wb,stub_export_macro=TAO_IFR_Client_Export \
                 -Wb,stub_export_include=tao/IFR_Client/ifr_client_export.h \
                 -o IFR_Client

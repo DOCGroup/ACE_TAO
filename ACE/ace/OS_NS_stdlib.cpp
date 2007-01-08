@@ -6,8 +6,6 @@ ACE_RCSID (ace,
            OS_NS_stdlib,
            "$Id$")
 
-#include "ace/Default_Constants.h"
-
 #if !defined (ACE_HAS_INLINED_OSCALLS)
 # include "ace/OS_NS_stdlib.inl"
 #endif /* ACE_HAS_INLINED_OSCALLS */
@@ -101,76 +99,6 @@ ACE_OS::getenvstrings (void)
 #else /* ACE_WIN32 */
   ACE_NOTSUP_RETURN (0);
 #endif /* ACE_WIN32 */
-}
-
-// Return a dynamically allocated duplicate of <str>, substituting the
-// environment variables of form $VAR_NAME.  Note that the pointer is
-// allocated with <ACE_OS::malloc> and must be freed by
-// <ACE_OS::free>.
-
-ACE_TCHAR *
-ACE_OS::strenvdup (const ACE_TCHAR *str)
-{
-#if defined (ACE_HAS_WINCE)
-  // WinCE doesn't have environment variables so we just skip it.
-  return ACE_OS::strdup (str);
-#elif defined (ACE_LACKS_ENV)
-  ACE_UNUSED_ARG (str);
-  ACE_NOTSUP_RETURN (0);
-#else
-  const ACE_TCHAR * start = 0;
-  if ((start = ACE_OS::strchr (str, ACE_LIB_TEXT ('$'))) != 0)
-    {
-      ACE_TCHAR buf[ACE_DEFAULT_ARGV_BUFSIZ];
-      size_t var_len = ACE_OS::strcspn (&start[1],
-        ACE_LIB_TEXT ("$~!#%^&*()-+=\\|/?,.;:'\"`[]{} \t\n\r"));
-      ACE_OS::strncpy (buf, &start[1], var_len);
-      buf[var_len++] = ACE_LIB_TEXT ('\0');
-#  if defined (ACE_WIN32)
-      // Always use the ACE_TCHAR for Windows.
-      ACE_TCHAR *temp = ACE_OS::getenv (buf);
-#  else
-      // Use char * for environment on non-Windows.
-      char *temp = ACE_OS::getenv (ACE_TEXT_ALWAYS_CHAR (buf));
-#  endif /* ACE_WIN32 */
-      size_t buf_len = ACE_OS::strlen (str) + 1;
-      if (temp != 0)
-        buf_len += ACE_OS::strlen (temp) - var_len;
-      ACE_TCHAR * buf_p = buf;
-      if (buf_len > ACE_DEFAULT_ARGV_BUFSIZ)
-        {
-          buf_p =
-            (ACE_TCHAR *) ACE_OS::malloc (buf_len * sizeof (ACE_TCHAR));
-          if (buf_p == 0)
-            {
-              errno = ENOMEM;
-              return 0;
-            }
-        }
-      ACE_TCHAR * p = buf_p;
-      size_t len = start - str;
-      ACE_OS::strncpy (p, str, len);
-      p += len;
-      if (temp != 0)
-        {
-#  if defined (ACE_WIN32)
-          p = ACE_OS::strecpy (p, temp) - 1;
-#  else
-          p = ACE_OS::strecpy (p, ACE_TEXT_CHAR_TO_TCHAR (temp)) - 1;
-#  endif /* ACE_WIN32 */
-        }
-      else
-        {
-          ACE_OS::strncpy (p, start, var_len);
-          p += var_len;
-          *p = ACE_LIB_TEXT ('\0');
-        }
-      ACE_OS::strcpy (p, &start[var_len]);
-      return (buf_p == buf) ? ACE_OS::strdup (buf) : buf_p;
-    }
-  else
-    return ACE_OS::strdup (str);
-#endif /* ACE_HAS_WINCE */
 }
 
 #if !defined (ACE_HAS_ITOA)

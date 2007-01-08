@@ -2,34 +2,33 @@
 #ifndef THREAD_TASK_H
 #define THREAD_TASK_H
 
-#include "JobC.h"
-#include "rtschedtestlib_export.h"
-
 #include "tao/RTScheduling/RTScheduler.h"
+//#include "FP_Scheduler.h"
 #include "ace/Task.h"
+#include "DT_Creator.h"
 
 class Task_Stats;
 class DT_Creator;
 
-class RTSCHEDTESTLIB_Export Thread_Task : public ACE_Task <ACE_SYNCH>
+class Thread_Task : public ACE_Task <ACE_SYNCH>
 {
  public:
 
 /*    Thread_Task (int importance, */
-/*           int start_time, */
-/*           int load, */
-/*           DT_Creator *dt_creator); */
+/*  	       int start_time, */
+/*  	       int load, */
+/*  	       DT_Creator *dt_creator); */
 
   Thread_Task (void);
 
   virtual int activate_task (RTScheduling::Current_ptr current,
-                             CORBA::Policy_ptr sched_param,
-                             long flags,
-                             ACE_Time_Value* base_time
-                             ACE_ENV_ARG_DECL_WITH_DEFAULTS) = 0;
-
+			     CORBA::Policy_ptr sched_param,
+			     long flags,
+			     ACE_Time_Value* base_time
+			     ACE_ENV_ARG_DECL_WITH_DEFAULTS) = 0;
+  
   virtual int perform_task (void);
-
+  
   int importance (void);
 
   int start_time (void);
@@ -37,7 +36,7 @@ class RTSCHEDTESTLIB_Export Thread_Task : public ACE_Task <ACE_SYNCH>
   /// = Job get/set
   /// Returns the name of the Job exec'ed by this Task.
   const char* job (void);
-
+  
   /// Sets the Job to exec.
   void job (Job_ptr job);
 

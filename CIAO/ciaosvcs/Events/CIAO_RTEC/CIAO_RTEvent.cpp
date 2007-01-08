@@ -14,9 +14,9 @@
 #include "CIAO_RTEvent.h"
 #include "ciao/CIAO_common.h"
 #include "SimpleAddressServer.h"
-#include "tao/ORB_Core.h"
+#include <tao/ORB_Core.h>
 #include "tao/AnyTypeCode/Any_Unknown_IDL_Type.h"
-#include "orbsvcs/CosNamingC.h"
+#include <orbsvcs/CosNamingC.h>
 
 #include <sstream>
 
@@ -529,7 +529,7 @@ namespace CIAO
   RTEventService::tao_rt_event_channel (ACE_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((::CORBA::SystemException))
   {
-    return this->rt_event_channel_.in ();
+    return this->rt_event_channel_;
   }
 
   //////////////////////////////////////////////////////////////////////

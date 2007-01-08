@@ -74,6 +74,8 @@ be_visitor_operation_argument::post_process (be_decl *bd)
 int
 be_visitor_operation_argument::visit_operation (be_operation *node)
 {
+  TAO_OutStream *os = this->ctx_->stream ();
+
   // All we do is hand over code generation to our scope.
   if (this->visit_scope (node) == -1)
     {
@@ -82,6 +84,33 @@ be_visitor_operation_argument::visit_operation (be_operation *node)
                          "visit_operation - "
                          "codegen for scope failed\n"),
                         -1);
+    }
+
+  // If we are supporting the alternate mapping, we must pass the
+  // ACE_ENV_ARG_PARAMETER as the last parameter.
+  if (!be_global->exception_support ())
+    {
+      switch (this->ctx_->state ())
+        {
+        case TAO_CodeGen::TAO_OPERATION_ARG_UPCALL_SS:
+        case TAO_CodeGen::TAO_OPERATION_COLLOCATED_ARG_UPCALL_SS:
+          // Applicable only to these cases where the actual upcall is made.
+
+          // Use ACE_ENV_SINGLE_ARG_DECL or ACE_ENV_ARG_DECL depending on
+          // whether the operation node has parameters.
+          if (node->argument_count () > 0)
+            {
+              *os << env_arg;
+            }
+          else
+            {
+              *os << env_sngl_arg;
+            }
+
+          break;
+        default:
+          break;
+        }
     }
 
   return 0;

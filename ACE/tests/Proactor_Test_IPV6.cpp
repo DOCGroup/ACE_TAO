@@ -20,7 +20,7 @@ ACE_RCSID (tests,
            Proactor_Test,
            "$Id$")
 
-#if defined (ACE_HAS_THREADS) && (defined (ACE_HAS_WIN32_OVERLAPPED_IO) || defined (ACE_HAS_AIO_CALLS))
+#if defined (ACE_HAS_THREADS) && ((defined (ACE_WIN32) && !defined (ACE_HAS_WINCE)) || (defined (ACE_HAS_AIO_CALLS)))
   // This only works on Win32 platforms and on Unix platforms
   // supporting POSIX aio calls.
 
@@ -50,7 +50,7 @@ ACE_RCSID (tests,
 #include "ace/Atomic_Op.h"
 #include "ace/Synch_Traits.h"
 
-#if defined (ACE_HAS_WIN32_OVERLAPPED_IO)
+#if defined (ACE_WIN32) && !defined (ACE_HAS_WINCE)
 
 #  include "ace/WIN32_Proactor.h"
 
@@ -60,7 +60,7 @@ ACE_RCSID (tests,
 #  include "ace/POSIX_CB_Proactor.h"
 #  include "ace/SUN_Proactor.h"
 
-#endif /* defined (ACE_HAS_WIN32_OVERLAPPED_IO) */
+#endif /* defined (ACE_WIN32) && !defined (ACE_HAS_WINCE) */
 
 #include "Proactor_Test.h"
 
@@ -1678,7 +1678,7 @@ Client::handle_read_stream (const ACE_Asynch_Read_Stream::Result &result)
                     ACE_TEXT ("error"),
                     result.error ()));
 
-#if defined (ACE_WIN32)
+#if (defined (ACE_WIN32) && !defined (ACE_HAS_WINCE))
         char index = 0;
         for (ACE_Message_Block* mb_i = &mb;
              mb_i != 0;
@@ -1694,14 +1694,14 @@ Client::handle_read_stream (const ACE_Asynch_Read_Stream::Result &result)
                         index,
                         mb_i->rd_ptr ()));
           }
-#else /* ACE_WIN32 */
+#else /* (defined (ACE_WIN32) && !defined (ACE_HAS_WINCE)) */
         // write 0 at string end for proper printout
         mb.rd_ptr()[result.bytes_transferred ()]  = '\0'; // for proper printout
         ACE_DEBUG ((LM_DEBUG,
                     ACE_TEXT ("%s = %s\n"),
                     ACE_TEXT ("message_block"),
                     mb.rd_ptr ()));
-#endif /* ACE_WIN32 */
+#endif /* (defined (ACE_WIN32) && !defined (ACE_HAS_WINCE)) */
 
         ACE_DEBUG ((LM_DEBUG,
                     ACE_TEXT ("**** end of message ****************\n")));
@@ -1981,4 +1981,4 @@ run_main (int, ACE_TCHAR *[])
   return 0;
 }
 
-#endif  /* ACE_HAS_WIN32_OVERLAPPED_IO || ACE_HAS_AIO_CALLS */
+#endif  /* ACE_WIN32 && !ACE_HAS_WINCE || ACE_HAS_AIO_CALLS */

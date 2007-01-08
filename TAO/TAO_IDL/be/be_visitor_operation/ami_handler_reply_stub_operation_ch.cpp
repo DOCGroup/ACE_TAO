@@ -74,7 +74,10 @@ be_visitor_operation_ami_handler_reply_stub_operation_ch::visit_operation (
 
       *os << "TAO_InputCDR &_tao_reply_cdr," << be_nl
           << "::Messaging::ReplyHandler_ptr _tao_reply_handler," << be_nl
-          << "::CORBA::ULong reply_status);" << be_uidt;
+          << "::CORBA::ULong reply_status";
+
+      *os << env_dflts << be_uidt_nl
+          << ");" << be_uidt;
     }
 
   return 0;

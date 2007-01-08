@@ -14,7 +14,7 @@
 //   is:
 //
 //     tao_idl
-//        -o orig -GA -Sa -Gp -Gd -Sci
+//        -o orig -GA -Sa -Gp -Gd -Ge 1 -Sci
 //          -Wb,export_macro=TAO_RTScheduler_Export
 //          -Wb,export_include="rtscheduler_export.h"
 //          -Wb,pre_include="ace/pre.h"

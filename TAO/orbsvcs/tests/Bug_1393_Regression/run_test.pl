@@ -14,10 +14,10 @@ $status = 0;
 $ifr_service_bin = "../../IFR_Service";
 
 # The location of the tao_ifr utility binary
-$tao_ifr_bin = "$ENV{ACE_ROOT}/bin";
+$tao_ifr_bin = "../../../../bin";
 
 # The location of the tao_idl utility binary
-$tao_idl_bin = "$ENV{ACE_ROOT}/bin";
+$tao_idl_bin = "../../../../bin";
 
 # The idl file to be used for the test
 $test_idl = PerlACE::LocalFile("test.idl");

@@ -2,7 +2,7 @@
 
 #include "tao/XtResource/XtResource_Factory.h"
 #include "tao/debug.h"
-#include "ace/XtReactor/XtReactor.h"
+#include "ace/XtReactor.h"
 
 ACE_RCSID( TAO_XtResource,
            XtResource_Factory,

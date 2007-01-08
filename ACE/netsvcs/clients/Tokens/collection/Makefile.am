@@ -15,4 +15,4 @@ noinst_PROGRAMS = \
 
 collection_SOURCES = collection.cpp
 collection_LDADD = $(top_builddir)/netsvcs/lib/libnetsvcs.la \
-                   $(top_builddir)/ace/$(ACE_BUILDDIR)/ace/libACE.la
+                   $(top_builddir)/ace/libACE.la

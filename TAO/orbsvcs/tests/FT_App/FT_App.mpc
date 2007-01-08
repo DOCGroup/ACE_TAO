@@ -7,7 +7,7 @@ project(*idl): taoidldefaults, orbsvcslib {
   custom_only = 1
 }
 
-project(*Server): taoserver, fault_tolerance, orbsvcsexe, avoids_minimum_corba, avoids_corba_e_compact, avoids_corba_e_micro {
+project(*Server): taoserver, fault_tolerance, orbsvcsexe, minimum_corba {
   exename = ft_replica
   after += *idl
   Source_Files {
@@ -47,7 +47,7 @@ project(*Server): taoserver, fault_tolerance, orbsvcsexe, avoids_minimum_corba, 
   }
 }
 
-project(*Client): taoclient, fault_tolerance, orbsvcsexe, avoids_minimum_corba, avoids_corba_e_compact, avoids_corba_e_micro {
+project(*Client): taoclient, fault_tolerance, orbsvcsexe, minimum_corba {
   exename = ft_client
   after += *idl
   Source_Files {
@@ -60,7 +60,7 @@ project(*Client): taoclient, fault_tolerance, orbsvcsexe, avoids_minimum_corba, 
   }
 }
 
-project(*Notifier): taoserver, fault_tolerance, iormanip, orbsvcsexe, avoids_minimum_corba, avoids_corba_e_compact, avoids_corba_e_micro {
+project(*Notifier): taoserver, fault_tolerance, iormanip, orbsvcsexe, minimum_corba {
   exename = ft_notifier
   Source_Files {
     FTAPP_Notifier_Main.cpp
@@ -91,7 +91,7 @@ project(*Analyzer): taoclient, fault_tolerance, notification_skel, orbsvcsexe {
   }
 }
 
-project(*FaultConsumer): taoserver, fault_tolerance, notification_skel, orbsvcsexe, avoids_minimum_corba, avoids_corba_e_compact, avoids_corba_e_micro {
+project(*FaultConsumer): taoserver, fault_tolerance, notification_skel, orbsvcsexe, minimum_corba {
   exename = ft_fault_consumer
   libs    += TAO_ReplicationManagerLib
   after   += FT_ReplicationManager_Lib
@@ -107,7 +107,7 @@ project(*FaultConsumer): taoserver, fault_tolerance, notification_skel, orbsvcse
   }
 }
 
-project(*FactoryRegistry): taoclient, fault_tolerance, orbsvcsexe, avoids_minimum_corba, avoids_corba_e_compact, avoids_corba_e_micro {
+project(*FactoryRegistry): taoclient, fault_tolerance, orbsvcsexe, minimum_corba {
   exename = ft_registry
 
   Source_Files {
@@ -124,7 +124,7 @@ project(*FactoryRegistry): taoclient, fault_tolerance, orbsvcsexe, avoids_minimu
   }
 }
 
-project(*Creator): taoclient, fault_tolerance, orbsvcsexe, avoids_minimum_corba, avoids_corba_e_compact, avoids_corba_e_micro {
+project(*Creator): taoclient, fault_tolerance, orbsvcsexe, minimum_corba {
   exename = ft_create
 
   Source_Files {
@@ -140,7 +140,7 @@ project(*Creator): taoclient, fault_tolerance, orbsvcsexe, avoids_minimum_corba,
   }
 }
 
-project(*RMController): taoclient, fault_tolerance, orbsvcsexe, avoids_minimum_corba, avoids_corba_e_compact, avoids_corba_e_micro {
+project(*RMController): taoclient, fault_tolerance, orbsvcsexe, minimum_corba {
   exename = replmgr_controller
   Source_Files {
     FT_ReplicationManagerController.cpp

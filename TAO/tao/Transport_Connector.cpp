@@ -94,6 +94,11 @@ TAO_Connector::corbaloc_scan (const char *str,
   const char *slash_pos = ACE_OS::strchr (str,'/');
   if (comma_pos == 0 && slash_pos == 0)
     {
+      if (TAO_debug_level)
+        ACE_DEBUG ((LM_DEBUG,
+                    ACE_TEXT("TAO (%P|%t) TAO_Connector::corbaloc_scan warning: ")
+                    ACE_TEXT("supplied string contains no comma or slash: %s\n"),
+                    str));
       len = ACE_OS::strlen (str);
     }
   else if (comma_pos == 0 || comma_pos > slash_pos)

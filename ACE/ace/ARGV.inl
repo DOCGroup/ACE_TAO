@@ -6,47 +6,12 @@
 // Open versioned namespace, if enabled by the user.
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
-template <typename CHAR_TYPE> ACE_INLINE
-ACE_ARGV_Queue_Entry_T<CHAR_TYPE>::ACE_ARGV_Queue_Entry_T (void)
-  : arg_(0),
-    quote_arg_(false)
-{
-  // No-op
-}
-
-template <typename CHAR_TYPE> ACE_INLINE
-ACE_ARGV_Queue_Entry_T<CHAR_TYPE>::ACE_ARGV_Queue_Entry_T (const CHAR_TYPE *arg,
-                                                           bool quote_arg)
-  : arg_(arg),
-    quote_arg_(quote_arg)
-{
-  // No-op
-}
-
-template <typename CHAR_TYPE> ACE_INLINE
-ACE_ARGV_Queue_Entry_T<CHAR_TYPE>::ACE_ARGV_Queue_Entry_T (const ACE_ARGV_Queue_Entry_T<CHAR_TYPE> &entry)
-  : arg_(entry.arg_),
-    quote_arg_(entry.quote_arg_)
-{
-  // No-op
-}
-
-template <typename CHAR_TYPE> ACE_INLINE
-ACE_ARGV_Queue_Entry_T<CHAR_TYPE>::~ACE_ARGV_Queue_Entry_T (void)
-{
-  // No-op just to keep some compilers happy...
-}
-
 // Return the number of args
 template <typename CHAR_TYPE>
 ACE_INLINE int
 ACE_ARGV_T<CHAR_TYPE>::argc (void) const
 {
   ACE_TRACE ("ACE_ARGV_T::argc");
- // Try to create the argv_ if it isn't there
-  ACE_ARGV_T<CHAR_TYPE> *nonconst_this =
-    const_cast <ACE_ARGV_T<CHAR_TYPE> *> (this);
- (void) nonconst_this->argv ();
   return this->argc_;
 }
 

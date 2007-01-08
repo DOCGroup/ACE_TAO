@@ -13,43 +13,43 @@ ACE_ROOT = $(top_srcdir)/..
 TAO_BUILDDIR = $(top_builddir)
 TAO_IDL = ACE_ROOT=$(ACE_ROOT) TAO_ROOT=$(TAO_ROOT) $(TAO_BUILDDIR)/TAO_IDL/tao_idl
 TAO_IDL_DEP = $(TAO_BUILDDIR)/TAO_IDL/tao_idl
-TAO_IDLFLAGS = -Wb,pre_include=ace/pre.h -Wb,post_include=ace/post.h -I$(TAO_ROOT) -I$(srcdir) -g $(ACE_BUILDDIR)/apps/gperf/src/gperf
+TAO_IDLFLAGS = -Ge 1 -Wb,pre_include=ace/pre.h -Wb,post_include=ace/post.h -I$(TAO_ROOT) -I$(srcdir) -g $(ACE_BUILDDIR)/apps/gperf/src/gperf
 TAO_ROOT = $(top_srcdir)
 
-noinst_LTLIBRARIES =
-CLEANFILES =
-BUILT_SOURCES =
 bin_PROGRAMS =
-noinst_HEADERS =
 
 ## Makefile.ImR_Activator_IDL.am
 
-if BUILD_EXCEPTIONS
-
-BUILT_SOURCES += \
+BUILT_SOURCES = \
   ImR_ActivatorC.cpp \
   ImR_ActivatorC.h \
   ImR_ActivatorC.inl \
   ImR_ActivatorS.cpp \
   ImR_ActivatorS.h \
-  ImR_ActivatorS.inl
+  ImR_ActivatorS.inl \
+  ImR_ActivatorS_T.cpp \
+  ImR_ActivatorS_T.h \
+  ImR_ActivatorS_T.inl
 
-CLEANFILES += \
+CLEANFILES = \
   ImR_Activator-stamp \
   ImR_ActivatorC.cpp \
   ImR_ActivatorC.h \
   ImR_ActivatorC.inl \
   ImR_ActivatorS.cpp \
   ImR_ActivatorS.h \
-  ImR_ActivatorS.inl
+  ImR_ActivatorS.inl \
+  ImR_ActivatorS_T.cpp \
+  ImR_ActivatorS_T.h \
+  ImR_ActivatorS_T.inl
 
-ImR_ActivatorC.cpp ImR_ActivatorC.h ImR_ActivatorC.inl ImR_ActivatorS.cpp ImR_ActivatorS.h ImR_ActivatorS.inl: ImR_Activator-stamp
+ImR_ActivatorC.cpp ImR_ActivatorC.h ImR_ActivatorC.inl ImR_ActivatorS.cpp ImR_ActivatorS.h ImR_ActivatorS.inl ImR_ActivatorS_T.cpp ImR_ActivatorS_T.h ImR_ActivatorS_T.inl: ImR_Activator-stamp
 
 ImR_Activator-stamp: $(srcdir)/ImR_Activator.idl $(TAO_IDL_DEP)
-	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs -Wb,versioning_begin=TAO_BEGIN_VERSIONED_NAMESPACE_DECL -Wb,versioning_end=TAO_END_VERSIONED_NAMESPACE_DECL -Wb,export_macro=ActivatorIDL_Export -Wb,export_include=activator_idl_export.h $(srcdir)/ImR_Activator.idl
+	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs -GT -Wb,versioning_begin=TAO_BEGIN_VERSIONED_NAMESPACE_DECL -Wb,versioning_end=TAO_END_VERSIONED_NAMESPACE_DECL -Wb,export_macro=ActivatorIDL_Export -Wb,export_include=activator_idl_export.h $(srcdir)/ImR_Activator.idl
 	@touch $@
 
-noinst_LTLIBRARIES += libTAO_ImR_Activator_IDL.la
+noinst_LTLIBRARIES = libTAO_ImR_Activator_IDL.la
 
 libTAO_ImR_Activator_IDL_la_CPPFLAGS = \
   -I$(ACE_ROOT) \
@@ -64,20 +64,20 @@ libTAO_ImR_Activator_IDL_la_SOURCES = \
   ImR_ActivatorC.cpp \
   ImR_ActivatorS.cpp
 
-noinst_HEADERS += \
+noinst_HEADERS = \
   ImR_Activator.idl \
   ImR_ActivatorC.h \
   ImR_ActivatorC.inl \
   ImR_ActivatorS.h \
   ImR_ActivatorS.inl \
+  ImR_ActivatorS_T.cpp \
+  ImR_ActivatorS_T.h \
+  ImR_ActivatorS_T.inl \
   activator_idl_export.h
-
-endif BUILD_EXCEPTIONS
 
 ## Makefile.ImR_Locator_IDL.am
 
 if BUILD_CORBA_MESSAGING
-if BUILD_EXCEPTIONS
 
 BUILT_SOURCES += \
   ImR_LocatorC.cpp \
@@ -85,7 +85,10 @@ BUILT_SOURCES += \
   ImR_LocatorC.inl \
   ImR_LocatorS.cpp \
   ImR_LocatorS.h \
-  ImR_LocatorS.inl
+  ImR_LocatorS.inl \
+  ImR_LocatorS_T.cpp \
+  ImR_LocatorS_T.h \
+  ImR_LocatorS_T.inl
 
 CLEANFILES += \
   ImR_Locator-stamp \
@@ -94,12 +97,15 @@ CLEANFILES += \
   ImR_LocatorC.inl \
   ImR_LocatorS.cpp \
   ImR_LocatorS.h \
-  ImR_LocatorS.inl
+  ImR_LocatorS.inl \
+  ImR_LocatorS_T.cpp \
+  ImR_LocatorS_T.h \
+  ImR_LocatorS_T.inl
 
-ImR_LocatorC.cpp ImR_LocatorC.h ImR_LocatorC.inl ImR_LocatorS.cpp ImR_LocatorS.h ImR_LocatorS.inl: ImR_Locator-stamp
+ImR_LocatorC.cpp ImR_LocatorC.h ImR_LocatorC.inl ImR_LocatorS.cpp ImR_LocatorS.h ImR_LocatorS.inl ImR_LocatorS_T.cpp ImR_LocatorS_T.h ImR_LocatorS_T.inl: ImR_Locator-stamp
 
 ImR_Locator-stamp: $(srcdir)/ImR_Locator.idl $(TAO_IDL_DEP)
-	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs -Wb,versioning_begin=TAO_BEGIN_VERSIONED_NAMESPACE_DECL -Wb,versioning_end=TAO_END_VERSIONED_NAMESPACE_DECL -Wb,export_macro=LocatorIDL_Export -Wb,export_include=locator_idl_export.h $(srcdir)/ImR_Locator.idl
+	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs -GT -Wb,versioning_begin=TAO_BEGIN_VERSIONED_NAMESPACE_DECL -Wb,versioning_end=TAO_END_VERSIONED_NAMESPACE_DECL -Wb,export_macro=LocatorIDL_Export -Wb,export_include=locator_idl_export.h $(srcdir)/ImR_Locator.idl
 	@touch $@
 
 BUILT_SOURCES += \
@@ -108,7 +114,10 @@ BUILT_SOURCES += \
   AsyncStartupWaiterC.inl \
   AsyncStartupWaiterS.cpp \
   AsyncStartupWaiterS.h \
-  AsyncStartupWaiterS.inl
+  AsyncStartupWaiterS.inl \
+  AsyncStartupWaiterS_T.cpp \
+  AsyncStartupWaiterS_T.h \
+  AsyncStartupWaiterS_T.inl
 
 CLEANFILES += \
   AsyncStartupWaiter-stamp \
@@ -117,12 +126,15 @@ CLEANFILES += \
   AsyncStartupWaiterC.inl \
   AsyncStartupWaiterS.cpp \
   AsyncStartupWaiterS.h \
-  AsyncStartupWaiterS.inl
+  AsyncStartupWaiterS.inl \
+  AsyncStartupWaiterS_T.cpp \
+  AsyncStartupWaiterS_T.h \
+  AsyncStartupWaiterS_T.inl
 
-AsyncStartupWaiterC.cpp AsyncStartupWaiterC.h AsyncStartupWaiterC.inl AsyncStartupWaiterS.cpp AsyncStartupWaiterS.h AsyncStartupWaiterS.inl: AsyncStartupWaiter-stamp
+AsyncStartupWaiterC.cpp AsyncStartupWaiterC.h AsyncStartupWaiterC.inl AsyncStartupWaiterS.cpp AsyncStartupWaiterS.h AsyncStartupWaiterS.inl AsyncStartupWaiterS_T.cpp AsyncStartupWaiterS_T.h AsyncStartupWaiterS_T.inl: AsyncStartupWaiter-stamp
 
 AsyncStartupWaiter-stamp: $(srcdir)/AsyncStartupWaiter.idl $(TAO_IDL_DEP)
-	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs -Wb,versioning_begin=TAO_BEGIN_VERSIONED_NAMESPACE_DECL -Wb,versioning_end=TAO_END_VERSIONED_NAMESPACE_DECL -Wb,export_macro=LocatorIDL_Export -Wb,export_include=locator_idl_export.h -GH $(srcdir)/AsyncStartupWaiter.idl
+	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs -GT -Wb,versioning_begin=TAO_BEGIN_VERSIONED_NAMESPACE_DECL -Wb,versioning_end=TAO_END_VERSIONED_NAMESPACE_DECL -Wb,export_macro=LocatorIDL_Export -Wb,export_include=locator_idl_export.h -GH $(srcdir)/AsyncStartupWaiter.idl
 	@touch $@
 
 noinst_LTLIBRARIES += libTAO_ImR_Locator_IDL.la
@@ -148,22 +160,27 @@ noinst_HEADERS += \
   AsyncStartupWaiterC.inl \
   AsyncStartupWaiterS.h \
   AsyncStartupWaiterS.inl \
+  AsyncStartupWaiterS_T.cpp \
+  AsyncStartupWaiterS_T.h \
+  AsyncStartupWaiterS_T.inl \
   ImR_Locator.idl \
   ImR_LocatorC.h \
   ImR_LocatorC.inl \
   ImR_LocatorS.h \
   ImR_LocatorS.inl \
+  ImR_LocatorS_T.cpp \
+  ImR_LocatorS_T.h \
+  ImR_LocatorS_T.inl \
   locator_idl_export.h
 
-endif BUILD_EXCEPTIONS
 endif BUILD_CORBA_MESSAGING
 
 ## Makefile.ImR_Activator.am
 
 if BUILD_ACEXML
 if BUILD_CORBA_MESSAGING
-if BUILD_EXCEPTIONS
 if !BUILD_ACE_FOR_TAO
+if !BUILD_MINIMUM_CORBA
 
 noinst_LTLIBRARIES += libTAO_ImR_Activator.la
 
@@ -177,28 +194,10 @@ libTAO_ImR_Activator_la_CPPFLAGS = \
   -I$(ACE_ROOT)/ACEXML/common \
   -DACTIVATOR_BUILD_DLL
 
-if BUILD_ZLIB
-if BUILD_ZZIP
-libTAO_ImR_Activator_la_CPPFLAGS += \
-  $(ACE_ZZIP_CPPFLAGS) \
-  $(ACE_ZLIB_CPPFLAGS)
-endif BUILD_ZZIP
-endif BUILD_ZLIB
-
 libTAO_ImR_Activator_la_SOURCES = \
   Activator_Loader.cpp \
   Activator_Options.cpp \
   ImR_Activator_i.cpp
-
-libTAO_ImR_Activator_la_LDFLAGS =
-
-if BUILD_ZLIB
-if BUILD_ZZIP
-libTAO_ImR_Activator_la_LDFLAGS += \
-  $(ACE_ZZIP_LDFLAGS) \
-  $(ACE_ZLIB_LDFLAGS)
-endif BUILD_ZZIP
-endif BUILD_ZLIB
 
 noinst_HEADERS += \
   Activator_Loader.h \
@@ -206,8 +205,8 @@ noinst_HEADERS += \
   ImR_Activator_i.h \
   activator_export.h
 
+endif !BUILD_MINIMUM_CORBA
 endif !BUILD_ACE_FOR_TAO
-endif BUILD_EXCEPTIONS
 endif BUILD_CORBA_MESSAGING
 endif BUILD_ACEXML
 
@@ -215,8 +214,8 @@ endif BUILD_ACEXML
 
 if BUILD_ACEXML
 if BUILD_CORBA_MESSAGING
-if BUILD_EXCEPTIONS
 if !BUILD_ACE_FOR_TAO
+if !BUILD_MINIMUM_CORBA
 
 bin_PROGRAMS += ImR_Activator
 
@@ -229,28 +228,10 @@ ImR_Activator_CPPFLAGS = \
   -I$(TAO_ROOT)/orbsvcs \
   -I$(TAO_BUILDDIR)/orbsvcs
 
-if BUILD_ZLIB
-if BUILD_ZZIP
-ImR_Activator_CPPFLAGS += \
-  $(ACE_ZZIP_CPPFLAGS) \
-  $(ACE_ZLIB_CPPFLAGS)
-endif BUILD_ZZIP
-endif BUILD_ZLIB
-
 ImR_Activator_SOURCES = \
   Activator_NT_Service.cpp \
   ImR_Activator.cpp \
   Activator_NT_Service.h
-
-ImR_Activator_LDFLAGS =
-
-if BUILD_ZLIB
-if BUILD_ZZIP
-ImR_Activator_LDFLAGS += \
-  $(ACE_ZZIP_LDFLAGS) \
-  $(ACE_ZLIB_LDFLAGS)
-endif BUILD_ZZIP
-endif BUILD_ZLIB
 
 ImR_Activator_LDADD = \
   libTAO_ImR_Activator.la \
@@ -269,16 +250,8 @@ ImR_Activator_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
-if BUILD_ZLIB
-if BUILD_ZZIP
-ImR_Activator_LDADD += \
-  $(ACE_ZZIP_LIBS) \
-  $(ACE_ZLIB_LIBS)
-endif BUILD_ZZIP
-endif BUILD_ZLIB
-
+endif !BUILD_MINIMUM_CORBA
 endif !BUILD_ACE_FOR_TAO
-endif BUILD_EXCEPTIONS
 endif BUILD_CORBA_MESSAGING
 endif BUILD_ACEXML
 
@@ -286,8 +259,8 @@ endif BUILD_ACEXML
 
 if BUILD_ACEXML
 if BUILD_CORBA_MESSAGING
-if BUILD_EXCEPTIONS
 if !BUILD_ACE_FOR_TAO
+if !BUILD_MINIMUM_CORBA
 
 noinst_LTLIBRARIES += libTAO_ImR_Locator.la
 
@@ -300,14 +273,6 @@ libTAO_ImR_Locator_la_CPPFLAGS = \
   -I$(TAO_BUILDDIR)/orbsvcs \
   -I$(ACE_ROOT)/ACEXML/common \
   -DLOCATOR_BUILD_DLL
-
-if BUILD_ZLIB
-if BUILD_ZZIP
-libTAO_ImR_Locator_la_CPPFLAGS += \
-  $(ACE_ZZIP_CPPFLAGS) \
-  $(ACE_ZLIB_CPPFLAGS)
-endif BUILD_ZZIP
-endif BUILD_ZLIB
 
 libTAO_ImR_Locator_la_SOURCES = \
   Activator_Info.cpp \
@@ -322,16 +287,6 @@ libTAO_ImR_Locator_la_SOURCES = \
   Locator_Repository.cpp \
   Locator_XMLHandler.cpp \
   Server_Info.cpp
-
-libTAO_ImR_Locator_la_LDFLAGS =
-
-if BUILD_ZLIB
-if BUILD_ZZIP
-libTAO_ImR_Locator_la_LDFLAGS += \
-  $(ACE_ZZIP_LDFLAGS) \
-  $(ACE_ZLIB_LDFLAGS)
-endif BUILD_ZZIP
-endif BUILD_ZLIB
 
 noinst_HEADERS += \
   Activator_Info.h \
@@ -349,8 +304,8 @@ noinst_HEADERS += \
   locator_export.h \
   utils.h
 
+endif !BUILD_MINIMUM_CORBA
 endif !BUILD_ACE_FOR_TAO
-endif BUILD_EXCEPTIONS
 endif BUILD_CORBA_MESSAGING
 endif BUILD_ACEXML
 
@@ -358,8 +313,8 @@ endif BUILD_ACEXML
 
 if BUILD_ACEXML
 if BUILD_CORBA_MESSAGING
-if BUILD_EXCEPTIONS
 if !BUILD_ACE_FOR_TAO
+if !BUILD_MINIMUM_CORBA
 
 bin_PROGRAMS += ImplRepo_Service
 
@@ -372,28 +327,10 @@ ImplRepo_Service_CPPFLAGS = \
   -I$(TAO_ROOT)/orbsvcs \
   -I$(TAO_BUILDDIR)/orbsvcs
 
-if BUILD_ZLIB
-if BUILD_ZZIP
-ImplRepo_Service_CPPFLAGS += \
-  $(ACE_ZZIP_CPPFLAGS) \
-  $(ACE_ZLIB_CPPFLAGS)
-endif BUILD_ZZIP
-endif BUILD_ZLIB
-
 ImplRepo_Service_SOURCES = \
   ImR_Locator.cpp \
   Locator_NT_Service.cpp \
   Locator_NT_Service.h
-
-ImplRepo_Service_LDFLAGS =
-
-if BUILD_ZLIB
-if BUILD_ZZIP
-ImplRepo_Service_LDFLAGS += \
-  $(ACE_ZZIP_LDFLAGS) \
-  $(ACE_ZLIB_LDFLAGS)
-endif BUILD_ZZIP
-endif BUILD_ZLIB
 
 ImplRepo_Service_LDADD = \
   libTAO_ImR_Locator.la \
@@ -414,22 +351,14 @@ ImplRepo_Service_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
-if BUILD_ZLIB
-if BUILD_ZZIP
-ImplRepo_Service_LDADD += \
-  $(ACE_ZZIP_LIBS) \
-  $(ACE_ZLIB_LIBS)
-endif BUILD_ZZIP
-endif BUILD_ZLIB
-
+endif !BUILD_MINIMUM_CORBA
 endif !BUILD_ACE_FOR_TAO
-endif BUILD_EXCEPTIONS
 endif BUILD_CORBA_MESSAGING
 endif BUILD_ACEXML
 
 ## Makefile.tao_imr.am
 
-if BUILD_EXCEPTIONS
+if !BUILD_MINIMUM_CORBA
 
 bin_PROGRAMS += tao_imr
 
@@ -451,7 +380,7 @@ tao_imr_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
-endif BUILD_EXCEPTIONS
+endif !BUILD_MINIMUM_CORBA
 
 ## Clean up template repositories, etc.
 clean-local:

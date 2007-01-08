@@ -4,7 +4,7 @@
 
 #include "Deployment.hpp"
 #include "PCD_Handler.h"
-#include "ciao/Deployment_Packaging_DataC.h"
+#include "ciao/Packaging_DataC.h"
 #include "SID_Handler.h"
 #include "ace/Get_Opt.h"
 #include "Utils/XML_Helper.h"
@@ -57,7 +57,7 @@ int main (int argc, char *argv[])
       // Initialize an ORB so Any will work
       CORBA::ORB_ptr orb = CORBA::ORB_init (argc, argv, "");
       ACE_UNUSED_ARG (orb);
-
+      
 
       if (xercesc::DOMDocument *doc = XML_HELPER->create_dom (input_file))
         {

@@ -5,9 +5,6 @@
 #include "tao/Transport.h"
 #include "tao/Transport_Mux_Strategy.h"
 #include "tao/ORB_Core.h"
-#include "tao/Stub.h"
-
-#include "ace/Service_Config.h"
 
 ACE_RCSID (tao,
            LocateRequest_Invocation_Adapter,
@@ -31,6 +28,7 @@ namespace TAO
 
     TAO_Stub * const stub =
       this->target_->_stubobj ();
+
     if (stub == 0)
       ACE_THROW (CORBA::INTERNAL (
                      CORBA::SystemException::_tao_minor_code (
@@ -38,13 +36,6 @@ namespace TAO
                          EINVAL),
                         CORBA::COMPLETED_NO));
 
-    // The invocation has got to be within the context of the
-    // corresponding ORB's configuration. Otherwise things like
-    // timeout hooks, etc may not work as expected. Especially if
-    // there are multiple ORB instances in the process, each with its
-    // own, local configuration.
-    ACE_Service_Config_Guard scg (stub->orb_core ()->configuration ());
-    
     ACE_Time_Value tmp_wait_time;
     ACE_Time_Value *max_wait_time = 0;
 

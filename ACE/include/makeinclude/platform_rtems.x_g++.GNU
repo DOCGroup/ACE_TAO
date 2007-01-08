@@ -12,7 +12,6 @@ threads ?= 1
 
 shared_libs =
 static_libs = 1
-rwho = 0
 
 ifeq (,$(RTEMS_MAKEFILE_PATH))
   default:
@@ -44,7 +43,7 @@ DLD             = $(LD)
 INCLDIRS        +=
 
 LD              = $(CXX)
-LDFLAGS         += -Wl,--allow-multiple-definition -B$(RTEMS_MAKEFILE_PATH)/lib -Wl,-Ttext,0x00100000
+LDFLAGS         += -Wl,--allow-multiple-definition -B$(RTEMS_MAKEFILE_PATH)/lib
 OCFLAGS         += -O
 PIC             =
 

@@ -78,9 +78,9 @@ ACE_RCSID (fe,
 
 FE_Declarator::FE_Declarator (UTL_ScopedName *n,
                               DeclaratorType dt,
-                              AST_Decl *cp)
+			                        AST_Decl *cp)
  : pd_complex_part (cp),
-   pd_decl_type (dt)
+	 pd_decl_type (dt)
 {
   this->pd_name = n;
 }
@@ -103,7 +103,7 @@ FE_Declarator::compose (AST_Decl *d)
         }
     }
 
-  AST_Array  *arr = 0;
+  AST_Array	*arr = 0;
   AST_Type *ct = 0;
 
   ct = AST_Type::narrow_from_decl (d);
@@ -118,6 +118,9 @@ FE_Declarator::compose (AST_Decl *d)
   // not have a different prefix from the place of declaration.
   if (!ct->is_defined ())
     {
+      char *current_prefix = 0;
+      idl_global->pragma_prefixes ().top (current_prefix);
+
       const char *original_prefix = d->prefix ();
       AST_Decl *scope = d;
 
@@ -126,7 +129,7 @@ FE_Declarator::compose (AST_Decl *d)
         {
           scope = ScopeAsDecl (scope->defined_in ());
 
-          // Are we at global scope?
+          // Are we at global scope.8
           if (scope == 0)
             {
               break;
@@ -141,14 +144,6 @@ FE_Declarator::compose (AST_Decl *d)
           d->prefix (const_cast<char *> (original_prefix));
         }
 
-      // (JP) This could give a bogus error, since typeprefix can
-      // appear any time after the corresponding declaration.
-      // The right way to do this is with a separate traversal
-      // after the entire AST is built.
-      /*
-      char *current_prefix = 0;
-      idl_global->pragma_prefixes ().top (current_prefix);
-
       if (current_prefix != 0
           && ACE_OS::strcmp (current_prefix, d->prefix ()) != 0)
         {
@@ -157,7 +152,6 @@ FE_Declarator::compose (AST_Decl *d)
 
           return 0;
         }
-      */
     }
 
   if (this->pd_decl_type == FD_simple || this->pd_complex_part == 0)
@@ -168,17 +162,17 @@ FE_Declarator::compose (AST_Decl *d)
   if (this->pd_complex_part->node_type () == AST_Decl::NT_array)
     {
       arr = AST_Array::narrow_from_decl (this->pd_complex_part);
-
+      
       // The base type of an array isn't set until after the array
       // has been created, so the check below gets done at this point.
-      arr->set_base_type (ct);
+      arr->set_base_type (ct);      
       AST_Decl::NodeType nt = ct->unaliased_type ()->node_type ();
-
+      
       if (nt == AST_Decl::NT_string || nt == AST_Decl::NT_wstring)
         {
           idl_global->string_member_seen_ = true;
         }
-
+        
       return arr;
     }
 

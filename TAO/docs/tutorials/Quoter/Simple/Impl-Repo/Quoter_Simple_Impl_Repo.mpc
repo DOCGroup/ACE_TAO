@@ -1,7 +1,7 @@
 // -*- MPC -*-
 // $Id$
 
-project(*client) : taoexe, portableserver, rtevent, naming  {
+project(*client) : taoexe, portableserver, rtevent, naming, exceptions  {
   libs += Quoter_Idl_Lib
   after += Quoter_Idl_Lib
 
@@ -15,7 +15,7 @@ project(*client) : taoexe, portableserver, rtevent, naming  {
   }
 }
 
-project(*server) : taoserver, rtevent, naming, iortable {
+project(*server) : taoserver, rtevent, naming, iortable, exceptions {
   libs += Quoter_Idl_Lib
   after += Quoter_Idl_Lib
 

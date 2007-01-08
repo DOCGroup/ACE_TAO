@@ -70,9 +70,6 @@ ACE_Basic_Stats::dump_results (const ACE_TCHAR *msg,
               l_avg,
               l_max, this->max_at_));
 
-#else
-  ACE_UNUSED_ARG (msg);
-  ACE_UNUSED_ARG (sf);
 #endif /* ACE_NLOGGING */
 }
 

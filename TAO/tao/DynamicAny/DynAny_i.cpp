@@ -2,15 +2,12 @@
 
 #include "tao/AnyTypeCode/Any_Unknown_IDL_Type.h"
 #include "tao/AnyTypeCode/AnyTypeCode_methods.h"
-#include "tao/DynamicAny/DynAnyUtils_T.h"
-
 #include "tao/DynamicAny/DynAny_i.h"
 #include "tao/DynamicAny/DynAnyFactory.h"
-
 #include "tao/CDR.h"
-
 #include "ace/OS_NS_wchar.h"
 #include "ace/OS_NS_string.h"
+
 
 ACE_RCSID (DynamicAny,
            DynAny_i,
@@ -55,24 +52,6 @@ TAO_DynAny_i::check_typecode (CORBA::TypeCode_ptr tc
     case CORBA::tk_string:
     case CORBA::tk_wstring:
       break;
-    case CORBA::tk_sequence:
-      if (tc == CORBA::_tc_BooleanSeq
-          || tc == CORBA::_tc_OctetSeq
-          || tc == CORBA::_tc_CharSeq
-          || tc == CORBA::_tc_WCharSeq
-          || tc == CORBA::_tc_ShortSeq
-          || tc == CORBA::_tc_UShortSeq
-          || tc == CORBA::_tc_LongSeq
-          || tc == CORBA::_tc_ULongSeq
-          || tc == CORBA::_tc_LongLongSeq
-          || tc == CORBA::_tc_ULongLongSeq
-          || tc == CORBA::_tc_FloatSeq
-          || tc == CORBA::_tc_DoubleSeq
-          || tc == CORBA::_tc_LongDoubleSeq)
-        {
-          // Otherwise fall through.
-          break;
-        }
     default:
       ACE_THROW (DynamicAny::DynAnyFactory::InconsistentTypeCode ());
   }
@@ -165,10 +144,10 @@ TAO_DynAny_i::set_to_default_value (CORBA::TypeCode_ptr tc
 void
 TAO_DynAny_i::init_common (void)
 {
-  this->ref_to_component_ = false;
-  this->container_is_destroying_ = false;
-  this->has_components_ = false;
-  this->destroyed_ = false;
+  this->ref_to_component_ = 0;
+  this->container_is_destroying_ = 0;
+  this->has_components_ = 0;
+  this->destroyed_ = 0;
   this->current_position_ = -1;
   this->component_count_ = 0;
 }
@@ -419,14 +398,14 @@ TAO_DynAny_i::equal (DynamicAny::DynAny_ptr rhs
         this->any_ >>= lhs_v;
 
         DynamicAny::DynAny_var rhs_dyn =
-          TAO::MakeDynAnyUtils<const CORBA::Any&>::make_dyn_any_t (
-            rhs_v->_tao_get_typecode (),
-            *rhs_v);
+          TAO_DynAnyFactory::make_dyn_any (*rhs_v
+                                           ACE_ENV_ARG_PARAMETER);
+        ACE_CHECK_RETURN (0);
 
         DynamicAny::DynAny_var lhs_dyn =
-          TAO::MakeDynAnyUtils<const CORBA::Any&>::make_dyn_any_t (
-            lhs_v->_tao_get_typecode (),
-            *lhs_v);
+          TAO_DynAnyFactory::make_dyn_any (*lhs_v
+                                           ACE_ENV_ARG_PARAMETER);
+        ACE_CHECK_RETURN (0);
 
         CORBA::Boolean b = rhs_dyn->equal (lhs_dyn.in ()
                                            ACE_ENV_ARG_PARAMETER);

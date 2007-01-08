@@ -28,11 +28,10 @@
 #include "ace/Active_Map_Manager_T.h"
 #include "ace/Thread_Mutex.h"
 
-#include "CCM_EventsC.h"
+#include "CCM_EventC.h"
 #include "CIAO_Server_Export.h"
-#include "CCM_ContainerC.h"
-#include "CCM_ObjectS.h"
-#include "CCM_StandardConfiguratorC.h"
+#include "CCM_ComponentS.h"
+#include "CCM_ContainerS.h"
 #include "Home_Servant_Impl_Base.h"
 #include "Servant_Activator.h"
 
@@ -138,7 +137,7 @@ namespace CIAO
                            ACE_ENV_ARG_DECL_WITH_DEFAULTS)
       ACE_THROW_SPEC ((CORBA::SystemException,
                        Components::InvalidName));
-
+    
     virtual ::Components::ReceptacleDescriptions *
     get_all_receptacles (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
       ACE_THROW_SPEC ((CORBA::SystemException));

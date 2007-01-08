@@ -19,13 +19,12 @@
 #define CIAO_NODEAPPLICATION_CORE_H
 #include /**/ "ace/pre.h"
 
-#include "CIAO_NodeApplication_export.h"
+#include "tao/ORB_Core.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/ORB_Core.h"
 #include "tao/ORB.h"
 #include "ace/Task.h"
 #include "ace/Auto_Ptr.h"
@@ -40,7 +39,7 @@ namespace CIAO
    * @brief An ACE_Task subclass that allow the ORB thread to be run
    * as separate thread when RT behaviors are needed.
    */
-  class NODEAPPLICATION_Export NodeApplication_Core
+  class NodeApplication_Core
     : public virtual ACE_Task_Base
   {
   public:

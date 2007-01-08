@@ -1,18 +1,16 @@
 // $Id$
 
-#include "tao/DynamicAny/DynStruct_i.h"
-#include "tao/DynamicAny/DynAnyFactory.h"
-#include "tao/DynamicAny/DynAnyUtils_T.h"
-
 #include "tao/AnyTypeCode/Marshal.h"
 #include "tao/AnyTypeCode/Any_Unknown_IDL_Type.h"
 #include "tao/AnyTypeCode/AnyTypeCode_methods.h"
-
+#include "tao/DynamicAny/DynStruct_i.h"
+#include "tao/DynamicAny/DynAnyFactory.h"
 #include "tao/CDR.h"
 
 ACE_RCSID (DynamicAny,
            DynStruct_i,
            "$Id$")
+
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -43,10 +41,10 @@ TAO_DynStruct_i::check_typecode (CORBA::TypeCode_ptr tc
 void
 TAO_DynStruct_i::init_common (void)
 {
-  this->ref_to_component_ = false;
-  this->container_is_destroying_ = false;
-  this->has_components_ = true;
-  this->destroyed_ = false;
+  this->ref_to_component_ = 0;
+  this->container_is_destroying_ = 0;
+  this->has_components_ = 1;
+  this->destroyed_ = 0;
   this->component_count_ = static_cast <CORBA::ULong> (this->da_members_.size ());
   this->current_position_ = this->component_count_ ? 0 : -1;
 }
@@ -136,9 +134,9 @@ TAO_DynStruct_i::set_from_any (const CORBA::Any & any
       // This recursive step will call the correct constructor
       // based on the type of field_any.
       this->da_members_[i] =
-        TAO::MakeDynAnyUtils<const CORBA::Any&>::make_dyn_any_t (
-          field_any._tao_get_typecode (),
-          field_any);
+        TAO_DynAnyFactory::make_dyn_any (field_any
+                                         ACE_ENV_ARG_PARAMETER);
+      ACE_CHECK;
 
       // Move to the next field in the CDR stream.
       (void) TAO_Marshal_Object::perform_skip (field_tc.in (),
@@ -183,9 +181,9 @@ TAO_DynStruct_i::init (CORBA::TypeCode_ptr tc
 
       // Recursively initialize each member.
       this->da_members_[i] =
-        TAO::MakeDynAnyUtils<CORBA::TypeCode_ptr>::make_dyn_any_t (
-          mtype.in (),
-          mtype.in ());
+        TAO_DynAnyFactory::make_dyn_any (mtype.in ()
+                                         ACE_ENV_ARG_PARAMETER);
+      ACE_CHECK;
     }
 }
 
@@ -402,9 +400,9 @@ TAO_DynStruct_i::set_members (const DynamicAny::NameValuePairSeq & values
       ACE_CHECK;
 
       this->da_members_[i] =
-        TAO::MakeDynAnyUtils<const CORBA::Any&>::make_dyn_any_t (
-          values[i].value._tao_get_typecode (),
-          values[i].value);
+        TAO_DynAnyFactory::make_dyn_any (values[i].value
+                                         ACE_ENV_ARG_PARAMETER);
+      ACE_CHECK;
     }
 
   this->current_position_ = length ? 0 : -1;
@@ -605,9 +603,9 @@ TAO_DynStruct_i::from_any (const CORBA::Any & any
           ACE_CHECK;
 
           this->da_members_[i] =
-            TAO::MakeDynAnyUtils<const CORBA::Any&>::make_dyn_any_t (
-              field_any._tao_get_typecode (),
-              field_any);
+            TAO_DynAnyFactory::make_dyn_any (field_any
+                                             ACE_ENV_ARG_PARAMETER);
+          ACE_CHECK;
 
           // Move to the next field in the CDR stream.
           (void) TAO_Marshal_Object::perform_skip (field_tc.in (),

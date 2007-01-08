@@ -4,7 +4,7 @@
 #include "IFR_Service.h"
 #include "tao/Environment.h"
 
-ACE_RCSID (IFR_Service,
+ACE_RCSID (IFR_Service, 
            IFR_Server,
            "$Id$")
 
@@ -19,7 +19,7 @@ main (int argc, char *argv[])
       int status = server.init (argc, argv ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      if (status != 0)
+      if (status == -1)
         {
           return 1;
         }

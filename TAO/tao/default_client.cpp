@@ -322,11 +322,6 @@ TAO_Default_Client_Strategy_Factory::create_wait_strategy (TAO_Transport *transp
 {
   TAO_Wait_Strategy *ws = 0;
 
-/*
- * Hook to customize the wait strategy object when the concrete wait strategy
- * object is known a priori.
- */
-//@@ WAIT_STRATEGY_SPL_COMMENT_HOOK_START
   if (this->wait_strategy_ == TAO_WAIT_ON_READ)
     ACE_NEW_RETURN (ws,
                     TAO_Wait_On_Read (transport),
@@ -347,7 +342,6 @@ TAO_Default_Client_Strategy_Factory::create_wait_strategy (TAO_Transport *transp
                       TAO_Wait_On_Leader_Follower (transport),
                       0);
     }
-//@@ WAIT_STRATEGY_SPL_COMMENT_HOOK_END
 
   return ws;
 }

@@ -1,5 +1,3 @@
-// -*- C++ -*-
-//
 // $Id$
 
 #ifndef TAO_ADVANCED_RESOURCE_H
@@ -67,8 +65,7 @@ public:
     TAO_REACTOR_SELECT_ST = 2,
     TAO_REACTOR_WFMO      = 3,
     TAO_REACTOR_MSGWFMO   = 4,
-    TAO_REACTOR_TP        = 5,
-    TAO_REACTOR_DEV_POLL  = 6
+    TAO_REACTOR_TP        = 5
   };
 
   /// Thread queueing Strategy

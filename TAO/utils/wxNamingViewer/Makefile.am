@@ -16,7 +16,6 @@ TAO_ROOT = $(top_srcdir)
 
 ## Makefile.wxNamingViewer.am
 
-if BUILD_EXCEPTIONS
 if BUILD_WXWINDOWS
 
 noinst_PROGRAMS = wxNamingViewer
@@ -64,7 +63,6 @@ wxNamingViewer_LDADD = \
   $(ACE_WX_LIBS)
 
 endif BUILD_WXWINDOWS
-endif BUILD_EXCEPTIONS
 
 EXTRA_DIST = \
   wxNamingViewer.rc

@@ -12,7 +12,6 @@
 #include "tao/ORB.h"
 #include "tao/ORB_Core.h"
 #include "tao/debug.h"
-
 #include "ace/OS_NS_string.h"
 #include "ace/CORBA_macros.h"
 
@@ -20,9 +19,11 @@
 # include "tao/Valuetype/ValueBase.inl"
 #endif /* ! __ACE_INLINE__ */
 
+
 ACE_RCSID (Valuetype,
            ValueBase,
            "$Id$")
+
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -48,8 +49,8 @@ CORBA::remove_ref (CORBA::ValueBase *val)
 
 // ***********************************************************************
 
-TAO_ChunkInfo::TAO_ChunkInfo (CORBA::Boolean do_chunking,
-                              CORBA::Long init_level)
+TAO_ChunkInfo::TAO_ChunkInfo(CORBA::Boolean do_chunking,
+                             CORBA::Long init_level)
   : chunking_(do_chunking),
     value_nesting_level_(init_level),
     chunk_size_pos_ (0),
@@ -65,8 +66,8 @@ CORBA::ValueBase::ValueBase (void)
 }
 
 CORBA::ValueBase::ValueBase (const ValueBase& val)
-  : is_truncatable_ (val.is_truncatable_),
-    chunking_ (val.chunking_)
+  :  is_truncatable_(val.is_truncatable_),
+     chunking_(val.chunking_)
 {
 }
 
@@ -182,9 +183,7 @@ CORBA::ValueBase::_tao_unmarshal (TAO_InputCDR &strm,
   if (new_object != 0)
     {
       if (!new_object->_tao_unmarshal_v (strm))
-        {
-          return false;
-        }
+        return false;
     }
 
   return retval;
@@ -225,42 +224,32 @@ CORBA::ValueBase::_tao_unmarshal_pre (TAO_InputCDR &strm,
   CORBA::Long valuetag;
   Repository_Id_List ids;
 
-  if (! strm.read_long (valuetag))
-    {
-      return false;
-    }
+  if (! strm.read_long(valuetag))
+    return false;
 
   if (TAO_OBV_GIOP_Flags::is_indirection_tag (valuetag))
-    {
-      //@@TODO: read indirection value.
-        if (TAO_debug_level > 0)
-          {
-            ACE_ERROR ((LM_ERROR,
-                        ACE_TEXT ("TAO does not currently ")
-                        ACE_TEXT ("support valuetype indirecton\n")));
-          }
-
-      return false;
+        {
+    //@@TODO: read indirection value.
+      if (TAO_debug_level > 0)
+        ACE_ERROR ((LM_ERROR,
+                    ACE_TEXT ("TAO does not currently support valuetype indirecton\n")));
+    return false;
     }
   else if (TAO_OBV_GIOP_Flags::is_null_ref (valuetag))
     {
-      // null reference is unmarshalled.
-      valuetype = 0;
-      return true;
+    // null reference is unmarshalled.
+    valuetype = 0;
+    return true;
     }
   else if (TAO_OBV_GIOP_Flags::has_single_type_info (valuetag))
     {
       if (! _tao_read_repository_id(strm, ids))
-        {
-          return false;
-        }
+        return false;
     }
   else if (TAO_OBV_GIOP_Flags::has_list_type_info (valuetag))
     {
       if (! _tao_read_repository_id_list(strm, ids))
-        {
-          return false;
-        }
+        return false;
     }
   else if (TAO_OBV_GIOP_Flags::has_no_type_info (valuetag))
     {
@@ -269,12 +258,8 @@ CORBA::ValueBase::_tao_unmarshal_pre (TAO_InputCDR &strm,
   else
     {
       if (TAO_debug_level > 0)
-        {
-          ACE_ERROR ((LM_ERROR,
-                      ACE_TEXT ("TAO (%P|%t) unknown value tag: %x\n"),
-                      valuetag));
-        }
-
+        ACE_ERROR ((LM_ERROR,
+                    ACE_TEXT ("TAO (%P|%t) unknown value tag: %x\n"), valuetag));
       return false;
     }
 
@@ -293,17 +278,15 @@ CORBA::ValueBase::_tao_unmarshal_pre (TAO_InputCDR &strm,
     }
 
   CORBA::Boolean require_truncation = false;
-  CORBA::Boolean const chunking =
-    TAO_OBV_GIOP_Flags::is_chunked (valuetag);
-  CORBA::ULong const num_ids = ids.size ();
+  CORBA::Boolean const chunking = TAO_OBV_GIOP_Flags::is_chunked (valuetag);
 
+  CORBA::ULong const num_ids = ids.size ();
   // Find the registered factory for this unmarshalling valuetype. If any
   // factory for the valuetype in its truncatable derivation hierarchy
   // is registered, the factory is used to create value for unmarshalling.
   for (CORBA::ULong i = 0; i < num_ids; ++i)
     {
       factory = orb_core->orb ()->lookup_value_factory (ids[i].c_str ());
-
       if (factory.in() != 0)
         {
           if (i != 0 && chunking)
@@ -318,23 +301,19 @@ CORBA::ValueBase::_tao_unmarshal_pre (TAO_InputCDR &strm,
     {
       if (TAO_debug_level > 0)
         {
-          ACE_ERROR ((LM_ERROR,
-                      ACE_TEXT ("TAO (%P|%t) OBV factory ")
-                      ACE_TEXT ("is null, id = %s\n"),
-                      repo_id));
+          ACE_DEBUG ((LM_DEBUG,
+                      ACE_TEXT ("TAO (%P|%t) OBV factory is null, id = %s\n"), repo_id));
         }
-
       ACE_THROW_RETURN (CORBA::MARSHAL (CORBA::OMGVMCID | 1,
                                         CORBA::COMPLETED_MAYBE),
                                         false);
-    }
+     }
+
 
   valuetype = factory->create_for_unmarshal ();
 
   if (require_truncation)
-    {
-      valuetype->truncation_hook ();
-    }
+    valuetype->truncation_hook ();
 
   if (valuetype == 0)
     {
@@ -385,7 +364,6 @@ CORBA::ValueBase::_tao_validate_box_type (TAO_InputCDR &strm,
       null_object = true;
       return true;
     }
-
   null_object = false;
 
   if (!TAO_OBV_GIOP_Flags::is_value_tag (value_tag))
@@ -418,9 +396,9 @@ CORBA::ValueBase::_tao_validate_box_type (TAO_InputCDR &strm,
      CORBA::String_var repo_id_stream;
 
      if (!strm.read_string (repo_id_stream.inout ()))
-      {
+     {
         return false;
-      }
+     }
 
      if (!ACE_OS::strcmp (repo_id_stream.in (), repo_id_expected))
        {  // Repository ids matched as expected
@@ -442,8 +420,8 @@ CORBA::ValueBase::_tao_validate_box_type (TAO_InputCDR &strm,
 
 
 CORBA::Boolean
-CORBA::ValueBase::_tao_write_special_value (TAO_OutputCDR &strm,
-                                            const CORBA::ValueBase *value)
+CORBA::ValueBase::_tao_write_special_value(TAO_OutputCDR &strm,
+                                      const CORBA::ValueBase *value)
 {
   // If the 'value' is null then write the null value to the stream.
   if (value == 0)
@@ -462,29 +440,25 @@ CORBA::ValueBase::_tao_write_special_value (TAO_OutputCDR &strm,
 
 
 CORBA::Boolean
-CORBA::ValueBase::_tao_write_value (TAO_OutputCDR &strm,
-                                    const CORBA::ValueBase * value,
-                                    ptrdiff_t formal_type_id)
+CORBA::ValueBase::_tao_write_value(TAO_OutputCDR &strm,
+                              const CORBA::ValueBase * value,
+                              ptrdiff_t formal_type_id)
 {
   if (! value->_tao_write_value_header (strm, formal_type_id))
-    {
-      return false;
-    }
+    return false;
 
   if (! value->_tao_marshal_v (strm))
-    {
-      return false;
-    }
+    return false;
 
   return true;
 }
 
 
 CORBA::Boolean
-CORBA::ValueBase::_tao_write_value_header (TAO_OutputCDR &strm,
-                                           ptrdiff_t formal_type_id) const
+CORBA::ValueBase::_tao_write_value_header(TAO_OutputCDR &strm,
+                                     ptrdiff_t formal_type_id) const
 {
-#ifdef TAO_HAS_OPTIMIZED_VALUETYPE_MARSHALING
+#if defined (TAO_HAS_OPTIMIZED_VALUETYPE_MARSHALING)
   // this case allows TAO to avoid marshaling the typeID for values
   // where the actual type matches the formal type (ie not a derived
   // type).
@@ -501,15 +475,15 @@ CORBA::ValueBase::_tao_write_value_header (TAO_OutputCDR &strm,
   // support unmarshaling of valuetypes that did not explicitly
   // marshal the type id. At least it is benign to always encode the
   // typecode value, even if it can be a little verbose.
-  CORBA::Boolean const is_formal_type = false;
+  CORBA::Boolean const is_formal_type =
+    false;
   ACE_UNUSED_ARG (formal_type_id);
 #endif /* TAO_HAS_OPTIMIZED_VALUETYPE_MARSHALING */
 
   // Get the list of repository ids for this valuetype.
   Repository_Id_List repository_ids;
   this->_tao_obv_truncatable_repo_ids (repository_ids);
-  CORBA::Long const num_ids =
-    static_cast <CORBA::Long> (repository_ids.size ());
+  CORBA::Long const num_ids = static_cast <CORBA::Long> (repository_ids.size ());
 
   // Build <value-tag>, which states if chunking is used
   // and if type information ((list of) repository id(s))
@@ -526,35 +500,26 @@ CORBA::ValueBase::_tao_write_value_header (TAO_OutputCDR &strm,
     valuetag |= TAO_OBV_GIOP_Flags::Type_info_single;
 
   if (num_ids > 1)
-    {
-      valuetag |= TAO_OBV_GIOP_Flags::Type_info_list;
-    }
+    valuetag |= TAO_OBV_GIOP_Flags::Type_info_list;
 
-  if (! strm.write_long (valuetag)                    // Write <value-tag>.
-      || (num_ids > 1 && !strm.write_long (num_ids))) // Write <num-ids>.
-    {
-      return false;
-    }
+  // Write <value-tag>.
+  if (!strm.write_long (valuetag))
+    return false;
 
-#ifndef TAO_HAS_OPTIMIMIZED_VALUETYPE_MARSHALING
-  if (this->is_truncatable_
-      || !is_formal_type  /* Always evaluates to true in the
-                             !TAO_HAS_OPTIMIMIZED_VALUETYPE_MARSHALING
-                             case */
-      || num_ids > 1)
+  if (num_ids > 1 && !strm.write_long (num_ids))
+    return false;
+
+  if (this->is_truncatable_ ||
+      !is_formal_type ||
+      num_ids > 1)
     {
-#endif  /* !TAO_HAS_OPTIMIMIZED_VALUETYPE_MARSHALING */
       // Marshal type information.
-      for (CORBA::Long i = 0; i < num_ids; ++i )
+      for( CORBA::Long i = 0; i < num_ids; ++i )
         {
           if (! strm.write_string (repository_ids[i]))
-            {
-              return false;
-            }
+            return false;
         }
-#ifndef TAO_HAS_OPTIMIMIZED_VALUETYPE_MARSHALING
     }
-#endif  /* !TAO_HAS_OPTIMIMIZED_VALUETYPE_MARSHALING */
 
   return true;
 }
@@ -568,13 +533,9 @@ TAO_ChunkInfo::start_chunk(TAO_OutputCDR &strm)
   if (this->chunking_)
     {
       if (! reserve_chunk_size(strm))
-        {
-          return false;
-        }
-
+        return false;
       this->value_nesting_level_ ++;
     }
-
   return true;
 }
 
@@ -586,15 +547,11 @@ TAO_ChunkInfo::end_chunk(TAO_OutputCDR &strm)
     {
       // Write actual chunk size at the reserved chunk size place.
       if (! this->write_previous_chunk_size(strm))
-        {
-          return false;
-        }
+        return false;
 
       // Write an end tag which is negation of value_nesting_level_.
       if (! strm.write_long(- this->value_nesting_level_))
-        {
-          return false;
-        }
+        return false;
 
       //      -- this->value_nesting_level_;
       if ( -- this->value_nesting_level_ == 0 )
@@ -611,30 +568,26 @@ CORBA::Boolean
 TAO_ChunkInfo::write_previous_chunk_size(TAO_OutputCDR &strm)
 {
   if (this->chunk_size_pos_ != 0)
-    {
-      // Calculate the chunk size.
-      CORBA::Long const chunk_size = strm.total_length () - this->length_to_chunk_octets_pos_;
+  {
+    // Calculate the chunk size.
+    CORBA::Long const chunk_size = strm.total_length () - this->length_to_chunk_octets_pos_;
 
-      // This should not happen since this is called in end_chunk() and
-      // the idl generated code always have the matched start_chunk() and
-      // end_chunk() pair. There is always data written to the stream between
-      // the start_chunk() and end_chunk() calls.
-      if (chunk_size == 0)
-        {
-          return false;
-        }
+    // This should not happen since this is called in end_chunk() and
+    // the idl generated code always have the matched start_chunk() and
+    // end_chunk() pair. There is always data written to the stream between
+    // the start_chunk() and end_chunk() calls.
+    if (chunk_size == 0)
+      return false;
 
-      // Write the actual chunk size to the reserved chunk size position
-      // in the stream.
-      if (!strm.replace (chunk_size, this->chunk_size_pos_))
-        {
-          return false;
-        }
+    // Write the actual chunk size to the reserved chunk size position
+    // in the stream.
+    if (!strm.replace (chunk_size, this->chunk_size_pos_))
+      return false;
 
-      // We finish writing the actual chunk size, now we need reset the state.
-      this->chunk_size_pos_ = 0;
-      this->length_to_chunk_octets_pos_ = 0;
-    }
+    // We finish writing the actual chunk size, now we need reset the state.
+    this->chunk_size_pos_ = 0;
+    this->length_to_chunk_octets_pos_ = 0;
+  }
 
   return true;
 }
@@ -660,9 +613,7 @@ TAO_ChunkInfo::reserve_chunk_size(TAO_OutputCDR &strm)
       // Insert four bytes here as a place-holder, we need to go back
       // later and write the actual size.
       if (! strm.write_long (0))
-        {
-          return false;
-        }
+        return false;
 
       // Remember length before writing chunk data. This is used to calculate
       // the actual size of the chunk.
@@ -676,9 +627,7 @@ CORBA::Boolean
 TAO_ChunkInfo::handle_chunking (TAO_InputCDR &strm)
 {
   if (!this->chunking_)
-    {
-      return true;
-    }
+    return true;
 
   char* the_rd_ptr = strm.start()->rd_ptr ();
 
@@ -694,59 +643,50 @@ TAO_ChunkInfo::handle_chunking (TAO_InputCDR &strm)
     }
 
   //Safty check if reading is out of range of current chunk.
-  if (this->chunk_octets_end_pos_ != 0
-      && the_rd_ptr > this->chunk_octets_end_pos_)
-    {
-      return false;
-    }
+  if (this->chunk_octets_end_pos_ != 0 && the_rd_ptr > this->chunk_octets_end_pos_)
+    return false;
 
   // Read a long value that might be an endtag, the chunk size or the value tag
   // of the nested valuetype.
   CORBA::Long tag;
-  
-  if (!strm.read_long (tag))
-    {
-      return false;
-    }
+  if (!strm.read_long(tag))
+    return false;
 
   if (tag < 0)
+  {
+    // tag is an end tag
+    if (-tag > this->value_nesting_level_)
     {
-      // tag is an end tag
-      if (-tag > this->value_nesting_level_)
-        {
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             ACE_TEXT ("%P|%t) received end tag ")
-                             ACE_TEXT ("%d > value_nesting_level %d\n"),
-                             -tag,
-                             this->value_nesting_level_),
-                            false);
-        }
-        
-      this->value_nesting_level_ = - tag;
-      this->value_nesting_level_--;
-
-
-      this->chunk_octets_end_pos_ = 0;
-
-      // Continue reading so that we can read the outmost endtag. This
-      // would simplify the implementation in the derived valuetype.
-      if (this->value_nesting_level_ > 0)
-        {
-          this->handle_chunking(strm);
-        }
+      ACE_ERROR_RETURN ((LM_ERROR,
+        ACE_TEXT ("%P|%t) received end tag %d > value_nesting_level %d\n"),
+        -tag, this->value_nesting_level_),
+        false);
     }
+    this->value_nesting_level_ = - tag;
+    this->value_nesting_level_--;
+
+
+    this->chunk_octets_end_pos_ = 0;
+
+    // Continue reading so that we can read the outmost endtag. This would
+    // simplify the implementation in the derived valuetype.
+    if (this->value_nesting_level_ > 0)
+    {
+      this->handle_chunking(strm);
+    }
+  }
   else if (tag < TAO_OBV_GIOP_Flags::Value_tag_base)
-    {
-      // Read the chunk size of another chunk.
-      this->chunk_octets_end_pos_ = strm.rd_ptr () + tag;
-      this->value_nesting_level_ ++;
-    }
+  {
+    // Read the chunk size of another chunk.
+    this->chunk_octets_end_pos_ = strm.rd_ptr () + tag;
+    this->value_nesting_level_ ++;
+  }
   else // (tag >= 0x7fffff00)
-    {
-      // This should not happen since the valuetag of the nested values
-      // are always unmarshalled in the ValueBase::_tao_unmarshal_pre().
-      return false;
-    }
+  {
+    // This should not happen since the valuetag of the nested values are always
+    // unmarshalled in the ValueBase::_tao_unmarshal_pre().
+    return false;
+  }
 
   return true;
 }
@@ -756,24 +696,18 @@ CORBA::Boolean
 TAO_ChunkInfo::skip_chunks (TAO_InputCDR &strm)
 {
   if (!this->chunking_)
-    {
-      return true;
-    }
+    return true;
 
   // This function is called after reading data of the truncated parent and
   // skips the remaining chunks until the outmost endtag (-1).
   // The tag read here is suppoused to be an endtag.
   CORBA::Long tag;
   if (!strm.read_long(tag))
-    {
-      return false;
-    }
+    return false;
 
   // end of the whole valuetype.
   if (tag == -1)
-    {
-      return true;
-    }
+    return true;
   else if (tag < 0)
     {
       // continue skip the chunk.
@@ -782,8 +716,7 @@ TAO_ChunkInfo::skip_chunks (TAO_InputCDR &strm)
   else if (tag < TAO_OBV_GIOP_Flags::Value_tag_base)
     {
       // Read the chunk size and move forward to skip the data.
-      ACE_Message_Block* current =
-        const_cast<ACE_Message_Block*>(strm.start ());
+      ACE_Message_Block* current = const_cast<ACE_Message_Block*>(strm.start ());
       current->rd_ptr (tag);
       return this->skip_chunks (strm);
     }
@@ -796,27 +729,22 @@ CORBA::ValueBase::_tao_read_repository_id_list (ACE_InputCDR& strm,
                                                 Repository_Id_List& ids)
 {
   CORBA::Long num_ids;
-  
-  if (!strm.read_long (num_ids))
-    {
-      return false;
-    }
+  if (!strm.read_long(num_ids))
+    return false;
 
   if (num_ids == TAO_OBV_GIOP_Flags::Indirection_tag)
-    {
-      //@@TODO: read indirection repository ids and return true.
-      return false;
-    }
+  {
+    //@@TODO: read indirection repository ids and return true.
+    return false;
+  }
   else
+  {
+    //@@TODO: map repository id for indirection
+    for (CORBA::Long i = 0; i < num_ids; i ++)
     {
-      //@@TODO: map repository id for indirection
-      for (CORBA::Long i = 0; i < num_ids; ++i)
-        {
-          if (!_tao_read_repository_id (strm,ids))
-            {
-              return false;
-            }
-        }
+      if (!_tao_read_repository_id (strm,ids))
+        return false;
+    }
   }
 
   return true;
@@ -826,7 +754,7 @@ CORBA::Boolean
 CORBA::ValueBase::_tao_read_repository_id (ACE_InputCDR& strm,
                                            Repository_Id_List& ids)
 {
-  ACE_CString id;
+      ACE_CString id;
   CORBA::ULong length = 0;
 
   CORBA::Long offset = 0;
@@ -834,7 +762,7 @@ CORBA::ValueBase::_tao_read_repository_id (ACE_InputCDR& strm,
 
   if (!strm.read_ulong (length))
     {
-      return false;
+        return false;
     }
 
   // 'length' may not be the repo id length - it could be the
@@ -849,7 +777,6 @@ CORBA::ValueBase::_tao_read_repository_id (ACE_InputCDR& strm,
         {
           return false;
         }
-        
       buffer_size = -(offset) + sizeof (CORBA::Long);
     }
 
@@ -861,22 +788,21 @@ CORBA::ValueBase::_tao_read_repository_id (ACE_InputCDR& strm,
   if (!indir_stream.good_bit ())
     {
       return false;
-    }
-    
-  indir_stream.read_string (id);
+  }
+  indir_stream.read_string(id);
 
   // Since the ID is always read from the indirection cdr we have to skip
   // the main CDR forward if we were in fact reading from the current
   // location and not rewinding back some offset.
 
   if (offset == 0)
-    {
-      strm.skip_bytes (length);
-    }
+    strm.skip_bytes (length);
 
   ids.push_back (id);
+
   return true;
 }
+
 
 void
 CORBA::ValueBase::truncation_hook ()
@@ -925,8 +851,8 @@ namespace TAO
 
 namespace CORBA
 {
-  TypeCode_ptr const _tc_ValueBase = &TAO::TypeCode::tc_ValueBase;
-  TypeCode_ptr const _tc_EventBase = &TAO::TypeCode::tc_EventBase;
+  TypeCode_ptr const _tc_ValueBase     = &TAO::TypeCode::tc_ValueBase;
+  TypeCode_ptr const _tc_EventBase     = &TAO::TypeCode::tc_EventBase;
 }
 
 // member functions for CORBA::DefaultValueRefCountBase ============

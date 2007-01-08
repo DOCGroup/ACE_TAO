@@ -1,8 +1,9 @@
 // $Id$
 
 #include "NodeManager_Impl.h"
-#include "DAnCE/NodeApplicationManager/NodeApplicationManager_Impl.h"
+#include "../NodeApplicationManager/NodeApplicationManager_Impl.h"
 #include "ace/Log_Msg.h"
+#include <errno.h>
 
 CIAO::NodeManager_Impl_Base::NodeManager_Impl_Base (const char *name,
                                                     CORBA::ORB_ptr orb,
@@ -31,7 +32,7 @@ CIAO::NodeManager_Impl_Base::init (ACE_ENV_SINGLE_ARG_DECL)
 {
   ACE_TRY
     {
-      // Create the call back poa for NAM.
+      //create the call back poa for NAM.
       PortableServer::POAManager_var mgr
         = this->poa_->the_POAManager (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
@@ -99,9 +100,8 @@ CIAO::NodeManager_Impl_Base::joinDomain (const Deployment::Domain & domain,
     {
       ACE_DEBUG ((LM_DEBUG , "Before Activate\n"));
     }
-
-  // Activate the Monitor Controller to
-  // start the monitoring
+  /// Activate the Monitor Controller to
+  //start the monitoring
   monitor_controller_->activate ();
 
   if (CIAO::debug_level () > 9)
@@ -163,10 +163,8 @@ get_all_facets (ACE_CString & name)
   Component_Facets_Map::ENTRY *entry = 0;
 
   if (this->comp_facets_map_.find (name.c_str (), entry) != 0)
-    {
-      ACE_ERROR ((LM_ERROR, "(%P|%t) - NodeManager_Impl_Base::get_all_facets - "
-                  "No component with name [%s] was found in the NodeManager\n", name.c_str ()));
-    }
+    ACE_ERROR ((LM_ERROR, "(%P|%t) - NodeManager_Impl_Base::get_all_facets - "
+                "No component with name [%s] was found in the NodeManager\n", name.c_str ()));
 
   CORBA::ULong const facet_len = entry->int_id_->length ();
 
@@ -192,10 +190,8 @@ get_all_consumers (ACE_CString & name)
   Component_Consumers_Map::ENTRY *entry = 0;
 
   if (this->comp_consumers_map_.find (name.c_str (), entry) != 0)
-    {
-      ACE_ERROR ((LM_ERROR, "(%P|%t) - NodeManager_Impl_Base::get_all_facets - "
-                  "Component [%s] was not found in the NodeManager\n", name.c_str ()));
-    }
+    ACE_ERROR ((LM_ERROR, "(%P|%t) - NodeManager_Impl_Base::get_all_facets - "
+                "Component [%s] was not found in the NodeManager\n", name.c_str ()));
 
   CORBA::ULong const consumer_len = entry->int_id_->length ();
 
@@ -527,7 +523,7 @@ CIAO::NodeManager_Impl_Base::get_shared_components_i (void)
        iter != end;
        ++iter)
     {
-      CORBA::ULong const curr_len = retv->length ();
+      CORBA::ULong curr_len = retv->length ();
       retv->length (curr_len + 1);
       (*retv)[curr_len].name = (*iter).c_str ();
 
@@ -555,12 +551,9 @@ CIAO::NodeManager_Impl_Base::get_shared_components_i (void)
 CORBA::StringSeq *
 CIAO::NodeManager_Impl_Base::shared_components_seq (void)
 {
-  CORBA::StringSeq * retv = 0;
+  CORBA::StringSeq * retv;
   ACE_NEW_RETURN (retv, CORBA::StringSeq, 0);
   retv->length (0);
-
-  // @todo rewrite to just set the length once and then copy the strings
-  // to reduce allocations
 
   ACE_Unbounded_Set<ACE_CString>::iterator end = this->shared_components_.end ();
   for (ACE_Unbounded_Set<ACE_CString>::iterator
@@ -568,7 +561,7 @@ CIAO::NodeManager_Impl_Base::shared_components_seq (void)
        iter != end;
        ++iter)
     {
-      CORBA::ULong const curr_len = retv->length ();
+      CORBA::ULong curr_len = retv->length ();
       retv->length (curr_len + 1);
       (*retv)[curr_len] = (*iter).c_str ();
     }
@@ -605,7 +598,7 @@ validate_plan (const Deployment::DeploymentPlan &plan)
 
   for (i = 0; i < plan.instance.length (); ++i)
     {
-      const char * my_resource_id = 0;
+      const char * my_resource_id;
       if (plan.instance[i].deployedResource.length () == 0)
         {
           continue;
@@ -660,7 +653,7 @@ create_node_app_manager (CORBA::ORB_ptr orb,
                          ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  CIAO::NodeApplicationManager_Impl_Base *app_mgr = 0;
+  CIAO::NodeApplicationManager_Impl_Base *app_mgr;
   ACE_NEW_THROW_EX (app_mgr,
                     CIAO::NodeApplicationManager_Impl (orb,
                                                        poa),
@@ -692,11 +685,9 @@ create_node_app_manager (CORBA::ORB_ptr orb,
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   if (CIAO::debug_level () > 10)
-    {
-      ACE_DEBUG ((LM_DEBUG, "creating static_node_app_manager\n"));
-    }
+    ACE_DEBUG ((LM_DEBUG, "creating static_node_app_manager\n"));
 
-  CIAO::NodeApplicationManager_Impl_Base *app_mgr = 0;
+  CIAO::NodeApplicationManager_Impl_Base *app_mgr;
   ACE_NEW_THROW_EX (app_mgr,
                     CIAO::Static_NodeApplicationManager_Impl (orb,
                                                               poa,

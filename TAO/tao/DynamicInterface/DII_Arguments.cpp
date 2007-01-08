@@ -108,7 +108,7 @@ namespace TAO
   void
   NVList_Argument::interceptor_paramlist (Dynamic::ParameterList *lst)
   {
-    CORBA::ULong const len = this->x_->count ();
+    const CORBA::ULong len = this->x_->count ();
     lst->length (len);
 
     for (CORBA::ULong i = 0; i < len; ++i)

@@ -135,8 +135,8 @@ public:
   virtual int extract_next_message (ACE_Message_Block &incoming,
                                     TAO_Queued_Data *&qd) = 0;
 
-  /// Check whether the node @a qd needs consolidation from @a incoming
-  /// @return 0 on success, -1 on error
+  /// Check whether the node @a qd needs consolidation from @a incoming,
+  /// @r 0 on success, -1 on error
   virtual int consolidate_node (TAO_Queued_Data *qd,
                                 ACE_Message_Block &incoming) = 0;
 

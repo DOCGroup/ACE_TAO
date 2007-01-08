@@ -96,7 +96,7 @@ namespace TAO
         const PortableServer::ObjectId &system_id,
         TAO::Portable_Server::Servant_Upcall &servant_upcall,
         TAO::Portable_Server::POA_Current_Impl &poa_current_impl,
-        bool &wait_occurred_restart_call
+        int &wait_occurred_restart_call
         ACE_ENV_ARG_DECL) = 0;
 
       virtual void cleanup_servant (

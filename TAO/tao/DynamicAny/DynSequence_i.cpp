@@ -1,13 +1,10 @@
 // $Id$
 
-#include "tao/DynamicAny/DynSequence_i.h"
-#include "tao/DynamicAny/DynAnyFactory.h"
-#include "tao/DynamicAny/DynAnyUtils_T.h"
-
 #include "tao/AnyTypeCode/Marshal.h"
 #include "tao/AnyTypeCode/Any_Unknown_IDL_Type.h"
 #include "tao/AnyTypeCode/AnyTypeCode_methods.h"
-
+#include "tao/DynamicAny/DynSequence_i.h"
+#include "tao/DynamicAny/DynAnyFactory.h"
 #include "tao/CDR.h"
 
 ACE_RCSID (DynamicAny,
@@ -27,10 +24,10 @@ TAO_DynSequence_i::~TAO_DynSequence_i (void)
 void
 TAO_DynSequence_i::init_common (void)
 {
-  this->ref_to_component_ = false;
-  this->container_is_destroying_ = false;
-  this->has_components_ = true;
-  this->destroyed_ = false;
+  this->ref_to_component_ = 0;
+  this->container_is_destroying_ = 0;
+  this->has_components_ = 1;
+  this->destroyed_ = 0;
   this->current_position_ = -1;
   this->component_count_ = static_cast<CORBA::ULong> (this->da_members_.size ());
 }
@@ -100,9 +97,9 @@ TAO_DynSequence_i::init (const CORBA::Any& any
       // This recursive step will call the correct constructor
       // based on the type of field_any.
       this->da_members_[i] =
-        TAO::MakeDynAnyUtils<const CORBA::Any&>::make_dyn_any_t (
-          field_any._tao_get_typecode (),
-          field_any);
+        TAO_DynAnyFactory::make_dyn_any (field_any
+                                         ACE_ENV_ARG_PARAMETER);
+      ACE_CHECK;
 
       // Move to the next field in the CDR stream.
       (void) TAO_Marshal_Object::perform_skip (field_tc.in (),
@@ -256,9 +253,9 @@ TAO_DynSequence_i::set_length (CORBA::ULong length
       for (CORBA::ULong i = this->component_count_; i < length; ++i)
         {
           this->da_members_[i] =
-        TAO::MakeDynAnyUtils<CORBA::TypeCode_ptr>::make_dyn_any_t (
-          elemtype.in (),
-          elemtype.in ());
+            TAO_DynAnyFactory::make_dyn_any (elemtype.in ()
+                                             ACE_ENV_ARG_PARAMETER);
+          ACE_CHECK;
         }
     }
   else if (length < this->component_count_)
@@ -383,9 +380,9 @@ TAO_DynSequence_i::set_elements (const DynamicAny::AnySeq & value
             }
 
           this->da_members_[i] =
-            TAO::MakeDynAnyUtils<const CORBA::Any&>::make_dyn_any_t (
-              value[i]._tao_get_typecode (),
-              value[i]);
+            TAO_DynAnyFactory::make_dyn_any (value[i]
+                                          ACE_ENV_ARG_PARAMETER);
+          ACE_CHECK;
         }
       else
         {
@@ -614,9 +611,9 @@ TAO_DynSequence_i::from_any (const CORBA::Any & any
             }
 
           this->da_members_[i] =
-            TAO::MakeDynAnyUtils<const CORBA::Any&>::make_dyn_any_t (
-              field_any._tao_get_typecode (),
-              field_any);
+            TAO_DynAnyFactory::make_dyn_any (field_any
+                                          ACE_ENV_ARG_PARAMETER);
+          ACE_CHECK;
 
           // Move to the next field in the CDR stream.
           (void) TAO_Marshal_Object::perform_skip (field_tc.in (),

@@ -16,9 +16,9 @@ TAO_ROOT = $(top_srcdir)
 
 ## Makefile.SpaceCraft.am
 
-if BUILD_EXCEPTIONS
 if BUILD_THREADS
 if !BUILD_ACE_FOR_TAO
+if !BUILD_MINIMUM_CORBA
 
 noinst_PROGRAMS = craft
 
@@ -42,7 +42,6 @@ craft_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO_IFR_Client.la \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosNotification_Serv.la \
   $(TAO_BUILDDIR)/tao/libTAO_DynamicAny.la \
-  $(TAO_BUILDDIR)/tao/libTAO_Valuetype.la \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_ETCL.la \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_Svc_Utils.la \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosNotification_Skel.la \
@@ -55,9 +54,9 @@ craft_LDADD = \
   $(ACE_BUILDDIR)/protocols/ace/RMCast/libACE_RMCast.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
+endif !BUILD_MINIMUM_CORBA
 endif !BUILD_ACE_FOR_TAO
 endif BUILD_THREADS
-endif BUILD_EXCEPTIONS
 
 ## Clean up template repositories, etc.
 clean-local:

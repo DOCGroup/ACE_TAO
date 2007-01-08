@@ -13,7 +13,7 @@ ACE_ROOT = $(top_srcdir)/..
 TAO_BUILDDIR = $(top_builddir)
 TAO_IDL = ACE_ROOT=$(ACE_ROOT) TAO_ROOT=$(TAO_ROOT) $(TAO_BUILDDIR)/TAO_IDL/tao_idl
 TAO_IDL_DEP = $(TAO_BUILDDIR)/TAO_IDL/tao_idl
-TAO_IDLFLAGS = -Wb,pre_include=ace/pre.h -Wb,post_include=ace/post.h -I$(TAO_ROOT) -I$(srcdir) -g $(ACE_BUILDDIR)/apps/gperf/src/gperf
+TAO_IDLFLAGS = -Ge 1 -Wb,pre_include=ace/pre.h -Wb,post_include=ace/post.h -I$(TAO_ROOT) -I$(srcdir) -g $(ACE_BUILDDIR)/apps/gperf/src/gperf
 TAO_ROOT = $(top_srcdir)
 
 noinst_PROGRAMS =
@@ -21,9 +21,9 @@ noinst_PROGRAMS =
 ## Makefile.RTCORBA_Baseline_IDL.am
 
 if BUILD_CORBA_MESSAGING
-if BUILD_EXCEPTIONS
 if BUILD_RT_CORBA
 if !BUILD_ACE_FOR_TAO
+if !BUILD_MINIMUM_CORBA
 
 BUILT_SOURCES = \
   TestC.cpp \
@@ -31,7 +31,10 @@ BUILT_SOURCES = \
   TestC.inl \
   TestS.cpp \
   TestS.h \
-  TestS.inl
+  TestS.inl \
+  TestS_T.cpp \
+  TestS_T.h \
+  TestS_T.inl
 
 CLEANFILES = \
   Test-stamp \
@@ -40,28 +43,32 @@ CLEANFILES = \
   TestC.inl \
   TestS.cpp \
   TestS.h \
-  TestS.inl
+  TestS.inl \
+  TestS_T.cpp \
+  TestS_T.h \
+  TestS_T.inl
 
-TestC.cpp TestC.h TestC.inl TestS.cpp TestS.h TestS.inl: Test-stamp
+TestC.cpp TestC.h TestC.inl TestS.cpp TestS.h TestS.inl TestS_T.cpp TestS_T.h TestS_T.inl: Test-stamp
 
 Test-stamp: $(srcdir)/Test.idl $(TAO_IDL_DEP)
-	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs $(srcdir)/Test.idl
+	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs -GT $(srcdir)/Test.idl
 	@touch $@
+
 
 noinst_HEADERS = \
   Test.idl
 
+endif !BUILD_MINIMUM_CORBA
 endif !BUILD_ACE_FOR_TAO
 endif BUILD_RT_CORBA
-endif BUILD_EXCEPTIONS
 endif BUILD_CORBA_MESSAGING
 
 ## Makefile.RTCORBA_Baseline_Client.am
 
 if BUILD_CORBA_MESSAGING
-if BUILD_EXCEPTIONS
 if BUILD_RT_CORBA
 if !BUILD_ACE_FOR_TAO
+if !BUILD_MINIMUM_CORBA
 
 noinst_PROGRAMS += client
 
@@ -99,17 +106,17 @@ client_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
+endif !BUILD_MINIMUM_CORBA
 endif !BUILD_ACE_FOR_TAO
 endif BUILD_RT_CORBA
-endif BUILD_EXCEPTIONS
 endif BUILD_CORBA_MESSAGING
 
 ## Makefile.RTCORBA_Baseline_Server.am
 
 if BUILD_CORBA_MESSAGING
-if BUILD_EXCEPTIONS
 if BUILD_RT_CORBA
 if !BUILD_ACE_FOR_TAO
+if !BUILD_MINIMUM_CORBA
 
 noinst_PROGRAMS += server
 
@@ -149,9 +156,9 @@ server_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
+endif !BUILD_MINIMUM_CORBA
 endif !BUILD_ACE_FOR_TAO
 endif BUILD_RT_CORBA
-endif BUILD_EXCEPTIONS
 endif BUILD_CORBA_MESSAGING
 
 ## Clean up template repositories, etc.

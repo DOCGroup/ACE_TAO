@@ -4,7 +4,8 @@
 project(Hello_Base_DnC_stub): ciao_client_dnc {
 
   sharedname = Hello_Base_DnC_stub
-  idlflags += -Wb,stub_export_macro=HELLO_BASE_STUB_Export \
+  idlflags += -Sc \
+              -Wb,stub_export_macro=HELLO_BASE_STUB_Export \
               -Wb,stub_export_include=Hello_Base_stub_export.h \
               -Wb,skel_export_macro=HELLO_BASE_SVNT_Export \
               -Wb,skel_export_include=Hello_Base_svnt_export.h
@@ -32,7 +33,8 @@ project(Hello_Base_DnC_svnt) : ciao_servant_dnc {
   sharedname  = Hello_Base_DnC_svnt
   libs    += Hello_Base_DnC_stub
 
-  idlflags  += -Wb,stub_export_macro=HELLO_BASE_STUB_Export \
+  idlflags  += -Sc \
+               -Wb,stub_export_macro=HELLO_BASE_STUB_Export \
                -Wb,stub_export_include=Hello_Base_stub_export.h \
                -Wb,skel_export_macro=HELLO_BASE_SVNT_Export \
                -Wb,skel_export_include=Hello_Base_svnt_export.h

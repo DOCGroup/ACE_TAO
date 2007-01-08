@@ -92,7 +92,7 @@ namespace CORBA
     virtual const char* _tao_obv_repository_id (void) const;
     virtual CORBA::Boolean _tao_marshal_v (TAO_OutputCDR &strm) const;
     virtual CORBA::Boolean _tao_unmarshal_v (TAO_InputCDR &strm);
-    virtual CORBA::Boolean _tao_match_formal_type (ptrdiff_t) const;
+    virtual CORBA::Boolean _tao_match_formal_type (ptrdiff_t ) const;
 
     /// Memmory management operations
     virtual void _add_ref (void);
@@ -145,8 +145,6 @@ namespace CORBA
     /// version of  CORBA::ValueBase
     CORBA::Object_var equivalent_obj_;
   };
-
-  extern TAO_Valuetype_Export TypeCode_ptr const _tc_AbstractBase;
 }
 
 TAO_Valuetype_Export CORBA::Boolean

@@ -560,44 +560,7 @@ run_main (int argc, ACE_TCHAR *argv[])
     }
 
   ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("Long stream[2] - no errors\n\n")
-              ACE_TEXT ("Testing consolidation\n\n")));
-
-  ACE_OutputCDR output (30);
-  CDR_Test_Types test_types;
-
-  if (test_types.test_put (output) != 0)
-    return 1;
-
-  if (output.begin () == output.end ())
-    ACE_DEBUG ((LM_WARNING,
-                ACE_TEXT ("Only one block needed; test no effective.\n")));
-  else
-    {
-      if (output.consolidate () != 0)
-        ACE_ERROR ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("consolidate")));
-    }
-
-  ACE_InputCDR input (output);
-  if (debug > 0)
-    {
-      ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("Output CDR: \n")));
-      ACE_HEX_DUMP ((LM_DEBUG,
-                     input.rd_ptr(),
-                     64));
-      ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("Input CDR: \n")));
-      ACE_HEX_DUMP ((LM_DEBUG,
-                     input.rd_ptr(),
-                     64));
-    }
-
-  if (test_types.test_get (input) != 0)
-    return 1;
-
-  ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("Consolidation - no errors\n\n")));
+              ACE_TEXT ("Long stream[2] - no errors\n\n")));
 
   ACE_END_TEST;
   return 0;

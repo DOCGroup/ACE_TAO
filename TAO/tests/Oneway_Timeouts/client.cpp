@@ -1,10 +1,9 @@
-// $Id$
-
 #include "TestS.h"
 #include "tao/Strategies/advanced_resource.h"
 #include "tao/Messaging/Messaging.h"
 #include "tao/AnyTypeCode/TAOA.h"
 #include "tao/AnyTypeCode/Any.h"
+#include "tao/IIOP_Connector.h"
 
 #include "ace/streams.h"
 #include "ace/High_Res_Timer.h"
@@ -18,7 +17,7 @@ using namespace PortableServer;
 namespace
 {
   const char *non_existent_ior = "corbaloc:iiop:1.2@63.246.9.65:12345/test";
-  const int TIME_THRESHOLD = 100; //ms
+  const int TIME_THRESHOLD = 50; //ms
 
   int request_timeout = 0;
   Messaging::SyncScope sync_scope;
@@ -43,27 +42,16 @@ namespace
   bool retry_transients = false;
   bool retry_timeouts = false;
 
-  void print_usage (const char *argv0)
+  void print_usage ()
   {
-    ACE_ERROR ((LM_ERROR,
-                "%s [-request_timeout ms=0] "
-                "[-connect_timeout ms=0] "
-                "[-request_interval ms=100] "
-                "[-run_orb_delay ms=0] "
-                "[-run_orb_time ms=0] "
-                "[-max_request_time ms=0] "
-                "[-num_requests n=10] "
-                "[-use_twoway] "
-                "[-retry_transients] "
-                "[-retry_timeouts] "
-                "[-use_sleep] "
-                "[-force_timeout] "
-                "[-force_connect] "
-                "[-buffer_count n=0]"
-                "[-buffer_bytes n=0] "
-                "[-buffer_timeout ms=0] "
-                "[-sync delayed|eager|none]\n",
-                argv0));
+    cout << "client [-request_timeout ms=0] [-connect_timeout ms=0] "
+      "[-request_interval ms=100]\n\t[-run_orb_delay ms=0] "
+      "[-run_orb_time ms=0] [-max_request_time ms=0]\n"
+      "\t[-num_requests n=10] [-use_twoway] [-retry_transients] "
+      "[-retry_timeouts]\n"
+      "\t[-use_sleep] [-force_timeout] [-force_connect] [-buffer_count n=0]\n"
+      "\t[-buffer_bytes n=0] [-buffer_timeout ms=0] [-sync delayed|eager|none]"
+         << endl;
   }
 
   bool parse_command_line (int ac, char *av[])
@@ -186,7 +174,7 @@ namespace
               }
             else
               {
-                print_usage (av[0]);
+                print_usage ();
                 return false;
               }
 
@@ -194,9 +182,9 @@ namespace
           }
         else
           {
-            ACE_ERROR ((LM_ERROR, "Error: Unknown argument \"%s\"\n",
-                        args.get_current ()));
-            print_usage (av[0]);
+            cerr << "Error: Unknown argument \""
+                 << args.get_current () << "\"" << endl;
+            print_usage ();
             return false;
           }
 
@@ -204,6 +192,20 @@ namespace
 
     return true;
   }
+
+
+  POA_ptr create_poa (ORB_ptr orb)
+  {
+    POA_var poa;
+    PolicyList pols;
+    Object_var obj = orb->resolve_initial_references ("RootPOA");
+    POA_var root = POA::_narrow (obj.in ());
+    ACE_ASSERT (! is_nil (root.in ()));
+    POAManager_var man = root->the_POAManager ();
+    poa = root->create_POA ("X", man.in (), pols);
+    return poa._retn ();
+  }
+
 
   Tester_ptr set_request_timeout (Tester_ptr tst, ORB_ptr orb)
   {
@@ -326,7 +328,7 @@ int main (int ac, char *av[])
         {
           tmp_tester = Tester::_narrow (obj.in ());
           tmp_tester->test2 (-2);
-          ACE_DEBUG ((LM_DEBUG, "Connected...\n"));
+          cout << "Connected..." << endl;
         }
       else
         tmp_tester = Tester::_unchecked_narrow (obj.in ());
@@ -354,23 +356,21 @@ int main (int ac, char *av[])
             }
           catch (CORBA::TRANSIENT&)
             {
-              ACE_DEBUG ((LM_DEBUG,
-                          "Transient exception during test () invocation %d\n",
-                          i));
-              if (retry_transients)
-                ACE_DEBUG ((LM_DEBUG,"retrying\n"));
-              else
-                throw;
+              cerr << "Transient exception during test () invocation " << i << endl;
+              if (! retry_transients)
+                {
+                  throw;
+                }
+
             }
           catch (CORBA::TIMEOUT&)
             {
-              ACE_DEBUG ((LM_DEBUG,
-                          "Timeout exception during test () invocation %d\n",
-                          i));
-              if (retry_timeouts)
-                ACE_DEBUG ((LM_DEBUG,"retrying\n"));
-              else
-                throw;
+              cerr << "Timeout exception during test () invocation " << i << endl;
+              if (! retry_timeouts)
+                {
+                  throw;
+                }
+
             }
 
           ++num_requests_sent;
@@ -379,14 +379,13 @@ int main (int ac, char *av[])
           if (max_request_time > 0 &&
               (after - before).msec () > max_request_time)
             {
-              ACE_ERROR_RETURN ((LM_ERROR,
-                                 "Error: test() took %d ms, max is %d ms\n",
-                                 (after - before).msec (), max_request_time),
-                                1);
+              cerr << "Error : test () took " << (after - before).msec ()
+                   << endl;
+              return 1;
             }
 
-          ACE_DEBUG ((LM_DEBUG, "c%d\n", i));
 
+          cout << 'c' << i << endl;
           if (request_interval > 0)
             {
               ACE_Time_Value tv (0, request_interval * 1000);
@@ -408,8 +407,6 @@ int main (int ac, char *av[])
             }
         }
 
-      ACE_DEBUG ((LM_DEBUG,"request loop complete\n"));
-
 
       if (run_orb_delay > 0)
         {
@@ -424,14 +421,8 @@ int main (int ac, char *av[])
           orb->run (tv);
         }
 
-      ACE_DEBUG ((LM_DEBUG,"Sending synch request to shutdown server\n"));
-      if (force_timeout)
-        // we have one more invocation that may time out.
-        before = ACE_High_Res_Timer::gettimeofday_hr ();
-      use_twoway = true;
-      use_sync_scope = false;
-      // Let the server know we're finished. This will timeout if
-      // force_timeout is true.
+
+      // Let the server know we're finished.
       tester->test2 (-1);
 
       orb->shutdown (1);
@@ -440,16 +431,55 @@ int main (int ac, char *av[])
 
       if (force_timeout)
         {
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             "Error: Connection did not time out.\n"),
-                            1);
+          cerr << "Error: Connection did not timeout." << endl;
+          return 1;
         }
+
 
       return 0;
+
     }
-  catch (CORBA::TRANSIENT &)
+  catch (CORBA::TRANSIENT &ex)
     {
-      ACE_DEBUG ((LM_DEBUG, "caught transient exception\n"));
+      if (force_timeout)
+        {
+          ACE_DEBUG ((LM_DEBUG, "caught exception\n"));
+          ACE_Time_Value after = ACE_High_Res_Timer::gettimeofday_hr ();
+          long ms = (after - before).msec ();
+          if ( (use_twoway || !use_sync_scope)
+              && request_timeout > 0
+              && request_timeout < connect_timeout)
+            {
+              connect_timeout = request_timeout;
+            }
+          else if (use_sync_scope && !use_sleep)
+            {
+              if (ms > TIME_THRESHOLD)
+                {
+                  cerr << "Error: Buffered request took " << ms << endl;
+                  return 1;
+                }
+
+              ms = num_requests_sent * request_interval;
+            }
+
+          if (std::abs (static_cast<int>(ms - connect_timeout))
+              > TIME_THRESHOLD)
+            {
+              cerr << "Error: Timeout expected in " << connect_timeout
+                   << "ms, but took " << ms << "ms" << endl;
+              return 1;
+            }
+
+          return 0;
+        }
+      else
+        {
+          cerr << "Error: Unexpected transient\n" << ex << endl;
+        }
+    }
+  catch (CORBA::TIMEOUT &ex)
+    {
       if (force_timeout)
         {
           ACE_Time_Value after = ACE_High_Res_Timer::gettimeofday_hr ();
@@ -464,77 +494,36 @@ int main (int ac, char *av[])
             {
               if (ms > TIME_THRESHOLD)
                 {
-                  ACE_ERROR_RETURN ((LM_ERROR,
-                                     "Error: Buffered request took %dms\n",
-                                     ms),1);
+                  cerr << "Error: Buffered request took " << ms << endl;
+                  return 1;
                 }
 
               ms = num_requests_sent * request_interval;
             }
 
-          if (ms - connect_timeout > TIME_THRESHOLD ||
-              connect_timeout - ms > TIME_THRESHOLD)
+          if (std::abs (static_cast<int>(ms - connect_timeout))
+              > TIME_THRESHOLD)
             {
-              ACE_ERROR_RETURN ((LM_ERROR,
-                                 "Error: Timeout expected in %d ms, "
-                                 "but took %d ms\n", connect_timeout, ms),
-                                1);
+              cerr << "Error: Timeout expected in " << connect_timeout
+                   << "ms, but took " << ms << "ms" << endl;
+              return 1;
             }
 
           return 0;
         }
       else
         {
-          ACE_ERROR_RETURN ((LM_ERROR, "Error: Unexpected\n"), 1);
-        }
-    }
-  catch (CORBA::TIMEOUT &)
-    {
-      ACE_DEBUG ((LM_DEBUG, "caught timeout exception\n"));
-      if (force_timeout)
-        {
-          ACE_Time_Value after = ACE_High_Res_Timer::gettimeofday_hr ();
-          long ms = (after - before).msec ();
-          if ( (use_twoway || !use_sync_scope)
-              && request_timeout > 0
-              && request_timeout < connect_timeout)
-            {
-              connect_timeout = request_timeout;
-            }
-          else if (use_sync_scope && !use_sleep)
-            {
-              if (ms > TIME_THRESHOLD)
-                {
-                  ACE_ERROR_RETURN ((LM_ERROR,
-                                    "Error: Buffered request took %d ms\n",
-                                    ms),1);
-                }
-
-              ms = num_requests_sent * request_interval;
-            }
-
-          if (ms - connect_timeout > TIME_THRESHOLD ||
-              connect_timeout - ms > TIME_THRESHOLD)
-            {
-              ACE_ERROR_RETURN ((LM_ERROR,
-                                 "Error: Timeout expected in %d ms, "
-                                 "but took %d ms\n", connect_timeout, ms),
-                                1);
-            }
-
-          return 0;
-        }
-      else
-        {
-          ACE_ERROR_RETURN ((LM_ERROR, "Error: Unexpected\n"), 1);
+          cerr << "Error: Unexpected timeout\n" << ex << endl;
         }
 
     }
   catch (Exception &ex)
     {
-      ACE_ERROR ((LM_ERROR, "client: %s\n\nLast operation took %d ms.\n",
-                  ex._name(),
-                  (ACE_High_Res_Timer::gettimeofday_hr () - before).msec ()));
+      cerr << "client: " << ex << endl;
+      cerr << "\nLast operation took "
+           << (ACE_High_Res_Timer::gettimeofday_hr () - before).msec ()
+           << "ms"
+           << endl;
     }
 
   return 1;

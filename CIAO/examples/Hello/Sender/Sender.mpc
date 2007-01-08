@@ -5,7 +5,8 @@ project(Hello_Base_Sender_DnC_stub): ciao_client_dnc {
   avoids += ace_for_tao
   after += Hello_Base_DnC_stub
   sharedname = Sender_DnC_stub
-  idlflags += -Wb,stub_export_macro=SENDER_STUB_Export \
+  idlflags += -Sc \
+              -Wb,stub_export_macro=SENDER_STUB_Export \
               -Wb,stub_export_include=Sender_stub_export.h \
               -Wb,skel_export_macro=SENDER_SVNT_Export \
               -Wb,skel_export_include=Sender_svnt_export.h
@@ -19,11 +20,11 @@ project(Hello_Base_Sender_DnC_stub): ciao_client_dnc {
   Source_Files {
     SenderC.cpp
   }
-
+  
   Header_Files {
     SenderC.h
   }
-
+  
   Inline_Files {
     SenderC.inl
   }
@@ -38,7 +39,8 @@ project(Hello_Base_Sender_DnC_svnt) : ciao_servant_dnc {
           Hello_Base_DnC_stub \
           Hello_Base_DnC_svnt
 
-  idlflags  +=  -Wb,export_macro=SENDER_SVNT_Export \
+  idlflags  +=  -Sc \
+                -Wb,export_macro=SENDER_SVNT_Export \
                 -Wb,export_include=Sender_svnt_export.h
   dynamicflags = SENDER_SVNT_BUILD_DLL
 
@@ -55,13 +57,13 @@ project(Hello_Base_Sender_DnC_svnt) : ciao_servant_dnc {
     SenderS.cpp
     Sender_svnt.cpp
   }
-
+  
   Header_Files {
     SenderEC.h
     SenderS.h
     Sender_svnt.h
   }
-
+  
   Inline_Files {
     SenderEC.inl
     SenderS.inl
@@ -77,7 +79,8 @@ project(Hello_Base_Sender_DnC_exec) : ciao_component_dnc {
                Hello_Base_DnC_stub \
                Hello_Base_DnC_svnt
 
-  idlflags  +=  -Wb,export_macro=SENDER_EXEC_Export \
+  idlflags  +=  -Sc \
+                -Wb,export_macro=SENDER_EXEC_Export \
                 -Wb,export_include=Sender_exec_export.h
   dynamicflags   = SENDER_EXEC_BUILD_DLL
 
@@ -87,7 +90,7 @@ project(Hello_Base_Sender_DnC_exec) : ciao_component_dnc {
   Source_Files {
     Sender_exec.cpp
   }
-
+  
   Header_Files {
     Sender_exec.h
   }
@@ -105,10 +108,10 @@ project (Hello_DnC_Starter) : ciao_client_dnc, valuetype {
   Source_Files {
     starter.cpp
   }
-
+  
   Header_Files {
   }
-
+  
   Inline_Files {
   }
 }

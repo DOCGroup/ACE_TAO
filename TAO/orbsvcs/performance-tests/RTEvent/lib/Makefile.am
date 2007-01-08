@@ -13,16 +13,16 @@ ACE_ROOT = $(top_srcdir)/..
 TAO_BUILDDIR = $(top_builddir)
 TAO_IDL = ACE_ROOT=$(ACE_ROOT) TAO_ROOT=$(TAO_ROOT) $(TAO_BUILDDIR)/TAO_IDL/tao_idl
 TAO_IDL_DEP = $(TAO_BUILDDIR)/TAO_IDL/tao_idl
-TAO_IDLFLAGS = -Wb,pre_include=ace/pre.h -Wb,post_include=ace/post.h -I$(TAO_ROOT) -I$(srcdir) -g $(ACE_BUILDDIR)/apps/gperf/src/gperf
+TAO_IDLFLAGS = -Ge 1 -Wb,pre_include=ace/pre.h -Wb,post_include=ace/post.h -I$(TAO_ROOT) -I$(srcdir) -g $(ACE_BUILDDIR)/apps/gperf/src/gperf
 TAO_ROOT = $(top_srcdir)
 
 
 ## Makefile.RTEC_Perf.am
 
 if BUILD_CORBA_MESSAGING
-if BUILD_EXCEPTIONS
 if BUILD_RT_CORBA
 if !BUILD_ACE_FOR_TAO
+if !BUILD_MINIMUM_CORBA
 
 BUILT_SOURCES = \
   Federated_TestC.cpp \
@@ -30,7 +30,10 @@ BUILT_SOURCES = \
   Federated_TestC.inl \
   Federated_TestS.cpp \
   Federated_TestS.h \
-  Federated_TestS.inl
+  Federated_TestS.inl \
+  Federated_TestS_T.cpp \
+  Federated_TestS_T.h \
+  Federated_TestS_T.inl
 
 CLEANFILES = \
   Federated_Test-stamp \
@@ -39,12 +42,15 @@ CLEANFILES = \
   Federated_TestC.inl \
   Federated_TestS.cpp \
   Federated_TestS.h \
-  Federated_TestS.inl
+  Federated_TestS.inl \
+  Federated_TestS_T.cpp \
+  Federated_TestS_T.h \
+  Federated_TestS_T.inl
 
-Federated_TestC.cpp Federated_TestC.h Federated_TestC.inl Federated_TestS.cpp Federated_TestS.h Federated_TestS.inl: Federated_Test-stamp
+Federated_TestC.cpp Federated_TestC.h Federated_TestC.inl Federated_TestS.cpp Federated_TestS.h Federated_TestS.inl Federated_TestS_T.cpp Federated_TestS_T.h Federated_TestS_T.inl: Federated_Test-stamp
 
 Federated_Test-stamp: $(srcdir)/Federated_Test.idl $(TAO_IDL_DEP)
-	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs -Wb,export_macro=TAO_RTEC_Perf_Export -Wb,export_include=rtec_perf_export.h $(srcdir)/Federated_Test.idl
+	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs -GT -Wb,export_macro=TAO_RTEC_Perf_Export -Wb,export_include=rtec_perf_export.h $(srcdir)/Federated_Test.idl
 	@touch $@
 
 noinst_LTLIBRARIES = libTAO_RTEC_Perf.la
@@ -107,6 +113,9 @@ noinst_HEADERS = \
   Federated_TestC.inl \
   Federated_TestS.h \
   Federated_TestS.inl \
+  Federated_TestS_T.cpp \
+  Federated_TestS_T.h \
+  Federated_TestS_T.inl \
   Implicit_Deactivator.h \
   Implicit_Deactivator.inl \
   Loopback.h \
@@ -158,9 +167,9 @@ noinst_HEADERS = \
   Task_Activator.inl \
   rtec_perf_export.h
 
+endif !BUILD_MINIMUM_CORBA
 endif !BUILD_ACE_FOR_TAO
 endif BUILD_RT_CORBA
-endif BUILD_EXCEPTIONS
 endif BUILD_CORBA_MESSAGING
 
 ## Clean up template repositories, etc.

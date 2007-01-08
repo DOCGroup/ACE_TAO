@@ -2,7 +2,7 @@
 //
 // $Id$
 
-project : htbp, orbsvcslib, install, tao_versioning_idl_defaults {
+project : htbp, orbsvcslib, core, tao_versioning_idl_defaults {
   sharedname   = TAO_HTIOP
   idlflags    += -Wb,export_macro=HTIOP_Export -Wb,export_include=orbsvcs/HTIOP/HTIOP_Export.h -SS
   dynamicflags = HTIOP_BUILD_DLL
@@ -15,7 +15,7 @@ project : htbp, orbsvcslib, install, tao_versioning_idl_defaults {
   }
 
   IDL_Files {
-    idlflags += -Sci -Gp -Gd -Sa -Sorb \
+    idlflags += -Sci -Gp -Gd -Ge 1 -Sa -Sorb \
                 -o HTIOP
     idlflags -= -St
     HTIOP/htiop_endpoints.pidl

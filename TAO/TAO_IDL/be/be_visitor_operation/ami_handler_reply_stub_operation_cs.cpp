@@ -130,7 +130,7 @@ be_visitor_operation_ami_handler_reply_stub_operation_cs::visit_operation (
   *os << "TAO_InputCDR &_tao_in, " << be_nl
       << "::Messaging::ReplyHandler_ptr _tao_reply_handler," << be_nl
       << "::CORBA::ULong reply_status"
-      << ")" << be_uidt << be_uidt_nl
+      << env_decl << ")" << be_uidt << be_uidt_nl
       << "{" << be_idt_nl;
 
   *os << "// Retrieve Reply Handler object." << be_nl;
@@ -138,8 +138,10 @@ be_visitor_operation_ami_handler_reply_stub_operation_cs::visit_operation (
       << "_tao_reply_handler_object =" << be_idt_nl;
 
   *os << parent->full_name ();
-  *os << "::_narrow (_tao_reply_handler);" << be_uidt
-      << be_nl << be_nl
+  *os << "::_narrow (_tao_reply_handler"
+      << (be_global->use_raw_throw () ? "" : " ACE_ENV_ARG_PARAMETER")
+      << ");" << be_uidt
+      << TAO_ACE_CHECK () << be_nl << be_nl
       << "// Exception handling" << be_nl
       << "switch (reply_status)" << be_nl
       << "{" << be_idt_nl
@@ -273,7 +275,17 @@ be_visitor_operation_ami_handler_reply_stub_operation_cs::visit_operation (
       << node->local_name () << "_excep (" << be_idt << be_idt_nl
       << "exception_holder_var";
 
+  if (!be_global->exception_support ())
+    {
+      *os << " ACE_ENV_ARG_PARAMETER";
+    }
+
   *os << be_uidt_nl << ");" << be_uidt_nl;
+
+  if (!be_global->exception_support ())
+    {
+      *os << "ACE_CHECK;" << be_nl;
+    }
 
   *os << "break;" << be_uidt_nl
       << "}" << be_nl;
@@ -443,7 +455,7 @@ be_visitor_operation_ami_handler_reply_stub_operation_cs::gen_marshal_and_invoke
     }
 
   *os << be_uidt_nl << ");" << be_uidt
-      << be_nl;
+      << TAO_ACE_CHECK () << be_nl;
 
   return 0;
 }

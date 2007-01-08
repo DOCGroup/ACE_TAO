@@ -160,52 +160,54 @@ be_visitor_component_sh::visit_component (be_component *node)
       << "virtual ~" << class_name.c_str () << " (void);" << be_nl << be_nl;
 
   // _is_a
-  *os << "virtual ::CORBA::Boolean _is_a (const char* logical_type_id);" << be_nl << be_nl;
+  *os << "virtual ::CORBA::Boolean _is_a (" << be_idt << be_idt_nl
+      << "const char* logical_type_id" << env_dflts << be_uidt_nl
+      << ");" << be_uidt_nl << be_nl;
 
   // Add a skeleton for our _is_a method.
   *os << "static void _is_a_skel (" << be_idt << be_idt_nl
       << "TAO_ServerRequest &req," << be_nl
       << "void *servant," << be_nl
-      << "void *servant_upcall" << be_uidt_nl
+      << "void *servant_upcall" << env_decl << be_uidt_nl
       << ");" << be_uidt_nl << be_nl;
 
   // Add a skeleton for our _non_existent method.
   *os << "static void _non_existent_skel (" << be_idt << be_idt_nl
       << "TAO_ServerRequest &req," << be_nl
       << "void *servant," << be_nl
-      << "void *servant_upcall" << be_uidt_nl
+      << "void *servant_upcall" << env_decl << be_uidt_nl
       << ");" << be_uidt_nl << be_nl;
 
   // Add a skeleton for our _interface method.
   *os << "static void _interface_skel (" << be_idt << be_idt_nl
       << "TAO_ServerRequest &req," << be_nl
       << "void *servant," << be_nl
-      << "void *servant_upcall" << be_uidt_nl
+      << "void *servant_upcall" << env_decl << be_uidt_nl
       << ");" << be_uidt_nl << be_nl;
 
   // Add a skeleton for our _component method.
   *os << "static void _component_skel (" << be_idt << be_idt_nl
       << "TAO_ServerRequest &req," << be_nl
       << "void *obj," << be_nl
-      << "void *servant_upcall" << be_uidt_nl
+      << "void *servant_upcall" << env_decl << be_uidt_nl
       << ");" << be_uidt_nl << be_nl;
 
   // Add a skeleton for our _repository_id method.
   *os << "static void _repository_id_skel (" << be_idt << be_idt_nl
       << "TAO_ServerRequest &req," << be_nl
       << "void *servant," << be_nl
-      << "void *servant_upcall" << be_uidt_nl
+      << "void *servant_upcall" << env_decl << be_uidt_nl
       << ");" << be_uidt_nl << be_nl;
 
   // Add the dispatch method.
   *os << "virtual void _dispatch (" << be_idt << be_idt_nl
       << "TAO_ServerRequest &req," << be_nl
-      << "void *_servant_upcall" << be_uidt_nl
+      << "void *_servant_upcall" << env_decl << be_uidt_nl
       << ");" << be_uidt_nl << be_nl;
 
   // _this
   *os << "::" << node->full_name () << " *_this (" << be_idt << be_idt
-      << be_uidt_nl
+      << env_dflts << be_uidt_nl
       << ");" << be_uidt_nl << be_nl;
 
   // _interface_repository_id

@@ -1,7 +1,7 @@
 // -*- MPC -*-
 // $Id$
 
-project(CosConcurrency_IDL): orbsvcslib, install, tao_versioning_idl_defaults {
+project(CosConcurrency_IDL): orbsvcslib, core, tao_versioning_idl_defaults {
   custom_only = 1
   idlflags   += -Wb,stub_export_macro=TAO_Concurrency_Export -Wb,stub_export_include=orbsvcs/Concurrency/concurrency_export.h -Wb,skel_export_macro=TAO_Concurrency_Skel_Export -Wb,skel_export_include=orbsvcs/Concurrency/concurrency_skel_export.h
 
@@ -10,7 +10,7 @@ project(CosConcurrency_IDL): orbsvcslib, install, tao_versioning_idl_defaults {
   }
 }
 
-project(CosConcurrency) : orbsvcslib, install {
+project(CosConcurrency) : orbsvcslib, core {
   sharedname   = TAO_CosConcurrency
   dynamicflags = TAO_CONCURRENCY_BUILD_DLL
   tagchecks   += Concurrency
@@ -44,7 +44,7 @@ project(CosConcurrency) : orbsvcslib, install {
   }
 }
 
-project(CosConcurrency_Skel): orbsvcslib, install, concurrency, portableserver {
+project(CosConcurrency_Skel): orbsvcslib, core, concurrency, portableserver {
   sharedname   = TAO_CosConcurrency_Skel
   dynamicflags = TAO_CONCURRENCY_SKEL_BUILD_DLL
   tagchecks   += Concurrency
@@ -74,7 +74,7 @@ project(CosConcurrency_Skel): orbsvcslib, install, concurrency, portableserver {
   }
 }
 
-project(CosConcurrency_Serv) : orbsvcslib, install, concurrency_skel, avoids_corba_e_micro {
+project(CosConcurrency_Serv) : orbsvcslib, core, concurrency_skel {
   sharedname   = TAO_CosConcurrency_Serv
   dynamicflags = TAO_CONCURRENCY_SERV_BUILD_DLL
   tagchecks   += Concurrency
@@ -87,9 +87,6 @@ project(CosConcurrency_Serv) : orbsvcslib, install, concurrency_skel, avoids_cor
   }
 
   Header_Files {
-    // We want all the headers in the Concurrency subdirectory, except
-    // concurrency_export.h and concurrency_skel_export.h, since those
-    // are bundled in the stub and skeleton projects.
     Concurrency
     ^Concurrency/concurrency_export.h
     ^Concurrency/concurrency_skel_export.h

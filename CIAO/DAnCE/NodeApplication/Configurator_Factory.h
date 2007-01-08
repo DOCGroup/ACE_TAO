@@ -18,13 +18,12 @@
 #define CIAO_CONFIGURATOR_FACTORY_H
 #include /**/ "ace/pre.h"
 
-#include "CIAO_NodeApplication_export.h"
+#include "tao/ORB_Core.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/ORB_Core.h"
 #include "tao/ORB.h"
 #include "ace/Task.h"
 #include "ace/SString.h"
@@ -50,7 +49,7 @@ namespace CIAO
    * developers can plug in their own system configuration needs into
    * the whole system.
    */
-  class NODEAPPLICATION_Export NodeApplication_Options
+  class NodeApplication_Options
   {
   public:
     // default ctor.

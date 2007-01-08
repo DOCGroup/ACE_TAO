@@ -28,7 +28,7 @@ straightforward way to get the features you need.
 <H3> List of Libraries </H3>
 
 Here we outline the list of libraries in TAO core with the list of <a
-href="../../MPC/docs/README"> MPC </a> projects that can be used by the
+href="../../MPC/README"> MPC </a> projects that can be used by the
 application to get all the required libraries linked into the
 application.  The library names in table below are the ones created on
 UNIX based systems.  Windows systems have a slightly different naming
@@ -103,7 +103,7 @@ and the dependencies outlined below are the same. <P>
    <td>Support for the TAO-specific Endpoint Policy. This is used
     to set up constraints on endpoints placed in IORs. The endpoint
     policy is applied to a POAManager via the POAManagerFactory and
-    affects all POAs associated with that manager. Examples of use
+    affects all POAs associated with that mananger. Examples of use
     are in $TAO_ROOT/tests/POA/EndpointPolicy. Applications have to
     <code> #include "tao/EndpointPolicy/EndpointPolicy.h" </code> to
     get the right symbols.</td>
@@ -181,18 +181,18 @@ and the dependencies outlined below are the same. <P>
    </tr>
    <tr align=left>
    <th>libTAO_PI.so</th>
-   <td>Support for Portable Interceptors. This library is automagically
+   <td>Support for Portalbe Interceptors. This library is automagically
     loaded by
     the ORB when the application uses the PolicyFactory or ORBInitializer
     . Just linking this library should be sufficient to
     get all the features that are required to write applications
-    using portable interceptors. </td>
+    using portable intercetpros. </td>
    <td>pi.mpb</td>
    </tr>
    <tr align=left>
    <th>libTAO_PortableServer.so</th>
    <td>Support for POA. This library is automagically loaded by
-    the ORB when the application calls resolve_initial_references
+    the ORB when the application calls resolve_intial_references
     ("RootPOA"); Just linking this library should be sufficient to
     get all the features that are required to write powerful
     servers. </td>
@@ -271,45 +271,6 @@ and the dependencies outlined below are the same. <P>
     </code> for static loading and provide service configuration file for dynamic loading.
    </td>
    <td>csd_threadpool.mpb</td>
-   </tr>
-   <tr align=left>
-   <th>libTAO_TC.so</th>
-   <td>Support for TAO::Transport::Current - a generic fremework for aplications that 
-   need access to statistical information about the currently used Transport. See <a 
-   href="transport_current/index.html"> Transport::Current</a>. 
-   This library can be loaded statically or dynamically. Applications are required to
-    <code> #include "tao/TransportCurrent/Transport_Current.h"
-    </code> for static loading.
-   </td>
-   <td>tc.mpb</td>
-   </tr>
-   <tr align=left>
-   <th>libTAO_TC_IIOP.so</th>
-   <td>Support for TAO::Transport::IIOP::Current - an IIOP-specific plug-in for 
-   Transport::Current. See <a href="transport_current/index.html"> Transport::Current</a>.
-   This library can be loaded statically or dynamically. 
-   Applications are required to <code> #include "tao/TransportCurrent/IIOP_Transport_Current.h"
-    </code> for static loading. Depends on libTAO_TC.so.
-   </td>
-   <td>tc_iiop.mpb</td>
-   </tr>
-   <tr align=left>
-   <th>libTAO_Compression.so</th>
-   <td>Support for Compression. This library can
-    be loaded statically or dynamically. Applications are required to
-    <code> #include "tao/Compression/Compression.h"
-    </code> for static loading.
-   </td>
-   <td>compression.mpb</td>
-   </tr>
-   <tr align=left>
-   <th>libTAO_ZlibCompressor.so</th>
-   <td>Support for Zlib Compression. This library can
-    be loaded statically or dynamically. Applications are required to
-    <code> #include "tao/Compression/zlib/ZlibCompressor.h"
-    </code> for static loading.
-   </td>
-   <td>zlibcompressor.mpb</td>
    </tr>
 </tr>
 </table>

@@ -127,16 +127,14 @@ const char* TT_Info::MODEL_NUMBERS[] =
   "9q834jidlj234ujof"
 };
 
-const int TT_Info::NUM_QUERIES = 9;
+const int TT_Info::NUM_QUERIES = 7;
 const char* TT_Info::QUERIES[][3] =
 {
   {INTERFACE_NAMES[REMOTE_IO], "", ""},
   {INTERFACE_NAMES[REMOTE_IO], "'Cupples' ~ Location", ""},
   {INTERFACE_NAMES[PLOTTER], "'sbw1' in User_Queue", "min Cost_Per_Page"},
   {INTERFACE_NAMES[PLOTTER], "Num_Colors > 1 and 'Cupples' ~ Location", "min Cost_Per_Page"},
-  {INTERFACE_NAMES[PRINTER], "Pages_Per_Sec < -101215752192 and Color == TRUE", "with 'sbw1' in User_Queue"},
-  {INTERFACE_NAMES[PRINTER], "Pages_Per_Sec > 3.0 and Color == TRUE", "with 'sbw1' in User_Queue"},
-  {INTERFACE_NAMES[PRINTER], "Pages_Per_Sec > -3.0 and Color == TRUE", "with 'sbw1' in User_Queue"},
+  {INTERFACE_NAMES[PRINTER], "Pages_Per_Sec > 3 and Color == TRUE", "with 'sbw1' in User_Queue"},
   {INTERFACE_NAMES[PRINTER], "Color == TRUE or Double_Sided == TRUE", "random"},
   {INTERFACE_NAMES[PRINTER], "(Color or Double_Sided) and 'sbw1' in User_Queue", "with 'Cupples' ~ Location"}
 };

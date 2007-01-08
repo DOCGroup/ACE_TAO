@@ -33,15 +33,13 @@ CIAO::DomainDataManager * CIAO::DomainDataManager::create (CORBA::ORB_ptr orb,
 }
 
 
-CIAO::DomainDataManager*
-CIAO::DomainDataManager::get_data_manager ()
+CIAO::DomainDataManager* CIAO::DomainDataManager::get_data_manager ()
 {
   return global_data_manager_;
 }
 
 
-void
-CIAO::DomainDataManager::delete_data_manger ()
+void CIAO::DomainDataManager::delete_data_manger ()
 {
   if (global_data_manager_)
     delete global_data_manager_;
@@ -167,16 +165,17 @@ int CIAO::DomainDataManager::call_all_node_managers ()
       return 0;
     }
 
-  CORBA::ULong const length = initial_domain_.node.length ();
+  int length = initial_domain_.node.length ();
   if (CIAO::debug_level () > 9)
     {
       ACE_DEBUG ((LM_DEBUG, "Number of nodes in domain.cdd is : %d\n", length));
     }
 
-  for (CORBA::ULong i=0;i < length;i++)
+  for (int i=0;i < length;i++)
     {
 
       ::Deployment::NodeManager_var node_manager;
+
 
       try
         {
@@ -303,7 +302,7 @@ CORBA::Long CIAO::DomainDataManager::get_pid (ACE_CString cmp)
       for (unsigned int j = 0;j < current_domain_.node[i].resource.length ();j++)
         {
           // The resource
-          if (!ACE_OS::strcmp(
+          if (!strcmp(
                       current_domain_.node[i].resource[j].name,
                       "Component") &&
               ACE_CString (current_domain_.node[i].resource[j].property[0].name) ==
@@ -382,14 +381,12 @@ releaseResources (
     {
       for (unsigned int j = 0;j < provisioned_data_.node.length ();j++)
         {
-          if (!ACE_OS::strcmp (plan.instance[i].node.in () ,
-                               provisioned_data_.node[j].name.in ()))
+          if (!strcmp (plan.instance[i].node.in () ,
+                       provisioned_data_.node[j].name.in ()))
           {
             if (CIAO::debug_level () > 9)
-              {
-                ACE_DEBUG ((LM_DEBUG ,
-                    "TM::commitResource::Host name matched\n"));
-              }
+              ACE_DEBUG ((LM_DEBUG ,
+                  "TM::commitResource::Host name matched\n"));
 
             match_requirement_resource (
                                         plan.instance[i].deployedResource,
@@ -410,11 +407,11 @@ match_requirement_resource (
 {
   // here match the deployed to the available
 
-  for (CORBA::ULong i = 0;i < deployed.length ();i++)
+  for (unsigned int i = 0;i < deployed.length ();i++)
     {
       // for each deployed resource ....search the corresponding
       // available resource
-      for (CORBA::ULong j = 0;j < available.length ();j++)
+      for (unsigned int j = 0;j < available.length ();j++)
         {
           if (!strcmp (deployed[i].requirementName, available[j].name))
             {
@@ -422,7 +419,7 @@ match_requirement_resource (
                 ACE_DEBUG ((LM_DEBUG ,
                     "TM::commitResource::Requirement name matched\n"));
               // search for the resourcename in the resourceType
-              for (CORBA::ULong k = 0;k < available[j].resourceType.length ();k++)
+              for (unsigned int k = 0;k < available[j].resourceType.length ();k++)
                 {
                   if (!strcmp (deployed[i].resourceName,
                                available[j].resourceType[k]))
@@ -457,10 +454,10 @@ match_properties (
       ::Deployment::Properties deployed,
       ::Deployment::SatisfierProperties & available)
 {
-  for (CORBA::ULong i = 0;i < deployed.length ();i++)
+  for (unsigned int i = 0;i < deployed.length ();i++)
     {
-      for (CORBA::ULong j = 0;j < available.length ();j++)
-        if (!ACE_OS::strcmp (deployed[i].name , available[j].name))
+      for (unsigned int j = 0;j < available.length ();j++)
+        if (!strcmp (deployed[i].name , available[j].name))
           {
             // check kind here ....and then subtract ....
             // accordingly , ..this is complex ... better to write
@@ -519,13 +516,13 @@ void CIAO::DomainDataManager::commit_release_resource (
   else
     {
       //must be release
-      // @todo check return value of >>=
       CORBA::Long required_d;
       deployed.value >>= required_d;
       CORBA::Long available_d;
       available.value >>= available_d;
 
       available_d = available_d + required_d;
+
 
       // Should we check for bin > 100 ??????
 
@@ -540,15 +537,17 @@ void CIAO::DomainDataManager::commit_release_resource (
 void CIAO::DomainDataManager::stop_monitors ()
 {
 
-  CORBA::ULong length = initial_domain_.node.length ();
+  int length = initial_domain_.node.length ();
   if (CIAO::debug_level () > 9)
     {
       ACE_DEBUG ((LM_DEBUG, "Number of nodes in domain.cdd is : %d\n", length));
     }
 
-  for (CORBA::ULong i=0;i < length;i++)
+  for (int i=0;i < length;i++)
     {
+
       ::Deployment::NodeManager_var node_manager;
+
 
       try
         {
@@ -637,7 +636,7 @@ find_in_initial_domain (const char* node_name,
       i < this->initial_domain_.node.length ();
       i++)
   {
-    if (ACE_OS::strcmp (node_name, this->initial_domain_.node[i].name.in ()) == 0)
+    if (strcmp (node_name, this->initial_domain_.node[i].name.in ()) == 0)
     {
       node = this->initial_domain_.node[i];
       return true;
@@ -657,7 +656,7 @@ find_in_provisioned_domain (const char* node_name,
       i < this->provisioned_data_.node.length ();
       i++)
   {
-    if (ACE_OS::strcmp (node_name, this->provisioned_data_.node[i].name.in ()) == 0)
+    if (strcmp (node_name, this->provisioned_data_.node[i].name.in ()) == 0)
     {
       node = this->provisioned_data_.node[i];
       return true;
@@ -684,20 +683,21 @@ int CIAO::DomainDataManager::delete_from_domain (
   // if not found add it to the updated nodes list
 
   ::Deployment::Nodes updated_nodes;
-  bool found = false;
+  bool found = 0;
+
 
   for (CORBA::ULong j = 0;
        j < this->provisioned_data_.node.length ();
        j++)
     {
-      found = false;
+      found = 0;
 
       for (CORBA::ULong i = 0;i < domain.node.length ();i++)
         {
           if (strcmp (domain.node[i].name.in (),
                       this->provisioned_data_.node[j].name.in ()) == 0)
             {
-              found = true;
+              found = 1;
               break; // found the node
             }
         }
@@ -726,7 +726,7 @@ int CIAO::DomainDataManager::intimate_planner (
 {
  // use the connection with the planner and get a reference to the planner
  // make a call top the planner
-  Deployment::Domain d = domain;
+  Deployment::Domain d = domain; 
   return 0;
 
 }

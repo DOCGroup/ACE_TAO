@@ -39,9 +39,6 @@ template <class EXT_ID, class INT_ID>
 class ACE_Map_Entry
 {
 public:
-  /// Initialize member variables.
-  ACE_Map_Entry (void);
-
   /// We need this destructor to keep some compilers from complaining.
   /// It's just a no-op, however.
   ~ACE_Map_Entry (void);
@@ -82,7 +79,7 @@ public:
 #if defined (ACE_HAS_LAZY_MAP_MANAGER)
 
   /// Is this entry free?
-  bool free_;
+  int free_;
 
 #endif /* ACE_HAS_LAZY_MAP_MANAGER */
 

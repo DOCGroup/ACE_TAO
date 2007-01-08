@@ -6,7 +6,7 @@
 ## this file will be lost the next time it is generated.
 ##
 ## MPC Command:
-## ./bin/mwc.pl -type automake -noreldefs ACE.mwc
+## /acebuilds/ACE_wrappers-repository/bin/mwc.pl -include /acebuilds/MPC/config -include /acebuilds/MPC/templates -feature_file /acebuilds/ACE_wrappers-repository/local.features -noreldefs -type automake -exclude build,Kokyu
 
 ACE_BUILDDIR = $(top_builddir)
 ACE_ROOT = $(top_srcdir)
@@ -61,7 +61,6 @@ endif !BUILD_ACE_FOR_TAO
 ## Makefile.Svc_Cfg_IPC_Server_Test.am
 
 if !BUILD_ACE_FOR_TAO
-
 noinst_PROGRAMS = server_test
 
 server_test_CPPFLAGS = \

@@ -11,36 +11,9 @@
 #
 include $(ACE_ROOT)/include/makeinclude/platform_tru64_pre.GNU
 
-debug ?= 1
-exceptions ?= 1
-rtti ?= 1
-threads ?= 1
-optimize ?= 1
-
-CC              = gcc
-CXX             = g++
-CFLAGS          += -D_REENTRANT
-
-DCFLAGS         += -g
-LD              = $(CXX)
-DLD             = $(CXX)
-LIBS            += -lpthread -lmach -lexc -lxti -lrt
-OCFLAGS         += -O3
-PIC             = -fpic
-ARFLAGS         = cruvZ
-# When libraries are archived, a hash index is automatically created so there
-# is no need for ranlib
-RANLIB          = /usr/bin/true
-SOFLAGS         += -shared $(CPPFLAGS) $(ACELIB)
-SOBUILD         = $(COMPILE.cc) $(PIC) -o $(VSHDIR)$*.so $<
-PRELIB          = @true
-
-# Test for template instantiation, add to SOFLAGS if SONAME set,
-# add -E to LDFLAGS if using GNU ld
+# Include the macro file for osf1_4.x
 #
-include $(ACE_ROOT)/include/makeinclude/platform_g++_common.GNU
-
-CCFLAGS         += $(CFLAGS) $(TEMPLATES_FLAG)
+include $(ACE_ROOT)/include/makeinclude/platform_osf1_4.x_g++.GNU
 
 # Include the common macros for all compilers
 #

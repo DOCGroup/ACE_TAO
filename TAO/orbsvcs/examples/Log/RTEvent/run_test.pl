@@ -49,7 +49,7 @@ print STDERR "Starting Supplier\n";
 $supplier->Spawn ();
 
 
-$supplier->WaitKill (10);
+$supplier->WaitKill (5);
 
 $consumer->Kill ();
 

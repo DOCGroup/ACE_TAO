@@ -71,11 +71,12 @@ public:
    * This is the ACT associated with the handle on which the
    * Asynch_Operation takes place.
    *
-   * @note This is not implemented for POSIX4 platforms.
+   * @@ This is not implemented for POSIX4 platforms.
+   *
    */
   const void *completion_key (void) const;
 
-  /// Error value if the operation fails.
+  /// Error value if the operation fail.
   u_long error (void) const;
 
   /// This returns ACE_INVALID_HANDLE on POSIX4 platforms.

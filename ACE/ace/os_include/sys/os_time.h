@@ -41,11 +41,11 @@ extern "C"
 #endif /* __cplusplus */
 
 #if defined (ACE_HAS_SVR4_GETTIMEOFDAY)
-# if !defined (SCO)
+# if !defined (m88k) && !defined (SCO)
   int gettimeofday (struct timeval *tp, void * = 0);
 # else
   int gettimeofday (struct timeval *tp);
-# endif  /* !SCO */
+# endif  /*  !m88k && !SCO */
 #elif defined (ACE_HAS_OSF1_GETTIMEOFDAY)
   int gettimeofday (struct timeval *tp, struct timezone * = 0);
 #elif defined (ACE_HAS_VOIDPTR_GETTIMEOFDAY)

@@ -6,13 +6,12 @@
 ## this file will be lost the next time it is generated.
 ##
 ## MPC Command:
-## ./bin/mwc.pl -type automake -noreldefs ACE.mwc
+## /acebuilds/ACE_wrappers-repository/bin/mwc.pl -include /acebuilds/MPC/config -include /acebuilds/MPC/templates -feature_file /acebuilds/ACE_wrappers-repository/local.features -noreldefs -type automake -exclude build,Kokyu
 
 ACE_BUILDDIR = $(top_builddir)
 ACE_ROOT = $(top_srcdir)
 
 ## Makefile.Client.am
-
 noinst_PROGRAMS = Client
 
 Client_CPPFLAGS = \
@@ -27,7 +26,6 @@ Client_LDADD = \
   $(ACE_BUILDDIR)/ace/libACE.la
 
 ## Makefile.HAStatus.am
-
 noinst_PROGRAMS += HAStatus
 
 HAStatus_CPPFLAGS = \
@@ -43,7 +41,6 @@ HAStatus_LDADD = \
   $(ACE_BUILDDIR)/ace/libACE.la
 
 ## Makefile.HAStatus_AC.am
-
 noinst_PROGRAMS += HAStatus-AC
 
 HAStatus_AC_CPPFLAGS = \
@@ -59,7 +56,6 @@ HAStatus_AC_LDADD = \
   $(ACE_BUILDDIR)/ace/libACE.la
 
 ## Makefile.Reactor_Timers.am
-
 noinst_PROGRAMS += Timers
 
 Timers_CPPFLAGS = \
@@ -75,7 +71,6 @@ Timers_LDADD = \
   $(ACE_BUILDDIR)/ace/libACE.la
 
 ## Makefile.Reschedule.am
-
 noinst_PROGRAMS += Reschedule
 
 Reschedule_CPPFLAGS = \
@@ -91,7 +86,6 @@ Reschedule_LDADD = \
   $(ACE_BUILDDIR)/ace/libACE.la
 
 ## Makefile.Schedule_Timers.am
-
 noinst_PROGRAMS += Schedule_Timers
 
 Schedule_Timers_CPPFLAGS = \
@@ -107,7 +101,6 @@ Schedule_Timers_LDADD = \
   $(ACE_BUILDDIR)/ace/libACE.la
 
 ## Makefile.Timer_Cancel.am
-
 noinst_PROGRAMS += Timer_Cancel
 
 Timer_Cancel_CPPFLAGS = \
@@ -123,7 +116,6 @@ Timer_Cancel_LDADD = \
   $(ACE_BUILDDIR)/ace/libACE.la
 
 ## Makefile.Timer_State_Data.am
-
 noinst_PROGRAMS += Timer_State_Data
 
 Timer_State_Data_CPPFLAGS = \

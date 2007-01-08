@@ -6,14 +6,13 @@
 ## this file will be lost the next time it is generated.
 ##
 ## MPC Command:
-## ./bin/mwc.pl -type automake -noreldefs ACE.mwc
+## /acebuilds/ACE_wrappers-repository/bin/mwc.pl -include /acebuilds/MPC/config -include /acebuilds/MPC/templates -feature_file /acebuilds/ACE_wrappers-repository/local.features -noreldefs -type automake -exclude build,Kokyu
 
 ACE_BUILDDIR = $(top_builddir)
 ACE_ROOT = $(top_srcdir)
 
 
 ## Makefile.Threads_Auto_Event.am
-
 noinst_PROGRAMS = auto_event
 
 auto_event_CPPFLAGS = \
@@ -31,7 +30,6 @@ auto_event_LDADD = \
   $(ACE_BUILDDIR)/ace/libACE.la
 
 ## Makefile.Threads_Barrier1.am
-
 noinst_PROGRAMS += barrier1
 
 barrier1_CPPFLAGS = \
@@ -49,7 +47,6 @@ barrier1_LDADD = \
   $(ACE_BUILDDIR)/ace/libACE.la
 
 ## Makefile.Threads_Barrier2.am
-
 noinst_PROGRAMS += barrier2
 
 barrier2_CPPFLAGS = \
@@ -67,7 +64,6 @@ barrier2_LDADD = \
   $(ACE_BUILDDIR)/ace/libACE.la
 
 ## Makefile.Threads_Cancel.am
-
 noinst_PROGRAMS += cancel
 
 cancel_CPPFLAGS = \
@@ -87,7 +83,6 @@ cancel_LDADD = \
 ## Makefile.Threads_Future1.am
 
 if !BUILD_ACE_FOR_TAO
-
 noinst_PROGRAMS += future1
 
 future1_CPPFLAGS = \
@@ -109,7 +104,6 @@ endif !BUILD_ACE_FOR_TAO
 ## Makefile.Threads_Future2.am
 
 if !BUILD_ACE_FOR_TAO
-
 noinst_PROGRAMS += future2
 
 future2_CPPFLAGS = \
@@ -129,7 +123,6 @@ future2_LDADD = \
 endif !BUILD_ACE_FOR_TAO
 
 ## Makefile.Threads_Manual_Event.am
-
 noinst_PROGRAMS += manual_event
 
 manual_event_CPPFLAGS = \
@@ -149,7 +142,6 @@ manual_event_LDADD = \
 ## Makefile.Threads_Process_Mutex.am
 
 if !BUILD_ACE_FOR_TAO
-
 noinst_PROGRAMS += process_mutex
 
 process_mutex_CPPFLAGS = \
@@ -171,7 +163,6 @@ endif !BUILD_ACE_FOR_TAO
 ## Makefile.Threads_Process_Semaphore.am
 
 if !BUILD_ACE_FOR_TAO
-
 noinst_PROGRAMS += process_semaphore
 
 process_semaphore_CPPFLAGS = \
@@ -191,7 +182,6 @@ process_semaphore_LDADD = \
 endif !BUILD_ACE_FOR_TAO
 
 ## Makefile.Threads_Reader_Writer.am
-
 noinst_PROGRAMS += reader_writer
 
 reader_writer_CPPFLAGS = \
@@ -209,7 +199,6 @@ reader_writer_LDADD = \
   $(ACE_BUILDDIR)/ace/libACE.la
 
 ## Makefile.Threads_Recursive_Mutex.am
-
 noinst_PROGRAMS += recursive_mutex
 
 recursive_mutex_CPPFLAGS = \
@@ -227,7 +216,6 @@ recursive_mutex_LDADD = \
   $(ACE_BUILDDIR)/ace/libACE.la
 
 ## Makefile.Threads_Task_Five.am
-
 noinst_PROGRAMS += task_five
 
 task_five_CPPFLAGS = \
@@ -245,7 +233,6 @@ task_five_LDADD = \
   $(ACE_BUILDDIR)/ace/libACE.la
 
 ## Makefile.Threads_Task_Four.am
-
 noinst_PROGRAMS += task_four
 
 task_four_CPPFLAGS = \
@@ -263,7 +250,6 @@ task_four_LDADD = \
   $(ACE_BUILDDIR)/ace/libACE.la
 
 ## Makefile.Threads_Task_One.am
-
 noinst_PROGRAMS += task_one
 
 task_one_CPPFLAGS = \
@@ -281,7 +267,6 @@ task_one_LDADD = \
   $(ACE_BUILDDIR)/ace/libACE.la
 
 ## Makefile.Threads_Task_Three.am
-
 noinst_PROGRAMS += task_three
 
 task_three_CPPFLAGS = \
@@ -299,7 +284,6 @@ task_three_LDADD = \
   $(ACE_BUILDDIR)/ace/libACE.la
 
 ## Makefile.Threads_Task_Two.am
-
 noinst_PROGRAMS += task_two
 
 task_two_CPPFLAGS = \
@@ -317,7 +301,6 @@ task_two_LDADD = \
   $(ACE_BUILDDIR)/ace/libACE.la
 
 ## Makefile.Threads_Thread_Manager.am
-
 noinst_PROGRAMS += thread_manager
 
 thread_manager_CPPFLAGS = \
@@ -335,7 +318,6 @@ thread_manager_LDADD = \
   $(ACE_BUILDDIR)/ace/libACE.la
 
 ## Makefile.Threads_Thread_Pool.am
-
 noinst_PROGRAMS += thread_pool
 
 thread_pool_CPPFLAGS = \
@@ -353,7 +335,6 @@ thread_pool_LDADD = \
   $(ACE_BUILDDIR)/ace/libACE.la
 
 ## Makefile.Threads_Thread_Specific.am
-
 noinst_PROGRAMS += thread_specific
 
 thread_specific_CPPFLAGS = \
@@ -368,7 +349,6 @@ thread_specific_LDADD = \
   $(ACE_BUILDDIR)/ace/libACE.la
 
 ## Makefile.Threads_Token.am
-
 noinst_PROGRAMS += token
 
 token_CPPFLAGS = \
@@ -386,7 +366,6 @@ token_LDADD = \
   $(ACE_BUILDDIR)/ace/libACE.la
 
 ## Makefile.Threads_Tss1.am
-
 noinst_PROGRAMS += tss1
 
 tss1_CPPFLAGS = \
@@ -404,7 +383,6 @@ tss1_LDADD = \
   $(ACE_BUILDDIR)/ace/libACE.la
 
 ## Makefile.Threads_Tss2.am
-
 noinst_PROGRAMS += tss2
 
 tss2_CPPFLAGS = \

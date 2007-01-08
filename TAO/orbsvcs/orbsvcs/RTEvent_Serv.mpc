@@ -1,7 +1,7 @@
 // -*- MPC -*-
 // $Id$
 
-project(RTEvent_Serv) : orbsvcslib, install, rtevent_skel, svc_utils, messaging {
+project(RTEvent_Serv) : orbsvcslib, core, rtevent_skel, svc_utils, messaging {
   avoids      += ace_for_tao  // Requires ACE_crc32
   sharedname   = TAO_RTEvent_Serv
   dynamicflags = TAO_RTEVENT_SERV_BUILD_DLL
@@ -81,7 +81,6 @@ project(RTEvent_Serv) : orbsvcslib, install, rtevent_skel, svc_utils, messaging 
     Event/EC_TPC_Factory.cpp
     Event/EC_TPC_ProxyConsumer.cpp
     Event/EC_TPC_ProxySupplier.cpp
-    Event/EC_Thread_Flags.cpp
   }
 
   Template_Files {

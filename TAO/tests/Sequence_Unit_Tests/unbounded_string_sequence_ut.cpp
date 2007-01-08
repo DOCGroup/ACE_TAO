@@ -12,7 +12,9 @@
 #include "testing_allocation_traits.hpp"
 #include "testing_range_checking.hpp"
 
-#include "tao/Unbounded_Basic_String_Sequence_T.h"
+#include "tao/Unbounded_String_Sequence_T.h"
+#include "tao/Unbounded_Wstring_Sequence_T.h"
+#include "tao/Unbounded_Wstring_Sequence_T.h"
 #include "tao/CORBA_String.h"
 
 #include "string_sequence_tester.hpp"
@@ -234,7 +236,7 @@ struct Tester
     expected_calls f(tested_allocation_traits::freebuf_calls);
     expected_calls r(tested_element_traits::release_calls);
     {
-      tested_sequence a(8, 4, buffer, false);
+      tested_sequence a(8, 4, buffer);
       BOOST_CHECK_EQUAL(CORBA::ULong(8), a.maximum());
       BOOST_CHECK_EQUAL(CORBA::ULong(4), a.length());
       BOOST_CHECK_EQUAL(buffer, a.get_buffer());
@@ -419,7 +421,7 @@ struct Tester
     expected_calls f(tested_allocation_traits::freebuf_calls);
     expected_calls r(tested_element_traits::release_calls);
     {
-      tested_sequence a(8, 4, buffer, false);
+      tested_sequence a(8, 4, buffer);
       BOOST_CHECK_EQUAL(CORBA::ULong(8), a.maximum());
       BOOST_CHECK_EQUAL(CORBA::ULong(4), a.length());
       BOOST_CHECK_EQUAL(buffer, a.get_buffer());
@@ -526,13 +528,13 @@ init_unit_test_suite(int, char*[])
       BOOST_TEST_SUITE("unbounded string sequence unit test");
 
   {
-    typedef Tester<unbounded_basic_string_sequence <char> > nTester;
+    typedef Tester<unbounded_string_sequence> nTester;
     boost::shared_ptr<nTester> tester(nTester::allocate());
     tester->add_all(ts);
   }
 
   {
-    typedef Tester<unbounded_basic_string_sequence <CORBA::WChar> > wTester;
+    typedef Tester<unbounded_wstring_sequence> wTester;
     boost::shared_ptr<wTester> tester(wTester::allocate());
     tester->add_all(ts);
   }

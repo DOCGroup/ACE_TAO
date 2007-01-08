@@ -9,7 +9,7 @@ project(*IDL): taoidldefaults {
   custom_only = 1
 }
 
-project(*balancer): taoexe, utils, portableserver, avoids_minimum_corba, avoids_corba_e_compact, avoids_corba_e_micro {
+project(*balancer): taoexe, utils, portableserver, minimum_corba {
   avoids += repo ace_for_tao
   exename = load_balancer
   after += *IDL
@@ -25,7 +25,7 @@ project(*balancer): taoexe, utils, portableserver, avoids_minimum_corba, avoids_
   }
 }
 
-project(*server): taoserver, utils, avoids_minimum_corba, avoids_corba_e_compact, avoids_corba_e_micro {
+project(*server): taoserver, utils, minimum_corba {
   avoids += repo
   exename = server
   after += *IDL
@@ -42,7 +42,7 @@ project(*server): taoserver, utils, avoids_minimum_corba, avoids_corba_e_compact
   }
 }
 
-project(*client): taoclient, utils, portableserver, avoids_minimum_corba, avoids_corba_e_compact, avoids_corba_e_micro {
+project(*client): taoclient, utils, portableserver, minimum_corba {
   avoids += repo
   exename = client
   after += *IDL

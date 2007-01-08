@@ -11,7 +11,7 @@ dnl
 dnl Note that this macro removes the newline output by the M4
 dnl "esyscmd" built-in.  Unless you understand what you're doing,
 dnl particularly with M4, do not modify this macro definition.
-define([ACE_VERSION], patsubst(esyscmd(grep ACE_VERSION ace/Version.h | sed 's/.*\" *\(.*\)\".*/\1/'), [
+define([ACE_VERSION], patsubst(esyscmd(grep ACE_VERSION ace/Version.h | sed 's/.*\"\(.*\)\".*/\1/'), [
 ]))dnl remove newline ending every `esyscmd' answer
 
 AC_INIT([ACE],
@@ -210,7 +210,7 @@ dnl Determine which subsets to build
 dnl This is done using the autoconf "--enable-foobar" mechanism.
 ACE_CHECK_SUBSETS
 
-dnl Some of the third party libraries (X11, openssl, etc.) depend on
+dnl Some of the third party libraries (X11, openssl, etc.) depend on 
 dnl other libraries.  Check for those before the processing --enable
 dnl options.
 
@@ -492,7 +492,7 @@ AC_CHECK_HEADER([dlfcn.h],
 
      case "$host_os" in
      darwin*)
-	AC_DEFINE([ACE_LD_SEARCH_PATH],
+	AC_DEFINE([ACE_LD_SEARCH_PATH], 
 		  [ACE_LIB_TEXT ("DYLD_LIBRARY_PATH")],
 		  [Define to environment variable used for DLL search path])
 	AC_DEFINE([ACE_DLL_SUFFIX],
@@ -664,7 +664,7 @@ dnl Test for <sys/types.h> out of alphabetical order, since it must
 dnl be (conditionally) #included in other feature tests.
 ACE_CHECK_LACKS_HEADERS(sys/types.h)
 
-ACE_CHECK_LACKS_HEADERS(sys/sysctl.h, [], [],
+ACE_CHECK_LACKS_HEADERS(sys/sysctl.h, [], [], 
 [
 #ifndef ACE_LACKS_SYS_TYPES_H
 # include <sys/types.h>
@@ -1167,32 +1167,6 @@ AC_CHECK_TYPE([sig_atomic_t],
 	      [],
 	      [#include <signal.h>])
 
-AC_CHECK_TYPE([sigval_t],
-	      [],
-	      [AC_DEFINE([ACE_LACKS_SIGVAL_T], 1,
-			 [Define to 1 if the system lacks the type 'sigval_t'.])],
-	      [#include <signal.h>])
-
-if test "$ac_cv_type_sigval_t" = yes; then
-  dnl Depending on the system, the field names of union sigval have
-  dnl either a sival_ (POSIX) or sigval_ (older versions of FreeBSD)
-  dnl prefix.  Define ACE_HAS_SIGVAL_SIGVAL_INT accordingly.
-  AC_CHECK_MEMBER([sigval_t.sigval_int],
-		  [AC_DEFINE([ACE_HAS_SIGVAL_SIGVAL_INT], 1,
-			     [Define to 1 if `sigval_int' is a member of `sigval_t'.])],
-		  [],
-		  [#include <signal.h>])
-
-  dnl Depending on the system, the field names of union sigval have
-  dnl either a sival_ (POSIX) or sigval_ (older versions of FreeBSD)
-  dnl prefix.  Define ACE_HAS_SIGVAL_SIGVAL_PTR accordingly.
-  AC_CHECK_MEMBER([sigval_t.sigval_ptr],
-		  [AC_DEFINE([ACE_HAS_SIGVAL_SIGVAL_PTR], 1,
-			     [Define to 1 if `sigval_ptr' is a member of `sigval_t'.])],
-		  [],
-		  [#include <signal.h>])
-fi
-
 AC_CHECK_TYPE([ssize_t],
 	      [AC_DEFINE([ACE_HAS_SSIZE_T], 1,
 			 [Define to 1 if the system has the type `ssize_t'.])],
@@ -1388,7 +1362,6 @@ if test "$ac_cv_type_siginfo_t" = yes; then
 #include <siginfo.h>
 #endif])
 fi
-
 
 dnl Some platforms need to include sys/types.h before sys/socket.h
 dnl in order for struct msghdr to work.
@@ -1988,13 +1961,17 @@ AC_CHECK_TYPE([uint64_t],
 #include <inttypes.h>
 #endif])
 
-ACE_CACHE_CHECK([for std::numeric_limits<>],
-[ace_cv_func_numeric_limits],
+AC_CACHE_CHECK([for std::numeric_limits<>],
+[ace_func_numeric_limits],
 [AC_COMPILE_IFELSE([AC_LANG_PROGRAM([#include <limits>],
 		  [return std::numeric_limits<int>::max();])],
 		  [ace_cv_func_numeric_limits=yes],
-		  [ace_cv_func_numeric_limits=no])
-],,[AC_DEFINE([ACE_LACKS_NUMERIC_LIMITS])])
+		  [ace_cv_func_numeric_limits=no])])
+if test $ace_cv_func_numeric_limits = no; then
+  AC_DEFINE([ACE_LACKS_NUMERIC_LIMITS], 1,
+	    [Define to 1 if platfom lacks std::numeric_limits<>.])
+fi
+
 
 dnl Other checks
 
@@ -2407,7 +2384,7 @@ ACE_CACHE_CHECK([for C++ typename keyword],
   ],
   [AC_DEFINE([ACE_HAS_TYPENAME_KEYWORD])],
   [
-   AC_MSG_WARN([$CXX does not support the C++ "typename" keyword.
+   AC_MSG_WARN([$CXX does not support the C++ \"typename\" keyword.
 ACE will require it in the near future.])
   ])
 
@@ -3551,16 +3528,6 @@ ACE_CHECK_LACKS_FUNCS(inet_aton)
 
 ACE_CHECK_LACKS_FUNCS(isatty)
 
-AC_CHECK_FUNC(isastream)
-if test $ac_cv_func_isastream = yes; then
-  AC_CHECK_DECL([isastream],
-                [AC_DEFINE([ACE_HAS_ISASTREAM_PROTOTYPE], 1,
-                           [Define to 1 if platform has the declaration
-                            of isastream().])],
-                [],
-                [#include <stropts.h>])
-fi
-
 ACE_CHECK_HAS_FUNCS(itoa)
 
 dnl Check for 64 bit llseek() or lseek64()
@@ -3596,35 +3563,13 @@ fi
 
 ACE_CHECK_HAS_FUNCS(memchr)
 
-ACE_CHECK_LACKS_FUNCS(mkfifo)
-
-ACE_CHECK_LACKS_FUNCS(mkstemp)
-if test $ac_cv_func_mkstemp = yes; then
-  AC_CHECK_DECL([mkstemp],
-                [],
-                [AC_DEFINE([ACE_LACKS_MKSTEMP_PROTOTYPE], 1,
-                           [Define to 1 if platform lacks the declaration
-                           of mkstemp().])],
-                [#include <stdlib.h>])
-fi
-
-ACE_CHECK_LACKS_FUNCS(mktemp)
-if test $ac_cv_func_mktemp = yes; then
-  AC_CHECK_DECL([mktemp],
-                [],
-                [AC_DEFINE([ACE_LACKS_MKTEMP_PROTOTYPE], 1,
-                           [Define to 1 if platform lacks the declaration
-                           of mktemp().])],
-                [#include <stdlib.h>])
-fi
+ACE_CHECK_LACKS_FUNCS(mkfifo mkstemp mktemp)
 
 ACE_CHECK_LACKS_FUNCS(msync mprotect)
 
 ACE_CHECK_LACKS_FUNCS(pipe)
 
 ACE_CHECK_LACKS_FUNCS(qsort)
-
-ACE_CHECK_LACKS_FUNCS(realpath)
 
 ACE_CHECK_LACKS_FUNCS(setegid seteuid setgid)
 
@@ -3708,7 +3653,7 @@ ACE_CHECK_HAS_FUNCS(strnlen)
 
 ACE_CHECK_LACKS_FUNCS(strchr)
 
-# believe it or not, both ACE_LACKS_STRERROR and ACE_HAS_STRERROR
+# believe it or not, both ACE_LACKS_STRERROR and ACE_HAS_STRERROR 
 # feature test macros are currently used.
 ACE_CHECK_HAS_FUNCS(strerror)
 ACE_CHECK_LACKS_FUNCS(strerror)
@@ -4149,63 +4094,17 @@ AC_LINK_IFELSE([AC_LANG_PROGRAM(
           [
            AC_DEFINE([ACE_HAS_SHM_OPEN])
            AC_MSG_RESULT([yes])
-
-           dnl Now see if running it requires a leading slash.
-           ACE_CACHE_CHECK([if shm_open requires one slash],
-             [ace_cv_shm_open_requires_one_slash],
-             [
-              AC_RUN_IFELSE([AC_LANG_SOURCE([[
-#ifndef ACE_LACKS_SYS_TYPES_H
-# include <sys/types.h>
-#endif
-#include <fcntl.h>
-#include <unistd.h>
-#include <sys/stat.h>
-#include <sys/mman.h>
-
-int main (int argc, char *argv[])
-{
-  const char name[] = "ACE_Foo";
-  const char name2[] = "/ACE_Foo";
-  const int oflag = O_RDWR | O_CREAT;
-  const mode_t mode = 0400;  /* Whatever */
-  int fd = shm_open (name, oflag, mode);
-  if (fd != -1)
-  {
-    close (fd);
-    shm_unlink (name);
-    return 1;    /* Don't need the slash */
-  }
-  fd = shm_open (name2, oflag, mode);
-  if (fd != -1)
-  {
-    close (fd);
-    shm_unlink (name2);
-    return 0;
-  }
-  return 1;  /* Nothing worked, so say 'no' */
-}
-              ]])],[
-               ace_cv_shm_open_requires_one_slash=yes
-              ],[
-               ace_cv_shm_open_requires_one_slash=no
-              ],[
-               dnl action if cross-compiling
-               ace_cv_shm_open_requires_one_slash=no
-              ])
-           ],AC_DEFINE([ACE_SHM_OPEN_REQUIRES_ONE_SLASH]),)
           ],
           [
            AC_MSG_RESULT([no])
           ])
 
-dnl if test "$ace_cv_shm_open_requires_one_slash" = yes; then
-dnl   AC_DEFINE([ACE_SHM_OPEN_REQUIRES_ONE_SLASH])
-dnl fi
-
 ACE_CHECK_HAS_FUNCS(snprintf)
 
 ACE_CHECK_LACKS_FUNCS(tempnam truncate)
+
+dnl Check for MIT pthreads APIs for timed send/recv operations
+ACE_CHECK_HAS_FUNCS(read_timedwait readv_timedwait recv_timedwait recvfrom_timedwait recvmsg_timedwait send_timedwait sendmsg_timedwait sendto_timedwait write_timedwait writev_timedwait)
 
 dnl Save the cache for debugging purposes
 AC_CACHE_SAVE
@@ -4368,15 +4267,6 @@ dnl backwards compatibility with Pthread Draft 4 functions of the same
 dnl name.
 
   ACE_CHECK_LACKS_FUNCS(pthread_sigmask)
-  if test $ac_cv_func_pthread_sigmask = yes; then
-    AC_CHECK_DECL([pthread_sigmask],
-		  [AC_DEFINE([ACE_HAS_PTHREAD_SIGMASK_PROTOTYPE], 1,
-			     [Define to 1 if platform has the declaration
-			     of pthread_sigmask().])],
-		  [],
-		  [#include <pthread.h>
-                   #include <signal.h>])
-  fi
 
   AC_CHECK_FUNC([pthread_key_create],
     [AC_DEFINE([ACE_HAS_THREAD_SPECIFIC_STORAGE])],
@@ -4534,9 +4424,9 @@ dnl Check for Unix98 pthreads extensions
 
 dnl Linux's sched_{set,get}affinity interface has changed three times:
 dnl
-dnl In glibc 2.3.2, it was:
+dnl In glibc 2.3.2, it was: 
 dnl
-dnl   int sched_setaffinity(pid_t __pid,
+dnl   int sched_setaffinity(pid_t __pid, 
 dnl                         unsigned int __len, unsigned long * __mask);
 dnl
 dnl In glibc 2.3.3, it was changed to:
@@ -4545,7 +4435,7 @@ dnl   int sched_setaffinity(pid_t __pid, const cpu_set_t* __mask);
 dnl
 dnl And in glibc ?.?.?, it was changed again to:
 dnl
-dnl   int sched_setaffinity(pid_t __pid, size_t __cpusetsize,
+dnl   int sched_setaffinity(pid_t __pid, size_t __cpusetsize, 
 dnl                         const cpu_set_t* __cpuset);
 dnl
 dnl The following feature tests attempt to determine which (if any)
@@ -4591,7 +4481,7 @@ AC_LINK_IFELSE([AC_LANG_PROGRAM(
           ],
           [
            AC_MSG_RESULT([2])
-           AC_DEFINE([ACE_HAS_2_PARAM_SCHED_GETAFFINITY], 1,
+           AC_DEFINE([ACE_HAS_2_PARAM_SCHED_GETAFFINITY], 1, 
 		     [Define to 1 if platform has 2 parameter sched_getaffinity()])
           ])
 fi dnl test "$ac_cv_func_sched_getaffinity" = yes
@@ -4620,7 +4510,7 @@ AC_LINK_IFELSE([AC_LANG_PROGRAM(
           ],
           [
            AC_MSG_RESULT([2])
-           AC_DEFINE([ACE_HAS_2_PARAM_SCHED_SETAFFINITY], 1,
+           AC_DEFINE([ACE_HAS_2_PARAM_SCHED_SETAFFINITY], 1, 
 		     [Define to 1 if platform has 2 parameter sched_setaffinity()])
           ])
 fi dnl test "$ac_cv_func_sched_setaffinity" = yes
@@ -4992,26 +4882,6 @@ fi dnl End checks for reentrant functions
 
 
 ACE_CHECK_LACKS_FUNCS(readdir_r)
-if test "$ac_cv_func_readdir_r" = yes; then
-dnl The readdir_r() function varies with standards. Check which one we have.
-AC_MSG_CHECKING([for 2- or 3-param readdir_r])
-AC_LINK_IFELSE([AC_LANG_PROGRAM(
-          [[
-#include <dirent.h>
-          ]],
-          [[
-readdir_r(0, 0, 0);
-          ]])],
-          [
-           AC_DEFINE([ACE_HAS_3_PARAM_READDIR_R], 1,
-		     [Define to 1 if platform has 3 parameter readdir_r()])
-           AC_MSG_RESULT([3])
-          ],
-          [
-           AC_MSG_RESULT([2])
-          ])
-fi dnl test "$ac_cv_func_readdir" = yes
-
 
 dnl Disabled until we figure out what to do with the comparator
 dnl function argument inconsistencies between different platforms.
@@ -6223,6 +6093,42 @@ if test "$ace_cv_lib_posix_sigaction_constp_2" = yes; then
   AC_DEFINE([ACE_HAS_SIGACTION_CONSTP2])
 fi
 
+dnl Check if the wait() system call takes a (union wait *) rather than int *
+ACE_CACHE_CHECK([if wait() takes a (union wait *) rather than int *],
+  [ace_cv_lib_wait_takes_union_wait_ptr],
+   [
+    AC_COMPILE_IFELSE([AC_LANG_PROGRAM([[
+#include <sys/wait.h>
+       ]], [[
+        int* status = 0;
+        int result = 0;
+        result=wait(status);
+       ]])],[
+        ace_cv_lib_wait_takes_union_wait_ptr=no
+       ],[
+        AC_COMPILE_IFELSE([AC_LANG_PROGRAM(
+          [[
+#include <sys/wait.h>
+          ]],
+          [[
+           union wait* status = 0;
+           int result = 0;
+           result=wait(status);
+          ]])],
+          [
+           ace_cv_lib_wait_takes_union_wait_ptr=yes
+          ],
+          [
+dnl If we get here then we're screwed! We can't use int* or union wait*.
+dnl It is very unlikely that we will ever get this far.  For the sake
+dnl of setting some result, we'll assume that we can actually use int*.
+           ace_cv_lib_wait_takes_union_wait_ptr=no
+           AC_MSG_WARN([wait() doesn't seem to take either int* or union wait*])
+           AC_MSG_WARN([as an argument.  Going to assume that int* will work.])
+          ])
+       ])
+  ], [AC_DEFINE([ACE_HAS_UNION_WAIT])],)
+
 dnl We need to use the ACE_CONVERT_WARNINGS_TO_ERRORS() macro since
 dnl passing a void * just caused implicit conversion warnings when
 dnl using GNU C++, for example.
@@ -6279,28 +6185,36 @@ fi dnl test "$ace_cv_lib_voidptr_gettimeofday" = no
 dnl Check for gettimeofday() protoype
 if test "$ace_cv_lib_voidptr_gettimeofday" = yes ||
    test "$ace_cv_lib_timezone_gettimeofday" = yes; then
-
-AC_CHECK_DECL([gettimeofday],
-              [
-if test "$ace_cv_lib_voidptr_gettimeofday" = yes; then
-  AC_DEFINE([ACE_HAS_VOIDPTR_GETTIMEOFDAY])
-else
-  AC_DEFINE([ACE_HAS_TIMEZONE_GETTIMEOFDAY])
-fi
-	      ],[
-if test "$ace_cv_lib_voidptr_gettimeofday" = yes; then
-  AC_DEFINE([ACE_HAS_SVR4_GETTIMEOFDAY])
-else
-  AC_DEFINE([ACE_HAS_OSF1_GETTIMEOFDAY])
-fi
-	      ],
-              [
-#include <sys/time.h>
-#ifndef ACE_LACKS_UNISTD_H
-# include <unistd.h>
-#endif
-	      ])
-
+  ACE_CACHE_CHECK([for gettimeofday() protoype],
+    [ace_cv_lib_has_gettimeofday_prototype],
+    [
+     AC_EGREP_CPP([gettimeofday],
+       [
+#include <time.h>
+       ],
+       [
+dnl We have a gettimeofday prototype
+        ace_cv_lib_has_gettimeofday_prototype=yes
+       ],
+       [
+dnl We don't have a gettimeofday prototype
+        ace_cv_lib_has_gettimeofday_prototype=no
+       ])
+    ],
+    [
+     if test "$ace_cv_lib_voidptr_gettimeofday" = yes; then
+       AC_DEFINE([ACE_HAS_VOIDPTR_GETTIMEOFDAY])
+     else
+       AC_DEFINE([ACE_HAS_TIMEZONE_GETTIMEOFDAY])
+     fi
+    ],
+    [
+     if test "$ace_cv_lib_voidptr_gettimeofday" = yes; then
+       AC_DEFINE([ACE_HAS_SVR4_GETTIMEOFDAY])
+     else
+       AC_DEFINE([ACE_HAS_OSF1_GETTIMEOFDAY])
+     fi
+    ])
 fi dnl Check for gettimeofday() protoype
 
 
@@ -6392,6 +6306,94 @@ dnl The following test should only be run if the above two testsfail.
      AC_MSG_WARN([No supported msghdr structure was found.  ACE may not compile or function properly.])
     ])
   fi
+
+dnl Now check if CMSG_DATA is defined if and only if we have 4.4 BSD
+dnl style struct msghdr members.  If CMSG_DATA isn't defined, then
+dnl we try to figure out what it should be defined to.
+  if test "$ace_cv_lib_4_4bsd_msghdr" = yes; then
+    ACE_CACHE_CHECK([if CMSG_DATA is defined],
+      [ace_cv_lib_cmsg_data],
+      [
+       AC_COMPILE_IFELSE([AC_LANG_PROGRAM(
+         [[
+#ifndef ACE_LACKS_SYS_TYPES_H
+# include <sys/types.h>
+#endif
+#include <sys/socket.h>
+#include <sys/un.h>  /* @@ Is this header necessary? */
+         ]],
+         [[
+           cmsghdr ace_cmsg;
+           void * c = CMSG_DATA (&ace_cmsg);
+         ]])],
+         [
+          ace_cv_lib_cmsg_data=yes
+         ],
+         [
+          ace_cv_lib_cmsg_data=no
+dnl Now check which type of CMSG_DATA #define we need.
+          AC_COMPILE_IFELSE([AC_LANG_PROGRAM([[
+#ifndef ACE_LACKS_SYS_TYPES_H
+# include <sys/types.h>
+#endif
+#include <sys/socket.h>
+#include <sys/un.h>
+            ]], [[
+             /* This is sloppy.  Oh well. */
+             unsigned char ace_cmsg_data[0];
+
+             cmsghdr ace_cmsg;
+             ace_cmsg.cmsg_data = ace_cmsg_data;
+            ]])],,[
+             AC_COMPILE_IFELSE([AC_LANG_PROGRAM(
+               [[
+#ifndef ACE_LACKS_SYS_TYPES_H
+# include <sys/types.h>
+#endif
+#include <sys/socket.h>
+#include <sys/un.h>
+               ]],
+               [[
+                /* This is sloppy.  Oh well. */
+                unsigned char ace_cmsg_data[0];
+
+                cmsghdr ace_cmsg;
+                ace_cmsg.__cmsg_data = ace_cmsg_data;
+               ]])],
+               [
+                AC_MSG_ERROR([cmsgmdr member '__cmsg_data[0]' not supported by ACE's CMSG_DATA macro])
+               ],
+               [
+                AC_COMPILE_IFELSE([AC_LANG_PROGRAM(
+                  [[
+#ifndef ACE_LACKS_SYS_TYPES_H
+# include <sys/types.h>
+#endif
+#include <sys/socket.h>
+#include <sys/un.h>
+                  ]],
+                  [[
+                   cmsghdr ace_cmsg;
+                  ]])],
+                  [
+                   AC_CACHE_VAL([ace_cv_lib_cmsg_data_member],
+                                [ace_cv_lib_cmsg_data_member=no])
+                  ],
+                  [
+                   AC_MSG_ERROR([No supported cmsghdr structure exists.  ACE cannot be built without one.])
+                  ])
+               ])
+            ])
+         ])
+      ], ,
+      [
+       AC_DEFINE([ACE_LACKS_CMSG_DATA_MACRO])
+       if test "$ace_cv_lib_cmsg_data_member"=no; then
+         AC_DEFINE([ACE_LACKS_CMSG_DATA_MEMBER])
+       fi
+
+      ])
+  fi dnl test "$ace_cv_lib_4_4bsd_msghdr" = yes
 
 fi dnl End struct msghdr_stuff
 
@@ -6687,9 +6689,9 @@ smemcpy (void* dest, const void* src, const size_t n)
 
 // Function pointer
 void* (* test_func) (void *dst, const void* src, size_t);
-
+                                                                                
 namespace { enum { ITERATIONS = 100000 }; }
-
+                                                                                
 #include <sys/time.h>
 #include <time.h>
 
@@ -6698,35 +6700,35 @@ main(int argc, char* argv[])
 {
  struct timeval start, now;
  double value;
-
+                                                                                
  // Test buffer
  char dest [16];
  const void* src = " THIS IS A TEST";
-
+                                                                                
  // We want to test if the loop unrolling is faster for sizes
  // from 1..16
  for (size_t counter = 16; counter >=1; counter--)
  {
    test_func = smemcpy;
-
+                                                                                
    // Warm up
    for (int i = ITERATIONS ; i > 0 ; --i)
      test_func ((void *)dest, src, counter);
-
+                                                                                
    gettimeofday (&start, 0) ;
    for (int j = ITERATIONS ; j > 0 ; --j)
      test_func ((void *)dest, src, counter);
    gettimeofday (&now, 0);
-
+                                                                                
    double fast = 1000000 * (now.tv_sec - start.tv_sec) +
                             now.tv_usec - start.tv_usec ;
-
+                                                                                
    test_func = memcpy;
-
+                                                                                
    // Warm up
    for (int k = ITERATIONS ; k > 0 ; --k)
      test_func ((void *)dest, src, counter);
-
+                                                                                
   gettimeofday (&start, 0) ;
   for (int l = ITERATIONS ; l > 0 ; --l)
      test_func ((void *)dest, src, counter);
@@ -6736,7 +6738,7 @@ main(int argc, char* argv[])
                            now.tv_usec - start.tv_usec ;
   if (fast > slow)
     return 1; // Unrolling was slower than actual memcpy
-
+                                                                                
   if (1.10*fast > slow)
     return 1; // Unrolling was not faster by 10%
  }
@@ -7817,6 +7819,16 @@ AC_CONFIG_FILES([
   ace/Makefile
   ace/QoS/Makefile
   ace/SSL/Makefile
+  ASNMP/Makefile
+  ASNMP/asnmp/Makefile
+  ASNMP/agent/Makefile
+  ASNMP/examples/Makefile
+  ASNMP/examples/get/Makefile
+  ASNMP/examples/next/Makefile
+  ASNMP/examples/set/Makefile
+  ASNMP/examples/trap/Makefile
+  ASNMP/examples/walk/Makefile
+  ASNMP/tests/Makefile
   apps/Makefile
   apps/Gateway/Makefile
   apps/Gateway/Gateway/Makefile
@@ -7827,7 +7839,6 @@ AC_CONFIG_FILES([
   apps/JAWS/clients/Caching/Makefile
   apps/JAWS/server/Makefile
   apps/JAWS2/Makefile
-  apps/JAWS2/HTTPU/Makefile
   apps/JAWS2/JAWS/Makefile
   apps/JAWS3/Makefile
   apps/JAWS3/jaws3/Makefile
@@ -7847,13 +7858,21 @@ AC_CONFIG_FILES([
   netsvcs/clients/Naming/Client/Makefile
   netsvcs/clients/Naming/Dump_Restore/Makefile
   netsvcs/servers/Makefile
+  protocols/Makefile
+  protocols/ace/Makefile
+  protocols/ace/HTBP/Makefile
+  protocols/ace/RMCast/Makefile
+  protocols/ace/TMCast/Makefile
+  protocols/examples/Makefile
+  protocols/examples/RMCast/Makefile
+  protocols/examples/RMCast/Send_Msg/Makefile
   websvcs/Makefile
   websvcs/lib/Makefile
   websvcs/tests/Makefile
 ])
 
 dnl Configure examples if configured...
-if test "$ace_build_examples" = yes; then
+if test $ace_build_examples = yes; then
   AC_CONFIG_FILES([
     examples/Makefile
     examples/APG/Makefile
@@ -7886,7 +7905,6 @@ if test "$ace_build_examples" = yes; then
     examples/Bounded_Packet_Relay/Makefile
     examples/C++NPv1/Makefile
     examples/C++NPv2/Makefile
-    examples/ConfigViewer/Makefile
     examples/Connection/Makefile
     examples/Connection/blocking/Makefile
     examples/Connection/misc/Makefile
@@ -7949,28 +7967,37 @@ if test "$ace_build_examples" = yes; then
     examples/System_V_IPC/Makefile
     examples/System_V_IPC/SV_Message_Queues/Makefile
     examples/System_V_IPC/SV_Semaphores/Makefile
+    examples/TMCast/Makefile
+    examples/TMCast/Member/Makefile
     examples/Threads/Makefile
     examples/Timer_Queue/Makefile
     examples/Web_Crawler/Makefile
   ])
 fi
 
-dnl Configure tests if configured...
-if test "$ace_build_tests" = yes; then
+dnl Configure examples if configured...
+if test $ace_build_tests = yes; then
   AC_CONFIG_FILES([
     performance-tests/Makefile
     performance-tests/Misc/Makefile
     performance-tests/SCTP/Makefile
-    performance-tests/Server_Concurrency/Leader_Follower/Makefile
     performance-tests/Server_Concurrency/Makefile
+    performance-tests/Server_Concurrency/Leader_Follower/Makefile
     performance-tests/Server_Concurrency/Queue_Based_Workers/Makefile
-    performance-tests/Synch-Benchmarks/Base_Test/Makefile
     performance-tests/Synch-Benchmarks/Makefile
-    performance-tests/Synch-Benchmarks/Perf_Test/Makefile
     performance-tests/Synch-Benchmarks/Synch_Lib/Makefile
+    performance-tests/Synch-Benchmarks/Base_Test/Makefile
+    performance-tests/Synch-Benchmarks/Perf_Test/Makefile
     performance-tests/TCP/Makefile
     performance-tests/UDP/Makefile
+    protocols/tests/Makefile
+    protocols/tests/RMCast/Makefile
     tests/Makefile
+    tests/HTBP/Makefile
+    tests/HTBP/Reactor_Tests/Makefile
+    tests/HTBP/Send_Large_Msg/Makefile
+    tests/HTBP/Send_Recv_Tests/Makefile
+    tests/HTBP/ping/Makefile
     tests/SSL/Makefile
   ])
 fi
@@ -7989,23 +8016,6 @@ if test -d $srcdir/ACEXML; then
     ACEXML/tests/Makefile
     ACEXML/tests/util/Makefile
   ])
-  AC_SUBST([ACEXML],[ACEXML])
-fi
-
-if test -d $srcdir/ASNMP; then
-  AC_CONFIG_FILES([
-    ASNMP/Makefile
-    ASNMP/asnmp/Makefile
-    ASNMP/agent/Makefile
-    ASNMP/examples/Makefile
-    ASNMP/examples/get/Makefile
-    ASNMP/examples/next/Makefile
-    ASNMP/examples/set/Makefile
-    ASNMP/examples/trap/Makefile
-    ASNMP/examples/walk/Makefile
-    ASNMP/tests/Makefile
-  ])
-  AC_SUBST([ASNMP],[ASNMP])
 fi
 
 if test -d $srcdir/Kokyu; then
@@ -8018,46 +8028,15 @@ if test -d $srcdir/Kokyu; then
   ])
   AC_SUBST([KOKYU],[Kokyu])
 fi
-
-if test -d $srcdir/protocols; then
-  AC_CONFIG_FILES([
-    protocols/Makefile
-    protocols/ace/Makefile
-    protocols/ace/HTBP/Makefile
-    protocols/ace/RMCast/Makefile
-    protocols/ace/TMCast/Makefile
-  ])
-
-  dnl Configure examples if configured...
-  if test "$ace_build_examples" = yes; then
-    AC_CONFIG_FILES([
-      protocols/examples/Makefile
-      protocols/examples/RMCast/Makefile
-      protocols/examples/RMCast/Send_Msg/Makefile
-      protocols/examples/TMCast/Makefile
-      protocols/examples/TMCast/Member/Makefile
-    ])
-  fi
-
-  dnl Configure tests if configured...
-  if test "$ace_build_tests" = yes; then
-    AC_CONFIG_FILES([
-      protocols/tests/HTBP/Makefile
-      protocols/tests/HTBP/Reactor_Tests/Makefile
-      protocols/tests/HTBP/Send_Large_Msg/Makefile
-      protocols/tests/HTBP/Send_Recv_Tests/Makefile
-      protocols/tests/HTBP/ping/Makefile
-      protocols/tests/Makefile
-      protocols/tests/RMCast/Makefile
-    ])
-  fi
-  AC_SUBST([protocols],[protocols])
-fi
+AM_CONDITIONAL([BUILD_KOKYU],
+               [test -d $srcdir/Kokyu])
 
 if test -d $srcdir/TAO -a X$ace_user_with_tao = Xyes; then
   AC_CONFIG_SUBDIRS([TAO])
   AC_SUBST([TAO],[TAO])
 fi
+AM_CONDITIONAL([BUILD_TAO],
+               [test -d $srcdir/TAO -a X$ace_user_with_tao = Xyes])
 
 dnl Note that the "ACE_VERSION" in the message below is an M4 macro
 dnl that expands to the version of ACE being configured.

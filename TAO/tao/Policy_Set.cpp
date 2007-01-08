@@ -272,8 +272,8 @@ CORBA::PolicyList *
 TAO_Policy_Set::get_policy_overrides (const CORBA::PolicyTypeSeq &types
                                       ACE_ENV_ARG_DECL)
 {
-  CORBA::ULong const slots = types.length ();
-  CORBA::PolicyList *policy_list_ptr = 0;
+  const CORBA::ULong slots = types.length ();
+  CORBA::PolicyList *policy_list_ptr;
 
   if (slots == 0)
     {
@@ -297,12 +297,12 @@ TAO_Policy_Set::get_policy_overrides (const CORBA::PolicyTypeSeq &types
 
   for (CORBA::ULong j = 0; j < slots; ++j)
     {
-      CORBA::ULong const slot = types[j];
-      CORBA::ULong const length = this->policy_list_.length ();
+      const CORBA::ULong slot = types[j];
+      const CORBA::ULong length = this->policy_list_.length ();
 
       for (CORBA::ULong i = 0; i < length; ++i)
         {
-          CORBA::ULong const current =
+          const CORBA::ULong current =
             this->policy_list_[i]->policy_type (ACE_ENV_SINGLE_ARG_PARAMETER);
           ACE_CHECK_RETURN (0);
 

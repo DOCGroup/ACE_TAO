@@ -8,7 +8,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE int
 TAO_Active_Object_Map::is_servant_in_map (PortableServer::Servant servant,
-                                          bool &deactivated)
+                                          int &deactivated)
 {
   return this->id_uniqueness_strategy_->is_servant_in_map (servant,
                                                            deactivated);

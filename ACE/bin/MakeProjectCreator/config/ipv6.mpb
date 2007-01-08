@@ -2,7 +2,7 @@
 // $Id$
 
 feature(ipv6) {
-  specific(vc6, vc7, vc71, vc8, nmake, borland, bmake, bds4) {
+  specific(vc6, vc7, vc71, vc8, nmake, borland, bmake, cbx) {
     lit_libs += iphlpapi
   }
 

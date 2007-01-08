@@ -27,7 +27,7 @@ ACE_RCSID (tests,
            Proactor_Timer_Test,
            "$Id$")
 
-#if defined (ACE_HAS_WIN32_OVERLAPPED_IO) || defined (ACE_HAS_AIO_CALLS)
+#if ((defined (ACE_WIN32) && !defined (ACE_HAS_WINCE)) || (defined (ACE_HAS_AIO_CALLS)))
   // This only works on Win32 platforms and on Unix platforms
   // supporting POSIX aio calls.
 
@@ -38,7 +38,7 @@ ACE_RCSID (tests,
 #include "ace/Asynch_IO.h"
 
 static int    done = 0;
-static size_t counter = 0;
+static size_t count = 0;
 static int    odd = 0;
 
 class Time_Handler : public ACE_Handler
@@ -100,29 +100,29 @@ Time_Handler::Time_Handler (void)
 void
 Time_Handler::handle_time_out (const ACE_Time_Value &, const void *arg)
 {
-  size_t current_counter = *(reinterpret_cast<const size_t *> (arg));
-  if (current_counter != counter)
+  size_t current_count = *(reinterpret_cast<const size_t *> (arg));
+  if (current_count != count)
     ACE_ERROR ((LM_ERROR,
                 ACE_TEXT ("Expected timer %d, not %d\n"),
-                counter,
-                current_counter));
+                count,
+                current_count));
 
   ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("[%@] Timer id %d with counter #%d|%d expired.\n"),
+              ACE_TEXT ("[%@] Timer id %d with count #%d|%d expired.\n"),
               this,
               this->timer_id (),
-              counter,
-              current_counter));
+              count,
+              current_count));
 
-  if (current_counter == (ACE_MAX_TIMERS - 1))
+  if (current_count == (ACE_MAX_TIMERS - 1))
     done = 1;
-  else if (counter == ACE_MAX_TIMERS - 1)
+  else if (count == ACE_MAX_TIMERS - 1)
     {
       done = 1;
       return;
     }
 
-  counter += (1 + odd);
+  count += (1 + odd);
   return;
 }
 
@@ -213,7 +213,7 @@ test_registering_one_handler (void)
   size_t which[ACE_MAX_TIMERS];
 
   done = 0;
-  counter = 0;
+  count = 0;
   long secs = 0;
   size_t i = 0;
   for ( ; i < ACE_MAX_TIMERS; i++, secs++)
@@ -241,7 +241,7 @@ test_canceling_odd_timers (void)
   size_t which[ACE_MAX_TIMERS];
 
   done = 0;
-  counter = 1;
+  count = 1;
   odd = 1;
   size_t i = 0;
   long secs = 0;
@@ -340,4 +340,4 @@ run_main (int, ACE_TCHAR *[])
   return 0;
 }
 
-#endif  /* ACE_HAS_WIN32_OVERLAPPED_IO || ACE_HAS_AIO_CALLS */
+#endif  /* ACE_WIN32 && !ACE_HAS_WINCE || ACE_HAS_AIO_CALLS */

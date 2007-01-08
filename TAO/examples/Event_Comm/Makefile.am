@@ -13,10 +13,8 @@ ACE_ROOT = $(top_srcdir)/..
 TAO_BUILDDIR = $(top_builddir)
 TAO_IDL = ACE_ROOT=$(ACE_ROOT) TAO_ROOT=$(TAO_ROOT) $(TAO_BUILDDIR)/TAO_IDL/tao_idl
 TAO_IDL_DEP = $(TAO_BUILDDIR)/TAO_IDL/tao_idl
-TAO_IDLFLAGS = -Wb,pre_include=ace/pre.h -Wb,post_include=ace/post.h -I$(TAO_ROOT) -I$(srcdir) -g $(ACE_BUILDDIR)/apps/gperf/src/gperf
+TAO_IDLFLAGS = -Ge 1 -Wb,pre_include=ace/pre.h -Wb,post_include=ace/post.h -I$(TAO_ROOT) -I$(srcdir) -g $(ACE_BUILDDIR)/apps/gperf/src/gperf
 TAO_ROOT = $(top_srcdir)
-
-noinst_PROGRAMS =
 
 ## Makefile.Event_Comm_IDL.am
 
@@ -43,14 +41,13 @@ Event_Comm-stamp: $(srcdir)/Event_Comm.idl $(TAO_IDL_DEP)
 	$(TAO_IDL) $(TAO_IDLFLAGS) -Sa -St $(srcdir)/Event_Comm.idl
 	@touch $@
 
+
 noinst_HEADERS = \
   Event_Comm.idl
 
 ## Makefile.Event_Comm_Consumer.am
 
-if BUILD_EXCEPTIONS
-
-noinst_PROGRAMS += consumer
+noinst_PROGRAMS = consumer
 
 consumer_CPPFLAGS = \
   -I$(ACE_ROOT) \
@@ -78,11 +75,7 @@ consumer_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
-endif BUILD_EXCEPTIONS
-
 ## Makefile.Event_Comm_Notifier.am
-
-if BUILD_EXCEPTIONS
 
 noinst_PROGRAMS += notifier
 
@@ -114,11 +107,7 @@ notifier_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
-endif BUILD_EXCEPTIONS
-
 ## Makefile.Event_Comm_Supplier.am
-
-if BUILD_EXCEPTIONS
 
 noinst_PROGRAMS += supplier
 
@@ -148,8 +137,6 @@ supplier_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO_AnyTypeCode.la \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
-
-endif BUILD_EXCEPTIONS
 
 ## Clean up template repositories, etc.
 clean-local:

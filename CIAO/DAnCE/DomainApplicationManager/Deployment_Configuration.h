@@ -23,12 +23,12 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ciao/Deployment_NodeManagerC.h"
+#include "ciao/NodeManagerC.h"
+#include "DomainApplicationManager/DomainApplicationManager_Export.h"
+#include "ace/SString.h"
 #include "tao/Valuetype/ValueBase.h"
 #include "tao/Valuetype/Valuetype_Adapter_Impl.h"
 #include "ace/SString.h"
-
-#include "DomainApplicationManager/DomainApplicationManager_Export.h"
 
 namespace CIAO
 {
@@ -64,7 +64,7 @@ namespace CIAO
     Deployment_Configuration (CORBA::ORB_ptr o);
 
     /// Destructor
-    ~Deployment_Configuration (void);
+    virtual ~Deployment_Configuration (void);
 
     /**
      * Init method takes the filename to a configuration file which
@@ -82,7 +82,7 @@ namespace CIAO
      * @retval 0 if no valid name were found.  When @c name = 0, then
      * this function behave exactly as get_default_activator_ior.
      */
-    const char *get_node_manager_ior (const char *name) const;
+    virtual const char *get_node_manager_ior (const char *name) const;
 
     /**
      * Return the default NodeManager the DomainApplicationManager
@@ -92,12 +92,12 @@ namespace CIAO
      *
      * @retval 0 if no valid daemon is configured.
      */
-    const char *get_default_node_manager_ior () const;
+    virtual const char *get_default_node_manager_ior () const;
 
     /**
      * @retval nil if no valid name were found.
      */
-    ::Deployment::NodeManager_ptr
+    virtual ::Deployment::NodeManager_ptr
     get_node_manager (const char *name
                       ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
@@ -108,7 +108,7 @@ namespace CIAO
      *
      * @retval nil if no valid daemon is configured.
      */
-    ::Deployment::NodeManager_ptr
+    virtual ::Deployment::NodeManager_ptr
     get_default_node_manager (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
 
   protected:

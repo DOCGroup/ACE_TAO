@@ -249,7 +249,7 @@ CIAO::RTResource_Config_Manager::init_resources
   const CIAO::DAnCE::PolicySets &sets = server_resource.orb_config.policy_set;
   for (CORBA::ULong i = 0; i < sets.length (); ++i)
     {
-      CORBA::ULong const np = sets[i].policies.length ();
+      CORBA::ULong np = sets[i].policies.length ();
       if (np == 0)
         continue;
 
@@ -309,7 +309,7 @@ CIAO::RTResource_Config_Manager::find_threadpool_by_name (const char *name
     {
       ACE_ERROR ((LM_ERROR,
                   "Invalid name string found in \"find_threadpool_by_name\"\n"));
-      ACE_THROW_RETURN (CORBA::BAD_PARAM (), 0);
+      ACE_THROW_RETURN (CORBA::INTERNAL (), 0);
     }
 
 
@@ -335,7 +335,7 @@ CIAO::RTResource_Config_Manager::find_priority_bands_by_name (const char *name
     {
       ACE_ERROR ((LM_ERROR,
                   "Invalid name string found in \"find_priority_bands_by_name\"\n"));
-      ACE_THROW_RETURN (CORBA::BAD_PARAM (), 0);
+      ACE_THROW_RETURN (CORBA::INTERNAL (), 0);
     }
 
   PB_MAP::ENTRY *entry = 0;
@@ -362,7 +362,7 @@ CIAO::RTResource_Config_Manager::find_policies_by_name (const char *name
     {
       ACE_ERROR ((LM_ERROR,
                   "Invalid name string found in \"find_policies_by_name\"\n"));
-      ACE_THROW_RETURN (CORBA::BAD_PARAM (), 0);
+      ACE_THROW_RETURN (CORBA::INTERNAL (), 0);
     }
 
 

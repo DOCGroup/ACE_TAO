@@ -56,7 +56,7 @@ TAO_IDL_CPP_Keyword_Table::hash (const char *str, unsigned int len)
   return len + asso_values[(int) str[1]] + asso_values[(int) str[0]] + asso_values[(int) str[len - 1]];
 }
 
-const TAO_IDL_CPP_Keyword_Entry *
+const struct TAO_IDL_CPP_Keyword_Entry *
 TAO_IDL_CPP_Keyword_Table::lookup (const char *str, unsigned int len)
 {
   enum

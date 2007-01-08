@@ -123,12 +123,9 @@ be_visitor_valuebox_cs::visit_valuebox (be_valuebox *node)
       << "}" << be_nl << be_nl;
 
   *os << "void" << be_nl
-      << node->name ()
-      << "::_tao_obv_truncatable_repo_ids (Repository_Id_List& ids) const"
-      << be_nl
+      << node->name () << "::_tao_obv_truncatable_repo_ids (Repository_Id_List& ids) const" << be_nl
       << "{" << be_idt_nl
-      << "ids.push_back (this->_tao_obv_static_repository_id ());"
-      << be_uidt_nl
+      << "ids.push_back (this->_tao_obv_static_repository_id ());" << be_uidt_nl
       << "}" << be_nl << be_nl;
 
   // _tao_match_formal_type method.  Generated because ValueBase interface
@@ -140,69 +137,31 @@ be_visitor_valuebox_cs::visit_valuebox (be_valuebox *node)
       << "{" << be_idt_nl
       << "return true;" << be_uidt_nl
       << "}" << be_nl << be_nl;
-      
-
-  if (be_global->any_support ())
-    {
-      *os << "void" << be_nl
-          << node->name ()
-          << "::_tao_any_destructor (void *_tao_void_pointer)" << be_nl
-          << "{" << be_idt_nl
-          << node->local_name () << " *_tao_tmp_pointer =" << be_idt_nl
-          << "static_cast<" << be_idt
-          << node->local_name () << " *> ("
-          << "_tao_void_pointer);" << be_uidt << be_uidt_nl
-          << "::CORBA::remove_ref (_tao_tmp_pointer);" << be_uidt_nl
-          << "}" << be_nl << be_nl;
-    }
-
-  // Switch streams to the *A.cpp file if we are using this option.
-  if (be_global->gen_anyop_files ())
-    {
-      os = tao_cg->anyop_source ();
-    }
-
-  if (be_global->tc_support ())
-    {
-      *os << "// TAO extension - the virtual _type method." << be_nl;
-      *os << "::CORBA::TypeCode_ptr " << node->name ()
-          << "::_tao_type (void) const" << be_nl;
-      *os << "{" << be_idt_nl;
-      *os << "return ::" << node->tc_name () << ";" << be_uidt_nl;
-      *os << "}" << be_nl << be_nl;
-    }
-
-  // Make sure we are generating to *C.cpp regardless of the above.
-  os = tao_cg->client_stubs ();
 
   AST_Type * at = node->boxed_type()->unaliased_type();
   be_type *bt = be_type::narrow_from_decl (at);
   bool is_array = false;
+
   const char * unmarshal_arg;
   be_predefined_type *bpt = be_predefined_type::narrow_from_decl (bt);
-  
   if (bpt != 0)
     {
       switch (bpt->pt())
         {
         case AST_PredefinedType::PT_boolean:
-          unmarshal_arg =
-            "::ACE_InputCDR::to_boolean (vb_object->_pd_value)";
+          unmarshal_arg = "::ACE_InputCDR::to_boolean (vb_object->_pd_value)";
           break;
 
         case AST_PredefinedType::PT_char:
-          unmarshal_arg =
-            "::ACE_InputCDR::to_char (vb_object->_pd_value)";
+          unmarshal_arg = "::ACE_InputCDR::to_char (vb_object->_pd_value)";
           break;
 
         case AST_PredefinedType::PT_wchar:
-          unmarshal_arg =
-            "::ACE_InputCDR::to_wchar (vb_object->_pd_value)";
+          unmarshal_arg = "::ACE_InputCDR::to_wchar (vb_object->_pd_value)";
           break;
 
         case AST_PredefinedType::PT_octet:
-          unmarshal_arg =
-            "::ACE_InputCDR::to_octet (vb_object->_pd_value)";
+          unmarshal_arg = "::ACE_InputCDR::to_octet (vb_object->_pd_value)";
           break;
 
         case AST_PredefinedType::PT_any:
@@ -236,8 +195,7 @@ be_visitor_valuebox_cs::visit_valuebox (be_valuebox *node)
       << "if ( ::CORBA::ValueBase::_tao_validate_box_type (" << be_idt
       << be_idt << be_idt_nl
       << "strm," << be_nl
-      << node->local_name () << "::_tao_obv_static_repository_id (),"
-      << be_nl
+      << node->local_name () << "::_tao_obv_static_repository_id ()," << be_nl
       << "is_null_object"
       << be_uidt_nl
       << ") == false)" << be_uidt_nl
@@ -256,10 +214,9 @@ be_visitor_valuebox_cs::visit_valuebox (be_valuebox *node)
 
   if (is_array)
     {
-      *os << at->full_name()
-          << "_forany temp (vb_object->_boxed_inout ());" << be_nl;
+      *os << at->full_name() << "_forany temp (vb_object->_boxed_inout ());"
+          << be_nl;
     }
-    
   *os << "return (strm >> " << unmarshal_arg << ");" << be_uidt_nl
       << "}" << be_nl << be_nl;
 
@@ -307,8 +264,7 @@ be_visitor_valuebox_cs::visit_array (be_array * node)
      << vb_node->name ()
      << "::_tao_marshal_v (TAO_OutputCDR & strm) const" << be_nl
      << "{" << be_idt_nl
-     << node->name () << "_forany temp (this->_pd_value.ptr ());"
-     << be_nl
+     << node->name () << "_forany temp (this->_pd_value.ptr ());" << be_nl
      << "return (strm << temp);" << be_uidt_nl
      << "}" << be_nl << be_nl;
 
@@ -356,23 +312,19 @@ be_visitor_valuebox_cs::visit_predefined_type (be_predefined_type * node)
   switch (node->pt ())
     {
     case AST_PredefinedType::PT_boolean:
-      marshal_arg =
-        "::ACE_OutputCDR::from_boolean (this->_pd_value)";
+      marshal_arg = "::ACE_OutputCDR::from_boolean (this->_pd_value)";
       break;
 
     case AST_PredefinedType::PT_char:
-      marshal_arg =
-        "::ACE_OutputCDR::from_char (this->_pd_value)";
+      marshal_arg = "::ACE_OutputCDR::from_char (this->_pd_value)";
       break;
 
     case AST_PredefinedType::PT_wchar:
-      marshal_arg =
-        "::ACE_OutputCDR::from_wchar (this->_pd_value)";
+      marshal_arg = "::ACE_OutputCDR::from_wchar (this->_pd_value)";
       break;
 
     case AST_PredefinedType::PT_octet:
-      marshal_arg =
-        "::ACE_OutputCDR::from_octet (this->_pd_value)";
+      marshal_arg = "::ACE_OutputCDR::from_octet (this->_pd_value)";
       break;
 
     case AST_PredefinedType::PT_any:
@@ -417,7 +369,6 @@ be_visitor_valuebox_cs::visit_sequence (be_sequence *node)
   // Retrieve the base type since we will need to do some code
   // generation for it.
   be_type *bt = be_type::narrow_from_decl (node->base_type ());
-  
   if (bt == 0)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
@@ -462,10 +413,10 @@ be_visitor_valuebox_cs::visit_sequence (be_sequence *node)
   if (bt->accept (&bt_visitor) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                         "(%N:%l) be_visitor_valuebox_cs::"
-                         "visit_valuebox - "
-                         "base type visit failed\n"),
-                        -1);
+                       "(%N:%l) be_visitor_valuebox_cs::"
+                       "visit_valuebox - "
+                       "base type visit failed\n"),
+                       -1);
     }
 
   *os << " * buf," << be_nl
@@ -493,15 +444,14 @@ be_visitor_valuebox_cs::visit_sequence (be_sequence *node)
   if (bt->accept (&bt_visitor) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                         "(%N:%l) be_visitor_valuebox_cs::"
-                         "visit_valuebox - "
-                         "base type visit failed\n"),
-                        -1);
+                       "(%N:%l) be_visitor_valuebox_cs::"
+                       "visit_valuebox - "
+                       "base type visit failed\n"),
+                       -1);
     }
 
   *os << " & " << be_nl
-      << vb_node->name () << "::operator[] ( ::CORBA::ULong index)"
-      << be_nl
+      << vb_node->name () << "::operator[] ( ::CORBA::ULong index)" << be_nl
       << "{" << be_idt_nl
       << "return (";
 
@@ -519,7 +469,6 @@ be_visitor_valuebox_cs::visit_sequence (be_sequence *node)
 
   // Accessor: const
   *os << "const ";
-  
   if (bt->accept (&bt_visitor) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
@@ -528,7 +477,6 @@ be_visitor_valuebox_cs::visit_sequence (be_sequence *node)
                          "base type visit failed\n"),
                         -1);
     }
-    
   *os << " &" << be_nl;
   *os << vb_node->name ()
       << "::operator[] ( ::CORBA::ULong index) const" << be_nl
@@ -561,6 +509,7 @@ be_visitor_valuebox_cs::visit_sequence (be_sequence *node)
         }
 
       *os << "&) this->_pd_value->operator[] (index);" << be_uidt_nl;
+
     }
 
   *os << "}" << be_nl << be_nl;

@@ -90,9 +90,6 @@ protected:
   int init_ORB (int& argc, ACE_TCHAR *argv []
                 ACE_ENV_ARG_DECL);
   // initialize the ORB.
-  int init_dispatching_ORB (int& argc, ACE_TCHAR *argv []
-                ACE_ENV_ARG_DECL);
-  // initialize the dispatching ORB.
 
   TAO_Notify_Service* notify_service_;
 
@@ -132,9 +129,6 @@ protected:
   CORBA::ORB_var orb_;
   // The ORB that we use.
 
-  CORBA::ORB_var dispatching_orb_;
-  // separate dispatching orb if needed.
-
   PortableServer::POA_var poa_;
   // Reference to the root poa.
 
@@ -146,9 +140,6 @@ protected:
 
   int nthreads_;
   // Number of worker threads.
-
-  bool separate_dispatching_orb_;
-  // indicate that a separate ORB is used for dispatching events.
 };
 
 #include /**/ "ace/post.h"

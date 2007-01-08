@@ -9,11 +9,6 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-/*
- * Hook to specialize to add includes
- */
-//@@ REACTOR_SPL_INCLUDE_FORWARD_DECL_ADD_HOOK
-
 #include "ace/Timer_Queue_T.h"
 #include "ace/Guard_T.h"
 #include "ace/Log_Msg.h"
@@ -83,7 +78,7 @@ ACE_Timer_Queue_T<TYPE, FUNCTOR, ACE_LOCK>::calculate_timeout (ACE_Time_Value *m
     return max_wait_time;
   else
     {
-      ACE_Time_Value const cur_time = this->gettimeofday ();
+      ACE_Time_Value cur_time = this->gettimeofday ();
 
       if (this->earliest_time () > cur_time)
         {
@@ -412,7 +407,7 @@ ACE_Event_Handler_Handle_Timeout_Upcall<ACE_LOCK>::timeout (TIMER_QUEUE &timer_q
   // Upcall to the <handler>s handle_timeout method.
   if (event_handler->handle_timeout (cur_time, act) == -1)
     {
-      if (event_handler->reactor_timer_interface ())
+      if (event_handler->reactor ())
         event_handler->reactor_timer_interface ()->cancel_timer (event_handler, 0);
       else
         timer_queue.cancel (event_handler, 0); // 0 means "call handle_close()".

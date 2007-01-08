@@ -6,13 +6,12 @@
 ## this file will be lost the next time it is generated.
 ##
 ## MPC Command:
-## ./bin/mwc.pl -type automake -noreldefs ACE.mwc
+## /acebuilds/ACE_wrappers-repository/bin/mwc.pl -include /acebuilds/MPC/config -include /acebuilds/MPC/templates -feature_file /acebuilds/ACE_wrappers-repository/local.features -noreldefs -type automake -exclude build,Kokyu
 
 ACE_BUILDDIR = $(top_builddir)
 ACE_ROOT = $(top_srcdir)
 
 ## Makefile.Change_Instance_Default.am
-
 noinst_PROGRAMS = Change_Instance_Default
 
 Change_Instance_Default_CPPFLAGS = \
@@ -32,7 +31,6 @@ Change_Instance_Default_LDADD = \
   $(ACE_BUILDDIR)/ace/libACE.la
 
 ## Makefile.Change_Mask.am
-
 noinst_PROGRAMS += Change_Mask
 
 Change_Mask_CPPFLAGS = \
@@ -52,7 +50,6 @@ Change_Mask_LDADD = \
   $(ACE_BUILDDIR)/ace/libACE.la
 
 ## Makefile.Howto_Syslog.am
-
 noinst_PROGRAMS += Howto_Syslog
 
 Howto_Syslog_CPPFLAGS = \
@@ -72,7 +69,6 @@ Howto_Syslog_LDADD = \
   $(ACE_BUILDDIR)/ace/libACE.la
 
 ## Makefile.Simple1.am
-
 noinst_PROGRAMS += Simple1
 
 Simple1_CPPFLAGS = \
@@ -92,7 +88,6 @@ Simple1_LDADD = \
   $(ACE_BUILDDIR)/ace/libACE.la
 
 ## Makefile.Simple2.am
-
 noinst_PROGRAMS += Simple2
 
 Simple2_CPPFLAGS = \
@@ -112,7 +107,6 @@ Simple2_LDADD = \
   $(ACE_BUILDDIR)/ace/libACE.la
 
 ## Makefile.Trace_Return.am
-
 noinst_PROGRAMS += Trace_Return
 
 Trace_Return_CPPFLAGS = \
@@ -132,7 +126,6 @@ Trace_Return_LDADD = \
   $(ACE_BUILDDIR)/ace/libACE.la
 
 ## Makefile.Use_Callback.am
-
 noinst_PROGRAMS += Use_Callback
 
 Use_Callback_CPPFLAGS = \
@@ -152,7 +145,6 @@ Use_Callback_LDADD = \
   $(ACE_BUILDDIR)/ace/libACE.la
 
 ## Makefile.Use_Callback2.am
-
 noinst_PROGRAMS += Use_Callback2
 
 Use_Callback2_CPPFLAGS = \
@@ -172,7 +164,6 @@ Use_Callback2_LDADD = \
   $(ACE_BUILDDIR)/ace/libACE.la
 
 ## Makefile.Use_LogManager.am
-
 noinst_PROGRAMS += Use_LogManager
 
 Use_LogManager_CPPFLAGS = \
@@ -192,7 +183,6 @@ Use_LogManager_LDADD = \
   $(ACE_BUILDDIR)/ace/libACE.la
 
 ## Makefile.Use_Logger.am
-
 noinst_PROGRAMS += Use_Logger
 
 Use_Logger_CPPFLAGS = \
@@ -212,7 +202,6 @@ Use_Logger_LDADD = \
   $(ACE_BUILDDIR)/ace/libACE.la
 
 ## Makefile.Use_Logging_Server.am
-
 noinst_PROGRAMS += Use_Logging_Server
 
 Use_Logging_Server_CPPFLAGS = \
@@ -232,7 +221,6 @@ Use_Logging_Server_LDADD = \
   $(ACE_BUILDDIR)/ace/libACE.la
 
 ## Makefile.Use_Logging_Strategy.am
-
 noinst_PROGRAMS += Use_Logging_Strategy
 
 Use_Logging_Strategy_CPPFLAGS = \
@@ -252,7 +240,6 @@ Use_Logging_Strategy_LDADD = \
   $(ACE_BUILDDIR)/ace/libACE.la
 
 ## Makefile.Use_Multiple_Sinks.am
-
 noinst_PROGRAMS += Use_Multiple_Sinks
 
 Use_Multiple_Sinks_CPPFLAGS = \
@@ -272,7 +259,6 @@ Use_Multiple_Sinks_LDADD = \
   $(ACE_BUILDDIR)/ace/libACE.la
 
 ## Makefile.Use_Ostream.am
-
 noinst_PROGRAMS += Use_Ostream
 
 Use_Ostream_CPPFLAGS = \
@@ -292,7 +278,6 @@ Use_Ostream_LDADD = \
   $(ACE_BUILDDIR)/ace/libACE.la
 
 ## Makefile.Use_Stderr.am
-
 noinst_PROGRAMS += Use_Stderr
 
 Use_Stderr_CPPFLAGS = \
@@ -312,7 +297,6 @@ Use_Stderr_LDADD = \
   $(ACE_BUILDDIR)/ace/libACE.la
 
 ## Makefile.Use_Syslog.am
-
 noinst_PROGRAMS += Use_Syslog
 
 Use_Syslog_CPPFLAGS = \
@@ -332,7 +316,6 @@ Use_Syslog_LDADD = \
   $(ACE_BUILDDIR)/ace/libACE.la
 
 ## Makefile.Wrap_Macros.am
-
 noinst_PROGRAMS += Wrap_Macros
 
 Wrap_Macros_CPPFLAGS = \
@@ -352,7 +335,6 @@ Wrap_Macros_LDADD = \
   $(ACE_BUILDDIR)/ace/libACE.la
 
 ## Makefile.Wrap_Macros_Alt.am
-
 noinst_PROGRAMS += Wrap_Macros_Alt
 
 Wrap_Macros_Alt_CPPFLAGS = \

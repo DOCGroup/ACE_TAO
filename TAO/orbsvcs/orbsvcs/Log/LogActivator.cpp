@@ -4,7 +4,7 @@ ACE_RCSID (Log,
            LogActivator,
            "$Id$")
 
-#if (TAO_HAS_MINIMUM_POA == 0) && !defined (CORBA_E_COMPACT) && !defined (CORBA_E_MICRO)
+#if (TAO_HAS_MINIMUM_POA == 0)
 #include "orbsvcs/Log/LogMgr_i.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
@@ -39,7 +39,7 @@ TAO_LogActivator::incarnate (const PortableServer::ObjectId& oid,
 
 
 void
-TAO_LogActivator::etherealize (const PortableServer::ObjectId&,
+TAO_LogActivator::etherealize (const PortableServer::ObjectId&, 
 			       PortableServer::POA_ptr,
 			       PortableServer::Servant servant,
 			       CORBA::Boolean,
@@ -47,7 +47,7 @@ TAO_LogActivator::etherealize (const PortableServer::ObjectId&,
 			       ACE_ENV_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  if (!remaining_activations)
+  if (!remaining_activations) 
    {
      delete servant;
    }

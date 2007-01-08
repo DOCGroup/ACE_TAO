@@ -1,12 +1,11 @@
 // $Id$
 
-project (Multi_Threaded_client) : ciao_client_dnc, valuetype , strategies {
+project (Multi_Threaded_client) : ciao_client_dnc, valuetype , strategies{
   exename = client
   after += RoundTripClient_stub
   libs += RoundTripClient_stub Benchmark_stub
   libpaths += ..
   includes += ../RoundTripClient
-  avoids += ace_for_tao
 
   IDL_Files {
   }

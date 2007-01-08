@@ -5,7 +5,7 @@
  * BiDirPolicy*.* The command used to generate code
  * is:
  *
- * tao_idl -o orig -Sa -St -Sci \
+ * tao_idl -o orig -Ge 1 -Sa -St -Sci \
  *           -Wb,export_macro=TAO_BiDirGIOP_Export \
  *           -Wb,export_include="bidirgiop_export.h" \
  *           -Wb,pre_include="ace/pre.h" \

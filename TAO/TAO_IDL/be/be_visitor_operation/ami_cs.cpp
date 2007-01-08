@@ -128,16 +128,23 @@ be_visitor_operation_ami_cs::visit_operation (be_operation *node)
 
   // Generate the actual code for the stub. However, if any of the argument
   // types is "native", we flag a MARSHAL exception.
-  // last argument
+  // last argument - is always ACE_ENV_ARG_PARAMETER
   *os << be_nl << "{" << be_idt;
+
+  if (be_global->exception_support ())
+    {
+      *os << be_nl
+          << "ACE_DECLARE_NEW_CORBA_ENV;";
+    }
 
   if (node->has_native ()) // native exists => no stub
     {
       be_predefined_type bpt (AST_PredefinedType::PT_void,
                               0);
 
-      int const status = this->gen_raise_exception ("::CORBA::MARSHAL",
-                                                    "");
+      int status = this->gen_raise_exception (&bpt,
+                                              "::CORBA::MARSHAL",
+                                              "");
 
       if (status == -1)
         {
@@ -263,8 +270,9 @@ be_visitor_operation_ami_cs::visit_operation (be_operation *node)
 
   *os << "AMI_" << parent->local_name () << "Handler::"
       << opname.fast_rep () + (this->ctx_->attribute () != 0)
-      << "_reply_stub" << be_uidt_nl
-      << ");" << be_uidt;
+      << "_reply_stub" << env_arg << be_uidt_nl
+      << ");" << be_uidt
+      << TAO_ACE_CHECK ();
 
   *os << be_uidt_nl
       << "}";

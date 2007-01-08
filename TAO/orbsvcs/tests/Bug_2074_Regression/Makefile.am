@@ -17,7 +17,7 @@ TAO_ROOT = $(top_srcdir)
 ## Makefile.Bug_2074_Regression_Test.am
 
 if BUILD_CORBA_MESSAGING
-if BUILD_EXCEPTIONS
+if !BUILD_MINIMUM_CORBA
 
 noinst_PROGRAMS = test
 
@@ -45,7 +45,7 @@ test_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
-endif BUILD_EXCEPTIONS
+endif !BUILD_MINIMUM_CORBA
 endif BUILD_CORBA_MESSAGING
 
 ## Clean up template repositories, etc.

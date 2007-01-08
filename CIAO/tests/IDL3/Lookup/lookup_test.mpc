@@ -3,6 +3,7 @@
 project(LookupTest_stub): ciao_client_dnc {
 
   sharedname = LookupTest_stub
+  idlflags += -Sc
 
   IDL_Files {
     lookup_test.idl

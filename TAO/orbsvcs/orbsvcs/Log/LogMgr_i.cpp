@@ -70,7 +70,7 @@ TAO_LogMgr_i::init (CORBA::ORB_ptr orb,
 					       ACE_ENV_ARG_PARAMETER);
     ACE_CHECK;
 
-#if (TAO_HAS_MINIMUM_POA == 0) && !defined (CORBA_E_COMPACT)
+#if (TAO_HAS_MINIMUM_POA == 0)
     policies.length(4);
     policies[2] =
       this->poa_->create_servant_retention_policy (PortableServer::RETAIN
@@ -90,7 +90,7 @@ TAO_LogMgr_i::init (CORBA::ORB_ptr orb,
     ACE_CHECK;
   }
 
-#if (TAO_HAS_MINIMUM_POA == 0) && !defined (CORBA_E_COMPACT)
+#if (TAO_HAS_MINIMUM_POA == 0)
   PortableServer::ServantActivator* servant_activator = 0;
 
   ACE_NEW_THROW_EX (servant_activator,
@@ -142,11 +142,8 @@ TAO_LogMgr_i::create_log_reference (DsLogAdmin::LogId id
 					      ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (DsLogAdmin::Log::_nil ());
 
-  // Use _unchecked_narrow() because this may be called from a servant
-  // activator's incarnate() method.  A plain _narrow() will result in
-  // infinate recursion.
   DsLogAdmin::Log_var log =
-    DsLogAdmin::Log::_unchecked_narrow (obj.in () ACE_ENV_ARG_PARAMETER);
+    DsLogAdmin::Log::_narrow (obj.in () ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (DsLogAdmin::Log::_nil ());
 
   return log._retn();

@@ -7,10 +7,5 @@ project : acelib {
   after    += Synch_Lib
   libs     += Synch_Lib
   libpaths += ../Synch_Lib
-
-  specific (automake) {
-    includes += $(srcdir)/..
-  } else {
-    includes += ..
-  }
+  includes += ..
 }

@@ -76,7 +76,7 @@ TAO_ORB_Core::get_protocols_hooks (void)
 }
 
 ACE_INLINE CORBA::Boolean
-TAO_ORB_Core::service_profile_selection (const TAO_MProfile &mprofile,
+TAO_ORB_Core::service_profile_selection (TAO_MProfile &mprofile,
                                          TAO_Profile  *&profile)
 {
   CORBA::Boolean retval = 0;
@@ -86,11 +86,43 @@ TAO_ORB_Core::service_profile_selection (const TAO_MProfile &mprofile,
   if (this->ft_service_.service_callback ())
     {
       retval =
-        this->ft_service_.service_callback ()->select_profile (mprofile,
+        this->ft_service_.service_callback ()->select_profile (&mprofile,
                                                                 profile);
     }
   return retval;
 }
+
+ACE_INLINE CORBA::Boolean
+TAO_ORB_Core::service_profile_reselection (TAO_Stub *stub,
+                                           TAO_Profile *&profile)
+{
+  CORBA::Boolean retval = 0;
+  // @@ If different services have the same feature we may want to
+  // prioritise them here. We need to decide here whose selection of
+  // profile is more important.
+  if (this->ft_service_.service_callback ())
+    {
+      retval =
+        this->ft_service_.service_callback ()->reselect_profile (stub,
+                                                                 profile);
+    }
+  return retval;
+}
+
+ACE_INLINE void
+TAO_ORB_Core::reset_service_profile_flags (void)
+{
+  // @@ If different services have the same feature we may want to
+  // prioritise them here. We need to decide here whose selection of
+  // profile is more important.
+
+  if (this->ft_service_.service_callback ())
+    {
+      this->ft_service_.service_callback ()->reset_profile_flags ();
+    }
+  return;
+}
+
 
 ACE_INLINE CORBA::Boolean
 TAO_ORB_Core::object_is_nil (CORBA::Object_ptr obj)
@@ -314,8 +346,8 @@ TAO_ORB_Core::tss_cleanup_funcs (void)
   return &(this->tss_cleanup_funcs_);
 }
 
-ACE_INLINE bool
-TAO_ORB_Core::has_shutdown (void) const
+ACE_INLINE int
+TAO_ORB_Core::has_shutdown (void)
 {
   return this->has_shutdown_;
 }
@@ -392,19 +424,6 @@ TAO_ORB_Core::resolve_codecfactory (ACE_ENV_SINGLE_ARG_DECL)
       ACE_CHECK_RETURN (CORBA::Object::_nil ());
     }
   return CORBA::Object::_duplicate (this->codec_factory_);
-}
-
-ACE_INLINE CORBA::Object_ptr
-TAO_ORB_Core::resolve_compression_manager (ACE_ENV_SINGLE_ARG_DECL)
-{
-  ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, mon, this->lock_,
-                    CORBA::Object::_nil ());
-  if (CORBA::is_nil (this->compression_manager_))
-    {
-      this->resolve_compression_manager_i (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK_RETURN (CORBA::Object::_nil ());
-    }
-  return CORBA::Object::_duplicate (this->compression_manager_);
 }
 
 ACE_INLINE const char *

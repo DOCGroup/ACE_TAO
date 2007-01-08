@@ -138,13 +138,12 @@ ACE_Service_Type_Dynamic_Guard::~ACE_Service_Type_Dynamic_Guard (void)
   // Lookup without ignoring suspended services. Making sure
   // not to ignore any inactive services, since those may be forward
   // declarations
-  size_t slot = 0;
-  int const ret = this->repo_.find_i (this->name_, slot, &tmp, false);
+  int ret = this->repo_.find_i (this->name_, &tmp, 0);
 
   // We inserted it (as inactive), so we expect to find it, right?
   if (ret < 0 && ret != -2)
     {
-      if (ACE::debug ())
+      if(ACE::debug ())
         ACE_ERROR ((LM_WARNING,
                     ACE_LIB_TEXT ("ACE (%P|%t) STDG::<dtor> - Failed (%d) to find %s\n"),
                     ret, this->name_));
@@ -242,21 +241,16 @@ ACE_Service_Gestalt::Processed_Static_Svc::
 
 ACE_Service_Gestalt::~ACE_Service_Gestalt (void)
 {
+  ACE_ASSERT (this->repo_ != 0);
+
   if (this->svc_repo_is_owned_)
     delete this->repo_;
-
-  this->repo_ =0;
-
   delete this->static_svcs_;
-  this->static_svcs_ = 0;
-
   // Delete the dynamically allocated static_svcs instance.
-#ifndef ACE_NLOGGING
   if (ACE::debug ())
     ACE_DEBUG ((LM_DEBUG,
                 ACE_LIB_TEXT ("ACE (%P|%t) SG::dtor - this=%@, pss = %@\n"),
                 this, this->processed_static_svcs_));
-#endif
 
   if (this->processed_static_svcs_ &&
       !this->processed_static_svcs_->is_empty())
@@ -270,52 +264,35 @@ ACE_Service_Gestalt::~ACE_Service_Gestalt (void)
         }
     }
   delete this->processed_static_svcs_;
-  this->processed_static_svcs_ = 0;
 }
 
 ACE_Service_Gestalt::ACE_Service_Gestalt (size_t size,
                                           bool svc_repo_is_owned,
                                           bool no_static_svcs)
   : svc_repo_is_owned_ (svc_repo_is_owned)
-  , svc_repo_size_ (size)
   , is_opened_ (0)
   , logger_key_ (ACE_DEFAULT_LOGGER_KEY)
   , no_static_svcs_ (no_static_svcs)
   , svc_queue_ (0)
   , svc_conf_file_queue_ (0)
-  , static_svcs_ (0)
-  , processed_static_svcs_ (0)
 {
-  (void)this->init_i ();
+  if (svc_repo_is_owned)
+    ACE_NEW_NORETURN (this->repo_,
+                      ACE_Service_Repository (size));
+  else
+      this->repo_ =
+        ACE_Service_Repository::instance (size);
 
-#ifndef ACE_NLOGGING
+  ACE_NEW_NORETURN (this->static_svcs_,
+                    ACE_STATIC_SVCS);
+
+  this->processed_static_svcs_ = 0;
+
   if (ACE::debug ())
     ACE_DEBUG ((LM_DEBUG,
                 ACE_LIB_TEXT ("ACE (%P|%t) SG::ctor - this = %@, pss = %@\n"),
                 this, this->processed_static_svcs_));
-#endif
 }
-
-/// Performs the common initialization tasks for a new or previously
-/// closed instance. Must not be virtual, as it is called from the
-/// constructor.
-int
-ACE_Service_Gestalt::init_i (void)
-{
-  if (this->svc_repo_is_owned_)
-    {
-      ACE_NEW_NORETURN (this->repo_,
-                        ACE_Service_Repository (this->svc_repo_size_));
-    }
-  else
-    {
-      this->repo_ =
-        ACE_Service_Repository::instance (this->svc_repo_size_);
-    }
-
-  return 0;
-}
-
 
 // Add the default statically-linked services to the Service
 // Repository.
@@ -377,9 +354,6 @@ ACE_Service_Gestalt::find_static_svc_descriptor (const ACE_TCHAR* name,
 const ACE_Static_Svc_Descriptor*
 ACE_Service_Gestalt::find_processed_static_svc (const ACE_TCHAR* name)
 {
-  if (this->processed_static_svcs_ == 0 || name == 0)
-    return 0;
-
   Processed_Static_Svc **pss = 0;
   for (ACE_PROCESSED_STATIC_SVCS_ITERATOR iter (*this->processed_static_svcs_);
        iter.next (pss) != 0;
@@ -414,7 +388,7 @@ ACE_Service_Gestalt::add_processed_static_svc
   ///
   /// In contrast a "dynamic" directive, when processed through the
   /// overloaded process_directives(string) both creates the SO
-  /// locally and initializes it, where the statics directive must
+  /// locally and initializes it, where the statis directive must
   /// first locate the SO and then calls the init() method. This means
   /// that durig the "static" initialization there's no specific
   /// information about the hosting repository and the gestalt must
@@ -475,11 +449,6 @@ ACE_Service_Gestalt::insert (ACE_Static_Svc_Descriptor *stsd)
            stsd->active_);
     }
 
-  if (this->static_svcs_ == 0)
-    ACE_NEW_RETURN (this->static_svcs_,
-                    ACE_STATIC_SVCS,
-                    -1);
-
   // Inserting a service after the Gestalt has been opened makes it
   // impossible to activate it later. Perhaps open came too soon?
   //ACE_ASSERT (this->is_opened_ == 0);
@@ -523,7 +492,7 @@ ACE_Service_Gestalt::initialize (const ACE_TCHAR *svc_name,
 #endif
 
   const ACE_Service_Type *srp = 0;
-  for (int i = 0; this->find (svc_name, &srp) == -1 && i < 2; i++)
+  for (int i = 0; this->repo_->find (svc_name, &srp) == -1 && i < 2; i++)
     //  if (this->repo_->find (svc_name, &srp) == -1)
     {
       const ACE_Static_Svc_Descriptor *assd =
@@ -676,8 +645,8 @@ ACE_Service_Gestalt::initialize (const ACE_Service_Type *sr,
   if (ACE::debug ())
     ACE_DEBUG ((LM_DEBUG,
                 ACE_LIB_TEXT ("ACE (%P|%t) SG::initialize - looking up dynamic ")
-                ACE_LIB_TEXT (" service %s to initialize, repo=%@\n"),
-                sr->name (), this->repo_));
+                ACE_LIB_TEXT (" service \'%s\' to initialize\n"),
+                sr->name ()));
 
   ACE_Service_Type *srp = 0;
   if (this->repo_->find (sr->name (),
@@ -744,9 +713,6 @@ int
 ACE_Service_Gestalt::remove (const ACE_TCHAR svc_name[])
 {
   ACE_TRACE ("ACE_Service_Gestalt::remove");
-  if (this->repo_ == 0)
-    return -1;
-
   return this->repo_->remove (svc_name);
 }
 
@@ -760,9 +726,6 @@ int
 ACE_Service_Gestalt::suspend (const ACE_TCHAR svc_name[])
 {
   ACE_TRACE ("ACE_Service_Gestalt::suspend");
-  if (this->repo_ == 0)
-    return -1;
-
   return this->repo_->suspend (svc_name);
 }
 
@@ -773,9 +736,6 @@ int
 ACE_Service_Gestalt::resume (const ACE_TCHAR svc_name[])
 {
   ACE_TRACE ("ACE_Service_Gestalt::resume");
-  if (this->repo_ == 0)
-    return -1;
-
   return this->repo_->resume (svc_name);
 }
 
@@ -796,9 +756,6 @@ int
 ACE_Service_Gestalt::process_directive_i (const ACE_Static_Svc_Descriptor &ssd,
                                         int force_replace)
 {
-  if (this->repo_ == 0)
-    return -1;
-
   if (!force_replace)
     {
       if (this->repo_->find (ssd.name_, 0, 0) >= 0)
@@ -1018,7 +975,9 @@ ACE_Service_Gestalt::process_directive (const ACE_TCHAR directive[])
 
   ACE_Svc_Conf_Param d (this, directive);
 
-  return this->process_directives_i (&d);
+  int result = this->process_directives_i (&d);
+
+  return result;
 #else
   ACE_DLL dll;
 
@@ -1100,10 +1059,7 @@ ACE_Service_Gestalt::open_i (const ACE_TCHAR /*program_name*/[],
   if (this->is_opened_++ != 0)
     return 0;
 
-  if (this->init_i () != 0)
-    return -1;
-
-  if (!ignore_debug_flag)
+  if (ignore_debug_flag == 0)
     {
       // If -d was included as a startup parameter, the user wants debug
       // information printed during service initialization.
@@ -1133,7 +1089,7 @@ ACE_Service_Gestalt::open_i (const ACE_TCHAR /*program_name*/[],
     // Make sure to save/restore errno properly.
     ACE_Errno_Guard error (errno);
 
-    if (!ignore_debug_flag)
+    if (ignore_debug_flag == 0)
       {
         log_msg->priority_mask (old_process_mask, ACE_Log_Msg::PROCESS);
         log_msg->priority_mask (old_thread_mask, ACE_Log_Msg::THREAD);
@@ -1307,6 +1263,9 @@ ACE_Service_Gestalt::close (void)
                 this, this->repo_, this->processed_static_svcs_));
 #endif
 
+  delete this->static_svcs_;
+  this->static_svcs_ = 0;
+
   if (this->processed_static_svcs_ &&
       !this->processed_static_svcs_->is_empty())
     {
@@ -1321,17 +1280,12 @@ ACE_Service_Gestalt::close (void)
   delete this->processed_static_svcs_;
   this->processed_static_svcs_ = 0;
 
-  if (this->svc_repo_is_owned_)
-      delete this->repo_;
-
 #ifndef ACE_NLOGGING
   if (ACE::debug ())
     ACE_DEBUG ((LM_DEBUG,
                 ACE_LIB_TEXT ("ACE (%P|%t) SG::close - complete this=%@, repo=%@\n"),
                 this, this->repo_));
 #endif
-
-  this->repo_ = 0;
 
   return 0;
 

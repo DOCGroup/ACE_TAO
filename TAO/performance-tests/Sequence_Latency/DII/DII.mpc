@@ -1,14 +1,14 @@
 // -*- MPC -*-
 // $Id$
 
-project(*sequence_idl): taoidldefaults, strategies, avoids_minimum_corba, avoids_corba_e_compact, avoids_corba_e_micro {
+project(*sequence_idl): taoidldefaults, strategies, minimum_corba {
   IDL_Files {
     Test.idl
   }
   custom_only = 1
 }
 
-project(*sequence server): taoserver, strategies, avoids_minimum_corba, avoids_corba_e_compact, avoids_corba_e_micro {
+project(*sequence server): taoserver, strategies, minimum_corba {
   after += *sequence_idl
 
   exename = server
@@ -22,9 +22,8 @@ project(*sequence server): taoserver, strategies, avoids_minimum_corba, avoids_c
   }
 }
 
-project(*sequence client): taoserver, strategies, dynamicinterface, avoids_minimum_corba, avoids_corba_e_compact, avoids_corba_e_micro {
+project(*sequence client): taoserver, strategies, dynamicinterface, minimum_corba {
   after += *sequence_idl
-  avoids += ace_for_tao
 
   exename = client
   Source_Files {

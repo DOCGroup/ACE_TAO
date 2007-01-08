@@ -5,7 +5,7 @@
 #include "DD_Handler.h"
 #include "Any_Handler.h"
 #include "Deployment.hpp"
-#include "ciao/Deployment_TargetDataC.h"
+#include "ciao/Deployment_BaseC.h"
 #include "CIAO_common.h"
 
 using namespace std;

@@ -6,7 +6,7 @@
 ## this file will be lost the next time it is generated.
 ##
 ## MPC Command:
-## ../bin/mwc.pl -type automake -noreldefs TAO.mwc
+## ..\bin\mwc.pl -type automake -noreldefs TAO.mwc
 
 includedir = @includedir@/orbsvcs
 pkgconfigdir = @libdir@/pkgconfig
@@ -16,51 +16,48 @@ ACE_ROOT = $(top_srcdir)/..
 TAO_BUILDDIR = $(top_builddir)
 TAO_IDL = ACE_ROOT=$(ACE_ROOT) TAO_ROOT=$(TAO_ROOT) $(TAO_BUILDDIR)/TAO_IDL/tao_idl
 TAO_IDL_DEP = $(TAO_BUILDDIR)/TAO_IDL/tao_idl
-TAO_IDLFLAGS = -Wb,pre_include=ace/pre.h -Wb,post_include=ace/post.h -I$(TAO_ROOT) -I$(srcdir) -g $(ACE_BUILDDIR)/apps/gperf/src/gperf
+TAO_IDLFLAGS = -Ge 1 -Wb,pre_include=ace/pre.h -Wb,post_include=ace/post.h -I$(TAO_ROOT) -I$(srcdir) -g $(ACE_BUILDDIR)/apps/gperf/src/gperf
 TAO_ROOT = $(top_srcdir)
 
-lib_LTLIBRARIES =
-pkgconfig_DATA =
-CLEANFILES =
-BUILT_SOURCES =
 
 ## Makefile.CosNaming_IDL.am
 
-if BUILD_EXCEPTIONS
-
-BUILT_SOURCES += \
+BUILT_SOURCES = \
   CosNamingC.cpp \
   CosNamingC.h \
   CosNamingC.inl \
   CosNamingS.cpp \
   CosNamingS.h \
-  CosNamingS.inl
+  CosNamingS.inl \
+  CosNamingS_T.cpp \
+  CosNamingS_T.h \
+  CosNamingS_T.inl
 
-CLEANFILES += \
+CLEANFILES = \
   CosNaming-stamp \
   CosNamingC.cpp \
   CosNamingC.h \
   CosNamingC.inl \
   CosNamingS.cpp \
   CosNamingS.h \
-  CosNamingS.inl
+  CosNamingS.inl \
+  CosNamingS_T.cpp \
+  CosNamingS_T.h \
+  CosNamingS_T.inl
 
-CosNamingC.cpp CosNamingC.h CosNamingC.inl CosNamingS.cpp CosNamingS.h CosNamingS.inl: CosNaming-stamp
+CosNamingC.cpp CosNamingC.h CosNamingC.inl CosNamingS.cpp CosNamingS.h CosNamingS.inl CosNamingS_T.cpp CosNamingS_T.h CosNamingS_T.inl: CosNaming-stamp
 
 CosNaming-stamp: $(srcdir)/CosNaming.idl $(TAO_IDL_DEP)
-	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs -Wb,versioning_begin=TAO_BEGIN_VERSIONED_NAMESPACE_DECL -Wb,versioning_end=TAO_END_VERSIONED_NAMESPACE_DECL -Wb,stub_export_macro=TAO_Naming_Export -Wb,stub_export_include=orbsvcs/Naming/naming_export.h -Wb,skel_export_macro=TAO_Naming_Skel_Export -Wb,skel_export_include=orbsvcs/Naming/naming_skel_export.h $(srcdir)/CosNaming.idl
-	@touch $@
+	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs -GT -Wb,versioning_begin=TAO_BEGIN_VERSIONED_NAMESPACE_DECL -Wb,versioning_end=TAO_END_VERSIONED_NAMESPACE_DECL -Wb,stub_export_macro=TAO_Naming_Export -Wb,stub_export_include=orbsvcs/Naming/naming_export.h -Wb,skel_export_macro=TAO_Naming_Skel_Export -Wb,skel_export_include=orbsvcs/Naming/naming_skel_export.h $(srcdir)/CosNaming.idl
+	@touch "$@"
+
 
 nobase_include_HEADERS = \
   CosNaming.idl
 
-endif BUILD_EXCEPTIONS
-
 ## Makefile.CosNaming.am
 
-if BUILD_EXCEPTIONS
-
-lib_LTLIBRARIES += libTAO_CosNaming.la
+lib_LTLIBRARIES = libTAO_CosNaming.la
 
 libTAO_CosNaming_la_CPPFLAGS = \
   -I$(ACE_ROOT) \
@@ -76,7 +73,7 @@ libTAO_CosNaming_la_SOURCES = \
   Naming/Naming_Client.cpp
 
 libTAO_CosNaming_la_LDFLAGS = \
- -version-number @TAO_MAJOR@:@TAO_MINOR@:@TAO_BETA@
+ -version-number @TAO_MAJOR@:@TAO_MINOR@:@TAO_BETA@ -L. -L$(ACE_ROOT)/lib
 
 libTAO_CosNaming_la_LIBADD = \
   $(TAO_BUILDDIR)/tao/libTAO_AnyTypeCode.la \
@@ -89,16 +86,14 @@ nobase_include_HEADERS += \
   Naming/Naming_Client.h \
   Naming/naming_export.h
 
-pkgconfig_DATA += \
+pkgconfig_DATA = \
   TAO_CosNaming.pc
 
 CLEANFILES += \
   TAO_CosNaming.pc
 
 TAO_CosNaming.pc: ${top_builddir}/config.status ${srcdir}/TAO_CosNaming.pc.in
-	${top_builddir}/config.status --file $@:${srcdir}/TAO_CosNaming.pc.in
-
-endif BUILD_EXCEPTIONS
+	${top_builddir}/config.status --file "$@":${srcdir}/TAO_CosNaming.pc.in
 
 EXTRA_DIST = \
   CosNaming.rc \
@@ -107,15 +102,16 @@ EXTRA_DIST = \
 
 ## Makefile.CosProperty_IDL.am
 
-if BUILD_EXCEPTIONS
-
 BUILT_SOURCES += \
   CosPropertyC.cpp \
   CosPropertyC.h \
   CosPropertyC.inl \
   CosPropertyS.cpp \
   CosPropertyS.h \
-  CosPropertyS.inl
+  CosPropertyS.inl \
+  CosPropertyS_T.cpp \
+  CosPropertyS_T.h \
+  CosPropertyS_T.inl
 
 CLEANFILES += \
   CosProperty-stamp \
@@ -124,13 +120,16 @@ CLEANFILES += \
   CosPropertyC.inl \
   CosPropertyS.cpp \
   CosPropertyS.h \
-  CosPropertyS.inl
+  CosPropertyS.inl \
+  CosPropertyS_T.cpp \
+  CosPropertyS_T.h \
+  CosPropertyS_T.inl
 
-CosPropertyC.cpp CosPropertyC.h CosPropertyC.inl CosPropertyS.cpp CosPropertyS.h CosPropertyS.inl: CosProperty-stamp
+CosPropertyC.cpp CosPropertyC.h CosPropertyC.inl CosPropertyS.cpp CosPropertyS.h CosPropertyS.inl CosPropertyS_T.cpp CosPropertyS_T.h CosPropertyS_T.inl: CosProperty-stamp
 
 CosProperty-stamp: $(srcdir)/CosProperty.idl $(TAO_IDL_DEP)
-	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs -Wb,versioning_begin=TAO_BEGIN_VERSIONED_NAMESPACE_DECL -Wb,versioning_end=TAO_END_VERSIONED_NAMESPACE_DECL -Wb,stub_export_macro=TAO_Property_Export -Wb,stub_export_include=orbsvcs/Property/property_export.h -Wb,skel_export_macro=TAO_Property_Skel_Export -Wb,skel_export_include=orbsvcs/Property/property_skel_export.h $(srcdir)/CosProperty.idl
-	@touch $@
+	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs -GT -Wb,versioning_begin=TAO_BEGIN_VERSIONED_NAMESPACE_DECL -Wb,versioning_end=TAO_END_VERSIONED_NAMESPACE_DECL -Wb,stub_export_macro=TAO_Property_Export -Wb,stub_export_include=orbsvcs/Property/property_export.h -Wb,skel_export_macro=TAO_Property_Skel_Export -Wb,skel_export_include=orbsvcs/Property/property_skel_export.h $(srcdir)/CosProperty.idl
+	@touch "$@"
 
 BUILT_SOURCES += \
   CosPropertyServiceC.cpp \
@@ -138,7 +137,10 @@ BUILT_SOURCES += \
   CosPropertyServiceC.inl \
   CosPropertyServiceS.cpp \
   CosPropertyServiceS.h \
-  CosPropertyServiceS.inl
+  CosPropertyServiceS.inl \
+  CosPropertyServiceS_T.cpp \
+  CosPropertyServiceS_T.h \
+  CosPropertyServiceS_T.inl
 
 CLEANFILES += \
   CosPropertyService-stamp \
@@ -147,23 +149,23 @@ CLEANFILES += \
   CosPropertyServiceC.inl \
   CosPropertyServiceS.cpp \
   CosPropertyServiceS.h \
-  CosPropertyServiceS.inl
+  CosPropertyServiceS.inl \
+  CosPropertyServiceS_T.cpp \
+  CosPropertyServiceS_T.h \
+  CosPropertyServiceS_T.inl
 
-CosPropertyServiceC.cpp CosPropertyServiceC.h CosPropertyServiceC.inl CosPropertyServiceS.cpp CosPropertyServiceS.h CosPropertyServiceS.inl: CosPropertyService-stamp
+CosPropertyServiceC.cpp CosPropertyServiceC.h CosPropertyServiceC.inl CosPropertyServiceS.cpp CosPropertyServiceS.h CosPropertyServiceS.inl CosPropertyServiceS_T.cpp CosPropertyServiceS_T.h CosPropertyServiceS_T.inl: CosPropertyService-stamp
 
 CosPropertyService-stamp: $(srcdir)/CosPropertyService.idl $(TAO_IDL_DEP)
-	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs -Wb,versioning_begin=TAO_BEGIN_VERSIONED_NAMESPACE_DECL -Wb,versioning_end=TAO_END_VERSIONED_NAMESPACE_DECL -Wb,stub_export_macro=TAO_Property_Export -Wb,stub_export_include=orbsvcs/Property/property_export.h -Wb,skel_export_macro=TAO_Property_Skel_Export -Wb,skel_export_include=orbsvcs/Property/property_skel_export.h $(srcdir)/CosPropertyService.idl
-	@touch $@
+	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs -GT -Wb,versioning_begin=TAO_BEGIN_VERSIONED_NAMESPACE_DECL -Wb,versioning_end=TAO_END_VERSIONED_NAMESPACE_DECL -Wb,stub_export_macro=TAO_Property_Export -Wb,stub_export_include=orbsvcs/Property/property_export.h -Wb,skel_export_macro=TAO_Property_Skel_Export -Wb,skel_export_include=orbsvcs/Property/property_skel_export.h $(srcdir)/CosPropertyService.idl
+	@touch "$@"
+
 
 nobase_include_HEADERS += \
   CosProperty.idl \
   CosPropertyService.idl
 
-endif BUILD_EXCEPTIONS
-
 ## Makefile.CosProperty.am
-
-if BUILD_EXCEPTIONS
 
 lib_LTLIBRARIES += libTAO_CosProperty.la
 
@@ -181,7 +183,7 @@ libTAO_CosProperty_la_SOURCES = \
   CosPropertyServiceC.cpp
 
 libTAO_CosProperty_la_LDFLAGS = \
- -version-number @TAO_MAJOR@:@TAO_MINOR@:@TAO_BETA@
+ -version-number @TAO_MAJOR@:@TAO_MINOR@:@TAO_BETA@ -L. -L$(ACE_ROOT)/lib
 
 libTAO_CosProperty_la_LIBADD = \
   $(TAO_BUILDDIR)/tao/libTAO_AnyTypeCode.la \
@@ -202,17 +204,13 @@ CLEANFILES += \
   TAO_CosProperty.pc
 
 TAO_CosProperty.pc: ${top_builddir}/config.status ${srcdir}/TAO_CosProperty.pc.in
-	${top_builddir}/config.status --file $@:${srcdir}/TAO_CosProperty.pc.in
-
-endif BUILD_EXCEPTIONS
+	${top_builddir}/config.status --file "$@":${srcdir}/TAO_CosProperty.pc.in
 
 EXTRA_DIST += \
   TAO_CosProperty.pc.in
 
 
 ## Makefile.CosProperty_Skel.am
-
-if BUILD_EXCEPTIONS
 
 lib_LTLIBRARIES += libTAO_CosProperty_Skel.la
 
@@ -230,7 +228,7 @@ libTAO_CosProperty_Skel_la_SOURCES = \
   CosPropertyServiceS.cpp
 
 libTAO_CosProperty_Skel_la_LDFLAGS = \
- -version-number @TAO_MAJOR@:@TAO_MINOR@:@TAO_BETA@
+ -version-number @TAO_MAJOR@:@TAO_MINOR@:@TAO_BETA@ -L. -L$(ACE_ROOT)/lib
 
 libTAO_CosProperty_Skel_la_LIBADD = \
   $(TAO_BUILDDIR)/tao/libTAO_PortableServer.la \
@@ -242,8 +240,14 @@ libTAO_CosProperty_Skel_la_LIBADD = \
 nobase_include_HEADERS += \
   CosPropertyS.h \
   CosPropertyS.inl \
+  CosPropertyS_T.cpp \
+  CosPropertyS_T.h \
+  CosPropertyS_T.inl \
   CosPropertyServiceS.h \
   CosPropertyServiceS.inl \
+  CosPropertyServiceS_T.cpp \
+  CosPropertyServiceS_T.h \
+  CosPropertyServiceS_T.inl \
   Property/property_skel_export.h
 
 pkgconfig_DATA += \
@@ -253,17 +257,13 @@ CLEANFILES += \
   TAO_CosProperty_Skel.pc
 
 TAO_CosProperty_Skel.pc: ${top_builddir}/config.status ${srcdir}/TAO_CosProperty_Skel.pc.in
-	${top_builddir}/config.status --file $@:${srcdir}/TAO_CosProperty_Skel.pc.in
-
-endif BUILD_EXCEPTIONS
+	${top_builddir}/config.status --file "$@":${srcdir}/TAO_CosProperty_Skel.pc.in
 
 EXTRA_DIST += \
   TAO_CosProperty_Skel.pc.in
 
 
 ## Makefile.CosProperty_Serv.am
-
-if BUILD_EXCEPTIONS
 
 lib_LTLIBRARIES += libTAO_CosProperty_Serv.la
 
@@ -280,7 +280,7 @@ libTAO_CosProperty_Serv_la_SOURCES = \
   Property/CosPropertyService_i.cpp
 
 libTAO_CosProperty_Serv_la_LDFLAGS = \
- -version-number @TAO_MAJOR@:@TAO_MINOR@:@TAO_BETA@
+ -version-number @TAO_MAJOR@:@TAO_MINOR@:@TAO_BETA@ -L. -L$(ACE_ROOT)/lib
 
 libTAO_CosProperty_Serv_la_LIBADD = \
   libTAO_CosProperty_Skel.la \
@@ -301,9 +301,7 @@ CLEANFILES += \
   TAO_CosProperty_Serv.pc
 
 TAO_CosProperty_Serv.pc: ${top_builddir}/config.status ${srcdir}/TAO_CosProperty_Serv.pc.in
-	${top_builddir}/config.status --file $@:${srcdir}/TAO_CosProperty_Serv.pc.in
-
-endif BUILD_EXCEPTIONS
+	${top_builddir}/config.status --file "$@":${srcdir}/TAO_CosProperty_Serv.pc.in
 
 EXTRA_DIST += \
   TAO_CosProperty_Serv.pc.in
@@ -311,7 +309,6 @@ EXTRA_DIST += \
 
 ## Makefile.AV.am
 
-if BUILD_EXCEPTIONS
 if !BUILD_ACE_FOR_TAO
 
 BUILT_SOURCES += \
@@ -320,7 +317,9 @@ BUILT_SOURCES += \
   AVStreamsC.inl \
   AVStreamsS.cpp \
   AVStreamsS.h \
-  AVStreamsS.inl
+  AVStreamsS.inl \
+  AVStreamsS_T.cpp \
+  AVStreamsS_T.inl
 
 CLEANFILES += \
   AVStreams-stamp \
@@ -329,13 +328,15 @@ CLEANFILES += \
   AVStreamsC.inl \
   AVStreamsS.cpp \
   AVStreamsS.h \
-  AVStreamsS.inl
+  AVStreamsS.inl \
+  AVStreamsS_T.cpp \
+  AVStreamsS_T.inl
 
-AVStreamsC.cpp AVStreamsC.h AVStreamsC.inl AVStreamsS.cpp AVStreamsS.h AVStreamsS.inl: AVStreams-stamp
+AVStreamsC.cpp AVStreamsC.h AVStreamsC.inl AVStreamsS.cpp AVStreamsS.h AVStreamsS.inl AVStreamsS_T.cpp AVStreamsS_T.inl: AVStreams-stamp
 
 AVStreams-stamp: $(srcdir)/AVStreams.idl $(TAO_IDL_DEP)
-	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs -Wb,versioning_begin=TAO_BEGIN_VERSIONED_NAMESPACE_DECL -Wb,versioning_end=TAO_END_VERSIONED_NAMESPACE_DECL -Wb,export_macro=TAO_AV_Export -Wb,export_include=orbsvcs/AV/AV_export.h $(srcdir)/AVStreams.idl
-	@touch $@
+	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs -GT -Wb,versioning_begin=TAO_BEGIN_VERSIONED_NAMESPACE_DECL -Wb,versioning_end=TAO_END_VERSIONED_NAMESPACE_DECL -Wb,export_macro=TAO_AV_Export -Wb,export_include=orbsvcs/AV/AV_export.h $(srcdir)/AVStreams.idl
+	@touch "$@"
 
 BUILT_SOURCES += \
   Null_MediaCtrlC.cpp \
@@ -343,7 +344,9 @@ BUILT_SOURCES += \
   Null_MediaCtrlC.inl \
   Null_MediaCtrlS.cpp \
   Null_MediaCtrlS.h \
-  Null_MediaCtrlS.inl
+  Null_MediaCtrlS.inl \
+  Null_MediaCtrlS_T.cpp \
+  Null_MediaCtrlS_T.inl
 
 CLEANFILES += \
   Null_MediaCtrl-stamp \
@@ -352,13 +355,15 @@ CLEANFILES += \
   Null_MediaCtrlC.inl \
   Null_MediaCtrlS.cpp \
   Null_MediaCtrlS.h \
-  Null_MediaCtrlS.inl
+  Null_MediaCtrlS.inl \
+  Null_MediaCtrlS_T.cpp \
+  Null_MediaCtrlS_T.inl
 
-Null_MediaCtrlC.cpp Null_MediaCtrlC.h Null_MediaCtrlC.inl Null_MediaCtrlS.cpp Null_MediaCtrlS.h Null_MediaCtrlS.inl: Null_MediaCtrl-stamp
+Null_MediaCtrlC.cpp Null_MediaCtrlC.h Null_MediaCtrlC.inl Null_MediaCtrlS.cpp Null_MediaCtrlS.h Null_MediaCtrlS.inl Null_MediaCtrlS_T.cpp Null_MediaCtrlS_T.inl: Null_MediaCtrl-stamp
 
 Null_MediaCtrl-stamp: $(srcdir)/Null_MediaCtrl.idl $(TAO_IDL_DEP)
-	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs -Wb,versioning_begin=TAO_BEGIN_VERSIONED_NAMESPACE_DECL -Wb,versioning_end=TAO_END_VERSIONED_NAMESPACE_DECL -Wb,export_macro=TAO_AV_Export -Wb,export_include=orbsvcs/AV/AV_export.h $(srcdir)/Null_MediaCtrl.idl
-	@touch $@
+	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs -GT -Wb,versioning_begin=TAO_BEGIN_VERSIONED_NAMESPACE_DECL -Wb,versioning_end=TAO_END_VERSIONED_NAMESPACE_DECL -Wb,export_macro=TAO_AV_Export -Wb,export_include=orbsvcs/AV/AV_export.h $(srcdir)/Null_MediaCtrl.idl
+	@touch "$@"
 
 BUILT_SOURCES += \
   sfpC.cpp \
@@ -366,7 +371,9 @@ BUILT_SOURCES += \
   sfpC.inl \
   sfpS.cpp \
   sfpS.h \
-  sfpS.inl
+  sfpS.inl \
+  sfpS_T.cpp \
+  sfpS_T.inl
 
 CLEANFILES += \
   sfp-stamp \
@@ -375,13 +382,15 @@ CLEANFILES += \
   sfpC.inl \
   sfpS.cpp \
   sfpS.h \
-  sfpS.inl
+  sfpS.inl \
+  sfpS_T.cpp \
+  sfpS_T.inl
 
-sfpC.cpp sfpC.h sfpC.inl sfpS.cpp sfpS.h sfpS.inl: sfp-stamp
+sfpC.cpp sfpC.h sfpC.inl sfpS.cpp sfpS.h sfpS.inl sfpS_T.cpp sfpS_T.inl: sfp-stamp
 
 sfp-stamp: $(srcdir)/sfp.idl $(TAO_IDL_DEP)
-	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs -Wb,versioning_begin=TAO_BEGIN_VERSIONED_NAMESPACE_DECL -Wb,versioning_end=TAO_END_VERSIONED_NAMESPACE_DECL -Wb,export_macro=TAO_AV_Export -Wb,export_include=orbsvcs/AV/AV_export.h $(srcdir)/sfp.idl
-	@touch $@
+	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs -GT -Wb,versioning_begin=TAO_BEGIN_VERSIONED_NAMESPACE_DECL -Wb,versioning_end=TAO_END_VERSIONED_NAMESPACE_DECL -Wb,export_macro=TAO_AV_Export -Wb,export_include=orbsvcs/AV/AV_export.h $(srcdir)/sfp.idl
+	@touch "$@"
 
 lib_LTLIBRARIES += libTAO_AV.la
 
@@ -424,7 +433,7 @@ libTAO_AV_la_SOURCES = \
   sfpS.cpp
 
 libTAO_AV_la_LDFLAGS = \
- -version-number @TAO_MAJOR@:@TAO_MINOR@:@TAO_BETA@
+ -version-number @TAO_MAJOR@:@TAO_MINOR@:@TAO_BETA@ -L. -L$(ACE_ROOT)/lib
 
 libTAO_AV_la_LIBADD = \
   libTAO_CosNaming.la \
@@ -478,19 +487,24 @@ nobase_include_HEADERS += \
   AVStreamsC.inl \
   AVStreamsS.h \
   AVStreamsS.inl \
+  AVStreamsS_T.cpp \
+  AVStreamsS_T.inl \
   Null_MediaCtrl.idl \
   Null_MediaCtrlC.h \
   Null_MediaCtrlC.inl \
   Null_MediaCtrlS.h \
   Null_MediaCtrlS.inl \
+  Null_MediaCtrlS_T.cpp \
+  Null_MediaCtrlS_T.inl \
   sfp.idl \
   sfpC.h \
   sfpC.inl \
   sfpS.h \
-  sfpS.inl
+  sfpS.inl \
+  sfpS_T.cpp \
+  sfpS_T.inl
 
 endif !BUILD_ACE_FOR_TAO
-endif BUILD_EXCEPTIONS
 
 EXTRA_DIST += \
   AV.rc
@@ -498,15 +512,16 @@ EXTRA_DIST += \
 
 ## Makefile.CosConcurrency_IDL.am
 
-if BUILD_EXCEPTIONS
-
 BUILT_SOURCES += \
   CosConcurrencyControlC.cpp \
   CosConcurrencyControlC.h \
   CosConcurrencyControlC.inl \
   CosConcurrencyControlS.cpp \
   CosConcurrencyControlS.h \
-  CosConcurrencyControlS.inl
+  CosConcurrencyControlS.inl \
+  CosConcurrencyControlS_T.cpp \
+  CosConcurrencyControlS_T.h \
+  CosConcurrencyControlS_T.inl
 
 CLEANFILES += \
   CosConcurrencyControl-stamp \
@@ -515,22 +530,22 @@ CLEANFILES += \
   CosConcurrencyControlC.inl \
   CosConcurrencyControlS.cpp \
   CosConcurrencyControlS.h \
-  CosConcurrencyControlS.inl
+  CosConcurrencyControlS.inl \
+  CosConcurrencyControlS_T.cpp \
+  CosConcurrencyControlS_T.h \
+  CosConcurrencyControlS_T.inl
 
-CosConcurrencyControlC.cpp CosConcurrencyControlC.h CosConcurrencyControlC.inl CosConcurrencyControlS.cpp CosConcurrencyControlS.h CosConcurrencyControlS.inl: CosConcurrencyControl-stamp
+CosConcurrencyControlC.cpp CosConcurrencyControlC.h CosConcurrencyControlC.inl CosConcurrencyControlS.cpp CosConcurrencyControlS.h CosConcurrencyControlS.inl CosConcurrencyControlS_T.cpp CosConcurrencyControlS_T.h CosConcurrencyControlS_T.inl: CosConcurrencyControl-stamp
 
 CosConcurrencyControl-stamp: $(srcdir)/CosConcurrencyControl.idl $(TAO_IDL_DEP)
-	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs -Wb,versioning_begin=TAO_BEGIN_VERSIONED_NAMESPACE_DECL -Wb,versioning_end=TAO_END_VERSIONED_NAMESPACE_DECL -Wb,stub_export_macro=TAO_Concurrency_Export -Wb,stub_export_include=orbsvcs/Concurrency/concurrency_export.h -Wb,skel_export_macro=TAO_Concurrency_Skel_Export -Wb,skel_export_include=orbsvcs/Concurrency/concurrency_skel_export.h $(srcdir)/CosConcurrencyControl.idl
-	@touch $@
+	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs -GT -Wb,versioning_begin=TAO_BEGIN_VERSIONED_NAMESPACE_DECL -Wb,versioning_end=TAO_END_VERSIONED_NAMESPACE_DECL -Wb,stub_export_macro=TAO_Concurrency_Export -Wb,stub_export_include=orbsvcs/Concurrency/concurrency_export.h -Wb,skel_export_macro=TAO_Concurrency_Skel_Export -Wb,skel_export_include=orbsvcs/Concurrency/concurrency_skel_export.h $(srcdir)/CosConcurrencyControl.idl
+	@touch "$@"
+
 
 nobase_include_HEADERS += \
   CosConcurrencyControl.idl
 
-endif BUILD_EXCEPTIONS
-
 ## Makefile.CosConcurrency.am
-
-if BUILD_EXCEPTIONS
 
 lib_LTLIBRARIES += libTAO_CosConcurrency.la
 
@@ -547,7 +562,7 @@ libTAO_CosConcurrency_la_SOURCES = \
   CosConcurrencyControlC.cpp
 
 libTAO_CosConcurrency_la_LDFLAGS = \
- -version-number @TAO_MAJOR@:@TAO_MINOR@:@TAO_BETA@
+ -version-number @TAO_MAJOR@:@TAO_MINOR@:@TAO_BETA@ -L. -L$(ACE_ROOT)/lib
 
 libTAO_CosConcurrency_la_LIBADD = \
   $(TAO_BUILDDIR)/tao/libTAO_AnyTypeCode.la \
@@ -566,17 +581,13 @@ CLEANFILES += \
   TAO_CosConcurrency.pc
 
 TAO_CosConcurrency.pc: ${top_builddir}/config.status ${srcdir}/TAO_CosConcurrency.pc.in
-	${top_builddir}/config.status --file $@:${srcdir}/TAO_CosConcurrency.pc.in
-
-endif BUILD_EXCEPTIONS
+	${top_builddir}/config.status --file "$@":${srcdir}/TAO_CosConcurrency.pc.in
 
 EXTRA_DIST += \
   TAO_CosConcurrency.pc.in
 
 
 ## Makefile.CosConcurrency_Skel.am
-
-if BUILD_EXCEPTIONS
 
 lib_LTLIBRARIES += libTAO_CosConcurrency_Skel.la
 
@@ -593,7 +604,7 @@ libTAO_CosConcurrency_Skel_la_SOURCES = \
   CosConcurrencyControlS.cpp
 
 libTAO_CosConcurrency_Skel_la_LDFLAGS = \
- -version-number @TAO_MAJOR@:@TAO_MINOR@:@TAO_BETA@
+ -version-number @TAO_MAJOR@:@TAO_MINOR@:@TAO_BETA@ -L. -L$(ACE_ROOT)/lib
 
 libTAO_CosConcurrency_Skel_la_LIBADD = \
   $(TAO_BUILDDIR)/tao/libTAO_PortableServer.la \
@@ -614,17 +625,13 @@ CLEANFILES += \
   TAO_CosConcurrency_Skel.pc
 
 TAO_CosConcurrency_Skel.pc: ${top_builddir}/config.status ${srcdir}/TAO_CosConcurrency_Skel.pc.in
-	${top_builddir}/config.status --file $@:${srcdir}/TAO_CosConcurrency_Skel.pc.in
-
-endif BUILD_EXCEPTIONS
+	${top_builddir}/config.status --file "$@":${srcdir}/TAO_CosConcurrency_Skel.pc.in
 
 EXTRA_DIST += \
   TAO_CosConcurrency_Skel.pc.in
 
 
 ## Makefile.CosConcurrency_Serv.am
-
-if BUILD_EXCEPTIONS
 
 lib_LTLIBRARIES += libTAO_CosConcurrency_Serv.la
 
@@ -645,7 +652,7 @@ libTAO_CosConcurrency_Serv_la_SOURCES = \
   Concurrency/Concurrency_Utils.cpp
 
 libTAO_CosConcurrency_Serv_la_LDFLAGS = \
- -version-number @TAO_MAJOR@:@TAO_MINOR@:@TAO_BETA@
+ -version-number @TAO_MAJOR@:@TAO_MINOR@:@TAO_BETA@ -L. -L$(ACE_ROOT)/lib
 
 libTAO_CosConcurrency_Serv_la_LIBADD = \
   libTAO_CosConcurrency_Skel.la \
@@ -670,9 +677,7 @@ CLEANFILES += \
   TAO_CosConcurrency_Serv.pc
 
 TAO_CosConcurrency_Serv.pc: ${top_builddir}/config.status ${srcdir}/TAO_CosConcurrency_Serv.pc.in
-	${top_builddir}/config.status --file $@:${srcdir}/TAO_CosConcurrency_Serv.pc.in
-
-endif BUILD_EXCEPTIONS
+	${top_builddir}/config.status --file "$@":${srcdir}/TAO_CosConcurrency_Serv.pc.in
 
 EXTRA_DIST += \
   TAO_CosConcurrency_Serv.pc.in
@@ -680,7 +685,7 @@ EXTRA_DIST += \
 
 ## Makefile.CosEvent_IDL.am
 
-if BUILD_EXCEPTIONS
+if !BUILD_MINIMUM_CORBA
 
 BUILT_SOURCES += \
   CosTypedEventCommC.cpp \
@@ -690,7 +695,8 @@ BUILT_SOURCES += \
   CosTypedEventCommS.h \
   CosTypedEventCommS.inl \
   CosTypedEventCommS_T.cpp \
-  CosTypedEventCommS_T.h
+  CosTypedEventCommS_T.h \
+  CosTypedEventCommS_T.inl
 
 CLEANFILES += \
   CosTypedEventComm-stamp \
@@ -701,13 +707,14 @@ CLEANFILES += \
   CosTypedEventCommS.h \
   CosTypedEventCommS.inl \
   CosTypedEventCommS_T.cpp \
-  CosTypedEventCommS_T.h
+  CosTypedEventCommS_T.h \
+  CosTypedEventCommS_T.inl
 
-CosTypedEventCommC.cpp CosTypedEventCommC.h CosTypedEventCommC.inl CosTypedEventCommS.cpp CosTypedEventCommS.h CosTypedEventCommS.inl CosTypedEventCommS_T.cpp CosTypedEventCommS_T.h: CosTypedEventComm-stamp
+CosTypedEventCommC.cpp CosTypedEventCommC.h CosTypedEventCommC.inl CosTypedEventCommS.cpp CosTypedEventCommS.h CosTypedEventCommS.inl CosTypedEventCommS_T.cpp CosTypedEventCommS_T.h CosTypedEventCommS_T.inl: CosTypedEventComm-stamp
 
 CosTypedEventComm-stamp: $(srcdir)/CosTypedEventComm.idl $(TAO_IDL_DEP)
 	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs -GT -Wb,stub_export_macro=TAO_Event_Export -Wb,stub_export_include=orbsvcs/CosEvent/event_export.h -Wb,skel_export_macro=TAO_Event_Skel_Export -Wb,skel_export_include=orbsvcs/CosEvent/event_skel_export.h $(srcdir)/CosTypedEventComm.idl
-	@touch $@
+	@touch "$@"
 
 BUILT_SOURCES += \
   CosTypedEventChannelAdminC.cpp \
@@ -717,7 +724,8 @@ BUILT_SOURCES += \
   CosTypedEventChannelAdminS.h \
   CosTypedEventChannelAdminS.inl \
   CosTypedEventChannelAdminS_T.cpp \
-  CosTypedEventChannelAdminS_T.h
+  CosTypedEventChannelAdminS_T.h \
+  CosTypedEventChannelAdminS_T.inl
 
 CLEANFILES += \
   CosTypedEventChannelAdmin-stamp \
@@ -728,13 +736,14 @@ CLEANFILES += \
   CosTypedEventChannelAdminS.h \
   CosTypedEventChannelAdminS.inl \
   CosTypedEventChannelAdminS_T.cpp \
-  CosTypedEventChannelAdminS_T.h
+  CosTypedEventChannelAdminS_T.h \
+  CosTypedEventChannelAdminS_T.inl
 
-CosTypedEventChannelAdminC.cpp CosTypedEventChannelAdminC.h CosTypedEventChannelAdminC.inl CosTypedEventChannelAdminS.cpp CosTypedEventChannelAdminS.h CosTypedEventChannelAdminS.inl CosTypedEventChannelAdminS_T.cpp CosTypedEventChannelAdminS_T.h: CosTypedEventChannelAdmin-stamp
+CosTypedEventChannelAdminC.cpp CosTypedEventChannelAdminC.h CosTypedEventChannelAdminC.inl CosTypedEventChannelAdminS.cpp CosTypedEventChannelAdminS.h CosTypedEventChannelAdminS.inl CosTypedEventChannelAdminS_T.cpp CosTypedEventChannelAdminS_T.h CosTypedEventChannelAdminS_T.inl: CosTypedEventChannelAdmin-stamp
 
 CosTypedEventChannelAdmin-stamp: $(srcdir)/CosTypedEventChannelAdmin.idl $(TAO_IDL_DEP)
 	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs -GT -Wb,stub_export_macro=TAO_Event_Export -Wb,stub_export_include=orbsvcs/CosEvent/event_export.h -Wb,skel_export_macro=TAO_Event_Skel_Export -Wb,skel_export_include=orbsvcs/CosEvent/event_skel_export.h $(srcdir)/CosTypedEventChannelAdmin.idl
-	@touch $@
+	@touch "$@"
 
 BUILT_SOURCES += \
   CosEventCommC.cpp \
@@ -744,7 +753,8 @@ BUILT_SOURCES += \
   CosEventCommS.h \
   CosEventCommS.inl \
   CosEventCommS_T.cpp \
-  CosEventCommS_T.h
+  CosEventCommS_T.h \
+  CosEventCommS_T.inl
 
 CLEANFILES += \
   CosEventComm-stamp \
@@ -755,13 +765,14 @@ CLEANFILES += \
   CosEventCommS.h \
   CosEventCommS.inl \
   CosEventCommS_T.cpp \
-  CosEventCommS_T.h
+  CosEventCommS_T.h \
+  CosEventCommS_T.inl
 
-CosEventCommC.cpp CosEventCommC.h CosEventCommC.inl CosEventCommS.cpp CosEventCommS.h CosEventCommS.inl CosEventCommS_T.cpp CosEventCommS_T.h: CosEventComm-stamp
+CosEventCommC.cpp CosEventCommC.h CosEventCommC.inl CosEventCommS.cpp CosEventCommS.h CosEventCommS.inl CosEventCommS_T.cpp CosEventCommS_T.h CosEventCommS_T.inl: CosEventComm-stamp
 
 CosEventComm-stamp: $(srcdir)/CosEventComm.idl $(TAO_IDL_DEP)
-	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs -Wb,versioning_begin=TAO_BEGIN_VERSIONED_NAMESPACE_DECL -Wb,versioning_end=TAO_END_VERSIONED_NAMESPACE_DECL -GT -Wb,stub_export_macro=TAO_Event_Export -Wb,stub_export_include=orbsvcs/CosEvent/event_export.h -Wb,skel_export_macro=TAO_Event_Skel_Export -Wb,skel_export_include=orbsvcs/CosEvent/event_skel_export.h $(srcdir)/CosEventComm.idl
-	@touch $@
+	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs -GT -Wb,versioning_begin=TAO_BEGIN_VERSIONED_NAMESPACE_DECL -Wb,versioning_end=TAO_END_VERSIONED_NAMESPACE_DECL -Wb,stub_export_macro=TAO_Event_Export -Wb,stub_export_include=orbsvcs/CosEvent/event_export.h -Wb,skel_export_macro=TAO_Event_Skel_Export -Wb,skel_export_include=orbsvcs/CosEvent/event_skel_export.h $(srcdir)/CosEventComm.idl
+	@touch "$@"
 
 BUILT_SOURCES += \
   CosEventChannelAdminC.cpp \
@@ -771,7 +782,8 @@ BUILT_SOURCES += \
   CosEventChannelAdminS.h \
   CosEventChannelAdminS.inl \
   CosEventChannelAdminS_T.cpp \
-  CosEventChannelAdminS_T.h
+  CosEventChannelAdminS_T.h \
+  CosEventChannelAdminS_T.inl
 
 CLEANFILES += \
   CosEventChannelAdmin-stamp \
@@ -782,13 +794,15 @@ CLEANFILES += \
   CosEventChannelAdminS.h \
   CosEventChannelAdminS.inl \
   CosEventChannelAdminS_T.cpp \
-  CosEventChannelAdminS_T.h
+  CosEventChannelAdminS_T.h \
+  CosEventChannelAdminS_T.inl
 
-CosEventChannelAdminC.cpp CosEventChannelAdminC.h CosEventChannelAdminC.inl CosEventChannelAdminS.cpp CosEventChannelAdminS.h CosEventChannelAdminS.inl CosEventChannelAdminS_T.cpp CosEventChannelAdminS_T.h: CosEventChannelAdmin-stamp
+CosEventChannelAdminC.cpp CosEventChannelAdminC.h CosEventChannelAdminC.inl CosEventChannelAdminS.cpp CosEventChannelAdminS.h CosEventChannelAdminS.inl CosEventChannelAdminS_T.cpp CosEventChannelAdminS_T.h CosEventChannelAdminS_T.inl: CosEventChannelAdmin-stamp
 
 CosEventChannelAdmin-stamp: $(srcdir)/CosEventChannelAdmin.idl $(TAO_IDL_DEP)
-	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs -Wb,versioning_begin=TAO_BEGIN_VERSIONED_NAMESPACE_DECL -Wb,versioning_end=TAO_END_VERSIONED_NAMESPACE_DECL -GT -Wb,stub_export_macro=TAO_Event_Export -Wb,stub_export_include=orbsvcs/CosEvent/event_export.h -Wb,skel_export_macro=TAO_Event_Skel_Export -Wb,skel_export_include=orbsvcs/CosEvent/event_skel_export.h $(srcdir)/CosEventChannelAdmin.idl
-	@touch $@
+	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs -GT -Wb,versioning_begin=TAO_BEGIN_VERSIONED_NAMESPACE_DECL -Wb,versioning_end=TAO_END_VERSIONED_NAMESPACE_DECL -Wb,stub_export_macro=TAO_Event_Export -Wb,stub_export_include=orbsvcs/CosEvent/event_export.h -Wb,skel_export_macro=TAO_Event_Skel_Export -Wb,skel_export_include=orbsvcs/CosEvent/event_skel_export.h $(srcdir)/CosEventChannelAdmin.idl
+	@touch "$@"
+
 
 nobase_include_HEADERS += \
   CosEventChannelAdmin.idl \
@@ -796,11 +810,11 @@ nobase_include_HEADERS += \
   CosTypedEventChannelAdmin.idl \
   CosTypedEventComm.idl
 
-endif BUILD_EXCEPTIONS
+endif !BUILD_MINIMUM_CORBA
 
 ## Makefile.CosEvent.am
 
-if BUILD_EXCEPTIONS
+if !BUILD_MINIMUM_CORBA
 
 lib_LTLIBRARIES += libTAO_CosEvent.la
 
@@ -821,7 +835,7 @@ libTAO_CosEvent_la_SOURCES = \
   CosTypedEventCommC.cpp
 
 libTAO_CosEvent_la_LDFLAGS = \
- -version-number @TAO_MAJOR@:@TAO_MINOR@:@TAO_BETA@
+ -version-number @TAO_MAJOR@:@TAO_MINOR@:@TAO_BETA@ -L. -L$(ACE_ROOT)/lib
 
 libTAO_CosEvent_la_LIBADD = \
   $(TAO_BUILDDIR)/tao/libTAO_AnyTypeCode.la \
@@ -846,9 +860,9 @@ CLEANFILES += \
   TAO_CosEvent.pc
 
 TAO_CosEvent.pc: ${top_builddir}/config.status ${srcdir}/TAO_CosEvent.pc.in
-	${top_builddir}/config.status --file $@:${srcdir}/TAO_CosEvent.pc.in
+	${top_builddir}/config.status --file "$@":${srcdir}/TAO_CosEvent.pc.in
 
-endif BUILD_EXCEPTIONS
+endif !BUILD_MINIMUM_CORBA
 
 EXTRA_DIST += \
   CosEvent.rc \
@@ -857,15 +871,15 @@ EXTRA_DIST += \
 
 ## Makefile.Svc_Utils.am
 
-if BUILD_EXCEPTIONS
-
 BUILT_SOURCES += \
   TimeBaseC.cpp \
   TimeBaseC.h \
   TimeBaseC.inl \
   TimeBaseS.cpp \
   TimeBaseS.h \
-  TimeBaseS.inl
+  TimeBaseS.inl \
+  TimeBaseS_T.cpp \
+  TimeBaseS_T.inl
 
 CLEANFILES += \
   TimeBase-stamp \
@@ -874,13 +888,15 @@ CLEANFILES += \
   TimeBaseC.inl \
   TimeBaseS.cpp \
   TimeBaseS.h \
-  TimeBaseS.inl
+  TimeBaseS.inl \
+  TimeBaseS_T.cpp \
+  TimeBaseS_T.inl
 
-TimeBaseC.cpp TimeBaseC.h TimeBaseC.inl TimeBaseS.cpp TimeBaseS.h TimeBaseS.inl: TimeBase-stamp
+TimeBaseC.cpp TimeBaseC.h TimeBaseC.inl TimeBaseS.cpp TimeBaseS.h TimeBaseS.inl TimeBaseS_T.cpp TimeBaseS_T.inl: TimeBase-stamp
 
 TimeBase-stamp: $(srcdir)/TimeBase.idl $(TAO_IDL_DEP)
-	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs -Wb,versioning_begin=TAO_BEGIN_VERSIONED_NAMESPACE_DECL -Wb,versioning_end=TAO_END_VERSIONED_NAMESPACE_DECL -Wb,export_macro=TAO_Svc_Utils_Export -Wb,export_include=orbsvcs/svc_utils_export.h $(srcdir)/TimeBase.idl
-	@touch $@
+	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs -GT -Wb,versioning_begin=TAO_BEGIN_VERSIONED_NAMESPACE_DECL -Wb,versioning_end=TAO_END_VERSIONED_NAMESPACE_DECL -Wb,export_macro=TAO_Svc_Utils_Export -Wb,export_include=orbsvcs/svc_utils_export.h $(srcdir)/TimeBase.idl
+	@touch "$@"
 
 BUILT_SOURCES += \
   RtecBaseC.cpp \
@@ -888,7 +904,9 @@ BUILT_SOURCES += \
   RtecBaseC.inl \
   RtecBaseS.cpp \
   RtecBaseS.h \
-  RtecBaseS.inl
+  RtecBaseS.inl \
+  RtecBaseS_T.cpp \
+  RtecBaseS_T.inl
 
 CLEANFILES += \
   RtecBase-stamp \
@@ -897,13 +915,15 @@ CLEANFILES += \
   RtecBaseC.inl \
   RtecBaseS.cpp \
   RtecBaseS.h \
-  RtecBaseS.inl
+  RtecBaseS.inl \
+  RtecBaseS_T.cpp \
+  RtecBaseS_T.inl
 
-RtecBaseC.cpp RtecBaseC.h RtecBaseC.inl RtecBaseS.cpp RtecBaseS.h RtecBaseS.inl: RtecBase-stamp
+RtecBaseC.cpp RtecBaseC.h RtecBaseC.inl RtecBaseS.cpp RtecBaseS.h RtecBaseS.inl RtecBaseS_T.cpp RtecBaseS_T.inl: RtecBase-stamp
 
 RtecBase-stamp: $(srcdir)/RtecBase.idl $(TAO_IDL_DEP)
-	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs -Wb,versioning_begin=TAO_BEGIN_VERSIONED_NAMESPACE_DECL -Wb,versioning_end=TAO_END_VERSIONED_NAMESPACE_DECL -Wb,export_macro=TAO_Svc_Utils_Export -Wb,export_include=orbsvcs/svc_utils_export.h $(srcdir)/RtecBase.idl
-	@touch $@
+	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs -GT -Wb,versioning_begin=TAO_BEGIN_VERSIONED_NAMESPACE_DECL -Wb,versioning_end=TAO_END_VERSIONED_NAMESPACE_DECL -Wb,export_macro=TAO_Svc_Utils_Export -Wb,export_include=orbsvcs/svc_utils_export.h $(srcdir)/RtecBase.idl
+	@touch "$@"
 
 lib_LTLIBRARIES += libTAO_Svc_Utils.la
 
@@ -926,7 +946,7 @@ libTAO_Svc_Utils_la_SOURCES = \
   Time_Utilities.cpp
 
 libTAO_Svc_Utils_la_LDFLAGS = \
- -version-number @TAO_MAJOR@:@TAO_MINOR@:@TAO_BETA@
+ -version-number @TAO_MAJOR@:@TAO_MINOR@:@TAO_BETA@ -L. -L$(ACE_ROOT)/lib
 
 libTAO_Svc_Utils_la_LIBADD = \
   $(TAO_BUILDDIR)/tao/libTAO_PortableServer.la \
@@ -941,12 +961,16 @@ nobase_include_HEADERS += \
   RtecBaseC.inl \
   RtecBaseS.h \
   RtecBaseS.inl \
+  RtecBaseS_T.cpp \
+  RtecBaseS_T.inl \
   Shutdown_Utilities.h \
   TimeBase.idl \
   TimeBaseC.h \
   TimeBaseC.inl \
   TimeBaseS.h \
   TimeBaseS.inl \
+  TimeBaseS_T.cpp \
+  TimeBaseS_T.inl \
   Time_Utilities.h \
   Time_Utilities.inl \
   svc_utils_export.h
@@ -958,9 +982,7 @@ CLEANFILES += \
   TAO_Svc_Utils.pc
 
 TAO_Svc_Utils.pc: ${top_builddir}/config.status ${srcdir}/TAO_Svc_Utils.pc.in
-	${top_builddir}/config.status --file $@:${srcdir}/TAO_Svc_Utils.pc.in
-
-endif BUILD_EXCEPTIONS
+	${top_builddir}/config.status --file "$@":${srcdir}/TAO_Svc_Utils.pc.in
 
 EXTRA_DIST += \
   Svc_Utils.rc \
@@ -969,7 +991,7 @@ EXTRA_DIST += \
 
 ## Makefile.CosEvent_Skel.am
 
-if BUILD_EXCEPTIONS
+if !BUILD_MINIMUM_CORBA
 
 lib_LTLIBRARIES += libTAO_CosEvent_Skel.la
 
@@ -990,7 +1012,7 @@ libTAO_CosEvent_Skel_la_SOURCES = \
   CosTypedEventCommS.cpp
 
 libTAO_CosEvent_Skel_la_LDFLAGS = \
- -version-number @TAO_MAJOR@:@TAO_MINOR@:@TAO_BETA@
+ -version-number @TAO_MAJOR@:@TAO_MINOR@:@TAO_BETA@ -L. -L$(ACE_ROOT)/lib
 
 libTAO_CosEvent_Skel_la_LIBADD = \
   $(TAO_BUILDDIR)/tao/libTAO_PortableServer.la \
@@ -1005,18 +1027,22 @@ nobase_include_HEADERS += \
   CosEventChannelAdminS.inl \
   CosEventChannelAdminS_T.cpp \
   CosEventChannelAdminS_T.h \
+  CosEventChannelAdminS_T.inl \
   CosEventCommS.h \
   CosEventCommS.inl \
   CosEventCommS_T.cpp \
   CosEventCommS_T.h \
+  CosEventCommS_T.inl \
   CosTypedEventChannelAdminS.h \
   CosTypedEventChannelAdminS.inl \
   CosTypedEventChannelAdminS_T.cpp \
   CosTypedEventChannelAdminS_T.h \
+  CosTypedEventChannelAdminS_T.inl \
   CosTypedEventCommS.h \
   CosTypedEventCommS.inl \
   CosTypedEventCommS_T.cpp \
-  CosTypedEventCommS_T.h
+  CosTypedEventCommS_T.h \
+  CosTypedEventCommS_T.inl
 
 pkgconfig_DATA += \
   TAO_CosEvent_Skel.pc
@@ -1025,9 +1051,9 @@ CLEANFILES += \
   TAO_CosEvent_Skel.pc
 
 TAO_CosEvent_Skel.pc: ${top_builddir}/config.status ${srcdir}/TAO_CosEvent_Skel.pc.in
-	${top_builddir}/config.status --file $@:${srcdir}/TAO_CosEvent_Skel.pc.in
+	${top_builddir}/config.status --file "$@":${srcdir}/TAO_CosEvent_Skel.pc.in
 
-endif BUILD_EXCEPTIONS
+endif !BUILD_MINIMUM_CORBA
 
 EXTRA_DIST += \
   CosEvent_Skel.rc \
@@ -1037,7 +1063,7 @@ EXTRA_DIST += \
 ## Makefile.CosEvent_Serv.am
 
 if BUILD_CORBA_MESSAGING
-if BUILD_EXCEPTIONS
+if !BUILD_MINIMUM_CORBA
 
 lib_LTLIBRARIES += libTAO_CosEvent_Serv.la
 
@@ -1079,7 +1105,7 @@ libTAO_CosEvent_Serv_la_SOURCES = \
   CosEvent/CEC_TypedSupplierAdmin.cpp
 
 libTAO_CosEvent_Serv_la_LDFLAGS = \
- -version-number @TAO_MAJOR@:@TAO_MINOR@:@TAO_BETA@
+ -version-number @TAO_MAJOR@:@TAO_MINOR@:@TAO_BETA@ -L. -L$(ACE_ROOT)/lib
 
 libTAO_CosEvent_Serv_la_LIBADD = \
   libTAO_Svc_Utils.la \
@@ -1151,9 +1177,9 @@ CLEANFILES += \
   TAO_CosEvent_Serv.pc
 
 TAO_CosEvent_Serv.pc: ${top_builddir}/config.status ${srcdir}/TAO_CosEvent_Serv.pc.in
-	${top_builddir}/config.status --file $@:${srcdir}/TAO_CosEvent_Serv.pc.in
+	${top_builddir}/config.status --file "$@":${srcdir}/TAO_CosEvent_Serv.pc.in
 
-endif BUILD_EXCEPTIONS
+endif !BUILD_MINIMUM_CORBA
 endif BUILD_CORBA_MESSAGING
 
 EXTRA_DIST += \
@@ -1163,15 +1189,16 @@ EXTRA_DIST += \
 
 ## Makefile.CosLifeCycle.am
 
-if BUILD_EXCEPTIONS
-
 BUILT_SOURCES += \
   CosLifeCycleC.cpp \
   CosLifeCycleC.h \
   CosLifeCycleC.inl \
   CosLifeCycleS.cpp \
   CosLifeCycleS.h \
-  CosLifeCycleS.inl
+  CosLifeCycleS.inl \
+  CosLifeCycleS_T.cpp \
+  CosLifeCycleS_T.h \
+  CosLifeCycleS_T.inl
 
 CLEANFILES += \
   CosLifeCycle-stamp \
@@ -1180,13 +1207,16 @@ CLEANFILES += \
   CosLifeCycleC.inl \
   CosLifeCycleS.cpp \
   CosLifeCycleS.h \
-  CosLifeCycleS.inl
+  CosLifeCycleS.inl \
+  CosLifeCycleS_T.cpp \
+  CosLifeCycleS_T.h \
+  CosLifeCycleS_T.inl
 
-CosLifeCycleC.cpp CosLifeCycleC.h CosLifeCycleC.inl CosLifeCycleS.cpp CosLifeCycleS.h CosLifeCycleS.inl: CosLifeCycle-stamp
+CosLifeCycleC.cpp CosLifeCycleC.h CosLifeCycleC.inl CosLifeCycleS.cpp CosLifeCycleS.h CosLifeCycleS.inl CosLifeCycleS_T.cpp CosLifeCycleS_T.h CosLifeCycleS_T.inl: CosLifeCycle-stamp
 
 CosLifeCycle-stamp: $(srcdir)/CosLifeCycle.idl $(TAO_IDL_DEP)
-	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs -Wb,versioning_begin=TAO_BEGIN_VERSIONED_NAMESPACE_DECL -Wb,versioning_end=TAO_END_VERSIONED_NAMESPACE_DECL -Wb,export_macro=TAO_LifeCycle_Export -Wb,export_include=orbsvcs/LifeCycle/lifecycle_export.h $(srcdir)/CosLifeCycle.idl
-	@touch $@
+	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs -GT -Wb,versioning_begin=TAO_BEGIN_VERSIONED_NAMESPACE_DECL -Wb,versioning_end=TAO_END_VERSIONED_NAMESPACE_DECL -Wb,export_macro=TAO_LifeCycle_Export -Wb,export_include=orbsvcs/LifeCycle/lifecycle_export.h $(srcdir)/CosLifeCycle.idl
+	@touch "$@"
 
 BUILT_SOURCES += \
   LifeCycleServiceC.cpp \
@@ -1194,7 +1224,10 @@ BUILT_SOURCES += \
   LifeCycleServiceC.inl \
   LifeCycleServiceS.cpp \
   LifeCycleServiceS.h \
-  LifeCycleServiceS.inl
+  LifeCycleServiceS.inl \
+  LifeCycleServiceS_T.cpp \
+  LifeCycleServiceS_T.h \
+  LifeCycleServiceS_T.inl
 
 CLEANFILES += \
   LifeCycleService-stamp \
@@ -1203,13 +1236,16 @@ CLEANFILES += \
   LifeCycleServiceC.inl \
   LifeCycleServiceS.cpp \
   LifeCycleServiceS.h \
-  LifeCycleServiceS.inl
+  LifeCycleServiceS.inl \
+  LifeCycleServiceS_T.cpp \
+  LifeCycleServiceS_T.h \
+  LifeCycleServiceS_T.inl
 
-LifeCycleServiceC.cpp LifeCycleServiceC.h LifeCycleServiceC.inl LifeCycleServiceS.cpp LifeCycleServiceS.h LifeCycleServiceS.inl: LifeCycleService-stamp
+LifeCycleServiceC.cpp LifeCycleServiceC.h LifeCycleServiceC.inl LifeCycleServiceS.cpp LifeCycleServiceS.h LifeCycleServiceS.inl LifeCycleServiceS_T.cpp LifeCycleServiceS_T.h LifeCycleServiceS_T.inl: LifeCycleService-stamp
 
 LifeCycleService-stamp: $(srcdir)/LifeCycleService.idl $(TAO_IDL_DEP)
-	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs -Wb,versioning_begin=TAO_BEGIN_VERSIONED_NAMESPACE_DECL -Wb,versioning_end=TAO_END_VERSIONED_NAMESPACE_DECL -Wb,export_macro=TAO_LifeCycle_Export -Wb,export_include=orbsvcs/LifeCycle/lifecycle_export.h $(srcdir)/LifeCycleService.idl
-	@touch $@
+	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs -GT -Wb,versioning_begin=TAO_BEGIN_VERSIONED_NAMESPACE_DECL -Wb,versioning_end=TAO_END_VERSIONED_NAMESPACE_DECL -Wb,export_macro=TAO_LifeCycle_Export -Wb,export_include=orbsvcs/LifeCycle/lifecycle_export.h $(srcdir)/LifeCycleService.idl
+	@touch "$@"
 
 lib_LTLIBRARIES += libTAO_CosLifeCycle.la
 
@@ -1229,7 +1265,7 @@ libTAO_CosLifeCycle_la_SOURCES = \
   LifeCycleServiceS.cpp
 
 libTAO_CosLifeCycle_la_LDFLAGS = \
- -version-number @TAO_MAJOR@:@TAO_MINOR@:@TAO_BETA@
+ -version-number @TAO_MAJOR@:@TAO_MINOR@:@TAO_BETA@ -L. -L$(ACE_ROOT)/lib
 
 libTAO_CosLifeCycle_la_LIBADD = \
   $(TAO_BUILDDIR)/tao/libTAO_PortableServer.la \
@@ -1244,11 +1280,17 @@ nobase_include_HEADERS += \
   CosLifeCycleC.inl \
   CosLifeCycleS.h \
   CosLifeCycleS.inl \
+  CosLifeCycleS_T.cpp \
+  CosLifeCycleS_T.h \
+  CosLifeCycleS_T.inl \
   LifeCycleService.idl \
   LifeCycleServiceC.h \
   LifeCycleServiceC.inl \
   LifeCycleServiceS.h \
-  LifeCycleServiceS.inl
+  LifeCycleServiceS.inl \
+  LifeCycleServiceS_T.cpp \
+  LifeCycleServiceS_T.h \
+  LifeCycleServiceS_T.inl
 
 pkgconfig_DATA += \
   TAO_CosLifeCycle.pc
@@ -1257,9 +1299,7 @@ CLEANFILES += \
   TAO_CosLifeCycle.pc
 
 TAO_CosLifeCycle.pc: ${top_builddir}/config.status ${srcdir}/TAO_CosLifeCycle.pc.in
-	${top_builddir}/config.status --file $@:${srcdir}/TAO_CosLifeCycle.pc.in
-
-endif BUILD_EXCEPTIONS
+	${top_builddir}/config.status --file "$@":${srcdir}/TAO_CosLifeCycle.pc.in
 
 EXTRA_DIST += \
   CosLifeCycle.rc \
@@ -1269,7 +1309,7 @@ EXTRA_DIST += \
 ## Makefile.PortableGroup.am
 
 if BUILD_CORBA_MESSAGING
-if BUILD_EXCEPTIONS
+if !BUILD_MINIMUM_CORBA
 
 BUILT_SOURCES += \
   miopC.cpp \
@@ -1277,7 +1317,9 @@ BUILT_SOURCES += \
   miopC.inl \
   miopS.cpp \
   miopS.h \
-  miopS.inl
+  miopS.inl \
+  miopS_T.cpp \
+  miopS_T.inl
 
 CLEANFILES += \
   miop-stamp \
@@ -1286,32 +1328,36 @@ CLEANFILES += \
   miopC.inl \
   miopS.cpp \
   miopS.h \
-  miopS.inl
+  miopS.inl \
+  miopS_T.cpp \
+  miopS_T.inl
 
-miopC.cpp miopC.h miopC.inl miopS.cpp miopS.h miopS.inl: miop-stamp
+miopC.cpp miopC.h miopC.inl miopS.cpp miopS.h miopS.inl miopS_T.cpp miopS_T.inl: miop-stamp
 
 miop-stamp: $(srcdir)/miop.idl $(TAO_IDL_DEP)
-	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs -Wb,versioning_begin=TAO_BEGIN_VERSIONED_NAMESPACE_DECL -Wb,versioning_end=TAO_END_VERSIONED_NAMESPACE_DECL -Wb,export_macro=TAO_PortableGroup_Export -Wb,export_include=orbsvcs/PortableGroup/portablegroup_export.h $(srcdir)/miop.idl
-	@touch $@
+	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs -GT -Wb,versioning_begin=TAO_BEGIN_VERSIONED_NAMESPACE_DECL -Wb,versioning_end=TAO_END_VERSIONED_NAMESPACE_DECL -Wb,export_macro=TAO_PortableGroup_Export -Wb,export_include=orbsvcs/PortableGroup/portablegroup_export.h $(srcdir)/miop.idl
+	@touch "$@"
 
 BUILT_SOURCES += \
   PortableGroup_Simple_DSC.cpp \
   PortableGroup_Simple_DSC.h \
   PortableGroup_Simple_DSC.inl \
-  PortableGroup_Simple_DSS.inl
+  PortableGroup_Simple_DSS.inl \
+  PortableGroup_Simple_DSS_T.inl
 
 CLEANFILES += \
   PortableGroup_Simple_DS-stamp \
   PortableGroup_Simple_DSC.cpp \
   PortableGroup_Simple_DSC.h \
   PortableGroup_Simple_DSC.inl \
-  PortableGroup_Simple_DSS.inl
+  PortableGroup_Simple_DSS.inl \
+  PortableGroup_Simple_DSS_T.inl
 
-PortableGroup_Simple_DSC.cpp PortableGroup_Simple_DSC.h PortableGroup_Simple_DSC.inl PortableGroup_Simple_DSS.inl: PortableGroup_Simple_DS-stamp
+PortableGroup_Simple_DSC.cpp PortableGroup_Simple_DSC.h PortableGroup_Simple_DSC.inl PortableGroup_Simple_DSS.inl PortableGroup_Simple_DSS_T.inl: PortableGroup_Simple_DS-stamp
 
 PortableGroup_Simple_DS-stamp: $(srcdir)/PortableGroup_Simple_DS.idl $(TAO_IDL_DEP)
-	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs -Wb,versioning_begin=TAO_BEGIN_VERSIONED_NAMESPACE_DECL -Wb,versioning_end=TAO_END_VERSIONED_NAMESPACE_DECL -Wb,export_macro=TAO_PortableGroup_Export -Wb,export_include=orbsvcs/PortableGroup/portablegroup_export.h $(srcdir)/PortableGroup_Simple_DS.idl
-	@touch $@
+	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs -GT -Wb,versioning_begin=TAO_BEGIN_VERSIONED_NAMESPACE_DECL -Wb,versioning_end=TAO_END_VERSIONED_NAMESPACE_DECL -Wb,export_macro=TAO_PortableGroup_Export -Wb,export_include=orbsvcs/PortableGroup/portablegroup_export.h $(srcdir)/PortableGroup_Simple_DS.idl
+	@touch "$@"
 
 BUILT_SOURCES += \
   PortableGroupC.cpp \
@@ -1319,7 +1365,9 @@ BUILT_SOURCES += \
   PortableGroupC.inl \
   PortableGroupS.cpp \
   PortableGroupS.h \
-  PortableGroupS.inl
+  PortableGroupS.inl \
+  PortableGroupS_T.cpp \
+  PortableGroupS_T.inl
 
 CLEANFILES += \
   PortableGroup-stamp \
@@ -1328,13 +1376,15 @@ CLEANFILES += \
   PortableGroupC.inl \
   PortableGroupS.cpp \
   PortableGroupS.h \
-  PortableGroupS.inl
+  PortableGroupS.inl \
+  PortableGroupS_T.cpp \
+  PortableGroupS_T.inl
 
-PortableGroupC.cpp PortableGroupC.h PortableGroupC.inl PortableGroupS.cpp PortableGroupS.h PortableGroupS.inl: PortableGroup-stamp
+PortableGroupC.cpp PortableGroupC.h PortableGroupC.inl PortableGroupS.cpp PortableGroupS.h PortableGroupS.inl PortableGroupS_T.cpp PortableGroupS_T.inl: PortableGroup-stamp
 
 PortableGroup-stamp: $(srcdir)/PortableGroup.idl $(TAO_IDL_DEP)
-	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs -Wb,versioning_begin=TAO_BEGIN_VERSIONED_NAMESPACE_DECL -Wb,versioning_end=TAO_END_VERSIONED_NAMESPACE_DECL -Wb,export_macro=TAO_PortableGroup_Export -Wb,export_include=orbsvcs/PortableGroup/portablegroup_export.h -GC $(srcdir)/PortableGroup.idl
-	@touch $@
+	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs -GT -Wb,versioning_begin=TAO_BEGIN_VERSIONED_NAMESPACE_DECL -Wb,versioning_end=TAO_END_VERSIONED_NAMESPACE_DECL -Wb,export_macro=TAO_PortableGroup_Export -Wb,export_include=orbsvcs/PortableGroup/portablegroup_export.h -GC $(srcdir)/PortableGroup.idl
+	@touch "$@"
 
 lib_LTLIBRARIES += libTAO_PortableGroup.la
 
@@ -1392,7 +1442,7 @@ libTAO_PortableGroup_la_SOURCES = \
   miopS.cpp
 
 libTAO_PortableGroup_la_LDFLAGS = \
- -version-number @TAO_MAJOR@:@TAO_MINOR@:@TAO_BETA@
+ -version-number @TAO_MAJOR@:@TAO_MINOR@:@TAO_BETA@ -L. -L$(ACE_ROOT)/lib
 
 libTAO_PortableGroup_la_LIBADD = \
   $(TAO_BUILDDIR)/tao/libTAO_Messaging.la \
@@ -1455,15 +1505,20 @@ nobase_include_HEADERS += \
   PortableGroupC.inl \
   PortableGroupS.h \
   PortableGroupS.inl \
+  PortableGroupS_T.cpp \
+  PortableGroupS_T.inl \
   PortableGroup_Simple_DS.idl \
   PortableGroup_Simple_DSC.h \
   PortableGroup_Simple_DSC.inl \
   PortableGroup_Simple_DSS.inl \
+  PortableGroup_Simple_DSS_T.inl \
   miop.idl \
   miopC.h \
   miopC.inl \
   miopS.h \
-  miopS.inl
+  miopS.inl \
+  miopS_T.cpp \
+  miopS_T.inl
 
 pkgconfig_DATA += \
   TAO_PortableGroup.pc
@@ -1472,9 +1527,9 @@ CLEANFILES += \
   TAO_PortableGroup.pc
 
 TAO_PortableGroup.pc: ${top_builddir}/config.status ${srcdir}/TAO_PortableGroup.pc.in
-	${top_builddir}/config.status --file $@:${srcdir}/TAO_PortableGroup.pc.in
+	${top_builddir}/config.status --file "$@":${srcdir}/TAO_PortableGroup.pc.in
 
-endif BUILD_EXCEPTIONS
+endif !BUILD_MINIMUM_CORBA
 endif BUILD_CORBA_MESSAGING
 
 EXTRA_DIST += \
@@ -1486,7 +1541,7 @@ EXTRA_DIST += \
 
 if BUILD_AMI
 if BUILD_CORBA_MESSAGING
-if BUILD_EXCEPTIONS
+if !BUILD_MINIMUM_CORBA
 
 BUILT_SOURCES += \
   CosLoadBalancingC.cpp \
@@ -1494,7 +1549,10 @@ BUILT_SOURCES += \
   CosLoadBalancingC.inl \
   CosLoadBalancingS.cpp \
   CosLoadBalancingS.h \
-  CosLoadBalancingS.inl
+  CosLoadBalancingS.inl \
+  CosLoadBalancingS_T.cpp \
+  CosLoadBalancingS_T.h \
+  CosLoadBalancingS_T.inl
 
 CLEANFILES += \
   CosLoadBalancing-stamp \
@@ -1503,20 +1561,25 @@ CLEANFILES += \
   CosLoadBalancingC.inl \
   CosLoadBalancingS.cpp \
   CosLoadBalancingS.h \
-  CosLoadBalancingS.inl
+  CosLoadBalancingS.inl \
+  CosLoadBalancingS_T.cpp \
+  CosLoadBalancingS_T.h \
+  CosLoadBalancingS_T.inl
 
-CosLoadBalancingC.cpp CosLoadBalancingC.h CosLoadBalancingC.inl CosLoadBalancingS.cpp CosLoadBalancingS.h CosLoadBalancingS.inl: CosLoadBalancing-stamp
+CosLoadBalancingC.cpp CosLoadBalancingC.h CosLoadBalancingC.inl CosLoadBalancingS.cpp CosLoadBalancingS.h CosLoadBalancingS.inl CosLoadBalancingS_T.cpp CosLoadBalancingS_T.h CosLoadBalancingS_T.inl: CosLoadBalancing-stamp
 
 CosLoadBalancing-stamp: $(srcdir)/CosLoadBalancing.idl $(TAO_IDL_DEP)
-	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs -GC -Wb,versioning_begin=TAO_BEGIN_VERSIONED_NAMESPACE_DECL -Wb,versioning_end=TAO_END_VERSIONED_NAMESPACE_DECL -Wb,export_macro=TAO_LoadBalancing_Export -Wb,export_include=orbsvcs/LoadBalancing/LoadBalancing_export.h $(srcdir)/CosLoadBalancing.idl
-	@touch $@
+	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs -GT -GC -Wb,versioning_begin=TAO_BEGIN_VERSIONED_NAMESPACE_DECL -Wb,versioning_end=TAO_END_VERSIONED_NAMESPACE_DECL -Wb,export_macro=TAO_LoadBalancing_Export -Wb,export_include=orbsvcs/LoadBalancing/LoadBalancing_export.h $(srcdir)/CosLoadBalancing.idl
+	@touch "$@"
 
 BUILT_SOURCES += \
   LB_ORTC.cpp \
   LB_ORTC.h \
   LB_ORTC.inl \
   LB_ORTS.h \
-  LB_ORTS.inl
+  LB_ORTS.inl \
+  LB_ORTS_T.h \
+  LB_ORTS_T.inl
 
 CLEANFILES += \
   LB_ORT-stamp \
@@ -1524,13 +1587,15 @@ CLEANFILES += \
   LB_ORTC.h \
   LB_ORTC.inl \
   LB_ORTS.h \
-  LB_ORTS.inl
+  LB_ORTS.inl \
+  LB_ORTS_T.h \
+  LB_ORTS_T.inl
 
-LB_ORTC.cpp LB_ORTC.h LB_ORTC.inl LB_ORTS.h LB_ORTS.inl: LB_ORT-stamp
+LB_ORTC.cpp LB_ORTC.h LB_ORTC.inl LB_ORTS.h LB_ORTS.inl LB_ORTS_T.h LB_ORTS_T.inl: LB_ORT-stamp
 
 LB_ORT-stamp: $(srcdir)/LB_ORT.idl $(TAO_IDL_DEP)
-	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs -GC -Wb,versioning_begin=TAO_BEGIN_VERSIONED_NAMESPACE_DECL -Wb,versioning_end=TAO_END_VERSIONED_NAMESPACE_DECL -Wb,export_macro=TAO_LoadBalancing_Export -Wb,export_include=orbsvcs/LoadBalancing/LoadBalancing_export.h $(srcdir)/LB_ORT.idl
-	@touch $@
+	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs -GT -GC -Wb,versioning_begin=TAO_BEGIN_VERSIONED_NAMESPACE_DECL -Wb,versioning_end=TAO_END_VERSIONED_NAMESPACE_DECL -Wb,export_macro=TAO_LoadBalancing_Export -Wb,export_include=orbsvcs/LoadBalancing/LoadBalancing_export.h $(srcdir)/LB_ORT.idl
+	@touch "$@"
 
 lib_LTLIBRARIES += libTAO_CosLoadBalancing.la
 
@@ -1570,7 +1635,7 @@ libTAO_CosLoadBalancing_la_SOURCES = \
   LoadBalancing/LB_ServerRequestInterceptor.cpp
 
 libTAO_CosLoadBalancing_la_LDFLAGS = \
- -version-number @TAO_MAJOR@:@TAO_MINOR@:@TAO_BETA@
+ -version-number @TAO_MAJOR@:@TAO_MINOR@:@TAO_BETA@ -L. -L$(ACE_ROOT)/lib
 
 libTAO_CosLoadBalancing_la_LIBADD = \
   $(TAO_BUILDDIR)/tao/libTAO_IORInterceptor.la \
@@ -1594,11 +1659,16 @@ nobase_include_HEADERS += \
   CosLoadBalancingC.inl \
   CosLoadBalancingS.h \
   CosLoadBalancingS.inl \
+  CosLoadBalancingS_T.cpp \
+  CosLoadBalancingS_T.h \
+  CosLoadBalancingS_T.inl \
   LB_ORT.idl \
   LB_ORTC.h \
   LB_ORTC.inl \
   LB_ORTS.h \
   LB_ORTS.inl \
+  LB_ORTS_T.h \
+  LB_ORTS_T.inl \
   LoadBalancing/LB_CPU_Load_Average_Monitor.h \
   LoadBalancing/LB_CPU_Utilization_Monitor.h \
   LoadBalancing/LB_ClientComponent.h \
@@ -1632,9 +1702,9 @@ CLEANFILES += \
   TAO_CosLoadBalancing.pc
 
 TAO_CosLoadBalancing.pc: ${top_builddir}/config.status ${srcdir}/TAO_CosLoadBalancing.pc.in
-	${top_builddir}/config.status --file $@:${srcdir}/TAO_CosLoadBalancing.pc.in
+	${top_builddir}/config.status --file "$@":${srcdir}/TAO_CosLoadBalancing.pc.in
 
-endif BUILD_EXCEPTIONS
+endif !BUILD_MINIMUM_CORBA
 endif BUILD_CORBA_MESSAGING
 endif BUILD_AMI
 
@@ -1644,8 +1714,6 @@ EXTRA_DIST += \
 
 
 ## Makefile.CosNaming_Skel.am
-
-if BUILD_EXCEPTIONS
 
 lib_LTLIBRARIES += libTAO_CosNaming_Skel.la
 
@@ -1662,7 +1730,7 @@ libTAO_CosNaming_Skel_la_SOURCES = \
   CosNamingS.cpp
 
 libTAO_CosNaming_Skel_la_LDFLAGS = \
- -version-number @TAO_MAJOR@:@TAO_MINOR@:@TAO_BETA@
+ -version-number @TAO_MAJOR@:@TAO_MINOR@:@TAO_BETA@ -L. -L$(ACE_ROOT)/lib
 
 libTAO_CosNaming_Skel_la_LIBADD = \
   $(TAO_BUILDDIR)/tao/libTAO_PortableServer.la \
@@ -1674,6 +1742,9 @@ libTAO_CosNaming_Skel_la_LIBADD = \
 nobase_include_HEADERS += \
   CosNamingS.h \
   CosNamingS.inl \
+  CosNamingS_T.cpp \
+  CosNamingS_T.h \
+  CosNamingS_T.inl \
   Naming/naming_skel_export.h
 
 pkgconfig_DATA += \
@@ -1683,9 +1754,7 @@ CLEANFILES += \
   TAO_CosNaming_Skel.pc
 
 TAO_CosNaming_Skel.pc: ${top_builddir}/config.status ${srcdir}/TAO_CosNaming_Skel.pc.in
-	${top_builddir}/config.status --file $@:${srcdir}/TAO_CosNaming_Skel.pc.in
-
-endif BUILD_EXCEPTIONS
+	${top_builddir}/config.status --file "$@":${srcdir}/TAO_CosNaming_Skel.pc.in
 
 EXTRA_DIST += \
   CosNaming_Skel.rc \
@@ -1694,7 +1763,6 @@ EXTRA_DIST += \
 
 ## Makefile.CosNaming_Serv.am
 
-if BUILD_EXCEPTIONS
 if !BUILD_ACE_FOR_TAO
 
 lib_LTLIBRARIES += libTAO_CosNaming_Serv.la
@@ -1724,7 +1792,7 @@ libTAO_CosNaming_Serv_la_SOURCES = \
   Naming/Transient_Naming_Context.cpp
 
 libTAO_CosNaming_Serv_la_LDFLAGS = \
- -version-number @TAO_MAJOR@:@TAO_MINOR@:@TAO_BETA@
+ -version-number @TAO_MAJOR@:@TAO_MINOR@:@TAO_BETA@ -L. -L$(ACE_ROOT)/lib
 
 libTAO_CosNaming_Serv_la_LIBADD = \
   $(TAO_BUILDDIR)/tao/libTAO_IORTable.la \
@@ -1765,10 +1833,9 @@ CLEANFILES += \
   TAO_CosNaming_Serv.pc
 
 TAO_CosNaming_Serv.pc: ${top_builddir}/config.status ${srcdir}/TAO_CosNaming_Serv.pc.in
-	${top_builddir}/config.status --file $@:${srcdir}/TAO_CosNaming_Serv.pc.in
+	${top_builddir}/config.status --file "$@":${srcdir}/TAO_CosNaming_Serv.pc.in
 
 endif !BUILD_ACE_FOR_TAO
-endif BUILD_EXCEPTIONS
 
 EXTRA_DIST += \
   CosNaming_Serv.rc \
@@ -1777,7 +1844,7 @@ EXTRA_DIST += \
 
 ## Makefile.CosNotification_IDL.am
 
-if BUILD_EXCEPTIONS
+if !BUILD_MINIMUM_CORBA
 
 BUILT_SOURCES += \
   CosNotificationC.cpp \
@@ -1785,7 +1852,10 @@ BUILT_SOURCES += \
   CosNotificationC.inl \
   CosNotificationS.cpp \
   CosNotificationS.h \
-  CosNotificationS.inl
+  CosNotificationS.inl \
+  CosNotificationS_T.cpp \
+  CosNotificationS_T.h \
+  CosNotificationS_T.inl
 
 CLEANFILES += \
   CosNotification-stamp \
@@ -1794,13 +1864,16 @@ CLEANFILES += \
   CosNotificationC.inl \
   CosNotificationS.cpp \
   CosNotificationS.h \
-  CosNotificationS.inl
+  CosNotificationS.inl \
+  CosNotificationS_T.cpp \
+  CosNotificationS_T.h \
+  CosNotificationS_T.inl
 
-CosNotificationC.cpp CosNotificationC.h CosNotificationC.inl CosNotificationS.cpp CosNotificationS.h CosNotificationS.inl: CosNotification-stamp
+CosNotificationC.cpp CosNotificationC.h CosNotificationC.inl CosNotificationS.cpp CosNotificationS.h CosNotificationS.inl CosNotificationS_T.cpp CosNotificationS_T.h CosNotificationS_T.inl: CosNotification-stamp
 
 CosNotification-stamp: $(srcdir)/CosNotification.idl $(TAO_IDL_DEP)
-	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs -Wb,versioning_begin=TAO_BEGIN_VERSIONED_NAMESPACE_DECL -Wb,versioning_end=TAO_END_VERSIONED_NAMESPACE_DECL -Wb,stub_export_macro=TAO_Notify_Export -Wb,stub_export_include=orbsvcs/Notify/notify_export.h -Wb,skel_export_macro=TAO_Notify_Skel_Export -Wb,skel_export_include=orbsvcs/Notify/notify_skel_export.h $(srcdir)/CosNotification.idl
-	@touch $@
+	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs -GT -Wb,versioning_begin=TAO_BEGIN_VERSIONED_NAMESPACE_DECL -Wb,versioning_end=TAO_END_VERSIONED_NAMESPACE_DECL -Wb,stub_export_macro=TAO_Notify_Export -Wb,stub_export_include=orbsvcs/Notify/notify_export.h -Wb,skel_export_macro=TAO_Notify_Skel_Export -Wb,skel_export_include=orbsvcs/Notify/notify_skel_export.h $(srcdir)/CosNotification.idl
+	@touch "$@"
 
 BUILT_SOURCES += \
   CosNotifyCommC.cpp \
@@ -1808,7 +1881,10 @@ BUILT_SOURCES += \
   CosNotifyCommC.inl \
   CosNotifyCommS.cpp \
   CosNotifyCommS.h \
-  CosNotifyCommS.inl
+  CosNotifyCommS.inl \
+  CosNotifyCommS_T.cpp \
+  CosNotifyCommS_T.h \
+  CosNotifyCommS_T.inl
 
 CLEANFILES += \
   CosNotifyComm-stamp \
@@ -1817,13 +1893,16 @@ CLEANFILES += \
   CosNotifyCommC.inl \
   CosNotifyCommS.cpp \
   CosNotifyCommS.h \
-  CosNotifyCommS.inl
+  CosNotifyCommS.inl \
+  CosNotifyCommS_T.cpp \
+  CosNotifyCommS_T.h \
+  CosNotifyCommS_T.inl
 
-CosNotifyCommC.cpp CosNotifyCommC.h CosNotifyCommC.inl CosNotifyCommS.cpp CosNotifyCommS.h CosNotifyCommS.inl: CosNotifyComm-stamp
+CosNotifyCommC.cpp CosNotifyCommC.h CosNotifyCommC.inl CosNotifyCommS.cpp CosNotifyCommS.h CosNotifyCommS.inl CosNotifyCommS_T.cpp CosNotifyCommS_T.h CosNotifyCommS_T.inl: CosNotifyComm-stamp
 
 CosNotifyComm-stamp: $(srcdir)/CosNotifyComm.idl $(TAO_IDL_DEP)
-	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs -Wb,versioning_begin=TAO_BEGIN_VERSIONED_NAMESPACE_DECL -Wb,versioning_end=TAO_END_VERSIONED_NAMESPACE_DECL -Wb,stub_export_macro=TAO_Notify_Export -Wb,stub_export_include=orbsvcs/Notify/notify_export.h -Wb,skel_export_macro=TAO_Notify_Skel_Export -Wb,skel_export_include=orbsvcs/Notify/notify_skel_export.h $(srcdir)/CosNotifyComm.idl
-	@touch $@
+	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs -GT -Wb,versioning_begin=TAO_BEGIN_VERSIONED_NAMESPACE_DECL -Wb,versioning_end=TAO_END_VERSIONED_NAMESPACE_DECL -Wb,stub_export_macro=TAO_Notify_Export -Wb,stub_export_include=orbsvcs/Notify/notify_export.h -Wb,skel_export_macro=TAO_Notify_Skel_Export -Wb,skel_export_include=orbsvcs/Notify/notify_skel_export.h $(srcdir)/CosNotifyComm.idl
+	@touch "$@"
 
 BUILT_SOURCES += \
   CosNotifyFilterC.cpp \
@@ -1831,7 +1910,10 @@ BUILT_SOURCES += \
   CosNotifyFilterC.inl \
   CosNotifyFilterS.cpp \
   CosNotifyFilterS.h \
-  CosNotifyFilterS.inl
+  CosNotifyFilterS.inl \
+  CosNotifyFilterS_T.cpp \
+  CosNotifyFilterS_T.h \
+  CosNotifyFilterS_T.inl
 
 CLEANFILES += \
   CosNotifyFilter-stamp \
@@ -1840,13 +1922,16 @@ CLEANFILES += \
   CosNotifyFilterC.inl \
   CosNotifyFilterS.cpp \
   CosNotifyFilterS.h \
-  CosNotifyFilterS.inl
+  CosNotifyFilterS.inl \
+  CosNotifyFilterS_T.cpp \
+  CosNotifyFilterS_T.h \
+  CosNotifyFilterS_T.inl
 
-CosNotifyFilterC.cpp CosNotifyFilterC.h CosNotifyFilterC.inl CosNotifyFilterS.cpp CosNotifyFilterS.h CosNotifyFilterS.inl: CosNotifyFilter-stamp
+CosNotifyFilterC.cpp CosNotifyFilterC.h CosNotifyFilterC.inl CosNotifyFilterS.cpp CosNotifyFilterS.h CosNotifyFilterS.inl CosNotifyFilterS_T.cpp CosNotifyFilterS_T.h CosNotifyFilterS_T.inl: CosNotifyFilter-stamp
 
 CosNotifyFilter-stamp: $(srcdir)/CosNotifyFilter.idl $(TAO_IDL_DEP)
-	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs -Wb,versioning_begin=TAO_BEGIN_VERSIONED_NAMESPACE_DECL -Wb,versioning_end=TAO_END_VERSIONED_NAMESPACE_DECL -Wb,stub_export_macro=TAO_Notify_Export -Wb,stub_export_include=orbsvcs/Notify/notify_export.h -Wb,skel_export_macro=TAO_Notify_Skel_Export -Wb,skel_export_include=orbsvcs/Notify/notify_skel_export.h $(srcdir)/CosNotifyFilter.idl
-	@touch $@
+	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs -GT -Wb,versioning_begin=TAO_BEGIN_VERSIONED_NAMESPACE_DECL -Wb,versioning_end=TAO_END_VERSIONED_NAMESPACE_DECL -Wb,stub_export_macro=TAO_Notify_Export -Wb,stub_export_include=orbsvcs/Notify/notify_export.h -Wb,skel_export_macro=TAO_Notify_Skel_Export -Wb,skel_export_include=orbsvcs/Notify/notify_skel_export.h $(srcdir)/CosNotifyFilter.idl
+	@touch "$@"
 
 BUILT_SOURCES += \
   CosNotifyChannelAdminC.cpp \
@@ -1854,7 +1939,10 @@ BUILT_SOURCES += \
   CosNotifyChannelAdminC.inl \
   CosNotifyChannelAdminS.cpp \
   CosNotifyChannelAdminS.h \
-  CosNotifyChannelAdminS.inl
+  CosNotifyChannelAdminS.inl \
+  CosNotifyChannelAdminS_T.cpp \
+  CosNotifyChannelAdminS_T.h \
+  CosNotifyChannelAdminS_T.inl
 
 CLEANFILES += \
   CosNotifyChannelAdmin-stamp \
@@ -1863,13 +1951,16 @@ CLEANFILES += \
   CosNotifyChannelAdminC.inl \
   CosNotifyChannelAdminS.cpp \
   CosNotifyChannelAdminS.h \
-  CosNotifyChannelAdminS.inl
+  CosNotifyChannelAdminS.inl \
+  CosNotifyChannelAdminS_T.cpp \
+  CosNotifyChannelAdminS_T.h \
+  CosNotifyChannelAdminS_T.inl
 
-CosNotifyChannelAdminC.cpp CosNotifyChannelAdminC.h CosNotifyChannelAdminC.inl CosNotifyChannelAdminS.cpp CosNotifyChannelAdminS.h CosNotifyChannelAdminS.inl: CosNotifyChannelAdmin-stamp
+CosNotifyChannelAdminC.cpp CosNotifyChannelAdminC.h CosNotifyChannelAdminC.inl CosNotifyChannelAdminS.cpp CosNotifyChannelAdminS.h CosNotifyChannelAdminS.inl CosNotifyChannelAdminS_T.cpp CosNotifyChannelAdminS_T.h CosNotifyChannelAdminS_T.inl: CosNotifyChannelAdmin-stamp
 
 CosNotifyChannelAdmin-stamp: $(srcdir)/CosNotifyChannelAdmin.idl $(TAO_IDL_DEP)
-	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs -Wb,versioning_begin=TAO_BEGIN_VERSIONED_NAMESPACE_DECL -Wb,versioning_end=TAO_END_VERSIONED_NAMESPACE_DECL -Wb,stub_export_macro=TAO_Notify_Export -Wb,stub_export_include=orbsvcs/Notify/notify_export.h -Wb,skel_export_macro=TAO_Notify_Skel_Export -Wb,skel_export_include=orbsvcs/Notify/notify_skel_export.h $(srcdir)/CosNotifyChannelAdmin.idl
-	@touch $@
+	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs -GT -Wb,versioning_begin=TAO_BEGIN_VERSIONED_NAMESPACE_DECL -Wb,versioning_end=TAO_END_VERSIONED_NAMESPACE_DECL -Wb,stub_export_macro=TAO_Notify_Export -Wb,stub_export_include=orbsvcs/Notify/notify_export.h -Wb,skel_export_macro=TAO_Notify_Skel_Export -Wb,skel_export_include=orbsvcs/Notify/notify_skel_export.h $(srcdir)/CosNotifyChannelAdmin.idl
+	@touch "$@"
 
 BUILT_SOURCES += \
   NotifyExtC.cpp \
@@ -1877,7 +1968,10 @@ BUILT_SOURCES += \
   NotifyExtC.inl \
   NotifyExtS.cpp \
   NotifyExtS.h \
-  NotifyExtS.inl
+  NotifyExtS.inl \
+  NotifyExtS_T.cpp \
+  NotifyExtS_T.h \
+  NotifyExtS_T.inl
 
 CLEANFILES += \
   NotifyExt-stamp \
@@ -1886,13 +1980,16 @@ CLEANFILES += \
   NotifyExtC.inl \
   NotifyExtS.cpp \
   NotifyExtS.h \
-  NotifyExtS.inl
+  NotifyExtS.inl \
+  NotifyExtS_T.cpp \
+  NotifyExtS_T.h \
+  NotifyExtS_T.inl
 
-NotifyExtC.cpp NotifyExtC.h NotifyExtC.inl NotifyExtS.cpp NotifyExtS.h NotifyExtS.inl: NotifyExt-stamp
+NotifyExtC.cpp NotifyExtC.h NotifyExtC.inl NotifyExtS.cpp NotifyExtS.h NotifyExtS.inl NotifyExtS_T.cpp NotifyExtS_T.h NotifyExtS_T.inl: NotifyExt-stamp
 
 NotifyExt-stamp: $(srcdir)/NotifyExt.idl $(TAO_IDL_DEP)
-	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs -Wb,versioning_begin=TAO_BEGIN_VERSIONED_NAMESPACE_DECL -Wb,versioning_end=TAO_END_VERSIONED_NAMESPACE_DECL -Wb,stub_export_macro=TAO_Notify_Export -Wb,stub_export_include=orbsvcs/Notify/notify_export.h -Wb,skel_export_macro=TAO_Notify_Skel_Export -Wb,skel_export_include=orbsvcs/Notify/notify_skel_export.h $(srcdir)/NotifyExt.idl
-	@touch $@
+	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs -GT -Wb,versioning_begin=TAO_BEGIN_VERSIONED_NAMESPACE_DECL -Wb,versioning_end=TAO_END_VERSIONED_NAMESPACE_DECL -Wb,stub_export_macro=TAO_Notify_Export -Wb,stub_export_include=orbsvcs/Notify/notify_export.h -Wb,skel_export_macro=TAO_Notify_Skel_Export -Wb,skel_export_include=orbsvcs/Notify/notify_skel_export.h $(srcdir)/NotifyExt.idl
+	@touch "$@"
 
 BUILT_SOURCES += \
   Event_ForwarderC.cpp \
@@ -1900,7 +1997,10 @@ BUILT_SOURCES += \
   Event_ForwarderC.inl \
   Event_ForwarderS.cpp \
   Event_ForwarderS.h \
-  Event_ForwarderS.inl
+  Event_ForwarderS.inl \
+  Event_ForwarderS_T.cpp \
+  Event_ForwarderS_T.h \
+  Event_ForwarderS_T.inl
 
 CLEANFILES += \
   Event_Forwarder-stamp \
@@ -1909,13 +2009,17 @@ CLEANFILES += \
   Event_ForwarderC.inl \
   Event_ForwarderS.cpp \
   Event_ForwarderS.h \
-  Event_ForwarderS.inl
+  Event_ForwarderS.inl \
+  Event_ForwarderS_T.cpp \
+  Event_ForwarderS_T.h \
+  Event_ForwarderS_T.inl
 
-Event_ForwarderC.cpp Event_ForwarderC.h Event_ForwarderC.inl Event_ForwarderS.cpp Event_ForwarderS.h Event_ForwarderS.inl: Event_Forwarder-stamp
+Event_ForwarderC.cpp Event_ForwarderC.h Event_ForwarderC.inl Event_ForwarderS.cpp Event_ForwarderS.h Event_ForwarderS.inl Event_ForwarderS_T.cpp Event_ForwarderS_T.h Event_ForwarderS_T.inl: Event_Forwarder-stamp
 
 Event_Forwarder-stamp: $(srcdir)/Event_Forwarder.idl $(TAO_IDL_DEP)
-	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs -Wb,versioning_begin=TAO_BEGIN_VERSIONED_NAMESPACE_DECL -Wb,versioning_end=TAO_END_VERSIONED_NAMESPACE_DECL -Wb,stub_export_macro=TAO_Notify_Export -Wb,stub_export_include=orbsvcs/Notify/notify_export.h -Wb,skel_export_macro=TAO_Notify_Skel_Export -Wb,skel_export_include=orbsvcs/Notify/notify_skel_export.h $(srcdir)/Event_Forwarder.idl
-	@touch $@
+	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs -GT -Wb,versioning_begin=TAO_BEGIN_VERSIONED_NAMESPACE_DECL -Wb,versioning_end=TAO_END_VERSIONED_NAMESPACE_DECL -Wb,stub_export_macro=TAO_Notify_Export -Wb,stub_export_include=orbsvcs/Notify/notify_export.h -Wb,skel_export_macro=TAO_Notify_Skel_Export -Wb,skel_export_include=orbsvcs/Notify/notify_skel_export.h $(srcdir)/Event_Forwarder.idl
+	@touch "$@"
+
 
 nobase_include_HEADERS += \
   CosNotification.idl \
@@ -1925,11 +2029,11 @@ nobase_include_HEADERS += \
   Event_Forwarder.idl \
   NotifyExt.idl
 
-endif BUILD_EXCEPTIONS
+endif !BUILD_MINIMUM_CORBA
 
 ## Makefile.CosNotification.am
 
-if BUILD_EXCEPTIONS
+if !BUILD_MINIMUM_CORBA
 
 lib_LTLIBRARIES += libTAO_CosNotification.la
 
@@ -1953,7 +2057,7 @@ libTAO_CosNotification_la_SOURCES = \
   NotifyExtC.cpp
 
 libTAO_CosNotification_la_LDFLAGS = \
- -version-number @TAO_MAJOR@:@TAO_MINOR@:@TAO_BETA@
+ -version-number @TAO_MAJOR@:@TAO_MINOR@:@TAO_BETA@ -L. -L$(ACE_ROOT)/lib
 
 libTAO_CosNotification_la_LIBADD = \
   libTAO_CosEvent.la \
@@ -1984,9 +2088,9 @@ CLEANFILES += \
   TAO_CosNotification.pc
 
 TAO_CosNotification.pc: ${top_builddir}/config.status ${srcdir}/TAO_CosNotification.pc.in
-	${top_builddir}/config.status --file $@:${srcdir}/TAO_CosNotification.pc.in
+	${top_builddir}/config.status --file "$@":${srcdir}/TAO_CosNotification.pc.in
 
-endif BUILD_EXCEPTIONS
+endif !BUILD_MINIMUM_CORBA
 
 EXTRA_DIST += \
   CosNotification.rc \
@@ -1994,8 +2098,6 @@ EXTRA_DIST += \
 
 
 ## Makefile.ETCL.am
-
-if BUILD_EXCEPTIONS
 
 lib_LTLIBRARIES += libTAO_ETCL.la
 
@@ -2015,7 +2117,7 @@ libTAO_ETCL_la_SOURCES = \
   ETCL/ETCL_y.cpp
 
 libTAO_ETCL_la_LDFLAGS = \
- -version-number @TAO_MAJOR@:@TAO_MINOR@:@TAO_BETA@
+ -version-number @TAO_MAJOR@:@TAO_MINOR@:@TAO_BETA@ -L. -L$(ACE_ROOT)/lib
 
 libTAO_ETCL_la_LIBADD = \
   $(TAO_BUILDDIR)/tao/libTAO_AnyTypeCode.la \
@@ -2037,9 +2139,7 @@ CLEANFILES += \
   TAO_ETCL.pc
 
 TAO_ETCL.pc: ${top_builddir}/config.status ${srcdir}/TAO_ETCL.pc.in
-	${top_builddir}/config.status --file $@:${srcdir}/TAO_ETCL.pc.in
-
-endif BUILD_EXCEPTIONS
+	${top_builddir}/config.status --file "$@":${srcdir}/TAO_ETCL.pc.in
 
 EXTRA_DIST += \
   ETCL.rc \
@@ -2048,7 +2148,7 @@ EXTRA_DIST += \
 
 ## Makefile.CosNotification_Skel.am
 
-if BUILD_EXCEPTIONS
+if !BUILD_MINIMUM_CORBA
 
 lib_LTLIBRARIES += libTAO_CosNotification_Skel.la
 
@@ -2071,7 +2171,7 @@ libTAO_CosNotification_Skel_la_SOURCES = \
   NotifyExtS.cpp
 
 libTAO_CosNotification_Skel_la_LDFLAGS = \
- -version-number @TAO_MAJOR@:@TAO_MINOR@:@TAO_BETA@
+ -version-number @TAO_MAJOR@:@TAO_MINOR@:@TAO_BETA@ -L. -L$(ACE_ROOT)/lib
 
 libTAO_CosNotification_Skel_la_LIBADD = \
   libTAO_CosEvent_Skel.la \
@@ -2085,17 +2185,35 @@ libTAO_CosNotification_Skel_la_LIBADD = \
 nobase_include_HEADERS += \
   CosNotificationS.h \
   CosNotificationS.inl \
+  CosNotificationS_T.cpp \
+  CosNotificationS_T.h \
+  CosNotificationS_T.inl \
   CosNotifyChannelAdminS.h \
   CosNotifyChannelAdminS.inl \
+  CosNotifyChannelAdminS_T.cpp \
+  CosNotifyChannelAdminS_T.h \
+  CosNotifyChannelAdminS_T.inl \
   CosNotifyCommS.h \
   CosNotifyCommS.inl \
+  CosNotifyCommS_T.cpp \
+  CosNotifyCommS_T.h \
+  CosNotifyCommS_T.inl \
   CosNotifyFilterS.h \
   CosNotifyFilterS.inl \
+  CosNotifyFilterS_T.cpp \
+  CosNotifyFilterS_T.h \
+  CosNotifyFilterS_T.inl \
   Event_ForwarderS.h \
   Event_ForwarderS.inl \
+  Event_ForwarderS_T.cpp \
+  Event_ForwarderS_T.h \
+  Event_ForwarderS_T.inl \
   Notify/notify_skel_export.h \
   NotifyExtS.h \
-  NotifyExtS.inl
+  NotifyExtS.inl \
+  NotifyExtS_T.cpp \
+  NotifyExtS_T.h \
+  NotifyExtS_T.inl
 
 pkgconfig_DATA += \
   TAO_CosNotification_Skel.pc
@@ -2104,9 +2222,9 @@ CLEANFILES += \
   TAO_CosNotification_Skel.pc
 
 TAO_CosNotification_Skel.pc: ${top_builddir}/config.status ${srcdir}/TAO_CosNotification_Skel.pc.in
-	${top_builddir}/config.status --file $@:${srcdir}/TAO_CosNotification_Skel.pc.in
+	${top_builddir}/config.status --file "$@":${srcdir}/TAO_CosNotification_Skel.pc.in
 
-endif BUILD_EXCEPTIONS
+endif !BUILD_MINIMUM_CORBA
 
 EXTRA_DIST += \
   CosNotification_Skel.rc \
@@ -2115,7 +2233,7 @@ EXTRA_DIST += \
 
 ## Makefile.CosNotification_Serv.am
 
-if BUILD_EXCEPTIONS
+if !BUILD_MINIMUM_CORBA
 
 lib_LTLIBRARIES += libTAO_CosNotification_Serv.la
 
@@ -2214,12 +2332,11 @@ libTAO_CosNotification_Serv_la_SOURCES = \
   Notify/Worker_Task.cpp
 
 libTAO_CosNotification_Serv_la_LDFLAGS = \
- -version-number @TAO_MAJOR@:@TAO_MINOR@:@TAO_BETA@
+ -version-number @TAO_MAJOR@:@TAO_MINOR@:@TAO_BETA@ -L. -L$(ACE_ROOT)/lib
 
 libTAO_CosNotification_Serv_la_LIBADD = \
   libTAO_ETCL.la \
   $(TAO_BUILDDIR)/tao/libTAO_DynamicAny.la \
-  $(TAO_BUILDDIR)/tao/libTAO_Valuetype.la \
   libTAO_CosNotification_Skel.la \
   libTAO_CosEvent_Skel.la \
   libTAO_CosNotification.la \
@@ -2346,9 +2463,9 @@ CLEANFILES += \
   TAO_CosNotification_Serv.pc
 
 TAO_CosNotification_Serv.pc: ${top_builddir}/config.status ${srcdir}/TAO_CosNotification_Serv.pc.in
-	${top_builddir}/config.status --file $@:${srcdir}/TAO_CosNotification_Serv.pc.in
+	${top_builddir}/config.status --file "$@":${srcdir}/TAO_CosNotification_Serv.pc.in
 
-endif BUILD_EXCEPTIONS
+endif !BUILD_MINIMUM_CORBA
 
 EXTRA_DIST += \
   CosNotification_Serv.rc \
@@ -2358,8 +2475,8 @@ EXTRA_DIST += \
 ## Makefile.CosNotification_Persist.am
 
 if BUILD_ACEXML
-if BUILD_EXCEPTIONS
 if !BUILD_ACE_FOR_TAO
+if !BUILD_MINIMUM_CORBA
 
 lib_LTLIBRARIES += libTAO_CosNotification_Persist.la
 
@@ -2374,36 +2491,19 @@ libTAO_CosNotification_Persist_la_CPPFLAGS = \
   -DTAO_HAS_TYPED_EVENT_CHANNEL \
   -DTAO_NOTIFY_PERSIST_BUILD_DLL
 
-if BUILD_ZLIB
-if BUILD_ZZIP
-libTAO_CosNotification_Persist_la_CPPFLAGS += \
-  $(ACE_ZZIP_CPPFLAGS) \
-  $(ACE_ZLIB_CPPFLAGS)
-endif BUILD_ZZIP
-endif BUILD_ZLIB
-
 libTAO_CosNotification_Persist_la_SOURCES = \
   Notify/XML_Loader.cpp \
   Notify/XML_Saver.cpp \
   Notify/XML_Topology_Factory.cpp
 
 libTAO_CosNotification_Persist_la_LDFLAGS = \
- -version-number @TAO_MAJOR@:@TAO_MINOR@:@TAO_BETA@
-
-if BUILD_ZLIB
-if BUILD_ZZIP
-libTAO_CosNotification_Persist_la_LDFLAGS += \
-  $(ACE_ZZIP_LDFLAGS) \
-  $(ACE_ZLIB_LDFLAGS)
-endif BUILD_ZZIP
-endif BUILD_ZLIB
+ -version-number @TAO_MAJOR@:@TAO_MINOR@:@TAO_BETA@ -L. -L$(ACE_ROOT)/lib
 
 libTAO_CosNotification_Persist_la_LIBADD = \
   $(ACE_BUILDDIR)/ACEXML/parser/parser/libACEXML_Parser.la \
   $(ACE_BUILDDIR)/ACEXML/common/libACEXML.la \
   libTAO_CosNotification_Serv.la \
   $(TAO_BUILDDIR)/tao/libTAO_DynamicAny.la \
-  $(TAO_BUILDDIR)/tao/libTAO_Valuetype.la \
   libTAO_ETCL.la \
   libTAO_CosNotification_Skel.la \
   libTAO_CosEvent_Skel.la \
@@ -2415,27 +2515,17 @@ libTAO_CosNotification_Persist_la_LIBADD = \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
-if BUILD_ZLIB
-if BUILD_ZZIP
-libTAO_CosNotification_Persist_la_LIBADD += \
-  $(ACE_ZZIP_LIBS) \
-  $(ACE_ZLIB_LIBS)
-endif BUILD_ZZIP
-endif BUILD_ZLIB
-
 nobase_include_HEADERS += \
   Notify/XML_Loader.h \
   Notify/XML_Saver.h \
   Notify/XML_Topology_Factory.h \
   Notify/notify_persist_export.h
 
+endif !BUILD_MINIMUM_CORBA
 endif !BUILD_ACE_FOR_TAO
-endif BUILD_EXCEPTIONS
 endif BUILD_ACEXML
 
 ## Makefile.CosTime.am
-
-if BUILD_EXCEPTIONS
 
 BUILT_SOURCES += \
   TimeServiceC.cpp \
@@ -2443,7 +2533,8 @@ BUILT_SOURCES += \
   TimeServiceC.inl \
   TimeServiceS.cpp \
   TimeServiceS.h \
-  TimeServiceS.inl
+  TimeServiceS.inl \
+  TimeServiceS_T.cpp
 
 CLEANFILES += \
   TimeService-stamp \
@@ -2452,13 +2543,14 @@ CLEANFILES += \
   TimeServiceC.inl \
   TimeServiceS.cpp \
   TimeServiceS.h \
-  TimeServiceS.inl
+  TimeServiceS.inl \
+  TimeServiceS_T.cpp
 
-TimeServiceC.cpp TimeServiceC.h TimeServiceC.inl TimeServiceS.cpp TimeServiceS.h TimeServiceS.inl: TimeService-stamp
+TimeServiceC.cpp TimeServiceC.h TimeServiceC.inl TimeServiceS.cpp TimeServiceS.h TimeServiceS.inl TimeServiceS_T.cpp: TimeService-stamp
 
 TimeService-stamp: $(srcdir)/TimeService.idl $(TAO_IDL_DEP)
-	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs -Wb,versioning_begin=TAO_BEGIN_VERSIONED_NAMESPACE_DECL -Wb,versioning_end=TAO_END_VERSIONED_NAMESPACE_DECL -Wb,export_macro=TAO_Time_Export -Wb,export_include=orbsvcs/Time/time_export.h $(srcdir)/TimeService.idl
-	@touch $@
+	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs -GT -Wb,versioning_begin=TAO_BEGIN_VERSIONED_NAMESPACE_DECL -Wb,versioning_end=TAO_END_VERSIONED_NAMESPACE_DECL -Wb,export_macro=TAO_Time_Export -Wb,export_include=orbsvcs/Time/time_export.h $(srcdir)/TimeService.idl
+	@touch "$@"
 
 lib_LTLIBRARIES += libTAO_CosTime.la
 
@@ -2481,7 +2573,7 @@ libTAO_CosTime_la_SOURCES = \
   TimeServiceS.cpp
 
 libTAO_CosTime_la_LDFLAGS = \
- -version-number @TAO_MAJOR@:@TAO_MINOR@:@TAO_BETA@
+ -version-number @TAO_MAJOR@:@TAO_MINOR@:@TAO_BETA@ -L. -L$(ACE_ROOT)/lib
 
 libTAO_CosTime_la_LIBADD = \
   libTAO_Svc_Utils.la \
@@ -2501,7 +2593,8 @@ nobase_include_HEADERS += \
   TimeServiceC.h \
   TimeServiceC.inl \
   TimeServiceS.h \
-  TimeServiceS.inl
+  TimeServiceS.inl \
+  TimeServiceS_T.cpp
 
 pkgconfig_DATA += \
   TAO_CosTime.pc
@@ -2510,9 +2603,7 @@ CLEANFILES += \
   TAO_CosTime.pc
 
 TAO_CosTime.pc: ${top_builddir}/config.status ${srcdir}/TAO_CosTime.pc.in
-	${top_builddir}/config.status --file $@:${srcdir}/TAO_CosTime.pc.in
-
-endif BUILD_EXCEPTIONS
+	${top_builddir}/config.status --file "$@":${srcdir}/TAO_CosTime.pc.in
 
 EXTRA_DIST += \
   CosTime.rc \
@@ -2521,15 +2612,16 @@ EXTRA_DIST += \
 
 ## Makefile.CosTrading_IDL.am
 
-if BUILD_EXCEPTIONS
-
 BUILT_SOURCES += \
   CosTradingC.cpp \
   CosTradingC.h \
   CosTradingC.inl \
   CosTradingS.cpp \
   CosTradingS.h \
-  CosTradingS.inl
+  CosTradingS.inl \
+  CosTradingS_T.cpp \
+  CosTradingS_T.h \
+  CosTradingS_T.inl
 
 CLEANFILES += \
   CosTrading-stamp \
@@ -2538,13 +2630,16 @@ CLEANFILES += \
   CosTradingC.inl \
   CosTradingS.cpp \
   CosTradingS.h \
-  CosTradingS.inl
+  CosTradingS.inl \
+  CosTradingS_T.cpp \
+  CosTradingS_T.h \
+  CosTradingS_T.inl
 
-CosTradingC.cpp CosTradingC.h CosTradingC.inl CosTradingS.cpp CosTradingS.h CosTradingS.inl: CosTrading-stamp
+CosTradingC.cpp CosTradingC.h CosTradingC.inl CosTradingS.cpp CosTradingS.h CosTradingS.inl CosTradingS_T.cpp CosTradingS_T.h CosTradingS_T.inl: CosTrading-stamp
 
 CosTrading-stamp: $(srcdir)/CosTrading.idl $(TAO_IDL_DEP)
-	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs -Wb,versioning_begin=TAO_BEGIN_VERSIONED_NAMESPACE_DECL -Wb,versioning_end=TAO_END_VERSIONED_NAMESPACE_DECL -Wb,stub_export_macro=TAO_Trading_Export -Wb,stub_export_include=orbsvcs/Trader/trading_export.h -Wb,skel_export_macro=TAO_Trading_Skel_Export -Wb,skel_export_include=orbsvcs/Trader/trading_skel_export.h $(srcdir)/CosTrading.idl
-	@touch $@
+	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs -GT -Wb,versioning_begin=TAO_BEGIN_VERSIONED_NAMESPACE_DECL -Wb,versioning_end=TAO_END_VERSIONED_NAMESPACE_DECL -Wb,stub_export_macro=TAO_Trading_Export -Wb,stub_export_include=orbsvcs/Trader/trading_export.h -Wb,skel_export_macro=TAO_Trading_Skel_Export -Wb,skel_export_include=orbsvcs/Trader/trading_skel_export.h $(srcdir)/CosTrading.idl
+	@touch "$@"
 
 BUILT_SOURCES += \
   CosTradingReposC.cpp \
@@ -2552,7 +2647,10 @@ BUILT_SOURCES += \
   CosTradingReposC.inl \
   CosTradingReposS.cpp \
   CosTradingReposS.h \
-  CosTradingReposS.inl
+  CosTradingReposS.inl \
+  CosTradingReposS_T.cpp \
+  CosTradingReposS_T.h \
+  CosTradingReposS_T.inl
 
 CLEANFILES += \
   CosTradingRepos-stamp \
@@ -2561,13 +2659,16 @@ CLEANFILES += \
   CosTradingReposC.inl \
   CosTradingReposS.cpp \
   CosTradingReposS.h \
-  CosTradingReposS.inl
+  CosTradingReposS.inl \
+  CosTradingReposS_T.cpp \
+  CosTradingReposS_T.h \
+  CosTradingReposS_T.inl
 
-CosTradingReposC.cpp CosTradingReposC.h CosTradingReposC.inl CosTradingReposS.cpp CosTradingReposS.h CosTradingReposS.inl: CosTradingRepos-stamp
+CosTradingReposC.cpp CosTradingReposC.h CosTradingReposC.inl CosTradingReposS.cpp CosTradingReposS.h CosTradingReposS.inl CosTradingReposS_T.cpp CosTradingReposS_T.h CosTradingReposS_T.inl: CosTradingRepos-stamp
 
 CosTradingRepos-stamp: $(srcdir)/CosTradingRepos.idl $(TAO_IDL_DEP)
-	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs -Wb,versioning_begin=TAO_BEGIN_VERSIONED_NAMESPACE_DECL -Wb,versioning_end=TAO_END_VERSIONED_NAMESPACE_DECL -Wb,stub_export_macro=TAO_Trading_Export -Wb,stub_export_include=orbsvcs/Trader/trading_export.h -Wb,skel_export_macro=TAO_Trading_Skel_Export -Wb,skel_export_include=orbsvcs/Trader/trading_skel_export.h $(srcdir)/CosTradingRepos.idl
-	@touch $@
+	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs -GT -Wb,versioning_begin=TAO_BEGIN_VERSIONED_NAMESPACE_DECL -Wb,versioning_end=TAO_END_VERSIONED_NAMESPACE_DECL -Wb,stub_export_macro=TAO_Trading_Export -Wb,stub_export_include=orbsvcs/Trader/trading_export.h -Wb,skel_export_macro=TAO_Trading_Skel_Export -Wb,skel_export_include=orbsvcs/Trader/trading_skel_export.h $(srcdir)/CosTradingRepos.idl
+	@touch "$@"
 
 BUILT_SOURCES += \
   CosTradingDynamicC.cpp \
@@ -2575,7 +2676,10 @@ BUILT_SOURCES += \
   CosTradingDynamicC.inl \
   CosTradingDynamicS.cpp \
   CosTradingDynamicS.h \
-  CosTradingDynamicS.inl
+  CosTradingDynamicS.inl \
+  CosTradingDynamicS_T.cpp \
+  CosTradingDynamicS_T.h \
+  CosTradingDynamicS_T.inl
 
 CLEANFILES += \
   CosTradingDynamic-stamp \
@@ -2584,24 +2688,24 @@ CLEANFILES += \
   CosTradingDynamicC.inl \
   CosTradingDynamicS.cpp \
   CosTradingDynamicS.h \
-  CosTradingDynamicS.inl
+  CosTradingDynamicS.inl \
+  CosTradingDynamicS_T.cpp \
+  CosTradingDynamicS_T.h \
+  CosTradingDynamicS_T.inl
 
-CosTradingDynamicC.cpp CosTradingDynamicC.h CosTradingDynamicC.inl CosTradingDynamicS.cpp CosTradingDynamicS.h CosTradingDynamicS.inl: CosTradingDynamic-stamp
+CosTradingDynamicC.cpp CosTradingDynamicC.h CosTradingDynamicC.inl CosTradingDynamicS.cpp CosTradingDynamicS.h CosTradingDynamicS.inl CosTradingDynamicS_T.cpp CosTradingDynamicS_T.h CosTradingDynamicS_T.inl: CosTradingDynamic-stamp
 
 CosTradingDynamic-stamp: $(srcdir)/CosTradingDynamic.idl $(TAO_IDL_DEP)
-	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs -Wb,versioning_begin=TAO_BEGIN_VERSIONED_NAMESPACE_DECL -Wb,versioning_end=TAO_END_VERSIONED_NAMESPACE_DECL -Wb,stub_export_macro=TAO_Trading_Export -Wb,stub_export_include=orbsvcs/Trader/trading_export.h -Wb,skel_export_macro=TAO_Trading_Skel_Export -Wb,skel_export_include=orbsvcs/Trader/trading_skel_export.h $(srcdir)/CosTradingDynamic.idl
-	@touch $@
+	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs -GT -Wb,versioning_begin=TAO_BEGIN_VERSIONED_NAMESPACE_DECL -Wb,versioning_end=TAO_END_VERSIONED_NAMESPACE_DECL -Wb,stub_export_macro=TAO_Trading_Export -Wb,stub_export_include=orbsvcs/Trader/trading_export.h -Wb,skel_export_macro=TAO_Trading_Skel_Export -Wb,skel_export_include=orbsvcs/Trader/trading_skel_export.h $(srcdir)/CosTradingDynamic.idl
+	@touch "$@"
+
 
 nobase_include_HEADERS += \
   CosTrading.idl \
   CosTradingDynamic.idl \
   CosTradingRepos.idl
 
-endif BUILD_EXCEPTIONS
-
 ## Makefile.CosTrading.am
-
-if BUILD_EXCEPTIONS
 
 lib_LTLIBRARIES += libTAO_CosTrading.la
 
@@ -2620,7 +2724,7 @@ libTAO_CosTrading_la_SOURCES = \
   CosTradingReposC.cpp
 
 libTAO_CosTrading_la_LDFLAGS = \
- -version-number @TAO_MAJOR@:@TAO_MINOR@:@TAO_BETA@
+ -version-number @TAO_MAJOR@:@TAO_MINOR@:@TAO_BETA@ -L. -L$(ACE_ROOT)/lib
 
 libTAO_CosTrading_la_LIBADD = \
   $(TAO_BUILDDIR)/tao/libTAO_AnyTypeCode.la \
@@ -2643,9 +2747,7 @@ CLEANFILES += \
   TAO_CosTrading.pc
 
 TAO_CosTrading.pc: ${top_builddir}/config.status ${srcdir}/TAO_CosTrading.pc.in
-	${top_builddir}/config.status --file $@:${srcdir}/TAO_CosTrading.pc.in
-
-endif BUILD_EXCEPTIONS
+	${top_builddir}/config.status --file "$@":${srcdir}/TAO_CosTrading.pc.in
 
 EXTRA_DIST += \
   CosTrading.rc \
@@ -2653,8 +2755,6 @@ EXTRA_DIST += \
 
 
 ## Makefile.CosTrading_Skel.am
-
-if BUILD_EXCEPTIONS
 
 lib_LTLIBRARIES += libTAO_CosTrading_Skel.la
 
@@ -2673,7 +2773,7 @@ libTAO_CosTrading_Skel_la_SOURCES = \
   CosTradingS.cpp
 
 libTAO_CosTrading_Skel_la_LDFLAGS = \
- -version-number @TAO_MAJOR@:@TAO_MINOR@:@TAO_BETA@
+ -version-number @TAO_MAJOR@:@TAO_MINOR@:@TAO_BETA@ -L. -L$(ACE_ROOT)/lib
 
 libTAO_CosTrading_Skel_la_LIBADD = \
   $(TAO_BUILDDIR)/tao/libTAO_PortableServer.la \
@@ -2685,10 +2785,19 @@ libTAO_CosTrading_Skel_la_LIBADD = \
 nobase_include_HEADERS += \
   CosTradingDynamicS.h \
   CosTradingDynamicS.inl \
+  CosTradingDynamicS_T.cpp \
+  CosTradingDynamicS_T.h \
+  CosTradingDynamicS_T.inl \
   CosTradingReposS.h \
   CosTradingReposS.inl \
+  CosTradingReposS_T.cpp \
+  CosTradingReposS_T.h \
+  CosTradingReposS_T.inl \
   CosTradingS.h \
   CosTradingS.inl \
+  CosTradingS_T.cpp \
+  CosTradingS_T.h \
+  CosTradingS_T.inl \
   Trader/trading_skel_export.h
 
 pkgconfig_DATA += \
@@ -2698,9 +2807,7 @@ CLEANFILES += \
   TAO_CosTrading_Skel.pc
 
 TAO_CosTrading_Skel.pc: ${top_builddir}/config.status ${srcdir}/TAO_CosTrading_Skel.pc.in
-	${top_builddir}/config.status --file $@:${srcdir}/TAO_CosTrading_Skel.pc.in
-
-endif BUILD_EXCEPTIONS
+	${top_builddir}/config.status --file "$@":${srcdir}/TAO_CosTrading_Skel.pc.in
 
 EXTRA_DIST += \
   CosTrading_Skel.rc \
@@ -2708,8 +2815,6 @@ EXTRA_DIST += \
 
 
 ## Makefile.CosTrading_Serv.am
-
-if BUILD_EXCEPTIONS
 
 lib_LTLIBRARIES += libTAO_CosTrading_Serv.la
 
@@ -2740,7 +2845,7 @@ libTAO_CosTrading_Serv_la_SOURCES = \
   Trader/Trading_Loader.cpp
 
 libTAO_CosTrading_Serv_la_LDFLAGS = \
- -version-number @TAO_MAJOR@:@TAO_MINOR@:@TAO_BETA@
+ -version-number @TAO_MAJOR@:@TAO_MINOR@:@TAO_BETA@ -L. -L$(ACE_ROOT)/lib
 
 libTAO_CosTrading_Serv_la_LIBADD = \
   $(TAO_BUILDDIR)/tao/libTAO_IORTable.la \
@@ -2749,7 +2854,6 @@ libTAO_CosTrading_Serv_la_LIBADD = \
   $(TAO_BUILDDIR)/tao/libTAO_CodecFactory.la \
   libTAO_Svc_Utils.la \
   $(TAO_BUILDDIR)/tao/libTAO_DynamicAny.la \
-  $(TAO_BUILDDIR)/tao/libTAO_Valuetype.la \
   libTAO_CosTrading_Skel.la \
   $(TAO_BUILDDIR)/tao/libTAO_PortableServer.la \
   libTAO_CosTrading.la \
@@ -2783,9 +2887,7 @@ CLEANFILES += \
   TAO_CosTrading_Serv.pc
 
 TAO_CosTrading_Serv.pc: ${top_builddir}/config.status ${srcdir}/TAO_CosTrading_Serv.pc.in
-	${top_builddir}/config.status --file $@:${srcdir}/TAO_CosTrading_Serv.pc.in
-
-endif BUILD_EXCEPTIONS
+	${top_builddir}/config.status --file "$@":${srcdir}/TAO_CosTrading_Serv.pc.in
 
 EXTRA_DIST += \
   CosTrading_Serv.rc \
@@ -2794,15 +2896,16 @@ EXTRA_DIST += \
 
 ## Makefile.DsLogAdmin_IDL.am
 
-if BUILD_EXCEPTIONS
-
 BUILT_SOURCES += \
   DsLogAdminC.cpp \
   DsLogAdminC.h \
   DsLogAdminC.inl \
   DsLogAdminS.cpp \
   DsLogAdminS.h \
-  DsLogAdminS.inl
+  DsLogAdminS.inl \
+  DsLogAdminS_T.cpp \
+  DsLogAdminS_T.h \
+  DsLogAdminS_T.inl
 
 CLEANFILES += \
   DsLogAdmin-stamp \
@@ -2811,13 +2914,16 @@ CLEANFILES += \
   DsLogAdminC.inl \
   DsLogAdminS.cpp \
   DsLogAdminS.h \
-  DsLogAdminS.inl
+  DsLogAdminS.inl \
+  DsLogAdminS_T.cpp \
+  DsLogAdminS_T.h \
+  DsLogAdminS_T.inl
 
-DsLogAdminC.cpp DsLogAdminC.h DsLogAdminC.inl DsLogAdminS.cpp DsLogAdminS.h DsLogAdminS.inl: DsLogAdmin-stamp
+DsLogAdminC.cpp DsLogAdminC.h DsLogAdminC.inl DsLogAdminS.cpp DsLogAdminS.h DsLogAdminS.inl DsLogAdminS_T.cpp DsLogAdminS_T.h DsLogAdminS_T.inl: DsLogAdmin-stamp
 
 DsLogAdmin-stamp: $(srcdir)/DsLogAdmin.idl $(TAO_IDL_DEP)
-	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs -Wb,versioning_begin=TAO_BEGIN_VERSIONED_NAMESPACE_DECL -Wb,versioning_end=TAO_END_VERSIONED_NAMESPACE_DECL -Wb,stub_export_macro=TAO_Log_Export -Wb,stub_export_include=orbsvcs/Log/log_export.h -Wb,skel_export_macro=TAO_Log_Skel_Export -Wb,skel_export_include=orbsvcs/Log/log_skel_export.h $(srcdir)/DsLogAdmin.idl
-	@touch $@
+	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs -GT -Wb,versioning_begin=TAO_BEGIN_VERSIONED_NAMESPACE_DECL -Wb,versioning_end=TAO_END_VERSIONED_NAMESPACE_DECL -Wb,stub_export_macro=TAO_Log_Export -Wb,stub_export_include=orbsvcs/Log/log_export.h -Wb,skel_export_macro=TAO_Log_Skel_Export -Wb,skel_export_include=orbsvcs/Log/log_skel_export.h $(srcdir)/DsLogAdmin.idl
+	@touch "$@"
 
 BUILT_SOURCES += \
   DsLogNotificationC.cpp \
@@ -2825,7 +2931,10 @@ BUILT_SOURCES += \
   DsLogNotificationC.inl \
   DsLogNotificationS.cpp \
   DsLogNotificationS.h \
-  DsLogNotificationS.inl
+  DsLogNotificationS.inl \
+  DsLogNotificationS_T.cpp \
+  DsLogNotificationS_T.h \
+  DsLogNotificationS_T.inl
 
 CLEANFILES += \
   DsLogNotification-stamp \
@@ -2834,23 +2943,23 @@ CLEANFILES += \
   DsLogNotificationC.inl \
   DsLogNotificationS.cpp \
   DsLogNotificationS.h \
-  DsLogNotificationS.inl
+  DsLogNotificationS.inl \
+  DsLogNotificationS_T.cpp \
+  DsLogNotificationS_T.h \
+  DsLogNotificationS_T.inl
 
-DsLogNotificationC.cpp DsLogNotificationC.h DsLogNotificationC.inl DsLogNotificationS.cpp DsLogNotificationS.h DsLogNotificationS.inl: DsLogNotification-stamp
+DsLogNotificationC.cpp DsLogNotificationC.h DsLogNotificationC.inl DsLogNotificationS.cpp DsLogNotificationS.h DsLogNotificationS.inl DsLogNotificationS_T.cpp DsLogNotificationS_T.h DsLogNotificationS_T.inl: DsLogNotification-stamp
 
 DsLogNotification-stamp: $(srcdir)/DsLogNotification.idl $(TAO_IDL_DEP)
-	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs -Wb,versioning_begin=TAO_BEGIN_VERSIONED_NAMESPACE_DECL -Wb,versioning_end=TAO_END_VERSIONED_NAMESPACE_DECL -Wb,stub_export_macro=TAO_Log_Export -Wb,stub_export_include=orbsvcs/Log/log_export.h -Wb,skel_export_macro=TAO_Log_Skel_Export -Wb,skel_export_include=orbsvcs/Log/log_skel_export.h $(srcdir)/DsLogNotification.idl
-	@touch $@
+	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs -GT -Wb,versioning_begin=TAO_BEGIN_VERSIONED_NAMESPACE_DECL -Wb,versioning_end=TAO_END_VERSIONED_NAMESPACE_DECL -Wb,stub_export_macro=TAO_Log_Export -Wb,stub_export_include=orbsvcs/Log/log_export.h -Wb,skel_export_macro=TAO_Log_Skel_Export -Wb,skel_export_include=orbsvcs/Log/log_skel_export.h $(srcdir)/DsLogNotification.idl
+	@touch "$@"
+
 
 nobase_include_HEADERS += \
   DsLogAdmin.idl \
   DsLogNotification.idl
 
-endif BUILD_EXCEPTIONS
-
 ## Makefile.DsLogAdmin.am
-
-if BUILD_EXCEPTIONS
 
 lib_LTLIBRARIES += libTAO_DsLogAdmin.la
 
@@ -2868,7 +2977,7 @@ libTAO_DsLogAdmin_la_SOURCES = \
   DsLogNotificationC.cpp
 
 libTAO_DsLogAdmin_la_LDFLAGS = \
- -version-number @TAO_MAJOR@:@TAO_MINOR@:@TAO_BETA@
+ -version-number @TAO_MAJOR@:@TAO_MINOR@:@TAO_BETA@ -L. -L$(ACE_ROOT)/lib
 
 libTAO_DsLogAdmin_la_LIBADD = \
   $(TAO_BUILDDIR)/tao/libTAO_AnyTypeCode.la \
@@ -2889,9 +2998,7 @@ CLEANFILES += \
   TAO_DsLogAdmin.pc
 
 TAO_DsLogAdmin.pc: ${top_builddir}/config.status ${srcdir}/TAO_DsLogAdmin.pc.in
-	${top_builddir}/config.status --file $@:${srcdir}/TAO_DsLogAdmin.pc.in
-
-endif BUILD_EXCEPTIONS
+	${top_builddir}/config.status --file "$@":${srcdir}/TAO_DsLogAdmin.pc.in
 
 EXTRA_DIST += \
   DsLogAdmin.rc \
@@ -2900,7 +3007,7 @@ EXTRA_DIST += \
 
 ## Makefile.DsEventLogAdmin_IDL.am
 
-if BUILD_EXCEPTIONS
+if !BUILD_MINIMUM_CORBA
 
 BUILT_SOURCES += \
   DsEventLogAdminC.cpp \
@@ -2908,7 +3015,10 @@ BUILT_SOURCES += \
   DsEventLogAdminC.inl \
   DsEventLogAdminS.cpp \
   DsEventLogAdminS.h \
-  DsEventLogAdminS.inl
+  DsEventLogAdminS.inl \
+  DsEventLogAdminS_T.cpp \
+  DsEventLogAdminS_T.h \
+  DsEventLogAdminS_T.inl
 
 CLEANFILES += \
   DsEventLogAdmin-stamp \
@@ -2917,22 +3027,26 @@ CLEANFILES += \
   DsEventLogAdminC.inl \
   DsEventLogAdminS.cpp \
   DsEventLogAdminS.h \
-  DsEventLogAdminS.inl
+  DsEventLogAdminS.inl \
+  DsEventLogAdminS_T.cpp \
+  DsEventLogAdminS_T.h \
+  DsEventLogAdminS_T.inl
 
-DsEventLogAdminC.cpp DsEventLogAdminC.h DsEventLogAdminC.inl DsEventLogAdminS.cpp DsEventLogAdminS.h DsEventLogAdminS.inl: DsEventLogAdmin-stamp
+DsEventLogAdminC.cpp DsEventLogAdminC.h DsEventLogAdminC.inl DsEventLogAdminS.cpp DsEventLogAdminS.h DsEventLogAdminS.inl DsEventLogAdminS_T.cpp DsEventLogAdminS_T.h DsEventLogAdminS_T.inl: DsEventLogAdmin-stamp
 
 DsEventLogAdmin-stamp: $(srcdir)/DsEventLogAdmin.idl $(TAO_IDL_DEP)
-	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs -Wb,versioning_begin=TAO_BEGIN_VERSIONED_NAMESPACE_DECL -Wb,versioning_end=TAO_END_VERSIONED_NAMESPACE_DECL -Wb,stub_export_macro=TAO_EventLog_Export -Wb,stub_export_include=orbsvcs/Log/eventlog_export.h -Wb,skel_export_macro=TAO_EventLog_Skel_Export -Wb,skel_export_include=orbsvcs/Log/eventlog_skel_export.h $(srcdir)/DsEventLogAdmin.idl
-	@touch $@
+	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs -GT -Wb,versioning_begin=TAO_BEGIN_VERSIONED_NAMESPACE_DECL -Wb,versioning_end=TAO_END_VERSIONED_NAMESPACE_DECL -Wb,stub_export_macro=TAO_EventLog_Export -Wb,stub_export_include=orbsvcs/Log/eventlog_export.h -Wb,skel_export_macro=TAO_EventLog_Skel_Export -Wb,skel_export_include=orbsvcs/Log/eventlog_skel_export.h $(srcdir)/DsEventLogAdmin.idl
+	@touch "$@"
+
 
 nobase_include_HEADERS += \
   DsEventLogAdmin.idl
 
-endif BUILD_EXCEPTIONS
+endif !BUILD_MINIMUM_CORBA
 
 ## Makefile.DsEventLogAdmin.am
 
-if BUILD_EXCEPTIONS
+if !BUILD_MINIMUM_CORBA
 
 lib_LTLIBRARIES += libTAO_DsEventLogAdmin.la
 
@@ -2950,7 +3064,7 @@ libTAO_DsEventLogAdmin_la_SOURCES = \
   DsEventLogAdminC.cpp
 
 libTAO_DsEventLogAdmin_la_LDFLAGS = \
- -version-number @TAO_MAJOR@:@TAO_MINOR@:@TAO_BETA@
+ -version-number @TAO_MAJOR@:@TAO_MINOR@:@TAO_BETA@ -L. -L$(ACE_ROOT)/lib
 
 libTAO_DsEventLogAdmin_la_LIBADD = \
   libTAO_CosEvent.la \
@@ -2971,9 +3085,9 @@ CLEANFILES += \
   TAO_DsEventLogAdmin.pc
 
 TAO_DsEventLogAdmin.pc: ${top_builddir}/config.status ${srcdir}/TAO_DsEventLogAdmin.pc.in
-	${top_builddir}/config.status --file $@:${srcdir}/TAO_DsEventLogAdmin.pc.in
+	${top_builddir}/config.status --file "$@":${srcdir}/TAO_DsEventLogAdmin.pc.in
 
-endif BUILD_EXCEPTIONS
+endif !BUILD_MINIMUM_CORBA
 
 EXTRA_DIST += \
   DsEventLogAdmin.rc \
@@ -2981,8 +3095,6 @@ EXTRA_DIST += \
 
 
 ## Makefile.DsLogAdmin_Skel.am
-
-if BUILD_EXCEPTIONS
 
 lib_LTLIBRARIES += libTAO_DsLogAdmin_Skel.la
 
@@ -3000,7 +3112,7 @@ libTAO_DsLogAdmin_Skel_la_SOURCES = \
   DsLogNotificationS.cpp
 
 libTAO_DsLogAdmin_Skel_la_LDFLAGS = \
- -version-number @TAO_MAJOR@:@TAO_MINOR@:@TAO_BETA@
+ -version-number @TAO_MAJOR@:@TAO_MINOR@:@TAO_BETA@ -L. -L$(ACE_ROOT)/lib
 
 libTAO_DsLogAdmin_Skel_la_LIBADD = \
   $(TAO_BUILDDIR)/tao/libTAO_PortableServer.la \
@@ -3012,8 +3124,14 @@ libTAO_DsLogAdmin_Skel_la_LIBADD = \
 nobase_include_HEADERS += \
   DsLogAdminS.h \
   DsLogAdminS.inl \
+  DsLogAdminS_T.cpp \
+  DsLogAdminS_T.h \
+  DsLogAdminS_T.inl \
   DsLogNotificationS.h \
   DsLogNotificationS.inl \
+  DsLogNotificationS_T.cpp \
+  DsLogNotificationS_T.h \
+  DsLogNotificationS_T.inl \
   Log/log_skel_export.h
 
 pkgconfig_DATA += \
@@ -3023,17 +3141,13 @@ CLEANFILES += \
   TAO_DsLogAdmin_Skel.pc
 
 TAO_DsLogAdmin_Skel.pc: ${top_builddir}/config.status ${srcdir}/TAO_DsLogAdmin_Skel.pc.in
-	${top_builddir}/config.status --file $@:${srcdir}/TAO_DsLogAdmin_Skel.pc.in
-
-endif BUILD_EXCEPTIONS
+	${top_builddir}/config.status --file "$@":${srcdir}/TAO_DsLogAdmin_Skel.pc.in
 
 EXTRA_DIST += \
   TAO_DsLogAdmin_Skel.pc.in
 
 
 ## Makefile.DsLogAdmin_Serv.am
-
-if BUILD_EXCEPTIONS
 
 lib_LTLIBRARIES += libTAO_DsLogAdmin_Serv.la
 
@@ -3065,7 +3179,7 @@ libTAO_DsLogAdmin_Serv_la_SOURCES = \
   Log/Log_i.cpp
 
 libTAO_DsLogAdmin_Serv_la_LDFLAGS = \
- -version-number @TAO_MAJOR@:@TAO_MINOR@:@TAO_BETA@
+ -version-number @TAO_MAJOR@:@TAO_MINOR@:@TAO_BETA@ -L. -L$(ACE_ROOT)/lib
 
 libTAO_DsLogAdmin_Serv_la_LIBADD = \
   libTAO_Svc_Utils.la \
@@ -3074,7 +3188,6 @@ libTAO_DsLogAdmin_Serv_la_LIBADD = \
   $(TAO_BUILDDIR)/tao/libTAO_CodecFactory.la \
   libTAO_ETCL.la \
   $(TAO_BUILDDIR)/tao/libTAO_DynamicAny.la \
-  $(TAO_BUILDDIR)/tao/libTAO_Valuetype.la \
   libTAO_DsLogAdmin_Skel.la \
   $(TAO_BUILDDIR)/tao/libTAO_PortableServer.la \
   libTAO_DsLogAdmin.la \
@@ -3110,9 +3223,7 @@ CLEANFILES += \
   TAO_DsLogAdmin_Serv.pc
 
 TAO_DsLogAdmin_Serv.pc: ${top_builddir}/config.status ${srcdir}/TAO_DsLogAdmin_Serv.pc.in
-	${top_builddir}/config.status --file $@:${srcdir}/TAO_DsLogAdmin_Serv.pc.in
-
-endif BUILD_EXCEPTIONS
+	${top_builddir}/config.status --file "$@":${srcdir}/TAO_DsLogAdmin_Serv.pc.in
 
 EXTRA_DIST += \
   TAO_DsLogAdmin_Serv.pc.in
@@ -3120,7 +3231,7 @@ EXTRA_DIST += \
 
 ## Makefile.DsEventLogAdmin_Skel.am
 
-if BUILD_EXCEPTIONS
+if !BUILD_MINIMUM_CORBA
 
 lib_LTLIBRARIES += libTAO_DsEventLogAdmin_Skel.la
 
@@ -3138,7 +3249,7 @@ libTAO_DsEventLogAdmin_Skel_la_SOURCES = \
   DsEventLogAdminS.cpp
 
 libTAO_DsEventLogAdmin_Skel_la_LDFLAGS = \
- -version-number @TAO_MAJOR@:@TAO_MINOR@:@TAO_BETA@
+ -version-number @TAO_MAJOR@:@TAO_MINOR@:@TAO_BETA@ -L. -L$(ACE_ROOT)/lib
 
 libTAO_DsEventLogAdmin_Skel_la_LIBADD = \
   libTAO_CosEvent_Skel.la \
@@ -3154,6 +3265,9 @@ libTAO_DsEventLogAdmin_Skel_la_LIBADD = \
 nobase_include_HEADERS += \
   DsEventLogAdminS.h \
   DsEventLogAdminS.inl \
+  DsEventLogAdminS_T.cpp \
+  DsEventLogAdminS_T.h \
+  DsEventLogAdminS_T.inl \
   Log/eventlog_skel_export.h
 
 pkgconfig_DATA += \
@@ -3163,9 +3277,9 @@ CLEANFILES += \
   TAO_DsEventLogAdmin_Skel.pc
 
 TAO_DsEventLogAdmin_Skel.pc: ${top_builddir}/config.status ${srcdir}/TAO_DsEventLogAdmin_Skel.pc.in
-	${top_builddir}/config.status --file $@:${srcdir}/TAO_DsEventLogAdmin_Skel.pc.in
+	${top_builddir}/config.status --file "$@":${srcdir}/TAO_DsEventLogAdmin_Skel.pc.in
 
-endif BUILD_EXCEPTIONS
+endif !BUILD_MINIMUM_CORBA
 
 EXTRA_DIST += \
   TAO_DsEventLogAdmin_Skel.pc.in
@@ -3174,7 +3288,7 @@ EXTRA_DIST += \
 ## Makefile.DsEventLogAdmin_Serv.am
 
 if BUILD_CORBA_MESSAGING
-if BUILD_EXCEPTIONS
+if !BUILD_MINIMUM_CORBA
 
 lib_LTLIBRARIES += libTAO_DsEventLogAdmin_Serv.la
 
@@ -3195,7 +3309,7 @@ libTAO_DsEventLogAdmin_Serv_la_SOURCES = \
   Log/EventLog_i.cpp
 
 libTAO_DsEventLogAdmin_Serv_la_LDFLAGS = \
- -version-number @TAO_MAJOR@:@TAO_MINOR@:@TAO_BETA@
+ -version-number @TAO_MAJOR@:@TAO_MINOR@:@TAO_BETA@ -L. -L$(ACE_ROOT)/lib
 
 libTAO_DsEventLogAdmin_Serv_la_LIBADD = \
   libTAO_CosEvent_Serv.la \
@@ -3203,6 +3317,7 @@ libTAO_DsEventLogAdmin_Serv_la_LIBADD = \
   $(TAO_BUILDDIR)/tao/libTAO_IFR_Client.la \
   $(TAO_BUILDDIR)/tao/libTAO_DynamicInterface.la \
   $(TAO_BUILDDIR)/tao/libTAO_Messaging.la \
+  $(TAO_BUILDDIR)/tao/libTAO_Valuetype.la \
   libTAO_DsLogAdmin_Serv.la \
   $(TAO_BUILDDIR)/tao/libTAO_Utils.la \
   $(TAO_BUILDDIR)/tao/libTAO_PI.la \
@@ -3210,7 +3325,6 @@ libTAO_DsEventLogAdmin_Serv_la_LIBADD = \
   libTAO_Svc_Utils.la \
   libTAO_ETCL.la \
   $(TAO_BUILDDIR)/tao/libTAO_DynamicAny.la \
-  $(TAO_BUILDDIR)/tao/libTAO_Valuetype.la \
   libTAO_DsEventLogAdmin_Skel.la \
   libTAO_CosEvent_Skel.la \
   libTAO_DsLogAdmin_Skel.la \
@@ -3236,9 +3350,9 @@ CLEANFILES += \
   TAO_DsEventLogAdmin_Serv.pc
 
 TAO_DsEventLogAdmin_Serv.pc: ${top_builddir}/config.status ${srcdir}/TAO_DsEventLogAdmin_Serv.pc.in
-	${top_builddir}/config.status --file $@:${srcdir}/TAO_DsEventLogAdmin_Serv.pc.in
+	${top_builddir}/config.status --file "$@":${srcdir}/TAO_DsEventLogAdmin_Serv.pc.in
 
-endif BUILD_EXCEPTIONS
+endif !BUILD_MINIMUM_CORBA
 endif BUILD_CORBA_MESSAGING
 
 EXTRA_DIST += \
@@ -3247,7 +3361,7 @@ EXTRA_DIST += \
 
 ## Makefile.DsNotifyLogAdmin_IDL.am
 
-if BUILD_EXCEPTIONS
+if !BUILD_MINIMUM_CORBA
 
 BUILT_SOURCES += \
   DsNotifyLogAdminC.cpp \
@@ -3255,7 +3369,10 @@ BUILT_SOURCES += \
   DsNotifyLogAdminC.inl \
   DsNotifyLogAdminS.cpp \
   DsNotifyLogAdminS.h \
-  DsNotifyLogAdminS.inl
+  DsNotifyLogAdminS.inl \
+  DsNotifyLogAdminS_T.cpp \
+  DsNotifyLogAdminS_T.h \
+  DsNotifyLogAdminS_T.inl
 
 CLEANFILES += \
   DsNotifyLogAdmin-stamp \
@@ -3264,22 +3381,26 @@ CLEANFILES += \
   DsNotifyLogAdminC.inl \
   DsNotifyLogAdminS.cpp \
   DsNotifyLogAdminS.h \
-  DsNotifyLogAdminS.inl
+  DsNotifyLogAdminS.inl \
+  DsNotifyLogAdminS_T.cpp \
+  DsNotifyLogAdminS_T.h \
+  DsNotifyLogAdminS_T.inl
 
-DsNotifyLogAdminC.cpp DsNotifyLogAdminC.h DsNotifyLogAdminC.inl DsNotifyLogAdminS.cpp DsNotifyLogAdminS.h DsNotifyLogAdminS.inl: DsNotifyLogAdmin-stamp
+DsNotifyLogAdminC.cpp DsNotifyLogAdminC.h DsNotifyLogAdminC.inl DsNotifyLogAdminS.cpp DsNotifyLogAdminS.h DsNotifyLogAdminS.inl DsNotifyLogAdminS_T.cpp DsNotifyLogAdminS_T.h DsNotifyLogAdminS_T.inl: DsNotifyLogAdmin-stamp
 
 DsNotifyLogAdmin-stamp: $(srcdir)/DsNotifyLogAdmin.idl $(TAO_IDL_DEP)
-	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs -Wb,versioning_begin=TAO_BEGIN_VERSIONED_NAMESPACE_DECL -Wb,versioning_end=TAO_END_VERSIONED_NAMESPACE_DECL -Wb,stub_export_macro=TAO_NotifyLog_Export -Wb,stub_export_include=orbsvcs/Log/notifylog_export.h -Wb,skel_export_macro=TAO_NotifyLog_Skel_Export -Wb,skel_export_include=orbsvcs/Log/notifylog_skel_export.h $(srcdir)/DsNotifyLogAdmin.idl
-	@touch $@
+	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs -GT -Wb,versioning_begin=TAO_BEGIN_VERSIONED_NAMESPACE_DECL -Wb,versioning_end=TAO_END_VERSIONED_NAMESPACE_DECL -Wb,stub_export_macro=TAO_NotifyLog_Export -Wb,stub_export_include=orbsvcs/Log/notifylog_export.h -Wb,skel_export_macro=TAO_NotifyLog_Skel_Export -Wb,skel_export_include=orbsvcs/Log/notifylog_skel_export.h $(srcdir)/DsNotifyLogAdmin.idl
+	@touch "$@"
+
 
 nobase_include_HEADERS += \
   DsNotifyLogAdmin.idl
 
-endif BUILD_EXCEPTIONS
+endif !BUILD_MINIMUM_CORBA
 
 ## Makefile.DsNotifyLogAdmin.am
 
-if BUILD_EXCEPTIONS
+if !BUILD_MINIMUM_CORBA
 
 lib_LTLIBRARIES += libTAO_DsNotifyLogAdmin.la
 
@@ -3297,7 +3418,7 @@ libTAO_DsNotifyLogAdmin_la_SOURCES = \
   DsNotifyLogAdminC.cpp
 
 libTAO_DsNotifyLogAdmin_la_LDFLAGS = \
- -version-number @TAO_MAJOR@:@TAO_MINOR@:@TAO_BETA@
+ -version-number @TAO_MAJOR@:@TAO_MINOR@:@TAO_BETA@ -L. -L$(ACE_ROOT)/lib
 
 libTAO_DsNotifyLogAdmin_la_LIBADD = \
   libTAO_CosNotification.la \
@@ -3320,9 +3441,9 @@ CLEANFILES += \
   TAO_DsNotifyLogAdmin.pc
 
 TAO_DsNotifyLogAdmin.pc: ${top_builddir}/config.status ${srcdir}/TAO_DsNotifyLogAdmin.pc.in
-	${top_builddir}/config.status --file $@:${srcdir}/TAO_DsNotifyLogAdmin.pc.in
+	${top_builddir}/config.status --file "$@":${srcdir}/TAO_DsNotifyLogAdmin.pc.in
 
-endif BUILD_EXCEPTIONS
+endif !BUILD_MINIMUM_CORBA
 
 EXTRA_DIST += \
   DsNotifyLogAdmin.rc \
@@ -3331,7 +3452,7 @@ EXTRA_DIST += \
 
 ## Makefile.DsNotifyLogAdmin_Skel.am
 
-if BUILD_EXCEPTIONS
+if !BUILD_MINIMUM_CORBA
 
 lib_LTLIBRARIES += libTAO_DsNotifyLogAdmin_Skel.la
 
@@ -3349,7 +3470,7 @@ libTAO_DsNotifyLogAdmin_Skel_la_SOURCES = \
   DsNotifyLogAdminS.cpp
 
 libTAO_DsNotifyLogAdmin_Skel_la_LDFLAGS = \
- -version-number @TAO_MAJOR@:@TAO_MINOR@:@TAO_BETA@
+ -version-number @TAO_MAJOR@:@TAO_MINOR@:@TAO_BETA@ -L. -L$(ACE_ROOT)/lib
 
 libTAO_DsNotifyLogAdmin_Skel_la_LIBADD = \
   libTAO_CosNotification_Skel.la \
@@ -3369,6 +3490,9 @@ libTAO_DsNotifyLogAdmin_Skel_la_LIBADD = \
 nobase_include_HEADERS += \
   DsNotifyLogAdminS.h \
   DsNotifyLogAdminS.inl \
+  DsNotifyLogAdminS_T.cpp \
+  DsNotifyLogAdminS_T.h \
+  DsNotifyLogAdminS_T.inl \
   Log/notifylog_skel_export.h
 
 pkgconfig_DATA += \
@@ -3378,9 +3502,9 @@ CLEANFILES += \
   TAO_DsNotifyLogAdmin_Skel.pc
 
 TAO_DsNotifyLogAdmin_Skel.pc: ${top_builddir}/config.status ${srcdir}/TAO_DsNotifyLogAdmin_Skel.pc.in
-	${top_builddir}/config.status --file $@:${srcdir}/TAO_DsNotifyLogAdmin_Skel.pc.in
+	${top_builddir}/config.status --file "$@":${srcdir}/TAO_DsNotifyLogAdmin_Skel.pc.in
 
-endif BUILD_EXCEPTIONS
+endif !BUILD_MINIMUM_CORBA
 
 EXTRA_DIST += \
   TAO_DsNotifyLogAdmin_Skel.pc.in
@@ -3388,7 +3512,7 @@ EXTRA_DIST += \
 
 ## Makefile.DsNotifyLogAdmin_Serv.am
 
-if BUILD_EXCEPTIONS
+if !BUILD_MINIMUM_CORBA
 
 lib_LTLIBRARIES += libTAO_DsNotifyLogAdmin_Serv.la
 
@@ -3409,7 +3533,7 @@ libTAO_DsNotifyLogAdmin_Serv_la_SOURCES = \
   Log/NotifyLog_i.cpp
 
 libTAO_DsNotifyLogAdmin_Serv_la_LDFLAGS = \
- -version-number @TAO_MAJOR@:@TAO_MINOR@:@TAO_BETA@
+ -version-number @TAO_MAJOR@:@TAO_MINOR@:@TAO_BETA@ -L. -L$(ACE_ROOT)/lib
 
 libTAO_DsNotifyLogAdmin_Serv_la_LIBADD = \
   libTAO_DsLogAdmin_Serv.la \
@@ -3419,7 +3543,6 @@ libTAO_DsNotifyLogAdmin_Serv_la_LIBADD = \
   libTAO_Svc_Utils.la \
   libTAO_ETCL.la \
   $(TAO_BUILDDIR)/tao/libTAO_DynamicAny.la \
-  $(TAO_BUILDDIR)/tao/libTAO_Valuetype.la \
   libTAO_DsNotifyLogAdmin_Skel.la \
   libTAO_CosNotification_Skel.la \
   libTAO_DsEventLogAdmin_Skel.la \
@@ -3449,18 +3572,69 @@ CLEANFILES += \
   TAO_DsNotifyLogAdmin_Serv.pc
 
 TAO_DsNotifyLogAdmin_Serv.pc: ${top_builddir}/config.status ${srcdir}/TAO_DsNotifyLogAdmin_Serv.pc.in
-	${top_builddir}/config.status --file $@:${srcdir}/TAO_DsNotifyLogAdmin_Serv.pc.in
+	${top_builddir}/config.status --file "$@":${srcdir}/TAO_DsNotifyLogAdmin_Serv.pc.in
 
-endif BUILD_EXCEPTIONS
+endif !BUILD_MINIMUM_CORBA
 
 EXTRA_DIST += \
   TAO_DsNotifyLogAdmin_Serv.pc.in
 
 
+## Makefile.ESF.am
+
+
+nobase_include_HEADERS += \
+  ESF/ESF_Busy_Lock.cpp \
+  ESF/ESF_Busy_Lock.h \
+  ESF/ESF_Busy_Lock.inl\
+  ESF/ESF_Copy_On_Read.cpp \
+  ESF/ESF_Copy_On_Read.h \
+  ESF/ESF_Copy_On_Write.cpp \
+  ESF/ESF_Copy_On_Write.h \
+  ESF/ESF_Copy_On_Write.inl\
+  ESF/ESF_Defaults.h \
+  ESF/ESF_Delayed_Changes.cpp \
+  ESF/ESF_Delayed_Changes.h \
+  ESF/ESF_Delayed_Changes.inl\
+  ESF/ESF_Delayed_Command.cpp \
+  ESF/ESF_Delayed_Command.h \
+  ESF/ESF_Delayed_Command.inl\
+  ESF/ESF_Immediate_Changes.cpp \
+  ESF/ESF_Immediate_Changes.h \
+  ESF/ESF_Immediate_Changes.inl\
+  ESF/ESF_Peer_Admin.cpp \
+  ESF/ESF_Peer_Admin.h \
+  ESF/ESF_Peer_Workers.cpp \
+  ESF/ESF_Peer_Workers.h \
+  ESF/ESF_Peer_Workers.inl\
+  ESF/ESF_Proxy_Admin.cpp \
+  ESF/ESF_Proxy_Admin.h \
+  ESF/ESF_Proxy_Admin.inl\
+  ESF/ESF_Proxy_Collection.cpp \
+  ESF/ESF_Proxy_Collection.h \
+  ESF/ESF_Proxy_List.cpp \
+  ESF/ESF_Proxy_List.h \
+  ESF/ESF_Proxy_List.inl\
+  ESF/ESF_Proxy_RB_Tree.cpp \
+  ESF/ESF_Proxy_RB_Tree.h \
+  ESF/ESF_Proxy_RB_Tree.inl\
+  ESF/ESF_Proxy_RefCount_Guard.cpp \
+  ESF/ESF_Proxy_RefCount_Guard.h \
+  ESF/ESF_Proxy_RefCount_Guard.inl\
+  ESF/ESF_RefCount_Guard.cpp \
+  ESF/ESF_RefCount_Guard.h \
+  ESF/ESF_RefCount_Guard.inl\
+  ESF/ESF_Shutdown_Proxy.cpp \
+  ESF/ESF_Shutdown_Proxy.h \
+  ESF/ESF_Shutdown_Proxy.inl\
+  ESF/ESF_Worker.cpp \
+  ESF/ESF_Worker.h \
+  ESF/esf_export.h
+
 ## Makefile.FTORB_Utils.am
 
 if BUILD_CORBA_MESSAGING
-if BUILD_EXCEPTIONS
+if !BUILD_MINIMUM_CORBA
 
 BUILT_SOURCES += \
   FT_CORBA_ORBC.cpp \
@@ -3468,7 +3642,10 @@ BUILT_SOURCES += \
   FT_CORBA_ORBC.inl \
   FT_CORBA_ORBS.cpp \
   FT_CORBA_ORBS.h \
-  FT_CORBA_ORBS.inl
+  FT_CORBA_ORBS.inl \
+  FT_CORBA_ORBS_T.cpp \
+  FT_CORBA_ORBS_T.h \
+  FT_CORBA_ORBS_T.inl
 
 CLEANFILES += \
   FT_CORBA_ORB-stamp \
@@ -3477,13 +3654,16 @@ CLEANFILES += \
   FT_CORBA_ORBC.inl \
   FT_CORBA_ORBS.cpp \
   FT_CORBA_ORBS.h \
-  FT_CORBA_ORBS.inl
+  FT_CORBA_ORBS.inl \
+  FT_CORBA_ORBS_T.cpp \
+  FT_CORBA_ORBS_T.h \
+  FT_CORBA_ORBS_T.inl
 
-FT_CORBA_ORBC.cpp FT_CORBA_ORBC.h FT_CORBA_ORBC.inl FT_CORBA_ORBS.cpp FT_CORBA_ORBS.h FT_CORBA_ORBS.inl: FT_CORBA_ORB-stamp
+FT_CORBA_ORBC.cpp FT_CORBA_ORBC.h FT_CORBA_ORBC.inl FT_CORBA_ORBS.cpp FT_CORBA_ORBS.h FT_CORBA_ORBS.inl FT_CORBA_ORBS_T.cpp FT_CORBA_ORBS_T.h FT_CORBA_ORBS_T.inl: FT_CORBA_ORB-stamp
 
 FT_CORBA_ORB-stamp: $(srcdir)/FT_CORBA_ORB.idl $(TAO_IDL_DEP)
-	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs -Wb,versioning_begin=TAO_BEGIN_VERSIONED_NAMESPACE_DECL -Wb,versioning_end=TAO_END_VERSIONED_NAMESPACE_DECL -Wb,skel_export_include=tao/PortableServer/PolicyS.h -Wb,export_macro=TAO_FT_ORB_Utils_Export -Wb,export_include=orbsvcs/FaultTolerance/FT_ORB_Utils_export.h $(srcdir)/FT_CORBA_ORB.idl
-	@touch $@
+	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs -GT -Wb,versioning_begin=TAO_BEGIN_VERSIONED_NAMESPACE_DECL -Wb,versioning_end=TAO_END_VERSIONED_NAMESPACE_DECL -Wb,skel_export_include=tao/PortableServer/PolicyS.h -Wb,export_macro=TAO_FT_ORB_Utils_Export -Wb,export_include=orbsvcs/FaultTolerance/FT_ORB_Utils_export.h $(srcdir)/FT_CORBA_ORB.idl
+	@touch "$@"
 
 lib_LTLIBRARIES += libTAO_FTORB_Utils.la
 
@@ -3502,7 +3682,7 @@ libTAO_FTORB_Utils_la_SOURCES = \
   FaultTolerance/FT_IOGR_Property.cpp
 
 libTAO_FTORB_Utils_la_LDFLAGS = \
- -version-number @TAO_MAJOR@:@TAO_MINOR@:@TAO_BETA@
+ -version-number @TAO_MAJOR@:@TAO_MINOR@:@TAO_BETA@ -L. -L$(ACE_ROOT)/lib
 
 libTAO_FTORB_Utils_la_LIBADD = \
   libTAO_PortableGroup.la \
@@ -3518,12 +3698,14 @@ libTAO_FTORB_Utils_la_LIBADD = \
   $(ACE_BUILDDIR)/ace/libACE.la
 
 nobase_include_HEADERS += \
-  Channel_Clients_T.cpp \
   FT_CORBA_ORB.idl \
   FT_CORBA_ORBC.h \
   FT_CORBA_ORBC.inl \
   FT_CORBA_ORBS.h \
   FT_CORBA_ORBS.inl \
+  FT_CORBA_ORBS_T.cpp \
+  FT_CORBA_ORBS_T.h \
+  FT_CORBA_ORBS_T.inl \
   FaultTolerance/FT_IOGR_Property.h \
   FaultTolerance/FT_IOGR_Property.inl \
   FaultTolerance/FT_ORB_Utils_export.h
@@ -3535,9 +3717,9 @@ CLEANFILES += \
   TAO_FTORB_Utils.pc
 
 TAO_FTORB_Utils.pc: ${top_builddir}/config.status ${srcdir}/TAO_FTORB_Utils.pc.in
-	${top_builddir}/config.status --file $@:${srcdir}/TAO_FTORB_Utils.pc.in
+	${top_builddir}/config.status --file "$@":${srcdir}/TAO_FTORB_Utils.pc.in
 
-endif BUILD_EXCEPTIONS
+endif !BUILD_MINIMUM_CORBA
 endif BUILD_CORBA_MESSAGING
 
 EXTRA_DIST += \
@@ -3547,7 +3729,6 @@ EXTRA_DIST += \
 ## Makefile.FTRT_ClientORB.am
 
 if BUILD_CORBA_MESSAGING
-if BUILD_EXCEPTIONS
 
 lib_LTLIBRARIES += libTAO_FTRT_ClientORB.la
 
@@ -3566,7 +3747,7 @@ libTAO_FTRT_ClientORB_la_SOURCES = \
   FtRtEvent/ClientORB/FTRT_ClientORB_Loader.cpp
 
 libTAO_FTRT_ClientORB_la_LDFLAGS = \
- -version-number @TAO_MAJOR@:@TAO_MINOR@:@TAO_BETA@
+ -version-number @TAO_MAJOR@:@TAO_MINOR@:@TAO_BETA@ -L. -L$(ACE_ROOT)/lib
 
 libTAO_FTRT_ClientORB_la_LIBADD = \
   $(TAO_BUILDDIR)/tao/libTAO_Messaging.la \
@@ -3583,12 +3764,9 @@ nobase_include_HEADERS += \
   FtRtEvent/ClientORB/FTRT_ClientORB_Interceptor.h \
   FtRtEvent/ClientORB/FTRT_ClientORB_Loader.h
 
-endif BUILD_EXCEPTIONS
 endif BUILD_CORBA_MESSAGING
 
 ## Makefile.RTEvent.am
-
-if BUILD_EXCEPTIONS
 
 BUILT_SOURCES += \
   RtecDefaultEventDataC.cpp \
@@ -3606,8 +3784,8 @@ CLEANFILES += \
 RtecDefaultEventDataC.cpp RtecDefaultEventDataC.h RtecDefaultEventDataC.inl RtecDefaultEventDataS_T.cpp: RtecDefaultEventData-stamp
 
 RtecDefaultEventData-stamp: $(srcdir)/RtecDefaultEventData.idl $(TAO_IDL_DEP)
-	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs -Wb,versioning_begin=TAO_BEGIN_VERSIONED_NAMESPACE_DECL -Wb,versioning_end=TAO_END_VERSIONED_NAMESPACE_DECL -GT -Wb,stub_export_macro=TAO_RTEvent_Export -Wb,stub_export_include=orbsvcs/Event/event_export.h -Wb,skel_export_macro=TAO_RTEvent_Skel_Export -Wb,skel_export_include=orbsvcs/Event/event_skel_export.h $(srcdir)/RtecDefaultEventData.idl
-	@touch $@
+	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs -GT -Wb,versioning_begin=TAO_BEGIN_VERSIONED_NAMESPACE_DECL -Wb,versioning_end=TAO_END_VERSIONED_NAMESPACE_DECL -Wb,stub_export_macro=TAO_RTEvent_Export -Wb,stub_export_include=orbsvcs/Event/event_export.h -Wb,skel_export_macro=TAO_RTEvent_Skel_Export -Wb,skel_export_include=orbsvcs/Event/event_skel_export.h $(srcdir)/RtecDefaultEventData.idl
+	@touch "$@"
 
 BUILT_SOURCES += \
   RtecEventCommC.cpp \
@@ -3625,8 +3803,8 @@ CLEANFILES += \
 RtecEventCommC.cpp RtecEventCommC.h RtecEventCommC.inl RtecEventCommS_T.cpp: RtecEventComm-stamp
 
 RtecEventComm-stamp: $(srcdir)/RtecEventComm.idl $(TAO_IDL_DEP)
-	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs -Wb,versioning_begin=TAO_BEGIN_VERSIONED_NAMESPACE_DECL -Wb,versioning_end=TAO_END_VERSIONED_NAMESPACE_DECL -GT -Wb,stub_export_macro=TAO_RTEvent_Export -Wb,stub_export_include=orbsvcs/Event/event_export.h -Wb,skel_export_macro=TAO_RTEvent_Skel_Export -Wb,skel_export_include=orbsvcs/Event/event_skel_export.h $(srcdir)/RtecEventComm.idl
-	@touch $@
+	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs -GT -Wb,versioning_begin=TAO_BEGIN_VERSIONED_NAMESPACE_DECL -Wb,versioning_end=TAO_END_VERSIONED_NAMESPACE_DECL -Wb,stub_export_macro=TAO_RTEvent_Export -Wb,stub_export_include=orbsvcs/Event/event_export.h -Wb,skel_export_macro=TAO_RTEvent_Skel_Export -Wb,skel_export_include=orbsvcs/Event/event_skel_export.h $(srcdir)/RtecEventComm.idl
+	@touch "$@"
 
 BUILT_SOURCES += \
   RtecEventChannelAdminC.cpp \
@@ -3644,8 +3822,8 @@ CLEANFILES += \
 RtecEventChannelAdminC.cpp RtecEventChannelAdminC.h RtecEventChannelAdminC.inl RtecEventChannelAdminS_T.cpp: RtecEventChannelAdmin-stamp
 
 RtecEventChannelAdmin-stamp: $(srcdir)/RtecEventChannelAdmin.idl $(TAO_IDL_DEP)
-	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs -Wb,versioning_begin=TAO_BEGIN_VERSIONED_NAMESPACE_DECL -Wb,versioning_end=TAO_END_VERSIONED_NAMESPACE_DECL -GT -Wb,stub_export_macro=TAO_RTEvent_Export -Wb,stub_export_include=orbsvcs/Event/event_export.h -Wb,skel_export_macro=TAO_RTEvent_Skel_Export -Wb,skel_export_include=orbsvcs/Event/event_skel_export.h $(srcdir)/RtecEventChannelAdmin.idl
-	@touch $@
+	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs -GT -Wb,versioning_begin=TAO_BEGIN_VERSIONED_NAMESPACE_DECL -Wb,versioning_end=TAO_END_VERSIONED_NAMESPACE_DECL -Wb,stub_export_macro=TAO_RTEvent_Export -Wb,stub_export_include=orbsvcs/Event/event_export.h -Wb,skel_export_macro=TAO_RTEvent_Skel_Export -Wb,skel_export_include=orbsvcs/Event/event_skel_export.h $(srcdir)/RtecEventChannelAdmin.idl
+	@touch "$@"
 
 BUILT_SOURCES += \
   RtecUDPAdminC.cpp \
@@ -3663,8 +3841,8 @@ CLEANFILES += \
 RtecUDPAdminC.cpp RtecUDPAdminC.h RtecUDPAdminC.inl RtecUDPAdminS_T.cpp: RtecUDPAdmin-stamp
 
 RtecUDPAdmin-stamp: $(srcdir)/RtecUDPAdmin.idl $(TAO_IDL_DEP)
-	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs -Wb,versioning_begin=TAO_BEGIN_VERSIONED_NAMESPACE_DECL -Wb,versioning_end=TAO_END_VERSIONED_NAMESPACE_DECL -GT -Wb,stub_export_macro=TAO_RTEvent_Export -Wb,stub_export_include=orbsvcs/Event/event_export.h -Wb,skel_export_macro=TAO_RTEvent_Skel_Export -Wb,skel_export_include=orbsvcs/Event/event_skel_export.h $(srcdir)/RtecUDPAdmin.idl
-	@touch $@
+	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs -GT -Wb,versioning_begin=TAO_BEGIN_VERSIONED_NAMESPACE_DECL -Wb,versioning_end=TAO_END_VERSIONED_NAMESPACE_DECL -Wb,stub_export_macro=TAO_RTEvent_Export -Wb,stub_export_include=orbsvcs/Event/event_export.h -Wb,skel_export_macro=TAO_RTEvent_Skel_Export -Wb,skel_export_include=orbsvcs/Event/event_skel_export.h $(srcdir)/RtecUDPAdmin.idl
+	@touch "$@"
 
 lib_LTLIBRARIES += libTAO_RTEvent.la
 
@@ -3685,7 +3863,7 @@ libTAO_RTEvent_la_SOURCES = \
   RtecUDPAdminC.cpp
 
 libTAO_RTEvent_la_LDFLAGS = \
- -version-number @TAO_MAJOR@:@TAO_MINOR@:@TAO_BETA@
+ -version-number @TAO_MAJOR@:@TAO_MINOR@:@TAO_BETA@ -L. -L$(ACE_ROOT)/lib
 
 libTAO_RTEvent_la_LIBADD = \
   libTAO_Svc_Utils.la \
@@ -3719,9 +3897,7 @@ CLEANFILES += \
   TAO_RTEvent.pc
 
 TAO_RTEvent.pc: ${top_builddir}/config.status ${srcdir}/TAO_RTEvent.pc.in
-	${top_builddir}/config.status --file $@:${srcdir}/TAO_RTEvent.pc.in
-
-endif BUILD_EXCEPTIONS
+	${top_builddir}/config.status --file "$@":${srcdir}/TAO_RTEvent.pc.in
 
 EXTRA_DIST += \
   RTEvent.rc \
@@ -3731,7 +3907,6 @@ EXTRA_DIST += \
 ## Makefile.RTEvent_Skel.am
 
 if BUILD_CORBA_MESSAGING
-if BUILD_EXCEPTIONS
 
 lib_LTLIBRARIES += libTAO_RTEvent_Skel.la
 
@@ -3751,7 +3926,7 @@ libTAO_RTEvent_Skel_la_SOURCES = \
   RtecUDPAdminS.cpp
 
 libTAO_RTEvent_Skel_la_LDFLAGS = \
- -version-number @TAO_MAJOR@:@TAO_MINOR@:@TAO_BETA@
+ -version-number @TAO_MAJOR@:@TAO_MINOR@:@TAO_BETA@ -L. -L$(ACE_ROOT)/lib
 
 libTAO_RTEvent_Skel_la_LIBADD = \
   libTAO_RTEvent.la \
@@ -3783,9 +3958,8 @@ CLEANFILES += \
   TAO_RTEvent_Skel.pc
 
 TAO_RTEvent_Skel.pc: ${top_builddir}/config.status ${srcdir}/TAO_RTEvent_Skel.pc.in
-	${top_builddir}/config.status --file $@:${srcdir}/TAO_RTEvent_Skel.pc.in
+	${top_builddir}/config.status --file "$@":${srcdir}/TAO_RTEvent_Skel.pc.in
 
-endif BUILD_EXCEPTIONS
 endif BUILD_CORBA_MESSAGING
 
 EXTRA_DIST += \
@@ -3796,7 +3970,6 @@ EXTRA_DIST += \
 ## Makefile.RTEvent_Serv.am
 
 if BUILD_CORBA_MESSAGING
-if BUILD_EXCEPTIONS
 if !BUILD_ACE_FOR_TAO
 
 lib_LTLIBRARIES += libTAO_RTEvent_Serv.la
@@ -3876,7 +4049,6 @@ libTAO_RTEvent_Serv_la_SOURCES = \
   Event/EC_TPC_Factory.cpp \
   Event/EC_TPC_ProxyConsumer.cpp \
   Event/EC_TPC_ProxySupplier.cpp \
-  Event/EC_Thread_Flags.cpp \
   Event/EC_Timeout_Filter.cpp \
   Event/EC_Timeout_Generator.cpp \
   Event/EC_Trivial_Supplier_Filter.cpp \
@@ -3884,7 +4056,7 @@ libTAO_RTEvent_Serv_la_SOURCES = \
   Event/EC_UDP_Admin.cpp
 
 libTAO_RTEvent_Serv_la_LDFLAGS = \
- -version-number @TAO_MAJOR@:@TAO_MINOR@:@TAO_BETA@
+ -version-number @TAO_MAJOR@:@TAO_MINOR@:@TAO_BETA@ -L. -L$(ACE_ROOT)/lib
 
 libTAO_RTEvent_Serv_la_LIBADD = \
   libTAO_RTEvent_Skel.la \
@@ -4004,7 +4176,6 @@ nobase_include_HEADERS += \
   Event/EC_TPC_ProxyConsumer.h \
   Event/EC_TPC_ProxySupplier.h \
   Event/EC_TPC_ProxySupplier.inl \
-  Event/EC_Thread_Flags.h \
   Event/EC_Timeout_Filter.h \
   Event/EC_Timeout_Filter.inl \
   Event/EC_Timeout_Generator.h \
@@ -4020,10 +4191,9 @@ CLEANFILES += \
   TAO_RTEvent_Serv.pc
 
 TAO_RTEvent_Serv.pc: ${top_builddir}/config.status ${srcdir}/TAO_RTEvent_Serv.pc.in
-	${top_builddir}/config.status --file $@:${srcdir}/TAO_RTEvent_Serv.pc.in
+	${top_builddir}/config.status --file "$@":${srcdir}/TAO_RTEvent_Serv.pc.in
 
 endif !BUILD_ACE_FOR_TAO
-endif BUILD_EXCEPTIONS
 endif BUILD_CORBA_MESSAGING
 
 EXTRA_DIST += \
@@ -4034,8 +4204,8 @@ EXTRA_DIST += \
 ## Makefile.FtRtEvent.am
 
 if BUILD_CORBA_MESSAGING
-if BUILD_EXCEPTIONS
 if !BUILD_ACE_FOR_TAO
+if !BUILD_MINIMUM_CORBA
 
 BUILT_SOURCES += \
   FTRTC.cpp \
@@ -4043,7 +4213,10 @@ BUILT_SOURCES += \
   FTRTC.inl \
   FTRTS.cpp \
   FTRTS.h \
-  FTRTS.inl
+  FTRTS.inl \
+  FTRTS_T.cpp \
+  FTRTS_T.h \
+  FTRTS_T.inl
 
 CLEANFILES += \
   FTRT-stamp \
@@ -4052,13 +4225,16 @@ CLEANFILES += \
   FTRTC.inl \
   FTRTS.cpp \
   FTRTS.h \
-  FTRTS.inl
+  FTRTS.inl \
+  FTRTS_T.cpp \
+  FTRTS_T.h \
+  FTRTS_T.inl
 
-FTRTC.cpp FTRTC.h FTRTC.inl FTRTS.cpp FTRTS.h FTRTS.inl: FTRT-stamp
+FTRTC.cpp FTRTC.h FTRTC.inl FTRTS.cpp FTRTS.h FTRTS.inl FTRTS_T.cpp FTRTS_T.h FTRTS_T.inl: FTRT-stamp
 
 FTRT-stamp: $(srcdir)/FTRT.idl $(TAO_IDL_DEP)
-	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs -Wb,versioning_begin=TAO_BEGIN_VERSIONED_NAMESPACE_DECL -Wb,versioning_end=TAO_END_VERSIONED_NAMESPACE_DECL -Wb,export_macro=TAO_FtRtEvent_Export -Wb,export_include=orbsvcs/FtRtEvent/Utils/ftrtevent_export.h -GC $(srcdir)/FTRT.idl
-	@touch $@
+	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs -GT -Wb,versioning_begin=TAO_BEGIN_VERSIONED_NAMESPACE_DECL -Wb,versioning_end=TAO_END_VERSIONED_NAMESPACE_DECL -Wb,export_macro=TAO_FtRtEvent_Export -Wb,export_include=orbsvcs/FtRtEvent/Utils/ftrtevent_export.h -GC $(srcdir)/FTRT.idl
+	@touch "$@"
 
 BUILT_SOURCES += \
   FtRtecEventCommC.cpp \
@@ -4066,7 +4242,10 @@ BUILT_SOURCES += \
   FtRtecEventCommC.inl \
   FtRtecEventCommS.cpp \
   FtRtecEventCommS.h \
-  FtRtecEventCommS.inl
+  FtRtecEventCommS.inl \
+  FtRtecEventCommS_T.cpp \
+  FtRtecEventCommS_T.h \
+  FtRtecEventCommS_T.inl
 
 CLEANFILES += \
   FtRtecEventComm-stamp \
@@ -4075,13 +4254,16 @@ CLEANFILES += \
   FtRtecEventCommC.inl \
   FtRtecEventCommS.cpp \
   FtRtecEventCommS.h \
-  FtRtecEventCommS.inl
+  FtRtecEventCommS.inl \
+  FtRtecEventCommS_T.cpp \
+  FtRtecEventCommS_T.h \
+  FtRtecEventCommS_T.inl
 
-FtRtecEventCommC.cpp FtRtecEventCommC.h FtRtecEventCommC.inl FtRtecEventCommS.cpp FtRtecEventCommS.h FtRtecEventCommS.inl: FtRtecEventComm-stamp
+FtRtecEventCommC.cpp FtRtecEventCommC.h FtRtecEventCommC.inl FtRtecEventCommS.cpp FtRtecEventCommS.h FtRtecEventCommS.inl FtRtecEventCommS_T.cpp FtRtecEventCommS_T.h FtRtecEventCommS_T.inl: FtRtecEventComm-stamp
 
 FtRtecEventComm-stamp: $(srcdir)/FtRtecEventComm.idl $(TAO_IDL_DEP)
-	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs -Wb,versioning_begin=TAO_BEGIN_VERSIONED_NAMESPACE_DECL -Wb,versioning_end=TAO_END_VERSIONED_NAMESPACE_DECL -Wb,export_macro=TAO_FtRtEvent_Export -Wb,export_include=orbsvcs/FtRtEvent/Utils/ftrtevent_export.h -GC $(srcdir)/FtRtecEventComm.idl
-	@touch $@
+	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs -GT -Wb,versioning_begin=TAO_BEGIN_VERSIONED_NAMESPACE_DECL -Wb,versioning_end=TAO_END_VERSIONED_NAMESPACE_DECL -Wb,export_macro=TAO_FtRtEvent_Export -Wb,export_include=orbsvcs/FtRtEvent/Utils/ftrtevent_export.h -GC $(srcdir)/FtRtecEventComm.idl
+	@touch "$@"
 
 BUILT_SOURCES += \
   FTRT_GroupManagerC.cpp \
@@ -4089,7 +4271,10 @@ BUILT_SOURCES += \
   FTRT_GroupManagerC.inl \
   FTRT_GroupManagerS.cpp \
   FTRT_GroupManagerS.h \
-  FTRT_GroupManagerS.inl
+  FTRT_GroupManagerS.inl \
+  FTRT_GroupManagerS_T.cpp \
+  FTRT_GroupManagerS_T.h \
+  FTRT_GroupManagerS_T.inl
 
 CLEANFILES += \
   FTRT_GroupManager-stamp \
@@ -4098,13 +4283,16 @@ CLEANFILES += \
   FTRT_GroupManagerC.inl \
   FTRT_GroupManagerS.cpp \
   FTRT_GroupManagerS.h \
-  FTRT_GroupManagerS.inl
+  FTRT_GroupManagerS.inl \
+  FTRT_GroupManagerS_T.cpp \
+  FTRT_GroupManagerS_T.h \
+  FTRT_GroupManagerS_T.inl
 
-FTRT_GroupManagerC.cpp FTRT_GroupManagerC.h FTRT_GroupManagerC.inl FTRT_GroupManagerS.cpp FTRT_GroupManagerS.h FTRT_GroupManagerS.inl: FTRT_GroupManager-stamp
+FTRT_GroupManagerC.cpp FTRT_GroupManagerC.h FTRT_GroupManagerC.inl FTRT_GroupManagerS.cpp FTRT_GroupManagerS.h FTRT_GroupManagerS.inl FTRT_GroupManagerS_T.cpp FTRT_GroupManagerS_T.h FTRT_GroupManagerS_T.inl: FTRT_GroupManager-stamp
 
 FTRT_GroupManager-stamp: $(srcdir)/FTRT_GroupManager.idl $(TAO_IDL_DEP)
-	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs -Wb,versioning_begin=TAO_BEGIN_VERSIONED_NAMESPACE_DECL -Wb,versioning_end=TAO_END_VERSIONED_NAMESPACE_DECL -Wb,export_macro=TAO_FtRtEvent_Export -Wb,export_include=orbsvcs/FtRtEvent/Utils/ftrtevent_export.h -GC $(srcdir)/FTRT_GroupManager.idl
-	@touch $@
+	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs -GT -Wb,versioning_begin=TAO_BEGIN_VERSIONED_NAMESPACE_DECL -Wb,versioning_end=TAO_END_VERSIONED_NAMESPACE_DECL -Wb,export_macro=TAO_FtRtEvent_Export -Wb,export_include=orbsvcs/FtRtEvent/Utils/ftrtevent_export.h -GC $(srcdir)/FTRT_GroupManager.idl
+	@touch "$@"
 
 BUILT_SOURCES += \
   FtRtecEventChannelAdminC.cpp \
@@ -4112,7 +4300,10 @@ BUILT_SOURCES += \
   FtRtecEventChannelAdminC.inl \
   FtRtecEventChannelAdminS.cpp \
   FtRtecEventChannelAdminS.h \
-  FtRtecEventChannelAdminS.inl
+  FtRtecEventChannelAdminS.inl \
+  FtRtecEventChannelAdminS_T.cpp \
+  FtRtecEventChannelAdminS_T.h \
+  FtRtecEventChannelAdminS_T.inl
 
 CLEANFILES += \
   FtRtecEventChannelAdmin-stamp \
@@ -4121,13 +4312,16 @@ CLEANFILES += \
   FtRtecEventChannelAdminC.inl \
   FtRtecEventChannelAdminS.cpp \
   FtRtecEventChannelAdminS.h \
-  FtRtecEventChannelAdminS.inl
+  FtRtecEventChannelAdminS.inl \
+  FtRtecEventChannelAdminS_T.cpp \
+  FtRtecEventChannelAdminS_T.h \
+  FtRtecEventChannelAdminS_T.inl
 
-FtRtecEventChannelAdminC.cpp FtRtecEventChannelAdminC.h FtRtecEventChannelAdminC.inl FtRtecEventChannelAdminS.cpp FtRtecEventChannelAdminS.h FtRtecEventChannelAdminS.inl: FtRtecEventChannelAdmin-stamp
+FtRtecEventChannelAdminC.cpp FtRtecEventChannelAdminC.h FtRtecEventChannelAdminC.inl FtRtecEventChannelAdminS.cpp FtRtecEventChannelAdminS.h FtRtecEventChannelAdminS.inl FtRtecEventChannelAdminS_T.cpp FtRtecEventChannelAdminS_T.h FtRtecEventChannelAdminS_T.inl: FtRtecEventChannelAdmin-stamp
 
 FtRtecEventChannelAdmin-stamp: $(srcdir)/FtRtecEventChannelAdmin.idl $(TAO_IDL_DEP)
-	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs -Wb,versioning_begin=TAO_BEGIN_VERSIONED_NAMESPACE_DECL -Wb,versioning_end=TAO_END_VERSIONED_NAMESPACE_DECL -Wb,export_macro=TAO_FtRtEvent_Export -Wb,export_include=orbsvcs/FtRtEvent/Utils/ftrtevent_export.h $(srcdir)/FtRtecEventChannelAdmin.idl
-	@touch $@
+	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs -GT -Wb,versioning_begin=TAO_BEGIN_VERSIONED_NAMESPACE_DECL -Wb,versioning_end=TAO_END_VERSIONED_NAMESPACE_DECL -Wb,export_macro=TAO_FtRtEvent_Export -Wb,export_include=orbsvcs/FtRtEvent/Utils/ftrtevent_export.h $(srcdir)/FtRtecEventChannelAdmin.idl
+	@touch "$@"
 
 lib_LTLIBRARIES += libTAO_FtRtEvent.la
 
@@ -4155,7 +4349,7 @@ libTAO_FtRtEvent_la_SOURCES = \
   FtRtecEventCommS.cpp
 
 libTAO_FtRtEvent_la_LDFLAGS = \
- -version-number @TAO_MAJOR@:@TAO_MINOR@:@TAO_BETA@
+ -version-number @TAO_MAJOR@:@TAO_MINOR@:@TAO_BETA@ -L. -L$(ACE_ROOT)/lib
 
 libTAO_FtRtEvent_la_LIBADD = \
   $(TAO_BUILDDIR)/tao/libTAO_PI_Server.la \
@@ -4182,11 +4376,17 @@ nobase_include_HEADERS += \
   FTRTC.inl \
   FTRTS.h \
   FTRTS.inl \
+  FTRTS_T.cpp \
+  FTRTS_T.h \
+  FTRTS_T.inl \
   FTRT_GroupManager.idl \
   FTRT_GroupManagerC.h \
   FTRT_GroupManagerC.inl \
   FTRT_GroupManagerS.h \
   FTRT_GroupManagerS.inl \
+  FTRT_GroupManagerS_T.cpp \
+  FTRT_GroupManagerS_T.h \
+  FTRT_GroupManagerS_T.inl \
   FtRtEvent/Utils/FTEC_Gateway.h \
   FtRtEvent/Utils/FTEC_Gateway.inl \
   FtRtEvent/Utils/Log.h \
@@ -4200,21 +4400,27 @@ nobase_include_HEADERS += \
   FtRtecEventChannelAdminC.inl \
   FtRtecEventChannelAdminS.h \
   FtRtecEventChannelAdminS.inl \
+  FtRtecEventChannelAdminS_T.cpp \
+  FtRtecEventChannelAdminS_T.h \
+  FtRtecEventChannelAdminS_T.inl \
   FtRtecEventComm.idl \
   FtRtecEventCommC.h \
   FtRtecEventCommC.inl \
   FtRtecEventCommS.h \
-  FtRtecEventCommS.inl
+  FtRtecEventCommS.inl \
+  FtRtecEventCommS_T.cpp \
+  FtRtecEventCommS_T.h \
+  FtRtecEventCommS_T.inl
 
+endif !BUILD_MINIMUM_CORBA
 endif !BUILD_ACE_FOR_TAO
-endif BUILD_EXCEPTIONS
 endif BUILD_CORBA_MESSAGING
 
 ## Makefile.FTRT_EventChannel.am
 
 if BUILD_CORBA_MESSAGING
-if BUILD_EXCEPTIONS
 if !BUILD_ACE_FOR_TAO
+if !BUILD_MINIMUM_CORBA
 
 lib_LTLIBRARIES += libTAO_FTRT_EventChannel.la
 
@@ -4264,7 +4470,7 @@ libTAO_FTRT_EventChannel_la_SOURCES = \
   FtRtEvent/EventChannel/replace_key.cpp
 
 libTAO_FTRT_EventChannel_la_LDFLAGS = \
- -version-number @TAO_MAJOR@:@TAO_MINOR@:@TAO_BETA@
+ -version-number @TAO_MAJOR@:@TAO_MINOR@:@TAO_BETA@ -L. -L$(ACE_ROOT)/lib
 
 libTAO_FTRT_EventChannel_la_LIBADD = \
   $(TAO_BUILDDIR)/tao/libTAO_Utils.la \
@@ -4330,17 +4536,17 @@ nobase_include_HEADERS += \
   FtRtEvent/EventChannel/create_persistent_poa.h \
   FtRtEvent/EventChannel/ftrtec_export.h
 
+endif !BUILD_MINIMUM_CORBA
 endif !BUILD_ACE_FOR_TAO
-endif BUILD_EXCEPTIONS
 endif BUILD_CORBA_MESSAGING
 
 ## Makefile.FT_ClientORB.am
 
 if BUILD_ACE_UUID
 if BUILD_CORBA_MESSAGING
-if BUILD_EXCEPTIONS
 if BUILD_INTERCEPTORS
 if !BUILD_ACE_FOR_TAO
+if !BUILD_MINIMUM_CORBA
 
 lib_LTLIBRARIES += libTAO_FT_ClientORB.la
 
@@ -4364,7 +4570,7 @@ libTAO_FT_ClientORB_la_SOURCES = \
   FaultTolerance/FT_Service_Callbacks.cpp
 
 libTAO_FT_ClientORB_la_LDFLAGS = \
- -version-number @TAO_MAJOR@:@TAO_MINOR@:@TAO_BETA@
+ -version-number @TAO_MAJOR@:@TAO_MINOR@:@TAO_BETA@ -L. -L$(ACE_ROOT)/lib
 
 libTAO_FT_ClientORB_la_LIBADD = \
   libTAO_FTORB_Utils.la \
@@ -4398,11 +4604,11 @@ CLEANFILES += \
   TAO_FT_ClientORB.pc
 
 TAO_FT_ClientORB.pc: ${top_builddir}/config.status ${srcdir}/TAO_FT_ClientORB.pc.in
-	${top_builddir}/config.status --file $@:${srcdir}/TAO_FT_ClientORB.pc.in
+	${top_builddir}/config.status --file "$@":${srcdir}/TAO_FT_ClientORB.pc.in
 
+endif !BUILD_MINIMUM_CORBA
 endif !BUILD_ACE_FOR_TAO
 endif BUILD_INTERCEPTORS
-endif BUILD_EXCEPTIONS
 endif BUILD_CORBA_MESSAGING
 endif BUILD_ACE_UUID
 
@@ -4413,8 +4619,8 @@ EXTRA_DIST += \
 ## Makefile.FT_ServerORB.am
 
 if BUILD_CORBA_MESSAGING
-if BUILD_EXCEPTIONS
 if BUILD_INTERCEPTORS
+if !BUILD_MINIMUM_CORBA
 
 lib_LTLIBRARIES += libTAO_FT_ServerORB.la
 
@@ -4435,7 +4641,7 @@ libTAO_FT_ServerORB_la_SOURCES = \
   FaultTolerance/FT_ServerService_Activate.cpp
 
 libTAO_FT_ServerORB_la_LDFLAGS = \
- -version-number @TAO_MAJOR@:@TAO_MINOR@:@TAO_BETA@
+ -version-number @TAO_MAJOR@:@TAO_MINOR@:@TAO_BETA@ -L. -L$(ACE_ROOT)/lib
 
 libTAO_FT_ServerORB_la_LIBADD = \
   $(TAO_BUILDDIR)/tao/libTAO_PI_Server.la \
@@ -4467,10 +4673,10 @@ CLEANFILES += \
   TAO_FT_ServerORB.pc
 
 TAO_FT_ServerORB.pc: ${top_builddir}/config.status ${srcdir}/TAO_FT_ServerORB.pc.in
-	${top_builddir}/config.status --file $@:${srcdir}/TAO_FT_ServerORB.pc.in
+	${top_builddir}/config.status --file "$@":${srcdir}/TAO_FT_ServerORB.pc.in
 
+endif !BUILD_MINIMUM_CORBA
 endif BUILD_INTERCEPTORS
-endif BUILD_EXCEPTIONS
 endif BUILD_CORBA_MESSAGING
 
 EXTRA_DIST += \
@@ -4481,9 +4687,9 @@ EXTRA_DIST += \
 
 if BUILD_ACE_UUID
 if BUILD_CORBA_MESSAGING
-if BUILD_EXCEPTIONS
 if BUILD_INTERCEPTORS
 if !BUILD_ACE_FOR_TAO
+if !BUILD_MINIMUM_CORBA
 
 BUILT_SOURCES += \
   FT_CORBAC.cpp \
@@ -4491,7 +4697,9 @@ BUILT_SOURCES += \
   FT_CORBAC.inl \
   FT_CORBAS.cpp \
   FT_CORBAS.h \
-  FT_CORBAS.inl
+  FT_CORBAS.inl \
+  FT_CORBAS_T.cpp \
+  FT_CORBAS_T.inl
 
 CLEANFILES += \
   FT_CORBA-stamp \
@@ -4500,13 +4708,15 @@ CLEANFILES += \
   FT_CORBAC.inl \
   FT_CORBAS.cpp \
   FT_CORBAS.h \
-  FT_CORBAS.inl
+  FT_CORBAS.inl \
+  FT_CORBAS_T.cpp \
+  FT_CORBAS_T.inl
 
-FT_CORBAC.cpp FT_CORBAC.h FT_CORBAC.inl FT_CORBAS.cpp FT_CORBAS.h FT_CORBAS.inl: FT_CORBA-stamp
+FT_CORBAC.cpp FT_CORBAC.h FT_CORBAC.inl FT_CORBAS.cpp FT_CORBAS.h FT_CORBAS.inl FT_CORBAS_T.cpp FT_CORBAS_T.inl: FT_CORBA-stamp
 
 FT_CORBA-stamp: $(srcdir)/FT_CORBA.idl $(TAO_IDL_DEP)
-	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs -Wb,versioning_begin=TAO_BEGIN_VERSIONED_NAMESPACE_DECL -Wb,versioning_end=TAO_END_VERSIONED_NAMESPACE_DECL -Wb,export_macro=TAO_FT_Export -Wb,export_include=orbsvcs/FaultTolerance/fault_tol_export.h -Wb,skel_export_include=tao/PortableServer/PolicyS.h $(srcdir)/FT_CORBA.idl
-	@touch $@
+	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs -GT -Wb,versioning_begin=TAO_BEGIN_VERSIONED_NAMESPACE_DECL -Wb,versioning_end=TAO_END_VERSIONED_NAMESPACE_DECL -Wb,export_macro=TAO_FT_Export -Wb,export_include=orbsvcs/FaultTolerance/fault_tol_export.h -Wb,skel_export_include=tao/PortableServer/PolicyS.h $(srcdir)/FT_CORBA.idl
+	@touch "$@"
 
 BUILT_SOURCES += \
   FT_ReplicaC.cpp \
@@ -4514,7 +4724,9 @@ BUILT_SOURCES += \
   FT_ReplicaC.inl \
   FT_ReplicaS.cpp \
   FT_ReplicaS.h \
-  FT_ReplicaS.inl
+  FT_ReplicaS.inl \
+  FT_ReplicaS_T.cpp \
+  FT_ReplicaS_T.inl
 
 CLEANFILES += \
   FT_Replica-stamp \
@@ -4523,13 +4735,15 @@ CLEANFILES += \
   FT_ReplicaC.inl \
   FT_ReplicaS.cpp \
   FT_ReplicaS.h \
-  FT_ReplicaS.inl
+  FT_ReplicaS.inl \
+  FT_ReplicaS_T.cpp \
+  FT_ReplicaS_T.inl
 
-FT_ReplicaC.cpp FT_ReplicaC.h FT_ReplicaC.inl FT_ReplicaS.cpp FT_ReplicaS.h FT_ReplicaS.inl: FT_Replica-stamp
+FT_ReplicaC.cpp FT_ReplicaC.h FT_ReplicaC.inl FT_ReplicaS.cpp FT_ReplicaS.h FT_ReplicaS.inl FT_ReplicaS_T.cpp FT_ReplicaS_T.inl: FT_Replica-stamp
 
 FT_Replica-stamp: $(srcdir)/FT_Replica.idl $(TAO_IDL_DEP)
-	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs -Wb,versioning_begin=TAO_BEGIN_VERSIONED_NAMESPACE_DECL -Wb,versioning_end=TAO_END_VERSIONED_NAMESPACE_DECL -Wb,export_macro=TAO_FT_Export -Wb,export_include=orbsvcs/FaultTolerance/fault_tol_export.h -Wb,skel_export_include=tao/PortableServer/PolicyS.h $(srcdir)/FT_Replica.idl
-	@touch $@
+	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs -GT -Wb,versioning_begin=TAO_BEGIN_VERSIONED_NAMESPACE_DECL -Wb,versioning_end=TAO_END_VERSIONED_NAMESPACE_DECL -Wb,export_macro=TAO_FT_Export -Wb,export_include=orbsvcs/FaultTolerance/fault_tol_export.h -Wb,skel_export_include=tao/PortableServer/PolicyS.h $(srcdir)/FT_Replica.idl
+	@touch "$@"
 
 BUILT_SOURCES += \
   FT_NotifierC.cpp \
@@ -4537,7 +4751,9 @@ BUILT_SOURCES += \
   FT_NotifierC.inl \
   FT_NotifierS.cpp \
   FT_NotifierS.h \
-  FT_NotifierS.inl
+  FT_NotifierS.inl \
+  FT_NotifierS_T.cpp \
+  FT_NotifierS_T.inl
 
 CLEANFILES += \
   FT_Notifier-stamp \
@@ -4546,13 +4762,15 @@ CLEANFILES += \
   FT_NotifierC.inl \
   FT_NotifierS.cpp \
   FT_NotifierS.h \
-  FT_NotifierS.inl
+  FT_NotifierS.inl \
+  FT_NotifierS_T.cpp \
+  FT_NotifierS_T.inl
 
-FT_NotifierC.cpp FT_NotifierC.h FT_NotifierC.inl FT_NotifierS.cpp FT_NotifierS.h FT_NotifierS.inl: FT_Notifier-stamp
+FT_NotifierC.cpp FT_NotifierC.h FT_NotifierC.inl FT_NotifierS.cpp FT_NotifierS.h FT_NotifierS.inl FT_NotifierS_T.cpp FT_NotifierS_T.inl: FT_Notifier-stamp
 
 FT_Notifier-stamp: $(srcdir)/FT_Notifier.idl $(TAO_IDL_DEP)
-	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs -Wb,versioning_begin=TAO_BEGIN_VERSIONED_NAMESPACE_DECL -Wb,versioning_end=TAO_END_VERSIONED_NAMESPACE_DECL -Wb,export_macro=TAO_FT_Export -Wb,export_include=orbsvcs/FaultTolerance/fault_tol_export.h -Wb,skel_export_include=tao/PortableServer/PolicyS.h $(srcdir)/FT_Notifier.idl
-	@touch $@
+	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs -GT -Wb,versioning_begin=TAO_BEGIN_VERSIONED_NAMESPACE_DECL -Wb,versioning_end=TAO_END_VERSIONED_NAMESPACE_DECL -Wb,export_macro=TAO_FT_Export -Wb,export_include=orbsvcs/FaultTolerance/fault_tol_export.h -Wb,skel_export_include=tao/PortableServer/PolicyS.h $(srcdir)/FT_Notifier.idl
+	@touch "$@"
 
 BUILT_SOURCES += \
   FT_FaultDetectorFactoryC.cpp \
@@ -4560,7 +4778,9 @@ BUILT_SOURCES += \
   FT_FaultDetectorFactoryC.inl \
   FT_FaultDetectorFactoryS.cpp \
   FT_FaultDetectorFactoryS.h \
-  FT_FaultDetectorFactoryS.inl
+  FT_FaultDetectorFactoryS.inl \
+  FT_FaultDetectorFactoryS_T.cpp \
+  FT_FaultDetectorFactoryS_T.inl
 
 CLEANFILES += \
   FT_FaultDetectorFactory-stamp \
@@ -4569,13 +4789,15 @@ CLEANFILES += \
   FT_FaultDetectorFactoryC.inl \
   FT_FaultDetectorFactoryS.cpp \
   FT_FaultDetectorFactoryS.h \
-  FT_FaultDetectorFactoryS.inl
+  FT_FaultDetectorFactoryS.inl \
+  FT_FaultDetectorFactoryS_T.cpp \
+  FT_FaultDetectorFactoryS_T.inl
 
-FT_FaultDetectorFactoryC.cpp FT_FaultDetectorFactoryC.h FT_FaultDetectorFactoryC.inl FT_FaultDetectorFactoryS.cpp FT_FaultDetectorFactoryS.h FT_FaultDetectorFactoryS.inl: FT_FaultDetectorFactory-stamp
+FT_FaultDetectorFactoryC.cpp FT_FaultDetectorFactoryC.h FT_FaultDetectorFactoryC.inl FT_FaultDetectorFactoryS.cpp FT_FaultDetectorFactoryS.h FT_FaultDetectorFactoryS.inl FT_FaultDetectorFactoryS_T.cpp FT_FaultDetectorFactoryS_T.inl: FT_FaultDetectorFactory-stamp
 
 FT_FaultDetectorFactory-stamp: $(srcdir)/FT_FaultDetectorFactory.idl $(TAO_IDL_DEP)
-	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs -Wb,versioning_begin=TAO_BEGIN_VERSIONED_NAMESPACE_DECL -Wb,versioning_end=TAO_END_VERSIONED_NAMESPACE_DECL -Wb,export_macro=TAO_FT_Export -Wb,export_include=orbsvcs/FaultTolerance/fault_tol_export.h -Wb,skel_export_include=tao/PortableServer/PolicyS.h $(srcdir)/FT_FaultDetectorFactory.idl
-	@touch $@
+	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs -GT -Wb,versioning_begin=TAO_BEGIN_VERSIONED_NAMESPACE_DECL -Wb,versioning_end=TAO_END_VERSIONED_NAMESPACE_DECL -Wb,export_macro=TAO_FT_Export -Wb,export_include=orbsvcs/FaultTolerance/fault_tol_export.h -Wb,skel_export_include=tao/PortableServer/PolicyS.h $(srcdir)/FT_FaultDetectorFactory.idl
+	@touch "$@"
 
 BUILT_SOURCES += \
   FT_ReplicationManagerC.cpp \
@@ -4583,7 +4805,9 @@ BUILT_SOURCES += \
   FT_ReplicationManagerC.inl \
   FT_ReplicationManagerS.cpp \
   FT_ReplicationManagerS.h \
-  FT_ReplicationManagerS.inl
+  FT_ReplicationManagerS.inl \
+  FT_ReplicationManagerS_T.cpp \
+  FT_ReplicationManagerS_T.inl
 
 CLEANFILES += \
   FT_ReplicationManager-stamp \
@@ -4592,13 +4816,15 @@ CLEANFILES += \
   FT_ReplicationManagerC.inl \
   FT_ReplicationManagerS.cpp \
   FT_ReplicationManagerS.h \
-  FT_ReplicationManagerS.inl
+  FT_ReplicationManagerS.inl \
+  FT_ReplicationManagerS_T.cpp \
+  FT_ReplicationManagerS_T.inl
 
-FT_ReplicationManagerC.cpp FT_ReplicationManagerC.h FT_ReplicationManagerC.inl FT_ReplicationManagerS.cpp FT_ReplicationManagerS.h FT_ReplicationManagerS.inl: FT_ReplicationManager-stamp
+FT_ReplicationManagerC.cpp FT_ReplicationManagerC.h FT_ReplicationManagerC.inl FT_ReplicationManagerS.cpp FT_ReplicationManagerS.h FT_ReplicationManagerS.inl FT_ReplicationManagerS_T.cpp FT_ReplicationManagerS_T.inl: FT_ReplicationManager-stamp
 
 FT_ReplicationManager-stamp: $(srcdir)/FT_ReplicationManager.idl $(TAO_IDL_DEP)
-	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs -Wb,versioning_begin=TAO_BEGIN_VERSIONED_NAMESPACE_DECL -Wb,versioning_end=TAO_END_VERSIONED_NAMESPACE_DECL -Wb,export_macro=TAO_FT_Export -Wb,export_include=orbsvcs/FaultTolerance/fault_tol_export.h -Wb,skel_export_include=tao/PortableServer/PolicyS.h $(srcdir)/FT_ReplicationManager.idl
-	@touch $@
+	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs -GT -Wb,versioning_begin=TAO_BEGIN_VERSIONED_NAMESPACE_DECL -Wb,versioning_end=TAO_END_VERSIONED_NAMESPACE_DECL -Wb,export_macro=TAO_FT_Export -Wb,export_include=orbsvcs/FaultTolerance/fault_tol_export.h -Wb,skel_export_include=tao/PortableServer/PolicyS.h $(srcdir)/FT_ReplicationManager.idl
+	@touch "$@"
 
 lib_LTLIBRARIES += libTAO_FaultTolerance.la
 
@@ -4625,7 +4851,7 @@ libTAO_FaultTolerance_la_SOURCES = \
   FT_ReplicationManagerS.cpp
 
 libTAO_FaultTolerance_la_LDFLAGS = \
- -version-number @TAO_MAJOR@:@TAO_MINOR@:@TAO_BETA@
+ -version-number @TAO_MAJOR@:@TAO_MINOR@:@TAO_BETA@ -L. -L$(ACE_ROOT)/lib
 
 libTAO_FaultTolerance_la_LIBADD = \
   libTAO_FT_ServerORB.la \
@@ -4652,26 +4878,36 @@ nobase_include_HEADERS += \
   FT_CORBAC.inl \
   FT_CORBAS.h \
   FT_CORBAS.inl \
+  FT_CORBAS_T.cpp \
+  FT_CORBAS_T.inl \
   FT_FaultDetectorFactory.idl \
   FT_FaultDetectorFactoryC.h \
   FT_FaultDetectorFactoryC.inl \
   FT_FaultDetectorFactoryS.h \
   FT_FaultDetectorFactoryS.inl \
+  FT_FaultDetectorFactoryS_T.cpp \
+  FT_FaultDetectorFactoryS_T.inl \
   FT_Notifier.idl \
   FT_NotifierC.h \
   FT_NotifierC.inl \
   FT_NotifierS.h \
   FT_NotifierS.inl \
+  FT_NotifierS_T.cpp \
+  FT_NotifierS_T.inl \
   FT_Replica.idl \
   FT_ReplicaC.h \
   FT_ReplicaC.inl \
   FT_ReplicaS.h \
   FT_ReplicaS.inl \
+  FT_ReplicaS_T.cpp \
+  FT_ReplicaS_T.inl \
   FT_ReplicationManager.idl \
   FT_ReplicationManagerC.h \
   FT_ReplicationManagerC.inl \
   FT_ReplicationManagerS.h \
   FT_ReplicationManagerS.inl \
+  FT_ReplicationManagerS_T.cpp \
+  FT_ReplicationManagerS_T.inl \
   FaultTolerance/fault_tol_export.h
 
 pkgconfig_DATA += \
@@ -4681,11 +4917,11 @@ CLEANFILES += \
   TAO_FaultTolerance.pc
 
 TAO_FaultTolerance.pc: ${top_builddir}/config.status ${srcdir}/TAO_FaultTolerance.pc.in
-	${top_builddir}/config.status --file $@:${srcdir}/TAO_FaultTolerance.pc.in
+	${top_builddir}/config.status --file "$@":${srcdir}/TAO_FaultTolerance.pc.in
 
+endif !BUILD_MINIMUM_CORBA
 endif !BUILD_ACE_FOR_TAO
 endif BUILD_INTERCEPTORS
-endif BUILD_EXCEPTIONS
 endif BUILD_CORBA_MESSAGING
 endif BUILD_ACE_UUID
 
@@ -4696,7 +4932,6 @@ EXTRA_DIST += \
 
 ## Makefile.HTIOP.am
 
-if BUILD_EXCEPTIONS
 if !BUILD_ACE_FOR_TAO
 
 BUILT_SOURCES += \
@@ -4715,8 +4950,8 @@ CLEANFILES += \
 HTIOPC.cpp HTIOPC.h HTIOPC.inl HTIOPS.h: HTIOP-stamp
 
 HTIOP-stamp: $(srcdir)/HTIOP.idl $(TAO_IDL_DEP)
-	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs -Wb,versioning_begin=TAO_BEGIN_VERSIONED_NAMESPACE_DECL -Wb,versioning_end=TAO_END_VERSIONED_NAMESPACE_DECL -Wb,export_macro=HTIOP_Export -Wb,export_include=orbsvcs/HTIOP/HTIOP_Export.h -SS $(srcdir)/HTIOP.idl
-	@touch $@
+	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs -GT -Wb,versioning_begin=TAO_BEGIN_VERSIONED_NAMESPACE_DECL -Wb,versioning_end=TAO_END_VERSIONED_NAMESPACE_DECL -Wb,export_macro=HTIOP_Export -Wb,export_include=orbsvcs/HTIOP/HTIOP_Export.h -SS $(srcdir)/HTIOP.idl
+	@touch "$@"
 
 BUILT_SOURCES += \
   HTIOP/htiop_endpointsC.cpp \
@@ -4732,8 +4967,8 @@ CLEANFILES += \
 HTIOP/htiop_endpointsC.cpp HTIOP/htiop_endpointsC.h HTIOP/htiop_endpointsS.h: HTIOP/htiop_endpoints-stamp
 
 HTIOP/htiop_endpoints-stamp: $(srcdir)/HTIOP/htiop_endpoints.pidl $(TAO_IDL_DEP)
-	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs -Wb,versioning_begin=TAO_BEGIN_VERSIONED_NAMESPACE_DECL -Wb,versioning_end=TAO_END_VERSIONED_NAMESPACE_DECL -Wb,export_macro=HTIOP_Export -Wb,export_include=orbsvcs/HTIOP/HTIOP_Export.h -SS -Sci -Gp -Gd -Sa -Sorb -o HTIOP $(srcdir)/HTIOP/htiop_endpoints.pidl
-	@touch $@
+	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs -GT -Wb,versioning_begin=TAO_BEGIN_VERSIONED_NAMESPACE_DECL -Wb,versioning_end=TAO_END_VERSIONED_NAMESPACE_DECL -Wb,export_macro=HTIOP_Export -Wb,export_include=orbsvcs/HTIOP/HTIOP_Export.h -SS -Sci -Gp -Gd -Ge 1 -Sa -Sorb -o HTIOP $(srcdir)/HTIOP/htiop_endpoints.pidl
+	@touch "$@"
 
 lib_LTLIBRARIES += libTAO_HTIOP.la
 
@@ -4762,7 +4997,7 @@ libTAO_HTIOP_la_SOURCES = \
   HTIOPC.cpp
 
 libTAO_HTIOP_la_LDFLAGS = \
- -version-number @TAO_MAJOR@:@TAO_MINOR@:@TAO_BETA@
+ -version-number @TAO_MAJOR@:@TAO_MINOR@:@TAO_BETA@ -L. -L$(ACE_ROOT)/lib
 
 libTAO_HTIOP_la_LIBADD = \
   $(TAO_BUILDDIR)/tao/libTAO_AnyTypeCode.la \
@@ -4771,7 +5006,6 @@ libTAO_HTIOP_la_LIBADD = \
   $(ACE_BUILDDIR)/ace/libACE.la
 
 nobase_include_HEADERS += \
-  Channel_Clients_T.cpp \
   HTIOP.idl \
   HTIOP/HTIOP_Acceptor.h \
   HTIOP/HTIOP_Acceptor.inl \
@@ -4793,12 +5027,11 @@ nobase_include_HEADERS += \
   HTIOPS.h
 
 endif !BUILD_ACE_FOR_TAO
-endif BUILD_EXCEPTIONS
 
 ## Makefile.IFRService.am
 
-if BUILD_EXCEPTIONS
 if !BUILD_ACE_FOR_TAO
+if !BUILD_MINIMUM_CORBA
 
 lib_LTLIBRARIES += libTAO_IFRService.la
 
@@ -4870,7 +5103,7 @@ libTAO_IFRService_la_SOURCES = \
   IFRService/WstringDef_i.cpp
 
 libTAO_IFRService_la_LDFLAGS = \
- -version-number @TAO_MAJOR@:@TAO_MINOR@:@TAO_BETA@
+ -version-number @TAO_MAJOR@:@TAO_MINOR@:@TAO_BETA@ -L. -L$(ACE_ROOT)/lib
 
 libTAO_IFRService_la_LIBADD = \
   $(TAO_BUILDDIR)/tao/libTAO_IORTable.la \
@@ -4913,28 +5146,18 @@ nobase_include_HEADERS += \
   IFRService/IFR_BaseS.h \
   IFRService/IFR_BaseS.inl \
   IFRService/IFR_BaseS_T.cpp \
-  IFRService/IFR_BaseS_T.h \
-  IFRService/IFR_BaseS_T.inl \
   IFRService/IFR_BasicS.h \
   IFRService/IFR_BasicS.inl \
   IFRService/IFR_BasicS_T.cpp \
-  IFRService/IFR_BasicS_T.h \
-  IFRService/IFR_BasicS_T.inl \
   IFRService/IFR_ComponentsS.h \
   IFRService/IFR_ComponentsS.inl \
   IFRService/IFR_ComponentsS_T.cpp \
-  IFRService/IFR_ComponentsS_T.h \
-  IFRService/IFR_ComponentsS_T.inl \
   IFRService/IFR_ExtendedS.h \
   IFRService/IFR_ExtendedS.inl \
   IFRService/IFR_ExtendedS_T.cpp \
-  IFRService/IFR_ExtendedS_T.h \
-  IFRService/IFR_ExtendedS_T.inl \
   IFRService/IFR_Service_Loader.h \
   IFRService/IFR_Service_Utils.h \
   IFRService/IFR_Service_Utils_T.cpp \
-  IFRService/IFR_Service_Utils_T.h \
-  IFRService/IFR_macro.h \
   IFRService/IRObject_i.h \
   IFRService/InterfaceAttrExtension_i.h \
   IFRService/InterfaceDef_i.h \
@@ -4957,12 +5180,10 @@ nobase_include_HEADERS += \
   IFRService/ValueBoxDef_i.h \
   IFRService/ValueDef_i.h \
   IFRService/ValueMemberDef_i.h \
-  IFRService/WstringDef_i.h \
-  IFRService/concrete_classes.h \
-  IFRService/ifr_service_export.h
+  IFRService/WstringDef_i.h
 
+endif !BUILD_MINIMUM_CORBA
 endif !BUILD_ACE_FOR_TAO
-endif BUILD_EXCEPTIONS
 
 EXTRA_DIST += \
   IFRService.rc
@@ -4971,7 +5192,6 @@ EXTRA_DIST += \
 ## Makefile.RTCORBAEvent.am
 
 if BUILD_CORBA_MESSAGING
-if BUILD_EXCEPTIONS
 if BUILD_RT_CORBA
 if !BUILD_ACE_FOR_TAO
 
@@ -4991,7 +5211,7 @@ libTAO_RTCORBAEvent_la_SOURCES = \
   Event/EC_RTCORBA_Factory.cpp
 
 libTAO_RTCORBAEvent_la_LDFLAGS = \
- -version-number @TAO_MAJOR@:@TAO_MINOR@:@TAO_BETA@
+ -version-number @TAO_MAJOR@:@TAO_MINOR@:@TAO_BETA@ -L. -L$(ACE_ROOT)/lib
 
 libTAO_RTCORBAEvent_la_LIBADD = \
   $(TAO_BUILDDIR)/tao/libTAO_RTPortableServer.la \
@@ -5015,13 +5235,11 @@ nobase_include_HEADERS += \
 
 endif !BUILD_ACE_FOR_TAO
 endif BUILD_RT_CORBA
-endif BUILD_EXCEPTIONS
 endif BUILD_CORBA_MESSAGING
 
 ## Makefile.RTEventLogAdmin_IDL.am
 
 if BUILD_CORBA_MESSAGING
-if BUILD_EXCEPTIONS
 
 BUILT_SOURCES += \
   RTEventLogAdminC.cpp \
@@ -5029,7 +5247,10 @@ BUILT_SOURCES += \
   RTEventLogAdminC.inl \
   RTEventLogAdminS.cpp \
   RTEventLogAdminS.h \
-  RTEventLogAdminS.inl
+  RTEventLogAdminS.inl \
+  RTEventLogAdminS_T.cpp \
+  RTEventLogAdminS_T.h \
+  RTEventLogAdminS_T.inl
 
 CLEANFILES += \
   RTEventLogAdmin-stamp \
@@ -5038,24 +5259,26 @@ CLEANFILES += \
   RTEventLogAdminC.inl \
   RTEventLogAdminS.cpp \
   RTEventLogAdminS.h \
-  RTEventLogAdminS.inl
+  RTEventLogAdminS.inl \
+  RTEventLogAdminS_T.cpp \
+  RTEventLogAdminS_T.h \
+  RTEventLogAdminS_T.inl
 
-RTEventLogAdminC.cpp RTEventLogAdminC.h RTEventLogAdminC.inl RTEventLogAdminS.cpp RTEventLogAdminS.h RTEventLogAdminS.inl: RTEventLogAdmin-stamp
+RTEventLogAdminC.cpp RTEventLogAdminC.h RTEventLogAdminC.inl RTEventLogAdminS.cpp RTEventLogAdminS.h RTEventLogAdminS.inl RTEventLogAdminS_T.cpp RTEventLogAdminS_T.h RTEventLogAdminS_T.inl: RTEventLogAdmin-stamp
 
 RTEventLogAdmin-stamp: $(srcdir)/RTEventLogAdmin.idl $(TAO_IDL_DEP)
-	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs -Wb,versioning_begin=TAO_BEGIN_VERSIONED_NAMESPACE_DECL -Wb,versioning_end=TAO_END_VERSIONED_NAMESPACE_DECL -Wb,stub_export_macro=TAO_RTEventLog_Export -Wb,stub_export_include=orbsvcs/Log/rteventlog_export.h -Wb,skel_export_macro=TAO_RTEventLog_Skel_Export -Wb,skel_export_include=orbsvcs/Log/rteventlog_skel_export.h $(srcdir)/RTEventLogAdmin.idl
-	@touch $@
+	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs -GT -Wb,versioning_begin=TAO_BEGIN_VERSIONED_NAMESPACE_DECL -Wb,versioning_end=TAO_END_VERSIONED_NAMESPACE_DECL -Wb,stub_export_macro=TAO_RTEventLog_Export -Wb,stub_export_include=orbsvcs/Log/rteventlog_export.h -Wb,skel_export_macro=TAO_RTEventLog_Skel_Export -Wb,skel_export_include=orbsvcs/Log/rteventlog_skel_export.h $(srcdir)/RTEventLogAdmin.idl
+	@touch "$@"
+
 
 nobase_include_HEADERS += \
   RTEventLogAdmin.idl
 
-endif BUILD_EXCEPTIONS
 endif BUILD_CORBA_MESSAGING
 
 ## Makefile.RTEventLogAdmin.am
 
 if BUILD_CORBA_MESSAGING
-if BUILD_EXCEPTIONS
 
 lib_LTLIBRARIES += libTAO_RTEventLogAdmin.la
 
@@ -5072,7 +5295,7 @@ libTAO_RTEventLogAdmin_la_SOURCES = \
   RTEventLogAdminC.cpp
 
 libTAO_RTEventLogAdmin_la_LDFLAGS = \
- -version-number @TAO_MAJOR@:@TAO_MINOR@:@TAO_BETA@
+ -version-number @TAO_MAJOR@:@TAO_MINOR@:@TAO_BETA@ -L. -L$(ACE_ROOT)/lib
 
 libTAO_RTEventLogAdmin_la_LIBADD = \
   libTAO_RTEvent.la \
@@ -5099,9 +5322,8 @@ CLEANFILES += \
   TAO_RTEventLogAdmin.pc
 
 TAO_RTEventLogAdmin.pc: ${top_builddir}/config.status ${srcdir}/TAO_RTEventLogAdmin.pc.in
-	${top_builddir}/config.status --file $@:${srcdir}/TAO_RTEventLogAdmin.pc.in
+	${top_builddir}/config.status --file "$@":${srcdir}/TAO_RTEventLogAdmin.pc.in
 
-endif BUILD_EXCEPTIONS
 endif BUILD_CORBA_MESSAGING
 
 EXTRA_DIST += \
@@ -5110,15 +5332,16 @@ EXTRA_DIST += \
 
 ## Makefile.RTSched.am
 
-if BUILD_EXCEPTIONS
-
 BUILT_SOURCES += \
   RtecSchedulerC.cpp \
   RtecSchedulerC.h \
   RtecSchedulerC.inl \
   RtecSchedulerS.cpp \
   RtecSchedulerS.h \
-  RtecSchedulerS.inl
+  RtecSchedulerS.inl \
+  RtecSchedulerS_T.cpp \
+  RtecSchedulerS_T.h \
+  RtecSchedulerS_T.inl
 
 CLEANFILES += \
   RtecScheduler-stamp \
@@ -5127,13 +5350,16 @@ CLEANFILES += \
   RtecSchedulerC.inl \
   RtecSchedulerS.cpp \
   RtecSchedulerS.h \
-  RtecSchedulerS.inl
+  RtecSchedulerS.inl \
+  RtecSchedulerS_T.cpp \
+  RtecSchedulerS_T.h \
+  RtecSchedulerS_T.inl
 
-RtecSchedulerC.cpp RtecSchedulerC.h RtecSchedulerC.inl RtecSchedulerS.cpp RtecSchedulerS.h RtecSchedulerS.inl: RtecScheduler-stamp
+RtecSchedulerC.cpp RtecSchedulerC.h RtecSchedulerC.inl RtecSchedulerS.cpp RtecSchedulerS.h RtecSchedulerS.inl RtecSchedulerS_T.cpp RtecSchedulerS_T.h RtecSchedulerS_T.inl: RtecScheduler-stamp
 
 RtecScheduler-stamp: $(srcdir)/RtecScheduler.idl $(TAO_IDL_DEP)
-	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs -Wb,versioning_begin=TAO_BEGIN_VERSIONED_NAMESPACE_DECL -Wb,versioning_end=TAO_END_VERSIONED_NAMESPACE_DECL -Wb,export_macro=TAO_RTSched_Export -Wb,export_include=orbsvcs/Sched/sched_export.h $(srcdir)/RtecScheduler.idl
-	@touch $@
+	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs -GT -Wb,versioning_begin=TAO_BEGIN_VERSIONED_NAMESPACE_DECL -Wb,versioning_end=TAO_END_VERSIONED_NAMESPACE_DECL -Wb,export_macro=TAO_RTSched_Export -Wb,export_include=orbsvcs/Sched/sched_export.h $(srcdir)/RtecScheduler.idl
+	@touch "$@"
 
 lib_LTLIBRARIES += libTAO_RTSched.la
 
@@ -5161,7 +5387,7 @@ libTAO_RTSched_la_SOURCES = \
   Scheduler_Utilities.cpp
 
 libTAO_RTSched_la_LDFLAGS = \
- -version-number @TAO_MAJOR@:@TAO_MINOR@:@TAO_BETA@
+ -version-number @TAO_MAJOR@:@TAO_MINOR@:@TAO_BETA@ -L. -L$(ACE_ROOT)/lib
 
 libTAO_RTSched_la_LIBADD = \
   libTAO_Svc_Utils.la \
@@ -5177,6 +5403,9 @@ nobase_include_HEADERS += \
   RtecSchedulerC.inl \
   RtecSchedulerS.h \
   RtecSchedulerS.inl \
+  RtecSchedulerS_T.cpp \
+  RtecSchedulerS_T.h \
+  RtecSchedulerS_T.inl \
   Runtime_Scheduler.h \
   Sched/Config_Scheduler.h \
   Sched/DynSched.h \
@@ -5193,8 +5422,6 @@ nobase_include_HEADERS += \
   Scheduler_Utilities.h \
   Scheduler_Utilities.inl
 
-endif BUILD_EXCEPTIONS
-
 EXTRA_DIST += \
   RTSched.rc
 
@@ -5202,7 +5429,6 @@ EXTRA_DIST += \
 ## Makefile.RTEventLogAdmin_Skel.am
 
 if BUILD_CORBA_MESSAGING
-if BUILD_EXCEPTIONS
 
 lib_LTLIBRARIES += libTAO_RTEventLogAdmin_Skel.la
 
@@ -5219,7 +5445,7 @@ libTAO_RTEventLogAdmin_Skel_la_SOURCES = \
   RTEventLogAdminS.cpp
 
 libTAO_RTEventLogAdmin_Skel_la_LDFLAGS = \
- -version-number @TAO_MAJOR@:@TAO_MINOR@:@TAO_BETA@
+ -version-number @TAO_MAJOR@:@TAO_MINOR@:@TAO_BETA@ -L. -L$(ACE_ROOT)/lib
 
 libTAO_RTEventLogAdmin_Skel_la_LIBADD = \
   libTAO_RTEvent_Skel.la \
@@ -5240,7 +5466,10 @@ libTAO_RTEventLogAdmin_Skel_la_LIBADD = \
 nobase_include_HEADERS += \
   Log/rteventlog_skel_export.h \
   RTEventLogAdminS.h \
-  RTEventLogAdminS.inl
+  RTEventLogAdminS.inl \
+  RTEventLogAdminS_T.cpp \
+  RTEventLogAdminS_T.h \
+  RTEventLogAdminS_T.inl
 
 pkgconfig_DATA += \
   TAO_RTEventLogAdmin_Skel.pc
@@ -5249,9 +5478,8 @@ CLEANFILES += \
   TAO_RTEventLogAdmin_Skel.pc
 
 TAO_RTEventLogAdmin_Skel.pc: ${top_builddir}/config.status ${srcdir}/TAO_RTEventLogAdmin_Skel.pc.in
-	${top_builddir}/config.status --file $@:${srcdir}/TAO_RTEventLogAdmin_Skel.pc.in
+	${top_builddir}/config.status --file "$@":${srcdir}/TAO_RTEventLogAdmin_Skel.pc.in
 
-endif BUILD_EXCEPTIONS
 endif BUILD_CORBA_MESSAGING
 
 EXTRA_DIST += \
@@ -5261,7 +5489,6 @@ EXTRA_DIST += \
 ## Makefile.RTEventLogAdmin_Serv.am
 
 if BUILD_CORBA_MESSAGING
-if BUILD_EXCEPTIONS
 if !BUILD_ACE_FOR_TAO
 
 lib_LTLIBRARIES += libTAO_RTEventLogAdmin_Serv.la
@@ -5282,7 +5509,7 @@ libTAO_RTEventLogAdmin_Serv_la_SOURCES = \
   Log/RTEventLog_i.cpp
 
 libTAO_RTEventLogAdmin_Serv_la_LDFLAGS = \
- -version-number @TAO_MAJOR@:@TAO_MINOR@:@TAO_BETA@
+ -version-number @TAO_MAJOR@:@TAO_MINOR@:@TAO_BETA@ -L. -L$(ACE_ROOT)/lib
 
 libTAO_RTEventLogAdmin_Serv_la_LIBADD = \
   libTAO_RTSched.la \
@@ -5322,10 +5549,9 @@ CLEANFILES += \
   TAO_RTEventLogAdmin_Serv.pc
 
 TAO_RTEventLogAdmin_Serv.pc: ${top_builddir}/config.status ${srcdir}/TAO_RTEventLogAdmin_Serv.pc.in
-	${top_builddir}/config.status --file $@:${srcdir}/TAO_RTEventLogAdmin_Serv.pc.in
+	${top_builddir}/config.status --file "$@":${srcdir}/TAO_RTEventLogAdmin_Serv.pc.in
 
 endif !BUILD_ACE_FOR_TAO
-endif BUILD_EXCEPTIONS
 endif BUILD_CORBA_MESSAGING
 
 EXTRA_DIST += \
@@ -5335,7 +5561,6 @@ EXTRA_DIST += \
 ## Makefile.RTKokyuEvent.am
 
 if BUILD_CORBA_MESSAGING
-if BUILD_EXCEPTIONS
 if !BUILD_ACE_FOR_TAO
 
 lib_LTLIBRARIES += libTAO_RTKokyuEvent.la
@@ -5358,7 +5583,7 @@ libTAO_RTKokyuEvent_la_SOURCES = \
   Event/EC_Kokyu_Scheduling.cpp
 
 libTAO_RTKokyuEvent_la_LDFLAGS = \
- -version-number @TAO_MAJOR@:@TAO_MINOR@:@TAO_BETA@
+ -version-number @TAO_MAJOR@:@TAO_MINOR@:@TAO_BETA@ -L. -L$(ACE_ROOT)/lib
 
 libTAO_RTKokyuEvent_la_LIBADD = \
   $(ACE_BUILDDIR)/Kokyu/libKokyu.la \
@@ -5389,13 +5614,11 @@ nobase_include_HEADERS += \
   Event/EC_Kokyu_Scheduling.inl
 
 endif !BUILD_ACE_FOR_TAO
-endif BUILD_EXCEPTIONS
 endif BUILD_CORBA_MESSAGING
 
 ## Makefile.RTSchedEvent.am
 
 if BUILD_CORBA_MESSAGING
-if BUILD_EXCEPTIONS
 if !BUILD_ACE_FOR_TAO
 
 lib_LTLIBRARIES += libTAO_RTSchedEvent.la
@@ -5418,7 +5641,7 @@ libTAO_RTSchedEvent_la_SOURCES = \
   Event/EC_Sched_Filter_Builder.cpp
 
 libTAO_RTSchedEvent_la_LDFLAGS = \
- -version-number @TAO_MAJOR@:@TAO_MINOR@:@TAO_BETA@
+ -version-number @TAO_MAJOR@:@TAO_MINOR@:@TAO_BETA@ -L. -L$(ACE_ROOT)/lib
 
 libTAO_RTSchedEvent_la_LIBADD = \
   libTAO_RTSched.la \
@@ -5448,7 +5671,6 @@ nobase_include_HEADERS += \
   Event/EC_Sched_Filter_Builder.inl
 
 endif !BUILD_ACE_FOR_TAO
-endif BUILD_EXCEPTIONS
 endif BUILD_CORBA_MESSAGING
 
 EXTRA_DIST += \
@@ -5457,8 +5679,8 @@ EXTRA_DIST += \
 
 ## Makefile.RT_Notification.am
 
-if BUILD_EXCEPTIONS
 if BUILD_RT_CORBA
+if !BUILD_MINIMUM_CORBA
 
 lib_LTLIBRARIES += libTAO_RT_Notification.la
 
@@ -5481,12 +5703,11 @@ libTAO_RT_Notification_la_SOURCES = \
   Notify/Structured/RT_StructuredProxyPushSupplier.cpp
 
 libTAO_RT_Notification_la_LDFLAGS = \
- -version-number @TAO_MAJOR@:@TAO_MINOR@:@TAO_BETA@
+ -version-number @TAO_MAJOR@:@TAO_MINOR@:@TAO_BETA@ -L. -L$(ACE_ROOT)/lib
 
 libTAO_RT_Notification_la_LIBADD = \
   libTAO_CosNotification_Serv.la \
   $(TAO_BUILDDIR)/tao/libTAO_DynamicAny.la \
-  $(TAO_BUILDDIR)/tao/libTAO_Valuetype.la \
   libTAO_ETCL.la \
   libTAO_CosNotification_Skel.la \
   libTAO_CosEvent_Skel.la \
@@ -5510,8 +5731,8 @@ nobase_include_HEADERS += \
   Notify/RT_Properties.inl \
   Notify/Structured/RT_StructuredProxyPushSupplier.h
 
+endif !BUILD_MINIMUM_CORBA
 endif BUILD_RT_CORBA
-endif BUILD_EXCEPTIONS
 
 EXTRA_DIST += \
   RT_Notification.rc
@@ -5520,65 +5741,70 @@ EXTRA_DIST += \
 ## Makefile.Security.am
 
 if BUILD_CORBA_MESSAGING
-if BUILD_EXCEPTIONS
 if BUILD_INTERCEPTORS
 
 BUILT_SOURCES += \
   CSIC.cpp \
   CSIC.h \
   CSIC.inl \
-  CSIS.inl
+  CSIS.inl \
+  CSIS_T.inl
 
 CLEANFILES += \
   CSI-stamp \
   CSIC.cpp \
   CSIC.h \
   CSIC.inl \
-  CSIS.inl
+  CSIS.inl \
+  CSIS_T.inl
 
-CSIC.cpp CSIC.h CSIC.inl CSIS.inl: CSI-stamp
+CSIC.cpp CSIC.h CSIC.inl CSIS.inl CSIS_T.inl: CSI-stamp
 
 CSI-stamp: $(srcdir)/CSI.idl $(TAO_IDL_DEP)
-	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs -Wb,versioning_begin=TAO_BEGIN_VERSIONED_NAMESPACE_DECL -Wb,versioning_end=TAO_END_VERSIONED_NAMESPACE_DECL -Wb,export_macro=TAO_Security_Export -Wb,export_include=orbsvcs/Security/security_export.h $(srcdir)/CSI.idl
-	@touch $@
+	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs -GT -Wb,versioning_begin=TAO_BEGIN_VERSIONED_NAMESPACE_DECL -Wb,versioning_end=TAO_END_VERSIONED_NAMESPACE_DECL -Wb,export_macro=TAO_Security_Export -Wb,export_include=orbsvcs/Security/security_export.h $(srcdir)/CSI.idl
+	@touch "$@"
 
 BUILT_SOURCES += \
   CSIIOPC.cpp \
   CSIIOPC.h \
   CSIIOPC.inl \
-  CSIIOPS.inl
+  CSIIOPS.inl \
+  CSIIOPS_T.inl
 
 CLEANFILES += \
   CSIIOP-stamp \
   CSIIOPC.cpp \
   CSIIOPC.h \
   CSIIOPC.inl \
-  CSIIOPS.inl
+  CSIIOPS.inl \
+  CSIIOPS_T.inl
 
-CSIIOPC.cpp CSIIOPC.h CSIIOPC.inl CSIIOPS.inl: CSIIOP-stamp
+CSIIOPC.cpp CSIIOPC.h CSIIOPC.inl CSIIOPS.inl CSIIOPS_T.inl: CSIIOP-stamp
 
 CSIIOP-stamp: $(srcdir)/CSIIOP.idl $(TAO_IDL_DEP)
-	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs -Wb,versioning_begin=TAO_BEGIN_VERSIONED_NAMESPACE_DECL -Wb,versioning_end=TAO_END_VERSIONED_NAMESPACE_DECL -Wb,export_macro=TAO_Security_Export -Wb,export_include=orbsvcs/Security/security_export.h $(srcdir)/CSIIOP.idl
-	@touch $@
+	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs -GT -Wb,versioning_begin=TAO_BEGIN_VERSIONED_NAMESPACE_DECL -Wb,versioning_end=TAO_END_VERSIONED_NAMESPACE_DECL -Wb,export_macro=TAO_Security_Export -Wb,export_include=orbsvcs/Security/security_export.h $(srcdir)/CSIIOP.idl
+	@touch "$@"
 
 BUILT_SOURCES += \
   GSSUPC.cpp \
   GSSUPC.h \
   GSSUPC.inl \
-  GSSUPS.inl
+  GSSUPS.inl \
+  GSSUPS_T.inl
 
 CLEANFILES += \
   GSSUP-stamp \
   GSSUPC.cpp \
   GSSUPC.h \
   GSSUPC.inl \
-  GSSUPS.inl
+  GSSUPS.inl \
+  GSSUPS_T.inl
 
-GSSUPC.cpp GSSUPC.h GSSUPC.inl GSSUPS.inl: GSSUP-stamp
+GSSUPC.cpp GSSUPC.h GSSUPC.inl GSSUPS.inl GSSUPS_T.inl: GSSUP-stamp
 
 GSSUP-stamp: $(srcdir)/GSSUP.idl $(TAO_IDL_DEP)
-	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs -Wb,versioning_begin=TAO_BEGIN_VERSIONED_NAMESPACE_DECL -Wb,versioning_end=TAO_END_VERSIONED_NAMESPACE_DECL -Wb,export_macro=TAO_Security_Export -Wb,export_include=orbsvcs/Security/security_export.h $(srcdir)/GSSUP.idl
-	@touch $@
+	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs -GT -Wb,versioning_begin=TAO_BEGIN_VERSIONED_NAMESPACE_DECL -Wb,versioning_end=TAO_END_VERSIONED_NAMESPACE_DECL -Wb,export_macro=TAO_Security_Export -Wb,export_include=orbsvcs/Security/security_export.h $(srcdir)/GSSUP.idl
+	@touch "$@"
 
 BUILT_SOURCES += \
   SecurityC.cpp \
@@ -5586,7 +5812,9 @@ BUILT_SOURCES += \
   SecurityC.inl \
   SecurityS.cpp \
   SecurityS.h \
-  SecurityS.inl
+  SecurityS.inl \
+  SecurityS_T.cpp \
+  SecurityS_T.inl
 
 CLEANFILES += \
   Security-stamp \
@@ -5595,13 +5823,15 @@ CLEANFILES += \
   SecurityC.inl \
   SecurityS.cpp \
   SecurityS.h \
-  SecurityS.inl
+  SecurityS.inl \
+  SecurityS_T.cpp \
+  SecurityS_T.inl
 
-SecurityC.cpp SecurityC.h SecurityC.inl SecurityS.cpp SecurityS.h SecurityS.inl: Security-stamp
+SecurityC.cpp SecurityC.h SecurityC.inl SecurityS.cpp SecurityS.h SecurityS.inl SecurityS_T.cpp SecurityS_T.inl: Security-stamp
 
 Security-stamp: $(srcdir)/Security.idl $(TAO_IDL_DEP)
-	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs -Wb,versioning_begin=TAO_BEGIN_VERSIONED_NAMESPACE_DECL -Wb,versioning_end=TAO_END_VERSIONED_NAMESPACE_DECL -Wb,export_macro=TAO_Security_Export -Wb,export_include=orbsvcs/Security/security_export.h $(srcdir)/Security.idl
-	@touch $@
+	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs -GT -Wb,versioning_begin=TAO_BEGIN_VERSIONED_NAMESPACE_DECL -Wb,versioning_end=TAO_END_VERSIONED_NAMESPACE_DECL -Wb,export_macro=TAO_Security_Export -Wb,export_include=orbsvcs/Security/security_export.h $(srcdir)/Security.idl
+	@touch "$@"
 
 BUILT_SOURCES += \
   SecurityLevel1C.cpp \
@@ -5609,7 +5839,9 @@ BUILT_SOURCES += \
   SecurityLevel1C.inl \
   SecurityLevel1S.cpp \
   SecurityLevel1S.h \
-  SecurityLevel1S.inl
+  SecurityLevel1S.inl \
+  SecurityLevel1S_T.cpp \
+  SecurityLevel1S_T.inl
 
 CLEANFILES += \
   SecurityLevel1-stamp \
@@ -5618,13 +5850,15 @@ CLEANFILES += \
   SecurityLevel1C.inl \
   SecurityLevel1S.cpp \
   SecurityLevel1S.h \
-  SecurityLevel1S.inl
+  SecurityLevel1S.inl \
+  SecurityLevel1S_T.cpp \
+  SecurityLevel1S_T.inl
 
-SecurityLevel1C.cpp SecurityLevel1C.h SecurityLevel1C.inl SecurityLevel1S.cpp SecurityLevel1S.h SecurityLevel1S.inl: SecurityLevel1-stamp
+SecurityLevel1C.cpp SecurityLevel1C.h SecurityLevel1C.inl SecurityLevel1S.cpp SecurityLevel1S.h SecurityLevel1S.inl SecurityLevel1S_T.cpp SecurityLevel1S_T.inl: SecurityLevel1-stamp
 
 SecurityLevel1-stamp: $(srcdir)/SecurityLevel1.idl $(TAO_IDL_DEP)
-	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs -Wb,versioning_begin=TAO_BEGIN_VERSIONED_NAMESPACE_DECL -Wb,versioning_end=TAO_END_VERSIONED_NAMESPACE_DECL -Wb,export_macro=TAO_Security_Export -Wb,export_include=orbsvcs/Security/security_export.h $(srcdir)/SecurityLevel1.idl
-	@touch $@
+	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs -GT -Wb,versioning_begin=TAO_BEGIN_VERSIONED_NAMESPACE_DECL -Wb,versioning_end=TAO_END_VERSIONED_NAMESPACE_DECL -Wb,export_macro=TAO_Security_Export -Wb,export_include=orbsvcs/Security/security_export.h $(srcdir)/SecurityLevel1.idl
+	@touch "$@"
 
 BUILT_SOURCES += \
   SecurityLevel2C.cpp \
@@ -5632,7 +5866,9 @@ BUILT_SOURCES += \
   SecurityLevel2C.inl \
   SecurityLevel2S.cpp \
   SecurityLevel2S.h \
-  SecurityLevel2S.inl
+  SecurityLevel2S.inl \
+  SecurityLevel2S_T.cpp \
+  SecurityLevel2S_T.inl
 
 CLEANFILES += \
   SecurityLevel2-stamp \
@@ -5641,32 +5877,36 @@ CLEANFILES += \
   SecurityLevel2C.inl \
   SecurityLevel2S.cpp \
   SecurityLevel2S.h \
-  SecurityLevel2S.inl
+  SecurityLevel2S.inl \
+  SecurityLevel2S_T.cpp \
+  SecurityLevel2S_T.inl
 
-SecurityLevel2C.cpp SecurityLevel2C.h SecurityLevel2C.inl SecurityLevel2S.cpp SecurityLevel2S.h SecurityLevel2S.inl: SecurityLevel2-stamp
+SecurityLevel2C.cpp SecurityLevel2C.h SecurityLevel2C.inl SecurityLevel2S.cpp SecurityLevel2S.h SecurityLevel2S.inl SecurityLevel2S_T.cpp SecurityLevel2S_T.inl: SecurityLevel2-stamp
 
 SecurityLevel2-stamp: $(srcdir)/SecurityLevel2.idl $(TAO_IDL_DEP)
-	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs -Wb,versioning_begin=TAO_BEGIN_VERSIONED_NAMESPACE_DECL -Wb,versioning_end=TAO_END_VERSIONED_NAMESPACE_DECL -Wb,export_macro=TAO_Security_Export -Wb,export_include=orbsvcs/Security/security_export.h $(srcdir)/SecurityLevel2.idl
-	@touch $@
+	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs -GT -Wb,versioning_begin=TAO_BEGIN_VERSIONED_NAMESPACE_DECL -Wb,versioning_end=TAO_END_VERSIONED_NAMESPACE_DECL -Wb,export_macro=TAO_Security_Export -Wb,export_include=orbsvcs/Security/security_export.h $(srcdir)/SecurityLevel2.idl
+	@touch "$@"
 
 BUILT_SOURCES += \
   SecurityLevel3C.cpp \
   SecurityLevel3C.h \
   SecurityLevel3C.inl \
-  SecurityLevel3S.inl
+  SecurityLevel3S.inl \
+  SecurityLevel3S_T.inl
 
 CLEANFILES += \
   SecurityLevel3-stamp \
   SecurityLevel3C.cpp \
   SecurityLevel3C.h \
   SecurityLevel3C.inl \
-  SecurityLevel3S.inl
+  SecurityLevel3S.inl \
+  SecurityLevel3S_T.inl
 
-SecurityLevel3C.cpp SecurityLevel3C.h SecurityLevel3C.inl SecurityLevel3S.inl: SecurityLevel3-stamp
+SecurityLevel3C.cpp SecurityLevel3C.h SecurityLevel3C.inl SecurityLevel3S.inl SecurityLevel3S_T.inl: SecurityLevel3-stamp
 
 SecurityLevel3-stamp: $(srcdir)/SecurityLevel3.idl $(TAO_IDL_DEP)
-	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs -Wb,versioning_begin=TAO_BEGIN_VERSIONED_NAMESPACE_DECL -Wb,versioning_end=TAO_END_VERSIONED_NAMESPACE_DECL -Wb,export_macro=TAO_Security_Export -Wb,export_include=orbsvcs/Security/security_export.h $(srcdir)/SecurityLevel3.idl
-	@touch $@
+	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs -GT -Wb,versioning_begin=TAO_BEGIN_VERSIONED_NAMESPACE_DECL -Wb,versioning_end=TAO_END_VERSIONED_NAMESPACE_DECL -Wb,export_macro=TAO_Security_Export -Wb,export_include=orbsvcs/Security/security_export.h $(srcdir)/SecurityLevel3.idl
+	@touch "$@"
 
 lib_LTLIBRARIES += libTAO_Security.la
 
@@ -5707,7 +5947,7 @@ libTAO_Security_la_SOURCES = \
   SecurityS.cpp
 
 libTAO_Security_la_LDFLAGS = \
- -version-number @TAO_MAJOR@:@TAO_MINOR@:@TAO_BETA@
+ -version-number @TAO_MAJOR@:@TAO_MINOR@:@TAO_BETA@ -L. -L$(ACE_ROOT)/lib
 
 libTAO_Security_la_LIBADD = \
   $(TAO_BUILDDIR)/tao/libTAO_Valuetype.la \
@@ -5726,11 +5966,14 @@ nobase_include_HEADERS += \
   CSIIOPC.h \
   CSIIOPC.inl \
   CSIIOPS.inl \
+  CSIIOPS_T.inl \
   CSIS.inl \
+  CSIS_T.inl \
   GSSUP.idl \
   GSSUPC.h \
   GSSUPC.inl \
   GSSUPS.inl \
+  GSSUPS_T.inl \
   Security.idl \
   Security/CSI_Utils.h \
   Security/SL2_EstablishTrustPolicy.h \
@@ -5757,20 +6000,26 @@ nobase_include_HEADERS += \
   SecurityLevel1C.inl \
   SecurityLevel1S.h \
   SecurityLevel1S.inl \
+  SecurityLevel1S_T.cpp \
+  SecurityLevel1S_T.inl \
   SecurityLevel2.idl \
   SecurityLevel2C.h \
   SecurityLevel2C.inl \
   SecurityLevel2S.h \
   SecurityLevel2S.inl \
+  SecurityLevel2S_T.cpp \
+  SecurityLevel2S_T.inl \
   SecurityLevel3.idl \
   SecurityLevel3C.h \
   SecurityLevel3C.inl \
   SecurityLevel3S.inl \
+  SecurityLevel3S_T.inl \
   SecurityS.h \
-  SecurityS.inl
+  SecurityS.inl \
+  SecurityS_T.cpp \
+  SecurityS_T.inl
 
 endif BUILD_INTERCEPTORS
-endif BUILD_EXCEPTIONS
 endif BUILD_CORBA_MESSAGING
 
 EXTRA_DIST += \
@@ -5780,9 +6029,9 @@ EXTRA_DIST += \
 ## Makefile.SSLIOP.am
 
 if BUILD_CORBA_MESSAGING
-if BUILD_EXCEPTIONS
 if BUILD_INTERCEPTORS
 if BUILD_SSL
+if !BUILD_ACE_FOR_TAO
 
 BUILT_SOURCES += \
   SSLIOPC.cpp \
@@ -5800,8 +6049,8 @@ CLEANFILES += \
 SSLIOPC.cpp SSLIOPC.h SSLIOPC.inl SSLIOPS.h: SSLIOP-stamp
 
 SSLIOP-stamp: $(srcdir)/SSLIOP.idl $(TAO_IDL_DEP)
-	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs -Wb,versioning_begin=TAO_BEGIN_VERSIONED_NAMESPACE_DECL -Wb,versioning_end=TAO_END_VERSIONED_NAMESPACE_DECL -Wb,export_macro=TAO_SSLIOP_Export -Wb,export_include=orbsvcs/SSLIOP/SSLIOP_Export.h -SS $(srcdir)/SSLIOP.idl
-	@touch $@
+	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs -GT -Wb,versioning_begin=TAO_BEGIN_VERSIONED_NAMESPACE_DECL -Wb,versioning_end=TAO_END_VERSIONED_NAMESPACE_DECL -Wb,export_macro=TAO_SSLIOP_Export -Wb,export_include=orbsvcs/SSLIOP/SSLIOP_Export.h -SS $(srcdir)/SSLIOP.idl
+	@touch "$@"
 
 BUILT_SOURCES += \
   SSLIOP/ssl_endpointsC.cpp \
@@ -5817,8 +6066,8 @@ CLEANFILES += \
 SSLIOP/ssl_endpointsC.cpp SSLIOP/ssl_endpointsC.h SSLIOP/ssl_endpointsS.h: SSLIOP/ssl_endpoints-stamp
 
 SSLIOP/ssl_endpoints-stamp: $(srcdir)/SSLIOP/ssl_endpoints.pidl $(TAO_IDL_DEP)
-	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs -Wb,versioning_begin=TAO_BEGIN_VERSIONED_NAMESPACE_DECL -Wb,versioning_end=TAO_END_VERSIONED_NAMESPACE_DECL -Wb,export_macro=TAO_SSLIOP_Export -Wb,export_include=orbsvcs/SSLIOP/SSLIOP_Export.h -SS -Sci -Gp -Gd -Sa -Sorb -o SSLIOP $(srcdir)/SSLIOP/ssl_endpoints.pidl
-	@touch $@
+	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs -GT -Wb,versioning_begin=TAO_BEGIN_VERSIONED_NAMESPACE_DECL -Wb,versioning_end=TAO_END_VERSIONED_NAMESPACE_DECL -Wb,export_macro=TAO_SSLIOP_Export -Wb,export_include=orbsvcs/SSLIOP/SSLIOP_Export.h -SS -Sci -Gp -Gd -Ge 1 -Sa -Sorb -o SSLIOP $(srcdir)/SSLIOP/ssl_endpoints.pidl
+	@touch "$@"
 
 lib_LTLIBRARIES += libTAO_SSLIOP.la
 
@@ -5863,7 +6112,7 @@ libTAO_SSLIOP_la_SOURCES = \
   SSLIOPC.cpp
 
 libTAO_SSLIOP_la_LDFLAGS = \
- -version-number @TAO_MAJOR@:@TAO_MINOR@:@TAO_BETA@ @ACE_TLS_LDFLAGS@
+ -version-number @TAO_MAJOR@:@TAO_MINOR@:@TAO_BETA@ @ACE_TLS_LDFLAGS@ -L. -L$(ACE_ROOT)/lib
 
 libTAO_SSLIOP_la_LIBADD = \
   $(TAO_BUILDDIR)/tao/libTAO_PI_Server.la \
@@ -5879,7 +6128,6 @@ libTAO_SSLIOP_la_LIBADD = \
   @ACE_TLS_LIBS@
 
 nobase_include_HEADERS += \
-  Channel_Clients_T.cpp \
   SSLIOP.idl \
   SSLIOP/IIOP_SSL_Acceptor.h \
   SSLIOP/IIOP_SSL_Connection_Handler.h \
@@ -5920,9 +6168,9 @@ nobase_include_HEADERS += \
   SSLIOPC.inl \
   SSLIOPS.h
 
+endif !BUILD_ACE_FOR_TAO
 endif BUILD_SSL
 endif BUILD_INTERCEPTORS
-endif BUILD_EXCEPTIONS
 endif BUILD_CORBA_MESSAGING
 
 EXTRA_DIST += \

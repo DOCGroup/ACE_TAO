@@ -23,8 +23,6 @@ module Test
   {
     Timestamp test_method (in Timestamp send_time)
       raises (InvalidTimestamp, ServerOverload);
-
-    oneway void shutdown ();
   };
 
 };

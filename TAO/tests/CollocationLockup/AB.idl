@@ -3,6 +3,6 @@
 interface A {
 };
 
-interface C {
+interface B {
   A makeA ();
 };

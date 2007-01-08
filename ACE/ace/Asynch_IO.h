@@ -33,7 +33,7 @@
 #pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#if defined (ACE_HAS_WIN32_OVERLAPPED_IO) || defined (ACE_HAS_AIO_CALLS)
+#if (defined (ACE_WIN32) && !defined (ACE_HAS_WINCE)) || (defined (ACE_HAS_AIO_CALLS))
 
 #include "ace/Synch_Traits.h"
 #if defined (ACE_HAS_THREADS)
@@ -49,7 +49,8 @@
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
-# if defined (ACE_HAS_WIN32_OVERLAPPED_IO)
+# if defined (ACE_WIN32) && ! defined (ACE_HAS_WINCE) \
+                         && ! defined (ACE_HAS_PHARLAP)
 typedef TRANSMIT_FILE_BUFFERS ACE_TRANSMIT_FILE_BUFFERS;
 typedef LPTRANSMIT_FILE_BUFFERS ACE_LPTRANSMIT_FILE_BUFFERS;
 typedef PTRANSMIT_FILE_BUFFERS ACE_PTRANSMIT_FILE_BUFFERS;
@@ -58,7 +59,7 @@ typedef PTRANSMIT_FILE_BUFFERS ACE_PTRANSMIT_FILE_BUFFERS;
 #   define ACE_STATUS_TIMEOUT STATUS_TIMEOUT
 #   define ACE_WAIT_FAILED WAIT_FAILED
 #   define ACE_WAIT_TIMEOUT WAIT_TIMEOUT
-# else /* ACE_HAS_WIN32_OVERLAPPED_IO */
+# else /* ACE_WIN32 */
 struct ACE_TRANSMIT_FILE_BUFFERS
 {
   void *Head;
@@ -75,7 +76,7 @@ typedef ACE_TRANSMIT_FILE_BUFFERS* ACE_LPTRANSMIT_FILE_BUFFERS;
 #   define ACE_STATUS_TIMEOUT LONG_MAX
 #   define ACE_WAIT_FAILED LONG_MAX
 #   define ACE_WAIT_TIMEOUT LONG_MAX
-# endif /* ACE_HAS_WIN32_OVERLAPPED_IO */
+# endif /* ACE_WIN32 */
 
 // Forward declarations
 class ACE_Proactor;
@@ -337,7 +338,7 @@ public:
             int priority = 0,
             int signal_number = ACE_SIGRTMIN);
 
-#if defined (ACE_HAS_WIN32_OVERLAPPED_IO)
+#if (defined (ACE_WIN32) && !defined (ACE_HAS_WINCE) && (ACE_HAS_WINNT4) && (ACE_HAS_WINNT4 != 0))
   /**
   * Same as above but with scatter support, through chaining of composite
   * message blocks using the continuation field.
@@ -347,7 +348,7 @@ public:
              const void *act = 0,
              int priority = 0,
              int signal_number = ACE_SIGRTMIN);
-#endif /* defined (ACE_HAS_WIN32_OVERLAPPED_IO) */
+#endif /* (defined (ACE_WIN32) && !defined (ACE_HAS_WINCE) && (ACE_HAS_WINNT4) && (ACE_HAS_WINNT4 != 0)) */
 
   /// Return the underlying implementation class.
   //  (this should be protected...)
@@ -461,7 +462,7 @@ public:
              int priority = 0,
              int signal_number = ACE_SIGRTMIN);
 
-#if defined (ACE_HAS_WIN32_OVERLAPPED_IO)
+#if (defined (ACE_WIN32) && !defined (ACE_HAS_WINCE) && (ACE_HAS_WINNT4) && (ACE_HAS_WINNT4 != 0))
   /**
   * Same as above but with gather support, through chaining of composite
   * message blocks using the continuation field.
@@ -471,7 +472,7 @@ public:
               const void *act = 0,
               int priority = 0,
               int signal_number = ACE_SIGRTMIN);
-#endif /* defined (ACE_HAS_WIN32_OVERLAPPED_IO) */
+#endif /* (defined (ACE_WIN32) && !defined (ACE_HAS_WINCE) && (ACE_HAS_WINNT4) && (ACE_HAS_WINNT4 != 0)) */
 
   /// Return the underlying implementation class.
   /// @todo (this should be protected...)

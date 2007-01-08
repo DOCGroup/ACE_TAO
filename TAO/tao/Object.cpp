@@ -162,19 +162,6 @@ CORBA::Object::marshal (const CORBA::Object_ptr x,
   return x->marshal (cdr);
 }
 
-bool
-CORBA::Object::can_convert_to_ior (void) const
-{
-  // By default, objects can not be stringified if they are local
-  return !this->_is_local ();
-}
-
-char*
-CORBA::Object::convert_to_ior (bool,
-                               const char*) const
-{
-  return 0;
-}
 
 TAO_Abstract_ServantBase*
 CORBA::Object::_servant (void) const
@@ -601,13 +588,6 @@ CORBA::Object::_set_policy_overrides (
                         ENOMEM),
                       CORBA::COMPLETED_MAYBE));
   ACE_CHECK_RETURN (CORBA::Object::_nil ());
-
-  // If the stub is collocated and we don't have a collocated server we need
-  // to reinitialize it to get it.
-  if (stub->is_collocated () && stub->collocated_servant () == 0)
-    {
-      obj->orb_core ()->reinitialize_object (stub);
-    }
 
   (void) safe_stub.release ();
 

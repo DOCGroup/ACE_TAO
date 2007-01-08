@@ -1,6 +1,5 @@
-#include "ciao/Dynamic_Component_Activator.h"
-#include "ciao/Dynamic_Component_Servant_Base.h"
-#include "ciao/CIAO_common.h"
+#include "Dynamic_Component_Activator.h"
+#include "CIAO_common.h"
 #include "ace/Log_Msg.h"
 #include "ace/OS_NS_string.h"
 
@@ -63,6 +62,9 @@ namespace CIAO
     if (this->servant_map_.unbind (oid, servant) != 0)
       {
         ACE_DEBUG ((LM_DEBUG, "Invalid object reference\n"));
+        return;
       }
+
+    return;
   }
 }

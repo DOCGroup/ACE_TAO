@@ -1,4 +1,4 @@
-// $Id$
+// CmpClient.cpp,v 1.3 2006/01/25 00:10:27 dengg Exp
 /**
  * @file CmpClient.cpp
  *
@@ -9,8 +9,8 @@
  * TM to getAllResources and getAvailable resources
  */
 
-#include "ciao/Deployment_DataC.h"
-#include "DAnCE/TargetManager/TargetManagerImplC.h"
+#include "Deployment_DataC.h"
+#include "TargetManagerC.h"
 #include "ace/streams.h"
 #include "Config_Handlers/DnC_Dump.h"
 
@@ -105,7 +105,7 @@ int main (int argc, char* argv[])
 
     plan.instance[1] = instance_;
 
-    bool resource_available = true;
+    bool resource_available = 1;
 
     try
     {
@@ -141,11 +141,11 @@ int main (int argc, char* argv[])
     // Make a call to release resources , if resource < 0
     try
     {
-      if (!resource_available)
-        {
-          targetI->releaseResources(plan);
-          ACE_DEBUG ((LM_DEBUG , "\n\nreleaseResources Returned \n"));
-        }
+      if (resource_available == 0)
+      {
+        targetI->releaseResources(plan);
+        ACE_DEBUG ((LM_DEBUG , "\n\nreleaseResources Returned \n"));
+      }
     }
     catch(CORBA::NO_IMPLEMENT &)
     {
@@ -171,7 +171,7 @@ int main (int argc, char* argv[])
     ::CORBA::StringSeq elements;
     elements.length (0);
 
-    bool Add = true;
+    bool Add = 1;
     Add = ACE_OS::atoi (argv[3]);
 
     if (Add)
@@ -212,7 +212,7 @@ int main (int argc, char* argv[])
       Deployment::Domain_var domainV = targetI->getAvailableResources();
 
       // here write things to file ...
-      write_to_file (domainV.in());
+      write_to_file (domainV);
 
       ACE_DEBUG ((LM_DEBUG , "\n\nGetAvailableResources Returned \n"));
       ::Deployment::DnC_Dump::dump (domainV);

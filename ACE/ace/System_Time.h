@@ -25,7 +25,6 @@
 #include "ace/Global_Macros.h"
 #include "ace/os_include/os_time.h"  /* For time_t. */
 #include "ace/os_include/os_limits.h"  /* For MAXPATHLEN. */
-#include "ace/MMAP_Memory_Pool.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 

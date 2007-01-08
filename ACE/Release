@@ -86,6 +86,7 @@ RELEASE_FILES = \
         $(addprefix ACE_wrappers/,$(CONTROLLED_FILES)) \
         ACE_wrappers/ACE-INSTALL \
         ACE_wrappers/GNUmake* \
+        ACE_wrappers/*.dsw \
         ACE_wrappers/*.sln \
         ACE_wrappers/*.bor \
         ACE_wrappers/*.vcw \
@@ -117,10 +118,10 @@ RELEASE_LIB_FILES = \
 RELEASE_TAG_FILES = \
         html
 
-.PHONY: tag ACE TAO CIAO acesources taosources ciaosources
+.PHONY: tag ACE TAO CIAO acesources taosources ciaosources 
 .PHONY: allsources manpages all
 
-# Some useful defines which are used to create the release bundle.
+# Some useful defines which are used to create the release bundle. 
 ACE_TAG_VALUE = $(shell head -1 VERSION | perl -ne \
                 's/.* ([\d\.]+),.*\n/$$1/; tr/./_/; print "ACE-$$_";')
 ACE_TAG       = -ta $(ACE_TAG_VALUE)
@@ -162,22 +163,22 @@ acesources: $(APPLY_NEW_TAG)
 	@$(ACE_ROOT)/bin/make_release -k ace $(ACE_TAG) \
          $(INSTALL_KIT) $(ZIP_FILES) $(CHECK)
 
-#### The following target is for use by the TAO Release target. It
-#### should not be called directly from the command line.  This is
+#### The following target is for use by the TAO Release target. It 
+#### should not be called directly from the command line.  This is 
 #### invoked by the TAO target this Release file.
 taosources:
 	@$(ACE_ROOT)/bin/make_release -k ace+tao $(ACE_TAG) $(TAO_TAG) \
          $(INSTALL_KIT) $(ZIP_FILES) $(CHECK)
 
-#### The following target is for use by the TAO Release target. It
-#### should not be called directly from the command line.  This is
+#### The following target is for use by the TAO Release target. It 
+#### should not be called directly from the command line.  This is 
 #### invoked by the TAO target this Release file.
 ciaosources:
 	@$(ACE_ROOT)/bin/make_release -k ace+tao+ciao $(ACE_TAG) $(TAO_TAG) $(CIAO_TAG) \
          $(INSTALL_KIT) $(ZIP_FILES) $(CHECK)
 
 #########################################################################
-## The following targets are a matter of convinience. We don't
+## The following targets are a matter of convinience. We don't 
 ## believe that we ever will release ACE+TAO+CIAO seperately. If that
 ## happens then we have these to help us out.
 #########################################################################

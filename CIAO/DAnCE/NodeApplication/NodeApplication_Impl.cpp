@@ -31,7 +31,7 @@ CIAO::NodeApplication_Impl::create_all_containers (
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // Create all the containers here based on the input node_impl_info.
-  CORBA::ULong const len = container_infos.length ();
+  const CORBA::ULong len = container_infos.length ();
 
   for (CORBA::ULong i = 0; i < len; ++i)
     {
@@ -88,7 +88,7 @@ CIAO::NodeApplication_Impl::finishLaunch_i (
 
   ACE_TRY
     {
-      CORBA::ULong const length = connections.length ();
+      const CORBA::ULong length = connections.length ();
 
       // For every connection struct we finish the connection.
       for (CORBA::ULong i = 0; i < length; ++i)
@@ -311,7 +311,7 @@ CIAO::NodeApplication_Impl::install (
       // the ComponentInfo for components installed in each container.
       // Merge all the returned ComponentInfo, which will be used
       // as the return value of this method.
-      CORBA::ULong const num_containers = container_infos.length ();
+      const CORBA::ULong num_containers = container_infos.length ();
       for (CORBA::ULong i = 0; i < num_containers; ++i)
         {
           Deployment::ComponentInfos_var comp_infos =
@@ -333,7 +333,7 @@ CIAO::NodeApplication_Impl::install (
       // installed on this NodeApplication. I know we can delegates these to the
       // undelying containers, but in that case, we should loop
       // all the containers to find the component object reference. - Gan
-      CORBA::ULong const comp_len = retv->length ();
+      const CORBA::ULong comp_len = retv->length ();
       for (CORBA::ULong len = 0;
           len < comp_len;
           ++len)
@@ -448,9 +448,7 @@ CIAO::NodeApplication_Impl::activate_component (const char * name
 
   if (CORBA::is_nil (comp_state.objref_.in ()))
     {
-      ACE_ERROR ((LM_ERROR,
-                  "CIAO (%P|%t) - NodeApplication_Impl.cpp, "
-                  "comp is nil\n"));
+      ACE_DEBUG ((LM_DEBUG, "comp is nil\n"));
       throw Deployment::StartError ();
     }
 
@@ -475,33 +473,23 @@ CIAO::NodeApplication_Impl::remove (ACE_ENV_SINGLE_ARG_DECL)
     return;
 
   // For each container, invoke <remove> operation to remove home and components.
-  CORBA::ULong const set_size = this->container_set_.size ();
+  const CORBA::ULong set_size = this->container_set_.size ();
   for (CORBA::ULong i = 0; i < set_size; ++i)
     {
-      if (CIAO::debug_level () > 5)
-        {
-          ACE_DEBUG ((LM_DEBUG, "NA: calling remove on container %i\n"));
-        }
-
+      ACE_DEBUG ((LM_DEBUG, "NA: calling remove on container %i\n"));
       this->container_set_.at(i)->remove (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK;
     }
 
   // Remove all containers
   // Maybe we should also deactivate container object reference.
-  if (CIAO::debug_level () > 5)
-    {
-      ACE_DEBUG ((LM_DEBUG, "NA: remove all\n"));
-    }
-
+  ACE_DEBUG ((LM_DEBUG, "NA: remove all\n"));
   this->container_set_.remove_all ();
 
   if (CIAO::debug_level () > 1)
-    {
-      ACE_DEBUG ((LM_DEBUG, "Removed all containers from this NodeApplication!\n"));
-    }
+    ACE_DEBUG ((LM_DEBUG, "Removed all containers from this NodeApplication!\n"));
 
-  // For static deployment, ORB will be shutdown in the Static_NodeManager
+  //For static deployment, ORB will be shutdown in the Static_NodeManager
   if (this->static_entrypts_maps_ == 0)
     {
       this->orb_->shutdown (0 ACE_ENV_ARG_PARAMETER);
@@ -606,6 +594,7 @@ CIAO::NodeApplication_Impl::remove_container (::Deployment::Container_ptr cref
   ACE_CHECK;
 
   // Should we remove the server still, even if the previous call failed.
+
   if (this->container_set_.remove (cref) == -1)
     {
       ACE_THROW (::Components::RemoveFailure ());
@@ -633,64 +622,64 @@ ACE_THROW_SPEC ((::CORBA::SystemException,
     {
       ACE_DEBUG ((LM_DEBUG, "\nNodeApplication_Impl::install_es() called.\n\n"));
 
-      CIAO_Event_Service_var ciao_es =
-        es_factory_.create (es_info.type, es_info.name.in ());
+          CIAO_Event_Service_var ciao_es =
+            es_factory_.create (es_info.type, es_info.name.in ());
 
-		  // Set up the event channel federations
-      if (es_info.type == CIAO::RTEC)
-        {
-          // Narrow the event service to CIAO_RT_Event_Service
-          ::CIAO::CIAO_RT_Event_Service_var ciao_rtes =
-            ::CIAO::CIAO_RT_Event_Service::_narrow (ciao_es.in ());
+          // Set up the event channel federation configurations
+          if (es_info.type == CIAO::RTEC)
+            {
+              // Narrow the event service to CIAO_RT_Event_Service
+              ::CIAO::CIAO_RT_Event_Service_var ciao_rtes =
+                ::CIAO::CIAO_RT_Event_Service::_narrow (ciao_es);
 
-          if (CORBA::is_nil (ciao_rtes.in ()))
-            ACE_THROW (::Deployment::InstallationFailure ());
+              if (CORBA::is_nil (ciao_rtes.in ()))
+                ACE_THROW (::Deployment::InstallationFailure ());
 
-          // Set up the event channel federations
-          for (CORBA::ULong j = 0; j < es_info.addr_servs.length (); ++j)
-		        {
-			        bool retv = 
-			        ciao_rtes->create_addr_serv (
-				        es_info.addr_servs[j].name.in (),
-				        es_info.addr_servs[j].port,
-				        es_info.addr_servs[j].address);
+              // Set up the event channel federations
+              for (CORBA::ULong j = 0; j < es_info.addr_servs.length (); ++j)
+                {
+                  bool retv = 
+                    ciao_rtes->create_addr_serv (
+                      es_info.addr_servs[j].name.in (),
+                      es_info.addr_servs[j].port,
+                      es_info.addr_servs[j].address);
 
-			        if (retv == false)
-			        {
-				        ACE_DEBUG ((LM_ERROR, "RTEC failed to create addr serv object\t\n"));
-				        ACE_THROW_RETURN (::Deployment::InstallationFailure (), 0);
-			        }
-		        }
+                  if (retv == false)
+                    {
+                      ACE_DEBUG ((LM_ERROR, "RTEC failed to create addr serv object\t\n"));
+                      ACE_THROW_RETURN (::Deployment::InstallationFailure (), 0);
+                    }
+                }
+              for (CORBA::ULong j = 0; j < es_info.senders.length (); ++j)
+                {
+                  bool retv = 
+                    ciao_rtes->create_sender (
+                      es_info.senders[j].addr_serv_id.in ());
 
-		      for (CORBA::ULong j = 0; j < es_info.senders.length (); ++j)
-		        {
-			        bool retv = 
-			        ciao_rtes->create_sender (
-				        es_info.senders[j].addr_serv_id.in ());
+                  if (retv == false)
+                    {
+                      ACE_DEBUG ((LM_ERROR, "RTEC failed to create UDP sender object\t\n"));
+                      ACE_THROW_RETURN (::Deployment::InstallationFailure (), 0);
+                    }
+                }
 
-			        if (retv == false)
-			        {
-				        ACE_DEBUG ((LM_ERROR, "RTEC failed to create UDP sender object\t\n"));
-				        ACE_THROW_RETURN (::Deployment::InstallationFailure (), 0);
-			        }
-		        }
+              for (CORBA::ULong j = 0; j < es_info.receivers.length (); ++j)
+                {
+                  bool retv = 
+                    ciao_rtes->create_receiver (
+                      es_info.receivers[j].addr_serv_id.in (),
+                      es_info.receivers[j].is_multicast,
+                      es_info.receivers[j].listen_port);
 
-		      for (CORBA::ULong j = 0; j < es_info.receivers.length (); ++j)
-		        {
-			        bool retv = 
-			        ciao_rtes->create_receiver (
-				        es_info.receivers[j].addr_serv_id.in (),
-				        es_info.receivers[j].is_multicast,
-				        es_info.receivers[j].listen_port);
+                  if (retv == false)
+                    {
+                      ACE_DEBUG ((LM_ERROR, "RTEC failed to create UDP receiver object\t\n"));
+                      ACE_THROW_RETURN (::Deployment::InstallationFailure (), 0);
+                    }
+                }
+            }
 
-			        if (retv == false)
-			        {
-				        ACE_DEBUG ((LM_ERROR, "RTEC failed to create UDP receiver object\t\n"));
-				        ACE_THROW_RETURN (::Deployment::InstallationFailure (), 0);
-			        }
-		        }
-        }
-      return ciao_es._retn ();
+          return ciao_es._retn ();
     }
   ACE_CATCHANY
     {

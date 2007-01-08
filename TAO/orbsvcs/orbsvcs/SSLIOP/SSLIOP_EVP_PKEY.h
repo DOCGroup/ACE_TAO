@@ -6,7 +6,7 @@
  *
  *  $Id$
  *
- *  @author Ossama Othman <ossama@dre.vanderbilt.edu>
+ *  @author Ossama Othman <ossama@dre,vanderbilt.edu>
  */
 //=============================================================================
 

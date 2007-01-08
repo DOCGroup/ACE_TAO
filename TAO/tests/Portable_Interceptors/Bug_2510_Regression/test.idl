@@ -1,4 +1,4 @@
-// $Id$
+// test.idl,v 1.1 2003/08/27 22:43:35 edwardgt Exp
 
 module Test_Interceptors
 {

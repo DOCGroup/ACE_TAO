@@ -88,7 +88,7 @@ public:
       ACE_ENV_ARG_DECL
     ) = 0;
 
-#if (TAO_HAS_MINIMUM_CORBA == 0) && !defined (CORBA_E_COMPACT) && !defined (CORBA_E_MICRO)
+#if (TAO_HAS_MINIMUM_CORBA == 0)
   virtual void create_operation_list (
                CORBA::ORB_ptr orb,
                CORBA::OperationDef_ptr,

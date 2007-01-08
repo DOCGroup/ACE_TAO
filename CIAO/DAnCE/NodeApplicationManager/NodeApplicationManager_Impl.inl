@@ -20,6 +20,11 @@ NodeApplicationManager_Impl_Base (CORBA::ORB_ptr o,
 }
 
 ACE_INLINE
+CIAO::NodeApplicationManager_Impl_Base::~NodeApplicationManager_Impl_Base (void)
+{
+}
+
+ACE_INLINE
 void
 CIAO::NodeApplicationManager_Impl_Base::
 parse_config_value (ACE_CString & str

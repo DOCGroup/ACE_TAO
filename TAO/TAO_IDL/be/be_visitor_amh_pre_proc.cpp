@@ -185,16 +185,10 @@ be_visitor_amh_pre_proc::create_response_handler (
   response_handler->set_imported (node->imported ());
   response_handler->set_line (node->line ());
   response_handler->set_file_name (node->file_name ());
-  
-  // Set repo id to 0, so it will be recomputed on the next access,
-  // and set the prefix to the node's prefix. All this is
-  // necessary in case the node's prefix was modified after
-  // its declaration.
-  response_handler->AST_Decl::repoID (0);
-  response_handler->prefix (const_cast<char*> (node->prefix ()));
-  
   response_handler->gen_fwd_helper_name ();
+
   this->add_rh_node_members (node, response_handler, exception_holder);
+
   return response_handler;
 }
 
@@ -625,14 +619,6 @@ be_visitor_amh_pre_proc::create_exception_holder (be_interface *node)
 
   excep_holder->set_name (excep_holder_name);
   excep_holder->set_defined_in (node->defined_in ());
-  
-  // Set repo id to 0, so it will be recomputed on the next access,
-  // and set the prefix to the node's prefix. All this is
-  // necessary in case the node's prefix was modified after
-  // its declaration.
-  excep_holder->AST_Decl::repoID (0);
-  excep_holder->prefix (const_cast<char*> (node->prefix ()));
-  
   excep_holder->gen_fwd_helper_name ();
 
   // Now our customized valuetype is created, we have to

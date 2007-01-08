@@ -9,11 +9,7 @@
  * @brief Interfaces for configuring CIAO's event mechanism.
  */
 
-#if !defined (CIAO_EVENTS_IDL)
-#define CIAO_EVENTS_IDL
-
-#include "ciao/CCM_EventConsumerBase.idl"
-#include "ciao/CCM_Base.idl"
+#include "ciao/CCM_Event.idl"
 
 module CIAO
 {
@@ -75,5 +71,3 @@ module CIAO
     //void push_event (in Components::EventBase ev);
   };
 };
-
-#endif /* CIAO_EVENTS_IDL */

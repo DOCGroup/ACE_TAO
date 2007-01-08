@@ -25,7 +25,7 @@ ACE_Message_Queue_Vx::msgq (void)
 
 #endif /* ACE_VXWORKS */
 
-#if defined (ACE_HAS_WIN32_OVERLAPPED_IO)
+#if defined (ACE_WIN32) && (ACE_HAS_WINNT4 != 0)
 
 ACE_INLINE int
 ACE_Message_Queue_NT::enqueue_tail (ACE_Message_Block *new_item,
@@ -143,6 +143,6 @@ ACE_Message_Queue_NT::notification_strategy (ACE_Notification_Strategy *)
 {
 }
 
-#endif /* ACE_HAS_WIN32_OVERLAPPED_IO */
+#endif /* ACE_WIN32 && ACE_HAS_WINNT4 != 0 */
 
 ACE_END_VERSIONED_NAMESPACE_DECL

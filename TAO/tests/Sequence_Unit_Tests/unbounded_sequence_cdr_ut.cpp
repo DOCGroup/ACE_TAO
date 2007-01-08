@@ -16,7 +16,7 @@
 
 #include "tao/Unbounded_Value_Sequence_T.h"
 #include "tao/Unbounded_Object_Reference_Sequence_T.h"
-#include "tao/Unbounded_Basic_String_Sequence_T.h"
+#include "tao/Unbounded_String_Sequence_T.h"
 #include "tao/Unbounded_Sequence_CDR_T.h"
 #include "tao/CDR.h"
 

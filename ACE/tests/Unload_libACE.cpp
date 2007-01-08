@@ -150,16 +150,10 @@ main (int, char **)
           char buf[BUFSIZ];
 
           strcpy (buf, ace_root);
-          strcat (buf, "/lib/lib");
-#if defined (ACE_LIB_NAME)
-          strcat (buf, ACE_LIB_NAME);
-#else
-          strcat (buf, "ACE");
-#endif /* ACE_LIB_NAME */
 #if defined (__hpux) && !(defined (__ia64) && (__ia64 == 1))
-          strcat (buf, ".sl");
+          strcat (buf, "/lib/libACE.sl");
 #else
-          strcat (buf, ".so");
+          strcat (buf, "/lib/libACE.so");
 #endif /* (__hpux) */
 
           handle = dlopen (buf, RTLD_LAZY);

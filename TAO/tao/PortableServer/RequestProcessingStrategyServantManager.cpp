@@ -1,17 +1,15 @@
 // -*- C++ -*-
 
-#include "tao/orbconf.h"
+#include "tao/PortableServer/RequestProcessingStrategyServantManager.h"
+#include "tao/PortableServer/ServantManagerC.h"
+#include "tao/PortableServer/Root_POA.h"
+#include "tao/ORB_Constants.h"
 
 ACE_RCSID (PortableServer,
            Request_Processing,
            "$Id$")
 
 #if (TAO_HAS_MINIMUM_POA == 0) && !defined (CORBA_E_COMPACT) && !defined (CORBA_E_MICRO)
-
-#include "tao/PortableServer/RequestProcessingStrategyServantManager.h"
-#include "tao/PortableServer/ServantManagerC.h"
-#include "tao/PortableServer/Root_POA.h"
-#include "tao/ORB_Constants.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

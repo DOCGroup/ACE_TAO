@@ -27,7 +27,7 @@
 
 #include "ace/POSIX_Proactor.h"
 
-#if defined (ACE_LACKS_SIGVAL_T)
+#if defined(AIX) || defined(sun) || defined(__APPLE__) || defined (ACE_VXWORKS)
 typedef union sigval sigval_t;
 #endif
 
@@ -83,13 +83,13 @@ protected:
   virtual int notify_completion (int sig_num);
 
   /**
-   * Dispatch a single set of events.  If @a milli_seconds elapses
+   * Dispatch a single set of events.  If <milli_seconds> elapses
    * before any events occur, return 0. Return 1 if a completion is
    * dispatched. Return -1 on errors.
    */
   int handle_events_i (u_long milli_seconds);
 
-  /// Semaphore variable to notify
+  /// semaphore variable to notify
   /// used to wait the first AIO start
   ACE_SYNCH_SEMAPHORE sema_;
 };

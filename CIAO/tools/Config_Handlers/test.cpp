@@ -5,7 +5,7 @@
 #include "Deployment.hpp"
 #include "DP_Handler.h"
 #include "ciao/Deployment_DataC.h"
-#include "ciao/CIAO_ServerResourcesC.h"
+#include "ciao/ServerResourcesC.h"
 #include "ace/Get_Opt.h"
 #include "Utils/XML_Helper.h"
 #include "DnC_Dump.h"
@@ -54,7 +54,7 @@ int main (int argc, char *argv[])
   // Initialize an ORB so Any will work
   CORBA::ORB_ptr orb = CORBA::ORB_init (argc, argv, "");
   ACE_UNUSED_ARG (orb);
-
+  
   //Create an XML_Helper for all the file work
   XML_Helper the_helper;
 

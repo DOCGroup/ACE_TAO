@@ -28,9 +28,9 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_Message_Queue_Vx;
 #endif /* defined (ACE_VXWORKS) */
 
-#if defined (ACE_HAS_WIN32_OVERLAPPED_IO)
+#if defined (ACE_WIN32) && (ACE_HAS_WINNT4 != 0)
 class ACE_Message_Queue_NT;
-#endif /* ACE_HAS_WIN32_OVERLAPPED_IO*/
+#endif /* ACE_WIN32 && ACE_HAS_WINNT4 != 0 */
 
 /**
  * @class ACE_Message_Queue
@@ -933,13 +933,13 @@ public:
 
 #endif /* defined (ACE_VXWORKS) */
 
-#if defined (ACE_HAS_WIN32_OVERLAPPED_IO)
+#if defined (ACE_WIN32) && (ACE_HAS_WINNT4 != 0)
 
   /// Factory method for a NT message queue.
   static ACE_Message_Queue_NT *
   create_NT_message_queue (size_t max_threads);
 
-#endif /* ACE_HAS_WIN32_OVERLAPPED_IO */
+#endif /* ACE_WIN32 && ACE_HAS_WINNT4 != 0 */
 };
 
 /**

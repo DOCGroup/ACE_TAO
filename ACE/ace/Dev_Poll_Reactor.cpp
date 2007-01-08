@@ -104,7 +104,7 @@ ACE_Dev_Poll_Reactor_Notify::open (ACE_Reactor_Impl *r,
 #endif /* ACE_HAS_REACTOR_NOTIFICATION_QUEUE */
 
       // Set the read handle into non-blocking mode since we need to
-      // perform a "speculative" read when determining if there are
+      // perform a "speculative" read when determining if their are
       // notifications to dispatch.
       if (ACE::set_flags (this->notification_pipe_.read_handle (),
                           ACE_NONBLOCK) == -1)
@@ -2228,12 +2228,12 @@ ACE_Dev_Poll_Reactor::handler (int signum,
   return 0;
 }
 
-bool
+int
 ACE_Dev_Poll_Reactor::initialized (void)
 {
   ACE_TRACE ("ACE_Dev_Poll_Reactor::initialized");
 
-  ACE_MT (ACE_GUARD_RETURN (ACE_Dev_Poll_Reactor_Token, mon, this->token_, false));
+  ACE_MT (ACE_GUARD_RETURN (ACE_Dev_Poll_Reactor_Token, mon, this->token_, -1));
 
   return this->initialized_;
 }

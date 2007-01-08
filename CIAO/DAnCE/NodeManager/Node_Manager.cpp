@@ -183,7 +183,7 @@ main (int argc, char *argv[])
         {
           ACE_DEBUG ((LM_DEBUG, "Use -s <NodeApplicationPath> to specify \
                                  executable path\n"));
-          ACE_OS::exit (1);
+          exit (1);
         }
 
       // Get reference to Root POA.
@@ -248,11 +248,11 @@ main (int argc, char *argv[])
         {
           char name [MAXHOSTNAMELEN + 1];
 
-          if (ACE_OS::hostname (name, MAXHOSTNAMELEN + 1) == -1)
+          if (ACE_OS::hostname (name, 100) == -1)
             {
               ACE_ERROR ((LM_ERROR,
                           "gethostname call failed! \n"));
-              ACE_OS::exit (1);
+              exit (1);
             }
 
           // Register this name with the Naming Service

@@ -9,7 +9,6 @@
 ## ../bin/mwc.pl -type automake -noreldefs TAO.mwc
 
 SUBDIRS = \
-        Timeout \
         lib \
         Basic
 

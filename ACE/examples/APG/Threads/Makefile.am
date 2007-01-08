@@ -6,13 +6,12 @@
 ## this file will be lost the next time it is generated.
 ##
 ## MPC Command:
-## ./bin/mwc.pl -type automake -noreldefs ACE.mwc
+## /acebuilds/ACE_wrappers-repository/bin/mwc.pl -include /acebuilds/MPC/config -include /acebuilds/MPC/templates -feature_file /acebuilds/ACE_wrappers-repository/local.features -noreldefs -type automake -exclude build,Kokyu
 
 ACE_BUILDDIR = $(top_builddir)
 ACE_ROOT = $(top_srcdir)
 
 ## Makefile.Activate.am
-
 noinst_PROGRAMS = Activate
 
 Activate_CPPFLAGS = \
@@ -27,7 +26,6 @@ Activate_LDADD = \
   $(ACE_BUILDDIR)/ace/libACE.la
 
 ## Makefile.Condition_Variables.am
-
 noinst_PROGRAMS += Condition_Variables
 
 Condition_Variables_CPPFLAGS = \
@@ -42,7 +40,6 @@ Condition_Variables_LDADD = \
   $(ACE_BUILDDIR)/ace/libACE.la
 
 ## Makefile.Guards.am
-
 noinst_PROGRAMS += Guards
 
 Guards_CPPFLAGS = \
@@ -57,7 +54,6 @@ Guards_LDADD = \
   $(ACE_BUILDDIR)/ace/libACE.la
 
 ## Makefile.Message_Blocks.am
-
 noinst_PROGRAMS += Message_Blocks
 
 Message_Blocks_CPPFLAGS = \
@@ -72,7 +68,6 @@ Message_Blocks_LDADD = \
   $(ACE_BUILDDIR)/ace/libACE.la
 
 ## Makefile.Message_Queue.am
-
 noinst_PROGRAMS += Message_Queue
 
 Message_Queue_CPPFLAGS = \
@@ -87,7 +82,6 @@ Message_Queue_LDADD = \
   $(ACE_BUILDDIR)/ace/libACE.la
 
 ## Makefile.Mutexes.am
-
 noinst_PROGRAMS += Mutexes
 
 Mutexes_CPPFLAGS = \

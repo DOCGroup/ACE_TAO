@@ -34,14 +34,14 @@ if (PerlACE::waitforfile_timed ($iorfile,
 
 $client = $CL->SpawnWaitKill (60);
 
-if ($client != 0) {
+if ($client == -1) {
     print STDERR "ERROR: client returned $client\n";
     $status = 1;
 }
 
 $server = $SV->WaitKill (10);
 
-if ($server != 0) {
+if ($server == -1) {
     print STDERR "ERROR: server returned $server\n";
     $status = 1;
 }

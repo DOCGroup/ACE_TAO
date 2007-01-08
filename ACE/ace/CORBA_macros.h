@@ -34,19 +34,6 @@
 
 #include "ace/Exception_Macros.h"
 
-// The Windows MFC exception mechanism requires that a caught CException
-// (including the CMemoryException in use here) be freed using its Delete()
-// method. Thus, when MFC is in use and we're catching exceptions as a result
-// of new(), the exception's Delete() method has to be called. No other
-// platform imposes this sort of restriction/requirement. The Windows
-// config stuff (at least for MSVC/MFC) defines a ACE_del_bad_alloc macro
-// that works with its ACE_bad_alloc macro to implement this cleanup
-// requirement. Since no other platform requires this, define it as
-// empty here.
-#if !defined (ACE_del_bad_alloc)
-#  define ACE_del_bad_alloc
-#endif
-
 // If you wish to you use these macros for emulating exceptions on
 // platforms which lack native exception support, you need to do the
 // following:
@@ -420,7 +407,7 @@
 
 #   define ACE_NEW_THROW_EX(POINTER,CONSTRUCTOR,EXCEPTION) \
      do { try { POINTER = new CONSTRUCTOR; } \
-       catch (ACE_bad_alloc) { ACE_del_bad_alloc errno = ENOMEM; ACE_THROW_INT (EXCEPTION); } \
+       catch (ACE_bad_alloc) { errno = ENOMEM; ACE_THROW_INT (EXCEPTION); } \
      } while (0)
 
 #else /* ! ACE_NEW_THROWS_EXCEPTIONS */

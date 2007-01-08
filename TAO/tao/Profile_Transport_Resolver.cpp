@@ -39,7 +39,7 @@ namespace TAO
         this->profile_->_decr_refcnt ();
       }
 
-    if (this->transport_.get ())
+    if (this->transport_)
       {
         if (this->is_released_ == false)
           {
@@ -93,7 +93,7 @@ namespace TAO
                          ACE_ENV_ARG_PARAMETER);
     ACE_CHECK;
 
-    if (this->transport_.get () == 0)
+    if (this->transport_ == 0)
       {
         ACE_THROW (CORBA::INTERNAL ());
       }
@@ -187,20 +187,20 @@ namespace TAO
     ACE_ASSERT(con != 0);
     if (parallel)
       {
-        this->transport_.set (con->parallel_connect (this, desc, timeout
-                                                     ACE_ENV_ARG_PARAMETER));
+        this->transport_ = con->parallel_connect (this, desc, timeout
+                                                  ACE_ENV_ARG_PARAMETER);
       }
     else
       {
-        this->transport_.set (con->connect (this, desc, timeout
-                                            ACE_ENV_ARG_PARAMETER));
+        this->transport_ = con->connect (this, desc, timeout
+                                         ACE_ENV_ARG_PARAMETER);
       }
     ACE_CHECK_RETURN (false);
     // A timeout error occurred.
     // If the user has set a roundtrip timeout policy, throw a timeout
     // exception.  Otherwise, just fall through and return false to
     // look at the next endpoint.
-    if (this->transport_.get () == 0 &&
+    if (this->transport_ == 0 &&
         has_con_timeout == false &&
         errno == ETIME)
       {
@@ -211,7 +211,7 @@ namespace TAO
                             CORBA::COMPLETED_NO),
                           false);
       }
-    else if (this->transport_.get () == 0)
+    else if (this->transport_ == 0)
       {
         return false;
       }
@@ -269,16 +269,12 @@ namespace TAO
     TAO::Transport_Cache_Manager & cache =
       this->profile_->orb_core()->lane_resources ().transport_cache();
 
-    // the cache increments the reference count on the transport if
-    // the find is successful. Cache.find_transport returns 0 on success.
-    // but we want to return a "boolean" of 0 for failure, 1 for success.
-    TAO_Transport* tmp = this->transport_.get ();
-    if (cache.find_transport(desc, tmp) != 0)
-      return 0;
-
-    this->transport_.set (tmp);
-    return 1;
+    // the cache increments the reference count on the transport if the
+    // find is successful. Find_transport uses negative logic in its return,
+    // 0 for success
+    return (cache.find_transport(desc,this->transport_) == 0);
   }
+
 
 }
 

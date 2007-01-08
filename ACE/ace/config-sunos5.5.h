@@ -384,9 +384,9 @@
 # endif /* __GNUC_MINOR__ */
 #endif /* __GNUG__ */
 
-#if defined (i386) && (_FILE_OFFSET_BITS==32)
+#if defined (i386)
 # define ACE_HAS_X86_STAT_MACROS
-#endif /* i386 && _FILE_OFFSET_BITS==32 */
+#endif /* i386 */
 
 #define ACE_MALLOC_ALIGN 8
 #define ACE_LACKS_SETREUID_PROTOTYPE
@@ -402,12 +402,5 @@
 #undef ACE_HAS_PROC_FS
 #undef ACE_HAS_PRUSAGE_T
 #endif /* (_LARGEFILE_SOURCE) || (_FILE_OFFSET_BITS==64) */
-
-#if defined (_POSIX_PTHREAD_SEMANTICS) || (_FILE_OFFSET_BITS == 64) || (_POSIX_C_SOURCE - 0 >= 199506L)
-#  define ACE_HAS_3_PARAM_READDIR_R
-#endif
-
-#define ACE_LACKS_SIGVAL_T
-
 #include /**/ "ace/post.h"
 #endif /* ACE_CONFIG_H */

@@ -18,7 +18,7 @@
 #include "NodeManager_svnt_export.h"
 #include "Deployment_BaseC.h"
 
-#include "TargetManager/TargetManagerImplC.h"
+#include "TargetManager/TargetManagerC.h"
 #include "ace/Task.h"
 #include "ace/Auto_Ptr.h"
 
@@ -53,6 +53,7 @@ namespace CIAO
     {
     public:
       /**
+       * @function svc.
        * @brief The main function containing the
        * entire activity.
        *
@@ -62,6 +63,7 @@ namespace CIAO
        */
       int svc (void);
       /**
+       * @function terminate.
        * @brief The terminate function
        *
        * This function is called to terminate the
@@ -81,8 +83,9 @@ namespace CIAO
     protected:
 
       /**
+       * @function terminating.
        * @brief returns the terminating flag
-       * @return bool The terminating state of the thread
+       * @return bool The terminting state of the thread
        */
       bool terminating ();
 
@@ -98,11 +101,10 @@ namespace CIAO
       /// The terminate flag_
       bool terminate_flag_;
 
-      /// Thread Mutex for synchronizing call
+      //Thread Mutex for synchronizing call
       ACE_SYNCH_MUTEX lock_;
 
-      /// the ORB pointer ..
-      /// @todo Make this a _var
+      // the ORB pointer ..
       CORBA::ORB_ptr orb_;
 
       /// The initial domain
@@ -111,10 +113,10 @@ namespace CIAO
       /// The Node Manager
       ::CIAO::NodeManager_Impl_Base* node_mgr_;
 
-      /// Flag tells ; what to monitor
+      /// flag tells ; what to monitor
       bool monitor_cpu_usage_;
 
-      /// To add component pid or not ..
+      /// TO add component pid or not ..
       bool add_component_pid_;
     };
 

@@ -51,14 +51,11 @@ namespace CIAO
 
     virtual ~Port_Activator (void);
 
-    /// Return the oid of port that this activator encapulates.
-    const char* oid (void) const;
+    /// Return the name of port that this activator encapulates.
+    const char*  name (void) const;
 
-    /// Set the oid
-    void oid (const char* oid);
-
-    /// Return the oid of port that this activator encapulates.
-    const char* name (void) const;
+    /// Set the name
+    void set_name (const char* name);
 
     /// Activate the servant reponsible for this port.
     /**
@@ -83,7 +80,7 @@ namespace CIAO
     CORBA::String_var name_;
 
     /// What type of port is it, a consumer or facet.
-    Type const t_;
+    Type t_;
   };
 }
 

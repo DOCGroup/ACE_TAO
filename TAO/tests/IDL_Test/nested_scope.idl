@@ -9,7 +9,7 @@
 //    nested_scope.idl
 //
 // = DESCRIPTION
-//    This file contains examples of IDL code that has
+//    This file contains examples of IDL code that has 
 //    caused problems in the past for the TAO IDL
 //    compiler. This test is to make sure the problems
 //    stay fixed.
@@ -26,7 +26,7 @@ module skip
 {
   module hump
   {
-    struct skip {short s;};
+    struct skip {short s;};      
   };
 };
 
@@ -142,11 +142,11 @@ module bug_1985_c
 // This one caused several problems - in the stub declaration of
 // the operation, and in the skeleton body's allocation of return type.
 module Negotiator
-{
+{ 
   interface UAV_Negotiator {};
 
   interface UAV_Negotiator_Factory : ::Negotiator::UAV_Negotiator
-  {
+  { 
     ::Negotiator::UAV_Negotiator make_negotiator (in string bitrate_sc);
   };
 };
@@ -154,19 +154,19 @@ module Negotiator
 // Caught some generation of arg helper template parameters not using
 // the qualifying '::' on scoped names.
 
-module bug_2125
+module bug_2125 
 {
-  module Bar
+  module Bar 
   {
     enum Stuff {ONE, TWO};
   };
 };
 
-module Wow
+module Wow 
 {
-  module bug_2125
+  module bug_2125 
   {
-    interface MyInterface
+    interface MyInterface 
     {
       void op1 (in bug_2125::Bar::Stuff fbs);
       void op2 (in ::bug_2125::Bar::Stuff fbs);
@@ -180,8 +180,6 @@ module Company
 {
   module CORBA
   {
-    typedef unsigned long LongU;
-
     module Inner
     {
       struct Foo

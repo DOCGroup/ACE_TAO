@@ -28,8 +28,7 @@ endif
 if BUILD_TESTS
 SUBDIRS += \
 	performance-tests \
-	interop-tests \
-	tests
+	interop-tests
 endif
 
 SUBDIRS += \

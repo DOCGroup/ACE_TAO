@@ -16,7 +16,7 @@ TAO_ROOT = $(top_srcdir)
 
 ## Makefile.CosEvent_Test_Lib.am
 
-if BUILD_EXCEPTIONS
+if !BUILD_MINIMUM_CORBA
 
 noinst_LTLIBRARIES = libCECTests.la
 
@@ -39,7 +39,7 @@ noinst_HEADERS = \
   Counting_Supplier.h \
   cectest_export.h
 
-endif BUILD_EXCEPTIONS
+endif !BUILD_MINIMUM_CORBA
 
 ## Clean up template repositories, etc.
 clean-local:

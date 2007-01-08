@@ -6,14 +6,13 @@
 ## this file will be lost the next time it is generated.
 ##
 ## MPC Command:
-## ./bin/mwc.pl -type automake -noreldefs ACE.mwc
+## /acebuilds/ACE_wrappers-repository/bin/mwc.pl -include /acebuilds/MPC/config -include /acebuilds/MPC/templates -feature_file /acebuilds/ACE_wrappers-repository/local.features -noreldefs -type automake -exclude build,Kokyu
 
 ACE_BUILDDIR = $(top_builddir)
 ACE_ROOT = $(top_srcdir)
 
 
 ## Makefile.ARGV_Example.am
-
 noinst_PROGRAMS = ARGV_Example
 
 ARGV_Example_CPPFLAGS = \
@@ -30,7 +29,6 @@ ARGV_Example_LDADD = \
 ## Makefile.Config_HA_Status.am
 
 if !BUILD_ACE_FOR_TAO
-
 noinst_PROGRAMS += HA_Status
 
 HA_Status_CPPFLAGS = \
@@ -47,7 +45,6 @@ HA_Status_LDADD = \
 endif !BUILD_ACE_FOR_TAO
 
 ## Makefile.Get_Opt.am
-
 noinst_PROGRAMS += Get_Opt
 
 Get_Opt_CPPFLAGS = \
@@ -62,7 +59,6 @@ Get_Opt_LDADD = \
   $(ACE_BUILDDIR)/ace/libACE.la
 
 ## Makefile.Get_Opt_Long.am
-
 noinst_PROGRAMS += Get_Opt_Long
 
 Get_Opt_Long_CPPFLAGS = \

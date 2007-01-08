@@ -9,7 +9,7 @@
  * This file was used to generate the code in
  * EndpointPolicyTypeC.* The command used to generate code is:
  * tao_idl
- *          -o orig -GA \
+ *          -o orig -Ge 1 -GA \
  *          -Wb,export_macro=TAO_EndpointPolicy_Export \
  *          -Wb,export_include="tao/EndpointPolicy/TAO_EndpointPolicy_Export.h" \
  *          -Wb,pre_include="ace/pre.h" \

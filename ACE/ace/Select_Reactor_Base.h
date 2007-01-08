@@ -39,10 +39,6 @@
 # include "ace/Array_Base.h"
 #endif  /* ACE_WIN32 */
 
-#if !defined (ACE_DISABLE_NOTIFY_PIPE_DEFAULT)
-# define ACE_DISABLE_NOTIFY_PIPE_DEFAULT 0
-#endif /* ACE_DISABLE_NOTIFY_PIPE_DEFAULT */
-
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // Add useful typedefs to simplify the following code.
@@ -144,7 +140,7 @@ public:
   /// Initialize.
   virtual int open (ACE_Reactor_Impl *,
                     ACE_Timer_Queue * = 0,
-                    int disable_notify_pipe = ACE_DISABLE_NOTIFY_PIPE_DEFAULT);
+                    int disable_notify_pipe = 0);
 
   /// Destroy.
   virtual int close (void);
@@ -260,7 +256,7 @@ protected:
   //   more notifications to be stored than would otherwise be the case.
 
   /// Keeps track of allocated arrays of type
-  /// ACE_Notification_Buffer.
+  /// <ACE_Notification_Buffer>.
   ACE_Unbounded_Queue <ACE_Notification_Buffer *> alloc_queue_;
 
   /// Keeps track of all pending notifications.
@@ -325,7 +321,7 @@ public:
   /// Default "do-nothing" constructor.
   ACE_Select_Reactor_Handler_Repository (ACE_Select_Reactor_Impl &);
 
-  /// Initialize a repository of the appropriate @a size.
+  /// Initialize a repository of the appropriate <size>.
   /**
    * On Unix platforms, the size parameter should be as large as the
    * maximum number of file descriptors allowed for a given process.
@@ -390,7 +386,7 @@ private:
   int unbind (ACE_HANDLE handle,
               map_type::iterator pos,
               ACE_Reactor_Mask mask);
-
+  
   /**
    * @return @c iterator corresponding @c ACE_Event_Handler*
    *         associated with @c ACE_HANDLE.
@@ -398,7 +394,7 @@ private:
   map_type::iterator find_eh (ACE_HANDLE handle);
 
 private:
-  /// Reference to our @c Select_Reactor.
+  /// Reference to our <Select_Reactor>.
   ACE_Select_Reactor_Impl &select_reactor_;
 
 #ifndef ACE_WIN32
@@ -429,7 +425,7 @@ public:
 
   // = Iteration methods.
 
-  /// Pass back the @a next_item that hasn't been seen in the Set.
+  /// Pass back the <next_item> that hasn't been seen in the Set.
   /// Returns @c false when all items have been seen, else @c true.
   bool next (ACE_Event_Handler* & next_item);
 
@@ -460,7 +456,7 @@ private:
  *
  * @brief This class simply defines how Select_Reactor's basic interface
  * functions should look like and provides a common base class for
- * @c Select_Reactor using various locking mechanism.
+ * <Select_Reactor> using various locking mechanism.
  */
 class ACE_Export ACE_Select_Reactor_Impl : public ACE_Reactor_Impl
 {

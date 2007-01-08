@@ -241,12 +241,12 @@ CORBA::SystemException::_info (void) const
   info += this->_rep_id ();
   info += "'\n";
 
-  CORBA::ULong const VMCID = this->minor () & 0xFFFFF000u;
+  const CORBA::ULong VMCID = this->minor () & 0xFFFFF000u;
 
   if (VMCID == TAO::VMCID)
     {
       // @@ Move the following code to a subroutine, it is too long already!
-      const char *location = 0;
+      const char *location;
       switch (this->minor () & 0x00000F80u)
         {
         case TAO_INVOCATION_LOCATION_FORWARD_MINOR_CODE:
@@ -409,7 +409,7 @@ CORBA::SystemException::_info (void) const
     }
   else if (VMCID == CORBA::OMGVMCID)
     {
-      CORBA::ULong const minor_code = this->minor () & 0xFFFU;
+      const CORBA::ULong minor_code = this->minor () & 0xFFFU;
 
       const char *minor_description = 0;
 
@@ -512,7 +512,7 @@ CORBA::SystemException::_tao_get_omg_exception_description (
       "ORB output stream does not support ValueOutputStream interface.", // 40
       "ORB input stream does not support ValueInputStream interface.",    // 41
       "Character support limited to ISO 8859-1 for this object reference", // 42
-      "Attempt to add a Pollable to a second PollableSet." // 43
+      "Attempt to add a Pollable to a second PollableSet."
     };
 
   static const char *IMP_LIMIT_TABLE[] =

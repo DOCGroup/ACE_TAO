@@ -15,7 +15,7 @@ Event_Logging_Service::Event_Logging_Service (void)
   : service_name_ ("EventLogFactory"),
     ior_file_name_ (0),
     pid_file_name_ (0),
-    bind_to_naming_service_ (true),
+    bind_to_naming_service_ (1),
     nthreads_ (0)
 {
   // No-Op.
@@ -27,8 +27,8 @@ Event_Logging_Service::~Event_Logging_Service (void)
 }
 
 void
-Event_Logging_Service::init_ORB (int& argc, char *argv []
-				 ACE_ENV_ARG_DECL)
+Event_Logging_Service::init_ORB  (int& argc, char *argv []
+                                  ACE_ENV_ARG_DECL)
 {
   this->orb_ = CORBA::ORB_init (argc,
                                 argv,
@@ -36,7 +36,7 @@ Event_Logging_Service::init_ORB (int& argc, char *argv []
                                 ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
-  CORBA::Object_var poa_object =
+  CORBA::Object_var poa_object  =
     this->orb_->resolve_initial_references("RootPOA"
                                            ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
@@ -65,23 +65,23 @@ Event_Logging_Service::parse_args (int argc, char *argv[])
       switch (opt)
         {
         case 'n':
-          this->service_name_ = get_opt.opt_arg ();
+          service_name_ = get_opt.opt_arg();
           break;
 
         case 'o':
-          this->ior_file_name_ = get_opt.opt_arg ();
+          ior_file_name_ = get_opt.opt_arg();
           break;
 
         case 'p':
-          this->pid_file_name_ = get_opt.opt_arg ();
+          pid_file_name_ = get_opt.opt_arg();
           break;
 
         case 't':
-          this->nthreads_ = ACE_OS::atoi (get_opt.opt_arg ());
+          nthreads_ = ACE_OS::atoi (get_opt.opt_arg ());
           break;
 
         case 'x':
-          this->bind_to_naming_service_ = false;
+          bind_to_naming_service_ = 0;
           break;
 
         case '?':
@@ -105,7 +105,7 @@ Event_Logging_Service::parse_args (int argc, char *argv[])
 int
 Event_Logging_Service::init (int argc, char *argv[] ACE_ENV_ARG_DECL)
 {
-  // initialize the ORB.
+  // initalize the ORB.
   this->init_ORB (argc, argv
                   ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
@@ -118,6 +118,7 @@ Event_Logging_Service::init (int argc, char *argv[] ACE_ENV_ARG_DECL)
                     TAO_EventLogFactory_i (),
                     CORBA::NO_MEMORY ());
 
+  // CORBA::Object_var obj =
   DsEventLogAdmin::EventLogFactory_var obj =
     this->event_log_factory_->activate (this->orb_.in (),
                                         this->poa_.in ()
@@ -144,23 +145,23 @@ Event_Logging_Service::init (int argc, char *argv[] ACE_ENV_ARG_DECL)
       ACE_CHECK_RETURN (-1);
     }
 
-  if (this->ior_file_name_ != 0)
+  if (ior_file_name_ != 0)
     {
-      FILE* iorf = ACE_OS::fopen (this->ior_file_name_, ACE_TEXT("w"));
-      if (iorf == 0)
-	{
-	  ACE_ERROR_RETURN ((LM_ERROR,
-			     "Cannot open output file for writing IOR: %s",
-			     this->ior_file_name_),
-			    -1);
-	}
+      FILE* iorf = ACE_OS::fopen (ior_file_name_, ACE_TEXT("w"));
+      if (iorf == 0) {
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           "Cannot open output file for writing IOR: %s",
+                           ior_file_name_),
+                          -1);
+      }
+
       ACE_OS::fprintf (iorf, "%s\n", ior.in ());
       ACE_OS::fclose (iorf);
     }
 
-  if (this->pid_file_name_ != 0)
+  if (pid_file_name_ != 0)
     {
-      FILE* pidf = ACE_OS::fopen (this->pid_file_name_, ACE_TEXT("w"));
+      FILE* pidf = ACE_OS::fopen (pid_file_name_, ACE_TEXT("w"));
       if (pidf != 0)
         {
           ACE_OS::fprintf (pidf,
@@ -170,13 +171,15 @@ Event_Logging_Service::init (int argc, char *argv[] ACE_ENV_ARG_DECL)
         }
     }
 
-  if (this->bind_to_naming_service_)
+  if (bind_to_naming_service_)
     {
       // Resolve the naming service.
       this->resolve_naming_service (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK_RETURN (-1);
 
       // Register the Event Log Factory.
+      ACE_ASSERT(!CORBA::is_nil (this->naming_.in ()));
+
       CosNaming::Name name (1);
       name.length (1);
       name[0].id = CORBA::string_dup (this->service_name_);
@@ -247,15 +250,29 @@ Event_Logging_Service::svc (void)
 void
 Event_Logging_Service::shutdown (ACE_ENV_SINGLE_ARG_DECL)
 {
-  if (this->bind_to_naming_service_)
+  // @@ JTC - factory object isn't activated on root poa.
+#if 0
+  // Deactivate.
+  PortableServer::ObjectId_var oid =
+    this->poa_->servant_to_id (this->event_log_factory_
+                               ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK;
+
+  // deactivate from the poa.
+  this->poa_->deactivate_object (oid.in ()
+                                 ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK;
+#endif
+
+  if (bind_to_naming_service_)
     {
+      // Unbind from the naming service.
       CosNaming::Name name (1);
       name.length (1);
       name[0].id = CORBA::string_dup (this->service_name_);
 
       this->naming_->unbind (name
                              ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
     }
 
   // shutdown the ORB.

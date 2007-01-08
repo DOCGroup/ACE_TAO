@@ -74,8 +74,8 @@ namespace TAO
       virtual TAO_Endpoint *next (void);
       virtual int addr_to_string (char *buffer, size_t length);
 
-      /// Return true if this endpoint is equivalent to @a
-      /// other_endpoint The relationship is defined as equivalency of
+      /// Return true if this endpoint is equivalent to @param
+      /// other_endpoint. The relationship is defined as equivalency of
       /// their qop, hostname and ssl ports (if non-zero).
       /// Two endpoints may be equivalent even if their iiop counterparts are
       /// not. In fact, there are cases (as with the LPL processing)
@@ -111,7 +111,6 @@ namespace TAO
 
       /// Mutator to our IIOP counterpart.
       /**
-       * @param endpoint The new endpoint
        * @param destroy If set to @c true, the TAO::SSLIOP::Endpoint
        *                object retains ownership of the given
        *                TAO_IIOP_Endpoint.

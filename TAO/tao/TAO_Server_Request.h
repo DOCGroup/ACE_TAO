@@ -29,7 +29,6 @@
 #include "tao/Tagged_Profile.h"
 #include "tao/Service_Context.h"
 #include "tao/Object.h"
-#include "tao/Transport_Selection_Guard.h"
 
 #if TAO_HAS_INTERCEPTORS == 1
 
@@ -376,10 +375,6 @@ private:
   /// Reply status for the current request.
   PortableInterceptor::ReplyStatus reply_status_;
 #endif  /* TAO_HAS_INTERCEPTORS == 1 */
-
-  /// An RAII (resource acquisition is initialization) class instance
-  /// for interfacing with TSS storage for the "current" transport.
-  TAO::Transport_Selection_Guard transport_selection_guard_;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

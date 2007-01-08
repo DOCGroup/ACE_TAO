@@ -203,7 +203,10 @@ be_visitor_component_cs::visit_component (be_component *node)
 
   // The _narrow method.
   *os << node->full_name () << "_ptr" << be_nl << node->full_name ()
-      << "::_narrow (::CORBA::Object_ptr _tao_objref)" << be_nl
+      << "::_narrow (" << be_idt << be_idt_nl
+      << "::CORBA::Object_ptr"
+      << " _tao_objref" << env_decl << be_uidt_nl
+      << ")" << be_uidt_nl
       << "{" << be_idt_nl;
 
   *os << "return" << be_idt_nl
@@ -215,7 +218,7 @@ be_visitor_component_cs::visit_component (be_component *node)
       << "\"" << node->repoID () << "\"," << be_nl
       << node->flat_client_enclosing_scope ()
       << node->base_proxy_broker_name ()
-      << "_Factory_function_pointer" << be_uidt_nl
+      << "_Factory_function_pointer" << env_arg << be_uidt_nl
       << ");" << be_uidt << be_uidt << be_uidt_nl
       << "}" << be_nl << be_nl;
 
@@ -234,7 +237,9 @@ be_visitor_component_cs::visit_component (be_component *node)
 
   // The is_a method.
   *os << "::CORBA::Boolean" << be_nl
-      << node->full_name () << "::_is_a (const char *value)" << be_nl
+      << node->full_name () << "::_is_a (" << be_idt << be_idt_nl
+      << "const char *value" << env_decl << be_uidt_nl
+      << ")" << be_uidt_nl
       << "{" << be_idt_nl
       << "if (" << be_idt << be_idt_nl;
 
@@ -243,7 +248,7 @@ be_visitor_component_cs::visit_component (be_component *node)
   while (ancestor != 0)
     {
       *os << "!ACE_OS::strcmp (" << be_idt << be_idt_nl
-          << "value," << be_nl
+          << "(char *)value," << be_nl
           << "\"" << ancestor->repoID () << "\"" << be_uidt_nl
           << ") ||" << be_uidt_nl;
 
@@ -251,7 +256,7 @@ be_visitor_component_cs::visit_component (be_component *node)
     }
 
   *os << "!ACE_OS::strcmp (" << be_idt << be_idt_nl
-      << "value," << be_nl
+      << "(char *)value," << be_nl
       << "\"IDL:omg.org/Components/CCMObject:1.0\"" << be_uidt_nl
       << ")" << be_uidt << be_uidt_nl
       << " )" << be_nl
@@ -260,7 +265,10 @@ be_visitor_component_cs::visit_component (be_component *node)
       << "}" << be_uidt_nl
       << "else" << be_idt_nl
       << "{" << be_idt_nl
-      << "return this->::CORBA::Object::_is_a (value);" << be_uidt_nl
+      << "return this->::CORBA::Object::_is_a ("
+      << be_idt << be_idt_nl
+      << "value" << env_arg << be_uidt_nl
+      << ");" << be_uidt << be_uidt_nl
       << "}" << be_uidt << be_uidt_nl
       << "}" << be_nl << be_nl;
 

@@ -88,7 +88,7 @@ ifeq ($(TOOL_FAMILY),)
   endif
 endif
 
-ifeq ("$(TOOL_FAMILY)","gnu")
+ifeq ("$(TOOL)","gnu")
   templates ?= automatic
 endif
 
@@ -169,11 +169,9 @@ endif
 
 ifeq ($(rtp),1)
   include $(WIND_USR)/make/defs.default
-  include $(WIND_USR)/tool/$(TOOL_FAMILY)/make.$(CPU)$(TOOL)
   include $(WIND_USR)/make/defs.$(WIND_HOST_TYPE)
-  ifeq ("$(TOOL_FAMILY)","gnu")
-    CPPFLAGS += -mrtp
-  endif
+  include $(WIND_USR)/tool/$(TOOL_FAMILY)/make.$(CPU)$(TOOL)
+  CPPFLAGS += -mrtp
   LDFLAGS := $(filter-out -X, $(LDFLAGS))
   LDFLAGS := $(filter-out -N, $(LDFLAGS))
   LD := $(CPLUS)
@@ -238,7 +236,7 @@ ifeq ($(pthread),1)
   CPPFLAGS += -DACE_HAS_PTHREADS
 endif
 
-ifeq ("$(TOOL_FAMILY)","gnu")
+ifeq ("$(TOOL)","gnu")
 # Test for template instantiation, add to SOFLAGS if SONAME set,
 # add -E to LDFLAGS if using GNU ld
 include $(ACE_ROOT)/include/makeinclude/platform_g++_common.GNU
@@ -268,16 +266,16 @@ endif
 ifneq ($(TEMPLATES_FLAG),) # If specified, add it to the CCFLAGS
   CPPFLAGS += $(TEMPLATES_FLAG)
 endif
-endif  # TOOL_FAMILY == gnu
+endif  # TOOL == gnu
 
-ifeq ("$(TOOL_FAMILY)","diab")
+ifeq ("$(TOOL)","diab")
 ifeq ($(exceptions),1)
   C++FLAGS += -Xexceptions
 else
   C++FLAGS += -Xexceptions-off
 endif
 else
-ifeq ("$(TOOL_FAMILY)","gnu")
+ifeq ("$(TOOL)","gnu")
 ifeq ($(exceptions),1)
   C++FLAGS += -fexceptions
 else
@@ -288,22 +286,18 @@ endif
 
 ifeq (0,$(rtti))
 C++FLAGS += -DACE_LACKS_RTTI
-ifeq ("$(TOOL_FAMILY)","gnu")
+ifeq ("$(TOOL)","gnu")
   C++FLAGS += -fno-rtti
 else
   C++FLAGS += -Xrtti-off
 endif
 endif # rtti
 
-ifeq ("$(TOOL_FAMILY)","diab")
-  LDLIBS += -lstlstd
-endif
-
 ifneq ($(findstring $(VX_CPU_FAMILY),ppc arm),)
-ifeq ("$(TOOL_FAMILY)","diab")
+ifeq ("$(TOOL)","diab")
   C++FLAGS += -Xchar-signed
 else
-ifeq ("$(TOOL_FAMILY)","gnu")
+ifeq ("$(TOOL)","gnu")
   C++FLAGS += -fsigned-char
 endif
 endif
@@ -322,10 +316,10 @@ CCFLAGS         += $(C++FLAGS)
 ifeq (0,$(rtp))
 PIC              =
 else
-  ifeq ("$(TOOL_FAMILY)","diab")
+  ifeq ("$(TOOL)","diab")
     PIC = -Xpic
   else
-  ifeq ("$(TOOL_FAMILY)","gnu")
+  ifeq ("$(TOOL)","gnu")
     PIC = -fpic
   endif
 endif

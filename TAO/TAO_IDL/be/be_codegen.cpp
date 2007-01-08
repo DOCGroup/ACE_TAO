@@ -24,7 +24,7 @@
 #include "global_extern.h"
 #include "utl_string.h"
 #include "idl_defines.h"
-#include "ace/os_include/os_ctype.h"
+ #include "ace/os_include/os_ctype.h"
 
 ACE_RCSID (be,
            be_codegen,
@@ -43,6 +43,7 @@ TAO_CodeGen::TAO_CodeGen (void)
     server_skeletons_ (0),
     server_template_skeletons_ (0),
     server_inline_ (0),
+    server_template_inline_ (0),
     anyop_header_ (0),
     anyop_source_ (0),
     gperf_input_stream_ (0),
@@ -240,6 +241,7 @@ TAO_CodeGen::start_client_header (const char *fname)
 
           // Make sure this file was actually got included, not
           // ignored by some #if defined compiler directive.
+
 
           // Get the clnt header from the IDL file name.
           const char* client_hdr =
@@ -717,6 +719,15 @@ TAO_CodeGen::start_server_template_skeletons (const char *fname)
       << be_global->be_get_server_template_hdr_fname (1)
       << "\"";
 
+  // Generate the code that includes the inline file if not included in the
+  // header file.
+  *this->server_template_skeletons_ << "\n\n#if !defined (__ACE_INLINE__)";
+  *this->server_template_skeletons_
+      << "\n#include \""
+      << be_global->be_get_server_template_inline_fname (1)
+      << "\"";
+  *this->server_template_skeletons_ << "\n#endif /* !defined INLINE */\n\n";
+
   // Begin versioned namespace support after initial headers have been
   // included, but before the inline file and post include
   // directives.
@@ -768,6 +779,47 @@ TAO_OutStream *
 TAO_CodeGen::server_inline (void)
 {
   return this->server_inline_;
+}
+
+// Set the server template inline stream.
+int
+TAO_CodeGen::start_server_template_inline (const char *fname)
+{
+  // Retrieve the singleton instance to the outstream factory.
+  TAO_OutStream_Factory *factory = TAO_OUTSTREAM_FACTORY::instance ();
+
+  // Clean up between multiple files.
+  delete this->server_template_inline_;
+  this->server_template_inline_ = factory->make_outstream ();
+
+  if (!this->server_template_inline_)
+    {
+      return -1;
+    }
+
+  if (this->server_template_inline_->open (fname,
+                                           TAO_OutStream::TAO_SVR_INL)
+       == -1)
+    {
+      return -1;
+    }
+
+  // Generate the ident string, if any.
+  this->gen_ident_string (this->server_template_inline_);
+
+  // Begin versioned namespace support after initial headers have been
+  // included, but before the inline file and post include
+  // directives.
+  *this->server_template_inline_ << be_global->versioning_begin ();
+
+  return 0;
+}
+
+// Get the server template inline stream.
+TAO_OutStream *
+TAO_CodeGen::server_template_inline (void)
+{
+  return this->server_template_inline_;
 }
 
 int
@@ -835,25 +887,25 @@ TAO_CodeGen::start_anyop_header (const char *fname)
   // If anyop macro hasn't been set, default to stub macro.
   if (be_global->anyop_export_include () != 0)
     {
-      *this->anyop_header_ << "\n#include /**/ \""
+      *this->anyop_header_ << "\n#include \""
                            << be_global->anyop_export_include ()
                            << "\"";
     }
   else if (be_global->stub_export_include () != 0)
     {
-      *this->anyop_header_ << "\n#include /**/ \""
+      *this->anyop_header_ << "\n#include \""
                            << be_global->stub_export_include ()
                            << "\"";
     }
 
   const char *tao_prefix = "";
   ACE_CString pidl_checker (idl_global->filename ()->get_string ());
-  bool const got_tao_pidl =
+  bool const got_pidl =
     (pidl_checker.substr (pidl_checker.length () - 5) == ".pidl");
 
   // If we're here and we have a .pidl file, we need to generate
-  // the *C.h include from the tao library.
-  if (got_tao_pidl)
+  // the *A.h include from the AnyTypeCode library.
+  if (got_pidl)
     {
       tao_prefix = "tao/";
     }
@@ -873,24 +925,22 @@ TAO_CodeGen::start_anyop_header (const char *fname)
         {
           char* idl_name = idl_global->included_idl_files ()[j];
 
+          // Make a String out of it.
+          UTL_String idl_name_str = idl_name;
+
+          const char *anyop_hdr =
+            BE_GlobalData::be_get_anyop_header (&idl_name_str, 1);
+
+          idl_name_str.destroy ();
+
           ACE_CString pidl_checker (idl_name);
           bool const got_pidl =
             (pidl_checker.substr (pidl_checker.length () - 5) == ".pidl");
 
           // If we're here and we have a .pidl file, we need to generate
-          // the *A.h include, if it is not a .pidl file we don't generate
-          // a thing because the *C.h include is already generated in the
-          // C.h file
+          // the *A.h include from the AnyTypeCode library.
           if (got_pidl)
             {
-              // Make a String out of it.
-              UTL_String idl_name_str = idl_name;
-
-              const char *anyop_hdr =
-                BE_GlobalData::be_get_anyop_header (&idl_name_str, 1);
-
-              idl_name_str.destroy ();
-
               // Stripped off any scope in the name and add the
               // AnyTypeCode prefix.
               ACE_CString work_hdr (anyop_hdr);
@@ -922,6 +972,11 @@ TAO_CodeGen::start_anyop_header (const char *fname)
 
               this->anyop_header_->print ("\n#include \"%s\"",
                                           final_hdr.c_str ());
+            }
+          else
+            {
+              this->anyop_header_->print ("\n#include \"%s\"",
+                                          anyop_hdr);
             }
         }
     }
@@ -1299,6 +1354,14 @@ TAO_CodeGen::end_server_template_header (void)
   // before this.
   *this->server_template_header_ << be_global->versioning_end ();
 
+  // Insert the code to include the inline file.
+  *this->server_template_header_ << "#if defined (__ACE_INLINE__)";
+  *this->server_template_header_
+      << "\n#include \""
+      << be_global->be_get_server_template_inline_fname (1)
+      << "\"";
+  *this->server_template_header_ << "\n#endif /* defined INLINE */";
+
   // Insert the code to include the template source file.
   *this->server_template_header_
       << "\n\n#if defined (ACE_TEMPLATES_REQUIRE_SOURCE)";
@@ -1328,6 +1391,18 @@ TAO_CodeGen::end_server_template_header (void)
     }
 
   *this->server_template_header_ << "#endif /* ifndef */\n";
+  return 0;
+}
+
+int
+TAO_CodeGen::end_server_template_inline (void)
+{
+  *this->server_template_inline_ << "\n";
+
+  // End versioned namespace support.  Do not place include directives
+  // before this.
+  *this->server_template_inline_ << be_global->versioning_end ();
+
   return 0;
 }
 
@@ -1700,7 +1775,10 @@ TAO_CodeGen::gen_stub_hdr_includes (void)
 
           ACE_CString pidl_checker (idl_name);
           bool got_pidl =
-            (pidl_checker.substr (pidl_checker.length () - 5) == ".pidl");
+            (pidl_checker.substr (pidl_checker.length () - 5) == ".pidl")
+            && (pidl_checker.find ("IFR_Client") == ACE_CString::npos);
+            // We can't use the -GA option on IFR_Client .pidl files,
+            // because there are decls inside interfaces.
 
           // If we're here and we have a .pidl file, we need to generate
           // the *A.h include from the AnyTypeCode library.
@@ -2387,6 +2465,7 @@ TAO_CodeGen::destroy (void)
   delete this->server_template_skeletons_;
   delete this->client_inline_;
   delete this->server_inline_;
+  delete this->server_template_inline_;
   delete this->anyop_source_;
   delete this->anyop_header_;
 #if !defined (linux) && !defined (__QNX__) && !defined (__GLIBC__)

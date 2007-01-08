@@ -3,17 +3,16 @@
 #include "Containers_Info_Map.h"
 #include "ciao/CIAO_Config.h"
 #include "ciao/CIAO_common.h"
-#include "ciao/CIAO_ServerResourcesC.h"
 
 //Added for HTTP
 #include "URL_Parser.h"              //for parsing the URL
-#include "tao/HTTP_Client.h"         //the HTTP client class to downloading packages
+#include "HTTP_Client.h"             //the HTTP client class to downloading packages
 #include "ace/Message_Block.h"       //for ACE_Message_Block
 #include "ace/OS_NS_fcntl.h"         //for open
 #include "ace/OS_NS_unistd.h"        //for close
 #include "ace/OS_NS_sys_stat.h"      //for filesize and mkdir
 #include "ace/OS_NS_string.h"        //for string functions
-#include "ace/streams.h"
+
 
 namespace CIAO
 {
@@ -466,6 +465,11 @@ is_shared_component (ACE_CString & name)
                                                      ACE_CString &arti_name,
                                                      ACE_CString &path)
   {
+
+    ACE_DEBUG ((LM_INFO,
+                "Attempting to download %s\n",
+                location));
+
     // Figure out the file name.
     char* name = const_cast<char*> (location);
     char* p = 0;
@@ -502,22 +506,9 @@ is_shared_component (ACE_CString & name)
       return false;
     }
 
-#if defined (ACE_WIN32) && defined (ACE_LD_DECORATOR_STR) && !defined (ACE_DISABLE_DEBUG_DLL_CHECK)
-    ACE_TString decorator (ACE_LD_DECORATOR_STR);
-#endif
-    ACE_TString prefix (ACE_DLL_PREFIX);
-    ACE_TString suffix (ACE_DLL_SUFFIX);
-
-    ACE_CString new_name (name);
-    new_name = prefix + new_name;
-#if defined (ACE_WIN32) && defined (ACE_LD_DECORATOR_STR) && !defined (ACE_DISABLE_DEBUG_DLL_CHECK)
-    new_name += decorator;
-#endif
-    new_name += suffix;
-
     path = HTTP_DOWNLOAD_PATH;
     path += "/";
-    path += new_name;
+    path += name;
 
     if (!this->write_to_disk (path.c_str (), *mb))
     {
@@ -525,7 +516,7 @@ is_shared_component (ACE_CString & name)
       return false;
     }
 
-    mb->release ();
+    mb->release ();    
     return true;
   }
 
@@ -538,60 +529,12 @@ is_shared_component (ACE_CString & name)
   CIAO::Containers_Info_Map::retrieve_via_HTTP (const char* URL,
                                                 ACE_Message_Block &mb)
   {
-    ACE_CString loc (URL);
-
-    // Figure out the file name.
-    char* name_ = const_cast<char*> (URL);
-    char* p = 0;
-
-    while (true)
-      {
-        p = ACE_OS::strstr (name_, "/");
-
-        if (0 == p)
-          {
-            p = ACE_OS::strstr (name_, "\\");
-          }
-
-        if (0 == p)
-          {
-            break;
-          }
-        else
-          {
-            name_ = ++p;
-            continue;
-          }
-      }
-
-    ACE_CString name (name_);
-    loc = loc.substr (0, loc.length() - name.length ());
-
-#if defined (ACE_WIN32) && defined (ACE_LD_DECORATOR_STR) && !defined (ACE_DISABLE_DEBUG_DLL_CHECK)
-    ACE_TString decorator (ACE_LD_DECORATOR_STR);
-#endif
-    ACE_TString prefix (ACE_DLL_PREFIX);
-    ACE_TString suffix (ACE_DLL_SUFFIX);
-
-    ACE_CString new_name (name);
-    new_name = prefix + new_name;
-#if defined (ACE_WIN32) && defined (ACE_LD_DECORATOR_STR) && !defined (ACE_DISABLE_DEBUG_DLL_CHECK)
-    new_name += decorator;
-#endif
-    new_name += suffix;
-
-    loc = loc + new_name;
-
-    ACE_DEBUG ((LM_INFO,
-                "Attempting to download %s\n",
-                loc.c_str ()));
-
     URL_Parser *parser = TheURL_Parser::instance ();
-    if (!parser->parseURL (const_cast<char*> (loc.c_str ())))
-      return false;
+    if (!parser->parseURL (const_cast<char*> (URL)))
+    return false;
 
     // Create a client
-    TAO_HTTP_Client client;
+    HTTP_Client client;
 
     // Open the client
     if (client.open (parser->filename_,

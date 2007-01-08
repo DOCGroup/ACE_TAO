@@ -19,15 +19,15 @@
 #define CIAO_CONTAINER_IMPL_H
 #include /**/ "ace/pre.h"
 
-#include "CIAO_NodeApplication_export.h"
+#include "ace/config-all.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ciao/Deployment_ContainerS.h"
-#include "ciao/Deployment_NodeApplicationC.h"
+#include "ciao/Deployment_CoreS.h"
 #include "ciao/Container_Base.h"
+//#include "ciao/Swapping_Container.h"
 #include "ace/SString.h"
 #include "ciao/Server_init.h"  // write_IOR function & NameUtility
 #include "ciao/CIAO_common.h" // CIAO::debug_level
@@ -45,7 +45,7 @@ namespace CIAO
    * interface and is used to manage the lifecycle of the installed
    * components and homes.
    */
-  class NODEAPPLICATION_Export Container_Impl
+  class Container_Impl
     : public virtual POA_Deployment::Container
   {
   public:
@@ -126,6 +126,11 @@ namespace CIAO
                    ACE_ENV_ARG_DECL_WITH_DEFAULTS)
         ACE_THROW_SPEC ((CORBA::SystemException,
                          Components::RemoveFailure));
+
+    // Get all homes
+    virtual ::Components::CCMHomes *
+      get_homes (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+        ACE_THROW_SPEC ((CORBA::SystemException));
 
     bool
     register_with_ns (const char * obj_name,

@@ -9,7 +9,7 @@
 //    valuetype.idl
 //
 // = DESCRIPTION
-//    This file contains examples of IDL code that has
+//    This file contains examples of IDL code that has 
 //    caused problems in the past for the TAO IDL
 //    compiler. This test is to make sure the problems
 //    stay fixed.
@@ -20,14 +20,9 @@
 //
 // ============================================================================
 
-#ifndef IDL_TEST_VALUETYPE_IDL
-#define IDL_TEST_VALUETYPE_IDL
-
-#include "included.idl"
-
 // A valuetype factory can have exceptions, so the declaration must pull in
 // an #include of SystemException.h.
-valuetype MyValueType
+valuetype MyValueType 
 {
   public string my_string_value;
   factory make_one ();
@@ -45,12 +40,3 @@ valuetype RecValueType
   private sequence<RecValueType> rec_value_types;
 };
 
-// Inherits an anonymous sequence member, which was not named
-// correctly in the original bug when used in the arglist for
-// this valuetype's constructor from values.
-valuetype GetsDeprecatedMember : IncludedBase
-{
-  public string StringMember;
-};
-
-#endif /* IDL_TEST_VALUETYPE_IDL */

@@ -1096,7 +1096,7 @@ public:
 
   /// Returns true if WFMO_Reactor has been successfully initialized, else
   /// false.
-  virtual bool initialized (void);
+  virtual int initialized (void);
 
   /// Returns the current size of the WFMO_Reactor's internal
   /// descriptor table.

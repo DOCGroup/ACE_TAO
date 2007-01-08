@@ -22,9 +22,9 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#if defined (ACE_HAS_WIN32_NAMED_PIPES)
+#if (defined (ACE_WIN32) && defined (ACE_HAS_WINNT4) && (ACE_HAS_WINNT4 != 0))
 #include "ace/Manual_Event.h"
-#endif /* ACE_HAS_WIN32_NAMED_PIPES */
+#endif /* ACE_WIN32 */
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -138,7 +138,7 @@ private:
   /// Create a new instance of an SPIPE.
   int create_new_instance (int perms = 0);
 
-#if defined (ACE_HAS_WIN32_NAMED_PIPES)
+#if (defined (ACE_WIN32) && defined (ACE_HAS_WINNT4) && (ACE_HAS_WINNT4 != 0))
   // On Windows, the SECURITY_ATTRIBUTES specified for the initial accept
   // operation is reused on all subsequent pipe instances as well.
   LPSECURITY_ATTRIBUTES sa_;
@@ -158,7 +158,7 @@ private:
   ACE_Manual_Event event_;
   ACE_HANDLE       pipe_handle_;
   int              already_connected_;
-#endif /* ACE_HAS_WIN32_NAMED_PIPES */
+#endif /* ACE_WIN32 */
 
 };
 

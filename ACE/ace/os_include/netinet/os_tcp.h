@@ -34,10 +34,6 @@ extern "C"
 {
 #endif /* __cplusplus */
 
-# if !defined (TCP_NODELAY)
-#   define TCP_NODELAY 0x01
-# endif /* TCP_NODELAY */
-
 #ifdef __cplusplus
 }
 #endif /* __cplusplus */

@@ -108,31 +108,24 @@ be_visitor_valuetype_cs::visit_valuetype (be_valuetype *node)
 
   // The _tao_obv_repository_id method.
   *os << "const char *" << be_nl
-      << node->name ()
-      << "::_tao_obv_repository_id (void) const" << be_nl
+      << node->name () << "::_tao_obv_repository_id (void) const" << be_nl
       << "{" << be_idt_nl
-      << "return this->_tao_obv_static_repository_id ();"
-      << be_uidt_nl
+      << "return this->_tao_obv_static_repository_id ();" << be_uidt_nl
       << "}" << be_nl << be_nl;
 
   *os << "void" << be_nl
-      << node->name ()
-      << "::_tao_obv_truncatable_repo_ids (Repository_Id_List& ids) const"
-      << be_nl
+      << node->name () << "::_tao_obv_truncatable_repo_ids (Repository_Id_List& ids) const" << be_nl
       << "{" << be_idt_nl
       << "ids.push_back (this->_tao_obv_static_repository_id ());";
 
   if (node->truncatable ())
     {
-      *os << be_nl
-          << node->inherits_concrete ()->name ()
-          << "::_tao_obv_truncatable_repo_ids (ids);" << be_uidt_nl
-          << "}" << be_nl << be_nl;
+      *os << be_nl;
+      *os << node->inherits_concrete ()->name () << "::_tao_obv_truncatable_repo_ids (ids);" << be_uidt_nl;
+      *os << "}" << be_nl << be_nl;
     }
   else
-    {
-      *os << be_uidt_nl << "}" << be_nl << be_nl;
-    }
+    *os << be_uidt_nl << "}" << be_nl << be_nl;
 
   if (be_global->any_support ())
     {
@@ -148,34 +141,14 @@ be_visitor_valuetype_cs::visit_valuetype (be_valuetype *node)
           << "}" << be_nl << be_nl;
     }
 
-  // Switch streams to the *A.cpp file if we are using this option.
-  if (be_global->gen_anyop_files ())
-    {
-      os = tao_cg->anyop_source ();
-    }
-
-  if (be_global->tc_support ())
-    {
-      *os << "// TAO extension - the virtual _type method." << be_nl;
-      *os << "::CORBA::TypeCode_ptr " << node->name ()
-          << "::_tao_type (void) const" << be_nl;
-      *os << "{" << be_idt_nl;
-      *os << "return ::" << node->tc_name () << ";" << be_uidt_nl;
-      *os << "}" << be_nl << be_nl;
-    }
-
-  // Make sure we are generating to *C.cpp regardless of the above.
-  os = tao_cg->client_stubs ();
-
   // Generate destructor.
   //
   // @@ Do not inline this destructor.  It is virtual.  Inlining
   //    virtual functions, including virtual destructors, wreaks havoc
   //    with g++ >= 4.0 RTTI support when the
   //    "-fvisibility-inlines-hidden" command line option is used.
-  *os << node->name () << "::~" << node->local_name () << " (void)"
-      << be_nl
-      << "{}" << be_nl << be_nl;
+  *os << node->name () << "::~" << node->local_name () << " (void)" << be_nl;
+  *os << "{}\n" << be_nl;
 
   bool is_an_amh_exception_holder =
     this->is_amh_exception_holder (node);
@@ -188,7 +161,7 @@ be_visitor_valuetype_cs::visit_valuetype (be_valuetype *node)
           << node->name ()
           << "::_tao_marshal_v (TAO_OutputCDR & strm) const" << be_nl
           << "{" << be_idt_nl
-          << "TAO_ChunkInfo ci (this->is_truncatable_ || this->chunking_);"
+          << "TAO_ChunkInfo ci(this->is_truncatable_ || this->chunking_);"
           << be_nl
           << "return ";
 
@@ -215,7 +188,7 @@ be_visitor_valuetype_cs::visit_valuetype (be_valuetype *node)
           << "::_tao_unmarshal_v (TAO_InputCDR & strm)"
           << be_nl
           << "{" << be_idt_nl
-          << "TAO_ChunkInfo ci (this->is_truncatable_ || this->chunking_, 1);"
+          << "TAO_ChunkInfo ci(this->is_truncatable_ || this->chunking_ ,1);"
           << be_nl
           << "return ";
 
@@ -306,23 +279,19 @@ be_visitor_valuetype_cs::visit_valuetype (be_valuetype *node)
       << ")" << be_uidt_nl
       << "{" << be_idt_nl
       << "::CORBA::ValueBase *base = 0;" << be_nl
-      << "::CORBA::Boolean const retval =" << be_idt_nl
-      << "::CORBA::ValueBase::_tao_unmarshal_pre ("
-      << be_idt << be_idt_nl
+      << "::CORBA::Boolean retval =" << be_idt_nl
+      << "::CORBA::ValueBase::_tao_unmarshal_pre (" << be_idt << be_idt_nl
       << "strm," << be_nl
       << "base," << be_nl
-      << node->local_name () << "::_tao_obv_static_repository_id ()"
-      << be_uidt_nl
+      << node->local_name () << "::_tao_obv_static_repository_id ()" << be_uidt_nl
       << ");" << be_uidt << be_uidt_nl << be_nl
       << "if (!retval)" << be_idt_nl
       << "return false;" << be_uidt_nl << be_nl
       << "if (base != 0 && ! base->_tao_unmarshal_v (strm))" << be_idt_nl
       << "return false;" << be_uidt_nl << be_nl
-      << "// Now base must be null or point to the unmarshaled object."
-      << be_nl
+      << "// Now base must be null or point to the unmarshaled object." << be_nl
       << "// Align the pointer to the right subobject." << be_nl
-      << "new_object = " << node->local_name () << "::_downcast (base);"
-      << be_nl
+      << "new_object = " << node->local_name () << "::_downcast (base);" << be_nl
       << "return true;" << be_uidt_nl
       << "}";
 
@@ -421,8 +390,8 @@ be_visitor_valuetype_cs::visit_operation (be_operation *node)
   // STEP 2: Generate the operation name.
   *os << be_nl << parent->name () << "::" << node->local_name ();
 
-  // STEP 3: Generate the argument list with the appropriate mapping.
-  // For these, we grab a visitor that generates the parameter listing.
+  // STEP 3: Generate the argument list with the appropriate mapping. For these
+  // we grab a visitor that generates the parameter listing.
   ctx = *this->ctx_;
   ctx.state (TAO_CodeGen::TAO_OBV_OPERATION_ARGLIST_CS);
   be_visitor_obv_operation_arglist ooa_visitor (&ctx);
@@ -446,9 +415,14 @@ be_visitor_valuetype_cs::visit_operation (be_operation *node)
   // and without native exception support).
   *os << be_nl
       << "{" << be_nl
-      << "auto_ptr< ::CORBA::Exception> safety (this->exception);"
-      << be_nl
+      << "#if defined (TAO_HAS_EXCEPTIONS)" << be_idt_nl
+      << "auto_ptr< ::CORBA::Exception> safety (this->exception);" << be_nl
+      << "// Direct throw because we don't have the ACE_TRY_ENV." << be_nl
       << "this->exception->_raise ();" << be_uidt_nl
+      << "#else" << be_idt_nl
+      << "// We can not use ACE_THROW here." << be_nl
+      << "ACE_TRY_ENV.exception (this->exception);" << be_uidt_nl
+      << "#endif" << be_nl
       << "}"
       << be_uidt_nl;
 

@@ -77,10 +77,6 @@ private:
 // Listing 2 code/ch03
 #define TRACE_PREFIX       ACE_TEXT ("TRACE ")
 
-#if defined (TRACE)
-#undef TRACE
-#endif /* TRACE */
-
 #if (ACE_NTRACE == 1)
 #    define TRACE(X)
 #    define TRACE_RETURN(V)     return V;

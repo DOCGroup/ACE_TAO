@@ -26,7 +26,7 @@ for ($i = 0; $i <= $#ARGV; $i++) {
     }
 }
 
-$TAO_IFR = new PerlACE::Process ("$ENV{ACE_ROOT}/bin/tao_ifr");
+$TAO_IFR = new PerlACE::Process ("../../../../../bin/tao_ifr");
 
 # We want the tao_ifr executable to be found exactly in the path
 # given, without being modified by the value of -ExeSubDir.

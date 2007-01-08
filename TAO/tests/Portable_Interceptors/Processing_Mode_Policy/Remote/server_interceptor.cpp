@@ -154,6 +154,8 @@ Echo_Server_Request_Interceptor::send_exception (
   ACE_THROW_SPEC ((CORBA::SystemException,
                    PortableInterceptor::ForwardRequest))
 {
+  ++server_interceptor_check_;
+
   CORBA::String_var op = ri->operation (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
@@ -168,15 +170,6 @@ Echo_Server_Request_Interceptor::send_exception (
   ACE_CHECK;
 
   CORBA::TypeCode_var type = any->type ();
-  if (0 == type.in())
-    {
-      ACE_DEBUG ((LM_DEBUG,
-                  "No TypeCode information available; perhaps the user IDL\n"
-                  "  has been compiled with TAO_IDL \"-St -Sa\" options?\n"));
-      ACE_THROW (CORBA::NO_IMPLEMENT ());
-    }
-
-  ++server_interceptor_check_;
 
   const char *exception_id = type->id (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;

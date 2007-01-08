@@ -15,7 +15,6 @@ int main (int argc, char* argv[])
    {
       int failed = 0;
 
-      ACE_DEBUG((LM_DEBUG, "Start of Client\n"));
       // Initialise ORB.
       //
       CORBA::ORB_var orb = CORBA::ORB_init( argc, argv, "" ACE_ENV_ARG_PARAMETER);
@@ -23,11 +22,9 @@ int main (int argc, char* argv[])
 
       // Find the Interface Repository.
       //
-      ACE_DEBUG((LM_DEBUG, ". Find IFR\n"));
       CORBA::Object_var ifr_obj = orb->resolve_initial_references( "InterfaceRepository" ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      ACE_DEBUG((LM_DEBUG, ". Narrow IFR\n"));
       CORBA::Repository_var ifr = CORBA::Repository::_narrow( ifr_obj.in() ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
@@ -37,7 +34,6 @@ int main (int argc, char* argv[])
          return 1;
       }
 
-      ACE_DEBUG((LM_DEBUG, ". Construct interface\n"));
       // Add an interface to the repository.
       //
       CORBA::InterfaceDefSeq baseInterfaces(1) ;
@@ -52,24 +48,19 @@ int main (int argc, char* argv[])
       // Add an operation to the interface.
       // First get some useful things.
       //
-      ACE_DEBUG((LM_DEBUG, ". Get primitive (void)\n"));
       CORBA::PrimitiveDef_var voidPrimitive =
          ifr->get_primitive( CORBA::pk_void ACE_ENV_ARG_PARAMETER) ;
       ACE_TRY_CHECK;
-      ACE_DEBUG((LM_DEBUG, ". Get primitive (char)\n"));
       CORBA::PrimitiveDef_var charPrimitive =
          ifr->get_primitive( CORBA::pk_char ACE_ENV_ARG_PARAMETER) ;
       ACE_TRY_CHECK;
-      ACE_DEBUG((LM_DEBUG, ". Get primitive (long)\n"));
       CORBA::PrimitiveDef_var longPrimitive =
          ifr->get_primitive( CORBA::pk_long ACE_ENV_ARG_PARAMETER) ;
       ACE_TRY_CHECK;
-      ACE_DEBUG((LM_DEBUG, ". Get primitive (short)\n"));
       CORBA::PrimitiveDef_var shortPrimitive =
          ifr->get_primitive( CORBA::pk_short ACE_ENV_ARG_PARAMETER) ;
       ACE_TRY_CHECK;
 
-      ACE_DEBUG((LM_DEBUG, ". create 3 parameters\n"));
       // The operation has three parameters...
       //
       CORBA::ULong numParams = 3 ;
@@ -102,19 +93,16 @@ int main (int argc, char* argv[])
 
       // ...and no exceptions...
       //
-      ACE_DEBUG((LM_DEBUG, ". create 0 excepts\n"));
       CORBA::ExceptionDefSeq exceptions( 1 ) ;
       exceptions.length( 0 ) ;
 
       // ...and no context ids
       //
-      ACE_DEBUG((LM_DEBUG, ". create 0 cids\n"));
       CORBA::ContextIdSeq contextIds( 1 ) ;
       contextIds.length( 0 ) ;
 
       // Create the operation, called "f".
       //
-      ACE_DEBUG((LM_DEBUG, ". create_operation\n"));
       CORBA::OperationDef_var operation =
          interface->create_operation( "IDL:interface865/f:1.0",
                                       "f",
@@ -133,12 +121,14 @@ int main (int argc, char* argv[])
       CORBA::NVList_var opList ;
 
       ACE_DEBUG((LM_DEBUG, "About to call create_operation_list\n"));
+
       orb->create_operation_list(operation.in (),
 		                 opList.out()
 				 ACE_ENV_ARG_PARAMETER) ;
       ACE_TRY_CHECK;
 
       ACE_DEBUG((LM_DEBUG, "Call to create_operation_list succeeded\n"));
+
       CORBA::ULong count = opList->count() ;
       ACE_TRY_CHECK;
 
@@ -153,7 +143,7 @@ int main (int argc, char* argv[])
       {
          ACE_DEBUG((LM_DEBUG, "Test failed: param 1 wrong name\n"));
          failed = 1 ;
-      }
+      };
 
       CORBA::Boolean const eq_char =
         nv->value()->type()->equal (CORBA::_tc_char
@@ -164,19 +154,19 @@ int main (int argc, char* argv[])
       {
          ACE_DEBUG((LM_DEBUG, "Test failed: param 1 wrong type\n"));
          failed = 1 ;
-      }
+      };
       if( nv->flags() != CORBA::ARG_IN )
       {
          ACE_DEBUG((LM_DEBUG, "Test failed: param 1 wrong mode\n"));
          failed = 1 ;
-      }
+      };
 
       nv = opList->item( 1 ) ;
       if(ACE_OS::strcmp( nv->name(), "p2") != 0 )
       {
          ACE_DEBUG((LM_DEBUG, "Test failed: param 2 wrong name\n"));
          failed = 1 ;
-      }
+      };
 
       CORBA::Boolean const eq_long =
         nv->value()->type()->equal (CORBA::_tc_long
@@ -187,19 +177,19 @@ int main (int argc, char* argv[])
       {
          ACE_DEBUG((LM_DEBUG, "Test failed: param 2 wrong type\n"));
          failed = 1 ;
-      }
+      };
       if( nv->flags() != CORBA::ARG_OUT )
       {
          ACE_DEBUG((LM_DEBUG, "Test failed: param 2 wrong mode\n"));
          failed = 1 ;
-      }
+      };
 
       nv = opList->item( 2 ) ;
       if(ACE_OS::strcmp( nv->name(), "p3") != 0 )
       {
          ACE_DEBUG((LM_DEBUG, "Test failed: param 3 wrong name\n"));
          failed = 1 ;
-      }
+      };
 
       CORBA::Boolean const eq_short =
         nv->value()->type()->equal (CORBA::_tc_short
@@ -210,14 +200,15 @@ int main (int argc, char* argv[])
       {
          ACE_DEBUG((LM_DEBUG, "Test failed: param 3 wrong type\n"));
          failed = 1 ;
-      }
+      };
       if( nv->flags() != CORBA::ARG_INOUT )
       {
          ACE_DEBUG((LM_DEBUG, "Test failed: param 3 wrong mode\n"));
          failed = 1 ;
-      }
+      };
 
-      // opList->free();
+
+     // opList->free();
       //operation->destroy();
 
       // Finally destroy the interface.
@@ -230,7 +221,6 @@ int main (int argc, char* argv[])
       {
          return 1 ;
       }
-      ACE_DEBUG((LM_DEBUG, ". seems OK\n"));
    }
    ACE_CATCHANY
    {

@@ -10,7 +10,6 @@ ACE_RCSID (Log,
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_Hash_Iterator_i::TAO_Hash_Iterator_i (
-  PortableServer::POA_ptr poa,
   ACE_Reactor* reactor,
   TAO_Hash_LogRecordStore* recordstore,
   TAO_Hash_LogRecordStore::LOG_RECORD_STORE_ITER iter,
@@ -18,7 +17,7 @@ TAO_Hash_Iterator_i::TAO_Hash_Iterator_i (
   CORBA::ULong start,
   const char *constraint,
   CORBA::ULong max_rec_list_len)
-  : TAO_Iterator_i(poa, reactor),
+  : TAO_Iterator_i(reactor),
     recordstore_ (recordstore),
     iter_ (iter),
     iter_end_ (iter_end),

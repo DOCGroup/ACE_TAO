@@ -1,6 +1,3 @@
-// -*- MPC -*-
-// $Id$
-
 project (*client) : taoexe, messaging, portableserver, strategies {
   exename = client
   after = *server
@@ -15,7 +12,8 @@ project (*client) : taoexe, messaging, portableserver, strategies {
   }
 }
 
-project (*server) : taoserver, messaging, strategies {
+project (*server) : taoexe, messaging, portableserver, strategies {
+  exename = server
   source_files {
     server.cpp
     TestS.cpp

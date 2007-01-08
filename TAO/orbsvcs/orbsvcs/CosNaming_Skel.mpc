@@ -1,7 +1,7 @@
 // -*- MPC -*-
 // $Id$
 
-project(CosNaming_Skel) : orbsvcslib, install, naming, portableserver {
+project(CosNaming_Skel) : orbsvcslib, core, naming, portableserver {
   sharedname   = TAO_CosNaming_Skel
   dynamicflags = TAO_NAMING_SKEL_BUILD_DLL
   tagchecks   += Naming
@@ -15,14 +15,17 @@ project(CosNaming_Skel) : orbsvcslib, install, naming, portableserver {
 
   Header_Files {
     CosNamingS.h
+    CosNamingS_T.h
     Naming/naming_skel_export.h
   }
 
   Inline_Files {
     CosNamingS.inl
+    CosNamingS_T.inl
   }
 
   Template_Files {
+    CosNamingS_T.cpp
   }
 
   Pkgconfig_Files {

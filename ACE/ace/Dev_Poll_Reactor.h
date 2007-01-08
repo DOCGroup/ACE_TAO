@@ -873,7 +873,7 @@ public:
 
   /// Returns true if Reactor has been successfully initialized, else
   /// false.
-  virtual bool initialized (void);
+  virtual int initialized (void);
 
   /// Returns the current size of the Reactor's internal descriptor
   /// table.

@@ -16,7 +16,7 @@ noinst_PROGRAMS = \
 manual_SOURCES = manual.cpp
 manual_LDADD = \
   $(top_builddir)/netsvcs/lib/libnetsvcs.la \
-  $(top_builddir)/ace/$(ACE_BUILDDIR)/ace/libACE.la
+  $(top_builddir)/ace/libACE.la
 
 ## Clean up template repositories, etc.
 clean-local:

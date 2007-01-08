@@ -33,7 +33,7 @@ namespace TAO
     /**
      * @class Fixed
      *
-     * @brief @c CORBA::TypeCode implementation for the OMG IDL fixed
+     * @brief @c CORBA::TypeCode implementation for the OMG IDL @fixed
      *        types.
      *
      * This class implements a @c CORBA::TypeCode for the OMG IDL @c

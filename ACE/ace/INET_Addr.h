@@ -315,9 +315,6 @@ public:
   /// Return @c true if the IP address is IPv4/IPv6 loopback address.
   bool is_loopback (void) const;
 
-  /// Return @c true if the IP address is IPv4/IPv6 multicast address.
-  bool is_multicast (void) const;
-
 #if defined (ACE_HAS_IPV6)
   /// Return @c true if the IP address is IPv6 linklocal address.
   bool is_linklocal (void) const;

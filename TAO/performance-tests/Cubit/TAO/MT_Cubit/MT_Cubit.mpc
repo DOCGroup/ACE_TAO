@@ -8,7 +8,7 @@ project(*IDL): taoidldefaults, strategies {
   custom_only = 1
 }
 
-project(*server): taoexe, utils, portableserver, strategies, avoids_corba_e_micro {
+project(*server): taoexe, utils, portableserver, strategies {
   after += *IDL
 
   Source_Files {
@@ -25,9 +25,9 @@ project(*server): taoexe, utils, portableserver, strategies, avoids_corba_e_micr
   }
 }
 
-project(*client): taoexe, utils, portableserver, strategies, avoids_corba_e_micro {
+project(*client): taoexe, utils, portableserver, strategies {
   after += *IDL
-  avoids += ace_for_tao
+
   Source_Files {
     Timer.cpp
     Globals.cpp

@@ -229,7 +229,7 @@ ACE_Pagefile_Memory_Pool::map (int &first_time,
   // Create file mapping, if not yet done
   if (object_handle_ == 0)
     {
-#if !defined (ACE_LACKS_WIN32_SECURITY_DESCRIPTORS)
+#if (defined (ACE_HAS_WINNT4) && (ACE_HAS_WINNT4 != 0))
       // Allow access by all users.
       SECURITY_ATTRIBUTES sa;
       SECURITY_DESCRIPTOR sd;
@@ -242,7 +242,7 @@ ACE_Pagefile_Memory_Pool::map (int &first_time,
       sa.nLength = sizeof (SECURITY_ATTRIBUTES);
       sa.lpSecurityDescriptor = &sd;
       sa.bInheritHandle = FALSE;
-#endif /* ACE_LACKS_WIN32_SECURITY_DESCRIPTORS */
+#endif /* (defined (ACE_HAS_WINNT4) && (ACE_HAS_WINNT4 != 0)) */
 
       // Get an object handle to the named reserved memory object.
       DWORD size_high;
@@ -257,11 +257,11 @@ ACE_Pagefile_Memory_Pool::map (int &first_time,
 
       object_handle_ =
         ACE_TEXT_CreateFileMapping (INVALID_HANDLE_VALUE,
-#if !defined (ACE_LACKS_WIN32_SECURITY_DESCRIPTORS)
+#if (defined (ACE_HAS_WINNT4) && (ACE_HAS_WINNT4 != 0))
                                     &sa,
 #else
                                     0,
-#endif /* !ACE_LACKS_WIN32_SECURITY_DESCRIPTORS */
+#endif /* (defined (ACE_HAS_WINNT4) && (ACE_HAS_WINNT4 != 0)) */
                                     PAGE_READWRITE | SEC_RESERVE,
                                     size_high,
                                     size_low,

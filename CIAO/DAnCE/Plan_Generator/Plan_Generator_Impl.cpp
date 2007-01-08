@@ -13,7 +13,6 @@ namespace CIAO
 {
   namespace Plan_Generator
   {
-    // @todo make this a private method
     static CORBA::Object_ptr
     fetch_reference_naming (CORBA::ORB_ptr orb,
                             const char *repoman_name = 0
@@ -29,14 +28,9 @@ namespace CIAO
                                            ACE_ENV_ARG_PARAMETER);
       ACE_CHECK;
 
-      if (CORBA::is_nil (pns.in ()))
-        {
-          return CORBA::Object::_nil ();
-        }
-
       CosNaming::Name name (1);
       name.length (1);
-
+      
       name[0].id = CORBA::string_dup (repoman_name);
 
       return pns->resolve (name
@@ -58,19 +52,22 @@ namespace CIAO
       if (rm_use_naming)
         {
           obj = fetch_reference_naming (orb, rm_name ACE_ENV_ARG_PARAMETER);
+          ACE_CHECK;
         }
       else
         {
           obj = orb->string_to_object (rm_name ACE_ENV_ARG_PARAMETER);
+          ACE_CHECK;
         }
 
       this->rm_ = Deployment::RepositoryManager::_narrow (obj.in () ACE_ENV_ARG_PARAMETER);
+      ACE_CHECK;
 
       if (CORBA::is_nil (this->rm_.in ()))
         {
           ACE_ERROR ((LM_ERROR,
-            "(%P|%t) CIAO_PlanGenerator: nil Repository "
-            "Manager reference, narrow failed\n"));
+            "(%P|%t) CIAO_PlanGenerator: nil Repository"
+            " Manager reference, narrow failed\n"));
           return false;
         }
 
@@ -113,7 +110,7 @@ namespace CIAO
             {
               CORBA::StringSeq_var seq = this->rm_->findNamesByType (package);
 
-              for (CORBA::ULong i = 0; i < seq->length (); ++i)
+              for (size_t i = 0; i < seq->length (); ++i)
                 {
                   pc = this->rm_->findPackageByName (seq[i]);
 
@@ -142,9 +139,9 @@ namespace CIAO
         }
 
       ::Deployment::PackageConfiguration_var pc;
-
+      
       CORBA::StringSeq_var seq = rm_->findNamesByType (specific_type);
-      for (CORBA::ULong i = 0; i < seq->length (); ++i)
+      for (size_t i = 0; i < seq->length (); ++i)
         {
           pc = rm_->findPackageByName (seq[i]);
 

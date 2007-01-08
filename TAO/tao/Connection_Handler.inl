@@ -2,8 +2,6 @@
 //
 //$Id$
 
-#include "tao/Transport.h"
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE TAO_ORB_Core *
@@ -41,27 +39,6 @@ ACE_INLINE bool
 TAO_Connection_Handler::is_connecting (void) const
 {
   return this->state_ == TAO_LF_Event::LFS_CONNECTION_WAIT;
-}
-
-
-ACE_INLINE void
-TAO_Connection_Handler::connection_pending (void)
-{
-  if (!this->connection_pending_)
-    {
-      this->connection_pending_ = true;
-      this->transport()->add_reference();
-    }
-}
-
-ACE_INLINE void
-TAO_Connection_Handler::cancel_pending_connection (void)
-{
-  if (this->connection_pending_)
-    {
-      this->connection_pending_ = false;
-      this->transport()->remove_reference();
-    }
 }
 
 //@@ CONNECTION_HANDLER_SPL_METHODS_ADD_HOOK

@@ -27,7 +27,13 @@
 #include "ace/os_include/sys/os_uio.h"
 
 #if !defined (ACE_LACKS_SYS_SOCKET_H)
+#  if defined (ACE_HAS_AIX_BROKEN_SOCKET_HEADER)
+#    undef __cplusplus
+#  endif /* ACE_HAS_AIX_BROKEN_SOCKET_HEADER */
 #  include /**/ <sys/socket.h>
+#  if defined (ACE_HAS_AIX_BROKEN_SOCKET_HEADER)
+#    define __cplusplus
+#  endif /* ACE_HAS_AIX_BROKEN_SOCKET_HEADER */
 #endif /* !ACE_LACKS_SYS_SOCKET_H */
 
 #if defined (ACE_VXWORKS) && (ACE_VXWORKS < 0x620)
@@ -64,13 +70,6 @@ extern "C"
     };
 # endif /* ACE_LACKS_SOCKADDR */
 
-# if defined (ACE_LACKS_LINGER)
-    struct  linger {
-          int     l_onoff;                /* option on/off */
-          int     l_linger;               /* linger time */
-    };
-# endif /* ACE_LACKS_LINGER */
-
 #if defined (ACE_WIN32)
    struct msghdr
    {
@@ -96,6 +95,13 @@ extern "C"
 #if defined (ACE_HAS_4_4BSD_SENDMSG_RECVMSG)
    // Control message size to pass a file descriptor.
 #  define ACE_BSD_CONTROL_MSG_LEN sizeof (struct cmsghdr) + sizeof (ACE_HANDLE)
+#  if defined (ACE_LACKS_CMSG_DATA_MACRO)
+#    if defined (ACE_LACKS_CMSG_DATA_MEMBER)
+#      define CMSG_DATA(cmsg) ((unsigned char *) ((struct cmsghdr *) (cmsg) + 1))
+#    else
+#      define CMSG_DATA(cmsg) ((cmsg)->cmsg_data)
+#    endif /* ACE_LACKS_CMSG_DATA_MEMBER */
+#  endif /* ACE_LACKS_CMSG_DATA_MACRO */
 #endif /* ACE_HAS_4_4BSD_SENDMSG_RECVMSG */
 
 // Increase the range of "address families".  Please note that this
@@ -112,10 +118,6 @@ extern "C"
 #if !defined (AF_LOCAL)
 #  define AF_LOCAL 1
 #endif /* AF_LOCAL */
-
-#if !defined (AF_UNIX)
-#  define AF_UNIX AF_LOCAL
-#endif /* AF_UNIX */
 
 #if !defined (AF_INET)
 #  define AF_INET 2
@@ -164,10 +166,6 @@ extern "C"
 #  define SOCK_DGRAM 2
 #endif /* SOCK_DGRAM */
 
-#if !defined (SOCK_SEQPACKET)
-#  define SOCK_SEQPACKET 5
-#endif /* SOCK_SEQPACKET */
-
 #if !defined (SOL_SOCKET)
 #  define SOL_SOCKET 0xffff
 #endif /* SOL_SOCKET */
@@ -176,10 +174,6 @@ extern "C"
 #  define SO_REUSEADDR 0x0004
 #endif /* SO_REUSEADDR */
 
-#if !defined (SO_LINGER)
-#  define SO_LINGER 0x0080
-#endif /* SO_LINGER */
-
 #if !defined (SO_SNDBUF)
 #  define SO_SNDBUF 0x1001
 #endif /* SO_SNDBUF */
@@ -187,14 +181,6 @@ extern "C"
 #if !defined (SO_RCVBUF)
 #  define SO_RCVBUF 0x1002
 #endif /* SO_RCVBUF */
-
-#if !defined (SO_BROADCAST)
-#  define SO_BROADCAST 0x0020
-#endif /* SO_BROADCAST */
-
-#if !defined (SO_ERROR)
-#  define SO_ERROR 0x1007
-#endif /* SO_ERROR */
 
 #if defined (ACE_HAS_IPV6)
 #  if defined (ACE_USES_IPV4_IPV6_MIGRATION)

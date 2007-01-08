@@ -23,18 +23,15 @@
 class DynAnyAnalyzer
 {
 public:
-  DynAnyAnalyzer (CORBA::ORB_ptr orb, DynamicAny::DynAnyFactory_ptr dynany_factory, int debug);
+  DynAnyAnalyzer(CORBA::ORB_ptr orb, DynamicAny::DynAnyFactory_ptr dynany_factory, int debug);
 
-  void tab (int t);
+  void tab(int t);
 
-  ~DynAnyAnalyzer (void);
+  ~DynAnyAnalyzer();
 
-  void resetTab (void);
+  void resetTab();
 
-  void analyze (DynamicAny::DynAny_ptr da ACE_ENV_ARG_DECL);
-  
-  void analyze_basic_seq (CORBA::TypeCode_ptr tc,
-                          DynamicAny::DynAny_ptr da);
+  void analyze(DynamicAny::DynAny_ptr da ACE_ENV_ARG_DECL);
 
 private:
   CORBA::ORB_var orb_;

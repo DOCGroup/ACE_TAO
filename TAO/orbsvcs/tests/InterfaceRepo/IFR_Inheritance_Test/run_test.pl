@@ -60,7 +60,7 @@ my $CL = new PerlACE::Process ("IFR_Inheritance_Test",
 my $tao_ifr = "undefined";
 if ($^O eq "MSWin32")
 {
-   $tao_ifr = "$ENV{ACE_ROOT}/bin/tao_ifr";
+   $tao_ifr = "../../../../../bin/tao_ifr";
 }
 else
 {

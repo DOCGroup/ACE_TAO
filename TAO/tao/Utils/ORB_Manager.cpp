@@ -97,7 +97,19 @@ TAO_ORB_Manager::init (int &argc,
   return 0;
 }
 
-#if !defined (CORBA_E_MICRO)
+int
+TAO_ORB_Manager::init_child_poa (int& argc,
+                                 char **argv,
+                                 const char *poa_name
+                                 ACE_ENV_ARG_DECL)
+{
+  return this->init_child_poa (argc,
+                               argv,
+                               poa_name,
+                               0
+                               ACE_ENV_ARG_PARAMETER);
+}
+
 int
 TAO_ORB_Manager::init_child_poa (int& argc,
                                  char **argv,
@@ -105,11 +117,13 @@ TAO_ORB_Manager::init_child_poa (int& argc,
                                  const char *orb_name
                                  ACE_ENV_ARG_DECL)
 {
+  int init_result;
+
   // check to see if root poa has to be created.
-  int init_result = this->init (argc,
-                                argv,
-                                orb_name
-                                ACE_ENV_ARG_PARAMETER);
+  init_result = this->init (argc,
+                            argv,
+                            orb_name
+                            ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
 
   if (init_result == -1)
@@ -157,7 +171,6 @@ TAO_ORB_Manager::init_child_poa (int& argc,
     }
   return 0;
 }
-#endif /* CORBA_E_MICRO */
 
 // Activate POA manager.
 
@@ -211,8 +224,8 @@ TAO_ORB_Manager::deactivate (const char *id
                                  ACE_ENV_ARG_PARAMETER);
 }
 
-#if !defined (CORBA_E_MICRO)
 // Activate the object with the object_name under the child POA.
+
 char *
 TAO_ORB_Manager::activate_under_child_poa (const char *object_name,
                                            PortableServer::Servant servant
@@ -263,7 +276,6 @@ TAO_ORB_Manager::deactivate_under_child_poa (const char *id
   this->child_poa_->deactivate_object (object_id.in ()
                                        ACE_ENV_ARG_PARAMETER);
 }
-#endif /* CORBA_E_MICRO */
 
 // Enter the ORB event loop.
 

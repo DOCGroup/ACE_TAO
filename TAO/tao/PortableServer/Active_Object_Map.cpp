@@ -322,31 +322,36 @@ TAO_Active_Object_Map::~TAO_Active_Object_Map (void)
   delete this->user_id_map_;
 }
 
-bool
+int
 TAO_Active_Object_Map::is_user_id_in_map (const PortableServer::ObjectId &user_id,
                                           CORBA::Short priority,
-                                          bool &priorities_match,
-                                          bool &deactivated)
+                                          int &priorities_match,
+                                          int &deactivated)
 {
   TAO_Active_Object_Map_Entry *entry = 0;
-  bool result = false;
-  int const find_result = this->user_id_map_->find (user_id,
-                                                    entry);
-  if (find_result == 0)
+  int result = this->user_id_map_->find (user_id,
+                                         entry);
+  if (result == 0)
     {
       if (entry->servant_ == 0)
         {
+          result = 0;
+
           if (entry->priority_ != priority)
-            priorities_match = false;
+            priorities_match = 0;
         }
       else
         {
-          result = true;
+          result = 1;
           if (entry->deactivated_)
             {
-              deactivated = true;
+              deactivated = 1;
             }
         }
+    }
+  else
+    {
+      result = 0;
     }
 
   return result;
@@ -366,7 +371,7 @@ TAO_Id_Uniqueness_Strategy::set_active_object_map (TAO_Active_Object_Map *active
 
 int
 TAO_Unique_Id_Strategy::is_servant_in_map (PortableServer::Servant servant,
-                                           bool &deactivated)
+                                           int &deactivated)
 {
   TAO_Active_Object_Map_Entry *entry = 0;
   int result = this->active_object_map_->servant_map_->find (servant,
@@ -376,7 +381,7 @@ TAO_Unique_Id_Strategy::is_servant_in_map (PortableServer::Servant servant,
       result = 1;
       if (entry->deactivated_)
         {
-          deactivated = true;
+          deactivated = 1;
         }
     }
   else
@@ -523,7 +528,7 @@ TAO_Unique_Id_Strategy::remaining_activations (PortableServer::Servant servant)
 
 int
 TAO_Multiple_Id_Strategy::is_servant_in_map (PortableServer::Servant,
-                                             bool &)
+                                             int &)
 {
   return -1;
 }

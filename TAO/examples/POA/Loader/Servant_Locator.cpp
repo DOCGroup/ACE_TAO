@@ -49,7 +49,7 @@ ServantLocator::ServantLocator (CORBA::ORB_ptr orb,
   // to long first.
   //
   void *symbol = this->dll_.symbol (factory_function);
-  intptr_t function = reinterpret_cast<intptr_t> (symbol);
+  long function = reinterpret_cast<long> (symbol);
 
   servant_supplier_ =
     reinterpret_cast<SERVANT_FACTORY> (function);
@@ -57,7 +57,7 @@ ServantLocator::ServantLocator (CORBA::ORB_ptr orb,
   // Obtain the symbol for the function which will destroy the
   // servant.
   symbol = this->dll_.symbol (garbage_collection_function);
-  function = reinterpret_cast<intptr_t> (symbol);
+  function = reinterpret_cast<long> (symbol);
 
   servant_garbage_collector_ =
     reinterpret_cast<SERVANT_GARBAGE_COLLECTOR> (function);

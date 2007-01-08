@@ -23,7 +23,7 @@ TAO_DynValueCommon_i::is_null (
       CORBA::SystemException
     ))
 {
-  ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (), false);
+  return true;
 }
   
 void
@@ -33,7 +33,6 @@ TAO_DynValueCommon_i::set_to_null (
       CORBA::SystemException
     ))
 {
-  ACE_THROW (CORBA::NO_IMPLEMENT ());
 }
   
 void
@@ -43,7 +42,6 @@ TAO_DynValueCommon_i::set_to_value (
       CORBA::SystemException
     ))
 {
-  ACE_THROW (CORBA::NO_IMPLEMENT ());
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL

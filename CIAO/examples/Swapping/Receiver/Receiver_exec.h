@@ -10,7 +10,7 @@
 #ifndef RECEIVER_EXEC_H
 #define RECEIVER_EXEC_H
 
-#include "ciao/CIAO_SwapExecC.h"
+#include "SwapExecC.h"
 #include "ReceiverEC.h"
 #include "Receiver_exec_export.h"
 #include "tao/LocalObject.h"
@@ -117,7 +117,7 @@ namespace CIDL_Receiver_Impl
       ACE_THROW_SPEC ((CORBA::SystemException,
                        Components::CCMException));
   };
-
+  
   extern "C" RECEIVER_EXEC_Export ::Components::HomeExecutorBase_ptr
   createReceiverHome_Impl (void);
 }

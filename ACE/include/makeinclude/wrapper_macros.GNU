@@ -57,10 +57,6 @@
 #  templates	    Type of template instantiation to perform. Can be one of
 #                   automatic, used. Defaults to automatic.
 #  threads          Build with thread support.
-#  trio             Indicate build with trio; adds PLATFORM_TRIO_CPPFLAGS
-#                   to CPPFLAGS, PLATFORM_TRIO_LDFLAGS to LDFLAGS, and
-#                   PLATFORM_TRIO_LIBS to LIBS. For more information on
-#                   trio, see http://sourceforge.net/projects/ctrio/
 #  xt               Build with Xt (X11 Toolkit) support.
 #  fl               Build with FlTk (Fast Light Toolkit) support.
 #  tk               Build with Tk (Tcl/Tk) support.
@@ -462,18 +458,6 @@ ifeq ($(threads),0)
   override threads =
 endif # threads
 
-trio ?=
-ifeq ($(trio),0)
-  override trio =
-endif # trio
-
-ifdef trio
-  CPPFLAGS += -DACE_HAS_TRIO $(PLATFORM_TRIO_CPPFLAGS)
-  LDFLAGS += $(PLATFORM_TRIO_LDFLAGS)
-  LIBS += -ltrio $(PLATFORM_TRIO_LIBS)
-  ACE_MAKE_OPTIONS += trio
-endif # trio
-
 # ace_for_tao subsetting is disabled by default.
 ace_for_tao ?=
 ifeq ($(ace_for_tao),0)
@@ -557,7 +541,7 @@ endif
 
 rapi ?=
 ifeq ($(rapi),0)
-   override rapi =
+     override rapi =
 endif #rapi
 
 ifneq ($(rapi),)
@@ -574,9 +558,9 @@ endif #rapi
 
 # if any sctp implementation is present then add
 ifneq ($(sctp),)
-  CPPFLAGS += -DACE_HAS_SCTP $(PLATFORM_SCTP_CPPFLAGS)
-  LDFLAGS  += $(PLATFORM_SCTP_LDFLAGS)
-  LIBS     += $(PLATFORM_SCTP_LIBS)
+ CPPFLAGS += -DACE_HAS_SCTP $(PLATFORM_SCTP_CPPFLAGS)
+ LDFLAGS  += $(PLATFORM_SCTP_LDFLAGS)
+ LIBS     += $(PLATFORM_SCTP_LIBS)
   ACE_MAKE_OPTIONS += sctp
 endif
 
@@ -602,21 +586,17 @@ else
     ACE_MAKE_OPTIONS += ssl
   endif
 endif
-
-## These are related to MPC.  When 'requires' is used in a project
-## it controls whether or not the project is generated.  There is also
-## a second level of control in platform macros and thus requires
-## some features to be set here as well.
 ec_typed_events ?= 1
-zlib ?= 1
 
 ifeq ($(exceptions),0)
+  ifeq ($(ACE_HAS_GNUG_PRE_2_8),0)
     #### Disable the default exception handling of g++ >= 2.8.0.
     ifneq ($(ACE_GNUG_ON_UNIXWARE),)
       CCFLAGS += -fcheck-new
     else
       CCFLAGS += -fno-exceptions -fcheck-new
     endif # ! ACE_GNUG_ON_UNIXWARE
+  endif # ! ACE_HAS_GNUG_PRE_2_8
 else  # exceptions
   CPPFLAGS += -DACE_HAS_EXCEPTIONS
   ifndef include_env
@@ -625,6 +605,17 @@ else  # exceptions
   ifeq ($(include_env),1)
     CPPFLAGS += -DACE_ENV_BKWD_COMPAT
   endif
+  ifeq ($(ACE_HAS_GNUG_PRE_2_8),1)
+    #### Enable exception handling with g++ < 2.8.0.  Not recommended,
+    #### but provided here for completeness.
+    CCFLAGS += -fhandle-exceptions
+#  else  # ! ACE_HAS_GNUG_PRE_2_8
+#  ifeq ($(ACE_HAS_GNUG_PRE_2_8),0)
+#    #### Disable this warning on g++ >= 2.8.0 if exceptions are enabled,
+#    #### it gets confused and reports too many bogus warnings.
+#    CCFLAGS += -Wno-uninitialized
+#  endif # g++ > 2.8.0
+  endif # ! ACE_HAS_GNUG_PRE_2_8
   ACE_MAKE_OPTIONS += exceptions
 endif # exceptions
 

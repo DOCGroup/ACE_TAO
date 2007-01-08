@@ -2,6 +2,7 @@
 
 #include "CLA_Handler.h"
 #include "CIAOServerResources.hpp"
+#include "ServerResourcesC.h"
 
 namespace CIAO
 {

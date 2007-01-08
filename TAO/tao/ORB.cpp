@@ -279,7 +279,7 @@ CORBA::ORB::work_pending (ACE_ENV_SINGLE_ARG_DECL)
   return 1;
 }
 
-#if (TAO_HAS_MINIMUM_CORBA == 0) && !defined (CORBA_E_COMPACT) && !defined (CORBA_E_MICRO)
+#if (TAO_HAS_MINIMUM_CORBA == 0)
 
 void
 CORBA::ORB::create_list (CORBA::Long count,
@@ -1116,12 +1116,6 @@ CORBA::ORB::resolve_initial_references (const char *name,
         (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK_RETURN (CORBA::Object::_nil ());
     }
-  else if (ACE_OS::strcmp (name, TAO_OBJID_COMPRESSIONMANAGER) == 0)
-    {
-      result = this->orb_core ()->resolve_compression_manager
-        (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK_RETURN (CORBA::Object::_nil ());
-    }
 #if TAO_HAS_INTERCEPTORS == 1
   else if (ACE_OS::strcmp (name, TAO_OBJID_PICurrent) == 0)
     {
@@ -1311,7 +1305,7 @@ TAO::ORB::init_orb_globals (ACE_ENV_SINGLE_ARG_DECL)
 CORBA::ORB_ptr
 CORBA::ORB::_tao_make_ORB (TAO_ORB_Core * orb_core)
 {
-  CORBA::ORB_ptr orb = CORBA::ORB_ptr ();
+  CORBA::ORB_ptr orb = CORBA::ORB::_nil ();
 
   ACE_NEW_RETURN (orb,
                   CORBA::ORB (orb_core),
@@ -1329,27 +1323,10 @@ CORBA::ORB_init (int &argc,
                  char *argv[],
                  const char *orb_name)
 {
-#ifndef ACE_HAS_EXCEPTIONS
-  // Make sure TAO's singleton manager is initialized.
-  //
-  // We need to initialize before TAO_default_environment() is called
-  // since that call instantiates a TAO_TSS_Singleton.
-  if (TAO_Singleton_Manager::instance ()->init () == -1)
-    {
-      return CORBA::ORB::_nil ();
-    }
-
   return CORBA::ORB_init (argc,
                           argv,
                           orb_name,
                           TAO_default_environment ());
-#else
-  CORBA::Environment env;
-  return CORBA::ORB_init (argc,
-                          argv,
-                          orb_name,
-                          env /* unused */);
-#endif  /* !ACE_HAS_EXCEPTIONS */
 }
 
 CORBA::ORB_ptr
@@ -1592,20 +1569,11 @@ CORBA::ORB::object_to_string (CORBA::Object_ptr obj
   this->check_shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
 
-  if (!CORBA::is_nil (obj))
-    {
-      if (!obj->can_convert_to_ior ())
-        ACE_THROW_RETURN (CORBA::MARSHAL (CORBA::OMGVMCID | 4,
-                                          CORBA::COMPLETED_NO),
-                          0);
+  if (!CORBA::is_nil (obj) && obj->_is_local ())
+    ACE_THROW_RETURN (CORBA::MARSHAL (CORBA::OMGVMCID | 4,
+                                      CORBA::COMPLETED_NO),
+                      0);
 
-      // Allow a user to provide custom object stringification
-      char* user_string =
-        obj->convert_to_ior (this->use_omg_ior_format_,
-                             ior_prefix);
-      if (user_string != 0)
-        return user_string;
-    }
 
   // Application writer controls what kind of objref strings they get,
   // maybe along with other things, by how they initialize the ORB.

@@ -15,6 +15,13 @@
 #define _POSIX_NAME_MAX     14      /*  Max bytes in a filename             */
 #define _POSIX_PATH_MAX     256     /*  Num. bytes in pathname (excl. NULL) */
 
+// gcc can do inline
+#if __GNUC__ > 2 || ( __GNUC__ == 2 && __GNUC_MINOR__ >= 8)
+# if !defined (__ACE_INLINE__)
+#   define __ACE_INLINE__
+# endif /* ! __ACE_INLINE__ */
+#endif
+
 #if defined(__OPTIMIZE__)
 # if defined(__X86__)
     // string.h can't be used by ACE with __OPTIMIZE__.
@@ -64,7 +71,6 @@
 #define ACE_HAS_MT_SAFE_MKTIME
 #define ACE_HAS_MUTEX_TIMEOUTS
 #define ACE_HAS_NONCONST_SELECT_TIMEVAL
-#define ACE_HAS_NONCONST_SWAB
 #define ACE_HAS_POSIX_SEM
 #define ACE_HAS_POSIX_TIME
 #define ACE_HAS_PTHREADS
@@ -78,6 +84,7 @@
 #define ACE_HAS_SIG_ATOMIC_T
 #define ACE_HAS_SIG_MACROS
 #define ACE_HAS_SOCKADDR_IN_SIN_LEN
+#define ACE_HAS_SIZET_SOCKET_LEN
 #define ACE_HAS_SSIZE_T
 #define ACE_HAS_STRERROR
 #define ACE_HAS_STRINGS
@@ -92,9 +99,9 @@
 #define ACE_HAS_UCONTEXT_T
 #define ACE_HAS_VOIDPTR_MMAP
 #define ACE_HAS_VOIDPTR_SOCKOPT
+#define ACE_LACKS_CMSG_DATA_MEMBER
 #define ACE_LACKS_CONDATTR_PSHARED
 #define ACE_LACKS_CONST_TIMESPEC_PTR
-#define ACE_LACKS_CUSERID
 #define ACE_LACKS_FORK
 #define ACE_LACKS_LINEBUFFERED_STREAMBUF
 #define ACE_LACKS_MADVISE
@@ -102,19 +109,17 @@
 #define ACE_LACKS_NAMED_POSIX_SEM
 #define ACE_LACKS_NETDB_REENTRANT_FUNCTIONS
 #define ACE_LACKS_NETDB_REENTRANT_FUNCTIONS
-#define ACE_LACKS_POLL_H
 #define ACE_LACKS_PTHREAD_THR_SIGSETMASK
+#define ACE_LACKS_RTTI
 #define ACE_LACKS_RWLOCK_T
 #define ACE_LACKS_SBRK
 #define ACE_LACKS_SEEKDIR
 #define ACE_LACKS_SOCKET_BUFSIZ
 #define ACE_LACKS_SOCKETPAIR
-#define ACE_LACKS_STROPTS_H
 #define ACE_LACKS_STREAM_MODULES
 #define ACE_LACKS_STRRECVFD
 #define ACE_LACKS_SYSCALL
 #define ACE_LACKS_SYS_MSG_H
-#define ACE_LACKS_SYS_SHM_H
 #define ACE_LACKS_SYSV_SHMEM
 #define ACE_LACKS_TCP_NODELAY
 #define ACE_LACKS_TELLDIR

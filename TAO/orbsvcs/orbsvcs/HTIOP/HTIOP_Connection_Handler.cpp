@@ -76,9 +76,6 @@ TAO::HTIOP::Connection_Handler::open_handler (void *v)
 int
 TAO::HTIOP::Connection_Handler::open (void*)
 {
-  if (this->shared_open() == -1)
-    return -1;
-
   if (this->transport ()->wait_strategy ()->non_blocking ())
     {
       if (this->peer ().enable (ACE_NONBLOCK) == -1)

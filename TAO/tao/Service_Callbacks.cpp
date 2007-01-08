@@ -16,8 +16,15 @@ TAO_Service_Callbacks::~TAO_Service_Callbacks (void)
 }
 
 CORBA::Boolean
-TAO_Service_Callbacks::select_profile (const TAO_MProfile & /*mprofile*/,
+TAO_Service_Callbacks::select_profile (TAO_MProfile * /*mprofile*/,
                                        TAO_Profile *& /*pfile*/)
+{
+  return false;
+}
+
+CORBA::Boolean
+TAO_Service_Callbacks::reselect_profile (TAO_Stub * /*stub*/,
+                                         TAO_Profile *& /*pfile*/)
 {
   return false;
 }
@@ -29,6 +36,12 @@ TAO_Service_Callbacks::object_is_nil (CORBA::Object_ptr /* obj */)
   // We shouldn't be here at all. But in case if we are here,
   // something is wrong. So, we send a true for a is_nil () call
   return true;
+}
+
+void
+TAO_Service_Callbacks::reset_profile_flags (void)
+{
+  return;
 }
 
 

@@ -1,7 +1,7 @@
 // -*- MPC -*-
 // $Id$
 
-project(csd_test_server): csd_pt_test_exe, avoids_corba_e_micro {
+project(csd_test_server): csd_pt_test_exe {
   exename=server_main
 
   Source_Files {
@@ -10,7 +10,7 @@ project(csd_test_server): csd_pt_test_exe, avoids_corba_e_micro {
   }
 }
 
-project(csd_test_client): csd_pt_test_exe, avoids_corba_e_micro {
+project(csd_test_client): csd_pt_test_exe {
   exename=client_main
 
   Source_Files {

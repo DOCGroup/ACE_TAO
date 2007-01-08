@@ -1599,6 +1599,23 @@ ACE_Log_Msg::log (const ACE_TCHAR *format_str,
                       ACE_OS::sprintf (bp,
                                        format,
                                        static_cast <unsigned> (ACE_Thread::self ()));
+#elif defined (ACE_AIX_VERS) && (ACE_AIX_VERS <= 402)
+                  // AIX's pthread_t (ACE_hthread_t) is a pointer, and it's
+                  // a little ugly to send that through a %u format.  So,
+                  // get the kernel thread ID (tid_t) via thread_self() and
+                  // display that instead.
+                  // This isn't conditionalized on ACE_HAS_THREAD_SELF because
+                  // 1. AIX 4.2 doesn't have that def anymore (it messes up
+                  //    other things)
+                  // 2. OSF/1 V3.2 has that def, and I'm not sure what affect
+                  //   this would have on that.
+                  // -Steve Huston, 19-Aug-97
+                  ACE_OS::strcpy (fp, ACE_LIB_TEXT ("u"));
+                  if (can_check)
+                    this_len = ACE_OS::snprintf
+                      (bp, bspace, format, thread_self());
+                  else
+                    this_len = ACE_OS::sprintf (bp, format, thread_self());
 #elif defined (DIGITAL_UNIX)
                   ACE_OS::strcpy (fp, ACE_LIB_TEXT ("u"));
                   {
@@ -1684,26 +1701,33 @@ ACE_Log_Msg::log (const ACE_TCHAR *format_str,
 
                 case 'W':
                   {
-#if defined (ACE_HAS_WCHAR)
+#if defined (ACE_WIN32)
+                    ACE_TCHAR *wstr = va_arg (argp, ACE_TCHAR *);
+# if defined (ACE_USES_WCHAR)
+                    ACE_OS::strcpy (fp, ACE_LIB_TEXT ("s"));
+# else /* ACE_USES_WCHAR */
+                    ACE_OS::strcpy (fp, ACE_LIB_TEXT ("S"));
+# endif /* ACE_USES_WCHAR */
+                    if (can_check)
+                      this_len = ACE_OS::snprintf
+                        (bp, bspace, format, wstr ? wstr : ACE_LIB_TEXT ("(null)"));
+                    else
+                      this_len = ACE_OS::sprintf
+                        (bp, format, wstr ? wstr : ACE_LIB_TEXT ("(null)"));
+#elif defined (ACE_HAS_WCHAR)
                     wchar_t *wchar_str = va_arg (argp, wchar_t *);
 # if defined (HPUX)
                     ACE_OS::strcpy (fp, ACE_LIB_TEXT ("S"));
-# elif defined (ACE_WIN32)
-#   if defined (ACE_USES_WCHAR)
-                    ACE_OS::strcpy (fp, ACE_LIB_TEXT ("s"));
-#   else /* ACE_USES_WCHAR */
-                    ACE_OS::strcpy (fp, ACE_LIB_TEXT ("S"));
-#   endif /* ACE_USES_WCHAR */
 # else
                     ACE_OS::strcpy (fp, ACE_LIB_TEXT ("ls"));
 # endif /* HPUX */
                     if (can_check)
                       this_len = ACE_OS::snprintf
-                        (bp, bspace, format, wchar_str ? wchar_str : ACE_TEXT_WIDE("(null)"));
+                        (bp, bspace, format, wchar_str);
                     else
                       this_len = ACE_OS::sprintf
-                        (bp, format, wchar_str ? wchar_str : ACE_TEXT_WIDE("(null)"));
-#endif /* ACE_HAS_WCHAR */
+                        (bp, format, wchar_str);
+#endif /* ACE_WIN32 / ACE_HAS_WCHAR */
                     ACE_UPDATE_COUNT (bspace, this_len);
                   }
                   break;

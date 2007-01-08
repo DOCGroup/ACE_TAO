@@ -1,5 +1,3 @@
-<!-- $Id$ -->
-
 <html>
 <head>
 <title>The realm of the build czar</title>
@@ -84,122 +82,121 @@ well. Here is the procedure followed while cutting a beta:
 <li>The whole process takes somewhere between 8-9 hours, about 2 hours
 for making the release itself and the remaining time for generating
 the doxygen documentation.</li>
-<li>I suggest you take advantage of GNU Screen so that even if your SSH session
-is interrupted, the cutting process can continue.
-<ul>
-<li> type <code>screen</code> to start screen.</li>
-<li> execute commands as normal.  Note that Ctrl-A is special in screen, so you
-need to type Ctrl-A-A to send a Ctrl-A to the shell</li>
-<li> should your sesssion be interrupted, reconnect and type <code>screen -x</code></li>
-<li> when finished, just type exit twice</li>
-</ul>
 <li>Prior to starting this, gather aggregate release notes from all
 developers.  This is usually in the form of an email plea asking for
 a writeup of significant changes since the last beta. Add these notes
 to the NEWS files before cutting the release so that all notes are
 part of the release.</li>
-<li>Checkout a new workspace on <tt>anduril.dre.vanderbilt.edu</tt></li>
+<li>Checkout a new workspace on <tt>deuce.doc.wustl.edu</tt></li>
 <ul>
+<li>In order to do this you must have ssh identity set up, and
+ (unless you like typing your passphrase <b>A LOT</b>) have your
+environment configured so that you can access the CVS repo transparently.
+When you are using the bugzilla account the best you can add the
+public key in .ssh/id_rsa.pub into your .ssh/authorized_keys on
+cvs.doc.wustl.edu
+<em>Need a link here!</em>
+</li>
 <li>
-The best place to create the workspace is under /export/anduriltmp/bczar. Don't use
+The best place to create the workspace is under /project/acetmp. Don't use
 the home directory itself, it is an NFS share and not really fast.
 </li>
-<li>Checkout like this:
-<ul><li>svn co https://svn.dre.vanderbilt.edu/DOC/Middleware/trunk DOC_ROOT</li>
-    <li>svn co https://svn.dre.vanderbilt.edu/DOC/MPC/trunk DOC_ROOT/ACE/MPC</li>
+<li>Set the <code>CVSROOT</code> variable to yourusers@cvs.doc.wustl.edu:/project
+/cvs-repository and CVS_RSH to ssh using SETENV
+</li>
+<li>Checkout like this: <tt>cvs -z 9 checkout ACE_wrappers</tt></li>
 </ul>
-</ul>
-<li> Set $DOC_ROOT to point to the new
-workspace you checked out.</li>
+<li> Do not forget to checkout your MPC repository. Do it like this:
+    <tt>cvs -z 9 co -P ACE_MPC</tt></li>
+<li> If the repository is frozen, remove all users from that file and
+place your user name in the FROZEN file </li>
+<li> Set $ACE_ROOT, $TAO_ROOT and $CIAO_ROOT to point to the new
+workspace you checked out. You must also set <code>$MPC_ROOT</code> to
+be <code>$ACE_ROOT/MPC</code>.</li>
 <li> Set an environment variable SIGNATURE indicating your full
 name. This is used to fill the ChangeLog entry.</li>
-<ul><li>For example,<tt>export SIGNATURE="Chris Cleeland"</tt></li></ul>
+<ul><li>For example,<tt>setenv SIGNATURE "Chris Cleeland"</tt></li></ul>
 <li> Set an environment variable MAILID indicating your mail id. This
 is used to fill the mail id portion of the ChangeLog entry.</li>
-<ul><li>For example,<tt>export MAILID="cleeland@ociweb.com"</tt></li></ul>
-<li> Change directories to to <tt>$DOC_ROOT</tt> </li>
-<li> Tag the release by executing <code>ACE/bin/make_release -v beta -u</code> This will only
-take a couple minutes to complete.</li>
-<li> Create the kits by executing <code>ACE/bin/make_release -k ace+tao+ciao </code>
-
-<ul><li>These commands only tags and creates the kits for the
+<ul><li>For example,<tt>setenv MAILID "cleeland@ociweb.com"</tt></li></ul>
+<li> Change directories to to <tt>$ACE_ROOT</tt> </li>
+<li> Do a <tt>make -f Release allsources</tt> to create a beta kit</li>
+<li> Or do a <tt>make -f Release allsources REL=minor</tt> to create a minor kit</li>
+<ul><li>This command only tags and creates the kits for the
  software itself, not documentation. </li>
-<li>The kits end up in <tt>/export/anduriltmp/bczar/packages</tt></li>
+<li>The kits end up in <tt>/export/project/deuce/ftp/pub/ACE+TAO-distribution</tt></li>
 </ul>
 <p>
 To summarise, the following is a transcript of the steps up to this point executing
 successfully (assumes /project/acetmp/sm exists and is empty): <p>
 <code>
 sm@beatrice ~<br>
-$ ssh bczar@anduril.dre.vanderbilt.edu<br>
+$ ssh bugzilla@deuce.doc.wustl.edu<br>
 No default printer<br>
--bash-3.00$ cd /export/anduriltmp/bczar<br>
--bash-3.00$ export DOC_ROOT=$PWD/DOC_ROOT<br>
--bash-3.00$ export SIGNATURE "Simon McQueen"<br>
--bash-3.00$ export MAILID sm@prismtech.com<br>
--bash-3.00$ svn co https://svn.dre.vanderbilt.edu/DOC/Middleware/trunk DOC_ROOT<br>
--bash-3.00$ svn co https://svn.dre.vanderbilt.edu/DOC/MPC/trunk DOC_ROOT/ACE/MPC<br>
--bash-3.00$ cd DOC_ROOT/<br>
--bash-3.00$ ACE/bin/make_release -v beta -u<br>
--bash-3.00$ ACE/bin/make_release -i -k ace+tao+ciao<br>
+bugzilla@deuce cs/group/bugzilla> cd /project/acetmp/sm<br>
+bugzilla@deuce /project/acetmp/sm> setenv CVSROOT bugzilla@cvs.doc.wustl.edu:/project/cvs-repository<br>
+bugzilla@deuce /project/acetmp/sm> setenv CVS_RSH ssh<br>
+bugzilla@deuce /project/acetmp/sm> setenv ACE_ROOT $PWD/ACE_wrappers<br>
+bugzilla@deuce /project/acetmp/sm> setenv TAO_ROOT $PWD/ACE_wrappers/TAO<br>
+bugzilla@deuce /project/acetmp/sm> setenv CIAO_ROOT $PWD/ACE_wrappers/TAO/CIAO<br>
+bugzilla@deuce /project/acetmp/sm> setenv MPC_ROOT $PWD/ACE_wrappers/MPC<br>
+bugzilla@deuce /project/acetmp/sm> setenv SIGNATURE "Simon McQueen"<br>
+bugzilla@deuce /project/acetmp/sm> setenv MAILID sm@prismtech.com<br>
+bugzilla@deuce /project/acetmp/sm> cvs -z 9 checkout ACE_wrappers<br>
+bugzilla@deuce /project/acetmp/sm> cvs -z 9 co -P ACE_MPC<br>
+bugzilla@deuce /project/acetmp/sm> cd ACE_wrappers/<br>
+bugzilla@deuce acetmp/sm/ACE_wrappers> make -f Release allsources | & tee ../release.log<br>
 </code>
 <p>
 Feel free to cut and paste with suitable edits.
-<li>In the <em>EXTREMELY</em> unlikely event that something goes wrong during the
-<em>tagging</em> of the repo (ie, make_release -v beta -u),
+<li>If something goes wrong and the build needs to be restarted for some reason
 the following files must be returned to the state they were in before the release
-process started and then checked back into SVN:<br><code>
-ACE/ChangeLog<br>
-ACE/PROBLEM-REPORT-FORM<br>
-ACE/VERSION<br>
-ACE/TAO/ChangeLog<br>
-ACE/TAO/PROBLEM-REPORT-FORM<br>
-TAO/VERSION<br>
-CIAO/ChangeLog<br>
-CIAO/PROBLEM-REPORT-FORM<br>
-CIAO/VERSION<br>
-CIAO/ciao/Version.h<br>
-TAO/tao/Version.h<br>
-ace/Version.h<br></code><p>
-The tag will also need to be removed: ACE+TAO+CIAO-X_Y_Z
+process started and then checked back into CVS:<br><code>
+ACE_wrappers/ChangeLog<br>
+ACE_wrappers/PROBLEM-REPORT-FORM<br>
+ACE_wrappers/VERSION<br>
+ACE_wrappers/TAO/ChangeLog<br>
+ACE_wrappers/TAO/PROBLEM-REPORT-FORM<br>
+ACE_wrappers/TAO/VERSION<br>
+ACE_wrappers/TAO/CIAO/ChangeLog<br>
+ACE_wrappers/TAO/CIAO/PROBLEM-REPORT-FORM<br>
+ACE_wrappers/TAO/CIAO/VERSION<br>
+ACE_wrappers/TAO/CIAO/ciao/Version.h<br>
+ACE_wrappers/TAO/tao/Version.h<br>
+ACE_wrappers/ace/Version.h<br></code><p>
+The following tags will also need to be removed: CIAO-0_X_Y, TAO-1_X_Y, and ACE-5_X_Y
 (wher X and Y are the minor and beta release numbers of the release that is to be restarted).<p>
 E.g.:<br>
 <code>
-svn rm https://svn.dre.vanderbilt.edu/DOC/Middleware/tags/ACE+TAO+CIAO-X_Y_Z<br />
+cvs tag -d CIAO-0_4_8<br>
+cvs tag -d TAO-1_4_8<br>
+cvs tag -d ACE-5_4_8<br>
 </code>
 
-Note that this <em>only</em> needs to be done if the <em>tagging</em> fails.  If kit creation
-fails, simply restart that process.
-<li>The packages and up by default under /export/doc/latest, you can copy them to the webserver using the following commands. At the moment
-you execute these commands all users can download these packages.</li>
-<code>
-cp /export/doc/latest/ACE* /export/www/download.dre/ACE+TAO-distribution<br>
-cp /export/doc/previous-versions/ACE* /export/www/download.dre/previous_versions<br>
-</code>
+<li>When ready, create a manual tag ACE+TAO+CIAO-X_Y_Z, where X_Y_Z must be replaced by major/minor/beta version (for example 1_4_7).
+    For example, the tag might be: ACE+TAO+CIAO-1_4_8</li>
 <li>Once the distribution is ready, get ready for creating doxygen
 documentation. This is slightly complicated than it requires. We will
 address the complexity soon.</li>
 <li>Login to naboo.dre.vanderbilt.edu as bczar</li>
-<ul><li>After login, ssh to bczar@download.dre.vanderbilt.edu as bczar and check whether ssh succeeds. If not fix the problem. The make script tries to copy the tar.gz files to the website using ssh.</li></ul>
-<li> go to /web/users/isisbuilds/tmp/ACE_wrappers and remove the contents of this directory</li>
+<ul><li>After login, ssh to deuce.doc.wustl.edu as bugzilla and check whether ssh succeeds. If not fix the problem. The make script tries to copy the tar.gz files to the website using ssh.</li></ul>
+<li> go to /web/users/isisbuilds/tmp/ACE_wrappers </li>
+<li> Set the environment variables pointed above. </li>
 <li> Update the workspace with the right version tag </li>
 <code>
 svn co svn://svn.dre.vanderbilt.edu/DOC/Middleware/tags/ACE+TAO+CIAO-X_Y_Z/ACE ACE_wrappers<br>
 svn co svn://svn.dre.vanderbilt.edu/DOC/Middleware/tags/ACE+TAO+CIAO-X_Y_Z/TAO ACE_wrappers/TAO<br>
 svn co svn://svn.dre.vanderbilt.edu/DOC/Middleware/tags/ACE+TAO+CIAO-X_Y_Z/CIAO ACE_wrappers/TAO/CIAO<br>
 </code>
-<li> Set the needed environment variables using</li>
-<code>
-export ACE_ROOT=/web/users/isisbuilds/tmp/ACE_wrappers/ACE_wrappers
-</code>
+
 <li> Run doxygen --version within the shell. </li>
-<li> Open up $ACE_ROOT/bin/generate_rel_manpages in your favorite editor.</li>
+<li> Open up $ACE_ROOT/bin/generate_rel_mangpages in your favorite editor.</li>
 <li> Search for the string 'doxy_version'. </li>
 <li> Check the version specified here. If it is the  same as the one
 you got using doxygen --version then you don't have to worry. </li>
 <li> If it is different change the value of the doxy_version to the one installed on naboo.dre.vanderbilt.edu.</li>
 <li> Now you are ready to create documentation </li>
-<li> Do a <code>cd $ACE_ROOT</code> and then run <tt>make -f Release manpages</tt> to create the doxygen
+<li> Run <tt>make -f Release manpages</tt> to create the doxygen
 documentation.</li>
 <ul><li><b>If you can't leave the terminal window active for 6-9 hours,
  consider prefixing this command with <tt>nohup</tt></b></li></ul>

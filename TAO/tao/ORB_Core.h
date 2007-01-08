@@ -596,7 +596,7 @@ public:
                  ACE_ENV_ARG_DECL);
 
   /// Get the shutdown flag value
-  bool has_shutdown (void) const;
+  int has_shutdown (void);
 
   /// Shutdown the ORB and free resources
   void destroy (ACE_ENV_SINGLE_ARG_DECL);
@@ -673,9 +673,6 @@ public:
   /// Resolve the CodecFactory DLL.
   CORBA::Object_ptr resolve_codecfactory (ACE_ENV_SINGLE_ARG_DECL);
 
-  /// Resolve the Compression DLL.
-  CORBA::Object_ptr resolve_compression_manager (ACE_ENV_SINGLE_ARG_DECL);
-
   /// Resolve the Dynamic Any Factory
   CORBA::Object_ptr resolve_dynanyfactory (ACE_ENV_SINGLE_ARG_DECL);
 
@@ -730,8 +727,21 @@ public:
    * services do make the selection they would return the selected
    * profile through <profile>.
    */
-  CORBA::Boolean service_profile_selection (const TAO_MProfile &mprofile,
+  CORBA::Boolean service_profile_selection (TAO_MProfile &mprofile,
                                             TAO_Profile  *&profile);
+
+  /**
+   * The loaded service in the ORB_Core would determine if the profile
+   * reselection is going to be made by the services or not. If the
+   * services do make the reselection they would return the selected
+   * profile through <profile>. The reselction is for the
+   * multi-profile IORS.
+   */
+  CORBA::Boolean service_profile_reselection (TAO_Stub *stub,
+                                              TAO_Profile *&profile);
+
+  /// Reset the flags in the loaded services.
+  void reset_service_profile_flags (void);
 
   /**
    * The loaded service would determine if the CORBA::Object_ptr is
@@ -959,9 +969,6 @@ protected:
   /// Obtain and cache the codec factory object reference.
   void resolve_codecfactory_i (ACE_ENV_SINGLE_ARG_DECL);
 
-  /// Obtain and cache the compression manager object reference.
-  void resolve_compression_manager_i (ACE_ENV_SINGLE_ARG_DECL);
-
   /// Obtain and cache the dynamic any factory object reference.
   void resolve_dynanyfactory_i (ACE_ENV_SINGLE_ARG_DECL);
 
@@ -1053,9 +1060,6 @@ protected:
 
   /// The cached IOR for the CodecFactory DLL.
   CORBA::Object_ptr codec_factory_;
-
-  /// The cached IOR for the Compression DLL.
-  CORBA::Object_ptr compression_manager_;
 
   /// The cached object reference for the DynAnyFactory.
   CORBA::Object_ptr dynany_factory_;
@@ -1179,7 +1183,7 @@ protected:
   ACE_TSS_TYPE (TAO_ORB_Core_TSS_Resources) tss_resources_;
 
   /// Flag which denotes that the ORB has been shutdown.
-  bool has_shutdown_;
+  int has_shutdown_;
 
   /// The value of the timeout if the flag above is not zero.
   //@{
@@ -1417,6 +1421,9 @@ public:
       (const TAO_ORB_Core_Static_Resources&);
 
 private:
+
+  /// The singleton instance.
+//   static TAO_ORB_Core_Static_Resources* instance_;
 
   /// Mostly unused variable whose sole purpose is to enforce
   /// the instantiation of a TAO_ORB_Core_Static_Resources instance

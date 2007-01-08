@@ -18,7 +18,6 @@ noinst_PROGRAMS =
 ## Makefile.Simple_Consumer.am
 
 if BUILD_CORBA_MESSAGING
-if BUILD_EXCEPTIONS
 if !BUILD_ACE_FOR_TAO
 
 noinst_PROGRAMS += consumer
@@ -53,13 +52,11 @@ consumer_LDADD = \
   $(ACE_BUILDDIR)/ace/libACE.la
 
 endif !BUILD_ACE_FOR_TAO
-endif BUILD_EXCEPTIONS
 endif BUILD_CORBA_MESSAGING
 
 ## Makefile.Simple_Gateway_Ec.am
 
 if BUILD_CORBA_MESSAGING
-if BUILD_EXCEPTIONS
 if !BUILD_ACE_FOR_TAO
 
 noinst_PROGRAMS += gateway-ec
@@ -94,13 +91,11 @@ gateway_ec_LDADD = \
   $(ACE_BUILDDIR)/ace/libACE.la
 
 endif !BUILD_ACE_FOR_TAO
-endif BUILD_EXCEPTIONS
 endif BUILD_CORBA_MESSAGING
 
 ## Makefile.Simple_Supplier.am
 
 if BUILD_CORBA_MESSAGING
-if BUILD_EXCEPTIONS
 if !BUILD_ACE_FOR_TAO
 
 noinst_PROGRAMS += supplier
@@ -135,7 +130,6 @@ supplier_LDADD = \
   $(ACE_BUILDDIR)/ace/libACE.la
 
 endif !BUILD_ACE_FOR_TAO
-endif BUILD_EXCEPTIONS
 endif BUILD_CORBA_MESSAGING
 
 ## Clean up template repositories, etc.

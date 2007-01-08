@@ -483,7 +483,7 @@ ACE_Malloc_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::ACE_Malloc_T (const ACE_TCHAR *p
   if (this->lock_ == 0)
     return;
 
-  this->delete_lock_ = true;
+  this->delete_lock_ = 1;
 
   this->bad_flag_ = this->open ();
 
@@ -508,7 +508,7 @@ ACE_Malloc_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::ACE_Malloc_T (const ACE_TCHAR *p
   if (this->lock_ == 0)
     return;
 
-  this->delete_lock_ = true;
+  this->delete_lock_ = 1;
 
   this->bad_flag_ = this->open ();
   if (this->bad_flag_ == -1)
@@ -525,7 +525,7 @@ ACE_Malloc_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::ACE_Malloc_T (const ACE_TCHAR *p
   : cb_ptr_ (0),
     memory_pool_ (pool_name, options),
     lock_ (lock),
-    delete_lock_ (false),
+    delete_lock_ (0),
     bad_flag_ (0)
 {
   ACE_TRACE ("ACE_Malloc_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::ACE_Malloc_T");
@@ -560,7 +560,7 @@ ACE_Malloc_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::ACE_Malloc_T (const ACE_TCHAR *p
   if (this->lock_ == 0)
     return;
 
-  this->delete_lock_ = true;
+  this->delete_lock_ = 1;
   this->bad_flag_ = this->open ();
   if (this->bad_flag_ == -1)
     ACE_ERROR ((LM_ERROR,

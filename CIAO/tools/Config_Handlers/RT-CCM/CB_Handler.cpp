@@ -1,6 +1,7 @@
 // $Id$
 
 #include "CB_Handler.h"
+#include "ciao/ServerResourcesC.h"
 #include "CIAOServerResources.hpp"
 #include "ace/Basic_Types.h"
 

@@ -93,13 +93,8 @@ int
 TAO_IIOP_Profile::decode_profile (TAO_InputCDR& cdr)
 {
   // Decode host and port into the <endpoint_>.
-  // it is necessary to do it indirectly so that IPv6 host addresses
-  // can be evaluated correctly.
-  CORBA::String_var host;
-  CORBA::UShort port;
-
-  if (cdr.read_string(host.out()) == 0 ||
-      cdr.read_ushort (port) == 0)
+  if (cdr.read_string (this->endpoint_.host_.out ()) == 0
+      || cdr.read_ushort (this->endpoint_.port_) == 0)
     {
       if (TAO_debug_level > 0)
         ACE_DEBUG ((LM_DEBUG,
@@ -107,9 +102,6 @@ TAO_IIOP_Profile::decode_profile (TAO_InputCDR& cdr)
                     ACE_TEXT ("error while decoding host/port\n")));
       return -1;
     }
-
-  this->endpoint_.host(host.in());
-  this->endpoint_.port(port);
 
   if (cdr.good_bit ())
     {

@@ -22,14 +22,6 @@ TAO_Wait_On_Leader_Follower::~TAO_Wait_On_Leader_Follower (void)
 {
 }
 
-/*
- * Hook to specialize the wait strategy when the concrete strategy is
- * a simple "lf" strategy. Add all public/protected/private methods
- * within the *COPY* hooks.
- */
-
-//@@ WAIT_STRATEGY_SPL_COPY_HOOK_START
-
 int
 TAO_Wait_On_Leader_Follower::register_handler (void)
 {
@@ -58,7 +50,6 @@ TAO_Wait_On_Leader_Follower::sending_request (TAO_ORB_Core *orb_core,
     }
 
   // Send the request.
-//@@ LF_WAIT_STRATEGY_SPL_SENDING_REQUEST_HOOK
   return this->TAO_Wait_Strategy::sending_request (orb_core,
                                                    two_way);
 }
@@ -79,10 +70,5 @@ TAO_Wait_On_Leader_Follower::can_process_upcalls (void) const
 {
   return true;
 }
-
-//@@ WAIT_STRATEGY_SPL_COPY_HOOK_END
-/*
- * End copy hook.
- */
 
 TAO_END_VERSIONED_NAMESPACE_DECL

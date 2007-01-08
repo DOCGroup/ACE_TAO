@@ -15,7 +15,7 @@
 
 #include /**/ "ace/pre.h"
 
-#include "CCM_HomeS.h"
+#include "CCM_ComponentS.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once

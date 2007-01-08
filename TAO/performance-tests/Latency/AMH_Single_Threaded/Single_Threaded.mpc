@@ -22,7 +22,6 @@ project(*AMH latency server): taoserver, strategies, valuetype, amh {
 
 project(*AMH latency client): taoclient, strategies, valuetype, amh {
   after += *AMH_latency_idl
-  avoids += ace_for_tao
   Source_Files {
     TestC.cpp
     client.cpp

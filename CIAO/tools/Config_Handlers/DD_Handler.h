@@ -46,25 +46,35 @@ public:
 class NoDomain {};
 
 /**
-* @param file The file to be read
+* @operation constructor
+*
+* @param The file to be read
 */
 DD_Handler (const ACE_TCHAR *file);
 
 /**
+* @operation constructor
+*
 * @param dmn The Domain structure
 */
 DD_Handler(Domain *dmn);
 
 /**
+* @operation constructor
+*
 * @param dmn The Deployment::Domain structure
 */
 DD_Handler(::Deployment::Domain *dmn);
 
 /**
+* @operation destructor
+*
 */
 ~DD_Handler (void);
 
 /**
+* @operation domain_idl
+*
 * @brief Returns the const IDL domain
 * @return Domain* the IDL domain pointer
 */
@@ -72,6 +82,8 @@ DD_Handler(::Deployment::Domain *dmn);
 throw (NoDomain);
 
 /**
+* @operation domain_idl
+*
 * @brief Returns the IDL domain
 * @return Domain* the IDL domain pointer
 */
@@ -79,6 +91,8 @@ throw (NoDomain);
 throw (NoDomain);
 
 /**
+* @operation domain_xsc
+*
 * @brief Returns the const XSC domain
 * @return Domain* the XSC domain pointer
 */
@@ -86,6 +100,8 @@ Domain const *domain_xsc (void) const
 throw (NoDomain);
 
 /**
+* @operation domain_xsc
+*
 * @brief Returns the XSC domain
 * @return Domain* the XSC domain pointer
 */
@@ -94,11 +110,15 @@ throw (NoDomain);
 
 private:
 /**
+*  @operation build_domain
+*
 *  @brief builds the domain structure
 */
 bool build_domain ();
 
 /**
+*  @operation build_xsc
+*
 *  @brief builds the XSC data structure
 */
 bool build_xsc ();

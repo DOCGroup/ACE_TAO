@@ -1,12 +1,10 @@
 //$Id$
-
 #include "Job_i.h"
-#include "DT_Creator.h"
-#include "Task_Stats.h"
 
 #include "tao/debug.h"
-
 #include "ace/Arg_Shifter.h"
+#include "DT_Creator.h"
+#include "Task_Stats.h"
 #include "ace/High_Res_Timer.h"
 #include "ace/OS_NS_sys_time.h"
 #include "ace/Countdown_Time.h"
@@ -52,27 +50,27 @@ Job_i::init (ACE_Arg_Shifter& arg_shifter)
 
 void
 Job_i::work (CORBA::ULong work,
-       CORBA::Short importance
-       ACE_ENV_ARG_DECL)
+	     CORBA::Short importance
+	     ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   static CORBA::ULong prime_number = 9619;
 
   if (TAO_debug_level > 0)
     ACE_DEBUG ((LM_DEBUG,
-    "test_i::method: %d units of work\n",
-    work));
+		"test_i::method: %d units of work\n",
+		work));
 
   if (guid_ == 0)
     ACE_OS::memcpy (&guid_,
-        dt_creator_->current ()->id (ACE_ENV_SINGLE_ARG_PARAMETER)->get_buffer (),
-        sizeof (dt_creator_->current ()->id (ACE_ENV_SINGLE_ARG_PARAMETER)->length ()));
+		    dt_creator_->current ()->id (ACE_ENV_SINGLE_ARG_PARAMETER)->get_buffer (),
+		    sizeof (dt_creator_->current ()->id (ACE_ENV_SINGLE_ARG_PARAMETER)->length ()));
 
   if (TAO_debug_level > 0)
     ACE_DEBUG ((LM_DEBUG,
-    "%t Guid is %d, Importance is %d\n",
-    guid_,
-    importance));
+		"%t Guid is %d, Importance is %d\n",
+		guid_,
+		importance));
 
   char msg [BUFSIZ];
   ACE_OS::sprintf (msg,
@@ -93,12 +91,12 @@ Job_i::work (CORBA::ULong work,
       ACE_Countdown_Time count_down (&count_down_time);
 
       while (count_down_time > ACE_Time_Value::zero)
-        {
-          ACE::is_prime (prime_number,
-            2,
-            prime_number / 2);
-          count_down.update ();
-        }
+	      {
+	        ACE::is_prime (prime_number,
+			      2,
+			      prime_number / 2);
+	        count_down.update ();
+	      }
 
       run_time = ACE_OS::gettimeofday () - *(dt_creator_->base_time ());
       TASK_STATS::instance ()->sample (run_time.sec (), guid_);
@@ -107,16 +105,16 @@ Job_i::work (CORBA::ULong work,
       sched_param = CORBA::Policy::_duplicate (dt_creator_->sched_param (importance));
       const char * name = 0;
       dt_creator_->current ()->update_scheduling_segment (name,
-                sched_param.in (),
-                sched_param.in ()
-                ACE_ENV_ARG_PARAMETER);
+							  sched_param.in (),
+							  sched_param.in ()
+							  ACE_ENV_ARG_PARAMETER);
       ACE_CHECK;
     }
 }
 
 void
 Job_i::post_work (int /*guid*/,
-      int /*importance*/)
+		  int /*importance*/)
 {
 }
 
@@ -145,8 +143,8 @@ Job_i::dump_stats (void)
 
   if (TAO_debug_level > 0)
     ACE_DEBUG ((LM_DEBUG,
-    "File name %s\n",
-    fname));
+		"File name %s\n",
+		fname));
 
 
   char msg [BUFSIZ];
@@ -156,6 +154,6 @@ Job_i::dump_stats (void)
                    guid_);
 
   task_stats_->dump_samples (fname,
-           msg,
-           ACE_High_Res_Timer::global_scale_factor ());
+			     msg,
+			     ACE_High_Res_Timer::global_scale_factor ());
 }

@@ -6,7 +6,7 @@
 ## this file will be lost the next time it is generated.
 ##
 ## MPC Command:
-## ./bin/mwc.pl -type automake -noreldefs ACE.mwc
+## /acebuilds/ACE_wrappers-repository/bin/mwc.pl -include /acebuilds/MPC/config -include /acebuilds/MPC/templates -feature_file /acebuilds/ACE_wrappers-repository/local.features -noreldefs -type automake -exclude build,Kokyu
 
 ACE_BUILDDIR = $(top_builddir)
 ACE_ROOT = $(top_srcdir)
@@ -16,7 +16,6 @@ noinst_PROGRAMS =
 ## Makefile.SV_Semaphores_1.am
 
 if !BUILD_ACE_FOR_TAO
-
 noinst_PROGRAMS += sem1
 
 sem1_CPPFLAGS = \
@@ -34,7 +33,6 @@ endif !BUILD_ACE_FOR_TAO
 ## Makefile.SV_Semaphores_2.am
 
 if !BUILD_ACE_FOR_TAO
-
 noinst_PROGRAMS += sem2
 
 sem2_CPPFLAGS = \

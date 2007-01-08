@@ -20,8 +20,7 @@ TARGETS_LOCAL  = \
 	clobber.local \
 	depend.local \
 	rcs_info.local \
-	idl_stubs.local \
-	svnignore.local
+	idl_stubs.local
 
 TARGETS_NESTED   = \
 	$(TARGETS_LOCAL:.local=.nested)

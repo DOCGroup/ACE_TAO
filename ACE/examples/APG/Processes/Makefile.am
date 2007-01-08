@@ -6,7 +6,7 @@
 ## this file will be lost the next time it is generated.
 ##
 ## MPC Command:
-## ./bin/mwc.pl -type automake -noreldefs ACE.mwc
+## /acebuilds/ACE_wrappers-repository/bin/mwc.pl -include /acebuilds/MPC/config -include /acebuilds/MPC/templates -feature_file /acebuilds/ACE_wrappers-repository/local.features -noreldefs -type automake -exclude build,Kokyu
 
 ACE_BUILDDIR = $(top_builddir)
 ACE_ROOT = $(top_srcdir)
@@ -16,7 +16,6 @@ noinst_PROGRAMS =
 ## Makefile.Process_Manager_Death.am
 
 if !BUILD_ACE_FOR_TAO
-
 noinst_PROGRAMS += Process_Manager_Death
 
 Process_Manager_Death_CPPFLAGS = \
@@ -34,7 +33,6 @@ endif !BUILD_ACE_FOR_TAO
 ## Makefile.Process_Manager_Spawn.am
 
 if !BUILD_ACE_FOR_TAO
-
 noinst_PROGRAMS += Process_Manager_Spawn
 
 Process_Manager_Spawn_CPPFLAGS = \
@@ -52,7 +50,6 @@ endif !BUILD_ACE_FOR_TAO
 ## Makefile.Process_Mutex.am
 
 if !BUILD_ACE_FOR_TAO
-
 noinst_PROGRAMS += Process_Mutex
 
 Process_Mutex_CPPFLAGS = \
@@ -70,7 +67,6 @@ endif !BUILD_ACE_FOR_TAO
 ## Makefile.Spawn.am
 
 if !BUILD_ACE_FOR_TAO
-
 noinst_PROGRAMS += Spawn
 
 Spawn_CPPFLAGS = \

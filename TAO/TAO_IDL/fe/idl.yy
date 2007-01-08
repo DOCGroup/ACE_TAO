@@ -1026,33 +1026,23 @@ value_box_decl
                 }
 
               if (tp == 0)
-                {
-                  // The <type_spec> given is a valid type
+                { // The <type_spec> given is a valid type
                   idl_global->err ()->not_a_type ($2);
+                }
+              else if (tp->node_type() == AST_Decl::NT_valuetype)
+                { // valuetype is not allowed as <type_spec> for boxed value
+                  idl_global->err ()->error0 (
+                      UTL_Error::EIDL_ILLEGAL_BOXED_TYPE
+                    );
                 }
               else
                 {
-                  AST_Decl::NodeType nt = tp->node_type ();
-                  
-                  if (nt == AST_Decl::NT_valuetype
-                      || nt == AST_Decl::NT_eventtype)
-                    {
-                      // valuetype is not allowed as <type_spec>
-                      // for boxed value
-                      idl_global->err ()->error0 (
-                          UTL_Error::EIDL_ILLEGAL_BOXED_TYPE
-                        );
-                    }
-                  else
-                    {
-                      /*
-                      * Add the valuebox to its definition scope
-                      */
-                      AST_ValueBox *vb =
-                        idl_global->gen ()->create_valuebox (&n,
-                                                             tp);
-                      (void) s->fe_add_valuebox (vb);
-                    }
+                  /*
+                  * Add the valuebox to its definition scope
+                  */
+                  AST_ValueBox *vb = idl_global->gen ()->create_valuebox (&n,
+                                                                          tp);
+                  (void) s->fe_add_valuebox (vb);
                 }
             }
               

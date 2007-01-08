@@ -6,13 +6,12 @@
 ## this file will be lost the next time it is generated.
 ##
 ## MPC Command:
-## ./bin/mwc.pl -type automake -noreldefs ACE.mwc
+## /acebuilds/ACE_wrappers-repository/bin/mwc.pl -include /acebuilds/MPC/config -include /acebuilds/MPC/templates -feature_file /acebuilds/ACE_wrappers-repository/local.features -noreldefs -type automake -exclude build,Kokyu
 
 ACE_BUILDDIR = $(top_builddir)
 ACE_ROOT = $(top_srcdir)
 
 ## Makefile.SigAction.am
-
 noinst_PROGRAMS = SigAction
 
 SigAction_CPPFLAGS = \
@@ -26,7 +25,6 @@ SigAction_LDADD = \
   $(ACE_BUILDDIR)/ace/libACE.la
 
 ## Makefile.SigGuard.am
-
 noinst_PROGRAMS += SigGuard
 
 SigGuard_CPPFLAGS = \
@@ -40,7 +38,6 @@ SigGuard_LDADD = \
   $(ACE_BUILDDIR)/ace/libACE.la
 
 ## Makefile.SigHandler.am
-
 noinst_PROGRAMS += SigHandler
 
 SigHandler_CPPFLAGS = \
@@ -54,7 +51,6 @@ SigHandler_LDADD = \
   $(ACE_BUILDDIR)/ace/libACE.la
 
 ## Makefile.SigHandlers.am
-
 noinst_PROGRAMS += SigHandlers
 
 SigHandlers_CPPFLAGS = \
@@ -68,7 +64,6 @@ SigHandlers_LDADD = \
   $(ACE_BUILDDIR)/ace/libACE.la
 
 ## Makefile.SigInfo.am
-
 noinst_PROGRAMS += SigInfo
 
 SigInfo_CPPFLAGS = \

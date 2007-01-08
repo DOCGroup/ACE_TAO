@@ -3,7 +3,7 @@
 // This test tries to install a set of components in 2 different containers, which
 // is hosted in the same NodeApplication.
 
-#include "Deployment_NodeApplicationC.h"
+#include "Deployment_CoreC.h"
 #include "Client_init.h"
 #include "NodeAppTest_RoundTripC.h"
 #include "ace/Get_Opt.h"
@@ -239,7 +239,7 @@ main (int argc, char *argv[])
               ACE_DEBUG ((LM_DEBUG,
                           "Return values did not match: on Component: %d \n",
                           i));
-              ACE_OS::exit (1);
+              exit (1);
             }
         }
 

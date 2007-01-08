@@ -573,6 +573,16 @@ AH_TEMPLATE([ACE_AUTO_PTR_LACKS_RESET],
 [Compiler/platform standard C++ auto_ptr implementation lacks
    reset() method])
 
+AH_TEMPLATE([ACE_LACKS_CMSG_DATA_MACRO],
+[Platform has ACE_HAS_4_4BSD_SENDMSG_RECVMSG but does not define
+   CMSG_DATA (cmsg) macro.])
+
+AH_TEMPLATE([ACE_LACKS_CMSG_DATA_MEMBER],
+[Platform has ACE_HAS_4_4BSD_SENDMSG_RECVMSG but its cmsghdr
+   structure does not contain an 'unsigned char cmsg_data[0]' member.
+   (This may be 'unsigned char __cmsg_data[0]' on some platforms, in
+   which case we need another macro.)])
+
 AH_TEMPLATE([ACE_LACKS_READDIR_R],[Platform lacks readdir_r()])
 
 AH_TEMPLATE([ACE_LACKS_INLINE_FUNCTIONS],
@@ -593,7 +603,6 @@ AH_TEMPLATE([ACE_HAS_SEMUN],
 [Compiler/platform defines a union semun for SysV shared memory ])
 
 AH_TEMPLATE([ACE_HAS_SHM_OPEN],[Platform has shm_open()])
-AH_TEMPLATE([ACE_SHM_OPEN_REQUIRES_ONE_SLASH],[shm_open() requires a leading slash in name])
 
 AH_TEMPLATE([ACE_HAS_SIGISMEMBER_BUG],
 [Platform has bug with sigismember() (HP/UX 11).])
@@ -730,6 +739,9 @@ AH_TEMPLATE([ACE_HAS_TSS_EMULATION],
 
 AH_TEMPLATE([ACE_HAS_UCONTEXT_T],
 [Platform supports ucontext_t (which is used in the extended signal API).])
+
+AH_TEMPLATE([ACE_HAS_UNION_WAIT],
+[The wait() system call takes a (union wait *) rather than int *])
 
 AH_TEMPLATE([ACE_HAS_UNIXWARE_SVR4_SIGNAL_T],
 [Has inconsistent SVR4 signal stuff, but not the same as the other
@@ -959,8 +971,6 @@ AH_TEMPLATE([ACE_LACKS_CHAR_RIGHT_SHIFTS],
 AH_TEMPLATE([ACE_LACKS_CHAR_STAR_RIGHT_SHIFTS],
 [Compiler does not have operator>> (istream &, u_char *) or
    operator>> (istream &, signed char *)])
-
-AH_TEMPLATE([ACE_LACKS_NUMERIC_LIMITS],[Platform lacks std::numeric_limits<>])
 
 AH_TEMPLATE([ACE_LACKS_UNIX_DOMAIN_SOCKETS],
 [ACE platform has no UNIX domain sockets])

@@ -52,7 +52,7 @@ TAO_FILE_Parser::parse_string (const char *ior,
   if (file == 0)
     return CORBA::Object::_nil ();
 
-  ACE_Read_Buffer reader (file, true);
+  ACE_Read_Buffer reader (file, 1);
 
   char* string = reader.read ();
 

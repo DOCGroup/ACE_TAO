@@ -102,7 +102,7 @@ ACE_TP_Reactor::ACE_TP_Reactor (ACE_Sig_Handler *sh,
                                 ACE_Timer_Queue *tq,
                                 int mask_signals,
                                 int s_queue)
-  : ACE_Select_Reactor (sh, tq, ACE_DISABLE_NOTIFY_PIPE_DEFAULT, 0, mask_signals, s_queue)
+  : ACE_Select_Reactor (sh, tq, 0, 0, mask_signals, s_queue)
 {
   ACE_TRACE ("ACE_TP_Reactor::ACE_TP_Reactor");
   this->supress_notify_renew (1);
@@ -114,7 +114,7 @@ ACE_TP_Reactor::ACE_TP_Reactor (size_t max_number_of_handles,
                                 ACE_Timer_Queue *tq,
                                 int mask_signals,
                                 int s_queue)
-  : ACE_Select_Reactor (max_number_of_handles, restart, sh, tq, ACE_DISABLE_NOTIFY_PIPE_DEFAULT, 0, mask_signals, s_queue)
+  : ACE_Select_Reactor (max_number_of_handles, restart, sh, tq, 0, 0, mask_signals, s_queue)
 {
   ACE_TRACE ("ACE_TP_Reactor::ACE_TP_Reactor");
   this->supress_notify_renew (1);

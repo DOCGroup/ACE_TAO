@@ -102,6 +102,19 @@ ACE_Thread_ID::to_string (char *thr_string) const
   ACE_OS::sprintf (thr_string,
                    format,
                    static_cast <unsigned> (thread_id_));
+#elif defined (ACE_AIX_VERS) && (ACE_AIX_VERS <= 402)
+                  // AIX's pthread_t (ACE_hthread_t) is a pointer, and it's
+                  // a little ugly to send that through a %u format.  So,
+                  // get the kernel thread ID (tid_t) via thread_self() and
+                  // display that instead.
+                  // This isn't conditionalized on ACE_HAS_THREAD_SELF because
+                  // 1. AIX 4.2 doesn't have that def anymore (it messes up
+                  //    other things)
+                  // 2. OSF/1 V3.2 has that def, and I'm not sure what affect
+                  //   this would have on that.
+                  // -Steve Huston, 19-Aug-97
+                  ACE_OS::strcpy (fp, "u");
+                  ACE_OS::sprintf (thr_string, format, thread_id_);
 #elif defined (DIGITAL_UNIX)
                   ACE_OS::strcpy (fp, "u");
                   ACE_OS::sprintf (thr_string, format,
@@ -2599,31 +2612,15 @@ ACE_OS::event_init (ACE_event_t *event,
 
   if (type == USYNC_PROCESS)
     {
-      const char *name_p = 0;
-#  if defined (ACE_SHM_OPEN_REQUIRES_ONE_SLASH)
-      char adj_name[MAXPATHLEN];
-      if (name[0] != '/')
-        {
-          adj_name[0] = '/';
-          ACE_OS::strsncpy (&adj_name[1], name, MAXPATHLEN-1);
-          name_p = adj_name;
-        }
-      else
-        {
-          name_p = name;
-        }
-#  else
-      name_p = name;
-#  endif /* ACE_SHM_OPEN_REQUIRES_ONE_SLASH */
       int owner = 0;
       // Let's see if the shared memory entity already exists.
-      ACE_HANDLE fd = ACE_OS::shm_open (ACE_TEXT_CHAR_TO_TCHAR (name_p),
+      ACE_HANDLE fd = ACE_OS::shm_open (ACE_TEXT_CHAR_TO_TCHAR (name),
                                         O_RDWR | O_CREAT | O_EXCL,
                                         ACE_DEFAULT_FILE_PERMS);
       if (fd == ACE_INVALID_HANDLE)
         {
           if (errno == EEXIST)
-            fd = ACE_OS::shm_open (ACE_TEXT_CHAR_TO_TCHAR (name_p),
+            fd = ACE_OS::shm_open (ACE_TEXT_CHAR_TO_TCHAR (name),
                                    O_RDWR | O_CREAT,
                                    ACE_DEFAULT_FILE_PERMS);
           if (fd == ACE_INVALID_HANDLE)   // Still can't get it.
@@ -2651,16 +2648,16 @@ ACE_OS::event_init (ACE_event_t *event,
       if (evtdata == MAP_FAILED)
         {
           if (owner)
-            ACE_OS::shm_unlink (ACE_TEXT_CHAR_TO_TCHAR (name_p));
+            ACE_OS::shm_unlink (ACE_TEXT_CHAR_TO_TCHAR (name));
           return -1;
         }
 
       if (owner)
         {
-          event->name_ = ACE_OS::strdup (name_p);
+          event->name_ = ACE_OS::strdup (name);
           if (event->name_ == 0)
             {
-              ACE_OS::shm_unlink (ACE_TEXT_CHAR_TO_TCHAR (name_p));
+              ACE_OS::shm_unlink (ACE_TEXT_CHAR_TO_TCHAR (name));
               return -1;
             }
           event->eventdata_ = evtdata;
@@ -3629,8 +3626,6 @@ ACE_OS::sched_params (const ACE_Sched_Params &sched_params,
       return -1;
     }
 
-# endif /* ACE_HAS_PHARLAP_RT */
-
   if (sched_params.scope () == ACE_SCOPE_THREAD)
     {
 
@@ -3651,16 +3646,13 @@ ACE_OS::sched_params (const ACE_Sched_Params &sched_params,
         }
 #endif /* ACE_DISABLE_WIN32_INCREASE_PRIORITY */
 
+# endif /* ACE_HAS_PHARLAP_RT */
       // Now that we have set the priority class of the process, set the
       // priority of the current thread to the desired value.
       return ACE_OS::thr_setprio (sched_params.priority ());
     }
   else if (sched_params.scope () == ACE_SCOPE_PROCESS)
     {
-
-# if defined (ACE_HAS_PHARLAP_RT)
-      ACE_NOTSUP_RETURN (-1);
-# else
       HANDLE hProcess = ::OpenProcess (PROCESS_SET_INFORMATION,
                                        FALSE,
                                        id);
@@ -3687,8 +3679,6 @@ ACE_OS::sched_params (const ACE_Sched_Params &sched_params,
         }
       ::CloseHandle (hProcess);
       return 0;
-#endif /* ACE_HAS_PHARLAP_RT */
-
     }
   else
     {
@@ -4080,6 +4070,25 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
           else
             spolicy = SCHED_RR;
 
+#       if defined (ACE_HAS_FSU_PTHREADS)
+          int ret;
+          switch (spolicy)
+            {
+            case SCHED_FIFO:
+            case SCHED_RR:
+              ret = 0;
+              break;
+            default:
+              ret = 22;
+              break;
+            }
+          if (ret != 0)
+            {
+              ::pthread_attr_destroy (&attr);
+              return -1;
+            }
+#       endif    /*  ACE_HAS_FSU_PTHREADS */
+
 #     endif /* ACE_HAS_ONLY_SCHED_OTHER */
 
 #     if defined (ACE_HAS_PTHREADS_DRAFT4)
@@ -4152,6 +4161,17 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
           sparam.sched_priority = priority;
 #     endif /* ACE_HAS_IRIX62_THREADS */
 
+#     if defined (ACE_HAS_FSU_PTHREADS)
+          if (sparam.sched_priority >= PTHREAD_MIN_PRIORITY
+              && sparam.sched_priority <= PTHREAD_MAX_PRIORITY)
+            attr.prio = sparam.sched_priority;
+          else
+            {
+              pthread_attr_destroy (&attr);
+              errno = EINVAL;
+              return -1;
+            }
+#     else
           {
 #       if defined (sun)  &&  defined (ACE_HAS_ONLY_SCHED_OTHER)
             // SunOS, through 5.6, POSIX only allows priorities > 0 to
@@ -4178,6 +4198,7 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
                   }
               }
           }
+#     endif    /* ACE_HAS_FSU_PTHREADS */
         }
 
       // *** Set scheduling explicit or inherited
@@ -4248,7 +4269,6 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
         }
 #   endif /* !ACE_HAS_PTHREAD_ATTR_SETCREATESUSPEND_NP */
 
-#   if ! defined(ACE_LACKS_THR_CONCURRENCY_FUNCS)
       if (ACE_BIT_ENABLED (flags, THR_NEW_LWP))
         {
           // Increment the number of LWPs by one to emulate the
@@ -4275,7 +4295,6 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
                 return -1;
             }
         }
-#   endif /* ! ACE_LACKS_THR_CONCURRENCY_FUNCS */
     }
 
 #   if defined (ACE_HAS_PTHREADS_DRAFT4)
@@ -5109,6 +5128,16 @@ ACE_OS::thr_setspecific_native (ACE_OS_thread_key_t key, void *data)
   // ACE_OS_TRACE ("ACE_OS::thr_setspecific_native");
 #   if defined (ACE_HAS_THREADS)
 #     if defined (ACE_HAS_PTHREADS)
+#       if defined (ACE_HAS_FSU_PTHREADS)
+      // Call pthread_init() here to initialize threads package.  FSU
+      // threads need an initialization before the first thread constructor.
+      // This seems to be the one; however, a segmentation fault may
+      // indicate that another pthread_init() is necessary, perhaps in
+      // Synch.cpp or Synch_T.cpp.  FSU threads will not reinit if called
+      // more than once, so another call to pthread_init will not adversely
+      // affect existing threads.
+      pthread_init ();
+#       endif /*  ACE_HAS_FSU_PTHREADS */
 #      if defined (ACE_HAS_PTHREADS_DRAFT4) || defined (ACE_HAS_PTHREADS_DRAFT6)
     ACE_OSCALL_RETURN (::pthread_setspecific (key, data), int, -1);
 #       else
@@ -5532,3 +5561,18 @@ vx_execae (FUNCPTR entry, char* arg, int prio, int opt, int stacksz, ...)
 }
 #endif /* ACE_VXWORKS && !__RTP__ */
 
+#if defined (__DGUX) && defined (ACE_HAS_THREADS) && defined (_POSIX4A_DRAFT10_SOURCE)
+extern "C" int __d6_sigwait (sigset_t *set);
+
+extern "C" int __d10_sigwait (const sigset_t *set, int *sig)
+{
+  sigset_t unconst_set = *set;
+  int caught_sig = __d6_sigwait (&unconst_set);
+
+  if (caught == -1)
+    return -1;
+
+  *sig = caught_sig;
+  return 0;
+}
+#endif /* __DGUX && PTHREADS && _POSIX4A_DRAFT10_SOURCE */

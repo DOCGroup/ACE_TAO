@@ -13,7 +13,7 @@ ACE_ROOT = $(top_srcdir)/..
 TAO_BUILDDIR = $(top_builddir)
 TAO_IDL = ACE_ROOT=$(ACE_ROOT) TAO_ROOT=$(TAO_ROOT) $(TAO_BUILDDIR)/TAO_IDL/tao_idl
 TAO_IDL_DEP = $(TAO_BUILDDIR)/TAO_IDL/tao_idl
-TAO_IDLFLAGS = -Wb,pre_include=ace/pre.h -Wb,post_include=ace/post.h -I$(TAO_ROOT) -I$(srcdir) -g $(ACE_BUILDDIR)/apps/gperf/src/gperf
+TAO_IDLFLAGS = -Ge 1 -Wb,pre_include=ace/pre.h -Wb,post_include=ace/post.h -I$(TAO_ROOT) -I$(srcdir) -g $(ACE_BUILDDIR)/apps/gperf/src/gperf
 TAO_ROOT = $(top_srcdir)
 
 noinst_PROGRAMS =
@@ -66,14 +66,15 @@ Load_Balancer-stamp: $(srcdir)/Load_Balancer.idl $(TAO_IDL_DEP)
 	$(TAO_IDL) $(TAO_IDLFLAGS) -Sa -St $(srcdir)/Load_Balancer.idl
 	@touch $@
 
+
 noinst_HEADERS = \
   Identity.idl \
   Load_Balancer.idl
 
 ## Makefile.Load_Balancing_Persistent_Balancer.am
 
-if BUILD_EXCEPTIONS
 if !BUILD_ACE_FOR_TAO
+if !BUILD_MINIMUM_CORBA
 if !BUILD_REPO
 
 noinst_PROGRAMS += load_balancer
@@ -102,12 +103,12 @@ load_balancer_LDADD = \
   $(ACE_BUILDDIR)/ace/libACE.la
 
 endif !BUILD_REPO
+endif !BUILD_MINIMUM_CORBA
 endif !BUILD_ACE_FOR_TAO
-endif BUILD_EXCEPTIONS
 
 ## Makefile.Load_Balancing_Persistent_Client.am
 
-if BUILD_EXCEPTIONS
+if !BUILD_MINIMUM_CORBA
 if !BUILD_REPO
 
 noinst_PROGRAMS += client
@@ -134,11 +135,11 @@ client_LDADD = \
   $(ACE_BUILDDIR)/ace/libACE.la
 
 endif !BUILD_REPO
-endif BUILD_EXCEPTIONS
+endif !BUILD_MINIMUM_CORBA
 
 ## Makefile.Load_Balancing_Persistent_Server.am
 
-if BUILD_EXCEPTIONS
+if !BUILD_MINIMUM_CORBA
 if !BUILD_REPO
 
 noinst_PROGRAMS += server
@@ -168,7 +169,7 @@ server_LDADD = \
   $(ACE_BUILDDIR)/ace/libACE.la
 
 endif !BUILD_REPO
-endif BUILD_EXCEPTIONS
+endif !BUILD_MINIMUM_CORBA
 
 ## Clean up template repositories, etc.
 clean-local:

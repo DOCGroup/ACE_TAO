@@ -26,7 +26,8 @@ TAO_PortableServer_PolicyFactory::create_policy (
                    CORBA::PolicyError))
 {
 #if !defined (CORBA_E_MICRO)
-#if (TAO_HAS_MINIMUM_POA == 0) && !defined (CORBA_E_COMPACT)
+#if (TAO_HAS_MINIMUM_POA == 0)
+
 
   if (type == ::PortableServer::THREAD_POLICY_ID)
     {
@@ -73,7 +74,7 @@ TAO_PortableServer_PolicyFactory::create_policy (
       return id_assignment_policy;
     }
 
-#if (TAO_HAS_MINIMUM_POA == 0) && !defined (CORBA_E_COMPACT)
+#if (TAO_HAS_MINIMUM_POA == 0)
 
   if (type == PortableServer::IMPLICIT_ACTIVATION_POLICY_ID)
     {

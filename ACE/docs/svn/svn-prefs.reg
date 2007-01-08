@@ -31,6 +31,7 @@ REGEDIT4
 "use-commit-times"="yes"
 "#template-root"=""
 "enable-auto-props"="yes"
+
 [HKEY_CURRENT_USER\Software\Tigris.org\Subversion\Config\tunnels]
 
 [HKEY_CURRENT_USER\Software\Tigris.org\Subversion\Config\auto-props]
@@ -82,6 +83,4 @@ REGEDIT4
 "*.pdf"="svn:mime-type=application/postscript"
 "*.ps"="svn:eol-style=native;svn:keywords=Author Date Id Revision"
 "*.tab"="svn:eol-style=native;svn:keywords=Author Date Id Revision"
-"*.doxygen"="svn:eol-style=native;svn:keywords=Author Date Id Revision"
-"*.rc"="svn:eol-style=native;svn:keywords=Author Date Id Revision"
 "Change?og*"="svn:eol-style=native;svn:keywords=Author Date Id Revision"

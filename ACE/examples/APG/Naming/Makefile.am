@@ -6,7 +6,7 @@
 ## this file will be lost the next time it is generated.
 ##
 ## MPC Command:
-## ./bin/mwc.pl -type automake -noreldefs ACE.mwc
+## /acebuilds/ACE_wrappers-repository/bin/mwc.pl -include /acebuilds/MPC/config -include /acebuilds/MPC/templates -feature_file /acebuilds/ACE_wrappers-repository/local.features -noreldefs -type automake -exclude build,Kokyu
 
 ACE_BUILDDIR = $(top_builddir)
 ACE_ROOT = $(top_srcdir)
@@ -16,7 +16,6 @@ noinst_PROGRAMS =
 ## Makefile.Netlocal.am
 
 if !BUILD_ACE_FOR_TAO
-
 noinst_PROGRAMS += Netlocal
 
 Netlocal_CPPFLAGS = \
@@ -36,7 +35,6 @@ endif !BUILD_ACE_FOR_TAO
 ## Makefile.Netlocal_Reader.am
 
 if !BUILD_ACE_FOR_TAO
-
 noinst_PROGRAMS += Netlocal_reader
 
 Netlocal_reader_CPPFLAGS = \
@@ -58,7 +56,6 @@ endif !BUILD_ACE_FOR_TAO
 ## Makefile.Nodelocal.am
 
 if !BUILD_ACE_FOR_TAO
-
 noinst_PROGRAMS += Nodelocal
 
 Nodelocal_CPPFLAGS = \
@@ -78,7 +75,6 @@ endif !BUILD_ACE_FOR_TAO
 ## Makefile.Nodelocal_Shared.am
 
 if !BUILD_ACE_FOR_TAO
-
 noinst_PROGRAMS += Nodelocal_shared
 
 Nodelocal_shared_CPPFLAGS = \
@@ -98,7 +94,6 @@ endif !BUILD_ACE_FOR_TAO
 ## Makefile.Nodelocal_Shared_Reader.am
 
 if !BUILD_ACE_FOR_TAO
-
 noinst_PROGRAMS += Nodelocal_shared_reader
 
 Nodelocal_shared_reader_CPPFLAGS = \

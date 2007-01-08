@@ -1797,6 +1797,7 @@ TAO_GIOP_Message_Base::parse_request_id (const TAO_Queued_Data *qd,
       db = qd->msg_block_->data_block ()->duplicate ();
     }
 
+
   TAO_InputCDR input_cdr (db,
                           flg,
                           rd_pos,
@@ -1806,7 +1807,7 @@ TAO_GIOP_Message_Base::parse_request_id (const TAO_Queued_Data *qd,
                           qd->minor_version_,
                           this->orb_core_);
 
-  if (qd->major_version_ == 1 &&
+  if (qd->major_version_ >= 1 &&
       (qd->minor_version_ == 0 || qd->minor_version_ == 1))
     {
       if (qd->msg_type_ == TAO_PLUGGABLE_MESSAGE_REQUEST ||
@@ -1814,20 +1815,32 @@ TAO_GIOP_Message_Base::parse_request_id (const TAO_Queued_Data *qd,
         {
           IOP::ServiceContextList service_context;
 
-          if ((input_cdr >> service_context)
-              && (input_cdr >> request_id))
+          if ( ! (input_cdr >> service_context))
             {
-              return 0;
+              return -1;
             }
+
+          if ( ! (input_cdr >> request_id))
+            {
+              return -1;
+            }
+
+          return 0;
         }
       else if (qd->msg_type_ == TAO_PLUGGABLE_MESSAGE_CANCELREQUEST ||
                qd->msg_type_ == TAO_PLUGGABLE_MESSAGE_LOCATEREQUEST ||
                qd->msg_type_ == TAO_PLUGGABLE_MESSAGE_LOCATEREPLY)
         {
-          if ((input_cdr >> request_id))
+          if ( ! (input_cdr >> request_id) )
             {
-              return 0;
+              return -1;
             }
+
+          return 0;
+        }
+      else
+        {
+          return -1;
         }
     }
   else
@@ -1839,14 +1852,18 @@ TAO_GIOP_Message_Base::parse_request_id (const TAO_Queued_Data *qd,
           qd->msg_type_ == TAO_PLUGGABLE_MESSAGE_LOCATEREQUEST ||
           qd->msg_type_ == TAO_PLUGGABLE_MESSAGE_LOCATEREPLY)
         {
-          // Dealing with GIOP-1.2, the request-id is located directly
-          // behind the GIOP-Header.  This is true for all message
-          // types that might be sent in form of fragments or
-          // cancel-requests.
-          if ((input_cdr >> request_id))
+          // Dealing with GIOP-1.2, the request-id is located directly behind the GIOP-Header.
+          // This is true for all message types that might be sent in form of fragments or cancel-requests.
+          if ( ! (input_cdr >> request_id) )
             {
-              return 0;
+              return -1;
             }
+
+          return 0;
+        }
+      else
+        {
+          return -1;
         }
     }
 
@@ -1855,9 +1872,7 @@ TAO_GIOP_Message_Base::parse_request_id (const TAO_Queued_Data *qd,
 
 /* @return -1 error, 0 ok, +1 outstanding fragments */
 int
-TAO_GIOP_Message_Base::consolidate_fragmented_message (
-  TAO_Queued_Data * qd,
-  TAO_Queued_Data *& msg)
+TAO_GIOP_Message_Base::consolidate_fragmented_message (TAO_Queued_Data *qd, TAO_Queued_Data *&msg)
 {
   TAO::Incoming_Message_Stack reverse_stack;
 

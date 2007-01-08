@@ -26,7 +26,7 @@ PLANNED MAJOR CHANGES "SOMETIME IN THE FUTURE" (i.e., exact beta not known)
 . Enhance DAnCE to support OpenCCM components.
 
 . Update DAnCE IDL data structures and interfaces to comply with the
-  06-04-01 version of the DnC specification, and perform
+  06-02-01 version of the DnC specification, and perform
   interoperability testing with other DnC implementations.  Note this
   work may change the functionality and semantics of some proprietary
   DAnCE extensions, notably ReDaC, Shared Compoents, and RTEC
@@ -46,6 +46,8 @@ PLANNED MAJOR CHANGES "SOMETIME IN THE FUTURE" (i.e., exact beta not known)
 
 . Implement support for more complex type initialization with XML.
 
+. (Remedy) support for using CIAO with VxWorks as target
+
 . Decouple dependencies to NodeApplication from other DAnCE tools.
   These dependencies were added to support static configurator.  We
   need to have these tools in both conventional version and static
@@ -61,13 +63,8 @@ PLANNED MAJOR CHANGES "SOMETIME IN THE FUTURE" (i.e., exact beta not known)
 . Implement a planner to query the TargetManager and RepositoryManager
   and generate deployment plans on the fly.
 
-USER VISIBLE CHANGES BETWEEN CIAO-0.5.4 and CIAO-0.5.5
-======================================================
-
-. All IDL has been refactored to get a smaller footprint
-
-USER VISIBLE CHANGES BETWEEN CIAO-0.5.3 and CIAO-0.5.4
-======================================================
+PLANNED MAJOR CHANGES FOR THE NEXT RELEASE
+==========================================
 
 . Adding support to manage multiple interconnected assemblies, which will
   involve the work through ExternalReferenceEndPoint idea.
@@ -75,30 +72,10 @@ USER VISIBLE CHANGES BETWEEN CIAO-0.5.3 and CIAO-0.5.4
 . Seamless integration of swapping into the main line programming model,
   so that DAnCE can actually kickstart swapping.
 
-. Integrated real-time event service into CIAO and DAnCE.
-
-. Improved syntax error checking and reporting in the CIDL compiler.
-
-. Add Null Component to be able to measure footprint in detail
-
-. Added the naming service & the implementation of createPackage function
-  to RepoMan.
-
-. Added the code to save the state of the RepoMan at exit and load the
-  state of it at start.
-
-. Reimplemented the findNamesByType () and getAllTypes () operations of
-  RepoMan, which use the newly generated    ACE_Hash_MultiMap_Manager class
-  and its corresponding classes.
-
-. Added Plan_Generator project. This project is used to retrieve information
-  from Repoman and generate/modify DeploymentPlans based on different demands.
-
-. A succesfull static deployment of the Hello example has been tested on
-  VxWorks 6.3
+. Integrate various Pub/Sub services into CIAO and DAnCE.
 
 USER VISIBLE CHANGES BETWEEN CIAO-0.5.2 and CIAO-0.5.3
-======================================================
+====================================================
 
 . Improve documentation for CoSMiC Quoter tutorial to reflect the latest update
 
@@ -128,7 +105,7 @@ USER VISIBLE CHANGES BETWEEN CIAO-0.5.2 and CIAO-0.5.3
   mechanisms.
 
 USER VISIBLE CHANGES BETWEEN CIAO-0.5.1 and CIAO-0.5.2
-======================================================
+====================================================
 
 . Changed CIDL compiler code generation for facet servant classes
   to enable reuse if the same interface is used as a facet more
@@ -179,7 +156,7 @@ USER VISIBLE CHANGES BETWEEN CIAO-0.5.1 and CIAO-0.5.2
   library for stub projects.
 
 USER VISIBLE CHANGES BETWEEN CIAO-0.5.0 and CIAO-0.5.1
-======================================================
+====================================================
 
 . Added the support of integrating real-time event service into the
   CIAO core framework. Enhanced DAnCE to support declaratively configure
@@ -209,7 +186,7 @@ USER VISIBLE CHANGES BETWEEN CIAO-0.5.0 and CIAO-0.5.1
   get_all_publishers(), and disconnect_consumer().
 
 USER VISIBLE CHANGES BETWEEN CIAO-0.4.10 and CIAO-0.5.0
-=======================================================
+====================================================
 
 . Changed MPC configuration of Config_Handlers to turn off hidden
   visibility if applicable when compiling Config_Handlers or projects
@@ -226,7 +203,7 @@ USER VISIBLE CHANGES BETWEEN CIAO-0.4.10 and CIAO-0.5.0
   when removing it from the container.
 
 USER VISIBLE CHANGES BETWEEN CIAO-0.4.9 and CIAO-0.4.10
-=======================================================
+======================================================
 
 . Enhanced DAnCE ReDaC service to enforce the correct
   assembly redeployment and reconfiguration order.

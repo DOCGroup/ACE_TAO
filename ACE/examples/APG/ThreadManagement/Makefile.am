@@ -6,13 +6,12 @@
 ## this file will be lost the next time it is generated.
 ##
 ## MPC Command:
-## ./bin/mwc.pl -type automake -noreldefs ACE.mwc
+## /acebuilds/ACE_wrappers-repository/bin/mwc.pl -include /acebuilds/MPC/config -include /acebuilds/MPC/templates -feature_file /acebuilds/ACE_wrappers-repository/local.features -noreldefs -type automake -exclude build,Kokyu
 
 ACE_BUILDDIR = $(top_builddir)
 ACE_ROOT = $(top_srcdir)
 
 ## Makefile.Async_Cancel.am
-
 noinst_PROGRAMS = Async_Cancel
 
 Async_Cancel_CPPFLAGS = \
@@ -27,7 +26,6 @@ Async_Cancel_LDADD = \
   $(ACE_BUILDDIR)/ace/libACE.la
 
 ## Makefile.Coop_Cancel.am
-
 noinst_PROGRAMS += Coop_Cancel
 
 Coop_Cancel_CPPFLAGS = \
@@ -42,7 +40,6 @@ Coop_Cancel_LDADD = \
   $(ACE_BUILDDIR)/ace/libACE.la
 
 ## Makefile.ExitHandler.am
-
 noinst_PROGRAMS += ExitHandler
 
 ExitHandler_CPPFLAGS = \
@@ -57,7 +54,6 @@ ExitHandler_LDADD = \
   $(ACE_BUILDDIR)/ace/libACE.la
 
 ## Makefile.Pool.am
-
 noinst_PROGRAMS += Pool
 
 Pool_CPPFLAGS = \
@@ -72,7 +68,6 @@ Pool_LDADD = \
   $(ACE_BUILDDIR)/ace/libACE.la
 
 ## Makefile.Priorities.am
-
 noinst_PROGRAMS += Priorities
 
 Priorities_CPPFLAGS = \
@@ -87,7 +82,6 @@ Priorities_LDADD = \
   $(ACE_BUILDDIR)/ace/libACE.la
 
 ## Makefile.Signals.am
-
 noinst_PROGRAMS += Signals
 
 Signals_CPPFLAGS = \
@@ -102,7 +96,6 @@ Signals_LDADD = \
   $(ACE_BUILDDIR)/ace/libACE.la
 
 ## Makefile.Signals2.am
-
 noinst_PROGRAMS += Signals2
 
 Signals2_CPPFLAGS = \
@@ -117,7 +110,6 @@ Signals2_LDADD = \
   $(ACE_BUILDDIR)/ace/libACE.la
 
 ## Makefile.Start_Hook.am
-
 noinst_PROGRAMS += Start_Hook
 
 Start_Hook_CPPFLAGS = \
@@ -132,7 +124,6 @@ Start_Hook_LDADD = \
   $(ACE_BUILDDIR)/ace/libACE.la
 
 ## Makefile.State.am
-
 noinst_PROGRAMS += State
 
 State_CPPFLAGS = \

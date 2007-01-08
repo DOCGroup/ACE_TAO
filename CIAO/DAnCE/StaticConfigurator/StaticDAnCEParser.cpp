@@ -16,13 +16,15 @@
  */
 //=============================================================================
 
-#include "DAnCE/NodeApplicationManager/ImplementationInfo.h"
+#include "NodeApplicationManager/ImplementationInfo.h"
 #include "ace/OS_NS_stdio.h"
 #include "ace/streams.h"
 #include "ace/Get_Opt.h"
 #include "tao/IORTable/IORTable.h"
 #include "tao/CDR.h"
 #include "Config_Handlers/XML_File_Intf.h"
+
+using namespace CIAO;
 
 static void
 usage (const ACE_TCHAR* program)
@@ -75,11 +77,12 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   ::Deployment::ComponentPlans dummy;
   dummy.length (0);
 
-  CIAO::NodeImplementationInfoHandler handler (plan, dummy);
+  NodeImplementationInfoHandler handler (plan, dummy);
 
-  Deployment::NodeImplementationInfo_var node_impl_info (handler.node_impl_info ());
+  Deployment::NodeImplementationInfo * node_impl_info =
+    handler.node_impl_info ();
 
-  if (node_impl_info.ptr() == 0)
+  if (!node_impl_info)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                   "DAnCE (%P|%t) StaticParser -"
@@ -87,7 +90,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
     }
 
-  Deployment::ContainerImplementationInfos& impl_infos = node_impl_info->impl_infos;
+  Deployment::ContainerImplementationInfos& impl_infos = node_impl_info[0].impl_infos;
 
   FILE* fp = ACE_OS::fopen ("plan.h", "w");
 

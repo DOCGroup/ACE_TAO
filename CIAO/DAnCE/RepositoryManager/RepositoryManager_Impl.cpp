@@ -32,7 +32,7 @@
 
 //for the PackageConfiguration parsing
 #include "ciao/Deployment_DataC.h"
-#include "ciao/Deployment_Packaging_DataC.h"
+#include "ciao/Packaging_DataC.h"
 #include "Package_Handlers/PCD_Handler.h"
 
 #include "RM_Helper.h"            //to be able to externalize/internalize a PackageConfiguration
@@ -42,11 +42,14 @@
 #include "ace/OS_NS_stdlib.h"     //for itoa ()
 
 #include "URL_Parser.h"           //for parsing the URL
-#include "tao/HTTP_Client.h"      //the HTTP client class to downloading packages
+#include "HTTP_Client.h"          //the HTTP client class to downloading packages
 
 #include "PC_Updater.h"           //A visitor class to walk through the elements of the PC
 
 #include "ace/Configuration_Import_Export.h"
+
+#include <iostream>
+using namespace std;
 
 namespace
 {
@@ -63,7 +66,7 @@ namespace
 //-----------------------------------------------------------------
 
 CIAO_RepositoryManagerDaemon_i::CIAO_RepositoryManagerDaemon_i
-  (CORBA::ORB_ptr the_orb, const char* server, const char* install_dir)
+  (CORBA::ORB_ptr the_orb, const char* server, char* install_dir)
   : the_orb_ (CORBA::ORB::_duplicate (the_orb)),
     install_root_ (""),
     HTTP_server_ ("http://"),
@@ -251,8 +254,8 @@ void CIAO_RepositoryManagerDaemon_i::installPackage (
     {
 
       //TODO: how can I incorporate a Auto_Ptr is explicit release is needed
-      ACE_Message_Block* mb = 0;
-      ACE_NEW_THROW_EX (mb, ACE_Message_Block (), CORBA::NO_MEMORY ());
+      ACE_Message_Block* mb;
+      ACE_NEW_THROW_EX (mb, ACE_Message_Block (), CORBA::INTERNAL ());
       ACE_CHECK_RETURN (0);
 
       //get the remote file
@@ -456,7 +459,7 @@ void CIAO_RepositoryManagerDaemon_i::createPackage (
   {
     //TODO: how can I incorporate a Auto_Ptr is explicit release is needed
     ACE_Message_Block* mb;
-    ACE_NEW_THROW_EX (mb, ACE_Message_Block (), CORBA::NO_MEMORY ());
+    ACE_NEW_THROW_EX (mb, ACE_Message_Block (), CORBA::INTERNAL ());
     ACE_CHECK_RETURN (0);
 
     //get the remote file
@@ -589,7 +592,7 @@ CIAO_RepositoryManagerDaemon_i::findPackageByName (const char * name)
   Deployment::PackageConfiguration_var pc;
   ACE_NEW_THROW_EX (pc,
                     Deployment::PackageConfiguration (),
-                    CORBA::NO_MEMORY ());
+                    CORBA::INTERNAL ());
 
   ACE_CHECK_RETURN (0);
 
@@ -630,7 +633,7 @@ CIAO_RepositoryManagerDaemon_i::findPackageByUUID (const char * UUID)
   Deployment::PackageConfiguration_var pc;
   ACE_NEW_THROW_EX (pc,
                     Deployment::PackageConfiguration (),
-                    CORBA::NO_MEMORY ());
+                    CORBA::INTERNAL ());
 
   ACE_CHECK_RETURN (0);
 
@@ -661,7 +664,7 @@ CIAO_RepositoryManagerDaemon_i::findPackageByUUID (const char * UUID)
   {
     //return an empty sequence
     CORBA::StringSeq_var seq;
-    ACE_NEW_THROW_EX (seq, CORBA::StringSeq (0), CORBA::NO_MEMORY ());
+    ACE_NEW_THROW_EX (seq, CORBA::StringSeq (0), CORBA::INTERNAL ());
     ACE_CHECK_RETURN (0);
 
     return seq._retn ();
@@ -676,7 +679,7 @@ CIAO_RepositoryManagerDaemon_i::findPackageByUUID (const char * UUID)
     CORBA::StringSeq_var seq;
     ACE_NEW_THROW_EX (seq,
                       CORBA::StringSeq (len),
-                      CORBA::NO_MEMORY ());
+                      CORBA::INTERNAL ());
     seq->length (len);
 
     //store the elements in the string sequence
@@ -719,7 +722,7 @@ CIAO_RepositoryManagerDaemon_i::getAllNames ()
      ++num_entries;
 
   CORBA::StringSeq_var seq;
-  ACE_NEW_THROW_EX (seq, CORBA::StringSeq (num_entries), CORBA::NO_MEMORY ());
+  ACE_NEW_THROW_EX (seq, CORBA::StringSeq (num_entries), CORBA::INTERNAL ());
 
   ACE_CHECK_RETURN (0);
 
@@ -767,7 +770,7 @@ CIAO_RepositoryManagerDaemon_i::getAllNames ()
   CORBA::StringSeq_var seq;
   ACE_NEW_THROW_EX (seq,
                     CORBA::StringSeq (num_entries),
-                    CORBA::NO_MEMORY ());
+                    CORBA::INTERNAL ());
 
   ACE_CHECK_RETURN (0);
 
@@ -832,7 +835,7 @@ void CIAO_RepositoryManagerDaemon_i::deletePackage (
   Deployment::PackageConfiguration_var pc;
   ACE_NEW_THROW_EX (pc,
                     Deployment::PackageConfiguration (),
-                    CORBA::NO_MEMORY ());
+                    CORBA::INTERNAL ());
 
   ACE_CHECK_RETURN (0);
 
@@ -947,7 +950,7 @@ int CIAO_RepositoryManagerDaemon_i::HTTP_Get (const char* URL, ACE_Message_Block
     return 0;
 
     // Create a client
-    TAO_HTTP_Client client;
+    HTTP_Client client;
 
     // Open the client
     if (client.open (parser->filename_,

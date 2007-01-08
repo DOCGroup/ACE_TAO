@@ -3,6 +3,7 @@
 // $Id$
 
 #include "ace/OS_NS_unistd.h"
+#include "ace/Truncate.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -48,14 +49,34 @@ ACE_SOCK_IO::recv (void *buf,
 
 ACE_INLINE ssize_t
 ACE_SOCK_IO::recvv (iovec iov[],
-                    int n,
+                    size_t n,
                     const ACE_Time_Value *timeout) const
 {
   ACE_TRACE ("ACE_SOCK_IO::recvv");
   return ACE::recvv (this->get_handle (),
                      iov,
-                     n,
+                     ACE_Utils::Truncate<size_t> (n),
                      timeout);
+}
+
+ACE_INLINE ssize_t
+ACE_SOCK_IO::recv (iovec iov[],
+                   size_t n,
+                   const ACE_Time_Value *timeout) const
+{
+  ACE_TRACE ("ACE_SOCK_IO::recv");
+  return this->recvv (iov,
+                      n,
+                      timeout);
+}
+
+ACE_INLINE ssize_t
+ACE_SOCK_IO::recv (iovec *io_vec,
+                   const ACE_Time_Value *timeout) const
+{
+  ACE_TRACE ("ACE_SOCK_IO::recv");
+  return this->recvv (io_vec,
+                      timeout);
 }
 
 ACE_INLINE ssize_t
@@ -98,14 +119,25 @@ ACE_SOCK_IO::send (const void *buf,
 
 ACE_INLINE ssize_t
 ACE_SOCK_IO::sendv (const iovec iov[],
-                    int n,
+                    size_t n,
                     const ACE_Time_Value *timeout) const
 {
   ACE_TRACE ("ACE_SOCK_IO::sendv");
   return ACE::sendv (this->get_handle (),
                      iov,
-                     n,
+                     ACE_Utils::Truncate<size_t> (n),
                      timeout);
+}
+
+ACE_INLINE ssize_t
+ACE_SOCK_IO::send (const iovec iov[],
+                   size_t n,
+                   const ACE_Time_Value *timeout) const
+{
+  ACE_TRACE ("ACE_SOCK_IO::send");
+  return this->sendv (iov,
+                      n,
+                      timeout);
 }
 
 ACE_INLINE ssize_t

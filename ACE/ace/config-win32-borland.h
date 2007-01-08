@@ -110,10 +110,21 @@
 # define ACE_LACKS_INLINE_ASSEMBLY
 #endif
 
-#define ACE_WCSDUP_EQUIVALENT ::_wcsdup
-#define ACE_STRCASECMP_EQUIVALENT ::stricmp
-#define ACE_STRNCASECMP_EQUIVALENT ::strnicmp
-#define ACE_HAS_ITOA 1
+#if (__BORLANDC__ >= 0x600)
+# define ACE_LACKS_PTRDIFF_T
+# define ACE_PTRDIFF_T_TYPE std::ptrdiff_t
+# define ACE_HAS_DINKUM_STL
+# undef ACE_HAS_WIN32_STRUCTURAL_EXCEPTIONS
+# define ACE_STRCASECMP_EQUIVALENT std::strcasecmp
+# define ACE_STRNCASECMP_EQUIVALENT std::strncasecmp
+# define ACE_LACKS_WCSDUP
+# define ACE_HAS_3_PARAM_WCSTOK
+#else
+# define ACE_WCSDUP_EQUIVALENT ::_wcsdup
+# define ACE_STRCASECMP_EQUIVALENT ::stricmp
+# define ACE_STRNCASECMP_EQUIVALENT ::strnicmp
+# define ACE_HAS_ITOA 1
+#endif
 
 #include /**/ "ace/post.h"
 #endif /* ACE_CONFIG_WIN32_BORLAND_H */

@@ -85,14 +85,6 @@ extern "C"
   };
 # endif /* ACE_LACKS_SOCKADDR_IN */
 
-# if defined (ACE_LACKS_SOCKADDR_UN)
-  struct  sockaddr_un {
-          u_char  sun_len;                /* sockaddr len including null */
-          u_char  sun_family;             /* AF_UNIX */
-          char    sun_path[104];          /* path name (gag) */
-  };
-#endif /* ACE_LACKS_SOCKADDR_UN */
-
 # if defined (ACE_LACKS_IP_MREQ)
   struct ip_mreq
   {
@@ -168,10 +160,6 @@ extern "C"
 # if !defined (IPPROTO_IP)
 #   define IPPROTO_IP 0
 # endif /* IPPROTO_IP */
-
-# if !defined (IPPROTO_TCP)
-#   define IPPROTO_TCP 6
-# endif /* IPPROTO_TCP */
 
 # if !defined (INADDR_ANY)
 #   define INADDR_ANY (u_long)0x00000000

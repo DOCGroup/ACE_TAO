@@ -13,14 +13,10 @@ ACE_ROOT = $(top_srcdir)/..
 TAO_BUILDDIR = $(top_builddir)
 TAO_IDL = ACE_ROOT=$(ACE_ROOT) TAO_ROOT=$(TAO_ROOT) $(TAO_BUILDDIR)/TAO_IDL/tao_idl
 TAO_IDL_DEP = $(TAO_BUILDDIR)/TAO_IDL/tao_idl
-TAO_IDLFLAGS = -Wb,pre_include=ace/pre.h -Wb,post_include=ace/post.h -I$(TAO_ROOT) -I$(srcdir) -g $(ACE_BUILDDIR)/apps/gperf/src/gperf
+TAO_IDLFLAGS = -Ge 1 -Wb,pre_include=ace/pre.h -Wb,post_include=ace/post.h -I$(TAO_ROOT) -I$(srcdir) -g $(ACE_BUILDDIR)/apps/gperf/src/gperf
 TAO_ROOT = $(top_srcdir)
 
-noinst_PROGRAMS =
-
 ## Makefile.Simple_Time_Date_Lib.am
-
-if BUILD_EXCEPTIONS
 
 BUILT_SOURCES = \
   Time_DateC.cpp \
@@ -63,7 +59,6 @@ libTime_Date_la_SOURCES = \
 
 noinst_HEADERS = \
   Alt_Resource_Factory.h \
-  Time_Date.h \
   Time_Date.idl \
   Time_DateC.h \
   Time_DateC.inl \
@@ -71,13 +66,9 @@ noinst_HEADERS = \
   Time_DateS.inl \
   Time_Date_i.h
 
-endif BUILD_EXCEPTIONS
-
 ## Makefile.Simple_Time_Date_Client.am
 
-if BUILD_EXCEPTIONS
-
-noinst_PROGRAMS += client
+noinst_PROGRAMS = client
 
 client_CPPFLAGS = \
   -I$(ACE_ROOT) \
@@ -92,9 +83,6 @@ client_SOURCES = \
   client.cpp \
   Time_Date_Client_i.h
 
-client_LDFLAGS = \
-  -L.
-
 client_LDADD = \
   libTime_Date.la \
   $(TAO_BUILDDIR)/tao/libTAO_PortableServer.la \
@@ -104,11 +92,7 @@ client_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
-endif BUILD_EXCEPTIONS
-
 ## Makefile.Simple_Time_Date_Server.am
-
-if BUILD_EXCEPTIONS
 
 noinst_PROGRAMS += server
 
@@ -126,8 +110,6 @@ server_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO_AnyTypeCode.la \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
-
-endif BUILD_EXCEPTIONS
 
 ## Clean up template repositories, etc.
 clean-local:

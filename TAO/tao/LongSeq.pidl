@@ -8,7 +8,7 @@
  * The command used to generate code is:
  *
  *     tao_idl
- *        -o orig -GA -SS -Sci
+ *        -o orig -Ge 1 -GA -SS -Sci
  *          -Wb,export_macro=TAO_Export
  *          -Wb,export_include=TAO_Export.h
  *          -Wb,pre_include="ace/pre.h"

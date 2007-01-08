@@ -6,7 +6,7 @@
 ## this file will be lost the next time it is generated.
 ##
 ## MPC Command:
-## ./bin/mwc.pl -type automake -noreldefs ACE.mwc
+## /acebuilds/ACE_wrappers-repository/bin/mwc.pl -include /acebuilds/MPC/config -include /acebuilds/MPC/templates -feature_file /acebuilds/ACE_wrappers-repository/local.features -noreldefs -type automake -exclude build,Kokyu
 
 ACE_BUILDDIR = $(top_builddir)
 ACE_ROOT = $(top_srcdir)
@@ -18,7 +18,7 @@ noinst_PROGRAMS =
 ## Makefile.C++NPv2_AC_CLD.am
 
 if BUILD_SSL
-if BUILD_THREADS
+if !BUILD_ACE_FOR_TAO
 if !BUILD_USES_WCHAR
 
 noinst_LTLIBRARIES += libAC_CLD.la
@@ -43,12 +43,13 @@ noinst_HEADERS += \
   Reactor_Logging_Server_T.cpp
 
 endif !BUILD_USES_WCHAR
-endif BUILD_THREADS
+endif !BUILD_ACE_FOR_TAO
 endif BUILD_SSL
 
 ## Makefile.C++NPv2_AIO_CLD.am
 
 if BUILD_SSL
+if !BUILD_ACE_FOR_TAO
 
 noinst_LTLIBRARIES += libAIO_CLD.la
 
@@ -69,6 +70,7 @@ noinst_HEADERS += \
   AIO_Client_Logging_Daemon.h \
   Reactor_Logging_Server_T.cpp
 
+endif !BUILD_ACE_FOR_TAO
 endif BUILD_SSL
 
 ## Makefile.C++NPv2_CLD.am
@@ -101,7 +103,6 @@ endif !BUILD_ACE_FOR_TAO
 ## Makefile.C++NPv2_Configurable_Log_Server.am
 
 if !BUILD_USES_WCHAR
-
 noinst_PROGRAMS += configurable_logging_server
 
 configurable_logging_server_CPPFLAGS = \
@@ -121,7 +122,6 @@ endif !BUILD_USES_WCHAR
 ## Makefile.C++NPv2_Display_Logfile.am
 
 if !BUILD_ACE_FOR_TAO
-
 noinst_PROGRAMS += display_logfile
 
 display_logfile_CPPFLAGS = \
@@ -159,7 +159,6 @@ endif !BUILD_ACE_FOR_TAO
 
 if !BUILD_ACE_FOR_TAO
 if !BUILD_USES_WCHAR
-
 noinst_PROGRAMS += reactor_logging_server
 
 reactor_logging_server_CPPFLAGS = \
@@ -243,7 +242,6 @@ endif !BUILD_USES_WCHAR
 endif !BUILD_ACE_FOR_TAO
 
 ## Makefile.C++NPv2_SR_Configurable_Log_Server.am
-
 noinst_PROGRAMS += sr_configurable_logging_server
 
 sr_configurable_logging_server_CPPFLAGS = \
@@ -279,7 +277,6 @@ sr_configurable_logging_server_LDADD = \
 
 if !BUILD_ACE_FOR_TAO
 if !BUILD_USES_WCHAR
-
 noinst_PROGRAMS += select_reactor_logging_server
 
 select_reactor_logging_server_CPPFLAGS = \
@@ -306,6 +303,7 @@ endif !BUILD_ACE_FOR_TAO
 ## Makefile.C++NPv2_TPCLS.am
 
 if BUILD_SSL
+if !BUILD_ACE_FOR_TAO
 if !BUILD_USES_WCHAR
 
 noinst_LTLIBRARIES += libTPCLS.la
@@ -330,6 +328,7 @@ noinst_HEADERS += \
   TPC_Logging_Server.h
 
 endif !BUILD_USES_WCHAR
+endif !BUILD_ACE_FOR_TAO
 endif BUILD_SSL
 
 ## Makefile.C++NPv2_TPLS.am
@@ -364,7 +363,6 @@ endif !BUILD_ACE_FOR_TAO
 
 if !BUILD_ACE_FOR_TAO
 if !BUILD_USES_WCHAR
-
 noinst_PROGRAMS += tp_reactor_logging_server
 
 tp_reactor_logging_server_CPPFLAGS = \
@@ -393,7 +391,6 @@ endif !BUILD_ACE_FOR_TAO
 if BUILD_WFMO
 if !BUILD_ACE_FOR_TAO
 if !BUILD_USES_WCHAR
-
 noinst_PROGRAMS += wfmo_reactor_logging_server
 
 wfmo_reactor_logging_server_CPPFLAGS = \

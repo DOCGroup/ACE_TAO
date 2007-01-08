@@ -60,7 +60,7 @@ main (int argc, char **argv)
       poa_manager->activate (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-#if (TAO_HAS_MINIMUM_POA == 0) && !defined (CORBA_E_COMPACT)
+#if (TAO_HAS_MINIMUM_POA == 0)
 
       {
         PortableServer::ThreadPolicy_var policy1 =
@@ -156,7 +156,7 @@ main (int argc, char **argv)
         ACE_ASSERT (policy1->value () == policy2->value ());
       }
 
-#if (TAO_HAS_MINIMUM_POA == 0) && !defined (CORBA_E_COMPACT)
+#if (TAO_HAS_MINIMUM_POA == 0)
 
       {
         PortableServer::ImplicitActivationPolicy_var policy1 =

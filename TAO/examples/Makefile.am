@@ -14,7 +14,6 @@ SUBDIRS = \
         Advanced \
         Buffered_AMI \
         Buffered_Oneways \
-        CSD_Strategy \
         Callback_Quoter \
         Content_Server \
         Event_Comm \
@@ -34,5 +33,5 @@ SUBDIRS = \
         ior_corbaloc \
         mfc
 
-# SUBDIRS += \
-# 	RTScheduling
+#	CSD_Strategy
+#	RTScheduling

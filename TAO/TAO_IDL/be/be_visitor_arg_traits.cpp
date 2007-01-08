@@ -929,9 +929,7 @@ be_visitor_arg_traits::visit_field (be_field *node)
   // get handled elsewhere, and will also avoid nested valuetype
   // recursion. So we set the field node as processed (the
   // field *type* may not have been reached yet) and return.
-  AST_Decl::NodeType nt = bt->base_node_type ();
-  
-  if (nt == AST_Decl::NT_valuetype || nt == AST_Decl::NT_eventtype)
+  if (bt->base_node_type () == AST_Decl::NT_valuetype)
     {
       node->cli_traits_gen (true);
       return 0;

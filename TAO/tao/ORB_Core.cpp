@@ -219,7 +219,6 @@ TAO_ORB_Core::TAO_ORB_Core (const char *orbid)
     imr_endpoints_in_ior_ (1),
     typecode_factory_ (CORBA::Object::_nil ()),
     codec_factory_ (CORBA::Object::_nil ()),
-    compression_manager_ (CORBA::Object::_nil ()), 
     dynany_factory_ (CORBA::Object::_nil ()),
     ior_manip_factory_ (CORBA::Object::_nil ()),
     ior_table_ (CORBA::Object::_nil ()),
@@ -251,11 +250,11 @@ TAO_ORB_Core::TAO_ORB_Core (const char *orbid)
     tm_ (),
     tss_cleanup_funcs_ (),
     tss_resources_ (),
-    has_shutdown_ (true),  // Start the ORB in a  "shutdown" state.  Only
-                           // after CORBA::ORB_init() is called will the
-                           // ORB no longer be shutdown.  This does not
-                           // mean that the ORB can be reinitialized.  It
-                           // can only be initialized once.
+    has_shutdown_ (1),  // Start the ORB in a  "shutdown" state.  Only
+                        // after CORBA::ORB_init() is called will the
+                        // ORB no longer be shutdown.  This does not
+                        // mean that the ORB can be reinitialized.  It
+                        // can only be initialized once.
     thread_per_connection_use_timeout_ (1),
     open_lock_ (),
     endpoint_selector_factory_ (0),
@@ -366,9 +365,6 @@ TAO_ORB_Core::~TAO_ORB_Core (void)
 
   delete this->codeset_manager_;
   this->codeset_manager_ = 0;
-
-  // This will destroy the service repository for this core
-  (void) TAO::ORB::close_services (this->config_);
 
   delete this->config_;
   this->config_ = 0;
@@ -1093,11 +1089,9 @@ TAO_ORB_Core::init (int &argc, char *argv[] ACE_ENV_ARG_DECL)
       // ok, we can't interpret this argument, move to next argument//
       ////////////////////////////////////////////////////////////////
       else
-        {
-          // Any arguments that don't match are ignored so that the
-          // caller can still use them.
-          arg_shifter.ignore_arg ();
-        }
+        // Any arguments that don't match are ignored so that the
+        // caller can still use them.
+        arg_shifter.ignore_arg ();
     }
 
   const char *env_endpoint =
@@ -1348,7 +1342,7 @@ TAO_ORB_Core::init (int &argc, char *argv[] ACE_ENV_ARG_DECL)
 
   // The ORB has been initialized, meaning that the ORB is no longer
   // in the shutdown state.
-  this->has_shutdown_ = false;
+  this->has_shutdown_ = 0;
 
   return 0;
 }
@@ -1411,6 +1405,8 @@ TAO_ORB_Core::fini (void)
   //       TAO_ORB_Core::thread_lane_resources_manager().
   if (this->thread_lane_resources_manager_ != 0)
     this->thread_lane_resources_manager_->finalize ();
+
+  (void) TAO::ORB::close_services (this->configuration ());
 
   // Destroy the object_key table
   this->object_key_table_.destroy ();
@@ -1625,30 +1621,26 @@ TAO_ORB_Core::policy_factory_registry_i (void)
 TAO::ORBInitializer_Registry_Adapter *
 TAO_ORB_Core::orbinitializer_registry_i (void)
 {
-  // @todo The ORBInitializer_Registry is supposed to be a singleton.
-
-  ACE_Service_Gestalt * const config = this->configuration ();
-
   // If not, lookup it up.
   this->orbinitializer_registry_ =
     ACE_Dynamic_Service<TAO::ORBInitializer_Registry_Adapter>::instance
-      (config,
+      (this->configuration (),
        ACE_TEXT ("ORBInitializer_Registry"));
 
 #if !defined (TAO_AS_STATIC_LIBS)
       // In case we build shared, try to load the PI Client library, in a
       // static build we just can't do this, so don't try it, lower layers
       // output an error then.
-  if (this->orbinitializer_registry_ == 0)
+  if (orbinitializer_registry_ == 0)
     {
-      config->process_directive (
-        ACE_DYNAMIC_SERVICE_DIRECTIVE ("ORBInitializer_Registry",
-                                       "TAO_PI",
-                                       "_make_ORBInitializer_Registry",
-                                       ""));
-      this->orbinitializer_registry_ =
+      this->configuration ()->process_directive (
+        ACE_DYNAMIC_SERVICE_DIRECTIVE("ORBInitializer_Registry",
+                                      "TAO_PI",
+                                      "_make_ORBInitializer_Registry",
+                                      ""));
+      orbinitializer_registry_ =
         ACE_Dynamic_Service<TAO::ORBInitializer_Registry_Adapter>::instance
-          (config,
+          (this->configuration (),
            ACE_TEXT ("ORBInitializer_Registry"));
     }
 #endif /* !TAO_AS_STATIC_LIBS */
@@ -2105,21 +2097,13 @@ CORBA::Boolean
 TAO_ORB_Core::is_collocation_enabled (TAO_ORB_Core *orb_core,
                                       const TAO_MProfile &mp)
 {
-  TAO_MProfile mp_temp;
-
-  TAO_Profile* profile = 0;
-  if (this->service_profile_selection(mp, profile) && profile)
-  {
-    mp_temp.add_profile(profile);
-  }
-
   if (!orb_core->optimize_collocation_objects ())
     return 0;
 
   if (!orb_core->use_global_collocation () && orb_core != this)
     return 0;
 
-  if (!orb_core->is_collocated (profile ? mp_temp : mp))
+  if (!orb_core->is_collocated (mp))
     return 0;
 
   return 1;
@@ -2189,7 +2173,7 @@ TAO_ORB_Core::run (ACE_Time_Value *tv,
   // We don't need to do this because we use the Reactor
   // mechanisms to shutdown in a thread-safe way.
 
-  while (this->has_shutdown () == false)
+  while (this->has_shutdown () == 0)
     {
       // Every time we perform an interation we have to become the
       // leader again, because it is possible that a client has
@@ -2261,7 +2245,7 @@ TAO_ORB_Core::run (ACE_Time_Value *tv,
       // Otherwise just continue..
     }
 
-  if (this->has_shutdown () == true &&
+  if (this->has_shutdown () == 1 &&
       this->server_factory_->activate_server_connections ())
       this->tm_.wait ();
 
@@ -2284,7 +2268,7 @@ TAO_ORB_Core::shutdown (CORBA::Boolean wait_for_completion
   {
     ACE_GUARD (TAO_SYNCH_MUTEX, monitor, this->lock_);
 
-    if (this->has_shutdown () == true)
+    if (this->has_shutdown () != 0)
       return;
 
     // Check if we are on the right state, i.e. do not accept
@@ -2296,7 +2280,7 @@ TAO_ORB_Core::shutdown (CORBA::Boolean wait_for_completion
 
     // Set the 'has_shutdown' flag, so any further attempt to shutdown
     // becomes a noop.
-    this->has_shutdown_ = true;
+    this->has_shutdown_ = 1;
 
     // need to release the mutex, because some of the shutdown
     // operations invoke application code, that could (and in practice
@@ -2499,34 +2483,6 @@ TAO_ORB_Core::resolve_codecfactory_i (ACE_ENV_SINGLE_ARG_DECL)
   if (loader != 0)
     {
       this->codec_factory_ =
-        loader->create_object (this->orb_, 0, 0 ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
-    }
-}
-
-void
-TAO_ORB_Core::resolve_compression_manager_i (ACE_ENV_SINGLE_ARG_DECL)
-{
-  TAO_Object_Loader *loader =
-    ACE_Dynamic_Service<TAO_Object_Loader>::instance
-      (this->configuration (),
-       ACE_TEXT ("Compression_Loader"));
-
-  if (loader == 0)
-    {
-      this->configuration()->process_directive
-        (ACE_DYNAMIC_SERVICE_DIRECTIVE("Compression",
-                                       "TAO_Compression",
-                                       "_make_TAO_Compression_Loader",
-                                       ""));
-      loader =
-        ACE_Dynamic_Service<TAO_Object_Loader>::instance
-          (this->configuration (), ACE_TEXT ("Compression_Loader"));
-    }
-
-  if (loader != 0)
-    {
-      this->compression_manager_ =
         loader->create_object (this->orb_, 0, 0 ACE_ENV_ARG_PARAMETER);
       ACE_CHECK;
     }

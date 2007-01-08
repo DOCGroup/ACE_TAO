@@ -15,7 +15,7 @@
  * is:
  *
  *      tao_idl
- *           -Gp -Gd -Sc -Sa -DCORBA3 -Sci \
+ *           -Gp -Gd -Ge 1 -Sc -Sa -DCORBA3 -Sci \
  *           -Wb,export_macro=HTIOP_Export \
  *           -Wb,export_include="HTIOP_Export.h" \
  *           -Wb,pre_include="ace/pre.h" \

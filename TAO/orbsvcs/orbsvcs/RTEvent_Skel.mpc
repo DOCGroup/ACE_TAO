@@ -1,7 +1,7 @@
 // -*- MPC -*-
 // $Id$
 
-project(RTEvent_Skel) : orbsvcslib, install, rtevent, portableserver {
+project(RTEvent_Skel) : orbsvcslib, core, rtevent, portableserver {
   sharedname   = TAO_RTEvent_Skel
   dynamicflags = TAO_RTEVENT_SKEL_BUILD_DLL
   tagchecks   += RTEvent

@@ -289,8 +289,7 @@ public:
 
 protected:
   // These are not private because they're used by
-  // be_predefined_type' constructor and can be called
-  // from be_decl.
+  // be_predefined_type' constructor.
 
   char *repoID_;
   // Repository ID.

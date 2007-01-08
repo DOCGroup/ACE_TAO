@@ -1,5 +1,5 @@
 //$Id$
-project : taolib, install, pi {
+project : taolib, core, pi {
   sharedname   = TAO_RTCORBA
   dynamicflags = TAO_RTCORBA_BUILD_DLL
   requires    += rt_corba
@@ -29,7 +29,7 @@ project : taolib, install, pi {
   }
 
   IDL_Files {
-    idlflags += -Sci -SS -Sorb -Sa -GX \
+    idlflags += -Ge 1 -Sci -SS -Sorb -Sa -GX \
                 -Wb,export_macro=TAO_RTCORBA_Export \
                 -Wb,export_include=tao/RTCORBA/rtcorba_export.h \
                 -Wb,unique_include=tao/RTCORBA/RTCORBA.h \

@@ -326,11 +326,6 @@ TAO_IIOP_Acceptor::open (TAO_ORB_Core *orb_core,
       if (this->probe_interfaces (orb_core, def_type) == -1)
         return -1;
 
-      // Probe interfaces has a side effect of potentially modifying
-      // the default address, since that is where the address family
-      // is considered.
-      addr.set(this->default_address_);
-
       return this->open_i (addr, reactor);
     }
 
@@ -1190,7 +1185,15 @@ TAO_IIOP_Acceptor::parse_options_i (int &argc,
                            ACE_TEXT ("TAO (%P|%t) Zero length IIOP ")
                            ACE_TEXT ("option name.\n")),
                           -1);
-      if (name == "portspan")
+      if (name == "priority")
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             ACE_TEXT ("TAO (%P|%t) Invalid IIOP endpoint format: ")
+                             ACE_TEXT ("endpoint priorities no longer supported. \n"),
+                             value.c_str ()),
+                            -1);
+        }
+      else if (name == "portspan")
         {
           int range = static_cast <int> (ACE_OS::atoi (value.c_str ()));
           // @@ What's the lower bound on the range?  zero, or one?

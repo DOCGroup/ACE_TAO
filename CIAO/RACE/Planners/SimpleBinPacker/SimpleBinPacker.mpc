@@ -6,7 +6,8 @@ project(SimpleBinPacker_stub): ciao_deployment_stub {
   avoids += ace_for_tao
   after += Planner_Interface_stub Planner_stub
   sharedname = SimpleBinPacker_stub
-  idlflags += -Wb,stub_export_macro=SIMPLEBINPACKER_STUB_Export \
+  idlflags += -Sc \
+              -Wb,stub_export_macro=SIMPLEBINPACKER_STUB_Export \
               -Wb,stub_export_include=SimpleBinPacker_stub_export.h \
               -Wb,skel_export_macro=SIMPLEBINPACKER_SVNT_Export \
               -Wb,skel_export_include=SimpleBinPacker_svnt_export.h
@@ -41,7 +42,8 @@ project(SimpleBinPacker_svnt) : ciao_servant_dnc {
              Planner_stub \
              Planner_svnt \
              RACE_common_stub
-  idlflags  +=  -Wb,export_macro=SIMPLEBINPACKER_SVNT_Export \
+  idlflags  +=  -Sc \
+                -Wb,export_macro=SIMPLEBINPACKER_SVNT_Export \
                 -Wb,export_include=SimpleBinPacker_svnt_export.h
 
   dynamicflags = SIMPLEBINPACKER_SVNT_BUILD_DLL
@@ -83,15 +85,16 @@ project(SimpleBinPacker_exec) : ciao_component_dnc {
                Planner_Interface_stub \
                Planner_Interface_svnt \
                Planner_stub \
-               Planner_svnt \
+               Planner_svnt \ 
                RACE_common_stub
-
-  idlflags  +=  -Wb,export_macro=SIMPLEBINPACKER_EXEC_Export \
+  
+  idlflags  +=  -Sc \
+                -Wb,export_macro=SIMPLEBINPACKER_EXEC_Export \
                 -Wb,export_include=SimpleBinPacker_exec_export.h
   dynamicflags   = SIMPLEBINPACKER_EXEC_BUILD_DLL
 
   IDL_Files {
-
+    
   }
 
   Source_Files {

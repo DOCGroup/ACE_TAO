@@ -15,7 +15,6 @@
 #include "tao/AnyTypeCode/TypeCode_Constants.h"
 #include "tao/ORB.h"
 #include "tao/Object.h"
-#include "tao/ShortSeqC.h"
 
 class Data
 {
@@ -38,10 +37,8 @@ public:
   CORBA::TypeCode_ptr   m_typecode1,  m_typecode2;
   CORBA::WChar          m_wchar1,     m_wchar2;
   CORBA::Object_var     m_objref1,    m_objref2;
-  CORBA::ShortSeq       m_shortseq1;
-  CORBA::ShortSeq_var   m_shortseq2;
 
-const char* labels[17];
+const char* labels[16];
 
 private:
   CORBA::ORB_var orb_;

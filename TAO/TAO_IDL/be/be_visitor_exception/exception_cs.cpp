@@ -49,7 +49,7 @@ int be_visitor_exception_cs::visit_exception (be_exception *node)
 
   os->indent ();
 
-  // Generate stub code required of any anonymous types of members.
+  // Generate stub code  required of any anonymous types of members.
   if (this->visit_scope (node) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
@@ -57,53 +57,6 @@ int be_visitor_exception_cs::visit_exception (be_exception *node)
                          "visit_exception -"
                          "code for stub failed\n"),
                         -1);
-    }
-
-  be_visitor_context ctx (*this->ctx_);
-
-  // Constructor taking all members. It exists only if there are any
-  // members.
-  if (node->member_count () > 0)
-    {
-      // Generate the signature.
-      ctx.state (TAO_CodeGen::TAO_EXCEPTION_CTOR_CS);
-      be_visitor_exception_ctor ec_visitor (&ctx);
-
-      if (node->accept (&ec_visitor) == -1)
-        {
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             "(%N:%l) be_visitor_exception::"
-                             "visit_exception - "
-                             "codegen for ctor failed\n"),
-                            -1);
-        }
-
-      *os << be_idt_nl
-          << ": ::CORBA::UserException ("
-          << be_idt << be_idt << be_idt_nl
-          << "\"" << node->repoID () << "\"," << be_nl
-          << "\"" << node->local_name () << "\"" << be_uidt_nl
-          << ")" << be_uidt << be_uidt << be_uidt_nl;
-      *os << "{" << be_idt;
-
-      // Assign each individual member. We need yet another state.
-      ctx = *this->ctx_;
-
-      // Indicate that the special ctor is being generated.
-      ctx.exception (true);
-
-      be_visitor_exception_ctor_assign eca_visitor (&ctx);
-
-      if (node->accept (&eca_visitor) == -1)
-        {
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             "(%N:%l) be_visitor_exception_cs::"
-                             "visit_exception -"
-                             "codegen for scope failed\n"),
-                            -1);
-        }
-
-      *os << be_uidt_nl << "}" << be_nl << be_nl;
     }
 
   *os << be_nl << be_nl << "// TAO_IDL - Generated from " << be_nl
@@ -134,7 +87,7 @@ int be_visitor_exception_cs::visit_exception (be_exception *node)
       << ")" << be_uidt << be_uidt << be_uidt_nl;
   *os << "{";
 
-  ctx = *this->ctx_;
+  be_visitor_context ctx (*this->ctx_);
 
   if (node->nmembers () > 0)
     {
@@ -239,11 +192,12 @@ int be_visitor_exception_cs::visit_exception (be_exception *node)
       << "}" << be_nl << be_nl;
 
   *os << "void " << node->name ()
-      << "::_tao_encode (";
+      << "::_tao_encode (" << be_idt << be_idt_nl;
 
   if (!node->is_local ())
     {
-      *os << "TAO_OutputCDR &cdr) const" << be_nl
+      *os << "TAO_OutputCDR &cdr" << env_decl << be_uidt_nl
+          << ") const" << be_uidt_nl
           << "{" << be_idt_nl
           << "if (cdr << *this)" << be_idt_nl
           << "{" << be_idt_nl
@@ -263,7 +217,8 @@ int be_visitor_exception_cs::visit_exception (be_exception *node)
     }
   else
     {
-      *os << "TAO_OutputCDR &) const" << be_nl
+      *os << "TAO_OutputCDR &" << env_decl << be_uidt_nl
+          << ") const" << be_uidt_nl
           << "{" << be_idt_nl;
 
       if (be_global->use_raw_throw ())
@@ -279,11 +234,12 @@ int be_visitor_exception_cs::visit_exception (be_exception *node)
     }
 
   *os << "void " << node->name ()
-      << "::_tao_decode (";
+      << "::_tao_decode (" << be_idt << be_idt_nl;
 
   if (!node->is_local ())
     {
-      *os << "TAO_InputCDR &cdr)" << be_nl
+      *os << "TAO_InputCDR &cdr" << env_decl << be_uidt_nl
+          << ")" << be_uidt_nl
           << "{" << be_idt_nl
           << "if (cdr >> *this)" << be_idt_nl
           << "{" << be_idt_nl
@@ -303,7 +259,8 @@ int be_visitor_exception_cs::visit_exception (be_exception *node)
     }
   else
     {
-      *os << "TAO_InputCDR &)" << be_nl
+      *os << "TAO_InputCDR &" << env_decl << be_uidt_nl
+          << ")" << be_uidt_nl
           << "{" << be_idt_nl;
 
       if (be_global->use_raw_throw ())
@@ -316,6 +273,52 @@ int be_visitor_exception_cs::visit_exception (be_exception *node)
         }
 
       *os << "}" << be_nl << be_nl;
+    }
+
+  // Constructor taking all members. It exists only if there are any
+  // members.
+  if (node->member_count () > 0)
+    {
+      // Generate the signature.
+      ctx = *this->ctx_;
+      ctx.state (TAO_CodeGen::TAO_EXCEPTION_CTOR_CS);
+      be_visitor_exception_ctor ec_visitor (&ctx);
+
+      if (node->accept (&ec_visitor) == -1)
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "(%N:%l) be_visitor_exception::"
+                             "visit_exception - "
+                             "codegen for ctor failed\n"),
+                            -1);
+        }
+
+      *os << be_idt_nl
+          << ": ::CORBA::UserException ("
+          << be_idt << be_idt << be_idt_nl
+          << "\"" << node->repoID () << "\"," << be_nl
+          << "\"" << node->local_name () << "\"" << be_uidt_nl
+          << ")" << be_uidt << be_uidt << be_uidt_nl;
+      *os << "{" << be_idt;
+
+      // Assign each individual member. We need yet another state.
+      ctx = *this->ctx_;
+
+      // Indicate that the special ctor is being generated.
+      ctx.exception (1);
+
+      be_visitor_exception_ctor_assign eca_visitor (&ctx);
+
+      if (node->accept (&eca_visitor) == -1)
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "(%N:%l) be_visitor_exception_cs::"
+                             "visit_exception -"
+                             "codegen for scope failed\n"),
+                            -1);
+        }
+
+      *os << be_uidt_nl << "}" << be_nl << be_nl;
     }
 
   // Switch streams to the *A.cpp file if we are using this option.

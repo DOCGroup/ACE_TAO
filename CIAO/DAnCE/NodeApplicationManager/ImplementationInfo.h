@@ -21,7 +21,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ciao/Deployment_NodeApplicationC.h"
+#include "ciao/DeploymentC.h"
 #include "ace/SString.h"
 #include "ace/Hash_Map_Manager.h"
 #include "Containers_Info_Map.h"

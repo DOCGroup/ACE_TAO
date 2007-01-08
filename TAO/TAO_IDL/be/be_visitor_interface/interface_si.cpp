@@ -100,6 +100,24 @@ be_visitor_interface_si::visit_interface (be_interface *node)
         }
     }
 
+  if (be_global->gen_tie_classes ())
+    {
+      // Generate the TIE class.
+      be_visitor_context ctx (*this->ctx_);
+      ctx.state (TAO_CodeGen::TAO_ROOT_TIE_SI);
+      ctx.stream (tao_cg->server_template_inline ());
+      be_visitor_interface_tie_si visitor (&ctx);
+
+      if (node->accept (&visitor) == -1)
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "be_visitor_interface_sh::"
+                             "visit_interface - "
+                             "codegen for TIE class failed\n"),
+                            -1);
+        }
+    }
+
   return 0;
 }
 

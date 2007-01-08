@@ -11,8 +11,8 @@
  */
 //=============================================================================
 
-#ifndef CIAO_DYNAMIC_COMPONENT_ACTIVATOR_H
-#define CIAO_DYNAMIC_COMPONENT_ACTIVATOR_H
+#ifndef CIAO_DYNAMIC_SWAPPING_ACTIVATOR_H
+#define CIAO_DYNAMIC_SWAPPING_ACTIVATOR_H
 #include /**/ "ace/pre.h"
 
 #include "ciao/CIAO_Server_Export.h"
@@ -23,6 +23,7 @@
 
 #include "ciao/CCM_ContainerC.h"
 #include "ciao/Deployment_CoreC.h"
+#include "ciao/Dynamic_Component_Servant_Base.h"
 
 #include "tao/PortableServer/Key_Adapters.h"
 #include "tao/PortableServer/PortableServer.h"
@@ -93,6 +94,7 @@ namespace CIAO
                             ACE_Equal_To<PortableServer::ObjectId>,
                             ACE_SYNCH_MUTEX>
       servant_map_;
+
   };
 }
 
@@ -101,4 +103,4 @@ namespace CIAO
 #endif /* _MSC_VER */
 
 #include /**/ "ace/post.h"
-#endif /* CIAO_DYNAMIC_COMPONENT_ACTIVATOR_H */
+#endif /*CIAO_DYNAMIC_SWAPPING_ACTIVATOR_H*/

@@ -1,5 +1,3 @@
-// $Id$
-
 interface Tester {
   oneway void test(in long id);
   long test2(in long id);

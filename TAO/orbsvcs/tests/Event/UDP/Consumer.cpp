@@ -102,7 +102,7 @@ Consumer::push (const RtecEventComm::EventSet& events
 
       if (this->valuetype_)
         {
-          Hello::ValueTypeData * test_data = 0;
+          ValueTypeData * test_data = 0;
           if (events[i].data.any_value >>= test_data)
             {
               ACE_DEBUG ((LM_DEBUG, "Consumer (%P|%t): Received message <%d>: %s\n",

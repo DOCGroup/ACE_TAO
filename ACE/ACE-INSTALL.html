@@ -49,7 +49,7 @@ report process</a>.<p>
   </li><li><a href="#MPC">General MPC Information</a>
   </li><li><a href="#eclipse">Working with ACE in Eclipse</a>
   </li><li><a href="#advanced">Advanced Topics</a>
-  </li><li><a href="#power">Building from Subversion</a>
+  </li><li><a href="#power">Building from subversion</a>
 </li></ul>
 
 
@@ -153,12 +153,11 @@ document</a>.</p><p>
   <tr>
     <th>Remedy IT</th>
     <td>Maintains ACE on many platforms required for their ACE and
-        TAO service offerings. We support AIX, Borland C++ Builder 6/2006,
-        CBuilderX 1.0, MinGW, Microsoft Visual C++, GCC,
-        Cygwin, VxWorks 5.5.x & 6.x, OpenVMS 8.2-1 & 8.3 on Alpha and IA64,
-        BlueCAT Linux, RedHat, Fedora,
-        Tru64, SuSE Linux on Alpha/IA32/EM64T/IA64, RTEMS, QNX, LynxOS 4.0/4.2,
-        HPUX 11i v1/v2 32/64 bit on PA-RISC, and
+        TAO service offerings. Besides the standard DOC group platforms
+        we also support AIX, Borland C++ Builder 6/2006, CBuilderX 1.0, MinGW,
+        Cygwin, VxWorks 5.5.x & 6.x, OpenVMS 8.2-1 & 8.3,
+        Tru64, SuSE Linux on Alpha/IA32/EM64T, RTEMS, LynxOS, 
+        HPUX 11i v2/v2 32/64 bit on PA-RISC, and
         HPUX 11i v2 on Itanium. The Intel C++ compiler is supported on
         Windows 32/64bit, Linux IA32/EM64T/Itanium2.
     </td>
@@ -182,7 +181,7 @@ document</a>.</p><p>
         IRIX 6.x; UnixWare 7.1.0;
         Linux on PPC; OpenMVS;
         Tandem; SCO; FreeBSD; NetBSD; OpenBSD;
-        Macintosh OS X; OS/9; PharLap TNT Embedded ToolSuite 13;
+        Macintosh OS X; OS/9; PharLap TNT Embedded ToolSuite 9.1;
         QNX RTP and Neutrino 2.0; Interix (Windows Services for Unix)
     </td>
   </tr><tr>
@@ -624,6 +623,15 @@ https://msdn.microsoft.com/visualc/downloads/default.aspx</a> for information.
   programs that uses ACE.  Otherwise you may experience problems
   finding ace.dll or aced.dll.<br>
       <br>
+  </li><li>If you are building for Windows NT 4 or later (Windows 2000, XP, etc.)
+      then you can start building without anymore changes. If you are building
+      on Windows 9x/Me, then you should add the line <br>
+      <br>
+      <code>#define ACE_HAS_WINNT4 0</code><br>
+      <br>
+      before the #include statement in ACE_ROOT\ace\config.h and it
+      will turn off some WinNT/Win2K-specific code in ACE.<br>
+      <br>
   </li><li>If you want to use the standard C++ headers (iostream, cstdio, ...
       as defined by the C++ Standard Draft 2) that comes with MSVC,
       then add the line: <br>
@@ -775,6 +783,15 @@ to check <a href="#win32nonic">here</a> first. <p>
       <br>
       <code>#include "ace/config-win32.h"</code><br>
       <br>
+      If you are building for Windows NT 4, Windows 2000, or Windows XP,
+      then you can start without any more changes.  If you are building
+      on Windows 9x/Me, then you should add the line <br>
+      <br>
+      <code>#define ACE_HAS_WINNT4 0</code><br>
+      <br>
+      before the #include statement in ACE_ROOT\ace\config.h and it
+      will turn off some WinNT/Win2K-specific code in ACE.<br>
+      <br>
   </li><li>Open a Command Prompt (DOS Box).<br>
       <br>
   </li><li>Set the ACE_ROOT environment variable to point to the ACE_wrappers
@@ -917,6 +934,15 @@ For our build we require the packages
 
        <blockquote><code></code><pre>       #include "ace/config-win32.h"
        </pre></blockquote>
+
+       If you are building for Windows 9X/Me (ie, <em>not</em> WinNT or
+       Win2K), you will need to add:
+
+       <blockquote><code></code><pre>       #define ACE_HAS_WINNT4 0
+       </pre></blockquote>
+
+       before the <code>#include</code> line.
+       <br><br>
 
   </li><li> Create a file called <tt>platform_macros.GNU</tt> in the
        <tt>$ACE_ROOT/include/makeinclude</tt> directory containing:
@@ -1727,7 +1753,59 @@ your needs. For example when you give option debug=1 all the debug
 symbols will be created and the build will huge in size. The debug
 symbols are necessary when you want to debug your code.</p>
 
-<p></p><hr align="left" width="50%">
+<p></p><hr align="left" width="50%"><p>
+</p><h2><a name="rtems">Building and Installing ACE on RTEMS</a></h2>
+
+<pre>export RTEMS_MAKEFILE_PATH=/opt/rtems/CPU-rtems/BSP
+# setup the build structure
+cd ACE_wrappers
+
+# create the host (e.g. Linux in this case) build tree
+bin/create_ace_build.pl Linux_g++
+cd build/Linux_g++/ace
+ln -s ../../../ace/config-linux.h config.h
+cd ../include/makeinclude
+ln -s ../../../../include/makeinclude/platform_linux.GNU platform_macros.GNU
+cd ../../../..
+
+# create the target build tree
+bin/create_ace_build.pl rtems
+cd build/rtems/TAO
+/bin/rm -r TAO_IDL
+ln -s ../../Linux_g++/TAO/TAO_IDL .
+cd ../ace
+ln -s ../../../ace/config-rtems.h config.h
+cd ../include/makeinclude
+ln -s ../../../../include/makeinclude/platform_rtems.x_g++.GNU platform_macros.GNU
+cd ../../../..
+
+# build the host side of things
+cd build/Linux_g++
+export ACE_ROOT=`pwd`; export LD_LIBRARY_PATH=`pwd`/ace:`pwd`/lib:$LD_LIBRARY_PATH
+cd ace
+make
+
+# optionally build the ACE tests
+cd ../tests
+make
+
+cd ../TAO
+make
+
+# build the target side of things
+cd ../rtems
+export ACE_ROOT=`pwd`
+cd ace
+make
+cd ../tests
+# build rtems_init.o by hand
+make -f  ../include/makeinclude/Makefile.rtems rtems_init.o
+make
+cd ../TAO
+make
+</pre>
+
+
 <hr>
 <h1><a name="svcsinstall">Building and Installing ACE Network Services</a></h1>
 
@@ -2362,45 +2440,15 @@ libraries.
       Under the current version of QNX RTP ACE fails if compiled with
       inline=0 . </p><p>
 
-  </p></li><li><strong><a name="rtems">RTEMS</a></strong><p>
+  </p></li><li><strong>PharLap TNT Embedded ToolSuite (ETS)</strong><p>
 
-      The support for RTEMS has been reviVed from version x.5.4. This version
-      was the first version that build again out of the box on RTEMS. Compilation
-      and testing was done for RTEMS with and without networking support. The
-      ACE GNU makefiles do automatically detect whether networking support
-      is available or not.
-
-      Besides the standard config.h/platform_macros.GNU file you will need
-      to set <code>RTEMS_MAKEFILE_PATH</code> to point to the location
-      of your RTEMS installation, see below for an example.</p>
-      <p><code>export RTEMS_MAKEFILE_PATH=/opt/rtems/CPU-rtems/BSP</code></p>
-      <p>
-      When building without network support you will need the ace_for_tao
-      subsetting functionality enabled. For this add <code>ace_for_tao = 1</code>
-      to your <code>bin/MakeProjectCreator/config</code> file and regenerate the
-      GNU makefiles as described <a href="#power">here</a>.</p><p>
-
-  </p></li><li><strong>PharLap ETS</strong><p>
-
-      ACE has been ported to Ardence's
-      <a href="http://www.ardence.com/embedded/products.aspx?ID=71">PharLap ETS</a>
-      version 13. The port was originally done for Pharlap 9.1 and MSVC 6,
-      but has been updated to Pharlap ETS 13 with Visual Studio .NET 2003
-      (VC7.1).</p><p> To build for PharLap, you'll need to use MPC to
-      generate .sln/.vcproj files with the ETS configurations. For example:
-      <pre>
-cd \ace\ACE_wrappers
-perl bin/mwc.pl  -type vc71 -relative ACE_ROOT=C:/ace/ACE_wrappers -relative TAO_ROOT=C:/ace/ACE_wrappers/TAO -value_template configurations='"ETS Debug"' -value_template configurations+='"ETS Release"' -name_modifier *_ETS TAO_ACE.mwc
-      </pre>
-      That command will generate the same .sln and .vproj files as for
-      regular Windows builds with VC7.1, but they'll have names with an
-      <code>_ETS</code> suffix and will include the "ETS Debug" and
-      "ETS Release" configurations.</p><p>
-      After generating the needed VC7.1 files, use the ace/config-pharlap.h
-      configuration file, and the instructions
+      ACE has been ported to <a href="http://www.pharlap.com/">PharLap's</a> TNT Embedded
+      ToolSuite (ETS) version 9.1. The port is being tested with
+      Microsoft Visual C++ 6.</p><p> To build for PharLap, use the
+      ace/config-pharlap.h configuration file, and the instructions
       for building on Windows. Building the ACE library is the same as
       for regular Windows platforms, except you choose one of the PharLap
-      ETS configurations to build within Visual Studio. Only static
+      ETS configurations to build within Visual C++. Only static
       library configurations are available for PharLap at this time.
       For an example of how to build
       binaries, see the tests directory. The tests_pharlap_msvc.lnk
@@ -2903,27 +2951,17 @@ show_uninit        Lists all uninitialized in object files built for
 </pre>
 
 </p><hr><p>
-</p><h2><a name="power">Building from Subversion (anonymous access)</a></h2>
-If users are building from our <a href="https://svn.dre.vanderbilt.edu/viewvc/Middleware/trunk/">Subversion repository</a> the
+</p><h2><a name="power">Building from anonymous subversion</a></h2>
+If users are building from our <a href="https://svn.dre.vanderbilt.edu/viewvc/Middleware/trunk/"> svn</a> the
 GNUmakefiles, and project files for building on various platforms will
-not be available.  Subversion users are expected to <a href="#generate_using_mpc">generate them</a>
+not be available. Users from subversion are expected to generate them
 using <a href="https://svn.dre.vanderbilt.edu/viewvc/MPC/trunk/docs/README?revision=HEAD">MPC</a> before building ACE, TAO or
 CIAO. We point out some suggestions below to get bootstrapped
 quickly.
 
 <ul>
-	<li>You can checkout different subsets from the Subversion repository.
-	<ul>
-	<li>To checkout ACE with MPC:<p>
-	<code>svn co svn://svn.dre.vanderbilt.edu/DOC/Middleware/sets-anon/ACE .</code>
-	</li>
-	<li>To checkout ACE+TAO with MPC:<p>
-	<code>svn co svn://svn.dre.vanderbilt.edu/DOC/Middleware/sets-anon/ACE+TAO .</code>
-	</li>
-	<li>To checkout ACE+TAO+CIAO with MPC:<p>
+	<li>You can checkout ACE+TAO+CIAO together with MPC with the following command: <p>
 	<code>svn co svn://svn.dre.vanderbilt.edu/DOC/Middleware/sets-anon/ACE+TAO+CIAO .</code>
-	</li>
-	</ul>
   </p></li><li>Please make sure that you have <a href="http://www.perl.org/">
   perl</a> installed, preferably perl
   5.8 or higher. Users on Win32 based platforms are recommended to use
@@ -2931,19 +2969,18 @@ quickly.
   State Perl</a>. We use active state perl without problems. We have
   ran into problems trying to use the cygwin version of perl on Win32
   based platforms. <p>
-  </p></li>
-  <a name="generate_using_mpc"></a>
-  <li>To build ACE and associated tests, examples,
-  and associated utility libraries with GNUmakefiles, you must
-  generate GNUmakefiles with MPC:<p>
-  <code> $ACE_ROOT/bin/mwc.pl -type gnuace ACE.mwc</code> </p>
-  <p>On Windows, with Visual C++ 8, you must generate solution and project files with MPC:<p>
+  </p></li><li>If you just want to build ACE and associated tests, examples,
+  and associated utility libraries, we recommend that you do <p>
+  <code> $ACE_ROOT/bin/mwc.pl -type gnuace ACE.mwc</code> </p><p>
+
+  from <code> $ACE_ROOT </code> to generate GNUmakefiles. Please use
 
   <code> $ACE_ROOT/bin/mwc.pl -type vc8 ACE.mwc </code> </p><p>
 
-  On Windows, with Visual C++ 7, you must generate solution and project files with MPC:<p>
-  <code> $ACE_ROOT/bin/mwc.pl -type vc71 ACE.mwc </code> </p>
-  </li><li>If you want to build TAO+CIAO and its associated libraries
+  to generate VC8 project and solution files. Please use <code>-type
+  vc71</code> to generate VC71 project and solution files.
+
+  </p></li><li>If you want to build TAO+CIAO and its associated libraries
   please see <a href="TAO/TAO-INSTALL.html">TAO-INSTALL</a><a> and
   </a><a href="TAO/CIAO/CIAO-INSTALL.html">CIAO-INSTALL</a> for details.
 </li></ul>

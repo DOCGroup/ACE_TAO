@@ -1,5 +1,5 @@
 // $Id$
-project(*RTEvent_Server): orbsvcsexe, rtcorbaevent, strategies, avoids_minimum_corba, avoids_corba_e_compact, avoids_corba_e_micro {
+project(*RTEvent_Server): orbsvcsexe, rtcorbaevent, strategies, minimum_corba {
   after    += RTEC_Perf
   libs     += TAO_RTEC_Perf
 
@@ -14,7 +14,7 @@ project(*RTEvent_Server): orbsvcsexe, rtcorbaevent, strategies, avoids_minimum_c
   }
 }
 
-project(*RTEvent_Client): orbsvcsexe, rtcorbaevent, strategies, avoids_minimum_corba, avoids_corba_e_compact, avoids_corba_e_micro {
+project(*RTEvent_Client): orbsvcsexe, rtcorbaevent, strategies, minimum_corba {
   after    += RTEC_Perf
   libs     += TAO_RTEC_Perf
 

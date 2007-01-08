@@ -2,8 +2,6 @@
  * @file Null_Interface.idl
  *
  * @author Abdul Sowayan <abdullah.sowayan@lmco.com>
- *
- * $Id$
  */
 
 #ifndef NULL_INTERFACE_IDL
@@ -11,8 +9,8 @@
 
 /**
  * @interface Null_Interface
- *
- * @brief
+ * 
+ * @brief 
  */
 interface Null_Interface
 {

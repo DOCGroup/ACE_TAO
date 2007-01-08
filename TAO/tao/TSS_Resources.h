@@ -33,7 +33,6 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 namespace TAO
 {
   class GUIResource_Factory;
-  class Transport_Selection_Guard;
 }
 /**
  * @class TAO_TSS_Resources
@@ -106,17 +105,6 @@ public:
    * are operational only in within the context of GUI event loops.
    */
   TAO::GUIResource_Factory * gui_resource_factory_;
-
-#if TAO_HAS_TRANSPORT_CURRENT == 1
-
-  /// A TSS for a pointer to the current transport guard (see
-  /// below). The guard keeps track of the Transport, if any that has
-  /// been selected for use by the current thread, in the context of
-  /// an upcall or client-side interceptor.
-
-  TAO::Transport_Selection_Guard* tsg_;
-
-#endif  /* TAO_HAS_TRANSPORT_CURRENT == 1 */
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

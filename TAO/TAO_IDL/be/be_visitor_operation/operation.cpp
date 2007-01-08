@@ -148,9 +148,7 @@ be_visitor_operation::gen_throw_spec (be_operation *node)
       int is_amh_exception_holder = this->is_amh_exception_holder (iface);
       AST_Decl::NodeType nt = iface->node_type ();
 
-      if (nt != AST_Decl::NT_valuetype
-          && nt != AST_Decl::NT_eventtype
-          || is_amh_exception_holder)
+      if (nt != AST_Decl::NT_valuetype || is_amh_exception_holder)
         {
           *os << be_nl << throw_spec_open;
           *os << be_idt_nl << "::CORBA::SystemException";
@@ -188,13 +186,130 @@ be_visitor_operation::gen_throw_spec (be_operation *node)
 }
 
 int
-be_visitor_operation::gen_raise_exception (const char *exception_name,
+be_visitor_operation::gen_environment_decl (int argument_emitted,
+                                            be_operation *node)
+{
+  // Generate the CORBA::Environment parameter for the alternative mapping.
+  if (be_global->exception_support ())
+    {
+      return 0;
+    }
+
+  TAO_OutStream *os = this->ctx_->stream ();
+
+  // Use ACE_ENV_SINGLE_ARG_DECL or ACE_ENV_ARG_DECL depending on
+  // whether the operation node has parameters.
+  const char *env_decl = "ACE_ENV_SINGLE_ARG_DECL";
+
+  if (this->ctx_->sub_state ()
+        == TAO_CodeGen::TAO_AMH_RESPONSE_HANDLER_OPERATION
+      && node->argument_count () == 0)
+    {
+      // Response handler operations don't use the environment arg
+      // unless there are other args in the operation.
+      env_decl = "ACE_ENV_SINGLE_ARG_DECL";
+      this->ctx_->sub_state (TAO_CodeGen::TAO_SUB_STATE_UNKNOWN);
+    }
+  else if (argument_emitted || node->argument_count () > 0)
+    {
+      env_decl = "ACE_ENV_ARG_DECL";
+    }
+
+  TAO_CodeGen::CG_STATE cgs = this->ctx_->state ();
+
+  if (node->argument_count () > 0
+      || cgs == TAO_CodeGen::TAO_OPERATION_ARGLIST_PROXY_IMPL_XH
+      || cgs == TAO_CodeGen::TAO_OPERATION_ARGLIST_PROXY_IMPL_XS)
+    {
+      *os << be_nl;
+    }
+
+  switch (this->ctx_->state ())
+    {
+    case TAO_CodeGen::TAO_OPERATION_ARGLIST_CH:
+    case TAO_CodeGen::TAO_OPERATION_ARGLIST_COLLOCATED_SH:
+    case TAO_CodeGen::TAO_OPERATION_ARGLIST_SH:
+      // Last argument is always CORBA::Environment.
+      *os << env_decl << "_WITH_DEFAULTS";
+      break;
+    default:
+      *os << env_decl;
+      break;
+    }
+
+  return 0;
+}
+
+// Method that returns the appropriate CORBA::Environment variable.
+const char *
+be_visitor_operation::gen_environment_var (void)
+{
+  static const char *ace_try_env_decl = "ACE_DECLARE_NEW_CORBA_ENV;";
+  static const char *null_env_decl = "";
+
+  // Check if we are generating stubs/skeletons for
+  // true C++ exception support.
+  if (be_global->exception_support ())
+    {
+      return ace_try_env_decl;
+    }
+  else
+    {
+      return null_env_decl;
+    }
+}
+
+int
+be_visitor_operation::gen_raise_exception (be_type *return_type,
+                                           const char *exception_name,
                                            const char *exception_arguments)
 {
   TAO_OutStream *os = this->ctx_->stream ();
 
-  *os << "throw "
-      << exception_name << "(" << exception_arguments << ");";
+  if (be_global->use_raw_throw ())
+    {
+      *os << "throw "
+          << exception_name << "(" << exception_arguments << ");\n";
+      return 0;
+    }
+
+  int is_void =
+    return_type == 0 || this->void_return_type (return_type);
+
+  if (is_void)
+    {
+      *os << "ACE_THROW (";
+    }
+  else
+    {
+      *os << "ACE_THROW_RETURN (";
+    }
+
+  *os << exception_name << " (" << exception_arguments << ")";
+
+  if (is_void)
+    {
+      *os << ");";
+
+      return 0;
+    }
+
+  *os << ",";
+
+  // Non-void return type.
+  be_visitor_context ctx (*this->ctx_);
+  be_visitor_operation_rettype_return_cs visitor (&ctx);
+
+  if (return_type->accept (&visitor) == -1)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "(%N:%l) be_visitor_operation::"
+                         "gen_raise_exception - "
+                         "codegen for return var failed\n"),
+                        -1);
+    }
+
+  *os << ");";
 
   return 0;
 }
@@ -225,7 +340,8 @@ be_visitor_operation::gen_stub_operation_body (
 
   if (node->has_native ()) // native exists => no stub
     {
-      if (this->gen_raise_exception ("::CORBA::MARSHAL",
+      if (this->gen_raise_exception (return_type,
+                                     "::CORBA::MARSHAL",
                                      "") == -1)
         {
           ACE_ERROR_RETURN ((
@@ -357,12 +473,23 @@ be_visitor_operation::gen_stub_operation_body (
       *os << "_tao_call.invoke (" << be_idt << be_idt_nl
           << "_tao_" << node->flat_name ()
           << "_exceptiondata," << be_nl
-          << node->exceptions ()->length () << be_uidt_nl
+          << node->exceptions ()->length () << env_arg << be_uidt_nl
           << ");" << be_uidt;
     }
   else
     {
-      *os << "_tao_call.invoke (0, 0);";
+      *os << "_tao_call.invoke (0, 0"
+          << (be_global->use_raw_throw () ? "" : " ACE_ENV_ARG_PARAMETER")
+          << ");";
+    }
+
+  if (this->void_return_type (return_type))
+    {
+      *os << TAO_ACE_CHECK ();
+    }
+  else
+    {
+      *os << TAO_ACE_CHECK ("_tao_retval.excp ()");
     }
 
   if (!this->void_return_type (return_type))
@@ -408,7 +535,18 @@ be_visitor_operation::gen_raise_interceptor_exception (
 
   if (this->void_return_type (bt))
     {
-      *os << "throw " << excep << "(" << completion_status << ");";
+      if (be_global->use_raw_throw ())
+        {
+          *os << "throw " << excep << "(" << completion_status << ");";
+        }
+      else
+        {
+          *os << "TAO_INTERCEPTOR_THROW (" << be_idt << be_idt_nl
+              << excep << " (" << be_idt << be_idt_nl
+              << completion_status << be_uidt_nl
+              << ")" << be_uidt << be_uidt_nl
+              << ");" << be_uidt;
+        }
     }
   else
     {

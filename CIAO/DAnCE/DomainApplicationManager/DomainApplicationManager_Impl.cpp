@@ -2,7 +2,7 @@
 
 #include "DomainApplicationManager_Impl.h"
 #include "ExecutionManager/Execution_Manager_Impl.h"
-#include "ciao/Deployment_NodeApplicationManagerC.h"
+#include "ciao/NodeApplicationManagerC.h"
 #include "ace/Null_Mutex.h"
 #include "ace/OS_NS_string.h"
 #include "ace/SString.h"
@@ -254,7 +254,7 @@ get_plan_info (void)
 
   // Error: If there are no nodes in the plan => No nodes to deploy the
   // components
-  CORBA::ULong const length = this->plan_.instance.length ();
+  const CORBA::ULong length = this->plan_.instance.length ();
 
   if (length == 0)
     {
@@ -1464,7 +1464,7 @@ start (ACE_ENV_SINGLE_ARG_DECL)
       for (i = 0; i < this->num_child_plans_; ++i)
         {
           // Get the NodeApplication object reference.
-          ACE_Hash_Map_Entry <ACE_CString, Chained_Artifacts> *entry = 0;
+          ACE_Hash_Map_Entry <ACE_CString, Chained_Artifacts> *entry;
 
           if (this->artifact_map_.find (this->node_manager_names_[i],
                                         entry) != 0)
@@ -2040,7 +2040,7 @@ purge_connections (Deployment::Connections_var & connections,
     }
 }
 
-const Deployment::Properties *
+Deployment::Properties *
 CIAO::DomainApplicationManager_Impl::
 get_connection_QoS_configuration (const Deployment::Requirement & requirement)
 {

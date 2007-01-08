@@ -141,10 +141,6 @@ extern int t_errno;
 #  define EBUSY ETIME
 #endif /* EBUSY */
 
-#if !defined (ECANCELED)
-#  define ECANCELED 125
-#endif /* ECANCELED */
-
 #ifdef __cplusplus
 }
 #endif /* __cplusplus */

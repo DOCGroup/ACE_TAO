@@ -399,7 +399,8 @@ ACE_Reactor::timer_queue (ACE_Timer_Queue *tq)
 ACE_Timer_Queue *
 ACE_Reactor::timer_queue (void) const
 {
-  return this->implementation ()->timer_queue ();
+  ACE_Reactor_Impl *impl = this->implementation_;
+  return impl->timer_queue ();
 }
 
 int

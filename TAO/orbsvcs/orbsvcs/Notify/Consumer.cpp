@@ -31,7 +31,6 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 TAO_Notify_Consumer::TAO_Notify_Consumer (TAO_Notify_ProxySupplier* proxy)
 : proxy_ (proxy)
 , is_suspended_ (0)
-, have_not_yet_verified_publish_ (true)
 , pacing_ (proxy->qos_properties_.pacing_interval ())
 , max_batch_size_ (CosNotification::MaximumBatchSize, 0)
 , timer_id_ (-1)
@@ -684,14 +683,7 @@ void
 TAO_Notify_Consumer::dispatch_updates_i (const CosNotification::EventTypeSeq& added, const CosNotification::EventTypeSeq& removed
                                          ACE_ENV_ARG_DECL)
 {
-  if (this->have_not_yet_verified_publish_)
-    {
-      this->have_not_yet_verified_publish_ = false; // no need to check again
-      if (! this->publish_->_is_a ("IDL:omg.org/CosNotifyComm/NotifyPublish:1.0"
-                                   ACE_ENV_ARG_PARAMETER))
-        this->publish_ = CosNotifyComm::NotifyPublish::_nil();
-    }
-  if (! CORBA::is_nil (this->publish_.in ()))
+  if (!CORBA::is_nil (this->publish_.in ()))
     this->publish_->offer_change (added, removed ACE_ENV_ARG_PARAMETER);
 }
 

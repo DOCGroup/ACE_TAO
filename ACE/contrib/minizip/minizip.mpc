@@ -1,6 +1,3 @@
-// -*- MPC -*-
-// $Id$
-
 project (minizip) : zlib{
 
 sharedname = minizip

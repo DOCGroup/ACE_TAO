@@ -19,7 +19,7 @@
 #include /**/ "ace/pre.h"
 
 #include "Dynamic_Component_Servant_Base.h"
-#include "CIAO_SwapExecC.h"
+#include "SwapExecC.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once

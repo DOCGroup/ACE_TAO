@@ -123,7 +123,7 @@ sub store_file ($)
     elsif ($name =~ /\/GNUmakefile.*.[^~]$/) {
         push @files_makefile, ($name);
     }
-    elsif ($name =~ /\.(mpc|mwc|mpb|mpt)$/i) {
+    elsif ($name =~ /\.(mpc|mwc|mpb|mpt)/i) {
         push @files_mpc, ($name);
     }
     elsif ($name =~ /\.(icc|ncb|opt|zip)$/i) {
@@ -277,12 +277,12 @@ sub check_for_newline ()
 }
 
 
-# This test checks for files that are not allowed to be in svn
+# This test checks for files that are not allowed to be in cvs
 sub check_for_noncvs_files ()
 {
-    print "Running non svn files check\n";
+    print "Running non cvs files check\n";
     foreach $file (@files_noncvs, @files_dsp, @files_dsw, @files_makefile) {
-        print_error ("File $file should not be in svn!");
+        print_error ("File $file should not be in cvs!");
     }
 }
 
@@ -589,7 +589,7 @@ sub check_for_dependency_file ()
                     $depend = $path . $depend;
                     unless (open (DFILE, $depend)) {
                         print_error ("DEPENDENCY_FILE \"$depend\" not found");
-                        print " Either add \"$depend\" to svn ";
+                        print " Either add \"$depend\" to cvs ";
                         print "or remove DEPENDENCY_FILE variable\n";
                         print " from $file\n\n";
                     }
@@ -747,8 +747,7 @@ sub check_for_versioned_namespace_begin_end ()
         if (/^\s*\w+_END_VERSIONED_NAMESPACE_DECL/) {
           ++$end_count;
         }
-        if ($begin_count > $end_count and
-            /^\s*#\s*include(\s*\/\*\*\/)?\s*"/) {
+        if ($begin_count > $end_count and /^\s*#\s*include\s*/) {
           print_error ("$file:$.: #include directive within Versioned namespace block");
         }
       }
@@ -1449,7 +1448,7 @@ check_for_streams_include () if ($opt_l >= 6);
 check_for_dependency_file () if ($opt_l >= 1);
 check_for_makefile_variable () if ($opt_l >= 1);
 check_for_inline_in_cpp () if ($opt_l >= 2);
-check_for_id_string () if ($opt_l >= 1);
+# check_for_id_string () if ($opt_l >= 1);
 check_for_newline () if ($opt_l >= 1);
 check_for_inline () if ($opt_l >= 2);
 check_for_math_include () if ($opt_l >= 3);

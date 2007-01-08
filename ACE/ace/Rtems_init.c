@@ -1,46 +1,49 @@
 /*
+ * RTEMS Network configuration/initialization
+ *
+ *  This file is a merger of the netdemo/init.c and networkconfig.h
+ *  with some modifications to support loopback only.  This file
+ *  is OK for a starting point for a real networked application.
+ *     --joel sherrill 16 Mar 2001
+ *
+ * This program may be distributed and used for any purpose.
+ * I ask only that you:
+ *	1. Leave this author information intact.
+ *	2. Document any changes you make.
+ *
+ * W. Eric Norum
+ * Saskatchewan Accelerator Laboratory
+ * University of Saskatchewan
+ * Saskatoon, Saskatchewan, CANADA
+ * eric@skatter.usask.ca
+ *
  *  $Id$
  */
 
 #if defined (ACE_HAS_RTEMS)
 
-#define RTEMS_BSP_NETWORK_DRIVER_NAME "ne1"
-#define RTEMS_BSP_NETWORK_DRIVER_ATTACH rtems_ne_driver_attach
-#define CONFIGURE_LIBIO_MAXIMUM_FILE_DESCRIPTORS 256
+#include <bsp.h>
 
-#define CONFIGURE_MAXIMUM_POSIX_THREADS 100
-#define CONFIGURE_MAXIMUM_POSIX_MUTEXES 300
-#define CONFIGURE_MAXIMUM_POSIX_CONDITION_VARIABLES 300
-#define CONFIGURE_MAXIMUM_POSIX_KEYS 100
-#define CONFIGURE_MAXIMUM_POSIX_TIMERS 100
-#define CONFIGURE_MAXIMUM_POSIX_QUEUED_SIGNALS 10
-#define CONFIGURE_MAXIMUM_POSIX_SEMAPHORES 300
-#define CONFIGURE_POSIX_INIT_THREAD_TABLE
-#define CONFIGURE_POSIX_INIT_THREAD_ENTRY_POINT Init
-#define CONFIGURE_MEMORY_FOR_POSIX (10*1024)
-#define CONFIGURE_POSIX_INIT_THREAD_STACK_SIZE (10*1024)
+char *rtems_progname;
 
 #define CONFIGURE_TEST_NEEDS_CONSOLE_DRIVER
 #define CONFIGURE_TEST_NEEDS_CLOCK_DRIVER
+#define CONFIGURE_RTEMS_INIT_TASKS_TABLE
 
 #define CONFIGURE_EXECUTIVE_RAM_SIZE	(512*1024)
+#define CONFIGURE_MAXIMUM_SEMAPHORES	20
+#define CONFIGURE_MAXIMUM_TASKS		20
 
 #define CONFIGURE_MICROSECONDS_PER_TICK	10000
 
-#define CONFIGURE_MAXIMUM_SEMAPHORES    100
-#define CONFIGURE_MAXIMUM_TASKS         100
-#define CONFIGURE_INIT_TASK_PRIORITY 120
+#define CONFIGURE_INIT_TASK_STACK_SIZE	(10*1024)
+#define CONFIGURE_INIT_TASK_PRIORITY	120
 #define CONFIGURE_INIT_TASK_INITIAL_MODES (RTEMS_PREEMPT | \
                                            RTEMS_NO_TIMESLICE | \
                                            RTEMS_NO_ASR | \
                                            RTEMS_INTERRUPT_LEVEL(0))
 
-#include <bsp.h>
-
-char *rtems_progname;
-
 #define CONFIGURE_INIT
-
 rtems_task Init (rtems_task_argument argument);
 
 #include <confdefs.h>
@@ -50,6 +53,7 @@ rtems_task Init (rtems_task_argument argument);
 #if !defined (ACE_LACKS_NETWORKING)
 
 #include <rtems/rtems_bsdnet.h>
+/* start of #include "../networkconfig.h" */
 
 /*
  * Network configuration
@@ -58,6 +62,8 @@ rtems_task Init (rtems_task_argument argument);
  * EDIT THIS FILE TO REFLECT YOUR NETWORK CONFIGURATION     *
  * BEFORE RUNNING ANY RTEMS PROGRAMS WHICH USE THE NETWORK! *
  ************************************************************
+ *
+ *  $Id$
  */
 
 #ifndef _RTEMS_NETWORKCONFIG_H_
@@ -84,12 +90,13 @@ rtems_task Init (rtems_task_argument argument);
  */
 #define RTEMS_SET_ETHERNET_ADDRESS
 #if (defined (RTEMS_SET_ETHERNET_ADDRESS))
+/* static char ethernet_address[6] = { 0x08, 0x00, 0x3e, 0x12, 0x28, 0xb1 }; */
 static char ethernet_address[6] = { 0x00, 0x80, 0x7F, 0x22, 0x61, 0x77 };
 
 #endif
 
 #define RTEMS_USE_LOOPBACK
-
+#define RTEMS_USE_LOOPBACK_ONLY
 #ifdef RTEMS_USE_LOOPBACK
 /*
  * Loopback interface
@@ -129,7 +136,7 @@ static struct rtems_bsdnet_ifconfig netdriver_config = {
 	NULL,				/* BOOTP supplies IP address */
 	NULL,				/* BOOTP supplies IP net mask */
 #else
-  "XXX.YYY.ZZZ.XYZ",   /* IP address */
+	"XXX.YYY.ZZZ.XYZ",		/* IP address */
 	"255.255.255.0",		/* IP net mask */
 #endif /* !RTEMS_USE_BOOTP */
 
@@ -161,9 +168,9 @@ struct rtems_bsdnet_config rtems_bsdnet_config = {
 #if (!defined (RTEMS_USE_BOOTP))
 	"rtems_host",		/* Host name */
 	"nodomain.com",		/* Domain name */
-  "XXX.YYY.ZZZ.1", /* Gateway */
+	"XXX.YYY.ZZZ.1",	/* Gateway */
 	"XXX.YYY.ZZZ.1",	/* Log host */
-  {"XXX.YYY.ZZZ.1" },  /* Name server(s) */
+	{"XXX.YYY.ZZZ.1" },	/* Name server(s) */
 	{"XXX.YYY.ZZZ.1" },	/* NTP server(s) */
 
 	/*
@@ -194,10 +201,9 @@ struct rtems_bsdnet_config rtems_bsdnet_config = {
 #endif
 
 #endif /* _RTEMS_NETWORKCONFIG_H_ */
+/* end of #include "../networkconfig.h" */
 
 #endif /* ACE_LACKS_NETWORKING */
-
-extern int main (int, char *[]);
 
 /*
  * RTEMS Startup Task
@@ -205,14 +211,13 @@ extern int main (int, char *[]);
 rtems_task
 Init (rtems_task_argument not_used)
 {
-  int retval = 0;
+  int doSocket(void);
+
 #if !defined (ACE_LACKS_NETWORKING)
-  retval = rtems_bsdnet_initialize_network ();
+  rtems_bsdnet_initialize_network ();
+  rtems_bsdnet_show_inet_routes ();
 #endif /* ACE_LACKS_NETWORKING */
-  if (retval == 0)
-    {
-      retval = main (0, 0);
-    }
+  exit (0);
 }
 
 #elif !defined (__GNUC__)

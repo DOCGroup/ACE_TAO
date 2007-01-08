@@ -149,7 +149,7 @@ namespace TAO
     int
     ServantRetentionStrategyNonRetain::is_servant_in_map (
       PortableServer::Servant /*servant*/,
-      bool &/*wait_occurred_restart_call*/)
+      int &/*wait_occurred_restart_call*/)
     {
       return 0;
     }
@@ -196,7 +196,7 @@ namespace TAO
     ServantRetentionStrategyNonRetain::activate_object (
       PortableServer::Servant /*servant*/,
       CORBA::Short /*priority*/,
-      bool &/*wait_occurred_restart_call*/
+      int &/*wait_occurred_restart_call*/
       ACE_ENV_ARG_DECL)
         ACE_THROW_SPEC ((CORBA::SystemException,
                          PortableServer::POA::ServantAlreadyActive,
@@ -212,7 +212,7 @@ namespace TAO
       const PortableServer::ObjectId &/*id*/,
       PortableServer::Servant /*servant*/,
       CORBA::Short /*priority*/,
-      bool &/*wait_occurred_restart_call*/
+      int &/*wait_occurred_restart_call*/
       ACE_ENV_ARG_DECL)
         ACE_THROW_SPEC ((CORBA::SystemException,
                          PortableServer::POA::ServantAlreadyActive,
@@ -345,4 +345,3 @@ namespace TAO
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL
-

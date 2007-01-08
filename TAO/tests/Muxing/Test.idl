@@ -12,8 +12,5 @@ module Test
 
     /// Return the number of messages received so far
     long get_event_count ();
-
-    /// A method to shutdown the ORB
-    oneway void shutdown ();
   };
 };

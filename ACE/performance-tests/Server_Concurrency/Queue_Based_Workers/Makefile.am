@@ -6,7 +6,7 @@
 ## this file will be lost the next time it is generated.
 ##
 ## MPC Command:
-## ./bin/mwc.pl -type automake -noreldefs ACE.mwc
+## /acebuilds/ACE_wrappers-repository/bin/mwc.pl -include /acebuilds/MPC/config -include /acebuilds/MPC/templates -feature_file /acebuilds/ACE_wrappers-repository/local.features -noreldefs -type automake -exclude build,Kokyu
 
 ACE_BUILDDIR = $(top_builddir)
 ACE_ROOT = $(top_srcdir)
@@ -16,7 +16,6 @@ noinst_PROGRAMS =
 ## Makefile.Svr_Conc_Queue_Based_Workers.am
 
 if !BUILD_ACE_FOR_TAO
-
 noinst_PROGRAMS += workers
 
 workers_CPPFLAGS = \
@@ -35,7 +34,6 @@ endif !BUILD_ACE_FOR_TAO
 ## Makefile.Svr_Conc_Queue_Based_Workers_RTCorba.am
 
 if !BUILD_ACE_FOR_TAO
-
 noinst_PROGRAMS += RT_CORBA_Workers
 
 RT_CORBA_Workers_CPPFLAGS = \

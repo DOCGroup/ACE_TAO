@@ -14,7 +14,9 @@
 #ifndef MONITOR_CBH
 #define MONITOR_CBH
 
-#include "ciao/Deployment_TargetManagerC.h"
+#include "TargetManagerC.h"
+
+
 
 /**
  * @namespace CIAO
@@ -36,28 +38,27 @@ namespace CIAO
     {
     public:
       /**
-       *  @param orb The ORB pointer
-       *  @param target The TargetManager reference
+       *  @constructor
+       *  @param _orb The ORB pointer
+       *  @param The TargetManager reference
        *  @param interval The time interval to sent update
        */
-      MonitorCB (CORBA::ORB_ptr orb, Deployment::TargetManager_ptr target, int interval);
+      MonitorCB (CORBA::ORB_ptr _orb,Deployment::TargetManager_ptr,int interval);
       /**
-       *  This function is called by the monitor to
-       *               update Domain data, which is then sent to
-       *               TM.
+       *  @function update_data
        *  @param  data Contains the updated Domain data
        *  @return int indicates success.
-       *  @todo Check return value, seems not used at this moment
+       *  @description This function is called by the monitor to
+       *               update Domain data, which is then sent to
+       *               TM.
        */
       int update_data (::Deployment::Domain& data);
     private:
       /// The ORB pointer
-      /// @todo Make this a _var
       CORBA::ORB_ptr orb_;
 
       /// The Target Manager pointer to send back the
       /// update
-      /// @todo Make this a _var
       ::Deployment::TargetManager_ptr target_mgr_;
 
       /// The interval after which updates need to be send

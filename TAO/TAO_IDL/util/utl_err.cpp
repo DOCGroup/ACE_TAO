@@ -72,7 +72,6 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "utl_string.h"
 #include "global_extern.h"
 #include "nr_extern.h"
-#include "fe_extern.h"
 #include "ast_interface.h"
 #include "ast_enum.h"
 #include "ast_union.h"
@@ -113,7 +112,7 @@ error_string (UTL_Error::ErrorCode c)
     case UTL_Error::EIDL_PREFIX_CONFLICT:
       return "prefix at declaration differs from prefix at definition or use, ";
     case UTL_Error::EIDL_ILLEGAL_VERSION:
-      return "illegal #pragma version, ";
+      return "illegal version number, ";
     case UTL_Error::EIDL_VERSION_RESET:
       return "version already set by #pragma version or #pragma id, ";
     case UTL_Error::EIDL_ID_RESET:
@@ -631,11 +630,7 @@ UTL_Error::syntax_error (IDL_GlobalData::ParseState ps)
   ACE_ERROR ((LM_ERROR,
               "%s\n",
               parse_state_to_error_message (ps)));
-
-  // Better to bail here than to increment the error count and
-  // try to avoid further bogus error messages and crashes
-  // that may arise.
-  throw FE_Bailout ();
+  idl_global->set_err_count (idl_global->err_count () + 1);
 }
 
 void
@@ -808,18 +803,6 @@ UTL_Error::version_number_error (char *n)
   ACE_ERROR ((LM_ERROR,
               "%s\n",
               n));
-  idl_global->set_err_count (idl_global->err_count () + 1);
-}
-
-void
-UTL_Error::version_syntax_error (const char *msg)
-{
-  idl_error_header (EIDL_ILLEGAL_VERSION,
-                    idl_global->lineno (),
-                    idl_global->filename ()->get_string ());
-  ACE_ERROR ((LM_ERROR,
-              "%s\n",
-              msg));
   idl_global->set_err_count (idl_global->err_count () + 1);
 }
 

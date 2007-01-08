@@ -116,11 +116,9 @@ AST_InterfaceFwd::is_local (void)
   return this->full_definition ()->is_local ();
 }
 
-bool
-AST_InterfaceFwd::is_valuetype (void)
+bool AST_InterfaceFwd::is_valuetype (void)
 {
-  AST_Decl::NodeType nt = this->full_definition ()->node_type ();
-  return nt == AST_Decl::NT_valuetype || nt == AST_Decl::NT_eventtype;
+  return this->full_definition ()->node_type () == AST_Decl::NT_valuetype;
 }
 
 bool
@@ -135,33 +133,33 @@ AST_InterfaceFwd::full_def_seen (void)
 {
   UTL_Scope *s = this->defined_in ();
   AST_Interface *i = 0;
-
+  
   // If a full definition is seen in a previous module opening
   // or anywhere in the current scope (before or after our
   // declaration, reture TRUE.
-
+  
   if (AST_Decl::NT_module == s->scope_node_type ())
     {
       AST_Module *m = AST_Module::narrow_from_scope (s);
       AST_Decl *d = m->look_in_previous (this->local_name (), false);
-
+      
       if (0 != d)
         {
           i = AST_Interface::narrow_from_decl (d);
-
+          
           if (0 != i && i->is_defined ())
             {
               return true;
             }
         }
     }
-
+  
   for (UTL_ScopeActiveIterator iter (s, UTL_Scope::IK_decls);
         !iter.is_done ();
         iter.next ())
     {
       i = AST_Interface::narrow_from_decl (iter.item ());
-
+      
       if (0 != i && this->local_name ()->compare (i->local_name ()))
         {
           if (i->is_defined ())
@@ -170,7 +168,7 @@ AST_InterfaceFwd::full_def_seen (void)
             }
         }
     }
-
+    
   return false;
 }
 
@@ -212,6 +210,7 @@ void
 AST_InterfaceFwd::set_full_definition (AST_Interface *nfd)
 {
   delete this->pd_full_definition;
+  this->pd_full_definition = 0;
   this->pd_full_definition = nfd;
 }
 
@@ -224,31 +223,31 @@ AST_InterfaceFwd::is_defined (void)
     {
       AST_Module *m =
         AST_Module::narrow_from_scope (this->defined_in ());
-
+        
       if (0 != m)
         {
           AST_Decl *d = m->look_in_previous (this->local_name ());
-
+          
           if (0 != d)
             {
               // We could be looking at a superfluous forward decl
               // of an interface already defined.
               AST_Interface *full = AST_Interface::narrow_from_decl (d);
-
+              
               if (0 != full)
                 {
                   this->is_defined_ = true;
                 }
-
+                
               AST_InterfaceFwd *fwd =
                 AST_InterfaceFwd::narrow_from_decl (d);
-
+                
               // Since fwd_redefinition_helper() is called
               // before fe_add_interface(), we can't check
               // n_inherits() or is_defined(), but added()
               // is a sufficient way to tell if our full
               // definition has already gone through the
-              // add_to_scope process.
+              // add_to_scope process.  
               if (0 != fwd && fwd->full_definition ()->added ())
                 {
                   this->is_defined_ = true;
@@ -256,7 +255,7 @@ AST_InterfaceFwd::is_defined (void)
             }
         }
     }
-
+    
   return this->is_defined_;
 }
 
@@ -279,13 +278,13 @@ AST_InterfaceFwd::destroy (void)
     {
       // If our full definition is not defined, it
       // means that there was no full definition
-      // for us in this compilation unit, so we
+      // for us in this compilation unit, so we 
       // have to destroy this allocation.
       this->pd_full_definition->destroy ();
       delete this->pd_full_definition;
       this->pd_full_definition = 0;
     }
-
+    
   this->AST_Type::destroy ();
 }
 

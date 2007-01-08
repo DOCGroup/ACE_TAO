@@ -23,9 +23,7 @@ TAO_TSS_Resources::TAO_TSS_Resources (void)
 
 #endif /* TAO_HAS_CORBA_MESSAGING == 1 */
   , gui_resource_factory_ (0)
-#if (TAO_HAS_TRANSPORT_CURRENT == 1)
-  , tsg_ (0)
-#endif /* TAO_HAS_TRANSPORT_CURRENT */
+
 {
 }
 

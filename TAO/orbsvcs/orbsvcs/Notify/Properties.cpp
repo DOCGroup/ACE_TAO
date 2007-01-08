@@ -17,11 +17,8 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 TAO_Notify_Properties::TAO_Notify_Properties (void)
   : factory_ (0)
   , builder_ (0)
-  , orb_(0)
-  , dispatching_orb_ (0)
   , asynch_updates_ (0)
   , allow_reconnect_ (false)
-  , separate_dispatching_orb_ (false)
   , updates_ (1)
 {
   // In case no conf. file is specified, the EC will default to reactive concurrency.
@@ -40,13 +37,8 @@ TAO_Notify_Properties::~TAO_Notify_Properties ()
 {
 }
 
-TAO_Notify_Properties *
-TAO_Notify_Properties::instance (void)
-{
-  // Hide the template instantiation to prevent multiple instances
-  // from being created.
+#if defined (ACE_HAS_EXPLICIT_STATIC_TEMPLATE_MEMBER_INSTANTIATION)
+template class TAO_Singleton<TAO_Notify_Properties, ACE_Thread_Mutex> *TAO_Singleton<TAO_Notify_Properties, ACE_Thread_Mutex>::singleton_;
+#endif /* ACE_HAS_EXPLICIT_STATIC_TEMPLATE_MEMBER_INSTANTIATION */
 
-  return
-    TAO_Singleton<TAO_Notify_Properties, TAO_SYNCH_MUTEX>::instance ();
-}
 TAO_END_VERSIONED_NAMESPACE_DECL

@@ -14,7 +14,8 @@
 #include "tao/String_Traits_T.h"
 #include "testing_allocation_traits.hpp"
 
-#include "tao/Bounded_Basic_String_Sequence_T.h"
+#include "tao/Bounded_String_Sequence_T.h"
+#include "tao/Bounded_Wstring_Sequence_T.h"
 #include "tao/CORBA_String.h"
 
 #include "string_sequence_tester.hpp"
@@ -96,7 +97,7 @@ struct Tester
     expected_calls f(tested_allocation_traits::freebuf_calls);
     expected_calls r(tested_element_traits::release_calls);
     {
-      tested_sequence a(4, buffer, false);
+      tested_sequence a(4, buffer);
       BOOST_CHECK_EQUAL(CORBA::ULong(MAXIMUM), a.maximum());
       BOOST_CHECK_EQUAL(CORBA::ULong(4), a.length());
       BOOST_CHECK_EQUAL(buffer, a.get_buffer());
@@ -120,7 +121,7 @@ struct Tester
     expected_calls f(tested_allocation_traits::freebuf_calls);
     expected_calls r(tested_element_traits::release_calls);
     {
-      tested_sequence a(4, buffer, false);
+      tested_sequence a(4, buffer);
       BOOST_CHECK_EQUAL(CORBA::ULong(MAXIMUM), a.maximum());
       BOOST_CHECK_EQUAL(CORBA::ULong(4), a.length());
       BOOST_CHECK_EQUAL(buffer, a.get_buffer());
@@ -374,14 +375,14 @@ init_unit_test_suite(int, char*[])
       BOOST_TEST_SUITE("bounded string sequence unit test");
 
   {
-    typedef TAO::bounded_basic_string_sequence<char, MAXIMUM> s_sequence;
+    typedef TAO::bounded_string_sequence<MAXIMUM> s_sequence;
     typedef Tester<s_sequence> nTester;
     boost::shared_ptr<nTester> tester(nTester::allocate());
     tester->add_all(ts);
   }
 
   {
-    typedef TAO::bounded_basic_string_sequence<CORBA::WChar, MAXIMUM> w_sequence;
+    typedef TAO::bounded_wstring_sequence<MAXIMUM> w_sequence;
     typedef Tester<w_sequence> wTester;
     boost::shared_ptr<wTester> tester(wTester::allocate());
     tester->add_all(ts);

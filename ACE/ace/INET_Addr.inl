@@ -208,19 +208,6 @@ ACE_INET_Addr::is_loopback (void) const
   return (this->get_ip_address () == INADDR_LOOPBACK);
 }
 
-// Return @c true if the IP address is IPv4/IPv6 multicast address.
-ACE_INLINE bool
-ACE_INET_Addr::is_multicast (void) const
-{
-#if defined (ACE_HAS_IPV6)
-  if (this->get_type() == AF_INET6)
-    return this->inet_addr_.in6_.sin6_addr.s6_addr[0] == 0xFF;
-#endif /* ACE_HAS_IPV6 */
-  return
-    this->inet_addr_.in4_.sin_addr.s_addr >= 0xE0000000 &&  // 224.0.0.0
-    this->inet_addr_.in4_.sin_addr.s_addr <= 0xEFFFFFFF; // 239.255.255.255
-}
-
 #if defined (ACE_HAS_IPV6)
 // Return @c true if the IP address is IPv6 linklocal address.
 ACE_INLINE bool

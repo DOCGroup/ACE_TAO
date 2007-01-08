@@ -40,7 +40,15 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_ALLOC_HOOK_DEFINE(ACE_Select_Reactor_T)
 
-template <class ACE_SELECT_REACTOR_TOKEN> int
+#if defined (ACE_WIN32)
+#define ACE_SELECT_REACTOR_HANDLE(H) (this->event_handlers_[(H)].handle_)
+#define ACE_SELECT_REACTOR_EVENT_HANDLER(THIS,H) ((THIS)->event_handlers_[(H)].event_handler_)
+#else
+#define ACE_SELECT_REACTOR_HANDLE(H) (H)
+#define ACE_SELECT_REACTOR_EVENT_HANDLER(THIS,H) ((THIS)->event_handlers_[(H)])
+#endif /* ACE_WIN32 */
+
+  template <class ACE_SELECT_REACTOR_TOKEN> int
 ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::any_ready
   (ACE_Select_Reactor_Handle_Set &wait_set)
 {
@@ -58,7 +66,7 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::any_ready
   return this->any_ready_i (wait_set);
 }
 
-template <class ACE_SELECT_REACTOR_TOKEN> int
+  template <class ACE_SELECT_REACTOR_TOKEN> int
 ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::any_ready_i
   (ACE_Select_Reactor_Handle_Set &wait_set)
 {
@@ -100,14 +108,13 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::handler_i (int signum,
   return 0;
 }
 
-template <class ACE_SELECT_REACTOR_TOKEN> bool
+template <class ACE_SELECT_REACTOR_TOKEN> int
 ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::initialized (void)
 {
   ACE_TRACE ("ACE_Select_Reactor_T::initialized");
-  ACE_MT (ACE_GUARD_RETURN (ACE_SELECT_REACTOR_TOKEN, ace_mon, this->token_, false));
+  ACE_MT (ACE_GUARD_RETURN (ACE_SELECT_REACTOR_TOKEN, ace_mon, this->token_, 0));
   return this->initialized_;
 }
-
 
 template <class ACE_SELECT_REACTOR_TOKEN> int
 ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::owner (ACE_thread_t tid,
@@ -210,7 +217,7 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::notify (ACE_Event_Handler *eh,
   // caller to dictate which Event_Handler method the receiver
   // invokes.  Note that this call can timeout.
 
-  ssize_t const n = this->notify_handler_->notify (eh, mask, timeout);
+  ssize_t n = this->notify_handler_->notify (eh, mask, timeout);
   return n == -1 ? -1 : 0;
 }
 
@@ -407,7 +414,7 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::open
       if (this->timer_queue_ == 0)
         result = -1;
       else
-        this->delete_timer_queue_ = true;
+        this->delete_timer_queue_ = 1;
     }
 
   // Allows the Notify_Handler to be overridden.
@@ -420,7 +427,7 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::open
       if (this->notify_handler_ == 0)
         result = -1;
       else
-        this->delete_notify_handler_ = true;
+        this->delete_notify_handler_ = 1;
     }
 
   if (result != -1 && this->handler_rep_.open (size) == -1)
@@ -437,7 +444,7 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::open
 
   if (result != -1)
     // We're all set to go.
-    this->initialized_ = true;
+    this->initialized_ = 1;
   else
     // This will close down all the allocated resources properly.
     this->close ();
@@ -466,10 +473,10 @@ template <class ACE_SELECT_REACTOR_TOKEN> int
 ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::timer_queue
   (ACE_Timer_Queue *tq)
 {
-  if (this->timer_queue_ != 0 && this->delete_timer_queue_)
+  if (this->timer_queue_ != 0 && this->delete_timer_queue_ != 0)
     delete this->timer_queue_;
   this->timer_queue_ = tq;
-  this->delete_timer_queue_ = false;
+  this->delete_timer_queue_ = 0;
   return 0;
 }
 
@@ -575,7 +582,7 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::close (void)
     {
       delete this->timer_queue_;
       this->timer_queue_ = 0;
-      this->delete_timer_queue_ = false;
+      this->delete_timer_queue_ = 0;
     }
 
   if (this->notify_handler_ != 0)
@@ -585,10 +592,10 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::close (void)
     {
       delete this->notify_handler_;
       this->notify_handler_ = 0;
-      this->delete_notify_handler_ = false;
+      this->delete_notify_handler_ = 0;
     }
 
-  this->initialized_ = false;
+  this->initialized_ = 0;
 
   return 0;
 }

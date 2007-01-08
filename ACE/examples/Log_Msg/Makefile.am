@@ -6,13 +6,12 @@
 ## this file will be lost the next time it is generated.
 ##
 ## MPC Command:
-## ./bin/mwc.pl -type automake -noreldefs ACE.mwc
+## /acebuilds/ACE_wrappers-repository/bin/mwc.pl -include /acebuilds/MPC/config -include /acebuilds/MPC/templates -feature_file /acebuilds/ACE_wrappers-repository/local.features -noreldefs -type automake -exclude build,Kokyu
 
 ACE_BUILDDIR = $(top_builddir)
 ACE_ROOT = $(top_srcdir)
 
 ## Makefile.Log_Msg_Test_Callback.am
-
 noinst_PROGRAMS = test_callback
 
 test_callback_CPPFLAGS = \
@@ -26,7 +25,6 @@ test_callback_LDADD = \
   $(ACE_BUILDDIR)/ace/libACE.la
 
 ## Makefile.Log_Msg_Test_Log_Msg.am
-
 noinst_PROGRAMS += test_log_msg
 
 test_log_msg_CPPFLAGS = \
@@ -40,7 +38,6 @@ test_log_msg_LDADD = \
   $(ACE_BUILDDIR)/ace/libACE.la
 
 ## Makefile.Log_Msg_Test_Ostream.am
-
 noinst_PROGRAMS += test_ostream
 
 test_ostream_CPPFLAGS = \

@@ -143,6 +143,9 @@
 #define ACE_HAS_IP_MULTICAST
 #define ACE_LACKS_PERFECT_MULTICAST_FILTERING 1
 
+//platform supports snprintf ()
+#define ACE_HAS_SNPRINTF
+
 // Compiler/platform has the getrusage() system call.
 #define ACE_HAS_GETRUSAGE
 
@@ -206,7 +209,6 @@
 #define ACE_HAS_GETIFADDRS
 #define ACE_LACKS_STATIC_DATA_MEMBER_TEMPLATES
 #define ACE_LACKS_UNNAMED_SEMAPHORE
-#define ACE_LACKS_SIGVAL_T
 
 // dlcompat package (not part of base Darwin) is needed for dlopen().
 // You may download directly from sourceforge and install or use fink

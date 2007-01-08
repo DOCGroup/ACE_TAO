@@ -13,7 +13,7 @@
  * is:
  *
  * tao_idl
- *          -o orig -Gp -Gd -Sa -DCORBA3 -Sci
+ *          -o orig -Gp -Gd -Ge 1 -Sa -DCORBA3 -Sci
  *           -Wb,export_macro=TAO_Strategies_Export \
  *           -Wb,export_include="strategies_export.h" \
  *           -Wb,pre_include="ace/pre.h" \

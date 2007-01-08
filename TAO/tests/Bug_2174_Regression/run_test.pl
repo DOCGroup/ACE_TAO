@@ -70,9 +70,6 @@ if ($client != 3) {
 
 # Test C: server does not run (_non_existent() throws TRANSIENT)
 
-# This test was failing on win32 without this sleep.
-sleep 1;
-
 $client = $CL->SpawnWaitKill (10);
 unlink $iorfile;
 if ($client != 5) {

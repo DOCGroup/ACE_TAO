@@ -3,8 +3,6 @@
    Version 1.01e, February 12th, 2005
 
    Copyright (C) 1998-2005 Gilles Vollant
-
-   $Id$
 */
 
 #include <stdio.h>

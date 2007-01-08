@@ -69,7 +69,6 @@ ACE_OS::inet_ntop (int family, const void *addrptr, char *strptr, size_t len)
   ACE_NOTSUP_RETURN(0);
 #endif /* ACE_HAS_IPV6 */
 }
-
 ACE_INLINE int
 ACE_OS::inet_pton (int family, const char *strptr, void *addrptr)
 {

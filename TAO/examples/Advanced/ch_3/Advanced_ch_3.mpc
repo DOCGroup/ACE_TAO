@@ -1,14 +1,14 @@
 // -*- MPC -*-
 // $Id$
 
-project(*idl) : taoclient {
+project(*idl) : taoclient, exceptions {
   IDL_Files {
     time.idl
   }
   custom_only = 1
 }
 
-project(*client) : taoclient, anytypecode {
+project(*client) : taoclient, anytypecode, exceptions {
   after += *idl
   requires += corba_messaging
   source_files {
@@ -19,7 +19,7 @@ project(*client) : taoclient, anytypecode {
   }
 }
 
-project(*server) : taoserver {
+project(*server) : taoserver, exceptions {
   after += *idl
   source_files {
     server.cpp

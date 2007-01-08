@@ -57,7 +57,7 @@ TAO_PortableServer_ORBInitializer::register_policy_factories (
   // types since a single policy factory is used to create each of the
   // different types of PortableServer policies.
   static CORBA::PolicyType const type[] = {
-#if (TAO_HAS_MINIMUM_POA == 0) && !defined (CORBA_E_COMPACT)
+#if (TAO_HAS_MINIMUM_POA == 0)
     PortableServer::THREAD_POLICY_ID,
     PortableServer::IMPLICIT_ACTIVATION_POLICY_ID,
     PortableServer::SERVANT_RETENTION_POLICY_ID,

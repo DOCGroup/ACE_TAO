@@ -13,14 +13,14 @@ ACE_ROOT = $(top_srcdir)/..
 TAO_BUILDDIR = $(top_builddir)
 TAO_IDL = ACE_ROOT=$(ACE_ROOT) TAO_ROOT=$(TAO_ROOT) $(TAO_BUILDDIR)/TAO_IDL/tao_idl
 TAO_IDL_DEP = $(TAO_BUILDDIR)/TAO_IDL/tao_idl
-TAO_IDLFLAGS = -Wb,pre_include=ace/pre.h -Wb,post_include=ace/post.h -I$(TAO_ROOT) -I$(srcdir) -g $(ACE_BUILDDIR)/apps/gperf/src/gperf
+TAO_IDLFLAGS = -Ge 1 -Wb,pre_include=ace/pre.h -Wb,post_include=ace/post.h -I$(TAO_ROOT) -I$(srcdir) -g $(ACE_BUILDDIR)/apps/gperf/src/gperf
 TAO_ROOT = $(top_srcdir)
 
 
 ## Makefile.NotifyTests_Lib.am
 
 if BUILD_CORBA_MESSAGING
-if BUILD_EXCEPTIONS
+if !BUILD_MINIMUM_CORBA
 
 BUILT_SOURCES = \
   Activation_ManagerC.cpp \
@@ -28,7 +28,10 @@ BUILT_SOURCES = \
   Activation_ManagerC.inl \
   Activation_ManagerS.cpp \
   Activation_ManagerS.h \
-  Activation_ManagerS.inl
+  Activation_ManagerS.inl \
+  Activation_ManagerS_T.cpp \
+  Activation_ManagerS_T.h \
+  Activation_ManagerS_T.inl
 
 CLEANFILES = \
   Activation_Manager-stamp \
@@ -37,12 +40,15 @@ CLEANFILES = \
   Activation_ManagerC.inl \
   Activation_ManagerS.cpp \
   Activation_ManagerS.h \
-  Activation_ManagerS.inl
+  Activation_ManagerS.inl \
+  Activation_ManagerS_T.cpp \
+  Activation_ManagerS_T.h \
+  Activation_ManagerS_T.inl
 
-Activation_ManagerC.cpp Activation_ManagerC.h Activation_ManagerC.inl Activation_ManagerS.cpp Activation_ManagerS.h Activation_ManagerS.inl: Activation_Manager-stamp
+Activation_ManagerC.cpp Activation_ManagerC.h Activation_ManagerC.inl Activation_ManagerS.cpp Activation_ManagerS.h Activation_ManagerS.inl Activation_ManagerS_T.cpp Activation_ManagerS_T.h Activation_ManagerS_T.inl: Activation_Manager-stamp
 
 Activation_Manager-stamp: $(srcdir)/Activation_Manager.idl $(TAO_IDL_DEP)
-	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs $(srcdir)/Activation_Manager.idl
+	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs -GT $(srcdir)/Activation_Manager.idl
 	@touch $@
 
 noinst_LTLIBRARIES = libTAO_NotifyTests.la
@@ -102,6 +108,9 @@ noinst_HEADERS = \
   Activation_ManagerC.inl \
   Activation_ManagerS.h \
   Activation_ManagerS.inl \
+  Activation_ManagerS_T.cpp \
+  Activation_ManagerS_T.h \
+  Activation_ManagerS_T.inl \
   Application_Command.h \
   Command.h \
   Command_Builder.h \
@@ -162,7 +171,7 @@ noinst_HEADERS = \
   common.h \
   notify_test_export.h
 
-endif BUILD_EXCEPTIONS
+endif !BUILD_MINIMUM_CORBA
 endif BUILD_CORBA_MESSAGING
 
 ## Clean up template repositories, etc.

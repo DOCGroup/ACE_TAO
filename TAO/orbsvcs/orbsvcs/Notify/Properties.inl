@@ -34,22 +34,10 @@ TAO_Notify_Properties::orb (void)
   return CORBA::ORB::_duplicate (orb_.in ());
 }
 
-ACE_INLINE CORBA::ORB_ptr
-TAO_Notify_Properties::dispatching_orb (void)
-{
-  return CORBA::ORB::_duplicate (dispatching_orb_.in ());
-}
-
 ACE_INLINE void
 TAO_Notify_Properties::orb (CORBA::ORB_ptr orb)
 {
   orb_ = CORBA::ORB::_duplicate (orb);
-}
-
-ACE_INLINE void
-TAO_Notify_Properties::dispatching_orb (CORBA::ORB_ptr dispatching_orb)
-{
-  dispatching_orb_ = CORBA::ORB::_duplicate (dispatching_orb);
 }
 
 ACE_INLINE PortableServer::POA_ptr
@@ -86,18 +74,6 @@ ACE_INLINE void
 TAO_Notify_Properties::allow_reconnect (bool b)
 {
   this->allow_reconnect_ = b;
-}
-
-ACE_INLINE bool
-TAO_Notify_Properties::separate_dispatching_orb (void)
-{
-  return this->separate_dispatching_orb_;
-}
-
-ACE_INLINE void
-TAO_Notify_Properties::separate_dispatching_orb (bool b)
-{
-  this->separate_dispatching_orb_ = b;
 }
 
 ACE_INLINE CORBA::Boolean

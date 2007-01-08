@@ -94,6 +94,15 @@ TAO_UIOP_Connector::corbaloc_scan (const char *str, size_t &len
                     str));
       return 0;
     }
+  if (*(separator+1) != ',' && *(separator+1) != '/')
+    {
+      if (TAO_debug_level)
+        ACE_DEBUG ((LM_DEBUG,
+                    "(%P|%t) TAO_UIOP_CONNECTOR::corbaloc_scan warning: "
+                    "terminating charactor '|' should be followed by a ','"
+                    "or a '/' in <%s>",
+                    str));
+    }
   len = (separator - str) + 1;
   return this->make_profile (ACE_ENV_SINGLE_ARG_PARAMETER);
 }
@@ -234,14 +243,9 @@ TAO_UIOP_Connector::make_connection (TAO::Profile_Transport_Resolver *r,
       return 0;
     }
 
-  if (svc_handler->keep_waiting ())
+  if (transport->connection_handler ()->keep_waiting ())
     {
-      svc_handler->connection_pending ();
-    }
-
-  if (svc_handler->error_detected ())
-    {
-      svc_handler->cancel_pending_connection ();
+      svc_handler->add_reference ();
     }
 
   // At this point, the connection has be successfully created
@@ -271,13 +275,6 @@ TAO_UIOP_Connector::make_connection (TAO::Profile_Transport_Resolver *r,
                       ACE_TEXT ("could not add the new connection to Cache \n")));
         }
 
-      return 0;
-    }
-
-  if (svc_handler->error_detected ())
-    {
-      svc_handler->cancel_pending_connection ();
-      transport->purge_entry();
       return 0;
     }
 

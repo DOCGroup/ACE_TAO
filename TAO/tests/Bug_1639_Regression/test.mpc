@@ -1,7 +1,7 @@
 // -*- MPC -*-
 // $Id$
 
-project (Bug_1639_testclient) : taoserver, dynamicany {
+project (Bug_1639_testclient) : taoserver, dynamicany, exceptions {
    exename    = client
    Source_Files {
       struct_client.cpp

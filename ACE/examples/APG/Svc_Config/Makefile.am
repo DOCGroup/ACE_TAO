@@ -6,7 +6,7 @@
 ## this file will be lost the next time it is generated.
 ##
 ## MPC Command:
-## ./bin/mwc.pl -type automake -noreldefs ACE.mwc
+## /acebuilds/ACE_wrappers-repository/bin/mwc.pl -include /acebuilds/MPC/config -include /acebuilds/MPC/templates -feature_file /acebuilds/ACE_wrappers-repository/local.features -noreldefs -type automake -exclude build,Kokyu
 
 ACE_BUILDDIR = $(top_builddir)
 ACE_ROOT = $(top_srcdir)
@@ -16,7 +16,6 @@ noinst_PROGRAMS =
 ## Makefile.HA_Configurable_Server_Dynamic.am
 
 if !BUILD_ACE_FOR_TAO
-
 noinst_PROGRAMS += HA_Configurable_Server_Dynamic
 
 HA_Configurable_Server_Dynamic_CPPFLAGS = \
@@ -37,7 +36,6 @@ endif !BUILD_ACE_FOR_TAO
 ## Makefile.HA_Configurable_Server_Static.am
 
 if !BUILD_ACE_FOR_TAO
-
 noinst_PROGRAMS += HA_Configurable_Server_Static
 
 HA_Configurable_Server_Static_CPPFLAGS = \

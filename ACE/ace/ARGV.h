@@ -27,54 +27,6 @@
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
- * @class ACE_ARGV_Queue_Entry_T
- *
- * @brief An entry in the queue which keeps user supplied arguments.
- */
-template <typename CHAR_TYPE>
-class ACE_ARGV_Queue_Entry_T
-{
-public:
-  // = Initialization and termination.
-  /// Initialize a ACE_ARGV_Queue_Entry_T.
-  ACE_ARGV_Queue_Entry_T (void);
-
-  /**
-   * Initialize a ACE_ARGV_Queue_Entry_T.
-   *
-   * @param arg   Pointer to an argument
-   *
-   * @param quote_arg The argument @a arg need to be quoted
-   *              while adding to the vector.
-   */
-  ACE_ARGV_Queue_Entry_T (const CHAR_TYPE *arg,
-                          bool quote_arg);
-
-  /**
-   * Initialize a ACE_ARGV_Queue_Entry_T.
-   *
-   * @param entry Pointer to a queue entry
-   */
-  ACE_ARGV_Queue_Entry_T (const ACE_ARGV_Queue_Entry_T<CHAR_TYPE> &entry);
-
-  /// We need this destructor to keep some compilers from complaining.
-  /// It's just a no-op, however.
-  ~ACE_ARGV_Queue_Entry_T (void);
-
-  /// Dump the state of this object.
-  void dump (void) const;
-
-  // Declare the dynamic allocation hooks.
-  ACE_ALLOC_HOOK_DECLARE;
-
-  /// Pointer to the argument.
-  const CHAR_TYPE * arg_;
-
-  /// The argument need to be quoted while adding to the vector.
-  bool quote_arg_;
-};
-
-/**
  * @class ACE_ARGV_T
  *
  * @brief Builds a counted argument vector (ala argc/argv) from either
@@ -127,13 +79,9 @@ public:
    *              an environment variable reference (e.g., @c $VAR) will have
    *              its environment variable value in the resultant vector
    *              in place of the environment variable name.
-   *
-   * @param quote_args  If non-zero each argument @a argv[i] needs to
-   *                    be enclosed in double quotes ('"').
    */
   ACE_ARGV_T (CHAR_TYPE *argv[],
-              bool substitute_env_args = true,
-              bool quote_args = false);
+              bool substitute_env_args = true);
 
   /**
    * Initializes the argument vector from two combined argument vectors.
@@ -148,15 +96,10 @@ public:
    *              reference (e.g., @c $VAR) will have its environment
    *              variable value in the resultant vector in place
    *              of the environment variable name.
-   *
-   * @param quote_args  If non-zero each arguments @a first_argv[i] and
-   *                    @a second_argv[i] needs to be enclosed
-   *                    in double quotes ('"').
    */
   ACE_ARGV_T (CHAR_TYPE *first_argv[],
               CHAR_TYPE *second_argv[],
-              bool substitute_env_args = true,
-              bool quote_args = false);
+              bool substitute_env_args = true);
 
   /**
    * Initialize this object so arguments can be added later using one
@@ -218,14 +161,11 @@ public:
    *
    * @param next_arg    Pointer to the next argument to add to the vector.
    *
-   * @param quote_arg   The argument @a next_arg need to be quoted while
-   *                    adding to the vector.
-   *
    * @retval 0 on success; -1 on failure. Most likely @c errno values are:
    *       - EINVAL: This object is not in iterative mode.
    *       - ENOMEM: Not enough memory available to save @a next_arg.
    */
-  int add (const CHAR_TYPE *next_arg, bool quote_arg = false);
+  int add (const CHAR_TYPE *next_arg);
 
   /**
    * Add an array of arguments. This only works in the iterative mode.
@@ -238,14 +178,11 @@ public:
    * @param argv    Pointers to the arguments to add to the vector.
    *                @a argv must be terminated by a 0 pointer.
    *
-   * @param quote_args  If non-zero each argument @a argv[i] needs to
-   *                    be enclosed in double quotes ('"').
-   *
    * @retval 0 on success; -1 on failure. Most likely @c errno values are:
    *       - EINVAL: This object is not in iterative mode.
    *       - ENOMEM: Not enough memory available to save @a next_arg.
    */
-  int add (CHAR_TYPE *argv[], bool quote_args = false);
+  int add (CHAR_TYPE *argv[]);
 
 private:
   /// Copy constructor not implemented.
@@ -259,6 +196,10 @@ private:
 
   /// Converts buf_ into the CHAR_TYPE *argv[] format.
   int string_to_argv (void);
+
+  /// Returns the string created from argv in buf and
+  /// returns the number of arguments.
+  int argv_to_string (CHAR_TYPE **argv, CHAR_TYPE *&buf);
 
   /// Replace args with environment variable values?
   bool substitute_env_args_;
@@ -280,10 +221,9 @@ private:
 
   /// Queue which keeps user supplied arguments.  This is only
   /// active in the "iterative" mode.
-  ACE_Unbounded_Queue<ACE_ARGV_Queue_Entry_T<CHAR_TYPE> > queue_;
+  ACE_Unbounded_Queue<CHAR_TYPE *> queue_;
 };
 
-typedef ACE_ARGV_Queue_Entry_T<ACE_TCHAR> ACE_ARGV_Queue_Entry;
 typedef ACE_ARGV_T<ACE_TCHAR> ACE_ARGV;
 
 // Close versioned namespace, if enabled by the user.

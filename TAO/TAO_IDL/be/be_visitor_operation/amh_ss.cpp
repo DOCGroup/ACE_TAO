@@ -125,7 +125,8 @@ be_visitor_amh_operation_ss::visit_operation (be_operation *node)
       *os << be_uidt_nl << "))" << be_nl;
 
       // If marshaling fails, raise exception.
-      if (this->gen_raise_exception ("::CORBA::MARSHAL",
+      if (this->gen_raise_exception (0,
+                                     "::CORBA::MARSHAL",
                                      "") == -1)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
@@ -172,6 +173,8 @@ be_visitor_amh_operation_ss::visit_operation (be_operation *node)
                               -1);
           }
       }
+
+    *os << env_arg;
   }
 
   if (this->generate_shared_epilogue (os) == -1)
@@ -199,6 +202,8 @@ be_visitor_amh_operation_ss::visit_attribute (be_attribute *node)
       return -1;
     }
 
+  *os << env_arg;
+
   if (this->generate_shared_epilogue (os) == -1)
     {
       return -1;
@@ -217,7 +222,7 @@ be_visitor_amh_operation_ss::visit_attribute (be_attribute *node)
   be_argument the_argument (AST_Argument::dir_IN,
                             node->field_type (),
                             node->name ());
-
+                            
   int status = 0;
 
   {
@@ -225,7 +230,7 @@ be_visitor_amh_operation_ss::visit_attribute (be_attribute *node)
     be_visitor_args_vardecl_ss vardecl_visitor (&ctx);
 
     status = vardecl_visitor.visit_argument (&the_argument);
-
+    
     if (-1 == status)
       {
         the_argument.destroy ();
@@ -246,7 +251,7 @@ be_visitor_amh_operation_ss::visit_attribute (be_attribute *node)
     be_visitor_args_marshal_ss marshal_visitor (&ctx);
 
     status = marshal_visitor.visit_argument (&the_argument);
-
+    
     if (-1 == status)
       {
         the_argument.destroy ();
@@ -258,7 +263,8 @@ be_visitor_amh_operation_ss::visit_attribute (be_attribute *node)
       << "{" << be_idt_nl;
 
   // If marshaling fails, raise exception.
-  status = this->gen_raise_exception ("::CORBA::MARSHAL",
+  status = this->gen_raise_exception (0,
+                                      "::CORBA::MARSHAL",
                                       "");
   if (-1 == status)
     {
@@ -279,14 +285,16 @@ be_visitor_amh_operation_ss::visit_attribute (be_attribute *node)
 
   {
     be_visitor_args_upcall_ss upcall_visitor (this->ctx_);
-    status = upcall_visitor.visit_argument (&the_argument);
+    status = upcall_visitor.visit_argument (&the_argument);   
     the_argument.destroy ();
-
+    
     if (-1 == status)
       {
         return -1;
       }
   }
+
+  *os << env_arg;
 
   if (-1 == this->generate_shared_epilogue (os))
     {
@@ -336,11 +344,11 @@ be_visitor_amh_operation_ss::generate_shared_prologue (be_decl *node,
       << "_skel (" << be_idt << be_idt_nl
       << "TAO_ServerRequest & _tao_server_request," << be_nl
       << "void * /* context */," << be_nl
-      << "void * _tao_servant" << be_uidt_nl
+      << "void * _tao_servant" << env_decl << be_uidt_nl
       << ")" << be_uidt_nl;
 
   // Generate the actual code for the skeleton.
-  // last argument
+  // last argument - is always ACE_ENV_ARG_PARAMETER.
   *os << "{" << be_idt_nl;
 
   // Get the right object implementation.

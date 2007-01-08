@@ -23,7 +23,7 @@
 
 Point of contact: <a href="mailto: parsons@cs.wustl.edu">Jeff Parsons</a>
 
-<p>Last Update: November 28, 2006 </p>
+<p>Last Update: June 11, 2001 </p>
 </center>
 
 
@@ -81,7 +81,13 @@ Point of contact: <a href="mailto: parsons@cs.wustl.edu">Jeff Parsons</a>
 <ul>
 
   <li><p>Implementation of dynamic any classes for value types, boxed value
-         types.
+         types, and fixed types, as these types themselves are implemented
+         in TAO (value types are partially implemented, but the implementation
+         does not include Any insertion/extraction operators or type codes).
+  </p></li>
+
+  <li><p>Implementation of get and insert operations for abstract interfaces,
+         when abstract interfaces themselves are implemented in TAO.
   </p></li>
 
 </ul>
@@ -109,16 +115,6 @@ Point of contact: <a href="mailto: parsons@cs.wustl.edu">Jeff Parsons</a>
   </p></li>
 
   <li><p>Expansion of existing dynamic any tests to included the added functionality.
-  </p></li>
-
-  <li><p>Implementation of spec defined insert_*_seq() and get_*_seq(),
-         which are defined for all basic IDL types, and 
-         implemententation of get_abstract() and insert_abstract().
-  </p></li>
-
-  <li><p>Dynamic Any source code has been refactored to make more use
-         of C++ templates, made possible by the dropping of ACE+TAO
-         support for C++ compilers with poor template support.
   </p></li>
 
 </ul>

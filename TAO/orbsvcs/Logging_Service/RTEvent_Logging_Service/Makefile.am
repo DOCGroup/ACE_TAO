@@ -17,7 +17,6 @@ TAO_ROOT = $(top_srcdir)
 ## Makefile.RTEvent_Logging_Service.am
 
 if BUILD_CORBA_MESSAGING
-if BUILD_EXCEPTIONS
 if !BUILD_ACE_FOR_TAO
 
 bin_PROGRAMS = RTEvent_Logging_Service
@@ -31,7 +30,6 @@ RTEvent_Logging_Service_CPPFLAGS = \
   -I$(TAO_BUILDDIR)/orbsvcs
 
 RTEvent_Logging_Service_SOURCES = \
-  RTEvent_Logging_Server.cpp \
   RTEvent_Logging_Service.cpp \
   RTEvent_Logging_Service.h
 
@@ -62,7 +60,6 @@ RTEvent_Logging_Service_LDADD = \
   $(ACE_BUILDDIR)/ace/libACE.la
 
 endif !BUILD_ACE_FOR_TAO
-endif BUILD_EXCEPTIONS
 endif BUILD_CORBA_MESSAGING
 
 ## Clean up template repositories, etc.

@@ -1,5 +1,5 @@
 // $Id$
-project(*server): orbsvcsexe, rtcorbaevent, strategies, avoids_minimum_corba, avoids_corba_e_compact, avoids_corba_e_micro {
+project(*server): orbsvcsexe, rtcorbaevent, strategies, minimum_corba {    
   after    += RTEC_Perf
   libs     += TAO_RTEC_Perf
 
@@ -13,10 +13,10 @@ project(*server): orbsvcsexe, rtcorbaevent, strategies, avoids_minimum_corba, av
   }
 }
 
-project(*client): orbsvcsexe, rtcorbaevent, strategies, avoids_minimum_corba, avoids_corba_e_compact, avoids_corba_e_micro {
+project(*client): orbsvcsexe, rtcorbaevent, strategies, minimum_corba {
   after    += RTEC_Perf
   libs     += TAO_RTEC_Perf
-
+  
   specific (automake) {
     includes += $(srcdir)/../lib
   }

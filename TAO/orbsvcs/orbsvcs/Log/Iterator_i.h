@@ -52,7 +52,7 @@ public:
   // = Initialization and Termination methods.
 
   /// Constructor.
-  TAO_Iterator_i (PortableServer::POA_ptr poa, ACE_Reactor* reactor);
+  TAO_Iterator_i (ACE_Reactor* reactor);
 
   /// Destructor.
   virtual ~TAO_Iterator_i (void);
@@ -69,9 +69,6 @@ public:
     ACE_THROW_SPEC ((CORBA::SystemException));
 
 protected:
-  /// POA
-  PortableServer::POA_var poa_;
-
   /// Reactor
   ACE_Reactor* reactor_;
 

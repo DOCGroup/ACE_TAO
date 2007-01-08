@@ -15,8 +15,6 @@
 
 #include "JobS.h"
 #include "Task_Stats.h"
-#include "rtschedtestlib_export.h"
-
 #include "ace/SString.h"
 #include "ace/Arg_Shifter.h"
 
@@ -28,7 +26,7 @@ class DT_Creator;
  * @brief Implements a Job that performs some cpu bound work.
  *
  */
-class RTSCHEDTESTLIB_Export Job_i : public POA_Job
+class Job_i : public POA_Job
 {
  public:
   /// Constructor
@@ -45,14 +43,14 @@ class RTSCHEDTESTLIB_Export Job_i : public POA_Job
 
   /// = inteface Job method implementation.
   virtual void work (CORBA::ULong work,
-         CORBA::Short importance
-         ACE_ENV_ARG_DECL)
+		     CORBA::Short importance
+		     ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((
                      CORBA::SystemException
                      ));
 
   virtual void post_work (int guid,
-        int importance);
+			  int importance);
 
   void dump_stats (void);
 

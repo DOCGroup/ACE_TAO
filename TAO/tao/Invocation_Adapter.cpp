@@ -14,8 +14,6 @@
 #include "tao/GIOP_Utils.h"
 #include "tao/TAOC.h"
 
-#include "ace/Service_Config.h"
-
 #if !defined (__ACE_INLINE__)
 # include "tao/Invocation_Adapter.inl"
 #endif /* __ACE_INLINE__ */
@@ -62,13 +60,6 @@ namespace TAO
                                 TAO_Operation_Details &details
                                 ACE_ENV_ARG_DECL)
   {
-    // The invocation has got to be within the context of the
-    // corresponding ORB's configuration. Otherwise things like
-    // timeout hooks, etc may not work as expected. Especially if
-    // there are multiple ORB instances in the process, each with its
-    // own, local configuration.
-    ACE_Service_Config_Guard scg (stub->orb_core ()->configuration ());
-
     // Cache the target to a local variable.
     CORBA::Object_var effective_target =
       CORBA::Object::_duplicate (this->target_);
@@ -344,7 +335,7 @@ namespace TAO
                                         r,
                                         details);
 
-    Invocation_Status const status =
+    Invocation_Status status =
       synch.remote_twoway (max_wait_time
                            ACE_ENV_ARG_PARAMETER);
     ACE_CHECK_RETURN (TAO_INVOKE_FAILURE);
@@ -383,7 +374,7 @@ namespace TAO
                                         r,
                                         details);
 
-    Invocation_Status const s =
+    Invocation_Status s =
       synch.remote_oneway (max_wait_time
                            ACE_ENV_ARG_PARAMETER);
     ACE_CHECK_RETURN (TAO_INVOKE_FAILURE);

@@ -1,6 +1,6 @@
 // $Id$
 
-#include "ciao/Deployment_NodeApplicationC.h"
+#include "ciao/Deployment_CoreC.h"
 #include "ciao/Client_init.h"
 #include "NodeAppTest_RoundTripC.h"
 #include "ace/Get_Opt.h"
@@ -159,7 +159,7 @@ main (int argc, char *argv[])
           else
             {
               ACE_DEBUG ((LM_DEBUG, "Return values did not match: failure\n"));
-              ACE_OS::exit (1);
+              exit (1);
             }
         }
 

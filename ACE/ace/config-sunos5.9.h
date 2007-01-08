@@ -13,6 +13,5 @@
 #include "ace/config-sunos5.8.h"
 
 #define ACE_HAS_SENDFILE
-#define ACE_LACKS_THR_CONCURRENCY_FUNCS
 
 #endif /* ACE_CONFIG_H */

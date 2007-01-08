@@ -6,7 +6,7 @@
 ## this file will be lost the next time it is generated.
 ##
 ## MPC Command:
-## ./bin/mwc.pl -type automake -noreldefs ACE.mwc
+## /acebuilds/ACE_wrappers-repository/bin/mwc.pl -include /acebuilds/MPC/config -include /acebuilds/MPC/templates -feature_file /acebuilds/ACE_wrappers-repository/local.features -noreldefs -type automake -exclude build,Kokyu
 
 ACE_BUILDDIR = $(top_builddir)
 ACE_ROOT = $(top_srcdir)
@@ -16,7 +16,6 @@ noinst_PROGRAMS =
 ## Makefile.Connection_Non_Blocking_LSockClient.am
 
 if !BUILD_ACE_FOR_TAO
-
 noinst_PROGRAMS += lsock_client
 
 lsock_client_CPPFLAGS = \
@@ -36,7 +35,6 @@ endif !BUILD_ACE_FOR_TAO
 ## Makefile.Connection_Non_Blocking_LSockServer.am
 
 if !BUILD_ACE_FOR_TAO
-
 noinst_PROGRAMS += lsock_server
 
 lsock_server_CPPFLAGS = \
@@ -54,7 +52,6 @@ lsock_server_LDADD = \
 endif !BUILD_ACE_FOR_TAO
 
 ## Makefile.Connection_Non_Blocking_SPipeClient.am
-
 noinst_PROGRAMS += spipe_client
 
 spipe_client_CPPFLAGS = \
@@ -70,7 +67,6 @@ spipe_client_LDADD = \
   $(ACE_BUILDDIR)/ace/libACE.la
 
 ## Makefile.Connection_Non_Blocking_SPipeServer.am
-
 noinst_PROGRAMS += spipe_server
 
 spipe_server_CPPFLAGS = \
@@ -86,7 +82,6 @@ spipe_server_LDADD = \
   $(ACE_BUILDDIR)/ace/libACE.la
 
 ## Makefile.Connection_Non_Blocking_SockClient.am
-
 noinst_PROGRAMS += sock_client
 
 sock_client_CPPFLAGS = \
@@ -102,7 +97,6 @@ sock_client_LDADD = \
   $(ACE_BUILDDIR)/ace/libACE.la
 
 ## Makefile.Connection_Non_Blocking_SockServer.am
-
 noinst_PROGRAMS += sock_server
 
 sock_server_CPPFLAGS = \
@@ -118,7 +112,6 @@ sock_server_LDADD = \
   $(ACE_BUILDDIR)/ace/libACE.la
 
 ## Makefile.Connection_Non_Blocking_TLIClient.am
-
 noinst_PROGRAMS += tli_client
 
 tli_client_CPPFLAGS = \
@@ -134,7 +127,6 @@ tli_client_LDADD = \
   $(ACE_BUILDDIR)/ace/libACE.la
 
 ## Makefile.Connection_Non_Blocking_TLIServer.am
-
 noinst_PROGRAMS += tli_server
 
 tli_server_CPPFLAGS = \

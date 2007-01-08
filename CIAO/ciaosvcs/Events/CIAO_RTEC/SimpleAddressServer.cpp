@@ -1,4 +1,4 @@
-/* $Id$ */
+// SimpleAddressServer.cpp
 
 #include "SimpleAddressServer.h"
 #include <ace/INET_Addr.h>

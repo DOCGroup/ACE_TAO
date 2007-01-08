@@ -113,7 +113,7 @@ namespace ACE_Utils
         // Get a buffer exactly the correct size. Use the nil UUID as a
         // gauge.  Don't forget the trailing nul.
         size_t UUID_STRING_LENGTH = 36 + thr_id_.length () + pid_.length ();
-        char *buf = 0;
+        char *buf;
 
         if ((thr_id_.length () != 0) && (pid_.length () != 0))
           {
@@ -161,20 +161,10 @@ namespace ACE_Utils
                              );
           }
 
-        // We allocated 'buf' above dynamically, so we shouldn't use
-        // ACE_NEW_RETURN here to avoid a possible memory leak.
-        ACE_NEW_NORETURN (this->as_string_,
-                          ACE_CString (buf, UUID_STRING_LENGTH));
-
-        // we first free the dynamically allocated 'buf'.
+        ACE_NEW_RETURN (this->as_string_,
+                        ACE_CString (buf, UUID_STRING_LENGTH),
+                        0);
         delete [] buf;
-
-        // then we test that ACE_NEW succeded for 'as_string_'
-        // if not, we return 0 (NULL) to indicate failure.
-        if( this->as_string_ == 0 )
-        {
-           return 0;
-        }
       }
 
     return as_string_;

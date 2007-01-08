@@ -1,5 +1,5 @@
 //$Id$
-project : taolib, install, extra_anytypecode, tao_versioning_idl_defaults {
+project : taolib, core, extra_anytypecode, tao_versioning_idl_defaults {
   sharedname   = TAO_AnyTypeCode
   dynamicflags = TAO_ANYTYPECODE_BUILD_DLL
 
@@ -14,7 +14,6 @@ project : taolib, install, extra_anytypecode, tao_versioning_idl_defaults {
     AnyTypeCode/Any_Unknown_IDL_Type.cpp
     AnyTypeCode/AnyTypeCode_Adapter_Impl.cpp
     AnyTypeCode/append.cpp
-    AnyTypeCode/BasicTypeTraits.cpp
     AnyTypeCode/BooleanSeqA.cpp
     AnyTypeCode/BoundsA.cpp
     AnyTypeCode/BoundsC.cpp
@@ -80,40 +79,6 @@ project : taolib, install, extra_anytypecode, tao_versioning_idl_defaults {
 
   Header_Files {
     AnyTypeCode/*.h
-    AnyTypeCode/GIOPA.h
-    AnyTypeCode/BooleanSeqA.h
-    AnyTypeCode/CONV_FRAMEA.h
-    AnyTypeCode/CharSeqA.h
-    AnyTypeCode/CurrentA.h
-    AnyTypeCode/DoubleSeqA.h
-    AnyTypeCode/FloatSeqA.h
-    AnyTypeCode/LongSeqA.h
-    AnyTypeCode/IIOPA.h
-    AnyTypeCode/IIOP_EndpointsA.h
-    AnyTypeCode/IOPA.h
-    AnyTypeCode/IOP_IORA.h
-    AnyTypeCode/LongDoubleSeqA.h
-    AnyTypeCode/LongLongSeqA.h
-    AnyTypeCode/LongSeqA.h
-    AnyTypeCode/Messaging_PolicyValueA.h
-    AnyTypeCode/Messaging_SyncScopeA.h
-    AnyTypeCode/ObjectIdListA.h
-    AnyTypeCode/OctetSeqA.h
-    AnyTypeCode/PI_ForwardA.h
-    AnyTypeCode/ParameterModeA.h
-    AnyTypeCode/Policy_ForwardA.h
-    AnyTypeCode/PortableInterceptorA.h
-    AnyTypeCode/ServicesA.h
-    AnyTypeCode/ShortSeqA.h
-    AnyTypeCode/StringSeqA.h
-    AnyTypeCode/TAOA.h
-    AnyTypeCode/TimeBaseA.h
-    AnyTypeCode/ULongLongSeqA.h
-    AnyTypeCode/ULongSeqA.h
-    AnyTypeCode/UShortSeqA.h
-    AnyTypeCode/WCharSeqA.h
-    AnyTypeCode/WStringSeqA.h
-    AnyTypeCode/orb_typesA.h
   }
 
   Inline_Files {
@@ -143,7 +108,7 @@ project : taolib, install, extra_anytypecode, tao_versioning_idl_defaults {
   }
 
   IDL_Files {
-    idlflags += -Gp -Gd -Sci -SS -Sorb -GA \
+    idlflags += -Gp -Gd -Sci -SS -Sorb -GA -Ge 1 \
                 -Wb,export_macro=TAO_AnyTypeCode_Export \
                 -Wb,export_include=tao/AnyTypeCode/TAO_AnyTypeCode_Export.h \
                 -o AnyTypeCode
@@ -155,7 +120,7 @@ project : taolib, install, extra_anytypecode, tao_versioning_idl_defaults {
   }
 
   IDL_Files {
-    idlflags += -Gp -Gd -Sci -SS -GA \
+    idlflags += -Gp -Gd -Sci -SS -GA -Ge 1 \
                 -Wb,export_macro=TAO_AnyTypeCode_Export \
                 -Wb,export_include=tao/AnyTypeCode/TAO_AnyTypeCode_Export.h \
                 -o AnyTypeCode

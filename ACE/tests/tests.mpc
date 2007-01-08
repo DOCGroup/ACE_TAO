@@ -999,13 +999,6 @@ project(Thread Pool Test) : acetest {
   }
 }
 
-project(Thread Creation Threshold Test) : acetest {
-  exename = Thread_Creation_Threshold_Test
-  Source_Files {
-    Thread_Creation_Threshold_Test.cpp
-  }
-}
-
 project(Timeprobe Test) : acetest {
   exename = Timeprobe_Test
   Source_Files {
@@ -1374,7 +1367,7 @@ project(Based Pointer Test) : acetest {
   }
 }
 
-project(Library Unload): unload_libace {
+project(Library Unload) {
   avoids += wince
   exename = UnloadLibACE
   staticflags += ACE_AS_STATIC_LIBS
@@ -1382,12 +1375,5 @@ project(Library Unload): unload_libace {
     Unload_libACE.cpp
   }
   Resource_Files {
-  }
-}
-
-project(Bug_2659_Regression_Test) : acetest {
-  exename = Bug_2659_Regression_Test
-  Source_Files {
-    Bug_2659_Regression_Test.cpp
   }
 }

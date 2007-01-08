@@ -57,6 +57,11 @@ namespace TAO
       Connection_Handler (ACE_Thread_Manager* t = 0);
 
       /// Constructor.
+      /**
+       * @param arg Parameter is used by the Acceptor to pass the
+       *        protocol configuration properties for this
+       *        connection.
+       */
       Connection_Handler (TAO_ORB_Core *orb_core,
                           CORBA::Boolean flag);
 

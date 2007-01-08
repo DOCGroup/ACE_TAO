@@ -281,7 +281,7 @@ ACE_DLL_Handle::close (int unload)
       this->handle_ = ACE_SHLIB_INVALID_HANDLE;
     }
 
-  if (retval != 0 && ACE::debug ())
+  if (retval != 0)
     ACE_ERROR ((LM_ERROR,
                 ACE_LIB_TEXT ("ACE (%P|%t) DLL_Handle::close - ")
                 ACE_LIB_TEXT ("Failed with: \"%s\".\n"),
@@ -339,6 +339,8 @@ ACE_DLL_Handle::get_handle (int become_owner)
   ACE_TRACE ("ACE_DLL_Handle::get_handle");
   ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->lock_, 0));
 
+  ACE_SHLIB_HANDLE handle = ACE_SHLIB_INVALID_HANDLE;
+
   if (this->refcount_ == 0 && become_owner != 0)
     {
       if (ACE::debug ())
@@ -349,7 +351,7 @@ ACE_DLL_Handle::get_handle (int become_owner)
       return ACE_SHLIB_INVALID_HANDLE;
     }
 
-  ACE_SHLIB_HANDLE handle = this->handle_;
+  handle = this->handle_;
 
   if (become_owner != 0)
     {

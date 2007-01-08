@@ -18,8 +18,8 @@
 //
 // ============================================================================
 
-ACE_RCSID (be_visitor_root,
-           root_ss,
+ACE_RCSID (be_visitor_root, 
+           root_ss, 
            "$Id$")
 
 // ******************************************************
@@ -46,7 +46,7 @@ be_visitor_root_ss::init (void)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_root_ss::init - "
-                         "Error opening server skeletons file\n"),
+                         "Error opening server skeletons file\n"), 
                         -1);
     }
 

@@ -7,7 +7,8 @@ project(Plan_Analyzer_stub): ciao_deployment_stub {
            RACE_common_stub \
            Planner_Manager_Interface_stub
   sharedname = Plan_Analyzer_stub
-  idlflags += -Wb,stub_export_macro=PLAN_ANALYZER_STUB_Export \
+  idlflags += -Sc \
+              -Wb,stub_export_macro=PLAN_ANALYZER_STUB_Export \
               -Wb,stub_export_include=Plan_Analyzer_stub_export.h \
               -Wb,skel_export_macro=PLAN_ANALYZER_SVNT_Export \
               -Wb,skel_export_include=Plan_Analyzer_svnt_export.h
@@ -43,7 +44,8 @@ project(Plan_Analyzer_svnt) : ciao_servant_dnc {
              Plan_Analyzer_Interface_svnt \
              Planner_Manager_Interface_stub
 
-  idlflags  +=  -Wb,export_macro=PLAN_ANALYZER_SVNT_Export \
+  idlflags  +=  -Sc \
+                -Wb,export_macro=PLAN_ANALYZER_SVNT_Export \
                 -Wb,export_include=Plan_Analyzer_svnt_export.h
 
   dynamicflags = PLAN_ANALYZER_SVNT_BUILD_DLL
@@ -86,12 +88,13 @@ project(Plan_Analyzer_exec) : ciao_component_dnc {
              Plan_Analyzer_Interface_svnt \
              Planner_Manager_Interface_stub
 
-  idlflags  +=  -Wb,export_macro=PLAN_ANALYZER_EXEC_Export \
+  idlflags  +=  -Sc \
+                -Wb,export_macro=PLAN_ANALYZER_EXEC_Export \
                 -Wb,export_include=Plan_Analyzer_exec_export.h
   dynamicflags   = PLAN_ANALYZER_EXEC_BUILD_DLL
 
   IDL_Files {
-
+    
   }
 
   Source_Files {

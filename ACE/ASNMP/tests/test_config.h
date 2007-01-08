@@ -25,6 +25,32 @@
 // FUZZ: disable check_for_streams_include
 #include "ace/streams.h"
 
+#if !defined (ACE_HAS_TEMPLATE_SPECIALIZATION)
+class KEY
+// ============================================================================
+// = TITLE
+//    Define a key for use with the Map_Manager_Test.
+//
+// = DESCRIPTION
+//    This class is put into the test_config.h header file to work
+//    around AIX C++ compiler "features" related to template
+//    instantiation...  It is only used by Map_Manager_Test.cpp
+// ============================================================================
+{
+public:
+  KEY (size_t v = 0): value_ (v)
+  { }
+
+  size_t hash (void) const { return this->value_; }
+  operator size_t () const { return this->value_; }
+
+private:
+  size_t value_;
+};
+#else
+typedef size_t KEY;
+#endif /* ACE_HAS_TEMPLATE_SPECIALIZATION */
+
 #if defined (ACE_WIN32)
 
 #define ACE_DEFAULT_TEST_FILE ACE_TEXT ("C:\\temp\\ace_test_file")
@@ -41,20 +67,16 @@
 
 #endif /* ACE_WIN32 */
 
-#ifndef ACE_START_TEST
 #define ACE_START_TEST(NAME) \
   const ACE_TCHAR *program = NAME; \
   ACE_LOG_MSG->open (program, ACE_Log_Msg::OSTREAM); \
   if (ace_file_stream.set_output (program) != 0) \
     ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("set_output failed")), -1); \
-  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%P|%t) starting %s test at %D\n"), program));
-#endif /* ACE_START_TEST */
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%P|%t) starting %s test at %T\n"), program));
 
-#ifndef ACE_END_TEST
 #define ACE_END_TEST \
-  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%P|%t) Ending %s test at %D\n"), program)); \
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%P|%t) Ending %s test at %T\n"), program)); \
   ace_file_stream.close ();
-#endif /* ACE_END_TEST */
 
 #define ACE_NEW_THREAD \
 do {\
@@ -68,10 +90,10 @@ do {\
   ACE_LOG_MSG->open (program, ACE_Log_Msg::OSTREAM); \
   if (ace_file_stream.set_output (program, 1) != 0) \
     ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("set_output failed")), -1); \
-  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%P|%t) Starting %s test at %D\n"), program));
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%P|%t) Starting %s test at %T\n"), program));
 
 #define ACE_END_LOG \
-  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%P|%t) Ending %s test at %D\n\n"), program)); \
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%P|%t) Ending %s test at %T\n\n"), program)); \
   ace_file_stream.close ();
 
 #define ACE_INIT_LOG(NAME) \

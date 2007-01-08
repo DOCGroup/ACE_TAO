@@ -18,8 +18,8 @@
 //
 // ============================================================================
 
-ACE_RCSID (be_visitor_root,
-           root_si,
+ACE_RCSID (be_visitor_root, 
+           root_si, 
            "$Id$")
 
 // ***********************************************
@@ -44,8 +44,22 @@ be_visitor_root_si::init (void)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_root_si::init - "
-                         "server inline open failed\n"),
+                         "server inline open failed\n"), 
                         -1);
+    }
+
+  if (be_global->gen_tie_classes ())
+    {
+      if (tao_cg->start_server_template_inline (
+              be_global->be_get_server_template_inline_fname ()
+            )
+          == -1)
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "(%N:%l) be_visitor_root_si::init - "
+                             "Error opening server template inline file\n"),
+                            -1);
+        }
     }
 
   // init stream

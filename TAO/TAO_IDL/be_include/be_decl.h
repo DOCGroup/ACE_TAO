@@ -83,7 +83,6 @@ public:
   bool srv_skel_gen (void);
   bool impl_skel_gen (void);
   bool srv_inline_gen (void);
-  bool tie_skel_gen (void);
   bool cli_hdr_any_op_gen (void);
   bool cli_stub_any_op_gen (void);
   bool cli_hdr_cdr_op_gen (void);
@@ -129,7 +128,6 @@ public:
   void srv_skel_gen (bool);
   void impl_skel_gen (bool);
   void srv_inline_gen (bool);
-  void tie_skel_gen (bool);
   void cli_hdr_any_op_gen (bool);
   void cli_stub_any_op_gen (bool);
   void cli_hdr_cdr_op_gen (bool);
@@ -185,7 +183,6 @@ private:
   bool srv_skel_gen_;
   bool impl_skel_gen_;
   bool srv_inline_gen_;
-  bool tie_skel_gen_;
   bool cli_hdr_any_op_gen_;
   bool cli_stub_any_op_gen_;
   bool cli_hdr_cdr_op_gen_;

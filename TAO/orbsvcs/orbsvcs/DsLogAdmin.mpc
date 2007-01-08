@@ -1,7 +1,7 @@
 // -*- MPC -*-
 // $Id$
 
-project(DsLogAdmin_IDL) : orbsvcslib, install, tao_versioning_idl_defaults {
+project(DsLogAdmin_IDL) : orbsvcslib, core, tao_versioning_idl_defaults {
   custom_only = 1
   idlflags   += -Wb,stub_export_macro=TAO_Log_Export -Wb,stub_export_include=orbsvcs/Log/log_export.h -Wb,skel_export_macro=TAO_Log_Skel_Export -Wb,skel_export_include=orbsvcs/Log/log_skel_export.h
 
@@ -11,7 +11,7 @@ project(DsLogAdmin_IDL) : orbsvcslib, install, tao_versioning_idl_defaults {
   }
 }
 
-project(DsLogAdmin) : orbsvcslib, install {
+project(DsLogAdmin) : orbsvcslib, core {
   sharedname   = TAO_DsLogAdmin
   dynamicflags = TAO_LOG_BUILD_DLL
   tagchecks   += Log
@@ -50,7 +50,7 @@ project(DsLogAdmin) : orbsvcslib, install {
 }
 
 
-project(DsLogAdmin_Skel) : orbsvcslib, install, dslogadmin, portableserver {
+project(DsLogAdmin_Skel) : orbsvcslib, core, dslogadmin, portableserver {
   sharedname   = TAO_DsLogAdmin_Skel
   dynamicflags = TAO_LOG_SKEL_BUILD_DLL
   tagchecks   += Log
@@ -66,15 +66,24 @@ project(DsLogAdmin_Skel) : orbsvcslib, install, dslogadmin, portableserver {
   Header_Files {
     DsLogAdminS.h
     DsLogNotificationS.h
+
+    DsLogAdminS_T.h
+    DsLogNotificationS_T.h
+
     Log/log_skel_export.h
   }
 
   Inline_Files {
     DsLogAdminS.inl
     DsLogNotificationS.inl
+
+    DsLogAdminS_T.inl
+    DsLogNotificationS_T.inl
   }
 
   Template_Files {
+    DsLogAdminS_T.cpp
+    DsLogNotificationS_T.cpp
   }
 
   Pkgconfig_Files {
@@ -83,7 +92,7 @@ project(DsLogAdmin_Skel) : orbsvcslib, install, dslogadmin, portableserver {
 }
 
 
-project(DsLogAdmin_Serv) : orbsvcslib, install, dslogadmin_skel, dynamicany, etcl, utils, svc_utils {
+project(DsLogAdmin_Serv) : orbsvcslib, core, dslogadmin_skel, dynamicany, etcl, utils, svc_utils {
   sharedname   = TAO_DsLogAdmin_Serv
   dynamicflags = TAO_LOG_SERV_BUILD_DLL
   tagchecks   += Log

@@ -1,7 +1,7 @@
 # $Id$
 #
-# LynxOS with g++.  Defaults to LynxOS Version 4.0.0.  For Version 4.2.0,
-# for example, add "VERSION=4.2.0" to your make invocation.
+# LynxOS with g++.  Defaults to LynxOS Version 4.0.0.  For Version 3.1.0,
+# for example, add "VERSION=3.1.0" to your make invocation.
 
 #### NOTE:  It's best to create a file that includes this one, instead
 #### of symlinking it.  That way, you can easily override the default
@@ -67,7 +67,15 @@ endif # ! LynxOS
 LYNXOS_MAJOR = $(shell echo $(VERSION) | awk -F. '{print $$1;}')
 LYNXOS_MINOR = $(shell echo $(VERSION) | awk -F. '{print $$2;}')
 
-shared_libs ?= 1
+ifeq ($(shared_libs_only),1)
+  shared_libs = 1
+  static_libs =
+endif
+ifeq ($(static_libs_only),1)
+  shared_libs =
+  static_libs = 1
+endif
+
 optimize ?= 1
 debug ?= 1
 pipes ?= 1
@@ -100,9 +108,9 @@ ifeq ($(threads),1)
 endif
 
 ifeq ($(shared_libs),1)
-  CPPFLAGS += -DACE_HAS_SVR4_DYNAMIC_LINKING
-  CFLAGS   += -mshared
-  SOFLAGS  += -mshared
+  CFLAGS  += -mshared -DACE_HAS_SVR4_DYNAMIC_LINKING
+  CFLAGS  += -DACE_HAS_BROKEN_THREAD_KEYFREE
+  SOFLAGS += -mshared -DACE_HAS_SVR4_DYNAMIC_LINKING
   LIBS    += -ldl
 else
   LIBS    += -lnetinet -lnsl
@@ -111,7 +119,7 @@ endif
 CC              = gcc
 CXX             = g++
 CFLAGS          += -Wpointer-arith -Wall
-CPPFLAGS        += -DACE_LYNXOS_MAJOR=$(LYNXOS_MAJOR) -DACE_LYNXOS_MINOR=$(LYNXOS_MINOR)
+CFLAGS          += -DACE_LYNXOS_MAJOR=$(LYNXOS_MAJOR) -DACE_LYNXOS_MINOR=$(LYNXOS_MINOR)
 DCFLAGS         += -g
 PIC             = -fPIC
 DLD             = $(CXX)
@@ -125,7 +133,7 @@ SOBUILD         = $(COMPILE.cc) $(PIC) -o $(VSHDIR)$*.so $<; \
                   $(SOLINK.cc) -o $@ $(LDFLAGS) $(VSHDIR)$*.o
 PRELIB          = @true
 
-# Test for template instantiation, add to SOFLAGS if SONAME set,
+# Test for template instantiation, add to SOFLAGS if SONAME set, 
 # add -E to LDFLAGS if using GNU ld
 #
 include $(ACE_ROOT)/include/makeinclude/platform_g++_common.GNU

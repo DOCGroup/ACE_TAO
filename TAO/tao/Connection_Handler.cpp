@@ -24,9 +24,8 @@ ACE_RCSID (tao,
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_Connection_Handler::TAO_Connection_Handler (TAO_ORB_Core *orb_core)
-  : orb_core_ (orb_core),
-    transport_ (0),
-    connection_pending_ (false)
+  : orb_core_ (orb_core)
+  , transport_ (0)
 {
   // @@todo: We need to have a distinct option/ method in the resource
   // factory for this and TAO_Transport.
@@ -47,18 +46,6 @@ TAO_Connection_Handler::~TAO_Connection_Handler (void)
   //@@ CONNECTION_HANDLER_DESTRUCTOR_ADD_HOOK
 }
 
-int
-TAO_Connection_Handler::shared_open (void)
-{
-  // This reference counting is related to asynch connections.  It
-  // should probably be managed by the ACE_Strategy_Connector, since
-  // that's really the reference being managed here.  also, whether
-  // open ultimately succeeds or fails, the connection attempted is
-  // ending, so the reference must be removed in any case.
-  this->cancel_pending_connection();
-
-  return 0;
-}
 
 int
 TAO_Connection_Handler::set_socket_option (ACE_SOCK &sock,
@@ -310,7 +297,7 @@ TAO_Connection_Handler::close_connection_eh (ACE_Event_Handler *eh)
                    handle));
     }
 
-  this->transport ()->pre_close ();
+  this->transport ()->purge_entry ();
 
   // @@ This seems silly, but if we have no reason to be in the
   // reactor, then we dont remove ourselves.
@@ -320,7 +307,7 @@ TAO_Connection_Handler::close_connection_eh (ACE_Event_Handler *eh)
 
       if (this->orb_core_->has_shutdown () == 0)
         {
-          // If the ORB is nil, get the reactor from orb_core which gets it
+          // If the ORB is nill, get the reactor from orb_core which gets it
           // from LF.
           if (eh_reactor == 0)
             eh_reactor = this->transport()->orb_core()->reactor ();
@@ -428,14 +415,7 @@ TAO_Connection_Handler::close_handler (void)
 {
   this->state_changed (TAO_LF_Event::LFS_CONNECTION_CLOSED,
                        this->orb_core_->leader_follower ());
-  this->transport ()->purge_entry();
   this->transport ()->remove_reference ();
-
-  // @@ I think that if the connection_pending state is true
-  // when close_handler is calld, we should probably release
-  // another reference so that the connector doesn't have to
-  // worry about it.
-
   return 0;
 }
 

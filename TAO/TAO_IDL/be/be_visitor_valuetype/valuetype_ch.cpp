@@ -218,12 +218,6 @@ be_visitor_valuetype_ch::visit_valuetype (be_valuetype *node)
       *os << "static void _tao_any_destructor (void *);";
     }
 
-  if (be_global->tc_support ())
-    {
-      *os << be_nl << be_nl
-          << "virtual ::CORBA::TypeCode_ptr _tao_type (void) const;";
-    }
-
   // Generate code for the valuetype definition.
   if (this->visit_valuetype_scope (node) == -1)
     {

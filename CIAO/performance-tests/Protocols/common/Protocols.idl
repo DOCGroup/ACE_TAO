@@ -1,5 +1,7 @@
 // $Id$
 
+#include <Components.idl>
+
 module Protocols
 {
   interface test
@@ -15,15 +17,15 @@ module Protocols
     oneway void oneway_sync ();
 
     void twoway_sync ();
-
+  
     typedef sequence<octet> octets;
 
     oneway void oneway_method (in long session_id,
                                in unsigned long iteration,
                                in octets payload);
-
+  
     void twoway_method (inout long session_id,
                         inout unsigned long iteration,
-                        inout octets payload);
+                        inout octets payload);  
   };
 };

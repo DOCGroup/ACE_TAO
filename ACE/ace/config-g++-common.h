@@ -67,7 +67,7 @@
 
 // Take advantage of G++ (>= 4.x) visibility attributes to generate
 // improved shared library binaries.
-#if (__GNUC__ >= 4)
+#if (__GNUC__ > 3)
 
 # if defined (ACE_HAS_CUSTOM_EXPORT_MACROS) && ACE_HAS_CUSTOM_EXPORT_MACROS == 0
 #  undef ACE_HAS_CUSTOM_EXPORT_MACROS
@@ -78,24 +78,15 @@
 #  define ACE_Proper_Export_Flag __attribute__ ((visibility("default")))
 #  define ACE_Proper_Import_Flag
 
-# if (__GNUC__ > 4) || ((__GNUC__ == 4) && (__GNUC_MINOR__ >= 2))
 // Sadly, G++ 4.x silently ignores visibility attributes on
 // template instantiations, which breaks singletons.
 // As a workaround, we use the GCC visibility pragmas.
 // And to make them fit in a macro, we use C99's _Pragma()
 // http://gcc.gnu.org/bugzilla/show_bug.cgi?id=17470
-// This has been fixed in GCC 4.1.1 with FC6 but not with SuSE 10.2
-// that gets shipped with GCC 4.1.2 so we assume that with GCC 4.2
-// this will be fixed on the head. With FC6 just set this define yourself
-#  ifndef ACE_GCC_HAS_TEMPLATE_INSTANTIATION_VISIBILITY_ATTRS
-#    define ACE_GCC_HAS_TEMPLATE_INSTANTIATION_VISIBILITY_ATTRS 1
-#  endif
-# endif
-
-#  if defined (ACE_GCC_HAS_TEMPLATE_INSTANTIATION_VISIBILITY_ATTRS) && GCC_HAS_TEMPLATE_INSTANTIATION_VISIBILITY_ATTRS == 1
+#  if 0 /* ... replace if/when gcc bug 17470 is fixed */
 #   define ACE_EXPORT_SINGLETON_DECLARATION(T) template class ACE_Proper_Export_Flag T
 #   define ACE_EXPORT_SINGLETON_DECLARE(SINGLETON_TYPE, CLASS, LOCK) template class ACE_Proper_Export_Flag SINGLETON_TYPE <CLASS, LOCK>;
-#  else  /* ACE_GCC_HAS_TEMPLATE_INSTANTIATION_VISIBILITY_ATTRS */
+#  else  /* ! GCC_HAS_TEMPLATE_INSTANTIATION_VISIBILITY_ATTRS */
 #   define ACE_EXPORT_SINGLETON_DECLARATION(T)     \
         _Pragma ("GCC visibility push(default)")  \
         template class T                          \
@@ -104,15 +95,16 @@
         _Pragma ("GCC visibility push(default)")                    \
         template class SINGLETON_TYPE<CLASS, LOCK>;                 \
         _Pragma ("GCC visibility pop")
-#  endif /* ACE_GCC_HAS_TEMPLATE_INSTANTIATION_VISIBILITY_ATTRS */
+#  endif /* ! GCC_HAS_TEMPLATE_INSTANTIATION_VISIBILITY_ATTRS */
 
 // Note that the "__extension__" is needed to prevent g++ from issuing
 // an error when using its "-pedantic" command line flag.
 #  define ACE_IMPORT_SINGLETON_DECLARATION(T) __extension__ extern template class T
 #  define ACE_IMPORT_SINGLETON_DECLARE(SINGLETON_TYPE, CLASS, LOCK) __extension__ extern template class SINGLETON_TYPE<CLASS, LOCK>;
 
+
 # endif  /* ACE_HAS_CUSTOM_EXPORT_MACROS == 0 */
-#endif  /* __GNU__ >= 4 */
+#endif  /* __GNU__ > 3 */
 
 #if defined (ACE_HAS_GNU_REPO)
   // -frepo causes unresolved symbols of basic_string left- and

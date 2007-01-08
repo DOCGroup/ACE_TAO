@@ -157,8 +157,12 @@ extern "C"
 
 #if defined (ACE_VXWORKS)
 #  define ACE_NSIG (_NSIGS + 1)
-#elif defined (__Lynx__) || defined (ACE_HAS_RTEMS)
+#elif defined (__Lynx__)
 #  define ACE_NSIG (NSIG + 1)
+#elif defined (ACE_HAS_RTEMS)
+#  define ACE_NSIG (SIGRTMAX)
+#elif defined(__BORLANDC__) && (__BORLANDC__ >= 0x600)
+#  define ACE_NSIG _NSIG
 #else
    // All other platforms set NSIG to one greater than the
    // highest-numbered signal.
@@ -167,15 +171,37 @@ extern "C"
 
 #if defined (ACE_HAS_CONSISTENT_SIGNAL_PROTOTYPES)
    // Prototypes for both signal() and struct sigaction are consistent..
+  //#  if defined (ACE_HAS_SIG_C_FUNC)
+  //   extern "C" {
+  //#  endif /* ACE_HAS_SIG_C_FUNC */
   typedef void (*ACE_SignalHandler)(int);
   typedef void (*ACE_SignalHandlerV)(int);
-#elif defined (ACE_HAS_LYNXOS_SIGNALS) || defined (ACE_HAS_TANDEM_SIGNALS)
+  //#  if defined (ACE_HAS_SIG_C_FUNC)
+  //   }
+  //#  endif /* ACE_HAS_SIG_C_FUNC */
+#elif defined (ACE_HAS_LYNXOS_SIGNALS)
+   typedef void (*ACE_SignalHandler)(...);
+   typedef void (*ACE_SignalHandlerV)(...);
+#elif defined (ACE_HAS_TANDEM_SIGNALS)
+   typedef void (*ACE_SignalHandler)(...);
+   typedef void (*ACE_SignalHandlerV)(...);
+#elif defined (ACE_HAS_IRIX_53_SIGNALS)
+   typedef void (*ACE_SignalHandler)(...);
+   typedef void (*ACE_SignalHandlerV)(...);
+#elif defined (ACE_HAS_SPARCWORKS_401_SIGNALS)
+   typedef void (*ACE_SignalHandler)(int, ...);
+   typedef void (*ACE_SignalHandlerV)(int,...);
+#elif defined (ACE_HAS_SUNOS4_SIGNAL_T)
    typedef void (*ACE_SignalHandler)(...);
    typedef void (*ACE_SignalHandlerV)(...);
 #elif defined (ACE_HAS_SVR4_SIGNAL_T)
    // SVR4 Signals are inconsistent (e.g., see struct sigaction)..
    typedef void (*ACE_SignalHandler)(int);
-   typedef void (*ACE_SignalHandlerV)(void);
+#  if !defined (m88k)     /*  with SVR4_SIGNAL_T */
+     typedef void (*ACE_SignalHandlerV)(void);
+#  else
+     typedef void (*ACE_SignalHandlerV)(int);
+#  endif  /*  m88k */       /*  with SVR4_SIGNAL_T */
 #elif defined (ACE_WIN32)
    typedef void (__cdecl *ACE_SignalHandler)(int);
    typedef void (__cdecl *ACE_SignalHandlerV)(int);
@@ -208,15 +234,19 @@ extern "C"
 
 // Defining POSIX4 real-time signal range.
 #if defined(ACE_HAS_POSIX_REALTIME_SIGNALS)
-#  define ACE_SIGRTMIN SIGRTMIN
-#  define ACE_SIGRTMAX SIGRTMAX
+#define ACE_SIGRTMIN SIGRTMIN
+#define ACE_SIGRTMAX SIGRTMAX
+
 #else /* !ACE_HAS_POSIX_REALTIME_SIGNALS */
-#  ifndef ACE_SIGRTMIN
-#    define ACE_SIGRTMIN 0
-#  endif /* ACE_SIGRTMIN */
-#  ifndef ACE_SIGRTMAX
-#    define ACE_SIGRTMAX 0
-#  endif /* ACE_SIGRTMAX */
+
+#ifndef ACE_SIGRTMIN
+#define ACE_SIGRTMIN 0
+#endif /* ACE_SIGRTMIN */
+
+#ifndef ACE_SIGRTMAX
+#define ACE_SIGRTMAX 0
+#endif /* ACE_SIGRTMAX */
+
 #endif /* ACE_HAS_POSIX_REALTIME_SIGNALS */
 
 #if defined (DIGITAL_UNIX)

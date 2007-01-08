@@ -1,21 +1,9 @@
 // -*- MPC -*-
 // $Id$
 
-project(*idl): taoidldefaults {
-  IDL_Files {
-    test.idl
-  }
-  custom_only = 1
-}
-
 project(*Server): rt_server {
-  after += *idl
   Source_Files {
     server.cpp
-    testS.cpp
-    testC.cpp
-  }
-  IDL_Files {
   }
 }
 
@@ -27,6 +15,5 @@ project(*Client): rt_client, interceptors {
     Client_ORBInitializer.cpp
     client.cpp
   }
-  IDL_Files {
-  }
 }
+

@@ -82,7 +82,6 @@ TAO_ServerRequest::TAO_ServerRequest (TAO_Pluggable_Messaging *mesg_base,
     , caught_exception_ (0)
     , reply_status_ (-1)
 #endif  /* TAO_HAS_INTERCEPTORS == 1 */
-    , transport_selection_guard_ (transport)
 {
   ACE_FUNCTION_TIMEPROBE (TAO_SERVER_REQUEST_START);
   // No-op.
@@ -127,7 +126,6 @@ TAO_ServerRequest::TAO_ServerRequest (TAO_Pluggable_Messaging *mesg_base,
   , caught_exception_ (0)
   , reply_status_ (-1)
 #endif  /* TAO_HAS_INTERCEPTORS == 1 */
-  , transport_selection_guard_ (transport)
 {
   this->profile_.object_key (object_key);
   parse_error = 0;
@@ -165,7 +163,6 @@ TAO_ServerRequest::TAO_ServerRequest (TAO_ORB_Core * orb_core,
   , caught_exception_ (0)
   , reply_status_ (-1)
 #endif  /* TAO_HAS_INTERCEPTORS == 1 */
-  , transport_selection_guard_ (0)
 {
   // Have to use a const_cast<>.  *sigh*
   this->profile_.object_key (
@@ -204,8 +201,6 @@ TAO_ServerRequest::~TAO_ServerRequest (void)
         }
     }
 #endif  /* TAO_HAS_INTERCEPTORS == 1 */
-  if (this->release_operation_)
-    CORBA::string_free (const_cast<char*> (this->operation_));
 }
 
 CORBA::ORB_ptr

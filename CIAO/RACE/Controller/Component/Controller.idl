@@ -14,8 +14,8 @@
  */
 
 #include <Components.idl>
-#include "ciao/Deployment_Target_Data.idl"
-#include "DAnCE/TargetManager/TargetManagerExt.idl"
+#include "ciao/Target_Data.idl"
+#include "../../../DAnCE/TargetManager/TargetManagerExt.idl"
 
 /**
  * @module CIAO

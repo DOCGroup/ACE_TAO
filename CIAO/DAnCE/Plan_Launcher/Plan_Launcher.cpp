@@ -202,7 +202,7 @@ namespace CIAO
 
           if (mode == pl_mode_start || mode == pl_mode_interactive)  // initial deployment
             {
-              CORBA::String_var uuid;
+              const char* uuid = 0;
 
               if (package_names != 0)
                 uuid = launcher.launch_plan (deployment_plan_url,
@@ -215,14 +215,14 @@ namespace CIAO
                                              use_package_name,
                                              use_repoman);
 
-              if (uuid.in () == 0)
+              if (uuid == 0)
                 {
                   ACE_ERROR ((LM_ERROR, "(%P|%t) Plan_Launcher: Error launching plan\n"));
                   return -1;
                 }
 
-              ACE_DEBUG ((LM_DEBUG, "Plan_Launcher returned UUID is %s\n", uuid.in ()));
-              dapp_mgr = launcher.get_dam (uuid.in ());
+              ACE_DEBUG ((LM_DEBUG, "Plan_Launcher returned UUID is %s\n", uuid));
+              dapp_mgr = launcher.get_dam (uuid);
 
               // Write out DAM ior if requested
               if (mode == pl_mode_start)
@@ -238,7 +238,7 @@ namespace CIAO
 
                   // Tear down the assembly
                   ACE_DEBUG ((LM_DEBUG,
-                              "Plan_Launcher: destroy the application.....\n"));
+                              "Plan_Launcher: destroy the application....."));
                   if (! launcher.teardown_plan (uuid))
                       ACE_DEBUG ((LM_DEBUG,
                                   "(%P|%t) CIAO_PlanLauncher:tear down assembly failed: "
@@ -248,9 +248,9 @@ namespace CIAO
           else if (mode == pl_mode_redeployment && new_deployment_plan_url != 0) // do redeployment
             {
               ACE_DEBUG ((LM_DEBUG,
-                          "Plan_Launcher: reconfigure application assembly.....\n"));
+                          "Plan_Launcher: reconfigure application assembly....."));
 
-              CORBA::String_var uuid;
+              const char* uuid;
 
               if (package_names != 0)
                 uuid = launcher.re_launch_plan (new_deployment_plan_url,
@@ -263,7 +263,7 @@ namespace CIAO
                                                 use_package_name,
                                                 use_repoman);
 
-              if (uuid.in () == 0)
+              if (uuid == 0)
                 {
                   ACE_ERROR ((LM_ERROR, "(%P|%t) Plan_Launcher: Error re-launching plan\n"));
                   return -1;
@@ -285,14 +285,14 @@ namespace CIAO
 
               // Tear down the assembly
               ACE_DEBUG ((LM_DEBUG,
-                          "Plan_Launcher: destroy the application.....\n"));
+                          "Plan_Launcher: destroy the application....."));
               launcher.teardown_plan (dapp_mgr.in ());
             }
           else if (mode == pl_mode_stop_by_uuid) // tear down by plan_uuid
             {
               // Tear down the assembly
               ACE_DEBUG ((LM_DEBUG,
-                          "Plan_Launcher: destroy the application.....\n"));
+                          "Plan_Launcher: destroy the application....."));
               if (! launcher.teardown_plan (plan_uuid))
                 {
                   ACE_ERROR ((LM_ERROR,
@@ -336,5 +336,7 @@ int
 ACE_TMAIN (int argc,
            ACE_TCHAR *argv[])
 {
+  //ACE_DEBUG ((LM_DEBUG, "NEW PLAN LAUNCHER\n"));
+
   return run_main_implementation (argc, argv);
 }

@@ -12,7 +12,7 @@ use PerlACE::Run_Test;
 $imr_bin_path  = "../../ImplRepo_Service";
 
 # The location of the tao_imr IMR utility
-$tao_imr_bin_path = "$ENV{ACE_ROOT}/bin";
+$tao_imr_bin_path = "../../../../bin";
 
 # IOR file names
 $imr_ior_file        = PerlACE::LocalFile("impl.ior");

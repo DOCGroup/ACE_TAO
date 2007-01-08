@@ -28,18 +28,16 @@
 #include "ace/Vector_T.h"
 #include "ace/Functor.h"
 #include "ace/OS_NS_string.h"
-
-#include "ciao/Deployment_DomainApplicationManagerS.h"
+#include "ciao/DomainApplicationManagerS.h"
 #include "ciao/Deployment_common.h"
 
 #include "tao/Valuetype/ValueBase.h"
 #include "tao/Valuetype/Valuetype_Adapter_Impl.h"
 
-#include "ciao/CIAO_common.h"
-#include "ciao/Deployment_EventsC.h"
-
 #include "Deployment_Configuration.h"
 #include "DomainApplicationManager_Export.h"
+#include "ciao/CIAO_common.h"
+#include "ciao/Deployment_EventsC.h"
 
 namespace CIAO
 {
@@ -61,9 +59,9 @@ namespace CIAO
   {
   public:
 
-    /// External_Connections means we search all the connections including
-    /// the connectiosn for external/shared components of this plan which hold
-    /// port objrefs of components within this plan
+    // External_Connections means we search all the connections including
+    // the connectiosn for external/shared components of this plan which hold
+    // port objrefs of components within this plan
     enum Connection_Search_Type
       {
         External_Connections,
@@ -199,6 +197,7 @@ namespace CIAO
       ACE_THROW_SPEC ((CORBA::SystemException,
                       Deployment::StartError));
 
+
     /**
      * Starts the application. Raises the StartError exception if
      * starting the application fails.
@@ -210,7 +209,7 @@ namespace CIAO
     /**
      * Terminates a running application. Raises the StopError
      * exception if an error occurs during termination. Raises the
-     * InvalidReference exception if the appliction reference is
+     * InvalidReference exception if the appliction referen is
      * unknown.
      */
     virtual void destroyApplication (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
@@ -273,8 +272,8 @@ namespace CIAO
     /**
      * Construct <Component_Binding_Info> struct for the component instance.
      *
-     * @param name component instance name
-     * @param child_uuid child plan uuid string
+     * @para name component instance name
+     * @para child_uuid child plan uuid string
      */
     CIAO::Component_Binding_Info *
       populate_binding_info (const ACE_CString& name,
@@ -285,7 +284,7 @@ namespace CIAO
      * Fetch the plan_uuid info from the internally cached shared component
      * list.
      *
-     * @param name component instance name
+     * @para name component instance name
      */
     CIAO::Component_Binding_Info *
       populate_binding_info (const ACE_CString& name);
@@ -300,7 +299,7 @@ namespace CIAO
      * A helper function to add a list of shared components into
      * the cached shared component list.
      *
-     * @param shared A list of shared components to be added.
+     * @para shared A list of shared components to be added.
      */
     void add_shared_components (const Deployment::ComponentPlans & shared);
 
@@ -308,7 +307,7 @@ namespace CIAO
      * A private function to check whether a component is in the shared
      * component list.
      *
-     * @param name The name of a component instance.
+     * @para name The name of a component instance.
      */
     bool is_shared_component (const char * name);
 
@@ -383,7 +382,7 @@ namespace CIAO
     void
     purge_connections (Deployment::Connections_var & connections,
                        const char * inst);
-
+                       
     /**
      * The first step in finish_launching an application in the
      * domain-level.  We install all the CIAO_Event_Service objects
@@ -409,7 +408,7 @@ namespace CIAO
      * deployment requirement. The deployment requirement only specifies
      * an identifier/reference to the EventServiceDeploymentDescriptions.
      */
-    virtual const Deployment::Properties *
+    virtual Deployment::Properties *
     get_connection_QoS_configuration (
       const Deployment::Requirement & requirement);
 

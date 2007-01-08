@@ -63,9 +63,7 @@ Test_DynEnum::run_test (void)
                             -1);
         }
 
-      DynAnyAnalyzer analyzer (this->orb_.in(),
-                               dynany_factory.in (),
-                               debug_);
+      DynAnyAnalyzer analyzer(this->orb_.in(), dynany_factory.in(), debug_);
 
       DynAnyTests::test_enum te = DynAnyTests::TE_ZEROTH;
       CORBA::Any in_any1;
@@ -74,7 +72,6 @@ Test_DynEnum::run_test (void)
         dynany_factory->create_dyn_any (in_any1
                                         ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
-      
       DynamicAny::DynEnum_var de1 =
         DynamicAny::DynEnum::_narrow (dp1.in ()
                                       ACE_ENV_ARG_PARAMETER);
@@ -87,15 +84,13 @@ Test_DynEnum::run_test (void)
                           ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      CORBA::ULong ul_out1 =
-        de1->get_as_ulong (ACE_ENV_SINGLE_ARG_PARAMETER);
+      CORBA::ULong ul_out1 = de1->get_as_ulong (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       analyzer.analyze(de1.in() ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      CORBA::Any_var out_any2 =
-        de1->to_any (ACE_ENV_SINGLE_ARG_PARAMETER);
+      CORBA::Any_var out_any2 = de1->to_any (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (ul_out1 == 1)
@@ -115,8 +110,7 @@ Test_DynEnum::run_test (void)
       de1->set_as_ulong (3
                          ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
-      CORBA::String_var s =
-        de1->get_as_string (ACE_ENV_SINGLE_ARG_PARAMETER);
+      CORBA::String_var s = de1->get_as_string (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (ACE_OS::strcmp (s.in (), "TE_THIRD") == 0)
@@ -159,10 +153,8 @@ Test_DynEnum::run_test (void)
       analyzer.analyze(de2.in() ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      CORBA::Any_var out_any1 =
-        de2->to_any (ACE_ENV_SINGLE_ARG_PARAMETER);
+      CORBA::Any_var out_any1 = de2->to_any (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
-      
       out_any1.in () >>= te;
 
       if (te == DynAnyTests::TE_THIRD)
@@ -195,7 +187,6 @@ Test_DynEnum::run_test (void)
 
       de1->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
-      
       de2->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }

@@ -3,11 +3,7 @@
 project(ENW_stub): ciao_client_dnc, event {
 
   sharedname = ENW_stub
-  idlflags -= -GT
-  idlflags += -Wb,stub_export_macro=ENW_STUB_Export \
-              -Wb,stub_export_include=ENW_stub_export.h \
-              -Wb,skel_export_macro=ENW_SKEL_Export \
-              -Wb,skel_export_include=ENW_skel_export.h
+  idlflags += -Wb,stub_export_macro=ENW_STUB_Export -Wb,stub_export_include=ENW_stub_export.h -Wb,skel_export_macro=ENW_SVNT_Export -Wb,skel_export_include=ENW_svnt_export.h
   dynamicflags   = ENW_STUB_BUILD_DLL
 
   IDL_Files {
@@ -19,21 +15,12 @@ project(ENW_stub): ciao_client_dnc, event {
   }
 }
 
-project(ENW_skel) : ciao_servant_dnc, event {
+project(ENW_svnt) : ciao_servant_dnc, event {
   after +=  ENW_stub
-  sharedname  = ENW_skel
+  sharedname  = ENW_svnt
   libs    += ENW_stub
-  idlflags -= -GT
-  idlflags += -Wb,stub_export_macro=ENW_STUB_Export \
-              -Wb,stub_export_include=ENW_stub_export.h \
-              -Wb,skel_export_macro=ENW_SKEL_Export \
-              -Wb,skel_export_include=ENW_skel_export.h
 
-  dynamicflags = ENW_SKEL_BUILD_DLL
-
-  IDL_Files {
-    ENW.idl
-  }
+  dynamicflags = ENW_SVNT_BUILD_DLL
 
   Source_Files {
     ENWS.cpp
