@@ -26,15 +26,11 @@
 // Used primarily for Interceptors
 
 #include "tao/AnyTypeCode/Dynamic_Parameter.pidl"
+#include "tao/Typecode_types.pidl"
 #include "tao/StringSeq.pidl"
 
 #ifndef _DYNAMIC_IDL_
 #define _DYNAMIC_IDL_
-
-module CORBA
-{
-  interface TypeCode;
-};
 
 module Dynamic
 {
