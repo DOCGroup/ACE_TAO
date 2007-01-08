@@ -2,13 +2,16 @@
 // $Id$
 
 project(*Server): taoserver, tc_iiop, pi_server {
-
   after += Curren_Test_Lib_Client Current_Test_Lib_Server
+  libs  += Current_Test_Lib_Client Current_Test_Lib_Server
 
-  includes += . ../lib
-
-  libs += Current_Test_Lib_Client Current_Test_Lib_Server
-  libpaths += ../lib
+  specific (automake) {
+    includes += $(srcdir) $(srcdir)/../lib
+    libpaths += $(srcdir)/../lib
+  } else {
+    includes += . ../lib
+    libpaths += ../lib
+  }
 
   Source_Files {
     server.cpp
@@ -23,13 +26,16 @@ project(*Server): taoserver, tc_iiop, pi_server {
 }
 
 project(*Client): taoclient, tc_iiop, dynamicinterface {
-
   after += *Server Current_Test_Lib_Client Current_Test_Lib_Server
+  libs  += Current_Test_Lib_Client Current_Test_Lib_Server
 
-  includes += . ../lib
-
-  libs += Current_Test_Lib_Client Current_Test_Lib_Server
-  libpaths += ../lib
+  specific (automake) {
+    includes += $(srcdir) $(srcdir)/../lib
+    libpaths += $(srcdir)/../lib
+  } else {
+    includes += . ../lib
+    libpaths += ../lib
+  }
 
   Source_Files {
     client.cpp
