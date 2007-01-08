@@ -646,6 +646,15 @@ namespace TAO
                          PortableServer::POA::ServantNotActive,
                          PortableServer::POA::WrongPolicy))
     {
+#if defined (CORBA_E_COMPACT) || defined (CORBA_E_MICRO)
+      if (this->poa_->allow_multiple_activations () ||
+            this->poa_->allow_implicit_activation ())
+        {
+          ACE_THROW_RETURN (PortableServer::POA::WrongPolicy (),
+                            0);
+        }
+
+#else
       // This operation requires the RETAIN and either the UNIQUE_ID or
       // IMPLICIT_ACTIVATION policies; if not present, the WrongPolicy
       // exception is raised.
@@ -655,6 +664,7 @@ namespace TAO
           ACE_THROW_RETURN (PortableServer::POA::WrongPolicy (),
                             0);
         }
+#endif
 
       // This operation has three possible behaviors.
 

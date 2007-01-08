@@ -1,3 +1,28 @@
+Mon Jan  8 18:56:55 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/AnyTypeCode.mpc:
+          Cleanup and added regeneration of Dynamic.pidl
+
+        * tao/AnyTypeCode/Dynamic.pidl:
+          Removed TypeCode interface and include other pidl
+          file that has TypeCode
+
+        * tao/AnyTypeCode/DynamicA.cpp:
+        * tao/AnyTypeCode/DynamicA.h:
+        * tao/AnyTypeCode/DynamicC.cpp:
+        * tao/AnyTypeCode/DynamicC.h:
+        * tao/AnyTypeCode/DynamicS.h:
+          Removed from the repo, they are now generated on the fly
+
+        * tao/PortableServer/ServantRetentionStrategyRetain.cpp (servant_to_system_id_i):
+          Added special check for CORBA/e so that the correct exception is thrown
+
+        * tests/IDL_Test/typecode.idl:
+          New idl file used to test how to regenerate Dynamic.pidl
+
+        * IDL_Test/IDL_Test.mpc:
+          Added typecode.idl
+
 Mon Jan  8 16:02:13 UTC 2007  Ciju John  <johnc@ociweb.com>
 
         * docs/ORBEndpoint.html:

@@ -40,6 +40,7 @@ project(*Main): taoserver, messaging {
     typedef.idl
     valuetype.idl
     array_only.idl
+    typecode.idl
   }
 
   Source_Files {
