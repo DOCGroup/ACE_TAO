@@ -27,8 +27,8 @@ server_CPPFLAGS = \
   -I$(ACE_BUILDDIR) \
   -I$(TAO_ROOT) \
   -I$(TAO_BUILDDIR) \
-  -I. \
-  -I../lib
+  -I$(srcdir) \
+  -I$(srcdir)/../lib
 
 server_SOURCES = \
   Current_Test_Impl.cpp \
@@ -38,15 +38,15 @@ server_SOURCES = \
   server.cpp \
   IIOP_Server_Request_Interceptor.h
 
-../lib:
-	mkdir -p ../lib
+$(srcdir)/../lib:
+	mkdir -p $(srcdir)/../lib
 
 
 server_DEPENDENCIES = \
- ../lib
+ $(srcdir)/../lib
 
 server_LDFLAGS = \
-  -L../lib
+  -L$(srcdir)/../lib
 
 server_LDADD = \
   $(top_builddir)/tests/TransportCurrent/lib/libCurrent_Test_Lib_Client.la \
@@ -77,23 +77,20 @@ client_CPPFLAGS = \
   -I$(ACE_BUILDDIR) \
   -I$(TAO_ROOT) \
   -I$(TAO_BUILDDIR) \
-  -I. \
-  -I../lib
+  -I$(srcdir) \
+  -I$(srcdir)/../lib
 
 client_SOURCES = \
   IIOP_Tester.cpp \
   client.cpp \
   IIOP_Server_Request_Interceptor.h
 
-../lib:
-	mkdir -p ../lib
-
 
 client_DEPENDENCIES = \
- ../lib
+ $(srcdir)/../lib
 
 client_LDFLAGS = \
-  -L../lib
+  -L$(srcdir)/../lib
 
 client_LDADD = \
   $(top_builddir)/tests/TransportCurrent/lib/libCurrent_Test_Lib_Client.la \
