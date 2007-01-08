@@ -29,7 +29,7 @@ namespace TAO
     // This method implements one of the "starting" client side
     // interception point.
 
-    bool is_remote_request = invocation.is_remote_request();
+    bool const is_remote_request = invocation.is_remote_request();
 
     ACE_TRY
       {
@@ -237,8 +237,35 @@ namespace TAO
                                        ACE_ENV_ARG_PARAMETER);
         ACE_TRY_CHECK;
       }
+    ACE_CATCHANY
+      {
+        // The receive_exception() interception point in the remaining
+        // interceptors must be called so call this method (not the
+        // interceptor's corresponding method) recursively.  The call is
+        // made recursively since the caught exception must survive
+        // until the remaining interceptors have been called.
+
+        // Note that the recursion will stop once the flow stack size
+        // drops to zero, i.e., once each interceptor has been invoked.
+        // This prevents infinite recursion from occuring.
+
+        invocation.exception (&ACE_ANY_EXCEPTION);
+
+        this->receive_exception (invocation ACE_ENV_ARG_PARAMETER);
+        ACE_TRY_CHECK;
+
+        PortableInterceptor::ReplyStatus status =
+          this->reply_status (invocation);
+
+        // Only re-throw the exception if it hasn't been transformed by
+        // the receive_exception() interception point (e.g. to a
+        // LOCATION_FORWARD).
+        if (status == PortableInterceptor::SYSTEM_EXCEPTION
+            || status == PortableInterceptor::USER_EXCEPTION)
+          ACE_RE_THROW;
+      }
     ACE_ENDTRY;
-    ACE_CHECK;
+    ACE_CHECK;                                      
   }
 
   void

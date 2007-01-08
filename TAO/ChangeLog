@@ -1,3 +1,23 @@
+Mon Jan  8 10:52:55 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Invocation_Base.cpp (exception):
+          Set the forwarded_to_ member to nil again, it can be that
+          we had a forward request which was converted to a regular
+          exeption in a PI call and then we have to make sure we don't
+          keep the old data
+
+        * tao/PI/ClientRequestInterceptor_Adapter_Impl.cpp (receive_other):
+          When an exception occurs make sure we implement the following
+          behaviour from the OMG spec section 21.3.6.5:
+          This interception point may raise a system exception. If it does, no other
+          Interceptors’ receive_other operations are called. The remaining
+          Interceptors in the Flow Stack are popped and have their receive_exception
+          interception point called.
+
+          This fixes the failing of bug 2287 regression on svn head. Thanks to
+          Simon McQueen for explaining the meaning of this test and reviewing
+          the changes above
+
 Mon Jan  8 00:18:21 UTC 2007  Iliyan Jeliazkov  <iliyan@ociweb.com>
 
         * tests/TransportCurrent/Framework/run_test.pl:
