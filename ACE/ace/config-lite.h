@@ -129,12 +129,9 @@ ACE_END_VERSIONED_NAMESPACE_DECL
   // the _RWSTD_NO_CLASS_PARTIAL_SPEC feature test macro below.
 # include <Cstd/stdcomp.h>
 #endif /* __SUNPRO_CC <= 0x580 */
-#if defined (_MSC_VER) && (_MSC_VER < 1310) && !defined (_CPPLIB_VER)
-  // MSVC++ 6 and the latest platform SDKs don't define a standard
+#if defined (_MSC_VER) && (_MSC_VER <= 1310) && defined (_WIN64)
+  // VC 7.1 and the latest 64-bit platform SDK still don't define a standard
   // compliant reverse_iterator adapter.
-  //
-  // It seems when there is no _CPPLIB_VER defined we can also assume
-  // that the SDK is old.
 # define ACE_DECLARE_STL_REVERSE_ITERATORS \
   typedef std::reverse_iterator<iterator, value_type> reverse_iterator; \
   typedef std::reverse_iterator<const_iterator, \
@@ -158,7 +155,7 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 # define ACE_DECLARE_STL_REVERSE_ITERATORS \
   typedef std::reverse_iterator<iterator>       reverse_iterator; \
   typedef std::reverse_iterator<const_iterator> const_reverse_iterator;
-#endif  /* _MSC_VER && !_CPPLIB_VER */
+#endif  /* _MSC_VER && _WIN64 */
 
 
 #include /**/ "ace/post.h"
