@@ -14,7 +14,7 @@
 
 #include "ace/Pipe.h"
 #include "ace/Event_Handler.h"
-#include "ace/Select_Reactor.h"
+#include "ace/Reactor.h"
 
 ACE_RCSID (tests,
            Bug_2540_Regression_Test,
@@ -67,7 +67,7 @@ private:
  * in a repeating interval.  On the first @c initial_iterations the Timer
  * writes data through all of its handlers.  On iteration @c initial_iteration
  * it triggers bug 2540 by removing two handlers from the reactor.
- *
+ * 
  */
 class Timer : public ACE_Event_Handler
 {
@@ -99,19 +99,18 @@ run_main (int, ACE_TCHAR *[])
 {
   ACE_START_TEST (ACE_TEXT ("Bug_2540_Regression_Test"));
 
-  ACE_Select_Reactor select_reactor;
-  ACE_Reactor reactor (&select_reactor);
+  ACE_Reactor * reactor = ACE_Reactor::instance();
 
   // Create the timer, this is the main driver for the test
   Timer * timer = new Timer;
 
   // Initialize the timer and register with the reactor
-  if (-1 == timer->open(&reactor))
+  if (-1 == timer->open(reactor))
   {
       ACE_ERROR_RETURN ((LM_ERROR, "Cannot initialize timer\n"), -1);
   }
 
-  reactor.run_reactor_event_loop();
+  reactor->run_reactor_event_loop();
 
   // Verify that the results are what we expect
   if (!timer->check_expected_results())
@@ -256,7 +255,7 @@ int Timer::handle_timeout(ACE_Time_Value const &, void const *)
 	// The first iterations are there just to prime things.
 	return 0;
     }
-
+    
     if (iteration_ == initial_iterations)
     {
 	// We expect the special_handler() to work normally after this
