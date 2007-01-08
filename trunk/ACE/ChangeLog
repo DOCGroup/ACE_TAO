@@ -1,3 +1,12 @@
+Mon Jan  8 18:54:55 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
+
+        * tests/Bug_1890_Regression_Test.cpp:
+        * tests/Bug_2540_Regression_Test.cpp:
+
+          Reverted my previous changes where the ACE_Select_Reactor was
+          explicitly chosen.  The bug reports specifically talk about the
+          select reactor, but they actually apply to others as well.
+
 Mon Jan  8 18:50:30 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/os_include/os_string.h:
