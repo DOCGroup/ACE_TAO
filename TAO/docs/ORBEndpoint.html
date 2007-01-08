@@ -359,7 +359,8 @@
 	    on a port still in TIME_WAIT state. Use caution using this option. Its not
 	    recommended for the general use-case. Setting
 	    SO_REUSEADDR has been observed to cause unexpected side-effects on some
-	    platforms.
+	    platforms (e.g. Solaris 5.7 x86 allows programs run as same or different
+	    users to bind to the same port when SO_REUSEADDR is set by all users).
             <P>
             The format for <CODE>ORBEndpoint</CODE> with the
             <CODE>reuse_addr</CODE> option is:
