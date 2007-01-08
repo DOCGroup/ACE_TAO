@@ -1,3 +1,13 @@
+Mon Jan  8 19:56:54 UTC 2007  Chris Cleeland  <cleeland_c@ociweb.com>
+
+        * tao/Unbounded_Octet_Sequence_T.h:
+        
+          Moved #include for OS_NS_string.h into the
+          (TAO_NO_COPY_OCTET_SEQUENCES == 0) clause...which is where it
+          should have been in the first place since that's where memcmp is
+          actually used.  This should fix the BCB build, and any other
+          TAO_NO_COPY_OCTET_SEQUENCES builds.
+
 Mon Jan  8 19:40:55 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/GIOP_Message_Locate_Header.h:
