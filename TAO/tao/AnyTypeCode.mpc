@@ -3,6 +3,12 @@ project : taolib, install, extra_anytypecode, tao_versioning_idl_defaults {
   sharedname   = TAO_AnyTypeCode
   dynamicflags = TAO_ANYTYPECODE_BUILD_DLL
 
+  idlflags += -Gp -Gd -Sci -SS -GA \
+              -Wb,export_macro=TAO_AnyTypeCode_Export \
+              -Wb,export_include=tao/AnyTypeCode/TAO_AnyTypeCode_Export.h \
+              -o AnyTypeCode
+  idlflags -= -Sa -St
+
   Source_Files(TAO_ANYTYPECODE_COMPONENTS) {
     AnyTypeCode/Alias_TypeCode_Static.cpp
     AnyTypeCode/Any.cpp
@@ -143,23 +149,15 @@ project : taolib, install, extra_anytypecode, tao_versioning_idl_defaults {
   }
 
   IDL_Files {
-    idlflags += -Gp -Gd -Sci -SS -Sorb -GA \
-                -Wb,export_macro=TAO_AnyTypeCode_Export \
-                -Wb,export_include=tao/AnyTypeCode/TAO_AnyTypeCode_Export.h \
-                -o AnyTypeCode
-    idlflags -= -Sa -St
+    idlflags += -Sorb
     AnyTypeCode/AnySeq.pidl
     AnyTypeCode/Dynamic_Parameter.pidl
     AnyTypeCode/ValueModifier.pidl
     AnyTypeCode/Visibility.pidl
+    AnyTypeCode/Dynamic.pidl
   }
 
   IDL_Files {
-    idlflags += -Gp -Gd -Sci -SS -GA \
-                -Wb,export_macro=TAO_AnyTypeCode_Export \
-                -Wb,export_include=tao/AnyTypeCode/TAO_AnyTypeCode_Export.h \
-                -o AnyTypeCode
-    idlflags -= -Sa -St
     AnyTypeCode/Bounds.pidl
   }
 
