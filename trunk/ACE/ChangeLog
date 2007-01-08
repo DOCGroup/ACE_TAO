@@ -1,3 +1,16 @@
+Mon Jan  8 19:55:31 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
+
+        * ace/SString.cpp:
+
+          When creating a substring, only allocate the ACE_SString in the
+          return statement to avoid needless memory allocation and possibly
+          leaking memory.
+
+        * tests/SString_Test.cpp:
+
+          Specialized memory cleanup for the particular usage pattern of
+          ACE_SString near the end of the test.
+
 Mon Jan  8 19:48:50 UTC 2007  Steve Huston  <shuston@riverace.com>
 
         * ace/config-lite.h (ACE_DECLARE_STL_REVERSE_ITERATOR): The
