@@ -1,3 +1,9 @@
+Mon Jan  8 13:55:00 UTC 2007  Simon Massey  <sma@prismtech.com>
+
+        * orbsvcs/tests/Bug_1630_Regression/testclient.cpp:
+
+          Add some debug output to trace code flow for remote systems.
+
 Mon Jan  8 13:50:31 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
 
         * tests/OBV/Truncatable/client.cpp:
