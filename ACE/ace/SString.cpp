@@ -317,16 +317,15 @@ ACE_SString
 ACE_SString::substring (size_type offset,
                         size_type length) const
 {
-  ACE_SString nill;
   size_t count = length;
 
   // case 1. empty string
   if (len_ == 0)
-    return nill;
+    return ACE_SString ();
 
   // case 2. start pos l
   if (offset >= len_)
-    return nill;
+    return ACE_SString ();
 
   // get all remaining bytes
   if (length == npos || count > (this->len_ - offset))

@@ -320,6 +320,7 @@ run_main (int, ACE_TCHAR *[])
     // Set 1 for ACE_SString, which is not tested
     ACE_SString sstr;
 
+    const char *old = sstr.rep ();
     const char *str = "What_a_day_it_has_been";
 
     sstr.rep (const_cast<char *>(str));
@@ -330,6 +331,11 @@ run_main (int, ACE_TCHAR *[])
     if (tmp.length () == 300)
       ACE_ERROR ((LM_ERROR, "SString substring \n"));
 
+    // Constring an ACE_SString without a character pointer or from an
+    // existing ACE_SString causes memory to be allocated that will not
+    // be delete (apparently by design).
+    ACE_Allocator::instance ()->free (const_cast<char *> (old));
+    ACE_Allocator::instance ()->free (const_cast<char *> (tmp.rep ()));
   }
 
   int err = testConcatenation();
