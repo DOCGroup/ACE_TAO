@@ -32,7 +32,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
  *
  * @brief Location service support
  */
-class TAO_Export TAO_GIOP_Locate_Request_Header
+class TAO_GIOP_Locate_Request_Header
 {
 public:
 
