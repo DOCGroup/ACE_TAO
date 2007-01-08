@@ -1,3 +1,10 @@
+Mon Jan  8 16:51:55 UTC 2007  Wallace Zhang  <zhang_w@ociweb.com>
+
+        * tests/Bug_2368_Regression_Test.cpp:
+
+          Improved the test output to show the failure caused by the
+          unresolved bug is expected.
+
 Mon Jan  8 13:48:17 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
 
         * examples/APG/Logging/Trace.h:
