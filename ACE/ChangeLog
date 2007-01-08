@@ -1,3 +1,12 @@
+Mon Jan  8 17:58:46 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
+
+        * tests/Bug_1890_Regression_Test.cpp:
+
+          Bug 1890 is specifically targeted for the Select Reactor.  So,
+          instead of relying on ACE_Reactor::instance() being an
+          ACE_Select_Reactor, explicitly use the ACE_Select_Reactor impl.
+          This will fix this test on Windows.
+
 Mon Jan  8 16:51:55 UTC 2007  Wallace Zhang  <zhang_w@ociweb.com>
 
         * tests/Bug_2368_Regression_Test.cpp:
