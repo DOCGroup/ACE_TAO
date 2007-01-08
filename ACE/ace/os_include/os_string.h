@@ -59,6 +59,10 @@ extern "C"
   char *strtok_r (char *s, const char *delim, char **save_ptr);
 #endif  /* ACE_LACKS_STRTOK_R_PROTOTYPE */
 
+#if defined (ACE_LACKS_STRNLEN_PROTOTYPE)
+  size_t strnlen(const char *s, size_t maxlen);
+#endif  /* ACE_LACKS_STRNLEN_PROTOTYPE */
+
 #if defined (__BORLANDC__) && (__BORLANDC__ < 0x560)
 #  define _stricmp stricmp
 #  define _strnicmp strnicmp

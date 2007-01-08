@@ -304,11 +304,10 @@
 #define ACE_HAS_GETPAGESIZE 1
 
 #if (__GLIBC__  < 2)  ||  (__GLIBC__ == 2 && __GLIBC_MINOR__ < 2)
-
 // glibc supports wchar, but lacks fgetwc and ungetwc
-#define ACE_LACKS_FGETWC
-#define ACE_HAS_NONCONST_MSGSND
-
+# define ACE_LACKS_FGETWC
+# define ACE_HAS_NONCONST_MSGSND
+# define ACE_LACKS_STRNLEN_PROTOTYPE
 #endif
 
 // glibc requires _XOPEN_SOURCE_EXTENDED to make this prototype

@@ -1,3 +1,14 @@
+Mon Jan  8 18:50:30 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/os_include/os_string.h:
+          Added ACE_LACKS_STRNLEN_PROTOTYPE to define strnlen prototype,
+          seems to lack with RedHat 6.2 Thanks to Nelson Filipe Ferreira Gonçalves
+          <ngoncalves at isr dot ist dot utl dot pt> for delivering the
+          autoconf log
+
+        * ace/config-linux-common.h:
+          Glibc 2.1 and lower don't have a strnlen prototype
+
 Mon Jan  8 18:43:36 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
 
         * tests/Bug_2540_Regression_Test.cpp:
