@@ -1,3 +1,11 @@
+Mon Jan  8 13:36:37 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
+
+        * tests/TransportCurrent/IIOP/IIOP.mpc:
+        * tests/TransportCurrent/IIOP/Makefile.am:
+
+          Modified the MPC file to work with automake and updated the
+          Makefile.am accordingly.
+
 Mon Jan  8 10:52:55 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Invocation_Base.cpp (exception):
