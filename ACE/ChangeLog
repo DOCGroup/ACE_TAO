@@ -1,3 +1,19 @@
+Mon Jan  8 10:45:30 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Select_Reactor_Base.h:
+          Doxygen improvements
+
+        * ace/Select_Reactor_Base.h:
+          Changed the way we set the default for the
+          ACE_Select_Reactor_Notify::open call, instead of just hardcoding
+          the default 0, use the ACE_DISABLE_NOTIFY_PIPE_DEFAULT define
+          which is set by default to 0, but which we can set from a
+          config file to 1 to disable the notification pipe.
+
+        * ace/config-posix-nonetworking.h:
+          Set ACE_DISABLE_NOTIFY_PIPE_DEFAULT to 1. The notification pipe
+          doesn't work when networking is fully disabled.
+
 Mon Jan  8 00:10:52 UTC 2007  Iliyan Jeliazkov  <iliyan@ociweb.com>
 
         * bin/tao_orb_tests.lst:
