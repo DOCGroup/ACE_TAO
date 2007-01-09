@@ -1,3 +1,12 @@
+Tue Jan  9 22:57:24 UTC 2007  Steve Huston  <shuston@riverace.com>
+
+        * tests/SOCK_Send_Recv_Test.cpp: Added a check to make sure nonblocking
+          recv() works without blocking; this feature is relied on by later
+          tests, and is also the subject of a customer report.
+          Also, removed all the ACE_ASSERTS - tests should never do asserts.
+          It kills the program without any legit idea of what went on, and they
+          disappear in Release builds.
+
 Tue Jan  9 15:36:30 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Log_Msg.cpp:
