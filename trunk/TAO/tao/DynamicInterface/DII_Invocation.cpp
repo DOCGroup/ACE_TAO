@@ -1,7 +1,7 @@
 // $Id$
 
-#include "tao/AnyTypeCode/DynamicC.h"
 #include "tao/AnyTypeCode/TypeCode.h"
+#include "tao/AnyTypeCode/DynamicC.h"
 
 #include "tao/DynamicInterface/DII_Invocation.h"
 #include "tao/DynamicInterface/Unknown_User_Exception.h"
