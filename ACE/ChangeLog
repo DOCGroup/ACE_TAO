@@ -1,3 +1,9 @@
+Tue Jan  9 03:46:14 UTC 2007  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * configure.ac:
+
+          Add ACE_LACKS_STRNLEN_PROTOTYPE feature test.
+
 Mon Jan  8 19:55:31 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
 
         * ace/SString.cpp:
