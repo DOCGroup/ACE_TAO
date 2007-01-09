@@ -3,6 +3,7 @@
 // cvs-id    : $Id$
 
 #include "tao/AnyTypeCode/Any_Impl.h"
+#include "tao/AnyTypeCode/TypeCode.h"
 #include "tao/AnyTypeCode/DynamicC.h"
 #include "tao/PortableServer/Servant_Base.h"
 #include "tao/PI/PI.h"
