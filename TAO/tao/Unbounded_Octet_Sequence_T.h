@@ -23,6 +23,7 @@
 #include "tao/Basic_Types.h"
 #include "ace/Message_Block.h"
 #include "ace/OS_Memory.h"
+#include "ace/OS_NS_string.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
