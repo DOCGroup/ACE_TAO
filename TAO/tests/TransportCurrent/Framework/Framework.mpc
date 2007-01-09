@@ -7,7 +7,7 @@ project(*Server): taoserver, tc, pi_server {
   libs += Current_Test_Lib_Client Current_Test_Lib_Server
 
   specific (automake) {
-    includes += $(srcdir)/../lib
+    includes += $(srcdir)/../lib ../lib
   } else {
     includes += . ../lib
     libpaths += ../lib
@@ -30,7 +30,7 @@ project(*Client): taoclient, tc, dynamicinterface {
   libs += Current_Test_Lib_Client Current_Test_Lib_Server
 
   specific (automake) {
-    includes += $(srcdir)/../lib
+    includes += $(srcdir)/../lib ../lib
   } else {
     includes += . ../lib
     libpaths += ../lib

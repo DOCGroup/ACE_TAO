@@ -1,3 +1,16 @@
+Tue Jan  9 06:15:00 UTC 2007  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * tests/TransportCurrent/Framework/Makefile.am:
+        * tests/TransportCurrent/IIOP/Makefile.am:
+
+          Regenerated.
+
+        * tests/TransportCurrent/IIOP/IIOP.mpc
+        * tests/TransportCurrent/Framework/Framework.mpc
+
+          For the automake builds includes are relative to both $(srcdir)
+          and the build dir.
+
 Tue Jan  9 03:50:30 UTC 2007  J.T. Conklin  <jtc@acorntoolworks.com>
 
         * tests/IDL_Test/Makefile.am:
