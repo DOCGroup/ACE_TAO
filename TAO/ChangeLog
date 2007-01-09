@@ -1,3 +1,9 @@
+Tue Jan  9 03:48:33 UTC 2007  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * tests/Compression/Makefile.am:
+
+          Regenerated.
+
 Tue Jan  9 03:43:45 UTC 2007  J.T. Conklin  <jtc@acorntoolworks.com>
 
         * tao/Makefile.am:

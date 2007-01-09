@@ -37,8 +37,6 @@ server_LDFLAGS = \
 server_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO_ZlibCompressor.la \
   $(TAO_BUILDDIR)/tao/libTAO_Compression.la \
-  $(TAO_BUILDDIR)/tao/libTAO_PI.la \
-  $(TAO_BUILDDIR)/tao/libTAO_CodecFactory.la \
   $(TAO_BUILDDIR)/tao/libTAO_PortableServer.la \
   $(TAO_BUILDDIR)/tao/libTAO_AnyTypeCode.la \
   $(TAO_BUILDDIR)/tao/libTAO.la \
