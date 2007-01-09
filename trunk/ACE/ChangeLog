@@ -1,3 +1,10 @@
+Tue Jan  9 15:36:30 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Log_Msg.cpp:
+        * ace/Thread_Manager.{h,cpp,inl}:
+          Removed ACE_USE_ONESHOT_AT_THREAD_EXIT checks, that define
+          is not set in any config file
+
 Tue Jan  9 14:17:50 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
 
         * bin/msvc_static_order.lst:

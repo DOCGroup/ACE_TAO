@@ -81,12 +81,11 @@ class ACE_Task_Base;
 class ACE_Thread_Manager;
 class ACE_Thread_Descriptor;
 
-#if !defined(ACE_USE_ONE_SHOT_AT_THREAD_EXIT)
-  /**
-   * @class ACE_At_Thread_Exit
-   *
-   * @brief Contains a method to be applied when a thread is terminated.
-   */
+/**
+  * @class ACE_At_Thread_Exit
+  *
+  * @brief Contains a method to be applied when a thread is terminated.
+  */
 class ACE_Export ACE_At_Thread_Exit
 {
   friend class ACE_Thread_Descriptor;
@@ -153,8 +152,6 @@ protected:
    /// The apply method
    void apply (void);
 };
-
-#endif /* !ACE_USE_ONE_SHOT_AT_THREAD_EXIT */
 
 /**
  * @class ACE_Thread_Descriptor_Base
@@ -231,9 +228,7 @@ protected:
  */
 class ACE_Export ACE_Thread_Descriptor : public ACE_Thread_Descriptor_Base
 {
-#if !defined(ACE_USE_ONE_SHOT_AT_THREAD_EXIT)
   friend class ACE_At_Thread_Exit;
-#endif /* !ACE_USE_ONE_SHOT_AT_THREAD_EXIT */
   friend class ACE_Thread_Manager;
   friend class ACE_Double_Linked_List<ACE_Thread_Descriptor>;
   friend class ACE_Double_Linked_List_Iterator<ACE_Thread_Descriptor>;
@@ -251,7 +246,6 @@ public:
   /// Dump the state of an object.
   void dump (void) const;
 
-#if !defined(ACE_USE_ONE_SHOT_AT_THREAD_EXIT)
   /**
    * This cleanup function must be called only for ACE_TSS_cleanup.
    * The ACE_TSS_cleanup delegate Log_Msg instance destruction when
@@ -269,7 +263,6 @@ public:
   /// Register an At_Thread_Exit hook and the ownership is retained for the
   /// caller. Normally used when the at_exit hook is created in stack.
   int at_exit (ACE_At_Thread_Exit& cleanup);
-#endif /* !ACE_USE_ONE_SHOT_AT_THREAD_EXIT */
 
   /**
    * Register an object (or array) for cleanup at thread termination.
@@ -313,7 +306,6 @@ private:
   /// Reset this thread descriptor.
   void reset (ACE_Thread_Manager *tm);
 
-#if !defined (ACE_USE_ONE_SHOT_AT_THREAD_EXIT)
   /// Pop an At_Thread_Exit from at thread termination list, apply the at
   /// if apply is true.
   void at_pop (int apply = 1);
@@ -335,7 +327,6 @@ private:
 
   /// The AT_Thread_Exit list
   ACE_At_Thread_Exit *at_exit_list_;
-#endif  /* !ACE_USE_ONE_SHOT_AT_THREAD_EXIT */
 
   /**
    * Stores the cleanup info for a thread.
@@ -343,19 +334,15 @@ private:
    */
   ACE_Cleanup_Info cleanup_info_;
 
-#if !defined(ACE_USE_ONE_SHOT_AT_THREAD_EXIT)
   /// Pointer to an ACE_Thread_Manager or NULL if there's no
   /// ACE_Thread_Manager>
   ACE_Thread_Manager* tm_;
-#endif /* !ACE_USE_ONE_SHOT_AT_THREAD_EXIT */
 
   /// Registration lock to prevent premature removal of thread descriptor.
   ACE_DEFAULT_THREAD_MANAGER_LOCK *sync_;
 
-#if !defined(ACE_USE_ONE_SHOT_AT_THREAD_EXIT)
   /// Keep track of termination status.
   bool terminated_;
-#endif  /* !ACE_USE_ONE_SHOT_AT_THREAD_EXIT */
 };
 
 // Forward declaration.
@@ -397,9 +384,7 @@ public:
 
   // Allow ACE_THread_Exit to register the global TSS instance object.
   friend class ACE_Thread_Exit;
-#if !defined(ACE_USE_ONE_SHOT_AT_THREAD_EXIT)
   friend class ACE_Thread_Descriptor;
-#endif /* !ACE_USE_ONE_SHOT_AT_THREAD_EXIT */
 
 #if !defined (__GNUG__)
   typedef int (ACE_Thread_Manager::*ACE_THR_MEMBER_FUNC)(ACE_Thread_Descriptor *, int);
@@ -611,15 +596,15 @@ public:
    *                                 THR_DAEMON flags set and remove
    *                                 these threads.  Notice that
    *                                 unlike other @c wait_*() methods,
-   *                                 by default, @c wait() does wait on 
+   *                                 by default, @c wait() does wait on
    *                                 all thread spawned by this
-   *                                 thread manager no matter the detached 
+   *                                 thread manager no matter the detached
    *                                 flags are set or not unless it is
    *                                 called with @c
-   *                                 abandon_detached_threads flag set. 
+   *                                 abandon_detached_threads flag set.
    * @param use_absolute_time If non-0 then treat @c timeout as
    *                          absolute time, else relative time.
-   * @return 0 on success * and -1 on failure.  
+   * @return 0 on success * and -1 on failure.
    *
    * NOTE that if this function is called while the @c
    * ACE_Object_Manager is shutting down (as a result of program
@@ -929,7 +914,6 @@ public:
   /// managed by this thread manager.
   int thr_state (ACE_thread_t id, ACE_UINT32& state);
 
-#if !defined(ACE_USE_ONE_SHOT_AT_THREAD_EXIT)
   /**
    * Register an At_Thread_Exit hook and the ownership is acquire by
    * Thread_Descriptor, this is the usual case when the AT is dynamically
@@ -940,7 +924,6 @@ public:
   /// Register an At_Thread_Exit hook and the ownership is retained for the
   /// caller. Normally used when the at_exit hook is created in stack.
   int at_exit (ACE_At_Thread_Exit& cleanup);
-#endif /* !ACE_USE_ONE_SHOT_AT_THREAD_EXIT */
 
   /**
    *
