@@ -1,7 +1,21 @@
+Tue Jan  9 03:37:26 UTC 2007  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * tests/TransportCurrent/Framework/Makefile.am:
+        * tests/TransportCurrent/IIOP/Makefile.am:
+        * tests/TransportCurrent/lib/Makefile.am:
+
+          Regenerated.
+
+        * tests/TransportCurrent/IIOP/IIOP.mpc
+        * tests/TransportCurrent/Framework/Framework.mpc
+
+          For the automake builds includes are relative to $(srcdir),
+          libpaths are relative to the build dir.
+
 Mon Jan  8 19:56:54 UTC 2007  Chris Cleeland  <cleeland_c@ociweb.com>
 
         * tao/Unbounded_Octet_Sequence_T.h:
-        
+
           Moved #include for OS_NS_string.h into the
           (TAO_NO_COPY_OCTET_SEQUENCES == 0) clause...which is where it
           should have been in the first place since that's where memcmp is

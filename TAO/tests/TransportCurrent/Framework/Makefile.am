@@ -27,8 +27,7 @@ server_CPPFLAGS = \
   -I$(ACE_BUILDDIR) \
   -I$(TAO_ROOT) \
   -I$(TAO_BUILDDIR) \
-  -I. \
-  -I../lib
+  -I$(srcdir)/../lib
 
 server_SOURCES = \
   Current_Test_Impl.cpp \
@@ -36,23 +35,13 @@ server_SOURCES = \
   Tester.cpp \
   server.cpp
 
-../lib:
-	mkdir -p ../lib
-
-
-server_DEPENDENCIES = \
- ../lib
-
-server_LDFLAGS = \
-  -L../lib
-
 server_LDADD = \
   $(top_builddir)/tests/TransportCurrent/lib/libCurrent_Test_Lib_Client.la \
   $(top_builddir)/tests/TransportCurrent/lib/libCurrent_Test_Lib_Server.la \
   $(TAO_BUILDDIR)/tao/libTAO_PI_Server.la \
+  $(TAO_BUILDDIR)/tao/libTAO_TC.la \
   $(TAO_BUILDDIR)/tao/libTAO_PI.la \
   $(TAO_BUILDDIR)/tao/libTAO_CodecFactory.la \
-  $(TAO_BUILDDIR)/tao/libTAO_TC.la \
   $(TAO_BUILDDIR)/tao/libTAO_PortableServer.la \
   $(TAO_BUILDDIR)/tao/libTAO_AnyTypeCode.la \
   $(TAO_BUILDDIR)/tao/libTAO.la \
@@ -74,22 +63,11 @@ client_CPPFLAGS = \
   -I$(ACE_BUILDDIR) \
   -I$(TAO_ROOT) \
   -I$(TAO_BUILDDIR) \
-  -I. \
-  -I../lib
+  -I$(srcdir)/../lib
 
 client_SOURCES = \
   Tester.cpp \
   client.cpp
-
-../lib:
-	mkdir -p ../lib
-
-
-client_DEPENDENCIES = \
- ../lib
-
-client_LDFLAGS = \
-  -L../lib
 
 client_LDADD = \
   $(top_builddir)/tests/TransportCurrent/lib/libCurrent_Test_Lib_Client.la \
@@ -98,10 +76,10 @@ client_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO_Messaging.la \
   $(TAO_BUILDDIR)/tao/libTAO_PortableServer.la \
   $(TAO_BUILDDIR)/tao/libTAO_Valuetype.la \
+  $(TAO_BUILDDIR)/tao/libTAO_TC.la \
   $(TAO_BUILDDIR)/tao/libTAO_PI.la \
   $(TAO_BUILDDIR)/tao/libTAO_CodecFactory.la \
   $(TAO_BUILDDIR)/tao/libTAO_AnyTypeCode.la \
-  $(TAO_BUILDDIR)/tao/libTAO_TC.la \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
