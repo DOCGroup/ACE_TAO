@@ -27,7 +27,8 @@ server_CPPFLAGS = \
   -I$(ACE_BUILDDIR) \
   -I$(TAO_ROOT) \
   -I$(TAO_BUILDDIR) \
-  -I$(srcdir)/../lib
+  -I$(srcdir)/../lib \
+  -I../lib
 
 server_SOURCES = \
   Current_Test_Impl.cpp \
@@ -63,7 +64,8 @@ client_CPPFLAGS = \
   -I$(ACE_BUILDDIR) \
   -I$(TAO_ROOT) \
   -I$(TAO_BUILDDIR) \
-  -I$(srcdir)/../lib
+  -I$(srcdir)/../lib \
+  -I../lib
 
 client_SOURCES = \
   Tester.cpp \
