@@ -1,3 +1,9 @@
+Tue Jan  9 14:17:50 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/msvc_static_order.lst:
+
+          Added TAO/tao/TC to the end of the TAO library list.
+
 Tue Jan  9 12:47:30 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Log_Record.cpp:
