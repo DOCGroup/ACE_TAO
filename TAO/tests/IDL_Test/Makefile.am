@@ -870,6 +870,37 @@ array_only-stamp: $(srcdir)/array_only.idl $(TAO_IDL_DEP)
 	$(TAO_IDL) $(TAO_IDLFLAGS) -GC -GH -Gd -GA -GT $(srcdir)/array_only.idl
 	@touch $@
 
+BUILT_SOURCES += \
+  typecodeA.cpp \
+  typecodeA.h \
+  typecodeC.cpp \
+  typecodeC.h \
+  typecodeC.inl \
+  typecodeS.cpp \
+  typecodeS.h \
+  typecodeS.inl \
+  typecodeS_T.cpp \
+  typecodeS_T.h
+
+CLEANFILES += \
+  typecode-stamp \
+  typecodeA.cpp \
+  typecodeA.h \
+  typecodeC.cpp \
+  typecodeC.h \
+  typecodeC.inl \
+  typecodeS.cpp \
+  typecodeS.h \
+  typecodeS.inl \
+  typecodeS_T.cpp \
+  typecodeS_T.h
+
+typecodeA.cpp typecodeA.h typecodeC.cpp typecodeC.h typecodeC.inl typecodeS.cpp typecodeS.h typecodeS.inl typecodeS_T.cpp typecodeS_T.h: typecode-stamp
+
+typecode-stamp: $(srcdir)/typecode.idl $(TAO_IDL_DEP)
+	$(TAO_IDL) $(TAO_IDLFLAGS) -GC -GH -Gd -GA -GT $(srcdir)/typecode.idl
+	@touch $@
+
 noinst_PROGRAMS = main
 
 main_CPPFLAGS = \
@@ -939,6 +970,9 @@ main_SOURCES = \
   repo_id_modS.cpp \
   sequenceC.cpp \
   sequenceS.cpp \
+  typecodeA.cpp \
+  typecodeC.cpp \
+  typecodeS.cpp \
   typedefA.cpp \
   typedefC.cpp \
   typedefS.cpp \
@@ -1086,6 +1120,12 @@ main_SOURCES = \
   sequenceS.h \
   sequenceS.inl \
   sequenceS_T.h \
+  typecodeA.h \
+  typecodeC.h \
+  typecodeC.inl \
+  typecodeS.h \
+  typecodeS.inl \
+  typecodeS_T.h \
   typedefA.h \
   typedefC.h \
   typedefC.inl \
