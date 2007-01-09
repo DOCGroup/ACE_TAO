@@ -83,15 +83,49 @@ client (void *arg)
               ACE_TEXT ("(%P|%t) connected to %s\n"),
               ACE_TEXT_CHAR_TO_TCHAR(server_addr.get_host_name ())));
 
+  //*******************   TEST 0   ******************************
+  //
+  // First make sure that non-blocking receive works as intended.
+  // Set the socket to non-blocking and do a recv() - the server side
+  // will send a short piece of data after sleeping for a few seconds.
+  // This means we should get a EWOULDBLOCK first; then change to
+  // blocking for the rest of the tests.
+
+  u_char buffer[255];
+  size_t  i;
+  ssize_t len;
+
+  if (-1 == cli_stream.enable (ACE_NONBLOCK))
+    ACE_ERROR ((LM_ERROR,
+                ACE_TEXT ("(%P|%t) %p\n"),
+                ACE_TEXT ("Can't enable test 0 nonblocking")));
+
+  len = cli_stream.recv (buffer, sizeof (buffer));
+  cli_stream.disable (ACE_NONBLOCK);
+  if (len == -1)
+    {
+      if (errno == EWOULDBLOCK)
+        ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%P|%t) Nonblocking recv ok!\n")));
+      else
+        {
+          ACE_ERROR ((LM_ERROR,
+                      ACE_TEXT ("(%P|%t) %p\n"),
+                      ACE_TEXT ("Nonblocking recv")));
+          Test_Result = 1;
+        }
+      cli_stream.recv (buffer, sizeof (buffer));    // Drain the sent data
+    }
+  else
+    {
+      ACE_ERROR ((LM_ERROR, ACE_TEXT ("(%P|%t) Nonblocking recv blocked\n")));
+      Test_Result = 1;
+    }
+
   //*******************   TEST 1   ******************************
   //
   // Do a iovec sendv - send the 255 byte buffer in 5 chunks.  The
   // server will verify that the correct data is sent, and that there
   // is no more and no less.
-
-  u_char buffer[255];
-  size_t  i;
-  ssize_t len;
 
   // The server will verify that this data pattern gets there intact.
 
@@ -123,8 +157,10 @@ client (void *arg)
                   ACE_TEXT ("Test 1, sendv failed")));
       Test_Result = 1;
     }
-  else
-    ACE_ASSERT (len == 255);
+  else if (len != 255)
+    ACE_ERROR ((LM_ERROR,
+                ACE_TEXT ("(%P|%t) test 1 recvd %d; should be 255\n"),
+                static_cast<int> (len)));
 
   //*******************   TEST 2   ******************************
   //
@@ -145,7 +181,6 @@ client (void *arg)
                   ACE_TEXT ("(%P|%t) %p; len is %d, but should be 255!\n"),
                   len));
     }
-  ACE_ASSERT (len == 255);
 
   for (i = 0; i < 255; i++)
     if (buffer2[i] != buffer[i])
@@ -166,7 +201,10 @@ client (void *arg)
 
   ssize_t sent;
   char buff[Test3_Send_Size];
-  ACE_ASSERT (cli_stream.enable (ACE_NONBLOCK) != -1);
+  if (-1 == cli_stream.enable (ACE_NONBLOCK))
+    ACE_ERROR ((LM_ERROR,
+                ACE_TEXT ("(%P|%t) %p\n"),
+                ACE_TEXT ("Can't enable test 3 nonblocking")));
   for (i = 0; i < Test3_Loops; ++i)
     {
       errno = 0;
@@ -213,6 +251,14 @@ server (void *arg)
 
   //*******************   TEST 1   ******************************
   //
+  // The client will be expecting to not see data for a few seconds.
+  // Wait a bit then send a short blurb to complete the client's recv.
+
+  ACE_OS::sleep (3);
+  sock_str.send ("abc", 3);
+
+  //*******************   TEST 1   ******************************
+  //
   // Do a iovec recvv - the client should send 255 bytes, which we
   // will be detected and read into a ACE-allocated buffer.  Use a 5
   // second timeout to give the client a chance to send it all.
@@ -242,7 +288,13 @@ server (void *arg)
       Test_Result = 1;
     }
 
-  ACE_ASSERT (len == 255);
+  if (len != 255)
+    {
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT ("(%P|%t) Test 1 recvd %d; should be 255\n"),
+                  static_cast<int> (len)));
+      Test_Result = 1;
+    }
   for (i = 0; i < 255; i++)
     if (buffer[i] != i)
       {
@@ -265,7 +317,13 @@ server (void *arg)
                        189,
                        &buffer[231],
                        24);
-  ACE_ASSERT (len == 255);
+  if (len != 255)
+    {
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT ("(%P|%t) Test 2 sent %d; should be 255\n"),
+                  static_cast<int> (len)));
+      Test_Result = 1;
+    }
 
   //*******************   TEST 3   ******************************
   //
