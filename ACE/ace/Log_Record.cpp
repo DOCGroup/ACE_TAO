@@ -123,10 +123,10 @@ int
 ACE_Log_Record::msg_data (const ACE_TCHAR *data)
 {
   // ACE_TRACE ("ACE_Log_Record::msg_data");
-  size_t newlen = ACE_OS::strlen (data) + 1;  // Will need room for '\0'
+  size_t const newlen = ACE_OS::strlen (data) + 1;  // Will need room for '\0'
   if (newlen > this->msg_data_size_)
     {
-      ACE_TCHAR *new_msg_data;
+      ACE_TCHAR *new_msg_data = 0;
       ACE_NEW_RETURN (new_msg_data, ACE_TCHAR[newlen], -1);
       delete [] this->msg_data_;
       this->msg_data_ = new_msg_data;
