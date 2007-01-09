@@ -1,3 +1,9 @@
+Tue Jan  8 19:43:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ciao/CCM_CCMException.idl:
+        * ciao/CCM_Context.idl:
+          Added some commented out IDL that is part of the QoS4CCM spec
+
 Sun Jan  7 18:44:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * DAnCE/NodeApplicationManager/URL_Parser.cpp:

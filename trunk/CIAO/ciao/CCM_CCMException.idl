@@ -27,6 +27,10 @@ module Components
     FIND_ERROR,
     OBJECT_NOT_FOUND,
     NO_SUCH_ENTITY
+    /* extended by QoS4CCM
+    QOS_ERROR,
+    REGISTRATION_ERROR,
+    SERVICE_INSTALLATION_ERROR */
   };
 
   exception CCMException
