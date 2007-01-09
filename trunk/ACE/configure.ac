@@ -3705,6 +3705,14 @@ ACE_CHECK_LACKS_FUNCS(setsid setuid)
 ACE_CHECK_LACKS_FUNCS(sigaction)
 
 ACE_CHECK_HAS_FUNCS(strnlen)
+if test "$ac_cv_func_strnlen" = yes; then
+  AC_CHECK_DECL([strnlen],
+		[],
+		[AC_DEFINE([ACE_LACKS_STRNLEN_PROTOTYPE], 1,
+			   [Define to 1 if platform lacks the declaration
+			     of strnlen().])],
+		[#include <string.h>])
+fi
 
 ACE_CHECK_LACKS_FUNCS(strchr)
 
