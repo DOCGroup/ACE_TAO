@@ -74,7 +74,7 @@ Mon Jan  8 18:56:55 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/AnyTypeCode/Dynamic.pidl:
           Removed TypeCode interface and include other pidl
-          file that has TypeCode
+          file that has TypeCode. Fixes bugzilla bug 2766
 
         * tao/AnyTypeCode/DynamicA.cpp:
         * tao/AnyTypeCode/DynamicA.h:
