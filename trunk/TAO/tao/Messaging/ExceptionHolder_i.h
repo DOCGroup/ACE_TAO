@@ -53,9 +53,12 @@ namespace TAO
       ::CORBA::Boolean is_system_exception,
       ::CORBA::Boolean byte_order,
       const ::CORBA::OctetSeq &marshaled_exception,
-      ::TAO::Exception_Data* data_,
+      ::TAO::Exception_Data* data,
       ::CORBA::ULong exceptions_count
     );
+
+    void set_exception_data (::TAO::Exception_Data* data,
+                             ::CORBA::ULong exceptions_count);
 
     virtual void raise_exception (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
 
@@ -71,8 +74,8 @@ namespace TAO
 
   private:
 
-    TAO::Exception_Data* const data_;
-    CORBA::ULong const count_;
+    TAO::Exception_Data* data_;
+    CORBA::ULong count_;
 
   };
 
