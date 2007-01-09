@@ -1,3 +1,21 @@
+Tue Jan  9 11:21:30 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/String_Base.cpp:
+        * ace/String_Base.h:
+          Moved the members of String_Base_Const to String_Base and
+          removed String_Base_Const
+
+        * ace/String_Base_Const.cpp:
+        * ace/String_Base_Const.h:
+          Remove String_Base_Const. It was there as workaround for an old
+          sun compiler which we don't support anymore. Fixes bugzilla bug
+          2588.
+
+        * ace/ace.mpc:
+        * ace/ace_for_tao.mpc:
+        * ace/Makefile.am:
+          Removed String_Base_Const.{h,cpp}
+
 Tue Jan  9 09:11:44 UTC 2007  Krishnakumar B  <kitty@dre.vanderbilt.edu>
 
         * docs/svn/config (enable-auto-props):
