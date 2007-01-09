@@ -1953,6 +1953,14 @@ TAO_CodeGen::gen_skel_src_includes (void)
         );
     }
 
+  if (be_global->ami_call_back () == true)
+    {
+      this->gen_standard_include (this->server_skeletons_,
+                                  "tao/Exception_Data.h");
+      this->gen_standard_include (this->server_skeletons_,
+                                  "tao/Messaging/ExceptionHolder_i.h");
+    }
+
   this->gen_standard_include (this->server_skeletons_,
                               "tao/PortableServer/Upcall_Command.h");
   this->gen_standard_include (this->server_skeletons_,

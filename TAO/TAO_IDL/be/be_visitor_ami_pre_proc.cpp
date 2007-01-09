@@ -997,8 +997,14 @@ be_visitor_ami_pre_proc::create_excep_operation (be_operation *node,
   arg->set_name (arg_name);
   arg->set_defined_in (operation);
 
-  // We do not copy the exceptions because the exceptions
-  // are delivered by the excep methods.
+  // Copy the exceptions since the user exception information may
+  // be needed when collocation is disabled.
+  UTL_ExceptList *exceptions = node->exceptions ();
+
+  if (0 != exceptions)
+    {
+      operation->be_add_exceptions (exceptions->copy ());
+    }
 
   // After having generated the operation we insert it into the
   // reply handler interface.

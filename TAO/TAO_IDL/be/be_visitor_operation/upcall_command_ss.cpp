@@ -278,11 +278,38 @@ be_visitor_operation_upcall_command_ss::gen_upcall (be_operation * node)
                               UTL_Scope::IK_decls);
 
   unsigned int index = 1;
-
+  const char *op_name = node->flat_name ();
+  static const char *excep_suffix = "_excep";
+  static const size_t excep_suffix_len = ACE_OS::strlen (excep_suffix);
+  bool excep_method = ((ACE_OS::strstr (op_name, excep_suffix) +
+                        excep_suffix_len) ==
+                       (op_name + ACE_OS::strlen (op_name)));
   for (; !si.is_done (); si.next (), ++index)
     {
       AST_Argument * const arg =
         AST_Argument::narrow_from_decl (si.item ());
+
+      // Finish the check for the _excep method
+      if (excep_method)
+        {
+          excep_method = false;
+          be_argument *argument =
+            be_argument::narrow_from_decl (si.item ());
+          be_valuetype *value_type =
+            be_valuetype::narrow_from_decl (argument->field_type ());
+
+          if (value_type != 0)
+            {
+              static const char *excepholder = "ExceptionHolder";
+              static const size_t excepholder_len =
+                                         ACE_OS::strlen (excepholder);
+              const char *param_name = value_type->full_name ();
+              excep_method =
+                 ((ACE_OS::strstr (param_name, excepholder) +
+                   excepholder_len) ==
+                  (param_name + ACE_OS::strlen (param_name)));
+            }
+        }
 
       os << "TAO::SArg_Traits< ";
 
@@ -367,6 +394,32 @@ be_visitor_operation_upcall_command_ss::gen_upcall (be_operation * node)
 
       os << be_uidt_nl;
 
+    }
+
+  --index;
+
+  // We have determined that this is an "_excep" method, there is exactly
+  // one argument.  Now, if the node has exceptions, we're in business.
+  if (excep_method && index == 1 && node->exceptions())
+    {
+      be_visitor_operation_exceptlist_cs exceplist (this->ctx ());
+      exceplist.visit_operation (node);
+
+      unsigned int exceptions_count = 0;
+      for (UTL_ExceptlistActiveIterator ei (node->exceptions ());
+           !ei.is_done (); ei.next ())
+        {
+          ++exceptions_count;
+        }
+
+      os << be_nl
+         << "TAO::ExceptionHolder *tao_excepholder = " << be_idt_nl
+         << "dynamic_cast<TAO::ExceptionHolder *> (arg_" << index
+         << ");" << be_uidt_nl
+         << "if (tao_excepholder != 0)" << be_idt_nl
+         << "tao_excepholder->set_exception_data "
+            "(_tao_" << op_name << "_exceptiondata, " << exceptions_count << ");" << be_uidt_nl
+         << be_nl;
     }
 
   if (!node->void_return_type ())
