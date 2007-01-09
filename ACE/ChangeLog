@@ -1,3 +1,14 @@
+Tue Jan  9 12:47:30 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Log_Record.cpp:
+          Const improvement and initialise pointer with 0
+
+        * ace/Process_Manager.h:
+          Doxygen improvements
+
+        * ace/String_Base.cpp:
+          Added missing typename to get the npos compiling with all compilers
+
 Tue Jan  9 11:21:30 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/String_Base.cpp:
