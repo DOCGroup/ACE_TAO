@@ -20,6 +20,7 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_ALLOC_HOOK_DEFINE(ACE_String_Base)
 
+template <class CHAR>
 ACE_String_Base<CHAR>::size_type const ACE_String_Base<CHAR>::npos =
   ACE_Numeric_Limits<ACE_String_Base<CHAR>::size_type>::max ();
 
