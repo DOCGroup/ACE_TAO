@@ -1,3 +1,13 @@
+Tue Jan  9 09:11:44 UTC 2007  Krishnakumar B  <kitty@dre.vanderbilt.edu>
+
+        * docs/svn/config (enable-auto-props):
+        * docs/svn/svn-prefs.reg:
+
+          Added .clo to the list of extensions that we want metadata to be
+          associated with.  Fixed a bunch of unmatched quotes in
+          svn-prefs.reg, and updated the mime-type of pdf to be
+          application/pdf as opposed to application/postscript.
+
 Tue Jan  9 08:12:30 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Log_Msg.cpp:
