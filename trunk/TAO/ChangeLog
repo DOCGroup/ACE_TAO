@@ -1,3 +1,8 @@
+Tue Jan  9 07:25:55 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/DynamicInterface/DII_Invocation.cpp:
+          Reordered includes to fix compile problems with gcc4
+
 Tue Jan  9 06:15:00 UTC 2007  J.T. Conklin  <jtc@acorntoolworks.com>
 
         * tests/TransportCurrent/Framework/Makefile.am:
