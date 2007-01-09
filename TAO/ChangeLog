@@ -1,3 +1,12 @@
+Tue Jan  9 15:14:09 UTC 2007  Chris Cleeland  <cleeland_c@ociweb.com>
+
+        * tao/Unbounded_Octet_Sequence_T.h: 
+        
+          Refactored #include "ace/OS_NS_string.h" for memcmp() out of the
+          two TAO_NO_COPY_OCTET_SEQUENCES branches and move it into the
+          common #include area.  This reverts changes yesterday by me and
+          this morning by Chad Elliott.
+
 Tue Jan  9 14:06:55 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/DynamicAny/diffs/DynamicAny.pidl.diff:

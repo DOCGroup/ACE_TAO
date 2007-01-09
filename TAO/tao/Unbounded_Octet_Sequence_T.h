@@ -12,6 +12,7 @@
 #include "tao/orbconf.h"
 
 #include "tao/Unbounded_Value_Sequence_T.h"
+#include "ace/OS_NS_string.h"
 
 #if (TAO_NO_COPY_OCTET_SEQUENCES == 1)
 
@@ -23,7 +24,6 @@
 #include "tao/Basic_Types.h"
 #include "ace/Message_Block.h"
 #include "ace/OS_Memory.h"
-#include "ace/OS_NS_string.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -322,8 +322,6 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 #endif /* TAO_NO_COPY_OCTET_SEQUENCES == 1 */
 
 #if (TAO_NO_COPY_OCTET_SEQUENCES == 0)
-
-#include "ace/OS_NS_string.h"
 
 // This doesn't work always for unexplained reason. At least
 // PortableServer::Active_Object_Map.cpp fails to compile with some compilers.
