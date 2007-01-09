@@ -22,7 +22,7 @@ ACE_ALLOC_HOOK_DEFINE(ACE_String_Base)
 
 template <class CHAR>
 typename ACE_String_Base<CHAR>::size_type const ACE_String_Base<CHAR>::npos =
-  ACE_Numeric_Limits<ACE_String_Base<CHAR>::size_type>::max ();
+  ACE_Numeric_Limits<typename ACE_String_Base<CHAR>::size_type>::max ();
 
 template <class CHAR>
 CHAR ACE_String_Base<CHAR>::NULL_String_ = 0;
