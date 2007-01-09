@@ -133,10 +133,10 @@ public:
 
   // = Initialization and termination methods.
   /**
-   * Initialize an <ACE_Process_Manager> with a table containing up to
-   * <size> processes.  This table resizes itself automatically as
-   * needed.  If a non-NULL <reactor> is provided, this
-   * <ACE_Process_Manager> uses it to notify an application when a
+   * Initialize an ACE_Process_Manager with a table containing up to
+   * @a size processes.  This table resizes itself automatically as
+   * needed.  If a non-NULL @a reactor is provided, this
+   * ACE_Process_Manager uses it to notify an application when a
    * process it controls exits.  By default, however, we don't use an
    * ACE_Reactor.
    */
@@ -144,14 +144,14 @@ public:
                        ACE_Reactor *reactor = 0);
 
   /**
-   * Initialize an <ACE_Process_Manager> with a table containing up to
-   * <size> processes.  This table resizes itself automatically as
-   * needed.  If a non-NULL <reactor> is provided, this
-   * <ACE_Process_Manager> uses it to notify an application when a
+   * Initialize an ACE_Process_Manager with a table containing up to
+   * @a size processes.  This table resizes itself automatically as
+   * needed.  If a non-NULL @a reactor is provided, this
+   * ACE_Process_Manager uses it to notify an application when a
    * process it controls exits.  By default, however, we don't use an
    * ACE_Reactor.
    */
-  int open (size_t size = DEFAULT_SIZE,
+  int open (size_t size = ACE_Process_Manager::DEFAULT_SIZE,
             ACE_Reactor *r = 0);
 
   /// Release all resources.  Do not wait for processes to exit.
@@ -162,10 +162,10 @@ public:
   virtual ~ACE_Process_Manager (void);
 
   // = Singleton accessors.
-  /// Get pointer to a process-wide <ACE_Process_Manager>.
+  /// Get pointer to a process-wide ACE_Process_Manager.
   static ACE_Process_Manager *instance (void);
 
-  /// Set pointer to a process-wide <ACE_Process_Manager> and return
+  /// Set pointer to a process-wide ACE_Process_Manager and return
   /// existing pointer.
   static ACE_Process_Manager *instance (ACE_Process_Manager *);
 
@@ -179,19 +179,19 @@ public:
   // = Process creation methods.
 
   /**
-   * Create a new process by passing <options> to <proc.spawn>.
-   * Register <event_handler> to be called back when the process exits.
+   * Create a new process by passing @a options to <proc.spawn>.
+   * Register @a event_handler to be called back when the process exits.
    *
    * On success, returns the process id of the child that was created.
    * On failure, returns ACE_INVALID_PID.
    */
   pid_t spawn (ACE_Process *proc,
                ACE_Process_Options &options,
-	       ACE_Event_Handler *event_handler = 0);
+               ACE_Event_Handler *event_handler = 0);
 
   /**
-   * Create a new process by passing <options> to <ACE_Process::spawn>.
-   * Register <event_handler> to be called back when the process exits.
+   * Create a new process by passing @a options to <ACE_Process::spawn>.
+   * Register @a event_handler to be called back when the process exits.
    *
    * On success, returns the process id of the child that was created.
    * On failure, returns ACE_INVALID_PID.
@@ -200,11 +200,11 @@ public:
 	       ACE_Event_Handler *event_handler = 0);
 
   /**
-   * Create <n> new processes by passing <options> to
-   * <ACE_Process::spawn>, which is called <n> times.  If <child_pids>
+   * Create @a n new processes by passing @a options to
+   * <ACE_Process::spawn>, which is called @a n times.  If <child_pids>
    * is non-0 it is expected to be an array of <n> <pid_t>'s, which
    * are filled in with the process ids of each newly created process.
-   * Register <event_handler> to be called back when each process exits.
+   * Register @a event_handler to be called back when each process exits.
    * Returns 0 on success and -1 on failure.
    */
   int spawn_n (size_t n,
@@ -383,31 +383,31 @@ private:
   ssize_t find_proc (pid_t process_id);
 
 #if defined (ACE_WIN32)
-  /// Locate the index of the table slot occupied by <process_handle>.
-  /// Returns ~0 if <process_handle> is not in the <process_table_>
+  /// Locate the index of the table slot occupied by @a process_handle.
+  /// Returns ~0 if @a process_handle is not in the <process_table_>
   ssize_t find_proc (ACE_HANDLE process_handle);
 #endif /* ACE_WIN32 */
 
   /// Insert a process in the table (checks for duplicates).  Omitting
   /// the process handle won't work on Win32...
-  /// Register <event_handler> to be called back when the process exits.
+  /// Register @a event_handler to be called back when the process exits.
   int insert_proc (ACE_Process *process,
-		   ACE_Event_Handler *event_handler = 0);
+                   ACE_Event_Handler *event_handler = 0);
 
   /**
    * Append information about a process, i.e., its <process_id> in the
    * <process_table_>.  Each entry is added at the end, growing the
    * table if necessary.
-   * Register <event_handler> to be called back when the process exits.
+   * Register @a event_handler to be called back when the process exits.
    */
   int append_proc (ACE_Process *process,
-		   ACE_Event_Handler *event_handler = 0);
+                   ACE_Event_Handler *event_handler = 0);
 
-  /// Actually removes the process at index <n> from the table.  This method
+  /// Actually removes the process at index @a n from the table.  This method
   /// must be called with locks held.
   int remove_proc (size_t n);
 
-  /// If there's a specific handler for the Process at index <n> in the
+  /// If there's a specific handler for the Process at index @a n in the
   /// table, or there's a default handler, call it.
   int notify_proc_handler (size_t n,
                            ACE_exitcode status);
