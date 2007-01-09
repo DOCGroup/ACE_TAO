@@ -27,7 +27,6 @@ server_CPPFLAGS = \
   -I$(ACE_BUILDDIR) \
   -I$(TAO_ROOT) \
   -I$(TAO_BUILDDIR) \
-  -I$(srcdir) \
   -I$(srcdir)/../lib
 
 server_SOURCES = \
@@ -38,24 +37,14 @@ server_SOURCES = \
   server.cpp \
   IIOP_Server_Request_Interceptor.h
 
-$(srcdir)/../lib:
-	mkdir -p $(srcdir)/../lib
-
-
-server_DEPENDENCIES = \
- $(srcdir)/../lib
-
-server_LDFLAGS = \
-  -L$(srcdir)/../lib
-
 server_LDADD = \
   $(top_builddir)/tests/TransportCurrent/lib/libCurrent_Test_Lib_Client.la \
   $(top_builddir)/tests/TransportCurrent/lib/libCurrent_Test_Lib_Server.la \
   $(TAO_BUILDDIR)/tao/libTAO_PI_Server.la \
-  $(TAO_BUILDDIR)/tao/libTAO_PI.la \
-  $(TAO_BUILDDIR)/tao/libTAO_CodecFactory.la \
   $(TAO_BUILDDIR)/tao/libTAO_TC_IIOP.la \
   $(TAO_BUILDDIR)/tao/libTAO_TC.la \
+  $(TAO_BUILDDIR)/tao/libTAO_PI.la \
+  $(TAO_BUILDDIR)/tao/libTAO_CodecFactory.la \
   $(TAO_BUILDDIR)/tao/libTAO_PortableServer.la \
   $(TAO_BUILDDIR)/tao/libTAO_AnyTypeCode.la \
   $(TAO_BUILDDIR)/tao/libTAO.la \
@@ -77,20 +66,12 @@ client_CPPFLAGS = \
   -I$(ACE_BUILDDIR) \
   -I$(TAO_ROOT) \
   -I$(TAO_BUILDDIR) \
-  -I$(srcdir) \
   -I$(srcdir)/../lib
 
 client_SOURCES = \
   IIOP_Tester.cpp \
   client.cpp \
   IIOP_Server_Request_Interceptor.h
-
-
-client_DEPENDENCIES = \
- $(srcdir)/../lib
-
-client_LDFLAGS = \
-  -L$(srcdir)/../lib
 
 client_LDADD = \
   $(top_builddir)/tests/TransportCurrent/lib/libCurrent_Test_Lib_Client.la \
@@ -99,11 +80,11 @@ client_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO_Messaging.la \
   $(TAO_BUILDDIR)/tao/libTAO_PortableServer.la \
   $(TAO_BUILDDIR)/tao/libTAO_Valuetype.la \
+  $(TAO_BUILDDIR)/tao/libTAO_TC_IIOP.la \
+  $(TAO_BUILDDIR)/tao/libTAO_TC.la \
   $(TAO_BUILDDIR)/tao/libTAO_PI.la \
   $(TAO_BUILDDIR)/tao/libTAO_CodecFactory.la \
   $(TAO_BUILDDIR)/tao/libTAO_AnyTypeCode.la \
-  $(TAO_BUILDDIR)/tao/libTAO_TC_IIOP.la \
-  $(TAO_BUILDDIR)/tao/libTAO_TC.la \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
