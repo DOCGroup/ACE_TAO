@@ -1,3 +1,10 @@
+Tue Jan  9 12:34:12 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
+
+        * tao/Unbounded_Octet_Sequence_T.h:
+
+          Added a missing #include "ace/OS_NS_string.h" to get
+          ACE_OS::memcmp().
+
 Tue Jan  9 07:25:55 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/DynamicInterface/DII_Invocation.cpp:
