@@ -4,11 +4,14 @@
 project(*Server): taoserver, tc, pi_server {
 
   after += Current_Test_Lib_Client Current_Test_Lib_Server
-
-  includes += . ../lib
-
   libs += Current_Test_Lib_Client Current_Test_Lib_Server
-  libpaths += ../lib
+
+  specific (automake) {
+    includes += $(srcdir)/../lib
+  } else {
+    includes += . ../lib
+    libpaths += ../lib
+  }
 
   Source_Files {
     server.cpp
@@ -24,11 +27,14 @@ project(*Server): taoserver, tc, pi_server {
 project(*Client): taoclient, tc, dynamicinterface {
 
   after += *Server Current_Test_Lib_Client Current_Test_Lib_Server
-
-  includes += . ../lib
-
   libs += Current_Test_Lib_Client Current_Test_Lib_Server
-  libpaths += ../lib
+
+  specific (automake) {
+    includes += $(srcdir)/../lib
+  } else {
+    includes += . ../lib
+    libpaths += ../lib
+  }
 
   Source_Files {
     client.cpp

@@ -49,6 +49,7 @@ noinst_HEADERS = \
 ## Makefile.Current_Test_Lib_Client.am
 
 if BUILD_EXCEPTIONS
+if BUILD_INTERCEPTORS
 
 noinst_LTLIBRARIES += libCurrent_Test_Lib_Client.la
 
@@ -69,11 +70,13 @@ noinst_HEADERS += \
   Client_ORBInitializer.h \
   Client_Request_Interceptor.h
 
+endif BUILD_INTERCEPTORS
 endif BUILD_EXCEPTIONS
 
 ## Makefile.Current_Test_Lib_Server.am
 
 if BUILD_EXCEPTIONS
+if BUILD_INTERCEPTORS
 
 noinst_LTLIBRARIES += libCurrent_Test_Lib_Server.la
 
@@ -95,6 +98,7 @@ noinst_HEADERS += \
   Server_ORBInitializer.h \
   Server_Request_Interceptor.h
 
+endif BUILD_INTERCEPTORS
 endif BUILD_EXCEPTIONS
 
 ## Clean up template repositories, etc.
