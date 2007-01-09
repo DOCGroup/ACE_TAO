@@ -234,14 +234,12 @@ LOCAL_EXTERN_PREFIX
 void
 ACE_TSS_CLEANUP_NAME (void *ptr)
 {
-#if !defined(ACE_USE_ONE_SHOT_AT_THREAD_EXIT)
   // Delegate to thr_desc if this not has terminated
   ACE_Log_Msg* log_msg = (ACE_Log_Msg*) ptr;
   if (log_msg->thr_desc()!=0)
-   log_msg->thr_desc()->log_msg_cleanup(log_msg);
+    log_msg->thr_desc()->log_msg_cleanup(log_msg);
   else
-#endif /* !ACE_USE_ONE_SHOT_AT_THREAD_EXIT */
-  delete (ACE_Log_Msg *) ptr;
+    delete (ACE_Log_Msg *) ptr;
 }
 # endif /* ACE_HAS_THREAD_SPECIFIC_STORAGE || ACE_HAS_TSS_EMULATION */
 #endif /* ! ACE_MT_SAFE */
