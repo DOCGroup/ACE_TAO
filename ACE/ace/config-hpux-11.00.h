@@ -397,14 +397,14 @@
 
 // Shared library name/path components
 #if defined (__ia64)
-#  define ACE_DLL_SUFFIX  ".so"
+#  define ACE_DLL_SUFFIX  ACE_LIB_TEXT (".so")
 #else
-#  define ACE_DLL_SUFFIX  ".sl"
+#  define ACE_DLL_SUFFIX  ACE_LIB_TEXT (".sl")
 #endif  /* __ia64 */
 #if defined (__LP64__)
-#  define ACE_LD_SEARCH_PATH "LD_LIBRARY_PATH"
+#  define ACE_LD_SEARCH_PATH ACE_LIB_TEXT ("LD_LIBRARY_PATH")
 #else
-#  define ACE_LD_SEARCH_PATH "SHLIB_PATH"
+#  define ACE_LD_SEARCH_PATH ACE_LIB_TEXT ("SHLIB_PATH")
 #endif  /* __LP64__ */
 
 #if defined (_INCLUDE__STDC_A1_SOURCE)
