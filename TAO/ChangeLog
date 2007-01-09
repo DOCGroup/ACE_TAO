@@ -1,7 +1,30 @@
+Tue Jan  9 19:56:41 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
+
+        * TAO_IDL/be/be_codegen.cpp:
+        * TAO_IDL/be/be_visitor_ami_pre_proc.cpp:
+        * TAO_IDL/be/be_visitor_operation/upcall_command_ss.cpp:
+        * tao/Messaging/ExceptionHolder_i.h:
+        * tao/Messaging/ExceptionHolder_i.cpp:
+
+          Modified the tao_idl code to emit code to set the exception data
+          in the Messaging::ExceptionHolder in the AMI _excep operation.  
+          This has the effect of allowing supporting code to raise the  
+          correct user defined exception.  Previously, the user defined
+          exception would not be recognized and a CORBA::UNKNOWN would be
+          raised in it's place.  This fixes bug 2350.                    
+
+        * tests/IDL_Test/Bug_2350_Regression.idl:
+        * tests/IDL_Test/IDL_Test.mpc:
+
+          Added an idl file to ensure that the code to fix bug 2350 does
+          not incorrectly recognize user methods that end in _excep, that
+          take a single parameter ending in ExceptionHolder and raises a  
+          user defined exception.
+
 Tue Jan  9 15:14:09 UTC 2007  Chris Cleeland  <cleeland_c@ociweb.com>
 
-        * tao/Unbounded_Octet_Sequence_T.h: 
-        
+        * tao/Unbounded_Octet_Sequence_T.h:
+
           Refactored #include "ace/OS_NS_string.h" for memcmp() out of the
           two TAO_NO_COPY_OCTET_SEQUENCES branches and move it into the
           common #include area.  This reverts changes yesterday by me and

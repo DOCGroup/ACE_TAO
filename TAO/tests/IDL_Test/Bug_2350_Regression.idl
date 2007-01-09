@@ -1,0 +1,14 @@
+exception something
+{
+};
+
+struct _user_ExceptionHolder
+{
+  long a;
+};
+
+interface Bug_2350_Regression
+{
+  void Bug_2350_Regression_excep(in _user_ExceptionHolder a)
+         raises(something);
+};

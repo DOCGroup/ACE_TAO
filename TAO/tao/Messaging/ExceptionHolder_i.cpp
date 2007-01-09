@@ -35,6 +35,14 @@ namespace TAO
   {
   }
 
+  void
+  ExceptionHolder::set_exception_data (::TAO::Exception_Data* data,
+                                       ::CORBA::ULong exceptions_count)
+  {
+    this->data_ = data;
+    this->count_ = exceptions_count;
+  }
+
   void ExceptionHolder::raise_exception (
         ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
     )
