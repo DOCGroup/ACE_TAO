@@ -229,7 +229,6 @@ project(ACE) : acedefaults, install, other, codecs, token, svcconf, uuid, fileca
     SPIPE_Stream.cpp
     SString.cpp
     Stats.cpp
-    String_Base_Const.cpp
     SUN_Proactor.cpp
     SV_Message.cpp
     SV_Message_Queue.cpp
@@ -413,7 +412,6 @@ project(ACE) : acedefaults, install, other, codecs, token, svcconf, uuid, fileca
     SStringfwd.h
     Static_Object_Lock.h
     Strategies.h
-    String_Base_Const.h
     Svc_Conf.h
     Svc_Conf_Tokens.h
     Swap.h
