@@ -1,3 +1,11 @@
+Tue Jan  9 08:12:30 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Log_Msg.cpp:
+          Initialise pointers with 0
+
+        * ace/config-hpux-11.00.h:
+          Fixed defines to work with wchar builds
+
 Tue Jan  9 03:46:14 UTC 2007  J.T. Conklin  <jtc@acorntoolworks.com>
 
         * configure.ac:
