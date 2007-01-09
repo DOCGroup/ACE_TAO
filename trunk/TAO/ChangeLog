@@ -1,3 +1,9 @@
+Tue Jan  9 03:43:45 UTC 2007  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * tao/Makefile.am:
+
+          Regenerated for AnyTypeCode.mpc changes.
+
 Tue Jan  9 03:37:26 UTC 2007  J.T. Conklin  <jtc@acorntoolworks.com>
 
         * tests/TransportCurrent/Framework/Makefile.am:

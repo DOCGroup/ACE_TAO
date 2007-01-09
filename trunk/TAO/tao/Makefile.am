@@ -1577,7 +1577,7 @@ CLEANFILES += \
 AnyTypeCode/AnySeqA.cpp AnyTypeCode/AnySeqA.h AnyTypeCode/AnySeqC.cpp AnyTypeCode/AnySeqC.h: AnyTypeCode/AnySeq-stamp
 
 AnyTypeCode/AnySeq-stamp: $(srcdir)/AnyTypeCode/AnySeq.pidl $(TAO_IDL_DEP)
-	$(TAO_IDL) $(TAO_IDLFLAGS) -Wb,versioning_begin=TAO_BEGIN_VERSIONED_NAMESPACE_DECL -Wb,versioning_end=TAO_END_VERSIONED_NAMESPACE_DECL -Gp -Gd -Sci -SS -Sorb -GA -Wb,export_macro=TAO_AnyTypeCode_Export -Wb,export_include=tao/AnyTypeCode/TAO_AnyTypeCode_Export.h -o AnyTypeCode $(srcdir)/AnyTypeCode/AnySeq.pidl
+	$(TAO_IDL) $(TAO_IDLFLAGS) -Wb,versioning_begin=TAO_BEGIN_VERSIONED_NAMESPACE_DECL -Wb,versioning_end=TAO_END_VERSIONED_NAMESPACE_DECL -Gp -Gd -Sci -SS -GA -Wb,export_macro=TAO_AnyTypeCode_Export -Wb,export_include=tao/AnyTypeCode/TAO_AnyTypeCode_Export.h -o AnyTypeCode -Sorb $(srcdir)/AnyTypeCode/AnySeq.pidl
 	@touch $@
 
 BUILT_SOURCES += \
@@ -1596,7 +1596,7 @@ CLEANFILES += \
 AnyTypeCode/Dynamic_ParameterA.cpp AnyTypeCode/Dynamic_ParameterA.h AnyTypeCode/Dynamic_ParameterC.cpp AnyTypeCode/Dynamic_ParameterC.h: AnyTypeCode/Dynamic_Parameter-stamp
 
 AnyTypeCode/Dynamic_Parameter-stamp: $(srcdir)/AnyTypeCode/Dynamic_Parameter.pidl $(TAO_IDL_DEP)
-	$(TAO_IDL) $(TAO_IDLFLAGS) -Wb,versioning_begin=TAO_BEGIN_VERSIONED_NAMESPACE_DECL -Wb,versioning_end=TAO_END_VERSIONED_NAMESPACE_DECL -Gp -Gd -Sci -SS -Sorb -GA -Wb,export_macro=TAO_AnyTypeCode_Export -Wb,export_include=tao/AnyTypeCode/TAO_AnyTypeCode_Export.h -o AnyTypeCode $(srcdir)/AnyTypeCode/Dynamic_Parameter.pidl
+	$(TAO_IDL) $(TAO_IDLFLAGS) -Wb,versioning_begin=TAO_BEGIN_VERSIONED_NAMESPACE_DECL -Wb,versioning_end=TAO_END_VERSIONED_NAMESPACE_DECL -Gp -Gd -Sci -SS -GA -Wb,export_macro=TAO_AnyTypeCode_Export -Wb,export_include=tao/AnyTypeCode/TAO_AnyTypeCode_Export.h -o AnyTypeCode -Sorb $(srcdir)/AnyTypeCode/Dynamic_Parameter.pidl
 	@touch $@
 
 BUILT_SOURCES += \
@@ -1615,7 +1615,7 @@ CLEANFILES += \
 AnyTypeCode/ValueModifierA.cpp AnyTypeCode/ValueModifierA.h AnyTypeCode/ValueModifierC.cpp AnyTypeCode/ValueModifierC.h: AnyTypeCode/ValueModifier-stamp
 
 AnyTypeCode/ValueModifier-stamp: $(srcdir)/AnyTypeCode/ValueModifier.pidl $(TAO_IDL_DEP)
-	$(TAO_IDL) $(TAO_IDLFLAGS) -Wb,versioning_begin=TAO_BEGIN_VERSIONED_NAMESPACE_DECL -Wb,versioning_end=TAO_END_VERSIONED_NAMESPACE_DECL -Gp -Gd -Sci -SS -Sorb -GA -Wb,export_macro=TAO_AnyTypeCode_Export -Wb,export_include=tao/AnyTypeCode/TAO_AnyTypeCode_Export.h -o AnyTypeCode $(srcdir)/AnyTypeCode/ValueModifier.pidl
+	$(TAO_IDL) $(TAO_IDLFLAGS) -Wb,versioning_begin=TAO_BEGIN_VERSIONED_NAMESPACE_DECL -Wb,versioning_end=TAO_END_VERSIONED_NAMESPACE_DECL -Gp -Gd -Sci -SS -GA -Wb,export_macro=TAO_AnyTypeCode_Export -Wb,export_include=tao/AnyTypeCode/TAO_AnyTypeCode_Export.h -o AnyTypeCode -Sorb $(srcdir)/AnyTypeCode/ValueModifier.pidl
 	@touch $@
 
 BUILT_SOURCES += \
@@ -1634,7 +1634,26 @@ CLEANFILES += \
 AnyTypeCode/VisibilityA.cpp AnyTypeCode/VisibilityA.h AnyTypeCode/VisibilityC.cpp AnyTypeCode/VisibilityC.h: AnyTypeCode/Visibility-stamp
 
 AnyTypeCode/Visibility-stamp: $(srcdir)/AnyTypeCode/Visibility.pidl $(TAO_IDL_DEP)
-	$(TAO_IDL) $(TAO_IDLFLAGS) -Wb,versioning_begin=TAO_BEGIN_VERSIONED_NAMESPACE_DECL -Wb,versioning_end=TAO_END_VERSIONED_NAMESPACE_DECL -Gp -Gd -Sci -SS -Sorb -GA -Wb,export_macro=TAO_AnyTypeCode_Export -Wb,export_include=tao/AnyTypeCode/TAO_AnyTypeCode_Export.h -o AnyTypeCode $(srcdir)/AnyTypeCode/Visibility.pidl
+	$(TAO_IDL) $(TAO_IDLFLAGS) -Wb,versioning_begin=TAO_BEGIN_VERSIONED_NAMESPACE_DECL -Wb,versioning_end=TAO_END_VERSIONED_NAMESPACE_DECL -Gp -Gd -Sci -SS -GA -Wb,export_macro=TAO_AnyTypeCode_Export -Wb,export_include=tao/AnyTypeCode/TAO_AnyTypeCode_Export.h -o AnyTypeCode -Sorb $(srcdir)/AnyTypeCode/Visibility.pidl
+	@touch $@
+
+BUILT_SOURCES += \
+  AnyTypeCode/DynamicA.cpp \
+  AnyTypeCode/DynamicA.h \
+  AnyTypeCode/DynamicC.cpp \
+  AnyTypeCode/DynamicC.h
+
+CLEANFILES += \
+  AnyTypeCode/Dynamic-stamp \
+  AnyTypeCode/DynamicA.cpp \
+  AnyTypeCode/DynamicA.h \
+  AnyTypeCode/DynamicC.cpp \
+  AnyTypeCode/DynamicC.h
+
+AnyTypeCode/DynamicA.cpp AnyTypeCode/DynamicA.h AnyTypeCode/DynamicC.cpp AnyTypeCode/DynamicC.h: AnyTypeCode/Dynamic-stamp
+
+AnyTypeCode/Dynamic-stamp: $(srcdir)/AnyTypeCode/Dynamic.pidl $(TAO_IDL_DEP)
+	$(TAO_IDL) $(TAO_IDLFLAGS) -Wb,versioning_begin=TAO_BEGIN_VERSIONED_NAMESPACE_DECL -Wb,versioning_end=TAO_END_VERSIONED_NAMESPACE_DECL -Gp -Gd -Sci -SS -GA -Wb,export_macro=TAO_AnyTypeCode_Export -Wb,export_include=tao/AnyTypeCode/TAO_AnyTypeCode_Export.h -o AnyTypeCode -Sorb $(srcdir)/AnyTypeCode/Dynamic.pidl
 	@touch $@
 
 BUILT_SOURCES += \
@@ -1791,9 +1810,9 @@ nobase_include_HEADERS += \
   AnyTypeCode/CurrentA.h \
   AnyTypeCode/DomainA.h \
   AnyTypeCode/DoubleSeqA.h \
+  AnyTypeCode/Dynamic.pidl \
   AnyTypeCode/DynamicA.h \
   AnyTypeCode/DynamicC.h \
-  AnyTypeCode/DynamicS.h \
   AnyTypeCode/Dynamic_Parameter.pidl \
   AnyTypeCode/Dynamic_ParameterA.h \
   AnyTypeCode/Dynamic_ParameterC.h \
@@ -3457,7 +3476,7 @@ CLEANFILES += \
 Compression/CompressionC.cpp Compression/CompressionC.h Compression/CompressionS.h: Compression/Compression-stamp
 
 Compression/Compression-stamp: $(srcdir)/Compression/Compression.pidl $(TAO_IDL_DEP)
-	$(TAO_IDL) $(TAO_IDLFLAGS) -Wb,versioning_begin=TAO_BEGIN_VERSIONED_NAMESPACE_DECL -Wb,versioning_end=TAO_END_VERSIONED_NAMESPACE_DECL -Gp -Gd -Sci -SS -Sorb -Sa -St -Wb,export_macro=TAO_Compression_Export -Wb,export_include=tao/Compression/compression_export.h -Wb,include_guard=TAO_COMPRESSION_SAFE_INCLUDE -Wb,safe_include=tao/Compression/Compression.h -o Compression $(srcdir)/Compression/Compression.pidl
+	$(TAO_IDL) $(TAO_IDLFLAGS) -Sa -St -Wb,versioning_begin=TAO_BEGIN_VERSIONED_NAMESPACE_DECL -Wb,versioning_end=TAO_END_VERSIONED_NAMESPACE_DECL -Gp -Gd -Sci -SS -Sorb -Sa -St -Wb,export_macro=TAO_Compression_Export -Wb,export_include=tao/Compression/compression_export.h -Wb,include_guard=TAO_COMPRESSION_SAFE_INCLUDE -Wb,safe_include=tao/Compression/Compression.h -o Compression $(srcdir)/Compression/Compression.pidl
 	@touch $@
 
 lib_LTLIBRARIES += libTAO_Compression.la
@@ -3480,9 +3499,6 @@ libTAO_Compression_la_LDFLAGS = \
  -version-number @TAO_MAJOR@:@TAO_MINOR@:@TAO_BETA@
 
 libTAO_Compression_la_LIBADD = \
-  libTAO_PI.la \
-  libTAO_CodecFactory.la \
-  libTAO_AnyTypeCode.la \
   libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
@@ -5919,10 +5935,10 @@ libTAO_TC_IIOP_la_LDFLAGS = \
  -version-number @TAO_MAJOR@:@TAO_MINOR@:@TAO_BETA@
 
 libTAO_TC_IIOP_la_LIBADD = \
+  libTAO_TC.la \
   libTAO_PI.la \
   libTAO_CodecFactory.la \
   libTAO_AnyTypeCode.la \
-  libTAO_TC.la \
   libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
@@ -6102,9 +6118,6 @@ libTAO_ZlibCompressor_la_LDFLAGS = \
 
 libTAO_ZlibCompressor_la_LIBADD = \
   libTAO_Compression.la \
-  libTAO_PI.la \
-  libTAO_CodecFactory.la \
-  libTAO_AnyTypeCode.la \
   libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la \
   $(ACE_ZLIB_LIBS)
