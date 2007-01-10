@@ -1,3 +1,20 @@
+Wed Jan 10 18:53:20 UTC 2007  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tao/DynamicAny/DynAnyUtils_T.cpp:
+        
+          New file, containing the implementation formerly in the
+          header file.
+          
+        * tao/DynamicAny/DynAnyUtils_T.h:
+        
+          Factored out the method bodies and put them in the new file
+          above.
+          
+        * tao/DynamicAny.mpc:
+        
+          Added the new file above explicitly in the Template_Files
+          block, also listed explicitly the rest of the .cpp files.
+
 Wed Jan 10 18:51:20 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
 
         * NEWS:
