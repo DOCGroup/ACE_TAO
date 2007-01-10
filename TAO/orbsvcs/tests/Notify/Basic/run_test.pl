@@ -63,8 +63,8 @@ $status = 0;
   (
    "notify.rt.conf",
    "notify.reactive.conf",
-   "notify.mt.conf",
-   );
+   "notify.mt.conf"
+  );
 
 if ($#ARGV == -1)
   {
@@ -96,6 +96,13 @@ for $dispatch_opt ("", "-UseSeparateDispatchingOrb 1")
 
 for $config (@test_configs)
   {
+    if ($dispatch_opt =~ /UseSeparateDispatchingORB 1/i
+        && ($config =~ /\.(reactive|rt)\./))
+      {
+        print STDERR "\nSkipping $config;  not supported with $dispatch_opt\n\n";
+        next;
+      }
+
     print STDERR "\nTesting Notification Service with config file = $config ....\n\n";
 
     $Notification = new PerlACE::Process ("../../../Notify_Service/Notify_Service",
@@ -105,14 +112,14 @@ for $config (@test_configs)
                                           "-ORBSvcConf $config");
     unlink $notifyior;
     $Notification->Spawn ();
-    
+
     if (PerlACE::waitforfile_timed ($notifyior, $startup_timeout) == -1) {
       print STDERR "ERROR: waiting for the notify service to start\n";
       $Notification->Kill ();
       $Naming->Kill ();
       exit 1;
     }
-    
+
     for $name (@tests)
       {
         ## The MaxQueueLength and MaxEventsPerConsumer are not supported in the Reactive
@@ -144,7 +151,7 @@ for $config (@test_configs)
             break;
           }
       }
-    
+
     $Notification->Kill ();
   }
 }

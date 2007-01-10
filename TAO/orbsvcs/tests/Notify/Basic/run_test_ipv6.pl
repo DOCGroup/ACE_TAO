@@ -91,6 +91,13 @@ for $dispatch_opt ("", "-UseSeparateDispatchingOrb 1")
 {
 for $config (@test_configs)
   {
+    if ($dispatch_opt =~ /UseSeparateDispatchingORB 1/i
+        && ($config =~ /\.(reactive|rt)\./))
+      {
+        print STDERR "\nSkipping $config;  not supported with $dispatch_opt\n\n";
+        next;
+      }
+
     print STDERR "\nTesting Notification Service with config file = $config ....\n\n";
 
     $Notification = new PerlACE::Process ("../../../Notify_Service/Notify_Service",
