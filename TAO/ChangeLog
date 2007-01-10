@@ -1,3 +1,9 @@
+Wed Jan 10 18:51:20 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
+
+        * NEWS:
+
+          Updated with my changes since 1.5.4.
+
 Wed Jan 10 14:29:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * performance-tests/Memory/Single_Threaded/Memory_Growth.mpc:
@@ -3530,7 +3536,7 @@ Wed Dec 13 13:05:21 UTC 2006  Chad Elliott  <elliott_c@ociweb.com>
 
         * orbsvcs/orbsvcs/Trader/Trader_Interfaces.cpp:
 
-          Added ACE_NOTREACHED around to returns that coult not possibly be
+          Added ACE_NOTREACHED around two returns that coult not possibly be
           reached.
 
 Wed Dec 13 12:43:04 UTC 2006  Chad Elliott  <elliott_c@ociweb.com>
