@@ -167,11 +167,19 @@ BOOL CServerApp::InitInstance()
   //  of your final executable, you should remove from the following
   //  the specific initialization routines you do not need.
 
+/*
+   From MFC 5.0, Enable3dControls and Enable3dControlsStatic are obsolete
+   because their functionality is incorporated into Microsoft's 32-bit
+   operating systems. Basically no need to call with VC5.0 and above.
+
+#if !defined (_WIN32_WCE)
 #ifdef _AFXDLL
-  Enable3dControls();                   // Call this when using MFC in a shared DLL
+	Enable3dControls();			// Call this when using MFC in a shared DLL
 #else
-  Enable3dControlsStatic();     // Call this when linking to MFC statically
+	Enable3dControlsStatic();	// Call this when linking to MFC statically
 #endif
+#endif
+*/
 
   // Change the registry key under which our settings are stored.
   // TODO: You should modify this string to be something appropriate

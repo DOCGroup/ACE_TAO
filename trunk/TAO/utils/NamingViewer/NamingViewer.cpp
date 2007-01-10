@@ -47,6 +47,10 @@ BOOL CNamingViewerApp::InitInstance()
 	// If you are not using these features and wish to reduce the size
 	//  of your final executable, you should remove from the following
 	//  the specific initialization routines you do not need.
+/*
+   From MFC 5.0, Enable3dControls and Enable3dControlsStatic are obsolete
+   because their functionality is incorporated into Microsoft's 32-bit
+   operating systems. Basically no need to call with VC5.0 and above.
 
 #if !defined (_WIN32_WCE)
 #ifdef _AFXDLL
@@ -55,7 +59,7 @@ BOOL CNamingViewerApp::InitInstance()
 	Enable3dControlsStatic();	// Call this when linking to MFC statically
 #endif
 #endif
-
+*/
   // Parse command line arguments so we can initialize ORB with them
   ACE_ARGV Argv(ACE_TEXT_CHAR_TO_TCHAR(m_lpCmdLine));
 
