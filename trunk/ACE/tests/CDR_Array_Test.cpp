@@ -610,6 +610,12 @@ CDR_Test<T, H>::do_test (int total, int niter, int use_array,
 
         H::swap(src, dst);
 
+        // Due to a "feature" of the gcc 4.1.1 optimizer, we need to do
+        // something with the src pointer so that it doesn't optimize it
+        // away.  Calling tellalign() is benign, but the optimizer
+        // doesn't know/care. -- Chad Elliott 1/10/2007
+        tellalign (src);
+
         T cv = CDR_Test<T, H>::checkval (i);
         if (rv != cv)
           {
