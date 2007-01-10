@@ -1,3 +1,13 @@
+Wed Jan 10 20:24:57 UTC 2007  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * tao/DynamicAny/DynAnyUtils_T.cpp:
+
+          Add missing include file.
+
+        * tao/DynamicAny/DynAnyUtils_T.h:
+
+          Fix a couple of Win-typos.
+
 Wed Jan 10 19:24:11 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
 
         * tests/Bug_1551_Regression/Client_Task.cpp:
