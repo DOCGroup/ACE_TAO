@@ -1,3 +1,9 @@
+Wed Jan 10 21:28:19 UTC 2007  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * NEWS:
+
+          Updated with my changes since 1.5.4.
+
 Wed Jan 10 20:24:57 UTC 2007  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * tao/DynamicAny/DynAnyUtils_T.cpp:
