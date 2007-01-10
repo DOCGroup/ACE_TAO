@@ -90,33 +90,6 @@ main (int argc, char *argv[])
       ACE_TRY_CHECK;
 
 
-      CORBA::Object_var object =
-        orb->resolve_initial_references ("PolicyCurrent"
-                                         ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
-      CORBA::PolicyCurrent_var policy_current =
-        CORBA::PolicyCurrent::_narrow (object.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
-
-      TimeBase::TimeT timeout_period = 20 * 1000;
-
-      CORBA::Any timeout_as_any;
-      timeout_as_any <<= timeout_period;
-
-      CORBA::PolicyList policy_list (1);
-      policy_list.length (1);
-      policy_list[0] =
-        orb->create_policy (Messaging::RELATIVE_RT_TIMEOUT_POLICY_TYPE,
-                                   timeout_as_any
-                                   ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
-
-      policy_current->set_policy_overrides (policy_list,
-                                            CORBA::ADD_OVERRIDE
-                                            ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
-
-
       // Let the client perform the test in a separate thread
 
 

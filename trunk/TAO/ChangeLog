@@ -1,17 +1,36 @@
+Wed Jan 10 19:24:11 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
+
+        * tests/Bug_1551_Regression/Client_Task.cpp:
+        * tests/Bug_1551_Regression/client.cpp:
+
+          Moved the setting of the policy override on the PolicyCurrent into
+          the thread specific code.  Since overrides set on the
+          PolicyCurrent only apply to the thread in which they are set, it
+          should have been done in each client thread.
+
+          Also, we ignore CORBA::TIMEOUT exceptions.  Since the server is
+          aborting itself, they are expected.
+
+        * tests/Bug_1551_Regression/run_test.pl:
+
+          Only sleep 30 seconds if starting the three clients succeeded.
+          And trap the return value of the WaitKill() called on the clients
+          in order to determine if the test needs to continue or not.
+
 Wed Jan 10 18:53:20 UTC 2007  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tao/DynamicAny/DynAnyUtils_T.cpp:
-        
+
           New file, containing the implementation formerly in the
           header file.
-          
+
         * tao/DynamicAny/DynAnyUtils_T.h:
-        
+
           Factored out the method bodies and put them in the new file
           above.
-          
+
         * tao/DynamicAny.mpc:
-        
+
           Added the new file above explicitly in the Template_Files
           block, also listed explicitly the rest of the .cpp files.
 

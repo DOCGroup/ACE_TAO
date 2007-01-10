@@ -45,11 +45,12 @@ $client2 = $CL2->Spawn ();
 $client3 = $CL3->Spawn ();
 
 
-sleep (30);
+sleep (30) if ($client1 == 0 && $client2 == 0 && $client3 == 0);
+
 $SV->WaitKill (3) unless $sv1 < 0;
-$CL1->WaitKill (3);
-$CL2->WaitKill (3);
-$CL3->WaitKill (3);
+$client1 = $CL1->WaitKill (3);
+$client2 = $CL2->WaitKill (3);
+$client3 = $CL3->WaitKill (3);
 
 if ($client3 != 0){
     $status = -1;
