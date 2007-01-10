@@ -8,7 +8,6 @@
 #include "ace/String_Base.h"
 #include "ace/Auto_Ptr.h"
 #include "ace/OS_NS_string.h"
-#include "ace/Numeric_Limits.h"
 
 #include <algorithm>  // For std::swap<>
 
@@ -19,10 +18,6 @@
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_ALLOC_HOOK_DEFINE(ACE_String_Base)
-
-template <class CHAR>
-typename ACE_String_Base<CHAR>::size_type const ACE_String_Base<CHAR>::npos =
-  ACE_Numeric_Limits<typename ACE_String_Base<CHAR>::size_type>::max ();
 
 template <class CHAR>
 CHAR ACE_String_Base<CHAR>::NULL_String_ = 0;

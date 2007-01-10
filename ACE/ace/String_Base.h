@@ -22,7 +22,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/Malloc_Base.h"
+#include "ace/String_Base_Const.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -55,14 +55,11 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
  *     probably doing something wrong.
  */
 template <class CHAR>
-class ACE_String_Base
+class ACE_String_Base : public ACE_String_Base_Const
 {
 public:
-  typedef ACE_Allocator::size_type size_type;
 
-  /// Constant that denotes case where no such character position
-  /// exists.
-  static size_type const npos;
+  using ACE_String_Base_Const::size_type;
 
    /**
     *  Default constructor.

@@ -286,6 +286,7 @@ libACE_la_SOURCES = \
   Signal.cpp \
   Sock_Connect.cpp \
   Stats.cpp \
+  String_Base_Const.cpp \
   Svc_Conf_Lexer.cpp \
   Svc_Conf_y.cpp \
   Synch_Options.cpp \
@@ -963,6 +964,7 @@ nobase_include_HEADERS += \
   String_Base.cpp \
   String_Base.h \
   String_Base.inl \
+  String_Base_Const.h \
   Svc_Conf.h \
   Svc_Conf_Lexer.h \
   Svc_Conf_Tokens.h \
