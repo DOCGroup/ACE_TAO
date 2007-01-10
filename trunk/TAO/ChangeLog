@@ -1,3 +1,27 @@
+Wed Jan 10 21:47:39 UTC 2007  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * docs/INS.html:
+          Updated documentation relative to corbaloc strings to include
+          IPv6 details. Also generally freshened the document by removing
+          references to obsoleted iioploc strings and added more
+          information on using the IOR Table. Localized the references
+          graphic images to avoid the need for an internet connection to
+          see the full document.
+
+        * docs/TAO-tutorials.html:
+        * docs/index.html:
+          Localized the references graphic images to avoid the need for an
+          internet connection to see the full document.
+
+        * docs/space.gif:
+        * docs/redball.gif:
+        * interop-naming.png:
+        * interop-naming.eps:
+
+          The image files, these used to be hosted only  at wustl,
+          requiring a network connection in order to see the graphics in
+          the documentation.
+
 Wed Jan 10 21:28:19 UTC 2007  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * NEWS:
