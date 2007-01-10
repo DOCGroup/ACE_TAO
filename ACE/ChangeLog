@@ -2,7 +2,7 @@ Wed Jan 10 14:16:04 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * docs/svn/config:
         * docs/svn/svn-prefs.reg:
-          Added .vxe .a and .obj to global ignore list
+          Added .vxe to global ignore list
 
 Wed Jan 10 11:40:04 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
