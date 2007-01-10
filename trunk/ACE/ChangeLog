@@ -1,3 +1,10 @@
+Wed Jan 10 02:01:04 UTC 2007  Chris Cleeland  <cleeland_c@ociweb.com>
+
+        * bin/MakeProjectCreator/config: Added "default.features" to
+          svn:ignore property.
+        
+        * tests: Re-generated the svn:ignore property.
+
 Wed Jan 10 00:22:01 UTC 2007  Steve Huston  <shuston@riverace.com>
 
         * ace/POSIX_Proactor.cpp: Fixed some spelling and logging issues.
