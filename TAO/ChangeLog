@@ -1,3 +1,8 @@
+Wed Jan 10 14:29:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * performance-tests/Memory/Single_Threaded/Memory_Growth.mpc:
+          Removed not needed idlflags, these are inherited from the base
+
 Wed Jan 10 13:13:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/tests/AVStreams/Asynch_Three_Stage/run_test.pl:
