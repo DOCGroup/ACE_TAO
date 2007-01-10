@@ -1,3 +1,40 @@
+Wed Jan 10 02:02:00 UTC 2007  Chris Cleeland  <cleeland_c@ociweb.com>
+
+        * orbsvcs/tests/Notify/Basic/run_test.pl:
+        * orbsvcs/tests/Notify/Basic/run_test_ipv6.pl:
+        
+          Modified these test files to only run the tests with the
+          "-UseSeparateDispatchingOrb 1" option with the notify.mt.conf
+          configuration.  Currently, only the MultiTypes test fails, but
+          the opportunity exists for others to fail.  The MultiTypes test
+          fails because in the reactive and the rt case, a separate ORB is
+          used to dispatch, but only one thread is running.  Therefore,
+          when the dispatch is made and the consumer invokes "disconnect*"
+          back on there, the non-dispatching (or "main") ORB isn't running
+          in order to handle the request.  When the same ORB is used for
+          administration and dispatching, the ORB can handle the
+          disconnect call b/c of nested upcalls.  Therefore, we simply
+          disallow using a separate dispatching ORB when not using using
+          separate dispatching threads.
+
+        * orbsvcs/tests/Notify/Basic:
+        * orbsvcs/tests/Notify/Blocking:
+        * orbsvcs/tests/Notify/Destroy:
+        * orbsvcs/tests/Notify/Discarding:
+        * orbsvcs/tests/Notify/Driver:
+        * orbsvcs/tests/Notify/MT_Dispatching:
+        * orbsvcs/tests/Notify/Ordering:
+        * orbsvcs/tests/Notify/Reconnecting:
+        * orbsvcs/tests/Notify/Sequence_Multi_ETCL_Filter:
+        * orbsvcs/tests/Notify/Sequence_Multi_Filter:
+        * orbsvcs/tests/Notify/Structured_Filter:
+        * orbsvcs/tests/Notify/Structured_Multi_Filter:
+        * orbsvcs/tests/Notify/performance-tests/Filter:
+        * orbsvcs/tests/Notify/performance-tests/RedGreen:
+        * orbsvcs/tests/Notify/performance-tests/Throughput:
+        
+          Update the svn:ignore property on these directories.
+
 Tue Jan  9 19:56:41 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
 
         * TAO_IDL/be/be_codegen.cpp:
@@ -7,18 +44,18 @@ Tue Jan  9 19:56:41 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
         * tao/Messaging/ExceptionHolder_i.cpp:
 
           Modified the tao_idl code to emit code to set the exception data
-          in the Messaging::ExceptionHolder in the AMI _excep operation.  
-          This has the effect of allowing supporting code to raise the  
+          in the Messaging::ExceptionHolder in the AMI _excep operation.
+          This has the effect of allowing supporting code to raise the
           correct user defined exception.  Previously, the user defined
           exception would not be recognized and a CORBA::UNKNOWN would be
-          raised in it's place.  This fixes bug 2350.                    
+          raised in it's place.  This fixes bug 2350.
 
         * tests/IDL_Test/Bug_2350_Regression.idl:
         * tests/IDL_Test/IDL_Test.mpc:
 
           Added an idl file to ensure that the code to fix bug 2350 does
           not incorrectly recognize user methods that end in _excep, that
-          take a single parameter ending in ExceptionHolder and raises a  
+          take a single parameter ending in ExceptionHolder and raises a
           user defined exception.
 
 Tue Jan  9 15:14:09 UTC 2007  Chris Cleeland  <cleeland_c@ociweb.com>
