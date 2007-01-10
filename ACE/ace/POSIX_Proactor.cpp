@@ -882,8 +882,8 @@ int ACE_POSIX_AIOCB_Proactor::delete_result_aiocb_list (void)
 
   size_t ai;
 
-  // Try to cancel all uncomlpeted operarion POSIX systems may have
-  // hidden system threads that still can work with our aiocb's!
+  // Try to cancel all uncompleted operations; POSIX systems may have
+  // hidden system threads that still can work with our aiocbs!
   for (ai = 0; ai < aiocb_list_max_size_; ai++)
     if (this->aiocb_list_[ai] != 0)  // active operation
       this->cancel_aiocb (result_list_[ai]);
@@ -1123,7 +1123,7 @@ ACE_POSIX_Asynch_Result * ACE_POSIX_AIOCB_Proactor::getq_result (void)
   if (this->result_queue_.dequeue_head (result) != 0)
     return 0;
 
-//  don;t waste time if queue is empty - it is normal
+//  don't waste time if queue is empty - it is normal
 //  or check queue size before dequeue_head
 //    ACE_ERROR_RETURN ((LM_ERROR,
 //                       "%N:%l:(%P | %t):%p\n",
@@ -1194,10 +1194,8 @@ ACE_POSIX_AIOCB_Proactor::handle_events_i (u_long milli_seconds)
       if (errno != EAGAIN &&   // Timeout
           errno != EINTR )    // Interrupted call
           ACE_ERROR ((LM_ERROR,
-                      "%N:%l:(%P | %t)::%p\n",
-                      "ACE_POSIX_AIOCB_Proactor::handle_events:"
-                      "aio_suspend failed\n"));
-
+                      ACE_LIB_TEXT ("%N:%l:(%P|%t)::%p\n"),
+                      ACE_LIB_TEXT ("handle_events: aio_suspend failed")));
       // let continue work
       // we should check "post_completed" queue
     }
@@ -1329,8 +1327,9 @@ ACE_POSIX_AIOCB_Proactor::start_aio (ACE_POSIX_Asynch_Result *result,
 
     default:
       ACE_ERROR_RETURN ((LM_ERROR,
-                         "%N:%l:(%P | %t)::\n"
-                         "start_aio: Invalid operation code\n"),
+                         ACE_LIB_TEXT ("%N:%l:(%P|%t)::")
+                         ACE_LIB_TEXT ("start_aio: Invalid op code %d\n"),
+			 op),
                         -1);
     }
 
