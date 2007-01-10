@@ -1,3 +1,8 @@
+Wed Jan 10 11:40:04 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/tao_orb_tests.lst:
+          Don't run 1482 with VxWorks RTP
+
 Wed Jan 10 07:55:04 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         Reverted my change below. It worked in terms that it compiled on
