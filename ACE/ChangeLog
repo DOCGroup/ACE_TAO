@@ -1,3 +1,7 @@
+Wed Jan 10 00:22:01 UTC 2007  Steve Huston  <shuston@riverace.com>
+
+        * ace/POSIX_Proactor.cpp: Fixed some spelling and logging issues.
+
 Tue Jan  9 22:57:24 UTC 2007  Steve Huston  <shuston@riverace.com>
 
         * tests/SOCK_Send_Recv_Test.cpp: Added a check to make sure nonblocking
