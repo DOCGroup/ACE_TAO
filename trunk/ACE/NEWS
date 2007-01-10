@@ -10,13 +10,13 @@ PLANNED CHANGES FOR "ACE-5.5.6"
 
 . (OO) Various other fixes that have been piling up.
 
-PLANNED CHANGES FOR "ACE-5.5.5"
-===============================
-
 . (Riverace) Pharlap ETS 13 qualification.
 
 USER VISIBLE CHANGES BETWEEN ACE-5.5.4 and ACE-5.5.5
 ====================================================
+
+. Support for Windows earlier than NT 4 SP2 was removed. ACE will not build
+  for Windows 95, 98, Me, etc. out of the box any longer.
 
 . Reformat stringified IPv6 addresses to use [addr]:port when printing
   addresses that contain ':' such as "::1".

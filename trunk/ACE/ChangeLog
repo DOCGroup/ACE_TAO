@@ -1,3 +1,11 @@
+Wed Jan 10 15:19:02 UTC 2007  Steve Huston  <shuston@riverace.com>
+
+        * NEWS: Noted that Windows 95, 98, Me, etc. prior to NT4 SP2 are
+          no longer supported. The code for this is described at
+          Sat Jan  6 00:06:52 UTC 2007  Steve Huston  <shuston@riverace.com>
+
+        * ACE-INSTALL.html: Corrected Pharlap references.
+
 Wed Jan 10 14:16:04 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * docs/svn/config:
