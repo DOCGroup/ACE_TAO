@@ -64,6 +64,10 @@ PLANNED MAJOR CHANGES "SOMETIME IN THE FUTURE" (i.e., exact beta not known)
 USER VISIBLE CHANGES BETWEEN CIAO-0.5.4 and CIAO-0.5.5
 ======================================================
 
+. Fixed problems and added command line options to the
+  generate_component_mpc.pl Perl script. Also added an HTML
+  documentation file for this script.
+
 . All IDL has been refactored to get a smaller footprint
 
 USER VISIBLE CHANGES BETWEEN CIAO-0.5.3 and CIAO-0.5.4

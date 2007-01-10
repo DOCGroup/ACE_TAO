@@ -1,3 +1,9 @@
+Wed Jan 10 21:35:25 UTC 2007  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * NEWS:
+
+          Updated with my changes since 0.5.4.
+
 Tue Jan  8 20:01:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * RACE/common/RACE_common.idl:
