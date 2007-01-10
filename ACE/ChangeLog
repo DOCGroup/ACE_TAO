@@ -1,3 +1,9 @@
+Wed Jan 10 20:31:52 UTC 2007  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * docs/ACE-guidelines.html:
+          Added some text making explicit the use of "#if defined (FOO)"
+          rather than "#if FOO" so as to avoid trouble with Doxygen.
+
 Wed Jan 10 16:08:32 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
 
         * tests/CDR_Array_Test.cpp:

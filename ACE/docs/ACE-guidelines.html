@@ -192,9 +192,16 @@ bgcolor="#ffffff">
         those files #include the correct headers.  If you do not do
         this, your code will not compile with the Standard C++ Library.<p>
 
+    <li>Always use <strong><code>#if defined (MACRONAME)</code></strong>
+        to test if a macro is defined, rather than the simpler
+        <strong><code>#if MACRONAME</code></strong>. Doxygen requires this.
+        The one exception to this the macros used to prevent multiple
+        inclusion of header files, as shown below.
+
     <li>Always follow a preprocessor <strong><code>#endif</code></strong>
-        with a <strong><code>/*  */</code></strong> C-style comment.  It
-        should correspond to the condition in the matching
+        with a <strong><code>/*  */</code></strong> C-style comment. Using
+        C-style comments with preprocessor code is required for some old
+        compilers. It should correspond to the condition in the matching
         <strong><code>#if</code></strong> directive.  For example,
         <pre>
         #if defined (ACE_HAS_THREADS)
