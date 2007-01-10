@@ -24,6 +24,8 @@
 #include "tao/DynamicAny/DynStruct_i.h"
 #include "tao/DynamicAny/DynUnion_i.h"
 
+#include "tao/DynamicAny/DynAnyFactory.h"
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO
@@ -58,7 +60,7 @@ namespace TAO
         my_any <<= insert_arg;
       }
   }
-  
+
   template<typename T>
   typename BasicTypeTraits<T>::return_type
   DynAnyBasicTypeUtils<T>::get_value (TAO_DynCommon *the_dynany)
