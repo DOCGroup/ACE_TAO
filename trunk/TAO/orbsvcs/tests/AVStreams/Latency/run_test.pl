@@ -23,7 +23,12 @@ $CTRL = new PerlACE::Process ("control", "-f file://$pingior -g file://$pongior"
 
 print STDERR "Starting Ping\n";
 
-$PING->Spawn ();
+$PING_result = $PING->Spawn ();
+
+if ($PING_result != 0) {
+    print STDERR "ERROR: Ping returned $PING_result\n";
+    exit 1;
+}
 
 if (PerlACE::waitforfile_timed ($pingior, 20) == -1) {
     print STDERR "ERROR: cannot find file <$pingior>\n";

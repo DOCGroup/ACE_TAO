@@ -47,7 +47,13 @@ if (PerlACE::waitforfile_timed ($nsior, 10) == -1) {
 
 print STDERR "Starting Receiver 1\n";
 
-$RE1->Spawn ();
+$RE1_result = $RE1->Spawn ();
+
+if ($RE1_result != 0) {
+    print STDERR "ERROR: Receiver 1 returned $RE1_result\n";
+    $NS->Kill ();
+    exit 1;
+}
 
 sleep $sleeptime;
 
