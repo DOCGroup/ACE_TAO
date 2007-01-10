@@ -1,3 +1,14 @@
+Wed Jan 10 13:13:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/tests/AVStreams/Asynch_Three_Stage/run_test.pl:
+        * orbsvcs/tests/AVStreams/Bidirectional_Flows/run_test.pl:
+        * orbsvcs/tests/AVStreams/Component_Switching/run_test.pl:
+        * orbsvcs/tests/AVStreams/Latency/run_test.pl:
+          Check the result of th spawn of the first executable in
+          the test itself. With this change if we have a naming
+          service but no test executable we don't wait a long time
+          on a non existent process
+
 Wed Jan 10 12:30:00 UTC 2007  Simon Massey  <sma@prismtech.com>
 
         * examples/mfc/server.cpp:
