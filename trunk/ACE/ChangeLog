@@ -1,8 +1,31 @@
+Wed Jan 10 07:55:04 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        Reverted my change below. It worked in terms that it compiled on
+        all platforms but it resulted in a big footprint increase (about 1.5%)
+        for a full application and that is just too much.
+
+        Tue Jan  9 11:21:30 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+        * ace/String_Base.cpp:
+        * ace/String_Base.h:
+          Moved the members of String_Base_Const to String_Base and
+          removed String_Base_Const
+
+        * ace/String_Base_Const.cpp:
+        * ace/String_Base_Const.h:
+          Remove String_Base_Const. It was there as workaround for an old
+          sun compiler which we don't support anymore. Fixes bugzilla bug
+          2588.
+
+        * ace/ace.mpc:
+        * ace/ace_for_tao.mpc:
+        * ace/Makefile.am:
+          Removed String_Base_Const.{h,cpp}
+
 Wed Jan 10 02:01:04 UTC 2007  Chris Cleeland  <cleeland_c@ociweb.com>
 
         * bin/MakeProjectCreator/config: Added "default.features" to
           svn:ignore property.
-        
+
         * tests: Re-generated the svn:ignore property.
 
 Wed Jan 10 00:22:01 UTC 2007  Steve Huston  <shuston@riverace.com>
