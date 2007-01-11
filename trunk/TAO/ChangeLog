@@ -1,3 +1,16 @@
+Thu Jan 11 17:13:56 UTC 2007  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * tests/Oneway_Timeouts/client.cpp:
+
+          Changed test failure criteria so that a missed deadline is no
+          longer considered a failure. The errors due to missed deadlines
+          are spurious on systems using preemptive multitasking because
+          there is no way to control the additional delay imposed by the
+          operating system. The test for exception delivery time is beside
+          the point for this test anyway; we want to test that an
+          exception occurs or does not occur, not when it happens to
+          occur.
+
 Wed Jan 10 21:47:39 UTC 2007  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * docs/INS.html:
