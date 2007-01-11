@@ -135,88 +135,90 @@ namespace TAO
     return dp.release ();
   }
 
-  template<typename ANY_TC>
-  DynamicAny::DynAny_ptr
-  MakeDynAnyUtils<ANY_TC>::make_dyn_any_t (CORBA::TypeCode_ptr tc,
-                                           ANY_TC any_tc)
+  namespace MakeDynAnyUtils
   {
-    switch (TAO_DynAnyFactory::unalias (tc))
-      {
-        case CORBA::tk_null:
-        case CORBA::tk_void:
-        case CORBA::tk_short:
-        case CORBA::tk_long:
-        case CORBA::tk_ushort:
-        case CORBA::tk_ulong:
-        case CORBA::tk_float:
-        case CORBA::tk_double:
-        case CORBA::tk_longlong:
-        case CORBA::tk_ulonglong:
-        case CORBA::tk_boolean:
-        case CORBA::tk_char:
-        case CORBA::tk_wchar:
-        case CORBA::tk_octet:
-        case CORBA::tk_any:
-        case CORBA::tk_TypeCode:
-        case CORBA::tk_objref:
-        case CORBA::tk_string:
-        case CORBA::tk_wstring:
-          return
-            CreateDynAnyUtils<
-              TAO_DynAny_i,
-              ANY_TC>::create_dyn_any_t (any_tc);
-        case CORBA::tk_struct:
-        case CORBA::tk_except:
-          return
-            CreateDynAnyUtils<
-              TAO_DynStruct_i,
-              ANY_TC>::create_dyn_any_t (any_tc);
-        case CORBA::tk_sequence:
-          if (TAO_DynCommon::is_basic_type_seq (tc))
-            {
-              return
-                CreateDynAnyUtils<
-                  TAO_DynAny_i,
-                  ANY_TC>::create_dyn_any_t (any_tc);
-            }
-          else
-            {
-              return
-                CreateDynAnyUtils<
-                  TAO_DynSequence_i,
-                  ANY_TC>::create_dyn_any_t (any_tc);
-            }
-        case CORBA::tk_union:
-          return
-            CreateDynAnyUtils<
-              TAO_DynUnion_i,
-              ANY_TC>::create_dyn_any_t (any_tc);
-        case CORBA::tk_enum:
-          return
-            CreateDynAnyUtils<
-              TAO_DynEnum_i,
-              ANY_TC>::create_dyn_any_t (any_tc);
-        case CORBA::tk_array:
-          return
-            CreateDynAnyUtils<
-              TAO_DynArray_i,
-              ANY_TC>::create_dyn_any_t (any_tc);
-      case CORBA::tk_fixed:
-      case CORBA::tk_value:
-      case CORBA::tk_value_box:
-      case CORBA::tk_abstract_interface:
-      case CORBA::tk_component:
-      case CORBA::tk_home:
-        ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (),
-                          DynamicAny::DynAny::_nil ());
-      case CORBA::tk_native:
-        ACE_THROW_RETURN (DynamicAny::DynAnyFactory::InconsistentTypeCode (),
-                          DynamicAny::DynAny::_nil ());
-      default:
-        break;
-      }
+    template<typename ANY_TC>
+    DynamicAny::DynAny_ptr
+    make_dyn_any_t<ANY_TC> (CORBA::TypeCode_ptr tc, ANY_TC any_tc)
+    {
+      switch (TAO_DynAnyFactory::unalias (tc))
+        {
+          case CORBA::tk_null:
+          case CORBA::tk_void:
+          case CORBA::tk_short:
+          case CORBA::tk_long:
+          case CORBA::tk_ushort:
+          case CORBA::tk_ulong:
+          case CORBA::tk_float:
+          case CORBA::tk_double:
+          case CORBA::tk_longlong:
+          case CORBA::tk_ulonglong:
+          case CORBA::tk_boolean:
+          case CORBA::tk_char:
+          case CORBA::tk_wchar:
+          case CORBA::tk_octet:
+          case CORBA::tk_any:
+          case CORBA::tk_TypeCode:
+          case CORBA::tk_objref:
+          case CORBA::tk_string:
+          case CORBA::tk_wstring:
+            return
+              CreateDynAnyUtils<
+                TAO_DynAny_i,
+                ANY_TC>::create_dyn_any_t (any_tc);
+          case CORBA::tk_struct:
+          case CORBA::tk_except:
+            return
+              CreateDynAnyUtils<
+                TAO_DynStruct_i,
+                ANY_TC>::create_dyn_any_t (any_tc);
+          case CORBA::tk_sequence:
+            if (TAO_DynCommon::is_basic_type_seq (tc))
+              {
+                return
+                  CreateDynAnyUtils<
+                    TAO_DynAny_i,
+                    ANY_TC>::create_dyn_any_t (any_tc);
+              }
+            else
+              {
+                return
+                  CreateDynAnyUtils<
+                    TAO_DynSequence_i,
+                    ANY_TC>::create_dyn_any_t (any_tc);
+              }
+          case CORBA::tk_union:
+            return
+              CreateDynAnyUtils<
+                TAO_DynUnion_i,
+                ANY_TC>::create_dyn_any_t (any_tc);
+          case CORBA::tk_enum:
+            return
+              CreateDynAnyUtils<
+                TAO_DynEnum_i,
+                ANY_TC>::create_dyn_any_t (any_tc);
+          case CORBA::tk_array:
+            return
+              CreateDynAnyUtils<
+                TAO_DynArray_i,
+                ANY_TC>::create_dyn_any_t (any_tc);
+        case CORBA::tk_fixed:
+        case CORBA::tk_value:
+        case CORBA::tk_value_box:
+        case CORBA::tk_abstract_interface:
+        case CORBA::tk_component:
+        case CORBA::tk_home:
+          ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (),
+                            DynamicAny::DynAny::_nil ());
+        case CORBA::tk_native:
+          ACE_THROW_RETURN (DynamicAny::DynAnyFactory::InconsistentTypeCode (),
+                            DynamicAny::DynAny::_nil ());
+        default:
+          break;
+        }
 
-    return DynamicAny::DynAny::_nil ();
+      return DynamicAny::DynAny::_nil ();
+    }
   }
 }
 

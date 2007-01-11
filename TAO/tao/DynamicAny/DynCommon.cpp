@@ -970,7 +970,7 @@ TAO_DynCommon::get_dyn_any (ACE_ENV_SINGLE_ARG_DECL)
   ACE_CHECK_RETURN (0);
 
   return
-    TAO::MakeDynAnyUtils<const CORBA::Any&>::make_dyn_any_t (
+    TAO::MakeDynAnyUtils::make_dyn_any_t<const CORBA::Any&> (
       any.in ()._tao_get_typecode (),
       any.in ());
 }
@@ -1127,7 +1127,7 @@ TAO_DynCommon::copy (ACE_ENV_SINGLE_ARG_DECL)
   ACE_CHECK_RETURN (DynamicAny::DynAny::_nil ());
 
   DynamicAny::DynAny_ptr retval =
-    TAO::MakeDynAnyUtils<const CORBA::Any&>::make_dyn_any_t (
+    TAO::MakeDynAnyUtils::make_dyn_any_t<const CORBA::Any&> (
       any.in ()._tao_get_typecode (),
       any.in ());
 
