@@ -94,7 +94,7 @@ TAO_DynUnion_i::init (CORBA::TypeCode_ptr tc
 
   // Initialize the discriminator to the label value of the first member.
   this->discriminator_ =
-    TAO::MakeDynAnyUtils<const CORBA::Any&>::make_dyn_any_t (
+    TAO::MakeDynAnyUtils::make_dyn_any_t<const CORBA::Any&> (
       first_label.in ()._tao_get_typecode (),
       first_label.in ());
 
@@ -105,7 +105,7 @@ TAO_DynUnion_i::init (CORBA::TypeCode_ptr tc
 
   // Recursively initialize the member to its default value.
   this->member_ =
-    TAO::MakeDynAnyUtils<CORBA::TypeCode_ptr>::make_dyn_any_t (
+    TAO::MakeDynAnyUtils::make_dyn_any_t<CORBA::TypeCode_ptr> (
       first_type.in (),
       first_type.in ());
 }
@@ -185,7 +185,7 @@ TAO_DynUnion_i::set_from_any (const CORBA::Any & any
 
   // Set the discriminator.
   this->discriminator_ =
-    TAO::MakeDynAnyUtils<const CORBA::Any&>::make_dyn_any_t (
+    TAO::MakeDynAnyUtils::make_dyn_any_t<const CORBA::Any&> (
       disc_any._tao_get_typecode (),
       disc_any);
 
@@ -247,7 +247,7 @@ TAO_DynUnion_i::set_from_any (const CORBA::Any & any
       member_any.replace (unk);
 
       this->member_ =
-        TAO::MakeDynAnyUtils<const CORBA::Any&>::make_dyn_any_t (
+        TAO::MakeDynAnyUtils::make_dyn_any_t<const CORBA::Any&> (
           member_any._tao_get_typecode (),
           member_any);
 
@@ -290,7 +290,7 @@ TAO_DynUnion_i::set_from_any (const CORBA::Any & any
           default_any.replace (unk);
 
           this->member_ =
-            TAO::MakeDynAnyUtils<const CORBA::Any&>::make_dyn_any_t (
+            TAO::MakeDynAnyUtils::make_dyn_any_t<const CORBA::Any&> (
               default_any._tao_get_typecode (),
               default_any);
 
@@ -411,7 +411,7 @@ TAO_DynUnion_i::set_discriminator (DynamicAny::DynAny_ptr value
 
       // Initialize member to default value.
       this->member_ =
-        TAO::MakeDynAnyUtils<CORBA::TypeCode_ptr>::make_dyn_any_t (
+        TAO::MakeDynAnyUtils::make_dyn_any_t<CORBA::TypeCode_ptr> (
           member_tc.in (),
           member_tc.in ());
 
@@ -499,7 +499,7 @@ TAO_DynUnion_i::set_to_default_member (ACE_ENV_SINGLE_ARG_DECL)
       ACE_CHECK;
 
       this->member_ =
-        TAO::MakeDynAnyUtils<CORBA::TypeCode_ptr>::make_dyn_any_t (
+        TAO::MakeDynAnyUtils::make_dyn_any_t<CORBA::TypeCode_ptr> (
           default_tc.in (),
           default_tc.in ());
 

@@ -136,7 +136,7 @@ TAO_DynStruct_i::set_from_any (const CORBA::Any & any
       // This recursive step will call the correct constructor
       // based on the type of field_any.
       this->da_members_[i] =
-        TAO::MakeDynAnyUtils<const CORBA::Any&>::make_dyn_any_t (
+        TAO::MakeDynAnyUtils::make_dyn_any_t<const CORBA::Any&> (
           field_any._tao_get_typecode (),
           field_any);
 
@@ -183,7 +183,7 @@ TAO_DynStruct_i::init (CORBA::TypeCode_ptr tc
 
       // Recursively initialize each member.
       this->da_members_[i] =
-        TAO::MakeDynAnyUtils<CORBA::TypeCode_ptr>::make_dyn_any_t (
+        TAO::MakeDynAnyUtils::make_dyn_any_t<CORBA::TypeCode_ptr> (
           mtype.in (),
           mtype.in ());
     }
@@ -402,7 +402,7 @@ TAO_DynStruct_i::set_members (const DynamicAny::NameValuePairSeq & values
       ACE_CHECK;
 
       this->da_members_[i] =
-        TAO::MakeDynAnyUtils<const CORBA::Any&>::make_dyn_any_t (
+        TAO::MakeDynAnyUtils::make_dyn_any_t<const CORBA::Any&> (
           values[i].value._tao_get_typecode (),
           values[i].value);
     }
@@ -605,7 +605,7 @@ TAO_DynStruct_i::from_any (const CORBA::Any & any
           ACE_CHECK;
 
           this->da_members_[i] =
-            TAO::MakeDynAnyUtils<const CORBA::Any&>::make_dyn_any_t (
+            TAO::MakeDynAnyUtils::make_dyn_any_t<const CORBA::Any&> (
               field_any._tao_get_typecode (),
               field_any);
 
