@@ -1,3 +1,22 @@
+Thu Jan 11 18:42:33 UTC 2007  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tao/DynamicAny/DynArray_i.cpp:
+        * tao/DynamicAny/DynCommon.cpp:
+        * tao/DynamicAny/DynAnyUtils_T.cpp:
+        * tao/DynamicAny/DynStruct_i.cpp:
+        * tao/DynamicAny/DynAny_i.cpp:
+        * tao/DynamicAny/DynUnion_i.cpp:
+        * tao/DynamicAny/DynAnyUtils_T.h:
+        * tao/DynamicAny/DynAnyFactory.cpp:
+        * tao/DynamicAny/DynSequence_i.cpp:
+
+          Changed make_dyn_any_t() from a static method inside
+          a templatized struct to a template method inside a
+          namespace, and changed all usages accordingly. Thanks
+          to Ossama Othman <Ossama.Othman@symantec.com> for
+          the suggestion, which is an attempt to eliminate
+          Debian link errors in DynamicAny.
+
 Thu Jan 11 17:13:56 UTC 2007  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * tests/Oneway_Timeouts/client.cpp:

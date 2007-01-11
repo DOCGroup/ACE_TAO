@@ -79,12 +79,12 @@ namespace TAO
 
   // Code common to DynAnyFactory create_* calls, parameterized on
   // {Any | TypeCode}.
-  template<typename ANY_TC>
-  struct MakeDynAnyUtils
+  namespace MakeDynAnyUtils
   {
-    static DynamicAny::DynAny_ptr
+    template<typename ANY_TC>
+    DynamicAny::DynAny_ptr
     make_dyn_any_t (CORBA::TypeCode_ptr tc, ANY_TC any_tc);
-  };
+  }
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL

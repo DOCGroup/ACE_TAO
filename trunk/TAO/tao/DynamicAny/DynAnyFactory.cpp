@@ -45,7 +45,7 @@ TAO_DynAnyFactory::create_dyn_any (
     ))
 {
   return
-    TAO::MakeDynAnyUtils<const CORBA::Any&>::make_dyn_any_t (
+    TAO::MakeDynAnyUtils::make_dyn_any_t<const CORBA::Any&> (
       value._tao_get_typecode (),
       value);
 }
@@ -63,7 +63,7 @@ TAO_DynAnyFactory::create_dyn_any_from_type_code (
   // Second arg is typed in the template parameter, repeating it
   // this way allows cleaner template code.
   return
-    TAO::MakeDynAnyUtils<CORBA::TypeCode_ptr>::make_dyn_any_t (
+    TAO::MakeDynAnyUtils::make_dyn_any_t<CORBA::TypeCode_ptr> (
       type,
       type);
 }

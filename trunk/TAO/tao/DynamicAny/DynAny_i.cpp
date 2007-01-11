@@ -419,12 +419,12 @@ TAO_DynAny_i::equal (DynamicAny::DynAny_ptr rhs
         this->any_ >>= lhs_v;
 
         DynamicAny::DynAny_var rhs_dyn =
-          TAO::MakeDynAnyUtils<const CORBA::Any&>::make_dyn_any_t (
+          TAO::MakeDynAnyUtils::make_dyn_any_t<const CORBA::Any&> (
             rhs_v->_tao_get_typecode (),
             *rhs_v);
 
         DynamicAny::DynAny_var lhs_dyn =
-          TAO::MakeDynAnyUtils<const CORBA::Any&>::make_dyn_any_t (
+          TAO::MakeDynAnyUtils::make_dyn_any_t<const CORBA::Any&> (
             lhs_v->_tao_get_typecode (),
             *lhs_v);
 
