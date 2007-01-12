@@ -47,9 +47,9 @@ TAO_Log_Constraint_Visitor::TAO_Log_Constraint_Visitor (const DsLogAdmin::LogRec
   for (CORBA::Long i = 0; i < len; ++i)
     {
       this->property_lookup_.bind (ACE_CString(rec.attr_list[i].name,
-					       0,
-					       0),
-				   rec.attr_list[i].value);
+                 0,
+                 0),
+           rec.attr_list[i].value);
     }
 }
 
@@ -97,8 +97,8 @@ TAO_Log_Constraint_Visitor::visit_identifier (TAO_ETCL_Identifier *ident)
     {
       if (any.impl() != 0)
         {
-	  this->queue_.enqueue_head (TAO_ETCL_Literal_Constraint (&any));
-	  return_value = 0;
+    this->queue_.enqueue_head (TAO_ETCL_Literal_Constraint (&any));
+    return_value = 0;
         }
     }
 
@@ -209,19 +209,19 @@ TAO_Log_Constraint_Visitor::visit_union_pos (
                 }
 
                 DynamicAny::DynAny_var dyn_any =
-                  TAO::MakeDynAnyUtils<const CORBA::Any &>::make_dyn_any_t (
+                  TAO::MakeDynAnyUtils::make_dyn_any_t<const CORBA::Any &> (
                     disc_tc.in (),
                     disc_any
                     ACE_ENV_ARG_PARAMETER);
                 ACE_TRY_CHECK;
-                
+
                 dyn_union.set_discriminator (dyn_any.in ()
                                              ACE_ENV_ARG_PARAMETER);
                 ACE_TRY_CHECK;
                 DynamicAny::DynAny_var u_member =
                   dyn_union.member (ACE_ENV_SINGLE_ARG_PARAMETER);
                 ACE_TRY_CHECK;
-                
+
                 this->current_member_ =
                   u_member->to_any (ACE_ENV_SINGLE_ARG_PARAMETER);
                 ACE_TRY_CHECK;
@@ -404,9 +404,9 @@ TAO_Log_Constraint_Visitor::visit_component_assoc (
   // the spec may come along someday.
 
   CORBA::Any any;
-  ACE_CString key (assoc->identifier ()->value (), 
-		   0, 
-		   0);
+  ACE_CString key (assoc->identifier ()->value (),
+       0,
+       0);
 
   if (this->property_lookup_.find (key, any) != 0
       || any.impl () == 0)

@@ -270,7 +270,7 @@ TAO_Notify_Constraint_Visitor::visit_union_pos (
           }
 
           DynamicAny::DynAny_var dyn_any =
-            TAO::MakeDynAnyUtils<const CORBA::Any &>::make_dyn_any_t (
+            TAO::MakeDynAnyUtils::make_dyn_any_t<const CORBA::Any &> (
               disc_tc.in (),
               disc_any
               ACE_ENV_ARG_PARAMETER);
