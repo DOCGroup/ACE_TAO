@@ -139,7 +139,7 @@ namespace TAO
   {
     template<typename ANY_TC>
     DynamicAny::DynAny_ptr
-    make_dyn_any_t<ANY_TC> (CORBA::TypeCode_ptr tc, ANY_TC any_tc)
+    make_dyn_any_t (CORBA::TypeCode_ptr tc, ANY_TC any_tc)
     {
       switch (TAO_DynAnyFactory::unalias (tc))
         {
