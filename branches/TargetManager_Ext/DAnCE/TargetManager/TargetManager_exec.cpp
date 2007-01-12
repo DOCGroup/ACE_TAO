@@ -47,7 +47,11 @@ namespace CIDL_TargetManager_i
             target_impl->provide_targetMgr ();
     //    dataManager_.reset (new CIAO::DomainDataManager (orb, target.in ()));
     ACE_DEBUG ((LM_DEBUG, "TM_Exec: creating domain data manager\n"));
-    CIAO::DomainDataManager::create (orb, target.in());
+    
+    // Create Domain Data here 
+  
+    CIAO::DomainDataManager::create (orb_, target.in ());
+//    CIAO::Domain_Singleton::instance ();
     ACE_DEBUG ((LM_DEBUG, "TM_Exec: DDD created!\n"));
   }
 
@@ -287,7 +291,7 @@ namespace CIDL_TargetManager_i
       ACE_DEBUG ((LM_DEBUG , "Calling TM constructor"));
     }
 
-    if (CORBA::is_nil (this->exec_ext_object_.in ()))
+    if (CORBA::is_nil (this->exec_object_.in ()))
       {
         this->exec_object_ = new TargetManager_exec_i(this,
                       context_->_ciao_the_Container()->the_ORB(),

@@ -65,7 +65,6 @@ namespace CIAO
        */
       ::Deployment::Domain* get_current_domain ();
 
-
       /**
        * @brief     This function is called to create the Datamanager
        * @param orb The orb pointer
@@ -91,7 +90,6 @@ namespace CIAO
        * @brief deletes the data manager
        */
       static void delete_data_manger ();
-
       /**
        * @brief returns the sequence of node managers
        * object reference
@@ -113,7 +111,7 @@ namespace CIAO
         *
         * @return process id
         */
-       CORBA::Long get_pid (ACE_CString cmp);
+       CORBA::Long get_pid (const ACE_CString& cmp);
 
        /**
         * @brief commits the resources that are specified
@@ -155,7 +153,7 @@ namespace CIAO
         * @description This function is for the ResourceCommitmentManager
         *
         */
-       int commitResourceAllocation (
+       void commitResourceAllocation (
            const ::Deployment::ResourceAllocations & resources);
 
        /**
@@ -167,10 +165,10 @@ namespace CIAO
         * @description This function is for the ResourceCommitmentManager
         *
         */
-       int releaseResourceAllocation (
+       void releaseResourceAllocation (
            const ::Deployment::ResourceAllocations & resources);
 
-      protected:
+      private:
 
 
       /**
@@ -301,19 +299,14 @@ namespace CIAO
       /// at total capacity
       ::Deployment::Domain initial_domain_;
 
-
+      /// The staic data member , replacing a global variable
+      static DomainDataManager* global_data_manager_; 
       /// The Current Domain - contains resources
       /// at current capacity
       ::Deployment::Domain current_domain_;
 
       /// The Target Manager Context
       ::Deployment::TargetManager_var target_mgr_;
-
-      /**
-       * The staic data manager pointer implementing
-       * singleton pattern
-       */
-      static DomainDataManager* global_data_manager_;
 
       /**
        * The static provisioned Domain data
@@ -329,5 +322,6 @@ namespace CIAO
     };
 
 } // CIAO
+
 
 #endif /* DOMAIN_DATA_MGRH */

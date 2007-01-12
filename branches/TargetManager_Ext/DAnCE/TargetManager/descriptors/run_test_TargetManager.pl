@@ -134,7 +134,7 @@ $call_num = 5;
 for ($i = 0; $i < $call_num; ++$i)
 {
   print "Invoking the client\n";
-  $tmclient = new PerlACE::Process ("../CmpClient", "file://TargetManager.ior");
+  $tmclient = new PerlACE::Process ("../CmpClient", "-t file://TargetManager.ior");
   $result = $tmclient->SpawnWaitKill (3000);
 
   if ($result != 0) {
