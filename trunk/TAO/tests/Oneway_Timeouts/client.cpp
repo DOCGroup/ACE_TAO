@@ -367,6 +367,13 @@ int main (int ac, char *av[])
               ACE_DEBUG ((LM_DEBUG,
                           "Timeout exception during test () invocation %d\n",
                           i));
+
+              // This exception is expected with forced timeouts, since the
+              // IOR is invalid. Unless we want to retry the invocation
+              // go ahead and rethrow and let the outer catch deal with it.
+              // Likewise if force_timeouts is not set, then throw it anyway
+              // because the exception should not occur because these are
+              // oneways.
               if (retry_timeouts)
                 ACE_DEBUG ((LM_DEBUG,"retrying\n"));
               else
@@ -424,14 +431,23 @@ int main (int ac, char *av[])
         }
 
       ACE_DEBUG ((LM_DEBUG,"Sending synch request to shutdown server\n"));
-      if (force_timeout)
-        // we have one more invocation that may time out.
-        before = ACE_High_Res_Timer::gettimeofday_hr ();
       use_twoway = true;
       use_sync_scope = false;
-      // Let the server know we're finished. This will timeout if
-      // force_timeout is true.
-      tester->test2 (-1);
+
+      if (force_timeout)
+        {
+          // we have one more invocation that may time out.
+          before = ACE_High_Res_Timer::gettimeofday_hr ();
+          tester->test2 (-1);
+        }
+      else
+        {
+          // At this point, we aren't interested in the time it takes, we
+          // want the peer to shut down, so use the non-timeout reference.
+          // BUT IF THIS DOES raise a timeout, it will be reported as an
+          // error.
+          tmp_tester->test2 (-1);
+        }
 
       orb->shutdown (1);
 

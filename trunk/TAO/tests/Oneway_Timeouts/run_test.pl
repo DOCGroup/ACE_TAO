@@ -29,7 +29,7 @@ sub test_timeouts
 {
     print "test_timeouts 1 testing...\n";
     $CLI->Arguments("-force_timeout -connect_timeout 200");
-    my $ret = $CLI->SpawnWaitKill(5);
+    my $ret = $CLI->SpawnWaitKill(15);
     if ($ret != 0) {
         return $ret;
     }
@@ -37,14 +37,14 @@ sub test_timeouts
     print "test_timeouts 2 testing...\n";
     # request timeout should override connect timeout
     $CLI->Arguments("-force_timeout -request_timeout 100 -connect_timeout 200");
-    my $ret = $CLI->SpawnWaitKill(5);
+    my $ret = $CLI->SpawnWaitKill(15);
     if ($ret != 0) {
         return $ret;
     }
     print "test_timeouts 2 passed...\n";
     print "test_timeouts 3 testing...\n";
     $CLI->Arguments("-use_twoway -force_timeout -connect_timeout 200");
-    my $ret = $CLI->SpawnWaitKill(5);
+    my $ret = $CLI->SpawnWaitKill(15);
     if ($ret != 0) {
         return $ret;
     }
@@ -52,7 +52,7 @@ sub test_timeouts
     print "test_timeouts 4 testing...\n";
     # request timeout should override connect timeout
     $CLI->Arguments("-use_twoway -force_timeout -request_timeout 200 -connect_timeout 1000");
-    my $ret = $CLI->SpawnWaitKill(5);
+    my $ret = $CLI->SpawnWaitKill(15);
     if ($ret != 0) {
         return $ret;
     }
@@ -60,21 +60,21 @@ sub test_timeouts
     print "test_timeouts 5 testing...\n";
     # request_timeout ignored for other sync_scopes
     $CLI->Arguments("-sync none -force_timeout -request_timeout 100 -connect_timeout 200 -max_request_time 30");
-    my $ret = $CLI->SpawnWaitKill(5);
+    my $ret = $CLI->SpawnWaitKill(15);
     if ($ret != 0) {
         return $ret;
     }
     print "test_timeouts 5 passed...\n";
     print "test_timeouts 6 testing...\n";
     $CLI->Arguments("-sync eager -force_timeout -request_timeout 100 -connect_timeout 200 -max_request_time 30");
-    my $ret = $CLI->SpawnWaitKill(5);
+    my $ret = $CLI->SpawnWaitKill(15);
     if ($ret != 0) {
         return $ret;
     }
     print "test_timeouts 6 passed...\n";
     print "test_timeouts 7 testing...\n";
     $CLI->Arguments("-sync delayed -force_timeout -request_timeout 100 -connect_timeout 200 -max_request_time 30");
-    my $ret = $CLI->SpawnWaitKill(5);
+    my $ret = $CLI->SpawnWaitKill(15);
     if ($ret != 0) {
         return $ret;
     }
@@ -90,12 +90,12 @@ sub test_buffering
     if ($SRV->Spawn() != 0) {
         return 1;
     }
-    if (PerlACE::waitforfile_timed ($srv_ior, 2) != 0) {
+    if (PerlACE::waitforfile_timed ($srv_ior, 15) != 0) {
         print STDERR "Error: IOR not found.\n";
         return 1;
     }
     $CLI->Arguments("-sync none -max_request_time 30");
-    if ($CLI->SpawnWaitKill(5) != 0) {
+    if ($CLI->SpawnWaitKill(15) != 0) {
         print STDERR "Error: Client failed.\n";
         return 1;
     }
@@ -110,12 +110,12 @@ sub test_buffering
     if ($SRV->Spawn() != 0) {
         return 1;
     }
-    if (PerlACE::waitforfile_timed ($srv_ior, 2) != 0) {
+    if (PerlACE::waitforfile_timed ($srv_ior, 15) != 0) {
         print STDERR "Error: IOR not found.\n";
         return 1;
     }
     $CLI->Arguments("-sync delayed -max_request_time 30");
-    if ($CLI->SpawnWaitKill(5) != 0) {
+    if ($CLI->SpawnWaitKill(15) != 0) {
         print STDERR "Error: Client failed.\n";
         return 1;
     }
@@ -132,12 +132,12 @@ sub test_buffering
     if ($SRV->Spawn() != 0) {
         return 1;
     }
-    if (PerlACE::waitforfile_timed ($srv_ior, 2) != 0) {
+    if (PerlACE::waitforfile_timed ($srv_ior, 15) != 0) {
         print STDERR "Error: IOR not found.\n";
         return 1;
     }
     $CLI->Arguments("-sync none -max_request_time 30 -use_sleep -run_orb_time 500");
-    if ($CLI->SpawnWaitKill(5) != 0) {
+    if ($CLI->SpawnWaitKill(15) != 0) {
         print STDERR "Error: Client failed.\n";
         return 1;
     }
@@ -154,12 +154,12 @@ sub test_buffering
     if ($SRV->Spawn() != 0) {
         return 1;
     }
-    if (PerlACE::waitforfile_timed ($srv_ior, 2) != 0) {
+    if (PerlACE::waitforfile_timed ($srv_ior, 15) != 0) {
         print STDERR "Error: IOR not found.\n";
         return 1;
     }
     $CLI->Arguments("-sync delayed -max_request_time 30 -use_sleep -run_orb_time 500");
-    if ($CLI->SpawnWaitKill(5) != 0) {
+    if ($CLI->SpawnWaitKill(15) != 0) {
         print STDERR "Error: Client failed.\n";
         return 1;
     }
@@ -176,12 +176,12 @@ sub test_buffering
     if ($SRV->Spawn() != 0) {
         return 1;
     }
-    if (PerlACE::waitforfile_timed ($srv_ior, 2) != 0) {
+    if (PerlACE::waitforfile_timed ($srv_ior, 15) != 0) {
         print STDERR "Error: IOR not found.\n";
         return 1;
     }
     $CLI->Arguments("-sync delayed -max_request_time 30 -use_sleep -run_orb_time 500 -force_connect");
-    if ($CLI->SpawnWaitKill(5) != 0) {
+    if ($CLI->SpawnWaitKill(15) != 0) {
         print STDERR "Error: Client failed.\n";
         return 1;
     }
@@ -197,12 +197,12 @@ sub test_buffering
     if ($SRV->Spawn() != 0) {
         return 1;
     }
-    if (PerlACE::waitforfile_timed ($srv_ior, 2) != 0) {
+    if (PerlACE::waitforfile_timed ($srv_ior, 15) != 0) {
         print STDERR "Error: IOR not found.\n";
         return 1;
     }
     $CLI->Arguments("-sync none -max_request_time 30 -use_sleep -run_orb_time 500 -force_connect");
-    if ($CLI->SpawnWaitKill(5) != 0) {
+    if ($CLI->SpawnWaitKill(15) != 0) {
         print STDERR "Error: Client failed.\n";
         return 1;
     }
@@ -224,12 +224,12 @@ sub test_buffer_count_timeout
     if ($SRV->Spawn() != 0) {
         return 1;
     }
-    if (PerlACE::waitforfile_timed ($srv_ior, 2) != 0) {
+    if (PerlACE::waitforfile_timed ($srv_ior, 15) != 0) {
         print STDERR "Error: IOR not found.\n";
         return 1;
     }
     $CLI->Arguments("-sync none -buffer_count 5 -max_request_time 30 -request_timeout 10");
-    if ($CLI->SpawnWaitKill(5) != 0) {
+    if ($CLI->SpawnWaitKill(15) != 0) {
         print STDERR "Error: Client failed.\n";
         return 1;
     }
@@ -249,12 +249,12 @@ sub test_buffer_bytes_timeout
     if ($SRV->Spawn() != 0) {
         return 1;
     }
-    if (PerlACE::waitforfile_timed ($srv_ior, 2) != 0) {
+    if (PerlACE::waitforfile_timed ($srv_ior, 15) != 0) {
         print STDERR "Error: IOR not found.\n";
         return 1;
     }
     $CLI->Arguments("-sync none -buffer_bytes 200 -max_request_time 30 -request_timeout 10");
-    if ($CLI->SpawnWaitKill(5) != 0) {
+    if ($CLI->SpawnWaitKill(15) != 0) {
         print STDERR "Error: Client failed.\n";
         return 1;
     }
@@ -274,14 +274,14 @@ sub test_buffer_timeout
     if ($SRV->Spawn() != 0) {
         return 1;
     }
-    if (PerlACE::waitforfile_timed ($srv_ior, 2) != 0) {
+    if (PerlACE::waitforfile_timed ($srv_ior, 15) != 0) {
         print STDERR "Error: IOR not found.\n";
         return 1;
     }
     # Must use run_orb_time so that the timer will fire, and to prevent sending the
     # test_done twoway request which would flush the queue.
     $CLI->Arguments("-sync none -buffer_timeout 1000 -max_request_time 30 -run_orb_time 1500");
-    if ($CLI->SpawnWaitKill(5) != 0) {
+    if ($CLI->SpawnWaitKill(15) != 0) {
         print STDERR "Error: Client failed.\n";
         return 1;
     }
@@ -298,14 +298,14 @@ sub test_buffer_timeout
     if ($SRV->Spawn() != 0) {
         return 1;
     }
-    if (PerlACE::waitforfile_timed ($srv_ior, 2) != 0) {
+    if (PerlACE::waitforfile_timed ($srv_ior, 15) != 0) {
         print STDERR "Error: IOR not found.\n";
         return 1;
     }
     # Must use run_orb_time so that the timer will fire, and to prevent sending the
     # test_done twoway request which would flush the queue.
     $CLI->Arguments("-sync delayed -buffer_timeout 1000 -max_request_time 30 -run_orb_time 1500");
-    if ($CLI->SpawnWaitKill(5) != 0) {
+    if ($CLI->SpawnWaitKill(15) != 0) {
         print STDERR "Error: Client failed.\n";
         return 1;
     }
@@ -321,14 +321,14 @@ sub test_buffer_timeout
     if ($SRV->Spawn() != 0) {
         return 1;
     }
-    if (PerlACE::waitforfile_timed ($srv_ior, 2) != 0) {
+    if (PerlACE::waitforfile_timed ($srv_ior, 15) != 0) {
         print STDERR "Error: IOR not found.\n";
         return 1;
     }
     # Must use run_orb_time so that the timer will fire, and to prevent sending the
     # test_done twoway request which would flush the queue.
     $CLI->Arguments("-sync delayed -force_connect -buffer_timeout 1000 -max_request_time 30 -run_orb_time 1500");
-    if ($CLI->SpawnWaitKill(5) != 0) {
+    if ($CLI->SpawnWaitKill(15) != 0) {
         print STDERR "Error: Client failed.\n";
         return 1;
     }
@@ -349,14 +349,14 @@ sub test_one_request
     if ($SRV->Spawn() != 0) {
         return 1;
     }
-    if (PerlACE::waitforfile_timed ($srv_ior, 2) != 0) {
+    if (PerlACE::waitforfile_timed ($srv_ior, 15) != 0) {
         print STDERR "Error: IOR not found.\n";
         return 1;
     }
     # Must use run_orb_time so that the timer will fire, and to prevent sending the
     # test_done twoway request which would flush the queue.
     $CLI->Arguments("-sync none -buffer_timeout 1000 -max_request_time 30 -run_orb_time 1500 -num_requests 1");
-    if ($CLI->SpawnWaitKill(5) != 0) {
+    if ($CLI->SpawnWaitKill(15) != 0) {
         print STDERR "Error: Client failed.\n";
         return 1;
     }
