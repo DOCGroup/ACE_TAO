@@ -14,7 +14,7 @@ module Deployment {
     Add,
     Delete,
     UpdateAll,
-    UpdateAvailable
+    UpdateDynamic
   };
 
   interface TargetManager {
