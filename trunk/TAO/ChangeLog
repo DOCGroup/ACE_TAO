@@ -1,3 +1,13 @@
+Fri Jan 12 20:50:38 UTC 2007  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tao/DynamicAny.mpc:
+
+          Reordered the source files, which will likewise reorder the
+          linking of object files on builds using makefiles. Thanks
+          to Ossama Othman <Ossama.Othman@symantec.com> for this
+          suggestion to try and eliminate the Debian linking errors
+          in DynamicAny.
+
 Fri Jan 12 17:23:07 UTC 2007  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * orbsvcs/orbsvcs/Log/Log_Constraint_Visitors.cpp:
