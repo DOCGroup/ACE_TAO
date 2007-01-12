@@ -1,3 +1,8 @@
+Fri Jan 12 20:09:47 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/config-g++-common.h:
+          Fixed incorrect macro
+
 Thu Jan 11 21:42:47 UTC 2007  Steve Huston  <shuston@riverace.com>
 
         * ace/Message_Block.h: Comment typos.
