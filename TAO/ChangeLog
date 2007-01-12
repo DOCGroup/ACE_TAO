@@ -1,3 +1,8 @@
+Fri Jan 12 09:06:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/DynamicAny/DynAnyUtils_T.cpp:
+          Fixed compile problem
+
 Thu Jan 11 18:42:33 UTC 2007  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tao/DynamicAny/DynArray_i.cpp:
