@@ -8,7 +8,6 @@ project : install, valuetype, tao_versioning_idl_defaults {
     DynamicAny/DynamicAny.cpp
     DynamicAny/DynamicAnyC.cpp
     DynamicAny/DynAny_i.cpp
-    DynamicAny/DynAnyFactory.cpp
     DynamicAny/DynArray_i.cpp
     DynamicAny/DynCommon.cpp
     DynamicAny/DynEnum_i.cpp
@@ -18,6 +17,7 @@ project : install, valuetype, tao_versioning_idl_defaults {
     DynamicAny/DynValue_i.cpp
     DynamicAny/DynValueBox_i.cpp
     DynamicAny/DynValueCommon_i.cpp
+    DynamicAny/DynAnyFactory.cpp
   }
 
   Header_Files {
