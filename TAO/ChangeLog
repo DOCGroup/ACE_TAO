@@ -1,3 +1,21 @@
+Fri Jan 12 21:40:13 UTC 2007  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * tests/Oneway_Timeouts/client.cpp:
+
+          Replaced the final invocation used to signal a shutdown to the
+          server as this is a two-way call that was using the same
+          timeout-enabled reference as the test. This sometimes caused
+          spurious timeout errors that are then reported as failures even
+          though they are not.
+
+        * tests/run_test.pl:
+
+          Increased the process start-up timeout as the old values were
+          short enough that the script assumed an error even though the
+          processes were actually running. On busy systems, a 2 or 5
+          second delay is really possible, particularly if shared
+          libraries have to be reloaded or the system is just busy.
+
 Fri Jan 12 20:50:38 UTC 2007  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tao/DynamicAny.mpc:
