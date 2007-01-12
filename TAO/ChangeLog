@@ -1,3 +1,13 @@
+Fri Jan 12 17:23:07 UTC 2007  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * orbsvcs/orbsvcs/Log/Log_Constraint_Visitors.cpp:
+        * orbsvcs/orbsvcs/Notify/Notify_Constraint_Visitors.cpp:
+
+          Modified call to make_dyn_any_t() to be consistent with
+          changes in
+
+          Thu Jan 11 18:42:33 UTC 2007  Jeff Parsons <j.parsons@vanderbilt.edu>
+
 Fri Jan 12 09:06:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/DynamicAny/DynAnyUtils_T.cpp:
