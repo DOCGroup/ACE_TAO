@@ -31,7 +31,8 @@ $SV_ALT_IIOP->Spawn ();
 if (PerlACE::waitforfile_timed ($iorfile,
                         $PerlACE::wait_interval_for_process_creation) == -1) {
     print STDERR "ERROR: cannot find file <$iorfile>\n";
-    $SV->Kill (); $SV->TimedWait (1);
+    $SV_ALT_IIOP->Kill ();
+    $SV_ALT_IIOP->TimedWait (1);
     exit 1;
 }
 

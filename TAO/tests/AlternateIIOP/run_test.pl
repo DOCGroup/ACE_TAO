@@ -11,9 +11,9 @@ use PerlACE::Run_Test;
 $iorfile = PerlACE::LocalFile ("altiiop.ior");
 unlink $iorfile;
 $status = 0;
-@bogus_eps = ("-orbendpoint iiop://localhost:10200/hostname_in_ior=bogus.com",
-              "-orbendpoint iiop://localhost:10202/hostname_in_ior=bogus.com");
-$valid_ep = "-orbendpoint iiop://localhost:10201";
+@bogus_eps = ("-orbendpoint iiop://localhost:10210/hostname_in_ior=bogus.com",
+              "-orbendpoint iiop://localhost:10212/hostname_in_ior=bogus.com");
+$valid_ep = "-orbendpoint iiop://localhost:10211";
 
 $SV_ALT_IIOP = new PerlACE::Process ("../Hello/server", "-o $iorfile -ORBUseSharedProfile 1 ",
                                      "$bogus_eps[0] $valid_ep $bogus_eps[1]");
@@ -23,7 +23,8 @@ $SV_ALT_IIOP->Spawn ();
 if (PerlACE::waitforfile_timed ($iorfile,
                         $PerlACE::wait_interval_for_process_creation) == -1) {
     print STDERR "ERROR: cannot find file <$iorfile>\n";
-    $SV->Kill (); $SV->TimedWait (1);
+    $SV_ALT_IIOP->Kill ();
+    $SV_ALT_IIOP->TimedWait (1);
     exit 1;
 }
 
