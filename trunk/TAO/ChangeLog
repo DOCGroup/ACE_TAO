@@ -1,3 +1,13 @@
+Sat Jan 13 14:31:10 UTC 2007  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * tests/AlternateIIOP/run_test.pl:
+        * tests/Parallel_Connect_Strategy/run_test.pl:
+
+          Renumbered the port values passed to the server. I noticed the
+          PCS test on one nightly machine failed because the acceptor
+          couldn't open a new socket. Also corrected a cut & paste error
+          in the scripts.
+
 Fri Jan 12 21:40:13 UTC 2007  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * tests/Oneway_Timeouts/client.cpp:
