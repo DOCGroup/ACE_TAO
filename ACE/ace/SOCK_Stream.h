@@ -69,7 +69,7 @@ public:
    * @param buf      The buffer to write from or receive into.
    * @param iov      An I/O vector containing a specified number of
    *                 count/pointer pairs directing the data to be transferred.
-   * @param iovcnt   The number of I/O vectors to be used from @arg iov.
+   * @param iovcnt   The number of I/O vectors to be used from @a iov.
    * @param len      The number of bytes to transfer.
    * @param flags    Flags that will be passed through to the @c recv()
    *                 system call.
@@ -87,10 +87,10 @@ public:
    * @retval      0  EOF, i.e., the peer closed the connection.
    * @retval      -1 an error occurred before the entire amount was
    *                 transferred. Check @c errno for more information.
-   *                 If the @arg timeout period is reached, errno is ETIME.
+   *                 If the @a timeout period is reached, errno is ETIME.
    *
    * On partial transfers, i.e., if any data is transferred before
-   * timeout/error/EOF, *@arg bytes_transferred will contain the number of
+   * timeout/error/EOF, *@a bytes_transferred will contain the number of
    * bytes transferred.
    */
   //@{
