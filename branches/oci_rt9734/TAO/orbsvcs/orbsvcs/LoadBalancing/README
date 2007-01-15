@@ -1,0 +1,35 @@
+This directory contains the implementations of the TAO Load Balancing
+service, which is called as Cygnus.
+
+Cygnus currently implements the latest revision of the OMG Load Balancing
+and Monitoring proposed specification. The features and advantages of
+Cygnus include:
+1. Multiple object group support.
+2. Extensible load balancing strategies through IDL interface.
+3. Extensible load monitoring.
+4. Support for push and pull style monitoring.
+5. Support for infrastructure and application controlled memberships.
+6. Efficient server side transparency.
+7. Default implementations of well known load balancing strategies.
+
+Future Work targeted:
+1. Implement a distributed load balancing service.
+2. Implement stateful load balancing service.
+3. Implement self adaptive load balancing strategies using control
+theoretical techniques.
+
+Papers about Cygnus:
+1. Ossama Othman, Carlos O'Ryan, and Douglas C. Schmidt, The Design of an
+Adaptive CORBA Load Balancing Service, IEEE Distributed Systems Online, Volume
+2, Number 4, April, 2001.
+2.  Ossama Othman, Carlos O'Ryan, and Douglas C. Schmidt, An Efficient
+Adaptive Load Balancing Service for CORBA, IEEE Distributed Systems Online,
+Volume 2, Number 3, March, 2001.
+3.  Jaiganesh Balasubramanian, Douglas C. Schmidt, Lawrence Dowdy, and Ossama
+Othman, Evaluating the Performance of Middleware Load Balancing Strategies,
+Proceedings of the 8th International IEEE Enterprise Distributed Object
+Computing Conference, Monterey, CA, September 2004
+4.  Ossama Othman, Jaigaesh Balasubramanian, and Douglas C. Schmidt, The
+Design of an Adaptive Middleware Load Balancing and Monitoring Service, Third
+International Workshop on Self-Adaptive Software, Arlington, VA, USA, June
+9-11, 2003

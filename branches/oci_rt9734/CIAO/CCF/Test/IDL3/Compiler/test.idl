@@ -1,0 +1,166 @@
+// file      : CCF/Test/IDL3/Compiler/test.idl
+// author    : Boris Kolpackov <boris@dre.vanderbilt.edu>
+// cvs-id    : $Id$
+
+// Component
+//
+//
+
+module ComponentTest
+{
+  component A;
+
+  component B
+  {
+  };
+
+  interface I
+  {
+  };
+
+  interface J
+  {
+  };
+
+  component A : B supports I, J
+  {
+  };
+};
+
+
+// Consumes
+//
+//
+module ConsumesTest
+{
+  eventtype E
+  {
+  };
+
+  component C
+  {
+    consumes E e;
+  };
+};
+
+
+// Emits
+//
+//
+module EmitsTest
+{
+  eventtype E
+  {
+  };
+
+  component C
+  {
+    emits E e;
+  };
+};
+
+
+// EventType (incomplete)
+//
+//
+module EventTypeTest
+{
+  eventtype E
+  {
+  };
+};
+
+
+// Home
+//
+//
+module HomeTest
+{
+  interface I
+  {
+  };
+
+  interface J
+  {
+  };
+
+  component A
+  {
+  };
+
+  home AH manages A
+  {
+  };
+
+  component B
+  {
+  };
+
+  home BH : AH supports I, J manages B
+  {
+  };
+};
+
+
+// HomeFactory
+//
+//
+module HomeFactoryTest
+{
+  component A
+  {
+  };
+
+  home AH manages A
+  {
+    factory new (in long size);
+  };
+};
+
+
+// Provides
+//
+//
+module ProvidesTest
+{
+  interface I
+  {
+  };
+
+  component C
+  {
+    provides I i;
+  };
+};
+
+
+// Publishes
+//
+//
+module PublishesTest
+{
+  eventtype E
+  {
+  };
+
+  component C
+  {
+    publishes E e;
+  };
+};
+
+
+// Uses
+//
+//
+module UsesTest
+{
+  interface I
+  {
+  };
+
+  component C
+  {
+    uses I i;
+  };
+};
