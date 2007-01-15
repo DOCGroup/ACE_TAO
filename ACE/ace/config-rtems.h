@@ -45,7 +45,6 @@
 #define ACE_LACKS_SIGINFO_H
 #define ACE_LACKS_SYS_IPC_H
 #define ACE_LACKS_SYS_SEM_H
-#define ACE_LACKS_SUSECONDS_T
 #define ACE_LACKS_STRINGS_H
 #define ACE_LACKS_SYS_SHM_H
 #define ACE_LACKS_SETEGID
@@ -143,6 +142,7 @@
 #if (__RTEMS_MAJOR__ > 4) || (__RTEMS_MAJOR__ == 4 && __RTEMS_MINOR__ > 6)
 # define ACE_HAS_UALARM
 #else
+# define ACE_LACKS_SUSECONDS_T
 # define ACE_LACKS_INTPTR_T
 # undef ACE_HAS_SHM_OPEN
 # undef ACE_HAS_AIO_CALLS
