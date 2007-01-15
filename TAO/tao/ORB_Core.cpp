@@ -219,7 +219,7 @@ TAO_ORB_Core::TAO_ORB_Core (const char *orbid)
     imr_endpoints_in_ior_ (1),
     typecode_factory_ (CORBA::Object::_nil ()),
     codec_factory_ (CORBA::Object::_nil ()),
-    compression_manager_ (CORBA::Object::_nil ()), 
+    compression_manager_ (CORBA::Object::_nil ()),
     dynany_factory_ (CORBA::Object::_nil ()),
     ior_manip_factory_ (CORBA::Object::_nil ()),
     ior_table_ (CORBA::Object::_nil ()),
@@ -1453,9 +1453,11 @@ TAO_ORB_Core::set_gui_resource_factory (TAO::GUIResource_Factory *gui_resource_f
 {
   if (TAO_TSS_Resources::instance ()->gui_resource_factory_ != 0)
     {
-
-      ACE_DEBUG ((LM_WARNING,
-                  "TAO (%P|%t) - Deleting old gui_resource_factory.\n"));
+      if (TAO_debug_level > 2)
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      "TAO (%P|%t) - Deleting old gui_resource_factory.\n"));
+        }
       delete TAO_TSS_Resources::instance ()->gui_resource_factory_;
     }
 
@@ -3140,24 +3142,30 @@ TAO_ORB_Core::connection_timeout_hook (Timeout_Hook hook)
   if (TOCSRi->connection_timeout_hook_ == 0)
     {
       if (TAO_debug_level > 2)
-        ACE_DEBUG ((LM_DEBUG,
-                    ACE_TEXT("TAO (%P|%t) setting primary hook\n")));
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      ACE_TEXT("TAO (%P|%t) setting primary hook\n")));
+        }
       TOCSRi->connection_timeout_hook_ = hook;
     }
   else if (TOCSRi->connection_timeout_hook_ != hook &&
            TOCSRi->alt_connection_timeout_hook_ == 0)
     {
       if (TAO_debug_level > 2)
-        ACE_DEBUG ((LM_DEBUG,
-                    ACE_TEXT("TAO (%P|%t) setting alternate hook\n")));
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      ACE_TEXT("TAO (%P|%t) setting alternate hook\n")));
+        }
       TOCSRi->alt_connection_timeout_hook_ = hook;
     }
   else
     if (TAO_debug_level > 2)
-      ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("TAO (%P|%t) not overwriting alternate hook.")
-                  ACE_TEXT (" Is it still null? %d\n"),
-                  TOCSRi->alt_connection_timeout_hook_ == 0));
+      {
+        ACE_DEBUG ((LM_DEBUG,
+                    ACE_TEXT ("TAO (%P|%t) not overwriting alternate hook.")
+                    ACE_TEXT (" Is it still null? %d\n"),
+                    TOCSRi->alt_connection_timeout_hook_ == 0));
+      }
 
 #undef TOCSRi
 }

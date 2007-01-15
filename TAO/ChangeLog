@@ -1,3 +1,9 @@
+Mon Jan 15 09:44:10 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/ORB_Core.cpp:
+          Made debug statement dependent on debug level, it was now
+          printed alwasy
+
 Sat Jan 13 14:31:10 UTC 2007  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * tests/AlternateIIOP/run_test.pl:
