@@ -1,0 +1,40 @@
+// $Id$
+
+#ifndef DEPLOYMENT_DATA_IDL
+#define DEPLOYMENT_DATA_IDL
+
+#include "ciao/Deployment_DeploymentPlan.idl"
+
+module Deployment {
+
+  struct ComponentPackageReference {
+    string requiredUUID;
+    string requiredName;
+    string requiredType;
+  };
+
+  typedef sequence < ComponentPackageReference > ComponentPackageReferences;
+
+  typedef sequence < ResourceUsageKind > ResourceUsageKinds;
+
+  struct ImplementationRequirement {
+    ResourceUsageKinds resourceUsage;
+    string resourcePort;
+    string componentPort;
+    string resourceType;
+    string name;
+    Properties property;
+  };
+
+  typedef sequence < ImplementationRequirement > ImplementationRequirements;
+
+  struct Capability {
+    string name;
+    ::CORBA::StringSeq resourceType;
+    SatisfierProperties property;
+  };
+
+  typedef sequence < Capability > Capabilities;
+};
+
+#endif /* DEPLOYMENT_DATA_IDL */

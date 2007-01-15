@@ -1,0 +1,39 @@
+// $Id$
+
+/**
+ * @file TargetManagerImpl.idl
+ * @brief TargetManager interface defintion
+ *
+ * @author Nilabja R <nilabjar@dre.vanderbilt.edu>
+ */
+
+#ifndef TARGETMGR_IDL
+#define TARGETMGR_IDL
+
+#include "ciao/Components.idl"
+#include "ciao/Deployment_Target_Data.idl"
+#include "TargetManagerExt.idl"
+#include "DomainEvents.idl"
+
+/**
+ * @module CIAO
+ *
+ * @brief TargetManagenr interface defintion
+ *
+ */
+module CIAO
+{
+  component TargetManagerImpl
+  {
+    provides ::Deployment::TargetManager targetMgr;
+    provides CIAO::TargetManagerExt target_manager_ext;
+
+    publishes Domain_Changed_Event changes;
+  };
+
+  home TargetManagerHome manages TargetManagerImpl
+  {
+  };
+};
+
+#endif
