@@ -1,3 +1,7 @@
+Mon Jan 15 21:54:47 UTC 2007  Steve Huston  <shuston@riverace.com>
+
+        * ace/SOCK_Stream.h: Corrected Doxygen tags.
+
 Mon Jan 15 10:15:47 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/config-rtems.h:
