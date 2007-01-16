@@ -1,0 +1,32 @@
+TAO_ROOT/tao/Protocol_Hooks.h:
+=============================
+
+Added the following new virtual function declarations:
+
+virtual void set_dscp_codepoint (CORBA::Long &dscp_codepoint
+  ACE_ENV_ARG_DECL) = 0;
+
+virtual void np_service_context (TAO_Stub *stub,
+                                 TAO_Service_Context &service_context,
+                                 CORBA::Boolean restart
+                                 ACE_ENV_ARG_DECL) = 0;
+
+virtual void add_rep_np_service_context_hook (
+  TAO_Service_Context &service_context,
+  CORBA::Long &dscp_codepoint
+  ACE_ENV_ARG_DECL) = 0;
+
+Since these are virtual abstract functions, they are being implemented
+by the following files:
+
+TAO_ROOT/tao/Default_Protocol_Hooks.{h, cpp}
+TAO_ROOT/tao/RTCORBA/RT_Protocol_Hooks.{h, cpp}
+
+depending upon whether RTCORBA is used or not.
+
+So i modified the following files:
+
+TAO_ROOT/tao/Default_Protocol_Hooks.{h, cpp}
+TAO_ROOT/tao/RTCORBA/RT_Protocol_Hooks.{h, cpp}
+
+to define the implementations for the above defined functions.

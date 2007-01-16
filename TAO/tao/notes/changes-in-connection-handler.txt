@@ -1,0 +1,34 @@
+This notes describes the changes to the following libraries and files:
+
+TAO_ROOT/tao:
+
+IIOP_Connection_Handler.{h, cpp}
+
+TAO_ROOT/tao/Strategies:
+
+DIOP_Connection_Handler.{h, cpp}
+SCIOP_Connection_Handler.{h, cpp}
+
+A new function was declared in the header files:
+
+int set_dscp_codepoint (CORBA::Long dscp_codepoint);
+
+The .cpp files contained the definition of the above described
+function.
+
+Those are the only changes in the files defined above.
+
+These changes allowed TAO Connection Handlers to actually set a 
+DiffServ codepoint that was being passed to the function as a
+CORBA::Long argument.
+
+There is another function already declared in the TAO Connection
+Handlers with the following signature:
+
+/// Set Diff-Serv codepoint on outgoing packets.
+int set_dscp_codepoint (CORBA::Boolean set_network_priority);
+
+But that function is used when the RT-CORBA way of setting DiffServ
+codepoints are followed in the TAO application. There is clearly a
+input argument signature change between the two functions though they
+have the same function name.
