@@ -52,7 +52,7 @@ dump_iov (iovec *iov, int iovcnt, size_t id,
           size_t current_transfer,
           const char *location)
 {
-  ACE_Log_Msg::instance ()->acquire ();
+  ACE_Guard <ACE_Log_Msg> log_guard (*ACE_Log_Msg::instance ());
 
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("TAO (%P|%t) - Transport[%d]::%s, ")
@@ -110,11 +110,14 @@ dump_iov (iovec *iov, int iovcnt, size_t id,
               ACE_TEXT ("TAO (%P|%t) - Transport[%d]::%s, ")
               ACE_TEXT ("end of data\n"),
               id, ACE_TEXT_CHAR_TO_TCHAR(location)));
-
-  ACE_Log_Msg::instance ()->release ();
 }
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
+TAO::Transport::Stats::~Stats ()
+{
+  // no-op
+}
 
 TAO_Transport::TAO_Transport (CORBA::ULong tag,
                               TAO_ORB_Core *orb_core)
@@ -165,6 +168,8 @@ TAO_Transport::TAO_Transport (CORBA::ULong tag,
   ACE_NEW_THROW_EX (this->stats_,
                     TAO::Transport::Stats,
                     CORBA::NO_MEMORY ());
+#else
+  this->stats_ = 0;
 #endif /* TAO_HAS_TRANSPORT_CURRENT == 1 */
 
   /*
@@ -205,6 +210,10 @@ TAO_Transport::~TAO_Transport (void)
   // See the bugzilla bug #2494 for details.
   ACE_ASSERT (this->head_ == 0);
   ACE_ASSERT (this->cache_map_entry_ == 0);
+
+#if TAO_HAS_TRANSPORT_CURRENT == 1
+  delete this->stats_;
+#endif /* TAO_HAS_TRANSPORT_CURRENT == 1 */
 
   /*
    * Hook to add code that cleans up components
