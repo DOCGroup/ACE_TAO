@@ -1,0 +1,24 @@
+Changes in IOP_IOR.pidl:
+=======================
+
+Since the DiffServ support in TAO is going to adopt the request
+processing models similar to RT-CORBA, support needed to be added
+for supporing the CLIENT_PROPAGATED network priority model.
+
+This means that the client decides te DiffServ codepoint with
+which the request and the reply needs to be sent.
+
+So in order to let the server know about the DiffServ codepoint with
+which the reply needs to be sent, the request is sent with s service
+context entry, that describes the DiffServ codepoint with which the reply
+needs to be sent back to the client.
+
+The POA is equipped to read the service context on the request, when the
+request is dispatched to a servant.
+
+In order to define the service context to be sent along with the request,
+i changed IOR_IOR.pidl, to add the following:
+
+const ServiceId REP_NWPRIORITY = 14;
+
+That is the only change in this file.
