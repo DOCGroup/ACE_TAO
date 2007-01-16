@@ -44,14 +44,14 @@ class TAO_Notify_Tests_ConsumerAdmin_Ext_Traits
 template <class Consumer_Traits>
 class TAO_Notify_Tests_Consumer_T : public TAO_Notify_Tests_Peer_T <Consumer_Traits>
 {
-  typedef ACE_TYPENAME Consumer_Traits::Admin_Traits Admin_Traits;
-  typedef ACE_TYPENAME Consumer_Traits::Admin_Ext_Traits Admin_Ext_Traits;
-  typedef ACE_TYPENAME Consumer_Traits::Proxy_Traits Proxy_Traits;
+  typedef typename Consumer_Traits::Admin_Traits Admin_Traits;
+  typedef typename Consumer_Traits::Admin_Ext_Traits Admin_Ext_Traits;
+  typedef typename Consumer_Traits::Proxy_Traits Proxy_Traits;
 
-  typedef ACE_TYPENAME Proxy_Traits::INTERFACE Proxy_Traits_INTERFACE;
-  typedef ACE_TYPENAME Proxy_Traits::PTR Proxy_Traits_PTR;
-  typedef ACE_TYPENAME Admin_Traits::PTR Admin_Traits_PTR;
-  typedef ACE_TYPENAME Admin_Ext_Traits::PTR Admin_Ext_Traits_PTR;
+  typedef typename Proxy_Traits::INTERFACE Proxy_Traits_INTERFACE;
+  typedef typename Proxy_Traits::PTR Proxy_Traits_PTR;
+  typedef typename Admin_Traits::PTR Admin_Traits_PTR;
+  typedef typename Admin_Ext_Traits::PTR Admin_Ext_Traits_PTR;
 
 public:
   /// Constuctor

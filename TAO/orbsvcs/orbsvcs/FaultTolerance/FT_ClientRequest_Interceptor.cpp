@@ -155,7 +155,7 @@ namespace TAO
     }
     ACE_ENDTRY;
 
-    if (status ==  PortableInterceptor::LOCATION_FORWARD)
+    if (status == PortableInterceptor::LOCATION_FORWARD)
       {
         // We are in an FT request and a location forward has been received.
 

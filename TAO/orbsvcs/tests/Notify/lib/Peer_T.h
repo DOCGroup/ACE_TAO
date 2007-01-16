@@ -29,20 +29,20 @@
 template <class Peer_Traits>
 class TAO_Notify_Tests_Peer_T : public TAO_Notify_Tests_Peer, public Peer_Traits::SKELETON
 {
-  typedef ACE_TYPENAME Peer_Traits::Admin_Traits Admin_Traits;
-  typedef ACE_TYPENAME Peer_Traits::Admin_Ext_Traits Admin_Ext_Traits;
-  typedef ACE_TYPENAME Peer_Traits::Proxy_Traits Proxy_Traits;
+  typedef typename Peer_Traits::Admin_Traits Admin_Traits;
+  typedef typename Peer_Traits::Admin_Ext_Traits Admin_Ext_Traits;
+  typedef typename Peer_Traits::Proxy_Traits Proxy_Traits;
 
-  typedef ACE_TYPENAME Peer_Traits::PTR Peer_Traits_PTR;
+  typedef typename Peer_Traits::PTR Peer_Traits_PTR;
 
-  typedef ACE_TYPENAME Proxy_Traits::INTERFACE Proxy_Traits_INTERFACE;
-  typedef ACE_TYPENAME Proxy_Traits::PTR Proxy_Traits_PTR;
-  typedef ACE_TYPENAME Proxy_Traits::ID Proxy_Traits_ID;
+  typedef typename Proxy_Traits::INTERFACE Proxy_Traits_INTERFACE;
+  typedef typename Proxy_Traits::PTR Proxy_Traits_PTR;
+  typedef typename Proxy_Traits::ID Proxy_Traits_ID;
 
-  typedef ACE_TYPENAME Admin_Traits::PTR Admin_Traits_PTR;
+  typedef typename Admin_Traits::PTR Admin_Traits_PTR;
 
-  typedef ACE_TYPENAME Admin_Ext_Traits::INTERFACE Admin_Ext_Traits_INTERFACE;
-  typedef ACE_TYPENAME Admin_Ext_Traits::PTR Admin_Ext_Traits_PTR;
+  typedef typename Admin_Ext_Traits::INTERFACE Admin_Ext_Traits_INTERFACE;
+  typedef typename Admin_Ext_Traits::PTR Admin_Ext_Traits_PTR;
 
 public:
   /// Constuctor
@@ -103,10 +103,10 @@ protected:
   // = Data Members
 
   /// The proxy that we are connected to.
-   ACE_TYPENAME Proxy_Traits::VAR proxy_;
+   typename Proxy_Traits::VAR proxy_;
 
   /// This <proxy_> id.
-   ACE_TYPENAME Proxy_Traits::ID proxy_id_;
+   typename Proxy_Traits::ID proxy_id_;
 };
 
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
