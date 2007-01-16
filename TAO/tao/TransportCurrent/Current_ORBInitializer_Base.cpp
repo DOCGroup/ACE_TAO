@@ -1,8 +1,8 @@
 // $Id$
 
+
 #include "tao/PI/ORBInitInfo.h"
 #include "tao/TransportCurrent/Current_ORBInitializer_Base.h"
-
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -14,12 +14,13 @@ namespace TAO
     Current_ORBInitializer_Base::Current_ORBInitializer_Base(const ACE_TCHAR* id)
       : id_ (id)
     {
+      // do nothing
     }
 
     Current_ORBInitializer_Base::~Current_ORBInitializer_Base(void)
     {
+      // do nothing
     }
-
 
 
     void
@@ -56,7 +57,6 @@ namespace TAO
                                                         ACE_ENV_ARG_PARAMETER));
       ACE_CHECK;
 
-
       info->register_initial_reference (ACE_TEXT_ALWAYS_CHAR (this->id_.fast_rep ()),
                                         current.in ());
 
@@ -67,6 +67,7 @@ namespace TAO
                                             ACE_ENV_ARG_DECL_NOT_USED )
       ACE_THROW_SPEC( (CORBA::SystemException) )
     {
+      // do nothing
     }
 
   }
@@ -74,3 +75,5 @@ namespace TAO
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL
+
+

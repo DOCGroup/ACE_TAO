@@ -36,8 +36,6 @@ namespace TAO
     {
     }
 
-
-
     /// Initializes object when dynamic linking occurs.
     int
     Current_Loader::init (int, ACE_TCHAR *[])
@@ -66,9 +64,6 @@ namespace TAO
 } /* namespace TAO */
 
 TAO_END_VERSIONED_NAMESPACE_DECL
-
-
-
 
 
 #if defined (TAO_AS_STATIC_LIBS)

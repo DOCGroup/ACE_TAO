@@ -108,18 +108,18 @@ server_main (int argc,
              ACE_TCHAR *argv[],
              Test::Server_Request_Interceptor *cri)
 {
+
+#if TAO_HAS_TRANSPORT_CURRENT == 1
+
   ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY
     {
-      PortableInterceptor::ORBInitializer_ptr temp_initializer =
-        PortableInterceptor::ORBInitializer::_nil ();
-
+      PortableInterceptor::ORBInitializer_ptr temp_initializer = 0;
       ACE_NEW_RETURN (temp_initializer,
                       Test::Server_ORBInitializer (cri),
                       -1);  // No exceptions yet!
 
-      PortableInterceptor::ORBInitializer_var orb_initializer =
-        temp_initializer;
+      PortableInterceptor::ORBInitializer_var orb_initializer (temp_initializer);
 
       PortableInterceptor::register_orb_initializer (orb_initializer.in ()
                                                      ACE_ENV_ARG_PARAMETER);
@@ -205,7 +205,11 @@ server_main (int argc,
                            ACE_TEXT ("Server (%P|%t) Cannot activate %d threads\n"),
                            nthreads),
                           -1);
-      worker.thr_mgr ()->wait ();
+      if(worker.thr_mgr ()->wait () != 0)
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           ACE_TEXT ("Server (%P|%t) wait() Cannot wait for all %d threads\n"),
+                           nthreads),
+                          -1);
 #else
       if (nthreads > 1)
         ACE_ERROR ((LM_WARNING,
@@ -221,8 +225,13 @@ server_main (int argc,
         ACE_ERROR ((LM_ERROR,
                     ACE_TEXT ("Server (%P|%t) ERROR: Interceptor self_test failed\n")));
 
+      root_poa->destroy (1, 1 ACE_ENV_SINGLE_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+
       server->shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
+
+      ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Server (%P|%t) Invoking orb->destroy ()\n")));
 
       orb->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
@@ -239,4 +248,8 @@ server_main (int argc,
 
   ACE_DEBUG ((LM_INFO, ACE_TEXT ("Server (%P|%t) Completed successfuly.\n")));
   return 0;
+#else /*  TAO_HAS_TRANSPORT_CURRENT == 1 */
+  ACE_DEBUG ((LM_INFO, ACE_TEXT ("Server (%P|%t) Need TAO_HAS_TRANSPORT_CURRENT enabled to run.\n")));
+  return 0;
+#endif /*  TAO_HAS_TRANSPORT_CURRENT == 1 */
 }

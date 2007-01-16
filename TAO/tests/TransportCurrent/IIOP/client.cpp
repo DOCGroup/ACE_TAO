@@ -161,20 +161,23 @@ Worker::svc (void)
 int
 ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
+#if TAO_HAS_TRANSPORT_CURRENT == 1
+
   ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY
     {
-      Test::Client_Request_Interceptor cri (CLIENT_ORB_ID, test_transport_current);
-
-      PortableInterceptor::ORBInitializer_ptr temp_initializer =
-        PortableInterceptor::ORBInitializer::_nil ();
-
-      ACE_NEW_RETURN (temp_initializer,
-                      Test::Client_ORBInitializer (&cri),
+      Test::Client_Request_Interceptor* cri = 0;
+      ACE_NEW_RETURN (cri,
+                      Test::Client_Request_Interceptor (CLIENT_ORB_ID,
+                                                        test_transport_current),
                       -1);
+      PortableInterceptor::ClientRequestInterceptor_var cri_safe (cri);
 
-      PortableInterceptor::ORBInitializer_var orb_initializer =
-        temp_initializer;
+      PortableInterceptor::ORBInitializer_ptr temp_initializer = 0;
+      ACE_NEW_RETURN (temp_initializer,
+                      Test::Client_ORBInitializer (cri),
+                      -1);
+      PortableInterceptor::ORBInitializer_var orb_initializer (temp_initializer);
 
       PortableInterceptor::register_orb_initializer (orb_initializer.in ()
                                                      ACE_ENV_ARG_PARAMETER);
@@ -256,7 +259,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       CORBA::Long result = 0;
 
       // Verify enough interception points have been triggered
-      if (cri.interceptions () != 2 *             // request & response
+      if (cri->interceptions () != 2 *             // request & response
                                   niterations *   // iterations
                                   nthreads *      // threads
                                   (2*use_dii))    // sii and dii, if needed
@@ -264,7 +267,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
           ACE_ERROR ((LM_ERROR,
                       ACE_TEXT ("Client (%P|%t) Expected %d client-side interceptions, but detected %d\n"),
                       2 * niterations * nthreads * (2*use_dii),
-                      cri.interceptions ()));
+                      cri->interceptions ()));
         }
       else
         {
@@ -300,4 +303,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       return -1;
     }
   ACE_ENDTRY;
+
+#else /*  TAO_HAS_TRANSPORT_CURRENT == 1 */
+  ACE_DEBUG ((LM_INFO, ACE_TEXT ("Client (%P|%t) Need TAO_HAS_TRANSPORT_CURRENT enabled to run.\n")));
+  return 0;
+#endif /*  TAO_HAS_TRANSPORT_CURRENT == 1 */
 }
