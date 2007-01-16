@@ -1,3 +1,17 @@
+Tue Jan 16 11:15:10 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/orbsvcs/LoadBalancing/LB_CPU_Load_Average_Monitor.cpp:
+          Initialise pointer with 0
+
+        * orbsvcs/orbsvcs/Notify/Event_Map_T.h:
+        * orbsvcs/orbsvcs/Sched/Reconfig_Sched_Utils_T.h:
+        * orbsvcs/orbsvcs/Sched/Reconfig_Scheduler_T.h:
+        * orbsvcs/performance-tests/RTEvent/lib/RIR_Narrow.h:
+        * orbsvcs/tests/Notify/lib/Consumer_T.h:
+        * orbsvcs/tests/Notify/lib/Peer_T.h:
+        * orbsvcs/tests/Notify/lib/Supplier_T.h:
+          Use typename instead of ACE_TYPENAME
+
 Tue Jan 16 08:18:10 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/CollocationLockup/CollocationLockup.cpp:

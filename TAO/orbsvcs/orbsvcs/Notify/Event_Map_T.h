@@ -71,10 +71,10 @@ public:
   ENTRY* find (const TAO_Notify_EventType& event_type ACE_ENV_ARG_DECL);
 
   /// Find the default broadcast list.
-  ACE_TYPENAME ENTRY::COLLECTION* broadcast_collection (void);
+  typename ENTRY::COLLECTION* broadcast_collection (void);
 
   /// Find the update list. This is all the PROXYS connected to this Map.
-  ACE_TYPENAME ENTRY::COLLECTION* updates_collection (void);
+  typename ENTRY::COLLECTION* updates_collection (void);
 
   /// Release the usage count on this entry.
   void release (ENTRY* entry);

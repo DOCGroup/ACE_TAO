@@ -553,7 +553,7 @@ protected:
   virtual void map_dependency_i
                  (RtecScheduler::handle_t key,
                   RtecScheduler::handle_t handle,
-                         ACE_TYPENAME TAO_Reconfig_Scheduler<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::DEPENDENCY_SET_MAP &dependency_map,
+                         typename TAO_Reconfig_Scheduler<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::DEPENDENCY_SET_MAP &dependency_map,
                   CORBA::Long number_of_calls,
                          RtecScheduler::Dependency_Type_t dependency_type,
                          RtecScheduler::Dependency_Enabled_Type_t enabled
@@ -565,7 +565,7 @@ protected:
 
   void unmap_dependency_i (RtecScheduler::handle_t key,
                            RtecScheduler::handle_t handle,
-                           ACE_TYPENAME TAO_Reconfig_Scheduler<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::DEPENDENCY_SET_MAP &dependency_map,
+                           typename TAO_Reconfig_Scheduler<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::DEPENDENCY_SET_MAP &dependency_map,
                            CORBA::Long number_of_calls,
                            RtecScheduler::Dependency_Type_t dependency_type
                            ACE_ENV_ARG_DECL)
@@ -576,7 +576,7 @@ protected:
 
   void map_dependency_enable_state_i (RtecScheduler::handle_t key,
                                       RtecScheduler::handle_t handle,
-                                      ACE_TYPENAME
+                                      typename
                                         TAO_Reconfig_Scheduler<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::DEPENDENCY_SET_MAP &dependency_map,
                                       CORBA::Long number_of_calls,
                                       RtecScheduler::Dependency_Type_t dependency_type,
