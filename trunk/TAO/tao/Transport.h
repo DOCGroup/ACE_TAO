@@ -1118,6 +1118,7 @@ namespace TAO
     {
     public:
       Stats ();
+      virtual ~Stats ();
 
       void messages_sent (size_t message_length);
       CORBA::LongLong messages_sent (void) const;
