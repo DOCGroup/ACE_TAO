@@ -1,3 +1,10 @@
+Tue Jan 16 21:00:20 UTC 2007  Iliyan Jeliazkov  <iliyan@ociweb.com>
+
+        * ace/Service_Gestalt.cpp:
+
+          Fixing a memory leak of a gestalt instance, caused by an
+          incorrect re-initialization.
+
 Mon Jan 15 21:54:47 UTC 2007  Steve Huston  <shuston@riverace.com>
 
         * ace/SOCK_Stream.h: Corrected Doxygen tags.
