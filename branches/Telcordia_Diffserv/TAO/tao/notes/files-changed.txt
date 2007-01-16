@@ -1,0 +1,41 @@
+Here are the files that were changed in TAO_ROOT/tao library:
+
+Connection_Handler.{h, cpp}
+Default_Protocols_Hooks.{h, cpp}
+IIOP_Connection_Handler.{h, cpp}
+ORB.{h, cpp}
+Stub.{h, cpp}
+IOP_IOR.pidl
+orbconf.h
+ORB_Core.cpp
+Profile.cpp
+Protocols_Hooks.h
+Remote_Invocation.cpp
+tao.mpc
+
+The following new files were added:
+
+Client_Network_Priority_Policy.{h, cpp}
+Network_Priority_Policy.{h, cpp}
+TAO_Network_Priority_Policy.pidl
+
+Here are the files that were changed in TAO_ROOT/tao/RTCORBA library:
+
+RT_Protocols_Hooks.{h, cpp}
+
+Here are the files that were changed in TAO_ROOT/tao/Strategies library:
+
+DIOP_Connection_Handler.{h, cpp}
+SCIOP_Connection_Handler.{h, cpp}
+
+Here are the files that were changed in TAO_ROOT/tao/PortableServer library:
+
+Default_Policy_Validator.cpp
+Default_Servant_Dispatcher.cpp
+POA.pidl
+POA_Cached_Policies.{h, cpp, inl}
+Root_POA.{h, cpp}
+
+Here are the files that were changed in TAO_ROOT/tao/RTPortableServer library:
+
+RT_Servant_Dispatcher.cpp

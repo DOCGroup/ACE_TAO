@@ -1,0 +1,56 @@
+The design calls for adding network priorities in the form of
+DiffServ codepoints to application communications made using
+TAO. TAO currently has support for adding network priorities
+to client-server communications, but the support is tied down
+to the RT-CORBA support in TAO. In short, priority mappers are
+defined that specify the mapping between the native CORBA thread
+priorities and the corresponding DiffServ codepoint to be used.
+So when scheduling mechanisms are used to define the different 
+priorities of the clients and servers in the system, the priority
+mappers are also defined. So when a client or a server executes
+at a given thread priority, automatically a DiffServ codepoint
+is added to the communication being executed at the CPU thread
+priority.
+
+This support has many disadvantages:
+
+1. The support requires applications to compile and use TAO
+RT-CORBA support, even though they may only need applications
+to have network QoS support, and not the CPU QoS support
+which RT-CORBA provides.
+2. Two applications operating at the same thread priority cannot
+have two different network priorities, because the network
+priorities are tied down to the thread priorities. So we cannot
+differentiate two applications at the network level, just like
+we could differentiate two applications at the CPU level.
+
+Hence, we wanted to design support mechanisms in TAO, that
+can allow applications to specify network priorities irrespective
+of the support for thread priorities. The support also demanded 
+the following additional properties:
+
+1. A client can dictate the network priority with which the request
+needs to be sent to the server , and the network priority with which 
+the reply needs to be received by the client.
+2. A server can dictate the network priority with which the request
+needs to be sent to the server, and the network priority with which 
+the reply needs to be received by the client.
+
+The above two properties look very much similar to the
+RT-CORBA request processing models: CLIENT_PROPAGATED
+and SERVER_DECLARED. Hence we wanted to provide the network
+priority support in TAO, very much similar to the RT-CORBA
+support. Precisely, we needed support for:
+
+1. Creating policies at the client and the server side of the application
+specifying the request processing model to be used.
+2. Encoding the network priority to be used at the server side
+by using service contexts, in the case of CLIENT_PROPAGATED
+model.
+3. Defining policies on the POA, to support adding network priorities
+when server replies are sent out.
+
+And finally, we wanted to extend this support in TAO to CIAO, whereby
+the policies can be driven by modeling tools, and the configuration
+support is provided in DAnCE to configure the underlying TAO
+to add network priorities to application communications.
