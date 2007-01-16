@@ -1,0 +1,27 @@
+Made changes in ORB.cpp to add the following functions:
+
+#if !defined(CORBA_E_MICRO)
+    /// Create a client network priority policy
+    TAO::NetworkPriorityPolicy_ptr
+    create_network_priority_policy (
+       ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+       ACE_THROW_SPEC ((CORBA::SystemException));
+#endif
+
+#if !defined(CORBA_E_MICRO)
+    /// Create a client network priority policy
+    TAO::NetworkPriorityPolicy_ptr
+    create_client_network_priority_policy (
+       ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+       ACE_THROW_SPEC ((CORBA::SystemException));
+#endif
+
+And also modified the following function to create the network priority
+policy:
+
+#if !defined(CORBA_E_MICRO)
+    /// Create an empty policy, usually to be filled in later by
+    /// demarshaling.
+    CORBA::Policy_ptr _create_policy (CORBA::PolicyType type
+                                      ACE_ENV_ARG_DECL);
+#endif
