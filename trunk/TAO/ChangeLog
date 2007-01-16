@@ -1,5 +1,14 @@
+Tue Jan 16 18:39:17 UTC 2007  Iliyan Jeliazkov  <iliyan@ociweb.com>
+
+        * tests/TransportCurrent/IIOP/IIOP_Server_Main.cpp:
+
+          Ensured request interceptors are heap allocated to avoid
+          problems trying to delete automatic instances when the ORB is
+          destroyed.
+
 Tue Jan 16 17:13:13 UTC 2007  Iliyan Jeliazkov  <iliyan@ociweb.com>
 
+        * tao/Transport.h:
         * tao/Transport.cpp:
 
           Added initialization for the stats_ member in case the TC
