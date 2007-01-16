@@ -1,3 +1,41 @@
+Tue Jan 16 17:13:13 UTC 2007  Iliyan Jeliazkov  <iliyan@ociweb.com>
+
+        * tao/Transport.cpp:
+
+          Added initialization for the stats_ member in case the TC
+          feature has been disabled, and providing a delete for it in the
+          destructor.
+
+        * tao/TransportCurrent/Current_Loader.h:
+        * tao/TransportCurrent/Current_Loader.cpp:
+
+          Removed unnecessary orbinitializer_registry method and
+          eliminated nnecesary whitespace.
+
+        * tao/TransportCurrent/Current_ORBInitializer_Base.h:
+        * tao/TransportCurrent/Current_ORBInitializer_Base.cpp:
+
+           Added TAO_Local_RefCounted_Object as an additional base class
+           to ensure proper cleanup of the ORB initializer instances. The
+           local CORBA objects are not reference counted (yet)!
+
+        * tests/TransportCurrent/Framework/Server_Main.cpp:
+        * tests/TransportCurrent/Framework/client.cpp:
+        * tests/TransportCurrent/Framework/server.cpp:
+        * tests/TransportCurrent/IIOP/client.cpp:
+        * tests/TransportCurrent/IIOP/server.cpp:
+
+          Ensured request interceptors are heap allocated to avoid
+          problems trying to delete automatic instances when the ORB is
+          destroyed.
+
+        * tests/TransportCurrent/lib/Client_ORBInitializer.h:
+        * tests/TransportCurrent/lib/Server_ORBInitializer.h:
+
+           Added TAO_Local_RefCounted_Object as an additional base class
+           to ensure proper cleanup of the ORB initializer instances. The
+           local CORBA objects are not reference counted (yet)!
+
 Tue Jan 16 11:15:10 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/orbsvcs/LoadBalancing/LB_CPU_Load_Average_Monitor.cpp:

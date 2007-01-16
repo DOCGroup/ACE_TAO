@@ -25,12 +25,11 @@
 #include "tao/Versioned_Namespace.h"
 #include "tao/TransportCurrent/Transport_Current_Export.h"
 
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO
 {
-  class ORBInitializer_Registry_Adapter;
+  //  class ORBInitializer_Registry_Adapter;
 
   namespace Transport
   {
@@ -47,13 +46,6 @@ namespace TAO
 
       // Protected destructor to enforce reference counting discipline
       virtual ~Current_Loader (void);
-
-      ORBInitializer_Registry_Adapter* orbinitializer_registry (void);
-
-    private:
-
-      /// A cache for the registry pointer
-      ORBInitializer_Registry_Adapter* oir_;
     };
 
   }

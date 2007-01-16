@@ -108,18 +108,18 @@ server_main (int argc,
              ACE_TCHAR *argv[],
              Test::Server_Request_Interceptor *cri)
 {
+
+#if TAO_HAS_TRANSPORT_CURRENT == 1
+
   ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY
     {
-      PortableInterceptor::ORBInitializer_ptr temp_initializer =
-        PortableInterceptor::ORBInitializer::_nil ();
-
+      PortableInterceptor::ORBInitializer_ptr temp_initializer = 0;
       ACE_NEW_RETURN (temp_initializer,
                       Test::Server_ORBInitializer (cri),
                       -1);  // No exceptions yet!
 
-      PortableInterceptor::ORBInitializer_var orb_initializer =
-        temp_initializer;
+      PortableInterceptor::ORBInitializer_var orb_initializer (temp_initializer);
 
       PortableInterceptor::register_orb_initializer (orb_initializer.in ()
                                                      ACE_ENV_ARG_PARAMETER);
@@ -239,4 +239,8 @@ server_main (int argc,
 
   ACE_DEBUG ((LM_INFO, ACE_TEXT ("Server (%P|%t) Completed successfuly.\n")));
   return 0;
+#else /*  TAO_HAS_TRANSPORT_CURRENT == 1 */
+  ACE_DEBUG ((LM_INFO, ACE_TEXT ("Server (%P|%t) Need TAO_HAS_TRANSPORT_CURRENT enabled to run.\n")));
+  return 0;
+#endif /*  TAO_HAS_TRANSPORT_CURRENT == 1 */
 }
