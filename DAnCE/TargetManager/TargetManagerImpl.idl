@@ -15,12 +15,6 @@
 #include "TargetManagerExt.idl"
 #include "DomainEvents.idl"
 
-/**
- * @module CIAO
- *
- * @brief TargetManager interface defintion
- *
- */
 module CIAO
 {
   component TargetManagerImpl

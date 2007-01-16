@@ -1,3 +1,17 @@
+Tue Jan 16 21:18:57 UTC 2007  Nilabja R  <nilabjar@dre.vanderbilt.edu>
+
+        * DAnCE/TargetManager/CmpClient.cpp:
+        * DAnCE/TargetManager/DomainDataManager.h:
+        * DAnCE/TargetManager/DomainDataManager.cpp:
+        * DAnCE/TargetManager/TargetManagerExt.idl:
+        * DAnCE/TargetManager/TargetManagerImpl.idl:
+        * DAnCE/TargetManager/TargetManager_exec.h:
+        * DAnCE/TargetManager/TargetManager_exec.cpp:
+
+          Added some comments to decrease doxygen warnings;Changed
+          ACE_DEBUG in many places to ACE_ERROR;Removed a lot of unwanted
+          debug messages
+
 Fri Jan 12 22:04:14 UTC 2007  Nilabja R  <nilabjar@dre.vanderbilt.edu>
 
         * DAnCE/TargetManager/CmpClient.cpp:

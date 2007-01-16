@@ -51,7 +51,7 @@ namespace CIAO
                            ::Deployment::DomainUpdateKind updateKind
                            );
       /**
-       * @brief        This function is called the Executor code
+       * @brief        This function is called from the Executor code
        *               to get the Original Domain data.
        * @return       Domain* The Initial Domain
        *
@@ -59,7 +59,7 @@ namespace CIAO
       ::Deployment::Domain* get_initial_domain ();
 
       /**
-       * @brief       This function is called the Executor code
+       * @brief       This function is called from the Executor code
        *              to get the Current Domain data.
        * @return      Domain* The Current Domain
        */
@@ -70,7 +70,7 @@ namespace CIAO
        * @param orb The orb pointer
        * @param target The Target Manager Object Reference
        *
-       * @description This function calls the constructor of the
+       * This function calls the constructor of the
        *              class Domain Data Manager
        */
       static DomainDataManager * create (CORBA::ORB_ptr orb,
@@ -81,7 +81,7 @@ namespace CIAO
        * @brief Returns the static pointer to the
        *        data manager.
        * @return DomainDataManager*
-       * @description The staic get_data_manger function returning
+       * The staic get_data_manger function returning
        *              the data_manager pointer
        */
       static DomainDataManager* get_data_manager ();
@@ -139,30 +139,26 @@ namespace CIAO
         * @brief The function makes a call on the leaveDomain on the
         *        NodeManager
         *
-        * @description The node manager in turn stops the monitor
+        * The node manager in turn stops the monitor
         *
         */
        void stop_monitors ();
 
        /**
-        * @function commitResourceAllocation
-        *
         * @brief The function allocates resources specified in the
         * parameter
         *
-        * @description This function is for the ResourceCommitmentManager
+        * This function is for the ResourceCommitmentManager
         *
         */
        void commitResourceAllocation (
            const ::Deployment::ResourceAllocations & resources);
 
        /**
-        * @function releaseResourceAllocation
-        *
         * @brief The function releases resources specified in the
         * parameter
         *
-        * @description This function is for the ResourceCommitmentManager
+        * This function is for the ResourceCommitmentManager
         *
         */
        void releaseResourceAllocation (
@@ -170,11 +166,10 @@ namespace CIAO
 
       private:
 
-
       /**
        * @param orb The orb pointer
        * @param target The Target Manager Object Reference
-       * @description The constructor made proteccted so that no one can create
+       * The constructor made proteccted so that no one can create
        *              it.
        */
       DomainDataManager (CORBA::ORB_ptr orb,
@@ -320,7 +315,6 @@ namespace CIAO
       /// The current action
       Action current_action_;
     };
-
 } // CIAO
 
 

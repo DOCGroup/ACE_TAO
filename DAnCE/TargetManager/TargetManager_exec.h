@@ -24,6 +24,9 @@
 #include "tao/LocalObject.h"
 #include "DomainDataManager.h"
 
+/**
+ * TargetManager Executor namespace
+ */
 namespace CIDL_TargetManager_i
 {
   class TargetManager_exec_i;
