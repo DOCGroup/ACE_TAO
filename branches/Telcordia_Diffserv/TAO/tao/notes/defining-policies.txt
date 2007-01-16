@@ -1,0 +1,10 @@
+The following new files were added:
+
+Client_Network_Priority_Policy.cpp
+Client_Network_Priority_Policy.h
+Network_Priority_Policy.cpp
+Network_Priority_Policy.h
+TAO_Network_Priority_Policy.pidl
+
+They define the client side as well as the server side policies
+for adding network priorities for applications.
