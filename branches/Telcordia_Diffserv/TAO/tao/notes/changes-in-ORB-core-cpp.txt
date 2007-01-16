@@ -1,0 +1,8 @@
+Made changes in ORB_Core.cpp to add the network priority to the service
+context list, when the CLIENT_PROPAGATED network priority policy
+is chosen.
+
+function changed: service_context_list (TAO_Stub *stub,
+    TAO_Service_Context &service_context,
+    CORBA::Boolean restart
+    ACE_ENV_ARG_DECL)
