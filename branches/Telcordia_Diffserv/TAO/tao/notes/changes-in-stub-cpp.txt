@@ -1,0 +1,22 @@
+In order to support the SERVER_DECLARED network priority model, i modifed
+Stub.cpp and Stub.h, to follow the design similar to the RT-CORBA
+SERVER_DECLARED priority model.
+
+So the following functions were added in Stub.h and Stub.cpp:
+
+void parse_network_priority_policy (ACE_ENV_SINGLE_ARG_DECL);
+void exposed_network_priority_model (CORBA::Policy_ptr policy);
+CORBA::Policy_ptr exposed_network_priority_model (ACE_ENV_SINGLE_ARG_DECL);
+
+The following private variables were also added:
+
+CORBA::Policy_var network_priority_model_policy_;
+CORBA::Boolean network_priority_policy_parsed_;
+
+So when a a client application gets an IOR, and makes a call on the server
+to check the SERVER_DECLARED policy, just like te TAO RT-CORBA application
+under TAO_ROOT/tests/RTCORBA/Server_Declared, the above code changes
+needs to kick in and work to get the client application, the policies
+that were defined on the server side.
+
+The design is very similar to the design under RT_Stub.cpp and RT_Stub.h.
