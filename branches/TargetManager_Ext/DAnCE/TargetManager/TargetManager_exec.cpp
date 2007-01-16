@@ -1,13 +1,4 @@
 // $Id$
-//===============================================================
-/**
- * @file TargetManager_exec.cpp
- *
- * @brief TargetManager Executor code
- *
- * @author Nilabja Roy nilabjar@dre.vanderbilt.edu
- */
-//===============================================================
 #include "TargetManager_exec.h"
 #include "ciao/CIAO_common.h"
 #include <orbsvcs/CosNamingC.h>
@@ -37,22 +28,16 @@ namespace CIDL_TargetManager_i
 
     // get its own obj ref , then call
 
-    ACE_DEBUG ((LM_DEBUG, "TM_Exec: getting ccm object\n"));
     CORBA::Object_var object = context_->get_CCM_object ();
-    ACE_DEBUG ((LM_DEBUG, "TM_Exec: narrowing target_impl\n"));
     CIAO::TargetManagerImpl_var target_impl =
             CIAO::TargetManagerImpl::_narrow (object.in ());
-    ACE_DEBUG ((LM_DEBUG, "TM_Exec: provide target manager\n"));
     ::Deployment::TargetManager_var target =
             target_impl->provide_targetMgr ();
-    //    dataManager_.reset (new CIAO::DomainDataManager (orb, target.in ()));
-    ACE_DEBUG ((LM_DEBUG, "TM_Exec: creating domain data manager\n"));
     
     // Create Domain Data here 
   
     CIAO::DomainDataManager::create (orb_, target.in ());
 //    CIAO::Domain_Singleton::instance ();
-    ACE_DEBUG ((LM_DEBUG, "TM_Exec: DDD created!\n"));
   }
 
   TargetManager_exec_i::~TargetManager_exec_i (void)
@@ -111,11 +96,6 @@ namespace CIDL_TargetManager_i
   ACE_THROW_SPEC ((CORBA::SystemException))
   {
     // Your code here.
-    if (CIAO::debug_level () > 9)
-      {
-        ACE_DEBUG ((LM_DEBUG , ".. Update Domain called ...\n"));
-      }
-
     CIAO::DomainDataManager::
       get_data_manager ()->update_domain (
                     elements,
@@ -131,10 +111,6 @@ namespace CIDL_TargetManager_i
     if (updateKind == ::Deployment::Delete ||
         updateKind == ::Deployment::Add)
       {
-        if (CIAO::debug_level () > 9)
-          {
-            ACE_DEBUG ((LM_DEBUG , "TM::Creating the changed event\n"));
-          }
 
         CIAO::Domain_Changed_Event_var changed_event =
           new OBV_CIAO::Domain_Changed_Event ();
@@ -142,25 +118,10 @@ namespace CIDL_TargetManager_i
         ::Deployment::Domain_var temp_domain =
           new ::Deployment::Domain (domainSubset);
 
-        if (CIAO::debug_level () > 9)
-          {
-            ACE_DEBUG ((LM_DEBUG , "TM::After getting the current domain\n"));
-          }
-
         changed_event->changes (temp_domain);
         changed_event->change_kind (updateKind);
 
-        if (CIAO::debug_level () > 9)
-          {
-            ACE_DEBUG ((LM_DEBUG , "TM::Sending the event to the Planner_Manager\n"));
-          }
-
         context_->push_changes (changed_event);
-
-        if (CIAO::debug_level () > 9)
-          {
-            ACE_DEBUG ((LM_DEBUG , "TM::After   Sending the event to the Planner_Manager\n"));
-          }
       }
 
   }
@@ -172,7 +133,6 @@ namespace CIDL_TargetManager_i
   ACE_THROW_SPEC ((::CORBA::SystemException,
                    ::Deployment::ResourceCommitmentFailure))
   {
-    ACE_DEBUG ((LM_DEBUG, "Create Resource Commitment called \n\n"));
     
     CIAO::ResourceCommitmentManager_i *commit_servant =
       new CIAO::ResourceCommitmentManager_i ();
@@ -186,7 +146,6 @@ namespace CIDL_TargetManager_i
     Deployment::ResourceCommitmentManager_var mgrv =
       commit_servant->_this ();
 
-    ACE_DEBUG ((LM_DEBUG, "Returning from Create Resource Commitment \n\n"));
     return mgrv._retn ();
   }
 
@@ -223,7 +182,6 @@ namespace CIDL_TargetManager_i
     ACE_THROW_SPEC ((CORBA::SystemException))
   {
     // Your code here.
-    ACE_DEBUG ((LM_DEBUG, "Get PID :: Skeleton Impl"));
     return CIAO::DomainDataManager::
       get_data_manager ()->get_pid (component_uuid);
   }
@@ -234,7 +192,6 @@ namespace CIDL_TargetManager_i
     ACE_THROW_SPEC ((CORBA::SystemException))
   {
     // Your code here.
-    ACE_DEBUG ((LM_DEBUG, "Get host cpu :: Skeleton Impl entering\n"));
     return CIAO::DomainDataManager::
       get_data_manager ()->get_cpu_info ();
   }
@@ -244,11 +201,6 @@ namespace CIDL_TargetManager_i
                                               ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((CORBA::SystemException))
   {
-    // Your code here.
-    ACE_DEBUG ((LM_DEBUG, "Get component cpu :: Skeleton Impl"));
-
-    // todo
-
     return 0;
   }
 
@@ -286,10 +238,6 @@ namespace CIDL_TargetManager_i
   ACE_THROW_SPEC ((CORBA::SystemException))
   {
     // Your code here.
-    if (CIAO::debug_level () > 9)
-    {
-      ACE_DEBUG ((LM_DEBUG , "Calling TM constructor"));
-    }
 
     if (CORBA::is_nil (this->exec_object_.in ()))
       {
@@ -366,10 +314,6 @@ namespace CIDL_TargetManager_i
   ::Components::CCMException))
   {
     // Your code here.
-    if (CIAO::debug_level () > 9)
-    {
-      ACE_DEBUG ((LM_DEBUG , "Inside CCM_ACTIVATE\n"));
-    }
     this->get_targetMgr ();
   }
 
@@ -391,11 +335,9 @@ namespace CIDL_TargetManager_i
   ::Components::CCMException))
   {
     // Your code here.
-    ACE_DEBUG ((LM_DEBUG , "TM::ccm_remove , calling LeaveDomain\n"));
 
     //CIAO::DomainDataManager::get_data_manager ()->stop_monitors ();
 
-    ACE_DEBUG ((LM_DEBUG , "TM::ccm_remove , After calling LeaveDomain\n"));
     return;
   }
 

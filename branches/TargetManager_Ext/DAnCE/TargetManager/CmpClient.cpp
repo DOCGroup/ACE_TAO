@@ -18,19 +18,31 @@
 #include "ace/Get_Opt.h"
 #include "Config_Handlers/DnC_Dump.h"
 
+/**
+ * TM_Tester contains the code to test the TM Component
+ */
 namespace TM_Tester
 {
+  /**
+   * writes the extracted data to file
+   */
   void write_to_file (::Deployment::Domain domain);
 
+  /// variable contains IOR of the TM 
   const char * stringified_TM_IOR;
+
+  /// if add or delete from domain
   bool add_to_domain = true;
+
+  /// whether to test update domain or not
   bool call_update = false;
+
+  /// contains the host name 
   const char * host_name;
   
-    
+    /// parses the arguments and extracts the params
   bool parse_args (int argc, char *argv[])
   {
-    ACE_DEBUG ((LM_DEBUG, "The Parse Agr is called\n"));
     ACE_Get_Opt get_opts (argc, argv, "t:u:d");
     int c;
     while ((c = get_opts ()) != -1)
@@ -38,7 +50,6 @@ namespace TM_Tester
       {
         case 't':
           stringified_TM_IOR = get_opts.opt_arg ();
-          ACE_DEBUG ((LM_DEBUG, "The stringified IOR is [%s]\n",stringified_TM_IOR));
           break;
         case 'u':
           host_name = get_opts.opt_arg ();
@@ -63,6 +74,7 @@ namespace TM_Tester
   }
 }
 
+  /// The main function
   int main (int argc, char* argv[])
   {
     try {
@@ -85,7 +97,6 @@ namespace TM_Tester
         CIAO::TargetManagerImpl::_narrow (factory_object.in ());
 
       // Now get the facet reference from the target Manager Component
-      ACE_DEBUG((LM_DEBUG, "Making a Call to provide_targetMgr ()\n"));
       Deployment::TargetManager_ptr targetI = targetCmp->provide_targetMgr ();
 
       // Now make calls on the Target Manager facet
@@ -93,17 +104,16 @@ namespace TM_Tester
       try
       {
         Deployment::Domain_var domainV = targetI->getAllResources ();
-        ACE_DEBUG ((LM_DEBUG , "\n\nGetAllResources Returned \n"));
         ::Deployment::DnC_Dump::dump (domainV);
       }
       catch(CORBA::NO_IMPLEMENT &)
       {
-        ACE_DEBUG((LM_DEBUG ,"Error:TargetManager:CORBA::NO_IMPLEMENT thrown\n"));
+        ACE_ERROR ((LM_ERROR ,"Error:TargetManager:CORBA::NO_IMPLEMENT thrown\n"));
       }
       catch(CORBA::Exception &)
       {
-        ACE_DEBUG((LM_DEBUG ,"Error:TargetManager:CORBA Generic Exception \n"));
-        ACE_DEBUG((LM_DEBUG ,"Error:TargetManager:Exception in TargetManager call\n"));
+        ACE_ERROR ((LM_ERROR ,"Error:TargetManager:CORBA Generic Exception \n"));
+        ACE_ERROR ((LM_ERROR ,"Error:TargetManager:Exception in TargetManager call\n"));
       }
 
 
@@ -134,18 +144,17 @@ namespace TM_Tester
 
         manager->commitResources (resource_seq);
 
-        ACE_DEBUG ((LM_DEBUG , "\n\ncommitResources Returned \n"));
       }
       catch(CORBA::NO_IMPLEMENT &)
       {
-        ACE_DEBUG ((LM_DEBUG, "Error:TargetManager:CORBA::NO_IMPLEMENT thrown\n"));
+        ACE_ERROR ((LM_ERROR, "Error:TargetManager:CORBA::NO_IMPLEMENT thrown\n"));
       }
       catch (::Deployment::ResourceCommitmentFailure& e)
       {
         resource_available = 0;
-        ACE_DEBUG ((LM_DEBUG, "TargetManager commitResources ResourceCommitmentFailure Exception\n"));
+        ACE_ERROR ((LM_ERROR, "TargetManager commitResources ResourceCommitmentFailure Exception\n"));
 
-        ACE_DEBUG ((LM_DEBUG ,
+        ACE_ERROR ((LM_ERROR ,
               "ResourceCommitmentFailure\n reason=[%s]\n elementName=[%s]\n resourceName=[%s]\n propertyName=[%s]\n",
               e.reason.in (),
               resource_seq[e.index].elementName.in (),
@@ -154,9 +163,9 @@ namespace TM_Tester
       }
       catch(CORBA::Exception & ex)
       {
-        ACE_DEBUG ((LM_DEBUG, "Error:TargetManager:commitResources Exception\n"));
-        ACE_DEBUG ((LM_DEBUG, "Error:TargetManager:CORBA Generic Exception\n"));
-        ACE_DEBUG ((LM_DEBUG, "Error:TargetManager:Exception in TargetManager call"));
+        ACE_ERROR ((LM_ERROR, "Error:TargetManager:commitResources Exception\n"));
+        ACE_ERROR ((LM_ERROR, "Error:TargetManager:CORBA Generic Exception\n"));
+        ACE_ERROR ((LM_ERROR, "Error:TargetManager:Exception in TargetManager call"));
       }
 
 
@@ -168,23 +177,21 @@ namespace TM_Tester
           d = 10;
           resource_seq[0].property[0].value <<= d;
           manager->releaseResources (resource_seq);
-          //            targetI->destroyResourceCommitment (manager);
-          ACE_DEBUG ((LM_DEBUG , "\n\nreleaseResources Returned \n"));
         }
       }
       catch(CORBA::NO_IMPLEMENT &)
       {
-        ACE_DEBUG ((LM_DEBUG, "Error:TargetManager:CORBA::NO_IMPLEMENT thrown\n"));
+        ACE_ERROR ((LM_ERROR, "Error:TargetManager:CORBA::NO_IMPLEMENT thrown\n"));
       }
       catch (Deployment::ResourceNotAvailable &)
       {
-        ACE_DEBUG ((LM_DEBUG, "Error:TargetManager releaseResources ResourceNotAvailable Exception\n"));
+        ACE_ERROR ((LM_ERROR, "Error:TargetManager releaseResources ResourceNotAvailable Exception\n"));
       }
       catch(CORBA::Exception & ex)
       {
-        ACE_DEBUG ((LM_DEBUG, "Error:TargetManager:releaseResources Exception\n"));
-        ACE_DEBUG ((LM_DEBUG, "Error:TargetManager:CORBA Generic Exception\n"));
-        ACE_DEBUG ((LM_DEBUG, "Error:TargetManager:Exception in TargetManager call"));
+        ACE_ERROR ((LM_ERROR, "Error:TargetManager:releaseResources Exception\n"));
+        ACE_ERROR ((LM_ERROR, "Error:TargetManager:CORBA Generic Exception\n"));
+        ACE_ERROR ((LM_ERROR, "Error:TargetManager:Exception in TargetManager call"));
       }
 
       // Here make a call on the TM with update domain and node deletion
@@ -207,12 +214,12 @@ namespace TM_Tester
           }
           catch(CORBA::NO_IMPLEMENT &)
           {
-            ACE_DEBUG ((LM_DEBUG, "Error:TargetManager:CORBA::NO_IMPLEMENT thrown\n"));
+            ACE_ERROR ((LM_ERROR, "Error:TargetManager:CORBA::NO_IMPLEMENT thrown\n"));
           }
           catch(CORBA::Exception & ex)
           {
-            ACE_DEBUG ((LM_DEBUG, "Error:TargetManager:CORBA Generic Exception\n"));
-            ACE_DEBUG ((LM_DEBUG, "Error:TargetManager:Exception in UpdateDomain call"));
+            ACE_ERROR ((LM_ERROR, "Error:TargetManager:CORBA Generic Exception\n"));
+            ACE_ERROR ((LM_ERROR, "Error:TargetManager:Exception in UpdateDomain call"));
           }
         }
         else
@@ -223,12 +230,12 @@ namespace TM_Tester
           }
           catch(CORBA::NO_IMPLEMENT &)
           {
-            ACE_DEBUG ((LM_DEBUG, "Error:TargetManager:CORBA::NO_IMPLEMENT thrown\n"));
+            ACE_ERROR ((LM_ERROR, "Error:TargetManager:CORBA::NO_IMPLEMENT thrown\n"));
           }
           catch(CORBA::Exception & ex)
           {
-            ACE_DEBUG ((LM_DEBUG, "Error:TargetManager:CORBA Generic Exception\n"));
-            ACE_DEBUG ((LM_DEBUG, "Error:TargetManager:Exception in UpdateDomain call"));
+            ACE_ERROR ((LM_ERROR, "Error:TargetManager:CORBA Generic Exception\n"));
+            ACE_ERROR ((LM_ERROR, "Error:TargetManager:Exception in UpdateDomain call"));
           }
         }
       }
@@ -241,17 +248,16 @@ namespace TM_Tester
         // here write things to file ...
         TM_Tester::write_to_file (domainV.in());
 
-        ACE_DEBUG ((LM_DEBUG , "\n\nGetAvailableResources Returned \n"));
         ::Deployment::DnC_Dump::dump (domainV);
       }
       catch(CORBA::NO_IMPLEMENT &)
       {
-        ACE_DEBUG ((LM_DEBUG, "Error:TargetManager:CORBA::NO_IMPLEMENT thrown\n"));
+        ACE_ERROR ((LM_ERROR, "Error:TargetManager:CORBA::NO_IMPLEMENT thrown\n"));
       }
       catch(CORBA::Exception & ex)
       {
-        ACE_DEBUG ((LM_DEBUG ,"Error:TargetManager:CORBA Generic Exception\n"));
-        ACE_DEBUG ((LM_DEBUG,  "Error:TargetManager:Exception in TargetManager call\n"));
+        ACE_ERROR ((LM_ERROR ,"Error:TargetManager:CORBA Generic Exception\n"));
+        ACE_ERROR ((LM_ERROR,  "Error:TargetManager:Exception in TargetManager call\n"));
       }
 
       // Finally destroy the ORB
@@ -259,7 +265,7 @@ namespace TM_Tester
     }
     catch (CORBA::Exception & ex) 
     {
-      ACE_DEBUG ((LM_DEBUG,  "Error:TargetManager:CORBA exception raised!\n"));
+      ACE_ERROR ((LM_ERROR,  "Error:TargetManager:CORBA exception raised!\n"));
     }
     return 0;
   }
@@ -289,15 +295,12 @@ namespace TM_Tester
           file_name += domain.node[i].name.in ();
           ACE_FILE_IO file_io;
           ACE_FILE_Connector (file_io, ACE_FILE_Addr (file_name.c_str ()));
- //         std::ofstream na_out (file_name.c_str ());
           CORBA::Double na_node_cpu;
           domain.node[i].resource[j].property[0].value >>= na_node_cpu;
           char buf[BUFSIZ];
           memset (buf , 0 , BUFSIZ);
           ACE_OS::sprintf (buf , "%f", na_node_cpu);
           file_io.send (buf, ACE_OS::strlen (buf));
-//          na_out << na_node_cpu << std::endl;
-//          na_out.close ();
         }
       }
 
