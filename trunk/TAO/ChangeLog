@@ -1,3 +1,8 @@
+Tue Jan 16 08:18:10 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/CollocationLockup/CollocationLockup.cpp:
+          Removed not used global variable to fix gcc warning
+
 Mon Jan 15 09:44:10 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/ORB_Core.cpp:
