@@ -189,6 +189,8 @@ TAO_Transport::sent_byte_count (void) const
   return this->sent_byte_count_;
 }
 
+#if TAO_HAS_TRANSPORT_CURRENT == 1
+
 ACE_INLINE TAO::Transport::Stats*
 TAO_Transport::stats (void) const
 {
@@ -254,6 +256,7 @@ TAO::Transport::Stats::opened_since (void) const
 {
   return this->opened_since_;
 }
+#endif /* TAO_HAS_TRANSPORT_CURRENT == 1 */
 
 
 TAO_END_VERSIONED_NAMESPACE_DECL

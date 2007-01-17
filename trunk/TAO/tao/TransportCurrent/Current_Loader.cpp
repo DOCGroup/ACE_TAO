@@ -16,13 +16,16 @@
 
 #include "tao/ORB_Constants.h"
 #include "tao/ORBInitializer_Registry.h"
-#include "tao/TransportCurrent/Current_ORBInitializer.h"
-#include "tao/TransportCurrent/Current_Loader.h"
-#include "tao/TransportCurrent/Current_Impl.h"
 
 ACE_RCSID (TC,
            Current_Loader,
            "$Id$")
+
+#if TAO_HAS_TRANSPORT_CURRENT == 1
+
+#include "tao/TransportCurrent/Current_ORBInitializer.h"
+#include "tao/TransportCurrent/Current_Loader.h"
+#include "tao/TransportCurrent/Current_Impl.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -87,6 +90,7 @@ namespace TAO
 
 TAO_END_VERSIONED_NAMESPACE_DECL
 
+
 #endif /* defined (TAO_AS_STATIC_LIBS) */
 
 
@@ -102,3 +106,5 @@ ACE_STATIC_SVC_DEFINE (TAO_Transport_Current_Loader,
 ACE_FACTORY_NAMESPACE_DEFINE (TAO_Transport_Current,
                               TAO_Transport_Current_Loader,
                               TAO::Transport::Current_Loader)
+
+#endif /* TAO_HAS_TRANSPORT_CURRENT == 1 */
