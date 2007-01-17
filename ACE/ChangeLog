@@ -1,3 +1,9 @@
+Wed Jan 17 15:10:12 UTC 2007  Johnny willemsen  <jwillemsen@remedy.nl>
+
+        * ace/config-g++-common.h:
+          Make sure that we don't set visibility for singletons
+          when visibility is turned off completely
+
 Wed Jan 17 12:20:57 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
 
         * bin/PerlACE/Run_Test.pm:
