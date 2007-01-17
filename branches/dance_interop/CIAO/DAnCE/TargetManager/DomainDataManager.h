@@ -169,7 +169,7 @@ namespace CIAO
        * @operation   Constructor
        * @param orb The orb pointer
        * @param target The Target Manager Object Reference
-       * @description The constructor made proteccted so that no one can create
+       * @description The constructor made protected so that no one can create
        *              it.
        */
       DomainDataManager (CORBA::ORB_ptr orb,
