@@ -12,7 +12,7 @@ Wed Jan 17 16:05:42 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
           Set the properties instance before initializing the notify
           service.  Using the static singleton can cause static destruction
           issues between the properties instance and statically allocated
-          type code structures.
+          type code structures.  This change fixes Bug 1675.
 
 Wed Jan 17 12:36:48 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
 
