@@ -1,3 +1,9 @@
+Wed Jan 17 15:55:06 UTC 2007  Iliyan Jeliazkov  <iliyan@ociweb.com>
+
+        * bin/tao_orb_tests.lst:
+          Making sure the Transport::Current tests are not ran when the
+          functionality is disabled.
+
 Wed Jan 17 15:10:12 UTC 2007  Johnny willemsen  <jwillemsen@remedy.nl>
 
         * ace/config-g++-common.h:
