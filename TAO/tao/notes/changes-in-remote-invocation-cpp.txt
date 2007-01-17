@@ -1,0 +1,3 @@
+Added checks for DiffServ policies when the remote invocation is made.
+
+Made changes to function send_message () in this regard.
