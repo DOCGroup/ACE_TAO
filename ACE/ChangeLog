@@ -1,3 +1,10 @@
+Wed Jan 17 12:20:57 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/PerlACE/Run_Test.pm:
+
+          Added a function to check for the privileges required to set
+          thread priority on HP-UX.  For all other platforms, it is a noop.
+
 Tue Jan 16 21:00:20 UTC 2007  Iliyan Jeliazkov  <iliyan@ociweb.com>
 
         * ace/Service_Gestalt.cpp:
