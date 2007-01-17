@@ -14,6 +14,8 @@ ACE_RCSID (Notify,
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
+static TAO_Notify_Properties* properties = 0;
+
 TAO_Notify_Properties::TAO_Notify_Properties (void)
   : factory_ (0)
   , builder_ (0)
@@ -43,10 +45,21 @@ TAO_Notify_Properties::~TAO_Notify_Properties ()
 TAO_Notify_Properties *
 TAO_Notify_Properties::instance (void)
 {
-  // Hide the template instantiation to prevent multiple instances
-  // from being created.
+  if (properties == 0)
+    {
+      // Hide the template instantiation to prevent multiple instances
+      // from being created.
+      properties = TAO_Singleton<TAO_Notify_Properties,
+                                 TAO_SYNCH_MUTEX>::instance ();
+    }
 
-  return
-    TAO_Singleton<TAO_Notify_Properties, TAO_SYNCH_MUTEX>::instance ();
+  return properties;
 }
+
+void
+TAO_Notify_Properties::instance (TAO_Notify_Properties* props)
+{
+  properties = props;
+}
+
 TAO_END_VERSIONED_NAMESPACE_DECL
