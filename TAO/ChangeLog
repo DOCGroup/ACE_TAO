@@ -1,3 +1,19 @@
+Wed Jan 17 16:05:42 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
+
+        * orbsvcs/orbsvcs/Notify/Properties.h:
+        * orbsvcs/orbsvcs/Notify/Properties.cpp:
+
+          Provide a method to set the properties instance.  If the
+          properties instance is not set by the user, a singleton instance
+          will be used.
+
+        * orbsvcs/Notify_Service/Notify_Server.cpp:
+
+          Set the properties instance before initializing the notify
+          service.  Using the static singleton can cause static destruction
+          issues between the properties instance and statically allocated
+          type code structures.
+
 Wed Jan 17 12:36:48 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
 
         * orbsvcs/examples/Notify/Filter/run_test.pl:
