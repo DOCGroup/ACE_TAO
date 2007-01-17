@@ -1,3 +1,23 @@
+Wed Jan 17 18:16:18 UTC 2007  Iliyan Jeliazkov  <iliyan@ociweb.com>
+
+        * tao/Transport.h:
+        * tao/Transport.inl:
+        * tao/Transport.cpp:
+        * tao/TransportCurrent/Current_Impl.h:
+        * tao/TransportCurrent/Current_Impl.cpp:
+        * tao/TransportCurrent/Current_Loader.h:
+        * tao/TransportCurrent/Current_Loader.cpp:
+        * tao/TransportCurrent/IIOP_Current_Impl.h:
+        * tao/TransportCurrent/IIOP_Current_Impl.cpp:
+        * tao/TransportCurrent/IIOP_Current_Loader.h:
+        * tao/TransportCurrent/IIOP_Current_Loader.cpp:
+        * tests/TransportCurrent/IIOP/client.cpp:
+        * tests/TransportCurrent/IIOP/server.cpp:
+
+          Updated to prevent any footprint impact when
+          Transport::Current functionality is disabled
+          (TAO_HAS_TRANSPORT_CURRENT is 0 or undefined)
+
 Wed Jan 17 16:05:42 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
 
         * orbsvcs/orbsvcs/Notify/Properties.h:

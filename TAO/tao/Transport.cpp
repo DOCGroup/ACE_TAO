@@ -114,10 +114,12 @@ dump_iov (iovec *iov, int iovcnt, size_t id,
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
+#if TAO_HAS_TRANSPORT_CURRENT == 1
 TAO::Transport::Stats::~Stats ()
 {
   // no-op
 }
+#endif /* TAO_HAS_TRANSPORT_CURRENT == 1 */
 
 TAO_Transport::TAO_Transport (CORBA::ULong tag,
                               TAO_ORB_Core *orb_core)
@@ -168,8 +170,6 @@ TAO_Transport::TAO_Transport (CORBA::ULong tag,
   ACE_NEW_THROW_EX (this->stats_,
                     TAO::Transport::Stats,
                     CORBA::NO_MEMORY ());
-#else
-  this->stats_ = 0;
 #endif /* TAO_HAS_TRANSPORT_CURRENT == 1 */
 
   /*
@@ -1247,9 +1247,11 @@ TAO_Transport::send_message_shared_i (TAO_Stub *stub,
         break;
     }
 
+#if TAO_HAS_TRANSPORT_CURRENT == 1
   // "Count" the message, only if no error was encountered.
   if (ret != -1 && this->stats_ != 0)
     this->stats_->messages_sent (message_length);
+#endif /* TAO_HAS_TRANSPORT_CURRENT == 1 */
 
   return ret;
 }
@@ -2221,9 +2223,11 @@ TAO_Transport::process_parsed_messages (TAO_Queued_Data *qd,
   // Get the <message_type> that we have received
   const TAO_Pluggable_Message_Type t = qd->msg_type_;
 
+#if TAO_HAS_TRANSPORT_CURRENT == 1
   // Update stats, if any
   if (this->stats_ != 0)
     this->stats_->messages_received (qd->msg_block_->length ());
+#endif /* TAO_HAS_TRANSPORT_CURRENT == 1 */
 
   if (t == TAO_PLUGGABLE_MESSAGE_CLOSECONNECTION)
     {

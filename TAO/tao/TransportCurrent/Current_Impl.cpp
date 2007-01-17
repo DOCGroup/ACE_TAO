@@ -1,12 +1,16 @@
 // $Id$
+// @file: Current_Impl.cpp
+//
 
-#include "tao/Transport.h"
+#include /**/ "tao/Transport.h"
+
 #include "tao/Transport_Selection_Guard.h"
-
 #include "tao/TransportCurrent/Current_Loader.h"
 #include "tao/TransportCurrent/Current_Impl.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
+#if TAO_HAS_TRANSPORT_CURRENT == 1
 
 namespace TAO
 {
@@ -101,6 +105,8 @@ namespace TAO
   }
 
 }
+
+#endif /* TAO_HAS_TRANSPORT_CURRENT == 1 */
 
 TAO_END_VERSIONED_NAMESPACE_DECL
 

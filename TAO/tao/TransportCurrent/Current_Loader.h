@@ -23,6 +23,10 @@
 #include "ace/Service_Object.h"
 #include "ace/Service_Config.h"
 #include "tao/Versioned_Namespace.h"
+
+
+#if TAO_HAS_TRANSPORT_CURRENT == 1
+
 #include "tao/TransportCurrent/Transport_Current_Export.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
@@ -70,6 +74,8 @@ ACE_STATIC_SVC_DECLARE_EXPORT (TAO_Transport_Current,
 
 ACE_FACTORY_DECLARE (TAO_Transport_Current,
                      TAO_Transport_Current_Loader)
+
+#endif /* TAO_HAS_TRANSPORT_CURRENT == 1 */
 
 #include /**/ "ace/post.h"
 

@@ -17,6 +17,8 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#if TAO_HAS_TRANSPORT_CURRENT == 1
+
 #include "tao/TransportCurrent/TC_IIOPC.h"
 #include "tao/TransportCurrent/Current_Impl.h"
 
@@ -103,6 +105,8 @@ namespace TAO
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL
+
+#endif /* TAO_HAS_TRANSPORT_CURRENT == 1 */
 
 #include /**/ "ace/post.h"
 
