@@ -5,6 +5,8 @@
 #include "tao/IIOP_Transport.h"
 #include "tao/Transport_Selection_Guard.h"
 
+#if TAO_HAS_TRANSPORT_CURRENT == 1
+
 #include "IIOP_Current_Impl.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
@@ -149,3 +151,6 @@ namespace TAO
 
 
 TAO_END_VERSIONED_NAMESPACE_DECL
+
+
+#endif /* TAO_HAS_TRANSPORT_CURRENT == 1 */
