@@ -1,0 +1,40 @@
+1. Defined the following new functions in Root_POA.h:
+
+CORBA::Long get_diffserv_codepoint (TAO_Service_Context &sc);
+CORBA::Long request_diffserv_codepoint (void) const;
+CORBA::Long reply_diffserv_codepoint (void) const;
+
+Added the function definitions under Root_POA.cpp.
+
+2. Modified the following function in Default_Policy_Validator.cpp
+
+legal_policy_impl ()
+
+to validate the network priority policy while being added,
+when the POA is created.
+
+3. Made changes to the following function in Default_Servant_Dispatcher.cpp
+
+pre_invoke_remote_request ()
+
+to add the diffserv codepoint in the reply back to the client. The code
+basically checks the service context and uses the diffserv codepoint
+that came in the service context, and uses it in the reply, by setting
+that codepoint with the IIOP Connection Handler.
+
+4. Made changes to POA.pidl
+
+to define the network priority policy ID.
+
+5. Made changes to the following files:
+
+POA_Cached_Policies.{h, cpp, inl}
+
+to help add the network priority policy in the POA, when the server is
+created.
+
+6. Made changes to RT_Servant_Dispatcher.cpp
+
+to make similar changes like Default_Servant_Dispatcher.cpp in POA.
+
+
