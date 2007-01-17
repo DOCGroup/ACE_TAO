@@ -1,0 +1,5 @@
+Made changes to Profile.cpp to change the length of the
+PolicyList that is returned back, espicially if we read a
+policy in the IOR Profiles, that is unsupported by TAO.
+
+The changes were made in the function get_policies ().
