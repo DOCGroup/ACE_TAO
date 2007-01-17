@@ -1,3 +1,38 @@
+Wed Jan 17 12:36:48 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
+
+        * orbsvcs/examples/Notify/Filter/run_test.pl:
+        * orbsvcs/examples/Notify/Lanes/run_test.pl:
+        * orbsvcs/examples/Notify/Subscribe/run_test.pl:
+        * orbsvcs/examples/Notify/ThreadPool/run_test.pl:
+        * orbsvcs/tests/Notify/Basic/run_test.pl:
+        * orbsvcs/tests/Notify/Basic/run_test_ipv6.pl:
+        * orbsvcs/tests/Notify/Blocking/run_test.pl:
+        * orbsvcs/tests/Notify/Discarding/run_test.pl:
+        * orbsvcs/tests/Notify/Lanes/run_test.pl:
+        * orbsvcs/tests/Notify/Lanes/run_test_notify.pl:
+        * orbsvcs/tests/Notify/MT_Dispatching/run_test.pl:
+        * orbsvcs/tests/Notify/Ordering/run_test.pl:
+        * orbsvcs/tests/Notify/Reconnecting/run_test.pl:
+        * orbsvcs/tests/Notify/Sequence_Multi_ETCL_Filter/run_test.pl:
+        * orbsvcs/tests/Notify/Sequence_Multi_Filter/run_test.pl:
+        * orbsvcs/tests/Notify/Structured_Filter/run_test.pl:
+        * orbsvcs/tests/Notify/Structured_Multi_Filter/run_test.pl:
+        * orbsvcs/tests/Notify/ThreadPool/run_test.pl:
+        * orbsvcs/tests/Notify/performance-tests/Filter/run_test.pl:
+        * orbsvcs/tests/Notify/performance-tests/RedGreen/run_test.pl:
+        * orbsvcs/tests/Notify/performance-tests/scripts/1_Path_Period_0_Lanes/run_test.pl:
+        * orbsvcs/tests/Notify/performance-tests/scripts/3_Path_Period_10ms_Lanes/run_test.pl:
+        * orbsvcs/tests/Notify/performance-tests/scripts/Max_Throughput/Notify/run_test.pl:
+        * orbsvcs/tests/Notify/performance-tests/scripts/Max_Throughput/Notify_RTCORBA/run_test.pl:
+        * orbsvcs/tests/Notify/performance-tests/scripts/Paths_vs_Throughput/run_notify.pl:
+        * orbsvcs/tests/Notify/performance-tests/scripts/Paths_vs_Throughput/run_test.pl:
+
+          The Notify_Service will fail to start up on HP-UX if the user does
+          not have the RTSCHED group privilege.  Each test that runs the
+          Notify_Service now calls a method in PerlACE::Run_Test that checks
+          for this group privilege.  If the user does not have the correct
+          access, a warning is printed and the test will exit.
+
 Tue Jan 16 18:39:17 UTC 2007  Iliyan Jeliazkov  <iliyan@ociweb.com>
 
         * tests/TransportCurrent/IIOP/IIOP_Server_Main.cpp:
@@ -19,7 +54,7 @@ Tue Jan 16 17:13:13 UTC 2007  Iliyan Jeliazkov  <iliyan@ociweb.com>
         * tao/TransportCurrent/Current_Loader.cpp:
 
           Removed unnecessary orbinitializer_registry method and
-          eliminated nnecesary whitespace.
+          eliminated unnecesary whitespace.
 
         * tao/TransportCurrent/Current_ORBInitializer_Base.h:
         * tao/TransportCurrent/Current_ORBInitializer_Base.cpp:
@@ -68,7 +103,7 @@ Mon Jan 15 09:44:10 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/ORB_Core.cpp:
           Made debug statement dependent on debug level, it was now
-          printed alwasy
+          printed always
 
 Sat Jan 13 14:31:10 UTC 2007  Phil Mesnier  <mesnier_p@ociweb.com>
 
@@ -479,7 +514,7 @@ Mon Jan  8 10:52:55 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
         * tao/Invocation_Base.cpp (exception):
           Set the forwarded_to_ member to nil again, it can be that
           we had a forward request which was converted to a regular
-          exeption in a PI call and then we have to make sure we don't
+          exception in a PI call and then we have to make sure we don't
           keep the old data
 
         * tao/PI/ClientRequestInterceptor_Adapter_Impl.cpp (receive_other):
@@ -896,7 +931,7 @@ Sat Jan  6 19:16:55 UTC 2007  Chris Cleeland  <cleeland_c@ociweb.com>
         * utils/nslist:
 
           Added subversion svn:ignore properties on all these directories
-          comparable to the values previously in the vertigial .cvsignore
+          comparable to the values previously in the vestigial .cvsignore
           files, as well as updated them commensurate with the new svnignore
           gnuace make target.
 
@@ -1193,7 +1228,7 @@ Fri Jan  5 13:07:32 UTC 2007  Phil Mesnier  <mesnier_p@ociweb.com>
         * orbsvcs/tests/EC_Mcast/EC_Mcast.cpp (open_senders):
 
           Switched from using a macro for the buffer length used in
-          gathering the ingore address as a string to using a literal
+          gathering the ignore address as a string to using a literal
           constant. This is consistent with common usage of addr_to_string
           throughout the ACE/TAO codebase, and avoids adding potentially
           system-specific includes at the application level.
@@ -1833,7 +1868,7 @@ Tue Jan  2 11:50:57 UTC 2007  Iliyan Jeliazkov  <iliyan@ociweb.com>
 Tue Jan  2 09:13:36 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         Removed support from the IDL compiler for -Ge 0 and -Ge 1. We
-        now always generate without enviroment macros. -Ge 2 is still there
+        now always generate without environment macros. -Ge 2 is still there
         but probably gets removed also soon
 
         * TAO_IDL/be/be_global.cpp:
@@ -2420,7 +2455,7 @@ Tue Jan  2 09:13:36 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
         * tests/Typedef_String_Array/Makefile.am:
         * tests/UNKNOWN_Exception/Makefile.am:
         * tests/Xt_Stopwatch/Makefile.am:
-          Removed any occurence of -Ge 1
+          Removed any occurrence of -Ge 1
 
 Sun Dec 31 23:12:36 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
 
@@ -2459,7 +2494,7 @@ Sun Dec 31 17:27:27 UTC 2006  Iliyan Jeliazkov  <iliyan@ociweb.com>
 
         * tests/TransportCurrent/IIOP/IIOP.mpc:
 
-              Added a "Template_Files" section to explicitely make
+              Added a "Template_Files" section to explicitly make
           ORBInitializer.cpp available.
 
 Fri Dec 29 22:31:08 UTC 2006  Iliyan Jeliazkov  <iliyan@ociweb.com>
@@ -2480,7 +2515,7 @@ Fri Dec 29 22:31:08 UTC 2006  Iliyan Jeliazkov  <iliyan@ociweb.com>
         * tests/TransportCurrent/Framework/ORBInitializer_T.h:
         * tests/TransportCurrent/Framework/ORBInitializer_T.cpp:
 
-          Cleaned up template declarations and moved themplate code to a
+          Cleaned up template declarations and moved template code to a
           cpp file.
 
         * tests/TransportCurrent/Framework/Server_Request_Interceptor.h:
@@ -2609,9 +2644,9 @@ Thu Dec 28 19:29:58 UTC 2006  Iliyan Jeliazkov  <iliyan@ociweb.com>
         * tao/TC_IIOP.mpc:
 
           Removed interceptors and pi from the list of base projects. The
-          Transport::Current feature isnot itself dependent on these
+          Transport::Current feature is not itself dependent on these
           features. The tests however are, and their *.mpc files have been
-          modifiedaccordingly to add interceptors explicitely.
+          modified accordingly to add interceptors explicitely.
 
         * tao/TransportCurrent/Current_ORBInitializer.h:
 
@@ -2710,7 +2745,7 @@ Thu Dec 28 11:33:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
           a final spec.
 
         * MPC/config/compression.mpb:
-          New base project for the compresion library
+          New base project for the compression library
 
         * MPC/config/zlibcompressor.mpb:
           New base project for the zlib compressor
@@ -2816,7 +2851,7 @@ Sun Dec 24 23:22:41 UTC 2006  Iliyan Jeliazkov  <iliyan@ociweb.com>
         * tests/Nested_Upcall_Crash/Nested_Upcall_Crash.mpc:
         * tests/Portable_Interceptors/Service_Context_Manipulation/PI_Svc_Context_Manip.mpc:
 
-          Adding "after" keyword to makesure IDL is built first in
+          Adding "after" keyword to make sure IDL is built first in
           parallel builds.
 
 Sun Dec 24 15:44:40 UTC 2006  Iliyan Jeliazkov  <iliyan@ociweb.com>
@@ -3097,7 +3132,7 @@ Wed Dec 20 21:14:11 UTC 2006  Iliyan Jeliazkov  <iliyan@ociweb.com>
         * tao/TransportCurrent/Current_Loader.h:
 
           Fixing an error in builds that use versioned namespaces due to
-          incorect placement of TAO_END_VERSIONED_NAMESPACE_DECL.
+          incorrect placement of TAO_END_VERSIONED_NAMESPACE_DECL.
 
 Wed Dec 20 20:59:39 UTC 2006  Iliyan Jeliazkov  <iliyan@ociweb.com>
 
@@ -3221,7 +3256,7 @@ Wed Dec 20 09:36:00 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
         * tests/NestedUpcall/Triangle_Test/TT.mpc:
           Disabled some projects that can't compile when CORBA/e
           micro has been enabled. Also removed some after usage because
-          there is now a seperate idl project
+          there is now a separate idl project
 
 Wed Dec 20 09:31:00 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -3654,7 +3689,7 @@ Thu Dec 14 08:47:25 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
 
           Align subtle differences (like using an explicit this-> (or not)
           for invoking methods and accessing member variables.  This makes
-          diff betweens between the wrapper classes highlight the real and
+          diffs between between the wrapper classes highlight the real and
           substantial differences.  This too should make future maintenance
           easier.
 
@@ -3675,7 +3710,7 @@ Thu Dec 14 08:47:25 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
           Overhaul the RTEvent_Logging_Service class to follow the idiom
           used by the other three Logging Service implementations.  It had
           lots of dead (commented out and/or #if 0'd) code for setting up
-          a scheduler; yet was missing support for supressing binding the
+          a scheduler; yet was missing support for suppressing binding the
           log factory to the naming service and spinning up a thread pool
           for ORB threads.  Aligning this should make future maintenance
           easier.
@@ -3769,7 +3804,7 @@ Wed Dec 13 13:05:21 UTC 2006  Chad Elliott  <elliott_c@ociweb.com>
 
         * orbsvcs/orbsvcs/Trader/Trader_Interfaces.cpp:
 
-          Added ACE_NOTREACHED around two returns that coult not possibly be
+          Added ACE_NOTREACHED around two returns that could not possibly be
           reached.
 
 Wed Dec 13 12:43:04 UTC 2006  Chad Elliott  <elliott_c@ociweb.com>
@@ -4224,7 +4259,7 @@ Thu Dec  7 10:49:57 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/ORB.{h,cpp}:
           Disable more of the ORB when building for CORBA/e, thanks to
-          Jeff for pointing out that these methods wheren't disabled
+          Jeff for pointing out that these methods weren't disabled
 
 Thu Dec  7 09:56:57 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -4354,7 +4389,7 @@ Wed Dec  6 16:15:58 UTC 2006  Iliyan Jeliazkov  <iliyan@ociweb.com>
 
           Fixing fuzz (missing $id$) and compile errors on
           TAO_HAS_MINIMUM_CORBA builds, which define the POAManager
-          inteface without the deactivate() method.
+          interface without the deactivate() method.
 
 Wed Dec  6 16:10:57 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -5428,7 +5463,7 @@ Tue Nov 28 19:32:46 UTC 2006  Jeff Parsons <j.parsons@vanderbilt.edu>
         * tao/AnyTypeCode/BasicTypeTraits_T.h:
 
           New files, defining and specializing template
-          utiities for using Anys and typecodes with
+          utilities for using Anys and typecodes with
           IDL basic types.
 
         * tao/AnyTypeCode.mpc:
@@ -5740,7 +5775,7 @@ Mon Nov 27 08:04:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
         to the basic sequences
 
         * tao/tao.mpc:
-          Enabed -Gse for ULongLongSeq
+          Enabled -Gse for ULongLongSeq
 
         * orbsvcs/performance-tests/RTEvent/lib/Federated_Test.idl:
           Use the CORBA::ULongLongSeq predefined typedef
@@ -5786,7 +5821,7 @@ Fri Nov 24 13:45:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
           When policies is zero, return an empty sequence instead of
           a nill pointer. This fixes bugzilla 2656. Thanks to
           Richard Ridgway <Richard_Ridgway at ml dot com> for
-          delevering the test extension and the patch for this file.
+          delivering the test extension and the patch for this file.
 
 Fri Nov 24 13:43:44 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
 
@@ -6004,7 +6039,7 @@ Thu Nov 23 03:20:04 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
         * orbsvcs/orbsvcs/CosProperty.mpc:
 
           Removed *S_T.* files from the Header_Files, Inline_Files, and
-          Template_Files sections, cooresponding to the recent change to
+          Template_Files sections, corresponding to the recent change to
           orbsvcslib.mpb which removed -GT from the command line options
           passed to tao_idl.
 
@@ -6076,7 +6111,7 @@ Wed Nov 22 18:50:59 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
 
         * orbsvcs/orbsvcs/Log/Log_i.cpp:
 
-          Now the infinate recursion problem has been resolved, we invoke
+          Now the infinite recursion problem has been resolved, we invoke
           TAO_LogMgr_i::create_log_reference() from TAO_Log_i::init() and
           stash it away in a member variable.  This allows us to remove
           the code that lazily obtained the object reference within the
@@ -6086,7 +6121,7 @@ Wed Nov 22 18:50:59 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
 
           Changed TAO_LogMgr_i::create_log_reference() to use
           _unchecked_narrow() while narrowing the object reference.  This
-          avoids the infinite recursion which occured with _narrow() when
+          avoids the infinite recursion which occurred with _narrow() when
           this was called by the servant activator's incarnate() method.
 
 

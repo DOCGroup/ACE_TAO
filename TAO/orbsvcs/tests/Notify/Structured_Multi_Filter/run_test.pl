@@ -10,6 +10,8 @@ use strict;
 use lib "$ENV{ACE_ROOT}/bin";
 use PerlACE::Run_Test;
 
+PerlACE::check_privilege_group();
+
 my $ior = PerlACE::LocalFile ("supplier.ior");
 my $namingior = PerlACE::LocalFile ("naming.ior");
 my $notifyior = PerlACE::LocalFile ("notify.ior");
