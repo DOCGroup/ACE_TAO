@@ -228,10 +228,10 @@ TAO/tests/Portable_Interceptors/Redirection/run_test.pl: !MINIMUM !CORBA_E_COMPA
 TAO/tests/ORT/run_test.pl: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !DISABLE_INTERCEPTORS
 TAO/tests/Object_Loader/run_test.pl: !VxWorks !STATIC
 TAO/tests/Two_Objects/run_test.pl: !ST
-TAO/tests/TransportCurrent/Framework/run_test.pl -dynamic: !STATIC !DISABLE_INTERCEPTORS !MINIMUM
-TAO/tests/TransportCurrent/Framework/run_test.pl -static: STATIC !DISABLE_INTERCEPTORS !MINIMUM
-TAO/tests/TransportCurrent/IIOP/run_test.pl -dynamic: !STATIC !DISABLE_INTERCEPTORS !MINIMUM
-TAO/tests/TransportCurrent/IIOP/run_test.pl -static: STATIC !DISABLE_INTERCEPTORS !MINIMUM
+TAO/tests/TransportCurrent/Framework/run_test.pl -dynamic: !DISABLE_TRANSPORT_CURRENT !STATIC !DISABLE_INTERCEPTORS !MINIMUM
+TAO/tests/TransportCurrent/Framework/run_test.pl -static: !DISABLE_TRANSPORT_CURRENT STATIC !DISABLE_INTERCEPTORS !MINIMUM
+TAO/tests/TransportCurrent/IIOP/run_test.pl -dynamic: !DISABLE_TRANSPORT_CURRENT !STATIC !DISABLE_INTERCEPTORS !MINIMUM
+TAO/tests/TransportCurrent/IIOP/run_test.pl -static: !DISABLE_TRANSPORT_CURRENT STATIC !DISABLE_INTERCEPTORS !MINIMUM
 TAO/tests/UNKNOWN_Exception/run_test.pl: Exceptions
 TAO/tests/Native_Exceptions/run_test.pl: Exceptions
 TAO/tests/Servant_To_Reference_Test/run_test.pl: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !ST
