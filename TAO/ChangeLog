@@ -1,3 +1,31 @@
+Wed Jan 17 22:53:22 UTC 2007  Iliyan Jeliazkov  <iliyan@ociweb.com>
+
+        * NEWS:
+        * docs/transport_current/index.html:
+
+          Updated the documentation on how to disable the
+          Transport::Current functionality.
+
+        * MPC/config/taodefaults.mpb:
+
+          Added a "feature(!transport_current)..." to help enable and
+          disable the Transport::Current features (and footprint impact).
+
+        * MPC/config/tc.mpb:
+
+          Projects inheriting from this will get "requires += transport_current"
+
+        * tao/TC.mpc:
+        * tao/TC_IIOP.mpc:
+
+          Added "requires += transport_current"
+
+        * tao/orbconf.h:
+
+          Fixing a macro re-definition when "transport_current=0" is
+          present in default.features.
+
+
 Wed Jan 17 18:16:18 UTC 2007  Iliyan Jeliazkov  <iliyan@ociweb.com>
 
         * tao/Transport.h:
