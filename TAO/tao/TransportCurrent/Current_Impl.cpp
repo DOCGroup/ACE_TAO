@@ -1,8 +1,17 @@
-// $Id$
-// @file: Current_Impl.cpp
-//
+/* -*- C++ -*- */
+
+/**
+ * @file Current_Impl.cpp
+ *
+ * $Id$
+ *
+ * @author Iliyan Jeliazkov <iliyan@ociweb.com>
+ *
+ */
 
 #include /**/ "tao/Transport.h"
+
+#if TAO_HAS_TRANSPORT_CURRENT == 1
 
 #include "tao/Transport_Selection_Guard.h"
 #include "tao/TransportCurrent/Current_Loader.h"
@@ -10,7 +19,6 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-#if TAO_HAS_TRANSPORT_CURRENT == 1
 
 namespace TAO
 {
@@ -106,7 +114,7 @@ namespace TAO
 
 }
 
-#endif /* TAO_HAS_TRANSPORT_CURRENT == 1 */
-
 TAO_END_VERSIONED_NAMESPACE_DECL
+
+#endif /* TAO_HAS_TRANSPORT_CURRENT == 1 */
 
