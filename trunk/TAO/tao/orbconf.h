@@ -842,8 +842,6 @@ enum TAO_Policy_Scope
 // Enable TransportCurrent by default
 #if !defined (TAO_HAS_TRANSPORT_CURRENT)
 #    define TAO_HAS_TRANSPORT_CURRENT 1
-#  else
-#    define TAO_HAS_TRANSPORT_CURRENT 0
 #endif  /* ! TAO_HAS_TRANSPORT_CURRENT */
 
 TAO_END_VERSIONED_NAMESPACE_DECL
