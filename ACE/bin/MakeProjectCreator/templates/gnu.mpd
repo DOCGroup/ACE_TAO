@@ -634,6 +634,13 @@ ifneq ($(GENERATED_DIRTY),)
 	-$(RM) -r $(GENERATED_DIRTY)
 endif
 
+__prebuild__:
+<%if(prebuild)%>
+	@<%eval(prebuild)%>
+<%else%>
+	@-:
+<%endif%>
+
 <%if(postbuild)%>
 all: __postbuild__
 
