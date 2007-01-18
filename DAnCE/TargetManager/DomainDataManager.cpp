@@ -61,7 +61,7 @@ int CIAO::DomainDataManager::update_domain (
         break;
     }
 
-  CORBA::ULong size = current_domain_.node.length ();
+  CORBA::ULong const size = current_domain_.node.length ();
 
   CORBA::ULong i;
   for (i=0;i < size;i++)
@@ -419,7 +419,7 @@ match_properties (
         failure.reason = CORBA::string_dup ("Property Not Found\n");
         failure.propertyName = CORBA::string_dup (deployed[i].name);
         failure.propertyValue.length (0);
-        
+
         throw failure;
       }
     } // outside for ...
@@ -571,7 +571,7 @@ find_in_initial_domain (const char* node_name,
     }
   }
 
-  // not found the node , retunr a node with an empty name
+  // not found the node , return a node with an empty name
   return false;
 }
 
@@ -591,7 +591,7 @@ find_in_provisioned_domain (const char* node_name,
     }
   }
 
-  // not found the node , retunr a node with an empty name
+  // not found the node , return a node with an empty name
   return false;
 }
 
