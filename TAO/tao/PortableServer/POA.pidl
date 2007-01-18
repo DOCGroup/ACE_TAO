@@ -78,6 +78,7 @@ module PortableServer
   const CORBA::PolicyType IMPLICIT_ACTIVATION_POLICY_ID   = 20;
   const CORBA::PolicyType SERVANT_RETENTION_POLICY_ID     = 21;
   const CORBA::PolicyType REQUEST_PROCESSING_POLICY_ID    = 22;
+  /// @todo Jai, this shouldn't be here and also the number should be something like 0x54410002
   const CORBA::PolicyType NETWORK_PRIORITY_POLICY_ID      = 23;
 #   endif
 
