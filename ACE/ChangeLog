@@ -1,5 +1,9 @@
 Thu Jan 18 19:22:41 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
 
+        * NEWS:
+
+          Documented this change.
+
         * bin/MakeProjectCreator/templates/gnu.mpd:
 
           Provide a __prebuild__ target that performs the prebuild step or
