@@ -49,6 +49,7 @@ module TAO
   const CORBA::PolicyType NETWORK_PRIORITY_TYPE = 87;
 
   /// @todo Jai, can't we just have 3 attributes, 2 read-write, one readonly? Then all the methods can get removed
+  /// Also this interface should move to a new library
   local interface NetworkPriorityPolicy : CORBA::Policy
     {
       void set_network_priority_model (in NetworkPriorityModel npm);
