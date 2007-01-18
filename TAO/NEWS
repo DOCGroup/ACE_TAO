@@ -83,8 +83,8 @@ USER VISIBLE CHANGES BETWEEN TAO-1.5.4 and TAO-1.5.5
   implementation can utilize a separate ORB for dispatching events to
   consumers.
 
-. Contributed the Transport::Current support - an optional
-  feature with IDL interfaces, which enables users to obtain
+. Contributed the Transport::Current support - a TAO-specific
+  feature providing IDL interfaces which enables users to obtain
   information about the Transports used to send or receive a
   message.  The basic intent is to provide (typically) a
   read-only interface to obtaining data like the number of bytes
@@ -94,11 +94,11 @@ USER VISIBLE CHANGES BETWEEN TAO-1.5.4 and TAO-1.5.5
   Transport::Current is insufficient.  This implementation also
   provides support for specific Transport implementations. See
   the TC_IIOP implementation, which is an IIOP-specific
-  Transport::Current, which extends the generic interface with
+  Transport::Current. It extends the generic interface with
   operations providing information about IIOP endpoints, like
-  host and port.  To build TAO with support for this feature, a
-  macro named TAO_HAS_TRANSPORT_CURRENT must be defined and have
-  a value != 0. For more details of how the feature is intended
+  host and port.  By default, TAO builds with support for this feature.
+  Define "transport_current=0" in your default.features file to disable 
+  it. For more details of how the feature is intended
   to be used, see docs/transport_current/index.html
 
 USER VISIBLE CHANGES BETWEEN TAO-1.5.3 and TAO-1.5.4
