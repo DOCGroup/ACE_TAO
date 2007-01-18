@@ -1,3 +1,9 @@
+Thu Jan 18 17:49:00 UTC 2007    Gan Deng <gan.deng@vanderbilt.edu>
+
+        * docs/index.html:
+        
+          Fixed broken links to doxygen.
+
 Wed Jan 10 21:35:25 UTC 2007  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * NEWS:
