@@ -1,3 +1,17 @@
+Thu Jan 18 19:22:41 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/MakeProjectCreator/templates/gnu.mpd:
+
+          Provide a __prebuild__ target that performs the prebuild step or
+          nothing if a prebuild step wasn't supplied.                     
+
+        * include/makeinclude/rules.common.GNU:
+
+          Added the __prebuild__ target to the front of the all
+          dependencies.                                        
+                       
+          This change fixes Bugzilla #2713.
+
 Wed Jan 17 15:55:06 UTC 2007  Iliyan Jeliazkov  <iliyan@ociweb.com>
 
         * bin/tao_orb_tests.lst:

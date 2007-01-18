@@ -6,7 +6,7 @@
 #	Common targets
 #----------------------------------------------------------------------------
 
-all:              all.nested all.local
+all:              __prebuild__ all.nested all.local
 debug:	          debug.nested debug.local
 profile:          profile.nested profile.local
 install:          install.nested install.local
