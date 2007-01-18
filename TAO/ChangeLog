@@ -1,3 +1,8 @@
+Thu Jan 18 12:05:47 UTC 2007  Iliyan Jeliazkov  <iliyan@ociweb.com>
+
+        * tao/TransportCurrent/Current_Impl.cpp:
+          Fixig a "fuzz" error.
+
 Wed Jan 17 22:53:22 UTC 2007  Iliyan Jeliazkov  <iliyan@ociweb.com>
 
         * NEWS:
