@@ -1,3 +1,11 @@
+Fri Jan 19 17:53:23 UTC 2007  Nishanth Shankaran  <nshankar@nospam.com>
+
+        * Monitor/Central_Monitor/Interface.idl:
+        * Monitor/Central_Monitor/Interface_stub_export.h:
+        * Monitor/Central_Monitor/Interface_svnt_export.h: Refactored the
+          Interface "provided" by the Central Monitor component into a
+          separate IDL file.
+
 Fri Jan 19 17:44:42 UTC 2007  Nishanth Shankaran  <nshankar@nospam.com>
 
         * Controller/Component/Controller.idl:
