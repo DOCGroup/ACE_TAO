@@ -1,3 +1,12 @@
+Thu Jan 18 16:45:31 UTC 2007  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
+
+        * ace/README: Added ACE_HAS_EBCDIC.  
+  
+        * ace/Codeset_IBM1047.{h,cpp}: Changed ACE_MVS to ACE_HAS_EBCDIC
+          in these files so that EBCDIC support can be enabled for non-MVS
+          platforms.  Thanks to Harry Goldschmitt <harry at hgac dot com>
+          for this suggestion.
+
 Fri Jan 19 12:35:42 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
 
         * bin/tao_orb_tests.lst:

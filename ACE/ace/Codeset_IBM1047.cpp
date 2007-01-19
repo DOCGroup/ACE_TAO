@@ -19,7 +19,7 @@
 
 #include "ace/Codeset_IBM1047.h"
 
-#if defined(ACE_MVS)
+#if defined (ACE_HAS_EBCDIC)
 
 ACE_RCSID (ace,
            Codeset_IBM1047,
@@ -314,4 +314,4 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 #elif defined (__HP_aCC)
 // Make aC++ stop complaining about an empty translation unit
 static int const shut_up_aCC = 0;
-#endif /* ACE_MVS */
+#endif /* ACE_HAS_EBCDIC */
