@@ -35,8 +35,8 @@ project(Monitor_Interface_svnt): taolib_with_idl, portableserver {
 
 project(Monitor_stub): ciao_client_dnc {
 
-  after += Monitor_Interface_stub
-  sharedname = Interface_Monitor_svnt
+  after += Monitor_stub
+  sharedname = Monitor_stub
   idlflags += -Wb,stub_export_macro=MONITOR_STUB_Export \
               -Wb,stub_export_include=Monitor_stub_export.h \
               -Wb,skel_export_macro=MONITOR_SVNT_Export \
