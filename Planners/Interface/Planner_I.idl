@@ -1,8 +1,7 @@
-// Planner_I.idl,v 1.1 2005/09/06 19:57:22 wotte Exp
 #ifndef RACE_PLANNER_I_IDL
 #define RACE_PLANNER_I_IDL
 
-#include "Packaging_Data.idl"
+#include "ciao/Deployment_Packaging_Data.idl"
 #include "RACE/common/RACE_common.idl"
 
 module CIAO

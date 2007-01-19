@@ -12,7 +12,7 @@
  */
 
 #include <Components.idl>
-#include "ciao/Target_Data.idl"
+#include "ciao/Deployment_Target_Data.idl"
 #include "TargetManager/TargetManagerExt.idl"
 #include "Interface.idl"
 #include "RACE/Monitor/Central_Monitor/Monitor.idl"

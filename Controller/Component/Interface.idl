@@ -1,7 +1,7 @@
 #ifndef RACE_CONTROLLER_INTERFACE_IDL
 #define RACE_CONTROLLER_INTERFACE_IDL
 
-#include "ciao/Packaging_Data.idl"
+#include "ciao/Deployment_Packaging_Data.idl"
 
 module CIAO
 {

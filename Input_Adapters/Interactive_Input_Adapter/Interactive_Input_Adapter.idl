@@ -5,7 +5,7 @@
 #include <Components.idl>
 #include "RACE/Input_Adapters/Base/Input_Adapter.idl"
 #include "RACE/common/RACE_common.idl"
-#include "ciao/Packaging_Data.idl"
+#include "ciao/Deployment_Packaging_Data.idl"
 
 module CIAO
 {

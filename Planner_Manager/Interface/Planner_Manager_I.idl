@@ -2,7 +2,7 @@
 #ifndef RACE_PLANNER_MANAGER_I_IDL
 #define RACE_PLANNER_MANAGER_I_IDL
 
-#include "ciao/Packaging_Data.idl"
+#include "ciao/Deployment_Packaging_Data.idl"
 
 #include "RACE/common/RACE_common.idl"
 
