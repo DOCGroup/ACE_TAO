@@ -1,3 +1,17 @@
+Fri Jan 19 18:52:36 UTC 2007  Nishanth Shankaran  <nshankar@nospam.com>
+
+        * Monitor/Central_Monitor/Monitor.idl:
+        * Monitor/Central_Monitor/Monitor.mpc:
+        * Monitor/Local_Monitor/Local_Monitor.h:
+        * Monitor/Local_Monitor/Local_Monitor.mpc: Updated these files to
+          fix compilation errors on linux.
+
+        * Monitor/Central_Monitor/Interface.idl:
+        * Monitor/Central_Monitor/Interface_stub_export.h:
+        * Monitor/Central_Monitor/Interface_svnt_export.h:
+
+          Removed these files.
+
 Fri Jan 19 17:53:23 UTC 2007  Nishanth Shankaran  <nshankar@nospam.com>
 
         * Monitor/Central_Monitor/Interface.idl:
