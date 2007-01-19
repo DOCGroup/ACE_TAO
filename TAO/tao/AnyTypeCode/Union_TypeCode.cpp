@@ -56,25 +56,18 @@ TAO::TypeCode::Union<StringType,
     && (enc << this->ncases_);
 
   if (!success)
-    return false;
-
-  offset += enc.total_length ();
+    {
+      return false;
+    }
 
   for (CORBA::ULong i = 0; i < this->ncases_; ++i)
     {
-      TAO_OutputCDR case_enc;
-      offset = ACE_align_binary (offset,
-                                 ACE_CDR::LONG_ALIGN);
-
       case_type const & c = *this->cases_[i];
 
-      if (!c.marshal (case_enc, offset))
-        return false;
-
-      offset += case_enc.total_length ();
-
-      if (!enc.write_octet_array_mb (case_enc.begin ()))
-        return false;
+      if (!c.marshal (enc, offset))
+        {
+          return false;
+        }
     }
 
   return
