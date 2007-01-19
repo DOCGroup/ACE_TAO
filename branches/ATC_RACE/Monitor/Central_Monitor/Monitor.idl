@@ -2,24 +2,24 @@
 #define RACE_MONITOR_IDL
 
 #include <Components.idl>
-#include "RACE/Monitor/Central_Monitor/Interface.idl"
+//#include "RACE/Monitor/Central_Monitor/Interface.idl"
 
 module CIAO
 {
   module RACE
   {
-//     typedef sequence<long> Delays;
+    typedef sequence<long> Delays;
 
-//     interface Execution_Time_Monitor
-//     {
-//       exception IdNotFound
-//       {
-//       };
+    interface Execution_Time_Monitor
+    {
+      exception IdNotFound
+      {
+      };
 
-//       oneway void push_delays (in string id, in Delays delay);
+      oneway void push_delays (in string id, in Delays delay);
 
-//       Delays get_delays (in string id) raises (IdNotFound);
-//     };
+      Delays get_delays (in string id) raises (IdNotFound);
+    };
 
     component Central_Monitor
     {
