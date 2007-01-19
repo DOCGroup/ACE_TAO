@@ -1,3 +1,13 @@
+Fri Jan 19 14:17:18 UTC 2007  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tao/AnyTypeCode/Union_TypeCode.cpp(tao_marshal):
+        * tao/AnyTypeCode/Union_TypeCode_Static.cpp(tao_marshal):
+
+          Changed the marshaling of union members in the typecode to
+          use the existing CDR stream, rather than creating a separate
+          one and merging it with write_octet_array_mb(), which was
+          causing as alignment problem. This fixes [BUGID:2773].
+
 Fri Jan 19 13:53:37 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
 
         * rules.tao.GNU:
