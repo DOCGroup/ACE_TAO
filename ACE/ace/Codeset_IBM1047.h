@@ -25,7 +25,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#if defined(ACE_MVS)
+#if defined (ACE_HAS_EBCDIC)
 
 #include "ace/CDR_Stream.h"
 
@@ -121,7 +121,7 @@ public:
 
 ACE_END_VERSIONED_NAMESPACE_DECL
 
-#endif /* ACE_MVS */
+#endif /* ACE_EBCDIC */
 
 #include /**/ "ace/post.h"
 
