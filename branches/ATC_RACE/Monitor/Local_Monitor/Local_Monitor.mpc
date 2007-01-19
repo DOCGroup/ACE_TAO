@@ -1,7 +1,7 @@
-project(Local_Monitor):ciao_client_dnc, naming, ciao_race_default{
+project(Local_Monitor): ciao_client_dnc, naming, ciao_race_default, portableserver{
   sharedname = Local_Monitor
   after += Monitor_stub
-  libs += Monitor_stub
+  libs += Monitor_Interface_stub Monitor_stub
 
   dynamicflags   = LOCAL_MONITOR_BUILD_DLL
 

@@ -1,3 +1,22 @@
+Fri Jan 19 17:44:42 UTC 2007  Nishanth Shankaran  <nshankar@nospam.com>
+
+        * Controller/Component/Controller.idl:
+        * Controller/Component/Interface.idl:
+        * Input_Adapters/Interactive_Input_Adapter/Interactive_Input_Adapter.idl:
+        * Monitor/Central_Monitor/Monitor.idl:
+        * Monitor/Central_Monitor/Monitor.mpc:
+        * Monitor/Local_Monitor/Local_Monitor.h:
+        * Monitor/Local_Monitor/Local_Monitor.cpp:
+        * Monitor/Local_Monitor/Local_Monitor.mpc:
+        * Output_Adapters/Interface/PlanEgress.idl:
+        * Plan_Analyzer/Interface/Analyzer_I.idl:
+        * Plan_Analyzer/Interface/PlanIngress.idl:
+        * Planner_Manager/Interface/Planner_Manager_I.idl:
+        * Planners/Interface/Planner_I.idl:
+        * Planners/StaticPlanner/StaticPlanner.idl:
+        * common/RACE_common.idl: Fixed the IDL files to be consistent
+          with the recent refactoring of CIAO IDL files.
+
 Thu Nov 30 19:00:22 UTC 2006  Nishanth Shankaran  <nshankar@nospam.com>
 
         * Controller/Component/Controller.mpc:

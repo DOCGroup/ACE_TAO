@@ -2,7 +2,7 @@
 #ifndef RACE_PLAN_EGRESS_IDL
 #define RACE_PLAN_EGRESS_IDL
 
-#include "ciao/Packaging_Data.idl"
+#include "ciao/Deployment_Packaging_Data.idl"
 #include "RACE/common/RACE_common.idl"
 
 module CIAO

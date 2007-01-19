@@ -5,7 +5,7 @@
 
 #include <Components.idl>
 #include "../Base/Planner.idl"
-#include "ciao/Target_Data.idl"
+#include "ciao/Deployment_TargetManager.idl"
 
 module CIAO
 {
@@ -15,7 +15,7 @@ module CIAO
     {
       uses ::Deployment::TargetManager target_mgr;
     };
-    
+
     home StaticPlanner_Home manages StaticPlanner
     {
     };
