@@ -1,0 +1,25 @@
+#ifndef RACE_MONITOR_INTERFACE_IDL
+#define RACE_MONITOR_INTERFACE_IDL
+
+module CIAO
+{
+  module RACE
+  {
+    typedef sequence<long> Delays;
+
+    interface Execution_Time_Monitor
+    {
+      exception IdNotFound
+      {
+      };
+
+      oneway void push_delays (in string id, in Delays delay);
+
+      Delays get_delays (in string id) raises (IdNotFound);
+    };
+
+  };
+
+};
+
+#endif /*RACE_MONITOR_INTERFACE_IDL*/
