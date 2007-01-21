@@ -56,6 +56,9 @@ private:
   void register_policy_factories (
                                   PortableInterceptor::ORBInitInfo_ptr info
                                   ACE_ENV_ARG_DECL);
+
+private:
+  PortableInterceptor::PolicyFactory_var policy_factory_;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL
