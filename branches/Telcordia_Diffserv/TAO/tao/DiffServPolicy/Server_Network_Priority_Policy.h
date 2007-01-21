@@ -43,7 +43,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
  * This policy is used to control the network priority assigned to the
  * requests and replies, processed by the ORB.
  */
-class TAO_Export TAO_Server_Network_Priority_Policy
+class TAO_DiffServPolicy_Export TAO_Server_Network_Priority_Policy
   : public TAO::NetworkPriorityPolicy,
     public TAO_Local_RefCounted_Object
 {
