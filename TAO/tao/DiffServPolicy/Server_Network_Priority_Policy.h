@@ -16,6 +16,7 @@
 
 #include /**/ "ace/pre.h"
 
+#include "tao/DiffServPolicy/DiffServPolicy_Export.h"
 #include "tao/DiffServPolicyC.h"
 #include "tao/orbconf.h"
 
