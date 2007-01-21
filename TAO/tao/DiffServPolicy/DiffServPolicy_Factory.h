@@ -37,7 +37,7 @@
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /// Policy factory for all DiffServ related policies.
-class TAO_DiffServ_PolicyFactory
+class TAO_DiffServPolicy_Export TAO_DiffServ_PolicyFactory
   : public virtual PortableInterceptor::PolicyFactory,
     public virtual TAO_Local_RefCounted_Object
 {
