@@ -50,6 +50,24 @@ TAO_Client_Network_Priority_Policy::TAO_Client_Network_Priority_Policy (
 {
 }
 
+CORBA::Policy_ptr
+TAO_Client_Network_Priority_Policy::create (const CORBA::Any &val
+  ACE_ENV_ARG_DECL)
+{
+  CORBA::Policy_ptr policy = CORBA::Policy::_nil ();
+
+  ACE_NEW_THROW_EX (policy,
+                    TAO_Client_Network_Priority_Policy (),
+                    CORBA::NO_MEMORY (
+                      CORBA::SystemException::_tao_minor_code (
+                        TAO::VMCID,
+                        ENOMEM),
+                      CORBA::COMPLETED_NO));
+  ACE_CHECK_RETURN (CORBA::Policy::_nil ());
+
+  return policy;
+}
+
 CORBA::PolicyType
 TAO_Client_Network_Priority_Policy::policy_type (
    ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
