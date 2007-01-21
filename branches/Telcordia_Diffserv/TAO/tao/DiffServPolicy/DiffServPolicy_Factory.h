@@ -2,26 +2,23 @@
 
 //=============================================================================
 /**
- *  @file     RT_PolicyFactory.h
+ *  @file     DiffServPolicy_Factory.h
  *
  *  $Id$
  *
- *  @author  Angelo Corsaro <corsaro@cs.wustl.edu>
- *  @author  Ossama Othman <ossama@uci.edu>
+ *  @author  Jaiganesh Balasubramanian <jai@dre.vanderbilt.edu>
+ *  @author  Johnny Willemsen <jwillemsen@remedy.nl>
  */
 //=============================================================================
 
 
-#ifndef TAO_RT_POLICY_FACTORY_H
-#define TAO_RT_POLICY_FACTORY_H
+#ifndef TAO_DIFFSERV_POLICY_FACTORY_H
+#define TAO_DIFFSERV_POLICY_FACTORY_H
 
 #include /**/ "ace/pre.h"
 
 #include "tao/orbconf.h"
-
-#if defined (TAO_HAS_CORBA_MESSAGING) && TAO_HAS_CORBA_MESSAGING != 0
-
-#include "tao/RTCORBA/rtcorba_export.h"
+#include "tao/DiffServPolicy/DiffServPolicy_Export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -39,8 +36,8 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-/// Policy factory for all RTCORBA related policies.
-class TAO_RT_PolicyFactory
+/// Policy factory for all DiffServ related policies.
+class TAO_DiffServ_PolicyFactory
   : public virtual PortableInterceptor::PolicyFactory,
     public virtual TAO_Local_RefCounted_Object
 {
@@ -64,8 +61,6 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 #pragma warning(pop)
 #endif /* _MSC_VER */
 
-#endif /* TAO_HAS_CORBA_MESSAGING && TAO_HAS_CORBA_MESSAGING != 0 */
-
 #include /**/ "ace/post.h"
 
-#endif /* TAO_RT_POLICY_FACTORY_H */
+#endif /* TAO_DIFFSERV_POLICY_FACTORY_H */
