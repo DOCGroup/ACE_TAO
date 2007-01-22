@@ -14,27 +14,22 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 void
 TAO_DiffServPolicy_ORBInitializer::pre_init (
-    PortableInterceptor::ORBInitInfo_ptr
-    ACE_ENV_ARG_DECL_NOT_USED)
+    PortableInterceptor::ORBInitInfo_ptr)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
 }
 
 void
 TAO_DiffServPolicy_ORBInitializer::post_init (
-    PortableInterceptor::ORBInitInfo_ptr info
-    ACE_ENV_ARG_DECL)
+    PortableInterceptor::ORBInitInfo_ptr info)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  this->register_policy_factories (info
-                                   ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+  this->register_policy_factories (info);
 }
 
 void
 TAO_DiffServPolicy_ORBInitializer::register_policy_factories (
-  PortableInterceptor::ORBInitInfo_ptr info
-  ACE_ENV_ARG_DECL)
+  PortableInterceptor::ORBInitInfo_ptr info)
 {
   if (CORBA::is_nil (this->policy_factory_.in ()))
     {
@@ -46,7 +41,6 @@ TAO_DiffServPolicy_ORBInitializer::register_policy_factories (
                               TAO::VMCID,
                               ENOMEM),
                             CORBA::COMPLETED_NO));
-      ACE_CHECK;
 
       this->policy_factory_ = policy_factory;
     }
@@ -61,19 +55,16 @@ TAO_DiffServPolicy_ORBInitializer::register_policy_factories (
 
   const CORBA::PolicyType *end =
     type + sizeof (type) / sizeof (type[0]);
-  
+
   for (CORBA::PolicyType const * i = type;
        i != end;
        ++i)
     {
-      ACE_TRY
+      try
         {
-          info->register_policy_factory (*i,
-                                         this->policy_factory_.in ()
-                                         ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+          info->register_policy_factory (*i, this->policy_factory_.in ());
         }
-      ACE_CATCH (CORBA::BAD_INV_ORDER, ex)
+      catch ( ::CORBA::BAD_INV_ORDER& ex)
         {
           if (ex.minor () == (CORBA::OMGVMCID | 16))
             {
@@ -84,15 +75,13 @@ TAO_DiffServPolicy_ORBInitializer::register_policy_factories (
               // ORBInitializer.
               return;
             }
-          ACE_RE_THROW;
+          throw;
         }
-      ACE_CATCHANY
+      catch ( ::CORBA::Exception&)
         {
           // Rethrow any other exceptions...
-          ACE_RE_THROW;
+          throw;
         }
-      ACE_ENDTRY;
-      ACE_CHECK;
     }
 }
 

@@ -42,20 +42,16 @@ class TAO_DiffServPolicy_Export TAO_DiffServPolicy_ORBInitializer
   , public virtual TAO_Local_RefCounted_Object
 {
 public:
-  virtual void pre_init (PortableInterceptor::ORBInitInfo_ptr info
-                         ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+  virtual void pre_init (PortableInterceptor::ORBInitInfo_ptr info)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual void post_init (PortableInterceptor::ORBInitInfo_ptr info
-                          ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+  virtual void post_init (PortableInterceptor::ORBInitInfo_ptr info)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
 private:
 
   /// Register DiffServ policy factories.
-  void register_policy_factories (
-                                  PortableInterceptor::ORBInitInfo_ptr info
-                                  ACE_ENV_ARG_DECL);
+  void register_policy_factories (PortableInterceptor::ORBInitInfo_ptr info);
 
 private:
   PortableInterceptor::PolicyFactory_var policy_factory_;
