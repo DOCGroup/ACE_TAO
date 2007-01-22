@@ -55,8 +55,7 @@ TAO_Server_Network_Priority_Policy::TAO_Server_Network_Priority_Policy (
 }
 
 CORBA::Policy_ptr
-TAO_Server_Network_Priority_Policy::create (const CORBA::Any &val
-  ACE_ENV_ARG_DECL)
+TAO_Server_Network_Priority_Policy::create (const CORBA::Any &val)
 {
   CORBA::Policy_ptr policy = CORBA::Policy::_nil ();
 
@@ -67,14 +66,12 @@ TAO_Server_Network_Priority_Policy::create (const CORBA::Any &val
                         TAO::VMCID,
                         ENOMEM),
                       CORBA::COMPLETED_NO));
-  ACE_CHECK_RETURN (CORBA::Policy::_nil ());
 
   return policy;
 }
 
 CORBA::PolicyType
-TAO_Server_Network_Priority_Policy::policy_type (
-   ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+TAO_Server_Network_Priority_Policy::policy_type (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return TAO::NETWORK_PRIORITY_TYPE;
@@ -91,8 +88,7 @@ TAO_Server_Network_Priority_Policy::clone (void) const
 }
 
 TAO::DiffservCodepoint
-TAO_Server_Network_Priority_Policy::request_diffserv_codepoint (
-   ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+TAO_Server_Network_Priority_Policy::request_diffserv_codepoint (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return this->request_diffserv_codepoint_;
@@ -100,16 +96,14 @@ TAO_Server_Network_Priority_Policy::request_diffserv_codepoint (
 
 void
 TAO_Server_Network_Priority_Policy::request_diffserv_codepoint (
-   TAO::DiffservCodepoint req_dscp
-   ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+   TAO::DiffservCodepoint req_dscp)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->request_diffserv_codepoint_ = req_dscp;
 }
 
 TAO::DiffservCodepoint
-TAO_Server_Network_Priority_Policy::reply_diffserv_codepoint (
-   ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+TAO_Server_Network_Priority_Policy::reply_diffserv_codepoint (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return this->reply_diffserv_codepoint_;
@@ -117,36 +111,33 @@ TAO_Server_Network_Priority_Policy::reply_diffserv_codepoint (
 
 void
 TAO_Server_Network_Priority_Policy::reply_diffserv_codepoint (
-   TAO::DiffservCodepoint reply_dscp
-   ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+   TAO::DiffservCodepoint reply_dscp)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->reply_diffserv_codepoint_ = reply_dscp;
 }
 
 TAO::NetworkPriorityModel
-TAO_Server_Network_Priority_Policy::network_priority_model (
-   ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+TAO_Server_Network_Priority_Policy::network_priority_model (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return this->network_priority_model_;
 }
 
 CORBA::Policy_ptr
-TAO_Server_Network_Priority_Policy::copy (ACE_ENV_SINGLE_ARG_DECL)
+TAO_Server_Network_Priority_Policy::copy (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_Server_Network_Priority_Policy* servant = 0;
   ACE_NEW_THROW_EX (servant,
                     TAO_Server_Network_Priority_Policy (*this),
                     CORBA::NO_MEMORY ());
-  ACE_CHECK_RETURN (CORBA::Policy::_nil ());
 
   return servant;
 }
 
 void
-TAO_Server_Network_Priority_Policy::destroy (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+TAO_Server_Network_Priority_Policy::destroy (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
 }
@@ -167,7 +158,7 @@ TAO_Server_Network_Priority_Policy::_tao_scope (void) const
 CORBA::Boolean
 TAO_Server_Network_Priority_Policy::_tao_encode (TAO_OutputCDR &out_cdr)
 {
-  return ((out_cdr << request_diffserv_codepoint_) && 
+  return ((out_cdr << request_diffserv_codepoint_) &&
           (out_cdr << reply_diffserv_codepoint_) &&
           (out_cdr << network_priority_model_));
 }

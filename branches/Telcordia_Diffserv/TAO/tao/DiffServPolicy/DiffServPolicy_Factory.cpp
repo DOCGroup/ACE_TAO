@@ -14,27 +14,22 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 CORBA::Policy_ptr
 TAO_DiffServ_PolicyFactory::create_policy (
     CORBA::PolicyType type,
-    const CORBA::Any &value
-    ACE_ENV_ARG_DECL)
+    const CORBA::Any &value)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    CORBA::PolicyError))
 {
   if (type == TAO::CLIENT_NETWORK_PRIORITY_TYPE)
-    return TAO_Client_Network_Priority_Policy::create (value
-              ACE_ENV_ARG_PARAMETER);
+    return TAO_Client_Network_Priority_Policy::create (value);
 
   if (type == TAO::NETWORK_PRIORITY_TYPE)
-    return TAO_Server_Network_Priority_Policy::create (value
-              ACE_ENV_ARG_PARAMETER);
+    return TAO_Server_Network_Priority_Policy::create (value);
 
   ACE_THROW_RETURN (CORBA::PolicyError (CORBA::BAD_POLICY_TYPE),
                     CORBA::Policy::_nil ());
 }
 
 CORBA::Policy_ptr
-TAO_DiffServ_PolicyFactory::_create_policy (
-    CORBA::PolicyType type
-    ACE_ENV_ARG_DECL)
+TAO_DiffServ_PolicyFactory::_create_policy (CORBA::PolicyType type)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    CORBA::PolicyError))
 {
@@ -49,7 +44,6 @@ TAO_DiffServ_PolicyFactory::_create_policy (
                             TAO::VMCID,
                             ENOMEM),
                           CORBA::COMPLETED_NO));
-      ACE_CHECK_RETURN (CORBA::Policy::_nil ());
 
       return policy;
     }
@@ -63,7 +57,6 @@ TAO_DiffServ_PolicyFactory::_create_policy (
                             TAO::VMCID,
                             ENOMEM),
                           CORBA::COMPLETED_NO));
-      ACE_CHECK_RETURN (CORBA::Policy::_nil ());
 
       return policy;
     }
