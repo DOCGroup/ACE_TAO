@@ -1,3 +1,7 @@
+Mon Jan 22 23:14:56 2007  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * ACE version 5.5.5 released.
+
 Thu Jan 18 16:45:31 UTC 2007  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
 
         * ace/README: Added ACE_HAS_EBCDIC.  
