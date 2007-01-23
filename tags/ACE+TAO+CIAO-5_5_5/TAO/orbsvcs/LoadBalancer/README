@@ -1,0 +1,183 @@
+#
+# $Id$
+#
+
+This directory contains the sources for two binaries:
+
+	1) LoadManager
+	2) LoadMonitor
+
+Descriptions of each follow.
+
+LoadManager
+===========
+The "LoadManager" binary is the stand-alone load balancing/managing
+service.
+
+A listing of available "LoadManager" command line options is available
+by invoking the "LoadManager" binary with the "-h" command line option.
+
+Usage
+-----
+The below comments assume a non-adaptive load balancing configuration.
+Documentation on adaptive load balancing will be added in the future.
+
+Approach 1:  Portable Approach
+..............................
+
+1. Start the `LoadManager' binary in $TAO_ROOT/orbsvcs/LoadBalancer.
+
+2. In your server, obtain a reference to the "LoadManager" object
+   using the canonical resolve_initial_references() mechanism.  Don't
+   forget to pass your server the appropriate
+   "-ORBInitRef LoadManager=..." ORB option.
+
+3. One (not more!) of your servers must create an "object group."  For
+   example, to create an object group that your application will
+   populate (i.e. "application controlled" membership, as opposed to
+   "infrastructure controlled membership):
+
+        // The object group will contain members of this type.
+        const char * repository_id = "IDL:MyObject:1.0";
+
+        PortableGroup::Criteria criteria (1);
+        criteria.length (1);
+
+        PortableGroup::Property & property = criteria[0];
+        property.nam.length (1);
+
+        property.nam[0].id =
+          CORBA::string_dup ("org.omg.PortableGroup.MembershipStyle");
+
+        // Configure for application-controlled membership.
+        PortableGroup::MembershipStyleValue msv =
+          PortableGroup::MEMB_APP_CTRL;
+        property.val <<= msv;
+
+        PortableGroup::GenericFactory::FactoryCreationId_var fcid;
+
+        CORBA::Object_var group =
+          load_manager->create_object (repository_id,
+                                       criteria,
+                                       fcid.out ());
+
+   You then "export" the "group" object reference to your clients as
+   you would with any other object reference, such as those returned
+   from _this().  You can for example call object_to_string() on the
+   above "group" reference.  You can even put it into any Naming
+   Service, not just TAO's.
+
+   Note that the default load balancing strategy is "Random," which is
+   non-adaptive.  It is currently possible to override it with a
+   custom one but that functionality hasn't been fully tested yet.  If
+   you want to know how to do that, please let me know on the mailing
+   list so that others may benefit, too.
+
+4. Once you've created the object group, you need to populate it with
+   your object group members, i.e. your objects:
+
+        CORBA::Object_var member = my_servant._this ();
+
+        PortableGroup::Location location (1);
+        location.length (1);
+
+        // Location this member resides at.
+        location[0].id = CORBA::string_dup ("My Location 1");
+
+        // "group" is the object group reference.  add_member() may
+        // change it (TAO's implementation does NOT) so store the new
+        // reference in the same variable.
+        group =
+          load_manager->add_member (group.in (),
+                                    location,
+                                    member.in ());
+
+   Only one member of a given object group can reside at a given
+   location.  For example, you cannot add two members of object group
+   A at "My Location 1".  You can, however, have multiple members of
+   different object groups residing at the same location.  For
+   example, a member of object group A and a member of object group B
+   can reside at "My Location 1".  Also, multiple object group of the
+   same type, e.g. "IDL:MyObject:1.0", can exist.  In that case,
+   a member from each object group may reside at the location, despite
+   the fact they are of the same type.
+
+5. At this point, load balancing will automatically occur once clients
+   start making invocation via the object group reference.
+
+
+6. Once you longer have any need of the object group, destroy it as
+   follows:
+
+        load_manager->delete_object (fcid.in ());
+
+   "fcid" is the factory creation ID that was returned as an "out"
+   parameter in the LoadManager::create_object() call.
+
+Approach 2:
+Quick, Transparent, Non-Portable and Somewhat Experimental Approach
+...................................................................
+
+Use the "LB_Component" Service Object to transparently add load
+balancer support to your dynamically linked servers.  It will
+automatically register whatever CORBA objects you want with the load
+balancer, and override object reference creation methods such as
+_this() and POA::create_reference() so that they return the object
+group reference instead of the individual object's reference.  All of
+this is done "behind the scenes," meaning that no modification to your
+existing code is necessary.
+
+This approach is "experimental" since I'm still tweaking the
+configuration interface available to the user, and since I may rename
+"LB_Component" to something else like "LB_ServerComponent."  It's
+"non-portable" since other ORB's do not use the same dynamic loading
+approach the "LB_Component" uses, i.e. ACE's Service Configurator.  It
+is, however, portable to all platforms supported by TAO.
+
+Other than that, the underlying group registration mechanisms are
+portable since they are straight CORBA calls.  The "LB_Component" just
+makes all of the calls on the "LoadManager" for you.
+
+If you want try this approach, try adding the following to your
+primary (i.e. the one that creates the object group) server's
+`svc.conf' file:
+
+  dynamic LB_Component Service_Object * TAO_CosLoadBalancing:_make_TAO_LB_Component() "-LBLocation LOCATION_1 -LBGroup CREATE -LBTypeId IDL:MyObject:1.0"
+
+and the following to your other servers that do NOT create object
+groups and simply add themselves to the object group:
+
+  dynamic LB_Component Service_Object * TAO_CosLoadBalancing:_make_TAO_LB_Component() "-LBLocation LOCATION_2 -LBGroup file://group.ior -LBTypeId IDL:MyObject:1.0"
+
+etc.  Don't forget to change the location for each object group
+member.  With this approach, all of the LoadManager calls I described
+in the "standard" approach are handled for you.  Again, this approach
+is still really experimental.
+
+If none of this makes sense, you may want to just wait for the
+documentation to be completed, and simply use the above "standard"
+procedure.
+
+
+LoadMonitor
+===========
+The "LoadMonitor" binary is a stand-alone load monitoring utility.  It
+can be used to report loads for the standard load monitor types (CPU,
+Disk, Memory and Network), in addition to custom load monitors.
+A custom load monitor is used by passing its IOR to the "LoadMonitor"
+utility through the "-m" command line option.
+
+Both "PUSH" and "PULL" load monitoring styles may be configured.  The
+"PUSH" interval may be configured, as well.
+
+A listing of available "LoadMonitor" command line options is available
+by invoking the "LoadMonitor" binary with the "-h" command line
+option.
+
+The LoadManager object's IOR must be made available to the
+"LoadMonitor" binary.  This can be done using the standard
+Interoperable Naming Service "-ORBInitRef" option.  For example, the
+following will work if LoadManager IOR is available in the file
+`lm.ior' 
+
+	LoadMonitor -ORBInitRef LoadManager=file://lm.ior

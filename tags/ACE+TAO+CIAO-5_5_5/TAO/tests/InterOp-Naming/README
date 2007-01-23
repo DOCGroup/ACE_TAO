@@ -1,0 +1,68 @@
+CORBA InterOperable Naming Service :
+-------------------------------------
+
+This service allows the ORB to be administratively configured to return
+object references from CORBA::ORB::resolve_initial_references () for
+non-locality constrained objects.
+
+For more information on the service please see :
+
+$(TAO_ROOT)/docs/releasenotes/#nservices
+$(TAO_ROOT)/docs/Options.html
+
+The InterOp_test :
+
+The test server adds the argument specified with the -i option and the
+IOR of the INS_i servant to the IOR table. The test client calls 
+resolve_initial_references on argv[1].
+
+TEST 1: Single Profile corbalocs using -ORBInitRef
+
+InterOp-Naming> INS_test_server -i ins -nd -ORBObjRefStyle URL  
+					// -i Adds the ins:IOR mapping to
+					// the ORB table.
+					// -n Use the Naming Service.
+
+InterOp-Naming> INS_test_client arbit_service \
+                -ORBInitRef "arbit_service=corbaloc:iiop:<host-name>:<port>/ins"
+
+
+TEST 2: Multiple Profile corbalocs using -ORBInitRef
+
+InterOp-Naming> INS_test_server -i ins -nd -ORBobjrefstyle url  
+
+					// -i Adds the ins:IOR mapping to
+					// the ORB table.
+					// -n Use the Naming Service.
+
+InterOp-Naming> INS_test_client arbit_service \
+		-ORBInitRef "arbit_service=corbaloc:1.0@<host-name>:<port>/ins,
+					   1.0@<host-name2>:<port2>/key,
+					   ...
+					   1.0@<host-namen>:<portN>/key"
+
+TEST 3: Single Profile corbaloc using -ORBDefautlInitRef
+
+InterOp-Naming> INS_test_server -i ins -nd -ORBObjRefStyle URL  
+
+					// -i Adds the ins:IOR mapping to
+					// the ORB table.
+					// -n Use the Naming Service.
+
+InterOp-Naming> INS_test_client ins \
+		-ORBDefaultInitRef "corbaloc::1.0@<host-name>:<port>"
+
+TEST 4: Multiple Profile corbaloc using -ORBDefaultInitRef
+
+InterOp-Naming> INS_test_server -i ins -nd -ORBobjrefstyle url  
+
+					// -i Adds the ins:IOR mapping to
+					// the ORB table.
+					// -n Use the Naming Service.
+
+InterOp-Naming> INS_test_client \
+		-ORBDefaultInitRef "corbaloc::1.0@<host-name>:<port>,
+					    1.0@<host-name2>:<port2>,
+					    ...
+					    1.0@<host-namen>:<portN>"
+

@@ -1,0 +1,25 @@
+// -*- MPC -*-
+// $Id$
+
+project (minizip) : zlib{
+
+sharedname = minizip
+libout = $(ACE_ROOT)/lib
+dynamicflags += MINIZIP_BUILD_DLL
+requires += zlib
+
+Source_Files {
+   zip.c
+   unzip.c
+   ioapi.c
+}
+
+Header_Files {
+  minizip_export.h
+  ioapi.h
+  unzip.h
+  zip.h
+}
+
+}
+
