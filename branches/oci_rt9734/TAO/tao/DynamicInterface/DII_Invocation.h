@@ -31,6 +31,7 @@
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_DII_Deferred_Reply_Dispatcher;
+class TAO_DII_Asynch_Reply_Dispatcher;
 
 namespace Dynamic
 {
@@ -113,6 +114,42 @@ namespace TAO
     CORBA::Request_ptr host_;
 
   };
+
+class TAO_DynamicInterface_Export TAO_GIOP_DII_Asynch_Invocation
+  : public TAO::Asynch_Remote_Invocation
+{
+  // = TITLE
+  //    Sends a two-way request using DII and does not wait for a reply.
+  //
+  // = DESCRIPTION
+  //    This class connects (or looks up a connection from the cache) to
+  //    the remote server, builds the CDR stream for the Request, send
+  //    the CDR stream and returns.
+  //
+public:
+  TAO_GIOP_DII_Asynch_Invocation (TAO_Stub *data,
+                                  TAO_ORB_Core* orb_core,
+                                  CORBA::Boolean argument_flag,
+                                  const CORBA::Request_ptr req,
+                                  CORBA::Object_ptr reply_handler,
+                                  int byte_order = TAO_ENCAP_BYTE_ORDER);
+  // Constructor.
+
+  int invoke (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+    ACE_THROW_SPEC ((CORBA::SystemException));
+  // Send request, block until any reply comes back, and unmarshal
+  // reply parameters as appropriate.
+
+private:
+  int invoke_i (ACE_ENV_SINGLE_ARG_DECL)
+    ACE_THROW_SPEC ((CORBA::SystemException));
+  // Implementation of the invoke() methods, handles the basic
+  // send/reply code and the system exceptions.
+
+  TAO_DII_Asynch_Reply_Dispatcher *rd_;
+  // Reply dispatcher for the current synchronous Asynch_Invocation.
+};
+
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL

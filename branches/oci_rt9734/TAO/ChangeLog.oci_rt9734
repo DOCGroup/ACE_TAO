@@ -1,0 +1,16 @@
+Mon Jan 22 22:26:07 UTC 2007  Wallace Zhang  <zhang_w@ociweb.com>
+
+        * tao/DynamicInterface/DII_Invocation.h:
+        * tao/DynamicInterface/DII_Invocation_Adapter.h:
+        * tao/DynamicInterface/DII_Invocation_Adapter.cpp:
+        * tao/DynamicInterface/DII_Reply_Dispatcher.h:
+        * tao/DynamicInterface/DII_Reply_Dispatcher.cpp:
+        * tao/DynamicInterface/DII_Reply_Handler.h:
+        * tao/DynamicInterface/DII_Reply_Handler.inl:
+        * tao/DynamicInterface/DII_Reply_Handler.cpp:
+        * tao/DynamicInterface/Request.h:
+        * tao/DynamicInterface/Request.cpp:
+
+        * tao/Invocation_Utils.h:
+
+          Extended TAO  for support the combination of DSI and AMH.

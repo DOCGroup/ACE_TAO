@@ -191,6 +191,47 @@ namespace TAO
 
     return status;
   }
-} // End namespace TAO
 
+  DII_Asynch_Invocation_Adapter
+  ::DII_Asynch_Invocation_Adapter (CORBA::Object *target,
+                                   Argument **args,
+                                   int arg_count,
+                                   const char *operation,
+                                   int op_len,
+                                   CORBA::Request *req,
+                                   TAO::Invocation_Mode mode)
+    : DII_Invocation_Adapter (target,
+                              args,
+                              arg_count,
+                              operation,
+                              op_len,
+                              0,
+                              req,
+                              mode)
+  {
+  }
+
+  void
+  DII_Asynch_Invocation_Adapter::invoke (Messaging::ReplyHandler_ptr rh
+                                         ACE_ENV_ARG_DECL)
+  {
+    ACE_UNUSED_ARG (rh);
+  }
+
+  Invocation_Status
+  DII_Asynch_Invocation_Adapter::invoke_twoway (
+        TAO_Operation_Details & op ,
+        CORBA::Object_var &effective_target,
+        Profile_Transport_Resolver &r,
+        ACE_Time_Value *&max_wait_time
+        ACE_ENV_ARG_DECL)
+  {
+    ACE_UNUSED_ARG (op);
+    ACE_UNUSED_ARG (effective_target);
+    ACE_UNUSED_ARG (r);
+    ACE_UNUSED_ARG (max_wait_time);
+    return TAO_INVOKE_FAILURE;
+  }
+
+} // End namespace TAO
 TAO_END_VERSIONED_NAMESPACE_DECL
