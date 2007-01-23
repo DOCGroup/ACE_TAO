@@ -1,8 +1,0 @@
-// -*- MPC -*-
-// $Id$
-
-project : ciao_component_dnc {
-  includes += $(CIAO_ROOT)/DAnCE/Plan_Generator
-  libs     += Plan_Generator
-  after    += Plan_Generator
-}
