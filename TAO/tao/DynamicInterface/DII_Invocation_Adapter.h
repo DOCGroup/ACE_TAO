@@ -21,6 +21,7 @@
 
 
 #include "tao/Invocation_Adapter.h"
+#include "tao/Messaging/Messaging.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_Time_Value;
@@ -155,6 +156,44 @@ namespace TAO
     /// Cache the orb_core
     TAO_ORB_Core * const orb_core_;
   };
+
+/**
+ *
+ */
+class TAO_DynamicInterface_Export DII_Asynch_Invocation_Adapter
+  : protected DII_Invocation_Adapter
+{
+public:
+  DII_Asynch_Invocation_Adapter (
+      CORBA::Object *target,
+      Argument **args,
+      int arg_number,
+      const char *operation,
+      int op_len,
+
+      CORBA::Request *req,
+      TAO::Invocation_Mode mode = TAO_DII_ASYNCH_INVOCATION);
+
+  /// Invoke the target
+  void invoke (Messaging::ReplyHandler_ptr reply_handler_ptr
+               ACE_ENV_ARG_DECL);
+
+
+protected:
+  virtual Invocation_Status invoke_twoway (
+      TAO_Operation_Details &op,
+      CORBA::Object_var &effective_target,
+      Profile_Transport_Resolver &r,
+      ACE_Time_Value *&max_wait_time
+      ACE_ENV_ARG_DECL);
+
+private:
+  /// Reply dispatcher for the current Invocation.
+  TAO_DII_Deferred_Reply_Dispatcher *rd_;
+
+  /// Cache the orb_core
+  TAO_ORB_Core *orb_core_;
+};
 } // End namespace TAO
 
 TAO_END_VERSIONED_NAMESPACE_DECL
