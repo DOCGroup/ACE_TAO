@@ -230,7 +230,7 @@ TAO_DynAny_i::from_any (const CORBA::Any &any)
 
   if (!equiv)
     {
-      throw (DynamicAny::DynAny::TypeMismatch ());
+      throw DynamicAny::DynAny::TypeMismatch ();
     }
 
 // @@@ (JP) Spec also says we should check for illegal Any

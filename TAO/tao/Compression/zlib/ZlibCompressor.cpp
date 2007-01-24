@@ -38,7 +38,7 @@ ZlibCompressor::compress (
 
   if (retval != Z_OK)
     {
-      throw (::Compression::CompressionException ());
+      throw ::Compression::CompressionException ();
     }
   else
     {
@@ -63,7 +63,7 @@ ZlibCompressor::decompress (
 
   if (retval != Z_OK)
     {
-      throw (::Compression::CompressionException ());
+      throw ::Compression::CompressionException ();
     }
   else
     {

@@ -352,10 +352,10 @@ TAO_CORBALOC_Parser::make_canonical (const char *ior,
                         ACE_TEXT ("TAO (%P|%t) ")
                         ACE_TEXT ("cannot determine hostname.\n")));
 
-          throw ( ::CORBA::INV_OBJREF
+          throw ::CORBA::INV_OBJREF
                      (CORBA::SystemException::_tao_minor_code
                       (TAO::VMCID, EINVAL),
-                      CORBA::COMPLETED_NO));
+                      CORBA::COMPLETED_NO);
         }
       else
         {

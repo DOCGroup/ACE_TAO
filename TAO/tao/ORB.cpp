@@ -171,8 +171,7 @@ CORBA::ORB::destroy (void)
       // CORBA::OBJECT_NOT_EXIST exception if the ORB has been
       // destroyed by the time an ORB function is called.
 
-      throw ( ::CORBA::OBJECT_NOT_EXIST (0,
-                                          CORBA::COMPLETED_NO));
+      throw ::CORBA::OBJECT_NOT_EXIST (0, CORBA::COMPLETED_NO);
     }
 
   if (TAO_debug_level > 2)
@@ -362,51 +361,51 @@ CORBA::ORB::get_service_information (
 void
 CORBA::ORB::create_context_list (CORBA::ContextList_ptr &)
 {
-  throw ( ::CORBA::NO_IMPLEMENT (
+  throw ::CORBA::NO_IMPLEMENT (
                CORBA::SystemException::_tao_minor_code (
                  0,
                  ENOTSUP),
-               CORBA::COMPLETED_NO));
+               CORBA::COMPLETED_NO);
 }
 
 void
 CORBA::ORB::get_default_context (CORBA::Context_ptr &)
 {
-  throw ( ::CORBA::NO_IMPLEMENT (
+  throw ::CORBA::NO_IMPLEMENT (
                CORBA::SystemException::_tao_minor_code (
                  0,
                  ENOTSUP),
-               CORBA::COMPLETED_NO));
+               CORBA::COMPLETED_NO);
 }
 
 void
 CORBA::ORB::send_multiple_requests_oneway (const CORBA::RequestSeq &)
 {
-  throw ( ::CORBA::NO_IMPLEMENT (
+  throw ::CORBA::NO_IMPLEMENT (
                CORBA::SystemException::_tao_minor_code (
                  0,
                  ENOTSUP),
-               CORBA::COMPLETED_NO));
+               CORBA::COMPLETED_NO);
 }
 
 void
 CORBA::ORB::send_multiple_requests_deferred (const CORBA::RequestSeq &)
 {
-  throw ( ::CORBA::NO_IMPLEMENT (
+  throw ::CORBA::NO_IMPLEMENT (
                CORBA::SystemException::_tao_minor_code (
                  0,
                  ENOTSUP),
-               CORBA::COMPLETED_NO));
+               CORBA::COMPLETED_NO);
 }
 
 void
 CORBA::ORB::get_next_response (CORBA::Request_ptr &)
 {
-  throw ( ::CORBA::NO_IMPLEMENT (
+  throw ::CORBA::NO_IMPLEMENT (
                CORBA::SystemException::_tao_minor_code (
                  0,
                  ENOTSUP),
-               CORBA::COMPLETED_NO));
+               CORBA::COMPLETED_NO);
 }
 
 CORBA::Boolean
@@ -1092,16 +1091,15 @@ CORBA::ORB::register_initial_reference (const char * id,
                                         CORBA::Object_ptr obj)
 {
   if (id == 0 || ACE_OS::strlen (id) == 0)
-    throw ( ::CORBA::ORB::InvalidName ());
+    throw ::CORBA::ORB::InvalidName ();
 
   if (CORBA::is_nil (obj))
-    throw ( ::CORBA::BAD_PARAM (CORBA::OMGVMCID | 27,
-                                 CORBA::COMPLETED_NO));
+    throw ::CORBA::BAD_PARAM (CORBA::OMGVMCID | 27, CORBA::COMPLETED_NO);
 
   TAO_Object_Ref_Table &table = this->orb_core_->object_ref_table ();
 
   if (table.register_initial_reference (id, obj) == -1)
-    throw ( ::CORBA::ORB::InvalidName ());
+    throw ::CORBA::ORB::InvalidName ();
 }
 #endif
 
@@ -1130,8 +1128,7 @@ CORBA::ORB::check_shutdown (void)
       // CORBA::OBJECT_NOT_EXIST exception if the ORB has been
       // destroyed by the time an ORB function is called.
 
-      throw ( ::CORBA::OBJECT_NOT_EXIST (0,
-                                          CORBA::COMPLETED_NO));
+      throw ::CORBA::OBJECT_NOT_EXIST (0, CORBA::COMPLETED_NO);
     }
 }
 

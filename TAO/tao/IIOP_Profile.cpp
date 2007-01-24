@@ -138,11 +138,11 @@ TAO_IIOP_Profile::parse_string_i (const char *ior
   if (okd == 0 || okd == ior)
     {
       // No object key delimiter or no hostname specified.
-      throw ( ::CORBA::INV_OBJREF (
+      throw ::CORBA::INV_OBJREF (
                    CORBA::SystemException::_tao_minor_code (
                      0,
                      EINVAL),
-                   CORBA::COMPLETED_NO));
+                   CORBA::COMPLETED_NO);
     }
 
   // Length of host string.
@@ -172,11 +172,11 @@ TAO_IIOP_Profile::parse_string_i (const char *ior
                        ACE_TEXT ("Invalid IPv6 decimal address specified.\n")));
             }
 
-          throw ( ::CORBA::INV_OBJREF (
+          throw ::CORBA::INV_OBJREF (
                        CORBA::SystemException::_tao_minor_code (
                          0,
                          EINVAL),
-                       CORBA::COMPLETED_NO));
+                       CORBA::COMPLETED_NO);
         }
       else
         {
@@ -200,11 +200,11 @@ TAO_IIOP_Profile::parse_string_i (const char *ior
                    ACE_TEXT ("Host address may be omited only when no port has been specified.\n")));
         }
 
-      throw ( ::CORBA::INV_OBJREF (
+      throw ::CORBA::INV_OBJREF (
                    CORBA::SystemException::_tao_minor_code (
                      0,
                      EINVAL),
-                   CORBA::COMPLETED_NO));
+                   CORBA::COMPLETED_NO);
     }
   else if (cp_pos != 0)
     {
@@ -229,11 +229,11 @@ TAO_IIOP_Profile::parse_string_i (const char *ior
           ACE_INET_Addr ia;
           if (ia.string_to_addr (tmp.in ()) == -1)
             {
-              throw ( ::CORBA::INV_OBJREF (
+              throw ::CORBA::INV_OBJREF (
                              CORBA::SystemException::_tao_minor_code (
                                0,
                                EINVAL),
-                             CORBA::COMPLETED_NO));
+                             CORBA::COMPLETED_NO);
             }
           else
             {
@@ -288,11 +288,11 @@ TAO_IIOP_Profile::parse_string_i (const char *ior
                         ACE_TEXT ("cannot determine hostname")));
 
           // @@ What's the right exception to throw here?
-          throw ( ::CORBA::INV_OBJREF (
+          throw ::CORBA::INV_OBJREF (
                        CORBA::SystemException::_tao_minor_code (
                          0,
                          EINVAL),
-                       CORBA::COMPLETED_NO));
+                       CORBA::COMPLETED_NO);
         }
       else
         this->endpoint_.host_ = CORBA::string_dup (tmp_host);

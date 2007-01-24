@@ -355,7 +355,7 @@ TAO_CDR_Encaps_Codec::check_type_for_encoding (
   if (this->major_ == 1
       && this->minor_ == 0
       && typecode->equivalent (CORBA::_tc_wstring))
-    throw (IOP::Codec::InvalidTypeForEncoding ());
+    throw IOP::Codec::InvalidTypeForEncoding ();
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL

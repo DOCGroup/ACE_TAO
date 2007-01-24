@@ -82,7 +82,7 @@ TAO_IOR_Table_Impl::bind (const char * object_key, const char * IOR)
 {
   ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->lock_);
   if (this->map_.bind (object_key, IOR) != 0)
-    throw (IORTable::AlreadyBound ());
+    throw IORTable::AlreadyBound ();
 }
 
 void
@@ -99,7 +99,7 @@ TAO_IOR_Table_Impl::unbind (const char * object_key)
 {
   ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->lock_);
   if (this->map_.unbind (object_key) != 0)
-    throw (IORTable::NotFound ());
+    throw IORTable::NotFound ();
 }
 
 void

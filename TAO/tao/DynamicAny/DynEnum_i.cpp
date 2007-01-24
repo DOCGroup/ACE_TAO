@@ -219,7 +219,7 @@ TAO_DynEnum_i::from_any (const CORBA::Any& any
     }
   else
     {
-      throw (DynamicAny::DynAny::TypeMismatch ());
+      throw DynamicAny::DynAny::TypeMismatch ();
     }
 }
 
