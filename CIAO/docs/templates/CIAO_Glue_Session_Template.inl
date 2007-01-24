@@ -93,7 +93,7 @@ ACE_INLINE void
 }
 
 ACE_INLINE [eventtype]Consumer_ptr
-[ciao module name]::[component name]_Context::disconnect_[emit name] (ACE_ENV_SINGLE_ARG_DECL)
+[ciao module name]::[component name]_Context::disconnect_[emit name] (void)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    ::Components::NoConnection))
 {
@@ -107,7 +107,7 @@ ACE_INLINE [eventtype]Consumer_ptr
 
 // Operations for ::Components::CCMContext
 ACE_INLINE ::Components::Principal_ptr
-[ciao module name]::[component name]_Context::get_caller_principal (ACE_ENV_SINGLE_ARG_DECL)
+[ciao module name]::[component name]_Context::get_caller_principal (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // @@ We don't support Security in CIAO yet.
@@ -115,14 +115,14 @@ ACE_INLINE ::Components::Principal_ptr
 }
 
 ACE_INLINE ::Components::CCMHome_ptr
-[ciao module name]::[component name]_Context::get_CCM_home (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+[ciao module name]::[component name]_Context::get_CCM_home (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return ::Components::CCMHome::_duplicate (this->home_.in ());
 }
 
 ACE_INLINE CORBA::Boolean
-[ciao module name]::[component name]_Context::get_rollback_only (ACE_ENV_SINGLE_ARG_DECL)
+[ciao module name]::[component name]_Context::get_rollback_only (void)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Components::IllegalState))
 {
@@ -131,7 +131,7 @@ ACE_INLINE CORBA::Boolean
 }
 
 ACE_INLINE ::Components::Transaction::UserTransaction_ptr
-[ciao module name]::[component name]_Context::get_user_transaction (ACE_ENV_SINGLE_ARG_DECL)
+[ciao module name]::[component name]_Context::get_user_transaction (void)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Components::IllegalState))
 {
@@ -151,7 +151,7 @@ ACE_INLINE CORBA::Boolean
 }
 
 ACE_INLINE void
-[ciao module name]::[component name]_Context::set_rollback_only (ACE_ENV_SINGLE_ARG_DECL)
+[ciao module name]::[component name]_Context::set_rollback_only (void)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Components::IllegalState))
 {
@@ -192,18 +192,18 @@ ACE_INLINE void
 }
 
 ACE_INLINE [uses type]_ptr
-[ciao module name]::[component name]_Servant::disconnect_[receptacle name] (ACE_ENV_SINGLE_ARG_DECL)
+[ciao module name]::[component name]_Servant::disconnect_[receptacle name] (void)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    ::Components::NoConnection))
 {
-  return this->context_->disconnect_[receptacle name] (ACE_ENV_SINGLE_ARG_PARAMETER);
+  return this->context_->disconnect_[receptacle name] ();
 }
 
 ACE_INLINE [uses type]_ptr
-[ciao module name]::[component name]_Servant::get_connection_[receptacle name] (ACE_ENV_SINGLE_ARG_DECL)
+[ciao module name]::[component name]_Servant::get_connection_[receptacle name] (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  return this->context_->get_connection_[receptacle name] (ACE_ENV_SINGLE_ARG_PARAMETER);
+  return this->context_->get_connection_[receptacle name] ();
 }
 ##  else ([receptacle name] is a multiplex ('uses multiple') receptacle)
 
@@ -230,10 +230,10 @@ ACE_INLINE [uses type]_ptr
 }
 
 ACE_INLINE [receptacle name]Connections *
-[ciao module name]::[component name]_Servant::get_connections_[receptacle name] (ACE_ENV_SINGLE_ARG_DECL)
+[ciao module name]::[component name]_Servant::get_connections_[receptacle name] (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  return this->context_->get_connections_[receptacle name] (ACE_ENV_SINGLE_ARG_PARAMETER);
+  return this->context_->get_connections_[receptacle name] ();
 }
 
 ##  endif [receptacle name]
@@ -267,10 +267,10 @@ ACE_INLINE
 }
 
 ACE_INLINE CORBA::Object_ptr
-[ciao module name]::[component name]_Servant::[eventtype]Consumer_[consumer name]_Servant::_get_component (ACE_ENV_SINGLE_ARG_DECL)
+[ciao module name]::[component name]_Servant::[eventtype]Consumer_[consumer name]_Servant::_get_component (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  return this->ctx_->get_CCM_object (ACE_ENV_SINGLE_ARG_PARAMETER);
+  return this->ctx_->get_CCM_object ();
 }
 
 ACE_INLINE void
@@ -312,11 +312,11 @@ ACE_INLINE void
 }
 
 ACE_INLINE [eventtype]Consumer_ptr
-[ciao module name]::[component name]_Servant::disconnect_[emit name] (ACE_ENV_SINGLE_ARG_DECL)
+[ciao module name]::[component name]_Servant::disconnect_[emit name] (void)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    ::Components::NoConnection))
 {
-  return this->context_->disconnect_[emit name] (ACE_ENV_SINGLE_ARG_PARAMETER);
+  return this->context_->disconnect_[emit name] ();
 }
 ##end foreach [emit name] with [eventtype]
 
@@ -377,12 +377,10 @@ ACE_INLINE [component name]_ptr
 {
   Components::EnterpriseComponent_var _ciao_ec =
     this->executor_->[factory name] (.... ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (0);
 
   CCM_[component name]_var _ciao_comp
     = CCM_[component name]::_narrow (_ciao_ec.in ()
                                      ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (0);
 
   return this->_ciao_activate_component (_ciao_comp.in ()
                                          ACE_ENV_ARG_PARAMETER);
@@ -400,7 +398,6 @@ ACE_INLINE [component name]_ptr
 {
   Components::EnterpriseComponent_var com =
     this->executor_->[finder name] (.... ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (0);
 
   // Do we create a new object reference referring to the same object,
   // or do we try to create a different objref referring to the same object?
@@ -413,12 +410,12 @@ ACE_INLINE [component name]_ptr
 
 // Operations for KeylessHome interface
 ACE_INLINE ::Components::CCMObject_ptr
-[ciao module name]::[home name]_Servant::create_component (ACE_ENV_SINGLE_ARG_DECL)
+[ciao module name]::[home name]_Servant::create_component (void)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Components::CreateFailure))
 {
   // Simply forward to the create method.
-  return this->create (ACE_ENV_SINGLE_ARG_PARAMETER);
+  return this->create ();
 }
 
 ##  else [home basename] is keyed home with [key type]
@@ -476,7 +473,7 @@ ACE_INLINE [key type] *
 
 // Operations for CCMHome interface
 ACE_INLINE ::CORBA::IRObject_ptr
-[ciao module name]::[home name]_Servant::get_component_def (ACE_ENV_SINGLE_ARG_DECL)
+[ciao module name]::[home name]_Servant::get_component_def (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // @@ TO-DO.  Contact IfR?
@@ -485,7 +482,7 @@ ACE_INLINE ::CORBA::IRObject_ptr
 }
 
 ACE_INLINE CORBA::IRObject_ptr
-[ciao module name]::[home name]_Servant::get_home_def (ACE_ENV_SINGLE_ARG_DECL)
+[ciao module name]::[home name]_Servant::get_home_def (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // @@ TO-DO.  Contact IfR?

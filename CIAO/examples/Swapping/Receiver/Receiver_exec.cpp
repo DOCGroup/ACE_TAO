@@ -19,14 +19,14 @@ namespace CIDL_Receiver_Impl
   }
 
   ::Components::EnterpriseComponent_ptr
-  ReceiverSwap_exec_i::incarnate (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+  ReceiverSwap_exec_i::incarnate (void)
     ACE_THROW_SPEC ((CORBA::SystemException))
   {
     return new Receiver_exec_i;
   }
 
   ::Components::EnterpriseComponent_ptr
-  ReceiverSwap_exec_i::etherealize (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+  ReceiverSwap_exec_i::etherealize (void)
     ACE_THROW_SPEC ((CORBA::SystemException))
   {
     return new Receiver_exec_i;
@@ -50,9 +50,8 @@ namespace CIDL_Receiver_Impl
                 "Receiver - Informed by the Sender \n"));
 
     Hello::ReadMessage_var rev
-      = this->context_->get_connection_read_message 
-        (ACE_ENV_SINGLE_ARG_PARAMETER);
-    ACE_CHECK;
+      = this->context_->get_connection_read_message
+        ();
 
     if (CORBA::is_nil (rev.in ()))
       {
@@ -60,8 +59,7 @@ namespace CIDL_Receiver_Impl
       }
 
     CORBA::String_var str =
-      rev->get_message (ACE_ENV_SINGLE_ARG_PARAMETER);
-    ACE_CHECK;
+      rev->get_message ();
 
     ACE_DEBUG ((LM_DEBUG,
                 "Receiver - Got message from the server [%s] \n",
@@ -80,7 +78,6 @@ namespace CIDL_Receiver_Impl
     this->context_ =
       Receiver_Exec_Context::_narrow (ctx
                                       ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK;
 
     if (CORBA::is_nil (this->context_.in ()))
       {
@@ -89,7 +86,7 @@ namespace CIDL_Receiver_Impl
   }
 
   void
-  Receiver_exec_i::ciao_preactivate (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+  Receiver_exec_i::ciao_preactivate (void)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      Components::CCMException))
   {
@@ -98,7 +95,7 @@ namespace CIDL_Receiver_Impl
   }
 
   void
-  Receiver_exec_i::ccm_activate (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+  Receiver_exec_i::ccm_activate (void)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      Components::CCMException))
   {
@@ -106,7 +103,7 @@ namespace CIDL_Receiver_Impl
   }
 
   void
-  Receiver_exec_i::ciao_postactivate (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+  Receiver_exec_i::ciao_postactivate (void)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      Components::CCMException))
   {
@@ -115,27 +112,23 @@ namespace CIDL_Receiver_Impl
   }
 
   void
-  Receiver_exec_i::ccm_passivate (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+  Receiver_exec_i::ccm_passivate (void)
     ACE_THROW_SPEC ((CORBA::SystemException,
                     Components::CCMException))
   {
     ACE_DEBUG ((LM_DEBUG, "Receiver_exec_i::ccm_passivate\n"));
     /*
     CORBA::Object_var comp_object =
-      this->context_->get_CCM_object (ACE_ENV_SINGLE_ARG_PARAMETER);
-    ACE_CHECK_RETURN (0);
+      this->context_->get_CCM_object ();
 
     Hello::Receiver_var receiver = Hello::Receiver::_narrow (comp_object.in ()
                                                       ACE_ENV_ARG_PARAMETER);
-                                                      ACE_CHECK;
 
     ::Components::ConsumerDescriptions_var cons_desc =
-      receiver->get_all_consumers (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK_RETURN (0);
+      receiver->get_all_consumers ();
 
     ::Components::FacetDescriptions_var facet_desc =
-      receiver->get_all_facets (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK_RETURN (0);
+      receiver->get_all_facets ();
 
     CORBA::ULong cons_len = cons_desc->length ();
     CORBA::ULong facet_len = facet_desc->length ();
@@ -151,7 +144,7 @@ namespace CIDL_Receiver_Impl
   }
 
   void
-  Receiver_exec_i::ccm_remove (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+  Receiver_exec_i::ccm_remove (void)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      Components::CCMException))
   {
@@ -168,22 +161,22 @@ namespace CIDL_Receiver_Impl
   }
 
   ::Components::EnterpriseComponent_ptr
-  ReceiverHome_exec_i::create (ACE_ENV_SINGLE_ARG_DECL)
+  ReceiverHome_exec_i::create (void)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      Components::CCMException))
   {
     Components::EnterpriseComponent_ptr tmp;
-      
+
     ACE_NEW_THROW_EX (tmp,
                       ReceiverSwap_exec_i,
                       CORBA::NO_MEMORY ());
-   
-    /* 
+
+    /*
     ACE_NEW_THROW_EX (tmp,
                       Receiver_exec_i,
                       CORBA::NO_MEMORY ());
     */
-   
+
     return tmp;
   }
 

@@ -22,7 +22,7 @@ LatencyTest_Impl::makeCall (CORBA::Long send_time
 }
 
 void
-LatencyTest_Impl::shutdown (ACE_ENV_SINGLE_ARG_DECL)
+LatencyTest_Impl::shutdown (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->orb_->shutdown (0 ACE_ENV_ARG_PARAMETER);

@@ -85,8 +85,7 @@ namespace CIDL_StockBroker_Impl
     // Retrieve stock information if the stock name is in the subscribed_stock_list
     if (this->subscribed_stock_list_.find (stock_name.in ()) != this->subscribed_stock_list_.end ())
     {
-      Stock::StockQuoter_var quoter_obj = this->context_->get_connection_read_quoter (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK;
+      Stock::StockQuoter_var quoter_obj = this->context_->get_connection_read_quoter ();
 
       if (CORBA::is_nil (quoter_obj.in ()))
       {
@@ -94,7 +93,6 @@ namespace CIDL_StockBroker_Impl
       }
 
       Stock::StockInfo_var info = quoter_obj->get_stock_info (stock_name.in () ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
 
       ACE_DEBUG ((LM_DEBUG, "Quoter - Current value of %s is %d\n",
                              stock_name.in (),
@@ -114,7 +112,6 @@ namespace CIDL_StockBroker_Impl
   {
     this->context_ = StockBroker_Context::_narrow (ctx
                                                    ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK;
 
     if (0 == this->context_)
     {
@@ -193,7 +190,6 @@ namespace CIDL_StockBroker_Impl
     retval,
     StockBroker_exec_i,
     CORBA::NO_MEMORY ());
-    ACE_CHECK_RETURN (::Components::EnterpriseComponent::_nil ());
 
     return retval;
   }

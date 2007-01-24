@@ -141,7 +141,7 @@ CIAO::RTResource_Config_Manager::init_resources
          orb_resource.threadpool_list[i].max_buffered_requests,
          orb_resource.threadpool_list[i].max_request_buffer_size
          ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;                // Simply pass back the exception here
+               // Simply pass back the exception here
                                 // for now.  We need to have a better way
                                 // to handle execption here.
       if (this->threadpool_map_.bind (orb_resource.threadpool_list[i].Id.in (),
@@ -191,7 +191,7 @@ CIAO::RTResource_Config_Manager::init_resources
          orb_resource.threadpool_with_lanes_list[i].max_buffered_requests,
          orb_resource.threadpool_with_lanes_list[i].max_request_buffer_size
          ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;                // Simply pass back the exception here
+               // Simply pass back the exception here
                                 // for now.  We need to have a better way
                                 // to handle execption here.
 
@@ -261,7 +261,6 @@ CIAO::RTResource_Config_Manager::init_resources
         {
           policy_list[pc] = this->create_single_policy (sets[i].policies[pc]
                                                         ACE_ENV_ARG_PARAMETER);
-          ACE_CHECK;
         }
 
       // Bind the policy list to the name.  The bind operation should
@@ -285,7 +284,7 @@ CIAO::RTResource_Config_Manager::init_resources
 }
 
 void
-CIAO::RTResource_Config_Manager::fini (ACE_ENV_SINGLE_ARG_DECL)
+CIAO::RTResource_Config_Manager::fini (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TP_MAP::ITERATOR iter = this->threadpool_map_.begin ();
@@ -295,7 +294,6 @@ CIAO::RTResource_Config_Manager::fini (ACE_ENV_SINGLE_ARG_DECL)
     {
       this->rtorb_->destroy_threadpool ((*iter).int_id_
                                         ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
     }
 
 }
@@ -411,7 +409,6 @@ CIAO::RTResource_Config_Manager::create_single_policy
         retv = this->rtorb_->create_priority_model_policy ((RTCORBA::PriorityModel) tmp.priority_model,
                                                            tmp.server_priority
                                                            ACE_ENV_ARG_PARAMETER);
-        ACE_CHECK_RETURN (0);
 
         if (! CORBA::is_nil (retv.in ()))
           ACE_DEBUG ((LM_DEBUG,
@@ -425,11 +422,9 @@ CIAO::RTResource_Config_Manager::create_single_policy
         RTCORBA::ThreadpoolId tpid =
           this->find_threadpool_by_name (policy_def.ThreadpoolDef().Id.in ()
                                          ACE_ENV_ARG_PARAMETER);
-        ACE_CHECK_RETURN (0);
 
         retv = this->rtorb_->create_threadpool_policy (tpid
                                                        ACE_ENV_ARG_PARAMETER);
-        ACE_CHECK_RETURN (0);
 
         if (! CORBA::is_nil (retv.in ()))
           ACE_DEBUG ((LM_DEBUG,
@@ -443,12 +438,10 @@ CIAO::RTResource_Config_Manager::create_single_policy
         RTCORBA::PriorityBands_var bands =
           this->find_priority_bands_by_name (policy_def.PriorityBandedConnectionDef().Id.in ()
                                              ACE_ENV_ARG_PARAMETER);
-        ACE_CHECK_RETURN (0);
 
         retv =
           this->rtorb_->create_priority_banded_connection_policy (bands.in ()
                                                                   ACE_ENV_ARG_PARAMETER);
-        ACE_CHECK_RETURN (0);
 
         if (! CORBA::is_nil (retv.in ()))
           {

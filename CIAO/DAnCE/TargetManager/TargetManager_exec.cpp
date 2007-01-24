@@ -212,7 +212,7 @@ namespace CIDL_TargetManager_i
 
   ::CIAO::Host_NodeManager_seq *
   TargetManagerExt_exec_i::get_all_node_managers
-  (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+  (void)
     ACE_THROW_SPEC ((CORBA::SystemException))
   {
     return CIAO::DomainDataManager::
@@ -287,7 +287,6 @@ namespace CIDL_TargetManager_i
     TargetManagerImpl_Context::_narrow (
     ctx
     ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK;
 
     if (this->context_ == 0)
     {
@@ -394,7 +393,6 @@ namespace CIDL_TargetManager_i
     retval,
     TargetManagerImpl_exec_i,
     CORBA::NO_MEMORY ());
-    ACE_CHECK_RETURN (::Components::EnterpriseComponent::_nil ());
 
     return retval;
   }

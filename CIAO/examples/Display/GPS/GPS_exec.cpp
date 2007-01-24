@@ -9,14 +9,14 @@
 
 // Operations from HUDisplay::position
 CORBA::Long
-MyImpl::Position_Impl::posx (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+MyImpl::Position_Impl::posx (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return component_.posx();
 }
 
 CORBA::Long
-MyImpl::Position_Impl::posy (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+MyImpl::Position_Impl::posy (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return component_.posy();
@@ -38,7 +38,7 @@ MyImpl::GPS_exec_i::~GPS_exec_i ()
 
 // Operations from HUDisplay::GPS
   HUDisplay::CCM_position_ptr
-  MyImpl::GPS_exec_i::get_MyLocation (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+  MyImpl::GPS_exec_i::get_MyLocation (void)
     ACE_THROW_SPEC ((CORBA::SystemException))
   {
 //     ACE_DEBUG ((LM_DEBUG,
@@ -66,14 +66,14 @@ MyImpl::GPS_exec_i::push_Refresh (HUDisplay::tick *
 }
 
 CORBA::Long
-MyImpl::GPS_exec_i::posx (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+MyImpl::GPS_exec_i::posx (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return this->positionx_;
 }
 
 CORBA::Long
-MyImpl::GPS_exec_i::posy (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+MyImpl::GPS_exec_i::posy (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return this->positiony_;
@@ -93,7 +93,6 @@ MyImpl::GPS_exec_i::set_session_context (Components::SessionContext_ptr ctx
   this->context_ =
     HUDisplay::CCM_GPS_Context::_narrow (ctx
                                          ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
   if (CORBA::is_nil (this->context_.in ()))
     ACE_THROW (CORBA::INTERNAL ());
@@ -101,14 +100,14 @@ MyImpl::GPS_exec_i::set_session_context (Components::SessionContext_ptr ctx
 }
 
 void
-MyImpl::GPS_exec_i::ciao_preactivate (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+MyImpl::GPS_exec_i::ciao_preactivate (void)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Components::CCMException))
 {
 }
 
 void
-MyImpl::GPS_exec_i::ccm_activate (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+MyImpl::GPS_exec_i::ccm_activate (void)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Components::CCMException))
 {
@@ -117,14 +116,14 @@ MyImpl::GPS_exec_i::ccm_activate (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
 }
 
 void
-MyImpl::GPS_exec_i::ciao_postactivate (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+MyImpl::GPS_exec_i::ciao_postactivate (void)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Components::CCMException))
 {
 }
 
 void
-MyImpl::GPS_exec_i::ccm_passivate (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+MyImpl::GPS_exec_i::ccm_passivate (void)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Components::CCMException))
 {
@@ -133,7 +132,7 @@ MyImpl::GPS_exec_i::ccm_passivate (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
 }
 
 void
-MyImpl::GPS_exec_i::ccm_remove (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+MyImpl::GPS_exec_i::ccm_remove (void)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Components::CCMException))
 {
@@ -156,7 +155,7 @@ MyImpl::GPSHome_exec_i::~GPSHome_exec_i ()
 // Implicit home operations.
 
 ::Components::EnterpriseComponent_ptr
-MyImpl::GPSHome_exec_i::create (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+MyImpl::GPSHome_exec_i::create (void)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Components::CCMException))
 {

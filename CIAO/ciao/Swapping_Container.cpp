@@ -49,7 +49,6 @@ namespace CIAO
   {
     this->the_facet_cons_POA ()->deactivate_object (oid
        ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK;
   }
 
   int
@@ -71,7 +70,6 @@ namespace CIAO
     CORBA::Object_var poa_object =
       this->orb_->resolve_initial_references("RootPOA"
                                              ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK_RETURN (-1);
 
     if (CORBA::is_nil (poa_object.in ()))
       ACE_ERROR_RETURN ((LM_ERROR,
@@ -81,14 +79,12 @@ namespace CIAO
     PortableServer::POA_var root_poa =
       PortableServer::POA::_narrow (poa_object.in ()
                                     ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK_RETURN (-1);
 
 
     this->create_servant_POA (name,
                               more_policies,
                               root_poa.in ()
                               ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK_RETURN (-1);
 
 
 
@@ -96,18 +92,14 @@ namespace CIAO
                                    more_policies,
                                    root_poa.in ()
                                    ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK_RETURN (-1);
 
     this->create_connections_POA (root_poa.in ()
                                   ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK_RETURN (-1);
 
     PortableServer::POAManager_var poa_manager =
-      root_poa->the_POAManager (ACE_ENV_SINGLE_ARG_PARAMETER);
-    ACE_CHECK_RETURN (-1);
+      root_poa->the_POAManager ();
 
-    poa_manager->activate (ACE_ENV_SINGLE_ARG_PARAMETER);
-    ACE_CHECK_RETURN (-1);
+    poa_manager->activate ();
 
     return 0;
   }
@@ -139,8 +131,7 @@ namespace CIAO
       policies = *p;
 
     PortableServer::POAManager_var poa_manager =
-      root->the_POAManager (ACE_ENV_SINGLE_ARG_PARAMETER);
-    ACE_CHECK;
+      root->the_POAManager ();
 
 
     this->home_servant_poa_ =
@@ -148,7 +139,6 @@ namespace CIAO
                         poa_manager.in (),
                         policies
                         ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK;
   }
 
   void
@@ -157,8 +147,7 @@ namespace CIAO
       ACE_ENV_ARG_DECL)
   {
     PortableServer::POAManager_var poa_manager =
-      root->the_POAManager (ACE_ENV_SINGLE_ARG_PARAMETER);
-    ACE_CHECK;
+      root->the_POAManager ();
 
     TAO::Utils::PolicyList_Destroyer policies (3);
     policies.length (3);
@@ -166,27 +155,23 @@ namespace CIAO
     policies[0] =
       root->create_id_assignment_policy (PortableServer::USER_ID
                                          ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK;
 
     policies[1] =
       root->create_request_processing_policy
         (PortableServer::USE_SERVANT_MANAGER
          ACE_ENV_ARG_PARAMETER);
 
-    ACE_CHECK;
 
     // Servant Retention Policy
     policies[2] =
       root->create_servant_retention_policy (PortableServer::RETAIN
                                              ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK;
 
     this->facet_cons_poa_ =
       root->create_POA ("facet_consumer_poa",
                         poa_manager.in (),
                         policies
                         ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK;
 
     ACE_NEW_THROW_EX (this->sa_,
                       Servant_Activator (this->orb_.in ()),
@@ -196,7 +181,6 @@ namespace CIAO
         this->sa_
         ACE_ENV_ARG_PARAMETER);
 
-    ACE_CHECK;
   }
 
   void
@@ -214,15 +198,13 @@ namespace CIAO
       policies = *p;
 
     PortableServer::POAManager_var poa_manager =
-      root->the_POAManager (ACE_ENV_SINGLE_ARG_PARAMETER);
-    ACE_CHECK;
+      root->the_POAManager ();
 
     CORBA::ULong policy_length = policies.length ();
     policies.length (policy_length + 1);
     policies[policy_length] =
       root->create_id_assignment_policy (PortableServer::USER_ID
                                          ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK;
 
     policy_length = policies.length ();
     policies.length (policy_length + 1);
@@ -230,21 +212,18 @@ namespace CIAO
      root->create_request_processing_policy (
        PortableServer::USE_SERVANT_MANAGER
        ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK;
 
     policy_length = policies.length ();
     policies.length (policy_length + 1);
     policies[policy_length] =
       root->create_servant_retention_policy (PortableServer::RETAIN
                                              ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK;
 
     this->component_poa_ =
       root->create_POA (name,
                         poa_manager.in (),
                         policies
                         ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK;
 
     ACE_NEW_THROW_EX (this->dsa_,
                       Dynamic_Component_Activator (this->orb_.in ()),
@@ -253,7 +232,6 @@ namespace CIAO
     this->component_poa_->set_servant_manager (
         this->dsa_
         ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK;
 
   }
 
@@ -266,11 +244,9 @@ namespace CIAO
     PortableServer::ObjectId_var oid =
       tmp->reference_to_id (homeref
                             ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK;
 
     tmp->deactivate_object (oid.in ()
                             ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK;
   }
 
   CORBA::Object_ptr
@@ -291,12 +267,10 @@ namespace CIAO
     PortableServer::ObjectId_var oid
       = tmp->activate_object (p
                               ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK_RETURN (0);
 
     CORBA::Object_var objref
       = tmp->id_to_reference (oid.in ()
                               ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK_RETURN (0);
 
     return objref._retn ();
   }

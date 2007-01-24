@@ -45,7 +45,6 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       CORBA::ORB_var orb = CORBA::ORB_init (argc, argv,
                       ""ACE_ENV_ARG_PARAMETER);
 
-      ACE_TRY_CHECK;
 
       Options* options = TheOptions::instance ();
       if (!options->parse_args (argc, argv))
@@ -56,7 +55,6 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       if (options->write_to_ior_)
       {
         obj = orb->string_to_object (ior ACE_ENV_ARG_PARAMETER);
-        ACE_TRY_CHECK;
       }
 
       else if (options->register_with_ns_)
@@ -68,11 +66,9 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         CORBA::Object_var naming_context_object =
           orb->resolve_initial_references ("NameService"
           ACE_ENV_ARG_PARAMETER);
-        ACE_CHECK_RETURN (false);
 
         CosNaming::NamingContext_var naming_context =
           CosNaming::NamingContext::_narrow (naming_context_object.in ());
-        ACE_TRY_CHECK;
 
         // Initialize the Naming Sequence
         CosNaming::Name name (1);
@@ -83,14 +79,12 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
         // Resolve object from name
         obj = naming_context->resolve (name);
-        ACE_TRY_CHECK;
       }
 
 
     CIAO::RepositoryManagerDaemon_var rm =
       CIAO::RepositoryManagerDaemon::_narrow (obj.in ()
                                 ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       if (CORBA::is_nil (rm.in ()))
         {
@@ -247,7 +241,6 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     }
 
       orb->shutdown (1);
-      ACE_TRY_CHECK;
     }
   ACE_CATCHANY
     {

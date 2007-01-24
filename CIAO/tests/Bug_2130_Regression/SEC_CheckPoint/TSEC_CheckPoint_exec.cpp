@@ -443,7 +443,6 @@ Impl::TSEC_CheckPoint_exec_i::set_session_context
   this->_context =
     ENW::CCM_TSEC_CheckPoint_Context::_narrow( Ctx
                                                ACE_ENV_ARG_PARAMETER );
-  ACE_CHECK;
 
   if( CORBA::is_nil( this->_context.in() ) )
   {

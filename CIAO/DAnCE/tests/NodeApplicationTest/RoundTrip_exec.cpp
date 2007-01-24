@@ -58,7 +58,7 @@ namespace CIDL_RoundTrip_Impl
   }
 
   void
-  RoundTrip_exec_i::ccm_activate (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+  RoundTrip_exec_i::ccm_activate (void)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      Components::CCMException))
   {
@@ -70,7 +70,7 @@ namespace CIDL_RoundTrip_Impl
   }
 
   void
-  RoundTrip_exec_i::ccm_passivate (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+  RoundTrip_exec_i::ccm_passivate (void)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      Components::CCMException))
   {
@@ -81,7 +81,7 @@ namespace CIDL_RoundTrip_Impl
   }
 
   void
-  RoundTrip_exec_i::ccm_remove (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+  RoundTrip_exec_i::ccm_remove (void)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      Components::CCMException))
   {
@@ -92,7 +92,7 @@ namespace CIDL_RoundTrip_Impl
   }
 
   void
-  RoundTrip_exec_i::ciao_preactivate (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+  RoundTrip_exec_i::ciao_preactivate (void)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      Components::CCMException))
   {
@@ -104,7 +104,7 @@ namespace CIDL_RoundTrip_Impl
   }
 
   void
-  RoundTrip_exec_i::ciao_postactivate (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+  RoundTrip_exec_i::ciao_postactivate (void)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      Components::CCMException))
   {
@@ -123,7 +123,7 @@ namespace CIDL_RoundTrip_Impl
   }
 
   ::Components::EnterpriseComponent_ptr
-  RoundTripHome_exec_i::create (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+  RoundTripHome_exec_i::create (void)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      Components::CCMException))
   {

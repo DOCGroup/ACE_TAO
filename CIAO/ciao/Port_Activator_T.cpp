@@ -39,8 +39,7 @@ namespace CIAO
       ACE_ENV_ARG_DECL)
   {
     SERVANT *s = dynamic_cast<SERVANT *> (servant);
-    s->_remove_ref (ACE_ENV_SINGLE_ARG_PARAMETER);
-    ACE_CHECK;
+    s->_remove_ref ();
   }
 
   template <typename SERV,

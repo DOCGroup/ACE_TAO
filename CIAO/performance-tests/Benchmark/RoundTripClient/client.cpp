@@ -28,12 +28,10 @@ main (int argc, char *argv[])
                                             argv,
                                             ""
                                             ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       // Resolve HomeFinder interface
       CORBA::Object_var obj
         = orb->string_to_object (ior ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
       Benchmark::RoundTripClient_var test =
 	      Benchmark::RoundTripClient::_narrow(obj.in());
       //Get the RoundTrip reference

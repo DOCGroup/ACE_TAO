@@ -74,17 +74,17 @@ namespace CIAO
       ACE_THROW_SPEC ((CORBA::SystemException));
 
     /// Initializes the NodeManager.
-    virtual void init (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+    virtual void init (void)
       ACE_THROW_SPEC ((CORBA::SystemException));
 
     /// POA operation..
     virtual PortableServer::POA_ptr _default_POA (void);
 
     /// CIAO::Daemon defined attributes/operations.
-    virtual char * name (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+    virtual char * name (void)
       ACE_THROW_SPEC ((CORBA::SystemException));
 
-    virtual void shutdown (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+    virtual void shutdown (void)
       ACE_THROW_SPEC ((CORBA::SystemException));
 
     virtual void joinDomain (const Deployment::Domain & domain,
@@ -94,7 +94,7 @@ namespace CIAO
                              )
       ACE_THROW_SPEC ((CORBA::SystemException));
 
-    virtual void leaveDomain (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+    virtual void leaveDomain (void)
       ACE_THROW_SPEC ((CORBA::SystemException));
 
     virtual ::Deployment::NodeApplicationManager_ptr
@@ -120,7 +120,7 @@ namespace CIAO
 
     /// CIAO specific extension, return a set of shared components
     virtual ::Deployment::ComponentPlans *
-    get_shared_components (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+    get_shared_components (void)
       ACE_THROW_SPEC ((::CORBA::SystemException));
 
     /// RACE specific extension. Modify the priority of a node application

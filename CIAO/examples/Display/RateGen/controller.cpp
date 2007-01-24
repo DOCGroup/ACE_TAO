@@ -77,7 +77,6 @@ main (int argc, char *argv[])
                          argv,
                          ""
                          ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       if (parse_args (argc, argv) != 0)
         {
@@ -87,12 +86,10 @@ main (int argc, char *argv[])
       CORBA::Object_var obj =
         orb->string_to_object (rategen_ior_
                                ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       HUDisplay::RateGen_var pulser =
         HUDisplay::RateGen::_narrow (obj.in ()
                                      ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       if (CORBA::is_nil (pulser.in ()))
         {
@@ -105,23 +102,19 @@ main (int argc, char *argv[])
         {
           pulser->hertz (rate
                          ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
 
           ACE_DEBUG ((LM_DEBUG, "Start up the Rate Generator\n"));
 
-          pulser->start (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+          pulser->start ();
         }
       else
         {
-          pulser->stop (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+          pulser->stop ();
 
           ACE_DEBUG ((LM_DEBUG, "Rate Generator stopped\n"));
         }
 
-      orb->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      orb->destroy ();
     }
   ACE_CATCHANY
     {

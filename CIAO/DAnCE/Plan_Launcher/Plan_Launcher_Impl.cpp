@@ -16,12 +16,10 @@ namespace CIAO
       CORBA::Object_var tmp =
         orb->resolve_initial_references ("NameService"
                                          ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
 
       CosNaming::NamingContext_var pns =
         CosNaming::NamingContext::_narrow (tmp.in ()
                                            ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
 
       if (CORBA::is_nil (pns.in ()))
         {
@@ -268,7 +266,6 @@ namespace CIAO
           ACE_THROW (Deployment_Failure  (""));
         }
       ACE_ENDTRY;
-      ACE_CHECK_RETURN (0);
 
       return CORBA::string_dup (plan.UUID.in ());
     }

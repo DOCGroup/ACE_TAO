@@ -28,7 +28,6 @@ namespace CIAO
   {
     this->component_->set_attributes (descr
                                       ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK;
   }
 
   void

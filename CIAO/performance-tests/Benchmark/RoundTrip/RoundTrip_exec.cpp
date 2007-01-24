@@ -46,7 +46,7 @@ MyImpl::RoundTrip_exec_i::~RoundTrip_exec_i ()
 }
 
 ::Benchmark::CCM_LatencyTest *
-MyImpl::RoundTrip_exec_i::get_latency (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+MyImpl::RoundTrip_exec_i::get_latency (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return ::Benchmark::CCM_LatencyTest::_duplicate (this);
@@ -76,7 +76,6 @@ MyImpl::RoundTrip_exec_i::set_session_context (
   this->context_ =
     Benchmark::CCM_RoundTrip_Context::_narrow (ctx
                                                ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
   if (CORBA::is_nil (this->context_.in ()))
     ACE_THROW (CORBA::INTERNAL ());
@@ -84,14 +83,14 @@ MyImpl::RoundTrip_exec_i::set_session_context (
 }
 
 void
-MyImpl::RoundTrip_exec_i::ciao_preactivate (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+MyImpl::RoundTrip_exec_i::ciao_preactivate (void)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Components::CCMException))
 {
 }
 
 void
-MyImpl::RoundTrip_exec_i::ccm_activate (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+MyImpl::RoundTrip_exec_i::ccm_activate (void)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Components::CCMException))
 {
@@ -104,7 +103,7 @@ MyImpl::RoundTrip_exec_i::ccm_activate (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
 }
 
 void
-MyImpl::RoundTrip_exec_i::ciao_postactivate (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+MyImpl::RoundTrip_exec_i::ciao_postactivate (void)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Components::CCMException))
 {
@@ -112,7 +111,7 @@ MyImpl::RoundTrip_exec_i::ciao_postactivate (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
 }
 
 void
-MyImpl::RoundTrip_exec_i::ccm_passivate (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+MyImpl::RoundTrip_exec_i::ccm_passivate (void)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Components::CCMException))
 {
@@ -121,7 +120,7 @@ MyImpl::RoundTrip_exec_i::ccm_passivate (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
 }
 
 void
-MyImpl::RoundTrip_exec_i::ccm_remove (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+MyImpl::RoundTrip_exec_i::ccm_remove (void)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Components::CCMException))
 {
@@ -139,7 +138,7 @@ MyImpl::RoundTripHome_exec_i::~RoundTripHome_exec_i ()
 }
 
 ::Components::EnterpriseComponent_ptr
-MyImpl::RoundTripHome_exec_i::create (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+MyImpl::RoundTripHome_exec_i::create (void)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Components::CCMException))
 {

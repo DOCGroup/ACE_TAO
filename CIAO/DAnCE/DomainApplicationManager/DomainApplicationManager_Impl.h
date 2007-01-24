@@ -116,7 +116,7 @@ namespace CIAO
      *
      * @@ What else do we need to initialize here?
      */
-    void init (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+    void init (void)
       ACE_THROW_SPEC ((CORBA::SystemException,
                        Deployment::ResourceNotAvailable,
                        Deployment::StartError,
@@ -203,7 +203,7 @@ namespace CIAO
      * Starts the application. Raises the StartError exception if
      * starting the application fails.
      */
-    virtual void start (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+    virtual void start (void)
       ACE_THROW_SPEC ((CORBA::SystemException,
                        ::Deployment::StartError));
 
@@ -213,14 +213,14 @@ namespace CIAO
      * InvalidReference exception if the appliction reference is
      * unknown.
      */
-    virtual void destroyApplication (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+    virtual void destroyApplication (void)
       ACE_THROW_SPEC ((CORBA::SystemException,
                        ::Deployment::StopError));
 
     /**
      * Returns the DeploymentPlan associated with this ApplicationManager.
      */
-    virtual ::Deployment::DeploymentPlan * getPlan (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+    virtual ::Deployment::DeploymentPlan * getPlan (void)
       ACE_THROW_SPEC ((CORBA::SystemException));
 
     /**
@@ -230,7 +230,7 @@ namespace CIAO
      * op invoked on it. This is part of the result for merging DAM
      * with DA.
      */
-    virtual void destroyManager (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+    virtual void destroyManager (void)
       ACE_THROW_SPEC ((CORBA::SystemException,
                        Deployment::StopError));
 

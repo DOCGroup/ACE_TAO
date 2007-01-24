@@ -1,3 +1,8 @@
+Wed Jan 24 13:00:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * *.{h,cpp,inl}
+          Removed part of the environment macros
+
 Mon Jan 22 23:14:56 2007  William R. Otte  <wotte@dre.vanderbilt.edu>
 
 	* CIAO version 0.5.5 released.

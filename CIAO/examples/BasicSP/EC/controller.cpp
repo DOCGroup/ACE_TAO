@@ -75,11 +75,10 @@ main (int argc, char *argv[])
   ACE_TRY_NEW_ENV
     {
       // Initialize orb
-      CORBA::ORB_var orb = CORBA::ORB_init (argc, 
+      CORBA::ORB_var orb = CORBA::ORB_init (argc,
 		                                        argv,
 					                                  ""
 					                                  ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       if (parse_args (argc, argv) != 0)
         {
@@ -89,45 +88,38 @@ main (int argc, char *argv[])
       CORBA::Object_var obj =
         orb->string_to_object (rategen_ior_
                                ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       BasicSP::EC_var pulser
         = BasicSP::EC::_narrow (obj.in ()
                                 ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       if (CORBA::is_nil (pulser.in ()))
         {
-          ACE_ERROR_RETURN ((LM_ERROR, 
+          ACE_ERROR_RETURN ((LM_ERROR,
                              "Unable to acquire 'EC' objref\n"),
                             -1);
         }
 
       pulser->hertz (rate
                      ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       if (turn_on)
         {
           pulser->hertz (rate
                          ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
 
           ACE_DEBUG ((LM_DEBUG, "Start up the Event services\n"));
 
-          pulser->start (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+          pulser->start ();
         }
       else
         {
-          pulser->stop (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+          pulser->stop ();
 
           ACE_DEBUG ((LM_DEBUG, "Stop the ES\n"));
         }
 
-      orb->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      orb->destroy ();
     }
   ACE_CATCHANY
     {

@@ -42,14 +42,11 @@ MyImpl::NavDisplayGUI_exec_impl::push_Refresh (
 
   // Refresh position
   HUDisplay::position_var loc =
-    this->context_->get_connection_GPSLocation (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+    this->context_->get_connection_GPSLocation ();
 
-  CORBA::Long lx = loc->posx (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+  CORBA::Long lx = loc->posx ();
 
-  CORBA::Long ly = loc->posy (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+  CORBA::Long ly = loc->posy ();
 
   mutex_.acquire();
 
@@ -87,7 +84,6 @@ MyImpl::NavDisplayGUI_exec_impl::set_session_context (Components::SessionContext
   this->context_ =
     HUDisplay::CCM_NavDisplay_Context::_narrow (ctx
                                          ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
   if (CORBA::is_nil (this->context_.in ()))
     ACE_THROW (CORBA::INTERNAL ());
@@ -95,14 +91,14 @@ MyImpl::NavDisplayGUI_exec_impl::set_session_context (Components::SessionContext
 }
 
 void
-MyImpl::NavDisplayGUI_exec_impl::ciao_preactivate (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+MyImpl::NavDisplayGUI_exec_impl::ciao_preactivate (void)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Components::CCMException))
 {
 }
 
 void
-MyImpl::NavDisplayGUI_exec_impl::ccm_activate (ACE_ENV_SINGLE_ARG_DECL)
+MyImpl::NavDisplayGUI_exec_impl::ccm_activate (void)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Components::CCMException))
 {
@@ -131,14 +127,14 @@ MyImpl::NavDisplayGUI_exec_impl::ccm_activate (ACE_ENV_SINGLE_ARG_DECL)
 }
 
 void
-MyImpl::NavDisplayGUI_exec_impl::ciao_postactivate (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+MyImpl::NavDisplayGUI_exec_impl::ciao_postactivate (void)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Components::CCMException))
 {
 }
 
 void
-MyImpl::NavDisplayGUI_exec_impl::ccm_passivate (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+MyImpl::NavDisplayGUI_exec_impl::ccm_passivate (void)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Components::CCMException))
 {
@@ -158,7 +154,7 @@ MyImpl::NavDisplayGUI_exec_impl::ccm_passivate (ACE_ENV_SINGLE_ARG_DECL_NOT_USED
 }
 
 void
-MyImpl::NavDisplayGUI_exec_impl::ccm_remove (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+MyImpl::NavDisplayGUI_exec_impl::ccm_remove (void)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Components::CCMException))
 {
@@ -187,7 +183,7 @@ MyImpl::NavDisplayGUIHome_exec_impl::~NavDisplayGUIHome_exec_impl ()
 // Implicit home operations.
 
 ::Components::EnterpriseComponent_ptr
-MyImpl::NavDisplayGUIHome_exec_impl::create (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+MyImpl::NavDisplayGUIHome_exec_impl::create (void)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Components::CCMException))
 {
