@@ -65,6 +65,22 @@ dump<Test::RecursiveStruct> (Test::RecursiveStruct * data)
 
 template<>
 void
+dump<Test::NestedRecursiveStruct> (Test::NestedRecursiveStruct * data)
+{
+  ACE_DEBUG ((LM_DEBUG,
+              "Test::NestedRecursiveStruct\n"
+              "%d\n"
+              "%u\n"
+              "%d\n"
+              "%d\n",
+              data->i,
+              data->ins.recursive_structs.length (),
+              data->ins.recursive_structs[0].i,
+              data->ins.recursive_structs[1].i));
+}
+
+template<>
+void
 dump<Test::RecursiveUnion> (Test::RecursiveUnion * data)
 {
   ACE_DEBUG ((LM_DEBUG, "Test::RecursiveUnion\n"));
@@ -105,7 +121,6 @@ perform_invocation (Test::Hello_ptr hello,
       CORBA::Any_var my_any =
         hello->get_any (the_any
                         ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
 
       T * my_foo = 0;
       if (!(my_any.in () >>= my_foo))
@@ -120,7 +135,6 @@ perform_invocation (Test::Hello_ptr hello,
       CORBA::Boolean const equal_tc =
         the_tc->equal (my_tc.in ()
                        ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
 
       if (!equal_tc)
         ACE_THROW (Test::Recursive_Type_In_Any_Test_Failed ());
@@ -128,7 +142,6 @@ perform_invocation (Test::Hello_ptr hello,
       CORBA::Boolean const equiv_tc =
         the_tc->equivalent (my_tc.in ()
                             ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
 
       if (!equiv_tc)
         ACE_THROW (Test::Recursive_Type_In_Any_Test_Failed ());
@@ -156,7 +169,29 @@ recursive_struct_test (CORBA::ORB_ptr /* orb */,
   ::perform_invocation<Test::RecursiveStruct> (hello,
                                                the_any
                                                ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+}
+
+void
+nested_recursive_struct_test (CORBA::ORB_ptr /* orb */,
+                       Test::Hello_ptr hello
+                       ACE_ENV_ARG_DECL)
+{
+  ACE_DEBUG ((LM_INFO,
+              "Executing nested recursive struct test\n"));
+
+  Test::NestedRecursiveStruct foo;
+
+  foo.ins.recursive_structs.length (2);
+  foo.ins.recursive_structs[0].i = 37;
+  foo.ins.recursive_structs[1].i = 11034;
+  foo.i = 12;
+
+  CORBA::Any the_any;
+  the_any <<= foo;
+
+  ::perform_invocation<Test::NestedRecursiveStruct> (hello,
+                                               the_any
+                                               ACE_ENV_ARG_PARAMETER);
 }
 
 void
@@ -179,7 +214,6 @@ recursive_union_test (CORBA::ORB_ptr /* orb */,
   ::perform_invocation<Test::EnumUnion> (hello,
                                          the_any
                                          ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
   // Non-recursive member case.
   foo.i (test_long);
@@ -189,7 +223,6 @@ recursive_union_test (CORBA::ORB_ptr /* orb */,
   ::perform_invocation<Test::RecursiveUnion> (hello,
                                               the_any
                                               ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
   // Recursive member case.
   Test::RecursiveUnionSeq seq;
@@ -204,7 +237,6 @@ recursive_union_test (CORBA::ORB_ptr /* orb */,
   ::perform_invocation<Test::RecursiveUnion> (hello,
                                               the_any
                                               ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
   // Recursive member case with no default member
   Test::RecursiveUnionSeqNoDefault seqnodefault;
@@ -220,7 +252,6 @@ recursive_union_test (CORBA::ORB_ptr /* orb */,
   ::perform_invocation<Test::RecursiveUnionNoDefault> (hello,
                                                        the_any
                                                        ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
   // Recursive member case with enum .
   Test::VSortRecursiveUnionSeq vsortseq;
@@ -236,7 +267,14 @@ recursive_union_test (CORBA::ORB_ptr /* orb */,
   ::perform_invocation<Test::VSortRecursiveUnion> (hello,
                                                    the_any
                                                    ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+
+  // Non-recursive member case with enum .
+  Test::NonRecursiveUnionWithEnum val;
+  the_any <<= val;
+
+  ::perform_invocation<Test::NonRecursiveUnionWithEnum> (hello,
+                                                         the_any
+                                                         ACE_ENV_ARG_PARAMETER);
 }
 
 
@@ -287,13 +325,11 @@ recursive_struct_typecodefactory_test (CORBA::ORB_ptr orb,
   CORBA::TypeCode_var recursive_tc =
     orb->create_recursive_tc ("IDL:Test/RecursiveStruct:1.0"
                               ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
   CORBA::TypeCode_var seq_tc =
     orb->create_sequence_tc (0,
                              recursive_tc.in ()
                              ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
   CORBA::StructMemberSeq members (3);
   members.length (3);
@@ -309,18 +345,15 @@ recursive_struct_typecodefactory_test (CORBA::ORB_ptr orb,
                            "RecursiveStruct",
                            members
                            ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
   // Reset the underlying TypeCode to the one we just created with the
   // TypeCodeFactory.
   the_any.type (struct_tc.in ()
                 ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
   ::perform_invocation<Test::RecursiveStruct> (hello,
                                                the_any
                                                ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 }
 
 void
@@ -392,7 +425,6 @@ struct Caller : public std::unary_function<T, void>
         f (orb.in (),
            hello.in ()
            ACE_ENV_ARG_PARAMETER);
-        ACE_TRY_CHECK;
       }
     ACE_CATCHANY
       {
@@ -402,7 +434,6 @@ struct Caller : public std::unary_function<T, void>
         success = false;
       }
     ACE_ENDTRY;
-    ACE_CHECK;
   }
 
   CORBA::ORB_var orb;
@@ -417,18 +448,15 @@ main (int argc, char *argv[])
     {
       CORBA::ORB_var orb =
         CORBA::ORB_init (argc, argv, "" ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       if (parse_args (argc, argv) != 0)
         return 1;
 
       CORBA::Object_var tmp =
         orb->string_to_object(ior ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       Test::Hello_var hello =
         Test::Hello::_narrow(tmp.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       if (CORBA::is_nil (hello.in ()))
         {
@@ -445,6 +473,7 @@ main (int argc, char *argv[])
       static test_func const tests[] =
         {
           recursive_struct_test
+          , nested_recursive_struct_test
           , recursive_union_test
           , indirectly_recursive_valuetype_test
           , directly_recursive_valuetype_test
@@ -468,11 +497,9 @@ main (int argc, char *argv[])
       if (!c.success)
         ACE_TRY_THROW (Test::Recursive_Type_In_Any_Test_Failed ());
 
-      hello->shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      hello->shutdown ();
 
-      orb->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      orb->destroy ();
     }
   ACE_CATCHANY
     {
