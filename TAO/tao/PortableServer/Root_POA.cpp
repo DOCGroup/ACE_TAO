@@ -1097,8 +1097,7 @@ TAO_Root_POA::add_ior_component_to_profile (
   // supposed to throw a CORBA::BAD_PARAM exception if no profile
   // matched the given ProfileId.
   if (found_profile == false)
-    throw ( ::CORBA::BAD_PARAM (CORBA::OMGVMCID | 29,
-                                 CORBA::COMPLETED_NO));
+    throw ::CORBA::BAD_PARAM (CORBA::OMGVMCID | 29, CORBA::COMPLETED_NO);
 }
 
 void
@@ -1261,8 +1260,8 @@ TAO_Root_POA::check_for_valid_wait_for_completions (const TAO_ORB_Core &orb_core
                 {
                   // CORBA 2.3 specifies which minor code corresponds
                   // to this particular problem.
-                  throw ( ::CORBA::BAD_INV_ORDER (CORBA::OMGVMCID | 3,
-                                                   CORBA::COMPLETED_NO));
+                  throw ::CORBA::BAD_INV_ORDER (CORBA::OMGVMCID | 3,
+                                                   CORBA::COMPLETED_NO);
                 }
             }
           else

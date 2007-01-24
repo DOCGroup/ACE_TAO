@@ -171,8 +171,7 @@ TAO_Optimized_Connection_Endpoint_Selector::select_endpoint
 
   // If we get here, we completely failed to find an endpoint selector
   // that we know how to use, so throw an exception.
-  throw ( ::CORBA::TRANSIENT (CORBA::OMGVMCID | 2,
-                               CORBA::COMPLETED_NO));
+  throw ::CORBA::TRANSIENT (CORBA::OMGVMCID | 2, CORBA::COMPLETED_NO);
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL

@@ -319,11 +319,11 @@ TAO_Thread_Lane::open (void)
                                             );
 
   if (result == -1)
-    throw ( ::CORBA::INTERNAL (
+    throw ::CORBA::INTERNAL (
                  CORBA::SystemException::_tao_minor_code (
                    TAO_ACCEPTOR_REGISTRY_OPEN_LOCATION_CODE,
                    0),
-                 CORBA::COMPLETED_NO));
+                 CORBA::COMPLETED_NO);
 }
 
 TAO_Thread_Lane::~TAO_Thread_Lane (void)
@@ -781,7 +781,7 @@ TAO_Thread_Pool_Manager::destroy_threadpool (RTCORBA::ThreadpoolId threadpool
 
     // If the thread pool is not found in our map.
     if (result != 0)
-      throw (RTCORBA::RTORB::InvalidThreadpool ());
+      throw RTCORBA::RTORB::InvalidThreadpool ();
   }
 
   // Mark the thread pool that we are shutting down.

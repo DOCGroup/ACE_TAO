@@ -148,11 +148,11 @@ TAO_SCIOP_Profile::parse_string_i (const char *ior
   if (okd == 0 || okd == ior)
     {
       // No object key delimiter or no hostname specified.
-      throw ( ::CORBA::INV_OBJREF (
+      throw ::CORBA::INV_OBJREF (
                    CORBA::SystemException::_tao_minor_code (
                      TAO::VMCID,
                      EINVAL),
-                   CORBA::COMPLETED_NO));
+                   CORBA::COMPLETED_NO);
     }
 
   // Length of host string.
@@ -163,11 +163,11 @@ TAO_SCIOP_Profile::parse_string_i (const char *ior
   if (cp_pos == ior)
     {
       // No hostname specified!  It is required by the spec.
-      throw ( ::CORBA::INV_OBJREF (
+      throw ::CORBA::INV_OBJREF (
                    CORBA::SystemException::_tao_minor_code (
                      TAO::VMCID,
                      EINVAL),
-                   CORBA::COMPLETED_NO));
+                   CORBA::COMPLETED_NO);
     }
   else if (cp_pos != 0)
     {
@@ -217,11 +217,11 @@ TAO_SCIOP_Profile::parse_string_i (const char *ior
                         ACE_TEXT ("cannot determine hostname")));
 
           // @@ What's the right exception to throw here?
-          throw ( ::CORBA::INV_OBJREF (
+          throw ::CORBA::INV_OBJREF (
                        CORBA::SystemException::_tao_minor_code (
                          TAO::VMCID,
                          EINVAL),
-                       CORBA::COMPLETED_NO));
+                       CORBA::COMPLETED_NO);
         }
       else
         this->endpoint_.host_ = CORBA::string_dup (tmp_host);
