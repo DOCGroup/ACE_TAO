@@ -102,7 +102,7 @@ main (int argc, char *argv[])
       obj = child_poa->id_to_reference (id.in() ACE_ENV_ARG_PARAMETER);
 
       Test::Hello_var hello =
-        Test::Hello::_narrow(obj.in() ACE_ENV_ARG_PARAMETER)
+        Test::Hello::_narrow(obj.in() ACE_ENV_ARG_PARAMETER);
 
       CORBA::String_var ior =
         orb->object_to_string (hello.in () ACE_ENV_ARG_PARAMETER);
