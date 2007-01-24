@@ -112,7 +112,7 @@ const char * TAO::PG_FactoryRegistry::identity () const
   return this->identity_.c_str();
 }
 
-void TAO::PG_FactoryRegistry::_remove_ref (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+void TAO::PG_FactoryRegistry::_remove_ref (void)
 {
   this->quit_state_ = GONE;
 }
@@ -136,7 +136,7 @@ int TAO::PG_FactoryRegistry::idle (int & result ACE_ENV_ARG_DECL_NOT_USED)
 }
 
 
-int TAO::PG_FactoryRegistry::fini (ACE_ENV_SINGLE_ARG_DECL)
+int TAO::PG_FactoryRegistry::fini (void)
 {
   if (this->ior_output_file_ != 0)
   {
@@ -164,18 +164,15 @@ void TAO::PG_FactoryRegistry::init (CORBA::ORB_ptr orb, PortableServer::POA_ptr 
 
   // Register with the POA.
   this->object_id_ = this->poa_->activate_object (this ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
   // find my identity as a corba object
   this->this_obj_ =
     this->poa_->id_to_reference (object_id_.in ()
                                  ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
   // and create a ior string
   this->ior_ = this->orb_->object_to_string (this->this_obj_.in ()
                                   ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
 }
 
@@ -190,7 +187,6 @@ int TAO::PG_FactoryRegistry::init (CORBA::ORB_ptr orb
   CORBA::Object_var poa_object =
     this->orb_->resolve_initial_references (TAO_OBJID_ROOTPOA
                                             ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
 
   if (CORBA::is_nil (poa_object.in ()))
     ACE_ERROR_RETURN ((LM_ERROR,
@@ -202,7 +198,6 @@ int TAO::PG_FactoryRegistry::init (CORBA::ORB_ptr orb
     PortableServer::POA::_narrow (poa_object.in ()
                                   ACE_ENV_ARG_PARAMETER);
 
-  ACE_CHECK_RETURN (-1);
 
   if (CORBA::is_nil (this->poa_.in()))
   {
@@ -212,27 +207,22 @@ int TAO::PG_FactoryRegistry::init (CORBA::ORB_ptr orb
   }
 
   PortableServer::POAManager_var poa_manager =
-    this->poa_->the_POAManager (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN(-1);
+    this->poa_->the_POAManager ();
 
-  poa_manager->activate (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN(-1);
+  poa_manager->activate ();
 
   // Register with the POA.
   this->object_id_ = this->poa_->activate_object (this ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN(-1);
 
   // find my identity as a corba object
   this->this_obj_ =
     this->poa_->id_to_reference (object_id_.in ()
                                  ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN(-1);
 
 
   // and create a ior string
   this->ior_ = this->orb_->object_to_string (this->this_obj_.in ()
                                   ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN(-1);
 
 
   if (this->ior_output_file_ != 0)
@@ -250,7 +240,6 @@ int TAO::PG_FactoryRegistry::init (CORBA::ORB_ptr orb
 
     CORBA::Object_var naming_obj =
       this->orb_->resolve_initial_references ("NameService" ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK_RETURN(-1);
 
     if (CORBA::is_nil(naming_obj.in ())){
       ACE_ERROR_RETURN ((LM_ERROR,
@@ -260,14 +249,12 @@ int TAO::PG_FactoryRegistry::init (CORBA::ORB_ptr orb
 
     this->naming_context_ =
       CosNaming::NamingContext::_narrow (naming_obj.in () ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK_RETURN(-1);
 
     this->this_name_.length (1);
     this->this_name_[0].id = CORBA::string_dup (this->ns_name_);
 
     this->naming_context_->rebind (this->this_name_, this->this_obj_.in()  //CORBA::Object::_duplicate(this_obj)
                             ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK_RETURN(-1);
   }
 
   return result;
@@ -328,7 +315,6 @@ void TAO::PG_FactoryRegistry::register_factory (
       ACE_NEW_THROW_EX (role_info,
                         RoleInfo(5),
                         CORBA::NO_MEMORY());
-      ACE_CHECK;
 
       ACE_AUTO_PTR_RESET (safe_entry, role_info, RoleInfo);
       role_info->type_id_ = type_id;
@@ -645,7 +631,6 @@ void TAO::PG_FactoryRegistry::unregister_factory_by_location (
   ACE_NEW_THROW_EX (result, ::PortableGroup::FactoryInfos(),
     CORBA::NO_MEMORY (TAO::VMCID, CORBA::COMPLETED_NO));
 
-  ACE_CHECK_RETURN (0);
 
   RoleInfo * role_info = 0;
   if (this->registry_.find(role, role_info) == 0)
@@ -676,7 +661,6 @@ void TAO::PG_FactoryRegistry::unregister_factory_by_location (
   ACE_NEW_THROW_EX (result, ::PortableGroup::FactoryInfos(this->registry_.current_size()),
     CORBA::NO_MEMORY (TAO::VMCID, CORBA::COMPLETED_NO));
 
-   ACE_CHECK_RETURN (0);
 
   size_t result_length = 0;
 

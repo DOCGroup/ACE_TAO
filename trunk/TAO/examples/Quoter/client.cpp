@@ -6,8 +6,8 @@
 
 #include "client.h"
 
-ACE_RCSID (Quoter, 
-           client, 
+ACE_RCSID (Quoter,
+           client,
            "$Id$")
 
 Quoter_Task::Quoter_Task (int argc, char **argv)
@@ -94,7 +94,6 @@ Quoter_Client::run (void)
     {
       exception_message = "While using get_quote ()";
       CORBA::Long q = this->quoter_var_->get_quote ("ACE Hardware" ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       if (this->debug_level_ >= 1)
         ACE_DEBUG ((LM_DEBUG, "Quoter Client: ACE Hardware = %i\n", q));
@@ -107,7 +106,6 @@ Quoter_Client::run (void)
         this->quoter_var_->copy (factory_Finder_var_.in (),
                                  criteria
                                  ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       if (CORBA::is_nil (quoterObj_var.in()))
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -119,7 +117,6 @@ Quoter_Client::run (void)
       Stock::Quoter_var copied_quoter_var =
         Stock::Quoter::_narrow (quoterObj_var.in ()
                                 ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       if (CORBA::is_nil (copied_quoter_var.in()))
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -131,7 +128,6 @@ Quoter_Client::run (void)
 
       exception_message = "While using get_quote () on copied object";
       q = copied_quoter_var->get_quote ("ACE Hardware" ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       if (this->debug_level_ >= 1)
         ACE_DEBUG ((LM_DEBUG, "Quoter Client: Copied object: ACE Hardware = %i\n", q));
@@ -168,7 +164,6 @@ Quoter_Client::init_naming_service (void)
       // Resolve the Naming Service
       CORBA::Object_var naming_obj =
         orb_->resolve_initial_references ("NameService" ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       if (CORBA::is_nil (naming_obj.in ()))
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -178,7 +173,6 @@ Quoter_Client::init_naming_service (void)
       exception_message = "While narrowing the naming context";
       CosNaming::NamingContext_var naming_context =
         CosNaming::NamingContext::_narrow (naming_obj.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       if (this->debug_level_ >= 2)
         ACE_DEBUG ((LM_DEBUG, "Quoter Client: Have a proper reference to the Naming Service.\n"));
@@ -195,7 +189,6 @@ Quoter_Client::init_naming_service (void)
       CORBA::Object_var factory_obj =
         naming_context->resolve (quoterFactoryFinderName
                                  ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       if (this->debug_level_ >= 2)
         ACE_DEBUG ((LM_DEBUG, "Quoter Client: Resolved the Quoter Factory Finder!\n"));
@@ -204,7 +197,6 @@ Quoter_Client::init_naming_service (void)
       factory_Finder_var_ =
         Stock::Quoter_Factory_Finder::_narrow (factory_obj.in ()
                                                ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       if (CORBA::is_nil (factory_Finder_var_.in ()))
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -238,7 +230,6 @@ Quoter_Client::init_naming_service (void)
       exception_message = "While finding factories";
       CosLifeCycle::Factories *factories_ptr =
           factory_Finder_var_->find_factories (factoryName ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       if (factories_ptr == 0)
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -268,7 +259,6 @@ Quoter_Client::init_naming_service (void)
       generic_Factory_var_ =
         CosLifeCycle::GenericFactory::_narrow (quoter_FactoryObj_var.in ()
                                                ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       if (CORBA::is_nil (this->generic_Factory_var_.in ()))
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -313,7 +303,6 @@ Quoter_Client::init (int argc, char **argv)
                                     this->argv_,
                                     "internet"
                                     ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       // Parse command line and verify parameters.
       if (this->parse_args () == -1)
@@ -343,10 +332,8 @@ Quoter_Client::init (int argc, char **argv)
         this->generic_Factory_var_->create_object (genericFactoryName,
                                                    criteria
                                                    ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       this->quoter_var_ = Stock::Quoter::_narrow (quoterObject_var.in() ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       if (this->debug_level_ >= 2)
         ACE_DEBUG ((LM_DEBUG, "Quoter Client: Quoter Created\n"));

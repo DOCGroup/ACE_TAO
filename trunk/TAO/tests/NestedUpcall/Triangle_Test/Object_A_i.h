@@ -38,7 +38,7 @@ public:
                     ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual void finish (ACE_ENV_SINGLE_ARG_DECL)
+  virtual void finish (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   unsigned long finish_two_way_call_;

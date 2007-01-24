@@ -43,18 +43,15 @@ main (int argc, char *argv[])
     {
       CORBA::ORB_var orb =
         CORBA::ORB_init (argc, argv, "" ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       if (parse_args (argc, argv) != 0)
         return 1;
 
       CORBA::Object_var tmp =
         orb->string_to_object(ior ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       Test::Hello_var hello =
         Test::Hello::_narrow(tmp.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       if (CORBA::is_nil (hello.in ()))
         {
@@ -63,14 +60,12 @@ main (int argc, char *argv[])
                              ior),
                             1);
         }
-        
+
       CORBA::Object_var poa_object =
         orb->resolve_initial_references("RootPOA" ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       PortableServer::POA_var root_poa =
         PortableServer::POA::_narrow (poa_object.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       if (CORBA::is_nil (root_poa.in ()))
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -78,8 +73,7 @@ main (int argc, char *argv[])
                           1);
 
       PortableServer::POAManager_var poa_manager =
-        root_poa->the_POAManager (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        root_poa->the_POAManager ();
 
       if (parse_args (argc, argv) != 0)
         return 1;
@@ -91,15 +85,13 @@ main (int argc, char *argv[])
       PortableServer::ServantBase_var owner_transfer(hello_impl);
 
       Test::Hello_var me =
-        hello_impl->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        hello_impl->_this ();
 
-      poa_manager->activate (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      poa_manager->activate ();
 
       ACE_TRY
         {
-          hello->throw_exception (ACE_ENV_SINGLE_ARG_PARAMETER);
+          hello->throw_exception ();
         }
       ACE_CATCH (Test::MyException, my_ex)
         {
@@ -107,15 +99,12 @@ main (int argc, char *argv[])
           ACE_DEBUG ((LM_DEBUG, "Client catches a MyException, as expected. No problem !\n"));
         }
       ACE_ENDTRY;
-      
-      result = ! hello->call_me_back (me.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
-      
-      hello->shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
-      orb->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      result = ! hello->call_me_back (me.in () ACE_ENV_ARG_PARAMETER);
+
+      hello->shutdown ();
+
+      orb->destroy ();
     }
   ACE_CATCHANY
     {

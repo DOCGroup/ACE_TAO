@@ -21,7 +21,7 @@
 class test_i : public POA_test
 {
 public:
-  void destroy_poa (ACE_ENV_SINGLE_ARG_DECL)
+  void destroy_poa (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   void test_poa (PortableServer::POA_ptr poa);
@@ -36,7 +36,7 @@ test_i::test_poa (PortableServer::POA_ptr poa)
 }
 
 void
-test_i::destroy_poa (ACE_ENV_SINGLE_ARG_DECL)
+test_i::destroy_poa (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   CORBA::Boolean etherealize_objects = 1;
@@ -44,7 +44,6 @@ test_i::destroy_poa (ACE_ENV_SINGLE_ARG_DECL)
   this->poa_->destroy (etherealize_objects,
                        wait_for_completion
                        ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 }
 
 PortableServer::POA_ptr
@@ -58,27 +57,22 @@ init_orb (int argc,
                                         argv,
                                         orb_name
                                         ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (PortableServer::POA::_nil ());
 
   // Obtain the RootPOA.
   CORBA::Object_var obj =
     orb->resolve_initial_references ("RootPOA"
                                      ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (PortableServer::POA::_nil ());
 
   // Get the POA_var object from Object_var.
   PortableServer::POA_var root_poa =
     PortableServer::POA::_narrow (obj.in ()
                                   ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (PortableServer::POA::_nil ());
 
   // Get the POAManager of the RootPOA.
   PortableServer::POAManager_var poa_manager =
-    root_poa->the_POAManager (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (PortableServer::POA::_nil ());
+    root_poa->the_POAManager ();
 
-  poa_manager->activate (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (PortableServer::POA::_nil ());
+  poa_manager->activate ();
 
   return root_poa._retn ();
 }
@@ -96,18 +90,15 @@ main (int argc,
                   argv,
                   "first ORB"
                   ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       PortableServer::POA_var second_poa =
         init_orb (argc,
                   argv,
                   "second ORB"
                   ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       test_i servant;
-      test_var test_object = servant._this (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      test_var test_object = servant._this ();
 
       int expected_exception_raised = 0;
 
@@ -115,7 +106,7 @@ main (int argc,
         {
           servant.test_poa (first_poa.in ());
 
-          test_object->destroy_poa (ACE_ENV_SINGLE_ARG_PARAMETER);
+          test_object->destroy_poa ();
           ACE_TRY_CHECK_EX (first_poa);
         }
       ACE_CATCH (CORBA::BAD_INV_ORDER, ex)
@@ -129,7 +120,6 @@ main (int argc,
           return -1;
         }
       ACE_ENDTRY;
-      ACE_CHECK_RETURN (-1);
 
       // Make sure an exception was raised and it was of the correct
       // type.
@@ -140,11 +130,9 @@ main (int argc,
 
       servant.test_poa (second_poa.in ());
 
-      test_object->destroy_poa (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      test_object->destroy_poa ();
 
       first_poa->destroy (1, 1 ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
     }
   ACE_CATCHANY
     {
@@ -152,7 +140,6 @@ main (int argc,
       return -1;
     }
   ACE_ENDTRY;
-  ACE_CHECK_RETURN (-1);
 
   return 0;
 }

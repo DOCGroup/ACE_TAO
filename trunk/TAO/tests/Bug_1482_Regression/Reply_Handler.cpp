@@ -23,8 +23,7 @@ Reply_Handler::next_prime_excep (
 
   ACE_TRY
     {
-      ex->raise_exception (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      ex->raise_exception ();
     }
   ACE_CATCH (CORBA::COMM_FAILURE, t)
     {
@@ -34,10 +33,8 @@ Reply_Handler::next_prime_excep (
 
       ACE_Time_Value tv (10, 0);
       this->orb_->run (tv ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       this->orb_->shutdown (0 ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
     }
   ACE_CATCHANY
     {
@@ -45,5 +42,4 @@ Reply_Handler::next_prime_excep (
                            "Caught exception:");
     }
   ACE_ENDTRY;
-  ACE_CHECK;
 }

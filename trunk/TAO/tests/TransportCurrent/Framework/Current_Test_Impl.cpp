@@ -22,14 +22,14 @@ Current_Test_Impl::~Current_Test_Impl (void)
 }
 
 ::CORBA::Long
-Current_Test_Impl::self_test (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+Current_Test_Impl::self_test (void)
         ACE_THROW_SPEC ((::CORBA::SystemException))
 {
   return 0;
 }
 
 void
-Current_Test_Impl::test_transport_current (ACE_ENV_SINGLE_ARG_DECL)
+Current_Test_Impl::test_transport_current (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   if (TAO_debug_level > 2) {
@@ -40,29 +40,22 @@ Current_Test_Impl::test_transport_current (ACE_ENV_SINGLE_ARG_DECL)
   CORBA::Object_var tcobject =
     orb_->resolve_initial_references ("TAO::Transport::Current"
                                       ACE_ENV_ARG_PARAMETER);
-  ACE_TRY_CHECK;
 
   TAO::Transport::Current_var tc =
     TAO::Transport::Current::_narrow (tcobject.in ()
                                       ACE_ENV_SINGLE_ARG_DECL);
-  ACE_TRY_CHECK;
 
   if (TAO_debug_level >= 1)
     {
-      ::CORBA::Long id = tc->id (ACE_ENV_SINGLE_ARG_DECL);
-      ACE_TRY_CHECK;
+      ::CORBA::Long id = tc->id (void);
 
-      ::TAO::CounterT bs = tc->bytes_sent (ACE_ENV_SINGLE_ARG_DECL);
-      ACE_TRY_CHECK;
+      ::TAO::CounterT bs = tc->bytes_sent (void);
 
-      ::TAO::CounterT br = tc->bytes_received (ACE_ENV_SINGLE_ARG_DECL);
-      ACE_TRY_CHECK;
+      ::TAO::CounterT br = tc->bytes_received (void);
 
-      ::TAO::CounterT rs = tc->messages_sent (ACE_ENV_SINGLE_ARG_DECL);
-      ACE_TRY_CHECK;
+      ::TAO::CounterT rs = tc->messages_sent (void);
 
-      ::TAO::CounterT rr = tc->messages_received (ACE_ENV_SINGLE_ARG_DECL);
-      ACE_TRY_CHECK;
+      ::TAO::CounterT rr = tc->messages_received (void);
 
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("Current_Test_Impl (%P|%t) Transport [%q] - Sent/Received [bytes=%q/%q, messages=%q/%q]\n"),
@@ -80,13 +73,12 @@ Current_Test_Impl::test_transport_current (ACE_ENV_SINGLE_ARG_DECL)
 }
 
 void
-Current_Test_Impl::invoked_by_client (ACE_ENV_SINGLE_ARG_DECL)
+Current_Test_Impl::invoked_by_client (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_TRY
     {
-      this->invoked_by_client_i (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      this->invoked_by_client_i ();
     }
   ACE_CATCH (TAO::Transport::NoContext, ex)
     {
@@ -102,7 +94,7 @@ Current_Test_Impl::invoked_by_client (ACE_ENV_SINGLE_ARG_DECL)
 }
 
 void
-Current_Test_Impl::invoked_by_client_i (ACE_ENV_SINGLE_ARG_DECL)
+Current_Test_Impl::invoked_by_client_i (void)
   ACE_THROW_SPEC ((CORBA::SystemException, TAO::Transport::NoContext))
 {
   if (TAO_debug_level > 2) {
@@ -110,20 +102,17 @@ Current_Test_Impl::invoked_by_client_i (ACE_ENV_SINGLE_ARG_DECL)
                 ACE_TEXT ("(%P|%t) server - Testing inside an upcall\n")));
   }
 
-  this->test_transport_current (ACE_ENV_SINGLE_ARG_DECL);
-  ACE_TRY_CHECK;
+  this->test_transport_current (void);
 
   if (this->do_collocated_calls_)
     {
       CORBA::Object_var selfobject =
         poa_->servant_to_reference (this
                                     ACE_ENV_SINGLE_ARG_DECL);
-      ACE_TRY_CHECK;
 
       Test::Transport::CurrentTest_var self =
         Test::Transport::CurrentTest::_narrow (selfobject.in ()
                                                ACE_ENV_SINGLE_ARG_DECL);
-      ACE_TRY_CHECK;
 
       if (TAO_debug_level >= 1)
         {
@@ -131,7 +120,6 @@ Current_Test_Impl::invoked_by_client_i (ACE_ENV_SINGLE_ARG_DECL)
                       ACE_TEXT ("(%P|%t) server - Testing a collocated call\n")));
         }
       self->invoked_during_upcall (ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
     }
   else
     {
@@ -144,7 +132,7 @@ Current_Test_Impl::invoked_by_client_i (ACE_ENV_SINGLE_ARG_DECL)
 }
 
 void
-Current_Test_Impl::invoked_during_upcall (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+Current_Test_Impl::invoked_during_upcall (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   if (TAO_debug_level > 2) {
@@ -156,7 +144,7 @@ Current_Test_Impl::invoked_during_upcall (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
 }
 
 void
-Current_Test_Impl::shutdown (ACE_ENV_SINGLE_ARG_DECL)
+Current_Test_Impl::shutdown (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   if (TAO_debug_level > 2) {

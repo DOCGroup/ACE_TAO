@@ -50,7 +50,7 @@ public:
   virtual void init (ACE_Arg_Shifter& arg_shifter);
 
     /// Implement command execution.
-  virtual void execute_i (ACE_ENV_SINGLE_ARG_DECL) = 0;
+  virtual void execute_i (void) = 0;
 
   /// Return the name of this command.
   virtual const char* get_name (void)= 0;
@@ -68,7 +68,7 @@ protected:
 
 private:
   /// Execute the command.
-  void execute (ACE_ENV_SINGLE_ARG_DECL);
+  void execute (void);
 
   /// Save the next command to exec.
   void next (TAO_Notify_Tests_Command* command);

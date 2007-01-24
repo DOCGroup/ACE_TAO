@@ -111,7 +111,6 @@ test_codec (IOP::Codec_ptr codec)
   // includes the TypeCode in the CDR encapsulation.
   encoded_data = codec->encode (data
                                 ACE_ENV_ARG_PARAMETER);
-  ACE_TRY_CHECK;
 
   if ((reinterpret_cast<ptrdiff_t> (encoded_data->get_buffer ())
           % ACE_CDR::MAX_ALIGNMENT) == 0)
@@ -121,7 +120,6 @@ test_codec (IOP::Codec_ptr codec)
   // Extract the data from the octet sequence.
   decoded_data = codec->decode (encoded_data.in ()
                                 ACE_ENV_ARG_PARAMETER);
-  ACE_TRY_CHECK;
 
   if (!(decoded_data.in() >>= extracted_value))
     ACE_ERROR_RETURN ((LM_ERROR,
@@ -148,7 +146,6 @@ test_codec (IOP::Codec_ptr codec)
   // *not* include the TypeCode in the CDR encapsulation.
   encoded_data = codec->encode_value (data
                                       ACE_ENV_ARG_PARAMETER);
-  ACE_TRY_CHECK;
 
   if ((reinterpret_cast<ptrdiff_t> (encoded_data->get_buffer ())
           % ACE_CDR::MAX_ALIGNMENT) == 0)
@@ -161,7 +158,6 @@ test_codec (IOP::Codec_ptr codec)
   decoded_data = codec->decode_value (encoded_data.in (),
                                       Foo::_tc_Bar
                                       ACE_ENV_ARG_PARAMETER);
-  ACE_TRY_CHECK;
 
   if (!(decoded_data.in() >>= extracted_value))
     ACE_ERROR_RETURN ((LM_ERROR,
@@ -193,18 +189,15 @@ main (int argc, char *argv[])
                          argv,
                          "my_orb"
                          ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       // Obtain a reference to the CodecFactory.
       CORBA::Object_var obj =
         orb->resolve_initial_references ("CodecFactory"
                                          ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       IOP::CodecFactory_var codec_factory =
         IOP::CodecFactory::_narrow (obj.in ()
                                     ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       // Set up a structure that contains information necessary to
       // create a GIOP 1.1 CDR encapsulation Codec.
@@ -219,7 +212,6 @@ main (int argc, char *argv[])
       IOP::Codec_var codec_1_2 =
         codec_factory->create_codec_with_codesets (encoding_1_2
                                                    ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       retval = test_codec (codec_1_2.in ());
 
@@ -236,7 +228,6 @@ main (int argc, char *argv[])
       IOP::Codec_var codec =
         codec_factory->create_codec (encoding
                                      ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       retval = test_codec (codec.in ());
     }

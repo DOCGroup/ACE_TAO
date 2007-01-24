@@ -36,10 +36,10 @@ public:
       ACE_ENV_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual OBV_AnyTest::VB * get_vb (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+  virtual OBV_AnyTest::VB * get_vb (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual void shutdown (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+  virtual void shutdown (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
 private:

@@ -54,8 +54,8 @@ public:
   void init (TAO_Notify_EventChannel *ec ACE_ENV_ARG_DECL);
 
   /// ServantBase refcount methods.
-  virtual void _add_ref (ACE_ENV_SINGLE_ARG_DECL);
-  virtual void _remove_ref (ACE_ENV_SINGLE_ARG_DECL);
+  virtual void _add_ref (void);
+  virtual void _remove_ref (void);
 
 
   virtual const char * get_admin_type_name () const;
@@ -92,7 +92,7 @@ protected:
                      ));
 
   /// = CosNotifyChannelAdmin::ConsumerAdmin methods
-  virtual CosNotifyChannelAdmin::AdminID MyID (ACE_ENV_SINGLE_ARG_DECL)
+  virtual CosNotifyChannelAdmin::AdminID MyID (void)
     ACE_THROW_SPEC ((
                      CORBA::SystemException
                      ));
@@ -104,7 +104,7 @@ protected:
                      CORBA::SystemException
                      ));
 
-  virtual ::CosNotifyChannelAdmin::InterFilterGroupOperator MyOperator (ACE_ENV_SINGLE_ARG_DECL)
+  virtual ::CosNotifyChannelAdmin::InterFilterGroupOperator MyOperator (void)
     ACE_THROW_SPEC ((
                      CORBA::SystemException
                      ));
@@ -121,7 +121,7 @@ protected:
                      CORBA::SystemException
                      ));
 
-  virtual ::CosNotifyFilter::MappingFilter_ptr lifetime_filter (ACE_ENV_SINGLE_ARG_DECL)
+  virtual ::CosNotifyFilter::MappingFilter_ptr lifetime_filter (void)
     ACE_THROW_SPEC ((
                      CORBA::SystemException
                      ));
@@ -132,12 +132,12 @@ protected:
                      CORBA::SystemException
                      ));
 
-  virtual ::CosNotifyChannelAdmin::ProxyIDSeq * pull_suppliers (ACE_ENV_SINGLE_ARG_DECL)
+  virtual ::CosNotifyChannelAdmin::ProxyIDSeq * pull_suppliers (void)
     ACE_THROW_SPEC ((
                      CORBA::SystemException
                      ));
 
-  virtual ::CosNotifyChannelAdmin::ProxyIDSeq * push_suppliers (ACE_ENV_SINGLE_ARG_DECL)
+  virtual ::CosNotifyChannelAdmin::ProxyIDSeq * push_suppliers (void)
     ACE_THROW_SPEC ((
                      CORBA::SystemException
                      ));
@@ -167,12 +167,12 @@ protected:
                      , CosNotifyChannelAdmin::AdminLimitExceeded
                      ));
 
-  virtual void destroy (ACE_ENV_SINGLE_ARG_DECL)
+  virtual void destroy (void)
     ACE_THROW_SPEC ((
                      CORBA::SystemException
                      ));
 
-  virtual ::CosNotification::QoSProperties * get_qos (ACE_ENV_SINGLE_ARG_DECL)
+  virtual ::CosNotification::QoSProperties * get_qos (void)
     ACE_THROW_SPEC ((
                      CORBA::SystemException
                      ));
@@ -217,22 +217,22 @@ protected:
                      , CosNotifyFilter::FilterNotFound
                      ));
 
-  virtual ::CosNotifyFilter::FilterIDSeq * get_all_filters (ACE_ENV_SINGLE_ARG_DECL)
+  virtual ::CosNotifyFilter::FilterIDSeq * get_all_filters (void)
     ACE_THROW_SPEC ((
                      CORBA::SystemException
                      ));
 
-  virtual void remove_all_filters (ACE_ENV_SINGLE_ARG_DECL)
+  virtual void remove_all_filters (void)
     ACE_THROW_SPEC ((
                      CORBA::SystemException
                      ));
 
-  virtual ::CosEventChannelAdmin::ProxyPushSupplier_ptr obtain_push_supplier (ACE_ENV_SINGLE_ARG_DECL)
+  virtual ::CosEventChannelAdmin::ProxyPushSupplier_ptr obtain_push_supplier (void)
     ACE_THROW_SPEC ((
                      CORBA::SystemException
                      ));
 
-  virtual ::CosEventChannelAdmin::ProxyPullSupplier_ptr obtain_pull_supplier (ACE_ENV_SINGLE_ARG_DECL)
+  virtual ::CosEventChannelAdmin::ProxyPullSupplier_ptr obtain_pull_supplier (void)
     ACE_THROW_SPEC ((
                      CORBA::SystemException
                      ));

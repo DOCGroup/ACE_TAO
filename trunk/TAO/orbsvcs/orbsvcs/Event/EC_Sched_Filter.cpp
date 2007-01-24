@@ -73,8 +73,7 @@ void
 TAO_EC_Sched_Filter::compute_qos_info (TAO_EC_QOS_Info& qos_info
                                        ACE_ENV_ARG_DECL)
 {
-  this->init_rt_info (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+  this->init_rt_info ();
 
   qos_info.rt_info = this->rt_info_;
   switch (this->info_type_)
@@ -94,7 +93,6 @@ TAO_EC_Sched_Filter::compute_qos_info (TAO_EC_QOS_Info& qos_info
                                     p_subpriority,
                                     p_priority
                                      ACE_ENV_ARG_PARAMETER);
-        ACE_CHECK;
         qos_info.preemption_priority = p_priority;
       }
     }
@@ -108,10 +106,8 @@ TAO_EC_Sched_Filter::push (const RtecEventComm::EventSet &event,
   if (this->parent () != 0)
     {
       this->compute_qos_info (qos_info ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
 
       this->parent ()->push (event, qos_info ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
     }
 }
 
@@ -123,10 +119,8 @@ TAO_EC_Sched_Filter::push_nocopy (RtecEventComm::EventSet &event,
   if (this->parent () != 0)
     {
       this->compute_qos_info (qos_info ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
 
       this->parent ()->push_nocopy (event, qos_info ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
     }
 }
 
@@ -153,24 +147,20 @@ TAO_EC_Sched_Filter::add_dependencies (const RtecEventComm::EventHeader& header,
                                        const TAO_EC_QOS_Info &qos_info
                                        ACE_ENV_ARG_DECL)
 {
-  this->init_rt_info (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (0);
+  this->init_rt_info ();
 
   int matches = this->body_->add_dependencies (header,
                                                qos_info
                                                 ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (0);
 
   if (matches != 0)
     {
       this->scheduler_->add_dependency (this->rt_info_, qos_info.rt_info, 1,
                                         RtecBase::TWO_WAY_CALL
                                          ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK_RETURN (0);
 
       RtecScheduler::RT_Info_var info =
         this->scheduler_->get (qos_info.rt_info ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK_RETURN (0);
       ACE_DEBUG ((LM_DEBUG, "[%s] ----> [%s]\n",
                   this->name_.c_str (),
                   info->entry_point.in ()));
@@ -180,7 +170,6 @@ TAO_EC_Sched_Filter::add_dependencies (const RtecEventComm::EventHeader& header,
   for (ChildrenIterator i = this->begin (); i != end; ++i)
     {
       (*i)->add_dependencies (header, qos_info ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK_RETURN (0);
     }
   return 0;
 }
@@ -189,14 +178,13 @@ void
 TAO_EC_Sched_Filter::get_qos_info (TAO_EC_QOS_Info& qos_info
                                    ACE_ENV_ARG_DECL)
 {
-  this->init_rt_info (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+  this->init_rt_info ();
 
   qos_info.rt_info = this->rt_info_;
 }
 
 void
-TAO_EC_Sched_Filter::init_rt_info (ACE_ENV_SINGLE_ARG_DECL)
+TAO_EC_Sched_Filter::init_rt_info (void)
 {
   if (this->rt_info_computed_)
     return;
@@ -214,7 +202,6 @@ TAO_EC_Sched_Filter::init_rt_info (ACE_ENV_SINGLE_ARG_DECL)
                          0, // threads
                          this->info_type_
                           ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
 #if 0
   ChildrenIterator end = this->end ();
@@ -224,17 +211,14 @@ TAO_EC_Sched_Filter::init_rt_info (ACE_ENV_SINGLE_ARG_DECL)
 
       TAO_EC_QOS_Info child;
       filter->get_qos_info (child ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
 
       this->scheduler_->add_dependency (this->rt_info_,
                                         child.rt_info, 1,
                                         RtecBase::TWO_WAY_CALL
                                          ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
 
       RtecScheduler::RT_Info_var info =
         this->scheduler_->get (child.rt_info ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
       ACE_DEBUG ((LM_DEBUG, "[%s] ----> [%s]\n",
                   info->entry_point.in (),
                   this->name_.c_str ()));
@@ -250,11 +234,9 @@ TAO_EC_Sched_Filter::init_rt_info (ACE_ENV_SINGLE_ARG_DECL)
                                         1,
                                         RtecBase::TWO_WAY_CALL
                                          ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
 
       RtecScheduler::RT_Info_var info =
         this->scheduler_->get (this->body_info_ ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
       ACE_DEBUG ((LM_DEBUG, "[%s] ----> [%s]\n",
                   info->entry_point.in (),
                   this->name_.c_str ()));
@@ -267,11 +249,9 @@ TAO_EC_Sched_Filter::init_rt_info (ACE_ENV_SINGLE_ARG_DECL)
                                     1,
                                     RtecBase::TWO_WAY_CALL
                                      ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
   RtecScheduler::RT_Info_var info =
     this->scheduler_->get (this->parent_info_ ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
   ACE_DEBUG ((LM_DEBUG, "[%s] ----> [%s]\n",
               this->name_.c_str (),
               info->entry_point.in ()));

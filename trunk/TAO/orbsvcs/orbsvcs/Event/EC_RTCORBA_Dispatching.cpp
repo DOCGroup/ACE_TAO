@@ -85,8 +85,7 @@ TAO_EC_RTCORBA_Dispatching::push_nocopy (TAO_EC_ProxyPushSupplier* proxy,
                                          ACE_ENV_ARG_DECL)
 {
   RTCORBA::Priority current_priority =
-    this->current_->the_priority (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+    this->current_->the_priority ();
 
   for (CORBA::ULong i = 0; i != this->lanes_.length (); ++i)
     {
@@ -98,7 +97,6 @@ TAO_EC_RTCORBA_Dispatching::push_nocopy (TAO_EC_ProxyPushSupplier* proxy,
 
       this->tasks_[i].push (proxy, consumer, event
                             ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
       break;
     }
 }

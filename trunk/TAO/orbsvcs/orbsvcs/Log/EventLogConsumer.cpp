@@ -10,7 +10,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_Event_LogConsumer::TAO_Event_LogConsumer (TAO_EventLog_i *log)
 : log_ (log)
-{  
+{
 }
 
 TAO_Event_LogConsumer::~TAO_Event_LogConsumer (void)
@@ -63,11 +63,10 @@ ACE_THROW_SPEC ((
   //
   // I have submitted a defect report to the OMG for clarification.
   //    --jtc
-  ACE_TRY 
+  ACE_TRY
     {
       // log the RecordList.
       this->log_->write_recordlist (recList ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
     }
   ACE_CATCH (DsLogAdmin::LogFull, ex)
     {
@@ -89,12 +88,12 @@ ACE_THROW_SPEC ((
 }
 
 void
-TAO_Event_LogConsumer::disconnect_push_consumer (ACE_ENV_SINGLE_ARG_DECL)
+TAO_Event_LogConsumer::disconnect_push_consumer (void)
         ACE_THROW_SPEC ((
                 CORBA::SystemException
         ))
 {
-  this->supplier_proxy_->disconnect_push_supplier (ACE_ENV_SINGLE_ARG_PARAMETER);
+  this->supplier_proxy_->disconnect_push_supplier ();
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL

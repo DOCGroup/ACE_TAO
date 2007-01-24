@@ -35,18 +35,18 @@ namespace TAO_FTRTEC
             ACE_ENV_ARG_DECL);
 
       RtecEventChannelAdmin::EventChannel_ptr
-        _this(ACE_ENV_SINGLE_ARG_DECL);
+        _this(void);
 
       //= The RtecEventChannelAdmin::EventChannel methods
       virtual RtecEventChannelAdmin::ConsumerAdmin_ptr
-        for_consumers (ACE_ENV_SINGLE_ARG_DECL)
+        for_consumers (void)
           ACE_THROW_SPEC((CORBA::SystemException));
 
       virtual RtecEventChannelAdmin::SupplierAdmin_ptr
-        for_suppliers (ACE_ENV_SINGLE_ARG_DECL)
+        for_suppliers (void)
           ACE_THROW_SPEC((CORBA::SystemException));
 
-      virtual void destroy (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+      virtual void destroy (void)
          ACE_THROW_SPEC((CORBA::SystemException));
 
       virtual RtecEventChannelAdmin::Observer_Handle

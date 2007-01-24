@@ -24,14 +24,14 @@ public:
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   /// No-op.
-  virtual void disconnect_push_consumer (ACE_ENV_SINGLE_ARG_DECL)
+  virtual void disconnect_push_consumer (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
 private:
 
   /// Helper - destroys EC, shutdowns the ORB and prints number of
   /// events received.
-  void disconnect (ACE_ENV_SINGLE_ARG_DECL)
+  void disconnect (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   /// Number of events of different types pushed to us by EC.
@@ -88,17 +88,17 @@ EC_Consumer::push (const RtecEventComm::EventSet &events
   if (this->a_events_ >= 100
       && this->b_events_ >= 100
       && this->c_events_ >= 100)
-    this->disconnect (ACE_ENV_SINGLE_ARG_PARAMETER);
+    this->disconnect ();
 }
 
 void
-EC_Consumer::disconnect_push_consumer (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+EC_Consumer::disconnect_push_consumer (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
 }
 
 void
-EC_Consumer::disconnect (ACE_ENV_SINGLE_ARG_DECL)
+EC_Consumer::disconnect (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   if (this->a_events_ == 100
@@ -111,8 +111,7 @@ EC_Consumer::disconnect (ACE_ENV_SINGLE_ARG_DECL)
                   "(A, B, and C), as expected\n"));
     }
 
-  this->ec_->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+  this->ec_->destroy ();
 
   this->orb_->shutdown (0 ACE_ENV_ARG_PARAMETER);
 }
@@ -144,31 +143,25 @@ main (int argc, char *argv[])
       // Initialize ORB and POA, POA Manager, parse args.
       CORBA::ORB_var orb =
         CORBA::ORB_init (argc, argv, "" ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       if (parse_args (argc, argv) == -1)
         return 1;
 
       CORBA::Object_var obj =
         orb->resolve_initial_references ("RootPOA" ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
       PortableServer::POA_var poa =
         PortableServer::POA::_narrow (obj.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
       if (check_for_nil (poa.in (), "POA") == -1)
         return 1;
 
       PortableServer::POAManager_var manager =
-        poa->the_POAManager (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        poa->the_POAManager ();
 
       // Obtain reference to EC.
       obj = orb->resolve_initial_references ("Event_Service" ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
       RtecEventChannelAdmin::EventChannel_var ec =
         RtecEventChannelAdmin::EventChannel::_narrow (obj.in ()
                                                       ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
       if (check_for_nil (ec.in (), "EC") == -1)
         return 1;
 
@@ -186,18 +179,15 @@ main (int argc, char *argv[])
                 consumer_impl.in (),
                 consumer_deactivator
                 ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
       consumer_deactivator.disallow_deactivation ();
 
       // Obtain reference to ConsumerAdmin.
       RtecEventChannelAdmin::ConsumerAdmin_var consumer_admin =
-        ec->for_consumers (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        ec->for_consumers ();
 
       // Obtain ProxyPushSupplier and connect this consumer.
       RtecEventChannelAdmin::ProxyPushSupplier_var supplier =
-        consumer_admin->obtain_push_supplier (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        consumer_admin->obtain_push_supplier ();
 
       ACE_ConsumerQOS_Factory qos;
       qos.start_disjunction_group (3);
@@ -207,15 +197,12 @@ main (int argc, char *argv[])
       supplier->connect_push_consumer (consumer.in (),
                                        qos.get_ConsumerQOS ()
                                        ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       // Allow processing of CORBA requests.
-      manager->activate (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      manager->activate ();
 
       // Receive events from EC.
-      orb->run (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      orb->run ();
     }
   ACE_CATCHANY
     {

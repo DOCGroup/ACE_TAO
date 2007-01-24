@@ -57,7 +57,6 @@ TAO_EC_Kokyu_Filter_Builder::build (
 
   RtecScheduler::Scheduler_var scheduler =
     RtecScheduler::Scheduler::_narrow (tmp.in () ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (0);
 
 #ifdef EC_KOKYU_LOGGING
   for (i=0; i<qos.dependencies.length (); ++i)
@@ -122,7 +121,6 @@ TAO_EC_Kokyu_Filter_Builder::build (
       RtecScheduler::RT_Info_var final_consumer_rt_info =
         scheduler->get ( h_final_consumer_rt_info
                          ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK_RETURN (0);
 
       final_consumer_rep_name = final_consumer_rt_info->entry_point.in ();
       final_consumer_rep_name += "#rep";
@@ -136,7 +134,6 @@ TAO_EC_Kokyu_Filter_Builder::build (
       h_final_consumer_rep_rt_info =
         scheduler->create (final_consumer_rep_name.c_str ()
                            ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK_RETURN (0);
 #ifdef EC_KOKYU_LOGGING
       ACE_DEBUG ((LM_DEBUG, "consumer rep created\n"));
 #endif
@@ -152,7 +149,6 @@ TAO_EC_Kokyu_Filter_Builder::build (
                            scheduler.in (),
                            h_final_consumer_rep_rt_info  //parent_info
                            ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (0);
 
 #ifdef EC_KOKYU_LOGGING
   ACE_DEBUG ((LM_DEBUG,
@@ -174,14 +170,12 @@ TAO_EC_Kokyu_Filter_Builder::build (
       //the final consumer
       TAO_EC_QOS_Info qos_info;
       kokyu_filter->get_qos_info (qos_info ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK_RETURN (0);
 
       scheduler->add_dependency (h_final_consumer_rt_info,
                                  qos_info.rt_info,
                                  1,
                                  RtecBase::ONE_WAY_CALL
                                  ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK_RETURN (0);
     }
   return filter;
 }
@@ -211,7 +205,6 @@ TAO_EC_Kokyu_Filter_Builder::recursive_build (
       this->recursive_name (qos, npos,
                             scheduler, name
                              ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK_RETURN (0);
 
       pos++; // Consume the designator
 
@@ -227,7 +220,6 @@ TAO_EC_Kokyu_Filter_Builder::recursive_build (
                                                scheduler,
                                                conj_rt_info
                                                ACE_ENV_ARG_PARAMETER);
-          ACE_CHECK_RETURN (0);
         }
 
       TAO_EC_Kokyu_Filter *filter;
@@ -244,7 +236,6 @@ TAO_EC_Kokyu_Filter_Builder::recursive_build (
       TAO_EC_QOS_Info qos_info;
       filter->get_qos_info (qos_info ACE_ENV_ARG_PARAMETER);
       // @@
-      ACE_CHECK_RETURN (0);
       return filter;
     }
 
@@ -258,7 +249,6 @@ TAO_EC_Kokyu_Filter_Builder::recursive_build (
       this->recursive_name (qos, npos,
                             scheduler, name
                              ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK_RETURN (0);
 
       pos++; // Consume the designator
 
@@ -274,7 +264,6 @@ TAO_EC_Kokyu_Filter_Builder::recursive_build (
                                                scheduler,
                                                disj_rt_info
                                                 ACE_ENV_ARG_PARAMETER);
-          ACE_CHECK_RETURN (0);
         }
       TAO_EC_Kokyu_Filter *filter;
       ACE_NEW_RETURN (filter,
@@ -291,7 +280,6 @@ TAO_EC_Kokyu_Filter_Builder::recursive_build (
       TAO_EC_QOS_Info qos_info;
       filter->get_qos_info (qos_info ACE_ENV_ARG_PARAMETER);
       // @@
-      ACE_CHECK_RETURN (0);
       return filter;
     }
     else if (e.header.type == ACE_ES_EVENT_TIMEOUT
@@ -317,7 +305,6 @@ TAO_EC_Kokyu_Filter_Builder::recursive_build (
         TAO_EC_QOS_Info qos_info;
         qos_info.rt_info =
           scheduler->create (name.c_str () ACE_ENV_ARG_PARAMETER);
-        ACE_CHECK_RETURN (0);
 
         // Convert the time to the proper units....
         RtecScheduler::Period_t period =
@@ -338,14 +325,12 @@ TAO_EC_Kokyu_Filter_Builder::recursive_build (
                         1, // threads
                         RtecScheduler::OPERATION
                         ACE_ENV_ARG_PARAMETER);
-        ACE_CHECK_RETURN (0);
 
         scheduler->add_dependency (qos_info.rt_info,
                                    h_consumer_rt_info,
                                    1,
                                    RtecBase::TWO_WAY_CALL
                                    ACE_ENV_ARG_PARAMETER);
-        ACE_CHECK_RETURN (0);
 #endif //by VS
 
         pos++;
@@ -385,7 +370,6 @@ TAO_EC_Kokyu_Filter_Builder::recursive_build (
 
   RtecScheduler::RT_Info_var info =
     scheduler->get (parent_info ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (0);
 
   ACE_CString name = info->entry_point.in ();
 
@@ -404,7 +388,6 @@ TAO_EC_Kokyu_Filter_Builder::recursive_build (
   TAO_EC_QOS_Info qos_info;
   filter->get_qos_info (qos_info ACE_ENV_ARG_PARAMETER);
   // @@
-  ACE_CHECK_RETURN (0);
   return filter;
 }
 
@@ -430,7 +413,6 @@ TAO_EC_Kokyu_Filter_Builder:: recursive_name (
                                 scheduler,
                                 child_name
                                  ACE_ENV_ARG_PARAMETER);
-          ACE_CHECK;
 
           if (i == 0)
             name += "(";
@@ -455,7 +437,6 @@ TAO_EC_Kokyu_Filter_Builder:: recursive_name (
                                 scheduler,
                                 child_name
                                  ACE_ENV_ARG_PARAMETER);
-          ACE_CHECK;
 
           if (i == 0)
             name += "(";
@@ -485,7 +466,6 @@ TAO_EC_Kokyu_Filter_Builder:: recursive_name (
 
   RtecScheduler::RT_Info_var info =
     scheduler->get (body_info ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
   name = info->entry_point.in ();
   name += "#rep";

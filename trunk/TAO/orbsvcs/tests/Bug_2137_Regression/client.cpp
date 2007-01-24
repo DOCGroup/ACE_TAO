@@ -39,11 +39,9 @@ check_is_equivalent (const char* ior1, const char * ior2, CORBA::Boolean expecte
     {
       CORBA::Object_var object1 =
         orb->string_to_object(ior1 ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       CORBA::Object_var object2 =
         orb->string_to_object (ior2 ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       const char* expected_result_string = (expected_result ? "true" : "false");
 
@@ -80,7 +78,6 @@ main (int argc, char *argv[])
     {
       orb =
         CORBA::ORB_init (argc, argv, "" ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       if (parse_args (argc, argv) != 0)
         return 1;
@@ -297,8 +294,7 @@ main (int argc, char *argv[])
           result = 1;
         }
 
-      orb->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      orb->destroy ();
     }
   ACE_CATCHANY
     {

@@ -55,7 +55,7 @@ public:
             ACE_ENV_ARG_DECL);
   // Initialize the Clerk state - parsing arguments and waiting.
 
-  int run (ACE_ENV_SINGLE_ARG_DECL);
+  int run (void);
   // Run the orb.
 
 private:

@@ -43,8 +43,7 @@ Time_Client_i::run (const char *name,
       ACE_UNUSED_ARG (padding);
 
       //Make the RMI.
-      timedate = client->current_time (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      timedate = client->current_time ();
 
       // Print out value
       // Use ACE_OS::ctime_r(), ctime() doesn't seem to work properly
@@ -58,8 +57,7 @@ Time_Client_i::run (const char *name,
                   ascii_timedate));
 
       if (client.shutdown () == 1)
-        client->shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        client->shutdown ();
     }
   ACE_CATCHANY
     {

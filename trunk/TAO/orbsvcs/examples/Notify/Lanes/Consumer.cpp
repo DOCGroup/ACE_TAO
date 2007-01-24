@@ -23,45 +23,41 @@ TAO_Notify_Lanes_Consumer::init (PortableServer::POA_var& poa, CosNotifyChannelA
   this->admin_ = admin;
   this->event_type_ = event_type;
 
-  this->connect (ACE_ENV_SINGLE_ARG_PARAMETER);
+  this->connect ();
 }
 
 PortableServer::POA_ptr
-TAO_Notify_Lanes_Consumer::_default_POA (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+TAO_Notify_Lanes_Consumer::_default_POA (void)
 {
   return PortableServer::POA::_duplicate (this->default_POA_.in ());
 }
 
 void
-TAO_Notify_Lanes_Consumer::run (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+TAO_Notify_Lanes_Consumer::run (void)
 {
   // Nothing to do.
 }
 
 void
-TAO_Notify_Lanes_Consumer::connect (ACE_ENV_SINGLE_ARG_DECL)
+TAO_Notify_Lanes_Consumer::connect (void)
 {
   // Activate the consumer with the default_POA_
-  CosNotifyComm::StructuredPushConsumer_var objref = this->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+  CosNotifyComm::StructuredPushConsumer_var objref = this->_this ();
 
   CosNotifyChannelAdmin::ProxySupplier_var proxysupplier =
     this->admin_->obtain_notification_push_supplier (CosNotifyChannelAdmin::STRUCTURED_EVENT
                                                      , proxy_supplier_id_ ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
   ACE_ASSERT (!CORBA::is_nil (proxysupplier.in ()));
 
   // narrow
   this->proxy_supplier_ =
     CosNotifyChannelAdmin::StructuredProxyPushSupplier::_narrow (proxysupplier.in () ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
   ACE_ASSERT (!CORBA::is_nil (proxy_supplier_.in ()));
 
   this->proxy_supplier_->connect_structured_push_consumer (objref.in ()
                                                      ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
   // Call subscription_change to inform the supplier that this consumer is available.
   CosNotification::EventTypeSeq added (1);
@@ -72,14 +68,12 @@ TAO_Notify_Lanes_Consumer::connect (ACE_ENV_SINGLE_ARG_DECL)
   added[0].type_name = CORBA::string_dup (this->event_type_.c_str ());
 
   this->proxy_supplier_->subscription_change (added, removed ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 }
 
 void
-TAO_Notify_Lanes_Consumer::disconnect (ACE_ENV_SINGLE_ARG_DECL)
+TAO_Notify_Lanes_Consumer::disconnect (void)
 {
-  this->proxy_supplier_->disconnect_structured_push_supplier(ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+  this->proxy_supplier_->disconnect_structured_push_supplier();
 }
 
 void
@@ -106,8 +100,7 @@ TAO_Notify_Lanes_Consumer::push_structured_event (const CosNotification::Structu
     {
       // Check the current threads priority.
       RTCORBA::Priority thread_priority =
-        this->orb_objects_.current_->the_priority (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        this->orb_objects_.current_->the_priority ();
 
       const CosNotification::PropertySeq& prop_seq = notification.header.variable_header;
 
@@ -128,10 +121,10 @@ TAO_Notify_Lanes_Consumer::push_structured_event (const CosNotification::Structu
         ACE_DEBUG ((LM_DEBUG, "(%P, %t) Error: Event priority and thread priority are different. \n"));
 
       // Disconnect from the EC
-      this->disconnect (ACE_ENV_SINGLE_ARG_PARAMETER);
+      this->disconnect ();
 
       // Deactivate this object.
-      this->deactivate (ACE_ENV_SINGLE_ARG_PARAMETER);
+      this->deactivate ();
 
       // We received the event, shutdown the ORB.
       this->orb_objects_.orb_->shutdown (1);
@@ -147,25 +140,22 @@ TAO_Notify_Lanes_Consumer::push_structured_event (const CosNotification::Structu
 }
 
 void
-TAO_Notify_Lanes_Consumer::deactivate (ACE_ENV_SINGLE_ARG_DECL)
+TAO_Notify_Lanes_Consumer::deactivate (void)
 {
-  PortableServer::POA_var poa (this->_default_POA (ACE_ENV_SINGLE_ARG_PARAMETER));
-  ACE_CHECK;
+  PortableServer::POA_var poa (this->_default_POA ());
 
   PortableServer::ObjectId_var id (poa->servant_to_id (this
                                                        ACE_ENV_ARG_PARAMETER));
-  ACE_CHECK;
 
   poa->deactivate_object (id.in()
                           ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 }
 
 void
-TAO_Notify_Lanes_Consumer::disconnect_structured_push_consumer (ACE_ENV_SINGLE_ARG_DECL)
+TAO_Notify_Lanes_Consumer::disconnect_structured_push_consumer (void)
   ACE_THROW_SPEC ((
                    CORBA::SystemException
                    ))
 {
-  this->deactivate (ACE_ENV_SINGLE_ARG_PARAMETER);
+  this->deactivate ();
 }

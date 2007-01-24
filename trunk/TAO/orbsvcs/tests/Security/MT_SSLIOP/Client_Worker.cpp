@@ -13,7 +13,7 @@ Client_Worker::Client_Worker (Simple_Server_ptr server,
 }
 
 void
-Client_Worker::validate_connection (ACE_ENV_SINGLE_ARG_DECL)
+Client_Worker::validate_connection (void)
 {
   // Ping the object 100 times, ignoring all exceptions.
   // It would be better to use validate_connection() but the test must
@@ -25,7 +25,6 @@ Client_Worker::validate_connection (ACE_ENV_SINGLE_ARG_DECL)
         {
           this->server_->test_method (j ACE_ENV_ARG_PARAMETER);
           this->another_->test_method (j ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
           if(TAO_debug_level > 0)
             ACE_DEBUG (( LM_DEBUG,
                          "******** VALIDATED ******* \n"));
@@ -45,14 +44,12 @@ Client_Worker::svc (void)
   ACE_TRY
     {
       // Validate connections befire doing any actual work..
-      this->validate_connection (ACE_ENV_SINGLE_ARG_PARAMETER);
-       ACE_TRY_CHECK;
+      this->validate_connection ();
 
        for (int i = 0; i < this->niterations_; ++i)
          {
            this->server_->test_method (i ACE_ENV_ARG_PARAMETER);
            this->another_->test_method (i ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
 
            if (TAO_debug_level > 0)
              ACE_DEBUG ((LM_DEBUG,

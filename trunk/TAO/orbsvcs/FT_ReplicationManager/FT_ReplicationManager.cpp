@@ -157,15 +157,12 @@ int TAO::FT_ReplicationManager::init (CORBA::ORB_ptr orb ACE_ENV_ARG_DECL)
   // Get the RootPOA.
   CORBA::Object_var poa_obj = this->orb_->resolve_initial_references (
     TAO_OBJID_ROOTPOA ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
   this->poa_ = PortableServer::POA::_narrow (
     poa_obj.in () ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
 
 
   // initialize the FactoryRegistry
   this->factory_registry_.init (this->orb_.in (), this->poa_.in () ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
 
   PortableGroup::FactoryRegistry_var factory_registry = this->factory_registry_.reference ();
 
@@ -175,19 +172,15 @@ int TAO::FT_ReplicationManager::init (CORBA::ORB_ptr orb ACE_ENV_ARG_DECL)
     this->poa_.in (),
     factory_registry.in ()
     ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
 
   // Activate ourself in the POA.
   PortableServer::ObjectId_var oid = this->poa_->activate_object (
     this ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
 
   CORBA::Object_var this_obj = this->poa_->id_to_reference (
     oid.in () ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
   this->replication_manager_ref_ = FT::ReplicationManager::_narrow (
     this_obj.in () ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
 
   // If we were given an initial IOR string for a Fault Notifier on the
   // command line, convert it to an IOR, then register the fault
@@ -196,14 +189,11 @@ int TAO::FT_ReplicationManager::init (CORBA::ORB_ptr orb ACE_ENV_ARG_DECL)
   {
     CORBA::Object_var notifier_obj = this->orb_->string_to_object (
       this->fault_notifier_ior_string_ ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK_RETURN (-1);
     FT::FaultNotifier_var notifier = FT::FaultNotifier::_narrow (
       notifier_obj.in () ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK_RETURN (-1);
     if (! CORBA::is_nil (notifier.in ()))
     {
       this->register_fault_notifier_i (notifier.in () ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK_RETURN (-1);
     }
     else
     {
@@ -217,21 +207,17 @@ int TAO::FT_ReplicationManager::init (CORBA::ORB_ptr orb ACE_ENV_ARG_DECL)
 
   // Activate the RootPOA.
   PortableServer::POAManager_var poa_mgr =
-    this->poa_->the_POAManager (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
-  poa_mgr->activate (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
+    this->poa_->the_POAManager ();
+  poa_mgr->activate ();
 
   // Register our IOR in the IORTable with the key-string
   // "ReplicationManager".
   CORBA::Object_var ior_table_obj =
     this->orb_->resolve_initial_references (
       TAO_OBJID_IORTABLE ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
 
   IORTable::Table_var ior_table =
     IORTable::Table::_narrow (ior_table_obj.in () ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
   if (CORBA::is_nil (ior_table.in ()))
   {
     ACE_ERROR_RETURN ( (LM_ERROR,
@@ -242,10 +228,8 @@ int TAO::FT_ReplicationManager::init (CORBA::ORB_ptr orb ACE_ENV_ARG_DECL)
   {
     CORBA::String_var rm_ior_str = this->orb_->object_to_string (
       this->replication_manager_ref_.in () ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK_RETURN (-1);
     ior_table->bind ("ReplicationManager", rm_ior_str.in ()
       ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK_RETURN (-1);
   }
 
   // Publish our IOR, either to a file or the Naming Service.
@@ -263,12 +247,10 @@ int TAO::FT_ReplicationManager::init (CORBA::ORB_ptr orb ACE_ENV_ARG_DECL)
 
     CORBA::Object_var naming_obj = this->orb_->resolve_initial_references (
         TAO_OBJID_NAMESERVICE ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK_RETURN (-1);
 
     this->naming_context_ =
       CosNaming::NamingContext::_narrow (
         naming_obj.in () ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK_RETURN (-1);
 
     if (CORBA::is_nil (this->naming_context_.in ()))
     {
@@ -284,7 +266,6 @@ int TAO::FT_ReplicationManager::init (CORBA::ORB_ptr orb ACE_ENV_ARG_DECL)
       this->this_name_,
       this->replication_manager_ref_.in ()
       ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK_RETURN (-1);
   }
 
   if (TAO_debug_level > 1)
@@ -310,37 +291,29 @@ int TAO::FT_ReplicationManager::init (CORBA::ORB_ptr orb ACE_ENV_ARG_DECL)
   PortableGroup::Value value;
   value <<= TAO_PG_MEMBERSHIP_STYLE;
   this->properties_support_.set_default_property (PortableGroup::PG_MEMBERSHIP_STYLE, value ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN(-1);
 
   value <<= TAO_PG_INITIAL_NUMBER_MEMBERS;
   this->properties_support_.set_default_property (PortableGroup::PG_INITIAL_NUMBER_MEMBERS, value ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN(-1);
 
   value <<= TAO_PG_MINIMUM_NUMBER_MEMBERS;
   this->properties_support_.set_default_property (PortableGroup::PG_MINIMUM_NUMBER_MEMBERS, value ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN(-1);
 
   value <<= FT::SEMI_ACTIVE;
   this->properties_support_.set_default_property (FT::FT_REPLICATION_STYLE, value ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN(-1);
 
   value <<= FT::CONS_APP_CTRL;
   this->properties_support_.set_default_property (  FT::FT_CONSISTENCY_STYLE, value ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN(-1);
 
   value <<= FT::PULL;
   this->properties_support_.set_default_property (FT::FT_FAULT_MONITORING_STYLE, value ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN(-1);
 
   value <<= FT::MEMB;
   this->properties_support_.set_default_property (FT::FT_FAULT_MONITORING_GRANULARITY, value ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN(-1);
 
 #if 0
   FaultMonitoringIntervalAndTimeoutValue times;
   value <<= times;
   this->properties_support_.set_default_property (FT::FT_FAULT_MONITORING_INTERVAL_AND_TIMEOUT, value ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN(-1);
 #endif
 
 #if 0
@@ -361,12 +334,11 @@ int TAO::FT_ReplicationManager::idle (int & result ACE_ENV_ARG_DECL_NOT_USED)
 
 
 //public
-int TAO::FT_ReplicationManager::fini (ACE_ENV_SINGLE_ARG_DECL)
+int TAO::FT_ReplicationManager::fini (void)
 {
   int result = 0;
 
-  result = this->fault_consumer_.fini (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
+  result = this->fault_consumer_.fini ();
 
   if (this->ior_output_file_ != 0)
   {
@@ -376,7 +348,6 @@ int TAO::FT_ReplicationManager::fini (ACE_ENV_SINGLE_ARG_DECL)
   if (this->ns_name_ != 0)
   {
     this->naming_context_->unbind (this->this_name_ ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK_RETURN (-1);
     this->ns_name_ = 0;
   }
 
@@ -424,8 +395,7 @@ TAO::FT_ReplicationManager::register_fault_notifier_i (
   {
     //@@ should we check to see if a notifier is already registered, rather than
     // simply "unregistering"?
-    result = this->fault_consumer_.fini (ACE_ENV_SINGLE_ARG_PARAMETER);
-    ACE_TRY_CHECK;
+    result = this->fault_consumer_.fini ();
 
     // Note if the fini failed, we ignore it.  It may not have been registered in the first place.
 
@@ -451,7 +421,6 @@ TAO::FT_ReplicationManager::register_fault_notifier_i (
         this->fault_notifier_.in (),
         analyzer
         ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
     }
   }
   ACE_CATCHANY
@@ -636,7 +605,6 @@ TAO::FT_ReplicationManager::set_properties_dynamically (
   if (this->group_factory_.find_group (object_group, group))
   {
     group->set_properties_dynamically (overrides ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK;
   }
   else
   {
@@ -696,7 +664,6 @@ TAO::FT_ReplicationManager::set_primary_member (
     TAO_FT_IOGR_Property prop (tag_component);
 
     int sts = group->set_primary_member (&prop, the_location ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK_RETURN (PortableGroup::ObjectGroup::_nil ());
     if (sts)
     {
       result = group->reference ();
@@ -734,7 +701,6 @@ TAO::FT_ReplicationManager::create_member (
   if (this->group_factory_.find_group (object_group, group))
   {
     group->create_member (the_location, type_id, the_criteria ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK_RETURN (PortableGroup::ObjectGroup::_nil ());
     result = group->reference ();
   }
   else
@@ -774,7 +740,6 @@ TAO::FT_ReplicationManager::add_member (
       the_location,
       member
       ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK_RETURN (CORBA::Object::_nil ());
 
     result = group->reference ();
 
@@ -809,10 +774,8 @@ TAO::FT_ReplicationManager::remove_member (
   if (this->group_factory_.find_group (object_group, group))
   {
     group->remove_member (the_location ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK_RETURN (result._retn ());
 
-    group->minimum_populate (ACE_ENV_SINGLE_ARG_PARAMETER);
-    ACE_CHECK_RETURN (result._retn ());
+    group->minimum_populate ();
       //@@ how about the case where the member was removed successfully,
       // but for one reason or another we were unable to bring the group
       // back up to minimum_number_of_replicas?
@@ -842,7 +805,6 @@ TAO::FT_ReplicationManager::locations_of_members (
   {
     result = group->locations_of_members (
       ACE_ENV_SINGLE_ARG_PARAMETER);
-    ACE_CHECK_RETURN (0);
   }
   else
   {
@@ -880,7 +842,6 @@ TAO::FT_ReplicationManager::get_object_group_id (
   if (this->group_factory_.find_group (object_group, group))
   {
     group->get_object_group_id ();
-    ACE_CHECK_RETURN (result);
     result = group->get_object_group_id ();
   }
   else
@@ -973,7 +934,6 @@ TAO::FT_ReplicationManager::get_member_ref (
   if (this->group_factory_.find_group (object_group, group))
   {
     result = group->get_member_reference (the_location ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK_RETURN (CORBA::Object::_nil());
   }
   else
   {
@@ -1015,7 +975,6 @@ TAO::FT_ReplicationManager::create_object (
     = this->properties_support_.find_typeid_properties (
       type_id
       ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (CORBA::Object::_nil ());
 
   TAO::PG_Object_Group * group
     = this->group_factory_.create_group (
@@ -1023,10 +982,8 @@ TAO::FT_ReplicationManager::create_object (
       the_criteria,
       typeid_properties
       ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (CORBA::Object::_nil ());
 
-  group->initial_populate (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (CORBA::Object::_nil ());
+  group->initial_populate ();
     //@@ on error we should remove the group from the Group_Factory
     // doing this "right" will require a var-type pointer to the object group
     // that knows about the factory, too.
@@ -1040,7 +997,6 @@ TAO::FT_ReplicationManager::create_object (
                         TAO::VMCID,
                         ENOMEM),
                       CORBA::COMPLETED_NO));
-  ACE_CHECK_RETURN (CORBA::Object::_nil ());
   PortableGroup::GenericFactory::FactoryCreationId_var factory_id = factory_id_ptr;
   PortableGroup::ObjectGroupId group_id = group->get_object_group_id ();
   factory_id <<= group_id;
@@ -1064,7 +1020,6 @@ TAO::FT_ReplicationManager::delete_object (
     this->group_factory_.delete_group (
       group_id
       ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK;
   }
   else
   {

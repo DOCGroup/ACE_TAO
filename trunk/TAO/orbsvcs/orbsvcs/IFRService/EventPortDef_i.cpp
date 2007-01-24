@@ -33,10 +33,9 @@ TAO_EventPortDef_i::event (
 {
   TAO_IFR_READ_GUARD_RETURN (CORBA::ComponentIR::EventDef::_nil ());
 
-  this->update_key (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (CORBA::ComponentIR::EventDef::_nil ());
+  this->update_key ();
 
-  return this->event_i (ACE_ENV_SINGLE_ARG_PARAMETER);
+  return this->event_i ();
 }
 
 CORBA::ComponentIR::EventDef_ptr
@@ -51,7 +50,6 @@ TAO_EventPortDef_i::event_i (
                                             holder);
   CORBA::Contained_var obj = this->repo_->lookup_id (holder.fast_rep ()
                                                      ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (CORBA::ComponentIR::EventDef::_nil ());
 
   return CORBA::ComponentIR::EventDef::_narrow (obj.in ()
                                                 ACE_ENV_ARG_PARAMETER);
@@ -66,8 +64,7 @@ TAO_EventPortDef_i::event (
 {
   TAO_IFR_WRITE_GUARD;
 
-  this->update_key (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+  this->update_key ();
 
   this->event_i (event
                  ACE_ENV_ARG_PARAMETER);
@@ -116,8 +113,7 @@ TAO_EventPortDef_i::is_a (
 {
   TAO_IFR_READ_GUARD_RETURN (0);
 
-  this->update_key (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (0);
+  this->update_key ();
 
   return this->is_a_i (event_id
                        ACE_ENV_ARG_PARAMETER);
@@ -149,19 +145,18 @@ TAO_EventPortDef_i::is_a_i (
 }
 
 CORBA::Contained::Description *
-TAO_EventPortDef_i::describe (ACE_ENV_SINGLE_ARG_DECL)
+TAO_EventPortDef_i::describe (void)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_IFR_READ_GUARD_RETURN (0);
 
-  this->update_key (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (0);
+  this->update_key ();
 
-  return this->describe_i (ACE_ENV_SINGLE_ARG_PARAMETER);
+  return this->describe_i ();
 }
 
 CORBA::Contained::Description *
-TAO_EventPortDef_i::describe_i (ACE_ENV_SINGLE_ARG_DECL)
+TAO_EventPortDef_i::describe_i (void)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   CORBA::ComponentIR::EventPortDescription epd;
@@ -172,7 +167,6 @@ TAO_EventPortDef_i::describe_i (ACE_ENV_SINGLE_ARG_DECL)
                                               this->section_key_
                                               ACE_ENV_ARG_PARAMETER
                                             );
-  ACE_CHECK_RETURN (0);
 
   ACE_TString holder;
   this->repo_->config ()->get_string_value (this->section_key_,
@@ -191,7 +185,7 @@ TAO_EventPortDef_i::describe_i (ACE_ENV_SINGLE_ARG_DECL)
 }
 
 CORBA::DefinitionKind
-TAO_EventPortDef_i::def_kind (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+TAO_EventPortDef_i::def_kind (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return CORBA::dk_none;

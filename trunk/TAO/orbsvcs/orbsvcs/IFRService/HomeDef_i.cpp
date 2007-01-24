@@ -36,26 +36,25 @@ TAO_HomeDef_i::~TAO_HomeDef_i (void)
 }
 
 CORBA::DefinitionKind
-TAO_HomeDef_i::def_kind (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+TAO_HomeDef_i::def_kind (void)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return CORBA::dk_Home;
 }
 
 void
-TAO_HomeDef_i::destroy (ACE_ENV_SINGLE_ARG_DECL)
+TAO_HomeDef_i::destroy (void)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_IFR_WRITE_GUARD;
 
-  this->update_key (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+  this->update_key ();
 
-  this->destroy_i (ACE_ENV_SINGLE_ARG_PARAMETER);
+  this->destroy_i ();
 }
 
 void
-TAO_HomeDef_i::destroy_i (ACE_ENV_SINGLE_ARG_DECL)
+TAO_HomeDef_i::destroy_i (void)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // Destroy our special subsections first, then call destroy_i
@@ -67,7 +66,6 @@ TAO_HomeDef_i::destroy_i (ACE_ENV_SINGLE_ARG_DECL)
       this->section_key_
       ACE_ENV_ARG_PARAMETER
     );
-  ACE_CHECK;
 
   TAO_IFR_Generic_Utils<TAO_FinderDef_i>::destroy_special (
       "finders",
@@ -75,25 +73,23 @@ TAO_HomeDef_i::destroy_i (ACE_ENV_SINGLE_ARG_DECL)
       this->section_key_
       ACE_ENV_ARG_PARAMETER
     );
-  ACE_CHECK;
 
-  this->TAO_ExtInterfaceDef_i::destroy_i (ACE_ENV_SINGLE_ARG_PARAMETER);
+  this->TAO_ExtInterfaceDef_i::destroy_i ();
 }
 
 CORBA::Contained::Description *
-TAO_HomeDef_i::describe (ACE_ENV_SINGLE_ARG_DECL)
+TAO_HomeDef_i::describe (void)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_IFR_READ_GUARD_RETURN (0);
 
-  this->update_key (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (0);
+  this->update_key ();
 
-  return this->describe_i (ACE_ENV_SINGLE_ARG_PARAMETER);
+  return this->describe_i ();
 }
 
 CORBA::Contained::Description *
-TAO_HomeDef_i::describe_i (ACE_ENV_SINGLE_ARG_DECL)
+TAO_HomeDef_i::describe_i (void)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   CORBA::ComponentIR::HomeDescription home_desc;
@@ -103,7 +99,6 @@ TAO_HomeDef_i::describe_i (ACE_ENV_SINGLE_ARG_DECL)
                                                       this->repo_,
                                                       this->section_key_
                                                       ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (0);
 
   ACE_TString holder;
   int status =
@@ -145,29 +140,24 @@ TAO_HomeDef_i::describe_i (ACE_ENV_SINGLE_ARG_DECL)
       impl.section_key (tmp_key);
       impl.fill_value_description (home_desc.primary_key
                                    ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK_RETURN (0);
     }
 
   this->fill_op_desc_seq (this->section_key_,
                           home_desc.factories,
                           "factories"
                           ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (0);
 
   this->fill_op_desc_seq (this->section_key_,
                           home_desc.finders,
                           "finders"
                           ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (0);
 
   this->fill_op_desc_seq (this->section_key_,
                           home_desc.operations,
                           "ops"
                           ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (0);
 
-  home_desc.type = this->type_i (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (0);
+  home_desc.type = this->type_i ();
 
   CORBA::Contained::Description *retval = 0;
   ACE_NEW_RETURN (retval,
@@ -180,19 +170,18 @@ TAO_HomeDef_i::describe_i (ACE_ENV_SINGLE_ARG_DECL)
 }
 
 CORBA::TypeCode_ptr
-TAO_HomeDef_i::type (ACE_ENV_SINGLE_ARG_DECL)
+TAO_HomeDef_i::type (void)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_IFR_READ_GUARD_RETURN (CORBA::TypeCode::_nil ());
 
-  this->update_key (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (CORBA::TypeCode::_nil ());
+  this->update_key ();
 
-  return this->type_i (ACE_ENV_SINGLE_ARG_PARAMETER);
+  return this->type_i ();
 }
 
 CORBA::TypeCode_ptr
-TAO_HomeDef_i::type_i (ACE_ENV_SINGLE_ARG_DECL)
+TAO_HomeDef_i::type_i (void)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_TString id;
@@ -211,19 +200,18 @@ TAO_HomeDef_i::type_i (ACE_ENV_SINGLE_ARG_DECL)
 }
 
 CORBA::ComponentIR::HomeDef_ptr
-TAO_HomeDef_i::base_home (ACE_ENV_SINGLE_ARG_DECL)
+TAO_HomeDef_i::base_home (void)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_IFR_READ_GUARD_RETURN (CORBA::ComponentIR::HomeDef::_nil ());
 
-  this->update_key (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (CORBA::ComponentIR::HomeDef::_nil ());
+  this->update_key ();
 
-  return this->base_home_i (ACE_ENV_SINGLE_ARG_PARAMETER);
+  return this->base_home_i ();
 }
 
 CORBA::ComponentIR::HomeDef_ptr
-TAO_HomeDef_i::base_home_i (ACE_ENV_SINGLE_ARG_DECL)
+TAO_HomeDef_i::base_home_i (void)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_TString path;
@@ -241,7 +229,6 @@ TAO_HomeDef_i::base_home_i (ACE_ENV_SINGLE_ARG_DECL)
     TAO_IFR_Service_Utils::path_to_ir_object (path,
                                               this->repo_
                                               ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (CORBA::ComponentIR::HomeDef::_nil ());
 
   return CORBA::ComponentIR::HomeDef::_narrow (obj.in ()
                                                ACE_ENV_ARG_PARAMETER);
@@ -256,8 +243,7 @@ TAO_HomeDef_i::base_home (
 {
   TAO_IFR_WRITE_GUARD;
 
-  this->update_key (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+  this->update_key ();
 
   this->base_home_i (base_home
                      ACE_ENV_ARG_PARAMETER);
@@ -284,10 +270,9 @@ TAO_HomeDef_i::supported_interfaces (
 {
   TAO_IFR_READ_GUARD_RETURN (0);
 
-  this->update_key (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (0);
+  this->update_key ();
 
-  return this->supported_interfaces_i (ACE_ENV_SINGLE_ARG_PARAMETER);
+  return this->supported_interfaces_i ();
 }
 
 CORBA::InterfaceDefSeq *
@@ -332,11 +317,9 @@ TAO_HomeDef_i::supported_interfaces_i (
       obj = TAO_IFR_Service_Utils::path_to_ir_object (holder,
                                                       this->repo_
                                                       ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK_RETURN (0);
 
       safe_retval[i] = CORBA::InterfaceDef::_narrow (obj.in ()
                                                      ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK_RETURN (0);
     }
 
   return safe_retval._retn ();
@@ -351,8 +334,7 @@ TAO_HomeDef_i::supported_interfaces (
 {
   TAO_IFR_WRITE_GUARD;
 
-  this->update_key (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+  this->update_key ();
 
   this->supported_interfaces_i (supported_interfaces
                                 ACE_ENV_ARG_PARAMETER);
@@ -397,19 +379,18 @@ TAO_HomeDef_i::supported_interfaces_i (
 }
 
 CORBA::ComponentIR::ComponentDef_ptr
-TAO_HomeDef_i::managed_component (ACE_ENV_SINGLE_ARG_DECL)
+TAO_HomeDef_i::managed_component (void)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_IFR_READ_GUARD_RETURN (CORBA::ComponentIR::ComponentDef::_nil ());
 
-  this->update_key (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (CORBA::ComponentIR::ComponentDef::_nil ());
+  this->update_key ();
 
-  return this->managed_component_i (ACE_ENV_SINGLE_ARG_PARAMETER);
+  return this->managed_component_i ();
 }
 
 CORBA::ComponentIR::ComponentDef_ptr
-TAO_HomeDef_i::managed_component_i (ACE_ENV_SINGLE_ARG_DECL)
+TAO_HomeDef_i::managed_component_i (void)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_TString path;
@@ -420,7 +401,6 @@ TAO_HomeDef_i::managed_component_i (ACE_ENV_SINGLE_ARG_DECL)
     TAO_IFR_Service_Utils::path_to_ir_object (path,
                                               this->repo_
                                               ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (CORBA::ComponentIR::ComponentDef::_nil ());
 
   return CORBA::ComponentIR::ComponentDef::_narrow (obj.in ()
                                                     ACE_ENV_ARG_PARAMETER);
@@ -435,8 +415,7 @@ TAO_HomeDef_i::managed_component (
 {
   TAO_IFR_WRITE_GUARD;
 
-  this->update_key (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+  this->update_key ();
 
   this->managed_component_i (managed_component
                              ACE_ENV_ARG_PARAMETER);
@@ -456,19 +435,18 @@ TAO_HomeDef_i::managed_component_i (
 }
 
 CORBA::ValueDef_ptr
-TAO_HomeDef_i::primary_key (ACE_ENV_SINGLE_ARG_DECL)
+TAO_HomeDef_i::primary_key (void)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_IFR_READ_GUARD_RETURN (CORBA::ValueDef::_nil ());
 
-  this->update_key (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (CORBA::ValueDef::_nil ());
+  this->update_key ();
 
-  return this->primary_key_i (ACE_ENV_SINGLE_ARG_PARAMETER);
+  return this->primary_key_i ();
 }
 
 CORBA::ValueDef_ptr
-TAO_HomeDef_i::primary_key_i (ACE_ENV_SINGLE_ARG_DECL)
+TAO_HomeDef_i::primary_key_i (void)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_TString path;
@@ -486,7 +464,6 @@ TAO_HomeDef_i::primary_key_i (ACE_ENV_SINGLE_ARG_DECL)
     TAO_IFR_Service_Utils::path_to_ir_object (path,
                                               this->repo_
                                               ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (CORBA::ValueDef::_nil ());
 
   return CORBA::ValueDef::_narrow (obj.in ()
                                    ACE_ENV_ARG_PARAMETER);
@@ -501,8 +478,7 @@ TAO_HomeDef_i::primary_key (
 {
   TAO_IFR_WRITE_GUARD;
 
-  this->update_key (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+  this->update_key ();
 
   this->primary_key_i (primary_key
                        ACE_ENV_ARG_PARAMETER);
@@ -539,8 +515,7 @@ TAO_HomeDef_i::create_factory (const char *id,
 {
   TAO_IFR_WRITE_GUARD_RETURN (CORBA::ComponentIR::FactoryDef::_nil ());
 
-  this->update_key (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (CORBA::ComponentIR::FactoryDef::_nil ());
+  this->update_key ();
 
   return this->create_factory_i (id,
                                  name,
@@ -569,7 +544,6 @@ TAO_HomeDef_i::create_factory_i (
                                                params,
                                                exceptions
                                                ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (CORBA::ComponentIR::FactoryDef::_nil ());
 
   return CORBA::ComponentIR::FactoryDef::_narrow (obj.in ()
                                                   ACE_ENV_ARG_PARAMETER);
@@ -586,8 +560,7 @@ TAO_HomeDef_i::create_finder (const char *id,
 {
   TAO_IFR_WRITE_GUARD_RETURN (CORBA::ComponentIR::FinderDef::_nil ());
 
-  this->update_key (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (CORBA::ComponentIR::FinderDef::_nil ());
+  this->update_key ();
 
   return this->create_finder_i (id,
                                 name,
@@ -616,7 +589,6 @@ TAO_HomeDef_i::create_finder_i (
                                                params,
                                                exceptions
                                                ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (CORBA::ComponentIR::FinderDef::_nil ());
 
   return CORBA::ComponentIR::FinderDef::_narrow (obj.in ()
                                                  ACE_ENV_ARG_PARAMETER);
@@ -648,7 +620,6 @@ TAO_HomeDef_i::create_common (CORBA::DefinitionKind created_kind,
                                           version,
                                           sub_section
                                           ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (CORBA::Object::_nil ());
 
   // Set the 'result' field with the path of our managed component.
   ACE_TString managed_path;
@@ -785,7 +756,6 @@ TAO_HomeDef_i::fill_op_desc_seq (ACE_Configuration_Section_Key &key,
                           ods[i],
                           stringified
                           ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
     }
 }
 
@@ -807,7 +777,6 @@ TAO_HomeDef_i::fill_op_desc (ACE_Configuration_Section_Key &key,
       op_key
       ACE_ENV_ARG_PARAMETER
     );
-  ACE_CHECK;
 
   ACE_TString result_path;
   this->repo_->config ()->get_string_value (key,
@@ -816,13 +785,11 @@ TAO_HomeDef_i::fill_op_desc (ACE_Configuration_Section_Key &key,
   TAO_IDLType_i *result =
     TAO_IFR_Service_Utils::path_to_idltype (result_path,
                                             this->repo_);
-  od.result = result->type_i (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+  od.result = result->type_i ();
 
   TAO_OperationDef_i impl (this->repo_);
   impl.section_key (op_key);
-  od.mode = impl.mode_i (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+  od.mode = impl.mode_i ();
 
   TAO_IFR_Strseq_Utils<CORBA::ContextIdSeq>::fill_string_seq (
       "contexts",
@@ -835,7 +802,6 @@ TAO_HomeDef_i::fill_op_desc (ACE_Configuration_Section_Key &key,
                              od.parameters,
                              "params"
                              ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
   this->fill_exc_desc_seq (op_key,
                            od.exceptions,
@@ -876,7 +842,6 @@ TAO_HomeDef_i::fill_param_desc_seq (ACE_Configuration_Section_Key &key,
                              pds[i],
                              stringified
                              ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
     }
 }
 
@@ -901,18 +866,15 @@ TAO_HomeDef_i::fill_param_desc (ACE_Configuration_Section_Key &key,
                                             holder);
   TAO_IDLType_i *impl = TAO_IFR_Service_Utils::path_to_idltype (holder,
                                                                 this->repo_);
-  pd.type = impl->type_i (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+  pd.type = impl->type_i ();
 
   CORBA::Object_var obj =
     TAO_IFR_Service_Utils::path_to_ir_object (holder,
                                               this->repo_
                                               ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
   pd.type_def = CORBA::IDLType::_narrow (obj.in ()
                                          ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
   CORBA::ULong val;
   this->repo_->config ()->get_integer_value (param_key,
@@ -954,7 +916,6 @@ TAO_HomeDef_i::fill_exc_desc_seq (ACE_Configuration_Section_Key &key,
                            eds[i],
                            stringified
                            ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
     }
 }
 
@@ -987,7 +948,7 @@ TAO_HomeDef_i::fill_exc_desc (ACE_Configuration_Section_Key &key,
 
   TAO_ExceptionDef_i impl (this->repo_);
   impl.section_key (except_def_key);
-  ed.type = impl.type_i (ACE_ENV_SINGLE_ARG_PARAMETER);
+  ed.type = impl.type_i ();
 }
 
 void
@@ -1023,7 +984,6 @@ TAO_HomeDef_i::fill_attr_desc_seq (ACE_Configuration_Section_Key &key,
                             eads[i],
                             stringified
                             ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
     }
 }
 
@@ -1045,14 +1005,12 @@ TAO_HomeDef_i::fill_attr_desc (ACE_Configuration_Section_Key &key,
                                               attr_key
                                               ACE_ENV_ARG_PARAMETER
                                             );
-  ACE_CHECK;
 
   TAO_AttributeDef_i impl (this->repo_);
   impl.section_key (attr_key);
-  ead.type = impl.type_i (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+  ead.type = impl.type_i ();
 
-  ead.mode = impl.mode_i (ACE_ENV_SINGLE_ARG_PARAMETER);
+  ead.mode = impl.mode_i ();
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL

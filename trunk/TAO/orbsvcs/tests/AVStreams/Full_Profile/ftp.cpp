@@ -50,10 +50,8 @@ FTP_Client_Callback::handle_timeout (void *)
                   ACE_DEBUG ((LM_DEBUG,"handle_timeout:End of file\n"));
                   AVStreams::flowSpec stop_spec (1);
                   CLIENT::instance ()->streamctrl ()->stop (stop_spec ACE_ENV_ARG_PARAMETER);
-                  ACE_TRY_CHECK;
                   //CLIENT::instance ()->streamctrl ()->destroy (stop_spec ACE_ENV_ARG_PARAMETER);
                   TAO_AV_CORE::instance ()->orb ()->shutdown (0);
-                  ACE_TRY_CHECK;
                   return 0;
                 }
               else
@@ -236,13 +234,10 @@ Client::init (int argc,char **argv)
       this->flowname_ = "Data";
 
       sep_a_ = this->streamendpoint_a_->_this( ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
-      fep_a_obj_ = this->fep_a_->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      fep_a_obj_ = this->fep_a_->_this ();
 
       CORBA::String_var s1 = sep_a_->add_fep( fep_a_obj_.in() ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       ACE_DEBUG ((LM_DEBUG, "(%N,%l) Added flowendpoint named: %s\n", s1.in() ));
 
@@ -264,7 +259,6 @@ Client::init (int argc,char **argv)
       return -1;
     }
   ACE_ENDTRY;
-  ACE_CHECK_RETURN (-1);
   return 0;
 }
 
@@ -311,23 +305,19 @@ Client::run (void)
 				the_qos.inout(),
 				flow_spec
 				ACE_ENV_ARG_PARAMETER );
-      ACE_TRY_CHECK;
 
       timer.stop ();
       timer.elapsed_time (elapsed);
       elapsed.dump ();
-      ACE_TRY_CHECK;
       if (result == 0)
         ACE_ERROR_RETURN ((LM_ERROR,"streamctrl::bind failed\n"),-1);
 
       AVStreams::flowSpec start_spec (1);
       this->streamctrl_.start (start_spec ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       // Schedule a timer for the for the flow handler.
       ACE_Time_Value tv (10000,0);
       this->orb_->run (tv ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       ACE_DEBUG ((LM_DEBUG, "event loop finished\n"));
 
@@ -338,7 +328,6 @@ Client::run (void)
       return -1;
     }
   ACE_ENDTRY;
-  ACE_CHECK_RETURN (-1);
   return 0;
 }
 
@@ -353,7 +342,6 @@ main (int argc,
                                             argv);
       CORBA::Object_var obj
         = orb->resolve_initial_references ("RootPOA" ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       PortableServer::POA_var poa
         = PortableServer::POA::_narrow (obj.in ());
@@ -361,7 +349,6 @@ main (int argc,
       TAO_AV_CORE::instance ()->init (orb.in (),
                                       poa.in ()
                                       ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
 
       int result = 0;
@@ -371,10 +358,8 @@ main (int argc,
       result = CLIENT::instance ()->run ();
 
       poa->destroy (1, 1 ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK_RETURN (-1);
 
-      orb->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK_RETURN (-1);
+      orb->destroy ();
 
       if (result < 0)
         ACE_ERROR_RETURN ((LM_ERROR,"client::run failed\n"),1);
@@ -387,7 +372,6 @@ main (int argc,
     return -1;
   }
   ACE_ENDTRY;
-  ACE_CHECK_RETURN (-1);
 
   CLIENT::close ();  // Explicitly finalize the Unmanaged_Singleton.
 

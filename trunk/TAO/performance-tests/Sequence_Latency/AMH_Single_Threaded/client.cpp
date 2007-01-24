@@ -40,7 +40,7 @@ parse_args (int argc, char *argv[])
             ACE_OS::strcmp (data_type, "longlong") != 0)
           return -1;
         break;
-	  
+
 	  case 's':
         sz = ACE_OS::atoi (get_opts.opt_arg ());
         break;
@@ -94,7 +94,6 @@ test_octet_seq (Test::Roundtrip_ptr roundtrip ACE_ENV_ARG_DECL)
       ACE_hrtime_t start = ACE_OS::gethrtime ();
 
       (void) roundtrip->test_octet_method (ol, start ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
 
       ACE_hrtime_t now = ACE_OS::gethrtime ();
       history.sample (now - start);
@@ -137,7 +136,6 @@ test_long_seq (Test::Roundtrip_ptr roundtrip ACE_ENV_ARG_DECL)
       ACE_hrtime_t start = ACE_OS::gethrtime ();
 
       (void) roundtrip->test_long_method (ll, start ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
 
       ACE_hrtime_t now = ACE_OS::gethrtime ();
       history.sample (now - start);
@@ -180,7 +178,6 @@ test_short_seq (Test::Roundtrip_ptr roundtrip ACE_ENV_ARG_DECL)
       ACE_hrtime_t start = ACE_OS::gethrtime ();
 
       (void) roundtrip->test_short_method (sl, start ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
 
       ACE_hrtime_t now = ACE_OS::gethrtime ();
       history.sample (now - start);
@@ -223,7 +220,6 @@ test_char_seq (Test::Roundtrip_ptr roundtrip ACE_ENV_ARG_DECL)
       ACE_hrtime_t start = ACE_OS::gethrtime ();
 
       (void) roundtrip->test_char_method (cl, start ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
 
       ACE_hrtime_t now = ACE_OS::gethrtime ();
       history.sample (now - start);
@@ -266,7 +262,6 @@ test_longlong_seq (Test::Roundtrip_ptr roundtrip ACE_ENV_ARG_DECL)
       ACE_hrtime_t start = ACE_OS::gethrtime ();
 
       (void) roundtrip->test_longlong_method (ll, start ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
 
       ACE_hrtime_t now = ACE_OS::gethrtime ();
       history.sample (now - start);
@@ -309,7 +304,6 @@ test_double_seq (Test::Roundtrip_ptr roundtrip ACE_ENV_ARG_DECL)
       ACE_hrtime_t start = ACE_OS::gethrtime ();
 
       (void) roundtrip->test_double_method (dl, start ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
 
       ACE_hrtime_t now = ACE_OS::gethrtime ();
       history.sample (now - start);
@@ -366,18 +360,15 @@ main (int argc, char *argv[])
     {
       CORBA::ORB_var orb =
         CORBA::ORB_init (argc, argv, "" ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       if (parse_args (argc, argv) != 0)
         return 1;
 
       CORBA::Object_var object =
         orb->string_to_object (ior ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       Test::Roundtrip_var roundtrip =
         Test::Roundtrip::_narrow (object.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       if (CORBA::is_nil (roundtrip.in ()))
         {
@@ -387,7 +378,7 @@ main (int argc, char *argv[])
                             1);
         }
 
-	  Test::octet_load oc;	
+	  Test::octet_load oc;
 
       for (int j = 0; j < 100; ++j)
         {
@@ -395,45 +386,37 @@ main (int argc, char *argv[])
           (void) roundtrip->test_octet_method (oc,
                                                start
                                                ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
         }
 
       if (ACE_OS::strcmp (data_type, "octet") == 0 )
         {
           test_octet_seq (roundtrip.in ()
                           ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
         }
       else if (ACE_OS::strcmp (data_type, "char") == 0)
         {
           test_char_seq (roundtrip.in () ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
         }
       else if (ACE_OS::strcmp (data_type, "long") == 0)
         {
           test_long_seq (roundtrip.in () ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
         }
       else if (ACE_OS::strcmp (data_type, "short") == 0)
         {
           test_short_seq (roundtrip.in () ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
         }
       else if (ACE_OS::strcmp (data_type, "double") == 0)
         {
           test_double_seq (roundtrip.in () ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
         }
       else if (ACE_OS::strcmp (data_type, "longlong") == 0)
         {
           test_longlong_seq (roundtrip.in () ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
         }
 
       if (do_shutdown)
         {
-          roundtrip->shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+          roundtrip->shutdown ();
         }
     }
   ACE_CATCHANY

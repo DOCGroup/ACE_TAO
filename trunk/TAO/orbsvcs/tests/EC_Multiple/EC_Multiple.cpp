@@ -132,12 +132,10 @@ Test_ECG::run (int argc, char* argv[])
     {
       CORBA::ORB_var orb =
         CORBA::ORB_init (argc, argv, "" ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       CORBA::Object_var poa_object =
         orb->resolve_initial_references("RootPOA"
                                         ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       if (CORBA::is_nil (poa_object.in ()))
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -146,14 +144,11 @@ Test_ECG::run (int argc, char* argv[])
 
       PortableServer::POA_var root_poa =
         PortableServer::POA::_narrow (poa_object.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       PortableServer::POAManager_var poa_manager =
-        root_poa->the_POAManager (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        root_poa->the_POAManager ();
 
-      poa_manager->activate (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      poa_manager->activate ();
 
       if (this->parse_args (argc, argv))
         return 1;
@@ -255,7 +250,6 @@ Test_ECG::run (int argc, char* argv[])
 
       CORBA::Object_var naming_obj =
         orb->resolve_initial_references ("NameService" ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       if (CORBA::is_nil (naming_obj.in ()))
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -264,7 +258,6 @@ Test_ECG::run (int argc, char* argv[])
 
       CosNaming::NamingContext_var naming_context =
         CosNaming::NamingContext::_narrow (naming_obj.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       auto_ptr<POA_RtecScheduler::Scheduler> scheduler_impl;
       RtecScheduler::Scheduler_var scheduler;
@@ -285,8 +278,7 @@ Test_ECG::run (int argc, char* argv[])
           }
           if (scheduler_impl.get () == 0)
             return -1;
-          scheduler = scheduler_impl->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+          scheduler = scheduler_impl->_this ();
           break;
 
         case Test_ECG::ss_runtime:
@@ -308,8 +300,7 @@ Test_ECG::run (int argc, char* argv[])
 
               if (scheduler_impl.get () == 0)
                 return -1;
-              scheduler = scheduler_impl->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
-              ACE_TRY_CHECK;
+              scheduler = scheduler_impl->_this ();
             }
           else if (ACE_OS::strcmp (this->lcl_name_, "ECM2") == 0)
             {
@@ -329,8 +320,7 @@ Test_ECG::run (int argc, char* argv[])
 
               if (scheduler_impl.get () == 0)
                 return -1;
-              scheduler = scheduler_impl->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
-              ACE_TRY_CHECK;
+              scheduler = scheduler_impl->_this ();
             }
           else if (ACE_OS::strcmp (this->lcl_name_, "ECM3") == 0)
             {
@@ -350,8 +340,7 @@ Test_ECG::run (int argc, char* argv[])
 
               if (scheduler_impl.get () == 0)
                 return -1;
-              scheduler = scheduler_impl->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
-              ACE_TRY_CHECK;
+              scheduler = scheduler_impl->_this ();
             }
           else
             {
@@ -364,8 +353,7 @@ Test_ECG::run (int argc, char* argv[])
 
               if (scheduler_impl.get () == 0)
                 return -1;
-              scheduler = scheduler_impl->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
-              ACE_TRY_CHECK;
+              scheduler = scheduler_impl->_this ();
             }
           break;
 
@@ -388,7 +376,6 @@ Test_ECG::run (int argc, char* argv[])
           {
             CORBA::String_var str =
               orb->object_to_string (scheduler.in () ACE_ENV_ARG_PARAMETER);
-            ACE_TRY_CHECK;
             ACE_DEBUG ((LM_DEBUG, "The (local) scheduler IOR is <%s>\n",
                         str.in ()));
 
@@ -400,7 +387,6 @@ Test_ECG::run (int argc, char* argv[])
             schedule_name.length (1);
             schedule_name[0].id = CORBA::string_dup (buf);
             naming_context->bind (schedule_name, scheduler.in () ACE_ENV_ARG_PARAMETER);
-            ACE_TRY_CHECK;
 
             if (ACE_Scheduler_Factory::use_config (naming_context.in (),
                                                    buf) == -1)
@@ -417,12 +403,10 @@ Test_ECG::run (int argc, char* argv[])
 
       // Register Event_Service with the Naming Service.
       RtecEventChannelAdmin::EventChannel_var ec =
-        ec_impl._this (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        ec_impl._this ();
 
       CORBA::String_var str =
         orb->object_to_string (ec.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       ACE_OS::sleep (5);
       ACE_DEBUG ((LM_DEBUG, "The (local) EC IOR is <%s>\n", str.in ()));
@@ -434,7 +418,6 @@ Test_ECG::run (int argc, char* argv[])
       channel_name.length (1);
       channel_name[0].id = CORBA::string_dup (buf);
       naming_context->bind (channel_name, ec.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       ACE_DEBUG ((LM_DEBUG, "waiting to start\n"));
 
@@ -443,7 +426,6 @@ Test_ECG::run (int argc, char* argv[])
       if (this->rmt_name_ != 0)
         {
           orb->run (&tv ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
         }
 
       ACE_DEBUG ((LM_DEBUG, "starting....\n"));
@@ -452,22 +434,18 @@ Test_ECG::run (int argc, char* argv[])
         this->get_ec (naming_context.in (),
                       this->lcl_name_
                       ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       ACE_DEBUG ((LM_DEBUG, "located local EC\n"));
 
       for (int sd = 0; sd < this->supplier_disconnects_; ++sd)
         {
           this->connect_suppliers (local_ec.in () ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
-          this->disconnect_suppliers (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+          this->disconnect_suppliers ();
           ACE_OS::sleep (5);
           ACE_DEBUG ((LM_DEBUG, "Supplier disconnection %d\n", sd));
         }
 
       this->connect_suppliers (local_ec.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       ACE_DEBUG ((LM_DEBUG, "connected supplier\n"));
 
@@ -476,13 +454,11 @@ Test_ECG::run (int argc, char* argv[])
         {
           tv.set (5, 0);
           orb->run (&tv ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
 
           RtecEventChannelAdmin::EventChannel_var remote_ec =
             this->get_ec (naming_context.in (),
                           this->rmt_name_
                           ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
           ACE_DEBUG ((LM_DEBUG, "located remote EC\n"));
 
           CosNaming::Name rsch_name (1);
@@ -496,48 +472,38 @@ Test_ECG::run (int argc, char* argv[])
           rsch_name[0].id = CORBA::string_dup (buf);
           CORBA::Object_var tmpobj =
             naming_context->resolve (rsch_name ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
 
           RtecScheduler::Scheduler_var remote_sch =
             RtecScheduler::Scheduler::_narrow (tmpobj.in () ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
 
           this->connect_ecg (local_ec.in (),
                              remote_ec.in (),
                              remote_sch.in ()
                              ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
 
           ACE_DEBUG ((LM_DEBUG, "connected proxy\n"));
 
           tv.set (5, 0);
           orb->run (&tv ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
 
           RtecEventChannelAdmin::Observer_ptr observer =
-            this->ecg_._this (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+            this->ecg_._this ();
           observer_handle = ec_impl.append_observer (observer
                                                      ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
         }
 
       for (int cd = 0; cd < this->consumer_disconnects_; ++cd)
         {
           this->connect_consumers (local_ec.in () ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
-          this->disconnect_consumers (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+          this->disconnect_consumers ();
           ACE_OS::sleep (5);
           ACE_DEBUG ((LM_DEBUG, "Consumer disconnection %d\n", cd));
         }
       this->connect_consumers (local_ec.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       ACE_DEBUG ((LM_DEBUG, "connected consumer\n"));
 
       this->activate_suppliers (local_ec.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       ACE_DEBUG ((LM_DEBUG, "suppliers are active\n"));
 
@@ -556,15 +522,13 @@ Test_ECG::run (int argc, char* argv[])
       if (this->rmt_name_ != 0)
         {
           ec_impl.remove_observer (observer_handle ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
         }
 
       // Create the EC internal threads
       ec_impl.activate ();
 
       ACE_DEBUG ((LM_DEBUG, "running the test\n"));
-      orb->run (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      orb->run ();
 
       this->test_stop_ = ACE_OS::gethrtime ();
 
@@ -588,7 +552,6 @@ Test_ECG::run (int argc, char* argv[])
              infos.out (), deps.out (),
              configs.out (), anomalies.out ()
              ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
 
           ACE_Scheduler_Factory::dump_schedule (infos.in (),
                                                 deps.in (),
@@ -598,25 +561,19 @@ Test_ECG::run (int argc, char* argv[])
         }
 
       naming_context->unbind (channel_name ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       if (this->rmt_name_ != 0)
         {
-          this->ecg_.close (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_TRY_CHECK;
-          this->ecg_.shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+          this->ecg_.close ();
+          this->ecg_.shutdown ();
         }
 
-      this->disconnect_consumers (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
-      this->disconnect_suppliers (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      this->disconnect_consumers ();
+      this->disconnect_suppliers ();
 
       ACE_DEBUG ((LM_DEBUG, "shutdown grace period\n"));
       tv.set (5, 0);
       orb->run (&tv ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
     }
   ACE_CATCH (CORBA::SystemException, sys_ex)
     {
@@ -646,7 +603,6 @@ Test_ECG::get_ec (CosNaming::NamingContext_ptr naming_context,
 
   CORBA::Object_var ec_ptr =
     naming_context->resolve (channel_name ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (RtecEventChannelAdmin::EventChannel::_nil ());
   if (CORBA::is_nil (ec_ptr.in ()))
     return RtecEventChannelAdmin::EventChannel::_nil ();
 
@@ -655,12 +611,11 @@ Test_ECG::get_ec (CosNaming::NamingContext_ptr naming_context,
 }
 
 void
-Test_ECG::disconnect_suppliers (ACE_ENV_SINGLE_ARG_DECL)
+Test_ECG::disconnect_suppliers (void)
 {
   for (int i = 0; i < this->hp_suppliers_ + this->lp_suppliers_; ++i)
     {
-      this->suppliers_[i]->close (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK;
+      this->suppliers_[i]->close ();
     }
 }
 
@@ -689,7 +644,6 @@ Test_ECG::connect_suppliers (RtecEventChannelAdmin::EventChannel_ptr local_ec
                                  this->hp_interval_ * 10,
                                  local_ec
                                  ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
     }
 
   for (; i < this->hp_suppliers_ + this->lp_suppliers_; ++i)
@@ -713,17 +667,15 @@ Test_ECG::connect_suppliers (RtecEventChannelAdmin::EventChannel_ptr local_ec
                                  this->lp_interval_ * 10,
                                  local_ec
                                  ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
     }
 }
 
 void
-Test_ECG::disconnect_consumers (ACE_ENV_SINGLE_ARG_DECL)
+Test_ECG::disconnect_consumers (void)
 {
   for (int i = 0; i < this->hp_consumers_ + this->lp_consumers_; ++i)
     {
-      this->consumers_[i]->close (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK;
+      this->consumers_[i]->close ();
     }
 }
 
@@ -748,7 +700,6 @@ Test_ECG::activate_suppliers (RtecEventChannelAdmin::EventChannel_ptr local_ec
                                          this->hp_interval_ * 10,
                                          local_ec
                                          ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
         }
 
       for (; i < this->hp_suppliers_ + this->lp_suppliers_; ++i)
@@ -766,7 +717,6 @@ Test_ECG::activate_suppliers (RtecEventChannelAdmin::EventChannel_ptr local_ec
                                          this->lp_interval_ * 10,
                                          local_ec
                                          ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
         }
     }
   ACE_CATCHANY
@@ -794,7 +744,6 @@ Test_ECG::connect_consumers (RtecEventChannelAdmin::EventChannel_ptr local_ec
                                  this->hpc_event_b_,
                                  local_ec
                                  ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
       this->stats_[i].total_time_ = 0;
       this->stats_[i].lcl_count_ = 0;
       this->stats_[i].rmt_count_ = 0;
@@ -814,7 +763,6 @@ Test_ECG::connect_consumers (RtecEventChannelAdmin::EventChannel_ptr local_ec
                                  this->lpc_event_b_,
                                  local_ec
                                  ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
       this->stats_[i].total_time_ = 0;
       this->stats_[i].lcl_count_ = 0;
       this->stats_[i].rmt_count_ = 0;
@@ -853,7 +801,6 @@ Test_ECG::connect_ecg (RtecEventChannelAdmin::EventChannel_ptr local_ec,
 
   this->ecg_.init (remote_ec, local_ec, remote_sch, local_sch,
                    rmt, lcl ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 }
 
 void
@@ -868,7 +815,6 @@ Test_ECG::push_supplier (void * /* cookie */,
   if (!this->short_circuit_)
     {
       consumer->push (events ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
     }
   else
     {
@@ -876,12 +822,10 @@ Test_ECG::push_supplier (void * /* cookie */,
       for (; i < this->hp_consumers_; ++i)
         {
           this->consumers_[i]->push (events ACE_ENV_ARG_PARAMETER);
-          ACE_CHECK;
         }
       for (; i < this->hp_consumers_ + this->lp_consumers_; ++i)
         {
           this->consumers_[i]->push (events ACE_ENV_ARG_PARAMETER);
-          ACE_CHECK;
         }
     }
 }
@@ -1023,14 +967,13 @@ Test_ECG::shutdown_consumer (int id)
 }
 
 int
-Test_ECG::shutdown (ACE_ENV_SINGLE_ARG_DECL)
+Test_ECG::shutdown (void)
 {
   ACE_DEBUG ((LM_DEBUG, "Shutting down the multiple EC test\n"));
 
   if (this->rmt_name_ != 0)
     {
-      this->ecg_.shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK_RETURN (-1);
+      this->ecg_.shutdown ();
     }
 
   TAO_ORB_Core_instance ()->orb ()->shutdown ();
@@ -1293,7 +1236,6 @@ Test_Supplier::open (const char* name,
 
   RtecScheduler::handle_t rt_info =
     server->create (name ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
   // The execution times are set to reasonable values, but
   // actually they are changed on the real execution, i.e. we
@@ -1312,7 +1254,6 @@ Test_Supplier::open (const char* name,
                1,
                    RtecScheduler::OPERATION
                ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
   this->supplier_id_ = ACE::crc32 (name);
   ACE_DEBUG ((LM_DEBUG, "ID for <%s> is %04.4x\n", name,
@@ -1330,31 +1271,27 @@ Test_Supplier::open (const char* name,
               rt_info, 1);
 
   RtecEventChannelAdmin::SupplierAdmin_var supplier_admin =
-    ec->for_suppliers (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+    ec->for_suppliers ();
 
   this->consumer_proxy_ =
-    supplier_admin->obtain_push_consumer (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+    supplier_admin->obtain_push_consumer ();
 
-  RtecEventComm::PushSupplier_var objref = this->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+  RtecEventComm::PushSupplier_var objref = this->_this ();
 
   this->consumer_proxy_->connect_push_supplier (objref.in (),
                                                 qos.get_SupplierQOS ()
                                                 ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 }
 
 void
-Test_Supplier::close (ACE_ENV_SINGLE_ARG_DECL)
+Test_Supplier::close (void)
 {
   if (CORBA::is_nil (this->consumer_proxy_.in ()))
     return;
 
   RtecEventChannelAdmin::ProxyPushConsumer_var proxy =
     this->consumer_proxy_._retn ();
-  proxy->disconnect_push_consumer (ACE_ENV_SINGLE_ARG_PARAMETER);
+  proxy->disconnect_push_consumer ();
 }
 
 void
@@ -1372,7 +1309,6 @@ Test_Supplier::activate (const char* name,
   ACE_OS::strcat (buf, name);
   RtecScheduler::handle_t rt_info =
     server->create (buf ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
   // The execution times are set to reasonable values, but
   // actually they are changed on the real execution, i.e. we
@@ -1391,7 +1327,6 @@ Test_Supplier::activate (const char* name,
                1,
                RtecScheduler::OPERATION
                ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
   // Also connect our consumer for timeout events from the EC.
   int interval = rate / 10;
@@ -1408,22 +1343,18 @@ Test_Supplier::activate (const char* name,
 
   // = Connect as a consumer.
   RtecEventChannelAdmin::ConsumerAdmin_var consumer_admin =
-    ec->for_consumers (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+    ec->for_consumers ();
 
   this->supplier_proxy_ =
-    consumer_admin->obtain_push_supplier (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+    consumer_admin->obtain_push_supplier ();
 
   RtecEventComm::PushConsumer_var cref =
-    this->consumer_._this (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+    this->consumer_._this ();
 
   this->supplier_proxy_->connect_push_consumer (
        cref.in (),
        consumer_qos.get_ConsumerQOS ()
        ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 }
 
 void
@@ -1469,7 +1400,6 @@ Test_Supplier::push (const RtecEventComm::EventSet& events
           this->test_->shutdown_supplier (this->cookie_,
                                           this->consumer_proxy_.in ()
                                           ACE_ENV_ARG_PARAMETER);
-          ACE_CHECK;
         }
       if (this->message_count_ % 2 == 0)
         {
@@ -1488,17 +1418,17 @@ Test_Supplier::push (const RtecEventComm::EventSet& events
 }
 
 void
-Test_Supplier::disconnect_push_supplier (ACE_ENV_SINGLE_ARG_DECL)
+Test_Supplier::disconnect_push_supplier (void)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   if (CORBA::is_nil (this->supplier_proxy_.in ()))
     return;
 
-  this->supplier_proxy_->disconnect_push_supplier (ACE_ENV_SINGLE_ARG_PARAMETER);
+  this->supplier_proxy_->disconnect_push_supplier ();
 }
 
 void
-Test_Supplier::disconnect_push_consumer (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+Test_Supplier::disconnect_push_consumer (void)
 {
 }
 
@@ -1525,7 +1455,6 @@ Test_Consumer::open (const char* name,
 
   RtecScheduler::handle_t rt_info =
     server->create (name ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
   // The worst case execution time is far less than 2
   // milliseconds, but that is a safe estimate....
@@ -1542,7 +1471,6 @@ Test_Consumer::open (const char* name,
                0,
                RtecScheduler::OPERATION
                ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
   ACE_ConsumerQOS_Factory qos;
   qos.start_disjunction_group ();
@@ -1552,31 +1480,27 @@ Test_Consumer::open (const char* name,
 
   // = Connect as a consumer.
   RtecEventChannelAdmin::ConsumerAdmin_var consumer_admin =
-    ec->for_consumers (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+    ec->for_consumers ();
 
   this->supplier_proxy_ =
-    consumer_admin->obtain_push_supplier (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+    consumer_admin->obtain_push_supplier ();
 
-  RtecEventComm::PushConsumer_var objref = this->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+  RtecEventComm::PushConsumer_var objref = this->_this ();
 
   this->supplier_proxy_->connect_push_consumer (objref.in (),
                                                 qos.get_ConsumerQOS ()
                                                 ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 }
 
 void
-Test_Consumer::close (ACE_ENV_SINGLE_ARG_DECL)
+Test_Consumer::close (void)
 {
   if (CORBA::is_nil (this->supplier_proxy_.in ()))
     return;
 
   RtecEventChannelAdmin::ProxyPushSupplier_var proxy =
     this->supplier_proxy_._retn ();
-  proxy->disconnect_push_supplier (ACE_ENV_SINGLE_ARG_PARAMETER);
+  proxy->disconnect_push_supplier ();
 }
 
 void
@@ -1589,7 +1513,7 @@ Test_Consumer::push (const RtecEventComm::EventSet& events
 }
 
 void
-Test_Consumer::disconnect_push_consumer (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+Test_Consumer::disconnect_push_consumer (void)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
 }

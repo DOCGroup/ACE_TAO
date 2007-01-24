@@ -19,8 +19,8 @@
 
 #include "LifeCycle_Service_i.h"
 
-ACE_RCSID (LifeCycle_Service, 
-           LifeCycle_Service_i, 
+ACE_RCSID (LifeCycle_Service,
+           LifeCycle_Service_i,
            "$Id$")
 
 // Constructor
@@ -67,8 +67,7 @@ Life_Cycle_Service_i::create_object (const CosLifeCycle::Key &factory_key,
       if (this->debug_level_ >= 2)
         ACE_DEBUG ((LM_DEBUG, "Life_Cycle_Service_i:create_object: getFilter will be called.\n"));
 
-      char* filter = criteria_Evaluator.getFilter (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK_RETURN (0);
+      char* filter = criteria_Evaluator.getFilter ();
 
       if (this->debug_level_ >= 2)
         ACE_DEBUG ((LM_DEBUG, "Life_Cycle_Service_i:create_object: query(%s) will be called.\n",filter));
@@ -101,7 +100,6 @@ Life_Cycle_Service_i::create_object (const CosLifeCycle::Key &factory_key,
               genericFactory_var =
                 CosLifeCycle::GenericFactory::_narrow (genericFactoryObj_ptr
                                                        ACE_ENV_ARG_PARAMETER);
-              // ACE_TRY_CHECK;
             }
           ACE_CATCHANY
             {
@@ -110,7 +108,6 @@ Life_Cycle_Service_i::create_object (const CosLifeCycle::Key &factory_key,
               ACE_TRY_THROW (CosLifeCycle::NoFactory (factory_key));
             }
           ACE_ENDTRY;
-          ACE_CHECK_RETURN (0);
 
           if (CORBA::is_nil (genericFactory_var.in()))
             ACE_ERROR_RETURN ((LM_ERROR,
@@ -124,7 +121,6 @@ Life_Cycle_Service_i::create_object (const CosLifeCycle::Key &factory_key,
           CORBA::Object_var object_var = genericFactory_var->create_object (factory_key,
                                                                             the_criteria
                                                                             ACE_ENV_ARG_PARAMETER);
-          ACE_CHECK_RETURN (0);
 
           if (this->debug_level_ >= 2)
             ACE_DEBUG ((LM_DEBUG,

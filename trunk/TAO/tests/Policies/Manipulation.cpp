@@ -87,7 +87,6 @@ main (int argc, char *argv[])
     {
       CORBA::ORB_var orb =
         CORBA::ORB_init (argc, argv, "" ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       if (parse_args (argc, argv) != 0)
         return 1;
@@ -95,13 +94,11 @@ main (int argc, char *argv[])
       CORBA::Object_var object =
         orb->string_to_object ("corbaloc:iiop:localhost:12345/FakeIOR"
                                ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       Test_var test =
 	TAO::Narrow_Utils<Test>::unchecked_narrow (
 	   object.in (),
 	   _TAO_Test_Proxy_Broker_Factory_function_pointer);
-      ACE_TRY_CHECK;
 
       if (CORBA::is_nil (test.in ()))
         {
@@ -213,7 +210,6 @@ Manipulation::perform_iteration (ACE_RANDR_TYPE &seed,
           policy = this->orb_->create_policy (policy_type,
                                               any
                                               ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
 
           CORBA::SetOverrideType override_type = CORBA::SET_OVERRIDE;
           if (operation == ADD_OBJECT_POLICY
@@ -234,7 +230,6 @@ Manipulation::perform_iteration (ACE_RANDR_TYPE &seed,
                 this->test_->_set_policy_overrides (policy_list,
                                                     override_type
                                                     ACE_ENV_ARG_PARAMETER);
-              ACE_TRY_CHECK;
             }
           else if (operation == ADD_CURRENT_POLICY
                    || operation == SET_CURRENT_POLICY)
@@ -242,7 +237,6 @@ Manipulation::perform_iteration (ACE_RANDR_TYPE &seed,
               policy_current->set_policy_overrides (policy_list,
                                                     override_type
                                                     ACE_ENV_ARG_PARAMETER);
-              ACE_TRY_CHECK;
             }
           else
             {
@@ -251,24 +245,20 @@ Manipulation::perform_iteration (ACE_RANDR_TYPE &seed,
               policy_manager->set_policy_overrides (policy_list,
                                                     override_type
                                                     ACE_ENV_ARG_PARAMETER);
-              ACE_TRY_CHECK;
             }
-          policy_list[0]->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+          policy_list[0]->destroy ();
         }
       else if (operation == SAVE_CURRENT_POLICIES)
         {
           CORBA::PolicyTypeSeq types;
           policies =
             policy_current->get_policy_overrides (types ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
         }
       else if (operation == SAVE_MANAGER_POLICIES)
         {
           CORBA::PolicyTypeSeq types;
           policies =
             policy_manager->get_policy_overrides (types ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
         }
       else if (operation == RESTORE_CURRENT_POLICIES)
         {
@@ -277,7 +267,6 @@ Manipulation::perform_iteration (ACE_RANDR_TYPE &seed,
               policy_current->set_policy_overrides (policies.in (),
                                                     CORBA::SET_OVERRIDE
                                                     ACE_ENV_ARG_PARAMETER);
-              ACE_TRY_CHECK;
             }
         }
       else // operation == RESTORE_MANAGER_POLICIES)
@@ -287,7 +276,6 @@ Manipulation::perform_iteration (ACE_RANDR_TYPE &seed,
               policy_manager->set_policy_overrides (policies.in (),
                                                     CORBA::SET_OVERRIDE
                                                     ACE_ENV_ARG_PARAMETER);
-              ACE_TRY_CHECK;
             }
         }
     }
@@ -314,20 +302,16 @@ Manipulation::svc (void)
       CORBA::Object_var object =
         this->orb_->resolve_initial_references ("ORBPolicyManager"
                                                 ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       CORBA::PolicyManager_var policy_manager =
         CORBA::PolicyManager::_narrow (object.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       object =
         this->orb_->resolve_initial_references ("PolicyCurrent"
                                                 ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       CORBA::PolicyCurrent_var policy_current =
         CORBA::PolicyCurrent::_narrow (object.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
 
       for (int i = 0; i != this->niterations_; ++i)
@@ -338,7 +322,6 @@ Manipulation::svc (void)
                                    policy_manager.in (),
                                    policy_current.in ()
                                    ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
         }
     }
   ACE_CATCHANY

@@ -40,7 +40,6 @@ Client_Task::do_invocations(Test::Payload& payload ACE_ENV_SINGLE_ARG_DECL)
   for (int i = 0; i != this->event_count_; ++i)
     {
       this->payload_receiver_->more_data (payload ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
     }
 }
 
@@ -53,7 +52,6 @@ Client_Task::do_sync_none_invocations(Test::Payload& payload ACE_ENV_SINGLE_ARG_
   for (int i = 0; i != this->event_count_; ++i)
     {
       this->payload_receiver_->sync_none_more_data (payload ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
     }
 }
 
@@ -70,16 +68,13 @@ Client_Task::svc (void)
   ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY
     {
-      this->validate_connection (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      this->validate_connection ();
 
       CORBA::Object_var object =
         this->orb_->resolve_initial_references ("PolicyCurrent"
                                                 ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
       CORBA::PolicyCurrent_var policy_current =
         CORBA::PolicyCurrent::_narrow (object.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       CORBA::Any scope_as_any;
       scope_as_any <<= this->sync_scope_;
@@ -91,12 +86,10 @@ Client_Task::svc (void)
         this->orb_->create_policy (Messaging::SYNC_SCOPE_POLICY_TYPE,
                                    scope_as_any
                                    ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       policy_current->set_policy_overrides (policy_list,
                                             CORBA::ADD_OVERRIDE
                                             ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       if (this->sync_scope_ == Messaging::SYNC_NONE)
         this->do_sync_none_invocations(payload ACE_ENV_SINGLE_ARG_PARAMETER);
@@ -119,7 +112,7 @@ Client_Task::svc (void)
 }
 
 void
-Client_Task::validate_connection (ACE_ENV_SINGLE_ARG_DECL)
+Client_Task::validate_connection (void)
 {
   ACE_TRY
     {
@@ -127,7 +120,6 @@ Client_Task::validate_connection (ACE_ENV_SINGLE_ARG_DECL)
       for (int i = 0; i != 100; ++i)
         {
           (void) this->payload_receiver_->more_data (payload ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
         }
     }
   ACE_CATCHANY {} ACE_ENDTRY;

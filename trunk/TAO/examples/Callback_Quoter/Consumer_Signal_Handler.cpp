@@ -72,8 +72,7 @@ Consumer_Signal_Handler::quit_on_signal (void)
           ACE_DEBUG ((LM_DEBUG,
                       "Consumer Unregistered\n"));
         }
-      this->consumer_handler_->consumer_servant_->shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      this->consumer_handler_->consumer_servant_->shutdown ();
     }
   ACE_CATCHANY
     {
@@ -81,7 +80,6 @@ Consumer_Signal_Handler::quit_on_signal (void)
       return -1;
     }
   ACE_ENDTRY;
-  ACE_CHECK_RETURN (-1);
 
   return 0;
 }

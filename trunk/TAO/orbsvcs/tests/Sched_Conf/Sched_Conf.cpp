@@ -341,11 +341,9 @@ main (int argc, char *argv[])
       // Initialize ORB.
       CORBA::ORB_var orb =
         CORBA::ORB_init (argc, argv, "internet" ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       CORBA::Object_var poa_object =
         orb->resolve_initial_references("RootPOA" ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       if (CORBA::is_nil(poa_object.in ()))
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -354,14 +352,11 @@ main (int argc, char *argv[])
 
       PortableServer::POA_var root_poa =
         PortableServer::POA::_narrow (poa_object.in() ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       PortableServer::POAManager_var poa_manager =
-        root_poa->the_POAManager (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        root_poa->the_POAManager ();
 
-      poa_manager->activate (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      poa_manager->activate ();
 
       // Initialize the naming services
       TAO_Naming_Client my_name_client;
@@ -388,7 +383,6 @@ main (int argc, char *argv[])
           config_infos[i].handle =
             ACE_Scheduler_Factory::server ()->create (config_infos[i].entry_point
                                                       ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
 
           // initialize the RT_Info
           ACE_Scheduler_Factory::server ()->
@@ -403,7 +397,6 @@ main (int argc, char *argv[])
                  config_infos[i].threads,
                  static_cast<RtecScheduler::Info_Type_t> (config_infos[i].info_type)
                  ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
 
           // make operations in second half dependant on
           // operations in the first half of the array,
@@ -416,7 +409,6 @@ main (int argc, char *argv[])
                                 2,                             // number of calls
                                 RtecBase::ONE_WAY_CALL    // type of dependency
                                 ACE_ENV_ARG_PARAMETER);
-              ACE_TRY_CHECK;
             }
         }
 
@@ -433,7 +425,6 @@ main (int argc, char *argv[])
          infos.out (), deps.out (), configs.out (), anomalies.out ()
          ACE_ENV_ARG_PARAMETER);
 
-      ACE_TRY_CHECK;
 
       ACE_Scheduler_Factory::dump_schedule (infos.in (),
                                             deps.in (),

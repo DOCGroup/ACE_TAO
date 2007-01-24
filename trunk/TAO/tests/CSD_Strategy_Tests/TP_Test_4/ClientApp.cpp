@@ -24,17 +24,14 @@ int
 ClientApp::run_i(int argc, char* argv[] ACE_ENV_ARG_DECL)
 {
   int result = this->init(argc, argv ACE_ENV_ARG_PARAMETER);
-  if (result != 0)   
+  if (result != 0)
     {
       return result;
     }
-  ACE_CHECK_RETURN (-1);
 
-  this->client_setup(ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
+  this->client_setup();
 
-  result = this->run_engine(ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
+  result = this->run_engine();
 
   this->cleanup();
 
@@ -46,7 +43,6 @@ int
 ClientApp::init(int argc, char* argv[] ACE_ENV_ARG_DECL)
 {
   this->orb_ = CORBA::ORB_init(argc, argv, "" ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
 
   // Parse the command-line args for this application.
   // * Raises -1 if problems are encountered.
@@ -57,13 +53,12 @@ ClientApp::init(int argc, char* argv[] ACE_ENV_ARG_DECL)
 
 
 void
-ClientApp::client_setup(ACE_ENV_SINGLE_ARG_DECL)
+ClientApp::client_setup(void)
 {
   // Turn the ior_ into a Foo_C obj ref.
   Foo_C_var foo = RefHelper<Foo_C>::string_to_ref(this->orb_.in(),
                                                   this->ior_.c_str()
                                                   ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
   // Create the ClientEngine object, and give it the Foo_C obj ref.
   this->engine_ = new Foo_C_ClientEngine(foo.in(), this->client_id_);
@@ -71,10 +66,9 @@ ClientApp::client_setup(ACE_ENV_SINGLE_ARG_DECL)
 
 
 int
-ClientApp::run_engine(ACE_ENV_SINGLE_ARG_DECL)
+ClientApp::run_engine(void)
 {
-  bool result = this->engine_->execute(ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
+  bool result = this->engine_->execute();
 
   return result ? 0 : -1;
 }

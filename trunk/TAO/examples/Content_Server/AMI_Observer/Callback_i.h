@@ -92,7 +92,7 @@ private:
 
 private:
 
-  void deactivate (ACE_ENV_SINGLE_ARG_DECL);
+  void deactivate (void);
   // Deactivate this Callback servant.
 
 private:

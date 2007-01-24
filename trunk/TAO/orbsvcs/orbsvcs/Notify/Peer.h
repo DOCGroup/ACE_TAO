@@ -49,7 +49,7 @@ public:
   CORBA::ULong _decr_refcnt (void);
 
   /// Shutdown the peer.
-  virtual void shutdown (ACE_ENV_SINGLE_ARG_DECL);
+  virtual void shutdown (void);
 
   /// Access Proxy.
   virtual TAO_Notify_Proxy* proxy (void) = 0;
@@ -63,7 +63,7 @@ public:
   virtual void qos_changed (const TAO_Notify_QoSProperties& qos_properties);
 
   /// Handle dispatch exceptions.
-  void handle_dispatch_exception (ACE_ENV_SINGLE_ARG_DECL);
+  void handle_dispatch_exception (void);
 
   /// Retrieve the ior of this peer
   virtual ACE_CString get_ior (void) const = 0;

@@ -74,7 +74,6 @@ TAO::PG_Object_Group_Manipulator::create_object_group (
     this->poa_->create_reference_with_id (oid.in(),
                                           type_id
                                           ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (CORBA::Object::_nil ());
 
   PortableGroup::TagGroupTaggedComponent tag_component;
 
@@ -87,7 +86,6 @@ TAO::PG_Object_Group_Manipulator::create_object_group (
   // Set the property
   TAO::PG_Utils::set_tagged_component (object_group,
                                        tag_component);
-  ACE_CHECK_RETURN (CORBA::Object::_nil ());
 
   return object_group._retn ();
 }
@@ -106,11 +104,9 @@ TAO::PG_Object_Group_Manipulator::init (CORBA::ORB_ptr orb,
   // Get an object reference for the ORBs IORManipulation object!
   CORBA::Object_var IORM = this->orb_->resolve_initial_references (
     TAO_OBJID_IORMANIPULATION, 0 ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
   this->iorm_ = TAO_IOP::TAO_IOR_Manipulation::_narrow (
     IORM.in () ACE_ENV_ARG_PARAMETER);
-//  ACE_CHECK;
 }
 
 int TAO::PG_Object_Group_Manipulator::set_primary (
@@ -120,11 +116,9 @@ int TAO::PG_Object_Group_Manipulator::set_primary (
       ACE_ENV_ARG_DECL) const
 {
   int sts = this->iorm_->is_primary_set (prop, group ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (0);
   if (sts)
   {
     (void)this->iorm_->remove_primary_tag (prop, group ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK_RETURN (0);
   }
   /////note: iorm takes it's parameters in the "wrong" order for this call
   return this->iorm_->set_primary (prop, new_primary, group ACE_ENV_ARG_PARAMETER);

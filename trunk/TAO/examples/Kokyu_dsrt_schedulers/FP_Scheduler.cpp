@@ -47,20 +47,19 @@ FP_Segment_Sched_Param_Policy::value (
 }
 
 CORBA::Policy_ptr
-FP_Segment_Sched_Param_Policy::copy (ACE_ENV_SINGLE_ARG_DECL)
+FP_Segment_Sched_Param_Policy::copy (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   FP_Segment_Sched_Param_Policy* tmp;
   ACE_NEW_THROW_EX (tmp, FP_Segment_Sched_Param_Policy (*this),
                     CORBA::NO_MEMORY (TAO::VMCID,
                                       CORBA::COMPLETED_NO));
-  ACE_CHECK_RETURN (CORBA::Policy::_nil ());
 
   return tmp;
 }
 
 void
-FP_Segment_Sched_Param_Policy::destroy (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+FP_Segment_Sched_Param_Policy::destroy (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
 }
@@ -91,17 +90,14 @@ Fixed_Priority_Scheduler::Fixed_Priority_Scheduler (
   CORBA::Object_var object =
     orb->resolve_initial_references ("RTScheduler_Current"
                                      ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
   this->current_ =
     RTScheduling::Current::_narrow (object.in () ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
   IOP::CodecFactory_var codec_factory;
   CORBA::Object_var obj =
     orb->resolve_initial_references ("CodecFactory"
                                       ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
   if (CORBA::is_nil(obj.in ()))
     {
@@ -208,7 +204,6 @@ Fixed_Priority_Scheduler::begin_nested_scheduling_segment (const RTScheduling::C
                                       sched_param,
                                       implicit_sched_param
                                       ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 }
 
 void
@@ -281,8 +276,7 @@ Fixed_Priority_Scheduler::send_request (PortableInterceptor::ClientRequestInfo_p
 {
   Kokyu::Svc_Ctxt_DSRT_QoS sc_qos;
 
-  CORBA::String_var operation = ri->operation (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+  CORBA::String_var operation = ri->operation ();
 
 #ifdef KOKYU_DSRT_LOGGING
   ACE_DEBUG ((LM_DEBUG,
@@ -295,7 +289,7 @@ Fixed_Priority_Scheduler::send_request (PortableInterceptor::ClientRequestInfo_p
   sc.context_id = Client_Interceptor::SchedulingInfo;
 
   CORBA::Policy_ptr sched_policy =
-    this->current_->scheduling_parameter(ACE_ENV_SINGLE_ARG_PARAMETER);
+    this->current_->scheduling_parameter();
   /*
   int guid;
   ACE_OS::memcpy (&guid,
@@ -344,7 +338,6 @@ Fixed_Priority_Scheduler::send_request (PortableInterceptor::ClientRequestInfo_p
 
       // Add this context to the service context list.
       ri->add_request_service_context (sc, 0 ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
     }
 
 
@@ -382,8 +375,7 @@ Fixed_Priority_Scheduler::receive_request (PortableInterceptor::ServerRequestInf
 
   RTScheduling::Current::IdType guid;
 
-  CORBA::String_var operation = ri->operation (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+  CORBA::String_var operation = ri->operation ();
 
 #ifdef KOKYU_DSRT_LOGGING
   ACE_DEBUG ((LM_DEBUG,
@@ -401,7 +393,6 @@ Fixed_Priority_Scheduler::receive_request (PortableInterceptor::ServerRequestInf
   IOP::ServiceContext_var sc =
     ri->get_request_service_context (Server_Interceptor::SchedulingInfo
                                      ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
   RTCORBA::Priority desired_priority;
 
@@ -472,8 +463,7 @@ Fixed_Priority_Scheduler::send_reply (PortableInterceptor::ServerRequestInfo_ptr
   RTCORBA::Priority desired_priority = 0;
   Kokyu::Svc_Ctxt_DSRT_QoS sc_qos;
 
-  CORBA::String_var operation = ri->operation (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+  CORBA::String_var operation = ri->operation ();
 
 #ifdef KOKYU_DSRT_LOGGING
   ACE_DEBUG ((LM_DEBUG,
@@ -487,8 +477,7 @@ Fixed_Priority_Scheduler::send_reply (PortableInterceptor::ServerRequestInfo_ptr
 
   ACE_DEBUG ((LM_DEBUG, "in send_reply: before accessing current_->sched_param\n"));
   CORBA::Policy_ptr sched_policy =
-    this->current_->scheduling_parameter(ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+    this->current_->scheduling_parameter();
 
   if (CORBA::is_nil (sched_policy))
   {
@@ -518,7 +507,6 @@ Fixed_Priority_Scheduler::send_reply (PortableInterceptor::ServerRequestInfo_ptr
 
       // Add this context to the service context list.
       ri->add_reply_service_context (sc, 1 ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
 
 #ifdef KOKYU_DSRT_LOGGING
       ACE_DEBUG ((LM_DEBUG, "(%t|%T):reply sc added\n"));
@@ -559,11 +547,9 @@ Fixed_Priority_Scheduler::receive_reply (PortableInterceptor::ClientRequestInfo_
   RTScheduling::Current::IdType guid;
   RTCORBA::Priority desired_priority=0;
 
-  CORBA::String_var operation = ri->operation (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+  CORBA::String_var operation = ri->operation ();
 
-  CORBA::Object_var target = ri->target (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+  CORBA::Object_var target = ri->target ();
 
   ACE_CString opname = operation.in ();
 #ifdef KOKYU_DSRT_LOGGING
@@ -578,7 +564,6 @@ Fixed_Priority_Scheduler::receive_reply (PortableInterceptor::ClientRequestInfo_
   IOP::ServiceContext_var sc =
     ri->get_reply_service_context (Client_Interceptor::SchedulingInfo
                                    ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
   if (sc.ptr () == 0)
     {
@@ -621,7 +606,6 @@ Fixed_Priority_Scheduler::receive_exception (PortableInterceptor::ClientRequestI
                    PortableInterceptor::ForwardRequest))
 {
   receive_reply (ri ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 }
 
 void
@@ -631,7 +615,6 @@ Fixed_Priority_Scheduler::receive_other (PortableInterceptor::ClientRequestInfo_
                    PortableInterceptor::ForwardRequest))
 {
   receive_reply (ri ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 }
 
 void
@@ -643,7 +626,7 @@ Fixed_Priority_Scheduler::cancel (const RTScheduling::Current::IdType &
 }
 
 CORBA::PolicyList*
-Fixed_Priority_Scheduler::scheduling_policies (ACE_ENV_SINGLE_ARG_DECL)
+Fixed_Priority_Scheduler::scheduling_policies (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (), 0);
@@ -658,14 +641,14 @@ Fixed_Priority_Scheduler::scheduling_policies (const CORBA::PolicyList &
 }
 
 CORBA::PolicyList*
-Fixed_Priority_Scheduler::poa_policies (ACE_ENV_SINGLE_ARG_DECL)
+Fixed_Priority_Scheduler::poa_policies (void)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (), 0);
 }
 
 char *
-Fixed_Priority_Scheduler::scheduling_discipline_name (ACE_ENV_SINGLE_ARG_DECL)
+Fixed_Priority_Scheduler::scheduling_discipline_name (void)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (), 0);

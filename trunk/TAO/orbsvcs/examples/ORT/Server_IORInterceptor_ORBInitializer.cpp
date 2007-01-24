@@ -27,13 +27,11 @@ Server_IORInterceptor_ORBInitializer::post_init (
   CORBA::Object_var obj =
     info->resolve_initial_references ("Gateway_Object_Factory"
                                       ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
   /// Narrow it down correctly.
   Gateway::Object_Factory_var gateway_object_factory =
     Gateway::Object_Factory::_narrow (obj.in ()
                                       ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
   /// Check for nil reference
   if (CORBA::is_nil (gateway_object_factory.in ()))
@@ -49,11 +47,9 @@ Server_IORInterceptor_ORBInitializer::post_init (
                         TAO::VMCID,
                         ENOMEM),
                       CORBA::COMPLETED_NO));
-  ACE_CHECK;
 
   PortableInterceptor::IORInterceptor_var ior_interceptor = gateway;
 
   info->add_ior_interceptor (ior_interceptor.in ()
                              ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 }

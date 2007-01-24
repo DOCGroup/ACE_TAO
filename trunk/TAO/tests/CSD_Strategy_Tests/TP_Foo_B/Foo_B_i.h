@@ -14,7 +14,7 @@ class CSD_TP_Foo_B_Export Foo_B_i : public virtual POA_Foo_B
     Foo_B_i();
     virtual ~Foo_B_i();
 
-    virtual void op1(ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)              
+    virtual void op1(void)
       ACE_THROW_SPEC((CORBA::SystemException));
 
     virtual void op2(CORBA::Long value ACE_ENV_ARG_DECL_WITH_DEFAULTS)
@@ -26,11 +26,11 @@ class CSD_TP_Foo_B_Export Foo_B_i : public virtual POA_Foo_B
     virtual void op4(CORBA::Long value ACE_ENV_ARG_DECL_WITH_DEFAULTS)
                                     ACE_THROW_SPEC((CORBA::SystemException));
 
-    virtual void op5(ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)              
+    virtual void op5(void)
       ACE_THROW_SPEC((CORBA::SystemException, FooException));
 
-    virtual CORBA::Boolean op6(const TimeOfDay& t, 
-                               char*& message 
+    virtual CORBA::Boolean op6(const TimeOfDay& t,
+                               char*& message
                                ACE_ENV_ARG_DECL_WITH_DEFAULTS)
                                     ACE_THROW_SPEC((CORBA::SystemException));
 
@@ -39,18 +39,18 @@ class CSD_TP_Foo_B_Export Foo_B_i : public virtual POA_Foo_B
                                     ACE_THROW_SPEC((CORBA::SystemException,
                                                     FooException));
 
-    virtual void test_unbounded_string_arg(const char* message 
+    virtual void test_unbounded_string_arg(const char* message
                                            ACE_ENV_ARG_DECL_WITH_DEFAULTS)
                                     ACE_THROW_SPEC((CORBA::SystemException));
-  
+
     virtual void test_bounded_string_arg(const char* message
                                          ACE_ENV_ARG_DECL_WITH_DEFAULTS)
                                     ACE_THROW_SPEC((CORBA::SystemException));
-  
+
     virtual void test_fixed_array_arg(const Fixed_Array message
                                       ACE_ENV_ARG_DECL_WITH_DEFAULTS)
                                     ACE_THROW_SPEC((CORBA::SystemException));
-  
+
     virtual void test_var_array_arg(const Var_Array messages
                                     ACE_ENV_ARG_DECL_WITH_DEFAULTS)
                                     ACE_THROW_SPEC((CORBA::SystemException));
@@ -58,7 +58,7 @@ class CSD_TP_Foo_B_Export Foo_B_i : public virtual POA_Foo_B
     virtual void test_bounded_var_size_arg(const Bounded_Var_Size& message
                                            ACE_ENV_ARG_DECL_WITH_DEFAULTS)
                                     ACE_THROW_SPEC((CORBA::SystemException));
-    
+
     virtual void test_unbounded_var_size_arg(const Unbounded_Var_Size& message
                                              ACE_ENV_ARG_DECL_WITH_DEFAULTS)
                                     ACE_THROW_SPEC((CORBA::SystemException));
@@ -76,13 +76,13 @@ class CSD_TP_Foo_B_Export Foo_B_i : public virtual POA_Foo_B
                                  ACE_ENV_ARG_DECL_WITH_DEFAULTS)
                                     ACE_THROW_SPEC((CORBA::SystemException));
 
-    virtual void done(ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)             
+    virtual void done(void)
       ACE_THROW_SPEC((CORBA::SystemException));
 
-    void gather_stats (Foo_B_Statistics& stats); 
+    void gather_stats (Foo_B_Statistics& stats);
 
   private:
-  
+
     LongVector in_long_ [16];
     StringVector in_string_ [16];
     unsigned op_count_ [16];

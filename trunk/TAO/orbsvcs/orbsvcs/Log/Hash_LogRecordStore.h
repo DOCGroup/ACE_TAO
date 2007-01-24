@@ -87,7 +87,7 @@ class TAO_Log_Serv_Export TAO_Hash_LogRecordStore
 
   /// Gets the administrative state of the log
   virtual DsLogAdmin::AdministrativeState
-    get_administrative_state (ACE_ENV_SINGLE_ARG_DECL) const;
+    get_administrative_state (void) const;
 
   /// Sets the administrative state of the log
   virtual void
@@ -96,7 +96,7 @@ class TAO_Log_Serv_Export TAO_Hash_LogRecordStore
 
   /// Get the capacity alarm thresholds
   virtual DsLogAdmin::CapacityAlarmThresholdList*
-    get_capacity_alarm_thresholds (ACE_ENV_SINGLE_ARG_DECL) const;
+    get_capacity_alarm_thresholds (void) const;
 
   /// Set the capacity alarm thresholds
   virtual void
@@ -105,7 +105,7 @@ class TAO_Log_Serv_Export TAO_Hash_LogRecordStore
 
   /// Gets the forwarding state
   virtual DsLogAdmin::ForwardingState
-    get_forwarding_state (ACE_ENV_SINGLE_ARG_DECL) const;
+    get_forwarding_state (void) const;
 
   /// Sets the forwarding state
   virtual void
@@ -114,7 +114,7 @@ class TAO_Log_Serv_Export TAO_Hash_LogRecordStore
 
   /// Get the log duration
   virtual DsLogAdmin::TimeInterval
-    get_interval (ACE_ENV_SINGLE_ARG_DECL) const;
+    get_interval (void) const;
 
   /// Set the log duration.
   virtual void
@@ -123,7 +123,7 @@ class TAO_Log_Serv_Export TAO_Hash_LogRecordStore
 
   /// Gets the log full action
   virtual DsLogAdmin::LogFullActionType
-    get_log_full_action (ACE_ENV_SINGLE_ARG_DECL) const;
+    get_log_full_action (void) const;
 
   /// Sets the log full action
   virtual void
@@ -132,7 +132,7 @@ class TAO_Log_Serv_Export TAO_Hash_LogRecordStore
 
   /// Get the list of the QoS properties supported by the log.
   virtual DsLogAdmin::QoSList*
-    get_log_qos (ACE_ENV_SINGLE_ARG_DECL) const;
+    get_log_qos (void) const;
 
   /// Set the list of the QoS properties supported by the log.
   virtual void
@@ -141,7 +141,7 @@ class TAO_Log_Serv_Export TAO_Hash_LogRecordStore
 
   /// Gets the max record life
   virtual CORBA::ULong
-    get_max_record_life (ACE_ENV_SINGLE_ARG_DECL) const;
+    get_max_record_life (void) const;
 
   /// Sets the max record life
   virtual void
@@ -150,44 +150,44 @@ class TAO_Log_Serv_Export TAO_Hash_LogRecordStore
 
   /// Get the current set value of the max size of the log data.
   virtual CORBA::ULongLong
-    get_max_size (ACE_ENV_SINGLE_ARG_DECL) const;
+    get_max_size (void) const;
 
   /// Set the max size of log data. size == 0, => infinite.
   virtual void
     set_max_size (CORBA::ULongLong size
                   ACE_ENV_ARG_DECL);
-  
+
   /// Get the weekly scheduling parameters
   virtual DsLogAdmin::WeekMask*
-    get_week_mask (ACE_ENV_SINGLE_ARG_DECL);
-  
+    get_week_mask (void);
+
   /// Set the weekly scheduling parameters.
   virtual void
     set_week_mask (const DsLogAdmin::WeekMask & masks
 		   ACE_ENV_ARG_DECL);
-  
+
 
   // = LogRecordStore status methods
 
   /// Gets the current size of the log data.
   virtual CORBA::ULongLong
-    get_current_size (ACE_ENV_SINGLE_ARG_DECL);
+    get_current_size (void);
 
   /// Get the number of records in the log right now.
   virtual CORBA::ULongLong
-    get_n_records (ACE_ENV_SINGLE_ARG_DECL);
+    get_n_records (void);
 
 
   // = LogRecordStore gauge
- 
+
   /// Gets the current value of the "gauge" that measures the total
   /// size of the records written to the log.
   virtual CORBA::ULongLong
-    get_gauge(ACE_ENV_SINGLE_ARG_DECL);
+    get_gauge(void);
 
   /// Resets the "gauge" to 0
   virtual void
-    reset_gauge(ACE_ENV_SINGLE_ARG_DECL);
+    reset_gauge(void);
 
 
   // = Record logging, retrieval, update and removal methods.
@@ -199,7 +199,7 @@ class TAO_Log_Serv_Export TAO_Hash_LogRecordStore
 
   /// Deletes "old" records from the store.
   virtual int
-    purge_old_records (ACE_ENV_SINGLE_ARG_DECL);
+    purge_old_records (void);
 
   /// Set single record attributes.
   virtual void
@@ -233,7 +233,7 @@ class TAO_Log_Serv_Export TAO_Hash_LogRecordStore
   /// Ensure changes have been flushed to persistent media
   /// Returns 0 on success, -1 on failure.
   virtual int
-    flush (ACE_ENV_SINGLE_ARG_DECL);
+    flush (void);
 
   /// Returns all records in the log that match the given constraint
   /// <c>.
@@ -280,8 +280,8 @@ class TAO_Log_Serv_Export TAO_Hash_LogRecordStore
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual CORBA::ULong
-    remove_old_records (ACE_ENV_SINGLE_ARG_DECL);
-  
+    remove_old_records (void);
+
   /// Read-Write Lock
   virtual ACE_SYNCH_RW_MUTEX& lock();
 
@@ -310,7 +310,7 @@ protected:
   /// Returns 0 on success, -1 on failure.
   int remove_i (DsLogAdmin::RecordId id
 		ACE_ENV_ARG_DECL);
-	
+
   /// Remove the record from the LogRecordStore.
   void remove_i (LOG_RECORD_STORE_ITER iter
 		 ACE_ENV_ARG_DECL);
@@ -384,7 +384,7 @@ protected:
 
   /// The days of the week that the log should be operational
   DsLogAdmin::WeekMask			weekmask_;
-  
+
 
   ACE_Reactor*                          reactor_;
 

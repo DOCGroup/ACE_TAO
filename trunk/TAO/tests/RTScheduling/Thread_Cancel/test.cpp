@@ -16,15 +16,12 @@ main (int argc, char* argv [])
 			 argv,
 			 ""
 			 ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK_RETURN (-1);
 
       CORBA::Object_var manager_obj = orb->resolve_initial_references ("RTSchedulerManager"
 								       ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK_RETURN (-1);
 
       TAO_RTScheduler_Manager_var manager = TAO_RTScheduler_Manager::_narrow (manager_obj.in ()
 									      ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK_RETURN (-1);
 
       TAO_Scheduler scheduler (orb.in ());
 
@@ -46,20 +43,16 @@ main (int argc, char* argv [])
 
       CORBA::Object_var current_obj = orb->resolve_initial_references ("RTScheduler_Current"
 								       ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       RTScheduling::Current_var current = RTScheduling::Current::_narrow (current_obj.in ()
 									  ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       for (int i = 0; i < 4; i++)
         {
           RTScheduling::DistributableThread_var DT = current->lookup ((task.guids ())[i]
                             ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
 
-          DT->cancel (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+          DT->cancel ();
         }
 
       orb->run ();

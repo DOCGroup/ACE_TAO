@@ -67,7 +67,7 @@ public:
     ACE_THROW_SPEC ((CORBA::SystemException));
   // Close the given account.
 
-  virtual void shutdown (ACE_ENV_SINGLE_ARG_DECL)
+  virtual void shutdown (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
   // Shutdown the server.
 

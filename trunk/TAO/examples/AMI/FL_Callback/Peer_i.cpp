@@ -32,13 +32,13 @@ Peer_Handler_i::request_excep (
 }
 
 void
-Peer_Handler_i::start (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+Peer_Handler_i::start (void)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
 }
 
 void
-Peer_Handler_i::shutdown (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+Peer_Handler_i::shutdown (void)
     ACE_THROW_SPEC ((CORBA::SystemException))
 
 {
@@ -64,12 +64,10 @@ Peer_i::init (CORBA::ORB_ptr orb,
   this->progress_ = Progress::_duplicate (progress);
   this->delay_ = delay;
 
-  Peer_var peer = this->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+  Peer_var peer = this->_this ();
 
   ACE_DEBUG ((LM_DEBUG, "Peer (%P|%t) - binding\n"));
   this->id_ = this->progress_->bind (peer.in () ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 }
 
 void
@@ -98,8 +96,7 @@ Peer_i::start (const PeerSet &the_peers,
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   AMI_PeerHandler_var handler =
-    this->reply_handler_._this (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+    this->reply_handler_._this ();
 
   // @@ Report errors as exceptions...
   Peer_Task *task;
@@ -112,7 +109,7 @@ Peer_i::start (const PeerSet &the_peers,
 }
 
 void
-Peer_i::shutdown (ACE_ENV_SINGLE_ARG_DECL)
+Peer_i::shutdown (void)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->orb_->shutdown (0 ACE_ENV_ARG_PARAMETER);
@@ -146,11 +143,9 @@ Peer_Task::svc (void)
               this->the_peers_[j]->sendc_request (this->handler_.in (),
                                                   this->id_
                                                   ACE_ENV_ARG_PARAMETER);
-              ACE_TRY_CHECK;
 
               this->progress_->sent_request (this->id_
                                              ACE_ENV_ARG_PARAMETER);
-              ACE_TRY_CHECK;
             }
           ACE_CATCHANY
             {

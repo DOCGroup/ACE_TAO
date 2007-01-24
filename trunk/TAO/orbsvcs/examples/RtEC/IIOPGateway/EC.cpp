@@ -46,19 +46,15 @@ EC::run (int argc, char* argv[])
       // ORB initialization boiler plate...
       CORBA::ORB_var orb =
         CORBA::ORB_init (argc, argv, "" ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       CORBA::Object_var object =
         orb->resolve_initial_references ("RootPOA" ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       PortableServer::POA_var rootpoa =
         PortableServer::POA::_narrow (object.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       PortableServer::POAManager_var root_poa_manager =
-        rootpoa->the_POAManager (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        rootpoa->the_POAManager ();
 
       // Create persistent POA
       CORBA::PolicyList policies (2);
@@ -67,12 +63,10 @@ EC::run (int argc, char* argv[])
       policies[0] =
         rootpoa->create_id_assignment_policy (PortableServer::USER_ID
                                           ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       policies[1] =
         rootpoa->create_lifespan_policy (PortableServer::PERSISTENT
                                         ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       ACE_CString poaname = "POA";
       PortableServer::POA_var child_poa_ =
@@ -92,22 +86,17 @@ EC::run (int argc, char* argv[])
       PortableServer::ObjectId_var ecId = PortableServer::string_to_ObjectId(ecname);
 
       child_poa_->activate_object_with_id(ecId.in(), &ec_impl ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       CORBA::Object_var ec_obj = child_poa_->id_to_reference(ecId.in() ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       RtecEventChannelAdmin::EventChannel_var ec =
         RtecEventChannelAdmin::EventChannel::_narrow(ec_obj.in() ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       // Find the Naming Service.
       object = orb->resolve_initial_references("NameService" ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       CosNaming::NamingContextExt_var naming_context =
         CosNaming::NamingContextExt::_narrow(object.in() ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       // Create a name.
       CosNaming::Name name;
@@ -117,10 +106,8 @@ EC::run (int argc, char* argv[])
 
       // Register with the name server
       naming_context->rebind (name, ec.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
-      root_poa_manager->activate (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      root_poa_manager->activate ();
 
       // Wait for events, using work_pending()/perform_work() may help
       // or using another thread, this example is too simple for that.

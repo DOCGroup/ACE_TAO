@@ -105,7 +105,7 @@ public:
           RTCORBA::RTORB_ptr rt_orb,
           CORBA::PolicyManager_ptr policy_manager);
 
-  void vanilla_invocations (ACE_ENV_SINGLE_ARG_DECL);
+  void vanilla_invocations (void);
 
   void priority_invocations (int debug
                              ACE_ENV_ARG_DECL);
@@ -116,9 +116,9 @@ public:
   void set_priority_bands (int debug
                            ACE_ENV_ARG_DECL);
 
-  void set_private_connection_policies (ACE_ENV_SINGLE_ARG_DECL);
+  void set_private_connection_policies (void);
 
-  void reset_policies (ACE_ENV_SINGLE_ARG_DECL);
+  void reset_policies (void);
 
 
 private:
@@ -142,7 +142,7 @@ public:
 
   int svc (void);
 
-  void validate_connection (ACE_ENV_SINGLE_ARG_DECL);
+  void validate_connection (void);
 
 private:
   Client client_;
@@ -165,7 +165,7 @@ Worker_Thread::Worker_Thread (ACE_Thread_Manager &thread_manager,
 }
 
 void
-Worker_Thread::validate_connection (ACE_ENV_SINGLE_ARG_DECL)
+Worker_Thread::validate_connection (void)
 {
   // Try to validate the connection several times, ignoring transient
   // exceptions.  If the connection can still not be setup, return
@@ -180,7 +180,6 @@ Worker_Thread::validate_connection (ACE_ENV_SINGLE_ARG_DECL)
           ++current_attempt;
           this->test_->_validate_connection (inconsistent_policies.out ()
                                              ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
 
           // If successful, we are done.
           return;
@@ -198,7 +197,6 @@ Worker_Thread::validate_connection (ACE_ENV_SINGLE_ARG_DECL)
           ACE_RE_THROW;
         }
       ACE_ENDTRY;
-      ACE_CHECK;
     }
 }
 
@@ -209,13 +207,10 @@ Worker_Thread::svc (void)
     {
       this->current_->the_priority (this->priority_
                                     ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
-      this->validate_connection (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      this->validate_connection ();
 
-      this->client_.vanilla_invocations (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      this->client_.vanilla_invocations ();
     }
   ACE_CATCHANY
     {
@@ -240,12 +235,11 @@ Client::Client (test_ptr test,
 }
 
 void
-Client::vanilla_invocations (ACE_ENV_SINGLE_ARG_DECL)
+Client::vanilla_invocations (void)
 {
   for (int i = 0; i < iterations; i++)
     {
-      this->test_->method (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK;
+      this->test_->method ();
     }
 }
 
@@ -329,7 +323,6 @@ Client::set_client_protocols_policies (int debug
                    policies,
                    debug
                    ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
   if (result != 0)
     {
       ACE_ERROR ((LM_ERROR,
@@ -341,7 +334,6 @@ Client::set_client_protocols_policies (int debug
   this->policy_manager_->set_policy_overrides (policies,
                                                CORBA::ADD_OVERRIDE
                                                ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 }
 
 void
@@ -357,7 +349,6 @@ Client::set_priority_bands (int debug
                         policies,
                         debug
                         ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
   if (result != 0)
     {
       ACE_ERROR ((LM_ERROR,
@@ -369,34 +360,30 @@ Client::set_priority_bands (int debug
   this->policy_manager_->set_policy_overrides (policies,
                                                CORBA::ADD_OVERRIDE
                                                ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 }
 
 void
-Client::set_private_connection_policies (ACE_ENV_SINGLE_ARG_DECL)
+Client::set_private_connection_policies (void)
 {
   CORBA::PolicyList policies;
   policies.length (1);
 
   policies[0] =
-    this->rt_orb_->create_private_connection_policy (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+    this->rt_orb_->create_private_connection_policy ();
 
   this->policy_manager_->set_policy_overrides (policies,
                                                CORBA::ADD_OVERRIDE
                                                ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 }
 
 void
-Client::reset_policies (ACE_ENV_SINGLE_ARG_DECL)
+Client::reset_policies (void)
 {
   CORBA::PolicyList empty_policies;
 
   this->policy_manager_->set_policy_overrides (empty_policies,
                                                CORBA::SET_OVERRIDE
                                                ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 }
 
 class Task : public ACE_Task_Base
@@ -427,46 +414,37 @@ Task::svc (void)
       CORBA::Object_var object =
         this->orb_->resolve_initial_references ("RTORB"
                                                 ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       RTCORBA::RTORB_var rt_orb =
         RTCORBA::RTORB::_narrow (object.in ()
                                  ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       object =
         this->orb_->resolve_initial_references ("ORBPolicyManager"
                                                 ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       CORBA::PolicyManager_var policy_manager =
         CORBA::PolicyManager::_narrow (object.in ()
                                        ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       object =
         this->orb_->resolve_initial_references ("RTCurrent"
                                                 ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       RTCORBA::Current_var current =
         RTCORBA::Current::_narrow (object.in ()
                                    ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       current->the_priority (0
                              ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       object =
         this->orb_->string_to_object (ior
                                       ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       test_var test =
         test::_narrow (object.in ()
                        ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       Client client (test.in (),
                      this->orb_.in (),
@@ -474,78 +452,57 @@ Task::svc (void)
                      rt_orb.in (),
                      policy_manager.in ());
 
-      client.vanilla_invocations (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      client.vanilla_invocations ();
 
-      client.set_private_connection_policies (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      client.set_private_connection_policies ();
 
-      client.vanilla_invocations (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      client.vanilla_invocations ();
 
-      client.reset_policies (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      client.reset_policies ();
 
       client.set_client_protocols_policies (debug
                                             ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
-      client.vanilla_invocations (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      client.vanilla_invocations ();
 
-      client.set_private_connection_policies (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      client.set_private_connection_policies ();
 
-      client.vanilla_invocations (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      client.vanilla_invocations ();
 
-      client.reset_policies (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      client.reset_policies ();
 
       client.set_priority_bands (debug
                                  ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       client.priority_invocations (debug
                                    ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
-      client.set_private_connection_policies (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      client.set_private_connection_policies ();
 
       client.priority_invocations (debug
                                    ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
-      client.reset_policies (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      client.reset_policies ();
 
       client.set_priority_bands (debug
                                  ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       client.set_client_protocols_policies (0
                                             ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       client.priority_invocations (0
                                    ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
-      client.set_private_connection_policies (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      client.set_private_connection_policies ();
 
       client.priority_invocations (debug
                                    ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
-      client.reset_policies (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      client.reset_policies ();
 
       if (shutdown_server)
         {
-          test->shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+          test->shutdown ();
         }
     }
   ACE_CATCHANY
@@ -570,7 +527,6 @@ main (int argc, char **argv)
                          argv,
                          0
                          ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       int parse_args_result =
         parse_args (argc, argv);
@@ -625,7 +581,6 @@ main (int argc, char **argv)
       return -1;
     }
   ACE_ENDTRY;
-  ACE_CHECK_RETURN (-1);
 
   return 0;
 }

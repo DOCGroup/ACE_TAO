@@ -59,12 +59,10 @@ CC_Command::GetLockSet (const char *lock_set_name
             CC_naming_service::Instance()->get_obj_from_name ("",
                                                               lock_set_name
                                                               ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
 
           ccls_ret =
             CosConcurrencyControl::LockSet::_narrow (ccls_obj.in ()
                                                      ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
         }
       else
         {
@@ -175,7 +173,6 @@ int CC_CreateLockSet_Cmd::execute(void)
         {
           CC_naming_service::Instance()->bind_name(name_,
                                                    lock_set ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
         }
       else
         {
@@ -225,10 +222,8 @@ int CC_Lock_Cmd::execute(void)
     {
       CosConcurrencyControl::LockSet_var ccls =
         GetLockSet(name_ ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
       ccls->lock (mode_
                   ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
     }
   ACE_CATCHANY
     {
@@ -271,11 +266,9 @@ int CC_UnLock_Cmd::execute(void)
   ACE_TRY
     {
       CosConcurrencyControl::LockSet_var ccls = GetLockSet(name_ ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       ccls->unlock (mode_
                     ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
     }
   ACE_CATCHANY
@@ -321,11 +314,9 @@ int CC_TryLock_Cmd::execute(void)
   ACE_TRY
     {
       CosConcurrencyControl::LockSet_var ccls = GetLockSet(name_ ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       lock_not_held = ccls->try_lock (mode_
                                       ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       if (lock_not_held)
         {
@@ -386,11 +377,9 @@ int CC_ChangeMode_Cmd::execute(void)
   ACE_TRY
     {
       CosConcurrencyControl::LockSet_var ccls = GetLockSet(name_ ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       ccls->change_mode (held_mode_, new_mode_
                     ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
     }
   ACE_CATCHANY
@@ -583,15 +572,12 @@ CC_Lookup_Cmd::execute(void)
             CC_naming_service::Instance()->get_obj_from_name ("",
                                                               name_
                                                               ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
 
           CosConcurrencyControl::LockSet_var ccls =
             CosConcurrencyControl::LockSet::_narrow (ccls_obj.in ()
                                                      ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
 
           cc_lockset_ = ccls;
-          ACE_TRY_CHECK;
 
         }
       ACE_CATCHANY

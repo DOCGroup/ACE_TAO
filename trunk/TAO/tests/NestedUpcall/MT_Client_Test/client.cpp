@@ -166,7 +166,6 @@ MT_Client::run (void)
           this->mT_Object_var_->yadda (0,
                                        0
                                        ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
         }
     }
   ACE_CATCHANY
@@ -214,7 +213,6 @@ MT_Client::init (int argc, char **argv,
                          this->argv_,
                          buf
                          ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       // Parse command line and verify parameters.
       if (this->parse_args () == -1)
@@ -229,7 +227,6 @@ MT_Client::init (int argc, char **argv,
       CORBA::Object_var object_var =
         this->orb_var_->string_to_object (this->object_key_
                                           ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       if (CORBA::is_nil (object_var.in()))
           ACE_ERROR_RETURN ((LM_ERROR,
@@ -238,7 +235,6 @@ MT_Client::init (int argc, char **argv,
 
       this->mT_Object_var_ = MT_Object::_narrow (object_var.in()
                                                  ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       if (CORBA::is_nil (this->mT_Object_var_.in()))
         {
@@ -252,7 +248,6 @@ MT_Client::init (int argc, char **argv,
 
       CORBA::Object_var poa_object =
         this->orb_var_->resolve_initial_references("RootPOA" ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       if (CORBA::is_nil (poa_object.in ()))
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -261,14 +256,11 @@ MT_Client::init (int argc, char **argv,
 
       PortableServer::POA_var root_poa =
         PortableServer::POA::_narrow (poa_object.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       PortableServer::POAManager_var poa_manager =
-        root_poa->the_POAManager (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        root_poa->the_POAManager ();
 
-      poa_manager->activate (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      poa_manager->activate ();
     }
   ACE_CATCHANY
     {
@@ -295,7 +287,6 @@ main (int argc, char **argv)
       int r = orb_manager.init (argc,
                                 argv
                                 ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       if (r != 0)
         ACE_ERROR_RETURN ((LM_ERROR,

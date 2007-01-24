@@ -16,7 +16,7 @@ public:
   /// Constructor
   Hello(CORBA::ORB_ptr orb, bool simulate_crashes);
 
-  virtual void short_sleep (ACE_ENV_SINGLE_ARG_DECL)
+  virtual void short_sleep (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
 private:

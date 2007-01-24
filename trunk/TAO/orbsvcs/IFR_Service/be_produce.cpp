@@ -99,7 +99,7 @@ BE_abort (void)
 }
 
 void
-BE_create_holding_scope (ACE_ENV_SINGLE_ARG_DECL)
+BE_create_holding_scope (void)
 {
   CORBA::ModuleDef_ptr scope = CORBA::ModuleDef::_nil ();
 
@@ -107,7 +107,6 @@ BE_create_holding_scope (ACE_ENV_SINGLE_ARG_DECL)
   CORBA::Contained_var result =
     be_global->repository ()->lookup_id (be_global->holding_scope_name ()
                                          ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
   // Will live until the repository goes away for good.
   if (CORBA::is_nil (result.in ()))
@@ -119,25 +118,22 @@ BE_create_holding_scope (ACE_ENV_SINGLE_ARG_DECL)
                                       "1.0"
                                       ACE_ENV_ARG_PARAMETER
                                     );
-      ACE_CHECK;
     }
   else
     {
       scope = CORBA::ModuleDef::_narrow (result.in ()
                                          ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
     }
 
   be_global->holding_scope (scope);
 }
 
 int
-BE_ifr_repo_init (ACE_ENV_SINGLE_ARG_DECL)
+BE_ifr_repo_init (void)
 {
   CORBA::Object_var object =
     be_global->orb ()->resolve_initial_references ("InterfaceRepository"
                                                     ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
 
   if (CORBA::is_nil (object.in ()))
     {
@@ -152,7 +148,6 @@ BE_ifr_repo_init (ACE_ENV_SINGLE_ARG_DECL)
   CORBA::Repository_var repo =
     CORBA::Repository::_narrow (object.in ()
                                 ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
 
   if (CORBA::is_nil (repo.in ()))
     {
@@ -176,16 +171,14 @@ BE_produce (void)
   ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY
     {
-      int status = BE_ifr_repo_init (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      int status = BE_ifr_repo_init ();
 
       if (status != 0)
         {
           return;
         }
 
-      BE_create_holding_scope (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      BE_create_holding_scope ();
 
       // Get the root node.
       AST_Decl *d = idl_global->root ();

@@ -33,7 +33,6 @@ TAO::SSLIOP::Util::current (
       TAO::SSLIOP::Current_var tao_current =
         TAO::SSLIOP::Current::_narrow (obj.in ()
                                        ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       if (CORBA::is_nil (tao_current.in ()))
         ACE_TRY_THROW (CORBA::INV_OBJREF ());
@@ -50,7 +49,6 @@ TAO::SSLIOP::Util::current (
       return 0;
     }
   ACE_ENDTRY;
-  ACE_CHECK_RETURN (0);
 
   return 0;
 }

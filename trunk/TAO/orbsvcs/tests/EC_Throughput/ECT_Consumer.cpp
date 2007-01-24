@@ -38,7 +38,6 @@ Test_Consumer::connect (RtecScheduler::Scheduler_ptr scheduler,
 {
   RtecScheduler::handle_t rt_info =
     scheduler->create (name ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
   // The worst case execution time is far less than 2
   // milliseconds, but that is a safe estimate....
@@ -54,7 +53,6 @@ Test_Consumer::connect (RtecScheduler::Scheduler_ptr scheduler,
                   0,
                   RtecScheduler::OPERATION
                   ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
   ACE_ConsumerQOS_Factory qos;
   qos.start_disjunction_group ();
@@ -66,43 +64,35 @@ Test_Consumer::connect (RtecScheduler::Scheduler_ptr scheduler,
 
   // = Connect as a consumer.
   RtecEventChannelAdmin::ConsumerAdmin_var consumer_admin =
-    ec->for_consumers (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+    ec->for_consumers ();
 
   this->supplier_proxy_ =
-    consumer_admin->obtain_push_supplier (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+    consumer_admin->obtain_push_supplier ();
 
-  RtecEventComm::PushConsumer_var objref = this->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+  RtecEventComm::PushConsumer_var objref = this->_this ();
 
   this->supplier_proxy_->connect_push_consumer (objref.in (),
                                                 qos.get_ConsumerQOS ()
                                                 ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 }
 
 void
-Test_Consumer::disconnect (ACE_ENV_SINGLE_ARG_DECL)
+Test_Consumer::disconnect (void)
 {
   if (CORBA::is_nil (this->supplier_proxy_.in ()))
     return;
 
-  this->supplier_proxy_->disconnect_push_supplier (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+  this->supplier_proxy_->disconnect_push_supplier ();
 
   this->supplier_proxy_ =
     RtecEventChannelAdmin::ProxyPushSupplier::_nil ();
 
   // Deactivate the servant
   PortableServer::POA_var poa =
-    this->_default_POA (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+    this->_default_POA ();
   PortableServer::ObjectId_var id =
     poa->servant_to_id (this ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
   poa->deactivate_object (id.in () ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 }
 
 void
@@ -160,7 +150,6 @@ Test_Consumer::push (const RtecEventComm::EventSet& events
               // We stop the timer as soon as we realize it is time to
               // do so.
               this->driver_->shutdown_consumer (this->cookie_ ACE_ENV_ARG_PARAMETER);
-              ACE_CHECK;
             }
         }
       else
@@ -177,7 +166,7 @@ Test_Consumer::push (const RtecEventComm::EventSet& events
 }
 
 void
-Test_Consumer::disconnect_push_consumer (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+Test_Consumer::disconnect_push_consumer (void)
       ACE_THROW_SPEC ((CORBA::SystemException))
 {
 }

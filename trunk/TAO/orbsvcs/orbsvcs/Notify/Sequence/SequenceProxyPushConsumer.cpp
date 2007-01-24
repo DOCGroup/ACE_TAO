@@ -29,7 +29,7 @@ TAO_Notify_SequenceProxyPushConsumer::release (void)
 }
 
 CosNotifyChannelAdmin::ProxyType
-TAO_Notify_SequenceProxyPushConsumer::MyType (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+TAO_Notify_SequenceProxyPushConsumer::MyType (void)
   ACE_THROW_SPEC ((
                    CORBA::SystemException
                    ))
@@ -51,11 +51,9 @@ TAO_Notify_SequenceProxyPushConsumer::connect_sequence_push_supplier (CosNotifyC
                     CORBA::NO_MEMORY ());
 
   supplier->init (push_supplier ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
   this->connect (supplier ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
-  this->self_change (ACE_ENV_SINGLE_ARG_PARAMETER);
+  this->self_change ();
 }
 
 void
@@ -80,20 +78,18 @@ TAO_Notify_SequenceProxyPushConsumer::push_structured_events (const CosNotificat
 
       TAO_Notify_StructuredEvent_No_Copy event (notification);
       this->push_i (&event ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
     }
 }
 
 void
-TAO_Notify_SequenceProxyPushConsumer::disconnect_sequence_push_consumer (ACE_ENV_SINGLE_ARG_DECL)
+TAO_Notify_SequenceProxyPushConsumer::disconnect_sequence_push_consumer (void)
   ACE_THROW_SPEC ((
                    CORBA::SystemException
                    ))
 {
   TAO_Notify_SequenceProxyPushConsumer::Ptr guard( this );
-  this->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
-  this->self_change (ACE_ENV_SINGLE_ARG_PARAMETER);
+  this->destroy ();
+  this->self_change ();
 }
 
 const char *
@@ -117,15 +113,12 @@ TAO_Notify_SequenceProxyPushConsumer::load_attrs (const TAO_Notify::NVPList& att
       if ( ior.length() > 0 )
       {
         CORBA::Object_var obj = orb->string_to_object(ior.c_str() ACE_ENV_ARG_PARAMETER);
-        ACE_TRY_CHECK;
         ps = CosNotifyComm::SequencePushSupplier::_unchecked_narrow(obj.in() ACE_ENV_ARG_PARAMETER);
-        ACE_TRY_CHECK;
       }
       // minor hack: suppress generating subscription updates during reload.
       bool save_updates = this->updates_off_;
       this->updates_off_ = true;
       this->connect_sequence_push_supplier(ps.in() ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
       this->updates_off_ = save_updates;
     }
     ACE_CATCHANY

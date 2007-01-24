@@ -81,7 +81,6 @@ UDP_i::invoke (const char * client_name,
           responseHandler_->invoke (client_name,
                                     request_id
                                     ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
         }
 
     }
@@ -110,7 +109,6 @@ UDP_i::reset (const char * client_name
         {
           responseHandler_->reset (client_name
                                    ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
         }
     }
   ACE_CATCHANY
@@ -124,7 +122,7 @@ UDP_i::reset (const char * client_name
 // Shutdown.
 
 void
-UDP_i::shutdown (ACE_ENV_SINGLE_ARG_DECL)
+UDP_i::shutdown (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_DEBUG ((LM_DEBUG,
@@ -135,7 +133,6 @@ UDP_i::shutdown (ACE_ENV_SINGLE_ARG_DECL)
     {
       // Instruct the ORB to shutdown.
       this->orb_->shutdown (0 ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
     }
   ACE_CATCHANY
     {

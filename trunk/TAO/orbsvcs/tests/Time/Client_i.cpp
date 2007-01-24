@@ -37,9 +37,8 @@ Client_i::test_for_secure_universal_time (void)
   ACE_TRY
     {
       CosTime::UTO_var UTO_server =
-           this->clerk_->secure_universal_time (ACE_ENV_SINGLE_ARG_PARAMETER);
+           this->clerk_->secure_universal_time ();
 
-      ACE_TRY_CHECK;
     }
   ACE_CATCH (CORBA::SystemException, sysex)
     {
@@ -62,9 +61,8 @@ Client_i::test_for_universal_time (void)
   ACE_TRY
     {
       CosTime::UTO_var UTO_server =
-        this->clerk_->universal_time (ACE_ENV_SINGLE_ARG_PARAMETER);
+        this->clerk_->universal_time ();
 
-      ACE_TRY_CHECK;
 
 #ifndef ACE_LACKS_LONGLONG_T
       ACE_DEBUG ((LM_DEBUG,
@@ -90,7 +88,6 @@ Client_i::test_for_universal_time (void)
                   (UTO_server->utc_time ()).tdf));
 #endif
 
-      ACE_TRY_CHECK;
     }
   ACE_CATCHANY
     {
@@ -119,15 +116,14 @@ Client_i::test_for_new_universal_time (void)
                                                                       tdf
                                                                       ACE_ENV_ARG_PARAMETER);
 
-      ACE_ASSERT (UTO_server->time (ACE_ENV_SINGLE_ARG_PARAMETER) == 999999999);
-      ACE_ASSERT (UTO_server->inaccuracy (ACE_ENV_SINGLE_ARG_PARAMETER) == 9999);
-      ACE_ASSERT (UTO_server->tdf (ACE_ENV_SINGLE_ARG_PARAMETER) == 99);
-      ACE_ASSERT ((UTO_server->utc_time (ACE_ENV_SINGLE_ARG_PARAMETER)).time == 999999999);
-      ACE_ASSERT ((UTO_server->utc_time (ACE_ENV_SINGLE_ARG_PARAMETER)).inacchi == 0);
-      ACE_ASSERT ((UTO_server->utc_time (ACE_ENV_SINGLE_ARG_PARAMETER)).inacclo == 9999);
-      ACE_ASSERT ((UTO_server->utc_time (ACE_ENV_SINGLE_ARG_PARAMETER)).tdf == 99);
+      ACE_ASSERT (UTO_server->time () == 999999999);
+      ACE_ASSERT (UTO_server->inaccuracy () == 9999);
+      ACE_ASSERT (UTO_server->tdf () == 99);
+      ACE_ASSERT ((UTO_server->utc_time ()).time == 999999999);
+      ACE_ASSERT ((UTO_server->utc_time ()).inacchi == 0);
+      ACE_ASSERT ((UTO_server->utc_time ()).inacclo == 9999);
+      ACE_ASSERT ((UTO_server->utc_time ()).tdf == 99);
 
-      ACE_TRY_CHECK;
     }
   ACE_CATCHANY
     {
@@ -156,21 +152,19 @@ Client_i::test_for_uto_from_utc (void)
     {
       CosTime::UTO_var UTO_server = this->clerk_->uto_from_utc (utc_struct
                                                                 ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       TimeBase::InaccuracyT inaccuracy = utc_struct.inacchi;
       inaccuracy <<= 32;
       inaccuracy |= utc_struct.inacclo;
 
-      ACE_ASSERT (UTO_server->time (ACE_ENV_SINGLE_ARG_PARAMETER) == 999999999);
-      ACE_ASSERT (UTO_server->inaccuracy (ACE_ENV_SINGLE_ARG_PARAMETER) == inaccuracy);
-      ACE_ASSERT (UTO_server->tdf (ACE_ENV_SINGLE_ARG_PARAMETER) == 99);
-      ACE_ASSERT ((UTO_server->utc_time (ACE_ENV_SINGLE_ARG_PARAMETER)).time == 999999999);
-      ACE_ASSERT ((UTO_server->utc_time (ACE_ENV_SINGLE_ARG_PARAMETER)).inacclo == 50);
-      ACE_ASSERT ((UTO_server->utc_time (ACE_ENV_SINGLE_ARG_PARAMETER)).inacchi == 50);
-      ACE_ASSERT ((UTO_server->utc_time (ACE_ENV_SINGLE_ARG_PARAMETER)).tdf == 99);
+      ACE_ASSERT (UTO_server->time () == 999999999);
+      ACE_ASSERT (UTO_server->inaccuracy () == inaccuracy);
+      ACE_ASSERT (UTO_server->tdf () == 99);
+      ACE_ASSERT ((UTO_server->utc_time ()).time == 999999999);
+      ACE_ASSERT ((UTO_server->utc_time ()).inacclo == 50);
+      ACE_ASSERT ((UTO_server->utc_time ()).inacchi == 50);
+      ACE_ASSERT ((UTO_server->utc_time ()).tdf == 99);
 
-      ACE_TRY_CHECK;
     }
   ACE_CATCHANY
     {
@@ -197,10 +191,9 @@ Client_i::test_for_new_interval (void)
                                                                 upper
                                                                 ACE_ENV_ARG_PARAMETER);
 
-      ACE_ASSERT ((TIO_server->time_interval (ACE_ENV_SINGLE_ARG_PARAMETER)).lower_bound == 666666666);
-      ACE_ASSERT ((TIO_server->time_interval (ACE_ENV_SINGLE_ARG_PARAMETER)).upper_bound == 999999999);
+      ACE_ASSERT ((TIO_server->time_interval ()).lower_bound == 666666666);
+      ACE_ASSERT ((TIO_server->time_interval ()).upper_bound == 999999999);
 
-      ACE_TRY_CHECK;
     }
   ACE_CATCHANY
     {
@@ -361,11 +354,9 @@ Client_i::obtain_initial_references (void)
       CORBA::Object_var temp_object =
         my_name_client_->resolve (clerk_name
                                   ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       clerk_ = CosTime::TimeService::_narrow (temp_object.in ()
                                               ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       if (CORBA::is_nil (clerk_.in ()))
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -401,7 +392,6 @@ Client_i::init (int argc, char **argv)
                                     this->argv_,
                                     0
                                     ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       // Parse command line and verify parameters.
       if (this->parse_args () == -1)
@@ -415,7 +405,6 @@ Client_i::init (int argc, char **argv)
           CORBA::Object_var server_object =
           this->orb_->string_to_object (this->ior_
                                         ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
 
           if (CORBA::is_nil (server_object.in ()))
             ACE_ERROR_RETURN ((LM_ERROR,
@@ -425,11 +414,9 @@ Client_i::init (int argc, char **argv)
           this->clerk_ =
             CosTime::TimeService::_narrow (server_object.in ()
                                            ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
 
           ACE_DEBUG ((LM_DEBUG,
                       "[CLIENT] Process/Thread Id : (%P/%t) Using the IOR provided\n"));
-          ACE_TRY_CHECK;
         }
       else
         { // No IOR specified. Use the Naming Service
@@ -439,7 +426,6 @@ Client_i::init (int argc, char **argv)
           if (this->obtain_initial_references () == -1)
             return -1;
 
-          ACE_TRY_CHECK;
         }
     }
   ACE_CATCHANY

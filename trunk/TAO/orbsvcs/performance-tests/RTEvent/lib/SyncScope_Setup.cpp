@@ -42,7 +42,6 @@ SyncScope_Setup::init (CORBA::ORB_ptr orb,
     RIR_Narrow<CORBA::PolicyManager>::resolve (orb,
                                                "ORBPolicyManager"
                                                ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
   CORBA::PolicyList policy_list (1);
   policy_list.length (1);
@@ -56,14 +55,11 @@ SyncScope_Setup::init (CORBA::ORB_ptr orb,
     orb->create_policy (Messaging::SYNC_SCOPE_POLICY_TYPE,
                         sync_scope
                         ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
   policy_manager->set_policy_overrides (policy_list,
                                         CORBA::ADD_OVERRIDE
                                         ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
-  policy_list[0]->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+  policy_list[0]->destroy ();
 }
 
 SyncScope_Setup::~SyncScope_Setup (void)

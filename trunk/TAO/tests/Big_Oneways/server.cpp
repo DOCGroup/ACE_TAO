@@ -66,15 +66,12 @@ main (int argc, char *argv[])
     {
       CORBA::ORB_var orb =
         CORBA::ORB_init (argc, argv, "" ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       CORBA::Object_var poa_object =
         orb->resolve_initial_references("RootPOA" ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       PortableServer::POA_var root_poa =
         PortableServer::POA::_narrow (poa_object.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       if (CORBA::is_nil (poa_object.in ()))
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -82,8 +79,7 @@ main (int argc, char *argv[])
                           1);
 
       PortableServer::POAManager_var poa_manager =
-        root_poa->the_POAManager (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        root_poa->the_POAManager ();
 
       if (parse_args (argc, argv) != 0)
         return 1;
@@ -94,12 +90,10 @@ main (int argc, char *argv[])
                       1);
 
       Test::Coordinator_var coordinator =
-        coordinator_impl->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        coordinator_impl->_this ();
 
       CORBA::String_var ior =
         orb->object_to_string (coordinator.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       // If the ior_output_file exists, output the ior to it
       FILE *output_file= ACE_OS::fopen (ior_output_file, "w");
@@ -111,8 +105,7 @@ main (int argc, char *argv[])
       ACE_OS::fprintf (output_file, "%s", ior.in ());
       ACE_OS::fclose (output_file);
 
-      poa_manager->activate (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      poa_manager->activate ();
 
       ACE_DEBUG ((LM_DEBUG, "Waiting for peers . . . "));
       for (int i = 0;
@@ -121,7 +114,6 @@ main (int argc, char *argv[])
         {
           ACE_Time_Value tv (1, 0);
           orb->run (tv ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
         }
       ACE_DEBUG ((LM_DEBUG, "done.\n"));
 
@@ -140,8 +132,7 @@ main (int argc, char *argv[])
                       1);
 
       Test::Session_Control_var session_control =
-        session_control_impl->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        session_control_impl->_this ();
 
       Test::Session_List session_list;
       coordinator_impl->create_session_list (session_control.in (),
@@ -150,7 +141,6 @@ main (int argc, char *argv[])
                                              message_count,
                                              session_list
                                              ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       ACE_ASSERT (session_list.length () == peer_count);
 
@@ -174,7 +164,6 @@ main (int argc, char *argv[])
 
           session_list[j]->start (other_sessions
                                   ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
 
         }
 
@@ -186,7 +175,6 @@ main (int argc, char *argv[])
         {
           ACE_Time_Value tv (1, 0);
           orb->run (tv ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
         }
 
       if (!session_control_impl->all_sessions_finished ())
@@ -200,23 +188,19 @@ main (int argc, char *argv[])
 
       for (j = 0; j != peer_count; ++j)
         {
-          session_list[j]->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+          session_list[j]->destroy ();
 
         }
 
       ACE_DEBUG ((LM_DEBUG, "Shutdown all peers . . .\n"));
 
-      coordinator_impl->shutdown_all_peers (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      coordinator_impl->shutdown_all_peers ();
 
       ACE_DEBUG ((LM_DEBUG, "Shutdown poa and orb . . .\n"));
 
       root_poa->destroy (1, 1 ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
-      orb->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      orb->destroy ();
     }
   ACE_CATCHANY
     {

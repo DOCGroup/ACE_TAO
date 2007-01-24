@@ -17,12 +17,10 @@ Supplier::connect (RtecEventChannelAdmin::SupplierAdmin_ptr supplier_admin
                    ACE_ENV_ARG_DECL)
 {
   this->proxy_ =
-    supplier_admin->obtain_push_consumer (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+    supplier_admin->obtain_push_consumer ();
 
   RtecEventComm::PushSupplier_var me =
-    this->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+    this->_this ();
 
   // Simple publication, but usually the helper classes in
   // $TAO_ROOT/orbsvcs/Event_Utils.h are a better way to do this.
@@ -37,17 +35,15 @@ Supplier::connect (RtecEventChannelAdmin::SupplierAdmin_ptr supplier_admin
 
   this->proxy_->connect_push_supplier (me.in (), qos
                                        ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 }
 
 void
-Supplier::disconnect (ACE_ENV_SINGLE_ARG_DECL)
+Supplier::disconnect (void)
 {
   // Disconnect from the EC
   ACE_TRY
     {
-      this->proxy_->disconnect_push_consumer (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      this->proxy_->disconnect_push_consumer ();
     }
   ACE_CATCHANY
     {
@@ -55,13 +51,10 @@ Supplier::disconnect (ACE_ENV_SINGLE_ARG_DECL)
   ACE_ENDTRY;
 
   PortableServer::POA_var poa =
-    this->_default_POA (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+    this->_default_POA ();
   PortableServer::ObjectId_var id =
     poa->servant_to_id (this ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
   poa->deactivate_object (id.in () ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 }
 
 void
@@ -71,7 +64,7 @@ Supplier::insert_into_any (CORBA::Any& any, Components::EventBase* vb)
 }
 
 void
-Supplier::perform_push (ACE_ENV_SINGLE_ARG_DECL)
+Supplier::perform_push (void)
 {
   ACE_TRY
     {
@@ -98,7 +91,6 @@ Supplier::perform_push (ACE_ENV_SINGLE_ARG_DECL)
         }
 
       this->proxy_->push (event ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
     }
   ACE_CATCHANY
     {
@@ -107,7 +99,7 @@ Supplier::perform_push (ACE_ENV_SINGLE_ARG_DECL)
 }
 
 void
-Supplier::disconnect_push_supplier (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+Supplier::disconnect_push_supplier (void)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
 }

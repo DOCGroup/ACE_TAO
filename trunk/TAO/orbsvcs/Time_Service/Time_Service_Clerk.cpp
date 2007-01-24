@@ -19,13 +19,11 @@ ACE_TMAIN (int argc, ACE_TCHAR* argv[])
   ACE_TRY
     {
       int r = clerk.init (argc, argv ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
       if (r == -1)
         return 1;
       else
         {
-          clerk.run (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+          clerk.run ();
         }
     }
   ACE_CATCH (CORBA::SystemException, sysex)

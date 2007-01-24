@@ -44,7 +44,7 @@ TAO_IRObject_i::section_key (ACE_Configuration_Section_Key &key)
 }
 
 void
-TAO_IRObject_i::update_key (ACE_ENV_SINGLE_ARG_DECL)
+TAO_IRObject_i::update_key (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO::Portable_Server::POA_Current_Impl *pc_impl =

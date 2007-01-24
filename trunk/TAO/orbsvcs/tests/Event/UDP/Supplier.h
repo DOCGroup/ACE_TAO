@@ -43,15 +43,15 @@ public:
                 ACE_ENV_ARG_DECL);
   // Connect to the event channel
 
-  void disconnect (ACE_ENV_SINGLE_ARG_DECL);
+  void disconnect (void);
   // Disconnect from the event channel
 
-  void perform_push (ACE_ENV_SINGLE_ARG_DECL);
+  void perform_push (void);
   // Push a single event
 
   // = The RtecEventComm::PushSupplier methods
 
-  virtual void disconnect_push_supplier (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+  virtual void disconnect_push_supplier (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
   // The skeleton methods.
 

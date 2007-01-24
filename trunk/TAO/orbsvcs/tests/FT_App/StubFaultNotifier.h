@@ -53,7 +53,7 @@ public:
   /**
    * Prepare to exit.
    */
-  int fini (ACE_ENV_SINGLE_ARG_DECL);
+  int fini (void);
 
   /**
    * Return a string to identify this object for logging/console message purposes.
@@ -68,7 +68,7 @@ public:
   int idle(int &result ACE_ENV_ARG_DECL);
 
   // override virtuals
-::PortableServer::POA_ptr _default_POA (ACE_ENV_SINGLE_ARG_DECL);
+::PortableServer::POA_ptr _default_POA (void);
 
   PortableServer::ObjectId objectId()const;
 
@@ -76,7 +76,7 @@ public:
   /**
    * Clean house for process shut down.
    */
-  void shutdown_i (ACE_ENV_SINGLE_ARG_DECL);
+  void shutdown_i (void);
 
   ////////////////////////////////
   // CORBA interface FaultNotifier
@@ -122,7 +122,7 @@ public:
 
   //////////////////////////////////////////
   // CORBA interface PullMonitorable methods
-  virtual CORBA::Boolean is_alive (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+  virtual CORBA::Boolean is_alive (void)
   ACE_THROW_SPEC ((CORBA::SystemException));
 
   /////////////////

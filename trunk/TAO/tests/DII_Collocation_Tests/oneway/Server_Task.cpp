@@ -34,12 +34,10 @@ Server_Task::svc (void)
      CORBA::Object_var poa_object =
        this->sorb_->resolve_initial_references("RootPOA"
                                                ACE_ENV_ARG_PARAMETER);
-     ACE_TRY_CHECK;
 
      PortableServer::POA_var root_poa =
        PortableServer::POA::_narrow (poa_object.in ()
                                      ACE_ENV_ARG_PARAMETER);
-     ACE_TRY_CHECK;
 
      if (CORBA::is_nil (root_poa.in ()))
        ACE_ERROR_RETURN ((LM_ERROR,
@@ -47,8 +45,7 @@ Server_Task::svc (void)
                          1);
 
      PortableServer::POAManager_var poa_manager =
-       root_poa->the_POAManager (ACE_ENV_SINGLE_ARG_PARAMETER);
-     ACE_TRY_CHECK;
+       root_poa->the_POAManager ();
 
      Hello *hello_impl;
      ACE_NEW_RETURN (hello_impl,
@@ -59,13 +56,11 @@ Server_Task::svc (void)
      PortableServer::ServantBase_var owner_transfer(hello_impl);
 
      Test::Hello_var hello =
-       hello_impl->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
-     ACE_TRY_CHECK;
+       hello_impl->_this ();
 
      CORBA::String_var ior =
        this->sorb_->object_to_string (hello.in ()
                                       ACE_ENV_ARG_PARAMETER);
-     ACE_TRY_CHECK;
 
      // Output the IOR to the <this->output_>
      FILE *output_file= ACE_OS::fopen (this->output_,
@@ -87,13 +82,11 @@ Server_Task::svc (void)
      PortableServer::ServantBase_var owner_transfer_simple(simple_impl);
 
      Test::Simple_Test_var simple_test =
-       simple_impl->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
-     ACE_TRY_CHECK;
+       simple_impl->_this ();
 
      CORBA::String_var simple_test_ior =
        this->sorb_->object_to_string (simple_test.in ()
                                       ACE_ENV_ARG_PARAMETER);
-     ACE_TRY_CHECK;
 
      // Output the IOR to the <this->output_>
      FILE *simple_test_output_file= ACE_OS::fopen (this->simple_test_output_,
@@ -107,14 +100,12 @@ Server_Task::svc (void)
      ACE_OS::fprintf (simple_test_output_file, "%s", simple_test_ior.in ());
      ACE_OS::fclose (simple_test_output_file);
 
-     poa_manager->activate (ACE_ENV_SINGLE_ARG_PARAMETER);
-     ACE_TRY_CHECK;
+     poa_manager->activate ();
 
      // Signal the main thread before we call orb->run ();
      this->me_.signal ();
 
-     this->sorb_->run (ACE_ENV_SINGLE_ARG_PARAMETER);
-     ACE_TRY_CHECK;
+     this->sorb_->run ();
 
      ACE_DEBUG ((LM_DEBUG, "(%P|%t) server - event loop finished\n"));
 
@@ -142,7 +133,7 @@ Server_Task::svc (void)
  return 0;
 }
 
-CORBA::ULong 
+CORBA::ULong
 Server_Task::error_count () const
 {
   return error_count_;

@@ -88,7 +88,7 @@ TAO_Notify_Tests_EventChannel_Command::init (ACE_Arg_Shifter& arg_shifter)
 }
 
 void
-TAO_Notify_Tests_EventChannel_Command::create_collocated_ecf (ACE_ENV_SINGLE_ARG_DECL)
+TAO_Notify_Tests_EventChannel_Command::create_collocated_ecf (void)
 {
   CosNotifyChannelAdmin::EventChannelFactory_var notify_factory;
 
@@ -120,39 +120,33 @@ TAO_Notify_Tests_EventChannel_Command::create_collocated_ecf (ACE_ENV_SINGLE_ARG
   LOOKUP_MANAGER->resolve (naming);
 
   notify_service->init_service (orb.in () ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
   // Activate the factory
   notify_factory =
     notify_service->create (poa.in ()
                             ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
   // Register with the Naming Service
   CosNaming::Name_var name =
     naming->to_name (TAO_Notify_Tests_Name::event_channel_factory
                      ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
   naming->rebind (name.in (),
                   notify_factory.in ()
                   ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 }
 
 void
-TAO_Notify_Tests_EventChannel_Command::handle_create (ACE_ENV_SINGLE_ARG_DECL)
+TAO_Notify_Tests_EventChannel_Command::handle_create (void)
 {
   if (this->collocated_ == 1)
     {
-      this->create_collocated_ecf (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK;
+      this->create_collocated_ecf ();
     }
 
   CosNotifyChannelAdmin::EventChannelFactory_var ec_factory;
 
   LOOKUP_MANAGER->resolve (ec_factory , TAO_Notify_Tests_Name::event_channel_factory ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
   CosNotification::QoSProperties qos;
   CosNotification::AdminProperties admin;
@@ -163,63 +157,53 @@ TAO_Notify_Tests_EventChannel_Command::handle_create (ACE_ENV_SINGLE_ARG_DECL)
                                 admin,
                                 this->id_
                                 ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
   LOOKUP_MANAGER->_register (ec.in(), this->name_.c_str () ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 }
 
 void
-TAO_Notify_Tests_EventChannel_Command::handle_destroy (ACE_ENV_SINGLE_ARG_DECL)
+TAO_Notify_Tests_EventChannel_Command::handle_destroy (void)
 {
   ACE_DEBUG ((LM_DEBUG, "Destroying event channel %s\n", this->name_.c_str ()));
   CosNotifyChannelAdmin::EventChannel_var ec;
 
   LOOKUP_MANAGER->resolve (ec, this->name_.c_str () ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
-  ec->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+  ec->destroy ();
 }
 void
-TAO_Notify_Tests_EventChannel_Command::handle_set_qos (ACE_ENV_SINGLE_ARG_DECL)
+TAO_Notify_Tests_EventChannel_Command::handle_set_qos (void)
 {
   CosNotifyChannelAdmin::EventChannel_var ec;
 
   LOOKUP_MANAGER->resolve (ec, this->name_.c_str () ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
   ec->set_qos (this->qos_ ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 }
 
 void
-TAO_Notify_Tests_EventChannel_Command::handle_status (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+TAO_Notify_Tests_EventChannel_Command::handle_status (void)
 {
   //@@ TODO: Implement
 }
 
 void
-TAO_Notify_Tests_EventChannel_Command::execute_i (ACE_ENV_SINGLE_ARG_DECL)
+TAO_Notify_Tests_EventChannel_Command::execute_i (void)
 {
   if (this->command_ == CREATE)
     {
-      this->handle_create (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK;
+      this->handle_create ();
     }
   else if (this->command_ == DESTROY)
     {
-      this->handle_destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK;
+      this->handle_destroy ();
     }
   else if (this->command_ == SET_QOS)
     {
-      this->handle_set_qos (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK;
+      this->handle_set_qos ();
     }
   else if (this->command_ == DUMP_STATE)
     {
-      this->handle_status (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK;
+      this->handle_status ();
     }
 }

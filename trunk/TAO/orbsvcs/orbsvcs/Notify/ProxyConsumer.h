@@ -58,13 +58,13 @@ public:
                      ));
 
   /// Disconnect
-  void disconnect (ACE_ENV_SINGLE_ARG_DECL);
+  void disconnect (void);
 
   /// Shutdown  (TAO_Notify_Container_T method)
-  virtual int shutdown (ACE_ENV_SINGLE_ARG_DECL);
+  virtual int shutdown (void);
 
   /// Destroy this object.
-  virtual void destroy (ACE_ENV_SINGLE_ARG_DECL);
+  virtual void destroy (void);
 
 
   /// Return 1 if connected

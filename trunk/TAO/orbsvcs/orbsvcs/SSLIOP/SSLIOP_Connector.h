@@ -90,12 +90,12 @@ namespace TAO
        * @see @c TAO_Connector
        */
       //@{
-      virtual TAO_Profile * make_profile (ACE_ENV_SINGLE_ARG_DECL);
+      virtual TAO_Profile * make_profile (void);
       virtual int cancel_svc_handler (TAO_Connection_Handler * svc_handler);
       //@}
 
       /// SSL-specific profile
-      TAO_Profile * make_secure_profile (ACE_ENV_SINGLE_ARG_DECL);
+      TAO_Profile * make_secure_profile (void);
 
       /// IIOP-specific connection establishment.
       /**

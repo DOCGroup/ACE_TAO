@@ -45,7 +45,7 @@ public:
             ACE_ENV_ARG_DECL);
   // Initialize the Server state.
 
-  int run (ACE_ENV_SINGLE_ARG_DECL);
+  int run (void);
   // Run the orb.
 
   int init_naming_service ();

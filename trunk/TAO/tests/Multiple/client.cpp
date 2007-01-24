@@ -12,13 +12,11 @@ int main (int argc, char *argv[])
     {
       // ORB Initialization
       CORBA::ORB_var orb = CORBA::ORB_init (argc, argv, "TAO" ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       CORBA::Object_var object;
 
       // Get The IOR from a file
       object = orb->string_to_object ("file://s.ior" ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       if (CORBA::is_nil (object.in ()))
         {
@@ -27,8 +25,7 @@ int main (int argc, char *argv[])
         }
 
       Collocation_Tester tester (object.in ());
-      tester.run (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      tester.run ();
     }
   ACE_CATCHANY
     {

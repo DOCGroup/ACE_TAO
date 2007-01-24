@@ -37,14 +37,14 @@ public:
   ~Cubit_i (void);
   // Destructor
 
-  virtual PortableServer::POA_ptr _default_POA (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
+  virtual PortableServer::POA_ptr _default_POA (void);
   // Returns the default POA for this servant.
 
-  virtual void cube_oneway (ACE_ENV_SINGLE_ARG_DECL)
+  virtual void cube_oneway (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
   // Test a oneway call.
 
-  virtual void cube_void (ACE_ENV_SINGLE_ARG_DECL)
+  virtual void cube_void (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
   // Test a twoway call.
 
@@ -108,12 +108,12 @@ public:
   // Cube a struct in an any
 
   /// Shutdown routine.
-  virtual void shutdown (ACE_ENV_SINGLE_ARG_DECL)
+  virtual void shutdown (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
 
   /// A ping. Please see the idl file for details.
-  virtual void ping (ACE_ENV_SINGLE_ARG_DECL)
+  virtual void ping (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
 
@@ -141,7 +141,7 @@ public:
   ~Cubit_Factory_i (void);
   // Destructor.
 
-  virtual Cubit_ptr make_cubit (ACE_ENV_SINGLE_ARG_DECL)
+  virtual Cubit_ptr make_cubit (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
   // Make a cubit object.
 

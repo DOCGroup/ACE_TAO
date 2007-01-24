@@ -59,7 +59,6 @@ Low_Priority_Setup (int consumer_count,
                               consumer_poa);
       this->clients_[i].connect (ec
                                  ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
       // Automatically disconnect the group if the connection was
       // successful
       this->disconnect_[i] = &this->clients_[i];

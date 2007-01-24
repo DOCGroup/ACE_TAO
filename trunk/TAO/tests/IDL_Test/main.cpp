@@ -95,25 +95,21 @@ main (int argc , char *argv[])
                                             argv,
                                             ""
                                             ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       CORBA::Object_var poa_object =
         orb->resolve_initial_references ("RootPOA"
                                          ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       PortableServer::POA_var root_poa =
         PortableServer::POA::_narrow (poa_object.in ()
                                       ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       // Test of #pragma prefix behavior.
 
       CORBA::Object_var obj;
 
       hello_i h;
-      obj = h._this (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      obj = h._this ();
 
       if (ACE_OS::strcmp (obj->_interface_repository_id (),
                           "IDL:anvil.com/hello:1.0"))
@@ -124,8 +120,7 @@ main (int argc , char *argv[])
         }
 
       goodbye_i g;
-      obj = g._this (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      obj = g._this ();
 
       if (ACE_OS::strcmp (obj->_interface_repository_id (),
                           "IDL:anvil.com/goodbye:1.0"))
@@ -136,8 +131,7 @@ main (int argc , char *argv[])
         }
 
       sayonara_i s;
-      obj = s._this (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      obj = s._this ();
 
       if (ACE_OS::strcmp (obj->_interface_repository_id (),
                           "IDL:hammer.com/salutation/sayonara:1.0"))
@@ -148,8 +142,7 @@ main (int argc , char *argv[])
         }
 
       ciao_i c;
-      obj = c._this (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      obj = c._this ();
 
       if (ACE_OS::strcmp (obj->_interface_repository_id (),
                           "IDL:anvil.com/ciao:1.0"))
@@ -160,8 +153,7 @@ main (int argc , char *argv[])
         }
 
       aloha_i a;
-      obj = a._this (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      obj = a._this ();
 
       if (ACE_OS::strcmp (obj->_interface_repository_id (),
                           "IDL:anvil.com/aloha:1.0"))
@@ -355,7 +347,6 @@ main (int argc , char *argv[])
       root_poa->destroy (1,
                          1
                          ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
     }
   ACE_CATCHANY
     {

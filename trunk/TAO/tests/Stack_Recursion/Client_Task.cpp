@@ -27,8 +27,7 @@ Client_Task::svc (void)
   ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY
     {
-      this->validate_connections (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      this->validate_connections ();
 
       for (int i = 0; i != this->event_count_; ++i)
         {
@@ -43,7 +42,6 @@ Client_Task::svc (void)
           this->sender_->get_data (this->event_size_,
                                    payload
                                    ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
         }
     }
   ACE_CATCHANY
@@ -57,14 +55,13 @@ Client_Task::svc (void)
 
 
 void
-Client_Task::validate_connections (ACE_ENV_SINGLE_ARG_DECL)
+Client_Task::validate_connections (void)
 {
   for (int i = 0 ; i != 100; i++)
     {
       ACE_TRY
         {
-          this->sender_->ping (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+          this->sender_->ping ();
 
         }
       ACE_CATCHANY {} ACE_ENDTRY;

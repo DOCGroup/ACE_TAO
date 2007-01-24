@@ -48,7 +48,6 @@ Server_Timer::handle_timeout (ACE_Time_Value const &, void const *)
 
       echo->echo_payload (pload
                           ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
     }
   ACE_CATCHANY
     {

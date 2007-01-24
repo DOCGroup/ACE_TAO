@@ -134,7 +134,6 @@ main (int argc, char *argv[])
 
       PortableInterceptor::register_orb_initializer (orb_initializer.in ()
                                                      ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       ACE_Argv_Type_Converter satc (argc, argv);
       CORBA::ORB_var sorb =
@@ -142,7 +141,6 @@ main (int argc, char *argv[])
                          satc.get_TCHAR_argv (),
                          server_orb.c_str ()
                          ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       ACE_Manual_Event me;
       Server_Task server_task (output,
@@ -166,7 +164,6 @@ main (int argc, char *argv[])
                          catc.get_TCHAR_argv (),
                          client_orb.c_str ()
                          ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       Client_Task client_task (input,
                                corb.in (),
@@ -181,8 +178,7 @@ main (int argc, char *argv[])
 
       ACE_Thread_Manager::instance ()->wait ();
 
-      sorb->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      sorb->destroy ();
 
       bool failed_check = false;
 

@@ -74,7 +74,6 @@ main (int argc, char *argv[])
                          main_args_s.get_TCHAR_argv (),
                          "Server_ORB"
                          ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       ACE_Manual_Event me;
 
@@ -99,7 +98,6 @@ main (int argc, char *argv[])
                          main_args_c.get_TCHAR_argv (),
                          "Client_ORB"
                          ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       {
         Client_Task client_task (ior_input_file,
@@ -115,8 +113,7 @@ main (int argc, char *argv[])
         ACE_Thread_Manager::instance ()->wait ();
       }
 
-      corb->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      corb->destroy ();
     }
   ACE_CATCHANY
     {

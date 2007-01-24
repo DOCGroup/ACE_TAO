@@ -54,7 +54,7 @@ public:
   int init (int argc, char *argv [] ACE_ENV_ARG_DECL_WITH_DEFAULTS);
   // initialize the client test bed
 
-  int run (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
+  int run (void);
   // run the tests
 
 private:
@@ -65,16 +65,16 @@ private:
   int init_operation_db (void);
   // initialize the operation database
 
-  int run_linear_test (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
+  int run_linear_test (void);
   // run linear strategy
 
-  int run_random_test (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
+  int run_random_test (void);
   // run random strategy
 
-  int run_best_test (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
+  int run_best_test (void);
   // run best strategy (w.r.t to linear)
 
-  int run_worst_test (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
+  int run_worst_test (void);
   // run worst strategy (w.r.t to linear)
 
   int print_results (void);

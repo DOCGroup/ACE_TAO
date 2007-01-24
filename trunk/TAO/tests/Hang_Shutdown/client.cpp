@@ -70,17 +70,14 @@ namespace Test
           this->h_->send_stuff ("Testing",
                                 false
                                 ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
 
           this->h_->send_stuff ("Testing",
                                 false
                                 ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
 
           this->h_->send_stuff ("Testing",
                                 true
                                 ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
         }
       ACE_CATCH (CORBA::COMM_FAILURE, f)
         {
@@ -145,7 +142,6 @@ namespace Test
 
           this->o_->shutdown (blocked
                               ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
 
           // Stop the timer
           profile_timer.stop ();
@@ -194,7 +190,6 @@ namespace Test
                            argv,
                            ""
                            ACE_ENV_ARG_PARAMETER);
-        ACE_TRY_CHECK;
 
         if (parse_args (argc, argv) == false)
           return -1;
@@ -202,12 +197,10 @@ namespace Test
         CORBA::Object_var tmp =
           orb->string_to_object (ior
                                  ACE_ENV_ARG_PARAMETER);
-        ACE_TRY_CHECK;
 
         Hang_var test =
           Hang::_narrow (tmp.in ()
                          ACE_ENV_ARG_PARAMETER);
-        ACE_TRY_CHECK;
 
         if (CORBA::is_nil (test.in ()))
           {
@@ -236,8 +229,7 @@ namespace Test
 
         ACE_Thread_Manager::instance ()->wait ();
 
-        orb->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-        ACE_TRY_CHECK;
+        orb->destroy ();
 
       }
     ACE_CATCHANY

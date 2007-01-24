@@ -30,14 +30,14 @@ Echo_Client_Request_Interceptor (void)
 }
 
 char *
-Echo_Client_Request_Interceptor::name (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+Echo_Client_Request_Interceptor::name (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return CORBA::string_dup ("Echo_Client_Interceptor");
 }
 
 void
-Echo_Client_Request_Interceptor::destroy (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+Echo_Client_Request_Interceptor::destroy (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
 }
@@ -71,13 +71,11 @@ Echo_Client_Request_Interceptor::send_request (
   ri->add_request_service_context (sc,
                                    0
                                    ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
   // Check that the request service context can be retrieved.
   IOP::ServiceContext_var rc =
     ri->get_request_service_context (::service_id
                                      ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
   if (rc->context_data.length() != magic_cookie_len
       || ACE_OS::memcmp(
@@ -101,7 +99,6 @@ Echo_Client_Request_Interceptor::receive_reply (
   IOP::ServiceContext_var rc =
     ri->get_request_service_context (::service_id
                                      ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
   if (rc->context_data.length() != magic_cookie_len
       || ACE_OS::memcmp(
@@ -126,7 +123,6 @@ Echo_Client_Request_Interceptor::receive_other (
   IOP::ServiceContext_var rc =
     ri->get_request_service_context (::service_id
                                      ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
   if (rc->context_data.length() != magic_cookie_len
       || ACE_OS::memcmp(

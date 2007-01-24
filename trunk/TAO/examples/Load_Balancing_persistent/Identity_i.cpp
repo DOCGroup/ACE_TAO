@@ -34,7 +34,7 @@ Identity_i::get_name (CORBA::String_out name
 }
 
 PortableServer::POA_ptr
-Identity_i::_default_POA (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+Identity_i::_default_POA (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return PortableServer::POA::_duplicate (this->poa_.in ());

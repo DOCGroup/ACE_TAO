@@ -79,7 +79,6 @@ AdminProperties_Task::svc (void)
         {
           ACE_DEBUG((LM_DEBUG, "+"));
           this->supplier_->send_event (event ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
         }
       ACE_CATCH (CORBA::IMP_LIMIT, impl_limit)
         {
@@ -243,7 +242,6 @@ AdminProperties::create_channel(bool reject ACE_ENV_ARG_DECL)
                                                this->initial_admin_,
                                                id
                                                ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
   ACE_ASSERT (!CORBA::is_nil (ec_.in ()));
 
@@ -253,40 +251,32 @@ AdminProperties::create_channel(bool reject ACE_ENV_ARG_DECL)
   this->supplier_admin_ = ec_->new_for_suppliers (this->ifgop_,
                                                   adminid
                                                   ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
   ACE_ASSERT (!CORBA::is_nil (supplier_admin_.in ()));
 
   this->consumer_admin_ = ec_->new_for_consumers (this->ifgop_,
                                                   adminid
                                                   ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
   ACE_ASSERT (!CORBA::is_nil (consumer_admin_.in ()));
 }
 
 void
-AdminProperties::run_test (ACE_ENV_SINGLE_ARG_DECL)
+AdminProperties::run_test (void)
 {
   bool reject = true;
   this->create_channel(reject ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
   this->test_max_queue_length (reject ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
-  this->ec_->destroy(ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+  this->ec_->destroy();
 
   reject = false;
   this->create_channel(reject ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
   this->test_max_queue_length (reject ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
-   this->test_max_clients (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+   this->test_max_clients ();
 
-  this->ec_->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
+  this->ec_->destroy ();
 }
 
 void
@@ -296,17 +286,13 @@ AdminProperties::test_max_queue_length (bool reject ACE_ENV_ARG_DECL)
   AdminProperties_StructuredPushConsumer *consumer;
   ACE_NEW (consumer, AdminProperties_StructuredPushConsumer (this));
   consumer->init (root_poa_.in () ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
   consumer->connect (this->consumer_admin_.in () ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
   // Create the supplier
   TAO_Notify_Tests_StructuredPushSupplier *supplier = 0;
   ACE_NEW (supplier, TAO_Notify_Tests_StructuredPushSupplier ());
   supplier->init (root_poa_.in () ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
   supplier->connect (this->supplier_admin_.in () ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
   AdminProperties_Task supplier_task;
 
@@ -322,17 +308,14 @@ AdminProperties::test_max_queue_length (bool reject ACE_ENV_ARG_DECL)
   // received. This relies on our use of -ORBClientConnectionHandler RW.
   supplier_task.wait ();
 
-  this->ORB_run(ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+  this->ORB_run();
 
   // consumer is destroyed by consumer->disconnect()
   CORBA::Long received_count = consumer->events_received_.value ();
 
   // disconnect the participants.
-  consumer->disconnect (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
-  supplier->disconnect (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+  consumer->disconnect ();
+  supplier->disconnect ();
 
   // If the reject_new_events setting == true, then the supplier should
   // have received an imp_limit exception for each event it tried to push
@@ -367,13 +350,11 @@ AdminProperties::test_max_queue_length (bool reject ACE_ENV_ARG_DECL)
 }
 
 void
-AdminProperties::test_max_clients (ACE_ENV_SINGLE_ARG_DECL)
+AdminProperties::test_max_clients (void)
 {
-  this->create_suppliers (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+  this->create_suppliers ();
 
-  this->create_consumers (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+  this->create_consumers ();
 
   // check the results and print the assessment.
   if (this->consumers_connected_count_ > this->max_consumers_)
@@ -386,7 +367,7 @@ AdminProperties::test_max_clients (ACE_ENV_SINGLE_ARG_DECL)
 }
 
 void
-AdminProperties::create_suppliers (ACE_ENV_SINGLE_ARG_DECL)
+AdminProperties::create_suppliers (void)
 {
   // Create the requested number of suppliers.
   // @@ CosNotifyChannelAdmin::AdminID adminid;
@@ -404,11 +385,9 @@ AdminProperties::create_suppliers (ACE_ENV_SINGLE_ARG_DECL)
           ACE_NEW (supplier,
                    TAO_Notify_Tests_StructuredPushSupplier ());
           supplier->init (root_poa_.in () ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
 
           supplier->connect (this->supplier_admin_.in ()
                              ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
 
           this->suppliers_connected_count_++;
         }
@@ -427,7 +406,7 @@ AdminProperties::create_suppliers (ACE_ENV_SINGLE_ARG_DECL)
 }
 
 void
-AdminProperties::create_consumers (ACE_ENV_SINGLE_ARG_DECL)
+AdminProperties::create_consumers (void)
 {
   // Create the requested number of suppliers.
   // @@ CosNotifyChannelAdmin::AdminID adminid;
@@ -444,10 +423,8 @@ AdminProperties::create_consumers (ACE_ENV_SINGLE_ARG_DECL)
         {
           ACE_NEW (consumer, TAO_Notify_Tests_StructuredPushConsumer ());
           consumer->init (root_poa_.in () ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
 
           consumer->connect (this->consumer_admin_.in () ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
 
           this->consumers_connected_count_++;
         }
@@ -475,10 +452,8 @@ main (int argc, char* argv[])
   ACE_TRY_NEW_ENV
     {
       test.init (argc, argv ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
-      test.run_test (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      test.run_test ();
     }
   ACE_CATCH (CORBA::Exception, se)
     {

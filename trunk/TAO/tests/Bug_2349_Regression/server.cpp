@@ -39,7 +39,6 @@ foo_i::destroy ()
     {
       // This should case an BAD_INV_ORDER exception
       this->orb_->destroy ();
-      ACE_TRY_CHECK;
     }
   ACE_CATCH (CORBA::BAD_INV_ORDER, ex)
     {

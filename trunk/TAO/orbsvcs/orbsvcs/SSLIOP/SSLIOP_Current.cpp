@@ -47,7 +47,6 @@ TAO::SSLIOP::Current::get_peer_certificate (
                         TAO::VMCID,
                         ENOMEM),
                       CORBA::COMPLETED_NO));
-  ACE_CHECK_RETURN (0);
 
   ::SSLIOP::ASN_1_Cert_var certificate = c;
 
@@ -81,7 +80,6 @@ TAO::SSLIOP::Current::get_peer_certificate_chain (
                         TAO::VMCID,
                         ENOMEM),
                       CORBA::COMPLETED_NO));
-  ACE_CHECK_RETURN (0);
 
   ::SSLIOP::SSL_Cert_var cert_chain = c;
 
@@ -92,7 +90,7 @@ TAO::SSLIOP::Current::get_peer_certificate_chain (
 }
 
 CORBA::Boolean
-TAO::SSLIOP::Current::no_context (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+TAO::SSLIOP::Current::no_context (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return (this->implementation () == 0 ? 1 : 0);

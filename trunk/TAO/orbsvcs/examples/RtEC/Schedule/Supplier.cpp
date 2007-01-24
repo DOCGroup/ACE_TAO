@@ -11,7 +11,7 @@ Supplier::Supplier (void)
 }
 
 void
-Supplier::disconnect_push_supplier (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+Supplier::disconnect_push_supplier (void)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
 }

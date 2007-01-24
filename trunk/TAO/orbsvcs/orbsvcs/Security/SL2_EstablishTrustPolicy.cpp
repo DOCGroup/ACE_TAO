@@ -31,7 +31,7 @@ TAO::Security::EstablishTrustPolicy::policy_type (
 }
 
 CORBA::Policy_ptr
-TAO::Security::EstablishTrustPolicy::copy (ACE_ENV_SINGLE_ARG_DECL)
+TAO::Security::EstablishTrustPolicy::copy (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO::Security::EstablishTrustPolicy *policy = 0;
@@ -42,19 +42,18 @@ TAO::Security::EstablishTrustPolicy::copy (ACE_ENV_SINGLE_ARG_DECL)
                         TAO::VMCID,
                         ENOMEM),
                       CORBA::COMPLETED_NO));
-  ACE_CHECK_RETURN (CORBA::Policy::_nil ());
 
   return policy;
 }
 
 void
-TAO::Security::EstablishTrustPolicy::destroy (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+TAO::Security::EstablishTrustPolicy::destroy (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
 }
 
 ::Security::EstablishTrust
-TAO::Security::EstablishTrustPolicy::trust (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+TAO::Security::EstablishTrustPolicy::trust (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return this->trust_;

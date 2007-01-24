@@ -218,7 +218,7 @@ public:
    * NOTE: after <destroy> is invoked on a Naming Context, all
    * BindingIterators associated with that Naming Context are also destroyed.
    */
-  virtual void destroy (ACE_ENV_SINGLE_ARG_DECL);
+  virtual void destroy (void);
 
   /// Returns the Default POA of this Servant object
   virtual PortableServer::POA_ptr _default_POA (void);

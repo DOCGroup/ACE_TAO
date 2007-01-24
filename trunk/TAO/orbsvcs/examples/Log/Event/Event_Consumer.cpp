@@ -33,7 +33,6 @@ Consumer::run (int argc, char* argv[])
       // ORB initialization boiler plate...
       CORBA::ORB_var orb =
         CORBA::ORB_init (argc, argv, "" ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       // Do *NOT* make a copy because we don't want the ORB to outlive
       // the Consumer object.
@@ -41,21 +40,16 @@ Consumer::run (int argc, char* argv[])
 
       CORBA::Object_var object =
         orb->resolve_initial_references ("RootPOA" ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
       PortableServer::POA_var poa =
         PortableServer::POA::_narrow (object.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
       PortableServer::POAManager_var poa_manager =
-        poa->the_POAManager (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
-      poa_manager->activate (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        poa->the_POAManager ();
+      poa_manager->activate ();
 
       // Obtain the event channel
       CORBA::Object_var naming_obj =
         this->orb_->resolve_initial_references (NAMING_SERVICE_NAME
                                             ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       // Need to check return value for errors.
       if (CORBA::is_nil (naming_obj.in ()))
@@ -63,7 +57,6 @@ Consumer::run (int argc, char* argv[])
 
       this->naming_context_ =
         CosNaming::NamingContext::_narrow (naming_obj.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       CosNaming::Name name (1);
       name.length (1);
@@ -72,18 +65,16 @@ Consumer::run (int argc, char* argv[])
       CORBA::Object_var obj =
         this->naming_context_->resolve (name
                                        ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       this->event_log_factory_ =
         DsEventLogAdmin::EventLogFactory::_narrow (obj.in ()
                                               ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       this->supplier_ =
         this->event_log_factory_->obtain_push_supplier ();
 
       CosEventComm::PushConsumer_var consumer =
-        this->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
+        this->_this ();
 
       this->supplier_->connect_push_consumer (consumer.in () ACE_ENV_ARG_PARAMETER);
 
@@ -120,7 +111,7 @@ Consumer::push (const CORBA::Any &
 }
 
 void
-Consumer::disconnect_push_consumer (ACE_ENV_SINGLE_ARG_DECL)
+Consumer::disconnect_push_consumer (void)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // In this example we shutdown the ORB when we disconnect from the

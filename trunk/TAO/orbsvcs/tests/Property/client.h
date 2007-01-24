@@ -49,10 +49,10 @@ public:
             ACE_ENV_ARG_DECL);
   // Initialize the ORB etc, and bind the MMDevices.
 
-  int run (ACE_ENV_SINGLE_ARG_DECL);
+  int run (void);
   // Run the client.  This will call StreamCtrl::bind_devs.
 
-  int property_tester (ACE_ENV_SINGLE_ARG_DECL);
+  int property_tester (void);
   // Testing  the property service methods.
 
 protected:
@@ -63,35 +63,35 @@ protected:
 
   // = Property Testing.
 
-  int test_define_property (ACE_ENV_SINGLE_ARG_DECL);
+  int test_define_property (void);
   // Testing the define property method.
 
-  int test_get_number_of_properties (ACE_ENV_SINGLE_ARG_DECL);
+  int test_get_number_of_properties (void);
   // Testing the number of properties, currently in the Property Set.
 
-  int test_get_all_property_names (ACE_ENV_SINGLE_ARG_DECL);
+  int test_get_all_property_names (void);
   //Testing get_all_property_names.
 
-  int test_get_property_value (ACE_ENV_SINGLE_ARG_DECL);
+  int test_get_property_value (void);
   // Testing get_property_value.
 
-  int test_get_properties (ACE_ENV_SINGLE_ARG_DECL);
+  int test_get_properties (void);
   //Testing get_properties.  Give the names and get their properties.
 
-  int test_get_all_properties (ACE_ENV_SINGLE_ARG_DECL);
+  int test_get_all_properties (void);
   // Testing get_all_properties.
 
   int test_delete_property (const char *property_name
                             ACE_ENV_ARG_DECL);
   // Testing delete_property.
 
-  int test_delete_properties (ACE_ENV_SINGLE_ARG_DECL);
+  int test_delete_properties (void);
   // Testing delete_properties.
 
-  int test_define_properties (ACE_ENV_SINGLE_ARG_DECL);
+  int test_define_properties (void);
   // Defining a sequence of properties.
 
-  int test_define_property_with_mode (ACE_ENV_SINGLE_ARG_DECL);
+  int test_define_property_with_mode (void);
   // Defines properties with various modes.
 
   TAO_ORB_Manager manager_;

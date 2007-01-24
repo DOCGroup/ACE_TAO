@@ -62,7 +62,7 @@ public:
   ~TAO_Log_i ();
 
   /// Initlialize the Log.
-  void init (ACE_ENV_SINGLE_ARG_DECL);
+  void init (void);
 
   /**
    * @name DsLogAdmin::Log Methods
@@ -71,16 +71,16 @@ public:
    */
   //@{
   /// Return the factory of the log.
-  DsLogAdmin::LogMgr_ptr my_factory (ACE_ENV_SINGLE_ARG_DECL)
+  DsLogAdmin::LogMgr_ptr my_factory (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   /// Return the id of the log.
-  DsLogAdmin::LogId id (ACE_ENV_SINGLE_ARG_DECL)
+  DsLogAdmin::LogId id (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   /// Get the list of the QoS properties supported by the log.
   DsLogAdmin::QoSList*
-  get_log_qos (ACE_ENV_SINGLE_ARG_DECL)
+  get_log_qos (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   /// Set the list of the QoS properties supported by the log.
@@ -91,7 +91,7 @@ public:
 
   /// Get the record life in seconds (0 infinite).
   CORBA::ULong
-  get_max_record_life (ACE_ENV_SINGLE_ARG_DECL)
+  get_max_record_life (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   /// Set the record life in seconds (0 infinite).
@@ -102,7 +102,7 @@ public:
 
   /// Get the maximum size in octets.
   CORBA::ULongLong
-  get_max_size (ACE_ENV_SINGLE_ARG_DECL)
+  get_max_size (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   /// Set the maximum size in octets.
@@ -114,17 +114,17 @@ public:
 
   /// Get the current size of the log in octets.
   CORBA::ULongLong
-  get_current_size (ACE_ENV_SINGLE_ARG_DECL)
+  get_current_size (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   /// Return the number of records in the log.
   CORBA::ULongLong
-  get_n_records (ACE_ENV_SINGLE_ARG_DECL)
+  get_n_records (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   /// Get the action to be taken when the log reaches its maximum size.
   DsLogAdmin::LogFullActionType
-  get_log_full_action (ACE_ENV_SINGLE_ARG_DECL)
+  get_log_full_action (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   /// Set the action to be taken when the log reaches its maximum size.
@@ -136,7 +136,7 @@ public:
 
   /// Get the administrative state of the log.
   DsLogAdmin::AdministrativeState
-  get_administrative_state (ACE_ENV_SINGLE_ARG_DECL)
+  get_administrative_state (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   /// Set the administrative state of the log.
@@ -150,7 +150,7 @@ public:
   /// @@@ Of course!  get_forwarding_state() is virtual in the base
   ///     class dictated by the IDL!  -Ossama
   virtual DsLogAdmin::ForwardingState
-  get_forwarding_state (ACE_ENV_SINGLE_ARG_DECL)
+  get_forwarding_state (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   /// Set the forwarding state of the log.
@@ -162,12 +162,12 @@ public:
 
   /// Get the operational state of the log.
   DsLogAdmin::OperationalState
-  get_operational_state (ACE_ENV_SINGLE_ARG_DECL)
+  get_operational_state (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   /// Get the log duration
   DsLogAdmin::TimeInterval
-  get_interval (ACE_ENV_SINGLE_ARG_DECL)
+  get_interval (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   /// Set the log duration.
@@ -180,12 +180,12 @@ public:
 
   /// Get the availability status
   DsLogAdmin::AvailabilityStatus
-  get_availability_status (ACE_ENV_SINGLE_ARG_DECL)
+  get_availability_status (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   /// Get the capacity alarm threshold
   DsLogAdmin::CapacityAlarmThresholdList*
-    get_capacity_alarm_thresholds (ACE_ENV_SINGLE_ARG_DECL)
+    get_capacity_alarm_thresholds (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   /**
@@ -205,7 +205,7 @@ public:
 
   /// Get the weekly scheduling parameters
   DsLogAdmin::WeekMask*
-  get_week_mask (ACE_ENV_SINGLE_ARG_DECL)
+  get_week_mask (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   /// Set the weekly scheduling parameters.
@@ -315,25 +315,25 @@ public:
   /// Causes all pending events to be written to storage. Raises
   /// DsLogAdmin::UnsupportedQos
   void
-  flush (ACE_ENV_SINGLE_ARG_DECL)
+  flush (void)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      DsLogAdmin::UnsupportedQoS));
   //@}
 
   /// Remove records that have exceeded max_record_life_.
-  void remove_old_records (ACE_ENV_SINGLE_ARG_DECL)
+  void remove_old_records (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
 protected:
   /// Get the availability status
   /// @note must be called with locks held
   DsLogAdmin::AvailabilityStatus
-  get_availability_status_i (ACE_ENV_SINGLE_ARG_DECL)
+  get_availability_status_i (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   /// Tells if the Log is scheduled to run now.
   /// @note must be called with locks held
-  CORBA::Boolean scheduled (ACE_ENV_SINGLE_ARG_DECL)
+  CORBA::Boolean scheduled (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   /// Copy the attributes of the log being passed.
@@ -342,11 +342,11 @@ protected:
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   /// Check if threshold reached.
-  void check_capacity_alarm_threshold (ACE_ENV_SINGLE_ARG_DECL)
+  void check_capacity_alarm_threshold (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   /// Reset capacity alarm threshold.
-  void reset_capacity_alarm_threshold (ACE_ENV_SINGLE_ARG_DECL)
+  void reset_capacity_alarm_threshold (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   /// Check that valid threshold values have been given.
@@ -394,7 +394,7 @@ protected:
   /// The log's factory's object reference
   DsLogAdmin::LogMgr_var factory_;
 
-  /// The log's id 
+  /// The log's id
   DsLogAdmin::LogId logid_;
 
   /// The log's operational state
@@ -438,7 +438,7 @@ protected:
   static const ACE_Time_Value	log_flush_interval_;
 };
 
-bool TAO_Log_Serv_Export 
+bool TAO_Log_Serv_Export
 operator==(const DsLogAdmin::CapacityAlarmThresholdList& rhs,
            const DsLogAdmin::CapacityAlarmThresholdList& lhs);
 
@@ -489,11 +489,11 @@ operator!=(const DsLogAdmin::TimeInterval& rhs,
 bool TAO_Log_Serv_Export
 operator==(const DsLogAdmin::WeekMaskItem& rhs,
            const DsLogAdmin::WeekMaskItem& lhs);
-	
+
 bool TAO_Log_Serv_Export
 operator!=(const DsLogAdmin::WeekMaskItem& rhs,
            const DsLogAdmin::WeekMaskItem& lhs);
-	
+
 bool TAO_Log_Serv_Export
 operator==(const DsLogAdmin::WeekMask& rhs,
            const DsLogAdmin::WeekMask& lhs);

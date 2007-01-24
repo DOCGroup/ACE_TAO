@@ -64,7 +64,6 @@ Session::svc (void)
               Test::Payload_var received =
                 this->other_sessions_[j]->echo_payload (payload
                                                         ACE_ENV_ARG_PARAMETER);
-              ACE_TRY_CHECK;
             }
         }
 
@@ -77,7 +76,6 @@ Session::svc (void)
           }
       }
       this->terminate (1 ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
     }
   ACE_CATCHANY
     {
@@ -116,14 +114,12 @@ Session::start (const Test::Session_List &other_sessions
         // access to this object....
         ACE_TRY
           {
-            this->_add_ref (ACE_ENV_SINGLE_ARG_PARAMETER);
-            ACE_TRY_CHECK;
+            this->_add_ref ();
 
             if (this->task_.activate (
                     THR_NEW_LWP | THR_JOINABLE, 1, 1) == -1)
               {
-                this->_remove_ref (ACE_ENV_SINGLE_ARG_PARAMETER);
-                ACE_TRY_CHECK;
+                this->_remove_ref ();
               }
             else
               {
@@ -143,8 +139,7 @@ Session::start (const Test::Session_List &other_sessions
       return;
   }
 
-  this->validate_connections (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+  this->validate_connections ();
 
   this->barrier_.wait ();
 
@@ -154,7 +149,6 @@ Session::start (const Test::Session_List &other_sessions
   /// None of the threads are running, this session is useless at
   /// this point, report the problem and destroy the local objects
   this->terminate (0 ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 }
 
 Test::Payload *
@@ -199,26 +193,22 @@ Session::echo_payload (const Test::Payload &the_payload
       return retval._retn ();
   }
   this->terminate (1 ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (0);
 
   return retval._retn ();
 }
 
 
 void
-Session::destroy (ACE_ENV_SINGLE_ARG_DECL)
+Session::destroy (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // Make sure local resources are released
 
   PortableServer::POA_var poa =
-    this->_default_POA (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+    this->_default_POA ();
   PortableServer::ObjectId_var oid =
     poa->servant_to_id (this ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
   poa->deactivate_object (oid.in () ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 }
 
 int
@@ -233,7 +223,7 @@ Session::more_work (void) const
 }
 
 void
-Session::validate_connections (ACE_ENV_SINGLE_ARG_DECL)
+Session::validate_connections (void)
   ACE_THROW_SPEC (())
 {
   const CORBA::ULong session_count =
@@ -246,11 +236,9 @@ Session::validate_connections (ACE_ENV_SINGLE_ARG_DECL)
           CORBA::PolicyList_var unused;
           this->other_sessions_[j]->_validate_connection (unused
                                                           ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
 #else
           (void) this->other_sessions_[j]->_is_a ("Not_An_IDL_Type"
                                                   ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
 #endif /* TAO_HAS_MESSAGING == 1 */
         }
       ACE_CATCHANY

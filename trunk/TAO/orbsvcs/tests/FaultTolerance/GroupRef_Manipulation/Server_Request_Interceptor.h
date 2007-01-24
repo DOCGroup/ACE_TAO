@@ -55,7 +55,7 @@ public:
                                    ACE_ENV_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  /// Reset to initial state, like counter etc, keeps the object-references 
+  /// Reset to initial state, like counter etc, keeps the object-references
   virtual void reset (ACE_ENV_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
@@ -70,10 +70,10 @@ public:
    */
   //@{
   /// Return the name of this ServerRequestinterceptor.
-  virtual char * name (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+  virtual char * name (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual void destroy (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+  virtual void destroy (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual void receive_request_service_contexts (

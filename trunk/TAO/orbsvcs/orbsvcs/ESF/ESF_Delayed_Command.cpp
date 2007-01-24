@@ -82,12 +82,12 @@ TAO_ESF_Shutdown_Command<Target>::execute (void* arg)
     {
       ACE_ENV_EMIT_CODE (CORBA::Environment &ACE_TRY_ENV =
                              *static_cast<CORBA::Environment*> (arg));
-      this->target_->shutdown_i (ACE_ENV_SINGLE_ARG_PARAMETER);
+      this->target_->shutdown_i ();
     }
   else
     {
       ACE_ENV_EMIT_CODE (ACE_DECLARE_NEW_CORBA_ENV);
-      this->target_->shutdown_i (ACE_ENV_SINGLE_ARG_PARAMETER);
+      this->target_->shutdown_i ();
     }
   return 0;
 }

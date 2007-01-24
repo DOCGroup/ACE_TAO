@@ -27,8 +27,7 @@ TAO_LB_Push_Handler::handle_timeout (
   ACE_TRY
     {
       CosLoadBalancing::LoadList_var loads =
-        this->monitor_->loads (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        this->monitor_->loads ();
 
 //       ACE_DEBUG ((LM_DEBUG,
 //                   "PUSHING LOAD:\n"
@@ -40,7 +39,6 @@ TAO_LB_Push_Handler::handle_timeout (
       this->manager_->push_loads (this->location_,
                                   loads.in ()
                                   ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
     }
   ACE_CATCHANY
     {

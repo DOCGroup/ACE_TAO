@@ -52,7 +52,6 @@ TAO_PG_PropertyManager::set_default_properties (
 
   this->property_validator_.validate_property (props
                                                ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
   ACE_GUARD (TAO_SYNCH_MUTEX, guard, this->lock_);
 
@@ -75,7 +74,6 @@ TAO_PG_PropertyManager::get_default_properties (
                         TAO::VMCID,
                         ENOMEM),
                       CORBA::COMPLETED_NO));
-  ACE_CHECK_RETURN (0);
 
   return props;
 }
@@ -97,7 +95,6 @@ TAO_PG_PropertyManager::remove_default_properties (
   this->remove_properties (props,
                            this->default_properties_
                            ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 }
 
 
@@ -112,7 +109,6 @@ TAO_PG_PropertyManager::set_type_properties (
 {
   this->property_validator_.validate_property (overrides
                                                ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
   CORBA::ULong num_overrides = overrides.length ();
 
@@ -159,7 +155,6 @@ TAO_PG_PropertyManager::get_type_properties (
                         TAO::VMCID,
                         ENOMEM),
                       CORBA::COMPLETED_NO));
-  ACE_CHECK_RETURN (0);
 
   PortableGroup::Properties_var properties = tmp_properties;
 
@@ -201,7 +196,6 @@ TAO_PG_PropertyManager::remove_type_properties (
   this->remove_properties (props,
                            type_properties
                            ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 }
 
 
@@ -236,7 +230,6 @@ TAO_PG_PropertyManager::set_properties_dynamically (
 
   this->property_validator_.validate_property (overrides
                                                ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
   // @todo Set the properties in the object group map entry.
 #endif  /* 0 */
@@ -260,7 +253,6 @@ TAO_PG_PropertyManager::get_properties (
   PortableGroup::Properties_var dynamic_properties =
     this->object_group_manager_.get_properties (object_group
                                                 ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (0);
 
   CORBA::ULong dyn_props_len = dynamic_properties->length ();
   if (dyn_props_len > properties_len)
@@ -269,7 +261,6 @@ TAO_PG_PropertyManager::get_properties (
   CORBA::String_var type_id =
     this->object_group_manager_.type_id (object_group
                                          ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (0);
 
   CORBA::ULong type_props_len = 0;
   PortableGroup::Properties * type_properties = 0;
@@ -295,7 +286,6 @@ TAO_PG_PropertyManager::get_properties (
                         TAO::VMCID,
                         ENOMEM),
                       CORBA::COMPLETED_NO));
-  ACE_CHECK_RETURN (0);
 
   PortableGroup::Properties_var properties = tmp_properties;
 

@@ -32,13 +32,11 @@ DatabaseImpl::Entry::Entry (CORBA::ORB_ptr orb,
   CORBA::Object_var obj =
     this->orb_->resolve_initial_references ("POACurrent"
                                             ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
   // Narrow the object reference to a POA Current reference
   this->poa_current_ =
     PortableServer::Current::_narrow (obj.in ()
                                       ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 }
 
 DatabaseImpl::Entry::~Entry (void)
@@ -52,8 +50,7 @@ DatabaseImpl::Entry::invoke (CORBA::ServerRequest_ptr request
   // The servant determines the key associated with the database
   // entry represented by self.
   PortableServer::ObjectId_var oid =
-    this->poa_current_->get_object_id (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+    this->poa_current_->get_object_id ();
 
   // Now convert the id into a string
   CORBA::String_var key =
@@ -67,7 +64,6 @@ DatabaseImpl::Entry::invoke (CORBA::ServerRequest_ptr request
                       "_is_a") == 0)
     {
       this->is_a (request ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
     }
   else
     ACE_THROW (CORBA::NO_IMPLEMENT ());
@@ -87,23 +83,19 @@ DatabaseImpl::Entry::is_a (CORBA::ServerRequest_ptr request
                    any_1,
                    CORBA::ARG_IN
                    ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
   request->arguments (list
                       ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
   CORBA::NamedValue_ptr nv = list->item (0
                                          ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
   CORBA::Any_ptr ap = nv->value ();
   const char *value;
   *ap >>= value;
 
   const char *object_id =
-    CORBA::_tc_Object->id (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+    CORBA::_tc_Object->id ();
 
   CORBA::Boolean result;
   if (ACE_OS::strcmp (value, "IDL:Database/Employee:1.0") == 0
@@ -118,7 +110,6 @@ DatabaseImpl::Entry::is_a (CORBA::ServerRequest_ptr request
   result_any <<= from_boolean;
 
   request->set_result (result_any ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 }
 
 CORBA::RepositoryId
@@ -130,7 +121,7 @@ DatabaseImpl::Entry::_primary_interface (const PortableServer::ObjectId &/*oid*/
 }
 
 PortableServer::POA_ptr
-DatabaseImpl::Entry::_default_POA (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+DatabaseImpl::Entry::_default_POA (void)
 {
   return PortableServer::POA::_duplicate (this->poa_.in ());
 }
@@ -144,11 +135,9 @@ DatabaseImpl::Agent::Agent (CORBA::ORB_ptr orb,
                      poa
                      ACE_ENV_ARG_PARAMETER)
 {
-  ACE_CHECK;
 
   this->poa_->set_servant (&this->common_servant_
                            ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 }
 
 DatabaseImpl::Agent::~Agent (void)
@@ -192,7 +181,6 @@ DatabaseImpl::Agent::create_entry (const char *key,
   ACE_NEW_THROW_EX (new_employee,
                     Employee (name, id),
                     CORBA::NO_MEMORY ());
-  ACE_CHECK_RETURN (Database::Entry::_nil ());
 
   // @@ Should check the return value here and throw an exception if
   // it fails.
@@ -216,11 +204,9 @@ DatabaseImpl::Agent::create_entry (const char *key,
     this->poa_->create_reference_with_id (obj_id.in (),
                                           repository_id.in ()
                                           ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (Database::Entry::_nil ());
 
   Database::Entry_var entry = Database::Entry::_narrow (obj.in ()
                                                         ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (Database::Entry::_nil ());
 
   return entry._retn ();
 }
@@ -261,11 +247,9 @@ DatabaseImpl::Agent::find_entry (const char *key,
         this->poa_->create_reference_with_id (obj_id.in (),
                                               repository_id.in ()
                                               ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK_RETURN (Database::Entry::_nil ());
 
       entry = Database::Entry::_narrow (obj.in ()
                                         ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK_RETURN (Database::Entry::_nil ());
     }
   else
     {
@@ -316,14 +300,14 @@ DatabaseImpl::Agent::destroy_entry (const char *key,
 }
 
 void
-DatabaseImpl::Agent::shutdown (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+DatabaseImpl::Agent::shutdown (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->orb_->shutdown ();
 }
 
 PortableServer::POA_ptr
-DatabaseImpl::Agent::_default_POA (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+DatabaseImpl::Agent::_default_POA (void)
 {
   return PortableServer::POA::_duplicate (this->poa_.in ());
 }

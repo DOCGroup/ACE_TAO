@@ -80,10 +80,10 @@ protected:
   virtual void connect_to_peer (Proxy_Traits::PTR proxy_ptr, Peer_Traits::PTR peer_ptr ACE_ENV_ARG_DECL);
 
   /// Disconnect from proxy.
-  virtual void disconnect_from_proxy (ACE_ENV_SINGLE_ARG_DECL);
+  virtual void disconnect_from_proxy (void);
 
   // = PushSupplier method
-  virtual void disconnect_push_supplier (ACE_ENV_SINGLE_ARG_DECL)
+  virtual void disconnect_push_supplier (void)
     ACE_THROW_SPEC ((
                      CORBA::SystemException
                      ));

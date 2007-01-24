@@ -174,7 +174,7 @@ public:
     CosNotifyChannelAdmin::EventChannelFactory_ptr ecf_
     ACE_ENV_ARG_DECL);
 
-  void fini (ACE_ENV_SINGLE_ARG_DECL);
+  void fini (void);
 
   size_t reconnect_count () const;
 
@@ -183,7 +183,7 @@ public:
       ACE_ENV_ARG_DECL
     ) ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual CORBA::Boolean is_alive (ACE_ENV_SINGLE_ARG_DECL)
+  virtual CORBA::Boolean is_alive (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
 private:
@@ -204,8 +204,8 @@ class Consumer_Main
   int parse_single_arg (int argc, char *argv[]);
 
   int init (int argc, char *argv[] ACE_ENV_ARG_DECL);
-  int run (ACE_ENV_SINGLE_ARG_DECL);
-  int fini (ACE_ENV_SINGLE_ARG_DECL);
+  int run (void);
+  int fini (void);
   void usage (FILE * log) const;
 
   void reconnect (
@@ -215,19 +215,19 @@ class Consumer_Main
 
  private:
   /// Find naming service.
-  int resolve_naming_service (ACE_ENV_SINGLE_ARG_DECL);
+  int resolve_naming_service (void);
 
   /// Resolve the Notify factory from the Naming service.
-  int find_notify_factory (ACE_ENV_SINGLE_ARG_DECL);
+  int find_notify_factory (void);
 
   /// Resolve the Notify factory using resolve_initial_reference ("NotifyEventChannelFactory")
-  int resolve_notify_factory (ACE_ENV_SINGLE_ARG_DECL);
+  int resolve_notify_factory (void);
 
-  void init_event_channel (ACE_ENV_SINGLE_ARG_DECL);
-  void init_consumer_admin (ACE_ENV_SINGLE_ARG_DECL);
-  void init_structured_proxy_supplier (ACE_ENV_SINGLE_ARG_DECL);
-  void init_sequence_proxy_supplier (ACE_ENV_SINGLE_ARG_DECL);
-  void init_any_proxy_supplier (ACE_ENV_SINGLE_ARG_DECL);
+  void init_event_channel (void);
+  void init_consumer_admin (void);
+  void init_structured_proxy_supplier (void);
+  void init_sequence_proxy_supplier (void);
+  void init_any_proxy_supplier (void);
 
   void set_proxy_qos (CosNotifyChannelAdmin::ProxySupplier_ptr proxy ACE_ENV_ARG_DECL);
 

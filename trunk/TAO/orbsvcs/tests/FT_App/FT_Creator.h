@@ -46,7 +46,7 @@ namespace FTAPP
 
     ////////////
     // execution
-    int run (ACE_ENV_SINGLE_ARG_DECL);
+    int run (void);
 
     ////////////
     // shut down

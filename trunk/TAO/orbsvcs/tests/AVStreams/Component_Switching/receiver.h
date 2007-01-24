@@ -121,7 +121,7 @@ public:
   ACE_CString sender_name (void);
   ACE_CString receiver_name (void);
 
-  void shut_down (ACE_ENV_SINGLE_ARG_DECL_NOT_USED);
+  void shut_down (void);
 
 protected:
   Connection_Manager connection_manager_;

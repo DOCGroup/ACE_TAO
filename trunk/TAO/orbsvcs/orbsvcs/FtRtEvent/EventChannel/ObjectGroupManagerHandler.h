@@ -31,21 +31,21 @@ public:
                             ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual void create_group (ACE_ENV_SINGLE_ARG_DECL)
+  virtual void create_group (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual void create_group_excep (::Messaging::ExceptionHolder * excep_holder
                                    ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual void add_member (ACE_ENV_SINGLE_ARG_DECL)
+  virtual void add_member (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual void add_member_excep (::Messaging::ExceptionHolder * excep_holder
                                  ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual void set_state (ACE_ENV_SINGLE_ARG_DECL)
+  virtual void set_state (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual void set_state_excep (::Messaging::ExceptionHolder * excep_holder

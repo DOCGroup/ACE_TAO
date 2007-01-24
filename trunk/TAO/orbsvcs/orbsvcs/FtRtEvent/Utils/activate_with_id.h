@@ -28,12 +28,10 @@ activate_object_with_id (T * &result,
   poa->activate_object_with_id(id,
                                servant
                                ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
   CORBA::Object_var object =
     poa->id_to_reference(id
                          ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
   result = T::_narrow(object.in() ACE_ENV_ARG_PARAMETER);
 }

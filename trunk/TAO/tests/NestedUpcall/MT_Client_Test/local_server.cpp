@@ -155,7 +155,6 @@ MT_Server::init (int argc,
                                               "child_poa"
                                               ACE_ENV_ARG_PARAMETER);
 
-      ACE_TRY_CHECK;
 
       this->parse_args ();
       // ~~ check for the return value here
@@ -164,7 +163,6 @@ MT_Server::init (int argc,
         this->orb_manager_ptr_->activate_under_child_poa ("MT",
                                                           &this->mT_Object_i_
                                                           ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
 #if 0
       ACE_DEBUG ((LM_DEBUG,
@@ -191,7 +189,6 @@ MT_Server::init (int argc,
       CORBA::Object_var object_var =
         orb_var->string_to_object (this->object_key_
                                    ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       if (CORBA::is_nil (object_var.in()))
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -200,7 +197,6 @@ MT_Server::init (int argc,
 
       this->mT_Object_var_ = MT_Object::_narrow (object_var.in()
                                                  ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       if (CORBA::is_nil (this->mT_Object_var_.in()))
         {
@@ -228,8 +224,7 @@ MT_Server::run ()
   ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY
     {
-      int r = this->orb_manager_ptr_->run (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      int r = this->orb_manager_ptr_->run ();
 
       if (r == -1)
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -256,7 +251,6 @@ MT_Server::~MT_Server (void)
       if (this->orb_manager_ptr_)
         this->orb_manager_ptr_->deactivate_under_child_poa (this->str_.in ()
                                                             ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
     }
   ACE_CATCHANY
     {
@@ -281,13 +275,11 @@ MT_Server::run_ORB_briefly (void)
           for (unsigned int i = 0; i < this->iterations_; i++)
             {
               MT_Object_var tmp =
-                this->mT_Object_i_._this (ACE_ENV_SINGLE_ARG_PARAMETER);
-              ACE_TRY_CHECK;
+                this->mT_Object_i_._this ();
 
               this->mT_Object_var_->yadda (0,
                                            tmp.in ()
                                            ACE_ENV_ARG_PARAMETER);
-              ACE_TRY_CHECK;
             }
         }
       ACE_CATCHANY

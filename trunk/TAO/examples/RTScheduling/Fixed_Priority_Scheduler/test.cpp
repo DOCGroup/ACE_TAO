@@ -71,7 +71,6 @@ DT_Test::init (int argc, char *argv []
 			  argv,
 			  ""
 			  ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
 
   this->check_supported_priorities ();
 
@@ -81,11 +80,9 @@ DT_Test::init (int argc, char *argv []
 
   CORBA::Object_ptr manager_obj = orb_->resolve_initial_references ("RTSchedulerManager"
 								   ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
 
   TAO_RTScheduler_Manager_var manager = TAO_RTScheduler_Manager::_narrow (manager_obj
 									  ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
 
 
   ACE_NEW_RETURN (scheduler_,
@@ -97,11 +94,9 @@ DT_Test::init (int argc, char *argv []
   CORBA::Object_var object =
     orb_->resolve_initial_references ("RTScheduler_Current"
 				      ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
 
   current_  =
     RTScheduling::Current::_narrow (object.in () ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
 
 
   if (sched_policy_ != ACE_SCHED_OTHER)
@@ -133,29 +128,22 @@ DT_Test::run (int argc, char* argv []
 {
   init (argc,argv
 	ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
-  if (this->dt_creator_->resolve_naming_service (ACE_ENV_SINGLE_ARG_PARAMETER) == -1)
+  if (this->dt_creator_->resolve_naming_service () == -1)
     return;
-  ACE_CHECK;
 
 
   //TASK_STATS::instance ()->init (this->dt_creator_->dt_count () * 100);
 
 
-  this->dt_creator_->activate_root_poa (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+  this->dt_creator_->activate_root_poa ();
 
-  this->dt_creator_->activate_poa_list (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
-  this->dt_creator_->activate_job_list (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
-  this->dt_creator_->activate_schedule (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+  this->dt_creator_->activate_poa_list ();
+  this->dt_creator_->activate_job_list ();
+  this->dt_creator_->activate_schedule ();
 
   DT_Creator* dt_creator = this->dt_creator_;
-  dt_creator->register_synch_obj (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+  dt_creator->register_synch_obj ();
 
   ACE_DEBUG ((LM_DEBUG,
 	      "Registered Synch Object\n"));
@@ -163,7 +151,6 @@ DT_Test::run (int argc, char* argv []
   /*
   dt_creator_->create_distributable_threads (current_.in ()
 					     ACE_ENV_ARG_PARAMETER);
-  ACE_TRY_CHECK;
   */
 
   this->activate_task ();
@@ -173,8 +160,7 @@ DT_Test::run (int argc, char* argv []
   dt_creator_->log_msg (msg);
 
   //ACE_Thread_Manager::instance ()->wait ();
-  orb_->run (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+  orb_->run ();
 
 
 }
@@ -236,7 +222,6 @@ DT_Test::svc (void)
 
       dt_creator_->create_distributable_threads (current_.in ()
 						 ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
 
     }
@@ -267,7 +252,6 @@ main (int argc, char* argv [])
 
       DT_TEST::instance ()->run (argc, argv
 				 ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
     }
   ACE_CATCHANY

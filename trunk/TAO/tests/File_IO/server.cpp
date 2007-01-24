@@ -84,7 +84,6 @@ main (int argc, char *argv[])
     {
       // Initialize the ORB
       CORBA::ORB_var orb = CORBA::ORB_init (argc, argv, 0 ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       int result = parse_args (argc, argv);
       if (result != 0)
@@ -94,16 +93,13 @@ main (int argc, char *argv[])
       CORBA::Object_var obj =
         orb->resolve_initial_references ("RootPOA"
                                          ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       // Narrow the object reference to a POA reference
       PortableServer::POA_var root_poa =
         PortableServer::POA::_narrow (obj.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       PortableServer::POAManager_var poa_manager =
-        root_poa->the_POAManager (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        root_poa->the_POAManager ();
 
       CORBA::PolicyList policies (5);
       policies.length (5);
@@ -111,27 +107,22 @@ main (int argc, char *argv[])
       // ID Assignment Policy
       policies[0] =
         root_poa->create_id_assignment_policy (PortableServer::USER_ID ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       // Lifespan Policy
       policies[1] =
         root_poa->create_lifespan_policy (PortableServer::PERSISTENT ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       // Request Processing Policy
       policies[2] =
         root_poa->create_request_processing_policy (PortableServer::USE_DEFAULT_SERVANT ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       // Servant Retention Policy
       policies[3] =
         root_poa->create_servant_retention_policy (PortableServer::RETAIN ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       // Id Uniqueness Policy
       policies[4] =
         root_poa->create_id_uniqueness_policy (PortableServer::MULTIPLE_ID ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       ACE_CString name = "firstPOA";
       PortableServer::POA_var first_poa =
@@ -139,15 +130,13 @@ main (int argc, char *argv[])
                               poa_manager.in (),
                               policies
                               ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       for (CORBA::ULong i = 0;
            i < policies.length ();
            ++i)
         {
           CORBA::Policy_ptr policy = policies[i];
-          policy->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+          policy->destroy ();
         }
 
       // Create a File System Implementation object in first_poa
@@ -159,16 +148,13 @@ main (int argc, char *argv[])
       first_poa->activate_object_with_id (file_system_oid.in (),
                                           &file_system_impl
                                           ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       CORBA::Object_var file_system =
         first_poa->id_to_reference (file_system_oid.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       // Get the IOR for the "FileSystem" object
       CORBA::String_var file_system_ior =
         orb->object_to_string (file_system.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       ACE_DEBUG ((LM_DEBUG,"%s\n",
                   file_system_ior.in ()));
@@ -184,8 +170,7 @@ main (int argc, char *argv[])
 
       // set the state of the poa_manager to active i.e ready to
       // process requests
-      poa_manager->activate (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      poa_manager->activate ();
 
       Worker worker (orb.in ());
       if (worker.activate (THR_NEW_LWP | THR_JOINABLE,
@@ -197,13 +182,10 @@ main (int argc, char *argv[])
       worker.thr_mgr ()->wait ();
 
       first_poa->destroy(1, 1 ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       root_poa->destroy(1, 1 ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
-      orb->destroy(ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      orb->destroy();
     }
   ACE_CATCHANY
     {
@@ -211,7 +193,6 @@ main (int argc, char *argv[])
       return -1;
     }
   ACE_ENDTRY;
-  ACE_CHECK_RETURN (-1);
 
   return 0;
 }
@@ -233,7 +214,6 @@ Worker::svc (void)
       // Run the ORB for atmost 75 seconds
       ACE_Time_Value tv (75, 0);
       this->orb_->run (tv ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
     }
   ACE_CATCHANY
     {
@@ -241,7 +221,6 @@ Worker::svc (void)
       return -1;
     }
   ACE_ENDTRY;
-  ACE_CHECK_RETURN (-1);
 
   return 0;
 }

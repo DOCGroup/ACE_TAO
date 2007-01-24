@@ -48,8 +48,8 @@ public:
   virtual PortableServer::Servant servant (void);
 
   /// ServantBase refcount methods.
-  virtual void _add_ref (ACE_ENV_SINGLE_ARG_DECL);
-  virtual void _remove_ref (ACE_ENV_SINGLE_ARG_DECL);
+  virtual void _add_ref (void);
+  virtual void _remove_ref (void);
 
   virtual void validate_event_qos (
     const CosNotification::QoSProperties & required_qos,

@@ -76,8 +76,7 @@ OrbTask::svc()
 {
   ACE_TRY_NEW_ENV
   {
-    this->orb_->run(ACE_ENV_SINGLE_ARG_PARAMETER);
-    ACE_TRY_CHECK;
+    this->orb_->run();
   }
   ACE_CATCHALL
   {

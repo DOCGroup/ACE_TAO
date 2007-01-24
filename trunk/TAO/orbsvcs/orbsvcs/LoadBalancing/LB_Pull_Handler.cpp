@@ -54,13 +54,11 @@ TAO_LB_Pull_Handler::handle_timeout (
           // LoadManager prevents nil load monitor references from
           // being registered.
           CosLoadBalancing::LoadList_var load_list =
-            monitor->loads (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+            monitor->loads ();
 
           this->load_manager_->push_loads (location,
                                            load_list.in ()
                                            ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
 
 //           ACE_DEBUG ((LM_DEBUG,
 //                       "LOCATION = %s\tLOAD = %f\n",

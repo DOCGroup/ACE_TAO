@@ -48,14 +48,14 @@ namespace TAO
   }
 
   char *
-  FT_ClientRequest_Interceptor::name (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+  FT_ClientRequest_Interceptor::name (void)
     ACE_THROW_SPEC ((CORBA::SystemException))
   {
     return CORBA::string_dup (this->name_);
   }
 
   void
-  FT_ClientRequest_Interceptor::destroy (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+  FT_ClientRequest_Interceptor::destroy (void)
     ACE_THROW_SPEC ((CORBA::SystemException))
   {
   }
@@ -79,8 +79,7 @@ namespace TAO
     if (TAO_debug_level > 3)
       {
         CORBA::String_var op =
-          ri->operation (ACE_ENV_SINGLE_ARG_PARAMETER);
-        ACE_CHECK;
+          ri->operation ();
 
         ACE_DEBUG ((LM_DEBUG,
                     ACE_TEXT ("TAO_FT (%P|%t) - %s called for %s\n"),
@@ -94,7 +93,6 @@ namespace TAO
         tp =
           ri->get_effective_component (IOP::TAG_FT_GROUP
                                        ACE_ENV_ARG_PARAMETER);
-        ACE_TRY_CHECK;
       }
     ACE_CATCHANY
       {
@@ -105,11 +103,9 @@ namespace TAO
     this->group_version_context (ri,
                                  tp
                                  ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK;
 
     this->request_service_context (ri
                                    ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK;
   }
 
   void
@@ -146,7 +142,7 @@ namespace TAO
 
     ACE_TRY
     {
-       status = ri->reply_status(ACE_ENV_SINGLE_ARG_PARAMETER);
+       status = ri->reply_status();
     }
     ACE_CATCHANY
     {
@@ -191,8 +187,7 @@ namespace TAO
     // @@ Will be used later.
     // Do a check for policy in which this can be done..
     PortableInterceptor::ReplyStatus rs =
-      ri->reply_status (ACE_ENV_SINGLE_ARG_PARAMETER);
-    ACE_CHECK;
+      ri->reply_status ();
 
     if (rs != PortableInterceptor::SYSTEM_EXCEPTION)
       {
@@ -200,8 +195,7 @@ namespace TAO
       }
 
     CORBA::Any_var ex =
-      ri->received_exception (ACE_ENV_SINGLE_ARG_PARAMETER);
-    ACE_CHECK;
+      ri->received_exception ();
 
     TAO_OutputCDR cdr;
 
@@ -308,7 +302,6 @@ namespace TAO
       ri->add_request_service_context (sc,
         0
         ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
     }
     ACE_CATCHANY
@@ -317,7 +310,6 @@ namespace TAO
       // ACE_RE_THROW;
     }
     ACE_ENDTRY;
-    ACE_CHECK;
 
     return;
   }
@@ -336,7 +328,6 @@ namespace TAO
       CORBA::Policy_var policy =
         ri->get_request_policy (FT::REQUEST_DURATION_POLICY
         ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       FT::FTRequestServiceContext ftrsc;
       ftrsc.client_id =
@@ -364,7 +355,6 @@ namespace TAO
           ftrsc.expiration_time =
               this->request_expiration_time (policy.in ()
                                            ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
 
           tao_ri->tao_ft_retention_id (ftrsc.retention_id);
           tao_ri->tao_ft_expiration_time (ftrsc.expiration_time);
@@ -397,14 +387,12 @@ namespace TAO
       ri->add_request_service_context (sc,
         0
         ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
     }
     ACE_CATCHANY
     {
       // ACE_RE_THROW;
     }
     ACE_ENDTRY;
-    ACE_CHECK;
     return;
   }
 
@@ -420,7 +408,6 @@ namespace TAO
       {
         p =  FT::RequestDurationPolicy::_narrow (policy
                                                  ACE_ENV_ARG_PARAMETER);
-        ACE_CHECK_RETURN (0);
       }
 
     TimeBase::TimeT t = 0;
@@ -428,8 +415,7 @@ namespace TAO
     if (p.in ())
       {
         t =
-        p->request_duration_policy_value (ACE_ENV_SINGLE_ARG_PARAMETER);
-        ACE_CHECK_RETURN (0);
+        p->request_duration_policy_value ();
       }
     else
       {

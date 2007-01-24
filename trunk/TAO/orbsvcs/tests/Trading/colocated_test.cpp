@@ -35,7 +35,6 @@ main (int argc, char** argv)
     {
       TAO_ORB_Manager orb_manager;
       orb_manager.init (argc, argv ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       // Command line argument interpretation.
       CORBA::Boolean verbose = 0;
@@ -51,8 +50,7 @@ main (int argc, char** argv)
       TAO_Trading_Components_i& trd_comp = trader->trading_components ();
 
       // Set the service type repository
-      sup_attr.type_repos (type_repos._this (ACE_ENV_SINGLE_ARG_PARAMETER));
-      ACE_TRY_CHECK;
+      sup_attr.type_repos (type_repos._this ());
 
       // Run the Service Type Exporter tests
       ACE_DEBUG ((LM_DEBUG, "*** Running the Service Type Exporter tests.\n"));
@@ -60,22 +58,16 @@ main (int argc, char** argv)
         (CosTrading::Lookup::_duplicate (trd_comp.lookup_if ()),
          verbose
          ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
-      type_exporter.remove_all_types (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      type_exporter.remove_all_types ();
 
-      type_exporter.add_all_types (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      type_exporter.add_all_types ();
 
-      type_exporter.list_all_types (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      type_exporter.list_all_types ();
 
-      type_exporter.describe_all_types (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      type_exporter.describe_all_types ();
 
-      type_exporter.fully_describe_all_types (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      type_exporter.fully_describe_all_types ();
 
       // Run the Offer Exporter tests
       ACE_DEBUG ((LM_DEBUG, "*** Running the Offer Exporter tests.\n"));
@@ -83,45 +75,33 @@ main (int argc, char** argv)
         (CosTrading::Lookup::_duplicate (trd_comp.lookup_if ()),
          verbose
          ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
-      offer_exporter.withdraw_offers (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      offer_exporter.withdraw_offers ();
 
-      offer_exporter.export_offers (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      offer_exporter.export_offers ();
 
-      offer_exporter.describe_offers (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      offer_exporter.describe_offers ();
 
-      offer_exporter.modify_offers (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      offer_exporter.modify_offers ();
 
-      offer_exporter.describe_offers (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      offer_exporter.describe_offers ();
 
-      offer_exporter.withdraw_offers_using_constraints (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      offer_exporter.withdraw_offers_using_constraints ();
 
-      offer_exporter.describe_offers (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      offer_exporter.describe_offers ();
 
-      offer_exporter.withdraw_offers (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      offer_exporter.withdraw_offers ();
 
-      offer_exporter.export_offers (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      offer_exporter.export_offers ();
 
-      offer_exporter.describe_offers (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      offer_exporter.describe_offers ();
 
       // Run the Offer Importer tests
       ACE_DEBUG ((LM_DEBUG, "*** Running the Offer Importer tests.\n"));
       TAO_Offer_Importer offer_importer
         (CosTrading::Lookup::_duplicate (trd_comp.lookup_if ()), verbose);
 
-      offer_importer.perform_queries (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      offer_importer.perform_queries ();
     }
   ACE_CATCHANY
     {

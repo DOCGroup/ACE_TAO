@@ -27,31 +27,29 @@ TAO_SequenceDef_i::~TAO_SequenceDef_i (void)
 }
 
 CORBA::DefinitionKind
-TAO_SequenceDef_i::def_kind (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+TAO_SequenceDef_i::def_kind (void)
    ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return CORBA::dk_Sequence;
 }
 
 void
-TAO_SequenceDef_i::destroy (ACE_ENV_SINGLE_ARG_DECL)
+TAO_SequenceDef_i::destroy (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_IFR_WRITE_GUARD;
 
-  this->update_key (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+  this->update_key ();
 
-  this->destroy_i (ACE_ENV_SINGLE_ARG_PARAMETER);
+  this->destroy_i ();
 }
 
 void
-TAO_SequenceDef_i::destroy_i (ACE_ENV_SINGLE_ARG_DECL)
+TAO_SequenceDef_i::destroy_i (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // Only if it is (w)string, fixed, array or sequence.
-  this->destroy_element_type (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+  this->destroy_element_type ();
 
   ACE_TString name;
   this->repo_->config ()->get_string_value (this->section_key_,
@@ -64,27 +62,24 @@ TAO_SequenceDef_i::destroy_i (ACE_ENV_SINGLE_ARG_DECL)
 }
 
 CORBA::TypeCode_ptr
-TAO_SequenceDef_i::type (ACE_ENV_SINGLE_ARG_DECL)
+TAO_SequenceDef_i::type (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_IFR_READ_GUARD_RETURN (CORBA::TypeCode::_nil ());
 
-  this->update_key (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (CORBA::TypeCode::_nil ());
+  this->update_key ();
 
-  return this->type_i (ACE_ENV_SINGLE_ARG_PARAMETER);
+  return this->type_i ();
 }
 
 CORBA::TypeCode_ptr
-TAO_SequenceDef_i::type_i (ACE_ENV_SINGLE_ARG_DECL)
+TAO_SequenceDef_i::type_i (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   CORBA::TypeCode_var element_typecode =
-    this->element_type_i (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (CORBA::TypeCode::_nil ());
+    this->element_type_i ();
 
-  CORBA::ULong bound = this->bound_i (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (CORBA::TypeCode::_nil ());
+  CORBA::ULong bound = this->bound_i ();
 
   return this->repo_->tc_factory ()->create_sequence_tc (
                                          bound,
@@ -94,19 +89,18 @@ TAO_SequenceDef_i::type_i (ACE_ENV_SINGLE_ARG_DECL)
 }
 
 CORBA::ULong
-TAO_SequenceDef_i::bound (ACE_ENV_SINGLE_ARG_DECL)
+TAO_SequenceDef_i::bound (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_IFR_READ_GUARD_RETURN (0);
 
-  this->update_key (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (0);
+  this->update_key ();
 
-  return this->bound_i (ACE_ENV_SINGLE_ARG_PARAMETER);
+  return this->bound_i ();
 }
 
 CORBA::ULong
-TAO_SequenceDef_i::bound_i (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+TAO_SequenceDef_i::bound_i (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   u_int bound = 0;
@@ -139,19 +133,18 @@ TAO_SequenceDef_i::bound_i (CORBA::ULong bound
 }
 
 CORBA::TypeCode_ptr
-TAO_SequenceDef_i::element_type (ACE_ENV_SINGLE_ARG_DECL)
+TAO_SequenceDef_i::element_type (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_IFR_READ_GUARD_RETURN (CORBA::TypeCode::_nil ());
 
-  this->update_key (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (CORBA::TypeCode::_nil ());
+  this->update_key ();
 
-  return this->element_type_i (ACE_ENV_SINGLE_ARG_PARAMETER);
+  return this->element_type_i ();
 }
 
 CORBA::TypeCode_ptr
-TAO_SequenceDef_i::element_type_i (ACE_ENV_SINGLE_ARG_DECL)
+TAO_SequenceDef_i::element_type_i (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_TString element_path;
@@ -163,23 +156,22 @@ TAO_SequenceDef_i::element_type_i (ACE_ENV_SINGLE_ARG_DECL)
     TAO_IFR_Service_Utils::path_to_idltype (element_path,
                                             this->repo_);
 
-  return impl->type_i (ACE_ENV_SINGLE_ARG_PARAMETER);
+  return impl->type_i ();
 }
 
 CORBA::IDLType_ptr
-TAO_SequenceDef_i::element_type_def (ACE_ENV_SINGLE_ARG_DECL)
+TAO_SequenceDef_i::element_type_def (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_IFR_READ_GUARD_RETURN (CORBA::IDLType::_nil ());
 
-  this->update_key (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (CORBA::IDLType::_nil ());
+  this->update_key ();
 
-  return this->element_type_def_i (ACE_ENV_SINGLE_ARG_PARAMETER);
+  return this->element_type_def_i ();
 }
 
 CORBA::IDLType_ptr
-TAO_SequenceDef_i::element_type_def_i (ACE_ENV_SINGLE_ARG_DECL)
+TAO_SequenceDef_i::element_type_def_i (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_TString element_path;
@@ -191,7 +183,6 @@ TAO_SequenceDef_i::element_type_def_i (ACE_ENV_SINGLE_ARG_DECL)
     TAO_IFR_Service_Utils::path_to_ir_object (element_path,
                                               this->repo_
                                               ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (CORBA::IDLType::_nil ());
 
   return CORBA::IDLType::_narrow (obj.in ()
                                  ACE_ENV_ARG_PARAMETER);
@@ -204,8 +195,7 @@ TAO_SequenceDef_i::element_type_def (CORBA::IDLType_ptr element_type_def
 {
   TAO_IFR_WRITE_GUARD;
 
-  this->update_key (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+  this->update_key ();
 
   this->element_type_def_i (element_type_def
                             ACE_ENV_ARG_PARAMETER);
@@ -216,8 +206,7 @@ TAO_SequenceDef_i::element_type_def_i (CORBA::IDLType_ptr element_type_def
                                        ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  this->destroy_element_type (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+  this->destroy_element_type ();
 
   char *element_path =
     TAO_IFR_Service_Utils::reference_to_path (element_type_def);
@@ -256,8 +245,7 @@ TAO_SequenceDef_i::destroy_element_type (
         TAO_IFR_Service_Utils::path_to_idltype (element_path,
                                                 this->repo_);
 
-      impl->destroy_i (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK;
+      impl->destroy_i ();
 
       break;
     }

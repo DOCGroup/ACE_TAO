@@ -40,7 +40,6 @@ TAO_ESF_Immediate_Changes<PROXY,C,ITERATOR,ACE_LOCK>::
   for (ITERATOR i = this->collection_.begin (); i != end; ++i)
     {
       worker->work ((*i) ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
     }
 }
 

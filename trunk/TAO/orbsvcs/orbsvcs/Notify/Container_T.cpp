@@ -31,7 +31,7 @@ TAO_Notify_Container_T<TYPE>::~TAO_Notify_Container_T ()
 }
 
 template <class TYPE> void
-TAO_Notify_Container_T<TYPE>::shutdown (ACE_ENV_SINGLE_ARG_DECL)
+TAO_Notify_Container_T<TYPE>::shutdown (void)
 {
   TAO_ESF_Shutdown_Proxy<TYPE> shutdown_worker;
 
@@ -51,7 +51,7 @@ TAO_Notify_Container_T<TYPE>::remove (TYPE* type ACE_ENV_ARG_DECL)
 }
 
 template<class TYPE> void
-TAO_Notify_Container_T<TYPE>::init (ACE_ENV_SINGLE_ARG_DECL)
+TAO_Notify_Container_T<TYPE>::init (void)
 {
   // get the factory
   TAO_Notify_Factory* factory = TAO_Notify_PROPERTIES::instance ()->factory ();

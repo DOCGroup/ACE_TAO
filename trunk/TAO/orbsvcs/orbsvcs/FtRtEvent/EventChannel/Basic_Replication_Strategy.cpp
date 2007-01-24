@@ -27,10 +27,9 @@ Basic_Replication_Strategy::~Basic_Replication_Strategy()
 }
 
 void
-Basic_Replication_Strategy::check_validity(ACE_ENV_SINGLE_ARG_DECL)
+Basic_Replication_Strategy::check_validity(void)
 {
-    FTRT::SequenceNumber seq_no = Request_Context_Repository().get_sequence_number(ACE_ENV_SINGLE_ARG_PARAMETER);
-    ACE_CHECK;
+    FTRT::SequenceNumber seq_no = Request_Context_Repository().get_sequence_number();
 
     TAO_FTRTEC::Log(1 , "check_validity : sequence no = %d\n", sequence_num_);
 
@@ -60,7 +59,6 @@ void twoway_set_update(FtRtecEventChannelAdmin::EventChannel_var successor,
   do {
     ACE_TRY {
       successor->set_update(state ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
     }
     ACE_CATCH(CORBA::COMM_FAILURE, ex) {
       if (ex.minor() == 6)   finished = false;
@@ -68,7 +66,6 @@ void twoway_set_update(FtRtecEventChannelAdmin::EventChannel_var successor,
         ACE_RE_THROW;
     }
     ACE_ENDTRY;
-    ACE_CHECK;
   } while(!finished);
 }
 
@@ -83,8 +80,7 @@ Basic_Replication_Strategy::replicate_request(
   ACE_UNUSED_ARG(oid);
 
   FTRT::TransactionDepth transaction_depth =
-    Request_Context_Repository().get_transaction_depth(ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+    Request_Context_Repository().get_transaction_depth();
 
   GroupInfoPublisherBase * info_publisher = GroupInfoPublisher::instance();
   FtRtecEventChannelAdmin::EventChannel_var successor = info_publisher->successor();
@@ -95,10 +91,8 @@ Basic_Replication_Strategy::replicate_request(
     TAO_FTRTEC::Log(1, "replicate_request : sequence no = %d\n", sequence_num_);
     Request_Context_Repository().set_sequence_number(sequence_num_
       ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK;
 
     Request_Context_Repository().set_transaction_depth(transaction_depth-1 ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK;
 
     if (transaction_depth > 1) {
       twoway_set_update(successor, state ACE_ENV_ARG_PARAMETER);
@@ -129,14 +123,12 @@ Basic_Replication_Strategy::add_member(const FTRT::ManagerInfo & info,
   do {
     ACE_TRY {
       successor->add_member(info, object_group_ref_version ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
     }
     ACE_CATCH(CORBA::COMM_FAILURE, ex) {
       if (ex.minor() == 6) finished = false;
       else ACE_RE_THROW;
     }
     ACE_ENDTRY;
-    ACE_CHECK;
   } while (!finished);
 }
 

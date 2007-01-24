@@ -31,18 +31,15 @@ main (int argc, char *argv[])
     {
       CORBA::ORB_var orb =
         CORBA::ORB_init (argc, argv, "" ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       if (parse_args (argc, argv) != 0)
         return 1;
 
       CORBA::Object_var object =
         orb->string_to_object (ior ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       Test::Roundtrip_var roundtrip =
         Test::Roundtrip::_narrow (object.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       if (CORBA::is_nil (roundtrip.in ()))
         {
@@ -59,7 +56,6 @@ main (int argc, char *argv[])
       for (int i = 0; i < num_calls; i++)
         {
           roundtrip->test_method (time ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
 
           ACE_DEBUG ((LM_DEBUG, "Sent call # %d \n", i));
         }

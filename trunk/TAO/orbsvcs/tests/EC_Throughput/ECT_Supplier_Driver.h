@@ -53,10 +53,10 @@ private:
   void connect_suppliers (RtecScheduler::Scheduler_ptr scheduler,
                           RtecEventChannelAdmin::EventChannel_ptr local_ec
                           ACE_ENV_ARG_DECL);
-  void disconnect_suppliers (ACE_ENV_SINGLE_ARG_DECL);
+  void disconnect_suppliers (void);
   // Connect the suppliers.
 
-  void activate_suppliers (ACE_ENV_SINGLE_ARG_DECL);
+  void activate_suppliers (void);
   // Activate the suppliers, i.e. they start generating events.
 
   void dump_results (void);

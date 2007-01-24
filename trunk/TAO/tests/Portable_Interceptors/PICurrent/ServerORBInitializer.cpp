@@ -29,12 +29,10 @@ ServerORBInitializer::post_init (
   CORBA::Object_var obj =
     info->resolve_initial_references ("PICurrent"
                                       ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
   PortableInterceptor::Current_var pi_current =
     PortableInterceptor::Current::_narrow (obj.in ()
                                            ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
   if (CORBA::is_nil (pi_current.in ()))
     {
@@ -44,8 +42,7 @@ ServerORBInitializer::post_init (
       ACE_THROW (CORBA::INTERNAL ());
     }
 
-  ::slot_id = info->allocate_slot_id (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+  ::slot_id = info->allocate_slot_id ();
 
   PortableInterceptor::ServerRequestInterceptor_ptr server_tmp;
   ACE_NEW_THROW_EX (server_tmp,
@@ -56,14 +53,12 @@ ServerORBInitializer::post_init (
                         TAO::VMCID,
                         ENOMEM),
                       CORBA::COMPLETED_NO));
-  ACE_CHECK;
 
   PortableInterceptor::ServerRequestInterceptor_var server_interceptor =
     server_tmp;
 
   info->add_server_request_interceptor (server_interceptor.in ()
                                         ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
   PortableInterceptor::ClientRequestInterceptor_ptr client_tmp;
   ACE_NEW_THROW_EX (client_tmp,
@@ -73,14 +68,12 @@ ServerORBInitializer::post_init (
                         TAO::VMCID,
                         ENOMEM),
                       CORBA::COMPLETED_NO));
-  ACE_CHECK;
 
   PortableInterceptor::ClientRequestInterceptor_var client_interceptor =
     client_tmp;
 
   info->add_client_request_interceptor (client_interceptor.in ()
                                         ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
   // Disable collocation -- TAO-specific!!!
   //
@@ -91,7 +84,6 @@ ServerORBInitializer::post_init (
   TAO_ORBInitInfo_var tao_info =
     TAO_ORBInitInfo::_narrow (info
                               ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
   tao_info->orb_core ()->optimize_collocation_objects (0);
 }

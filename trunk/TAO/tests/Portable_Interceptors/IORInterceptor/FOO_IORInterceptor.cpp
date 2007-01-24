@@ -14,14 +14,14 @@ FOO_IORInterceptor::FOO_IORInterceptor (IOP::Codec_ptr codec)
 }
 
 char *
-FOO_IORInterceptor::name (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+FOO_IORInterceptor::name (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return CORBA::string_dup ("FOO_IORInterceptor");
 }
 
 void
-FOO_IORInterceptor::destroy (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+FOO_IORInterceptor::destroy (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
 }
@@ -38,8 +38,7 @@ FOO_IORInterceptor::establish_components (
   // does the right thing, and ignores any IOR interceptors that throw
   // an exception.
 
-  CORBA::String_var name = this->name (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+  CORBA::String_var name = this->name ();
 
   CORBA::Any data;
   data <<= name.in ();
@@ -47,7 +46,6 @@ FOO_IORInterceptor::establish_components (
   CORBA::OctetSeq_var encoded_data =
     this->codec_->encode_value (data
                                 ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
   // Construct a tagged component.
   IOP::TaggedComponent component;
@@ -69,7 +67,6 @@ FOO_IORInterceptor::establish_components (
   // Add the tagged component to all profiles.
   info->add_ior_component (component
                            ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
   ACE_DEBUG ((LM_DEBUG,
               "(%P|%t) Added tagged component containing the\n"
@@ -81,7 +78,6 @@ FOO_IORInterceptor::establish_components (
   info->add_ior_component_to_profile (component,
                                       IOP::TAG_INTERNET_IOP
                                       ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
   ACE_DEBUG ((LM_DEBUG,
               "(%P|%t) Added tagged component containing the\n"
@@ -96,7 +92,6 @@ FOO_IORInterceptor::establish_components (
       CORBA::Policy_var policy =
         info->get_effective_policy (PortableServer::THREAD_POLICY_ID
                                     ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       ACE_DEBUG ((LM_DEBUG,
                   "(%P|%t) Successfully retrieved effective policy.\n"));
@@ -107,7 +102,6 @@ FOO_IORInterceptor::establish_components (
         ACE_RE_THROW;
     }
   ACE_ENDTRY;
-  ACE_CHECK;
 }
 
 void
@@ -148,7 +142,6 @@ FOO_IORInterceptor::components_established (
         }
     }
   ACE_ENDTRY;
-  ACE_CHECK;
 
   ACE_TRY_EX (PROFILE)
     {
@@ -176,7 +169,6 @@ FOO_IORInterceptor::components_established (
         }
     }
   ACE_ENDTRY;
-  ACE_CHECK;
 }
 
 void

@@ -63,8 +63,7 @@ Thread_Task::svc (void)
 
       // Get the priority of the current thread.
       RTCORBA::Priority prio =
-        ACTIVITY::instance()->current ()->the_priority (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK_RETURN (-1);
+        ACTIVITY::instance()->current ()->the_priority ();
 
       if (prio == this->task_priority_)
         ACE_DEBUG ((LM_DEBUG,

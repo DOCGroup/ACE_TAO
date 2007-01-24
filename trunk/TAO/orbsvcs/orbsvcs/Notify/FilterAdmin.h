@@ -75,12 +75,12 @@ class TAO_Notify_Serv_Export TAO_Notify_FilterAdmin
                      CosNotifyFilter::FilterNotFound
                      ));
 
-  virtual CosNotifyFilter::FilterIDSeq * get_all_filters (ACE_ENV_SINGLE_ARG_DECL)
+  virtual CosNotifyFilter::FilterIDSeq * get_all_filters (void)
     ACE_THROW_SPEC ((
                      CORBA::SystemException
                      ));
 
-  virtual void remove_all_filters (ACE_ENV_SINGLE_ARG_DECL)
+  virtual void remove_all_filters (void)
     ACE_THROW_SPEC ((
                      CORBA::SystemException
                      ));

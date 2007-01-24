@@ -46,8 +46,7 @@ single_iteration (Test::Oneway_Receiver_ptr oneway_receiver
 {
   ACE_TRY
     {
-      oneway_receiver->receive_oneway (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      oneway_receiver->receive_oneway ();
       ACE_Time_Value tv (0, 40000);
       ACE_OS::sleep (tv);
     }
@@ -66,18 +65,15 @@ main (int argc, char *argv[])
     {
       CORBA::ORB_var orb =
         CORBA::ORB_init (argc, argv, "" ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       if (parse_args (argc, argv) != 0)
         return 1;
 
       CORBA::Object_var tmp =
         orb->string_to_object(ior ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       Test::Oneway_Receiver_var oneway_receiver =
         Test::Oneway_Receiver::_narrow(tmp.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       if (CORBA::is_nil (oneway_receiver.in ()))
         {
@@ -93,7 +89,6 @@ main (int argc, char *argv[])
         {
           int result = single_iteration (oneway_receiver.in ()
                                          ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
           if (result)
             exception_count++;
           else
@@ -109,8 +104,7 @@ main (int argc, char *argv[])
       if (normal_count == 0)
         ACE_ERROR ((LM_ERROR, "ERROR: no request was succesful\n"));
 
-      orb->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      orb->destroy ();
     }
   ACE_CATCHANY
     {

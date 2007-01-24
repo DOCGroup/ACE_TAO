@@ -30,9 +30,9 @@ TAO_ESF_Delayed_Changes<PROXY,C,I,ACE_SYNCH_USE>::
 
 template<class PROXY, class C, class I,ACE_SYNCH_DECL> void
 TAO_ESF_Delayed_Changes<PROXY,C,I,ACE_SYNCH_USE>::
-    shutdown_i (ACE_ENV_SINGLE_ARG_DECL)
+    shutdown_i (void)
 {
-  this->collection_.shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
+  this->collection_.shutdown ();
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL

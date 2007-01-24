@@ -40,7 +40,6 @@ TAO_FT_Endpoint_Selector_Factory::get_selector (
           ACE_NEW_THROW_EX (ft_endpoint_selector_,
                             TAO_FT_Invocation_Endpoint_Selector (),
                             CORBA::NO_MEMORY ());
-          ACE_CHECK_RETURN (0);
         }
     }
 

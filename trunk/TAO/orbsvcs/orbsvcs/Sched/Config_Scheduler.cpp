@@ -472,7 +472,7 @@ void ACE_Config_Scheduler::dispatch_configuration (RtecScheduler::Preemption_Pri
 
 
 RtecScheduler::Preemption_Priority_t
-ACE_Config_Scheduler::last_scheduled_priority (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+ACE_Config_Scheduler::last_scheduled_priority (void)
     ACE_THROW_SPEC ((CORBA::SystemException,
                     RtecScheduler::NOT_SCHEDULED))
 {

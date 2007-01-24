@@ -16,16 +16,16 @@ public:
           CORBA::Short server_priority,
           CORBA::Short client_priority);
 
-  CORBA::Short method (ACE_ENV_SINGLE_ARG_DECL)
+  CORBA::Short method (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  void prioritized_method (ACE_ENV_SINGLE_ARG_DECL)
+  void prioritized_method (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  void shutdown (ACE_ENV_SINGLE_ARG_DECL)
+  void shutdown (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  PortableServer::POA_ptr _default_POA (ACE_ENV_SINGLE_ARG_DECL);
+  PortableServer::POA_ptr _default_POA (void);
 
 private:
 
@@ -47,7 +47,7 @@ test_i::test_i (CORBA::ORB_ptr orb,
 }
 
 CORBA::Short
-test_i::method (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+test_i::method (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_DEBUG ((LM_DEBUG,
@@ -57,22 +57,19 @@ test_i::method (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
 }
 
 void
-test_i::prioritized_method (ACE_ENV_SINGLE_ARG_DECL)
+test_i::prioritized_method (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   CORBA::Object_var object =
     this->orb_->resolve_initial_references ("RTCurrent"
                                             ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
   RTCORBA::Current_var current =
     RTCORBA::Current::_narrow (object.in ()
                                ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
   CORBA::Short priority =
-    current->the_priority (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+    current->the_priority ();
 
   ACE_DEBUG ((LM_DEBUG,
               "test_i::prioritized_method: client = %d server = %d (should be %d)\n",
@@ -84,7 +81,7 @@ test_i::prioritized_method (ACE_ENV_SINGLE_ARG_DECL)
 }
 
 void
-test_i::shutdown (ACE_ENV_SINGLE_ARG_DECL)
+test_i::shutdown (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_DEBUG ((LM_DEBUG,
@@ -92,11 +89,10 @@ test_i::shutdown (ACE_ENV_SINGLE_ARG_DECL)
 
   this->orb_->shutdown (0
                         ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 }
 
 PortableServer::POA_ptr
-test_i::_default_POA (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+test_i::_default_POA (void)
 {
   return PortableServer::POA::_duplicate (this->poa_.in ());
 }
@@ -156,7 +152,6 @@ write_iors_to_file (CORBA::Object_ptr object,
   CORBA::String_var ior =
     orb->object_to_string (object
                            ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
   u_int result = 0;
   result =
@@ -178,8 +173,8 @@ public:
           PortableServer::POA_ptr root_poa,
           PortableServer::POAManager_ptr poa_manager);
 
-  void test_root_poa (ACE_ENV_SINGLE_ARG_DECL);
-  void test_child_poa (ACE_ENV_SINGLE_ARG_DECL);
+  void test_root_poa (void);
+  void test_child_poa (void);
 
   typedef void (server::*test_function) (CORBA::PolicyList &policies,
                                          CORBA::Short server_priority,
@@ -236,29 +231,29 @@ public:
                                        const char *test_name
                                        ACE_ENV_ARG_DECL);
 
-  void test_default_pool_no_bands_client_propagated_poa (ACE_ENV_SINGLE_ARG_DECL);
+  void test_default_pool_no_bands_client_propagated_poa (void);
 
-  void test_no_lanes_no_bands_client_propagated_poa (ACE_ENV_SINGLE_ARG_DECL);
+  void test_no_lanes_no_bands_client_propagated_poa (void);
 
-  void test_lanes_no_bands_client_propagated_poa (ACE_ENV_SINGLE_ARG_DECL);
+  void test_lanes_no_bands_client_propagated_poa (void);
 
-  void test_default_pool_bands_client_propagated_poa (ACE_ENV_SINGLE_ARG_DECL);
+  void test_default_pool_bands_client_propagated_poa (void);
 
-  void test_no_lanes_bands_client_propagated_poa (ACE_ENV_SINGLE_ARG_DECL);
+  void test_no_lanes_bands_client_propagated_poa (void);
 
-  void test_lanes_bands_client_propagated_poa (ACE_ENV_SINGLE_ARG_DECL);
+  void test_lanes_bands_client_propagated_poa (void);
 
-  void test_default_pool_no_bands_server_declared_poa (ACE_ENV_SINGLE_ARG_DECL);
+  void test_default_pool_no_bands_server_declared_poa (void);
 
-  void test_no_lanes_no_bands_server_declared_poa (ACE_ENV_SINGLE_ARG_DECL);
+  void test_no_lanes_no_bands_server_declared_poa (void);
 
-  void test_lanes_no_bands_server_declared_poa (ACE_ENV_SINGLE_ARG_DECL);
+  void test_lanes_no_bands_server_declared_poa (void);
 
-  void test_default_pool_bands_server_declared_poa (ACE_ENV_SINGLE_ARG_DECL);
+  void test_default_pool_bands_server_declared_poa (void);
 
-  void test_no_lanes_bands_server_declared_poa (ACE_ENV_SINGLE_ARG_DECL);
+  void test_no_lanes_bands_server_declared_poa (void);
 
-  void test_lanes_bands_server_declared_poa (ACE_ENV_SINGLE_ARG_DECL);
+  void test_lanes_bands_server_declared_poa (void);
 
 private:
 
@@ -280,7 +275,7 @@ server::server (CORBA::ORB_ptr orb,
 }
 
 void
-server::test_root_poa (ACE_ENV_SINGLE_ARG_DECL)
+server::test_root_poa (void)
 {
   test_i *servant = 0;
   ACE_NEW_THROW_EX (servant,
@@ -289,37 +284,32 @@ server::test_root_poa (ACE_ENV_SINGLE_ARG_DECL)
                             TAO_INVALID_PRIORITY,
                             TAO_INVALID_PRIORITY),
                     CORBA::NO_MEMORY ());
-  ACE_CHECK;
 
   PortableServer::ServantBase_var safe_servant (servant);
 
   test_var test =
-    servant->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+    servant->_this ();
 
   write_iors_to_file (test.in (),
                       this->orb_.in (),
                       "root"
                       ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 }
 
 void
-server::test_child_poa (ACE_ENV_SINGLE_ARG_DECL)
+server::test_child_poa (void)
 {
   CORBA::PolicyList policies;
   policies.length (1);
   policies[policies.length () - 1] =
     this->root_poa_->create_implicit_activation_policy (PortableServer::IMPLICIT_ACTIVATION
                                                         ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
   PortableServer::POA_var poa =
     this->root_poa_->create_POA ("child",
                                  this->poa_manager_.in (),
                                  policies
                                  ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
   test_i *servant = 0;
   ACE_NEW_THROW_EX (servant,
@@ -328,19 +318,16 @@ server::test_child_poa (ACE_ENV_SINGLE_ARG_DECL)
                             TAO_INVALID_PRIORITY,
                             TAO_INVALID_PRIORITY),
                     CORBA::NO_MEMORY ());
-  ACE_CHECK;
 
   PortableServer::ServantBase_var safe_servant (servant);
 
   test_var test =
-    servant->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+    servant->_this ();
 
   write_iors_to_file (test.in (),
                       this->orb_.in (),
                       "child"
                       ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 }
 
 void
@@ -356,7 +343,6 @@ server::test_default_pool_poa (CORBA::Short server_priority,
                      client_priority,
                      test_name
                      ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 }
 
 void
@@ -381,14 +367,12 @@ server::test_bands_poa (CORBA::PolicyList &policies,
   policies[policies.length () - 1] =
     this->rt_orb_->create_priority_banded_connection_policy (bands
                                                              ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
   (this->*function) (policies,
                      server_priority,
                      client_priority,
                      test_name
                      ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 }
 
 void
@@ -407,12 +391,10 @@ server::test_no_lanes_poa (CORBA::Short server_priority,
                                       max_buffered_requests,
                                       max_request_buffer_size
                                       ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
   CORBA::Policy_var threadpool_policy =
     this->rt_orb_->create_threadpool_policy (threadpool_id
                                              ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
   CORBA::PolicyList policies;
   policies.length (1);
@@ -424,7 +406,6 @@ server::test_no_lanes_poa (CORBA::Short server_priority,
                      client_priority,
                      test_name
                      ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 }
 
 void
@@ -457,12 +438,10 @@ server::test_lanes_poa (CORBA::Short server_priority,
                                                  max_buffered_requests,
                                                  max_request_buffer_size
                                                  ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
   CORBA::Policy_var threadpool_policy =
     this->rt_orb_->create_threadpool_policy (threadpool_id
                                              ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
   CORBA::PolicyList policies;
   policies.length (1);
@@ -474,7 +453,6 @@ server::test_lanes_poa (CORBA::Short server_priority,
                      client_priority,
                      test_name
                      ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 }
 
 void
@@ -489,19 +467,16 @@ server::test_no_bands_client_propagated_poa (CORBA::PolicyList &policies,
     this->rt_orb_->create_priority_model_policy (RTCORBA::CLIENT_PROPAGATED,
                                                  default_thread_priority
                                                  ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
   PortableServer::POA_var poa =
     this->root_poa_->create_POA (test_name,
                                  this->poa_manager_.in (),
                                  policies
                                  ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
   RTPortableServer::POA_var rt_poa =
     RTPortableServer::POA::_narrow (poa.in ()
                                     ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
   test_i *servant = 0;
   ACE_NEW_THROW_EX (servant,
@@ -510,25 +485,21 @@ server::test_no_bands_client_propagated_poa (CORBA::PolicyList &policies,
                             server_priority,
                             client_priority),
                     CORBA::NO_MEMORY ());
-  ACE_CHECK;
 
   PortableServer::ServantBase_var safe_servant (servant);
 
   PortableServer::ObjectId_var id =
     rt_poa->activate_object (servant
                              ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
   CORBA::Object_var object =
     poa->id_to_reference (id.in ()
                           ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
   write_iors_to_file (object.in (),
                       this->orb_.in (),
                       test_name
                       ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 }
 
 void
@@ -544,73 +515,66 @@ server::test_bands_client_propagated_poa (CORBA::PolicyList &policies,
                         &server::test_no_bands_client_propagated_poa,
                         test_name
                         ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 }
 
 void
-server::test_default_pool_no_bands_client_propagated_poa (ACE_ENV_SINGLE_ARG_DECL)
+server::test_default_pool_no_bands_client_propagated_poa (void)
 {
   this->test_default_pool_poa (::client_priority + 1,
                                ::client_priority + 1,
                                &server::test_no_bands_client_propagated_poa,
                                "default_pool_no_bands_client_propagated"
                                ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 }
 
 void
-server::test_no_lanes_no_bands_client_propagated_poa (ACE_ENV_SINGLE_ARG_DECL)
+server::test_no_lanes_no_bands_client_propagated_poa (void)
 {
   this->test_no_lanes_poa (::client_priority - 1,
                            ::client_priority - 1,
                            &server::test_no_bands_client_propagated_poa,
                            "no_lanes_no_bands_client_propagated"
                            ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 }
 
 void
-server::test_lanes_no_bands_client_propagated_poa (ACE_ENV_SINGLE_ARG_DECL)
+server::test_lanes_no_bands_client_propagated_poa (void)
 {
   this->test_lanes_poa (::client_priority,
                         ::client_priority,
                         &server::test_no_bands_client_propagated_poa,
                         "lanes_no_bands_client_propagated"
                         ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 }
 
 void
-server::test_default_pool_bands_client_propagated_poa (ACE_ENV_SINGLE_ARG_DECL)
+server::test_default_pool_bands_client_propagated_poa (void)
 {
   this->test_default_pool_poa (::client_priority + 1,
                                ::client_priority + 1,
                                &server::test_bands_client_propagated_poa,
                                "default_pool_bands_client_propagated"
                                ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 }
 
 void
-server::test_no_lanes_bands_client_propagated_poa (ACE_ENV_SINGLE_ARG_DECL)
+server::test_no_lanes_bands_client_propagated_poa (void)
 {
   this->test_no_lanes_poa (::client_priority - 1,
                            ::client_priority - 1,
                            &server::test_bands_client_propagated_poa,
                            "no_lanes_bands_client_propagated"
                            ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 }
 
 void
-server::test_lanes_bands_client_propagated_poa (ACE_ENV_SINGLE_ARG_DECL)
+server::test_lanes_bands_client_propagated_poa (void)
 {
   this->test_lanes_poa (::client_priority,
                         ::client_priority + 1,
                         &server::test_bands_client_propagated_poa,
                         "lanes_bands_client_propagated"
                         ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
 }
 
@@ -626,19 +590,16 @@ server::test_no_bands_server_declared_poa (CORBA::PolicyList &policies,
     this->rt_orb_->create_priority_model_policy (RTCORBA::SERVER_DECLARED,
                                                  default_thread_priority
                                                  ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
   PortableServer::POA_var poa =
     this->root_poa_->create_POA (test_name,
                                  this->poa_manager_.in (),
                                  policies
                                  ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
   RTPortableServer::POA_var rt_poa =
     RTPortableServer::POA::_narrow (poa.in ()
                                     ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
   test_i *servant = 0;
   ACE_NEW_THROW_EX (servant,
@@ -647,7 +608,6 @@ server::test_no_bands_server_declared_poa (CORBA::PolicyList &policies,
                             server_priority,
                             client_priority),
                     CORBA::NO_MEMORY ());
-  ACE_CHECK;
 
   PortableServer::ServantBase_var safe_servant (servant);
 
@@ -655,18 +615,15 @@ server::test_no_bands_server_declared_poa (CORBA::PolicyList &policies,
     rt_poa->activate_object_with_priority (servant,
                                            ::server_priority
                                            ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
   CORBA::Object_var object =
     poa->id_to_reference (id.in ()
                           ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
   write_iors_to_file (object.in (),
                       this->orb_.in (),
                       test_name
                       ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 }
 
 void
@@ -682,73 +639,66 @@ server::test_bands_server_declared_poa (CORBA::PolicyList &policies,
                         &server::test_no_bands_server_declared_poa,
                         test_name
                         ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 }
 
 void
-server::test_default_pool_no_bands_server_declared_poa (ACE_ENV_SINGLE_ARG_DECL)
+server::test_default_pool_no_bands_server_declared_poa (void)
 {
   this->test_default_pool_poa (::server_priority,
                                ::client_priority + 1,
                                &server::test_no_bands_server_declared_poa,
                                "default_pool_no_bands_server_declared"
                                ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 }
 
 void
-server::test_no_lanes_no_bands_server_declared_poa (ACE_ENV_SINGLE_ARG_DECL)
+server::test_no_lanes_no_bands_server_declared_poa (void)
 {
   this->test_no_lanes_poa (::server_priority,
                            ::client_priority - 1,
                            &server::test_no_bands_server_declared_poa,
                            "no_lanes_no_bands_server_declared"
                            ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 }
 
 void
-server::test_lanes_no_bands_server_declared_poa (ACE_ENV_SINGLE_ARG_DECL)
+server::test_lanes_no_bands_server_declared_poa (void)
 {
   this->test_lanes_poa (::server_priority,
                         ::client_priority + 1,
                         &server::test_no_bands_server_declared_poa,
                         "lanes_no_bands_server_declared"
                         ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 }
 
 void
-server::test_default_pool_bands_server_declared_poa (ACE_ENV_SINGLE_ARG_DECL)
+server::test_default_pool_bands_server_declared_poa (void)
 {
   this->test_default_pool_poa (::server_priority,
                                ::client_priority - 1,
                                &server::test_bands_server_declared_poa,
                                "default_pool_bands_server_declared"
                                ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 }
 
 void
-server::test_no_lanes_bands_server_declared_poa (ACE_ENV_SINGLE_ARG_DECL)
+server::test_no_lanes_bands_server_declared_poa (void)
 {
   this->test_no_lanes_poa (::server_priority,
                            ::client_priority + 1,
                            &server::test_bands_server_declared_poa,
                            "no_lanes_bands_server_declared"
                            ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 }
 
 void
-server::test_lanes_bands_server_declared_poa (ACE_ENV_SINGLE_ARG_DECL)
+server::test_lanes_bands_server_declared_poa (void)
 {
   this->test_lanes_poa (::server_priority,
                         ::client_priority - 1,
                         &server::test_bands_server_declared_poa,
                         "lanes_bands_server_declared"
                         ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 }
 
 class Task : public ACE_Task_Base
@@ -779,12 +729,10 @@ Task::svc (void)
       CORBA::Object_var object =
         this->orb_->resolve_initial_references ("RTORB"
                                          ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       RTCORBA::RTORB_var rt_orb =
         RTCORBA::RTORB::_narrow (object.in ()
                                  ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       // The following sets the current thread to the lowest priority
       // for this scheduling policy.  This will give us the biggest
@@ -808,16 +756,13 @@ Task::svc (void)
       object =
         this->orb_->resolve_initial_references ("RTCurrent"
                                          ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       RTCORBA::Current_var current =
         RTCORBA::Current::_narrow (object.in ()
                                    ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       default_thread_priority =
-        current->the_priority (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        current->the_priority ();
 
       client_priority =
         default_thread_priority + 2;
@@ -828,72 +773,52 @@ Task::svc (void)
       object =
         this->orb_->resolve_initial_references ("RootPOA"
                                          ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       PortableServer::POA_var root_poa =
         PortableServer::POA::_narrow (object.in ()
                                       ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       PortableServer::POAManager_var poa_manager =
-        root_poa->the_POAManager (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        root_poa->the_POAManager ();
 
       server server (this->orb_.in (),
                      rt_orb.in (),
                      root_poa.in (),
                      poa_manager.in ());
 
-      server.test_root_poa (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      server.test_root_poa ();
 
-      server.test_child_poa (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      server.test_child_poa ();
 
-      server.test_default_pool_no_bands_client_propagated_poa (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      server.test_default_pool_no_bands_client_propagated_poa ();
 
-      server.test_default_pool_no_bands_server_declared_poa (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      server.test_default_pool_no_bands_server_declared_poa ();
 
-      server.test_no_lanes_no_bands_client_propagated_poa (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      server.test_no_lanes_no_bands_client_propagated_poa ();
 
-      server.test_no_lanes_no_bands_server_declared_poa (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      server.test_no_lanes_no_bands_server_declared_poa ();
 
-      server.test_lanes_no_bands_client_propagated_poa (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      server.test_lanes_no_bands_client_propagated_poa ();
 
-      server.test_lanes_no_bands_server_declared_poa (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      server.test_lanes_no_bands_server_declared_poa ();
 
-      server.test_default_pool_bands_client_propagated_poa (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      server.test_default_pool_bands_client_propagated_poa ();
 
-      server.test_default_pool_bands_server_declared_poa (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      server.test_default_pool_bands_server_declared_poa ();
 
-      server.test_no_lanes_bands_client_propagated_poa (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      server.test_no_lanes_bands_client_propagated_poa ();
 
-      server.test_no_lanes_bands_server_declared_poa (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      server.test_no_lanes_bands_server_declared_poa ();
 
-      server.test_lanes_bands_client_propagated_poa (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      server.test_lanes_bands_client_propagated_poa ();
 
-      server.test_lanes_bands_server_declared_poa (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      server.test_lanes_bands_server_declared_poa ();
 
-      poa_manager->activate (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      poa_manager->activate ();
 
-      this->orb_->run (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      this->orb_->run ();
 
-      this->orb_->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      this->orb_->destroy ();
     }
   ACE_CATCHANY
     {
@@ -915,7 +840,6 @@ main (int argc, char **argv)
                          argv,
                          0
                          ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       int result =
         parse_args (argc, argv);

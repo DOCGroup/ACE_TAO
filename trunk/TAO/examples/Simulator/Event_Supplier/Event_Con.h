@@ -46,7 +46,7 @@ public:
   // supplier.  Stores <my_name> for printing out messages.  Returns 0
   // on success, -1 on failure.
 
-  virtual void disconnect_push_consumer (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+  virtual void disconnect_push_consumer (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
   // The channel is disconnecting.
 

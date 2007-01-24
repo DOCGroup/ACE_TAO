@@ -43,7 +43,7 @@ public:
   virtual void init (ACE_Arg_Shifter& arg_shifter);
 
   /// Execute the command.
-  virtual void execute_i (ACE_ENV_SINGLE_ARG_DECL);
+  virtual void execute_i (void);
 
   /// Get the command name.
   virtual const char* get_name (void);
@@ -70,13 +70,13 @@ protected:
   int dump_samples_;
 
   ///= Handlers
-  virtual void handle_init (ACE_ENV_SINGLE_ARG_DECL);
-  void handle_run (ACE_ENV_SINGLE_ARG_DECL);
-  void handle_wait_for_completion (ACE_ENV_SINGLE_ARG_DECL);
-  void handle_shutdown (ACE_ENV_SINGLE_ARG_DECL);
-  void handle_dump_stats (ACE_ENV_SINGLE_ARG_DECL);
-  void handle_signal_peer (ACE_ENV_SINGLE_ARG_DECL);
-  void handle_wait_to_start (ACE_ENV_SINGLE_ARG_DECL);
+  virtual void handle_init (void);
+  void handle_run (void);
+  void handle_wait_for_completion (void);
+  void handle_shutdown (void);
+  void handle_dump_stats (void);
+  void handle_signal_peer (void);
+  void handle_wait_to_start (void);
 };
 
 #include /**/ "ace/post.h"

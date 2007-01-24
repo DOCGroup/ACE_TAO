@@ -102,14 +102,12 @@ test_octet_seq (const CORBA::Object_var object ACE_ENV_ARG_DECL)
 
       CORBA::Request_var request =
         object->_request ("test_octet_method" ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
 
       request->add_in_arg("octet_load") <<= ol;
       request->add_in_arg("send_time") <<= start_time;
 
       request->set_return_type (CORBA::_tc_ulonglong);
-      request->invoke (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK;
+      request->invoke ();
 
       ACE_hrtime_t now = ACE_OS::gethrtime ();
       history.sample (now - start);
@@ -152,14 +150,12 @@ test_long_seq (const CORBA::Object_var object ACE_ENV_ARG_DECL)
 
       CORBA::Request_var request =
         object->_request ("test_long_method" ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
 
       request->add_in_arg("long_load") <<= ll;
       request->add_in_arg("send_time") <<= static_cast <Test::Timestamp> (start);
 
       request->set_return_type (CORBA::_tc_ulonglong);
-      request->invoke (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK;
+      request->invoke ();
 
       ACE_hrtime_t now = ACE_OS::gethrtime ();
       history.sample (now - start);
@@ -202,14 +198,12 @@ test_short_seq (const CORBA::Object_var object ACE_ENV_ARG_DECL)
 
       CORBA::Request_var request =
         object->_request ("test_short_method" ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
 
       request->add_in_arg("short_load") <<= sl;
       request->add_in_arg("send_time") <<= static_cast <Test::Timestamp> (start);
 
       request->set_return_type (CORBA::_tc_ulonglong);
-      request->invoke (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK;
+      request->invoke ();
 
       ACE_hrtime_t now = ACE_OS::gethrtime ();
       history.sample (now - start);
@@ -252,14 +246,12 @@ test_char_seq (const CORBA::Object_var object ACE_ENV_ARG_DECL)
 
       CORBA::Request_var request =
         object->_request ("test_char_method" ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
 
       request->add_in_arg("char_load") <<= cl;
       request->add_in_arg("send_time") <<= static_cast <Test::Timestamp> (start);
 
       request->set_return_type (CORBA::_tc_ulonglong);
-      request->invoke (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK;
+      request->invoke ();
 
       ACE_hrtime_t now = ACE_OS::gethrtime ();
       history.sample (now - start);
@@ -302,14 +294,12 @@ test_double_seq (const CORBA::Object_var object ACE_ENV_ARG_DECL)
 
       CORBA::Request_var request =
         object->_request ("test_double_method" ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
 
       request->add_in_arg("double_load") <<= dl;
       request->add_in_arg("send_time") <<= static_cast <Test::Timestamp> (start);
 
       request->set_return_type (CORBA::_tc_ulonglong);
-      request->invoke (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK;
+      request->invoke ();
 
       ACE_hrtime_t now = ACE_OS::gethrtime ();
       history.sample (now - start);
@@ -352,14 +342,12 @@ test_longlong_seq (const CORBA::Object_var object ACE_ENV_ARG_DECL)
 
       CORBA::Request_var request =
         object->_request ("test_longlong_method" ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
 
       request->add_in_arg("longlong_load") <<= ll;
       request->add_in_arg("send_time") <<= static_cast <Test::Timestamp> (start);
 
       request->set_return_type (CORBA::_tc_ulonglong);
-      request->invoke (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK;
+      request->invoke ();
 
       ACE_hrtime_t now = ACE_OS::gethrtime ();
       history.sample (now - start);
@@ -417,14 +405,12 @@ main (int argc, char *argv[])
     {
       CORBA::ORB_var orb =
         CORBA::ORB_init (argc, argv, "" ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       if (parse_args (argc, argv) != 0)
         return 1;
 
       CORBA::Object_var object =
         orb->string_to_object (ior ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       if (CORBA::is_nil (object.in ()))
         {
@@ -440,15 +426,13 @@ main (int argc, char *argv[])
         {
           CORBA::Request_var request =
             object->_request ("test_octet_method" ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
 
           Test::Timestamp dummy = 0;
           request->add_in_arg("octet_load") <<= oc;
           request->add_in_arg("send_time") <<= dummy;
 
           request->set_return_type (CORBA::_tc_ulonglong);
-          request->invoke (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+          request->invoke ();
         }
 
 	  // Test various sequence types
@@ -456,32 +440,26 @@ main (int argc, char *argv[])
 	  if (ACE_OS::strcmp (data_type, "octet") == 0 )
         {
           test_octet_seq (object ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
         }
       else if (ACE_OS::strcmp (data_type, "char") == 0)
         {
           test_char_seq (object ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
         }
       else if (ACE_OS::strcmp (data_type, "long") == 0)
         {
           test_long_seq (object ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
         }
       else if (ACE_OS::strcmp (data_type, "short") == 0)
         {
           test_short_seq (object ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
         }
       else if (ACE_OS::strcmp (data_type, "double") == 0)
         {
           test_double_seq (object ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
         }
       else if (ACE_OS::strcmp (data_type, "longlong") == 0)
         {
           test_longlong_seq (object ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
         }
 
 
@@ -489,10 +467,8 @@ main (int argc, char *argv[])
         {
           CORBA::Request_var request =
             object->_request ("shutdown" ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
 
-          request->invoke (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+          request->invoke ();
 
         }
     }

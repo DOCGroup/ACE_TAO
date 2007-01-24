@@ -26,7 +26,7 @@ namespace Test {
   }
 
   char *
-  IIOP_Server_Request_Interceptor::name (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+  IIOP_Server_Request_Interceptor::name (void)
     ACE_THROW_SPEC ((CORBA::SystemException))
   {
     return CORBA::string_dup ("II SRI");
@@ -45,12 +45,10 @@ namespace Test {
                                           0,
                                           orbid
                                           ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK;
 
     CORBA::Object_var tcobject =
       orb->resolve_initial_references (ACE_TEXT_ALWAYS_CHAR ("TAO::Transport::IIOP::Current")
                                        ACE_ENV_ARG_PARAMETER);
-    ACE_TRY_CHECK;
 
     return TAO::Transport::IIOP::Current::_narrow (tcobject.in ()
                                                    ACE_ENV_ARG_PARAMETER);
@@ -184,7 +182,6 @@ namespace Test {
   {
     CORBA::String_var name (this->name ());
     CORBA::String_var op (ri->operation(ACE_ENV_ARG_PARAMETER));
-    ACE_CHECK;
 
     if (TAO_debug_level >=1)
       ACE_DEBUG ((LM_DEBUG,
@@ -198,7 +195,6 @@ namespace Test {
         IOP::ServiceContext_var sc =
           ri->get_request_service_context (id
                                            ACE_ENV_ARG_PARAMETER);
-        ACE_TRY_CHECK;
 
         const char *buf =
           reinterpret_cast <const char *> (sc->context_data.get_buffer ());
@@ -230,7 +226,6 @@ namespace Test {
 
     IOP::ServiceContext_var sc =
       ri->get_request_service_context (id ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK;
 
     const char *buf =
       reinterpret_cast <const char *> (sc->context_data.get_buffer ());
@@ -252,7 +247,6 @@ namespace Test {
     ACE_TRY
       {
         inbound_process_context (ri ACE_ENV_ARG_PARAMETER);
-        ACE_TRY_CHECK;
       }
     ACE_CATCHANY
       {
@@ -265,7 +259,6 @@ namespace Test {
     ACE_ENDTRY;
 
     Server_Request_Interceptor::receive_request_service_contexts (ri ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK;
 
   }
 
@@ -278,7 +271,6 @@ namespace Test {
     ACE_TRY
       {
         outbound_process_context (ri ACE_ENV_ARG_PARAMETER);
-        ACE_TRY_CHECK;
 
       }
     ACE_CATCHANY
@@ -292,7 +284,6 @@ namespace Test {
     ACE_ENDTRY;
 
     Server_Request_Interceptor::send_reply (ri ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK;
 
   }
 
@@ -305,7 +296,6 @@ namespace Test {
     ACE_TRY
       {
         outbound_process_context (ri ACE_ENV_ARG_PARAMETER);
-        ACE_TRY_CHECK;
 
 
       }
@@ -321,7 +311,6 @@ namespace Test {
     ACE_ENDTRY;
 
     Server_Request_Interceptor::send_exception (ri ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK;
   }
 
   void
@@ -333,7 +322,6 @@ namespace Test {
     ACE_TRY
       {
         outbound_process_context (ri ACE_ENV_ARG_PARAMETER);
-        ACE_TRY_CHECK;
       }
     ACE_CATCHANY
       {
@@ -346,7 +334,6 @@ namespace Test {
     ACE_ENDTRY;
 
     Server_Request_Interceptor::send_other (ri ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK;
   }
 
 }

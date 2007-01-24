@@ -32,11 +32,9 @@ createPersistentPOA (PortableServer::POA_ptr root_poa, const char* poa_name ACE_
 {
   PortableServer::LifespanPolicy_var life =
     root_poa->create_lifespan_policy (PortableServer::PERSISTENT ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (PortableServer::POA::_nil ());
 
   PortableServer::IdAssignmentPolicy_var assign =
     root_poa->create_id_assignment_policy (PortableServer::USER_ID ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (PortableServer::POA::_nil ());
 
   CORBA::PolicyList pols;
   pols.length (2);
@@ -46,12 +44,9 @@ createPersistentPOA (PortableServer::POA_ptr root_poa, const char* poa_name ACE_
   PortableServer::POAManager_var mgr = root_poa->the_POAManager ();
   PortableServer::POA_var poa =
     root_poa->create_POA(poa_name, mgr.in (), pols ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN(PortableServer::POA::_nil ());
 
-  life->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (PortableServer::POA::_nil ());
-  assign->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (PortableServer::POA::_nil ());
+  life->destroy ();
+  assign->destroy ();
 
   return poa._retn ();
 }
@@ -71,19 +66,16 @@ ImR_Activator_i::register_with_imr (ImplementationRepository::Activator_ptr acti
       // First, resolve the ImR, without this we can go no further
       CORBA::Object_var obj =
         orb_->resolve_initial_references ("ImplRepoService" ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       this->process_mgr_.open (ACE_Process_Manager::DEFAULT_SIZE,
         this->orb_->orb_core ()->reactor ());
 
       locator_ = ImplementationRepository::Locator::_narrow (obj.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       if (!CORBA::is_nil (locator_.in ()))
         {
           this->registration_token_ =
             locator_->register_activator (name_.c_str (), activator ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
 
           if (debug_ > 0)
             ACE_DEBUG((LM_DEBUG, "ImR Activator: Registered with ImR.\n"));
@@ -117,10 +109,8 @@ ImR_Activator_i::init_with_orb (CORBA::ORB_ptr orb, const Activator_Options& opt
   ACE_TRY
     {
       CORBA::Object_var obj = orb->resolve_initial_references ("RootPOA" ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
       ACE_ASSERT (! CORBA::is_nil (obj.in ()));
       this->root_poa_ = PortableServer::POA::_narrow (obj.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
       ACE_ASSERT (! CORBA::is_nil(this->root_poa_.in ()));
 
       // The activator must use a persistent POA so that it can be started before the
@@ -128,22 +118,17 @@ ImR_Activator_i::init_with_orb (CORBA::ORB_ptr orb, const Activator_Options& opt
       // wants to reconnect to running activators to auto_start some servers.
       this->imr_poa_ = createPersistentPOA (this->root_poa_.in (),
         "ImR_Activator" ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
       ACE_ASSERT (! CORBA::is_nil(this->imr_poa_.in ()));
 
       // Activate ourself
       PortableServer::ObjectId_var id = PortableServer::string_to_ObjectId ("ImR_Activator");
       this->imr_poa_->activate_object_with_id (id.in (), this ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
       obj = this->imr_poa_->id_to_reference (id.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
       ImplementationRepository::Activator_var activator =
         ImplementationRepository::Activator::_narrow (obj.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
       ACE_ASSERT(! CORBA::is_nil (activator.in ()));
 
       CORBA::String_var ior = this->orb_->object_to_string (activator.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       if (this->debug_ > 0)
         ACE_DEBUG((LM_DEBUG, "ImR Activator: Starting %s\n", name_.c_str ()));
@@ -163,10 +148,8 @@ ImR_Activator_i::init_with_orb (CORBA::ORB_ptr orb, const Activator_Options& opt
       this->register_with_imr (activator.in ()); // no throw
 
       PortableServer::POAManager_var poaman =
-        this->root_poa_->the_POAManager (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
-      poaman->activate (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        this->root_poa_->the_POAManager ();
+      poaman->activate ();
 
       if (this->debug_ > 1)
         {
@@ -194,7 +177,6 @@ ImR_Activator_i::init_with_orb (CORBA::ORB_ptr orb, const Activator_Options& opt
       ACE_RE_THROW;
     }
   ACE_ENDTRY;
-  ACE_CHECK_RETURN (-1);
   return 0;
 }
 
@@ -210,16 +192,14 @@ ImR_Activator_i::init (Activator_Options& opts ACE_ENV_ARG_DECL)
 
   CORBA::ORB_var orb =
     CORBA::ORB_init (argc, av.argv (), "TAO_ImR_Activator" ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN(-1);
 
   int ret = this->init_with_orb(orb.in (), opts ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN(-1);
 
   return ret;
 }
 
 int
-ImR_Activator_i::fini (ACE_ENV_SINGLE_ARG_DECL)
+ImR_Activator_i::fini (void)
 {
   ACE_TRY_EX (try_block_1)
     {
@@ -254,11 +234,10 @@ ImR_Activator_i::fini (ACE_ENV_SINGLE_ARG_DECL)
     ACE_RE_THROW_EX (try_block_1);
   }
   ACE_ENDTRY;
-  ACE_CHECK_RETURN (-1);
 
   ACE_TRY_EX (try_block_2)
     {
-      this->orb_->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
+      this->orb_->destroy ();
       ACE_TRY_CHECK_EX (try_block_2);
 
       if (debug_ > 0)
@@ -270,20 +249,18 @@ ImR_Activator_i::fini (ACE_ENV_SINGLE_ARG_DECL)
       ACE_RE_THROW_EX (try_block_2);
     }
   ACE_ENDTRY;
-  ACE_CHECK_RETURN (-1);
   return 0;
 }
 
 int
-ImR_Activator_i::run (ACE_ENV_SINGLE_ARG_DECL)
+ImR_Activator_i::run (void)
 {
-  this->orb_->run (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
+  this->orb_->run ();
   return 0;
 }
 
 void
-ImR_Activator_i::shutdown (ACE_ENV_SINGLE_ARG_DECL)
+ImR_Activator_i::shutdown (void)
 ACE_THROW_SPEC ((CORBA::SystemException))
 {
   shutdown (false ACE_ENV_ARG_PARAMETER);

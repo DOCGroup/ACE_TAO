@@ -67,7 +67,6 @@ main (int argc, char *argv[])
     {
       CORBA::ORB_var orb =
         CORBA::ORB_init (argc, argv, "" ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       if (parse_args (argc, argv) != 0)
         {
@@ -76,11 +75,9 @@ main (int argc, char *argv[])
 
       CORBA::Object_var object =
         orb->string_to_object (ior ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       Simple_Server_var server =
         Simple_Server::_narrow (object.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       if (CORBA::is_nil (server.in ()))
         {
@@ -95,13 +92,11 @@ main (int argc, char *argv[])
 
       if (test_user_exception == 1)
         {
-          server->raise_user_exception (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+          server->raise_user_exception ();
         }
       else if (test_system_exception == 1)
         {
-          server->raise_system_exception (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+          server->raise_system_exception ();
         }
       else
         {
@@ -136,7 +131,6 @@ main (int argc, char *argv[])
                                      the_out_structure.out (),
                                      name.inout ()
                                      ACE_ENV_ARG_PARAMETER);
-              ACE_TRY_CHECK;
 
               if (TAO_debug_level > 0)
                 {
@@ -163,8 +157,7 @@ main (int argc, char *argv[])
 
       if (do_shutdown)
         {
-          server->shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+          server->shutdown ();
         }
     }
   ACE_CATCH (test_exception, ex)

@@ -45,7 +45,6 @@ Echo_Client_i::run (const char *name,
 
           CORBA::String_var s = client->echo_string (buf
                                                      ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
 
           ACE_DEBUG ((LM_DEBUG,
                       "\nString echoed by client \n%s\n",
@@ -53,9 +52,8 @@ Echo_Client_i::run (const char *name,
         }
 
       if (client.shutdown () == 1)
-        client->shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
+        client->shutdown ();
 
-      ACE_TRY_CHECK;
 
     }
   ACE_CATCHANY
@@ -64,7 +62,6 @@ Echo_Client_i::run (const char *name,
       return -1;
     }
   ACE_ENDTRY;
-  ACE_CHECK_RETURN (-1);
 
   return 0;
 }

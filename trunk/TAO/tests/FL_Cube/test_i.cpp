@@ -28,7 +28,7 @@ Simple_Server_i::set_y_angle (CORBA::Long y ACE_ENV_ARG_DECL_NOT_USED)
 }
 
 void
-Simple_Server_i::shutdown (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+Simple_Server_i::shutdown (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->orb_->shutdown (0);

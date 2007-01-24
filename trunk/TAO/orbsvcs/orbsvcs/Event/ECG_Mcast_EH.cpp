@@ -64,20 +64,17 @@ TAO_ECG_Mcast_EH::open (RtecEventChannelAdmin::EventChannel_ptr ec
   TAO_EC_Object_Deactivator observer_deactivator;
   RtecEventChannelAdmin::Observer_var observer_ref;
   PortableServer::POA_var poa =
-    this->observer_->_default_POA (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+    this->observer_->_default_POA ();
 
   activate (observer_ref,
             poa.in (),
             this->observer_.in (),
             observer_deactivator
             ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
   RtecEventChannelAdmin::Observer_Handle handle =
     ec->append_observer (observer_ref.in ()
                          ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
   this->observer_->set_deactivator (observer_deactivator);
   this->auto_observer_disconnect_.set_command
@@ -145,7 +142,6 @@ TAO_ECG_Mcast_EH::update_consumer (
   this->compute_required_subscriptions (sub,
                                         multicast_addresses
                                         ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
   this->delete_unwanted_subscriptions (multicast_addresses);
 
@@ -171,7 +167,6 @@ TAO_ECG_Mcast_EH::compute_required_subscriptions (
       RtecUDPAdmin::UDP_Addr addr;
 
       this->receiver_->get_addr (header, addr ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
 
       ACE_INET_Addr inet_addr (addr.port, addr.ipaddr);
       // Ignore errors, if the element is in the set we simply ignore

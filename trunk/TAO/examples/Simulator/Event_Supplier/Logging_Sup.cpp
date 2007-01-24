@@ -46,7 +46,7 @@ ACE_RCSID (Event_Supplier,
 #if defined (ACE_OPENVMS)
 // need this to circumvent link error on OpenVMS
 // has to do with interference in template instantiations
-// for the server build by previous compilation of 
+// for the server build by previous compilation of
 // components which are reused here without recompilation
 ACE_Time_Value dum = ACE_Time_Value::zero;
 #endif
@@ -378,7 +378,6 @@ Logging_Supplier::insert_event_data (CORBA::Any &data,
                     (*sched_data)->operation_name));
       }
 
-      ACE_TRY_CHECK;
 
 
             if (last_completion > (*sched_data)->completion_time)
@@ -507,7 +506,6 @@ main (int argc, char *argv [])
       orb_Manager.init (argc,
                         argv
                         ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
 
       // Create the demo supplier.
@@ -526,7 +524,6 @@ main (int argc, char *argv [])
 
       // when done, we clean up
       delete event_Supplier_ptr;
-      ACE_TRY_CHECK;
 
     }
   ACE_CATCHANY

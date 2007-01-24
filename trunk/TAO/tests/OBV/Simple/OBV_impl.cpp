@@ -26,7 +26,7 @@ Event_impl::_copy_value (void)
 
 
 void
-Event_impl::do_print (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+Event_impl::do_print (void)
 {
   ACE_DEBUG((LM_DEBUG, "(value %d)  \n",
              (CORBA::ULong) this->value_()));
@@ -37,7 +37,7 @@ Event_factory::~Event_factory ()
 }
 
 TAO_OBV_CREATE_RETURN_TYPE (Event)
-Event_factory::create_for_unmarshal (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+Event_factory::create_for_unmarshal (void)
 {
   return new Event_impl;
 }

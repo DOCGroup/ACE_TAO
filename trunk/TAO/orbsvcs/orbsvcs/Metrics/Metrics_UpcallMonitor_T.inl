@@ -152,7 +152,6 @@ push (const RtecEventComm::EventSet & data,
 
       // Push to the actual consumer.
       consumer_.push (data, ACE_TRY_ENV);
-      ACE_CHECK;
 
       // Record the end of the upcall in the cache, and report whether
       // the deadline was made or missed to the monitor.
@@ -170,12 +169,10 @@ push (const RtecEventComm::EventSet & data,
           if (result == 0)
           {
               monitor_.report_made_deadline (this->handle_, ACE_TRY_ENV);
-              ACE_CHECK;
           }
           else if (result == 1)
           {
               monitor_.report_missed_deadline (this->handle_, ACE_TRY_ENV);
-              ACE_CHECK;
           }
 # if defined (METRICS_MONITOR_ERROR_OUTPUT_ENABLED)
           else
@@ -203,7 +200,6 @@ push (const RtecEventComm::EventSet & data,
          // the cache and the missed deadline to the monitor.
          cache_.report_upcall_cancellation (this->handle_);
          monitor_.report_missed_deadline (this->handle_, ACE_TRY_ENV);
-         ACE_CHECK;
       }
     }
 

@@ -54,13 +54,11 @@ main (int argc, char *argv[])
   ACE_TRY_NEW_ENV
     {
       int ret = cubit_server.init (argc, argv ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       if (ret == -1)
         return -1;
 
-      cubit_server.run (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      cubit_server.run ();
 
       ACE_OS::sleep (5);
     }

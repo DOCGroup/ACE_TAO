@@ -43,14 +43,14 @@ Echo_Server_Request_Interceptor::forward_reference (CORBA::Object_ptr forward_lo
 }
 
 char *
-Echo_Server_Request_Interceptor::name (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+Echo_Server_Request_Interceptor::name (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return CORBA::string_dup (this->myname_);
 }
 
 void
-Echo_Server_Request_Interceptor::destroy (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+Echo_Server_Request_Interceptor::destroy (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
 }
@@ -63,8 +63,7 @@ Echo_Server_Request_Interceptor::receive_request_service_contexts (
                    PortableInterceptor::ForwardRequest))
 {
 
-  CORBA::String_var operation = ri->operation (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+  CORBA::String_var operation = ri->operation ();
 
   ACE_DEBUG ((LM_DEBUG,
               "%s.receive_request_service_contexts from "
@@ -131,8 +130,7 @@ Echo_Server_Request_Interceptor::send_other (
   // This will throw an exception if a location forward has not
   // occured.  If an exception is thrown then something is wrong with
   // the PortableInterceptor::ForwardRequest support.
-  CORBA::Object_var forward = ri->forward_reference (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+  CORBA::Object_var forward = ri->forward_reference ();
 
   if (CORBA::is_nil (forward.in ()))
     ACE_THROW (CORBA::INTERNAL ());

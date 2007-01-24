@@ -72,18 +72,15 @@ main (int argc, char *argv[])
                          argv,
                          ""
                          ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       // Obtain a reference to the LoadManager.
       CORBA::Object_var obj =
         orb->resolve_initial_references ("LoadManager"
 					 ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       CosLoadBalancing::LoadManager_var lm =
         CosLoadBalancing::LoadManager::_narrow (obj.in ()
                                                 ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       CosLoadBalancing::Location the_location (1);
       the_location.length (1);
@@ -119,7 +116,6 @@ main (int argc, char *argv[])
               ACE_OS::sleep (2);
             }
           ACE_ENDTRY;
-          ACE_TRY_CHECK;
         }
 
       if (retrieved_load == 0)
@@ -133,17 +129,14 @@ main (int argc, char *argv[])
 
       ::check_loads (loads.in ()
                      ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       // Attempt to get loads directly from the LoadMonitor.
       CosLoadBalancing::LoadMonitor_var monitor =
         lm->get_load_monitor (the_location
                               ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       CosLoadBalancing::Location_var cpu_mon_location =
-        monitor->the_location (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        monitor->the_location ();
 
       if (cpu_mon_location.in () != the_location)
         {
@@ -156,15 +149,13 @@ main (int argc, char *argv[])
       ACE_DEBUG ((LM_INFO,
                   "Retrieving loads directly from LoadMonitor ..."));
 
-      loads = monitor->loads (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      loads = monitor->loads ();
 
       ACE_DEBUG ((LM_INFO,
                   " DONE\n"));
 
       ::check_loads (loads.in ()
                      ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
     }
   ACE_CATCHANY
     {

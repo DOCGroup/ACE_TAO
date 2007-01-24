@@ -41,12 +41,10 @@ Gateway_i::invoke (CORBA::ServerRequest_ptr request
   CORBA::Object_var target_object =
     this->orb_->string_to_object (stringified_object_id.in ()
                                   ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
   // Use the IfR interfaces to query the NVList for this object...
   CORBA::InterfaceDef_var target_interface =
-    target_object->_get_interface (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+    target_object->_get_interface ();
 
   if (CORBA::is_nil (target_interface.in ()))
     {
@@ -65,8 +63,7 @@ Gateway_i::invoke (CORBA::ServerRequest_ptr request
 
   // Save the result typecode...
   CORBA::TypeCode_var result_typecode =
-    operation.in ()->result (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+    operation.in ()->result ();
 
   CORBA::ParDescriptionSeq_var parameters =
     operation.in ()->params ();
@@ -76,7 +73,6 @@ Gateway_i::invoke (CORBA::ServerRequest_ptr request
   this->orb_->create_list (parameters->length (),
                            arguments
                            ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
   CORBA::Flags flags = 0;
 
@@ -109,7 +105,6 @@ Gateway_i::invoke (CORBA::ServerRequest_ptr request
                             any,
                             flags
                             ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
     }
 
   // Extract the values of the arguments from the DSI ServerRequest
@@ -122,7 +117,6 @@ Gateway_i::invoke (CORBA::ServerRequest_ptr request
 
   this->orb_->create_named_value (named_value
                                   ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
   CORBA::ContextList *context_list = 0;
   CORBA::ExceptionList *exceptions = 0;
@@ -136,7 +130,6 @@ Gateway_i::invoke (CORBA::ServerRequest_ptr request
                                   dii_request.inout (),
                                   CORBA::Flags (0)
                                   ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
   // Set the return type...
   dii_request->set_return_type (result_typecode.in ());
@@ -144,8 +137,7 @@ Gateway_i::invoke (CORBA::ServerRequest_ptr request
   ACE_TRY
     {
       // Make the DII request
-      dii_request->invoke (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      dii_request->invoke ();
 
       // At this point the NVList contains all the out and inout
       // arguments, but we need to extract the return value...

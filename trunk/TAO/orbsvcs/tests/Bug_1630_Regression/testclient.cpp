@@ -19,17 +19,14 @@ int main (int argc, char* argv[])
       // Initialise ORB.
       //
       CORBA::ORB_var orb = CORBA::ORB_init( argc, argv, "" ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       // Find the Interface Repository.
       //
       ACE_DEBUG((LM_DEBUG, ". Find IFR\n"));
       CORBA::Object_var ifr_obj = orb->resolve_initial_references( "InterfaceRepository" ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       ACE_DEBUG((LM_DEBUG, ". Narrow IFR\n"));
       CORBA::Repository_var ifr = CORBA::Repository::_narrow( ifr_obj.in() ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       if( CORBA::is_nil( ifr.in() ) )
       {
@@ -47,7 +44,6 @@ int main (int argc, char* argv[])
                                 "interface865",
                                 "1.0",
                                 baseInterfaces  ACE_ENV_ARG_PARAMETER) ;
-      ACE_TRY_CHECK;
 
       // Add an operation to the interface.
       // First get some useful things.
@@ -55,19 +51,15 @@ int main (int argc, char* argv[])
       ACE_DEBUG((LM_DEBUG, ". Get primitive (void)\n"));
       CORBA::PrimitiveDef_var voidPrimitive =
          ifr->get_primitive( CORBA::pk_void ACE_ENV_ARG_PARAMETER) ;
-      ACE_TRY_CHECK;
       ACE_DEBUG((LM_DEBUG, ". Get primitive (char)\n"));
       CORBA::PrimitiveDef_var charPrimitive =
          ifr->get_primitive( CORBA::pk_char ACE_ENV_ARG_PARAMETER) ;
-      ACE_TRY_CHECK;
       ACE_DEBUG((LM_DEBUG, ". Get primitive (long)\n"));
       CORBA::PrimitiveDef_var longPrimitive =
          ifr->get_primitive( CORBA::pk_long ACE_ENV_ARG_PARAMETER) ;
-      ACE_TRY_CHECK;
       ACE_DEBUG((LM_DEBUG, ". Get primitive (short)\n"));
       CORBA::PrimitiveDef_var shortPrimitive =
          ifr->get_primitive( CORBA::pk_short ACE_ENV_ARG_PARAMETER) ;
-      ACE_TRY_CHECK;
 
       ACE_DEBUG((LM_DEBUG, ". create 3 parameters\n"));
       // The operation has three parameters...
@@ -124,7 +116,6 @@ int main (int argc, char* argv[])
                                       parameters,
                                       exceptions,
                                       contextIds ACE_ENV_ARG_PARAMETER) ;
-      ACE_TRY_CHECK;
 
 
 
@@ -136,11 +127,9 @@ int main (int argc, char* argv[])
       orb->create_operation_list(operation.in (),
 		                 opList.out()
 				 ACE_ENV_ARG_PARAMETER) ;
-      ACE_TRY_CHECK;
 
       ACE_DEBUG((LM_DEBUG, "Call to create_operation_list succeeded\n"));
       CORBA::ULong count = opList->count() ;
-      ACE_TRY_CHECK;
 
       if( count != numParams )
       {
@@ -158,7 +147,6 @@ int main (int argc, char* argv[])
       CORBA::Boolean const eq_char =
         nv->value()->type()->equal (CORBA::_tc_char
                                     ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       if( !eq_char  )
       {
@@ -181,7 +169,6 @@ int main (int argc, char* argv[])
       CORBA::Boolean const eq_long =
         nv->value()->type()->equal (CORBA::_tc_long
                                    ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       if( !eq_long  )
       {
@@ -204,7 +191,6 @@ int main (int argc, char* argv[])
       CORBA::Boolean const eq_short =
         nv->value()->type()->equal (CORBA::_tc_short
                                     ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       if( !eq_short  )
       {
@@ -222,7 +208,7 @@ int main (int argc, char* argv[])
 
       // Finally destroy the interface.
       //
-      interface->destroy(ACE_ENV_SINGLE_ARG_PARAMETER) ;
+      interface->destroy() ;
 
       //orb->destroy();
 
@@ -244,7 +230,6 @@ int main (int argc, char* argv[])
    }
    ACE_ENDTRY;
 
-   ACE_CHECK_RETURN(1);
 
    return 0 ;
 }

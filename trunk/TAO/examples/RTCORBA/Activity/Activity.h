@@ -56,7 +56,7 @@ public:
   void run (int argc, char *argv[] ACE_ENV_ARG_DECL);
 
   /// Resolve the naming service.
-  int resolve_naming_service (ACE_ENV_SINGLE_ARG_DECL);
+  int resolve_naming_service (void);
 
   /// = Accessors
   CORBA::ORB_ptr orb (void);
@@ -76,13 +76,13 @@ public:
   protected:
   /// = Activation methods.
   /// Activate the POA's
-  void activate_poa_list (ACE_ENV_SINGLE_ARG_DECL);
+  void activate_poa_list (void);
 
   /// Activate the task list.
-  void activate_schedule (ACE_ENV_SINGLE_ARG_DECL);
+  void activate_schedule (void);
 
   /// Activate the Job's
-  void activate_job_list (ACE_ENV_SINGLE_ARG_DECL);
+  void activate_job_list (void);
 
   /// Check if we should process exit
   void check_ifexit (void);

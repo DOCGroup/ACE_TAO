@@ -27,7 +27,7 @@ CC_LockSetFactory::~CC_LockSetFactory (void)
 }
 
 CosConcurrencyControl::LockSet_ptr
-CC_LockSetFactory::create (ACE_ENV_SINGLE_ARG_DECL)
+CC_LockSetFactory::create (void)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   CC_LockSet *ls = 0;
@@ -37,9 +37,8 @@ CC_LockSetFactory::create (ACE_ENV_SINGLE_ARG_DECL)
   ACE_NEW_THROW_EX (ls,
                     CC_LockSet,
                     CORBA::NO_MEMORY());
-  ACE_CHECK_RETURN (CosConcurrencyControl::LockSet::_nil ());
 
-  return ls->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
+  return ls->_this ();
 }
 
 CosConcurrencyControl::LockSet_ptr
@@ -54,9 +53,8 @@ CC_LockSetFactory::create_related (CosConcurrencyControl::LockSet_ptr which
   ACE_NEW_THROW_EX (ls,
                     CC_LockSet (which),
                     CORBA::NO_MEMORY());
-  ACE_CHECK_RETURN (CosConcurrencyControl::LockSet::_nil ());
 
-  return ls->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
+  return ls->_this ();
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL

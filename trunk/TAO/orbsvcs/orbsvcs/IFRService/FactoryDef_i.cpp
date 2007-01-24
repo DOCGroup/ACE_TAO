@@ -3,8 +3,8 @@
 #include "orbsvcs/IFRService/Repository_i.h"
 #include "orbsvcs/IFRService/FactoryDef_i.h"
 
-ACE_RCSID (IFRService, 
-           FactoryDef_i, 
+ACE_RCSID (IFRService,
+           FactoryDef_i,
            "$Id$")
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
@@ -23,7 +23,7 @@ TAO_FactoryDef_i::~TAO_FactoryDef_i (void)
 }
 
 CORBA::DefinitionKind
-TAO_FactoryDef_i::def_kind (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+TAO_FactoryDef_i::def_kind (void)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return CORBA::dk_Factory;

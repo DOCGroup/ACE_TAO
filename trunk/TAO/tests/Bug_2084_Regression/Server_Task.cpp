@@ -32,12 +32,10 @@ Server_Task::svc (void)
      CORBA::Object_var poa_object =
        this->sorb_->resolve_initial_references("RootPOA"
                                                ACE_ENV_ARG_PARAMETER);
-     ACE_TRY_CHECK;
 
      PortableServer::POA_var root_poa =
        PortableServer::POA::_narrow (poa_object.in ()
                                      ACE_ENV_ARG_PARAMETER);
-     ACE_TRY_CHECK;
 
      if (CORBA::is_nil (root_poa.in ()))
        ACE_ERROR_RETURN ((LM_ERROR,
@@ -45,12 +43,11 @@ Server_Task::svc (void)
                          1);
 
      PortableServer::POAManager_var poa_manager =
-       root_poa->the_POAManager (ACE_ENV_SINGLE_ARG_PARAMETER);
-     ACE_TRY_CHECK;
+       root_poa->the_POAManager ();
 
      EventNode *evnode_impl = new EventNode(this->sorb_.in(),ACE_Thread::self());
      PortableServer::ServantBase_var owner_transfer(evnode_impl);
-     Test::EventNode_var evNode = evnode_impl->_this(ACE_ENV_SINGLE_ARG_PARAMETER);
+     Test::EventNode_var evNode = evnode_impl->_this();
 
      ACE_DEBUG((LM_DEBUG,"Server (%t) optimize_collocation_objects=%d use_global_collocation=%d\n",
                          sorb_->orb_core()->optimize_collocation_objects(),
@@ -59,7 +56,6 @@ Server_Task::svc (void)
      CORBA::String_var ior =
        this->sorb_->object_to_string (evNode.in ()
                                       ACE_ENV_ARG_PARAMETER);
-     ACE_TRY_CHECK;
 
      // Output the IOR to the <this->output_>
      FILE *output_file= ACE_OS::fopen (this->output_,
@@ -73,14 +69,12 @@ Server_Task::svc (void)
      ACE_OS::fprintf (output_file, "%s", ior.in ());
      ACE_OS::fclose (output_file);
 
-     poa_manager->activate (ACE_ENV_SINGLE_ARG_PARAMETER);
-     ACE_TRY_CHECK;
+     poa_manager->activate ();
 
      // Signal the main thread before we call orb->run ();
      this->me_.signal ();
 
-     this->sorb_->run (ACE_ENV_SINGLE_ARG_PARAMETER);
-     ACE_TRY_CHECK;
+     this->sorb_->run ();
 
      ACE_DEBUG ((LM_DEBUG, "(%P|%t) server - event loop finished\n"));
    }

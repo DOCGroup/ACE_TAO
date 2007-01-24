@@ -95,7 +95,6 @@ Server_i::create_server (void)
         this->orb_manager_.activate_under_child_poa ("server",
                                                      this->time_service_server_impl_
                                                      ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       PortableServer::ObjectId_var id =
         PortableServer::string_to_ObjectId ("server");
@@ -103,11 +102,9 @@ Server_i::create_server (void)
       CORBA::Object_var server_ref =
         this->orb_manager_.child_poa ()->id_to_reference (id.in ()
                                                           ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       this->time_service_server_ = CosTime::TimeService::_narrow (server_ref.in ()
                                                                   ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       // All this !! just to register a servant with the child poa.
       // Instead of using _this ().
@@ -117,7 +114,6 @@ Server_i::create_server (void)
       CORBA::String_var objref_server =
         this->orb_->object_to_string (server_ref.in ()
                                       ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       // Print the server IOR on the console.
       ACE_DEBUG ((LM_DEBUG,
@@ -190,7 +186,6 @@ Server_i::register_server (void)
       this->naming_client_->rebind (server_name,
                                     this->time_service_server_.in ()
                                     ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT("Binding ServerContext -> %s\n"),
@@ -229,7 +224,6 @@ Server_i::init (int argc,
                       command.get_ASCII_argv(),
                       "time_server"
                       ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       if (retval == -1)
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -238,8 +232,7 @@ Server_i::init (int argc,
                            -1);
 
       // Activate the POA Manager.
-      this->orb_manager_.activate_poa_manager (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      this->orb_manager_.activate_poa_manager ();
 
       int result = this->parse_args (command.get_argc(), command.get_TCHAR_argv());
 
@@ -273,10 +266,9 @@ Server_i::init (int argc,
 // Run the event loop for ORB.
 
 int
-Server_i::run (ACE_ENV_SINGLE_ARG_DECL)
+Server_i::run (void)
 {
-  int retval = this->orb_manager_.run (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
+  int retval = this->orb_manager_.run ();
 
   if (retval == -1)
     ACE_ERROR_RETURN ((LM_ERROR,

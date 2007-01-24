@@ -41,18 +41,15 @@ ImR_Forwarder::init (CORBA::ORB_ptr orb ACE_ENV_ARG_DECL)
     {
       CORBA::Object_var tmp =
         orb->resolve_initial_references ("POACurrent" ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       this->poa_current_var_ =
         PortableServer::Current::_narrow (tmp.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
     }
   ACE_CATCHANY
     {
       ACE_DEBUG ((LM_DEBUG, "ImR_Forwarder::init() Exception ignored.\n"));
     }
   ACE_ENDTRY;
-  ACE_CHECK;
   ACE_ASSERT (!CORBA::is_nil (this->poa_current_var_.in ()));
 }
 
@@ -86,7 +83,6 @@ ImR_Forwarder::preinvoke (const PortableServer::ObjectId &,
       // just tack on the current ObjectKey to get a valid ior for
       // the desired server.
       CORBA::String_var pior = locator_.activate_server_by_name (server_name.in (), false ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       ACE_CString ior = pior.in ();
 
@@ -116,7 +112,6 @@ ImR_Forwarder::preinvoke (const PortableServer::ObjectId &,
 
       forward_obj =
         this->orb_->string_to_object (ior.c_str () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
     }
   ACE_CATCH (ImplementationRepository::CannotActivate, ex)
     {
@@ -138,7 +133,6 @@ ImR_Forwarder::preinvoke (const PortableServer::ObjectId &,
         CORBA::COMPLETED_NO));
     }
   ACE_ENDTRY;
-  ACE_CHECK_RETURN (0);
 
   if (!CORBA::is_nil (forward_obj.in ()))
     ACE_THROW_RETURN (PortableServer::ForwardRequest (forward_obj.in ()), 0);

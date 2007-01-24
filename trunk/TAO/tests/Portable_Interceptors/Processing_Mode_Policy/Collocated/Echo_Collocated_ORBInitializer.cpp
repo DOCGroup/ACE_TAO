@@ -31,32 +31,27 @@ Echo_Collocated_ORBInitializer::post_init (
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   CORBA::String_var orb_id =
-    info->orb_id (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+    info->orb_id ();
 
   // TAO-Specific way to get to the ORB Core (and thus, the ORB).
   TAO_ORBInitInfo_var tao_info =
     TAO_ORBInitInfo::_narrow (info
                               ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
   CORBA::ORB_var orb = CORBA::ORB::_duplicate(tao_info->orb_core()->orb());
 
   if (CORBA::is_nil(orb.in()))
     {
       ACE_THROW (CORBA::INTERNAL ());
-      ACE_CHECK;
     }
 
   PortableInterceptor::ORBInitInfo_3_1_var info_3_1 =
     PortableInterceptor::ORBInitInfo_3_1::_narrow(info
                                                   ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
   if (CORBA::is_nil(info_3_1.in()))
     {
       ACE_THROW (CORBA::INTERNAL ());
-      ACE_CHECK;
     }
 
   if (!ACE_OS::strcmp (orb_id.in (), "client_orb"))
@@ -68,7 +63,6 @@ Echo_Collocated_ORBInitializer::post_init (
       ACE_NEW_THROW_EX (interceptor,
                         Echo_Client_Request_Interceptor,
                         CORBA::NO_MEMORY ());
-      ACE_CHECK;
 
       PortableInterceptor::ClientRequestInterceptor_var
         client_interceptor = interceptor;
@@ -83,16 +77,13 @@ Echo_Collocated_ORBInitializer::post_init (
         orb->create_policy (PortableInterceptor::PROCESSING_MODE_POLICY_TYPE,
                             client_proc_mode_as_any
                             ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
 
       info_3_1->add_client_request_interceptor_with_policy (
                                         client_interceptor.in (),
                                         policy_list
                                         ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
 
-      policy_list[0]->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK;
+      policy_list[0]->destroy ();
       policy_list[0] = CORBA::Policy::_nil ();
     }
   else if (!ACE_OS::strcmp (orb_id.in (), "server_orb"))
@@ -104,7 +95,6 @@ Echo_Collocated_ORBInitializer::post_init (
       ACE_NEW_THROW_EX (interceptor,
                         Echo_Server_Request_Interceptor,
                         CORBA::NO_MEMORY ());
-      ACE_CHECK;
 
       PortableInterceptor::ServerRequestInterceptor_var
         server_interceptor = interceptor;
@@ -119,16 +109,13 @@ Echo_Collocated_ORBInitializer::post_init (
         orb->create_policy (PortableInterceptor::PROCESSING_MODE_POLICY_TYPE,
                             server_proc_mode_as_any
                             ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
 
       info_3_1->add_server_request_interceptor_with_policy (
                                             server_interceptor.in (),
                                             policy_list
                                             ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
 
-      policy_list[0]->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK;
+      policy_list[0]->destroy ();
       policy_list[0] = CORBA::Policy::_nil ();
     }
   else

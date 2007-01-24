@@ -58,7 +58,7 @@ AMI_Test_i::foo (CORBA::Long_out out_l,
 
 
 void
-AMI_Test_i::shutdown (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+AMI_Test_i::shutdown (void)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->orb_->shutdown (0);
@@ -66,7 +66,7 @@ AMI_Test_i::shutdown (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
 
 
 CORBA::Long
-AMI_Test_i::yadda (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+AMI_Test_i::yadda (void)
       ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_DEBUG ((LM_DEBUG,

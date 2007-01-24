@@ -57,7 +57,6 @@ main (int argc, char **argv)
                                   argv,
                                   "child_poa"
                                   ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       if (parse_args (argc, argv) != 0)
         return -1;
@@ -66,7 +65,6 @@ main (int argc, char **argv)
         orb_manager.activate_under_child_poa ("my_object",
                                               &servant
                                               ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       ACE_DEBUG ((LM_DEBUG, "%s\n",
                   ior.in ()));
@@ -84,8 +82,7 @@ main (int argc, char **argv)
           ACE_OS::fclose (output_file);
         }
 
-      orb_manager.run (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      orb_manager.run ();
     }
   ACE_CATCH (CORBA::SystemException, sysex)
     {

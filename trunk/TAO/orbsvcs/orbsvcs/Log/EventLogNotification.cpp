@@ -21,16 +21,16 @@ TAO_EventLogNotification::~TAO_EventLogNotification (void)
 }
 
 void
-TAO_EventLogNotification::disconnect_push_supplier (ACE_ENV_SINGLE_ARG_DECL)
+TAO_EventLogNotification::disconnect_push_supplier (void)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  this->consumer_->disconnect_push_consumer (ACE_ENV_SINGLE_ARG_PARAMETER);
+  this->consumer_->disconnect_push_consumer ();
 }
 
 void
 TAO_EventLogNotification::obtain_proxy_consumer()
-{  
-  CosEventChannelAdmin::SupplierAdmin_var supplier_admin = 
+{
+  CosEventChannelAdmin::SupplierAdmin_var supplier_admin =
     event_channel_->for_suppliers ();
 
   consumer_ = supplier_admin->obtain_push_consumer ();
@@ -42,7 +42,7 @@ TAO_EventLogNotification::obtain_proxy_consumer()
 }
 
 void
-TAO_EventLogNotification::send_notification (const CORBA::Any& any 
+TAO_EventLogNotification::send_notification (const CORBA::Any& any
                                              ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {

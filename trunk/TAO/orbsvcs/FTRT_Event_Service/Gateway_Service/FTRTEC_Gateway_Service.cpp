@@ -38,10 +38,8 @@ int parse_args(int argc, ACE_TCHAR** argv)
         {
           CORBA::Object_var obj = orb->string_to_object(get_opt.opt_arg ()
                                                         ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
           ftec = FtRtecEventChannelAdmin::EventChannel::_narrow(obj.in()
                                                                 ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
         }
         break;
       case 'n':
@@ -59,12 +57,10 @@ int parse_args(int argc, ACE_TCHAR** argv)
       CosNaming::NamingContext_var naming_context =
         resolve_init<CosNaming::NamingContext>(orb.in(), "NameService"
         ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       ftec = resolve<FtRtecEventChannelAdmin::EventChannel>(naming_context.in(),
         name
         ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       if (CORBA::is_nil(ftec.in()))
         ACE_ERROR_RETURN((LM_ERROR, "Cannot Find FT_EventService\n"), -1);
@@ -83,7 +79,6 @@ int main(int argc,  ACE_TCHAR** argv)
   {
     orb = CORBA::ORB_init (argc, argv, ""
                            ACE_ENV_ARG_PARAMETER);
-    ACE_TRY_CHECK;
 
     if (parse_args(argc, argv)==-1)
       return 1;
@@ -91,28 +86,23 @@ int main(int argc,  ACE_TCHAR** argv)
     PortableServer::POA_var
       root_poa =  resolve_init<PortableServer::POA>(orb.in(), "RootPOA"
       ACE_ENV_ARG_PARAMETER);
-    ACE_TRY_CHECK;
 
     // create POAManager
     PortableServer::POAManager_var
-      mgr = root_poa->the_POAManager(ACE_ENV_SINGLE_ARG_PARAMETER);
-    ACE_TRY_CHECK;
+      mgr = root_poa->the_POAManager();
 
 
-    mgr->activate(ACE_ENV_SINGLE_ARG_PARAMETER);
-    ACE_TRY_CHECK;
+    mgr->activate();
 
     TAO_FTRTEC::FTEC_Gateway gateway_servant(orb.in(), ftec.in());
 
     RtecEventChannelAdmin::EventChannel_var gateway =
       gateway_servant.activate(root_poa.in() ACE_ENV_ARG_PARAMETER);
-    ACE_TRY_CHECK;
 
     if (ior_file_name.length())
     {
       CORBA::String_var str = orb->object_to_string(gateway.in()
         ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       FILE *output_file=
         ACE_OS::fopen (ACE_TEXT_CHAR_TO_TCHAR(ior_file_name.c_str()),
@@ -126,7 +116,7 @@ int main(int argc,  ACE_TCHAR** argv)
       ACE_OS::fclose (output_file);
     }
 
-    orb->run(ACE_ENV_SINGLE_ARG_PARAMETER);
+    orb->run();
   }
   ACE_CATCHANY {
     return 1;

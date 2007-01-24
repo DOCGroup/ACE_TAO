@@ -23,7 +23,7 @@ TAO_Notify_Tests_RT_Test_FilterFactory::create (PortableServer::POA_var& filter_
 
   PortableServer::ServantBase_var servant_var (this);
 
-  return _this (ACE_ENV_SINGLE_ARG_PARAMETER);
+  return _this ();
 }
 
 CosNotifyFilter::Filter_ptr
@@ -55,12 +55,10 @@ TAO_Notify_Tests_RT_Test_FilterFactory::create_filter (const char *constraint_gr
   PortableServer::ObjectId_var oid =
     this->filter_poa_->activate_object (filter
                                         ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (CosNotifyFilter::Filter::_nil ());
 
   CORBA::Object_var obj =
     this->filter_poa_->id_to_reference (oid.in ()
                                         ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (CosNotifyFilter::Filter::_nil ());
 
   return CosNotifyFilter::Filter::_narrow (obj.in ()
                                            ACE_ENV_ARG_PARAMETER);

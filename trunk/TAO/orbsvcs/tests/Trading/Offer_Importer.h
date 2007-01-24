@@ -33,7 +33,7 @@ public:
   TAO_Offer_Importer (CosTrading::Lookup_ptr lookup_if,
                       CORBA::Boolean verbose = 1);
 
-  void perform_queries (ACE_ENV_SINGLE_ARG_DECL)
+  void perform_queries (void)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      CosTrading::IllegalServiceType,
                      CosTrading::UnknownServiceType,
@@ -47,7 +47,7 @@ public:
                      CosTrading::DuplicatePolicyName));
   // Barrage the bootstrapped-to trader with queries.
 
-  void perform_directed_queries (ACE_ENV_SINGLE_ARG_DECL)
+  void perform_directed_queries (void)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      CosTrading::IllegalServiceType,
                      CosTrading::UnknownServiceType,

@@ -130,7 +130,6 @@ Initiator_Server::init (int argc,
                                      argv,
                                      "child_poa"
                                      ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
 
   this->argc_ = argc;
   this->argv_ = argv;
@@ -151,11 +150,9 @@ Initiator_Server::init (int argc,
       CORBA::Object_var object_A_obj_var =
         this->orb_manager_.orb()->string_to_object (this->object_A_key_
                                                     ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       this->object_A_var_ =
         Object_A::_narrow (object_A_obj_var.in() ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       if (CORBA::is_nil (this->object_A_var_.in ()))
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -176,11 +173,9 @@ Initiator_Server::init (int argc,
       CORBA::Object_var object_B_obj_var =
         this->orb_manager_.orb()->string_to_object (this->object_B_key_
                                                     ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       this->object_B_var_ =
         Object_B::_narrow (object_B_obj_var.in() ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       if (CORBA::is_nil (this->object_B_var_.in ()))
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -196,8 +191,7 @@ Initiator_Server::init (int argc,
 
       ACE_DEBUG ((LM_DEBUG, "Object B received OK\n"));
 
-      this->orb_manager_.activate_poa_manager (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      this->orb_manager_.activate_poa_manager ();
     }
   ACE_CATCH (CORBA::SystemException, sysex)
     {
@@ -219,7 +213,6 @@ Initiator_Server::init (int argc,
   this->str_ =
     this->orb_manager_.activate (this->initiator_i_ptr_
                                  ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
 
 #if 0
   ACE_DEBUG ((LM_DEBUG,
@@ -232,7 +225,7 @@ Initiator_Server::init (int argc,
 
 
 int
-Initiator_Server::run (ACE_ENV_SINGLE_ARG_DECL)
+Initiator_Server::run (void)
 {
   ACE_TRY
     {
@@ -241,11 +234,9 @@ Initiator_Server::run (ACE_ENV_SINGLE_ARG_DECL)
                   "foo on Object A\n"));
 
       Initiator_var initiator =
-        this->initiator_i_ptr_->_this(ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        this->initiator_i_ptr_->_this();
 
       this->object_A_var_->foo (initiator.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
       ACE_DEBUG ((LM_DEBUG,
                   "Initiator_Server::run: Returned from invoke "
                   "foo on Object A\n"));
@@ -277,7 +268,6 @@ Initiator_Server::~Initiator_Server (void)
     {
       this->orb_manager_.deactivate (this->str_.in ()
                                      ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
     }
   ACE_CATCHANY
     {
@@ -301,14 +291,12 @@ main (int argc, char *argv[])
 
       int retval =
         initiator_Server.init (argc, argv ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       if (retval == -1)
         return 1;
       else
         {
-          initiator_Server.run (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+          initiator_Server.run ();
         }
     }
   ACE_CATCH (CORBA::SystemException, sysex)

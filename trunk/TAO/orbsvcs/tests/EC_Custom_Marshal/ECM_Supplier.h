@@ -43,10 +43,10 @@ public:
                 ACE_ENV_ARG_DECL);
   // This method connects the supplier to the EC.
 
-  void disconnect (ACE_ENV_SINGLE_ARG_DECL);
+  void disconnect (void);
   // Disconnect from the EC.
 
-  virtual void disconnect_push_supplier (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+  virtual void disconnect_push_supplier (void)
       ACE_THROW_SPEC ((CORBA::SystemException));
   // The methods in the skeleton.
 
@@ -112,10 +112,10 @@ private:
 
   void connect_suppliers (RtecEventChannelAdmin::EventChannel_ptr local_ec
                           ACE_ENV_ARG_DECL);
-  void disconnect_suppliers (ACE_ENV_SINGLE_ARG_DECL);
+  void disconnect_suppliers (void);
   // Connect the suppliers.
 
-  void activate_suppliers (ACE_ENV_SINGLE_ARG_DECL);
+  void activate_suppliers (void);
   // Activate the suppliers, i.e. they start generating events.
 
 private:

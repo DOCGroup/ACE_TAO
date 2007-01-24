@@ -140,7 +140,7 @@ public:
                             ACE_ENV_ARG_DECL);
   virtual void disconnected (PROXY *proxy
                              ACE_ENV_ARG_DECL);
-  virtual void shutdown (ACE_ENV_SINGLE_ARG_DECL);
+  virtual void shutdown (void);
 
 private:
   typedef TAO_ESF_Copy_On_Write_Collection<COLLECTION,ITERATOR> Collection;

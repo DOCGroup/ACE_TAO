@@ -37,7 +37,6 @@ ACE_TMAIN (int argcw, ACE_TCHAR *argvw[])
       ACE_Argv_Type_Converter argcon (argcw, argvw);
       orb = CORBA::ORB_init (argcon.get_argc (), argcon.get_ASCII_argv (),
                              "" ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       // Scan through the command line options
       bool
@@ -168,8 +167,7 @@ ACE_TMAIN (int argcw, ACE_TCHAR *argvw[])
                       "unless --ns is given. Displays all ID/Kinds found\n"
                       "on path unless --quiet is given.\n",
                       pname));
-          orb->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+          orb->destroy ();
           return 1;
         }
 
@@ -179,18 +177,15 @@ ACE_TMAIN (int argcw, ACE_TCHAR *argvw[])
         nc_obj = orb->string_to_object (nameService ACE_ENV_ARG_PARAMETER);
       else
         nc_obj = orb->resolve_initial_references ("NameService" ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       CosNaming::NamingContext_var root_nc =
         CosNaming::NamingContext::_narrow (nc_obj.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       if (CORBA::is_nil (root_nc.in ()))
         {
           ACE_DEBUG ((LM_DEBUG,
                       "Error: nil naming context\n"));
-          orb->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+          orb->destroy ();
           return 1;
         }
 
@@ -213,10 +208,8 @@ ACE_TMAIN (int argcw, ACE_TCHAR *argvw[])
       // Attempt to locate the object and destroy/unbind it
       CORBA::Object_var
         obj = root_nc->resolve( the_name ACE_ENV_ARG_PARAMETER );
-      ACE_TRY_CHECK;
       CosNaming::NamingContext_var this_nc =
         CosNaming::NamingContext::_narrow (obj.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
       if (!CORBA::is_nil (this_nc.in ()))
         {
           if (destroy)
@@ -224,13 +217,11 @@ ACE_TMAIN (int argcw, ACE_TCHAR *argvw[])
               if (!quiet)
                 ACE_DEBUG ((LM_DEBUG,"Destroying\n"));
               this_nc->destroy( ACE_ENV_SINGLE_ARG_PARAMETER );
-              ACE_TRY_CHECK;
             }
           else if (!quiet)
             {
               CORBA::String_var str =
                 orb->object_to_string (obj.in () ACE_ENV_ARG_PARAMETER);
-              ACE_TRY_CHECK;
               ACE_DEBUG ((LM_DEBUG,
                          "\n*** Possiably Orphaned Naming Context ***\n%s\n\n", str.in()));
             }
@@ -238,7 +229,6 @@ ACE_TMAIN (int argcw, ACE_TCHAR *argvw[])
       else if (destroy && !quiet)
         ACE_DEBUG ((LM_DEBUG,"Can't Destroy object, it is not a naming context!\n"));
       root_nc->unbind (the_name ACE_ENV_ARG_PARAMETER );
-      ACE_TRY_CHECK;
       if (!quiet)
         {
           unsigned int index;
@@ -299,7 +289,7 @@ ACE_TMAIN (int argcw, ACE_TCHAR *argvw[])
              ACE_DEBUG ((LM_DEBUG, "ID: %s\n",
                nf.rest_of_name[index].id.in()));
         }
-      orb->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
+      orb->destroy ();
       return 1;
     }
   ACE_CATCHANY
@@ -307,11 +297,11 @@ ACE_TMAIN (int argcw, ACE_TCHAR *argvw[])
       ACE_DEBUG ((LM_DEBUG, "\nError:\n"));
       ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
                            "Exception in nsdel");
-      orb->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
+      orb->destroy ();
       return 1;
     }
   ACE_ENDTRY;
 
-  orb->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
+  orb->destroy ();
   return 0;
 }

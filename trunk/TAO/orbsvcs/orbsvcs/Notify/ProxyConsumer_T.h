@@ -47,7 +47,7 @@ public:
                                     const CosNotification::EventTypeSeq & removed
                                     ACE_ENV_ARG_DECL);
 
-  virtual CosNotifyChannelAdmin::SupplierAdmin_ptr MyAdmin (ACE_ENV_SINGLE_ARG_DECL)
+  virtual CosNotifyChannelAdmin::SupplierAdmin_ptr MyAdmin (void)
     ACE_THROW_SPEC ((
                      CORBA::SystemException
                      ));

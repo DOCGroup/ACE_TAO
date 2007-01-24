@@ -15,7 +15,7 @@ TAO_ECG_CDR_Message_Sender::TAO_ECG_CDR_Message_Sender (CORBA::Boolean crc)
 }
 
 ACE_INLINE void
-TAO_ECG_CDR_Message_Sender::shutdown (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+TAO_ECG_CDR_Message_Sender::shutdown (void)
 {
   // Release the endpoint.
   TAO_ECG_Refcounted_Endpoint empty_endpoint_rptr;

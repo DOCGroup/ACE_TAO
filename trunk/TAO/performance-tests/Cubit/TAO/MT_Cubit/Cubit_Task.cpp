@@ -72,21 +72,18 @@ Cubit_Task::svc (void)
 
       // Handle requests for this object until we're killed, or one of
       // the methods asks us to exit.
-      int r = this->orb_manager_.run (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      int r = this->orb_manager_.run ();
 
       if (r == -1)
         ACE_ERROR_RETURN ((LM_ERROR,
                            "%p\n",
                            "run"),
                           -1);
-      ACE_TRY_CHECK;
 
       CORBA::ORB_var orb =
         this->orb_manager_.orb ();
 
-      orb->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      orb->destroy ();
     }
   ACE_CATCHANY
     {
@@ -124,7 +121,6 @@ Cubit_Task::initialize_orb (void)
                                                  "persistent_poa",
                                                  orb_name
                                                  ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
       if (r == -1)
         return -1;
 
@@ -173,18 +169,14 @@ Cubit_Task::create_servants (void)
       CORBA::Object_var obj =
         this->orb_->resolve_initial_references ("RootPOA"
                                                 ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       PortableServer::POA_var poa =
         PortableServer::POA::_narrow (obj.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       PortableServer::POAManager_var manager =
-        poa->the_POAManager(ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        poa->the_POAManager();
 
-      manager->activate(ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      manager->activate();
 
       // Create the array of cubit implementations.
       ACE_NEW_RETURN (this->servants_,
@@ -233,14 +225,12 @@ Cubit_Task::create_servants (void)
           // some client.  Then release the object.
 
           Cubit_var cubit =
-            this->servants_[i]->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+            this->servants_[i]->_this ();
 
 
           CORBA::String_var str =
             this->orb_->object_to_string (cubit.in ()
                                           ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
 
           this->servants_iors_[i] =
             ACE_OS::strdup (str.in ());

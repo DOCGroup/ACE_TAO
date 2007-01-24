@@ -42,7 +42,7 @@ public:
   //Destructor
   virtual ~interop_WChar_Passer_i (void);
 
-  virtual char * orb_name (ACE_ENV_SINGLE_ARG_DECL)
+  virtual char * orb_name (void)
     ACE_THROW_SPEC (( CORBA::SystemException ));
 
   virtual CORBA::Boolean wchar_to_server (CORBA::WChar test,
@@ -119,7 +119,7 @@ virtual void exception_test (CORBA::Short key
   ACE_THROW_SPEC (( CORBA::SystemException,
                     interop::WChar_Passer::WStringException ));
 
-virtual void shutdown (ACE_ENV_SINGLE_ARG_DECL)
+virtual void shutdown (void)
   ACE_THROW_SPEC (( CORBA::SystemException ));
 
 private:

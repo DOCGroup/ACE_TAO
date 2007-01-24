@@ -542,13 +542,11 @@ TAO::SSLIOP::Protocol_Factory::register_orb_initializer (
                             TAO::VMCID,
                             ENOMEM),
                           CORBA::COMPLETED_NO));
-      ACE_TRY_CHECK;
 
       PortableInterceptor::ORBInitializer_var initializer = tmp;
 
       PortableInterceptor::register_orb_initializer (initializer.in ()
                                                      ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       // Register the SSLIOP ORB initializer.
       // PortableInterceptor::ORBInitializer_ptr tmp;
@@ -561,14 +559,12 @@ TAO::SSLIOP::Protocol_Factory::register_orb_initializer (
                             TAO::VMCID,
                             ENOMEM),
                           CORBA::COMPLETED_NO));
-      ACE_TRY_CHECK;
 
       //PortableInterceptor::ORBInitializer_var initializer = tmp;
       initializer = tmp;
 
       PortableInterceptor::register_orb_initializer (initializer.in ()
                                                      ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
     }
   ACE_CATCHANY
     {
@@ -578,7 +574,6 @@ TAO::SSLIOP::Protocol_Factory::register_orb_initializer (
       return -1;
     }
   ACE_ENDTRY;
-  ACE_CHECK_RETURN (-1);
 
   return 0;
 }

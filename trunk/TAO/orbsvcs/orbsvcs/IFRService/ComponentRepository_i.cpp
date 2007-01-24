@@ -14,8 +14,8 @@
 #include "orbsvcs/IFRService/ProvidesDef_i.h"
 #include "orbsvcs/IFRService/UsesDef_i.h"
 
-ACE_RCSID (IFRService, 
-           ComponentRepository_i, 
+ACE_RCSID (IFRService,
+           ComponentRepository_i,
            "$Id$")
 
 
@@ -28,8 +28,8 @@ TAO_ComponentRepository_i::TAO_ComponentRepository_i (
   )
   : TAO_IRObject_i (0),
     TAO_Container_i (0),
-    TAO_Repository_i (orb, 
-                      poa, 
+    TAO_Repository_i (orb,
+                      poa,
                       config),
     TAO_ComponentContainer_i (0)
 {
@@ -44,11 +44,10 @@ TAO_ComponentRepository_i::create_servants_and_poas (
     ACE_ENV_SINGLE_ARG_DECL
   )
 {
-  int status = 
+  int status =
     this->TAO_Repository_i::create_servants_and_poas (
         ACE_ENV_SINGLE_ARG_PARAMETER
       );
-  ACE_CHECK_RETURN (-1);
 
   if (status != 0)
     {
@@ -60,43 +59,37 @@ TAO_ComponentRepository_i::create_servants_and_poas (
 
   // ID Assignment Policy.
   policies[0] =
-    this->root_poa_->create_id_assignment_policy (PortableServer::USER_ID 
+    this->root_poa_->create_id_assignment_policy (PortableServer::USER_ID
                                                   ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
 
   // Lifespan Policy.
   policies[1] =
-    this->root_poa_->create_lifespan_policy (PortableServer::PERSISTENT 
+    this->root_poa_->create_lifespan_policy (PortableServer::PERSISTENT
                                              ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1); 
 
   // Request Processing Policy.
   policies[2] =
     this->root_poa_->create_request_processing_policy (
-        PortableServer::USE_DEFAULT_SERVANT 
+        PortableServer::USE_DEFAULT_SERVANT
         ACE_ENV_ARG_PARAMETER
       );
-  ACE_CHECK_RETURN (-1);
 
   // Servant Retention Policy.
   policies[3] =
     this->root_poa_->create_servant_retention_policy (
-        PortableServer::NON_RETAIN 
+        PortableServer::NON_RETAIN
         ACE_ENV_ARG_PARAMETER
       );
-  ACE_CHECK_RETURN (-1);
 
   // Id Uniqueness Policy.
   policies[4] =
     this->root_poa_->create_id_uniqueness_policy (
-        PortableServer::MULTIPLE_ID 
+        PortableServer::MULTIPLE_ID
         ACE_ENV_ARG_PARAMETER
       );
-  ACE_CHECK_RETURN (-1);
 
   PortableServer::POAManager_var poa_manager =
-    this->root_poa_->the_POAManager (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
+    this->root_poa_->the_POAManager ();
 
 #define GEN_IR_OBJECT(name) \
   this-> name ## _poa_ = \
@@ -104,7 +97,7 @@ TAO_ComponentRepository_i::create_servants_and_poas (
                                  poa_manager.in (), \
                                  policies \
                                  ACE_ENV_ARG_PARAMETER); \
-  ACE_CHECK_RETURN (-1); \
+\
   TAO_ ## name ## _i * name ## _impl = 0; \
   ACE_NEW_RETURN (name ## _impl, \
                   TAO_ ## name ## _i (this), \
@@ -121,7 +114,6 @@ TAO_ComponentRepository_i::create_servants_and_poas (
     ); \
   this-> name ## _poa_->set_servant (this-> name ## _servant_ \
                                      ACE_ENV_ARG_PARAMETER); \
-  ACE_CHECK_RETURN (-1);
 
   CONCRETE_IR_OBJECT_TYPES
 
@@ -133,8 +125,7 @@ TAO_ComponentRepository_i::create_servants_and_poas (
   for (CORBA::ULong i = 0; i < length; ++i)
     {
       CORBA::Policy_ptr policy = policies[i];
-      policy->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK_RETURN (-1);
+      policy->destroy ();
     }
 
   return 0;

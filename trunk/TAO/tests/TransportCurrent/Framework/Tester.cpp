@@ -14,20 +14,15 @@ test_transport_current (Transport::Current_ptr tc
   ACE_THROW_SPEC ((CORBA::SystemException,
                    CORBA::UserException))
 {
-  CORBA::Long id = tc->id (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_TRY_CHECK;
+  CORBA::Long id = tc->id ();
 
-  TAO::CounterT bs = tc->bytes_sent (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_TRY_CHECK;
+  TAO::CounterT bs = tc->bytes_sent ();
 
-  TAO::CounterT br = tc->bytes_received (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_TRY_CHECK;
+  TAO::CounterT br = tc->bytes_received ();
 
-  TAO::CounterT rs = tc->messages_sent (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_TRY_CHECK;
+  TAO::CounterT rs = tc->messages_sent ();
 
-  TAO::CounterT rr = tc->messages_received (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_TRY_CHECK;
+  TAO::CounterT rr = tc->messages_received ();
 
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("Tester (%P|%t) Transport [%q] - Sent/Received [bytes=%q/%q, messages=%q/%q]\n"),
@@ -50,12 +45,10 @@ test_transport_current (CORBA::ORB_ptr orb
   CORBA::Object_var tcobject =
     orb->resolve_initial_references ("TAO::Transport::Current"
                                       ACE_ENV_ARG_PARAMETER);
-  ACE_TRY_CHECK;
 
   Transport::Current_var tc =
     Transport::Current::_narrow (tcobject.in ()
                                       ACE_ENV_SINGLE_ARG_DECL);
-  ACE_TRY_CHECK;
 
   if (CORBA::is_nil (tc.in ()))
     {

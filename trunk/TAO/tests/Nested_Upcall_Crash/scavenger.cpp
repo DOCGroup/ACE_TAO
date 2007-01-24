@@ -31,17 +31,14 @@ main (int argc, char *argv[])
       CORBA::ORB_var orb =
         CORBA::ORB_init (argc, argv, ""
                          ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       CORBA::Object_var object =
         orb->resolve_initial_references ("PolicyCurrent"
                                          ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       CORBA::PolicyCurrent_var policy_current =
         CORBA::PolicyCurrent::_narrow (object.in ()
                                        ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       if (CORBA::is_nil (policy_current.in ()))
         {
@@ -56,14 +53,11 @@ main (int argc, char *argv[])
         orb->create_policy (Messaging::SYNC_SCOPE_POLICY_TYPE,
                             scope_as_any
                             ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       policy_current->set_policy_overrides (policies, CORBA::ADD_OVERRIDE
                                             ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
-      policies[0]->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      policies[0]->destroy ();
 
       if (parse_args (argc, argv) != 0)
         return 1;
@@ -71,12 +65,10 @@ main (int argc, char *argv[])
       CORBA::Object_var tmp =
         orb->string_to_object(ior
                               ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       Test::Peer_var peer =
         Test::Peer::_narrow(tmp.in ()
                             ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       if (CORBA::is_nil (peer.in ()))
         {
@@ -88,15 +80,14 @@ main (int argc, char *argv[])
 
       while(1)
       {
-        peer->noop (ACE_ENV_SINGLE_ARG_PARAMETER);
-        ACE_TRY_CHECK;
+        peer->noop ();
       }
 
       /* Warning with TRU 64 builds
        ACE_DEBUG ((LM_DEBUG, "(%P|%t) scavenger - event loop finished\n"));
 
-      orb->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;*/
+      orb->destroy ();
+/
     }
   ACE_CATCHANY
     {

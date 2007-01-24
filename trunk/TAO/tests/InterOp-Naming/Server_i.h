@@ -44,7 +44,7 @@ public:
   int add_IOR_to_table (CORBA::String_var ior);
   // Add an IOR to the ORB-IOR table.
 
-  int run (ACE_ENV_SINGLE_ARG_DECL);
+  int run (void);
   // Run the orb.
 
 protected:

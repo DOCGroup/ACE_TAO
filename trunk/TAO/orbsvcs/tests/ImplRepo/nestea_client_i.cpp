@@ -104,7 +104,6 @@ Nestea_Client_i::init (int argc, char **argv)
                                     this->argv_,
                                     "internet"
                                     ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       // Parse command line and verify parameters.
       if (this->parse_args () == -1)
@@ -118,10 +117,8 @@ Nestea_Client_i::init (int argc, char **argv)
 
       CORBA::Object_var server_object =
         this->orb_->string_to_object (this->server_key_ ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       this->server_ = Nestea_Bookshelf::_narrow (server_object.in() ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       if (CORBA::is_nil (server_object.in ()))
         ACE_ERROR_RETURN ((LM_ERROR,

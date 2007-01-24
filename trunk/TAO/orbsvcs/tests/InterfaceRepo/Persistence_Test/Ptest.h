@@ -50,8 +50,8 @@ public:
   // Execute test code.
 
 private:
-  void populate (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
-  void query (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
+  void populate (void);
+  void query (void);
   // The two IFR tests.
 
   int parse_args (int argc,

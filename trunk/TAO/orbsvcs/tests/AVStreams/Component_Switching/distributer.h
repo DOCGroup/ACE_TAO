@@ -194,7 +194,7 @@ public:
   void stream_destroyed (void);
   /// Called when stream destroyed
 
-  void shut_down (ACE_ENV_SINGLE_ARG_DECL_NOT_USED);
+  void shut_down (void);
   ///Unbind the sender and receiver from the Naming Service
 
 protected:

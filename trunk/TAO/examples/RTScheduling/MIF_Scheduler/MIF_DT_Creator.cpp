@@ -55,7 +55,6 @@ MIF_DT_Creator::yield (int suspend_time,
                                                sched_param.in (),
                                                sched_param.in ()
                                                ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
           now = ACE_OS::gettimeofday ();
           if (suspend_time == 1)
             break;

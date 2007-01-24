@@ -44,7 +44,7 @@ public:
   virtual void init (ACE_Arg_Shifter& arg_shifter);
 
   /// Execute the command.
-  virtual void execute_i (ACE_ENV_SINGLE_ARG_DECL);
+  virtual void execute_i (void);
 
   /// Name of object
   virtual const char* get_name (void);
@@ -83,12 +83,12 @@ protected:
   TAO_Notify_Tests_Periodic_Supplier* supplier (void);
 
   ///= Handlers
-  void handle_create (ACE_ENV_SINGLE_ARG_DECL);
-  void handle_offers (ACE_ENV_SINGLE_ARG_DECL);
-  void handle_disconnect (ACE_ENV_SINGLE_ARG_DECL);
-  void handle_deactivate (ACE_ENV_SINGLE_ARG_DECL);
-  void handle_status (ACE_ENV_SINGLE_ARG_DECL);
-  void handle_set_qos (ACE_ENV_SINGLE_ARG_DECL);
+  void handle_create (void);
+  void handle_offers (void);
+  void handle_disconnect (void);
+  void handle_deactivate (void);
+  void handle_status (void);
+  void handle_set_qos (void);
 };
 
 #include /**/ "ace/post.h"

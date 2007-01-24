@@ -13,8 +13,8 @@
 #include "Client_Pair.inl"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID (TAO_PERF_RTEC, 
-           Client_Pair, 
+ACE_RCSID (TAO_PERF_RTEC,
+           Client_Pair,
            "$Id$")
 
 void
@@ -63,11 +63,9 @@ Client_Pair::connect (RtecEventChannelAdmin::EventChannel_ptr ec
                        ACE_ENV_ARG_DECL)
 {
   this->supplier_->connect (ec ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
   Auto_Disconnect<Supplier> supplier_disconnect (this->supplier_);
 
   this->consumer_->connect (ec ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
   Auto_Disconnect<Consumer> consumer_disconnect (this->consumer_);
 
   consumer_disconnect.release ();
@@ -75,7 +73,7 @@ Client_Pair::connect (RtecEventChannelAdmin::EventChannel_ptr ec
 }
 
 void
-Client_Pair::disconnect (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+Client_Pair::disconnect (void)
 {
   Auto_Disconnect<Supplier> supplier_disconnect (this->supplier_);
   Auto_Disconnect<Consumer> consumer_disconnect (this->consumer_);

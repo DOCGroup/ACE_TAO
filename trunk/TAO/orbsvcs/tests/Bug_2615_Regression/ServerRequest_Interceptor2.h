@@ -45,10 +45,10 @@ ServerRequest_Interceptor2 (void);
  */
 //@{
 /// Return the name of this ServerRequestinterceptor.
-virtual char * name (ACE_ENV_SINGLE_ARG_DECL)
+virtual char * name (void)
   ACE_THROW_SPEC ((CORBA::SystemException));
 
-virtual void destroy (ACE_ENV_SINGLE_ARG_DECL)
+virtual void destroy (void)
   ACE_THROW_SPEC ((CORBA::SystemException));
 
 virtual void receive_request_service_contexts (

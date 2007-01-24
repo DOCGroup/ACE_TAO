@@ -119,20 +119,17 @@ test_octet_seq (Test::Roundtrip_ptr roundtrip ACE_ENV_ARG_DECL)
           request[j] =
             roundtrip->_request ("test_octet_method"
                                  ACE_ENV_ARG_PARAMETER);
-          ACE_CHECK_RETURN (-1);
 
           request[j]->add_in_arg ("octet_load") <<= ol;
           request[j]->add_in_arg ("send_time") <<= start;
                   request[j]->set_return_type (CORBA::_tc_ulonglong);
 
-          request[j]->send_deferred (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_CHECK_RETURN (-1);
+          request[j]->send_deferred ();
         }
 
       for (j = 0; j != burst; ++j)
         {
-          request[j]->get_response (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_CHECK_RETURN (-1);
+          request[j]->get_response ();
 
           CORBA::ULongLong retval;
           if ((request[j]->return_value () >>= retval) == 1)
@@ -192,20 +189,17 @@ test_long_seq (Test::Roundtrip_ptr roundtrip ACE_ENV_ARG_DECL)
           request[j] =
             roundtrip->_request ("test_long_method"
                                  ACE_ENV_ARG_PARAMETER);
-          ACE_CHECK_RETURN (-1);
 
           request[j]->add_in_arg ("long_load") <<= ll;
           request[j]->add_in_arg ("send_time") <<= start;
                                         request[j]->set_return_type (CORBA::_tc_ulonglong);
 
-          request[j]->send_deferred (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_CHECK_RETURN (-1);
+          request[j]->send_deferred ();
         }
 
       for (j = 0; j != burst; ++j)
         {
-          request[j]->get_response (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_CHECK_RETURN (-1);
+          request[j]->get_response ();
 
           CORBA::ULongLong retval;
           if ((request[j]->return_value () >>= retval) == 1)
@@ -265,20 +259,17 @@ test_short_seq (Test::Roundtrip_ptr roundtrip ACE_ENV_ARG_DECL)
           request[j] =
             roundtrip->_request ("test_short_method"
                                  ACE_ENV_ARG_PARAMETER);
-          ACE_CHECK_RETURN (-1);
 
           request[j]->add_in_arg ("short_load") <<= sl;
           request[j]->add_in_arg ("send_time") <<= start;
                                         request[j]->set_return_type (CORBA::_tc_ulonglong);
 
-          request[j]->send_deferred (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_CHECK_RETURN (-1);
+          request[j]->send_deferred ();
         }
 
       for (j = 0; j != burst; ++j)
         {
-          request[j]->get_response (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_CHECK_RETURN (-1);
+          request[j]->get_response ();
 
           CORBA::ULongLong retval;
           if ((request[j]->return_value () >>= retval) == 1)
@@ -338,20 +329,17 @@ test_char_seq (Test::Roundtrip_ptr roundtrip ACE_ENV_ARG_DECL)
           request[j] =
             roundtrip->_request ("test_char_method"
                                  ACE_ENV_ARG_PARAMETER);
-          ACE_CHECK_RETURN (-1);
 
           request[j]->add_in_arg ("char_load") <<= cl;
           request[j]->add_in_arg ("send_time") <<= start;
                                         request[j]->set_return_type (CORBA::_tc_ulonglong);
 
-          request[j]->send_deferred (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_CHECK_RETURN (-1);
+          request[j]->send_deferred ();
         }
 
       for (j = 0; j != burst; ++j)
         {
-          request[j]->get_response (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_CHECK_RETURN (-1);
+          request[j]->get_response ();
 
           CORBA::ULongLong retval;
           if ((request[j]->return_value () >>= retval) == 1)
@@ -411,20 +399,17 @@ test_longlong_seq (Test::Roundtrip_ptr roundtrip ACE_ENV_ARG_DECL)
           request[j] =
             roundtrip->_request ("test_longlong_method"
                                  ACE_ENV_ARG_PARAMETER);
-          ACE_CHECK_RETURN (-1);
 
           request[j]->add_in_arg ("longlong_load") <<= ll;
           request[j]->add_in_arg ("send_time") <<= start;
                                         request[j]->set_return_type (CORBA::_tc_ulonglong);
 
-          request[j]->send_deferred (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_CHECK_RETURN (-1);
+          request[j]->send_deferred ();
         }
 
       for (j = 0; j != burst; ++j)
         {
-          request[j]->get_response (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_CHECK_RETURN (-1);
+          request[j]->get_response ();
 
           CORBA::ULongLong retval;
           if ((request[j]->return_value () >>= retval) == 1)
@@ -484,20 +469,17 @@ test_double_seq (Test::Roundtrip_ptr roundtrip ACE_ENV_ARG_DECL)
           request[j] =
             roundtrip->_request ("test_double_method"
                                  ACE_ENV_ARG_PARAMETER);
-          ACE_CHECK_RETURN (-1);
 
           request[j]->add_in_arg ("double_load") <<= dl;
           request[j]->add_in_arg ("send_time") <<= start;
                                         request[j]->set_return_type (CORBA::_tc_ulonglong);
 
-          request[j]->send_deferred (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_CHECK_RETURN (-1);
+          request[j]->send_deferred ();
         }
 
       for (j = 0; j != burst; ++j)
         {
-          request[j]->get_response (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_CHECK_RETURN (-1);
+          request[j]->get_response ();
 
           CORBA::ULongLong retval;
           if ((request[j]->return_value () >>= retval) == 1)
@@ -563,18 +545,15 @@ main (int argc, char *argv[])
     {
       CORBA::ORB_var orb =
         CORBA::ORB_init (argc, argv, "" ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       if (parse_args (argc, argv) != 0)
         return 1;
 
       CORBA::Object_var object =
         orb->string_to_object (ior ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       Test::Roundtrip_var roundtrip =
         Test::Roundtrip::_narrow (object.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       if (CORBA::is_nil (roundtrip.in ()))
         {
@@ -592,7 +571,6 @@ main (int argc, char *argv[])
           (void) roundtrip->test_octet_method (oc,
                                                start
                                                ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
         }
 
 
@@ -601,38 +579,31 @@ main (int argc, char *argv[])
           if (ACE_OS::strcmp (data_type, "octet") == 0 )
         {
           test_octet_seq (roundtrip.in () ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
         }
       else if (ACE_OS::strcmp (data_type, "char") == 0)
         {
           test_char_seq (roundtrip.in () ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
         }
       else if (ACE_OS::strcmp (data_type, "long") == 0)
         {
           test_long_seq (roundtrip.in () ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
         }
       else if (ACE_OS::strcmp (data_type, "short") == 0)
         {
           test_short_seq (roundtrip.in () ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
         }
       else if (ACE_OS::strcmp (data_type, "double") == 0)
         {
           test_double_seq (roundtrip.in () ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
         }
       else if (ACE_OS::strcmp (data_type, "longlong") == 0)
         {
           test_longlong_seq (roundtrip.in () ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
         }
 
       if (do_shutdown)
         {
-          roundtrip->shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+          roundtrip->shutdown ();
         }
     }
   ACE_CATCHANY

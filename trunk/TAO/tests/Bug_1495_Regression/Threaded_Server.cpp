@@ -60,16 +60,13 @@ main (int argc, char *argv[])
 
       PortableInterceptor::register_orb_initializer (initializer.in ()
                                                      ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       // Now initialize the ORB.
       CORBA::ORB_var orb = CORBA::ORB_init (argc, argv,
                                             "Remote_Server_ORB" ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       CORBA::Object_var poa_object =
         orb->resolve_initial_references ("RootPOA" ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       if (CORBA::is_nil (poa_object.in ()))
         {
@@ -80,14 +77,11 @@ main (int argc, char *argv[])
 
       PortableServer::POA_var root_poa =
         PortableServer::POA::_narrow (poa_object.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       PortableServer::POAManager_var poa_manager =
-        root_poa->the_POAManager (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        root_poa->the_POAManager ();
 
-      poa_manager->activate (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      poa_manager->activate ();
 
       if (parse_args (argc, argv) != 0)
         {
@@ -109,7 +103,6 @@ main (int argc, char *argv[])
       // Pull in the ior from the remote server to use as the forward location.
       CORBA::Object_var forward_location = orb->string_to_object (ior_input_file
                                                                   ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       if (CORBA::is_nil (forward_location.in ()))
         {
@@ -121,27 +114,22 @@ main (int argc, char *argv[])
 
       server_interceptor->forward_reference (forward_location.in ()
                                              ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       Bug1495_i server_impl (orb.in ());
 
       PortableServer::ObjectId_var id =
         root_poa->activate_object (&server_impl ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       CORBA::Object_var test_obj =
         root_poa->id_to_reference (id.in ()
                                    ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       Bug1495_Regression::Bug1495_var server =
         Bug1495_Regression::Bug1495::_narrow (test_obj.in ()
                                               ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       CORBA::String_var ior =
         orb->object_to_string (server.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       // Output the server IOR to a file
       if (ior_output_file != 0)
@@ -163,7 +151,6 @@ main (int argc, char *argv[])
       ACE_Time_Value tv (15, 0);
 
       orb->run (tv ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       if (server_interceptor->forward_location_done() == false)
         {
@@ -172,7 +159,6 @@ main (int argc, char *argv[])
 
       ACE_DEBUG ((LM_DEBUG, "Threaded Server event loop finished \n"));
       root_poa->destroy (1, 1 ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
     }
   ACE_CATCHANY
     {

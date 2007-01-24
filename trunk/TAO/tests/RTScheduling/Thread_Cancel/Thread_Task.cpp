@@ -31,11 +31,9 @@ Thread_Task::activate_task (CORBA::ORB_ptr orb)
 
       CORBA::Object_var current_obj = this->orb_->resolve_initial_references ("RTScheduler_Current"
                                                                               ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       this->current_ = RTScheduling::Current::_narrow (current_obj.in ()
                                                        ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
     }
   ACE_CATCHANY
     {
@@ -76,7 +74,6 @@ Thread_Task::svc (void)
                                                 sched_param,
                                                 implicit_sched_param
                                                 ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       size_t count = 0;
       ACE_OS::memcpy (&count,
@@ -88,7 +85,6 @@ Thread_Task::svc (void)
                                                 sched_param,
                                                 implicit_sched_param
                                                 ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       this->guid_[guid_index++] = *(this->current_->id ());
 
@@ -97,13 +93,11 @@ Thread_Task::svc (void)
                                                 sched_param,
                                                 implicit_sched_param
                                                 ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
 
       {
         ACE_GUARD_RETURN (ACE_Lock, ace_mon, *shutdown_lock_,-1);
-        RTScheduling::Current::NameList_var name_list = this->current_->current_scheduling_segment_names (ACE_ENV_SINGLE_ARG_PARAMETER);
-        ACE_TRY_CHECK;
+        RTScheduling::Current::NameList_var name_list = this->current_->current_scheduling_segment_names ();
 
         ACE_DEBUG ((LM_DEBUG,
                     "Scheduling Segments for DT %d :\n",
@@ -121,19 +115,16 @@ Thread_Task::svc (void)
 
       this->current_->end_scheduling_segment (name
                                               ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
       //  End - Nested Scheduling Segment
 
 
 
       this->current_->end_scheduling_segment (name
                                               ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
       //  End - Nested Scheduling Segment
 
       this->current_->end_scheduling_segment (name
                                               ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
 
     }

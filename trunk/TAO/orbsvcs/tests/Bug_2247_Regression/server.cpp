@@ -44,14 +44,12 @@ main (int argc, char *argv[])
     {
       CORBA::ORB_var orb =
         CORBA::ORB_init (argc, argv, "" ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       // We do the command line parsing first
       if (parse_args (argc, argv) != 0)
         return 1;
       CORBA::Object_var poa_object =
         orb->resolve_initial_references("RootPOA" ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       if (CORBA::is_nil (poa_object.in ()))
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -60,32 +58,25 @@ main (int argc, char *argv[])
 
       PortableServer::POA_var root_poa =
         PortableServer::POA::_narrow (poa_object.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       PortableServer::POAManager_var poa_manager =
-        root_poa->the_POAManager (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        root_poa->the_POAManager ();
 
       CORBA::PolicyList policies;
       policies.length (3);
       policies[0] = root_poa->create_id_assignment_policy (
           PortableServer::USER_ID ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
       policies[1] = root_poa->create_implicit_activation_policy (
           PortableServer::NO_IMPLICIT_ACTIVATION ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
       policies[2] = root_poa->create_lifespan_policy (
           PortableServer::PERSISTENT ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       PortableServer::POA_var poa = root_poa->create_POA (
           "PERS_POA", poa_manager.in (), policies ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       for (CORBA::ULong i = 0; i < policies.length (); ++i)
         {
-          policies[i]->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+          policies[i]->destroy ();
         }
 
       // Instantiate the LCD_Display implementation class
@@ -94,15 +85,12 @@ main (int argc, char *argv[])
           PortableServer::string_to_ObjectId ("IOGR_OID");
 
       poa->activate_object_with_id (id.in(), &display_impl ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       CORBA::Object_var server =
           poa->id_to_reference (id.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       CORBA::String_var ior =
         orb->object_to_string (server.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       ACE_DEBUG ((LM_DEBUG, "Activated as <%s>\n", ior.in ()));
 
@@ -119,8 +107,7 @@ main (int argc, char *argv[])
           ACE_OS::fclose (output_file);
         }
 
-      poa_manager->activate (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      poa_manager->activate ();
 
       orb->run ();
 

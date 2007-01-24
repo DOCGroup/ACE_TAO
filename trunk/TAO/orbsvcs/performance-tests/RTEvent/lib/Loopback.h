@@ -36,7 +36,7 @@ public:
   //@{
   /** @name The Federated_Test::Loopback methods
    */
-  virtual void disconnect (ACE_ENV_SINGLE_ARG_DECL)
+  virtual void disconnect (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
   //@}
 

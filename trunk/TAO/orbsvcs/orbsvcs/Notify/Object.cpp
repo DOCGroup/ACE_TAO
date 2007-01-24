@@ -86,12 +86,11 @@ TAO_Notify_Object::activate (
 
 
 void
-TAO_Notify_Object::deactivate (ACE_ENV_SINGLE_ARG_DECL)
+TAO_Notify_Object::deactivate (void)
 {
   ACE_TRY
   {
     this->poa_->deactivate (this->id_ ACE_ENV_ARG_PARAMETER);
-    ACE_TRY_CHECK;
   }
   ACE_CATCHANY
   {
@@ -106,7 +105,7 @@ TAO_Notify_Object::deactivate (ACE_ENV_SINGLE_ARG_DECL)
 }
 
 int
-TAO_Notify_Object::shutdown (ACE_ENV_SINGLE_ARG_DECL)
+TAO_Notify_Object::shutdown (void)
 {
   {
     ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, this->lock_, 1);
@@ -117,8 +116,7 @@ TAO_Notify_Object::shutdown (ACE_ENV_SINGLE_ARG_DECL)
     this->shutdown_ = 1;
   }
 
-  this->deactivate (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (1);
+  this->deactivate ();
 
   this->shutdown_worker_task ();
 
@@ -126,7 +124,7 @@ TAO_Notify_Object::shutdown (ACE_ENV_SINGLE_ARG_DECL)
 }
 
 CORBA::Object_ptr
-TAO_Notify_Object::ref (ACE_ENV_SINGLE_ARG_DECL)
+TAO_Notify_Object::ref (void)
 {
   return this->poa_->id_to_reference (this->id_ ACE_ENV_ARG_PARAMETER);
 }
@@ -160,8 +158,7 @@ TAO_Notify_Object::destroy_proxy_poa (void)
       {
         this->own_proxy_poa_ = false;
         ACE_Auto_Ptr< TAO_Notify_POA_Helper > app( object_poa_ );
-        this->proxy_poa_->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-        ACE_TRY_CHECK;
+        this->proxy_poa_->destroy ();
       }
       this->proxy_poa_ = 0;
     }
@@ -189,8 +186,7 @@ TAO_Notify_Object::destroy_object_poa (void)
       {
         this->own_object_poa_ = false;
         ACE_Auto_Ptr< TAO_Notify_POA_Helper > aop( object_poa_ );
-        this->object_poa_->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-        ACE_TRY_CHECK;
+        this->object_poa_->destroy ();
       }
       this->object_poa_ = 0;
     }
@@ -267,19 +263,16 @@ TAO_Notify_Object::set_qos (const CosNotification::QoSProperties & qos ACE_ENV_A
     if (new_qos_properties.thread_pool ().value ().static_threads == 0)
       {
         TAO_Notify_PROPERTIES::instance()->builder()->apply_reactive_concurrency (*this ACE_ENV_ARG_PARAMETER);
-        ACE_CHECK;
       }
     else
       {
         TAO_Notify_PROPERTIES::instance()->builder()->
         apply_thread_pool_concurrency (*this, new_qos_properties.thread_pool ().value () ACE_ENV_ARG_PARAMETER);
-        ACE_CHECK;
       }
   }
   else if (new_qos_properties.thread_pool_lane ().is_valid ())
     TAO_Notify_PROPERTIES::instance()->builder()->
     apply_lane_concurrency (*this, new_qos_properties.thread_pool_lane ().value () ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
   // Update the Thread Task's QoS properties..
   this->worker_task_->update_qos_properties (new_qos_properties);
@@ -296,7 +289,7 @@ TAO_Notify_Object::set_qos (const CosNotification::QoSProperties & qos ACE_ENV_A
 }
 
 CosNotification::QoSProperties*
-TAO_Notify_Object::get_qos (ACE_ENV_SINGLE_ARG_DECL)
+TAO_Notify_Object::get_qos (void)
 {
   CosNotification::QoSProperties_var properties;
 

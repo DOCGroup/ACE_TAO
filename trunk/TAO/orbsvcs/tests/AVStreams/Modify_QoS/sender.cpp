@@ -123,7 +123,7 @@ Sender::parse_args (int argc,
 
 // Method to get the object reference of the receiver
 int
-Sender::bind_to_receiver (ACE_ENV_SINGLE_ARG_DECL)
+Sender::bind_to_receiver (void)
 {
   CosNaming::Name name (1);
   name.length (1);
@@ -134,12 +134,10 @@ Sender::bind_to_receiver (ACE_ENV_SINGLE_ARG_DECL)
   CORBA::Object_var receiver_mmdevice_obj =
     this->naming_client_->resolve (name
                                    ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
 
   this->receiver_mmdevice_ =
     AVStreams::MMDevice::_narrow (receiver_mmdevice_obj.in ()
                                   ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
 
   if (CORBA::is_nil (this->receiver_mmdevice_.in ()))
     ACE_ERROR_RETURN ((LM_ERROR,
@@ -189,8 +187,7 @@ Sender::init (int argc,
                 "File opened successfully\n"));
 
   // Resolve the object reference of the receiver from the Naming Service.
-  result = this->bind_to_receiver (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
+  result = this->bind_to_receiver ();
 
   if (result != 0)
     ACE_ERROR_RETURN ((LM_ERROR,
@@ -223,8 +220,7 @@ Sender::init (int argc,
     this->sender_mmdevice_;
 
   AVStreams::MMDevice_var mmdevice =
-    this->sender_mmdevice_->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
+    this->sender_mmdevice_->_this ();
 
   ACE_NEW_RETURN (this->streamctrl_,
                   TAO_StreamCtrl,
@@ -240,7 +236,6 @@ Sender::init (int argc,
                                   the_qos.inout (),
                                   flow_spec
                                   ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
 
   if (bind_result == 0)
     ACE_ERROR_RETURN ((LM_ERROR,
@@ -252,7 +247,7 @@ Sender::init (int argc,
 
 // Method to send data at the specified rate
 int
-Sender::pace_data (ACE_ENV_SINGLE_ARG_DECL)
+Sender::pace_data (void)
 {
 
 
@@ -325,7 +320,6 @@ Sender::pace_data (ACE_ENV_SINGLE_ARG_DECL)
                   // continue other orb requests.
                   TAO_AV_CORE::instance ()->orb ()->run (wait_time
                                                          ACE_ENV_ARG_PARAMETER);
-                  ACE_TRY_CHECK;
                 }
             }
 
@@ -354,11 +348,9 @@ Sender::pace_data (ACE_ENV_SINGLE_ARG_DECL)
       // File reading is complete, destroy the stream.
       AVStreams::flowSpec stop_spec;
       this->streamctrl_->destroy (stop_spec ACE_ENV_ARG_PARAMETER);
-        ACE_TRY_CHECK;
 
         // Shut the orb down.
         TAO_AV_CORE::instance ()->orb ()->shutdown (1 ACE_ENV_ARG_PARAMETER);
-        ACE_TRY_CHECK;
     }
   ACE_CATCHANY
     {
@@ -382,38 +374,31 @@ main (int argc,
                          argv,
                          0
                          ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       CORBA::Object_var obj
         = orb->resolve_initial_references ("RootPOA"
                                            ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       // Get the POA_var object from Object_var
       PortableServer::POA_var root_poa
         = PortableServer::POA::_narrow (obj.in ()
                                         ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       PortableServer::POAManager_var mgr
-        = root_poa->the_POAManager (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        = root_poa->the_POAManager ();
 
-      mgr->activate (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      mgr->activate ();
 
       // Initialize the AV Stream components.
       TAO_AV_CORE::instance ()->init (orb.in (),
                                       root_poa.in ()
                                       ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       // Initialize the Sender.
       int result = 0;
       result = SENDER::instance ()->init (argc,
                                           argv
                                           ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       if (result < 0)
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -421,8 +406,7 @@ main (int argc,
                           -1);
 
       // Start sending data.
-      result = SENDER::instance ()->pace_data (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      result = SENDER::instance ()->pace_data ();
 
     }
   ACE_CATCHANY
@@ -432,7 +416,6 @@ main (int argc,
       return -1;
     }
   ACE_ENDTRY;
-  ACE_CHECK_RETURN (-1);
 
   SENDER::close ();  // Explicitly finalize the Unmanaged_Singleton.
 

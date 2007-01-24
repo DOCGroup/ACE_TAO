@@ -76,7 +76,6 @@ RTCosScheduling_ServerScheduler_i::configure_ORB(TAO_ORB_Core *orb_core)
           &this->object_name_map_,
           &this->resource_map_),
           CORBA::NO_MEMORY());
-      ACE_TRY_CHECK;
 
       /// First, get a list of all interceptors currently registered
       TAO::ServerRequestInterceptor_List::TYPE &interceptors =
@@ -123,7 +122,6 @@ RTCosScheduling_ServerScheduler_i::configure_ORB(TAO_ORB_Core *orb_core)
       RTCORBA::PriorityMappingManager_var mapping_manager =
         RTCORBA::PriorityMappingManager::_narrow(rt_obj.in()
                                                  ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       /// Create the Linear Priority Mapping Manager
       ACE_NEW_THROW_EX(this->pm_,
@@ -132,7 +130,6 @@ RTCosScheduling_ServerScheduler_i::configure_ORB(TAO_ORB_Core *orb_core)
                       CORBA::NO_MEMORY());
 
       mapping_manager->mapping(this->pm_);
-      ACE_TRY_CHECK;
 
    }
  ACE_CATCHANY
@@ -179,7 +176,6 @@ RTCosScheduling_ServerScheduler_i::configure_ORB(TAO_ORB_Core *orb_core)
       CORBA::Object_var rt_obj =
         orb->resolve_initial_references("RTORB"
                                         ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
       if (CORBA::is_nil(rt_obj.in()))
         {
           ACE_DEBUG((LM_DEBUG,
@@ -192,7 +188,6 @@ RTCosScheduling_ServerScheduler_i::configure_ORB(TAO_ORB_Core *orb_core)
       RTCORBA::RTORB_var rt_orb =
          RTCORBA::RTORB::_narrow (rt_obj.in ()
                                   ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       if (CORBA::is_nil(rt_orb.in ()))
         {
@@ -214,7 +209,6 @@ RTCosScheduling_ServerScheduler_i::configure_ORB(TAO_ORB_Core *orb_core)
           RTCORBA::SERVER_DECLARED,
           RTCORBA::maxPriority
           ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       // Set up the threadpool
 #if defined (ACE_HAS_THREADS)
@@ -249,12 +243,10 @@ RTCosScheduling_ServerScheduler_i::configure_ORB(TAO_ORB_Core *orb_core)
                                           max_buffered_requests,
                                           max_request_buffer_size
                                           ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       poa_policy_list[policies.length()+1] =
         rt_orb->create_threadpool_policy (threadpool
                                           ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 #endif /* ACE_HAS_THREADS */
 
 
@@ -264,7 +256,6 @@ RTCosScheduling_ServerScheduler_i::configure_ORB(TAO_ORB_Core *orb_core)
                             a_POAManager,
                             poa_policy_list
                             ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       RTPortableServer::POA_var rt_poa =
         RTPortableServer::POA::_narrow(poa.in()
@@ -302,7 +293,6 @@ RTCosScheduling_ServerScheduler_i::schedule_object (
   else
     {
      this->object_name_map_.rebind(obj, name);
-     ACE_CHECK;
     }
 }
 
@@ -325,7 +315,6 @@ RTCosScheduling_ServerScheduler_Interceptor::RTCosScheduling_ServerScheduler_Int
       ACE_NEW_THROW_EX(this->PCP_factory_,
                        PCP_Manager_Factory(shared_file),
                        CORBA::NO_MEMORY());
-      ACE_CHECK;
 
 
       /// Now resolve a reference to the Real Time ORB
@@ -333,7 +322,6 @@ RTCosScheduling_ServerScheduler_Interceptor::RTCosScheduling_ServerScheduler_Int
         this->orb_->resolve_initial_references("RTORB"
                                        ACE_ENV_ARG_PARAMETER);
       RTCORBA::RTORB_var rt_orb;
-      ACE_TRY_CHECK;
       if (CORBA::is_nil(obj.in ()))
         {
           ACE_DEBUG((LM_DEBUG,
@@ -351,7 +339,6 @@ RTCosScheduling_ServerScheduler_Interceptor::RTCosScheduling_ServerScheduler_Int
       // for the PCP manager to control
       obj = this->orb_->resolve_initial_references ("RTCurrent"
                                                     ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
       if (CORBA::is_nil(obj.in()))
         {
           ACE_DEBUG((LM_DEBUG,
@@ -371,7 +358,6 @@ RTCosScheduling_ServerScheduler_Interceptor::RTCosScheduling_ServerScheduler_Int
       obj =
         this->orb_->resolve_initial_references ("CodecFactory"
                                                 ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       if (CORBA::is_nil(obj.in()))
         {
@@ -384,7 +370,6 @@ RTCosScheduling_ServerScheduler_Interceptor::RTCosScheduling_ServerScheduler_Int
         {
           this->codec_factory_ = IOP::CodecFactory::_narrow(obj.in());
         }
-      ACE_TRY_CHECK;
 
 
       // Set up the codec
@@ -429,7 +414,6 @@ ACE_THROW_SPEC((
       // Now get a reference to the POA, this is used to get a reference
       // to the target object
       PortableInterceptor::AdapterName *adapter_seq = ri->adapter_name();
-      ACE_TRY_CHECK;
       PortableServer::POA_var poa;
       const char *adapter_name =
         (*adapter_seq)[adapter_seq->length() - 1];
@@ -437,7 +421,6 @@ ACE_THROW_SPEC((
       CORBA::Object_var obj =
         this->orb_->resolve_initial_references("RootPOA"
                                                ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
       if (CORBA::is_nil(obj.in()))
         {
           ACE_DEBUG((LM_DEBUG,
@@ -456,7 +439,6 @@ ACE_THROW_SPEC((
               return;
             }
           poa = root_poa->find_POA(adapter_name, 0);
-          ACE_TRY_CHECK;
         }
 
       // decode the Client priority sent in the service context
@@ -483,15 +465,12 @@ ACE_THROW_SPEC((
         sc->context_data.length(),
         sc->context_data.get_buffer(),
         0);
-      ACE_TRY_CHECK;
 
       CORBA::Any the_priority_as_any;
       the_priority_as_any = *this->codec_->decode(ocSeq);
-      ACE_TRY_CHECK;
 
       RTCORBA::Priority the_client_priority;
       the_priority_as_any >>= the_client_priority;
-      ACE_TRY_CHECK;
 
       // get the object from the object ID that is passed
       CORBA::OctetSeq_var oseq = ri->object_id();
@@ -499,10 +478,8 @@ ACE_THROW_SPEC((
                                    oseq -> length(),
                                    oseq -> get_buffer(),
                                     0);
-      ACE_TRY_CHECK;
 
       CORBA::Object_var target_object = poa->id_to_reference(oid);
-      ACE_TRY_CHECK;
 
       // Check to make sure we have the object as scheduled by the
       // ServerScheduler
@@ -552,7 +529,6 @@ ACE_THROW_SPEC((
                        PCP_Manager(
                          PCP_factory_->New_PCP_Manager(this->current_)),
                        CORBA::NO_MEMORY());
-      ACE_TRY_CHECK;
 
       // Get the lock on the resource, using MPCP
 
@@ -563,7 +539,6 @@ ACE_THROW_SPEC((
       this->invocation_map_.bind(
         p->threadID(),
         p);
-      ACE_TRY_CHECK;
     }
   ACE_CATCHANY
     {
@@ -601,14 +576,14 @@ RTCosScheduling_ServerScheduler_Interceptor::finish_execution()
 }
 
 char*
-RTCosScheduling_ServerScheduler_Interceptor::name(ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+RTCosScheduling_ServerScheduler_Interceptor::name(void)
   ACE_THROW_SPEC((CORBA::SystemException))
 {
   return CORBA::string_dup(this->name_);
 }
 
 void
-RTCosScheduling_ServerScheduler_Interceptor::destroy(ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+RTCosScheduling_ServerScheduler_Interceptor::destroy(void)
   ACE_THROW_SPEC((CORBA::SystemException))
 {
 }

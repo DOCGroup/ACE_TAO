@@ -65,8 +65,8 @@ public:
   virtual ~TAO_Notify_EventChannelFactory ();
 
   /// = ServantBase  Methods
-  virtual void _add_ref (ACE_ENV_SINGLE_ARG_DECL);
-  virtual void _remove_ref (ACE_ENV_SINGLE_ARG_DECL);
+  virtual void _add_ref (void);
+  virtual void _remove_ref (void);
 
   /// Remove <channel> from the <ec_container_>
   void remove (TAO_Notify_EventChannel* channel ACE_ENV_ARG_DECL);
@@ -84,7 +84,7 @@ public:
   /// Use the registered Topology_Factory to create a loader, and
   /// load the topology. If no Topology_Factory is registered
   /// then nothing will be loaded.
-  void load_topology (ACE_ENV_SINGLE_ARG_DECL);
+  void load_topology (void);
 
   /// Use the passed in saver factory to generate topology saver objects.
   /// Does not take ownership.
@@ -95,20 +95,20 @@ public:
   virtual bool is_persistent () const;
 
   virtual void save_persistent (TAO_Notify::Topology_Saver& saver ACE_ENV_ARG_DECL);
-  virtual bool change_to_parent (ACE_ENV_SINGLE_ARG_DECL);
+  virtual bool change_to_parent (void);
   virtual TAO_Notify::Topology_Object* load_child (const ACE_CString &type,
                                                    CORBA::Long id,
                                                    const TAO_Notify::NVPList& attrs
                                                    ACE_ENV_ARG_DECL);
-  CosNotifyChannelAdmin::EventChannelFactory_ptr activate_self (ACE_ENV_SINGLE_ARG_DECL);
-  virtual void reconnect (ACE_ENV_SINGLE_ARG_DECL);
+  CosNotifyChannelAdmin::EventChannelFactory_ptr activate_self (void);
+  virtual void reconnect (void);
 
   /// handle change notifications
-  bool handle_change (ACE_ENV_SINGLE_ARG_DECL);
+  bool handle_change (void);
 
-  void load_event_persistence (ACE_ENV_SINGLE_ARG_DECL);
+  void load_event_persistence (void);
 
-  virtual void save_topology (ACE_ENV_SINGLE_ARG_DECL)
+  virtual void save_topology (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   TAO_Notify_ProxyConsumer * find_proxy_consumer (TAO_Notify::IdVec & id_path, size_t position  ACE_ENV_ARG_DECL);
@@ -125,13 +125,13 @@ public:
   CosNotifyFilter::FilterFactory_var default_filter_factory_;
 
   /// = NotifyExt methods
-  virtual void destroy (ACE_ENV_SINGLE_ARG_DECL)
+  virtual void destroy (void)
     ACE_THROW_SPEC ((
                      CORBA::SystemException
                      ));
 
   /// shutdown
-  virtual int shutdown (ACE_ENV_SINGLE_ARG_DECL);
+  virtual int shutdown (void);
 
   virtual
   NotifyExt::ReconnectionRegistry::ReconnectionID register_callback (
@@ -144,7 +144,7 @@ public:
       ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual CORBA::Boolean is_alive (ACE_ENV_SINGLE_ARG_DECL)
+  virtual CORBA::Boolean is_alive (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   /// = CosNotifyChannelAdmin Methods

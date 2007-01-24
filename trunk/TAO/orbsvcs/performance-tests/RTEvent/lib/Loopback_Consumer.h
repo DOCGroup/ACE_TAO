@@ -39,7 +39,7 @@ public:
                 ACE_ENV_ARG_DECL);
 
   /// Disconnect from the event channel
-  void disconnect (ACE_ENV_SINGLE_ARG_DECL);
+  void disconnect (void);
 
   //@{
   /** @name The RtecEventComm::PushConsumer methods
@@ -47,9 +47,9 @@ public:
   virtual void push (const RtecEventComm::EventSet& events
                      ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
-  virtual void disconnect_push_consumer (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+  virtual void disconnect_push_consumer (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
-  virtual PortableServer::POA_ptr _default_POA (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+  virtual PortableServer::POA_ptr _default_POA (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
   //@}
 

@@ -62,7 +62,6 @@ int main (int argc, char *argv[])
                                            argv,
                                            ""
                                            ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       // Get IOR from command line (or file)
       if (argc != 2)
@@ -78,12 +77,10 @@ int main (int argc, char *argv[])
       CORBA::Object_var object =
         orb->string_to_object (buf
                                ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       // Get the server
       simple_var server = simple::_narrow (object.in ()
                                            ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       const char *bare_string = "Hello World";
 
@@ -98,7 +95,6 @@ int main (int argc, char *argv[])
                      inarg,
                      outarg.out ()
                      ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       const char *any_reply;
       outarg >>= any_reply;

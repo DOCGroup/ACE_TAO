@@ -80,14 +80,11 @@ Server_i::add_IOR_to_table (CORBA::String_var ior)
         this->orb_manager_.orb ()->resolve_initial_references (
             "IORTable"
             ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       IORTable::Table_var adapter =
         IORTable::Table::_narrow (table_object.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       adapter->bind (this->ins_, ior.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
     }
   ACE_CATCH (CORBA::SystemException, ex)
     {
@@ -110,7 +107,6 @@ Server_i::init (int argc,
                                                   argv,
                                                   "child_poa"
                                                   ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
 
   if (result == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
@@ -137,7 +133,6 @@ Server_i::init (int argc,
         this->orb_manager_.activate_under_child_poa ("INS_servant",
                                                      &this->servant_
                                                      ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       ACE_DEBUG ((LM_DEBUG,
                   "The IOR is: <%s>\n",
@@ -169,11 +164,10 @@ Server_i::init (int argc,
 }
 
 int
-Server_i::run (ACE_ENV_SINGLE_ARG_DECL)
+Server_i::run (void)
 {
   // Run the main event loop for the ORB.
-  int result = this->orb_manager_.run (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
+  int result = this->orb_manager_.run ();
 
   if (result == -1)
     ACE_ERROR_RETURN ((LM_ERROR,

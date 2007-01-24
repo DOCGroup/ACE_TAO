@@ -46,7 +46,6 @@ main (int argc, char *argv[])
                                             argv,
                                             "Client ORB"
                                             ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       if (::parse_args (argc, argv) != 0)
         return -1;
@@ -56,11 +55,9 @@ main (int argc, char *argv[])
       // this test.
       CORBA::Object_var object =
         orb->string_to_object (ior ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       ForwardRequestTest::test_var server =
         ForwardRequestTest::test::_narrow (object.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       // Before and after the LOCATION_FORWARD_PERM the marshaled
       // object reference must differ.
@@ -84,8 +81,7 @@ main (int argc, char *argv[])
                       "CLIENT: Issuing request %d.\n",
                       i));
 
-          number += server->number (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+          number += server->number ();
 
           ACE_DEBUG ((LM_INFO,
                       "CLIENT: Number %d .\n",
@@ -116,8 +112,7 @@ main (int argc, char *argv[])
           ACE_OS::abort ();
         }
 
-      server->shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      server->shutdown ();
     }
   ACE_CATCHANY
     {

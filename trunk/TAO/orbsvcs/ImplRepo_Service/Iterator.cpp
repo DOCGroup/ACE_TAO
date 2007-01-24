@@ -81,11 +81,9 @@ ImR_Iterator::next_n (CORBA::ULong how_many,
 
 
 void
-ImR_Iterator::destroy (ACE_ENV_SINGLE_ARG_DECL)
+ImR_Iterator::destroy (void)
    ACE_THROW_SPEC ((CORBA::SystemException))
 {
   PortableServer::ObjectId_var oid = poa_->servant_to_id (this ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
   poa_->deactivate_object (oid.in() ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 }

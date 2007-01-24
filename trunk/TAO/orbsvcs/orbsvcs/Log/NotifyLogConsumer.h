@@ -62,7 +62,7 @@ public:
   void connect (CosNotifyChannelAdmin::ConsumerAdmin_ptr consumer_admin ACE_ENV_ARG_DECL);
 
   /// Disconnect from NotifyLog.
-  virtual void disconnect (ACE_ENV_SINGLE_ARG_DECL);
+  virtual void disconnect (void);
 
 protected:
   /// Destructor.

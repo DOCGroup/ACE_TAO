@@ -46,12 +46,10 @@ Multiple::init_ORB  (int argc, char *argv [])
                                     argv,
                                     ""
                                     ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       CORBA::Object_var poa_object  =
         this->orb_->resolve_initial_references("RootPOA"
                                                ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       if (CORBA::is_nil (poa_object.in ()))
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -61,14 +59,11 @@ Multiple::init_ORB  (int argc, char *argv [])
       PortableServer::POA_var root_poa =
         PortableServer::POA::_narrow (poa_object.in ()
                                       ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       PortableServer::POAManager_var poa_manager =
-        root_poa->the_POAManager (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        root_poa->the_POAManager ();
 
-      poa_manager->activate (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      poa_manager->activate ();
     }
   ACE_CATCHANY
     {
@@ -77,7 +72,6 @@ Multiple::init_ORB  (int argc, char *argv [])
       return -1;
     }
   ACE_ENDTRY;
-  ACE_CHECK_RETURN (-1);
 
   return 0;
 }
@@ -103,7 +97,6 @@ Multiple::init_CosEC (void)
       CORBA::Object_var EC_obj =
         this->naming_client_->resolve (ec_ref_name
                                       ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       // The CORBA::Object_var object is downcast to
       // CosEventChannelAdmin::EventChannel
@@ -111,7 +104,6 @@ Multiple::init_CosEC (void)
       this->cos_ec_ =
         CosEventChannelAdmin::EventChannel::_narrow (EC_obj.in ()
                                                      ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
     }
   ACE_CATCHANY
     {
@@ -120,7 +112,6 @@ Multiple::init_CosEC (void)
       return -1;
     }
   ACE_ENDTRY;
-  ACE_CHECK_RETURN (-1);
 
   return 0;
 }
@@ -131,8 +122,7 @@ Multiple::runORB (void)
   ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY
     {
-      this->orb_->run (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      this->orb_->run ();
     }
   ACE_CATCHANY
     {

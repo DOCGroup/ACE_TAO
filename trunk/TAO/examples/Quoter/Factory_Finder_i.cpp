@@ -58,7 +58,6 @@ Quoter_Factory_Finder_i::find_factories (const CosLifeCycle::Key &factory_key
     exception_message = "While resolving the Name Service";
     CORBA::Object_var namingObj_var =
       orb_ptr->resolve_initial_references ("NameService" ACE_ENV_ARG_PARAMETER);
-    ACE_TRY_CHECK;
 
     if (CORBA::is_nil (namingObj_var.in ()))
       ACE_ERROR ((LM_ERROR,
@@ -69,7 +68,6 @@ Quoter_Factory_Finder_i::find_factories (const CosLifeCycle::Key &factory_key
     CosNaming::NamingContext_var namingContext_var =
       CosNaming::NamingContext::_narrow (namingObj_var.in ()
                                          ACE_ENV_ARG_PARAMETER);
-    ACE_TRY_CHECK;
 
     // Take the key supplied to search for a Quoter Factory
     CosNaming::Name factoryName = (CosNaming::Name) factory_key;
@@ -78,7 +76,6 @@ Quoter_Factory_Finder_i::find_factories (const CosLifeCycle::Key &factory_key
     exception_message = "While resolving the Factory Object";
     CORBA::Object_var quoterFactoryObject_var =
       namingContext_var->resolve (factoryName ACE_ENV_ARG_PARAMETER);
-    ACE_TRY_CHECK;
 
     // Check if it is a valid Quoter Factory reference
     if (CORBA::is_nil (quoterFactoryObject_var.in()))

@@ -32,12 +32,10 @@ ClientORBInitializer::post_init (
   CORBA::Object_var obj =
     info->resolve_initial_references ("PICurrent"
                                       ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
   PortableInterceptor::Current_var pi_current =
     PortableInterceptor::Current::_narrow (obj.in ()
                                            ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
   if (CORBA::is_nil (pi_current.in ()))
     {
@@ -47,8 +45,7 @@ ClientORBInitializer::post_init (
       ACE_THROW (CORBA::INTERNAL ());
     }
 
-  ::slot_id = info->allocate_slot_id (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+  ::slot_id = info->allocate_slot_id ();
 
   PortableInterceptor::ClientRequestInterceptor_ptr foo;
   ACE_NEW_THROW_EX (foo,
@@ -59,12 +56,10 @@ ClientORBInitializer::post_init (
                         TAO::VMCID,
                         ENOMEM),
                       CORBA::COMPLETED_NO));
-  ACE_CHECK;
 
   PortableInterceptor::ClientRequestInterceptor_var interceptor =
     foo;
 
   info->add_client_request_interceptor (interceptor.in ()
                                         ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 }

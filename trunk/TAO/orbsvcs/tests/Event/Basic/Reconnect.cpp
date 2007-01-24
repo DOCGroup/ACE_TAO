@@ -90,18 +90,16 @@ EC_Reconnect::modify_attributes (TAO_EC_Event_Channel_Attributes& attr)
 }
 
 void
-EC_Reconnect::execute_test (ACE_ENV_SINGLE_ARG_DECL)
+EC_Reconnect::execute_test (void)
 {
-  this->execute_consumer_test (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
-  this->execute_supplier_test (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+  this->execute_consumer_test ();
+  this->execute_supplier_test ();
 
   ACE_UINT32 gsf = ACE_High_Res_Timer::global_scale_factor ();
   this->consumer_reconnect_.dump_results ("Reconnect/consumer", gsf);
   this->supplier_reconnect_.dump_results ("Reconnect/supplier", gsf);
 
-  // this->EC_Driver::execute_test (ACE_ENV_SINGLE_ARG_PARAMETER);
+  // this->EC_Driver::execute_test ();
 }
 
 void
@@ -110,12 +108,11 @@ EC_Reconnect::dump_results (void)
 }
 
 void
-EC_Reconnect::execute_consumer_test (ACE_ENV_SINGLE_ARG_DECL)
+EC_Reconnect::execute_consumer_test (void)
 {
   RtecEventChannelAdmin::ConsumerQOS qos;
   int shutdown_event_type;
   this->build_consumer_qos (0, qos, shutdown_event_type ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
   if (this->allow_consumer_reconnect_)
     {
@@ -126,7 +123,6 @@ EC_Reconnect::execute_consumer_test (ACE_ENV_SINGLE_ARG_DECL)
           this->consumers_[0]->connect (qos,
                                         shutdown_event_type
                                         ACE_ENV_ARG_PARAMETER);
-          ACE_CHECK;
           ACE_hrtime_t stop = ACE_OS::gethrtime ();
           this->consumer_reconnect_.sample (stop - start_time,
                                             stop - start);
@@ -139,7 +135,6 @@ EC_Reconnect::execute_consumer_test (ACE_ENV_SINGLE_ARG_DECL)
           this->consumers_[0]->connect (qos,
                                         shutdown_event_type
                                         ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
 
           ACE_DEBUG ((LM_ERROR, "Expected exception\n"));
         }
@@ -155,20 +150,17 @@ EC_Reconnect::execute_consumer_test (ACE_ENV_SINGLE_ARG_DECL)
       ACE_ENDTRY;
 
       RtecEventChannelAdmin::ConsumerAdmin_var consumer_admin =
-        this->event_channel_->for_consumers (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK;
+        this->event_channel_->for_consumers ();
 
       ACE_hrtime_t start_time = ACE_OS::gethrtime ();
       for (int i = 0; i < this->disconnections_; ++i)
         {
           ACE_hrtime_t start = ACE_OS::gethrtime ();
-          this->consumers_[0]->disconnect (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_CHECK;
+          this->consumers_[0]->disconnect ();
           this->consumers_[0]->connect (consumer_admin.in (),
                                         qos,
                                         shutdown_event_type
                                         ACE_ENV_ARG_PARAMETER);
-          ACE_CHECK;
           ACE_hrtime_t stop = ACE_OS::gethrtime ();
           this->consumer_reconnect_.sample (stop - start_time,
                                             stop - start);
@@ -177,12 +169,11 @@ EC_Reconnect::execute_consumer_test (ACE_ENV_SINGLE_ARG_DECL)
 }
 
 void
-EC_Reconnect::execute_supplier_test (ACE_ENV_SINGLE_ARG_DECL)
+EC_Reconnect::execute_supplier_test (void)
 {
   RtecEventChannelAdmin::SupplierQOS qos;
   int shutdown_event_type;
   this->build_supplier_qos (0, qos, shutdown_event_type ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
   if (this->allow_supplier_reconnect_)
     {
@@ -192,7 +183,6 @@ EC_Reconnect::execute_supplier_test (ACE_ENV_SINGLE_ARG_DECL)
           ACE_hrtime_t start = ACE_OS::gethrtime ();
           this->suppliers_[0]->connect (qos, shutdown_event_type
                                         ACE_ENV_ARG_PARAMETER);
-          ACE_CHECK;
           ACE_hrtime_t stop = ACE_OS::gethrtime ();
           this->supplier_reconnect_.sample (stop - start_time,
                                             stop - start);
@@ -204,7 +194,6 @@ EC_Reconnect::execute_supplier_test (ACE_ENV_SINGLE_ARG_DECL)
         {
           this->suppliers_[0]->connect (qos, shutdown_event_type
                                         ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
 
           ACE_DEBUG ((LM_ERROR, "Expected exception\n"));
         }
@@ -220,20 +209,17 @@ EC_Reconnect::execute_supplier_test (ACE_ENV_SINGLE_ARG_DECL)
       ACE_ENDTRY;
 
       RtecEventChannelAdmin::SupplierAdmin_var supplier_admin =
-        this->event_channel_->for_suppliers (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK;
+        this->event_channel_->for_suppliers ();
 
       ACE_hrtime_t start_time = ACE_OS::gethrtime ();
       for (int i = 0; i < this->disconnections_; ++i)
         {
           ACE_hrtime_t start = ACE_OS::gethrtime ();
-          this->suppliers_[0]->disconnect (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_CHECK;
+          this->suppliers_[0]->disconnect ();
           this->suppliers_[0]->connect (supplier_admin.in (),
                                         qos,
                                         shutdown_event_type
                                         ACE_ENV_ARG_PARAMETER);
-          ACE_CHECK;
           ACE_hrtime_t stop = ACE_OS::gethrtime ();
           this->supplier_reconnect_.sample (stop - start_time,
                                             stop - start);

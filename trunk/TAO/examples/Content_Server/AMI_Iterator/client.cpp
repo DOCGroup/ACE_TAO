@@ -41,28 +41,23 @@ main (int argc, char *argv[])
                                             argv,
                                             "Mighty ORB"
                                             ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       // Get the Root POA.
       CORBA::Object_var obj =
         orb->resolve_initial_references ("RootPOA"
                                          ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       PortableServer::POA_var poa =
         PortableServer::POA::_narrow (obj.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       // Activate the POA manager.
       PortableServer::POAManager_var mgr = poa->the_POAManager ();
-      mgr->activate (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      mgr->activate ();
 
       // Get an Iterator_Factory reference.
       Web_Server::Iterator_Factory_var factory =
         ::get_iterator (orb.in ()
                         ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       if (CORBA::is_nil (factory.in ()))
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -84,30 +79,25 @@ main (int argc, char *argv[])
                          &request_count,
                          factory.in ()
                          ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       // Run the ORB event loop.
       while (request_count > 0)
         {
           CORBA::Boolean more_work;
 
-          more_work = orb->work_pending (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+          more_work = orb->work_pending ();
 
           if (more_work)
             {
-              orb->perform_work (ACE_ENV_SINGLE_ARG_PARAMETER);
-              ACE_TRY_CHECK;
+              orb->perform_work ();
             }
           else
             ACE_OS::sleep (tv);
         }
 
       orb->shutdown (0 ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
-      orb->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      orb->destroy ();
     }
   ACE_CATCH (Web_Server::Error_Result, exc)
     {
@@ -142,12 +132,10 @@ get_iterator (CORBA::ORB_ptr o
   CORBA::Object_var obj =
     orb->resolve_initial_references ("NameService"
                                      ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (Web_Server::Iterator_Factory::_nil ());
 
   // Narrow to a Naming Context
   CosNaming::NamingContext_var nc =
     CosNaming::NamingContext::_narrow (obj.in () ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (Web_Server::Iterator_Factory::_nil ());
 
   if (CORBA::is_nil (obj.in ()))
     {
@@ -163,7 +151,6 @@ get_iterator (CORBA::ORB_ptr o
   name[0].kind = CORBA::string_dup ("");
 
   obj = nc->resolve (name ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (Web_Server::Iterator_Factory::_nil ());
 
   Web_Server::Iterator_Factory_ptr factory =
     Web_Server::Iterator_Factory::_narrow (obj.in ());
@@ -189,7 +176,6 @@ void invoke_requests (int argc,
       ACE_NEW_THROW_EX (handler,
                         Iterator_Handler,
                         CORBA::NO_MEMORY ());
-      ACE_CHECK;
 
       // Transfer ownership to the POA.
       PortableServer::ServantBase_var tmp (handler);
@@ -199,6 +185,5 @@ void invoke_requests (int argc,
                     argv[i + 1],
                     factory.in ()
                     ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
     }
 }

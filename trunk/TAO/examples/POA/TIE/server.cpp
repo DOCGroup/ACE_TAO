@@ -34,26 +34,22 @@ main (int argc, char **argv)
 
       // Initialize the ORB first.
       CORBA::ORB_var orb = CORBA::ORB_init (argc, argv, 0 ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       // Obtain the RootPOA.
       CORBA::Object_var obj =
         orb->resolve_initial_references ("RootPOA"
                                          ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       ACE_OS::strcpy (str, "PortableServer::POA::_narrow");
 
       // Get the POA_var object from Object_var.
       PortableServer::POA_var root_poa =
         PortableServer::POA::_narrow (obj.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       ACE_OS::strcpy (str, "PortableServer::POA::the_POAManager");
       // Get the POAManager of the RootPOA.
       PortableServer::POAManager_var poa_manager =
-        root_poa->the_POAManager (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        root_poa->the_POAManager ();
 
 
       // Policies for the firstPOA to be created.
@@ -64,13 +60,11 @@ main (int argc, char **argv)
       // Lifespan policy
       policies[0] =
         root_poa->create_lifespan_policy (PortableServer::PERSISTENT ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       ACE_OS::strcpy (str, "PortableServer::POA::create_implicit_activation_policy");
       // Implicit activation policy
       policies[1] =
         root_poa->create_implicit_activation_policy (PortableServer::IMPLICIT_ACTIVATION ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       ACE_OS::strcpy (str, "PortableServer::POA::create_POA");
       // Create the firstPOA under the RootPOA.
@@ -80,7 +74,6 @@ main (int argc, char **argv)
                               poa_manager.in (),
                               policies
                               ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
 
       ACE_OS::strcpy (str,"PortableServer::POA::create_POA");
@@ -91,8 +84,7 @@ main (int argc, char **argv)
            ++i)
         {
           CORBA::Policy_ptr policy = policies[i];
-          policy->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+          policy->destroy ();
         }
 
       // Create A_i
@@ -121,35 +113,29 @@ main (int argc, char **argv)
 
       ACE_OS::strcpy (str, "POA_A::_this");
       // Get Object Reference for the a_impl object.
-      A_var a = a_impl._this (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      A_var a = a_impl._this ();
 
 
       ACE_OS::strcpy (str, "POA_Outer::B::_this");
       // Get Object Reference for the b_impl object.
-      Outer::B_var b = b_impl._this (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      Outer::B_var b = b_impl._this ();
 
       ACE_OS::strcpy (str, "POA_Outer::Inner::C::_this");
       // Get Object Reference for the c_impl object.
-      Outer::Inner::C_var c = c_impl._this (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      Outer::Inner::C_var c = c_impl._this ();
 
 #if defined (ACE_HAS_USING_KEYWORD)
       ACE_OS::strcpy (str, "POA_A::_this");
       // Get Object Reference for the a_tie_impl object.
-      A_var a_tie = a_tie_impl._this (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      A_var a_tie = a_tie_impl._this ();
 
       ACE_OS::strcpy (str, "POA_Outer::B::_this");
       // Get Object Reference for the a_tie_impl object.
-      Outer::B_var b_tie = b_tie_impl._this (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      Outer::B_var b_tie = b_tie_impl._this ();
 
       ACE_OS::strcpy (str, "POA_Outer::C::_this");
       // Get Object Reference for the c_tie_impl object.
-      Outer::Inner::C_var c_tie = c_tie_impl._this (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      Outer::Inner::C_var c_tie = c_tie_impl._this ();
 
 #endif /* ACE_HAS_USING_KEYWORD */
 
@@ -157,23 +143,19 @@ main (int argc, char **argv)
       // Stringyfy all the object references and print them out.
       CORBA::String_var first_ior =
         orb->object_to_string (a.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       // Stringyfy all the object references and print them out.
       CORBA::String_var second_ior =
         orb->object_to_string (b.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       // Stringyfy all the object references and print them out.
       CORBA::String_var third_ior =
         orb->object_to_string (c.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
 #if defined (ACE_HAS_USING_KEYWORD)
       // Stringyfy all the object references and print them out.
       CORBA::String_var forth_ior =
         orb->object_to_string (a_tie.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       FILE *output_file_1 = ACE_OS::fopen ("ior_1", "w");
       FILE *output_file_2 = ACE_OS::fopen ("ior_2", "w");
@@ -206,13 +188,11 @@ main (int argc, char **argv)
       // Stringyfy all the object references and print them out.
       CORBA::String_var fifth_ior =
         orb->object_to_string (b_tie.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
 
       // Stringyfy all the object references and print them out.
       CORBA::String_var sixth_ior =
         orb->object_to_string (c_tie.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       FILE *output_file_5 = ACE_OS::fopen ("ior_5", "w");
       FILE *output_file_6 = ACE_OS::fopen ("ior_6", "w");
@@ -231,11 +211,9 @@ main (int argc, char **argv)
 
 #endif /* ACE_HAS_USING_KEYWORD */
 
-      poa_manager->activate (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      poa_manager->activate ();
 
-      orb->run (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      orb->run ();
     }
   ACE_CATCHANY
     {
@@ -243,7 +221,6 @@ main (int argc, char **argv)
       return -1;
     }
   ACE_ENDTRY;
-  ACE_CHECK_RETURN (-1);
 
   return 0;
 }

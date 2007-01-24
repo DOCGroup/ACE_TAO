@@ -23,7 +23,7 @@ Foo_i::~Foo_i()
 
 
 void
-Foo_i::op1(ACE_ENV_SINGLE_ARG_DECL_NOT_USED)  
+Foo_i::op1(void)
   ACE_THROW_SPEC((CORBA::SystemException))
 {
   ++this->count_op1_;
@@ -33,7 +33,7 @@ Foo_i::op1(ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
 
 
 void
-Foo_i::op2(CORBA::Long value ACE_ENV_ARG_DECL_NOT_USED)  
+Foo_i::op2(CORBA::Long value ACE_ENV_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC((CORBA::SystemException))
 {
   ++this->count_op2_;
@@ -42,15 +42,14 @@ Foo_i::op2(CORBA::Long value ACE_ENV_ARG_DECL_NOT_USED)
 
 
 CORBA::Long
-Foo_i::op3(ACE_ENV_SINGLE_ARG_DECL)  
+Foo_i::op3(void)
   ACE_THROW_SPEC((CORBA::SystemException))
 {
   ++this->count_op3_;
 
   if (this->count_op3_ == 30)
     {
-      this->mgr_->deactivate_servant (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK_RETURN (0);
+      this->mgr_->deactivate_servant ();
     }
 
   return this->value_.value ();
@@ -58,7 +57,7 @@ Foo_i::op3(ACE_ENV_SINGLE_ARG_DECL)
 
 
 void
-Foo_i::op4(CORBA::Long value ACE_ENV_ARG_DECL_NOT_USED)  
+Foo_i::op4(CORBA::Long value ACE_ENV_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC((CORBA::SystemException))
 {
   ++this->count_op4_;
@@ -77,7 +76,7 @@ Foo_i::op4(CORBA::Long value ACE_ENV_ARG_DECL_NOT_USED)
 
 
 void
-Foo_i::op5(ACE_ENV_SINGLE_ARG_DECL)  
+Foo_i::op5(void)
   ACE_THROW_SPEC((CORBA::SystemException, FooException))
 {
   ++this->count_op5_;
@@ -85,7 +84,7 @@ Foo_i::op5(ACE_ENV_SINGLE_ARG_DECL)
 }
 
 
-CORBA::Boolean 
+CORBA::Boolean
 Foo_i::op6 (
   const char * user_name,
   char *& message
@@ -103,7 +102,7 @@ ACE_THROW_SPEC ((
 }
 
 
-void 
+void
 Foo_i::test_unbounded_string_arg (
   const char * message
   ACE_ENV_ARG_DECL_NOT_USED
@@ -113,12 +112,12 @@ CORBA::SystemException
 ))
 {
   ACE_DEBUG((LM_DEBUG, ACE_TEXT("(%P|%t)Foo_i::test_unbounded_string_arg ")
-                       ACE_TEXT("got unbounded string %s\n"), 
+                       ACE_TEXT("got unbounded string %s\n"),
                        message));
 }
 
 
-void 
+void
 Foo_i::test_bounded_string_arg (
   const char * message
   ACE_ENV_ARG_DECL_NOT_USED
@@ -128,12 +127,12 @@ CORBA::SystemException
 ))
 {
   ACE_DEBUG((LM_DEBUG, ACE_TEXT("(%P|%t)Foo_i::test_bounded_string_arg ")
-                       ACE_TEXT("got bounded string %s\n"), 
+                       ACE_TEXT("got bounded string %s\n"),
                        message));
 }
 
 
-void 
+void
 Foo_i::test_fixed_array_arg (
   const ::Fixed_Array message
   ACE_ENV_ARG_DECL_NOT_USED
@@ -145,13 +144,13 @@ ACE_THROW_SPEC ((
   for (CORBA::ULong i = 0; i < 20; i++)
     {
       ACE_DEBUG((LM_DEBUG, ACE_TEXT("(%P|%t)Foo_i::test_fixed_array_arg ")
-                           ACE_TEXT("got fixed_array[i] = %d\n"), 
+                           ACE_TEXT("got fixed_array[i] = %d\n"),
                            i, message[i]));
     }
 }
 
 
-void 
+void
 Foo_i::test_bounded_var_size_arg (
   const ::Bounded_Var_Size & message
   ACE_ENV_ARG_DECL_NOT_USED
@@ -161,12 +160,12 @@ ACE_THROW_SPEC ((
 ))
 {
   ACE_DEBUG((LM_DEBUG, ACE_TEXT("(%P|%t)Foo_i::test_bounded_var_size_arg ")
-                       ACE_TEXT("got var array chars %s\n"), 
+                       ACE_TEXT("got var array chars %s\n"),
                        message.get_buffer ()));
 }
 
 
-void 
+void
 Foo_i::test_unbounded_var_size_arg (
   const ::Unbounded_Var_Size & message
   ACE_ENV_ARG_DECL_NOT_USED
@@ -181,7 +180,7 @@ ACE_THROW_SPEC ((
 }
 
 
-void 
+void
 Foo_i::test_fixed_size_arg (
   const ::TimeOfDay & t
   ACE_ENV_ARG_DECL_NOT_USED
@@ -195,7 +194,7 @@ ACE_THROW_SPEC ((
                        t.hour, t.minute, t.second));
 }
 
-void 
+void
 Foo_i::test_fixed_size_arg_two_way (
   const ::TimeOfDay & t
   ACE_ENV_ARG_DECL_NOT_USED
@@ -209,7 +208,7 @@ ACE_THROW_SPEC ((
                        t.hour, t.minute, t.second));
 }
 
-void 
+void
 Foo_i::test_var_array_arg (
   const ::Var_Array messages
   ACE_ENV_ARG_DECL_NOT_USED
@@ -227,7 +226,7 @@ ACE_THROW_SPEC ((
 }
 
 
-void 
+void
 Foo_i::test_special_basic_arg (
   ::CORBA::Boolean value
   ACE_ENV_ARG_DECL_NOT_USED
@@ -241,7 +240,7 @@ ACE_THROW_SPEC ((
 }
 
 
-void 
+void
 Foo_i::test_objref_arg (
   ::Callback_ptr cb
   ACE_ENV_ARG_DECL_NOT_USED
@@ -256,7 +255,7 @@ ACE_THROW_SPEC ((
 }
 
 
-void 
+void
 Foo_i::callback_object (
   ::Callback_ptr cb
   ACE_ENV_ARG_DECL_NOT_USED
@@ -268,7 +267,7 @@ ACE_THROW_SPEC ((
   this->callback_ = Callback::_duplicate (cb);
 }
 
-void 
+void
 Foo_i::test_callback (
   ACE_ENV_SINGLE_ARG_DECL
 )
@@ -282,29 +281,27 @@ ACE_THROW_SPEC ((
     }
   else
     {
-      this->callback_->test_method (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK;
+      this->callback_->test_method ();
     }
 }
 
 
 void
-Foo_i::done(ACE_ENV_SINGLE_ARG_DECL)  
+Foo_i::done(void)
   ACE_THROW_SPEC((CORBA::SystemException))
 {
-  this->mgr_->client_done(ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+  this->mgr_->client_done();
 }
 
 
-void 
+void
 Foo_i::active (bool flag)
 {
   active_ = flag;
 }
 
 
-bool 
+bool
 Foo_i::active ()
 {
   return active_.value ();

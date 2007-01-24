@@ -35,7 +35,6 @@ IFR_Service::init (int argc,
                                     argv,
                                     0
                                     ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       result = this->my_ifr_server_.init_with_orb (argc,
                                                    argv,
@@ -54,26 +53,23 @@ IFR_Service::init (int argc,
       ACE_RE_THROW;
     }
   ACE_ENDTRY;
-  ACE_CHECK_RETURN (-1);
   return 0;
 }
 
 int
-IFR_Service::run (ACE_ENV_SINGLE_ARG_DECL)
+IFR_Service::run (void)
 {
   this->orb_->run (0 ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
 
   return 0;
 }
 
 int
-IFR_Service::fini (ACE_ENV_SINGLE_ARG_DECL)
+IFR_Service::fini (void)
 {
   ACE_TRY
     {
       this->my_ifr_server_.fini ();
-      ACE_TRY_CHECK;
     }
   ACE_CATCHANY
     {
@@ -82,7 +78,6 @@ IFR_Service::fini (ACE_ENV_SINGLE_ARG_DECL)
       ACE_RE_THROW;
     }
   ACE_ENDTRY;
-  ACE_CHECK_RETURN (-1);
   return 0;
 }
 

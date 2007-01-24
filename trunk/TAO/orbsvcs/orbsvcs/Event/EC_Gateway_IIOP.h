@@ -78,10 +78,10 @@ public:
             ACE_ENV_ARG_DECL);
 
   /// The channel is disconnecting.
-  void disconnect_push_supplier (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
+  void disconnect_push_supplier (void);
 
   /// The channel is disconnecting.
-  void disconnect_push_consumer (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
+  void disconnect_push_consumer (void);
 
   /// This is the consumer side behavior, it pushes the events to the
   /// local event channel.
@@ -89,10 +89,10 @@ public:
              ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
   /// Disconnect and shutdown the gateway
-  int shutdown (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
+  int shutdown (void);
 
   // The following methods are documented in the base class.
-  virtual void close (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
+  virtual void close (void);
   virtual void update_consumer (const RtecEventChannelAdmin::ConsumerQOS& sub
                                 ACE_ENV_ARG_DECL_WITH_DEFAULTS)
       ACE_THROW_SPEC ((CORBA::SystemException));
@@ -101,7 +101,7 @@ public:
       ACE_THROW_SPEC ((CORBA::SystemException));
 
   // Let the gateway reconnect itself to the consumer ec given exisiting QoS
-  void reconnect_consumer_ec(ACE_ENV_SINGLE_ARG_DECL);
+  void reconnect_consumer_ec(void);
 
   /// Check whether the consumer event channel is non existent or not
   CORBA::Boolean consumer_ec_non_existent (CORBA::Boolean_out disconnected
@@ -113,7 +113,7 @@ public:
    * the consumer proxy administration in case we know that the consumers
    * are all unreachable.
    */
-  void cleanup_consumer_proxies (ACE_ENV_SINGLE_ARG_DECL);
+  void cleanup_consumer_proxies (void);
 
   /// Cleanup the connection to the consumer ec. Doesn't call anything on the
   /// ec again, just set the object to nil
@@ -124,22 +124,22 @@ public:
   int cleanup_supplier_ec (void);
 
   /// Suspend the connection to the supplier ec
-  void suspend_supplier_ec (ACE_ENV_SINGLE_ARG_DECL);
+  void suspend_supplier_ec (void);
 
   /// Resume the connection to the supplier ec
-  void resume_supplier_ec (ACE_ENV_SINGLE_ARG_DECL);
+  void resume_supplier_ec (void);
 
 private:
-  void close_i (ACE_ENV_SINGLE_ARG_DECL);
+  void close_i (void);
 
   /// Disconnect the supplier proxy
-  void disconnect_supplier_proxy_i (ACE_ENV_SINGLE_ARG_DECL);
+  void disconnect_supplier_proxy_i (void);
 
   /// Disconnect all consumer proxies
-  void disconnect_consumer_proxies_i (ACE_ENV_SINGLE_ARG_DECL);
+  void disconnect_consumer_proxies_i (void);
 
   /// Remove all consumer proxies without calling disconnect on them
-  void cleanup_consumer_proxies_i (ACE_ENV_SINGLE_ARG_DECL);
+  void cleanup_consumer_proxies_i (void);
 
   void update_consumer_i (const RtecEventChannelAdmin::ConsumerQOS& sub
                           ACE_ENV_ARG_DECL);

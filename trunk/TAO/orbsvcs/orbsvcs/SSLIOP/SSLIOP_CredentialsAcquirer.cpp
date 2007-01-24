@@ -90,31 +90,28 @@ TAO::SSLIOP::CredentialsAcquirer::~CredentialsAcquirer (void)
 }
 
 char *
-TAO::SSLIOP::CredentialsAcquirer::acquisition_method (ACE_ENV_SINGLE_ARG_DECL)
+TAO::SSLIOP::CredentialsAcquirer::acquisition_method (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  this->check_validity (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (0);
+  this->check_validity ();
 
   return CORBA::string_dup ("SL3TLS");
 }
 
 SecurityLevel3::AcquisitionStatus
-TAO::SSLIOP::CredentialsAcquirer::current_status (ACE_ENV_SINGLE_ARG_DECL)
+TAO::SSLIOP::CredentialsAcquirer::current_status (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  this->check_validity (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (SecurityLevel3::AQST_Failed);
+  this->check_validity ();
 
   return SecurityLevel3::AQST_Succeeded;  // @@ Really?
 }
 
 CORBA::ULong
-TAO::SSLIOP::CredentialsAcquirer::nth_iteration (ACE_ENV_SINGLE_ARG_DECL)
+TAO::SSLIOP::CredentialsAcquirer::nth_iteration (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  this->check_validity (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (0);
+  this->check_validity ();
 
   // SSL/TLS credentials is single-step process from the point-of-view
   // of the caller.
@@ -146,8 +143,7 @@ TAO::SSLIOP::CredentialsAcquirer::get_credentials (CORBA::Boolean on_list
                                                    ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  this->check_validity (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (SecurityLevel3::OwnCredentials::_nil ());
+  this->check_validity ();
 
   ::SSLIOP::AuthData *data;
 
@@ -183,7 +179,6 @@ TAO::SSLIOP::CredentialsAcquirer::get_credentials (CORBA::Boolean on_list
   ACE_NEW_THROW_EX (creds,
                     TAO::SSLIOP::OwnCredentials (x509.in (), evp.in ()),
                     CORBA::NO_MEMORY ());
-  ACE_CHECK_RETURN (SecurityLevel3::OwnCredentials::_nil ());
 
   SecurityLevel3::OwnCredentials_var credentials = creds;
 
@@ -191,21 +186,18 @@ TAO::SSLIOP::CredentialsAcquirer::get_credentials (CORBA::Boolean on_list
     {
       this->curator_->_tao_add_own_credentials (creds
                                                 ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK_RETURN (SecurityLevel3::OwnCredentials::_nil ());
     }
 
-  this->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (SecurityLevel3::OwnCredentials::_nil ());
+  this->destroy ();
 
   return credentials._retn ();
 }
 
 void
-TAO::SSLIOP::CredentialsAcquirer::destroy (ACE_ENV_SINGLE_ARG_DECL)
+TAO::SSLIOP::CredentialsAcquirer::destroy (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  this->check_validity (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+  this->check_validity ();
 
   ACE_GUARD (TAO_SYNCH_MUTEX,
              guard,
@@ -221,7 +213,7 @@ TAO::SSLIOP::CredentialsAcquirer::destroy (ACE_ENV_SINGLE_ARG_DECL)
 }
 
 void
-TAO::SSLIOP::CredentialsAcquirer::check_validity (ACE_ENV_SINGLE_ARG_DECL)
+TAO::SSLIOP::CredentialsAcquirer::check_validity (void)
 {
   ACE_GUARD (TAO_SYNCH_MUTEX,
              guard,

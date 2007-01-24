@@ -61,11 +61,9 @@ TAO_Notify_Admin::init (TAO_Notify::Topology_Parent* parent ACE_ENV_ARG_DECL)
   ACE_NEW_THROW_EX (proxy_container,
                     TAO_Notify_Proxy_Container (),
                     CORBA::INTERNAL ());
-  ACE_CHECK;
   this->proxy_container_.reset (proxy_container);
 
-  this->proxy_container().init (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+  this->proxy_container().init ();
 
 }
 
@@ -73,7 +71,6 @@ void
 TAO_Notify_Admin::remove (TAO_Notify_Proxy* proxy ACE_ENV_ARG_DECL)
 {
   this->proxy_container().remove (proxy ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 }
 
 void
@@ -81,7 +78,6 @@ TAO_Notify_Admin::subscribed_types (TAO_Notify_EventTypeSeq& subscribed_types AC
 {
   ACE_GUARD_THROW_EX (TAO_SYNCH_MUTEX, ace_mon, this->lock_,
                       CORBA::INTERNAL ());
-  ACE_CHECK;
 
   // Adopt the Admin's subscription.
   TAO_Notify_EventTypeSeq added (this->subscribed_types_), removed;
@@ -92,15 +88,13 @@ TAO_Notify_Admin::subscribed_types (TAO_Notify_EventTypeSeq& subscribed_types AC
 }
 
 int
-TAO_Notify_Admin::shutdown (ACE_ENV_SINGLE_ARG_DECL)
+TAO_Notify_Admin::shutdown (void)
 {
-  int sd_ret = TAO_Notify_Object::shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (1);
+  int sd_ret = TAO_Notify_Object::shutdown ();
   if (sd_ret == 1)
     return 1;
 
-  this->proxy_container().shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (1);
+  this->proxy_container().shutdown ();
 
   return 0;
 }
@@ -128,24 +122,20 @@ TAO_Notify_Admin::save_persistent (TAO_Notify::Topology_Saver& saver ACE_ENV_ARG
       bool want_all_children =
         saver.begin_object(this->id(), type, attrs, changed
                            ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
 
       if (want_all_children || this->filter_admin_.is_changed ())
         {
           this->filter_admin_.save_persistent(saver ACE_ENV_ARG_PARAMETER);
-          ACE_CHECK;
         }
       if (want_all_children || this->subscribed_types_.is_changed ())
         {
           this->subscribed_types_.save_persistent(saver ACE_ENV_ARG_PARAMETER);
-          ACE_CHECK;
         }
 
       TAO_Notify::Save_Persist_Worker<TAO_Notify_Proxy>
         wrk(saver, want_all_children);
       this->proxy_container().collection()->for_each(&wrk
                                                      ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
 
       saver.end_object(this->id(), type ACE_ENV_ARG_PARAMETER);
     }
@@ -212,11 +202,10 @@ TAO_Notify_Admin::load_child (const ACE_CString &type,
 }
 
 void
-TAO_Notify_Admin::reconnect (ACE_ENV_SINGLE_ARG_DECL)
+TAO_Notify_Admin::reconnect (void)
 {
   TAO_Notify::Reconnect_Worker<TAO_Notify_Proxy> wrk;
   this->proxy_container().collection()->for_each(&wrk ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL

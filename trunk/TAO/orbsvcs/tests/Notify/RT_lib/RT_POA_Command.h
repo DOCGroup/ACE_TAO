@@ -45,7 +45,7 @@ public:
   virtual void init (ACE_Arg_Shifter& arg_shifter);
 
   /// Execute the command.
-  virtual void execute_i (ACE_ENV_SINGLE_ARG_DECL);
+  virtual void execute_i (void);
 
   /// Get the command name.
   virtual const char* get_name (void);

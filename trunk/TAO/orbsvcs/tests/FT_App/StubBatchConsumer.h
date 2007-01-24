@@ -38,7 +38,7 @@ public:
    */
   virtual ~StubBatchConsumer ();
 
-  ::PortableServer::POA_ptr _default_POA (ACE_ENV_SINGLE_ARG_DECL);
+  ::PortableServer::POA_ptr _default_POA (void);
   ::PortableServer::ObjectId objectId()const;
 
   /**
@@ -66,7 +66,7 @@ public:
   /**
    * Clean house for process shut down.
    */
-  void fini (ACE_ENV_SINGLE_ARG_DECL);
+  void fini (void);
 
 
 public:

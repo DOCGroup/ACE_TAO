@@ -50,12 +50,10 @@ UDP_PerformanceClient::svc ()
       CORBA::String_var corba_client_name =
         CORBA::string_dup (client_name.c_str ());
 
-      UDP_var udpHandler_var = udpHandler_->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      UDP_var udpHandler_var = udpHandler_->_this ();
 
       udp_->setResponseHandler (udpHandler_var.in ()
                                 ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       ACE_High_Res_Timer timer;
       while (1)
@@ -75,7 +73,6 @@ UDP_PerformanceClient::svc ()
                             j
                             ACE_ENV_ARG_PARAMETER);
 
-              ACE_TRY_CHECK;
 
               if (micro_seconds)
                 {
@@ -96,7 +93,6 @@ UDP_PerformanceClient::svc ()
           // Reset expected request ID
           udp_->reset (corba_client_name.in ()
                        ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
 
           // Give the reset a chance to propagate back to us
           ACE_OS::sleep (tv);
@@ -157,8 +153,7 @@ UDP_PerformanceClient::svc ()
         }
 
       // shut down remote ORB
-      udp_->shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      udp_->shutdown ();
 
       ACE_Time_Value tv (0, 50); // 50ms
       ACE_OS::sleep (tv);  // let the previous request go through
@@ -166,7 +161,6 @@ UDP_PerformanceClient::svc ()
       // Shut down local ORB, trigger the end of the ORB event loop
             // in the main thread.
       orb_->shutdown (0 ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
     }
   ACE_CATCHANY
     {

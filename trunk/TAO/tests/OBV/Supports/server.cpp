@@ -12,18 +12,14 @@ main (int argc, char * argv[])
 	{
 
 		CORBA::ORB_var orb = CORBA::ORB_init (argc, argv, "" ACE_ENV_ARG_PARAMETER);
-		ACE_TRY_CHECK;
 
 		CORBA::Object_var poa_object = orb->resolve_initial_references ("RootPOA" ACE_ENV_ARG_PARAMETER);
-		ACE_TRY_CHECK;
 
 		PortableServer::POA_var root_poa = PortableServer::POA::_narrow (poa_object.in () ACE_ENV_ARG_PARAMETER);
-		ACE_TRY_CHECK;
 
 		if (CORBA::is_nil (root_poa.in ())) ACE_ERROR_RETURN ((LM_ERROR," (%P|%t) Nil RootPOA\n"), 1);
 
-		PortableServer::POAManager_var poa_manager = root_poa->the_POAManager (ACE_ENV_SINGLE_ARG_PARAMETER);
-		ACE_TRY_CHECK;
+    PortableServer::POAManager_var poa_manager = root_poa->the_POAManager ();
 
 
 		/* Create, register factories */
@@ -33,7 +29,6 @@ main (int argc, char * argv[])
 		ACE_NEW_RETURN (node_factory, node_init_impl, 1);
 
 		CORBA::ValueFactory returned_factory = orb->register_value_factory (node_factory->tao_repository_id (), node_factory ACE_ENV_ARG_PARAMETER);
-		ACE_TRY_CHECK;
 
 		ACE_ASSERT (returned_factory == 0);
 
@@ -44,7 +39,6 @@ main (int argc, char * argv[])
 		ACE_NEW_RETURN (vt_graph_factory, vt_graph_init_impl, 1);
 
 		returned_factory = orb->register_value_factory (vt_graph_factory->tao_repository_id (), vt_graph_factory ACE_ENV_ARG_PARAMETER);
-		ACE_TRY_CHECK;
 
 		ACE_ASSERT (returned_factory == 0);
 
@@ -56,11 +50,9 @@ main (int argc, char * argv[])
 
     //PortableServer::ServantBase_var owner_transfer = a_test_impl;
 
-      Supports_Test::test_ptr a_test = a_test_impl->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
-		ACE_TRY_CHECK;
+      Supports_Test::test_ptr a_test = a_test_impl->_this ();
 
       CORBA::String_var ior = orb->object_to_string (a_test ACE_ENV_ARG_PARAMETER);
-		ACE_TRY_CHECK;
 
       FILE * output_file = ACE_OS::fopen (ior_output_file, "w");
 
@@ -70,20 +62,15 @@ main (int argc, char * argv[])
 
       ACE_OS::fclose (output_file);
 
-      poa_manager->activate (ACE_ENV_SINGLE_ARG_PARAMETER);
-		ACE_TRY_CHECK;
+      poa_manager->activate ();
 
-      a_test_impl->_remove_ref (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      a_test_impl->_remove_ref ();
 
-      orb->run (ACE_ENV_SINGLE_ARG_PARAMETER);
-		ACE_TRY_CHECK;
+      orb->run ();
 
       root_poa->destroy (0, 0 ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
-      orb->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-		ACE_TRY_CHECK;
+      orb->destroy ();
 
       ACE_DEBUG ((LM_DEBUG, "Server (%P.%t) completed test successfully\n"));
 	}

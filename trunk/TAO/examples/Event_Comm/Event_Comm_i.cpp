@@ -307,7 +307,6 @@ Notifier_i::disconnect (const char *reason
         {
           consumer_ref->disconnect (reason
                                     ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
         }
       ACE_CATCHANY
         {
@@ -373,7 +372,6 @@ Notifier_i::push (const Event_Comm::Event &event
             {
               consumer_ref->push (event
                                   ACE_ENV_ARG_PARAMETER);
-              ACE_TRY_CHECK;
             }
           ACE_CATCHANY
             {

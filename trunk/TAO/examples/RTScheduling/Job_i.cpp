@@ -65,8 +65,8 @@ Job_i::work (CORBA::ULong work,
 
   if (guid_ == 0)
     ACE_OS::memcpy (&guid_,
-        dt_creator_->current ()->id (ACE_ENV_SINGLE_ARG_PARAMETER)->get_buffer (),
-        sizeof (dt_creator_->current ()->id (ACE_ENV_SINGLE_ARG_PARAMETER)->length ()));
+        dt_creator_->current ()->id ()->get_buffer (),
+        sizeof (dt_creator_->current ()->id ()->length ()));
 
   if (TAO_debug_level > 0)
     ACE_DEBUG ((LM_DEBUG,
@@ -110,7 +110,6 @@ Job_i::work (CORBA::ULong work,
                 sched_param.in (),
                 sched_param.in ()
                 ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
     }
 }
 
@@ -127,7 +126,7 @@ Job_i::guid (void)
 }
 
 void
-Job_i::shutdown (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+Job_i::shutdown (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   dt_creator_->job_ended ();

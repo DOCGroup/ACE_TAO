@@ -27,7 +27,7 @@ StockFactory::get_stock (const char *symbol)
 }
 
 void
-StockFactory::shutdown (ACE_ENV_SINGLE_ARG_DECL)
+StockFactory::shutdown (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->orb_->shutdown (0 ACE_ENV_ARG_PARAMETER);

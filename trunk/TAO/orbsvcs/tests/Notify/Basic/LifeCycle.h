@@ -25,17 +25,17 @@ public:
   void init (int argc,
              char *argv[]
              ACE_ENV_ARG_DECL);
-  void run_test (ACE_ENV_SINGLE_ARG_DECL);
+  void run_test (void);
   int parse_args (int argc,
                   char *argv[]);
 
 private:
-   void create_ec (ACE_ENV_SINGLE_ARG_DECL);
-   void create_supplier_admin (ACE_ENV_SINGLE_ARG_DECL);
-   void create_consumer_admin (ACE_ENV_SINGLE_ARG_DECL);
-   void destroy_ec (ACE_ENV_SINGLE_ARG_DECL);
-   void destroy_supplier_admin (ACE_ENV_SINGLE_ARG_DECL);
-   void destroy_consumer_admin (ACE_ENV_SINGLE_ARG_DECL);
+   void create_ec (void);
+   void create_supplier_admin (void);
+   void create_consumer_admin (void);
+   void destroy_ec (void);
+   void destroy_supplier_admin (void);
+   void destroy_consumer_admin (void);
 
    CosNotifyChannelAdmin::EventChannelFactory_var notify_factory_;
    CosNotifyChannelAdmin::EventChannel_var ec_;

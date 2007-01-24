@@ -123,7 +123,7 @@ namespace TAO
      * Prepare to exit.
      * @return zero for success; nonzero is process return code for failure.
      */
-    int fini (ACE_ENV_SINGLE_ARG_DECL);
+    int fini (void);
 
     /**
      * Idle-time activity.
@@ -163,7 +163,7 @@ namespace TAO
         , PortableGroup::InvalidProperty
       ));
 
-    virtual void shutdown (ACE_ENV_SINGLE_ARG_DECL)
+    virtual void shutdown (void)
     ACE_THROW_SPEC ((
       CORBA::SystemException
     ));
@@ -197,7 +197,7 @@ namespace TAO
     //////////////////////////////////////////
     // CORBA interface PullMonitorable methods
 
-    virtual CORBA::Boolean is_alive (ACE_ENV_SINGLE_ARG_DECL)
+    virtual CORBA::Boolean is_alive (void)
       ACE_THROW_SPEC ((CORBA::SystemException));
 
     /////////////////////////

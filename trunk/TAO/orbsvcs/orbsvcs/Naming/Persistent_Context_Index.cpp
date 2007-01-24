@@ -149,7 +149,6 @@ TAO_Persistent_Context_Index::init (size_t context_size)
                                                          context_size,
                                                          this
                                                          ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK_RETURN (-1);
     }
 
   else
@@ -221,10 +220,8 @@ TAO_Persistent_Context_Index::recreate_all (void)
       this->poa_->activate_object_with_id (id.in (),
                                            context
                                            ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK_RETURN (-1);
 
-      CosNaming::NamingContext_var result = context->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK_RETURN (-1);
+      CosNaming::NamingContext_var result = context->_this ();
 
       // If this is the root Naming Context, take a note of it.
       if (context_impl->root ())

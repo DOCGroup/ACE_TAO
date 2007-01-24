@@ -40,7 +40,7 @@ Receiver_i::message (const char *msg
 }
 
 void
-Receiver_i::shutdown (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+Receiver_i::shutdown (void)
  ACE_THROW_SPEC ((
       CORBA::SystemException
     ))

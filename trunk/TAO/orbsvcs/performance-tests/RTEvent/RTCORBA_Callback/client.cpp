@@ -40,7 +40,7 @@ public:
   {
   }
 
-  virtual void run_test (ACE_ENV_SINGLE_ARG_DECL) = 0;
+  virtual void run_test (void) = 0;
 
   virtual int svc (void)
   {
@@ -48,8 +48,7 @@ public:
     ACE_DECLARE_NEW_CORBA_ENV;
     ACE_TRY
       {
-        this->run_test (ACE_ENV_SINGLE_ARG_PARAMETER);
-        ACE_TRY_CHECK;
+        this->run_test ();
       }
     ACE_CATCHANY
       {
@@ -81,18 +80,16 @@ public:
   {
   }
 
-  virtual void run_test (ACE_ENV_SINGLE_ARG_DECL)
+  virtual void run_test (void)
   {
     Test::Callback_var cb =
-      callback->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
-    ACE_CHECK;
+      callback->_this ();
 
     Implicit_Deactivator deactivator (callback);
 
     Test::Session_var session =
       this->session_factory_->create_new_session (cb.in ()
                                                   ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK;
 
     ACE_Utils::Auto_Functor<Test::Session,Shutdown<Test::Session> > auto_shutdown (session.in ());
 
@@ -112,7 +109,6 @@ public:
           ACE_hrtime_t start = ACE_OS::gethrtime ();
           (void) session->sample (start
                                   ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
         } ACE_CATCHANY {
         } ACE_ENDTRY;
       }
@@ -146,18 +142,16 @@ public:
     this->stopped_ = 1;
   }
 
-  virtual void run_test (ACE_ENV_SINGLE_ARG_DECL)
+  virtual void run_test (void)
   {
     Test::Callback_var cb =
-      callback->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
-    ACE_CHECK;
+      callback->_this ();
 
     Implicit_Deactivator deactivator (callback);
 
     Test::Session_var session =
       this->session_factory_->create_new_session (cb.in ()
                                                   ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK;
 
     ACE_Utils::Auto_Functor<Test::Session,Shutdown<Test::Session> > auto_shutdown (session.in ());
 
@@ -176,7 +170,6 @@ public:
           CORBA::ULongLong dummy = 0;
           (void) session->sample (dummy
                                   ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
 
         } ACE_CATCHANY {
         } ACE_ENDTRY;
@@ -202,7 +195,6 @@ int main (int argc, char *argv[])
     {
       ORB_Holder orb (argc, argv, ""
                       ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       Client_Options options (argc, argv);
       if (argc != 1)
@@ -228,20 +220,16 @@ int main (int argc, char *argv[])
                                      rt_class,
                                      options.nthreads
                                      ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       PortableServer::POA_var root_poa =
         RIR_Narrow<PortableServer::POA>::resolve (orb,
                                                   "RootPOA"
                                                   ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       PortableServer::POAManager_var poa_manager =
-        root_poa->the_POAManager (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        root_poa->the_POAManager ();
 
-      poa_manager->activate (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      poa_manager->activate ();
 
       PortableServer::POA_var the_poa (rtserver_setup.poa ());
 
@@ -255,17 +243,14 @@ int main (int argc, char *argv[])
 
       CORBA::Object_var object =
         orb->string_to_object (options.ior ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       Test::Session_Factory_var session_factory =
         Test::Session_Factory::_narrow (object.in ()
                                         ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       CORBA::PolicyList_var inconsistent_policies;
       (void) session_factory->_validate_connection (inconsistent_policies
                                                     ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       int thread_count = 1 + options.nthreads;
       ACE_Barrier the_barrier (thread_count);
@@ -318,8 +303,7 @@ int main (int argc, char *argv[])
 
       ACE_DEBUG ((LM_DEBUG, "(%P|%t) client - all task(s) joined\n"));
 
-      session_factory->shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      session_factory->shutdown ();
 
       ACE_DEBUG ((LM_DEBUG, "(%P|%t) client - starting cleanup\n"));
     }

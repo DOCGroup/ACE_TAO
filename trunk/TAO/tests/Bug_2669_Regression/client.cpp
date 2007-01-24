@@ -58,22 +58,17 @@ main (int argc, char *argv[])
     {
       CORBA::ORB_var orb =
         CORBA::ORB_init (argc, argv, "");
-      ACE_TRY_CHECK;
 
       CORBA::Object_var object_var =
         orb->resolve_initial_references ("RootPOA");
-      ACE_TRY_CHECK;
 
       PortableServer::POA_var poa_var =
         PortableServer::POA::_narrow (object_var.in ());
-      ACE_TRY_CHECK;
 
       PortableServer::POAManager_var poa_manager_var =
         poa_var->the_POAManager ();
-      ACE_TRY_CHECK;
 
       poa_manager_var->activate ();
-      ACE_TRY_CHECK;
 
       if (parse_args (argc, argv) != 0)
         return 1;
@@ -154,7 +149,6 @@ main (int argc, char *argv[])
       return 1;
     }
   ACE_ENDTRY;
-  ACE_CHECK_RETURN (-1);
 
   return result;
 }

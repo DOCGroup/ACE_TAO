@@ -44,11 +44,11 @@ class Event_Logging_Service
   // Initializes the Telecom Log Service.
   // Returns 0 on success, -1 on error.
 
-  int run (ACE_ENV_SINGLE_ARG_DECL);
+  int run (void);
   // Run the Telecom Log Service.
   // Returns 0 on success, -1 on error.
 
-  void shutdown (ACE_ENV_SINGLE_ARG_DECL);
+  void shutdown (void);
   // Shutdown the Telecom Log Service.
   // Returns 0 on success, -1 on error.
 
@@ -60,7 +60,7 @@ protected:
   int parse_args (int argc, char *argv []);
   // Parses the command line arguments.
 
-  void resolve_naming_service (ACE_ENV_SINGLE_ARG_DECL);
+  void resolve_naming_service (void);
   // Resolve the naming service.
 
   int svc ();

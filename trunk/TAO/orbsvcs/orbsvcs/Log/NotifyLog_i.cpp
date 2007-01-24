@@ -52,20 +52,16 @@ TAO_NotifyLog_i::copy (DsLogAdmin::LogId &id ACE_ENV_ARG_DECL)
 {
   DsNotifyLogAdmin::NotifyLogFactory_var notifyLogFactory =
     DsNotifyLogAdmin::NotifyLogFactory::_narrow (factory_.in () ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (DsLogAdmin::Log::_nil ());
 
-  CosNotification::QoSProperties* qos = get_qos (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (DsLogAdmin::Log::_nil ());
+  CosNotification::QoSProperties* qos = get_qos ();
 
-  CosNotification::AdminProperties* admin = get_admin (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (DsLogAdmin::Log::_nil ());
+  CosNotification::AdminProperties* admin = get_admin ();
 
   DsNotifyLogAdmin::NotifyLog_var log =
     notifyLogFactory->create (DsLogAdmin::halt, 0, thresholds_, static_cast<const CosNotification::QoSProperties> (*qos),
                                static_cast<const CosNotification::AdminProperties> (*admin), id);
 
   this->copy_attributes (log.in () ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (DsLogAdmin::Log::_nil ());
 
   return log._retn ();
 }
@@ -78,50 +74,42 @@ TAO_NotifyLog_i::copy_with_id (DsLogAdmin::LogId id ACE_ENV_ARG_DECL)
 {
   DsNotifyLogAdmin::NotifyLogFactory_var notifyLogFactory =
     DsNotifyLogAdmin::NotifyLogFactory::_narrow (factory_.in () ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (DsLogAdmin::Log::_nil ());
 
-  CosNotification::QoSProperties* qos = get_qos (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (DsLogAdmin::Log::_nil ());
+  CosNotification::QoSProperties* qos = get_qos ();
 
-  CosNotification::AdminProperties* admin = get_admin (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (DsLogAdmin::Log::_nil ());
+  CosNotification::AdminProperties* admin = get_admin ();
 
   DsNotifyLogAdmin::NotifyLog_var log =
     notifyLogFactory->create_with_id (id, DsLogAdmin::halt, 0, thresholds_, static_cast<const CosNotification::QoSProperties> (*qos),
                                static_cast<const CosNotification::AdminProperties> (*admin));
 
   this->copy_attributes (log.in () ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (DsLogAdmin::Log::_nil ());
 
   return log._retn ();
 }
 
 
 void
-TAO_NotifyLog_i::destroy (ACE_ENV_SINGLE_ARG_DECL)
+TAO_NotifyLog_i::destroy (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   notifier_->object_deletion (logid_ ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
   // Remove ourselves from the list of logs.
   this->logmgr_i_.remove (this->logid_
 			  ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
   // Deregister with POA.
   PortableServer::ObjectId_var id =
     this->poa_->servant_to_id (this
                                ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
   this->poa_->deactivate_object (id.in ()
                                  ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 }
 
 void
-TAO_NotifyLog_i::activate (ACE_ENV_SINGLE_ARG_DECL)
+TAO_NotifyLog_i::activate (void)
 {
 
   CosNotifyChannelAdmin::AdminID adminid = 0;
@@ -130,18 +118,15 @@ TAO_NotifyLog_i::activate (ACE_ENV_SINGLE_ARG_DECL)
 
   this->consumer_admin_ =
     this->event_channel_->new_for_consumers (ifgop, adminid ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
   ACE_ASSERT (!CORBA::is_nil (consumer_admin_.in ()));
 
   CosNotifyFilter::FilterFactory_var ffact =
-    this->event_channel_->default_filter_factory (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+    this->event_channel_->default_filter_factory ();
 
   // setup a filter at the consumer admin
   CosNotifyFilter::Filter_var ca_filter =
     ffact->create_filter (TCL_GRAMMAR ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
   ACE_ASSERT (!CORBA::is_nil (ca_filter.in ()));
 
@@ -152,10 +137,8 @@ TAO_NotifyLog_i::activate (ACE_ENV_SINGLE_ARG_DECL)
   constraint_list[0].constraint_expr = CORBA::string_dup (CA_FILTER);
 
   ca_filter->add_constraints (constraint_list ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
   consumer_admin_->add_filter (ca_filter.in () ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
   // Setup the CA to receive all type of events
   CosNotification::EventTypeSeq added(1);
@@ -167,7 +150,6 @@ TAO_NotifyLog_i::activate (ACE_ENV_SINGLE_ARG_DECL)
   added[0].type_name = CORBA::string_dup ("*");
 
   this->consumer_admin_->subscription_change (added, removed ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
   ACE_NEW_THROW_EX (this->my_log_consumer_,
                     TAO_Notify_LogConsumer (this),
@@ -178,7 +160,7 @@ TAO_NotifyLog_i::activate (ACE_ENV_SINGLE_ARG_DECL)
 
 //IDL to C++
 CosNotifyFilter::Filter_ptr
-TAO_NotifyLog_i::get_filter (ACE_ENV_SINGLE_ARG_DECL)
+TAO_NotifyLog_i::get_filter (void)
     ACE_THROW_SPEC ((
       CORBA::SystemException
     ))
@@ -200,7 +182,7 @@ TAO_NotifyLog_i::set_filter (CosNotifyFilter::Filter_ptr /* filter */
 }
 
 CosNotifyChannelAdmin::EventChannelFactory_ptr
-TAO_NotifyLog_i::MyFactory (ACE_ENV_SINGLE_ARG_DECL)
+TAO_NotifyLog_i::MyFactory (void)
     ACE_THROW_SPEC ((
       CORBA::SystemException
     ))
@@ -210,30 +192,30 @@ TAO_NotifyLog_i::MyFactory (ACE_ENV_SINGLE_ARG_DECL)
 }
 
 CosNotifyChannelAdmin::ConsumerAdmin_ptr
-TAO_NotifyLog_i::default_consumer_admin (ACE_ENV_SINGLE_ARG_DECL)
+TAO_NotifyLog_i::default_consumer_admin (void)
     ACE_THROW_SPEC ((
       CORBA::SystemException
     ))
 {
-  return this->event_channel_->default_consumer_admin (ACE_ENV_SINGLE_ARG_PARAMETER);
+  return this->event_channel_->default_consumer_admin ();
 }
 
 CosNotifyChannelAdmin::SupplierAdmin_ptr
-TAO_NotifyLog_i::default_supplier_admin (ACE_ENV_SINGLE_ARG_DECL)
+TAO_NotifyLog_i::default_supplier_admin (void)
     ACE_THROW_SPEC ((
       CORBA::SystemException
     ))
 {
-  return this->event_channel_->default_supplier_admin (ACE_ENV_SINGLE_ARG_PARAMETER);
+  return this->event_channel_->default_supplier_admin ();
 }
 
 CosNotifyFilter::FilterFactory_ptr
-TAO_NotifyLog_i::default_filter_factory (ACE_ENV_SINGLE_ARG_DECL)
+TAO_NotifyLog_i::default_filter_factory (void)
     ACE_THROW_SPEC ((
       CORBA::SystemException
     ))
 {
-  return this->event_channel_->default_filter_factory (ACE_ENV_SINGLE_ARG_PARAMETER);
+  return this->event_channel_->default_filter_factory ();
 }
 
 CosNotifyChannelAdmin::ConsumerAdmin_ptr
@@ -277,30 +259,30 @@ TAO_NotifyLog_i::get_supplieradmin (CosNotifyChannelAdmin::AdminID id ACE_ENV_AR
 }
 
 CosNotifyChannelAdmin::AdminIDSeq*
-TAO_NotifyLog_i::get_all_consumeradmins (ACE_ENV_SINGLE_ARG_DECL)
+TAO_NotifyLog_i::get_all_consumeradmins (void)
     ACE_THROW_SPEC ((
       CORBA::SystemException
     ))
 {
-  return this->event_channel_->get_all_consumeradmins (ACE_ENV_SINGLE_ARG_PARAMETER);
+  return this->event_channel_->get_all_consumeradmins ();
 }
 
 CosNotifyChannelAdmin::AdminIDSeq*
-TAO_NotifyLog_i::get_all_supplieradmins (ACE_ENV_SINGLE_ARG_DECL)
+TAO_NotifyLog_i::get_all_supplieradmins (void)
     ACE_THROW_SPEC ((
       CORBA::SystemException
     ))
 {
-  return this->event_channel_->get_all_supplieradmins (ACE_ENV_SINGLE_ARG_PARAMETER);
+  return this->event_channel_->get_all_supplieradmins ();
 }
 
 CosNotification::AdminProperties*
-TAO_NotifyLog_i::get_admin (ACE_ENV_SINGLE_ARG_DECL)
+TAO_NotifyLog_i::get_admin (void)
     ACE_THROW_SPEC ((
       CORBA::SystemException
     ))
 {
-  return this->event_channel_->get_admin (ACE_ENV_SINGLE_ARG_PARAMETER);
+  return this->event_channel_->get_admin ();
 }
 
 void
@@ -314,7 +296,7 @@ TAO_NotifyLog_i::set_admin (const CosNotification::AdminProperties& admin ACE_EN
 }
 
 CosNotification::QoSProperties*
-TAO_NotifyLog_i::get_qos (ACE_ENV_SINGLE_ARG_DECL)
+TAO_NotifyLog_i::get_qos (void)
     ACE_THROW_SPEC ((
       CORBA::SystemException
     ))
@@ -349,12 +331,12 @@ TAO_NotifyLog_i::validate_qos (
 }
 
 CosEventChannelAdmin::ConsumerAdmin_ptr
-TAO_NotifyLog_i::for_consumers (ACE_ENV_SINGLE_ARG_DECL)
+TAO_NotifyLog_i::for_consumers (void)
     ACE_THROW_SPEC ((
       CORBA::SystemException
     ))
 {
-  return this->event_channel_->for_consumers(ACE_ENV_SINGLE_ARG_PARAMETER);
+  return this->event_channel_->for_consumers();
 }
 
 CosEventChannelAdmin::SupplierAdmin_ptr
@@ -365,7 +347,7 @@ TAO_NotifyLog_i::for_suppliers (
       CORBA::SystemException
     ))
 {
-  return this->event_channel_->for_suppliers(ACE_ENV_SINGLE_ARG_PARAMETER);
+  return this->event_channel_->for_suppliers();
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL

@@ -21,7 +21,6 @@ Roundtrip::invoke (CORBA::ServerRequest_ptr request
   if (ACE_OS::strcmp ("shutdown", request->operation ()) == 0)
     {
       this->orb_->shutdown (0 ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
 
       return;
     }
@@ -30,19 +29,15 @@ Roundtrip::invoke (CORBA::ServerRequest_ptr request
     {
       CORBA::NVList_ptr list;
       this->orb_->create_list (0, list ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
 
       CORBA::Any type_id;
       type_id._tao_set_typecode (CORBA::_tc_string);
       list->add_value ("type_id", type_id, CORBA::ARG_IN
                        ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
 
       request->arguments (list ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
 
       CORBA::NamedValue_ptr nv = list->item (0 ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
 
       const char *arg;
       *(nv->value ()) >>= arg;
@@ -57,7 +52,6 @@ Roundtrip::invoke (CORBA::ServerRequest_ptr request
       result <<= CORBA::Any::from_boolean (type_matches);
 
       request->set_result (result ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
 
       return;
     }
@@ -66,22 +60,17 @@ Roundtrip::invoke (CORBA::ServerRequest_ptr request
     {
       CORBA::NVList_ptr list;
       this->orb_->create_list (0, list ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
 
       CORBA::Any send_time;
       send_time._tao_set_typecode (CORBA::_tc_ulonglong);
       list->add_value ("send_time", send_time, CORBA::ARG_IN
                        ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
 
       request->arguments (list ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
 
       CORBA::NamedValue_ptr nv = list->item (0 ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
 
       request->set_result (*(nv->value ()) ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
 
       return;
     }
@@ -90,7 +79,6 @@ Roundtrip::invoke (CORBA::ServerRequest_ptr request
   CORBA::BAD_OPERATION exception;
   bad_operation <<= exception;
   request->set_exception (bad_operation ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 }
 
 CORBA::RepositoryId

@@ -95,8 +95,7 @@ TAO_Notify_Tests_Worker::svc (void)
   ACE_TRY
     {
       ACE_DEBUG ((LM_DEBUG, "Running Commands... \n"));
-      this->cmd_builder_->execute (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      this->cmd_builder_->execute ();
     }
   ACE_CATCHANY
     {
@@ -137,7 +136,7 @@ TAO_Notify_Tests_ORB_Run_Worker::svc (void)
   // just disabling it altogether.  It doesn't provide much value, and
   // makes service startup needlessly more verbose.  See bugzilla 2477
   // for details.
-  
+
   ACE_hthread_t current;
   ACE_Thread::self (current);
 
@@ -156,8 +155,7 @@ TAO_Notify_Tests_ORB_Run_Worker::svc (void)
     {
       ACE_DEBUG ((LM_ERROR, "Running ORB, timeout in %d sec\n", this->run_period_.sec ()));
 
-      this->orb_->run (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      this->orb_->run ();
 
     }
   ACE_CATCHANY
@@ -243,7 +241,6 @@ TAO_Notify_Tests_Driver::init (int argc, ACE_TCHAR *argv[] ACE_ENV_ARG_DECL)
                                 command_line.get_ASCII_argv(),
                                 ""
                                 ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
 
   if (this->parse_args (argc, argv) == -1)
     return -1;
@@ -254,7 +251,6 @@ TAO_Notify_Tests_Driver::init (int argc, ACE_TCHAR *argv[] ACE_ENV_ARG_DECL)
     check_supported_priorities (this->orb_.in());
 
   LOOKUP_MANAGER->init (this->orb_.in () ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
 
   this->cmd_builder_ =
     ACE_Dynamic_Service<TAO_Notify_Tests_Command_Builder>::instance (TAO_Notify_Tests_Name::command_builder);
@@ -272,7 +268,7 @@ TAO_Notify_Tests_Driver::init (int argc, ACE_TCHAR *argv[] ACE_ENV_ARG_DECL)
 }
 
 void
-TAO_Notify_Tests_Driver::run (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+TAO_Notify_Tests_Driver::run (void)
 {
   // Task activation flags.
   long flags =

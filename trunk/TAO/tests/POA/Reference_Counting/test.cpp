@@ -33,7 +33,7 @@ public:
 CORBA::ULong
 getRefCount (PortableServer::ServantBase * sb ACE_ENV_ARG_DECL)
 {
-  return sb->_refcount_value (ACE_ENV_SINGLE_ARG_PARAMETER);
+  return sb->_refcount_value ();
 }
 
 int
@@ -43,15 +43,12 @@ main (int argc, char * argv[])
     {
       CORBA::ORB_var orb =
         CORBA::ORB_init (argc, argv, "" ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       CORBA::Object_var poa_object =
         orb->resolve_initial_references("RootPOA" ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       PortableServer::POA_var poa =
         PortableServer::POA::_narrow (poa_object.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       if (CORBA::is_nil (poa.in ()))
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -61,16 +58,13 @@ main (int argc, char * argv[])
       Hello_impl * h = 0;
       ACE_NEW_RETURN (h,Hello_impl, 1);
 
-      CORBA::ULong before_act = h->_refcount_value (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      CORBA::ULong before_act = h->_refcount_value ();
 
       ACE_DEBUG ((LM_DEBUG, "Before activation: %d\n", before_act));
 
       PortableServer::ObjectId_var oid = poa->activate_object (h ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
-      CORBA::ULong after_act = h->_refcount_value (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      CORBA::ULong after_act = h->_refcount_value ();
 
       ACE_DEBUG ((LM_DEBUG, "After activation: %d\n", after_act));
         {
@@ -85,17 +79,14 @@ main (int argc, char * argv[])
            */
 
           CORBA::ULong refCountBeforeIdToServant =
-            h->_refcount_value (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+            h->_refcount_value ();
 
           ACE_DEBUG ((LM_DEBUG, "Before id_to_servant:  %d\n", refCountBeforeIdToServant));
 
           PortableServer::ServantBase_var srv = poa->id_to_servant (oid.in() ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
 
           CORBA::ULong refCountAfterIdToServant =
-            srv->_refcount_value (ACE_ENV_SINGLE_ARG_PARAMETER);;
-          ACE_TRY_CHECK;
+            srv->_refcount_value ();;
 
           ACE_DEBUG ((LM_DEBUG, "After id_to_servant:  %d\n", refCountAfterIdToServant));
 
@@ -110,13 +101,11 @@ main (int argc, char * argv[])
            */
         }
 
-      CORBA::ULong before_deact = h->_refcount_value (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      CORBA::ULong before_deact = h->_refcount_value ();
 
       ACE_DEBUG ((LM_DEBUG, "Before deactivate_object: %d\n", before_deact));
 
       poa->deactivate_object (oid.in() ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       /*
        * Because id_to_servant did not increment the reference count, but
@@ -126,20 +115,16 @@ main (int argc, char * argv[])
        * correct.
        */
 
-      CORBA::ULong after_deact = h->_refcount_value (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      CORBA::ULong after_deact = h->_refcount_value ();
 
       ACE_DEBUG ((LM_DEBUG, "After deactivate_object: %d\n", after_deact));
 
-      h->_remove_ref (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      h->_remove_ref ();
 
       orb->shutdown (1
                      ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
-      orb->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      orb->destroy ();
     }
   ACE_CATCHANY
     {

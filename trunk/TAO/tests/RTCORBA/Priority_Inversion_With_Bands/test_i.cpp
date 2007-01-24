@@ -29,7 +29,6 @@ test_i::test_i (CORBA::ORB_ptr orb,
       CORBA::Object_var object =
         this->orb_->resolve_initial_references ("RTCurrent"
                                                 ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       this->rt_current_ =
         RTCORBA::Current::_narrow (object.in ()
@@ -60,8 +59,7 @@ test_i::method (CORBA::ULong work,
     (TAO_Thread_Lane *) tss->lane_;
 
   RTCORBA::Priority current_priority =
-    this->rt_current_->the_priority (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+    this->rt_current_->the_priority ();
 
   const char *priority_string = 0;
   if (current_priority == this->low_priority_)
@@ -99,12 +97,11 @@ test_i::method (CORBA::ULong work,
     {
       this->orb_->shutdown (0
                             ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
     }
 }
 
 PortableServer::POA_ptr
-test_i::_default_POA (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+test_i::_default_POA (void)
 {
   return PortableServer::POA::_duplicate (this->poa_.in ());
 }

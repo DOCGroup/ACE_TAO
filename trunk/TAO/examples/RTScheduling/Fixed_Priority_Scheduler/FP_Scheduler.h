@@ -12,17 +12,17 @@ public FP_Scheduling::SegmentSchedulingParameterPolicy,
        public TAO_Local_RefCounted_Object
 {
  public:
-  virtual RTCORBA::Priority value (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+  virtual RTCORBA::Priority value (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual void value (RTCORBA::Priority value
                       ACE_ENV_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  CORBA::Policy_ptr copy (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+  CORBA::Policy_ptr copy (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  void destroy (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+  void destroy (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
  private:
@@ -130,17 +130,17 @@ public TAO_Local_RefCounted_Object
 		       ACE_ENV_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual CORBA::PolicyList * scheduling_policies (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+  virtual CORBA::PolicyList * scheduling_policies (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual void scheduling_policies (const CORBA::PolicyList & scheduling_policies
 				    ACE_ENV_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual CORBA::PolicyList * poa_policies (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+  virtual CORBA::PolicyList * poa_policies (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual char * scheduling_discipline_name (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+  virtual char * scheduling_discipline_name (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual RTScheduling::ResourceManager_ptr create_resource_manager (const char * name,

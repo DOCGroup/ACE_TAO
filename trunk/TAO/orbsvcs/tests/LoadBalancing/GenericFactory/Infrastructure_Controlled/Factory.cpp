@@ -31,7 +31,6 @@ Factory::create_object (
 		    Simple,
 		    CORBA::NO_MEMORY ());
 
-  ACE_CHECK_RETURN (CORBA::Object::_nil ());
 
   PortableServer::ServantBase_var safe_servant = servant;
 
@@ -53,21 +52,18 @@ Factory::create_object (
   ACE_NEW_THROW_EX (my_fcid,
 		    PortableGroup::GenericFactory::FactoryCreationId,
 		    CORBA::NO_MEMORY ());
-  ACE_CHECK_RETURN (CORBA::Object::_nil ());
 
   fcid = my_fcid;
 
   *my_fcid <<= tmp_fcid;
 
   this->poa_ =
-    servant->_default_POA (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (CORBA::Object::_nil ());
+    servant->_default_POA ();
 
   this->oid_ = this->poa_->servant_to_id (servant
                                           ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (CORBA::Object::_nil ());
 
-  return servant->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
+  return servant->_this ();
 
 }
 
@@ -98,7 +94,6 @@ Factory::delete_object (
     {
       this->poa_->deactivate_object (this->oid_.in ()
 		                     ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
     }
   else
     {

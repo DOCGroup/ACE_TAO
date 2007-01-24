@@ -55,7 +55,7 @@ TAO_Security_Current::received_credentials (
   if (impl == 0)
     ACE_THROW_RETURN (CORBA::BAD_INV_ORDER (), 0);
 
-  return impl->received_credentials (ACE_ENV_SINGLE_ARG_PARAMETER);
+  return impl->received_credentials ();
 }
 
 int
@@ -72,7 +72,6 @@ TAO_Security_Current::init (void)
                                             argv,
                                             this->orb_id_.in ()
                                             ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       this->orb_core_ = orb.in ()->orb_core ();
 
@@ -89,7 +88,6 @@ TAO_Security_Current::init (void)
       result = -1;
     }
   ACE_ENDTRY;
-  ACE_CHECK_RETURN (-1);
 
   return result;
 }

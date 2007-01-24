@@ -82,7 +82,7 @@ private:
                     ACE_Profile_Timer::ACE_Elapsed_Time &elapsed_time);
   // Prints the time stats.
 
-  void cube_union (ACE_ENV_SINGLE_ARG_DECL);
+  void cube_union (void);
   // Exercise the union.  Cube a union.
 
   void cube_struct (int i

@@ -30,6 +30,6 @@ Roundtrip::shutdown (
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_DECLARE_NEW_CORBA_ENV;
-  _tao_rh->shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
+  _tao_rh->shutdown ();
   this->orb_->shutdown (0 ACE_ENV_ARG_PARAMETER);
 }

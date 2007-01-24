@@ -64,15 +64,13 @@ TimeoutClient::svc ()
       this->none_test ();
 
       // shut down remote ORB
-      timeoutObject_->shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      timeoutObject_->shutdown ();
 
       ACE_Time_Value tv (0, 20); // wait for the ORB to deliver the shutdonw
       ACE_OS::sleep (tv);
 
       // shut down local ORB
       orb_->shutdown (0 ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
     }
   ACE_CATCHANY
     {
@@ -96,11 +94,9 @@ TimeoutClient::initialize ()
       CORBA::Object_var object =
         orb_->resolve_initial_references ("ORBPolicyManager"
                                           ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       policy_manager_ =
         CORBA::PolicyManager::_narrow (object.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
     }
   ACE_CATCHANY
     {
@@ -193,14 +189,13 @@ TimeoutClient::send (CORBA::Boolean async,
 
     }
   ACE_ENDTRY;
-  ACE_CHECK;
 
   // get rid of the policy, you created before.
   ACE_TRY_EX (cleanup)
     {
       if (local_timeout != 0)
         {
-          policy_list[0]->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
+          policy_list[0]->destroy ();
           ACE_TRY_CHECK_EX (cleanup);
         }
     }
@@ -210,7 +205,6 @@ TimeoutClient::send (CORBA::Boolean async,
                   "Error: Unexpected exception\n\n"));
     }
   ACE_ENDTRY;
-  ACE_CHECK;
 
   // wait for responses
   ACE_Time_Value tv (0, (local_timeout + remote_sleep)*2000 + 4000);

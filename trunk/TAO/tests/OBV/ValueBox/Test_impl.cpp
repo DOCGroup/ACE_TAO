@@ -261,7 +261,7 @@ Test_impl::struct_op4 (const ::Variable_Struct1 & p1,
 }
 
 
-::VBlongarray * 
+::VBlongarray *
 Test_impl::array_op1 (::VBlongarray * p1,
                       ::VBlongarray *& p2,
                       ::VBlongarray_out p3
@@ -521,7 +521,7 @@ Test_impl::union_op4 (const ::Variable_Union1 & p1,
 
 
 void
-Test_impl::shutdown (ACE_ENV_SINGLE_ARG_DECL)
+Test_impl::shutdown (void)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->orb_->shutdown (0 ACE_ENV_ARG_PARAMETER);

@@ -72,20 +72,17 @@ main (int argc,
       manager.init (argc,
                     argv
                     ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       // the command line arguments
       if (parse_args (argc, argv) == -1)
         return -1;
 
       // Merge the different IORS
-      manager.make_merged_iors (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      manager.make_merged_iors ();
 
       // Set properties. This is the most important portion of the
       // test
-      manager.set_properties (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      manager.set_properties ();
 
       // Write IOR to file
       manager.write_to_file ();
@@ -93,8 +90,7 @@ main (int argc,
       // Client, who is going to use the merged IOR
       // Construct that with the managers ORB
       Client_i client_imp (manager.orb ());
-      client_imp.init (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      client_imp.init ();
     }
   ACE_CATCHANY
     {
@@ -123,53 +119,44 @@ Manager::init (int argc,
                                 argv,
                                 0
                                 ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
   // Obtain the RootPOA.
   CORBA::Object_var obj_var =
     this->orb_->resolve_initial_references ("RootPOA"
                                             ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
   // Get the POA_var object from Object_var.
   PortableServer::POA_var root_poa_var =
     PortableServer::POA::_narrow (obj_var.in () ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
   // Get the POAManager of the RootPOA.
   PortableServer::POAManager_var poa_manager_var =
-    root_poa_var->the_POAManager (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+    root_poa_var->the_POAManager ();
 
-  poa_manager_var->activate (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+  poa_manager_var->activate ();
 }
 
 int
-Manager::make_merged_iors (ACE_ENV_SINGLE_ARG_DECL)
+Manager::make_merged_iors (void)
 {
   // First  server
   object_primary =
     this->orb_->string_to_object (first_ior
                                   ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
 
   //Second server
   object_secondary =
     this->orb_->string_to_object (second_ior
                                   ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
 
   // Get an object reference for the ORBs IORManipultion object!
   CORBA::Object_var IORM =
     this->orb_->resolve_initial_references (TAO_OBJID_IORMANIPULATION,
                                             0
                                             ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
 
   iorm =
     TAO_IOP::TAO_IOR_Manipulation::_narrow (IORM.in() ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
 
 
   // Create the list
@@ -181,13 +168,12 @@ Manager::make_merged_iors (ACE_ENV_SINGLE_ARG_DECL)
   // Create a merged set 1;
   merged_set_ =
     iorm->merge_iors (iors ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
 
   return 0;
 }
 
 int
-Manager::set_properties (ACE_ENV_SINGLE_ARG_DECL)
+Manager::set_properties (void)
 {
   FT::TagFTGroupTaggedComponent ft_tag_component;
 
@@ -216,7 +202,6 @@ Manager::set_properties (ACE_ENV_SINGLE_ARG_DECL)
   CORBA::Boolean retval = iorm->set_property (&iogr_prop,
                                               this->merged_set_.in ()
                                               ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
 
   // Set the primary
   // See we are setting the second ior as the primary
@@ -226,19 +211,17 @@ Manager::set_properties (ACE_ENV_SINGLE_ARG_DECL)
                                   object_secondary.in (),
                                   this->merged_set_.in ()
                                   ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK_RETURN (-1);
     }
 
   return 0;
 }
 
 int
-Manager::run (ACE_ENV_SINGLE_ARG_DECL)
+Manager::run (void)
 {
   ACE_TRY
     {
-      this->orb_->run (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      this->orb_->run ();
     }
   ACE_CATCHANY
     {
@@ -289,7 +272,7 @@ run_test (Simple_Server_ptr server
           ACE_ENV_ARG_DECL);
 
 void
-Client_i::init (ACE_ENV_SINGLE_ARG_DECL)
+Client_i::init (void)
 {
   // Open the file for reading.
   ACE_HANDLE f_handle = ACE_OS::open (ior_output_file,
@@ -315,18 +298,15 @@ Client_i::init (ACE_ENV_SINGLE_ARG_DECL)
                                 argv,
                                 0
                                 ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
   CORBA::Object_var object =
     this->orb_->string_to_object (data
                                   ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
   // Combined IOR stuff
   Simple_Server_var server =
     Simple_Server::_narrow (object.in ()
                             ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
   if (CORBA::is_nil (server.in ()))
     {
@@ -337,7 +317,6 @@ Client_i::init (ACE_ENV_SINGLE_ARG_DECL)
 
   run_test (server.in ()
             ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
   ior_buffer.alloc ()->free (data);
   ACE_OS::close (f_handle);
@@ -359,16 +338,14 @@ void run_test (Simple_Server_ptr server
                j++)
             {
               // Make a remote call
-              server->remote_call (ACE_ENV_SINGLE_ARG_PARAMETER);
-              ACE_TRY_CHECK;
+              server->remote_call ();
             }
 
           ACE_DEBUG ((LM_DEBUG,
                       ACE_TEXT ("*********************************\n")));
           ACE_DEBUG ((LM_DEBUG,
                       ACE_TEXT ("I am going to shutdown the server\n")));
-          server->shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+          server->shutdown ();
           ACE_OS::sleep (2);
         }
       ACE_CATCH (CORBA::TRANSIENT, t)
@@ -399,6 +376,5 @@ void run_test (Simple_Server_ptr server
           ACE_RE_THROW;
         }
       ACE_ENDTRY;
-      ACE_CHECK;
     }
 }

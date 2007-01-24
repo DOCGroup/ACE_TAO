@@ -32,13 +32,13 @@ public:
 
   test_i (PortableServer::POA_ptr poa);
 
-  void normal (ACE_ENV_SINGLE_ARG_DECL)
+  void normal (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  void exceptional (ACE_ENV_SINGLE_ARG_DECL)
+  void exceptional (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  void notexisting (ACE_ENV_SINGLE_ARG_DECL)
+  void notexisting (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   PortableServer::POA_var poa_;
@@ -50,21 +50,21 @@ test_i::test_i (PortableServer::POA_ptr poa)
 }
 
 void
-test_i::normal (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+test_i::normal (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
     ACE_DEBUG ((LM_DEBUG, "executing normal\n"));
 }
 
 void
-test_i::exceptional (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+test_i::exceptional (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
     ACE_DEBUG ((LM_DEBUG, "executing exceptional\n"));
 }
 
 void
-test_i::notexisting (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+test_i::notexisting (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
     ACE_DEBUG ((LM_DEBUG, "executing notexisting\n"));
@@ -171,24 +171,19 @@ main (int argc, char **argv)
                          argv,
                          0
                          ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       CORBA::Object_var obj =
         orb->resolve_initial_references ("RootPOA"
                                          ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       PortableServer::POA_var root_poa =
         PortableServer::POA::_narrow (obj.in ()
                                       ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       PortableServer::POAManager_var poa_manager =
-        root_poa->the_POAManager (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        root_poa->the_POAManager ();
 
-      poa_manager->activate (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      poa_manager->activate ();
 
       CORBA::PolicyList policies;
       CORBA::ULong current_length = 0;
@@ -197,31 +192,26 @@ main (int argc, char **argv)
       policies[current_length++] =
         root_poa->create_request_processing_policy (PortableServer::USE_SERVANT_MANAGER
                                                     ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       policies.length (current_length + 1);
       policies[current_length++] =
         root_poa->create_servant_retention_policy (PortableServer::NON_RETAIN
                                                    ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       policies.length (current_length + 1);
       policies[current_length++] =
         root_poa->create_id_assignment_policy (PortableServer::USER_ID
                                                ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       PortableServer::POA_var child_poa =
         root_poa->create_POA ("child",
                               poa_manager.in (),
                               policies
                               ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       Servant_Locator* servant_locator = new Servant_Locator(child_poa.in ()) ;
       child_poa->set_servant_manager (servant_locator
                                       ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       PortableServer::ObjectId_var objectID =
         PortableServer::string_to_ObjectId ("object");
@@ -230,12 +220,10 @@ main (int argc, char **argv)
         child_poa->create_reference_with_id (objectID.in (),
                                              "IDL:test:1.0"
                                              ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       test_var testObject =
         test::_narrow (objectREF.in ()
                        ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       testObject->normal();
 

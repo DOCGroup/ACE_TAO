@@ -44,7 +44,7 @@ public:
     ));
   // Receives a message string.
 
-  virtual void shutdown (ACE_ENV_SINGLE_ARG_DECL)
+  virtual void shutdown (void)
     ACE_THROW_SPEC ((
       CORBA::SystemException
     ));

@@ -28,10 +28,10 @@ public:
   ForwardCtrlServerInterceptor();
   ~ForwardCtrlServerInterceptor();
 
-  virtual char * name (ACE_ENV_SINGLE_ARG_DECL)
+  virtual char * name (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual void destroy (ACE_ENV_SINGLE_ARG_DECL)
+  virtual void destroy (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual void receive_request (PortableInterceptor::ServerRequestInfo_ptr ri

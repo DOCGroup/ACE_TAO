@@ -18,7 +18,7 @@ public:
   HelloWorld (void);
   /// Constructor
 
-  virtual char * get_string (ACE_ENV_SINGLE_ARG_DECL)
+  virtual char * get_string (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
 };

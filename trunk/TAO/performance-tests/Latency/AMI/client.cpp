@@ -76,11 +76,9 @@ main (int argc, char *argv[])
     {
       CORBA::ORB_var orb =
         CORBA::ORB_init (argc, argv, "" ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       CORBA::Object_var poa_object =
         orb->resolve_initial_references("RootPOA" ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       if (CORBA::is_nil (poa_object.in ()))
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -89,22 +87,18 @@ main (int argc, char *argv[])
 
       PortableServer::POA_var root_poa =
         PortableServer::POA::_narrow (poa_object.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       PortableServer::POAManager_var poa_manager =
-        root_poa->the_POAManager (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        root_poa->the_POAManager ();
 
       if (parse_args (argc, argv) != 0)
         return 1;
 
       CORBA::Object_var object =
         orb->string_to_object (ior ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       Test::Roundtrip_var roundtrip =
         Test::Roundtrip::_narrow (object.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       if (CORBA::is_nil (roundtrip.in ()))
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -116,7 +110,6 @@ main (int argc, char *argv[])
         {
           ACE_hrtime_t start = 0;
           (void) roundtrip->test_method (start ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
         }
 
       Roundtrip_Handler *roundtrip_handler_impl;
@@ -126,11 +119,9 @@ main (int argc, char *argv[])
       PortableServer::ServantBase_var owner_transfer(roundtrip_handler_impl);
 
       Test::AMI_RoundtripHandler_var roundtrip_handler =
-        roundtrip_handler_impl->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        roundtrip_handler_impl->_this ();
 
-      poa_manager->activate (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      poa_manager->activate ();
 
       ACE_hrtime_t test_start = ACE_OS::gethrtime ();
 
@@ -140,10 +131,9 @@ main (int argc, char *argv[])
            roundtrip->sendc_test_method (roundtrip_handler.in (),
                                          ACE_OS::gethrtime ()
                                          ACE_ENV_ARG_PARAMETER);
-           if (orb->work_pending (ACE_ENV_SINGLE_ARG_PARAMETER))
-              orb->perform_work (ACE_ENV_SINGLE_ARG_PARAMETER);
+           if (orb->work_pending ())
+              orb->perform_work ();
 
-           ACE_TRY_CHECK;
          }
 
        ACE_Time_Value tv (0, 2000);
@@ -151,7 +141,6 @@ main (int argc, char *argv[])
        while (roundtrip_handler_impl->pending_callbacks ())
          {
            orb->perform_work (tv ACE_ENV_ARG_PARAMETER);
-           ACE_TRY_CHECK;
          }
 
       ACE_hrtime_t test_end = ACE_OS::gethrtime ();
@@ -166,14 +155,11 @@ main (int argc, char *argv[])
                                              test_end - test_start,
                                              niterations);
 
-      roundtrip->shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      roundtrip->shutdown ();
 
       root_poa->destroy (1, 1 ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
-      orb->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      orb->destroy ();
     }
   ACE_CATCHANY
     {

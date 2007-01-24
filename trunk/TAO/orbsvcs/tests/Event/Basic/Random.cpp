@@ -29,13 +29,10 @@ deactivate_servant (PortableServer::Servant servant
                     ACE_ENV_ARG_DECL)
 {
   PortableServer::POA_var poa =
-    servant->_default_POA (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+    servant->_default_POA ();
   PortableServer::ObjectId_var oid =
     poa->servant_to_id (servant ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
   poa->deactivate_object (oid.in () ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 }
 
 
@@ -58,7 +55,6 @@ RND_Driver::run (int argc, char *argv[])
     {
       CORBA::ORB_var orb =
         CORBA::ORB_init (argc, argv, "" ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       // ****************************************************************
 
@@ -121,15 +117,11 @@ RND_Driver::run (int argc, char *argv[])
 
       CORBA::Object_var object =
         orb->resolve_initial_references ("RootPOA" ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
       PortableServer::POA_var poa =
         PortableServer::POA::_narrow (object.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
       PortableServer::POAManager_var poa_manager =
-        poa->the_POAManager (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
-      poa_manager->activate (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        poa->the_POAManager ();
+      poa_manager->activate ();
 
       // ****************************************************************
 
@@ -139,24 +131,20 @@ RND_Driver::run (int argc, char *argv[])
       attributes.supplier_reconnect = 1;
 
       TAO_EC_Event_Channel ec_impl (attributes);
-      ec_impl.activate (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      ec_impl.activate ();
 
       RtecEventChannelAdmin::EventChannel_var event_channel =
-        ec_impl._this (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        ec_impl._this ();
 
       // ****************************************************************
 
       // Obtain the consumer admin..
       this->consumer_admin_ =
-        event_channel->for_consumers (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        event_channel->for_consumers ();
 
       // Obtain the supplier admin..
       this->supplier_admin_ =
-        event_channel->for_suppliers (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        event_channel->for_suppliers ();
 
       // ****************************************************************
 
@@ -178,7 +166,6 @@ RND_Driver::run (int argc, char *argv[])
         this->timer_.connect (this->consumer_admin_.in (),
                               qos.get_ConsumerQOS ()
                               ACE_ENV_ARG_PARAMETER);
-        ACE_TRY_CHECK;
       }
 
       // ****************************************************************
@@ -190,7 +177,6 @@ RND_Driver::run (int argc, char *argv[])
         this->supplier_.connect (this->supplier_admin_.in (),
                                  qos.get_SupplierQOS ()
                                  ACE_ENV_ARG_PARAMETER);
-        ACE_TRY_CHECK;
       }
 
       // ****************************************************************
@@ -205,8 +191,7 @@ RND_Driver::run (int argc, char *argv[])
                           1);
 
           CORBA::Object_var obj =
-            this->consumers_[i]->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+            this->consumers_[i]->_this ();
         }
 
       // ****************************************************************
@@ -222,8 +207,7 @@ RND_Driver::run (int argc, char *argv[])
           this->suppliers_[j]->activate ();
 
           CORBA::Object_var obj =
-            this->suppliers_[j]->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+            this->suppliers_[j]->_this ();
         }
 
       // ****************************************************************
@@ -240,9 +224,7 @@ RND_Driver::run (int argc, char *argv[])
           {
             deactivate_servant (this->suppliers_[k]
                                 ACE_ENV_ARG_PARAMETER);
-            ACE_TRY_CHECK;
-            this->suppliers_[k]->_remove_ref (ACE_ENV_SINGLE_ARG_PARAMETER);
-            ACE_TRY_CHECK;
+            this->suppliers_[k]->_remove_ref ();
           }
         delete[] this->suppliers_;
         this->suppliers_ = 0;
@@ -252,8 +234,7 @@ RND_Driver::run (int argc, char *argv[])
 
       // We destroy now to verify that the callbacks work and do not
       // produce any problems.
-      event_channel->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      event_channel->destroy ();
 
       // ****************************************************************
 
@@ -262,9 +243,7 @@ RND_Driver::run (int argc, char *argv[])
           {
             deactivate_servant (this->consumers_[k]
                                 ACE_ENV_ARG_PARAMETER);
-            ACE_TRY_CHECK;
-            this->consumers_[k]->_remove_ref (ACE_ENV_SINGLE_ARG_PARAMETER);
-            ACE_TRY_CHECK;
+            this->consumers_[k]->_remove_ref ();
           }
         delete[] this->consumers_;
         this->consumers_ = 0;
@@ -274,17 +253,14 @@ RND_Driver::run (int argc, char *argv[])
 
       deactivate_servant (&ec_impl
                           ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       // ****************************************************************
 
       poa->destroy (1, 1 ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       // ****************************************************************
 
-      orb->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      orb->destroy ();
     }
   ACE_CATCHANY
     {
@@ -318,7 +294,6 @@ RND_Driver::timer (const RtecEventComm::Event &e
             event[0] = e;
             event[0].header.source ++;
             this->supplier_.push (event ACE_ENV_ARG_PARAMETER);
-            ACE_CHECK;
           }
       }
       break;
@@ -343,7 +318,6 @@ RND_Driver::timer (const RtecEventComm::Event &e
         this->suppliers_[n]->connect (this->supplier_admin_.in (),
                                       qos.get_SupplierQOS ()
                                       ACE_ENV_ARG_PARAMETER);
-        ACE_CHECK;
       }
       break;
 
@@ -360,7 +334,6 @@ RND_Driver::timer (const RtecEventComm::Event &e
         this->consumers_[n]->connect (this->consumer_admin_.in (),
                                       qos.get_ConsumerQOS ()
                                       ACE_ENV_ARG_PARAMETER);
-        ACE_CHECK;
       }
       break;
 
@@ -370,8 +343,7 @@ RND_Driver::timer (const RtecEventComm::Event &e
 
         // ACE_DEBUG ((LM_DEBUG, "Disconnecting supplier %d\n", n));
 
-        this->suppliers_[n]->disconnect (ACE_ENV_SINGLE_ARG_PARAMETER);
-        ACE_CHECK;
+        this->suppliers_[n]->disconnect ();
       }
       break;
 
@@ -381,8 +353,7 @@ RND_Driver::timer (const RtecEventComm::Event &e
 
         // ACE_DEBUG ((LM_DEBUG, "Disconnecting consumer %d\n", n));
 
-        this->consumers_[n]->disconnect (ACE_ENV_SINGLE_ARG_PARAMETER);
-        ACE_CHECK;
+        this->consumers_[n]->disconnect ();
       }
       break;
     }
@@ -405,7 +376,6 @@ RND_Timer::push (const RtecEventComm::EventSet &event
   ACE_TRY
     {
       this->driver_->timer (event[0] ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
     }
   ACE_CATCHANY
     {
@@ -426,30 +396,26 @@ RND_Consumer::connect (RtecEventChannelAdmin::ConsumerAdmin_ptr admin,
 
     if (CORBA::is_nil (this->proxy_.in ()))
       {
-        this->proxy_ = admin->obtain_push_supplier (ACE_ENV_SINGLE_ARG_PARAMETER);
-        ACE_CHECK;
+        this->proxy_ = admin->obtain_push_supplier ();
       }
     proxy =
       RtecEventChannelAdmin::ProxyPushSupplier::_duplicate(this->proxy_.in ());
   }
   RtecEventComm::PushConsumer_var me =
-    this->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+    this->_this ();
   proxy->connect_push_consumer (me.in (),
                                 qos
                                 ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 }
 
 void
-RND_Consumer::disconnect (ACE_ENV_SINGLE_ARG_DECL)
+RND_Consumer::disconnect (void)
 {
   ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->lock_);
 
   if (CORBA::is_nil (this->proxy_.in ()))
     return;
-  this->proxy_->disconnect_push_supplier (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+  this->proxy_->disconnect_push_supplier ();
   this->proxy_ =
     RtecEventChannelAdmin::ProxyPushSupplier::_nil ();
 }
@@ -463,7 +429,7 @@ RND_Consumer::push (const RtecEventComm::EventSet &event
 }
 
 void
-RND_Consumer::disconnect_push_consumer (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+RND_Consumer::disconnect_push_consumer (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
 }
@@ -481,37 +447,33 @@ RND_Supplier::connect (RtecEventChannelAdmin::SupplierAdmin_ptr admin,
 
     if (CORBA::is_nil (this->proxy_.in ()))
       {
-        this->proxy_ = admin->obtain_push_consumer (ACE_ENV_SINGLE_ARG_PARAMETER);
-        ACE_CHECK;
+        this->proxy_ = admin->obtain_push_consumer ();
       }
 
     proxy =
       RtecEventChannelAdmin::ProxyPushConsumer::_duplicate(this->proxy_.in ());
   }
   RtecEventComm::PushSupplier_var me =
-    this->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+    this->_this ();
   proxy->connect_push_supplier (me.in (),
                                 qos
                                 ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 }
 
 void
-RND_Supplier::disconnect (ACE_ENV_SINGLE_ARG_DECL)
+RND_Supplier::disconnect (void)
 {
   ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->lock_);
 
   if (CORBA::is_nil (this->proxy_.in ()))
     return;
-  this->proxy_->disconnect_push_consumer (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+  this->proxy_->disconnect_push_consumer ();
   this->proxy_ =
     RtecEventChannelAdmin::ProxyPushConsumer::_nil ();
 }
 
 void
-RND_Supplier::push_new_event (ACE_ENV_SINGLE_ARG_DECL)
+RND_Supplier::push_new_event (void)
 {
   RtecEventComm::EventSet event (1);
   event.length (1);
@@ -540,7 +502,7 @@ RND_Supplier::push (RtecEventComm::EventSet &event
 }
 
 void
-RND_Supplier::disconnect_push_supplier (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+RND_Supplier::disconnect_push_supplier (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
 }
@@ -559,8 +521,7 @@ RND_Supplier::svc (void)
           ACE_Time_Value tv (0, 10000);
           ACE_OS::sleep (tv);
 
-          this->push_new_event (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+          this->push_new_event ();
         }
       ACE_CATCHANY
         {

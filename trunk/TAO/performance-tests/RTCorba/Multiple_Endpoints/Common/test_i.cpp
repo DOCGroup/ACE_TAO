@@ -31,8 +31,6 @@ Test_i::shutdown (const char *orb_id
                                         0,
                                         orb_id
                                         ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
   orb->shutdown (0 ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 }

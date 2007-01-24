@@ -26,26 +26,25 @@ TAO_AliasDef_i::~TAO_AliasDef_i (void)
 }
 
 CORBA::DefinitionKind
-TAO_AliasDef_i::def_kind (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+TAO_AliasDef_i::def_kind (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return CORBA::dk_Alias;
 }
 
 CORBA::TypeCode_ptr
-TAO_AliasDef_i::type (ACE_ENV_SINGLE_ARG_DECL)
+TAO_AliasDef_i::type (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_IFR_READ_GUARD_RETURN (CORBA::TypeCode::_nil ());
 
-  this->update_key (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (CORBA::TypeCode::_nil ());
+  this->update_key ();
 
-  return this->type_i (ACE_ENV_SINGLE_ARG_PARAMETER);
+  return this->type_i ();
 }
 
 CORBA::TypeCode_ptr
-TAO_AliasDef_i::type_i (ACE_ENV_SINGLE_ARG_DECL)
+TAO_AliasDef_i::type_i (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_TString id;
@@ -71,8 +70,7 @@ TAO_AliasDef_i::type_i (ACE_ENV_SINGLE_ARG_DECL)
      ACE_THROW_RETURN ( CORBA::OBJECT_NOT_EXIST(), CORBA::TypeCode::_nil () );
   }
 
-  CORBA::TypeCode_var tc = impl->type_i (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (CORBA::TypeCode::_nil ());
+  CORBA::TypeCode_var tc = impl->type_i ();
 
   return this->repo_->tc_factory ()->create_alias_tc (id.c_str (),
                                                       name.c_str (),
@@ -81,19 +79,18 @@ TAO_AliasDef_i::type_i (ACE_ENV_SINGLE_ARG_DECL)
 }
 
 CORBA::IDLType_ptr
-TAO_AliasDef_i::original_type_def (ACE_ENV_SINGLE_ARG_DECL)
+TAO_AliasDef_i::original_type_def (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_IFR_READ_GUARD_RETURN (CORBA::IDLType::_nil ());
 
-  this->update_key (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (CORBA::IDLType::_nil ());
+  this->update_key ();
 
-  return this->original_type_def_i (ACE_ENV_SINGLE_ARG_PARAMETER);
+  return this->original_type_def_i ();
 }
 
 CORBA::IDLType_ptr
-TAO_AliasDef_i::original_type_def_i (ACE_ENV_SINGLE_ARG_DECL)
+TAO_AliasDef_i::original_type_def_i (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_TString original_type;
@@ -105,7 +102,6 @@ TAO_AliasDef_i::original_type_def_i (ACE_ENV_SINGLE_ARG_DECL)
     TAO_IFR_Service_Utils::path_to_ir_object (original_type,
                                               this->repo_
                                               ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (CORBA::IDLType::_nil ());
 
   return CORBA::IDLType::_narrow (obj.in ()
                                   ACE_ENV_ARG_PARAMETER);
@@ -118,8 +114,7 @@ TAO_AliasDef_i::original_type_def (CORBA::IDLType_ptr original_type_def
 {
   TAO_IFR_WRITE_GUARD;
 
-  this->update_key (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+  this->update_key ();
 
   this->original_type_def_i (original_type_def
                              ACE_ENV_ARG_PARAMETER);

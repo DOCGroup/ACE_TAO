@@ -32,14 +32,14 @@ ServerRequest_Interceptor2::~ServerRequest_Interceptor2 (void)
 }
 
 char *
-ServerRequest_Interceptor2::name (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+ServerRequest_Interceptor2::name (void)
 ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return CORBA::string_dup ("ServerRequest_Interceptor2");
 }
 
 void
-ServerRequest_Interceptor2::destroy (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+ServerRequest_Interceptor2::destroy (void)
 ACE_THROW_SPEC ((CORBA::SystemException))
 {
 }
@@ -60,7 +60,7 @@ ServerRequest_Interceptor2::receive_request (
 ACE_THROW_SPEC ((CORBA::SystemException,
                  PortableInterceptor::ForwardRequest))
 {
-  CORBA::String_var op = ri->operation (ACE_ENV_SINGLE_ARG_PARAMETER);
+  CORBA::String_var op = ri->operation ();
 
   if (ACE_OS::strcmp (op.in (), "has_ft_request_service_context"))
   {
@@ -74,7 +74,6 @@ ACE_THROW_SPEC ((CORBA::SystemException,
       IOP::ServiceContext_var sc =
         ri->get_request_service_context (IOP::FT_REQUEST
                                          ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       // No exception therefore there was a context
       has_ft_request_sc_ = true;

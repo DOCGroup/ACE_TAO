@@ -116,7 +116,6 @@ main (int argc, char **argv)
                          argv,
                          0
                          ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       // Initialize options based on command-line arguments.
       int parse_args_result =
@@ -128,17 +127,14 @@ main (int argc, char **argv)
       CORBA::Object_var object =
         orb->string_to_object (IOR
                                ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       // Try to narrow the object reference to a test reference.
       test_var test = test::_narrow (object.in ()
                                      ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       CORBA::String_var ior =
         orb->object_to_string (test.in ()
                                ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       ACE_DEBUG ((LM_DEBUG,
                   "\nConnecting to: %s\n\n",
@@ -158,23 +154,19 @@ main (int argc, char **argv)
             {
               test->timed_oneway_method (timeout
                                          ACE_ENV_ARG_PARAMETER);
-              ACE_TRY_CHECK;
             }
           else if (oneway)
             {
-              test->oneway_method (ACE_ENV_SINGLE_ARG_PARAMETER);
-              ACE_TRY_CHECK;
+              test->oneway_method ();
             }
           else if (!oneway && timed_method)
             {
               test->timed_method (timeout
                                   ACE_ENV_ARG_PARAMETER);
-              ACE_TRY_CHECK;
             }
           else
             {
-              test->method (ACE_ENV_SINGLE_ARG_PARAMETER);
-              ACE_TRY_CHECK;
+              test->method ();
             }
         }
 
@@ -187,8 +179,7 @@ main (int argc, char **argv)
 
       if (shutdown_server)
         {
-          test->shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+          test->shutdown ();
         }
     }
   ACE_CATCHANY
@@ -197,7 +188,6 @@ main (int argc, char **argv)
       return -1;
     }
   ACE_ENDTRY;
-  ACE_CHECK_RETURN (-1);
 
   return 0;
 }

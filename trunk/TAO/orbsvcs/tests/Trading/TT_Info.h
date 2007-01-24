@@ -38,7 +38,7 @@ public:
 
     Remote_Output (void) {}
 
-    virtual void confirm (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+    virtual void confirm (void)
       ACE_THROW_SPEC ((CORBA::SystemException)) {}
     // Method to test that the importer received a valid reference to
     // the exported object.
@@ -51,7 +51,7 @@ public:
 
     Printer (void) {}
 
-    virtual void confirm (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+    virtual void confirm (void)
       ACE_THROW_SPEC ((CORBA::SystemException)) {}
     // Method to test that the importer received a valid reference to
     // the exported object.
@@ -63,7 +63,7 @@ public:
   public:
     Plotter (void) {}
 
-    virtual void confirm (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+    virtual void confirm (void)
       ACE_THROW_SPEC ((CORBA::SystemException)) {}
     // Method to test that the importer received a valid reference to
     // the exported object.
@@ -75,7 +75,7 @@ public:
   public:
     File_System (void) {}
 
-    virtual void confirm (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+    virtual void confirm (void)
       ACE_THROW_SPEC ((CORBA::SystemException)) {}
     // Method to test that the importer received a valid reference to
     // the exported object.
@@ -87,7 +87,7 @@ public:
   public:
     PostScript_Printer (void) {}
 
-    virtual void confirm (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+    virtual void confirm (void)
       ACE_THROW_SPEC ((CORBA::SystemException)) {}
     // Method to test that the importer received a valid reference to
     // the exported object.

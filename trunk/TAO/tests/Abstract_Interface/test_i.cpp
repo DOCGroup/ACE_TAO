@@ -66,8 +66,7 @@ passer_i::pass_ops (base_out outarg
   ACE_NEW (servant,
            foo_i);
   PortableServer::ServantBase_var safety (servant);
-  outarg = servant->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+  outarg = servant->_this ();
 }
 
 void

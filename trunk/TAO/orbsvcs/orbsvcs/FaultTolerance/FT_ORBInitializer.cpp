@@ -32,15 +32,12 @@ TAO_FT_ORBInitializer::post_init (
 {
   this->register_policy_factories (info
                                    ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
   this->register_server_request_interceptors (info
                                               ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
   this->register_client_request_interceptors (info
                                               ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 }
 
 void
@@ -64,7 +61,6 @@ TAO_FT_ORBInitializer::register_policy_factories (
                          TAO::VMCID,
                          ENOMEM),
                       CORBA::COMPLETED_NO));
-  ACE_CHECK;
 
   policy_factory = temp_factory;
 
@@ -76,19 +72,16 @@ TAO_FT_ORBInitializer::register_policy_factories (
   info->register_policy_factory (type,
                                  policy_factory.in ()
                                  ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
   type = FT::HEARTBEAT_POLICY;
   info->register_policy_factory (type,
                                  policy_factory.in ()
                                  ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
   type = FT::HEARTBEAT_ENABLED_POLICY;
   info->register_policy_factory (type,
                                  policy_factory.in ()
                                  ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
   // Transfer ownership of the policy factory to the registry.
   (void) policy_factory._retn ();
@@ -112,7 +105,6 @@ TAO_FT_ORBInitializer::register_server_request_interceptors (
 
   info->add_server_request_interceptor (server_interceptor.in ()
                                         ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 }
 
 
@@ -134,7 +126,6 @@ TAO_FT_ORBInitializer::register_client_request_interceptors (
 
   info->add_client_request_interceptor (client_interceptor.in ()
                                         ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL

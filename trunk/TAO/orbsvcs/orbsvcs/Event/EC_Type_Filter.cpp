@@ -22,7 +22,6 @@ TAO_EC_Type_Filter::filter (const RtecEventComm::EventSet& event,
   if (this->can_match (event[0].header))
     {
       this->push (event, qos_info ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK_RETURN (0);
       return 1;
     }
   return 0;
@@ -39,7 +38,6 @@ TAO_EC_Type_Filter::filter_nocopy (RtecEventComm::EventSet& event,
   if (this->can_match (event[0].header))
     {
       this->push_nocopy (event, qos_info ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK_RETURN (0);
       return 1;
     }
   return 0;
@@ -142,7 +140,6 @@ TAO_EC_Type_Filter::filter_set (const RtecEventComm::EventSet& event,
     return 0;
 
   this->push (matched, qos_info ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (0);
 
   return 1;
 }

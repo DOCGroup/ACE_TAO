@@ -57,7 +57,7 @@ private:
   void connect_consumers (RtecScheduler::Scheduler_ptr scheduler,
                           RtecEventChannelAdmin::EventChannel_ptr local_ec
                           ACE_ENV_ARG_DECL);
-  void disconnect_consumers (ACE_ENV_SINGLE_ARG_DECL);
+  void disconnect_consumers (void);
   // Connect and disconnect the consumers.
 
   void dump_results (void);

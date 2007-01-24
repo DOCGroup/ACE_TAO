@@ -84,17 +84,14 @@ Object_Group_Factory_i::make_group (int random,
         ACE_NEW_THROW_EX (group_servant,
                           RR_Object_Group (id, this),
                           CORBA::NO_MEMORY ());
-      ACE_CHECK_RETURN (group._retn ());
 
       // Temporarily put the servant into the auto_ptr.
       ACE_Auto_Basic_Ptr<Object_Group_i> temp (group_servant);
 
       // Register with the poa, begin using ref. counting.
-      group = group_servant->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK_RETURN (group._retn ());
+      group = group_servant->_this ();
 
-      group_servant->_remove_ref (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK_RETURN (Load_Balancer::Object_Group::_nil ());
+      group_servant->_remove_ref ();
       temp.release ();
 
       // Make an entry in appropriate map of groups.
@@ -156,7 +153,6 @@ Object_Group_Factory_i::list_groups (int random
   ACE_NEW_THROW_EX (list,
                     Load_Balancer::Group_List (len),
                     CORBA::NO_MEMORY ());
-  ACE_CHECK_RETURN (list);
   list->length (len);
 
   // Create an iterator for group structure to populate the list.
@@ -182,14 +178,14 @@ Object_Group_Factory_i::list_groups (int random
 }
 
 Load_Balancer::Group_List *
-Object_Group_Factory_i::round_robin_groups (ACE_ENV_SINGLE_ARG_DECL)
+Object_Group_Factory_i::round_robin_groups (void)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return list_groups (0 ACE_ENV_ARG_PARAMETER);
 }
 
 Load_Balancer::Group_List *
-Object_Group_Factory_i::random_groups (ACE_ENV_SINGLE_ARG_DECL)
+Object_Group_Factory_i::random_groups (void)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return list_groups (1 ACE_ENV_ARG_PARAMETER);
@@ -215,7 +211,7 @@ Object_Group_i::~Object_Group_i (void)
 }
 
 char *
-Object_Group_i::id (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+Object_Group_i::id (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return CORBA::string_dup (id_.c_str ());
@@ -242,7 +238,6 @@ Object_Group_i::bind (const Load_Balancer::Member & member
   ACE_NEW_THROW_EX (new_id,
                     ACE_CString (member.id),
                     CORBA::NO_MEMORY ());
-  ACE_CHECK;
   if (member_id_list_.insert_tail (new_id) == 0)
     ACE_THROW (CORBA::NO_MEMORY ());
 
@@ -303,7 +298,7 @@ Object_Group_i::resolve_with_id (const char * id
 }
 
 Load_Balancer::Member_ID_List *
-Object_Group_i::members (ACE_ENV_SINGLE_ARG_DECL)
+Object_Group_i::members (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   Load_Balancer::Member_ID_List * list;
@@ -315,7 +310,6 @@ Object_Group_i::members (ACE_ENV_SINGLE_ARG_DECL)
   ACE_NEW_THROW_EX (list,
                     Load_Balancer::Member_ID_List (len),
                     CORBA::NO_MEMORY ());
-  ACE_CHECK_RETURN (list);
   list->length (len);
 
   // Create an iterator for <member_id_list_> to populate the list.
@@ -332,22 +326,19 @@ Object_Group_i::members (ACE_ENV_SINGLE_ARG_DECL)
 }
 
 void
-Object_Group_i::destroy (ACE_ENV_SINGLE_ARG_DECL)
+Object_Group_i::destroy (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // Deregister with POA.
   PortableServer::POA_var poa =
-    this->_default_POA (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+    this->_default_POA ();
 
   PortableServer::ObjectId_var id =
     poa->servant_to_id (this
                         ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
   poa->deactivate_object (id.in ()
                           ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
   ACE_DEBUG ((LM_DEBUG,
               "Load_Balancer: Destroyed object group"
@@ -367,18 +358,18 @@ Random_Object_Group::~Random_Object_Group (void)
 }
 
 void
-Random_Object_Group::destroy (ACE_ENV_SINGLE_ARG_DECL)
+Random_Object_Group::destroy (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   //Deregisters this <Object_Group> with its
   // <Object_Group_Factory>.
   my_factory_->remove_group (id_, 1);
 
-  Object_Group_i::destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
+  Object_Group_i::destroy ();
 }
 
 CORBA::Object_ptr
-Random_Object_Group::resolve (ACE_ENV_SINGLE_ARG_DECL)
+Random_Object_Group::resolve (void)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Load_Balancer::no_such_member))
 {
@@ -417,18 +408,18 @@ RR_Object_Group::~RR_Object_Group (void)
 }
 
 void
-RR_Object_Group::destroy (ACE_ENV_SINGLE_ARG_DECL)
+RR_Object_Group::destroy (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   //Deregisters this <Object_Group> with its
   // <Object_Group_Factory>.
   my_factory_->remove_group (id_, 0);
 
-  Object_Group_i::destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
+  Object_Group_i::destroy ();
 }
 
 CORBA::Object_ptr
-RR_Object_Group::resolve (ACE_ENV_SINGLE_ARG_DECL)
+RR_Object_Group::resolve (void)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Load_Balancer::no_such_member))
 {

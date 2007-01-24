@@ -20,7 +20,7 @@
 #include "objref_struct.h"
 
 ACE_RCSID (Param_Test,
-           objref_struct, 
+           objref_struct,
            "$Id$")
 
 // ************************************************************************
@@ -59,8 +59,7 @@ Test_Objref_Struct::dii_req_invoke (CORBA::Request *req
 
   req->set_return_type (Param_Test::_tc_Objref_Struct);
 
-  req->invoke (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+  req->invoke ();
 
   Param_Test::Objref_Struct *tmp;
   req->return_value () >>= tmp;
@@ -68,13 +67,11 @@ Test_Objref_Struct::dii_req_invoke (CORBA::Request *req
 
   CORBA::NamedValue_ptr o2 =
     req->arguments ()->item (1 ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
   *o2->value () >>= tmp;
   this->inout_ = new Param_Test::Objref_Struct (*tmp);
 
   CORBA::NamedValue_ptr o3 =
     req->arguments ()->item (2 ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
   *o3->value () >>= tmp;
   this->out_ = new Param_Test::Objref_Struct (*tmp);
 }
@@ -90,15 +87,13 @@ Test_Objref_Struct::init_parameters (Param_Test_ptr objref
       // Set the long member.
       this->in_.x = gen->gen_long ();
 
-      this->in_.y = objref->make_coffee (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      this->in_.y = objref->make_coffee ();
 
       Coffee::Desc d;
       d.name = gen->gen_string ();
 
       this->in_.y->description (d
                                 ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
             this->inout_->x = 0;
 
@@ -148,7 +143,6 @@ Test_Objref_Struct::run_sii_test (Param_Test_ptr objref
                                                this->inout_.inout (),
                                                out
                                                ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       return 0;
     }
@@ -182,17 +176,13 @@ Test_Objref_Struct::check_validity (void)
           return 0;
         }
 
-      Coffee::Desc_var s_in = this->in_.y->description (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      Coffee::Desc_var s_in = this->in_.y->description ();
 
-      Coffee::Desc_var s_out = this->out_->y->description (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      Coffee::Desc_var s_out = this->out_->y->description ();
 
-      Coffee::Desc_var s_inout = this->inout_->y->description (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      Coffee::Desc_var s_inout = this->inout_->y->description ();
 
-      Coffee::Desc_var s_ret = this->ret_->y->description (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      Coffee::Desc_var s_ret = this->ret_->y->description ();
 
       if (ACE_OS::strcmp (s_in->name, s_out->name) != 0
           || ACE_OS::strcmp (s_in->name, s_inout->name) != 0
@@ -237,9 +227,8 @@ Test_Objref_Struct::print_values (void)
 
   ACE_TRY
     {
-      Coffee::Desc_var s_in = 
-        this->in_.y->description (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      Coffee::Desc_var s_in =
+        this->in_.y->description ();
 
       Coffee::Desc_var s_inout = new Coffee::Desc;
       Coffee::Desc_var s_out = new Coffee::Desc;
@@ -250,20 +239,17 @@ Test_Objref_Struct::print_values (void)
 
       if (!CORBA::is_nil (this->out_->y.in ()))
         {
-          s_out = this->out_->y->description (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+          s_out = this->out_->y->description ();
         }
 
       if (!CORBA::is_nil (this->inout_->y.in ()))
         {
-          s_inout = this->inout_->y->description (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+          s_inout = this->inout_->y->description ();
         }
 
       if (!CORBA::is_nil (this->ret_->y.in ()))
         {
-          s_ret = this->ret_->y->description (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+          s_ret = this->ret_->y->description ();
         }
 
       ACE_DEBUG ((LM_DEBUG,
@@ -283,5 +269,4 @@ Test_Objref_Struct::print_values (void)
                            "Test_Objref_Struct::print_values\n");
     }
   ACE_ENDTRY;
-  ACE_CHECK;
 }

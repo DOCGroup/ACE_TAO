@@ -43,26 +43,21 @@ Server_i::init (int &argc,
                          this->argv_,
                          "" /* the ORB name, it can be anything! */
                          ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       // Get a reference to the RootPOA.
       CORBA::Object_var poa_object =
         this->orb_->resolve_initial_references ("RootPOA" ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       // Narrow down to the correct reference.
       PortableServer::POA_var poa =
         PortableServer::POA::_narrow (poa_object.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       // Set a POA Manager.
       PortableServer::POAManager_var poa_manager =
-        poa->the_POAManager (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        poa->the_POAManager ();
 
       // Activate the POA Manager.
-      poa_manager->activate (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      poa_manager->activate ();
 
       CORBA::String_var ior;
 
@@ -75,11 +70,9 @@ Server_i::init (int &argc,
 
       CORBA::Object_var table_object =
         this->orb_->resolve_initial_references ("IORTable" ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       IORTable::Table_var adapter =
         IORTable::Table::_narrow (table_object.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       if (CORBA::is_nil (adapter.in ()))
         {
@@ -90,9 +83,7 @@ Server_i::init (int &argc,
           ior =
             this->orb_->object_to_string (mcast_server.in ()
                                           ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
           adapter->bind ("MCASTServer", ior.in () ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
         }
 
       // Enable such that the server can listen for multicast requests
@@ -107,8 +98,7 @@ Server_i::init (int &argc,
         }
 
       // Run the ORB
-      this->orb_->run (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      this->orb_->run ();
 
       //Destroy the POA, waiting until the destruction terminates.
       poa->destroy (1, 1);

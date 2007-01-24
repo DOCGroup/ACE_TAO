@@ -29,7 +29,7 @@ TAO_Notify_StructuredProxyPushSupplier::release (void)
 }
 
 CosNotifyChannelAdmin::ProxyType
-TAO_Notify_StructuredProxyPushSupplier::MyType (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+TAO_Notify_StructuredProxyPushSupplier::MyType (void)
   ACE_THROW_SPEC ((
                    CORBA::SystemException
                    ))
@@ -52,24 +52,21 @@ TAO_Notify_StructuredProxyPushSupplier::connect_structured_push_consumer (CosNot
                     CORBA::NO_MEMORY ());
 
   consumer->init (push_consumer ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
   this->connect (consumer ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
-  this->self_change (ACE_ENV_SINGLE_ARG_PARAMETER);
+  this->self_change ();
 }
 
 void
-TAO_Notify_StructuredProxyPushSupplier::disconnect_structured_push_supplier (ACE_ENV_SINGLE_ARG_DECL)
+TAO_Notify_StructuredProxyPushSupplier::disconnect_structured_push_supplier (void)
   ACE_THROW_SPEC ((
                    CORBA::SystemException
                    ))
 
 {
   TAO_Notify_StructuredProxyPushSupplier::Ptr guard( this );
-  this->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
-  this->self_change (ACE_ENV_SINGLE_ARG_PARAMETER);
+  this->destroy ();
+  this->self_change ();
 }
 
 const char *
@@ -93,12 +90,9 @@ TAO_Notify_StructuredProxyPushSupplier::load_attrs (const TAO_Notify::NVPList& a
       if (ior.length() > 0)
       {
         CORBA::Object_var obj = orb->string_to_object(ior.c_str() ACE_ENV_ARG_PARAMETER);
-        ACE_TRY_CHECK;
         pc = CosNotifyComm::StructuredPushConsumer::_unchecked_narrow(obj.in() ACE_ENV_ARG_PARAMETER);
-        ACE_TRY_CHECK;
       }
       this->connect_structured_push_consumer(pc.in() ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
     }
     ACE_CATCHANY
     {

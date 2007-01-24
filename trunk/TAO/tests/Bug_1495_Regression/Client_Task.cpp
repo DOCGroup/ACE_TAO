@@ -28,12 +28,10 @@ Client_Task::svc (void)
     {
       CORBA::Object_var object =
         corb_->string_to_object (input_ ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       Bug1495_Regression::Bug1495_var server =
         Bug1495_Regression::Bug1495::_narrow (object.in ()
                                               ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       if (CORBA::is_nil (server.in ()))
         {
@@ -51,7 +49,6 @@ Client_Task::svc (void)
           CORBA::Long remote_thread_id;
 
           server->get_thread_id (remote_thread_id ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
 
           ACE_DEBUG ((LM_INFO,
                       "Remote thread ID was %i\n",

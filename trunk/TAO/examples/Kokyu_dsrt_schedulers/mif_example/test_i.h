@@ -29,7 +29,7 @@ class Simple_Server_i : public POA_Simple_Server
   //   Implements the Simple_Server interface in test.idl
   //
 public:
-  Simple_Server_i (CORBA::ORB_ptr orb, 
+  Simple_Server_i (CORBA::ORB_ptr orb,
                    RTScheduling::Current_ptr current,
                    Task_Stats&,
                    int);
@@ -39,7 +39,7 @@ public:
   CORBA::Long test_method (CORBA::Long x ACE_ENV_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  void shutdown (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+  void shutdown (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
 private:

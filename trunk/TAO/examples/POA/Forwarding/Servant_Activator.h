@@ -52,7 +52,7 @@ public:
                             ACE_ENV_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  void forward_requests (ACE_ENV_SINGLE_ARG_DECL);
+  void forward_requests (void);
   // Object should be forwarded from now on.
 
 private:

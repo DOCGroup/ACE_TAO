@@ -40,7 +40,6 @@ TAO_LogNotification::object_creation (DsLogAdmin::LogId id
 
   this->send_notification (any
                            ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 }
 
 void
@@ -64,7 +63,6 @@ TAO_LogNotification::object_deletion (DsLogAdmin::LogId id
 
   this->send_notification (any
                            ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 }
 
 void
@@ -83,7 +81,6 @@ TAO_LogNotification::processing_error_alarm (CORBA::ULong error_num,
 
   this->send_notification (any
                            ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 }
 
 void
@@ -116,7 +113,6 @@ TAO_LogNotification::attribute_value_change (DsLogAdmin::Log_ptr log,
 
   this->send_notification (any
                            ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 }
 
 void
@@ -138,7 +134,6 @@ TAO_LogNotification::capacity_alarm_threshold_value_change (
                                 oldV,
                                 newV
                                 ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 }
 
 void
@@ -159,7 +154,6 @@ TAO_LogNotification::log_full_action_value_change (DsLogAdmin::Log_ptr log,
                                 oldV,
                                 newV
                                 ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 }
 
 void
@@ -180,7 +174,6 @@ TAO_LogNotification::max_log_size_value_change (DsLogAdmin::Log_ptr log,
                                 oldV,
                                 newV
                                 ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 }
 
 void
@@ -201,7 +194,6 @@ TAO_LogNotification::start_time_value_change (DsLogAdmin::Log_ptr log,
                                 oldV,
                                 newV
                                 ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 }
 
 void
@@ -222,7 +214,6 @@ TAO_LogNotification::stop_time_value_change (DsLogAdmin::Log_ptr log,
                                 oldV,
                                 newV
                                 ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 }
 
 void
@@ -243,7 +234,6 @@ TAO_LogNotification::week_mask_value_change (DsLogAdmin::Log_ptr log,
                                 oldV,
                                 newV
                                 ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 }
 
 void
@@ -264,7 +254,6 @@ TAO_LogNotification::max_record_life_value_change (DsLogAdmin::Log_ptr log,
                                 oldV,
                                 newV
                                 ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 }
 
 void
@@ -286,7 +275,6 @@ TAO_LogNotification::quality_of_service_value_change (
                                 oldV,
                                 newV
                                 ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 }
 
 void
@@ -317,7 +305,6 @@ TAO_LogNotification::state_change (DsLogAdmin::Log_ptr log,
 
   this->send_notification (any
                            ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 }
 
 void
@@ -336,7 +323,6 @@ TAO_LogNotification::administrative_state_change (
                       DsLogNotification::administrativeState,
                       newV
                       ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 }
 
 void
@@ -355,7 +341,6 @@ TAO_LogNotification::operational_state_change (
                       DsLogNotification::operationalState,
                       newV
                       ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 }
 
 void
@@ -373,7 +358,6 @@ TAO_LogNotification::forwarding_state_change (DsLogAdmin::Log_ptr log,
                       DsLogNotification::forwardingState,
                       newV
                       ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 }
 
 void
@@ -405,7 +389,6 @@ TAO_LogNotification::threshold_alarm (
 
   this->send_notification (any
                            ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 }
 
 void

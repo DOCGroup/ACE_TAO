@@ -20,7 +20,6 @@ Smart_Test_Proxy::method (CORBA::Short boo
     {
       retval = TAO_Test_Smart_Proxy_Base::method (boo
                                                   ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
     }
   ACE_CATCH (Test::Oops, reason)
     {

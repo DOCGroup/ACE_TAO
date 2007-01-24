@@ -83,7 +83,7 @@ POA_CORBA::Repository_tie<T>::_tied_object (T &obj)
     {
       delete this->ptr_;
     }
-  
+
   this->ptr_ = &obj;
   this->rel_ = 0;
 }
@@ -95,7 +95,7 @@ POA_CORBA::Repository_tie<T>::_tied_object (T *obj, ::CORBA::Boolean release)
     {
       delete this->ptr_;
     }
-  
+
   this->ptr_ = obj;
   this->rel_ = release;
 }
@@ -113,17 +113,17 @@ POA_CORBA::Repository_tie<T>::_is_owner ( ::CORBA::Boolean b)
 }
 
 template <class T> ACE_INLINE PortableServer::POA_ptr
-POA_CORBA::Repository_tie<T>::_default_POA (ACE_ENV_SINGLE_ARG_DECL)
+POA_CORBA::Repository_tie<T>::_default_POA (void)
 {
   if (! ::CORBA::is_nil (this->poa_.in ()))
     {
       return PortableServer::POA::_duplicate (this->poa_.in ());
     }
-  
-  return this->Repository::_default_POA (ACE_ENV_SINGLE_ARG_PARAMETER);
+
+  return this->Repository::_default_POA ();
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -139,7 +139,7 @@ template <class T> ACE_INLINE
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -155,7 +155,7 @@ void POA_CORBA::Repository_tie<T>::destroy  (
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -173,7 +173,7 @@ template <class T> ACE_INLINE
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -193,7 +193,7 @@ template <class T> ACE_INLINE
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -217,7 +217,7 @@ template <class T> ACE_INLINE
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -239,7 +239,7 @@ template <class T> ACE_INLINE
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -261,7 +261,7 @@ template <class T> ACE_INLINE
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -287,7 +287,7 @@ template <class T> ACE_INLINE
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -311,7 +311,7 @@ template <class T> ACE_INLINE
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -337,7 +337,7 @@ template <class T> ACE_INLINE
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -361,7 +361,7 @@ template <class T> ACE_INLINE
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -385,7 +385,7 @@ template <class T> ACE_INLINE
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -409,7 +409,7 @@ template <class T> ACE_INLINE
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -445,7 +445,7 @@ template <class T> ACE_INLINE
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -469,7 +469,7 @@ template <class T> ACE_INLINE
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -493,7 +493,7 @@ template <class T> ACE_INLINE
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -515,7 +515,7 @@ template <class T> ACE_INLINE
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -539,7 +539,7 @@ template <class T> ACE_INLINE
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -563,7 +563,7 @@ template <class T> ACE_INLINE
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -599,7 +599,7 @@ template <class T> ACE_INLINE
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -617,7 +617,7 @@ template <class T> ACE_INLINE
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -635,7 +635,7 @@ template <class T> ACE_INLINE
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -653,7 +653,7 @@ template <class T> ACE_INLINE
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -671,7 +671,7 @@ template <class T> ACE_INLINE
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -689,7 +689,7 @@ template <class T> ACE_INLINE
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -709,7 +709,7 @@ template <class T> ACE_INLINE
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -729,7 +729,7 @@ template <class T> ACE_INLINE
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -802,7 +802,7 @@ POA_CORBA::ModuleDef_tie<T>::_tied_object (T &obj)
     {
       delete this->ptr_;
     }
-  
+
   this->ptr_ = &obj;
   this->rel_ = 0;
 }
@@ -814,7 +814,7 @@ POA_CORBA::ModuleDef_tie<T>::_tied_object (T *obj, ::CORBA::Boolean release)
     {
       delete this->ptr_;
     }
-  
+
   this->ptr_ = obj;
   this->rel_ = release;
 }
@@ -832,17 +832,17 @@ POA_CORBA::ModuleDef_tie<T>::_is_owner ( ::CORBA::Boolean b)
 }
 
 template <class T> ACE_INLINE PortableServer::POA_ptr
-POA_CORBA::ModuleDef_tie<T>::_default_POA (ACE_ENV_SINGLE_ARG_DECL)
+POA_CORBA::ModuleDef_tie<T>::_default_POA (void)
 {
   if (! ::CORBA::is_nil (this->poa_.in ()))
     {
       return PortableServer::POA::_duplicate (this->poa_.in ());
     }
-  
-  return this->ModuleDef::_default_POA (ACE_ENV_SINGLE_ARG_PARAMETER);
+
+  return this->ModuleDef::_default_POA ();
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -858,7 +858,7 @@ template <class T> ACE_INLINE
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -874,7 +874,7 @@ void POA_CORBA::ModuleDef_tie<T>::destroy  (
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -892,7 +892,7 @@ template <class T> ACE_INLINE
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -912,7 +912,7 @@ template <class T> ACE_INLINE
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -936,7 +936,7 @@ template <class T> ACE_INLINE
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -958,7 +958,7 @@ template <class T> ACE_INLINE
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -980,7 +980,7 @@ template <class T> ACE_INLINE
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -1006,7 +1006,7 @@ template <class T> ACE_INLINE
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -1030,7 +1030,7 @@ template <class T> ACE_INLINE
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -1056,7 +1056,7 @@ template <class T> ACE_INLINE
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -1080,7 +1080,7 @@ template <class T> ACE_INLINE
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -1104,7 +1104,7 @@ template <class T> ACE_INLINE
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -1128,7 +1128,7 @@ template <class T> ACE_INLINE
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -1164,7 +1164,7 @@ template <class T> ACE_INLINE
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -1188,7 +1188,7 @@ template <class T> ACE_INLINE
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -1212,7 +1212,7 @@ template <class T> ACE_INLINE
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -1234,7 +1234,7 @@ template <class T> ACE_INLINE
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -1258,7 +1258,7 @@ template <class T> ACE_INLINE
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -1282,7 +1282,7 @@ template <class T> ACE_INLINE
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -1318,7 +1318,7 @@ template <class T> ACE_INLINE
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -1334,7 +1334,7 @@ char * POA_CORBA::ModuleDef_tie<T>::id  (
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -1352,7 +1352,7 @@ void POA_CORBA::ModuleDef_tie<T>::id  (
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -1368,7 +1368,7 @@ char * POA_CORBA::ModuleDef_tie<T>::name  (
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -1386,7 +1386,7 @@ void POA_CORBA::ModuleDef_tie<T>::name  (
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -1402,7 +1402,7 @@ char * POA_CORBA::ModuleDef_tie<T>::version  (
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -1420,7 +1420,7 @@ void POA_CORBA::ModuleDef_tie<T>::version  (
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -1436,7 +1436,7 @@ template <class T> ACE_INLINE
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -1452,7 +1452,7 @@ char * POA_CORBA::ModuleDef_tie<T>::absolute_name  (
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -1468,7 +1468,7 @@ template <class T> ACE_INLINE
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -1484,7 +1484,7 @@ template <class T> ACE_INLINE
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -1559,7 +1559,7 @@ POA_CORBA::ConstantDef_tie<T>::_tied_object (T &obj)
     {
       delete this->ptr_;
     }
-  
+
   this->ptr_ = &obj;
   this->rel_ = 0;
 }
@@ -1571,7 +1571,7 @@ POA_CORBA::ConstantDef_tie<T>::_tied_object (T *obj, ::CORBA::Boolean release)
     {
       delete this->ptr_;
     }
-  
+
   this->ptr_ = obj;
   this->rel_ = release;
 }
@@ -1589,17 +1589,17 @@ POA_CORBA::ConstantDef_tie<T>::_is_owner ( ::CORBA::Boolean b)
 }
 
 template <class T> ACE_INLINE PortableServer::POA_ptr
-POA_CORBA::ConstantDef_tie<T>::_default_POA (ACE_ENV_SINGLE_ARG_DECL)
+POA_CORBA::ConstantDef_tie<T>::_default_POA (void)
 {
   if (! ::CORBA::is_nil (this->poa_.in ()))
     {
       return PortableServer::POA::_duplicate (this->poa_.in ());
     }
-  
-  return this->ConstantDef::_default_POA (ACE_ENV_SINGLE_ARG_PARAMETER);
+
+  return this->ConstantDef::_default_POA ();
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -1615,7 +1615,7 @@ template <class T> ACE_INLINE
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -1631,7 +1631,7 @@ void POA_CORBA::ConstantDef_tie<T>::destroy  (
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -1647,7 +1647,7 @@ char * POA_CORBA::ConstantDef_tie<T>::id  (
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -1665,7 +1665,7 @@ void POA_CORBA::ConstantDef_tie<T>::id  (
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -1681,7 +1681,7 @@ char * POA_CORBA::ConstantDef_tie<T>::name  (
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -1699,7 +1699,7 @@ void POA_CORBA::ConstantDef_tie<T>::name  (
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -1715,7 +1715,7 @@ char * POA_CORBA::ConstantDef_tie<T>::version  (
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -1733,7 +1733,7 @@ void POA_CORBA::ConstantDef_tie<T>::version  (
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -1749,7 +1749,7 @@ template <class T> ACE_INLINE
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -1765,7 +1765,7 @@ char * POA_CORBA::ConstantDef_tie<T>::absolute_name  (
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -1781,7 +1781,7 @@ template <class T> ACE_INLINE
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -1797,7 +1797,7 @@ template <class T> ACE_INLINE
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -1819,7 +1819,7 @@ void POA_CORBA::ConstantDef_tie<T>::move  (
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -1835,7 +1835,7 @@ template <class T> ACE_INLINE
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -1851,7 +1851,7 @@ template <class T> ACE_INLINE
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -1869,7 +1869,7 @@ void POA_CORBA::ConstantDef_tie<T>::type_def  (
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -1885,7 +1885,7 @@ template <class T> ACE_INLINE
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -1956,7 +1956,7 @@ POA_CORBA::StructDef_tie<T>::_tied_object (T &obj)
     {
       delete this->ptr_;
     }
-  
+
   this->ptr_ = &obj;
   this->rel_ = 0;
 }
@@ -1968,7 +1968,7 @@ POA_CORBA::StructDef_tie<T>::_tied_object (T *obj, ::CORBA::Boolean release)
     {
       delete this->ptr_;
     }
-  
+
   this->ptr_ = obj;
   this->rel_ = release;
 }
@@ -1986,17 +1986,17 @@ POA_CORBA::StructDef_tie<T>::_is_owner ( ::CORBA::Boolean b)
 }
 
 template <class T> ACE_INLINE PortableServer::POA_ptr
-POA_CORBA::StructDef_tie<T>::_default_POA (ACE_ENV_SINGLE_ARG_DECL)
+POA_CORBA::StructDef_tie<T>::_default_POA (void)
 {
   if (! ::CORBA::is_nil (this->poa_.in ()))
     {
       return PortableServer::POA::_duplicate (this->poa_.in ());
     }
-  
-  return this->StructDef::_default_POA (ACE_ENV_SINGLE_ARG_PARAMETER);
+
+  return this->StructDef::_default_POA ();
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -2012,7 +2012,7 @@ template <class T> ACE_INLINE
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -2028,7 +2028,7 @@ void POA_CORBA::StructDef_tie<T>::destroy  (
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -2044,7 +2044,7 @@ char * POA_CORBA::StructDef_tie<T>::id  (
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -2062,7 +2062,7 @@ void POA_CORBA::StructDef_tie<T>::id  (
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -2078,7 +2078,7 @@ char * POA_CORBA::StructDef_tie<T>::name  (
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -2096,7 +2096,7 @@ void POA_CORBA::StructDef_tie<T>::name  (
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -2112,7 +2112,7 @@ char * POA_CORBA::StructDef_tie<T>::version  (
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -2130,7 +2130,7 @@ void POA_CORBA::StructDef_tie<T>::version  (
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -2146,7 +2146,7 @@ template <class T> ACE_INLINE
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -2162,7 +2162,7 @@ char * POA_CORBA::StructDef_tie<T>::absolute_name  (
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -2178,7 +2178,7 @@ template <class T> ACE_INLINE
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -2194,7 +2194,7 @@ template <class T> ACE_INLINE
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -2216,7 +2216,7 @@ void POA_CORBA::StructDef_tie<T>::move  (
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -2232,7 +2232,7 @@ template <class T> ACE_INLINE
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -2250,7 +2250,7 @@ template <class T> ACE_INLINE
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -2270,7 +2270,7 @@ template <class T> ACE_INLINE
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -2294,7 +2294,7 @@ template <class T> ACE_INLINE
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -2316,7 +2316,7 @@ template <class T> ACE_INLINE
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -2338,7 +2338,7 @@ template <class T> ACE_INLINE
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -2364,7 +2364,7 @@ template <class T> ACE_INLINE
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -2388,7 +2388,7 @@ template <class T> ACE_INLINE
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -2414,7 +2414,7 @@ template <class T> ACE_INLINE
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -2438,7 +2438,7 @@ template <class T> ACE_INLINE
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -2462,7 +2462,7 @@ template <class T> ACE_INLINE
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -2486,7 +2486,7 @@ template <class T> ACE_INLINE
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -2522,7 +2522,7 @@ template <class T> ACE_INLINE
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -2546,7 +2546,7 @@ template <class T> ACE_INLINE
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -2570,7 +2570,7 @@ template <class T> ACE_INLINE
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -2592,7 +2592,7 @@ template <class T> ACE_INLINE
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -2616,7 +2616,7 @@ template <class T> ACE_INLINE
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -2640,7 +2640,7 @@ template <class T> ACE_INLINE
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -2676,7 +2676,7 @@ template <class T> ACE_INLINE
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -2692,7 +2692,7 @@ template <class T> ACE_INLINE
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -2763,7 +2763,7 @@ POA_CORBA::UnionDef_tie<T>::_tied_object (T &obj)
     {
       delete this->ptr_;
     }
-  
+
   this->ptr_ = &obj;
   this->rel_ = 0;
 }
@@ -2775,7 +2775,7 @@ POA_CORBA::UnionDef_tie<T>::_tied_object (T *obj, ::CORBA::Boolean release)
     {
       delete this->ptr_;
     }
-  
+
   this->ptr_ = obj;
   this->rel_ = release;
 }
@@ -2793,17 +2793,17 @@ POA_CORBA::UnionDef_tie<T>::_is_owner ( ::CORBA::Boolean b)
 }
 
 template <class T> ACE_INLINE PortableServer::POA_ptr
-POA_CORBA::UnionDef_tie<T>::_default_POA (ACE_ENV_SINGLE_ARG_DECL)
+POA_CORBA::UnionDef_tie<T>::_default_POA (void)
 {
   if (! ::CORBA::is_nil (this->poa_.in ()))
     {
       return PortableServer::POA::_duplicate (this->poa_.in ());
     }
-  
-  return this->UnionDef::_default_POA (ACE_ENV_SINGLE_ARG_PARAMETER);
+
+  return this->UnionDef::_default_POA ();
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -2819,7 +2819,7 @@ template <class T> ACE_INLINE
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -2835,7 +2835,7 @@ void POA_CORBA::UnionDef_tie<T>::destroy  (
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -2851,7 +2851,7 @@ char * POA_CORBA::UnionDef_tie<T>::id  (
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -2869,7 +2869,7 @@ void POA_CORBA::UnionDef_tie<T>::id  (
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -2885,7 +2885,7 @@ char * POA_CORBA::UnionDef_tie<T>::name  (
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -2903,7 +2903,7 @@ void POA_CORBA::UnionDef_tie<T>::name  (
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -2919,7 +2919,7 @@ char * POA_CORBA::UnionDef_tie<T>::version  (
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -2937,7 +2937,7 @@ void POA_CORBA::UnionDef_tie<T>::version  (
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -2953,7 +2953,7 @@ template <class T> ACE_INLINE
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -2969,7 +2969,7 @@ char * POA_CORBA::UnionDef_tie<T>::absolute_name  (
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -2985,7 +2985,7 @@ template <class T> ACE_INLINE
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -3001,7 +3001,7 @@ template <class T> ACE_INLINE
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -3023,7 +3023,7 @@ void POA_CORBA::UnionDef_tie<T>::move  (
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -3039,7 +3039,7 @@ template <class T> ACE_INLINE
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -3057,7 +3057,7 @@ template <class T> ACE_INLINE
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -3077,7 +3077,7 @@ template <class T> ACE_INLINE
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -3101,7 +3101,7 @@ template <class T> ACE_INLINE
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -3123,7 +3123,7 @@ template <class T> ACE_INLINE
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -3145,7 +3145,7 @@ template <class T> ACE_INLINE
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -3171,7 +3171,7 @@ template <class T> ACE_INLINE
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -3195,7 +3195,7 @@ template <class T> ACE_INLINE
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -3221,7 +3221,7 @@ template <class T> ACE_INLINE
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -3245,7 +3245,7 @@ template <class T> ACE_INLINE
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -3269,7 +3269,7 @@ template <class T> ACE_INLINE
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -3293,7 +3293,7 @@ template <class T> ACE_INLINE
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -3329,7 +3329,7 @@ template <class T> ACE_INLINE
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -3353,7 +3353,7 @@ template <class T> ACE_INLINE
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -3377,7 +3377,7 @@ template <class T> ACE_INLINE
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -3399,7 +3399,7 @@ template <class T> ACE_INLINE
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -3423,7 +3423,7 @@ template <class T> ACE_INLINE
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -3447,7 +3447,7 @@ template <class T> ACE_INLINE
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -3483,7 +3483,7 @@ template <class T> ACE_INLINE
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -3499,7 +3499,7 @@ template <class T> ACE_INLINE
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -3515,7 +3515,7 @@ template <class T> ACE_INLINE
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -3533,7 +3533,7 @@ void POA_CORBA::UnionDef_tie<T>::discriminator_type_def  (
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -3549,7 +3549,7 @@ template <class T> ACE_INLINE
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -3620,7 +3620,7 @@ POA_CORBA::EnumDef_tie<T>::_tied_object (T &obj)
     {
       delete this->ptr_;
     }
-  
+
   this->ptr_ = &obj;
   this->rel_ = 0;
 }
@@ -3632,7 +3632,7 @@ POA_CORBA::EnumDef_tie<T>::_tied_object (T *obj, ::CORBA::Boolean release)
     {
       delete this->ptr_;
     }
-  
+
   this->ptr_ = obj;
   this->rel_ = release;
 }
@@ -3650,17 +3650,17 @@ POA_CORBA::EnumDef_tie<T>::_is_owner ( ::CORBA::Boolean b)
 }
 
 template <class T> ACE_INLINE PortableServer::POA_ptr
-POA_CORBA::EnumDef_tie<T>::_default_POA (ACE_ENV_SINGLE_ARG_DECL)
+POA_CORBA::EnumDef_tie<T>::_default_POA (void)
 {
   if (! ::CORBA::is_nil (this->poa_.in ()))
     {
       return PortableServer::POA::_duplicate (this->poa_.in ());
     }
-  
-  return this->EnumDef::_default_POA (ACE_ENV_SINGLE_ARG_PARAMETER);
+
+  return this->EnumDef::_default_POA ();
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -3676,7 +3676,7 @@ template <class T> ACE_INLINE
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -3692,7 +3692,7 @@ void POA_CORBA::EnumDef_tie<T>::destroy  (
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -3708,7 +3708,7 @@ char * POA_CORBA::EnumDef_tie<T>::id  (
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -3726,7 +3726,7 @@ void POA_CORBA::EnumDef_tie<T>::id  (
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -3742,7 +3742,7 @@ char * POA_CORBA::EnumDef_tie<T>::name  (
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -3760,7 +3760,7 @@ void POA_CORBA::EnumDef_tie<T>::name  (
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -3776,7 +3776,7 @@ char * POA_CORBA::EnumDef_tie<T>::version  (
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -3794,7 +3794,7 @@ void POA_CORBA::EnumDef_tie<T>::version  (
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -3810,7 +3810,7 @@ template <class T> ACE_INLINE
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -3826,7 +3826,7 @@ char * POA_CORBA::EnumDef_tie<T>::absolute_name  (
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -3842,7 +3842,7 @@ template <class T> ACE_INLINE
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -3858,7 +3858,7 @@ template <class T> ACE_INLINE
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -3880,7 +3880,7 @@ void POA_CORBA::EnumDef_tie<T>::move  (
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -3896,7 +3896,7 @@ template <class T> ACE_INLINE
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -3912,7 +3912,7 @@ template <class T> ACE_INLINE
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -3983,7 +3983,7 @@ POA_CORBA::AliasDef_tie<T>::_tied_object (T &obj)
     {
       delete this->ptr_;
     }
-  
+
   this->ptr_ = &obj;
   this->rel_ = 0;
 }
@@ -3995,7 +3995,7 @@ POA_CORBA::AliasDef_tie<T>::_tied_object (T *obj, ::CORBA::Boolean release)
     {
       delete this->ptr_;
     }
-  
+
   this->ptr_ = obj;
   this->rel_ = release;
 }
@@ -4013,17 +4013,17 @@ POA_CORBA::AliasDef_tie<T>::_is_owner ( ::CORBA::Boolean b)
 }
 
 template <class T> ACE_INLINE PortableServer::POA_ptr
-POA_CORBA::AliasDef_tie<T>::_default_POA (ACE_ENV_SINGLE_ARG_DECL)
+POA_CORBA::AliasDef_tie<T>::_default_POA (void)
 {
   if (! ::CORBA::is_nil (this->poa_.in ()))
     {
       return PortableServer::POA::_duplicate (this->poa_.in ());
     }
-  
-  return this->AliasDef::_default_POA (ACE_ENV_SINGLE_ARG_PARAMETER);
+
+  return this->AliasDef::_default_POA ();
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -4039,7 +4039,7 @@ template <class T> ACE_INLINE
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -4055,7 +4055,7 @@ void POA_CORBA::AliasDef_tie<T>::destroy  (
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -4071,7 +4071,7 @@ char * POA_CORBA::AliasDef_tie<T>::id  (
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -4089,7 +4089,7 @@ void POA_CORBA::AliasDef_tie<T>::id  (
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -4105,7 +4105,7 @@ char * POA_CORBA::AliasDef_tie<T>::name  (
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -4123,7 +4123,7 @@ void POA_CORBA::AliasDef_tie<T>::name  (
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -4139,7 +4139,7 @@ char * POA_CORBA::AliasDef_tie<T>::version  (
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -4157,7 +4157,7 @@ void POA_CORBA::AliasDef_tie<T>::version  (
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -4173,7 +4173,7 @@ template <class T> ACE_INLINE
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -4189,7 +4189,7 @@ char * POA_CORBA::AliasDef_tie<T>::absolute_name  (
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -4205,7 +4205,7 @@ template <class T> ACE_INLINE
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -4221,7 +4221,7 @@ template <class T> ACE_INLINE
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -4243,7 +4243,7 @@ void POA_CORBA::AliasDef_tie<T>::move  (
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -4259,7 +4259,7 @@ template <class T> ACE_INLINE
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -4275,7 +4275,7 @@ template <class T> ACE_INLINE
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -4346,7 +4346,7 @@ POA_CORBA::NativeDef_tie<T>::_tied_object (T &obj)
     {
       delete this->ptr_;
     }
-  
+
   this->ptr_ = &obj;
   this->rel_ = 0;
 }
@@ -4358,7 +4358,7 @@ POA_CORBA::NativeDef_tie<T>::_tied_object (T *obj, ::CORBA::Boolean release)
     {
       delete this->ptr_;
     }
-  
+
   this->ptr_ = obj;
   this->rel_ = release;
 }
@@ -4376,17 +4376,17 @@ POA_CORBA::NativeDef_tie<T>::_is_owner ( ::CORBA::Boolean b)
 }
 
 template <class T> ACE_INLINE PortableServer::POA_ptr
-POA_CORBA::NativeDef_tie<T>::_default_POA (ACE_ENV_SINGLE_ARG_DECL)
+POA_CORBA::NativeDef_tie<T>::_default_POA (void)
 {
   if (! ::CORBA::is_nil (this->poa_.in ()))
     {
       return PortableServer::POA::_duplicate (this->poa_.in ());
     }
-  
-  return this->NativeDef::_default_POA (ACE_ENV_SINGLE_ARG_PARAMETER);
+
+  return this->NativeDef::_default_POA ();
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -4402,7 +4402,7 @@ template <class T> ACE_INLINE
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -4418,7 +4418,7 @@ void POA_CORBA::NativeDef_tie<T>::destroy  (
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -4434,7 +4434,7 @@ char * POA_CORBA::NativeDef_tie<T>::id  (
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -4452,7 +4452,7 @@ void POA_CORBA::NativeDef_tie<T>::id  (
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -4468,7 +4468,7 @@ char * POA_CORBA::NativeDef_tie<T>::name  (
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -4486,7 +4486,7 @@ void POA_CORBA::NativeDef_tie<T>::name  (
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -4502,7 +4502,7 @@ char * POA_CORBA::NativeDef_tie<T>::version  (
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -4520,7 +4520,7 @@ void POA_CORBA::NativeDef_tie<T>::version  (
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -4536,7 +4536,7 @@ template <class T> ACE_INLINE
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -4552,7 +4552,7 @@ char * POA_CORBA::NativeDef_tie<T>::absolute_name  (
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -4568,7 +4568,7 @@ template <class T> ACE_INLINE
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -4584,7 +4584,7 @@ template <class T> ACE_INLINE
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -4606,7 +4606,7 @@ void POA_CORBA::NativeDef_tie<T>::move  (
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -4675,7 +4675,7 @@ POA_CORBA::PrimitiveDef_tie<T>::_tied_object (T &obj)
     {
       delete this->ptr_;
     }
-  
+
   this->ptr_ = &obj;
   this->rel_ = 0;
 }
@@ -4687,7 +4687,7 @@ POA_CORBA::PrimitiveDef_tie<T>::_tied_object (T *obj, ::CORBA::Boolean release)
     {
       delete this->ptr_;
     }
-  
+
   this->ptr_ = obj;
   this->rel_ = release;
 }
@@ -4705,17 +4705,17 @@ POA_CORBA::PrimitiveDef_tie<T>::_is_owner ( ::CORBA::Boolean b)
 }
 
 template <class T> ACE_INLINE PortableServer::POA_ptr
-POA_CORBA::PrimitiveDef_tie<T>::_default_POA (ACE_ENV_SINGLE_ARG_DECL)
+POA_CORBA::PrimitiveDef_tie<T>::_default_POA (void)
 {
   if (! ::CORBA::is_nil (this->poa_.in ()))
     {
       return PortableServer::POA::_duplicate (this->poa_.in ());
     }
-  
-  return this->PrimitiveDef::_default_POA (ACE_ENV_SINGLE_ARG_PARAMETER);
+
+  return this->PrimitiveDef::_default_POA ();
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -4731,7 +4731,7 @@ template <class T> ACE_INLINE
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -4747,7 +4747,7 @@ void POA_CORBA::PrimitiveDef_tie<T>::destroy  (
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -4763,7 +4763,7 @@ template <class T> ACE_INLINE
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -4832,7 +4832,7 @@ POA_CORBA::StringDef_tie<T>::_tied_object (T &obj)
     {
       delete this->ptr_;
     }
-  
+
   this->ptr_ = &obj;
   this->rel_ = 0;
 }
@@ -4844,7 +4844,7 @@ POA_CORBA::StringDef_tie<T>::_tied_object (T *obj, ::CORBA::Boolean release)
     {
       delete this->ptr_;
     }
-  
+
   this->ptr_ = obj;
   this->rel_ = release;
 }
@@ -4862,17 +4862,17 @@ POA_CORBA::StringDef_tie<T>::_is_owner ( ::CORBA::Boolean b)
 }
 
 template <class T> ACE_INLINE PortableServer::POA_ptr
-POA_CORBA::StringDef_tie<T>::_default_POA (ACE_ENV_SINGLE_ARG_DECL)
+POA_CORBA::StringDef_tie<T>::_default_POA (void)
 {
   if (! ::CORBA::is_nil (this->poa_.in ()))
     {
       return PortableServer::POA::_duplicate (this->poa_.in ());
     }
-  
-  return this->StringDef::_default_POA (ACE_ENV_SINGLE_ARG_PARAMETER);
+
+  return this->StringDef::_default_POA ();
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -4888,7 +4888,7 @@ template <class T> ACE_INLINE
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -4904,7 +4904,7 @@ void POA_CORBA::StringDef_tie<T>::destroy  (
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -4920,7 +4920,7 @@ template <class T> ACE_INLINE
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -4936,7 +4936,7 @@ template <class T> ACE_INLINE
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -5007,7 +5007,7 @@ POA_CORBA::WstringDef_tie<T>::_tied_object (T &obj)
     {
       delete this->ptr_;
     }
-  
+
   this->ptr_ = &obj;
   this->rel_ = 0;
 }
@@ -5019,7 +5019,7 @@ POA_CORBA::WstringDef_tie<T>::_tied_object (T *obj, ::CORBA::Boolean release)
     {
       delete this->ptr_;
     }
-  
+
   this->ptr_ = obj;
   this->rel_ = release;
 }
@@ -5037,17 +5037,17 @@ POA_CORBA::WstringDef_tie<T>::_is_owner ( ::CORBA::Boolean b)
 }
 
 template <class T> ACE_INLINE PortableServer::POA_ptr
-POA_CORBA::WstringDef_tie<T>::_default_POA (ACE_ENV_SINGLE_ARG_DECL)
+POA_CORBA::WstringDef_tie<T>::_default_POA (void)
 {
   if (! ::CORBA::is_nil (this->poa_.in ()))
     {
       return PortableServer::POA::_duplicate (this->poa_.in ());
     }
-  
-  return this->WstringDef::_default_POA (ACE_ENV_SINGLE_ARG_PARAMETER);
+
+  return this->WstringDef::_default_POA ();
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -5063,7 +5063,7 @@ template <class T> ACE_INLINE
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -5079,7 +5079,7 @@ void POA_CORBA::WstringDef_tie<T>::destroy  (
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -5095,7 +5095,7 @@ template <class T> ACE_INLINE
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -5111,7 +5111,7 @@ template <class T> ACE_INLINE
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -5182,7 +5182,7 @@ POA_CORBA::SequenceDef_tie<T>::_tied_object (T &obj)
     {
       delete this->ptr_;
     }
-  
+
   this->ptr_ = &obj;
   this->rel_ = 0;
 }
@@ -5194,7 +5194,7 @@ POA_CORBA::SequenceDef_tie<T>::_tied_object (T *obj, ::CORBA::Boolean release)
     {
       delete this->ptr_;
     }
-  
+
   this->ptr_ = obj;
   this->rel_ = release;
 }
@@ -5212,17 +5212,17 @@ POA_CORBA::SequenceDef_tie<T>::_is_owner ( ::CORBA::Boolean b)
 }
 
 template <class T> ACE_INLINE PortableServer::POA_ptr
-POA_CORBA::SequenceDef_tie<T>::_default_POA (ACE_ENV_SINGLE_ARG_DECL)
+POA_CORBA::SequenceDef_tie<T>::_default_POA (void)
 {
   if (! ::CORBA::is_nil (this->poa_.in ()))
     {
       return PortableServer::POA::_duplicate (this->poa_.in ());
     }
-  
-  return this->SequenceDef::_default_POA (ACE_ENV_SINGLE_ARG_PARAMETER);
+
+  return this->SequenceDef::_default_POA ();
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -5238,7 +5238,7 @@ template <class T> ACE_INLINE
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -5254,7 +5254,7 @@ void POA_CORBA::SequenceDef_tie<T>::destroy  (
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -5270,7 +5270,7 @@ template <class T> ACE_INLINE
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -5286,7 +5286,7 @@ template <class T> ACE_INLINE
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -5304,7 +5304,7 @@ void POA_CORBA::SequenceDef_tie<T>::bound  (
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -5320,7 +5320,7 @@ template <class T> ACE_INLINE
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -5336,7 +5336,7 @@ template <class T> ACE_INLINE
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -5407,7 +5407,7 @@ POA_CORBA::ArrayDef_tie<T>::_tied_object (T &obj)
     {
       delete this->ptr_;
     }
-  
+
   this->ptr_ = &obj;
   this->rel_ = 0;
 }
@@ -5419,7 +5419,7 @@ POA_CORBA::ArrayDef_tie<T>::_tied_object (T *obj, ::CORBA::Boolean release)
     {
       delete this->ptr_;
     }
-  
+
   this->ptr_ = obj;
   this->rel_ = release;
 }
@@ -5437,17 +5437,17 @@ POA_CORBA::ArrayDef_tie<T>::_is_owner ( ::CORBA::Boolean b)
 }
 
 template <class T> ACE_INLINE PortableServer::POA_ptr
-POA_CORBA::ArrayDef_tie<T>::_default_POA (ACE_ENV_SINGLE_ARG_DECL)
+POA_CORBA::ArrayDef_tie<T>::_default_POA (void)
 {
   if (! ::CORBA::is_nil (this->poa_.in ()))
     {
       return PortableServer::POA::_duplicate (this->poa_.in ());
     }
-  
-  return this->ArrayDef::_default_POA (ACE_ENV_SINGLE_ARG_PARAMETER);
+
+  return this->ArrayDef::_default_POA ();
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -5463,7 +5463,7 @@ template <class T> ACE_INLINE
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -5479,7 +5479,7 @@ void POA_CORBA::ArrayDef_tie<T>::destroy  (
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -5495,7 +5495,7 @@ template <class T> ACE_INLINE
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -5511,7 +5511,7 @@ template <class T> ACE_INLINE
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -5529,7 +5529,7 @@ void POA_CORBA::ArrayDef_tie<T>::length  (
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -5545,7 +5545,7 @@ template <class T> ACE_INLINE
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -5561,7 +5561,7 @@ template <class T> ACE_INLINE
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -5632,7 +5632,7 @@ POA_CORBA::ExceptionDef_tie<T>::_tied_object (T &obj)
     {
       delete this->ptr_;
     }
-  
+
   this->ptr_ = &obj;
   this->rel_ = 0;
 }
@@ -5644,7 +5644,7 @@ POA_CORBA::ExceptionDef_tie<T>::_tied_object (T *obj, ::CORBA::Boolean release)
     {
       delete this->ptr_;
     }
-  
+
   this->ptr_ = obj;
   this->rel_ = release;
 }
@@ -5662,17 +5662,17 @@ POA_CORBA::ExceptionDef_tie<T>::_is_owner ( ::CORBA::Boolean b)
 }
 
 template <class T> ACE_INLINE PortableServer::POA_ptr
-POA_CORBA::ExceptionDef_tie<T>::_default_POA (ACE_ENV_SINGLE_ARG_DECL)
+POA_CORBA::ExceptionDef_tie<T>::_default_POA (void)
 {
   if (! ::CORBA::is_nil (this->poa_.in ()))
     {
       return PortableServer::POA::_duplicate (this->poa_.in ());
     }
-  
-  return this->ExceptionDef::_default_POA (ACE_ENV_SINGLE_ARG_PARAMETER);
+
+  return this->ExceptionDef::_default_POA ();
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -5688,7 +5688,7 @@ template <class T> ACE_INLINE
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -5704,7 +5704,7 @@ void POA_CORBA::ExceptionDef_tie<T>::destroy  (
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -5720,7 +5720,7 @@ char * POA_CORBA::ExceptionDef_tie<T>::id  (
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -5738,7 +5738,7 @@ void POA_CORBA::ExceptionDef_tie<T>::id  (
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -5754,7 +5754,7 @@ char * POA_CORBA::ExceptionDef_tie<T>::name  (
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -5772,7 +5772,7 @@ void POA_CORBA::ExceptionDef_tie<T>::name  (
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -5788,7 +5788,7 @@ char * POA_CORBA::ExceptionDef_tie<T>::version  (
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -5806,7 +5806,7 @@ void POA_CORBA::ExceptionDef_tie<T>::version  (
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -5822,7 +5822,7 @@ template <class T> ACE_INLINE
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -5838,7 +5838,7 @@ char * POA_CORBA::ExceptionDef_tie<T>::absolute_name  (
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -5854,7 +5854,7 @@ template <class T> ACE_INLINE
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -5870,7 +5870,7 @@ template <class T> ACE_INLINE
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -5892,7 +5892,7 @@ void POA_CORBA::ExceptionDef_tie<T>::move  (
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -5910,7 +5910,7 @@ template <class T> ACE_INLINE
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -5930,7 +5930,7 @@ template <class T> ACE_INLINE
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -5954,7 +5954,7 @@ template <class T> ACE_INLINE
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -5976,7 +5976,7 @@ template <class T> ACE_INLINE
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -5998,7 +5998,7 @@ template <class T> ACE_INLINE
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -6024,7 +6024,7 @@ template <class T> ACE_INLINE
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -6048,7 +6048,7 @@ template <class T> ACE_INLINE
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -6074,7 +6074,7 @@ template <class T> ACE_INLINE
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -6098,7 +6098,7 @@ template <class T> ACE_INLINE
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -6122,7 +6122,7 @@ template <class T> ACE_INLINE
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -6146,7 +6146,7 @@ template <class T> ACE_INLINE
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -6182,7 +6182,7 @@ template <class T> ACE_INLINE
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -6206,7 +6206,7 @@ template <class T> ACE_INLINE
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -6230,7 +6230,7 @@ template <class T> ACE_INLINE
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -6252,7 +6252,7 @@ template <class T> ACE_INLINE
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -6276,7 +6276,7 @@ template <class T> ACE_INLINE
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -6300,7 +6300,7 @@ template <class T> ACE_INLINE
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -6336,7 +6336,7 @@ template <class T> ACE_INLINE
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -6352,7 +6352,7 @@ template <class T> ACE_INLINE
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -6368,7 +6368,7 @@ template <class T> ACE_INLINE
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -6439,7 +6439,7 @@ POA_CORBA::AttributeDef_tie<T>::_tied_object (T &obj)
     {
       delete this->ptr_;
     }
-  
+
   this->ptr_ = &obj;
   this->rel_ = 0;
 }
@@ -6451,7 +6451,7 @@ POA_CORBA::AttributeDef_tie<T>::_tied_object (T *obj, ::CORBA::Boolean release)
     {
       delete this->ptr_;
     }
-  
+
   this->ptr_ = obj;
   this->rel_ = release;
 }
@@ -6469,17 +6469,17 @@ POA_CORBA::AttributeDef_tie<T>::_is_owner ( ::CORBA::Boolean b)
 }
 
 template <class T> ACE_INLINE PortableServer::POA_ptr
-POA_CORBA::AttributeDef_tie<T>::_default_POA (ACE_ENV_SINGLE_ARG_DECL)
+POA_CORBA::AttributeDef_tie<T>::_default_POA (void)
 {
   if (! ::CORBA::is_nil (this->poa_.in ()))
     {
       return PortableServer::POA::_duplicate (this->poa_.in ());
     }
-  
-  return this->AttributeDef::_default_POA (ACE_ENV_SINGLE_ARG_PARAMETER);
+
+  return this->AttributeDef::_default_POA ();
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -6495,7 +6495,7 @@ template <class T> ACE_INLINE
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -6511,7 +6511,7 @@ void POA_CORBA::AttributeDef_tie<T>::destroy  (
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -6527,7 +6527,7 @@ char * POA_CORBA::AttributeDef_tie<T>::id  (
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -6545,7 +6545,7 @@ void POA_CORBA::AttributeDef_tie<T>::id  (
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -6561,7 +6561,7 @@ char * POA_CORBA::AttributeDef_tie<T>::name  (
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -6579,7 +6579,7 @@ void POA_CORBA::AttributeDef_tie<T>::name  (
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -6595,7 +6595,7 @@ char * POA_CORBA::AttributeDef_tie<T>::version  (
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -6613,7 +6613,7 @@ void POA_CORBA::AttributeDef_tie<T>::version  (
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -6629,7 +6629,7 @@ template <class T> ACE_INLINE
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -6645,7 +6645,7 @@ char * POA_CORBA::AttributeDef_tie<T>::absolute_name  (
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -6661,7 +6661,7 @@ template <class T> ACE_INLINE
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -6677,7 +6677,7 @@ template <class T> ACE_INLINE
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -6699,7 +6699,7 @@ void POA_CORBA::AttributeDef_tie<T>::move  (
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -6715,7 +6715,7 @@ template <class T> ACE_INLINE
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -6731,7 +6731,7 @@ template <class T> ACE_INLINE
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -6749,7 +6749,7 @@ void POA_CORBA::AttributeDef_tie<T>::type_def  (
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -6765,7 +6765,7 @@ template <class T> ACE_INLINE
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -6836,7 +6836,7 @@ POA_CORBA::ExtAttributeDef_tie<T>::_tied_object (T &obj)
     {
       delete this->ptr_;
     }
-  
+
   this->ptr_ = &obj;
   this->rel_ = 0;
 }
@@ -6848,7 +6848,7 @@ POA_CORBA::ExtAttributeDef_tie<T>::_tied_object (T *obj, ::CORBA::Boolean releas
     {
       delete this->ptr_;
     }
-  
+
   this->ptr_ = obj;
   this->rel_ = release;
 }
@@ -6866,17 +6866,17 @@ POA_CORBA::ExtAttributeDef_tie<T>::_is_owner ( ::CORBA::Boolean b)
 }
 
 template <class T> ACE_INLINE PortableServer::POA_ptr
-POA_CORBA::ExtAttributeDef_tie<T>::_default_POA (ACE_ENV_SINGLE_ARG_DECL)
+POA_CORBA::ExtAttributeDef_tie<T>::_default_POA (void)
 {
   if (! ::CORBA::is_nil (this->poa_.in ()))
     {
       return PortableServer::POA::_duplicate (this->poa_.in ());
     }
-  
-  return this->ExtAttributeDef::_default_POA (ACE_ENV_SINGLE_ARG_PARAMETER);
+
+  return this->ExtAttributeDef::_default_POA ();
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -6892,7 +6892,7 @@ template <class T> ACE_INLINE
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -6908,7 +6908,7 @@ void POA_CORBA::ExtAttributeDef_tie<T>::destroy  (
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -6924,7 +6924,7 @@ char * POA_CORBA::ExtAttributeDef_tie<T>::id  (
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -6942,7 +6942,7 @@ void POA_CORBA::ExtAttributeDef_tie<T>::id  (
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -6958,7 +6958,7 @@ char * POA_CORBA::ExtAttributeDef_tie<T>::name  (
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -6976,7 +6976,7 @@ void POA_CORBA::ExtAttributeDef_tie<T>::name  (
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -6992,7 +6992,7 @@ char * POA_CORBA::ExtAttributeDef_tie<T>::version  (
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -7010,7 +7010,7 @@ void POA_CORBA::ExtAttributeDef_tie<T>::version  (
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -7026,7 +7026,7 @@ template <class T> ACE_INLINE
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -7042,7 +7042,7 @@ char * POA_CORBA::ExtAttributeDef_tie<T>::absolute_name  (
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -7058,7 +7058,7 @@ template <class T> ACE_INLINE
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -7074,7 +7074,7 @@ template <class T> ACE_INLINE
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -7096,7 +7096,7 @@ void POA_CORBA::ExtAttributeDef_tie<T>::move  (
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -7112,7 +7112,7 @@ template <class T> ACE_INLINE
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -7128,7 +7128,7 @@ template <class T> ACE_INLINE
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -7146,7 +7146,7 @@ void POA_CORBA::ExtAttributeDef_tie<T>::type_def  (
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -7162,7 +7162,7 @@ template <class T> ACE_INLINE
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -7180,7 +7180,7 @@ void POA_CORBA::ExtAttributeDef_tie<T>::mode  (
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -7196,7 +7196,7 @@ template <class T> ACE_INLINE
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -7214,7 +7214,7 @@ void POA_CORBA::ExtAttributeDef_tie<T>::get_exceptions  (
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -7230,7 +7230,7 @@ template <class T> ACE_INLINE
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -7248,7 +7248,7 @@ void POA_CORBA::ExtAttributeDef_tie<T>::set_exceptions  (
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -7317,7 +7317,7 @@ POA_CORBA::OperationDef_tie<T>::_tied_object (T &obj)
     {
       delete this->ptr_;
     }
-  
+
   this->ptr_ = &obj;
   this->rel_ = 0;
 }
@@ -7329,7 +7329,7 @@ POA_CORBA::OperationDef_tie<T>::_tied_object (T *obj, ::CORBA::Boolean release)
     {
       delete this->ptr_;
     }
-  
+
   this->ptr_ = obj;
   this->rel_ = release;
 }
@@ -7347,17 +7347,17 @@ POA_CORBA::OperationDef_tie<T>::_is_owner ( ::CORBA::Boolean b)
 }
 
 template <class T> ACE_INLINE PortableServer::POA_ptr
-POA_CORBA::OperationDef_tie<T>::_default_POA (ACE_ENV_SINGLE_ARG_DECL)
+POA_CORBA::OperationDef_tie<T>::_default_POA (void)
 {
   if (! ::CORBA::is_nil (this->poa_.in ()))
     {
       return PortableServer::POA::_duplicate (this->poa_.in ());
     }
-  
-  return this->OperationDef::_default_POA (ACE_ENV_SINGLE_ARG_PARAMETER);
+
+  return this->OperationDef::_default_POA ();
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -7373,7 +7373,7 @@ template <class T> ACE_INLINE
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -7389,7 +7389,7 @@ void POA_CORBA::OperationDef_tie<T>::destroy  (
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -7405,7 +7405,7 @@ char * POA_CORBA::OperationDef_tie<T>::id  (
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -7423,7 +7423,7 @@ void POA_CORBA::OperationDef_tie<T>::id  (
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -7439,7 +7439,7 @@ char * POA_CORBA::OperationDef_tie<T>::name  (
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -7457,7 +7457,7 @@ void POA_CORBA::OperationDef_tie<T>::name  (
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -7473,7 +7473,7 @@ char * POA_CORBA::OperationDef_tie<T>::version  (
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -7491,7 +7491,7 @@ void POA_CORBA::OperationDef_tie<T>::version  (
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -7507,7 +7507,7 @@ template <class T> ACE_INLINE
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -7523,7 +7523,7 @@ char * POA_CORBA::OperationDef_tie<T>::absolute_name  (
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -7539,7 +7539,7 @@ template <class T> ACE_INLINE
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -7555,7 +7555,7 @@ template <class T> ACE_INLINE
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -7577,7 +7577,7 @@ void POA_CORBA::OperationDef_tie<T>::move  (
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -7593,7 +7593,7 @@ template <class T> ACE_INLINE
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -7609,7 +7609,7 @@ template <class T> ACE_INLINE
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -7627,7 +7627,7 @@ void POA_CORBA::OperationDef_tie<T>::result_def  (
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -7643,7 +7643,7 @@ template <class T> ACE_INLINE
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -7661,7 +7661,7 @@ void POA_CORBA::OperationDef_tie<T>::params  (
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -7677,7 +7677,7 @@ template <class T> ACE_INLINE
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -7695,7 +7695,7 @@ void POA_CORBA::OperationDef_tie<T>::mode  (
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -7711,7 +7711,7 @@ template <class T> ACE_INLINE
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -7729,7 +7729,7 @@ void POA_CORBA::OperationDef_tie<T>::contexts  (
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -7745,7 +7745,7 @@ template <class T> ACE_INLINE
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -7816,7 +7816,7 @@ POA_CORBA::InterfaceDef_tie<T>::_tied_object (T &obj)
     {
       delete this->ptr_;
     }
-  
+
   this->ptr_ = &obj;
   this->rel_ = 0;
 }
@@ -7828,7 +7828,7 @@ POA_CORBA::InterfaceDef_tie<T>::_tied_object (T *obj, ::CORBA::Boolean release)
     {
       delete this->ptr_;
     }
-  
+
   this->ptr_ = obj;
   this->rel_ = release;
 }
@@ -7846,17 +7846,17 @@ POA_CORBA::InterfaceDef_tie<T>::_is_owner ( ::CORBA::Boolean b)
 }
 
 template <class T> ACE_INLINE PortableServer::POA_ptr
-POA_CORBA::InterfaceDef_tie<T>::_default_POA (ACE_ENV_SINGLE_ARG_DECL)
+POA_CORBA::InterfaceDef_tie<T>::_default_POA (void)
 {
   if (! ::CORBA::is_nil (this->poa_.in ()))
     {
       return PortableServer::POA::_duplicate (this->poa_.in ());
     }
-  
-  return this->InterfaceDef::_default_POA (ACE_ENV_SINGLE_ARG_PARAMETER);
+
+  return this->InterfaceDef::_default_POA ();
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -7872,7 +7872,7 @@ template <class T> ACE_INLINE
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -7888,7 +7888,7 @@ void POA_CORBA::InterfaceDef_tie<T>::destroy  (
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -7906,7 +7906,7 @@ template <class T> ACE_INLINE
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -7926,7 +7926,7 @@ template <class T> ACE_INLINE
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -7950,7 +7950,7 @@ template <class T> ACE_INLINE
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -7972,7 +7972,7 @@ template <class T> ACE_INLINE
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -7994,7 +7994,7 @@ template <class T> ACE_INLINE
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -8020,7 +8020,7 @@ template <class T> ACE_INLINE
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -8044,7 +8044,7 @@ template <class T> ACE_INLINE
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -8070,7 +8070,7 @@ template <class T> ACE_INLINE
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -8094,7 +8094,7 @@ template <class T> ACE_INLINE
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -8118,7 +8118,7 @@ template <class T> ACE_INLINE
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -8142,7 +8142,7 @@ template <class T> ACE_INLINE
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -8178,7 +8178,7 @@ template <class T> ACE_INLINE
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -8202,7 +8202,7 @@ template <class T> ACE_INLINE
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -8226,7 +8226,7 @@ template <class T> ACE_INLINE
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -8248,7 +8248,7 @@ template <class T> ACE_INLINE
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -8272,7 +8272,7 @@ template <class T> ACE_INLINE
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -8296,7 +8296,7 @@ template <class T> ACE_INLINE
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -8332,7 +8332,7 @@ template <class T> ACE_INLINE
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -8348,7 +8348,7 @@ char * POA_CORBA::InterfaceDef_tie<T>::id  (
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -8366,7 +8366,7 @@ void POA_CORBA::InterfaceDef_tie<T>::id  (
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -8382,7 +8382,7 @@ char * POA_CORBA::InterfaceDef_tie<T>::name  (
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -8400,7 +8400,7 @@ void POA_CORBA::InterfaceDef_tie<T>::name  (
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -8416,7 +8416,7 @@ char * POA_CORBA::InterfaceDef_tie<T>::version  (
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -8434,7 +8434,7 @@ void POA_CORBA::InterfaceDef_tie<T>::version  (
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -8450,7 +8450,7 @@ template <class T> ACE_INLINE
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -8466,7 +8466,7 @@ char * POA_CORBA::InterfaceDef_tie<T>::absolute_name  (
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -8482,7 +8482,7 @@ template <class T> ACE_INLINE
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -8498,7 +8498,7 @@ template <class T> ACE_INLINE
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -8520,7 +8520,7 @@ void POA_CORBA::InterfaceDef_tie<T>::move  (
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -8536,7 +8536,7 @@ template <class T> ACE_INLINE
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -8552,7 +8552,7 @@ template <class T> ACE_INLINE
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -8570,7 +8570,7 @@ void POA_CORBA::InterfaceDef_tie<T>::base_interfaces  (
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -8588,7 +8588,7 @@ template <class T> ACE_INLINE
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -8604,7 +8604,7 @@ template <class T> ACE_INLINE
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -8630,7 +8630,7 @@ template <class T> ACE_INLINE
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -8715,7 +8715,7 @@ POA_CORBA::InterfaceAttrExtension_tie<T>::_tied_object (T &obj)
     {
       delete this->ptr_;
     }
-  
+
   this->ptr_ = &obj;
   this->rel_ = 0;
 }
@@ -8727,7 +8727,7 @@ POA_CORBA::InterfaceAttrExtension_tie<T>::_tied_object (T *obj, ::CORBA::Boolean
     {
       delete this->ptr_;
     }
-  
+
   this->ptr_ = obj;
   this->rel_ = release;
 }
@@ -8745,17 +8745,17 @@ POA_CORBA::InterfaceAttrExtension_tie<T>::_is_owner ( ::CORBA::Boolean b)
 }
 
 template <class T> ACE_INLINE PortableServer::POA_ptr
-POA_CORBA::InterfaceAttrExtension_tie<T>::_default_POA (ACE_ENV_SINGLE_ARG_DECL)
+POA_CORBA::InterfaceAttrExtension_tie<T>::_default_POA (void)
 {
   if (! ::CORBA::is_nil (this->poa_.in ()))
     {
       return PortableServer::POA::_duplicate (this->poa_.in ());
     }
-  
-  return this->InterfaceAttrExtension::_default_POA (ACE_ENV_SINGLE_ARG_PARAMETER);
+
+  return this->InterfaceAttrExtension::_default_POA ();
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -8771,7 +8771,7 @@ template <class T> ACE_INLINE
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -8854,7 +8854,7 @@ POA_CORBA::ExtInterfaceDef_tie<T>::_tied_object (T &obj)
     {
       delete this->ptr_;
     }
-  
+
   this->ptr_ = &obj;
   this->rel_ = 0;
 }
@@ -8866,7 +8866,7 @@ POA_CORBA::ExtInterfaceDef_tie<T>::_tied_object (T *obj, ::CORBA::Boolean releas
     {
       delete this->ptr_;
     }
-  
+
   this->ptr_ = obj;
   this->rel_ = release;
 }
@@ -8884,17 +8884,17 @@ POA_CORBA::ExtInterfaceDef_tie<T>::_is_owner ( ::CORBA::Boolean b)
 }
 
 template <class T> ACE_INLINE PortableServer::POA_ptr
-POA_CORBA::ExtInterfaceDef_tie<T>::_default_POA (ACE_ENV_SINGLE_ARG_DECL)
+POA_CORBA::ExtInterfaceDef_tie<T>::_default_POA (void)
 {
   if (! ::CORBA::is_nil (this->poa_.in ()))
     {
       return PortableServer::POA::_duplicate (this->poa_.in ());
     }
-  
-  return this->ExtInterfaceDef::_default_POA (ACE_ENV_SINGLE_ARG_PARAMETER);
+
+  return this->ExtInterfaceDef::_default_POA ();
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -8910,7 +8910,7 @@ template <class T> ACE_INLINE
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -8926,7 +8926,7 @@ void POA_CORBA::ExtInterfaceDef_tie<T>::destroy  (
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -8944,7 +8944,7 @@ template <class T> ACE_INLINE
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -8964,7 +8964,7 @@ template <class T> ACE_INLINE
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -8988,7 +8988,7 @@ template <class T> ACE_INLINE
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -9010,7 +9010,7 @@ template <class T> ACE_INLINE
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -9032,7 +9032,7 @@ template <class T> ACE_INLINE
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -9058,7 +9058,7 @@ template <class T> ACE_INLINE
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -9082,7 +9082,7 @@ template <class T> ACE_INLINE
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -9108,7 +9108,7 @@ template <class T> ACE_INLINE
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -9132,7 +9132,7 @@ template <class T> ACE_INLINE
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -9156,7 +9156,7 @@ template <class T> ACE_INLINE
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -9180,7 +9180,7 @@ template <class T> ACE_INLINE
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -9216,7 +9216,7 @@ template <class T> ACE_INLINE
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -9240,7 +9240,7 @@ template <class T> ACE_INLINE
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -9264,7 +9264,7 @@ template <class T> ACE_INLINE
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -9286,7 +9286,7 @@ template <class T> ACE_INLINE
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -9310,7 +9310,7 @@ template <class T> ACE_INLINE
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -9334,7 +9334,7 @@ template <class T> ACE_INLINE
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -9370,7 +9370,7 @@ template <class T> ACE_INLINE
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -9386,7 +9386,7 @@ char * POA_CORBA::ExtInterfaceDef_tie<T>::id  (
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -9404,7 +9404,7 @@ void POA_CORBA::ExtInterfaceDef_tie<T>::id  (
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -9420,7 +9420,7 @@ char * POA_CORBA::ExtInterfaceDef_tie<T>::name  (
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -9438,7 +9438,7 @@ void POA_CORBA::ExtInterfaceDef_tie<T>::name  (
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -9454,7 +9454,7 @@ char * POA_CORBA::ExtInterfaceDef_tie<T>::version  (
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -9472,7 +9472,7 @@ void POA_CORBA::ExtInterfaceDef_tie<T>::version  (
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -9488,7 +9488,7 @@ template <class T> ACE_INLINE
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -9504,7 +9504,7 @@ char * POA_CORBA::ExtInterfaceDef_tie<T>::absolute_name  (
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -9520,7 +9520,7 @@ template <class T> ACE_INLINE
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -9536,7 +9536,7 @@ template <class T> ACE_INLINE
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -9558,7 +9558,7 @@ void POA_CORBA::ExtInterfaceDef_tie<T>::move  (
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -9574,7 +9574,7 @@ template <class T> ACE_INLINE
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -9590,7 +9590,7 @@ template <class T> ACE_INLINE
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -9608,7 +9608,7 @@ void POA_CORBA::ExtInterfaceDef_tie<T>::base_interfaces  (
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -9626,7 +9626,7 @@ template <class T> ACE_INLINE
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -9642,7 +9642,7 @@ template <class T> ACE_INLINE
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -9668,7 +9668,7 @@ template <class T> ACE_INLINE
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -9700,7 +9700,7 @@ template <class T> ACE_INLINE
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -9716,7 +9716,7 @@ template <class T> ACE_INLINE
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -9799,7 +9799,7 @@ POA_CORBA::AbstractInterfaceDef_tie<T>::_tied_object (T &obj)
     {
       delete this->ptr_;
     }
-  
+
   this->ptr_ = &obj;
   this->rel_ = 0;
 }
@@ -9811,7 +9811,7 @@ POA_CORBA::AbstractInterfaceDef_tie<T>::_tied_object (T *obj, ::CORBA::Boolean r
     {
       delete this->ptr_;
     }
-  
+
   this->ptr_ = obj;
   this->rel_ = release;
 }
@@ -9829,17 +9829,17 @@ POA_CORBA::AbstractInterfaceDef_tie<T>::_is_owner ( ::CORBA::Boolean b)
 }
 
 template <class T> ACE_INLINE PortableServer::POA_ptr
-POA_CORBA::AbstractInterfaceDef_tie<T>::_default_POA (ACE_ENV_SINGLE_ARG_DECL)
+POA_CORBA::AbstractInterfaceDef_tie<T>::_default_POA (void)
 {
   if (! ::CORBA::is_nil (this->poa_.in ()))
     {
       return PortableServer::POA::_duplicate (this->poa_.in ());
     }
-  
-  return this->AbstractInterfaceDef::_default_POA (ACE_ENV_SINGLE_ARG_PARAMETER);
+
+  return this->AbstractInterfaceDef::_default_POA ();
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -9855,7 +9855,7 @@ template <class T> ACE_INLINE
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -9871,7 +9871,7 @@ void POA_CORBA::AbstractInterfaceDef_tie<T>::destroy  (
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -9889,7 +9889,7 @@ template <class T> ACE_INLINE
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -9909,7 +9909,7 @@ template <class T> ACE_INLINE
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -9933,7 +9933,7 @@ template <class T> ACE_INLINE
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -9955,7 +9955,7 @@ template <class T> ACE_INLINE
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -9977,7 +9977,7 @@ template <class T> ACE_INLINE
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -10003,7 +10003,7 @@ template <class T> ACE_INLINE
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -10027,7 +10027,7 @@ template <class T> ACE_INLINE
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -10053,7 +10053,7 @@ template <class T> ACE_INLINE
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -10077,7 +10077,7 @@ template <class T> ACE_INLINE
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -10101,7 +10101,7 @@ template <class T> ACE_INLINE
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -10125,7 +10125,7 @@ template <class T> ACE_INLINE
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -10161,7 +10161,7 @@ template <class T> ACE_INLINE
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -10185,7 +10185,7 @@ template <class T> ACE_INLINE
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -10209,7 +10209,7 @@ template <class T> ACE_INLINE
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -10231,7 +10231,7 @@ template <class T> ACE_INLINE
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -10255,7 +10255,7 @@ template <class T> ACE_INLINE
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -10279,7 +10279,7 @@ template <class T> ACE_INLINE
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -10315,7 +10315,7 @@ template <class T> ACE_INLINE
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -10331,7 +10331,7 @@ char * POA_CORBA::AbstractInterfaceDef_tie<T>::id  (
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -10349,7 +10349,7 @@ void POA_CORBA::AbstractInterfaceDef_tie<T>::id  (
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -10365,7 +10365,7 @@ char * POA_CORBA::AbstractInterfaceDef_tie<T>::name  (
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -10383,7 +10383,7 @@ void POA_CORBA::AbstractInterfaceDef_tie<T>::name  (
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -10399,7 +10399,7 @@ char * POA_CORBA::AbstractInterfaceDef_tie<T>::version  (
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -10417,7 +10417,7 @@ void POA_CORBA::AbstractInterfaceDef_tie<T>::version  (
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -10433,7 +10433,7 @@ template <class T> ACE_INLINE
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -10449,7 +10449,7 @@ char * POA_CORBA::AbstractInterfaceDef_tie<T>::absolute_name  (
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -10465,7 +10465,7 @@ template <class T> ACE_INLINE
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -10481,7 +10481,7 @@ template <class T> ACE_INLINE
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -10503,7 +10503,7 @@ void POA_CORBA::AbstractInterfaceDef_tie<T>::move  (
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -10519,7 +10519,7 @@ template <class T> ACE_INLINE
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -10535,7 +10535,7 @@ template <class T> ACE_INLINE
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -10553,7 +10553,7 @@ void POA_CORBA::AbstractInterfaceDef_tie<T>::base_interfaces  (
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -10571,7 +10571,7 @@ template <class T> ACE_INLINE
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -10587,7 +10587,7 @@ template <class T> ACE_INLINE
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -10613,7 +10613,7 @@ template <class T> ACE_INLINE
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -10698,7 +10698,7 @@ POA_CORBA::ExtAbstractInterfaceDef_tie<T>::_tied_object (T &obj)
     {
       delete this->ptr_;
     }
-  
+
   this->ptr_ = &obj;
   this->rel_ = 0;
 }
@@ -10710,7 +10710,7 @@ POA_CORBA::ExtAbstractInterfaceDef_tie<T>::_tied_object (T *obj, ::CORBA::Boolea
     {
       delete this->ptr_;
     }
-  
+
   this->ptr_ = obj;
   this->rel_ = release;
 }
@@ -10728,17 +10728,17 @@ POA_CORBA::ExtAbstractInterfaceDef_tie<T>::_is_owner ( ::CORBA::Boolean b)
 }
 
 template <class T> ACE_INLINE PortableServer::POA_ptr
-POA_CORBA::ExtAbstractInterfaceDef_tie<T>::_default_POA (ACE_ENV_SINGLE_ARG_DECL)
+POA_CORBA::ExtAbstractInterfaceDef_tie<T>::_default_POA (void)
 {
   if (! ::CORBA::is_nil (this->poa_.in ()))
     {
       return PortableServer::POA::_duplicate (this->poa_.in ());
     }
-  
-  return this->ExtAbstractInterfaceDef::_default_POA (ACE_ENV_SINGLE_ARG_PARAMETER);
+
+  return this->ExtAbstractInterfaceDef::_default_POA ();
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -10754,7 +10754,7 @@ template <class T> ACE_INLINE
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -10770,7 +10770,7 @@ void POA_CORBA::ExtAbstractInterfaceDef_tie<T>::destroy  (
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -10788,7 +10788,7 @@ template <class T> ACE_INLINE
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -10808,7 +10808,7 @@ template <class T> ACE_INLINE
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -10832,7 +10832,7 @@ template <class T> ACE_INLINE
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -10854,7 +10854,7 @@ template <class T> ACE_INLINE
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -10876,7 +10876,7 @@ template <class T> ACE_INLINE
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -10902,7 +10902,7 @@ template <class T> ACE_INLINE
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -10926,7 +10926,7 @@ template <class T> ACE_INLINE
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -10952,7 +10952,7 @@ template <class T> ACE_INLINE
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -10976,7 +10976,7 @@ template <class T> ACE_INLINE
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -11000,7 +11000,7 @@ template <class T> ACE_INLINE
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -11024,7 +11024,7 @@ template <class T> ACE_INLINE
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -11060,7 +11060,7 @@ template <class T> ACE_INLINE
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -11084,7 +11084,7 @@ template <class T> ACE_INLINE
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -11108,7 +11108,7 @@ template <class T> ACE_INLINE
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -11130,7 +11130,7 @@ template <class T> ACE_INLINE
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -11154,7 +11154,7 @@ template <class T> ACE_INLINE
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -11178,7 +11178,7 @@ template <class T> ACE_INLINE
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -11214,7 +11214,7 @@ template <class T> ACE_INLINE
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -11230,7 +11230,7 @@ char * POA_CORBA::ExtAbstractInterfaceDef_tie<T>::id  (
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -11248,7 +11248,7 @@ void POA_CORBA::ExtAbstractInterfaceDef_tie<T>::id  (
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -11264,7 +11264,7 @@ char * POA_CORBA::ExtAbstractInterfaceDef_tie<T>::name  (
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -11282,7 +11282,7 @@ void POA_CORBA::ExtAbstractInterfaceDef_tie<T>::name  (
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -11298,7 +11298,7 @@ char * POA_CORBA::ExtAbstractInterfaceDef_tie<T>::version  (
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -11316,7 +11316,7 @@ void POA_CORBA::ExtAbstractInterfaceDef_tie<T>::version  (
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -11332,7 +11332,7 @@ template <class T> ACE_INLINE
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -11348,7 +11348,7 @@ char * POA_CORBA::ExtAbstractInterfaceDef_tie<T>::absolute_name  (
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -11364,7 +11364,7 @@ template <class T> ACE_INLINE
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -11380,7 +11380,7 @@ template <class T> ACE_INLINE
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -11402,7 +11402,7 @@ void POA_CORBA::ExtAbstractInterfaceDef_tie<T>::move  (
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -11418,7 +11418,7 @@ template <class T> ACE_INLINE
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -11434,7 +11434,7 @@ template <class T> ACE_INLINE
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -11452,7 +11452,7 @@ void POA_CORBA::ExtAbstractInterfaceDef_tie<T>::base_interfaces  (
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -11470,7 +11470,7 @@ template <class T> ACE_INLINE
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -11486,7 +11486,7 @@ template <class T> ACE_INLINE
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -11512,7 +11512,7 @@ template <class T> ACE_INLINE
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -11544,7 +11544,7 @@ template <class T> ACE_INLINE
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -11560,7 +11560,7 @@ template <class T> ACE_INLINE
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -11643,7 +11643,7 @@ POA_CORBA::LocalInterfaceDef_tie<T>::_tied_object (T &obj)
     {
       delete this->ptr_;
     }
-  
+
   this->ptr_ = &obj;
   this->rel_ = 0;
 }
@@ -11655,7 +11655,7 @@ POA_CORBA::LocalInterfaceDef_tie<T>::_tied_object (T *obj, ::CORBA::Boolean rele
     {
       delete this->ptr_;
     }
-  
+
   this->ptr_ = obj;
   this->rel_ = release;
 }
@@ -11673,17 +11673,17 @@ POA_CORBA::LocalInterfaceDef_tie<T>::_is_owner ( ::CORBA::Boolean b)
 }
 
 template <class T> ACE_INLINE PortableServer::POA_ptr
-POA_CORBA::LocalInterfaceDef_tie<T>::_default_POA (ACE_ENV_SINGLE_ARG_DECL)
+POA_CORBA::LocalInterfaceDef_tie<T>::_default_POA (void)
 {
   if (! ::CORBA::is_nil (this->poa_.in ()))
     {
       return PortableServer::POA::_duplicate (this->poa_.in ());
     }
-  
-  return this->LocalInterfaceDef::_default_POA (ACE_ENV_SINGLE_ARG_PARAMETER);
+
+  return this->LocalInterfaceDef::_default_POA ();
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -11699,7 +11699,7 @@ template <class T> ACE_INLINE
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -11715,7 +11715,7 @@ void POA_CORBA::LocalInterfaceDef_tie<T>::destroy  (
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -11733,7 +11733,7 @@ template <class T> ACE_INLINE
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -11753,7 +11753,7 @@ template <class T> ACE_INLINE
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -11777,7 +11777,7 @@ template <class T> ACE_INLINE
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -11799,7 +11799,7 @@ template <class T> ACE_INLINE
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -11821,7 +11821,7 @@ template <class T> ACE_INLINE
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -11847,7 +11847,7 @@ template <class T> ACE_INLINE
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -11871,7 +11871,7 @@ template <class T> ACE_INLINE
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -11897,7 +11897,7 @@ template <class T> ACE_INLINE
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -11921,7 +11921,7 @@ template <class T> ACE_INLINE
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -11945,7 +11945,7 @@ template <class T> ACE_INLINE
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -11969,7 +11969,7 @@ template <class T> ACE_INLINE
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -12005,7 +12005,7 @@ template <class T> ACE_INLINE
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -12029,7 +12029,7 @@ template <class T> ACE_INLINE
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -12053,7 +12053,7 @@ template <class T> ACE_INLINE
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -12075,7 +12075,7 @@ template <class T> ACE_INLINE
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -12099,7 +12099,7 @@ template <class T> ACE_INLINE
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -12123,7 +12123,7 @@ template <class T> ACE_INLINE
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -12159,7 +12159,7 @@ template <class T> ACE_INLINE
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -12175,7 +12175,7 @@ char * POA_CORBA::LocalInterfaceDef_tie<T>::id  (
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -12193,7 +12193,7 @@ void POA_CORBA::LocalInterfaceDef_tie<T>::id  (
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -12209,7 +12209,7 @@ char * POA_CORBA::LocalInterfaceDef_tie<T>::name  (
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -12227,7 +12227,7 @@ void POA_CORBA::LocalInterfaceDef_tie<T>::name  (
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -12243,7 +12243,7 @@ char * POA_CORBA::LocalInterfaceDef_tie<T>::version  (
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -12261,7 +12261,7 @@ void POA_CORBA::LocalInterfaceDef_tie<T>::version  (
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -12277,7 +12277,7 @@ template <class T> ACE_INLINE
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -12293,7 +12293,7 @@ char * POA_CORBA::LocalInterfaceDef_tie<T>::absolute_name  (
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -12309,7 +12309,7 @@ template <class T> ACE_INLINE
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -12325,7 +12325,7 @@ template <class T> ACE_INLINE
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -12347,7 +12347,7 @@ void POA_CORBA::LocalInterfaceDef_tie<T>::move  (
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -12363,7 +12363,7 @@ template <class T> ACE_INLINE
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -12379,7 +12379,7 @@ template <class T> ACE_INLINE
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -12397,7 +12397,7 @@ void POA_CORBA::LocalInterfaceDef_tie<T>::base_interfaces  (
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -12415,7 +12415,7 @@ template <class T> ACE_INLINE
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -12431,7 +12431,7 @@ template <class T> ACE_INLINE
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -12457,7 +12457,7 @@ template <class T> ACE_INLINE
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -12542,7 +12542,7 @@ POA_CORBA::ExtLocalInterfaceDef_tie<T>::_tied_object (T &obj)
     {
       delete this->ptr_;
     }
-  
+
   this->ptr_ = &obj;
   this->rel_ = 0;
 }
@@ -12554,7 +12554,7 @@ POA_CORBA::ExtLocalInterfaceDef_tie<T>::_tied_object (T *obj, ::CORBA::Boolean r
     {
       delete this->ptr_;
     }
-  
+
   this->ptr_ = obj;
   this->rel_ = release;
 }
@@ -12572,17 +12572,17 @@ POA_CORBA::ExtLocalInterfaceDef_tie<T>::_is_owner ( ::CORBA::Boolean b)
 }
 
 template <class T> ACE_INLINE PortableServer::POA_ptr
-POA_CORBA::ExtLocalInterfaceDef_tie<T>::_default_POA (ACE_ENV_SINGLE_ARG_DECL)
+POA_CORBA::ExtLocalInterfaceDef_tie<T>::_default_POA (void)
 {
   if (! ::CORBA::is_nil (this->poa_.in ()))
     {
       return PortableServer::POA::_duplicate (this->poa_.in ());
     }
-  
-  return this->ExtLocalInterfaceDef::_default_POA (ACE_ENV_SINGLE_ARG_PARAMETER);
+
+  return this->ExtLocalInterfaceDef::_default_POA ();
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -12598,7 +12598,7 @@ template <class T> ACE_INLINE
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -12614,7 +12614,7 @@ void POA_CORBA::ExtLocalInterfaceDef_tie<T>::destroy  (
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -12632,7 +12632,7 @@ template <class T> ACE_INLINE
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -12652,7 +12652,7 @@ template <class T> ACE_INLINE
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -12676,7 +12676,7 @@ template <class T> ACE_INLINE
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -12698,7 +12698,7 @@ template <class T> ACE_INLINE
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -12720,7 +12720,7 @@ template <class T> ACE_INLINE
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -12746,7 +12746,7 @@ template <class T> ACE_INLINE
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -12770,7 +12770,7 @@ template <class T> ACE_INLINE
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -12796,7 +12796,7 @@ template <class T> ACE_INLINE
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -12820,7 +12820,7 @@ template <class T> ACE_INLINE
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -12844,7 +12844,7 @@ template <class T> ACE_INLINE
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -12868,7 +12868,7 @@ template <class T> ACE_INLINE
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -12904,7 +12904,7 @@ template <class T> ACE_INLINE
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -12928,7 +12928,7 @@ template <class T> ACE_INLINE
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -12952,7 +12952,7 @@ template <class T> ACE_INLINE
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -12974,7 +12974,7 @@ template <class T> ACE_INLINE
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -12998,7 +12998,7 @@ template <class T> ACE_INLINE
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -13022,7 +13022,7 @@ template <class T> ACE_INLINE
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -13058,7 +13058,7 @@ template <class T> ACE_INLINE
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -13074,7 +13074,7 @@ char * POA_CORBA::ExtLocalInterfaceDef_tie<T>::id  (
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -13092,7 +13092,7 @@ void POA_CORBA::ExtLocalInterfaceDef_tie<T>::id  (
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -13108,7 +13108,7 @@ char * POA_CORBA::ExtLocalInterfaceDef_tie<T>::name  (
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -13126,7 +13126,7 @@ void POA_CORBA::ExtLocalInterfaceDef_tie<T>::name  (
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -13142,7 +13142,7 @@ char * POA_CORBA::ExtLocalInterfaceDef_tie<T>::version  (
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -13160,7 +13160,7 @@ void POA_CORBA::ExtLocalInterfaceDef_tie<T>::version  (
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -13176,7 +13176,7 @@ template <class T> ACE_INLINE
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -13192,7 +13192,7 @@ char * POA_CORBA::ExtLocalInterfaceDef_tie<T>::absolute_name  (
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -13208,7 +13208,7 @@ template <class T> ACE_INLINE
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -13224,7 +13224,7 @@ template <class T> ACE_INLINE
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -13246,7 +13246,7 @@ void POA_CORBA::ExtLocalInterfaceDef_tie<T>::move  (
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -13262,7 +13262,7 @@ template <class T> ACE_INLINE
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -13278,7 +13278,7 @@ template <class T> ACE_INLINE
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -13296,7 +13296,7 @@ void POA_CORBA::ExtLocalInterfaceDef_tie<T>::base_interfaces  (
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -13314,7 +13314,7 @@ template <class T> ACE_INLINE
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -13330,7 +13330,7 @@ template <class T> ACE_INLINE
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -13356,7 +13356,7 @@ template <class T> ACE_INLINE
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -13388,7 +13388,7 @@ template <class T> ACE_INLINE
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
@@ -13404,7 +13404,7 @@ template <class T> ACE_INLINE
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE

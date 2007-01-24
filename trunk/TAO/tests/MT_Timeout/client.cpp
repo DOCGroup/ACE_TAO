@@ -52,18 +52,15 @@ main (int argc, char *argv[])
     {
       CORBA::ORB_var orb =
         CORBA::ORB_init (argc, argv, "" ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       if (parse_args (argc, argv) != 0)
         return 1;
 
       CORBA::Object_var tmp =
         orb->string_to_object(ior ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       Test::Sleep_Service_var sleep_service =
         Test::Sleep_Service::_narrow(tmp.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       if (CORBA::is_nil (sleep_service.in ()))
         {
@@ -96,13 +93,10 @@ main (int argc, char *argv[])
 
       // Get back in sync with the server..
       sleep_service->go_to_sleep (0 ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
-      sleep_service->shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      sleep_service->shutdown ();
 
-      orb->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      orb->destroy ();
 
       ACE_DEBUG ((LM_DEBUG,
                   "Task 0: Successful calls = %d, timed out calls = %d\n",

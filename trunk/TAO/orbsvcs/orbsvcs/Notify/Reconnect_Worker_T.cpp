@@ -31,8 +31,7 @@ namespace TAO_Notify
   Reconnect_Worker<TOPOOBJ>::work (TOPOOBJ* o ACE_ENV_ARG_DECL)
   {
     ACE_ASSERT(o != 0);
-    o->reconnect (ACE_ENV_SINGLE_ARG_PARAMETER);
-    ACE_CHECK;
+    o->reconnect ();
   }
 } // namespace TAO_Notify
 

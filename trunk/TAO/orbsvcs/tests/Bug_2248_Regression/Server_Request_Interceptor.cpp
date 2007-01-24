@@ -27,14 +27,14 @@ Server_Request_Interceptor::forward_reference (
 }
 
 char *
-Server_Request_Interceptor::name (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+Server_Request_Interceptor::name (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return CORBA::string_dup ("Server_Request_Interceptor");
 }
 
 void
-Server_Request_Interceptor::destroy (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+Server_Request_Interceptor::destroy (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
 }
@@ -59,7 +59,6 @@ Server_Request_Interceptor::receive_request (
   IOP::ServiceContext_var svc =
     ri->get_request_service_context (IOP::FT_GROUP_VERSION
                                      ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
   // extract the group component
   TAO_InputCDR cdr (reinterpret_cast<const char*> (svc->context_data.get_buffer ()),
@@ -85,10 +84,8 @@ Server_Request_Interceptor::receive_request (
           int argc = 0;
           char** argv = 0;
           CORBA::ORB_var orb = CORBA::ORB_init(argc,argv,ri->orb_id() ACE_ENV_ARG_PARAMETER);
-          ACE_CHECK;
 
           CORBA::Object_var obj = orb->string_to_object (iorstr_.in() ACE_ENV_ARG_PARAMETER);
-          ACE_CHECK;
 
           ACE_DEBUG ((LM_DEBUG,
                     "SERVER (%P|%t) Request will be forwarded "

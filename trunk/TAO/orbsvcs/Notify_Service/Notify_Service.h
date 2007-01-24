@@ -75,11 +75,11 @@ class TAO_Notify_Service_Driver
   // Initializes the Service.
   // Returns 0 on success, -1 on error.
 
-  int run (ACE_ENV_SINGLE_ARG_DECL);
+  int run (void);
   // run the Service.
   // Returns 0 on success, -1 on error.
 
-  void shutdown (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
+  void shutdown (void);
   // Shutdown the Service.
   // Returns 0 on success, -1 on error.
 
@@ -96,7 +96,7 @@ protected:
 
   TAO_Notify_Service* notify_service_;
 
-  int resolve_naming_service (ACE_ENV_SINGLE_ARG_DECL);
+  int resolve_naming_service (void);
   // Resolve the naming service.
 
   int parse_args (int& argc, ACE_TCHAR *argv []);

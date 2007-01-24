@@ -37,7 +37,7 @@ Account_i::orb (CORBA::ORB_ptr o)
 // Return the current balance on the server.
 
 CORBA::Float
-Account_i::balance (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+Account_i::balance (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return balance_;
@@ -64,7 +64,7 @@ Account_i::withdraw (CORBA::Float withdrawl
 }
 
 char *
-Account_i::name (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+Account_i::name (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return CORBA::string_dup (this->name_.in ());

@@ -2,7 +2,7 @@
 
 // Note: This class controls the behaviour of consumers connected to both
 // the Typed and Un-typed Event Channels.  A check must be made in the code
-// to ensure the correct EC is referenced. 
+// to ensure the correct EC is referenced.
 
 #include "orbsvcs/CosEvent/CEC_EventChannel.h"
 #include "orbsvcs/CosEvent/CEC_ConsumerAdmin.h"
@@ -104,7 +104,6 @@ TAO_CEC_Reactive_ConsumerControl::query_consumers (
       // Typed EC
       this->typed_event_channel_->typed_consumer_admin ()->for_each (&push_worker
                                                                      ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
     }
   else
     {
@@ -113,12 +112,10 @@ TAO_CEC_Reactive_ConsumerControl::query_consumers (
   // Un-typed EC
   this->event_channel_->consumer_admin ()->for_each (&push_worker
                                                      ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
   TAO_CEC_Ping_Pull_Consumer pull_worker (this);
   this->event_channel_->consumer_admin ()->for_each (&pull_worker
                                                      ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
 #if defined (TAO_HAS_TYPED_EVENT_CHANNEL)
     }
@@ -216,18 +213,16 @@ TAO_CEC_Reactive_ConsumerControl::handle_timeout (
       CORBA::PolicyList_var policies =
         this->policy_current_->get_policy_overrides (types
                                                      ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       // Change the timeout
       this->policy_current_->set_policy_overrides (this->policy_list_,
                                                    CORBA::ADD_OVERRIDE
                                                    ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       ACE_TRY_EX (query)
         {
           // Query the state of the consumers...
-          this->query_consumers (ACE_ENV_SINGLE_ARG_PARAMETER);
+          this->query_consumers ();
           ACE_TRY_CHECK_EX (query);
         }
       ACE_CATCHANY
@@ -239,11 +234,9 @@ TAO_CEC_Reactive_ConsumerControl::handle_timeout (
       this->policy_current_->set_policy_overrides (policies.in (),
                                                    CORBA::SET_OVERRIDE
                                                    ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
       for (CORBA::ULong i = 0; i != policies->length (); ++i)
         {
-          policies[i]->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+          policies[i]->destroy ();
         }
     }
   ACE_CATCHANY
@@ -263,12 +256,10 @@ TAO_CEC_Reactive_ConsumerControl::activate (void)
       CORBA::Object_var tmp =
         this->orb_->resolve_initial_references ("PolicyCurrent"
                                                 ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       this->policy_current_ =
         CORBA::PolicyCurrent::_narrow (tmp.in ()
                                        ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       // Pre-compute the policy list to the set the right timeout
       // value...
@@ -285,7 +276,6 @@ TAO_CEC_Reactive_ConsumerControl::activate (void)
                Messaging::RELATIVE_RT_TIMEOUT_POLICY_TYPE,
                any
                ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       // Only schedule the timer, when the rate is not zero
       if (this->rate_ != ACE_Time_Value::zero)
@@ -330,8 +320,7 @@ TAO_CEC_Reactive_ConsumerControl::consumer_not_exist (
 {
   ACE_TRY
     {
-      proxy->disconnect_push_supplier (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      proxy->disconnect_push_supplier ();
 
       if (TAO_debug_level >= 10)
         {
@@ -355,8 +344,7 @@ TAO_CEC_Reactive_ConsumerControl::consumer_not_exist (
 {
   ACE_TRY
     {
-      proxy->disconnect_pull_supplier (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      proxy->disconnect_pull_supplier ();
     }
   ACE_CATCHANY
     {
@@ -377,8 +365,7 @@ TAO_CEC_Reactive_ConsumerControl::system_exception (
     {
       if (this->need_to_disconnect (proxy))
         {
-          proxy->disconnect_push_supplier (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+          proxy->disconnect_push_supplier ();
 
           if (TAO_debug_level >= 10)
             {
@@ -423,24 +410,20 @@ TAO_CEC_Ping_Push_Consumer::work (TAO_CEC_ProxyPushSupplier *supplier
       CORBA::Boolean non_existent =
         supplier->consumer_non_existent (disconnected
                                          ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
       if (non_existent && !disconnected)
         {
           this->control_->consumer_not_exist (supplier ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
         }
     }
   ACE_CATCH (CORBA::OBJECT_NOT_EXIST, ex)
     {
       this->control_->consumer_not_exist (supplier ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
     }
   ACE_CATCH (CORBA::TRANSIENT, transient)
     {
       if (this->control_->need_to_disconnect (supplier))
         {
           this->control_->consumer_not_exist (supplier ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
         }
     }
   ACE_CATCHANY
@@ -462,24 +445,20 @@ TAO_CEC_Ping_Pull_Consumer::work (TAO_CEC_ProxyPullSupplier *supplier
       CORBA::Boolean non_existent =
         supplier->consumer_non_existent (disconnected
                                          ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
       if (non_existent && !disconnected)
         {
           this->control_->consumer_not_exist (supplier ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
         }
     }
   ACE_CATCH (CORBA::OBJECT_NOT_EXIST, ex)
     {
       this->control_->consumer_not_exist (supplier ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
     }
   ACE_CATCH (CORBA::TRANSIENT, transient)
     {
       if (this->control_->need_to_disconnect (supplier))
         {
           this->control_->consumer_not_exist (supplier ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
         }
     }
   ACE_CATCHANY

@@ -25,7 +25,7 @@
 class TestSupplier
 : public POA_CosNotifyComm::StructuredPushSupplier
 {
-  virtual void disconnect_structured_push_supplier(ACE_ENV_SINGLE_ARG_DECL_NOT_USED) throw (CORBA::SystemException) {
+  virtual void disconnect_structured_push_supplier(void) throw (CORBA::SystemException) {
   }
 
   virtual void subscription_change( const CosNotification::EventTypeSeq&,
@@ -38,7 +38,7 @@ class TestSupplier
 class TestConsumer
 : public POA_CosNotifyComm::StructuredPushConsumer
 {
-  virtual void disconnect_structured_push_consumer(ACE_ENV_SINGLE_ARG_DECL_NOT_USED) throw (CORBA::SystemException) {
+  virtual void disconnect_structured_push_consumer(void) throw (CORBA::SystemException) {
   }
 
   virtual void offer_change( const CosNotification::EventTypeSeq&, const CosNotification::EventTypeSeq& ACE_ENV_ARG_DECL_NOT_USED)
@@ -65,7 +65,6 @@ int main(int ac, char **av)
     PortableServer::POA_var poa;
 
     orb = CORBA::ORB_init(ac, av, "" ACE_ENV_ARG_PARAMETER);
-    ACE_TRY_CHECK;
     ACE_ASSERT(! CORBA::is_nil (orb.in ()));
 
     if (ac > 2 && ACE_OS::strcmp (av[1], "-pass") == 0)
@@ -108,10 +107,8 @@ int main(int ac, char **av)
     }
     CORBA::Object_var obj =
       orb->resolve_initial_references("RootPOA" ACE_ENV_ARG_PARAMETER);
-    ACE_TRY_CHECK;
     ACE_ASSERT(! CORBA::is_nil (obj.in ()));
     poa = PortableServer::POA::_narrow(obj.in () ACE_ENV_ARG_PARAMETER);
-    ACE_TRY_CHECK;
     ACE_ASSERT(! CORBA::is_nil (poa.in ()));
     PortableServer::POAManager_var mgr = poa->the_POAManager();
     mgr->activate();
@@ -122,27 +119,22 @@ int main(int ac, char **av)
     policies[0] =
       poa->create_lifespan_policy (PortableServer::PERSISTENT
                                    ACE_ENV_ARG_PARAMETER);
-    ACE_TRY_CHECK;
 
     PortableServer::POA_var persistentPOA = poa->create_POA (
                                                     "PersistentPOA",
                                                     mgr.in (),
                                                     policies
                                                     ACE_ENV_ARG_PARAMETER);
-    ACE_TRY_CHECK;
 
-    policies[0]->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-    ACE_TRY_CHECK;
+    policies[0]->destroy ();
 
     if (pass1)
     {
       CosNotifyChannelAdmin::EventChannelFactory_var cosecf =
         TAO_Notify_EventChannelFactory_i::create(persistentPOA.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       NotifyExt::EventChannelFactory_var ecf =
         NotifyExt::EventChannelFactory::_narrow (cosecf.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       if (CORBA::is_nil (ecf.in ()))
       {
@@ -185,21 +177,18 @@ int main(int ac, char **av)
       CosNotifyChannelAdmin::ChannelID ecid;
       ::CosNotifyChannelAdmin::EventChannel_var ec =
         ecf->create_channel(qosprops, adminprops, ecid ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       CosNotifyChannelAdmin::AdminID consumer_admin_id;
       CosNotifyChannelAdmin::ConsumerAdmin_var ca =
         ec->new_for_consumers(CosNotifyChannelAdmin::OR_OP,
           consumer_admin_id
           ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       CosNotifyChannelAdmin::AdminID supplier_admin_id;
       CosNotifyChannelAdmin::SupplierAdmin_var sa =
         ec->new_for_suppliers(CosNotifyChannelAdmin::OR_OP,
           supplier_admin_id
           ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       CosNotifyChannelAdmin::ProxyID proxy_id;
       CosNotifyChannelAdmin::ProxySupplier_var ps =
@@ -207,7 +196,6 @@ int main(int ac, char **av)
           CosNotifyChannelAdmin::STRUCTURED_EVENT,
           proxy_id
           ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       CosNotifyChannelAdmin::StructuredProxyPushSupplier_var strps =
         CosNotifyChannelAdmin::StructuredProxyPushSupplier::_narrow(ps.in());
@@ -216,7 +204,6 @@ int main(int ac, char **av)
           CosNotifyChannelAdmin::SEQUENCE_EVENT,
           proxy_id
           ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       CosNotifyChannelAdmin::SequenceProxyPushSupplier_var seqps =
         CosNotifyChannelAdmin::SequenceProxyPushSupplier::_narrow(ps.in());
@@ -225,7 +212,6 @@ int main(int ac, char **av)
           CosNotifyChannelAdmin::ANY_EVENT,
           proxy_id
           ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       CosNotifyChannelAdmin::ProxyPushSupplier_var anyps =
         CosNotifyChannelAdmin::ProxyPushSupplier::_narrow(ps.in());
@@ -235,7 +221,6 @@ int main(int ac, char **av)
           CosNotifyChannelAdmin::STRUCTURED_EVENT,
           proxy_id
           ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       CosNotifyChannelAdmin::StructuredProxyPushConsumer_var strpc = CosNotifyChannelAdmin::StructuredProxyPushConsumer::_narrow(pc.in());
 
@@ -243,7 +228,6 @@ int main(int ac, char **av)
           CosNotifyChannelAdmin::SEQUENCE_EVENT,
           proxy_id
           ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       CosNotifyChannelAdmin::SequenceProxyPushConsumer_var seqpc = CosNotifyChannelAdmin::SequenceProxyPushConsumer::_narrow(pc.in());
 
@@ -252,23 +236,19 @@ int main(int ac, char **av)
           CosNotifyChannelAdmin::ANY_EVENT,
           proxy_id
           ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       CosNotifyChannelAdmin::ProxyPushConsumer_var anypc = CosNotifyChannelAdmin::ProxyPushConsumer::_narrow(pc.in());
 
       CosNotifyFilter::FilterFactory_var ff =
-        ec->default_filter_factory (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        ec->default_filter_factory ();
 
       CosNotifyFilter::Filter_var filter1 =
         ff->create_filter("EXTENDED_TCL" ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       ACE_ASSERT(! CORBA::is_nil (filter1.in ()));
 
       CosNotifyFilter::Filter_var filter2 =
         ff->create_filter("EXTENDED_TCL" ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       ACE_ASSERT(! CORBA::is_nil (filter2.in ()));
 
@@ -278,66 +258,48 @@ int main(int ac, char **av)
       constraint_list[0].constraint_expr = CORBA::string_dup("Number == 100");
 
       filter1->add_constraints(constraint_list ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       filter2->add_constraints(constraint_list ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       ca->add_filter (filter1.in() ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       sa->add_filter (filter2.in() ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       strps->add_filter (filter1.in() ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       seqps->add_filter (filter2.in() ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       anyps->add_filter (filter1.in() ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       strpc->add_filter (filter2.in() ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       seqpc->add_filter (filter1.in() ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       anypc->add_filter (filter1.in() ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
       anypc->add_filter (filter2.in() ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       CosNotification::EventTypeSeq added1(1), removed1(0);
       added1.length(1);
       added1[0].domain_name = CORBA::string_dup("nightly_builds");
       added1[0].type_name = CORBA::string_dup("*");
       ca->subscription_change(added1, removed1 ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       // Connect a PushConsumer and PushSupplier
       TestSupplier test_supplier_svt;
       PortableServer::ObjectId_var oid1 = persistentPOA->activate_object (&test_supplier_svt
                                                                           ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
       CORBA::Object_var obj1 = persistentPOA->id_to_reference (oid1.in ()
                                                                ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
       CosNotifyComm::StructuredPushSupplier_var push_sup = CosNotifyComm::StructuredPushSupplier::_narrow (obj1.in ()
                                                                                                            ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       TestConsumer test_consumer_svt;
       PortableServer::ObjectId_var oid2 = persistentPOA->activate_object (&test_consumer_svt
                                                                           ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
       CORBA::Object_var obj2 = persistentPOA->id_to_reference (oid2.in ()
                                                                ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
       CosNotifyComm::StructuredPushConsumer_var push_cons = CosNotifyComm::StructuredPushConsumer::_narrow (obj2.in ()
                                                                                                            ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
       strpc->connect_structured_push_supplier(push_sup.in());
       strps->connect_structured_push_consumer(push_cons.in());
 
@@ -345,14 +307,11 @@ int main(int ac, char **av)
 
       persistentPOA->deactivate_object (oid1.in ()
                                         ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       persistentPOA->deactivate_object (oid2.in ()
                                         ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
-      ecf->destroy(ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      ecf->destroy();
       ////////////////////////////////
       // TODO make this not hardcoded
       ACE_OS::rename ("abc.xml", "loadtest.xml");
@@ -365,12 +324,9 @@ int main(int ac, char **av)
       // Create a new ecf, which should load itself from loadtest.xml
       CosNotifyChannelAdmin::EventChannelFactory_var
         cosecf = TAO_Notify_EventChannelFactory_i::create(persistentPOA.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
-      ACE_TRY_CHECK;
       NotifyExt::EventChannelFactory_var
         ecf = NotifyExt::EventChannelFactory::_narrow (cosecf.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       if (CORBA::is_nil (ecf.in ()))
       {
@@ -378,17 +334,13 @@ int main(int ac, char **av)
       }
 
       // Force a change, which should write out a new abc.xml.
-      ecf->save_topology (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      ecf->save_topology ();
 
-      ecf->destroy(ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      ecf->destroy();
     }
 
     poa->destroy (1, 1 ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK_RETURN (1);
-    orb->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-    ACE_CHECK_RETURN (1);
+    orb->destroy ();
     poa = PortableServer::POA::_nil ();
     orb = CORBA::ORB::_nil ();
     retval = 0;

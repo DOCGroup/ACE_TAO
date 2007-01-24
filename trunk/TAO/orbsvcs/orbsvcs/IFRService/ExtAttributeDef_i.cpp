@@ -34,10 +34,9 @@ TAO_ExtAttributeDef_i::get_exceptions (
 {
   TAO_IFR_READ_GUARD_RETURN (0);
 
-  this->update_key (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (0);
+  this->update_key ();
 
-  return this->get_exceptions_i (ACE_ENV_SINGLE_ARG_PARAMETER);
+  return this->get_exceptions_i ();
 }
 
 CORBA::ExcDescriptionSeq *
@@ -55,7 +54,6 @@ TAO_ExtAttributeDef_i::get_exceptions_i (
   this->fill_exceptions (*retval,
                          "get_excepts"
                          ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (0);
 
   return safe_retval._retn ();
 }
@@ -69,8 +67,7 @@ TAO_ExtAttributeDef_i::get_exceptions (
 {
   TAO_IFR_WRITE_GUARD;
 
-  this->update_key (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+  this->update_key ();
 
   this->get_exceptions_i (get_exceptions
                           ACE_ENV_ARG_PARAMETER);
@@ -95,10 +92,9 @@ TAO_ExtAttributeDef_i::set_exceptions (
 {
   TAO_IFR_READ_GUARD_RETURN (0);
 
-  this->update_key (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (0);
+  this->update_key ();
 
-  return this->set_exceptions_i (ACE_ENV_SINGLE_ARG_PARAMETER);
+  return this->set_exceptions_i ();
 }
 
 CORBA::ExcDescriptionSeq *
@@ -116,7 +112,6 @@ TAO_ExtAttributeDef_i::set_exceptions_i (
   this->fill_exceptions (*retval,
                          "put_excepts"
                          ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (0);
 
   return safe_retval._retn ();
 }
@@ -130,8 +125,7 @@ TAO_ExtAttributeDef_i::set_exceptions (
 {
   TAO_IFR_WRITE_GUARD;
 
-  this->update_key (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+  this->update_key ();
 
   this->set_exceptions_i (set_exceptions
                           ACE_ENV_ARG_PARAMETER);
@@ -156,10 +150,9 @@ TAO_ExtAttributeDef_i::describe_attribute (
 {
   TAO_IFR_READ_GUARD_RETURN (0);
 
-  this->update_key (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (0);
+  this->update_key ();
 
-  return this->describe_attribute_i (ACE_ENV_SINGLE_ARG_PARAMETER);
+  return this->describe_attribute_i ();
 }
 
 CORBA::ExtAttributeDescription *
@@ -176,7 +169,6 @@ TAO_ExtAttributeDef_i::describe_attribute_i (
 
   this->fill_description (*retval
                           ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (0);
 
   return safe_retval._retn ();
 }
@@ -188,11 +180,9 @@ TAO_ExtAttributeDef_i::fill_description (
   )
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  desc.name = this->name_i (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+  desc.name = this->name_i ();
 
-  desc.id = this->id_i (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+  desc.id = this->id_i ();
 
   ACE_TString holder;
   this->repo_->config ()->get_string_value (this->section_key_,
@@ -200,19 +190,15 @@ TAO_ExtAttributeDef_i::fill_description (
                                             holder);
   desc.defined_in = holder.fast_rep ();
 
-  desc.id = this->id_i (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+  desc.id = this->id_i ();
 
-  desc.type = this->type_i (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+  desc.type = this->type_i ();
 
-  desc.mode = this->mode_i (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+  desc.mode = this->mode_i ();
 
   this->fill_exceptions (desc.get_exceptions,
                          "get_excepts"
                          ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
   this->fill_exceptions (desc.put_exceptions,
                          "put_excepts"
@@ -267,8 +253,7 @@ TAO_ExtAttributeDef_i::fill_exceptions (CORBA::ExcDescriptionSeq &exceptions,
 
       TAO_ExceptionDef_i impl (this->repo_);
       impl.section_key (except_key);
-      exceptions[i].type = impl.type_i (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK;
+      exceptions[i].type = impl.type_i ();
 
       this->repo_->config ()->get_string_value (except_key,
                                                 "container_id",

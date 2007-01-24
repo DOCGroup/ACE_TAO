@@ -65,7 +65,7 @@ public:
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   /// Deactivate from the POA
-  virtual void deactivate (ACE_ENV_SINGLE_ARG_DECL)
+  virtual void deactivate (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   /// Return false if no supplier is connected...
@@ -84,7 +84,7 @@ public:
                                         ACE_ENV_ARG_DECL);
 
   /// The event channel is shutting down
-  virtual void shutdown (ACE_ENV_SINGLE_ARG_DECL_NOT_USED);
+  virtual void shutdown (void);
 
   /// Increment and decrement the reference count.
   CORBA::ULong _incr_refcnt (void);
@@ -99,13 +99,13 @@ public:
   virtual void push (const CORBA::Any& event
                      ACE_ENV_ARG_DECL_NOT_USED)
       ACE_THROW_SPEC ((CORBA::SystemException));
-  virtual void disconnect_push_consumer (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+  virtual void disconnect_push_consumer (void)
       ACE_THROW_SPEC ((CORBA::SystemException));
 
   // = The Servant methods
-  virtual PortableServer::POA_ptr _default_POA (ACE_ENV_SINGLE_ARG_DECL);
-  virtual void _add_ref (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
-  virtual void _remove_ref (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
+  virtual PortableServer::POA_ptr _default_POA (void);
+  virtual void _add_ref (void);
+  virtual void _remove_ref (void);
 
 protected:
   /// Set the supplier, used by some implementations to change the

@@ -45,7 +45,6 @@ TAO_PG_GenericFactory::~TAO_PG_GenericFactory (void)
           this->delete_object_i (factory_set,
                                  1 /* Ignore exceptions */
                                  ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
         }
       ACE_CATCHANY
         {
@@ -73,7 +72,6 @@ TAO_PG_GenericFactory::create_object (
   PortableGroup::Properties_var properties =
     this->property_manager_.get_type_properties (type_id
                                                  ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (CORBA::Object::_nil ());
 
   PortableGroup::MembershipStyleValue membership_style =
     TAO_PG_MEMBERSHIP_STYLE;
@@ -93,7 +91,6 @@ TAO_PG_GenericFactory::create_object (
                           initial_number_members,
                           minimum_number_members
                           ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (CORBA::Object::_nil ());
 
   CORBA::ULong fcid = 0;
 
@@ -138,7 +135,6 @@ TAO_PG_GenericFactory::create_object (
                                                      type_id,
                                                      the_criteria
                                                      ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (CORBA::Object::_nil ());
 
   TAO_PG_Factory_Set factory_set;
 
@@ -155,7 +151,6 @@ TAO_PG_GenericFactory::create_object (
                                        initial_number_members,
                                        factory_set
                                        ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
 
           if (this->factory_map_.bind (fcid, factory_set) != 0)
             ACE_TRY_THROW (PortableGroup::ObjectNotCreated ());
@@ -171,7 +166,6 @@ TAO_PG_GenericFactory::create_object (
                             TAO::VMCID,
                             ENOMEM),
                           CORBA::COMPLETED_NO));
-      ACE_CHECK_RETURN (CORBA::Object::_nil ());
 
       factory_creation_id = tmp;
 
@@ -182,16 +176,13 @@ TAO_PG_GenericFactory::create_object (
       this->delete_object_i (factory_set,
                              1 /* Ignore exceptions */
                              ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       this->object_group_manager_.destroy_object_group (oid.in ()
                                                         ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       ACE_RE_THROW;
     }
   ACE_ENDTRY;
-  ACE_CHECK_RETURN (CORBA::Object::_nil ());
 
   {
     ACE_GUARD_RETURN (TAO_SYNCH_MUTEX,
@@ -234,7 +225,6 @@ TAO_PG_GenericFactory::delete_object (
           this->delete_object_i (factory_set,
                                  0  /* Do not ignore exceptions */
                                  ACE_ENV_ARG_PARAMETER);
-          ACE_CHECK;
 
           if (this->factory_map_.unbind (fcid) != 0)
             ACE_THROW (CORBA::INTERNAL ());
@@ -254,7 +244,6 @@ TAO_PG_GenericFactory::delete_object (
   this->object_group_manager_.destroy_object_group (
     oid.in ()
     ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 }
 
 void
@@ -283,7 +272,6 @@ TAO_PG_GenericFactory::delete_object_i (TAO_PG_Factory_Set & factory_set,
         {
           factory->delete_object (member_fcid
                                   ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
         }
       ACE_CATCHANY
         {
@@ -297,7 +285,6 @@ TAO_PG_GenericFactory::delete_object_i (TAO_PG_Factory_Set & factory_set,
             ACE_RE_THROW;
         }
       ACE_ENDTRY;
-      ACE_CHECK;
 
       // Since GenericFactory::delete_object() can throw an exception,
       // decrease the size of the factory array incrementally since
@@ -343,7 +330,6 @@ TAO_PG_GenericFactory::delete_member (
             {
               info.the_factory->delete_object (node.factory_creation_id.in ()
                                                ACE_ENV_ARG_PARAMETER);
-              ACE_CHECK;
 
               // The member has been successfully deleted.  Reduce the
               // size of the factory_set accordingly.
@@ -418,7 +404,6 @@ TAO_PG_GenericFactory::populate_object_group (
                                  type_id,
                                  propagate_member_already_present
                                  ACE_ENV_ARG_PARAMETER);
-          ACE_CHECK;
         }
 
       factory_node.factory_info = factory_info;  // Memberwise copy
@@ -474,7 +459,6 @@ TAO_PG_GenericFactory::process_criteria (
   PortableGroup::Properties_var props =
     this->property_manager_.get_type_properties (type_id
                                                  ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
   // Merge the given criteria with the type-specific criteria.
   TAO_PG::override_properties (criteria, props.inout ());
@@ -611,7 +595,6 @@ TAO_PG_GenericFactory::check_minimum_number_members (
   PortableGroup::Properties_var props =
     this->property_manager_.get_properties (object_group
                                             ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
   PortableGroup::Name name (1);
   name.length (1);
@@ -636,7 +619,6 @@ TAO_PG_GenericFactory::check_minimum_number_members (
       const CORBA::ULong count =
         this->object_group_manager_.member_count (object_group
                                                   ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
 
       if (count >= static_cast<CORBA::ULong> (minimum_number_members))
         return;
@@ -673,7 +655,6 @@ TAO_PG_GenericFactory::check_minimum_number_members (
                                      type_id,
                                      propagate_member_already_present
                                      ACE_ENV_ARG_PARAMETER);
-              ACE_TRY_CHECK;
 
               ++creation_count;
 
@@ -687,7 +668,6 @@ TAO_PG_GenericFactory::check_minimum_number_members (
               // Ignore this exception and continue.
             }
           ACE_ENDTRY;
-          ACE_CHECK;
         }
 
       // @todo If we get this far, and the MinimumNumberMembers
@@ -718,7 +698,6 @@ TAO_PG_GenericFactory::create_member (
                                              factory_info.the_criteria,
                                              fcid.out ()
                                              ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (0);
 
   ACE_TRY
     {
@@ -733,7 +712,6 @@ TAO_PG_GenericFactory::create_member (
       CORBA::Boolean right_type_id =
         member->_is_a (type_id
                        ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       // @todo Strategize this -- e.g. strict type checking.
       if (!right_type_id)
@@ -742,7 +720,6 @@ TAO_PG_GenericFactory::create_member (
           // it, and throw a NoFactory exception.
           factory_info.the_factory->delete_object (fcid.in ()
                                                    ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
 
           ACE_TRY_THROW (PortableGroup::NoFactory (factory_info.the_location,
                                                    type_id));
@@ -755,7 +732,6 @@ TAO_PG_GenericFactory::create_member (
         type_id,
         propagate_member_already_present
         ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
     }
   ACE_CATCHANY
     {
@@ -766,13 +742,11 @@ TAO_PG_GenericFactory::create_member (
         {
           factory_info.the_factory->delete_object (fcid.in ()
                                                    ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
         }
 
       ACE_RE_THROW;
     }
   ACE_ENDTRY;
-  ACE_CHECK_RETURN (0);
 
   return fcid._retn ();
 }

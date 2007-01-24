@@ -54,16 +54,13 @@ Client_Task::svc (void)
 
   ACE_TRY
     {
-      this->validate_connection (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      this->validate_connection ();
 
       CORBA::Object_var object =
         this->orb_->resolve_initial_references ("PolicyCurrent"
                                                 ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
       CORBA::PolicyCurrent_var policy_current =
         CORBA::PolicyCurrent::_narrow (object.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       TimeBase::TimeT timeout_period = 10 * this->timeout_;
 
@@ -76,17 +73,14 @@ Client_Task::svc (void)
         this->orb_->create_policy (Messaging::RELATIVE_RT_TIMEOUT_POLICY_TYPE,
                                    timeout_as_any
                                    ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       policy_current->set_policy_overrides (policy_list,
                                             CORBA::ADD_OVERRIDE
                                             ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       for (int i = 0; i != this->iterations_; ++i)
         {
-          int retval = this->one_iteration (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+          int retval = this->one_iteration ();
 
           if (retval == 1)
             successful_calls++;
@@ -119,14 +113,13 @@ Client_Task::svc (void)
 }
 
 void
-Client_Task::validate_connection (ACE_ENV_SINGLE_ARG_DECL)
+Client_Task::validate_connection (void)
 {
   ACE_TRY
     {
       for (int i = 0; i != 100; ++i)
         {
           (void) this->sleep_service_->go_to_sleep (0 ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
         }
     }
   ACE_CATCH (CORBA::TRANSIENT, ex)
@@ -134,11 +127,10 @@ Client_Task::validate_connection (ACE_ENV_SINGLE_ARG_DECL)
       // Ignore transient exceptions
     }
   ACE_ENDTRY;
-  ACE_CHECK;
 }
 
 int
-Client_Task::one_iteration (ACE_ENV_SINGLE_ARG_DECL)
+Client_Task::one_iteration (void)
 {
   ACE_TRY
     {
@@ -146,7 +138,6 @@ Client_Task::one_iteration (ACE_ENV_SINGLE_ARG_DECL)
 
       this->sleep_service_->go_to_sleep (this->sleep_time_
                                          ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       ACE_Time_Value end = ACE_OS::gettimeofday ();
 

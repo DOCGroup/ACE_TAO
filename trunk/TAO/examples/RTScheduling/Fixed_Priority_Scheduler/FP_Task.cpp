@@ -45,7 +45,6 @@ FP_Task::activate_task (RTScheduling::Current_ptr current,
 
   current_ = RTScheduling::Current::_narrow (current
 					     ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
 
   sched_param_ = CORBA::Policy::_duplicate (sched_param);
 
@@ -72,12 +71,10 @@ FP_Task::pre_activate (void)
     {
       CORBA::Object_var object = DT_TEST::instance ()->orb ()->resolve_initial_references ("PriorityMappingManager"
 											   ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       RTCORBA::PriorityMappingManager_var mapping_manager =
 	RTCORBA::PriorityMappingManager::_narrow (object.in ()
 						  ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       RTCORBA::PriorityMapping *pm =
 	mapping_manager->mapping ();

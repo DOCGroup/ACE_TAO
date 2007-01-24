@@ -292,7 +292,6 @@ int test_basic_invocations (Test * test_object)
 
         VBlong_var result =
           test_object->basic_op1(p1, p2, p3);
-        ACE_TRY_CHECK;
 
         OBV_VERITY (p2->_value () == (53*3));
         OBV_VERITY (p3->_value () == (53*5));
@@ -319,7 +318,6 @@ int test_basic_invocations (Test * test_object)
 
         vb_basic::M_VBlong_var mresult =
           test_object->basic_op2(mp1, mp2, mp3);
-        ACE_TRY_CHECK;
 
         OBV_VERITY (mp2->_value () == (53*3));
         OBV_VERITY (mp3->_value () == (53*5));
@@ -335,7 +333,6 @@ int test_basic_invocations (Test * test_object)
         long lresult =
           test_object->basic_op3(p1->_boxed_in(), p2->_boxed_inout(),
                                  p3->_boxed_out());
-        ACE_TRY_CHECK;
 
         OBV_VERITY (p2->_value () == (93*3));
         OBV_VERITY (p3->_value () == (93*5));
@@ -491,7 +488,6 @@ int test_boxed_string_invocations (Test * test_object)
         OBV_VERITY (strcmp(p2->_value (), "string2") == 0);
 
         VBstring_var result = test_object->string_op1(p1, p2, p3);
-        ACE_TRY_CHECK;
 
         OBV_VERITY (strcmp(p2->_value (), "2string") == 0);
         OBV_VERITY (strcmp(p3->_value (), "2string") == 0);
@@ -506,7 +502,6 @@ int test_boxed_string_invocations (Test * test_object)
         CORBA::String_var sresult =
           test_object->string_op2(p1->_boxed_in(), p2->_boxed_inout(),
                                   p3->_boxed_out());
-        ACE_TRY_CHECK;
 
         OBV_VERITY (strcmp(p2->_value (), "2second string") == 0);
         OBV_VERITY (strcmp(p3->_value (), "2second string") == 0);
@@ -655,7 +650,6 @@ int test_boxed_sequence_invocations (Test * test_object)
         OBV_VERITY ((*p1)[3] ==  7);
 
         VBseqlong_var result = test_object->seq_op1(p1, p2, p3);
-        ACE_TRY_CHECK;
 
         OBV_VERITY ((*p2)[0] == 100*3);
         OBV_VERITY ((*p2)[1] == 99*3);
@@ -674,7 +668,6 @@ int test_boxed_sequence_invocations (Test * test_object)
 
         test_object->seq_op2(p1->_boxed_in(), p2->_boxed_inout(),
                              p3->_boxed_out());
-        ACE_TRY_CHECK;
 
         OBV_VERITY ((*p2)[0] == 100*3*3);
         OBV_VERITY ((*p2)[1] == 99*3*3);
@@ -848,7 +841,6 @@ int test_boxed_struct_invocations (Test * test_object)
         OBV_VERITY ((p1->abstruct()).s2 ==  21);
 
         VBfixed_struct1_var result = test_object->struct_op1(p1, p2, p3);
-        ACE_TRY_CHECK;
 
         OBV_VERITY (p2->l() == 92*3);
         OBV_VERITY ((p2->abstruct()).s1 == 171*3);
@@ -914,7 +906,6 @@ int test_boxed_struct_invocations (Test * test_object)
         OBV_VERITY (strcmp(p4->str(), "variable1") == 0);
 
         VBvariable_struct1_var result2 = test_object->struct_op3(p4, p5, p6);
-        ACE_TRY_CHECK;
 
         OBV_VERITY (p5->l() == vs2.l*3);
         OBV_VERITY (strcmp(p5->str(), "2variable") == 0);
@@ -933,7 +924,6 @@ int test_boxed_struct_invocations (Test * test_object)
 
         test_object->struct_op4(p4->_boxed_in(), p5->_boxed_inout(),
                                 p6->_boxed_out());
-        ACE_TRY_CHECK;
 
         OBV_VERITY (p5->l() == vs2.l*3*3);
         OBV_VERITY (strcmp(p5->str(), "e2variabl") == 0);
@@ -1076,7 +1066,6 @@ int test_boxed_array_invocations (Test * test_object)
         VBlongarray *p3;
 
         VBlongarray_var result = test_object->array_op1 (p1, p2, p3);
-        ACE_TRY_CHECK;
 
         OBV_VERITY ((*p2)[0] == (3101*3)
                 && (*p2)[1] == (3202*3)
@@ -1100,7 +1089,6 @@ int test_boxed_array_invocations (Test * test_object)
 #if 0
         test_object->array_op2(p1->_boxed_in(), p2->_boxed_inout(),
                                p3->_boxed_out());
-        ACE_TRY_CHECK;
 
         OBV_VERITY ((*p2)[0] == (3101*3*3)
                 && (*p2)[1] == (3202*3*3)
@@ -1330,7 +1318,6 @@ int test_boxed_union_invocations (Test * test_object)
         VBfixed_union1 * p3;
 
         VBfixed_union1_var result = test_object->union_op1 (p1, p2, p3);
-        ACE_TRY_CHECK;
 
         OBV_VERITY (p2->_d () == 2);
         OBV_VERITY (p2->m2 () == 789*3);
@@ -1391,7 +1378,6 @@ int test_boxed_union_invocations (Test * test_object)
         VBvariable_union1 * p6;
 
         VBvariable_union1_var result2 = test_object->union_op3 (p4, p5, p6);
-        ACE_TRY_CHECK;
 
         OBV_VERITY (p5->_d () == 2);
         OBV_VERITY (strcmp(p5->m2 (), "aabracadabr") == 0);
@@ -1409,7 +1395,6 @@ int test_boxed_union_invocations (Test * test_object)
 
         test_object->union_op4(p4->_boxed_in(), p5->_boxed_inout(),
                                p6->_boxed_out());
-        ACE_TRY_CHECK;
 
         OBV_VERITY (p5->_d () == 2);
         OBV_VERITY (strcmp(p5->m2 (), "raabracadab") == 0);
@@ -1513,12 +1498,12 @@ main (int argc, char *argv[])
 
   ACE_TRY_EX (cleanup)
     {
-      test_object->shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
+      test_object->shutdown ();
       ACE_TRY_CHECK_EX (cleanup);
 
       ACE_DEBUG ((LM_DEBUG, "(%P|%t) client - test finished\n"));
 
-      orb->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
+      orb->destroy ();
       ACE_TRY_CHECK_EX (cleanup);
     }
   ACE_CATCHANY

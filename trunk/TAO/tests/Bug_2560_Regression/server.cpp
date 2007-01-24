@@ -55,7 +55,7 @@ int main (int argc, char* argv[])
     // Creation of the new POAs over, so destroy the Policy_ptr's.
     for ( size_t  i = 0 ; i < policies.length (); ++i ) {
       CORBA::Policy_ptr policy = policies[i];
-      policy->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
+      policy->destroy ();
     }
 
     // use this poa for making system objects

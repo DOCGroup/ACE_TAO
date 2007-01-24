@@ -46,18 +46,15 @@ main (int argc, char *argv[])
     {
       CORBA::ORB_var orb =
         CORBA::ORB_init (argc, argv, "" ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       if (parse_args (argc, argv) != 0)
         return 1;
 
       CORBA::Object_var poa_object =
         orb->resolve_initial_references("RootPOA" ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       PortableServer::POA_var root_poa =
         PortableServer::POA::_narrow (poa_object.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       if (CORBA::is_nil (root_poa.in ()))
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -65,8 +62,7 @@ main (int argc, char *argv[])
                           1);
 
       PortableServer::POAManager_var poa_manager =
-        root_poa->the_POAManager (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        root_poa->the_POAManager ();
 
       if (parse_args (argc, argv) != 0)
         return 1;
@@ -79,12 +75,10 @@ main (int argc, char *argv[])
       PortableServer::ServantBase_var owner_transfer(test_impl);
 
       MyInterface_var test_ref =
-        test_impl->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        test_impl->_this ();
 
       CORBA::String_var ior =
         orb->object_to_string (test_ref.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       // Output the IOR to the <ior_output_file>
       FILE *output_file= ACE_OS::fopen (ior_output_file, "w");
@@ -94,16 +88,14 @@ main (int argc, char *argv[])
           ACE_OS::fclose (output_file);
         }
 
-      poa_manager->activate (ACE_ENV_SINGLE_ARG_PARAMETER);
+      poa_manager->activate ();
       ACE_TRY_CHECK
 
       CORBA::Object_var tmp =
         orb->string_to_object(server_ior ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       MyInterface_var server =
         MyInterface::_narrow(tmp.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       if (CORBA::is_nil (server.in ()))
         {
@@ -112,11 +104,10 @@ main (int argc, char *argv[])
                              ior.in()),
                             1);
         }
-      
+
 
       CORBA::Boolean temp = server->myMethod (MyInterfaceImpl::my_string ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
-      
+
       if (temp)
         {
           ACE_DEBUG ((LM_DEBUG, "Test succeeded\n"));
@@ -125,13 +116,11 @@ main (int argc, char *argv[])
         {
 	  ACE_DEBUG ((LM_ERROR, "Test failed\n"));
 	  result = 1;
-	}	
+	}
 
-      //hello->shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
-      //ACE_TRY_CHECK;
+      //hello->shutdown ();
 
-      orb->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      orb->destroy ();
     }
   ACE_CATCHANY
     {

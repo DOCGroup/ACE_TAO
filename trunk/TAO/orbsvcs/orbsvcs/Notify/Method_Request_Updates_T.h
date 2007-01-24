@@ -41,15 +41,15 @@ class TAO_Notify_Serv_Export TAO_Notify_Method_Request_Updates_T
 {
 public:
   /// Constuctor
-  TAO_Notify_Method_Request_Updates_T (SEQ_PARAM added, 
-                                       SEQ_PARAM removed, 
+  TAO_Notify_Method_Request_Updates_T (SEQ_PARAM added,
+                                       SEQ_PARAM removed,
                                        PROXY_PARAM proxy);
 
   /// Destructor
   virtual ~TAO_Notify_Method_Request_Updates_T ();
 
   /// Execute the Request
-  int execute_i (ACE_ENV_SINGLE_ARG_DECL);
+  int execute_i (void);
 
 protected:
   /// Update Added

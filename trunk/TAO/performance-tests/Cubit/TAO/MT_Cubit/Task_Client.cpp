@@ -16,11 +16,7 @@ inline
 ACE_UINT32
 ACE_round (ACE_timer_t t)
 {
-#if defined (ACE_LACKS_FLOATING_POINT)
-  return t;
-#else
   return static_cast<ACE_UINT32> (t);
-#endif
 }
 
 ACE_RCSID(MT_Cubit, Task_Client, "$Id$")
@@ -555,7 +551,7 @@ Client::find_frequency (void)
 }
 
 CORBA::ORB_ptr
-Client::init_orb (ACE_ENV_SINGLE_ARG_DECL)
+Client::init_orb (void)
 {
   ACE_DEBUG ((LM_DEBUG,
               "I'm thread %t\n"));
@@ -586,7 +582,6 @@ Client::init_orb (ACE_ENV_SINGLE_ARG_DECL)
                                         argv,
                                         orbid
                                         ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (CORBA::ORB::_nil ());
 
   if (this->id_ == 0)
     {
@@ -636,7 +631,6 @@ Client::get_cubit (CORBA::ORB_ptr orb ACE_ENV_ARG_DECL)
   CORBA::Object_var objref =
     orb->string_to_object (my_ior
                            ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
 
   if (CORBA::is_nil (objref.in ()))
     ACE_ERROR_RETURN ((LM_ERROR,
@@ -647,7 +641,6 @@ Client::get_cubit (CORBA::ORB_ptr orb ACE_ENV_ARG_DECL)
   // checking the type along the way using _is_a.
   this->cubit_ = Cubit::_narrow (objref.in ()
                                  ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
 
   if (CORBA::is_nil (this->cubit_))
     ACE_ERROR_RETURN ((LM_ERROR,
@@ -660,7 +653,6 @@ Client::get_cubit (CORBA::ORB_ptr orb ACE_ENV_ARG_DECL)
   CORBA::String_var str =
     orb->object_to_string (this->cubit_
                            ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
 
   ACE_DEBUG ((LM_DEBUG,
               "(%t) CUBIT OBJECT connected to <%s>\n",
@@ -676,15 +668,13 @@ Client::svc (void)
   ACE_TRY
     {
       // Initialize the ORB.
-      CORBA::ORB_var orb = this->init_orb (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      CORBA::ORB_var orb = this->init_orb ();
 
       // Find the frequency of CORBA requests based on thread id.
       this->find_frequency ();
 
       // Get the cubit object from the file.
       int r = this->get_cubit (orb.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
       if (r != 0)
         return r;
 
@@ -718,15 +708,13 @@ Client::svc (void)
         {
           ACE_DEBUG ((LM_DEBUG,
                       "(%t) CALLING SHUTDOWN() ON THE SERVANT\n"));
-          this->cubit_->shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+          this->cubit_->shutdown ();
         }
 
       CORBA::release (this->cubit_);
       this->cubit_ = 0;
 
-      orb->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      orb->destroy ();
     }
   ACE_CATCHANY
     {
@@ -766,7 +754,6 @@ Client::cube_octet (void)
                                               ACE_ENV_ARG_PARAMETER);
 
       STOP_QUANTIFY;
-      ACE_TRY_CHECK;
 
       // Perform the cube operation.
       arg_octet = arg_octet * arg_octet * arg_octet;
@@ -806,7 +793,6 @@ Client::cube_short (void)
       ret_short = this->cubit_->cube_short (arg_short
                                             ACE_ENV_ARG_PARAMETER);
       STOP_QUANTIFY;
-      ACE_TRY_CHECK;
       arg_short = arg_short * arg_short * arg_short;
 
       if (arg_short != ret_short)
@@ -843,7 +829,6 @@ Client::cube_long (void)
       ret_long = this->cubit_->cube_long (arg_long
                                           ACE_ENV_ARG_PARAMETER);
       STOP_QUANTIFY;
-      ACE_TRY_CHECK;
 
       arg_long = arg_long * arg_long * arg_long;
 
@@ -884,7 +869,6 @@ Client::cube_struct (void)
       ret_struct = this->cubit_->cube_struct (arg_struct
                                               ACE_ENV_ARG_PARAMETER);
       STOP_QUANTIFY;
-      ACE_TRY_CHECK;
 
       arg_struct.l = arg_struct.l  * arg_struct.l  * arg_struct.l ;
       arg_struct.s = arg_struct.s  * arg_struct.s  * arg_struct.s ;
@@ -947,8 +931,7 @@ Client::make_request (void)
         {
           this->call_count_++;
           START_QUANTIFY;
-          this->cubit_->noop (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+          this->cubit_->noop ();
           STOP_QUANTIFY;
         }
       ACE_CATCHANY
@@ -1016,12 +999,7 @@ ACE_timer_t
 Client::calc_delta (ACE_timer_t real_time,
                     ACE_timer_t delta)
 {
-  ACE_timer_t new_delta;
-#if defined (ACE_LACKS_FLOATING_POINT)
-  new_delta = 40 * real_time / 100  +  60 * delta / 100;
-#else /* !ACE_LACKS_FLOATING_POINT */
-  new_delta = 0.4 * fabs (real_time)  +  0.6 * delta;
-#endif /* ACE_LACKS_FLOATING_POINT */
+  ACE_timer_t new_delta = 0.4 * fabs (real_time)  +  0.6 * delta;
   return new_delta;
 }
 

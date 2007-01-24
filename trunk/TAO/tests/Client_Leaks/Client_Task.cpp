@@ -30,13 +30,11 @@ Client_Task::svc (void)
 
   ACE_TRY
     {
-      this->validate_connection (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      this->validate_connection ();
 
       for (int i = 0; i != this->iterations_; ++i)
         {
-          int retval = this->one_iteration (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+          int retval = this->one_iteration ();
 
           if (retval != 0)
             successful_calls++;
@@ -65,14 +63,13 @@ Client_Task::svc (void)
 }
 
 void
-Client_Task::validate_connection (ACE_ENV_SINGLE_ARG_DECL)
+Client_Task::validate_connection (void)
 {
   ACE_TRY
     {
       for (int i = 0; i != 100; ++i)
         {
-          (void) this->process_factory_->noop (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+          (void) this->process_factory_->noop ();
         }
     }
   ACE_CATCH (CORBA::TRANSIENT, ex)
@@ -80,23 +77,19 @@ Client_Task::validate_connection (ACE_ENV_SINGLE_ARG_DECL)
       // Ignore transient exceptions
     }
   ACE_ENDTRY;
-  ACE_CHECK;
 }
 
 int
-Client_Task::one_iteration (ACE_ENV_SINGLE_ARG_DECL)
+Client_Task::one_iteration (void)
 {
   ACE_TRY
     {
       Test::Process_var process =
-        this->process_factory_->create_new_process (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        this->process_factory_->create_new_process ();
 
-      (void) process->get_process_id (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      (void) process->get_process_id ();
 
-      process->shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      process->shutdown ();
 
       return 1;
     }

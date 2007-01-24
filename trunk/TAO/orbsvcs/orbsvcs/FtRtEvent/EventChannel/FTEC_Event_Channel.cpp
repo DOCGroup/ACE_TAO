@@ -56,13 +56,11 @@ void setup_object_group(TAO_FTEC_Event_Channel* es,
           resolve<FtRtecEventChannelAdmin::EventChannel>(naming_context,
             FTRTEC::Identification_Service::instance()->name()
             ACE_ENV_ARG_PARAMETER);
-        ACE_CHECK;
 
         ACE_DEBUG((LM_DEBUG, "Got Primary address from Naming Service\n"));
 
         primary->join_group(member_list[0] ACE_ENV_ARG_PARAMETER);
       }
-      ACE_CHECK;
     }
 }
 
@@ -94,14 +92,12 @@ TAO_FTEC_Event_Channel::activate(TAO_FTEC_Event_Channel::MEMBERSHIP membership
     Request_Context_Repository().init(orb_.in());
 
     // get POAManager
-    PortableServer::POAManager_var mgr = poa_->the_POAManager(ACE_ENV_SINGLE_ARG_PARAMETER);
-    ACE_CHECK_RETURN(0);
+    PortableServer::POAManager_var mgr = poa_->the_POAManager();
 
     TAO::Utils::PolicyList_Destroyer policy_list(2);
 
     persistent_poa_ =
       create_persistent_poa(poa_, mgr, "FTEC_Persistant_POA", policy_list ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK_RETURN(0);
 
     // Activate the Event channel implementation
 
@@ -129,12 +125,10 @@ TAO_FTEC_Event_Channel::activate(TAO_FTEC_Event_Channel::MEMBERSHIP membership
                         supplier_admin_object_id,
                         consumer_admin_object_id
                         ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK_RETURN(0);
 
     FtRtecEventChannelAdmin::EventChannel_var result;
     activate_object_with_id(result.out(), persistent_poa_.in(), this, object_id
                 ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK_RETURN(0);
 
 
     setup_object_group(this,
@@ -177,17 +171,17 @@ void TAO_FTEC_Event_Channel::oneway_set_update (
 
 
 RtecEventChannelAdmin::ConsumerAdmin_ptr
-TAO_FTEC_Event_Channel::for_consumers (ACE_ENV_SINGLE_ARG_DECL)
+TAO_FTEC_Event_Channel::for_consumers (void)
         ACE_THROW_SPEC ((CORBA::SystemException))
 {
-    return ec_impl_->for_consumers(ACE_ENV_SINGLE_ARG_PARAMETER);
+    return ec_impl_->for_consumers();
 }
 
 RtecEventChannelAdmin::SupplierAdmin_ptr
-TAO_FTEC_Event_Channel::for_suppliers (ACE_ENV_SINGLE_ARG_DECL)
+TAO_FTEC_Event_Channel::for_suppliers (void)
         ACE_THROW_SPEC ((CORBA::SystemException))
 {
-    return ec_impl_->for_suppliers(ACE_ENV_SINGLE_ARG_PARAMETER);
+    return ec_impl_->for_suppliers();
 }
 
 
@@ -200,14 +194,13 @@ TAO_FTEC_Event_Channel::set_state (const FTRT::State & s ACE_ENV_ARG_DECL)
 }
 
 void
-TAO_FTEC_Event_Channel::destroy (ACE_ENV_SINGLE_ARG_DECL)
+TAO_FTEC_Event_Channel::destroy (void)
       ACE_THROW_SPEC ((CORBA::SystemException))
 {
   if (Fault_Detector::instance())
     Fault_Detector::instance()->stop();
 
-  ec_impl_->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+  ec_impl_->destroy ();
   this->orb_->shutdown ();
 }
 

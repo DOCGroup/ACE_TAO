@@ -76,7 +76,7 @@ TAO_CEC_TypedEventChannel::~TAO_CEC_TypedEventChannel (void)
 }
 
 void
-TAO_CEC_TypedEventChannel::activate (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+TAO_CEC_TypedEventChannel::activate (void)
 {
   this->dispatching_->activate ();
   this->consumer_control_->activate ();
@@ -101,49 +101,38 @@ namespace
 }
 
 void
-TAO_CEC_TypedEventChannel::shutdown (ACE_ENV_SINGLE_ARG_DECL)
+TAO_CEC_TypedEventChannel::shutdown (void)
 {
   this->dispatching_->shutdown ();
   this->supplier_control_->shutdown ();
   this->consumer_control_->shutdown ();
 
   PortableServer::POA_var typed_consumer_poa =
-    this->typed_consumer_admin_->_default_POA (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+    this->typed_consumer_admin_->_default_POA ();
   PortableServer::ObjectId_var typed_consumer_id =
     typed_consumer_poa->servant_to_id (this->typed_consumer_admin_ ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
   typed_consumer_poa->deactivate_object (typed_consumer_id.in () ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
   PortableServer::POA_var typed_supplier_poa =
-    this->typed_supplier_admin_->_default_POA (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+    this->typed_supplier_admin_->_default_POA ();
   PortableServer::ObjectId_var typed_supplier_id =
     typed_supplier_poa->servant_to_id (this->typed_supplier_admin_ ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
   typed_supplier_poa->deactivate_object (typed_supplier_id.in () ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
-  this->typed_supplier_admin_->shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+  this->typed_supplier_admin_->shutdown ();
 
-  this->typed_consumer_admin_->shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+  this->typed_consumer_admin_->shutdown ();
 
   if (destroy_on_shutdown_)
     {
       // Deactivate the Typed EC
       PortableServer::POA_var t_poa =
-        this->_default_POA (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK;
+        this->_default_POA ();
 
       PortableServer::ObjectId_var t_id =
         t_poa->servant_to_id (this ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
 
       t_poa->deactivate_object (t_id.in () ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
 
       ACE_Event_Handler *timer;
       ACE_NEW (timer, ShutdownHandler (this->orb_.in ()));
@@ -157,7 +146,6 @@ TAO_CEC_TypedEventChannel::connected (TAO_CEC_TypedProxyPushConsumer* consumer
                                       ACE_ENV_ARG_DECL)
 {
   this->typed_supplier_admin_->connected (consumer ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 }
 
 void
@@ -165,7 +153,6 @@ TAO_CEC_TypedEventChannel::reconnected (TAO_CEC_TypedProxyPushConsumer* consumer
                                         ACE_ENV_ARG_DECL)
 {
   this->typed_supplier_admin_->reconnected (consumer ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 }
 
 void
@@ -173,7 +160,6 @@ TAO_CEC_TypedEventChannel::disconnected (TAO_CEC_TypedProxyPushConsumer* consume
                                          ACE_ENV_ARG_DECL)
 {
   this->typed_supplier_admin_->disconnected (consumer ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 }
 
 void
@@ -181,7 +167,6 @@ TAO_CEC_TypedEventChannel::connected (TAO_CEC_ProxyPushSupplier* supplier
                                       ACE_ENV_ARG_DECL)
 {
   this->typed_consumer_admin_->connected (supplier ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 }
 
 void
@@ -189,7 +174,6 @@ TAO_CEC_TypedEventChannel::reconnected (TAO_CEC_ProxyPushSupplier* supplier
                                         ACE_ENV_ARG_DECL)
 {
   this->typed_consumer_admin_->reconnected (supplier ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 }
 
 void
@@ -197,7 +181,6 @@ TAO_CEC_TypedEventChannel::disconnected (TAO_CEC_ProxyPushSupplier* supplier
                                          ACE_ENV_ARG_DECL)
 {
   this->typed_consumer_admin_->disconnected (supplier ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 }
 
 // Find from the ifr cache the operation and return the parameter array pointer.
@@ -279,12 +262,10 @@ TAO_CEC_TypedEventChannel::cache_interface_description (const char *interface_
       // Lookup the Interface Name in the IFR
       CORBA::Contained_var contained =
         this->interface_repository_->lookup_id (interface_ ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       // Narrow the interface
       CORBA::InterfaceDef_var interface =
         CORBA::InterfaceDef::_narrow (contained.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       if (CORBA::is_nil (interface.in () ))
         {
@@ -300,8 +281,7 @@ TAO_CEC_TypedEventChannel::cache_interface_description (const char *interface_
         {
           // Obtain the full interface description
           CORBA::InterfaceDef::FullInterfaceDescription_var fid =
-            interface->describe_interface (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+            interface->describe_interface ();
 
           // Obtain the base interfaces
           this->base_interfaces_ = fid->base_interfaces;
@@ -453,7 +433,6 @@ TAO_CEC_TypedEventChannel::consumer_register_uses_interace (const char *uses_int
     {
       // Neither a consumer nor a supplier has connected yet
       int result = cache_interface_description (uses_interface ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK_RETURN (-1);
 
       if (result == 0)
         {
@@ -517,7 +496,6 @@ TAO_CEC_TypedEventChannel::supplier_register_supported_interface (const char *su
     {
       // Neither a consumer nor a supplier has connected yet
       int result = cache_interface_description (supported_interface ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK_RETURN (-1);
 
       if (result == 0)
         {
@@ -534,7 +512,6 @@ TAO_CEC_TypedEventChannel::create_operation_list (TAO_CEC_Operation_Params *oper
                                                   ACE_ENV_ARG_DECL)
 {
   this->orb_->create_list (0, new_list ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
   for (CORBA::ULong param=0; param<oper_params->num_params_; param++)
     {
@@ -546,7 +523,6 @@ TAO_CEC_TypedEventChannel::create_operation_list (TAO_CEC_Operation_Params *oper
                            any_1,
                            oper_params->parameters_[param].direction_
                            ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
     }
 }
 
@@ -557,33 +533,31 @@ TAO_CEC_TypedEventChannel::create_list (CORBA::Long count,
                                         ACE_ENV_ARG_DECL)
 {
   this->orb_->create_list (count, new_list ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 }
 
 // The CosTypedEventChannelAdmin::TypedEventChannel methods...
 CosTypedEventChannelAdmin::TypedConsumerAdmin_ptr
-TAO_CEC_TypedEventChannel::for_consumers (ACE_ENV_SINGLE_ARG_DECL)
+TAO_CEC_TypedEventChannel::for_consumers (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  return this->typed_consumer_admin_->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
+  return this->typed_consumer_admin_->_this ();
 }
 
 CosTypedEventChannelAdmin::TypedSupplierAdmin_ptr
-TAO_CEC_TypedEventChannel::for_suppliers (ACE_ENV_SINGLE_ARG_DECL)
+TAO_CEC_TypedEventChannel::for_suppliers (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  return this->typed_supplier_admin_->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
+  return this->typed_supplier_admin_->_this ();
 }
 
 void
-TAO_CEC_TypedEventChannel::destroy (ACE_ENV_SINGLE_ARG_DECL)
+TAO_CEC_TypedEventChannel::destroy (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   if (!destroyed_)
     {
       destroyed_ = 1;
-      this->shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK;
+      this->shutdown ();
     }
 }
 

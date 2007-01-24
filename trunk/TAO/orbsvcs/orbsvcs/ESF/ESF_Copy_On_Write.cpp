@@ -78,7 +78,6 @@ TAO_ESF_Copy_On_Write<PROXY,COLLECTION,ITERATOR,ACE_SYNCH_USE>::
   for (ITERATOR i = ace_mon.collection->collection.begin (); i != end; ++i)
     {
       worker->work (*i ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
     }
 }
 
@@ -128,7 +127,7 @@ TAO_ESF_Copy_On_Write<PROXY,COLLECTION,ITERATOR,ACE_SYNCH_USE>::
 
 template<class PROXY, class COLLECTION, class ITERATOR, ACE_SYNCH_DECL> void
 TAO_ESF_Copy_On_Write<PROXY,COLLECTION,ITERATOR,ACE_SYNCH_USE>::
-    shutdown (ACE_ENV_SINGLE_ARG_DECL)
+    shutdown (void)
 {
   // We need to perform a copy to follow the protocol.
   Write_Guard ace_mon (this->mutex_,
@@ -137,7 +136,7 @@ TAO_ESF_Copy_On_Write<PROXY,COLLECTION,ITERATOR,ACE_SYNCH_USE>::
                        this->writing_,
                        this->collection_);
 
-  ace_mon.copy->collection.shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
+  ace_mon.copy->collection.shutdown ();
 }
 
 template<class COLLECTION, class ITERATOR, ACE_SYNCH_DECL>

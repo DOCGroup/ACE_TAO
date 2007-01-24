@@ -64,7 +64,7 @@ public:
 
   /// Shutdown the collection, i.e. remove all elements and release
   /// resources
-  void shutdown (ACE_ENV_SINGLE_ARG_DECL_NOT_USED);
+  void shutdown (void);
 
 private:
   /// The underlying implementation object

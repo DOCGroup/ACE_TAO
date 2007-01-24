@@ -72,7 +72,7 @@ public:
    * vary based on the type of loader, so we can't include it in the
    * interface.
    */
-  virtual void close (ACE_ENV_SINGLE_ARG_DECL);
+  virtual void close (void);
 };
 
 } // namespace TAO_Notify

@@ -42,9 +42,8 @@ Counter_Servant::reset (ACE_ENV_SINGLE_ARG_DECL_NOT_USED/*ACE_ENV_SINGLE_ARG_PAR
 }
 
 void
-Counter_Servant::shutdown (ACE_ENV_SINGLE_ARG_DECL)
+Counter_Servant::shutdown (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  this->policy_tester_->shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_TRY_CHECK;
+  this->policy_tester_->shutdown ();
 }

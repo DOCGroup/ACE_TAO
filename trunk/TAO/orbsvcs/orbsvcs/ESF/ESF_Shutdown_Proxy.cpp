@@ -18,8 +18,7 @@ TAO_ESF_Shutdown_Proxy<PROXY>::work (PROXY *proxy
 {
   ACE_TRY
     {
-      proxy->shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      proxy->shutdown ();
     }
   ACE_CATCHANY
     {

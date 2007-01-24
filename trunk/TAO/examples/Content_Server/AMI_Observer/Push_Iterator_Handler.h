@@ -89,7 +89,7 @@ private:
    ACE_ENV_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((CORBA::SystemException)) {}
 
-  void deactivate (ACE_ENV_SINGLE_ARG_DECL)
+  void deactivate (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
   // Deactivate this handler.
 

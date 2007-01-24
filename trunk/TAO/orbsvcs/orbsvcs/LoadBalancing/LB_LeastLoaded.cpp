@@ -53,14 +53,14 @@ TAO_LB_LeastLoaded::~TAO_LB_LeastLoaded (void)
 }
 
 char *
-TAO_LB_LeastLoaded::name (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+TAO_LB_LeastLoaded::name (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return CORBA::string_dup ("LeastLoaded");
 }
 
 CosLoadBalancing::Properties *
-TAO_LB_LeastLoaded::get_properties (ACE_ENV_SINGLE_ARG_DECL)
+TAO_LB_LeastLoaded::get_properties (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   CosLoadBalancing::Properties * props = 0;
@@ -71,7 +71,6 @@ TAO_LB_LeastLoaded::get_properties (ACE_ENV_SINGLE_ARG_DECL)
                         TAO::VMCID,
                         ENOMEM),
                       CORBA::COMPLETED_NO));
-  ACE_CHECK_RETURN (0);
 
   return props;
 }
@@ -167,13 +166,11 @@ TAO_LB_LeastLoaded::get_loads (CosLoadBalancing::LoadManager_ptr load_manager,
   CosLoadBalancing::LoadList_var loads =
     load_manager->get_loads (the_location
                              ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (0);
 
   this->push_loads (the_location,
                     loads.in (),
                     loads[0]
                     ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (0);
 
   return loads._retn ();
 }
@@ -195,7 +192,6 @@ TAO_LB_LeastLoaded::next_member (
   PortableGroup::Locations_var locations =
     load_manager->locations_of_members (object_group
                                         ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (CORBA::Object::_nil ());
 
   if (locations->length () == 0)
     ACE_THROW_RETURN (CORBA::TRANSIENT (),
@@ -210,7 +206,6 @@ TAO_LB_LeastLoaded::next_member (
                         locations.in (),
                         location
                         ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (CORBA::Object::_nil ());
 
   if (found_location)
     {
@@ -254,7 +249,6 @@ TAO_LB_LeastLoaded::analyze_loads (
   PortableGroup::Locations_var locations =
     load_manager->locations_of_members (object_group
                                         ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
   if (locations->length () == 0)
     ACE_THROW (CORBA::TRANSIENT ());
@@ -275,14 +269,12 @@ TAO_LB_LeastLoaded::analyze_loads (
           CosLoadBalancing::LoadList_var current_loads =
             load_manager->get_loads (loc
                                      ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
 
           CosLoadBalancing::Load load;
           this->push_loads (loc,
                             current_loads.in (),
                             load
                             ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
 /*
            ACE_DEBUG ((LM_DEBUG,
                        "EFFECTIVE_LOAD == %f\n"
@@ -313,7 +305,6 @@ TAO_LB_LeastLoaded::analyze_loads (
                   // LoadManager.
                   load_manager->enable_alert (loc
                                               ACE_ENV_ARG_PARAMETER);
-                  ACE_TRY_CHECK;
                 }
               else
                 {
@@ -321,7 +312,6 @@ TAO_LB_LeastLoaded::analyze_loads (
                   // shedding at given location.
                   load_manager->disable_alert (loc
                                                ACE_ENV_ARG_PARAMETER);
-                  ACE_TRY_CHECK;
                 }
             }
         }
@@ -331,12 +321,11 @@ TAO_LB_LeastLoaded::analyze_loads (
           // next location.
         }
       ACE_ENDTRY;
-      ACE_CHECK;
     }
 }
 
 PortableServer::POA_ptr
-TAO_LB_LeastLoaded::_default_POA (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+TAO_LB_LeastLoaded::_default_POA (void)
 {
   return PortableServer::POA::_duplicate (this->poa_.in ());
 }
@@ -370,7 +359,6 @@ TAO_LB_LeastLoaded::get_location (
           CosLoadBalancing::LoadList_var current_loads =
             load_manager->get_loads (loc
                                      ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
 
           found_load = 1;
 
@@ -379,7 +367,6 @@ TAO_LB_LeastLoaded::get_location (
                             current_loads.in (),
                             load
                             ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
 /*
            ACE_DEBUG ((LM_DEBUG,
                        "LOC = %u"
@@ -496,7 +483,6 @@ TAO_LB_LeastLoaded::get_location (
           // next location.
         }
       ACE_ENDTRY;
-      ACE_CHECK_RETURN (0);
     }
 
 //   ACE_DEBUG ((LM_DEBUG,
@@ -547,7 +533,6 @@ TAO_LB_LeastLoaded::init (const PortableGroup::Properties & props
           this->extract_float_property (property,
                                         critical_threshold
                                         ACE_ENV_ARG_PARAMETER);
-          ACE_CHECK;
 
           ct = &property;
         }
@@ -558,7 +543,6 @@ TAO_LB_LeastLoaded::init (const PortableGroup::Properties & props
           this->extract_float_property (property,
                                         reject_threshold
                                         ACE_ENV_ARG_PARAMETER);
-          ACE_CHECK;
         }
 
       else if (ACE_OS::strcmp (property.nam[0].id.in (),
@@ -567,7 +551,6 @@ TAO_LB_LeastLoaded::init (const PortableGroup::Properties & props
           this->extract_float_property (property,
                                         tolerance
                                         ACE_ENV_ARG_PARAMETER);
-          ACE_CHECK;
 
           // Valid tolerance values are greater than or equal to one.
           if (tolerance < 1)
@@ -581,7 +564,6 @@ TAO_LB_LeastLoaded::init (const PortableGroup::Properties & props
           this->extract_float_property (property,
                                         dampening
                                         ACE_ENV_ARG_PARAMETER);
-          ACE_CHECK;
 
           // Dampening range is [0,1).
           if (dampening < 0 || dampening >= 1)
@@ -595,7 +577,6 @@ TAO_LB_LeastLoaded::init (const PortableGroup::Properties & props
           this->extract_float_property (property,
                                         per_balance_load
                                         ACE_ENV_ARG_PARAMETER);
-          ACE_CHECK;
         }
     }
 

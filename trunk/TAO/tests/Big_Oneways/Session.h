@@ -41,14 +41,14 @@ public:
                      Test::Already_Running,
                      Test::No_Peers));
 
-  virtual void ping (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+  virtual void ping (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual void receive_payload (const Test::Payload &the_payload
                                 ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual void destroy (ACE_ENV_SINGLE_ARG_DECL)
+  virtual void destroy (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
 private:
@@ -63,7 +63,7 @@ private:
 
   /// Make sure that all threads have connections avaiable to the
   /// other sessions.
-  void validate_connections (ACE_ENV_SINGLE_ARG_DECL);
+  void validate_connections (void);
 
 private:
   /// Synchronize the internal state

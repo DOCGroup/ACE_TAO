@@ -285,7 +285,7 @@ public:
 
   ~TAO_Policies (void);
 
-  CORBA::ULong search_card (ACE_ENV_SINGLE_ARG_DECL) const
+  CORBA::ULong search_card (void) const
     ACE_THROW_SPEC ((CosTrading::Lookup::PolicyTypeMismatch));
 
   // BEGIN SPEC
@@ -297,7 +297,7 @@ public:
   // trader's def_search_card attribute is used.
   // END SPEC
 
-  CORBA::ULong match_card (ACE_ENV_SINGLE_ARG_DECL) const
+  CORBA::ULong match_card (void) const
     ACE_THROW_SPEC ((CosTrading::Lookup::PolicyTypeMismatch));
 
   // BEGIN SPEC
@@ -309,7 +309,7 @@ public:
   // attribute is used.
   // END SPEC
 
-  CORBA::ULong return_card (ACE_ENV_SINGLE_ARG_DECL) const
+  CORBA::ULong return_card (void) const
     ACE_THROW_SPEC ((CosTrading::Lookup::PolicyTypeMismatch));
 
   // BEGIN SPEC
@@ -323,7 +323,7 @@ public:
 
   // = Offer consideration policies
 
-  CORBA::Boolean use_modifiable_properties (ACE_ENV_SINGLE_ARG_DECL) const
+  CORBA::Boolean use_modifiable_properties (void) const
     ACE_THROW_SPEC ((CosTrading::Lookup::PolicyTypeMismatch));
 
   // BEGIN SPEC
@@ -336,7 +336,7 @@ public:
   // included.
   // END SPEC
 
-  CORBA::Boolean use_dynamic_properties (ACE_ENV_SINGLE_ARG_DECL) const
+  CORBA::Boolean use_dynamic_properties (void) const
     ACE_THROW_SPEC ((CosTrading::Lookup::PolicyTypeMismatch));
 
   // BEGIN SPEC
@@ -349,7 +349,7 @@ public:
   // included.
   // END SPEC
 
-  CORBA::Boolean use_proxy_offers (ACE_ENV_SINGLE_ARG_DECL) const
+  CORBA::Boolean use_proxy_offers (void) const
     ACE_THROW_SPEC ((CosTrading::Lookup::PolicyTypeMismatch));
 
   // BEGIN SPEC
@@ -361,7 +361,7 @@ public:
   // specified, such offers will be included.
   // END SPEC
 
-  CORBA::Boolean exact_type_match (ACE_ENV_SINGLE_ARG_DECL) const
+  CORBA::Boolean exact_type_match (void) const
     ACE_THROW_SPEC ((CosTrading::Lookup::PolicyTypeMismatch));
 
   // BEGIN SPEC
@@ -390,12 +390,12 @@ public:
    * "starting_trader" policy with the first component removed.
    * END SPEC
    */
-  CosTrading::TraderName* starting_trader (ACE_ENV_SINGLE_ARG_DECL) const
+  CosTrading::TraderName* starting_trader (void) const
     ACE_THROW_SPEC ((CosTrading::Lookup::PolicyTypeMismatch,
                      CosTrading::Lookup::InvalidPolicyValue));
 
   /// Determine the link follow policy for this query overall.
-  CosTrading::FollowOption link_follow_rule (ACE_ENV_SINGLE_ARG_DECL) const
+  CosTrading::FollowOption link_follow_rule (void) const
     ACE_THROW_SPEC ((CosTrading::Lookup::PolicyTypeMismatch));
 
   // BEGIN SPEC
@@ -422,7 +422,7 @@ public:
                      CosTrading::Link::IllegalLinkName,
                      CosTrading::Link::UnknownLinkName));
 
-  CORBA::ULong hop_count (ACE_ENV_SINGLE_ARG_DECL) const
+  CORBA::ULong hop_count (void) const
     ACE_THROW_SPEC ((CosTrading::Lookup::PolicyTypeMismatch));
 
   // BEGIN SPEC
@@ -439,7 +439,7 @@ public:
 
   /// Return the request_id passed to the query method across a link to
   /// another trader.
-  CosTrading::Admin::OctetSeq* request_id (ACE_ENV_SINGLE_ARG_DECL) const
+  CosTrading::Admin::OctetSeq* request_id (void) const
     ACE_THROW_SPEC ((CosTrading::Lookup::PolicyTypeMismatch));
 
   /// Policies to forward to the next trader in a federated query.

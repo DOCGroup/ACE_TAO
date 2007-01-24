@@ -18,14 +18,14 @@ test_i::~test_i (void)
 }
 
 CORBA::Short
-test_i::number (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+test_i::number (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return this->number_;
 }
 
 void
-test_i::shutdown (ACE_ENV_SINGLE_ARG_DECL)
+test_i::shutdown (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_DEBUG ((LM_DEBUG,

@@ -53,7 +53,6 @@ make_iogr (const char* domain_id, CORBA::ULongLong group_id, CORBA::ULong group_
 
   CORBA::Object_var new_ref =
     iorm->merge_iors (iors ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (0);
 
   // Property values
 
@@ -78,7 +77,6 @@ make_iogr (const char* domain_id, CORBA::ULongLong group_id, CORBA::ULong group_
   CORBA::Boolean retval = iorm->set_property (&iogr_prop,
                                               new_ref.in ()
                                               ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (0);
 
   // Set the primary
   // See we are setting the second ior as the primary
@@ -88,7 +86,6 @@ make_iogr (const char* domain_id, CORBA::ULongLong group_id, CORBA::ULong group_
                                   refs[0],
                                   new_ref.in ()
                                   ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK_RETURN (0);
     }
 
   return new_ref._retn ();
@@ -102,7 +99,6 @@ main (int argc, char *argv[])
     {
       CORBA::ORB_var orb =
         CORBA::ORB_init (argc, argv, "" ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       if (parse_args (argc, argv) != 0)
         return 1;
@@ -112,12 +108,10 @@ main (int argc, char *argv[])
         orb->resolve_initial_references (TAO_OBJID_IORMANIPULATION,
                                          0
                                          ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       // Narrow
       iorm =
         TAO_IOP::TAO_IOR_Manipulation::_narrow (IORM.in() ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       Test::Hello_ptr *servers = new Test::Hello_ptr [number_of_servers];
 
@@ -130,11 +124,9 @@ main (int argc, char *argv[])
 
           CORBA::Object_var tmp =
             orb->string_to_object(ior ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
 
           servers[i] =
             Test::Hello::_narrow(tmp.in () ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
 
           if (CORBA::is_nil (servers[i]))
             {
@@ -146,7 +138,6 @@ main (int argc, char *argv[])
         }
 
       CORBA::Object_var iogr = make_iogr ("Domain_1", 1, 1, servers  ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       Test::Hello_var hello_iogr = Test::Hello::_narrow(iogr.in () ACE_ENV_ARG_PARAMETER);
 
@@ -154,7 +145,7 @@ main (int argc, char *argv[])
 
       ACE_TRY
         {
-          last_server = hello_iogr->drop_down_dead (ACE_ENV_SINGLE_ARG_PARAMETER);
+          last_server = hello_iogr->drop_down_dead ();
           // If the call 'succeeds' the server has identified a regression.
           result = 1;
           ACE_DEBUG ((LM_ERROR, "Error: REGRESSION identified by server %u. Test Failed !!\n", last_server));
@@ -173,8 +164,7 @@ main (int argc, char *argv[])
         {
           ACE_TRY
             {
-              servers[j]->shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
-              ACE_TRY_CHECK;
+              servers[j]->shutdown ();
             }
           ACE_CATCHALL
             {
@@ -192,8 +182,7 @@ main (int argc, char *argv[])
 
       delete [] servers;
 
-      orb->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      orb->destroy ();
     }
   ACE_CATCHANY
     {

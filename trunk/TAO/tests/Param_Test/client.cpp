@@ -69,7 +69,6 @@ Param_Test_Client<T>::run_sii_test (void)
   // Initialize parameters for the test.
   int check = this->test_object_->init_parameters (this->param_test_
                                                    ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
 
   if (check == -1)
     {
@@ -99,7 +98,6 @@ Param_Test_Client<T>::run_sii_test (void)
           // make the call
           this->test_object_->run_sii_test (this->param_test_
                                             ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
 
           // stop the timer.
           this->results_.stop_timer ();
@@ -182,7 +180,6 @@ Param_Test_Client<T>::run_dii_test (void)
   // initialize parameters for the test
   int check = this->test_object_->init_parameters (this->param_test_
                                                    ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
 
   if (check == -1)
     {
@@ -209,7 +206,6 @@ Param_Test_Client<T>::run_dii_test (void)
         {
           req = this->param_test_->_request (opname
                                              ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
 
           if (opt->debug ())
             {
@@ -220,7 +216,6 @@ Param_Test_Client<T>::run_dii_test (void)
           // Make the invocation, verify the result.
           this->test_object_->dii_req_invoke (req.in ()
                                               ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
         }
       ACE_CATCHANY
         {

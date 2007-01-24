@@ -49,8 +49,7 @@ Session::svc (void)
       CORBA::ULong session_count =
         this->other_sessions_.length ();
 
-      this->validate_connections (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      this->validate_connections ();
 
       for (; i != this->message_count_; ++i)
         {
@@ -67,7 +66,6 @@ Session::svc (void)
             {
               this->other_sessions_[j]->receive_payload (payload
                                                          ACE_ENV_ARG_PARAMETER);
-              ACE_TRY_CHECK;
             }
         }
 
@@ -80,7 +78,6 @@ Session::svc (void)
           }
       }
       this->terminate (1 ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
     }
   ACE_CATCHANY
     {
@@ -92,16 +89,14 @@ Session::svc (void)
       return -1;
     }
   ACE_ENDTRY;
-  ACE_CHECK_RETURN (-1);
 
-  this->_remove_ref (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
+  this->_remove_ref ();
 
   return 0;
 }
 
 void
-Session::validate_connections (ACE_ENV_SINGLE_ARG_DECL)
+Session::validate_connections (void)
 {
   CORBA::ULong session_count =
     this->other_sessions_.length ();
@@ -111,8 +106,7 @@ Session::validate_connections (ACE_ENV_SINGLE_ARG_DECL)
         {
           ACE_TRY
             {
-              this->other_sessions_[j]->ping (ACE_ENV_SINGLE_ARG_PARAMETER);
-              ACE_TRY_CHECK;
+              this->other_sessions_[j]->ping ();
             }
           ACE_CATCHANY
             {
@@ -145,14 +139,12 @@ Session::start (const Test::Session_List &other_sessions
         // access to this object....
         ACE_TRY
           {
-            this->_add_ref (ACE_ENV_SINGLE_ARG_PARAMETER);
-            ACE_TRY_CHECK;
+            this->_add_ref ();
 
             if (this->task_.activate (
                     THR_NEW_LWP | THR_JOINABLE, 1, 1) == -1)
               {
-                this->_remove_ref (ACE_ENV_SINGLE_ARG_PARAMETER);
-                ACE_TRY_CHECK;
+                this->_remove_ref ();
               }
             else
               {
@@ -172,8 +164,7 @@ Session::start (const Test::Session_List &other_sessions
       return;
   }
 
-  this->validate_connections (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+  this->validate_connections ();
 
   this->barrier_.wait ();
 
@@ -186,7 +177,7 @@ Session::start (const Test::Session_List &other_sessions
 }
 
 void
-Session::ping (ACE_ENV_SINGLE_ARG_DECL_NOT_USED) ACE_THROW_SPEC ((CORBA::SystemException))
+Session::ping (void) ACE_THROW_SPEC ((CORBA::SystemException))
 {
 }
 
@@ -234,19 +225,16 @@ Session::receive_payload (const Test::Payload &the_payload
 
 
 void
-Session::destroy (ACE_ENV_SINGLE_ARG_DECL)
+Session::destroy (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // Make sure local resources are released
 
   PortableServer::POA_var poa =
-    this->_default_POA (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+    this->_default_POA ();
   PortableServer::ObjectId_var oid =
     poa->servant_to_id (this ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
   poa->deactivate_object (oid.in () ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 }
 
 int

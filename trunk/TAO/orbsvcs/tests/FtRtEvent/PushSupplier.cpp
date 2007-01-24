@@ -48,13 +48,11 @@ int PushSupplier_impl::init(RtecEventChannelAdmin::EventChannel_ptr channel ACE_
 
   ACE_DEBUG((LM_DEBUG, "for_suppliers\n"));
   RtecEventChannelAdmin::SupplierAdmin_var supplier_admin =
-    channel->for_suppliers(ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN(0);
+    channel->for_suppliers();
 
   ACE_DEBUG((LM_DEBUG, "obtain_push_consumer\n"));
   consumer_ =
-    supplier_admin->obtain_push_consumer(ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN(0);
+    supplier_admin->obtain_push_consumer();
 
 
 
@@ -101,13 +99,10 @@ void  PushSupplier_impl::disconnect_push_supplier (
 
   PortableServer::Current_var current =
     resolve_init<PortableServer::Current>(orb_.in(), "POACurrent" ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
-  PortableServer::POA_var poa = current->get_POA(ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+  PortableServer::POA_var poa = current->get_POA();
 
-  PortableServer::ObjectId_var oid = current->get_object_id(ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+  PortableServer::ObjectId_var oid = current->get_object_id();
 
   poa->deactivate_object (oid.in ()
                           ACE_ENV_ARG_PARAMETER);
@@ -133,7 +128,6 @@ int PushSupplier_impl::handle_timeout (const ACE_Time_Value &current_time,
     event[0].data.any_value <<= seq_no_;
 
     consumer_->push(event ACE_ENV_ARG_PARAMETER);
-    ACE_TRY_CHECK;
     ACE_DEBUG((LM_DEBUG, "sending data %d\n", seq_no_));
     ++seq_no_;
   }

@@ -88,7 +88,6 @@ int main (int argc, char *argv[])
 
       CORBA::Object_var obj
         = orb->resolve_initial_references ("RootPOA" ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       PortableServer::POA_var poa
         = PortableServer::POA::_narrow (obj.in ());
@@ -101,7 +100,6 @@ int main (int argc, char *argv[])
       TAO_AV_CORE::instance ()->init (orb.in (),
                                       poa.in ()
                                       ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       // Connect the two streams and run them...
       AVStreams::flowSpec flow_spec (2);
@@ -130,20 +128,15 @@ int main (int argc, char *argv[])
       TAO_StreamCtrl stream_control_impl;
 
       AVStreams::StreamCtrl_var stream_control =
-        stream_control_impl._this (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        stream_control_impl._this ();
 
       obj = orb->string_to_object (ping_ior ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
       AVStreams::MMDevice_var ping_sender =
         AVStreams::MMDevice::_narrow (obj.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       obj = orb->string_to_object (pong_ior ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
       AVStreams::MMDevice_var pong_sender =
         AVStreams::MMDevice::_narrow (obj.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       AVStreams::streamQoS_var the_qos =
         new AVStreams::streamQoS;
@@ -153,23 +146,18 @@ int main (int argc, char *argv[])
                                  the_qos.inout (),
                                  flow_spec
                                  ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       flow_spec.length (0);
       stream_control->start (flow_spec ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       ACE_Time_Value tv (100, 0);
       orb->run (tv ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       ACE_DEBUG ((LM_DEBUG, "event loop finished\n"));
       orb->shutdown (1 ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
      // flow_spec.length (0);
      // stream_control->stop (flow_spec ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
     }
   ACE_CATCHANY

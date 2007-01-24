@@ -22,10 +22,10 @@ public:
   Receiver_Factory (CORBA::ORB_ptr orb);
 
   // = The skeleton methods
-  virtual Test::Receiver_ptr create_receiver (ACE_ENV_SINGLE_ARG_DECL)
+  virtual Test::Receiver_ptr create_receiver (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual void shutdown (ACE_ENV_SINGLE_ARG_DECL)
+  virtual void shutdown (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
 private:

@@ -21,7 +21,7 @@ public:
                     ACE_ENV_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  void shutdown (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+  void shutdown (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
 private:
@@ -44,18 +44,15 @@ Test_i::test_method (CORBA::Short priority
 
   CORBA::Object_var obj =
     this->orb_->resolve_initial_references ("RTCurrent" ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
   RTCORBA::Current_var current =
     RTCORBA::Current::_narrow (obj.in () ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
   if (CORBA::is_nil (obj.in ()))
     ACE_THROW (CORBA::INTERNAL ());
 
   CORBA::Short servant_thread_priority =
-    current->the_priority (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+    current->the_priority ();
 
   // Print out the info.
   if (servant_thread_priority != priority)
@@ -70,7 +67,7 @@ Test_i::test_method (CORBA::Short priority
 }
 
 void
-Test_i::shutdown (ACE_ENV_SINGLE_ARG_DECL)
+Test_i::shutdown (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->orb_->shutdown (0 ACE_ENV_ARG_PARAMETER);
@@ -174,17 +171,14 @@ create_object (RTPortableServer::POA_ptr poa,
   else
     id = poa->activate_object (server_impl ACE_ENV_ARG_PARAMETER);
 
-  ACE_CHECK_RETURN (-1);
 
   CORBA::Object_var server =
     poa->id_to_reference (id.in ()
                           ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
 
   // Print out the IOR.
   CORBA::String_var ior =
     orb->object_to_string (server.in () ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
 
   ACE_DEBUG ((LM_DEBUG, "<%s>\n\n", ior.in ()));
 
@@ -232,27 +226,22 @@ Task::svc (void)
       // RTORB.
       CORBA::Object_var object =
         this->orb_->resolve_initial_references ("RTORB" ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
       RTCORBA::RTORB_var rt_orb = RTCORBA::RTORB::_narrow (object.in ()
                                                            ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
       if (check_for_nil (rt_orb.in (), "RTORB") == -1)
         return -1;
 
       // RootPOA.
       object =
         this->orb_->resolve_initial_references("RootPOA" ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
       PortableServer::POA_var root_poa =
         PortableServer::POA::_narrow (object.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
       if (check_for_nil (root_poa.in (), "RootPOA") == -1)
         return -1;
 
       // POAManager.
       PortableServer::POAManager_var poa_manager =
-        root_poa->the_POAManager (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        root_poa->the_POAManager ();
 
       // Create child POA with SERVER_DECLARED PriorityModelPolicy,
       // and MULTIPLE_ID id uniqueness policy (so we can use one
@@ -263,23 +252,19 @@ Task::svc (void)
         rt_orb->create_priority_model_policy (RTCORBA::SERVER_DECLARED,
                                               poa_priority
                                               ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       poa_policy_list[1] =
         root_poa->create_id_uniqueness_policy (PortableServer::MULTIPLE_ID
                                                ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       PortableServer::POA_var child_poa =
         root_poa->create_POA ("Child_POA",
                               poa_manager.in (),
                               poa_policy_list
                               ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       RTPortableServer::POA_var rt_poa =
         RTPortableServer::POA::_narrow (child_poa.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
       if (check_for_nil (rt_poa.in (), "RTPOA") == -1)
         return -1;
 
@@ -291,7 +276,6 @@ Task::svc (void)
       ACE_DEBUG ((LM_DEBUG, "\nActivated object one as "));
       result = create_object (rt_poa.in (), this->orb_.in (), &server_impl,
                               -1, ior_output_file1 ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
       if (result == -1)
         return -1;
 
@@ -299,17 +283,14 @@ Task::svc (void)
       ACE_DEBUG ((LM_DEBUG, "\nActivated object two as "));
       result = create_object (rt_poa.in (), this->orb_.in (), &server_impl,
                               object_priority, ior_output_file2 ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
       if (result == -1)
         return -1;
 
       // Activate POA manager.
-      poa_manager->activate (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      poa_manager->activate ();
 
       // Start ORB event loop.
-      this->orb_->run (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      this->orb_->run ();
 
       ACE_DEBUG ((LM_DEBUG, "Server ORB event loop finished\n\n"));
     }
@@ -332,7 +313,6 @@ main (int argc, char *argv[])
       // ORB.
       CORBA::ORB_var orb =
         CORBA::ORB_init (argc, argv, "" ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       // Parse arguments.
       if (parse_args (argc, argv) != 0)

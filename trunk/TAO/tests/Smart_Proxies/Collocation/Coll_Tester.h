@@ -34,11 +34,11 @@ public:
   int parse_args (int argc, char *argv[]);
   // Parse the test specific arguments.
 
-  int test_narrow (ACE_ENV_SINGLE_ARG_DECL_NOT_USED);
+  int test_narrow (void);
   // This test narrow an object reference to its base class and see
   // if it works correctly.
 
-  int run (ACE_ENV_SINGLE_ARG_DECL_NOT_USED);
+  int run (void);
   // Run the test.
 
 private:

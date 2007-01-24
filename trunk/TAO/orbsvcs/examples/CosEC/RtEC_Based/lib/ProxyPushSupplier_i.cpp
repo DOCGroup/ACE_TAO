@@ -35,7 +35,7 @@ public:
       ACE_THROW_SPEC ((CORBA::SystemException));
   // This method is called by the RTEvent Channel to supply data.
 
-  virtual void disconnect_push_consumer (ACE_ENV_SINGLE_ARG_DECL)
+  virtual void disconnect_push_consumer (void)
       ACE_THROW_SPEC ((CORBA::SystemException));
   // Disconnects the consumer from the event channel.
 
@@ -73,7 +73,6 @@ TAO_CosEC_PushConsumerWrapper::push (const RtecEventComm::EventSet& set
         {
           this->consumer_->push (set[i].data.any_value
                                  ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
         }
       ACE_CATCHANY
         {
@@ -84,25 +83,21 @@ TAO_CosEC_PushConsumerWrapper::push (const RtecEventComm::EventSet& set
 }
 
 void
-TAO_CosEC_PushConsumerWrapper::disconnect_push_consumer (ACE_ENV_SINGLE_ARG_DECL)
+TAO_CosEC_PushConsumerWrapper::disconnect_push_consumer (void)
       ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // Deactivate the supplier proxy.
-  this->consumer_->disconnect_push_consumer (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+  this->consumer_->disconnect_push_consumer ();
 
   PortableServer::POA_var poa =
-    this->_default_POA (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+    this->_default_POA ();
 
   PortableServer::ObjectId_var id =
     poa->servant_to_id (this
                         ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
   poa->deactivate_object (id.in ()
                           ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
   // @@ If we keep a list remember to remove this object from the
   // list.
@@ -124,25 +119,21 @@ TAO_CosEC_ProxyPushSupplier_i::~TAO_CosEC_ProxyPushSupplier_i (void)
 }
 
 void
-TAO_CosEC_ProxyPushSupplier_i::disconnect_push_supplier (ACE_ENV_SINGLE_ARG_DECL)
+TAO_CosEC_ProxyPushSupplier_i::disconnect_push_supplier (void)
       ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  this->pps_->disconnect_push_supplier (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+  this->pps_->disconnect_push_supplier ();
 
   // Deactivate the supplier proxy
   PortableServer::POA_var poa =
-    this->_default_POA (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+    this->_default_POA ();
 
   PortableServer::ObjectId_var id =
     poa->servant_to_id (this
                         ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
   poa->deactivate_object (id.in ()
                           ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
   // @@ If we keep a list remember to remove this object from the
   // list.
@@ -165,23 +156,19 @@ TAO_CosEC_ProxyPushSupplier_i::connect_push_consumer (CosEventComm::PushConsumer
   ACE_NEW_THROW_EX (wrapper,
                     TAO_CosEC_PushConsumerWrapper (push_consumer),
                     CORBA::NO_MEMORY ());
-  ACE_CHECK;
 
   auto_ptr <TAO_CosEC_PushConsumerWrapper> auto_wrapper (wrapper);
 
   // @@ This code is not exception safe.
   RtecEventComm::PushConsumer_ptr  rtecpushconsumer =
-    auto_wrapper.get ()->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+    auto_wrapper.get ()->_this ();
 
   // give the ownership to the POA.
-  auto_wrapper.get ()->_remove_ref (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+  auto_wrapper.get ()->_remove_ref ();
 
   this->pps_->connect_push_consumer (rtecpushconsumer,
                                      this->qos_
                                      ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
   this->wrapper_ = auto_wrapper.release ();
 }

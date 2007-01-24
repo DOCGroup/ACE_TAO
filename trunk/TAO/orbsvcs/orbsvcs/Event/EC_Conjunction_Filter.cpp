@@ -89,7 +89,6 @@ TAO_EC_Conjunction_Filter::filter (const RtecEventComm::EventSet& event,
        ++this->current_child_)
     {
       int n = (*this->current_child_)->filter (event, qos_info ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK_RETURN (0);
       if (n != 0)
         return n;
     }
@@ -107,7 +106,6 @@ TAO_EC_Conjunction_Filter::filter_nocopy (RtecEventComm::EventSet& event,
        ++i)
     {
       int n = (*i)->filter_nocopy (event, qos_info ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK_RETURN (0);
       if (n != 0)
         return n;
     }

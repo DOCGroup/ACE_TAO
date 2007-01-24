@@ -19,7 +19,7 @@ parse_args (int argc, char *argv[])
         ior = get_opts.opt_arg ();
         break;
       case 's':
-        shutdown_server = 1; 
+        shutdown_server = 1;
         break;
       case '?':
       default:
@@ -42,18 +42,15 @@ main (int argc, char *argv[])
     {
       CORBA::ORB_var orb =
         CORBA::ORB_init (argc, argv, "" ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       if (parse_args (argc, argv) != 0)
         return 1;
 
       CORBA::Object_var tmp =
         orb->string_to_object(ior ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       Test_var server =
         Test::_narrow(tmp.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       if (CORBA::is_nil (server.in ()))
         {
@@ -65,17 +62,14 @@ main (int argc, char *argv[])
 
       if (shutdown_server)
       {
-        server->shutdown(ACE_ENV_SINGLE_ARG_PARAMETER);
-        ACE_TRY_CHECK;
+        server->shutdown();
       }
       else
       {
-        result = server->try_and_create_POA(ACE_ENV_SINGLE_ARG_PARAMETER);
-        ACE_TRY_CHECK;
+        result = server->try_and_create_POA();
       }
-      
-      orb->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+
+      orb->destroy ();
     }
   ACE_CATCHANY
     {

@@ -76,7 +76,6 @@ BE_ifr_orb_init (int &ac, char *av[])
                                        av,
                                        0
                                        ACE_ENV_ARG_PARAMETER));
-      ACE_TRY_CHECK;
     }
   ACE_CATCHANY
     {

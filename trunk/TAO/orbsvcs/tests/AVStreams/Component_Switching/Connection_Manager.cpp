@@ -46,7 +46,6 @@ Connection_Manager::bind_to_receivers (const ACE_CString &sender_name,
       this->sender_context_ =
         this->naming_client_->bind_new_context (name
                                                 ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       //
       // We reach here if there was no exception raised in
@@ -61,7 +60,6 @@ Connection_Manager::bind_to_receivers (const ACE_CString &sender_name,
       this->receiver_context_ =
         this->sender_context_->bind_new_context (name
                                                  ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
     }
   ACE_CATCH (CosNaming::NamingContext::AlreadyBound, al_ex)
     {
@@ -77,7 +75,6 @@ Connection_Manager::bind_to_receivers (const ACE_CString &sender_name,
       CORBA::Object_var object =
         this->naming_client_->resolve (name
                                        ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
 
       this->sender_context_ =
         CosNaming::NamingContext::_narrow (object.in ());
@@ -89,16 +86,13 @@ Connection_Manager::bind_to_receivers (const ACE_CString &sender_name,
       object =
         this->sender_context_->resolve (name
                                         ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
 
       this->receiver_context_ =
         CosNaming::NamingContext::_narrow (object.in ());
 
-      this->find_receivers (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK;
+      this->find_receivers ();
     }
   ACE_ENDTRY;
-  ACE_CHECK;
 
   name [0].id =
     CORBA::string_dup (this->sender_name_.c_str ());
@@ -107,11 +101,10 @@ Connection_Manager::bind_to_receivers (const ACE_CString &sender_name,
   this->sender_context_->rebind (name,
                                  sender
                                  ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 }
 
 void
-Connection_Manager::find_receivers (ACE_ENV_SINGLE_ARG_DECL)
+Connection_Manager::find_receivers (void)
 {
   CosNaming::BindingIterator_var iterator;
   CosNaming::BindingList_var binding_list;
@@ -122,12 +115,10 @@ Connection_Manager::find_receivers (ACE_ENV_SINGLE_ARG_DECL)
                                  binding_list,
                                  iterator
                                  ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
   // Add the receivers found in the bindinglist to the <receivers>.
   this->add_to_receivers (binding_list
                           ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
   if (!CORBA::is_nil (iterator.in ()))
     {
@@ -139,11 +130,9 @@ Connection_Manager::find_receivers (ACE_ENV_SINGLE_ARG_DECL)
           more = iterator->next_n (chunk,
                                    binding_list
                                    ACE_ENV_ARG_PARAMETER);
-          ACE_CHECK;
 
           this->add_to_receivers (binding_list
                                   ACE_ENV_ARG_PARAMETER);
-          ACE_CHECK;
         }
     }
 }
@@ -185,7 +174,7 @@ Connection_Manager::add_to_receivers (CosNaming::BindingList &binding_list
 }
 
 void
-Connection_Manager::connect_to_receivers (ACE_ENV_SINGLE_ARG_DECL)
+Connection_Manager::connect_to_receivers (void)
 {
   // Connect to all receivers that we know about.
   for (Receivers::iterator iterator = this->receivers_.begin ();
@@ -224,8 +213,7 @@ Connection_Manager::connect_to_receivers (ACE_ENV_SINGLE_ARG_DECL)
 
       // Register streamctrl.
       AVStreams::StreamCtrl_var streamctrl_object =
-        streamctrl->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK;
+        streamctrl->_this ();
 
       // Bind the flowname and the corresponding stream controller to
       // the stream controller map
@@ -238,7 +226,6 @@ Connection_Manager::connect_to_receivers (ACE_ENV_SINGLE_ARG_DECL)
                                     the_qos.inout (),
                                     flow_spec
                                     ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
     }
 }
 
@@ -273,7 +260,6 @@ Connection_Manager::bind_to_sender (const ACE_CString &sender_name,
       CORBA::Object_var object =
         this->naming_client_->resolve (name
                                        ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       //
       // We reach here if there was no exception raised in <resolve>.
@@ -291,7 +277,6 @@ Connection_Manager::bind_to_sender (const ACE_CString &sender_name,
       object =
         this->sender_context_->resolve (name
                                         ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
 
       this->receiver_context_ =
         CosNaming::NamingContext::_narrow (object.in ());
@@ -305,7 +290,6 @@ Connection_Manager::bind_to_sender (const ACE_CString &sender_name,
       this->sender_context_ =
         this->naming_client_->bind_new_context (name
                                                 ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
 
       name [0].id =
         CORBA::string_dup ("Receivers");
@@ -314,10 +298,8 @@ Connection_Manager::bind_to_sender (const ACE_CString &sender_name,
       this->receiver_context_ =
         this->sender_context_->bind_new_context (name
                                                  ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
     }
   ACE_ENDTRY;
-  ACE_CHECK;
 
   //
   // At this point we either have resolved the receiver context or we
@@ -330,7 +312,6 @@ Connection_Manager::bind_to_sender (const ACE_CString &sender_name,
   this->receiver_context_->rebind (name,
                                    receiver
                                    ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
   //
   // Check if the sender was registered.  Note that if we created the
@@ -358,12 +339,11 @@ Connection_Manager::bind_to_sender (const ACE_CString &sender_name,
           // No problem if the sender was not there.
         }
       ACE_ENDTRY;
-      ACE_CHECK;
     }
 }
 
 void
-Connection_Manager::connect_to_sender (ACE_ENV_SINGLE_ARG_DECL)
+Connection_Manager::connect_to_sender (void)
 {
   if (CORBA::is_nil (this->sender_.in ()))
     return;
@@ -399,8 +379,7 @@ Connection_Manager::connect_to_sender (ACE_ENV_SINGLE_ARG_DECL)
 
   // Register streamctrl.
   AVStreams::StreamCtrl_var streamctrl_object =
-    streamctrl->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+    streamctrl->_this ();
 
   //
   // Since senders terminate the streams, we don't need the streamctrl
@@ -419,7 +398,6 @@ Connection_Manager::connect_to_sender (ACE_ENV_SINGLE_ARG_DECL)
                            the_qos.inout (),
                            flow_spec
                            ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
   if (result == 0)
     ACE_ERROR ((LM_ERROR,
@@ -429,7 +407,6 @@ Connection_Manager::connect_to_sender (ACE_ENV_SINGLE_ARG_DECL)
   AVStreams::flowSpec start_spec;
   streamctrl->start (start_spec
                      ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 }
 
 void
@@ -441,7 +418,6 @@ Connection_Manager::add_streamctrl (const ACE_CString &flowname,
   CORBA::Any_var streamctrl_any =
     endpoint->get_property_value ("Related_StreamCtrl"
                                   ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
   AVStreams::StreamCtrl_ptr streamctrl;
 
@@ -465,7 +441,6 @@ Connection_Manager::destroy (const ACE_CString &flowname
   this->receivers_.unbind (flowname);
 
   this->streamctrls_.unbind(flowname);
-  ACE_CHECK;
 }
 
 void
@@ -489,7 +464,6 @@ Connection_Manager::unbind_sender (const ACE_CString &sender_name,
       CORBA::Object_var object =
         this->naming_client_->resolve (name
                                        ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       CosNaming::NamingContext_var sender_context =
         CosNaming::NamingContext::_narrow (object.in ());
@@ -559,7 +533,6 @@ Connection_Manager::unbind_receiver (const ACE_CString &sender_name,
       CORBA::Object_var object =
         this->naming_client_->resolve (name
                                        ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       CosNaming::NamingContext_var sender_context =
         CosNaming::NamingContext::_narrow (object.in ());

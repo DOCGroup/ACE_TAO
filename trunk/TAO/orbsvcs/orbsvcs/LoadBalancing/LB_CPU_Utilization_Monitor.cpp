@@ -110,7 +110,7 @@ TAO_LB_CPU_Utilization_Monitor::~TAO_LB_CPU_Utilization_Monitor (void)
 }
 
 CosLoadBalancing::Location *
-TAO_LB_CPU_Utilization_Monitor::the_location (ACE_ENV_SINGLE_ARG_DECL)
+TAO_LB_CPU_Utilization_Monitor::the_location (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   CosLoadBalancing::Location * location;
@@ -121,13 +121,12 @@ TAO_LB_CPU_Utilization_Monitor::the_location (ACE_ENV_SINGLE_ARG_DECL)
                         TAO::VMCID,
                         ENOMEM),
                       CORBA::COMPLETED_NO));
-  ACE_CHECK_RETURN (0);
 
   return location;
 }
 
 CosLoadBalancing::LoadList *
-TAO_LB_CPU_Utilization_Monitor::loads (ACE_ENV_SINGLE_ARG_DECL)
+TAO_LB_CPU_Utilization_Monitor::loads (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   CORBA::Float load = 0;
@@ -145,7 +144,6 @@ TAO_LB_CPU_Utilization_Monitor::loads (ACE_ENV_SINGLE_ARG_DECL)
                         TAO::VMCID,
                         ENOMEM),
                       CORBA::COMPLETED_NO));
-  ACE_CHECK_RETURN (0);
 
   CosLoadBalancing::LoadList_var load_list = tmp;
 

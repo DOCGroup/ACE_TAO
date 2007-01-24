@@ -21,7 +21,7 @@ class FooServantList
     void create_and_activate(PortableServer::POA_ptr poa
                              ACE_ENV_ARG_DECL);
 
-    void client_done(ACE_ENV_SINGLE_ARG_DECL);
+    void client_done(void);
 
 
   private:

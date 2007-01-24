@@ -27,7 +27,6 @@ Naming_Context_i::bind (const char *n,
   // Save the binding to database.
   int result =
     this->code_gen_->set_name_obj_ref (n, obj ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
 
   return result;
 }
@@ -41,7 +40,6 @@ Naming_Context_i::find (const char *n
   // 'n'
   CORBA::String_var obj_ref =
     this->code_gen_->get_obj_ref (n ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (0);
 
   return CORBA::string_dup (obj_ref.in ());
 }

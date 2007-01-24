@@ -55,7 +55,6 @@ main (int argc, char *argv[])
       // ORB.
       CORBA::ORB_var orb =
         CORBA::ORB_init (argc, argv, "" ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       // Parse arguments.
       if (parse_args (argc, argv) != 0)
@@ -64,29 +63,23 @@ main (int argc, char *argv[])
       // RTORB.
       CORBA::Object_var object =
         orb->resolve_initial_references ("RTORB" ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
       RTCORBA::RTORB_var rt_orb = RTCORBA::RTORB::_narrow (object.in ()
                                                            ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
       if (check_for_nil (rt_orb.in (), "RTORB") == -1)
         return -1;
 
       // PolicyCurrent.
       object = orb->resolve_initial_references ("PolicyCurrent"
                                                 ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
       CORBA::PolicyCurrent_var policy_current =
         CORBA::PolicyCurrent::_narrow (object.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
       if (check_for_nil (policy_current.in (), "PolicyCurrent")
           == -1)
         return -1;
 
       // Test object.
       object = orb->string_to_object (ior ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
       Test_var server = Test::_narrow (object.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
       if (check_for_nil (server.in (), "server") == -1)
         return -1;
 
@@ -109,12 +102,10 @@ main (int argc, char *argv[])
       policy_list[0] =
         rt_orb->create_client_protocol_policy (protocols
                                                ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       policy_current->set_policy_overrides (policy_list,
                                             CORBA::SET_OVERRIDE
                                             ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       ACE_DEBUG ((LM_DEBUG,
                   "\n     Test 1\n"));
@@ -122,7 +113,6 @@ main (int argc, char *argv[])
       CORBA::PolicyList_var pols;
       int status = server->_validate_connection (pols.out ()
                                                  ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       if (!status)
         ACE_DEBUG ((LM_DEBUG,
@@ -134,8 +124,7 @@ main (int argc, char *argv[])
       // NO new connections should get established.
       ACE_DEBUG ((LM_DEBUG,
                   "\n     Test 2\n"));
-      server->test_method (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      server->test_method ();
 
       // Test 3: Check that <validate_connection> detects policy
       // misconfigurations and reports them through
@@ -151,16 +140,13 @@ main (int argc, char *argv[])
       policy_list[0] =
         rt_orb->create_client_protocol_policy (protocols
                                                ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       policy_current->set_policy_overrides (policy_list,
                                             CORBA::SET_OVERRIDE
                                             ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       status = server->_validate_connection (pols.out ()
                                              ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       if (status)
         ACE_DEBUG ((LM_DEBUG,
@@ -187,18 +173,15 @@ main (int argc, char *argv[])
       policy_list[0] =
         rt_orb->create_client_protocol_policy (protocols
                                                ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       policy_current->set_policy_overrides (policy_list,
                                             CORBA::SET_OVERRIDE
                                             ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       ACE_DEBUG ((LM_DEBUG,
                   "\n  Testing over - shutting down\n"));
       ACE_OS::sleep (2);
-      server->shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      server->shutdown ();
 
       ACE_OS::sleep (2);
     }

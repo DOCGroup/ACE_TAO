@@ -36,7 +36,7 @@ public:
 
   // = The EC_Driver methods
   /// Don't run the suppliers just create the EC and then destroy it.
-  void execute_test (ACE_ENV_SINGLE_ARG_DECL);
+  void execute_test (void);
 
   /// Don't dump the EC_Driver results, they are meaningless.
   void dump_results (void);

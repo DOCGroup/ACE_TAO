@@ -61,7 +61,6 @@ Gateway_EC::write_ior_file (CORBA::ORB_ptr orb,
   // Write EC ior to a file.
   CORBA::String_var str;
   str = orb->object_to_string (ec ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
   FILE *output_file= ACE_OS::fopen (this->ec_ior_file_, "w");
   if (output_file == 0)
@@ -91,7 +90,6 @@ Gateway_EC::run (int argc, char ** argv)
       // Initialize ORB and POA, POA Manager, parse args.
       CORBA::ORB_var orb =
         CORBA::ORB_init (argc, argv, "" ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
       orb_destroyer.init (orb);
 
       if (parse_args (argc, argv) == -1)
@@ -99,17 +97,13 @@ Gateway_EC::run (int argc, char ** argv)
 
       CORBA::Object_var obj =
         orb->resolve_initial_references ("RootPOA" ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
       PortableServer::POA_var poa =
         PortableServer::POA::_narrow (obj.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
       if (check_for_nil (poa.in (), "POA") == -1)
         return -1;
       PortableServer::POAManager_var manager =
-        poa->the_POAManager (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
-      manager->activate (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        poa->the_POAManager ();
+      manager->activate ();
 
       // Set up EC.
       TAO_EC_Servant_Var<EC_Wrapper> ec_wrapper (EC_Wrapper::create ());
@@ -127,11 +121,9 @@ Gateway_EC::run (int argc, char ** argv)
                 ec_wrapper.in (),
                 ec_deactivator
                 ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
       ec_wrapper->set_deactivator (ec_deactivator);
 
       this->write_ior_file (orb.in (), ec.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       // Set up multicast components.
       // Obtain mcast gateway from service configurator.
@@ -142,14 +134,11 @@ Gateway_EC::run (int argc, char ** argv)
       if (!gateway)
         {
           ACE_TRY_THROW (CORBA::INTERNAL ());
-          ACE_TRY_CHECK;
         }
       gateway->run (orb.in (), ec.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       // Run server.
-      orb->run (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      orb->run ();
     }
   ACE_CATCHANY
     {

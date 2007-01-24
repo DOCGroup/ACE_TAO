@@ -27,7 +27,7 @@ public:
                              ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual void done (ACE_ENV_SINGLE_ARG_DECL)
+  virtual void done (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
 private:

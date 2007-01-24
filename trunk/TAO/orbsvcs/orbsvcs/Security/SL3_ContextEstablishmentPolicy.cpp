@@ -38,7 +38,7 @@ TAO::SL3::ContextEstablishmentPolicy::creds_directive (
 }
 
 SecurityLevel3::OwnCredentialsList *
-TAO::SL3::ContextEstablishmentPolicy::creds_list (ACE_ENV_SINGLE_ARG_DECL)
+TAO::SL3::ContextEstablishmentPolicy::creds_list (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   SecurityLevel3::OwnCredentialsList * creds = 0;
@@ -46,7 +46,6 @@ TAO::SL3::ContextEstablishmentPolicy::creds_list (ACE_ENV_SINGLE_ARG_DECL)
   ACE_NEW_THROW_EX (creds,
                     SecurityLevel3::OwnCredentialsList (this->creds_list_),
                     CORBA::NO_MEMORY ());
-  ACE_CHECK_RETURN (creds);
 
   return creds;
 }
@@ -92,7 +91,7 @@ TAO::SL3::ContextEstablishmentPolicy::policy_type (
 }
 
 CORBA::Policy_ptr
-TAO::SL3::ContextEstablishmentPolicy::copy (ACE_ENV_SINGLE_ARG_DECL)
+TAO::SL3::ContextEstablishmentPolicy::copy (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   CORBA::Policy_ptr p = CORBA::Policy::_nil ();
@@ -105,7 +104,6 @@ TAO::SL3::ContextEstablishmentPolicy::copy (ACE_ENV_SINGLE_ARG_DECL)
                       this->use_confidentiality_,
                       this->use_integrity_),
                     CORBA::NO_MEMORY ());
-  ACE_CHECK_RETURN (p);
 
   return p;
 }

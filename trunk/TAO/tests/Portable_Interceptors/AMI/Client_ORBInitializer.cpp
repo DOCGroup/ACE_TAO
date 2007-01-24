@@ -34,5 +34,4 @@ Client_ORBInitializer::post_init (
 
   info->add_client_request_interceptor (interceptor.in ()
                                         ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 }

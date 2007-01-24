@@ -68,7 +68,6 @@ Demux_Test_Client::init (int argc, char *argv []
       ACE_RE_THROW_EX (GET_ORB);
     }
   ACE_ENDTRY;
-  ACE_CHECK_RETURN (-1);
 
   // now parse the rest of the arguments to determine the POA depth, the number
   // of objects with each POA and other info
@@ -130,7 +129,6 @@ Demux_Test_Client::init (int argc, char *argv []
             ACE_RE_THROW_EX (IOR);
           }
         ACE_ENDTRY;
-        ACE_CHECK_RETURN (-1);
       } // j and i loop
 
   ACE_OS::fclose (this->ior_fp_);
@@ -255,7 +253,7 @@ Demux_Test_Client::parse_args (void)
 
 // The main program for Demux_Test
 int
-Demux_Test_Client::run (ACE_ENV_SINGLE_ARG_DECL)
+Demux_Test_Client::run (void)
 {
   // open a temporary results file
   if ((this->result_fp_ = ACE_OS::fopen ("results.dat", "w")) == 0)
@@ -270,19 +268,19 @@ Demux_Test_Client::run (ACE_ENV_SINGLE_ARG_DECL)
       switch (this->is_)
         {
         case Demux_Test_Client::LINEAR:
-          (void) this->run_linear_test (ACE_ENV_SINGLE_ARG_PARAMETER);
+          (void) this->run_linear_test ();
           ACE_TRY_CHECK_EX (RUN);
           break;
         case Demux_Test_Client::RANDOM:
-          (void) this->run_random_test (ACE_ENV_SINGLE_ARG_PARAMETER);
+          (void) this->run_random_test ();
           ACE_TRY_CHECK_EX (RUN);
           break;
         case Demux_Test_Client::BEST:
-          (void) this->run_best_test (ACE_ENV_SINGLE_ARG_PARAMETER);
+          (void) this->run_best_test ();
           ACE_TRY_CHECK_EX (RUN);
           break;
         case Demux_Test_Client::WORST:
-          (void) this->run_worst_test (ACE_ENV_SINGLE_ARG_PARAMETER);
+          (void) this->run_worst_test ();
           ACE_TRY_CHECK_EX (RUN);
           break;
         }
@@ -297,14 +295,13 @@ Demux_Test_Client::run (ACE_ENV_SINGLE_ARG_DECL)
       ACE_RE_THROW_EX (RUN);
     }
   ACE_ENDTRY;
-  ACE_CHECK_RETURN (-1);
 
   ACE_OS::fclose (this->result_fp_);
 
   ACE_TRY_EX (SHUTDOWN)
     {
       // call the shutdown method one the first object
-      this->demux_test_[0][0]->shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
+      this->demux_test_[0][0]->shutdown ();
       ACE_TRY_CHECK_EX (SHUTDOWN);
     }
   ACE_CATCHANY
@@ -317,7 +314,6 @@ Demux_Test_Client::run (ACE_ENV_SINGLE_ARG_DECL)
       ACE_RE_THROW_EX (SHUTDOWN) ;
     }
   ACE_ENDTRY;
-  ACE_CHECK_RETURN (-1);
 
       // now print the results
   if (this->print_results () == -1)
@@ -332,7 +328,7 @@ Demux_Test_Client::run (ACE_ENV_SINGLE_ARG_DECL)
 }
 
 int
-Demux_Test_Client::run_linear_test (ACE_ENV_SINGLE_ARG_DECL)
+Demux_Test_Client::run_linear_test (void)
 {
   CORBA::ULong j, k, l, m;
   ACE_hrtime_t start, end;
@@ -362,7 +358,7 @@ Demux_Test_Client::run_linear_test (ACE_ENV_SINGLE_ARG_DECL)
 }
 
 int
-Demux_Test_Client::run_random_test (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+Demux_Test_Client::run_random_test (void)
 {
   ACE_DEBUG ((LM_DEBUG,
               "ERROR : Random test\n"));
@@ -370,7 +366,7 @@ Demux_Test_Client::run_random_test (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
 }
 
 int
-Demux_Test_Client::run_best_test (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+Demux_Test_Client::run_best_test (void)
 {
   ACE_DEBUG ((LM_DEBUG,
               "ERROR : Best Test\n"));
@@ -378,7 +374,7 @@ Demux_Test_Client::run_best_test (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
 }
 
 int
-Demux_Test_Client::run_worst_test (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+Demux_Test_Client::run_worst_test (void)
 {
   ACE_DEBUG ((LM_DEBUG,
               "ERROR : Worst test\n"));

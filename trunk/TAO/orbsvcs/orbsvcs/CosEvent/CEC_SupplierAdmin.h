@@ -51,7 +51,7 @@ class TAO_CEC_EventChannel;
  * externally.
  * = TODO
  */
-class TAO_Event_Serv_Export TAO_CEC_SupplierAdmin 
+class TAO_Event_Serv_Export TAO_CEC_SupplierAdmin
   : public POA_CosEventChannelAdmin::SupplierAdmin
 {
 public:
@@ -85,18 +85,18 @@ public:
 
   /// The event channel is shutting down, inform all the consumers of
   /// this
-  virtual void shutdown (ACE_ENV_SINGLE_ARG_DECL_NOT_USED);
+  virtual void shutdown (void);
 
   // = The CosEventChannelAdmin::SupplierAdmin methods...
   virtual CosEventChannelAdmin::ProxyPushConsumer_ptr
-      obtain_push_consumer (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+      obtain_push_consumer (void)
           ACE_THROW_SPEC ((CORBA::SystemException));
   virtual CosEventChannelAdmin::ProxyPullConsumer_ptr
-      obtain_pull_consumer (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+      obtain_pull_consumer (void)
           ACE_THROW_SPEC ((CORBA::SystemException));
 
   // = The PortableServer::ServantBase methods
-  virtual PortableServer::POA_ptr _default_POA (ACE_ENV_SINGLE_ARG_DECL);
+  virtual PortableServer::POA_ptr _default_POA (void);
 
 private:
   /// The Event Channel we belong to
@@ -105,11 +105,11 @@ private:
   /// The push and pull aspects are implemented using these classes
   TAO_ESF_Proxy_Admin<TAO_CEC_EventChannel,
                       TAO_CEC_ProxyPushConsumer,
-                      CosEventChannelAdmin::ProxyPushConsumer> 
+                      CosEventChannelAdmin::ProxyPushConsumer>
     push_admin_;
   TAO_ESF_Proxy_Admin<TAO_CEC_EventChannel,
                       TAO_CEC_ProxyPullConsumer,
-                      CosEventChannelAdmin::ProxyPullConsumer> 
+                      CosEventChannelAdmin::ProxyPullConsumer>
     pull_admin_;
 
   /// Store the default POA.

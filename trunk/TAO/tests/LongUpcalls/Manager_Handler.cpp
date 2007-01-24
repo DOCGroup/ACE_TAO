@@ -14,7 +14,7 @@ Manager_Handler::Manager_Handler (Test::Manager_ptr manager,
 }
 
 void
-Manager_Handler::start_workers (ACE_ENV_SINGLE_ARG_DECL)
+Manager_Handler::start_workers (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_TRY
@@ -23,7 +23,6 @@ Manager_Handler::start_workers (ACE_ENV_SINGLE_ARG_DECL)
                                      CORBA::Long(1000),
                                      this->controller_.in ()
                                      ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
     }
   ACE_CATCHANY
     {
@@ -40,8 +39,7 @@ Manager_Handler::start_workers_excep (::Messaging::ExceptionHolder * holder
 {
   ACE_TRY
     {
-      holder->raise_exception (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      holder->raise_exception ();
     }
   ACE_CATCHANY
     {

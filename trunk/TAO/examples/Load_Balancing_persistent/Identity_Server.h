@@ -52,10 +52,10 @@ public:
   // Performs all the initializations necessary before going into the
   // ORB event loop.
 
-  int register_groups (ACE_ENV_SINGLE_ARG_DECL);
+  int register_groups (void);
 
 
-  int run (ACE_ENV_SINGLE_ARG_DECL);
+  int run (void);
   // Run the server.
 
 private:

@@ -25,7 +25,7 @@ FOO_ClientRequestInterceptor::name (
 }
 
 void
-FOO_ClientRequestInterceptor::destroy (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+FOO_ClientRequestInterceptor::destroy (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
 }
@@ -43,7 +43,6 @@ FOO_ClientRequestInterceptor::send_request (
   IOP::TaggedComponent_var component =
     ri->get_effective_component (FOO::COMPONENT_ID
                                  ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
   // The correct tagged component appears to exist.  Display the
   // contents of the component data, which should be a NULL terminated
@@ -72,7 +71,6 @@ FOO_ClientRequestInterceptor::send_request (
     this->codec_->decode_value (data,
                                 CORBA::_tc_string
                                 ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
   const char * name = 0;
 

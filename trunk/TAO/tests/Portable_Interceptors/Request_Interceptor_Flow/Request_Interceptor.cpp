@@ -22,7 +22,7 @@ Request_Interceptor::name (
 }
 
 void
-Request_Interceptor::destroy (ACE_ENV_SINGLE_ARG_DECL)
+Request_Interceptor::destroy (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
 

@@ -59,7 +59,6 @@ int main(int argc, ACE_TCHAR* argv[])
   ACE_TRY {
     CORBA::ORB_var orb = CORBA::ORB_init(argc, argv, ""
                                          ACE_ENV_ARG_PARAMETER);
-    ACE_TRY_CHECK;
 
     if (parse_args(argc, argv) == -1)
       return -1;
@@ -67,24 +66,19 @@ int main(int argc, ACE_TCHAR* argv[])
     CORBA::Object_var obj =
       orb->resolve_initial_references("RootPOA"
       ACE_ENV_ARG_PARAMETER);
-        ACE_TRY_CHECK;
 
     PortableServer::POA_var poa =
       PortableServer::POA::_narrow(obj.in()
                                    ACE_ENV_ARG_PARAMETER);
-    ACE_TRY_CHECK;
 
-    PortableServer::POAManager_var mgr = poa->the_POAManager(ACE_ENV_SINGLE_ARG_PARAMETER);
-    ACE_TRY_CHECK;
+    PortableServer::POAManager_var mgr = poa->the_POAManager();
 
-    mgr->activate(ACE_ENV_SINGLE_ARG_PARAMETER);
-    ACE_TRY_CHECK;
+    mgr->activate();
 
     EventChannelFactory_i servant("factory.cfg", orb.in());
 
     FT::GenericFactory_var event_channel_factory =
-      servant._this(ACE_ENV_SINGLE_ARG_PARAMETER);
-    ACE_TRY_CHECK;
+      servant._this();
 
     // register to the Event Service
 
@@ -92,12 +86,10 @@ int main(int argc, ACE_TCHAR* argv[])
       CORBA::Object_var namng_contex_object =
         orb->resolve_initial_references("NameService"
         ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       CosNaming::NamingContext_var naming_context =
         CosNaming::NamingContext::_narrow(namng_contex_object.in()
         ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       // register to naming service
       CosNaming::Name name(1);
@@ -108,7 +100,6 @@ int main(int argc, ACE_TCHAR* argv[])
 
       naming_context->bind(name, event_channel_factory.in()
         ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       ACE_DEBUG((LM_DEBUG, "Register to naming service with %s", id.c_str()));
       if (kind.length())
@@ -120,7 +111,6 @@ int main(int argc, ACE_TCHAR* argv[])
       // get the IOR of factory
       CORBA::String_var str = orb->object_to_string(event_channel_factory.in()
         ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       if (ACE_OS::strcmp(output.c_str(), "") != 0)
       {
@@ -137,9 +127,8 @@ int main(int argc, ACE_TCHAR* argv[])
       }
     }
 
-    ACE_TRY_CHECK;
 
-    orb->run(ACE_ENV_SINGLE_ARG_PARAMETER);
+    orb->run();
 
   }
   ACE_CATCHANY
@@ -149,7 +138,6 @@ int main(int argc, ACE_TCHAR* argv[])
   ACE_ENDTRY;
 
 
-  ACE_CHECK_RETURN(1);
 
   return 0;
 }

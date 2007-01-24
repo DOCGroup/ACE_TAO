@@ -54,7 +54,7 @@ public:
   PortableServer::POA_ptr poa (void);
 
   /// Destroy underlying POA.
-  void destroy (ACE_ENV_SINGLE_ARG_DECL);
+  void destroy (void);
 
   /// Activate Object, the POA will assign an ID and return its value.
   CORBA::Object_ptr activate (PortableServer::Servant servant,

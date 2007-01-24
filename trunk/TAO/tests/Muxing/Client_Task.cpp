@@ -33,7 +33,6 @@ Client_Task::svc (void)
       for (int i = 0; i != this->event_count_; ++i)
         {
           this->receiver_->receive_data (payload ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
         }
     }
   ACE_CATCHANY

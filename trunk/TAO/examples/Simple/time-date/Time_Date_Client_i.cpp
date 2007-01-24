@@ -46,7 +46,6 @@ Time_Date_Client_i::run (const char *name,
       // Get the time & date in binary format.
       client_->bin_date (l
                          ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       ACE_DEBUG ((LM_DEBUG,
                   "(%P|%t) Binary time_date = %d\n",
@@ -56,7 +55,6 @@ Time_Date_Client_i::run (const char *name,
       CORBA::String_var str_var;
       client_->str_date (str_var.out()
                          ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       ACE_DEBUG ((LM_DEBUG,
                   "(%P|%t) String time_date = %s\n",
@@ -77,7 +75,6 @@ Time_Date_Client_i::run (const char *name,
       return -1;
     }
   ACE_ENDTRY;
-  ACE_CHECK_RETURN (-1);
 
   return 0;
 }

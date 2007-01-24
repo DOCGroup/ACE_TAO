@@ -85,11 +85,10 @@ void TAO_FTEC_Group_Manager::create_group (
 
   GroupInfoPublisherBase* publisher = GroupInfoPublisher::instance();
   GroupInfoPublisherBase::Info_ptr info (
-    publisher->setup_info(impl_->info_list, 
+    publisher->setup_info(impl_->info_list,
                           impl_->my_position,
                           object_group_ref_version
                           ACE_ENV_ARG_PARAMETER));
-  ACE_CHECK;
 
   publisher->update_info(info);
 
@@ -109,7 +108,6 @@ void TAO_FTEC_Group_Manager::create_group (
   if (!CORBA::is_nil(successor.in())) {
     successor->create_group(info_list, object_group_ref_version
                             ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK;
   }
 }
 
@@ -146,11 +144,10 @@ void TAO_FTEC_Group_Manager::add_member (
 
   GroupInfoPublisherBase* publisher = GroupInfoPublisher::instance();
   GroupInfoPublisherBase::Info_ptr group_info (
-    publisher->setup_info(new_impl->info_list, 
+    publisher->setup_info(new_impl->info_list,
                           new_impl->my_position,
                           object_group_ref_version
                     ACE_ENV_ARG_PARAMETER));
-  ACE_CHECK;
 
   int last_one = (impl_->my_position == impl_->info_list.length()-1);
 
@@ -178,13 +175,11 @@ void TAO_FTEC_Group_Manager::add_member (
                               new_impl->my_position,
                               object_group_ref_version
                               ACE_ENV_ARG_PARAMETER));
-      ACE_CHECK;
       ACE_AUTO_PTR_RESET(group_info, group_info1.release(), GroupInfoPublisherBase::Info);
 
       last_one = true;
     }
     ACE_ENDTRY;
-    ACE_CHECK;
   }
 
   if (last_one)
@@ -240,11 +235,9 @@ void TAO_FTEC_Group_Manager::add_member (
 
     TAO_FTRTEC::Log(2, "Setting state\n");
     info.ior->set_state(s ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK;
     info.ior->create_group(new_impl->info_list,
                            object_group_ref_version
                            ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK;
     TAO_FTRTEC::Log(2, "After create_group\n");
   }
 
@@ -296,11 +289,10 @@ void TAO_FTEC_Group_Manager::remove_member (
   GroupInfoPublisherBase* publisher = GroupInfoPublisher::instance();
 
   GroupInfoPublisherBase::Info_ptr info (
-    publisher->setup_info(impl_->info_list, 
+    publisher->setup_info(impl_->info_list,
                           impl_->my_position,
                           object_group_ref_version
                           ACE_ENV_ARG_PARAMETER));
-  ACE_CHECK;
   publisher->update_info(info);
 
   FtRtecEventChannelAdmin::EventChannel_var successor =
@@ -312,7 +304,6 @@ void TAO_FTEC_Group_Manager::remove_member (
     successor->remove_member(crashed_location,
                              object_group_ref_version
                              ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
     }
     ACE_CATCHALL {
     }

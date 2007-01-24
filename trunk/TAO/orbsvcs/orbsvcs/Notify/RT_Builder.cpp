@@ -34,14 +34,12 @@ TAO_Notify_RT_Builder::apply_thread_pool_concurrency (TAO_Notify_Object& object
   ACE_NEW_THROW_EX (proxy_poa,
                     TAO_Notify_RT_POA_Helper (),
                     CORBA::NO_MEMORY ());
-  ACE_CHECK;
 
   ACE_Auto_Ptr<TAO_Notify_POA_Helper> auto_proxy_poa (proxy_poa);
 
   PortableServer::POA_var default_poa = TAO_Notify_PROPERTIES::instance ()->default_poa ();
 
   proxy_poa->init (default_poa.in (), tp_params ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
   // Give ownership of proxy_poa
   object.set_proxy_poa (auto_proxy_poa.release ());
@@ -57,14 +55,12 @@ TAO_Notify_RT_Builder::apply_lane_concurrency (TAO_Notify_Object& object
   ACE_NEW_THROW_EX (proxy_poa,
                     TAO_Notify_RT_POA_Helper (),
                     CORBA::NO_MEMORY ());
-  ACE_CHECK;
 
   ACE_Auto_Ptr<TAO_Notify_POA_Helper> auto_proxy_poa (proxy_poa);
 
   PortableServer::POA_var default_poa = TAO_Notify_PROPERTIES::instance ()->default_poa ();
 
   proxy_poa->init (default_poa.in (), tpl_params ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
   // Give ownership of proxy_poa
   object.set_proxy_poa (auto_proxy_poa.release ());

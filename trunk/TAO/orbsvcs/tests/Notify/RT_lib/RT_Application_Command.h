@@ -36,7 +36,7 @@ public:
   /// Destructor
   ~TAO_Notify_Tests_RT_Application_Command ();
 
-  virtual void handle_init (ACE_ENV_SINGLE_ARG_DECL);
+  virtual void handle_init (void);
 };
 
 #include /**/ "ace/post.h"

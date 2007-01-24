@@ -145,7 +145,6 @@ main (int argc, char *argv[])
 
       CORBA::ORB_var orb =
         CORBA::ORB_init (argc, argv, "" ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       if (parse_args (argc, argv) != 0)
         return 1;
@@ -154,12 +153,10 @@ main (int argc, char *argv[])
       CORBA::Object_var object =
         orb->resolve_initial_references ("PriorityMappingManager"
                                          ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       RTCORBA::PriorityMappingManager_var mapping_manager =
         RTCORBA::PriorityMappingManager::_narrow (object.in ()
                                               ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       if (CORBA::is_nil (mapping_manager.in ()))
         {
@@ -264,11 +261,9 @@ Client::svc (void)
 
       CORBA::Object_var object =
         orb_->string_to_object (ior ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       Test_var server =
         Test::_narrow (object.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       if (CORBA::is_nil (server.in ()))
         {
@@ -290,7 +285,6 @@ Client::svc (void)
 
           server->test_method (this->id_
                                ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
         }
 
       this->after_connection_->wait ();
@@ -305,7 +299,6 @@ Client::svc (void)
           // Invoke method.
           server->test_method (this->id_
                                ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
 
           // Grab timestamp again.
           ACE_hrtime_t now = ACE_OS::gethrtime ();
@@ -324,7 +317,7 @@ Client::svc (void)
       /* char orb_name[50];
       ACE_OS::sprintf (orb_name, "%d", priorities[this->id_]);
       server->shutdown (orb_name ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;*/
+/
     }
   ACE_CATCHANY
     {

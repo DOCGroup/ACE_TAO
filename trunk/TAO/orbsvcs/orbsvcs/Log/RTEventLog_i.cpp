@@ -54,15 +54,12 @@ TAO_RTEventLog_i::copy (DsLogAdmin::LogId &id ACE_ENV_ARG_DECL)
 {
   RTEventLogAdmin::EventLogFactory_var eventLogFactory =
     RTEventLogAdmin::EventLogFactory::_narrow (factory_.in () ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (DsLogAdmin::Log::_nil ());
 
   RTEventLogAdmin::EventLog_var log =
     eventLogFactory->create (DsLogAdmin::halt, 0, thresholds_,
                              id ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (DsLogAdmin::Log::_nil ());
 
   copy_attributes (log.in () ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (DsLogAdmin::Log::_nil ());
 
   return log._retn ();
 }
@@ -73,58 +70,50 @@ TAO_RTEventLog_i::copy_with_id (DsLogAdmin::LogId id ACE_ENV_ARG_DECL)
 {
   RTEventLogAdmin::EventLogFactory_var eventLogFactory =
     RTEventLogAdmin::EventLogFactory::_narrow (factory_.in () ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (DsLogAdmin::Log::_nil ());
 
   RTEventLogAdmin::EventLog_var log =
     eventLogFactory->create_with_id (id, DsLogAdmin::halt, 0,
                                      thresholds_ ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (DsLogAdmin::Log::_nil ());
 
   copy_attributes (log.in () ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (DsLogAdmin::Log::_nil ());
 
   return log._retn ();
 }
 
 void
-TAO_RTEventLog_i::destroy (ACE_ENV_SINGLE_ARG_DECL)
+TAO_RTEventLog_i::destroy (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   notifier_->object_deletion (logid_ ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
   // Remove ourselves from the list of logs.
   this->logmgr_i_.remove (this->logid_
-			  ACE_ENV_ARG_PARAMETER); 
-  ACE_CHECK;
+			  ACE_ENV_ARG_PARAMETER);
 
   // Deregister with POA.
   PortableServer::ObjectId_var id =
     this->log_poa_->servant_to_id (this
                                    ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
   this->log_poa_->deactivate_object (id.in ()
                                      ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 }
 
 void
-TAO_RTEventLog_i::activate (ACE_ENV_SINGLE_ARG_DECL)
+TAO_RTEventLog_i::activate (void)
 {
   RtecEventChannelAdmin::ConsumerAdmin_var consumer_admin =
-    this->event_channel_->for_consumers (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+    this->event_channel_->for_consumers ();
 
   this->my_log_consumer_ = new TAO_Rtec_LogConsumer (this);
   this->my_log_consumer_->connect (consumer_admin.in ());
 }
 
 RtecEventChannelAdmin::ConsumerAdmin_ptr
-TAO_RTEventLog_i::for_consumers (ACE_ENV_SINGLE_ARG_DECL)
+TAO_RTEventLog_i::for_consumers (void)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  return this->event_channel_->for_consumers(ACE_ENV_SINGLE_ARG_PARAMETER);
+  return this->event_channel_->for_consumers();
 }
 
 RtecEventChannelAdmin::SupplierAdmin_ptr
@@ -135,7 +124,7 @@ TAO_RTEventLog_i::for_suppliers (
       CORBA::SystemException
     ))
 {
-  return this->event_channel_->for_suppliers(ACE_ENV_SINGLE_ARG_PARAMETER);
+  return this->event_channel_->for_suppliers();
 }
 
 RtecEventChannelAdmin::Observer_Handle

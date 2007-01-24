@@ -122,7 +122,7 @@ typedef ACE_Hash_Map_Manager_Ex_Adapter<
 
     virtual ~RTCosScheduling_ServerScheduler_Interceptor();
 
-    virtual char* name(ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+    virtual char* name(void)
     ACE_THROW_SPEC((
       CORBA::SystemException));
 

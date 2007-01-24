@@ -26,15 +26,14 @@ TAO_CosEC_SupplierAdmin_i::init (const RtecEventChannelAdmin::SupplierQOS &suppl
 }
 
 CosEventChannelAdmin::ProxyPushConsumer_ptr
-TAO_CosEC_SupplierAdmin_i::obtain_push_consumer (ACE_ENV_SINGLE_ARG_DECL)
+TAO_CosEC_SupplierAdmin_i::obtain_push_consumer (void)
       ACE_THROW_SPEC ((CORBA::SystemException))
 {
   CosEventChannelAdmin::ProxyPushConsumer_ptr proxyconsumer_nil =
     CosEventChannelAdmin::ProxyPushConsumer::_nil ();
 
   RtecEventChannelAdmin::ProxyPushConsumer_var rtecproxypushconsumer =
-    this->rtec_supplieradmin_->obtain_push_consumer (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (proxyconsumer_nil);
+    this->rtec_supplieradmin_->obtain_push_consumer ();
 
   TAO_CosEC_ProxyPushConsumer_i *proxypushconsumer;
 
@@ -46,19 +45,17 @@ TAO_CosEC_SupplierAdmin_i::obtain_push_consumer (ACE_ENV_SINGLE_ARG_DECL)
     auto_proxyconsumer (proxypushconsumer);
 
   CosEventChannelAdmin::ProxyPushConsumer_ptr proxy_obj =
-    auto_proxyconsumer.get ()->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (proxyconsumer_nil);
+    auto_proxyconsumer.get ()->_this ();
 
    // give the ownership to the POA.
-  auto_proxyconsumer.get ()->_remove_ref (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (proxyconsumer_nil);
+  auto_proxyconsumer.get ()->_remove_ref ();
 
   auto_proxyconsumer.release ();
   return proxy_obj;
 }
 
 CosEventChannelAdmin::ProxyPullConsumer_ptr
-TAO_CosEC_SupplierAdmin_i::obtain_pull_consumer (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+TAO_CosEC_SupplierAdmin_i::obtain_pull_consumer (void)
       ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // TODO: implement this.

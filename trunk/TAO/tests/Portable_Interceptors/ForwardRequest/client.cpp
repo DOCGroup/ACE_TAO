@@ -67,14 +67,12 @@ main (int argc, char *argv[])
 
       PortableInterceptor::register_orb_initializer (orb_initializer.in ()
                                                      ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 #endif  /* TAO_HAS_INTERCEPTORS == 1 */
 
       CORBA::ORB_var orb = CORBA::ORB_init (argc,
                                             argv,
                                             "Client ORB"
                                             ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       if (::parse_args (argc, argv) != 0)
         return -1;
@@ -84,11 +82,9 @@ main (int argc, char *argv[])
       // this test.
       CORBA::Object_var object =
         orb->string_to_object (ior1 ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       ForwardRequestTest::test_var server =
         ForwardRequestTest::test::_narrow (object.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       if (CORBA::is_nil (server.in ()))
         {
@@ -114,9 +110,8 @@ main (int argc, char *argv[])
           if (i > 1)
             old_number = number;
 
-          number = server->number (ACE_ENV_SINGLE_ARG_PARAMETER);
+          number = server->number ();
 
-          ACE_TRY_CHECK;
 
           ACE_DEBUG ((LM_INFO,
                       "CLIENT: Request %d handled by object %d.\n",
@@ -143,8 +138,7 @@ main (int argc, char *argv[])
             }
         }
 
-      server->shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      server->shutdown ();
     }
   ACE_CATCHANY
     {

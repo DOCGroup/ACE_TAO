@@ -126,7 +126,7 @@ private:
 
   /// Initiatlizes the lock set array and acquires the initial
   /// semaphore.
-  void Init (ACE_ENV_SINGLE_ARG_DECL);
+  void Init (void);
 
   /// Returns true if the held lock and the requested lock are compatible
   CORBA::Boolean compatible (CC_LockModeEnum mr);

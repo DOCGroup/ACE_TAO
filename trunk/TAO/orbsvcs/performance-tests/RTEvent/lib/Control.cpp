@@ -18,8 +18,8 @@
 #include "ace/Basic_Stats.h"
 #include "ace/Auto_Ptr.h"
 
-ACE_RCSID (TAO_RTEC_Perf, 
-           Control, 
+ACE_RCSID (TAO_RTEC_Perf,
+           Control,
            "$Id$")
 
 Control::Control (size_t peers_expected,
@@ -86,7 +86,6 @@ Control::join (Federated_Test::Peer_ptr peer
             {
               this->peers_[j]->connect (this->peers_[i].in ()
                                         ACE_ENV_ARG_PARAMETER);
-              ACE_CHECK;
             }
         }
     }
@@ -122,7 +121,6 @@ Control::join (Federated_Test::Peer_ptr peer
                 this->peers_[j]->setup_loopback (experiment_id,
                                                  base_event_type
                                                  ACE_ENV_ARG_PARAMETER);
-              ACE_CHECK;
 
               ACE_AUTO_PTR_RESET (disconnects[lcount],
                                   new Loopback_Disconnect (
@@ -135,7 +133,6 @@ Control::join (Federated_Test::Peer_ptr peer
                 this->peers_[j]->setup_loopback (experiment_id,
                                                  base_event_type + 2
                                                  ACE_ENV_ARG_PARAMETER);
-              ACE_CHECK;
 
               ACE_AUTO_PTR_RESET (disconnects[lcount],
                                   new Loopback_Disconnect (
@@ -150,7 +147,6 @@ Control::join (Federated_Test::Peer_ptr peer
         this->peers_[i]->run_experiment (experiment_id,
                                          this->iterations_
                                          ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
 
       ACE_Sample_History history (results->length ());
       for (CORBA::ULong k = 0; k != results->length (); ++k)
@@ -172,7 +168,7 @@ Control::join (Federated_Test::Peer_ptr peer
 }
 
 PortableServer::POA_ptr
-Control::_default_POA (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+Control::_default_POA (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return PortableServer::POA::_duplicate (this->poa_.in ());

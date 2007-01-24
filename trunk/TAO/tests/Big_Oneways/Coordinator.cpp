@@ -45,12 +45,11 @@ Coordinator::create_session_list (Test::Session_Control_ptr session_control,
                               message_count,
                               this->peer_count_
                               ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
     }
 }
 
 void
-Coordinator::shutdown_all_peers (ACE_ENV_SINGLE_ARG_DECL)
+Coordinator::shutdown_all_peers (void)
 {
   for (Test::Peer_var *i = this->peers_;
        i != this->peers_ + this->peer_count_;
@@ -58,8 +57,7 @@ Coordinator::shutdown_all_peers (ACE_ENV_SINGLE_ARG_DECL)
     {
       ACE_TRY
         {
-          (*i)->shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+          (*i)->shutdown ();
         }
       ACE_CATCHANY
         {

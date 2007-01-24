@@ -3,8 +3,8 @@
 #include "orbsvcs/IFRService/Repository_i.h"
 #include "orbsvcs/IFRService/EventDef_i.h"
 
-ACE_RCSID (IFRService, 
-           EventDef_i, 
+ACE_RCSID (IFRService,
+           EventDef_i,
            "$Id$")
 
 
@@ -25,49 +25,47 @@ TAO_EventDef_i::~TAO_EventDef_i (void)
 }
 
 CORBA::DefinitionKind
-TAO_EventDef_i::def_kind (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+TAO_EventDef_i::def_kind (void)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return CORBA::dk_Event;
 }
 
 void
-TAO_EventDef_i::destroy (ACE_ENV_SINGLE_ARG_DECL)
+TAO_EventDef_i::destroy (void)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_IFR_WRITE_GUARD;
 
-  this->update_key (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+  this->update_key ();
 
-  this->destroy_i (ACE_ENV_SINGLE_ARG_PARAMETER);
+  this->destroy_i ();
 }
 
 void
-TAO_EventDef_i::destroy_i (ACE_ENV_SINGLE_ARG_DECL)
+TAO_EventDef_i::destroy_i (void)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // An event type is a restriction of a value type, not an extension.
-  this->TAO_ExtValueDef_i::destroy_i (ACE_ENV_SINGLE_ARG_PARAMETER);
+  this->TAO_ExtValueDef_i::destroy_i ();
 }
 
 CORBA::Contained::Description *
-TAO_EventDef_i::describe (ACE_ENV_SINGLE_ARG_DECL)
+TAO_EventDef_i::describe (void)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_IFR_READ_GUARD_RETURN (0);
 
-  this->update_key (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (0);
+  this->update_key ();
 
-  return this->describe_i (ACE_ENV_SINGLE_ARG_PARAMETER);
+  return this->describe_i ();
 }
 
 CORBA::Contained::Description *
-TAO_EventDef_i::describe_i (ACE_ENV_SINGLE_ARG_DECL)
+TAO_EventDef_i::describe_i (void)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  return this->TAO_ValueDef_i::describe_i (ACE_ENV_SINGLE_ARG_PARAMETER);
+  return this->TAO_ValueDef_i::describe_i ();
 }
 
 CORBA::Boolean
@@ -77,8 +75,7 @@ TAO_EventDef_i::is_a (const char *event_id
 {
   TAO_IFR_READ_GUARD_RETURN (0);
 
-  this->update_key (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (0);
+  this->update_key ();
 
   return this->is_a_i (event_id
                        ACE_ENV_ARG_PARAMETER);

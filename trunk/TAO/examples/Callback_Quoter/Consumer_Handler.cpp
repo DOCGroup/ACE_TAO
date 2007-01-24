@@ -178,7 +178,6 @@ Consumer_Handler::via_naming_service (void)
       CORBA::Object_var notifier_obj =
         this->naming_services_client_->resolve (notifier_ref_name
                                                 ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       // The CORBA::Object_var object is downcast to Notifier_var using
       // the <_narrow> method.
@@ -186,7 +185,6 @@ Consumer_Handler::via_naming_service (void)
         Notifier::_narrow (notifier_obj.in ()
                            ACE_ENV_ARG_PARAMETER);
 
-      ACE_TRY_CHECK;
 
     }
   ACE_CATCHANY
@@ -195,7 +193,6 @@ Consumer_Handler::via_naming_service (void)
       return -1;
     }
   ACE_ENDTRY;
-  ACE_CHECK_RETURN (-1);
 
   return 0;
 }
@@ -219,7 +216,6 @@ Consumer_Handler::init (int argc, char **argv)
                                     this->argv_,
                                     0
                                     ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
 
       // Parse command line and verify parameters.
@@ -282,7 +278,6 @@ Consumer_Handler::init (int argc, char **argv)
           CORBA::Object_var server_object =
             this->orb_->string_to_object (this->ior_
                                           ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
 
           if (CORBA::is_nil (server_object.in ()))
             ACE_ERROR_RETURN ((LM_ERROR,
@@ -293,7 +288,6 @@ Consumer_Handler::init (int argc, char **argv)
           // done using the <_narrow> method.
           this->server_ = Notifier::_narrow (server_object.in ()
                                              ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
         }
 
     }
@@ -303,7 +297,6 @@ Consumer_Handler::init (int argc, char **argv)
       return -1;
     }
   ACE_ENDTRY;
-  ACE_CHECK_RETURN (-1);
 
   return 0;
 }
@@ -318,18 +311,14 @@ Consumer_Handler::run (void)
       // Obtain and activate the RootPOA.
      CORBA::Object_var obj =
             this->orb_->resolve_initial_references ("RootPOA" ACE_ENV_ARG_PARAMETER);
-     ACE_TRY_CHECK;
 
      PortableServer::POA_var root_poa =
         PortableServer::POA::_narrow (obj.in () ACE_ENV_ARG_PARAMETER);
-     ACE_TRY_CHECK;
 
      PortableServer::POAManager_var poa_manager=
-       root_poa->the_POAManager (ACE_ENV_SINGLE_ARG_PARAMETER);
-     ACE_TRY_CHECK;
+       root_poa->the_POAManager ();
 
-     poa_manager->activate (ACE_ENV_SINGLE_ARG_PARAMETER);
-     ACE_TRY_CHECK;
+     poa_manager->activate ();
 
      ACE_NEW_RETURN (this->consumer_servant_,
                      Consumer_i (),
@@ -339,8 +328,7 @@ Consumer_Handler::run (void)
 
      // Get the consumer stub (i.e consumer object) pointer.
      this->consumer_var_ =
-       this->consumer_servant_->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+       this->consumer_servant_->_this ();
 
       if (this->interactive_ == 0)
         {
@@ -350,7 +338,6 @@ Consumer_Handler::run (void)
                                             this->threshold_value_,
                                             this->consumer_var_.in ()
                                             ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
 
           // Note the registration.
           this->registered_ = 1;
@@ -361,8 +348,7 @@ Consumer_Handler::run (void)
         }
 
       // Run the ORB.
-      this->orb_->run (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      this->orb_->run ();
 
     }
   ACE_CATCHANY

@@ -40,7 +40,7 @@ public:
   virtual ~StubFaultConsumer ();
 
 
-  ::PortableServer::POA_ptr _default_POA (ACE_ENV_SINGLE_ARG_DECL);
+  ::PortableServer::POA_ptr _default_POA (void);
   ::PortableServer::ObjectId objectId()const;
 
   /**
@@ -69,7 +69,7 @@ public:
   /**
    * Clean house for process shut down.
    */
-  int fini (ACE_ENV_SINGLE_ARG_DECL);
+  int fini (void);
 
 
   size_t notifications() const;
@@ -91,7 +91,7 @@ public:
       )
       ACE_THROW_SPEC ((CORBA::SystemException, CosNotifyComm::InvalidEventType));
 
-   virtual void disconnect_structured_push_consumer(ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+   virtual void disconnect_structured_push_consumer(void)
       ACE_THROW_SPEC ((CORBA::SystemException));
 
   ////////////////////

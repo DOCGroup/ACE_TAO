@@ -114,7 +114,6 @@ main (int argc, char **argv)
                                             argv,
 
                                             0 ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       // Parse the command-line arguments to get the location of the
       // IOR
@@ -137,7 +136,6 @@ main (int argc, char **argv)
       // Get the object reference with the IOR
       CORBA::Object_var object = orb->string_to_object (IOR
                                                         ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       ACE_OS::strcpy (str,
                       "Database::Agent::_narrow");
@@ -146,7 +144,6 @@ main (int argc, char **argv)
       Database::Agent_var database_agent =
         Database::Agent::_narrow (object.in ()
                                   ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       Database::NVPairSequence employee_attributes (2);
       employee_attributes.length (2);
@@ -173,14 +170,12 @@ main (int argc, char **argv)
                                       "Employee",
                                       employee_attributes
                                       ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       ACE_OS::strcpy (str, "Database::Employee::_narrow");
 
       Database::Employee_var employee =
         Database::Employee::_narrow (entry.in ()
                                      ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       /*
        *
@@ -193,7 +188,6 @@ main (int argc, char **argv)
       // Reset the id
       ACE_OS::strcpy (str, "Database::Employee::id");
       employee->id (666 ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 #endif /* 0 */
 
       ACE_OS::strcpy (str, "Database::Entry::find");
@@ -201,21 +195,18 @@ main (int argc, char **argv)
       entry = database_agent->find_entry ("irfan",
                                           "Employee"
                                           ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       ACE_OS::strcpy (str, "Database::Entry::destroy");
       // Destroy the employee
       database_agent->destroy_entry ("irfan",
                                      "Employee"
                                      ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       ACE_OS::strcpy (str, "Shutdown server");
 
       if (shutdown_server)
         {
-          database_agent->shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+          database_agent->shutdown ();
         }
 
       ACE_OS::free (IOR);
@@ -227,7 +218,6 @@ main (int argc, char **argv)
       return -1;
     }
   ACE_ENDTRY;
-  ACE_CHECK_RETURN (-1);
 
   return 0;
 }

@@ -34,18 +34,18 @@ public:
   // = Initialization and termination methods.
   RTEvent_Logging_Service (void);
   // Constructor.
-  
+
   virtual ~RTEvent_Logging_Service (void);
   // Destructor.
 
   int init (int argc, char* argv[]);
   // Initializes the Telecom Log Service.
 
-  int run (ACE_ENV_SINGLE_ARG_DECL);
+  int run (void);
     // Run the Telecom Log Service.
   // Returns 0 on success, -1 on error.
 
-  void shutdown (ACE_ENV_SINGLE_ARG_DECL);
+  void shutdown (void);
   // Shutdown the Telecom Log Service.
   // Returns 0 on success, -1 on error.
 
@@ -57,7 +57,7 @@ protected:
   int parse_args (int argc, char* argv[]);
   // parse the command line args
 
-  void resolve_naming_service (ACE_ENV_SINGLE_ARG_DECL);
+  void resolve_naming_service (void);
   // Resolve the naming service.
 
   int svc ();
@@ -88,7 +88,7 @@ private:
 
   bool bind_to_naming_service_;
   // If true, bind to naming service
-	
+
   int nthreads_;
   // Number of worker threads.
 };

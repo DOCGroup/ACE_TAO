@@ -65,7 +65,7 @@ Roundtrip::test_short_method (const Test::short_load &,
 }
 
 void
-Roundtrip::shutdown (ACE_ENV_SINGLE_ARG_DECL)
+Roundtrip::shutdown (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->orb_->shutdown (0 ACE_ENV_ARG_PARAMETER);

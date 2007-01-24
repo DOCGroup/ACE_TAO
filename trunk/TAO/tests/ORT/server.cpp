@@ -54,14 +54,12 @@ int main (int argc, char *argv[])
 
       PortableInterceptor::register_orb_initializer (orb_initializer.in ()
                                                      ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       // Initialize the ORB.
       CORBA::ORB_var orb = CORBA::ORB_init (argc,
                                             argv,
                                             "ORT Test ORB"
                                             ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       if (parse_args (argc, argv) != 0)
         return -1;
@@ -69,13 +67,11 @@ int main (int argc, char *argv[])
       CORBA::Object_var obj =
         orb->resolve_initial_references ("RootPOA"
                                          ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       // Narrow
       PortableServer::POA_var root_poa =
         PortableServer::POA::_narrow (obj.in ()
                                       ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       // Check for nil references
       if (CORBA::is_nil (root_poa.in ()))
@@ -85,12 +81,10 @@ int main (int argc, char *argv[])
 
       // Get poa_manager reference
       PortableServer::POAManager_var poa_manager =
-        root_poa->the_POAManager (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        root_poa->the_POAManager ();
 
       // Activate it.
-      poa_manager->activate (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      poa_manager->activate ();
 
       CORBA::PolicyList policies (0);
       policies.length (0);
@@ -101,45 +95,38 @@ int main (int argc, char *argv[])
                               poa_manager.in (),
                               policies
                               ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       PortableServer::POA_var second_poa =
         first_poa->create_POA ("SECOND_POA",
                                poa_manager.in (),
                                policies
                                ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       PortableServer::POA_var third_poa =
         second_poa->create_POA ("THIRD_POA",
                                 poa_manager.in (),
                                 policies
                                 ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       PortableServer::POA_var fourth_poa =
         third_poa->create_POA ("FOURTH_POA",
                                poa_manager.in (),
                                policies
                                ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       ORT_test_i ort_test_impl (orb.in ());
 
       PortableServer::ObjectId_var oid =
         fourth_poa->activate_object (&ort_test_impl
                                      ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       obj = fourth_poa->servant_to_reference (&ort_test_impl
                                               ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       // Convert the object reference to a string format.
       CORBA::String_var ior =
         orb->object_to_string (obj.in ()
                                ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       // Dump it to a file.
       if (ior_output_file != 0)
@@ -155,11 +142,9 @@ int main (int argc, char *argv[])
           ACE_OS::fclose (output_file);
         }
 
-      orb->run (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      orb->run ();
 
-      orb->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      orb->destroy ();
     }
   ACE_CATCHANY
     {

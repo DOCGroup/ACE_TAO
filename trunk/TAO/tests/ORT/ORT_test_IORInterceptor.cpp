@@ -15,14 +15,14 @@ ORT_test_IORInterceptor::ORT_test_IORInterceptor (void)
 }
 
 char *
-ORT_test_IORInterceptor::name (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+ORT_test_IORInterceptor::name (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return CORBA::string_dup ("ORT_IORInterceptor");
 }
 
 void
-ORT_test_IORInterceptor::destroy (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+ORT_test_IORInterceptor::destroy (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_ASSERT (this->establish_count_ > 0
@@ -60,8 +60,7 @@ ORT_test_IORInterceptor::components_established (
 
   // Save a copy of the current ObjectReferenceFactory.
   PortableInterceptor::ObjectReferenceFactory_var old_orf =
-    info->current_factory (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+    info->current_factory ();
 
   PortableInterceptor::ObjectReferenceFactory * tmp;
   ACE_NEW_THROW_EX (tmp,
@@ -71,13 +70,11 @@ ORT_test_IORInterceptor::components_established (
                         TAO::VMCID,
                         ENOMEM),
                       CORBA::COMPLETED_NO));
-  ACE_CHECK;
 
   PortableInterceptor::ObjectReferenceFactory_var orf = tmp;
 
   info->current_factory (orf.in ()
                          ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 }
 
 void

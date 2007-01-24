@@ -101,7 +101,7 @@ public:
                              ACE_ENV_ARG_DECL) = 0;
 
   /// The event channel is shutting down.
-  virtual void shutdown (ACE_ENV_SINGLE_ARG_DECL) = 0;
+  virtual void shutdown (void) = 0;
 
   /// The ProxyPushConsumer delegates on this class to actually send
   /// the event.

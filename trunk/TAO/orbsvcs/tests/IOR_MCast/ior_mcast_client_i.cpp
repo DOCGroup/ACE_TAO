@@ -27,11 +27,9 @@ ior_mcast_Client_i::init (int& argc,
                          argv,
                          "" /* the ORB name, it can be anything! */
                          ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       CORBA::Object_var mcast_server_object =
         orb->resolve_initial_references ("MCASTServer" ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       if (CORBA::is_nil (mcast_server_object.in ()))
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -40,7 +38,6 @@ ior_mcast_Client_i::init (int& argc,
 
       MCast::Server_var mcast_srvr =
         MCast::Server::_narrow (mcast_server_object.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       if (CORBA::is_nil (mcast_srvr.in ()))
           ACE_ERROR_RETURN ((LM_ERROR,
@@ -49,8 +46,7 @@ ior_mcast_Client_i::init (int& argc,
 
       // Invoke a request on the server
       CORBA::Boolean ret_value =
-        mcast_srvr->connect_server (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        mcast_srvr->connect_server ();
 
       if (ret_value != 0)
         {
@@ -74,7 +70,6 @@ ior_mcast_Client_i::init (int& argc,
       ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "client");
     }
   ACE_ENDTRY;
-  ACE_CHECK_RETURN (-1);
 
   return 0;
 }

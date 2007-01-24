@@ -74,18 +74,18 @@ namespace TAO
        * interface.
        */
       //@{
-      virtual char * creds_id (ACE_ENV_SINGLE_ARG_DECL)
+      virtual char * creds_id (void)
         ACE_THROW_SPEC ((CORBA::SystemException));
 
       virtual
-      SecurityLevel3::CredentialsType creds_type (ACE_ENV_SINGLE_ARG_DECL)
+      SecurityLevel3::CredentialsType creds_type (void)
         ACE_THROW_SPEC ((CORBA::SystemException)) = 0;
 
       virtual SecurityLevel3::CredentialsUsage creds_usage (
           ACE_ENV_SINGLE_ARG_DECL)
         ACE_THROW_SPEC ((CORBA::SystemException));
 
-      virtual TimeBase::UtcT expiry_time (ACE_ENV_SINGLE_ARG_DECL)
+      virtual TimeBase::UtcT expiry_time (void)
         ACE_THROW_SPEC ((CORBA::SystemException));
 
       virtual SecurityLevel3::CredentialsState creds_state (

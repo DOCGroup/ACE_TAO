@@ -22,7 +22,7 @@ public:
                     ACE_ENV_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  void shutdown (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+  void shutdown (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
 private:
@@ -45,18 +45,15 @@ Test_i::test_method (CORBA::Short priority
 
   CORBA::Object_var obj =
     this->orb_->resolve_initial_references ("RTCurrent" ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
   RTCORBA::Current_var current =
     RTCORBA::Current::_narrow (obj.in () ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
   if (CORBA::is_nil (obj.in ()))
     ACE_THROW (CORBA::INTERNAL ());
 
   CORBA::Short servant_thread_priority =
-    current->the_priority (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+    current->the_priority ();
 
   // Print out the info.
   if (servant_thread_priority != priority)
@@ -71,7 +68,7 @@ Test_i::test_method (CORBA::Short priority
 }
 
 void
-Test_i::shutdown (ACE_ENV_SINGLE_ARG_DECL)
+Test_i::shutdown (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->orb_->shutdown (0 ACE_ENV_ARG_PARAMETER);
@@ -135,11 +132,9 @@ Task::svc (void)
     {
       CORBA::Object_var object =
         this->orb_->resolve_initial_references("RootPOA" ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       PortableServer::POA_var root_poa =
         PortableServer::POA::_narrow (object.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       if (CORBA::is_nil (root_poa.in ()))
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -147,21 +142,16 @@ Task::svc (void)
                           -1);
 
       PortableServer::POAManager_var poa_manager =
-        root_poa->the_POAManager (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        root_poa->the_POAManager ();
 
       object = this->orb_->resolve_initial_references ("RTORB" ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
       RTCORBA::RTORB_var rt_orb = RTCORBA::RTORB::_narrow (object.in ()
                                                            ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       object =
         this->orb_->resolve_initial_references ("RTCurrent" ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
       RTCORBA::Current_var current =
         RTCORBA::Current::_narrow (object.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       // Create POA with CLIENT_PROPAGATED PriorityModelPolicy,
       // and register Test object with it.
@@ -171,30 +161,25 @@ Task::svc (void)
         rt_orb->create_priority_model_policy (RTCORBA::CLIENT_PROPAGATED,
                                               0
                                               ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       PortableServer::POA_var child_poa =
         root_poa->create_POA ("Child_POA",
                               poa_manager.in (),
                               poa_policy_list
                               ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       Test_i server_impl (this->orb_.in ());
 
       PortableServer::ObjectId_var id =
         child_poa->activate_object (&server_impl ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       CORBA::Object_var server =
         child_poa->id_to_reference (id.in ()
                                     ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       // Print Object IOR.
       CORBA::String_var ior =
         this->orb_->object_to_string (server.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       ACE_DEBUG ((LM_DEBUG, "Activated as <%s>\n\n", ior.in ()));
 
@@ -212,22 +197,18 @@ Task::svc (void)
 
       // Get the initial priority of the current thread.
       CORBA::Short initial_thread_priority =
-        current->the_priority (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        current->the_priority ();
 
       // Run ORB Event loop.
-      poa_manager->activate (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      poa_manager->activate ();
 
-      this->orb_->run (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      this->orb_->run ();
 
       ACE_DEBUG ((LM_DEBUG, "Server ORB event loop finished\n"));
 
       // Get the final priority of the current thread.
       CORBA::Short final_thread_priority =
-        current->the_priority (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        current->the_priority ();
 
       if (final_thread_priority != initial_thread_priority)
         ACE_DEBUG ((LM_DEBUG,
@@ -262,7 +243,6 @@ main (int argc, char *argv[])
       // RootPOA, RTORB, RTCurrent, POAManager).
       CORBA::ORB_var orb =
         CORBA::ORB_init (argc, argv, "" ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       if (parse_args (argc, argv) != 0)
         return -1;

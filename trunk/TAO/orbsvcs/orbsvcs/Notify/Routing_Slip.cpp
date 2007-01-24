@@ -57,7 +57,6 @@ Routing_Slip::create (const TAO_Notify_Event::Ptr& event ACE_ENV_ARG_DECL)
 {
   Routing_Slip * prs;
   ACE_NEW_THROW_EX (prs, Routing_Slip (event), CORBA::NO_MEMORY ());
-  ACE_CHECK_RETURN (Routing_Slip_Ptr());
   Routing_Slip_Ptr result(prs);
   result->this_ptr_ = result; // let the pointers touch so they use the same ref count
 
@@ -122,7 +121,6 @@ Routing_Slip::create (
         if (event.isSet())
         {
           result = create (event ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
           TAO_InputCDR cdr_rs (rs_mb);
           if ( result->unmarshal (ecf, cdr_rs))
           {
@@ -365,7 +363,6 @@ Routing_Slip::dispatch (
                     static_cast<int> (request_id),
                     ps->id()));
       ps->execute_task (method ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
     }
   else
     {
@@ -855,7 +852,6 @@ Routing_Slip::unmarshal (TAO_Notify_EventChannelFactory &ecf, TAO_InputCDR & cdr
             prequest,
             Delivery_Request(this_ptr_, this->delivery_requests_.size ()),
             CORBA::NO_MEMORY ());
-          ACE_TRY_CHECK;
           Delivery_Request_Ptr request(prequest);
           TAO_Notify_Method_Request_Dispatch_Queueable * method =
             TAO_Notify_Method_Request_Dispatch::unmarshal (
@@ -863,7 +859,6 @@ Routing_Slip::unmarshal (TAO_Notify_EventChannelFactory &ecf, TAO_InputCDR & cdr
               ecf,
               cdr
               ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
           if (method != 0)
           {
             this->delivery_requests_.push_back (request);
@@ -899,7 +894,7 @@ Routing_Slip::unmarshal (TAO_Notify_EventChannelFactory &ecf, TAO_InputCDR & cdr
 }
 
 void
-Routing_Slip::reconnect (ACE_ENV_SINGLE_ARG_DECL)
+Routing_Slip::reconnect (void)
 {
   Routing_Slip_Guard guard (this->internals_);
   enter_state_saved (guard);
@@ -908,8 +903,7 @@ Routing_Slip::reconnect (ACE_ENV_SINGLE_ARG_DECL)
   size_t count = this->delivery_methods_.size ();
   for (size_t nmethod = 0; nmethod < count; ++nmethod)
   {
-    this->delivery_methods_[nmethod]->execute (ACE_ENV_SINGLE_ARG_PARAMETER);
-    ACE_CHECK;
+    this->delivery_methods_[nmethod]->execute ();
   }
   this->delivery_methods_.clear ();
 }

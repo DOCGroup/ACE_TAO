@@ -20,7 +20,7 @@ Test_i::invoke_me (ACE_ENV_SINGLE_ARG_DECL_NOT_USED /* ACE_ENV_SINGLE_ARG_PARAME
 }
 
 void
-Test_i::shutdown (ACE_ENV_SINGLE_ARG_DECL)
+Test_i::shutdown (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_DEBUG ((LM_INFO,

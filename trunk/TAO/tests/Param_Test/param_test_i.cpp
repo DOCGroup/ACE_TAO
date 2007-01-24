@@ -692,10 +692,10 @@ Param_Test_i::test_objref_struct (const Param_Test::Objref_Struct &s1,
 
 // make a Coffee object
 Coffee_ptr
-Param_Test_i::make_coffee (ACE_ENV_SINGLE_ARG_DECL)
+Param_Test_i::make_coffee (void)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  return this->obj_._this (ACE_ENV_SINGLE_ARG_PARAMETER);
+  return this->obj_._this ();
 }
 
 // test for object references
@@ -710,15 +710,13 @@ Param_Test_i::test_objref (Coffee_ptr o1,
 
   ACE_TRY
     {
-      Coffee_var myobj = obj_._this (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      Coffee_var myobj = obj_._this ();
 
       if (!CORBA::is_nil (o2))
         CORBA::release (o2);
 
       CORBA::Boolean equiv = myobj->_is_equivalent (o1
                                                     ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       if (equiv)
         {
@@ -789,8 +787,7 @@ Param_Test_i::test_any (const CORBA::Any &a1,
   if (TAO_debug_level > 0)
     {
       CORBA::TypeCode_var tc = a1.type ();
-      int kind = tc->kind (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK_RETURN (0);
+      int kind = tc->kind ();
 
       ACE_DEBUG ((LM_DEBUG,
                   "Received any contents are <%d>\n",
@@ -994,8 +991,7 @@ Param_Test_i::test_exception (CORBA::ULong s1,
   // warning that test_exception is throwing an exception
   // not in its THROW_SPEC, but still test TAO's
   // conversion of such an exception to UNKNOWN.
-  this->throw_badboy (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (0);
+  this->throw_badboy ();
 
   return 0;
 }
@@ -1067,14 +1063,14 @@ Param_Test_i::test_multdim_array (const Param_Test::Multdim_Array a1,
 }
 
 void
-Param_Test_i::shutdown (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+Param_Test_i::shutdown (void)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->orb_->shutdown ();
 }
 
 void
-Param_Test_i::throw_badboy (ACE_ENV_SINGLE_ARG_DECL)
+Param_Test_i::throw_badboy (void)
 {
   ACE_THROW (Param_Test::BadBoy ());
 }

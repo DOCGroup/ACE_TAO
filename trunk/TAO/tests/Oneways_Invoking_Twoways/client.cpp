@@ -41,11 +41,9 @@ main (int argc, char *argv[])
     {
       CORBA::ORB_var orb =
         CORBA::ORB_init (argc, argv, "" ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       CORBA::Object_var poa_object =
         orb->resolve_initial_references("RootPOA" ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       if (CORBA::is_nil (poa_object.in ()))
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -54,11 +52,9 @@ main (int argc, char *argv[])
 
       PortableServer::POA_var root_poa =
         PortableServer::POA::_narrow (poa_object.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       PortableServer::POAManager_var poa_manager =
-        root_poa->the_POAManager (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        root_poa->the_POAManager ();
 
       if (parse_args (argc, argv) != 0)
         return 1;
@@ -66,11 +62,9 @@ main (int argc, char *argv[])
       // Get the sender reference..
       CORBA::Object_var tmp =
         orb->string_to_object(ior ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       Test::Sender_var sender =
         Test::Sender::_narrow(tmp.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       if (CORBA::is_nil (sender.in ()))
         {
@@ -90,12 +84,10 @@ main (int argc, char *argv[])
       PortableServer::ServantBase_var receiver_owner_transfer(receiver_impl);
 
       Test::Receiver_var receiver =
-        receiver_impl->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        receiver_impl->_this ();
 
       // Activate poa manager
-      poa_manager->activate (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      poa_manager->activate ();
 
       Client_Task client_task (sender.in (),
                                receiver.in (),
@@ -107,7 +99,6 @@ main (int argc, char *argv[])
       // Before creating threads we will let the sender know that we
       // will have two threads that would make invocations..
       sender->active_objects ((CORBA::Short) 2 ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       if (server_task.activate (THR_NEW_LWP | THR_JOINABLE, 2,1) == -1)
         {
@@ -124,8 +115,7 @@ main (int argc, char *argv[])
       ACE_DEBUG ((LM_DEBUG,
                   "Event Loop finished \n"));
 
-      orb->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      orb->destroy ();
     }
   ACE_CATCHANY
     {

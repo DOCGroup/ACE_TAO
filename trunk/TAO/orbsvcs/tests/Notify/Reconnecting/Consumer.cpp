@@ -159,7 +159,6 @@ StructuredPushConsumer_i::push_structured_event (
       static_cast<int>(this->received_)
       ));
     ACE_THROW (CORBA::UNKNOWN());
-    ACE_CHECK;
   }
   if (notification.filterable_data.length () > 0)
   {
@@ -393,7 +392,6 @@ SequencePushConsumer_i::push_structured_events (
         static_cast<int>(nevent + 1)
         ));
       ACE_THROW (CORBA::UNKNOWN());
-      ACE_CHECK;
     }
     const CosNotification::StructuredEvent & notification = notifications[nevent];
     if (notification.filterable_data.length () > 0)
@@ -605,7 +603,6 @@ AnyPushConsumer_i::push (
       static_cast<int>(this->received_)
       ));
     ACE_THROW (CORBA::UNKNOWN());
-    ACE_CHECK;
   }
   CORBA::ULong seq = 0;
   if (data >>= seq)
@@ -701,11 +698,9 @@ ReconnectionCallback_i::reconnect (
     ACE_TEXT ("(%P|%t) Consumer received reconnection request\n")
     ));
   this->ecf_ = CosNotifyChannelAdmin::EventChannelFactory::_narrow (reconnection ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
   if (!CORBA::is_nil (this->ecf_.in ()))
   {
     this->consumer_main_.reconnect (this->ecf_.in () ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK;
     this->reconnect_count_ += 1;
   }
   else
@@ -717,7 +712,7 @@ ReconnectionCallback_i::reconnect (
 }
 
 CORBA::Boolean
-ReconnectionCallback_i::is_alive (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+ReconnectionCallback_i::is_alive (void)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return CORBA::Boolean (1);
@@ -733,16 +728,14 @@ ReconnectionCallback_i::~ReconnectionCallback_i ()
 
 
 void
-ReconnectionCallback_i::fini (ACE_ENV_SINGLE_ARG_DECL)
+ReconnectionCallback_i::fini (void)
 {
   if (this->id_is_valid_)
   {
     NotifyExt::ReconnectionRegistry_var registry =
       NotifyExt::ReconnectionRegistry::_narrow (this->ecf_.in () ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK;
 
     registry->unregister_callback (this->callback_id_ ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK;
     this->id_is_valid_ = false;
   }
 }
@@ -756,22 +749,17 @@ ReconnectionCallback_i::init (
   this->ecf_ = CosNotifyChannelAdmin::EventChannelFactory::_duplicate (ecf);
   PortableServer::ObjectId_var reconnection_callback_id =
     poa->activate_object (this ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
   CORBA::Object_var obj =
     poa->id_to_reference (reconnection_callback_id.in () ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
   NotifyExt::ReconnectionCallback_var callback =
     NotifyExt::ReconnectionCallback::_narrow (obj.in () ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
   NotifyExt::ReconnectionRegistry_var registry =
     NotifyExt::ReconnectionRegistry::_narrow (ecf ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
   this->callback_id_ = registry->register_callback (callback.in () ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
   this->id_is_valid_ = true;
 }
 
@@ -918,7 +906,6 @@ void Consumer_Main::usage(FILE * out)const
 int Consumer_Main::init (int argc, char *argv[] ACE_ENV_ARG_DECL)
 {
   this->orb_ = CORBA::ORB_init(argc, argv, "" ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
 
   if (0 != this->parse_args(argc, argv))
   {
@@ -928,7 +915,6 @@ int Consumer_Main::init (int argc, char *argv[] ACE_ENV_ARG_DECL)
   CORBA::Object_ptr poa_object  =
     this->orb_->resolve_initial_references("RootPOA"
                                            ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
 
   if (CORBA::is_nil (poa_object))
   {
@@ -939,24 +925,19 @@ int Consumer_Main::init (int argc, char *argv[] ACE_ENV_ARG_DECL)
 
   this->root_poa_ =
     PortableServer::POA::_narrow (poa_object ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
 
   PortableServer::POAManager_var poa_manager =
-    root_poa_->the_POAManager (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
+    root_poa_->the_POAManager ();
 
-  poa_manager->activate (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
+  poa_manager->activate ();
 
   if (this->use_naming_service_ )
   {
-    this->find_notify_factory (ACE_ENV_SINGLE_ARG_PARAMETER);
-    ACE_CHECK_RETURN (-1);
+    this->find_notify_factory ();
   }
   else
   {
-    int ok = resolve_notify_factory (ACE_ENV_SINGLE_ARG_PARAMETER);
-    ACE_CHECK_RETURN (-1);
+    int ok = resolve_notify_factory ();
     if (!ok)
     {
       return -1;
@@ -965,11 +946,9 @@ int Consumer_Main::init (int argc, char *argv[] ACE_ENV_ARG_DECL)
 
   this->reconnecting_ = load_ids ();
 
-  init_event_channel (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
+  init_event_channel ();
 
-  init_consumer_admin (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
+  init_consumer_admin ();
 
   switch (this->mode_)
   {
@@ -984,8 +963,7 @@ int Consumer_Main::init (int argc, char *argv[] ACE_ENV_ARG_DECL)
           ));
       }
       this->structured_push_consumer_.set_expectations (this->expect_, this->fail_, this->serial_number_, this->verbose_);
-      init_structured_proxy_supplier (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK_RETURN (-1);
+      init_structured_proxy_supplier ();
       break;
     }
     case MODE_SEQUENCE:
@@ -999,8 +977,7 @@ int Consumer_Main::init (int argc, char *argv[] ACE_ENV_ARG_DECL)
           ));
       }
       this->sequence_push_consumer_.set_expectations (this->expect_, this->fail_, this->serial_number_, this->verbose_);
-      init_sequence_proxy_supplier (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK_RETURN (-1);
+      init_sequence_proxy_supplier ();
       break;
     }
     case MODE_ANY:
@@ -1014,8 +991,7 @@ int Consumer_Main::init (int argc, char *argv[] ACE_ENV_ARG_DECL)
           ));
       }
       this->any_push_consumer_.set_expectations (this->expect_, this->fail_, this->serial_number_, this->verbose_);
-      init_any_proxy_supplier (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK_RETURN (-1);
+      init_any_proxy_supplier ();
       break;
     }
     default:
@@ -1031,7 +1007,6 @@ int Consumer_Main::init (int argc, char *argv[] ACE_ENV_ARG_DECL)
     this->root_poa_.in (),
     this->ecf_.in ()
     ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
 
   save_ids ();
   return 0;
@@ -1136,32 +1111,27 @@ Consumer_Main::reconnect (
   }
   this->ecf_ = CosNotifyChannelAdmin::EventChannelFactory::_duplicate (dest_factory);
   this->reconnecting_ = true;
-  init_event_channel (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+  init_event_channel ();
 
-  init_consumer_admin (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+  init_consumer_admin ();
 
   switch (this->mode_)
   {
     case MODE_STRUCTURED:
     {
-      init_structured_proxy_supplier (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK;
+      init_structured_proxy_supplier ();
       break;
     }
 
     case MODE_SEQUENCE:
     {
-      init_sequence_proxy_supplier (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK;
+      init_sequence_proxy_supplier ();
       break;
     }
 
     case MODE_ANY                                                                                            :
     {
-      init_any_proxy_supplier (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK;
+      init_any_proxy_supplier ();
       break;
     }
   }
@@ -1175,7 +1145,7 @@ Consumer_Main::reconnect (
 
 
 int
-Consumer_Main::resolve_naming_service (ACE_ENV_SINGLE_ARG_DECL)
+Consumer_Main::resolve_naming_service (void)
 {
   // ignore redundant calls
   if (CORBA::is_nil (this->naming_context_.in ()))
@@ -1183,22 +1153,19 @@ Consumer_Main::resolve_naming_service (ACE_ENV_SINGLE_ARG_DECL)
     CORBA::Object_var naming_obj =
       this->orb_->resolve_initial_references (NAMING_SERVICE_NAME
                                               ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK_RETURN(0);
 
     this->naming_context_ =
       CosNaming::NamingContext::_narrow (naming_obj.in ()
                                          ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK_RETURN(0);
   }
 
   return !CORBA::is_nil (this->naming_context_.in ());
 }
 
 int
-Consumer_Main::find_notify_factory (ACE_ENV_SINGLE_ARG_DECL)
+Consumer_Main::find_notify_factory (void)
 {
-  int status = this->resolve_naming_service (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (0);
+  int status = this->resolve_naming_service ();
   if (status)
   {
     CosNaming::Name name (1);
@@ -1208,36 +1175,32 @@ Consumer_Main::find_notify_factory (ACE_ENV_SINGLE_ARG_DECL)
     CORBA::Object_var obj =
       this->naming_context_->resolve (name
                                      ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK_RETURN(0);
 
     this->ecf_ =
       CosNotifyChannelAdmin::EventChannelFactory::_narrow (
                                                       obj.in ()
                                                       ACE_ENV_ARG_PARAMETER
                                                     );
-    ACE_CHECK_RETURN(0);
   }
   return ! CORBA::is_nil (this->ecf_.in ());
 }
 
 int
-Consumer_Main::resolve_notify_factory (ACE_ENV_SINGLE_ARG_DECL)
+Consumer_Main::resolve_notify_factory (void)
 {
   CORBA::Object_var factory_obj =
     this->orb_->resolve_initial_references (NOTIFY_FACTORY_NAME
                                             ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN(0);
 
   this->ecf_ =
     CosNotifyChannelAdmin::EventChannelFactory::_narrow (
       factory_obj.in ()
       ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN(0);
   return ! CORBA::is_nil (this->ecf_.in ());
 }
 
 void
-Consumer_Main::init_event_channel (ACE_ENV_SINGLE_ARG_DECL)
+Consumer_Main::init_event_channel (void)
 {
   bool ok = false;
   if (this->reconnecting_)
@@ -1247,7 +1210,6 @@ Consumer_Main::init_event_channel (ACE_ENV_SINGLE_ARG_DECL)
       this->ec_ = this->ecf_->get_event_channel (
             this->ec_id_
             ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
       ok = ! CORBA::is_nil (this->ec_.in ());
       if (ok && this->verbose_)
       {
@@ -1345,7 +1307,6 @@ Consumer_Main::init_event_channel (ACE_ENV_SINGLE_ARG_DECL)
           adminprops,
           this->ec_id_
           ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK;
     ok = ! CORBA::is_nil (ec_.in ());
     if (ok && this->verbose_)
     {
@@ -1371,7 +1332,7 @@ Consumer_Main::init_event_channel (ACE_ENV_SINGLE_ARG_DECL)
 CosNotifyChannelAdmin::AdminID default_admin_id = static_cast<CosNotifyChannelAdmin::AdminID>(-1);
 
 void
-Consumer_Main::init_consumer_admin (ACE_ENV_SINGLE_ARG_DECL)
+Consumer_Main::init_consumer_admin (void)
 {
   bool ok = false;
   if (this->reconnecting_)
@@ -1380,7 +1341,7 @@ Consumer_Main::init_consumer_admin (ACE_ENV_SINGLE_ARG_DECL)
     {
       ACE_TRY_EX(TWO)
       {
-        this->sa_ = this->ec_->default_consumer_admin (ACE_ENV_SINGLE_ARG_PARAMETER);
+        this->sa_ = this->ec_->default_consumer_admin ();
         ACE_TRY_CHECK_EX(TWO);
         ok = ! CORBA::is_nil (this->sa_.in ());
         this->sa_id_ = default_admin_id;
@@ -1429,7 +1390,7 @@ Consumer_Main::init_consumer_admin (ACE_ENV_SINGLE_ARG_DECL)
   {
     ACE_TRY_EX(THREE)
     {
-      this->sa_ = this->ec_->default_consumer_admin (ACE_ENV_SINGLE_ARG_PARAMETER);
+      this->sa_ = this->ec_->default_consumer_admin ();
       ACE_TRY_CHECK_EX(THREE);
       ok = ! CORBA::is_nil (this->sa_.in ());
       this->sa_id_ = default_admin_id;
@@ -1457,7 +1418,6 @@ Consumer_Main::init_consumer_admin (ACE_ENV_SINGLE_ARG_DECL)
         CosNotifyChannelAdmin::OR_OP,
         this->sa_id_
         ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
       ok = ! CORBA::is_nil (this->sa_.in ());
 
 #ifdef TEST_SET_QOS
@@ -1474,7 +1434,6 @@ Consumer_Main::init_consumer_admin (ACE_ENV_SINGLE_ARG_DECL)
         qosprops[i++].value <<= CosNotification::Persistent; // Required, or we won't persist much
         qosprops.length(i);
         this->sa_->set_qos (qosprops ACE_ENV_ARG_PARAMETER);
-        ACE_CHECK;
       }
 #endif
 
@@ -1496,7 +1455,7 @@ Consumer_Main::init_consumer_admin (ACE_ENV_SINGLE_ARG_DECL)
   }
 }
 void
-Consumer_Main::init_structured_proxy_supplier (ACE_ENV_SINGLE_ARG_DECL)
+Consumer_Main::init_structured_proxy_supplier (void)
 {
   bool ok = false;
   CosNotifyChannelAdmin::ProxySupplier_var proxy;
@@ -1508,7 +1467,6 @@ Consumer_Main::init_structured_proxy_supplier (ACE_ENV_SINGLE_ARG_DECL)
                            this->structured_proxy_id_
                           ACE_ENV_ARG_PARAMETER
                         );
-      ACE_TRY_CHECK;
       ok = ! CORBA::is_nil (proxy.in ());
       if (ok && this->verbose_)
       {
@@ -1530,7 +1488,6 @@ Consumer_Main::init_structured_proxy_supplier (ACE_ENV_SINGLE_ARG_DECL)
         CosNotifyChannelAdmin::STRUCTURED_EVENT,
         this->structured_proxy_id_
         ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK;
     ok = ! CORBA::is_nil (proxy.in ());
     if (ok && this->verbose_)
     {
@@ -1542,7 +1499,6 @@ Consumer_Main::init_structured_proxy_supplier (ACE_ENV_SINGLE_ARG_DECL)
   }
   this->structured_proxy_push_supplier_ =
     CosNotifyChannelAdmin::StructuredProxyPushSupplier::_narrow(proxy.in () ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
   if (CORBA::is_nil (this->structured_proxy_push_supplier_.in ()))
   {
@@ -1557,15 +1513,12 @@ Consumer_Main::init_structured_proxy_supplier (ACE_ENV_SINGLE_ARG_DECL)
     PortableServer::ObjectId_var push_consumer_id =
       this->root_poa_->activate_object (
         &(this->structured_push_consumer_) ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK;
 
     CORBA::Object_var obj =
       this->root_poa_->id_to_reference (push_consumer_id.in () ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK;
 
     this->structured_push_consumer_ref_ =
       CosNotifyComm::StructuredPushConsumer::_narrow (obj.in () ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK;
   }
 
   if (CORBA::is_nil (this->structured_push_consumer_ref_.in ()))
@@ -1580,12 +1533,11 @@ Consumer_Main::init_structured_proxy_supplier (ACE_ENV_SINGLE_ARG_DECL)
   this->structured_proxy_push_supplier_->connect_structured_push_consumer (
     this->structured_push_consumer_ref_.in ()
     ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
   this->structured_push_consumer_.set_connected(true);
 }
 
 void
-Consumer_Main::init_sequence_proxy_supplier (ACE_ENV_SINGLE_ARG_DECL)
+Consumer_Main::init_sequence_proxy_supplier (void)
 {
   bool ok = false;
   CosNotifyChannelAdmin::ProxySupplier_var proxy;
@@ -1596,7 +1548,6 @@ Consumer_Main::init_sequence_proxy_supplier (ACE_ENV_SINGLE_ARG_DECL)
       proxy = this->sa_->get_proxy_supplier(
         this->sequence_proxy_id_
         ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
       ok = ! CORBA::is_nil (proxy.in ());
       if (ok && this->verbose_)
       {
@@ -1618,14 +1569,12 @@ Consumer_Main::init_sequence_proxy_supplier (ACE_ENV_SINGLE_ARG_DECL)
         CosNotifyChannelAdmin::SEQUENCE_EVENT,
         this->sequence_proxy_id_
         ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK;
     ok = ! CORBA::is_nil (proxy.in ());
 #ifdef TEST_SET_QOS
     // temporary
     if (ok)
     {
       set_proxy_qos (proxy.in () ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
     }
 #endif // TEST_SET_QOS
     if (ok && this->verbose_)
@@ -1638,7 +1587,6 @@ Consumer_Main::init_sequence_proxy_supplier (ACE_ENV_SINGLE_ARG_DECL)
   }
   this->sequence_proxy_push_supplier_ =
     CosNotifyChannelAdmin::SequenceProxyPushSupplier::_narrow(proxy.in () ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
   if (CORBA::is_nil (this->sequence_proxy_push_supplier_.in ()))
   {
@@ -1655,15 +1603,12 @@ Consumer_Main::init_sequence_proxy_supplier (ACE_ENV_SINGLE_ARG_DECL)
     PortableServer::ObjectId_var push_consumer_id =
       this->root_poa_->activate_object (
         &(this->sequence_push_consumer_) ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK;
 
     CORBA::Object_var obj =
       this->root_poa_->id_to_reference (push_consumer_id.in () ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK;
 
     this->sequence_push_consumer_ref_ =
       CosNotifyComm::SequencePushConsumer::_narrow (obj.in () ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK;
   }
   if (CORBA::is_nil (this->sequence_push_consumer_ref_.in ()))
   {
@@ -1677,7 +1622,6 @@ Consumer_Main::init_sequence_proxy_supplier (ACE_ENV_SINGLE_ARG_DECL)
   this->sequence_proxy_push_supplier_->connect_sequence_push_consumer (
     this->sequence_push_consumer_ref_.in ()
     ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
   this->sequence_push_consumer_.set_connected(true);
 
 }
@@ -1698,11 +1642,10 @@ Consumer_Main::set_proxy_qos (CosNotifyChannelAdmin::ProxySupplier_ptr proxy
   qosprops[i++].value <<= CosNotification::Persistent; // Required, or we won't persist much
   qosprops.length(i);
   proxy->set_qos (qosprops ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 }
 
 void
-Consumer_Main::init_any_proxy_supplier (ACE_ENV_SINGLE_ARG_DECL)
+Consumer_Main::init_any_proxy_supplier (void)
 {
   bool ok = false;
   CosNotifyChannelAdmin::ProxySupplier_var proxy;
@@ -1713,7 +1656,6 @@ Consumer_Main::init_any_proxy_supplier (ACE_ENV_SINGLE_ARG_DECL)
       proxy = this->sa_->get_proxy_supplier(
         this->any_proxy_id_
         ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
       ok = ! CORBA::is_nil (proxy.in ());
       if (ok && this->verbose_)
       {
@@ -1754,7 +1696,6 @@ Consumer_Main::init_any_proxy_supplier (ACE_ENV_SINGLE_ARG_DECL)
         CosNotifyChannelAdmin::ANY_EVENT,
         this->any_proxy_id_
         ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK;
     ok = ! CORBA::is_nil (proxy.in ());
 
     if (ok && this->verbose_)
@@ -1767,7 +1708,6 @@ Consumer_Main::init_any_proxy_supplier (ACE_ENV_SINGLE_ARG_DECL)
   }
   this->any_proxy_push_supplier_ =
     CosNotifyChannelAdmin::ProxyPushSupplier::_narrow(proxy.in () ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
   if (CORBA::is_nil (this->any_proxy_push_supplier_.in ()))
   {
@@ -1782,15 +1722,12 @@ Consumer_Main::init_any_proxy_supplier (ACE_ENV_SINGLE_ARG_DECL)
     PortableServer::ObjectId_var push_consumer_id =
       this->root_poa_->activate_object (
         &(this->any_push_consumer_) ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK;
 
     CORBA::Object_var obj =
       this->root_poa_->id_to_reference (push_consumer_id.in () ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK;
 
     this->any_push_consumer_ref_ =
       CosNotifyComm::PushConsumer::_narrow (obj.in () ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK;
   }
 
   if (CORBA::is_nil (this->any_push_consumer_ref_.in ()))
@@ -1804,33 +1741,28 @@ Consumer_Main::init_any_proxy_supplier (ACE_ENV_SINGLE_ARG_DECL)
   this->any_proxy_push_supplier_->connect_any_push_consumer (
     this->any_push_consumer_ref_.in ()
     ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
   this->any_push_consumer_.set_connected(true);
 }
 
-int Consumer_Main::fini (ACE_ENV_SINGLE_ARG_DECL)
+int Consumer_Main::fini (void)
 {
 
-  this->reconnection_callback_.fini (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-4);
- 
+  this->reconnection_callback_.fini ();
+
   if (this->disconnect_on_exit_)
   {
     if (!CORBA::is_nil (this->structured_proxy_push_supplier_.in ()))
     {
-      this->structured_proxy_push_supplier_->disconnect_structured_push_supplier (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK_RETURN (-4);
+      this->structured_proxy_push_supplier_->disconnect_structured_push_supplier ();
     }
     if (!CORBA::is_nil (this->sequence_proxy_push_supplier_.in ()))
     {
-      this->sequence_proxy_push_supplier_->disconnect_sequence_push_supplier (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK_RETURN (-4);
+      this->sequence_proxy_push_supplier_->disconnect_sequence_push_supplier ();
     }
     if (!CORBA::is_nil (this->any_proxy_push_supplier_.in ()))
     {
-      this->any_proxy_push_supplier_->disconnect_push_supplier (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK_RETURN (-4);
+      this->any_proxy_push_supplier_->disconnect_push_supplier ();
     }
     if (!CORBA::is_nil (this->sa_.in ()) && this->sa_id_ != default_admin_id)
     {
@@ -1849,7 +1781,7 @@ int Consumer_Main::fini (ACE_ENV_SINGLE_ARG_DECL)
 }
 
 
-int Consumer_Main::run (ACE_ENV_SINGLE_ARG_DECL)
+int Consumer_Main::run (void)
 {
   int result = 0;
 
@@ -1860,7 +1792,6 @@ int Consumer_Main::run (ACE_ENV_SINGLE_ARG_DECL)
   {
     ACE_Time_Value tv(0, 100 * 1000);
     this->orb_->run(tv ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK_RETURN(-1);
   }
 
   // see if consumers detected errors
@@ -1885,13 +1816,11 @@ main (int argc, char *argv[])
 
     if (result == 0)
     {
-      result = app.run (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      result = app.run ();
     }
     if (result == 0)
     {
-      app.fini (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      app.fini ();
     }
   }
   ACE_CATCHANY

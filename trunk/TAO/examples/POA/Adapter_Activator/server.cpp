@@ -92,20 +92,17 @@ Adapter_Activator::unknown_adapter (PortableServer::POA_ptr parent,
                                                           this->poa_manager_.in (),
                                                           this->first_poa_policies_
                                                           ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK_RETURN (0);
 
       // Creation of firstPOA is over. Destroy the Policy objects.
       for (CORBA::ULong i = 0;
            i < this->first_poa_policies_.length ();
            ++i)
         {
-          this->first_poa_policies_[i]->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_CHECK_RETURN (0);
+          this->first_poa_policies_[i]->destroy ();
         }
 
       child->the_activator (this
                             ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK_RETURN (0);
 
       reference_counted_test_i *servant =
         new reference_counted_test_i (this->orb_.in (),
@@ -113,12 +110,10 @@ Adapter_Activator::unknown_adapter (PortableServer::POA_ptr parent,
 
       child->set_servant (servant
                           ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK_RETURN (0);
 
       // This means that the ownership of <servant> now belongs to the
       // POA.
-      servant->_remove_ref (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK_RETURN (0);
+      servant->_remove_ref ();
 
       // Finally everything is fine
       return 1;
@@ -129,15 +124,13 @@ Adapter_Activator::unknown_adapter (PortableServer::POA_ptr parent,
                                                           this->poa_manager_.in (),
                                                           this->second_poa_policies_
                                                           ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK_RETURN (0);
 
       // Creation of secondPOA is over. Destroy the Policy objects.
       for (CORBA::ULong i = 0;
            i < this->second_poa_policies_.length ();
            ++i)
         {
-          this->second_poa_policies_[i]->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_CHECK_RETURN (0);
+          this->second_poa_policies_[i]->destroy ();
         }
 
       reference_counted_test_i *servant =
@@ -150,12 +143,10 @@ Adapter_Activator::unknown_adapter (PortableServer::POA_ptr parent,
       child->activate_object_with_id (oid.in (),
                                       servant
                                       ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK_RETURN (0);
 
       // This means that the ownership of <servant> now belongs to the
       // POA.
-      servant->_remove_ref (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK_RETURN (0);
+      servant->_remove_ref ();
 
       // Finally everything is fine
       return 1;
@@ -273,7 +264,6 @@ main (int argc, char **argv)
                                             argv,
                                             0
                                             ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       int result = parse_args (argc, argv);
       if (result != 0)
@@ -283,18 +273,15 @@ main (int argc, char **argv)
       CORBA::Object_var obj =
         orb->resolve_initial_references ("RootPOA"
                                          ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       // Get the POA_var object from Object_var.
       PortableServer::POA_var root_poa =
         PortableServer::POA::_narrow (obj.in ()
                                       ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       // Get the POAManager of the RootPOA.
       PortableServer::POAManager_var poa_manager =
-        root_poa->the_POAManager (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        root_poa->the_POAManager ();
 
       Adapter_Activator *adapter_activator =
         new Adapter_Activator (poa_manager.in (),
@@ -305,7 +292,6 @@ main (int argc, char **argv)
 
       root_poa->the_activator (adapter_activator_var.in ()
                                ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       PortableServer::POA_var first_poa;
       PortableServer::POA_var second_poa;
@@ -319,32 +305,27 @@ main (int argc, char **argv)
         policies[0] =
           root_poa->create_id_assignment_policy (PortableServer::SYSTEM_ID
                                                  ACE_ENV_ARG_PARAMETER);
-        ACE_TRY_CHECK;
 
         // Lifespan policy
         policies[1] =
           root_poa->create_lifespan_policy (PortableServer::PERSISTENT
                                             ACE_ENV_ARG_PARAMETER);
-        ACE_TRY_CHECK;
 
         // Request Processing policy
         policies[2] =
           root_poa->create_request_processing_policy (PortableServer::USE_DEFAULT_SERVANT
                                                       ACE_ENV_ARG_PARAMETER);
-        ACE_TRY_CHECK;
 
         // Id Uniqueness
         policies[3] =
           root_poa->create_id_uniqueness_policy (PortableServer::MULTIPLE_ID
                                                  ACE_ENV_ARG_PARAMETER);
-        ACE_TRY_CHECK;
 
         // Create the firstPOA under the RootPOA.
         first_poa = root_poa->create_POA ("firstPOA",
                                           poa_manager.in (),
                                           policies
                                           ACE_ENV_ARG_PARAMETER);
-        ACE_TRY_CHECK;
       }
 
       {
@@ -356,20 +337,17 @@ main (int argc, char **argv)
         policies[0] =
           root_poa->create_id_assignment_policy (PortableServer::USER_ID
                                                  ACE_ENV_ARG_PARAMETER);
-        ACE_TRY_CHECK;
 
         // Lifespan policy
         policies[1] =
           root_poa->create_lifespan_policy (PortableServer::PERSISTENT
                                             ACE_ENV_ARG_PARAMETER);
-        ACE_TRY_CHECK;
 
         // Create the secondPOA under the firstPOA.
         second_poa = first_poa->create_POA ("secondPOA",
                                             poa_manager.in (),
                                             policies
                                             ACE_ENV_ARG_PARAMETER);
-        ACE_TRY_CHECK;
       }
 
       // Create a servant.
@@ -379,16 +357,13 @@ main (int argc, char **argv)
       PortableServer::ObjectId_var first_oid =
         root_poa->activate_object (&first_servant
                                    ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       // Get Object Reference for the first_servant object.
-      test_var first_test = first_servant._this (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      test_var first_test = first_servant._this ();
 
       CORBA::Object_var second_test =
         first_poa->create_reference ("IDL:test:1.0"
                                      ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       PortableServer::ObjectId_var third_oid =
         PortableServer::string_to_ObjectId ("third test");
@@ -397,22 +372,18 @@ main (int argc, char **argv)
         second_poa->create_reference_with_id (third_oid.in (),
                                               "IDL:test:1.0"
                                               ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       // Stringyfy all the object references and print them out.
       CORBA::String_var first_ior =
         orb->object_to_string (first_test.in ()
                                ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       CORBA::String_var second_ior =
         orb->object_to_string (second_test.in ()
                                ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       CORBA::String_var third_ior =
         orb->object_to_string (third_test.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       ACE_DEBUG ((LM_DEBUG,
                   "%s\n%s\n%s\n",
@@ -429,13 +400,10 @@ main (int argc, char **argv)
       first_poa->destroy (1,
                           1
                           ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
-      poa_manager->activate (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      poa_manager->activate ();
 
-      orb->run (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      orb->run ();
 
     }
   ACE_CATCHANY
@@ -444,7 +412,6 @@ main (int argc, char **argv)
       return -1;
     }
   ACE_ENDTRY;
-  ACE_CHECK_RETURN (-1);
 
   return 0;
 }

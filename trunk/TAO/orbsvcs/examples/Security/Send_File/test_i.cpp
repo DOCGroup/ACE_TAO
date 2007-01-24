@@ -17,7 +17,7 @@ Simple_Server_i::send_line (const char *line
 }
 
 void
-Simple_Server_i::shutdown (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+Simple_Server_i::shutdown (void)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->orb_->shutdown (0);

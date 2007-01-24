@@ -58,15 +58,13 @@ ifr_removing_visitor::visit_scope (UTL_Scope *node)
               CORBA::Contained_var top_level =
                 be_global->repository ()->lookup_id (d->repoID ()
                                                      ACE_ENV_ARG_PARAMETER);
-              ACE_TRY_CHECK;
 
               if (!CORBA::is_nil (top_level.in ()))
                 {
                   // All we have to do is call destroy() on each IR object
                   // in the global scope, because destroy() works on all
                   // the contents recursively.
-                  top_level->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-                  ACE_TRY_CHECK;
+                  top_level->destroy ();
                 }
 
               si.next ();
@@ -96,7 +94,6 @@ ifr_removing_visitor::visit_root (AST_Root *node)
       CORBA::Container_var new_scope =
         CORBA::Container::_narrow (be_global->repository ()
                                   ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       if (be_global->ifr_scopes ().push (new_scope.in ()) != 0)
         {

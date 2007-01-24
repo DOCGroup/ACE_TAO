@@ -31,11 +31,11 @@ public:
   virtual ~Vault_Client_Request_Interceptor ();
   // dtor.
 
-  virtual char * name (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+  virtual char * name (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
   // Canonical name of the interceptor.
 
-  virtual void destroy (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+  virtual void destroy (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual void send_poll (PortableInterceptor::ClientRequestInfo_ptr
@@ -76,11 +76,11 @@ public:
   virtual ~Vault_Client_Request_Context_Interceptor ();
   // dtor.
 
-  virtual char * name (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+  virtual char * name (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
   // Canonical name of the interceptor.
 
-  virtual void destroy (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+  virtual void destroy (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual void send_poll (PortableInterceptor::ClientRequestInfo_ptr
@@ -121,11 +121,11 @@ public:
   virtual ~Vault_Client_Request_Dynamic_Interceptor ();
   // dtor.
 
-  virtual char * name (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+  virtual char * name (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
   // Canonical name of the interceptor.
 
-  virtual void destroy (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+  virtual void destroy (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual void send_poll (PortableInterceptor::ClientRequestInfo_ptr
@@ -166,11 +166,11 @@ public:
   virtual ~Vault_Client_Request_NOOP_Interceptor ();
   // dtor.
 
-  virtual char * name (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+  virtual char * name (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
   // Canonical name of the interceptor.
 
-  virtual void destroy (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+  virtual void destroy (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual void send_poll (PortableInterceptor::ClientRequestInfo_ptr

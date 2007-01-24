@@ -17,19 +17,15 @@ main (int argc, char *argv[])
                                                 argv,
                                                 orb_name
                                                 ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       CORBA::Object_var orb_obj =
         the_orb->resolve_initial_references ("RootPOA" ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       PortableServer::POA_var the_root_poa =
         PortableServer::POA::_narrow (orb_obj.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       PortableServer::POAManager_var the_poa_manager =
-        the_root_poa->the_POAManager (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        the_root_poa->the_POAManager ();
 
       // Retrieving the servants IOR from a file
 	  ACE_DEBUG ((LM_DEBUG,
@@ -40,14 +36,12 @@ main (int argc, char *argv[])
 
       orb_obj =
         the_orb->string_to_object (filename ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
 	  ACE_DEBUG ((LM_DEBUG,
                   "Narrowing the IOR!\n"));
 
       W32_Test_Interface_var mycall =
         W32_Test_Interface::_narrow (orb_obj.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
 	  ACE_DEBUG ((LM_DEBUG,
                   "Sending the Request!\n"));

@@ -29,14 +29,14 @@ namespace TAO
   }
 
   char *
-  FT_ServerRequest_Interceptor::name (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+  FT_ServerRequest_Interceptor::name (void)
     ACE_THROW_SPEC ((CORBA::SystemException))
   {
     return CORBA::string_dup ("TAO_FT_ServerRequest_Interceptor");
   }
 
   void
-  FT_ServerRequest_Interceptor::destroy (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+  FT_ServerRequest_Interceptor::destroy (void)
     ACE_THROW_SPEC ((CORBA::SystemException))
   {
   }
@@ -54,11 +54,9 @@ namespace TAO
         IOP::ServiceContext_var sc =
           ri->get_request_service_context (IOP::FT_GROUP_VERSION
                                            ACE_ENV_ARG_PARAMETER);
-        ACE_TRY_CHECK;
 
         this->check_iogr_version (sc.in ()
                                   ACE_ENV_ARG_PARAMETER);
-        ACE_TRY_CHECK;
       }
     ACE_CATCH (CORBA::BAD_PARAM, ex)
       {
@@ -70,7 +68,6 @@ namespace TAO
         ACE_RE_THROW;
       }
     ACE_ENDTRY;
-    ACE_CHECK;
 
   }
 
@@ -83,15 +80,13 @@ namespace TAO
   {
     // Check for the group version service context
     CORBA::String_var op =
-      ri->operation (ACE_ENV_SINGLE_ARG_PARAMETER);
-    ACE_CHECK;
+      ri->operation ();
 
     if (ACE_OS::strcmp (op.in (),
                         "tao_update_object_group") == 0)
     {
       this->update_iogr (ri
                          ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
     }
 
     // Else the world is fine
@@ -188,8 +183,7 @@ namespace TAO
     if (this->orb_.in () == 0)
       {
         CORBA::String_var orb_id =
-          ri->orb_id (ACE_ENV_SINGLE_ARG_PARAMETER);
-        ACE_CHECK;
+          ri->orb_id ();
 
         int argc = 0;
         char **argv = 0;
@@ -199,12 +193,10 @@ namespace TAO
                            argv,
                            orb_id.in ()
                            ACE_ENV_ARG_PARAMETER);
-        ACE_CHECK;
       }
 
     Dynamic::ParameterList_var param =
-      ri->arguments (ACE_ENV_SINGLE_ARG_PARAMETER);
-    ACE_CHECK;
+      ri->arguments ();
 
     // this is only for checking the tao_update_object_group operation
     // which accepts three parameters, i.e.,an iogr as a string,
@@ -224,7 +216,6 @@ namespace TAO
       this->orb_->string_to_object (obj.in ()
                                     ACE_ENV_ARG_PARAMETER);
 
-    ACE_CHECK;
 
     // @@ This exception is a hack to let the RM know that we have
     // received and updated the IOGR. We will add a special minor code

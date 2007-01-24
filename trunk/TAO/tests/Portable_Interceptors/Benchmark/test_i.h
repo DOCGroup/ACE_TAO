@@ -27,7 +27,7 @@ public:
   Secure_Vault_i (CORBA::ORB_ptr orb);
   // ctor
 
-  virtual CORBA::Short ready (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+  virtual CORBA::Short ready (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual void authenticate (const char * user
@@ -41,7 +41,7 @@ public:
                                       ACE_ENV_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual void shutdown (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+  virtual void shutdown (void)
       ACE_THROW_SPEC ((CORBA::SystemException));
 
  private:

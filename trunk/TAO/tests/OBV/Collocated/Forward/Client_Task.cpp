@@ -31,7 +31,6 @@ Client_Task::svc (void)
       this->corb_->register_value_factory (bn_factory->tao_repository_id (),
                                    bn_factory
                                    ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
       bn_factory->_remove_ref (); // release ownership
 
       // Create and register factory for TreeController.
@@ -43,7 +42,6 @@ Client_Task::svc (void)
       this->corb_->register_value_factory (tc_factory->tao_repository_id (),
                                    tc_factory
                                    ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
       tc_factory->_remove_ref (); // release ownership
 
       // Create and register factory for StringNode.
@@ -55,7 +53,6 @@ Client_Task::svc (void)
       this->corb_->register_value_factory (sn_factory->tao_repository_id (),
                                    sn_factory
                                    ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
       sn_factory->_remove_ref (); // release ownership
 
       //Well, done with factories.
@@ -63,10 +60,8 @@ Client_Task::svc (void)
       // Obtain reference to the object.
       CORBA::Object_var tmp =
         this->corb_->string_to_object(this->input_ ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       Test_var test = Test::_narrow(tmp.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       if (CORBA::is_nil (test.in ()))
       {
@@ -163,7 +158,6 @@ Client_Task::svc (void)
 
       TreeController_var tc_result =
         test->reflect (tc.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       // The following two ifs will fail until bug 1390 is fixed.
       if (is_equal_tree (tc.in (), tc_result.in ()))
@@ -179,8 +173,7 @@ Client_Task::svc (void)
                             1);
         }
 
-      test->shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      test->shutdown ();
 
       ACE_DEBUG ((LM_DEBUG, "(%P|%t) client - test finished\n"));
     }
@@ -201,7 +194,7 @@ Client_Task::is_equal_tree (TreeController * tree1, TreeController * tree2)
 {
   return is_equal_node (tree1->root (), tree2->root ());
 }
-  
+
 
 int
 Client_Task::is_equal_node (BaseNode * node1, BaseNode * node2)

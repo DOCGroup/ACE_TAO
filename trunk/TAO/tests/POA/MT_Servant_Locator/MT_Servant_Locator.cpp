@@ -30,7 +30,7 @@ public:
 
   test_i (PortableServer::POA_ptr poa);
 
-  void method (ACE_ENV_SINGLE_ARG_DECL)
+  void method (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   PortableServer::POA_var poa_;
@@ -42,7 +42,7 @@ test_i::test_i (PortableServer::POA_ptr poa)
 }
 
 void
-test_i::method (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+test_i::method (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
 }
@@ -187,7 +187,6 @@ set_nil_servant_manager (PortableServer::POA_ptr poa)
       // minor code 4
       poa->set_servant_manager (PortableServer::ServantManager::_nil()
                                 ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
     }
   ACE_CATCH (CORBA::OBJ_ADAPTER, ex)
     {
@@ -222,7 +221,6 @@ overwrite_servant_manager (PortableServer::POA_ptr poa)
       // obj_adapter with minor code 6
       poa->set_servant_manager (&servant_locator
                                 ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
     }
   ACE_CATCH (CORBA::BAD_INV_ORDER, ex)
     {
@@ -257,24 +255,19 @@ main (int argc, char **argv)
                          argv,
                          0
                          ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       CORBA::Object_var obj =
         orb->resolve_initial_references ("RootPOA"
                                          ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       PortableServer::POA_var root_poa =
         PortableServer::POA::_narrow (obj.in ()
                                       ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       PortableServer::POAManager_var poa_manager =
-        root_poa->the_POAManager (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        root_poa->the_POAManager ();
 
-      poa_manager->activate (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      poa_manager->activate ();
 
       CORBA::PolicyList policies;
       CORBA::ULong current_length = 0;
@@ -283,26 +276,22 @@ main (int argc, char **argv)
       policies[current_length++] =
         root_poa->create_request_processing_policy (PortableServer::USE_SERVANT_MANAGER
                                                     ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       policies.length (current_length + 1);
       policies[current_length++] =
         root_poa->create_servant_retention_policy (PortableServer::NON_RETAIN
                                                    ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       policies.length (current_length + 1);
       policies[current_length++] =
         root_poa->create_id_assignment_policy (PortableServer::USER_ID
                                                ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       PortableServer::POA_var child_poa =
         root_poa->create_POA ("child",
                               poa_manager.in (),
                               policies
                               ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       if (!set_nil_servant_manager (child_poa.in()))
         retval = -1;
@@ -310,7 +299,6 @@ main (int argc, char **argv)
       Servant_Locator servant_locator (child_poa.in ());
       child_poa->set_servant_manager (&servant_locator
                                       ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       if (!overwrite_servant_manager (child_poa.in()))
         retval = -1;
@@ -322,12 +310,10 @@ main (int argc, char **argv)
         child_poa->create_reference_with_id (first_oid.in (),
                                              "IDL:test:1.0"
                                              ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       test_var first_test =
         test::_narrow (first_object.in ()
                        ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       PortableServer::ObjectId_var second_oid =
         PortableServer::string_to_ObjectId ("second");
@@ -336,12 +322,10 @@ main (int argc, char **argv)
         child_poa->create_reference_with_id (second_oid.in (),
                                              "IDL:test:1.0"
                                              ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       test_var second_test =
         test::_narrow (second_object.in ()
                        ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       first_task.object (first_test.in ());
       second_task.object (second_test.in ());
@@ -355,7 +339,6 @@ main (int argc, char **argv)
       root_poa->destroy (1,
                          1
                          ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       ACE_DEBUG ((LM_DEBUG,
                   "%s successful\n",

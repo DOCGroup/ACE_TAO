@@ -24,7 +24,7 @@ public:
               ACE_ENV_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  void shutdown (ACE_ENV_SINGLE_ARG_DECL)
+  void shutdown (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
 private:
@@ -46,7 +46,7 @@ public:
                      ACE_ENV_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  void twoway_no_op (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+  void twoway_no_op (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
 private:

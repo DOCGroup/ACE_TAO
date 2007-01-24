@@ -101,7 +101,7 @@ public:
                     ACE_ENV_ARG_DECL);
   void disconnected_i (PROXY *proxy
                      ACE_ENV_ARG_DECL);
-  void shutdown_i (ACE_ENV_SINGLE_ARG_DECL);
+  void shutdown_i (void);
 
   typedef TAO_ESF_Connected_Command<TAO_ESF_Delayed_Changes<PROXY,COLLECTION,ITERATOR,ACE_SYNCH_USE>,PROXY> Connected_Command;
   typedef TAO_ESF_Reconnected_Command<TAO_ESF_Delayed_Changes<PROXY,COLLECTION,ITERATOR,ACE_SYNCH_USE>,PROXY> Reconnected_Command;
@@ -117,7 +117,7 @@ public:
                             ACE_ENV_ARG_DECL);
   virtual void disconnected (PROXY *proxy
                              ACE_ENV_ARG_DECL);
-  virtual void shutdown (ACE_ENV_SINGLE_ARG_DECL);
+  virtual void shutdown (void);
 
 private:
   COLLECTION collection_;

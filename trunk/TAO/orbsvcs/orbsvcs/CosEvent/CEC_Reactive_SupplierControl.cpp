@@ -2,7 +2,7 @@
 
 // Note: This class controls the behaviour of suppliers connected to both
 // the Typed and Un-typed Event Channels.  A check must be made in the code
-// to ensure the correct EC is referenced. 
+// to ensure the correct EC is referenced.
 
 #include "orbsvcs/CosEvent/CEC_EventChannel.h"
 #include "orbsvcs/CosEvent/CEC_SupplierAdmin.h"
@@ -105,7 +105,6 @@ TAO_CEC_Reactive_SupplierControl::query_suppliers (
 
       this->typed_event_channel_->typed_supplier_admin ()->for_each (&push_worker
                                                                      ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
     }
   else
     {
@@ -115,12 +114,10 @@ TAO_CEC_Reactive_SupplierControl::query_suppliers (
   TAO_CEC_Ping_Push_Supplier push_worker (this);
   this->event_channel_->supplier_admin ()->for_each (&push_worker
                                                      ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
   TAO_CEC_Ping_Pull_Supplier pull_worker (this);
   this->event_channel_->supplier_admin ()->for_each (&pull_worker
                                                      ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
 #if defined (TAO_HAS_TYPED_EVENT_CHANNEL)
     }
@@ -217,18 +214,16 @@ TAO_CEC_Reactive_SupplierControl::handle_timeout (
       CORBA::PolicyList_var policies =
         this->policy_current_->get_policy_overrides (types
                                                      ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       // Change the timeout
       this->policy_current_->set_policy_overrides (this->policy_list_,
                                                    CORBA::ADD_OVERRIDE
                                                    ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       ACE_TRY_EX (query)
         {
           // Query the state of the suppliers...
-          this->query_suppliers (ACE_ENV_SINGLE_ARG_PARAMETER);
+          this->query_suppliers ();
           ACE_TRY_CHECK_EX (query);
         }
       ACE_CATCHANY
@@ -240,11 +235,9 @@ TAO_CEC_Reactive_SupplierControl::handle_timeout (
       this->policy_current_->set_policy_overrides (policies.in (),
                                                    CORBA::SET_OVERRIDE
                                                    ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
       for (CORBA::ULong i = 0; i != policies->length (); ++i)
         {
-          policies[i]->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+          policies[i]->destroy ();
         }
     }
   ACE_CATCHANY
@@ -264,12 +257,10 @@ TAO_CEC_Reactive_SupplierControl::activate (void)
       CORBA::Object_var tmp =
         this->orb_->resolve_initial_references ("PolicyCurrent"
                                                 ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       this->policy_current_ =
         CORBA::PolicyCurrent::_narrow (tmp.in ()
                                        ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       // Pre-compute the policy list to the set the right timeout
       // value...
@@ -286,7 +277,6 @@ TAO_CEC_Reactive_SupplierControl::activate (void)
                Messaging::RELATIVE_RT_TIMEOUT_POLICY_TYPE,
                any
                ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       // Only schedule the timer, when the rate is not zero
       if (this->rate_ != ACE_Time_Value::zero)
@@ -331,8 +321,7 @@ TAO_CEC_Reactive_SupplierControl::supplier_not_exist (
 {
   ACE_TRY
     {
-      proxy->disconnect_push_consumer (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      proxy->disconnect_push_consumer ();
     }
   ACE_CATCHANY
     {
@@ -349,8 +338,7 @@ TAO_CEC_Reactive_SupplierControl::supplier_not_exist (
 {
   ACE_TRY
     {
-      proxy->disconnect_push_consumer (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      proxy->disconnect_push_consumer ();
     }
   ACE_CATCHANY
     {
@@ -367,8 +355,7 @@ TAO_CEC_Reactive_SupplierControl::supplier_not_exist (
 {
   ACE_TRY
     {
-      proxy->disconnect_pull_consumer (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      proxy->disconnect_pull_consumer ();
     }
   ACE_CATCHANY
     {
@@ -387,8 +374,7 @@ TAO_CEC_Reactive_SupplierControl::system_exception (
     {
       if (this->need_to_disconnect (proxy))
         {
-          proxy->disconnect_pull_consumer (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+          proxy->disconnect_pull_consumer ();
         }
     }
   ACE_CATCHANY
@@ -427,24 +413,20 @@ TAO_CEC_Ping_Push_Supplier::work (TAO_CEC_ProxyPushConsumer *consumer
       CORBA::Boolean non_existent =
         consumer->supplier_non_existent (disconnected
                                          ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
       if (non_existent && !disconnected)
         {
           this->control_->supplier_not_exist (consumer ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
         }
     }
   ACE_CATCH (CORBA::OBJECT_NOT_EXIST, ex)
     {
       this->control_->supplier_not_exist (consumer ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
     }
   ACE_CATCH (CORBA::TRANSIENT, transient)
     {
       if (this->control_->need_to_disconnect (consumer))
         {
           this->control_->supplier_not_exist (consumer ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
         }
     }
   ACE_CATCHANY
@@ -467,24 +449,20 @@ TAO_CEC_Ping_Typed_Push_Supplier::work (TAO_CEC_TypedProxyPushConsumer *consumer
       CORBA::Boolean non_existent =
         consumer->supplier_non_existent (disconnected
                                          ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
       if (non_existent && !disconnected)
         {
           this->control_->supplier_not_exist (consumer ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
         }
     }
   ACE_CATCH (CORBA::OBJECT_NOT_EXIST, ex)
     {
       this->control_->supplier_not_exist (consumer ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
     }
   ACE_CATCH (CORBA::TRANSIENT, transient)
     {
       if (this->control_->need_to_disconnect (consumer))
         {
           this->control_->supplier_not_exist (consumer ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
         }
     }
   ACE_CATCHANY
@@ -507,24 +485,20 @@ TAO_CEC_Ping_Pull_Supplier::work (TAO_CEC_ProxyPullConsumer *consumer
       CORBA::Boolean non_existent =
         consumer->supplier_non_existent (disconnected
                                          ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
       if (non_existent && !disconnected)
         {
           this->control_->supplier_not_exist (consumer ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
         }
     }
   ACE_CATCH (CORBA::OBJECT_NOT_EXIST, ex)
     {
       this->control_->supplier_not_exist (consumer ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
     }
   ACE_CATCH (CORBA::TRANSIENT, transient)
     {
       if (this->control_->need_to_disconnect (consumer))
         {
           this->control_->supplier_not_exist (consumer ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
         }
     }
   ACE_CATCHANY

@@ -75,12 +75,10 @@ TAO_ECG_UDP_Receiver::connect (const RtecEventChannelAdmin::SupplierQOS& pub
   if (CORBA::is_nil (this->consumer_proxy_.in ()))
     {
       this->new_connect (pub ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
     }
   else
     {
       this->reconnect (pub ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
     }
 }
 
@@ -98,22 +96,18 @@ TAO_ECG_UDP_Receiver::new_connect (const RtecEventChannelAdmin::SupplierQOS& pub
             this,
             deactivator
             ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
   // Connect as a supplier to the local EC.
   RtecEventChannelAdmin::SupplierAdmin_var supplier_admin =
-    this->lcl_ec_->for_suppliers (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+    this->lcl_ec_->for_suppliers ();
 
   RtecEventChannelAdmin::ProxyPushConsumer_var proxy =
-    supplier_admin->obtain_push_consumer (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+    supplier_admin->obtain_push_consumer ();
   ECG_Receiver_Auto_Proxy_Disconnect new_proxy_disconnect (proxy.in ());
 
   proxy->connect_push_supplier (supplier_ref.in (),
                                 pub
                                 ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
   // Update resource managers.
   this->consumer_proxy_ = proxy._retn ();
@@ -130,10 +124,8 @@ TAO_ECG_UDP_Receiver::reconnect (const RtecEventChannelAdmin::SupplierQOS& pub
   PortableServer::POA_var poa = this->_default_POA ();
 
   CORBA::Object_var obj = poa->servant_to_reference (this ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
   supplier_ref =
     RtecEventComm::PushSupplier::_narrow (obj.in () ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
   if (CORBA::is_nil (supplier_ref.in ()))
     {
@@ -144,21 +136,20 @@ TAO_ECG_UDP_Receiver::reconnect (const RtecEventChannelAdmin::SupplierQOS& pub
   this->consumer_proxy_->connect_push_supplier (supplier_ref.in (),
                                                 pub
                                                 ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 }
 
 void
-TAO_ECG_UDP_Receiver::disconnect_push_supplier (ACE_ENV_SINGLE_ARG_DECL)
+TAO_ECG_UDP_Receiver::disconnect_push_supplier (void)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // Prevent attempts to disconnect.
   this->auto_proxy_disconnect_.disallow_command ();
 
-  this->shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
+  this->shutdown ();
 }
 
 void
-TAO_ECG_UDP_Receiver::shutdown (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+TAO_ECG_UDP_Receiver::shutdown (void)
 {
   if (this->handler_rptr_.get ())
     this->handler_rptr_->shutdown ();
@@ -210,8 +201,7 @@ TAO_ECG_UDP_Receiver::handle_input (ACE_SOCK_Dgram& dgram)
                       "TAO_ECG_UDP_Receiver::handle_input() "
                       "called but the Receiver is not connected "
                       "to an event channel. Shutting down the Receiver.\n"));
-          this->shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+          this->shutdown ();
 
           return 0;
         }
@@ -233,7 +223,6 @@ TAO_ECG_UDP_Receiver::handle_input (ACE_SOCK_Dgram& dgram)
         }
 
       this->consumer_proxy_->push (cdr_decoder.events ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
     }
 
   ACE_CATCHANY

@@ -30,7 +30,7 @@ public:
                      Sender::Table_Full));
 
   /// Public method defined locally
-  void send_message (ACE_ENV_SINGLE_ARG_DECL);
+  void send_message (void);
 
 private:
   /// Synchronizing acces to this class

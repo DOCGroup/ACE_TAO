@@ -44,18 +44,15 @@ main (int argc, char *argv[])
     {
       CORBA::ORB_var orb =
         CORBA::ORB_init (argc, argv, "" ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       if (parse_args (argc, argv) != 0)
         return 1;
 
       CORBA::Object_var tmp =
         orb->string_to_object(ior ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       Test::Receiver_var receiver =
         Test::Receiver::_narrow(tmp.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       if (CORBA::is_nil (receiver.in ()))
         {
@@ -71,7 +68,7 @@ main (int argc, char *argv[])
         }
       else
         {
-        
+
           Client_Task client_task (receiver.in (),
 #if defined (ACE_OPENVMS)
                                   750, /* test takes much longer on OpenVMS */
@@ -80,21 +77,19 @@ main (int argc, char *argv[])
 #endif
                                   32768,
                                   ACE_Thread_Manager::instance ());
-        
+
           if (client_task.activate (THR_NEW_LWP | THR_JOINABLE, 4, 1) == -1)
               {
               ACE_ERROR ((LM_ERROR, "Error activating client task\n"));
               }
           ACE_Thread_Manager::instance ()->wait ();
-        
-          CORBA::Long count = receiver->get_event_count (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_TRY_CHECK;
-        
+
+          CORBA::Long count = receiver->get_event_count ();
+
           ACE_DEBUG ((LM_DEBUG, "(%P) - Receiver got %d messages\n",
                       count));
         }
-      orb->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      orb->destroy ();
     }
   ACE_CATCHANY
     {

@@ -54,7 +54,6 @@ UDP_Client_i::svc (void)
                         udpHandler_.inout (),
                         i
                         ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
 
           ACE_DEBUG ((LM_DEBUG,
                       "invoked %s %d, going to wait %d ms\n",
@@ -66,8 +65,7 @@ UDP_Client_i::svc (void)
         }
 
       // shut down remote ORB
-      udp_->shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      udp_->shutdown ();
 
       ACE_Time_Value tv (0, 500); // 50ms
       ACE_OS::sleep (tv);  // let the previous request go through

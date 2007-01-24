@@ -25,7 +25,6 @@ main (int argc, char *argv[])
       CORBA::ORB_var orb =
         CORBA::ORB_init (argc, argv, ""
                          ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       //
       // Get the Root POA.
@@ -33,19 +32,16 @@ main (int argc, char *argv[])
       CORBA::Object_var obj =
         orb->resolve_initial_references ("RootPOA"
                                          ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       PortableServer::POA_var poa =
         PortableServer::POA::_narrow (obj.in ()
                                       ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       //
       // Get a reference to the server.
       //
       obj = orb->string_to_object ("file://server.ior"
                                    ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       if (CORBA::is_nil (obj.in ()))
         {
@@ -61,7 +57,6 @@ main (int argc, char *argv[])
       server_var server_obj =
         server::_narrow (obj.in ()
                          ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       if (CORBA::is_nil (server_obj.in ()))
         {
@@ -79,48 +74,38 @@ main (int argc, char *argv[])
                       -1);
       PortableServer::ServantBase_var theClient = servant;
 
-      client_var client_ref = servant->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      client_var client_ref = servant->_this ();
 
       //
       // Activate the POA manager.
       //
       PortableServer::POAManager_var mgr =
-        poa->the_POAManager (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        poa->the_POAManager ();
 
-      mgr->activate (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      mgr->activate ();
 
       //
       // Set the server's callback and invoke the test request.
       //
       server_obj->set_client (client_ref.in ()
                               ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       server_obj->test_request ("first secure callback to client"
                                 ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       //
       // Repeat the callback test.
       //
       server_obj->set_client (client_ref.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
       server_obj->test_request ("second secure callback to client"
                                 ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
-      server_obj->shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      server_obj->shutdown ();
 
       poa->destroy (1, 1
                     ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
-      orb->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      orb->destroy ();
     }
   ACE_CATCHANY
     {

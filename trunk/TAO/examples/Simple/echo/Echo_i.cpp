@@ -49,17 +49,14 @@ Echo_i::echo_list (const char *
   list[CORBA::ULong(0)] =
     orb_->resolve_initial_references ("NameService"
                                       ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (0);
 
   list[CORBA::ULong(1)] =
     orb_->resolve_initial_references ("NameService"
                                       ACE_ENV_ARG_PARAMETER);;
-  ACE_CHECK_RETURN (0);
 
   list[CORBA::ULong(2)] =
     orb_->resolve_initial_references ("NameService"
                                       ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (0);
 
   return list._retn ();
 }
@@ -94,7 +91,7 @@ Echo_i::echo_string (const char *mesg
 // Shutdown the server application.
 
 void
-Echo_i::shutdown (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+Echo_i::shutdown (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_DEBUG ((LM_DEBUG,

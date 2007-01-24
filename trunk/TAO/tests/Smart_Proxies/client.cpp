@@ -62,7 +62,6 @@ main (int argc, char *argv[])
                          argv,
                          ""
                          ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       if (parse_args (argc, argv) != 0)
         return 1;
@@ -70,7 +69,6 @@ main (int argc, char *argv[])
        CORBA::Object_var object =
         orb->string_to_object (ior
                                ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       // To use the smart proxy it is necessary to allocate the
       // user-defined smart factory on the heap as the smart proxy
@@ -89,7 +87,6 @@ main (int argc, char *argv[])
       Test_var server =
         Test::_narrow (object.in ()
                        ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       if (CORBA::is_nil (server.in ()))
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -118,10 +115,8 @@ main (int argc, char *argv[])
         }
 
       server->method (0 ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
-      server->shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      server->shutdown ();
 
       // The following sleep is a hack to make sure the above oneway
       // request gets sent before we exit. Otherwise, at least on
@@ -129,8 +124,7 @@ main (int argc, char *argv[])
       ACE_Time_Value tv (0, 100000);
       ACE_OS::sleep(tv);
 
-      orb->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      orb->destroy ();
     }
   ACE_CATCHANY
     {

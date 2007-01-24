@@ -44,14 +44,12 @@ main (int argc, char *argv[])
     {
       CORBA::ORB_var orb =
         CORBA::ORB_init (argc, argv, "" ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       if (parse_args (argc, argv) != 0)
         return 1;
 
       CORBA::Object_var tmp =
         orb->string_to_object(ior ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
 
       /* Do an unchecked narrow since there's no way to do an is_a on
@@ -72,7 +70,6 @@ main (int argc, char *argv[])
         }
 
       hello->send_forty_two (42 ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       Test::Octets payload (MAX_MIOP_OCTET_SEQUENCE);
       payload.length (MAX_MIOP_OCTET_SEQUENCE);
@@ -83,13 +80,10 @@ main (int argc, char *argv[])
         }
 
       hello->send_large_octet_array (payload ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
-      hello->shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      hello->shutdown ();
 
-      orb->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      orb->destroy ();
     }
   ACE_CATCHANY
     {

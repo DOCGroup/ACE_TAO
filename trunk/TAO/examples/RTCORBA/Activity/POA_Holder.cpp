@@ -134,7 +134,6 @@ POA_Holder::activate (RTCORBA::RTORB_ptr rt_orb, PortableServer::POA_ptr parent_
     rt_orb->create_priority_model_policy (priority_model_,
                                           server_priority_
                                           ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
   if (lanes_.length () != 0)
     {
@@ -156,14 +155,12 @@ POA_Holder::activate (RTCORBA::RTORB_ptr rt_orb, PortableServer::POA_ptr parent_
                                               max_buffered_requests,
                                               max_request_buffer_size
                                               ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
 
 
       // Create a thread-pool policy.
       lanes_policy =
         rt_orb->create_threadpool_policy (threadpool_id
                                           ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
 
     }
 
@@ -173,7 +170,6 @@ POA_Holder::activate (RTCORBA::RTORB_ptr rt_orb, PortableServer::POA_ptr parent_
       bands_policy =
         rt_orb->create_priority_banded_connection_policy (this->bands_
                                                           ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
     }
 
   CORBA::PolicyList poa_policy_list;
@@ -208,12 +204,10 @@ POA_Holder::activate (RTCORBA::RTORB_ptr rt_orb, PortableServer::POA_ptr parent_
 
   // Get the POA Manager.
   PortableServer::POAManager_var poa_manager =
-    parent_poa->the_POAManager (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+    parent_poa->the_POAManager ();
 
   parent_poa->create_POA (POA_name_.c_str (),
                           poa_manager.in (),
                           poa_policy_list
                           ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 }

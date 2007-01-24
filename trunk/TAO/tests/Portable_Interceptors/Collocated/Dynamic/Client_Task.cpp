@@ -26,11 +26,9 @@ Client_Task::svc (void)
 
       CORBA::Object_var object =
         corb_->string_to_object (input_ ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       Test_Interceptors::Visual_var server =
         Test_Interceptors::Visual::_narrow (object.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       if (CORBA::is_nil (server.in ()))
         {
@@ -41,10 +39,8 @@ Client_Task::svc (void)
         }
 
       run_test (server.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
-      server->shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      server->shutdown ();
     }
   ACE_CATCHANY
     {
@@ -64,29 +60,25 @@ Client_Task::run_test (Test_Interceptors::Visual_ptr server
           ACE_ENV_ARG_DECL)
 {
   server->normal (10 ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
   CORBA::Long one = 1, two = 1;
   (void) server->calculate (one,
                             two
                             ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
   ACE_TRY
     {
-      (void) server->user (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      (void) server->user ();
     }
   ACE_CATCH (Test_Interceptors::Silly, userex)
     {
       ACE_DEBUG ((LM_DEBUG, "Caught Silly\n"));
     }
   ACE_ENDTRY;
-  ACE_CHECK;
 
   ACE_TRY_EX (SYS)
     {
-      server->system (ACE_ENV_SINGLE_ARG_PARAMETER);
+      server->system ();
       ACE_TRY_CHECK_EX (SYS);
     }
   ACE_CATCH (CORBA::INV_OBJREF, sysex)
@@ -94,5 +86,4 @@ Client_Task::run_test (Test_Interceptors::Visual_ptr server
       ACE_DEBUG ((LM_DEBUG, "Caught CORBA::INV_OBJREF\n"));
     }
   ACE_ENDTRY;
-  ACE_CHECK;
 }

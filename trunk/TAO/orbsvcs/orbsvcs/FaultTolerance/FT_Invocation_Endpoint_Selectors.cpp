@@ -36,7 +36,6 @@ TAO_FT_Invocation_Endpoint_Selector::select_endpoint (
     this->select_primary (r,
                           val
                           ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
   if (retval)
     return;
@@ -45,7 +44,6 @@ TAO_FT_Invocation_Endpoint_Selector::select_endpoint (
     this->select_secondary (r,
                             val
                             ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
   if (retval == false)
     {
@@ -91,7 +89,6 @@ TAO_FT_Invocation_Endpoint_Selector::select_primary (
       bool retval =
         this->check_profile_for_primary (tmp
                                          ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK_RETURN (false);
 
       // Choose a non-primary
       if (retval == true && tmp != 0)
@@ -101,7 +98,6 @@ TAO_FT_Invocation_Endpoint_Selector::select_primary (
                                tmp,
                                max_wait_time
                                ACE_ENV_ARG_PARAMETER);
-          ACE_CHECK_RETURN (false);
 
           if (retval == true)
             return true;
@@ -143,7 +139,6 @@ TAO_FT_Invocation_Endpoint_Selector::select_secondary (
       bool retval =
         this->check_profile_for_primary (tmp
                                          ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK_RETURN (false);
 
       // Choose a non-primary
       if (retval == false && tmp != 0)
@@ -153,7 +148,6 @@ TAO_FT_Invocation_Endpoint_Selector::select_secondary (
                                tmp,
                                max_wait_time
                                ACE_ENV_ARG_PARAMETER);
-          ACE_CHECK_RETURN (false);
 
           if (retval == true)
             return true;
@@ -186,7 +180,6 @@ TAO_FT_Invocation_Endpoint_Selector::try_connect (
         r->try_connect (&desc,
                         max_wait_time
                         ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK_RETURN (false);
 
       // @@ Good place to handle timeouts.. We can omit timeouts and
       // go ahead looking for other things... There are some small

@@ -143,10 +143,8 @@ ST_AMH_Server::cleanup ()
   ACE_TRY_NEW_ENV
     {
       this->root_poa_->destroy (1, 1 ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
-      this->orb_->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      this->orb_->destroy ();
     }
   ACE_CATCHANY
     {
@@ -164,11 +162,9 @@ ST_AMH_Server::start_orb_and_poa (void)
       this->orb_ = CORBA::ORB_init (*(this->argc_),
                                     this->argv_,
                                     "" ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       CORBA::Object_var poa_object =
         this->orb_->resolve_initial_references("RootPOA" ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       if (CORBA::is_nil (poa_object.in ()))
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -177,14 +173,11 @@ ST_AMH_Server::start_orb_and_poa (void)
 
       this->root_poa_ = PortableServer::POA::_narrow (poa_object.in ()
                                                       ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       PortableServer::POAManager_var poa_manager =
-        this->root_poa_->the_POAManager (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        this->root_poa_->the_POAManager ();
 
-      poa_manager->activate (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      poa_manager->activate ();
     }
   ACE_CATCHANY
     {
@@ -202,12 +195,10 @@ ST_AMH_Server::register_servant (ST_AMH_Servant *servant)
   ACE_TRY_NEW_ENV
     {
       Test::Roundtrip_var roundtrip =
-        servant->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        servant->_this ();
 
       CORBA::String_var ior =
         this->orb_->object_to_string (roundtrip.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       (void) this->write_ior_to_file (ior);
     }
@@ -228,13 +219,11 @@ ST_AMH_Server::run_event_loop ()
       while (1)
         {
               this->orb_->perform_work (&period);
-              ACE_TRY_CHECK;
 
               // when all calls from client have been recieved, exit
               if (calls_received == num_calls )
                 return;
         }
-      ACE_TRY_CHECK;
     }
   ACE_CATCHANY
     {}

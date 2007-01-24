@@ -16,12 +16,11 @@ struct RefHelper
   typedef typename T::_ptr_type T_ptr;
   typedef typename T::_var_type T_var;
 
-  static T_ptr string_to_ref(CORBA::ORB_ptr orb, 
-                             const char* ior 
+  static T_ptr string_to_ref(CORBA::ORB_ptr orb,
+                             const char* ior
                              ACE_ENV_ARG_DECL)
   {
     CORBA::Object_var obj = orb->string_to_object(ior ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK_RETURN(T::_nil ());
 
     if (CORBA::is_nil(obj.in()))
       {
@@ -31,7 +30,6 @@ struct RefHelper
       }
 
     T_var t_obj = T::_narrow(obj.in() ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK_RETURN(T::_nil ());
 
     if (CORBA::is_nil(t_obj.in()))
       {
@@ -43,13 +41,12 @@ struct RefHelper
     return t_obj._retn();
   }
 
-  static T_ptr resolve_initial_ref(CORBA::ORB_ptr orb, 
+  static T_ptr resolve_initial_ref(CORBA::ORB_ptr orb,
                                    const char* name
                                    ACE_ENV_ARG_DECL)
   {
-    CORBA::Object_var obj 
+    CORBA::Object_var obj
       = orb->resolve_initial_references(name ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK_RETURN (T::_nil ());
 
     if (CORBA::is_nil(obj.in()))
       {
@@ -60,7 +57,6 @@ struct RefHelper
       }
 
     T_var t_obj = T::_narrow(obj.in() ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK_RETURN (T::_nil ());
 
 
     if (CORBA::is_nil(t_obj.in()))

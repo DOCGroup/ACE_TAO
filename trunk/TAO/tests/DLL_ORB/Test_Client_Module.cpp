@@ -91,7 +91,6 @@ Test_Client_Module::init (int argc, ACE_TCHAR *argv[])
                                     new_argv.get_buffer (),
                                     "CLIENT"
                                     ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       if (CORBA::is_nil (this->orb_.in ()))
         return -1;
@@ -101,11 +100,9 @@ Test_Client_Module::init (int argc, ACE_TCHAR *argv[])
 
       CORBA::Object_var obj =
         this->orb_->string_to_object (ior ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       this->test_ =
         Test::_narrow (obj.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       if (CORBA::is_nil (this->test_.in ()))
         {
@@ -123,7 +120,6 @@ Test_Client_Module::init (int argc, ACE_TCHAR *argv[])
       return -1;
     }
   ACE_ENDTRY;
-  ACE_CHECK_RETURN (-1);
 
 #if defined (ACE_HAS_THREADS)
 
@@ -165,12 +161,10 @@ Test_Client_Module::svc (void)
   ACE_TRY
     {
       // Invoke an operation on the Test object.
-      this->test_->invoke_me (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      this->test_->invoke_me ();
 
       /// Shutdown the remote ORB.
-      this->test_->shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      this->test_->shutdown ();
 
       // Make sure the ORB is destroyed here - before the thread
       // exits, because it may be holding global resources, owned by
@@ -183,8 +177,7 @@ Test_Client_Module::svc (void)
       // deleted resources.
       if (!CORBA::is_nil (this->orb_.in ()))
         {
-          this->orb_->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+          this->orb_->destroy ();
         }
 
       // This is a bit of a hack.  The ORB Core's lifetime is tied to the
@@ -204,7 +197,6 @@ Test_Client_Module::svc (void)
       return -1;
     }
   ACE_ENDTRY;
-  ACE_CHECK_RETURN (-1);
 
   return 0;
 }

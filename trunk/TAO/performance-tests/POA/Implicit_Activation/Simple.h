@@ -23,7 +23,7 @@ public:
 
   // = The skeleton methods
 
-  virtual void destroy (ACE_ENV_SINGLE_ARG_DECL)
+  virtual void destroy (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
 };
 

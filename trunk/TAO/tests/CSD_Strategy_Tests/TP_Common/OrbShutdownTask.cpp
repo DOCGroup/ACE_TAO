@@ -54,7 +54,6 @@ OrbShutdownTask::svc()
   ACE_TRY_NEW_ENV
   {
     this->orb_->shutdown(0 ACE_ENV_ARG_PARAMETER);
-    ACE_TRY_CHECK;
   }
   ACE_CATCHALL
   {

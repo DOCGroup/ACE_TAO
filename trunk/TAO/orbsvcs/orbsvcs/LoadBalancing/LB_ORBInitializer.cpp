@@ -41,15 +41,12 @@ TAO_LB_ORBInitializer::post_init (
   CORBA::Object_var obj =
     info->resolve_initial_references ("LoadManager"
                                       ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
   CosLoadBalancing::LoadManager_var lm =
     CosLoadBalancing::LoadManager::_narrow (obj.in ()
                                             ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
-  CORBA::String_var orbid = info->orb_id (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+  CORBA::String_var orbid = info->orb_id ();
 
   PortableInterceptor::IORInterceptor_ptr tmp;
   ACE_NEW_THROW_EX (tmp,
@@ -64,13 +61,11 @@ TAO_LB_ORBInitializer::post_init (
                         TAO::VMCID,
                         ENOMEM),
                       CORBA::COMPLETED_NO));
-  ACE_CHECK;
 
   PortableInterceptor::IORInterceptor_var ior_interceptor = tmp;
 
   info->add_ior_interceptor (ior_interceptor.in ()
                              ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
   // ----------------
 
@@ -82,13 +77,11 @@ TAO_LB_ORBInitializer::post_init (
                         TAO::VMCID,
                         ENOMEM),
                       CORBA::COMPLETED_NO));
-  ACE_CHECK;
 
   PortableInterceptor::ServerRequestInterceptor_var sr_interceptor = sri;
 
   info->add_server_request_interceptor (sr_interceptor.in ()
                                         ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL
