@@ -188,16 +188,16 @@ TAO_OutputCDR::throw_stub_exception (int error_num )
     case 0 :
       break;
     case EINVAL : // wchar from a GIOP 1.0
-      throw ( ::CORBA::MARSHAL (CORBA::OMGVMCID | 5, CORBA::COMPLETED_NO));
+      throw ::CORBA::MARSHAL (CORBA::OMGVMCID | 5, CORBA::COMPLETED_NO);
       ACE_NOTREACHED (break);
 #if (ERANGE != EINVAL)
     case ERANGE : // untranslatable character
-      throw ( ::CORBA::DATA_CONVERSION (CORBA::OMGVMCID | 1,
-                                         CORBA::COMPLETED_NO));
+      throw ::CORBA::DATA_CONVERSION (CORBA::OMGVMCID | 1,
+                                         CORBA::COMPLETED_NO);
       ACE_NOTREACHED (break);
 #endif
     case EACCES : // wchar but no codeset
-      throw ( ::CORBA::INV_OBJREF (CORBA::OMGVMCID | 2, CORBA::COMPLETED_NO));
+      throw ::CORBA::INV_OBJREF (CORBA::OMGVMCID | 2, CORBA::COMPLETED_NO);
       ACE_NOTREACHED (break);
     default :
       throw ::CORBA::MARSHAL ();
@@ -213,23 +213,23 @@ TAO_OutputCDR::throw_skel_exception (int error_num )
       break;
 
     case EINVAL : // wchar from a GIOP 1.0
-      throw ( ::CORBA::MARSHAL (CORBA::OMGVMCID | 5, CORBA::COMPLETED_YES));
+      throw ::CORBA::MARSHAL (CORBA::OMGVMCID | 5, CORBA::COMPLETED_YES);
       ACE_NOTREACHED (break);
 
     case EACCES : // wchar but no codeset
-      throw ( ::CORBA::BAD_PARAM (CORBA::OMGVMCID | 23,
-                                   CORBA::COMPLETED_YES));
+      throw ::CORBA::BAD_PARAM (CORBA::OMGVMCID | 23,
+                                   CORBA::COMPLETED_YES);
       ACE_NOTREACHED (break);
 
 #if (ERANGE != EINVAL)
     case ERANGE : // untranslatable character
-      throw ( ::CORBA::DATA_CONVERSION (CORBA::OMGVMCID | 1,
-                                         CORBA::COMPLETED_YES));
+      throw ::CORBA::DATA_CONVERSION (CORBA::OMGVMCID | 1,
+                                         CORBA::COMPLETED_YES);
       ACE_NOTREACHED (break);
 #endif
 
     default :
-      throw ( ::CORBA::MARSHAL (0, CORBA::COMPLETED_YES));
+      throw ::CORBA::MARSHAL (0, CORBA::COMPLETED_YES);
 
     }
 }
@@ -280,18 +280,18 @@ TAO_InputCDR::throw_stub_exception (int error_num )
     case 0 :
       break;
     case EINVAL : // wchar from a GIOP 1.0
-      throw ( ::CORBA::MARSHAL (CORBA::OMGVMCID | 6, CORBA::COMPLETED_YES));
+      throw ::CORBA::MARSHAL (CORBA::OMGVMCID | 6, CORBA::COMPLETED_YES);
       ACE_NOTREACHED(break);
 #if (ERANGE != EINVAL)
     case ERANGE : // untranslatable character
-      throw ( ::CORBA::DATA_CONVERSION (CORBA::OMGVMCID | 1, CORBA::COMPLETED_YES));
+      throw ::CORBA::DATA_CONVERSION (CORBA::OMGVMCID | 1, CORBA::COMPLETED_YES);
       ACE_NOTREACHED(break);
 #endif
     case EACCES : // wchar but no codeset
-      throw ( ::CORBA::INV_OBJREF (CORBA::OMGVMCID | 2, CORBA::COMPLETED_YES));
+      throw ::CORBA::INV_OBJREF (CORBA::OMGVMCID | 2, CORBA::COMPLETED_YES);
       ACE_NOTREACHED(break);
     default :
-      throw ( ::CORBA::MARSHAL (0, CORBA::COMPLETED_YES));
+      throw ::CORBA::MARSHAL (0, CORBA::COMPLETED_YES);
     }
 }
 
@@ -303,16 +303,16 @@ TAO_InputCDR::throw_skel_exception (int error_num )
     case 0 :
       break;
     case EINVAL : // wchar from a GIOP 1.0
-      throw ( ::CORBA::MARSHAL(CORBA::OMGVMCID | 5, CORBA::COMPLETED_NO));
+      throw ::CORBA::MARSHAL(CORBA::OMGVMCID | 5, CORBA::COMPLETED_NO);
       ACE_NOTREACHED(break);
 
     case EACCES : // wchar but no codeset
-      throw ( ::CORBA::BAD_PARAM(CORBA::OMGVMCID | 23, CORBA::COMPLETED_NO));
+      throw ::CORBA::BAD_PARAM(CORBA::OMGVMCID | 23, CORBA::COMPLETED_NO);
       ACE_NOTREACHED(break);
 
 #if (ERANGE != EINVAL)
     case ERANGE : // untranslatable character
-      throw ( ::CORBA::DATA_CONVERSION(CORBA::OMGVMCID | 1, CORBA::COMPLETED_NO));
+      throw ::CORBA::DATA_CONVERSION(CORBA::OMGVMCID | 1, CORBA::COMPLETED_NO);
       ACE_NOTREACHED(break);
 #endif
 

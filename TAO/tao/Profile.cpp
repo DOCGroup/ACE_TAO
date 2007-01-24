@@ -557,11 +557,11 @@ TAO_Profile::verify_orb_configuration (void)
       // possible to add components to the profile.
       // @todo: We need the proper minor code as soon as the spec is
       //        updated.
-      throw ( ::CORBA::BAD_PARAM (
+      throw ::CORBA::BAD_PARAM (
                    CORBA::SystemException::_tao_minor_code (
                       0,
                       EINVAL),
-                   CORBA::COMPLETED_NO));
+                   CORBA::COMPLETED_NO);
     }
 }
 
@@ -588,11 +588,11 @@ TAO_Profile::verify_profile_version (void)
       // possible to add components to the profile.
       // @todo: We need the proper minor code as soon as the spec is
       //        updated.
-      throw ( ::CORBA::BAD_PARAM (
+      throw ::CORBA::BAD_PARAM (
                    CORBA::SystemException::_tao_minor_code (
                      0,
                      EINVAL),
-                   CORBA::COMPLETED_NO));
+                   CORBA::COMPLETED_NO);
     }
 }
 
@@ -623,11 +623,11 @@ TAO_Profile::addressing_mode (CORBA::Short addr
       break;
 
     default:
-      throw ( ::CORBA::BAD_PARAM (
+      throw ::CORBA::BAD_PARAM (
              CORBA::SystemException::_tao_minor_code (
                0,
                EINVAL),
-             CORBA::COMPLETED_NO));
+             CORBA::COMPLETED_NO);
     }
 }
 
@@ -637,11 +637,11 @@ TAO_Profile::parse_string (const char *ior
 {
   if (!ior || !*ior)
     {
-      throw ( ::CORBA::INV_OBJREF (
+      throw ::CORBA::INV_OBJREF (
                    CORBA::SystemException::_tao_minor_code (
                      0,
                      EINVAL),
-                   CORBA::COMPLETED_NO));
+                   CORBA::COMPLETED_NO);
     }
 
   // Remove the "N.n@" version prefix, if it exists, and verify the
@@ -669,15 +669,14 @@ TAO_Profile::parse_string (const char *ior
   if (this->version_.major != TAO_DEF_GIOP_MAJOR ||
       this->version_.minor >  TAO_DEF_GIOP_MINOR)
     {
-      throw ( ::CORBA::INV_OBJREF (
+      throw ::CORBA::INV_OBJREF (
                    CORBA::SystemException::_tao_minor_code (
                      0,
                      EINVAL),
-                   CORBA::COMPLETED_NO));
+                   CORBA::COMPLETED_NO);
     }
 
-  this->parse_string_i (ior
-                       );
+  this->parse_string_i (ior);
 }
 
 CORBA::Boolean

@@ -32,11 +32,11 @@ namespace TAO
     TAO_Stub * const stub =
       this->target_->_stubobj ();
     if (stub == 0)
-      throw ( ::CORBA::INTERNAL (
+      throw ::CORBA::INTERNAL (
                      CORBA::SystemException::_tao_minor_code (
                        0,
                          EINVAL),
-                        CORBA::COMPLETED_NO));
+                        CORBA::COMPLETED_NO);
 
     // The invocation has got to be within the context of the
     // corresponding ORB's configuration. Otherwise things like

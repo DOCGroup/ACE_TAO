@@ -361,7 +361,7 @@ TAO_DynStruct_i::set_members (const DynamicAny::NameValuePairSeq & values)
 
       if (!equivalent)
         {
-          throw (DynamicAny::DynAny::TypeMismatch ());
+          throw DynamicAny::DynAny::TypeMismatch ();
         }
 
       this->da_members_[i]->destroy ();
@@ -468,7 +468,7 @@ TAO_DynStruct_i::set_members_as_dyn_any (
 
       if (!equivalent)
         {
-          throw (DynamicAny::DynAny::TypeMismatch ());
+          throw DynamicAny::DynAny::TypeMismatch ();
         }
 
       this->da_members_[i]->destroy ();
@@ -567,7 +567,7 @@ TAO_DynStruct_i::from_any (const CORBA::Any & any)
     }
   else
     {
-      throw (DynamicAny::DynAny::TypeMismatch ());
+      throw DynamicAny::DynAny::TypeMismatch ();
     }
 }
 

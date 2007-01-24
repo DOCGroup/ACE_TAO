@@ -277,7 +277,7 @@ TAO_DynArray_i::set_elements (const DynamicAny::AnySeq & value
         }
       else
         {
-          throw (DynamicAny::DynAny::TypeMismatch ());
+          throw DynamicAny::DynAny::TypeMismatch ();
         }
     }
 }
@@ -361,7 +361,7 @@ TAO_DynArray_i::set_elements_as_dyn_any (
         }
       else
         {
-          throw (DynamicAny::DynAny::TypeMismatch ());
+          throw DynamicAny::DynAny::TypeMismatch ();
         }
     }
 }
@@ -414,7 +414,7 @@ TAO_DynArray_i::from_any (const CORBA::Any& any
 
       if (length != arg_length)
         {
-          throw (DynamicAny::DynAny::TypeMismatch ());
+          throw DynamicAny::DynAny::TypeMismatch ();
         }
 
       CORBA::TypeCode_var field_tc =
@@ -447,7 +447,7 @@ TAO_DynArray_i::from_any (const CORBA::Any& any
     }
   else
     {
-      throw (DynamicAny::DynAny::TypeMismatch ());
+      throw DynamicAny::DynAny::TypeMismatch ();
     }
 }
 

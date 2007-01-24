@@ -102,11 +102,11 @@ namespace TAO
     // Initialize the messaging object
     if (this->transport_->messaging_init (version.major, version.minor) == -1)
       {
-        throw ( ::CORBA::INTERNAL (
+        throw ::CORBA::INTERNAL (
                           CORBA::SystemException::_tao_minor_code (
                             0,
                             EINVAL),
-                          CORBA::COMPLETED_NO));
+                          CORBA::COMPLETED_NO);
       }
 
     if (!this->transport_->is_tcs_set ())

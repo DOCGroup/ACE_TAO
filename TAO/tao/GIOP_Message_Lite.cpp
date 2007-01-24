@@ -765,8 +765,7 @@ TAO_GIOP_Message_Lite::process_request (TAO_Transport *transport,
 
       // Throw an exception if the
       if (parse_error != 0)
-        throw ( ::CORBA::MARSHAL (0,
-                                       CORBA::COMPLETED_NO));
+        throw ::CORBA::MARSHAL (0, CORBA::COMPLETED_NO);
       request_id = request.request_id ();
 
       response_required = request.response_expected ();
@@ -949,8 +948,7 @@ TAO_GIOP_Message_Lite::process_locate_request (TAO_Transport *transport,
 
       if (parse_error != 0)
         {
-          throw ( ::CORBA::MARSHAL (0,
-                                         CORBA::COMPLETED_NO));
+          throw ::CORBA::MARSHAL (0, CORBA::COMPLETED_NO);
         }
 
       // Execute a fake request to find out if the object is there or
@@ -985,8 +983,7 @@ TAO_GIOP_Message_Lite::process_locate_request (TAO_Transport *transport,
 
       if (parse_error != 0)
         {
-          throw ( ::CORBA::MARSHAL (0,
-                                         CORBA::COMPLETED_NO));
+          throw ::CORBA::MARSHAL (0, CORBA::COMPLETED_NO);
         }
 
       CORBA::Object_var forward_to;
