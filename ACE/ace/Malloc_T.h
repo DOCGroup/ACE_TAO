@@ -217,7 +217,7 @@ public:
 #if defined (ACE_HAS_TEMPLATE_TYPEDEFS)
   // The following code will break C++ compilers that don't support
   // template typedefs correctly.
-  typedef const ACE_TYPENAME MALLOC::MEMORY_POOL_OPTIONS *MEMORY_POOL_OPTIONS;
+  typedef const typename MALLOC::MEMORY_POOL_OPTIONS *MEMORY_POOL_OPTIONS;
 #else
   typedef const void *MEMORY_POOL_OPTIONS;
 #endif /* ACE_HAS_TEMPLATE_TYPEDEFS */
@@ -436,8 +436,8 @@ public:
   friend class ACE_Malloc_FIFO_Iterator_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>;
   typedef ACE_MEM_POOL MEMORY_POOL;
   typedef ACE_MEM_POOL_OPTIONS MEMORY_POOL_OPTIONS;
-  typedef ACE_TYPENAME ACE_CB::ACE_Name_Node NAME_NODE;
-  typedef ACE_TYPENAME ACE_CB::ACE_Malloc_Header MALLOC_HEADER;
+  typedef typename ACE_CB::ACE_Name_Node NAME_NODE;
+  typedef typename ACE_CB::ACE_Malloc_Header MALLOC_HEADER;
 
   // = Initialization and termination methods.
   /**
@@ -701,8 +701,8 @@ template <ACE_MEM_POOL_1, class ACE_LOCK, class ACE_CB>
 class ACE_Malloc_LIFO_Iterator_T
 {
 public:
-  typedef ACE_TYPENAME ACE_CB::ACE_Name_Node NAME_NODE;
-  typedef ACE_TYPENAME ACE_CB::ACE_Malloc_Header MALLOC_HEADER;
+  typedef typename ACE_CB::ACE_Name_Node NAME_NODE;
+  typedef typename ACE_CB::ACE_Malloc_Header MALLOC_HEADER;
 
   // = Initialization method.
   /// If @a name = 0 it will iterate through everything else only
@@ -769,8 +769,8 @@ template <ACE_MEM_POOL_1, class ACE_LOCK, class ACE_CB>
 class ACE_Malloc_FIFO_Iterator_T
 {
 public:
-  typedef ACE_TYPENAME ACE_CB::ACE_Name_Node NAME_NODE;
-  typedef ACE_TYPENAME ACE_CB::ACE_Malloc_Header MALLOC_HEADER;
+  typedef typename ACE_CB::ACE_Name_Node NAME_NODE;
+  typedef typename ACE_CB::ACE_Malloc_Header MALLOC_HEADER;
 
   // = Initialization method.
   /// If @a name = 0 it will iterate through everything else only

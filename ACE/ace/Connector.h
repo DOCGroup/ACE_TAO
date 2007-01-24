@@ -156,18 +156,12 @@ class ACE_Connector : public ACE_Connector_Base<SVC_HANDLER>, public ACE_Service
 public:
 
   // Useful STL-style traits.
-  typedef ACE_TYPENAME SVC_HANDLER::addr_type    addr_type;
+  typedef typename SVC_HANDLER::addr_type        addr_type;
   typedef ACE_PEER_CONNECTOR                     connector_type;
   typedef SVC_HANDLER                            handler_type;
-  typedef ACE_TYPENAME SVC_HANDLER::stream_type  stream_type;
-
-  // typedef ACE_TYPENAME ACE_PEER_CONNECTOR_ADDR PEER_ADDR;
-#if defined (ACE_HAS_TYPENAME_KEYWORD)
-  typedef ACE_PEER_CONNECTOR_ADDR ACE_PEER_ADDR_TYPEDEF;
-#endif /* ACE_HAS_TYPENAME_KEYWORD */
-
-  typedef ACE_TYPENAME _ACE_PEER_CONNECTOR::PEER_ADDR
-  ACE_TYPENAME_ACE_PEER_CONNECTOR_PEER_ADDR;
+  typedef typename SVC_HANDLER::stream_type      stream_type;
+  typedef typename ACE_PEER_CONNECTOR::PEER_ADDR peer_addr_type;
+  typedef ACE_PEER_CONNECTOR_ADDR                ACE_PEER_ADDR_TYPEDEF;
 
   /**
    * Initialize a connector.  @a flags indicates how <SVC_HANDLER>'s
@@ -207,7 +201,7 @@ public:
                        const ACE_PEER_CONNECTOR_ADDR &remote_addr,
                        const ACE_Synch_Options &synch_options = ACE_Synch_Options::defaults,
                        const ACE_PEER_CONNECTOR_ADDR &local_addr
-                       = (ACE_TYPENAME_ACE_PEER_CONNECTOR_PEER_ADDR &) ACE_PEER_CONNECTOR_ADDR_ANY,
+                       = (peer_addr_type &) ACE_PEER_CONNECTOR_ADDR_ANY,
                        int reuse_addr = 0,
                        int flags = O_RDWR,
                        int perms = 0);
@@ -227,7 +221,7 @@ public:
                        const ACE_PEER_CONNECTOR_ADDR &remote_addr,
                        const ACE_Synch_Options &synch_options = ACE_Synch_Options::defaults,
                        const ACE_PEER_CONNECTOR_ADDR &local_addr
-                       = (ACE_TYPENAME_ACE_PEER_CONNECTOR_PEER_ADDR &) ACE_PEER_CONNECTOR_ADDR_ANY,
+                       = (peer_addr_type &) ACE_PEER_CONNECTOR_ADDR_ANY,
                        int reuse_addr = 0,
                        int flags = O_RDWR,
                        int perms = 0);
@@ -235,7 +229,7 @@ public:
   /**
    * Initiate connection of @a n @a svc_handlers to peers at
    * @a remote_addrs using @a synch_options.  Returns -1 if failure
-   * occurs and 0 otherwise.  If <failed_svc_handlers> is non-NULL, a
+   * occurs and 0 otherwise.  If @a failed_svc_handlers is non-NULL, a
    * 1 is placed in the corresponding index of <failed_svc_handler>
    * for each <svc_handlers[i]> that failed to connect, else a 0 is
    * placed in that index.
@@ -297,8 +291,8 @@ protected:
   virtual int make_svc_handler (SVC_HANDLER *&sh);
 
   /**
-   * Bridge method for connecting the <svc_handler> to the
-   * <remote_addr>.  The default behavior delegates to the
+   * Bridge method for connecting the @a svc_handler to the
+   * @a remote_addr.  The default behavior delegates to the
    * <PEER_CONNECTOR::connect>.
    */
   virtual int connect_svc_handler (SVC_HANDLER *&svc_handler,
@@ -318,7 +312,7 @@ protected:
                                    int perms);
 
   /**
-   * Bridge method for activating a <svc_handler> with the appropriate
+   * Bridge method for activating a @a svc_handler with the appropriate
    * concurrency strategy.  The default behavior of this method is to
    * activate the SVC_HANDLER by calling its <open> method (which
    * allows the SVC_HANDLER to define its own concurrency strategy).
@@ -356,7 +350,7 @@ protected:
   virtual int fini (void);
 
   /// Default version returns address info in <buf>.
-  virtual int info (ACE_TCHAR **, size_t) const;
+  virtual int info (ACE_TCHAR **strp, size_t length) const;
 
   // = Service management hooks.
   /// Default version does no work and returns -1.  Must be overloaded

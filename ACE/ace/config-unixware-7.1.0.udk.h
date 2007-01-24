@@ -343,9 +343,6 @@
 /* Platform has <utime.h> header file */
 #define ACE_HAS_UTIME 1
 
-/* Compiler supports the C++ typename keyword */
-#define ACE_HAS_TYPENAME_KEYWORD 1
-
 /* Prints out console message in ACE_NOTSUP.  Useful for tracking down origin
    of ACE_NOTSUP. */
 /* #undef ACE_HAS_VERBOSE_NOTSUP */

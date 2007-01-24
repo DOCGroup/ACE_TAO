@@ -103,9 +103,6 @@ typedef enum CMA_T_SCHED_POLICY {
 // Platform lacks streambuf "linebuffered ()".  [C++ iostream]
 #define ACE_LACKS_LINEBUFFERED_STREAMBUF
 
-// Use native implementation of memchr.
-#define ACE_HAS_MEMCHR
-
 // Platform supports recvmsg and sendmsg
 #define ACE_HAS_MSG
 

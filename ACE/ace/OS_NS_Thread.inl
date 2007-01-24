@@ -3312,16 +3312,16 @@ ACE_OS::thr_sigsetmask (int how,
     case SIG_UNBLOCK:
       {
         // get the old mask
-                old_mask = ::sigsetmask (*nsm);
+        old_mask = ::sigsetmask (*nsm);
         // create a new mask:  the following assumes that sigset_t is 4 bytes,
         // which it is on VxWorks 5.2, so bit operations are done simply . . .
         ::sigsetmask (how == SIG_BLOCK ? (old_mask |= *nsm) : (old_mask &= ~*nsm));
-                if (osm)
+        if (osm)
           *osm = old_mask;
         break;
       }
     case SIG_SETMASK:
-          old_mask = ::sigsetmask (*nsm);
+      old_mask = ::sigsetmask (*nsm);
       if (osm)
         *osm = old_mask;
       break;

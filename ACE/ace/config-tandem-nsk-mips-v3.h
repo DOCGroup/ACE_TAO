@@ -104,9 +104,6 @@ typedef enum CMA_T_SCHED_POLICY {
 // Platform lacks streambuf "linebuffered ()".  [C++ iostream]
 #define ACE_LACKS_LINEBUFFERED_STREAMBUF
 
-// Use native implementation of memchr.
-#define ACE_HAS_MEMCHR
-
 // Platform supports recvmsg and sendmsg
 #define ACE_HAS_MSG
 
@@ -410,9 +407,6 @@ extern int cma_sigwait  (sigset_t *);
 // Platform lacks "signed char" type (broken!)
 // Following will not be needed if use standard c library (G06.20 and later)
 #define ACE_LACKS_SIGNED_CHAR
-
-// Compiler supports the typename keyword for templates
-#define ACE_HAS_TYPENAME_KEYWORD
 
 // Compiler can handle any operators in namespace
 #define ACE_ANY_OPS_USE_NAMESPACE
