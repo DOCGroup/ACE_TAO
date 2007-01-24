@@ -64,7 +64,7 @@ TAO_Messaging_ORBInitializer::register_value_factory (
                     "\"PortableInterceptor::ORBInitInfo_ptr\" to\n"
                     "(%P|%t)   \"TAO_ORBInitInfo *.\"\n"));
 
-      throw ( ::CORBA::INTERNAL ());
+      throw ::CORBA::INTERNAL ();
     }
 
   TAO::ExceptionHolderFactory *base_factory = 0;

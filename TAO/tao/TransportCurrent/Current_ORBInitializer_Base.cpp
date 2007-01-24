@@ -41,7 +41,7 @@ namespace TAO
                         "TAO (%P|%t) TAO::Transport::ORBInitializer::pre_init - "
                         "Panic: unable to narrow the ORBInitInfo_ptr\n"));
 
-          throw ( ::CORBA::INTERNAL ());
+          throw ::CORBA::INTERNAL ();
         }
 
       // Reserve a TSS slot in the ORB core internal TSS resources for the

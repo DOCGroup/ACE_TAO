@@ -3261,7 +3261,7 @@ TAO_ORB_Core::add_interceptor (
                   ACE_TEXT ("ERROR: ORB Core unable to find the ")
                   ACE_TEXT ("IORInterceptor Adapter Factory instance")));
 
-      throw ( ::CORBA::INTERNAL ());
+      throw ::CORBA::INTERNAL ();
     }
 }
 
@@ -3322,7 +3322,7 @@ TAO_ORB_Core::add_interceptor (
                   ACE_TEXT ("Client Request Interceptor Adapter Factory ")
                   ACE_TEXT ("instance")));
 
-      throw ( ::CORBA::INTERNAL ());
+      throw ::CORBA::INTERNAL ();
     }
 }
 
@@ -3372,7 +3372,7 @@ TAO_ORB_Core::add_interceptor (
                   ACE_TEXT ("Server Request Interceptor Adapter Factory ")
                   ACE_TEXT ("instance")));
 
-      throw ( ::CORBA::INTERNAL ());
+      throw ::CORBA::INTERNAL ();
     }
 }
 
@@ -3398,7 +3398,7 @@ TAO_ORB_Core::add_interceptor (
                   ACE_TEXT ("Client Request Interceptor Adapter Factory ")
                   ACE_TEXT ("instance")));
 
-      throw ( ::CORBA::INTERNAL ());
+      throw ::CORBA::INTERNAL ();
     }
 }
 
@@ -3424,7 +3424,7 @@ TAO_ORB_Core::add_interceptor (
                   ACE_TEXT ("Server Request Interceptor Adapter Factory ")
                   ACE_TEXT ("instance")));
 
-      throw ( ::CORBA::INTERNAL ());
+      throw ::CORBA::INTERNAL ();
     }
 }
 

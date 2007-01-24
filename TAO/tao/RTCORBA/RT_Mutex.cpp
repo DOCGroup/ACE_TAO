@@ -21,7 +21,7 @@ TAO_RT_Mutex::lock (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   if (this->mu_.acquire () != 0)
-    throw ( ::CORBA::INTERNAL ());
+    throw ::CORBA::INTERNAL ();
 }
 
 void
@@ -29,7 +29,7 @@ TAO_RT_Mutex::unlock (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   if (this->mu_.release () != 0)
-    throw ( ::CORBA::INTERNAL ());
+    throw ::CORBA::INTERNAL ();
 }
 
 CORBA::Boolean
