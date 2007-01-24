@@ -31,12 +31,10 @@ typedef ACE_Dynamic_Cached_Allocator<ACE_SYNCH_NULL_MUTEX> DYNAMIC_ALLOCATOR;
 static int
 speed_test (ACE_UINT32 loops)
 {
-#ifndef ACE_LACKS_FLOATING_POINT
   double tt    = 0.0,
     ut    = 0.0,
     utus  = 0.0,
     speed = 0.0;
-#endif /* ACE_LACKS_FLOATING_POINT */
 
   ACE_Time_Value tc;
   void *ptr = 0;
@@ -66,10 +64,6 @@ speed_test (ACE_UINT32 loops)
   timer.elapsed_time (tc);
 
   ACE_DEBUG ((LM_INFO, ACE_TEXT (" (%t) Iterations : %d\n"), loops));
-#ifdef ACE_LACKS_FLOATING_POINT
-  ACE_DEBUG ((LM_INFO, ACE_TEXT (" (%t) Total time : %d s, %d us\n"),
-              tc.sec (), tc.usec ()));
-#elif !defined ACE_LACKS_FLOATING_POINT
   tt    = tc.sec () + tc.usec ()*1.0e-6;
   ut    = tt/loops;
   utus  = ut*1.0e6;
@@ -78,8 +72,6 @@ speed_test (ACE_UINT32 loops)
   ACE_DEBUG ((LM_INFO, ACE_TEXT (" (%t) Total time : %.6g [s]\n"), tt));
   ACE_DEBUG ((LM_INFO, ACE_TEXT (" (%t) Unit time  : %.6g [us]\n"), utus));
   ACE_DEBUG ((LM_INFO, ACE_TEXT (" (%t) Speed      : %.6g [1/s]\n"), speed));
-
-#endif /* !defined ACE_LACKS_FLOATING_POINT */
 
   return 0;
 }
@@ -91,12 +83,10 @@ static int
 stdspeed_test (ACE_UINT32 loops)
 {
 
-#ifndef ACE_LACKS_FLOATING_POINT
   double tt    = 0.0,
     ut    = 0.0,
     utus  = 0.0,
     speed = 0.0;
-#endif /* ACE_LACKS_FLOATING_POINT */
 
   ACE_Time_Value tc;
   void *ptr = 0;
@@ -123,10 +113,6 @@ stdspeed_test (ACE_UINT32 loops)
   timer.elapsed_time (tc);
 
   ACE_DEBUG ((LM_INFO, ACE_TEXT (" (%t) Iterations : %d\n"), loops));
-#ifdef ACE_LACKS_FLOATING_POINT
-  ACE_DEBUG ((LM_INFO, ACE_TEXT (" (%t) Total time : %d s, %d us\n"),
-              tc.sec (), tc.usec ()));
-#elif !defined ACE_LACKS_FLOATING_POINT
   tt    = tc.sec () + tc.usec ()*1.0e-6;
   ut    = tt/loops;
   utus  = ut*1.0e6;
@@ -135,8 +121,6 @@ stdspeed_test (ACE_UINT32 loops)
   ACE_DEBUG ((LM_INFO, ACE_TEXT (" (%t) Total time : %.6g [s]\n"), tt));
   ACE_DEBUG ((LM_INFO, ACE_TEXT (" (%t) Unit time  : %.6g [us]\n"), utus));
   ACE_DEBUG ((LM_INFO, ACE_TEXT (" (%t) Speed      : %.6g [1/s]\n"), speed));
-
-#endif /* !defined ACE_LACKS_FLOATING_POINT */
 
   return 0;
 }

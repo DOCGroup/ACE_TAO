@@ -55,11 +55,11 @@ namespace ACE_OS {
   ACE_NAMESPACE_INLINE_FUNCTION
   void *memchr (void *s, int c, size_t len);
 
-#if !defined (ACE_HAS_MEMCHR)
+#if defined (ACE_LACKS_MEMCHR)
   /// Emulated memchr - Finds a character in a buffer.
   extern ACE_Export
   const void *memchr_emulation (const void *s, int c, size_t len);
-#endif /* ACE_HAS_MEMCHR */
+#endif /* ACE_LACKS_MEMCHR */
 
   /// Compares two buffers.
   ACE_NAMESPACE_INLINE_FUNCTION
@@ -311,13 +311,6 @@ namespace ACE_OS {
   wchar_t *strpbrk (wchar_t *s1, const wchar_t *s2);
 #endif /* ACE_HAS_WCHAR */
 
-#if defined (ACE_LACKS_STRPBRK)
-  /// Emulated strpbrk - Searches for characters in a string.
-  extern ACE_Export
-  char *strpbrk_emulation (const char *string,
-                           const char *charset);
-#endif /* ACE_LACKS_STRPBRK */
-
   /// Finds the last occurance of a character in a string (const char
   /// version).
   ACE_NAMESPACE_INLINE_FUNCTION
@@ -405,13 +398,6 @@ namespace ACE_OS {
   ACE_NAMESPACE_INLINE_FUNCTION
   size_t strspn (const wchar_t *s1, const wchar_t *s2);
 #endif /* ACE_HAS_WCHAR */
-
-#if defined (ACE_LACKS_STRSPN)
-  /// Emulated wcsspn.
-  extern ACE_Export
-  size_t strspn_emulation (const char *string,
-                           const char *charset);
-#endif /* ACE_LACKS_STRSPN */
 
   /// Finds the first occurance of a substring in a string (const char
   /// version).

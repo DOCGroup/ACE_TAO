@@ -55,10 +55,10 @@ class ACE_Acceptor : public ACE_Service_Object
 public:
 
   // Useful STL-style traits.
-  typedef ACE_PEER_ACCEPTOR_ADDR                 addr_type;
-  typedef ACE_PEER_ACCEPTOR                      acceptor_type;
-  typedef SVC_HANDLER                            handler_type;
-  typedef ACE_TYPENAME SVC_HANDLER::stream_type  stream_type;
+  typedef ACE_PEER_ACCEPTOR_ADDR            addr_type;
+  typedef ACE_PEER_ACCEPTOR                 acceptor_type;
+  typedef SVC_HANDLER                       handler_type;
+  typedef typename SVC_HANDLER::stream_type stream_type;
 
   /// "Do-nothing" constructor.
   ACE_Acceptor (ACE_Reactor * = 0,
@@ -523,10 +523,10 @@ class ACE_Oneshot_Acceptor : public ACE_Service_Object
 public:
 
   // Useful STL-style traits.
-  typedef ACE_PEER_ACCEPTOR_ADDR                 addr_type;
-  typedef ACE_PEER_ACCEPTOR                      acceptor_type;
-  typedef SVC_HANDLER                            handler_type;
-  typedef ACE_TYPENAME SVC_HANDLER::stream_type  stream_type;
+  typedef ACE_PEER_ACCEPTOR_ADDR            addr_type;
+  typedef ACE_PEER_ACCEPTOR                 acceptor_type;
+  typedef SVC_HANDLER                       handler_type;
+  typedef typename SVC_HANDLER::stream_type stream_type;
 
   /// Constructor.
   ACE_Oneshot_Acceptor (void);

@@ -48,8 +48,6 @@
 //#define ACE_HAS_SVR4_TLI
 #define ACE_HAS_SUNOS4_GETTIMEOFDAY
 
-#define ACE_HAS_MEMCHR
-
 #define ACE_LACKS_STROPTS_H
 
 // Wcharness....

@@ -25,7 +25,8 @@ ACE_RCSID (ace,
            Codeset_IBM1047,
            "$Id$")
 
-// ****************************************************************
+#include "ace/OS_Memory.h"
+#include "ace/OS_NS_string.h"
 
 namespace
 {
@@ -172,7 +173,7 @@ ACE_IBM1047_ISO8859::write_char_array (ACE_OutputCDR& out,
                                        const ACE_CDR::Char* x,
                                        ACE_CDR::ULong len)
 {
-  char *buf;
+  char *buf = 0;
   if (this->adjust (out, len, 1, buf) == 0)
     {
       ACE_OS::memcpy (buf, x, len);
@@ -208,7 +209,6 @@ ACE_ISO8859_IBM1047::tcs ()
 {
   return 0x10020417;
 }
-
 
 ACE_CDR::Boolean
 ACE_ISO8859_IBM1047::read_char (ACE_InputCDR& in,
@@ -291,7 +291,7 @@ ACE_ISO8859_IBM1047::write_char_array (ACE_OutputCDR &out,
                                        const ACE_CDR::Char *x,
                                        ACE_CDR::ULong len)
 {
-  char *buf;
+  char *buf = 0;
 
   if (this->adjust (out, len, 1, buf) == 0)
     {
@@ -308,8 +308,6 @@ ACE_ISO8859_IBM1047::write_char_array (ACE_OutputCDR &out,
 }
 
 ACE_END_VERSIONED_NAMESPACE_DECL
-
-// ****************************************************************
 
 #elif defined (__HP_aCC)
 // Make aC++ stop complaining about an empty translation unit
