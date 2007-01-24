@@ -1005,8 +1005,7 @@ namespace
 
        os << "_exec_i," << endl
           << "::CORBA::NO_MEMORY ());"
-          << STRS[ACE_CR] << " (" << STRS[COMP_EC]
-          << "::_nil ());" << endl
+          << endl
           << "return retval;"
           << "}";
     }
