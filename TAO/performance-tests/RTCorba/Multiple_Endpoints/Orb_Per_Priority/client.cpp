@@ -317,7 +317,7 @@ Client::svc (void)
       /* char orb_name[50];
       ACE_OS::sprintf (orb_name, "%d", priorities[this->id_]);
       server->shutdown (orb_name ACE_ENV_ARG_PARAMETER);
-/
+      */
     }
   ACE_CATCHANY
     {
