@@ -410,22 +410,22 @@ namespace TAO
       effective_target->_stubobj ();
 
     if (stubobj == 0)
-      throw ( ::CORBA::INTERNAL (
+      throw ::CORBA::INTERNAL (
         CORBA::SystemException::_tao_minor_code (
           TAO_INVOCATION_LOCATION_FORWARD_MINOR_CODE,
           errno),
-        CORBA::COMPLETED_NO));
+        CORBA::COMPLETED_NO);
 
 
     // Reset the profile in the stubs
     stub->add_forward_profiles (stubobj->base_profiles (), permanent_forward);
 
     if (stub->next_profile () == 0)
-      throw ( ::CORBA::TRANSIENT (
+      throw ::CORBA::TRANSIENT (
         CORBA::SystemException::_tao_minor_code (
           TAO_INVOCATION_LOCATION_FORWARD_MINOR_CODE,
           errno),
-        CORBA::COMPLETED_NO));
+        CORBA::COMPLETED_NO);
 
     return;
   }

@@ -44,13 +44,13 @@ namespace CORBA
    * @c 2 is done as follows:
    *
    * @verbatim
-   *   throw (CORBA::BAD_PARAM (CORBA::OMGVMCID | 2, CORBA::COMPLETED_NO);
+   *   throw ::CORBA::BAD_PARAM (CORBA::OMGVMCID | 2, CORBA::COMPLETED_NO);
    * @endverbatim
    *
    * *NOT* as:
    *
    * @verbatim
-   *   throw (CORBA::BAD_PARAM (2, CORBA::COMPLETED_NO);
+   *   throw ::CORBA::BAD_PARAM (2, CORBA::COMPLETED_NO);
    * @endverbatim
    */
   const ULong OMGVMCID = 0x4f4d0000U;

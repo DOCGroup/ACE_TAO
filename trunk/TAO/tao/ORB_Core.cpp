@@ -2362,8 +2362,7 @@ TAO_ORB_Core::check_shutdown (void)
       // CORBA::BAD_INV_ORDER exception with minor code 4 if the ORB
       // has shutdown by the time an ORB function is called.
 
-      throw ( ::CORBA::BAD_INV_ORDER (CORBA::OMGVMCID | 4,
-                                       CORBA::COMPLETED_NO));
+      throw ::CORBA::BAD_INV_ORDER (CORBA::OMGVMCID | 4, CORBA::COMPLETED_NO);
     }
 }
 
@@ -2449,7 +2448,7 @@ TAO_ORB_Core::resolve_typecodefactory_i (void)
           ACE_ERROR ((LM_ERROR,
                       ACE_TEXT ("(%P|%t) Unable to instantiate ")
                       ACE_TEXT ("a TypeCodeFactory_Loader\n")));
-          throw ( ::CORBA::ORB::InvalidName ());
+          throw ::CORBA::ORB::InvalidName ();
         }
     }
 

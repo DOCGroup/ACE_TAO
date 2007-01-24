@@ -320,7 +320,7 @@ TAO_DynUnion_i::set_discriminator (DynamicAny::DynAny_ptr value)
 
   if (!equivalent)
     {
-      throw (DynamicAny::DynAny::TypeMismatch ());
+      throw DynamicAny::DynAny::TypeMismatch ();
     }
 
   CORBA::Any_var value_any = value->to_any ();
@@ -440,7 +440,7 @@ TAO_DynUnion_i::set_to_default_member (void)
   if (default_index == -1)
     {
       // No explicit default case.
-      throw (DynamicAny::DynAny::TypeMismatch ());
+      throw DynamicAny::DynAny::TypeMismatch ();
     }
   else
     {
@@ -489,7 +489,7 @@ TAO_DynUnion_i::set_to_no_active_member (void)
   // possible case label values are used.
   if (default_index != -1)
     {
-      throw (DynamicAny::DynAny::TypeMismatch ());
+      throw DynamicAny::DynAny::TypeMismatch ();
     }
   else
     {
@@ -510,7 +510,7 @@ TAO_DynUnion_i::set_to_no_active_member (void)
 
           if (member_count == label_count)
             {
-              throw (DynamicAny::DynAny::TypeMismatch ());
+              throw DynamicAny::DynAny::TypeMismatch ();
             }
         }
     }
@@ -683,7 +683,7 @@ TAO_DynUnion_i::from_any (const CORBA::Any& any)
     }
   else
     {
-      throw (DynamicAny::DynAny::TypeMismatch ());
+      throw DynamicAny::DynAny::TypeMismatch ();
     }
 }
 

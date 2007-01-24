@@ -30,7 +30,7 @@ void CompressionManager::register_factory (
 
           if (compressor_factory->compressor_id () == current)
             {
-              throw (::Compression::FactoryAlreadyRegistered ());
+              throw ::Compression::FactoryAlreadyRegistered ();
             }
         }
       factories_.length (length + 1);
@@ -39,8 +39,7 @@ void CompressionManager::register_factory (
   else
     {
       // @todo Standardize this minor code
-      throw ( ::CORBA::BAD_PARAM (CORBA::OMGVMCID | 44,
-                                   CORBA::COMPLETED_YES));
+      throw ::CORBA::BAD_PARAM (CORBA::OMGVMCID | 44, CORBA::COMPLETED_NO);
     }
 }
 
@@ -73,7 +72,7 @@ CompressionManager::unregister_factory (
     }
 
   // todo exception
-  throw (::Compression::UnknownCompressorId ());
+  throw ::Compression::UnknownCompressorId ();
 }
 
 ::Compression::CompressorFactory_ptr
@@ -101,7 +100,7 @@ CompressionManager::get_factory (
       return ::Compression::CompressorFactory::_duplicate (this->factories_[i]);
     }
 
-  throw (::Compression::UnknownCompressorId ());
+  throw ::Compression::UnknownCompressorId ();
 
   ACE_NOTREACHED (return ::Compression::CompressorFactory::_nil ());
 }

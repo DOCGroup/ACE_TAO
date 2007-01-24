@@ -366,7 +366,7 @@ TAO_DynSequence_i::set_elements (const DynamicAny::AnySeq & value)
         }
       else
         {
-          throw (DynamicAny::DynAny::TypeMismatch ());
+          throw DynamicAny::DynAny::TypeMismatch ();
         }
     }
 
@@ -480,7 +480,7 @@ TAO_DynSequence_i::set_elements_as_dyn_any (
         }
       else
         {
-          throw (DynamicAny::DynAny::TypeMismatch ());
+          throw DynamicAny::DynAny::TypeMismatch ();
         }
     }
 
@@ -602,7 +602,7 @@ TAO_DynSequence_i::from_any (const CORBA::Any & any)
     }
   else
     {
-      throw (DynamicAny::DynAny::TypeMismatch ());
+      throw DynamicAny::DynAny::TypeMismatch ();
     }
 }
 

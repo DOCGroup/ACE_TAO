@@ -99,8 +99,7 @@ CORBA::LocalObject::_create_request (CORBA::Context_ptr,
                                      CORBA::Request_ptr &,
                                      CORBA::Flags)
 {
-  throw ( ::CORBA::NO_IMPLEMENT (CORBA::OMGVMCID | 4,
-                                  CORBA::COMPLETED_NO));
+  throw ::CORBA::NO_IMPLEMENT (CORBA::OMGVMCID | 4, CORBA::COMPLETED_NO);
 }
 
 void
@@ -113,8 +112,7 @@ CORBA::LocalObject::_create_request (CORBA::Context_ptr,
                                      CORBA::Request_ptr &,
                                      CORBA::Flags)
 {
-  throw ( ::CORBA::NO_IMPLEMENT (CORBA::OMGVMCID | 4,
-                                  CORBA::COMPLETED_NO));
+  throw ::CORBA::NO_IMPLEMENT (CORBA::OMGVMCID | 4, CORBA::COMPLETED_NO);
 }
 
 CORBA::Request_ptr

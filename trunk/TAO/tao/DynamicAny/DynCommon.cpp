@@ -76,7 +76,7 @@ TAO_DynCommon::assign (DynamicAny::DynAny_ptr dyn_any
     }
   else
     {
-      throw (DynamicAny::DynAny::TypeMismatch ());
+      throw DynamicAny::DynAny::TypeMismatch ();
     }
 }
 
@@ -230,7 +230,7 @@ TAO_DynCommon::insert_string (const char * value
 
       if (kind != CORBA::tk_string)
         {
-          throw (DynamicAny::DynAny::TypeMismatch ());
+          throw DynamicAny::DynAny::TypeMismatch ();
         }
 
       CORBA::ULong const bound =
@@ -324,7 +324,7 @@ TAO_DynCommon::insert_reference (CORBA::Object_ptr value
         }
       else
         {
-          throw (DynamicAny::DynAny::TypeMismatch ());
+          throw DynamicAny::DynAny::TypeMismatch ();
         }
     }
 }
@@ -499,7 +499,7 @@ TAO_DynCommon::insert_val (CORBA::ValueBase *value
 
       if (kind != CORBA::tk_value)
         {
-          throw (DynamicAny::DynAny::TypeMismatch ());
+          throw DynamicAny::DynAny::TypeMismatch ();
         }
 
       // If the arg is 0 we can't do this kind of type checking,
@@ -518,7 +518,7 @@ TAO_DynCommon::insert_val (CORBA::ValueBase *value
           // here, so if the repo ids don't match, we're hosed.
           if (ACE_OS::strcmp (value_id, my_id) != 0)
             {
-              throw (DynamicAny::DynAny::TypeMismatch ());
+              throw DynamicAny::DynAny::TypeMismatch ();
             }
         }
 
@@ -1187,7 +1187,7 @@ TAO_DynCommon::insert_abstract (CORBA::AbstractBase_ptr value
         }
       else
         {
-          throw (DynamicAny::DynAny::TypeMismatch ());
+          throw DynamicAny::DynAny::TypeMismatch ();
         }
     }
 }
@@ -1695,7 +1695,7 @@ TAO_DynCommon::check_type (CORBA::TypeCode_ptr tc)
 
   if (!equivalent)
     {
-      throw (DynamicAny::DynAny::TypeMismatch ());
+      throw DynamicAny::DynAny::TypeMismatch ();
     }
 }
 

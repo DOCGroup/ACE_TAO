@@ -150,7 +150,7 @@ CORBA::Any::type (CORBA::TypeCode_ptr tc
     }
   else
     {
-      throw ( ::CORBA::BAD_TYPECODE ());
+      throw ::CORBA::BAD_TYPECODE ();
     }
 }
 
