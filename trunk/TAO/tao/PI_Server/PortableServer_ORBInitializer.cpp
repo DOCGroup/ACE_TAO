@@ -72,9 +72,7 @@ TAO_PortableServer_ORBInitializer::register_policy_factories (
     {
       try
         {
-          info->register_policy_factory (*i,
-                                         policy_factory.in ()
-                                        );
+          info->register_policy_factory (*i, policy_factory.in ());
         }
       catch ( ::CORBA::BAD_INV_ORDER& ex)
         {
