@@ -174,7 +174,7 @@ namespace
     OperationEmitter (Context& c,
                       T& scope)
       : EmitterBase (c),
-        scope_ (scope),
+        scope_ (scope)
     {
     }
 
