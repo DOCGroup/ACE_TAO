@@ -180,16 +180,14 @@ namespace
 
     // Overridden by facet and home operation emitters to do nothing.
     virtual void
-    gen_swap_related (Type& o)
+    gen_swap_related (Type&)
     {
       string swap_option = ctx.cl ().get_value ("custom-container", "");
       bool swapping = (swap_option == "upgradeable");
 
       if (swapping)
         {
-          os << "this->activate_component (" << ");";
-
-          os << endl;
+          os << "this->activate_component (" << ");" << endl;
         }
     }
 
