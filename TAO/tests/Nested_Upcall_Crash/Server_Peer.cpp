@@ -40,8 +40,7 @@ Server_Peer::callme(Test::Peer_ptr callback,
   {
     ACE_TRY
     {
-      callback->crash(ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      callback->crash();
     }
     ACE_CATCHANY
     {
@@ -49,13 +48,11 @@ Server_Peer::callme(Test::Peer_ptr callback,
     ACE_ENDTRY;
 
     // orb_->shutdown (0 ACE_ENV_ARG_PARAMETER);
-    // ACE_CHECK;
   }
   else if (max_depth > 0)
   {
     Test::Peer_var me =
-      this->_this(ACE_ENV_SINGLE_ARG_PARAMETER);
-    ACE_CHECK;
+      this->_this();
 
     Test::Payload extra_data(this->payload_size_);
     extra_data.length(this->payload_size_);
@@ -63,19 +60,18 @@ Server_Peer::callme(Test::Peer_ptr callback,
                      max_depth - 1,
                      extra_data
                      ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK;
   }
 }
 
 void
-Server_Peer::crash(ACE_ENV_SINGLE_ARG_DECL)
+Server_Peer::crash(void)
   ACE_THROW_SPEC((CORBA::SystemException))
 {
   ACE_THROW(CORBA::NO_IMPLEMENT ());
 }
 
 void
-Server_Peer::noop(ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+Server_Peer::noop(void)
   ACE_THROW_SPEC((CORBA::SystemException))
 {
 }

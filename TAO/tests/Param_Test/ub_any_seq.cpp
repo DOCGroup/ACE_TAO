@@ -21,7 +21,7 @@
 #include "tao/debug.h"
 
 ACE_RCSID (Param_Test,
-           ub_any_seq, 
+           ub_any_seq,
            "$Id$")
 
 const CORBA::ULong TEST_SEQ_LENGTH = 5;
@@ -62,8 +62,7 @@ Test_AnySeq::dii_req_invoke (CORBA::Request *req
 
   req->set_return_type (CORBA::_tc_AnySeq);
 
-  req->invoke (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+  req->invoke ();
 
   CORBA::AnySeq* tmp;
   req->return_value () >>= tmp;
@@ -71,13 +70,11 @@ Test_AnySeq::dii_req_invoke (CORBA::Request *req
 
   CORBA::NamedValue_ptr o2 =
     req->arguments ()->item (1 ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
   *o2->value () >>= tmp;
   this->inout_ = new CORBA::AnySeq (*tmp);
 
   CORBA::NamedValue_ptr o3 =
     req->arguments ()->item (2 ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
   *o3->value () >>= tmp;
   this->out_ = new CORBA::AnySeq (*tmp);
 }
@@ -126,8 +123,7 @@ Test_AnySeq::init_parameters (Param_Test_ptr objref
             ACE_TRY
               {
                 // get access to a Coffee Object
-                Coffee_var cobj = objref->make_coffee (ACE_ENV_SINGLE_ARG_PARAMETER);
-                ACE_TRY_CHECK;
+                Coffee_var cobj = objref->make_coffee ();
 
                 // insert the coffee object into the Any
                 this->in_[i] <<= cobj.in ();
@@ -210,7 +206,6 @@ Test_AnySeq::run_sii_test (Param_Test_ptr objref
                                         this->inout_.inout (),
                                         out
                                         ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       return 0;
     }

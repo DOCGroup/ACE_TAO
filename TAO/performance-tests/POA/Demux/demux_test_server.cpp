@@ -69,7 +69,6 @@ Demux_Test_Server::init (int argc, char *argv []
       ACE_RE_THROW_EX (GET_ORB);
     }
   ACE_ENDTRY;
-  ACE_CHECK_RETURN (-1);
 
   // Grab the ROOT POA
   ACE_TRY_EX (GET_ROOT_POA)
@@ -99,14 +98,13 @@ Demux_Test_Server::init (int argc, char *argv []
       ACE_RE_THROW_EX (GET_ROOT_POA);
     }
   ACE_ENDTRY;
-  ACE_CHECK_RETURN (-1);
 
   // grab the POA Manager
   ACE_TRY_EX (GET_POA_MGR)
     {
 
       this->poa_mgr_ =
-        this->root_poa_->the_POAManager (ACE_ENV_SINGLE_ARG_PARAMETER);
+        this->root_poa_->the_POAManager ();
       ACE_TRY_CHECK_EX (GET_POA_MGR);
     }
   ACE_CATCHANY
@@ -116,7 +114,6 @@ Demux_Test_Server::init (int argc, char *argv []
       ACE_RE_THROW_EX (GET_POA_MGR);
     }
   ACE_ENDTRY;
-  ACE_CHECK_RETURN (-1);
 
   // now parse the rest of the arguments to determine the POA depth, the number
   // of objects with each POA and other info
@@ -194,7 +191,6 @@ Demux_Test_Server::init (int argc, char *argv []
       ACE_RE_THROW_EX (POLICY);
     }
   ACE_ENDTRY;
-  ACE_CHECK_RETURN (-1);
 
   // now create a POA hierarchy of the desired depth and populate each POA with
   // the specified number of objects. Finally, activate these objects.
@@ -243,7 +239,6 @@ Demux_Test_Server::init (int argc, char *argv []
           ACE_RE_THROW_EX (CREATE_POA);
         }
       ACE_ENDTRY;
-      ACE_CHECK_RETURN (-1);
 
       for (j = 0; j < this->num_objs_; j++)
         {
@@ -271,7 +266,6 @@ Demux_Test_Server::init (int argc, char *argv []
                   ACE_RE_THROW_EX (ACTIVATE_OBJ);
                 }
               ACE_ENDTRY;
-              ACE_CHECK_RETURN (-1);
 
               // Get the IOR and output it to the file
               ACE_TRY_EX (IOR)
@@ -294,7 +288,6 @@ Demux_Test_Server::init (int argc, char *argv []
                   ACE_RE_THROW_EX (IOR);
                 }
               ACE_ENDTRY;
-              ACE_CHECK_RETURN (-1);
             }
           else
             {
@@ -323,17 +316,14 @@ Demux_Test_Server::init (int argc, char *argv []
                   this->child_poa_[i]->activate_object_with_id (oid.in (),
                                                                 demux_test_i_ptr
                                                                 ACE_ENV_ARG_PARAMETER);
-                  ACE_TRY_CHECK;
 
                   // Get Object reference for demux_test_i impl object.
-                  CORBA::Object_var demux_var = demux_test_i_ptr->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
+                  CORBA::Object_var demux_var = demux_test_i_ptr->_this ();
 
-                  ACE_TRY_CHECK;
 
                   CORBA::String_var ior = this->orb_->object_to_string
                     (demux_var.in () ACE_ENV_ARG_PARAMETER);
 
-                  ACE_TRY_CHECK;
 
                   ACE_OS::fprintf (this->ior_fp_, "%s\n", ior.in ());
 
@@ -345,7 +335,6 @@ Demux_Test_Server::init (int argc, char *argv []
                   ACE_RE_THROW;
                 }
               ACE_ENDTRY;
-              ACE_CHECK_RETURN (-1);
 
             }// end of if (!use_user_id_)
 
@@ -362,7 +351,7 @@ Demux_Test_Server::init (int argc, char *argv []
 
   ACE_TRY_EX (ACTIVATE)
     {
-      this->poa_mgr_->activate (ACE_ENV_SINGLE_ARG_PARAMETER);
+      this->poa_mgr_->activate ();
 
       ACE_TRY_CHECK_EX (ACTIVATE);
     }
@@ -373,7 +362,6 @@ Demux_Test_Server::init (int argc, char *argv []
       ACE_RE_THROW_EX (ACTIVATE);
     }
   ACE_ENDTRY;
-  ACE_CHECK_RETURN (-1);
 
   // success
   return 0;
@@ -471,12 +459,11 @@ Demux_Test_Server::init_naming_service (void)
 
 // The main program for Demux_Test
 int
-Demux_Test_Server::run (ACE_ENV_SINGLE_ARG_DECL)
+Demux_Test_Server::run (void)
 {
   ACE_TRY
     {
-      this->orb_->run (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      this->orb_->run ();
     }
   ACE_CATCHANY
     {

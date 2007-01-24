@@ -31,7 +31,7 @@ Memory_Growth::send_objref (const Test::PayLoad & /*p*/
 }
 
 void
-Memory_Growth::shutdown (ACE_ENV_SINGLE_ARG_DECL)
+Memory_Growth::shutdown (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->orb_->shutdown (0 ACE_ENV_ARG_PARAMETER);

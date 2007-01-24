@@ -29,7 +29,7 @@ class Collocation_Test
 public:
   Collocation_Test (void);
 
-  void shutdown (ACE_ENV_SINGLE_ARG_DECL);
+  void shutdown (void);
 
   int init (int argc, char *argv[] ACE_ENV_ARG_DECL_NOT_USED);
   // Initializing the Collocation_Test object.
@@ -37,11 +37,11 @@ public:
   int parse_args (int argc, char *argv[]);
   // Parse the test specific arguments.
 
-  int test_narrow (ACE_ENV_SINGLE_ARG_DECL_NOT_USED);
+  int test_narrow (void);
   // This test narrow an object reference to its base class and see
   // if it works correctly.
 
-  int run (ACE_ENV_SINGLE_ARG_DECL_NOT_USED);
+  int run (void);
   // Run the test.
 
 private:

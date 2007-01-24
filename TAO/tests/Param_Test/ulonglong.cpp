@@ -20,7 +20,7 @@
 #include "ulonglong.h"
 
 ACE_RCSID (Param_Test,
-           ulonglong, 
+           ulonglong,
            "$Id$")
 
 Test_ULongLong::Test_ULongLong (void)
@@ -50,19 +50,16 @@ Test_ULongLong::dii_req_invoke (CORBA::Request *req
 
   req->set_return_type (CORBA::_tc_ulonglong);
 
-  req->invoke (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+  req->invoke ();
 
   req->return_value () >>= this->ret_;
 
   CORBA::NamedValue_ptr o2 =
     req->arguments ()->item (1 ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
   *o2->value () >>= this->inout_;
 
   CORBA::NamedValue_ptr o3 =
     req->arguments ()->item (2 ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
   *o3->value () >>= this->out_;
 }
 
@@ -97,7 +94,6 @@ Test_ULongLong::run_sii_test (Param_Test_ptr objref
                                            this->out_
                                            ACE_ENV_ARG_PARAMETER);
 
-      ACE_TRY_CHECK;
 
       return 0;
     }

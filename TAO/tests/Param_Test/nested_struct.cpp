@@ -20,7 +20,7 @@
 #include "nested_struct.h"
 
 ACE_RCSID (Param_Test,
-           nested_struct, 
+           nested_struct,
            "$Id$")
 
 // ************************************************************************
@@ -57,8 +57,7 @@ Test_Nested_Struct::dii_req_invoke (CORBA::Request *req ACE_ENV_ARG_DECL)
   req->add_out_arg ("s3") <<= this->out_.in ();
   req->set_return_type (Param_Test::_tc_Nested_Struct);
 
-  req->invoke (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+  req->invoke ();
 
   Param_Test::Nested_Struct *tmp;
   req->return_value () >>= tmp;
@@ -66,13 +65,11 @@ Test_Nested_Struct::dii_req_invoke (CORBA::Request *req ACE_ENV_ARG_DECL)
 
   CORBA::NamedValue_ptr arg2 =
     req->arguments ()->item (1 ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
   *arg2->value () >>= tmp;
   this->inout_ = new Param_Test::Nested_Struct (*tmp);
 
   CORBA::NamedValue_ptr arg3 =
     req->arguments ()->item (2 ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
   *arg3->value () >>= tmp;
   this->out_ = new Param_Test::Nested_Struct (*tmp);
 }
@@ -142,7 +139,6 @@ Test_Nested_Struct::run_sii_test (Param_Test_ptr objref
                                                this->inout_.inout (),
                                                out
                                                ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       return 0;
     }

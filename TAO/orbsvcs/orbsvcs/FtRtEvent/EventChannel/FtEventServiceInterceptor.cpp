@@ -85,7 +85,6 @@ retrieve_ft_request_context(
                             ACE_ENV_ARG_DECL)
 {
   service_context = ri->get_request_service_context(IOP::FT_REQUEST ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
   const char * buf =
     reinterpret_cast<const char *> (service_context->context_data.get_buffer ());
@@ -115,7 +114,6 @@ get_transaction_depth_context(
   ACE_TRY {
     service_context = ri->get_request_service_context(FTRT::FT_TRANSACTION_DEPTH
       ACE_ENV_ARG_PARAMETER);
-    ACE_TRY_CHECK;
   }
   ACE_CATCH  (CORBA::BAD_PARAM, ex)
   {
@@ -152,7 +150,6 @@ get_sequence_number_context(
   IOP::ServiceContext_var service_context;
   service_context = ri->get_request_service_context(FTRT::FT_SEQUENCE_NUMBER
     ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN(0);
 
   const char * buf =
     reinterpret_cast<const char *> (service_context->context_data.get_buffer ());
@@ -193,14 +190,14 @@ FtEventServiceInterceptor::instance()
 }
 
 char *
-FtEventServiceInterceptor::name (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+FtEventServiceInterceptor::name (void)
 ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return CORBA::string_dup ("FtEventServiceInterceptor");
 }
 
 void
-FtEventServiceInterceptor::destroy (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+FtEventServiceInterceptor::destroy (void)
 ACE_THROW_SPEC ((CORBA::SystemException))
 {
 }
@@ -221,8 +218,7 @@ FtEventServiceInterceptor::receive_request (PortableInterceptor::ServerRequestIn
                                             ACE_THROW_SPEC ((CORBA::SystemException,
                                             PortableInterceptor::ForwardRequest))
 {
-  CORBA::String_var operation = ri->operation (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+  CORBA::String_var operation = ri->operation ();
   if (ACE_OS::strcmp(operation.in(), "push") == 0) {
     TAO_FTRTEC::Log(3, "Received push command\n");
     return;
@@ -295,7 +291,6 @@ FtEventServiceInterceptor::send_reply (PortableInterceptor::ServerRequestInfo_pt
       service_context,
       ft_request_service_context
       ACE_ENV_ARG_PARAMETER);
-    ACE_TRY_CHECK;
   }
   ACE_CATCH (CORBA::BAD_PARAM, ex) {
     return;

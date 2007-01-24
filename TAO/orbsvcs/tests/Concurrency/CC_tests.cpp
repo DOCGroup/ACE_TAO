@@ -43,8 +43,7 @@ CC_Test::create_lock_set (void)
   ACE_TRY
     {
       lock_set =
-        this->naming_service_->get_lock_set_factory ()->create (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        this->naming_service_->get_lock_set_factory ()->create ();
 
       if (CORBA::is_nil (lock_set))
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -108,14 +107,12 @@ Test_Single_Lock_With_Mode::run (int /* times_to_run */)
     {
       cc_lock_set_->lock (mode_ ACE_ENV_ARG_PARAMETER);
 
-      ACE_TRY_CHECK;
       ACE_DEBUG ((LM_DEBUG,
                   "%s lock set\n",
                   get_lock_mode_name (mode_)));
 
       lock_not_held = cc_lock_set_->try_lock (mode_
                                               ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       if (lock_not_held)
         {
@@ -137,7 +134,6 @@ Test_Single_Lock_With_Mode::run (int /* times_to_run */)
 
       lock_not_held = cc_lock_set_->try_lock (mode_
                                               ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       if (lock_not_held)
         ACE_DEBUG ((LM_DEBUG,
@@ -188,14 +184,12 @@ Test_Setup_LockSet::run (int /* times_to_run */)
         create_lock_set ();
       this->naming_service_->bind_name (my_name_, cc_lock_set_
                                         ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       ACE_DEBUG ((LM_DEBUG,
                   "Name bound\n"));
 
       cc_lock_set_->lock (CosConcurrencyControl::read
                           ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       ACE_DEBUG ((LM_DEBUG,
                   "Read lock set\n"));
@@ -235,16 +229,13 @@ Test_Use_Already_Created_LockSet::run (int /* times_to_run */)
         this->naming_service_->get_obj_from_name (const_cast<char *> (""),
                                                   my_name_
                                                   ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       CosConcurrencyControl::LockSet_var ccls =
         CosConcurrencyControl::LockSet::_narrow (ccls_obj.in ()
                                                  ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       ccls->lock (CosConcurrencyControl::read
                   ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
     }
   ACE_CATCHANY
@@ -281,12 +272,10 @@ Test_Unlock_Already_Created_LockSet::run (int /* times_to_run */)
       CORBA::Object_var ccls_obj =
         this->naming_service_->get_obj_from_name (const_cast<char *> (""), my_name_
                                                  ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       CosConcurrencyControl::LockSet_var ccls =
         CosConcurrencyControl::LockSet::_narrow (ccls_obj.in ()
                                                  ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       ccls->unlock (CosConcurrencyControl::read
                     ACE_ENV_ARG_PARAMETER);
@@ -327,7 +316,6 @@ Test_Release_Not_Held_Lock::run (int /* times_to_run */)
     {
       // lock the lock
       cc_lock_set_->lock (mode_ ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       ACE_DEBUG ((LM_DEBUG,
                   "%s lock set\n",
@@ -364,7 +352,6 @@ Test_Release_Not_Held_Lock::run (int /* times_to_run */)
                   "attemptet to release %s lock\n",
                   get_lock_mode_name (mode_)));
 
-      ACE_TRY_CHECK;
     }
   ACE_CATCH(CosConcurrencyControl::LockNotHeld, userex)
     {

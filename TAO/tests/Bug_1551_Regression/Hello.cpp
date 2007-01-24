@@ -15,7 +15,7 @@ Hello::Hello(
 }
 
 void
-Hello::short_sleep (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+Hello::short_sleep (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   long count = atomic_counter_--;

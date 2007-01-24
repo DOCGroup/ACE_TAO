@@ -32,17 +32,14 @@ Policy_Tester::~Policy_Tester (void)
 }
 
 void
-Policy_Tester::run (ACE_ENV_SINGLE_ARG_DECL)
+Policy_Tester::run (void)
 {
   PortableServer::POAManager_var poa_manager =
-    this->child_poa_->the_POAManager (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+    this->child_poa_->the_POAManager ();
 
-  poa_manager->activate (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+  poa_manager->activate ();
 
-  this->orb_->run (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+  this->orb_->run ();
 }
 
 int
@@ -54,17 +51,14 @@ Policy_Tester::init (int argc,
   this->orb_ =
     CORBA::ORB_init (argc, argv, ""
                      ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
 
   // Get a reference to the RT-ORB.
   CORBA::Object_var object =
     this->orb_->resolve_initial_references ("RTORB"
                                             ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
 
   this->rt_orb_ = RTCORBA::RTORB::_narrow (object.in ()
                                            ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
 
   // Here we parse the command line paramether passed
   // to the application.
@@ -79,13 +73,11 @@ Policy_Tester::init (int argc,
         {
           this->rt_poa_properties_ =
             RT_Properties::read_from (arg ACE_ENV_ARG_PARAMETER);
-          ACE_CHECK_RETURN (-1);
         }
       else if ((arg = arg_shifter.get_the_parameter ("-ObjectConfigFile")))
         {
           this->rt_object_properties_ =
             RT_Properties::read_from (arg ACE_ENV_ARG_PARAMETER);
-          ACE_CHECK_RETURN (-1);
         }
       else if ((arg = arg_shifter.get_the_parameter ("-BaseObjectIOR")))
         {
@@ -95,7 +87,6 @@ Policy_Tester::init (int argc,
                                 RT_Properties,
                                 CORBA::NO_MEMORY (TAO::VMCID,
                                                   CORBA::COMPLETED_NO));
-              ACE_CHECK_RETURN (-1);
             }
           this->rt_poa_properties_->ior_source (arg);
         }
@@ -107,7 +98,6 @@ Policy_Tester::init (int argc,
                                 RT_Properties,
                                 CORBA::NO_MEMORY (TAO::VMCID,
                                                   CORBA::COMPLETED_NO));
-              ACE_CHECK_RETURN (-1);
             }
           this->rt_object_properties_->ior_source (arg);
         }
@@ -123,8 +113,7 @@ Policy_Tester::init (int argc,
     }
 
   int result =
-    this->create_objects (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
+    this->create_objects ();
 
   if (result != 0)
     return result;
@@ -146,7 +135,7 @@ Policy_Tester::check_reference (CORBA::Object_ptr object,
 
 
 int
-Policy_Tester::create_objects (ACE_ENV_SINGLE_ARG_DECL)
+Policy_Tester::create_objects (void)
 {
   CORBA::PolicyList poa_policy_list;
   poa_policy_list.length (3);
@@ -157,7 +146,6 @@ Policy_Tester::create_objects (ACE_ENV_SINGLE_ARG_DECL)
     this->rt_orb_->create_priority_model_policy (RTCORBA::SERVER_DECLARED,
                                                  priority
                                                  ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
 
       // Create priority Banded Connection Policy.
   RTCORBA::PriorityBands poa_priority_bands =
@@ -166,7 +154,6 @@ Policy_Tester::create_objects (ACE_ENV_SINGLE_ARG_DECL)
   poa_policy_list[1] =
     this->rt_orb_->create_priority_banded_connection_policy (poa_priority_bands
                                                              ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
 
       // Client Protocol Policy.
   RTCORBA::ProtocolList protocol_list;
@@ -185,11 +172,9 @@ Policy_Tester::create_objects (ACE_ENV_SINGLE_ARG_DECL)
 
   CORBA::Object_var object =
     this->orb_->resolve_initial_references ("RootPOA" ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
 
   this->poa_ =
     PortableServer::POA::_narrow (object.in () ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
 
   PortableServer::POAManager_var poa_mgr =
     PortableServer::POAManager::_nil ();
@@ -199,18 +184,15 @@ Policy_Tester::create_objects (ACE_ENV_SINGLE_ARG_DECL)
                             poa_mgr.in (),
                             poa_policy_list
                             ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
 
   this->child_poa_ =
     RTPortableServer::POA::_narrow (object.in () ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
 
   // Create a Corba Object reference, using the policies
   // set at the POA level.
   object =
     this->child_poa_->create_reference ("IDL:Counter:1.0"
                                         ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
 
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("Reference Created!\n")));
@@ -220,7 +202,6 @@ Policy_Tester::create_objects (ACE_ENV_SINGLE_ARG_DECL)
     return -1;
 
   Counter_var base_object = Counter::_narrow (object.in () ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
 
   if (!check_reference (base_object.in(),
                         "Unable to create a Object!\n"))
@@ -228,7 +209,6 @@ Policy_Tester::create_objects (ACE_ENV_SINGLE_ARG_DECL)
 
   CORBA::String_var ior =
     this->orb_->object_to_string (base_object.in () ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
 
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("Activated as <%s>\n"), ior.in ()));
@@ -254,7 +234,6 @@ Policy_Tester::create_objects (ACE_ENV_SINGLE_ARG_DECL)
     ("IDL:Counter:1.0",
      this->rt_object_properties_->priority ()
      ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
 
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("Reference Created!\n")));
@@ -264,7 +243,6 @@ Policy_Tester::create_objects (ACE_ENV_SINGLE_ARG_DECL)
     return -1;
 
   Counter_var over_object = Counter::_narrow (object.in () ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
 
   if (!check_reference (over_object.in(),
                         "Unable to create Object!\n"))
@@ -273,7 +251,6 @@ Policy_Tester::create_objects (ACE_ENV_SINGLE_ARG_DECL)
 
   CORBA::String_var o_ior =
     this->orb_->object_to_string (over_object.in () ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
 
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("Activated as <%s>\n"), o_ior.in ()));
@@ -291,8 +268,7 @@ Policy_Tester::create_objects (ACE_ENV_SINGLE_ARG_DECL)
 }
 
 void
-Policy_Tester::shutdown (ACE_ENV_SINGLE_ARG_DECL)
+Policy_Tester::shutdown (void)
 {
   this->orb_->shutdown (0 ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 }

@@ -17,7 +17,6 @@ main (int argc, char *argv[])
   ACE_TRY
     {
       int status = server.init (argc, argv ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       if (status != 0)
         {
@@ -25,11 +24,9 @@ main (int argc, char *argv[])
         }
       else
         {
-          server.run (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+          server.run ();
 
-          status = server.fini (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+          status = server.fini ();
 
           if (status == -1)
             {

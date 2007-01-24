@@ -8,8 +8,8 @@
 #include "orbsvcs/Event/EC_Default_Factory.h"
 #include "orbsvcs/Event/EC_Gateway_IIOP.h"
 
-ACE_RCSID (EC_Tests, 
-           Gateway, 
+ACE_RCSID (EC_Tests,
+           Gateway,
            "$Id$")
 
 int
@@ -23,19 +23,14 @@ main (int argc, char* argv[])
       // ORB initialization boiler plate...
       CORBA::ORB_var orb =
         CORBA::ORB_init (argc, argv, "" ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       CORBA::Object_var object =
         orb->resolve_initial_references ("RootPOA" ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
       PortableServer::POA_var poa =
         PortableServer::POA::_narrow (object.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
       PortableServer::POAManager_var poa_manager =
-        poa->the_POAManager (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
-      poa_manager->activate (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        poa->the_POAManager ();
+      poa_manager->activate ();
 
       // ****************************************************************
 
@@ -45,46 +40,38 @@ main (int argc, char* argv[])
       attributes.supplier_reconnect = 1;
 
       TAO_EC_Event_Channel ec_impl_1 (attributes);
-      ec_impl_1.activate (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      ec_impl_1.activate ();
 
       RtecEventChannelAdmin::EventChannel_var event_channel_1 =
-        ec_impl_1._this (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        ec_impl_1._this ();
 
       // ****************************************************************
 
       TAO_EC_Event_Channel ec_impl_2 (attributes);
-      ec_impl_2.activate (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      ec_impl_2.activate ();
 
       RtecEventChannelAdmin::EventChannel_var event_channel_2 =
-        ec_impl_2._this (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        ec_impl_2._this ();
 
       // ****************************************************************
 
       // Obtain the consumer admin..
       RtecEventChannelAdmin::ConsumerAdmin_var consumer_admin_1 =
-        event_channel_1->for_consumers (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        event_channel_1->for_consumers ();
 
       // Obtain the supplier admin..
       RtecEventChannelAdmin::SupplierAdmin_var supplier_admin_1 =
-        event_channel_1->for_suppliers (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        event_channel_1->for_suppliers ();
 
       // ****************************************************************
 
       // Obtain the consumer admin..
       RtecEventChannelAdmin::ConsumerAdmin_var consumer_admin_2 =
-        event_channel_2->for_consumers (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        event_channel_2->for_consumers ();
 
       // Obtain the supplier admin..
       RtecEventChannelAdmin::SupplierAdmin_var supplier_admin_2 =
-        event_channel_2->for_suppliers (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        event_channel_2->for_suppliers ();
 
       // ****************************************************************
 
@@ -94,12 +81,10 @@ main (int argc, char* argv[])
                     ACE_ENV_ARG_PARAMETER);
 
       RtecEventChannelAdmin::Observer_var obs =
-        gateway._this (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        gateway._this ();
 
       RtecEventChannelAdmin::Observer_Handle h =
         event_channel_2->append_observer (obs.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       gateway.observer_handle (h);
 
@@ -114,28 +99,24 @@ main (int argc, char* argv[])
       supplier_00.activate (consumer_admin_1.in (),
                             milliseconds
                             ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
       supplier_00.connect (supplier_admin_1.in (),
                            event_source,
                            event_type,
                            event_source,
                            event_type
                            ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       EC_Counting_Supplier supplier_01;
 
       supplier_01.activate (consumer_admin_1.in (),
                             milliseconds
                             ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
       supplier_01.connect (supplier_admin_1.in (),
                            event_source,
                            event_type + 1,
                            event_source,
                            event_type + 1
                            ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       // ****************************************************************
 
@@ -152,7 +133,6 @@ main (int argc, char* argv[])
         consumer_00.connect (consumer_admin_2.in (),
                              consumer_qos.get_ConsumerQOS ()
                              ACE_ENV_ARG_PARAMETER);
-        ACE_TRY_CHECK;
       }
 
       // ****************************************************************
@@ -183,7 +163,6 @@ main (int argc, char* argv[])
         consumer_00.connect (consumer_admin_2.in (),
                              consumer_qos.get_ConsumerQOS ()
                              ACE_ENV_ARG_PARAMETER);
-        ACE_TRY_CHECK;
       }
 
       // ****************************************************************
@@ -210,7 +189,6 @@ main (int argc, char* argv[])
         consumer_00.connect (consumer_admin_2.in (),
                              consumer_qos.get_ConsumerQOS ()
                              ACE_ENV_ARG_PARAMETER);
-        ACE_TRY_CHECK;
       }
 
       // ****************************************************************
@@ -228,8 +206,7 @@ main (int argc, char* argv[])
 
       // ****************************************************************
 
-      consumer_00.disconnect (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      consumer_00.disconnect ();
 
       // ****************************************************************
 
@@ -241,7 +218,6 @@ main (int argc, char* argv[])
         consumer_00.connect (consumer_admin_2.in (),
                              consumer_qos.get_ConsumerQOS ()
                              ACE_ENV_ARG_PARAMETER);
-        ACE_TRY_CHECK;
       }
 
       // ****************************************************************
@@ -272,7 +248,6 @@ main (int argc, char* argv[])
         consumer_00.connect (consumer_admin_2.in (),
                              consumer_qos.get_ConsumerQOS ()
                              ACE_ENV_ARG_PARAMETER);
-        ACE_TRY_CHECK;
       }
 
       // ****************************************************************
@@ -299,7 +274,6 @@ main (int argc, char* argv[])
         consumer_00.connect (consumer_admin_2.in (),
                              consumer_qos.get_ConsumerQOS ()
                              ACE_ENV_ARG_PARAMETER);
-        ACE_TRY_CHECK;
       }
 
       // ****************************************************************
@@ -317,37 +291,27 @@ main (int argc, char* argv[])
 
       // ****************************************************************
 
-      consumer_00.disconnect (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      consumer_00.disconnect ();
 
-      supplier_01.deactivate (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
-      supplier_00.deactivate (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      supplier_01.deactivate ();
+      supplier_00.deactivate ();
 
-      supplier_01.disconnect (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
-      supplier_00.disconnect (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      supplier_01.disconnect ();
+      supplier_00.disconnect ();
 
-      gateway.shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      gateway.shutdown ();
 
       // ****************************************************************
 
-      event_channel_1->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      event_channel_1->destroy ();
 
-      event_channel_2->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      event_channel_2->destroy ();
 
       // ****************************************************************
 
       poa->destroy (1, 1 ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
-      orb->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      orb->destroy ();
     }
   ACE_CATCHANY
     {

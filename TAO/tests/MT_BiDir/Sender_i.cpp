@@ -57,7 +57,7 @@ Sender_i::receiver_object (Receiver_ptr recv
 
 
 void
-Sender_i::send_message (ACE_ENV_SINGLE_ARG_DECL)
+Sender_i::send_message (void)
 {
   // NOTE:No synchronization with purpose. Synchrnozing this is
   // going to spoil the whole purpose of this test.
@@ -66,5 +66,4 @@ Sender_i::send_message (ACE_ENV_SINGLE_ARG_DECL)
 
   this->receivers_[send_to]->receive_payload (this->payload_
                                               ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 }

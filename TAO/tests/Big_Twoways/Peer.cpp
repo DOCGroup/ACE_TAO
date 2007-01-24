@@ -32,14 +32,13 @@ Peer::create_session (Test::Session_Control_ptr control,
                              message_count,
                              peer_count),
                     CORBA::NO_MEMORY ());
-  ACE_CHECK_RETURN (Test::Session::_nil ());
   PortableServer::ServantBase_var transfer_ownership (session_impl);
 
-  return session_impl->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
+  return session_impl->_this ();
 }
 
 void
-Peer::shutdown (ACE_ENV_SINGLE_ARG_DECL)
+Peer::shutdown (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_DEBUG ((LM_DEBUG,

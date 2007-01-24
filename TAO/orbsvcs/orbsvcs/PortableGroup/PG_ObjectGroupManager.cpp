@@ -131,7 +131,6 @@ TAO_PG_ObjectGroupManager::_tao_add_member (
                                       member,
                                       check_type_id
                                       ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
     }
   ACE_CATCH (PortableGroup::ObjectGroupNotFound, ex)
     {
@@ -150,7 +149,6 @@ TAO_PG_ObjectGroupManager::_tao_add_member (
                                                type_id));
     }
   ACE_ENDTRY;
-  ACE_CHECK_RETURN (PortableGroup::ObjectGroup::_nil ());
 
   return new_group._retn ();
 }
@@ -170,7 +168,6 @@ TAO_PG_ObjectGroupManager::add_member_i (
   TAO_PG_ObjectGroup_Map_Entry * group_entry =
     this->get_group_entry (object_group
                            ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (PortableGroup::ObjectGroup::_nil ());
 
   if (check_type_id)
     {
@@ -179,7 +176,6 @@ TAO_PG_ObjectGroupManager::add_member_i (
                              group_entry,
                              member
                              ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK_RETURN (PortableGroup::ObjectGroup::_nil ());
 
       if (!right_type_id)
         {
@@ -209,7 +205,6 @@ TAO_PG_ObjectGroupManager::add_member_i (
                             TAO::VMCID,
                             ENOMEM),
                           CORBA::COMPLETED_NO));
-      ACE_CHECK_RETURN (0);
 
       auto_ptr<TAO_PG_ObjectGroup_Array> safe_groups (groups);
 
@@ -253,7 +248,6 @@ TAO_PG_ObjectGroupManager::remove_member (
   TAO_PG_ObjectGroup_Map_Entry * group_entry =
     this->get_group_entry (object_group
                            ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (PortableGroup::ObjectGroup::_nil ());
 
   TAO_PG_ObjectGroup_Array * groups = 0;
   if (this->location_map_.find (the_location, groups) != 0)
@@ -298,7 +292,6 @@ TAO_PG_ObjectGroupManager::remove_member (
               this->generic_factory_->delete_member (group_entry->group_id,
                                                      the_location
                                                      ACE_ENV_ARG_PARAMETER);
-              ACE_CHECK_RETURN (PortableGroup::ObjectGroup::_nil ());
             }
 
           if (member_infos.remove (info) == 0)
@@ -310,7 +303,6 @@ TAO_PG_ObjectGroupManager::remove_member (
                     group_entry->group_id,
                     group_entry->type_id.in ()
                     ACE_ENV_ARG_PARAMETER);
-                  ACE_CHECK_RETURN (PortableGroup::ObjectGroup::_nil ());
                 }
 
               return PortableGroup::ObjectGroup::_duplicate (object_group);
@@ -336,7 +328,6 @@ TAO_PG_ObjectGroupManager::locations_of_members (
   TAO_PG_ObjectGroup_Map_Entry * group_entry =
     this->get_group_entry (object_group
                            ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (0);
 
   PortableGroup::Locations *temp = 0;
   ACE_NEW_THROW_EX (temp,
@@ -346,7 +337,6 @@ TAO_PG_ObjectGroupManager::locations_of_members (
                         TAO::VMCID,
                         ENOMEM),
                       CORBA::COMPLETED_NO));
-  ACE_CHECK_RETURN (0);
 
   PortableGroup::Locations_var locations = temp;
 
@@ -375,7 +365,6 @@ TAO_PG_ObjectGroupManager::groups_at_location (
   ACE_NEW_THROW_EX (ogs,
                     PortableGroup::ObjectGroups,
                     CORBA::NO_MEMORY ());
-  ACE_CHECK_RETURN (0);
 
   PortableGroup::ObjectGroups_var object_groups = ogs;
 
@@ -414,7 +403,6 @@ TAO_PG_ObjectGroupManager::get_object_group_id (
   TAO_PG_ObjectGroup_Map_Entry * entry =
     this->get_group_entry (object_group
                            ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (0);
 
   if (entry == 0)
     ACE_THROW_RETURN (CORBA::INTERNAL (), 0);
@@ -442,7 +430,6 @@ TAO_PG_ObjectGroupManager::get_object_group_ref (
 
     entry = this->get_group_entry (object_group
                                    ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK_RETURN (PortableGroup::ObjectGroup::_nil ());
   }
 
   if (entry == 0)
@@ -470,7 +457,6 @@ TAO_PG_ObjectGroupManager::get_member_ref (
   TAO_PG_ObjectGroup_Map_Entry * group_entry =
     this->get_group_entry (object_group
                            ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (PortableGroup::ObjectGroup::_nil ());
 
   // This method assumes that it is faster to check for non-existence
   // of an object group (and hence the member) at a given location,
@@ -558,7 +544,6 @@ TAO_PG_ObjectGroupManager::create_object_group (
     this->poa_->create_reference_with_id (oid,
                                           type_id
                                           ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (CORBA::Object::_nil ());
 
   TAO_PG_ObjectGroup_Map_Entry * group_entry = 0;
   ACE_NEW_THROW_EX (group_entry,
@@ -568,7 +553,6 @@ TAO_PG_ObjectGroupManager::create_object_group (
                         TAO::VMCID,
                         ENOMEM),
                       CORBA::COMPLETED_NO));
-  ACE_CHECK_RETURN (CORBA::Object::_nil ());
 
   auto_ptr<TAO_PG_ObjectGroup_Map_Entry> safe_group_entry (group_entry);
 
@@ -628,7 +612,6 @@ TAO_PG_ObjectGroupManager::type_id (
   TAO_PG_ObjectGroup_Map_Entry * group_entry =
     this->get_group_entry (object_group
                            ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (0);
 
   return CORBA::string_dup (group_entry->type_id.in ());
 }
@@ -664,7 +647,6 @@ TAO_PG_ObjectGroupManager::member_count (
   TAO_PG_ObjectGroup_Map_Entry * group_entry =
     this->get_group_entry (group
                            ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (0);
 
   return static_cast<CORBA::ULong> (group_entry->member_infos.size ());
 }
@@ -691,7 +673,6 @@ TAO_PG_ObjectGroupManager::get_properties (
                         TAO::VMCID,
                         ENOMEM),
                       CORBA::COMPLETED_NO));
-  ACE_CHECK_RETURN (0);
 
   PortableGroup::Properties_var safe_properties = properties;
 
@@ -704,7 +685,6 @@ TAO_PG_ObjectGroupManager::get_properties (
     TAO_PG_ObjectGroup_Map_Entry * group_entry =
       this->get_group_entry (object_group
                              ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK_RETURN (0);
 
     *properties = group_entry->properties;
   }
@@ -727,7 +707,6 @@ TAO_PG_ObjectGroupManager::get_group_entry (
     {
       oid = this->poa_->reference_to_id (object_group
                                          ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
     }
   ACE_CATCH (PortableServer::POA::WrongAdapter, ex)
     {
@@ -744,7 +723,6 @@ TAO_PG_ObjectGroupManager::get_group_entry (
       ACE_TRY_THROW (CORBA::INTERNAL ());
     }
   ACE_ENDTRY;
-  ACE_CHECK_RETURN (0);
 
   TAO_PG_ObjectGroup_Map_Entry * group_entry = 0;
   if (this->object_group_map_.find (oid.in (), group_entry) != 0)
@@ -849,14 +827,12 @@ TAO_PG_ObjectGroupManager::valid_type_id (
     right_type_id =
       member->_is_a (type_id.in ()
                      ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK_RETURN (right_type_id);
   }
 
   // Make sure the group entry still exists.  It may have been
   // destroyed by another thread.
   group_entry = this->get_group_entry (object_group
                                        ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (right_type_id);
 
   return right_type_id;
 }

@@ -30,7 +30,6 @@ PolicyFactory::create_policy (CORBA::PolicyType type,
   ACE_NEW_THROW_EX (p,
                     Policy (val),
                     CORBA::NO_MEMORY ());
-  ACE_CHECK_RETURN (CORBA::Policy::_nil ());
 
   return p;
 }

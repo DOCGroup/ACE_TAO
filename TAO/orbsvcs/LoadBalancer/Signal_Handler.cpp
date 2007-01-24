@@ -123,12 +123,10 @@ TAO_LB_Signal_Handler::perform_cleanup (int signum)
       // clean up all resources they are responsible for.
       this->poa_->destroy (1, 1
                            ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       // Now shutdown the ORB.
       this->orb_->shutdown (1
                             ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
     }
   ACE_CATCHANY
     {
@@ -141,7 +139,6 @@ TAO_LB_Signal_Handler::perform_cleanup (int signum)
                         -1);
     }
   ACE_ENDTRY;
-  ACE_CHECK_RETURN (-1);
 
   return 0;
 }

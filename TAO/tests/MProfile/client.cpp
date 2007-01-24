@@ -61,7 +61,6 @@ main (int argc, char *argv[])
     {
       CORBA::ORB_var orb =
         CORBA::ORB_init (argc, argv, "" ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       if (parse_args (argc, argv) != 0)
         return 1;
@@ -69,23 +68,19 @@ main (int argc, char *argv[])
       // Primary server
       CORBA::Object_var object_primary =
         orb->string_to_object (ior ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       //Secondary server
       CORBA::Object_var object_secondary =
         orb->string_to_object (name ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       // Get an object reference for the ORBs IORManipultion object!
       CORBA::Object_ptr IORM =
         orb->resolve_initial_references (TAO_OBJID_IORMANIPULATION,
                                          0
                                          ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       TAO_IOP::TAO_IOR_Manipulation_ptr iorm =
         TAO_IOP::TAO_IOR_Manipulation::_narrow (IORM ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       TAO_IOP::TAO_IOR_Manipulation::IORList iors (2);
       iors.length(2);
@@ -93,12 +88,10 @@ main (int argc, char *argv[])
       iors [1] = object_secondary;
 
       CORBA::Object_var merged = iorm->merge_iors (iors ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       // Combined IOR stuff
       Simple_Server_var server =
         Simple_Server::_narrow (merged.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       if (CORBA::is_nil (server.in ()))
         {
@@ -109,7 +102,6 @@ main (int argc, char *argv[])
         }
 
       run_test (server.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
     }
   ACE_CATCHANY
     {
@@ -129,8 +121,7 @@ void run_test (Simple_Server_ptr server
         {
           // Make a remote call
           CORBA::Long ret =
-            server->remote_call (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+            server->remote_call ();
 
 	  ACE_UNUSED_ARG (ret);
 
@@ -164,6 +155,5 @@ void run_test (Simple_Server_ptr server
           ACE_RE_THROW;
         }
       ACE_ENDTRY;
-      ACE_CHECK;
     }
 }

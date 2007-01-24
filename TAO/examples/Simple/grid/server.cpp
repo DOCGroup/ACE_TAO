@@ -23,8 +23,7 @@ main (int argc, char *argv[])
         return 1;
       else
         {
-          server.run (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+          server.run ();
         }
     }
   ACE_CATCH (CORBA::UserException, userex)
@@ -40,7 +39,6 @@ main (int argc, char *argv[])
       return -1;
     }
   ACE_ENDTRY;
-  ACE_CHECK_RETURN (-1);
 
   return 0;
 }

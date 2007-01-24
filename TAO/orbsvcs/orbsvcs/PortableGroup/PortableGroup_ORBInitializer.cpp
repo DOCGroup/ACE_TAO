@@ -28,7 +28,6 @@ TAO_PortableGroup_ORBInitializer::pre_init (
   // orb_core() TAO extension.
   TAO_ORBInitInfo_var tao_info = TAO_ORBInitInfo::_narrow (info
                                                            ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
   if (CORBA::is_nil (tao_info.in ()))
     {
@@ -51,7 +50,6 @@ TAO_PortableGroup_ORBInitializer::pre_init (
                         TAO::VMCID,
                         ENOMEM),
                       CORBA::COMPLETED_NO));
-  ACE_CHECK;
 
   tao_info->orb_core ()->request_dispatcher (rd);
 

@@ -18,7 +18,6 @@ server_i::start (client_ptr c,
   this->client_ = client::_duplicate (c);
   this->ping (time_to_live
               ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
   return;
 }
@@ -39,15 +38,13 @@ server_i::ping (CORBA::UShort time_to_live
     {
       this->client_->ping (time_to_live
                            ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
     }
 }
 
 void
-server_i::shutdown (ACE_ENV_SINGLE_ARG_DECL)
+server_i::shutdown (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->orb_->shutdown (0
                         ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 }

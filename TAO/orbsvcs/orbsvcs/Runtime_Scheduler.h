@@ -255,7 +255,7 @@ public:
                     RtecScheduler::UNKNOWN_PRIORITY_LEVEL));
   // Provides the thread priority and queue type for the given priority level.
 
-  virtual RtecScheduler::Preemption_Priority_t last_scheduled_priority (ACE_ENV_SINGLE_ARG_DECL)
+  virtual RtecScheduler::Preemption_Priority_t last_scheduled_priority (void)
     ACE_THROW_SPEC ((CORBA::SystemException,
                     RtecScheduler::NOT_SCHEDULED));
   // Returns the last priority number assigned to an operation in the

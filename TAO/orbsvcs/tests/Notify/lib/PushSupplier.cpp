@@ -39,14 +39,14 @@ TAO_Notify_Tests_PushSupplier::connect_to_peer (Proxy_Traits::PTR proxy_ptr, Pee
 }
 
 void
-TAO_Notify_Tests_PushSupplier::disconnect_from_proxy (ACE_ENV_SINGLE_ARG_DECL)
+TAO_Notify_Tests_PushSupplier::disconnect_from_proxy (void)
 {
   ACE_DEBUG((LM_DEBUG, "\nPush Supplier disconnecting from consumer.\n"));
-  this->proxy_->disconnect_push_consumer (ACE_ENV_SINGLE_ARG_PARAMETER);
+  this->proxy_->disconnect_push_consumer ();
 }
 
 void
-TAO_Notify_Tests_PushSupplier::disconnect_push_supplier (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+TAO_Notify_Tests_PushSupplier::disconnect_push_supplier (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   bool this_method_used_only_by_notify_service = false;

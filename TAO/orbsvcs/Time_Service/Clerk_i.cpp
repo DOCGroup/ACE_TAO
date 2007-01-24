@@ -73,7 +73,6 @@ Clerk_i::read_ior (const ACE_TCHAR* filename)
           CORBA::Object_var objref =
             this->orb_->string_to_object (str
                                           ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
 
           // Return if the server reference is nil.
           if (CORBA::is_nil (objref.in ()))
@@ -87,7 +86,6 @@ Clerk_i::read_ior (const ACE_TCHAR* filename)
           CosTime::TimeService_ptr server =
             CosTime::TimeService::_narrow (objref.in ()
                                            ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
 
           this->insert_server (server);
         }
@@ -197,12 +195,10 @@ Clerk_i::get_first_IOR (void)
         this->naming_client_->resolve (server_context_name
                                        ACE_ENV_ARG_PARAMETER);
 
-      ACE_TRY_CHECK;
 
       CosNaming::NamingContext_var server_context =
         CosNaming::NamingContext::_narrow (temp_object.in ()
                                            ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       if (CORBA::is_nil (server_context.in ()))
         ACE_DEBUG ((LM_DEBUG,
@@ -221,12 +217,10 @@ Clerk_i::get_first_IOR (void)
       temp_object =
         server_context->resolve (server_name
                                  ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       CosTime::TimeService_var obj =
         CosTime::TimeService::_narrow (temp_object.in ()
                                        ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       if (CORBA::is_nil (obj.in ()))
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -274,7 +268,6 @@ Clerk_i::next_n_IORs (CosNaming::BindingIterator_var iter,
           while (iter->next_one (binding.out ()
                                  ACE_ENV_ARG_PARAMETER))
             {
-              ACE_TRY_CHECK;
 
               ACE_DEBUG ((LM_DEBUG,
                           ACE_TEXT("Getting IOR of the server: %s\n\n"),
@@ -287,20 +280,16 @@ Clerk_i::next_n_IORs (CosNaming::BindingIterator_var iter,
               CORBA::Object_var temp_object =
                 server_context->resolve (server_name
                                          ACE_ENV_ARG_PARAMETER);
-              ACE_TRY_CHECK;
 
               CosTime::TimeService_ptr server =
                 CosTime::TimeService::_narrow (temp_object.in ()
                                                ACE_ENV_ARG_PARAMETER);
-              ACE_TRY_CHECK;
 
               this->insert_server (server);
             }
 
-          ACE_TRY_CHECK;
         }
 
-      ACE_TRY_CHECK;
     }
   ACE_CATCHANY
     {
@@ -347,7 +336,6 @@ Clerk_i::create_clerk (void)
       CORBA::String_var objref_clerk =
         this->orb_->object_to_string (this->time_service_clerk_.in ()
                                       ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       // Print the clerk IOR on the console.
       ACE_DEBUG ((LM_DEBUG,
@@ -421,7 +409,6 @@ Clerk_i::register_clerk (void)
       this->naming_client_->rebind (clerk_name,
                                      this->time_service_clerk_.in ()
                                      ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
     }
   ACE_CATCHANY
@@ -458,7 +445,6 @@ Clerk_i::init (int argc,
                                command.get_ASCII_argv()
                                ACE_ENV_ARG_PARAMETER);
 
-      ACE_TRY_CHECK;
 
       if (this->orb_manager_.init_child_poa (command.get_argc(),
                                              command.get_ASCII_argv(),
@@ -468,7 +454,6 @@ Clerk_i::init (int argc,
                            ACE_TEXT("%p\n"),
                            ACE_TEXT("init_child_poa")),
                           -1);
-      ACE_TRY_CHECK;
 
       // Get the ORB.
       this->orb_ = this->orb_manager_.orb ();
@@ -523,13 +508,12 @@ Clerk_i::init (int argc,
 }
 
 int
-Clerk_i::run (ACE_ENV_SINGLE_ARG_DECL)
+Clerk_i::run (void)
 {
   ACE_TRY
     {
       // Run the main event loop for the ORB.
-      int r = this->orb_manager_.run (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      int r = this->orb_manager_.run ();
 
       if (r == -1)
         ACE_ERROR_RETURN ((LM_ERROR,

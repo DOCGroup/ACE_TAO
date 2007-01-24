@@ -31,11 +31,9 @@ Client_Task::svc (void)
       // Apply sync_none policy
       CORBA::Object_var object =
         orb_->resolve_initial_references ("PolicyCurrent" ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       CORBA::PolicyCurrent_var policy_current =
         CORBA::PolicyCurrent::_narrow (object.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       if (CORBA::is_nil (policy_current.in ()))
         {
@@ -50,21 +48,17 @@ Client_Task::svc (void)
         orb_->create_policy (Messaging::SYNC_SCOPE_POLICY_TYPE,
                             scope_as_any
                             ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
       policy_current->set_policy_overrides (policies, CORBA::ADD_OVERRIDE
                                             ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
-      policies[0]->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      policies[0]->destroy ();
 
       for (int i = 0; i != number_; ++i)
         {
           ACE_DEBUG ((LM_DEBUG,
                       "TAO (%P|%t) sending oneway invocation %d...\n", i));
 
-          this->sender_->send_ready_message (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+          this->sender_->send_ready_message ();
 
           // Do it slowly.
           ACE_OS::sleep(ACE_Time_Value(0,250000));

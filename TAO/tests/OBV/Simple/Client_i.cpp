@@ -31,18 +31,15 @@ Checkpoint_Client_i::run (const char *name,
       Event_var t_e (static_cast<Event*> (new Event_impl (value)));
       t_e->do_print ();
       checkpoint->put_event (t_e ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       value = 34;
       t_e = new Event_impl (value);
       t_e->do_print ();
       checkpoint->put_event (t_e ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       if (checkpoint.shutdown () == 1)
-        checkpoint->shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
+        checkpoint->shutdown ();
 
-      ACE_TRY_CHECK;
     }
   ACE_CATCHANY
     {
@@ -50,7 +47,6 @@ Checkpoint_Client_i::run (const char *name,
       return -1;
     }
   ACE_ENDTRY;
-  ACE_CHECK_RETURN (-1);
 
   return 0;
 }

@@ -137,7 +137,6 @@ int main (int argc, char *argv[])
     {
       ORB_Holder orb (argc, argv, ""
                       ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       if (parse_args (argc, argv) != 0)
         return 1;
@@ -147,20 +146,16 @@ int main (int argc, char *argv[])
                                      rt_class,
                                      nthreads
                                      ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       PortableServer::POA_var root_poa =
         RIR_Narrow<PortableServer::POA>::resolve (orb,
                                                   "RootPOA"
                                                   ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       PortableServer::POAManager_var poa_manager =
-        root_poa->the_POAManager (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        root_poa->the_POAManager ();
 
-      poa_manager->activate (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      poa_manager->activate ();
 
       ACE_DEBUG ((LM_DEBUG, "Finished ORB and POA configuration\n"));
 
@@ -170,29 +165,23 @@ int main (int argc, char *argv[])
                               rt_class
                               ACE_ENV_ARG_PARAMETER)
           );
-      ACE_TRY_CHECK;
 
       Federated_Test::Peer_var peer =
-        peer_impl->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        peer_impl->_this ();
 
       ACE_DEBUG ((LM_DEBUG, "Finished peer configuration and activation\n"));
 
       CORBA::Object_var object =
         orb->string_to_object (ior ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       Federated_Test::Control_var control =
         Federated_Test::Control::_narrow (object.in ()
                                           ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       control->join (peer.in ()
                      ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
-      orb->run (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      orb->run ();
     }
   ACE_CATCHANY
     {
@@ -243,7 +232,6 @@ Roundtrip_Peer::run_experiment (CORBA::Long experiment_id,
           this->event_channel_.in (),
           &the_barrier
           ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (0);
 #endif
 
   Client_Pair high_priority_group;
@@ -256,7 +244,6 @@ Roundtrip_Peer::run_experiment (CORBA::Long experiment_id,
                             this->poa_.in ());
   high_priority_group.connect (this->event_channel_.in ()
                                ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (0);
   Auto_Disconnect<Client_Pair> high_priority_disconnect (&high_priority_group);
 
   Send_Task high_priority_task;

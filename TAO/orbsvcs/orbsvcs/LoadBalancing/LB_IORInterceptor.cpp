@@ -30,14 +30,14 @@ TAO_LB_IORInterceptor::TAO_LB_IORInterceptor (
 }
 
 char *
-TAO_LB_IORInterceptor::name (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+TAO_LB_IORInterceptor::name (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return CORBA::string_dup ("TAO_LB_IORInterceptor");
 }
 
 void
-TAO_LB_IORInterceptor::destroy (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+TAO_LB_IORInterceptor::destroy (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // Force the LoadManager reference to be released since the ORB's
@@ -64,12 +64,10 @@ TAO_LB_IORInterceptor::components_established (
                                         0,
                                         this->orb_id_.in ()
                                         ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
   // Save a copy of the current ObjectReferenceFactory.
   PortableInterceptor::ObjectReferenceFactory_var old_orf =
-    info->current_factory (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+    info->current_factory ();
 
   PortableInterceptor::ObjectReferenceFactory * tmp;
   ACE_NEW_THROW_EX (tmp,
@@ -84,13 +82,11 @@ TAO_LB_IORInterceptor::components_established (
                         TAO::VMCID,
                         ENOMEM),
                       CORBA::COMPLETED_NO));
-  ACE_CHECK;
 
   PortableInterceptor::ObjectReferenceFactory_var orf = tmp;
 
   info->current_factory (orf.in ()
                          ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 }
 
 void
@@ -102,8 +98,7 @@ TAO_LB_IORInterceptor::adapter_manager_state_changed (
 {
   if (state == PortableInterceptor::ACTIVE)
     {
-      this->register_load_alert (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK;
+      this->register_load_alert ();
     }
 }
 
@@ -116,13 +111,12 @@ TAO_LB_IORInterceptor::adapter_state_changed (
 {
   if (state == PortableInterceptor::ACTIVE)
     {
-      this->register_load_alert (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK;
+      this->register_load_alert ();
     }
 }
 
 void
-TAO_LB_IORInterceptor::register_load_alert (ACE_ENV_SINGLE_ARG_DECL)
+TAO_LB_IORInterceptor::register_load_alert (void)
 {
   {
     ACE_GUARD (TAO_SYNCH_MUTEX, guard, this->lock_);
@@ -136,7 +130,7 @@ TAO_LB_IORInterceptor::register_load_alert (ACE_ENV_SINGLE_ARG_DECL)
       // By now, the RootPOA has been fully initialized, so it is safe
       // to activate the LoadAlert object.
       CosLoadBalancing::LoadAlert_var la =
-        this->load_alert_._this (ACE_ENV_SINGLE_ARG_PARAMETER);
+        this->load_alert_._this ();
       ACE_TRY_CHECK_EX (foo);
 
       {
@@ -153,7 +147,6 @@ TAO_LB_IORInterceptor::register_load_alert (ACE_ENV_SINGLE_ARG_DECL)
                              "LoadAlert::_this()");
     }
   ACE_ENDTRY;
-  ACE_CHECK;
 
   ACE_TRY
     {
@@ -164,7 +157,6 @@ TAO_LB_IORInterceptor::register_load_alert (ACE_ENV_SINGLE_ARG_DECL)
       this->lm_->register_load_alert (location,
                                       this->la_ref_.in ()
                                       ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
     }
   ACE_CATCH (CosLoadBalancing::LoadAlertAlreadyPresent, ex)
     {
@@ -183,7 +175,6 @@ TAO_LB_IORInterceptor::register_load_alert (ACE_ENV_SINGLE_ARG_DECL)
       ACE_TRY_THROW (CORBA::INTERNAL ());
     }
   ACE_ENDTRY;
-  ACE_CHECK;
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL

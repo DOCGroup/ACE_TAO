@@ -25,7 +25,6 @@ Server_ORBInitializer2::post_init (
 {
   this->register_server_request_interceptors (info
                                               ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 }
 
 void
@@ -46,7 +45,6 @@ Server_ORBInitializer2::register_server_request_interceptors (
 
   info->add_server_request_interceptor (server_interceptor.in ()
                                         ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 }
 
 

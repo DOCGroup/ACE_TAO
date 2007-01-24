@@ -75,8 +75,7 @@ void
 TAO_EC_Kokyu_Filter::compute_qos_info (TAO_EC_QOS_Info& qos_info
                                        ACE_ENV_ARG_DECL)
 {
-  this->init_rt_info (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+  this->init_rt_info ();
 
   qos_info.rt_info = this->rt_info_;
   switch (this->info_type_)
@@ -96,7 +95,6 @@ TAO_EC_Kokyu_Filter::compute_qos_info (TAO_EC_QOS_Info& qos_info
                                     p_subpriority,
                                     p_priority
                                      ACE_ENV_ARG_PARAMETER);
-        ACE_CHECK;
         qos_info.preemption_priority = p_priority;
       }
     }
@@ -110,10 +108,8 @@ TAO_EC_Kokyu_Filter::push (const RtecEventComm::EventSet &event,
   if (this->parent () != 0)
     {
       this->compute_qos_info (qos_info ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
 
       this->parent ()->push (event, qos_info ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
     }
 }
 
@@ -125,10 +121,8 @@ TAO_EC_Kokyu_Filter::push_nocopy (RtecEventComm::EventSet &event,
   if (this->parent () != 0)
     {
       this->compute_qos_info (qos_info ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
 
       this->parent ()->push_nocopy (event, qos_info ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
     }
 }
 
@@ -184,8 +178,7 @@ TAO_EC_Kokyu_Filter::add_dependencies (const RtecEventComm::EventHeader& header,
 #ifdef EC_KOKYU_LOGGING
   ACE_DEBUG ((LM_DEBUG, "Entering EC_Kokyu_Filter::add_dependencies\n"));
 #endif
-  this->init_rt_info (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (0);
+  this->init_rt_info ();
 
 #ifdef EC_KOKYU_LOGGING
   ACE_DEBUG ((LM_DEBUG,
@@ -197,21 +190,18 @@ TAO_EC_Kokyu_Filter::add_dependencies (const RtecEventComm::EventHeader& header,
   int matches = this->body_->add_dependencies (header,
                                                qos_info
                                                ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (0);
 
   if (matches != 0)
     {
 #ifdef EC_KOKYU_LOGGING
       ACE_DEBUG ((LM_DEBUG, "Kokyu_Filter::matches != 0\n"));
-#endif 
+#endif
       this->scheduler_->add_dependency (this->rt_info_, qos_info.rt_info, 1,
                                         RtecBase::ONE_WAY_CALL
                                          ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK_RETURN (0);
 
       RtecScheduler::RT_Info_var info =
         this->scheduler_->get (qos_info.rt_info ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK_RETURN (0);
       ACE_DEBUG ((LM_DEBUG, "[%s][%d] ----> [%s][%d]\n",
                   this->name_.c_str (),
                   this->rt_info_,
@@ -222,17 +212,16 @@ TAO_EC_Kokyu_Filter::add_dependencies (const RtecEventComm::EventHeader& header,
     {
 #ifdef EC_KOKYU_LOGGING
       ACE_DEBUG ((LM_DEBUG, "Kokyu_Filter::matches == 0\n"));
-#endif 
+#endif
     }
 
 #ifdef EC_KOKYU_LOGGING
   ACE_DEBUG ((LM_DEBUG, "about to iterate thru children\n"));
-#endif  
+#endif
   ChildrenIterator end = this->end ();
   for (ChildrenIterator i = this->begin (); i != end; ++i)
     {
       (*i)->add_dependencies (header, qos_info ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK_RETURN (0);
     }
 #ifdef EC_KOKYU_LOGGING
   ACE_DEBUG ((LM_DEBUG, "Exiting EC_Kokyu_Filter: add_dependencies\n"));
@@ -244,14 +233,13 @@ void
 TAO_EC_Kokyu_Filter::get_qos_info (TAO_EC_QOS_Info& qos_info
                                    ACE_ENV_ARG_DECL)
 {
-  this->init_rt_info (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+  this->init_rt_info ();
 
   qos_info.rt_info = this->rt_info_;
 }
 
 void
-TAO_EC_Kokyu_Filter::init_rt_info (ACE_ENV_SINGLE_ARG_DECL)
+TAO_EC_Kokyu_Filter::init_rt_info (void)
 {
   if (this->rt_info_computed_)
     return;
@@ -271,7 +259,6 @@ TAO_EC_Kokyu_Filter::init_rt_info (ACE_ENV_SINGLE_ARG_DECL)
                          0, // threads
                          this->info_type_
                          ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 #endif  //ifdef'ed by VS
 
 #if 0 //ifdef changed from 1 to 0 by VS
@@ -282,11 +269,9 @@ TAO_EC_Kokyu_Filter::init_rt_info (ACE_ENV_SINGLE_ARG_DECL)
                                         1,
                                         RtecBase::TWO_WAY_CALL
                                          ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
 
       RtecScheduler::RT_Info_var info =
         this->scheduler_->get (this->body_info_ ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
       ACE_DEBUG ((LM_DEBUG, "[%s] ----> [%s]\n",
                   info->entry_point.in (),
                   this->name_.c_str ()));
@@ -299,11 +284,9 @@ TAO_EC_Kokyu_Filter::init_rt_info (ACE_ENV_SINGLE_ARG_DECL)
                                     1,
                                     RtecBase::TWO_WAY_CALL
                                      ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
   RtecScheduler::RT_Info_var info =
     this->scheduler_->get (this->parent_info_ ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
   ACE_DEBUG ((LM_DEBUG, "[%s] ----> [%s]\n",
               this->name_.c_str (),
               info->entry_point.in ()));

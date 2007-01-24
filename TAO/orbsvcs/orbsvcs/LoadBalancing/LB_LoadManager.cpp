@@ -93,7 +93,6 @@ TAO_LB_LoadManager::push_loads (
   PortableGroup::ObjectGroups_var groups =
     this->object_group_manager_.groups_at_location (the_location
                                                     ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
   const CORBA::ULong len = groups->length ();
 
@@ -107,7 +106,6 @@ TAO_LB_LoadManager::push_loads (
           PortableGroup::Properties_var properties =
             this->get_properties (object_group
                                   ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
 
           PortableGroup::Value value;
           CosLoadBalancing::Strategy_ptr strategy;
@@ -126,7 +124,6 @@ TAO_LB_LoadManager::push_loads (
               strategy->analyze_loads (object_group,
                                        this->lm_ref_.in ()
                                        ACE_ENV_ARG_PARAMETER);
-              ACE_TRY_CHECK;
             }
         }
       ACE_CATCHANY
@@ -134,7 +131,6 @@ TAO_LB_LoadManager::push_loads (
           // Ignore all exceptions.
         }
       ACE_ENDTRY;
-      ACE_CHECK;
     }
 }
 
@@ -152,7 +148,6 @@ TAO_LB_LoadManager::get_loads (const PortableGroup::Location & the_location
                         TAO::VMCID,
                         ENOMEM),
                       CORBA::COMPLETED_NO));
-  ACE_CHECK_RETURN (0);
 
   CosLoadBalancing::LoadList_var loads = tmp;
 
@@ -218,7 +213,6 @@ TAO_LB_LoadManager::enable_alert (const PortableGroup::Location & the_location
         // member selection.
         load_alert->sendc_enable_alert (this->load_alert_handler_.in ()
                                         ACE_ENV_ARG_PARAMETER);
-        ACE_CHECK;
       }
     }
   else
@@ -275,7 +269,6 @@ TAO_LB_LoadManager::disable_alert (const PortableGroup::Location & the_location
         // member selection.
         load_alert->sendc_disable_alert (this->load_alert_handler_.in ()
                                          ACE_ENV_ARG_PARAMETER);
-        ACE_CHECK;
       }
     }
   else
@@ -353,7 +346,6 @@ TAO_LB_LoadManager::remove_load_alert (
   // object is no longer under the control of the LoadManager.
   this->disable_alert (the_location
                        ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
   ACE_GUARD (TAO_SYNCH_MUTEX, guard, this->load_alert_lock_);
 
@@ -491,7 +483,6 @@ TAO_LB_LoadManager::set_default_properties (
   PortableGroup::Properties new_props (props);
   this->preprocess_properties (new_props
                                ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
   this->property_manager_.set_default_properties (new_props
                                                   ACE_ENV_ARG_PARAMETER);
@@ -531,7 +522,6 @@ TAO_LB_LoadManager::set_type_properties (
   PortableGroup::Properties new_overrides (overrides);
   this->preprocess_properties (new_overrides
                                ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
   this->property_manager_.set_type_properties (type_id,
                                                new_overrides
@@ -576,7 +566,6 @@ TAO_LB_LoadManager::set_properties_dynamically (
   PortableGroup::Properties new_overrides (overrides);
   this->preprocess_properties (new_overrides
                                ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
   this->property_manager_.set_properties_dynamically (object_group,
                                                       new_overrides
@@ -739,21 +728,18 @@ TAO_LB_LoadManager::create_object (
                    PortableGroup::InvalidProperty,
                    PortableGroup::CannotMeetCriteria))
 {
-//   this->init (ACE_ENV_SINGLE_ARG_PARAMETER);
-//   ACE_CHECK_RETURN (CORBA::Object::_nil ());
+//   this->init ();
 
 
   PortableGroup::Criteria new_criteria (the_criteria);
   this->preprocess_properties (new_criteria
                                ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (CORBA::Object::_nil ());
 
   CORBA::Object_ptr obj =
     this->generic_factory_.create_object (type_id,
                                           new_criteria,
                                           factory_creation_id
                                           ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (CORBA::Object::_nil ());
 
 
   return obj;
@@ -837,7 +823,6 @@ TAO_LB_LoadManager::next_member (const PortableServer::ObjectId & oid
   PortableGroup::Properties_var properties =
     this->get_properties (object_group.in ()
                           ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (CORBA::Object::_nil ());
 
   // Prefer custom load balancing strategies over built-in ones.
   PortableGroup::Value value;
@@ -886,7 +871,6 @@ TAO_LB_LoadManager::init (ACE_Reactor * reactor,
                             TAO::VMCID,
                             ENOMEM),
                           CORBA::COMPLETED_NO));
-      ACE_CHECK;
 
       PortableServer::ServantManager_var member_locator = tmp;
 
@@ -897,13 +881,11 @@ TAO_LB_LoadManager::init (ACE_Reactor * reactor,
         root_poa->create_request_processing_policy (
           PortableServer::USE_SERVANT_MANAGER
           ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
 
       PortableServer::ServantRetentionPolicy_var retention =
         root_poa->create_servant_retention_policy (
           PortableServer::NON_RETAIN
           ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
 
       // Create the PolicyList containing the policies necessary for
       // the POA to support ServantLocators.
@@ -919,8 +901,7 @@ TAO_LB_LoadManager::init (ACE_Reactor * reactor,
       // Create the child POA with the above ServantManager policies.
       // The ServantManager will be the MemberLocator.
       PortableServer::POAManager_var poa_manager =
-        root_poa->the_POAManager (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK;
+        root_poa->the_POAManager ();
 
       // The child POA's name will consist of a string that includes
       // the current time in milliseconds in hexidecimal format (only
@@ -945,26 +926,21 @@ TAO_LB_LoadManager::init (ACE_Reactor * reactor,
                                          poa_manager.in (),
                                          policy_list
                                          ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
 
-      request->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK;
+      request->destroy ();
 
-      retention->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK;
+      retention->destroy ();
 
       // Now set the MemberLocator as the child POA's Servant
       // Manager.
       this->poa_->set_servant_manager (member_locator.in ()
                                        ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
 
       this->object_group_manager_.poa (this->poa_.in ());
       this->generic_factory_.poa (this->poa_.in ());
 
       // Activate the child POA.
-      poa_manager->activate (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK;
+      poa_manager->activate ();
 
       this->reactor_ = reactor;
       this->root_poa_ = PortableServer::POA::_duplicate (root_poa);
@@ -972,13 +948,11 @@ TAO_LB_LoadManager::init (ACE_Reactor * reactor,
 
   if (CORBA::is_nil (this->lm_ref_.in ()))
     {
-      this->lm_ref_ = this->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK;
+      this->lm_ref_ = this->_this ();
 
       orb->register_initial_reference ("LoadManager",
                                        this->lm_ref_.in ()
                                        ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
     }
 
   if (CORBA::is_nil (this->load_alert_handler_.in ()))
@@ -991,13 +965,11 @@ TAO_LB_LoadManager::init (ACE_Reactor * reactor,
                             TAO::VMCID,
                             ENOMEM),
                           CORBA::COMPLETED_NO));
-      ACE_CHECK;
 
       PortableServer::ServantBase_var safe_handler = handler;
 
       this->load_alert_handler_ =
-        handler->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK;
+        handler->_this ();
     }
 
   this->built_in_balancing_strategy_info_name_.length (1);
@@ -1044,7 +1016,6 @@ TAO_LB_LoadManager::preprocess_properties (PortableGroup::Properties & props
               CosLoadBalancing::Strategy_var strategy =
                 this->make_strategy (info
                                      ACE_ENV_ARG_PARAMETER);
-              ACE_CHECK;
 
               if (!CORBA::is_nil (strategy.in ()))
                 {
@@ -1091,13 +1062,11 @@ TAO_LB_LoadManager::make_strategy (CosLoadBalancing::StrategyInfo * info
             ACE_NEW_THROW_EX (rr_servant,
                               TAO_LB_RoundRobin (this->root_poa_.in ()),
                               CORBA::NO_MEMORY ());
-            ACE_CHECK_RETURN (CosLoadBalancing::Strategy::_nil ());
 
             PortableServer::ServantBase_var s = rr_servant;
 
             this->round_robin_ =
-              rr_servant->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
-            ACE_CHECK_RETURN (CosLoadBalancing::Strategy::_nil ());
+              rr_servant->_this ();
           }
       }
 
@@ -1118,13 +1087,11 @@ TAO_LB_LoadManager::make_strategy (CosLoadBalancing::StrategyInfo * info
             ACE_NEW_THROW_EX (rnd_servant,
                               TAO_LB_Random (this->root_poa_.in ()),
                               CORBA::NO_MEMORY ());
-            ACE_CHECK_RETURN (CosLoadBalancing::Strategy::_nil ());
 
             PortableServer::ServantBase_var s = rnd_servant;
 
             this->random_ =
-              rnd_servant->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
-            ACE_CHECK_RETURN (CosLoadBalancing::Strategy::_nil ());
+              rnd_servant->_this ();
           }
       }
 
@@ -1152,13 +1119,11 @@ TAO_LB_LoadManager::make_strategy (CosLoadBalancing::StrategyInfo * info
                 ACE_NEW_THROW_EX (ll_servant,
                                   TAO_LB_LeastLoaded (this->root_poa_.in ()),
                                   CORBA::NO_MEMORY ());
-                ACE_CHECK_RETURN (CosLoadBalancing::Strategy::_nil ());
 
                 PortableServer::ServantBase_var s = ll_servant;
 
                 this->least_loaded_ =
-                  ll_servant->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
-                ACE_CHECK_RETURN (CosLoadBalancing::Strategy::_nil ());
+                  ll_servant->_this ();
               }
           }
 
@@ -1171,15 +1136,13 @@ TAO_LB_LoadManager::make_strategy (CosLoadBalancing::StrategyInfo * info
           ACE_NEW_THROW_EX (ll_servant,
                             TAO_LB_LeastLoaded (this->root_poa_.in ()),
                             CORBA::NO_MEMORY ());
-          ACE_CHECK_RETURN (CosLoadBalancing::Strategy::_nil ());
 
           PortableServer::ServantBase_var s = ll_servant;
 
           ll_servant->init (info->props
                             ACE_ENV_ARG_PARAMETER);
-          ACE_CHECK_RETURN (CosLoadBalancing::Strategy::_nil ());
 
-          return ll_servant->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
+          return ll_servant->_this ();
         }
     }
   else if (ACE_OS::strcmp (info->name.in (), "LoadMinimum") == 0)
@@ -1199,13 +1162,11 @@ TAO_LB_LoadManager::make_strategy (CosLoadBalancing::StrategyInfo * info
                 ACE_NEW_THROW_EX (lm_servant,
                                   TAO_LB_LoadMinimum (this->root_poa_.in ()),
                                   CORBA::NO_MEMORY ());
-                ACE_CHECK_RETURN (CosLoadBalancing::Strategy::_nil ());
 
                 PortableServer::ServantBase_var s = lm_servant;
 
                 this->load_minimum_ =
-                  lm_servant->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
-                ACE_CHECK_RETURN (CosLoadBalancing::Strategy::_nil ());
+                  lm_servant->_this ();
               }
           }
 
@@ -1218,15 +1179,13 @@ TAO_LB_LoadManager::make_strategy (CosLoadBalancing::StrategyInfo * info
           ACE_NEW_THROW_EX (lm_servant,
                             TAO_LB_LoadMinimum (this->root_poa_.in ()),
                             CORBA::NO_MEMORY ());
-          ACE_CHECK_RETURN (CosLoadBalancing::Strategy::_nil ());
 
           PortableServer::ServantBase_var s = lm_servant;
 
           lm_servant->init (info->props
                             ACE_ENV_ARG_PARAMETER);
-          ACE_CHECK_RETURN (CosLoadBalancing::Strategy::_nil ());
 
-          return lm_servant->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
+          return lm_servant->_this ();
         }
     }
   else if (ACE_OS::strcmp (info->name.in (), "LoadAverage") == 0)
@@ -1246,13 +1205,11 @@ TAO_LB_LoadManager::make_strategy (CosLoadBalancing::StrategyInfo * info
                 ACE_NEW_THROW_EX (la_servant,
                                   TAO_LB_LoadAverage (this->root_poa_.in ()),
                                   CORBA::NO_MEMORY ());
-                ACE_CHECK_RETURN (CosLoadBalancing::Strategy::_nil ());
 
                 PortableServer::ServantBase_var s = la_servant;
 
                 this->load_average_ =
-                  la_servant->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
-                ACE_CHECK_RETURN (CosLoadBalancing::Strategy::_nil ());
+                  la_servant->_this ();
               }
           }
 
@@ -1265,15 +1222,13 @@ TAO_LB_LoadManager::make_strategy (CosLoadBalancing::StrategyInfo * info
           ACE_NEW_THROW_EX (la_servant,
                             TAO_LB_LoadAverage (this->root_poa_.in ()),
                             CORBA::NO_MEMORY ());
-          ACE_CHECK_RETURN (CosLoadBalancing::Strategy::_nil ());
 
           PortableServer::ServantBase_var s = la_servant;
 
           la_servant->init (info->props
                             ACE_ENV_ARG_PARAMETER);
-          ACE_CHECK_RETURN (CosLoadBalancing::Strategy::_nil ());
 
-          return la_servant->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
+          return la_servant->_this ();
         }
     }
   return CosLoadBalancing::Strategy::_nil ();

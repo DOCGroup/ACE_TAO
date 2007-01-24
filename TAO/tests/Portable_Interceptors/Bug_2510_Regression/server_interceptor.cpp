@@ -20,14 +20,14 @@ Echo_Server_Request_Interceptor::~Echo_Server_Request_Interceptor (void)
 }
 
 char *
-Echo_Server_Request_Interceptor::name (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+Echo_Server_Request_Interceptor::name (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return CORBA::string_dup (this->myname_);
 }
 
 void
-Echo_Server_Request_Interceptor::destroy (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+Echo_Server_Request_Interceptor::destroy (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
 }
@@ -40,8 +40,7 @@ Echo_Server_Request_Interceptor::receive_request_service_contexts (
                    PortableInterceptor::ForwardRequest))
 {
 
-  CORBA::String_var operation = ri->operation (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+  CORBA::String_var operation = ri->operation ();
 
   ACE_DEBUG ((LM_DEBUG,
               "%s.receive_request_service_contexts from "
@@ -57,7 +56,6 @@ Echo_Server_Request_Interceptor::receive_request_service_contexts (
   IOP::ServiceId id = ::service_id;
   IOP::ServiceContext_var sc =
     ri->get_request_service_context (id ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
   const char *buf =
     reinterpret_cast<const char *> (sc->context_data.get_buffer ());
@@ -82,7 +80,6 @@ Echo_Server_Request_Interceptor::receive_request_service_contexts (
     {
         ri->set_slot (slotId, data);
         ACE_DEBUG ((LM_DEBUG, "receive_request_service_contexts filled Slot %d\n",(int)slotId));
-        ACE_TRY_CHECK;
     }
     ACE_CATCHANY
     {
@@ -90,7 +87,6 @@ Echo_Server_Request_Interceptor::receive_request_service_contexts (
         ACE_TRY_THROW (CORBA::INTERNAL ());
     }
     ACE_ENDTRY;
-    ACE_CHECK;
 
   }
 }

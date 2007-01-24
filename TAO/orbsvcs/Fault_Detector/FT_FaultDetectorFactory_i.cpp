@@ -84,7 +84,7 @@ TAO::FT_FaultDetectorFactory_i::~FT_FaultDetectorFactory_i ()
     shutdown_i ();
   }
   ACE_DECLARE_NEW_ENV;
-  fini (ACE_ENV_SINGLE_ARG_PARAMETER);
+  fini ();
   this->threadManager_.close ();
 }
 
@@ -216,7 +216,6 @@ int TAO::FT_FaultDetectorFactory_i::init (CORBA::ORB_ptr orb ACE_ENV_ARG_DECL)
   CORBA::Object_var poa_object =
     this->orb_->resolve_initial_references (TAO_OBJID_ROOTPOA
                                             ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
 
   if (CORBA::is_nil (poa_object.in ()))
     ACE_ERROR_RETURN ((LM_ERROR,
@@ -228,7 +227,6 @@ int TAO::FT_FaultDetectorFactory_i::init (CORBA::ORB_ptr orb ACE_ENV_ARG_DECL)
     PortableServer::POA::_narrow (poa_object.in ()
                                   ACE_ENV_ARG_PARAMETER);
 
-  ACE_CHECK_RETURN (-1);
 
   if (CORBA::is_nil(this->poa_.in ()))
   {
@@ -238,27 +236,22 @@ int TAO::FT_FaultDetectorFactory_i::init (CORBA::ORB_ptr orb ACE_ENV_ARG_DECL)
   }
 
   PortableServer::POAManager_var poa_manager =
-    this->poa_->the_POAManager (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
+    this->poa_->the_POAManager ();
 
-  poa_manager->activate (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
+  poa_manager->activate ();
 
   // Register with the POA.
 
   this->objectId_ = this->poa_->activate_object (this ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
 
   // find my IOR
 
   CORBA::Object_var this_obj =
     this->poa_->id_to_reference (objectId_.in ()
                                  ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
 
   this->ior_ = this->orb_->object_to_string (this_obj.in ()
                                   ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
 
   this->identity_ = "FaultDetectorFactory";
 
@@ -269,19 +262,15 @@ int TAO::FT_FaultDetectorFactory_i::init (CORBA::ORB_ptr orb ACE_ENV_ARG_DECL)
     ACE_TRY_NEW_ENV
     {
       CORBA::Object_var rm_obj = orb->resolve_initial_references("ReplicationManager" ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
       this->replication_manager_ = ::FT::ReplicationManager::_narrow(rm_obj.in() ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
       if (!CORBA::is_nil (replication_manager_.in ()))
       {
         // capture the default notifier
-        this->notifier_ =  this->replication_manager_->get_fault_notifier (ACE_ENV_SINGLE_ARG_PARAMETER);
-        ACE_TRY_CHECK;
+        this->notifier_ =  this->replication_manager_->get_fault_notifier ();
 
         // register with ReplicationManager::RegistrationFactory
         PortableGroup::Criteria criteria(0);
         this->factory_registry_ = this->replication_manager_->get_factory_registry (criteria ACE_ENV_ARG_PARAMETER);
-        ACE_TRY_CHECK;
 
         if (! CORBA::is_nil(factory_registry_.in ()))
         {
@@ -301,7 +290,6 @@ int TAO::FT_FaultDetectorFactory_i::init (CORBA::ORB_ptr orb ACE_ENV_ARG_DECL)
             FT::FAULT_DETECTOR_ROLE_NAME,
             info
             ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
 
           ACE_DEBUG ((LM_DEBUG,
             "FaultDetector Registration complete.\n"
@@ -346,7 +334,6 @@ int TAO::FT_FaultDetectorFactory_i::init (CORBA::ORB_ptr orb ACE_ENV_ARG_DECL)
 
     CORBA::Object_var naming_obj =
       this->orb_->resolve_initial_references ("NameService" ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK_RETURN (-1);
 
     if (CORBA::is_nil(naming_obj.in ())){
       ACE_ERROR_RETURN ((LM_ERROR,
@@ -356,20 +343,18 @@ int TAO::FT_FaultDetectorFactory_i::init (CORBA::ORB_ptr orb ACE_ENV_ARG_DECL)
 
     this->naming_context_ =
       ::CosNaming::NamingContext::_narrow (naming_obj.in () ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK_RETURN (-1);
 
     this->this_name_.length (1);
     this->this_name_[0].id = CORBA::string_dup (this->ns_name_);
 
     this->naming_context_->rebind (this->this_name_, this_obj.in()  //CORBA::Object::_duplicate(this_obj)
                             ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK_RETURN (-1);
   }
 
   return result;
 }
 
-int TAO::FT_FaultDetectorFactory_i::fini (ACE_ENV_SINGLE_ARG_DECL)
+int TAO::FT_FaultDetectorFactory_i::fini (void)
 {
   if (this->ior_output_file_ != 0)
   {
@@ -389,7 +374,6 @@ int TAO::FT_FaultDetectorFactory_i::fini (ACE_ENV_SINGLE_ARG_DECL)
       FT::FAULT_DETECTOR_ROLE_NAME,
       this->location_
       ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK_RETURN (-1);
     this->registered_ = 0;
   }
   return 0;
@@ -496,7 +480,7 @@ void TAO::FT_FaultDetectorFactory_i::change_properties (
   METHOD_RETURN(TAO::FT_FaultDetectorFactory_i::change_properties);
 }
 
-void TAO::FT_FaultDetectorFactory_i::shutdown (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+void TAO::FT_FaultDetectorFactory_i::shutdown (void)
   ACE_THROW_SPEC ((
     CORBA::SystemException
   ))
@@ -704,7 +688,7 @@ void TAO::FT_FaultDetectorFactory_i::delete_object (
   METHOD_RETURN(TAO::FT_FaultDetectorFactory_i::delete_object);
 }
 
-CORBA::Boolean TAO::FT_FaultDetectorFactory_i::is_alive (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+CORBA::Boolean TAO::FT_FaultDetectorFactory_i::is_alive (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   METHOD_RETURN(TAO::FT_FaultDetectorFactory_i::is_alive)

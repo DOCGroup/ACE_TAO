@@ -49,13 +49,12 @@ EC_Schedule::print_usage (void)
 }
 
 void
-EC_Schedule::initialize_ec_impl (ACE_ENV_SINGLE_ARG_DECL)
+EC_Schedule::initialize_ec_impl (void)
 {
   this->scheduler_impl_ = new ACE_Config_Scheduler;
-  this->scheduler_ = this->scheduler_impl_->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+  this->scheduler_ = this->scheduler_impl_->_this ();
 
-  this->EC_Driver::initialize_ec_impl (ACE_ENV_SINGLE_ARG_PARAMETER);
+  this->EC_Driver::initialize_ec_impl ();
 }
 
 void
@@ -72,7 +71,7 @@ EC_Schedule::cleanup_ec (void)
 }
 
 void
-EC_Schedule::execute_test (ACE_ENV_SINGLE_ARG_DECL)
+EC_Schedule::execute_test (void)
 {
   CORBA::Long min_priority =
     (ACE_Sched_Params::priority_min (ACE_SCHED_FIFO)
@@ -94,7 +93,6 @@ EC_Schedule::execute_test (ACE_ENV_SINGLE_ARG_DECL)
                                         configs.out (),
                                         anomalies.out ()
                                         ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
   if (this->verbose ())
     ACE_DEBUG ((LM_DEBUG,
@@ -123,7 +121,6 @@ EC_Schedule::build_consumer_qos (
 
   RtecScheduler::handle_t rt_info =
     this->scheduler_->create (name ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
   // The worst case execution time is far less than 2
   // milliseconds, but that is a safe estimate....
@@ -139,7 +136,6 @@ EC_Schedule::build_consumer_qos (
                          0,
                          RtecScheduler::OPERATION
                          ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
   int type_start =
     this->consumer_type_start_
@@ -169,7 +165,6 @@ EC_Schedule::build_supplier_qos (
 
   RtecScheduler::handle_t rt_info =
     this->scheduler_->create (name ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
   ACE_Time_Value tv (0, this->burst_pause_);
   RtecScheduler::Period_t rate = tv.usec () * 10;
@@ -190,7 +185,6 @@ EC_Schedule::build_supplier_qos (
                          1,
                          RtecScheduler::OPERATION
                          ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
   int type_start = this->supplier_type_start_ + i*this->supplier_type_shift_;
   int supplier_id = i + 1;

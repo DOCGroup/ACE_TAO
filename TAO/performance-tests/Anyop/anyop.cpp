@@ -53,7 +53,6 @@ main (int argc, char *argv[])
                                             argv,
                                             0
                                             ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       ACE_Get_Opt get_opt (argc, argv, "dien:");
       int opt;
@@ -93,12 +92,10 @@ main (int argc, char *argv[])
         CORBA::Object_var obj =
           orb->string_to_object ("corbaloc:iiop:localhost:1234/Foo/Bar"
                                  ACE_ENV_ARG_PARAMETER);
-        ACE_TRY_CHECK;
 
         Param_Test_var param_test =
           TAO::Narrow_Utils<Param_Test>::unchecked_narrow (obj.in (),
                                                            0);
-        ACE_TRY_CHECK;
         TAO_Stub *stub = param_test->_stubobj ();
         stub->type_id = CORBA::string_dup ("IDL:Param_Test:1.0");
 

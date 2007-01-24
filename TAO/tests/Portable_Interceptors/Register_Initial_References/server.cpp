@@ -17,13 +17,11 @@ int test_orb (CORBA::ORB_ptr orb ACE_ENV_ARG_DECL)
   ACE_NEW_RETURN (test,
                   test_i, 1);
 
-  CORBA::Object_ptr object = test->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (1);
+  CORBA::Object_ptr object = test->_this ();
 
   orb->register_initial_reference ("ORBMyService",
                                     object
                                     ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (1);
 
   bool invalid_name = false;
   ACE_TRY
@@ -32,7 +30,6 @@ int test_orb (CORBA::ORB_ptr orb ACE_ENV_ARG_DECL)
       orb->register_initial_reference ("",
                                        object
                                        ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
     }
   ACE_CATCH (CORBA::ORB::InvalidName, ex)
     {
@@ -123,18 +120,14 @@ main (int argc, char *argv[])
     {
       CORBA::ORB_var orb =
         CORBA::ORB_init (argc, argv, "" ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       retval = test_orb (orb.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       PortableInterceptor::register_orb_initializer (initializer_var.in ()
                                                      ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       CORBA::ORB_var second_orb =
         CORBA::ORB_init (argc, argv, "SecondORB" ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
     }
   ACE_CATCHANY
     {

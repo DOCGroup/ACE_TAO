@@ -109,8 +109,7 @@ public:
                                   "Testing proper exception handling ...\n"));
       ACE_TRY
         {
-          excep_holder->raise_exception (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+          excep_holder->raise_exception ();
         }
       ACE_CATCHANY
         {
@@ -118,7 +117,6 @@ public:
                       "... caught the wrong exception -> ERROR\n"));
         }
       ACE_ENDTRY;
-      ACE_CHECK;
     };
 
 private:
@@ -135,33 +133,26 @@ main (int argc, char *argv[])
     {
       CORBA::ORB_var orb =
         CORBA::ORB_init (argc, argv, "" ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       CORBA::Object_var object_var =
         orb->resolve_initial_references ("RootPOA" ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       PortableServer::POA_var poa_var =
         PortableServer::POA::_narrow (object_var.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       PortableServer::POAManager_var poa_manager_var =
-        poa_var->the_POAManager (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        poa_var->the_POAManager ();
 
-      poa_manager_var->activate (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      poa_manager_var->activate ();
 
       if (parse_args (argc, argv) != 0)
         return 1;
 
       // We reuse the object_var smart pointer!
       object_var = orb->string_to_object (ior ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       A::AMI_Test_var ami_test_var =
         A::AMI_Test::_narrow (object_var.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       if (CORBA::is_nil (ami_test_var.in ()))
         {
@@ -174,8 +165,7 @@ main (int argc, char *argv[])
       // Instantiate the ReplyHandler and register that with the POA.
       Handler handler;
       A::AMI_AMI_TestHandler_var the_handler_var =
-        handler._this (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        handler._this ();
 
       CORBA::Long l = 931247;
       A::Payload payload (payload_size);
@@ -200,7 +190,6 @@ main (int argc, char *argv[])
                                    "Let's talk AMI.",
                                    payload
                                    ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
         }
 
       // We are just sending all requests, but we shouldn't get any replies
@@ -229,7 +218,6 @@ main (int argc, char *argv[])
                                               "Let's talk SMI.",
                                               payload
                                               ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       if (debug)
         {
@@ -240,17 +228,14 @@ main (int argc, char *argv[])
 
       if (shutdown_flag)
         {
-          ami_test_var->shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+          ami_test_var->shutdown ();
         }
 
       poa_var->destroy (1,  // ethernalize objects
                         0  // wait for completion
                         ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
-      orb->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      orb->destroy ();
     }
   ACE_CATCHANY
     {
@@ -259,7 +244,6 @@ main (int argc, char *argv[])
       return 1;
     }
   ACE_ENDTRY;
-  ACE_CHECK_RETURN (-1);
 
   return 0;
 }

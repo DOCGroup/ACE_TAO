@@ -244,7 +244,6 @@ start_synchronization (test_ptr test,
           test->method (work,
                         prime_number
                         ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
         }
     }
   ACE_CATCHANY
@@ -352,8 +351,7 @@ max_throughput (test_ptr test,
   ACE_TRY_NEW_ENV
     {
       CORBA_priority =
-        current->the_priority (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        current->the_priority ();
 
       CORBA::Boolean result =
         priority_mapping.to_native (CORBA_priority,
@@ -382,7 +380,6 @@ max_throughput (test_ptr test,
           test->method (work,
                         prime_number
                         ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
 
           ++calls_made;
         }
@@ -424,9 +421,9 @@ public:
 
   int svc (void);
   ACE_hrtime_t deadline_for_current_call (CORBA::ULong i);
-  void reset_priority (ACE_ENV_SINGLE_ARG_DECL);
+  void reset_priority (void);
   void print_stats (ACE_hrtime_t test_end);
-  int setup (ACE_ENV_SINGLE_ARG_DECL);
+  int setup (void);
   void missed_start_deadline (CORBA::ULong invocation);
   void missed_end_deadline (CORBA::ULong invocation);
 
@@ -477,19 +474,17 @@ Paced_Worker::Paced_Worker (ACE_Thread_Manager &thread_manager,
 }
 
 void
-Paced_Worker::reset_priority (ACE_ENV_SINGLE_ARG_DECL)
+Paced_Worker::reset_priority (void)
 {
   if (set_priority)
     {
       this->current_->the_priority (this->priority_
                                     ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
     }
   else
     {
       this->current_->the_priority (continuous_worker_priority
                                     ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
     }
 }
 
@@ -594,17 +589,15 @@ Paced_Worker::print_stats (ACE_hrtime_t test_end)
 }
 
 int
-Paced_Worker::setup (ACE_ENV_SINGLE_ARG_DECL)
+Paced_Worker::setup (void)
 {
   if (priority_setting == AFTER_THREAD_CREATION)
     {
-      this->reset_priority (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK_RETURN (-1);
+      this->reset_priority ();
     }
 
   this->CORBA_priority_ =
-    this->current_->the_priority (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
+    this->current_->the_priority ();
 
   CORBA::Boolean result =
     this->priority_mapping_.to_native (this->CORBA_priority_,
@@ -641,8 +634,7 @@ Paced_Worker::svc (void)
   ACE_TRY_NEW_ENV
     {
       int result =
-        this->setup (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        this->setup ();
 
       if (result != 0)
         return result;
@@ -666,7 +658,6 @@ Paced_Worker::svc (void)
           this->test_->method (work,
                                prime_number
                                ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
 
           ACE_hrtime_t time_after_call =
             ACE_OS::gethrtime ();
@@ -719,7 +710,7 @@ public:
   int svc (void);
   void print_stats (ACE_Sample_History &history,
                     ACE_hrtime_t test_end);
-  int setup (ACE_ENV_SINGLE_ARG_DECL);
+  int setup (void);
   void print_collective_stats (void);
 
   test_var test_;
@@ -821,18 +812,16 @@ Continuous_Worker::print_collective_stats (void)
 }
 
 int
-Continuous_Worker::setup (ACE_ENV_SINGLE_ARG_DECL)
+Continuous_Worker::setup (void)
 {
   if (priority_setting == AFTER_THREAD_CREATION)
     {
       this->current_->the_priority (continuous_worker_priority
                                     ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK_RETURN (-1);
     }
 
   this->CORBA_priority_ =
-    this->current_->the_priority (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
+    this->current_->the_priority ();
 
   CORBA::Boolean result =
     this->priority_mapping_.to_native (this->CORBA_priority_,
@@ -856,8 +845,7 @@ Continuous_Worker::svc (void)
       ACE_Sample_History history (this->iterations_);
 
       int result =
-        this->setup (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        this->setup ();
 
       if (result != 0)
         return result;
@@ -871,7 +859,6 @@ Continuous_Worker::svc (void)
           this->test_->method (work,
                                prime_number
                                ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
 
           ACE_hrtime_t end = ACE_OS::gethrtime ();
           history.sample (end - start);
@@ -926,31 +913,25 @@ Task::svc (void)
     {
       CORBA::Object_var object =
         this->orb_->string_to_object (ior ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       test_var test =
         test::_narrow (object.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       object =
         this->orb_->resolve_initial_references ("RTCurrent"
                                                 ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       RTCORBA::Current_var current =
         RTCORBA::Current::_narrow (object.in ()
                                    ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       object =
         this->orb_->resolve_initial_references ("PriorityMappingManager"
                                                 ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       RTCORBA::PriorityMappingManager_var mapping_manager =
         RTCORBA::PriorityMappingManager::_narrow (object.in ()
                                                   ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       RTCORBA::PriorityMapping &priority_mapping =
         *mapping_manager->mapping ();
@@ -1145,8 +1126,7 @@ Task::svc (void)
 
       if (shutdown_server)
         {
-          test->shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+          test->shutdown ();
         }
     }
   ACE_CATCHANY
@@ -1167,7 +1147,6 @@ main (int argc, char *argv[])
     {
       CORBA::ORB_var orb =
         CORBA::ORB_init (argc, argv, "" ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       int result =
         parse_args (argc, argv);

@@ -37,7 +37,7 @@ public:
   ~TAO_Notify_Tests_Direct_Consumer ();
 
   /// Connect using options parsed and set initial QoS.
-  virtual void connect (ACE_ENV_SINGLE_ARG_DECL);
+  virtual void connect (void);
 };
 
 #include /**/ "ace/post.h"

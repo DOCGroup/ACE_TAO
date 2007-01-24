@@ -47,7 +47,6 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       CORBA::ORB_var orb =
         CORBA::ORB_init (argcon.get_argc (), argcon.get_ASCII_argv (),
                          "" ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       ACE_Sig_Action sa ((ACE_SignalHandler) handler, SIGHUP);
 
@@ -56,7 +55,6 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
           ACE_Time_Value tv (5, 0);
 
           orb->perform_work (tv ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
 
           ACE_DEBUG ((LM_DEBUG,
                       "Reconfig flag = %d\n",

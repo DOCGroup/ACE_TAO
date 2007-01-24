@@ -36,14 +36,12 @@ Client_ORBInitializer::post_init (
                         TAO::VMCID,
                         ENOMEM),
                       CORBA::COMPLETED_NO));
-  ACE_CHECK;
 
   PortableInterceptor::ClientRequestInterceptor_var ci_interceptor =
     ci;
 
   info->add_client_request_interceptor (ci_interceptor.in ()
                                         ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
   ACE_NEW_THROW_EX (ci,
                     Client_Request_Interceptor ("CLIENT B"),
@@ -52,13 +50,11 @@ Client_ORBInitializer::post_init (
                         TAO::VMCID,
                         ENOMEM),
                       CORBA::COMPLETED_NO));
-  ACE_CHECK;
 
   ci_interceptor = ci;
 
   info->add_client_request_interceptor (ci_interceptor.in ()
                                         ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
   ACE_NEW_THROW_EX (ci,
                     Client_Request_Interceptor ("CLIENT C"),
@@ -67,11 +63,9 @@ Client_ORBInitializer::post_init (
                         TAO::VMCID,
                         ENOMEM),
                       CORBA::COMPLETED_NO));
-  ACE_CHECK;
 
   ci_interceptor = ci;
 
   info->add_client_request_interceptor (ci_interceptor.in ()
                                         ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 }

@@ -55,14 +55,14 @@ public:
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   /// Returns the number of cans in the bookshelf.
-  virtual CORBA::Long bookshelf_size (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+  virtual CORBA::Long bookshelf_size (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   /// Returns comments about your collection.
-  virtual char *get_praise (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+  virtual char *get_praise (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual void shutdown(ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+  virtual void shutdown(void)
     ACE_THROW_SPEC ((CORBA::SystemException));
 private:
   /// Saves bookshelf data to a file.

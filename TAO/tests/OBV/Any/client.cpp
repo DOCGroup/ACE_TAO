@@ -43,7 +43,6 @@ main (int argc, char *argv[])
 
       CORBA::ORB_var orb =
         CORBA::ORB_init (argc, argv, "" ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       if (parse_args (argc, argv) != 0)
         return 1;
@@ -58,7 +57,6 @@ main (int argc, char *argv[])
       orb->register_value_factory (va_factory->tao_repository_id (),
                                    va_factory
                                    ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
       va_factory->_remove_ref (); // release ownership
 
 
@@ -70,7 +68,6 @@ main (int argc, char *argv[])
       orb->register_value_factory (vb_factory->tao_repository_id (),
                                    vb_factory
                                    ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
       vb_factory->_remove_ref (); // release ownership
 
       // Do local test
@@ -135,11 +132,9 @@ main (int argc, char *argv[])
 
       CORBA::Object_var tmp =
         orb->string_to_object(ior ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       OBV_AnyTest::Test_var test =
         OBV_AnyTest::Test::_narrow(tmp.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       if (CORBA::is_nil (test.in ()))
       {
@@ -154,7 +149,6 @@ main (int argc, char *argv[])
       CORBA::Any_var result = test->get_something (
           0
           ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       if (!(result.inout () >>= dst) || dst->id () != magic)
         {
@@ -168,7 +162,6 @@ main (int argc, char *argv[])
       result = test->get_something (
           1
           ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       if (!(result.inout () >>= dst_vb) || dst_vb->id () != magic)
         {
@@ -199,7 +192,6 @@ main (int argc, char *argv[])
       result = test->get_something (
           1
           ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       if (!(result.inout () >>= CORBA::Any::to_value(target.out())))
         {
@@ -216,11 +208,9 @@ main (int argc, char *argv[])
         }
 #endif /* TAO_HAS_OPTIMIZED_VALUETYPE_MARSHALING */
 
-      test->shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      test->shutdown ();
 
-      orb->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      orb->destroy ();
 
       ACE_DEBUG ((LM_DEBUG, "(%P|%t) client - test finished.\n"));
     }

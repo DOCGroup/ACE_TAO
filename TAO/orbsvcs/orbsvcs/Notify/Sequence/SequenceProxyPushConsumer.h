@@ -60,7 +60,7 @@ protected:
   ///= Protected Methods
 
   //= interface methods
-  virtual CosNotifyChannelAdmin::ProxyType MyType (ACE_ENV_SINGLE_ARG_DECL)
+  virtual CosNotifyChannelAdmin::ProxyType MyType (void)
     ACE_THROW_SPEC ((
                      CORBA::SystemException
                      ));
@@ -81,7 +81,7 @@ protected:
                      CosEventComm::Disconnected
                      ));
 
-  virtual void disconnect_sequence_push_consumer (ACE_ENV_SINGLE_ARG_DECL)
+  virtual void disconnect_sequence_push_consumer (void)
     ACE_THROW_SPEC ((
                      CORBA::SystemException
                      ));

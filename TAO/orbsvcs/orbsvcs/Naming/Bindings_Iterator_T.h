@@ -67,7 +67,7 @@ public:
   ~TAO_Bindings_Iterator (void);
 
   /// Returns the Default POA of this Servant object
-  virtual PortableServer::POA_ptr _default_POA (ACE_ENV_SINGLE_ARG_DECL);
+  virtual PortableServer::POA_ptr _default_POA (void);
 
   // = Idl methods.
 
@@ -88,7 +88,7 @@ public:
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   /// This operation destroys the iterator.
-  void destroy (ACE_ENV_SINGLE_ARG_DECL)
+  void destroy (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   // = Helper method.

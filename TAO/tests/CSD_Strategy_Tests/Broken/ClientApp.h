@@ -28,12 +28,12 @@ class ClientApp : public TestAppBase
 
     // These are all called, in order, by the run_i() method.
     int init(int argc, char* argv[] ACE_ENV_ARG_DECL);
-    void poa_setup(ACE_ENV_SINGLE_ARG_DECL);
-    void csd_setup(ACE_ENV_SINGLE_ARG_DECL);
-    void client_setup(ACE_ENV_SINGLE_ARG_DECL);
-    void poa_activate(ACE_ENV_SINGLE_ARG_DECL);
-    void run_clients(ACE_ENV_SINGLE_ARG_DECL);
-    void run_orb_event_loop(ACE_ENV_SINGLE_ARG_DECL);
+    void poa_setup(void);
+    void csd_setup(void);
+    void client_setup(void);
+    void poa_activate(void);
+    void run_clients(void);
+    void run_orb_event_loop(void);
     bool check_validity ();
     void cleanup();
 

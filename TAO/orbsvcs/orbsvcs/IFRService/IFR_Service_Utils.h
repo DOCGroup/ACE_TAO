@@ -65,17 +65,17 @@ public:
 protected:
 
   /// Two persistent POAs, one using a servant locator.
-  int create_poa (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
+  int create_poa (void);
 
   /// Open an ACE_Configuration of the appropriate type.
-  int open_config (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
+  int open_config (void);
 
   /// Create and initialize the repository.
-  int create_repository (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
+  int create_repository (void);
 
   /// Enable the Interface Repository to answer multicast requests
   /// for its IOR.
-  int init_multicast_server (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
+  int init_multicast_server (void);
 
   /// Reference to our ORB.
   CORBA::ORB_var orb_;

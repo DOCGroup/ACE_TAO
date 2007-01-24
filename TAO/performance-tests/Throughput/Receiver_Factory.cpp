@@ -12,21 +12,20 @@ Receiver_Factory::Receiver_Factory (CORBA::ORB_ptr orb)
 }
 
 Test::Receiver_ptr
-Receiver_Factory::create_receiver (ACE_ENV_SINGLE_ARG_DECL)
+Receiver_Factory::create_receiver (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   Receiver *receiver_impl = 0;
   ACE_NEW_THROW_EX (receiver_impl,
                     Receiver,
                     CORBA::NO_MEMORY ());
-  ACE_CHECK_RETURN (Test::Receiver::_nil ());
   PortableServer::ServantBase_var transfer_ownership(receiver_impl);
 
-  return receiver_impl->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
+  return receiver_impl->_this ();
 }
 
 void
-Receiver_Factory::shutdown (ACE_ENV_SINGLE_ARG_DECL)
+Receiver_Factory::shutdown (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->orb_->shutdown (0 ACE_ENV_ARG_PARAMETER);

@@ -38,36 +38,30 @@ TAO_CosEC_EventChannel_i::init (const RtecEventChannelAdmin::ConsumerQOS &consum
   auto_ptr <TAO_CosEC_SupplierAdmin_i> auto_supplier_ (supplier_);
 
   RtecEventChannelAdmin::ConsumerAdmin_ptr rtec_consumeradmin =
-    rtec->for_consumers (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
+    rtec->for_consumers ();
 
   if (auto_consumer_.get ()->init (consumerqos,
                                    rtec_consumeradmin) == -1)
     return -1;
 
   this->consumeradmin_ =
-    auto_consumer_.get ()->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
+    auto_consumer_.get ()->_this ();
 
   // give the ownership to the POA.
-  auto_consumer_.get ()->_remove_ref (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
+  auto_consumer_.get ()->_remove_ref ();
 
   RtecEventChannelAdmin::SupplierAdmin_ptr rtec_supplieradmin =
-    rtec->for_suppliers (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
+    rtec->for_suppliers ();
 
   if (auto_supplier_.get ()->init (supplierqos,
                                    rtec_supplieradmin) == -1)
     return -1;
 
   this->supplieradmin_ =
-    auto_supplier_.get ()->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
+    auto_supplier_.get ()->_this ();
 
   // give the ownership to the POA.
-  auto_supplier_.get ()->_remove_ref (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
+  auto_supplier_.get ()->_remove_ref ();
 
   this->consumer_admin_ = auto_consumer_.release ();
   this->supplier_admin_ = auto_supplier_.release ();
@@ -76,7 +70,7 @@ TAO_CosEC_EventChannel_i::init (const RtecEventChannelAdmin::ConsumerQOS &consum
 }
 
 CosEventChannelAdmin::ConsumerAdmin_ptr
-TAO_CosEC_EventChannel_i::for_consumers (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+TAO_CosEC_EventChannel_i::for_consumers (void)
       ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // @@ Pradeep: you must make a copy here, because the caller is
@@ -86,7 +80,7 @@ TAO_CosEC_EventChannel_i::for_consumers (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
 }
 
 CosEventChannelAdmin::SupplierAdmin_ptr
-TAO_CosEC_EventChannel_i::for_suppliers (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+TAO_CosEC_EventChannel_i::for_suppliers (void)
       ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // @@ Pradeep: you must make a copy here, because the caller is
@@ -96,29 +90,26 @@ TAO_CosEC_EventChannel_i::for_suppliers (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
 }
 
 void
-TAO_CosEC_EventChannel_i::destroy (ACE_ENV_SINGLE_ARG_DECL)
+TAO_CosEC_EventChannel_i::destroy (void)
       ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // Deactivate the CosEventChannel
   PortableServer::POA_var poa =
-    this->_default_POA (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+    this->_default_POA ();
 
   PortableServer::ObjectId_var id = poa->servant_to_id (this
                                                         ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
   poa->deactivate_object (id.in ()
                           ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
   this->supplieradmin_ =  CosEventChannelAdmin::SupplierAdmin::_nil ();
   this->consumeradmin_ =  CosEventChannelAdmin::ConsumerAdmin::_nil ();
 }
 
 void
-TAO_CosEC_EventChannel_i::shutdown (ACE_ENV_SINGLE_ARG_DECL)
+TAO_CosEC_EventChannel_i::shutdown (void)
 {
-  this->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
+  this->destroy ();
 }
 

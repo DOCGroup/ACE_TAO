@@ -53,7 +53,7 @@ Sender::get_data (CORBA::ULong size,
 }
 
 CORBA::Long
-Sender::get_event_count (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+Sender::get_event_count (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_GUARD_RETURN (ACE_SYNCH_MUTEX,
@@ -65,14 +65,14 @@ Sender::get_event_count (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
 
 
 void
-Sender::ping (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+Sender::ping (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return;
 }
 
 void
-Sender::shutdown (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+Sender::shutdown (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   if (this->is_done_ == false)

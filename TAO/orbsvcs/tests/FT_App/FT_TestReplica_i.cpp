@@ -157,8 +157,7 @@ const char * FT_TestReplica_i::repository_id()
   ACE_DECLARE_NEW_CORBA_ENV;
 
   const char * id =
-    FT_TEST::_tc_TestReplica->id(ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (0);
+    FT_TEST::_tc_TestReplica->id();
 
   return id;
 }
@@ -183,7 +182,7 @@ unsigned long FT_TestReplica_i::factory_id()const
   return this->factory_id_;
 }
 
-::PortableServer::POA_ptr FT_TestReplica_i::_default_POA (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+::PortableServer::POA_ptr FT_TestReplica_i::_default_POA (void)
 {
   return ::PortableServer::POA::_duplicate(this->poa_.in ());
 }
@@ -207,7 +206,6 @@ int FT_TestReplica_i::init (CORBA::ORB_var & orb ACE_ENV_ARG_DECL)
   CORBA::Object_var poa_object =
     this->orb_->resolve_initial_references (TAO_OBJID_ROOTPOA
                                             ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
 
   if (CORBA::is_nil (poa_object.in ()))
     ACE_ERROR_RETURN ((LM_ERROR,
@@ -219,7 +217,6 @@ int FT_TestReplica_i::init (CORBA::ORB_var & orb ACE_ENV_ARG_DECL)
     PortableServer::POA::_narrow (poa_object.in ()
                                   ACE_ENV_ARG_PARAMETER);
 
-  ACE_CHECK_RETURN (-1);
 
   if (CORBA::is_nil(this->poa_.in ()))
   {
@@ -229,29 +226,26 @@ int FT_TestReplica_i::init (CORBA::ORB_var & orb ACE_ENV_ARG_DECL)
   }
 
   PortableServer::POAManager_var poa_manager =
-    this->poa_->the_POAManager (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
+    this->poa_->the_POAManager ();
 
-  poa_manager->activate (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
+  poa_manager->activate ();
 
 
   // Register with the POA.
 
   this->object_id_ = this->poa_->activate_object (this ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
 
   return 0;
 }
 
-void FT_TestReplica_i::_remove_ref (ACE_ENV_SINGLE_ARG_DECL)
+void FT_TestReplica_i::_remove_ref (void)
 {
   //////////////////////////////////////////////////
   // WARNING: The following call invokes fini then deletes this object
   this->factory_->remove_replica(this->factory_id_, this ACE_ENV_ARG_PARAMETER);
 }
 
-int FT_TestReplica_i::fini (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+int FT_TestReplica_i::fini (void)
 {
   return 0;
 }
@@ -260,7 +254,7 @@ int FT_TestReplica_i::fini (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
 
 /////////////////////////////////////////////////////
 // class FT_TestReplica_i:  PullMonitorable interface
-CORBA::Boolean FT_TestReplica_i::is_alive (ACE_ENV_SINGLE_ARG_DECL)
+CORBA::Boolean FT_TestReplica_i::is_alive (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   KEVORKIAN_RETURN(DURING_IS_ALIVE, is_alive, 0)
@@ -277,7 +271,7 @@ CORBA::Boolean FT_TestReplica_i::is_alive (ACE_ENV_SINGLE_ARG_DECL)
 
 /////////////////////////////////////////////////////
 // class FT_TestReplica_i:  Updateable interface
-FT::State * FT_TestReplica_i::get_update (ACE_ENV_SINGLE_ARG_DECL)
+FT::State * FT_TestReplica_i::get_update (void)
   ACE_THROW_SPEC ((CORBA::SystemException, FT::NoUpdateAvailable))
 {
   KEVORKIAN_RETURN(DURING_GET_UPDATE, get_update, 0)
@@ -303,7 +297,7 @@ void FT_TestReplica_i::set_update (const FT::State & s ACE_ENV_ARG_DECL)
 
 /////////////////////////////////////////////////////
 // class FT_TestReplica_i:  Checkpointable interface
-::FT::State * FT_TestReplica_i::get_state (ACE_ENV_SINGLE_ARG_DECL)
+::FT::State * FT_TestReplica_i::get_state (void)
   ACE_THROW_SPEC ((CORBA::SystemException, FT::NoStateAvailable))
 {
 #if defined(FT_TEST_LACKS_STATE)
@@ -371,7 +365,7 @@ CORBA::Long FT_TestReplica_i::increment (CORBA::Long delta
   return counter;
 }
 
-CORBA::Long FT_TestReplica_i::get (ACE_ENV_SINGLE_ARG_DECL)
+CORBA::Long FT_TestReplica_i::get (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   KEVORKIAN_DURING_RETURN(get, 0)
@@ -379,7 +373,7 @@ CORBA::Long FT_TestReplica_i::get (ACE_ENV_SINGLE_ARG_DECL)
   return counter;
 }
 
-CORBA::Long FT_TestReplica_i::counter (ACE_ENV_SINGLE_ARG_DECL)
+CORBA::Long FT_TestReplica_i::counter (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   KEVORKIAN_DURING_RETURN([get]counter, 0)
@@ -407,7 +401,7 @@ void FT_TestReplica_i::die (FT_TEST::TestReplica::Bane  when
   KEVORKIAN(RIGHT_NOW, die)
 }
 
-void FT_TestReplica_i::shutdown (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+void FT_TestReplica_i::shutdown (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_OS::fprintf (stdout, "%s@%s#%lu Shut down requested\n",

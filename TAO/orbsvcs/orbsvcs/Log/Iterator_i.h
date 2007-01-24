@@ -43,7 +43,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
  *
  * @brief Iterator to get LogRecords for the log via a query.
  */
-class TAO_Log_Serv_Export TAO_Iterator_i 
+class TAO_Log_Serv_Export TAO_Iterator_i
   : public virtual POA_DsLogAdmin::Iterator,
     public ACE_Event_Handler
 {
@@ -65,7 +65,7 @@ public:
                      DsLogAdmin::InvalidParam))			= 0;
 
   /// This destroys the iterator.
-  virtual void destroy (ACE_ENV_SINGLE_ARG_DECL)
+  virtual void destroy (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
 protected:
@@ -77,10 +77,10 @@ protected:
 
   /// Timeout
   static ACE_Time_Value timeout_;
-  
+
   /// Timer ID
   long timer_id_;
-  
+
   virtual int handle_timeout (const ACE_Time_Value&, const void *);
 };
 

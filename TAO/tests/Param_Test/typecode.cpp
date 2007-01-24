@@ -20,7 +20,7 @@
 #include "typecode.h"
 
 ACE_RCSID (Param_Test,
-           typecode, 
+           typecode,
            "$Id$")
 
 // ************************************************************************
@@ -54,8 +54,7 @@ Test_TypeCode::dii_req_invoke (CORBA::Request *req
 
   req->set_return_type (CORBA::_tc_TypeCode);
 
-  req->invoke (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+  req->invoke ();
 
   CORBA::TypeCode_ptr tmp;
   req->return_value () >>= tmp;
@@ -63,13 +62,11 @@ Test_TypeCode::dii_req_invoke (CORBA::Request *req
 
   CORBA::NamedValue_ptr o2 =
     req->arguments ()->item (1 ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
   *o2->value () >>= tmp;
   this->inout_ = CORBA::TypeCode::_duplicate (tmp);
 
   CORBA::NamedValue_ptr o3 =
     req->arguments ()->item (2 ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
   *o3->value () >>= tmp;
   this->out_ = CORBA::TypeCode::_duplicate (tmp);
 }
@@ -123,7 +120,6 @@ Test_TypeCode::run_sii_test (Param_Test_ptr objref
   ACE_TRY
     {
       this->init_parameters (objref ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       CORBA::TypeCode_out out (this->out_);
 
@@ -131,7 +127,6 @@ Test_TypeCode::run_sii_test (Param_Test_ptr objref
                                           this->inout_.inout (),
                                           out
                                           ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       return 0;
     }
@@ -156,15 +151,12 @@ Test_TypeCode::check_validity (void)
 
       one = this->in_.in ()->equal (this->inout_.in ()
                                     ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       two = this->in_.in ()->equal (this->out_.in ()
                                     ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       three = this->in_.in ()->equal (this->ret_.in ()
                                       ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       if (one && two && three)
         return 1;

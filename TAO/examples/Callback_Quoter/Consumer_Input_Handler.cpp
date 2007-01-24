@@ -113,7 +113,6 @@ Consumer_Input_Handler::register_consumer ()
                                                            this->consumer_handler_->threshold_value_,
                                                            this->consumer_handler_->consumer_var_.in ()
                                                            ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       // Note the registration.
       consumer_handler_->registered_ = 1;
@@ -130,7 +129,6 @@ Consumer_Input_Handler::register_consumer ()
       return -1;
     }
   ACE_ENDTRY;
-  ACE_CHECK_RETURN (-1);
 
 return 0;
 }
@@ -177,15 +175,13 @@ Consumer_Input_Handler::quit_consumer_process ()
           // raised. Hence check for this case using ACE_ENV_SINGLE_ARG_PARAMETER.
           this->consumer_handler_->server_->unregister_callback (this->consumer_handler_->consumer_var_.in ()
                                                                  ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
 
           ACE_DEBUG ((LM_DEBUG,
                       " Consumer Unregistered \n "));
           consumer_handler_->unregistered_ = 0;
           consumer_handler_->registered_ = 0;
         }
-      this->consumer_handler_->consumer_servant_->shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      this->consumer_handler_->consumer_servant_->shutdown ();
     }
   ACE_CATCHANY
     {
@@ -197,19 +193,17 @@ Consumer_Input_Handler::quit_consumer_process ()
 
       ACE_TRY_EX (block1)
         {
-          this->consumer_handler_->consumer_servant_->shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
+          this->consumer_handler_->consumer_servant_->shutdown ();
           ACE_TRY_CHECK_EX (block1);
         }
       ACE_CATCHANY
         {
         }
       ACE_ENDTRY;
-      ACE_CHECK_RETURN (-1);
 
       return -1;
     }
   ACE_ENDTRY;
-  ACE_CHECK_RETURN (-1);
 
   return 0;
 }

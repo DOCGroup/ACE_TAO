@@ -20,26 +20,21 @@ Loader::create_object (CORBA::ORB_ptr orb,
     {
       CORBA::Object_var obj =
         orb->resolve_initial_references ("RootPOA" ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       PortableServer::POA_var poa =
         PortableServer::POA::_narrow (obj.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       PortableServer::POAManager_var mgr =
-        poa->the_POAManager (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        poa->the_POAManager ();
 
-      mgr->activate (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      mgr->activate ();
 
       Test_i *test;
       ACE_NEW_RETURN (test, Test_i (poa.in ()),
                       CORBA::Object::_nil ());
 
       PortableServer::ServantBase_var tmp = test;
-      obj = test->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      obj = test->_this ();
 
       return obj._retn ();
     }

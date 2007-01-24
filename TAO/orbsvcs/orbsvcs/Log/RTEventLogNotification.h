@@ -58,7 +58,7 @@ public:
   ~TAO_RTEventLogNotification (void);
 
   /// The skeleton methods.
-  virtual void disconnect_push_supplier (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+  virtual void disconnect_push_supplier (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
 protected:
@@ -66,7 +66,7 @@ protected:
 
   /// Used to connect this PushSupplier to the EventChannel
   /// that will log these events.
-  void obtainProxyConsumer (ACE_ENV_SINGLE_ARG_DECL);
+  void obtainProxyConsumer (void);
 
   // Send the event on the event channel.
   virtual void send_notification (const CORBA::Any& any)

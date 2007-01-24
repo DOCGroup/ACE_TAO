@@ -95,8 +95,7 @@ Server::init (int argc,
       CosNaming::Name server_mmdevice_name (1);
       server_mmdevice_name.length (1);
       server_mmdevice_name [0].id = CORBA::string_dup ("Server_MMDevice1");
-      AVStreams::MMDevice_var mmdevice = this->mmdevice_->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      AVStreams::MMDevice_var mmdevice = this->mmdevice_->_this ();
 
       ACE_TRY_EX (bind)
         {
@@ -112,10 +111,8 @@ Server::init (int argc,
           this->my_naming_client_->bind (server_mmdevice_name,
                                          mmdevice.in ()
                                          ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
         }
       ACE_ENDTRY;
-      ACE_CHECK_RETURN (-1);
     }
   ACE_CATCHANY
     {
@@ -123,7 +120,6 @@ Server::init (int argc,
       return -1;
     }
   ACE_ENDTRY;
-  ACE_CHECK_RETURN (-1);
   return 0;
 }
 
@@ -137,18 +133,14 @@ Server::run (void)
 
       while( !done )
       {
-        CORBA::Boolean wp = orb->work_pending (ACE_ENV_SINGLE_ARG_PARAMETER);
-        ACE_TRY_CHECK;
+        CORBA::Boolean wp = orb->work_pending ();
         if (wp)
          {
               orb->perform_work( ACE_ENV_SINGLE_ARG_PARAMETER );
-              ACE_TRY_CHECK;
          }
       }
-      ACE_TRY_CHECK;
 
       orb->shutdown( 1 ACE_ENV_ARG_PARAMETER );
-      ACE_TRY_CHECK;
     }
     ACE_CATCHANY
     {
@@ -158,7 +150,6 @@ Server::run (void)
   ACE_ENDTRY;
 
 
-  ACE_CHECK_RETURN (-1);
   return 0;
 }
 
@@ -209,7 +200,6 @@ main (int argc,
     {
       CORBA::Object_var obj
         = orb->resolve_initial_references ("RootPOA" ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       PortableServer::POA_var poa
         = PortableServer::POA::_narrow (obj.in ());
@@ -217,7 +207,6 @@ main (int argc,
       TAO_AV_CORE::instance ()->init (orb.in (),
                                       poa.in ()
                                       ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
     }
   ACE_CATCHANY
     {
@@ -225,7 +214,6 @@ main (int argc,
       return -1;
     }
   ACE_ENDTRY;
-  ACE_CHECK_RETURN (-1);
 
   result = FTP_SERVER::instance ()->init (argc,argv);
   if (result < 0)

@@ -36,11 +36,11 @@ public:
   ~test_i (void);
 
   /// Say hello.
-  virtual void hello (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+  virtual void hello (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   /// Shutdown the ORB.
-  virtual void shutdown (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+  virtual void shutdown (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
 private:

@@ -51,14 +51,14 @@ TAO_LB_LoadAverage::~TAO_LB_LoadAverage (void)
 }
 
 char *
-TAO_LB_LoadAverage::name (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+TAO_LB_LoadAverage::name (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return CORBA::string_dup ("LoadAverage");
 }
 
 CosLoadBalancing::Properties *
-TAO_LB_LoadAverage::get_properties (ACE_ENV_SINGLE_ARG_DECL)
+TAO_LB_LoadAverage::get_properties (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   CosLoadBalancing::Properties * props = 0;
@@ -69,7 +69,6 @@ TAO_LB_LoadAverage::get_properties (ACE_ENV_SINGLE_ARG_DECL)
                         TAO::VMCID,
                         ENOMEM),
                       CORBA::COMPLETED_NO));
-  ACE_CHECK_RETURN (0);
 
   return props;
 }
@@ -165,13 +164,11 @@ TAO_LB_LoadAverage::get_loads (CosLoadBalancing::LoadManager_ptr load_manager,
   CosLoadBalancing::LoadList_var loads =
     load_manager->get_loads (the_location
                              ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (0);
 
   this->push_loads (the_location,
                     loads.in (),
                     loads[0]
                     ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (0);
 
   return loads._retn ();
 }
@@ -193,7 +190,6 @@ TAO_LB_LoadAverage::next_member (
   PortableGroup::Locations_var locations =
     load_manager->locations_of_members (object_group
                                         ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (CORBA::Object::_nil ());
 
   if (locations->length () == 0)
     ACE_THROW_RETURN (CORBA::TRANSIENT (),
@@ -221,7 +217,6 @@ TAO_LB_LoadAverage::analyze_loads (
   PortableGroup::Locations_var locations =
     load_manager->locations_of_members (object_group
                                         ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
   if (locations->length () == 0)
     ACE_THROW (CORBA::TRANSIENT ());
@@ -248,14 +243,12 @@ TAO_LB_LoadAverage::analyze_loads (
           CosLoadBalancing::LoadList_var current_loads =
             load_manager->get_loads (loc
                                      ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
 
           CosLoadBalancing::Load load;
           this->push_loads (loc,
                             current_loads.in (),
                             load
                             ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
 
           // @@ Jai, please use the compound "+=" operator here.  It
           //    is more efficient in this case.
@@ -275,7 +268,6 @@ TAO_LB_LoadAverage::analyze_loads (
           //
         }
       ACE_ENDTRY;
-      ACE_CHECK;
     }
 
   avg_load.value = total_load.value / len;
@@ -360,13 +352,12 @@ TAO_LB_LoadAverage::analyze_loads (
           //
         }
       ACE_ENDTRY;
-      ACE_CHECK;
     }
 
 }
 
 PortableServer::POA_ptr
-TAO_LB_LoadAverage::_default_POA (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+TAO_LB_LoadAverage::_default_POA (void)
 {
   return PortableServer::POA::_duplicate (this->poa_.in ());
 }
@@ -389,7 +380,6 @@ TAO_LB_LoadAverage::init (const PortableGroup::Properties & props
           this->extract_float_property (property,
                                         tolerance
                                         ACE_ENV_ARG_PARAMETER);
-          ACE_CHECK;
 
           // Valid tolerance values are greater than or equal to one.
           if (tolerance < 1)
@@ -403,7 +393,6 @@ TAO_LB_LoadAverage::init (const PortableGroup::Properties & props
           this->extract_float_property (property,
                                         dampening
                                         ACE_ENV_ARG_PARAMETER);
-          ACE_CHECK;
 
           // Dampening range is [0,1).
           if (dampening < 0 || dampening >= 1)
@@ -417,7 +406,6 @@ TAO_LB_LoadAverage::init (const PortableGroup::Properties & props
           this->extract_float_property (property,
                                         per_balance_load
                                         ACE_ENV_ARG_PARAMETER);
-          ACE_CHECK;
         }
     }
 

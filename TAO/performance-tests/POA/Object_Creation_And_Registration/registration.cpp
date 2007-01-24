@@ -253,7 +253,6 @@ child_poa_testing (PortableServer::POA_ptr root_poa
   policies[0] =
     root_poa->create_id_assignment_policy (PortableServer::USER_ID
                                            ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
   // Create the child POA under the RootPOA.
   PortableServer::POA_var child_poa =
@@ -261,7 +260,6 @@ child_poa_testing (PortableServer::POA_ptr root_poa
                           PortableServer::POAManager::_nil (),
                           policies
                           ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
   // Create an array of servants
   test_i *servants =
@@ -300,7 +298,6 @@ child_poa_testing (PortableServer::POA_ptr root_poa
           child_poa->create_reference_with_id (object_ids[i].in (),
                                                "IDL:test:1.0"
                                                ACE_ENV_ARG_PARAMETER);
-        ACE_CHECK;
       }
   }
 
@@ -315,7 +312,6 @@ child_poa_testing (PortableServer::POA_ptr root_poa
         child_poa->activate_object_with_id (object_ids[i].in (),
                                             &servants[i]
                                             ACE_ENV_ARG_PARAMETER);
-        ACE_CHECK;
       }
   }
 
@@ -329,7 +325,6 @@ child_poa_testing (PortableServer::POA_ptr root_poa
       {
         child_poa->deactivate_object (object_ids[i].in ()
                                       ACE_ENV_ARG_PARAMETER);
-        ACE_CHECK;
       }
   }
 
@@ -351,7 +346,6 @@ main (int argc, char **argv)
                                             argv,
                                             0
                                             ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       int result = parse_args (argc, argv);
       if (result != 0)
@@ -360,13 +354,11 @@ main (int argc, char **argv)
       // Obtain the RootPOA.
       CORBA::Object_var obj = orb->resolve_initial_references ("RootPOA"
                                                                ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       // Get the POA_var object from Object_var.
       PortableServer::POA_var root_poa =
         PortableServer::POA::_narrow (obj.in ()
                                       ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       // Create an array of servants
       test_i *servants =
@@ -395,8 +387,7 @@ main (int argc, char **argv)
 
         for (i = 0; i < iterations; i++)
           {
-            objects[i] = servants[i]._this (ACE_ENV_SINGLE_ARG_PARAMETER);
-            ACE_TRY_CHECK;
+            objects[i] = servants[i]._this ();
           }
       }
 
@@ -409,20 +400,17 @@ main (int argc, char **argv)
           {
             object_ids[i] = root_poa->servant_to_id (&servants[i]
                                                      ACE_ENV_ARG_PARAMETER);
-            ACE_TRY_CHECK;
           }
       }
 
       // Create the child POA.
       child_poa_testing (root_poa.in ()
                          ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       // Destroy RootPOA.
       root_poa->destroy (1,
                          1
                          ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       // Cleanup
       delete[] object_ids;
@@ -435,7 +423,6 @@ main (int argc, char **argv)
       return -1;
     }
   ACE_ENDTRY;
-  ACE_CHECK_RETURN (-1);
 
   return 0;
 }

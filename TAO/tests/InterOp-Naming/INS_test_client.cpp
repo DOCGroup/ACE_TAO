@@ -21,7 +21,6 @@ main (int argc, char *argv[])
                                             argv,
                                             0
                                             ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       if (argc < 2)
         {
@@ -38,8 +37,7 @@ main (int argc, char *argv[])
             {
               // List initial services
               CORBA::ORB::ObjectIdList_var list =
-                orb->list_initial_services (ACE_ENV_SINGLE_ARG_PARAMETER);
-              ACE_TRY_CHECK;
+                orb->list_initial_services ();
 
               size_t length = list->length ();
 
@@ -70,7 +68,6 @@ main (int argc, char *argv[])
           else
             {
               objref = orb->resolve_initial_references (argv[i] ACE_ENV_ARG_PARAMETER);
-              ACE_TRY_CHECK;
 
               if (CORBA::is_nil (objref.in ()))
                 ACE_ERROR_RETURN ((LM_ERROR,
@@ -80,7 +77,6 @@ main (int argc, char *argv[])
 
               INS_var server = INS::_narrow (objref.in ()
                                                  ACE_ENV_ARG_PARAMETER);
-              ACE_TRY_CHECK;
 
               CORBA::String_var iorstr =
                 orb->object_to_string (server.in ());
@@ -90,8 +86,7 @@ main (int argc, char *argv[])
                           iorstr.in()));
 
               CORBA::String_var test_ins_result =
-                server->test_ins (ACE_ENV_SINGLE_ARG_PARAMETER);
-              ACE_TRY_CHECK;
+                server->test_ins ();
 
               ACE_DEBUG ((LM_DEBUG,
                           "\nResult of Remote Call : %s\n",
@@ -109,7 +104,6 @@ main (int argc, char *argv[])
     }
 
   ACE_ENDTRY;
-  ACE_CHECK_RETURN (-1);
 
   return 0;
 }

@@ -109,10 +109,10 @@ TAO_Naming_Context::unbind (const CosNaming::Name &n
 }
 
 CosNaming::NamingContext_ptr
-TAO_Naming_Context::new_context (ACE_ENV_SINGLE_ARG_DECL)
+TAO_Naming_Context::new_context (void)
       ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  return impl_->new_context (ACE_ENV_SINGLE_ARG_PARAMETER);
+  return impl_->new_context ();
 }
 
 CosNaming::NamingContext_ptr
@@ -128,11 +128,11 @@ TAO_Naming_Context::bind_new_context (const CosNaming::Name &n
 }
 
 void
-TAO_Naming_Context::destroy (ACE_ENV_SINGLE_ARG_DECL)
+TAO_Naming_Context::destroy (void)
       ACE_THROW_SPEC ((CORBA::SystemException,
                        CosNaming::NamingContext::NotEmpty))
 {
-  impl_->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
+  impl_->destroy ();
 }
 
 void
@@ -452,7 +452,6 @@ TAO_Naming_Context::to_url (const char * addr,
   size_t no_char =
     TAO_Naming_Context::to_url_validate_and_compute_size (addr, sn
                                                           ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (0);
 
 
   // The 'corbaname:' tag is to be prepended at the starting of the
@@ -526,7 +525,6 @@ TAO_Naming_Context::resolve_str (const char * n
 
   // Get the unstrigified name.
   CosNaming::Name_var name = this->to_name (n ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (CORBA::Object::_nil ());
 
   // Pass this unstringified name to resolve and return an Object_ptr
   return this->resolve (name.in () ACE_ENV_ARG_PARAMETER);

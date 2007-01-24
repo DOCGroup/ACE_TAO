@@ -34,7 +34,7 @@ Echo_Handler::echo_operation_excep (::Messaging::ExceptionHolder *
 }
 
 void
-Echo_Handler::shutdown (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+Echo_Handler::shutdown (void)
   ACE_THROW_SPEC((CORBA::SystemException))
 {
 }

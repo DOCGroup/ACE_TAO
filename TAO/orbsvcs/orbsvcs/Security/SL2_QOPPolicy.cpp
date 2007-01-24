@@ -22,14 +22,14 @@ TAO::Security::QOPPolicy::~QOPPolicy (void)
 }
 
 CORBA::PolicyType
-TAO::Security::QOPPolicy::policy_type (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+TAO::Security::QOPPolicy::policy_type (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return ::Security::SecQOPPolicy;
 }
 
 CORBA::Policy_ptr
-TAO::Security::QOPPolicy::copy (ACE_ENV_SINGLE_ARG_DECL)
+TAO::Security::QOPPolicy::copy (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO::Security::QOPPolicy * policy = 0;
@@ -40,19 +40,18 @@ TAO::Security::QOPPolicy::copy (ACE_ENV_SINGLE_ARG_DECL)
                         TAO::VMCID,
                         ENOMEM),
                       CORBA::COMPLETED_NO));
-  ACE_CHECK_RETURN (CORBA::Policy::_nil ());
 
   return policy;
 }
 
 void
-TAO::Security::QOPPolicy::destroy (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+TAO::Security::QOPPolicy::destroy (void)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
 }
 
 Security::QOP
-TAO::Security::QOPPolicy::qop (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+TAO::Security::QOPPolicy::qop (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return this->qop_;

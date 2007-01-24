@@ -27,11 +27,11 @@ public:
          SecurityLevel3::SecurityCurrent_ptr current);
 
   /// Test method.
-  virtual void baz (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+  virtual void baz (void)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      Foo::Bar::NoSecurityAttributes));
 
-  virtual void shutdown (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+  virtual void shutdown (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
 private:

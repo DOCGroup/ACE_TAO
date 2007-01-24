@@ -86,7 +86,6 @@ main (int argc, char **argv)
     {
       // Initialize the ORB
       CORBA::ORB_var orb = CORBA::ORB_init (argc, argv, 0 ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       int result = parse_args (argc, argv);
       if (result != 0)
@@ -96,16 +95,13 @@ main (int argc, char **argv)
       CORBA::Object_var obj =
         orb->resolve_initial_references ("RootPOA"
                                          ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       // Narrow the object reference to a POA reference
       PortableServer::POA_var root_poa = PortableServer::POA::_narrow (obj.in ()
                                                                        ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       PortableServer::POAManager_var poa_manager =
-        root_poa->the_POAManager (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        root_poa->the_POAManager ();
 
       CORBA::PolicyList policies (5);
       policies.length (5);
@@ -113,52 +109,44 @@ main (int argc, char **argv)
       // ID Assignment Policy
       policies[0] =
         root_poa->create_id_assignment_policy (PortableServer::USER_ID ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       // Lifespan Policy
       policies[1] =
         root_poa->create_lifespan_policy (PortableServer::PERSISTENT
                                           ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       // Request Processing Policy
       policies[2] =
         root_poa->create_request_processing_policy (PortableServer::USE_DEFAULT_SERVANT
                                                     ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       // Servant Retention Policy
       policies[3] =
         root_poa->create_servant_retention_policy (PortableServer::RETAIN ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       // Id Uniqueness Policy
       policies[4] =
         root_poa->create_id_uniqueness_policy (PortableServer::MULTIPLE_ID ACE_ENV_ARG_PARAMETER);
 
-      ACE_TRY_CHECK;
 
       ACE_CString name = "firstPOA";
       PortableServer::POA_var first_poa = root_poa->create_POA (name.c_str (),
                                                                 poa_manager.in (),
                                                                 policies
                                                                 ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       for (CORBA::ULong i = 0;
            i < policies.length ();
            ++i)
         {
           CORBA::Policy_ptr policy = policies[i];
-          policy->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+          policy->destroy ();
         }
 
       // Create a Database Agent Implementation object in first_poa
       DatabaseImpl::Agent database_agent_impl (orb.in (),
                                                first_poa.in ()
                                                ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       PortableServer::ObjectId_var database_agent_oid =
         PortableServer::string_to_ObjectId ("DatabaseAgent");
@@ -166,16 +154,13 @@ main (int argc, char **argv)
       first_poa->activate_object_with_id (database_agent_oid.in (),
                                           &database_agent_impl
                                           ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       CORBA::Object_var database_agent =
         first_poa->id_to_reference (database_agent_oid.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       // Get the IOR for the "DatabaseAgent" object
       CORBA::String_var database_agent_ior =
         orb->object_to_string (database_agent.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       ACE_DEBUG ((LM_DEBUG,"%s\n",
                   database_agent_ior.in ()));
@@ -185,12 +170,10 @@ main (int argc, char **argv)
         return write_result;
 
       // set the state of the poa_manager to active i.e ready to process requests
-      poa_manager->activate (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      poa_manager->activate ();
 
       // Run the ORB
-      orb->run (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      orb->run ();
     }
   ACE_CATCHANY
     {
@@ -198,7 +181,6 @@ main (int argc, char **argv)
       return -1;
     }
   ACE_ENDTRY;
-  ACE_CHECK_RETURN (-1);
 
   return 0;
 }

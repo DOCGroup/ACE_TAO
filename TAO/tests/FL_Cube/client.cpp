@@ -59,7 +59,6 @@ int main (int argc, char* argv[])
     {
       CORBA::ORB_var orb =
         CORBA::ORB_init (argc, argv, "" ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       Fl_Window window (300, 100);
 
@@ -72,7 +71,6 @@ int main (int argc, char* argv[])
       client.show ();
 
       client.parse_args (argc, argv ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       Fl::run ();
     }
@@ -140,7 +138,6 @@ Client::x_changed (void)
     {
       CORBA::Long x = CORBA::Long (this->x_roller_->value ());
       this->server_->set_x_angle (x ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
     }
   ACE_CATCHANY
     {
@@ -156,7 +153,6 @@ Client::y_changed (void)
     {
       CORBA::Long y = CORBA::Long (this->y_roller_->value ());
       this->server_->set_y_angle (y ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
     }
   ACE_CATCHANY
     {
@@ -191,9 +187,7 @@ Client::parse_args (int argc, char *argv[]
 
   CORBA::Object_var object =
     this->orb_->string_to_object (ior ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
   this->server_ =
     Simple_Server::_narrow (object.in () ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 }

@@ -74,7 +74,6 @@ Server_i::init (int argc,
                        "%p\n",
                        "orb manager init failed\n"),
                       -1);
-  ACE_CHECK_RETURN (-1);
 
   CORBA::ORB_var orb = this->orb_manager_.orb ();
 
@@ -82,7 +81,6 @@ Server_i::init (int argc,
   CORBA::String_var str =
     this->orb_manager_.activate (&this->broadcaster_i_
                                  ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
 
   // Write the IOR to a file.
   this->write_IOR (str.in ());
@@ -90,14 +88,13 @@ Server_i::init (int argc,
 }
 
 int
-Server_i::run (ACE_ENV_SINGLE_ARG_DECL)
+Server_i::run (void)
 {
   ACE_DEBUG ((LM_DEBUG,
               "Running chat server...\n"));
 
   // Run the main event loop for the ORB.
-  int ret = this->orb_manager_.run (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
+  int ret = this->orb_manager_.run ();
   if (ret == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "Server_i::run"),

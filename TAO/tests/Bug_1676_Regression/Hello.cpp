@@ -12,14 +12,14 @@ Hello::Hello (CORBA::ORB_ptr orb)
 
 #if 0
 char *
-Hello::get_string (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+Hello::get_string (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return CORBA::string_dup ("Hello there!");
 }
 #endif
 
-::Test::StringList * 
+::Test::StringList *
 Hello::get_stringList (
 	// ACE_ENV_SINGLE_ARG_DECL_NOT_USED
     ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
@@ -43,7 +43,7 @@ Hello::get_stringList (
 	return seq;
 }
 
-void 
+void
 Hello::get_stringList2 (
         ::CORBA::Boolean initialize,
         ::Test::StringList_out osl
@@ -59,7 +59,7 @@ Hello::get_stringList2 (
     if (initialize) {
         ACE_NEW (osl,
 		    Test::StringList(10));
-        
+
         osl->length(5);
         for (CORBA::ULong i = 0; i<osl->length(); i++)
 	    {
@@ -69,8 +69,8 @@ Hello::get_stringList2 (
 	    }
     }
 }
-    
-void 
+
+void
 Hello::mod_stringList (
         ::Test::StringList & iosl
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
@@ -89,9 +89,9 @@ Hello::mod_stringList (
         }
 	}
 }
-    
+
 void
-Hello::shutdown (ACE_ENV_SINGLE_ARG_DECL)
+Hello::shutdown (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->orb_->shutdown (0 ACE_ENV_ARG_PARAMETER);

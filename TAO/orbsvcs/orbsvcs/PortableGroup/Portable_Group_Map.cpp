@@ -65,7 +65,6 @@ TAO_Portable_Group_Map::add_groupid_objectkey_pair (
                                                                                TAO::VMCID,
                                                                                ENOMEM),
                                       CORBA::COMPLETED_NO));
-  ACE_CHECK;
 
   // Fill out the entry.
   new_entry->key = key;
@@ -140,7 +139,6 @@ TAO_Portable_Group_Map::dispatch (PortableGroup::TagGroupTaggedComponent* group_
                                                    request,
                                                    forward_to
                                                    ACE_ENV_ARG_PARAMETER);
-          ACE_CHECK;
 
           // Reset the read pointer in the message block.
           msgblk->rd_ptr (read_ptr);

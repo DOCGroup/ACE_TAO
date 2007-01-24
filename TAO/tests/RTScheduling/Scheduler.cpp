@@ -10,11 +10,9 @@ TAO_Scheduler::TAO_Scheduler (CORBA::ORB_ptr orb ACE_ENV_ARG_DECL)
   CORBA::Object_var current_obj =
     orb->resolve_initial_references ("RTScheduler_Current"
                                      ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
   current_ = RTScheduling::Current::_narrow (current_obj.in ()
                                              ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 }
 
 TAO_Scheduler::~TAO_Scheduler (void)
@@ -22,7 +20,7 @@ TAO_Scheduler::~TAO_Scheduler (void)
 }
 
 CORBA::PolicyList*
-TAO_Scheduler::scheduling_policies (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+TAO_Scheduler::scheduling_policies (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return 0;
@@ -36,14 +34,14 @@ TAO_Scheduler::scheduling_policies (const CORBA::PolicyList &
 }
 
 CORBA::PolicyList*
-TAO_Scheduler::poa_policies (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+TAO_Scheduler::poa_policies (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return 0;
 }
 
 char *
-TAO_Scheduler::scheduling_discipline_name (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+TAO_Scheduler::scheduling_discipline_name (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return 0;
@@ -128,9 +126,8 @@ TAO_Scheduler::send_request (PortableInterceptor::ClientRequestInfo_ptr request_
   srv_con->context_id = Client_Interceptor::SchedulingInfo;
   srv_con->context_data.length (sizeof (size_t));
   ACE_OS::memcpy (srv_con->context_data.get_buffer (),
-                  current_->id (ACE_ENV_SINGLE_ARG_PARAMETER)->get_buffer (),
+                  current_->id ()->get_buffer (),
                   sizeof (size_t));
-  ACE_CHECK;
   request_info->add_request_service_context (*srv_con,
                                              0);
 }
@@ -151,7 +148,6 @@ TAO_Scheduler::receive_request (PortableInterceptor::ServerRequestInfo_ptr reque
     {
       serv_cxt = request_info->get_request_service_context (Server_Interceptor::SchedulingInfo
                                                             ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       size_t gu_id;
       ACE_OS::memcpy (&gu_id,

@@ -16,19 +16,15 @@ Test_i::Test_i (CORBA::ORB_ptr orb) :
       CORBA::Object_var obj =
         orb_->resolve_initial_references ("RootPOA"
                                           ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
       this->root_poa_ =
         PortableServer::POA::_narrow (obj.in ()
                                       ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
       policies_.length(1);
       policies_[0] =
         root_poa_->create_lifespan_policy (PortableServer::PERSISTENT
                                            ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
       this->poa_mgr_ =
-        this->root_poa_->the_POAManager (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        this->root_poa_->the_POAManager ();
     }
   ACE_CATCHANY
     {
@@ -46,7 +42,7 @@ Test_i::~Test_i (void)
 }
 
 int
-Test_i::try_and_create_POA (ACE_ENV_SINGLE_ARG_DECL)
+Test_i::try_and_create_POA (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_TRY
@@ -56,7 +52,6 @@ Test_i::try_and_create_POA (ACE_ENV_SINGLE_ARG_DECL)
                                poa_mgr_.in (),
                                this->policies_
                                ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
     }
   ACE_CATCH (CORBA::TRANSIENT, ex)
     {
@@ -79,7 +74,7 @@ Test_i::try_and_create_POA (ACE_ENV_SINGLE_ARG_DECL)
 }
 
 void
-Test_i::shutdown (ACE_ENV_SINGLE_ARG_DECL)
+Test_i::shutdown (void)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
    orb_->shutdown (0 ACE_ENV_ARG_PARAMETER);

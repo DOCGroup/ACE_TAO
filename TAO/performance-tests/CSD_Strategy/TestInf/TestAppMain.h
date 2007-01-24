@@ -27,7 +27,7 @@ main(int argc, char* argv[]) \
   ACE_TRY_NEW_ENV \
   { \
     int ret = app.run(argc,argv ACE_ENV_ARG_PARAMETER); \
-    ACE_TRY_CHECK; \
+\
     return ret; \
   } \
   ACE_CATCHANY \

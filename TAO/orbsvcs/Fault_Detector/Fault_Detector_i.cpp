@@ -89,9 +89,8 @@ void TAO::Fault_Detector_i::run()
   {
     ACE_TRY_NEW_ENV
     {
-      if (this->monitorable_->is_alive(ACE_ENV_SINGLE_ARG_PARAMETER))
+      if (this->monitorable_->is_alive())
       {
-        ACE_TRY_CHECK;
         // use this rather than ACE_OS::sleep
         // to allow the nap to be interruped see request_quit
         this->sleep_.wait (&sleep_time_, 0);
@@ -167,7 +166,6 @@ void TAO::Fault_Detector_i::notify()
       }
       this->notifier_->push_structured_fault(vEvent.in()
         ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
       if (TAO_debug_level > 5)
       {
 

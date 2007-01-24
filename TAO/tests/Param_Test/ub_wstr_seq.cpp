@@ -21,7 +21,7 @@
 #include "ace/OS_NS_wchar.h"
 
 ACE_RCSID (Param_Test,
-           ub_wstr_seq, 
+           ub_wstr_seq,
            "$Id$")
 
 // ************************************************************************
@@ -59,8 +59,7 @@ Test_WString_Sequence::dii_req_invoke (CORBA::Request *req
 
   req->set_return_type (CORBA::_tc_WStringSeq);
 
-  req->invoke (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+  req->invoke ();
 
   CORBA::WStringSeq *tmp;
   req->return_value () >>= tmp;
@@ -68,13 +67,11 @@ Test_WString_Sequence::dii_req_invoke (CORBA::Request *req
 
   CORBA::NamedValue_ptr o2 =
     req->arguments ()->item (1 ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
   *o2->value () >>= tmp;
   this->inout_ = new CORBA::WStringSeq (*tmp);
 
   CORBA::NamedValue_ptr o3 =
     req->arguments ()->item (2 ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
   *o3->value () >>= tmp;
   this->out_ = new CORBA::WStringSeq (*tmp);
 }
@@ -122,7 +119,6 @@ Test_WString_Sequence::run_sii_test (Param_Test_ptr objref
                                          this->inout_.inout (),
                                          out
                                          ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       return 0;
     }

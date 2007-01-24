@@ -65,7 +65,7 @@ public:
 
   /// The typed event channel is shutting down, inform all the consumers of
   /// this
-  virtual void shutdown (ACE_ENV_SINGLE_ARG_DECL_NOT_USED);
+  virtual void shutdown (void);
 
   // = The CosTypedEventChannelAdmin::TypedConsumerAdmin methods...
   virtual CosEventChannelAdmin::ProxyPushSupplier_ptr
@@ -79,15 +79,15 @@ public:
 
   // = The CosEventChannelAdmin::ConsumerAdmin methods...
   virtual CosEventChannelAdmin::ProxyPushSupplier_ptr
-    obtain_push_supplier (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+    obtain_push_supplier (void)
       ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual CosEventChannelAdmin::ProxyPullSupplier_ptr
-    obtain_pull_supplier (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+    obtain_pull_supplier (void)
       ACE_THROW_SPEC ((CORBA::SystemException));
 
   // = The PortableServer::ServantBase methods
-  virtual PortableServer::POA_ptr _default_POA (ACE_ENV_SINGLE_ARG_DECL);
+  virtual PortableServer::POA_ptr _default_POA (void);
 
 private:
   /// The Event Channel we belong to

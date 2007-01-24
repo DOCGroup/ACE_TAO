@@ -220,7 +220,7 @@ private:
     Observer_Disconnect_Command (const Observer_Disconnect_Command &rhs);
     Observer_Disconnect_Command & operator= (const Observer_Disconnect_Command & rhs);
 
-    void execute (ACE_ENV_SINGLE_ARG_DECL);
+    void execute (void);
 
   private:
 

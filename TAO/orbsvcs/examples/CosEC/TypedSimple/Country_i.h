@@ -15,18 +15,18 @@
 class Country_i : public virtual POA_Country
 {
 public:
-  //Constructor 
+  //Constructor
   Country_i (CORBA::ORB_ptr orb);
-  
-  //Destructor 
+
+  //Destructor
   virtual ~Country_i (void);
-  
+
   virtual void update_population (const char * country,
                                   CORBA::Long population
                                   ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual CORBA::Object_ptr get_typed_consumer (ACE_ENV_SINGLE_ARG_DECL)
+  virtual CORBA::Object_ptr get_typed_consumer (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual void push (const CORBA::Any & data
@@ -34,7 +34,7 @@ public:
     ACE_THROW_SPEC ((CORBA::SystemException,
                      CosEventComm::Disconnected));
 
-  virtual void disconnect_push_consumer (ACE_ENV_SINGLE_ARG_DECL)
+  virtual void disconnect_push_consumer (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
 private:

@@ -56,7 +56,7 @@ public:
   // After calling <init>, this method will register the server with
   // the TAO Naming Service using the servant_name passed to <init>.
 
-  int run (ACE_ENV_SINGLE_ARG_DECL);
+  int run (void);
   // Run the orb.
 
   int test_for_ins (CORBA::String_var ior);
@@ -127,7 +127,7 @@ public:
   void shutdown (int);
   // Fills in the shutdwon flag.
 
-  int obtain_initial_references (ACE_ENV_SINGLE_ARG_DECL);
+  int obtain_initial_references (void);
   // Initialize naming service
 
   CORBA::ORB_ptr orb (void) {return this->orb_.in ();}

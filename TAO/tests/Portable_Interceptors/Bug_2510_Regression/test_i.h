@@ -31,7 +31,7 @@ public:
   void normal (CORBA::Long arg
                ACE_ENV_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
-  void shutdown (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+  void shutdown (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
 private:

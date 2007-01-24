@@ -64,8 +64,7 @@ Airplane_Client_i::get_planes (size_t count)
       ACE_TRY
         {
           CORBA::String_var response =
-            this->server_->get_plane (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+            this->server_->get_plane ();
 
           ACE_DEBUG ((LM_DEBUG, "Plane %d is %s\n", i, response.in ()));
         }
@@ -112,7 +111,6 @@ Airplane_Client_i::init (int argc, char **argv)
                                     this->argv_,
                                     "internet"
                                     ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       // Parse command line and verify parameters.
       if (this->parse_args () == -1)
@@ -126,10 +124,8 @@ Airplane_Client_i::init (int argc, char **argv)
 
       CORBA::Object_var server_object =
         this->orb_->string_to_object (this->server_key_ ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       this->server_ = Paper_Airplane_Server::_narrow (server_object.in() ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       if (CORBA::is_nil (server_object.in ()))
         ACE_ERROR_RETURN ((LM_ERROR,

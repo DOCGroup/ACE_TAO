@@ -28,7 +28,6 @@ Server_Task::svc (void)
       ACE_Time_Value tv (120, 0);
 #endif
       this->orb_->run (tv ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
     }
   ACE_CATCHANY
     {

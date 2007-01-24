@@ -26,7 +26,6 @@ TAO_Notify_PushSupplier::init (CosEventComm::PushSupplier_ptr push_supplier ACE_
   ACE_TRY
     {
       this->subscribe_ = CosNotifyComm::NotifySubscribe::_narrow (push_supplier ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
     }
   ACE_CATCHANY
     {
@@ -51,7 +50,6 @@ TAO_Notify_PushSupplier::get_ior (void) const
   ACE_TRY
   {
     CORBA::String_var ior = orb->object_to_string(this->push_supplier_.in() ACE_ENV_ARG_PARAMETER);
-    ACE_TRY_CHECK;
     result = static_cast<const char*> (ior.in ());
   }
   ACE_CATCHANY

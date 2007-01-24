@@ -124,7 +124,6 @@ Service_Config_ORB_DLL::svc (void)
     int ret = this->worker_->test_main (this->argv_->argc (),
                                         this->argv_->argv ()
                                         ACE_ENV_ARG_PARAMETER);
-    ACE_TRY_CHECK;
 
     ACE_DEBUG ((LM_DEBUG,
                 ACE_TEXT ("(%P|%t) %@ %s bows out - so long, cruel world! (%d)\n"),

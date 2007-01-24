@@ -62,7 +62,6 @@ main (int argc, char *argv[])
                                             argv,
                                             "Client ORB"
                                             ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       if (::parse_args (argc, argv) != 0) return -1;
 
@@ -101,18 +100,15 @@ main (int argc, char *argv[])
         object_primary =
           orb->string_to_object (ior->c_str() ACE_ENV_ARG_PARAMETER);
 
-        ACE_CHECK_RETURN (-1);
 
         // Get an object reference for the ORBs IORManipultion object!
         CORBA::Object_ptr IORM =
           orb->resolve_initial_references (TAO_OBJID_IORMANIPULATION,
                                            0
                                            ACE_ENV_ARG_PARAMETER);
-        ACE_CHECK_RETURN (-1);
 
         TAO_IOP::TAO_IOR_Manipulation_ptr iorm =
           TAO_IOP::TAO_IOR_Manipulation::_narrow (IORM ACE_ENV_ARG_PARAMETER);
-        ACE_CHECK_RETURN (-1);
 
 
         // Create the list
@@ -120,7 +116,7 @@ main (int argc, char *argv[])
         iors.length(ior_strs.size ());
         size_t cntr = 0;
         iors [cntr] = CORBA::Object::_duplicate (object_primary.in ());
-        
+
         while (ior_iter.advance ())
           {
             ++cntr;
@@ -129,14 +125,12 @@ main (int argc, char *argv[])
             iors [cntr] =
               orb->string_to_object (ior->c_str() ACE_ENV_ARG_PARAMETER);
 
-            ACE_CHECK_RETURN (-1);
           }
 
         ACE_DEBUG ((LM_DEBUG, "Prepare to merge IORs.\n"));
         // Create a merged set 1;
         object = iorm->merge_iors (iors ACE_ENV_ARG_PARAMETER);
 
-        ACE_CHECK_RETURN (-1);
 
 
         FT::TagFTGroupTaggedComponent ft_tag_component;
@@ -165,13 +159,11 @@ main (int argc, char *argv[])
         CORBA::Boolean retval = iorm->set_property (&iogr_prop,
                                                     object.in ()
                                                     ACE_ENV_ARG_PARAMETER);
-        ACE_CHECK_RETURN (-1);
 
         retval = iorm->set_primary (&iogr_prop,
                                     object_primary.in (),
                                     object.in ()
                                     ACE_ENV_ARG_PARAMETER);
-        ACE_CHECK_RETURN (-1);
 
       }
       else
@@ -182,12 +174,10 @@ main (int argc, char *argv[])
                              "Unable to extract the only IOR string\n"),
                             -1);
         object = orb->string_to_object (ior->c_str() ACE_ENV_ARG_PARAMETER);
-        ACE_TRY_CHECK;
       }
 
       RolyPoly_var server =
         RolyPoly::_narrow (object.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       if (CORBA::is_nil (server.in ()))
       {
@@ -216,7 +206,6 @@ main (int argc, char *argv[])
           continue;
         }
 
-        ACE_TRY_CHECK;
 
         ACE_DEBUG ((LM_INFO,
                     "client: received %d\n",
@@ -224,8 +213,7 @@ main (int argc, char *argv[])
         ACE_OS::sleep (1);
       }
 
-      server->shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      server->shutdown ();
     }
   ACE_CATCHANY
     {

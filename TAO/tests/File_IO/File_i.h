@@ -34,7 +34,7 @@ public:
     ~Descriptor (void);
     // Destructor
 
-    PortableServer::POA_ptr _default_POA (ACE_ENV_SINGLE_ARG_DECL);
+    PortableServer::POA_ptr _default_POA (void);
     // Returns the default POA of this object
 
     virtual CORBA::Long write (const File::Descriptor::DataBuffer &buffer
@@ -56,13 +56,13 @@ public:
                        File::IOError));
     // seek to the offset in file from whence
 
-    virtual void destroy (ACE_ENV_SINGLE_ARG_DECL)
+    virtual void destroy (void)
       ACE_THROW_SPEC ((CORBA::SystemException));
     // closes the file corresponding to the requested ObjectID
 
   private:
 
-    ACE_HANDLE fd (ACE_ENV_SINGLE_ARG_DECL);
+    ACE_HANDLE fd (void);
     // Extracts the ACE_HANDLE from the objectID
 
     PortableServer::POA_var poa_;
@@ -80,7 +80,7 @@ public:
     ~System (void);
     //Destructor
 
-    PortableServer::POA_ptr _default_POA (ACE_ENV_SINGLE_ARG_DECL);
+    PortableServer::POA_ptr _default_POA (void);
     //Returns the default POA of this object
 
     File::Descriptor_ptr open (const char *file_name,

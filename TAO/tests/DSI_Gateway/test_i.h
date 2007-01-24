@@ -38,20 +38,20 @@ public:
                            ACE_ENV_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-   CORBA::Long test_val (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+   CORBA::Long test_val (void)
      ACE_THROW_SPEC (( CORBA::SystemException));
 
    void test_val (CORBA::Long test_val ACE_ENV_ARG_DECL_WITH_DEFAULTS)
      ACE_THROW_SPEC ((CORBA::SystemException));
 
-  void raise_user_exception (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+  void raise_user_exception (void)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      test_exception));
 
-  void raise_system_exception (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+  void raise_system_exception (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  void shutdown (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+  void shutdown (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
 private:

@@ -35,7 +35,7 @@ public:
   Basic_Replication_Strategy(bool mt);
   ~Basic_Replication_Strategy();
 
-  virtual void check_validity(ACE_ENV_SINGLE_ARG_DECL);
+  virtual void check_validity(void);
 
   virtual void replicate_request(const FTRT::State& state,
     RollbackOperation rollback,

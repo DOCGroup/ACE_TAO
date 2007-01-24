@@ -19,46 +19,39 @@ EC_Counting_Consumer::connect (RtecEventChannelAdmin::ConsumerAdmin_ptr consumer
   // The canonical protocol to connect to the EC
 
   RtecEventComm::PushConsumer_var consumer =
-    this->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+    this->_this ();
 
   if (CORBA::is_nil (this->supplier_proxy_.in ()))
     {
       this->supplier_proxy_ =
-        consumer_admin->obtain_push_supplier (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK;
+        consumer_admin->obtain_push_supplier ();
     }
 
   this->supplier_proxy_->connect_push_consumer (consumer.in (),
                                                 qos
                                                 ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 }
 
 void
-EC_Counting_Consumer::disconnect (ACE_ENV_SINGLE_ARG_DECL)
+EC_Counting_Consumer::disconnect (void)
 {
   if (!CORBA::is_nil (this->supplier_proxy_.in ()))
     {
-      this->supplier_proxy_->disconnect_push_supplier (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK;
+      this->supplier_proxy_->disconnect_push_supplier ();
       this->supplier_proxy_ =
         RtecEventChannelAdmin::ProxyPushSupplier::_nil ();
     }
-  this->deactivate (ACE_ENV_SINGLE_ARG_PARAMETER);
+  this->deactivate ();
 }
 
 void
-EC_Counting_Consumer::deactivate (ACE_ENV_SINGLE_ARG_DECL)
+EC_Counting_Consumer::deactivate (void)
 {
   PortableServer::POA_var consumer_poa =
-    this->_default_POA (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+    this->_default_POA ();
   PortableServer::ObjectId_var consumer_id =
     consumer_poa->servant_to_id (this ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
   consumer_poa->deactivate_object (consumer_id.in () ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
 }
 
@@ -107,7 +100,7 @@ EC_Counting_Consumer::push (const RtecEventComm::EventSet& events
 }
 
 void
-EC_Counting_Consumer::disconnect_push_consumer (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+EC_Counting_Consumer::disconnect_push_consumer (void)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->disconnect_count++;

@@ -47,12 +47,12 @@ public:
   void push (const CORBA::Any &event
              ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
-  void disconnect_push_consumer (ACE_ENV_SINGLE_ARG_DECL)
+  void disconnect_push_consumer (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   void connect (CosEventChannelAdmin::ConsumerAdmin_ptr admin
                 ACE_ENV_ARG_DECL);
-  void disconnect (ACE_ENV_SINGLE_ARG_DECL);
+  void disconnect (void);
 
 protected:
   RND_Driver *driver_;
@@ -106,14 +106,14 @@ public:
 
   void connect (CosEventChannelAdmin::SupplierAdmin_ptr admin
                 ACE_ENV_ARG_DECL);
-  void disconnect (ACE_ENV_SINGLE_ARG_DECL);
+  void disconnect (void);
 
-  void push_new_event (ACE_ENV_SINGLE_ARG_DECL);
+  void push_new_event (void);
   void push (CORBA::Any &event
              ACE_ENV_ARG_DECL);
   // Push a single event...
 
-  virtual void disconnect_push_supplier (ACE_ENV_SINGLE_ARG_DECL)
+  virtual void disconnect_push_supplier (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual int svc (void);

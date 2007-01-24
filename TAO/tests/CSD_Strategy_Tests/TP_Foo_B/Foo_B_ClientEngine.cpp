@@ -27,7 +27,7 @@ Foo_B_ClientEngine::~Foo_B_ClientEngine()
 
 
 bool
-Foo_B_ClientEngine::execute(ACE_ENV_SINGLE_ARG_DECL)
+Foo_B_ClientEngine::execute(void)
 {
   // Make sure the connection is established before making
   // remote invocations.
@@ -41,14 +41,11 @@ Foo_B_ClientEngine::execute(ACE_ENV_SINGLE_ARG_DECL)
   // Verify the return values and return the results.
   bool check_validity = true;
 
-  this->obj_->op1(ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (false);
+  this->obj_->op1();
 
   this->obj_->op2(this->client_id_ ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (false);
 
   CORBA::Long value = this->obj_->op3(this->client_id_ ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (false);
 
   if (value != static_cast<CORBA::Long>(this->client_id_))
     {
@@ -58,15 +55,13 @@ Foo_B_ClientEngine::execute(ACE_ENV_SINGLE_ARG_DECL)
   for (CORBA::ULong j = 1; j <= 5; j++)
     {
       this->obj_->op4(495 + (this->client_id_ * 5) + j ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK_RETURN (false);
     }
 
   bool caught_exception = false;
 
   ACE_TRY
   {
-    this->obj_->op5(ACE_ENV_SINGLE_ARG_PARAMETER);
-    ACE_TRY_CHECK;
+    this->obj_->op5();
   }
   ACE_CATCH (FooException, ex)
   {
@@ -94,7 +89,6 @@ Foo_B_ClientEngine::execute(ACE_ENV_SINGLE_ARG_DECL)
   CORBA::String_var message = CORBA::string_dup(test_str);
 
   CORBA::Boolean result = this->obj_->op6( t, message.inout() ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (false);
 
   ACE_UNUSED_ARG(result);
 
@@ -108,16 +102,13 @@ Foo_B_ClientEngine::execute(ACE_ENV_SINGLE_ARG_DECL)
 
   // Callback test.
   this->obj_->op7 (this->callback_.in () ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (false);
 
   // One-Way calls with various arguments.
   CORBA::String_var ub_string = CORBA::string_dup( test_str );
   this->obj_->test_unbounded_string_arg (ub_string.in () ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (false);
 
   CORBA::String_var bd_string = CORBA::string_dup( test_str );
   this->obj_->test_bounded_string_arg (bd_string.in () ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (false);
 
   Fixed_Array fixed_array;
 
@@ -127,7 +118,6 @@ Foo_B_ClientEngine::execute(ACE_ENV_SINGLE_ARG_DECL)
   }
 
   this->obj_->test_fixed_array_arg (fixed_array ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (false);
 
   Var_Array var_array;
 
@@ -139,7 +129,6 @@ Foo_B_ClientEngine::execute(ACE_ENV_SINGLE_ARG_DECL)
     }
 
   this->obj_->test_var_array_arg (var_array ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (false);
 
   Bounded_Var_Size_var bd_var_size_string = new Bounded_Var_Size();
 
@@ -147,7 +136,6 @@ Foo_B_ClientEngine::execute(ACE_ENV_SINGLE_ARG_DECL)
                                test_str);
   this->obj_->test_bounded_var_size_arg (bd_var_size_string.in ()
                                          ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (false);
 
   Unbounded_Var_Size_var ub_var_size_string = new Unbounded_Var_Size(100);
   ub_var_size_string->replace (ub_var_size_string->maximum (),
@@ -155,25 +143,20 @@ Foo_B_ClientEngine::execute(ACE_ENV_SINGLE_ARG_DECL)
                                test_str);
   this->obj_->test_unbounded_var_size_arg (ub_var_size_string.in ()
                                            ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (false);
 
   this->obj_->test_fixed_size_arg (t ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (false);
 
   this->obj_->test_special_basic_arg (this->client_id_ % 2,
                                       this->client_id_
                                       ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (false);
 
   this->obj_->test_objref_arg (this->callback_.in () ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (false);
 
   // Sleep for 5 seconds before invoking done().
   // This is a workaround with the problem that some oneway requests lost
   // when the server has multiple orb threads.
   ACE_OS::sleep (5);
-  this->obj_->done(ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (false);
+  this->obj_->done();
 
   return check_validity;
 }

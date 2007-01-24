@@ -67,7 +67,7 @@ private:
 
 
   virtual void
-  disconnect_structured_push_consumer (ACE_ENV_SINGLE_ARG_DECL)
+  disconnect_structured_push_consumer (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
 private:

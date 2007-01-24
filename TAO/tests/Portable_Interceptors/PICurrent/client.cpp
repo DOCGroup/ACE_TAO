@@ -55,14 +55,12 @@ main (int argc, char *argv[])
 
       PortableInterceptor::register_orb_initializer (orb_initializer.in ()
                                                      ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       CORBA::ORB_var orb =
         CORBA::ORB_init (argc,
                          argv,
                          "client_orb"
                          ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       if (parse_args (argc, argv) != 0)
         return 1;
@@ -71,12 +69,10 @@ main (int argc, char *argv[])
       CORBA::Object_var obj =
         orb->resolve_initial_references ("PICurrent"
                                           ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       PortableInterceptor::Current_var pi_current =
         PortableInterceptor::Current::_narrow (obj.in ()
                                                ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       if (CORBA::is_nil (pi_current.in ()))
         {
@@ -97,16 +93,13 @@ main (int argc, char *argv[])
       pi_current->set_slot (::slot_id,
                             data
                             ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       // Resolve the target object, and perform the invocation.
       obj =
         orb->string_to_object (ior ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       PICurrentTest::test_var server =
         PICurrentTest::test::_narrow (obj.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       if (CORBA::is_nil (server.in ()))
         {
@@ -138,13 +131,11 @@ main (int argc, char *argv[])
             }
         }
 
-      server->invoke_me (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      server->invoke_me ();
 
       CORBA::Any_var new_data =
         pi_current->get_slot (::slot_id
                               ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       // The original data in the TSC was of type CORBA::Long.  If the
       // following extraction from the CORBA::Any fails, then the
@@ -166,15 +157,12 @@ main (int argc, char *argv[])
           ACE_TRY_THROW (CORBA::INTERNAL ());
         }
 
-      server->invoke_we (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      server->invoke_we ();
 
-      server->shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      server->shutdown ();
 
       ACE_OS::sleep(1);
-      orb->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      orb->destroy ();
     }
   ACE_CATCHANY
     {

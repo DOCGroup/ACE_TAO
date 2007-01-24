@@ -41,7 +41,7 @@ TAO_ECG_UDP_Receiver_Disconnect_Command::operator= (
 
 ACE_INLINE void
 TAO_ECG_UDP_Receiver_Disconnect_Command::
-execute (ACE_ENV_SINGLE_ARG_DECL)
+execute (void)
 {
   if (CORBA::is_nil (this->proxy_.in ()))
     // We are not connected.
@@ -50,8 +50,7 @@ execute (ACE_ENV_SINGLE_ARG_DECL)
   RtecEventChannelAdmin::ProxyPushConsumer_var release_proxy =
     this->proxy_._retn ();
 
-  release_proxy->disconnect_push_consumer (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+  release_proxy->disconnect_push_consumer ();
 }
 
 //***************************************************************************

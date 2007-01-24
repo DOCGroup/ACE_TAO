@@ -22,14 +22,14 @@ Echo_Server_Request_Interceptor::Echo_Server_Request_Interceptor (void)
 }
 
 char *
-Echo_Server_Request_Interceptor::name (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+Echo_Server_Request_Interceptor::name (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return CORBA::string_dup ("Echo_Server_Interceptor");
 }
 
 void
-Echo_Server_Request_Interceptor::destroy (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+Echo_Server_Request_Interceptor::destroy (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
 }
@@ -42,8 +42,7 @@ Echo_Server_Request_Interceptor::receive_request_service_contexts (
                    PortableInterceptor::ForwardRequest))
 {
   CORBA::String_var operation =
-    ri->operation (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+    ri->operation ();
 
   if (ACE_OS::strcmp ("_is_a", operation.in ()) == 0)
     return;
@@ -51,7 +50,6 @@ Echo_Server_Request_Interceptor::receive_request_service_contexts (
   IOP::ServiceId id = ::service_id;
   IOP::ServiceContext_var sc =
     ri->get_request_service_context (id ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
   if (sc->context_data.length() != magic_cookie_len
       || ACE_OS::memcmp(

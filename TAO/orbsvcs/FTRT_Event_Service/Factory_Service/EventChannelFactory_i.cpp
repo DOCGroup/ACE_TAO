@@ -63,7 +63,6 @@ CORBA::Object_ptr EventChannelFactory_i::create_object (
     ACE_RE_THROW;
   }
   ACE_ENDTRY;
-  ACE_CHECK_RETURN(CORBA::Object::_nil());
 
     ACE_THROW_RETURN(PortableGroup::ObjectNotCreated(), CORBA::Object::_nil());
 }
@@ -83,7 +82,7 @@ void EventChannelFactory_i::delete_object (
   CORBA::Object_var obj;
   if (objects.find(object_id, obj) == 0) {
     objects.unbind(object_id);
-    //obj->shutdown(ACE_ENV_SINGLE_ARG_PARAMETER);
+    //obj->shutdown();
   }
 }
 
@@ -188,7 +187,6 @@ CORBA::Object_ptr EventChannelFactory_i::create_process (
   ACE_TRY_NEW_ENV {
     CORBA::Object_var result  = orb->string_to_object(ior
       ACE_ENV_ARG_PARAMETER);
-    ACE_TRY_CHECK;
 
     if (objects.bind(id, result) ==0){
       return result._retn();

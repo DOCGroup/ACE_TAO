@@ -88,15 +88,12 @@ Client_Task::narrow_servant (void)
     {
       CORBA::ORB_var orb =
         CORBA::ORB_init (this->argc_, this->argv_, "" ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       CORBA::Object_var object =
         orb->string_to_object (this->ior_ ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       this->roundtrip_ =
         Test::Roundtrip::_narrow (object.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       if (CORBA::is_nil (this->roundtrip_.in ()))
         {
@@ -127,13 +124,11 @@ Client_Task::run_test (void)
     {
       test_start = ACE_OS::gethrtime ();
 
-      this->roundtrip_->start_test (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      this->roundtrip_->start_test ();
 
       this->svc ();
 
-      this->roundtrip_->end_test (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      this->roundtrip_->end_test ();
 
       test_end = ACE_OS::gethrtime ();
 
@@ -172,7 +167,6 @@ Client_Task::svc (void)
           CORBA::ULongLong start = ACE_OS::gethrtime ();
 
           (void) this->roundtrip_->test_method (start ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
 
           ACE_hrtime_t now = ACE_OS::gethrtime ();
           this->latency_.sample (now - start);

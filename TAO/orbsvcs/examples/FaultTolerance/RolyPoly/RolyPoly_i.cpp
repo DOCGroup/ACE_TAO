@@ -63,7 +63,7 @@ RolyPoly_i::number (char *&str
 }
 
 void
-RolyPoly_i::shutdown (ACE_ENV_SINGLE_ARG_DECL)
+RolyPoly_i::shutdown (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_DEBUG ((LM_DEBUG, "Server is shutting down.\n"));

@@ -46,7 +46,6 @@ Client_Task::svc (void)
           ACE_hrtime_t start = ACE_OS::gethrtime ();
 
           (void) this->remote_ref_->test_method (start ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
 
           ACE_hrtime_t now = ACE_OS::gethrtime ();
           history.sample (now - start);
@@ -69,8 +68,7 @@ Client_Task::svc (void)
                                              stats.samples_count ());
 
       //shutdown the server ORB
-      this->remote_ref_->shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      this->remote_ref_->shutdown ();
     }
 
   ACE_CATCHANY

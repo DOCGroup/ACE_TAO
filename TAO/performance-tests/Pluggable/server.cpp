@@ -22,7 +22,6 @@ main (int argc, char *argv[])
       int status = pp_test_server.init (argc,
                                         argv
                                         ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       if (status == -1)
         {
@@ -32,8 +31,7 @@ main (int argc, char *argv[])
         }
       else
         {
-          pp_test_server.run (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+          pp_test_server.run ();
         }
     }
   ACE_CATCH (CORBA::SystemException, sysex)

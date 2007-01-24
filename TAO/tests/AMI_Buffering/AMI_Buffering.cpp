@@ -37,7 +37,6 @@ AMI_Buffering::receive_data (const Test::Payload &the_payload
     {
       AMI_Buffering::Nest_Guard ng(*this);
       this->admin_->request_received (the_payload.length () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
     }
   ACE_CATCHANY
     {
@@ -45,42 +44,38 @@ AMI_Buffering::receive_data (const Test::Payload &the_payload
     }
   ACE_ENDTRY;
 
-  this->try_shutdown(ACE_ENV_SINGLE_ARG_PARAMETER);
+  this->try_shutdown();
 }
 
 void
-AMI_Buffering::flush (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+AMI_Buffering::flush (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
 }
 
 void
-AMI_Buffering::sync (ACE_ENV_SINGLE_ARG_DECL)
+AMI_Buffering::sync (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  this->admin_->flush (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+  this->admin_->flush ();
 }
 
 void
-AMI_Buffering::shutdown (ACE_ENV_SINGLE_ARG_DECL)
+AMI_Buffering::shutdown (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->must_shutdown_ = true;
-  this->try_shutdown(ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+  this->try_shutdown();
 }
 
 void
-AMI_Buffering::try_shutdown(ACE_ENV_SINGLE_ARG_DECL)
+AMI_Buffering::try_shutdown(void)
 {
   if (!this->must_shutdown_ || this->nest_ > 0)
     return;
   if (this->max_nest_ > 1)
     ACE_DEBUG ((LM_DEBUG, "(%P|%t) max nesting level: %d\n", max_nest_));
   this->admin_->shutdown(ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
   this->orb_->shutdown (0 ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 }

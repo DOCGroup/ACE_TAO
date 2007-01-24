@@ -38,10 +38,8 @@ get_event_channel(int argc, ACE_TCHAR** argv ACE_ENV_ARG_DECL)
         {
           CORBA::Object_var obj = orb->string_to_object(get_opt.opt_arg ()
                                                         ACE_ENV_ARG_PARAMETER);
-          ACE_CHECK_RETURN(0);
           channel = FtRtecEventChannelAdmin::EventChannel::_narrow(obj.in()
                                                                 ACE_ENV_ARG_PARAMETER);
-          ACE_CHECK_RETURN(0);
         }
         break;
       case 'n':
@@ -69,18 +67,16 @@ get_event_channel(int argc, ACE_TCHAR** argv ACE_ENV_ARG_DECL)
       CosNaming::NamingContext_var naming_context =
         resolve_init<CosNaming::NamingContext>(orb.in(), "NameService"
         ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK_RETURN(0);
 
       channel  = resolve<FtRtecEventChannelAdmin::EventChannel>(naming_context.in(),
         name
         ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK_RETURN(0);
     }
 
     if (use_gateway)
     {
       ACE_AUTO_PTR_RESET (gateway, new TAO_FTRTEC::FTEC_Gateway(orb.in(), channel.in()), TAO_FTRTEC::FTEC_Gateway);
-      return gateway->_this(ACE_ENV_SINGLE_ARG_PARAMETER);
+      return gateway->_this();
     }
     else
       return channel._retn();
@@ -91,11 +87,9 @@ int main(int argc, ACE_TCHAR** argv)
   ACE_TRY_NEW_ENV {
     orb = CORBA::ORB_init(argc, argv, ""
       ACE_ENV_ARG_PARAMETER);
-    ACE_TRY_CHECK;
 
     RtecEventChannelAdmin::EventChannel_var channel
       = get_event_channel(argc, argv ACE_ENV_ARG_PARAMETER);
-    ACE_TRY_CHECK;
 
 
     if (CORBA::is_nil(channel.in()))
@@ -104,22 +98,17 @@ int main(int argc, ACE_TCHAR** argv)
     PortableServer::POA_var poa =
       resolve_init<PortableServer::POA>(orb.in(), "RootPOA"
                             ACE_ENV_ARG_PARAMETER);
-    ACE_TRY_CHECK;
 
-    PortableServer::POAManager_var mgr = poa->the_POAManager(ACE_ENV_SINGLE_ARG_PARAMETER);
-    ACE_TRY_CHECK;
+    PortableServer::POAManager_var mgr = poa->the_POAManager();
 
-    mgr->activate(ACE_ENV_SINGLE_ARG_PARAMETER);
-    ACE_TRY_CHECK;
+    mgr->activate();
 
     PushConsumer_impl push_consumer_impl(orb.in());
     RtecEventChannelAdmin::ConsumerAdmin_var consumer_admin =
-      channel->for_consumers(ACE_ENV_SINGLE_ARG_PARAMETER);
-    ACE_TRY_CHECK;
+      channel->for_consumers();
 
     RtecEventChannelAdmin::ProxyPushSupplier_var supplier =
-      consumer_admin->obtain_push_supplier(ACE_ENV_SINGLE_ARG_PARAMETER);
-    ACE_TRY_CHECK;
+      consumer_admin->obtain_push_supplier();
 
     RtecEventChannelAdmin::ConsumerQOS qos;
     qos.is_gateway = 1;
@@ -135,9 +124,8 @@ int main(int argc, ACE_TCHAR** argv)
 
     supplier->connect_push_consumer(push_consumer.in(),
       qos   ACE_ENV_ARG_PARAMETER);
-    ACE_TRY_CHECK;
 
-    orb->run(ACE_ENV_SINGLE_ARG_PARAMETER);
+    orb->run();
 
   }
   ACE_CATCHANY {

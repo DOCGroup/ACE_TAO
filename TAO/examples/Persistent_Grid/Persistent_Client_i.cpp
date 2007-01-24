@@ -66,7 +66,6 @@ Persistent_Client_i::run (const char *name,
       Grid_ptr grid = client->make_grid (width_,
                                          height_
                                          ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       ACE_DEBUG ((LM_DEBUG,
                   "(%P|%t) Made the grid succesfully\n"));
@@ -79,7 +78,6 @@ Persistent_Client_i::run (const char *name,
               CORBA::Long ret_val = grid->get (index_,
                                                ctr
                                                ACE_ENV_ARG_PARAMETER);
-              ACE_TRY_CHECK;
 
               ACE_DEBUG ((LM_DEBUG,
                           "Grid value [%d][%d] =  %d \n",index_, ctr,ret_val));
@@ -87,13 +85,11 @@ Persistent_Client_i::run (const char *name,
         }
 
       if (client.shutdown () == 1) {
-        client->shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
-        ACE_TRY_CHECK;
+        client->shutdown ();
       }
 
       if (this->remove_ == 1) {
-        client->cleanup (ACE_ENV_SINGLE_ARG_PARAMETER);
-        ACE_TRY_CHECK;
+        client->cleanup ();
       }
     }
   ACE_CATCH (CORBA::UserException, range_ex)
@@ -109,7 +105,6 @@ Persistent_Client_i::run (const char *name,
       return -1;
     }
   ACE_ENDTRY;
-  ACE_CHECK_RETURN (-1);
 
   return 0;
 }

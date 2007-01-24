@@ -83,7 +83,6 @@ main (int argc, char *argv[])
                          satc.get_TCHAR_argv (),
                          server_orb.c_str ()
                          ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       ACE_Manual_Event me;
       Server_Task server_task (output,
@@ -107,7 +106,6 @@ main (int argc, char *argv[])
                          catc.get_TCHAR_argv (),
                          client_orb.c_str ()
                          ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       Client_Task client_task (input,
                                corb.in (),

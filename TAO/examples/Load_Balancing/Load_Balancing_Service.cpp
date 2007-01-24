@@ -72,7 +72,6 @@ Load_Balancing_Service::init (int argc,
       result = this->orb_manager_.init (argc,
                                         argv
                                         ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
       if (result == -1)
         return result;
 
@@ -89,7 +88,6 @@ Load_Balancing_Service::init (int argc,
       PortableServer::ServantBase_var s = factory_servant;
       ior = orb_manager_.activate (factory_servant
                                    ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       if (ior.in () == 0)
         return -1;
@@ -104,7 +102,6 @@ Load_Balancing_Service::init (int argc,
       return -1;
     }
   ACE_ENDTRY;
-  ACE_CHECK_RETURN (-1);
 
   if (this->ior_output_file_ != 0)
     {
@@ -119,15 +116,14 @@ Load_Balancing_Service::init (int argc,
 
 
 int
-Load_Balancing_Service::run (ACE_ENV_SINGLE_ARG_DECL)
+Load_Balancing_Service::run (void)
 {
   ACE_DEBUG ((LM_DEBUG,
               "Load_Balancer: Initialized \n"));
 
   int result;
 
-  result = this->orb_manager_.run (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
+  result = this->orb_manager_.run ();
 
   return result;
 }
@@ -148,8 +144,7 @@ main (int argc, char *argv[])
   ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY
     {
-      result = factory.run (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      result = factory.run ();
     }
   ACE_CATCHANY
     {
@@ -157,7 +152,6 @@ main (int argc, char *argv[])
       return 1;
     }
   ACE_ENDTRY;
-  ACE_CHECK_RETURN (1);
 
   if (result == -1)
     return 1;

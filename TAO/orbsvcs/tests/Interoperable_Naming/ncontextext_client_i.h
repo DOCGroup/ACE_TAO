@@ -39,7 +39,7 @@ class NContextExt_Client_i
   NContextExt_Client_i (void);
   ~NContextExt_Client_i (void);
 
-  int run (ACE_ENV_SINGLE_ARG_DECL);
+  int run (void);
   // Execute the client example code.
 
   int init (int argc, char **argv);

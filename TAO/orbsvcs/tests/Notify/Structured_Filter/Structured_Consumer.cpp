@@ -63,10 +63,8 @@ create_consumer (CosNotifyChannelAdmin::ConsumerAdmin_ptr admin,
     CORBA::NO_MEMORY ());
 
   consumer->init (client->root_poa () ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
   consumer->_connect (admin, ec ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 }
 
 int main (int argc, char * argv[])
@@ -76,7 +74,6 @@ int main (int argc, char * argv[])
     Consumer_Client client;
 
     int status = client.init (argc, argv ACE_ENV_ARG_PARAMETER);
-    ACE_TRY_CHECK;
     ACE_UNUSED_ARG(status);
     ACE_ASSERT(status == 0);
 
@@ -86,19 +83,16 @@ int main (int argc, char * argv[])
     CosNotifyChannelAdmin::AdminID adminid = 0;
     CosNotifyChannelAdmin::ConsumerAdmin_var consumer_admin =
       ec->new_for_consumers(CosNotifyChannelAdmin::AND_OP, adminid ACE_ENV_ARG_PARAMETER);
-    ACE_TRY_CHECK;
 
     ACE_ASSERT(! CORBA::is_nil (consumer_admin.in ()));
 
     if (useFilter)
     {
       CosNotifyFilter::FilterFactory_var ffact =
-        ec->default_filter_factory (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        ec->default_filter_factory ();
 
       CosNotifyFilter::Filter_var filter =
         ffact->create_filter (GRAMMAR ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       if (CORBA::is_nil (filter.in ()))
       {
@@ -114,7 +108,6 @@ int main (int argc, char * argv[])
       constraint_list[0].constraint_expr = CORBA::string_dup ("type != 1 and group != 0");
 
       filter->add_constraints (constraint_list ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       consumer_admin->add_filter (filter.in ());
     }
@@ -123,28 +116,22 @@ int main (int argc, char * argv[])
 
     CORBA::Object_var object =
       orb->string_to_object (ior ACE_ENV_ARG_PARAMETER);
-    ACE_TRY_CHECK;
 
     sig_var sig = sig::_narrow (object.in () ACE_ENV_ARG_PARAMETER);
-    ACE_TRY_CHECK;
 
     ACE_ASSERT(! CORBA::is_nil (sig.in ()));
 
     create_consumer (consumer_admin.in (), ec.in (), &client ACE_ENV_ARG_PARAMETER);
-    ACE_TRY_CHECK;
 
     ACE_DEBUG((LM_DEBUG, "\nConsumer waiting for events...\n"));
 
-    sig->go (ACE_ENV_SINGLE_ARG_PARAMETER);
-    ACE_TRY_CHECK;
+    sig->go ();
 
     client.ORB_run( ACE_ENV_SINGLE_ARG_PARAMETER );
-    ACE_TRY_CHECK;
 
     ACE_DEBUG((LM_DEBUG, "\nConsumer done.\n"));
 
-    sig->done(ACE_ENV_SINGLE_ARG_PARAMETER);
-    ACE_TRY_CHECK;
+    sig->done();
 
     return 0;
   }

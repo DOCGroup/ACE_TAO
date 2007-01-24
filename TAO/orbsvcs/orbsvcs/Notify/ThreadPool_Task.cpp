@@ -46,7 +46,6 @@ TAO_Notify_ThreadPool_Task::init (const NotifyExt::ThreadPoolParams& tp_params,
   ACE_NEW_THROW_EX (timer,
     TAO_Notify_Timer_Queue (),
     CORBA::NO_MEMORY ());
-  ACE_CHECK;
   this->timer_.reset (timer);
 
 
@@ -55,7 +54,6 @@ TAO_Notify_ThreadPool_Task::init (const NotifyExt::ThreadPoolParams& tp_params,
     TAO_Notify_Buffering_Strategy (*msg_queue (), admin_properties),
     CORBA::NO_MEMORY ());
   this->buffering_strategy_.reset (buffering_strategy);
-  ACE_CHECK;
 
   long flags = THR_NEW_LWP | THR_DETACHED;
   CORBA::ORB_var orb =
@@ -103,8 +101,7 @@ TAO_Notify_ThreadPool_Task::execute (TAO_Notify_Method_Request& method_request A
 {
   if (!shutdown_)
   {
-    TAO_Notify_Method_Request_Queueable* request_copy = method_request.copy (ACE_ENV_SINGLE_ARG_PARAMETER);
-    ACE_CHECK;
+    TAO_Notify_Method_Request_Queueable* request_copy = method_request.copy ();
 
     if (this->buffering_strategy_->enqueue (request_copy) == -1)
     {
@@ -138,8 +135,7 @@ TAO_Notify_ThreadPool_Task::svc (void)
 
       if (result > 0)
       {
-        method_request->execute (ACE_ENV_SINGLE_ARG_PARAMETER);
-        ACE_TRY_CHECK;
+        method_request->execute ();
 
         ACE_Message_Block::release (method_request);
       }

@@ -65,7 +65,7 @@ public:
    * the trader will have all the offers it has now when the time
    * to return them comes.
    */
-  virtual CORBA::ULong max_left (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+  virtual CORBA::ULong max_left (void)
     ACE_THROW_SPEC ((CORBA::SystemException,
                     CosTrading::UnknownMaxLeft));
 

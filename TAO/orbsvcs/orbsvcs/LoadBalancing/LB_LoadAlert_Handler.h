@@ -43,7 +43,7 @@ class TAO_LB_LoadAlert_Handler
 {
 public:
 
-  virtual void enable_alert (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+  virtual void enable_alert (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual void enable_alert_excep (
@@ -51,7 +51,7 @@ public:
       ACE_ENV_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual void disable_alert (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+  virtual void disable_alert (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual void disable_alert_excep (

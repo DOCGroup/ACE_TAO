@@ -1,6 +1,6 @@
 // $Id$
 
-#include "TestS.h"
+#include "Test.h"
 #include "tao/Utils/ORB_Destroyer.h"
 #include "tao/Utils/RIR_Narrow.h"
 #include "tao/Utils/PolicyList_Destroyer.h"
@@ -21,22 +21,18 @@ create_persistent_POA (PortableServer::POA_ptr parent,
   plist[0] =
     parent->create_lifespan_policy (PortableServer::PERSISTENT
                                     ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (PortableServer::POA::_nil ());
 
   plist[1] =
     parent->create_id_assignment_policy (PortableServer::USER_ID
                                          ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (PortableServer::POA::_nil ());
 
   plist[2] =
     parent->create_implicit_activation_policy (
       PortableServer::NO_IMPLICIT_ACTIVATION
       ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (PortableServer::POA::_nil ());
 
   PortableServer::POAManager_var mgr =
-    parent->the_POAManager (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (PortableServer::POA::_nil ());
+    parent->the_POAManager ();
 
   return parent->create_POA (name,
                              mgr.in(),
@@ -55,21 +51,18 @@ test_create_object_before_servant_reactivation (
     create_persistent_POA(root_poa,
                           "T1"
                           ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
 
   PortableServer::ObjectId_var oid =
     PortableServer::string_to_ObjectId ("TestServant");
 
-  char const * id = _tc_Test->id (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+  char const * id = _tc_Test->id ();
 
   CORBA::Object_var object =
     persistent_poa->create_reference_with_id (
       oid.in (),
       id
       ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
   if (CORBA::is_nil (object.in ()))
     {
@@ -82,7 +75,6 @@ test_create_object_before_servant_reactivation (
   CORBA::String_var ior =
     orb->object_to_string (object.in ()
                            ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
   // Now destroy the POA...
   persistent_poa->destroy (true,
@@ -93,13 +85,11 @@ test_create_object_before_servant_reactivation (
     create_persistent_POA (root_poa,
                            "T1"
                            ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
   // And try to create the object again...
   object =
     orb->string_to_object (ior.in ()
                            ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
   if(CORBA::is_nil (object.in ()))
     {
@@ -111,7 +101,6 @@ test_create_object_before_servant_reactivation (
   persistent_poa->destroy (true,
                            true
                            ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 }
 
 void
@@ -125,19 +114,16 @@ test_create_object_before_POA_reactivation(
     create_persistent_POA (root_poa,
                            "T2"
                            ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
   PortableServer::ObjectId_var oid =
     PortableServer::string_to_ObjectId ("TestServant");
 
-  char const * id = _tc_Test->id (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+  char const * id = _tc_Test->id ();
 
   CORBA::Object_var object =
     persistent_poa->create_reference_with_id (oid.in (),
                                               id
                                               ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
   if (CORBA::is_nil (object.in ()))
     {
@@ -149,18 +135,15 @@ test_create_object_before_POA_reactivation(
   CORBA::String_var ior =
     orb->object_to_string (object.in ()
                            ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
   // Now destroy the POA...
   persistent_poa->destroy (true,
                            true
                            ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
   // And try to create the object again...
   object = orb->string_to_object (ior.in ()
                                   ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
   if (CORBA::is_nil (object.in ()))
     {
@@ -173,13 +156,60 @@ test_create_object_before_POA_reactivation(
   persistent_poa->destroy (true,
                            true
                            ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+}
+
+void
+test_no_implicit_activation (
+  PortableServer::POA_ptr root_poa
+  ACE_ENV_ARG_DECL)
+{
+  // Create a persistent POA and then create a reference in it...
+  PortableServer::POA_var persistent_poa =
+    create_persistent_POA (root_poa,
+                           "T3"
+                           ACE_ENV_ARG_PARAMETER);
+
+  Hello myhello (persistent_poa.in ());
+
+  bool succeed = false;
+  ACE_TRY_NEW_ENV
+    {
+      // Implicit activation should fail
+      Test_var myservant =
+          myhello._this ();
+
+    }
+  ACE_CATCH (PortableServer::POA::WrongPolicy, ex)
+    {
+      succeed = true;
+    }
+  ACE_CATCH (PortableServer::POA::ServantNotActive, ex)
+    {
+      // This is now the case when looking at the corba spec, raised
+      // an issue 10522 about this
+      succeed = true;
+    }
+  ACE_CATCHANY
+    {
+    }
+  ACE_ENDTRY;
+
+  if (!succeed)
+  {
+    ACE_ERROR ((LM_ERROR,
+                "(%t) ERROR, Implicit activation failed with invalid exception\n"));
+  }
+
+  // Now destroy the POA...
+  persistent_poa->destroy (true,
+                           true
+                           ACE_ENV_ARG_PARAMETER);
 }
 
 int
 main (int argc, char *argv[])
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
+  ACE_DECLARE_NEW_  CORBA_ENV;
 
   ACE_TRY
     {
@@ -188,7 +218,6 @@ main (int argc, char *argv[])
                          argv,
                          ""
                          ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       TAO::Utils::ORB_Destroyer orb_destroyer (orb.in());
 
@@ -196,24 +225,22 @@ main (int argc, char *argv[])
         TAO::Utils::RIR_Narrow<PortableServer::POA>::narrow (orb.in (),
                                                              "RootPOA"
                                                              ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       PortableServer::POAManager_var poa_manager =
-        root_poa->the_POAManager (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        root_poa->the_POAManager ();
 
-      poa_manager->activate (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      poa_manager->activate ();
 
       test_create_object_before_POA_reactivation (orb.in(),
                                                   root_poa.in ()
                                                   ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       test_create_object_before_servant_reactivation (orb.in (),
                                                       root_poa.in ()
                                                       ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+
+      test_no_implicit_activation (root_poa.in ()
+                                   ACE_ENV_ARG_PARAMETER);
     }
   ACE_CATCHANY
     {
@@ -226,7 +253,6 @@ main (int argc, char *argv[])
       return 1;
     }
   ACE_ENDTRY;
-  ACE_CHECK_RETURN (1);
 
   return 0;
 }

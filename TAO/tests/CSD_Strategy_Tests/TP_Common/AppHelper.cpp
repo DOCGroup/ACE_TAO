@@ -14,7 +14,7 @@ AppHelper::ref_to_file(CORBA::ORB_ptr    orb,
   if (ior_file == 0)
     {
       ACE_ERROR((LM_ERROR,
-                 "(%P|%t) Cannot open output file [%s] to write IOR.",
+                 "(%P|%t) Cannot open output file [%s] to write IOR.\n",
                  filename));
       ACE_THROW (TestAppException());
     }
@@ -35,7 +35,6 @@ AppHelper::create_poa(const char*                    name,
                                                            mgr,
                                                            policies
                                                            ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (PortableServer::POA::_nil ());
 
   if (CORBA::is_nil(child_poa.in()))
     {
@@ -54,13 +53,11 @@ AppHelper::activate_servant(PortableServer::POA_ptr poa,
                             ACE_ENV_ARG_DECL)
 {
   // Activate the servant using the Child POA.
-  PortableServer::ObjectId_var oid 
+  PortableServer::ObjectId_var oid
     = poa->activate_object(servant ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (CORBA::Object::_nil ());
- 
-  CORBA::Object_var obj 
+
+  CORBA::Object_var obj
     = poa->servant_to_reference(servant ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (CORBA::Object::_nil ());
 
   if (CORBA::is_nil(obj.in()))
     {
@@ -84,11 +81,9 @@ AppHelper::validate_connection (CORBA::Object_ptr obj)
           CORBA::PolicyList_var unused;
           obj->_validate_connection (unused
                                      ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
 #else
           obj->_is_a ("Not_An_IDL_Type"
                       ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
 #endif /* TAO_HAS_MESSAGING == 1 */
           return true;
         }

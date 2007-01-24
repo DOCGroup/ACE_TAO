@@ -29,7 +29,6 @@ ImR_Activator_Shutdown::operator() (int /*which_signal*/)
   ACE_TRY
   {
     this->act_.shutdown (true ACE_ENV_ARG_PARAMETER);
-    ACE_TRY_CHECK;
   }
   ACE_CATCHANY
   {
@@ -50,7 +49,6 @@ run_standalone (Activator_Options& opts)
   ACE_TRY
     {
       int status = server.init (opts ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       if (status == -1)
         {
@@ -59,12 +57,10 @@ run_standalone (Activator_Options& opts)
       else
         {
           // Run the server if it is initialized correctly.
-          server.run (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+          server.run ();
 
           // End the server after its work is done.
-          status = server.fini (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+          status = server.fini ();
 
           if (status == -1)
             return 1;

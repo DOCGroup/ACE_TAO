@@ -31,7 +31,6 @@ Consumer::run (int argc, char* argv[])
       // ORB initialization boiler plate...
       CORBA::ORB_var orb =
         CORBA::ORB_init (argc, argv, "" ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       // Do *NOT* make a copy because we don't want the ORB to outlive
       // the Consumer object.
@@ -46,43 +45,33 @@ Consumer::run (int argc, char* argv[])
 
       CORBA::Object_var object =
         orb->resolve_initial_references ("RootPOA" ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
       PortableServer::POA_var poa =
         PortableServer::POA::_narrow (object.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
       PortableServer::POAManager_var poa_manager =
-        poa->the_POAManager (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
-      poa_manager->activate (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        poa->the_POAManager ();
+      poa_manager->activate ();
 
       // Obtain the event channel, we could use a naming service, a
       // command line argument or resolve_initial_references(), but
       // this is simpler...
       object =
         orb->string_to_object (argv[1] ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       CosEventChannelAdmin::EventChannel_var event_channel =
         CosEventChannelAdmin::EventChannel::_narrow (object.in ()
                                                       ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       // The canonical protocol to connect to the EC
       CosEventChannelAdmin::ConsumerAdmin_var consumer_admin =
-        event_channel->for_consumers (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        event_channel->for_consumers ();
 
       CosEventChannelAdmin::ProxyPushSupplier_var supplier =
-        consumer_admin->obtain_push_supplier (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        consumer_admin->obtain_push_supplier ();
 
       CosEventComm::PushConsumer_var consumer =
-        this->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        this->_this ();
 
       supplier->connect_push_consumer (consumer.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       // Wait for events, using work_pending()/perform_work() may help
       // or using another thread, this example is too simple for that.
@@ -119,7 +108,7 @@ Consumer::push (const CORBA::Any &
 }
 
 void
-Consumer::disconnect_push_consumer (ACE_ENV_SINGLE_ARG_DECL)
+Consumer::disconnect_push_consumer (void)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // In this example we shutdown the ORB when we disconnect from the

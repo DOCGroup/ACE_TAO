@@ -29,14 +29,14 @@ FTRT_ClientORB_Interceptor::~FTRT_ClientORB_Interceptor (void)
 }
 
 char *
-FTRT_ClientORB_Interceptor::name (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+FTRT_ClientORB_Interceptor::name (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return CORBA::string_dup (this->myname_);
 }
 
 void
-FTRT_ClientORB_Interceptor::destroy (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+FTRT_ClientORB_Interceptor::destroy (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
 }
@@ -90,14 +90,12 @@ FTRT_ClientORB_Interceptor::send_request (
 #endif /* TAO_NO_COPY_OCTET_SEQUENCES == 1 */
 
     ri->add_request_service_context (sc, 0 ACE_ENV_ARG_PARAMETER);
-    ACE_TRY_CHECK;
   }
   ACE_CATCHANY
   {
     // Not much can be done anyway. Just keep quiet
   }
   ACE_ENDTRY;
-  ACE_CHECK;
 }
 
 void
@@ -114,13 +112,11 @@ FTRT_ClientORB_Interceptor::receive_reply (
     service_context =
       ri->get_reply_service_context(FTRT::FT_FORWARD
                                     ACE_ENV_ARG_PARAMETER);
-    ACE_TRY_CHECK;
   }
   ACE_CATCHANY {
     return;
   }
   ACE_ENDTRY;
-  ACE_CHECK;
 
 
   const char * buf =
@@ -134,7 +130,7 @@ FTRT_ClientORB_Interceptor::receive_reply (
 
   if (cdr >> obj) {
     // update the target
-     CORBA::Object_var target = ri->target(ACE_ENV_SINGLE_ARG_PARAMETER);
+     CORBA::Object_var target = ri->target();
      target->_stubobj ()->base_profiles ( obj->_stubobj()->base_profiles() );
      ACE_DEBUG((LM_DEBUG, "target object updated\n"));
   }

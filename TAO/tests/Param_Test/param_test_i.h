@@ -31,7 +31,7 @@ public:
 
   // =methods for the attribute
 
-  virtual Coffee::Desc * description (ACE_ENV_SINGLE_ARG_DECL)
+  virtual Coffee::Desc * description (void)
       ACE_THROW_SPEC ((CORBA::SystemException));
   // get attribute
 
@@ -241,7 +241,7 @@ public:
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual Coffee_ptr
-  make_coffee (ACE_ENV_SINGLE_ARG_DECL)
+  make_coffee (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
   // make a coffee object
 
@@ -328,7 +328,7 @@ public:
                       ACE_ENV_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  void shutdown (ACE_ENV_SINGLE_ARG_DECL)
+  void shutdown (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
 
@@ -339,7 +339,7 @@ private:
   Coffee_i obj_;
   // the coffee object reference we maintain
 
-  void throw_badboy (ACE_ENV_SINGLE_ARG_DECL);
+  void throw_badboy (void);
   // Called by test_exception. This will avoid the compiler
   // warning that test_exception is throwing an exception
   // not in its THROW_SPEC, but still test TAO's

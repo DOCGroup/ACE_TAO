@@ -1,20 +1,17 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    orbsvcs/Concurrecy_Service/Concurrency_Service
-//
-// = FILENAME
-//    Concurrency_Service.cpp
-//
-// = DESCRIPTION
-//      This class implements a Concurrency_Service object.
-//
-// = AUTHORS
-//    Torben Worm <tworm@cs.wustl.edu>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    Concurrency_Service.cpp
+ *
+ *  $Id$
+ *
+ *    This class implements a Concurrency_Service object.
+ *
+ *
+ *  @author Torben Worm <tworm@cs.wustl.edu>
+ */
+//=============================================================================
+
 
 #include "Concurrency_Service.h"
 
@@ -108,7 +105,6 @@ Concurrency_Service::init (int argc,
                        ACE_TEXT("%p\n"),
                        ACE_TEXT("init_child_poa")),
                       -1);
-  ACE_CHECK_RETURN (-1);
 
   if (this->parse_args (command_line.get_argc(), command_line.get_TCHAR_argv())!=0)
     ACE_ERROR_RETURN ((LM_ERROR,
@@ -149,13 +145,13 @@ Concurrency_Service::init (int argc,
     }
 
   if (this->use_naming_service_)
-    return this->init_naming_service (ACE_ENV_SINGLE_ARG_PARAMETER);
+    return this->init_naming_service ();
 
   return 0;
 }
 
 int
-Concurrency_Service::init_naming_service (ACE_ENV_SINGLE_ARG_DECL)
+Concurrency_Service::init_naming_service (void)
 {
   ACE_DEBUG ((LM_DEBUG, "Concurrency_Service::init_naming_service (...)\n"));
   CORBA::ORB_var orb;
@@ -168,8 +164,7 @@ Concurrency_Service::init_naming_service (ACE_ENV_SINGLE_ARG_DECL)
   if (result == -1)
     return result;
   lockset_factory_ =
-    this->my_concurrency_server_.GetLockSetFactory ()->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
+    this->my_concurrency_server_.GetLockSetFactory ()->_this ();
 
   CosNaming::Name concurrency_context_name (1);
   concurrency_context_name.length (1);
@@ -178,7 +173,6 @@ Concurrency_Service::init_naming_service (ACE_ENV_SINGLE_ARG_DECL)
   this->concurrency_context_ =
     this->naming_client_->bind_new_context (concurrency_context_name
                                              ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
 
   CosNaming::Name lockset_name (1);
   lockset_name.length (1);
@@ -186,20 +180,18 @@ Concurrency_Service::init_naming_service (ACE_ENV_SINGLE_ARG_DECL)
   this->concurrency_context_->bind (lockset_name,
                                    lockset_factory_.in ()
                                    ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
   return 0;
 }
 
 // Run the ORB event loop.
 
 int
-Concurrency_Service::run (ACE_ENV_SINGLE_ARG_DECL)
+Concurrency_Service::run (void)
 {
   ACE_DEBUG ((LM_DEBUG,
               "Concurrency_Service::run (...)\n"));
 
-  int retval = this->orb_manager_.run (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
+  int retval = this->orb_manager_.run ();
   if (retval == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
                       "Concurrency_Service::run"),
@@ -227,13 +219,11 @@ ACE_TMAIN (int argc, ACE_TCHAR ** argv)
   ACE_TRY
     {
       int r = concurrency_service.init (argc, argv ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       if (r == -1)
         return 1;
 
-      concurrency_service.run (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      concurrency_service.run ();
     }
 
   ACE_CATCH (CORBA::SystemException, sysex)

@@ -116,7 +116,7 @@ public:
                      RtecScheduler::INTERNAL));
   // Initializes the scheduler with the passed information.
 
-  void close (ACE_ENV_SINGLE_ARG_DECL)
+  void close (void)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      RtecScheduler::INTERNAL,
                      RtecScheduler::UNKNOWN_TASK,
@@ -358,7 +358,7 @@ public:
                      RtecScheduler::UNKNOWN_PRIORITY_LEVEL));
   // Provides the thread priority and queue type for the given priority level.
 
-  virtual RtecScheduler::Preemption_Priority_t last_scheduled_priority (ACE_ENV_SINGLE_ARG_DECL)
+  virtual RtecScheduler::Preemption_Priority_t last_scheduled_priority (void)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      RtecScheduler::SYNCHRONIZATION_FAILURE,
                      RtecScheduler::NOT_SCHEDULED));
@@ -587,20 +587,20 @@ protected:
                      RtecScheduler::UNKNOWN_TASK));
   // This method updates the enable state of a dependency in a dependency set map.
 
-  virtual void dfs_traverse_i (ACE_ENV_SINGLE_ARG_DECL)
+  virtual void dfs_traverse_i (void)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      RtecScheduler::INTERNAL));
   // Traverses dependency graph, assigning a topological ordering.
   // Resets DFS map entries, do DFS traversal, constructs DFS map.
 
-  virtual void detect_cycles_i (ACE_ENV_SINGLE_ARG_DECL)
+  virtual void detect_cycles_i (void)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      RtecScheduler::INTERNAL,
                      RtecScheduler::CYCLIC_DEPENDENCIES));
   // Sorts an array of RT_info handles in topological order, then
   // checks for loops, marks unresolved remote dependencies.
 
-  void perform_admission_i (ACE_ENV_SINGLE_ARG_DECL)
+  void perform_admission_i (void)
     ACE_THROW_SPEC ((RtecScheduler::UTILIZATION_BOUND_EXCEEDED,
                      CORBA::SystemException,
                      RtecScheduler::INTERNAL));
@@ -608,7 +608,7 @@ protected:
   // rate tuples.
 
 
-  void crit_dfs_traverse_i (ACE_ENV_SINGLE_ARG_DECL)
+  void crit_dfs_traverse_i (void)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      RtecScheduler::INTERNAL));
   // Traverses criticality dependency graph, assigning a topological
@@ -616,20 +616,20 @@ protected:
   // DFS map.
 
 
-  void propagate_criticalities_i (ACE_ENV_SINGLE_ARG_DECL)
+  void propagate_criticalities_i (void)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      RtecScheduler::INTERNAL));
   // Propagates criticalities.
 
 
-  void propagate_characteristics_i (ACE_ENV_SINGLE_ARG_DECL)
+  void propagate_characteristics_i (void)
     ACE_THROW_SPEC ((CORBA::SystemException,
                       RtecScheduler::INTERNAL,
                       RtecScheduler::UNRESOLVED_LOCAL_DEPENDENCIES,
                       RtecScheduler::THREAD_SPECIFICATION));
   // Propagates effective execution time and period, sets total frame size.
 
-  virtual void assign_priorities_i (ACE_ENV_SINGLE_ARG_DECL)
+  virtual void assign_priorities_i (void)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      RtecScheduler::INTERNAL,
                      RtecScheduler::DUPLICATE_NAME));
@@ -637,13 +637,13 @@ protected:
   // priorities and subpriorities in one pass.  (Re)computes utilization
   // and sets last scheduled priority and last feasible priority.
 
-  void refresh_tuple_ptr_array_i (ACE_ENV_SINGLE_ARG_DECL)
+  void refresh_tuple_ptr_array_i (void)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      RtecScheduler::INTERNAL));
   // Refreshes the array of tuple pointers, corrects the count.
 
 /* WSOA merge - commented out
-  virtual void compute_utilization_i (ACE_ENV_SINGLE_ARG_DECL)
+  virtual void compute_utilization_i (void)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      RtecScheduler::INTERNAL));
   // Compute utilization, set last feasible priority.

@@ -39,10 +39,10 @@ public:
   ~TAO_Notify_Lanes_Consumer_Client ();
 
   /// Init
-  void initialize (ACE_ENV_SINGLE_ARG_DECL);
+  void initialize (void);
 
   /// Run
-  void run (ACE_ENV_SINGLE_ARG_DECL);
+  void run (void);
 
   /// Parse Args
   int parse_args (int argc, char *argv[]);
@@ -52,7 +52,7 @@ public:
 
 protected:
   /// Create an RT POA with a single lane at the specified RT Priority.
-  PortableServer::POA_ptr create_rt_poa (ACE_ENV_SINGLE_ARG_DECL);
+  PortableServer::POA_ptr create_rt_poa (void);
 
   /// ORB Objects.
   TAO_Notify_ORB_Objects orb_objects_;

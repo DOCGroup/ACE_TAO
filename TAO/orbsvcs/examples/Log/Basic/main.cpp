@@ -15,11 +15,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     {
       client.init (argc, argv
                    ACE_ENV_ARG_PARAMETER); //Init the Client
-      ACE_TRY_CHECK;
 
-      client.run_tests (ACE_ENV_SINGLE_ARG_PARAMETER); //Init the Client
+      client.run_tests (); //Init the Client
 
-      ACE_TRY_CHECK;
     }
   ACE_CATCH (CORBA::UserException, ue)
     {

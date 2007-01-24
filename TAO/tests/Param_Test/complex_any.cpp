@@ -20,8 +20,8 @@
 #include "complex_any.h"
 #include "tao/debug.h"
 
-ACE_RCSID (Param_Test, 
-           complex_any, 
+ACE_RCSID (Param_Test,
+           complex_any,
            "$Id$")
 
 const int LEVEL_2_LENGTH = 5;
@@ -62,8 +62,7 @@ Test_Complex_Any::dii_req_invoke (CORBA::Request *req
 
   req->set_return_type (CORBA::_tc_any);
 
-  req->invoke (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+  req->invoke ();
 
   const CORBA::Any *tmp;
   req->return_value () >>= tmp;
@@ -71,13 +70,11 @@ Test_Complex_Any::dii_req_invoke (CORBA::Request *req
 
   CORBA::NamedValue_ptr o2 =
     req->arguments ()->item (1 ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
   *o2->value () >>= tmp;
   this->inout_ = CORBA::Any (*tmp);
 
   CORBA::NamedValue_ptr o3 =
     req->arguments ()->item (2 ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
   *o3->value () >>= tmp;
   this->out_ = new CORBA::Any (*tmp);
 }
@@ -178,7 +175,6 @@ Test_Complex_Any::run_sii_test (Param_Test_ptr objref
                                              this->inout_,
                                              this->out_.out ()
                                              ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
     }
   ACE_CATCHANY
     {

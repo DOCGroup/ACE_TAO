@@ -44,7 +44,7 @@ public:
     ACE_THROW_SPEC ((CORBA::SystemException));
   // Gets the stock information from the Notifier.
 
-  virtual void shutdown (ACE_ENV_SINGLE_ARG_DECL)
+  virtual void shutdown (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
   // Used to get the consumer to shut down.
 

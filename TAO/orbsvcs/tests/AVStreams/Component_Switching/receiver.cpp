@@ -204,19 +204,16 @@ Receiver::init (int,
     this->mmdevice_;
 
   AVStreams::MMDevice_var mmdevice =
-    this->mmdevice_->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
+    this->mmdevice_->_this ();
 
   /// Bind to sender.
   this->connection_manager_.bind_to_sender (this->sender_name_,
                                             this->receiver_name_,
                                             mmdevice.in ()
                                             ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
 
   /// Connect to the sender.
-  this->connection_manager_.connect_to_sender (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
+  this->connection_manager_.connect_to_sender ();
 
   return 0;
 }
@@ -261,14 +258,13 @@ Receiver::output_file_name (void)
 }
 
 void
-Receiver::shut_down (ACE_ENV_SINGLE_ARG_DECL)
+Receiver::shut_down (void)
 {
   ACE_TRY
     {
       AVStreams::MMDevice_var mmdevice_obj =
-        this->mmdevice_->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
+        this->mmdevice_->_this ();
 
-      ACE_TRY_CHECK;
 
       this->connection_manager_.unbind_receiver (this->sender_name_,
                                                  this->receiver_name_,
@@ -297,31 +293,25 @@ main (int argc,
                          argv,
                          0
                          ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       CORBA::Object_var obj
         = orb->resolve_initial_references ("RootPOA"
                                            ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       /// Get the POA_var object from Object_var.
       PortableServer::POA_var root_poa =
         PortableServer::POA::_narrow (obj.in ()
                                       ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       PortableServer::POAManager_var mgr
-        = root_poa->the_POAManager (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        = root_poa->the_POAManager ();
 
-      mgr->activate (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      mgr->activate ();
 
       /// Initialize the AVStreams components.
       TAO_AV_CORE::instance ()->init (orb.in (),
                                       root_poa.in ()
                                       ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       Receiver receiver;
       int result =
@@ -348,19 +338,16 @@ main (int argc,
         receiver.init (argc,
                        argv
                        ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       if (result != 0)
         return result;
 
       while (!done)
         {
-          orb->perform_work (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+          orb->perform_work ();
         }
 
-      receiver.shut_down (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      receiver.shut_down ();
 
       ACE_OS::fclose (output_file);
     }
@@ -370,7 +357,6 @@ main (int argc,
       return -1;
     }
   ACE_ENDTRY;
-  ACE_CHECK_RETURN (-1);
 
   return 0;
 }

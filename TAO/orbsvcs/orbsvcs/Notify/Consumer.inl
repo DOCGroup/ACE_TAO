@@ -19,7 +19,7 @@ TAO_Notify_Consumer::is_suspended (void)
 }
 
 ACE_INLINE void
-TAO_Notify_Consumer::suspend (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+TAO_Notify_Consumer::suspend (void)
 {
   this->is_suspended_ = 1;
 }

@@ -80,7 +80,7 @@ public:
    * time interval in the TIO and time value is the midpoint of the
    * interval.
    */
-  virtual CosTime::UTO_ptr time (ACE_ENV_SINGLE_ARG_DECL)
+  virtual CosTime::UTO_ptr time (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
 private:

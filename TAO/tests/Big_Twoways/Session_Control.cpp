@@ -63,13 +63,10 @@ Session_Control::session_finished (CORBA::Boolean success
   if (session_count_ == 0)
     {
       PortableServer::POA_var poa =
-        this->_default_POA (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK;
+        this->_default_POA ();
       PortableServer::ObjectId_var oid =
         poa->servant_to_id (this ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
       poa->deactivate_object (oid.in () ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
     }
 
 }

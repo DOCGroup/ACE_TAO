@@ -16,7 +16,6 @@ ORB_Shutdown::operator () (CORBA::ORB_ptr orb)
     {
       orb->shutdown (0
                      ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
     }
   ACE_CATCHANY { };
   ACE_ENDTRY;

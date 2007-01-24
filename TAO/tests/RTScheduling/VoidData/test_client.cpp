@@ -13,7 +13,6 @@ main (int argc, char* argv [])
                              argv,
                              ""
                              ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       test_impl foo_i;
       int something = 28;

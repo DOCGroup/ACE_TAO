@@ -18,8 +18,8 @@
 #include "multdim_array.h"
 
 
-ACE_RCSID (Param_Test, 
-           multdim_array, 
+ACE_RCSID (Param_Test,
+           multdim_array,
            "$Id$")
 
 // ************************************************************************
@@ -57,8 +57,7 @@ Test_Multdim_Array::dii_req_invoke (CORBA::Request *req
 
   req->set_return_type (Param_Test::_tc_Multdim_Array);
 
-  req->invoke (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+  req->invoke ();
 
 
   Param_Test::Multdim_Array_forany forany;
@@ -67,13 +66,11 @@ Test_Multdim_Array::dii_req_invoke (CORBA::Request *req
 
   CORBA::NamedValue_ptr o2 =
     req->arguments ()->item (1 ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
   *o2->value () >>= forany;
   Param_Test::Multdim_Array_copy (this->inout_, forany.in ());
 
   CORBA::NamedValue_ptr o3 =
     req->arguments ()->item (2 ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
   *o3->value () >>= forany;
   Param_Test::Multdim_Array_copy (this->out_, forany.in ());
 }
@@ -144,7 +141,6 @@ Test_Multdim_Array::run_sii_test (Param_Test_ptr objref
                                                this->inout_.inout (),
                                                this->out_.inout ()
                                                ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
       return 0;
     }
   ACE_CATCHANY

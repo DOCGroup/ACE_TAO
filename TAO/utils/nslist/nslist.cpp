@@ -201,7 +201,6 @@ namespace
           CORBA::string_dup (bl[i].binding_name[0].kind);
 
         CORBA::Object_var obj = nc->resolve (Name ACE_ENV_ARG_PARAMETER);
-        ACE_CHECK;
 
         // If this is a context node, follow it down to the next level...
         if (bl[i].binding_type == CosNaming::ncontext)
@@ -222,7 +221,6 @@ namespace
                 ACE_DEBUG ((LM_DEBUG, " {Destroyed}"));
               }
             ACE_ENDTRY;
-            ACE_CHECK;
 
             if (const int backwards= NestedNamingContexts::hasBeenSeen (xc.in ()))
               {
@@ -249,7 +247,6 @@ namespace
                     CORBA::String_var str =
                       orb->object_to_string (obj.in ()
                                              ACE_ENV_ARG_PARAMETER);
-                    ACE_CHECK;
                     ACE_DEBUG ((LM_DEBUG, ": %s", str.in ()));
                   }
 
@@ -259,7 +256,6 @@ namespace
                     if (xc.in ())
                       {
                         list_context (xc.in (), level + 1 ACE_ENV_ARG_PARAMETER);
-                        ACE_CHECK;
                       }
                   }
                 else
@@ -278,7 +274,6 @@ namespace
                 CORBA::String_var str =
                   orb->object_to_string (obj.in ()
                                          ACE_ENV_ARG_PARAMETER);
-                ACE_CHECK;
                 ACE_DEBUG ((LM_DEBUG, ": %s\n", str.in ()));
               }
             else if (CORBA::is_nil (obj.in ()))
@@ -301,10 +296,8 @@ namespace
 
     NestedNamingContexts::add (nc);
     nc->list (CHUNK, bl, it ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK;
 
     show_chunk (nc, bl.in (), level ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK;
 
     if (!CORBA::is_nil (it.in ()))
       {
@@ -314,11 +307,9 @@ namespace
           {
             more = it->next_n (CHUNK, bl);
             show_chunk (nc, bl.in (), level ACE_ENV_ARG_PARAMETER);
-            ACE_CHECK;
           } while (more);
 
-        it->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-        ACE_CHECK;
+        it->destroy ();
       }
 
     NestedNamingContexts::remove ();
@@ -336,7 +327,6 @@ ACE_TMAIN (int argcw, ACE_TCHAR *argvw[])
       ACE_Argv_Type_Converter argcon (argcw, argvw);
       orb = CORBA::ORB_init (argcon.get_argc (), argcon.get_ASCII_argv (),
                              "" ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       // Scan through the command line options
       bool
@@ -605,8 +595,7 @@ ACE_TMAIN (int argcw, ACE_TCHAR *argvw[])
             "  --kindsep <character> {<name> ID/Kind separation character, default .}\n"
             "  --max <number>        {If given, limits displayed sub-context depth}\n",
             pname));
-          orb->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+          orb->destroy ();
           return 1;
         }
 
@@ -620,17 +609,14 @@ ACE_TMAIN (int argcw, ACE_TCHAR *argvw[])
         obj = orb->string_to_object (nameService ACE_ENV_ARG_PARAMETER);
       else
         obj = orb->resolve_initial_references ("NameService" ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       CosNaming::NamingContext_var root_nc =
         CosNaming::NamingContext::_narrow (obj.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
       if (CORBA::is_nil (root_nc.in ()))
         {
           ACE_DEBUG ((LM_DEBUG,
                       "Error: nil root naming context\n"));
-          orb->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+          orb->destroy ();
           return 1;
         }
       if (name)
@@ -654,16 +640,13 @@ ACE_TMAIN (int argcw, ACE_TCHAR *argvw[])
 
           // Now find this sub-context and replace the root with it.
           obj = root_nc->resolve( the_name ACE_ENV_ARG_PARAMETER );
-          ACE_TRY_CHECK;
           root_nc =
             CosNaming::NamingContext::_narrow (obj.in () ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
           if (CORBA::is_nil (root_nc.in ()))
             {
               ACE_DEBUG ((LM_DEBUG,
                          "Error: Can't find naming context\n    %s\n", name));
-              orb->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-              ACE_TRY_CHECK;
+              orb->destroy ();
               return 1;
             }
         }
@@ -671,7 +654,6 @@ ACE_TMAIN (int argcw, ACE_TCHAR *argvw[])
       CORBA::String_var str =
         orb->object_to_string (root_nc.in ()
                                ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       if (showNSonly)
         {
@@ -684,18 +666,17 @@ ACE_TMAIN (int argcw, ACE_TCHAR *argvw[])
                      "Naming Service: %s\n---------------\n",
                      ((showCtxIOR)? str.in () : "")));
           list_context (root_nc.in (), 1 ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
         }
     }
   ACE_CATCHANY
     {
       ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
                            "Exception in nslist");
-      orb->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
+      orb->destroy ();
       return -1;
     }
   ACE_ENDTRY;
 
-  orb->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
+  orb->destroy ();
   return 0;
 }

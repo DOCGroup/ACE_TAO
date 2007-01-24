@@ -39,8 +39,8 @@ public:
   void connect (RtecEventChannelAdmin::ConsumerAdmin_ptr consumer_admin,
                 const RtecEventChannelAdmin::ConsumerQOS &qos
                 ACE_ENV_ARG_DECL);
-  void disconnect (ACE_ENV_SINGLE_ARG_DECL);
-  void deactivate (ACE_ENV_SINGLE_ARG_DECL);
+  void disconnect (void);
+  void deactivate (void);
 
   /// Print out an error message if the event count is too far from the
   /// expected count.
@@ -52,7 +52,7 @@ public:
   virtual void push (const RtecEventComm::EventSet& events
                      ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
-  virtual void disconnect_push_consumer (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+  virtual void disconnect_push_consumer (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   /// Keep track of the number of events received.

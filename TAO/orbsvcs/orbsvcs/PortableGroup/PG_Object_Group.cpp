@@ -177,7 +177,6 @@ TAO::PG_Object_Group::add_member_to_iogr (CORBA::Object_ptr member
         this->manipulator_.remove_profiles (cleaned.in (),
                                             this->reference_.in ()
                                             ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK_RETURN (PortableGroup::ObjectGroup::_nil());
       this->empty_ = 0;
     }
 
@@ -190,7 +189,6 @@ TAO::PG_Object_Group::add_member_to_iogr (CORBA::Object_ptr member
   // Now merge the list into one new IOGR
   result =
     this->manipulator_.merge_iors (iors ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (PortableGroup::ObjectGroup::_nil ());
   return result._retn ();
 }
 
@@ -214,18 +212,15 @@ TAO::PG_Object_Group::add_member (const PortableGroup::Location & the_location,
   CORBA::String_var member_ior_string =
     orb_->object_to_string (member
                             ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
   PortableGroup::ObjectGroup_var new_reference =
     add_member_to_iogr (member
                         ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
   // Convert new member back to a (non group) ior.
   CORBA::Object_var member_ior =
     this->orb_->string_to_object (member_ior_string.in ()
                                   ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
   MemberInfo * info = 0;
   ACE_NEW_THROW_EX (info,
@@ -243,8 +238,7 @@ TAO::PG_Object_Group::add_member (const PortableGroup::Location & the_location,
                                     // a duplicate
   if (this->increment_version ())
     {
-      this->distribute_iogr (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK;
+      this->distribute_iogr ();
     }
   else
     {
@@ -290,7 +284,6 @@ TAO::PG_Object_Group::set_primary_member (
                                         this->reference_.in (),
                                         info->member_.in ()
                                         ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK_RETURN (0);
       if (!set_ok)
         {
           if (TAO_debug_level > 3)
@@ -306,8 +299,7 @@ TAO::PG_Object_Group::set_primary_member (
 
       if (result && this->increment_version ())
         {
-          this->distribute_iogr (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_CHECK_RETURN (0);
+          this->distribute_iogr ();
         }
       else
         {
@@ -356,7 +348,6 @@ TAO::PG_Object_Group::remove_member (
             this->manipulator_.remove_profiles (this->reference_.in (),
                                                 info->member_.in ()
                                                 ACE_ENV_ARG_PARAMETER);
-          ACE_CHECK;
         }
       else
         {
@@ -372,8 +363,7 @@ TAO::PG_Object_Group::remove_member (
 
       if (this->increment_version ())
         {
-          this->distribute_iogr (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_CHECK;
+          this->distribute_iogr ();
         }
 
     }
@@ -467,13 +457,12 @@ TAO::PG_Object_Group::increment_version (void)
 //////////////////
 // Internal method
 void
-TAO::PG_Object_Group::distribute_iogr (ACE_ENV_SINGLE_ARG_DECL)
+TAO::PG_Object_Group::distribute_iogr (void)
 {
   // assume internals is locked
   CORBA::String_var iogr =
     this->orb_->object_to_string (this->reference_.in()
                                   ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
 //  size_t n_rep = 0; // for dump_ior below
   for (MemberMap_Iterator it = this->members_.begin();
@@ -511,7 +500,6 @@ TAO::PG_Object_Group::distribute_iogr (ACE_ENV_SINGLE_ARG_DECL)
                                             this->tagged_component_.object_group_ref_version,
                                             info->is_primary_
                                             ACE_ENV_ARG_PARAMETER);
-              ACE_TRY_CHECK;
             }
           ACE_CATCHANY
             {
@@ -532,7 +520,7 @@ TAO::PG_Object_Group::distribute_iogr (ACE_ENV_SINGLE_ARG_DECL)
 }
 
 PortableGroup::Locations *
-TAO::PG_Object_Group::locations_of_members (ACE_ENV_SINGLE_ARG_DECL)
+TAO::PG_Object_Group::locations_of_members (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_GUARD_RETURN (TAO_SYNCH_MUTEX,
@@ -548,7 +536,6 @@ TAO::PG_Object_Group::locations_of_members (ACE_ENV_SINGLE_ARG_DECL)
     result,
     PortableGroup::Locations (count),
     CORBA::NO_MEMORY() );
-  ACE_CHECK_RETURN (0);
 
   result->length (count);
 
@@ -658,7 +645,6 @@ TAO::PG_Object_Group::create_member (
           role_.c_str(),
           factory_type.out ()
           ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
 
       // @@ what if factory_type != type_id != this->type_id_
 
@@ -682,25 +668,21 @@ TAO::PG_Object_Group::create_member (
                   the_criteria,
                   fcid. out()
                   ACE_ENV_ARG_PARAMETER);
-              ACE_CHECK;
 
               // convert the new member to a stringified IOR to avoid
               // contamination with group info
               CORBA::String_var member_ior_string =
                 orb_->object_to_string (member.in ()
                                         ACE_ENV_ARG_PARAMETER);
-              ACE_CHECK;
 
               PortableGroup::ObjectGroup_var new_reference =
                 this->add_member_to_iogr (member.in ()
                                           ACE_ENV_ARG_PARAMETER);
-              ACE_CHECK;
 
               // Convert new member back to a (non group) ior.
               CORBA::Object_var member_ior =
                 this->orb_->string_to_object (member_ior_string.in ()
                                               ACE_ENV_ARG_PARAMETER);
-              ACE_CHECK;
 
               MemberInfo * info = 0;
               ACE_NEW_THROW_EX (info, MemberInfo(
@@ -709,7 +691,6 @@ TAO::PG_Object_Group::create_member (
                                                  factory_info.the_factory,
                                                  fcid.in ()),
                                 CORBA::NO_MEMORY());
-              ACE_CHECK;
 
               if (this->members_.bind (the_location, info) != 0)
                 {
@@ -721,8 +702,7 @@ TAO::PG_Object_Group::create_member (
                                                 // duplicate
               if (this->increment_version ())
                 {
-                  this->distribute_iogr (ACE_ENV_SINGLE_ARG_PARAMETER);
-                  ACE_CHECK;
+                  this->distribute_iogr ();
                 }
               created = 1;
             }
@@ -752,7 +732,6 @@ TAO::PG_Object_Group::create_members (size_t count ACE_ENV_ARG_DECL)
         role_.c_str(),
         factory_type.out ()
         ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
   CORBA::ULong factory_count = factories->length ();
   if (factory_count > 0)
@@ -778,25 +757,21 @@ TAO::PG_Object_Group::create_members (size_t count ACE_ENV_ARG_DECL)
                       factory_info.the_criteria,
                       fcid. out()
                       ACE_ENV_ARG_PARAMETER);
-                  ACE_TRY_CHECK;
 
                   // convert the new member to a stringified IOR to avoid
                   // contamination with group info
                   CORBA::String_var member_ior_string =
                     orb_->object_to_string (member.in ()
                                             ACE_ENV_ARG_PARAMETER);
-                  ACE_TRY_CHECK;
 
                   PortableGroup::ObjectGroup_var new_reference =
                     this->add_member_to_iogr (member.in ()
                                               ACE_ENV_ARG_PARAMETER);
-                  ACE_TRY_CHECK;
 
                   // Convert new member back to a (non group) ior.
                   CORBA::Object_var member_ior =
                     this->orb_->string_to_object (member_ior_string.in ()
                                                   ACE_ENV_ARG_PARAMETER);
-                  ACE_TRY_CHECK;
 
                   MemberInfo * info = 0;
                   ACE_NEW_THROW_EX (info, MemberInfo(
@@ -805,7 +780,6 @@ TAO::PG_Object_Group::create_members (size_t count ACE_ENV_ARG_DECL)
                                                      factory_info.the_factory,
                                                      fcid.in ()),
                                     CORBA::NO_MEMORY());
-                  ACE_TRY_CHECK;
 
                   if (this->members_.bind (factory_location, info) != 0)
                     {
@@ -835,8 +809,7 @@ TAO::PG_Object_Group::create_members (size_t count ACE_ENV_ARG_DECL)
 
       if (this->increment_version ())
         {
-          this->distribute_iogr (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_CHECK;
+          this->distribute_iogr ();
         }
     }
   else
@@ -846,7 +819,7 @@ TAO::PG_Object_Group::create_members (size_t count ACE_ENV_ARG_DECL)
 }
 
 void
-TAO::PG_Object_Group::initial_populate (ACE_ENV_SINGLE_ARG_DECL)
+TAO::PG_Object_Group::initial_populate (void)
 {
   ACE_GUARD (TAO_SYNCH_MUTEX, guard, this->internals_);
 
@@ -859,13 +832,12 @@ TAO::PG_Object_Group::initial_populate (ACE_ENV_SINGLE_ARG_DECL)
         {
           this->create_members (initial_number_members
                                 ACE_ENV_ARG_PARAMETER);
-          ACE_CHECK;
         }
     }
 }
 
 void
-TAO::PG_Object_Group::minimum_populate (ACE_ENV_SINGLE_ARG_DECL)
+TAO::PG_Object_Group::minimum_populate (void)
 {
   ACE_GUARD (TAO_SYNCH_MUTEX, guard, this->internals_);
 

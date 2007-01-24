@@ -59,15 +59,13 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       TAO_Notify_Properties::instance (&properties);
 
       int result = notify_service.init (argc, argv ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
        if (result == -1)
         ACE_ERROR_RETURN ((LM_ERROR,
                            ACE_TEXT("Failed to initialize the Notification Service.\n")),
                           1);
 
-      notify_service.run (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      notify_service.run ();
     }
   ACE_CATCHANY
     {

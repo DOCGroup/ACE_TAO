@@ -137,7 +137,6 @@ public:
 
           CORBA::ULong result = this->test_->method (work_from_this_thread
                                                      ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
 
           if (work_from_this_thread != result)
             {
@@ -156,7 +155,6 @@ public:
         }
       ACE_ENDTRY;
 
-      ACE_CHECK_RETURN (-1);
 
       return 0;
     }
@@ -207,7 +205,6 @@ public:
                                   event_loop_timeout_for_this_thread * 1000);
 
           this->orb_->run (timeout ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
 
           ACE_DEBUG ((LM_DEBUG, "Client: Event loop finished for thread %t @ %T\n"));
         }
@@ -219,7 +216,6 @@ public:
         }
       ACE_ENDTRY;
 
-      ACE_CHECK_RETURN (-1);
 
       return 0;
     }
@@ -248,7 +244,6 @@ main (int argc, char **argv)
                          argv,
                          0
                          ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       // Initialize options based on command-line arguments.
       int parse_args_result = parse_args (argc, argv);
@@ -258,12 +253,10 @@ main (int argc, char **argv)
       // Get an object reference from the argument string.
       CORBA::Object_var object =
         orb->string_to_object (IOR ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       // Try to narrow the object reference to a <server> reference.
       test_var server = test::_narrow (object.in ()
                                        ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       Client_Task client_task (server.in ());
 
@@ -293,8 +286,7 @@ main (int argc, char **argv)
       // Shutdown server.
       if (shutdown_server)
         {
-          server->shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+          server->shutdown ();
         }
     }
   ACE_CATCHANY
@@ -305,7 +297,6 @@ main (int argc, char **argv)
     }
   ACE_ENDTRY;
 
-  ACE_CHECK_RETURN (-1);
 
   return 0;
 }

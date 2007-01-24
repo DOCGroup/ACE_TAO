@@ -155,7 +155,7 @@ public:
                              ACE_ENV_ARG_DECL) = 0;
 
   /// The EC is shutting down, must release all the elements.
-  virtual void shutdown (ACE_ENV_SINGLE_ARG_DECL) = 0;
+  virtual void shutdown (void) = 0;
 };
 
 // ****************************************************************

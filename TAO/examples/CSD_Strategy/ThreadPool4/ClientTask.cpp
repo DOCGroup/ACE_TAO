@@ -56,13 +56,10 @@ ClientTask::svc()
     for (CORBA::Long i = 1; i <= 100; i++)
     {
       // Simple Two-way calls.
-      this->foo_->op1(ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      this->foo_->op1();
 
       this->foo_->op2(i ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
-      CORBA::Long value = this->foo_->op3(ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      CORBA::Long value = this->foo_->op3();
 
       ACE_DEBUG((LM_DEBUG,
                  "(%P|%t) ===> Value retrieved from op3() == %d\n",
@@ -71,13 +68,12 @@ ClientTask::svc()
       for (CORBA::Long j = 1; j <= 5; j++)
         {
           this->foo_->op4(495 + (i * 5) + j ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
         }
 
       ACE_TRY_EX (op5)
       {
         ACE_DEBUG((LM_DEBUG, "(%P|%t) ===> Invoke op5()\n"));
-        this->foo_->op5(ACE_ENV_SINGLE_ARG_PARAMETER);
+        this->foo_->op5();
         ACE_TRY_CHECK_EX (op5);
         ACE_DEBUG((LM_DEBUG, "(%P|%t) ===> No exception raised from op5().  :-(\n"));
       }
@@ -93,7 +89,6 @@ ClientTask::svc()
       CORBA::String_var message = CORBA::string_dup( "Hello! " );
       CORBA::Boolean result
         = this->foo_->op6( "TAO User", message.inout() ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       if (result)
         {
@@ -109,19 +104,15 @@ ClientTask::svc()
 
       // Callback test.
       this->foo_->callback_object (this->callback_.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
-      this->foo_->test_callback (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      this->foo_->test_callback ();
 
       // One-Way calls with various arguments.
       CORBA::String_var ub_string = CORBA::string_dup( "UNBOUNDED STRING" );
       this->foo_->test_unbounded_string_arg (ub_string.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       CORBA::String_var bd_string = CORBA::string_dup( "BOUNDED STRING" );
       this->foo_->test_bounded_string_arg (bd_string.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       Fixed_Array fixed_array;
 
@@ -131,14 +122,12 @@ ClientTask::svc()
         }
 
       this->foo_->test_fixed_array_arg (fixed_array ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       Var_Array var_array;
       var_array[0] = CORBA::string_dup( "STRING 1" );
       var_array[1] = CORBA::string_dup( "STRING 2" );
       var_array[2] = CORBA::string_dup( "STRING 3" );
       this->foo_->test_var_array_arg (var_array ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       Bounded_Var_Size_var bd_var_size_string = new Bounded_Var_Size();
       char * buffer1 = CORBA::string_dup ("BOUNDED VAR SIZE CHAR");
@@ -146,7 +135,6 @@ ClientTask::svc()
                                    buffer1, true);
       this->foo_->test_bounded_var_size_arg (bd_var_size_string.in ()
                                              ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       char * buffer2 = CORBA::string_dup ("UNBOUNDED VAR SIZE CHAR");
       Unbounded_Var_Size_var ub_var_size_string = new Unbounded_Var_Size(100);
@@ -156,31 +144,25 @@ ClientTask::svc()
                                    true);
       this->foo_->test_unbounded_var_size_arg (ub_var_size_string.in ()
                                                ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       TimeOfDay t;
       t.hour = 12;
       t.minute = 30;
       t.second = 10;
       this->foo_->test_fixed_size_arg (t ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       this->foo_->test_fixed_size_arg_two_way (t ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       CORBA::Boolean special_value = 1;
       this->foo_->test_special_basic_arg (special_value ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       this->foo_->test_objref_arg (this->callback_.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
     }
 
     ACE_DEBUG((LM_DEBUG,
               "(%P|%t) ClientTask::svc - Invoke foo->done()\n"));
 
-    this->foo_->done (ACE_ENV_SINGLE_ARG_PARAMETER);
-    ACE_TRY_CHECK;
+    this->foo_->done ();
     ACE_DEBUG((LM_DEBUG,
               "(%P|%t) ClientTask::svc - Back from foo->done()\n"));
   }

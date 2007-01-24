@@ -79,12 +79,10 @@ TAO_Hash_Naming_Context::get_context (const CosNaming::Name &name
       // Resolve the name.
       CORBA::Object_var context = resolve (comp_name
                                            ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       // Try narrowing object reference to the NamingContext type.
       result = CosNaming::NamingContext::_narrow (context.in ()
                                                   ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
     }
   ACE_CATCH (CosNaming::NamingContext::NotFound, ex)
     {
@@ -97,7 +95,6 @@ TAO_Hash_Naming_Context::get_context (const CosNaming::Name &name
       ACE_RE_THROW;
     }
   ACE_ENDTRY;
-  ACE_CHECK_RETURN (CosNaming::NamingContext::_nil ());
 
   if (CORBA::is_nil (result.in ()))
     {
@@ -123,7 +120,6 @@ TAO_Hash_Naming_Context::bind (const CosNaming::Name& n,
   ACE_GUARD_THROW_EX (TAO_SYNCH_RECURSIVE_MUTEX,
                       ace_mon, this->lock_,
                       CORBA::INTERNAL ());
-  ACE_CHECK;
 
   // Check to make sure this object didn't have <destroy> method
   // invoked on it.
@@ -144,7 +140,6 @@ TAO_Hash_Naming_Context::bind (const CosNaming::Name& n,
     {
       CosNaming::NamingContext_var context =
         this->get_context (n ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
 
       CosNaming::Name simple_name;
       simple_name.length (1);
@@ -152,7 +147,6 @@ TAO_Hash_Naming_Context::bind (const CosNaming::Name& n,
       ACE_TRY
         {
           context->bind (simple_name, obj ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
         }
       ACE_CATCH (CORBA::TIMEOUT, timeoutEx)
         {
@@ -186,7 +180,6 @@ TAO_Hash_Naming_Context::rebind (const CosNaming::Name& n,
   ACE_GUARD_THROW_EX (TAO_SYNCH_RECURSIVE_MUTEX, ace_mon,
                       this->lock_,
                       CORBA::INTERNAL ());
-  ACE_CHECK;
 
   // Check to make sure this object didn't have <destroy> method
   // invoked on it.
@@ -207,7 +200,6 @@ TAO_Hash_Naming_Context::rebind (const CosNaming::Name& n,
     {
       CosNaming::NamingContext_var context =
         get_context (n ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
 
       CosNaming::Name simple_name;
       simple_name.length (1);
@@ -215,7 +207,6 @@ TAO_Hash_Naming_Context::rebind (const CosNaming::Name& n,
       ACE_TRY
         {
           context->rebind (simple_name, obj ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
         }
       ACE_CATCH (CORBA::TIMEOUT, timeoutEx)
         {
@@ -251,7 +242,6 @@ TAO_Hash_Naming_Context::bind_context (const CosNaming::Name &n,
   ACE_GUARD_THROW_EX (TAO_SYNCH_RECURSIVE_MUTEX, ace_mon,
                       this->lock_,
                       CORBA::INTERNAL ());
-  ACE_CHECK;
 
   // Check to make sure this object didn't have <destroy> method
   // invoked on it.
@@ -276,7 +266,6 @@ TAO_Hash_Naming_Context::bind_context (const CosNaming::Name &n,
     {
       CosNaming::NamingContext_var context =
         get_context (n ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
 
       CosNaming::Name simple_name;
       simple_name.length (1);
@@ -284,7 +273,6 @@ TAO_Hash_Naming_Context::bind_context (const CosNaming::Name &n,
       ACE_TRY
         {
           context->bind_context (simple_name, nc ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
         }
       ACE_CATCH (CORBA::TIMEOUT, timeoutEx)
         {
@@ -318,7 +306,6 @@ TAO_Hash_Naming_Context::rebind_context (const CosNaming::Name &n,
   ACE_GUARD_THROW_EX (TAO_SYNCH_RECURSIVE_MUTEX, ace_mon,
                       this->lock_,
                       CORBA::INTERNAL ());
-  ACE_CHECK;
 
   // Check to make sure this object didn't have <destroy> method
   // invoked on it.
@@ -339,7 +326,6 @@ TAO_Hash_Naming_Context::rebind_context (const CosNaming::Name &n,
     {
       CosNaming::NamingContext_var context =
         get_context (n ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
 
       CosNaming::Name simple_name;
       simple_name.length (1);
@@ -347,7 +333,6 @@ TAO_Hash_Naming_Context::rebind_context (const CosNaming::Name &n,
       ACE_TRY
         {
           context->rebind_context (simple_name, nc ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
         }
       ACE_CATCH (CORBA::TIMEOUT, timeoutEx)
         {
@@ -381,7 +366,6 @@ TAO_Hash_Naming_Context::resolve (const CosNaming::Name& n
 {
   ACE_GUARD_THROW_EX (TAO_SYNCH_RECURSIVE_MUTEX, ace_mon, this->lock_,
                       CORBA::INTERNAL ());
-  ACE_CHECK_RETURN (CORBA::Object::_nil ());
 
   // Check to make sure this object didn't have <destroy> method
   // invoked on it.
@@ -426,7 +410,6 @@ TAO_Hash_Naming_Context::resolve (const CosNaming::Name& n
           // Narrow to NamingContext.
           context = CosNaming::NamingContext::_narrow (result.in ()
                                                        ACE_ENV_ARG_PARAMETER);
-          ACE_CHECK_RETURN (CORBA::Object::_nil ());
         }
       else
         // The first name component wasn't bound to a NamingContext.
@@ -462,7 +445,6 @@ TAO_Hash_Naming_Context::resolve (const CosNaming::Name& n
               CORBA::Object_ptr resolved_ref;
               resolved_ref = context->resolve (rest_of_name
                                                ACE_ENV_ARG_PARAMETER);
-              ACE_TRY_CHECK;
               return resolved_ref;
             }
           ACE_CATCH (CORBA::TIMEOUT, timeoutEx)
@@ -485,7 +467,6 @@ TAO_Hash_Naming_Context::unbind (const CosNaming::Name& n
   ACE_GUARD_THROW_EX (TAO_SYNCH_RECURSIVE_MUTEX, ace_mon,
                       this->lock_,
                       CORBA::INTERNAL ());
-  ACE_CHECK;
 
   // Check to make sure this object didn't have <destroy> method
   // invoked on it.
@@ -506,7 +487,6 @@ TAO_Hash_Naming_Context::unbind (const CosNaming::Name& n
     {
       CosNaming::NamingContext_var context =
         get_context (n ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
 
       CosNaming::Name simple_name;
       simple_name.length (1);
@@ -514,7 +494,6 @@ TAO_Hash_Naming_Context::unbind (const CosNaming::Name& n
       ACE_TRY
         {
           context->unbind (simple_name ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
         }
       ACE_CATCH (CORBA::TIMEOUT, timeoutEx)
         {
@@ -541,7 +520,6 @@ TAO_Hash_Naming_Context::bind_new_context (const CosNaming::Name& n
                       ace_mon,
                       this->lock_,
                       CORBA::INTERNAL ());
-  ACE_CHECK_RETURN (CosNaming::NamingContext::_nil ());
 
   // Check to make sure this object didn't have <destroy> method
   // invoked on it.
@@ -564,7 +542,6 @@ TAO_Hash_Naming_Context::bind_new_context (const CosNaming::Name& n
     {
       CosNaming::NamingContext_var context =
         get_context (n ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK_RETURN (CosNaming::NamingContext::_nil ());
 
       CosNaming::Name simple_name;
       simple_name.length (1);
@@ -579,8 +556,7 @@ TAO_Hash_Naming_Context::bind_new_context (const CosNaming::Name& n
     CosNaming::NamingContext::_nil ();
 
   // Create new context.
-  result = new_context (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (CosNaming::NamingContext::_nil ());
+  result = new_context ();
 
   // Bind the new context to the name.
   ACE_TRY
@@ -588,7 +564,6 @@ TAO_Hash_Naming_Context::bind_new_context (const CosNaming::Name& n
       bind_context (n,
                     result.in ()
                     ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
     }
   ACE_CATCHANY
     {
@@ -599,7 +574,7 @@ TAO_Hash_Naming_Context::bind_new_context (const CosNaming::Name& n
         ACE_DECLARE_NEW_CORBA_ENV;
         ACE_TRY_EX(DESTROY)
           {
-            result->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
+            result->destroy ();
             ACE_TRY_CHECK_EX(DESTROY);
           }
         ACE_CATCHANY
@@ -611,18 +586,16 @@ TAO_Hash_Naming_Context::bind_new_context (const CosNaming::Name& n
       ACE_RE_THROW;
     }
   ACE_ENDTRY;
-  ACE_CHECK_RETURN (CosNaming::NamingContext::_nil ());
   return result._retn ();
 }
 
 void
-TAO_Hash_Naming_Context::destroy (ACE_ENV_SINGLE_ARG_DECL)
+TAO_Hash_Naming_Context::destroy (void)
 {
   ACE_GUARD_THROW_EX (TAO_SYNCH_RECURSIVE_MUTEX,
                       ace_mon,
                       this->lock_,
                       CORBA::INTERNAL ());
-  ACE_CHECK;
 
   // Check to make sure this object didn't have <destroy> method
   // invoked on it.
@@ -650,11 +623,9 @@ TAO_Hash_Naming_Context::destroy (ACE_ENV_SINGLE_ARG_DECL)
       PortableServer::ObjectId_var id =
         PortableServer::string_to_ObjectId (poa_id_.fast_rep ());
 
-      ACE_CHECK;
 
       poa->deactivate_object (id.in ()
                               ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
     }
 }
 

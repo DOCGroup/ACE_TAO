@@ -29,8 +29,7 @@ CC_LockSet::CC_LockSet (void)
 {
   ACE_TRY_NEW_ENV
     {
-      this->Init (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      this->Init ();
     }
   ACE_CATCHANY
     {
@@ -47,8 +46,7 @@ CC_LockSet::CC_LockSet (CosConcurrencyControl::LockSet_ptr related)
 {
   ACE_TRY_NEW_ENV
     {
-      this->Init (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      this->Init ();
     }
   ACE_CATCHANY
     {
@@ -61,7 +59,7 @@ CC_LockSet::CC_LockSet (CosConcurrencyControl::LockSet_ptr related)
 // Initialization.
 
 void
-CC_LockSet::Init (ACE_ENV_SINGLE_ARG_DECL)
+CC_LockSet::Init (void)
 {
   // Set the mode of the statically allocated locks
   lock_[CC_IR] = 0;
@@ -219,7 +217,6 @@ CC_LockSet::change_mode (CosConcurrencyControl::lock_mode held_mode,
   else if (this->change_mode_i (lm_held, lm_new)==1)
     {
       this->unlock (held_mode ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
 
       if (semaphore_.acquire () == -1)
         ACE_THROW (CORBA::INTERNAL ());

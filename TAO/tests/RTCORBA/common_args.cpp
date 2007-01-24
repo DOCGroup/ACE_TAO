@@ -99,7 +99,6 @@ get_priority_bands (const char *test_type,
   CORBA::Policy_var banded_connection_policy =
     rt_orb->create_priority_banded_connection_policy (bands
                                                       ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
 
   policies.length (policies.length () + 1);
   policies[policies.length () - 1] =
@@ -240,12 +239,10 @@ get_priority_lanes (const char *test_type,
                                           max_buffered_requests,
                                           max_request_buffer_size
                                           ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
 
   CORBA::Policy_var threadpool_policy =
     rt_orb->create_threadpool_policy (threadpool_id
                                       ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
 
   policies.length (policies.length () + 1);
   policies[policies.length () - 1] =
@@ -291,7 +288,6 @@ get_protocols (const char *test_type,
   CORBA::Policy_var protocol_policy =
     rt_orb->create_client_protocol_policy (protocols
                                            ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
 
   policies.length (policies.length () + 1);
   policies[policies.length () - 1] =
@@ -371,18 +367,15 @@ get_auto_priority_lanes_and_bands (CORBA::ULong number_of_lanes,
                                           max_buffered_requests,
                                           max_request_buffer_size
                                           ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
   policies.length (policies.length () + 1);
   policies[policies.length () - 1] =
     rt_orb->create_priority_banded_connection_policy (bands
                                                       ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
   policies.length (policies.length () + 1);
   policies[policies.length () - 1] =
     rt_orb->create_threadpool_policy (threadpool_id
                                       ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 }
 

@@ -48,17 +48,14 @@ MT_Task::svc (void)
           CORBA::Object_var one_ref =
             this->p_->servant_to_reference (this->one_
                                             ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
 
           CORBA::Object_var two_ref =
             this->p_->servant_to_reference (this->two_
                                             ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
 
           CORBA::Object_var three_ref =
             this->p_->servant_to_reference (this->three_
                                             ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
         }
     }
   ACE_CATCHANY
@@ -67,7 +64,6 @@ MT_Task::svc (void)
                            "(%P|%t) Caugh exception \n");
     }
   ACE_ENDTRY;
-  ACE_CHECK_RETURN (-1);
 
   return 0;
 }
@@ -105,15 +101,12 @@ main (int argc, char *argv[])
     {
       CORBA::ORB_var orb =
         CORBA::ORB_init (argc, argv, "" ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       CORBA::Object_var poa_object =
         orb->resolve_initial_references("RootPOA" ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       PortableServer::POA_var root_poa =
         PortableServer::POA::_narrow (poa_object.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       if (CORBA::is_nil (root_poa.in ()))
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -121,8 +114,7 @@ main (int argc, char *argv[])
                           1);
 
       PortableServer::POAManager_var poa_manager =
-        root_poa->the_POAManager (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        root_poa->the_POAManager ();
 
       if (parse_args (argc, argv) != 0)
         return 1;
@@ -153,23 +145,19 @@ main (int argc, char *argv[])
                               poa_manager.in (),
                               policies
                               ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
 
       PortableServer::ObjectId_var oid1 =
         first_poa->activate_object (one_impl
                                     ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       PortableServer::ObjectId_var oid2 =
         first_poa->activate_object (two_impl
                                     ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       PortableServer::ObjectId_var oid3 =
         first_poa->activate_object (three_impl
                                     ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
 
       MT_Task task (first_poa.in (),
@@ -185,16 +173,13 @@ main (int argc, char *argv[])
 
       task.thr_mgr ()->wait ();
 
-      poa_manager->activate (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      poa_manager->activate ();
 
       ACE_DEBUG ((LM_DEBUG, "(%P|%t) server - test finished\n"));
 
       root_poa->destroy (1, 1 ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
-      orb->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      orb->destroy ();
     }
   ACE_CATCHANY
     {

@@ -22,7 +22,7 @@ Blocking_Sync_None::slow_operation (const Test::Payload &,
 }
 
 void
-Blocking_Sync_None::shutdown (ACE_ENV_SINGLE_ARG_DECL)
+Blocking_Sync_None::shutdown (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->orb_->shutdown (0 ACE_ENV_ARG_PARAMETER);

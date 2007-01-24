@@ -58,7 +58,7 @@ public:
       ACE_THROW_SPEC ((CORBA::SystemException));
   // Suppliers call this method to pass data to connected consumers.
 
-  virtual void disconnect_push_consumer (ACE_ENV_SINGLE_ARG_DECL)
+  virtual void disconnect_push_consumer (void)
       ACE_THROW_SPEC ((CORBA::SystemException));
   // Disconnects the supplier from the event communication.
 

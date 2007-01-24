@@ -49,18 +49,15 @@ main (int argc, char *argv[])
     {
       CORBA::ORB_var orb =
         CORBA::ORB_init (argc, argv, "" ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       if (parse_args (argc, argv) != 0)
         return 1;
 
       CORBA::Object_var tmp =
         orb->string_to_object(ior ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       Test::Blocking_Sync_None_var blocking_sync_none =
         Test::Blocking_Sync_None::_narrow(tmp.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       if (CORBA::is_nil (blocking_sync_none.in ()))
         ACE_ERROR_RETURN ((LM_DEBUG,
@@ -70,11 +67,9 @@ main (int argc, char *argv[])
 
       CORBA::Object_var object =
         orb->resolve_initial_references ("PolicyCurrent" ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       CORBA::PolicyCurrent_var policy_current =
         CORBA::PolicyCurrent::_narrow (object.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       if (CORBA::is_nil (policy_current.in ()))
         {
@@ -89,14 +84,11 @@ main (int argc, char *argv[])
         orb->create_policy (Messaging::SYNC_SCOPE_POLICY_TYPE,
                             scope_as_any
                             ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       policy_current->set_policy_overrides (policies, CORBA::ADD_OVERRIDE
                                             ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
-      policies[0]->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      policies[0]->destroy ();
 
       const int payload_length = 65536;
       const unsigned int sleep_milliseconds = 20;
@@ -114,7 +106,6 @@ main (int argc, char *argv[])
           blocking_sync_none->slow_operation (payload,
                                               sleep_microseconds
                                               ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
 
           ACE_Time_Value elapsed = ACE_OS::gettimeofday ();
           elapsed -= start;
@@ -125,11 +116,9 @@ main (int argc, char *argv[])
             }
         }
 
-      blocking_sync_none->shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      blocking_sync_none->shutdown ();
 
-      orb->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      orb->destroy ();
 
       if (blocked_calls > iterations / 20)
         {

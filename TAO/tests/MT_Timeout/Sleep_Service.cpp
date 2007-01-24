@@ -24,7 +24,7 @@ Sleep_Service::go_to_sleep (CORBA::ULong microseconds
 }
 
 void
-Sleep_Service::shutdown (ACE_ENV_SINGLE_ARG_DECL)
+Sleep_Service::shutdown (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_DEBUG ((LM_DEBUG, "Shutting down the ORB\n"));

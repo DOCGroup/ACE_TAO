@@ -21,20 +21,20 @@ Oneway_Buffering::receive_data (const Test::Payload &the_payload
 }
 
 void
-Oneway_Buffering::flush (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+Oneway_Buffering::flush (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
 }
 
 void
-Oneway_Buffering::sync (ACE_ENV_SINGLE_ARG_DECL)
+Oneway_Buffering::sync (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  this->admin_->flush (ACE_ENV_SINGLE_ARG_PARAMETER);
+  this->admin_->flush ();
 }
 
 void
-Oneway_Buffering::shutdown (ACE_ENV_SINGLE_ARG_DECL)
+Oneway_Buffering::shutdown (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->orb_->shutdown (0 ACE_ENV_ARG_PARAMETER);

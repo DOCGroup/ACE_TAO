@@ -40,18 +40,15 @@ main (int argc, char *argv[])
     {
       CORBA::ORB_var orb =
         CORBA::ORB_init (argc, argv, "" ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       if (parse_args (argc, argv) != 0)
         return 1;
 
       CORBA::Object_var tmp =
         orb->string_to_object(ior ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       SimpleStrings_var server =
         SimpleStrings::_narrow(tmp.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       if (CORBA::is_nil (server.in ()))
         {
@@ -63,15 +60,13 @@ main (int argc, char *argv[])
 
       ArrayOfString_var the_strings;
       server->get_strings (the_strings.out () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       for(size_t i = 0; i < 15; i++)
         {
           ACE_DEBUG ((LM_DEBUG, "%s\n", the_strings[i].in ()));
         }
 
-      orb->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      orb->destroy ();
     }
   ACE_CATCHANY
     {

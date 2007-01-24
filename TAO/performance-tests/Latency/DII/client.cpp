@@ -88,14 +88,12 @@ main (int argc, char *argv[])
     {
       CORBA::ORB_var orb =
         CORBA::ORB_init (argc, argv, "" ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       if (parse_args (argc, argv) != 0)
         return 1;
 
       CORBA::Object_var object =
         orb->string_to_object (ior ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       if (CORBA::is_nil (object.in ()))
         {
@@ -109,14 +107,12 @@ main (int argc, char *argv[])
         {
           CORBA::Request_var request =
             object->_request ("test_method" ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
 
           CORBA::ULongLong dummy = 0;
           request->add_in_arg("send_time") <<= dummy;
 
           request->set_return_type (CORBA::_tc_ulonglong);
-          request->invoke (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+          request->invoke ();
         }
 
       ACE_Sample_History history (niterations);
@@ -128,14 +124,12 @@ main (int argc, char *argv[])
 
           CORBA::Request_var request =
             object->_request ("test_method" ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
 
           CORBA::ULongLong start_time = static_cast <CORBA::ULongLong> (start);
           request->add_in_arg("send_time") <<= start_time;
 
           request->set_return_type (CORBA::_tc_ulonglong);
-          request->invoke (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+          request->invoke ();
 
           ACE_hrtime_t now = ACE_OS::gethrtime ();
           history.sample (now - start);
@@ -166,10 +160,8 @@ main (int argc, char *argv[])
         {
           CORBA::Request_var request =
             object->_request ("shutdown" ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
 
-          request->invoke (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+          request->invoke ();
 
         }
     }

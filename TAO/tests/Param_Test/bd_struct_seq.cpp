@@ -19,8 +19,8 @@
 #include "helper.h"
 #include "bd_struct_seq.h"
 
-ACE_RCSID (Param_Test, 
-           bd_struct_seq, 
+ACE_RCSID (Param_Test,
+           bd_struct_seq,
            "$Id$")
 
 const CORBA::ULong MAX_STRUCTSEQ_LEN = 1;
@@ -60,8 +60,7 @@ Test_Bounded_Struct_Sequence::dii_req_invoke (CORBA::Request *req
   req->add_out_arg ("s3") <<= this->out_.in ();
   req->set_return_type (Param_Test::_tc_Bounded_StructSeq);
 
-  req->invoke (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+  req->invoke ();
 
   Param_Test::Bounded_StructSeq *tmp;
   req->return_value () >>= tmp;
@@ -69,13 +68,11 @@ Test_Bounded_Struct_Sequence::dii_req_invoke (CORBA::Request *req
 
   CORBA::NamedValue_ptr arg2 =
     req->arguments ()->item (1 ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
   *arg2->value () >>= tmp;
   this->inout_ = new Param_Test::Bounded_StructSeq (*tmp);
 
   CORBA::NamedValue_ptr arg3 =
     req->arguments ()->item (2 ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
   *arg3->value () >>= tmp;
   this->out_ = new Param_Test::Bounded_StructSeq (*tmp);
 }
@@ -129,7 +126,6 @@ Test_Bounded_Struct_Sequence::run_sii_test (Param_Test_ptr objref
                                                          this->inout_.inout (),
                                                          out
                                                          ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       return 0;
     }

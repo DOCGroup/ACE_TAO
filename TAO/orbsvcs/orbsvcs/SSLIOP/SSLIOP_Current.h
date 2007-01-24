@@ -63,7 +63,7 @@ namespace TAO
       typedef Current_ptr _ptr_type;
       typedef Current_var _var_type;
       typedef Current_out _out_type;
-    
+
       /// Constructor.
       Current (TAO_ORB_Core *orb_core);
 
@@ -94,7 +94,7 @@ namespace TAO
        * @return @c true if the current execution context is not
        *         within a SSL session.
        */
-      virtual CORBA::Boolean no_context (ACE_ENV_SINGLE_ARG_DECL)
+      virtual CORBA::Boolean no_context (void)
         ACE_THROW_SPEC ((CORBA::SystemException));
 
       /// Set the TSS slot ID assigned to this object.

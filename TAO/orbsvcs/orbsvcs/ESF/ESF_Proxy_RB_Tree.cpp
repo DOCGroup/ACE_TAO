@@ -75,7 +75,7 @@ TAO_ESF_Proxy_RB_Tree<PROXY>::disconnected (PROXY *proxy
 }
 
 template<class PROXY> void
-TAO_ESF_Proxy_RB_Tree<PROXY>::shutdown (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+TAO_ESF_Proxy_RB_Tree<PROXY>::shutdown (void)
 {
   Iterator end = this->impl_.end ();
   for (Iterator i = this->impl_.begin (); i != end; ++i)

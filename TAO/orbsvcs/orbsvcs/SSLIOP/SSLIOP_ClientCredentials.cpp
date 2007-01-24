@@ -25,21 +25,21 @@ TAO::SSLIOP::ClientCredentials::~ClientCredentials (void)
 }
 
 SecurityLevel3::CredentialsType
-TAO::SSLIOP::ClientCredentials::creds_type (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+TAO::SSLIOP::ClientCredentials::creds_type (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return SecurityLevel3::CT_ClientCredentials;
 }
 
 char *
-TAO::SSLIOP::ClientCredentials::context_id (ACE_ENV_SINGLE_ARG_DECL)
+TAO::SSLIOP::ClientCredentials::context_id (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (), 0);
 }
 
 SecurityLevel3::Principal *
-TAO::SSLIOP::ClientCredentials::client_principal (ACE_ENV_SINGLE_ARG_DECL)
+TAO::SSLIOP::ClientCredentials::client_principal (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (), 0);
@@ -62,7 +62,7 @@ TAO::SSLIOP::ClientCredentials::client_restricted_resources (
 }
 
 SecurityLevel3::Principal *
-TAO::SSLIOP::ClientCredentials::target_principal (ACE_ENV_SINGLE_ARG_DECL)
+TAO::SSLIOP::ClientCredentials::target_principal (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (), 0);
@@ -85,7 +85,7 @@ TAO::SSLIOP::ClientCredentials::target_restricted_resources (
 }
 
 SecurityLevel3::OwnCredentials_ptr
-TAO::SSLIOP::ClientCredentials::parent_credentials (ACE_ENV_SINGLE_ARG_DECL)
+TAO::SSLIOP::ClientCredentials::parent_credentials (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   SecurityLevel3::OwnCredentials_ptr creds =
@@ -96,7 +96,6 @@ TAO::SSLIOP::ClientCredentials::parent_credentials (ACE_ENV_SINGLE_ARG_DECL)
                       ::SSL_get_certificate (this->ssl_.in ()),
                       ::SSL_get_privatekey (this->ssl_.in ())),
                     CORBA::NO_MEMORY ());
-  ACE_CHECK_RETURN (creds);
 
   return creds;
 }
@@ -116,25 +115,25 @@ TAO::SSLIOP::ClientCredentials::client_authentication (
 }
 
 CORBA::Boolean
-TAO::SSLIOP::ClientCredentials::target_authentication (ACE_ENV_SINGLE_ARG_DECL)
+TAO::SSLIOP::ClientCredentials::target_authentication (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (), false);
 }
 
 CORBA::Boolean
-TAO::SSLIOP::ClientCredentials::confidentiality (ACE_ENV_SINGLE_ARG_DECL)
+TAO::SSLIOP::ClientCredentials::confidentiality (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (), false);
 }
 
 CORBA::Boolean
-TAO::SSLIOP::ClientCredentials::integrity (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+TAO::SSLIOP::ClientCredentials::integrity (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // TAO's SSLIOP pluggable transport always provides integrity.  Note
-  // that if we 
+  // that if we
 
   return true;
 }

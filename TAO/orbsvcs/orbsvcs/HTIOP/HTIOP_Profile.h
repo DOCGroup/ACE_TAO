@@ -88,7 +88,7 @@ namespace TAO
        * This is used to create url-style reference.  Only one
        * endpoint is included into the string.
        */
-      virtual char * to_string (ACE_ENV_SINGLE_ARG_DECL);
+      virtual char * to_string (void);
 
       /**
        * Endpoints are transmitted using TAO-proprietory tagged component.

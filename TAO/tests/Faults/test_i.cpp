@@ -30,7 +30,6 @@ Callback_i::shutdown (CORBA::Boolean is_clean
       return;
     }
   this->orb_->shutdown (0 ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
   ACE_DEBUG ((LM_DEBUG, "Shutdown: Performed clean shutdown\n"));
 }
@@ -49,7 +48,6 @@ Simple_Server_i::test_method (CORBA::Boolean do_callback,
       ACE_DEBUG ((LM_DEBUG, "Callback to shutdown client (%d)\n",
                   is_clean));
       callback->shutdown (is_clean ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK_RETURN (0);
     }
   ACE_Time_Value tv (0, 20000);
   ACE_OS::sleep (tv);
@@ -77,7 +75,7 @@ Simple_Server_i::shutdown_now (CORBA::Boolean is_clean
 }
 
 void
-Simple_Server_i::shutdown (ACE_ENV_SINGLE_ARG_DECL)
+Simple_Server_i::shutdown (void)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->orb_->shutdown (0 ACE_ENV_ARG_PARAMETER);
@@ -99,14 +97,12 @@ Middle_i::test_method (CORBA::Boolean do_callback,
                                   0,
                                   callback
                                   ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK_RETURN (0);
     }
 
   this->server_->test_method (do_callback,
                               is_clean,
                               callback
                               ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (0);
 
   for (; i != 10; ++i)
     {
@@ -114,7 +110,6 @@ Middle_i::test_method (CORBA::Boolean do_callback,
                                   0,
                                   callback
                                   ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK_RETURN (0);
     }
 
   return 0;
@@ -129,13 +124,12 @@ Middle_i::shutdown_now (CORBA::Boolean is_clean
 }
 
 void
-Middle_i::shutdown (ACE_ENV_SINGLE_ARG_DECL)
+Middle_i::shutdown (void)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_TRY
     {
-      this->server_->shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      this->server_->shutdown ();
     }
   ACE_CATCHANY
     {

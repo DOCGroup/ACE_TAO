@@ -21,7 +21,6 @@ testCurrentORBInitializer (int argc, char *argv[])
   CORBA::Object_var obj =
     orb->resolve_initial_references ("TAO::Transport::Current"
                                      ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
   if (obj.in () == 0)
     ACE_ERROR_RETURN ((LM_ERROR,

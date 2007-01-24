@@ -43,7 +43,7 @@ public:
   ~TAO_Notify_Tests_RT_Test_Filter ();
 
 protected:
-  virtual char * constraint_grammar (ACE_ENV_SINGLE_ARG_DECL)
+  virtual char * constraint_grammar (void)
     ACE_THROW_SPEC ((
                      CORBA::SystemException
                      ));
@@ -70,17 +70,17 @@ protected:
                      CosNotifyFilter::ConstraintNotFound
                      ));
 
-  virtual CosNotifyFilter::ConstraintInfoSeq * get_all_constraints (ACE_ENV_SINGLE_ARG_DECL)
+  virtual CosNotifyFilter::ConstraintInfoSeq * get_all_constraints (void)
     ACE_THROW_SPEC ((
                      CORBA::SystemException
                      ));
 
-  virtual void remove_all_constraints (ACE_ENV_SINGLE_ARG_DECL)
+  virtual void remove_all_constraints (void)
     ACE_THROW_SPEC ((
                      CORBA::SystemException
                      ));
 
-  virtual void destroy (ACE_ENV_SINGLE_ARG_DECL)
+  virtual void destroy (void)
     ACE_THROW_SPEC ((
                      CORBA::SystemException
                      ));
@@ -114,7 +114,7 @@ protected:
                      CosNotifyFilter::CallbackNotFound
                      ));
 
-  virtual CosNotifyFilter::CallbackIDSeq * get_callbacks (ACE_ENV_SINGLE_ARG_DECL)
+  virtual CosNotifyFilter::CallbackIDSeq * get_callbacks (void)
     ACE_THROW_SPEC ((
                      CORBA::SystemException
                      ));

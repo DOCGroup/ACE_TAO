@@ -52,14 +52,12 @@ main (int argc, char *argv[])
                          argv,
                          ""
                          ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       if (::parse_args (argc, argv) != 0)
         return 1;
 
       CORBA::Object_var obj =
         orb->string_to_object (ior ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       if (CORBA::is_nil (obj.in ()))
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -68,7 +66,6 @@ main (int argc, char *argv[])
 
       TX_Object_var txObject =
         TX_Object::_narrow (obj.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       DataSeq data_input;
 
@@ -85,19 +82,16 @@ main (int argc, char *argv[])
                   data_input.length ()));
 
       txObject->send (data_input ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       DataSeq_var data_output;
 
       txObject->recv (data_output.out () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       ACE_DEBUG ((LM_DEBUG,
                   "Received octet sequence of length:\t%u\n",
                   data_output->length ()));
 
-      txObject->shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      txObject->shutdown ();
 
       // Sanity check
       if (data_output->length () != len

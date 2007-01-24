@@ -56,8 +56,7 @@ Timer_Helper::handle_timeout (const ACE_Time_Value &,
         {
           // This is a remote call.
           CosTime::UTO_var UTO_server =
-            (*value)->universal_time (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+            (*value)->universal_time ();
 
 #if defined (ACE_LACKS_LONGLONG_T)
 
@@ -89,8 +88,7 @@ Timer_Helper::handle_timeout (const ACE_Time_Value &,
 #endif
 
           CORBA::ULongLong curr_server_time =
-            UTO_server->time (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+            UTO_server->time ();
 
           sum += curr_server_time;
 
@@ -148,7 +146,6 @@ Timer_Helper::handle_timeout (const ACE_Time_Value &,
       return -1;
     }
   ACE_ENDTRY;
-  ACE_CHECK_RETURN (-1);
 
   return 0;
 }

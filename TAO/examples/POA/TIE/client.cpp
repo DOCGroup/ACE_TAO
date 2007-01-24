@@ -117,7 +117,6 @@ public:
       {
         // Get an object reference from the argument string.
         CORBA::Object_var object = orb->string_to_object (IOR ACE_ENV_ARG_PARAMETER);
-        ACE_CHECK;
 
         /*if (ACE_ENV_SINGLE_ARG_PARAMETER.exception () != 0)
           {
@@ -127,7 +126,6 @@ public:
         */
         // Try to narrow the object reference to a reference.
         T_var test = T::_narrow (object.in () ACE_ENV_ARG_PARAMETER);
-        ACE_CHECK;
 
         /*if (ACE_ENV_SINGLE_ARG_PARAMETER.exception () != 0)
           {
@@ -146,8 +144,7 @@ public:
         for (i = 0; i < iterations ; i++)
           {
             // Invoke the doit() method on the reference.
-            result = test->doit (ACE_ENV_SINGLE_ARG_PARAMETER);
-            ACE_CHECK;
+            result = test->doit ();
           }
 
         // stop the timer.
@@ -179,7 +176,6 @@ main (int argc, char **argv)
     {
         // Initialize the ORB
       CORBA::ORB_var orb = CORBA::ORB_init (argc, argv, 0 ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       // Initialize options based on command-line arguments.
       int parse_args_result = parse_args (argc, argv);
@@ -191,32 +187,26 @@ main (int argc, char **argv)
       Test<A, A_var>::run (orb.in (),
                            IOR[i++]
                            ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       Test<Outer::B, Outer::B_var>::run (orb.in (),
                                          IOR[i++]
                                          ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       Test<Outer::Inner::C, Outer::Inner::C_var>::run (orb.in (),
                                                        IOR[i++]
                                                        ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       Test<A, A_var>::run (orb.in (),
                            IOR[i++]
                            ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       Test<Outer::B, Outer::B_var>::run (orb.in (),
                                          IOR[i++]
                                          ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       Test<Outer::Inner::C, Outer::Inner::C_var>::run (orb.in (),
                                                        IOR[i++]
                                                        ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
     }
   ACE_CATCHANY
     {
@@ -224,7 +214,6 @@ main (int argc, char **argv)
       return -1;
     }
   ACE_ENDTRY;
-  ACE_CHECK_RETURN (-1);
   return 0;
 }
 

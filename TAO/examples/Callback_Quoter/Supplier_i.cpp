@@ -165,7 +165,6 @@ Supplier::send_market_status (const char *stock_name,
       this->notifier_->market_status (stock_name,
                                       value
                                       ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
     }
   ACE_CATCH (CORBA::SystemException, sysex)
     {
@@ -231,14 +230,12 @@ Supplier::via_naming_service (void)
       CORBA::Object_var notifier_obj =
         this->naming_services_client_->resolve (notifier_ref_name
                                                 ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       // The CORBA::Object_var object is downcast to Notifier_var
       // using the <_narrow> method.
       this->notifier_ =
         Notifier::_narrow (notifier_obj.in ()
                            ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
     }
   ACE_CATCH (CORBA::SystemException, sysex)
     {
@@ -272,7 +269,6 @@ Supplier::init (int argc, char **argv)
                                     this->argv_,
                                     0
                                     ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       // Parse command line and verify parameters.
       if (this->parse_args () == -1)
@@ -296,7 +292,6 @@ Supplier::init (int argc, char **argv)
       CORBA::Object_var notifier_object =
         this->orb_->string_to_object (this->ior_
                                       ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       if (CORBA::is_nil (notifier_object.in ()))
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -307,7 +302,6 @@ Supplier::init (int argc, char **argv)
       // done using the <_narrow> method.
       this->notifier_ = Notifier::_narrow (notifier_object.in ()
                                            ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
     }
   ACE_CATCH (CORBA::SystemException, sysex)
     {

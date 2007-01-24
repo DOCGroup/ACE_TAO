@@ -59,7 +59,6 @@ client_test (Test_ptr server ACE_ENV_ARG_DECL)
       ACE_TRY
         {
           server->client_test (i ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
 
           if (i == 1)
             {
@@ -93,7 +92,6 @@ client_test (Test_ptr server ACE_ENV_ARG_DECL)
           ACE_RE_THROW;
         }
       ACE_ENDTRY;
-      ACE_CHECK;
     }
 }
 
@@ -115,7 +113,6 @@ server_test (Test_ptr server ACE_ENV_ARG_DECL)
         {
           CORBA::ULongSeq_var ulongseq;
           server->server_test (i, ulongseq.out () ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
 
           if (i == 1)
             {
@@ -149,7 +146,6 @@ server_test (Test_ptr server ACE_ENV_ARG_DECL)
           ACE_RE_THROW;
         }
       ACE_ENDTRY;
-      ACE_CHECK;
     }
 }
 
@@ -170,24 +166,20 @@ main (int argc, char *argv[])
 
       PortableInterceptor::register_orb_initializer (orb_initializer.in ()
                                                      ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       CORBA::ORB_var orb = CORBA::ORB_init (argc,
                                             argv,
                                             "Client ORB"
                                             ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       if (::parse_args (argc, argv) != 0)
         return -1;
 
       CORBA::Object_var object =
         orb->string_to_object (ior ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       Test_var server =
         Test::_narrow (object.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       if (CORBA::is_nil (server.in ()))
         {
@@ -198,16 +190,12 @@ main (int argc, char *argv[])
         }
 
       ::client_test (server.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       ::server_test (server.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
-      server->shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      server->shutdown ();
 
-      orb->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      orb->destroy ();
     }
   ACE_CATCHANY
     {

@@ -40,11 +40,11 @@ public:
   // Starts up an ORB and the CosEC.
   // Returns 0 on success, -1 on error.
 
-  void run (ACE_ENV_SINGLE_ARG_DECL);
+  void run (void);
   // Connects a consumer and a supplier to the CosEC and sends 1 event
   // across.
 
-  void shutdown (ACE_ENV_SINGLE_ARG_DECL);
+  void shutdown (void);
   // Closes down the CosEC.
 
 private:
@@ -52,7 +52,7 @@ private:
   // initializes the ORB.
   // Returns 0 on success, -1 on error.
 
-  void init_CosEC (ACE_ENV_SINGLE_ARG_DECL);
+  void init_CosEC (void);
   // initializes the COS EC.
   // Returns 0 on success, -1 on error.
 

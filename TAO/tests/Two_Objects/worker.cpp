@@ -21,7 +21,6 @@ Worker::svc (void)
 
       // orb times out after <timeout> seconds
       this->orb_->run (tv ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
     }
   ACE_CATCHANY
     {

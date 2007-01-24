@@ -64,7 +64,7 @@ public:
   // The thread entry point.
 
 private:
-  void validate_connection (ACE_ENV_SINGLE_ARG_DECL_NOT_USED);
+  void validate_connection (void);
   // Validate the connection
 
 private:
@@ -82,18 +82,15 @@ main (int argc, char *argv[])
     {
       CORBA::ORB_var orb =
         CORBA::ORB_init (argc, argv, "" ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       if (parse_args (argc, argv) != 0)
         return 1;
 
       CORBA::Object_var object =
         orb->string_to_object (ior ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       Simple_Server_var server =
         Simple_Server::_narrow (object.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       if (CORBA::is_nil (server.in ()))
         {
@@ -116,12 +113,10 @@ main (int argc, char *argv[])
 
       if (server_shutdown)
         {
-          server->shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+          server->shutdown ();
         }
 
-      orb->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      orb->destroy ();
     }
   ACE_CATCHANY
     {
@@ -144,7 +139,7 @@ Client::Client (Simple_Server_ptr server,
 }
 
 void
-Client::validate_connection (ACE_ENV_SINGLE_ARG_DECL)
+Client::validate_connection (void)
 {
   // Ping the object 100 times, ignoring all exceptions.
   // It would be better to use validate_connection() but the test must
@@ -153,8 +148,7 @@ Client::validate_connection (ACE_ENV_SINGLE_ARG_DECL)
     {
       ACE_TRY
         {
-          this->server_->test_method (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+          this->server_->test_method ();
         }
       ACE_CATCHANY {} ACE_ENDTRY;
     }
@@ -165,13 +159,11 @@ Client::svc (void)
 {
   ACE_TRY_NEW_ENV
     {
-      this->validate_connection (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      this->validate_connection ();
 
       for (int i = 0; i < this->niterations_; ++i)
         {
-          this->server_->test_method (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+          this->server_->test_method ();
 
           if (TAO_debug_level > 0 && i % 100 == 0)
             ACE_DEBUG ((LM_DEBUG, "(%P|%t) iteration = %d\n",

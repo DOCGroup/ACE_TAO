@@ -52,7 +52,7 @@ public:
   // Method that binds the sender to the Naming Service and retreives
   // the references of any registered receivers.
 
-  void connect_to_receivers (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
+  void connect_to_receivers (void);
   // Connect to the receivers that we found.
 
   void bind_to_sender (const ACE_CString &sender_name,
@@ -61,7 +61,7 @@ public:
                        ACE_ENV_ARG_DECL_WITH_DEFAULTS);
   // Bind receiver to the sender.
 
-  void connect_to_sender (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
+  void connect_to_sender (void);
   // Connect to the sender that we found.
 
   void destroy (const ACE_CString &flowname
@@ -108,7 +108,7 @@ public:
 
 protected:
 
-  void find_receivers (ACE_ENV_SINGLE_ARG_DECL);
+  void find_receivers (void);
 
   void add_to_receivers (CosNaming::BindingList &binding_list
                          ACE_ENV_ARG_DECL);

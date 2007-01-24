@@ -48,10 +48,10 @@ public:
   int init_with_orb (CORBA::ORB_ptr orb, Options& opts ACE_ENV_ARG_DECL);
 
   /// Cleans up any state created by init*.
-  int fini (ACE_ENV_SINGLE_ARG_DECL);
+  int fini (void);
 
   /// Run using the orb reference created during init()
-  int run (ACE_ENV_SINGLE_ARG_DECL);
+  int run (void);
 
   /// Shutdown the orb.
   void shutdown (bool wait_for_completion ACE_ENV_ARG_DECL);
@@ -149,7 +149,7 @@ private:
   Activator_Info_Ptr get_activator (const ACE_CString& name);
   void connect_activator (Activator_Info& info);
 
-  void auto_start_servers(ACE_ENV_SINGLE_ARG_DECL);
+  void auto_start_servers(void);
 
   CORBA::Object_ptr set_timeout_policy(CORBA::Object_ptr obj, const ACE_Time_Value& to);
 

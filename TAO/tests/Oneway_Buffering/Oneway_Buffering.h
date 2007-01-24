@@ -22,13 +22,13 @@ public:
                              ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual void flush (ACE_ENV_SINGLE_ARG_DECL)
+  virtual void flush (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual void sync (ACE_ENV_SINGLE_ARG_DECL)
+  virtual void sync (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual void shutdown (ACE_ENV_SINGLE_ARG_DECL)
+  virtual void shutdown (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
 private:

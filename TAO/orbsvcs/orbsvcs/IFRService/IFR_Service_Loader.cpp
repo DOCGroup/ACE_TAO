@@ -47,7 +47,6 @@ TAO_IFR_Service_Loader::init (int argc,
                          command_line.get_ASCII_argv (),
                          0
                          ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       // This function call initializes the IFR_Service Service
       CORBA::Object_var object =
@@ -55,7 +54,6 @@ TAO_IFR_Service_Loader::init (int argc,
                              command_line.get_argc (),
                              command_line.get_TCHAR_argv ()
                              ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
     }
   ACE_CATCHANY
     {

@@ -59,7 +59,6 @@ main (int argc, char *argv[])
       // Initialize the ORB
       CORBA::ORB_var orb =
         CORBA::ORB_init (argc, argv, "" ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       if (parse_args (argc, argv) != 0)
         return 1;
@@ -67,12 +66,10 @@ main (int argc, char *argv[])
       // Get Object Reference using IOR file
       CORBA::Object_var object =
         orb->string_to_object (ior ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       // Cast to Appropriate Type
       Simple_Server_var server =
         Simple_Server::_narrow (object.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       if (CORBA::is_nil (server.in ()))
         {
@@ -97,13 +94,11 @@ main (int argc, char *argv[])
       // Shut down the server if -x option given in command line
       if (do_shutdown)
         {
-          server->shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+          server->shutdown ();
         }
 
       // Destroying the ORB..
-      orb->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      orb->destroy ();
     }
 
   ACE_CATCHANY

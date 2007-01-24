@@ -162,7 +162,6 @@ remove_offer (const CosTrading::OfferId offer_id
                         stype,
                         index
                         ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
 
   if (this->remove_offer (stype,
                           index) == -1)
@@ -183,7 +182,6 @@ lookup_offer (const CosTrading::OfferId offer_id,
   CORBA::ULong index;
   CosTrading::Offer* offer = 0;
   this->parse_offer_id (offer_id, type_name, index ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (offer);
 
   if ((offer = this->lookup_offer (type_name, index)) == 0)
     ACE_THROW_RETURN (CosTrading::UnknownOfferId (offer_id), offer);
@@ -204,7 +202,6 @@ lookup_offer (const CosTrading::OfferId offer_id
   CosTrading::Offer* offer = 0;
 
   this->parse_offer_id (offer_id, type_name, index ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (offer);
 
   if ((offer = this->lookup_offer (type_name, index)) == 0)
     ACE_THROW_RETURN (CosTrading::UnknownOfferId (offer_id), offer);

@@ -39,7 +39,7 @@ public:
   ~Demux_Test_Server (void);
   // dtor
 
-  int run (ACE_ENV_SINGLE_ARG_DECL_NOT_USED);
+  int run (void);
   // Execute client code.
 
   int init (int argc, char **argv ACE_ENV_ARG_DECL_NOT_USED);

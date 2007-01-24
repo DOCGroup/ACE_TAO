@@ -41,19 +41,19 @@ public:
              ACE_ENV_ARG_DECL);
   // This method connects the supplier to the EC.
 
-  void close (ACE_ENV_SINGLE_ARG_DECL);
+  void close (void);
   // Disconnect from the EC.
 
-  void connect (ACE_ENV_SINGLE_ARG_DECL);
+  void connect (void);
 
-  void disconnect (ACE_ENV_SINGLE_ARG_DECL);
+  void disconnect (void);
   // Disconnect from the EC, but do not forget about it or close it.
 
   void send_event (const CORBA::Any &data
                    ACE_ENV_ARG_DECL);
   // Send one event.
 
-  virtual void disconnect_push_supplier (ACE_ENV_SINGLE_ARG_DECL)
+  virtual void disconnect_push_supplier (void)
     ACE_THROW_SPEC ((
         CORBA::SystemException
       ));

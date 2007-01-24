@@ -22,7 +22,6 @@ TAO::SSLIOP::CredentialsAcquirerFactory::make (
                     TAO::SSLIOP::CredentialsAcquirer (curator,
                                                       acquisition_arguments),
                     CORBA::NO_MEMORY ());
-  ACE_CHECK_RETURN (SecurityLevel3::CredentialsAcquirer::_nil ());
 
   return ca;
 }

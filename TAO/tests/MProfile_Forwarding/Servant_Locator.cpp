@@ -62,7 +62,6 @@ Servant_Locator::preinvoke (const PortableServer::ObjectId &oid,
   Simple_Server_var server =
     Simple_Server::_narrow (this->objref_.in ()
                             ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (0);
 
   ACE_DEBUG ((LM_DEBUG,
               "Got the narrowed secondary server too... \n"));

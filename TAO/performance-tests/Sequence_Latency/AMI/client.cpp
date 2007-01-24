@@ -97,10 +97,9 @@ void test_octet_seq (Test::Roundtrip_ptr roundtrip,
                                                ol,
                                                ACE_OS::gethrtime ()
                                                ACE_ENV_ARG_PARAMETER);
-           if (orb->work_pending (ACE_ENV_SINGLE_ARG_PARAMETER))
-                  orb->perform_work (ACE_ENV_SINGLE_ARG_PARAMETER);
+           if (orb->work_pending ())
+                  orb->perform_work ();
 
-           ACE_CHECK;
          }
 
   ACE_Time_Value tv (0, 2000);
@@ -108,7 +107,6 @@ void test_octet_seq (Test::Roundtrip_ptr roundtrip,
   while (roundtrip_handler_impl->pending_callbacks ())
          {
            orb->perform_work (tv ACE_ENV_ARG_PARAMETER);
-           ACE_CHECK;
          }
 
   ACE_hrtime_t test_end = ACE_OS::gethrtime ();
@@ -146,10 +144,9 @@ void test_char_seq  (Test::Roundtrip_ptr roundtrip,
                                                cl,
                                                ACE_OS::gethrtime ()
                                                ACE_ENV_ARG_PARAMETER);
-           if (orb->work_pending (ACE_ENV_SINGLE_ARG_PARAMETER))
-                  orb->perform_work (ACE_ENV_SINGLE_ARG_PARAMETER);
+           if (orb->work_pending ())
+                  orb->perform_work ();
 
-           ACE_CHECK;
          }
 
   ACE_Time_Value tv (0, 2000);
@@ -157,7 +154,6 @@ void test_char_seq  (Test::Roundtrip_ptr roundtrip,
   while (roundtrip_handler_impl->pending_callbacks ())
          {
            orb->perform_work (tv ACE_ENV_ARG_PARAMETER);
-           ACE_CHECK;
          }
 
   ACE_hrtime_t test_end = ACE_OS::gethrtime ();
@@ -195,10 +191,9 @@ void test_long_seq  (Test::Roundtrip_ptr roundtrip,
                                               ll,
                                               ACE_OS::gethrtime ()
                                               ACE_ENV_ARG_PARAMETER);
-           if (orb->work_pending (ACE_ENV_SINGLE_ARG_PARAMETER))
-                  orb->perform_work (ACE_ENV_SINGLE_ARG_PARAMETER);
+           if (orb->work_pending ())
+                  orb->perform_work ();
 
-           ACE_CHECK;
          }
 
   ACE_Time_Value tv (0, 2000);
@@ -206,7 +201,6 @@ void test_long_seq  (Test::Roundtrip_ptr roundtrip,
   while (roundtrip_handler_impl->pending_callbacks ())
          {
            orb->perform_work (tv ACE_ENV_ARG_PARAMETER);
-           ACE_CHECK;
          }
 
   ACE_hrtime_t test_end = ACE_OS::gethrtime ();
@@ -244,10 +238,9 @@ void test_short_seq (Test::Roundtrip_ptr roundtrip,
                                                sl,
                                                ACE_OS::gethrtime ()
                                                ACE_ENV_ARG_PARAMETER);
-           if (orb->work_pending (ACE_ENV_SINGLE_ARG_PARAMETER))
-                  orb->perform_work (ACE_ENV_SINGLE_ARG_PARAMETER);
+           if (orb->work_pending ())
+                  orb->perform_work ();
 
-           ACE_CHECK;
          }
 
   ACE_Time_Value tv (0, 2000);
@@ -255,7 +248,6 @@ void test_short_seq (Test::Roundtrip_ptr roundtrip,
   while (roundtrip_handler_impl->pending_callbacks ())
          {
            orb->perform_work (tv ACE_ENV_ARG_PARAMETER);
-           ACE_CHECK;
          }
 
   ACE_hrtime_t test_end = ACE_OS::gethrtime ();
@@ -293,10 +285,9 @@ void test_double_seq (Test::Roundtrip_ptr roundtrip,
                                                 dl,
                                                 ACE_OS::gethrtime ()
                                                 ACE_ENV_ARG_PARAMETER);
-           if (orb->work_pending (ACE_ENV_SINGLE_ARG_PARAMETER))
-                  orb->perform_work (ACE_ENV_SINGLE_ARG_PARAMETER);
+           if (orb->work_pending ())
+                  orb->perform_work ();
 
-           ACE_CHECK;
          }
 
   ACE_Time_Value tv (0, 2000);
@@ -304,7 +295,6 @@ void test_double_seq (Test::Roundtrip_ptr roundtrip,
   while (roundtrip_handler_impl->pending_callbacks ())
          {
            orb->perform_work (tv ACE_ENV_ARG_PARAMETER);
-           ACE_CHECK;
          }
 
   ACE_hrtime_t test_end = ACE_OS::gethrtime ();
@@ -342,10 +332,9 @@ void test_longlong_seq (Test::Roundtrip_ptr roundtrip,
                                                   ll,
                                                   ACE_OS::gethrtime ()
                                                   ACE_ENV_ARG_PARAMETER);
-           if (orb->work_pending (ACE_ENV_SINGLE_ARG_PARAMETER))
-                  orb->perform_work (ACE_ENV_SINGLE_ARG_PARAMETER);
+           if (orb->work_pending ())
+                  orb->perform_work ();
 
-           ACE_CHECK;
          }
 
   ACE_Time_Value tv (0, 2000);
@@ -353,7 +342,6 @@ void test_longlong_seq (Test::Roundtrip_ptr roundtrip,
   while (roundtrip_handler_impl->pending_callbacks ())
          {
            orb->perform_work (tv ACE_ENV_ARG_PARAMETER);
-           ACE_CHECK;
          }
 
   ACE_hrtime_t test_end = ACE_OS::gethrtime ();
@@ -399,11 +387,9 @@ main (int argc, char *argv[])
     {
       CORBA::ORB_var orb =
         CORBA::ORB_init (argc, argv, "" ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       CORBA::Object_var poa_object =
         orb->resolve_initial_references("RootPOA" ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       if (CORBA::is_nil (poa_object.in ()))
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -412,22 +398,18 @@ main (int argc, char *argv[])
 
       PortableServer::POA_var root_poa =
         PortableServer::POA::_narrow (poa_object.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       PortableServer::POAManager_var poa_manager =
-        root_poa->the_POAManager (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        root_poa->the_POAManager ();
 
       if (parse_args (argc, argv) != 0)
         return 1;
 
       CORBA::Object_var object =
         orb->string_to_object (ior ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       Test::Roundtrip_var roundtrip =
         Test::Roundtrip::_narrow (object.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       if (CORBA::is_nil (roundtrip.in ()))
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -443,7 +425,6 @@ main (int argc, char *argv[])
           (void) roundtrip->test_octet_method (oc,
                                                start
                                                ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
         }
 
       Roundtrip_Handler *roundtrip_handler_impl;
@@ -453,11 +434,9 @@ main (int argc, char *argv[])
       PortableServer::ServantBase_var owner_transfer(roundtrip_handler_impl);
 
       Test::AMI_RoundtripHandler_var roundtrip_handler =
-        roundtrip_handler_impl->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        roundtrip_handler_impl->_this ();
 
-      poa_manager->activate (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      poa_manager->activate ();
 
       if (ACE_OS::strcmp (data_type, "octet") == 0 )
         {
@@ -466,7 +445,6 @@ main (int argc, char *argv[])
                           roundtrip_handler.in (),
                           roundtrip_handler_impl
                           ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
         }
       else if (ACE_OS::strcmp (data_type, "char") == 0)
         {
@@ -475,7 +453,6 @@ main (int argc, char *argv[])
                          roundtrip_handler.in (),
                          roundtrip_handler_impl
                          ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
         }
       else if (ACE_OS::strcmp (data_type, "long") == 0)
         {
@@ -484,7 +461,6 @@ main (int argc, char *argv[])
                          roundtrip_handler.in (),
                          roundtrip_handler_impl
                          ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
         }
       else if (ACE_OS::strcmp (data_type, "short") == 0)
         {
@@ -493,7 +469,6 @@ main (int argc, char *argv[])
                           roundtrip_handler.in (),
                           roundtrip_handler_impl
                           ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
         }
       else if (ACE_OS::strcmp (data_type, "double") == 0)
         {
@@ -502,7 +477,6 @@ main (int argc, char *argv[])
                            roundtrip_handler.in (),
                            roundtrip_handler_impl
                            ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
         }
       else if (ACE_OS::strcmp (data_type, "longlong") == 0)
         {
@@ -511,17 +485,13 @@ main (int argc, char *argv[])
                              roundtrip_handler.in (),
                              roundtrip_handler_impl
                              ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
         }
 
-      roundtrip->shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      roundtrip->shutdown ();
 
       root_poa->destroy (1, 1 ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
-      orb->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      orb->destroy ();
     }
   ACE_CATCHANY
     {

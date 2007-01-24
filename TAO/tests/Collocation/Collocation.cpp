@@ -12,13 +12,10 @@ int main (int argc, char *argv[])
       Collocation_Test coll_test;
 
       coll_test.init (argc, argv ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
-      coll_test.run (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      coll_test.run ();
 
-      coll_test.shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      coll_test.shutdown ();
     }
   ACE_CATCHANY
     {

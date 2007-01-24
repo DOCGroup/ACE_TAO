@@ -36,7 +36,7 @@ public:
                ACE_ENV_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  void flush (ACE_ENV_SINGLE_ARG_DECL)
+  void flush (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   void shutdown (CORBA::Long start_time ACE_ENV_ARG_DECL)

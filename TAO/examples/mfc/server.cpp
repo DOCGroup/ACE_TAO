@@ -53,32 +53,25 @@ spawn_my_orb_thread (void *)
                          __argv,
                          orb_name
                          ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       CORBA::Object_var orb_obj =
         the_orb->resolve_initial_references ("RootPOA" ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       PortableServer::POA_var the_root_poa =
         PortableServer::POA::_narrow (orb_obj.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       PortableServer::POAManager_var the_poa_manager =
-        the_root_poa->the_POAManager (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        the_root_poa->the_POAManager ();
 
-      the_poa_manager->activate (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      the_poa_manager->activate ();
 
       // Initializing the NamingService
       W32_Test_Impl myservant;
       W32_Test_Interface_var orb_servant =
         myservant._this (ACE_TRY_CHECK);
-      ACE_TRY_CHECK;
 
       CORBA::String_var ior =
         the_orb->object_to_string (orb_servant.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       FILE *output_file = ACE_OS::fopen ("ior.txt",
                                         "w");
@@ -87,8 +80,7 @@ spawn_my_orb_thread (void *)
                        ior.in ());
       ACE_OS::fclose (output_file);
 
-      the_orb->run (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      the_orb->run ();
     }
   ACE_CATCHANY
     {
@@ -97,7 +89,6 @@ spawn_my_orb_thread (void *)
       return 0;
     }
   ACE_ENDTRY;
-  ACE_CHECK_RETURN (0);
 
   return 0;
 }
@@ -128,11 +119,9 @@ CServerApp::~CServerApp()
                          argv,
                          orb_name
                          ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       the_shutdown_orb->shutdown (0 // wait_for_completion
                                   ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       ACE_Thread_Manager::instance ()->wait ();
     }
@@ -142,7 +131,6 @@ CServerApp::~CServerApp()
                            "Caught exception:");
     }
   ACE_ENDTRY;
-  ACE_CHECK;
 
 
   ACE::fini ();

@@ -144,7 +144,7 @@ public:
   int init (int argc, char *argv [] ACE_ENV_ARG_DECL);
   // initialization.
 
-  void run_test (ACE_ENV_SINGLE_ARG_DECL);
+  void run_test (void);
   // Run the test.
 
   void peer_done (void);
@@ -155,7 +155,7 @@ public:
 
   Worker worker_;
 protected:
-  void create_EC (ACE_ENV_SINGLE_ARG_DECL);
+  void create_EC (void);
   // Create participants.
 
   CORBA::Boolean collocated_ec_;

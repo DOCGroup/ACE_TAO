@@ -34,8 +34,7 @@ test_get_servant_manager (PortableServer::POA_ptr poa)
       // Getting the servant manager should give a wrong policy exception
       // exception
       PortableServer::ServantManager_ptr servant_manager =
-        poa->get_servant_manager (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        poa->get_servant_manager ();
 
       ACE_UNUSED_ARG (servant_manager);
     }
@@ -64,7 +63,6 @@ test_set_servant_manager (PortableServer::POA_ptr poa)
       // Setting the servant manager should give a wrong policy exception
       // exception
       poa->set_servant_manager (PortableServer::ServantManager::_nil() ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
     }
   ACE_CATCH (PortableServer::POA::WrongPolicy, ex)
     {
@@ -91,8 +89,7 @@ test_get_servant_with_no_set (PortableServer::POA_ptr poa)
       // Getting the default servant without one set whould give a NoServant
       // exception
       PortableServer::Servant servant =
-        poa->get_servant (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        poa->get_servant ();
 
       ACE_UNUSED_ARG (servant);
     }
@@ -121,25 +118,20 @@ test_reference_to_servant_active_object(PortableServer::POA_ptr root_poa
 
   PortableServer::ObjectId* id =
     root_poa->activate_object (&test ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
   expected_refcount++;
 
   CORBA::Object_var object =
     root_poa->id_to_reference (*id ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
   PortableServer::ServantBase_var servant =
     root_poa->reference_to_servant (object.in () ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
   expected_refcount++;
 
   root_poa->deactivate_object (*id ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
   expected_refcount--;
 
   CORBA::ULong refcount =
-    test._refcount_value (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+    test._refcount_value ();
 
   ACE_UNUSED_ARG (refcount);
   ACE_UNUSED_ARG (expected_refcount);
@@ -159,24 +151,20 @@ main (int argc, char **argv)
                                             argv,
                                             0
                                             ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       // Obtain the RootPOA.
       CORBA::Object_var object =
         orb->resolve_initial_references ("RootPOA"
                                          ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       // Narrow to POA.
       PortableServer::POA_var root_poa =
         PortableServer::POA::_narrow (object.in ()
                                       ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       // Get the POAManager of the RootPOA.
       PortableServer::POAManager_var poa_manager =
-        root_poa->the_POAManager (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        root_poa->the_POAManager ();
 
       // Policies for the new POA.
       CORBA::PolicyList policies (3);
@@ -186,19 +174,16 @@ main (int argc, char **argv)
       policies[0] =
         root_poa->create_request_processing_policy (PortableServer::USE_DEFAULT_SERVANT
                                                     ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       // Id Uniqueness Policy.
       policies[1] =
         root_poa->create_id_uniqueness_policy (PortableServer::MULTIPLE_ID
                                                ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       // Servant Retention Policy.
       policies[2] =
         root_poa->create_servant_retention_policy (PortableServer::NON_RETAIN
                                                    ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       // Create POA to host default servant.
       ACE_CString name = "Default Servant";
@@ -207,7 +192,6 @@ main (int argc, char **argv)
                               poa_manager.in (),
                               policies
                               ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       // Destroy policies.
       for (CORBA::ULong i = 0;
@@ -215,17 +199,14 @@ main (int argc, char **argv)
            ++i)
         {
           CORBA::Policy_ptr policy = policies[i];
-          policy->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+          policy->destroy ();
         }
 
       // Activate POA manager.
-      poa_manager->activate (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      poa_manager->activate ();
 
       test_reference_to_servant_active_object(root_poa.in ()
                                               ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       // Test servant.
       test_i test;
@@ -240,7 +221,6 @@ main (int argc, char **argv)
       // Register default servant.
       default_servant_poa->set_servant (&test
                                         ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
       expected_refcount++;
 
       // Create dummy id.
@@ -251,13 +231,11 @@ main (int argc, char **argv)
       object =
         default_servant_poa->create_reference ("IDL:test:1.0"
                                             ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       // Invoke id_to_servant(). Should retrieve default servant.
       PortableServer::ServantBase_var servant =
         default_servant_poa->id_to_servant (id.in ()
                                             ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
       expected_refcount++;
 
       // Assert correctness.
@@ -267,7 +245,6 @@ main (int argc, char **argv)
       servant =
         default_servant_poa->reference_to_servant (object.in ()
                                                    ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
       expected_refcount++;
 
       // Assert correctness.
@@ -278,16 +255,14 @@ main (int argc, char **argv)
                   "Default_Servant test successful\n"));
 
       CORBA::ULong refcount =
-        test._refcount_value (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        test._refcount_value ();
 
       ACE_UNUSED_ARG (refcount);
       ACE_UNUSED_ARG (expected_refcount);
       ACE_ASSERT (expected_refcount == refcount);
 
       // Destroy the ORB.
-      orb->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      orb->destroy ();
     }
   ACE_CATCHANY
     {
@@ -295,7 +270,6 @@ main (int argc, char **argv)
       return -1;
     }
   ACE_ENDTRY;
-  ACE_CHECK_RETURN (-1);
 
   return 0;
 }

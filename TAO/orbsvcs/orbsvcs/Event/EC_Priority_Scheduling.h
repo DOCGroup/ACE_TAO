@@ -59,7 +59,7 @@ private:
   TAO_EC_Priority_Scheduling& operator= (const TAO_EC_Priority_Scheduling&);
 
   /// Initialize our RT_Info handle and dependencies
-  void init_rt_info (ACE_ENV_SINGLE_ARG_DECL);
+  void init_rt_info (void);
 
 private:
   /// The scheduler we are going to use

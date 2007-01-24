@@ -122,8 +122,7 @@ TAO_EC_Dispatching_Task::svc (void)
               continue;
             }
 
-          int result = command->execute (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+          int result = command->execute ();
 
           ACE_Message_Block::release (mb);
 
@@ -152,7 +151,6 @@ TAO_EC_Dispatching_Task::push (TAO_EC_ProxyPushSupplier *proxy,
         this->queue_full_service_object_->queue_full_action (this, proxy,
                                                              consumer, event
                                                              ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
 
       if (action == TAO_EC_Queue_Full_Service_Object::SILENTLY_DISCARD)
         return;
@@ -186,7 +184,7 @@ TAO_EC_Dispatch_Command::~TAO_EC_Dispatch_Command (void)
 // ****************************************************************
 
 int
-TAO_EC_Shutdown_Task_Command::execute (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+TAO_EC_Shutdown_Task_Command::execute (void)
 {
   return -1;
 }
@@ -199,7 +197,7 @@ TAO_EC_Push_Command::~TAO_EC_Push_Command (void)
 }
 
 int
-TAO_EC_Push_Command::execute (ACE_ENV_SINGLE_ARG_DECL)
+TAO_EC_Push_Command::execute (void)
 {
   this->proxy_->push_to_consumer (this->consumer_.in (),
                                   this->event_

@@ -62,7 +62,7 @@ public:
       ACE_ENV_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((CORBA::SystemException)) {}
 
-  virtual void destroy (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+  virtual void destroy (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual void destroy_excep (
@@ -93,7 +93,7 @@ private:
                      Web_Server::Error_Result));
   // Initialize the Content Iterator used to retrieve the file.
 
-  void deactivate (ACE_ENV_SINGLE_ARG_DECL)
+  void deactivate (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
   // Deactivate this reply handler.
 

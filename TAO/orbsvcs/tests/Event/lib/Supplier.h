@@ -64,7 +64,7 @@ public:
                    const RtecEventComm::Event& event);
 
   /// Send a shutdown event.
-  void send_shutdown (ACE_ENV_SINGLE_ARG_DECL);
+  void send_shutdown (void);
 
   /// Connect using a <supplier_admin> and publications (<qos>)
   /// computed by the user
@@ -81,10 +81,10 @@ public:
         ACE_ENV_ARG_DECL);
 
   /// Disconnect from the EC, also deactivates the object
-  void disconnect (ACE_ENV_SINGLE_ARG_DECL);
+  void disconnect (void);
 
   /// Disconnect from the EC, also deactivates the object
-  void shutdown (ACE_ENV_SINGLE_ARG_DECL);
+  void shutdown (void);
 
   /// Dump the results...
   virtual void dump_results (const char* name,
@@ -98,7 +98,7 @@ public:
                    RtecEventComm::Event& event);
 
   // = The PushSupplier methods
-  virtual void disconnect_push_supplier (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+  virtual void disconnect_push_supplier (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
 private:

@@ -30,7 +30,6 @@ TAO_Notify_Constraint_Interpreter::build_tree (
       ACE_NEW_THROW_EX (this->root_,
                         TAO_ETCL_Literal_Constraint ((CORBA::Boolean) 1),
                         CORBA::NO_MEMORY ());
-      ACE_CHECK;
     }
   else
     {

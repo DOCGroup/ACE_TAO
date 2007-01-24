@@ -28,7 +28,6 @@ ServerApp::run_i(int argc, char* argv[] ACE_ENV_ARG_DECL)
 {
   // Initialize the ORB before parsing our own args.
   CORBA::ORB_var orb = CORBA::ORB_init(argc, argv, "" ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
 
   // Parse the command-line args for this application.
   // * Returns -1 if problems are encountered.
@@ -41,19 +40,16 @@ ServerApp::run_i(int argc, char* argv[] ACE_ENV_ARG_DECL)
     }
 
   TheAppShutdown->init(orb.in(), num_clients_ ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
 
   // Get the Root POA
   PortableServer::POA_var root_poa =
            RefHelper<PortableServer::POA>::resolve_initial_ref(orb.in(),
                                                                "RootPOA"
                                                                ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
 
   // Get the POAManager from the Root POA.
   PortableServer::POAManager_var poa_manager
-    = root_poa->the_POAManager(ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
+    = root_poa->the_POAManager();
 
   // Create the child POA Policies.
   CORBA::PolicyList policies(0);
@@ -66,14 +62,13 @@ ServerApp::run_i(int argc, char* argv[] ACE_ENV_ARG_DECL)
                                                     poa_manager.in(),
                                                     policies
                                                     ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
 
 
   // Create the thread pool servant dispatching strategy object, and
   // hold it in a (local) smart pointer variable.
   TAO_Intrusive_Ref_Count_Handle<TAO::CSD::TP_Strategy> csd_strategy =
                                                  new TAO::CSD::TP_Strategy();
-                                                 
+
   // Tell the strategy to apply itself to the child poa.
   if (csd_strategy->apply_to(child_poa.in() ACE_ENV_ARG_PARAMETER) == false)
     {
@@ -81,7 +76,6 @@ ServerApp::run_i(int argc, char* argv[] ACE_ENV_ARG_DECL)
                  "Failed to apply CSD strategy to child poa.\n"));
       return -1;
     }
-  ACE_CHECK_RETURN (-1);
 
   // Create the servant object.
   Foo_A_i* servant = new Foo_A_i();
@@ -94,25 +88,21 @@ ServerApp::run_i(int argc, char* argv[] ACE_ENV_ARG_DECL)
   CORBA::Object_var obj = AppHelper::activate_servant(child_poa.in(),
                                                       servant
                                                       ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
 
   // Stringify and save the object reference to a file
   AppHelper::ref_to_file(orb.in(),
                          obj.in(),
                          this->ior_filename_.c_str()
                          ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
 
   // Activate the POA Manager
-  poa_manager->activate(ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
+  poa_manager->activate();
 
   ACE_DEBUG((LM_DEBUG,
              "(%P|%t) ServerApp is ready.  Running the ORB event loop.\n"));
 
   // Run the ORB event loop.
-  orb->run (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
+  orb->run ();
 
   ACE_DEBUG((LM_DEBUG,
              "(%P|%t) ServerApp ORB event loop has completed.\n"));
@@ -129,13 +119,11 @@ ServerApp::run_i(int argc, char* argv[] ACE_ENV_ARG_DECL)
              "(%P|%t) ServerApp is destroying the Root POA.\n"));
 
   root_poa->destroy(1, 1 ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
 
   ACE_DEBUG((LM_DEBUG,
              "(%P|%t) ServerApp is destroying the ORB.\n"));
 
-  orb->destroy(ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
+  orb->destroy();
 
   ACE_DEBUG((LM_DEBUG,
              "(%P|%t) ServerApp has completed running successfully.\n"));

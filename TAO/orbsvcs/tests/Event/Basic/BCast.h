@@ -46,7 +46,7 @@ public:
   virtual void modify_attributes (TAO_EC_Event_Channel_Attributes& attr);
 
   /// Don't run the suppliers, just test connect and disconnect calls.
-  void execute_test (ACE_ENV_SINGLE_ARG_DECL);
+  void execute_test (void);
 
   /// Don't dump the EC_Driver results, they are meaningless.
   void dump_results (void);

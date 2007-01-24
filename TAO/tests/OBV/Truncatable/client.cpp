@@ -61,7 +61,6 @@ main (int argc, char *argv[])
     {
       CORBA::ORB_var orb =
         CORBA::ORB_init (argc, argv, "" ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       if (parse_args (argc, argv) != 0)
         return 1;
@@ -76,7 +75,6 @@ main (int argc, char *argv[])
       orb->register_value_factory (base_factory->tao_repository_id (),
                                    base_factory
                                    ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
       base_factory->_remove_ref (); // release ownership
 
 
@@ -89,7 +87,6 @@ main (int argc, char *argv[])
       orb->register_value_factory (value1_factory->tao_repository_id (),
                                    value1_factory
                                    ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
       value1_factory->_remove_ref ();
 
 
@@ -102,7 +99,6 @@ main (int argc, char *argv[])
       orb->register_value_factory (value2_factory->tao_repository_id (),
                                    value2_factory
                                    ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
       value2_factory->_remove_ref ();
 
 
@@ -114,7 +110,6 @@ main (int argc, char *argv[])
       orb->register_value_factory (value3_factory->tao_repository_id (),
                                    value3_factory
                                    ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
       value3_factory->_remove_ref ();
 
       OBV_TruncatableTest::TValue4_init *value4_factory = 0;
@@ -125,7 +120,6 @@ main (int argc, char *argv[])
       orb->register_value_factory (value4_factory->tao_repository_id (),
                                    value4_factory
                                    ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
       value4_factory->_remove_ref ();
 
       OBV_TruncatableTest::TValue5_init *value5_factory = 0;
@@ -136,7 +130,6 @@ main (int argc, char *argv[])
       orb->register_value_factory (value5_factory->tao_repository_id (),
                                    value5_factory
                                    ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
       value5_factory->_remove_ref ();
 
       OBV_TruncatableTest::NestedValue_init *nested_value_factory = 0;
@@ -147,17 +140,14 @@ main (int argc, char *argv[])
       orb->register_value_factory (nested_value_factory->tao_repository_id (),
                                    nested_value_factory
                                    ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
       nested_value_factory->_remove_ref ();
 
       // Obtain reference to the object
       CORBA::Object_var tmp =
         orb->string_to_object(ior ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       OBV_TruncatableTest::Test_var test =
         OBV_TruncatableTest::Test::_narrow(tmp.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       if (CORBA::is_nil (test.in ()))
         {
@@ -184,7 +174,6 @@ main (int argc, char *argv[])
         test->op1 ("case1", &v1, ov1.out (), desc.inout ()
                    ACE_ENV_ARG_PARAMETER);
 
-        ACE_TRY_CHECK;
 
         VERIFY (! ACE_OS::strcmp (desc.in (),
                                   "case1: A<-tB, truncate B to A"));
@@ -211,7 +200,6 @@ main (int argc, char *argv[])
 
         test->op1 ("case2", &v2, ov2.out (), desc.inout ()
                    ACE_ENV_ARG_PARAMETER);
-        ACE_TRY_CHECK;
 
         VERIFY (! ACE_OS::strcmp (desc.in (),
                                   "case2: A<-tB<-tC, truncate C to A"));
@@ -230,7 +218,6 @@ main (int argc, char *argv[])
 
         test->op2 (&v2, "case3", otv1.out (), desc.inout ()
                    ACE_ENV_ARG_PARAMETER);
-        ACE_TRY_CHECK;
 
         VERIFY (! ACE_OS::strcmp (desc.in (),
                                   "case3: A<-tB<-tC, truncate C to B"));
@@ -256,7 +243,6 @@ main (int argc, char *argv[])
 
         test->op2 (&itv1b, "case3b", otv1b.out (), desc.inout ()
                    ACE_ENV_ARG_PARAMETER);
-        ACE_TRY_CHECK;
 
         VERIFY (! ACE_OS::strcmp (desc.in (),
                 "case3b: A<-tB, truncatable but no truncation"));
@@ -326,7 +312,6 @@ main (int argc, char *argv[])
         pretest = fail;
         test->op1 ("case5", &v5, ov5.out (), desc.inout ()
                    ACE_ENV_ARG_PARAMETER);
-        ACE_TRY_CHECK;
 
         VERIFY (! ACE_OS::strcmp (desc.in (),
           "case5: A<-tB<-tC, B & C have nested value type, truncate C to A"));
@@ -345,7 +330,6 @@ main (int argc, char *argv[])
         pretest = fail;
         test->op3 ("case6", &v5, otv4.out (), desc.inout ()
                    ACE_ENV_ARG_PARAMETER);
-        ACE_TRY_CHECK;
 
         VERIFY (! ACE_OS::strcmp (desc.in (),
            "case6: A<-tB<-tC, B & C have nested value type, truncate C to B"));
@@ -370,7 +354,6 @@ main (int argc, char *argv[])
         pretest = fail;
         test->op1 ("case7", &iv, ov.out (), desc.inout ()
                    ACE_ENV_ARG_PARAMETER);
-        ACE_TRY_CHECK;
 
         VERIFY (! ACE_OS::strcmp (desc.in (),
                 "case7: A<-tB, B has no data, truncate B to A"));
@@ -414,7 +397,6 @@ main (int argc, char *argv[])
         OBV_TruncatableTest::BaseValue_var ov
           = test->op4 ("case8", &v1, 5, &v2, &v3, &v4, desc.inout ()
                        ACE_ENV_ARG_PARAMETER);
-        ACE_TRY_CHECK;
 
         VERIFY (! ACE_OS::strcmp (desc.in (),
                  "case8: multiple IN truncatable valuetype parameters"
@@ -445,7 +427,6 @@ main (int argc, char *argv[])
         test->op2 (&v1, "case9", ov1.out (), desc.inout ()
                    ACE_ENV_ARG_PARAMETER);
 
-        ACE_TRY_CHECK;
 
         VERIFY (! ACE_OS::strcmp (desc.in (),
                                   "case9: A<-tB, truncate unknown B to A"));
@@ -475,7 +456,6 @@ main (int argc, char *argv[])
         test->op5 (a, "case10", ov1.out (), desc.inout ()
                    ACE_ENV_ARG_PARAMETER);
 
-        ACE_TRY_CHECK;
 
         VERIFY (! ACE_OS::strcmp (desc.in (),
                                   "case10: A<-tB, known truncatable via Any"));
@@ -505,7 +485,6 @@ main (int argc, char *argv[])
         test->op5 (a, "case11", ov1.out (), desc.inout ()
                    ACE_ENV_ARG_PARAMETER);
 
-        ACE_TRY_CHECK;
 
         VERIFY (! ACE_OS::strcmp (desc.in (),
                                   "case11: A<-tB, unknown truncatable via Any"));
@@ -520,11 +499,9 @@ main (int argc, char *argv[])
       ACE_DEBUG ((LM_DEBUG, "(%P|%t) client - shutdown orb \n"));
 
 
-      test->shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      test->shutdown ();
 
-      orb->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      orb->destroy ();
 
       if (fail)
         {

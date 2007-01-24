@@ -54,14 +54,14 @@ Notifier_Input_Handler::~Notifier_Input_Handler (void)
 // the object name is bound to the naming server.
 
 int
-Notifier_Input_Handler::init_naming_service (ACE_ENV_SINGLE_ARG_DECL)
+Notifier_Input_Handler::init_naming_service (void)
 {
 
   CORBA::ORB_var orb = this->orb_manager_.orb ();
 
-  if (this->naming_server_.init (orb.in ()) == -1) 
+  if (this->naming_server_.init (orb.in ()) == -1)
     return -1;
-             
+
   // create the name for the naming service
   CosNaming::Name notifier_obj_name (1);
   notifier_obj_name.length (1);
@@ -70,16 +70,13 @@ Notifier_Input_Handler::init_naming_service (ACE_ENV_SINGLE_ARG_DECL)
   // (re)Bind the object.
   ACE_TRY
     {
-      Notifier_var notifier_obj = notifier_i_._this (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      Notifier_var notifier_obj = notifier_i_._this ();
 
-      this->orb_manager_.activate_poa_manager (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      this->orb_manager_.activate_poa_manager ();
 
       naming_server_->rebind (notifier_obj_name,
                               notifier_obj.in()
                               ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
     }
   ACE_CATCH (CosNaming::NamingContext::AlreadyBound, ex)
@@ -90,7 +87,6 @@ Notifier_Input_Handler::init_naming_service (ACE_ENV_SINGLE_ARG_DECL)
                         -1);
     }
   ACE_ENDTRY;
-  ACE_CHECK_RETURN (-1);
 
   return 0;
 }
@@ -160,7 +156,6 @@ Notifier_Input_Handler::init (int argc,
                        "%p\n",
                        "init_child_poa"),
                       -1);
-  ACE_CHECK_RETURN (-1);
 
   int retval = this->parse_args ();
 
@@ -189,7 +184,6 @@ Notifier_Input_Handler::init (int argc,
     this->orb_manager_.activate_under_child_poa ("Notifier",
                                                  &this->notifier_i_
                                                  ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
 
   ACE_DEBUG ((LM_DEBUG,
               "The IOR is: <%s>\n",
@@ -205,14 +199,13 @@ Notifier_Input_Handler::init (int argc,
 
   if (this->using_naming_service_)
     {
-      this->init_naming_service (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK_RETURN (-1);
+      this->init_naming_service ();
     }
   return 0;
 }
 
 int
-Notifier_Input_Handler::run (ACE_ENV_SINGLE_ARG_DECL)
+Notifier_Input_Handler::run (void)
 {
   // Run the main event loop for the ORB.
 
@@ -220,8 +213,7 @@ Notifier_Input_Handler::run (ACE_ENV_SINGLE_ARG_DECL)
   ACE_DEBUG ((LM_DEBUG,
               " Type \"q\" to quit \n "));
 
-  int result = this->orb_manager_.run (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
+  int result = this->orb_manager_.run ();
 
   if (result == -1)
     {
@@ -260,8 +252,7 @@ Notifier_Input_Handler::handle_input (ACE_HANDLE)
         {
           // @@ Please remove this call if it's not used.
           // (this->notifier_i_.consumer_map_).close();
-          this->notifier_i_.shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+          this->notifier_i_.shutdown ();
         }
     }
    ACE_CATCHANY
@@ -270,7 +261,6 @@ Notifier_Input_Handler::handle_input (ACE_HANDLE)
       return -1;
     }
   ACE_ENDTRY;
-  ACE_CHECK_RETURN (-1);
 
   return 0;
 }

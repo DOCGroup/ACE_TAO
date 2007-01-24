@@ -22,7 +22,7 @@ namespace TAO_Notify
   }
 
   void
-  Topology_Savable::reconnect (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+  Topology_Savable::reconnect (void)
   {
   }
 
@@ -79,22 +79,21 @@ namespace TAO_Notify
   }
 
   bool
-  Topology_Object::self_change (ACE_ENV_SINGLE_ARG_DECL)
+  Topology_Object::self_change (void)
   {
     this->self_changed_ = true;
-    return send_change (ACE_ENV_SINGLE_ARG_PARAMETER);
+    return send_change ();
   }
 
   bool
-  Topology_Object::send_change (ACE_ENV_SINGLE_ARG_DECL)
+  Topology_Object::send_change (void)
   {
     bool saving = false;
     if (is_persistent ())
     {
       while (this->self_changed_ || this->children_changed_)
       {
-        saving = this->change_to_parent (ACE_ENV_SINGLE_ARG_PARAMETER);
-        ACE_CHECK_RETURN (false);
+        saving = this->change_to_parent ();
         if (!saving)
         {
           this->self_changed_ = false;
@@ -111,14 +110,13 @@ namespace TAO_Notify
   }
 
   bool
-  Topology_Object::change_to_parent (ACE_ENV_SINGLE_ARG_DECL)
+  Topology_Object::change_to_parent (void)
   {
     bool result = false;
     Topology_Parent * parent = this->topology_parent();
     if (parent != 0)
     {
-      result = parent->child_change(ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK_RETURN (false);
+      result = parent->child_change();
     }
     return result;
   }

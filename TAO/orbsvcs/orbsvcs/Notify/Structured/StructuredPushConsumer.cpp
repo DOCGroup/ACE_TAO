@@ -47,9 +47,8 @@ TAO_Notify_StructuredPushConsumer::init (CosNotifyComm::StructuredPushConsumer_p
 
       ACE_TRY
         {
-          CosNotifyComm::StructuredPushConsumer_var new_push_consumer =  
+          CosNotifyComm::StructuredPushConsumer_var new_push_consumer =
             CosNotifyComm::StructuredPushConsumer::_unchecked_narrow(obj.in() ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
 
           this->push_consumer_ = CosNotifyComm::StructuredPushConsumer::_duplicate (new_push_consumer.in());
           this->publish_ = CosNotifyComm::NotifyPublish::_duplicate (new_push_consumer.in());
@@ -103,7 +102,6 @@ TAO_Notify_StructuredPushConsumer::push (const CosNotification::StructuredEvent&
   //--cj end
 
   this->push_consumer_->push_structured_event (event ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 }
 
 /// Push a batch of events to this consumer.
@@ -122,7 +120,6 @@ TAO_Notify_StructuredPushConsumer::reconnect_from_consumer (TAO_Notify_Consumer*
   TAO_Notify_StructuredPushConsumer* tmp = dynamic_cast<TAO_Notify_StructuredPushConsumer *> (old_consumer);
   ACE_ASSERT(tmp != 0);
   this->init(tmp->push_consumer_.in() ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
   this->schedule_timer(false);
 }
 
@@ -135,7 +132,6 @@ TAO_Notify_StructuredPushConsumer::get_ior (void) const
   ACE_TRY
   {
     CORBA::String_var ior = orb->object_to_string(this->push_consumer_.in() ACE_ENV_ARG_PARAMETER);
-    ACE_TRY_CHECK;
     result = static_cast<const char*> (ior.in ());
   }
   ACE_CATCHANY

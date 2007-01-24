@@ -38,7 +38,6 @@ Logger_Factory_i::make_logger (const char *name
       ACE_NEW_THROW_EX (result,
                         Logger_i (name),
                         CORBA::NO_MEMORY ());
-      ACE_CHECK_RETURN (Logger::_nil ());
     }
 
   // Enter the new logger into the hash map.  Check if the <bind>
@@ -63,7 +62,7 @@ Logger_Factory_i::make_logger (const char *name
   // registration attempt.
   // @@ Matt, this code doesn't seem right.  Can you please check with
   // Irfan and Carlos about whether this is the right thing to do?
-  return result->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
+  return result->_this ();
 }
 
 Logger_i::Logger_i (const char *name)

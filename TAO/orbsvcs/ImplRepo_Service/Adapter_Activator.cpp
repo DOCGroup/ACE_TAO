@@ -43,17 +43,14 @@ ImR_Adapter::unknown_adapter (PortableServer::POA_ptr parent,
       exception_message = "While PortableServer::POA::create_servant_retention_policy";
       policies[0] =
         parent->create_servant_retention_policy (PortableServer::NON_RETAIN ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       // Request Processing Policy
       exception_message = "While PortableServer::POA::create_request_processing_policy";
       policies[1] =
         parent->create_request_processing_policy (PortableServer::USE_SERVANT_MANAGER ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       PortableServer::POAManager_var poa_manager =
-        parent->the_POAManager (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        parent->the_POAManager ();
 
       exception_message = "While create_POA";
       PortableServer::POA_var child =
@@ -61,23 +58,19 @@ ImR_Adapter::unknown_adapter (PortableServer::POA_ptr parent,
                             poa_manager.in (),
                             policies
                             ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       exception_message = "While unknown_adapter::policy->destroy";
       for (CORBA::ULong i = 0; i < policies.length (); ++i)
         {
           CORBA::Policy_ptr policy = policies[i];
-          policy->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+          policy->destroy ();
         }
 
       exception_message = "While child->the_activator";
       child->the_activator (this ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       exception_message = "While unknown_adapter, set_servant_manager";
       child->set_servant_manager (this->servant_locator_ ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
     }
   ACE_CATCHANY
     {

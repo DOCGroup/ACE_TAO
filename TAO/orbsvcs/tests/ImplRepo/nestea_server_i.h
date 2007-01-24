@@ -42,7 +42,7 @@ public:
   int init (int argc, char **argv ACE_ENV_ARG_DECL);
 
   /// Run the orb
-  int run (ACE_ENV_SINGLE_ARG_DECL);
+  int run (void);
 
 private:
   /// Parses the commandline arguments.

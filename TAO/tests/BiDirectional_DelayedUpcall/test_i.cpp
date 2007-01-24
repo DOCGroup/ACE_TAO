@@ -14,7 +14,7 @@
 ACE_RCSID(BiDirectional_NestedUpcall, test_i, "$Id$")
 
 void
-Callback_i::shutdown (ACE_ENV_SINGLE_ARG_DECL)
+Callback_i::shutdown (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_DEBUG ((LM_DEBUG, "Performing clean shutdown\n"));
@@ -22,7 +22,7 @@ Callback_i::shutdown (ACE_ENV_SINGLE_ARG_DECL)
 }
 
 void
-Callback_i::callback_method (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+Callback_i::callback_method (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   if (TAO_debug_level > 0)
@@ -44,8 +44,7 @@ Simple_Server_i::handle_timeout (const ACE_Time_Value &,
         times < this->no_iterations_;
         ++times)
     {
-      this->callback_->callback_method (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK_RETURN (0);
+      this->callback_->callback_method ();
 
       if (this->orb_->orb_core ()->lane_resources ().transport_cache ().current_size () > 1)
         {
@@ -56,8 +55,7 @@ Simple_Server_i::handle_timeout (const ACE_Time_Value &,
         }
     }
 
-  this->callback_->shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (0);
+  this->callback_->shutdown ();
 
   return 0;
 }
@@ -99,7 +97,7 @@ Simple_Server_i::callback_object (Callback_ptr callback
 
 
 void
-Simple_Server_i::shutdown (ACE_ENV_SINGLE_ARG_DECL)
+Simple_Server_i::shutdown (void)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->orb_->shutdown (false ACE_ENV_ARG_PARAMETER);

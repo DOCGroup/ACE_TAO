@@ -370,7 +370,6 @@ CC_Client::init_naming_service (void)
                       -1);
 
       this->naming_service_->Init (this->orb_ ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
     }
   ACE_CATCHANY
     {
@@ -395,7 +394,6 @@ CC_Client::init (int argc, char **argv)
                                     this->argv_,
                                     "internet"
                                     ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       // Parse command line and verify parameters.
       if (this->parse_args () == -1)
@@ -419,14 +417,12 @@ CC_Client::init (int argc, char **argv)
           CORBA::Object_var factory_object =
             this->orb_->string_to_object (this->cc_factory_key_
                                           ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
 
 #if 0
           // The test cannot currently run without the naming service.
           this->factory_ =
             CosConcurrencyControl::LockSetFactory::_narrow
             (factory_object.in () ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
 
           if (CORBA::is_nil (this->factory_.in ()))
             ACE_ERROR_RETURN ((LM_ERROR,

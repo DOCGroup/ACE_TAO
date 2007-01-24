@@ -31,7 +31,7 @@ Payload_Receiver::more_data (const Test::Payload &payload
 
 
 void
-Payload_Receiver::shutdown (ACE_ENV_SINGLE_ARG_DECL)
+Payload_Receiver::shutdown (void)
    ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->orb_->shutdown (0 ACE_ENV_ARG_PARAMETER);

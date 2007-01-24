@@ -60,7 +60,6 @@ Iterator_Handler::next_chunk (CORBA::Boolean pending_data,
       this->contents_->sendc_next_chunk (this->ami_handler_.in (),
                                          this->offset_
                                          ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
 
     }
   else
@@ -74,7 +73,6 @@ Iterator_Handler::next_chunk (CORBA::Boolean pending_data,
       // Done with the iterator, so destroy it.
       this->contents_->sendc_destroy (this->ami_handler_.in ()
                                       ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
 
       // File retrieval has completed, so spawn an external viewer to
       // display its contents.
@@ -83,12 +81,11 @@ Iterator_Handler::next_chunk (CORBA::Boolean pending_data,
     }
 }
 void
-Iterator_Handler::destroy (ACE_ENV_SINGLE_ARG_DECL)
+Iterator_Handler::destroy (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // Deactivate this reply handler.
-  this->deactivate (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+  this->deactivate ();
 }
 
 
@@ -109,17 +106,14 @@ Iterator_Handler::run (int *request_count,
   this->initialize_content_iterator (pathname,
                                      factory
                                      ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
   // Activate this Reply Handler.
-  this->ami_handler_ = this->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+  this->ami_handler_ = this->_this ();
 
   // Begin the asynchronous invocation.
   this->contents_->sendc_next_chunk (this->ami_handler_.in (),
                                      this->offset_
                                      ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 }
 
 void
@@ -135,7 +129,6 @@ Iterator_Handler::initialize_content_iterator
                          this->contents_,
                          this->metadata_
                          ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
   // Create a temporary file to store the retrieved data.
   ACE_FILE_Connector connector;
@@ -155,22 +148,19 @@ Iterator_Handler::initialize_content_iterator
 }
 
 void
-Iterator_Handler::deactivate (ACE_ENV_SINGLE_ARG_DECL)
+Iterator_Handler::deactivate (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // Get the POA used when activating the Reply Handler object.
   PortableServer::POA_var poa =
-    this->_default_POA (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+    this->_default_POA ();
 
   // Get the object ID associated with this servant.
   PortableServer::ObjectId_var oid =
     poa->servant_to_id (this ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
   // Now deactivate the iterator object.
   poa->deactivate_object (oid.in () ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 }
 
 

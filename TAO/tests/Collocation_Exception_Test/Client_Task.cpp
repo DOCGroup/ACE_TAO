@@ -21,8 +21,7 @@ Client_Task::test_system_exception (
 {
   ACE_TRY
     {
-      hello_ptr->system_exception_test (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      hello_ptr->system_exception_test ();
     }
   ACE_CATCH (CORBA::INTERNAL, ex)
     {
@@ -36,7 +35,6 @@ Client_Task::test_system_exception (
       ACE_RE_THROW;
     }
   ACE_ENDTRY;
-  ACE_CHECK;
 }
 
 void
@@ -45,8 +43,7 @@ Client_Task::test_user_exception_expected (
 {
   ACE_TRY
     {
-      hello_ptr->user_exception_expected (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      hello_ptr->user_exception_expected ();
     }
   ACE_CATCH (::Test::Hello::A, ex)
     {
@@ -60,7 +57,6 @@ Client_Task::test_user_exception_expected (
       ACE_RE_THROW;
     }
   ACE_ENDTRY;
-  ACE_CHECK;
 }
 
 void
@@ -69,8 +65,7 @@ Client_Task::test_user_exception_not_expected (
 {
   ACE_TRY
     {
-      hello_ptr->user_exception_not_expected (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      hello_ptr->user_exception_not_expected ();
     }
   ACE_CATCH (CORBA::UNKNOWN, ex)
     {
@@ -84,7 +79,6 @@ Client_Task::test_user_exception_not_expected (
       ACE_RE_THROW;
     }
   ACE_ENDTRY;
-  ACE_CHECK;
 }
 
 int
@@ -95,11 +89,9 @@ Client_Task::svc (void)
       CORBA::Object_var tmp =
         this->corb_->string_to_object (input_
 				       ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       Test::Hello_var hello =
         Test::Hello::_narrow(tmp.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       if (CORBA::is_nil (hello.in ()))
         {
@@ -110,23 +102,18 @@ Client_Task::svc (void)
         }
 
       CORBA::String_var the_string =
-        hello->get_string (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        hello->get_string ();
 
       ACE_DEBUG ((LM_DEBUG, "(%P|%t) - string returned <%s>\n",
 		  the_string.in ()));
 
       this->test_system_exception (hello.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       this->test_user_exception_expected (hello.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       this->test_user_exception_not_expected (hello.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
-      hello->shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      hello->shutdown ();
     }
   ACE_CATCHANY
     {

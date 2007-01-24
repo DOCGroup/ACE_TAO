@@ -128,7 +128,7 @@ Client::frame_rate (void)
 
 // Method to get the object reference of the server
 int
-Client::bind_to_server (ACE_ENV_SINGLE_ARG_DECL)
+Client::bind_to_server (void)
 {
   // Initialize the naming services
   if (my_naming_client_.init (TAO_AV_CORE::instance ()->orb ()) != 0)
@@ -145,12 +145,10 @@ Client::bind_to_server (ACE_ENV_SINGLE_ARG_DECL)
   CORBA::Object_var server_mmdevice_obj =
     my_naming_client_->resolve (server_mmdevice_name
                                 ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
 
   this->server_mmdevice_ =
     AVStreams::MMDevice::_narrow (server_mmdevice_obj.in ()
                                   ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
 
   if (CORBA::is_nil (this->server_mmdevice_.in ()))
     ACE_ERROR_RETURN ((LM_ERROR,
@@ -191,8 +189,7 @@ Client::init (int argc,
                       -1);
 
   result
-    = this->bind_to_server (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
+    = this->bind_to_server ();
 
   // Resolve the object reference of the server from the Naming Service.
   if (result != 0)
@@ -269,8 +266,7 @@ Client::init (int argc,
   flow_spec [0] = CORBA::string_dup (entry.entry_to_string ());
 
   AVStreams::MMDevice_var client_mmdevice =
-    this->client_mmdevice_._this (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
+    this->client_mmdevice_._this ();
 
   // Bind/Connect  the client and server MMDevices.
   CORBA::Boolean bind_result =
@@ -279,7 +275,6 @@ Client::init (int argc,
                                  the_qos.inout (),
                                  flow_spec
                                  ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
 
   if (bind_result == 0)
     ACE_ERROR_RETURN ((LM_ERROR,"streamctrl::bind_devs failed\n"),-1);
@@ -289,7 +284,7 @@ Client::init (int argc,
 
 // Method to send data at the specified rate
 int
-Client::pace_data (ACE_ENV_SINGLE_ARG_DECL)
+Client::pace_data (void)
 {
 
   // Rate at which frames of data need to be sent.
@@ -373,7 +368,6 @@ Client::pace_data (ACE_ENV_SINGLE_ARG_DECL)
                   // run the orb for the wait time so the client can continue other orb requests.
                   TAO_AV_CORE::instance ()->orb ()->run (wait_time
                                                          ACE_ENV_ARG_PARAMETER);
-                  ACE_TRY_CHECK;
                 }
             }
 
@@ -397,11 +391,9 @@ Client::pace_data (ACE_ENV_SINGLE_ARG_DECL)
       AVStreams::flowSpec stop_spec (1);
       CLIENT::instance ()->streamctrl ()->destroy (stop_spec
                                                    ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       // Shut the orb down.
       TAO_AV_CORE::instance ()->orb ()->shutdown (0);
-      ACE_TRY_CHECK;
 
     }
   ACE_CATCHANY
@@ -425,50 +417,41 @@ main (int argc,
                                             argv,
                                             0
                                             ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       CORBA::Object_var obj
         = orb->resolve_initial_references ("RootPOA"
                                            ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
 
       //Get the POA_var object from Object_var
       PortableServer::POA_var root_poa
         = PortableServer::POA::_narrow (obj.in ()
                                         ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       PortableServer::POAManager_var mgr
-        = root_poa->the_POAManager (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        = root_poa->the_POAManager ();
 
-      mgr->activate (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      mgr->activate ();
 
       // Initialize the AV STream components.
       TAO_AV_CORE::instance ()->init (orb.in (),
                                       root_poa.in ()
                                       ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       // INitialize the Client.
       int result = 0;
       result = CLIENT::instance ()->init (argc,
                                           argv
                                           ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       if (result < 0)
         ACE_ERROR_RETURN ((LM_ERROR,
                            "client::init failed\n"),1);
 
       // Start sending data.
-      result = CLIENT::instance ()->pace_data (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      result = CLIENT::instance ()->pace_data ();
 
-      orb->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK_RETURN (-1);
+      orb->destroy ();
     }
   ACE_CATCHANY
 
@@ -477,7 +460,6 @@ main (int argc,
     return -1;
     }
   ACE_ENDTRY;
-  ACE_CHECK_RETURN (-1);
 
   CLIENT::close ();
 

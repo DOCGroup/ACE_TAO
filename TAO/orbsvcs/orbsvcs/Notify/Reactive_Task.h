@@ -43,7 +43,7 @@ public:
   virtual ~TAO_Notify_Reactive_Task ();
 
   /// Init the reactive task.
-  void init (ACE_ENV_SINGLE_ARG_DECL);
+  void init (void);
 
   /// Shutdown task
   virtual void shutdown (void);

@@ -35,7 +35,6 @@ Server_Task::svc (void)
     {
       CORBA::Object_var poa_object =
         sorb_->resolve_initial_references ("RootPOA" ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       if (CORBA::is_nil (poa_object.in ()))
         {
@@ -46,14 +45,11 @@ Server_Task::svc (void)
 
       PortableServer::POA_var root_poa =
         PortableServer::POA::_narrow (poa_object.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       PortableServer::POAManager_var poa_manager =
-        root_poa->the_POAManager (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        root_poa->the_POAManager ();
 
-      poa_manager->activate (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      poa_manager->activate ();
 
       Bug1495_i *server_impl = 0;
       ACE_NEW_RETURN (server_impl,
@@ -66,7 +62,6 @@ Server_Task::svc (void)
 
       CORBA::String_var ior = sorb_->object_to_string (bug1495.in ()
                                                        ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       if (output_ != 0)
         {
@@ -94,13 +89,11 @@ Server_Task::svc (void)
       // The ORB will run for 15 seconds and shut down.
       ACE_Time_Value tv (15, 0);
       sorb_->run (tv ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       ACE_DEBUG ((LM_DEBUG,
                    "Event loop finished for the thread server.\n"));
 
       root_poa->destroy (1, 1 ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
     }
   ACE_CATCHANY
     {
@@ -109,7 +102,6 @@ Server_Task::svc (void)
       return 1;
     }
   ACE_ENDTRY;
-  ACE_CHECK_RETURN (1);
 
   return 0;
 }

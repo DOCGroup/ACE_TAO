@@ -29,13 +29,13 @@ class TAO_RTEvent_Serv_Export TAO_EC_TPC_ProxyPushSupplier :
 public:
   /// Constructor
   TAO_EC_TPC_ProxyPushSupplier (TAO_EC_Event_Channel_Base* event_channel, int validate_connection);
-  
+
   /// Dtor
   virtual ~TAO_EC_TPC_ProxyPushSupplier (void);
 
   /*! These are overriden from the base class in order to maintain the
        map in the dispatcher class. */
-  
+
   // = The RtecEventChannelAdmin::ProxyPushSupplier methods...
   virtual void connect_push_consumer (
                 RtecEventComm::PushConsumer_ptr push_consumer,
@@ -45,10 +45,10 @@ public:
                        RtecEventChannelAdmin::AlreadyConnected,
                        RtecEventChannelAdmin::TypeError));
 
-  virtual void disconnect_push_supplier (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+  virtual void disconnect_push_supplier (void)
       ACE_THROW_SPEC ((CORBA::SystemException));
-  
-private:  
+
+private:
   typedef TAO_EC_Default_ProxyPushSupplier BASECLASS;
   TAO_EC_TPC_Dispatching* tpc_dispatching ();
 };

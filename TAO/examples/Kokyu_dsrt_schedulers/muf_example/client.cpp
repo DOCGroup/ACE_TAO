@@ -147,18 +147,15 @@ main (int argc, char *argv[])
     {
       CORBA::ORB_var orb =
         CORBA::ORB_init (argc, argv, "" ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       if (parse_args (argc, argv) != 0)
         return 1;
 
       CORBA::Object_var object =
         orb->string_to_object (ior ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       Simple_Server_var server =
         Simple_Server::_narrow (object.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       if (CORBA::is_nil (server.in ()))
         {
@@ -174,12 +171,10 @@ main (int argc, char *argv[])
           CORBA::Object_ptr manager_obj =
             orb->resolve_initial_references ("RTSchedulerManager"
                                              ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
 
           TAO_RTScheduler_Manager_var manager =
             TAO_RTScheduler_Manager::_narrow (manager_obj
                                               ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
 
           Kokyu::DSRT_Dispatcher_Impl_t disp_impl_type;
           if (enable_yield)
@@ -202,30 +197,28 @@ main (int argc, char *argv[])
           CORBA::Object_var object =
             orb->resolve_initial_references ("RTScheduler_Current"
                                               ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
 
           current  =
             RTScheduling::Current::_narrow (object.in () ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
 
         }
 
       TimeBase::TimeT deadline;
-      TimeBase::TimeT exec_time; 
+      TimeBase::TimeT exec_time;
       int criticality=0;
 
       ORBSVCS_Time::Time_Value_to_TimeT (deadline,
-                                         ACE_OS::gettimeofday () + 
+                                         ACE_OS::gettimeofday () +
                                          ACE_Time_Value (50,0) );
 
       ORBSVCS_Time::Time_Value_to_TimeT (exec_time,
-                                         ACE_OS::gettimeofday () + 
+                                         ACE_OS::gettimeofday () +
                                          ACE_Time_Value (10,0) );
 
-      Worker worker1 (orb.in (), 
-                      server.in (), 
-                      current.in (), 
-                      scheduler, 
+      Worker worker1 (orb.in (),
+                      server.in (),
+                      current.in (),
+                      scheduler,
                       deadline,
                       exec_time,
                       criticality,
@@ -240,18 +233,18 @@ main (int argc, char *argv[])
       ACE_OS::sleep(2);
 
       ORBSVCS_Time::Time_Value_to_TimeT (deadline,
-                                         ACE_OS::gettimeofday () + 
+                                         ACE_OS::gettimeofday () +
                                          ACE_Time_Value (30,0) );
 
       ORBSVCS_Time::Time_Value_to_TimeT (exec_time,
-                                         ACE_OS::gettimeofday () + 
+                                         ACE_OS::gettimeofday () +
                                          ACE_Time_Value (10,0) );
 
       criticality = 0;
-      Worker worker2 (orb.in (), 
-                      server.in (), 
-                      current.in (), 
-                      scheduler, 
+      Worker worker2 (orb.in (),
+                      server.in (),
+                      current.in (),
+                      scheduler,
                       deadline,
                       exec_time,
                       criticality,
@@ -264,18 +257,18 @@ main (int argc, char *argv[])
         }
 
       ORBSVCS_Time::Time_Value_to_TimeT (deadline,
-                                         ACE_OS::gettimeofday () + 
+                                         ACE_OS::gettimeofday () +
                                          ACE_Time_Value (100,0) );
 
       ORBSVCS_Time::Time_Value_to_TimeT (exec_time,
-                                         ACE_OS::gettimeofday () + 
+                                         ACE_OS::gettimeofday () +
                                          ACE_Time_Value (10,0) );
       criticality = 1;
 
-      Worker worker3 (orb.in (), 
-                      server.in (), 
-                      current.in (), 
-                      scheduler, 
+      Worker worker3 (orb.in (),
+                      server.in (),
+                      current.in (),
+                      scheduler,
                       deadline,
                       exec_time,
                       criticality,
@@ -290,7 +283,7 @@ main (int argc, char *argv[])
       worker2.wait ();
       worker3.wait ();
 
-      ACE_DEBUG ((LM_DEBUG, 
+      ACE_DEBUG ((LM_DEBUG,
                   "(%t): wait for worker threads done in main thread\n"));
 
       if (do_shutdown)
@@ -308,12 +301,10 @@ main (int argc, char *argv[])
                                                  sched_param_policy.in (),
                                                  implicit_sched_param
                                                  ACE_ENV_ARG_PARAMETER);
-              ACE_TRY_CHECK;
             }
 
             ACE_DEBUG ((LM_DEBUG, "(%t): about to call server shutdown\n"));
-            server->shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
-            ACE_TRY_CHECK;
+            server->shutdown ();
 
             ACE_DEBUG ((LM_DEBUG, "after shutdown call in main thread\n"));
 
@@ -321,7 +312,6 @@ main (int argc, char *argv[])
             if (enable_dynamic_scheduling)
             {
               current->end_scheduling_segment (0 ACE_ENV_ARG_PARAMETER);
-              ACE_TRY_CHECK;
             }
         }
 
@@ -408,19 +398,16 @@ Worker::svc (void)
                                                     sched_param_policy.in (),
                                                     implicit_sched_param
                                                     ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK_RETURN (-1);
       ACE_DEBUG ((LM_DEBUG, "(%t|%T):after begin_sched_segment\n"));
     }
 
   ACE_DEBUG ((LM_DEBUG, "(%t|%T):about to make two way call\n"));
   server_->test_method (server_load_ ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
   ACE_DEBUG ((LM_DEBUG, "(%t|%T):two way call done\n"));
 
   if (enable_dynamic_scheduling)
     {
       scheduler_current_->end_scheduling_segment (name);
-      ACE_CHECK_RETURN (-1);
     }
 
   ACE_DEBUG ((LM_DEBUG, "client worker thread (%t) done\n"));

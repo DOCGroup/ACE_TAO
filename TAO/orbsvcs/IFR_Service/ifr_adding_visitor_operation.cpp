@@ -41,7 +41,6 @@ ifr_adding_visitor_operation::visit_operation (AST_Operation *node)
       CORBA::Contained_var prev_def =
         be_global->repository ()->lookup_id (node->repoID ()
                                              ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       if (!CORBA::is_nil (prev_def.in ()))
         {
@@ -98,12 +97,10 @@ ifr_adding_visitor_operation::visit_operation (AST_Operation *node)
           prev_def =
             be_global->repository ()->lookup_id (ex->repoID ()
                                                  ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
 
-          exceptions[i] = 
+          exceptions[i] =
             CORBA::ExceptionDef::_narrow (prev_def.in ()
                                           ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
         }
 
       // Build the context list.
@@ -142,7 +139,6 @@ ifr_adding_visitor_operation::visit_operation (AST_Operation *node)
       // Updates ir_current_.
       this->get_referenced_type (return_type
                                  ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       // Is the operation oneway?
       CORBA::OperationMode mode = node->flags () == AST_Operation::OP_oneway
@@ -164,7 +160,6 @@ ifr_adding_visitor_operation::visit_operation (AST_Operation *node)
               CORBA::InterfaceDef_var iface =
                 CORBA::InterfaceDef::_narrow (current_scope
                                               ACE_ENV_ARG_PARAMETER);
-              ACE_TRY_CHECK;
 
               CORBA::OperationDef_var new_def =
                 iface->create_operation (node->repoID (),
@@ -176,14 +171,12 @@ ifr_adding_visitor_operation::visit_operation (AST_Operation *node)
                                          exceptions,
                                          contexts
                                          ACE_ENV_ARG_PARAMETER);
-              ACE_TRY_CHECK;
             }
           else
             {
               CORBA::ValueDef_var vtype =
                 CORBA::ValueDef::_narrow (current_scope
                                           ACE_ENV_ARG_PARAMETER);
-              ACE_TRY_CHECK;
 
               CORBA::OperationDef_var new_def =
                 vtype->create_operation (node->repoID (),
@@ -195,7 +188,6 @@ ifr_adding_visitor_operation::visit_operation (AST_Operation *node)
                                          exceptions,
                                          contexts
                                          ACE_ENV_ARG_PARAMETER);
-              ACE_TRY_CHECK;
             }
         }
       else
@@ -239,7 +231,6 @@ ifr_adding_visitor_operation::visit_argument (AST_Argument *node)
       // Updates ir_current_.
       this->get_referenced_type (arg_type
                                  ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       this->params_[this->index_].type_def =
         CORBA::IDLType::_duplicate (this->ir_current_.in ());

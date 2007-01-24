@@ -67,7 +67,6 @@ main (int argc, char *argv[])
       const char *orb_name = "";
       CORBA::ORB_var orb_ptr =
         CORBA::ORB_init (argc, argv, orb_name ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       CORBA::Object_var temp; // holder for the myriad of times we get
                               // an object which we then have to narrow.
@@ -76,7 +75,6 @@ main (int argc, char *argv[])
 
       temp = orb_ptr->resolve_initial_references ("RootPOA"
                                                   ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       if (CORBA::is_nil (temp.in()))
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -84,23 +82,19 @@ main (int argc, char *argv[])
                           1);
 
       oa_ptr = PortableServer::POA::_narrow (temp.in() ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       PortableServer::POAManager_var poa_manager =
-        oa_ptr->the_POAManager (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        oa_ptr->the_POAManager ();
 
       CORBA::PolicyList policies (2);
       policies.length (2);
       policies[0] =
         oa_ptr->create_id_assignment_policy (PortableServer::USER_ID
                                              ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       policies[1] =
         oa_ptr->create_lifespan_policy (PortableServer::PERSISTENT
                                         ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       // We use a different POA, otherwise the user would have to
       // change the object key each time it invokes the server.
@@ -109,7 +103,6 @@ main (int argc, char *argv[])
                             poa_manager.in (),
                             policies
                             ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       // Parse remaining command line and verify parameters.
       parse_args (argc, argv);
@@ -128,19 +121,16 @@ main (int argc, char *argv[])
       good_poa->activate_object_with_id (id.in (),
                                          param_test
                                          ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       // Stringify the objref we'll be implementing, and print it to
       // stdout.  Someone will take that string and give it to a
       // client.  Then release the object.
 
       temp = good_poa->id_to_reference (id.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       CORBA::String_var str =
         orb_ptr->object_to_string (temp.in ()
                                    ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       if (TAO_debug_level > 0)
         {
@@ -166,21 +156,17 @@ main (int argc, char *argv[])
 
 
       // Make the POAs controlled by this manager active
-      poa_manager->activate (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      poa_manager->activate ();
 
-      orb_ptr->run (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      orb_ptr->run ();
 
       good_poa->destroy (1,
                          1
                          ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       oa_ptr->destroy (1,
                        1
                        ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
     }
   ACE_CATCH (CORBA::SystemException, sysex)
     {
@@ -193,7 +179,6 @@ main (int argc, char *argv[])
       return -1;
     }
   ACE_ENDTRY;
-  ACE_CHECK_RETURN (-1);
   // Free resources
   delete param_test;
 

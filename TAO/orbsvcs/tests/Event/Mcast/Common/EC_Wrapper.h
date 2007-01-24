@@ -44,15 +44,15 @@ public:
   /// RtecEventChannelAdmin::Event_Channel methods.
   //@{
   virtual RtecEventChannelAdmin::ConsumerAdmin_ptr
-    for_consumers (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+    for_consumers (void)
       ACE_THROW_SPEC ((CORBA::SystemException));
   virtual RtecEventChannelAdmin::SupplierAdmin_ptr
-    for_suppliers (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+    for_suppliers (void)
       ACE_THROW_SPEC ((CORBA::SystemException));
 
   /// Destroy the Event Channel, deactivate from POA, and shut down
   /// the ORB.
-  virtual void destroy (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+  virtual void destroy (void)
       ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual RtecEventChannelAdmin::Observer_Handle
@@ -80,7 +80,7 @@ private:
 
   /// Helper - destroys Event Channel and deactivate from POA, if
   /// necessary.
-  void destroy_ec (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+  void destroy_ec (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   /// Event Channel implementation.

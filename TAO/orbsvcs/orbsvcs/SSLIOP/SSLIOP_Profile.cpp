@@ -339,7 +339,6 @@ TAO_SSLIOP_Profile::parse_string (const char * ior
 {
    TAO_IIOP_Profile::parse_string (ior
                                    ACE_ENV_ARG_PARAMETER);
-   ACE_CHECK;
 
    this->ssl_endpoint_.iiop_endpoint (&this->endpoint_, true);
 

@@ -11,14 +11,14 @@ const char* filename = "test.ior";
 class test_impl : public POA_test
 {
 public:
-  
+
   test_impl (CORBA::ORB_ptr orb,
 	     RTScheduling::Current_ptr current)
-    : orb_ (orb), 
+    : orb_ (orb),
     current_ (RTScheduling::Current::_duplicate (current))
   {
   }
-  
+
   virtual void one_way (const char * message
 			ACE_ENV_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((CORBA::SystemException))
@@ -27,7 +27,7 @@ public:
 		"One-Way Message = %s\n",
 		message));
   }
-  
+
   virtual char * two_way (const char * message
 			  ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException))
@@ -35,19 +35,17 @@ public:
     ACE_DEBUG ((LM_DEBUG,
 		"Two-Way Message = %s\n",
 		message));
-    
-    RTScheduling::DistributableThread_var DT = 
+
+    RTScheduling::DistributableThread_var DT =
       this->current_->lookup (*(this->current_->id ())
 			      ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK_RETURN (0);
-    
-    DT->cancel (ACE_ENV_SINGLE_ARG_PARAMETER);
-    ACE_CHECK_RETURN (0);
-    
+
+    DT->cancel ();
+
     return CORBA::string_dup (message);
   }
 
-  virtual void shutdown (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+  virtual void shutdown (void)
     ACE_THROW_SPEC ((CORBA::SystemException))
   {
     orb_->shutdown ();
@@ -58,7 +56,7 @@ private:
   RTScheduling::Current_var current_;
 };
 
-int 
+int
 parse_args (int argc,
 	    ACE_TCHAR* argv [])
 {
@@ -91,77 +89,65 @@ main (int argc, char* argv[])
 			 argv,
 			 ""
 			 ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       parse_args (argc, argv);
 
       CORBA::Object_var object =
 	orb->resolve_initial_references ("RootPOA"
 					 ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
-      
+
       PortableServer::POA_var root_poa =
 	PortableServer::POA::_narrow (object.in ()
 				      ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
-      
+
       PortableServer::POAManager_var poa_manager =
-	root_poa->the_POAManager (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
-      
-      poa_manager->activate (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
-      
+  root_poa->the_POAManager ();
+
+      poa_manager->activate ();
+
       CORBA::Object_var current_obj = orb->resolve_initial_references ("RTScheduler_Current"
 								       ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
-      
+
       RTScheduling::Current_var current = RTScheduling::Current::_narrow (current_obj.in ()
 									  ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       test_impl* test_i;
       ACE_NEW_RETURN (test_i,
 		      test_impl (orb.in (),
 				 current.in ()),
 		      -1);
-      
+
       PortableServer::ObjectId_var id;
-      
+
       id = root_poa->activate_object (test_i
 				      ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       CORBA::Object_var server =
 	root_poa->id_to_reference (id.in ()
 				   ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       CORBA::String_var ior;
       if (!CORBA::is_nil (server.in ()))
 	{
 	  ior = orb->object_to_string (server.in ()
 				       ACE_ENV_ARG_PARAMETER);
-	  ACE_TRY_CHECK;
 	}
-      else 
+      else
 	{
 	  ACE_ERROR_RETURN ((LM_ERROR,
 			     "Failed to activate test object\n"),
 			    -1);
 	}
-      
+
       ACE_DEBUG ((LM_DEBUG,
 		  "IOR = %s\n",
 		  ior.in ()));
 
       CORBA::Object_var manager_obj = orb->resolve_initial_references ("RTSchedulerManager"
 								       ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       TAO_RTScheduler_Manager_var manager = TAO_RTScheduler_Manager::_narrow (manager_obj.in ()
 									      ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       TAO_Scheduler scheduler (orb.in ());
       manager->rtscheduler (&scheduler);
@@ -187,7 +173,7 @@ main (int argc, char* argv[])
                            "Caught exception:");
       return 1;
     }
-  ACE_ENDTRY; 
+  ACE_ENDTRY;
 
   return 0;
 }

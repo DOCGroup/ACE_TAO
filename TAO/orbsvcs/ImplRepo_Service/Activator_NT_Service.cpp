@@ -72,7 +72,6 @@ Activator_NT_Service::svc (void)
   ACE_TRY
     {
       int status = server.init (opts ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       if (status == -1)
         {
@@ -82,11 +81,9 @@ Activator_NT_Service::svc (void)
       else
         {
           report_status (SERVICE_RUNNING);
-          server.run (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+          server.run ();
 
-          status = server.fini (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+          status = server.fini ();
 
           report_status (SERVICE_STOPPED);
 

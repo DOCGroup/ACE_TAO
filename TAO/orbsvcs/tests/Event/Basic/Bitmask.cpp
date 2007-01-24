@@ -23,19 +23,14 @@ main (int argc, char* argv[])
       // ORB initialization boiler plate...
       CORBA::ORB_var orb =
         CORBA::ORB_init (argc, argv, "" ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       CORBA::Object_var object =
         orb->resolve_initial_references ("RootPOA" ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
       PortableServer::POA_var poa =
         PortableServer::POA::_narrow (object.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
       PortableServer::POAManager_var poa_manager =
-        poa->the_POAManager (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
-      poa_manager->activate (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        poa->the_POAManager ();
+      poa_manager->activate ();
 
       // ****************************************************************
 
@@ -45,25 +40,21 @@ main (int argc, char* argv[])
       attributes.supplier_reconnect = 1;
 
       TAO_EC_Event_Channel ec_impl (attributes);
-      ec_impl.activate (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      ec_impl.activate ();
 
       RtecEventChannelAdmin::EventChannel_var event_channel =
-        ec_impl._this (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        ec_impl._this ();
 
 
       // ****************************************************************
 
       // Obtain the consumer admin..
       RtecEventChannelAdmin::ConsumerAdmin_var consumer_admin =
-        event_channel->for_consumers (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        event_channel->for_consumers ();
 
       // Obtain the supplier admin..
       RtecEventChannelAdmin::SupplierAdmin_var supplier_admin =
-        event_channel->for_suppliers (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        event_channel->for_suppliers ();
 
       // ****************************************************************
 
@@ -74,28 +65,24 @@ main (int argc, char* argv[])
       first_supplier.activate (consumer_admin.in (),
                                milliseconds
                                ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
       first_supplier.connect (supplier_admin.in (),
                               0x00001111UL,
                               0x11110000UL,
                               0x00001111UL,
                               0x11110000UL
                               ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       EC_Counting_Supplier second_supplier;
 
       second_supplier.activate (consumer_admin.in (),
                                 milliseconds
                                 ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
       second_supplier.connect (supplier_admin.in (),
                                0x01100000UL,
                                0x00000110UL,
                                0x01100000UL,
                                0x00000110UL
                                ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       // ****************************************************************
 
@@ -112,7 +99,6 @@ main (int argc, char* argv[])
         consumer_bitmask_reject.connect (consumer_admin.in (),
                                          consumer_qos.get_ConsumerQOS ()
                                          ACE_ENV_ARG_PARAMETER);
-        ACE_TRY_CHECK;
       }
 
       // ****************************************************************
@@ -129,7 +115,6 @@ main (int argc, char* argv[])
         consumer_bitmask_accept.connect (consumer_admin.in (),
                                          consumer_qos.get_ConsumerQOS ()
                                          ACE_ENV_ARG_PARAMETER);
-        ACE_TRY_CHECK;
       }
 
       // ****************************************************************
@@ -146,7 +131,6 @@ main (int argc, char* argv[])
         consumer_bitmask_filter.connect (consumer_admin.in (),
                                          consumer_qos.get_ConsumerQOS ()
                                          ACE_ENV_ARG_PARAMETER);
-        ACE_TRY_CHECK;
       }
 
       // ****************************************************************
@@ -164,7 +148,6 @@ main (int argc, char* argv[])
         consumer_bitmask_value.connect (consumer_admin.in (),
                                         consumer_qos.get_ConsumerQOS ()
                                         ACE_ENV_ARG_PARAMETER);
-        ACE_TRY_CHECK;
       }
 
       // ****************************************************************
@@ -182,7 +165,6 @@ main (int argc, char* argv[])
         consumer_bitmask_loose.connect (consumer_admin.in (),
                                         consumer_qos.get_ConsumerQOS ()
                                         ACE_ENV_ARG_PARAMETER);
-        ACE_TRY_CHECK;
       }
 
       // ****************************************************************
@@ -194,37 +176,26 @@ main (int argc, char* argv[])
 
       // ****************************************************************
 
-      consumer_bitmask_loose.disconnect (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
-      consumer_bitmask_value.disconnect (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
-      consumer_bitmask_filter.disconnect (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
-      consumer_bitmask_accept.disconnect (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
-      consumer_bitmask_reject.disconnect (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      consumer_bitmask_loose.disconnect ();
+      consumer_bitmask_value.disconnect ();
+      consumer_bitmask_filter.disconnect ();
+      consumer_bitmask_accept.disconnect ();
+      consumer_bitmask_reject.disconnect ();
 
       // ****************************************************************
 
-      second_supplier.deactivate (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
-      second_supplier.disconnect (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
-      first_supplier.deactivate (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
-      first_supplier.disconnect (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      second_supplier.deactivate ();
+      second_supplier.disconnect ();
+      first_supplier.deactivate ();
+      first_supplier.disconnect ();
 
       // ****************************************************************
 
-      event_channel->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      event_channel->destroy ();
 
       // ****************************************************************
 
       poa->destroy (1, 1 ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       // ****************************************************************
 
@@ -241,8 +212,7 @@ main (int argc, char* argv[])
       expected = second_supplier.event_count;
       consumer_bitmask_loose.dump_results (expected, 5);
 
-      orb->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      orb->destroy ();
     }
   ACE_CATCHANY
     {

@@ -62,7 +62,6 @@ PP_Test_Server::init (int argc,
                        "%p\n",
                        "init_child_poa"),
                       -1);
-  ACE_CHECK_RETURN (-1);
   this->argc_ = argc;
   this->argv_ = argv;
 
@@ -81,7 +80,6 @@ PP_Test_Server::init (int argc,
     this->orb_manager_.activate_under_child_poa ("factory",
                                                  this->factory_impl_
                                                  ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
 
   ACE_DEBUG ((LM_DEBUG,
               "The IOR is: <%s>\n",
@@ -102,9 +100,8 @@ PP_Test_Server::init (int argc,
 int
 PP_Test_Server::run (ACE_ENV_SINGLE_ARG_DECL_NOT_USED ACE_ENV_SINGLE_ARG_PARAMETER)
 {
-  int result = this->orb_manager_.run (ACE_ENV_SINGLE_ARG_PARAMETER);
+  int result = this->orb_manager_.run ();
 
-  ACE_CHECK_RETURN (-1);
 
   if (result == -1)
     ACE_ERROR_RETURN ((LM_ERROR,

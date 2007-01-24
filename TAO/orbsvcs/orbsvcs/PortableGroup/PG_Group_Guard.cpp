@@ -34,13 +34,11 @@ TAO_PG_Group_Guard::~TAO_PG_Group_Guard (void)
           this->generic_factory_.delete_object_i (this->factory_set_,
                                                   1  // Ignore exceptions
                                                   ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
 
           // This should never throw an exception if this Guard is
           // used properly.
           this->group_manager_.destroy_object_group (this->oid_
                                                      ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
         }
       ACE_CATCHANY
         {

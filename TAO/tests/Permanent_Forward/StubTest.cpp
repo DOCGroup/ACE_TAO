@@ -75,10 +75,8 @@ static bool
 marshaled_equal_to_other (CORBA::ORB_ptr orb, CORBA::Object_ptr obj, TAO_MProfile *other_mprofile)
 {
   CORBA::String_var str = orb->object_to_string (obj ACE_ENV_ARG_PARAMETER);
-  ACE_TRY_CHECK;
 
   CORBA::Object_var obj_copy = orb->string_to_object (str.in () ACE_ENV_ARG_PARAMETER);
-  ACE_TRY_CHECK;
 
   TAO_Stub *stub_copy = obj_copy->_stubobj ();
   TAO_MProfile *copy_mprofile  = &(stub_copy->base_profiles ());
@@ -102,11 +100,9 @@ static void
 test_forward_permanent (CORBA::ORB_ptr orb)
 {
   CORBA::Object_var obj1 = orb->string_to_object ("corbaloc:iiop:192.168.1.2:1111,iiop:192.168.1.3:1111/NameService" ACE_ENV_ARG_PARAMETER);
-  ACE_TRY_CHECK;
 
   // the permanent profile
   CORBA::Object_var obj4 = orb->string_to_object ("corbaloc:iiop:192.168.1.2:4444,iiop:192.168.1.3:4444/NameService" ACE_ENV_ARG_PARAMETER);
-  ACE_TRY_CHECK;
 
   TAO_Stub *stub1 = obj1->_stubobj ();
   TAO_Stub *stub4 = obj4->_stubobj ();
@@ -149,19 +145,14 @@ static void
 test_forward_permanent_mix (CORBA::ORB_ptr orb)
 {
   CORBA::Object_var obj1 = orb->string_to_object ("corbaloc:iiop:192.168.1.2:1111,iiop:192.168.1.3:1111/NameService" ACE_ENV_ARG_PARAMETER);
-  ACE_TRY_CHECK;
 
   CORBA::Object_var obj2 = orb->string_to_object ("corbaloc:iiop:192.168.1.2:2222,iiop:192.168.1.3:2222/NameService" ACE_ENV_ARG_PARAMETER);
-  ACE_TRY_CHECK;
 
   CORBA::Object_var obj3 = orb->string_to_object ("corbaloc:iiop:192.168.1.2:3333,iiop:192.168.1.3:3333/NameService" ACE_ENV_ARG_PARAMETER);
-  ACE_TRY_CHECK;
 
   CORBA::Object_var obj4 = orb->string_to_object ("corbaloc:iiop:192.168.1.2:4444,iiop:192.168.1.3:4444/NameService" ACE_ENV_ARG_PARAMETER);
-  ACE_TRY_CHECK;
 
   CORBA::Object_var obj5 = orb->string_to_object ("corbaloc:iiop:192.168.1.2:5555,iiop:192.168.1.3:5555/NameService" ACE_ENV_ARG_PARAMETER);
-  ACE_TRY_CHECK;
 
   TAO_Stub *stub1 = obj1->_stubobj ();
   TAO_Stub *stub2 = obj2->_stubobj ();
@@ -265,13 +256,10 @@ static void
 test_forward (CORBA::ORB_ptr orb)
 {
   CORBA::Object_var obj1 = orb->string_to_object ("corbaloc:iiop:192.168.1.2:1111,iiop:192.168.1.3:1111/NameService" ACE_ENV_ARG_PARAMETER);
-  ACE_TRY_CHECK;
 
   CORBA::Object_var obj2 = orb->string_to_object ("corbaloc:iiop:192.168.1.2:2222,iiop:192.168.1.3:2222/NameService" ACE_ENV_ARG_PARAMETER);
-  ACE_TRY_CHECK;
 
   CORBA::Object_var obj3 = orb->string_to_object ("corbaloc:iiop:192.168.1.2:3333,iiop:192.168.1.3:3333/NameService" ACE_ENV_ARG_PARAMETER);
-  ACE_TRY_CHECK;
 
   TAO_Stub *stub1 = obj1->_stubobj ();
   TAO_Stub *stub2 = obj2->_stubobj ();
@@ -344,7 +332,6 @@ main (int argc, char *argv[])
                                             argv,
                                             ""
                                             ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       test_forward (orb.in());
       test_forward_permanent (orb.in());

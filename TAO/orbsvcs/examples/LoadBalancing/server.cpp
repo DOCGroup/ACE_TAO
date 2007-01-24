@@ -80,12 +80,10 @@ join_object_group (CORBA::ORB_ptr orb,
   CORBA::Object_var ns_object =
     orb->resolve_initial_references ("NameService"
                                      ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (CORBA::Object::_nil ());
 
   CosNaming::NamingContext_var nc =
     CosNaming::NamingContext::_narrow (ns_object.in ()
                                        ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (CORBA::Object::_nil ());
 
   CosNaming::Name name (1);
   name.length (1);
@@ -99,7 +97,6 @@ join_object_group (CORBA::ORB_ptr orb,
     {
       group = nc->resolve (name
                            ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
     }
   ACE_CATCH (CosNaming::NamingContext::NotFound, ex)
     {
@@ -125,7 +122,6 @@ join_object_group (CORBA::ORB_ptr orb,
                                  criteria,
                                  fcid.out ()
                                  ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       ACE_TRY_EX (foo)
         {
@@ -196,7 +192,6 @@ join_object_group (CORBA::ORB_ptr orb,
 
           lm->set_default_properties (props
                                       ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
         }
       ACE_CATCH (CosNaming::NamingContext::AlreadyBound, ex)
         {
@@ -211,28 +206,23 @@ join_object_group (CORBA::ORB_ptr orb,
           ACE_TRY_CHECK_EX (foo);
         }
       ACE_ENDTRY;
-      ACE_TRY_CHECK;
     }
   ACE_ENDTRY;
-  ACE_CHECK_RETURN (CORBA::Object::_nil ());
 
   StockFactory * stockfactory_impl;
   ACE_NEW_THROW_EX (stockfactory_impl,
                     StockFactory (orb, number),
                     CORBA::NO_MEMORY ());
-  ACE_CHECK_RETURN (CORBA::Object::_nil ());
 
   PortableServer::ServantBase_var owner_transfer (stockfactory_impl);
 
   Test::StockFactory_var stockfactory =
-    stockfactory_impl->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (CORBA::Object::_nil ());
+    stockfactory_impl->_this ();
 
   group = lm->add_member (group.in (),
                           location,
                           stockfactory.in ()
                           ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (CORBA::Object::_nil ());
 
   return group._retn ();
 }
@@ -251,17 +241,14 @@ main (int argc, char *argv[])
 
       PortableInterceptor::register_orb_initializer (orb_initializer.in ()
                                                      ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       CORBA::ORB_var orb =
         CORBA::ORB_init (argc, argv, "" ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
 
       CORBA::Object_var poa_object =
         orb->resolve_initial_references ("RootPOA"
                                          ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       if (CORBA::is_nil (poa_object.in ()))
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -271,61 +258,50 @@ main (int argc, char *argv[])
       PortableServer::POA_var root_poa =
         PortableServer::POA::_narrow (poa_object.in ()
                                       ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       PortableServer::POAManager_var poa_manager =
-        root_poa->the_POAManager (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        root_poa->the_POAManager ();
 
       if (parse_args (argc, argv) != 0)
         return 1;
 
-      poa_manager->activate (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      poa_manager->activate ();
 
       CORBA::Object_var lm_object =
         orb->resolve_initial_references ("LoadManager"
                                          ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       CosLoadBalancing::LoadManager_var load_manager =
         CosLoadBalancing::LoadManager::_narrow (lm_object.in ()
                                                 ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       RPS_Monitor * monitor_servant;
       ACE_NEW_THROW_EX (monitor_servant,
                         RPS_Monitor (initializer->interceptor ()),
                         CORBA::NO_MEMORY ());
-      ACE_TRY_CHECK;
 
       PortableServer::ServantBase_var safe_monitor_servant (monitor_servant);
 
       CosLoadBalancing::LoadMonitor_var load_monitor =
-        monitor_servant->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        monitor_servant->_this ();
 
       PortableGroup::Location_var location =
-        load_monitor->the_location (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        load_monitor->the_location ();
 
       CORBA::Object_var stockfactory =
         ::join_object_group (orb.in (),
                              load_manager.in (),
                              location.in ()
                              ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       TAO_LB_LoadAlert & alert_servant = initializer->load_alert ();
 
       CosLoadBalancing::LoadAlert_var load_alert =
-        alert_servant._this (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        alert_servant._this ();
 
 
       CORBA::String_var ior =
         orb->object_to_string (stockfactory.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       // If the ior_output_file exists, output the ior to it
       FILE *output_file= ACE_OS::fopen (ior_output_file, "w");
@@ -340,23 +316,18 @@ main (int argc, char *argv[])
       load_manager->register_load_monitor (location.in (),
                                            load_monitor.in ()
                                            ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       load_manager->register_load_alert (location.in (),
                                          load_alert.in ()
                                          ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
-      orb->run (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      orb->run ();
 
       ACE_DEBUG ((LM_DEBUG, "(%P|%t) server - event loop finished\n"));
 
       root_poa->destroy (1, 1 ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
-      orb->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      orb->destroy ();
     }
   ACE_CATCHANY
     {

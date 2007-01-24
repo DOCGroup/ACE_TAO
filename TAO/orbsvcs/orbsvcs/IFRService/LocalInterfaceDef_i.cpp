@@ -3,8 +3,8 @@
 #include "orbsvcs/IFRService/LocalInterfaceDef_i.h"
 #include "orbsvcs/IFRService/Repository_i.h"
 
-ACE_RCSID (IFRService, 
-           LocalInterfaceDef_i, 
+ACE_RCSID (IFRService,
+           LocalInterfaceDef_i,
            "$Id$")
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
@@ -25,7 +25,7 @@ TAO_LocalInterfaceDef_i::~TAO_LocalInterfaceDef_i (void)
 }
 
 CORBA::DefinitionKind
-TAO_LocalInterfaceDef_i::def_kind (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+TAO_LocalInterfaceDef_i::def_kind (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return CORBA::dk_LocalInterface;
@@ -38,8 +38,7 @@ TAO_LocalInterfaceDef_i::is_a (const char *interface_id
 {
   TAO_IFR_READ_GUARD_RETURN (0);
 
-  this->update_key (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (0);
+  this->update_key ();
 
   return this->is_a_i (interface_id
                        ACE_ENV_ARG_PARAMETER);

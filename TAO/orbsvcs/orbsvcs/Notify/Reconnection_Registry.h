@@ -69,7 +69,7 @@ namespace TAO_Notify
     void unregister_callback (::NotifyExt::ReconnectionRegistry::ReconnectionID id
       ACE_ENV_ARG_DECL);
 
-    CORBA::Boolean is_alive (ACE_ENV_SINGLE_ARG_DECL);
+    CORBA::Boolean is_alive (void);
 
     //////////////////////
     // During topology save

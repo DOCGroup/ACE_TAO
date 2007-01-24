@@ -18,8 +18,7 @@ TAO_EC_Channel_Destroyer_Functor::operator() (
   ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY
     {
-      event_channel->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      event_channel->destroy ();
     }
   ACE_CATCHALL
     {

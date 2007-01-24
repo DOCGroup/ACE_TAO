@@ -30,10 +30,8 @@ TAO_Notify_EventChannelFactory_i::create (PortableServer::POA_ptr default_POA AC
   CORBA::ORB_ptr orb = poa->orb_core ().orb () ;
 
   notify_service->init_service (orb ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (notify_factory._retn ());
 
   notify_factory = notify_service->create (default_POA ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (notify_factory._retn ());
 
   return notify_factory._retn ();
 }

@@ -43,11 +43,11 @@ public:
 
   /// Forward requests back to the load manager via the object group
   /// reference.
-  virtual void enable_alert (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+  virtual void enable_alert (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   /// Stop forwarding requests, and begin accepting them again.
-  virtual void disable_alert (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+  virtual void disable_alert (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   //@}
@@ -64,7 +64,7 @@ public:
    * reference counting.
    */
   virtual ~TAO_LB_LoadAlert (void);
-  
+
 private:
 
   /// Has this LoadAlert servant been alerted of a high load condition

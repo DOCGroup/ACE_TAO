@@ -50,7 +50,6 @@ TAO_EC_Priority_Dispatching::activate (void)
 
           RtecScheduler::handle_t rt_info =
             this->scheduler_->create (buf ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
 
           this->scheduler_->set (rt_info,
                                  RtecScheduler::VERY_LOW_CRITICALITY,
@@ -63,7 +62,6 @@ TAO_EC_Priority_Dispatching::activate (void)
                                  1, // threads
                                  RtecScheduler::OPERATION
                                   ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
         }
       ACE_CATCHANY
         {

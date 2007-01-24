@@ -57,8 +57,7 @@ TAO_EC_Per_Supplier_Filter::unbind (TAO_EC_ProxyPushConsumer* consumer)
 
   ACE_TRY_NEW_ENV
     {
-      this->shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      this->shutdown ();
     }
   ACE_CATCHANY
     {
@@ -96,7 +95,6 @@ TAO_EC_Per_Supplier_Filter::connected (TAO_EC_ProxyPushSupplier* supplier
           ACE_DEBUG ((LM_DEBUG, "  matched\n"));
 #endif /* TAO_EC_ENABLED_DEBUG_MESSAGES */
           this->collection_->connected (supplier ACE_ENV_ARG_PARAMETER);
-          ACE_CHECK;
           return;
         }
 #if TAO_EC_ENABLE_DEBUG_MESSAGES
@@ -129,7 +127,6 @@ TAO_EC_Per_Supplier_Filter::reconnected (TAO_EC_ProxyPushSupplier* supplier
         {
           //          ACE_DEBUG ((LM_DEBUG, "  matched %x\n", supplier));
           this->collection_->connected (supplier ACE_ENV_ARG_PARAMETER);
-          ACE_CHECK;
           return;
         }
     }
@@ -144,9 +141,9 @@ TAO_EC_Per_Supplier_Filter::disconnected (TAO_EC_ProxyPushSupplier* supplier
 }
 
 void
-TAO_EC_Per_Supplier_Filter::shutdown (ACE_ENV_SINGLE_ARG_DECL)
+TAO_EC_Per_Supplier_Filter::shutdown (void)
 {
-  this->collection_->shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
+  this->collection_->shutdown ();
 }
 
 void

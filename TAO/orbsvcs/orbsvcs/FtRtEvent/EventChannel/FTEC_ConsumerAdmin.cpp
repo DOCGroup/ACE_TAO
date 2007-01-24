@@ -29,19 +29,18 @@ TAO_FTEC_ConsumerAdmin::~TAO_FTEC_ConsumerAdmin (void)
 
 
 RtecEventChannelAdmin::ProxyPushSupplier_ptr
-TAO_FTEC_ConsumerAdmin::obtain_push_supplier (ACE_ENV_SINGLE_ARG_DECL)
+TAO_FTEC_ConsumerAdmin::obtain_push_supplier (void)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_DEBUG((LM_DEBUG,"obtain_push_supplier\n" ));
-  return obtain_proxy(ACE_ENV_SINGLE_ARG_PARAMETER);
+  return obtain_proxy();
 }
 
 void
 TAO_FTEC_ConsumerAdmin::disconnect(RtecEventChannelAdmin::ProxyPushSupplier_ptr obj)
 {
   ACE_TRY_NEW_ENV {
-    obj->disconnect_push_supplier(ACE_ENV_SINGLE_ARG_PARAMETER);
-    ACE_TRY_CHECK;
+    obj->disconnect_push_supplier();
   }
   ACE_CATCHALL {
   }

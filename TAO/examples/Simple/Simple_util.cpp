@@ -97,19 +97,16 @@ Server<Servant>::test_for_ins (CORBA::String_var ior)
       CORBA::Object_var table_object =
         orb->resolve_initial_references ("IORTable"
                                          ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       IORTable::Table_var adapter =
         IORTable::Table::_narrow (table_object.in ()
                                   ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
       if (CORBA::is_nil (adapter.in ()))
         {
           ACE_ERROR ((LM_ERROR, "Nil IORTable\n"));
         }
 
       adapter->bind (this->ins_, ior.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
     }
   ACE_CATCHANY
     {
@@ -137,7 +134,6 @@ Server<Servant>::init (const char *servant_name,
                        "init_child_poa"),
                       -1);
 
-  ACE_CHECK_RETURN (-1);
 
   this->argc_ = argc;
   this->argv_ = argv;
@@ -176,7 +172,6 @@ Server<Servant>::init (const char *servant_name,
         this->orb_manager_.activate_under_child_poa (servant_name,
                                                      &this->servant_
                                                      ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       ACE_DEBUG ((LM_DEBUG,
                   "The IOR is: <%s>\n",
@@ -208,10 +203,10 @@ Server<Servant>::init (const char *servant_name,
 }
 
 template <class Servant>int
-Server<Servant>::run (ACE_ENV_SINGLE_ARG_DECL)
+Server<Servant>::run (void)
 {
     // Run the main event loop for the ORB.
-  if (this->orb_manager_.run (ACE_ENV_SINGLE_ARG_PARAMETER) == -1)
+  if (this->orb_manager_.run () == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "Server_i::run"),
                       -1);
@@ -237,16 +232,13 @@ Server<Servant>::register_name (void)
   // (re)Bind the object.
   ACE_TRY
     {
-      CORBA::Object_var object = servant_._this (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      CORBA::Object_var object = servant_._this ();
 
-      this->orb_manager_.activate_poa_manager (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      this->orb_manager_.activate_poa_manager ();
 
       naming_client_->rebind (bindName,
                               object.in()
                               ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       // Test for INS.
       if (this->ins_)
@@ -267,7 +259,6 @@ Server<Servant>::register_name (void)
                         -1);
     }
   ACE_ENDTRY;
-  ACE_CHECK_RETURN (-1);
 
   return 0;
 }
@@ -386,7 +377,6 @@ Client<INTERFACE_OBJECT, Var>::init (const char *name,
                                     this->argv_,
                                     0
                                     ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       // Parse command line and verify parameters.
       if (this->parse_args () == -1)
@@ -396,7 +386,6 @@ Client<INTERFACE_OBJECT, Var>::init (const char *name,
         {
           CORBA::Object_var server_object =
             this->orb_->string_to_object (this->ior_ ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
 
 
           if (CORBA::is_nil (server_object.in ()))
@@ -406,7 +395,6 @@ Client<INTERFACE_OBJECT, Var>::init (const char *name,
                               -1);
           this->server_ = INTERFACE_OBJECT::_narrow (server_object.in ()
                                                  ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
         }
       else if (this->naming_ == 1)
         {
@@ -414,8 +402,7 @@ Client<INTERFACE_OBJECT, Var>::init (const char *name,
           ACE_DEBUG((LM_DEBUG,
                      "Using the Naming Service \n"));
           this->name_ = const_cast<char *> (name);
-          int retv = this->obtain_initial_references (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+          int retv = this->obtain_initial_references ();
           if (retv ==-1)
             return -1;
         }
@@ -439,7 +426,7 @@ Client<INTERFACE_OBJECT, Var>::init (const char *name,
 
 
 template <class INTERFACE_OBJECT, class Var> int
-Client<INTERFACE_OBJECT, Var>::obtain_initial_references (ACE_ENV_SINGLE_ARG_DECL)
+Client<INTERFACE_OBJECT, Var>::obtain_initial_references (void)
 {
 
   ACE_TRY
@@ -459,11 +446,9 @@ Client<INTERFACE_OBJECT, Var>::obtain_initial_references (ACE_ENV_SINGLE_ARG_DEC
       CORBA::Object_var obj =
         naming_client_->resolve (server_name
                                 ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       this->server_ = INTERFACE_OBJECT::_narrow (obj.in ()
                                              ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
     }
   ACE_CATCHANY
     {

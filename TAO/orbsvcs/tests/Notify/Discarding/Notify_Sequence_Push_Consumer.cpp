@@ -46,20 +46,17 @@ Notify_Sequence_Push_Consumer::_connect (
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   CosNotifyComm::SequencePushConsumer_var consumer =
-    this->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+    this->_this ();
 
   CosNotifyChannelAdmin::ProxySupplier_var proxysupplier =
     consumer_admin->obtain_notification_push_supplier (
       CosNotifyChannelAdmin::SEQUENCE_EVENT,
       proxy_id_
       ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
   this->proxy_ =
     CosNotifyChannelAdmin::SequenceProxyPushSupplier::_narrow (
       proxysupplier.in () ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
   CosNotification::QoSProperties properties (4);
   properties.length (4);
@@ -78,11 +75,9 @@ Notify_Sequence_Push_Consumer::_connect (
   this->proxy_->set_qos (properties);
   this->proxy_->connect_sequence_push_consumer (consumer.in ()
                                                 ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
   // give ownership to POA
-  this->_remove_ref (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+  this->_remove_ref ();
 }
 
 

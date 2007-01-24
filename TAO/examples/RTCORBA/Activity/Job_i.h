@@ -43,7 +43,7 @@ class activity_Export Job_i : public POA_Job
                      CORBA::SystemException
                      ));
 
-  virtual void shutdown (ACE_ENV_SINGLE_ARG_DECL)
+  virtual void shutdown (void)
     ACE_THROW_SPEC ((
                      CORBA::SystemException
                      ));

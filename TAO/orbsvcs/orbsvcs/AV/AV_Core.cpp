@@ -591,7 +591,6 @@ TAO_AV_Core::get_acceptor (const char *flowname)
     {
 
       TAO_AV_AcceptorSetItor acceptor =  this->acceptor_registry_->begin ();
-      ACE_TRY_CHECK;
 
       TAO_AV_AcceptorSetItor end =
         this->acceptor_registry_->end ();
@@ -618,7 +617,6 @@ TAO_AV_Core::remove_acceptor (const char *flowname)
     {
 
       TAO_AV_AcceptorSetItor acceptor =  this->acceptor_registry_->begin ();
-      ACE_TRY_CHECK;
 
       TAO_AV_AcceptorSetItor end =
         this->acceptor_registry_->end ();
@@ -1134,16 +1132,13 @@ TAO_AV_Core::deactivate_servant (PortableServer::Servant servant)
   ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY
     {
-      PortableServer::POA_var poa = servant->_default_POA (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      PortableServer::POA_var poa = servant->_default_POA ();
 
       PortableServer::ObjectId_var id = poa->servant_to_id (servant
                                                             ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       poa->deactivate_object (id.in ()
                               ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
     }
   ACE_CATCHANY
     {
@@ -1151,7 +1146,6 @@ TAO_AV_Core::deactivate_servant (PortableServer::Servant servant)
       return -1;
     }
   ACE_ENDTRY;
-  ACE_CHECK_RETURN (-1);
   return 0;
 }
 

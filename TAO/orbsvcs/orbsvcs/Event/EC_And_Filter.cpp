@@ -62,7 +62,6 @@ TAO_EC_And_Filter::filter (const RtecEventComm::EventSet& event,
   for (ChildrenIterator i = this->begin (); i != end; ++i)
     {
       int n = (*i)->filter (event, qos_info ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK_RETURN (0);
       if (n == 0)
         return 0;
     }
@@ -71,7 +70,6 @@ TAO_EC_And_Filter::filter (const RtecEventComm::EventSet& event,
   if (this->parent () != 0)
     {
       this->parent ()->push (event, qos_info ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK_RETURN (0);
     }
 
   return 1;
@@ -86,7 +84,6 @@ TAO_EC_And_Filter::filter_nocopy (RtecEventComm::EventSet& event,
   for (ChildrenIterator i = this->begin (); i != end; ++i)
     {
       int n = (*i)->filter_nocopy (event, qos_info ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK_RETURN (0);
       if (n == 0)
         return 0;
     }
@@ -95,7 +92,6 @@ TAO_EC_And_Filter::filter_nocopy (RtecEventComm::EventSet& event,
   if (this->parent () != 0)
     {
       this->parent ()->push (event, qos_info ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK_RETURN (0);
     }
 
   return 1;

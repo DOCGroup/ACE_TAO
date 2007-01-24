@@ -44,7 +44,7 @@ Data::Data (CORBA::ORB_var orb)
       m_shortseq1[0UL] = 0;
       m_shortseq1[1UL] = 1;
       m_shortseq1[2UL] = 2;
-    
+
       labels[0] = "type boolean";
       labels[1] = "type octet";
       labels[2] = "type char";
@@ -62,14 +62,13 @@ Data::Data (CORBA::ORB_var orb)
       labels[14] = "type any";
       labels[15] = "type objref";
       labels[16] = "type short sequence";
-      
+
 
       // Getting the RootPOA so we can generate object references.
       CORBA::Object_var obj =
         this->orb_->resolve_initial_references ("RootPOA"
                                                 ACE_ENV_ARG_PARAMETER);
 
-      ACE_TRY_CHECK;
 
       if (CORBA::is_nil (obj.in ()))
         {
@@ -82,27 +81,23 @@ Data::Data (CORBA::ORB_var orb)
         PortableServer::POA::_narrow (obj.in ()
                                       ACE_ENV_ARG_PARAMETER);
 
-      ACE_TRY_CHECK;
 
       // Generate values for the member variables.
      this->m_objref1 =
         root_poa->create_reference ("foo"
                                     ACE_ENV_ARG_PARAMETER);
 
-      ACE_TRY_CHECK;
 
       this->m_objref2 =
         root_poa->create_reference ("foo"
                                     ACE_ENV_ARG_PARAMETER);
 
-      ACE_TRY_CHECK;
 
       // Clean up after the POA
       root_poa->destroy (1,
                          1
                          ACE_ENV_ARG_PARAMETER);
 
-      ACE_TRY_CHECK;
     }
   ACE_CATCHANY
     {
@@ -110,7 +105,6 @@ Data::Data (CORBA::ORB_var orb)
                            "Exception in ORB/POA init\n");
     }
   ACE_ENDTRY;
-  ACE_CHECK;
 }
 
 Data::~Data (void)

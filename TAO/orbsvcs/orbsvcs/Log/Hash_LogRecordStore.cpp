@@ -93,25 +93,25 @@ TAO_Hash_LogRecordStore::close (void)
 }
 
 CORBA::ULongLong
-TAO_Hash_LogRecordStore::get_current_size (ACE_ENV_SINGLE_ARG_DECL)
+TAO_Hash_LogRecordStore::get_current_size (void)
 {
   return this->current_size_;
 }
 
 CORBA::ULongLong
-TAO_Hash_LogRecordStore::get_n_records (ACE_ENV_SINGLE_ARG_DECL)
+TAO_Hash_LogRecordStore::get_n_records (void)
 {
   return this->num_records_;
 }
 
 CORBA::ULongLong
-TAO_Hash_LogRecordStore::get_gauge (ACE_ENV_SINGLE_ARG_DECL)
+TAO_Hash_LogRecordStore::get_gauge (void)
 {
   return this->gauge_;
 }
 
 void
-TAO_Hash_LogRecordStore::reset_gauge (ACE_ENV_SINGLE_ARG_DECL)
+TAO_Hash_LogRecordStore::reset_gauge (void)
 {
   this->gauge_ = 0;
 }
@@ -224,7 +224,7 @@ TAO_Hash_LogRecordStore::remove_i (LOG_RECORD_STORE_ITER iter
 }
 
 int
-TAO_Hash_LogRecordStore::purge_old_records (ACE_ENV_SINGLE_ARG_DECL)
+TAO_Hash_LogRecordStore::purge_old_records (void)
 {
   CORBA::ULongLong num_records_to_purge = this->num_records_ * 5U / 100U;
 
@@ -288,14 +288,12 @@ TAO_Hash_LogRecordStore::set_records_attribute (
                    DsLogAdmin::InvalidAttribute))
 {
   this->check_grammar (grammar ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (0);
 
   // TODO: validate attributes here.
 
   // Use an Interpreter to build an expression tree.
   TAO_Log_Constraint_Interpreter interpreter (constraint
                                               ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (0);
 
   // Create iterators
   LOG_RECORD_STORE_ITER iter (rec_map_.begin ());
@@ -328,7 +326,6 @@ TAO_Hash_LogRecordStore::get_record_attribute (DsLogAdmin::RecordId id
   DsLogAdmin::LogRecord rec;
 
   int retval = this->retrieve_i (id, rec ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (0);
 
   if (retval == -1)
     {
@@ -340,14 +337,13 @@ TAO_Hash_LogRecordStore::get_record_attribute (DsLogAdmin::RecordId id
   ACE_NEW_THROW_EX (nvlist,
                     DsLogAdmin::NVList (rec.attr_list),
                     CORBA::NO_MEMORY ());
-  ACE_CHECK_RETURN (0);
 
   return nvlist;
 }
 
 
 int
-TAO_Hash_LogRecordStore::flush (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+TAO_Hash_LogRecordStore::flush (void)
 {
   return 0;
 }
@@ -386,7 +382,6 @@ TAO_Hash_LogRecordStore::query_i (const char *constraint,
   // Use an Interpreter to build an expression tree.
   TAO_Log_Constraint_Interpreter interpreter (constraint
                                               ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (0);
 
   // Sequentially iterate over all the records and pick the ones that
   // meet the constraints.
@@ -396,7 +391,6 @@ TAO_Hash_LogRecordStore::query_i (const char *constraint,
   ACE_NEW_THROW_EX (rec_list,
                     DsLogAdmin::RecordList (how_many),
                     CORBA::NO_MEMORY ());
-  ACE_CHECK_RETURN (0);
   rec_list->length(how_many);
 
   // Create iterators
@@ -448,7 +442,6 @@ TAO_Hash_LogRecordStore::query_i (const char *constraint,
                                              constraint,
                                              this->max_rec_list_len_),
                         CORBA::NO_MEMORY ());
-      ACE_CHECK_RETURN (rec_list);
 
       // Transfer ownership to the POA.
       PortableServer::ServantBase_var safe_iter_query = iter_query;
@@ -476,7 +469,6 @@ TAO_Hash_LogRecordStore::query (const char *grammar,
                    DsLogAdmin::InvalidConstraint))
 {
   this->check_grammar (grammar ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (0);
 
   return this->query_i (constraint,
                         iter_out,
@@ -528,12 +520,10 @@ TAO_Hash_LogRecordStore::match (const char* grammar,
                    DsLogAdmin::InvalidConstraint))
 {
   this->check_grammar (grammar ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (0);
 
   // Use an Interpreter to build an expression tree.
   TAO_Log_Constraint_Interpreter interpreter (constraint
                                               ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (0);
 
   // Create iterators
   LOG_RECORD_STORE_ITER iter (rec_map_.begin ());
@@ -565,12 +555,10 @@ TAO_Hash_LogRecordStore::delete_records (const char *grammar,
                      DsLogAdmin::InvalidConstraint))
 {
   this->check_grammar (grammar ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (0);
 
   // Use an Interpreter to build an expression tree.
   TAO_Log_Constraint_Interpreter interpreter (constraint
                                               ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (0);
 
   // Create iterators
   LOG_RECORD_STORE_ITER iter (rec_map_.begin ());
@@ -617,7 +605,7 @@ TAO_Hash_LogRecordStore::delete_records_by_id (const DsLogAdmin::RecordIdList &i
 }
 
 CORBA::ULong
-TAO_Hash_LogRecordStore::remove_old_records (ACE_ENV_SINGLE_ARG_DECL)
+TAO_Hash_LogRecordStore::remove_old_records (void)
 {
   if (this->max_record_life_ == 0) {
     return 0;
@@ -639,7 +627,6 @@ TAO_Hash_LogRecordStore::remove_old_records (ACE_ENV_SINGLE_ARG_DECL)
   // Use an Interpreter to build an expression tree.
   TAO_Log_Constraint_Interpreter interpreter (out
                                               ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (0);
 
   // Create iterators
   LOG_RECORD_STORE_ITER iter (rec_map_.begin ());
@@ -689,7 +676,7 @@ TAO_Hash_LogRecordStore::check_grammar (const char* grammar
 
 
 DsLogAdmin::AdministrativeState
-TAO_Hash_LogRecordStore::get_administrative_state (ACE_ENV_SINGLE_ARG_DECL) const
+TAO_Hash_LogRecordStore::get_administrative_state (void) const
 {
   return this->admin_state_;
 }
@@ -703,13 +690,12 @@ TAO_Hash_LogRecordStore::set_administrative_state (DsLogAdmin::AdministrativeSta
 
 
 DsLogAdmin::CapacityAlarmThresholdList*
-TAO_Hash_LogRecordStore::get_capacity_alarm_thresholds (ACE_ENV_SINGLE_ARG_DECL) const
+TAO_Hash_LogRecordStore::get_capacity_alarm_thresholds (void) const
 {
   DsLogAdmin::CapacityAlarmThresholdList* ret_val;
   ACE_NEW_THROW_EX (ret_val,
                     DsLogAdmin::CapacityAlarmThresholdList (this->thresholds_),
                     CORBA::NO_MEMORY ());
-  ACE_CHECK_RETURN (0);
 
   return ret_val;
 }
@@ -724,7 +710,7 @@ TAO_Hash_LogRecordStore::set_capacity_alarm_thresholds (const DsLogAdmin::Capaci
 
 
 DsLogAdmin::ForwardingState
-TAO_Hash_LogRecordStore::get_forwarding_state (ACE_ENV_SINGLE_ARG_DECL) const
+TAO_Hash_LogRecordStore::get_forwarding_state (void) const
 {
   return this->forward_state_;
 }
@@ -737,7 +723,7 @@ TAO_Hash_LogRecordStore::set_forwarding_state (DsLogAdmin::ForwardingState state
 }
 
 DsLogAdmin::TimeInterval
-TAO_Hash_LogRecordStore::get_interval (ACE_ENV_SINGLE_ARG_DECL) const
+TAO_Hash_LogRecordStore::get_interval (void) const
 {
   return this->interval_;
 }
@@ -751,7 +737,7 @@ TAO_Hash_LogRecordStore::set_interval (const DsLogAdmin::TimeInterval &interval
 
 
 DsLogAdmin::LogFullActionType
-TAO_Hash_LogRecordStore::get_log_full_action (ACE_ENV_SINGLE_ARG_DECL) const
+TAO_Hash_LogRecordStore::get_log_full_action (void) const
 {
   return this->log_full_action_;
 }
@@ -764,13 +750,12 @@ TAO_Hash_LogRecordStore::set_log_full_action (DsLogAdmin::LogFullActionType acti
 }
 
 DsLogAdmin::QoSList *
-TAO_Hash_LogRecordStore::get_log_qos (ACE_ENV_SINGLE_ARG_DECL) const
+TAO_Hash_LogRecordStore::get_log_qos (void) const
 {
   DsLogAdmin::QoSList* ret_val = 0;
   ACE_NEW_THROW_EX (ret_val,
                     DsLogAdmin::QoSList (this->log_qos_),
                     CORBA::NO_MEMORY ());
-  ACE_CHECK_RETURN (0);
 
   return ret_val;
 }
@@ -783,7 +768,7 @@ TAO_Hash_LogRecordStore::set_log_qos (const DsLogAdmin::QoSList& qos
 }
 
 CORBA::ULong
-TAO_Hash_LogRecordStore::get_max_record_life (ACE_ENV_SINGLE_ARG_DECL) const
+TAO_Hash_LogRecordStore::get_max_record_life (void) const
 {
   return this->max_record_life_;
 }
@@ -796,7 +781,7 @@ TAO_Hash_LogRecordStore::set_max_record_life (CORBA::ULong max_record_life
 }
 
 CORBA::ULongLong
-TAO_Hash_LogRecordStore::get_max_size (ACE_ENV_SINGLE_ARG_DECL) const
+TAO_Hash_LogRecordStore::get_max_size (void) const
 {
   return this->max_size_;
 }
@@ -809,13 +794,12 @@ TAO_Hash_LogRecordStore::set_max_size (CORBA::ULongLong size
 }
 
 DsLogAdmin::WeekMask*
-TAO_Hash_LogRecordStore::get_week_mask (ACE_ENV_SINGLE_ARG_DECL)
+TAO_Hash_LogRecordStore::get_week_mask (void)
 {
   DsLogAdmin::WeekMask* ret_val = 0;
   ACE_NEW_THROW_EX (ret_val,
                     DsLogAdmin::WeekMask (this->weekmask_),
                     CORBA::NO_MEMORY ());
-  ACE_CHECK_RETURN (0);
 
   return ret_val;
 }

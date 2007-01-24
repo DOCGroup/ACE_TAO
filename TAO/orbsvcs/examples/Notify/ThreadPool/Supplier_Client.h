@@ -35,10 +35,10 @@ public:
   ~TAO_Notify_ThreadPool_Supplier_Client ();
 
   /// Init
-  void _init (ACE_ENV_SINGLE_ARG_DECL);
+  void _init (void);
 
   /// Run
-  void run (ACE_ENV_SINGLE_ARG_DECL);
+  void run (void);
 
   /// Parse Args
   int parse_args (int argc, char *argv[]);
@@ -48,10 +48,10 @@ public:
 
 protected:
   /// Create an EC
-  CosNotifyChannelAdmin::EventChannel_ptr create_ec (ACE_ENV_SINGLE_ARG_DECL);
+  CosNotifyChannelAdmin::EventChannel_ptr create_ec (void);
 
   /// Write ior to file.
-  void write_ior (ACE_ENV_SINGLE_ARG_DECL);
+  void write_ior (void);
 
   /// ORB Objects.
   TAO_Notify_ORB_Objects orb_objects_;

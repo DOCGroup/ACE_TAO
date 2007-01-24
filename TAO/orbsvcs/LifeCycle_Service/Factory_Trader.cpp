@@ -22,8 +22,8 @@
 #include "Factory_Trader.h"
 #include "orbsvcs/CosTradingC.h"
 
-ACE_RCSID (LifeCycle_Service, 
-           Factory_Trader, 
+ACE_RCSID (LifeCycle_Service,
+           Factory_Trader,
            "$Id$")
 
 // This const char * is used for adding a new type to the service repository
@@ -50,8 +50,7 @@ Factory_Trader::Factory_Trader (int debug_level)
 
       // Set the service type repository
       support_Attributes_ptr_->type_repos
-                     (this->repository_._this (ACE_ENV_SINGLE_ARG_PARAMETER));
-      ACE_TRY_CHECK;
+                     (this->repository_._this ());
 
       // Add the "Factory" type to the repository
       this->add_type ();
@@ -106,7 +105,6 @@ Factory_Trader::add_type ()
                                   propStructSeq,
                                   superTypeSeq
                                   ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
     }
   ACE_CATCHANY
     {
@@ -152,7 +150,6 @@ Factory_Trader::_cxx_export (const char * name,
                                  propertySeq
                                  ACE_ENV_ARG_PARAMETER);
 
-      ACE_TRY_CHECK;
     }
   ACE_CATCHANY
     {
@@ -196,7 +193,6 @@ Factory_Trader::query (const char* constraint)
                          CosTrading::OfferIterator_out(offerIterator_ptr),     // more results
                          CosTrading::PolicyNameSeq_out(policyNameSeq_ptr)      // Policies
                          ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       // Initialize
       CORBA::Object_ptr object_ptr = 0;

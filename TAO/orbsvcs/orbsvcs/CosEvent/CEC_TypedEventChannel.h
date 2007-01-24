@@ -142,11 +142,11 @@ public:
 
   /// Start the internal threads (if any), etc.
   /// After this call the EC can be used.
-  virtual void activate (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
+  virtual void activate (void);
 
   /// Shutdown any internal threads, cleanup all the internal
   /// structures, flush all the messages, etc.
-  virtual void shutdown (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
+  virtual void shutdown (void);
 
   /// Access the dispatching module....
   TAO_CEC_Dispatching* dispatching (void) const;
@@ -255,14 +255,14 @@ public:
 
   // = The CosTypedEventChannelAdmin::TypedEventChannel methods...
   virtual ::CosTypedEventChannelAdmin::TypedConsumerAdmin_ptr
-    for_consumers (ACE_ENV_SINGLE_ARG_DECL)
+    for_consumers (void)
       ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual ::CosTypedEventChannelAdmin::TypedSupplierAdmin_ptr
-    for_suppliers (ACE_ENV_SINGLE_ARG_DECL)
+    for_suppliers (void)
       ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual void destroy (ACE_ENV_SINGLE_ARG_DECL)
+  virtual void destroy (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   ServantRetryMap& get_servant_retry_map (void);

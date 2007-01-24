@@ -78,7 +78,7 @@ public:
   // Plug in the section key.
 
 protected:
-  void update_key (ACE_ENV_SINGLE_ARG_DECL)
+  void update_key (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
   // Set our key from the object ID via POACurrent.
 

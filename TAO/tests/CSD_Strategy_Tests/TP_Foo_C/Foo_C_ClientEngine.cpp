@@ -18,12 +18,12 @@ Foo_C_ClientEngine::~Foo_C_ClientEngine()
 
 
 bool
-Foo_C_ClientEngine::execute(ACE_ENV_SINGLE_ARG_DECL)
-{  
+Foo_C_ClientEngine::execute(void)
+{
   // Verify the return values and return the results.
   bool check_validity = true;
 
-  // Make sure the connection is established before making  
+  // Make sure the connection is established before making
   // remote invocations.
   if (AppHelper::validate_connection (this->obj_.in ()) == false)
     {
@@ -34,14 +34,11 @@ Foo_C_ClientEngine::execute(ACE_ENV_SINGLE_ARG_DECL)
 
   CORBA::Long i = this->client_id_;
 
-  this->obj_->op1(ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (false);
+  this->obj_->op1();
 
   this->obj_->op2(i ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (false);
 
   CORBA::Long value = this->obj_->op3(i ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (false);
 
   if (value != i)
     {
@@ -51,15 +48,13 @@ Foo_C_ClientEngine::execute(ACE_ENV_SINGLE_ARG_DECL)
   for (CORBA::Long j = 1; j <= 5; j++)
     {
       this->obj_->op4(495 + (i * 5) + j ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK_RETURN (false);
     }
 
   bool caught_exception = false;
-  
+
   ACE_TRY
   {
-    this->obj_->op5(ACE_ENV_SINGLE_ARG_PARAMETER);
-    ACE_TRY_CHECK;
+    this->obj_->op5();
   }
   ACE_CATCH (FooException, ex)
   {
@@ -73,8 +68,7 @@ Foo_C_ClientEngine::execute(ACE_ENV_SINGLE_ARG_DECL)
       check_validity = false;
     }
 
-  this->obj_->done(ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (false);
+  this->obj_->done();
 
   return check_validity;
 }
@@ -84,7 +78,7 @@ void
 Foo_C_ClientEngine::expected_results(Foo_C_Statistics& stats)
 {
   // This ClientEngine is used by remote clients.
-  stats.expected(1, 1, true); 
+  stats.expected(1, 1, true);
   stats.expected(2, 1, true);
   stats.expected(3, 1, true);
   stats.expected(4, 5, true);

@@ -32,7 +32,6 @@ TAO_LB_MemberLocator::preinvoke (
       CORBA::Object_var member =
         this->load_manager_->next_member (oid
                                           ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
 //       ACE_DEBUG ((LM_DEBUG, "%N:%l\n"));
 //       ACE_DEBUG ((LM_DEBUG,
@@ -56,7 +55,6 @@ TAO_LB_MemberLocator::preinvoke (
                              "LoadManager::next_member()");
     }
   ACE_ENDTRY;
-  ACE_CHECK_RETURN (0);
 
   ACE_THROW_RETURN (CORBA::OBJECT_NOT_EXIST (), 0);
 }

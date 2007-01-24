@@ -24,8 +24,7 @@ Servant_var<SERVANT>::~Servant_var ()
 
   ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY {
-    this->ptr_->_remove_ref (ACE_ENV_SINGLE_ARG_PARAMETER);
-    ACE_TRY_CHECK;
+    this->ptr_->_remove_ref ();
   } ACE_CATCHANY {
     // @@ TODO This event should be logged. Cannot throw because that
     //    would make it impossible to use this class effectively.

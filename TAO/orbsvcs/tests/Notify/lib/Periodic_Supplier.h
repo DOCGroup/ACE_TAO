@@ -64,13 +64,13 @@ public:
 protected:
 
   /// svc method.
-  void handle_svc (ACE_ENV_SINGLE_ARG_DECL);
+  void handle_svc (void);
 
   /// Send a few events before the actual measurements.
-  void send_warmup_events (ACE_ENV_SINGLE_ARG_DECL);
+  void send_warmup_events (void);
 
   /// Send Prologue
-  void send_prologue (ACE_ENV_SINGLE_ARG_DECL);
+  void send_prologue (void);
 
   /// All tasks synch at this barrier.
   ACE_Barrier* barrier_;

@@ -64,10 +64,10 @@ public:
 
   /// The application can invoke this method to disconnect from the EC
   /// and deactivate this class.
-  void disconnect (ACE_ENV_SINGLE_ARG_DECL);
+  void disconnect (void);
 
   /// The application is shutting down, deactivate the consumer.
-  void shutdown (ACE_ENV_SINGLE_ARG_DECL);
+  void shutdown (void);
 
   /// Accumulate our statistics to the totals.
   void accumulate (ACE_Throughput_Stats& throughput) const;
@@ -82,7 +82,7 @@ public:
   virtual void push (const RtecEventComm::EventSet& events
                      ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
-  virtual void disconnect_push_consumer (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+  virtual void disconnect_push_consumer (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
 private:

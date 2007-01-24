@@ -57,8 +57,7 @@ TAO_EC_Auto_Command<T>::execute (void)
 
       ACE_TRY_NEW_ENV
         {
-          this->command_.execute (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+          this->command_.execute ();
         }
       ACE_CATCHANY
         {
@@ -101,12 +100,11 @@ TAO_EC_Shutdown_Command<T>::TAO_EC_Shutdown_Command (T target)
 
 template <class T>
 ACE_INLINE void
-TAO_EC_Shutdown_Command<T>::execute (ACE_ENV_SINGLE_ARG_DECL)
+TAO_EC_Shutdown_Command<T>::execute (void)
 {
   if (this->target_.in ())
     {
-      this->target_->shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK;
+      this->target_->shutdown ();
     }
 }
 
@@ -140,8 +138,7 @@ TAO_EC_Servant_Var(TAO_EC_Servant_Var<T> const & rhs)
     {
       ACE_TRY_NEW_ENV
         {
-          ptr_->_add_ref (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+          ptr_->_add_ref ();
         }
       ACE_CATCHALL
         {
@@ -191,8 +188,7 @@ ACE_INLINE TAO_EC_Servant_Var<T>::
   {
     ACE_TRY_NEW_ENV
     {
-      ptr_->_remove_ref (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      ptr_->_remove_ref ();
     }
     ACE_CATCHALL
     {

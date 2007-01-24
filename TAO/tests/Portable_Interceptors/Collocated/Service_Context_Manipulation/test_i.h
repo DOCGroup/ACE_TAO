@@ -30,17 +30,17 @@ public:
                ACE_ENV_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  void nothing (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+  void nothing (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  void user (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+  void user (void)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      Test_Interceptors::Silly));
 
-  void system (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+  void system (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  void shutdown (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+  void shutdown (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
 private:

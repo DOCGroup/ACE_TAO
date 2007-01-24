@@ -32,13 +32,13 @@ public:
   virtual ~Big_Reply_i (void);
 
   // = The skeleton methods
-  virtual Test::Octet_Seq *get_big_reply (ACE_ENV_SINGLE_ARG_DECL)
+  virtual Test::Octet_Seq *get_big_reply (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual void ping (ACE_ENV_SINGLE_ARG_DECL)
+  virtual void ping (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual void shutdown (ACE_ENV_SINGLE_ARG_DECL)
+  virtual void shutdown (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
 private:

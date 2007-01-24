@@ -36,7 +36,7 @@ public:
 private:
   /// Make sure that all threads have connections available to
   /// workaround bug 189
-  void validate_connection (ACE_ENV_SINGLE_ARG_DECL);
+  void validate_connection (void);
 
   void do_invocations(Test::Payload& payload ACE_ENV_SINGLE_ARG_DECL);
   void do_sync_none_invocations(Test::Payload& payload ACE_ENV_SINGLE_ARG_DECL);

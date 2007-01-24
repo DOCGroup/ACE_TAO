@@ -29,7 +29,6 @@ Server_Request_Interceptor::receive_request_service_contexts (
 
   CORBA::Boolean server_side =
     this->server_side_test (ri ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
   if (!server_side)
     return;  // Don't continue if the client side is being tested.
@@ -76,7 +75,6 @@ Server_Request_Interceptor::receive_request (
 
   CORBA::Boolean server_side =
     this->server_side_test (ri ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
   if (!server_side)
     return;  // Don't continue if the client side is being tested.
@@ -95,7 +93,6 @@ Server_Request_Interceptor::send_reply (
 
   CORBA::Boolean server_side =
     this->server_side_test (ri ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
   if (!server_side)
     return;  // Don't continue if the client side is being tested.
@@ -110,8 +107,7 @@ Server_Request_Interceptor::send_reply (
     {
       // Determine which test scenario we are in
       Dynamic::ParameterList_var paramlist =
-        ri->arguments (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK;
+        ri->arguments ();
 
       Test::TestScenario scenario;
       CORBA::ULong i = 0;  // index -- explicitly used to avoid
@@ -155,7 +151,6 @@ Server_Request_Interceptor::send_exception (
 
   CORBA::Boolean server_side =
     this->server_side_test (ri ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
   if (!server_side)
     return;  // Don't continue if the client side is being tested.
@@ -170,8 +165,7 @@ Server_Request_Interceptor::send_exception (
     {
       // Determine which test scenario we are in
       Dynamic::ParameterList_var paramlist =
-        ri->arguments (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK;
+        ri->arguments ();
 
       Test::TestScenario scenario;
       CORBA::ULong i = 0;  // index -- explicitly used to avoid
@@ -185,13 +179,11 @@ Server_Request_Interceptor::send_exception (
           switch (scenario)
             {
             case 4:
-              exception = ri->sending_exception (ACE_ENV_SINGLE_ARG_PARAMETER);
-              ACE_CHECK;
+              exception = ri->sending_exception ();
 
               tc = exception->type ();
 
-              id = tc->id (ACE_ENV_SINGLE_ARG_PARAMETER);
-              ACE_CHECK;
+              id = tc->id ();
 
               if (ACE_OS::strcmp (id, "IDL:Test/X:1.0") == 0)
                 {
@@ -239,7 +231,6 @@ Server_Request_Interceptor::send_other (
 
   CORBA::Boolean server_side =
     this->server_side_test (ri ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
   if (!server_side)
     return;  // Don't continue if the client side is being tested.
@@ -256,8 +247,7 @@ Server_Request_Interceptor::server_side_test (
   PortableInterceptor::ServerRequestInfo_ptr info
   ACE_ENV_ARG_DECL)
 {
-  CORBA::String_var op = info->operation (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (0);
+  CORBA::String_var op = info->operation ();
 
   return ACE_OS::strcmp (op.in (), "server_test") == 0 ? 1 : 0;
 }

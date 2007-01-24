@@ -18,8 +18,7 @@ TAO_EC_Supplier_Proxy_Disconnect_Functor::operator() (
   ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY
     {
-      supplier->disconnect_push_supplier (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      supplier->disconnect_push_supplier ();
     }
   ACE_CATCHALL
     {
@@ -35,8 +34,7 @@ TAO_EC_Consumer_Proxy_Disconnect_Functor::operator() (
   ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY
     {
-      consumer->disconnect_push_consumer (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      consumer->disconnect_push_consumer ();
     }
   ACE_CATCHALL
     {

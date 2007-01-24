@@ -38,7 +38,6 @@ ACE_THROW_SPEC ((CORBA::SystemException, IORTable::NotFound))
 
       CORBA::String_var located =
         this->imr_locator_.activate_server_by_object (key.c_str () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       ACE_CString tmp = located.in ();
       tmp += object_key;

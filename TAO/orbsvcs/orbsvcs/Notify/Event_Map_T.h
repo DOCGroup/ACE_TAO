@@ -48,7 +48,7 @@ public:
   ~TAO_Notify_Event_Map_T ();
 
   /// Init
-  void init (ACE_ENV_SINGLE_ARG_DECL);
+  void init (void);
 
   /// Connect a PROXY
   void connect (PROXY* proxy ACE_ENV_ARG_DECL);

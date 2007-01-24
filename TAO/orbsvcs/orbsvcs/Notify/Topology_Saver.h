@@ -103,7 +103,7 @@ namespace TAO_Notify
      * vary based on the type of saver, so we can't include it in the
      * interface.
      */
-    virtual void close (ACE_ENV_SINGLE_ARG_DECL);
+    virtual void close (void);
   };
 } // namespace TAO_Notify
 

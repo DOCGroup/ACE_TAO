@@ -25,6 +25,5 @@ client_i::ping (CORBA::UShort time_to_live
     {
       this->server_->ping (time_to_live
                            ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
     }
 }

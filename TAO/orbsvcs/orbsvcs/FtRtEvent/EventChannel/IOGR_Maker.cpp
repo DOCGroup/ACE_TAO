@@ -64,7 +64,6 @@ IOGR_Maker::make_iogr(const TAO_IOP::TAO_IOR_Manipulation::IORList& list,
 {
   /// generate a new IOGR if the object group changes.
   CORBA::Object_var obj = merge_iors(list ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN(CORBA::Object::_nil());
 
   FT::TagFTGroupTaggedComponent ft_tag_component(ft_tag_component_);
   /// the generated IOGR should use a new object_group_ref_version
@@ -72,7 +71,6 @@ IOGR_Maker::make_iogr(const TAO_IOP::TAO_IOR_Manipulation::IORList& list,
   set_tag_components(obj.in(), list[0], ft_tag_component
                      ACE_ENV_ARG_PARAMETER);
 
-  ACE_CHECK_RETURN(CORBA::Object::_nil());
   return obj._retn();
 }
 
@@ -93,11 +91,10 @@ IOGR_Maker::forge_iogr(CORBA::Object_ptr obj
   FtRtecEventChannelAdmin::EventChannel_var successor
     = GroupInfoPublisher::instance()->successor();
   if (! CORBA::is_nil(successor.in())) {
-    TAO::ObjectKey_var newkey = obj->_key(ACE_ENV_SINGLE_ARG_PARAMETER);
+    TAO::ObjectKey_var newkey = obj->_key();
 
     CORBA::Object_var new_base = ior_replace_key(successor.in(), newkey.in()
                                                  ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK_RETURN(CORBA::Object::_nil());
 
     if (CORBA::is_nil( new_base.in() ))
       return CORBA::Object::_nil();
@@ -109,7 +106,6 @@ IOGR_Maker::forge_iogr(CORBA::Object_ptr obj
     TAO_Stub *stub = orb_core->create_stub (CORBA::string_dup(obj->_stubobj ()->type_id.in ()), // give the id string
       base_profiles
       ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK_RETURN (CORBA::Object::_nil ());
 
     // Make the stub memory allocation exception safe for the duration
     // of this method.
@@ -129,7 +125,6 @@ IOGR_Maker::forge_iogr(CORBA::Object_ptr obj
     merged =
       iorm_->add_profiles(obj, temp_obj
       ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK_RETURN (CORBA::Object::_nil ());
   }
   else
     merged = CORBA::Object::_duplicate(obj);
@@ -137,7 +132,6 @@ IOGR_Maker::forge_iogr(CORBA::Object_ptr obj
   set_tag_components(merged.in(), obj, ft_tag_component_
                      ACE_ENV_ARG_PARAMETER);
 
-  ACE_CHECK_RETURN(CORBA::Object::_nil ());
 
   return merged._retn();
 }
@@ -155,8 +149,7 @@ IOGR_Maker::ior_replace_key(CORBA::Object_ptr obj,
 
     ACE_CDR::consolidate(&mb, out_cdr.begin());
 
-    TAO::ObjectKey_var old_key = obj->_key(ACE_ENV_SINGLE_ARG_PARAMETER);
-    ACE_CHECK_RETURN(CORBA::Object::_nil ());
+    TAO::ObjectKey_var old_key = obj->_key();
 
     replace_key(mb.base(), mb.end(),
                 old_key.in(), key);
@@ -242,7 +235,7 @@ IOGR_Maker::get_ref_version() const
 
 void
 IOGR_Maker::set_tag_components(
-  CORBA::Object_ptr merged, 
+  CORBA::Object_ptr merged,
   CORBA::Object_ptr primary,
   FT::TagFTGroupTaggedComponent& ft_tag_component
   ACE_ENV_ARG_DECL)
@@ -253,11 +246,9 @@ IOGR_Maker::set_tag_components(
 
     prop.remove_primary_tag(merged
                          ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK;
 
     iorm_->set_primary (&prop, merged, primary
                        ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK;
       // Set the property
     iorm_->set_property (&prop,
                         merged

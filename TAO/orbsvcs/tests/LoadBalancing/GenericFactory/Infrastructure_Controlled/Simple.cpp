@@ -11,7 +11,7 @@ Simple::Simple (void)
 }
 
 char *
-Simple::get_string (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+Simple::get_string (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return CORBA::string_dup ("TAO Load Balancing Works!");

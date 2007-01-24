@@ -24,38 +24,31 @@ Server_Task::svc (void)
     {
       CORBA::Object_var poa_object =
         sorb_->resolve_initial_references ("RootPOA" ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       if (CORBA::is_nil (poa_object.in ()))
         ACE_ERROR_RETURN ((LM_ERROR, " (%P|%t) Unable to initialize the POA.\n"), 1);
 
       PortableServer::POA_var root_poa =
         PortableServer::POA::_narrow (poa_object.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       PortableServer::POAManager_var poa_manager =
-        root_poa->the_POAManager (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        root_poa->the_POAManager ();
 
-      poa_manager->activate (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      poa_manager->activate ();
 
       TestImpl * server_impl = 0;
       ACE_NEW_RETURN (server_impl, TestImpl (sorb_.in ()), 1);
 
       PortableServer::ObjectId_var id =
         root_poa->activate_object (server_impl ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       CORBA::Object_var test_obj =
         root_poa->id_to_reference (id.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       Test_var server = Test::_narrow (test_obj.in () ACE_ENV_ARG_PARAMETER);
 
       CORBA::String_var ior =
         sorb_->object_to_string (test_obj.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       // Output the IOR to the <ior_output_file>
       FILE *output_file= ACE_OS::fopen (output_, "w");
@@ -70,13 +63,11 @@ Server_Task::svc (void)
       // Signal the main thread before we call orb->run ();
       this->me_.signal ();
 
-      this->sorb_->run (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      this->sorb_->run ();
 
       ACE_DEBUG ((LM_DEBUG, "event loop finished\n"));
 
       root_poa->destroy (1, 1 ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
     }
   ACE_CATCHANY
     {

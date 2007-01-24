@@ -126,12 +126,10 @@ Worker::svc (void)
               CORBA::Request_var request =
                 this->server_->_request ("invoked_by_client"
                                          ACE_ENV_ARG_PARAMETER);
-              ACE_TRY_CHECK;
 
               request->set_return_type (CORBA::_tc_void);
 
-              request->invoke (ACE_ENV_SINGLE_ARG_PARAMETER);
-              ACE_CHECK;
+              request->invoke ();
             }
 
 #endif /* (!defined(TAO_HAS_MINIMUM_CORBA) || (TAO_HAS_MINIMUM_CORBA == 0)) */
@@ -139,8 +137,7 @@ Worker::svc (void)
           ACE_DEBUG ((LM_DEBUG,
                       ACE_TEXT ("Client (%P|%t) Invoking server->invoked_by_client() via SII\n")));
 
-          this->server_->invoked_by_client (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+          this->server_->invoked_by_client ();
 
           if (TAO_debug_level > 0 && i % 100 == 0)
             ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Client (%P|%t) Iteration = %d\n"),
@@ -181,14 +178,12 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       PortableInterceptor::register_orb_initializer (orb_initializer.in ()
                                                      ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       CORBA::ORB_var orb =
         CORBA::ORB_init (argc,
                          argv,
                          CLIENT_ORB_ID
                          ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       if (parse_args (argc, argv) != 0)
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -200,7 +195,6 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       ACE_TRY
         {
           test_transport_current (orb.in () ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
 
           ACE_ERROR_RETURN ((LM_ERROR,
                              ACE_TEXT ("Client (%P|%t) ERROR: ")
@@ -220,11 +214,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       // Resolve the target object
       CORBA::Object_var obj = orb->string_to_object (ior ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       Test::Transport::CurrentTest_var server =
         Test::Transport::CurrentTest::_narrow (obj.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       if (CORBA::is_nil (server.in ()))
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -275,8 +267,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
           ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Client (%P|%t) Invoking server->self_test()\n")));
 
           // Self-test the server side
-          result = server->self_test (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+          result = server->self_test ();
 
           if (result != 0)
             ACE_ERROR ((LM_ERROR,
@@ -285,11 +276,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Client (%P|%t) Invoking oneway server->shutdown()\n")));
 
-      server->shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      server->shutdown ();
 
-      orb->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      orb->destroy ();
 
       ACE_DEBUG ((LM_INFO,
                   ACE_TEXT ("Client (%P|%t) Completed %s\n"),

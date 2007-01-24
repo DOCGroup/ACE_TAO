@@ -52,14 +52,13 @@ TAO_Log_Compaction_Handler::handle_timeout (const ACE_Time_Value&,
 {
   ACE_TRY_NEW_ENV
     {
-      this->log_->remove_old_records(ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      this->log_->remove_old_records();
     }
   ACE_CATCHANY
     {
     }
   ACE_ENDTRY;
-  
+
   return 0;
 }
 

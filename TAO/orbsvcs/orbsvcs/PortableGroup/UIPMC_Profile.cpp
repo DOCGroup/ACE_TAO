@@ -84,7 +84,6 @@ TAO_UIPMC_Profile::TAO_UIPMC_Profile (const char *string,
 {
   this->add_group_component ();
   this->parse_string (string ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
   addressing_mode_ = default_addressing_mode_;
 }
 
@@ -447,7 +446,7 @@ TAO_UIPMC_Profile::endpoint_count (void) const
 }
 
 char *
-TAO_UIPMC_Profile::to_string (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+TAO_UIPMC_Profile::to_string (void)
 {
   // @@ Frank: Update to pull out GroupID information...
 

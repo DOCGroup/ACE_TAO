@@ -35,9 +35,9 @@ TAO_Notify_Tests_Peer_T<Peer_Traits>::get_proxy (void)
 
 template <class Peer_Traits>
 ACE_TYPENAME TAO_Notify_Tests_Peer_T<Peer_Traits>::Peer_Traits_PTR
-TAO_Notify_Tests_Peer_T<Peer_Traits>::activate (ACE_ENV_SINGLE_ARG_DECL)
+TAO_Notify_Tests_Peer_T<Peer_Traits>::activate (void)
 {
-  return this->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
+  return this->_this ();
 }
 
 template <class Peer_Traits>
@@ -51,11 +51,9 @@ TAO_Notify_Tests_Peer_T<Peer_Traits>::connect (Proxy_Traits_PTR proxy,
   PortableServer::ServantBase_var servant_var (this);
 
   ACE_TYPENAME Peer_Traits::VAR peer_var =
-    this->activate (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+    this->activate ();
 
   this->connect_to_peer (proxy, peer_var.in () ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
   // save the proxy
   this->proxy_ = Proxy_Traits_INTERFACE::_duplicate (proxy);
@@ -67,7 +65,6 @@ TAO_Notify_Tests_Peer_T<Peer_Traits>::connect (Proxy_Traits_PTR proxy,
       LOOKUP_MANAGER->_register (this->proxy_.in (),
                                  this->proxy_name_.c_str ()
                                  ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
     }
 }
 
@@ -79,32 +76,28 @@ TAO_Notify_Tests_Peer_T<Peer_Traits>::connect (Admin_Traits_PTR admin_ptr
   ACE_TYPENAME Proxy_Traits::VAR proxy_var =
     this->obtain_proxy (admin_ptr
                         ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
   ACE_ASSERT (!CORBA::is_nil (proxy_var.in ()));
 
   this->connect (proxy_var.in (),
                  this->proxy_id_
                  ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 }
 
 
 template <class Peer_Traits>
 void
-TAO_Notify_Tests_Peer_T<Peer_Traits>::connect (ACE_ENV_SINGLE_ARG_DECL)
+TAO_Notify_Tests_Peer_T<Peer_Traits>::connect (void)
 {
   // Get the POA
   PortableServer::POA_var poa;
   LOOKUP_MANAGER->resolve (poa,
                            this->poa_name_.c_str ()
                            ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
   // set the POA
   this->set_poa (poa.in ()
                  ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
   // Resolve the admin
   ACE_TYPENAME Admin_Traits::VAR admin_var;
@@ -112,18 +105,15 @@ TAO_Notify_Tests_Peer_T<Peer_Traits>::connect (ACE_ENV_SINGLE_ARG_DECL)
   LOOKUP_MANAGER->resolve (admin_var,
                            this->admin_name_.c_str ()
                            ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
   ACE_TYPENAME Admin_Ext_Traits::VAR admin_ext_var =
     Admin_Ext_Traits_INTERFACE::_narrow (admin_var.in ()
                                          ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
   ACE_TYPENAME Proxy_Traits::VAR proxy_var =
     this->obtain_proxy (admin_ext_var.in (),
                         this->qos_
                         ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
   ACE_ASSERT (!CORBA::is_nil (proxy_var.in ()));
 
@@ -132,7 +122,6 @@ TAO_Notify_Tests_Peer_T<Peer_Traits>::connect (ACE_ENV_SINGLE_ARG_DECL)
   this->connect (proxy_var.in (),
                  this->proxy_id_
                  ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 }
 
 template <class Peer_Traits>
@@ -143,19 +132,17 @@ TAO_Notify_Tests_Peer_T<Peer_Traits>::set_qos (
   )
 {
   this->get_proxy ()->set_qos (qos ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 }
 
 template <class Peer_Traits>
 void
-TAO_Notify_Tests_Peer_T<Peer_Traits>::status (ACE_ENV_SINGLE_ARG_DECL)
+TAO_Notify_Tests_Peer_T<Peer_Traits>::status (void)
 {
 #if (TAO_HAS_MINIMUM_CORBA == 0)
   ACE_TRY
     {
       CORBA::Boolean not_exist =
-        this->get_proxy ()->_non_existent (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        this->get_proxy ()->_non_existent ();
 
       if (not_exist == 1)
         {
@@ -192,13 +179,13 @@ TAO_Notify_Tests_Peer_T<Peer_Traits>::status (ACE_ENV_SINGLE_ARG_DECL)
 
 template <class Peer_Traits>
 void
-TAO_Notify_Tests_Peer_T<Peer_Traits>::disconnect (ACE_ENV_SINGLE_ARG_DECL)
+TAO_Notify_Tests_Peer_T<Peer_Traits>::disconnect (void)
 {
   ACE_ASSERT (!CORBA::is_nil (this->proxy_.in ()));
 
   ACE_TRY_EX(TRY1)
     {
-      this->disconnect_from_proxy (ACE_ENV_SINGLE_ARG_PARAMETER);
+      this->disconnect_from_proxy ();
       ACE_TRY_CHECK_EX(TRY1);
     }
   ACE_CATCHANY
@@ -211,7 +198,7 @@ TAO_Notify_Tests_Peer_T<Peer_Traits>::disconnect (ACE_ENV_SINGLE_ARG_DECL)
 
   ACE_TRY_EX(TRY2)
     {
-      this->deactivate (ACE_ENV_SINGLE_ARG_PARAMETER);
+      this->deactivate ();
       ACE_TRY_CHECK_EX(TRY2);
     }
   ACE_CATCHANY
@@ -234,18 +221,16 @@ TAO_Notify_Tests_Peer_T<Peer_Traits>::_default_POA (
 
 template <class Peer_Traits>
 void
-TAO_Notify_Tests_Peer_T<Peer_Traits>::deactivate (ACE_ENV_SINGLE_ARG_DECL)
+TAO_Notify_Tests_Peer_T<Peer_Traits>::deactivate (void)
 {
   PortableServer::POA_var poa = this->_default_POA ();
 
   PortableServer::ObjectId_var id =
     poa->servant_to_id (this
                         ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
   poa->deactivate_object (id.in ()
                           ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 }
 
 #endif /* TAO_Notify_Tests_Peer_T_CPP */

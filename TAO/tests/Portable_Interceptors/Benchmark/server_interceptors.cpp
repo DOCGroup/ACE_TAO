@@ -24,14 +24,14 @@ Vault_Server_Request_Interceptor::~Vault_Server_Request_Interceptor ()
 }
 
 char *
-Vault_Server_Request_Interceptor::name (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+Vault_Server_Request_Interceptor::name (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return CORBA::string_dup (this->myname_);
 }
 
 void
-Vault_Server_Request_Interceptor::destroy (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+Vault_Server_Request_Interceptor::destroy (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
 }
@@ -54,15 +54,13 @@ Vault_Server_Request_Interceptor::receive_request (
                    PortableInterceptor::ForwardRequest))
 {
 
-  CORBA::String_var op = ri->operation (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+  CORBA::String_var op = ri->operation ();
 
   if (ACE_OS::strcmp (op.in (), "authenticate") == 0)
     {
       IOP::ServiceId id = request_ctx_id;
       IOP::ServiceContext_var sc =
         ri->get_request_service_context (id ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
 
       const char *buf =
         reinterpret_cast<const char *> (sc->context_data.get_buffer ());
@@ -74,8 +72,7 @@ Vault_Server_Request_Interceptor::receive_request (
   if (ACE_OS::strcmp (op.in (), "update_records") == 0)
     {
       Dynamic::ParameterList_var paramlist =
-        ri->arguments (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK;
+        ri->arguments ();
 
       Test_Interceptors::Secure_Vault::Record *record;
       CORBA::Long id;
@@ -93,14 +90,12 @@ Vault_Server_Request_Interceptor::send_reply (
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
 
-  CORBA::String_var op = ri->operation (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+  CORBA::String_var op = ri->operation ();
 
   if (ACE_OS::strcmp (op.in (), "update_records") == 0)
     {
       CORBA::Long result;
-      CORBA::Any_var result_any = ri->result (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK;
+      CORBA::Any_var result_any = ri->result ();
 
       (result_any.in ()) >>= result;
     }
@@ -174,7 +169,6 @@ Vault_Server_Request_Context_Interceptor::receive_request (
   IOP::ServiceId id = request_ctx_id;
   IOP::ServiceContext_var sc =
     ri->get_request_service_context (id ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
   const char *buf = reinterpret_cast<const char *> (sc->context_data.get_buffer ());
 
@@ -244,14 +238,12 @@ Vault_Server_Request_Dynamic_Interceptor::receive_request (
                    PortableInterceptor::ForwardRequest))
 {
 
-  CORBA::String_var op = ri->operation (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+  CORBA::String_var op = ri->operation ();
 
   if (ACE_OS::strcmp (op.in (), "authenticate") == 0)
     {
       Dynamic::ParameterList_var paramlist =
-        ri->arguments (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK;
+        ri->arguments ();
 
       const char *user;
       CORBA::ULong i = 0;  // index -- explicitly used to avoid
@@ -262,8 +254,7 @@ Vault_Server_Request_Dynamic_Interceptor::receive_request (
   if (ACE_OS::strcmp (op.in (), "update_records") == 0)
     {
       Dynamic::ParameterList_var paramlist =
-        ri->arguments (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK;
+        ri->arguments ();
 
       Test_Interceptors::Secure_Vault::Record *record;
       CORBA::Long id;
@@ -291,14 +282,12 @@ Vault_Server_Request_Dynamic_Interceptor::send_reply (
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
 
-  CORBA::String_var op = ri->operation (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+  CORBA::String_var op = ri->operation ();
 
   if (ACE_OS::strcmp (op.in (), "ready") == 0)
     {
       CORBA::Short result;
-      CORBA::Any_var result_any = ri->result (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK;
+      CORBA::Any_var result_any = ri->result ();
 
       (result_any.in ()) >>= result;
     }
@@ -306,8 +295,7 @@ Vault_Server_Request_Dynamic_Interceptor::send_reply (
   if (ACE_OS::strcmp (op.in (), "update_records") == 0)
     {
       CORBA::Long result;
-      CORBA::Any_var result_any = ri->result (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK;
+      CORBA::Any_var result_any = ri->result ();
 
       (result_any.in ()) >>= result;
     }
@@ -344,7 +332,7 @@ Vault_Server_Request_NOOP_Interceptor::~Vault_Server_Request_NOOP_Interceptor ()
 }
 
 char *
-Vault_Server_Request_NOOP_Interceptor::name (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+Vault_Server_Request_NOOP_Interceptor::name (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return CORBA::string_dup (this->myname_);

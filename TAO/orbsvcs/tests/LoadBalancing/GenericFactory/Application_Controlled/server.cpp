@@ -91,8 +91,7 @@ main (int argc, char *argv[])
           return 1;
         }
 
-      lb_server.orb ()->run (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      lb_server.orb ()->run ();
 
       ACE_DEBUG ((LM_DEBUG, "(%P|%t) server - event loop finished\n"));
 

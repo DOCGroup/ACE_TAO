@@ -96,7 +96,6 @@ AMH_Servant::test_method (Test::AMH_RoundtripResponseHandler_ptr _tao_rh,
       long l = this->reactor_->schedule_timer (handler,
                                                (void *) 0,
                                                ACE_Time_Value (0, this->sleep_time_));
-      ACE_TRY_CHECK;
 
       if (l == -1) //schedule timer failed
         {
@@ -130,7 +129,6 @@ AMH_Servant::start_test (Test::AMH_RoundtripResponseHandler_ptr _tao_rh
   ACE_TRY
     {
       _tao_rh->start_test ();
-      ACE_TRY_CHECK;
     }
   ACE_CATCHANY
     {
@@ -147,7 +145,6 @@ AMH_Servant::end_test (Test::AMH_RoundtripResponseHandler_ptr _tao_rh
   ACE_TRY
     {
       _tao_rh->end_test ();
-      ACE_TRY_CHECK;
     }
   ACE_CATCHANY
     {

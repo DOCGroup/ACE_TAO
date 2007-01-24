@@ -56,27 +56,21 @@ public:
 
     PROXY_IMPL* proxy = 0;
     factory->create (proxy ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK_RETURN (proxy_ret._retn ());
 
     PortableServer::ServantBase_var servant (proxy);
 
     proxy->init (parent ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK_RETURN (proxy_ret._retn ());
 
     proxy->set_qos (initial_qos ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK_RETURN (proxy_ret._retn ());
 
     CORBA::Object_var obj = proxy->activate (proxy ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK_RETURN (proxy_ret._retn ());
 
     proxy_id = proxy->id ();
 
     proxy_ret = PROXY::_narrow (obj.in() ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK_RETURN (proxy_ret._retn ());
 
     // insert proxy in admin container.
     parent->insert (proxy ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK_RETURN (PROXY::_nil ());
 
     return proxy_ret._retn ();
   }
@@ -89,19 +83,15 @@ public:
 
     PROXY_IMPL* proxy = 0;
     factory->create (proxy ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK_RETURN (0);
 
     PortableServer::ServantBase_var servant (proxy);
 
     proxy->init (parent ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK_RETURN (0);
 
     proxy->activate (proxy, proxy_id ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK_RETURN (0);
 
     // insert proxy in admin container.
     parent->insert (proxy ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK_RETURN (0);
 
     return proxy;
   }
@@ -177,7 +167,7 @@ TAO_Notify_Builder::~TAO_Notify_Builder ()
 }
 
 CosNotifyFilter::FilterFactory_ptr
-TAO_Notify_Builder::build_filter_factory (ACE_ENV_SINGLE_ARG_DECL)
+TAO_Notify_Builder::build_filter_factory (void)
 {
   TAO_Notify_FilterFactory* ff = ACE_Dynamic_Service<TAO_Notify_FilterFactory>::instance ("TAO_Notify_FilterFactory");
 
@@ -186,7 +176,6 @@ TAO_Notify_Builder::build_filter_factory (ACE_ENV_SINGLE_ARG_DECL)
       ACE_NEW_THROW_EX (ff,
                         TAO_Notify_ETCL_FilterFactory (),
                         CORBA::NO_MEMORY ());
-      ACE_CHECK_RETURN (CosNotifyFilter::FilterFactory::_nil ());
     }
 
   PortableServer::POA_var default_poa = TAO_Notify_PROPERTIES::instance ()->default_poa ();
@@ -204,12 +193,9 @@ TAO_Notify_Builder::build_event_channel_factory (PortableServer::POA_ptr poa ACE
   // Create ECF
   TAO_Notify_EventChannelFactory* ecf = 0;
   factory->create (ecf ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (ecf_ret._retn ());
 
   ecf->init (poa ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (ecf_ret._retn ());
-  ecf_ret = ecf->activate_self (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (ecf_ret._retn ());
+  ecf_ret = ecf->activate_self ();
 
   return (ecf_ret._retn ());
 }
@@ -227,23 +213,18 @@ TAO_Notify_Builder::build_event_channel (
 
   TAO_Notify_EventChannel* ec = 0;
   factory->create (ec ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (ec_ret._retn ());
 
   ec->init (ecf, initial_qos, initial_admin ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (ec_ret._retn ());
 
   // insert ec in ec container.
   ecf->ec_container().insert (ec ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (ec_ret._retn ());
 
   CORBA::Object_var obj = ec->activate (ec ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (ec_ret._retn ());
 
   // Populate the ID to return.
   id = ec->id ();
 
   ec_ret = CosNotifyChannelAdmin::EventChannel::_narrow (obj.in() ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (ec_ret._retn ());
 
   return ec_ret._retn ();
 }
@@ -257,17 +238,13 @@ TAO_Notify_Builder::build_event_channel (
 
   TAO_Notify_EventChannel* ec = 0;
   factory->create (ec ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (0);
 
   ec->init (ecf ACE_ENV_ARG_PARAMETER); //, initial_qos, initial_admin
-  ACE_CHECK_RETURN (0);
 
   // insert ec in ec container.
   ecf->ec_container().insert (ec ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (0);
 
   ec->activate (ec, id ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (0);
 
   return ec;
 }
@@ -284,24 +261,19 @@ TAO_Notify_Builder::build_consumer_admin (
 
   TAO_Notify_ConsumerAdmin* ca = 0;
   factory->create (ca ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (ca_ret._retn ());
 
   ca->init (ec ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (ca_ret._retn ());
 
   ca->filter_operator (op);
 
   CORBA::Object_var obj = ca->activate (ca ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (ca_ret._retn ());
 
   id = ca->id ();
 
   ca_ret = CosNotifyChannelAdmin::ConsumerAdmin::_narrow (obj.in() ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (ca_ret._retn ());
 
   // insert admin in CA container.
   ec->ca_container_->insert (ca ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (ca_ret._retn ());
 
   return ca_ret._retn ();
 }
@@ -315,17 +287,13 @@ TAO_Notify_Builder::build_consumer_admin (
   TAO_Notify_Factory* factory = TAO_Notify_PROPERTIES::instance ()->factory ();
   TAO_Notify_ConsumerAdmin * ca = 0;
   factory->create (ca ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (0);
 
   ca->init (ec ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (0);
 
   CORBA::Object_var obj = ca->activate (ca, id ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (0);
 
   // insert admin in CA container.
   ec->ca_container_->insert (ca ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (0);
   return ca;
 }
 
@@ -338,24 +306,19 @@ TAO_Notify_Builder::build_supplier_admin (TAO_Notify_EventChannel* ec, CosNotify
 
   TAO_Notify_SupplierAdmin* sa = 0;
   factory->create (sa ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (sa_ret._retn ());
 
   sa->init (ec ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (sa_ret._retn ());
 
   sa->filter_operator (op);
 
   CORBA::Object_var obj = sa->activate (sa ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (sa_ret._retn ());
 
   id = sa->id ();
 
   sa_ret = CosNotifyChannelAdmin::SupplierAdmin::_narrow (obj.in() ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (sa_ret._retn ());
 
   // insert admin in SA container.
   ec->sa_container().insert (sa ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (sa_ret._retn ());
 
   return sa_ret._retn ();
 }
@@ -369,17 +332,13 @@ TAO_Notify_Builder::build_supplier_admin (
   TAO_Notify_Factory* factory = TAO_Notify_PROPERTIES::instance ()->factory ();
   TAO_Notify_SupplierAdmin * sa = 0;
   factory->create (sa ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (0);
 
   sa->init (ec ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (0);
 
   CORBA::Object_var obj = sa->activate (sa, id ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (0);
 
   // insert admin in CA container.
   ec->sa_container().insert (sa ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (0);
 
   return sa;
 }
@@ -558,12 +517,10 @@ TAO_Notify_Builder::apply_reactive_concurrency (TAO_Notify_Object& object ACE_EN
   ACE_NEW_THROW_EX (worker_task,
                     TAO_Notify_Reactive_Task (),
                     CORBA::NO_MEMORY ());
-  ACE_CHECK;
 
   object.set_worker_task (worker_task);
 
-  worker_task->init (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+  worker_task->init ();
 }
 
 void
@@ -574,12 +531,10 @@ TAO_Notify_Builder::apply_thread_pool_concurrency (TAO_Notify_Object& object, co
   ACE_NEW_THROW_EX (worker_task,
                     TAO_Notify_ThreadPool_Task (),
                     CORBA::NO_MEMORY ());
-  ACE_CHECK;
 
   object.set_worker_task (worker_task);
 
   worker_task->init (tp_params, object.admin_properties_ ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 }
 
 void

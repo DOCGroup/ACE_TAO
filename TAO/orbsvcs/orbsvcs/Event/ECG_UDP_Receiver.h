@@ -83,7 +83,7 @@ public:
   TAO_ECG_UDP_Receiver_Disconnect_Command &
    operator= (const TAO_ECG_UDP_Receiver_Disconnect_Command & rhs);
 
-  void execute (ACE_ENV_SINGLE_ARG_DECL);
+  void execute (void);
 
 private:
 
@@ -161,7 +161,7 @@ public:
    * result in decrementing of the reference count (due to
    * deactivation) and deletion of the object.
    */
-  void shutdown (ACE_ENV_SINGLE_ARG_DECL);
+  void shutdown (void);
   //@}
 
   /// Accessor.
@@ -174,7 +174,7 @@ public:
   /// The PushSupplier idl method.
   /// Invokes shutdown (), which may result in the object being deleted, if
   /// refcounting is used to manage its lifetime.
-  virtual void disconnect_push_supplier (ACE_ENV_SINGLE_ARG_DECL)
+  virtual void disconnect_push_supplier (void)
       ACE_THROW_SPEC ((CORBA::SystemException));
 
   /// TAO_ECG_Dgram_Handler method.

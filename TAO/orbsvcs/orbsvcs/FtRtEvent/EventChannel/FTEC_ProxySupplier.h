@@ -46,11 +46,11 @@ public:
       ACE_THROW_SPEC ((CORBA::SystemException,
                        RtecEventChannelAdmin::AlreadyConnected,
                        RtecEventChannelAdmin::TypeError));
-  virtual void disconnect_push_supplier (ACE_ENV_SINGLE_ARG_DECL)
+  virtual void disconnect_push_supplier (void)
       ACE_THROW_SPEC ((CORBA::SystemException));
-  virtual void suspend_connection (ACE_ENV_SINGLE_ARG_DECL)
+  virtual void suspend_connection (void)
       ACE_THROW_SPEC ((CORBA::SystemException));
-  virtual void resume_connection (ACE_ENV_SINGLE_ARG_DECL)
+  virtual void resume_connection (void)
       ACE_THROW_SPEC ((CORBA::SystemException));
 
   const FtRtecEventChannelAdmin::ObjectId& id() const;

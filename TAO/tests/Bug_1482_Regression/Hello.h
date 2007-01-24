@@ -17,7 +17,7 @@ public:
   Hello (CORBA::ORB_ptr orb);
 
   // = The skeleton methods
-  virtual CORBA::ULong next_prime (ACE_ENV_SINGLE_ARG_DECL)
+  virtual CORBA::ULong next_prime (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
 private:

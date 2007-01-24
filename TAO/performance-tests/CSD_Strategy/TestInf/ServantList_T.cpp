@@ -19,7 +19,7 @@ ServantList<T>::~ServantList()
 template <typename T>
 void
 ServantList<T>::create_and_activate(unsigned                num_servants,
-                                    CORBA::ORB_ptr          orb, 
+                                    CORBA::ORB_ptr          orb,
                                     PortableServer::POA_ptr poa,
                                     const char*             ior_fname_prefix
                                     ACE_ENV_ARG_DECL)
@@ -28,22 +28,19 @@ ServantList<T>::create_and_activate(unsigned                num_servants,
     {
       char buf[32];
       ACE_OS::sprintf(buf, "%02d", i + 1);
-      ACE_CString filename = ACE_CString(ior_fname_prefix) + "_" + buf + ".ior";  
+      ACE_CString filename = ACE_CString(ior_fname_prefix) + "_" + buf + ".ior";
       ServantRecord record;
       record.servant_ = new T();
       record.safe_servant_ = record.servant_;
 
-      CORBA::Object_var obj 
-        = AppHelper::activate_servant(poa, 
+      CORBA::Object_var obj
+        = AppHelper::activate_servant(poa,
                                       record.safe_servant_.in()
                                       ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
-                                     
-      AppHelper::ref_to_file(orb, obj.in(), filename.c_str() ACE_ENV_ARG_PARAMETER); 
-      ACE_CHECK;
+
+      AppHelper::ref_to_file(orb, obj.in(), filename.c_str() ACE_ENV_ARG_PARAMETER);
 
       record.obj_ = T_stub::_narrow(obj.in() ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
 
       if (CORBA::is_nil(record.obj_.in()))
         {
@@ -67,14 +64,12 @@ ServantList<T>::create_and_activate(unsigned                num_servants,
       record.servant_ = new T();
       record.safe_servant_ = record.servant_;
 
-      CORBA::Object_var obj 
-        = AppHelper::activate_servant(poa, 
+      CORBA::Object_var obj
+        = AppHelper::activate_servant(poa,
                                       record.safe_servant_.in()
                                       ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
-                                    
+
       record.obj_ = T_stub::_narrow(obj.in() ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
 
       if (CORBA::is_nil(record.obj_.in()))
         {

@@ -32,23 +32,17 @@ int
 ClientApp::run_i(int argc, char* argv[] ACE_ENV_ARG_DECL)
 {
   int result = this->init(argc, argv ACE_ENV_ARG_PARAMETER);
-  if (result != 0)   
+  if (result != 0)
     {
       return result;
     }
-  ACE_CHECK_RETURN (-1);
 
-  this->poa_setup(ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
-  this->csd_setup(ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
-  this->client_setup(ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
-  this->poa_activate(ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
+  this->poa_setup();
+  this->csd_setup();
+  this->client_setup();
+  this->poa_activate();
   this->run_clients();
-  this->run_orb_event_loop(ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
+  this->run_orb_event_loop();
 
   // Calling wait on ACE_Thread_Manager singleton to avoid the problem
   // that the main thread might exit before all CSD Threads exit.
@@ -67,7 +61,6 @@ int
 ClientApp::init(int argc, char* argv[] ACE_ENV_ARG_DECL)
 {
   this->orb_ = CORBA::ORB_init(argc, argv, "" ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
 
   // Parse the command-line args for this application.
   // * Raises -1 if problems are encountered.
@@ -80,24 +73,22 @@ ClientApp::init(int argc, char* argv[] ACE_ENV_ARG_DECL)
     }
 
   TheAppShutdown->init(this->orb_.in(), num_servants_ ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
 
   return 0;
 }
 
 
 void
-ClientApp::poa_setup(ACE_ENV_SINGLE_ARG_DECL)
+ClientApp::poa_setup(void)
 {
-  this->poa_ = this->create_poa(this->orb_.in(), 
-                                "ChildPoa" 
+  this->poa_ = this->create_poa(this->orb_.in(),
+                                "ChildPoa"
                                 ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 }
 
 
 void
-ClientApp::csd_setup(ACE_ENV_SINGLE_ARG_DECL)
+ClientApp::csd_setup(void)
 {
   this->tp_strategy_ = new TAO::CSD::TP_Strategy(this->num_csd_threads_);
 
@@ -107,41 +98,36 @@ ClientApp::csd_setup(ACE_ENV_SINGLE_ARG_DECL)
                  "Failed to apply CSD strategy to poa.\n"));
       ACE_THROW(TestAppException());
     }
-  ACE_CHECK;
 }
 
 
 void
-ClientApp::client_setup(ACE_ENV_SINGLE_ARG_DECL)
+ClientApp::client_setup(void)
 {
   // Turn the ior_ into a Foo_B obj ref.
   Foo_B_var foo = RefHelper<Foo_B>::string_to_ref(this->orb_.in(),
                                                   this->ior_.c_str()
                                                   ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
- 
+
   this->servants_.create_and_activate(1, // number of callback servants
                                       this->poa_.in()
                                       ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
   ServantListType::T_stub_var cb = this->servants_.objref(0);
 
-  // Create the ClientEngine object, and give it the Foo_B and Callback object 
+  // Create the ClientEngine object, and give it the Foo_B and Callback object
   // references.
-  ClientEngine_Handle engine 
+  ClientEngine_Handle engine
     = new Foo_B_ClientEngine(foo.in(), cb.in (), this->client_id_);
   this->client_task_.add_engine(engine.in());
 }
 
 
 void
-ClientApp::poa_activate(ACE_ENV_SINGLE_ARG_DECL)
+ClientApp::poa_activate(void)
 {
-  PortableServer::POAManager_var poa_manager 
-    = this->poa_->the_POAManager(ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
-  poa_manager->activate(ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+  PortableServer::POAManager_var poa_manager
+    = this->poa_->the_POAManager();
+  poa_manager->activate();
 }
 
 
@@ -153,31 +139,28 @@ ClientApp::run_clients()
 
 
 void
-ClientApp::run_orb_event_loop(ACE_ENV_SINGLE_ARG_DECL)
+ClientApp::run_orb_event_loop(void)
 {
   OrbRunner orb_runner(this->orb_.in(), this->num_orb_threads_);
-  orb_runner.run(ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+  orb_runner.run();
   TheAppShutdown->wait ();
 }
 
 
 PortableServer::POA_ptr
-ClientApp::create_poa(CORBA::ORB_ptr orb, 
-                      const char* poa_name 
+ClientApp::create_poa(CORBA::ORB_ptr orb,
+                      const char* poa_name
                       ACE_ENV_ARG_DECL)
 {
   // Get the Root POA.
   PortableServer::POA_var root_poa
-    = RefHelper<PortableServer::POA>::resolve_initial_ref(orb, 
+    = RefHelper<PortableServer::POA>::resolve_initial_ref(orb,
                                                           "RootPOA"
                                                           ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (PortableServer::POA::_nil ());
 
   // Get the POAManager from the Root POA.
-  PortableServer::POAManager_var poa_manager 
-    = root_poa->the_POAManager(ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (PortableServer::POA::_nil ());
+  PortableServer::POAManager_var poa_manager
+    = root_poa->the_POAManager();
 
   // Create the child POA Policies.
   CORBA::PolicyList policies(0);
@@ -189,7 +172,6 @@ ClientApp::create_poa(CORBA::ORB_ptr orb,
                                                       poa_manager.in(),
                                                       policies
                                                       ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (PortableServer::POA::_nil ());
 
   // Give away the child POA_ptr from the POA_var variable.
   return poa._retn();

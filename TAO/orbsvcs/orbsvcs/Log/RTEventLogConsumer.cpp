@@ -53,12 +53,11 @@ TAO_Rtec_LogConsumer::push (const RtecEventComm::EventSet& events ACE_ENV_ARG_DE
 
   this->log_->write_recordlist (recList ACE_ENV_ARG_PARAMETER);
 
-  ACE_CHECK;
 
 }
 
 void
-TAO_Rtec_LogConsumer::disconnect_push_consumer (ACE_ENV_SINGLE_ARG_DECL)
+TAO_Rtec_LogConsumer::disconnect_push_consumer (void)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->supplier_proxy_->disconnect_push_supplier (

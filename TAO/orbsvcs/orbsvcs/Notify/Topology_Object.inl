@@ -15,10 +15,10 @@ namespace TAO_Notify
 
   ACE_INLINE
   bool
-  Topology_Parent::child_change (ACE_ENV_SINGLE_ARG_DECL)
+  Topology_Parent::child_change (void)
   {
     this->children_changed_ = true;
-    return send_change (ACE_ENV_SINGLE_ARG_PARAMETER);
+    return send_change ();
   }
 
 } // namespace TAO_Notify

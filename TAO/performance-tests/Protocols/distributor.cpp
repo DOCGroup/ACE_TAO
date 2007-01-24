@@ -65,13 +65,13 @@ public:
                    ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  void end_test (ACE_ENV_SINGLE_ARG_DECL)
+  void end_test (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  void oneway_sync (ACE_ENV_SINGLE_ARG_DECL)
+  void oneway_sync (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  void twoway_sync (ACE_ENV_SINGLE_ARG_DECL)
+  void twoway_sync (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   void oneway_method (CORBA::Long session_id,
@@ -86,10 +86,10 @@ public:
                       ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  void shutdown (ACE_ENV_SINGLE_ARG_DECL)
+  void shutdown (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  PortableServer::POA_ptr _default_POA (ACE_ENV_SINGLE_ARG_DECL);
+  PortableServer::POA_ptr _default_POA (void);
 
 private:
   CORBA::ORB_var orb_;
@@ -178,7 +178,6 @@ test_i::start_test (CORBA::Long session_id,
   this->policy_manager_->set_policy_overrides (this->test_protocol_policy_,
                                                CORBA::SET_OVERRIDE
                                                ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
   // Since the network maybe unavailable temporarily, make sure to try
   // for a few times before giving up.
@@ -190,7 +189,7 @@ test_i::start_test (CORBA::Long session_id,
       ACE_TRY_EX (B1)
         {
           // Send a message to ensure that the connection is setup.
-          this->receiver_->oneway_sync (ACE_ENV_SINGLE_ARG_PARAMETER);
+          this->receiver_->oneway_sync ();
           ACE_TRY_CHECK_EX (B1);
 
           goto test_protocol_success;
@@ -221,7 +220,6 @@ test_i::start_test (CORBA::Long session_id,
   this->policy_manager_->set_policy_overrides (this->base_protocol_policy_,
                                                CORBA::SET_OVERRIDE
                                                ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
   // Since the network maybe unavailable temporarily, make sure to try
   // for a few times before giving up.
@@ -268,37 +266,32 @@ test_i::start_test (CORBA::Long session_id,
   this->policy_manager_->set_policy_overrides (this->test_protocol_policy_,
                                                CORBA::SET_OVERRIDE
                                                ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 }
 
 void
-test_i::end_test (ACE_ENV_SINGLE_ARG_DECL)
+test_i::end_test (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // Use IIOP to indicate end of test to server.
   this->policy_manager_->set_policy_overrides (this->base_protocol_policy_,
                                                CORBA::SET_OVERRIDE
                                                ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
-  this->receiver_->end_test (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+  this->receiver_->end_test ();
 }
 
 void
-test_i::oneway_sync (ACE_ENV_SINGLE_ARG_DECL)
+test_i::oneway_sync (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  this->receiver_->oneway_sync (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+  this->receiver_->oneway_sync ();
 }
 
 void
-test_i::twoway_sync (ACE_ENV_SINGLE_ARG_DECL)
+test_i::twoway_sync (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  this->receiver_->twoway_sync (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+  this->receiver_->twoway_sync ();
 }
 
 void
@@ -312,7 +305,6 @@ test_i::oneway_method (CORBA::Long session_id,
                                   iteration,
                                   payload
                                   ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 }
 
 void
@@ -326,25 +318,22 @@ test_i::twoway_method (CORBA::Long &session_id,
                                   iteration,
                                   payload
                                   ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 }
 
 PortableServer::POA_ptr
-test_i::_default_POA (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+test_i::_default_POA (void)
 {
   return PortableServer::POA::_duplicate (this->poa_.in ());
 }
 
 void
-test_i::shutdown (ACE_ENV_SINGLE_ARG_DECL)
+test_i::shutdown (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  this->receiver_->shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+  this->receiver_->shutdown ();
 
   this->orb_->shutdown (0
                         ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 }
 
 int
@@ -357,27 +346,22 @@ main (int argc, char **argv)
                          argv,
                          0
                          ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       CORBA::Object_var object =
         orb->resolve_initial_references ("RTORB"
                                          ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       RTCORBA::RTORB_var rtorb =
         RTCORBA::RTORB::_narrow (object.in ()
                                  ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       object =
         orb->resolve_initial_references ("ORBPolicyManager"
                                          ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       CORBA::PolicyManager_var policy_manager =
         CORBA::PolicyManager::_narrow (object.in ()
                                        ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       int parse_args_result =
         parse_args (argc, argv);
@@ -387,26 +371,21 @@ main (int argc, char **argv)
       object =
         orb->resolve_initial_references ("RootPOA"
                                          ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       PortableServer::POA_var root_poa =
         PortableServer::POA::_narrow (object.in ()
                                       ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       PortableServer::POAManager_var poa_manager =
-        root_poa->the_POAManager (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        root_poa->the_POAManager ();
 
       object =
         orb->string_to_object (ior
                                ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       test_var receiver =
         test::_narrow (object.in ()
                        ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       test_i *servant =
         new test_i (orb.in (),
@@ -418,12 +397,10 @@ main (int argc, char **argv)
       ACE_UNUSED_ARG (safe_servant);
 
       test_var test =
-        servant->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        servant->_this ();
 
       CORBA::String_var ior =
         orb->object_to_string (test.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       FILE *output_file =
         ACE_OS::fopen (ior_file, "w");
@@ -438,11 +415,9 @@ main (int argc, char **argv)
 
       ACE_OS::fclose (output_file);
 
-      poa_manager->activate (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      poa_manager->activate ();
 
-      orb->run (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      orb->run ();
     }
   ACE_CATCHANY
     {

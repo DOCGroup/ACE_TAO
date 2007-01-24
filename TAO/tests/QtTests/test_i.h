@@ -36,7 +36,7 @@ public:
 
   // ctor
 
-  void shutdown (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+  void shutdown (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   void send_val (CORBA::Long val

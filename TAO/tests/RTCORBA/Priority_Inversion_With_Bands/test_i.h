@@ -33,7 +33,7 @@ public:
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   /// Our POA.
-  PortableServer::POA_ptr _default_POA (ACE_ENV_SINGLE_ARG_DECL);
+  PortableServer::POA_ptr _default_POA (void);
 
   /// Work (burn CPU).
   void work (CORBA::ULong work);

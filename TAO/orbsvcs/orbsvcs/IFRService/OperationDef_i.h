@@ -171,7 +171,7 @@ public:
                          ACE_ENV_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  CORBA::TypeCode_ptr type_i (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+  CORBA::TypeCode_ptr type_i (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
 };
 

@@ -47,18 +47,15 @@ main (int argc, char *argv[])
                                             argv,
                                             "Mighty ORB"
                                             ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       // Get a reference to the Name Service.
       CORBA::Object_var obj =
         orb->resolve_initial_references ("NameService"
                                          ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       // Narrow to a Naming Context
       CosNaming::NamingContext_var nc =
         CosNaming::NamingContext::_narrow (obj.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       if (CORBA::is_nil (obj.in ()))
         {
@@ -75,7 +72,6 @@ main (int argc, char *argv[])
       name[0].kind = CORBA::string_dup ("");
 
       obj = nc->resolve (name ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       // Now narrow to an Iterator_Factory reference.
       Web_Server::Iterator_Factory_var factory =
@@ -99,7 +95,6 @@ main (int argc, char *argv[])
                              contents,
                              metadata
                              ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       ACE_DEBUG ((LM_INFO,
                   ACE_TEXT ("File <%s> has the following ")
@@ -113,20 +108,16 @@ main (int argc, char *argv[])
       int result = ::retrieve_data (metadata->content_type.in (),
                                     contents.in ()
                                     ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       if (result != 0)
         return -1;
 
       // Done with the Content_Iterator, so destroy it.
-      contents->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      contents->destroy ();
 
       orb->shutdown (0 ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
-      // orb->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-      // ACE_TRY_CHECK;
+      // orb->destroy ();
     }
   ACE_CATCH (Web_Server::Error_Result, exc)
     {
@@ -185,7 +176,6 @@ int retrieve_data (const char *content_type,
   for (;;)
     {
       rc = contents->next_chunk (offset, chunk ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK_RETURN (-1);
 
       if (!rc)
         break;

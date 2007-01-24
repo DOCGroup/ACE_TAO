@@ -65,20 +65,17 @@ Test_Exception::dii_req_invoke (CORBA::Request_ptr req
                                    Param_Test::_tc_Ooops
                                  ));
 
-      req->invoke (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      req->invoke ();
 
       req->return_value () >>= this->ret_;
 
       CORBA::NamedValue_ptr o2 =
         req->arguments ()->item (1 ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       *o2->value () >>= this->inout_;
 
       CORBA::NamedValue_ptr o3 =
         req->arguments ()->item (2 ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       *o3->value () >>= this->out_;
     }
@@ -236,7 +233,6 @@ Test_Exception::dii_req_invoke (CORBA::Request_ptr req
         }
     }
   ACE_ENDTRY;
-  ACE_CHECK;
 }
 
 int
@@ -268,7 +264,6 @@ Test_Exception::run_sii_test (Param_Test_ptr objref
                                            this->inout_,
                                            this->out_
                                            ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
     }
   ACE_CATCH (Param_Test::Ooops, ex)
     {

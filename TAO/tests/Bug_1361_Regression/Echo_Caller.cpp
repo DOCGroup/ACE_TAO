@@ -28,7 +28,7 @@ Echo_Caller::start_task(Test::Echo_ptr client
 }
 
 void
-Echo_Caller::shutdown(ACE_ENV_SINGLE_ARG_DECL)
+Echo_Caller::shutdown(void)
   ACE_THROW_SPEC((CORBA::SystemException))
 {
   ACE_DEBUG ((LM_DEBUG, "Server received shutdown message\n"));

@@ -20,14 +20,14 @@ Client_Request_Interceptor::~Client_Request_Interceptor (void)
 }
 
 char *
-Client_Request_Interceptor::name (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+Client_Request_Interceptor::name (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return CORBA::string_dup (this->myname_);
 }
 
 void
-Client_Request_Interceptor::destroy (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+Client_Request_Interceptor::destroy (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
 }
@@ -64,7 +64,6 @@ Client_Request_Interceptor::receive_reply (
       // report the fact via an exception.
       IOP::ServiceContext_var sc =
         ri->get_reply_service_context (IOP::RTCorbaPriority ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
     }
   ACE_CATCHANY
     {
@@ -102,18 +101,14 @@ Client_Request_Interceptor::receive_exception (
       this->orb_ = CORBA::ORB_init (argc, 0,
                                     this->orb_id_.in ()
                                     ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
     }
 
-  CORBA::String_var operation = ri->operation (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+  CORBA::String_var operation = ri->operation ();
 
-  CORBA::Object_var target = ri->target (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+  CORBA::Object_var target = ri->target ();
 
   CORBA::String_var ior =
     this->orb_->object_to_string (target.in () ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
   ACE_DEBUG ((LM_DEBUG,
               "%s.received_exception "
@@ -121,11 +116,9 @@ Client_Request_Interceptor::receive_exception (
               this->myname_,
               operation.in (),
               ior.in ()));
-  ACE_CHECK;
 
   // Try to get the RTCorbaPriority context.  If its not there,
   // report the fact via an exception.
   IOP::ServiceContext_var sc =
     ri->get_reply_service_context (IOP::RTCorbaPriority ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 }

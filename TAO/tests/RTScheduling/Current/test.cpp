@@ -14,15 +14,12 @@ main (int argc, char* argv [])
                          argv,
                          ""
                          ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       CORBA::Object_var manager_obj = orb->resolve_initial_references ("RTSchedulerManager"
                                                                        ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       TAO_RTScheduler_Manager_var manager = TAO_RTScheduler_Manager::_narrow (manager_obj.in ()
                                                                               ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       TAO_Scheduler scheduler (orb.in ());
 
@@ -32,14 +29,12 @@ main (int argc, char* argv [])
 
       task.activate_task (4);
 
-      orb->run (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      orb->run ();
 
       // Wait until all threads are ready.
       ACE_Thread_Manager::instance ()->wait ();
 
-      orb->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      orb->destroy ();
     }
   ACE_CATCHANY
     {

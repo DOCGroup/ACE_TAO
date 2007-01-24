@@ -12,8 +12,7 @@ Shutdown<Client>::operator () (Client *client)
   ACE_DECLARE_NEW_ENV;
   ACE_TRY
     {
-      client->shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      client->shutdown ();
     }
   ACE_CATCHANY { };
   ACE_ENDTRY;

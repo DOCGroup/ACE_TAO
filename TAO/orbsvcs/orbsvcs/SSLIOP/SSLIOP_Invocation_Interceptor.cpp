@@ -63,8 +63,7 @@ TAO::SSLIOP::Server_Invocation_Interceptor::receive_request_service_contexts (
   //          accept or reject requests on a per-object basis
   //          instead on a per-endpoint basis.
   CORBA::Boolean const no_ssl =
-    this->ssliop_current_->no_context (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+    this->ssliop_current_->no_context ();
 
   if (TAO_debug_level >= 3)
     ACE_DEBUG ((LM_DEBUG, "SSLIOP (%P|%t) Interceptor (context), ssl=%d\n", !(no_ssl)));
@@ -82,7 +81,6 @@ TAO::SSLIOP::Server_Invocation_Interceptor::receive_request_service_contexts (
       ::SSLIOP::ASN_1_Cert_var cert =
         this->ssliop_current_->get_peer_certificate (
           ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       // @@ The following debugging code works but I don't think that
       //    we should include it since it dumps alot of information,
@@ -132,7 +130,6 @@ TAO::SSLIOP::Server_Invocation_Interceptor::receive_request_service_contexts (
         ACE_THROW (CORBA::NO_PERMISSION ());
     }
   ACE_ENDTRY;
-  ACE_CHECK;
 #endif /* DEBUG_PEER_CERTIFICATES */
 }
 

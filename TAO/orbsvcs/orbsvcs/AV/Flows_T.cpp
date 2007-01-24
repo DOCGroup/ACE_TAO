@@ -30,14 +30,12 @@ TAO_FDev<T_Producer, T_Consumer>::TAO_FDev (const char *flowname)
       this->define_property ("Flow",
                              flowname_any
                              ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
     }
   ACE_CATCHANY
     {
       ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,"TAO_FDev::TAO_FDev");
     }
   ACE_ENDTRY;
-  ACE_CHECK;
 }
 
 template <class T_Producer, class T_Consumer>
@@ -65,14 +63,12 @@ TAO_FDev<T_Producer, T_Consumer>::flowname (const char *flow_name)
       this->define_property ("Flow",
                              flowname_any
                              ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
     }
   ACE_CATCHANY
     {
       ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,"TAO_FDev::flowname");
     }
   ACE_ENDTRY;
-  ACE_CHECK;
   this->flowname_ = flow_name;
 }
 
@@ -113,8 +109,7 @@ TAO_FDev<T_Producer, T_Consumer>::make_producer (AVStreams::FlowConnection_ptr /
       T_Producer *producer_i;
       ACE_NEW_RETURN (producer_i, T_Producer, 0);
       this->producer_list_.insert_tail (producer_i);
-      producer = producer_i->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      producer = producer_i->_this ();
     }
   ACE_CATCHANY
     {
@@ -122,7 +117,6 @@ TAO_FDev<T_Producer, T_Consumer>::make_producer (AVStreams::FlowConnection_ptr /
       return producer;
     }
   ACE_ENDTRY;
-  ACE_CHECK_RETURN (producer);
   return producer;
 }
 
@@ -143,8 +137,7 @@ TAO_FDev<T_Producer, T_Consumer>::make_consumer (AVStreams::FlowConnection_ptr /
       ACE_NEW_RETURN (consumer_i, T_Consumer, 0 );
 
       this->consumer_list_.insert_tail (consumer_i);
-      consumer = consumer_i->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      consumer = consumer_i->_this ();
     }
   ACE_CATCHANY
     {
@@ -152,7 +145,6 @@ TAO_FDev<T_Producer, T_Consumer>::make_consumer (AVStreams::FlowConnection_ptr /
       return consumer;
     }
   ACE_ENDTRY;
-  ACE_CHECK_RETURN (consumer);
   return consumer;
 }
 
@@ -190,7 +182,6 @@ TAO_FDev<T_Producer, T_Consumer>::bind (AVStreams::FDev_ptr peer_device,
   ACE_UNUSED_ARG (peer_device);
   ACE_UNUSED_ARG (the_qos);
   ACE_UNUSED_ARG (is_met);
-  ACE_CHECK_RETURN (0);
   return 0;
 }
 
@@ -208,7 +199,6 @@ TAO_FDev<T_Producer, T_Consumer>::bind_mcast (AVStreams::FDev_ptr first_peer,
   ACE_UNUSED_ARG (first_peer);
   ACE_UNUSED_ARG (the_qos);
   ACE_UNUSED_ARG (is_met);
-  ACE_CHECK_RETURN (0);
   return 0;
 }
 

@@ -45,7 +45,6 @@ TAO_Notify_PushConsumer::init (CosEventComm::PushConsumer_ptr push_consumer
 
         this->publish_ =
           CosNotifyComm::NotifyPublish::_narrow (push_consumer ACE_ENV_ARG_PARAMETER);
-        ACE_TRY_CHECK;
       }
     else
       {
@@ -58,9 +57,8 @@ TAO_Notify_PushConsumer::init (CosEventComm::PushConsumer_ptr push_consumer
 
         CosEventComm::PushConsumer_var new_cos_comm_pc =
           CosEventComm::PushConsumer::_unchecked_narrow(obj.in() ACE_ENV_ARG_PARAMETER);
-        ACE_TRY_CHECK;
 
-        this->push_consumer_ = 
+        this->push_consumer_ =
           CosEventComm::PushConsumer::_duplicate (new_cos_comm_pc.in());
 
         //
@@ -72,10 +70,9 @@ TAO_Notify_PushConsumer::init (CosEventComm::PushConsumer_ptr push_consumer
         // this->publish_ is in TAO_NS_Consumer::dispatch_updates_i (the superclass).
         // If any other use is made of this data member, then the code to validate
         // the actual type of the target object must be refactored.
-        this->publish_ = 
+        this->publish_ =
           CosNotifyComm::NotifyPublish::_unchecked_narrow (obj.in()
                                                            ACE_ENV_ARG_PARAMETER);
-        ACE_TRY_CHECK;
 
 
         //--cj verify dispatching ORB
@@ -147,7 +144,6 @@ TAO_Notify_PushConsumer::get_ior (void) const
   ACE_TRY
     {
       CORBA::String_var ior = orb->object_to_string(this->push_consumer_.in() ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
       result = static_cast<const char*> (ior.in ());
     }
   ACE_CATCHANY
@@ -166,7 +162,6 @@ TAO_Notify_PushConsumer::reconnect_from_consumer (TAO_Notify_Consumer* old_consu
     dynamic_cast<TAO_Notify_PushConsumer*> (old_consumer);
   ACE_ASSERT(tmp != 0);
   this->init(tmp->push_consumer_.in() ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
   this->schedule_timer(false);
 }
 

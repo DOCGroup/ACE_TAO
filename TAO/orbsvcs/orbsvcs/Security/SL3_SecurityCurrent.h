@@ -73,7 +73,7 @@ namespace TAO
           ACE_ENV_SINGLE_ARG_DECL)
         ACE_THROW_SPEC ((CORBA::SystemException));
 
-      virtual CORBA::Boolean request_is_local (ACE_ENV_SINGLE_ARG_DECL)
+      virtual CORBA::Boolean request_is_local (void)
         ACE_THROW_SPEC ((CORBA::SystemException));
       //@}
 

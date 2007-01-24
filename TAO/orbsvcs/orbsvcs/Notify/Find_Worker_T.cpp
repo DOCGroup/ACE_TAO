@@ -23,7 +23,6 @@ TAO_Notify_Find_Worker_T<TYPE,INTERFACE,INTERFACE_PTR,EXCEPTION>::find (const TA
   this->id_ = id;
 
   container.collection ()->for_each (this ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (0);
 
   return this->result_;
 }
@@ -32,14 +31,12 @@ template<class TYPE, class INTERFACE, class INTERFACE_PTR, class EXCEPTION> INTE
 TAO_Notify_Find_Worker_T<TYPE,INTERFACE,INTERFACE_PTR,EXCEPTION>::resolve (const TAO_Notify_Object::ID id, CONTAINER& container ACE_ENV_ARG_DECL)
 {
   this->find (id, container ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (INTERFACE::_nil ());
 
   if (this->result_ == 0)
     ACE_THROW_RETURN (EXCEPTION ()
                       , INTERFACE::_nil ());
 
-  CORBA::Object_var object = this->result_->ref (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (INTERFACE::_nil ());
+  CORBA::Object_var object = this->result_->ref ();
 
   return INTERFACE::_narrow (object.in () ACE_ENV_ARG_PARAMETER);
 }

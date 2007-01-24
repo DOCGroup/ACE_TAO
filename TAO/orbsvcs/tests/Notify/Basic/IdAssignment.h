@@ -29,10 +29,10 @@ public:
   void init (int argc,
              char *argv[]
              ACE_ENV_ARG_DECL);
-  void run_test (ACE_ENV_SINGLE_ARG_DECL);
+  void run_test (void);
 
 private:
-  CosNotifyChannelAdmin::ChannelID create_ec (ACE_ENV_SINGLE_ARG_DECL);
+  CosNotifyChannelAdmin::ChannelID create_ec (void);
   void destroy_ec (CosNotifyChannelAdmin::ChannelID id
                    ACE_ENV_ARG_DECL);
 

@@ -17,10 +17,8 @@ DSI_Simple_Server::invoke (CORBA::ServerRequest_ptr request
 {
   CORBA::NVList_ptr list;
   this->orb_->create_list (0, list ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
   request->arguments (list ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
   CORBA::Request_var target_request;
 
@@ -33,7 +31,6 @@ DSI_Simple_Server::invoke (CORBA::ServerRequest_ptr request
                                   target_request.inout (),
                                   0
                                   ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
   target_request->_tao_lazy_evaluation (1);
 
@@ -43,8 +40,7 @@ DSI_Simple_Server::invoke (CORBA::ServerRequest_ptr request
   ACE_TRY
     {
       // Updates the byte order state, if necessary.
-      target_request->invoke (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      target_request->invoke ();
     }
   ACE_CATCH (CORBA::UNKNOWN, ex)
     {
@@ -65,7 +61,6 @@ DSI_Simple_Server::invoke (CORBA::ServerRequest_ptr request
   if (ACE_OS::strcmp ("shutdown", request->operation ()) == 0)
     {
       this->orb_->shutdown (0 ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
     }
 }
 
@@ -79,7 +74,7 @@ DSI_Simple_Server::_primary_interface (const PortableServer::ObjectId &,
 }
 
 PortableServer::POA_ptr
-DSI_Simple_Server::_default_POA (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+DSI_Simple_Server::_default_POA (void)
 {
   return PortableServer::POA::_duplicate (this->poa_.in ());
 }

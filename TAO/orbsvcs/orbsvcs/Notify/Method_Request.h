@@ -42,8 +42,8 @@ public:
   virtual ~TAO_Notify_Method_Request (void);
 
   /// Execute the Request
-  virtual int execute (ACE_ENV_SINGLE_ARG_DECL) = 0;
-  virtual TAO_Notify_Method_Request_Queueable* copy (ACE_ENV_SINGLE_ARG_DECL) = 0;
+  virtual int execute (void) = 0;
+  virtual TAO_Notify_Method_Request_Queueable* copy (void) = 0;
 };
 
 /***********************************************************************/
@@ -64,7 +64,7 @@ public:
   TAO_Notify_Method_Request_Queueable();
   TAO_Notify_Method_Request_Queueable(const TAO_Notify_Event * event);
 
-  virtual TAO_Notify_Method_Request_Queueable* copy (ACE_ENV_SINGLE_ARG_DECL);
+  virtual TAO_Notify_Method_Request_Queueable* copy (void);
   void init (const TAO_Notify_Event * event);
 };
 

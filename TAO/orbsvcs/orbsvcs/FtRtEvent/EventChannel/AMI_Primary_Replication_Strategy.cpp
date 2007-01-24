@@ -52,19 +52,15 @@ int AMI_Primary_Replication_Strategy::svc()
     int argc = 0;
     char** argv = 0;
     orb_ = CORBA::ORB_init (argc, argv);
-    ACE_TRY_CHECK;
 
     root_poa_ =  resolve_init<PortableServer::POA>(orb_.in(), "RootPOA"
       ACE_ENV_ARG_PARAMETER);
-    ACE_TRY_CHECK;
 
     // create POAManager
-    mgr_ = root_poa_->the_POAManager(ACE_ENV_SINGLE_ARG_PARAMETER);
-    ACE_TRY_CHECK;
+    mgr_ = root_poa_->the_POAManager();
 
 
-    mgr_->activate(ACE_ENV_SINGLE_ARG_PARAMETER);
-    ACE_TRY_CHECK;
+    mgr_->activate();
 
     PortableServer::IdUniquenessPolicy_var id_uniqueness_policy =
       root_poa_->create_id_uniqueness_policy(PortableServer::MULTIPLE_ID
@@ -78,7 +74,6 @@ int AMI_Primary_Replication_Strategy::svc()
       );
     poa_ = create_persistent_poa(root_poa_, mgr_, "AMI_Update", policy_list
       ACE_ENV_ARG_PARAMETER);
-    ACE_TRY_CHECK;
 
     id_uniqueness_policy->destroy();
 
@@ -111,8 +106,7 @@ AMI_Primary_Replication_Strategy::replicate_request(
    bool success = false;
 
     FTRT::TransactionDepth transaction_depth =
-      Request_Context_Repository().get_transaction_depth(ACE_ENV_SINGLE_ARG_PARAMETER);
-   ACE_CHECK;
+      Request_Context_Repository().get_transaction_depth();
 
    const FtRtecEventChannelAdmin::EventChannelList& backups =
      GroupInfoPublisher::instance()->backups();
@@ -130,7 +124,6 @@ AMI_Primary_Replication_Strategy::replicate_request(
 
 
    Request_Context_Repository().set_transaction_depth(0 ACE_ENV_ARG_PARAMETER);
-   ACE_CHECK;
 
    for (size_t i = 0; i < num_backups; ++i)  {
       PortableServer::ObjectId oid;
@@ -188,13 +181,11 @@ AMI_Primary_Replication_Strategy::add_member(const FTRT::ManagerInfo & info,
 
   PortableServer::ObjectId_var oid =
     root_poa_->activate_object(&add_member_handler ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
   TAO::Utils::Implicit_Deactivator deactivator(&add_member_handler);
 
   CORBA::Object_var obj =
     root_poa_->id_to_reference(oid.in() ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
   FTRT::AMI_ObjectGroupManagerHandler_var handler =
     FTRT::AMI_ObjectGroupManagerHandler::_narrow(obj.in() ACE_ENV_ARG_PARAMETER);
@@ -205,7 +196,6 @@ AMI_Primary_Replication_Strategy::add_member(const FTRT::ManagerInfo & info,
                                    info,
                                    object_group_ref_version
                                    ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
     }
     ACE_CATCHALL {
       add_member_handler.add_member_excep(0 ACE_ENV_ARG_PARAMETER);

@@ -18,14 +18,12 @@ main (int argc, char *argv[])
   ACE_TRY
     {
       int rc = notifier.init (argc, argv ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       if (rc == -1)
         return 1;
       else
         {
-          notifier.run (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+          notifier.run ();
         }
     }
   ACE_CATCH (CORBA::SystemException, sysex)

@@ -40,11 +40,11 @@ public:
 
 public:
   virtual char *
-  name (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+  name (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual void
-  destroy (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+  destroy (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
 #if TAO_HAS_EXTENDED_FT_INTERCEPTORS == 1

@@ -39,7 +39,6 @@ TAO_Naming_Service::init (int argc,
       // Initialize the ORB
       this->orb_ =
         CORBA::ORB_init (command_line.get_argc(), command_line.get_ASCII_argv(), 0 ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       // Parse the args for '-t' option. If '-t' option is passed, do
       // the needful and then remove the option from the list of
@@ -61,7 +60,6 @@ TAO_Naming_Service::init (int argc,
       return -1;
     }
   ACE_ENDTRY;
-  ACE_CHECK_RETURN (-1);
 
   return 0;
 }
@@ -105,28 +103,25 @@ TAO_Naming_Service::parse_args (int &argc,
 
 // Run the ORB event loop.
 int
-TAO_Naming_Service::run (ACE_ENV_SINGLE_ARG_DECL)
+TAO_Naming_Service::run (void)
 {
   if (time_ == 0)
     {
-      this->orb_->run (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK_RETURN (-1);
+      this->orb_->run ();
     }
   else
     {
       ACE_Time_Value tv (time_);
       this->orb_->run (tv ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK_RETURN (-1);
     }
 
   return 0;
 }
 
 void
-TAO_Naming_Service::shutdown (ACE_ENV_SINGLE_ARG_DECL)
+TAO_Naming_Service::shutdown (void)
 {
   this->orb_->shutdown (0 ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 }
 
 int
@@ -139,8 +134,7 @@ TAO_Naming_Service::fini (void)
   ACE_TRY
   {
     // destroy implies shutdown
-    this->orb_->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-    ACE_TRY_CHECK;
+    this->orb_->destroy ();
   }
   ACE_CATCHANY
   {

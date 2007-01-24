@@ -43,8 +43,7 @@ Object_A_i::foo (Initiator_ptr theInitiator_ptr
 {
   ACE_TRY
     {
-      theInitiator_ptr->foo_object_B (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      theInitiator_ptr->foo_object_B ();
 
       while (!this->finish_two_way_call_)
         TAO_ORB_Core_instance ()->reactor ()->handle_events ();
@@ -58,7 +57,7 @@ Object_A_i::foo (Initiator_ptr theInitiator_ptr
 }
 
 void
-Object_A_i::finish (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+Object_A_i::finish (void)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->finish_two_way_call_ = 1;

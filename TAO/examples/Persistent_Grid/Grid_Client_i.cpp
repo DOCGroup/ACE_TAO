@@ -76,7 +76,6 @@ Grid_Client_i::run (const char *name,
       Grid_ptr grid = client->make_grid (width_,
                                          height_
                                          ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       ACE_DEBUG ((LM_DEBUG,
                   "(%P|%t) Made the grid succesfully\n"));
@@ -92,7 +91,6 @@ Grid_Client_i::run (const char *name,
                          ctr,
                          (value_ + ctr)
                          ACE_ENV_ARG_PARAMETER);
-              ACE_TRY_CHECK;
 
             }
         }
@@ -100,11 +98,9 @@ Grid_Client_i::run (const char *name,
       ACE_DEBUG ((LM_DEBUG,
                   "(%P|%t) Setting a value for the grid\n"));
 
-      ACE_TRY_CHECK;
 
       if (client.shutdown () == 1) {
-        client->shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
-        ACE_TRY_CHECK;
+        client->shutdown ();
       }
 
     }
@@ -121,7 +117,6 @@ Grid_Client_i::run (const char *name,
       return -1;
     }
   ACE_ENDTRY;
-  ACE_CHECK_RETURN (-1);
 
   return 0;
 }

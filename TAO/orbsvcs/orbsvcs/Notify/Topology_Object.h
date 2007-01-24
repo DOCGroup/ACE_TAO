@@ -73,13 +73,11 @@ namespace TAO_Notify
     ///   {
     ///     bool want_all_children = saver.begin_object(
     ///       this->id(), type, attrs, change ACE_ENV_ARG_PARAMETER);
-    ///     ACE_CHECK;
     ///     for all children
     ///     {
     ///       if (want_all_children || child.is_changed())
     ///       {
     ///         child.save_persistent(saver ACE_ENV_ARG_PARAMETER);
-    ///         ACE_CHECK;
     ///       }
     ///     }
     ///     for all deleted children
@@ -96,7 +94,7 @@ namespace TAO_Notify
     /// to any external objects with whom we were interacting.  We should
     /// call the reconnect() method on all of our children to give them
     /// the chance to do the same.
-    virtual void reconnect (ACE_ENV_SINGLE_ARG_DECL_NOT_USED);
+    virtual void reconnect (void);
 
   };
 
@@ -155,7 +153,7 @@ namespace TAO_Notify
     ///
     ///  see also Topology_Parent::child_change ()
     /// \return false if save will never happen
-    bool self_change (ACE_ENV_SINGLE_ARG_DECL);
+    bool self_change (void);
 
     /// \brief pointer to our topological parent
     ///
@@ -165,7 +163,7 @@ namespace TAO_Notify
     /// \brief Handle details of propagating change
     ///
     /// \return false if save will never happen
-    bool send_change (ACE_ENV_SINGLE_ARG_DECL);
+    bool send_change (void);
 
   private:
     /// \brief Send change to parent.
@@ -174,7 +172,7 @@ namespace TAO_Notify
     /// (top level of tree)
     /// private virtual because this should only be called from send_change()
     /// \return false if save will never happen
-    virtual bool change_to_parent (ACE_ENV_SINGLE_ARG_DECL);
+    virtual bool change_to_parent (void);
 
   protected:
     /// true if this object changed since last save_persistent
@@ -197,7 +195,7 @@ namespace TAO_Notify
     /// Called by a child that has changed.
     /// A child calls this method to report that it has changed.
     /// \return false if save will never happen
-    bool child_change (ACE_ENV_SINGLE_ARG_DECL);
+    bool child_change (void);
   };
 
 } // namespace TAO_Notify

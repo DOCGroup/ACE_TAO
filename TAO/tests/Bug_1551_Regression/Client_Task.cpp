@@ -56,12 +56,10 @@ Client_Task::svc (void)
       {
         this->receiver_->sendc_short_sleep (this->handler_var_.in ()
             ACE_ENV_ARG_PARAMETER);
-        ACE_TRY_CHECK;
       }
 
       ACE_Time_Value tv(10, 0);
       orb_->run(tv ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
     }
   ACE_CATCH (CORBA::TIMEOUT, ex)
     {

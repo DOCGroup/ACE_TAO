@@ -58,7 +58,6 @@ main (int argc, char *argv[])
       // ORB.
       CORBA::ORB_var orb =
         CORBA::ORB_init (argc, argv, "" ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       // Parse arguments.
       if (parse_args (argc, argv) != 0)
@@ -67,37 +66,29 @@ main (int argc, char *argv[])
       // RTORB.
       CORBA::Object_var object =
         orb->resolve_initial_references ("RTORB" ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
       RTCORBA::RTORB_var rt_orb = RTCORBA::RTORB::_narrow (object.in ()
                                                            ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
       if (check_for_nil (rt_orb.in (), "RTORB") == -1)
         return -1;
 
       // PolicyCurrent.
       object = orb->resolve_initial_references ("PolicyCurrent"
                                                 ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
       CORBA::PolicyCurrent_var policy_current =
         CORBA::PolicyCurrent::_narrow (object.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
       if (check_for_nil (policy_current.in (), "PolicyCurrent")
           == -1)
         return -1;
 
       // Test object 1.
       object = orb->string_to_object (ior1 ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
       Test_var server1 = Test::_narrow (object.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
       if (check_for_nil (server1.in (), "server1") == -1)
         return -1;
 
       // Test object 2.
       object = orb->string_to_object (ior2 ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
       Test_var server2 = Test::_narrow (object.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
       if (check_for_nil (server2.in (), "server2") == -1)
         return -1;
 
@@ -106,30 +97,25 @@ main (int argc, char *argv[])
       // following three.
       ACE_DEBUG ((LM_DEBUG,
                   "\n  Invocation 1 --> new connection\n"));
-      server1->test_method (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      server1->test_method ();
 
       ACE_DEBUG ((LM_DEBUG,
                   "\n  Invocation 2 --> use connection from invocation 1\n"));
-      server2->test_method (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      server2->test_method ();
 
       ACE_DEBUG ((LM_DEBUG,
                   "\n  Invocation 3 --> use connection from invocation 1\n"));
-      server1->test_method (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      server1->test_method ();
 
       ACE_DEBUG ((LM_DEBUG,
                   "\n  Invocation 4 --> use connection from invocation 1\n"));
-      server2->test_method (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      server2->test_method ();
 
       // Set RTCORBA::PrivateConnectionPolicy on PolicyCurrent.
       CORBA::PolicyList policy_list;
       policy_list.length (1);
       policy_list[0] =
-        rt_orb->create_private_connection_policy (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        rt_orb->create_private_connection_policy ();
 
       policy_current->set_policy_overrides (policy_list,
                                             CORBA::SET_OVERRIDE
@@ -143,29 +129,24 @@ main (int argc, char *argv[])
       // third, and <server2>'s reused on fourth.
       ACE_DEBUG ((LM_DEBUG,
                   "\n  Invocation 5 --> new connection\n"));
-      server1->test_method (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      server1->test_method ();
 
       ACE_DEBUG ((LM_DEBUG,
                   "\n  Invocation 6 --> new connection\n"));
-      server2->test_method (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      server2->test_method ();
 
       ACE_DEBUG ((LM_DEBUG,
                   "\n  Invocation 7 --> use connection from invocation 5\n"));
-      server1->test_method (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      server1->test_method ();
 
       ACE_DEBUG ((LM_DEBUG,
                   "\n  Invocation 8 --> use connection from invocation 6\n"));
-      server2->test_method (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      server2->test_method ();
 
       // Testing over.  Shut down Server ORB.
       ACE_DEBUG ((LM_DEBUG,
                   "\n  Testing over - shutting down\n"));
-      server1->shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      server1->shutdown ();
     }
   ACE_CATCHANY
     {

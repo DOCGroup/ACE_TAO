@@ -76,7 +76,6 @@ TAO::PG_Property_Set::decode (const PortableGroup::Properties & property_set
     this->set_property (static_cast<const char *> (nc.id),
                         property.val
                         ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK;
 
 #if 0
     ACE_CString name = static_cast<const char *> (nc.id);
@@ -85,7 +84,6 @@ TAO::PG_Property_Set::decode (const PortableGroup::Properties & property_set
     ACE_NEW_THROW_EX (value_copy,
                       PortableGroup::Value (property.val),
                       CORBA::NO_MEMORY ());
-    ACE_CHECK;
 
     const PortableGroup::Value * replaced_value = 0;
     if (0 == this->values_.rebind (name, value_copy, replaced_value))
@@ -158,7 +156,6 @@ void TAO::PG_Property_Set::set_property (
   ACE_NEW_THROW_EX (
     value_copy, PortableGroup::Value (value),
     CORBA::NO_MEMORY ());
-  ACE_CHECK;
 
   const PortableGroup::Value * replaced_value = 0;
   if (0 == this->values_.rebind (name, value_copy, replaced_value))

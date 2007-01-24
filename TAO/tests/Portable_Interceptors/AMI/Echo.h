@@ -20,7 +20,7 @@ public:
   virtual char * echo_operation(char const * the_input
                       ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC((CORBA::SystemException));
-  virtual void shutdown(ACE_ENV_SINGLE_ARG_DECL)
+  virtual void shutdown(void)
     ACE_THROW_SPEC((CORBA::SystemException));
 
 private:

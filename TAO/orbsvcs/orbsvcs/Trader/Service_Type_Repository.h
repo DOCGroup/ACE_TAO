@@ -43,7 +43,7 @@ public:
   ~TAO_Service_Type_Repository (void);
 
   virtual CosTradingRepos::ServiceTypeRepository::IncarnationNumber
-    incarnation (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+    incarnation (void)
       ACE_THROW_SPEC ((CORBA::SystemException));
 
   /**

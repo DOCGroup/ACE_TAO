@@ -46,15 +46,12 @@ main (int argc, char *argv[])
     {
       CORBA::ORB_var orb =
         CORBA::ORB_init (argc, argv, "" ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       CORBA::Object_var poa_object =
         orb->resolve_initial_references("RootPOA" ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       PortableServer::POA_var root_poa =
         PortableServer::POA::_narrow (poa_object.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       if (parse_args (argc, argv) != 0)
         return 1;
@@ -67,16 +64,13 @@ main (int argc, char *argv[])
       PortableServer::ServantBase_var owner_transfer(foo_i);
 
       Test::Foo_var foo =
-        foo_i->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        foo_i->_this ();
 
       CORBA::Object_var tmp =
         orb->string_to_object(ior ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       Test::Memory_Growth_var mem =
         Test::Memory_Growth::_narrow(tmp.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       if (CORBA::is_nil (mem.in ()))
         {
@@ -102,12 +96,10 @@ main (int argc, char *argv[])
         {
           mem->send_objref (pl
                             ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
         }
 
       // Let us run the event loop. This way we will not exit
-      orb->run (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      orb->run ();
     }
   ACE_CATCHANY
     {

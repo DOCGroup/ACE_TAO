@@ -74,7 +74,6 @@ Object_A_Server::init (int argc,
                                      "child_poa"
                                      ACE_ENV_ARG_PARAMETER);
 
-  ACE_CHECK_RETURN (-1);
   this->argc_ = argc;
   this->argv_ = argv;
 
@@ -85,7 +84,6 @@ Object_A_Server::init (int argc,
     this->orb_manager_.activate_under_child_poa ("object_A",
                                                  &this->object_A_i_
                                                  ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
 
   if (this->ior_output_file_)
     {
@@ -101,10 +99,9 @@ Object_A_Server::init (int argc,
 
 
 int
-Object_A_Server::run (ACE_ENV_SINGLE_ARG_DECL)
+Object_A_Server::run (void)
 {
-  int r = this->orb_manager_.run (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
+  int r = this->orb_manager_.run ();
 
   if (r == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
@@ -130,14 +127,12 @@ main (int argc, char *argv[])
     {
       int retval =
         object_A_Server.init (argc,argv ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       if (retval == -1)
         return 1;
       else
         {
-          object_A_Server.run (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+          object_A_Server.run ();
         }
     }
   ACE_CATCH (CORBA::SystemException, sysex)

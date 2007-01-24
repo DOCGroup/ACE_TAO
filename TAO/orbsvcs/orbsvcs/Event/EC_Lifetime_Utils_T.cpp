@@ -23,14 +23,12 @@ activate (T & obj_ref,
   PortableServer::ObjectId_var obj_id =
     poa->activate_object (servant
                           ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
   suggested_object_deactivator.set_values (poa, obj_id.in ());
 
   // Get the object reference of the activated object.
   CORBA::Object_var obj =
     poa->id_to_reference (obj_id.in () ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
   // Don't try to use T::_obj_type::_narrow, some compilers don't like it so
   // do this in two steps
@@ -38,7 +36,6 @@ activate (T & obj_ref,
 
   obj_ref =
     my_object_type::_narrow (obj.in() ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
   if (CORBA::is_nil (obj_ref.in ()))
   {

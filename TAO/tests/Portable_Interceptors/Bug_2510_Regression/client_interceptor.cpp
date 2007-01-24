@@ -24,14 +24,14 @@ Echo_Client_Request_Interceptor::~Echo_Client_Request_Interceptor (void)
 }
 
 char *
-Echo_Client_Request_Interceptor::name (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+Echo_Client_Request_Interceptor::name (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return CORBA::string_dup (this->myname_);
 }
 
 void
-Echo_Client_Request_Interceptor::destroy (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+Echo_Client_Request_Interceptor::destroy (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
 }
@@ -53,12 +53,10 @@ Echo_Client_Request_Interceptor::send_request (
                    PortableInterceptor::ForwardRequest))
 {
   CORBA::String_var operation =
-    ri->operation (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+    ri->operation ();
 
   CORBA::Object_var target =
-    ri->target (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+    ri->target ();
 
   ACE_DEBUG ((LM_DEBUG,"%s.send_request from %s\n", this->myname_, operation.in ()));
 
@@ -74,7 +72,6 @@ Echo_Client_Request_Interceptor::send_request (
 
   // Add this context to the service context list.
   ri->add_request_service_context (sc, 0 ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 }
 
 void
@@ -84,12 +81,10 @@ Echo_Client_Request_Interceptor::receive_reply (
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   CORBA::String_var operation =
-    ri->operation (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+    ri->operation ();
 
   CORBA::Object_var target =
-    ri->target (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+    ri->target ();
 
   ACE_DEBUG ((LM_DEBUG,"%s.receive_reply from %s\n", this->myname_, operation.in ()));
 }
@@ -101,11 +96,9 @@ Echo_Client_Request_Interceptor::receive_other (
   ACE_THROW_SPEC ((CORBA::SystemException,
                    PortableInterceptor::ForwardRequest))
 {
-  CORBA::String_var operation = ri->operation (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+  CORBA::String_var operation = ri->operation ();
 
-  CORBA::Object_var target = ri->target (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+  CORBA::Object_var target = ri->target ();
 
   ACE_DEBUG ((LM_DEBUG,"%s.receive_other from %s\n", this->myname_, operation.in ()));
 }
@@ -117,11 +110,9 @@ Echo_Client_Request_Interceptor::receive_exception (
   ACE_THROW_SPEC ((CORBA::SystemException,
                    PortableInterceptor::ForwardRequest))
 {
-  CORBA::String_var operation = ri->operation (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+  CORBA::String_var operation = ri->operation ();
 
-  CORBA::Object_var target = ri->target (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+  CORBA::Object_var target = ri->target ();
 
   ACE_DEBUG ((LM_DEBUG,"%s.receive_exception from %s\n", this->myname_, operation.in ()));
 }

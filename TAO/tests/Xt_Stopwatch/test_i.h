@@ -33,13 +33,13 @@ public:
   // ctor
 
   // = The Simple_Server methods.
-  void start (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+  void start (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  void stop (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+  void stop (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  void shutdown (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+  void shutdown (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
 private:

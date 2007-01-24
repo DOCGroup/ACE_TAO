@@ -29,8 +29,7 @@ Client_Task::svc (void)
       for (int i = 0; i != this->event_count_; ++i)
         {
           Test::Octet_Seq_var seq =
-              this->reply_gen_->get_big_reply (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+              this->reply_gen_->get_big_reply ();
 
           CORBA::ULong length = seq->length ();
           for(CORBA::ULong i = 0; i < length; ++i)

@@ -19,18 +19,15 @@ main (int argc, char *argv[])
                          argv,
                          "my_orb"
                          ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       // Obtain a reference to the CodecFactory.
       CORBA::Object_var obj =
         orb->resolve_initial_references ("CodecFactory"
                                          ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       IOP::CodecFactory_var codec_factory =
         IOP::CodecFactory::_narrow (obj.in ()
                                     ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       // ----------------------------------------------------------
 
@@ -45,7 +42,6 @@ main (int argc, char *argv[])
       IOP::Codec_var codec =
         codec_factory->create_codec (encoding
                                      ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       // ----------------------------------------------------------
       {
@@ -61,13 +57,11 @@ main (int argc, char *argv[])
         encoded_data =
           codec->encode_value (tmp
                                ACE_ENV_ARG_PARAMETER);
-        ACE_TRY_CHECK;
 
         decoded_data =
           codec->decode_value (encoded_data.in (),
                                Foo::_tc_type_ulong
                                ACE_ENV_ARG_PARAMETER);
-        ACE_TRY_CHECK;
 
         Foo::type_ulong check = 0;
 

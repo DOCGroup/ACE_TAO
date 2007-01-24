@@ -80,7 +80,6 @@ create_consumeradmin (CosNotifyChannelAdmin::EventChannel_ptr ec
     adminid
     ACE_ENV_ARG_PARAMETER);
 
-  ACE_CHECK_RETURN (0);
 
   return CosNotifyChannelAdmin::ConsumerAdmin::_duplicate (admin.in ());
 }
@@ -104,20 +103,17 @@ create_consumers (CosNotifyChannelAdmin::ConsumerAdmin_ptr admin,
       CORBA::NO_MEMORY ());
 
     consumers[ i ]->init (client->root_poa () ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK;
 
     consumers[ i ]->connect (admin ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK;
   }
 }
 
 static void
-disconnect_consumers (ACE_ENV_SINGLE_ARG_DECL)
+disconnect_consumers (void)
 {
   for (unsigned int i = 0; i < consumer_count; i++)
   {
-    consumers[ i ]->disconnect (ACE_ENV_SINGLE_ARG_PARAMETER);
-    ACE_CHECK;
+    consumers[ i ]->disconnect ();
   }
 }
 
@@ -133,20 +129,16 @@ int main (int argc, char* argv[])
     Consumer_Client client;
 
     status = client.init (argc, argv ACE_ENV_ARG_PARAMETER);
-    ACE_TRY_CHECK;
 
     if (status == 0)
     {
       CosNotifyChannelAdmin::EventChannel_var ec =
         client.create_event_channel ("MyEventChannel", 1 ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       CORBA::Object_var object =
         client.orb ()->string_to_object (ior ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       sig_var sig = sig::_narrow (object.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       if (CORBA::is_nil (sig.in ()))
       {
@@ -158,26 +150,20 @@ int main (int argc, char* argv[])
 
       CosNotifyChannelAdmin::ConsumerAdmin_var admin =
         create_consumeradmin (ec.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       if (!CORBA::is_nil (admin.in ()))
       {
         create_consumers (admin.in (), &client ACE_ENV_ARG_PARAMETER);
-        ACE_TRY_CHECK;
 
         // Tell the supplier to go
-        sig->go (ACE_ENV_SINGLE_ARG_PARAMETER);
-        ACE_TRY_CHECK;
+        sig->go ();
 
         client.ORB_run( ACE_ENV_SINGLE_ARG_PARAMETER );
-        ACE_TRY_CHECK;
 
-        disconnect_consumers(ACE_ENV_SINGLE_ARG_PARAMETER);
-        ACE_TRY_CHECK;
+        disconnect_consumers();
 
         ACE_DEBUG ((LM_DEBUG, "Consumer done.\n"));
-        sig->done (ACE_ENV_SINGLE_ARG_PARAMETER);
-        ACE_TRY_CHECK;
+        sig->done ();
       }
     }
   }

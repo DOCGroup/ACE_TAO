@@ -40,18 +40,15 @@ main (int argc, char *argv[])
     {
       CORBA::ORB_var orb =
         CORBA::ORB_init (argc, argv, "client_sum_orb" ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       if (parse_args (argc, argv) != 0)
         return 1;
 
       CORBA::Object_var obj =
         orb->string_to_object (ior ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       ORT::sum_server_var server =
         ORT::sum_server::_narrow (obj.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       if (CORBA::is_nil (server.in ()))
         {
@@ -67,7 +64,6 @@ main (int argc, char *argv[])
       CORBA::ULong result = server->add_variables (a,
                                                    b
                                                    ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       if (result != 8)
         ACE_DEBUG ((LM_DEBUG,

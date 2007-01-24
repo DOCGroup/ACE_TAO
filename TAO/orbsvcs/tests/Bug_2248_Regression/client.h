@@ -24,11 +24,11 @@ public:
 
   // Initialize the ORB, POA etc.
 
-  int make_merged_iors (ACE_ENV_SINGLE_ARG_DECL_NOT_USED);
+  int make_merged_iors (void);
   // Merges the different IORS
 
   /// Run the  ORB event loop..
-  int run (ACE_ENV_SINGLE_ARG_DECL);
+  int run (void);
 
   /// Write the merged IOGRs to a file
   int write_to_files (void);

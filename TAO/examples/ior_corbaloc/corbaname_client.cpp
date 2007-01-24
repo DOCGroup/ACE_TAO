@@ -40,12 +40,10 @@ int main (int argc, char *argv [])
       CORBA::Object_var obj =
         orb->string_to_object (argv[1]
                                ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       // Narrow
       corbaloc::Status_var factory =
         corbaloc::Status::_narrow (obj.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       if (CORBA::is_nil (factory.in ()))
         {
@@ -57,8 +55,7 @@ int main (int argc, char *argv [])
 
       // Invoke a request on the server
       CORBA::Boolean ret_value =
-        factory->print_status (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        factory->print_status ();
 
       if (ret_value != 0)
         {
@@ -78,7 +75,6 @@ int main (int argc, char *argv [])
       ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "client");
     }
   ACE_ENDTRY;
-  ACE_CHECK_RETURN (-1);
 
   return 0;
 }

@@ -14,12 +14,10 @@ ACE_TMAIN (int argc, ACE_TCHAR* argv[])
     {
       int check =
         trader.init (argc, argv ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       if (check != -1)
         {
-          trader.run (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+          trader.run ();
         }
       else
         ACE_ERROR_RETURN ((LM_ERROR,

@@ -18,7 +18,7 @@ public:
   Test_i (CORBA::ORB_ptr orb);
   // ctor
 
-  void shutdown (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+  void shutdown (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
 private:
@@ -32,7 +32,7 @@ Test_i::Test_i (CORBA::ORB_ptr orb)
 }
 
 void
-Test_i::shutdown (ACE_ENV_SINGLE_ARG_DECL)
+Test_i::shutdown (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_DEBUG ((LM_DEBUG,
@@ -102,12 +102,10 @@ check_server_protocol_at_root_poa (CORBA::ORB_ptr /*orb*/,
   CORBA::Policy_var server_protocol =
     policies.get_cached_policy (TAO_CACHED_POLICY_RT_SERVER_PROTOCOL
                                 ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
 
   RTCORBA::ServerProtocolPolicy_var policy =
     RTCORBA::ServerProtocolPolicy::_narrow (server_protocol.in ()
                                             ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
 
   if (CORBA::is_nil (policy.in ()))
     ACE_ERROR_RETURN ((LM_ERROR,
@@ -115,8 +113,7 @@ check_server_protocol_at_root_poa (CORBA::ORB_ptr /*orb*/,
                        "is missing\n"),
                       -1);
 
-  RTCORBA::ProtocolList_var protocols = policy->protocols (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
+  RTCORBA::ProtocolList_var protocols = policy->protocols ();
 
   ACE_DEBUG ((LM_DEBUG,
               "\nRoot POA ServerProtocolPolicy "
@@ -137,7 +134,6 @@ check_server_protocol_at_root_poa (CORBA::ORB_ptr /*orb*/,
           RTCORBA::TCPProtocolProperties_var tcp_properties =
             RTCORBA::TCPProtocolProperties::_narrow (properties.in ()
                                                      ACE_ENV_ARG_PARAMETER);
-          ACE_CHECK_RETURN (-1);
 
           if (!CORBA::is_nil (tcp_properties.in ()))
             ACE_DEBUG ((LM_DEBUG,
@@ -160,7 +156,6 @@ check_server_protocol_at_root_poa (CORBA::ORB_ptr /*orb*/,
           RTCORBA::UnixDomainProtocolProperties_var uiop_properties =
             RTCORBA::UnixDomainProtocolProperties::_narrow (properties.in ()
                                                             ACE_ENV_ARG_PARAMETER);
-          ACE_CHECK_RETURN (-1);
 
           if (!CORBA::is_nil (uiop_properties.in ()))
             ACE_DEBUG ((LM_DEBUG,
@@ -175,7 +170,6 @@ check_server_protocol_at_root_poa (CORBA::ORB_ptr /*orb*/,
           RTCORBA::SharedMemoryProtocolProperties_var shmem_properties =
             RTCORBA::SharedMemoryProtocolProperties::_narrow (properties.in ()
                                                               ACE_ENV_ARG_PARAMETER);
-          ACE_CHECK_RETURN (-1);
 
           if (!CORBA::is_nil (shmem_properties.in ()))
             ACE_DEBUG ((LM_DEBUG,
@@ -202,7 +196,6 @@ check_server_protocol_at_root_poa (CORBA::ORB_ptr /*orb*/,
           RTCORBA::UserDatagramProtocolProperties_var diop_properties =
             RTCORBA::UserDatagramProtocolProperties::_narrow (properties.in ()
                                                               ACE_ENV_ARG_PARAMETER);
-          ACE_CHECK_RETURN (-1);
 
           if (!CORBA::is_nil (diop_properties.in ()))
             ACE_DEBUG ((LM_DEBUG,
@@ -215,7 +208,6 @@ check_server_protocol_at_root_poa (CORBA::ORB_ptr /*orb*/,
           RTCORBA::StreamControlProtocolProperties_var sciop_properties =
             RTCORBA::StreamControlProtocolProperties::_narrow (properties.in ()
                                                                ACE_ENV_ARG_PARAMETER);
-          ACE_CHECK_RETURN (-1);
 
           if (!CORBA::is_nil (sciop_properties.in ()))
             ACE_DEBUG ((LM_DEBUG,
@@ -246,18 +238,15 @@ main (int argc, char *argv[])
     {
       CORBA::ORB_var orb =
         CORBA::ORB_init (argc, argv, "" ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       if (parse_args (argc, argv) != 0)
         return -1;
 
       CORBA::Object_var object =
         orb->resolve_initial_references("RootPOA" ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       PortableServer::POA_var root_poa =
         PortableServer::POA::_narrow (object.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       if (CORBA::is_nil (root_poa.in ()))
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -265,20 +254,16 @@ main (int argc, char *argv[])
                           -1);
 
       PortableServer::POAManager_var poa_manager =
-        root_poa->the_POAManager (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        root_poa->the_POAManager ();
 
       object = orb->resolve_initial_references ("RTORB" ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
       RTCORBA::RTORB_var rt_orb = RTCORBA::RTORB::_narrow (object.in ()
                                                            ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       // Check ServerProtocol configurations.
       int result = check_server_protocol_at_root_poa (orb.in (),
                                                       root_poa.in ()
                                                       ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
       if (result != 0)
         return -1;
 
@@ -300,7 +285,6 @@ main (int argc, char *argv[])
       poa_policy_list[0] =
         rt_orb->create_server_protocol_policy (protocols
                                                ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       PortableServer::POA_var poa;
 
@@ -311,30 +295,25 @@ main (int argc, char *argv[])
                                   poa_manager.in (),
                                   poa_policy_list
                                   ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
         }
 
       else
         {
           poa = PortableServer::POA::_duplicate (root_poa.in ());
-          ACE_TRY_CHECK;
         }
 
       Test_i server_impl (orb.in ());
 
       PortableServer::ObjectId_var id =
         poa->activate_object (&server_impl ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       CORBA::Object_var server =
         poa->id_to_reference (id.in ()
                               ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       // Print Object IOR.
       CORBA::String_var ior =
         orb->object_to_string (server.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       ACE_DEBUG ((LM_DEBUG, "\nActivated as <%s>\n\n", ior.in ()));
 
@@ -351,11 +330,9 @@ main (int argc, char *argv[])
         }
 
       // Run ORB Event loop.
-      poa_manager->activate (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      poa_manager->activate ();
 
-      orb->run (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      orb->run ();
 
       ACE_DEBUG ((LM_DEBUG, "Server ORB event loop finished\n\n"));
     }

@@ -285,7 +285,7 @@ TAO::HTIOP::Profile::add_endpoint (TAO::HTIOP::Endpoint *endp)
 }
 
 char *
-TAO::HTIOP::Profile::to_string (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+TAO::HTIOP::Profile::to_string (void)
 {
   CORBA::String_var key;
   TAO::ObjectKey::encode_sequence_to_string (key.inout(),

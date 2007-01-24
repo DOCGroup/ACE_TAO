@@ -27,11 +27,9 @@ Client_ORBInitializer::post_init (
     ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  CORBA::String_var orb_id = info->orb_id (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+  CORBA::String_var orb_id = info->orb_id ();
 
-  CORBA::StringSeq_var args = info->arguments (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+  CORBA::StringSeq_var args = info->arguments ();
 
   CORBA::String_var forward_str;
 
@@ -54,14 +52,12 @@ Client_ORBInitializer::post_init (
                         TAO::VMCID,
                         ENOMEM),
                       CORBA::COMPLETED_NO));
-  ACE_CHECK;
 
   PortableInterceptor::ClientRequestInterceptor_var
     client_interceptor = interceptor;
 
   info->add_client_request_interceptor (client_interceptor.in ()
                                         ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
 }
 

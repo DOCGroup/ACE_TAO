@@ -41,13 +41,13 @@ public:
 
   // Initialize the ORB, POA etc.
 
-  int make_merged_iors (ACE_ENV_SINGLE_ARG_DECL_NOT_USED);
+  int make_merged_iors (void);
   // Merges the different IORS
 
-  int set_properties (ACE_ENV_SINGLE_ARG_DECL_NOT_USED);
+  int set_properties (void);
   // Sets the properties for the profiles
 
-  int run (ACE_ENV_SINGLE_ARG_DECL);
+  int run (void);
   // Run the  ORB event loop..
 
   int write_to_file (void);

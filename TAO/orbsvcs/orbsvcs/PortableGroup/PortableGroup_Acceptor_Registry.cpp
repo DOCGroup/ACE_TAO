@@ -70,7 +70,6 @@ TAO_PortableGroup_Acceptor_Registry::open (const TAO_Profile* profile,
                             orb_core,
                             factory
                             ACE_ENV_ARG_PARAMETER);
-              ACE_CHECK;
 
               // found = 1;  // A usable protocol was found.
             }

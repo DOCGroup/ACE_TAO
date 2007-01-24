@@ -29,14 +29,14 @@ Echo_Client_Request_Interceptor::~Echo_Client_Request_Interceptor (void)
 }
 
 char *
-Echo_Client_Request_Interceptor::name (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+Echo_Client_Request_Interceptor::name (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return CORBA::string_dup (this->myname_);
 }
 
 void
-Echo_Client_Request_Interceptor::destroy (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+Echo_Client_Request_Interceptor::destroy (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
 }
@@ -63,20 +63,16 @@ Echo_Client_Request_Interceptor::send_request (
       this->orb_ = CORBA::ORB_init (argc, 0,
                                     this->orb_id_.in ()
                                     ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
     }
 
   CORBA::String_var operation =
-    ri->operation (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+    ri->operation ();
 
   CORBA::Object_var target =
-    ri->target (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+    ri->target ();
 
   CORBA::String_var ior =
     this->orb_->object_to_string (target.in () ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
   ACE_DEBUG ((LM_DEBUG,
               "%s.send_request "
@@ -90,7 +86,6 @@ Echo_Client_Request_Interceptor::send_request (
   ACE_TRY_NEW_ENV
     {
       ri->get_request_service_context (::service_id ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
     }
   ACE_CATCH (CORBA::BAD_PARAM, error)
     {
@@ -121,12 +116,10 @@ Echo_Client_Request_Interceptor::send_request (
 
       // Add this context to the service context list.
       ri->add_request_service_context (sc, 0 ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
 
       // Check that the request service context can be retrieved.
       IOP::ServiceContext_var sc2 =
         ri->get_request_service_context (::service_id ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
 
       const char *buf2 =
         reinterpret_cast<const char *> (sc2->context_data.get_buffer ());
@@ -162,12 +155,10 @@ Echo_Client_Request_Interceptor::send_request (
       sc.context_data.replace (string_len, string_len, buf, 1);
       // Add this context to the service context list.
       ri->add_request_service_context (sc, 0 ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
 
       // Check that the request service context can be retrieved.
       IOP::ServiceContext_var sc2 =
         ri->get_request_service_context (::service_id ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
 
       const char *buf2 =
         reinterpret_cast<const char *> (sc2->context_data.get_buffer ());
@@ -201,20 +192,16 @@ Echo_Client_Request_Interceptor::receive_reply (
       this->orb_ = CORBA::ORB_init (argc, 0,
                                     this->orb_id_.in ()
                                     ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
     }
 
   CORBA::String_var operation =
-    ri->operation (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+    ri->operation ();
 
   CORBA::Object_var target =
-    ri->target (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+    ri->target ();
 
   CORBA::String_var ior =
     this->orb_->object_to_string (target.in () ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
   ACE_DEBUG ((LM_DEBUG,
               "%s.receive_reply from "
@@ -227,7 +214,6 @@ Echo_Client_Request_Interceptor::receive_reply (
   // expected.
   IOP::ServiceContext_var sc =
     ri->get_reply_service_context (::service_id ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
   const char *buf =
     reinterpret_cast<const char *> (sc->context_data.get_buffer ());
@@ -245,7 +231,6 @@ Echo_Client_Request_Interceptor::receive_reply (
   // Check that no one has messed with the request service context.
   IOP::ServiceContext_var sc2 =
     ri->get_request_service_context (::service_id ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
   const char *buf2 =
     reinterpret_cast<const char *> (sc2->context_data.get_buffer ());
@@ -276,15 +261,12 @@ Echo_Client_Request_Interceptor::receive_other (
                                     this->orb_id_.in ());
     }
 
-  CORBA::String_var operation = ri->operation (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+  CORBA::String_var operation = ri->operation ();
 
-  CORBA::Object_var target = ri->target (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+  CORBA::Object_var target = ri->target ();
 
   CORBA::String_var ior =
     this->orb_->object_to_string (target.in () ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
   ACE_DEBUG ((LM_DEBUG,
               "%s.receive_other from "
@@ -296,7 +278,6 @@ Echo_Client_Request_Interceptor::receive_other (
   // Check that no one has messed with the request service context.
   IOP::ServiceContext_var sc =
     ri->get_request_service_context (::service_id ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
   const char *buf =
     reinterpret_cast<const char *> (sc->context_data.get_buffer ());
@@ -325,18 +306,14 @@ Echo_Client_Request_Interceptor::receive_exception (
       this->orb_ = CORBA::ORB_init (argc, 0,
                                     this->orb_id_.in ()
                                     ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
     }
 
-  CORBA::String_var operation = ri->operation (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+  CORBA::String_var operation = ri->operation ();
 
-  CORBA::Object_var target = ri->target (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+  CORBA::Object_var target = ri->target ();
 
   CORBA::String_var ior =
     this->orb_->object_to_string (target.in () ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
   ACE_DEBUG ((LM_DEBUG,
               "%s.received_exception "
@@ -349,7 +326,6 @@ Echo_Client_Request_Interceptor::receive_exception (
   // expected.
   IOP::ServiceContext_var sc =
     ri->get_reply_service_context (::service_id ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
   const char *buf =
     reinterpret_cast<const char *> (sc->context_data.get_buffer ());
@@ -367,7 +343,6 @@ Echo_Client_Request_Interceptor::receive_exception (
   // Check that no one has messed with the request service context.
   IOP::ServiceContext_var sc2 =
     ri->get_request_service_context (::service_id ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
   const char *buf2 =
     reinterpret_cast<const char *> (sc2->context_data.get_buffer ());

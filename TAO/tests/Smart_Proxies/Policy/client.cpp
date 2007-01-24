@@ -70,20 +70,17 @@ run_test (CORBA::ORB_ptr orb_ptr,
           object =
             orb->string_to_object (ior1
                                    ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
         }
       else
         {
           object =
             orb->string_to_object (ior2
                                    ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
         }
 
       Test_var server =
         Test::_narrow (object.in ()
                        ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       if (CORBA::is_nil (server.in ()))
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -92,8 +89,7 @@ run_test (CORBA::ORB_ptr orb_ptr,
 
       server->method (0);
 
-      server->shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      server->shutdown ();
     }
   ACE_CATCHANY
     {
@@ -114,7 +110,6 @@ main (int argc, char *argv[])
                          argv,
                          ""
                          ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       if (parse_args (argc, argv) != 0)
         return 1;
@@ -139,7 +134,6 @@ main (int argc, char *argv[])
       run_test (orb.in (), 1);
       run_test (orb.in (), 2);
 
-      ACE_TRY_CHECK;
     }
   ACE_CATCHANY
     {

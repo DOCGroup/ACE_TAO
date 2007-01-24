@@ -24,9 +24,9 @@ public:
               Test::Payload const & extra_data
               ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC((CORBA::SystemException));
-  void crash(ACE_ENV_SINGLE_ARG_DECL)
+  void crash(void)
     ACE_THROW_SPEC((CORBA::SystemException));
-  void noop(ACE_ENV_SINGLE_ARG_DECL)
+  void noop(void)
     ACE_THROW_SPEC((CORBA::SystemException));
 
 private:

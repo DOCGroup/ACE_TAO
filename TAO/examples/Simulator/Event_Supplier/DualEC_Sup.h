@@ -81,7 +81,7 @@ private:
     // = DESCRIPTION
     // Private class that implements a termination servant.
   {
-    void shutdown (ACE_ENV_SINGLE_ARG_DECL)
+    void shutdown (void)
       ACE_THROW_SPEC ((CORBA::SystemException));
   };
 

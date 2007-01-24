@@ -56,13 +56,13 @@ Cubit_i::cube_struct (const Cubit::Many &values
 }
 
 void
-Cubit_i::noop (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+Cubit_i::noop (void)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // does nothing.
 }
 
-void Cubit_i::shutdown (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+void Cubit_i::shutdown (void)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_DEBUG ((LM_DEBUG,
@@ -71,7 +71,7 @@ void Cubit_i::shutdown (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
 }
 
 PortableServer::POA_ptr
-Cubit_i::_default_POA (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+Cubit_i::_default_POA (void)
 {
   return PortableServer::POA::_duplicate (this->poa_.in ());
 }

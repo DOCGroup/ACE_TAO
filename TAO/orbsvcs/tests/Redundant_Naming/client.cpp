@@ -48,7 +48,7 @@ public:
     ACE_THROW_SPEC ((CORBA::SystemException));
   // Sets id.
 
-  CORBA::Short id (ACE_ENV_SINGLE_ARG_DECL)
+  CORBA::Short id (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
   // Gets id.
 
@@ -66,7 +66,7 @@ My_Test_Object::~My_Test_Object (void)
 }
 
 CORBA::Short
-My_Test_Object::id (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+My_Test_Object::id (void)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return id_;
@@ -197,7 +197,6 @@ main (int argc, ACE_TCHAR **argv)
     return -1;
   }
   ACE_ENDTRY;
-  ACE_CHECK_RETURN (-1);
 
   // Create a bunch of objects in one context
   // Note: strings to the naming service must be char, not wchar
@@ -215,9 +214,9 @@ main (int argc, ACE_TCHAR **argv)
     {
       // Instantiate a dummy object and bind it under the new context.
       My_Test_Object *impl1 = new My_Test_Object (i+1);
-      Test_Object_var obj1 = impl1->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
+      Test_Object_var obj1 = impl1->_this ();
       ACE_TRY_CHECK_EX(bl_b);
-      impl1->_remove_ref (ACE_ENV_SINGLE_ARG_PARAMETER);
+      impl1->_remove_ref ();
       ACE_TRY_CHECK_EX(bl_b);
 
       CosNaming::Name obj_name;
@@ -238,7 +237,6 @@ main (int argc, ACE_TCHAR **argv)
     return -1;
   }
   ACE_ENDTRY;
-  ACE_CHECK_RETURN (-1);
 
   // Create a deep context tree
   ACE_TRY_EX(bl_c)
@@ -266,7 +264,6 @@ main (int argc, ACE_TCHAR **argv)
     return -1;
   }
   ACE_ENDTRY;
-  ACE_CHECK_RETURN (-1);
 
   // Create a wide context tree
   ACE_TRY_EX(bl_d)
@@ -292,7 +289,6 @@ main (int argc, ACE_TCHAR **argv)
     return -1;
   }
   ACE_ENDTRY;
-  ACE_CHECK_RETURN (-1);
 
   // Delete three selected things, one from each tree
   ACE_TRY_EX(bl_e)
@@ -324,7 +320,7 @@ main (int argc, ACE_TCHAR **argv)
                          ACE_TEXT ("Problems with resolving wide context ")
                          ACE_TEXT ("- nil object ref.\n")),
                          -1);
-    result_object->destroy(ACE_ENV_SINGLE_ARG_PARAMETER);
+    result_object->destroy();
     ACE_TRY_CHECK_EX(bl_e);
     root_context_1->unbind (wide2 ACE_ENV_ARG_PARAMETER);
     ACE_TRY_CHECK_EX(bl_e);
@@ -349,7 +345,7 @@ main (int argc, ACE_TCHAR **argv)
                          ACE_TEXT ("Problems with resolving deep context ")
                          ACE_TEXT ("- nil object ref.\n")),
                          -1);
-    result_object->destroy(ACE_ENV_SINGLE_ARG_PARAMETER);
+    result_object->destroy();
     ACE_TRY_CHECK_EX(bl_e);
     root_context_1->unbind (deep ACE_ENV_ARG_PARAMETER);
     ACE_TRY_CHECK_EX(bl_e);
@@ -362,7 +358,6 @@ main (int argc, ACE_TCHAR **argv)
     return -1;
   }
   ACE_ENDTRY;
-  ACE_CHECK_RETURN (-1);
 
   // Now use the other name server to access 3 objects next to the
   // deleted objects and the 3 deleted objects
@@ -395,7 +390,6 @@ main (int argc, ACE_TCHAR **argv)
     return -1;
   }
   ACE_ENDTRY;
-  ACE_CHECK_RETURN (-1);
 
   ACE_TRY_EX(bl_g)
   {
@@ -449,7 +443,6 @@ main (int argc, ACE_TCHAR **argv)
     return -1;
   }
   ACE_ENDTRY;
-  ACE_CHECK_RETURN (-1);
 
   ACE_TRY_EX(bl_i)
   {
@@ -532,7 +525,6 @@ main (int argc, ACE_TCHAR **argv)
     return -1;
   }
   ACE_ENDTRY;
-  ACE_CHECK_RETURN (-1);
 
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Redundancy test OK\n")));
   return 0;

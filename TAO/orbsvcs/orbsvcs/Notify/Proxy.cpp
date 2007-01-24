@@ -46,7 +46,7 @@ TAO_Notify_Proxy::activate (PortableServer::Servant servant,
 }
 
 void
-TAO_Notify_Proxy::deactivate (ACE_ENV_SINGLE_ARG_DECL)
+TAO_Notify_Proxy::deactivate (void)
 {
   ACE_ASSERT (this->proxy_poa() != 0 );
   this->proxy_poa()->deactivate (this->id() ACE_ENV_ARG_PARAMETER);
@@ -57,7 +57,6 @@ TAO_Notify_Proxy::subscribed_types (TAO_Notify_EventTypeSeq& subscribed_types AC
 {
   ACE_GUARD_THROW_EX (TAO_SYNCH_MUTEX, ace_mon, this->lock_,
                         CORBA::INTERNAL ());
-  ACE_CHECK;
 
   // copy
   subscribed_types = this->subscribed_types_;
@@ -76,12 +75,10 @@ TAO_Notify_Proxy::types_changed (const TAO_Notify_EventTypeSeq& added, const TAO
   if (TAO_Notify_PROPERTIES::instance()->asynch_updates () == 1) // if we should send the updates synchronously.
     {
       this->execute_task (request ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
     }
   else // execute in the current thread context.
     {
-      request.execute (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK;
+      request.execute ();
     }
 }
 
@@ -98,7 +95,6 @@ TAO_Notify_Proxy::obtain_types (CosNotifyChannelAdmin::ObtainInfoMode mode, cons
                     CORBA::NO_MEMORY ());
 
   ACE_GUARD_THROW_EX (TAO_SYNCH_MUTEX, ace_mon, this->lock_, CORBA::INTERNAL ());
-  ACE_CHECK_RETURN (event_type_seq._retn ());
 
   if (mode == CosNotifyChannelAdmin::ALL_NOW_UPDATES_OFF ||
       mode == CosNotifyChannelAdmin::ALL_NOW_UPDATES_ON)
@@ -143,18 +139,15 @@ TAO_Notify_Proxy::save_persistent (TAO_Notify::Topology_Saver& saver ACE_ENV_ARG
 
     const char * type_name = this->get_proxy_type_name ();
     bool want_all_children = saver.begin_object(this->id(), type_name, attrs, changed ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK;
 
     if (want_all_children || this->filter_admin_.is_changed ())
     {
       this->filter_admin_.save_persistent(saver ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
     }
 
     if (want_all_children || this->subscribed_types_.is_changed ())
     {
       this->subscribed_types_.save_persistent(saver ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
     }
 
     // todo: handle removed children
@@ -187,7 +180,6 @@ TAO_Notify_Proxy::load_child (const ACE_CString &type, CORBA::Long id,
     // in the constructor. we have to clear it out first.
     this->subscribed_types_.reset();
     result = &this->subscribed_types_;
-    ACE_CHECK_RETURN(0);
   }
   else if (type == "filter_admin")
   {

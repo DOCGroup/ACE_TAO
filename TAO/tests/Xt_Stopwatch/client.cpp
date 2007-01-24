@@ -33,12 +33,10 @@ main (int argc, char *argv[])
     {
       CORBA::ORB_var orb =
         CORBA::ORB_init (argc, argv, "" ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       Client client (orb.in ());
 
       client.parse_args (argc, argv ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       client.add_callback (control);
 
@@ -92,11 +90,9 @@ Client::parse_args (int argc,
 
   CORBA::Object_var object =
     this->orb_->string_to_object (ior ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
   this->server_ =
     Stopwatch::_narrow (object.in () ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
   if (CORBA::is_nil(this->server_.in ()))
     {
@@ -147,8 +143,7 @@ Client::start_hook (void)
   ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY
     {
-      this->server_->start (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      this->server_->start ();
     }
   ACE_CATCHANY
     {
@@ -156,7 +151,6 @@ Client::start_hook (void)
       return;
     }
   ACE_ENDTRY;
-  ACE_CHECK;
 }
 
 void
@@ -165,8 +159,7 @@ Client::stop_hook (void)
   ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY
     {
-      this->server_->stop (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      this->server_->stop ();
     }
   ACE_CATCHANY
     {
@@ -175,6 +168,5 @@ Client::stop_hook (void)
       return;
     }
   ACE_ENDTRY;
-  ACE_CHECK;
 }
 

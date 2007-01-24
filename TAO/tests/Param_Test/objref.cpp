@@ -20,7 +20,7 @@
 #include "objref.h"
 
 ACE_RCSID (Param_Test,
-           objref, 
+           objref,
            "$Id$")
 
 // ************************************************************************
@@ -54,8 +54,7 @@ Test_ObjRef::dii_req_invoke (CORBA::Request *req
 
   req->set_return_type (_tc_Coffee);
 
-  req->invoke (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+  req->invoke ();
 
   Coffee_ptr tmp;
   req->return_value () >>= tmp;
@@ -63,13 +62,11 @@ Test_ObjRef::dii_req_invoke (CORBA::Request *req
 
   CORBA::NamedValue_ptr o2 =
     req->arguments ()->item (1 ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
   *o2->value () >>= tmp;
   this->inout_ = Coffee::_duplicate (tmp);
 
   CORBA::NamedValue_ptr o3 =
     req->arguments ()->item (2 ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
   *o3->value () >>= tmp;
   this->out_ = Coffee::_duplicate (tmp);
 }
@@ -97,8 +94,7 @@ Test_ObjRef::init_parameters (Param_Test_ptr objref
       ACE_OS::strcpy (msg_str, "make_cofee");
 
       // first get a Coffee object
-      this->in_ = objref->make_coffee (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      this->in_ = objref->make_coffee ();
 
       // Get some index into Coffee_Flavor [].
       CORBA::ULong index = (CORBA::ULong) (gen->gen_long () % 6);
@@ -107,7 +103,6 @@ Test_ObjRef::init_parameters (Param_Test_ptr objref
       // set the attribute of the object
       ACE_OS::strcpy (msg_str, "set coffee attribute");
       this->in_->description (desc ACE_ENV_ARG_PARAMETER); // set the attribute for the in object
-      ACE_TRY_CHECK;
 
       this->inout_ = Coffee::_nil ();
       this->out_ = Coffee::_nil ();
@@ -139,7 +134,6 @@ Test_ObjRef::reset_parameters (void)
     {
       // set the attribute of the object
       this->in_->description (desc ACE_ENV_ARG_PARAMETER); // set the attribute for the in object
-      ACE_TRY_CHECK;
     }
   ACE_CATCHANY
     {
@@ -166,7 +160,6 @@ Test_ObjRef::run_sii_test (Param_Test_ptr objref
                              this->inout_.inout (),
                              this->out_.out ()
                              ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       return 0;
     }
@@ -197,25 +190,21 @@ Test_ObjRef::check_validity (void)
           return 0;
         }
       Coffee::Desc_var in_desc =
-        this->in_->description (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        this->in_->description ();
 
       const char *in = in_desc->name.in ();
 
       Coffee::Desc_var inout_desc =
-        this->inout_->description (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        this->inout_->description ();
 
       const char *inout = inout_desc->name.in ();
 
       Coffee::Desc_var out_desc =
-        this->out_->description (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        this->out_->description ();
 
       const char *out = out_desc->name.in ();
 
-      Coffee::Desc_var ret_desc = this->out_->description (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      Coffee::Desc_var ret_desc = this->out_->description ();
 
       const char* ret = ret_desc->name.in ();
 
@@ -260,32 +249,28 @@ Test_ObjRef::print_values (void)
       if (!CORBA::is_nil (this->in_.in ()))
         {
           in_desc =
-            this->in_->description (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+            this->in_->description ();
           in = in_desc->name.in ();
         }
 
       if (!CORBA::is_nil (this->inout_.in ()))
         {
           inout_desc =
-            this->inout_->description (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+            this->inout_->description ();
           inout = inout_desc->name.in ();
         }
 
       if (!CORBA::is_nil (this->out_.in ()))
         {
           out_desc =
-            this->out_->description (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+            this->out_->description ();
           out = out_desc->name.in ();
         }
 
       if (!CORBA::is_nil (this->ret_.in ()))
         {
           ret_desc =
-            this->ret_->description (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+            this->ret_->description ();
           ret = ret_desc->name.in ();
         }
     }
@@ -295,7 +280,6 @@ Test_ObjRef::print_values (void)
       return;
     }
   ACE_ENDTRY;
-  ACE_CHECK;
 
 
 

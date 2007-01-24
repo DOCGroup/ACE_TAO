@@ -66,11 +66,11 @@ TAO_Notify_Consumer::qos_changed (const TAO_Notify_QoSProperties& qos_properties
 }
 
 void
-TAO_Notify_Consumer::resume (ACE_ENV_SINGLE_ARG_DECL)
+TAO_Notify_Consumer::resume (void)
 {
   this->is_suspended_ = 0;
 
-  this->dispatch_pending (ACE_ENV_SINGLE_ARG_PARAMETER);
+  this->dispatch_pending ();
 }
 
 void
@@ -79,14 +79,12 @@ TAO_Notify_Consumer::enqueue_request (
   ACE_ENV_ARG_DECL)
 {
   TAO_Notify_Event::Ptr event (
-    request->event ()->queueable_copy (ACE_ENV_SINGLE_ARG_PARAMETER));
-  ACE_CHECK;
+    request->event ()->queueable_copy ());
 
   TAO_Notify_Method_Request_Event_Queueable * queue_entry;
   ACE_NEW_THROW_EX (queue_entry,
     TAO_Notify_Method_Request_Event_Queueable (*request, event),
     CORBA::NO_MEMORY ());
-  ACE_CHECK;
 
   if (DEBUG_LEVEL  > 3) ACE_DEBUG ( (LM_DEBUG,
     ACE_TEXT ("Consumer %d: enqueue_request (%d) @%@.\n"),
@@ -111,14 +109,12 @@ TAO_Notify_Consumer::enqueue_if_necessary (TAO_Notify_Method_Request_Event * req
                     request->sequence ()
                     ));
       TAO_Notify_Event::Ptr event (
-        request->event ()->queueable_copy (ACE_ENV_SINGLE_ARG_PARAMETER));
-      ACE_CHECK_RETURN (false);
+        request->event ()->queueable_copy ());
       TAO_Notify_Method_Request_Event_Queueable * queue_entry;
       ACE_NEW_THROW_EX (queue_entry,
                         TAO_Notify_Method_Request_Event_Queueable (*request,
                                                                    event),
                         CORBA::NO_MEMORY ());
-      ACE_CHECK_RETURN (false);
       this->pending_events().enqueue_tail (queue_entry);
       this->schedule_timer (false);
       return true;
@@ -132,14 +128,12 @@ TAO_Notify_Consumer::enqueue_if_necessary (TAO_Notify_Method_Request_Event * req
                     request->sequence ()
                     ));
       TAO_Notify_Event::Ptr event (
-        request->event ()->queueable_copy (ACE_ENV_SINGLE_ARG_PARAMETER));
-      ACE_CHECK_RETURN (false);
+        request->event ()->queueable_copy ());
       TAO_Notify_Method_Request_Event_Queueable * queue_entry;
       ACE_NEW_THROW_EX (queue_entry,
                         TAO_Notify_Method_Request_Event_Queueable (*request,
                                                                    event),
                         CORBA::NO_MEMORY ());
-      ACE_CHECK_RETURN (false);
       this->pending_events().enqueue_tail (queue_entry);
       this->schedule_timer (false);
       return true;
@@ -155,7 +149,6 @@ TAO_Notify_Consumer::deliver (TAO_Notify_Method_Request_Event * request
   // from being deleted while the push is in progress.
   TAO_Notify_Proxy::Ptr proxy_guard (this->proxy ());
   bool queued = enqueue_if_necessary (request ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
   if (!queued)
     {
       DispatchStatus status = this->dispatch_request (request);
@@ -175,7 +168,6 @@ TAO_Notify_Consumer::deliver (TAO_Notify_Method_Request_Event * request
                           static_cast<int> (this->proxy ()->id ()),
                           request->sequence ()));
             this->enqueue_request (request ACE_ENV_ARG_PARAMETER);
-            ACE_CHECK;
             this->schedule_timer (true);
             break;
           }
@@ -204,8 +196,7 @@ TAO_Notify_Consumer::deliver (TAO_Notify_Method_Request_Event * request
             ACE_DECLARE_NEW_ENV;
             ACE_TRY
               {
-                this->proxy_supplier ()->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-                ACE_TRY_CHECK;
+                this->proxy_supplier ()->destroy ();
               }
             ACE_CATCHANY
               {
@@ -227,7 +218,6 @@ TAO_Notify_Consumer::dispatch_request (TAO_Notify_Method_Request_Event * request
   ACE_TRY
     {
       request->event ()->push (this ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
       if (DEBUG_LEVEL  > 8)
         ACE_DEBUG ((LM_DEBUG,
                     ACE_TEXT ("Consumer %d dispatched single event %d.\n"),
@@ -364,7 +354,6 @@ TAO_Notify_Consumer::dispatch_batch (const CosNotification::EventBatch& batch)
   ACE_TRY
     {
       this->push (batch ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
     }
   ACE_CATCH (CORBA::OBJECT_NOT_EXIST, ex)
     {
@@ -467,7 +456,7 @@ TAO_Notify_Consumer::dispatch_batch (const CosNotification::EventBatch& batch)
 }
 
 void
-TAO_Notify_Consumer::dispatch_pending (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+TAO_Notify_Consumer::dispatch_pending (void)
 {
   if (DEBUG_LEVEL  > 5)
     ACE_DEBUG ((LM_DEBUG,
@@ -563,8 +552,7 @@ TAO_Notify_Consumer::dispatch_from_queue (Request_Queue & requests, ACE_Guard <T
             ACE_DECLARE_NEW_ENV;
             ACE_TRY
               {
-                this->proxy_supplier ()->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-                ACE_TRY_CHECK;
+                this->proxy_supplier ()->destroy ();
               }
             ACE_CATCHANY
               {
@@ -659,8 +647,7 @@ TAO_Notify_Consumer::handle_timeout (const ACE_Time_Value&, const void*)
   ACE_DECLARE_NEW_ENV;
   ACE_TRY
     {
-      this->dispatch_pending (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      this->dispatch_pending ();
     }
   ACE_CATCHALL
     {
@@ -671,7 +658,7 @@ TAO_Notify_Consumer::handle_timeout (const ACE_Time_Value&, const void*)
 }
 
 void
-TAO_Notify_Consumer::shutdown (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+TAO_Notify_Consumer::shutdown (void)
 {
   if (this->timer_.isSet ())
     {

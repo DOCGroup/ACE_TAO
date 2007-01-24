@@ -47,7 +47,7 @@ public:
   void activate (RtecEventChannelAdmin::ConsumerAdmin_ptr consumer_admin,
                  int period
                  ACE_ENV_ARG_DECL);
-  void deactivate (ACE_ENV_SINGLE_ARG_DECL);
+  void deactivate (void);
 
   /// Simple connect/disconnect methods..
   void connect (RtecEventChannelAdmin::SupplierAdmin_ptr supplier_admin,
@@ -59,17 +59,17 @@ public:
   void connect (RtecEventChannelAdmin::SupplierAdmin_ptr supplier_admin,
                 const RtecEventChannelAdmin::SupplierQOS &qos
                 ACE_ENV_ARG_DECL);
-  void disconnect (ACE_ENV_SINGLE_ARG_DECL);
+  void disconnect (void);
 
   /// The Consumer side methods.
   void push (const RtecEventComm::EventSet& events
              ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
-  void disconnect_push_consumer (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+  void disconnect_push_consumer (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   /// The skeleton methods.
-  virtual void disconnect_push_supplier (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+  virtual void disconnect_push_supplier (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   /// Count the number of events sent
@@ -108,7 +108,7 @@ public:
   CORBA::ULong push_count (void);
 
   /// Run a single iteration of the test
-  void run (ACE_ENV_SINGLE_ARG_DECL);
+  void run (void);
 
 private:
   /// The supplier we are turning into an active object

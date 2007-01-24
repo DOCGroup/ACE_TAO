@@ -65,8 +65,7 @@ ClientTask::svc()
 
   ACE_TRY_NEW_ENV
   {
-    bool exec_ret = engine->execute(ACE_ENV_SINGLE_ARG_PARAMETER);
-    ACE_TRY_CHECK;
+    bool exec_ret = engine->execute();
     if (exec_ret == false)
       {
         GuardType guard(this->lock_);

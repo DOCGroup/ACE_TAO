@@ -48,7 +48,7 @@ void activate (T & obj_ref,
  *
  * Template argument requirements:
  *
- * Has void execute (ACE_ENV_SINGLE_ARG_DECL); method which
+ * Has void execute (void); method which
  * can throw ONLY CORBA exceptions.
  * Has default and copy constructors.
  *
@@ -84,7 +84,7 @@ class TAO_EC_Shutdown_Command
 public:
   TAO_EC_Shutdown_Command (void);
   TAO_EC_Shutdown_Command (T target);
-  void execute (ACE_ENV_SINGLE_ARG_DECL);
+  void execute (void);
 
 private:
 

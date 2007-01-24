@@ -13,7 +13,7 @@ Secure_Vault_i::Secure_Vault_i (CORBA::ORB_ptr orb)
 // ctor
 
 CORBA::Short
-Secure_Vault_i::ready (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+Secure_Vault_i::ready (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return 1;
@@ -40,7 +40,7 @@ return 1;
 }
 
 void
-Secure_Vault_i::shutdown (ACE_ENV_SINGLE_ARG_DECL)
+Secure_Vault_i::shutdown (void)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->orb_->shutdown (0 ACE_ENV_ARG_PARAMETER);

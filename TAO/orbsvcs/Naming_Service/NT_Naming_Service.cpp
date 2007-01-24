@@ -22,7 +22,7 @@ AutoFinalizer::AutoFinalizer (TAO_NT_Naming_Service &service)
 
 AutoFinalizer::~AutoFinalizer ()
 {
-  service_.report_status (SERVICE_STOPPED);  
+  service_.report_status (SERVICE_STOPPED);
   ACE_DEBUG ((LM_DEBUG, "Reported service stoped\n"));
 }
 
@@ -52,13 +52,13 @@ TAO_NT_Naming_Service::handle_control (DWORD control_code)
   if (control_code == SERVICE_CONTROL_SHUTDOWN
       || control_code == SERVICE_CONTROL_STOP)
     {
-      // Just in case any of the following method calls 
+      // Just in case any of the following method calls
       // throws in a way we do not expect.
       // This instance's destructor will notify the OS.
       AutoFinalizer afinalizer (*this);
 
       report_status (SERVICE_STOP_PENDING);
-      
+
       // This must be all that needs to be done since this method is executing
       // in a separate thread from the one running the reactor.
       // When the reactor is stopped it calls ORB::destroy(), which in turn
@@ -68,7 +68,6 @@ TAO_NT_Naming_Service::handle_control (DWORD control_code)
       ACE_TRY
         {
           TAO_ORB_Core_instance ()->orb ()->shutdown (1 ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
         }
       ACE_CATCHANY
         {
@@ -179,8 +178,7 @@ TAO_NT_Naming_Service::svc (void)
       ACE_DEBUG ((LM_INFO, "Notifying Windows of service startup\n"));
       report_status (SERVICE_RUNNING);
 
-      naming_service.run (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      naming_service.run ();
     }
   ACE_CATCHANY
     {
@@ -190,7 +188,6 @@ TAO_NT_Naming_Service::svc (void)
       return -1;
     }
   ACE_ENDTRY;
-  ACE_CHECK_RETURN (1);
 
   ACE_DEBUG ((LM_INFO, "Exiting gracefully\n"));
   return 0;

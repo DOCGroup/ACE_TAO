@@ -48,7 +48,6 @@ TAO_IMR_i::init (int argc, char **argv)
     {
       // Retrieve the ORB.
       this->orb_ = CORBA::ORB_init (this->argc_, this->argv_, "tao_imr_i" ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       // Parse command line and verify parameters.
       if (this->parse_args () == -1)
@@ -57,7 +56,6 @@ TAO_IMR_i::init (int argc, char **argv)
       // Get the ImplRepo object
       CORBA::Object_var obj =
         orb_->resolve_initial_references ("ImplRepoService" ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       if (CORBA::is_nil (obj.in ()))
         {
@@ -69,7 +67,6 @@ TAO_IMR_i::init (int argc, char **argv)
 
       this->imr_ =
         ImplementationRepository::Administration::_narrow (obj.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       if (CORBA::is_nil (imr_.in ()))
         {
@@ -702,7 +699,6 @@ TAO_IMR_Op_Activate::run (void)
   ACE_TRY
     {
       this->imr_->activate_server (this->server_name_.c_str () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
       ACE_DEBUG ((LM_DEBUG,
         "Successfully Activated server <%s>\n",
         this->server_name_.c_str ()));
@@ -748,7 +744,6 @@ TAO_IMR_Op_Autostart::run (void)
         server_list,
         server_iter
         ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       ACE_ASSERT(CORBA::is_nil (server_iter.in ()));
 
@@ -799,8 +794,7 @@ TAO_IMR_Op_IOR::run (void)
 
       CORBA::String_var imr_str =
         this->imr_->_stubobj ()->
-        profile_in_use ()->to_string (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        profile_in_use ()->to_string ();
 
       // Search for "corbaloc:" alone, without the protocol.  This code
       // should be protocol neutral.
@@ -878,7 +872,6 @@ TAO_IMR_Op_List::run (void)
             server_list.out(),
             server_iter.out()
             ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
 
           if (server_list->length() == 0)
           {
@@ -896,7 +889,6 @@ TAO_IMR_Op_List::run (void)
           ImplementationRepository::ServerInformation_var si;
 
           this->imr_->find (this->server_name_.c_str (), si ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
 
           this->verbose_server_information_ = 1;
 
@@ -927,7 +919,6 @@ TAO_IMR_Op_Remove::run (void)
   ACE_TRY
     {
       this->imr_->remove_server (this->server_name_.c_str () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       ACE_DEBUG ((LM_DEBUG, "Successfully removed server <%s>\n",
         this->server_name_.c_str ()));
@@ -962,7 +953,6 @@ TAO_IMR_Op_Shutdown::run (void)
   ACE_TRY
     {
       this->imr_->shutdown_server (this->server_name_.c_str () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       ACE_DEBUG ((LM_DEBUG, "Successfully shut down server <%s>\n",
         this->server_name_.c_str ()));
@@ -997,7 +987,6 @@ TAO_IMR_Op_ShutdownRepo::run (void)
     {
       bool servers = false; // not implemented yet, if ever
       this->imr_->shutdown (activators_, servers ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       ACE_DEBUG ((LM_DEBUG, "ImR shutdown initiated.\n"));
     }
@@ -1029,7 +1018,6 @@ TAO_IMR_Op_Register::run (void)
     {
       this->imr_->find(this->server_name_.c_str (),
         server_information.out() ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       if (server_name_ == server_information->server.in())
         {
@@ -1079,7 +1067,6 @@ TAO_IMR_Op_Register::run (void)
         }
 
       this->imr_->add_or_update_server (this->server_name_.c_str (), *options ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       ACE_DEBUG((LM_DEBUG, "Successfully registered <%s>.\n", this->server_name_.c_str ()));
     }

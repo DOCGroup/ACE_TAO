@@ -87,18 +87,15 @@ main (int argc, char *argv[])
     {
       CORBA::ORB_var orb =
         CORBA::ORB_init (argc, argv, "" ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       if (parse_args (argc, argv) != 0)
         return 1;
 
       CORBA::Object_var tmp =
         orb->string_to_object(ior ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       Test::Oneway_Receiver_var oneway_receiver =
         Test::Oneway_Receiver::_narrow(tmp.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       if (CORBA::is_nil (oneway_receiver.in ()))
         {
@@ -113,35 +110,30 @@ main (int argc, char *argv[])
           ACE_DEBUG ((LM_DEBUG, "Running SYNC_WITH_TARGET\n"));
           run_test_sync_with_target (oneway_receiver.in ()
                                      ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
         }
       else if (test_sync_with_server)
         {
           ACE_DEBUG ((LM_DEBUG, "Running SYNC_WITH_SERVER\n"));
           run_test_sync_with_server (oneway_receiver.in ()
                                      ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
         }
       else if (test_sync_with_transport)
         {
           ACE_DEBUG ((LM_DEBUG, "Running SYNC_WITH_TRANSPORT\n"));
           run_test_sync_with_transport (oneway_receiver.in ()
                                         ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
         }
       else
         {
           ACE_DEBUG ((LM_DEBUG, "Running SYNC_NONE\n"));
           run_test_sync_none (oneway_receiver.in ()
                               ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
         }
 
       // Run the orb for 3 seconds, this way we make sure things are flushed
       // to the transport.
       ACE_Time_Value time (3, 0);
       orb->run (time ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       if (successful_calls == 0)
         ACE_ERROR ((LM_ERROR, "ERROR: No requests were successful\n"));
@@ -155,8 +147,7 @@ main (int argc, char *argv[])
                     "ERROR: Mismatched number of calls (%d + %d != %d)\n",
                     successful_calls, failed_calls, iterations));
 
-      orb->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      orb->destroy ();
     }
   ACE_CATCHANY
     {
@@ -175,15 +166,12 @@ set_sync_scope_policy (Messaging::SyncScope sync_scope
 {
   int argc = 0;
   CORBA::ORB_var orb = CORBA::ORB_init (argc, 0, "" ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
   CORBA::Object_var object =
     orb->resolve_initial_references ("PolicyCurrent" ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
   CORBA::PolicyCurrent_var policy_current =
     CORBA::PolicyCurrent::_narrow (object.in () ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
   if (CORBA::is_nil (policy_current.in ()))
     {
@@ -198,14 +186,11 @@ set_sync_scope_policy (Messaging::SyncScope sync_scope
     orb->create_policy (Messaging::SYNC_SCOPE_POLICY_TYPE,
                         scope_as_any
                         ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
   policy_current->set_policy_overrides (policies, CORBA::ADD_OVERRIDE
                                         ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
-  policies[0]->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+  policies[0]->destroy ();
 }
 
 void
@@ -220,15 +205,13 @@ run_one_iteration (int i,
         {
           ACE_DEBUG ((LM_DEBUG, "Destroying object\n"));
           server_status = DESTROYED;
-          oneway_receiver->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+          oneway_receiver->destroy ();
         }
       if (i == 2 * iterations / 3)
         {
           ACE_DEBUG ((LM_DEBUG, "Shutting down server process\n"));
           server_status = SHUTDOWN;
-          shutdown_helper->shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+          shutdown_helper->shutdown ();
         }
     }
   ACE_CATCHANY
@@ -236,8 +219,7 @@ run_one_iteration (int i,
     }
   ACE_ENDTRY;
 
-  oneway_receiver->raise_no_permission (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+  oneway_receiver->raise_no_permission ();
 }
 
 /// Helper routine to set breakpoints during failures
@@ -254,11 +236,9 @@ run_test_sync_with_target (Test::Oneway_Receiver_ptr oneway_receiver
                            ACE_ENV_ARG_DECL)
 {
   set_sync_scope_policy (Messaging::SYNC_WITH_TARGET ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
   Test::Shutdown_Helper_var shutdown_helper =
-    oneway_receiver->get_shutdown_helper (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+    oneway_receiver->get_shutdown_helper ();
 
   int had_comm_failure = 0;
   for (int i = 0; i != iterations; ++i)
@@ -267,7 +247,6 @@ run_test_sync_with_target (Test::Oneway_Receiver_ptr oneway_receiver
         {
           run_one_iteration (i, oneway_receiver, shutdown_helper.in ()
                              ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
         }
       ACE_CATCH (CORBA::NO_PERMISSION, ex)
         {
@@ -311,11 +290,9 @@ run_test_sync_with_server (Test::Oneway_Receiver_ptr oneway_receiver
                            ACE_ENV_ARG_DECL)
 {
   set_sync_scope_policy (Messaging::SYNC_WITH_SERVER ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
   Test::Shutdown_Helper_var shutdown_helper =
-    oneway_receiver->get_shutdown_helper (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+    oneway_receiver->get_shutdown_helper ();
 
   int had_comm_failure = 0;
   for (int i = 0; i != iterations; ++i)
@@ -324,7 +301,6 @@ run_test_sync_with_server (Test::Oneway_Receiver_ptr oneway_receiver
         {
           run_one_iteration (i, oneway_receiver, shutdown_helper.in ()
                              ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
 
           if (server_status == DESTROYED
               || server_status == SHUTDOWN)
@@ -376,10 +352,8 @@ run_test_sync_with_transport (Test::Oneway_Receiver_ptr oneway_receiver
                               ACE_ENV_ARG_DECL)
 {
   set_sync_scope_policy (Messaging::SYNC_WITH_TRANSPORT ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
   run_test_unreliable (oneway_receiver ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 }
 
 void
@@ -387,10 +361,8 @@ run_test_sync_none (Test::Oneway_Receiver_ptr oneway_receiver
                     ACE_ENV_ARG_DECL)
 {
   set_sync_scope_policy (Messaging::SYNC_NONE ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
   run_test_unreliable (oneway_receiver ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 }
 
 
@@ -399,8 +371,7 @@ run_test_unreliable (Test::Oneway_Receiver_ptr oneway_receiver
                      ACE_ENV_ARG_DECL)
 {
   Test::Shutdown_Helper_var shutdown_helper =
-    oneway_receiver->get_shutdown_helper (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+    oneway_receiver->get_shutdown_helper ();
 
   int undetected = 0;
   int had_transient = 0;
@@ -410,7 +381,6 @@ run_test_unreliable (Test::Oneway_Receiver_ptr oneway_receiver
         {
           run_one_iteration (i, oneway_receiver, shutdown_helper.in ()
                              ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
 
           // A few failures can go undetected...
           if (server_status == SHUTDOWN)

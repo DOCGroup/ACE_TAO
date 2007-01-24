@@ -61,18 +61,15 @@ main (int argc, char *argv[])
     {
       CORBA::ORB_var orb =
         CORBA::ORB_init (argc, argv, "" ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       if (parse_args (argc, argv) != 0)
         return 1;
 
       CORBA::Object_var object =
         orb->string_to_object (ior ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       Test::Database_var server =
         Test::Database::_narrow (object.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       if (CORBA::is_nil (server.in ()))
         {
@@ -84,8 +81,7 @@ main (int argc, char *argv[])
 
 #if (TAO_HAS_MINIMUM_CORBA == 0)
       CORBA::String_var repository_id =
-        server->_repository_id (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        server->_repository_id ();
 
       if (ACE_OS::strcmp (repository_id.in (), "IDL:Test/Database:1.0") != 0)
         {
@@ -131,7 +127,6 @@ main (int argc, char *argv[])
                                token,
                                returned_token
                                ACE_ENV_ARG_PARAMETER);
-                  ACE_TRY_CHECK;
 
                   if (token != returned_token)
                     {
@@ -145,7 +140,6 @@ main (int argc, char *argv[])
 
           CORBA::ULong crc_remote =
             server->get_crc (idx ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
 
           CORBA::ULong crc_local =
             ACE::crc32 (elements[idx].get_buffer (),
@@ -165,11 +159,9 @@ main (int argc, char *argv[])
 
         }
 
-      server->shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      server->shutdown ();
 
-      orb->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      orb->destroy ();
     }
   ACE_CATCHANY
     {

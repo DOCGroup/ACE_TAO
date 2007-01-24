@@ -21,29 +21,24 @@ TAO_BasicLogFactory_i::activate (CORBA::ORB_ptr orb,
                                  ACE_ENV_ARG_DECL)
 {
   TAO_LogMgr_i::init (orb, poa ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (DsLogAdmin::BasicLogFactory::_nil ());
 
 
   PortableServer::ObjectId_var oid =
     this->factory_poa_->activate_object (this
 					 ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (DsLogAdmin::BasicLogFactory::_nil ());
 
   CORBA::Object_var obj =
     this->factory_poa_->id_to_reference (oid.in ()
 					 ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (DsLogAdmin::BasicLogFactory::_nil ());
 
   // narrow and store the result..
   this->log_mgr_ =
     DsLogAdmin::LogMgr::_narrow (obj.in ()
                                  ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (DsLogAdmin::BasicLogFactory::_nil ());
 
   DsLogAdmin::BasicLogFactory_var v_return =
     DsLogAdmin::BasicLogFactory::_narrow (obj.in ()
 					  ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (DsLogAdmin::BasicLogFactory::_nil ());
 
   return v_return._retn ();
 }
@@ -62,17 +57,14 @@ TAO_BasicLogFactory_i::create (DsLogAdmin::LogFullActionType full_action,
 		  0,
 		  id_out
 		  ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (DsLogAdmin::BasicLog::_nil ());
   DsLogAdmin::LogId id = id_out;
 
 #if (TAO_HAS_MINIMUM_POA == 0)
   DsLogAdmin::Log_var log =
     this->create_log_reference (id ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (DsLogAdmin::BasicLog::_nil ());
 #else
   DsLogAdmin::Log_var log =
     this->create_log_object (id ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (DsLogAdmin::BasicLog::_nil ());
 #endif
 
   // narrow to BasicLog
@@ -98,16 +90,13 @@ TAO_BasicLogFactory_i::create_with_id (DsLogAdmin::LogId id,
 			  max_size,
 			  0
 			  ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (DsLogAdmin::BasicLog::_nil ());
 
 #if (TAO_HAS_MINIMUM_POA == 0)
   DsLogAdmin::Log_var log =
     this->create_log_reference (id ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (DsLogAdmin::BasicLog::_nil ());
 #else
   DsLogAdmin::Log_var log =
     this->create_log_object (id ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (DsLogAdmin::BasicLog::_nil ());
 #endif
 
   // narrow to BasicLog
@@ -136,10 +125,8 @@ TAO_BasicLogFactory_i::create_log_servant (DsLogAdmin::LogId id
                                     this->log_mgr_.in (),
                                     id),
                     CORBA::NO_MEMORY ());
-  ACE_CHECK_RETURN (0);
 
-  basic_log_i->init (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (0);
+  basic_log_i->init ();
 
   return basic_log_i;
 }

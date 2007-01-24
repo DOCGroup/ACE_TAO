@@ -37,7 +37,6 @@ namespace TAO_Notify
     if (this->want_all_children_ || o->is_changed ())
     {
       o->save_persistent (saver_ ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
     }
   }
 } // namespace TAO_Notify

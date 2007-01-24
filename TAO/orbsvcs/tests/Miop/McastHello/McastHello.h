@@ -21,7 +21,7 @@ public:
   virtual void send_forty_two (CORBA::Long forty_two ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual void shutdown (ACE_ENV_SINGLE_ARG_DECL)
+  virtual void shutdown (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   /// Return whether all test requests have been received successfully.

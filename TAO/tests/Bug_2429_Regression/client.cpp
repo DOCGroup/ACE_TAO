@@ -15,7 +15,7 @@ class Reply_Handler
     }
 
    virtual void
-   childMethod (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+   childMethod (void)
       ACE_THROW_SPEC ((CORBA::SystemException))
     {
     }
@@ -27,8 +27,7 @@ class Reply_Handler
     {
       ACE_TRY
         {
-          excep_holder->raise_exception (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+          excep_holder->raise_exception ();
         }
       ACE_CATCH (CORBA::SystemException, ex)
         {
@@ -38,7 +37,7 @@ class Reply_Handler
     }
 
    virtual void
-   parentMethod (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+   parentMethod (void)
       ACE_THROW_SPEC ((CORBA::SystemException))
     {
       ACE_DEBUG ((LM_DEBUG,
@@ -55,8 +54,7 @@ class Reply_Handler
       ACE_TRY
         {
           ++parentMethod_excep_count;
-          excep_holder->raise_exception (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+          excep_holder->raise_exception ();
         }
       ACE_CATCH (CORBA::INTERNAL, iex)
         {
@@ -118,7 +116,6 @@ main(int argc, char *argv[])
     {
       // Initialize the ORB.
       orb = CORBA::ORB_init(argc, argv, 0 ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       // Initialize options based on command-line arguments.
       int parse_args_result = client_parse_args(argc, argv);
@@ -129,36 +126,29 @@ main(int argc, char *argv[])
 
       CORBA::Object_var object =
          orb->resolve_initial_references ("RootPOA" ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       PortableServer::POA_var root_poa =
          PortableServer::POA::_narrow (object.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       // Get an object reference from the nominated file
       object = orb->string_to_object (server_ior);
 
-      ACE_TRY_CHECK;
 
       PortableServer::POAManager_var poa_manager =
-         root_poa->the_POAManager(ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+         root_poa->the_POAManager();
 
-      poa_manager->activate(ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      poa_manager->activate();
 
       Child_var child = Child::_narrow (object.in() ACE_ENV_ARG_PARAMETER);
 
       Reply_Handler reply_handler_servant;
 
       AMI_ChildHandler_var reply_handler_object =
-         reply_handler_servant._this (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+         reply_handler_servant._this ();
 
       // Invoke the AMI parentMethod
       child->sendc_parentMethod (reply_handler_object.in ()
                                  ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       // Loop until all replies have been received.
       while (reply_handler_servant.reply_count () == 0)
@@ -168,10 +158,8 @@ main(int argc, char *argv[])
 
       // Shutdown server.
       child->shutdown ();
-      ACE_TRY_CHECK;
 
-      orb->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      orb->destroy ();
     }
   ACE_CATCHANY
     {

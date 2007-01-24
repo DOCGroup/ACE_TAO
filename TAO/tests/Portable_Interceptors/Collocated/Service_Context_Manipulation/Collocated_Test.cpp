@@ -63,7 +63,6 @@ main (int argc, char *argv[])
 
       PortableInterceptor::register_orb_initializer (initializer.in ()
                                                      ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       ACE_Argv_Type_Converter satc (argc, argv);
 
@@ -72,7 +71,6 @@ main (int argc, char *argv[])
                          satc.get_TCHAR_argv (),
                          server_orb.c_str ()
                          ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       ACE_Manual_Event me;
 
@@ -97,7 +95,6 @@ main (int argc, char *argv[])
                          catc.get_TCHAR_argv (),
                          client_orb.c_str ()
                          ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       Client_Task client_task (input,
                                corb.in (),

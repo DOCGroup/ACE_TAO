@@ -157,12 +157,10 @@ TT_Info::dump_properties (const CosTrading::PropertySeq& prop_seq,
       ACE_TRY
         {
           CORBA::Boolean is_dynamic = prop_eval.is_dynamic_property (k);
-          ACE_TRY_CHECK;
 
           if (print_dynamic || ! is_dynamic)
             {
               value = prop_eval.property_value(k ACE_ENV_ARG_PARAMETER);
-              ACE_TRY_CHECK;
 
               tc = value->type ();
             }
@@ -177,12 +175,10 @@ TT_Info::dump_properties (const CosTrading::PropertySeq& prop_seq,
           ACE_DEBUG ((LM_DEBUG, "Error retrieving property value.\n"));
         }
       ACE_ENDTRY;
-      ACE_CHECK;
 
       if (tc == 0)
         continue;
       int check = tc->equal (TAO_Trader_Test::_tc_StringSeq ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
 
       if (check)
         {
@@ -197,7 +193,6 @@ TT_Info::dump_properties (const CosTrading::PropertySeq& prop_seq,
       else
         {
           check = tc->equal (TAO_Trader_Test::_tc_ULongSeq ACE_ENV_ARG_PARAMETER);
-          ACE_CHECK;
 
           if (check)
             {

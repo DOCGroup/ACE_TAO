@@ -27,11 +27,9 @@ Thread_Task::activate_task (int thr_count)
 
       CORBA::Object_var current_obj = this->orb_->resolve_initial_references ("RTScheduler_Current"
 									      ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       this->current_ = RTScheduling::Current::_narrow (current_obj.in ()
                                                        ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       const char * name = 0;
       CORBA::Policy_ptr sched_param = 0;
@@ -112,7 +110,6 @@ Thread_Task::svc (void)
                                                 sched_param,
                                                 implicit_sched_param
                                                 ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       size_t count = 0;
       ACE_OS::memcpy (&count,
@@ -128,19 +125,16 @@ Thread_Task::svc (void)
                                                 sched_param,
                                                 implicit_sched_param
                                                 ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       //Start - Nested Scheduling Segment
       this->current_->begin_scheduling_segment ("The Return of the King",
                                                 sched_param,
                                                 implicit_sched_param
                                                 ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
 
       RTScheduling::Current::NameList_var segment_name_list =
-        this->current_->current_scheduling_segment_names (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        this->current_->current_scheduling_segment_names ();
 
       {
         ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, *lock_, -1);
@@ -158,16 +152,13 @@ Thread_Task::svc (void)
 
       this->current_->end_scheduling_segment (name
                                               ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
       //End - Nested Scheduling Segment
 
       this->current_->end_scheduling_segment (name
                                               ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       this->current_->end_scheduling_segment (name
                                               ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
       //End - Nested Scheduling Segment
 
       ACE_DEBUG ((LM_DEBUG,
@@ -184,7 +175,6 @@ Thread_Task::svc (void)
             ACE_OS::sleep (1);
 
             orb_->shutdown (0 ACE_ENV_ARG_PARAMETER);
-            ACE_TRY_CHECK;
           }
       }
     }

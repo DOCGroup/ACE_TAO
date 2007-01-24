@@ -40,8 +40,7 @@ TAO_ComponentContainer_i::create_component (
 {
   TAO_IFR_WRITE_GUARD_RETURN (CORBA::ComponentIR::ComponentDef::_nil ());
 
-  this->update_key (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (CORBA::ComponentIR::ComponentDef::_nil ());
+  this->update_key ();
 
   return this->create_component_i (id,
                                    name,
@@ -78,7 +77,6 @@ TAO_ComponentContainer_i::create_component_i (
         "defns"
         ACE_ENV_ARG_PARAMETER
       );
-  ACE_CHECK_RETURN (CORBA::ComponentIR::ComponentDef::_nil ());
 
   if (! CORBA::is_nil (base_component))
     {
@@ -99,7 +97,6 @@ TAO_ComponentContainer_i::create_component_i (
                                           this->repo_,
                                           CORBA::dk_Component
                                           ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK_RETURN (CORBA::ComponentIR::ComponentDef::_nil ());
 
       // Store the id for this - that's what ComponentDescription takes.
       ACE_TString base_id;
@@ -148,7 +145,6 @@ TAO_ComponentContainer_i::create_component_i (
                                           path.c_str (),
                                           this->repo_
                                           ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (CORBA::ComponentIR::ComponentDef::_nil ());
 
   return CORBA::ComponentIR::ComponentDef::_narrow (obj.in ()
                                                     ACE_ENV_ARG_PARAMETER);
@@ -169,8 +165,7 @@ TAO_ComponentContainer_i::create_home (
 {
   TAO_IFR_WRITE_GUARD_RETURN (CORBA::ComponentIR::HomeDef::_nil ());
 
-  this->update_key (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (CORBA::ComponentIR::HomeDef::_nil ());
+  this->update_key ();
 
   return this->create_home_i (id,
                               name,
@@ -211,7 +206,6 @@ TAO_ComponentContainer_i::create_home_i (
         "defns"
         ACE_ENV_ARG_PARAMETER
       );
-  ACE_CHECK_RETURN (CORBA::ComponentIR::HomeDef::_nil ());
 
   char *base_path = 0;
 
@@ -277,7 +271,6 @@ TAO_ComponentContainer_i::create_home_i (
                                           path.c_str (),
                                           this->repo_
                                           ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (CORBA::ComponentIR::HomeDef::_nil ());
 
   return CORBA::ComponentIR::HomeDef::_narrow (obj.in ()
                                                ACE_ENV_ARG_PARAMETER);
@@ -301,8 +294,7 @@ TAO_ComponentContainer_i::create_event (
 {
   TAO_IFR_WRITE_GUARD_RETURN (CORBA::ComponentIR::EventDef::_nil ());
 
-  this->update_key (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (CORBA::ComponentIR::EventDef::_nil ());
+  this->update_key ();
 
   return this->create_event_i (id,
                                name,
@@ -349,7 +341,6 @@ TAO_ComponentContainer_i::create_event_i (
         "defns"
         ACE_ENV_ARG_PARAMETER
       );
-  ACE_CHECK_RETURN (CORBA::ComponentIR::EventDef::_nil ());
 
   this->repo_->config ()->set_integer_value (new_key,
                                              "is_custom",
@@ -382,7 +373,6 @@ TAO_ComponentContainer_i::create_event_i (
                                           this->repo_,
                                           CORBA::dk_Value
                                           ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK_RETURN (CORBA::ComponentIR::EventDef::_nil ());
 
       ACE_TString base_value_id;
       this->repo_->config ()->get_string_value (TAO_IFR_Service_Utils::tmp_key_,
@@ -553,7 +543,6 @@ TAO_ComponentContainer_i::create_event_i (
                                           path.c_str (),
                                           this->repo_
                                           ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (CORBA::ComponentIR::EventDef::_nil ());
 
   return CORBA::ComponentIR::EventDef::_narrow (obj.in ()
                                                 ACE_ENV_ARG_PARAMETER);

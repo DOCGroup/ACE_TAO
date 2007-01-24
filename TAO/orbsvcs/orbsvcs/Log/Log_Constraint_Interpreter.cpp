@@ -21,10 +21,9 @@ TAO_Log_Constraint_Interpreter::TAO_Log_Constraint_Interpreter (
       ACE_NEW_THROW_EX (this->root_,
                         TAO_ETCL_Literal_Constraint ((CORBA::Boolean) 1),
                         CORBA::NO_MEMORY ());
-      ACE_CHECK;
     }
   else
-  {  
+  {
       // root_ is set in this base class call.
       if (TAO_ETCL_Interpreter::build_tree (constraints) != 0)
           ACE_THROW (DsLogAdmin::InvalidConstraint ());

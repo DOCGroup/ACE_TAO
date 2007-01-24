@@ -79,7 +79,6 @@ Driver::init (int argc, char **argv)
                                     argv,
                                     "internet"
                                     ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       // Parse command line and verify parameters.
       if (opt->parse_args (argc, argv) == -1)
@@ -93,7 +92,6 @@ Driver::init (int argc, char **argv)
       CORBA::Object_var temp =
         this->orb_->string_to_object (opt->param_test_ior () ACE_ENV_ARG_PARAMETER);
 
-      ACE_TRY_CHECK;
 
       if (CORBA::is_nil (temp.in()))
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -106,7 +104,6 @@ Driver::init (int argc, char **argv)
 
       this->objref_ = Param_Test::_narrow (temp.in() ACE_ENV_ARG_PARAMETER);
 
-      ACE_TRY_CHECK;
     }
   ACE_CATCHANY
     {
@@ -114,7 +111,6 @@ Driver::init (int argc, char **argv)
       return -1;
     }
   ACE_ENDTRY;
-  ACE_CHECK_RETURN (-1);
 
   return 0;
 }
@@ -620,8 +616,7 @@ Driver::run (void)
     {
       if (opt->shutdown ())
         {
-          this->objref_->shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+          this->objref_->shutdown ();
         }
     }
   ACE_CATCHANY

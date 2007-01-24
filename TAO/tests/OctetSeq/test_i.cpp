@@ -56,7 +56,6 @@ Database_i::get (Test::Index i
   ACE_NEW_THROW_EX (copy,
                     Test::OctetSeq (this->elements_[i]),
                     CORBA::NO_MEMORY ());
-  ACE_CHECK_RETURN (0);
   return copy;
 }
 
@@ -73,7 +72,7 @@ Database_i::get_crc (Test::Index i
 }
 
 void
-Database_i::shutdown (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+Database_i::shutdown (void)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->orb_->shutdown ();

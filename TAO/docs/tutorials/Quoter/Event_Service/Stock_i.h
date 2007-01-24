@@ -22,7 +22,7 @@ public:
   CORBA::Double price () throw (CORBA::SystemException);
   void set_price (CORBA::Double new_price) throw (CORBA::SystemException);
 
-  void disconnect_push_supplier (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+  void disconnect_push_supplier (void)
     throw (CORBA::SystemException);
 
   void connect (CosEventChannelAdmin::SupplierAdmin_ptr supplier_admin);

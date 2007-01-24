@@ -31,7 +31,7 @@ public:
   void change_weight (CORBA::Long new_weight ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  void print (ACE_ENV_SINGLE_ARG_DECL)
+  void print (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
 };
@@ -62,14 +62,14 @@ class vt_graph_impl :
   vt_graph_impl (int num_nodes
                  ACE_ENV_ARG_DECL);
 
-  virtual CORBA::Long size (ACE_ENV_SINGLE_ARG_DECL)
+  virtual CORBA::Long size (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual void add_node (const char * name
                          ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual void print (ACE_ENV_SINGLE_ARG_DECL)
+  virtual void print (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
 };
@@ -121,10 +121,10 @@ class test_impl :
 				    ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual void start (ACE_ENV_SINGLE_ARG_DECL)
+  virtual void start (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual void finish (ACE_ENV_SINGLE_ARG_DECL)
+  virtual void finish (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
  private:

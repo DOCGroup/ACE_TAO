@@ -86,7 +86,6 @@ Server<Servant>::init (const char *servant_name,
                        "init_child_poa"),
                       -1);
 
-  ACE_CHECK_RETURN (-1);
 
   this->argc_ = argc;
   this->argv_ = argv;
@@ -114,7 +113,6 @@ Server<Servant>::init (const char *servant_name,
         this->orb_manager_.activate_under_child_poa (servant_name,
                                                      &this->servant_
                                                      ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       ACE_DEBUG ((LM_DEBUG,
                   "The IOR is: <%s>\n",
@@ -136,17 +134,15 @@ Server<Servant>::init (const char *servant_name,
       return -1;
     }
   ACE_ENDTRY;
-  ACE_CHECK_RETURN (-1);
 
   return 0;
 }
 
 template <class Servant> int
-Server<Servant>::run (ACE_ENV_SINGLE_ARG_DECL)
+Server<Servant>::run (void)
 {
     // Run the main event loop for the ORB.
-  int ret = this->orb_manager_.run (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
+  int ret = this->orb_manager_.run ();
 
   if (ret == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
@@ -258,7 +254,6 @@ Client<InterfaceObj, Var>::init (const char * /*name*/,
                                     this->argv_,
                                     0
                                     ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       // Parse command line and verify parameters.
       if (this->parse_args () == -1)
@@ -268,7 +263,6 @@ Client<InterfaceObj, Var>::init (const char * /*name*/,
         {
           CORBA::Object_var server_object =
             this->orb_->string_to_object (this->ior_ ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
 
 
           if (CORBA::is_nil (server_object.in ()))
@@ -278,7 +272,6 @@ Client<InterfaceObj, Var>::init (const char * /*name*/,
                               -1);
           this->server_ = InterfaceObj::_narrow (server_object.in ()
                                                  ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
         }
       else
         ACE_ERROR_RETURN ((LM_ERROR,

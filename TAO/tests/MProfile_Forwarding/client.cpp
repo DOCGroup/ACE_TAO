@@ -47,14 +47,12 @@ main (int argc, char *argv[])
     {
       CORBA::ORB_var orb =
         CORBA::ORB_init (argc, argv, "" ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       if (parse_args (argc, argv) == -1)
         return -1;
 
       CORBA::Object_var objref =
         orb->string_to_object (ior_input_file);
-      ACE_TRY_CHECK;
 
       if (objref.in () == 0)
         {
@@ -65,7 +63,6 @@ main (int argc, char *argv[])
 
       Simple_Server_var server =
         Simple_Server::_narrow (objref.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       if (CORBA::is_nil (server.in ()))
         {
@@ -75,7 +72,6 @@ main (int argc, char *argv[])
         }
 
       run_test (server.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
     }
   ACE_CATCHANY
     {
@@ -98,8 +94,7 @@ void run_test (Simple_Server_ptr server
           ACE_OS::sleep (2);
 
           // Make a remote call
-          server->remote_call (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+          server->remote_call ();
 
           /*ACE_DEBUG ((LM_DEBUG,
                       "Kill  the primary . . . "));
@@ -107,8 +102,7 @@ void run_test (Simple_Server_ptr server
           ACE_DEBUG ((LM_DEBUG, " hope you did\n")); */
           ACE_DEBUG ((LM_DEBUG,
                       "I am going to shutdown \n"));
-          server->shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+          server->shutdown ();
           ACE_OS::sleep (23);
         }
       ACE_CATCH (CORBA::UserException, x)
@@ -132,6 +126,5 @@ void run_test (Simple_Server_ptr server
           ACE_RE_THROW;
         }
       ACE_ENDTRY;
-      ACE_CHECK;
     }
 }

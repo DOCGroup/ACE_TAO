@@ -42,12 +42,12 @@ public:
   ~Account_i (void);
   // Destructor.
 
-  virtual CORBA::Float balance (ACE_ENV_SINGLE_ARG_DECL)
+  virtual CORBA::Float balance (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   // Get the current balance in the account.
 
-  virtual char *name (ACE_ENV_SINGLE_ARG_DECL)
+  virtual char *name (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
   // Get the name of the <Account> holder.
 

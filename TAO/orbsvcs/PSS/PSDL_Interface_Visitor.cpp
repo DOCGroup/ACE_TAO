@@ -1631,7 +1631,6 @@ TAO_PSDL_Interface_Visitor::gen_code_for_si (void)
   *ps_si << "CORBA::Boolean is_a = obj->_is_a (\"IDL:"
          << this->interface_name_ << ":1.0\" ACE_ENV_ARG_PARAMETER);";
   ps_si->nl ();
-  *ps_si << "ACE_CHECK_RETURN (" << this->interface_name_ << "::_nil ());";   ps_si->nl ();
 
   *ps_si << "if (is_a == 0)";
   ps_si->incr_indent (0);
@@ -2151,7 +2150,7 @@ TAO_PSDL_Interface_Visitor::gen_code_for_si (void)
   ps_si->decr_indent (0);
   ps_si->decr_indent (0);
   ps_si->nl ();
-  *ps_si << "ACE_TRY_CHECK;";
+;
 
   ps_si->nl ();
   ps_si->nl ();
@@ -2333,7 +2332,7 @@ TAO_PSDL_Interface_Visitor::gen_code_for_si (void)
   ps_si->decr_indent (0);
   ps_si->nl ();
 
-  *ps_si << "ACE_TRY_CHECK;";   ps_si->nl ();
+;   ps_si->nl ();
   *ps_si << "return 1;";
 
   ps_si->decr_indent (0);

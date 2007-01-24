@@ -41,8 +41,7 @@ DLL_ORB::svc (void)
   ACE_TRY_NEW_ENV
     {
       // Run the ORB event loop in its own thread.
-      this->orb_->run (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      this->orb_->run ();
     }
   ACE_CATCH (CORBA::SystemException, sysex)
     {
@@ -84,7 +83,6 @@ DLL_ORB::init (int argc, char *argv[])
                                     argv,
                                     "An ORB"
                                     ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       if (CORBA::is_nil (this->orb_.in ()))
         return -1;
@@ -92,7 +90,6 @@ DLL_ORB::init (int argc, char *argv[])
       CORBA::Object_var poa_object =
         this->orb_->resolve_initial_references ("RootPOA"
                                                 ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       if (CORBA::is_nil (poa_object.in ()))
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -102,14 +99,11 @@ DLL_ORB::init (int argc, char *argv[])
       this->poa_ =
         PortableServer::POA::_narrow (poa_object.in ()
                                       ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       this->poa_manager_ =
-        this->poa_->the_POAManager (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        this->poa_->the_POAManager ();
 
-      this->poa_manager_->activate (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      this->poa_manager_->activate ();
 
 #if defined (ACE_HAS_THREADS)
       // Become an Active Object so that the ORB
@@ -198,13 +192,11 @@ Time_Date_Servant::init (int argc, char *argv[])
       PortableServer::ServantBase_var safe_servant = servant;
 
       CORBA::Object_var obj =
-        servant->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        servant->_this ();
 
       CORBA::String_var str =
         orb->orb_->object_to_string (obj.in ()
                                      ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       if (this->ior_output_file_)
         {

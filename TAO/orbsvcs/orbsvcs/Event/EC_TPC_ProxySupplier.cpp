@@ -21,7 +21,7 @@ TAO_EC_TPC_ProxyPushSupplier::~TAO_EC_TPC_ProxyPushSupplier (void)
 }
 
 void
-TAO_EC_TPC_ProxyPushSupplier:: disconnect_push_supplier (ACE_ENV_SINGLE_ARG_DECL)
+TAO_EC_TPC_ProxyPushSupplier:: disconnect_push_supplier (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   if (TAO_EC_TPC_debug_level > 0)
@@ -34,10 +34,8 @@ TAO_EC_TPC_ProxyPushSupplier:: disconnect_push_supplier (ACE_ENV_SINGLE_ARG_DECL
     {
       this->tpc_dispatching ()->remove_consumer (this->consumer_.in()
                                                  ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
     }
-  BASECLASS::disconnect_push_supplier (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+  BASECLASS::disconnect_push_supplier ();
 
   if (TAO_EC_TPC_debug_level > 0)
     ACE_DEBUG ((LM_DEBUG, "EC (%P|%t): leave EC_TPC_ProxySupplier::disconnect_push_supplier (%@)\n", this));
@@ -61,7 +59,6 @@ TAO_EC_TPC_ProxyPushSupplier::connect_push_consumer (
                      RtecEventChannelAdmin::TypeError))
 {
   BASECLASS::connect_push_consumer (push_consumer, qos ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
   if (TAO_EC_TPC_debug_level > 0)
     ACE_DEBUG ((LM_DEBUG, "EC (%P|%t): EC_ProxySupplier(%@): refcount=%u,consumer=%@\n",

@@ -43,8 +43,7 @@ TAO_CEC_Dispatching_Task::svc (void)
               continue;
             }
 
-          int result = command->execute (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+          int result = command->execute ();
 
           ACE_Message_Block::release (mb);
 
@@ -116,7 +115,7 @@ TAO_CEC_Dispatch_Command::~TAO_CEC_Dispatch_Command (void)
 // ****************************************************************
 
 int
-TAO_CEC_Shutdown_Task_Command::execute (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+TAO_CEC_Shutdown_Task_Command::execute (void)
 {
   return -1;
 }
@@ -129,10 +128,9 @@ TAO_CEC_Push_Command::~TAO_CEC_Push_Command (void)
 }
 
 int
-TAO_CEC_Push_Command::execute (ACE_ENV_SINGLE_ARG_DECL)
+TAO_CEC_Push_Command::execute (void)
 {
   this->proxy_->push_to_consumer (this->event_ ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
   return 0;
 }
 
@@ -145,10 +143,9 @@ TAO_CEC_Invoke_Command::~TAO_CEC_Invoke_Command (void)
 }
 
 int
-TAO_CEC_Invoke_Command::execute (ACE_ENV_SINGLE_ARG_DECL)
+TAO_CEC_Invoke_Command::execute (void)
 {
   this->proxy_->invoke_to_consumer (this->typed_event_ ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
   return 0;
 }
 #endif /* TAO_HAS_TYPED_EVENT_CHANNEL */

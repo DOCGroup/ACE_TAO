@@ -49,7 +49,7 @@ TAO_EC_Trivial_Supplier_Filter::disconnected (TAO_EC_ProxyPushSupplier*
 }
 
 void
-TAO_EC_Trivial_Supplier_Filter::shutdown (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+TAO_EC_Trivial_Supplier_Filter::shutdown (void)
 {
 }
 

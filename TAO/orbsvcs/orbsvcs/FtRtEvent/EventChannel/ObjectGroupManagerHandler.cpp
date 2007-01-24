@@ -26,7 +26,7 @@ ObjectGroupManagerHandler::start_excep (::Messaging::ExceptionHolder *
 {
 }
 
-void ObjectGroupManagerHandler::create_group (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+void ObjectGroupManagerHandler::create_group (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
 }
@@ -40,7 +40,7 @@ ObjectGroupManagerHandler::create_group_excep (::Messaging::ExceptionHolder *
 }
 
 void
-ObjectGroupManagerHandler::add_member (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+ObjectGroupManagerHandler::add_member (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   if (--num_backups_ ==0)
@@ -52,11 +52,11 @@ ObjectGroupManagerHandler::add_member_excep (::Messaging::ExceptionHolder *
                                              ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  this->add_member(ACE_ENV_SINGLE_ARG_PARAMETER);
+  this->add_member();
 }
 
 void
-ObjectGroupManagerHandler::set_state (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+ObjectGroupManagerHandler::set_state (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
 }

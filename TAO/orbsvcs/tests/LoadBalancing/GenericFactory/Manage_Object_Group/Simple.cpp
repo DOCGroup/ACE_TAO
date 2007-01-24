@@ -21,21 +21,21 @@ Simple::Simple (CORBA::Object_ptr object_group,
 }
 
 CORBA::Short
-Simple::number (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+Simple::number (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return this->number_;
 }
 
 char *
-Simple::get_string (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+Simple::get_string (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return CORBA::string_dup (this->location_);
 }
 
 void
-Simple::remove_member (ACE_ENV_SINGLE_ARG_DECL)
+Simple::remove_member (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_TRY
@@ -46,7 +46,6 @@ Simple::remove_member (ACE_ENV_SINGLE_ARG_DECL)
       this->lm_->remove_member (this->object_group_.in (),
                                 location
                                 ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       ACE_DEBUG ((LM_DEBUG, "(%P|%t) - Removed Member at Location <%s>\n",
                       this->location_));
@@ -74,7 +73,7 @@ Simple::remove_member (ACE_ENV_SINGLE_ARG_DECL)
 }
 
 void
-Simple::shutdown (ACE_ENV_SINGLE_ARG_DECL)
+Simple::shutdown (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->orb_->shutdown (0 ACE_ENV_ARG_PARAMETER);

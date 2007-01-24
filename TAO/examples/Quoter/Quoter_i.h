@@ -72,7 +72,7 @@ public:
                        CosLifeCycle::CannotMeetCriteria));
   // Move this object using <there>
 
-  virtual void remove (ACE_ENV_SINGLE_ARG_DECL)
+  virtual void remove (void)
       ACE_THROW_SPEC ((CORBA::SystemException,
                        CosLifeCycle::NotRemovable));
   // Removes the object.
@@ -105,7 +105,7 @@ public:
   ~Quoter_Factory_i (void);
   // Destructor.
 
-  int init (ACE_ENV_SINGLE_ARG_DECL);
+  int init (void);
   // Initialize everything in the factory
 
   virtual Stock::Quoter_ptr create_quoter (const char *name

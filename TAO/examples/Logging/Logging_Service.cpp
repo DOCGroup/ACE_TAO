@@ -18,13 +18,11 @@ main (int argc, char *argv[])
   ACE_TRY
     {
       int ret = log_server.init (argc, argv ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
       if (ret == -1)
         return 1;
       else
         {
-          log_server.run (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+          log_server.run ();
         }
     }
   ACE_CATCH (CORBA::SystemException, sysex)
@@ -38,7 +36,6 @@ main (int argc, char *argv[])
       return -1;
     }
   ACE_ENDTRY;
-  ACE_CHECK_RETURN (-1);
 
   return 0;
 }

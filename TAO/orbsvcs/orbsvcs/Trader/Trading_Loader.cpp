@@ -90,7 +90,6 @@ TAO_Trading_Loader::init (int argc, ACE_TCHAR *argv[])
       this->orb_manager_.init (command_line.get_argc(),
                                command_line.get_ASCII_argv()
                                ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       CORBA::ORB_var orb =
         this->orb_manager_.orb ();
@@ -98,7 +97,6 @@ TAO_Trading_Loader::init (int argc, ACE_TCHAR *argv[])
       // Initializes and sets up the Trading Service
       CORBA::Object_var object =
         this->create_object (orb.in (), command_line.get_argc(), command_line.get_TCHAR_argv() ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
     }
   ACE_CATCHANY
@@ -123,8 +121,7 @@ TAO_Trading_Loader::fini (void)
             trd_comp.link_if ();
 
           CosTrading::LinkNameSeq_var link_name_seq =
-            our_link->list_links (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+            our_link->list_links ();
 
           ACE_DEBUG ((LM_DEBUG,
                       "*** Unlinking from federated traders.\n"));
@@ -141,14 +138,12 @@ TAO_Trading_Loader::fini (void)
               CosTrading::Link::LinkInfo_var link_info =
                 our_link->describe_link (link_name_seq[i]
                                          ACE_ENV_ARG_PARAMETER);
-              ACE_TRY_CHECK;
 
               ACE_DEBUG ((LM_DEBUG,
                           "*** Removing link to %s.\n",
                           static_cast<const char *> (link_name_seq[i])));
               our_link->remove_link (link_name_seq[i]
                                      ACE_ENV_ARG_PARAMETER);
-              ACE_TRY_CHECK;
 
               CosTrading::Lookup_ptr remote_lookup;
               remote_lookup =
@@ -157,8 +152,7 @@ TAO_Trading_Loader::fini (void)
               ACE_DEBUG ((LM_DEBUG,
                           "*** Retrieving its link interface.\n"));
               CosTrading::Link_var remote_link =
-                remote_lookup->link_if (ACE_ENV_SINGLE_ARG_PARAMETER);
-              ACE_TRY_CHECK;
+                remote_lookup->link_if ();
 
               ACE_DEBUG ((LM_DEBUG,
                           "*** Removing its link to us.\n"));
@@ -167,13 +161,11 @@ TAO_Trading_Loader::fini (void)
                 {
                   remote_link->remove_link ("Bootstrap"
                                             ACE_ENV_ARG_PARAMETER);
-                  ACE_TRY_CHECK;
                 }
               else
                 {
                   remote_link->remove_link (this->name_.in ()
                                             ACE_ENV_ARG_PARAMETER);
-                  ACE_TRY_CHECK;
                 }
             }
         }
@@ -188,11 +180,10 @@ TAO_Trading_Loader::fini (void)
 }
 
 int
-TAO_Trading_Loader::run (ACE_ENV_SINGLE_ARG_DECL)
+TAO_Trading_Loader::run (void)
 {
   int return_value =
-    this->orb_manager_.run (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
+    this->orb_manager_.run ();
 
   return return_value;
 }
@@ -208,8 +199,7 @@ TAO_Trading_Loader::create_object (CORBA::ORB_ptr orb_ptr,
   CORBA::ORB_var orb = CORBA::ORB::_duplicate (orb_ptr);
 
   // Activating the poa manager
-  this->orb_manager_.activate_poa_manager (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (CORBA::Object::_nil ());
+  this->orb_manager_.activate_poa_manager ();
 
   // Create a Trader Object and set its Service Type Repository.
   auto_ptr<TAO_Trader_Factory::TAO_TRADER> auto_trader (TAO_Trader_Factory::create_trader (argc, argv));
@@ -222,8 +212,7 @@ TAO_Trading_Loader::create_object (CORBA::ORB_ptr orb_ptr,
   TAO_Trading_Components_i &trd_comp =
     this->trader_->trading_components ();
 
-  sup_attr.type_repos (this->type_repos_._this (ACE_ENV_SINGLE_ARG_PARAMETER));
-  ACE_CHECK_RETURN (CORBA::Object::_nil ());
+  sup_attr.type_repos (this->type_repos_._this ());
 
   // The Spec says: return a reference to the Lookup interface from
   // the resolve_initial_references method.
@@ -233,7 +222,6 @@ TAO_Trading_Loader::create_object (CORBA::ORB_ptr orb_ptr,
   this->ior_ =
     orb->object_to_string (lookup
                            ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (CORBA::Object::_nil ());
 
   // Parse the args
   if (this->parse_args (argc, argv) == -1)
@@ -250,21 +238,18 @@ TAO_Trading_Loader::create_object (CORBA::ORB_ptr orb_ptr,
 
   CORBA::Object_var table_object =
     orb->resolve_initial_references ("IORTable" ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (CORBA::Object::_nil ());
 
   IORTable::Table_var adapter =
     IORTable::Table::_narrow (table_object.in () ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (CORBA::Object::_nil ());
 
   if (CORBA::is_nil (adapter.in ()))
     {
       ACE_ERROR ((LM_ERROR, "Nil IORTable\n"));
-    } 
+    }
   else
     {
       adapter->bind ("TradingService",
                      this->ior_.in () ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK_RETURN (CORBA::Object::_nil ());
     }
 
   if (this->federate_)
@@ -274,8 +259,7 @@ TAO_Trading_Loader::create_object (CORBA::ORB_ptr orb_ptr,
       // @@ Could do other things. For example, every timeout
       // period try to federate again, but let's not hardcode that
       // policy.
-      int rc = this->bootstrap_to_federation (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK_RETURN (CORBA::Object::_nil ());
+      int rc = this->bootstrap_to_federation ();
 
       if (rc == -1)
         this->init_multicast_server ();
@@ -287,7 +271,7 @@ TAO_Trading_Loader::create_object (CORBA::ORB_ptr orb_ptr,
 }
 
 int
-TAO_Trading_Loader::bootstrap_to_federation (ACE_ENV_SINGLE_ARG_DECL)
+TAO_Trading_Loader::bootstrap_to_federation (void)
 {
   // If all traders follow this strategy, it creates a complete graph
   // of all known traders on a multicast network.
@@ -298,7 +282,6 @@ TAO_Trading_Loader::bootstrap_to_federation (ACE_ENV_SINGLE_ARG_DECL)
               "*** Bootstrapping to another Trading Service.\n"));
   CORBA::Object_var trading_obj =
     orb->resolve_initial_references ("TradingService" ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
 
   if (CORBA::is_nil (trading_obj.in ()))
     ACE_ERROR_RETURN ((LM_ERROR,
@@ -311,13 +294,11 @@ TAO_Trading_Loader::bootstrap_to_federation (ACE_ENV_SINGLE_ARG_DECL)
   CosTrading::Lookup_var lookup_if =
     CosTrading::Lookup::_narrow (trading_obj.in ()
                                  ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
 
   ACE_DEBUG ((LM_DEBUG,
               "*** Obtaining the link interface.\n"));
   CosTrading::Link_var link_if =
-    lookup_if->link_if (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
+    lookup_if->link_if ();
 
   TAO_Trading_Components_i &trd_comp =
     this->trader_->trading_components ();
@@ -333,7 +314,6 @@ TAO_Trading_Loader::bootstrap_to_federation (ACE_ENV_SINGLE_ARG_DECL)
                      CosTrading::always,
                      CosTrading::always
                      ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
 
   ACE_DEBUG ((LM_DEBUG,
               "*** Linking self to found trader.\n"));
@@ -342,13 +322,11 @@ TAO_Trading_Loader::bootstrap_to_federation (ACE_ENV_SINGLE_ARG_DECL)
                       CosTrading::always,
                       CosTrading::always
                       ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
 
   ACE_DEBUG ((LM_DEBUG,
               "*** Retrieving list of known linked traders.\n"));
   CosTrading::LinkNameSeq_var link_name_seq =
-    link_if->list_links (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
+    link_if->list_links ();
 
   ACE_DEBUG ((LM_DEBUG,
               "*** Linking self to all linked traders.\n"));
@@ -366,7 +344,6 @@ TAO_Trading_Loader::bootstrap_to_federation (ACE_ENV_SINGLE_ARG_DECL)
           CosTrading::Link::LinkInfo_var link_info =
             link_if->describe_link (link_name_seq[i]
                                     ACE_ENV_ARG_PARAMETER);
-          ACE_CHECK_RETURN (-1);
 
           CosTrading::Lookup_ptr remote_lookup;
           remote_lookup = link_info->target.in ();
@@ -374,8 +351,7 @@ TAO_Trading_Loader::bootstrap_to_federation (ACE_ENV_SINGLE_ARG_DECL)
           ACE_DEBUG ((LM_DEBUG,
                       "*** Retrieving its link interface.\n"));
           CosTrading::Link_var remote_link =
-            remote_lookup->link_if (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_CHECK_RETURN (-1);
+            remote_lookup->link_if ();
 
           ACE_DEBUG ((LM_DEBUG,
                       "*** Creating a link to me from it.\n"));
@@ -384,7 +360,6 @@ TAO_Trading_Loader::bootstrap_to_federation (ACE_ENV_SINGLE_ARG_DECL)
                                  CosTrading::always,
                                  CosTrading::always
                                  ACE_ENV_ARG_PARAMETER);
-          ACE_CHECK_RETURN (-1);
 
           ACE_DEBUG ((LM_DEBUG,
                       "*** Creating a link to it from me.\n"));
@@ -393,7 +368,6 @@ TAO_Trading_Loader::bootstrap_to_federation (ACE_ENV_SINGLE_ARG_DECL)
                               CosTrading::always,
                               CosTrading::always
                               ACE_ENV_ARG_PARAMETER);
-          ACE_CHECK_RETURN (-1);
         }
     }
 

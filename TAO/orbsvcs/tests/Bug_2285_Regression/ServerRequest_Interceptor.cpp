@@ -27,14 +27,14 @@ TAO249_ServerRequest_Interceptor::~TAO249_ServerRequest_Interceptor (void)
 
 
 char *
-TAO249_ServerRequest_Interceptor::name (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+TAO249_ServerRequest_Interceptor::name (void)
 ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return CORBA::string_dup ("TAO_TAO249_ServerRequest_Interceptor");
 }
 
 void
-TAO249_ServerRequest_Interceptor::destroy (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+TAO249_ServerRequest_Interceptor::destroy (void)
 ACE_THROW_SPEC ((CORBA::SystemException))
 {
 }
@@ -55,14 +55,12 @@ TAO249_ServerRequest_Interceptor::receive_request (
 ACE_THROW_SPEC ((CORBA::SystemException,
                  PortableInterceptor::ForwardRequest))
 {
-  CORBA::String_var op = ri->operation (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+  CORBA::String_var op = ri->operation ();
   ACE_TRY
   {
     IOP::ServiceContext_var sc =
       ri->get_request_service_context (IOP::FT_REQUEST
                                        ACE_ENV_ARG_PARAMETER);
-    ACE_TRY_CHECK;
 
     TAO_InputCDR cdr (reinterpret_cast <const char*>
                      (sc->context_data.get_buffer ()),
@@ -75,7 +73,6 @@ ACE_THROW_SPEC ((CORBA::SystemException,
         ACE_THROW (CORBA::BAD_PARAM (CORBA::OMGVMCID | 28,
                                CORBA::COMPLETED_NO));
       }
-    ACE_TRY_CHECK;
 
     cdr.reset_byte_order (static_cast <int> (byte_order));
 
@@ -84,10 +81,9 @@ ACE_THROW_SPEC ((CORBA::SystemException,
     if ((cdr >> ftrsc) == 0)
       ACE_THROW (CORBA::BAD_PARAM (CORBA::OMGVMCID | 28,
                                CORBA::COMPLETED_NO));
-    ACE_TRY_CHECK;
-    
-    ACE_DEBUG ((LM_DEBUG, "TAO249_ServerRequest_Interceptor::receive_request (%P|%t) called for method: %s ... client retention id is: %d\n", op.in (), ftrsc.retention_id ));    
-                            
+
+    ACE_DEBUG ((LM_DEBUG, "TAO249_ServerRequest_Interceptor::receive_request (%P|%t) called for method: %s ... client retention id is: %d\n", op.in (), ftrsc.retention_id ));
+
     if (client_id_ == 0)
       {
         client_id_ = ftrsc.retention_id;
@@ -103,17 +99,16 @@ ACE_THROW_SPEC ((CORBA::SystemException,
             ACE_DEBUG ((LM_ERROR, "Test Failed - REGRESSION !!! Same client retention id has been used for TWO consecutive independent invocations!!\n"));
             Hello::ids_differ_ = 0;
           }
-      }      
+      }
   }
 ACE_CATCHANY
   {
     ACE_DEBUG ((LM_ERROR, "Unexpected (non regression) error - test failed\n"));
     ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                               "Exception in TAO249_ServerRequest_Interceptor::receive_request \n");  
+                               "Exception in TAO249_ServerRequest_Interceptor::receive_request \n");
     ACE_RE_THROW;
   }
 ACE_ENDTRY;
-ACE_CHECK;
 
 }
 
@@ -142,4 +137,4 @@ ACE_THROW_SPEC ((CORBA::SystemException,
                  PortableInterceptor::ForwardRequest))
 {
 }
-  
+

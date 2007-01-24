@@ -87,7 +87,7 @@ public:
   virtual ~TAO_CEC_Dispatch_Command (void);
 
   /// Command callback
-  virtual int execute (ACE_ENV_SINGLE_ARG_DECL_NOT_USED) = 0;
+  virtual int execute (void) = 0;
 };
 
 // ****************************************************************
@@ -99,7 +99,7 @@ public:
   TAO_CEC_Shutdown_Task_Command (ACE_Allocator *mb_allocator = 0);
 
   /// Command callback
-  virtual int execute (ACE_ENV_SINGLE_ARG_DECL_NOT_USED);
+  virtual int execute (void);
 };
 
 // ****************************************************************
@@ -117,7 +117,7 @@ public:
   virtual ~TAO_CEC_Push_Command (void);
 
   /// Command callback
-  virtual int execute (ACE_ENV_SINGLE_ARG_DECL_NOT_USED);
+  virtual int execute (void);
 
 private:
   /// The proxy
@@ -143,7 +143,7 @@ public:
   virtual ~TAO_CEC_Invoke_Command (void);
 
   /// Command callback
-  virtual int execute (ACE_ENV_SINGLE_ARG_DECL_NOT_USED);
+  virtual int execute (void);
 
 private:
   /// The proxy

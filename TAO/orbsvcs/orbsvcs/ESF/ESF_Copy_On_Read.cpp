@@ -55,7 +55,6 @@ TAO_ESF_Copy_On_Read<PROXY,COLLECTION,ITERATOR,ACE_LOCK>::
       for (PROXY **j = proxies; j != proxies + size; ++j)
         {
           worker->work (*j ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
           (*j)->_decr_refcnt ();
         }
       delete[] proxies;
@@ -108,11 +107,11 @@ TAO_ESF_Copy_On_Read<PROXY,COLLECTION,ITERATOR,ACE_LOCK>::
 
 template<class PROXY, class COLLECTION, class ITERATOR, class ACE_LOCK> void
 TAO_ESF_Copy_On_Read<PROXY,COLLECTION,ITERATOR,ACE_LOCK>::
-    shutdown (ACE_ENV_SINGLE_ARG_DECL)
+    shutdown (void)
 {
   ACE_GUARD (ACE_LOCK, ace_mon, this->lock_);
 
-  this->collection_.shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
+  this->collection_.shutdown ();
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL

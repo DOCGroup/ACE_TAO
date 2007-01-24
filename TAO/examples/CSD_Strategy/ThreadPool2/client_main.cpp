@@ -21,24 +21,23 @@ main(int argc, char* argv[])
 
   ClientApp app;
 
-  ACE_TRY_NEW_ENV 
-  { 
-    int ret = app.run(argc,argv ACE_ENV_ARG_PARAMETER); 
-    ACE_TRY_CHECK; 
-    return ret == 1 ? 0 : ret; 
-  } 
-  ACE_CATCHANY 
-  { 
-     ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, 
-                           "Caught exception:"); 
-  } 
-  ACE_CATCHALL 
-  { 
-    ACE_ERROR((LM_ERROR, 
-               "(%P|%t) Unknown (...) exception caught in main() " 
-               "for ClientApp\n")); 
-  } 
-  ACE_ENDTRY; 
+  ACE_TRY_NEW_ENV
+  {
+    int ret = app.run(argc,argv ACE_ENV_ARG_PARAMETER);
+    return ret == 1 ? 0 : ret;
+  }
+  ACE_CATCHANY
+  {
+     ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
+                           "Caught exception:");
+  }
+  ACE_CATCHALL
+  {
+    ACE_ERROR((LM_ERROR,
+               "(%P|%t) Unknown (...) exception caught in main() "
+               "for ClientApp\n"));
+  }
+  ACE_ENDTRY;
 
   return 1;
 }

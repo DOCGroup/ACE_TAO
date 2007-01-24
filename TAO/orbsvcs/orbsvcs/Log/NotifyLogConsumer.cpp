@@ -24,12 +24,10 @@ TAO_Notify_LogConsumer::connect (
 {
   // Activate the consumer with the default_POA_
   CosNotifyComm::PushConsumer_var objref =
-    this->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+    this->_this ();
 
   CosNotifyChannelAdmin::ProxySupplier_var proxysupplier =
     consumer_admin->obtain_notification_push_supplier (CosNotifyChannelAdmin::ANY_EVENT, proxy_supplier_id_ ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
   ACE_ASSERT (!CORBA::is_nil (proxysupplier.in ()));
 
@@ -37,22 +35,19 @@ TAO_Notify_LogConsumer::connect (
   this->proxy_supplier_ =
     CosNotifyChannelAdmin::ProxyPushSupplier::
     _narrow (proxysupplier.in () ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
   ACE_ASSERT (!CORBA::is_nil (proxy_supplier_.in ()));
 
   proxy_supplier_->connect_any_push_consumer (objref.in ()
                                               ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
 }
 
 void
-TAO_Notify_LogConsumer::disconnect (ACE_ENV_SINGLE_ARG_DECL)
+TAO_Notify_LogConsumer::disconnect (void)
 {
   this->proxy_supplier_->
-    disconnect_push_supplier(ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+    disconnect_push_supplier();
 }
 
 void
@@ -107,11 +102,10 @@ TAO_Notify_LogConsumer::push
   //
   // I have submitted a defect report to the OMG for clarification.
   //    --jtc
-  ACE_TRY 
+  ACE_TRY
     {
       // log the RecordList.
       this->log_->write_recordlist (recList ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
     }
   ACE_CATCH (DsLogAdmin::LogFull, ex)
     {
@@ -134,7 +128,7 @@ TAO_Notify_LogConsumer::push
 
 void
 TAO_Notify_LogConsumer::disconnect_push_consumer
-   (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+   (void)
   ACE_THROW_SPEC ((
                    CORBA::SystemException
                    ))

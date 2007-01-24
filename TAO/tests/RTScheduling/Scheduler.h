@@ -15,17 +15,17 @@ public RTScheduling::Scheduler,
 
   ~TAO_Scheduler (void);
 
-  virtual CORBA::PolicyList * scheduling_policies (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+  virtual CORBA::PolicyList * scheduling_policies (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual void scheduling_policies (const CORBA::PolicyList & scheduling_policies
                                     ACE_ENV_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual CORBA::PolicyList * poa_policies (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+  virtual CORBA::PolicyList * poa_policies (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual char * scheduling_discipline_name (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+  virtual char * scheduling_discipline_name (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual RTScheduling::ResourceManager_ptr create_resource_manager (const char * name,

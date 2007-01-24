@@ -52,9 +52,8 @@ main (int argc, char *argv[])
       ACE_Argv_Type_Converter satc (argc, argv);
       CORBA::ORB_var sorb =
         CORBA::ORB_init (satc.get_argc (),
-                         satc.get_TCHAR_argv ()                         
+                         satc.get_TCHAR_argv ()
                          ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       {
         ACE_Manual_Event me;
@@ -77,8 +76,7 @@ main (int argc, char *argv[])
         ACE_Thread_Manager::instance ()->wait ();
       }
 
-      sorb->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      sorb->destroy ();
     }
   ACE_CATCHANY
     {

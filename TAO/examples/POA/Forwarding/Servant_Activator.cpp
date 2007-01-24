@@ -21,7 +21,6 @@ ServantActivator::incarnate (const PortableServer::ObjectId &,
 {
   this->orb_->shutdown (0
                         ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (0);
 
   // Throw forward exception
   ACE_THROW_RETURN (
@@ -43,7 +42,7 @@ ServantActivator::etherealize (const PortableServer::ObjectId &,
 }
 
 void
-ServantActivator::forward_requests (ACE_ENV_SINGLE_ARG_DECL)
+ServantActivator::forward_requests (void)
 {
   if (CORBA::is_nil (this->forward_to_.in ()))
     ACE_THROW (test::Cannot_Forward ());

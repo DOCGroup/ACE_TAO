@@ -45,7 +45,7 @@ TAO_Service_Type_Repository::~TAO_Service_Type_Repository (void)
 }
 
 CosTradingRepos::ServiceTypeRepository::IncarnationNumber
-TAO_Service_Type_Repository::incarnation (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+TAO_Service_Type_Repository::incarnation (void)
       ACE_THROW_SPEC ((CORBA::SystemException))
 {
   CosTradingRepos::ServiceTypeRepository::IncarnationNumber inc_num;
@@ -93,7 +93,6 @@ add_type (const char *name,
   ACE_UNUSED_ARG (inc_num);
 
   ACE_WRITE_GUARD_THROW_EX (ACE_Lock, ace_mon, *this->lock_, CORBA::INTERNAL ());
-  ACE_CHECK_RETURN (inc_num);
 
   // Make sure Type name is valid.
   if (TAO_Trader_Base::is_valid_identifier_name (name) == 0)
@@ -110,13 +109,11 @@ add_type (const char *name,
   this->validate_properties (prop_map,
                              props
                              ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (this->incarnation_);
 
   // Check that all super_types exist, and none are duplicated.
   this->validate_supertypes (super_map,
                              super_types
                              ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (this->incarnation_);
 
   // NOTE: I don't really know a way to do this without an Interface
   // Repository, since the Interface Repository IDs don't contain
@@ -124,7 +121,6 @@ add_type (const char *name,
   //
   // make sure interface name is legal.
   //  this->validate_interface (if_name, super_types ACE_ENV_ARG_PARAMETER);
-  //  ACE_CHECK_RETURN (this->incarnation);
   //
   // Instead, we do this:
   //
@@ -138,7 +134,6 @@ add_type (const char *name,
   this->validate_inheritance (prop_map,
                               super_types
                               ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (this->incarnation_);
 
   // We can now use prop_map to construct a sequence of all properties
   // the this type.
@@ -174,7 +169,6 @@ TAO_Service_Type_Repository::remove_type (const char *name
     ACE_THROW (CosTrading::IllegalServiceType (name));
 
   ACE_WRITE_GUARD_THROW_EX (ACE_Lock, ace_mon, *this->lock_, CORBA::INTERNAL ());
-  ACE_CHECK;
 
   // Check if the type exists.
   Service_Type_Map::ENTRY* type_entry = 0; ;
@@ -199,7 +193,6 @@ list_types (const CosTradingRepos::ServiceTypeRepository::SpecifiedServiceTypes 
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_READ_GUARD_THROW_EX (ACE_Lock, ace_mon, *this->lock_, CORBA::INTERNAL ());
-  ACE_CHECK_RETURN (0);
 
   CORBA::ULong i = 0;
   CORBA::ULong length = static_cast<CORBA::ULong> (this->type_map_.current_size ());
@@ -256,7 +249,6 @@ describe_type (const char * name
      ace_mon,
      *this->lock_,
      CORBA::INTERNAL ());
-  ACE_CHECK_RETURN (0);
 
   // Make sure the type exists.
   CORBA::String_var type_name (name);
@@ -301,7 +293,6 @@ fully_describe_type (const char *name
                       0);
 
   ACE_READ_GUARD_THROW_EX (ACE_Lock, ace_mon, *this->lock_, CORBA::INTERNAL ());
-  ACE_CHECK_RETURN (0);
 
   // Make sure the type exists.
   CORBA::String_var type_name (name);
@@ -616,7 +607,6 @@ validate_inheritance (Prop_Map &prop_map,
                   compare =
                     super_props[j].value_type->equal (prop_type
                                                       ACE_ENV_ARG_PARAMETER);
-                  ACE_TRY_CHECK;
                 }
               ACE_CATCHANY
                 {
@@ -627,7 +617,6 @@ validate_inheritance (Prop_Map &prop_map,
                                 property_in_map));
                 }
               ACE_ENDTRY;
-              ACE_CHECK;
 
               if (compare == 0
                   || super_props[j].mode > property_in_map.mode)

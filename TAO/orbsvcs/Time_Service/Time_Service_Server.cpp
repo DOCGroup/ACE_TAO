@@ -19,14 +19,12 @@ ACE_TMAIN (int argc, ACE_TCHAR* argv[])
   ACE_TRY
     {
       int r = server.init (argc, argv ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       if (r == -1)
         return 1;
       else
         {
-          server.run (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+          server.run ();
         }
     }
   ACE_CATCH (CORBA::SystemException, sysex)

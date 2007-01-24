@@ -55,11 +55,8 @@ FTP_Client_Callback::handle_timeout (void *)
                   AVStreams::flowSpec stop_spec (1);
                   //ACE_DECLARE_NEW_CORBA_ENV;
                   CLIENT::instance ()->streamctrl ()->stop (stop_spec ACE_ENV_ARG_PARAMETER);
-                  ACE_TRY_CHECK;
 //                    CLIENT::instance ()->streamctrl ()->destroy (stop_spec ACE_ENV_ARG_PARAMETER);
-//                    ACE_TRY_CHECK;
                   TAO_AV_CORE::instance ()->orb ()->shutdown (0);
-                  ACE_TRY_CHECK;
                   return 0;
                 }
               ACE_CATCHANY
@@ -197,12 +194,10 @@ Client::bind_to_server (const char *name)
       CORBA::Object_var server_mmdevice_obj =
         my_naming_client_->resolve (server_mmdevice_name
                                     ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       this->server_mmdevice_ =
         AVStreams::MMDevice::_narrow (server_mmdevice_obj.in ()
                                       ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       if (CORBA::is_nil (this->server_mmdevice_.in ()))
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -215,7 +210,6 @@ Client::bind_to_server (const char *name)
       return -1;
     }
   ACE_ENDTRY;
-  ACE_CHECK_RETURN (-1);
   return 0;
 }
 
@@ -268,7 +262,6 @@ Client::run (void)
       AVStreams::streamQoS_var the_qos (new AVStreams::streamQoS);
       AVStreams::flowSpec flow_spec (1);
 
-      ACE_TRY_CHECK;
       ACE_INET_Addr addr (this->address_);
       ACE_NEW_RETURN (this->flowname_,
                       char [BUFSIZ],
@@ -287,8 +280,7 @@ Client::run (void)
       ACE_DEBUG ((LM_DEBUG, "(%N,%l) Flowspec: %s\n", entry.entry_to_string() ));
 
       AVStreams::MMDevice_var client_mmdevice
-        = this->client_mmdevice_._this (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        = this->client_mmdevice_._this ();
 
       CORBA::Boolean result =
         this->streamctrl_.bind_devs (client_mmdevice.in (),
@@ -296,7 +288,6 @@ Client::run (void)
                                      the_qos.inout (),
                                      flow_spec
                                      ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
       if (this->bind_to_server ("Server_MMDevice1") == -1)
         ACE_ERROR_RETURN ((LM_ERROR,
                            "(%P|%t) Error binding to the naming service\n"),
@@ -306,7 +297,6 @@ Client::run (void)
                                             the_qos.inout (),
                                             flow_spec
                                             ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
       if (this->bind_to_server ("Server_MMDevice2") == -1)
         ACE_ERROR_RETURN ((LM_ERROR,
                            "(%P|%t) Error binding to the naming service\n"),
@@ -316,7 +306,6 @@ Client::run (void)
                                             the_qos.inout (),
                                             flow_spec
                                             ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       if (result == 0)
         ACE_ERROR_RETURN ((LM_ERROR,"streamctrl::bind_devs failed\n"),-1);
@@ -324,13 +313,11 @@ Client::run (void)
       start_spec.length (1);
       start_spec [0] = CORBA::string_dup (this->flowname_);
       this->streamctrl_.start (start_spec ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
       // Schedule a timer for the for the flow handler.
       //TAO_AV_CORE::instance ()->run ();
       ACE_Time_Value tv (10000,0);
 
       TAO_AV_CORE::instance ()->orb ()->run (tv ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       ACE_DEBUG ((LM_DEBUG, "event loop finished\n"));
 
@@ -342,7 +329,6 @@ Client::run (void)
       return -1;
     }
   ACE_ENDTRY;
-  ACE_CHECK_RETURN (-1);
   return 0;
 }
 
@@ -357,7 +343,6 @@ main (int argc,
                                             argv);
       CORBA::Object_var obj
         = orb->resolve_initial_references ("RootPOA" ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       PortableServer::POA_var poa
         = PortableServer::POA::_narrow (obj.in ());
@@ -365,7 +350,6 @@ main (int argc,
       TAO_AV_CORE::instance ()->init (orb.in (),
                                       poa.in ()
                                       ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       int result = 0;
       result = CLIENT::instance ()->init (argc,argv);
@@ -382,7 +366,6 @@ main (int argc,
       return -1;
     }
   ACE_ENDTRY;
-  ACE_CHECK_RETURN (-1);
 
   CLIENT::close ();  // Explicitly finalize the Unmanaged_Singleton.
 

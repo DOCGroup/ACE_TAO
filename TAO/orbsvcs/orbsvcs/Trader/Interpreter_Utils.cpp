@@ -14,8 +14,7 @@ sequence_type (CORBA::TypeCode* type_code
 {
   // @@ Seth, why do you use a comma to separate the two statements?
   CORBA::TCKind return_value = CORBA::tk_void,
-  type_kind = type_code->kind (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (return_value);
+  type_kind = type_code->kind ();
 
   if (type_kind == CORBA::tk_alias
       || type_kind == CORBA::tk_sequence)
@@ -24,28 +23,23 @@ sequence_type (CORBA::TypeCode* type_code
 
       for (;;)
         {
-          CORBA::TCKind base_kind = base->kind (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_CHECK_RETURN (return_value);
+          CORBA::TCKind base_kind = base->kind ();
 
           if (base_kind == CORBA::tk_alias)
             {
-              base = base->content_type (ACE_ENV_SINGLE_ARG_PARAMETER);
-              ACE_CHECK_RETURN (return_value);
+              base = base->content_type ();
             }
           else
             break;
         }
 
-      CORBA::TCKind base_kind = base->kind (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK_RETURN (return_value);
+      CORBA::TCKind base_kind = base->kind ();
 
       if (base_kind == CORBA::tk_sequence)
         {
-          base = base->content_type (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_CHECK_RETURN (return_value);
+          base = base->content_type ();
 
-          base_kind = base->kind (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_CHECK_RETURN (return_value);
+          base_kind = base->kind ();
           return_value = base_kind;
         }
     }

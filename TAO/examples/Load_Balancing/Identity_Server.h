@@ -49,7 +49,7 @@ public:
   // Performs all the initializations necessary before going into the
   // ORB event loop.
 
-  int run (ACE_ENV_SINGLE_ARG_DECL);
+  int run (void);
   // Run the server.
 
 private:

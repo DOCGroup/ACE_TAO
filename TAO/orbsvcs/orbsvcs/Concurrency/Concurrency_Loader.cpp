@@ -37,12 +37,10 @@ TAO_Concurrency_Loader::init (int argc, char *argv[])
       // Initialize the ORB
       CORBA::ORB_var orb =
         CORBA::ORB_init (argc, argv, 0 ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       // This function call initializes the Concurrency Service
       CORBA::Object_var object =
         this->create_object (orb.in (), argc, argv ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
     }
   ACE_CATCHANY
     {
@@ -70,15 +68,11 @@ TAO_Concurrency_Loader::create_object (CORBA::ORB_ptr orb,
 {
   CORBA::Object_var object =
     orb->resolve_initial_references ("RootPOA" ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (CORBA::Object::_nil ());
   PortableServer::POA_var poa =
     PortableServer::POA::_narrow (object.in () ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (CORBA::Object::_nil ());
   PortableServer::POAManager_var poa_manager =
-    poa->the_POAManager (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (CORBA::Object::_nil ());
-  poa_manager->activate (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (CORBA::Object::_nil ());
+    poa->the_POAManager ();
+  poa_manager->activate ();
 
   return this->concurrency_server_.init (orb, poa.in ());
 }

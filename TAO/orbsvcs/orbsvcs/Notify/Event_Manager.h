@@ -68,7 +68,7 @@ public:
   void release();
 
   /// Init
-  void init (ACE_ENV_SINGLE_ARG_DECL);
+  void init (void);
 
   /// Init
   void shutdown (void);

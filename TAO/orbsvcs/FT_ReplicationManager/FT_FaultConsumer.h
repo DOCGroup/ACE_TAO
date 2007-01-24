@@ -79,7 +79,7 @@ namespace TAO
     * - Disconnect from FT::FaultNotifier.
     * - Deactivate from the POA.
     */
-    int fini (ACE_ENV_SINGLE_ARG_DECL);
+    int fini (void);
 
     /**
     * Accessor for a duplicate of this consumer's object reference.

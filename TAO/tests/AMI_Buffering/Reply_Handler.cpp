@@ -10,7 +10,7 @@ Reply_Handler::Reply_Handler (void)
 }
 
 void
-Reply_Handler::receive_data (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+Reply_Handler::receive_data (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
 }
@@ -22,8 +22,7 @@ Reply_Handler::receive_data_excep (::Messaging::ExceptionHolder *holder
 {
   ACE_TRY
     {
-      holder->raise_exception (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      holder->raise_exception ();
     }
   ACE_CATCHANY
     {
@@ -34,7 +33,7 @@ Reply_Handler::receive_data_excep (::Messaging::ExceptionHolder *holder
 }
 
 void
-Reply_Handler::sync (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+Reply_Handler::sync (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
 }
@@ -46,8 +45,7 @@ Reply_Handler::sync_excep (::Messaging::ExceptionHolder *holder
 {
   ACE_TRY
     {
-      holder->raise_exception (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      holder->raise_exception ();
     }
   ACE_CATCHANY
     {
@@ -58,7 +56,7 @@ Reply_Handler::sync_excep (::Messaging::ExceptionHolder *holder
 }
 
 void
-Reply_Handler::shutdown (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+Reply_Handler::shutdown (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
 }
@@ -70,8 +68,7 @@ Reply_Handler::shutdown_excep (::Messaging::ExceptionHolder *holder
 {
   ACE_TRY
     {
-      holder->raise_exception (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      holder->raise_exception ();
     }
   ACE_CATCHANY
     {

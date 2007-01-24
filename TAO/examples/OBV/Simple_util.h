@@ -60,7 +60,7 @@ public:
   // After calling <init>, this method will register the server with
   // the TAO Naming Service using the servant_name passed to <init>.
 
-  int run (ACE_ENV_SINGLE_ARG_DECL);
+  int run (void);
   // Run the orb.
 
 protected:
@@ -121,7 +121,7 @@ public:
   void shutdown (int);
   // Fills in the shutdwon flag.
 
-  int obtain_initial_references (ACE_ENV_SINGLE_ARG_DECL);
+  int obtain_initial_references (void);
   // Initialize naming service
 
 protected:

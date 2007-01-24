@@ -21,7 +21,7 @@ TAO_Notify_Tests_RT_Test_Filter::~TAO_Notify_Tests_RT_Test_Filter ()
 }
 
 char*
-TAO_Notify_Tests_RT_Test_Filter::constraint_grammar (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+TAO_Notify_Tests_RT_Test_Filter::constraint_grammar (void)
   ACE_THROW_SPEC ((
                    CORBA::SystemException
                    ))
@@ -79,7 +79,6 @@ TAO_Notify_Tests_RT_Test_Filter::add_constraints (const CosNotifyFilter::Constra
   ACE_NEW_THROW_EX (infoseq_ptr,
                     CosNotifyFilter::ConstraintInfoSeq (0),
                     CORBA::NO_MEMORY ());
-  ACE_CHECK_RETURN (0);
 
   return infoseq_ptr;
 }
@@ -109,26 +108,25 @@ TAO_Notify_Tests_RT_Test_Filter::get_constraints (const CosNotifyFilter::Constra
 }
 
 CosNotifyFilter::ConstraintInfoSeq *
-TAO_Notify_Tests_RT_Test_Filter::get_all_constraints (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+TAO_Notify_Tests_RT_Test_Filter::get_all_constraints (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
         return 0;
 }
 
 void
-TAO_Notify_Tests_RT_Test_Filter::remove_all_constraints (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+TAO_Notify_Tests_RT_Test_Filter::remove_all_constraints (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
 
 }
 
 void
-TAO_Notify_Tests_RT_Test_Filter::destroy (ACE_ENV_SINGLE_ARG_DECL)
+TAO_Notify_Tests_RT_Test_Filter::destroy (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_GUARD_THROW_EX (TAO_SYNCH_MUTEX, ace_mon, this->lock_,
                       CORBA::INTERNAL ());
-  ACE_CHECK;
 
   PortableServer::POA_var my_POA = _default_POA ();
 
@@ -156,7 +154,6 @@ TAO_Notify_Tests_RT_Test_Filter::match_structured (const CosNotification::Struct
 {
   ACE_GUARD_THROW_EX (TAO_SYNCH_MUTEX, ace_mon, this->lock_,
                       CORBA::INTERNAL ());
-  ACE_CHECK_RETURN (0);
 
   if (TAO_debug_level > 0)
     ACE_DEBUG ((LM_DEBUG, "TAO_Notify_Tests_RT_Test_Filter (%x) ::match_structured (%t)\n", this));
@@ -170,12 +167,10 @@ TAO_Notify_Tests_RT_Test_Filter::match_structured (const CosNotification::Struct
   CORBA::Object_var object =
     orb->resolve_initial_references ("RTCurrent"
                                             ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (0);
 
   RTCORBA::Current_var current =
     RTCORBA::Current::_narrow (object.in ()
                                ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (0);
 
   // Get the ORB_Core's TSS resources.
   TAO_ORB_Core_TSS_Resources *tss =
@@ -284,7 +279,7 @@ TAO_Notify_Tests_RT_Test_Filter::detach_callback (
 }
 
 CosNotifyFilter::CallbackIDSeq *
-TAO_Notify_Tests_RT_Test_Filter::get_callbacks (ACE_ENV_SINGLE_ARG_DECL)
+TAO_Notify_Tests_RT_Test_Filter::get_callbacks (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (),

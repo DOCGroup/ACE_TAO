@@ -41,14 +41,12 @@ int main (int argc, char* argv[])
                                           argv,
                                           ""
                                           ACE_ENV_ARG_PARAMETER);
-    ACE_TRY_CHECK;
 
     if (parse_args (argc, argv) != 0)
       return 1;
 
     CORBA::Object_var obj = orb->string_to_object (ior
                                                    ACE_ENV_ARG_PARAMETER);
-    ACE_TRY_CHECK;
 
     // force a scope to see the destruction of the server object
     {
@@ -62,7 +60,6 @@ int main (int argc, char* argv[])
       Test_var server =
         Test::_narrow(obj.in()
                       ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       if (CORBA::is_nil (server.in())) {
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -77,8 +74,7 @@ int main (int argc, char* argv[])
       // Testing the _non_existent function
       ACE_DEBUG ((LM_DEBUG, "Testing _non_existent()\n"));
       CORBA::Boolean ne =
-        server->_non_existent(ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        server->_non_existent();
       if (ne)
         ACE_ERROR_RETURN ((LM_ERROR,
                            "Not a Messenger object reference\n"),
@@ -87,8 +83,7 @@ int main (int argc, char* argv[])
         ACE_DEBUG ((LM_DEBUG,"Successfully called _non_existent()\n"));
 #endif /* TAO_HAS_MINIMUM_CORBA */
 
-      server->shutdown(ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      server->shutdown();
 
       // The following sleep is a hack to make sure the above oneway
       // request gets sent before we exit. Otherwise, at least on
@@ -102,8 +97,7 @@ int main (int argc, char* argv[])
                         "The Smart proxy is not deleted\n"),1);
     }
 
-    orb->destroy(ACE_ENV_SINGLE_ARG_PARAMETER);
-    ACE_TRY_CHECK;
+    orb->destroy();
   }
   ACE_CATCHANY
   {

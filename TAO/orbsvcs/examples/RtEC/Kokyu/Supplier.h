@@ -46,11 +46,11 @@ public:
 
   // = The RtecEventComm::PushSupplier methods
 
-  virtual void disconnect_push_supplier (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+  virtual void disconnect_push_supplier (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
   // The skeleton methods.
 
-  void timeout_occured (ACE_ENV_SINGLE_ARG_DECL);    
+  void timeout_occured (void);
 
 private:
   RtecEventComm::EventSourceID id_;
@@ -64,8 +64,8 @@ class Timeout_Consumer : public POA_RtecEventComm::PushConsumer
   //
   // = DESCRIPTION
   //   This class is a consumer of timeout events from EC.
-  //   It registers for timeout event with EC and calls 
-  //   the 
+  //   It registers for timeout event with EC and calls
+  //   the
   //
 public:
   Timeout_Consumer (Supplier * supplier_impl);
@@ -76,12 +76,12 @@ public:
   virtual void push (const RtecEventComm::EventSet& events
                      ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
-  virtual void disconnect_push_consumer (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+  virtual void disconnect_push_consumer (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
   // The skeleton methods.
-  
+
 private:
-  Supplier *supplier_impl_;  
+  Supplier *supplier_impl_;
 };
 
 #endif /* SUPPLIER_H */

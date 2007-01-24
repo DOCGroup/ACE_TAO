@@ -61,14 +61,12 @@ namespace TAO_Notify
     CORBA::ORB_var orb = properties->orb ();
 
     CORBA::String_var cior = orb->object_to_string (callback ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK_RETURN (0);
     ACE_CString ior(cior.in ());
     if ( 0 != reconnection_registry_.bind (next_id, ior))
     {
       //todo throw something;
     }
-    this->self_change (ACE_ENV_SINGLE_ARG_PARAMETER);
-    ACE_CHECK_RETURN (0);
+    this->self_change ();
 
     return next_id;
   }
@@ -88,12 +86,11 @@ namespace TAO_Notify
     {
       //@@todo  throw something
     }
-    this->self_change (ACE_ENV_SINGLE_ARG_PARAMETER);
-    ACE_CHECK;
+    this->self_change ();
   }
 
   CORBA::Boolean
-  Reconnection_Registry::is_alive (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+  Reconnection_Registry::is_alive (void)
   {
     return CORBA::Boolean(1);
   }
@@ -111,7 +108,6 @@ namespace TAO_Notify
     NVPList attrs;
     //@@todo: bool want_all_children =
       saver.begin_object (0, REGISTRY_TYPE, attrs, change ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK;
 
     Reconnection_Registry_Type::ENTRY *entry;
     for (Reconnection_Registry_Type::ITERATOR iter (this->reconnection_registry_);
@@ -129,9 +125,7 @@ namespace TAO_Notify
       cattrs.push_back(NVP(RECONNECT_ID, entry->ext_id_));
       cattrs.push_back(NVP(RECONNECT_IOR, entry->int_id_));
       saver.begin_object (entry->ext_id_, REGISTRY_CALLBACK_TYPE, cattrs, true ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
       saver.end_object (entry->ext_id_, REGISTRY_CALLBACK_TYPE ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
     }
 // todo:
 //    for all deleted children
@@ -208,13 +202,11 @@ namespace TAO_Notify
         }
         ACE_CString & ior = entry->int_id_;
         CORBA::Object_var obj = orb->string_to_object (ior.c_str () ACE_ENV_ARG_PARAMETER);
-        ACE_TRY_CHECK;
         NotifyExt::ReconnectionCallback_var callback =
           NotifyExt::ReconnectionCallback::_narrow (obj.in ());
         if (!CORBA::is_nil (callback.in ()))
         {
           callback->reconnect (dest_factory ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
         }
         else
         {

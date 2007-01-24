@@ -425,7 +425,6 @@ public:
   {
     ACE_DEBUG( (LM_INFO, ". in ShutdownServer\n") );
     orb->shutdown(0 ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK;
   }
 };
 
@@ -605,7 +604,6 @@ public:
     ACE_DEBUG( (LM_INFO, "AnInterceptor::receive_request\n") );
     Dynamic::ParameterList
       *pArgs= ri->arguments( ACE_ENV_SINGLE_ARG_PARAMETER );
-    ACE_CHECK;
     display_arg_list( pArgs );
   }
 
@@ -622,12 +620,10 @@ public:
     ACE_DEBUG( (LM_INFO, "AnInterceptor::send_reply\n") );
     Dynamic::ParameterList
       *pArgs= ri->arguments( ACE_ENV_SINGLE_ARG_PARAMETER );
-    ACE_CHECK;
     display_arg_list( pArgs );
     ACE_DEBUG( (LM_INFO, "  result is an ") );
     CORBA::Any
       *pAny= ri->result( ACE_ENV_SINGLE_ARG_PARAMETER );
-    ACE_CHECK;
     display_any( CORBA::Any_var( pAny ).in() );
     ACE_DEBUG( (LM_INFO, "\n") );
   }
@@ -691,40 +687,30 @@ int main( int argc, char *argv[] )
     PortableInterceptor::register_orb_initializer( initialiser.in() );
 
     orb= CORBA::ORB_init( argc, argv, 0 ACE_ENV_ARG_PARAMETER );
-    ACE_TRY_CHECK;
     CORBA::Object_var
       Object = orb->resolve_initial_references( "RootPOA" ACE_ENV_ARG_PARAMETER );
-    ACE_TRY_CHECK;
     PortableServer::POA_var rootPOA=
       PortableServer::POA::_narrow( Object.in() ACE_ENV_ARG_PARAMETER );
-    ACE_TRY_CHECK;
     PortableServer::POAManager_var
       rootPOAMgr = rootPOA->the_POAManager( ACE_ENV_SINGLE_ARG_PARAMETER );
-    ACE_TRY_CHECK;
 
     FooImpl
       phooey;
     PortableServer::ObjectId_var
       phooeyId= rootPOA->activate_object( &phooey ACE_ENV_ARG_PARAMETER );
-    ACE_TRY_CHECK;
     CORBA::Object_var
       phooeyObj= rootPOA->id_to_reference( phooeyId.in() ACE_ENV_ARG_PARAMETER );
-    ACE_TRY_CHECK;
     CORBA::String_var
       stringifiedObj= orb->object_to_string( phooeyObj.in() ACE_ENV_ARG_PARAMETER );
-    ACE_TRY_CHECK;
     ofstream file( "server.ior" );
     file << stringifiedObj;
     file.close();
 
     rootPOAMgr->activate( ACE_ENV_SINGLE_ARG_PARAMETER );
-    ACE_TRY_CHECK;
 
     orb->run( 0 ACE_ENV_ARG_PARAMETER );
-    ACE_TRY_CHECK;
 
     orb->destroy( ACE_ENV_SINGLE_ARG_PARAMETER );
-    ACE_TRY_CHECK;
   }
   ACE_CATCH( CORBA::SystemException, exception )
   {

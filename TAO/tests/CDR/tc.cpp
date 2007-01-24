@@ -42,7 +42,6 @@ main (int argc, char *argv[])
                                             argv,
                                             0
                                             ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       static const CORBA::TypeCode_ptr tcs[]=
       {
@@ -112,8 +111,7 @@ main (int argc, char *argv[])
         {
           CORBA::TypeCode_ptr tc = *i;
 
-          CORBA::TCKind k = tc->kind (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+          CORBA::TCKind k = tc->kind ();
 
           switch (k)
             {
@@ -124,15 +122,12 @@ main (int argc, char *argv[])
             case CORBA::tk_alias:
             case CORBA::tk_except:
               {
-                const char *id = tc->id (ACE_ENV_SINGLE_ARG_PARAMETER);
-                ACE_TRY_CHECK;
+                const char *id = tc->id ();
 
-                const char *name = tc->name (ACE_ENV_SINGLE_ARG_PARAMETER);
-                ACE_TRY_CHECK;
+                const char *name = tc->name ();
 
                 CORBA::ULong length = 0;
                 // tc->length (TAO_TRY_ENV);
-                // ACE_TRY_CHECK;
 
                 if (TAO_debug_level > 0)
                   {

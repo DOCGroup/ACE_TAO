@@ -85,18 +85,15 @@ main (int argc, char *argv[])
     {
       CORBA::ORB_var orb =
         CORBA::ORB_init (argc, argv, "" ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       if (parse_args (argc, argv) != 0)
         return 1;
 
       CORBA::Object_var object =
         orb->string_to_object (ior ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       Test::Roundtrip_var roundtrip =
         Test::Roundtrip::_narrow (object.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       if (CORBA::is_nil (roundtrip.in ()))
         {
@@ -110,7 +107,6 @@ main (int argc, char *argv[])
         {
           ACE_hrtime_t start = 0;
           (void) roundtrip->test_method (start ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
         }
 
       ACE_Sample_History history (niterations);
@@ -121,7 +117,6 @@ main (int argc, char *argv[])
           ACE_hrtime_t start = ACE_OS::gethrtime ();
 
           (void) roundtrip->test_method (start ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
 
           ACE_hrtime_t now = ACE_OS::gethrtime ();
           history.sample (now - start);
@@ -150,8 +145,7 @@ main (int argc, char *argv[])
 
       if (do_shutdown)
         {
-          roundtrip->shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+          roundtrip->shutdown ();
         }
     }
   ACE_CATCHANY

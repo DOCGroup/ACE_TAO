@@ -37,11 +37,9 @@ Server_ORBInitializer::post_init (
                         TAO::VMCID,
                         ENOMEM),
                       CORBA::COMPLETED_NO));
-  ACE_CHECK;
 
   info->add_server_request_interceptor (interceptor
                                         ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 }
 
 #endif  /* TAO_HAS_INTERCEPTORS == 1 */

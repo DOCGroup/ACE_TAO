@@ -47,7 +47,6 @@ TAO_Concurrency_Server::init (CORBA::ORB_ptr orb,
       this->poa_= PortableServer::POA::_duplicate (poa);
 
       // Get the naming context ptr to NameService.
-      //      ACE_TRY_CHECK;
 
       PortableServer::ObjectId_var id =
         PortableServer::string_to_ObjectId ("ConcurrencyService");
@@ -55,7 +54,6 @@ TAO_Concurrency_Server::init (CORBA::ORB_ptr orb,
       poa->activate_object_with_id (id.in (),
                                     &this->lock_set_factory_
                                     ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       // Stringify the objref we'll be implementing, and print it to
       // stdout.  Someone will take that string and give it to a
@@ -63,12 +61,10 @@ TAO_Concurrency_Server::init (CORBA::ORB_ptr orb,
       obj =
         poa->id_to_reference (id.in ()
                               ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       CORBA::String_var str =
         orb->object_to_string (obj.in ()
                                ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       ACE_DEBUG ((LM_DEBUG,
                   "listening as object <%s>\n",
@@ -96,7 +92,6 @@ TAO_Concurrency_Server::fini (void)
 
       this->poa_->deactivate_object (id.in ()
                                      ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
     }
   ACE_CATCHANY
     {

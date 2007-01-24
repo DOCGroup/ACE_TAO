@@ -58,13 +58,11 @@ TAO_CEC_Reactive_Pulling_Strategy::handle_timeout (
       CORBA::PolicyList_var policies =
         this->policy_current_->get_policy_overrides (types
                                                      ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       // Change the timeout
       this->policy_current_->set_policy_overrides (this->policy_list_,
                                                    CORBA::ADD_OVERRIDE
                                                    ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       ACE_TRY_EX (query)
         {
@@ -84,11 +82,9 @@ TAO_CEC_Reactive_Pulling_Strategy::handle_timeout (
       this->policy_current_->set_policy_overrides (policies.in (),
                                                    CORBA::SET_OVERRIDE
                                                    ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
       for (CORBA::ULong i = 0; i != policies->length (); ++i)
         {
-          policies[i]->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+          policies[i]->destroy ();
         }
     }
   ACE_CATCHANY
@@ -115,12 +111,10 @@ TAO_CEC_Reactive_Pulling_Strategy::activate (void)
       CORBA::Object_var tmp =
         this->orb_->resolve_initial_references ("PolicyCurrent"
                                                 ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       this->policy_current_ =
         CORBA::PolicyCurrent::_narrow (tmp.in ()
                                        ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       // Pre-compute the policy list to the set the right timeout
       // value...
@@ -137,7 +131,6 @@ TAO_CEC_Reactive_Pulling_Strategy::activate (void)
                Messaging::RELATIVE_RT_TIMEOUT_POLICY_TYPE,
                any
                ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
     }
   ACE_CATCHANY
     {
@@ -185,7 +178,6 @@ TAO_CEC_Pull_Event::work (TAO_CEC_ProxyPullConsumer *consumer
     {
       any = consumer->try_pull_from_supplier (has_event
                                               ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
     }
   ACE_CATCHANY
     {
@@ -197,7 +189,6 @@ TAO_CEC_Pull_Event::work (TAO_CEC_ProxyPullConsumer *consumer
   if (has_event)
     {
       this->consumer_admin_->push (any.in () ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
     }
 }
 

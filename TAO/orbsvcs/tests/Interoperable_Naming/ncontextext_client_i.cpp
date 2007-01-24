@@ -148,7 +148,7 @@ NContextExt_Client_i::get_name ()
 }
 
 int
-NContextExt_Client_i::run (ACE_ENV_SINGLE_ARG_DECL)
+NContextExt_Client_i::run (void)
 {
 
   ACE_TRY_EX (OuterBlock)
@@ -256,7 +256,6 @@ NContextExt_Client_i::run (ACE_ENV_SINGLE_ARG_DECL)
       return -1;
     }
   ACE_ENDTRY;
-  ACE_CHECK_RETURN (-1);
 
   return 0;
 }
@@ -286,7 +285,6 @@ NContextExt_Client_i::init (int argc, char **argv)
       // Get a reference to the Naming Service
       CORBA::Object_var naming_context_object =
         orb->resolve_initial_references ("NameService" ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       if (CORBA::is_nil (naming_context_object.in ()))
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -297,7 +295,6 @@ NContextExt_Client_i::init (int argc, char **argv)
       this->naming_context_ =
         CosNaming::NamingContextExt::_narrow (naming_context_object.in ()
                                               ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       if (CORBA::is_nil (this->naming_context_.in ()))
         ACE_ERROR_RETURN ((LM_ERROR,

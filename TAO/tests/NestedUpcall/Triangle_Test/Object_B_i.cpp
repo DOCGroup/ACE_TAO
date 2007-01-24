@@ -46,8 +46,7 @@ Object_B_i::foo (Object_A_ptr theObject_A_ptr
       ACE_DEBUG ((LM_DEBUG,
                   "(%P|%t) BEGIN Object_B_i::foo: Trying to call Object A\n"));
 
-      theObject_A_ptr->finish (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      theObject_A_ptr->finish ();
 
       // Start to wait on this variable, it is set to true
       // by the method finish ()

@@ -132,10 +132,8 @@ int ReplicationManagerFaultConsumerAdapter::init (
 
   CORBA::Object_var detector_obj = this->orb_->string_to_object (
     this->detector_ior_ ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
   this->factory_ = ::FT::FaultDetectorFactory::_narrow (
     detector_obj.in() ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
   if (CORBA::is_nil (this->factory_.in()))
   {
     ACE_ERROR_RETURN ((
@@ -156,10 +154,8 @@ int ReplicationManagerFaultConsumerAdapter::init (
 
   CORBA::Object_var notifier_ior = this->orb_->string_to_object (
     this->notifier_ior_ ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
   this->notifier_ = ::FT::FaultNotifier::_narrow (
     notifier_ior.in() ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
   if (CORBA::is_nil (this->notifier_.in()))
   {
     ACE_ERROR_RETURN ((
@@ -197,10 +193,8 @@ int ReplicationManagerFaultConsumerAdapter::init (
   // Get the RootPOA from the ORB.
   CORBA::Object_var poa_obj = this->orb_->resolve_initial_references (
     "RootPOA" ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
   PortableServer::POA_var poa = PortableServer::POA::_narrow (
     poa_obj.in() ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
 
   // Create a fault analyzer.
   TAO::FT_FaultAnalyzer * analyzer = 0;
@@ -220,7 +214,6 @@ int ReplicationManagerFaultConsumerAdapter::init (
     this->notifier_.in(),
     analyzer
     ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
   if (result != 0)
   {
     ACE_ERROR_RETURN ((
@@ -234,10 +227,8 @@ int ReplicationManagerFaultConsumerAdapter::init (
 
   // Activate the RootPOA.
   PortableServer::POAManager_var poa_manager =
-    poa->the_POAManager (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
-  poa_manager->activate (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
+    poa->the_POAManager ();
+  poa_manager->activate ();
 
   /////////////////////////
   // Set up fault detectors
@@ -256,10 +247,8 @@ int ReplicationManagerFaultConsumerAdapter::init (
       const char * iorName = this->replica_iors_[nRep];
       CORBA::Object_var replica_obj = this->orb_->string_to_object (
         iorName ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK_RETURN (-1);
       FT::PullMonitorable_var replica = FT::PullMonitorable::_narrow (
         replica_obj.in() ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK_RETURN (-1);
       if (CORBA::is_nil(replica.in()))
       {
         ACE_ERROR_RETURN ((
@@ -327,7 +316,6 @@ int ReplicationManagerFaultConsumerAdapter::init (
             criteria.in(),
             factory_creation_id
             ACE_ENV_ARG_PARAMETER);
-          ACE_CHECK_RETURN (-1);
         }
       }
     }
@@ -358,10 +346,10 @@ const char * ReplicationManagerFaultConsumerAdapter::identity () const
 /**
  * Clean house for process shut down.
  */
-int ReplicationManagerFaultConsumerAdapter::fini (ACE_ENV_SINGLE_ARG_DECL)
+int ReplicationManagerFaultConsumerAdapter::fini (void)
 {
   // Delegate to the FT_FaultConsumer.
-  return this->p_fault_consumer_->fini (ACE_ENV_SINGLE_ARG_PARAMETER);
+  return this->p_fault_consumer_->fini ();
 }
 
 

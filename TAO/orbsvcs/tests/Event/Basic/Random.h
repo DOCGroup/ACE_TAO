@@ -38,13 +38,13 @@ public:
   void push (const RtecEventComm::EventSet &event
              ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
-  void disconnect_push_consumer (ACE_ENV_SINGLE_ARG_DECL)
+  void disconnect_push_consumer (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   void connect (RtecEventChannelAdmin::ConsumerAdmin_ptr admin,
                 const RtecEventChannelAdmin::ConsumerQOS &qos
                 ACE_ENV_ARG_DECL);
-  void disconnect (ACE_ENV_SINGLE_ARG_DECL);
+  void disconnect (void);
 
 protected:
   /// The driver
@@ -99,14 +99,14 @@ public:
   void connect (RtecEventChannelAdmin::SupplierAdmin_ptr admin,
                 const RtecEventChannelAdmin::SupplierQOS &qos
                 ACE_ENV_ARG_DECL);
-  void disconnect (ACE_ENV_SINGLE_ARG_DECL);
+  void disconnect (void);
 
   /// Push a single event...
-  void push_new_event (ACE_ENV_SINGLE_ARG_DECL);
+  void push_new_event (void);
   void push (RtecEventComm::EventSet &event
              ACE_ENV_ARG_DECL);
 
-  virtual void disconnect_push_supplier (ACE_ENV_SINGLE_ARG_DECL)
+  virtual void disconnect_push_supplier (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   /// Active method

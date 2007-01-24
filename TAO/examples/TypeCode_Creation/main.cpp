@@ -14,13 +14,11 @@ int main(int argc, char *argv[])
                                             argv,
                                             ""
                                             ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       CORBA::TypeCode_var iface_tc =
         orb->create_interface_tc (CORBA::string_dup ("IDL:iface:1.0"),
                                   CORBA::string_dup ("iface")
                                   ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       CORBA::ULong length = 5;
 
@@ -74,7 +72,6 @@ int main(int argc, char *argv[])
                                                           CORBA::_tc_short,
                                                           foo_members
                                                           ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       length = 2;
 
@@ -96,12 +93,10 @@ int main(int argc, char *argv[])
                                                           "bar",
                                                           bar_members
                                                           ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       // Check for equality with the typecode created by the IDL compiler.
       CORBA::Boolean eq = bar_tc->equal (_tc_bar
                                          ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       if (!eq)
         {

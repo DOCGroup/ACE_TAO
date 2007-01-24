@@ -16,8 +16,8 @@
 #include "RTClient_Setup.inl"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID (TAO_PERF_RTEC, 
-           RTClient_Setup, 
+ACE_RCSID (TAO_PERF_RTEC,
+           RTClient_Setup,
            "$Id$")
 
 RTClient_Setup::RTClient_Setup (int use_rt_corba,
@@ -28,7 +28,6 @@ RTClient_Setup::RTClient_Setup (int use_rt_corba,
   : use_rt_corba_ (use_rt_corba)
   , syncscope_setup_ (orb ACE_ENV_ARG_PARAMETER)
 {
-  ACE_CHECK;
 
   if (use_rt_corba)
     {
@@ -39,7 +38,6 @@ RTClient_Setup::RTClient_Setup (int use_rt_corba,
                                              ACE_ENV_ARG_PARAMETER),
                           RTCORBA_Setup
                          );
-      ACE_CHECK;
 
 #if 0
       ACE_AUTO_PTR_RESET (this->priorityband_setup_,
@@ -48,8 +46,7 @@ RTClient_Setup::RTClient_Setup (int use_rt_corba,
                                                   ACE_ENV_ARG_PARAMETER),
                           PriorityBand_Setup
                          );
-      ACE_CHECK;
-        
+
 #endif /* 0 */
     }
 }

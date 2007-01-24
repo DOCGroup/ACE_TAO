@@ -28,7 +28,7 @@ TAO_Notify_ProxyPushConsumer::release (void)
 }
 
 CosNotifyChannelAdmin::ProxyType
-TAO_Notify_ProxyPushConsumer::MyType (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+TAO_Notify_ProxyPushConsumer::MyType (void)
   ACE_THROW_SPEC ((
                    CORBA::SystemException
                    ))
@@ -71,22 +71,19 @@ TAO_Notify_ProxyPushConsumer::connect_any_push_supplier (CosEventComm::PushSuppl
                     CORBA::NO_MEMORY ());
 
   supplier->init (push_supplier ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
   this->connect (supplier ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
-  this->self_change (ACE_ENV_SINGLE_ARG_PARAMETER);
+  this->self_change ();
 }
 
-void TAO_Notify_ProxyPushConsumer::disconnect_push_consumer (ACE_ENV_SINGLE_ARG_DECL)
+void TAO_Notify_ProxyPushConsumer::disconnect_push_consumer (void)
   ACE_THROW_SPEC ((
                    CORBA::SystemException
                    ))
 {
   TAO_Notify_ProxyPushConsumer::Ptr guard( this );
-  this->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
-  this->self_change (ACE_ENV_SINGLE_ARG_PARAMETER);
+  this->destroy ();
+  this->self_change ();
 }
 
 const char *
@@ -106,21 +103,17 @@ TAO_Notify_ProxyPushConsumer::load_attrs (const TAO_Notify::NVPList& attrs)
       ACE_DECLARE_NEW_CORBA_ENV;
       ACE_TRY
         {
-          ACE_TRY_CHECK;
           CosNotifyComm::PushSupplier_var ps = CosNotifyComm::PushSupplier::_nil();
           if ( ior.length() > 0 )
             {
               CORBA::Object_var obj =
                 orb->string_to_object(ior.c_str() ACE_ENV_ARG_PARAMETER);
-              ACE_TRY_CHECK;
               ps = CosNotifyComm::PushSupplier::_unchecked_narrow(obj.in() ACE_ENV_ARG_PARAMETER);
-              ACE_TRY_CHECK;
             }
           // minor hack: suppress generating subscription updates during reload.
           bool save_updates = this->updates_off_;
           this->updates_off_ = true;
           this->connect_any_push_supplier(ps.in() ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
           this->updates_off_ = save_updates;
         }
       ACE_CATCHALL
