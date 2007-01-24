@@ -74,7 +74,7 @@ Client_Interceptor::send_request (PortableInterceptor::ClientRequestInfo_ptr ri)
             {
               ACE_DEBUG ((LM_DEBUG,
                           "No Scheduling Segment Context\n"));
-              throw ( ::CORBA::INTERNAL ());
+              throw ::CORBA::INTERNAL ();
 
             }
 
@@ -359,7 +359,7 @@ Server_Interceptor::receive_request (PortableInterceptor::ServerRequestInfo_ptr 
 
   if (result != 0)
     {
-      throw ( ::CORBA::INTERNAL ());
+      throw ::CORBA::INTERNAL ();
     }
 
   // Create new temporary current. Note that the new <sched_param> is

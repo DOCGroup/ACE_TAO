@@ -31,7 +31,7 @@ TAO_RT_Invocation_Endpoint_Selector::select_endpoint (
     )
 {
   if (r == 0)
-    throw ( ::CORBA::INTERNAL ());
+    throw ::CORBA::INTERNAL ();
 
   CORBA::Policy_var client_protocol_policy_base =
     TAO_RT_Endpoint_Utils::policy (TAO_CACHED_POLICY_RT_CLIENT_PROTOCOL,

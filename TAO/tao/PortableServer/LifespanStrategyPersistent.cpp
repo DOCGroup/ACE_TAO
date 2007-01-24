@@ -107,7 +107,7 @@ namespace TAO
                           ACE_TEXT ("(%P|%t) ERROR: No ImR_Client library ")
                           ACE_TEXT ("available but use IMR has been specified.\n")));
 
-              throw ( ::CORBA::INTERNAL ());
+              throw ::CORBA::INTERNAL ();
             }
         }
     }

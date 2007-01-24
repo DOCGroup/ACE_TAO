@@ -130,7 +130,7 @@ TAO_Named_RT_Mutex_Manager::destroy_mutex (RTCORBA::Mutex_ptr mutex
         this->map_.unbind (name);
 
       if (result != 0)
-        throw ( ::CORBA::INTERNAL ());
+        throw ::CORBA::INTERNAL ();
     }
 }
 #else /* TAO_HAS_NAMED_RT_MUTEXES == 1 */

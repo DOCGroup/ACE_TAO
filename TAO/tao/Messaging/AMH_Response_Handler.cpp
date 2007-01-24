@@ -208,7 +208,7 @@ TAO_AMH_Response_Handler::_tao_rh_send_exception (CORBA::Exception &ex
                                                   reply_params,
                                                   ex) == -1)
     {
-      throw ( ::CORBA::INTERNAL ());
+      throw ::CORBA::INTERNAL ();
     }
 
   // Send the Exception

@@ -358,7 +358,7 @@ TAO_ORBInitInfo::register_policy_factory (
 
   if (registry == 0)
     {
-      throw ( ::CORBA::INTERNAL ());
+      throw ::CORBA::INTERNAL ();
     }
 
   registry->register_policy_factory (type,
