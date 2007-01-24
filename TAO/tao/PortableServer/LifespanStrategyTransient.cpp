@@ -94,8 +94,7 @@ namespace TAO
       if (this->poa_->tao_poa_manager ().get_state_i () ==
         PortableServer::POAManager::INACTIVE)
         {
-          throw (::CORBA::OBJECT_NOT_EXIST (CORBA::OMGVMCID | 4,
-                                            CORBA::COMPLETED_NO));
+          throw ::CORBA::OBJECT_NOT_EXIST (CORBA::OMGVMCID | 4, CORBA::COMPLETED_NO);
         }
       else
         {

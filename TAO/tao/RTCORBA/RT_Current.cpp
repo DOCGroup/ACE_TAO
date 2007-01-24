@@ -62,7 +62,7 @@ TAO_RT_Current::the_priority (RTCORBA::Priority the_priority
                                    );
 
   if (result == -1)
-    throw ( ::CORBA::DATA_CONVERSION (1, CORBA::COMPLETED_NO));
+    throw ::CORBA::DATA_CONVERSION (1, CORBA::COMPLETED_NO);
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL

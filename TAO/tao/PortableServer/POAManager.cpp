@@ -71,7 +71,7 @@ TAO_POA_Manager::activate_i (void)
 
   if (this->state_ == PortableServer::POAManager::INACTIVE)
     {
-      throw (PortableServer::POAManager::AdapterInactive ());
+      throw PortableServer::POAManager::AdapterInactive ();
     }
   else
     {
@@ -111,7 +111,7 @@ TAO_POA_Manager::deactivate_i (CORBA::Boolean etherealize_objects,
 
   if (this->state_ == PortableServer::POAManager::INACTIVE)
     {
-      throw (PortableServer::POAManager::AdapterInactive ());
+      throw PortableServer::POAManager::AdapterInactive ();
     }
   else
     {
@@ -210,7 +210,7 @@ TAO_POA_Manager::hold_requests_i (CORBA::Boolean wait_for_completion
 
   if (this->state_ == PortableServer::POAManager::INACTIVE)
     {
-      throw (PortableServer::POAManager::AdapterInactive ());
+      throw PortableServer::POAManager::AdapterInactive ();
     }
   else
     {
@@ -268,7 +268,7 @@ TAO_POA_Manager::discard_requests_i (CORBA::Boolean wait_for_completion
 
   if (this->state_ == PortableServer::POAManager::INACTIVE)
     {
-      throw (PortableServer::POAManager::AdapterInactive ());
+      throw PortableServer::POAManager::AdapterInactive ();
     }
   else
     {

@@ -259,7 +259,7 @@ TAO_Thread_Lane::validate_and_map_priority (void)
                    this->native_priority_);
 
   if (!result)
-    throw ( ::CORBA::DATA_CONVERSION ());
+    throw ::CORBA::DATA_CONVERSION ();
 
   if (TAO_debug_level > 3)
     {

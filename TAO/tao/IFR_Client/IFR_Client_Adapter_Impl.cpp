@@ -186,7 +186,7 @@ TAO_IFR_Client_Adapter_Impl::create_operation_list (
           break;
         default:
           // Shouldn't happen
-          throw ( ::CORBA::INTERNAL());
+          throw ::CORBA::INTERNAL();
         }
 
       // Add an argument to the NVList.

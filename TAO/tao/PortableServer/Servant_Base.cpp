@@ -218,7 +218,7 @@ void TAO_ServantBase::synchronous_upcall_dispatch (TAO_ServerRequest & req,
                    skel,
                    static_cast <unsigned int> (req.operation_length())) == -1)
     {
-      throw ( ::CORBA::BAD_OPERATION ());
+      throw ::CORBA::BAD_OPERATION ();
     }
 
   CORBA::Boolean const send_reply =
@@ -295,7 +295,7 @@ void TAO_ServantBase::asynchronous_upcall_dispatch (TAO_ServerRequest & req,
                    skel,
                    static_cast <unsigned int> (req.operation_length())) == -1)
     {
-      throw ( ::CORBA::BAD_OPERATION ());
+      throw ::CORBA::BAD_OPERATION ();
     }
 
   try

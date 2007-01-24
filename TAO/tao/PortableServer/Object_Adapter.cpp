@@ -439,8 +439,7 @@ TAO_Object_Adapter::locate_poa (const TAO::ObjectKey &key,
   }
 
   if (result != 0)
-    throw ( ::CORBA::OBJECT_NOT_EXIST (CORBA::OMGVMCID | 2,
-                                        CORBA::COMPLETED_NO));
+    throw ::CORBA::OBJECT_NOT_EXIST (CORBA::OMGVMCID | 2, CORBA::COMPLETED_NO);
 }
 
 int

@@ -58,8 +58,7 @@ TAO_IORInfo::add_ior_component (const IOP::TaggedComponent &component
   this->check_validity ();
 
   if (this->components_established_)
-    throw ( ::CORBA::BAD_INV_ORDER (CORBA::OMGVMCID | 14,
-                                     CORBA::COMPLETED_NO));
+    throw ::CORBA::BAD_INV_ORDER (CORBA::OMGVMCID | 14, CORBA::COMPLETED_NO);
 
   // Add the given tagged component to all profiles.
   this->poa_->save_ior_component (component
@@ -76,8 +75,7 @@ TAO_IORInfo::add_ior_component_to_profile (
   this->check_validity ();
 
   if (this->components_established_)
-    throw ( ::CORBA::BAD_INV_ORDER (CORBA::OMGVMCID | 14,
-                                     CORBA::COMPLETED_NO));
+    throw ::CORBA::BAD_INV_ORDER (CORBA::OMGVMCID | 14, CORBA::COMPLETED_NO);
 
   this->poa_->save_ior_component_and_profile_id (component,
                                                  profile_id
@@ -174,8 +172,7 @@ TAO_IORInfo::check_validity (void)
       // once the POA has invoked all IORInterceptor interception
       // points.  This also prevents memory access violations from
       // occuring if the POA is destroyed before this IORInfo object.
-      throw ( ::CORBA::OBJECT_NOT_EXIST (TAO::VMCID,
-                                          CORBA::COMPLETED_NO));
+      throw ::CORBA::OBJECT_NOT_EXIST (TAO::VMCID, CORBA::COMPLETED_NO);
     }
 }
 
