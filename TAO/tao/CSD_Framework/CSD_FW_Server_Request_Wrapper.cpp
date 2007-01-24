@@ -93,7 +93,7 @@ TAO::CSD::FW_Server_Request_Wrapper::dispatch
               !this->request_->deferred_reply())
         {
           // The request is a remote request that is expecting a reply.
-          this->request_->tao_send_reply_exception(ACE_ANY_EXCEPTION);
+          this->request_->tao_send_reply_exception(ex);
         }
       else if (TAO_debug_level > 0)
         {
@@ -108,7 +108,7 @@ TAO::CSD::FW_Server_Request_Wrapper::dispatch
                       ACE_TEXT ("but client is not waiting a response\n")));
 
           ACE_PRINT_EXCEPTION (
-              ACE_ANY_EXCEPTION,
+              ex,
               "FW_Server_Request_Wrapper::dispatch ()");
         }
      }

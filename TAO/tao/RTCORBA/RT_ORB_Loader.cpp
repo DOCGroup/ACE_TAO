@@ -180,7 +180,7 @@ TAO_RT_ORB_Loader::init (int argc,
     }
   catch ( ::CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
+      ACE_PRINT_EXCEPTION (ex,
                            "Unexpected exception caught while "
                            "initializing the RTORB");
       return 1;

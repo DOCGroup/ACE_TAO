@@ -18,25 +18,21 @@
   ACE_GUARD_THROW_EX (ACE_Lock, \
                       monitor, \
                       this->lock (), \
-                      CORBA::OBJ_ADAPTER ()); \
-  ACE_CHECK
+                      CORBA::OBJ_ADAPTER ())
 
 #define TAO_OBJECT_ADAPTER_GUARD_RETURN(RETURN) \
   ACE_GUARD_THROW_EX (ACE_Lock, \
                       monitor, \
                       this->lock (), \
-                      CORBA::OBJ_ADAPTER ()); \
-  ACE_CHECK_RETURN (RETURN)
+                      CORBA::OBJ_ADAPTER ())
 
 #define TAO_POA_GUARD \
   TAO::Portable_Server::POA_Guard poa_guard (*this); \
-  ACE_UNUSED_ARG (poa_guard); \
-  ACE_CHECK
+  ACE_UNUSED_ARG (poa_guard)
 
 #define TAO_POA_GUARD_RETURN(RETURN) \
   TAO::Portable_Server::POA_Guard poa_guard (*this); \
-  ACE_UNUSED_ARG (poa_guard); \
-  ACE_CHECK_RETURN (RETURN)
+  ACE_UNUSED_ARG (poa_guard)
 
 #include /**/ "ace/post.h"
 

@@ -67,7 +67,7 @@ TAO_Thread_Pool_Threads::svc (void)
       ACE_ERROR ((LM_ERROR,
                   "orb->run() raised exception for thread %t\n"));
 
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
+      ACE_PRINT_EXCEPTION (ex,
                            "");
     }
 

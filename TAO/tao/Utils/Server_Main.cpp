@@ -115,7 +115,7 @@ TAO::Utils::Server_Main<SERVANT>::run (int argc, ACE_TCHAR *argv[])
   }
   catch ( ::CORBA::Exception& ex)
   {
-    ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
+    ACE_PRINT_EXCEPTION (ex,
       name_);
     result = -1;
   }

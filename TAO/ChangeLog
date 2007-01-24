@@ -1,3 +1,43 @@
+Wed Jan 24 18:25:26 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
+
+        * tao/BiDir_GIOP/BiDirGIOP.cpp:
+        * tao/CSD_Framework/CSD_FW_Server_Request_Wrapper.cpp:
+        * tao/CSD_ThreadPool/CSD_TP_Collocated_Synch_Request.cpp:
+        * tao/DynamicInterface/DII_Reply_Dispatcher.cpp:
+        * tao/EndpointPolicy/EndpointPolicy.cpp:
+        * tao/IORInterceptor/IORInterceptor_Adapter_Impl.cpp:
+        * tao/ImR_Client/ImR_Client.cpp:
+        * tao/Messaging/Asynch_Invocation.cpp:
+        * tao/Messaging/Asynch_Reply_Dispatcher.cpp:
+        * tao/Messaging/Messaging.cpp:
+        * tao/Messaging/Messaging_Loader.cpp:
+        * tao/ORB_Core.cpp:
+        * tao/PI/ClientRequestInterceptor_Adapter_Impl.cpp:
+        * tao/PI/ORBInitializer_Registry_Impl.cpp:
+        * tao/PI/PI.cpp:
+        * tao/PI_Server/PI_Server_Loader.cpp:
+        * tao/PI_Server/Policy_Creator_T.h:
+        * tao/PI_Server/ServerInterceptorAdapter.cpp:
+        * tao/PortableServer/Non_Servant_Upcall.cpp:
+        * tao/PortableServer/Object_Adapter.cpp:
+        * tao/PortableServer/Root_POA.cpp:
+        * tao/PortableServer/Servant_Base.cpp:
+        * tao/PortableServer/Servant_Upcall.cpp:
+        * tao/PortableServer/Upcall_Wrapper.cpp:
+        * tao/PortableServer/poa_macros.h:
+        * tao/RTCORBA/RT_ORB_Loader.cpp:
+        * tao/RTCORBA/RT_Protocols_Hooks.cpp:
+        * tao/RTCORBA/Thread_Pool.cpp:
+        * tao/RTPortableServer/RT_Servant_Dispatcher.cpp:
+        * tao/RTScheduling/Current.cpp:
+        * tao/RTScheduling/RTScheduler_Loader.cpp:
+        * tao/Stub.cpp:
+        * tao/Synch_Invocation.cpp:
+        * tao/Utils/Server_Main.cpp:
+
+          The first run of my macro removal script picked up a few things to
+          remove.  I'll be running this script on the rest of the tree soon.
+
 Wed Jan 24 14:00:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/IDL_Test/struct.idl:

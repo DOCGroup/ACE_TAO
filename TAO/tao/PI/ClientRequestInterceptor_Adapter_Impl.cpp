@@ -162,7 +162,7 @@ namespace TAO
         // drops to zero, i.e., once each interceptor has been invoked.
         // This prevents infinite recursion from occuring.
 
-        invocation.exception (&ACE_ANY_EXCEPTION);
+        invocation.exception (&ex);
 
         this->receive_exception (invocation);
 
@@ -233,7 +233,7 @@ namespace TAO
         // drops to zero, i.e., once each interceptor has been invoked.
         // This prevents infinite recursion from occuring.
 
-        invocation.exception (&ACE_ANY_EXCEPTION);
+        invocation.exception (&ex);
 
         this->receive_exception (invocation);
 

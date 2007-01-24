@@ -265,7 +265,7 @@ void TAO_ServantBase::synchronous_upcall_dispatch (TAO_ServerRequest & req,
               throw;
             }
           else
-            req.tao_send_reply_exception (ACE_ANY_EXCEPTION);
+            req.tao_send_reply_exception (ex);
         }
     }
 
@@ -321,7 +321,7 @@ void TAO_ServantBase::asynchronous_upcall_dispatch (TAO_ServerRequest & req,
     {
       // If an exception was raised we should marshal it and send
       // the appropriate reply to the client
-      req.tao_send_reply_exception (ACE_ANY_EXCEPTION);
+      req.tao_send_reply_exception (ex);
     }
 
   return;
