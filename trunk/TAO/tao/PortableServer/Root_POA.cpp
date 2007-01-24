@@ -2440,7 +2440,7 @@ TAO_Root_POA::ORT_adapter_i (void)
     }
   catch ( ::CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
+      ACE_PRINT_EXCEPTION (ex,
                            "(%P|%t) Cannot initialize the "
                            "object_reference_template_adapter\n");
     }

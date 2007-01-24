@@ -123,7 +123,6 @@ TAO::Upcall_Wrapper::upcall (TAO_ServerRequest & server_request,
               {
                 // The actual upcall.
                 command.execute ();
-                TAO_INTERCEPTOR_CHECK;
               }
 
 #if TAO_HAS_INTERCEPTORS == 1
@@ -170,7 +169,7 @@ TAO::Upcall_Wrapper::upcall (TAO_ServerRequest & server_request,
       PortableInterceptor::ReplyStatus status =
         PortableInterceptor::SYSTEM_EXCEPTION;
 
-      server_request.caught_exception (&ACE_ANY_EXCEPTION);
+      server_request.caught_exception (&ex);
 
       if (interceptor_adapter != 0)
         {

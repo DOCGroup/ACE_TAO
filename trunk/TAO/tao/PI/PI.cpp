@@ -56,7 +56,7 @@ TAO_PI_Init::Initializer (void)
     {
       if (TAO_debug_level > 0)
         {
-          ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
+          ACE_PRINT_EXCEPTION (ex,
                                "(%P | %t) Caught exception:");
         }
       return -1;

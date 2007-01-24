@@ -55,7 +55,7 @@ TAO_BiDirGIOP_Loader::init (int,
         {
           if (TAO_debug_level > 0)
             {
-              ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
+              ACE_PRINT_EXCEPTION (ex,
                                    "Caught exception:");
             }
           return -1;

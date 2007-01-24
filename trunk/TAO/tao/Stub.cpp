@@ -437,7 +437,6 @@ TAO_Stub::get_policy (CORBA::PolicyType type
       result =
         this->policies_->get_policy (type
                                     );
-      ACE_CHECK (CORBA::Policy::_nil ());
     }
 
   if (CORBA::is_nil (result.in ()))
@@ -445,7 +444,6 @@ TAO_Stub::get_policy (CORBA::PolicyType type
       result =
         this->orb_core_->get_policy_including_current (type
                                                       );
-      ACE_CHECK (CORBA::Policy::_nil ());
     }
 
   return result._retn ();

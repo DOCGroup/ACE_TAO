@@ -60,7 +60,7 @@ TAO_PI_Server_Loader::init (int,
     }
   catch ( ::CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
+      ACE_PRINT_EXCEPTION (ex,
                            "Caught exception:");
       return -1;
     }

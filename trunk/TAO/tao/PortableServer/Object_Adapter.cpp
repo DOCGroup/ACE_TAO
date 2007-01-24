@@ -862,7 +862,7 @@ TAO_Object_Adapter::dispatch (TAO::ObjectKey &key,
 
       if (sri_adapter != 0)
         {
-          request.caught_exception (&ACE_ANY_EXCEPTION);
+          request.caught_exception (&ex);
 
           sri_adapter->send_exception (request,
                                        0,  // args
