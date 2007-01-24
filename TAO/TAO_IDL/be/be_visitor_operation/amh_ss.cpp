@@ -384,7 +384,7 @@ be_visitor_amh_operation_ss::generate_shared_section (be_decl *node,
       << be_idt_nl
       << "buffer_allocator.allocate();"
       << be_uidt_nl << be_nl
-      << "if (!_tao_rh_ptr) " << be_idt_nl << "ACE_THROW ( ::CORBA::NO_MEMORY ());"
+      << "if (!_tao_rh_ptr) " << be_idt_nl << "throw ::CORBA::NO_MEMORY ();"
       << be_uidt_nl;
 
   // Initialize amh rh

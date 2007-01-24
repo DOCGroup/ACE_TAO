@@ -1,3 +1,10 @@
+Wed Jan 24 18:46:01 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
+
+        * TAO_IDL/be/be_visitor_interface/interface_ss.cpp:
+        * TAO_IDL/be/be_visitor_operation/amh_ss.cpp:
+
+          Changed the last of the ACE_THROW's to real throw's.
+
 Wed Jan 24 18:25:26 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
 
         * tao/BiDir_GIOP/BiDirGIOP.cpp:
