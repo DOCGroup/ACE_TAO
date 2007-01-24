@@ -3255,7 +3255,7 @@ namespace
       if (swapping)
       {
         os << "this->activate_component (" << ");"
-           << STRS[ACE_CK] << ";" << endl;
+           << endl;
       }
 
       os << "if (emitter_name == 0)" << endl
