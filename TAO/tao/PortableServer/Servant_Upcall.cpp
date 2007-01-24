@@ -439,7 +439,7 @@ namespace TAO
               catch ( ::CORBA::Exception& ex)
                 {
                   // Ignore exceptions
-                  ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
+                  ACE_PRINT_EXCEPTION (ex,
                                        "TAO_POA::~complete_destruction_i");
                 }
 

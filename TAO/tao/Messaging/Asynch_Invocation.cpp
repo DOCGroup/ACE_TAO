@@ -150,7 +150,7 @@ namespace TAO
       {
 #if TAO_HAS_INTERCEPTORS == 1
         PortableInterceptor::ReplyStatus const status =
-          this->handle_any_exception (&ACE_ANY_EXCEPTION);
+          this->handle_any_exception (&ex);
 
         if (status == PortableInterceptor::LOCATION_FORWARD ||
             status == PortableInterceptor::TRANSPORT_RETRY)

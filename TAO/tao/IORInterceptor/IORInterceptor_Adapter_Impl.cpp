@@ -106,7 +106,7 @@ TAO_IORInterceptor_Adapter_Impl::establish_components (
                               ACE_TEXT_CHAR_TO_TCHAR (name.in ())));
                 }
 
-              ACE_PRINT_TAO_EXCEPTION (ACE_ANY_EXCEPTION,
+              ACE_PRINT_TAO_EXCEPTION (ex,
                                        "Ignoring exception in "
                                        "IORInterceptor::establish_components");
             }

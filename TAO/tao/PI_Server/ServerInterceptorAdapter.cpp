@@ -432,7 +432,7 @@ TAO::ServerRequestInterceptor_Adapter_Impl::send_exception (
       // drops to zero, i.e., once each interceptor has been invoked.
       // This prevents infinite recursion from occuring.
 
-      server_request.caught_exception (&ACE_ANY_EXCEPTION);
+      server_request.caught_exception (&ex);
 
       this->send_exception (server_request,
                             args,

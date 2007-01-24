@@ -3218,7 +3218,6 @@ TAO_ORB_Core::get_cached_policy_including_current (
   CORBA::Policy_var result =
     policy_current.get_cached_policy (type
                                      );
-  ACE_CHECK (CORBA::Policy::_nil ());
 
   if (CORBA::is_nil (result.in ()))
     {

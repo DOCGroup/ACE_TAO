@@ -639,7 +639,7 @@ namespace TAO
     mon.set_status (TAO_INVOKE_SYSTEM_EXCEPTION);
 
     // Raise the exception.
-    ACE_ENV_RAISE (ex);
+    ex->_raise ();
 
     return TAO_INVOKE_SYSTEM_EXCEPTION;
   }

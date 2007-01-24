@@ -35,7 +35,7 @@ namespace TAO
         )
     {
       if ((val >>= value) == 0)
-        ACE_THROW (CORBA::PolicyError (CORBA::BAD_POLICY_VALUE));
+        throw CORBA::PolicyError (CORBA::BAD_POLICY_VALUE);
 
       ACE_NEW_THROW_EX (policy,
                         POLICYTYPE (value),

@@ -73,7 +73,7 @@ exception_holder_raise (TAO::Exception_Data *exception_data,
 
       // Raise the exception.
       ACE_Auto_Basic_Ptr<CORBA::SystemException> e_ptr(exception);
-      ACE_ENV_RAISE (exception);
+      exception->_raise ();
 
       return;
     }
@@ -95,7 +95,7 @@ exception_holder_raise (TAO::Exception_Data *exception_data,
 
       // Raise the exception.
       ACE_Auto_Basic_Ptr<CORBA::Exception> e_ptr (exception);
-      ACE_ENV_RAISE (exception);
+      exception->_raise ();
 
       return;
     }
