@@ -26,22 +26,20 @@ CIAO::NodeManager_Impl_Base::~NodeManager_Impl_Base ()
 }
 
 void
-CIAO::NodeManager_Impl_Base::init (ACE_ENV_SINGLE_ARG_DECL)
+CIAO::NodeManager_Impl_Base::init (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_TRY
     {
       // Create the call back poa for NAM.
       PortableServer::POAManager_var mgr
-        = this->poa_->the_POAManager (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        = this->poa_->the_POAManager ();
 
       this->callback_poa_ =
         this->poa_->create_POA ("callback_poa",
                                 mgr.in (),
                                 0
                                 ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
     }
   ACE_CATCHANY
     {
@@ -50,7 +48,6 @@ CIAO::NodeManager_Impl_Base::init (ACE_ENV_SINGLE_ARG_DECL)
       ACE_RE_THROW;
     }
   ACE_ENDTRY;
-  ACE_CHECK;
 }
 
 PortableServer::POA_ptr
@@ -61,19 +58,18 @@ CIAO::NodeManager_Impl_Base::_default_POA (void)
 
 
 char *
-CIAO::NodeManager_Impl_Base::name (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+CIAO::NodeManager_Impl_Base::name (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return CORBA::string_dup (this->name_.in ());
 }
 
 void
-CIAO::NodeManager_Impl_Base::shutdown (ACE_ENV_SINGLE_ARG_DECL)
+CIAO::NodeManager_Impl_Base::shutdown (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
 
   this->orb_->shutdown (0 ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 }
 
 void
@@ -111,7 +107,7 @@ CIAO::NodeManager_Impl_Base::joinDomain (const Deployment::Domain & domain,
 }
 
 void
-CIAO::NodeManager_Impl_Base::leaveDomain (ACE_ENV_SINGLE_ARG_DECL)
+CIAO::NodeManager_Impl_Base::leaveDomain (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // Delete the monitor , this will also terminate the thread
@@ -297,7 +293,6 @@ preparePlan (const Deployment::DeploymentPlan &plan
           CIAO::NodeApplicationManager_Impl_Base *node_app_mgr =
             this->create_node_app_manager (this->orb_.in (), this->poa_.in ()
                                            ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
 
           PortableServer::ServantBase_var safe (node_app_mgr);
 
@@ -312,13 +307,11 @@ preparePlan (const Deployment::DeploymentPlan &plan
                                 this->callback_poa_.in (),
                                 this // pass in a copy of ourself (servant object)
                                 ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
 
           this->map_.insert_nam (plan.UUID.in (), oid.in ());
 
           CORBA::Object_var obj =
             this->poa_->id_to_reference (this->map_.get_nam (plan.UUID.in ()));
-          ACE_TRY_CHECK;
 
           // We should inform NAM about "shared" components, so they
           // won't be instantiated again
@@ -344,14 +337,11 @@ preparePlan (const Deployment::DeploymentPlan &plan
 
           CORBA::Object_var obj =
             this->poa_->id_to_reference (this->map_.get_nam (plan.UUID.in ()));
-          ACE_TRY_CHECK;
 
           Deployment::NodeApplicationManager_var nam =
             Deployment::NodeApplicationManager::_narrow (obj.in ());
-          ACE_TRY_CHECK;
 
           nam->reset_plan (plan);
-          ACE_TRY_CHECK;
 
           // Similarly, we should inform NAM about "shared" components, so
           // they won't be instantiated again
@@ -376,7 +366,6 @@ preparePlan (const Deployment::DeploymentPlan &plan
       ACE_RE_THROW;
     }
   ACE_ENDTRY;
-  ACE_CHECK_RETURN (Deployment::NodeApplicationManager::_nil ());
 
   return Deployment::NodeApplicationManager::_nil ();
 }
@@ -396,7 +385,6 @@ CIAO::NodeManager_Impl_Base::destroyManager
       PortableServer::ObjectId_var id =
         this->poa_->reference_to_id (manager
                                      ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       if (!this->map_.remove_nam (id.in ()))
         {
@@ -407,7 +395,6 @@ CIAO::NodeManager_Impl_Base::destroyManager
 
       this->poa_->deactivate_object (id.in ()
                                      ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
     }
   ACE_CATCH (PortableServer::POA::WrongAdapter, ex)
     {
@@ -504,7 +491,7 @@ destroyPlan (const Deployment::DeploymentPlan & plan
 
 Deployment::ComponentPlans *
 CIAO::NodeManager_Impl_Base::
-get_shared_components (ACE_ENV_SINGLE_ARG_DECL)
+get_shared_components (void)
   ACE_THROW_SPEC ((::CORBA::SystemException))
 {
   return this->get_shared_components_i ();
@@ -720,7 +707,6 @@ CIAO::Static_NodeManager_Impl::destroyManager
 
       this->orb_->shutdown (0 ACE_ENV_ARG_PARAMETER);
 
-      ACE_TRY_CHECK;
     }
   ACE_CATCHANY
     {
@@ -730,5 +716,4 @@ CIAO::Static_NodeManager_Impl::destroyManager
     }
   ACE_ENDTRY;
 
-  ACE_CHECK;
 }

@@ -105,7 +105,7 @@ namespace CIAO
                        Deployment::InvalidConnection));
 
     virtual void
-    start (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+    start (void)
       ACE_THROW_SPEC ((CORBA::SystemException,
                        Deployment::StartError));
 
@@ -114,22 +114,22 @@ namespace CIAO
      *-----------------------------------------------------------*/
 
     virtual void
-    ciao_preactivate (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+    ciao_preactivate (void)
       ACE_THROW_SPEC ((CORBA::SystemException,
                        Deployment::StartError));
 
     virtual void
-    ciao_postactivate (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+    ciao_postactivate (void)
       ACE_THROW_SPEC ((CORBA::SystemException,
                        Deployment::StartError));
 
     virtual void
-    ciao_passivate (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+    ciao_passivate (void)
       ACE_THROW_SPEC ((CORBA::SystemException,
                        Deployment::StopError));
 
     /// Initialize the NodeApplication
-    virtual CORBA::Long init (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+    virtual CORBA::Long init (void)
       ACE_THROW_SPEC ((CORBA::SystemException));
 
     /// Start install homes and components.
@@ -152,12 +152,12 @@ namespace CIAO
     /// Get the object reference of the NodeApplicationManager.
     /// This might come in handy later.
     virtual ::CORBA::Object_ptr
-    get_node_application_manager (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+    get_node_application_manager (void)
       ACE_THROW_SPEC ((CORBA::SystemException));
 
     /// Access the readonly attribute.
     virtual ::Deployment::Properties *
-    properties (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+    properties (void)
       ACE_THROW_SPEC ((CORBA::SystemException));
 
     /// Remove a component instance from the NodeApplication
@@ -177,7 +177,7 @@ namespace CIAO
                        ::Components::RemoveFailure));
 
     /// Remove everything inside including all components and homes.
-    virtual void remove (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+    virtual void remove (void)
       ACE_THROW_SPEC ((CORBA::SystemException));
 
     /// Create a container interface, which will be hosted in this NodeApplication.
@@ -210,7 +210,7 @@ namespace CIAO
     /// Return the cached object reference of this NodeApplication object.
     /// This operation does *NOT* increase the reference count.
     ::Deployment::NodeApplication_ptr
-    get_objref (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
+    get_objref (void);
 
     /*------- CIAO helper functions for pub/sub service -------
      *

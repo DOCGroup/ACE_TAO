@@ -644,7 +644,7 @@ find_in_initial_domain (const char* node_name,
     }
   }
 
-  // not found the node , retunr a node with an empty name
+  // not found the node , return a node with an empty name
   return false;
 }
 
@@ -664,7 +664,7 @@ find_in_provisioned_domain (const char* node_name,
     }
   }
 
-  // not found the node , retunr a node with an empty name
+  // not found the node , return a node with an empty name
   return false;
 }
 

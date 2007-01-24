@@ -90,7 +90,6 @@ namespace CIAO
       // our disposal already in this function.
       // Why did the creation of DAM fail in the first place?
       //
-      ACE_CHECK_RETURN (::Deployment::DomainApplicationManager::_nil ());
 
       // Standard owner transfer mechanisms.
       //
@@ -102,14 +101,13 @@ namespace CIAO
       // Node Application Managers.
       //
       ACE_DEBUG ((LM_DEBUG, "CIAO (%P|%t) About to init...\n"));
-      dam_servant->init (ACE_ENV_SINGLE_ARG_PARAMETER);
+      dam_servant->init ();
 
       // This is a wrong exception to be thrown here.
       // We already had a DAM servant, the DAM servant is
       // not NIL any more.
       // We need to throw the right exception here.
       //
-      ACE_CHECK_RETURN (::Deployment::DomainApplicationManager::_nil ());
 
       ACE_DEBUG ((LM_DEBUG, "CIAO (%P|%t) About to set uuid on DAM...\n"));
       dam_servant->set_uuid (plan.UUID.in ());
@@ -129,14 +127,14 @@ namespace CIAO
     }
 
     Deployment::DomainApplicationManagers *
-    Execution_Manager_Impl::getManagers (ACE_ENV_SINGLE_ARG_DECL)
+    Execution_Manager_Impl::getManagers (void)
       ACE_THROW_SPEC ((CORBA::SystemException))
     {
       CIAO_TRACE("Execution_Manager::Execution_Manager_Impl::getManagers");
 
       // TODO Need to check the return value.
       //
-      return this->map_.get_dams (ACE_ENV_SINGLE_ARG_PARAMETER);
+      return this->map_.get_dams ();
     }
 
     Deployment::DomainApplicationManager_ptr
@@ -158,8 +156,7 @@ namespace CIAO
       ACE_TRY
         {
           ::Deployment::DeploymentPlan_var plan =
-              manager->getPlan (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+              manager->getPlan ();
 
           // What if we still have components running within this plan?
           //
@@ -167,18 +164,15 @@ namespace CIAO
 
           // Where does the POA deactivate happen?
           //
-          manager->destroyManager (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+          manager->destroyManager ();
 
 #if 0
           PortableServer::ObjectId_var oid =
             this->poa_->reference_to_id (manager
                                          ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
 
           this->poa_->deactivate_object (oid.in ()
                                          ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
 #endif /*if 0*/
         }
       ACE_CATCHANY
@@ -188,7 +182,6 @@ namespace CIAO
           ACE_THROW (Deployment::StopError ());
         }
       ACE_ENDTRY;
-      ACE_CHECK;
     }
 
 
@@ -230,18 +223,15 @@ namespace CIAO
 
           // Where does the POA deactivate happen?
           //
-          dam->destroyManager (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+          dam->destroyManager ();
 
 #if 0
           PortableServer::ObjectId_var oid =
             this->poa_->reference_to_id (manager
                                          ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
 
           this->poa_->deactivate_object (oid.in ()
                                          ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
 #endif /*if 0*/
         }
       ACE_CATCHANY
@@ -251,18 +241,16 @@ namespace CIAO
           ACE_THROW (Deployment::StopError ());
         }
       ACE_ENDTRY;
-      ACE_CHECK;
     }
 
 
     void
-    Execution_Manager_Impl::shutdown (ACE_ENV_SINGLE_ARG_DECL)
+    Execution_Manager_Impl::shutdown (void)
       ACE_THROW_SPEC ((CORBA::SystemException))
     {
       CIAO_TRACE("Execution_Manager::Execution_Manager_Impl::shutdown");
       // Shutdown the ORB on which it is runing
       this->orb_->shutdown (0 ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
     }
 
     void
@@ -314,7 +302,6 @@ namespace CIAO
           ACE_RE_THROW;
         }
       ACE_ENDTRY;
-      ACE_CHECK;
     }
 
     Deployment::DeploymentPlan *
@@ -348,7 +335,6 @@ namespace CIAO
           ACE_RE_THROW;
         }
       ACE_ENDTRY;
-      ACE_CHECK;
     }
 
     void

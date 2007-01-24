@@ -24,20 +24,16 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       CORBA::Object_var obj
         = orb->resolve_initial_references ("RootPOA"
                                            ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       PortableServer::POA_var poa
         = PortableServer::POA::_narrow (obj.in ()
                                         ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       // Activate POA manager
       PortableServer::POAManager_var mgr
-        = poa->the_POAManager (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        = poa->the_POAManager ();
 
-      mgr->activate (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      mgr->activate ();
 
       int homes_table_size =
         sizeof (homes_table)/sizeof(HomeAttributes);
@@ -77,11 +73,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       CORBA::Object_var table_object =
         orb->resolve_initial_references ("IORTable"
                                          ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       IORTable::Table_var adapter =
         IORTable::Table::_narrow (table_object.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       if (CORBA::is_nil (adapter.in ()))
           ACE_ERROR_RETURN ((LM_ERROR, "Nil IORTable\n"), -1);
@@ -92,22 +86,17 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       CORBA::String_var str =
         orb->object_to_string (manager.in ()
                                ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       adapter->bind ("NodeManager",
                      str.in ()
                      ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       // Run the main event loop for the ORB.
-      orb->run (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      orb->run ();
 
       poa->destroy (1, 1 ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
-      orb->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      orb->destroy ();
     }
   catch (CORBA::Exception& ex)
     {

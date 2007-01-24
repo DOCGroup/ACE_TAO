@@ -95,7 +95,6 @@ main (int argc, char *argv[])
                                             argv,
                                             ""
                                             ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       if (parse_args(argc, argv) == -1)
         {
@@ -106,19 +105,16 @@ main (int argc, char *argv[])
       // Resolve HomeFinder interface
       CORBA::Object_var obj
         = orb->string_to_object (ior ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       Benchmark::RoundTripHome_var home
         = Benchmark::RoundTripHome::_narrow (obj.in ()
                                         ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       if (CORBA::is_nil (home.in ()))
         ACE_ERROR_RETURN ((LM_ERROR, "Unable to acquire TestHome objref\n"), -1);
 
       Benchmark::RoundTrip_var test
-        = home->create (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        = home->create ();
 
       //Get the RoundTrip reference
       Benchmark::LatencyTest_var round_trip = test->provide_latency ();
@@ -128,7 +124,6 @@ main (int argc, char *argv[])
       for (int j = 0; j < 100; ++j)
         {
           round_trip->makeCall (start ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
         }
 
       ///// Start Test ////////////////////////////////////////////
@@ -143,7 +138,6 @@ main (int argc, char *argv[])
           long test = 0;
 
           (void) round_trip->makeCall (test ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
 
           ACE_hrtime_t now = ACE_OS::gethrtime ();
           history.sample (now - start);

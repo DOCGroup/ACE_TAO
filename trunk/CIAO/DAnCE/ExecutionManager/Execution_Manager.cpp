@@ -68,7 +68,6 @@ namespace CIAO
       CORBA::String_var ior =
         orb->object_to_string (obj
                                ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK_RETURN (false);
 
       FILE* ior_output_file_ =
         ACE_OS::fopen (ior_file_name_, "w");
@@ -112,7 +111,6 @@ namespace CIAO
       CORBA::Object_var naming_context_object =
         orb->resolve_initial_references ("NameService"
                                          ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK_RETURN (false);
 
       CosNaming::NamingContext_var naming_context =
         CosNaming::NamingContext::_narrow (naming_context_object.in ());
@@ -151,7 +149,6 @@ namespace CIAO
                              argv,
                              ""
                              ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
 
           if (!parse_args (argc, argv))
             return -1;
@@ -160,12 +157,10 @@ namespace CIAO
           CORBA::Object_var obj
             = orb->resolve_initial_references ("RootPOA"
                                                ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
 
           PortableServer::POA_var poa =
             PortableServer::POA::_narrow (obj.in ()
                                           ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
 
 
           if (CORBA::is_nil (poa.in ()))
@@ -197,7 +192,6 @@ namespace CIAO
                 register_with_ns (orb.in (),
                                   daemon.in ()
                                   ACE_ENV_ARG_PARAMETER);
-              ACE_TRY_CHECK;
             }
 
           if (write_to_ior_)
@@ -206,7 +200,6 @@ namespace CIAO
                 write_ior_file (orb.in (),
                                 daemon.in ()
                                 ACE_ENV_ARG_PARAMETER);
-              ACE_TRY_CHECK;
             }
 
           if (!retval)
@@ -214,8 +207,7 @@ namespace CIAO
 
           // Activate POA manager
           PortableServer::POAManager_var mgr =
-            poa->the_POAManager (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+            poa->the_POAManager ();
 
           if (mgr.in () == 0)
             ACE_ERROR_RETURN ((LM_ERROR,
@@ -223,8 +215,7 @@ namespace CIAO
                                "Nil POA Manager error, returning \n"),
                               -1);
 
-          mgr->activate (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+          mgr->activate ();
 
           // End Deployment part
           ACE_DEBUG ((LM_DEBUG,
@@ -233,8 +224,7 @@ namespace CIAO
           write_pid ();
 
           // Run the main event loop for the ORB.
-          orb->run (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+          orb->run ();
 
           // Forget the pointer. The POA will take care of it during
           // destroy.
@@ -243,10 +233,8 @@ namespace CIAO
           poa->destroy (1,
                         1
                         ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
 
-          orb->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+          orb->destroy ();
         }
       ACE_CATCHANY
         {

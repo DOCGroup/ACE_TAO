@@ -18,12 +18,12 @@ namespace CIAO
 
       // Supported operations.
       void
-      Controller_exec_i::start (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+      Controller_exec_i::start (void)
         ACE_THROW_SPEC ((::CORBA::SystemException))
       {}
 
       void
-      Controller_exec_i::stop (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+      Controller_exec_i::stop (void)
         ACE_THROW_SPEC ((::CORBA::SystemException))
       {}
 
@@ -54,7 +54,6 @@ namespace CIAO
         Controller_Context::_narrow (
           ctx
           ACE_ENV_ARG_PARAMETER);
-        ACE_CHECK;
 
         if (this->context_ == 0)
         {
@@ -148,7 +147,6 @@ namespace CIAO
           retval,
           Controller_exec_i,
           CORBA::NO_MEMORY ());
-        ACE_CHECK_RETURN (::Components::EnterpriseComponent::_nil ());
 
         return retval;
       }

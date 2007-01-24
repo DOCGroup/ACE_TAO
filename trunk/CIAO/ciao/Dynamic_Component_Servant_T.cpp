@@ -59,17 +59,14 @@ namespace CIAO
     CIAO::Swap_Exec_var swap_exec =
       CIAO::Swap_Exec::_narrow (this->executor_.in ()
                                 ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK_RETURN (0);
 
     ::Components::EnterpriseComponent_var ciao_ec =
-      swap_exec->incarnate (ACE_ENV_SINGLE_ARG_PARAMETER);
-    ACE_CHECK_RETURN (0);
+      swap_exec->incarnate ();
 
     typedef typename COMP_SVNT::_exec_type exec_type;
     typename COMP_SVNT::_exec_type::_var_type ciao_comp =
       exec_type::_narrow (ciao_ec.in ()
                           ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK_RETURN (0);
 
     /// @@ Jai, should you be using ACE_NEW_THROW_EX here?
     COMP_SVNT *svt = new COMP_SVNT (ciao_comp.in (),

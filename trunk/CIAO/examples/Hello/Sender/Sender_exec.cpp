@@ -5,7 +5,7 @@
 namespace CIDL_Sender_Impl
 {
   char*
-  Message_Impl::get_message (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+  Message_Impl::get_message (void)
     ACE_THROW_SPEC ((CORBA::SystemException))
   {
     ACE_DEBUG ((LM_DEBUG, "Sender sending out message: [%s]\n", component_.message_.in ()));
@@ -25,7 +25,7 @@ namespace CIDL_Sender_Impl
   }
 
   char *
-  Sender_exec_i::local_message (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+  Sender_exec_i::local_message (void)
     ACE_THROW_SPEC ((CORBA::SystemException))
   {
     return CORBA::string_dup (message_.in ());
@@ -41,7 +41,7 @@ namespace CIDL_Sender_Impl
   }
 
   CORBA::Long
-  Sender_exec_i::hertz (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+  Sender_exec_i::hertz (void)
     ACE_THROW_SPEC ((CORBA::SystemException))
   {
     return this->hertz_;
@@ -66,7 +66,7 @@ namespace CIDL_Sender_Impl
   }
 
   Hello::CCM_ReadMessage_ptr
-  Sender_exec_i::get_push_message (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+  Sender_exec_i::get_push_message (void)
         ACE_THROW_SPEC ((CORBA::SystemException))
   {
     ACE_DEBUG ((LM_DEBUG,
@@ -75,14 +75,13 @@ namespace CIDL_Sender_Impl
   }
 
   void
-  Sender_exec_i::start (ACE_ENV_SINGLE_ARG_DECL)
+  Sender_exec_i::start (void)
     ACE_THROW_SPEC ((CORBA::SystemException))
   {
     Hello::TimeOut_var event = new OBV_Hello::TimeOut;
     event->data ("ACE/TAO/CIAO");
     ACE_DEBUG ((LM_DEBUG, "Sender initiates the process.\n"));
     this->context_->push_click_out (event.in () ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK;
 
     ACE_DEBUG ((LM_DEBUG, "My current color is:"));
 
@@ -121,7 +120,6 @@ namespace CIDL_Sender_Impl
     this->context_ =
           Sender_Exec_Context::_narrow (ctx
                                         ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK;
 
     if (CORBA::is_nil (this->context_.in ()))
       {
@@ -130,7 +128,7 @@ namespace CIDL_Sender_Impl
   }
 
   void
-  Sender_exec_i::ciao_preactivate (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+  Sender_exec_i::ciao_preactivate (void)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      Components::CCMException))
   {
@@ -139,7 +137,7 @@ namespace CIDL_Sender_Impl
   }
 
   void
-  Sender_exec_i::ccm_activate (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+  Sender_exec_i::ccm_activate (void)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      Components::CCMException))
   {
@@ -148,7 +146,7 @@ namespace CIDL_Sender_Impl
   }
 
   void
-  Sender_exec_i::ciao_postactivate (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+  Sender_exec_i::ciao_postactivate (void)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      Components::CCMException))
   {
@@ -157,7 +155,7 @@ namespace CIDL_Sender_Impl
   }
 
   void
-  Sender_exec_i::ccm_passivate (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+  Sender_exec_i::ccm_passivate (void)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      Components::CCMException))
   {
@@ -165,7 +163,7 @@ namespace CIDL_Sender_Impl
   }
 
   void
-  Sender_exec_i::ccm_remove (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+  Sender_exec_i::ccm_remove (void)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      Components::CCMException))
   {
@@ -181,7 +179,7 @@ namespace CIDL_Sender_Impl
   }
 
   ::Components::EnterpriseComponent_ptr
-  SenderHome_exec_i::create (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+  SenderHome_exec_i::create (void)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      Components::CCMException))
   {

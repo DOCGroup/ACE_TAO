@@ -25,20 +25,18 @@ namespace CIDL_Receiver_Impl
   {
     //Get the message from the Sender first.
     ACE_DEBUG ((LM_DEBUG,
-                "Receiver - Informed by the Sender with message [%s]\n", 
+                "Receiver - Informed by the Sender with message [%s]\n",
                 ev->data ()));
 
     Hello::ReadMessage_var rev
-      = this->context_->get_connection_read_message 
-        (ACE_ENV_SINGLE_ARG_PARAMETER);
-    ACE_CHECK;
+      = this->context_->get_connection_read_message
+        ();
 
     if (CORBA::is_nil (rev.in ()))
       ACE_THROW (CORBA::BAD_INV_ORDER ());
 
     CORBA::String_var str =
-      rev->get_message (ACE_ENV_SINGLE_ARG_PARAMETER);
-    ACE_CHECK;
+      rev->get_message ();
 
     ACE_DEBUG ((LM_DEBUG,
                 "Receiver - Got message from the server [%s] \n",
@@ -57,14 +55,13 @@ namespace CIDL_Receiver_Impl
     this->context_ =
       Receiver_Exec_Context::_narrow (ctx
                                               ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK;
 
     if (CORBA::is_nil (this->context_.in ()))
       ACE_THROW (CORBA::INTERNAL ());
   }
 
   void
-  Receiver_exec_i::ciao_preactivate (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+  Receiver_exec_i::ciao_preactivate (void)
     ACE_THROW_SPEC ((CORBA::SystemException,
                     Components::CCMException))
   {
@@ -73,7 +70,7 @@ namespace CIDL_Receiver_Impl
   }
 
   void
-  Receiver_exec_i::ccm_activate (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+  Receiver_exec_i::ccm_activate (void)
     ACE_THROW_SPEC ((CORBA::SystemException,
                     Components::CCMException))
   {
@@ -81,7 +78,7 @@ namespace CIDL_Receiver_Impl
   }
 
   void
-  Receiver_exec_i::ciao_postactivate (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+  Receiver_exec_i::ciao_postactivate (void)
     ACE_THROW_SPEC ((CORBA::SystemException,
                     Components::CCMException))
   {
@@ -90,7 +87,7 @@ namespace CIDL_Receiver_Impl
   }
 
   void
-  Receiver_exec_i::ccm_passivate (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+  Receiver_exec_i::ccm_passivate (void)
     ACE_THROW_SPEC ((CORBA::SystemException,
                     Components::CCMException))
   {
@@ -98,7 +95,7 @@ namespace CIDL_Receiver_Impl
   }
 
   void
-  Receiver_exec_i::ccm_remove (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+  Receiver_exec_i::ccm_remove (void)
     ACE_THROW_SPEC ((CORBA::SystemException,
                     Components::CCMException))
   {
@@ -115,7 +112,7 @@ namespace CIDL_Receiver_Impl
   }
 
   ::Components::EnterpriseComponent_ptr
-  ReceiverHome_exec_i::create (ACE_ENV_SINGLE_ARG_DECL)
+  ReceiverHome_exec_i::create (void)
     ACE_THROW_SPEC ((CORBA::SystemException,
                     Components::CCMException))
   {

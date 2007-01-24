@@ -22,12 +22,10 @@ namespace CIAO
       CORBA::Object_var tmp =
         orb->resolve_initial_references ("NameService"
                                          ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
 
       CosNaming::NamingContext_var pns =
         CosNaming::NamingContext::_narrow (tmp.in ()
                                            ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
 
       if (CORBA::is_nil (pns.in ()))
         {

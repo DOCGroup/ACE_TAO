@@ -61,7 +61,6 @@ int main (int argc, char* argv[])
       CORBA::ORB_init (argc, argv,""
                        ACE_ENV_ARG_PARAMETER);
 
-    ACE_TRY_CHECK;
 
     if (parse_args (argc, argv) != 0)
       return -1;
@@ -70,13 +69,11 @@ int main (int argc, char* argv[])
     CORBA::Object_var broker_obj =
       orb->string_to_object (broker_ior
                              ACE_ENV_ARG_PARAMETER);
-    ACE_TRY_CHECK;
 
     // downcast the object reference to the appropriate type
     Stock::StockBroker_var broker =
     Stock::StockBroker::_narrow (broker_obj.in ()
                                  ACE_ENV_ARG_PARAMETER);
-    ACE_TRY_CHECK;
 
     if (CORBA::is_nil (broker.in ()))
     {
@@ -90,7 +87,6 @@ int main (int argc, char* argv[])
     {
       broker->stock_subscribe (subscribe_name
                                ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       ACE_DEBUG ((LM_DEBUG, "Subscribe successful!\n"));
     }
@@ -99,15 +95,13 @@ int main (int argc, char* argv[])
     {
       broker->stock_unsubscribe (unsubscribe_name
                                  ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       ACE_DEBUG ((LM_DEBUG, "Unsubscribe successful!\n"));
     }
 
     // Finally destroy the ORB
-    orb->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
+    orb->destroy ();
 
-    ACE_TRY_CHECK;
   }
   ACE_CATCHANY
   {

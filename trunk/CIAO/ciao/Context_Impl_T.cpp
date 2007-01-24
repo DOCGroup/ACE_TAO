@@ -50,7 +50,6 @@ namespace CIAO
           obj =
             this->container_->get_objref (this->servant_
                                           ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
         }
       ACE_CATCHANY
         {
@@ -63,7 +62,6 @@ namespace CIAO
 
       this->component_ = COMP::_narrow (obj.in ()
                                         ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK_RETURN (CORBA::Object::_nil ());
 
       if (CORBA::is_nil (this->component_.in ()))
       {

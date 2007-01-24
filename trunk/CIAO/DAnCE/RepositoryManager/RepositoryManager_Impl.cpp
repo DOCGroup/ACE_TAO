@@ -253,7 +253,6 @@ void CIAO_RepositoryManagerDaemon_i::installPackage (
       //TODO: how can I incorporate a Auto_Ptr is explicit release is needed
       ACE_Message_Block* mb = 0;
       ACE_NEW_THROW_EX (mb, ACE_Message_Block (), CORBA::NO_MEMORY ());
-      ACE_CHECK_RETURN (0);
 
       //get the remote file
       if (!HTTP_Get (location, *mb))
@@ -457,7 +456,6 @@ void CIAO_RepositoryManagerDaemon_i::createPackage (
     //TODO: how can I incorporate a Auto_Ptr is explicit release is needed
     ACE_Message_Block* mb;
     ACE_NEW_THROW_EX (mb, ACE_Message_Block (), CORBA::NO_MEMORY ());
-    ACE_CHECK_RETURN (0);
 
     //get the remote file
     if (!HTTP_Get (baseLocation, *mb))
@@ -591,7 +589,6 @@ CIAO_RepositoryManagerDaemon_i::findPackageByName (const char * name)
                     Deployment::PackageConfiguration (),
                     CORBA::NO_MEMORY ());
 
-  ACE_CHECK_RETURN (0);
 
   if(!RM_Helper::reincarnate (pc, pc_path.c_str ()))
     ACE_THROW_RETURN (CORBA::INTERNAL (), 0);
@@ -632,7 +629,6 @@ CIAO_RepositoryManagerDaemon_i::findPackageByUUID (const char * UUID)
                     Deployment::PackageConfiguration (),
                     CORBA::NO_MEMORY ());
 
-  ACE_CHECK_RETURN (0);
 
   if(!RM_Helper::reincarnate (pc, pc_path.c_str ()))
     ACE_THROW_RETURN (CORBA::INTERNAL (), 0);
@@ -662,7 +658,6 @@ CIAO_RepositoryManagerDaemon_i::findPackageByUUID (const char * UUID)
     //return an empty sequence
     CORBA::StringSeq_var seq;
     ACE_NEW_THROW_EX (seq, CORBA::StringSeq (0), CORBA::NO_MEMORY ());
-    ACE_CHECK_RETURN (0);
 
     return seq._retn ();
   }
@@ -721,7 +716,6 @@ CIAO_RepositoryManagerDaemon_i::getAllNames ()
   CORBA::StringSeq_var seq;
   ACE_NEW_THROW_EX (seq, CORBA::StringSeq (num_entries), CORBA::NO_MEMORY ());
 
-  ACE_CHECK_RETURN (0);
 
   seq->length (num_entries);
 
@@ -769,7 +763,6 @@ CIAO_RepositoryManagerDaemon_i::getAllNames ()
                     CORBA::StringSeq (num_entries),
                     CORBA::NO_MEMORY ());
 
-  ACE_CHECK_RETURN (0);
 
   seq->length (num_entries);
 
@@ -834,7 +827,6 @@ void CIAO_RepositoryManagerDaemon_i::deletePackage (
                     Deployment::PackageConfiguration (),
                     CORBA::NO_MEMORY ());
 
-  ACE_CHECK_RETURN (0);
 
   if(!RM_Helper::reincarnate (pc, pc_path.c_str ()))
   {

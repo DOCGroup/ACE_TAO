@@ -192,7 +192,7 @@ namespace CIAO
 
     /// Helper function to get the connection.
     virtual Deployment::Connections *
-    create_connections (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+    create_connections (void)
       ACE_THROW_SPEC ((CORBA::SystemException,
                        Deployment::ResourceNotAvailable,
                        Deployment::StartError,

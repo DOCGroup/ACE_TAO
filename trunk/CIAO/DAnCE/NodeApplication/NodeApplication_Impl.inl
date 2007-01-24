@@ -19,7 +19,7 @@ NodeApplication_Impl (CORBA::ORB_ptr o,
 // Access the readonly attribute
 ACE_INLINE
 Deployment::Properties *
-CIAO::NodeApplication_Impl::properties (ACE_ENV_SINGLE_ARG_DECL)
+CIAO::NodeApplication_Impl::properties (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   Deployment::Properties * tmp = 0;
@@ -27,7 +27,6 @@ CIAO::NodeApplication_Impl::properties (ACE_ENV_SINGLE_ARG_DECL)
   ACE_NEW_THROW_EX (tmp,
                     Deployment::Properties (this->properties_),
                     CORBA::NO_MEMORY ());
-  ACE_CHECK_RETURN (0);
 
   return tmp;
 }
@@ -70,12 +69,11 @@ set_objref (Components::Deployment::ServerActivator_ptr act,
 
 ACE_INLINE ::Deployment::NodeApplication_ptr
 CIAO::NodeApplication_Impl::
-get_objref (ACE_ENV_SINGLE_ARG_DECL)
+get_objref (void)
 {
   if (CORBA::is_nil (this->objref_.in ()))
     {
-      this->objref_ = this->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK_RETURN (0);
+      this->objref_ = this->_this ();
     }
 
   return this->objref_.in ();

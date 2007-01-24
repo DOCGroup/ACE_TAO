@@ -181,7 +181,6 @@ namespace CIAO
                              argv,
                              ""
                              ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
 
           if (parse_args (argc, argv) == false)
             return -1;
@@ -273,7 +272,6 @@ namespace CIAO
             {
               dapp_mgr = read_dap_ior (orb.in ()
                                        ACE_ENV_ARG_PARAMETER);
-              ACE_TRY_CHECK;
 
               if (CORBA::is_nil (dapp_mgr.in ()))
                 {
@@ -301,8 +299,7 @@ namespace CIAO
                 }
             }
 
-          orb->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+          orb->destroy ();
         }
       ACE_CATCH (Plan_Launcher_i::Deployment_Failure, ex)
         {
@@ -323,7 +320,6 @@ namespace CIAO
           return -1;
         }
       ACE_ENDTRY;
-      ACE_CHECK_RETURN (-1);
 
       return 0;
     }

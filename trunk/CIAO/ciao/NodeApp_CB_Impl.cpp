@@ -20,7 +20,6 @@ NodeApplication_Callback_Impl  (CORBA::ORB_ptr o,
     ACE_NEW_THROW_EX (tmp,
                     Deployment::Properties (properties),
                     CORBA::NO_MEMORY ());
-    ACE_TRY_CHECK;
     this->properties_ = tmp;
   }
   ACE_CATCHANY
@@ -30,7 +29,6 @@ NodeApplication_Callback_Impl  (CORBA::ORB_ptr o,
     ACE_RE_THROW;
   }
   ACE_ENDTRY;
-  ACE_CHECK;
 }
 
 CIAO::NodeApplication_Callback_Impl::~NodeApplication_Callback_Impl ()

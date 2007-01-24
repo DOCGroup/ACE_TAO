@@ -13,7 +13,7 @@ parse_args (int argc, char *argv[])
 {
   ACE_Get_Opt get_opts (argc, argv, "k:m");
   int c = 0;
-  
+
   while ((c = get_opts ()) != -1)
     {
       switch (c)
@@ -43,7 +43,7 @@ parse_args (int argc, char *argv[])
     {
       ior = "file://sender.ior";
     }
-    
+
   return 0;
 }
 
@@ -56,7 +56,6 @@ main (int argc, char *argv[])
       CORBA::ORB_var orb = CORBA::ORB_init (argc, argv,
                                             ""
                                             ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       if (parse_args (argc, argv) != 0)
         {
@@ -66,15 +65,13 @@ main (int argc, char *argv[])
       CORBA::Object_var obj =
         orb->string_to_object (ior
                                ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       Hello::Sender_var sender = Hello::Sender::_narrow (obj.in ()
                                                          ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       if (CORBA::is_nil (sender.in ()))
         {
-          ACE_ERROR_RETURN ((LM_ERROR, 
+          ACE_ERROR_RETURN ((LM_ERROR,
                              "Unable to acquire Sender's objref\n"),
                             -1);
         }
@@ -84,17 +81,14 @@ main (int argc, char *argv[])
       return_message = sender->local_message ();
       ACE_DEBUG ((LM_DEBUG, "the message is %s\n", return_message));
 
-      sender->start (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      sender->start ();
       sender->remove ();
 
       ACE_DEBUG ((LM_DEBUG, "creating one more servant here\n"));
-      sender->start (ACE_ENV_SINGLE_ARG_PARAMETER);
+      sender->start ();
       //sender->remove ();
-      ACE_TRY_CHECK;
 
-      orb->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      orb->destroy ();
     }
   ACE_CATCHANY
     {

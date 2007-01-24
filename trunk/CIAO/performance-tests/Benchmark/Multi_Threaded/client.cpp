@@ -35,24 +35,19 @@ main (int argc, char *argv[])
                                             argv,
                                             ""
                                             ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       // Resolve HomeFinder interface
       CORBA::Object_var obj1
         = orb->string_to_object (ior1 ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       CORBA::Object_var obj2
         = orb->string_to_object (ior2 ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       CORBA::Object_var obj3
         = orb->string_to_object (ior3 ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       CORBA::Object_var obj4
         = orb->string_to_object (ior4 ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       if (CORBA::is_nil (obj1.in ()) ||
           CORBA::is_nil (obj2.in ()) ||
@@ -67,19 +62,15 @@ main (int argc, char *argv[])
       //Narrow to appropriate interfaces
       Benchmark::RoundTripClient_var client1=
         Benchmark::RoundTripClient::_narrow (obj1.in());
-      ACE_TRY_CHECK;
 
       Benchmark::RoundTripClient_var client2=
         Benchmark::RoundTripClient::_narrow (obj1.in());
-      ACE_TRY_CHECK;
 
       Benchmark::RoundTripClient_var client3=
         Benchmark::RoundTripClient::_narrow (obj1.in());
-      ACE_TRY_CHECK;
 
       Benchmark::RoundTripClient_var client4=
         Benchmark::RoundTripClient::_narrow (obj1.in());
-      ACE_TRY_CHECK;
 
       //Create Tasks
       Client_Task task1(client1.in());

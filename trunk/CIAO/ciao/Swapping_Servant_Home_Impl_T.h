@@ -67,14 +67,14 @@ namespace CIAO
     // Operations for keyless home interface.
 
     virtual ::Components::CCMObject_ptr
-    create_component (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+    create_component (void)
       ACE_THROW_SPEC ((CORBA::SystemException,
                        Components::CreateFailure));
 
     // Operations for implicit home interface.
 
     virtual typename COMP_SVNT::_stub_ptr_type
-    create (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+    create (void)
       ACE_THROW_SPEC ((CORBA::SystemException,
                        Components::CreateFailure));
 

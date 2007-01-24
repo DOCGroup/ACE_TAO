@@ -119,7 +119,6 @@ main
     // Initialize orb
     CORBA::ORB_var orb =
                         CORBA::ORB_init( argc, argv, "" ACE_ENV_ARG_PARAMETER );
-    ACE_TRY_CHECK;
 
     if( parse_args( argc, argv ) != 0 )
     {
@@ -128,11 +127,9 @@ main
 
     CORBA::Object_var obj = orb->string_to_object( _sessionService_ior
                                                    ACE_ENV_ARG_PARAMETER );
-    ACE_TRY_CHECK;
 
     ENW::ISessionService_var sessionService =
                ENW::ISessionService::_narrow (obj.in () ACE_ENV_ARG_PARAMETER );
-    ACE_TRY_CHECK;
 
     if( CORBA::is_nil( sessionService.in() ) )
     {
@@ -186,7 +183,6 @@ main
     }
 
     orb->destroy( ACE_ENV_SINGLE_ARG_PARAMETER );
-    ACE_TRY_CHECK;
   }
   ACE_CATCHANY
   {

@@ -39,12 +39,10 @@ namespace CIAO
                     this->executor_.in ()
                     ACE_ENV_ARG_PARAMETER
                   );
-              ACE_TRY_CHECK;
 
               if (! ::CORBA::is_nil (scom.in ()))
                 {
-                  scom->ccm_remove (ACE_ENV_SINGLE_ARG_PARAMETER);
-                  ACE_TRY_CHECK;
+                  scom->ccm_remove ();
                 }
             }
             ACE_CATCHANY
@@ -75,12 +73,10 @@ namespace CIAO
       }
 
     ::CORBA::Object_var the_other =
-      object_ref->_get_component (ACE_ENV_SINGLE_ARG_PARAMETER);
-    ACE_CHECK_RETURN (0);
+      object_ref->_get_component ();
 
     ::CORBA::Object_var me =
-      this->context_->get_CCM_object (ACE_ENV_SINGLE_ARG_PARAMETER);
-    ACE_CHECK_RETURN (0);
+      this->context_->get_CCM_object ();
 
     return me->_is_equivalent (the_other.in ()
                                ACE_ENV_ARG_PARAMETER);
@@ -96,7 +92,7 @@ namespace CIAO
     )
     ACE_THROW_SPEC ((CORBA::SystemException))
   {
-    return this->context_->get_CCM_home (ACE_ENV_SINGLE_ARG_PARAMETER);
+    return this->context_->get_CCM_home ();
   }
 
   template <typename BASE_SKEL,
@@ -113,7 +109,6 @@ namespace CIAO
           this->executor_.in ()
           ACE_ENV_ARG_PARAMETER
         );
-    ACE_CHECK_RETURN (Components::SessionComponent::_nil ());
     return temp._retn ();
   }
 
@@ -131,11 +126,10 @@ namespace CIAO
           this->context_
           ACE_ENV_ARG_PARAMETER
         );
-    ACE_CHECK_RETURN (::CORBA::Object::_nil ());
 
     if (! ::CORBA::is_nil (sc.in ()))
       {
-        return sc->get_CCM_object (ACE_ENV_SINGLE_ARG_PARAMETER);
+        return sc->get_CCM_object ();
       }
 
     ::Components::EntityContext_var ec =
@@ -143,11 +137,10 @@ namespace CIAO
           this->context_
           ACE_ENV_ARG_PARAMETER
         );
-    ACE_CHECK_RETURN (::CORBA::Object::_nil ());
 
     if (! ::CORBA::is_nil (ec.in ()))
       {
-        return ec->get_CCM_object (ACE_ENV_SINGLE_ARG_PARAMETER);
+        return ec->get_CCM_object ();
       }
 
     ACE_THROW_RETURN (CORBA::INTERNAL (),
@@ -167,14 +160,11 @@ namespace CIAO
   {
     if (this->is_activated () == 0)
       {
-        this->ciao_preactivate (ACE_ENV_SINGLE_ARG_PARAMETER);
-        ACE_CHECK;
+        this->ciao_preactivate ();
 
-        this->ciao_activate (ACE_ENV_SINGLE_ARG_PARAMETER);
-        ACE_CHECK;
+        this->ciao_activate ();
 
-        this->ciao_postactivate (ACE_ENV_SINGLE_ARG_PARAMETER);
-        ACE_CHECK;
+        this->ciao_postactivate ();
       }
   }
 
@@ -192,15 +182,13 @@ namespace CIAO
           this->executor_.in ()
           ACE_ENV_ARG_PARAMETER
         );
-    ACE_CHECK;
 
     if (! ::CORBA::is_nil (temp.in ()))
       {
         if (this->pre_activated_ == 0)
           {
             this->pre_activated_ = 1;
-            temp->ciao_preactivate (ACE_ENV_SINGLE_ARG_PARAMETER);
-            ACE_CHECK;
+            temp->ciao_preactivate ();
           }
       }
   }
@@ -218,15 +206,13 @@ namespace CIAO
           this->executor_.in ()
           ACE_ENV_ARG_PARAMETER
         );
-    ACE_CHECK;
 
     if (! ::CORBA::is_nil (temp.in ()))
       {
         if (this->activated_ == 0)
           {
             this->activated_ = 1;
-            temp->ccm_activate (ACE_ENV_SINGLE_ARG_PARAMETER);
-            ACE_CHECK;
+            temp->ccm_activate ();
           }
       }
   }
@@ -245,15 +231,13 @@ namespace CIAO
           this->executor_.in ()
           ACE_ENV_ARG_PARAMETER
         );
-    ACE_CHECK;
 
     if (! ::CORBA::is_nil (temp.in ()))
       {
         if (this->post_activated_ == 0)
           {
             this->post_activated_ = 1;
-            temp->ciao_postactivate (ACE_ENV_SINGLE_ARG_PARAMETER);
-            ACE_CHECK;
+            temp->ciao_postactivate ();
           }
       }
   }
@@ -285,11 +269,9 @@ namespace CIAO
           this->executor_.in ()
           ACE_ENV_ARG_PARAMETER
         );
-    ACE_CHECK;
 
     if (! ::CORBA::is_nil (temp.in ()))
-      temp->ccm_passivate (ACE_ENV_SINGLE_ARG_PARAMETER);
-    ACE_CHECK;
+      temp->ccm_passivate ();
 
     this->pre_activated_ = 0;
     this->activated_ = 0;

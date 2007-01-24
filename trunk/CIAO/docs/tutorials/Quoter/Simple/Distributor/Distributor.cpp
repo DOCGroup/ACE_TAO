@@ -66,7 +66,6 @@ int main (int argc, char* argv[])
     CORBA::ORB_var orb =
       CORBA::ORB_init (argc, argv,""
                        ACE_ENV_ARG_PARAMETER);
-    ACE_TRY_CHECK;
 
     if (parse_args (argc, argv) != 0)
     {
@@ -77,13 +76,11 @@ int main (int argc, char* argv[])
     CORBA::Object_var distributor_obj =
       orb->string_to_object (distributor_ior
                                  ACE_ENV_ARG_PARAMETER);
-    ACE_TRY_CHECK;
 
     // downcast the object reference to the appropriate type
     Stock::StockDistributor_var distributor =
       Stock::StockDistributor::_narrow (distributor_obj.in ()
                                         ACE_ENV_ARG_PARAMETER);
-    ACE_TRY_CHECK;
 
     if (CORBA::is_nil (distributor.in ()))
     {
@@ -96,23 +93,19 @@ int main (int argc, char* argv[])
     {
       distributor->rate (rate
                          ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       ACE_DEBUG ((LM_DEBUG, "Start up the Distribution service\n"));
 
-      distributor->start (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      distributor->start ();
     }
     else
     {
       ACE_DEBUG ((LM_DEBUG, "Stop the Distribution service\n"));
 
-      distributor->stop (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      distributor->stop ();
     }
 
-    orb->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-    ACE_TRY_CHECK;
+    orb->destroy ();
   }
   ACE_CATCHANY
   {

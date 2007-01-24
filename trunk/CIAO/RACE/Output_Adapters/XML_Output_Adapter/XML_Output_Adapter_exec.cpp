@@ -92,7 +92,6 @@ namespace CIAO
         XML_Output_Adapter_Context::_narrow (
         ctx
         ACE_ENV_ARG_PARAMETER);
-        ACE_CHECK;
 
         if (this->context_ == 0)
         {
@@ -186,7 +185,6 @@ namespace CIAO
         retval,
         XML_Output_Adapter_exec_i,
         CORBA::NO_MEMORY ());
-        ACE_CHECK_RETURN (::Components::EnterpriseComponent::_nil ());
 
         return retval;
       }

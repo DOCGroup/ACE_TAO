@@ -41,7 +41,6 @@ main (int argc, char *argv[])
     {
       CORBA::ORB_var orb =
         CORBA::ORB_init (argc, argv, "" ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       if (parse_args (argc, argv) != 0)
         return 1;
@@ -50,12 +49,10 @@ main (int argc, char *argv[])
 
       CORBA::Object_var tmp =
         orb->string_to_object(ior ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       Deployment::NodeApplication_var node_app =
         Deployment::NodeApplication::_narrow(tmp.in ()
                                              ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       if (CORBA::is_nil (node_app.in ()))
         {
@@ -97,7 +94,6 @@ main (int argc, char *argv[])
       // Install test component and its home on NodeApplication
       Deployment::ComponentInfos_var comp_info =
         node_app->install (node_info ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       assert (comp_info->length () == 1); //return 1 component objeref
 
@@ -107,7 +103,6 @@ main (int argc, char *argv[])
       NodeAppTest::NodeAppTest_RoundTrip_var roundtrip_var =
         NodeAppTest::NodeAppTest_RoundTrip::_narrow (objref.in ()
                                                      ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       if (CORBA::is_nil (roundtrip_var.in ()))
        {
@@ -138,7 +133,6 @@ main (int argc, char *argv[])
         CORBA::string_dup ("NodeAppTest_RoundTrip_2");
       Deployment::ComponentInfos_var comp_info_new =
         node_app->install (node_info ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       assert (comp_info_new->length () == 1); //return 1 component objeref
 
@@ -150,8 +144,7 @@ main (int argc, char *argv[])
       node_app->remove ();
       ACE_DEBUG ((LM_DEBUG, "=====Components and Homes removed successfully\n"));
 
-      orb->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      orb->destroy ();
       ACE_DEBUG ((LM_DEBUG, "=====Test success!!\n"));
     }
   ACE_CATCHANY

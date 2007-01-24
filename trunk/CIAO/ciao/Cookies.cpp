@@ -57,7 +57,7 @@ namespace CIAO
 
   //========================================================
   CORBA::ValueBase *
-  Map_Key_Cookie_init::create_for_unmarshal (ACE_ENV_SINGLE_ARG_DECL)
+  Map_Key_Cookie_init::create_for_unmarshal (void)
   {
     CORBA::ValueBase *ret_val = 0;
 

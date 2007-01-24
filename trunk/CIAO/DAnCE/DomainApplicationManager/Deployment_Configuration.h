@@ -109,7 +109,7 @@ namespace CIAO
      * @retval nil if no valid daemon is configured.
      */
     ::Deployment::NodeManager_ptr
-    get_default_node_manager (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
+    get_default_node_manager (void);
 
   protected:
     CORBA::ORB_var orb_;

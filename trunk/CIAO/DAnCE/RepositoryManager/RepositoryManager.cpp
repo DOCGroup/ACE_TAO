@@ -79,7 +79,6 @@ write_ior_file (CORBA::ORB_ptr orb,
   CORBA::String_var ior =
     orb->object_to_string (obj
     ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (false);
 
   FILE* RMior_file =
     ACE_OS::fopen (CIAO::RepositoryManager::RMior, "w");
@@ -112,7 +111,6 @@ register_with_ns (CORBA::ORB_ptr orb,
   CORBA::Object_var naming_context_object =
     orb->resolve_initial_references ("NameService"
     ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (false);
 
   CosNaming::NamingContext_var naming_context =
     CosNaming::NamingContext::_narrow (naming_context_object.in ());
@@ -176,7 +174,6 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         write_ior_file (orb.in (),
         RepositoryManagerDaemon.in ()
         ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
     }
     else if (CIAO::RepositoryManager::register_with_ns_)
     {
@@ -184,7 +181,6 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         register_with_ns (orb.in (),
         RepositoryManagerDaemon.in ()
         ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
     }
 
     if (!retval)
@@ -279,8 +275,7 @@ int Worker::svc (void)
   ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY
     {
-      this->orb_->run (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      this->orb_->run ();
     }
   ACE_CATCHANY
     {

@@ -159,7 +159,6 @@ namespace CIAO
                         str.in ()));
             this->pa_[t]->deactivate (servant
                                       ACE_ENV_ARG_PARAMETER);
-            ACE_CHECK;
           }
       }
   }

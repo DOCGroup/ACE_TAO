@@ -43,7 +43,6 @@ namespace CIAO
     ACE_TRY_NEW_ENV;
       {
         this->container_->delete_servant_map (oid ACE_ENV_ARG_PARAMETER);
-        ACE_TRY_CHECK;
       }
       ACE_CATCHANY;
       {
@@ -100,7 +99,7 @@ namespace CIAO
     ACE_THROW_SPEC ((CORBA::SystemException,
                      Components::CreateFailure))
   {
-    return this->create (ACE_ENV_SINGLE_ARG_PARAMETER);
+    return this->create ();
   }
 
   // Operations for implicit home interface.
@@ -125,8 +124,7 @@ namespace CIAO
 
 
     ::Components::EnterpriseComponent_var _ciao_ec =
-      this->executor_->create (ACE_ENV_SINGLE_ARG_PARAMETER);
-    ACE_CHECK_RETURN (COMP_SVNT::_stub_type::_nil ());
+      this->executor_->create ();
 
     return this->_ciao_activate_component (_ciao_ec.in ()
                                            ACE_ENV_ARG_PARAMETER);
@@ -149,12 +147,10 @@ namespace CIAO
     CORBA::Object_var hobj =
       this->container_->get_home_objref (this
                                     ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK_RETURN (COMP_SVNT::_stub_type::_nil ());
 
     Components::CCMHome_var home =
       Components::CCMHome::_narrow (hobj.in ()
                                     ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK_RETURN (COMP_SVNT::_stub_type::_nil ());
 
     PortableServer::ObjectId_var oid =
       PortableServer::string_to_ObjectId (this->obj_id_);
@@ -165,7 +161,6 @@ namespace CIAO
         this->repo_id_,
         Container::Component
         ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK_RETURN (COMP_SVNT::_stub_type::_nil ());
 
     Dynamic_Component_Servant_Base *svt =
       new Dynamic_Component_Servant<COMP_SVNT> (ec,
@@ -175,7 +170,6 @@ namespace CIAO
                                                 this->container_);
 
     this->container_->add_servant_map (oid, svt ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK_RETURN (COMP_SVNT::_stub_type::_nil ());
 
     this->dynamic_servant_map_.bind (oid.in (), svt);
 
@@ -183,7 +177,6 @@ namespace CIAO
     typename COMP_SVNT::_stub_var_type ho =
       stub_type::_narrow (objref.in ()
                           ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK_RETURN (COMP_SVNT::_stub_type::_nil ());
 
     return ho._retn ();
   }
@@ -225,7 +218,6 @@ namespace CIAO
     this->container_->uninstall_component (comp,
                                            oid.out ()
                                            ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK;
 
     COMP_SVNT *servant = 0;
 
@@ -233,8 +225,7 @@ namespace CIAO
     {
       PortableServer::ServantBase_var safe (servant);
 
-      servant->ciao_passivate (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK;
+      servant->ciao_passivate ();
 
       this->component_map_.unbind (oid.in ());
     }

@@ -78,17 +78,17 @@ namespace CIAO
 
     /// Remove all homes and components
     virtual void
-      remove (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+      remove (void)
         ACE_THROW_SPEC ((CORBA::SystemException,
                          Components::RemoveFailure));
 
     /// Deployment::Container interface defined attributes/operations.
     virtual ::Deployment::Properties *
-      properties (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+      properties (void)
         ACE_THROW_SPEC ((CORBA::SystemException));
 
     virtual ::Deployment::NodeApplication_ptr
-      get_node_application (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+      get_node_application (void)
         ACE_THROW_SPEC ((CORBA::SystemException));
 
     /*-------------------------------------------------------------*/
@@ -143,7 +143,7 @@ namespace CIAO
     // These below two are helper methods to clean up components
     // should only be called when we are sure that there is no
     // active connection on this component.
-    virtual void remove_components (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+    virtual void remove_components (void)
       ACE_THROW_SPEC ((CORBA::SystemException,
                        Components::RemoveFailure));
 
@@ -163,7 +163,7 @@ namespace CIAO
     /// @@ Gan, caller should own memory. In this case you shoudl
     /// return a duplicate OR add a const to the operation
     /// signature. This is simply bad programming.
-    Deployment::Container_ptr get_objref (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
+    Deployment::Container_ptr get_objref (void);
 
 protected:
     /// Keep a pointer to the managing ORB serving this servant.

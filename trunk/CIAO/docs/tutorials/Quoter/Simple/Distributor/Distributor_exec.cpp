@@ -40,7 +40,7 @@ namespace CIDL_StockDistributor_Impl
   pulse_Generator::open_h ()
   {
     // convert the task into a active object that runs in separate thread
-    return this->activate (); 
+    return this->activate ();
   }
 
   int
@@ -49,7 +49,7 @@ namespace CIDL_StockDistributor_Impl
     this->reactor ()->end_reactor_event_loop ();
 
     // wait for all threads in the task to exit before it returns
-    return this->wait (); 
+    return this->wait ();
   }
 
   int
@@ -235,7 +235,7 @@ namespace CIDL_StockDistributor_Impl
   // Port operations.
 
   ::Stock::CCM_StockQuoter_ptr
-  StockDistributor_exec_i::get_push_quoter (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+  StockDistributor_exec_i::get_push_quoter (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
   {
     return new StockQuoter_exec_i (*this);
@@ -269,7 +269,6 @@ namespace CIDL_StockDistributor_Impl
   {
     this->context_ = StockDistributor_Context::_narrow (ctx
                                                         ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK;
 
     if (this->context_ == 0)
     {
@@ -352,7 +351,6 @@ namespace CIDL_StockDistributor_Impl
     retval,
     StockDistributor_exec_i,
     CORBA::NO_MEMORY ());
-    ACE_CHECK_RETURN (::Components::EnterpriseComponent::_nil ());
     return retval;
   }
 

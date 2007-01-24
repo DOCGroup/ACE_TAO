@@ -62,7 +62,7 @@ namespace CIAO
 
     /// Finalizing the RTResource_Config_Manager and the resources it
     /// manages.
-    void fini (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+    void fini (void)
       ACE_THROW_SPEC ((CORBA::SystemException));
 
     /// Query a policy set by name

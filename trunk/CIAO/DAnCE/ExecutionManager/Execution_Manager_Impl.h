@@ -60,7 +60,7 @@ namespace CIAO
                          Deployment::StartError));
 
       virtual Deployment::DomainApplicationManagers *
-      getManagers (ACE_ENV_SINGLE_ARG_DECL)
+      getManagers (void)
         ACE_THROW_SPEC ((CORBA::SystemException));
 
       // Below method is CIAO specific extension
@@ -83,7 +83,7 @@ namespace CIAO
         ACE_THROW_SPEC ((::CORBA::SystemException,
                          ::Deployment::StopError));
 
-      virtual void shutdown (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+      virtual void shutdown (void)
         ACE_THROW_SPEC ((CORBA::SystemException));
 
       // The input parameter is a *new_plan* which has the

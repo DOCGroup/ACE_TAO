@@ -60,42 +60,42 @@ namespace CIAO
       ACE_THROW_SPEC ((CORBA::SystemException));
 
     virtual ::Components::CCMHome_ptr
-    get_ccm_home (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+    get_ccm_home (void)
       ACE_THROW_SPEC ((CORBA::SystemException));
 
     virtual CORBA::Object_ptr
-    _get_component (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+    _get_component (void)
       ACE_THROW_SPEC ((CORBA::SystemException));
 
     virtual Components::SessionComponent_ptr
-    get_executor (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+    get_executor (void)
       ACE_THROW_SPEC ((CORBA::SystemException));
 
    // CIAO-specific operations.
 
     void
-    ciao_preactivate (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+    ciao_preactivate (void)
       ACE_THROW_SPEC ((CORBA::SystemException));
 
     void
-    ciao_activate (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+    ciao_activate (void)
       ACE_THROW_SPEC ((CORBA::SystemException));
 
     void
-    ciao_postactivate (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+    ciao_postactivate (void)
       ACE_THROW_SPEC ((CORBA::SystemException));
 
     /// @@NOTE: The busted operation.
     void
-    ciao_passivate (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+    ciao_passivate (void)
       ACE_THROW_SPEC ((CORBA::SystemException));
 
     CORBA::Boolean
-    is_activated (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+    is_activated (void)
       ACE_THROW_SPEC ((CORBA::SystemException));
 
     void
-    activate_component (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+    activate_component (void)
       ACE_THROW_SPEC ((CORBA::SystemException));
 
   protected:
