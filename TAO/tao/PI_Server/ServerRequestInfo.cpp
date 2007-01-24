@@ -182,11 +182,10 @@ TAO::ServerRequestInfo::result (void)
 
   // Generate the result on demand.
 
-  static CORBA::Boolean const tk_void_any = 1;
+  static CORBA::Boolean const tk_void_any = true;
 
   CORBA::Any * result_any =
-    TAO_RequestInfo_Util::make_any (tk_void_any
-                                   );
+    TAO_RequestInfo_Util::make_any (tk_void_any);
 
   CORBA::Any_var safe_result_any = result_any;
 
@@ -245,8 +244,7 @@ TAO::ServerRequestInfo::forward_reference (void)
 }
 
 CORBA::Any *
-TAO::ServerRequestInfo::get_slot (PortableInterceptor::SlotId id
-                                  )
+TAO::ServerRequestInfo::get_slot (PortableInterceptor::SlotId id)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    PortableInterceptor::InvalidSlot))
 {
@@ -271,31 +269,23 @@ TAO::ServerRequestInfo::get_slot (PortableInterceptor::SlotId id
 }
 
 IOP::ServiceContext *
-TAO::ServerRequestInfo::get_request_service_context (
-    IOP::ServiceId id
-    )
+TAO::ServerRequestInfo::get_request_service_context (IOP::ServiceId id)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_Service_Context &service_context_list =
     this->server_request_.request_service_context ();
 
-  return this->get_service_context_i (service_context_list,
-                                      id
-                                     );
+  return this->get_service_context_i (service_context_list, id);
 }
 
 IOP::ServiceContext *
-TAO::ServerRequestInfo::get_reply_service_context (
-    IOP::ServiceId id
-    )
+TAO::ServerRequestInfo::get_reply_service_context (IOP::ServiceId id)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_Service_Context & service_context_list =
     this->server_request_.reply_service_context ();
 
-  return this->get_service_context_i (service_context_list,
-                                      id
-                                     );
+  return this->get_service_context_i (service_context_list, id);
 }
 
 IOP::ServiceContext *
@@ -366,7 +356,6 @@ TAO::ServerRequestInfo::server_id (void)
     return
       CORBA::string_dup (this->server_request_.orb_core ()->server_id ());
 
-
   ACE_THROW_RETURN (CORBA::BAD_INV_ORDER (CORBA::OMGVMCID | 14,
                                           CORBA::COMPLETED_NO),
                     0);
@@ -396,8 +385,7 @@ TAO::ServerRequestInfo::adapter_name (void)
   // in this sequence.
   if (this->servant_upcall_ != 0)
     return
-      this->servant_upcall_->poa ().adapter_name (
-        );
+      this->servant_upcall_->poa ().adapter_name ();
 
   ACE_THROW_RETURN (CORBA::BAD_INV_ORDER (CORBA::OMGVMCID | 14,
                                           CORBA::COMPLETED_NO),
@@ -433,7 +421,7 @@ TAO::ServerRequestInfo::object_id (void)
       //    case, this is still faster than the
       //    PortableServer::Current::object_id() method since no TSS
       //    access is involved.
-      const CORBA::ULong len = id.length ();
+      CORBA::ULong const len = id.length ();
       obj_id->length (len);
       CORBA::Octet *buffer = obj_id->get_buffer ();
       ACE_OS::memcpy (buffer, id.get_buffer (), len);

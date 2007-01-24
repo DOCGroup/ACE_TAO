@@ -15,14 +15,12 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 namespace TAO
 {
   void
-  ServerRequestDetails::apply_policies (
-      const CORBA::PolicyList &policies
-      )
+  ServerRequestDetails::apply_policies (const CORBA::PolicyList &policies)
   {
     // Flag to check for duplicate ProcessingModePolicy objects in the list.
     bool processing_mode_applied = false;
 
-    const CORBA::ULong plen = policies.length ();
+    CORBA::ULong const plen = policies.length ();
 
     for (CORBA::ULong i = 0; i < plen; ++i)
       {
@@ -35,7 +33,7 @@ namespace TAO
           }
 
         // Obtain the PolicyType from the current Policy object.
-        const CORBA::PolicyType policy_type =
+        CORBA::PolicyType const policy_type =
           policy->policy_type ();
 
         if (policy_type == PortableInterceptor::PROCESSING_MODE_POLICY_TYPE)
@@ -44,7 +42,7 @@ namespace TAO
               {
                 // This is the second time we have run into this policy type,
                 // and that is not allowed.
-                throw ( ::CORBA::INV_POLICY ());
+                throw ::CORBA::INV_POLICY ();
               }
 
             // Flip the flag to true in order to trap any dupes.
@@ -53,17 +51,15 @@ namespace TAO
             // Narrow the Policy to the ProcessingModePolicy interface.
             PortableInterceptor::ProcessingModePolicy_var pm_policy =
                     PortableInterceptor::ProcessingModePolicy::_narrow (
-                                                 policy.in ()
-                                                );
+                                                 policy.in ());
 
             // Save the value of the ProcessingModePolicy in our data member.
-            this->processing_mode_ =
-              pm_policy->processing_mode ();
+            this->processing_mode_ = pm_policy->processing_mode ();
           }
         else
           {
             // We don't support the current policy type.
-            throw ( ::CORBA::INV_POLICY ());
+            throw ::CORBA::INV_POLICY ();
           }
       }
   }
