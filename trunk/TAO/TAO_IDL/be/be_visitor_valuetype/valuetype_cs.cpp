@@ -438,7 +438,7 @@ be_visitor_valuetype_cs::visit_operation (be_operation *node)
 
   // We need to throw an exceptions that was assigned in a
   // different place (by the app-developer). ACE_THROW does
-  // not fit the bill since the ACE_THROW macro contructs the
+  // not fit the bill since the ACE_THROW macro constructs the
   // exception passed to it.  Also exception->_raise() is
   // ruled out since in platforms without native exception
   // support, the _raise() function does not do anything. Below we
