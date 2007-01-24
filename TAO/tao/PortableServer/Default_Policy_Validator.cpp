@@ -53,12 +53,12 @@ TAO_POA_Default_Policy_Validator::validate_impl (TAO_Policy_Set &policies
   if (servant_retention == PortableServer::NON_RETAIN)
     if (request_processing != PortableServer::USE_SERVANT_MANAGER &&
         request_processing  != PortableServer::USE_DEFAULT_SERVANT)
-      throw (PortableServer::POA::InvalidPolicy ());
+      throw PortableServer::POA::InvalidPolicy ();
 
   // USE_ACTIVE_OBJECT_MAP_ONLY requires the RETAIN policy.
   if (request_processing == PortableServer::USE_ACTIVE_OBJECT_MAP_ONLY)
     if (servant_retention != PortableServer::RETAIN)
-      throw (PortableServer::POA::InvalidPolicy ());
+      throw PortableServer::POA::InvalidPolicy ();
 
   policy =
     policies.get_cached_policy (TAO_CACHED_POLICY_ID_UNIQUENESS
@@ -86,21 +86,20 @@ TAO_POA_Default_Policy_Validator::validate_impl (TAO_Policy_Set &policies
                                );
 
   PortableServer::IdAssignmentPolicy_var idap =
-    PortableServer::IdAssignmentPolicy::_narrow (policy.in ()
-                                                );
+    PortableServer::IdAssignmentPolicy::_narrow (policy.in ());
   PortableServer::IdAssignmentPolicyValue id_assignment =
     idap->value ();
 
   // USE_DEFAULT_SERVANT requires the MULTIPLE_ID policy.
   if (request_processing == PortableServer::USE_DEFAULT_SERVANT)
     if (id_uniqueness != PortableServer::MULTIPLE_ID)
-      throw (PortableServer::POA::InvalidPolicy ());
+      throw PortableServer::POA::InvalidPolicy ();
 
   // IMPLICIT_ACTIVATION requires the SYSTEM_ID and RETAIN policies.
   if (implicit_activation == PortableServer::IMPLICIT_ACTIVATION)
     if (servant_retention != PortableServer::RETAIN ||
         id_assignment != PortableServer::SYSTEM_ID)
-      throw (PortableServer::POA::InvalidPolicy ());
+      throw PortableServer::POA::InvalidPolicy ();
 #else /* TAO_HAS_MINIMUM_POA == 0 */
   ACE_UNUSED_ARG (policies);
 #endif /* TAO_HAS_MINIMUM_POA == 0 */

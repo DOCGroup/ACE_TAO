@@ -158,16 +158,15 @@ TAO_ORBInitInfo::register_initial_reference (
   this->check_validity ();
 
   if (id == 0 || ACE_OS::strlen (id) == 0)
-    throw (PortableInterceptor::ORBInitInfo::InvalidName ());
+    throw PortableInterceptor::ORBInitInfo::InvalidName ();
 
   if (CORBA::is_nil (obj))
-    throw ( ::CORBA::BAD_PARAM (CORBA::OMGVMCID | 27,
-                                 CORBA::COMPLETED_NO));
+    throw ::CORBA::BAD_PARAM (CORBA::OMGVMCID | 27, CORBA::COMPLETED_NO);
 
   TAO_Object_Ref_Table &table = this->orb_core_->object_ref_table ();
 
   if (table.register_initial_reference (id, obj) == -1)
-    throw (PortableInterceptor::ORBInitInfo::InvalidName ());
+    throw PortableInterceptor::ORBInitInfo::InvalidName ();
 }
 
 CORBA::Object_ptr
@@ -204,11 +203,11 @@ TAO_ORBInitInfo::add_client_request_interceptor (
   this->orb_core_->add_interceptor (interceptor);
 #else
   ACE_UNUSED_ARG (interceptor);
-  throw ( ::CORBA::NO_IMPLEMENT (
+  throw ::CORBA::NO_IMPLEMENT (
                CORBA::SystemException::_tao_minor_code (
                  0,
                  ENOTSUP),
-               CORBA::COMPLETED_NO));
+               CORBA::COMPLETED_NO);
 #endif  /* TAO_HAS_INTERCEPTORS == 1 */
 }
 
@@ -226,11 +225,11 @@ TAO_ORBInitInfo::add_server_request_interceptor (
 
 #else
   ACE_UNUSED_ARG (interceptor);
-  throw ( ::CORBA::NO_IMPLEMENT (
+  throw ::CORBA::NO_IMPLEMENT (
                CORBA::SystemException::_tao_minor_code (
                  0,
                  ENOTSUP),
-               CORBA::COMPLETED_NO));
+               CORBA::COMPLETED_NO);
 #endif  /* TAO_HAS_INTERCEPTORS == 1 */
 }
 
@@ -265,11 +264,11 @@ TAO_ORBInitInfo::add_client_request_interceptor_with_policy (
 #else
   ACE_UNUSED_ARG (interceptor);
   ACE_UNUSED_ARG (policies);
-  throw ( ::CORBA::NO_IMPLEMENT (
+  throw ::CORBA::NO_IMPLEMENT (
                CORBA::SystemException::_tao_minor_code (
                  0,
                  ENOTSUP),
-               CORBA::COMPLETED_NO));
+               CORBA::COMPLETED_NO);
 #endif  /* TAO_HAS_INTERCEPTORS == 1 */
 }
 
@@ -292,11 +291,11 @@ TAO_ORBInitInfo::add_server_request_interceptor_with_policy (
 #else
   ACE_UNUSED_ARG (interceptor);
   ACE_UNUSED_ARG (policies);
-  throw ( ::CORBA::NO_IMPLEMENT (
+  throw ::CORBA::NO_IMPLEMENT (
                CORBA::SystemException::_tao_minor_code (
                  0,
                  ENOTSUP),
-               CORBA::COMPLETED_NO));
+               CORBA::COMPLETED_NO);
 #endif  /* TAO_HAS_INTERCEPTORS == 1 */
 }
 
@@ -317,11 +316,11 @@ TAO_ORBInitInfo::add_ior_interceptor_with_policy (
   // is currently not implemented/supported.
   ACE_UNUSED_ARG (interceptor);
   ACE_UNUSED_ARG (policies);
-  throw ( ::CORBA::NO_IMPLEMENT (
+  throw ::CORBA::NO_IMPLEMENT (
                CORBA::SystemException::_tao_minor_code (
                  0,
                  ENOTSUP),
-               CORBA::COMPLETED_NO));
+               CORBA::COMPLETED_NO);
 }
 
 PortableInterceptor::SlotId
@@ -400,8 +399,7 @@ TAO_ORBInitInfo::check_validity (void)
       // this instance to zero when it is done initializing the ORB,
       // which is why we base "existence" on the validity of the ORB
       // core pointer.
-      throw ( ::CORBA::OBJECT_NOT_EXIST (0,
-                                          CORBA::COMPLETED_NO));
+      throw ::CORBA::OBJECT_NOT_EXIST (0, CORBA::COMPLETED_NO);
     }
 }
 

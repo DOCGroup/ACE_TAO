@@ -148,7 +148,7 @@ TAO_POA_RT_Policy_Validator::validate_server_protocol (TAO_Policy_Set &policies
         }
 
       if (!found)
-        throw (PortableServer::POA::InvalidPolicy ());
+        throw PortableServer::POA::InvalidPolicy ();
     }
 }
 
@@ -186,7 +186,7 @@ TAO_POA_RT_Policy_Validator::validate_priorities (TAO_Policy_Set &policies
 //          || priority > RTCORBA::maxPriority
          )
         {
-          throw (PortableServer::POA::InvalidPolicy ());
+          throw PortableServer::POA::InvalidPolicy ();
         }
     }
   else
@@ -195,7 +195,7 @@ TAO_POA_RT_Policy_Validator::validate_priorities (TAO_Policy_Set &policies
     {
       if (this->thread_pool_ != 0 &&
           this->thread_pool_->with_lanes ())
-        throw (PortableServer::POA::InvalidPolicy ());
+        throw PortableServer::POA::InvalidPolicy ();
     }
 
   policy =
@@ -224,14 +224,14 @@ TAO_POA_RT_Policy_Validator::validate_priorities (TAO_Policy_Set &policies
     {
       // Checks 0.
       if (rt_priority_model == TAO::Portable_Server::Cached_Policies::NOT_SPECIFIED)
-        throw (PortableServer::POA::InvalidPolicy ());
+        throw PortableServer::POA::InvalidPolicy ();
 
       RTCORBA::PriorityBands &bands =
         bands_policy->priority_bands_rep ();
 
       // Checks 1.
       if (bands.length () == 0)
-        throw (PortableServer::POA::InvalidPolicy ());
+        throw PortableServer::POA::InvalidPolicy ();
 
       // Checks 2.
       for (CORBA::ULong i = 0; i < bands.length (); ++i)
@@ -247,7 +247,7 @@ TAO_POA_RT_Policy_Validator::validate_priorities (TAO_Policy_Set &policies
 //              || bands[i].high > RTCORBA::maxPriority
              )
             {
-              throw (PortableServer::POA::InvalidPolicy ());
+              throw PortableServer::POA::InvalidPolicy ();
             }
         }
 
@@ -266,7 +266,7 @@ TAO_POA_RT_Policy_Validator::validate_priorities (TAO_Policy_Set &policies
             }
 
           if (!match)
-            throw (PortableServer::POA::InvalidPolicy ());
+            throw PortableServer::POA::InvalidPolicy ();
         }
 
       //
@@ -303,7 +303,7 @@ TAO_POA_RT_Policy_Validator::validate_priorities (TAO_Policy_Set &policies
                 match = 1;
             }
           if (!match)
-            throw (PortableServer::POA::InvalidPolicy ());
+            throw PortableServer::POA::InvalidPolicy ();
         }
 
       // Done with checks.
@@ -342,7 +342,7 @@ TAO_POA_RT_Policy_Validator::validate_priorities (TAO_Policy_Set &policies
             match = 1;
         }
       if (!match)
-        throw (PortableServer::POA::InvalidPolicy ());
+        throw PortableServer::POA::InvalidPolicy ();
 
       // Done with checks.
       return;

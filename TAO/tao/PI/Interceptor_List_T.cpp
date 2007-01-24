@@ -86,7 +86,7 @@ namespace TAO
                     if (ACE_OS::strcmp (existing_name.in (),
                                         name.in ()) == 0)
                       {
-                        throw (PortableInterceptor::ORBInitInfo::DuplicateName ());
+                        throw PortableInterceptor::ORBInitInfo::DuplicateName ();
                       }
                   }
               }
@@ -102,15 +102,13 @@ namespace TAO
       }
     else
       {
-        throw (
+        throw
             CORBA::INV_OBJREF (
                 CORBA::SystemException::_tao_minor_code (
                     0,
                     EINVAL
                   ),
-                CORBA::COMPLETED_NO
-              )
-            );
+                CORBA::COMPLETED_NO);
       }
   }
 
@@ -160,7 +158,7 @@ namespace TAO
                     if (ACE_OS::strcmp (existing_name.in (),
                                         name.in ()) == 0)
                       {
-                        throw (PortableInterceptor::ORBInitInfo::DuplicateName ());
+                        throw PortableInterceptor::ORBInitInfo::DuplicateName ();
                       }
                   }
               }
@@ -183,14 +181,13 @@ namespace TAO
       }
     else
       {
-        throw (
+        throw
             CORBA::INV_OBJREF (
                 CORBA::SystemException::_tao_minor_code (
                     0,
                     EINVAL
                   ),
                 CORBA::COMPLETED_NO
-              )
             );
       }
   }
