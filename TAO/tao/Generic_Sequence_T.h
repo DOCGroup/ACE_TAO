@@ -242,9 +242,9 @@ public:
    * maintains ownership of the underlying buffer.  Elements in the
    * returned buffer may be directly replaced by the caller.  For
    * sequences of strings, wide strings, and object references, the
-   * caller must use the sequence <release> accessor to determine
-   * whether elements should be freed (using <string_free>,
-   * <wstring_free>, or <CORBA::release> for strings, wide strings,
+   * caller must use the sequence @c release accessor to determine
+   * whether elements should be freed (using @c string_free,
+   * @c wstring_free, or @c CORBA::release for strings, wide strings,
    * and object references, respective) before being directly assigned
    * to.
    *
