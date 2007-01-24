@@ -47,15 +47,15 @@ Current_Test_Impl::test_transport_current (void)
 
   if (TAO_debug_level >= 1)
     {
-      ::CORBA::Long id = tc->id (void);
+      ::CORBA::Long id = tc->id ();
 
-      ::TAO::CounterT bs = tc->bytes_sent (void);
+      ::TAO::CounterT bs = tc->bytes_sent ();
 
-      ::TAO::CounterT br = tc->bytes_received (void);
+      ::TAO::CounterT br = tc->bytes_received ();
 
-      ::TAO::CounterT rs = tc->messages_sent (void);
+      ::TAO::CounterT rs = tc->messages_sent ();
 
-      ::TAO::CounterT rr = tc->messages_received (void);
+      ::TAO::CounterT rr = tc->messages_received ();
 
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("Current_Test_Impl (%P|%t) Transport [%q] - Sent/Received [bytes=%q/%q, messages=%q/%q]\n"),
@@ -102,7 +102,7 @@ Current_Test_Impl::invoked_by_client_i (void)
                 ACE_TEXT ("(%P|%t) server - Testing inside an upcall\n")));
   }
 
-  this->test_transport_current (void);
+  this->test_transport_current ();
 
   if (this->do_collocated_calls_)
     {
