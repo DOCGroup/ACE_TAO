@@ -560,8 +560,7 @@ TAO::ServerRequestInfo::add_reply_service_context (
 
   if (service_context_list.set_context (service_context, replace) == 0)
     {
-      throw ( ::CORBA::BAD_INV_ORDER (CORBA::OMGVMCID | 15,
-                                       CORBA::COMPLETED_NO));
+      throw ::CORBA::BAD_INV_ORDER (CORBA::OMGVMCID | 15, CORBA::COMPLETED_NO);
     }
 }
 

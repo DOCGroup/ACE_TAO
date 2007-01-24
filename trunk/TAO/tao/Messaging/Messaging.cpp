@@ -45,8 +45,7 @@ exception_holder_raise (TAO::Exception_Data *exception_data,
     {
       // Could not demarshal the exception id, raise a local
       // CORBA::MARSHAL
-      throw ( ::CORBA::MARSHAL (TAO::VMCID,
-                                 CORBA::COMPLETED_YES));
+      throw ::CORBA::MARSHAL (TAO::VMCID, CORBA::COMPLETED_YES);
     }
 
   if (is_system_exception)
@@ -55,8 +54,7 @@ exception_holder_raise (TAO::Exception_Data *exception_data,
       CORBA::ULong completion = 0;
       if ((_tao_in >> minor) == 0 ||
           (_tao_in >> completion) == 0)
-        throw ( ::CORBA::MARSHAL (TAO::VMCID,
-                                   CORBA::COMPLETED_MAYBE));
+        throw ::CORBA::MARSHAL (TAO::VMCID, CORBA::COMPLETED_MAYBE);
 
       CORBA::SystemException* exception =
         TAO::create_system_exception (type_id.in ());
@@ -89,8 +87,7 @@ exception_holder_raise (TAO::Exception_Data *exception_data,
       CORBA::Exception * const exception = exception_data[i].alloc ();
 
       if (exception == 0)
-        throw ( ::CORBA::NO_MEMORY (TAO::VMCID,
-                                     CORBA::COMPLETED_YES));
+        throw ::CORBA::NO_MEMORY (TAO::VMCID, CORBA::COMPLETED_YES);
       exception->_tao_decode (_tao_in);
 
       // Raise the exception.
@@ -106,8 +103,7 @@ exception_holder_raise (TAO::Exception_Data *exception_data,
   // @@ It would seem like if the remote exception is a
   //    UserException we can assume that the request was
   //    completed.
-  throw ( ::CORBA::UNKNOWN (TAO::VMCID,
-                             CORBA::COMPLETED_YES));
+  throw ::CORBA::UNKNOWN (TAO::VMCID, CORBA::COMPLETED_YES);
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL

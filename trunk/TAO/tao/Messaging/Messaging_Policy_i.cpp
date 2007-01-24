@@ -253,11 +253,11 @@ TAO_Sync_Scope_Policy::hook (TAO_ORB_Core *orb_core,
         Messaging::SyncScopePolicy::_narrow (policy.in ());
 
       if (CORBA::is_nil (p.in ()))
-        throw ( ::CORBA::INTERNAL (
+        throw ::CORBA::INTERNAL (
                 CORBA::SystemException::_tao_minor_code (
                   TAO_POLICY_NARROW_CODE,
                   0),
-                CORBA::COMPLETED_NO));
+                CORBA::COMPLETED_NO);
 
       has_synchronization = true;
       scope = p->synchronization ();

@@ -93,13 +93,12 @@ TAO::PICurrent::check_validity (const PortableInterceptor::SlotId &identifier
   // no slots, then the PICurrent_impl object is not created as there is no
   // data to copy).
   if (0 == this->slot_count_)
-    throw ( ::CORBA::BAD_INV_ORDER (CORBA::OMGVMCID | 14,
-                                     CORBA::COMPLETED_NO));
+    throw ::CORBA::BAD_INV_ORDER (CORBA::OMGVMCID | 14, CORBA::COMPLETED_NO);
 
   // No need to acquire a lock for this check.  At this point, these
   // attributes are read only.
   if (identifier >= this->slot_count_)
-    throw (PortableInterceptor::InvalidSlot ());
+    throw PortableInterceptor::InvalidSlot ();
 }
 
 CORBA::ORB_ptr
@@ -122,11 +121,11 @@ TAO::PICurrent::initialize (PortableInterceptor::SlotId sc
     // It MUST be called BEFORE we attempt to get/set any
     // PICurrent slot data.
     if (0 != orb_core_.add_tss_cleanup_func (CleanUpPICurrent, this->tss_slot_))
-      throw ( ::CORBA::NO_MEMORY (
+      throw ::CORBA::NO_MEMORY (
                    CORBA::SystemException::_tao_minor_code (
                      TAO::VMCID,
                      ENOMEM),
-                   CORBA::COMPLETED_NO));
+                   CORBA::COMPLETED_NO);
 
     this->slot_count_ = sc;
   }
