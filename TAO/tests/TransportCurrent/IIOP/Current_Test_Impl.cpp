@@ -78,7 +78,7 @@ Current_Test_Impl::invoked_by_client (void)
                 ACE_TEXT ("(%P|%t) server - Test method invoked by client.\n")));
   }
 
-  this->test_transport_current (void);
+  this->test_transport_current ();
 
   if (this->do_collocated_calls_)
     {
