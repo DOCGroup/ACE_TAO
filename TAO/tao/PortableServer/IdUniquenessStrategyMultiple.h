@@ -33,9 +33,9 @@ namespace TAO
       : public IdUniquenessStrategy
     {
     public:
-      virtual void strategy_init (TAO_Root_POA *poa ACE_ENV_ARG_DECL);
+      virtual void strategy_init (TAO_Root_POA *poa);
 
-      virtual void strategy_cleanup (ACE_ENV_SINGLE_ARG_DECL);
+      virtual void strategy_cleanup (void);
 
       virtual bool is_servant_activation_allowed (
         PortableServer::Servant servant,

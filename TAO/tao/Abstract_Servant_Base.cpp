@@ -18,12 +18,15 @@ TAO_Abstract_ServantBase::~TAO_Abstract_ServantBase (void)
   // No-Op.
 }
 
-TAO_Abstract_ServantBase::TAO_Abstract_ServantBase (const TAO_Abstract_ServantBase &)
+TAO_Abstract_ServantBase::TAO_Abstract_ServantBase (
+  const TAO_Abstract_ServantBase &)
 {
   // No-Op
 }
 
-TAO_Abstract_ServantBase & TAO_Abstract_ServantBase::operator= (const TAO_Abstract_ServantBase&)
+TAO_Abstract_ServantBase&
+TAO_Abstract_ServantBase::operator= (
+  const TAO_Abstract_ServantBase&)
 {
   return *this;
 }

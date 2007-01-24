@@ -79,7 +79,7 @@ TAO_UIOP_Connector::close (void)
 
 TAO_Profile *
 TAO_UIOP_Connector::corbaloc_scan (const char *str, size_t &len
-                                   ACE_ENV_ARG_DECL)
+                                   )
 {
   if (this->check_prefix (str) != 0)
     return 0;
@@ -95,7 +95,7 @@ TAO_UIOP_Connector::corbaloc_scan (const char *str, size_t &len
       return 0;
     }
   len = (separator - str) + 1;
-  return this->make_profile (ACE_ENV_SINGLE_ARG_PARAMETER);
+  return this->make_profile ();
 }
 
 
@@ -326,7 +326,7 @@ TAO_UIOP_Connector::create_profile (TAO_InputCDR& cdr)
 }
 
 TAO_Profile *
-TAO_UIOP_Connector::make_profile (ACE_ENV_SINGLE_ARG_DECL)
+TAO_UIOP_Connector::make_profile (void)
 {
   TAO_Profile *profile = 0;
   ACE_NEW_THROW_EX (profile,
@@ -337,7 +337,6 @@ TAO_UIOP_Connector::make_profile (ACE_ENV_SINGLE_ARG_DECL)
                         ENOMEM),
                       CORBA::COMPLETED_NO));
 
-  ACE_CHECK_RETURN (0);
 
   return profile;
 }

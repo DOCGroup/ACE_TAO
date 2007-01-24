@@ -26,11 +26,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 // This is used in the implementation of the _raise methods
-#if defined (TAO_HAS_EXCEPTIONS)
 #define TAO_RAISE(EXCEPTION) throw EXCEPTION
-#else
-#define TAO_RAISE(EXCEPTION)
-#endif /* ACE_HAS_EXCEPTIONS */
 
 #include "tao/AnyTypeCode/TAO_AnyTypeCode_Export.h"
 #include "tao/Exception.h"

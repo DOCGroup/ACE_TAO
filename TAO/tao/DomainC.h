@@ -43,7 +43,6 @@
 #include /**/ "tao/TAO_Export.h"
 #include "tao/ORB.h"
 #include "tao/SystemException.h"
-#include "tao/Environment.h"
 #include "tao/Object.h"
 #include "tao/Sequence_T.h"
 #include "tao/Objref_VarOut_T.h"
@@ -127,12 +126,10 @@ namespace CORBA
 
     static DomainManager_ptr _narrow (
         CORBA::Object_ptr obj
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     static DomainManager_ptr _unchecked_narrow (
         CORBA::Object_ptr obj
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     static DomainManager_ptr _nil (void)
@@ -147,7 +144,6 @@ namespace CORBA
 
     virtual ::CORBA::Policy_ptr get_domain_policy (
         ::CORBA::PolicyType policy_type
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
@@ -158,7 +154,7 @@ namespace CORBA
 
     virtual CORBA::Boolean _is_a (
         const char *type_id
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
+
       );
 
     virtual const char* _interface_repository_id (void) const;
@@ -248,12 +244,12 @@ namespace CORBA
 
     static ConstructionPolicy_ptr _narrow (
         CORBA::Object_ptr obj
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
+
       );
 
     static ConstructionPolicy_ptr _unchecked_narrow (
         CORBA::Object_ptr obj
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
+
       );
 
     static ConstructionPolicy_ptr _nil (void)
@@ -269,7 +265,7 @@ namespace CORBA
     virtual void make_domain_manager (
         ::CORBA::InterfaceDef_ptr object_type,
         ::CORBA::Boolean constr_policy
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
+
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
@@ -280,7 +276,7 @@ namespace CORBA
 
     virtual CORBA::Boolean _is_a (
         const char *type_id
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
+
       );
 
     virtual const char* _interface_repository_id (void) const;

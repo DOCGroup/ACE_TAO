@@ -36,15 +36,13 @@ class TAO_RTScheduler_Export TAO_RTScheduler_Manager :
 {
 public:
 
-        TAO_RTScheduler_Manager (void);
+  TAO_RTScheduler_Manager (void);
+
   /// Constructor.
   TAO_RTScheduler_Manager (TAO_ORB_Core*);
 
-  ///
-  void rtscheduler (RTScheduling::Scheduler_ptr rtscheduler
-                    ACE_ENV_ARG_DECL_WITH_DEFAULTS);
+  void rtscheduler (RTScheduling::Scheduler_ptr rtscheduler);
 
-  ///
   RTScheduling::Scheduler_ptr rtscheduler (void);
 
 public:
@@ -55,7 +53,7 @@ public:
   static TAO_RTScheduler_Manager_ptr _duplicate (TAO_RTScheduler_Manager_ptr obj);
   static TAO_RTScheduler_Manager_ptr _narrow (
       CORBA::Object_ptr obj
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS);
+      );
 
   static TAO_RTScheduler_Manager_ptr _nil (void)
     {
@@ -107,7 +105,7 @@ public:
   static TAO_RTScheduler_Manager_ptr duplicate (TAO_RTScheduler_Manager_ptr);
   static void release (TAO_RTScheduler_Manager_ptr);
   static TAO_RTScheduler_Manager_ptr nil (void);
-  static TAO_RTScheduler_Manager_ptr narrow (CORBA::Object * ACE_ENV_ARG_DECL_NOT_USED);
+  static TAO_RTScheduler_Manager_ptr narrow (CORBA::Object * );
   static CORBA::Object * upcast (void *);
 
 private:

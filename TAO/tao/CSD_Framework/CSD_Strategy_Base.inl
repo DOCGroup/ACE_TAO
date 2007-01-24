@@ -17,7 +17,7 @@ void
 TAO::CSD::Strategy_Base::dispatch_request
                          (TAO_ServerRequest& server_request,
                           TAO::Portable_Server::Servant_Upcall& upcall
-                          ACE_ENV_ARG_DECL)
+                          )
 {
   DispatchResult result;
 
@@ -28,8 +28,7 @@ TAO::CSD::Strategy_Base::dispatch_request
                                                    this->poa_.in(),
                                                    server_request.operation(),
                                                    upcall.servant()
-                                                   ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
+                                                  );
     }
   else
     {
@@ -38,8 +37,7 @@ TAO::CSD::Strategy_Base::dispatch_request
                                                this->poa_.in(),
                                                server_request.operation(),
                                                upcall.servant()
-                                               ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
+                                              );
     }
 
   switch (result)
@@ -73,8 +71,7 @@ TAO::CSD::Strategy_Base::dispatch_request
         // right now, using the current thread.
         upcall.servant()->_dispatch(server_request,
                                     (void*)&upcall
-                                    ACE_ENV_ARG_PARAMETER);
-        ACE_CHECK;
+                                   );
         break;
 
       default:
@@ -113,7 +110,7 @@ TAO::CSD::Strategy_Base::poa_deactivated_event()
       this->poa_deactivated_event_i();
 
       // Reset the poa to nil to decrement the reference count.
-      // This will break the circular dependency of the deletion 
+      // This will break the circular dependency of the deletion
       // of the CSD POA.
       this->poa_ = 0;
     }
@@ -124,10 +121,9 @@ void
 TAO::CSD::Strategy_Base::servant_activated_event
                                 (PortableServer::Servant servant,
                                  const PortableServer::ObjectId& oid
-                                 ACE_ENV_ARG_DECL)
+                                 )
 {
-  this->servant_activated_event_i(servant, oid ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+  this->servant_activated_event_i(servant, oid);
 }
 
 ACE_INLINE
@@ -135,10 +131,9 @@ void
 TAO::CSD::Strategy_Base::servant_deactivated_event
                                 (PortableServer::Servant servant,
                                  const PortableServer::ObjectId& oid
-                                 ACE_ENV_ARG_DECL)
+                                 )
 {
-  this->servant_deactivated_event_i(servant, oid ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+  this->servant_deactivated_event_i(servant, oid);
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL

@@ -38,8 +38,7 @@ TAO_PI_Server_Loader::init (int,
   initialized = true;
 
   // Register the ORB initializer.
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  try
     {
       /// Register the Messaging ORBInitializer.
       PortableInterceptor::ORBInitializer_ptr temp_orb_initializer =
@@ -52,23 +51,19 @@ TAO_PI_Server_Loader::init (int,
                             TAO::VMCID,
                             ENOMEM),
                           CORBA::COMPLETED_NO));
-      ACE_TRY_CHECK;
 
       PortableInterceptor::ORBInitializer_var orb_initializer =
         temp_orb_initializer;
 
       PortableInterceptor::register_orb_initializer (orb_initializer.in ()
-                                                     ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+                                                    );
     }
-  ACE_CATCHANY
+  catch ( ::CORBA::Exception& ex)
     {
       ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
                            "Caught exception:");
       return -1;
     }
-  ACE_ENDTRY;
-  ACE_CHECK_RETURN (-1);
 
   return 0;
 }

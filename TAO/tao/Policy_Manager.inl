@@ -13,15 +13,15 @@ TAO_Policy_Manager::TAO_Policy_Manager (void)
 ACE_INLINE CORBA::Policy_ptr
 TAO_Policy_Manager::get_policy (
   CORBA::PolicyType policy
-  ACE_ENV_ARG_DECL)
+  )
 {
   ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, this->mutex_, 0);
-  return this->impl_.get_policy (policy ACE_ENV_ARG_PARAMETER);
+  return this->impl_.get_policy (policy);
 }
 
 ACE_INLINE CORBA::Policy_ptr
 TAO_Policy_Manager::get_cached_policy (TAO_Cached_Policy_Type type
-                                       ACE_ENV_ARG_DECL)
+                                       )
 {
 
   // @@ Previous code used a "double-checked locking hack" to check
@@ -32,7 +32,7 @@ TAO_Policy_Manager::get_cached_policy (TAO_Cached_Policy_Type type
   ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, this->mutex_, 0);
 
   return this->impl_.get_cached_policy (type
-                                        ACE_ENV_ARG_PARAMETER);
+                                       );
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL

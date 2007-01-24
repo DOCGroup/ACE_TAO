@@ -62,13 +62,12 @@ TAO::Any_Array_Impl_T<T_slice, T_forany>::extract (const CORBA::Any & any,
 {
   _tao_elem = 0;
 
-  ACE_TRY_NEW_ENV
+  try
     {
       CORBA::TypeCode_ptr any_tc = any._tao_get_typecode ();
       CORBA::Boolean const _tao_equiv =
         any_tc->equivalent (tc
-                            ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+                           );
 
       if (_tao_equiv == false)
         {
@@ -125,10 +124,9 @@ TAO::Any_Array_Impl_T<T_slice, T_forany>::extract (const CORBA::Any & any,
       // Duplicated by Any_Impl base class constructor.
       ::CORBA::release (any_tc);
     }
-  ACE_CATCHANY
+  catch ( ::CORBA::Exception& ex)
     {
     }
-  ACE_ENDTRY;
 
   return 0;
 }
@@ -164,11 +162,11 @@ TAO::Any_Array_Impl_T<T_slice, T_forany>::free_value (void)
 template<typename T_slice, typename T_forany>
 void
 TAO::Any_Array_Impl_T<T_slice, T_forany>::_tao_decode (TAO_InputCDR &cdr
-                                                       ACE_ENV_ARG_DECL)
+                                                       )
 {
   if (! this->demarshal_value (cdr))
     {
-      ACE_THROW (CORBA::MARSHAL ());
+      throw ::CORBA::MARSHAL ();
     }
 }
 

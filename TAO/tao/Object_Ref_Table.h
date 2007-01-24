@@ -30,11 +30,6 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-namespace CORBA
-{
-  class Environment;
-}
-
 /**
  * @class TAO_Object_Ref_Table
  *

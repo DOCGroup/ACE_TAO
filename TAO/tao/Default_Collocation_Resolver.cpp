@@ -13,7 +13,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 CORBA::Boolean
 TAO_Default_Collocation_Resolver::is_collocated (CORBA::Object_ptr object
-                                                 ACE_ENV_ARG_DECL_NOT_USED) const
+                                                 ) const
 {
   return object->_is_collocated ();
 }

@@ -25,7 +25,7 @@ TAO_CSD_Default_Servant_Dispatcher::create_Root_POA (const ACE_CString &name,
                                                  TAO_SYNCH_MUTEX &thread_lock,
                                                  TAO_ORB_Core &orb_core,
                                                  TAO_Object_Adapter *object_adapter
-                                                 ACE_ENV_ARG_DECL)
+                                                 )
     {
   TAO_CSD_POA *poa = 0;
 
@@ -38,9 +38,8 @@ TAO_CSD_Default_Servant_Dispatcher::create_Root_POA (const ACE_CString &name,
                                  thread_lock,
                                  orb_core,
                                  object_adapter
-                                 ACE_ENV_ARG_PARAMETER),
+                                ),
                     CORBA::NO_MEMORY ());
-  ACE_CHECK_RETURN (0);
 
 
   TAO_CSD_Strategy_Repository *repo =
@@ -60,8 +59,7 @@ TAO_CSD_Default_Servant_Dispatcher::create_Root_POA (const ACE_CString &name,
 
   if (! ::CORBA::is_nil (strategy.in ()))
     {
-      poa->set_csd_strategy (strategy.in () ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK_RETURN (0);
+      poa->set_csd_strategy (strategy.in ());
     }
 
   return poa;

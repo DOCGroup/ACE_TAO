@@ -51,7 +51,7 @@ namespace TAO
   {
   public:
     bool operator () (const TAO::ObjectKey &lhs,
-                     const TAO::ObjectKey &rhs) const;
+                      const TAO::ObjectKey &rhs) const;
   };
 
   /**

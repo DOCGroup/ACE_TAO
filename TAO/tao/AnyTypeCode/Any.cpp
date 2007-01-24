@@ -133,7 +133,7 @@ CORBA::Any::_tao_byte_order (void) const
 
 void
 CORBA::Any::type (CORBA::TypeCode_ptr tc
-                  ACE_ENV_ARG_DECL)
+                  )
 {
   CORBA::Boolean equiv = false;
 
@@ -141,8 +141,7 @@ CORBA::Any::type (CORBA::TypeCode_ptr tc
     {
       equiv =
         this->impl_->_tao_get_typecode ()->equivalent (tc
-                                                       ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
+                                                      );
     }
 
   if (equiv)
@@ -151,7 +150,7 @@ CORBA::Any::type (CORBA::TypeCode_ptr tc
     }
   else
     {
-      ACE_THROW (CORBA::BAD_TYPECODE ());
+      throw ( ::CORBA::BAD_TYPECODE ());
     }
 }
 
@@ -277,7 +276,7 @@ operator>> (TAO_InputCDR &cdr, CORBA::Any &any)
       return false;
     }
 
-  ACE_TRY_NEW_ENV
+  try
     {
       TAO::Unknown_IDL_Type *impl = 0;
       ACE_NEW_RETURN (impl,
@@ -286,14 +285,12 @@ operator>> (TAO_InputCDR &cdr, CORBA::Any &any)
 
       any.replace (impl);
       impl->_tao_decode (cdr
-                         ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+                        );
     }
-  ACE_CATCH (CORBA::Exception, ex)
+  catch ( ::CORBA::Exception&)
     {
       return false;
     }
-  ACE_ENDTRY;
 
   return true;
 }

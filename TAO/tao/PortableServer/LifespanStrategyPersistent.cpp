@@ -23,10 +23,9 @@ namespace TAO
     void
     LifespanStrategyPersistent::strategy_init (
       TAO_Root_POA *poa
-      ACE_ENV_ARG_DECL)
+      )
     {
-      LifespanStrategy::strategy_init (poa ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
+      LifespanStrategy::strategy_init (poa);
 
       this->use_imr_ = this->poa_->orb_core ().use_implrepo ();
     }
@@ -68,7 +67,7 @@ namespace TAO
     }
 
     void
-    LifespanStrategyPersistent::notify_startup (ACE_ENV_SINGLE_ARG_DECL)
+    LifespanStrategyPersistent::notify_startup (void)
     {
       if (this->use_imr_)
         {
@@ -97,8 +96,7 @@ namespace TAO
 
           if (adapter != 0)
             {
-              adapter->imr_notify_startup (this->poa_ ACE_ENV_ARG_PARAMETER);
-              ACE_CHECK;
+              adapter->imr_notify_startup (this->poa_);
             }
           else
             {
@@ -109,13 +107,13 @@ namespace TAO
                           ACE_TEXT ("(%P|%t) ERROR: No ImR_Client library ")
                           ACE_TEXT ("available but use IMR has been specified.\n")));
 
-              ACE_THROW (CORBA::INTERNAL ());
+              throw ( ::CORBA::INTERNAL ());
             }
         }
     }
 
     void
-    LifespanStrategyPersistent::notify_shutdown (ACE_ENV_SINGLE_ARG_DECL)
+    LifespanStrategyPersistent::notify_shutdown (void)
     {
       ImR_Client_Adapter *adapter =
         ACE_Dynamic_Service<ImR_Client_Adapter>::instance (
@@ -124,8 +122,7 @@ namespace TAO
 
       if (adapter != 0)
         {
-          adapter->imr_notify_shutdown (this->poa_ ACE_ENV_ARG_PARAMETER);
-          ACE_CHECK;
+          adapter->imr_notify_shutdown (this->poa_);
         }
     }
 
@@ -135,10 +132,9 @@ namespace TAO
     }
 
     void
-    LifespanStrategyPersistent::check_state (ACE_ENV_SINGLE_ARG_DECL)
+    LifespanStrategyPersistent::check_state (void)
     {
-      this->poa_->tao_poa_manager().check_state (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK;
+      this->poa_->tao_poa_manager().check_state ();
     }
 
     ::PortableServer::LifespanPolicyValue

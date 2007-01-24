@@ -12,19 +12,17 @@ TAO::CSD::TP_Request::TP_Request(PortableServer::Servant servant,
     servant_ (servant),
     servant_state_(servant_state, false)
 {
-  // This try-catch block is not really necessary for current implementation 
-  // since the _add_ref does not throw exception, but we have to add it to 
-  // satisfy the non-exception builds. If _add_ref really throws an exception 
+  // This try-catch block is not really necessary for current implementation
+  // since the _add_ref does not throw exception, but we have to add it to
+  // satisfy the non-exception builds. If _add_ref really throws an exception
   // then this constructor needs deal with the exception.
-  ACE_TRY_NEW_ENV
+  try
   {
-    this->servant_->_add_ref (ACE_ENV_SINGLE_ARG_PARAMETER);
-    ACE_TRY_CHECK;
+    this->servant_->_add_ref ();
   }
-  ACE_CATCHALL
+  catch (...)
   {
   }
-  ACE_ENDTRY;
 }
 
 
@@ -84,7 +82,7 @@ TAO::CSD::TP_Request::mark_as_ready()
 
 
 ACE_INLINE
-bool 
+bool
 TAO::CSD::TP_Request::is_target(PortableServer::Servant servant)
 {
   // Compare pointers.  Return true only if these are the exact same object.
@@ -97,7 +95,7 @@ void
 TAO::CSD::TP_Request::dispatch()
 {
   this->dispatch_i();
-  
+
 }
 
 

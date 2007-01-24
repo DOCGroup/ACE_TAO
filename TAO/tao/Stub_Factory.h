@@ -29,7 +29,6 @@
 #include /**/ "tao/Versioned_Namespace.h"
 
 #include "ace/Service_Object.h"
-#include "ace/CORBA_macros.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -37,11 +36,6 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 class TAO_MProfile;
 class TAO_ORB_Core;
 class TAO_Stub;
-
-namespace CORBA
-{
-  class Environment;
-}
 
 /**
  * @class TAO_Stub_Factory
@@ -62,8 +56,7 @@ public:
   /// Creates a Stub Object.
   virtual TAO_Stub *create_stub (const char *repository_id,
                                  const TAO_MProfile &profiles,
-                                 TAO_ORB_Core *orb_core
-                                 ACE_ENV_ARG_DECL) = 0;
+                                 TAO_ORB_Core *orb_core) = 0;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

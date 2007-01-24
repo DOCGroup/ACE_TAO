@@ -52,22 +52,22 @@ public:
 
   /// Initialize using just a TypeCode
   void init (CORBA::TypeCode_ptr tc
-             ACE_ENV_ARG_DECL);
+            );
 
   /// Initialize using an Any.
   void init (const CORBA::Any& any
-             ACE_ENV_ARG_DECL);
+            );
 
   // = LocalObject methods.
   static TAO_DynAny_i *_narrow (
       CORBA::Object_ptr obj
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS);
+      );
 
   // = DynAny common functions not implemented in class TAO_DynCommon.
 
   virtual void from_any (
       const CORBA::Any & value
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+      )
 
     ACE_THROW_SPEC ((
         CORBA::SystemException,
@@ -76,7 +76,7 @@ public:
       ));
 
   virtual CORBA::Any * to_any (
-      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+      void)
 
     ACE_THROW_SPEC ((
         CORBA::SystemException
@@ -84,21 +84,21 @@ public:
 
   virtual CORBA::Boolean equal (
       DynamicAny::DynAny_ptr dyn_any
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+      )
 
     ACE_THROW_SPEC ((
         CORBA::SystemException
       ));
 
   virtual void destroy (
-      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+      void)
 
     ACE_THROW_SPEC ((
         CORBA::SystemException
       ));
 
   virtual DynamicAny::DynAny_ptr current_component (
-      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+      void)
 
     ACE_THROW_SPEC ((
         CORBA::SystemException,
@@ -108,11 +108,11 @@ public:
 private:
   /// Check if the typecode is acceptable.
   void check_typecode (CORBA::TypeCode_ptr tc
-                       ACE_ENV_ARG_DECL);
+                      );
 
   /// Used when we are created from a typecode.
   void set_to_default_value (CORBA::TypeCode_ptr tc
-                             ACE_ENV_ARG_DECL);
+                            );
 
   /// Called by both versions of init().
   void init_common (void);

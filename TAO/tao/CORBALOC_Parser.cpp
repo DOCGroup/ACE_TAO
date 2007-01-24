@@ -45,14 +45,13 @@ TAO_CORBALOC_Parser::match_prefix (const char *ior_string) const
 CORBA::Object_ptr
 TAO_CORBALOC_Parser::make_stub_from_mprofile (CORBA::ORB_ptr orb,
                                               TAO_MProfile &mprofile
-                                              ACE_ENV_ARG_DECL)
+                                              )
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // Create a TAO_Stub.
   TAO_Stub *data = orb->orb_core ()->create_stub ((const char *) 0,
                                                   mprofile
-                                                  ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (CORBA::Object::_nil ());
+                                                 );
 
   TAO_Stub_Auto_Ptr safe_data (data);
 
@@ -75,7 +74,7 @@ TAO_CORBALOC_Parser::make_stub_from_mprofile (CORBA::ORB_ptr orb,
 CORBA::Object_ptr
 TAO_CORBALOC_Parser::parse_string_rir_helper (const char * ior,
                                               CORBA::ORB_ptr orb
-                                              ACE_ENV_ARG_DECL)
+                                              )
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // Pass the key string as an argument to resolve_initial_references.
@@ -88,8 +87,7 @@ TAO_CORBALOC_Parser::parse_string_rir_helper (const char * ior,
   CORBA::Object_var rir_obj =
     orb->resolve_initial_references (*objkey == '\0' ? "NameService" :
                                      objkey
-                                     ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (CORBA::Object::_nil ());
+                                    );
 
   return rir_obj._retn ();
 }
@@ -97,7 +95,7 @@ TAO_CORBALOC_Parser::parse_string_rir_helper (const char * ior,
 CORBA::Object_ptr
 TAO_CORBALOC_Parser::parse_string (const char * ior,
                                    CORBA::ORB_ptr orb
-                                   ACE_ENV_ARG_DECL)
+                                   )
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // The decomposition of a corbaloc string is in Section 13.6.10.
@@ -126,7 +124,7 @@ TAO_CORBALOC_Parser::parse_string (const char * ior,
   //  First check for rir
   if (ACE_OS::strncmp (ior,rir_token,rir_token_len) == 0)
     return this->parse_string_rir_helper (ior,orb
-                                          ACE_ENV_ARG_PARAMETER);
+                                         );
 
   // set up space for parsed endpoints. there will be at least 1, and
   // most likely commas will separate endpoints, although they could be
@@ -142,8 +140,7 @@ TAO_CORBALOC_Parser::parse_string (const char * ior,
 
   // Get the Connector Registry from the ORB.
   TAO_Connector_Registry *conn_reg =
-    orb->orb_core ()->connector_registry(ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (CORBA::Object::_nil ());
+    orb->orb_core ()->connector_registry();
 
   while (1) { // will loop on comma only.
     size_t len = 0;
@@ -158,8 +155,7 @@ TAO_CORBALOC_Parser::parse_string (const char * ior,
       {
         endpoints[ndx].profile_ =
           (*conn_iter)->corbaloc_scan(ior,len
-                                      ACE_ENV_ARG_PARAMETER);
-        ACE_CHECK_RETURN (CORBA::Object::_nil ());
+                                     );
 
         if (endpoints[ndx].profile_)
           {
@@ -167,8 +163,7 @@ TAO_CORBALOC_Parser::parse_string (const char * ior,
               (*conn_iter)->object_key_delimiter();
             uiop_compatible = (endpoints[ndx].obj_key_sep_ == '|');
             this->make_canonical (ior,len,endpoints[ndx].prot_addr_
-                                  ACE_ENV_ARG_PARAMETER);
-            ACE_CHECK_RETURN (CORBA::Object::_nil ());
+                                 );
             ior += len;
             break;
           }
@@ -231,8 +226,7 @@ TAO_CORBALOC_Parser::parse_string (const char * ior,
         endpoints[i].obj_key_sep_ +
         obj_key;
       const char * str = full_ep.c_str();
-      endpoints[i].profile_->parse_string (str ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK_RETURN (CORBA::Object::_nil ());
+      endpoints[i].profile_->parse_string (str);
       int share = orb->orb_core()->orb_params()->shared_profile();
       if (mprofile.give_profile(endpoints[i].profile_, share) != -1)
         endpoints[i].profile_ = 0;
@@ -258,8 +252,7 @@ TAO_CORBALOC_Parser::parse_string (const char * ior,
   // Get an object stub out.
   object = this->make_stub_from_mprofile (orb,
                                           mprofile
-                                          ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (CORBA::Object::_nil ());
+                                         );
 
   return object;
 }
@@ -268,7 +261,7 @@ void
 TAO_CORBALOC_Parser::make_canonical (const char *ior,
                                      size_t prot_addr_len,
                                      ACE_CString &canonical_endpoint
-                                     ACE_ENV_ARG_DECL)
+                                     )
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   const char *separator = ACE_OS::strchr (ior, ':');
@@ -359,7 +352,7 @@ TAO_CORBALOC_Parser::make_canonical (const char *ior,
                         ACE_TEXT ("TAO (%P|%t) ")
                         ACE_TEXT ("cannot determine hostname.\n")));
 
-          ACE_THROW (CORBA::INV_OBJREF
+          throw ( ::CORBA::INV_OBJREF
                      (CORBA::SystemException::_tao_minor_code
                       (TAO::VMCID, EINVAL),
                       CORBA::COMPLETED_NO));

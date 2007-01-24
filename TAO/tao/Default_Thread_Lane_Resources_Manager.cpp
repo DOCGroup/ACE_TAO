@@ -3,7 +3,6 @@
 #include "tao/Default_Thread_Lane_Resources_Manager.h"
 #include "tao/Thread_Lane_Resources.h"
 #include "tao/Exception.h"
-#include "tao/Environment.h"
 #include "tao/ORB_Core.h"
 #include "ace/Log_Msg.h"
 
@@ -28,7 +27,7 @@ TAO_Default_Thread_Lane_Resources_Manager::~TAO_Default_Thread_Lane_Resources_Ma
 }
 
 int
-TAO_Default_Thread_Lane_Resources_Manager::open_default_resources (ACE_ENV_SINGLE_ARG_DECL)
+TAO_Default_Thread_Lane_Resources_Manager::open_default_resources (void)
 {
   TAO_ORB_Parameters * const params =
     this->orb_core_->orb_params ();
@@ -43,8 +42,7 @@ TAO_Default_Thread_Lane_Resources_Manager::open_default_resources (ACE_ENV_SINGL
   int const result =
     this->lane_resources_->open_acceptor_registry (endpoint_set,
                                                    ignore_address
-                                                   ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
+                                                  );
 
   return result;
 }

@@ -64,7 +64,7 @@ typedef void (*TAO_Reply_Handler_Skeleton)(
     TAO_InputCDR &,
     Messaging::ReplyHandler_ptr,
     CORBA::ULong reply_status
-    ACE_ENV_ARG_DECL_NOT_USED
+
     );
 
 namespace TAO
@@ -89,7 +89,7 @@ namespace TAO_Messaging_Helper
            CORBA::ULong marshaled_data_length,
            CORBA::Boolean byte_order,
            CORBA::Boolean is_system_exception
-           ACE_ENV_ARG_DECL);
+          );
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL

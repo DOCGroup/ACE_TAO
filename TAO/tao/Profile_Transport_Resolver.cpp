@@ -77,25 +77,23 @@ namespace TAO
 
   void
   Profile_Transport_Resolver::resolve (ACE_Time_Value *max_time_val
-                                       ACE_ENV_ARG_DECL)
+                                       )
     ACE_THROW_SPEC ((CORBA::SystemException))
   {
     ACE_Countdown_Time countdown (max_time_val);
 
     TAO_Invocation_Endpoint_Selector *es =
       this->stub_->orb_core ()->endpoint_selector_factory ()->get_selector (
-          ACE_ENV_SINGLE_ARG_PARAMETER);
-    ACE_CHECK;
+          );
 
     // Select the endpoint
     es->select_endpoint (this,
                          max_time_val
-                         ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK;
+                        );
 
     if (this->transport_.get () == 0)
       {
-        ACE_THROW (CORBA::INTERNAL ());
+        throw ( ::CORBA::INTERNAL ());
       }
 
     const TAO_GIOP_Message_Version& version =
@@ -104,7 +102,7 @@ namespace TAO
     // Initialize the messaging object
     if (this->transport_->messaging_init (version.major, version.minor) == -1)
       {
-        ACE_THROW (CORBA::INTERNAL (
+        throw ( ::CORBA::INTERNAL (
                           CORBA::SystemException::_tao_minor_code (
                             0,
                             EINVAL),
@@ -124,20 +122,20 @@ namespace TAO
   Profile_Transport_Resolver::try_connect (
       TAO_Transport_Descriptor_Interface *desc,
        ACE_Time_Value *timeout
-       ACE_ENV_ARG_DECL
+
      )
   {
-    return this->try_connect_i (desc, timeout, 0 ACE_ENV_ARG_PARAMETER);
+    return this->try_connect_i (desc, timeout, 0);
   }
 
   bool
   Profile_Transport_Resolver::try_parallel_connect (
        TAO_Transport_Descriptor_Interface *desc,
        ACE_Time_Value *timeout
-       ACE_ENV_ARG_DECL
+
      )
   {
-    return this->try_connect_i (desc, timeout, 1 ACE_ENV_ARG_PARAMETER);
+    return this->try_connect_i (desc, timeout, 1);
   }
 
 
@@ -146,13 +144,12 @@ namespace TAO
        TAO_Transport_Descriptor_Interface *desc,
        ACE_Time_Value *timeout,
        bool parallel
-       ACE_ENV_ARG_DECL
+
      )
   {
     TAO_Connector_Registry *conn_reg =
       this->stub_->orb_core ()->connector_registry (
-        ACE_ENV_SINGLE_ARG_PARAMETER);
-    ACE_CHECK_RETURN (false);
+        );
 
     if (conn_reg == 0)
       {
@@ -188,14 +185,13 @@ namespace TAO
     if (parallel)
       {
         this->transport_.set (con->parallel_connect (this, desc, timeout
-                                                     ACE_ENV_ARG_PARAMETER));
+                                                    ));
       }
     else
       {
         this->transport_.set (con->connect (this, desc, timeout
-                                            ACE_ENV_ARG_PARAMETER));
+                                           ));
       }
-    ACE_CHECK_RETURN (false);
     // A timeout error occurred.
     // If the user has set a roundtrip timeout policy, throw a timeout
     // exception.  Otherwise, just fall through and return false to
@@ -250,7 +246,7 @@ namespace TAO
 
   void
   Profile_Transport_Resolver::init_inconsistent_policies (
-    ACE_ENV_SINGLE_ARG_DECL)
+    void)
     ACE_THROW_SPEC ((CORBA::SystemException))
   {
     ACE_NEW_THROW_EX (this->inconsistent_policies_,

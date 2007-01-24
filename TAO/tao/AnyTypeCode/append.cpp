@@ -50,14 +50,13 @@ TAO::traverse_status
 TAO_Marshal_Primitive::append (CORBA::TypeCode_ptr tc,
                                TAO_InputCDR *src,
                                TAO_OutputCDR *dest
-                               ACE_ENV_ARG_DECL)
+                               )
 {
   CORBA::Boolean continue_append = 1;
   TAO::traverse_status retval =
     TAO::TRAVERSE_CONTINUE; // status of encode operation
 
-  CORBA::TCKind const k = tc->kind (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (TAO::TRAVERSE_STOP);
+  CORBA::TCKind const k = tc->kind ();
 
   switch (k)
     {
@@ -116,7 +115,7 @@ TAO::traverse_status
 TAO_Marshal_Any::append (CORBA::TypeCode_ptr,
                          TAO_InputCDR *src,
                          TAO_OutputCDR *dest
-                         ACE_ENV_ARG_DECL)
+                         )
 {
   // Typecode of the element that makes the Any.
   CORBA::TypeCode_var elem_tc;
@@ -136,8 +135,7 @@ TAO_Marshal_Any::append (CORBA::TypeCode_ptr,
     TAO_Marshal_Object::perform_append (elem_tc.in (),
                                         src,
                                         dest
-                                        ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (TAO::TRAVERSE_STOP);
+                                       );
 
   if (retval != TAO::TRAVERSE_CONTINUE)
     {
@@ -157,7 +155,7 @@ TAO::traverse_status
 TAO_Marshal_TypeCode::append (CORBA::TypeCode_ptr,
                               TAO_InputCDR *src,
                               TAO_OutputCDR *dest
-                              ACE_ENV_ARG_DECL)
+                              )
 {
   CORBA::Boolean continue_append = 1;
   TAO::traverse_status retval =
@@ -194,8 +192,7 @@ TAO_Marshal_TypeCode::append (CORBA::TypeCode_ptr,
                   TAO_Marshal_Object::perform_append (CORBA::_tc_long,
                                                       src,
                                                       dest
-                                                      ACE_ENV_ARG_PARAMETER);
-                ACE_CHECK_RETURN (TAO::TRAVERSE_STOP);
+                                                     );
               }
             break;
 
@@ -207,8 +204,7 @@ TAO_Marshal_TypeCode::append (CORBA::TypeCode_ptr,
                   TAO_Marshal_Object::perform_append (CORBA::_tc_long,
                                                       src,
                                                       dest
-                                                      ACE_ENV_ARG_PARAMETER);
-                ACE_CHECK_RETURN (TAO::TRAVERSE_STOP);
+                                                     );
               }
             break;
 
@@ -236,8 +232,7 @@ TAO_Marshal_TypeCode::append (CORBA::TypeCode_ptr,
                   TAO_Marshal_Object::perform_append (CORBA::_tc_OctetSeq,
                                                       src,
                                                       dest
-                                                      ACE_ENV_ARG_PARAMETER);
-                ACE_CHECK_RETURN (TAO::TRAVERSE_STOP);
+                                                     );
               }
             } // end of switch
         }
@@ -275,20 +270,20 @@ TAO::traverse_status
 TAO_Marshal_Principal::append (CORBA::TypeCode_ptr,
                                TAO_InputCDR *src,
                                TAO_OutputCDR *dest
-                               ACE_ENV_ARG_DECL)
+                               )
 {
   // write the octet sequence representing the Principal
   return TAO_Marshal_Object::perform_append (CORBA::_tc_OctetSeq,
                                              src,
                                              dest
-                                             ACE_ENV_ARG_PARAMETER);
+                                            );
 }
 
 TAO::traverse_status
 TAO_Marshal_ObjRef::append (CORBA::TypeCode_ptr,
                             TAO_InputCDR *src,
                             TAO_OutputCDR *dest
-                            ACE_ENV_ARG_DECL)
+                            )
 {
   CORBA::Boolean continue_append = 1;
 
@@ -361,7 +356,7 @@ TAO::traverse_status
 TAO_Marshal_Struct::append (CORBA::TypeCode_ptr  tc,
                             TAO_InputCDR *src,
                             TAO_OutputCDR *dest
-                            ACE_ENV_ARG_DECL)
+                            )
 {
   TAO::traverse_status retval =
     TAO::TRAVERSE_CONTINUE;
@@ -369,23 +364,20 @@ TAO_Marshal_Struct::append (CORBA::TypeCode_ptr  tc,
 
   // Number of fields in the struct.
   const CORBA::ULong member_count =
-    tc->member_count (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (TAO::TRAVERSE_STOP);
+    tc->member_count ();
 
   for (CORBA::ULong i = 0;
        i < member_count && retval == TAO::TRAVERSE_CONTINUE;
        ++i)
     {
       // get member type
-      param = tc->member_type (i ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK_RETURN (TAO::TRAVERSE_STOP);
+      param = tc->member_type (i);
 
       retval =
         TAO_Marshal_Object::perform_append (param.in (),
                                             src,
                                             dest
-                                            ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK_RETURN (TAO::TRAVERSE_STOP);
+                                           );
     }
 
   if (retval == TAO::TRAVERSE_CONTINUE)
@@ -404,15 +396,13 @@ TAO::traverse_status
 TAO_Marshal_Union::append (CORBA::TypeCode_ptr tc,
                            TAO_InputCDR *src,
                            TAO_OutputCDR *dest
-                           ACE_ENV_ARG_DECL)
+                           )
 {
   CORBA::TypeCode_var discrim_tc =
-    tc->discriminator_type (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (TAO::TRAVERSE_STOP);
+    tc->discriminator_type ();
 
   CORBA::ULong kind =
-    discrim_tc->kind (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (TAO::TRAVERSE_STOP);
+    discrim_tc->kind ();
 
   // Save the discriminator value in a temporary variable...
   CORBA::Short short_v = CORBA::Short();
@@ -495,8 +485,7 @@ TAO_Marshal_Union::append (CORBA::TypeCode_ptr tc,
     }
 
   const CORBA::ULong member_count =
-    tc->member_count (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (TAO::TRAVERSE_STOP);
+    tc->member_count ();
 
   const CORBA::ULong null_member = ~static_cast<CORBA::ULong> (0U);
 
@@ -508,16 +497,14 @@ TAO_Marshal_Union::append (CORBA::TypeCode_ptr tc,
        ++i)
     {
       CORBA::Any_var any = tc->member_label (i
-                                             ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK_RETURN (TAO::TRAVERSE_STOP);
+                                            );
 
       CORBA::Octet o;
 
       if ((any >>= CORBA::Any::to_octet (o)) && o == 0)
         {
           CORBA::ULong default_index =
-            tc->default_index (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_CHECK_RETURN (TAO::TRAVERSE_STOP);
+            tc->default_index ();
 
           if (i != default_index)
             ACE_THROW_RETURN (CORBA::BAD_TYPECODE (),
@@ -631,12 +618,11 @@ TAO_Marshal_Union::append (CORBA::TypeCode_ptr tc,
         {
           // Good, use the default to append...
           CORBA::TypeCode_var member_tc =
-            tc->member_type (default_member ACE_ENV_ARG_PARAMETER);
-          ACE_CHECK_RETURN (TAO::TRAVERSE_STOP);
+            tc->member_type (default_member);
           return TAO_Marshal_Object::perform_append (member_tc.in (),
                                                      src,
                                                      dest
-                                                     ACE_ENV_ARG_PARAMETER);
+                                                    );
         }
 
       // If we're here, we have an implicit default case, and we
@@ -647,19 +633,18 @@ TAO_Marshal_Union::append (CORBA::TypeCode_ptr tc,
 
   // If we found the member successfully then just use that one...
   CORBA::TypeCode_var member_tc =
-    tc->member_type (current_member ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (TAO::TRAVERSE_STOP);
+    tc->member_type (current_member);
   return TAO_Marshal_Object::perform_append (member_tc.in (),
                                              src,
                                              dest
-                                             ACE_ENV_ARG_PARAMETER);
+                                            );
 }
 
 TAO::traverse_status
 TAO_Marshal_String::append (CORBA::TypeCode_ptr,
                             TAO_InputCDR *src,
                             TAO_OutputCDR *dest
-                            ACE_ENV_ARG_DECL)
+                            )
 {
   CORBA::Boolean continue_append = 1;
 
@@ -688,7 +673,7 @@ TAO::traverse_status
 TAO_Marshal_Sequence::append (CORBA::TypeCode_ptr  tc,
                               TAO_InputCDR *src,
                               TAO_OutputCDR *dest
-                              ACE_ENV_ARG_DECL)
+                              )
 {
   // Size of element.
   CORBA::ULong bounds;
@@ -721,14 +706,12 @@ TAO_Marshal_Sequence::append (CORBA::TypeCode_ptr  tc,
     {
       // Get element typecode.
       CORBA::TypeCode_var tc2 =
-        tc->content_type (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK_RETURN (TAO::TRAVERSE_STOP);
+        tc->content_type ();
 
       TAO::traverse_status retval =
         TAO::TRAVERSE_CONTINUE;
 
-      CORBA::TCKind kind = tc2->kind (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK_RETURN (TAO::TRAVERSE_STOP);
+      CORBA::TCKind kind = tc2->kind ();
 
       switch (kind)
         {
@@ -882,8 +865,7 @@ TAO_Marshal_Sequence::append (CORBA::TypeCode_ptr  tc,
               retval = TAO_Marshal_Object::perform_append (tc2.in (),
                                                            src,
                                                            dest
-                                                            ACE_ENV_ARG_PARAMETER);
-              ACE_CHECK_RETURN (TAO::TRAVERSE_STOP);
+                                                           );
             }
           break;
         }// end of switch
@@ -906,19 +888,16 @@ TAO::traverse_status
 TAO_Marshal_Array::append (CORBA::TypeCode_ptr  tc,
                            TAO_InputCDR *src,
                            TAO_OutputCDR *dest
-                           ACE_ENV_ARG_DECL)
+                           )
 {
   // retrieve the bounds of the array
-  CORBA::ULong bounds = tc->length (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (TAO::TRAVERSE_STOP);
+  CORBA::ULong bounds = tc->length ();
 
   // get element typecode
-  CORBA::TypeCode_var tc2 = tc->content_type (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (TAO::TRAVERSE_STOP);
+  CORBA::TypeCode_var tc2 = tc->content_type ();
 
   // For CORBA basic types, the copy can be optimized
-  CORBA::TCKind kind = tc2->kind (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (TAO::TRAVERSE_STOP);
+  CORBA::TCKind kind = tc2->kind ();
 
   // Return status.
   TAO::traverse_status retval =
@@ -1075,8 +1054,7 @@ TAO_Marshal_Array::append (CORBA::TypeCode_ptr  tc,
           retval = TAO_Marshal_Object::perform_append (tc2.in (),
                                                        src,
                                                        dest
-                                                       ACE_ENV_ARG_PARAMETER);
-          ACE_CHECK_RETURN (TAO::TRAVERSE_STOP);
+                                                      );
         }
       break;
     }// end of switch
@@ -1097,7 +1075,7 @@ TAO::traverse_status
 TAO_Marshal_Alias::append (CORBA::TypeCode_ptr  tc,
                            TAO_InputCDR *src,
                            TAO_OutputCDR *dest
-                           ACE_ENV_ARG_DECL)
+                           )
 {
   // Typecode of the aliased type.
   CORBA::TypeCode_var tc2;
@@ -1107,14 +1085,12 @@ TAO_Marshal_Alias::append (CORBA::TypeCode_ptr  tc,
   TAO::traverse_status retval =
     TAO::TRAVERSE_CONTINUE;
 
-  tc2 = tc->content_type (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (TAO::TRAVERSE_STOP);
+  tc2 = tc->content_type ();
 
   retval = TAO_Marshal_Object::perform_append (tc2.in (),
                                                src,
                                                dest
-                                               ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (TAO::TRAVERSE_STOP);
+                                              );
 
   if (retval == TAO::TRAVERSE_CONTINUE
       && continue_append == 1)
@@ -1139,7 +1115,7 @@ TAO::traverse_status
 TAO_Marshal_Except::append (CORBA::TypeCode_ptr  tc,
                             TAO_InputCDR *src,
                             TAO_OutputCDR *dest
-                            ACE_ENV_ARG_DECL)
+                            )
 {
   TAO::traverse_status retval =
     TAO::TRAVERSE_CONTINUE;
@@ -1151,8 +1127,7 @@ TAO_Marshal_Except::append (CORBA::TypeCode_ptr  tc,
 
   // Number of fields in the struct.
   const CORBA::ULong member_count =
-    tc->member_count (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (TAO::TRAVERSE_STOP);
+    tc->member_count ();
 
   for (CORBA::ULong i = 0;
        i < member_count
@@ -1160,14 +1135,12 @@ TAO_Marshal_Except::append (CORBA::TypeCode_ptr  tc,
          && continue_append == 1;
        ++i)
     {
-      param = tc->member_type (i ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK_RETURN (TAO::TRAVERSE_STOP);
+      param = tc->member_type (i);
 
       retval = TAO_Marshal_Object::perform_append (param.in (),
                                                    src,
                                                    dest
-                                                   ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK_RETURN (TAO::TRAVERSE_STOP);
+                                                  );
     }
 
   if (retval == TAO::TRAVERSE_CONTINUE
@@ -1187,7 +1160,7 @@ TAO::traverse_status
 TAO_Marshal_WString::append (CORBA::TypeCode_ptr,
                              TAO_InputCDR *src,
                              TAO_OutputCDR *dest
-                             ACE_ENV_ARG_DECL)
+                             )
 {
   CORBA::Boolean continue_append = 1;
 
@@ -1217,7 +1190,7 @@ TAO::traverse_status
 TAO_Marshal_Value::append (CORBA::TypeCode_ptr  tc,
                            TAO_InputCDR *src,
                            TAO_OutputCDR *dest
-                           ACE_ENV_ARG_DECL)
+                           )
 {
   TAO::traverse_status retval =
     TAO::TRAVERSE_CONTINUE;
@@ -1273,19 +1246,16 @@ TAO_Marshal_Value::append (CORBA::TypeCode_ptr  tc,
 
   // Handle our base valuetype if any.
   CORBA::TypeCode_var param =
-    tc->concrete_base_type (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (TAO::TRAVERSE_STOP);
+    tc->concrete_base_type ();
 
-  CORBA::TCKind const param_kind = param->kind (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (TAO::TRAVERSE_STOP);
+  CORBA::TCKind const param_kind = param->kind ();
 
   if (param_kind != CORBA::tk_null)
     {
       retval = this->append (param.in (),
                              src,
                              dest
-                             ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK_RETURN (TAO::TRAVERSE_STOP);
+                            );
 
       if (retval != TAO::TRAVERSE_CONTINUE)
         {
@@ -1295,23 +1265,20 @@ TAO_Marshal_Value::append (CORBA::TypeCode_ptr  tc,
 
   // Number of fields in the struct.
   const CORBA::ULong member_count =
-    tc->member_count (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (TAO::TRAVERSE_STOP);
+    tc->member_count ();
 
   for (CORBA::ULong i = 0;
        i < member_count && retval == TAO::TRAVERSE_CONTINUE;
        ++i)
     {
       // get member type
-      param = tc->member_type (i ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK_RETURN (TAO::TRAVERSE_STOP);
+      param = tc->member_type (i);
 
       retval =
         TAO_Marshal_Object::perform_append (param.in (),
                                             src,
                                             dest
-                                            ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK_RETURN (TAO::TRAVERSE_STOP);
+                                           );
     }
 
   if (retval == TAO::TRAVERSE_CONTINUE)

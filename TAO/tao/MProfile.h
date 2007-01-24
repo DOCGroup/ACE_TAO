@@ -17,13 +17,12 @@
 #define TAO_MPROFILE_H
 
 #include /**/ "ace/pre.h"
-#include "ace/CORBA_macros.h"
+#include "ace/Recursive_Thread_Mutex.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/Recursive_Thread_Mutex.h"
 
 #include /**/ "tao/TAO_Export.h"
 #include "tao/Basic_Types.h"
@@ -36,8 +35,6 @@ class TAO_Profile;
 namespace CORBA
 {
   class PolicyList;
-
-  class Environment;
 }
 
 typedef CORBA::ULong TAO_PHandle;
@@ -172,14 +169,13 @@ public:
    * profile and the results are averaged together.
    * NON-THREAD SAFE.
    */
-  CORBA::ULong hash (CORBA::ULong max
-                     ACE_ENV_ARG_DECL);
+  CORBA::ULong hash (CORBA::ULong max);
 
 protected:
 
   /// This method handle the dynamic allocation of the data member
   /// <policy_list_>.
- void create_policy_list (ACE_ENV_SINGLE_ARG_DECL);
+ void create_policy_list (void);
 
 public:
 
@@ -189,12 +185,12 @@ public:
 
   /// Gets the policies list associated with the profiles
   /// owned by the TAO_MProfile.
-  CORBA::PolicyList *policy_list (ACE_ENV_SINGLE_ARG_DECL);
+  CORBA::PolicyList *policy_list (void);
 
 protected:
 
   /// Initialize the policy list, demarsharling the policy.
-  void init_policy_list (ACE_ENV_SINGLE_ARG_DECL);
+  void init_policy_list (void);
 
 protected:
   /// Stores the policy list for the profile of this MProfile.

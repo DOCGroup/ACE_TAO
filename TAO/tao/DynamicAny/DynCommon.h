@@ -42,14 +42,14 @@ public:
   // = Some functions common to all Dynamic Any types.
 
   virtual CORBA::TypeCode_ptr type (
-      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+      void)
     ACE_THROW_SPEC ((
         CORBA::SystemException
       ));
 
   virtual void assign (
       DynamicAny::DynAny_ptr dyn_any
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+      )
     ACE_THROW_SPEC ((
         CORBA::SystemException,
         DynamicAny::DynAny::TypeMismatch
@@ -57,7 +57,7 @@ public:
 
   virtual void insert_boolean (
       CORBA::Boolean value
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+      )
     ACE_THROW_SPEC ((
         CORBA::SystemException,
         DynamicAny::DynAny::TypeMismatch,
@@ -66,7 +66,7 @@ public:
 
   virtual void insert_octet (
       CORBA::Octet value
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+      )
     ACE_THROW_SPEC ((
         CORBA::SystemException,
         DynamicAny::DynAny::TypeMismatch,
@@ -75,7 +75,7 @@ public:
 
   virtual void insert_char (
       CORBA::Char value
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+      )
     ACE_THROW_SPEC ((
         CORBA::SystemException,
         DynamicAny::DynAny::TypeMismatch,
@@ -83,7 +83,7 @@ public:
       ));
   virtual void insert_short (
       CORBA::Short value
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+      )
 
     ACE_THROW_SPEC ((
         CORBA::SystemException,
@@ -92,7 +92,7 @@ public:
       ));
   virtual void insert_ushort (
       CORBA::UShort value
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+      )
 
     ACE_THROW_SPEC ((
         CORBA::SystemException,
@@ -102,7 +102,7 @@ public:
 
   virtual void insert_long (
       CORBA::Long value
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+      )
     ACE_THROW_SPEC ((
         CORBA::SystemException,
         DynamicAny::DynAny::TypeMismatch,
@@ -111,7 +111,7 @@ public:
 
   virtual void insert_ulong (
       CORBA::ULong value
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+      )
     ACE_THROW_SPEC ((
         CORBA::SystemException,
         DynamicAny::DynAny::TypeMismatch,
@@ -120,7 +120,7 @@ public:
 
   virtual void insert_float (
       CORBA::Float value
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+      )
     ACE_THROW_SPEC ((
         CORBA::SystemException,
         DynamicAny::DynAny::TypeMismatch,
@@ -129,7 +129,7 @@ public:
 
   virtual void insert_double (
       CORBA::Double value
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+      )
     ACE_THROW_SPEC ((
         CORBA::SystemException,
         DynamicAny::DynAny::TypeMismatch,
@@ -138,7 +138,7 @@ public:
 
   virtual void insert_string (
       const char * value
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+      )
     ACE_THROW_SPEC ((
         CORBA::SystemException,
         DynamicAny::DynAny::TypeMismatch,
@@ -147,7 +147,7 @@ public:
 
   virtual void insert_reference (
       CORBA::Object_ptr value
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+      )
     ACE_THROW_SPEC ((
         CORBA::SystemException,
         DynamicAny::DynAny::TypeMismatch,
@@ -156,7 +156,7 @@ public:
 
   virtual void insert_typecode (
       CORBA::TypeCode_ptr value
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+      )
     ACE_THROW_SPEC ((
         CORBA::SystemException,
         DynamicAny::DynAny::TypeMismatch,
@@ -165,7 +165,7 @@ public:
 
   virtual void insert_longlong (
       CORBA::LongLong value
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+      )
     ACE_THROW_SPEC ((
         CORBA::SystemException,
         DynamicAny::DynAny::TypeMismatch,
@@ -174,7 +174,7 @@ public:
 
   virtual void insert_ulonglong (
       CORBA::ULongLong value
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+      )
     ACE_THROW_SPEC ((
         CORBA::SystemException,
         DynamicAny::DynAny::TypeMismatch,
@@ -183,7 +183,7 @@ public:
 
   virtual void insert_longdouble (
       CORBA::LongDouble value
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+      )
     ACE_THROW_SPEC ((
         CORBA::SystemException,
         DynamicAny::DynAny::TypeMismatch,
@@ -192,7 +192,7 @@ public:
 
   virtual void insert_wchar (
       CORBA::WChar value
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+      )
     ACE_THROW_SPEC ((
         CORBA::SystemException,
         DynamicAny::DynAny::TypeMismatch,
@@ -201,7 +201,7 @@ public:
 
   virtual void insert_wstring (
       const CORBA::WChar * value
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+      )
     ACE_THROW_SPEC ((
         CORBA::SystemException,
         DynamicAny::DynAny::TypeMismatch,
@@ -210,7 +210,7 @@ public:
 
   virtual void insert_any (
       const CORBA::Any & value
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+      )
     ACE_THROW_SPEC ((
         CORBA::SystemException,
         DynamicAny::DynAny::TypeMismatch,
@@ -219,7 +219,7 @@ public:
 
   virtual void insert_dyn_any (
       DynamicAny::DynAny_ptr value
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+      )
     ACE_THROW_SPEC ((
         CORBA::SystemException,
         DynamicAny::DynAny::TypeMismatch,
@@ -228,7 +228,7 @@ public:
 
   virtual void insert_val (
       CORBA::ValueBase * value
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+      )
     ACE_THROW_SPEC ((
         CORBA::SystemException,
         DynamicAny::DynAny::TypeMismatch,
@@ -236,7 +236,7 @@ public:
       ));
 
   virtual CORBA::Boolean get_boolean (
-      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+      void)
     ACE_THROW_SPEC ((
         CORBA::SystemException,
         DynamicAny::DynAny::TypeMismatch,
@@ -244,7 +244,7 @@ public:
       ));
 
   virtual CORBA::Octet get_octet (
-      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+      void)
     ACE_THROW_SPEC ((
         CORBA::SystemException,
         DynamicAny::DynAny::TypeMismatch,
@@ -252,7 +252,7 @@ public:
       ));
 
   virtual CORBA::Char get_char (
-      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+      void)
     ACE_THROW_SPEC ((
         CORBA::SystemException,
         DynamicAny::DynAny::TypeMismatch,
@@ -260,7 +260,7 @@ public:
       ));
 
   virtual CORBA::Short get_short (
-      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+      void)
     ACE_THROW_SPEC ((
         CORBA::SystemException,
         DynamicAny::DynAny::TypeMismatch,
@@ -268,7 +268,7 @@ public:
       ));
 
   virtual CORBA::UShort get_ushort (
-      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+      void)
     ACE_THROW_SPEC ((
         CORBA::SystemException,
         DynamicAny::DynAny::TypeMismatch,
@@ -276,7 +276,7 @@ public:
       ));
 
   virtual CORBA::Long get_long (
-      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+      void)
     ACE_THROW_SPEC ((
         CORBA::SystemException,
         DynamicAny::DynAny::TypeMismatch,
@@ -284,7 +284,7 @@ public:
       ));
 
   virtual CORBA::ULong get_ulong (
-      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+      void)
     ACE_THROW_SPEC ((
         CORBA::SystemException,
         DynamicAny::DynAny::TypeMismatch,
@@ -292,7 +292,7 @@ public:
       ));
 
   virtual CORBA::Float get_float (
-      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+      void)
     ACE_THROW_SPEC ((
         CORBA::SystemException,
         DynamicAny::DynAny::TypeMismatch,
@@ -300,7 +300,7 @@ public:
       ));
 
   virtual CORBA::Double get_double (
-      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+      void)
     ACE_THROW_SPEC ((
         CORBA::SystemException,
         DynamicAny::DynAny::TypeMismatch,
@@ -308,7 +308,7 @@ public:
       ));
 
   virtual char * get_string (
-      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+      void)
     ACE_THROW_SPEC ((
         CORBA::SystemException,
         DynamicAny::DynAny::TypeMismatch,
@@ -316,7 +316,7 @@ public:
       ));
 
   virtual CORBA::Object_ptr get_reference (
-      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+      void)
     ACE_THROW_SPEC ((
         CORBA::SystemException,
         DynamicAny::DynAny::TypeMismatch,
@@ -324,7 +324,7 @@ public:
       ));
 
   virtual CORBA::TypeCode_ptr get_typecode (
-      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+      void)
     ACE_THROW_SPEC ((
         CORBA::SystemException,
         DynamicAny::DynAny::TypeMismatch,
@@ -332,7 +332,7 @@ public:
       ));
 
   virtual CORBA::LongLong get_longlong (
-      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+      void)
     ACE_THROW_SPEC ((
         CORBA::SystemException,
         DynamicAny::DynAny::TypeMismatch,
@@ -340,7 +340,7 @@ public:
       ));
 
   virtual CORBA::ULongLong get_ulonglong (
-      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+      void)
     ACE_THROW_SPEC ((
         CORBA::SystemException,
         DynamicAny::DynAny::TypeMismatch,
@@ -348,7 +348,7 @@ public:
       ));
 
   virtual CORBA::LongDouble get_longdouble (
-      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+      void)
     ACE_THROW_SPEC ((
         CORBA::SystemException,
         DynamicAny::DynAny::TypeMismatch,
@@ -356,7 +356,7 @@ public:
       ));
 
   virtual CORBA::WChar get_wchar (
-      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+      void)
     ACE_THROW_SPEC ((
         CORBA::SystemException,
         DynamicAny::DynAny::TypeMismatch,
@@ -364,7 +364,7 @@ public:
       ));
 
   virtual CORBA::WChar * get_wstring (
-      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+      void)
     ACE_THROW_SPEC ((
         CORBA::SystemException,
         DynamicAny::DynAny::TypeMismatch,
@@ -372,7 +372,7 @@ public:
       ));
 
   virtual CORBA::Any * get_any (
-      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+      void)
     ACE_THROW_SPEC ((
         CORBA::SystemException,
         DynamicAny::DynAny::TypeMismatch,
@@ -380,7 +380,7 @@ public:
       ));
 
   virtual DynamicAny::DynAny_ptr get_dyn_any (
-      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+      void)
     ACE_THROW_SPEC ((
         CORBA::SystemException,
         DynamicAny::DynAny::TypeMismatch,
@@ -388,7 +388,7 @@ public:
       ));
 
   virtual CORBA::ValueBase * get_val (
-      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+      void)
     ACE_THROW_SPEC ((
         CORBA::SystemException,
         DynamicAny::DynAny::TypeMismatch,
@@ -397,38 +397,38 @@ public:
 
   virtual CORBA::Boolean seek (
       CORBA::Long index
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+      )
     ACE_THROW_SPEC ((
         CORBA::SystemException
       ));
 
   virtual void rewind (
-      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+      void)
     ACE_THROW_SPEC ((
         CORBA::SystemException
       ));
 
   virtual CORBA::Boolean next (
-      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+      void)
     ACE_THROW_SPEC ((
         CORBA::SystemException
       ));
 
   virtual DynamicAny::DynAny_ptr copy (
-      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+      void)
     ACE_THROW_SPEC ((
         CORBA::SystemException
       ));
 
   virtual CORBA::ULong component_count (
-      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+      void)
     ACE_THROW_SPEC ((
         CORBA::SystemException
       ));
 
   virtual void insert_abstract (
       CORBA::AbstractBase_ptr value
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+      )
     ACE_THROW_SPEC ((
         CORBA::SystemException,
         DynamicAny::DynAny::TypeMismatch,
@@ -436,7 +436,7 @@ public:
       ));
 
   virtual CORBA::AbstractBase_ptr get_abstract (
-      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+      void)
     ACE_THROW_SPEC ((
         CORBA::SystemException,
         DynamicAny::DynAny::TypeMismatch,
@@ -445,7 +445,7 @@ public:
 
   virtual void insert_boolean_seq (
       const CORBA::BooleanSeq & value
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+      )
     ACE_THROW_SPEC ((
         CORBA::SystemException,
         DynamicAny::DynAny::TypeMismatch,
@@ -454,7 +454,7 @@ public:
 
   virtual void insert_octet_seq (
       const CORBA::OctetSeq & value
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+      )
     ACE_THROW_SPEC ((
         CORBA::SystemException,
         DynamicAny::DynAny::TypeMismatch,
@@ -463,7 +463,7 @@ public:
 
   virtual void insert_char_seq (
       const CORBA::CharSeq & value
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+      )
     ACE_THROW_SPEC ((
         CORBA::SystemException,
         DynamicAny::DynAny::TypeMismatch,
@@ -472,7 +472,7 @@ public:
 
   virtual void insert_short_seq (
       const CORBA::ShortSeq & value
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+      )
     ACE_THROW_SPEC ((
         CORBA::SystemException,
         DynamicAny::DynAny::TypeMismatch,
@@ -481,7 +481,7 @@ public:
 
   virtual void insert_ushort_seq (
       const CORBA::UShortSeq & value
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+      )
     ACE_THROW_SPEC ((
         CORBA::SystemException,
         DynamicAny::DynAny::TypeMismatch,
@@ -490,7 +490,7 @@ public:
 
   virtual void insert_long_seq (
       const CORBA::LongSeq & value
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+      )
     ACE_THROW_SPEC ((
         CORBA::SystemException,
         DynamicAny::DynAny::TypeMismatch,
@@ -499,7 +499,7 @@ public:
 
   virtual void insert_ulong_seq (
       const CORBA::ULongSeq & value
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+      )
     ACE_THROW_SPEC ((
         CORBA::SystemException,
         DynamicAny::DynAny::TypeMismatch,
@@ -508,7 +508,7 @@ public:
 
   virtual void insert_float_seq (
       const CORBA::FloatSeq & value
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+      )
     ACE_THROW_SPEC ((
         CORBA::SystemException,
         DynamicAny::DynAny::TypeMismatch,
@@ -517,7 +517,7 @@ public:
 
   virtual void insert_double_seq (
       const CORBA::DoubleSeq & value
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+      )
     ACE_THROW_SPEC ((
         CORBA::SystemException,
         DynamicAny::DynAny::TypeMismatch,
@@ -526,7 +526,7 @@ public:
 
   virtual void insert_longlong_seq (
       const CORBA::LongLongSeq & value
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+      )
     ACE_THROW_SPEC ((
         CORBA::SystemException,
         DynamicAny::DynAny::TypeMismatch,
@@ -535,7 +535,7 @@ public:
 
   virtual void insert_ulonglong_seq (
       const CORBA::ULongLongSeq & value
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+      )
     ACE_THROW_SPEC ((
         CORBA::SystemException,
         DynamicAny::DynAny::TypeMismatch,
@@ -544,7 +544,7 @@ public:
 
   virtual void insert_longdouble_seq (
       const CORBA::LongDoubleSeq & value
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+      )
     ACE_THROW_SPEC ((
         CORBA::SystemException,
         DynamicAny::DynAny::TypeMismatch,
@@ -553,7 +553,7 @@ public:
 
   virtual void insert_wchar_seq (
       const CORBA::WCharSeq & value
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+      )
     ACE_THROW_SPEC ((
         CORBA::SystemException,
         DynamicAny::DynAny::TypeMismatch,
@@ -561,7 +561,7 @@ public:
       ));
 
   virtual CORBA::BooleanSeq * get_boolean_seq (
-      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+      void)
     ACE_THROW_SPEC ((
         CORBA::SystemException,
         DynamicAny::DynAny::TypeMismatch,
@@ -569,7 +569,7 @@ public:
       ));
 
   virtual CORBA::OctetSeq * get_octet_seq (
-      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+      void)
     ACE_THROW_SPEC ((
         CORBA::SystemException,
         DynamicAny::DynAny::TypeMismatch,
@@ -577,7 +577,7 @@ public:
       ));
 
   virtual CORBA::CharSeq * get_char_seq (
-      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+      void)
     ACE_THROW_SPEC ((
         CORBA::SystemException,
         DynamicAny::DynAny::TypeMismatch,
@@ -585,7 +585,7 @@ public:
       ));
 
   virtual CORBA::ShortSeq * get_short_seq (
-      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+      void)
     ACE_THROW_SPEC ((
         CORBA::SystemException,
         DynamicAny::DynAny::TypeMismatch,
@@ -593,7 +593,7 @@ public:
       ));
 
   virtual CORBA::UShortSeq * get_ushort_seq (
-      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+      void)
     ACE_THROW_SPEC ((
         CORBA::SystemException,
         DynamicAny::DynAny::TypeMismatch,
@@ -601,7 +601,7 @@ public:
       ));
 
   virtual CORBA::LongSeq * get_long_seq (
-      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+      void)
     ACE_THROW_SPEC ((
         CORBA::SystemException,
         DynamicAny::DynAny::TypeMismatch,
@@ -609,7 +609,7 @@ public:
       ));
 
   virtual CORBA::ULongSeq * get_ulong_seq (
-      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+      void)
     ACE_THROW_SPEC ((
         CORBA::SystemException,
         DynamicAny::DynAny::TypeMismatch,
@@ -617,7 +617,7 @@ public:
       ));
 
   virtual CORBA::FloatSeq * get_float_seq (
-      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+      void)
     ACE_THROW_SPEC ((
         CORBA::SystemException,
         DynamicAny::DynAny::TypeMismatch,
@@ -625,7 +625,7 @@ public:
       ));
 
   virtual CORBA::DoubleSeq * get_double_seq (
-      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+      void)
     ACE_THROW_SPEC ((
         CORBA::SystemException,
         DynamicAny::DynAny::TypeMismatch,
@@ -633,7 +633,7 @@ public:
       ));
 
   virtual CORBA::LongLongSeq * get_longlong_seq (
-      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+      void)
     ACE_THROW_SPEC ((
         CORBA::SystemException,
         DynamicAny::DynAny::TypeMismatch,
@@ -641,7 +641,7 @@ public:
       ));
 
   virtual CORBA::ULongLongSeq * get_ulonglong_seq (
-      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+      void)
     ACE_THROW_SPEC ((
         CORBA::SystemException,
         DynamicAny::DynAny::TypeMismatch,
@@ -649,7 +649,7 @@ public:
       ));
 
   virtual CORBA::LongDoubleSeq * get_longdouble_seq (
-      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+      void)
     ACE_THROW_SPEC ((
         CORBA::SystemException,
         DynamicAny::DynAny::TypeMismatch,
@@ -657,7 +657,7 @@ public:
       ));
 
   virtual CORBA::WCharSeq * get_wchar_seq (
-      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+      void)
     ACE_THROW_SPEC ((
         CORBA::SystemException,
         DynamicAny::DynAny::TypeMismatch,
@@ -676,7 +676,7 @@ public:
   void set_flag (
       DynamicAny::DynAny_ptr component,
       CORBA::Boolean destroying
-      ACE_ENV_ARG_DECL
+
     )
     ACE_THROW_SPEC ((
         CORBA::SystemException
@@ -684,7 +684,7 @@ public:
 
   // Utility functions.
 
-  DynamicAny::DynAny_ptr check_component (ACE_ENV_SINGLE_ARG_DECL)
+  DynamicAny::DynAny_ptr check_component (void)
     ACE_THROW_SPEC ((
         CORBA::SystemException,
         DynamicAny::DynAny::TypeMismatch,
@@ -692,7 +692,7 @@ public:
       ));
 
   void check_type (CORBA::TypeCode_ptr tc
-                   ACE_ENV_ARG_DECL)
+                   )
     ACE_THROW_SPEC ((
         CORBA::SystemException,
         DynamicAny::DynAny::TypeMismatch
@@ -741,7 +741,7 @@ private:
   // Utility functions used by insert_* and get_*.
 
   CORBA::TypeCode_ptr check_type_and_unalias (CORBA::TypeCode_ptr tc
-                                              ACE_ENV_ARG_DECL)
+                                              )
     ACE_THROW_SPEC ((
         CORBA::SystemException,
         DynamicAny::DynAny::TypeMismatch

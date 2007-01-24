@@ -36,46 +36,42 @@ TAO_Adapter_Registry::~TAO_Adapter_Registry (void)
 
 void
 TAO_Adapter_Registry::close (int wait_for_completion
-                             ACE_ENV_ARG_DECL)
+                             )
 {
-  ACE_TRY
+  try
     {
       for (size_t i = 0; i != this->adapters_count_; ++i)
         {
           this->adapters_[i]->close (wait_for_completion
-                                     ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+                                    );
         }
     }
-  ACE_CATCHANY
+  catch ( ::CORBA::Exception& ex)
     {
       if (TAO_debug_level > 3)
         {
-          ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
+          ACE_PRINT_EXCEPTION (ex,
                                "Exception in TAO_Adapter_Registry::close ()");
         }
       return;
     }
-  ACE_ENDTRY;
 
   return;
 }
 
 void
-TAO_Adapter_Registry::check_close (int wait_for_completion
-                                   ACE_ENV_ARG_DECL)
+TAO_Adapter_Registry::check_close (int wait_for_completion)
 {
   for (size_t i = 0; i != this->adapters_count_; ++i)
     {
       this->adapters_[i]->check_close (wait_for_completion
-                                       ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+                                      );
     }
 }
 
 void
 TAO_Adapter_Registry::insert (TAO_Adapter *adapter
-                              ACE_ENV_ARG_DECL)
+                              )
 {
   if (this->adapters_capacity_ == this->adapters_count_)
     {
@@ -84,7 +80,6 @@ TAO_Adapter_Registry::insert (TAO_Adapter *adapter
       ACE_NEW_THROW_EX (tmp,
                         TAO_Adapter*[this->adapters_capacity_],
                         CORBA::NO_MEMORY ());
-      ACE_CHECK;
 
       for (size_t i = 0; i != this->adapters_count_; ++i)
         tmp[i] = this->adapters_[i];
@@ -115,15 +110,14 @@ void
 TAO_Adapter_Registry::dispatch (TAO::ObjectKey &key,
                                 TAO_ServerRequest &request,
                                 CORBA::Object_out forward_to
-                                ACE_ENV_ARG_DECL)
+                                )
 {
   for (size_t i = 0; i != this->adapters_count_; ++i)
     {
       int const r = this->adapters_[i]->dispatch (key,
                                                   request,
                                                   forward_to
-                                                  ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
+                                                 );
 
       if (r != TAO_Adapter::DS_MISMATCHED_KEY)
         {
@@ -133,7 +127,7 @@ TAO_Adapter_Registry::dispatch (TAO::ObjectKey &key,
 
   if (CORBA::is_nil (forward_to))
     {
-      ACE_THROW (CORBA::OBJECT_NOT_EXIST ());
+      throw ::CORBA::OBJECT_NOT_EXIST ();
     }
 }
 

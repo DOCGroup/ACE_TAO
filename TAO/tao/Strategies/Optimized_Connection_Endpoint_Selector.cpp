@@ -21,7 +21,8 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_Time_Value TAO_Optimized_Connection_Endpoint_Selector::timeout_;
 
-TAO_Optimized_Connection_Endpoint_Selector::TAO_Optimized_Connection_Endpoint_Selector (const ACE_Time_Value &tv)
+TAO_Optimized_Connection_Endpoint_Selector::
+TAO_Optimized_Connection_Endpoint_Selector (const ACE_Time_Value &tv)
 {
   TAO_Optimized_Connection_Endpoint_Selector::timeout_ = tv;
   if (TAO_debug_level)
@@ -38,7 +39,8 @@ TAO_Optimized_Connection_Endpoint_Selector::TAO_Optimized_Connection_Endpoint_Se
     }
 }
 
-TAO_Optimized_Connection_Endpoint_Selector::~TAO_Optimized_Connection_Endpoint_Selector (void)
+TAO_Optimized_Connection_Endpoint_Selector::
+~TAO_Optimized_Connection_Endpoint_Selector (void)
 {
 }
 
@@ -78,9 +80,8 @@ TAO_Optimized_Connection_Endpoint_Selector::check_profile (TAO_Profile *p,
 
 void
 TAO_Optimized_Connection_Endpoint_Selector::select_endpoint
-  ( TAO::Profile_Transport_Resolver *r,
-    ACE_Time_Value *max_wait_time
-    ACE_ENV_ARG_DECL)
+  (TAO::Profile_Transport_Resolver *r,
+   ACE_Time_Value *max_wait_time)
 {
   TAO_Stub *stub = r->stub();
   TAO_Profile *p = stub->profile_in_use();
@@ -155,8 +156,7 @@ TAO_Optimized_Connection_Endpoint_Selector::select_endpoint
               const bool retval =
                 r->try_connect (&desc,
                                 max_wait_time
-                                ACE_ENV_ARG_PARAMETER);
-              ACE_CHECK;
+                               );
 
               // Check if the connect has completed.
               if (retval)
@@ -171,7 +171,7 @@ TAO_Optimized_Connection_Endpoint_Selector::select_endpoint
 
   // If we get here, we completely failed to find an endpoint selector
   // that we know how to use, so throw an exception.
-  ACE_THROW (CORBA::TRANSIENT (CORBA::OMGVMCID | 2,
+  throw ( ::CORBA::TRANSIENT (CORBA::OMGVMCID | 2,
                                CORBA::COMPLETED_NO));
 }
 

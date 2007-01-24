@@ -41,27 +41,26 @@ TAO_ORB_Manager::TAO_ORB_Manager (CORBA::ORB_ptr orb,
 int
 TAO_ORB_Manager::init (int &argc,
                        char **argv
-                       ACE_ENV_ARG_DECL)
+                       )
 {
   return this->init (argc,
                      argv,
                      0
-                     ACE_ENV_ARG_PARAMETER);
+                    );
 }
 
 int
 TAO_ORB_Manager::init (int &argc,
                        char **argv,
                        const char *orb_name
-                       ACE_ENV_ARG_DECL)
+                       )
 {
   if (CORBA::is_nil (this->orb_.in ()))
     {
       this->orb_ = CORBA::ORB_init (argc,
                                     argv,
                                     orb_name
-                                    ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK_RETURN (-1);
+                                   );
     }
 
   if (CORBA::is_nil (this->poa_.in ()))
@@ -69,8 +68,7 @@ TAO_ORB_Manager::init (int &argc,
       // Get the POA from the ORB.
       CORBA::Object_var poa_object =
         this->orb_->resolve_initial_references (TAO_OBJID_ROOTPOA
-                                                ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK_RETURN (-1);
+                                               );
 
       if (CORBA::is_nil (poa_object.in ()))
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -80,18 +78,16 @@ TAO_ORB_Manager::init (int &argc,
       // Get the POA object.
       this->poa_ =
         PortableServer::POA::_narrow (poa_object.in ()
-                                      ACE_ENV_ARG_PARAMETER);
+                                     );
 
-      ACE_CHECK_RETURN (-1);
     }
 
   if (CORBA::is_nil (this->poa_manager_.in ()))
     {
       // Get the POA_Manager.
       this->poa_manager_ =
-        this->poa_->the_POAManager (ACE_ENV_SINGLE_ARG_PARAMETER);
+        this->poa_->the_POAManager ();
 
-      ACE_CHECK_RETURN (-1);
     }
 
   return 0;
@@ -103,14 +99,13 @@ TAO_ORB_Manager::init_child_poa (int& argc,
                                  char **argv,
                                  const char *poa_name,
                                  const char *orb_name
-                                 ACE_ENV_ARG_DECL)
+                                 )
 {
   // check to see if root poa has to be created.
   int init_result = this->init (argc,
                                 argv,
                                 orb_name
-                                ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
+                               );
 
   if (init_result == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
@@ -125,14 +120,12 @@ TAO_ORB_Manager::init_child_poa (int& argc,
   // Id Assignment policy
   policies[0] =
     this->poa_->create_id_assignment_policy (PortableServer::USER_ID
-                                             ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
+                                            );
 
   // Lifespan policy
   policies[1] =
     this->poa_->create_lifespan_policy (PortableServer::PERSISTENT
-                                        ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
+                                       );
 
   // We use a different POA, otherwise the user would have to change
   // the object key each time it invokes the server.
@@ -141,10 +134,9 @@ TAO_ORB_Manager::init_child_poa (int& argc,
     this->poa_->create_POA (poa_name,
                             this->poa_manager_.in (),
                             policies
-                            ACE_ENV_ARG_PARAMETER);
+                           );
   // Warning!  If create_POA fails, then the policies won't be
   // destroyed and there will be hell to pay in memory leaks!
-  ACE_CHECK_RETURN (-1);
 
   // Creation of the new POAs over, so destroy the Policy_ptr's.
   for (CORBA::ULong i = 0;
@@ -152,8 +144,7 @@ TAO_ORB_Manager::init_child_poa (int& argc,
        ++i)
     {
       CORBA::Policy_ptr policy = policies[i];
-      policy->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK_RETURN (-1);
+      policy->destroy ();
     }
   return 0;
 }
@@ -162,10 +153,9 @@ TAO_ORB_Manager::init_child_poa (int& argc,
 // Activate POA manager.
 
 int
-TAO_ORB_Manager::activate_poa_manager (ACE_ENV_SINGLE_ARG_DECL)
+TAO_ORB_Manager::activate_poa_manager (void)
 {
-  this->poa_manager_->activate (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
+  this->poa_manager_->activate ();
   return 0;
 }
 
@@ -173,42 +163,37 @@ TAO_ORB_Manager::activate_poa_manager (ACE_ENV_SINGLE_ARG_DECL)
 
 char *
 TAO_ORB_Manager::activate (PortableServer::Servant servant
-                           ACE_ENV_ARG_DECL)
+                           )
 {
   PortableServer::ObjectId_var id =
     this->poa_->activate_object (servant
-                                 ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (0);
+                                );
 
   CORBA::Object_var obj =
     this->poa_->id_to_reference (id.in ()
-                                 ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (0);
+                                );
 
   CORBA::String_var str =
     this->orb_->object_to_string (obj.in ()
-                                  ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (0);
+                                 );
 
   return str._retn ();
 }
 
 void
 TAO_ORB_Manager::deactivate (const char *id
-                             ACE_ENV_ARG_DECL)
+                             )
 {
   CORBA::Object_var object =
     this->orb_->string_to_object (id
-                                  ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+                                 );
 
   PortableServer::ObjectId_var object_id =
     this->poa_->reference_to_id (object.in ()
-                                 ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+                                );
 
   this->poa_->deactivate_object (object_id.in ()
-                                 ACE_ENV_ARG_PARAMETER);
+                                );
 }
 
 #if !defined (CORBA_E_MICRO)
@@ -216,7 +201,7 @@ TAO_ORB_Manager::deactivate (const char *id
 char *
 TAO_ORB_Manager::activate_under_child_poa (const char *object_name,
                                            PortableServer::Servant servant
-                                           ACE_ENV_ARG_DECL)
+                                           )
 {
   if (object_name == 0)
     ACE_ERROR_RETURN ((LM_ERROR,
@@ -229,39 +214,34 @@ TAO_ORB_Manager::activate_under_child_poa (const char *object_name,
 
   this->child_poa_->activate_object_with_id (id.in (),
                                              servant
-                                             ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (0);
+                                            );
 
   CORBA::Object_var obj =
     this->child_poa_->id_to_reference (id.in ()
-                                       ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (0);
+                                      );
 
   char * str =
     this->orb_->object_to_string (obj.in ()
-                                  ACE_ENV_ARG_PARAMETER);
+                                 );
 
-  ACE_CHECK_RETURN (0);
 
   return str;
 }
 
 void
 TAO_ORB_Manager::deactivate_under_child_poa (const char *id
-                                             ACE_ENV_ARG_DECL)
+                                             )
 {
   CORBA::Object_var object =
     this->orb_->string_to_object (id
-                                  ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+                                 );
 
   PortableServer::ObjectId_var object_id =
     this->child_poa_->reference_to_id (object.in ()
-                                       ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+                                      );
 
   this->child_poa_->deactivate_object (object_id.in ()
-                                       ACE_ENV_ARG_PARAMETER);
+                                      );
 }
 #endif /* CORBA_E_MICRO */
 
@@ -269,40 +249,34 @@ TAO_ORB_Manager::deactivate_under_child_poa (const char *id
 
 int
 TAO_ORB_Manager::run (ACE_Time_Value &tv
-                      ACE_ENV_ARG_DECL)
+                      )
 {
-  this->poa_manager_->activate (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
+  this->poa_manager_->activate ();
 
-  this->orb_->run (tv ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
+  this->orb_->run (tv);
 
   return 0;
 }
 
 int
-TAO_ORB_Manager::fini (ACE_ENV_SINGLE_ARG_DECL)
+TAO_ORB_Manager::fini (void)
 {
-  this->poa_->destroy (1, 1 ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
+  this->poa_->destroy (1, 1);
 
   this->poa_ = 0;
 
-  this->orb_->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
+  this->orb_->destroy ();
 
   this->orb_ = 0;
   return 0;
 }
 
 int
-TAO_ORB_Manager::run (ACE_ENV_SINGLE_ARG_DECL)
+TAO_ORB_Manager::run (void)
 {
-  this->poa_manager_->activate (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
+  this->poa_manager_->activate ();
 
-  this->orb_->run (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
+  this->orb_->run ();
 
   return 0;
 }
@@ -339,21 +313,19 @@ TAO_ORB_Manager::poa_manager (void)
 
 TAO_ORB_Manager::~TAO_ORB_Manager (void)
 {
-  ACE_TRY_NEW_ENV
+  try
     {
       if (!CORBA::is_nil (this->poa_.in ()))
         {
           this->poa_->destroy (1,
                                1
-                               ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+                              );
         }
     }
-  ACE_CATCHANY
+  catch ( ::CORBA::Exception&)
     {
       // ignore any exceptions..
     }
-  ACE_ENDTRY;
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL

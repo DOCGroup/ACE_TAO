@@ -29,7 +29,7 @@ TAO_Default_Endpoint_Selector::~TAO_Default_Endpoint_Selector (void)
 void
 TAO_Default_Endpoint_Selector::select_endpoint (TAO::Profile_Transport_Resolver *r,
                                                 ACE_Time_Value *max_wait_time
-                                                ACE_ENV_ARG_DECL)
+                                                )
 {
   do
     {
@@ -53,8 +53,7 @@ TAO_Default_Endpoint_Selector::select_endpoint (TAO::Profile_Transport_Resolver 
               bool success =
                 r->try_parallel_connect (&desc,
                                          max_wait_time
-                                         ACE_ENV_ARG_PARAMETER);
-              ACE_CHECK;
+                                        );
 
               // Check if the connect has completed.
               if (success)
@@ -76,8 +75,7 @@ TAO_Default_Endpoint_Selector::select_endpoint (TAO::Profile_Transport_Resolver 
               bool retval =
                 r->try_connect (&desc,
                                 max_wait_time
-                                ACE_ENV_ARG_PARAMETER);
-              ACE_CHECK;
+                               );
 
               // Check if the connect has completed.
               if (retval)
@@ -91,7 +89,7 @@ TAO_Default_Endpoint_Selector::select_endpoint (TAO::Profile_Transport_Resolver 
 
   // If we get here, we completely failed to find an endpoint selector
   // that we know how to use, so throw an exception.
-  ACE_THROW (CORBA::TRANSIENT (CORBA::OMGVMCID | 2,
+  throw ( ::CORBA::TRANSIENT (CORBA::OMGVMCID | 2,
                                CORBA::COMPLETED_NO));
 }
 

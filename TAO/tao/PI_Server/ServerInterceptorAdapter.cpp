@@ -34,12 +34,12 @@ TAO::ServerRequestInterceptor_Adapter_Impl::tao_ft_interception_point (
   CORBA::TypeCode_ptr const * exceptions,
   CORBA::ULong nexceptions,
   CORBA::OctetSeq_out oc
-  ACE_ENV_ARG_DECL)
+  )
 {
   // This method implements one of the "starting" server side
   // interception point.
 
-  ACE_TRY
+  try
     {
       oc = 0;
 
@@ -61,8 +61,7 @@ TAO::ServerRequestInterceptor_Adapter_Impl::tao_ft_interception_point (
               registered.interceptor_->
                 tao_ft_interception_point (&request_info,
                                            oc
-                                           ACE_ENV_ARG_PARAMETER);
-              ACE_TRY_CHECK;
+                                          );
             }
 
           if (oc != 0)
@@ -73,8 +72,7 @@ TAO::ServerRequestInterceptor_Adapter_Impl::tao_ft_interception_point (
                                        servant_upcall,
                                        exceptions,
                                        nexceptions
-                                       ACE_ENV_ARG_PARAMETER);
-              ACE_TRY_CHECK;
+                                      );
 
               return;
             }
@@ -84,7 +82,7 @@ TAO::ServerRequestInterceptor_Adapter_Impl::tao_ft_interception_point (
           ++server_request.interceptor_count ();
         }
     }
-  ACE_CATCH (PortableInterceptor::ForwardRequest, exc)
+  catch ( ::PortableInterceptor::ForwardRequest& exc)
     {
       server_request.forward_location (exc.forward.in ());
       server_request.reply_status (PortableInterceptor::LOCATION_FORWARD);
@@ -94,11 +92,8 @@ TAO::ServerRequestInterceptor_Adapter_Impl::tao_ft_interception_point (
                                servant_upcall,
                                exceptions,
                                nexceptions
-                               ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+                              );
     }
-  ACE_ENDTRY;
-  ACE_CHECK;
 }
 
 void
@@ -109,7 +104,7 @@ TAO::ServerRequestInterceptor_Adapter_Impl::receive_request_service_contexts (
   void * servant_upcall,
   CORBA::TypeCode_ptr const * exceptions,
   CORBA::ULong nexceptions
-  ACE_ENV_ARG_DECL)
+  )
 {
   // This method implements one of the "intermediate" server side
   // interception point.
@@ -124,10 +119,10 @@ TAO::ServerRequestInterceptor_Adapter_Impl::receive_request_service_contexts (
       // evaluates to "true," then it is likely that a starting
       // interception point was never invoked.  This is of course, an
       // internal error that must be corrected.
-      ACE_THROW (CORBA::INTERNAL ());
+      throw ( ::CORBA::INTERNAL ());
     }
 
-  ACE_TRY
+  try
     {
       // Copy the request scope current (RSC) to the thread scope
       // current (TSC) upon leaving this scope, i.e. just after the
@@ -153,12 +148,11 @@ TAO::ServerRequestInterceptor_Adapter_Impl::receive_request_service_contexts (
             {
               registered.interceptor_->
                 receive_request_service_contexts (&request_info
-                                                  ACE_ENV_ARG_PARAMETER);
-              ACE_TRY_CHECK;
+                                                 );
             }
         }
     }
-  ACE_CATCH (PortableInterceptor::ForwardRequest, exc)
+  catch ( ::PortableInterceptor::ForwardRequest& exc)
     {
       server_request.forward_location (exc.forward.in ());
       server_request.reply_status (PortableInterceptor::LOCATION_FORWARD);
@@ -168,11 +162,8 @@ TAO::ServerRequestInterceptor_Adapter_Impl::receive_request_service_contexts (
                                servant_upcall,
                                exceptions,
                                nexceptions
-                               ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+                              );
     }
-  ACE_ENDTRY;
-  ACE_CHECK;
 }
 
 #elif TAO_HAS_EXTENDED_FT_INTERCEPTORS == 0
@@ -188,12 +179,12 @@ TAO::ServerRequestInterceptor_Adapter_Impl::receive_request_service_contexts (
   void * servant_upcall,
   CORBA::TypeCode_ptr const * exceptions,
   CORBA::ULong nexceptions
-  ACE_ENV_ARG_DECL)
+  )
 {
   // This method implements one of the "starting" server side
   // interception point if extended interceptors are not in place.
 
-  ACE_TRY
+  try
     {
       // Copy the request scope current (RSC) to the thread scope
       // current (TSC) upon leaving this scope, i.e. just after the
@@ -220,8 +211,7 @@ TAO::ServerRequestInterceptor_Adapter_Impl::receive_request_service_contexts (
             {
               registered.interceptor_->
                 receive_request_service_contexts (&request_info
-                                                  ACE_ENV_ARG_PARAMETER);
-              ACE_TRY_CHECK;
+                                                 );
             }
 
           // The starting interception point completed successfully.
@@ -229,7 +219,7 @@ TAO::ServerRequestInterceptor_Adapter_Impl::receive_request_service_contexts (
           ++server_request.interceptor_count ();
         }
     }
-  ACE_CATCH (PortableInterceptor::ForwardRequest, exc)
+  catch ( ::PortableInterceptor::ForwardRequest& exc)
     {
       server_request.forward_location (exc.forward.in ());
       server_request.reply_status (PortableInterceptor::LOCATION_FORWARD);
@@ -239,11 +229,8 @@ TAO::ServerRequestInterceptor_Adapter_Impl::receive_request_service_contexts (
                                servant_upcall,
                                exceptions,
                                nexceptions
-                               ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+                              );
     }
-  ACE_ENDTRY;
-  ACE_CHECK;
 }
 
 #endif /*TAO_HAS_EXTENDED_FT_INTERCEPTORS*/
@@ -256,7 +243,7 @@ TAO::ServerRequestInterceptor_Adapter_Impl::receive_request (
   void * servant_upcall,
   CORBA::TypeCode_ptr const * exceptions,
   CORBA::ULong nexceptions
-  ACE_ENV_ARG_DECL)
+  )
 {
   // This method implements an "intermediate" server side interception
   // point.  Interceptors are invoked in the same order they were
@@ -272,7 +259,7 @@ TAO::ServerRequestInterceptor_Adapter_Impl::receive_request (
       // evaluates to "true," then it is likely that a starting
       // interception point was never invoked.  This is of course, an
       // internal error that must be corrected.
-      ACE_THROW (CORBA::INTERNAL ());
+      throw ( ::CORBA::INTERNAL ());
     }
 
   TAO::ServerRequestInfo request_info (server_request,
@@ -282,7 +269,7 @@ TAO::ServerRequestInterceptor_Adapter_Impl::receive_request (
                                        exceptions,
                                        nexceptions);
 
-  ACE_TRY
+  try
     {
       bool is_remote_request = !server_request.collocated ();
 
@@ -295,8 +282,7 @@ TAO::ServerRequestInterceptor_Adapter_Impl::receive_request (
             {
               registered.interceptor_->
                 receive_request (&request_info
-                                 ACE_ENV_ARG_PARAMETER);
-              ACE_TRY_CHECK;
+                                );
             }
 
           // Note that no interceptors are pushed on to or popped off
@@ -304,7 +290,7 @@ TAO::ServerRequestInterceptor_Adapter_Impl::receive_request (
           // an intermediate interception point.
         }
     }
-  ACE_CATCH (PortableInterceptor::ForwardRequest, exc)
+  catch ( ::PortableInterceptor::ForwardRequest& exc)
     {
       server_request.forward_location (exc.forward.in ());
       server_request.reply_status (PortableInterceptor::LOCATION_FORWARD);
@@ -314,11 +300,8 @@ TAO::ServerRequestInterceptor_Adapter_Impl::receive_request (
                         servant_upcall,
                         exceptions,
                         nexceptions
-                        ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+                       );
     }
-  ACE_ENDTRY;
-  ACE_CHECK;
 
 }
 
@@ -330,7 +313,7 @@ TAO::ServerRequestInterceptor_Adapter_Impl::send_reply (
   void * servant_upcall,
   CORBA::TypeCode_ptr const * exceptions,
   CORBA::ULong nexceptions
-  ACE_ENV_ARG_DECL)
+  )
 {
   // This is an "ending" interception point so we only process the
   // interceptors pushed on to the flow stack.
@@ -366,8 +349,7 @@ TAO::ServerRequestInterceptor_Adapter_Impl::send_reply (
         {
           registered.interceptor_->
             send_reply (&request_info
-                        ACE_ENV_ARG_PARAMETER);
-          ACE_CHECK;
+                       );
         }
     }
 
@@ -384,7 +366,7 @@ TAO::ServerRequestInterceptor_Adapter_Impl::send_exception (
   void * servant_upcall,
   CORBA::TypeCode_ptr const * exceptions,
   CORBA::ULong nexceptions
-  ACE_ENV_ARG_DECL)
+  )
 {
   // This is an "ending" server side interception point so we only
   // process the interceptors pushed on to the flow stack.
@@ -402,7 +384,7 @@ TAO::ServerRequestInterceptor_Adapter_Impl::send_exception (
                                        exceptions,
                                        nexceptions);
 
-  ACE_TRY
+  try
     {
       // Unwind the flow stack.
       size_t const len = server_request.interceptor_count ();
@@ -422,12 +404,11 @@ TAO::ServerRequestInterceptor_Adapter_Impl::send_exception (
             {
               registered.interceptor_->
                 send_exception (&request_info
-                                ACE_ENV_ARG_PARAMETER);
-              ACE_TRY_CHECK;
+                               );
             }
         }
     }
-  ACE_CATCH (PortableInterceptor::ForwardRequest, exc)
+  catch ( ::PortableInterceptor::ForwardRequest& exc)
     {
       server_request.forward_location (exc.forward.in ());
       server_request.reply_status (PortableInterceptor::LOCATION_FORWARD);
@@ -437,10 +418,9 @@ TAO::ServerRequestInterceptor_Adapter_Impl::send_exception (
                         servant_upcall,
                         exceptions,
                         nexceptions
-                        ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+                       );
     }
-  ACE_CATCHANY
+  catch ( ::CORBA::Exception& ex)
     {
       // The send_exception() interception point in the remaining
       // interceptors must be called so call this method (not the
@@ -460,8 +440,7 @@ TAO::ServerRequestInterceptor_Adapter_Impl::send_exception (
                             servant_upcall,
                             exceptions,
                             nexceptions
-                            ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+                           );
 
       PortableInterceptor::ReplyStatus status =
         server_request.reply_status ();
@@ -471,10 +450,8 @@ TAO::ServerRequestInterceptor_Adapter_Impl::send_exception (
       // LOCATION_FORWARD).
       if (status == PortableInterceptor::SYSTEM_EXCEPTION
           || status == PortableInterceptor::USER_EXCEPTION)
-        ACE_RE_THROW;
+        throw;
     }
-  ACE_ENDTRY;
-  ACE_CHECK;
 }
 
 void
@@ -485,7 +462,7 @@ TAO::ServerRequestInterceptor_Adapter_Impl::send_other (
   void * servant_upcall,
   CORBA::TypeCode_ptr const * exceptions,
   CORBA::ULong nexceptions
-  ACE_ENV_ARG_DECL)
+  )
 {
   // This is an "ending" server side interception point so we only
   // process the interceptors pushed on to the flow stack.
@@ -503,7 +480,7 @@ TAO::ServerRequestInterceptor_Adapter_Impl::send_other (
   // they were pushed onto the stack since this is an "ending" server
   // side interception point.
 
-  ACE_TRY
+  try
     {
       // Unwind the flow stack.
       size_t const len = server_request.interceptor_count ();
@@ -523,12 +500,11 @@ TAO::ServerRequestInterceptor_Adapter_Impl::send_other (
             {
               registered.interceptor_->
                 send_other (&request_info
-                            ACE_ENV_ARG_PARAMETER);
-              ACE_TRY_CHECK;
+                           );
             }
         }
     }
-  ACE_CATCH (PortableInterceptor::ForwardRequest, exc)
+  catch ( ::PortableInterceptor::ForwardRequest& exc)
     {
       server_request.forward_location (exc.forward.in ());
       server_request.reply_status (PortableInterceptor::LOCATION_FORWARD);
@@ -538,37 +514,34 @@ TAO::ServerRequestInterceptor_Adapter_Impl::send_other (
                         servant_upcall,
                         exceptions,
                         nexceptions
-                        ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+                       );
     }
-  ACE_ENDTRY;
-  ACE_CHECK;
 }
 
 void
 TAO::ServerRequestInterceptor_Adapter_Impl::add_interceptor (
   PortableInterceptor::ServerRequestInterceptor_ptr interceptor
-  ACE_ENV_ARG_DECL)
+  )
 {
-  this->interceptor_list_.add_interceptor (interceptor ACE_ENV_ARG_PARAMETER);
+  this->interceptor_list_.add_interceptor (interceptor);
 }
 
 void
 TAO::ServerRequestInterceptor_Adapter_Impl::add_interceptor (
   PortableInterceptor::ServerRequestInterceptor_ptr interceptor,
   const CORBA::PolicyList& policies
-  ACE_ENV_ARG_DECL)
+  )
 {
   this->interceptor_list_.add_interceptor (interceptor,
                                            policies
-                                           ACE_ENV_ARG_PARAMETER);
+                                          );
 }
 
 void
 TAO::ServerRequestInterceptor_Adapter_Impl::destroy_interceptors (
-  ACE_ENV_SINGLE_ARG_DECL)
+  void)
 {
-  this->interceptor_list_.destroy_interceptors (ACE_ENV_SINGLE_ARG_PARAMETER);
+  this->interceptor_list_.destroy_interceptors ();
 }
 
 TAO::PICurrent_Impl *
@@ -592,14 +565,13 @@ void
 TAO::ServerRequestInterceptor_Adapter_Impl::execute_command (
   TAO_ServerRequest & server_request,
   TAO::Upcall_Command & command
-  ACE_ENV_ARG_DECL)
+  )
 {
   TAO::PICurrent_Guard const pi_guard (server_request,
                                        true  /* Copy TSC to RSC */);
 
   // The actual upcall.
-  command.execute (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+  command.execute ();
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL

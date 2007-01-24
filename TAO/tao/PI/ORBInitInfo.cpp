@@ -76,11 +76,10 @@ TAO_ORBInitInfo::~TAO_ORBInitInfo (void)
 }
 
 CORBA::StringSeq *
-TAO_ORBInitInfo::arguments (ACE_ENV_SINGLE_ARG_DECL)
+TAO_ORBInitInfo::arguments (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  this->check_validity (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (0);
+  this->check_validity ();
 
   // In accordance with the C++ mapping for sequences, it is up to the
   // caller to deallocate storage for returned sequences.
@@ -93,7 +92,6 @@ TAO_ORBInitInfo::arguments (ACE_ENV_SINGLE_ARG_DECL)
                         0,
                         ENOMEM),
                       CORBA::COMPLETED_NO));
-  ACE_CHECK_RETURN (0);
 
   CORBA::StringSeq_var safe_args (args);
 
@@ -107,11 +105,10 @@ TAO_ORBInitInfo::arguments (ACE_ENV_SINGLE_ARG_DECL)
 }
 
 char *
-TAO_ORBInitInfo::orb_id (ACE_ENV_SINGLE_ARG_DECL)
+TAO_ORBInitInfo::orb_id (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  this->check_validity (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (0);
+  this->check_validity ();
 
   // In accordance with the C++ mapping for strings, return a copy.
 
@@ -119,7 +116,7 @@ TAO_ORBInitInfo::orb_id (ACE_ENV_SINGLE_ARG_DECL)
 }
 
 IOP::CodecFactory_ptr
-TAO_ORBInitInfo::codec_factory (ACE_ENV_SINGLE_ARG_DECL)
+TAO_ORBInitInfo::codec_factory (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   if (CORBA::is_nil (this->codec_factory_.in ()))
@@ -141,8 +138,7 @@ TAO_ORBInitInfo::codec_factory (ACE_ENV_SINGLE_ARG_DECL)
       if (loader != 0)
         {
           CORBA::Object_var cf =
-            loader->create_object (this->orb_core_->orb (), 0, 0 ACE_ENV_ARG_PARAMETER);
-          ACE_CHECK_RETURN (IOP::CodecFactory::_nil ());
+            loader->create_object (this->orb_core_->orb (), 0, 0);
 
           this->codec_factory_ = IOP::CodecFactory::_narrow (cf.in ());
         }
@@ -155,37 +151,33 @@ void
 TAO_ORBInitInfo::register_initial_reference (
     const char * id,
     CORBA::Object_ptr obj
-    ACE_ENV_ARG_DECL)
+    )
   ACE_THROW_SPEC ((CORBA::SystemException,
                    PortableInterceptor::ORBInitInfo::InvalidName))
 {
-  this->check_validity (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+  this->check_validity ();
 
   if (id == 0 || ACE_OS::strlen (id) == 0)
-    ACE_THROW (PortableInterceptor::ORBInitInfo::InvalidName ());
-  ACE_CHECK;
+    throw (PortableInterceptor::ORBInitInfo::InvalidName ());
 
   if (CORBA::is_nil (obj))
-    ACE_THROW (CORBA::BAD_PARAM (CORBA::OMGVMCID | 27,
+    throw ( ::CORBA::BAD_PARAM (CORBA::OMGVMCID | 27,
                                  CORBA::COMPLETED_NO));
-  ACE_CHECK;
 
   TAO_Object_Ref_Table &table = this->orb_core_->object_ref_table ();
 
   if (table.register_initial_reference (id, obj) == -1)
-    ACE_THROW (PortableInterceptor::ORBInitInfo::InvalidName ());
+    throw (PortableInterceptor::ORBInitInfo::InvalidName ());
 }
 
 CORBA::Object_ptr
 TAO_ORBInitInfo::resolve_initial_references (
     const char * id
-    ACE_ENV_ARG_DECL)
+    )
   ACE_THROW_SPEC ((CORBA::SystemException,
                    PortableInterceptor::ORBInitInfo::InvalidName))
 {
-  this->check_validity (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (CORBA::Object::_nil ());
+  this->check_validity ();
 
   if (id == 0 || ACE_OS::strlen (id) == 0)
     ACE_THROW_RETURN (PortableInterceptor::ORBInitInfo::InvalidName (),
@@ -196,25 +188,23 @@ TAO_ORBInitInfo::resolve_initial_references (
   // mechanism.
   return
     this->orb_core_->orb ()->resolve_initial_references (id
-                                                         ACE_ENV_ARG_PARAMETER);
+                                                        );
 }
 
 void
 TAO_ORBInitInfo::add_client_request_interceptor (
     PortableInterceptor::ClientRequestInterceptor_ptr interceptor
-    ACE_ENV_ARG_DECL)
+    )
   ACE_THROW_SPEC ((CORBA::SystemException,
                    PortableInterceptor::ORBInitInfo::DuplicateName))
 {
 # if TAO_HAS_INTERCEPTORS == 1
-  this->check_validity (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+  this->check_validity ();
 
-  this->orb_core_->add_interceptor (interceptor ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+  this->orb_core_->add_interceptor (interceptor);
 #else
   ACE_UNUSED_ARG (interceptor);
-  ACE_THROW (CORBA::NO_IMPLEMENT (
+  throw ( ::CORBA::NO_IMPLEMENT (
                CORBA::SystemException::_tao_minor_code (
                  0,
                  ENOTSUP),
@@ -225,20 +215,18 @@ TAO_ORBInitInfo::add_client_request_interceptor (
 void
 TAO_ORBInitInfo::add_server_request_interceptor (
     PortableInterceptor::ServerRequestInterceptor_ptr interceptor
-    ACE_ENV_ARG_DECL)
+    )
   ACE_THROW_SPEC ((CORBA::SystemException,
                    PortableInterceptor::ORBInitInfo::DuplicateName))
 {
 # if TAO_HAS_INTERCEPTORS == 1
-  this->check_validity (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+  this->check_validity ();
 
-  this->orb_core_->add_interceptor (interceptor ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+  this->orb_core_->add_interceptor (interceptor);
 
 #else
   ACE_UNUSED_ARG (interceptor);
-  ACE_THROW (CORBA::NO_IMPLEMENT (
+  throw ( ::CORBA::NO_IMPLEMENT (
                CORBA::SystemException::_tao_minor_code (
                  0,
                  ENOTSUP),
@@ -249,37 +237,35 @@ TAO_ORBInitInfo::add_server_request_interceptor (
 void
 TAO_ORBInitInfo::add_ior_interceptor (
     PortableInterceptor::IORInterceptor_ptr interceptor
-    ACE_ENV_ARG_DECL)
+    )
   ACE_THROW_SPEC ((CORBA::SystemException,
                    PortableInterceptor::ORBInitInfo::DuplicateName))
 {
-  this->check_validity (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+  this->check_validity ();
 
   this->orb_core_->add_interceptor (interceptor
-                                     ACE_ENV_ARG_PARAMETER);
+                                    );
 }
 
 void
 TAO_ORBInitInfo::add_client_request_interceptor_with_policy (
     PortableInterceptor::ClientRequestInterceptor_ptr interceptor,
     const CORBA::PolicyList& policies
-    ACE_ENV_ARG_DECL)
+    )
   ACE_THROW_SPEC ((CORBA::SystemException,
                    PortableInterceptor::ORBInitInfo::DuplicateName,
                    CORBA::PolicyError))
 {
 # if TAO_HAS_INTERCEPTORS == 1
-  this->check_validity (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+  this->check_validity ();
 
   this->orb_core_->add_interceptor (interceptor,
                                     policies
-                                    ACE_ENV_ARG_PARAMETER);
+                                   );
 #else
   ACE_UNUSED_ARG (interceptor);
   ACE_UNUSED_ARG (policies);
-  ACE_THROW (CORBA::NO_IMPLEMENT (
+  throw ( ::CORBA::NO_IMPLEMENT (
                CORBA::SystemException::_tao_minor_code (
                  0,
                  ENOTSUP),
@@ -291,23 +277,22 @@ void
 TAO_ORBInitInfo::add_server_request_interceptor_with_policy (
     PortableInterceptor::ServerRequestInterceptor_ptr interceptor,
     const CORBA::PolicyList& policies
-    ACE_ENV_ARG_DECL)
+    )
   ACE_THROW_SPEC ((CORBA::SystemException,
                    PortableInterceptor::ORBInitInfo::DuplicateName,
                    CORBA::PolicyError))
 {
 # if TAO_HAS_INTERCEPTORS == 1
-  this->check_validity (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+  this->check_validity ();
 
   this->orb_core_->add_interceptor (interceptor,
                                     policies
-                                    ACE_ENV_ARG_PARAMETER);
+                                   );
 
 #else
   ACE_UNUSED_ARG (interceptor);
   ACE_UNUSED_ARG (policies);
-  ACE_THROW (CORBA::NO_IMPLEMENT (
+  throw ( ::CORBA::NO_IMPLEMENT (
                CORBA::SystemException::_tao_minor_code (
                  0,
                  ENOTSUP),
@@ -319,13 +304,12 @@ void
 TAO_ORBInitInfo::add_ior_interceptor_with_policy (
     PortableInterceptor::IORInterceptor_ptr interceptor,
     const CORBA::PolicyList& policies
-    ACE_ENV_ARG_DECL)
+    )
   ACE_THROW_SPEC ((CORBA::SystemException,
                    PortableInterceptor::ORBInitInfo::DuplicateName,
                    CORBA::PolicyError))
 {
-  this->check_validity (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+  this->check_validity ();
 
   // Since there are currently no PI Policies that pertain to
   // IOR Interceptors, we will always raise the NO_IMPLEMENT
@@ -333,7 +317,7 @@ TAO_ORBInitInfo::add_ior_interceptor_with_policy (
   // is currently not implemented/supported.
   ACE_UNUSED_ARG (interceptor);
   ACE_UNUSED_ARG (policies);
-  ACE_THROW (CORBA::NO_IMPLEMENT (
+  throw ( ::CORBA::NO_IMPLEMENT (
                CORBA::SystemException::_tao_minor_code (
                  0,
                  ENOTSUP),
@@ -341,11 +325,10 @@ TAO_ORBInitInfo::add_ior_interceptor_with_policy (
 }
 
 PortableInterceptor::SlotId
-TAO_ORBInitInfo::allocate_slot_id (ACE_ENV_SINGLE_ARG_DECL)
+TAO_ORBInitInfo::allocate_slot_id (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  this->check_validity (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (0);
+  this->check_validity ();
 
 #if TAO_HAS_INTERCEPTORS == 1
   // No need to acquire a lock.  This only gets called during ORB
@@ -365,32 +348,30 @@ void
 TAO_ORBInitInfo::register_policy_factory (
     CORBA::PolicyType type,
     PortableInterceptor::PolicyFactory_ptr policy_factory
-    ACE_ENV_ARG_DECL)
+    )
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  this->check_validity (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+  this->check_validity ();
 
   TAO::PolicyFactory_Registry_Adapter *registry =
     this->orb_core_->policy_factory_registry ();
 
   if (registry == 0)
     {
-      ACE_THROW (CORBA::INTERNAL ());
+      throw ( ::CORBA::INTERNAL ());
     }
 
   registry->register_policy_factory (type,
                                      policy_factory
-                                      ACE_ENV_ARG_PARAMETER);
+                                     );
 }
 
 size_t
 TAO_ORBInitInfo::allocate_tss_slot_id (ACE_CLEANUP_FUNC cleanup
-                                       ACE_ENV_ARG_DECL)
+                                       )
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  this->check_validity (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (0);
+  this->check_validity ();
 
   size_t slot_id = 0;
 
@@ -409,7 +390,7 @@ TAO_ORBInitInfo::allocate_tss_slot_id (ACE_CLEANUP_FUNC cleanup
 }
 
 void
-TAO_ORBInitInfo::check_validity (ACE_ENV_SINGLE_ARG_DECL)
+TAO_ORBInitInfo::check_validity (void)
 {
   if (this->orb_core_ == 0)
     {
@@ -419,23 +400,22 @@ TAO_ORBInitInfo::check_validity (ACE_ENV_SINGLE_ARG_DECL)
       // this instance to zero when it is done initializing the ORB,
       // which is why we base "existence" on the validity of the ORB
       // core pointer.
-      ACE_THROW (CORBA::OBJECT_NOT_EXIST (0,
+      throw ( ::CORBA::OBJECT_NOT_EXIST (0,
                                           CORBA::COMPLETED_NO));
     }
 }
 
 CORBA::ORB_ptr
-TAO_ORBInitInfo::_get_orb (ACE_ENV_SINGLE_ARG_DECL)
+TAO_ORBInitInfo::_get_orb (void)
 {
-  this->check_validity (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (CORBA::ORB::_nil ());
+  this->check_validity ();
 
   return CORBA::ORB::_duplicate (this->orb_core_->orb ());
 }
 
 TAO_ORBInitInfo_ptr TAO_ORBInitInfo::_narrow (
     CORBA::Object_ptr _tao_objref
-    ACE_ENV_ARG_DECL_NOT_USED
+
   )
 {
   if (CORBA::is_nil (_tao_objref))

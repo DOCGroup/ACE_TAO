@@ -17,11 +17,11 @@
 
 #include "tao/Queued_Message.h"
 
-#include "ace/Time_Value.h"
-
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
+
+#include "ace/Time_Value.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_Message_Block;
@@ -45,7 +45,7 @@ public:
    *
    * @param alloc Allocator used for creating @c this object.
    *
-   * @param timeout The relative timeout after which this 
+   * @param timeout The relative timeout after which this
    * message should be expired.
    *
    * @todo I'm almost sure this class will require a callback

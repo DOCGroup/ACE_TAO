@@ -52,7 +52,7 @@ namespace TAO
   {
   public:
     void apply_policies (const CORBA::PolicyList& policies
-                         ACE_ENV_ARG_DECL);
+                        );
   };
 }
 

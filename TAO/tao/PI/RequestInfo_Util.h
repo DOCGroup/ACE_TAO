@@ -34,7 +34,6 @@ namespace CORBA
 {
   class StringSeq;
   class Any;
-  class Environment;
 }
 
 namespace Dynamic
@@ -66,19 +65,19 @@ public:
    */
   //@{
   static Dynamic::ParameterList * make_parameter_list (
-    ACE_ENV_SINGLE_ARG_DECL);
+    void);
 
   static Dynamic::ExceptionList * make_exception_list (
-    ACE_ENV_SINGLE_ARG_DECL);
+    void);
 
   static Dynamic::ContextList * make_context_list (
-    ACE_ENV_SINGLE_ARG_DECL);
+    void);
 
   static Dynamic::RequestContext * make_request_context (
-    ACE_ENV_SINGLE_ARG_DECL);
+    void);
 
   static CORBA::Any * make_any (CORBA::Boolean tk_void_any
-                                ACE_ENV_ARG_DECL);
+                               );
   //@}
 };
 

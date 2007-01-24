@@ -37,7 +37,7 @@ TAO_DynAnyFactory::TAO_DynAnyFactory (void)
 DynamicAny::DynAny_ptr
 TAO_DynAnyFactory::create_dyn_any (
       const CORBA::Any & value
-      ACE_ENV_ARG_DECL
+
     )
   ACE_THROW_SPEC ((
       CORBA::SystemException,
@@ -53,7 +53,7 @@ TAO_DynAnyFactory::create_dyn_any (
 DynamicAny::DynAny_ptr
 TAO_DynAnyFactory::create_dyn_any_from_type_code (
       CORBA::TypeCode_ptr type
-      ACE_ENV_ARG_DECL
+
     )
   ACE_THROW_SPEC ((
       CORBA::SystemException,
@@ -71,7 +71,7 @@ TAO_DynAnyFactory::create_dyn_any_from_type_code (
 DynamicAny::DynAny_ptr
 TAO_DynAnyFactory::create_dyn_any_without_truncation (
     const CORBA::Any & /* value */
-    ACE_ENV_ARG_DECL
+
   )
   ACE_THROW_SPEC ((
       CORBA::SystemException,
@@ -87,7 +87,7 @@ DynamicAny::DynAnySeq *
 TAO_DynAnyFactory::create_multiple_dyn_anys (
     const DynamicAny::AnySeq & /* values */,
     ::CORBA::Boolean /* allow_truncate */
-    ACE_ENV_ARG_DECL
+
   )
   ACE_THROW_SPEC ((
       CORBA::SystemException,
@@ -101,7 +101,7 @@ TAO_DynAnyFactory::create_multiple_dyn_anys (
 DynamicAny::AnySeq *
 TAO_DynAnyFactory::create_multiple_anys (
     const DynamicAny::DynAnySeq & /* values */
-    ACE_ENV_ARG_DECL
+
   )
   ACE_THROW_SPEC ((
       CORBA::SystemException
@@ -109,25 +109,22 @@ TAO_DynAnyFactory::create_multiple_anys (
 {
   ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (), 0);
 }
-      
+
 // Utility function called by all the DynAny classes
 // to extract the TCKind of possibly aliased types.
 CORBA::TCKind
 TAO_DynAnyFactory::unalias (CORBA::TypeCode_ptr tc
-                            ACE_ENV_ARG_DECL)
+                            )
 {
-  CORBA::TCKind tck = tc->kind (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (CORBA::tk_null);
+  CORBA::TCKind tck = tc->kind ();
 
   while (tck == CORBA::tk_alias)
     {
       CORBA::TypeCode_var temp =
-        tc->content_type (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK_RETURN (CORBA::tk_null);
+        tc->content_type ();
 
       tck = TAO_DynAnyFactory::unalias (temp.in ()
-                                        ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK_RETURN (CORBA::tk_null);
+                                       );
     }
 
   return tck;
@@ -136,19 +133,16 @@ TAO_DynAnyFactory::unalias (CORBA::TypeCode_ptr tc
 // Same as above, but returns the type code.
 CORBA::TypeCode_ptr
 TAO_DynAnyFactory::strip_alias (CORBA::TypeCode_ptr tc
-                                ACE_ENV_ARG_DECL)
+                                )
 {
   CORBA::TypeCode_var retval = CORBA::TypeCode::_duplicate (tc);
-  CORBA::TCKind tck = retval->kind (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (CORBA::TypeCode::_nil ());
+  CORBA::TCKind tck = retval->kind ();
 
   while (tck == CORBA::tk_alias)
     {
-      retval = retval->content_type (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK_RETURN (CORBA::TypeCode::_nil ());
+      retval = retval->content_type ();
 
-      tck = retval->kind (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK_RETURN (CORBA::TypeCode::_nil ());
+      tck = retval->kind ();
     }
 
   return retval._retn ();

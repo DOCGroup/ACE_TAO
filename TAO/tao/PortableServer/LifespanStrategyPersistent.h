@@ -36,11 +36,11 @@ namespace TAO
     public:
       LifespanStrategyPersistent ();
 
-      virtual void strategy_init(TAO_Root_POA *poa ACE_ENV_ARG_DECL);
+      virtual void strategy_init(TAO_Root_POA *poa);
 
-      virtual void notify_startup (ACE_ENV_SINGLE_ARG_DECL);
+      virtual void notify_startup (void);
 
-      virtual void notify_shutdown (ACE_ENV_SINGLE_ARG_DECL);
+      virtual void notify_shutdown (void);
 
       char key_type (void) const;
 
@@ -55,7 +55,7 @@ namespace TAO
                 const TAO::Portable_Server::Temporary_Creation_Time& creation_time) const;
 
       /// Check the state of the POA.
-      virtual void check_state (ACE_ENV_SINGLE_ARG_DECL);
+      virtual void check_state (void);
 
       virtual ::PortableServer::LifespanPolicyValue type() const;
 

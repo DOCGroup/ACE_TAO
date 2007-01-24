@@ -70,9 +70,9 @@ protected:
   /// request_id().
   CORBA::ULong request_id_generator_;
 
-  /// If 0 then the request id and reply dispatcher below are
+  /// If false then the request id and reply dispatcher below are
   /// meaningless
-  int has_request_;
+  bool has_request_;
 
   /// Request id for the current request.
   CORBA::ULong request_id_;

@@ -83,12 +83,12 @@ CORBA::ServerRequest::~ServerRequest (void)
 // inout/out/return values later on.
 void
 CORBA::ServerRequest::arguments (CORBA::NVList_ptr &list
-                                 ACE_ENV_ARG_DECL)
+                                 )
 {
   // arguments() must be called before either of these.
   if (this->params_ != 0 || this->exception_ != 0)
     {
-      ACE_THROW (CORBA::BAD_INV_ORDER (CORBA::OMGVMCID | 7, CORBA::COMPLETED_NO));
+      throw ( ::CORBA::BAD_INV_ORDER (CORBA::OMGVMCID | 7, CORBA::COMPLETED_NO));
     }
 
   // Save params for later use when marshaling the reply.
@@ -97,8 +97,7 @@ CORBA::ServerRequest::arguments (CORBA::NVList_ptr &list
   this->params_->_tao_incoming_cdr (*this->orb_server_request_.incoming (),
                                     CORBA::ARG_IN | CORBA::ARG_INOUT,
                                     this->lazy_evaluation_
-                                    ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+                                   );
 
   // Pass this alignment back to the TAO_ServerRequest.
   this->orb_server_request_.dsi_nvlist_align (
@@ -111,22 +110,21 @@ CORBA::ServerRequest::arguments (CORBA::NVList_ptr &list
 // only after the parameter list has been provided (maybe empty).
 void
 CORBA::ServerRequest::set_result (const CORBA::Any &value
-                                  ACE_ENV_ARG_DECL)
+                                  )
 {
   // Setting a result when another result already exists or if an exception
   // exists or before the args have been processeed is an error.
   if (this->retval_ != 0 || this->exception_ != 0 || this->params_ == 0)
     {
-      ACE_THROW (CORBA::BAD_INV_ORDER (CORBA::OMGVMCID | 8, CORBA::COMPLETED_NO));
+      throw ( ::CORBA::BAD_INV_ORDER (CORBA::OMGVMCID | 8, CORBA::COMPLETED_NO));
     }
 
   ACE_NEW_THROW_EX (this->retval_,
                     CORBA::Any (value),
                     CORBA::NO_MEMORY ());
-  ACE_CHECK;
 }
 
-  // NOTE: if "ACE_ENV_SINGLE_ARG_PARAMETER" is set, there has been a system exception,
+  // NOTE: if "" is set, there has been a system exception,
   // and it will take precedence over exceptions reported using the
   // set_exception() mechanism of the ServerRequest, which we assume
   // the application writer will use to report only user exceptions.
@@ -136,25 +134,23 @@ CORBA::ServerRequest::set_result (const CORBA::Any &value
 // Store the exception value.
 void
 CORBA::ServerRequest::set_exception (const CORBA::Any &value
-                                     ACE_ENV_ARG_DECL)
+                                     )
 {
   CORBA::TypeCode_var tc = value.type ();
 
-  CORBA::TCKind const kind = tc->kind (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+  CORBA::TCKind const kind = tc->kind ();
 
   // set_exception() can be called at any time, but the Any arg MUST
   // contain an exception.
   if (kind != CORBA::tk_except)
     {
-      ACE_THROW (CORBA::BAD_PARAM (CORBA::OMGVMCID | 21,
+      throw ( ::CORBA::BAD_PARAM (CORBA::OMGVMCID | 21,
                                    CORBA::COMPLETED_MAYBE));
     }
 
   ACE_NEW_THROW_EX (this->exception_,
                     CORBA::Any (value),
                     CORBA::NO_MEMORY ());
-  ACE_CHECK;
 
   this->orb_server_request_.exception_type (TAO_GIOP_USER_EXCEPTION);
 }
@@ -162,7 +158,7 @@ CORBA::ServerRequest::set_exception (const CORBA::Any &value
 // This method will be utilized by the DSI servant to marshal outgoing
 // parameters.
 void
-CORBA::ServerRequest::dsi_marshal (ACE_ENV_SINGLE_ARG_DECL)
+CORBA::ServerRequest::dsi_marshal (void)
 {
   // There was a user exception, no need to marshal any parameters.
   if (this->sent_gateway_exception_)
@@ -194,9 +190,8 @@ CORBA::ServerRequest::dsi_marshal (ACE_ENV_SINGLE_ARG_DECL)
           this->params_->_tao_encode (
                              *this->orb_server_request_.outgoing (),
                              CORBA::ARG_INOUT | CORBA::ARG_OUT
-                             ACE_ENV_ARG_PARAMETER
+
                            );
-          ACE_CHECK;
         }
     }
   else

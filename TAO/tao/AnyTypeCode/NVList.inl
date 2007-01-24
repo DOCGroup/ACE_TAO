@@ -99,11 +99,10 @@ CORBA::NVList::NVList (void)
 
 ACE_INLINE
 CORBA::ULong
-CORBA::NVList::count (ACE_ENV_SINGLE_ARG_DECL) const
+CORBA::NVList::count (void) const
 {
   (const_cast<CORBA::NVList *> (this))->evaluate (
-    ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (0);
+    );
 
   return this->max_;
 }

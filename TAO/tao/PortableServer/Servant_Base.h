@@ -68,35 +68,35 @@ public:
 
   /// Returns the default POA for this servant.
   virtual PortableServer::POA_ptr _default_POA (
-      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
+      void
     );
 
   /// Local implementation of the CORBA::Object::_is_a method.
   virtual CORBA::Boolean _is_a (const char *logical_type_id
-                                ACE_ENV_ARG_DECL_WITH_DEFAULTS);
+                                );
 
   /// Default _non_existent: always returns false.
   virtual CORBA::Boolean _non_existent (
-      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
+      void
     );
 
   /// Query the Interface Repository for the interface definition.
   virtual CORBA::InterfaceDef_ptr _get_interface (
-      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
+      void
     );
 
   /// Default _get_component: always returns CORBA::Object::_nil().
   virtual CORBA::Object_ptr _get_component (
-      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
+      void
     );
 
   /// Get the repository id.
   virtual char * _repository_id (
-      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
+      void
     );
 
   /// This is an auxiliary method for _this() and _narrow().
-  virtual TAO_Stub *_create_stub (ACE_ENV_SINGLE_ARG_DECL);
+  virtual TAO_Stub *_create_stub (void);
 
   /**
    * Dispatches a request to the object: find the operation, cast the
@@ -107,7 +107,7 @@ public:
    */
   virtual void _dispatch (TAO_ServerRequest &request,
                           void *servant_upcall
-                          ACE_ENV_ARG_DECL) = 0;
+                          ) = 0;
 
   /// Please see documentation in tao/Abstract_Servant_Base.h for
   /// details.
@@ -128,19 +128,19 @@ public:
    * @name Reference Counting Operations
    */
   /// Increase reference count by one.
-  virtual void _add_ref (ACE_ENV_SINGLE_ARG_DECL);
+  virtual void _add_ref (void);
 
   /**
    * Decreases reference count by one; if the resulting reference
    * count equals zero, _remove_ref invokes delete on its this pointer
    * in order to destroy the servant.
    */
-  virtual void _remove_ref (ACE_ENV_SINGLE_ARG_DECL);
+  virtual void _remove_ref (void);
 
   /**
    * Returns the current reference count value.
    */
-  virtual CORBA::ULong _refcount_value (ACE_ENV_SINGLE_ARG_DECL) const;
+  virtual CORBA::ULong _refcount_value (void) const;
   //@}
 
 protected:
@@ -157,12 +157,12 @@ protected:
   virtual void synchronous_upcall_dispatch (TAO_ServerRequest & req,
                                             void * servant_upcall,
                                             void * derived_this
-                                            ACE_ENV_ARG_DECL);
+                                           );
 
   virtual void asynchronous_upcall_dispatch (TAO_ServerRequest & req,
                                              void * servant_upcall,
                                              void * derived_this
-                                             ACE_ENV_ARG_DECL);
+                                            );
 
 protected:
   /// Reference counter.

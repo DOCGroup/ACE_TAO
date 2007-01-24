@@ -28,7 +28,7 @@ namespace TAO
     TAO::Transport::Current_ptr
     Current_ORBInitializer<Impl>::make_current_instance (TAO_ORB_Core* core,
                                                          size_t tss_slot_id
-                                                         ACE_ENV_ARG_DECL)
+                                                         )
       ACE_THROW_SPEC ((CORBA::SystemException))
       {
         // Create the Current
@@ -39,7 +39,6 @@ namespace TAO
                             (CORBA::SystemException::_tao_minor_code (TAO::VMCID,
                                                                       ENOMEM),
                              CORBA::COMPLETED_NO));
-        ACE_CHECK;
 
         return tmp;
       }

@@ -33,7 +33,7 @@ exception_holder_raise (TAO::Exception_Data *exception_data,
                         CORBA::ULong marshaled_data_length,
                         CORBA::Boolean byte_order,
                         CORBA::Boolean is_system_exception
-                        ACE_ENV_ARG_DECL)
+                        )
 {
   TAO_InputCDR _tao_in ((const char*) marshaled_data,
                         marshaled_data_length,
@@ -45,7 +45,7 @@ exception_holder_raise (TAO::Exception_Data *exception_data,
     {
       // Could not demarshal the exception id, raise a local
       // CORBA::MARSHAL
-      ACE_THROW (CORBA::MARSHAL (TAO::VMCID,
+      throw ( ::CORBA::MARSHAL (TAO::VMCID,
                                  CORBA::COMPLETED_YES));
     }
 
@@ -55,7 +55,7 @@ exception_holder_raise (TAO::Exception_Data *exception_data,
       CORBA::ULong completion = 0;
       if ((_tao_in >> minor) == 0 ||
           (_tao_in >> completion) == 0)
-        ACE_THROW (CORBA::MARSHAL (TAO::VMCID,
+        throw ( ::CORBA::MARSHAL (TAO::VMCID,
                                    CORBA::COMPLETED_MAYBE));
 
       CORBA::SystemException* exception =
@@ -72,9 +72,7 @@ exception_holder_raise (TAO::Exception_Data *exception_data,
       exception->completed (CORBA::CompletionStatus (completion));
 
       // Raise the exception.
-#if defined (TAO_HAS_EXCEPTIONS)
       ACE_Auto_Basic_Ptr<CORBA::SystemException> e_ptr(exception);
-#endif
       ACE_ENV_RAISE (exception);
 
       return;
@@ -91,15 +89,12 @@ exception_holder_raise (TAO::Exception_Data *exception_data,
       CORBA::Exception * const exception = exception_data[i].alloc ();
 
       if (exception == 0)
-        ACE_THROW (CORBA::NO_MEMORY (TAO::VMCID,
+        throw ( ::CORBA::NO_MEMORY (TAO::VMCID,
                                      CORBA::COMPLETED_YES));
-      exception->_tao_decode (_tao_in ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
+      exception->_tao_decode (_tao_in);
 
       // Raise the exception.
-#if defined (TAO_HAS_EXCEPTIONS)
       ACE_Auto_Basic_Ptr<CORBA::Exception> e_ptr (exception);
-#endif
       ACE_ENV_RAISE (exception);
 
       return;
@@ -111,7 +106,7 @@ exception_holder_raise (TAO::Exception_Data *exception_data,
   // @@ It would seem like if the remote exception is a
   //    UserException we can assume that the request was
   //    completed.
-  ACE_THROW (CORBA::UNKNOWN (TAO::VMCID,
+  throw ( ::CORBA::UNKNOWN (TAO::VMCID,
                              CORBA::COMPLETED_YES));
 }
 

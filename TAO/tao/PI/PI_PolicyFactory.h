@@ -38,7 +38,7 @@ class TAO_PI_Export TAO_PI_PolicyFactory
 public:
   CORBA::Policy_ptr create_policy (CORBA::PolicyType type,
                                    const CORBA::Any & value
-                                   ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+                                   )
     ACE_THROW_SPEC ((CORBA::SystemException,
                      CORBA::PolicyError));
 };

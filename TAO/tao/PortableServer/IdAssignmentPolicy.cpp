@@ -20,33 +20,32 @@ namespace TAO
     }
 
     CORBA::Policy_ptr
-    IdAssignmentPolicy::copy (ACE_ENV_SINGLE_ARG_DECL)
+    IdAssignmentPolicy::copy (void)
       ACE_THROW_SPEC ((CORBA::SystemException))
     {
       IdAssignmentPolicy *copy = 0;
       ACE_NEW_THROW_EX (copy,
                         IdAssignmentPolicy (this->value_),
                         CORBA::NO_MEMORY ());
-      ACE_CHECK_RETURN (CORBA::Policy::_nil ());
 
       return copy;
     }
 
     void
-    IdAssignmentPolicy::destroy (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+    IdAssignmentPolicy::destroy (void)
       ACE_THROW_SPEC ((CORBA::SystemException))
     {
     }
 
     ::PortableServer::IdAssignmentPolicyValue
-    IdAssignmentPolicy::value (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+    IdAssignmentPolicy::value (void)
       ACE_THROW_SPEC ((CORBA::SystemException))
     {
       return value_;
     }
 
     CORBA::PolicyType
-    IdAssignmentPolicy::policy_type (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+    IdAssignmentPolicy::policy_type (void)
       ACE_THROW_SPEC ((CORBA::SystemException))
     {
       return ::PortableServer::ID_ASSIGNMENT_POLICY_ID;

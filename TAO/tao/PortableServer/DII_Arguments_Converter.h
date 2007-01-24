@@ -34,20 +34,18 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
  * @brief TAO_DII_Arguments_Converter.
  *
  * Abstract class that convert the DII arguments in NVList to the
- * list of arguments. This is a base class for the actual implementation 
+ * list of arguments. This is a base class for the actual implementation
  * in the DynamicInterface library.
  */
 class TAO_PortableServer_Export TAO_DII_Arguments_Converter : public ACE_Service_Object
 {
 public:
-  
+
   virtual ~TAO_DII_Arguments_Converter (void);
-  
+
   virtual void convert ( TAO_ServerRequest & server_request,
                          TAO::Argument * const args[],
-                         size_t nargs
-                         ACE_ENV_ARG_DECL) = 0;
-
+                         size_t nargs) = 0;
 };
 
 

@@ -78,35 +78,35 @@ namespace TAO
     /// This method implements one of the "starting" client side
     /// interception points.
     virtual void send_request (Invocation_Base &invocation
-                               ACE_ENV_ARG_DECL) = 0;
+                               ) = 0;
 
     /// This method implements one of the "ending" client side
     /// interception point.
     virtual void receive_reply (Invocation_Base &invocation
-                                ACE_ENV_ARG_DECL) = 0;
+                                ) = 0;
 
     /// This method implements one of the "ending" client side
     /// interception point.
     virtual void receive_exception (Invocation_Base &invocation
-                                    ACE_ENV_ARG_DECL) = 0;
+                                    ) = 0;
 
     /// This method implements one of the "ending" client side
     /// interception point.
     virtual void receive_other (Invocation_Base &invocation
-                                ACE_ENV_ARG_DECL) = 0;
+                                ) = 0;
 
     /// Register an interceptor.
     virtual void add_interceptor (
       PortableInterceptor::ClientRequestInterceptor_ptr interceptor
-      ACE_ENV_ARG_DECL) = 0;
+      ) = 0;
 
     /// Register an interceptor with policies.
     virtual void add_interceptor (
       PortableInterceptor::ClientRequestInterceptor_ptr interceptor,
       const CORBA::PolicyList& policies
-      ACE_ENV_ARG_DECL) = 0;
+      ) = 0;
 
-    virtual void destroy_interceptors (ACE_ENV_SINGLE_ARG_DECL) = 0;
+    virtual void destroy_interceptors (void) = 0;
 
     /// Convert TAO Invocation status to a PI status
     virtual PortableInterceptor::ReplyStatus reply_status (

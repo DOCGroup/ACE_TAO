@@ -42,7 +42,7 @@ namespace TAO
       /// Cleanup the given strategy instance
       virtual void destroy (
         LifespanStrategy *strategy
-        ACE_ENV_ARG_DECL) = 0;
+        ) = 0;
     };
   }
 }

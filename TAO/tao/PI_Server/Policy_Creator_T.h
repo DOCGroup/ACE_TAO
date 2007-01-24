@@ -32,7 +32,7 @@ namespace TAO
         POLICYTYPE *& policy,
         POLICYVALUE &value,
         const CORBA::Any& val
-        ACE_ENV_ARG_DECL)
+        )
     {
       if ((val >>= value) == 0)
         ACE_THROW (CORBA::PolicyError (CORBA::BAD_POLICY_VALUE));
@@ -41,7 +41,6 @@ namespace TAO
                         POLICYTYPE (value),
                         CORBA::NO_MEMORY (TAO::VMCID,
                                           CORBA::COMPLETED_NO));
-      ACE_CHECK;
     }
   }
 }

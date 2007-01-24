@@ -57,7 +57,7 @@ namespace TAO
         CORBA::Object_ptr target);
 
     /// Start the invocation on the target
-    void invoke (ACE_ENV_SINGLE_ARG_DECL);
+    void invoke (void);
 
     /// Accessor to the inconsistent policy list
     CORBA::PolicyList *get_inconsistent_policies (void);

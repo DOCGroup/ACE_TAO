@@ -45,8 +45,7 @@ namespace TAO
       Adapter_Activator (PortableServer::POAManager_ptr poa_manager);
 
       CORBA::Boolean unknown_adapter (PortableServer::POA_ptr parent,
-                                      const char *name
-                                      ACE_ENV_ARG_DECL)
+                                      const char *name)
         ACE_THROW_SPEC ((CORBA::SystemException));
 
     protected:

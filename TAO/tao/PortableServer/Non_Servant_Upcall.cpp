@@ -69,18 +69,16 @@ namespace TAO
           if (this->poa_.waiting_destruction () &&
               this->poa_.outstanding_requests () == 0)
             {
-              ACE_TRY_NEW_ENV
+              try
                 {
-                  this->poa_.complete_destruction_i (ACE_ENV_SINGLE_ARG_PARAMETER);
-                  ACE_TRY_CHECK;
+                  this->poa_.complete_destruction_i ();
                 }
-              ACE_CATCHANY
+              catch ( ::CORBA::Exception& ex)
                 {
                   // Ignore exceptions
                   ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
                                        "TAO_POA::complete_destruction_i");
                 }
-              ACE_ENDTRY;
             }
 
           // If locking is enabled.

@@ -52,8 +52,7 @@ CORBA::ExceptionList::add_consume (CORBA::TypeCode_ptr tc)
 }
 
 CORBA::TypeCode_ptr
-CORBA::ExceptionList::item (CORBA::ULong slot
-                            ACE_ENV_ARG_DECL)
+CORBA::ExceptionList::item (CORBA::ULong slot)
 {
   CORBA::TypeCode_ptr *tc = 0;
 
@@ -69,10 +68,9 @@ CORBA::ExceptionList::item (CORBA::ULong slot
 }
 
 void
-CORBA::ExceptionList::remove (CORBA::ULong
-                              ACE_ENV_ARG_DECL)
+CORBA::ExceptionList::remove (CORBA::ULong)
 {
-  ACE_THROW (CORBA::NO_IMPLEMENT ());
+  throw ::CORBA::NO_IMPLEMENT ();
 }
 
 CORBA::ExceptionList_ptr
@@ -97,7 +95,7 @@ CORBA::ExceptionList::_incr_refcnt (void)
 void
 CORBA::ExceptionList::_decr_refcnt (void)
 {
-  CORBA::ULong refcount = --this->ref_count_;
+  CORBA::ULong const refcount = --this->ref_count_;
 
   if (refcount == 0)
     {

@@ -64,7 +64,7 @@ TAO::RetArgument::mode (void) const
 TAO::Argument*
 TAO::Void_Return_Argument::clone (void)
 {
-  TAO::Argument* clone_arg;
+  TAO::Argument* clone_arg = 0;
   ACE_NEW_RETURN (clone_arg,
                   Void_Return_Argument (),
                   0);

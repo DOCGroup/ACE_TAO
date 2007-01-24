@@ -66,11 +66,11 @@ public:
                          ACE_Time_Value const &dynamic_thread_idle_timeout);
 
   virtual void pre_init (PortableInterceptor::ORBInitInfo_ptr info
-                         ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+                         )
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual void post_init (PortableInterceptor::ORBInitInfo_ptr info
-                          ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+                          )
     ACE_THROW_SPEC ((CORBA::SystemException));
 
 private:
@@ -78,7 +78,7 @@ private:
   /// Register RTCORBA policy factories.
   void register_policy_factories (
                                   PortableInterceptor::ORBInitInfo_ptr info
-                                  ACE_ENV_ARG_DECL);
+                                 );
 
 private:
   /// Instance of the RTCorba policy factory.

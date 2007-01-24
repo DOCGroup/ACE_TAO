@@ -49,9 +49,7 @@ TAO::Any_Special_Impl_T<T, from_T, to_T>::insert (CORBA::Any & any,
 
   if (bound > 0)
     {
-      ACE_DECLARE_NEW_CORBA_ENV;
-      CORBA::TCKind const kind = tc->kind (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK;
+      CORBA::TCKind const kind = tc->kind ();
 
       bounded_tc =
         TAO::TypeCodeFactory::String_Traits<from_T>::create_typecode (kind,
@@ -86,20 +84,17 @@ TAO::Any_Special_Impl_T<T, from_T, to_T>::extract (const CORBA::Any & any,
 {
   _tao_elem = 0;
 
-  ACE_TRY_NEW_ENV
+  try
     {
       CORBA::TypeCode_ptr any_type = any._tao_get_typecode ();
       CORBA::TypeCode_var unaliased_any_type =
         TAO::unaliased_typecode (any_type
-                                 ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+                                );
 
       CORBA::TCKind any_kind =
-        unaliased_any_type->kind (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        unaliased_any_type->kind ();
 
-      CORBA::TCKind try_kind = tc->kind (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      CORBA::TCKind try_kind = tc->kind ();
 
       if (any_kind != try_kind)
         {
@@ -107,8 +102,7 @@ TAO::Any_Special_Impl_T<T, from_T, to_T>::extract (const CORBA::Any & any,
         }
 
       CORBA::ULong length =
-        unaliased_any_type->length (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        unaliased_any_type->length ();
 
       if (length != bound)
         {
@@ -168,10 +162,9 @@ TAO::Any_Special_Impl_T<T, from_T, to_T>::extract (const CORBA::Any & any,
       // Duplicated by Any_Impl base class constructor.
       ::CORBA::release (tc);
     }
-  ACE_CATCHANY
+  catch ( ::CORBA::Exception&)
     {
     }
-  ACE_ENDTRY;
 
   return 0;
 }
@@ -210,7 +203,7 @@ template<typename T, typename from_T, typename to_T>
 void
 TAO::Any_Special_Impl_T<T, from_T, to_T>::_tao_decode (
     TAO_InputCDR &cdr
-    ACE_ENV_ARG_DECL
+
   )
 {
   if (this->value_destructor_ != 0)
@@ -221,7 +214,7 @@ TAO::Any_Special_Impl_T<T, from_T, to_T>::_tao_decode (
 
   if (! this->demarshal_value (cdr))
     {
-      ACE_THROW (CORBA::MARSHAL ());
+      throw ::CORBA::MARSHAL ();
     }
 }
 

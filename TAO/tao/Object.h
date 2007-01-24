@@ -119,8 +119,7 @@ namespace CORBA
     static CORBA::Object_ptr _nil (void);
 
     /// No-op it is just here to simplify some templates.
-    static CORBA::Object_ptr _narrow (CORBA::Object_ptr obj
-                                      ACE_ENV_ARG_DECL_WITH_DEFAULTS);
+    static CORBA::Object_ptr _narrow (CORBA::Object_ptr obj);
 
     // These calls correspond to over-the-wire operations, or at least
     // do so in many common cases.  The normal implementation assumes a
@@ -129,8 +128,7 @@ namespace CORBA
     // appropriate.
 
     /// Determine if we are of the type specified by the "logical_type_id"
-    virtual CORBA::Boolean _is_a (const char *logical_type_id
-                                  ACE_ENV_ARG_DECL_WITH_DEFAULTS);
+    virtual CORBA::Boolean _is_a (const char *logical_type_id);
 
     /// The repository ID for the most derived class, this is an
     /// implementation method and does no remote invocations!
@@ -144,8 +142,7 @@ namespace CORBA
      * different ORB protocols are in use) there is no default
      * implementation.
      */
-    virtual CORBA::ULong _hash (CORBA::ULong maximum
-                                ACE_ENV_ARG_DECL_WITH_DEFAULTS);
+    virtual CORBA::ULong _hash (CORBA::ULong maximum);
 
     /**
      * Try to determine if this object is the same as other_obj.  This
@@ -153,36 +150,25 @@ namespace CORBA
      * private state.  Since that changes easily (when different ORB
      * protocols are in use) there is no default implementation.
      */
-    virtual CORBA::Boolean _is_equivalent (CORBA::Object_ptr other_obj
-                                           ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+    virtual CORBA::Boolean _is_equivalent (CORBA::Object_ptr other_obj)
       ACE_THROW_SPEC (());
 
 #if (TAO_HAS_MINIMUM_CORBA == 0)
 
-    virtual CORBA::Boolean _non_existent (
-        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
-      );
+    virtual CORBA::Boolean _non_existent (void);
 
     /// This method is deprecated in the CORBA 2.2 spec, we just return 0
     /// every time.
-    virtual CORBA::ImplementationDef_ptr _get_implementation (
-        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
-      );
+    virtual CORBA::ImplementationDef_ptr _get_implementation (void);
 
     /// Get info about the object from the Interface Repository.
-    virtual InterfaceDef_ptr _get_interface (
-        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
-      );
+    virtual InterfaceDef_ptr _get_interface (void);
 
     /// Get info about the object from the Interface Repository.
-    virtual CORBA::Object_ptr _get_component (
-        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
-      );
+    virtual CORBA::Object_ptr _get_component (void);
 
     /// Get the repository id.
-    virtual char * _repository_id (
-        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
-    );
+    virtual char * _repository_id (void);
 
 #if ! defined (CORBA_E_COMPACT) && ! defined (CORBA_E_MICRO)
     // DII operations to create a request.
@@ -196,8 +182,7 @@ namespace CORBA
                                   CORBA::NVList_ptr arg_list,
                                   CORBA::NamedValue_ptr result,
                                   CORBA::Request_ptr &request,
-                                  CORBA::Flags req_flags
-                                  ACE_ENV_ARG_DECL_WITH_DEFAULTS);
+                                  CORBA::Flags req_flags);
 
     virtual void _create_request (CORBA::Context_ptr ctx,
                                   const char *operation,
@@ -206,8 +191,7 @@ namespace CORBA
                                   CORBA::ExceptionList_ptr exclist,
                                   CORBA::ContextList_ptr ctxtlist,
                                   CORBA::Request_ptr &request,
-                                  CORBA::Flags req_flags
-                                  ACE_ENV_ARG_DECL_WITH_DEFAULTS);
+                                  CORBA::Flags req_flags);
 #endif
 
     // The default implementation of this method uses the same simple,
@@ -216,37 +200,29 @@ namespace CORBA
     // implementation.
 
     /// DII operation to create a request.
-    virtual CORBA::Request_ptr _request (const char *operation
-                                         ACE_ENV_ARG_DECL_WITH_DEFAULTS);
+    virtual CORBA::Request_ptr _request (const char *operation);
 
 #endif /* TAO_HAS_MINIMUM_CORBA */
 
 #if (TAO_HAS_CORBA_MESSAGING == 1)
 
-    CORBA::Policy_ptr _get_policy (CORBA::PolicyType type
-                                   ACE_ENV_ARG_DECL_WITH_DEFAULTS);
+    CORBA::Policy_ptr _get_policy (CORBA::PolicyType type);
 
-    CORBA::Policy_ptr _get_cached_policy (TAO_Cached_Policy_Type type
-                                          ACE_ENV_ARG_DECL_WITH_DEFAULTS);
+    CORBA::Policy_ptr _get_cached_policy (TAO_Cached_Policy_Type type);
 
     CORBA::Object_ptr _set_policy_overrides (
       const CORBA::PolicyList & policies,
-      CORBA::SetOverrideType set_add
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS);
+      CORBA::SetOverrideType set_add);
 
     CORBA::PolicyList * _get_policy_overrides (
-      const CORBA::PolicyTypeSeq & types
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS);
+      const CORBA::PolicyTypeSeq & types);
 
     CORBA::Boolean _validate_connection (
-      CORBA::PolicyList_out inconsistent_policies
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS);
+      CORBA::PolicyList_out inconsistent_policies);
 
 #endif /* TAO_HAS_CORBA_MESSAGING == 1 */
 
-    virtual CORBA::ORB_ptr _get_orb (
-        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
-      );
+    virtual CORBA::ORB_ptr _get_orb (void);
 
     /**
      * @name Reference Count Managment
@@ -306,7 +282,7 @@ namespace CORBA
 
     /// Return the object key as an out parameter.  Caller should release
     /// return value when finished with it.
-    virtual TAO::ObjectKey *_key (ACE_ENV_SINGLE_ARG_DECL);
+    virtual TAO::ObjectKey *_key (void);
 
     /// Constructor
     Object (TAO_Stub *p,

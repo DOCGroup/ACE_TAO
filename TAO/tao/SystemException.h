@@ -57,8 +57,6 @@ namespace TAO
 
 namespace CORBA
 {
-  class Environment;
-
   /**
    * @enum CompletionStatus
    *
@@ -123,10 +121,10 @@ namespace CORBA
     virtual ACE_CString _info (void) const;
 
     virtual void _tao_encode (TAO_OutputCDR &cdr
-                              ACE_ENV_ARG_DECL) const;
+                              ) const;
 
     virtual void _tao_decode (TAO_InputCDR &cdr
-                              ACE_ENV_ARG_DECL);
+                             );
 
     /// Helper to create a minor status value.
     static CORBA::ULong _tao_minor_code (u_int location,

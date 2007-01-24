@@ -92,17 +92,15 @@ namespace TAO
 
     TAO::BufferingConstraint buffering_constraint;
 
-    ACE_TRY_NEW_ENV
+    try
       {
         CORBA::Policy_var bcp_policy =
           stub->get_cached_policy (TAO_CACHED_POLICY_BUFFERING_CONSTRAINT
-                                   ACE_ENV_ARG_PARAMETER);
-        ACE_TRY_CHECK;
+                                  );
 
         TAO::BufferingConstraintPolicy_var bcpv =
           TAO::BufferingConstraintPolicy::_narrow (bcp_policy.in ()
-                                                   ACE_ENV_ARG_PARAMETER);
-        ACE_TRY_CHECK;
+                                                  );
 
         TAO_Buffering_Constraint_Policy* bcp =
           dynamic_cast<TAO_Buffering_Constraint_Policy *> (bcpv.in ());
@@ -112,11 +110,10 @@ namespace TAO
           }
         bcp->get_buffering_constraint (buffering_constraint);
       }
-    ACE_CATCHANY
+    catch ( ::CORBA::Exception&)
       {
         return true;
       }
-    ACE_ENDTRY;
 
 
     if (buffering_constraint.mode == TAO::BUFFER_FLUSH)

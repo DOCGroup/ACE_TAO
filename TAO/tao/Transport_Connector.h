@@ -48,11 +48,6 @@ namespace TAO
   class Profile_Transport_Resolver;
 }
 
-namespace CORBA
-{
-  class Environment;
-}
-
 /*
  * Hook to add includes and forward declaration
  * to the Connector class.
@@ -92,7 +87,7 @@ public:
   int make_mprofile (
       const char *ior,
       TAO_MProfile &mprofile
-      ACE_ENV_ARG_DECL);
+     );
 
   /// Helper function to assist corbaloc parsing. The default simply validates
   /// the protocol identifyier and scans up to the next comma or slash.
@@ -102,7 +97,7 @@ public:
   /// empty profile of the correct type, obtained from make_profile().
   virtual TAO_Profile * corbaloc_scan (const char *ior,
                                        size_t &len
-                                       ACE_ENV_ARG_DECL);
+                                      );
 
   ///  Initialize object and register with reactor.
   virtual int open (
@@ -120,7 +115,7 @@ public:
       TAO::Profile_Transport_Resolver *r,
       TAO_Transport_Descriptor_Interface *desc,
       ACE_Time_Value *timeout
-      ACE_ENV_ARG_DECL);
+     );
 
   /// A variation on connect that will try simultanious connections
   /// on all endpoints listed in the desc.
@@ -128,7 +123,7 @@ public:
       TAO::Profile_Transport_Resolver *r,
       TAO_Transport_Descriptor_Interface *desc,
       ACE_Time_Value *timeout
-      ACE_ENV_ARG_DECL);
+     );
 
   /// Create a profile for this protocol and initialize it based on the
   /// encapsulation in @a cdr
@@ -152,7 +147,7 @@ protected:
   virtual int supports_parallel_connects (void) const;
 
   /// Create a profile with a given endpoint.
-  virtual TAO_Profile *make_profile (ACE_ENV_SINGLE_ARG_DECL) = 0;
+  virtual TAO_Profile *make_profile (void) = 0;
 
   /// Set and validate endpoint. We need to do this to initialize our
   /// remote *_Addr's which have not been done during IOR decode.

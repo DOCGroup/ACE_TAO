@@ -22,7 +22,7 @@ TAO_Stub *
 TAO_Default_Stub_Factory::create_stub (const char *repository_id,
                                        const TAO_MProfile &profiles,
                                        TAO_ORB_Core *orb_core
-                                       ACE_ENV_ARG_DECL)
+                                       )
 {
   TAO_Stub *retval = 0;
 
@@ -30,7 +30,6 @@ TAO_Default_Stub_Factory::create_stub (const char *repository_id,
                     TAO_Stub (repository_id, profiles, orb_core),
                     CORBA::NO_MEMORY (0,
                                       CORBA::COMPLETED_MAYBE));
-  ACE_CHECK_RETURN (retval);
 
   return retval;
 }

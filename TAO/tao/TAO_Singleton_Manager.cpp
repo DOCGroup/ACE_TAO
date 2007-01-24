@@ -12,22 +12,19 @@
 # include "tao/TAO_Singleton_Manager.inl"
 #endif /* ! __ACE_INLINE__ */
 
-#if defined (ACE_HAS_EXCEPTIONS)
-# if defined (ACE_MVS)
-#   include /**/ <unexpect.h>
+#if defined (ACE_MVS)
+#  include /**/ <unexpect.h>
+#else
+# if defined (ACE_HAS_STANDARD_CPP_LIBRARY)
+#  include /**/ <exception>
 # else
-#  if defined (ACE_HAS_STANDARD_CPP_LIBRARY)
-#   include /**/ <exception>
-#  else
-#   include /**/ <exception.h>
-#  endif /* ACE_HAS_STANDARD_CPP_LIBRARY */
-# endif /* ACE_MVS */
-#endif /* ACE_HAS_EXCEPTIONS */
+#  include /**/ <exception.h>
+# endif /* ACE_HAS_STANDARD_CPP_LIBRARY */
+#endif /* ACE_MVS */
 
 ACE_RCSID (tao,
            TAO_Singleton_Manager,
            "$Id$")
-
 
 namespace
 {
@@ -65,9 +62,7 @@ TAO_Singleton_Manager::TAO_Singleton_Manager (void)
 #if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
     , internal_lock_ (0)
 # endif /* ACE_MT_SAFE */
-#if defined (ACE_HAS_EXCEPTIONS)
     , old_unexpected_ (0)
-#endif  /* ACE_HAS_EXCEPTIONS */
 {
 #if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
   ACE_NEW (this->internal_lock_,
@@ -269,7 +264,6 @@ TAO_Singleton_Manager::fini (void)
   this->internal_lock_ = 0;
 #endif /* ACE_MT_SAFE */
 
-#if defined (ACE_HAS_EXCEPTIONS)
   // Restore the old unexpected exception handler since TAO will no
   // longer be handling exceptions.  Allow the application to once
   // again handle unexpected exceptions.
@@ -280,7 +274,6 @@ TAO_Singleton_Manager::fini (void)
 # else
   (void) set_unexpected (this->old_unexpected_);
 # endif  /* ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB */
-#endif /* ACE_HAS_EXCEPTIONS */
 
   // Indicate that this TAO_Singleton_Manager instance has been shut down.
   this->object_manager_state_ = OBJ_MAN_SHUT_DOWN;
@@ -314,7 +307,6 @@ TAO_Singleton_Manager::shutting_down (void)
     : 1;
 }
 
-#if defined (ACE_HAS_EXCEPTIONS)
 void
 TAO_Singleton_Manager::_set_unexpected (TAO_unexpected_handler u)
 {
@@ -332,7 +324,6 @@ TAO_Singleton_Manager::_set_unexpected (TAO_unexpected_handler u)
   this->old_unexpected_ = set_unexpected (u);
 # endif  /* ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB */
 }
-#endif /* ACE_HAS_EXCEPTIONS */
 
 int
 TAO_Singleton_Manager::at_exit_i (void *object,

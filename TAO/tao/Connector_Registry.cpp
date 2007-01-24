@@ -121,7 +121,7 @@ TAO_Connector_Registry::close_all (void)
 int
 TAO_Connector_Registry::make_mprofile (const char *ior,
                                        TAO_MProfile &mprofile
-                                       ACE_ENV_ARG_DECL)
+                                       )
 {
   if (!ior)
     // Failure: Null IOR string pointer
@@ -144,8 +144,7 @@ TAO_Connector_Registry::make_mprofile (const char *ior,
           const int mp_result =
             (*connector)->make_mprofile (ior,
                                          mprofile
-                                         ACE_ENV_ARG_PARAMETER);
-          ACE_CHECK_RETURN (mp_result);
+                                        );
 
           if (mp_result == 0)
             return 0;  // Success

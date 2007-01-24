@@ -37,9 +37,7 @@ namespace TAO
       virtual IdAssignmentStrategy* create (
         ::PortableServer::IdAssignmentPolicyValue value);
 
-      virtual void destroy (
-        IdAssignmentStrategy *strategy
-        ACE_ENV_ARG_DECL);
+      virtual void destroy (IdAssignmentStrategy *strategy);
     };
   }
 }

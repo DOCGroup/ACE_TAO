@@ -15,7 +15,7 @@ void
 TAO_NVList_Adapter_Impl::create_list (
       CORBA::Long count,
       CORBA::NVList_ptr &new_list
-      ACE_ENV_ARG_DECL)
+      )
 {
   ACE_ASSERT (CORBA::ULong (count) <= UINT_MAX);
   // Create an empty list
@@ -26,7 +26,6 @@ TAO_NVList_Adapter_Impl::create_list (
                         0,
                         ENOMEM),
                       CORBA::COMPLETED_NO));
-  ACE_CHECK;
 
   // If count is greater than 0, create a list of NamedValues.
   if (count != 0)
@@ -43,7 +42,6 @@ TAO_NVList_Adapter_Impl::create_list (
                                 0,
                                 ENOMEM),
                               CORBA::COMPLETED_NO));
-          ACE_CHECK;
 
           new_list->values_.enqueue_tail (nv);
         }
@@ -53,7 +51,7 @@ TAO_NVList_Adapter_Impl::create_list (
 void
 TAO_NVList_Adapter_Impl::create_named_value (
       CORBA::NamedValue_ptr &nv
-      ACE_ENV_ARG_DECL)
+      )
 {
   ACE_NEW_THROW_EX (nv,
                     CORBA::NamedValue,

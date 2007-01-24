@@ -81,7 +81,7 @@ namespace TAO
      * interceptor invocation points.
      */
     Invocation_Status remote_twoway (ACE_Time_Value *max_wait_time
-                                     ACE_ENV_ARG_DECL)
+                                     )
       ACE_THROW_SPEC ((CORBA::Exception));
 
   protected:
@@ -93,18 +93,18 @@ namespace TAO
      * user exception exception handling
      */
     virtual Invocation_Status handle_user_exception (TAO_InputCDR &cdr
-                                                     ACE_ENV_ARG_DECL)
+                                                     )
       ACE_THROW_SPEC ((CORBA::Exception));
 
     /// Helper method used to handle location forwarded replies.
     Invocation_Status location_forward (TAO_InputCDR &cdr
-                                        ACE_ENV_ARG_DECL)
+                                        )
       ACE_THROW_SPEC ((CORBA::SystemException));
 
     /// Helper method used to handle system exceptions from the remote
     /// objects.
     Invocation_Status handle_system_exception (TAO_InputCDR &cdr
-                                               ACE_ENV_ARG_DECL)
+                                               )
       ACE_THROW_SPEC ((CORBA::SystemException));
 
     /// As the name suggests waits for a reply from the remote ORB.
@@ -114,7 +114,7 @@ namespace TAO
     Invocation_Status wait_for_reply (ACE_Time_Value *max_wait_time,
                                       TAO_Synch_Reply_Dispatcher &rd,
                                       TAO_Bind_Dispatcher_Guard &bd
-                                      ACE_ENV_ARG_DECL)
+                                      )
       ACE_THROW_SPEC ((CORBA::SystemException));
 
   private:
@@ -126,7 +126,7 @@ namespace TAO
      */
     Invocation_Status check_reply_status (
         TAO_Synch_Reply_Dispatcher &rd
-        ACE_ENV_ARG_DECL);
+       );
 
   };
 
@@ -168,7 +168,7 @@ namespace TAO
     /// Method used by the adapter to kickstart an oneway invocation
     /// to the remote object.
     Invocation_Status remote_oneway (ACE_Time_Value *max_wait_time
-                                     ACE_ENV_ARG_DECL)
+                                     )
       ACE_THROW_SPEC ((CORBA::Exception));
   };
 

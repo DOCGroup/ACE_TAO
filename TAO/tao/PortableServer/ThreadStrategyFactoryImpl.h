@@ -39,7 +39,7 @@ namespace TAO
 
       virtual void destroy (
         ThreadStrategy *strategy
-        ACE_ENV_ARG_DECL);
+       );
     };
   }
 }

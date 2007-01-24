@@ -63,11 +63,6 @@ class TAO_ORB_Core;
 class TAO_GIOP_Fragmentation_Strategy;
 class TAO_Stub;
 
-namespace CORBA
-{
-  class Environment;
-}
-
 /**
  * @class TAO_OutputCDR
  *
@@ -167,8 +162,8 @@ public:
   // strings and wstrings?
 
   // = TAO specific methods.
-  static void throw_stub_exception (int error_num ACE_ENV_ARG_DECL);
-  static void throw_skel_exception (int error_num ACE_ENV_ARG_DECL);
+  static void throw_stub_exception (int error_num);
+  static void throw_skel_exception (int error_num);
 
   /**
    * @name Outgoing GIOP Fragment Related Methods
@@ -385,8 +380,8 @@ public:
     clr_mb_flags( ACE_Message_Block::Message_Flags less_flags );
 
   // = TAO specific methods.
-  static void throw_stub_exception (int error_num ACE_ENV_ARG_DECL);
-  static void throw_skel_exception (int error_num ACE_ENV_ARG_DECL);
+  static void throw_stub_exception (int error_num);
+  static void throw_skel_exception (int error_num);
 
 private:
   /// The ORB_Core, required to extract object references.

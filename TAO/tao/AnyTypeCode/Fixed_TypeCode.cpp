@@ -43,17 +43,15 @@ TAO::TypeCode::Fixed<RefCountPolicy>::tao_release (void)
 template <class RefCountPolicy>
 CORBA::Boolean
 TAO::TypeCode::Fixed<RefCountPolicy>::equal_i (CORBA::TypeCode_ptr tc
-                                               ACE_ENV_ARG_DECL) const
+                                               ) const
 {
   // The following call won't throw since CORBA::TypeCode::equal() has
   // already established the kind of tc is the same as our kind.
   CORBA::UShort const tc_digits =
-    tc->fixed_digits (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (0);
+    tc->fixed_digits ();
 
   CORBA::UShort const tc_scale =
-    tc->fixed_scale (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (0);
+    tc->fixed_scale ();
 
   return (this->digits_ == tc_digits
           && this->scale_ == tc_scale);
@@ -62,19 +60,19 @@ TAO::TypeCode::Fixed<RefCountPolicy>::equal_i (CORBA::TypeCode_ptr tc
 template <class RefCountPolicy>
 CORBA::Boolean
 TAO::TypeCode::Fixed<RefCountPolicy>::equivalent_i (CORBA::TypeCode_ptr tc
-                                                    ACE_ENV_ARG_DECL) const
+                                                    ) const
 {
   // Since TCKind comparisons must be performed before equal_i() is
   // called, we can also call it to determine equivalence of
   // tk_fixed TypeCodes.
   return this->equal_i (tc
-                        ACE_ENV_ARG_PARAMETER);
+                       );
 }
 
 template <class RefCountPolicy>
 CORBA::TypeCode_ptr
 TAO::TypeCode::Fixed<RefCountPolicy>::get_compact_typecode_i (
-  ACE_ENV_SINGLE_ARG_DECL_NOT_USED) const
+  void) const
 {
   // Already compact since tk_fixed TypeCodes have no name or member
   // names, meaning that we can simply call _duplicate() on this
@@ -95,7 +93,7 @@ TAO::TypeCode::Fixed<RefCountPolicy>::get_compact_typecode_i (
 template <class RefCountPolicy>
 CORBA::UShort
 TAO::TypeCode::Fixed<RefCountPolicy>::fixed_digits_i (
-  ACE_ENV_SINGLE_ARG_DECL_NOT_USED) const
+  void) const
 {
   return this->digits_;
 }
@@ -103,7 +101,7 @@ TAO::TypeCode::Fixed<RefCountPolicy>::fixed_digits_i (
 template <class RefCountPolicy>
 CORBA::UShort
 TAO::TypeCode::Fixed<RefCountPolicy>::fixed_scale_i (
-  ACE_ENV_SINGLE_ARG_DECL_NOT_USED) const
+  void) const
 {
   return this->scale_;
 }

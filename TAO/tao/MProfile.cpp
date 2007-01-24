@@ -2,7 +2,6 @@
 //
 // $Id$
 #include "tao/MProfile.h"
-#include "tao/Environment.h"
 #include "tao/Profile.h"
 #include "tao/PolicyC.h"
 #include "tao/ORB_Constants.h"
@@ -25,22 +24,19 @@ TAO_MProfile::~TAO_MProfile (void)
 {
   if (this->policy_list_ != 0)
     {
-      ACE_DECLARE_NEW_CORBA_ENV;
-      const CORBA::ULong len = this->policy_list_->length ();
+      CORBA::ULong const len = this->policy_list_->length ();
       for (CORBA::ULong i = 0; i < len; ++i)
         {
-          ACE_TRY
+          try
             {
               CORBA::Policy_ptr policy = (*this->policy_list_)[i];
-              policy->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-              ACE_TRY_CHECK;
+              policy->destroy ();
             }
-          ACE_CATCHANY
+          catch ( ::CORBA::Exception&)
             {
               // Ignore all exceptions to allow other policies to be
               // destroyed.
             }
-          ACE_ENDTRY;
         }
 
       delete this->policy_list_;
@@ -289,8 +285,7 @@ TAO_MProfile::is_equivalent (const TAO_MProfile *rhs)
 }
 
 CORBA::ULong
-TAO_MProfile::hash (CORBA::ULong max
-                    ACE_ENV_ARG_DECL)
+TAO_MProfile::hash (CORBA::ULong max)
 {
   CORBA::ULong hashval = 0;
 
@@ -299,9 +294,7 @@ TAO_MProfile::hash (CORBA::ULong max
 
   for (TAO_PHandle h = 0; h < this->last_ ; ++h)
     {
-      hashval += pfiles_[h]->hash (max
-                                   ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK_RETURN (0);
+      hashval += pfiles_[h]->hash (max);
     }
 
   // The above hash function return an ULong between 0 and max here we
@@ -312,7 +305,7 @@ TAO_MProfile::hash (CORBA::ULong max
 }
 
 void
-TAO_MProfile::create_policy_list (ACE_ENV_SINGLE_ARG_DECL)
+TAO_MProfile::create_policy_list (void)
 {
   ACE_NEW_THROW_EX (this->policy_list_,
                     CORBA::PolicyList,
@@ -322,21 +315,19 @@ TAO_MProfile::create_policy_list (ACE_ENV_SINGLE_ARG_DECL)
 }
 
 void
-TAO_MProfile::init_policy_list (ACE_ENV_SINGLE_ARG_DECL)
+TAO_MProfile::init_policy_list (void)
 {
   // The first time this method is called
   // it causes the initialization of the policies
   // for the current profile.
 
-  this->get_current_profile ()->get_policies (*this->policy_list_
-                                              ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+  this->get_current_profile ()->get_policies (*this->policy_list_);
 
-  this->is_policy_list_initialized_ = 1;
+  this->is_policy_list_initialized_ = true;
 }
 
 CORBA::PolicyList *
-TAO_MProfile::policy_list (ACE_ENV_SINGLE_ARG_DECL)
+TAO_MProfile::policy_list (void)
 {
   if (!this->is_policy_list_initialized_)
     {
@@ -347,11 +338,9 @@ TAO_MProfile::policy_list (ACE_ENV_SINGLE_ARG_DECL)
 
       if (this->policy_list_ == 0)
         {
-          this->create_policy_list (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_CHECK_RETURN (0);
+          this->create_policy_list ();
 
-          this->init_policy_list (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_CHECK_RETURN (0);
+          this->init_policy_list ();
         }
     }
   CORBA::PolicyList *ret_val = 0;
@@ -359,7 +348,6 @@ TAO_MProfile::policy_list (ACE_ENV_SINGLE_ARG_DECL)
                     CORBA::PolicyList (*this->policy_list_),
                     CORBA::NO_MEMORY (0,
                                       CORBA::COMPLETED_NO));
-  ACE_CHECK_RETURN (0);
 
   return ret_val;
 }

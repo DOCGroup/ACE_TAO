@@ -89,12 +89,11 @@ TAO::Any_SystemException::extract (const CORBA::Any & any,
 {
   _tao_elem = 0;
 
-  ACE_TRY_NEW_ENV
+  try
     {
       CORBA::TypeCode_ptr any_tc = any._tao_get_typecode ();
       CORBA::Boolean const _tao_equiv = any_tc->equivalent (tc
-                                                            ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+                                                           );
 
       if (_tao_equiv == false)
         {
@@ -147,10 +146,9 @@ TAO::Any_SystemException::extract (const CORBA::Any & any,
           return true;
         }
     }
-  ACE_CATCHANY
+  catch ( ::CORBA::Exception&)
     {
     }
-  ACE_ENDTRY;
 
   return 0;
 }
@@ -176,34 +174,30 @@ TAO::Any_SystemException::value (void) const
 CORBA::Boolean
 TAO::Any_SystemException::marshal_value (TAO_OutputCDR &cdr)
 {
-  ACE_TRY_NEW_ENV
+  try
     {
       this->value_->_tao_encode (cdr
-                                 ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+                                );
       return true;
     }
-  ACE_CATCHANY
+  catch ( ::CORBA::Exception&)
     {
     }
-  ACE_ENDTRY;
   return false;
 }
 
 CORBA::Boolean
 TAO::Any_SystemException::demarshal_value (TAO_InputCDR &cdr)
 {
-  ACE_TRY_NEW_ENV
+  try
     {
       this->value_->_tao_decode (cdr
-                                 ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+                                );
       return true;
     }
-  ACE_CATCHANY
+  catch ( ::CORBA::Exception&)
     {
     }
-  ACE_ENDTRY;
   return false;
 }
 

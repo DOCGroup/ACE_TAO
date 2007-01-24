@@ -29,7 +29,7 @@ TAO_Dynamic_Adapter_Impl::create_request (
     CORBA::ExceptionList_ptr exceptions,
     CORBA::Request_ptr &request,
     CORBA::Flags req_flags
-    ACE_ENV_ARG_DECL
+
   )
 {
   ACE_NEW_THROW_EX (request,
@@ -40,7 +40,7 @@ TAO_Dynamic_Adapter_Impl::create_request (
                                     result,
                                     req_flags,
                                     exceptions
-                                    ACE_ENV_ARG_PARAMETER),
+                                   ),
                     CORBA::NO_MEMORY (
                         CORBA::SystemException::_tao_minor_code (
                             TAO::VMCID,
@@ -54,14 +54,14 @@ CORBA::Request_ptr
 TAO_Dynamic_Adapter_Impl::request (CORBA::Object_ptr obj,
                                    CORBA::ORB_ptr orb,
                                    const char *operation
-                                   ACE_ENV_ARG_DECL)
+                                   )
 {
   CORBA::Request_ptr req = CORBA::Request::_nil ();
   ACE_NEW_THROW_EX (req,
                     CORBA::Request (obj,
                                     orb,
                                     operation
-                                    ACE_ENV_ARG_PARAMETER),
+                                   ),
                     CORBA::NO_MEMORY (
                         CORBA::SystemException::_tao_minor_code (
                             TAO::VMCID,
@@ -69,7 +69,6 @@ TAO_Dynamic_Adapter_Impl::request (CORBA::Object_ptr obj,
                           ),
                         CORBA::COMPLETED_MAYBE
                       ));
-  ACE_CHECK_RETURN (CORBA::Request::_nil ());
 
   return req;
 }
@@ -122,7 +121,7 @@ TAO_Dynamic_Adapter_Impl::server_request_release (CORBA::ServerRequest_ptr req)
 void
 TAO_Dynamic_Adapter_Impl::create_exception_list (
     CORBA::ExceptionList_ptr &list
-    ACE_ENV_ARG_DECL
+
   )
 {
   ACE_NEW_THROW_EX (list,

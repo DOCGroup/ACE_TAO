@@ -13,10 +13,10 @@ namespace TAO
   void
   IORInterceptor_Details::apply_policies (
       const CORBA::PolicyList &/*policies*/
-      ACE_ENV_ARG_DECL)
+      )
   {
     // There are currently no policies that apply to IOR Interceptors.
-    ACE_THROW (CORBA::INV_POLICY ());
+    throw ( ::CORBA::INV_POLICY ());
   }
 }
 

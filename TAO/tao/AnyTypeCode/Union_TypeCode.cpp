@@ -111,7 +111,7 @@ TAO::TypeCode::Union<StringType,
                      CaseArrayType,
                      RefCountPolicy>::equal_i (
   CORBA::TypeCode_ptr tc
-  ACE_ENV_ARG_DECL) const
+  ) const
 {
   // These calls shouldn't throw since CORBA::TypeCode::equal()
   // verified that the TCKind is the same as our's prior to invoking
@@ -119,11 +119,9 @@ TAO::TypeCode::Union<StringType,
   // are supported.
 
   CORBA::ULong const tc_count =
-    tc->member_count (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (false);
+    tc->member_count ();
 
-  CORBA::Long tc_def = tc->default_index (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (false);
+  CORBA::Long tc_def = tc->default_index ();
 
   if (tc_count != this->ncases_
       || tc_def != this->default_index_)
@@ -131,14 +129,12 @@ TAO::TypeCode::Union<StringType,
 
   // Check the discriminator type.
   CORBA::TypeCode_var tc_discriminator =
-    tc->discriminator_type (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (false);
+    tc->discriminator_type ();
 
   CORBA::Boolean const equal_discriminators =
     Traits<StringType>::get_typecode (this->discriminant_type_)->equal (
       tc_discriminator.in ()
-      ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (false);
+     );
 
   if (!equal_discriminators)
     return false;
@@ -159,8 +155,7 @@ TAO::TypeCode::Union<StringType,
       bool const equal_case =
         lhs_case.equal (i,
                         tc
-                        ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK_RETURN (false);
+                       );
 
       if (!equal_case)
         return false;
@@ -179,31 +174,27 @@ TAO::TypeCode::Union<StringType,
                      CaseArrayType,
                      RefCountPolicy>::equivalent_i (
   CORBA::TypeCode_ptr tc
-  ACE_ENV_ARG_DECL) const
+  ) const
 {
   // Perform a structural comparison, excluding the name() and
   // member_name() operations.
 
   CORBA::ULong const tc_count =
-    tc->member_count (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (false);
+    tc->member_count ();
 
-  CORBA::Long tc_def = tc->default_index (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (false);
+  CORBA::Long tc_def = tc->default_index ();
 
   if (tc_count != this->ncases_
       || tc_def != this->default_index_)
     return false;
 
   CORBA::TypeCode_var tc_discriminator =
-    tc->discriminator_type (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (false);
+    tc->discriminator_type ();
 
   CORBA::Boolean const equiv_discriminators =
     Traits<StringType>::get_typecode (this->discriminant_type_)->equivalent (
       tc_discriminator.in ()
-      ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (false);
+     );
 
   if (!equiv_discriminators)
     return false;
@@ -224,8 +215,7 @@ TAO::TypeCode::Union<StringType,
       bool const equivalent_case =
         lhs_case.equivalent (i,
                              tc
-                             ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK_RETURN (false);
+                            );
 
       if (!equivalent_case)
         return false;
@@ -243,7 +233,7 @@ TAO::TypeCode::Union<StringType,
                      TypeCodeType,
                      CaseArrayType,
                      RefCountPolicy>::get_compact_typecode_i (
-  ACE_ENV_SINGLE_ARG_DECL) const
+  void) const
 {
 //   typedef ACE::Value_Ptr<TAO::TypeCode::Case<CORBA::String_var,
 //                                              CORBA::TypeCode_var> > elem_type;
@@ -264,8 +254,7 @@ TAO::TypeCode::Union<StringType,
 //           tc_cases[i].name = empty_name;
 //           tc_cases[i].type =
 //             this->cases_[i]->type ()->get_compact_typecode (
-//               ACE_ENV_ARG_PARAMETER);
-//           ACE_CHECK_RETURN (CORBA::TypeCode::_nil ());
+//              );
 //         }
 //     }
 
@@ -290,8 +279,7 @@ TAO::TypeCode::Union<StringType,
 //       this->default_index_,
 //       "",
 //       Traits<StringType>::get_typecode (this->default_case_.type)
-//       ACE_ENV_ARG_PARAMETER);
-//   ACE_CHECK_RETURN (CORBA::TypeCode::_nil ());
+//      );
 
   ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (), CORBA::TypeCode::_nil ());
 
@@ -307,7 +295,7 @@ TAO::TypeCode::Union<StringType,
                      TypeCodeType,
                      CaseArrayType,
                      RefCountPolicy>::id_i (
-  ACE_ENV_SINGLE_ARG_DECL_NOT_USED) const
+  void) const
 {
   // Ownership is retained by the TypeCode, as required by the C++
   // mapping.
@@ -323,7 +311,7 @@ TAO::TypeCode::Union<StringType,
                      TypeCodeType,
                      CaseArrayType,
                      RefCountPolicy>::name_i (
-  ACE_ENV_SINGLE_ARG_DECL_NOT_USED) const
+  void) const
 {
   // Ownership is retained by the TypeCode, as required by the C++
   // mapping.
@@ -339,7 +327,7 @@ TAO::TypeCode::Union<StringType,
                      TypeCodeType,
                       CaseArrayType,
                       RefCountPolicy>::member_count_i (
-  ACE_ENV_SINGLE_ARG_DECL_NOT_USED) const
+  void) const
 {
   return this->ncases_;
 }
@@ -353,7 +341,7 @@ TAO::TypeCode::Union<StringType,
                      TypeCodeType,
                      CaseArrayType,
                      RefCountPolicy>::member_name_i (CORBA::ULong index
-                                                     ACE_ENV_ARG_DECL) const
+                                                     ) const
 {
   // Ownership is retained by the TypeCode, as required by the C++
   // mapping.
@@ -372,7 +360,7 @@ TAO::TypeCode::Union<StringType,
                      TypeCodeType,
                      CaseArrayType,
                      RefCountPolicy>::member_type_i (CORBA::ULong index
-                                                     ACE_ENV_ARG_DECL) const
+                                                     ) const
 {
   if (index >= this->ncases_)
     ACE_THROW_RETURN (CORBA::TypeCode::Bounds (),
@@ -390,7 +378,7 @@ TAO::TypeCode::Union<StringType,
                      TypeCodeType,
                      CaseArrayType,
                      RefCountPolicy>::member_label_i (CORBA::ULong index
-                                                      ACE_ENV_ARG_DECL) const
+                                                      ) const
 {
   if (index >= this->ncases_)
     ACE_THROW_RETURN (CORBA::TypeCode::Bounds (),
@@ -404,7 +392,6 @@ TAO::TypeCode::Union<StringType,
       ACE_NEW_THROW_EX (any,
                         CORBA::Any,
                         CORBA::NO_MEMORY ());
-      ACE_CHECK_RETURN (0);
 
       CORBA::Any_var safe_any (any);
 
@@ -418,7 +405,7 @@ TAO::TypeCode::Union<StringType,
     }
 
   // Non-default cases.
-  return this->cases_[index]->label (ACE_ENV_SINGLE_ARG_PARAMETER);
+  return this->cases_[index]->label ();
 }
 
 template <typename StringType,
@@ -430,7 +417,7 @@ TAO::TypeCode::Union<StringType,
                      TypeCodeType,
                      CaseArrayType,
                      RefCountPolicy>::discriminator_type_i (
-  ACE_ENV_SINGLE_ARG_DECL_NOT_USED) const
+  void) const
 {
   return
     CORBA::TypeCode::_duplicate (
@@ -446,7 +433,7 @@ TAO::TypeCode::Union<StringType,
                      TypeCodeType,
                      CaseArrayType,
                      RefCountPolicy>::default_index_i (
-  ACE_ENV_SINGLE_ARG_DECL_NOT_USED) const
+  void) const
 {
   return this->default_index_;
 }

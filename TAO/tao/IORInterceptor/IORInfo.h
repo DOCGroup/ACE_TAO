@@ -62,13 +62,13 @@ public:
   /// effect for the object whose IOR is being created.
   virtual CORBA::Policy_ptr get_effective_policy (
       CORBA::PolicyType type
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+      )
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   /// Add the given tagged component to all profiles.
   virtual void add_ior_component (
       const IOP::TaggedComponent & component
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+      )
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   /// Add the given tagged component to all profiles matching the given
@@ -76,28 +76,28 @@ public:
   virtual void add_ior_component_to_profile (
       const IOP::TaggedComponent & component,
       IOP::ProfileId profile_id
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+      )
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual char * manager_id (
-      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+      void)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual PortableInterceptor::AdapterState state (
-      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+      void)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual PortableInterceptor::ObjectReferenceTemplate * adapter_template (
-      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+      void)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual PortableInterceptor::ObjectReferenceFactory * current_factory (
-      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+      void)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual void current_factory (
       PortableInterceptor::ObjectReferenceFactory * current_factory
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+      )
       ACE_THROW_SPEC ((CORBA::SystemException));
 
   //@}
@@ -132,7 +132,7 @@ protected:
    * this IORInfo object is no longer valid.  Throw an exception in
    * that case.
    */
-  void check_validity (ACE_ENV_SINGLE_ARG_DECL);
+  void check_validity (void);
 
 private:
 

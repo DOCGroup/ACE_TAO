@@ -23,10 +23,8 @@ namespace TAO
     : Any_Impl (0, tc),
       kind_ (CORBA::tk_null)
   {
-    ACE_DECLARE_NEW_CORBA_ENV;
     this->kind_ = TAO::unaliased_kind (tc
-                                       ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK;
+                                      );
 
     switch (this->kind_)
     {
@@ -101,13 +99,12 @@ namespace TAO
                            CORBA::TypeCode_ptr tc,
                            void *_tao_elem)
   {
-    ACE_TRY_NEW_ENV
+    try
       {
         CORBA::TypeCode_ptr any_tc = any._tao_get_typecode ();
         CORBA::Boolean _tao_equiv =
           any_tc->equivalent (tc
-                              ACE_ENV_ARG_PARAMETER);
-        ACE_TRY_CHECK;
+                             );
 
         if (!_tao_equiv)
           {
@@ -143,8 +140,7 @@ namespace TAO
         // Get the kind of the type where we are extracting in ie. the
         // aliased  type if there are any. Passing the aliased kind
         // will not help.
-        CORBA::TCKind const tck = tc->kind (ACE_ENV_SINGLE_ARG_PARAMETER);
-        ACE_TRY_CHECK;
+        CORBA::TCKind const tck = tc->kind ();
 
         // We don't want the rd_ptr of unk to move, in case it is
         // shared by another Any. This copies the state, not the buffer.
@@ -167,10 +163,9 @@ namespace TAO
         // Duplicated by Any_Impl base class constructor.
         ::CORBA::release (any_tc);
       }
-    ACE_CATCHANY
+    catch ( ::CORBA::Exception&)
       {
       }
-    ACE_ENDTRY;
 
     return false;
   }
@@ -264,20 +259,18 @@ namespace TAO
 
   void
   Any_Basic_Impl::_tao_decode (TAO_InputCDR &cdr
-                               ACE_ENV_ARG_DECL)
+                               )
   {
     if (! this->demarshal_value (cdr))
       {
-        ACE_THROW (CORBA::MARSHAL ());
+        throw ::CORBA::MARSHAL ();
       }
   }
 
   Any_Basic_Impl *
   Any_Basic_Impl::create_empty (CORBA::TypeCode_ptr tc)
   {
-    ACE_DECLARE_NEW_CORBA_ENV;
-    CORBA::TCKind const kind = tc->kind (ACE_ENV_SINGLE_ARG_PARAMETER);
-    ACE_CHECK_RETURN (0);
+    CORBA::TCKind const kind = tc->kind ();
 
     TAO::Any_Basic_Impl * retval = 0;
 

@@ -48,13 +48,12 @@ namespace TAO
 
 #if TAO_HAS_INTERCEPTORS == 1
   Dynamic::ParameterList *
-  DII_Invocation::arguments (ACE_ENV_SINGLE_ARG_DECL)
+  DII_Invocation::arguments (void)
     ACE_THROW_SPEC ((CORBA::SystemException))
   {
     // Generate the argument list on demand.
     Dynamic::ParameterList *parameter_list =
-      TAO_RequestInfo_Util::make_parameter_list (ACE_ENV_SINGLE_ARG_PARAMETER);
-    ACE_CHECK_RETURN (0);
+      TAO_RequestInfo_Util::make_parameter_list ();
 
     Dynamic::ParameterList_var safe_parameter_list = parameter_list;
 
@@ -75,17 +74,14 @@ namespace TAO
 #endif /* TAO_HAS_INTERCEPTORS == 1 */
 
   Invocation_Status
-  DII_Invocation::remote_invocation (ACE_Time_Value *max_wait_time
-                                     ACE_ENV_ARG_DECL)
+  DII_Invocation::remote_invocation (ACE_Time_Value *max_wait_time)
     ACE_THROW_SPEC ((CORBA::Exception))
   {
-    return Synch_Twoway_Invocation::remote_twoway (max_wait_time
-                                                   ACE_ENV_ARG_PARAMETER);
+    return Synch_Twoway_Invocation::remote_twoway (max_wait_time);
   }
 
   Invocation_Status
-  DII_Invocation::handle_user_exception (TAO_InputCDR &cdr
-                                         ACE_ENV_ARG_DECL)
+  DII_Invocation::handle_user_exception (TAO_InputCDR &cdr)
     ACE_THROW_SPEC ((CORBA::Exception))
   {
     Reply_Guard mon (this,
@@ -121,11 +117,9 @@ namespace TAO
       {
           CORBA::TypeCode_var tc =
             this->excp_list_->item (i
-                                    ACE_ENV_ARG_PARAMETER);
-          ACE_CHECK_RETURN (TAO_INVOKE_FAILURE);
+                                   );
 
-          const char *xid = tc->id (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_CHECK_RETURN (TAO_INVOKE_FAILURE);
+          const char *xid = tc->id ();
 
           if (ACE_OS::strcmp (buf.in (), xid) != 0)
             {
@@ -156,7 +150,6 @@ namespace TAO
     // are being used in a TAO gateway.
     this->host_->raw_user_exception (cdr);
 
-
     mon.set_status (TAO_INVOKE_USER_EXCEPTION);
 
     // @@ It would seem that if the remote exception is a
@@ -184,19 +177,17 @@ namespace TAO
                                 response_expected)
       , host_ (req)
   {
-
   }
 
 #if TAO_HAS_INTERCEPTORS == 1
   //@NOTE: Need to figure a way to share this code
   Dynamic::ParameterList *
-  DII_Deferred_Invocation::arguments (ACE_ENV_SINGLE_ARG_DECL)
+  DII_Deferred_Invocation::arguments (void)
     ACE_THROW_SPEC ((CORBA::SystemException))
   {
     // Generate the argument list on demand.
     Dynamic::ParameterList *parameter_list =
-      TAO_RequestInfo_Util::make_parameter_list (ACE_ENV_SINGLE_ARG_PARAMETER);
-    ACE_CHECK_RETURN (0);
+      TAO_RequestInfo_Util::make_parameter_list ();
 
     Dynamic::ParameterList_var safe_parameter_list = parameter_list;
 
@@ -217,17 +208,12 @@ namespace TAO
 #endif /* TAO_HAS_INTERCEPTORS == 1*/
 
   Invocation_Status
-  DII_Deferred_Invocation::remote_invocation (
-      ACE_Time_Value *max_wait_time
-      ACE_ENV_ARG_DECL
-    )
+  DII_Deferred_Invocation::remote_invocation (ACE_Time_Value *max_wait_time)
     ACE_THROW_SPEC ((CORBA::Exception))
   {
     this->safe_rd_->transport (this->resolver_.transport ());
 
-    return Asynch_Remote_Invocation::remote_invocation (
-        max_wait_time
-        ACE_ENV_ARG_PARAMETER);
+    return Asynch_Remote_Invocation::remote_invocation (max_wait_time);
   }
 }
 

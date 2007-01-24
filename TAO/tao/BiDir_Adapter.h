@@ -40,9 +40,8 @@ public:
   /// The virtual destructor
   virtual ~TAO_BiDir_Adapter (void);
 
-  virtual void load_policy_validators (TAO_Policy_Validator &validator ACE_ENV_ARG_DECL)
+  virtual void load_policy_validators (TAO_Policy_Validator &validator)
     ACE_THROW_SPEC ((CORBA::SystemException)) = 0;
-
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

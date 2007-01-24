@@ -43,7 +43,7 @@ public:
   virtual ~TAO_Valuetype_Adapter_Factory (void);
 
   virtual TAO_Valuetype_Adapter * create (
-      ACE_ENV_SINGLE_ARG_DECL
+
     )
     ACE_THROW_SPEC ((CORBA::SystemException)) = 0;
 };
