@@ -209,8 +209,6 @@ test_no_implicit_activation (
 int
 main (int argc, char *argv[])
 {
-  ACE_DECLARE_NEW_  CORBA_ENV;
-
   ACE_TRY
     {
       CORBA::ORB_var orb =
