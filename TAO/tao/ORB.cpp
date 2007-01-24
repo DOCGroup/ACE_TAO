@@ -302,7 +302,7 @@ CORBA::ORB::create_operation_list (CORBA::OperationDef_ptr opDef,
 
   if (adapter == 0)
     {
-      throw ( ::CORBA::INTF_REPOS ());
+      throw ::CORBA::INTF_REPOS ();
     }
 
   adapter->create_operation_list (this,
