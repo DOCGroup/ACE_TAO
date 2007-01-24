@@ -100,13 +100,13 @@ namespace
     receives_none (Type&)
     {
       os << " (" << endl
-         << STRS[ENV_SNGL_ARG] << ");";
+         << ");";
     }
 
     virtual void
     receives_post (Type&)
     {
-      os << endl << STRS[ENV_ARG] << ");";
+      os << endl << ");";
     }
 
     /// If we don't do this, the comma() method just below
@@ -175,9 +175,7 @@ namespace
                       T& scope)
       : EmitterBase (c),
         scope_ (scope),
-        ace_check_return_emitter_ (c)
     {
-      ace_check_returns_.node_traverser (ace_check_return_emitter_);
     }
 
     // Overridden by facet and home operation emitters to do nothing.
@@ -189,9 +187,7 @@ namespace
 
       if (swapping)
         {
-          os << "this->activate_component (" << STRS[ENV_SNGL_ARG] << ");";
-
-          Traversal::Operation::returns (o, ace_check_returns_);
+          os << "this->activate_component (" << ");";
 
           os << endl;
         }
@@ -214,13 +210,13 @@ namespace
     receives_none (Type&)
     {
       os << " (" << endl
-         << STRS[ENV_SNGL_SRC] << ")" << endl;
+         << ")" << endl;
     }
 
     virtual void
     receives_post (Type&)
     {
-      os << endl << STRS[ENV_SRC] << ")" << endl;
+      os << endl << ")" << endl;
     }
 
     virtual void
@@ -275,8 +271,6 @@ namespace
 
   protected:
     T& scope_;
-    AceCheckReturnEmitter ace_check_return_emitter_;
-    Traversal::Returns ace_check_returns_;
   };
 
   struct FacetEmitter : Traversal::UnconstrainedInterface,
@@ -345,7 +339,7 @@ namespace
         Traversal::ReadWriteAttribute::belongs (a, write_belongs_);
 
         os << " " << a.name () << endl
-           << STRS[ENV_SRC] << ")" << endl;
+           << ")" << endl;
       }
     };
 
@@ -387,7 +381,7 @@ namespace
       {
         os << scope_.name () << "_Servant_T<T>::"
            << a.name () << " (" << endl
-           << STRS[ENV_SNGL_SRC] << ")" << endl;
+           << ")" << endl;
       }
 
       // ReadAttribute
@@ -412,7 +406,7 @@ namespace
       {
         os << scope_.name () << "_Servant_T<T>::"
            << a.name () << " (" << endl
-           << STRS[ENV_SNGL_SRC] << ")" << endl;
+           << ")" << endl;
       }
     };
 
@@ -507,28 +501,28 @@ namespace
       os << "template <typename T>" << endl
          << "::CORBA::Object_ptr" << endl
          << i.name () << "_Servant_T<T>::_get_component (" << endl
-         << STRS[ENV_SNGL_SRC] << ")" << endl
+         << ")" << endl
          << STRS[EXCP_SNGL] << endl
          << "{"
          << STRS[COMP_SC] << "_var sc =" << endl
          << "  " << STRS[COMP_SC] << "::_narrow (" << endl
          << "  this->ctx_.in ()" << endl
-         << "  " << STRS[ENV_ARG] << ");"
+         << "  " << ");"
          << STRS[ACE_CR] << " ( ::CORBA::Object::_nil ());" << endl
          << "if (! ::CORBA::is_nil (sc.in ()))" << endl
          << "{"
          << "return sc->get_CCM_object (" << endl
-         << STRS[ENV_SNGL_ARG] << ");"
+         << ");"
          << "}"
          << "::Components::EntityContext_var ec =" << endl
          << "::Components::EntityContext::_narrow (" << endl
          << "this->ctx_.in ()" << endl
-         << STRS[ENV_ARG] << ");"
+         << ");"
          << STRS[ACE_CR] << " ( ::CORBA::Object::_nil ());" << endl
          << "if (! ::CORBA::is_nil (ec.in ()))" << endl
          << "{"
          << "return ec->get_CCM_object (" << endl
-         << STRS[ENV_SNGL_ARG] << ");"
+         << ");"
          << "}"
          << STRS[ACE_TR] << " ( ::CORBA::INTERNAL (), 0);" << endl
          << "}" << endl;
@@ -574,7 +568,7 @@ namespace
         os << "_ptr" << endl
            << scope_.name () << "_Context::get_connection_"
            << u.name () << " (" << endl
-           << STRS[ENV_SNGL_SRC_NOTUSED] << ")" << endl
+           << ")" << endl
            << STRS[EXCP_SNGL] << endl
            << "{"
            << "return ";
@@ -593,7 +587,7 @@ namespace
         Traversal::SingleUserData::belongs (u, belongs_);
 
         os << "_ptr c" << endl
-           << STRS[ENV_SRC] << ")" << endl
+           << ")" << endl
            << STRS[EXCP_START] << " "
            << STRS[EXCP_SYS] << "," << endl
            << STRS[EXCP_AC] << "," << endl
@@ -621,7 +615,7 @@ namespace
         os << "_ptr" << endl
            << scope_.name () << "_Context::disconnect_"
            << u.name () << " (" << endl
-           << STRS[ENV_SNGL_SRC] << ")" << endl
+           << ")" << endl
            << STRS[EXCP_START] << " "
            << STRS[EXCP_SYS] << "," << endl
            << STRS[EXCP_NC] << "))" << endl
@@ -647,7 +641,7 @@ namespace
         os << u.scoped_name () << "Connections *" << endl
            << scope_.name () << "_Context::get_connections_"
            << u.name () << " (" << endl
-           << STRS[ENV_SNGL_SRC] << ")" << endl
+           << ")" << endl
            << STRS[EXCP_SNGL] << endl
            << "{"
            << u.scoped_name () << "Connections *tmp_retv = 0;"
@@ -686,7 +680,7 @@ namespace
 
         os << "::_narrow (" << endl
            << "entry.int_id_.in ()" << endl
-           << STRS[ENV_ARG] << ");"
+           << ");"
            << STRS[ACE_CR] << " (0);" << endl;
 
         os << "ACE_NEW_THROW_EX ("
@@ -706,7 +700,7 @@ namespace
         Traversal::MultiUserData::belongs (u, belongs_);
 
         os << "_ptr c" << endl
-           << STRS[ENV_SRC] << ")" << endl
+           << ")" << endl
            << STRS[EXCP_START] << " "
            << STRS[EXCP_SYS] << "," << endl
            << STRS[EXCP_ECL] << "," << endl
@@ -752,7 +746,7 @@ namespace
            << scope_.name () << "_Context::disconnect_"
            << u.name () << " (" << endl
            << STRS[COMP_CK] << " * ck" << endl
-           << STRS[ENV_SRC] << ")" << endl
+           << ")" << endl
            << STRS[EXCP_START] << " "
            << STRS[EXCP_SYS] << "," << endl
            << STRS[EXCP_IC] << "))" << endl
@@ -799,7 +793,7 @@ namespace
         Traversal::PublisherData::belongs (p, belongs_);
 
         os << " *ev" << endl
-           << STRS[ENV_SRC] << ")" << endl
+           << ")" << endl
            << STRS[EXCP_SNGL] << endl
            << "{"
            << "for (ACE_Active_Map_Manager< " << endl
@@ -820,8 +814,8 @@ namespace
 
         os << " (" << endl
            << "ev" << endl
-           << STRS[ENV_ARG] << ");"
-           << "ACE_CHECK;" << endl
+           << ");"
+           << endl
            << "}";
 
         // @@ GD Modified Code Below
@@ -850,8 +844,8 @@ namespace
         Traversal::PublisherData::belongs (p, simple_belongs_);
 
         os << endl
-           << STRS[ENV_ARG] << ");"
-           << "ACE_CHECK;" << endl
+           << ");"
+           << endl
            << "}"
            << "}";
 
@@ -862,7 +856,7 @@ namespace
         Traversal::PublisherData::belongs (p, belongs_);
 
         os << "Consumer_ptr c" << endl
-           << STRS[ENV_SRC] << ")" << endl
+           << ")" << endl
            << STRS[EXCP_START] << " "
            << STRS[EXCP_SYS] << "," << endl
            << STRS[EXCP_ECL] << "))" << endl
@@ -896,7 +890,7 @@ namespace
            << scope_.name () << "_Context::subscribe_"
            << p.name () << "_generic (" << endl
            << STRS[COMP_ECB] << "_ptr c" << endl
-           << STRS[ENV_SRC] << ")" << endl
+           << ")" << endl
            << STRS[EXCP_START] << " "
            << STRS[EXCP_SYS] << "," << endl
            << STRS[EXCP_ECL] << "))" << endl
@@ -926,7 +920,7 @@ namespace
            << scope_.name () << "_Context::unsubscribe_"
            << p.name () << " (" << endl
            << STRS[COMP_CK] << " *ck" << endl
-           << STRS[ENV_SRC] << ")" << endl
+           << ")" << endl
            << STRS[EXCP_START] << " "
            << STRS[EXCP_SYS] << "," << endl
            << STRS[EXCP_IC] << "))" << endl
@@ -982,7 +976,7 @@ namespace
         Traversal::EmitterData::belongs (e, belongs_);
 
         os << " *ev" << endl
-           << STRS[ENV_SRC] << ")" << endl
+           << ")" << endl
            << STRS[EXCP_SNGL] << endl
            << "{"
            << "this->ciao_emits_" << e.name ()
@@ -992,7 +986,7 @@ namespace
 
         os << " (" << endl
            << "ev" << endl
-           << STRS[ENV_ARG] << ");" << endl
+           << ");" << endl
            << "}";
 
         os << "void" << endl
@@ -1002,7 +996,7 @@ namespace
         Traversal::EmitterData::belongs (e, belongs_);
 
         os << "Consumer_ptr c" << endl
-           << STRS[ENV_SRC] << ")" << endl
+           << ")" << endl
            << STRS[EXCP_START] << " "
            << STRS[EXCP_SYS] << "," << endl
            << STRS[EXCP_AC] << "))" << endl
@@ -1029,7 +1023,7 @@ namespace
         os << "Consumer_ptr" << endl
            << scope_.name () << "_Context::disconnect_"
            << e.name () << " (" << endl
-           << STRS[ENV_SNGL_SRC] << ")" << endl
+           << ")" << endl
            << STRS[EXCP_START] << " "
            << STRS[EXCP_SYS] << "," << endl
            << STRS[EXCP_NC] << "))" << endl
@@ -1116,7 +1110,7 @@ namespace
 
         os << "Consumer::_narrow (" << endl
            << "e.int_id_.in ()" << endl
-           << STRS[ENV_ARG] << ");"
+           << ");"
            << STRS[ACE_CR] << " (0);" << endl
            << "if ( ::CORBA::is_nil (c.in ()))"
            << "{"
@@ -1227,7 +1221,7 @@ namespace
         os << STRS[COMP_CD] << " *" << endl
            << t.name () << "_Context::get_registered_consumers (" << endl
            << "const char *publisher_name" << endl
-           << STRS[ENV_SRC] << ")" << endl
+           << ")" << endl
            << STRS[EXCP_START] << " "
            << STRS[EXCP_SYS] << "," << endl
            << STRS[EXCP_IN] << "," << endl
@@ -1272,7 +1266,7 @@ namespace
       os << t.name () << "_Context *" << endl
          << t.name () << "_Context::_narrow (" << endl
          << STRS[COMP_SC] << "_ptr p" << endl
-         << STRS[ENV_SRC_NOTUSED] << ")" << endl
+         << ")" << endl
          << "{"
          << "return dynamic_cast<" << t.name () << "_Context *> (p);"
          << endl
@@ -1315,8 +1309,8 @@ namespace
 
         os << "Consumer::_narrow (" << endl
            << "  consumer" << endl
-           << "  " << STRS[ENV_ARG] << ");"
-           << "ACE_CHECK;" << endl
+           << "  " << ");"
+ << endl
            << "if ( ::CORBA::is_nil (_ciao_consumer.in ()))" << endl
            << "{"
            << "ACE_THROW ( " << STRS[EXCP_IC] << " ());"
@@ -1325,7 +1319,7 @@ namespace
            << "this->connect_" << t.name ()
            << " (" << endl
            << "_ciao_consumer.in ()" << endl
-           << STRS[ENV_ARG] << ");" << endl
+           << ");" << endl
            << "return;"
            << "}";
       }
@@ -1350,7 +1344,7 @@ namespace
            << t.name ().unescaped_str () << "\") == 0)" << endl
            << "{"
            << "return this->disconnect_" << t.name ()
-           << " (" << STRS[ENV_SNGL_ARG] << ");" << endl
+           << " (" << ");" << endl
            << "}";
       }
     };
@@ -1369,7 +1363,7 @@ namespace
            << t.name ().unescaped_str () << "\") == 0)" << endl
            << "{"
            << "return this->executor_->get_" << t.name ()
-           << " (" << STRS[ENV_SNGL_ARG] << ");" << endl
+           << " (" << ");" << endl
            << "}";
       }
     };
@@ -1396,7 +1390,7 @@ namespace
         Traversal::PublisherData::belongs (p, belongs_);
 
         os << "Consumer_ptr c" << endl
-           << STRS[ENV_SRC] << ")" << endl
+           << ")" << endl
            << STRS[EXCP_START] << " "
            << STRS[EXCP_SYS] << "," << endl
            << STRS[EXCP_ECL] << "))" << endl
@@ -1407,21 +1401,21 @@ namespace
 
         if (swapping)
           {
-            os << "this->activate_component (" << STRS[ENV_SNGL_ARG] << ");"
+            os << "this->activate_component (" << ");"
                << STRS[ACE_CR] << " (0);" << endl;
           }
 
         os << "return this->context_->subscribe_" << p.name ()
            << " (" << endl
            << "c" << endl
-           << STRS[ENV_ARG] << ");" << endl
+           << ");" << endl
            << "}";
 
         os << STRS[COMP_CK] << " *" << endl
            << scope_.name ()
            << "_Servant::subscribe_" << p.name () << "_generic (" << endl
            << STRS[COMP_ECB] << "_ptr c" << endl
-           << STRS[ENV_SRC] << ")" << endl
+           << ")" << endl
            << STRS[EXCP_START] << " "
            << STRS[EXCP_SYS] << "," << endl
            << STRS[EXCP_ECL] << "))" << endl
@@ -1429,14 +1423,14 @@ namespace
 
         if (swapping)
           {
-            os << "this->activate_component (" << STRS[ENV_SNGL_ARG] << ");"
+            os << "this->activate_component (" << ");"
                << STRS[ACE_CR] << " (0);" << endl;
           }
 
         os << "return this->context_->subscribe_" << p.name ()
            << "_generic (" << endl
            << "c" << endl
-           << STRS[ENV_ARG] << ");" << endl
+           << ");" << endl
            << "}";
 
         Traversal::PublisherData::belongs (p, belongs_);
@@ -1445,7 +1439,7 @@ namespace
            << scope_.name ()
            << "_Servant::unsubscribe_" << p.name () << " (" << endl
            << STRS[COMP_CK] << " *ck" << endl
-           << STRS[ENV_SRC] << ")" << endl
+           << ")" << endl
            << STRS[EXCP_START] << " "
            << STRS[EXCP_SYS] << "," << endl
            << STRS[EXCP_IC] << "))" << endl
@@ -1453,7 +1447,7 @@ namespace
 
         if (swapping)
         {
-          os << "this->activate_component (" << STRS[ENV_SNGL_ARG] << ");"
+          os << "this->activate_component (" << ");"
              << STRS[ACE_CR] << " ( ";
 
             Traversal::PublisherData::belongs (p, belongs_);
@@ -1464,7 +1458,7 @@ namespace
         os << "return this->context_->unsubscribe_"
            << p.name () << " (" << endl
            << "ck" << endl
-           << STRS[ENV_ARG] << ");" << endl
+           << ");" << endl
            << "}";
       }
 
@@ -1500,7 +1494,7 @@ namespace
 
         os << "::_narrow (" << endl
            << "connection" << endl
-           << STRS[ENV_ARG] << ");"
+           << ");"
            << STRS[ACE_CR] << " (0);" << endl
            << "if ( ::CORBA::is_nil (_ciao_conn.in ()))" << endl
            << "{"
@@ -1510,7 +1504,7 @@ namespace
            << "// Simplex connect." << endl
            << "this->connect_" << u.name () << " (" << endl
            << "_ciao_conn.in ()" << endl
-           << STRS[ENV_ARG] << ");"
+           << ");"
            << STRS[ACE_CR] << " (0);" << endl
            << "return 0;" << endl
            << "}";
@@ -1531,7 +1525,7 @@ namespace
 
         os << "::_narrow (" << endl
            << "connection" << endl
-           << STRS[ENV_ARG] << ");"
+           << ");"
            << STRS[ACE_CR] << " (0);" << endl
            << "if ( ::CORBA::is_nil (_ciao_conn.in ()))" << endl
            << "{"
@@ -1541,7 +1535,7 @@ namespace
            << "// Multiplex connect." << endl
            << "return this->connect_" << u.name () << " (" << endl
            << "_ciao_conn.in ()" << endl
-           << STRS[ENV_ARG] << ");"
+           << ");"
            << "}";
       }
 
@@ -1567,7 +1561,7 @@ namespace
            << "{"
            << "// Simplex disconnect." << endl
            << "return this->disconnect_" << u.name ()
-           << " (" << STRS[ENV_SNGL_ARG] << ");" << endl
+           << " (" << ");" << endl
            << "}";
       }
 
@@ -1586,7 +1580,7 @@ namespace
            << "}"
            << "return this->disconnect_" << u.name () << " (" << endl
            << "ck" << endl
-           << STRS[ENV_ARG] << ");" << endl
+           << ");" << endl
            << "}";
       }
     };
@@ -1613,7 +1607,7 @@ namespace
         Traversal::SingleUserData::belongs (u, belongs_);
 
         os << "_ptr c" << endl
-           << STRS[ENV_SRC] << ")" << endl
+           << ")" << endl
            << STRS[EXCP_START] << " "
            << STRS[EXCP_SYS] << "," << endl
            << STRS[EXCP_AC] << "," << endl
@@ -1622,7 +1616,7 @@ namespace
            << "this->context_->connect_" << u.name () << " ("
            << endl
            << "c" << endl
-           << STRS[ENV_ARG] << ");" << endl
+           << ");" << endl
            << "this->add_receptacle (\"" << u.name ().unescaped_str ()
            << "\", c, 0);" << endl
            << "}";
@@ -1632,14 +1626,14 @@ namespace
         os << "_ptr" << endl
            << scope_.name () << "_Servant::disconnect_"
            << u.name () << " (" << endl
-           << STRS[ENV_SNGL_SRC] << ")" << endl
+           << ")" << endl
            << STRS[EXCP_START] << " "
            << STRS[EXCP_SYS] << "," << endl
            << STRS[EXCP_NC] << "))" << endl
            << "{"
            << "return this->context_->disconnect_" << u.name ()
            << " (" << endl
-           << STRS[ENV_SNGL_ARG] << ");" << endl
+           << ");" << endl
            << "}";
 
         Traversal::SingleUserData::belongs (u, belongs_);
@@ -1648,12 +1642,12 @@ namespace
            << scope_.name ()
            << "_Servant::get_connection_" << u.name ()
            << " (" << endl
-           << STRS[ENV_SNGL_SRC] << ")" << endl
+           << ")" << endl
            << STRS[EXCP_SNGL] << endl
            << "{"
            << "return this->context_->get_connection_"
            << u.name () << " (" << endl
-           << STRS[ENV_SNGL_ARG] << ");" << endl
+           << ");" << endl
            << "}";
       }
 
@@ -1667,7 +1661,7 @@ namespace
         Traversal::MultiUserData::belongs (u, belongs_);
 
         os << "_ptr c" << endl
-           << STRS[ENV_SRC] << ")" << endl
+           << ")" << endl
            << STRS[EXCP_START] << " "
            << STRS[EXCP_SYS] << "," << endl
            << STRS[EXCP_ECL] << "," << endl
@@ -1677,7 +1671,7 @@ namespace
           "this->context_->connect_" << u.name () << " ("
            << endl
            << "c" << endl
-           << STRS[ENV_ARG] << ");" << endl
+           << ");" << endl
            << "this->add_receptacle (\"" << u.name ().unescaped_str ()
            << "\", c, cookie);" << endl
            << "return cookie;" << endl
@@ -1689,7 +1683,7 @@ namespace
            << scope_.name () << "_Servant::disconnect_"
            << u.name () << " (" << endl
            << STRS[COMP_CK] << " * ck" << endl
-           << STRS[ENV_SRC] << ")" << endl
+           << ")" << endl
            << STRS[EXCP_START] << " "
            << STRS[EXCP_SYS] << "," << endl
            << STRS[EXCP_IC] << "))" << endl
@@ -1697,19 +1691,19 @@ namespace
            << "return this->context_->disconnect_" << u.name ()
            << " (" << endl
            << "ck" << endl
-           << STRS[ENV_ARG] << ");" << endl
+           << ");" << endl
            << "}";
 
         os << u.scoped_name () << "Connections *" << endl
            << scope_.name ()
            << "_Servant::get_connections_" << u.name ()
            << " (" << endl
-           << STRS[ENV_SNGL_SRC] << ")" << endl
+           << ")" << endl
            << STRS[EXCP_SNGL] << endl
            << "{"
            << "return this->context_->get_connections_"
            << u.name () << " (" << endl
-           << STRS[ENV_SNGL_ARG] << ");" << endl
+           << ");" << endl
            << "}";
       }
 
@@ -1745,7 +1739,7 @@ namespace
 
         os << "Consumer::_narrow (" << endl
            << "subscribe" << endl
-           << STRS[ENV_ARG] << ");"
+           << ");"
            << STRS[ACE_CR] << " (0);" << endl;
 
         os << "if ( ::CORBA::is_nil (sub.in ()))" << endl
@@ -1757,14 +1751,14 @@ namespace
         Traversal::PublisherData::belongs (p, belongs_);
 
         os << "::_tao_obv_static_repository_id ()" << endl
-           << "  " << STRS[ENV_ARG] << ");"
+           << "  " << ");"
            << STRS[ACE_CR] << " (0);" << endl;
 
         os << "if (substitutable)" << endl
            << "{"
            << "return this->subscribe_" << p.name () << "_generic (" << endl
            << "subscribe" << endl
-           << STRS[ENV_ARG] << ");" << endl
+           << ");" << endl
            << "}"
            << "else" << endl
            << "{"
@@ -1775,7 +1769,7 @@ namespace
            << "{"
            << "return this->subscribe_" << p.name () << " (" << endl
            << "sub.in ()" << endl
-           << STRS[ENV_ARG] << ");" << endl
+           << ");" << endl
            << "}"
            << "}";
       }
@@ -1801,7 +1795,7 @@ namespace
            << "return this->unsubscribe_" << p.name ()
            << " (" << endl
            << "ck" << endl
-           << STRS[ENV_ARG] << ");" << endl
+           << ");" << endl
            << "}";
       }
     };
@@ -1827,7 +1821,7 @@ namespace
         Traversal::EmitterData::belongs (e, belongs_);
 
         os << "Consumer_ptr c" << endl
-           << STRS[ENV_SRC] << ")" << endl
+           << ")" << endl
            << STRS[EXCP_START] << " "
            << STRS[EXCP_SYS] << "," << endl
            << STRS[EXCP_AC] << "))" << endl
@@ -1835,7 +1829,7 @@ namespace
            << "this->context_->connect_" << e.name ()
            << " (" << endl
            << "c" << endl
-           << STRS[ENV_ARG] << ");" << endl
+           << ");" << endl
            << "}";
 
         Traversal::EmitterData::belongs (e, belongs_);
@@ -1843,14 +1837,14 @@ namespace
         os << "Consumer_ptr" << endl
            << scope_.name () << "_Servant::disconnect_"
            << e.name () << " (" << endl
-           << STRS[ENV_SNGL_SRC] << ")" << endl
+           << ")" << endl
            << STRS[EXCP_START] << " "
            << STRS[EXCP_SYS] << "," << endl
            << STRS[EXCP_NC] << "))" << endl
            << "{"
            << "return this->context_->disconnect_"
            << e.name () << " (" << endl
-           << STRS[ENV_SNGL_ARG] << ");" << endl
+           << ");" << endl
            << "}";
       }
 
@@ -1907,7 +1901,7 @@ namespace
         os << "_ptr" << endl
            << scope_.name ()
            << "_Servant::provide_" << p.name () << " (" << endl
-           << STRS[ENV_SNGL_SRC] << ")" << endl
+           << ")" << endl
            << STRS[EXCP_SNGL] << endl
            << "{";
 
@@ -1917,7 +1911,7 @@ namespace
         if (swapping)
 
         {
-          os << "this->activate_component (" << STRS[ENV_SNGL_ARG] << ");"
+          os << "this->activate_component (" << ");"
              << STRS[ACE_CR] << " ( ";
 
             Traversal::ProviderData::belongs (p, belongs_);
@@ -1937,7 +1931,7 @@ namespace
 
         os << "::CORBA::Object_var obj =" << endl
            << "  this->provide_" << p.name () << "_i ("
-           << STRS[ENV_SNGL_ARG] << ");"
+           << ");"
            << STRS[ACE_CR] << " ( ";
 
         Traversal::ProviderData::belongs (p, belongs_);
@@ -1956,7 +1950,7 @@ namespace
 
         os << "::_narrow ("
            << "obj.in ()" << endl
-           << STRS[ENV_ARG] << ");"
+           << ");"
            << STRS[ACE_CR] << " ( ";
 
         Traversal::ProviderData::belongs (p, belongs_);
@@ -1976,7 +1970,7 @@ namespace
         os << "::CORBA::Object_ptr" << endl
            << scope_.name ()
            << "_Servant::provide_" << p.name () << "_i (" << endl
-           << STRS[ENV_SNGL_SRC] << ")" << endl
+           << ")" << endl
            << STRS[EXCP_SNGL] << endl
            << "{"
            << "::CORBA::Object_ptr ret =" << endl
@@ -2068,7 +2062,7 @@ namespace
 
         os << "," << endl
            << "  ::CIAO::Container::Facet_Consumer" << endl
-           << "  " << STRS[ENV_ARG] << ");"
+           << "  " << ");"
            << STRS[ACE_CR] << " ( ";
 
         Traversal::ProviderData::belongs (p, belongs_);
@@ -2077,7 +2071,7 @@ namespace
            << "this->add_facet (\""
            << p.name ().unescaped_str () << "\"," << endl
            << "obj.in ()" << endl
-           << STRS[ENV_ARG] << ");"
+           << ");"
            << STRS[ACE_CR] << " ( ";
 
         Traversal::ProviderData::belongs (p, belongs_);
@@ -2170,11 +2164,11 @@ namespace
 
         os << "Consumer_" << c.name ()
            << "_Servant::_get_component (" << endl
-           << STRS[ENV_SNGL_SRC] << ")" << endl
+           << ")" << endl
            << STRS[EXCP_SNGL] << endl
            << "{"
            << "return this->ctx_->get_CCM_object "
-           << "(" << STRS[ENV_SNGL_ARG] << ");" << endl
+           << "(" << ");" << endl
            << "}";
 
         os << "void" << endl
@@ -2192,13 +2186,13 @@ namespace
         Traversal::ConsumerData::belongs (c, belongs_);
 
         os << " *evt" << endl
-           << STRS[ENV_SRC] << ")" << endl
+           << ")" << endl
            << STRS[EXCP_SNGL] << endl
            << "{"
            << "this->executor_->push_" << c.name ()
            << " (" << endl
            << "evt" << endl
-           << STRS[ENV_ARG] << ");" << endl
+           << ");" << endl
            << "}";
 
         os << "// Inherited from " << STRS[COMP_ECB] << "." << endl
@@ -2210,7 +2204,7 @@ namespace
         os << "Consumer_" << c.name ()
            << "_Servant::push_event (" << endl
            << "::Components::EventBase *ev" << endl
-           << STRS[ENV_SRC] << ")" << endl
+           << ")" << endl
            << STRS[EXCP_START] << " "
            << STRS[EXCP_SYS] << "," << endl
            << STRS[EXCP_BET] << "))" << endl
@@ -2232,7 +2226,7 @@ namespace
 
         os << " (" << endl
            << "ev_type" << endl
-           << STRS[ENV_ARG] << ");" << endl
+           << ");" << endl
            << "return;" << endl
            << "}"
            << "ACE_THROW ( " << STRS[EXCP_BET] << " ());" << endl
@@ -2252,7 +2246,7 @@ namespace
            << "::Components::EventBase *ev," << endl
            << "const char * /* source_id */," << endl
            << "::CORBA::TypeCode_ptr /* tc */" << endl
-           << STRS[ENV_SRC] << ")" << endl
+           << ")" << endl
            << STRS[EXCP_START] << " "
            << STRS[EXCP_SYS] << "," << endl
            << STRS[EXCP_BET] << "))" << endl
@@ -2270,7 +2264,7 @@ namespace
         os << "Consumer_" << c.name ()
            << "_Servant::ciao_is_substitutable (" << endl
            << "const char * event_repo_id" << endl
-           << STRS[ENV_SRC] << ")" << endl
+           << ")" << endl
            << STRS[EXCP_SNGL] << endl
            << "{"
            << "if (event_repo_id == 0)" << endl
@@ -2280,7 +2274,7 @@ namespace
            << scope_.name () << "_Context *ctx =" << endl
            << "  " << scope_.name () << "_Context::_narrow (" << endl
            << "  this->ctx_.in ()" << endl
-           << "  " << STRS[ENV_ARG] << ");"
+           << "  " << ");"
            << STRS[ACE_CR] << " (false);" << endl;
 
         os << "CORBA::ORB_ptr orb = ctx->_ciao_the_Container ()->the_ORB ();"
@@ -2289,7 +2283,7 @@ namespace
         os << "CORBA::ValueFactory f =" << endl
            << "  orb->lookup_value_factory (" << endl
            << "  event_repo_id" << endl
-           << "  " << STRS[ENV_ARG] << ");"
+           << "  " << ");"
            << STRS[ACE_CR] << " (false);" << endl;
 
         os << "if (f == 0)" << endl
@@ -2297,7 +2291,7 @@ namespace
            << "return false;" << endl
            << "}"
            << "CORBA::ValueBase_var v =" << endl
-           << "  f->create_for_unmarshal (" << STRS[ENV_SNGL_ARG] << ");"
+           << "  f->create_for_unmarshal (" << ");"
            << STRS[ACE_CR] << " (false);" << endl;
 
         os << "f->_remove_ref ();" << endl;
@@ -2319,7 +2313,7 @@ namespace
         os << "Consumer_ptr" << endl
            << scope_.name  () << "_Servant::"
            << "get_consumer_" << c.name () << " (" << endl
-           << STRS[ENV_SNGL_SRC] << ")" << endl
+           << ")" << endl
            << STRS[EXCP_SNGL] << endl
            << "{"
            << "if (! ::CORBA::is_nil (this->consumes_" << c.name ()
@@ -2335,7 +2329,7 @@ namespace
 
         os << "::Components::EventConsumerBase_var obj =" << endl
            << "  this->get_consumer_" << c.name () << "_i (" << endl
-           << "  " << STRS[ENV_SNGL_ARG] << ");"
+           << "  " << ");"
            << STRS[ACE_CR] << " ( ";
 
         Traversal::ConsumerData::belongs (c, belongs_);
@@ -2351,7 +2345,7 @@ namespace
 
         os << "Consumer::_narrow (" << endl
            << "  obj.in ()" << endl
-           << "  " << STRS[ENV_ARG] << ");"
+           << "  " << ");"
            << STRS[ACE_CR] << " ( ";
 
         Traversal::ConsumerData::belongs (c, belongs_);
@@ -2371,7 +2365,7 @@ namespace
         os << "::Components::EventConsumerBase_ptr" << endl
            << scope_.name  () << "_Servant::"
            << "get_consumer_" << c.name () << "_i (" << endl
-           << STRS[ENV_SNGL_SRC] << ")" << endl
+           << ")" << endl
            << STRS[EXCP_SNGL] << endl
            << "{"
            << "::Components::EventConsumerBase_ptr ret =" << endl
@@ -2453,7 +2447,7 @@ namespace
 
         os << "," << endl
            << "  ::CIAO::Container::Facet_Consumer" << endl
-           << "  " << STRS[ENV_ARG] << ");"
+           << "  " << ");"
            << STRS[ACE_CR] << " ( ";
 
         Traversal::ConsumerData::belongs (c, belongs_);
@@ -2463,7 +2457,7 @@ namespace
         os << "::Components::EventConsumerBase_var ecb =" << endl
            << "  ::Components::EventConsumerBase::_narrow (" << endl
            << "  obj.in ()" << endl
-           << "  " << STRS[ENV_ARG] << ");"
+           << "  " << ");"
            << STRS[ACE_CR] << " ( ";
 
         Traversal::ConsumerData::belongs (c, belongs_);
@@ -2473,7 +2467,7 @@ namespace
         os << "this->add_consumer (\""
            << c.name ().unescaped_str () << "\"," << endl
            << "ecb.in ()" << endl
-           << STRS[ENV_ARG] << ");"
+           << ");"
            << STRS[ACE_CR] << " ( ";
 
         Traversal::ConsumerData::belongs (c, belongs_);
@@ -2693,8 +2687,8 @@ namespace
       {
         os << "obj_var =" << endl
            << "  this->provide_" << p.name () << "_i (" << endl
-           << "  " << STRS[ENV_SNGL_ARG] << ");"
-           << "ACE_CHECK;" << endl;
+           << "  " << ");"
+ << endl;
       }
 
       virtual void
@@ -2717,8 +2711,8 @@ namespace
       {
         os << "ecb_var =" << endl
            << "  this->get_consumer_" << p.name () << "_i (" << endl
-           <<  "  " << STRS[ENV_SNGL_ARG] << ");"
-           << "ACE_CHECK;" << endl;
+           <<  "  " << ");"
+ << endl;
       }
     };
 
@@ -3020,18 +3014,18 @@ namespace
          << "::Components::SessionComponent_var scom =" << endl
          << "  ::Components::SessionComponent::_narrow (" << endl
          << "  exe" << endl
-         << "  " << STRS[ENV_ARG] << ");"
-         << "ACE_TRY_CHECK;" << endl
+         << "  " << ");"
+ << endl
          << "if (! ::CORBA::is_nil (scom.in ()))" << endl
          << "{"
          << "scom->set_session_context (" << endl
          << "this->context_" << endl
-         << STRS[ENV_ARG] << ");"
-         << "ACE_TRY_CHECK;"
+         << ");"
+
          << "}"
          << "this->populate_port_tables (" << endl
-         << STRS[ENV_SNGL_ARG] << ");"
-         << "ACE_TRY_CHECK;"
+         << ");"
+
          << "}"
          << "ACE_CATCHANY" << endl
          << "{"
@@ -3049,17 +3043,17 @@ namespace
       os << "void" << endl
          << t.name () << "_Servant::set_attributes (" << endl
          << "const ::Components::ConfigValues &descr" << endl
-         << STRS[ENV_SRC] << ")" << endl
+         << ")" << endl
          << "{"
-         << "ACE_ENV_EMIT_CODE (ACE_UNUSED_ARG (ACE_TRY_ENV));" << endl;
+         << endl;
 
       string swap_option = ctx.cl ().get_value ("custom-container", "");
       bool swapping = (swap_option == "upgradeable");
 
       if (swapping)
         {
-          os << "this->activate_component (" << STRS[ENV_SNGL_ARG] << ");"
-             << "ACE_CHECK;" << endl;
+          os << "this->activate_component (" << ");"
+ << endl;
         }
 
       os << "for ( ::CORBA::ULong i = 0; i < descr.length (); ++i)" << endl
@@ -3146,7 +3140,7 @@ namespace
          << t.name () << "_Servant::connect (" << endl
          << "const char *name," << endl
          << "::CORBA::Object_ptr connection" << endl
-         << STRS[ENV_SRC] << ")" << endl
+         << ")" << endl
          << STRS[EXCP_START] << " "
          << STRS[EXCP_SYS] << "," << endl
          << STRS[EXCP_IN] << "," << endl
@@ -3157,7 +3151,7 @@ namespace
 
       if (swapping)
         {
-          os << "this->activate_component (" << STRS[ENV_SNGL_ARG] << ");"
+          os << "this->activate_component (" << ");"
              << STRS[ACE_CR] << " (0);" << endl;
         }
 
@@ -3193,7 +3187,7 @@ namespace
          << t.name () << "_Servant::disconnect (" << endl
          << "const char *name," << endl
          << STRS[COMP_CK] << " * ck" << endl
-         << STRS[ENV_SRC] << ")" << endl
+         << ")" << endl
          << STRS[EXCP_START] << " "
          << STRS[EXCP_SYS] << "," << endl
          << STRS[EXCP_IN] << "," << endl
@@ -3205,7 +3199,7 @@ namespace
 
       if (swapping)
       {
-        os << "this->activate_component (" << STRS[ENV_SNGL_ARG] << ");"
+        os << "this->activate_component (" << ");"
            << STRS[ACE_CR] << " ( ::CORBA::Object::_nil ());" << endl;
       }
 
@@ -3240,7 +3234,7 @@ namespace
 
       os << STRS[COMP_RD] << " *" << endl
          << t.name () << "_Servant::get_all_receptacles (" << endl
-         << STRS[ENV_SNGL_SRC] << ")" << endl
+         << ")" << endl
          << STRS[EXCP_SNGL] << endl
          << "{"
          << STRS[COMP_RD] << " *retval = 0;"
@@ -3312,7 +3306,7 @@ namespace
          << endl
          << "const char * emitter_name," << endl
          << STRS[COMP_ECB] << "_ptr consumer" << endl
-         << STRS[ENV_SRC] << ")" << endl
+         << ")" << endl
          << STRS[EXCP_START] << " "
          << STRS[EXCP_SYS] << "," << endl
          << STRS[EXCP_IN] << "," << endl
@@ -3322,7 +3316,7 @@ namespace
 
       if (swapping)
       {
-        os << "this->activate_component (" << STRS[ENV_SNGL_ARG] << ");"
+        os << "this->activate_component (" << ");"
            << STRS[ACE_CK] << ";" << endl;
       }
 
@@ -3356,7 +3350,7 @@ namespace
       os << STRS[COMP_ECB] << "_ptr" << endl
          << t.name () << "_Servant::disconnect_consumer (" << endl
          << "const char *source_name" << endl
-         << STRS[ENV_SRC] << ")" << endl
+         << ")" << endl
          << STRS[EXCP_START] << " "
          << STRS[EXCP_SYS] << "," << endl
          << STRS[EXCP_IN] << "," << endl
@@ -3365,7 +3359,7 @@ namespace
 
       if (swapping)
       {
-        os << "this->activate_component (" << STRS[ENV_SNGL_ARG] << ");"
+        os << "this->activate_component (" << ");"
            << STRS[ACE_CR] << " ( "
            << STRS[COMP_ECB] << "::_nil ());" << endl;
       }
@@ -3400,7 +3394,7 @@ namespace
 
       os << STRS[COMP_PD] << " *" << endl
          << t.name () << "_Servant::get_all_publishers (" << endl
-         << STRS[ENV_SNGL_SRC] << ")" << endl
+         << ")" << endl
          << STRS[EXCP_SNGL] << endl
          << "{"
          << STRS[COMP_PD] << " *retval = 0;"
@@ -3450,7 +3444,7 @@ namespace
 
       os << STRS[COMP_ED] << " *" << endl
          << t.name () << "_Servant::get_all_emitters (" << endl
-         << STRS[ENV_SNGL_SRC] << ")" << endl
+         << ")" << endl
          << STRS[EXCP_SNGL] << endl
          << "{"
          << STRS[COMP_ED] << " *retval = 0;"
@@ -3502,7 +3496,7 @@ namespace
          << t.name () << "_Servant::subscribe (" << endl
          << "const char *publisher_name," << endl
          << STRS[COMP_ECB] << "_ptr subscribe" << endl
-         << STRS[ENV_SRC] << ")" << endl
+         << ")" << endl
          << STRS[EXCP_START] << " "
          << STRS[EXCP_SYS] << "," << endl
          << STRS[EXCP_IN] << "," << endl
@@ -3512,7 +3506,7 @@ namespace
 
       if (swapping)
         {
-          os << "this->activate_component (" << STRS[ENV_SNGL_ARG] << ");"
+          os << "this->activate_component (" << ");"
              << STRS[ACE_CR] << " (0);" << endl;
         }
 
@@ -3549,7 +3543,7 @@ namespace
          << endl
          << "const char *publisher_name," << endl
          << STRS[COMP_CK] << " *ck" << endl
-         << STRS[ENV_SRC] << ")" << endl
+         << ")" << endl
          << STRS[EXCP_START] << " "
          << STRS[EXCP_SYS] << "," << endl
          << STRS[EXCP_IN] << "," << endl
@@ -3558,7 +3552,7 @@ namespace
 
       if (swapping)
       {
-        os << "this->activate_component (" << STRS[ENV_SNGL_ARG] << ");"
+        os << "this->activate_component (" << ");"
            << STRS[ACE_CR] << " ( " << STRS[COMP_ECB]
            << "::_nil ());" << endl;
       }
@@ -3615,14 +3609,14 @@ namespace
          << t.name ()
          << "_Servant::get_facet_executor (" << endl
          << "const char *name" << endl
-         << STRS[ENV_SRC] << ")" << endl
+         << ")" << endl
          << STRS[EXCP_START] << " "
          << STRS[EXCP_SYS] << "))" << endl
          << "{";
 
       if (swapping)
       {
-        os << "this->activate_component (" << STRS[ENV_SNGL_ARG] << ");"
+        os << "this->activate_component (" << ");"
            << STRS[ACE_CR] << " ( ::CORBA::Object::_nil ());" << endl;
       }
 
@@ -3739,10 +3733,9 @@ namespace
 
       os << "void" << endl
          << t.name () << "_Servant::populate_port_tables (" << endl
-         << STRS[ENV_SNGL_SRC] << ")" << endl
+         << ")" << endl
          << STRS[EXCP_SNGL] << endl
          << "{"
-         << "ACE_ENV_ARG_NOT_USED;"
          << "::CORBA::Object_var obj_var;"
          << "::Components::EventConsumerBase_var ecb_var;" << endl;
 
@@ -3868,7 +3861,7 @@ namespace
       receives_none (SemanticGraph::HomeFactory&)
       {
         os << " (" << endl
-           << STRS[ENV_SNGL_SRC] << ")" << endl;
+           << ")" << endl;
       }
 
       virtual void
@@ -3880,7 +3873,7 @@ namespace
       virtual void
       receives_post (SemanticGraph::HomeFactory&)
       {
-        os << endl << STRS[ENV_SRC] << ")" << endl;
+        os << endl << ")" << endl;
       }
 
       virtual void
@@ -3950,7 +3943,7 @@ namespace
 
         os << "::_narrow (" << endl
            << "_ciao_ec.in ()" << endl
-           << STRS[ENV_ARG] << ");" << endl;
+           << ");" << endl;
 
         os << STRS[ACE_CR] << " ( ";
 
@@ -3960,7 +3953,7 @@ namespace
 
         os << "return this->_ciao_activate_component (" << endl
            << "_ciao_comp.in ()" << endl
-           << STRS[ENV_ARG] << ");" << endl;
+           << ");" << endl;
 
         os << "}";
       }
@@ -4019,7 +4012,7 @@ namespace
       receives_none (SemanticGraph::HomeFinder&)
       {
         os << " (" << endl
-           << STRS[ENV_SNGL_SRC] << ")" << endl;
+           << ")" << endl;
       }
 
       virtual void
@@ -4031,7 +4024,7 @@ namespace
       virtual void
       receives_post (SemanticGraph::HomeFinder&)
       {
-        os << endl << STRS[ENV_SRC] << ")" << endl;
+        os << endl << ")" << endl;
       }
 
       virtual void
@@ -4337,7 +4330,7 @@ namespace
          << "::Components::HomeExecutorBase_ptr p," << endl
          << "::CIAO::Session_Container *c," << endl
          << "const char *ins_name" << endl
-         << STRS[ENV_SRC] << ")" << endl
+         << ")" << endl
          << "{"
          << "if (p == 0)" << endl
          << "{"
@@ -4348,7 +4341,7 @@ namespace
          << t.scoped_name ().scope_name () << "::CCM_" << t.name ()
          << "::_narrow (" << endl
          << "p" << endl
-         << STRS[ENV_ARG] << ");"
+         << ");"
          << STRS[ACE_CR] << " (0);" << endl
          << "if (::CORBA::is_nil (x.in ()))" << endl
          << "{"

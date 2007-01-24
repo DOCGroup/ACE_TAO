@@ -12,14 +12,6 @@ namespace StringLiterals
   // Index into the string array in Literals.cpp.
   enum
   {
-    ENV_HDR,
-    ENV_SNGL_HDR,
-    ENV_SRC,
-    ENV_SRC_NOTUSED,
-    ENV_SNGL_SRC,
-    ENV_SNGL_SRC_NOTUSED,
-    ENV_ARG,
-    ENV_SNGL_ARG,
     EXCP_SNGL,
     EXCP_START,
     EXCP_SYS,
@@ -56,8 +48,6 @@ namespace StringLiterals
     EXTRACT,
     EXTRACT_TMP,
     ACE_UA,
-    ACE_CK,
-    ACE_CR,
     ACE_TH,
     ACE_TR,
     LIT_SIZE
