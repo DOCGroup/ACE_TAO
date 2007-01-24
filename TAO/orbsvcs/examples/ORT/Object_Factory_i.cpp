@@ -41,7 +41,7 @@ Object_Factory_i::create_object (const char *interface_repository_id,
     ort->make_object (interface_repository_id,
                       *obj_id
                       ACE_ENV_ARG_PARAMETER);
-/
+*/
 
   return CORBA::Object::_nil();
 }
