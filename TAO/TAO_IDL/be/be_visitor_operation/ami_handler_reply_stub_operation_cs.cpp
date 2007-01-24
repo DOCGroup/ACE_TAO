@@ -397,14 +397,7 @@ be_visitor_operation_ami_handler_reply_stub_operation_cs::gen_marshal_and_invoke
       *os << be_uidt << be_uidt_nl
           << " ))" << be_nl;
 
-      if (be_global->use_raw_throw ())
-        {
-          *os << "throw ::CORBA::MARSHAL ();" << be_uidt_nl << be_nl;
-        }
-      else
-        {
-          *os << "ACE_THROW ( ::CORBA::MARSHAL ());" << be_uidt_nl << be_nl;
-        }
+      *os << "throw ::CORBA::MARSHAL ();" << be_uidt_nl << be_nl;
     }
 
 
