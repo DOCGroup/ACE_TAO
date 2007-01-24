@@ -321,7 +321,7 @@ namespace TAO
       int result = this->poa_->unbind_using_user_id (user_id);
 
       if (result != 0)
-        throw ( ::CORBA::OBJ_ADAPTER ());
+        throw ::CORBA::OBJ_ADAPTER ();
     }
 
     void

@@ -272,7 +272,7 @@ TAO_Root_POA::TAO_Root_POA (const TAO_Root_POA::String &name,
   int result = this->poa_manager_.register_poa (this);
   if (result != 0)
     {
-      throw ( ::CORBA::OBJ_ADAPTER ());
+      throw ::CORBA::OBJ_ADAPTER ();
     }
 
   // Add self to Object Adapter class.
@@ -286,7 +286,7 @@ TAO_Root_POA::TAO_Root_POA (const TAO_Root_POA::String &name,
       // further errors...
       this->poa_manager_.remove_poa (this);
 
-      throw ( ::CORBA::OBJ_ADAPTER ());
+      throw ::CORBA::OBJ_ADAPTER ();
     }
 
   // Set the id for this POA.
@@ -322,14 +322,14 @@ TAO_Root_POA::complete_destruction_i (void)
   int result = this->poa_manager_.remove_poa (this);
 
   if (result != 0)
-    throw ( ::CORBA::OBJ_ADAPTER ());
+    throw ::CORBA::OBJ_ADAPTER ();
 
   // Remove POA from the Object Adapter.
   result = this->object_adapter ().unbind_poa (this,
                                                this->folded_name_,
                                                this->system_name_.in ());
   if (result != 0)
-    throw ( ::CORBA::OBJ_ADAPTER ());
+    throw ::CORBA::OBJ_ADAPTER ();
 
   // Cleanup all strategies
   this->active_policy_strategies_.cleanup ();
@@ -1232,7 +1232,7 @@ TAO_Root_POA::wait_for_completions (CORBA::Boolean wait_for_completion)
       int result = this->outstanding_requests_condition_.wait ();
       if (result == -1)
         {
-          throw ( ::CORBA::OBJ_ADAPTER ());
+          throw ::CORBA::OBJ_ADAPTER ();
         }
     }
 }
