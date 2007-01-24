@@ -46,7 +46,7 @@ TAO_Regular_POA::remove_from_parent_i (void)
       int result = this->parent_->delete_child (this->name_);
       if (result != 0)
         {
-          throw ( ::CORBA::OBJ_ADAPTER ());
+          throw ::CORBA::OBJ_ADAPTER ();
         }
     }
 }

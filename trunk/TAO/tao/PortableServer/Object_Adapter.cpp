@@ -425,7 +425,7 @@ TAO_Object_Adapter::locate_poa (const TAO::ObjectKey &key,
   }
 
   if (result != 0)
-    throw ( ::CORBA::OBJ_ADAPTER ());
+    throw ::CORBA::OBJ_ADAPTER ();
 
   {
     ACE_FUNCTION_TIMEPROBE (TAO_OBJECT_ADAPTER_FIND_POA_START);
@@ -1244,7 +1244,7 @@ TAO_Object_Adapter::wait_for_non_servant_upcalls_to_complete (void)
       int result =
         this->non_servant_upcall_condition_.wait ();
       if (result == -1)
-        throw ( ::CORBA::OBJ_ADAPTER ());
+        throw ::CORBA::OBJ_ADAPTER ();
     }
 }
 

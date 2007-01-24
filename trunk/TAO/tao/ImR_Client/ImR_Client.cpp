@@ -206,7 +206,7 @@ namespace TAO
 
           if (!root_poa)
             {
-              throw ( ::CORBA::OBJ_ADAPTER ());
+              throw ::CORBA::OBJ_ADAPTER ();
             }
 
           PortableServer::ObjectId_var id =

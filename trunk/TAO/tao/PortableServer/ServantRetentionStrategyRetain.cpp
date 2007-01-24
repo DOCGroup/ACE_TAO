@@ -900,7 +900,7 @@ namespace TAO
             }
           else
             {
-              throw (PortableServer::POA::ServantAlreadyActive ());
+              throw PortableServer::POA::ServantAlreadyActive ();
             }
         }
 
@@ -911,7 +911,7 @@ namespace TAO
                                                         id,
                                                         priority) != 0)
         {
-          throw ( ::CORBA::OBJ_ADAPTER ());
+          throw ::CORBA::OBJ_ADAPTER ();
         }
 
       //
