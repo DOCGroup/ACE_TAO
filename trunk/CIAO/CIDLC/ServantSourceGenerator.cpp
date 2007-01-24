@@ -508,7 +508,6 @@ namespace
          << "  " << STRS[COMP_SC] << "::_narrow (" << endl
          << "  this->ctx_.in ()" << endl
          << "  " << ");"
-         << STRS[ACE_CR] << " ( ::CORBA::Object::_nil ());" << endl
          << "if (! ::CORBA::is_nil (sc.in ()))" << endl
          << "{"
          << "return sc->get_CCM_object (" << endl
@@ -518,7 +517,6 @@ namespace
          << "::Components::EntityContext::_narrow (" << endl
          << "this->ctx_.in ()" << endl
          << ");"
-         << STRS[ACE_CR] << " ( ::CORBA::Object::_nil ());" << endl
          << "if (! ::CORBA::is_nil (ec.in ()))" << endl
          << "{"
          << "return ec->get_CCM_object (" << endl
@@ -681,7 +679,7 @@ namespace
         os << "::_narrow (" << endl
            << "entry.int_id_.in ()" << endl
            << ");"
-           << STRS[ACE_CR] << " (0);" << endl;
+           << endl;
 
         os << "ACE_NEW_THROW_EX ("
            << "retv[i].ck.inout ()," << endl
@@ -1111,7 +1109,7 @@ namespace
         os << "Consumer::_narrow (" << endl
            << "e.int_id_.in ()" << endl
            << ");"
-           << STRS[ACE_CR] << " (0);" << endl
+           << endl
            << "if ( ::CORBA::is_nil (c.in ()))"
            << "{"
            << STRS[ACE_TR] << " ( " << STRS[EXCP_IC] << " (), 0);"
@@ -1401,8 +1399,7 @@ namespace
 
         if (swapping)
           {
-            os << "this->activate_component (" << ");"
-               << STRS[ACE_CR] << " (0);" << endl;
+            os << "this->activate_component (" << ");" << endl;
           }
 
         os << "return this->context_->subscribe_" << p.name ()
@@ -1423,8 +1420,7 @@ namespace
 
         if (swapping)
           {
-            os << "this->activate_component (" << ");"
-               << STRS[ACE_CR] << " (0);" << endl;
+            os << "this->activate_component (" << ");" << endl;
           }
 
         os << "return this->context_->subscribe_" << p.name ()
@@ -1447,12 +1443,7 @@ namespace
 
         if (swapping)
         {
-          os << "this->activate_component (" << ");"
-             << STRS[ACE_CR] << " ( ";
-
-            Traversal::PublisherData::belongs (p, belongs_);
-
-            os << "Consumer::_nil ());" << endl;
+          os << "this->activate_component (" << ");" << endl;
           }
 
         os << "return this->context_->unsubscribe_"
@@ -1495,7 +1486,7 @@ namespace
         os << "::_narrow (" << endl
            << "connection" << endl
            << ");"
-           << STRS[ACE_CR] << " (0);" << endl
+           << endl
            << "if ( ::CORBA::is_nil (_ciao_conn.in ()))" << endl
            << "{"
            << STRS[ACE_TR] << " ( " << STRS[EXCP_IC] << " (), 0);"
@@ -1505,7 +1496,7 @@ namespace
            << "this->connect_" << u.name () << " (" << endl
            << "_ciao_conn.in ()" << endl
            << ");"
-           << STRS[ACE_CR] << " (0);" << endl
+           << endl
            << "return 0;" << endl
            << "}";
       }
@@ -1526,7 +1517,7 @@ namespace
         os << "::_narrow (" << endl
            << "connection" << endl
            << ");"
-           << STRS[ACE_CR] << " (0);" << endl
+           << endl
            << "if ( ::CORBA::is_nil (_ciao_conn.in ()))" << endl
            << "{"
            << STRS[ACE_TR] << " ( " << STRS[EXCP_IC] << " (), 0);"
@@ -1740,7 +1731,7 @@ namespace
         os << "Consumer::_narrow (" << endl
            << "subscribe" << endl
            << ");"
-           << STRS[ACE_CR] << " (0);" << endl;
+           << endl;
 
         os << "if ( ::CORBA::is_nil (sub.in ()))" << endl
            << "{"
@@ -1752,7 +1743,7 @@ namespace
 
         os << "::_tao_obv_static_repository_id ()" << endl
            << "  " << ");"
-           << STRS[ACE_CR] << " (0);" << endl;
+           << endl;
 
         os << "if (substitutable)" << endl
            << "{"
@@ -1910,13 +1901,8 @@ namespace
 
         if (swapping)
 
-        {
-          os << "this->activate_component (" << ");"
-             << STRS[ACE_CR] << " ( ";
-
-            Traversal::ProviderData::belongs (p, belongs_);
-
-            os << "::_nil ());" << endl;
+          {
+            os << "this->activate_component (" << ");" << endl;
           }
 
         os << "if (! ::CORBA::is_nil (this->provide_"
@@ -1931,12 +1917,7 @@ namespace
 
         os << "::CORBA::Object_var obj =" << endl
            << "  this->provide_" << p.name () << "_i ("
-           << ");"
-           << STRS[ACE_CR] << " ( ";
-
-        Traversal::ProviderData::belongs (p, belongs_);
-
-        os << "::_nil ());" << endl;
+           << ");" << endl;
 
         ScopedName scoped (scope_.scoped_name ());
         Name stripped (scoped.begin () + 1, scoped.end ());
@@ -1950,12 +1931,7 @@ namespace
 
         os << "::_narrow ("
            << "obj.in ()" << endl
-           << ");"
-           << STRS[ACE_CR] << " ( ";
-
-        Traversal::ProviderData::belongs (p, belongs_);
-
-        os << "::_nil ());" << endl
+           << ");" << endl
            << "this->provide_" << p.name () << "_ = fo;"
            << "return ";
 
@@ -2062,21 +2038,11 @@ namespace
 
         os << "," << endl
            << "  ::CIAO::Container::Facet_Consumer" << endl
-           << "  " << ");"
-           << STRS[ACE_CR] << " ( ";
-
-        Traversal::ProviderData::belongs (p, belongs_);
-
-        os << "::_nil ());" << endl
+           << "  " << ");" << endl
            << "this->add_facet (\""
            << p.name ().unescaped_str () << "\"," << endl
            << "obj.in ()" << endl
-           << ");"
-           << STRS[ACE_CR] << " ( ";
-
-        Traversal::ProviderData::belongs (p, belongs_);
-
-        os << "::_nil ());" << endl;
+           << ");" << endl;
 
         os << "return obj._retn ();" << endl
            << "}";
@@ -2274,8 +2240,7 @@ namespace
            << scope_.name () << "_Context *ctx =" << endl
            << "  " << scope_.name () << "_Context::_narrow (" << endl
            << "  this->ctx_.in ()" << endl
-           << "  " << ");"
-           << STRS[ACE_CR] << " (false);" << endl;
+           << "  " << ");" << endl;
 
         os << "CORBA::ORB_ptr orb = ctx->_ciao_the_Container ()->the_ORB ();"
            << endl;
@@ -2283,16 +2248,14 @@ namespace
         os << "CORBA::ValueFactory f =" << endl
            << "  orb->lookup_value_factory (" << endl
            << "  event_repo_id" << endl
-           << "  " << ");"
-           << STRS[ACE_CR] << " (false);" << endl;
+           << "  " << ");" << endl;
 
         os << "if (f == 0)" << endl
            << "{"
            << "return false;" << endl
            << "}"
            << "CORBA::ValueBase_var v =" << endl
-           << "  f->create_for_unmarshal (" << ");"
-           << STRS[ACE_CR] << " (false);" << endl;
+           << "  f->create_for_unmarshal (" << ");" << endl;
 
         os << "f->_remove_ref ();" << endl;
 
@@ -2329,12 +2292,7 @@ namespace
 
         os << "::Components::EventConsumerBase_var obj =" << endl
            << "  this->get_consumer_" << c.name () << "_i (" << endl
-           << "  " << ");"
-           << STRS[ACE_CR] << " ( ";
-
-        Traversal::ConsumerData::belongs (c, belongs_);
-
-        os << "Consumer::_nil ());" << endl;
+           << "  " << ");" << endl;
 
         Traversal::ConsumerData::belongs (c, belongs_);
 
@@ -2345,13 +2303,9 @@ namespace
 
         os << "Consumer::_narrow (" << endl
            << "  obj.in ()" << endl
-           << "  " << ");"
-           << STRS[ACE_CR] << " ( ";
+           << "  " << ");" << endl;
 
-        Traversal::ConsumerData::belongs (c, belongs_);
-
-        os << "Consumer::_nil ());" << endl
-           << "this->consumes_" << c.name () << "_ = eco;"
+        os << "this->consumes_" << c.name () << "_ = eco;"
            << "return ";
 
         Traversal::ConsumerData::belongs (c, belongs_);
@@ -2447,32 +2401,17 @@ namespace
 
         os << "," << endl
            << "  ::CIAO::Container::Facet_Consumer" << endl
-           << "  " << ");"
-           << STRS[ACE_CR] << " ( ";
-
-        Traversal::ConsumerData::belongs (c, belongs_);
-
-        os << "Consumer::_nil ());" << endl;
+           << "  " << ");" << endl;
 
         os << "::Components::EventConsumerBase_var ecb =" << endl
            << "  ::Components::EventConsumerBase::_narrow (" << endl
            << "  obj.in ()" << endl
-           << "  " << ");"
-           << STRS[ACE_CR] << " ( ";
-
-        Traversal::ConsumerData::belongs (c, belongs_);
-
-        os << "Consumer::_nil ());" << endl;
+           << "  " << ");" << endl;
 
         os << "this->add_consumer (\""
            << c.name ().unescaped_str () << "\"," << endl
            << "ecb.in ()" << endl
-           << ");"
-           << STRS[ACE_CR] << " ( ";
-
-        Traversal::ConsumerData::belongs (c, belongs_);
-
-        os << "Consumer::_nil ());" << endl;
+           << ");" << endl;
 
         os << "return ecb._retn ();" << endl
            << "}";
@@ -3152,7 +3091,7 @@ namespace
       if (swapping)
         {
           os << "this->activate_component (" << ");"
-             << STRS[ACE_CR] << " (0);" << endl;
+             << endl;
         }
 
       os << "// If the component has no receptacles, this will be unused."
@@ -3199,8 +3138,7 @@ namespace
 
       if (swapping)
       {
-        os << "this->activate_component (" << ");"
-           << STRS[ACE_CR] << " ( ::CORBA::Object::_nil ());" << endl;
+        os << "this->activate_component (" << ");" << endl;
       }
 
       os << "if (name == 0)" << endl
@@ -3359,9 +3297,7 @@ namespace
 
       if (swapping)
       {
-        os << "this->activate_component (" << ");"
-           << STRS[ACE_CR] << " ( "
-           << STRS[COMP_ECB] << "::_nil ());" << endl;
+        os << "this->activate_component (" << ");" << endl;
       }
 
       os << "if (source_name == 0)" << endl
@@ -3506,8 +3442,7 @@ namespace
 
       if (swapping)
         {
-          os << "this->activate_component (" << ");"
-             << STRS[ACE_CR] << " (0);" << endl;
+          os << "this->activate_component (" << ");" << endl;
         }
 
       os << "// Just in case there are no if blocks" << endl
@@ -3552,9 +3487,7 @@ namespace
 
       if (swapping)
       {
-        os << "this->activate_component (" << ");"
-           << STRS[ACE_CR] << " ( " << STRS[COMP_ECB]
-           << "::_nil ());" << endl;
+        os << "this->activate_component (" << ");" << endl;
       }
 
       os << "// Just in case there are no if blocks" << endl
@@ -3616,8 +3549,7 @@ namespace
 
       if (swapping)
       {
-        os << "this->activate_component (" << ");"
-           << STRS[ACE_CR] << " ( ::CORBA::Object::_nil ());" << endl;
+        os << "this->activate_component (" << ");" << endl;
       }
 
       os << "if (name == 0)" << endl
@@ -3921,11 +3853,7 @@ namespace
           operation_emitter.traverse (hf);
         }
 
-        os << STRS[ACE_CR] << " ( ";
-
-        Traversal::Home::manages (scope_, manages_);
-
-        os << "::_nil ());" << endl;
+        os << endl;
 
         Traversal::Home::manages (scope_, enclosing_manages_);
 
@@ -3944,12 +3872,6 @@ namespace
         os << "::_narrow (" << endl
            << "_ciao_ec.in ()" << endl
            << ");" << endl;
-
-        os << STRS[ACE_CR] << " ( ";
-
-        Traversal::Home::manages (scope_, manages_);
-
-        os << "::_nil ());" << endl;
 
         os << "return this->_ciao_activate_component (" << endl
            << "_ciao_comp.in ()" << endl
@@ -4342,7 +4264,7 @@ namespace
          << "::_narrow (" << endl
          << "p" << endl
          << ");"
-         << STRS[ACE_CR] << " (0);" << endl
+         << endl
          << "if (::CORBA::is_nil (x.in ()))" << endl
          << "{"
          << "return 0;" << endl
