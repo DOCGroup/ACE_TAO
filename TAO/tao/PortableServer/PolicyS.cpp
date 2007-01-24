@@ -888,8 +888,7 @@ void POA_CORBA::Policy::_interface_skel (
 
   if (_tao_adapter == 0)
     {
-      throw ( ::CORBA::INTF_REPOS (CORBA::OMGVMCID | 1,
-                                    CORBA::COMPLETED_NO));
+      throw ::CORBA::INTF_REPOS (CORBA::OMGVMCID | 1, CORBA::COMPLETED_NO);
     }
 
   POA_CORBA::Policy * const impl =

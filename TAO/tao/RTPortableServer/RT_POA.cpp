@@ -214,7 +214,7 @@ TAO_RT_POA::validate_policies (void)
   if (this->cached_policies_.implicit_activation () ==
       PortableServer::IMPLICIT_ACTIVATION)
     {
-      throw (PortableServer::POA::WrongPolicy ());
+      throw PortableServer::POA::WrongPolicy ();
     }
 
   // For each of the above operations, if the POA does not support the
@@ -223,7 +223,7 @@ TAO_RT_POA::validate_policies (void)
   if (this->cached_policies_.priority_model () !=
       TAO::Portable_Server::Cached_Policies::SERVER_DECLARED)
     {
-      throw (PortableServer::POA::WrongPolicy ());
+      throw PortableServer::POA::WrongPolicy ();
     }
 
   // In all other respects the semantics of the corresponding
