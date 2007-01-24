@@ -27,11 +27,13 @@ namespace TAO
       if (this->object_adapter_.non_servant_upcall_nesting_level_ != 0)
         {
           // Remember previous instance of non_servant_upcall.
-          this->previous_ = this->object_adapter_.non_servant_upcall_in_progress_;
+          this->previous_ =
+            this->object_adapter_.non_servant_upcall_in_progress_;
 
           // Assert that the thread is the same as the one before.
-          ACE_ASSERT (ACE_OS::thr_equal (this->object_adapter_.non_servant_upcall_thread_,
-                                         ACE_OS::thr_self ()));
+          ACE_ASSERT (ACE_OS::thr_equal (
+                      this->object_adapter_.non_servant_upcall_thread_,
+                      ACE_OS::thr_self ()));
         }
 
       // Remember which thread is calling the adapter activators.
@@ -67,17 +69,16 @@ namespace TAO
 
           // Check if all pending requests are over.
           if (this->poa_.waiting_destruction () &&
-              this->poa_.outstanding_requests () == 0)
+            this->poa_.outstanding_requests () == 0)
             {
               try
                 {
                   this->poa_.complete_destruction_i ();
                 }
-              catch ( ::CORBA::Exception& ex)
+              catch (::CORBA::Exception&ex)
                 {
                   // Ignore exceptions
-                  ACE_PRINT_EXCEPTION (ex,
-                                       "TAO_POA::complete_destruction_i");
+                  ACE_PRINT_EXCEPTION (ex, "TAO_POA::complete_destruction_i");
                 }
             }
 
