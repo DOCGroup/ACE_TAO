@@ -225,7 +225,7 @@ TAO_Thread_Lane::validate_and_map_priority (void)
 {
   // Make sure that static_threads_number_ is not zero.
   if (this->static_threads_number_ == 0)
-    throw ( ::CORBA::BAD_PARAM ());
+    throw ::CORBA::BAD_PARAM ();
 
   // Check that the priority is in bounds.
   if (this->lane_priority_ < RTCORBA::minPriority
@@ -235,7 +235,7 @@ TAO_Thread_Lane::validate_and_map_priority (void)
 //      || this->lane_priority_ > RTCORBA::maxPriority
      )
     {
-      throw ( ::CORBA::BAD_PARAM ());
+      throw ::CORBA::BAD_PARAM ();
     }
 
   CORBA::ORB_ptr orb =

@@ -105,7 +105,7 @@ TAO_Policy_Set::copy_from (TAO_Policy_Set *source
 
       if (! this->compatible_scope (policy->_tao_scope()))
         {
-          throw ( ::CORBA::NO_PERMISSION ());
+          throw ::CORBA::NO_PERMISSION ();
         }
 
       CORBA::Policy_var copy =
@@ -153,7 +153,7 @@ TAO_Policy_Set::set_policy_overrides (const CORBA::PolicyList &policies,
   // @@ The spec does not say what to do on this case.
   if (set_add != CORBA::SET_OVERRIDE && set_add != CORBA::ADD_OVERRIDE)
     {
-      throw ( ::CORBA::BAD_PARAM ());
+      throw ::CORBA::BAD_PARAM ();
     }
 
   if (set_add == CORBA::SET_OVERRIDE)
@@ -189,7 +189,7 @@ TAO_Policy_Set::set_policy_overrides (const CORBA::PolicyList &policies,
           // responsibility of the user to return it to consistent state.
           if (server_protocol_set)
             {
-              throw ( ::CORBA::INV_POLICY ());
+              throw ::CORBA::INV_POLICY ();
             }
 
           server_protocol_set = true;
@@ -205,7 +205,7 @@ TAO_Policy_Set::set_policy (const CORBA::Policy_ptr policy
 {
   if (! this->compatible_scope (policy->_tao_scope()))
     {
-      throw ( ::CORBA::NO_PERMISSION ());
+      throw ::CORBA::NO_PERMISSION ();
     }
 
   const CORBA::PolicyType policy_type =

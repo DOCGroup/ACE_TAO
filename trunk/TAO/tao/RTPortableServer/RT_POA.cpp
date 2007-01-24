@@ -140,7 +140,7 @@ TAO_RT_POA::validate_priority (RTCORBA::Priority priority
 //      || priority > RTCORBA::maxPriority
      )
     {
-      throw ( ::CORBA::BAD_PARAM ());
+      throw ::CORBA::BAD_PARAM ();
     }
 
   // If this POA is using a thread pool with lanes, make sure the
@@ -162,7 +162,7 @@ TAO_RT_POA::validate_priority (RTCORBA::Priority priority
             return;
         }
 
-      throw ( ::CORBA::BAD_PARAM ());
+      throw ::CORBA::BAD_PARAM ();
     }
   else
     // Else we are dealing with a thread pool without lanes.
@@ -197,7 +197,7 @@ TAO_RT_POA::validate_priority (RTCORBA::Priority priority
                 return;
             }
 
-          throw ( ::CORBA::BAD_PARAM ());
+          throw ::CORBA::BAD_PARAM ();
         }
     }
 }

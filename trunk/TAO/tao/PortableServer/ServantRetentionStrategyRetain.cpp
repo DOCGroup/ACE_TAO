@@ -849,7 +849,7 @@ namespace TAO
       if (this->poa_->has_system_id () &&
           !this->poa_->is_poa_generated_id (id))
         {
-          throw ( ::CORBA::BAD_PARAM ());
+          throw ::CORBA::BAD_PARAM ();
         }
 
       // If the CORBA object denoted by the Object Id value is already

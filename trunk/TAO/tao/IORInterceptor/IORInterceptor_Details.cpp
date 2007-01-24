@@ -16,7 +16,7 @@ namespace TAO
       )
   {
     // There are currently no policies that apply to IOR Interceptors.
-    throw ( ::CORBA::INV_POLICY ());
+    throw ::CORBA::INV_POLICY ();
   }
 }
 
