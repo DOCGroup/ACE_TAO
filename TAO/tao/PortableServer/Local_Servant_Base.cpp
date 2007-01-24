@@ -18,7 +18,7 @@ TAO_Local_ServantBase::_dispatch (TAO_ServerRequest &,
                                   void *
                                   )
 {
-  throw ( ::CORBA::BAD_OPERATION ());
+  throw ::CORBA::BAD_OPERATION ();
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL

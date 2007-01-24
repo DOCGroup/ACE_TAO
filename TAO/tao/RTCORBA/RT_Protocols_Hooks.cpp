@@ -529,7 +529,7 @@ TAO_RT_Protocols_Hooks::rt_service_context (
             this->get_thread_CORBA_priority (client_priority);
 
           if (status == -1)
-            throw ( ::CORBA::DATA_CONVERSION (1, CORBA::COMPLETED_NO));
+            throw ::CORBA::DATA_CONVERSION (1, CORBA::COMPLETED_NO);
 
           this->add_rt_service_context_hook (service_context,
                                              priority_model_policy.in (),

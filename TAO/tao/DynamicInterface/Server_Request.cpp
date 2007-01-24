@@ -88,7 +88,7 @@ CORBA::ServerRequest::arguments (CORBA::NVList_ptr &list
   // arguments() must be called before either of these.
   if (this->params_ != 0 || this->exception_ != 0)
     {
-      throw ( ::CORBA::BAD_INV_ORDER (CORBA::OMGVMCID | 7, CORBA::COMPLETED_NO));
+      throw ::CORBA::BAD_INV_ORDER (CORBA::OMGVMCID | 7, CORBA::COMPLETED_NO);
     }
 
   // Save params for later use when marshaling the reply.
@@ -116,7 +116,7 @@ CORBA::ServerRequest::set_result (const CORBA::Any &value
   // exists or before the args have been processeed is an error.
   if (this->retval_ != 0 || this->exception_ != 0 || this->params_ == 0)
     {
-      throw ( ::CORBA::BAD_INV_ORDER (CORBA::OMGVMCID | 8, CORBA::COMPLETED_NO));
+      throw ::CORBA::BAD_INV_ORDER (CORBA::OMGVMCID | 8, CORBA::COMPLETED_NO);
     }
 
   ACE_NEW_THROW_EX (this->retval_,
@@ -144,8 +144,7 @@ CORBA::ServerRequest::set_exception (const CORBA::Any &value
   // contain an exception.
   if (kind != CORBA::tk_except)
     {
-      throw ( ::CORBA::BAD_PARAM (CORBA::OMGVMCID | 21,
-                                   CORBA::COMPLETED_MAYBE));
+      throw ::CORBA::BAD_PARAM (CORBA::OMGVMCID | 21, CORBA::COMPLETED_MAYBE);
     }
 
   ACE_NEW_THROW_EX (this->exception_,

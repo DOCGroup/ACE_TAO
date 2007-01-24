@@ -39,7 +39,7 @@ TAO::Direct_Collocation_Upcall_Wrapper::upcall (
 
   if (status == -1)
     {
-      throw ( ::CORBA::BAD_OPERATION (CORBA::OMGVMCID | 2, CORBA::COMPLETED_NO));
+      throw ::CORBA::BAD_OPERATION (CORBA::OMGVMCID | 2, CORBA::COMPLETED_NO);
     }
 
   try
