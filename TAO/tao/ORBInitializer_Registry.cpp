@@ -26,7 +26,7 @@ namespace PortableInterceptor
   void
   register_orb_initializer (
     ORBInitializer_ptr init
-    ACE_ENV_ARG_DECL)
+    )
   {
     {
       // Using ACE_Static_Object_Lock::instance() precludes
@@ -44,8 +44,7 @@ namespace PortableInterceptor
                       ACE_TEXT ("Unable to pre-initialize TAO\n")));
         }
 
-      TAO::ORB::init_orb_globals (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK;
+      TAO::ORB::init_orb_globals ();
     }
 
     // If not, lookup it up.
@@ -72,8 +71,7 @@ namespace PortableInterceptor
       {
         orbinitializer_registry_->register_orb_initializer (
           init
-          ACE_ENV_ARG_PARAMETER);
-        ACE_CHECK;
+         );
       }
     else
       {
@@ -82,7 +80,7 @@ namespace PortableInterceptor
                     ACE_TEXT ("ERROR: ORBInitializer Registry unable to find the ")
                     ACE_TEXT ("ORBInitializer Registry instance")));
 
-        ACE_THROW (CORBA::INTERNAL ());
+        throw ( ::CORBA::INTERNAL ());
       }
   }
 }

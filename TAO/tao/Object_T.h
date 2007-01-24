@@ -49,8 +49,7 @@ namespace TAO
 
     static T_ptr narrow (CORBA::Object_ptr,
                          const char *repo_id,
-                         Proxy_Broker_Factory
-                         ACE_ENV_ARG_DECL);
+                         Proxy_Broker_Factory);
 
     // Version used the operators.
     static T_ptr unchecked_narrow (CORBA::Object_ptr,
@@ -58,8 +57,7 @@ namespace TAO
 
     static T_ptr unchecked_narrow (CORBA::Object_ptr,
                                    const char *repo_id,
-                                   Proxy_Broker_Factory
-                                   ACE_ENV_ARG_DECL);
+                                   Proxy_Broker_Factory);
 
   private:
     // Code for lazily evaluated IORs.

@@ -65,15 +65,12 @@ namespace TAO
         TAO_Operation_Details &detail);
 
     /// Start the invocation.
-    Invocation_Status invoke (ACE_Time_Value *max_wait_time
-                              ACE_ENV_ARG_DECL)
+    Invocation_Status invoke (ACE_Time_Value *max_wait_time)
       ACE_THROW_SPEC ((CORBA::Exception));
 
   private:
     /// Helper to check the reply status
-    Invocation_Status check_reply (TAO_Synch_Reply_Dispatcher &rd
-                                   ACE_ENV_ARG_DECL);
-
+    Invocation_Status check_reply (TAO_Synch_Reply_Dispatcher &rd);
   };
 }
 

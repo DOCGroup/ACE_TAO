@@ -18,8 +18,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 CORBA::Policy_ptr
 TAO_Messaging_PolicyFactory::create_buffering_constraint_policy (
-    const CORBA::Any& val
-    ACE_ENV_ARG_DECL)
+    const CORBA::Any& val)
 {
   TAO::BufferingConstraint *buffering_constraint = 0;
   if ((val >>= buffering_constraint) == 0)
@@ -30,7 +29,6 @@ TAO_Messaging_PolicyFactory::create_buffering_constraint_policy (
   ACE_NEW_THROW_EX (servant,
                     TAO_Buffering_Constraint_Policy (*buffering_constraint),
                     CORBA::NO_MEMORY ());
-  ACE_CHECK_RETURN (CORBA::Policy::_nil ());
 
   return servant;
 }
@@ -40,33 +38,32 @@ TAO_Messaging_PolicyFactory::create_buffering_constraint_policy (
 CORBA::Policy_ptr
 TAO_Messaging_PolicyFactory::create_policy (
     CORBA::PolicyType type,
-    const CORBA::Any &value
-    ACE_ENV_ARG_DECL)
+    const CORBA::Any &value)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    CORBA::PolicyError))
 {
 #if (TAO_HAS_RELATIVE_ROUNDTRIP_TIMEOUT_POLICY == 1)
   if (type == Messaging::RELATIVE_RT_TIMEOUT_POLICY_TYPE)
     return TAO_RelativeRoundtripTimeoutPolicy::create (value
-                                                       ACE_ENV_ARG_PARAMETER);
+                                                      );
 #endif /* TAO_HAS_RELATIVE_ROUNDTRIP_TIMEOUT_POLICY == 1 */
 
 #if (TAO_HAS_CONNECTION_TIMEOUT_POLICY == 1)
   if (type == TAO::CONNECTION_TIMEOUT_POLICY_TYPE)
     return TAO_ConnectionTimeoutPolicy::create (value
-                                                ACE_ENV_ARG_PARAMETER);
+                                               );
 #endif /* TAO_HAS_RELATIVE_ROUNDTRIP_TIMEOUT_POLICY == 1 */
 
 #if (TAO_HAS_SYNC_SCOPE_POLICY == 1)
   if (type == Messaging::SYNC_SCOPE_POLICY_TYPE)
     return TAO_Sync_Scope_Policy::create (value
-                                          ACE_ENV_ARG_PARAMETER);
+                                         );
 #endif  /* TAO_HAS_SYNC_SCOPE_POLICY == 1 */
 
 #if (TAO_HAS_BUFFERING_CONSTRAINT_POLICY == 1)
   if (type == TAO::BUFFERING_CONSTRAINT_POLICY_TYPE)
     return this->create_buffering_constraint_policy (value
-                                                     ACE_ENV_ARG_PARAMETER);
+                                                    );
 #endif /* TAO_HAS_BUFFERING_CONSTRAINT_POLICY == 1 */
 
   if (

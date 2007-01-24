@@ -39,21 +39,16 @@ class TAO_BiDir_ORBInitializer
 {
 public:
 
-  virtual void pre_init (PortableInterceptor::ORBInitInfo_ptr info
-                         ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+  virtual void pre_init (PortableInterceptor::ORBInitInfo_ptr info)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual void post_init (PortableInterceptor::ORBInitInfo_ptr info
-                          ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+  virtual void post_init (PortableInterceptor::ORBInitInfo_ptr info)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
 private:
 
-  ///< Register BiDir policy factories.
-  void register_policy_factories (
-         PortableInterceptor::ORBInitInfo_ptr info
-         ACE_ENV_ARG_DECL);
-
+  /// Register BiDir policy factories.
+  void register_policy_factories (PortableInterceptor::ORBInitInfo_ptr info);
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

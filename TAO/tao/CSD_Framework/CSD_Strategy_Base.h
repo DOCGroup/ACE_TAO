@@ -77,7 +77,7 @@ namespace TAO
 
       /// This method is invoked to "attach" this strategy object to
       /// the supplied POA.  Returns true for success, and false for failure.
-      CORBA::Boolean apply_to(PortableServer::POA_ptr poa ACE_ENV_ARG_DECL)
+      CORBA::Boolean apply_to(PortableServer::POA_ptr poa )
         ACE_THROW_SPEC((CORBA::SystemException));
 
     protected:
@@ -91,7 +91,7 @@ namespace TAO
                               PortableServer::POA_ptr         poa,
                               const char*                     operation,
                               PortableServer::Servant         servant
-                              ACE_ENV_ARG_DECL) = 0;
+                              ) = 0;
 
       /// Subclass provides implementation to dispatch a collocated request.
       virtual DispatchResult dispatch_collocated_request_i
@@ -100,7 +100,7 @@ namespace TAO
                           PortableServer::POA_ptr         poa,
                           const char*                     operation,
                           PortableServer::Servant         servant
-                          ACE_ENV_ARG_DECL) = 0;
+                          ) = 0;
 
       /// Event - The POA has been activated.
       virtual bool poa_activated_event_i() = 0;
@@ -112,13 +112,13 @@ namespace TAO
       virtual void servant_activated_event_i
                                   (PortableServer::Servant servant,
                                   const PortableServer::ObjectId& oid
-                                  ACE_ENV_ARG_DECL);
+                                 );
 
       /// Event - A servant has been deactivated.
       virtual void servant_deactivated_event_i
                                   (PortableServer::Servant servant,
                                   const PortableServer::ObjectId& oid
-                                  ACE_ENV_ARG_DECL);
+                                 );
 
     private:
 
@@ -132,7 +132,7 @@ namespace TAO
       /// request.
       void dispatch_request(TAO_ServerRequest& server_request,
                             ::TAO::Portable_Server::Servant_Upcall& upcall
-                            ACE_ENV_ARG_DECL);
+                           );
 
       /// Event - The POA has been activated. This happens when the POA_Manager
       ///         is activated.
@@ -145,13 +145,13 @@ namespace TAO
       /// Event - A servant has been activated.
       void servant_activated_event(PortableServer::Servant servant,
                                   const PortableServer::ObjectId& oid
-                                  ACE_ENV_ARG_DECL);
+                                 );
 
       /// Event - A servant has been deactivated.  This also occurs when
       ///         the POA is destroyed.
       void servant_deactivated_event(PortableServer::Servant servant,
                                     const PortableServer::ObjectId& oid
-                                    ACE_ENV_ARG_DECL);
+                                   );
 
       /// The POA to which this strategy has been applied.
       ::PortableServer::POA_var poa_;

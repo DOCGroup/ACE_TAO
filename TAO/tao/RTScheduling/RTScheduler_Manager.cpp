@@ -12,7 +12,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_RTScheduler_Manager::TAO_RTScheduler_Manager (void)
 {
- 
+
 }
 
 TAO_RTScheduler_Manager::~TAO_RTScheduler_Manager (void)
@@ -21,9 +21,9 @@ TAO_RTScheduler_Manager::~TAO_RTScheduler_Manager (void)
 
 TAO_RTScheduler_Manager_ptr
 TAO_RTScheduler_Manager::_narrow (CORBA::Object_ptr obj
-                                  ACE_ENV_ARG_DECL_NOT_USED)
+                                  )
 {
-  return 
+  return
     TAO_RTScheduler_Manager::_duplicate (
         dynamic_cast<TAO_RTScheduler_Manager *> (obj)
       );

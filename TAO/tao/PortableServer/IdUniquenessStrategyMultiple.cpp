@@ -14,22 +14,19 @@ namespace TAO
   namespace Portable_Server
   {
     void
-    IdUniquenessStrategyMultiple::strategy_init (
-      TAO_Root_POA * /*poa*/
-      ACE_ENV_ARG_DECL_NOT_USED)
+    IdUniquenessStrategyMultiple::strategy_init (TAO_Root_POA * /*poa*/)
     {
     }
 
     void
-    IdUniquenessStrategyMultiple::strategy_cleanup(
-      ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+    IdUniquenessStrategyMultiple::strategy_cleanup (void)
     {
     }
 
     bool
-    IdUniquenessStrategyMultiple::is_servant_activation_allowed (
-      PortableServer::Servant /*servant*/,
-      bool & /*wait_occurred_restart_call*/)
+    IdUniquenessStrategyMultiple::is_servant_activation_allowed
+      (PortableServer::Servant/*servant*/,
+       bool &/*wait_occurred_restart_call*/)
     {
       // With the multiple id strategy we can always activate the servant
       // another time
@@ -43,7 +40,7 @@ namespace TAO
     }
 
     ::PortableServer::IdUniquenessPolicyValue
-    IdUniquenessStrategyMultiple::type() const
+    IdUniquenessStrategyMultiple::type () const
     {
       return ::PortableServer::MULTIPLE_ID;
     }

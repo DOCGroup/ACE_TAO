@@ -63,7 +63,7 @@ parse_string_dynamic_request_helper (CORBA::Object_ptr naming_context,
 CORBA::Object_ptr
 TAO_CORBANAME_Parser::parse_string (const char *ior,
                                     CORBA::ORB_ptr orb
-                                    ACE_ENV_ARG_DECL)
+                                    )
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
 
@@ -74,7 +74,7 @@ TAO_CORBANAME_Parser::parse_string (const char *ior,
 
   CORBA::Object_ptr obj = CORBA::Object::_nil ();
 
-  ACE_TRY
+  try
     {
       // The position of the seperator between the obj_addr and key
       // string
@@ -103,8 +103,7 @@ TAO_CORBANAME_Parser::parse_string (const char *ior,
       // Obtain a reference to the naming context
       CORBA::Object_var name_context =
         orb->string_to_object (corbaloc_addr.c_str ()
-                                ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+                               );
 
       // Check if the Object reference is nil.
       if (CORBA::is_nil (name_context.in ()))
@@ -114,8 +113,7 @@ TAO_CORBANAME_Parser::parse_string (const char *ior,
 
       CORBA::Boolean is_a =
         name_context->_is_a ("IDL:omg.org/CosNaming/NamingContextExt:1.0"
-                              ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+                             );
 
       if (!is_a)
         {
@@ -131,8 +129,7 @@ TAO_CORBANAME_Parser::parse_string (const char *ior,
           // Make a dynamic request for resolve_str in this naming context
           obj = this->parse_string_dynamic_request_helper (name_context.in (),
                                                            key_string
-                                                        ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+                                                       );
         }
       else
         { // There was no key string which implies that the caller wants
@@ -140,15 +137,13 @@ TAO_CORBANAME_Parser::parse_string (const char *ior,
           obj = name_context._retn ();
         }
     }
-  ACE_CATCH (CORBA::SystemException, ex)
+  catch ( ::CORBA::SystemException& ex)
     {
       if (TAO_debug_level >= 4)
         {
           ACE_PRINT_EXCEPTION (ex, "CORBANAME_Parser");
         }
     }
-  ACE_ENDTRY;
-  ACE_CHECK_RETURN (CORBA::Object::_nil ());
 
   return obj;
 }

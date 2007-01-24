@@ -46,7 +46,7 @@ public:
   static
   CORBA::Policy *policy (TAO_Cached_Policy_Type type,
                          TAO::Profile_Transport_Resolver &r
-                         ACE_ENV_ARG_DECL);
+                        );
 
 private:
   /// ctor.

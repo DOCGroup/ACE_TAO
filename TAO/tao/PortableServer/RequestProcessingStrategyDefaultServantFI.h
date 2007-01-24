@@ -42,7 +42,7 @@ namespace TAO
 
       virtual void destroy (
         RequestProcessingStrategy *strategy
-        ACE_ENV_ARG_DECL);
+       );
     };
   }
 }

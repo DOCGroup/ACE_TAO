@@ -35,7 +35,6 @@ class TAO_DII_Deferred_Reply_Dispatcher;
 namespace  CORBA
 {
   class Object;
-  class Environment;
   class SystemException;
   class ExceptionList;
   class Request;
@@ -98,7 +97,7 @@ namespace TAO
         CORBA::Object_var &effective_target,
         Profile_Transport_Resolver &r,
         ACE_Time_Value *&max_wait_time
-        ACE_ENV_ARG_DECL);
+       );
 
   private:
 
@@ -135,7 +134,7 @@ namespace TAO
     /// Invoke the target
     virtual void invoke (TAO::Exception_Data *ex,
                          unsigned long ex_count
-                         ACE_ENV_ARG_DECL);
+                        );
 
 
   protected:
@@ -144,7 +143,7 @@ namespace TAO
         CORBA::Object_var &effective_target,
         Profile_Transport_Resolver &r,
         ACE_Time_Value *&max_wait_time
-        ACE_ENV_ARG_DECL);
+       );
 
   private:
     CORBA::Request *request_;

@@ -41,41 +41,41 @@ TAO_RT_ORB::~TAO_RT_ORB (void)
 }
 
 RTCORBA::Mutex_ptr
-TAO_RT_ORB::create_mutex (ACE_ENV_SINGLE_ARG_DECL)
+TAO_RT_ORB::create_mutex (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  return this->mutex_mgr_.create_mutex (ACE_ENV_SINGLE_ARG_PARAMETER);
+  return this->mutex_mgr_.create_mutex ();
 }
 
 void
 TAO_RT_ORB::destroy_mutex (RTCORBA::Mutex_ptr mutex
-                           ACE_ENV_ARG_DECL)
+                           )
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->mutex_mgr_.destroy_mutex (mutex
-                                  ACE_ENV_ARG_PARAMETER);
+                                 );
 }
 
 
 RTCORBA::Mutex_ptr
 TAO_RT_ORB::create_named_mutex (const char *name,
                                 CORBA::Boolean_out created_flag
-                                ACE_ENV_ARG_DECL)
+                                )
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return this->mutex_mgr_.create_named_mutex (name,
                                               created_flag
-                                              ACE_ENV_ARG_PARAMETER);
+                                             );
 }
 
 RTCORBA::Mutex_ptr
 TAO_RT_ORB::open_named_mutex (const char *name
-                              ACE_ENV_ARG_DECL)
+                              )
   ACE_THROW_SPEC ((CORBA::SystemException,
                    RTCORBA::RTORB::MutexNotFound))
 {
   return this->mutex_mgr_.open_named_mutex (name
-                                            ACE_ENV_ARG_PARAMETER);
+                                           );
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -89,7 +89,7 @@ TAO_Named_RT_Mutex_Manager::~TAO_Named_RT_Mutex_Manager (void)
 }
 
 RTCORBA::Mutex_ptr
-TAO_Named_RT_Mutex_Manager::create_mutex (ACE_ENV_SINGLE_ARG_DECL)
+TAO_Named_RT_Mutex_Manager::create_mutex (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_RT_Mutex *mutex = 0;
@@ -100,7 +100,6 @@ TAO_Named_RT_Mutex_Manager::create_mutex (ACE_ENV_SINGLE_ARG_DECL)
                         TAO::VMCID,
                         ENOMEM),
                       CORBA::COMPLETED_NO));
-  ACE_CHECK_RETURN (RTCORBA::Mutex::_nil ());
 
   return mutex;
 }
@@ -110,7 +109,7 @@ TAO_Named_RT_Mutex_Manager::create_mutex (ACE_ENV_SINGLE_ARG_DECL)
 #if (TAO_HAS_NAMED_RT_MUTEXES == 1)
 void
 TAO_Named_RT_Mutex_Manager::destroy_mutex (RTCORBA::Mutex_ptr mutex
-                                           ACE_ENV_ARG_DECL)
+                                           )
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_RT_Mutex *tao_mutex =
@@ -126,19 +125,18 @@ TAO_Named_RT_Mutex_Manager::destroy_mutex (RTCORBA::Mutex_ptr mutex
                           monitor,
                           this->lock_,
                           CORBA::INTERNAL ());
-      ACE_CHECK;
 
       int result =
         this->map_.unbind (name);
 
       if (result != 0)
-        ACE_THROW (CORBA::INTERNAL ());
+        throw ( ::CORBA::INTERNAL ());
     }
 }
 #else /* TAO_HAS_NAMED_RT_MUTEXES == 1 */
 void
 TAO_Named_RT_Mutex_Manager::destroy_mutex (RTCORBA::Mutex_ptr
-                                           ACE_ENV_ARG_DECL_NOT_USED)
+                                           )
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
 }
@@ -147,7 +145,7 @@ TAO_Named_RT_Mutex_Manager::destroy_mutex (RTCORBA::Mutex_ptr
 RTCORBA::Mutex_ptr
 TAO_Named_RT_Mutex_Manager::create_named_mutex (const char *name,
                                                 CORBA::Boolean_out created_flag
-                                                ACE_ENV_ARG_DECL)
+                                                )
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
 #if (TAO_HAS_NAMED_RT_MUTEXES == 1)
@@ -156,7 +154,6 @@ TAO_Named_RT_Mutex_Manager::create_named_mutex (const char *name,
                       monitor,
                       this->lock_,
                       CORBA::INTERNAL ());
-  ACE_CHECK_RETURN (RTCORBA::Mutex::_nil ());
 
   // Optimistic that we'll find it.
   created_flag = 0;
@@ -179,7 +176,6 @@ TAO_Named_RT_Mutex_Manager::create_named_mutex (const char *name,
                             TAO::VMCID,
                             ENOMEM),
                           CORBA::COMPLETED_NO));
-      ACE_CHECK_RETURN (RTCORBA::Mutex::_nil ());
 
       mutex = tmp_mutex;
 
@@ -205,7 +201,7 @@ TAO_Named_RT_Mutex_Manager::create_named_mutex (const char *name,
 
 RTCORBA::Mutex_ptr
 TAO_Named_RT_Mutex_Manager::open_named_mutex (const char *name
-                                              ACE_ENV_ARG_DECL)
+                                              )
   ACE_THROW_SPEC ((CORBA::SystemException,
                    RTCORBA::RTORB::MutexNotFound))
 {
@@ -215,7 +211,6 @@ TAO_Named_RT_Mutex_Manager::open_named_mutex (const char *name
                       monitor,
                       this->lock_,
                       CORBA::INTERNAL ());
-  ACE_CHECK_RETURN (RTCORBA::Mutex::_nil ());
 
   // If we find the mutex, simply return it.
   RTCORBA::Mutex_var mutex;
@@ -242,7 +237,7 @@ TAO_RT_ORB::create_tcp_protocol_properties (CORBA::Long send_buffer_size,
                                             CORBA::Boolean dont_route,
                                             CORBA::Boolean no_delay,
                                             CORBA::Boolean enable_network_priority
-                                            ACE_ENV_ARG_DECL)
+                                            )
   ACE_THROW_SPEC ((CORBA::SystemException ))
 {
   TAO_TCP_Protocol_Properties *tmp = 0;
@@ -255,7 +250,6 @@ TAO_RT_ORB::create_tcp_protocol_properties (CORBA::Long send_buffer_size,
                                         enable_network_priority),
                     CORBA::NO_MEMORY (TAO::VMCID,
                                       CORBA::COMPLETED_NO));
-  ACE_CHECK_RETURN (RTCORBA::TCPProtocolProperties::_nil ());
 
   return tmp;
 }
@@ -264,7 +258,7 @@ RTCORBA::UnixDomainProtocolProperties_ptr
 TAO_RT_ORB::create_unix_domain_protocol_properties (
                                                     CORBA::Long send_buffer_size,
                                                     CORBA::Long recv_buffer_size
-                                                    ACE_ENV_ARG_DECL)
+                                                    )
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_UnixDomain_Protocol_Properties *tmp = 0;
@@ -274,7 +268,6 @@ TAO_RT_ORB::create_unix_domain_protocol_properties (
                                                recv_buffer_size),
                     CORBA::NO_MEMORY (TAO::VMCID,
                                       CORBA::COMPLETED_NO));
-  ACE_CHECK_RETURN (RTCORBA::UnixDomainProtocolProperties::_nil ());
 
   return tmp;
 }
@@ -289,7 +282,7 @@ TAO_RT_ORB::create_shared_memory_protocol_properties (
                                                       CORBA::Long preallocate_buffer_size,
                                                       const char *mmap_filename,
                                                       const char *mmap_lockname
-                                                      ACE_ENV_ARG_DECL)
+                                                      )
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_SharedMemory_Protocol_Properties *tmp = 0;
@@ -304,7 +297,6 @@ TAO_RT_ORB::create_shared_memory_protocol_properties (
                                                           mmap_lockname),
                     CORBA::NO_MEMORY (TAO::VMCID,
                                       CORBA::COMPLETED_NO));
-  ACE_CHECK_RETURN (RTCORBA::SharedMemoryProtocolProperties::_nil ());
 
   return tmp;
 }
@@ -312,7 +304,7 @@ TAO_RT_ORB::create_shared_memory_protocol_properties (
 RTCORBA::UserDatagramProtocolProperties_ptr
 TAO_RT_ORB::create_user_datagram_protocol_properties (
                                                       CORBA::Boolean enable_network_priority
-                                                      ACE_ENV_ARG_DECL)
+                                                      )
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_UserDatagram_Protocol_Properties *tmp = 0;
@@ -321,7 +313,6 @@ TAO_RT_ORB::create_user_datagram_protocol_properties (
                                                  enable_network_priority),
                     CORBA::NO_MEMORY (TAO::VMCID,
                                       CORBA::COMPLETED_NO));
-  ACE_CHECK_RETURN (RTCORBA::UserDatagramProtocolProperties::_nil ());
 
   return tmp;
 }
@@ -334,7 +325,7 @@ TAO_RT_ORB::create_stream_control_protocol_properties (
                                                        CORBA::Boolean dont_route,
                                                        CORBA::Boolean no_delay,
                                                        CORBA::Boolean enable_network_priority
-                                                       ACE_ENV_ARG_DECL)
+                                                       )
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_StreamControl_Protocol_Properties *tmp = 0;
@@ -348,7 +339,6 @@ TAO_RT_ORB::create_stream_control_protocol_properties (
                                                   enable_network_priority),
                     CORBA::NO_MEMORY (TAO::VMCID,
                                       CORBA::COMPLETED_NO));
-  ACE_CHECK_RETURN (RTCORBA::StreamControlProtocolProperties::_nil ());
 
   return tmp;
 }
@@ -361,7 +351,7 @@ TAO_RT_ORB::create_threadpool (CORBA::ULong stacksize,
                                CORBA::Boolean allow_request_buffering,
                                CORBA::ULong max_buffered_requests,
                                CORBA::ULong max_request_buffer_size
-                               ACE_ENV_ARG_DECL)
+                               )
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return this->tp_manager_->create_threadpool (stacksize,
@@ -372,7 +362,7 @@ TAO_RT_ORB::create_threadpool (CORBA::ULong stacksize,
                                                max_buffered_requests,
                                                max_request_buffer_size,
                                                this->dynamic_thread_idle_timeout_
-                                               ACE_ENV_ARG_PARAMETER);
+                                              );
 }
 
 RTCORBA::ThreadpoolId
@@ -382,7 +372,7 @@ TAO_RT_ORB::create_threadpool_with_lanes (CORBA::ULong stacksize,
                                           CORBA::Boolean allow_request_buffering,
                                           CORBA::ULong max_buffered_requests,
                                           CORBA::ULong max_request_buffer_size
-                                          ACE_ENV_ARG_DECL)
+                                          )
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return this->tp_manager_->create_threadpool_with_lanes (stacksize,
@@ -392,23 +382,23 @@ TAO_RT_ORB::create_threadpool_with_lanes (CORBA::ULong stacksize,
                                                           max_buffered_requests,
                                                           max_request_buffer_size,
                                                           this->dynamic_thread_idle_timeout_
-                                                          ACE_ENV_ARG_PARAMETER);
+                                                         );
 }
 
 void
 TAO_RT_ORB::destroy_threadpool (RTCORBA::ThreadpoolId threadpool
-                                ACE_ENV_ARG_DECL)
+                                )
   ACE_THROW_SPEC ((CORBA::SystemException,
                    RTCORBA::RTORB::InvalidThreadpool))
 {
   this->tp_manager_->destroy_threadpool (threadpool
-                                         ACE_ENV_ARG_PARAMETER);
+                                        );
 }
 
 RTCORBA::PriorityModelPolicy_ptr
 TAO_RT_ORB::create_priority_model_policy (RTCORBA::PriorityModel priority_model,
                                           RTCORBA::Priority server_priority
-                                          ACE_ENV_ARG_DECL)
+                                          )
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_PriorityModelPolicy *tmp = 0;
@@ -416,14 +406,13 @@ TAO_RT_ORB::create_priority_model_policy (RTCORBA::PriorityModel priority_model,
                     TAO_PriorityModelPolicy (priority_model, server_priority),
                     CORBA::NO_MEMORY (TAO::VMCID,
                                       CORBA::COMPLETED_NO));
-  ACE_CHECK_RETURN (RTCORBA::PriorityModelPolicy::_nil ());
 
   return tmp;
 }
 
 RTCORBA::ThreadpoolPolicy_ptr
 TAO_RT_ORB::create_threadpool_policy (RTCORBA::ThreadpoolId threadpool
-                                      ACE_ENV_ARG_DECL)
+                                      )
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_ThreadpoolPolicy *tmp = 0;
@@ -431,7 +420,6 @@ TAO_RT_ORB::create_threadpool_policy (RTCORBA::ThreadpoolId threadpool
                     TAO_ThreadpoolPolicy (threadpool),
                     CORBA::NO_MEMORY (TAO::VMCID,
                                       CORBA::COMPLETED_NO));
-  ACE_CHECK_RETURN (RTCORBA::ThreadpoolPolicy::_nil ());
 
   return tmp;
 }
@@ -439,7 +427,7 @@ TAO_RT_ORB::create_threadpool_policy (RTCORBA::ThreadpoolId threadpool
 RTCORBA::PriorityBandedConnectionPolicy_ptr
 TAO_RT_ORB::create_priority_banded_connection_policy (const
                                                       RTCORBA::PriorityBands & priority_bands
-                                                      ACE_ENV_ARG_DECL)
+                                                      )
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_PriorityBandedConnectionPolicy *tmp = 0;
@@ -447,13 +435,12 @@ TAO_RT_ORB::create_priority_banded_connection_policy (const
                     TAO_PriorityBandedConnectionPolicy (priority_bands),
                     CORBA::NO_MEMORY (TAO::VMCID,
                                       CORBA::COMPLETED_NO));
-  ACE_CHECK_RETURN (RTCORBA::PriorityBandedConnectionPolicy::_nil ());
 
   return tmp;
 }
 
 RTCORBA::PrivateConnectionPolicy_ptr
-TAO_RT_ORB::create_private_connection_policy (ACE_ENV_SINGLE_ARG_DECL)
+TAO_RT_ORB::create_private_connection_policy (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_PrivateConnectionPolicy *tmp = 0;
@@ -461,14 +448,13 @@ TAO_RT_ORB::create_private_connection_policy (ACE_ENV_SINGLE_ARG_DECL)
                     TAO_PrivateConnectionPolicy (),
                     CORBA::NO_MEMORY (TAO::VMCID,
                                       CORBA::COMPLETED_NO));
-  ACE_CHECK_RETURN (RTCORBA::PrivateConnectionPolicy::_nil ());
 
   return tmp;
 }
 
 RTCORBA::ServerProtocolPolicy_ptr
 TAO_RT_ORB::create_server_protocol_policy (const RTCORBA::ProtocolList & protocols
-                                           ACE_ENV_ARG_DECL)
+                                           )
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_ServerProtocolPolicy *tmp = 0;
@@ -476,14 +462,13 @@ TAO_RT_ORB::create_server_protocol_policy (const RTCORBA::ProtocolList & protoco
                     TAO_ServerProtocolPolicy (protocols),
                     CORBA::NO_MEMORY (TAO::VMCID,
                                       CORBA::COMPLETED_NO));
-  ACE_CHECK_RETURN (RTCORBA::ServerProtocolPolicy::_nil ());
 
   return tmp;
 }
 
 RTCORBA::ClientProtocolPolicy_ptr
 TAO_RT_ORB::create_client_protocol_policy (const RTCORBA::ProtocolList & protocols
-                                           ACE_ENV_ARG_DECL)
+                                           )
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_ClientProtocolPolicy *tmp = 0;
@@ -491,7 +476,6 @@ TAO_RT_ORB::create_client_protocol_policy (const RTCORBA::ProtocolList & protoco
                     TAO_ClientProtocolPolicy (protocols),
                     CORBA::NO_MEMORY (TAO::VMCID,
                                       CORBA::COMPLETED_NO));
-  ACE_CHECK_RETURN (RTCORBA::ClientProtocolPolicy::_nil ());
 
   return tmp;
 }

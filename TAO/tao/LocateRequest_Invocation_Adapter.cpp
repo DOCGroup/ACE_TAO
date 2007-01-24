@@ -25,14 +25,14 @@ namespace TAO
   }
 
   void
-  LocateRequest_Invocation_Adapter::invoke (ACE_ENV_SINGLE_ARG_DECL)
+  LocateRequest_Invocation_Adapter::invoke (void)
   {
     CORBA::Object * const effective_target = this->target_;
 
     TAO_Stub * const stub =
       this->target_->_stubobj ();
     if (stub == 0)
-      ACE_THROW (CORBA::INTERNAL (
+      throw ( ::CORBA::INTERNAL (
                      CORBA::SystemException::_tao_minor_code (
                        0,
                          EINVAL),
@@ -44,7 +44,7 @@ namespace TAO
     // there are multiple ORB instances in the process, each with its
     // own, local configuration.
     ACE_Service_Config_Guard scg (stub->orb_core ()->configuration ());
-    
+
     ACE_Time_Value tmp_wait_time;
     ACE_Time_Value *max_wait_time = 0;
 
@@ -63,15 +63,13 @@ namespace TAO
                                              stub,
                                              true);
 
-        ACE_TRY
+        try
           {
             resolver.init_inconsistent_policies (
-                ACE_ENV_SINGLE_ARG_PARAMETER);
-            ACE_TRY_CHECK;
+                );
 
             resolver.resolve (max_wait_time
-                              ACE_ENV_ARG_PARAMETER);
-            ACE_TRY_CHECK;
+                             );
 
             // Dummy operation details that is used to instantiate the
             // LocateRequest class.
@@ -84,21 +82,18 @@ namespace TAO
                                                  op);
 
             s = synch.invoke (max_wait_time
-                              ACE_ENV_ARG_PARAMETER);
-            ACE_TRY_CHECK;
+                             );
           }
-        ACE_CATCH (CORBA::INV_POLICY, ex)
+        catch ( ::CORBA::INV_POLICY&)
           {
             this->list_ =
               resolver.steal_inconsistent_policies ();
-            ACE_RE_THROW;
+            throw;
           }
-        ACE_CATCHANY
+        catch ( ::CORBA::Exception&)
           {
-            ACE_RE_THROW;
+            throw;
           }
-        ACE_ENDTRY;
-        ACE_CHECK;
       }
 
     return;

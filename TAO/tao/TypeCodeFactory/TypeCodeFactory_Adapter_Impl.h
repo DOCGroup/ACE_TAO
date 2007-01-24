@@ -46,7 +46,7 @@ public:
       const char *id,
       const char *name,
       const CORBA::StructMemberSeq &members
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+      )
 
     ACE_THROW_SPEC ((CORBA::SystemException));
 
@@ -55,7 +55,7 @@ public:
       const char *name,
       CORBA::TypeCode_ptr discriminator_type,
       const CORBA::UnionMemberSeq &members
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+      )
 
     ACE_THROW_SPEC ((CORBA::SystemException));
 
@@ -63,7 +63,7 @@ public:
       const char *id,
       const char *name,
       const CORBA::EnumMemberSeq &members
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+      )
 
     ACE_THROW_SPEC ((CORBA::SystemException));
 
@@ -71,7 +71,7 @@ public:
       const char *id,
       const char *name,
       CORBA::TypeCode_ptr original_type
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+      )
 
     ACE_THROW_SPEC ((CORBA::SystemException));
 
@@ -79,47 +79,47 @@ public:
       const char *id,
       const char *name,
       const CORBA::StructMemberSeq &members
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+      )
 
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual CORBA::TypeCode_ptr create_interface_tc (
       const char *id,
       const char *name
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+      )
 
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual CORBA::TypeCode_ptr create_string_tc (
       CORBA::ULong bound
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+      )
 
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual CORBA::TypeCode_ptr create_wstring_tc (
       CORBA::ULong bound
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+      )
 
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual CORBA::TypeCode_ptr create_fixed_tc (
       CORBA::UShort digits,
       CORBA::UShort scale
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+      )
 
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual CORBA::TypeCode_ptr create_sequence_tc (
       CORBA::ULong bound,
       CORBA::TypeCode_ptr element_type
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+      )
 
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual CORBA::TypeCode_ptr create_array_tc (
       CORBA::ULong length,
       CORBA::TypeCode_ptr element_type
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+      )
 
     ACE_THROW_SPEC ((CORBA::SystemException));
 
@@ -129,7 +129,7 @@ public:
       CORBA::ValueModifier type_modifier,
       CORBA::TypeCode_ptr concrete_base,
       const CORBA::ValueMemberSeq &members
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+      )
 
     ACE_THROW_SPEC ((CORBA::SystemException));
 
@@ -137,48 +137,48 @@ public:
       const char *id,
       const char *name,
       CORBA::TypeCode_ptr boxed_type
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+      )
 
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual CORBA::TypeCode_ptr create_native_tc (
       const char *id,
       const char *name
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+      )
 
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual CORBA::TypeCode_ptr create_recursive_tc (
       const char *id
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+      )
 
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual CORBA::TypeCode_ptr create_abstract_interface_tc (
       const char *id,
       const char *name
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+      )
 
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual CORBA::TypeCode_ptr create_local_interface_tc (
       const char *id,
       const char *name
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+      )
 
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual CORBA::TypeCode_ptr create_component_tc (
       const char *id,
       const char *name
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS
+
     )
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual CORBA::TypeCode_ptr create_home_tc (
       const char *id,
       const char *name
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS
+
     )
     ACE_THROW_SPEC ((CORBA::SystemException));
 
@@ -188,7 +188,7 @@ public:
       CORBA::ValueModifier type_modifier,
       CORBA::TypeCode_ptr concrete_base,
       const CORBA::ValueMemberSeq &members
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS
+
     )
     ACE_THROW_SPEC ((CORBA::SystemException));
 
@@ -205,7 +205,7 @@ public:
     char const * name,
     ACE_Array_Base<CORBA::String_var> const & enumerators,
     CORBA::ULong ncases
-    ACE_ENV_ARG_DECL);
+   );
 
   /// Create a structure or exception TypeCode.
   virtual CORBA::TypeCode_ptr create_struct_except_tc (
@@ -216,7 +216,7 @@ public:
       TAO::TypeCode::Struct_Field<CORBA::String_var,
                                   CORBA::TypeCode_var> > const & fields,
     CORBA::ULong nfields
-    ACE_ENV_ARG_DECL);
+   );
 
   /// Create a union TypeCode.
   virtual CORBA::TypeCode_ptr create_union_tc (
@@ -229,7 +229,7 @@ public:
     CORBA::Long default_index,
     char const * default_case_name,
     CORBA::TypeCode_ptr default_case_type
-    ACE_ENV_ARG_DECL);
+   );
 
   /// Create a valuetype or eventtype TypeCode.
   virtual CORBA::TypeCode_ptr create_value_event_tc (
@@ -242,7 +242,7 @@ public:
       TAO::TypeCode::Value_Field<CORBA::String_var,
                                  CORBA::TypeCode_var> > const & fields,
     CORBA::ULong nfields
-    ACE_ENV_ARG_DECL);
+   );
   //@}
 
 

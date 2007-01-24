@@ -2,7 +2,6 @@
 
 #include "tao/Object_Ref_Table.h"
 #include "tao/ORB.h"
-#include "tao/Environment.h"
 #include "tao/debug.h"
 #include "tao/ORB_Constants.h"
 #include "tao/SystemException.h"

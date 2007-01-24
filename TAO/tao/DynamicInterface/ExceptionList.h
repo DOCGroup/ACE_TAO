@@ -97,12 +97,10 @@ namespace CORBA
     void add_consume (CORBA::TypeCode_ptr tc);
 
     /// Return the typecode at slot i. Raises the "Bounds" exception.
-    CORBA::TypeCode_ptr item (CORBA::ULong slot
-                              ACE_ENV_ARG_DECL_WITH_DEFAULTS);
+    CORBA::TypeCode_ptr item (CORBA::ULong slot);
 
     /// Remove the typecode at slot i. Raises the "Bounds" exception.
-    void remove (CORBA::ULong slot
-                 ACE_ENV_ARG_DECL_WITH_DEFAULTS);
+    void remove (CORBA::ULong slot);
 
     /// Increment and decrement ref counts.
     void _incr_refcnt (void);

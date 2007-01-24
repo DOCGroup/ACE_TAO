@@ -90,7 +90,7 @@ PortableInterceptor::ServerRequestInterceptor::~ServerRequestInterceptor (void)
 PortableInterceptor::ServerRequestInterceptor_ptr
 PortableInterceptor::ServerRequestInterceptor::_narrow (
     ::CORBA::Object_ptr _tao_objref
-    ACE_ENV_ARG_DECL_NOT_USED
+
   )
 {
   return ServerRequestInterceptor::_duplicate (
@@ -101,7 +101,7 @@ PortableInterceptor::ServerRequestInterceptor::_narrow (
 PortableInterceptor::ServerRequestInterceptor_ptr
 PortableInterceptor::ServerRequestInterceptor::_unchecked_narrow (
     ::CORBA::Object_ptr _tao_objref
-    ACE_ENV_ARG_DECL_NOT_USED
+
   )
 {
   return ServerRequestInterceptor::_duplicate (
@@ -129,7 +129,7 @@ PortableInterceptor::ServerRequestInterceptor::_tao_release (ServerRequestInterc
 ::CORBA::Boolean
 PortableInterceptor::ServerRequestInterceptor::_is_a (
     const char *value
-    ACE_ENV_ARG_DECL_NOT_USED
+
   )
 {
   if (

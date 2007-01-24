@@ -12,14 +12,14 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-class TAO_RTScheduler_Export TAO_ThreadAction: 
+class TAO_RTScheduler_Export TAO_ThreadAction:
 public RTScheduling::ThreadAction,
   public TAO_Local_RefCounted_Object
 {
  public:
-  
+
   virtual void do (CORBA::VoidData data
-		   ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+       )
       ACE_THROW_SPEC ((CORBA::SystemException)) = 0;
 };
 

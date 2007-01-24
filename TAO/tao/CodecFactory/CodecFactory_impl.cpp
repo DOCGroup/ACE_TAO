@@ -23,7 +23,7 @@ TAO_CodecFactory::TAO_CodecFactory (TAO_ORB_Core * orb_core)
 
 IOP::Codec_ptr
 TAO_CodecFactory::create_codec_with_codesets (const IOP::Encoding_1_2 & enc
-                                              ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+                                              )
     ACE_THROW_SPEC ((CORBA::SystemException,
                      IOP::CodecFactory::UnknownEncoding,
                      IOP::CodecFactory::UnsupportedCodeset))
@@ -71,12 +71,12 @@ TAO_CodecFactory::create_codec_with_codesets (const IOP::Encoding_1_2 & enc
                                enc.format,
                                char_trans,
                                wchar_trans
-                               ACE_ENV_ARG_PARAMETER);
+                              );
 }
 
 IOP::Codec_ptr
 TAO_CodecFactory::create_codec (const IOP::Encoding & enc
-                                ACE_ENV_ARG_DECL)
+                                )
   ACE_THROW_SPEC ((CORBA::SystemException,
                    IOP::CodecFactory::UnknownEncoding))
 {
@@ -85,7 +85,7 @@ TAO_CodecFactory::create_codec (const IOP::Encoding & enc
                                enc.format,
                                0,
                                0
-                               ACE_ENV_ARG_PARAMETER);
+                              );
 }
 
 IOP::Codec_ptr
@@ -94,7 +94,7 @@ TAO_CodecFactory::create_codec_i (CORBA::Octet major,
                                   IOP::EncodingFormat encoding_format,
                                   TAO_Codeset_Translator_Base * char_trans,
                                   TAO_Codeset_Translator_Base * wchar_trans
-                                  ACE_ENV_ARG_DECL)
+                                  )
   ACE_THROW_SPEC ((CORBA::SystemException,
                    IOP::CodecFactory::UnknownEncoding))
 {
@@ -136,7 +136,6 @@ TAO_CodecFactory::create_codec_i (CORBA::Octet major,
                             0,
                             ENOMEM),
                           CORBA::COMPLETED_MAYBE));
-      ACE_CHECK_RETURN (IOP::Codec::_nil ());
       break;
 
     default:

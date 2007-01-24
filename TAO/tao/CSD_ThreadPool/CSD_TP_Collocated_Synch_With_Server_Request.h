@@ -42,13 +42,13 @@ namespace TAO
      * @brief Represents a "queue-able", one-way, collocated, CORBA
      *        request with a "Synch Scope" policy of SYNC_WITH_SERVER.
      *
-     * This kind of request is one-way request with the SYNC_WITH_SERVER 
-     * policy applied. It is cloned before enqueuing and the "enqueuing" 
+     * This kind of request is one-way request with the SYNC_WITH_SERVER
+     * policy applied. It is cloned before enqueuing and the "enqueuing"
      * thread will block until it is signalled by the TP_Task thread that
-     * will happen just before the request is dispatched or the request 
+     * will happen just before the request is dispatched or the request
      * is cancelled.
      */
-    class TAO_CSD_TP_Export TP_Collocated_Synch_With_Server_Request 
+    class TAO_CSD_TP_Export TP_Collocated_Synch_With_Server_Request
                                                   : public TP_Corba_Request
     {
     public:
@@ -70,15 +70,15 @@ namespace TAO
       /// *before* the request is dispatched by a worker thread.  This is
       /// different than the TP_Collocated_Synch_Request which waits until
       /// just *after* the request is dispatched by a worker thread.
-      /// Returns true if the request has been dispatched, and returns 
+      /// Returns true if the request has been dispatched, and returns
       /// false if the request has been cancelled.
-      bool wait(ACE_ENV_SINGLE_ARG_DECL);
+      bool wait(void);
 
 
     protected:
 
-      /// Prepare this TP_Collocated_Synch_With_Server_Request object to be 
-      /// placed into the request queue.  This will cause the underlying 
+      /// Prepare this TP_Collocated_Synch_With_Server_Request object to be
+      /// placed into the request queue.  This will cause the underlying
       /// TAO_ServerRequest object to be cloned.
       virtual void prepare_for_queue_i();
 

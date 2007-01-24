@@ -63,54 +63,50 @@ template <typename TypeCodeType, class RefCountPolicy>
 CORBA::Boolean
 TAO::TypeCode::Sequence<TypeCodeType,
                         RefCountPolicy>::equal_i (CORBA::TypeCode_ptr tc
-                                                  ACE_ENV_ARG_DECL) const
+                                                  ) const
 {
   // The following calls won't throw since CORBA::TypeCode::equal()
   // has already established the kind of tc is the same as our kind.
-  CORBA::ULong const tc_length = tc->length (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (0);
+  CORBA::ULong const tc_length = tc->length ();
 
   if (this->length_ != tc_length)
     return 0;
 
   CORBA::TypeCode_var rhs_content_type =
-    tc->content_type (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (0);
+    tc->content_type ();
 
   return
     Traits<TypeCodeType>::get_typecode (this->content_type_)->equal (
       rhs_content_type.in ()
-      ACE_ENV_ARG_PARAMETER);
+     );
 }
 
 template <typename TypeCodeType, class RefCountPolicy>
 CORBA::Boolean
 TAO::TypeCode::Sequence<TypeCodeType,
                         RefCountPolicy>::equivalent_i (CORBA::TypeCode_ptr tc
-                                                       ACE_ENV_ARG_DECL) const
+                                                       ) const
 {
   // The following calls won't throw since CORBA::TypeCode::equal()
   // has already established the kind of tc is the same as our kind.
-  CORBA::ULong const tc_length = tc->length (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (0);
+  CORBA::ULong const tc_length = tc->length ();
 
   if (this->length_ != tc_length)
     return 0;
 
   CORBA::TypeCode_var rhs_content_type =
-    tc->content_type (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (0);
+    tc->content_type ();
 
   return
     Traits<TypeCodeType>::get_typecode (this->content_type_)->equivalent (
       rhs_content_type.in ()
-      ACE_ENV_ARG_PARAMETER);
+     );
 }
 
 template <typename TypeCodeType, class RefCountPolicy>
 CORBA::TypeCode_ptr
 TAO::TypeCode::Sequence<TypeCodeType, RefCountPolicy>::get_compact_typecode_i (
-  ACE_ENV_SINGLE_ARG_DECL_NOT_USED) const
+  void) const
 {
   // Already compact since tk_sequence and tk_array TypeCodes have no
   // name or member names, meaning that we can simply call
@@ -130,7 +126,7 @@ TAO::TypeCode::Sequence<TypeCodeType, RefCountPolicy>::get_compact_typecode_i (
 template <typename TypeCodeType, class RefCountPolicy>
 CORBA::ULong
 TAO::TypeCode::Sequence<TypeCodeType, RefCountPolicy>::length_i (
-  ACE_ENV_SINGLE_ARG_DECL_NOT_USED) const
+  void) const
 {
   return this->length_;
 }
@@ -138,7 +134,7 @@ TAO::TypeCode::Sequence<TypeCodeType, RefCountPolicy>::length_i (
 template <typename TypeCodeType, class RefCountPolicy>
 CORBA::TypeCode_ptr
 TAO::TypeCode::Sequence<TypeCodeType, RefCountPolicy>::content_type_i (
-  ACE_ENV_SINGLE_ARG_DECL_NOT_USED) const
+  void) const
 {
   return
     CORBA::TypeCode::_duplicate (

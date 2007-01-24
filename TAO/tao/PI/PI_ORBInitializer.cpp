@@ -16,18 +16,14 @@ ACE_RCSID (tao,
            "$Id$")
 
 void
-TAO_PI_ORBInitializer::pre_init (PortableInterceptor::ORBInitInfo_ptr info
-                                 ACE_ENV_ARG_DECL_NOT_USED)
+TAO_PI_ORBInitializer::pre_init (PortableInterceptor::ORBInitInfo_ptr)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  ACE_UNUSED_ARG (info);
 }
 
 
 void
-TAO_PI_ORBInitializer::post_init (
-  PortableInterceptor::ORBInitInfo_ptr info
-  ACE_ENV_ARG_DECL)
+TAO_PI_ORBInitializer::post_init (PortableInterceptor::ORBInitInfo_ptr info)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // The PI policy factory is stateless and reentrant, so share a
@@ -42,22 +38,17 @@ TAO_PI_ORBInitializer::post_init (
                               TAO::VMCID,
                               ENOMEM),
                             CORBA::COMPLETED_NO));
-      ACE_CHECK;
 
       this->policy_factory_ = policy_factory;
     }
 
-
-  this->register_policy_factories (info
-                                   ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+  this->register_policy_factories (info);
 }
 
 
 void
 TAO_PI_ORBInitializer::register_policy_factories (
-  PortableInterceptor::ORBInitInfo_ptr info
-  ACE_ENV_ARG_DECL)
+  PortableInterceptor::ORBInitInfo_ptr info)
 {
   // Register the PI policy factory.
 
@@ -72,14 +63,12 @@ TAO_PI_ORBInitializer::register_policy_factories (
 
   for (CORBA::PolicyType *i = type; i != end; ++i)
     {
-      ACE_TRY
+      try
         {
           info->register_policy_factory (*i,
-                                         this->policy_factory_.in ()
-                                         ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+                                         this->policy_factory_.in ());
         }
-      ACE_CATCH (CORBA::BAD_INV_ORDER, ex)
+      catch ( ::CORBA::BAD_INV_ORDER& ex)
         {
           if (ex.minor () == (CORBA::OMGVMCID | 16))
             {
@@ -90,15 +79,13 @@ TAO_PI_ORBInitializer::register_policy_factories (
               // ORBInitializer.
               return;
             }
-          ACE_RE_THROW;
+          throw;
         }
-      ACE_CATCHANY
+      catch ( ::CORBA::Exception&)
         {
           // Rethrow any other exceptions...
-          ACE_RE_THROW;
+          throw;
         }
-      ACE_ENDTRY;
-      ACE_CHECK;
     }
 }
 

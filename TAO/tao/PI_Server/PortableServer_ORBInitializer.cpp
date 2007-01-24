@@ -17,27 +17,23 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 void
 TAO_PortableServer_ORBInitializer::pre_init (
-    PortableInterceptor::ORBInitInfo_ptr
-    ACE_ENV_ARG_DECL_NOT_USED)
+  PortableInterceptor::ORBInitInfo_ptr)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
 }
 
 void
 TAO_PortableServer_ORBInitializer::post_init (
-    PortableInterceptor::ORBInitInfo_ptr info
-    ACE_ENV_ARG_DECL)
+  PortableInterceptor::ORBInitInfo_ptr info)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->register_policy_factories (info
-                                   ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+                                  );
 }
 
 void
 TAO_PortableServer_ORBInitializer::register_policy_factories (
-  PortableInterceptor::ORBInitInfo_ptr info
-  ACE_ENV_ARG_DECL)
+  PortableInterceptor::ORBInitInfo_ptr info)
 {
 #if !defined (CORBA_E_MICRO)
   // Register the PortableServer policy factories.
@@ -49,7 +45,6 @@ TAO_PortableServer_ORBInitializer::register_policy_factories (
                         TAO::VMCID,
                         ENOMEM),
                       CORBA::COMPLETED_NO));
-  ACE_CHECK;
 
   PortableInterceptor::PolicyFactory_var policy_factory = tmp;
 
@@ -75,14 +70,13 @@ TAO_PortableServer_ORBInitializer::register_policy_factories (
        i != end;
        ++i)
     {
-      ACE_TRY
+      try
         {
           info->register_policy_factory (*i,
                                          policy_factory.in ()
-                                         ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+                                        );
         }
-      ACE_CATCH (CORBA::BAD_INV_ORDER, ex)
+      catch ( ::CORBA::BAD_INV_ORDER& ex)
         {
           if (ex.minor () == (CORBA::OMGVMCID | 16))
             {
@@ -93,15 +87,13 @@ TAO_PortableServer_ORBInitializer::register_policy_factories (
               // ORBInitializer.
               return;
             }
-          ACE_RE_THROW;
+          throw;
         }
-      ACE_CATCHANY
+      catch ( ::CORBA::Exception&)
         {
           // Rethrow any other exceptions...
-          ACE_RE_THROW;
+          throw;
         }
-      ACE_ENDTRY;
-      ACE_CHECK;
     }
 #else
   ACE_UNUSED_ARG (info);

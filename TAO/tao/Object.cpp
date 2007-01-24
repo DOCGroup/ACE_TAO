@@ -192,8 +192,7 @@ CORBA::Object::_servant (void) const
 // logical type ID is passed as a parameter.
 
 CORBA::Boolean
-CORBA::Object::_is_a (const char *type_id
-                      ACE_ENV_ARG_DECL)
+CORBA::Object::_is_a (const char *type_id)
 {
   TAO_OBJECT_IOR_EVALUATE_RETURN;
 
@@ -222,8 +221,7 @@ CORBA::Object::_is_a (const char *type_id
     return true;
 
   return this->proxy_broker ()->_is_a (this,
-                                     type_id
-                                     ACE_ENV_ARG_PARAMETER);
+                                       type_id);
 }
 
 const char*
@@ -270,13 +268,12 @@ CORBA::Object::_stubobj (void)
 }
 
 CORBA::ULong
-CORBA::Object::_hash (CORBA::ULong maximum
-                      ACE_ENV_ARG_DECL)
+CORBA::Object::_hash (CORBA::ULong maximum)
 {
   TAO_OBJECT_IOR_EVALUATE_RETURN;
 
   if (this->protocol_proxy_ != 0)
-    return this->protocol_proxy_->hash (maximum ACE_ENV_ARG_PARAMETER);
+    return this->protocol_proxy_->hash (maximum);
   else
     {
       // Locality-constrained object.
@@ -293,8 +290,7 @@ CORBA::Object::_hash (CORBA::ULong maximum
 }
 
 CORBA::Boolean
-CORBA::Object::_is_equivalent (CORBA::Object_ptr other_obj
-                               ACE_ENV_ARG_DECL_NOT_USED)
+CORBA::Object::_is_equivalent (CORBA::Object_ptr other_obj)
   ACE_THROW_SPEC (())
 {
   if (other_obj == this)
@@ -313,7 +309,7 @@ CORBA::Object::_is_equivalent (CORBA::Object_ptr other_obj
 // TAO's extensions
 
 TAO::ObjectKey *
-CORBA::Object::_key (ACE_ENV_SINGLE_ARG_DECL)
+CORBA::Object::_key (void)
 {
   TAO_OBJECT_IOR_EVALUATE_RETURN;
 
@@ -370,8 +366,7 @@ CORBA::Object::_create_request (CORBA::Context_ptr ctx,
                                 CORBA::NVList_ptr arg_list,
                                 CORBA::NamedValue_ptr result,
                                 CORBA::Request_ptr &request,
-                                CORBA::Flags req_flags
-                                ACE_ENV_ARG_DECL)
+                                CORBA::Flags req_flags)
 {
   TAO_OBJECT_IOR_EVALUATE;
 
@@ -381,7 +376,7 @@ CORBA::Object::_create_request (CORBA::Context_ptr ctx,
   // object references.
   if (ctx != 0 || this->protocol_proxy_ == 0)
     {
-      ACE_THROW (CORBA::NO_IMPLEMENT ());
+      throw ::CORBA::NO_IMPLEMENT ();
     }
 
   TAO_Dynamic_Adapter *dynamic_adapter =
@@ -398,7 +393,6 @@ CORBA::Object::_create_request (CORBA::Context_ptr ctx,
                        0,
                        request,
                        req_flags
-                       ACE_ENV_ARG_PARAMETER
                      );
 }
 #endif
@@ -412,8 +406,7 @@ CORBA::Object::_create_request (CORBA::Context_ptr ctx,
                                 CORBA::ExceptionList_ptr exceptions,
                                 CORBA::ContextList_ptr,
                                 CORBA::Request_ptr &request,
-                                CORBA::Flags req_flags
-                                ACE_ENV_ARG_DECL)
+                                CORBA::Flags req_flags)
 {
   TAO_OBJECT_IOR_EVALUATE;
 
@@ -423,7 +416,7 @@ CORBA::Object::_create_request (CORBA::Context_ptr ctx,
   // object references.
   if (ctx != 0 || this->protocol_proxy_ == 0)
     {
-      ACE_THROW (CORBA::NO_IMPLEMENT ());
+      throw ::CORBA::NO_IMPLEMENT ();
     }
 
   TAO_Dynamic_Adapter *dynamic_adapter =
@@ -439,15 +432,12 @@ CORBA::Object::_create_request (CORBA::Context_ptr ctx,
                        result,
                        exceptions,
                        request,
-                       req_flags
-                       ACE_ENV_ARG_PARAMETER
-                     );
+                       req_flags);
 }
 #endif
 
 CORBA::Request_ptr
-CORBA::Object::_request (const char *operation
-                         ACE_ENV_ARG_DECL)
+CORBA::Object::_request (const char *operation)
 {
   TAO_OBJECT_IOR_EVALUATE_RETURN;
   if (this->protocol_proxy_)
@@ -461,7 +451,6 @@ CORBA::Object::_request (const char *operation
                                   this,
                                   this->protocol_proxy_->orb_core ()->orb (),
                                   operation
-                                  ACE_ENV_ARG_PARAMETER
                                 );
     }
   else
@@ -476,61 +465,54 @@ CORBA::Object::_request (const char *operation
 // the latter case, return true.
 
 CORBA::Boolean
-CORBA::Object::_non_existent (ACE_ENV_SINGLE_ARG_DECL)
+CORBA::Object::_non_existent (void)
 {
   TAO_OBJECT_IOR_EVALUATE_RETURN;
 
   CORBA::Boolean retval = false;
 
-  ACE_TRY
+  try
     {
-      retval = this->proxy_broker ()->_non_existent (this
-                                                   ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      retval = this->proxy_broker ()->_non_existent (this);
     }
-  ACE_CATCH (CORBA::OBJECT_NOT_EXIST, ex)
+  catch ( ::CORBA::OBJECT_NOT_EXIST&)
     {
       retval = true;
     }
-  ACE_CATCHANY
+  catch ( ::CORBA::Exception&)
     {
-      ACE_RE_THROW;
+      throw;
     }
-  ACE_ENDTRY;
-  ACE_CHECK_RETURN (retval);
 
   return retval;
 }
 
 
 CORBA::InterfaceDef_ptr
-CORBA::Object::_get_interface (ACE_ENV_SINGLE_ARG_DECL)
+CORBA::Object::_get_interface (void)
 {
   TAO_OBJECT_IOR_EVALUATE_RETURN;
-  return this->proxy_broker ()->_get_interface (this
-                                              ACE_ENV_ARG_PARAMETER);
+  return this->proxy_broker ()->_get_interface (this);
 }
 
 CORBA::ImplementationDef_ptr
-CORBA::Object::_get_implementation (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+CORBA::Object::_get_implementation (void)
 {
   return 0;
 }
 
 CORBA::Object_ptr
-CORBA::Object::_get_component (ACE_ENV_SINGLE_ARG_DECL)
+CORBA::Object::_get_component (void)
 {
   TAO_OBJECT_IOR_EVALUATE_RETURN;
-  return this->proxy_broker ()->_get_component (this
-                                              ACE_ENV_ARG_PARAMETER);
+  return this->proxy_broker ()->_get_component (this);
 }
 
 char*
-CORBA::Object::_repository_id (ACE_ENV_SINGLE_ARG_DECL)
+CORBA::Object::_repository_id (void)
 {
   TAO_OBJECT_IOR_EVALUATE_RETURN;
-  return this->proxy_broker ()->_repository_id (this
-                                              ACE_ENV_ARG_PARAMETER);
+  return this->proxy_broker ()->_repository_id (this);
 }
 
 #endif /* TAO_HAS_MINIMUM_CORBA */
@@ -545,28 +527,24 @@ CORBA::Object::_repository_id (ACE_ENV_SINGLE_ARG_DECL)
 
 CORBA::Policy_ptr
 CORBA::Object::_get_policy (
-  CORBA::PolicyType type
-  ACE_ENV_ARG_DECL)
+  CORBA::PolicyType type)
 {
   TAO_OBJECT_IOR_EVALUATE_RETURN;
 
   if (this->protocol_proxy_)
-    return this->protocol_proxy_->get_policy (type
-                                              ACE_ENV_ARG_PARAMETER);
+    return this->protocol_proxy_->get_policy (type);
   else
     ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (), CORBA::Policy::_nil ());
 }
 
 CORBA::Policy_ptr
 CORBA::Object::_get_cached_policy (
-  TAO_Cached_Policy_Type type
-  ACE_ENV_ARG_DECL)
+  TAO_Cached_Policy_Type type)
 {
   TAO_OBJECT_IOR_EVALUATE_RETURN;
 
   if (this->protocol_proxy_)
-    return this->protocol_proxy_->get_cached_policy (type
-                                                     ACE_ENV_ARG_PARAMETER);
+    return this->protocol_proxy_->get_cached_policy (type);
   else
     ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (), CORBA::Policy::_nil ());
 }
@@ -574,8 +552,7 @@ CORBA::Object::_get_cached_policy (
 CORBA::Object_ptr
 CORBA::Object::_set_policy_overrides (
   const CORBA::PolicyList & policies,
-  CORBA::SetOverrideType set_add
-  ACE_ENV_ARG_DECL)
+  CORBA::SetOverrideType set_add)
 {
   TAO_OBJECT_IOR_EVALUATE_RETURN;
 
@@ -584,9 +561,7 @@ CORBA::Object::_set_policy_overrides (
 
   TAO_Stub* stub =
     this->protocol_proxy_->set_policy_overrides (policies,
-                                                 set_add
-                                                 ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (CORBA::Object::_nil ());
+                                                 set_add);
 
   TAO_Stub_Auto_Ptr safe_stub (stub);
 
@@ -600,7 +575,6 @@ CORBA::Object::_set_policy_overrides (
                         0,
                         ENOMEM),
                       CORBA::COMPLETED_MAYBE));
-  ACE_CHECK_RETURN (CORBA::Object::_nil ());
 
   // If the stub is collocated and we don't have a collocated server we need
   // to reinitialize it to get it.
@@ -615,58 +589,46 @@ CORBA::Object::_set_policy_overrides (
 }
 
 CORBA::PolicyList *
-CORBA::Object::_get_policy_overrides (const CORBA::PolicyTypeSeq & types
-                                      ACE_ENV_ARG_DECL)
+CORBA::Object::_get_policy_overrides (const CORBA::PolicyTypeSeq & types)
 {
   TAO_OBJECT_IOR_EVALUATE_RETURN;
   if (this->protocol_proxy_)
-    return this->protocol_proxy_->get_policy_overrides (types
-                                                        ACE_ENV_ARG_PARAMETER);
+    return this->protocol_proxy_->get_policy_overrides (types);
   else
     ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (), 0);
 }
 
 CORBA::Boolean
 CORBA::Object::_validate_connection (
-  CORBA::PolicyList_out inconsistent_policies
-  ACE_ENV_ARG_DECL)
+  CORBA::PolicyList_out inconsistent_policies)
 {
   TAO_OBJECT_IOR_EVALUATE_RETURN;
 
   inconsistent_policies = 0;
 
-  CORBA::Boolean retval = 0;
+  CORBA::Boolean retval = false;
 
-#if (TAO_HAS_MINIMUM_CORBA == 1)
-
-  ACE_ENV_ARG_NOT_USED; // FUZZ: ignore check_for_ace_check
-
-  retval = false;
-#else
-
+#if (TAO_HAS_MINIMUM_CORBA == 0)
   // If the object is collocated then use non_existent to see whether
   // it's there.
   if (this->_is_collocated ())
-      return !(this->_non_existent (ACE_ENV_SINGLE_ARG_PARAMETER));
+      return !(this->_non_existent ());
 
   TAO::LocateRequest_Invocation_Adapter tao_call (this);
-  ACE_TRY
+  try
     {
-      tao_call.invoke (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      tao_call.invoke ();
     }
-  ACE_CATCH (CORBA::INV_POLICY, ex)
+  catch ( ::CORBA::INV_POLICY&)
     {
       inconsistent_policies =
         tao_call.get_inconsistent_policies ();
       retval = false;
     }
-  ACE_CATCHANY
+  catch ( ::CORBA::Exception&)
     {
-      ACE_RE_THROW;
+      throw;
     }
-  ACE_ENDTRY;
-  ACE_CHECK_RETURN (false);
 
   retval = true;
 #endif /* TAO_HAS_MINIMUM_CORBA */
@@ -678,7 +640,7 @@ CORBA::Object::_validate_connection (
 
 
 CORBA::ORB_ptr
-CORBA::Object::_get_orb (ACE_ENV_SINGLE_ARG_DECL)
+CORBA::Object::_get_orb (void)
 {
   if (this->orb_core_ != 0)
     {
@@ -772,12 +734,10 @@ CORBA::Object::tao_object_initialize (CORBA::Object *obj)
 
   TAO_Stub *objdata = 0;
 
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  try
     {
       TAO_Connector_Registry *connector_registry =
-        orb_core->connector_registry (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        orb_core->connector_registry ();
 
       for (CORBA::ULong i = 0; i != profile_count; ++i)
         {
@@ -819,22 +779,18 @@ CORBA::Object::tao_object_initialize (CORBA::Object *obj)
 
       objdata =
         orb_core->create_stub (obj->ior_->type_id.in (),
-                               mp
-                               ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+                               mp);
     }
-  ACE_CATCHANY
+  catch ( ::CORBA::Exception& ex)
     {
       if (TAO_debug_level > 0)
-        ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
+        ACE_PRINT_EXCEPTION (ex,
                              ACE_TEXT ("TAO - ERROR creating stub ")
                              ACE_TEXT ("object when demarshaling object ")
                              ACE_TEXT ("reference."));
 
       return;
     }
-  ACE_ENDTRY;
-  ACE_CHECK;
 
   TAO_Stub_Auto_Ptr safe_objdata (objdata);
 
@@ -917,12 +873,10 @@ operator>> (TAO_InputCDR& cdr, CORBA::Object*& x)
 
       TAO_Stub *objdata = 0;
 
-      ACE_DECLARE_NEW_CORBA_ENV;
-      ACE_TRY
+      try
         {
           TAO_Connector_Registry *connector_registry =
-            orb_core->connector_registry (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+            orb_core->connector_registry ();
 
           for (CORBA::ULong i = 0; i != profile_count && cdr.good_bit (); ++i)
             {
@@ -947,22 +901,18 @@ operator>> (TAO_InputCDR& cdr, CORBA::Object*& x)
 
 
           objdata = orb_core->create_stub (type_hint.in (),
-                                           mp
-                                           ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+                                           mp);
         }
-      ACE_CATCHANY
+      catch ( ::CORBA::Exception& ex)
         {
           if (TAO_debug_level > 0)
-            ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
+            ACE_PRINT_EXCEPTION (ex,
                                  ACE_TEXT ("TAO - ERROR creating stub ")
                                  ACE_TEXT ("object when demarshaling object ")
                                  ACE_TEXT ("reference.\n"));
 
           return 0;
         }
-      ACE_ENDTRY;
-      ACE_CHECK_RETURN (0);
 
       TAO_Stub_Auto_Ptr safe_objdata (objdata);
 

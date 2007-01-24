@@ -9,7 +9,7 @@
  *
  */
 
-#include /**/ "tao/Transport.h"
+#include "tao/Transport.h"
 
 #if TAO_HAS_TRANSPORT_CURRENT == 1
 
@@ -41,68 +41,65 @@ namespace TAO
     /// if, there was no "current" transport selected on the current
     /// thread.
     const TAO_Transport*
-    Current_Impl::transport (ACE_ENV_SINGLE_ARG_DECL) const
+    Current_Impl::transport (void) const
       ACE_THROW_SPEC ((NoContext))
     {
       Transport_Selection_Guard* topguard =
         Transport_Selection_Guard::current (this->core_, this->tss_slot_id_);
 
       if (topguard == 0)
-        ACE_THROW (NoContext());
-      ACE_CHECK;
+        throw NoContext();
 
       return topguard->get ();
     }
 
     /// Obtains the current transport's stats
     const TAO::Transport::Stats*
-    Current_Impl::transport_stats (ACE_ENV_SINGLE_ARG_DECL) const
+    Current_Impl::transport_stats (void) const
       ACE_THROW_SPEC ((NoContext))
     {
       static const TAO::Transport::Stats dummy;
 
       const TAO_Transport* t =
-        this->transport (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK;
+        this->transport ();
 
       return (t==0 || t->stats () == 0) ? &dummy : t->stats ();
     }
 
-    CORBA::Long Current_Impl::id (ACE_ENV_SINGLE_ARG_DECL)
+    CORBA::Long Current_Impl::id (void)
       ACE_THROW_SPEC ((::CORBA::SystemException, NoContext))
     {
       const TAO_Transport* t =
-        this->transport (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK;
+        this->transport ();
 
       return (t==0) ? 0 : t->id ();
     }
 
-    CounterT Current_Impl::bytes_sent (ACE_ENV_SINGLE_ARG_DECL)
+    CounterT Current_Impl::bytes_sent (void)
       ACE_THROW_SPEC ((::CORBA::SystemException, NoContext))
     {
       return transport_stats ()->bytes_sent ();
     }
 
-    CounterT Current_Impl::bytes_received (ACE_ENV_SINGLE_ARG_DECL)
+    CounterT Current_Impl::bytes_received (void)
       ACE_THROW_SPEC ((::CORBA::SystemException, NoContext))
     {
       return transport_stats ()->bytes_received ();
     }
 
-    CounterT Current_Impl::messages_sent (ACE_ENV_SINGLE_ARG_DECL)
+    CounterT Current_Impl::messages_sent (void)
       ACE_THROW_SPEC ((::CORBA::SystemException, NoContext))
     {
       return transport_stats ()->messages_sent ();
     }
 
-    CounterT Current_Impl::messages_received (ACE_ENV_SINGLE_ARG_DECL)
+    CounterT Current_Impl::messages_received (void)
       ACE_THROW_SPEC ((::CORBA::SystemException, NoContext))
     {
       return transport_stats ()->messages_received ();
     }
 
-    TimeBase::TimeT Current_Impl::open_since (ACE_ENV_SINGLE_ARG_DECL)
+    TimeBase::TimeT Current_Impl::open_since (void)
       ACE_THROW_SPEC ((::CORBA::SystemException, NoContext))
     {
       TimeBase::TimeT msecs = 0;

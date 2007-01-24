@@ -37,8 +37,7 @@ TAO_Messaging_Loader::init (int,
     PortableInterceptor::ORBInitializer::_nil ();
   PortableInterceptor::ORBInitializer_var orb_initializer;
 
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  try
     {
       /// Register the Messaging ORBInitializer.
 
@@ -49,15 +48,13 @@ TAO_Messaging_Loader::init (int,
                             TAO::VMCID,
                             ENOMEM),
                           CORBA::COMPLETED_NO));
-      ACE_TRY_CHECK;
 
       orb_initializer = temp_orb_initializer;
 
       PortableInterceptor::register_orb_initializer (orb_initializer.in ()
-                                                     ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+                                                    );
     }
-  ACE_CATCHANY
+  catch ( ::CORBA::Exception& ex)
     {
       if (TAO_debug_level > 0)
         {
@@ -66,7 +63,6 @@ TAO_Messaging_Loader::init (int,
         }
       return -1;
     }
-  ACE_ENDTRY;
 
   return 0;
 }

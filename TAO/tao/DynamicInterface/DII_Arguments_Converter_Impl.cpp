@@ -16,9 +16,7 @@ void
 TAO_DII_Arguments_Converter_Impl::convert (
     TAO_ServerRequest & server_request,
     TAO::Argument * const args[],
-    size_t nargs
-    ACE_ENV_ARG_DECL
-  )
+    size_t nargs)
 {
   // The DII requests on client side always have two arguments
   // - one is the return argument and the other is NVList_Argument.
@@ -34,14 +32,14 @@ TAO_DII_Arguments_Converter_Impl::convert (
   // get_in_arg () from the oneway operation with multiple "IN"
   // parameters.
   CORBA::NVList_ptr lst
-    = static_cast<TAO::NVList_Argument *> (server_request.operation_details ()->args()[1])->arg ();
+    = static_cast<TAO::NVList_Argument *> (
+        server_request.operation_details ()->args()[1])->arg ();
 
-  CORBA::ULong const sz = lst->count (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+  CORBA::ULong const sz = lst->count ();
 
   if (sz != nargs - 1)
     {
-      ACE_THROW (CORBA::BAD_PARAM ());
+      throw ( ::CORBA::BAD_PARAM ());
     }
 
   // To avoid the use of extraction operators on CORBA::Any, we will
@@ -50,12 +48,11 @@ TAO_DII_Arguments_Converter_Impl::convert (
   TAO_OutputCDR output;
   for (CORBA::ULong i = 0; i < sz; ++i)
     {
-      CORBA::NamedValue_ptr theitem = lst->item (i ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
+      CORBA::NamedValue_ptr theitem = lst->item (i);
 
       if (!(theitem->value ()->impl ()->marshal_value (output)))
         {
-          ACE_THROW (CORBA::BAD_PARAM ());
+          throw ::CORBA::BAD_PARAM ();
         }
     }
 
@@ -64,7 +61,7 @@ TAO_DII_Arguments_Converter_Impl::convert (
     {
       if (!(args[j + 1]->demarshal (input)))
         {
-          ACE_THROW (CORBA::BAD_PARAM ());
+          throw ::CORBA::BAD_PARAM ();
         }
     }
 

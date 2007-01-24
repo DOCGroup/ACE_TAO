@@ -51,7 +51,7 @@ namespace TAO
         CORBA::Object_var &effective_target,
         Profile_Transport_Resolver &r,
         ACE_Time_Value *&max_wait_time
-        ACE_ENV_ARG_DECL)
+        )
   {
     // Simple sanity check
     if (this->mode_ != TAO_DII_INVOCATION ||
@@ -76,8 +76,7 @@ namespace TAO
 
     Invocation_Status status =
       synch.remote_invocation (max_wait_time
-                               ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK_RETURN (TAO_INVOKE_FAILURE);
+                              );
 
 
     if (status == TAO_INVOKE_RESTART &&
@@ -95,8 +94,7 @@ namespace TAO
         this->object_forwarded (effective_target,
                                 r.stub (),
                                 permanent_forward
-                                ACE_ENV_ARG_PARAMETER);
-        ACE_CHECK_RETURN (TAO_INVOKE_FAILURE);
+                               );
       }
     return status;
   }
@@ -131,7 +129,7 @@ namespace TAO
   DII_Deferred_Invocation_Adapter::invoke (
       TAO::Exception_Data *ex,
       unsigned long ex_count
-      ACE_ENV_ARG_DECL)
+      )
   {
     // New reply dispatcher on the heap, because we will go out of
     // scope and hand over the  reply dispatcher to the ORB.
@@ -144,8 +142,7 @@ namespace TAO
 
     Invocation_Adapter::invoke (ex,
                                 ex_count
-                                ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK;
+                               );
   }
 
   Invocation_Status
@@ -154,7 +151,7 @@ namespace TAO
       CORBA::Object_var &effective_target,
       Profile_Transport_Resolver &r,
       ACE_Time_Value *&max_wait_time
-      ACE_ENV_ARG_DECL)
+      )
   {
     // Simple sanity check
     if (this->mode_ != TAO_DII_DEFERRED_INVOCATION ||
@@ -180,8 +177,7 @@ namespace TAO
 
     Invocation_Status status =
       synch.remote_invocation (max_wait_time
-                               ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK_RETURN (TAO_INVOKE_FAILURE);
+                              );
 
     if (status == TAO_INVOKE_RESTART)
       {

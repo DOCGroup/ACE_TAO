@@ -83,14 +83,14 @@ namespace TAO
        */
       //@{
       virtual CORBA::Boolean equal_i (CORBA::TypeCode_ptr tc
-                                      ACE_ENV_ARG_DECL) const;
+                                      ) const;
       virtual CORBA::Boolean equivalent_i (CORBA::TypeCode_ptr tc
-                                           ACE_ENV_ARG_DECL) const;
+                                           ) const;
       virtual CORBA::TypeCode_ptr get_compact_typecode_i (
-        ACE_ENV_SINGLE_ARG_DECL) const;
-      virtual CORBA::ULong length_i (ACE_ENV_SINGLE_ARG_DECL) const;
+        void) const;
+      virtual CORBA::ULong length_i (void) const;
       virtual CORBA::TypeCode_ptr content_type_i (
-        ACE_ENV_SINGLE_ARG_DECL) const;
+        void) const;
 
     private:
 

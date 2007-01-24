@@ -37,9 +37,7 @@ namespace TAO
       CompressorFactory (::Compression::CompressorId compressor_id);
 
       virtual ::Compression::CompressorId compressor_id (void)
-        ACE_THROW_SPEC ((
-          ::CORBA::SystemException
-        ));
+        ACE_THROW_SPEC (( ::CORBA::SystemException));
 
       virtual ::CORBA::ULongLong compressed_bytes (void)
         ACE_THROW_SPEC ((

@@ -58,11 +58,11 @@ class TAO_RTCORBA_Export TAO_RT_Mutex
 public:
 
   /// Acquire the lock.
-  virtual void lock (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+  virtual void lock (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   /// Release the lock.
-  virtual void unlock (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+  virtual void unlock (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   /**
@@ -72,7 +72,7 @@ public:
    * using this operation in your program designs.
    */
   virtual CORBA::Boolean try_lock (TimeBase::TimeT max_wait
-                                   ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+                                   )
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   /// Returns the name of the mutex.

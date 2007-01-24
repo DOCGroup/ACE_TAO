@@ -32,7 +32,7 @@ TAO_EndpointPolicy_i::~TAO_EndpointPolicy_i ()
 
 
 CORBA::PolicyType
-TAO_EndpointPolicy_i::policy_type (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+TAO_EndpointPolicy_i::policy_type (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return EndpointPolicy::ENDPOINT_POLICY_TYPE;
@@ -49,7 +49,7 @@ TAO_EndpointPolicy_i::clone (void) const
 }
 
 EndpointPolicy::EndpointList *
-TAO_EndpointPolicy_i::value (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+TAO_EndpointPolicy_i::value (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   EndpointPolicy::EndpointList* list = 0;
@@ -61,20 +61,19 @@ TAO_EndpointPolicy_i::value (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
 }
 
 CORBA::Policy_ptr
-TAO_EndpointPolicy_i::copy (ACE_ENV_SINGLE_ARG_DECL)
+TAO_EndpointPolicy_i::copy (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_EndpointPolicy_i* servant = 0;
   ACE_NEW_THROW_EX (servant,
                     TAO_EndpointPolicy_i (*this),
                     CORBA::NO_MEMORY ());
-  ACE_CHECK_RETURN (CORBA::Policy::_nil ());
 
   return servant;
 }
 
 void
-TAO_EndpointPolicy_i::destroy (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+TAO_EndpointPolicy_i::destroy (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->value_.length (0);

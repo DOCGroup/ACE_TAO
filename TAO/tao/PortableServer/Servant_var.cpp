@@ -19,21 +19,17 @@ template <class T>
 T *
 PortableServer::Servant_var<T>::_duplicate (T * p)
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  try
     {
       if (p != 0)
         {
-          p->_add_ref (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+          p->_add_ref ();
         }
     }
-  ACE_CATCHALL
+  catch (...)
     {
-      ACE_RE_THROW;
+      throw;
     }
-  ACE_ENDTRY;
-  ACE_CHECK_RETURN (0);
 
   return p;
 }
@@ -45,19 +41,17 @@ PortableServer::Servant_var<T>::~Servant_var (void)  /* throw () */
   // can't assume that it will not throw.  If it does, then we are in
   // trouble.  In any event, we can't let the exception escape our
   // destructor.
-  ACE_TRY_NEW_ENV
+  try
     {
       if (this->ptr_ != 0)
         {
-          this->ptr_->_remove_ref (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+          this->ptr_->_remove_ref ();
         }
     }
-  ACE_CATCHALL
+  catch (...)
     {
       // Forget the exception..
     }
-  ACE_ENDTRY;
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL

@@ -172,18 +172,16 @@ CORBA::AbstractBase::_to_value (void)
 }
 
 CORBA::Boolean
-CORBA::AbstractBase::_is_a (const char *type_id
-                            ACE_ENV_ARG_DECL)
+CORBA::AbstractBase::_is_a (const char *type_id)
 {
   if (! CORBA::is_nil (this->equivalent_obj_.in ()))
     {
-      return this->equivalent_obj_->_is_a (type_id
-                                           ACE_ENV_ARG_PARAMETER);
+      return this->equivalent_obj_->_is_a (type_id);
     }
-    
-  int cmp = ACE_OS::strcmp (type_id,
-                            "IDL:omg.org/CORBA/AbstractBase:1.0");
-                            
+
+  int const cmp = ACE_OS::strcmp (type_id,
+                                  "IDL:omg.org/CORBA/AbstractBase:1.0");
+
   return (cmp == 0);
 }
 

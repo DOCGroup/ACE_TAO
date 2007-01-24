@@ -25,7 +25,7 @@ TAO_CSD_POA::TAO_CSD_POA (const String &name,
                    TAO_SYNCH_MUTEX &thread_lock,
                    TAO_ORB_Core &orb_core,
                    TAO_Object_Adapter *object_adapter
-                   ACE_ENV_ARG_DECL)
+                   )
 : TAO_Regular_POA (name,
                    poa_manager,
                    policies,
@@ -34,12 +34,11 @@ TAO_CSD_POA::TAO_CSD_POA (const String &name,
                    thread_lock,
                    orb_core,
                    object_adapter
-                   ACE_ENV_ARG_PARAMETER)
+                  )
 {
   ACE_NEW_THROW_EX (this->sds_proxy_,
                     TAO::CSD::Strategy_Proxy (),
                     CORBA::NO_MEMORY ());
-  ACE_CHECK;
 }
 
 
@@ -51,7 +50,7 @@ TAO_CSD_POA::~TAO_CSD_POA (void)
 
 void TAO_CSD_POA::set_csd_strategy (
     ::CSD_Framework::Strategy_ptr strategy
-    ACE_ENV_ARG_DECL
+
   )
   ACE_THROW_SPEC ((
     CORBA::SystemException
@@ -59,7 +58,7 @@ void TAO_CSD_POA::set_csd_strategy (
 {
   if (CORBA::is_nil (strategy))
     {
-      ACE_THROW (CORBA::BAD_PARAM ());
+      throw ( ::CORBA::BAD_PARAM ());
     }
   this->sds_proxy_->custom_strategy (strategy);
 }
@@ -73,7 +72,7 @@ TAO_CSD_POA::new_POA (const String &name,
                       TAO_SYNCH_MUTEX &thread_lock,
                       TAO_ORB_Core &orb_core,
                       TAO_Object_Adapter *object_adapter
-                      ACE_ENV_ARG_DECL)
+                      )
 {
   TAO_CSD_POA *poa = 0;
 
@@ -86,9 +85,8 @@ TAO_CSD_POA::new_POA (const String &name,
                              thread_lock,
                              orb_core,
                              object_adapter
-                             ACE_ENV_ARG_PARAMETER),
+                            ),
                     CORBA::NO_MEMORY ());
-  ACE_CHECK_RETURN (0);
 
   TAO_CSD_Strategy_Repository *repo =
     ACE_Dynamic_Service<TAO_CSD_Strategy_Repository>::instance ("TAO_CSD_Strategy_Repository");
@@ -98,8 +96,7 @@ TAO_CSD_POA::new_POA (const String &name,
 
   if (! ::CORBA::is_nil (strategy.in ()))
     {
-      poa->set_csd_strategy (strategy.in () ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK_RETURN (0);
+      poa->set_csd_strategy (strategy.in ());
     }
 
   return poa;
@@ -117,18 +114,16 @@ void TAO_CSD_POA::poa_deactivated_hook ()
 
 void TAO_CSD_POA::servant_activated_hook (PortableServer::Servant servant,
                                const PortableServer::ObjectId& oid
-                               ACE_ENV_ARG_DECL)
+                               )
 {
-  this->sds_proxy_->servant_activated_event (servant, oid ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+  this->sds_proxy_->servant_activated_event (servant, oid);
 }
 
 void TAO_CSD_POA::servant_deactivated_hook (PortableServer::Servant servant,
                                  const PortableServer::ObjectId& oid
-                                 ACE_ENV_ARG_DECL)
+                                 )
 {
-  this->sds_proxy_->servant_deactivated_event (servant, oid ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+  this->sds_proxy_->servant_deactivated_event (servant, oid);
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL

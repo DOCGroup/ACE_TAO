@@ -21,7 +21,7 @@ void
 TAO::CSD::Strategy_Proxy::dispatch_request
                                 (TAO_ServerRequest& server_request,
                                  TAO::Portable_Server::Servant_Upcall& upcall
-                                 ACE_ENV_ARG_DECL)
+                                 )
 {
 
   if (this->strategy_impl_ == 0)
@@ -29,16 +29,14 @@ TAO::CSD::Strategy_Proxy::dispatch_request
       // This is the "default" strategy implementation.
       upcall.servant()->_dispatch(server_request,
                                   (void*)&upcall
-                                  ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
+                                 );
     }
   else
     {
       // Delegate to the custom strategy object.
       this->strategy_impl_->dispatch_request(server_request,
                                              upcall
-                                             ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
+                                            );
     }
 }
 
@@ -70,7 +68,7 @@ void
 TAO::CSD::Strategy_Proxy::servant_activated_event
                                   (PortableServer::Servant servant,
                                    const PortableServer::ObjectId& oid
-                                   ACE_ENV_ARG_DECL)
+                                   )
 {
   // We only need to do something if this proxy holds a custom strategy.
   if (this->strategy_impl_)
@@ -78,8 +76,7 @@ TAO::CSD::Strategy_Proxy::servant_activated_event
       // Delegate to the custom strategy object.
       this->strategy_impl_->servant_activated_event(servant,
                                                oid
-                                               ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
+                                              );
     }
 }
 
@@ -88,7 +85,7 @@ void
 TAO::CSD::Strategy_Proxy::servant_deactivated_event
                                   (PortableServer::Servant servant,
                                    const PortableServer::ObjectId& oid
-                                   ACE_ENV_ARG_DECL)
+                                   )
 {
   // We only need to do something if this proxy holds a custom strategy.
   if (this->strategy_impl_)
@@ -96,8 +93,7 @@ TAO::CSD::Strategy_Proxy::servant_deactivated_event
       // Delegate to the custom strategy object.
       this->strategy_impl_->servant_deactivated_event(servant,
                                                  oid
-                                                 ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
+                                                );
     }
 }
 

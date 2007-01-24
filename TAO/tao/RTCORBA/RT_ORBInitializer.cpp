@@ -64,7 +64,7 @@ TAO_RT_ORBInitializer::TAO_RT_ORBInitializer (int priority_mapping_type,
 void
 TAO_RT_ORBInitializer::pre_init (
     PortableInterceptor::ORBInitInfo_ptr info
-    ACE_ENV_ARG_DECL)
+    )
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   //
@@ -120,14 +120,12 @@ TAO_RT_ORBInitializer::pre_init (
                         TAO::VMCID,
                         ENOMEM),
                       CORBA::COMPLETED_NO));
-  ACE_CHECK;
 
   TAO_Priority_Mapping_Manager_var safe_manager = manager;
 
   info->register_initial_reference ("PriorityMappingManager",
                                     manager
-                                    ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+                                   );
 
   // Create the initial priority mapping instance.
   TAO_Network_Priority_Mapping *npm = 0;
@@ -155,22 +153,19 @@ TAO_RT_ORBInitializer::pre_init (
                         TAO::VMCID,
                         ENOMEM),
                       CORBA::COMPLETED_NO));
-  ACE_CHECK;
 
   TAO_Network_Priority_Mapping_Manager_var safe_network_manager =
     network_manager;
 
   info->register_initial_reference ("NetworkPriorityMappingManager",
                                     network_manager
-                                    ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+                                   );
 
   // Narrow to a TAO_ORBInitInfo object to get access to the
   // orb_core() TAO extension.
   TAO_ORBInitInfo_var tao_info =
     TAO_ORBInitInfo::_narrow (info
-                              ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+                             );
 
   if (CORBA::is_nil (tao_info.in ()))
     {
@@ -181,7 +176,7 @@ TAO_RT_ORBInitializer::pre_init (
                     "\"PortableInterceptor::ORBInitInfo_ptr\" to\n"
                     "(%P|%t)   \"TAO_ORBInitInfo *.\"\n"));
 
-      ACE_THROW (CORBA::INTERNAL ());
+      throw ( ::CORBA::INTERNAL ());
     }
 
   // Create the RT_ORB.
@@ -194,13 +189,11 @@ TAO_RT_ORBInitializer::pre_init (
                         TAO::VMCID,
                         ENOMEM),
                       CORBA::COMPLETED_NO));
-  ACE_CHECK;
   CORBA::Object_var safe_rt_orb = rt_orb;
 
   info->register_initial_reference (TAO_OBJID_RTORB,
                                     rt_orb
-                                    ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+                                   );
 
   // Create the RT_Current.
   CORBA::Object_ptr current = CORBA::Object::_nil ();
@@ -211,13 +204,11 @@ TAO_RT_ORBInitializer::pre_init (
                         TAO::VMCID,
                         ENOMEM),
                       CORBA::COMPLETED_NO));
-  ACE_CHECK;
   CORBA::Object_var safe_rt_current = current;
 
   info->register_initial_reference (TAO_OBJID_RTCURRENT,
                                     current
-                                    ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+                                   );
 
   tao_info->orb_core ()->orb_params ()->scope_policy (this->scope_policy_);
   tao_info->orb_core ()->orb_params ()->sched_policy (this->sched_policy_);
@@ -227,19 +218,18 @@ TAO_RT_ORBInitializer::pre_init (
 void
 TAO_RT_ORBInitializer::post_init (
     PortableInterceptor::ORBInitInfo_ptr info
-    ACE_ENV_ARG_DECL)
+    )
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->register_policy_factories (info
-                                   ACE_ENV_ARG_PARAMETER);
+                                  );
 
-  ACE_CHECK;
 }
 
 void
 TAO_RT_ORBInitializer::register_policy_factories (
   PortableInterceptor::ORBInitInfo_ptr info
-  ACE_ENV_ARG_DECL)
+  )
 {
   // The RTCorba policy factory is stateless and reentrant, so share a
   // single instance between all ORBs.
@@ -253,7 +243,6 @@ TAO_RT_ORBInitializer::register_policy_factories (
                               TAO::VMCID,
                               ENOMEM),
                             CORBA::COMPLETED_NO));
-      ACE_CHECK;
 
       this->policy_factory_ = policy_factory;
     }
@@ -277,14 +266,13 @@ TAO_RT_ORBInitializer::register_policy_factories (
        i != end;
        ++i)
     {
-      ACE_TRY
+      try
         {
           info->register_policy_factory (*i,
                                          this->policy_factory_.in ()
-                                         ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+                                        );
         }
-      ACE_CATCH (CORBA::BAD_INV_ORDER, ex)
+      catch ( ::CORBA::BAD_INV_ORDER& ex)
         {
           if (ex.minor () == (CORBA::OMGVMCID | 16))
             {
@@ -295,15 +283,13 @@ TAO_RT_ORBInitializer::register_policy_factories (
               // ORBInitializer.
               return;
             }
-          ACE_RE_THROW;
+          throw;
         }
-      ACE_CATCHANY
+      catch ( ::CORBA::Exception&)
         {
           // Rethrow any other exceptions...
-          ACE_RE_THROW;
+          throw;
         }
-      ACE_ENDTRY;
-      ACE_CHECK;
     }
 }
 

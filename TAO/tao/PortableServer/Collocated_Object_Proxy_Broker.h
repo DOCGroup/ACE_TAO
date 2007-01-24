@@ -45,24 +45,17 @@ namespace TAO
     /// Please see the documentation in Object_Proxy_Broker.h for
     /// details.
     virtual CORBA::Boolean _is_a (CORBA::Object_ptr target,
-                                  const char *logical_type_id
-                                  ACE_ENV_ARG_DECL);
+                                  const char *logical_type_id);
 
 #if (TAO_HAS_MINIMUM_CORBA == 0)
 
-  virtual CORBA::Boolean _non_existent (CORBA::Object_ptr target
-                                        ACE_ENV_ARG_DECL);
+  virtual CORBA::Boolean _non_existent (CORBA::Object_ptr target);
 
-  virtual CORBA::InterfaceDef * _get_interface (
-      CORBA::Object_ptr target
-      ACE_ENV_ARG_DECL
-    );
+  virtual CORBA::InterfaceDef * _get_interface (CORBA::Object_ptr target);
 
-  virtual CORBA::Object_ptr _get_component (CORBA::Object_ptr target
-                                            ACE_ENV_ARG_DECL);
+  virtual CORBA::Object_ptr _get_component (CORBA::Object_ptr target);
 
-  virtual char * _repository_id (CORBA::Object_ptr target
-                                 ACE_ENV_ARG_DECL);
+  virtual char * _repository_id (CORBA::Object_ptr target);
 
 #endif /* TAO_HAS_MINIMUM_CORBA == 0 */
 

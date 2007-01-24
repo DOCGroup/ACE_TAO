@@ -15,14 +15,14 @@ TAO_DistributableThread::~TAO_DistributableThread (void)
 }
 
 void
-TAO_DistributableThread::cancel (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+TAO_DistributableThread::cancel (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->state_ = RTScheduling::DistributableThread::CANCELLED;
 }
 
 RTScheduling::DistributableThread::DT_State
-TAO_DistributableThread::state (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+TAO_DistributableThread::state (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return this->state_;
@@ -31,7 +31,6 @@ TAO_DistributableThread::state (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
 RTScheduling::DistributableThread_ptr
 TAO_DistributableThread_Factory::create_DT (void)
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
   TAO_DistributableThread* DT = 0;
 
   ACE_NEW_THROW_EX (DT,
@@ -41,11 +40,6 @@ TAO_DistributableThread_Factory::create_DT (void)
                         TAO::VMCID,
                         ENOMEM),
                       CORBA::COMPLETED_NO));
-  ACE_CHECK_RETURN (0);
-
-  //RTScheduling::DistributableThread_var dt = RTScheduling::DistributableThread::_narrow (DT
-  //                                                                             ACE_ENV_ARG_PARAMETER);
-  //ACE_CHECK;
 
   return DT;
 }

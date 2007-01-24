@@ -42,8 +42,7 @@ TAO::ORBInitializer_Registry::init (int, ACE_TCHAR *[])
 
   PortableInterceptor::ORBInitializer_var orb_initializer;
 
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  try
     {
       /// Register the PI ORBInitializer.
 
@@ -54,15 +53,13 @@ TAO::ORBInitializer_Registry::init (int, ACE_TCHAR *[])
                             TAO::VMCID,
                             ENOMEM),
                           CORBA::COMPLETED_NO));
-      ACE_TRY_CHECK;
 
       orb_initializer = temp_orb_initializer;
 
       this->register_orb_initializer (orb_initializer.in ()
-                                                     ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+                                                    );
     }
-  ACE_CATCHANY
+  catch ( ::CORBA::Exception& ex)
     {
       if (TAO_debug_level > 0)
         {
@@ -71,7 +68,6 @@ TAO::ORBInitializer_Registry::init (int, ACE_TCHAR *[])
         }
       return -1;
     }
-  ACE_ENDTRY;
 #endif /* !TAO_AS_STATIC_LIBS  && TAO_HAS_INTERCEPTORS == 1 */
   return 0;
 }
@@ -97,7 +93,7 @@ TAO::ORBInitializer_Registry::fini (void)
 void
 TAO::ORBInitializer_Registry::register_orb_initializer (
   PortableInterceptor::ORBInitializer_ptr init
-  ACE_ENV_ARG_DECL)
+  )
 {
   if (!CORBA::is_nil (init))
     {
@@ -109,14 +105,14 @@ TAO::ORBInitializer_Registry::register_orb_initializer (
       size_t const cur_len = this->initializers_.size ();
       size_t const new_len = cur_len + 1;
       if (this->initializers_.size (new_len) != 0)
-        ACE_THROW (CORBA::INTERNAL ());
+        throw ( ::CORBA::INTERNAL ());
 
       // Add the given ORBInitializer to the sequence.
       this->initializers_[cur_len] =
         PortableInterceptor::ORBInitializer::_duplicate (init);
     }
   else
-    ACE_THROW (CORBA::INV_OBJREF (
+    throw ( ::CORBA::INV_OBJREF (
                  CORBA::SystemException::_tao_minor_code (
                    0,
                    EINVAL),
@@ -129,7 +125,7 @@ TAO::ORBInitializer_Registry::pre_init (
   int argc,
   char *argv[],
   PortableInterceptor::SlotId &slotid
-  ACE_ENV_ARG_DECL)
+  )
 {
   ACE_GUARD_RETURN (TAO_SYNCH_RECURSIVE_MUTEX,
                     guard,
@@ -152,15 +148,13 @@ TAO::ORBInitializer_Registry::pre_init (
                             0,
                             ENOMEM),
                           CORBA::COMPLETED_NO));
-      ACE_CHECK_RETURN (0);
 
       TAO_ORBInitInfo_var orb_init_info_ = orb_init_info_temp;
 
       for (size_t i = 0; i < initializer_count; ++i)
         {
           this->initializers_[i]->pre_init (orb_init_info_.in ()
-                                            ACE_ENV_ARG_PARAMETER);
-          ACE_CHECK_RETURN (0);
+                                           );
         }
 
       slotid = orb_init_info_temp->slot_count ();
@@ -181,7 +175,7 @@ TAO::ORBInitializer_Registry::post_init (
   int argc,
   char *argv[],
   PortableInterceptor::SlotId slotid
-  ACE_ENV_ARG_DECL)
+  )
 {
   if (pre_init_count > 0)
     {
@@ -201,15 +195,13 @@ TAO::ORBInitializer_Registry::post_init (
                             0,
                             ENOMEM),
                           CORBA::COMPLETED_NO));
-      ACE_CHECK;
 
       TAO_ORBInitInfo_var orb_init_info_ = orb_init_info_temp;
 
       for (size_t i = 0; i < pre_init_count; ++i)
         {
           this->initializers_[i]->post_init (orb_init_info_.in ()
-                                             ACE_ENV_ARG_PARAMETER);
-          ACE_CHECK;
+                                            );
         }
 
 #if TAO_HAS_INTERCEPTORS == 1
@@ -230,8 +222,7 @@ TAO::ORBInitializer_Registry::post_init (
 
           if (pi)
             {
-              pi->initialize (slot_count ACE_ENV_ARG_PARAMETER);
-              ACE_CHECK;
+              pi->initialize (slot_count);
             }
         }
 #endif /* TAO_HAS_INTERCEPTORS == 1 */

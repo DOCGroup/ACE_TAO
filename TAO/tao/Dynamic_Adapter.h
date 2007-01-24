@@ -55,8 +55,6 @@ namespace CORBA
   typedef ServerRequest *ServerRequest_ptr;
 
   typedef ULong Flags;
-
-  class Environment;
 }
 
 /**
@@ -84,12 +82,12 @@ public:
                                CORBA::ExceptionList_ptr exceptions,
                                CORBA::Request_ptr &request,
                                CORBA::Flags req_flags
-                               ACE_ENV_ARG_DECL) = 0;
+                               ) = 0;
 
   virtual CORBA::Request_ptr request (CORBA::Object_ptr obj,
                                       CORBA::ORB_ptr orb,
                                       const char *op
-                                      ACE_ENV_ARG_DECL) = 0;
+                                      ) = 0;
 
   // CORBA::is_nil and CORBA::release for Context, Request, and ServerRequest.
 
@@ -107,7 +105,7 @@ public:
 
   // CORBA::ORB::create_exception_list.
   virtual void create_exception_list (CORBA::ExceptionList_ptr &
-                                      ACE_ENV_ARG_DECL) = 0;
+                                      ) = 0;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

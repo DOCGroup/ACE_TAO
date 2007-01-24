@@ -37,18 +37,16 @@ TAO_DynUnion_i::init_common (void)
 }
 
 void
-TAO_DynUnion_i::init (const CORBA::Any& any
-                      ACE_ENV_ARG_DECL)
+TAO_DynUnion_i::init (const CORBA::Any& any)
 {
   CORBA::TypeCode_var tc = any.type ();
 
   CORBA::TCKind kind = TAO_DynAnyFactory::unalias (tc.in ()
-                                                   ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+                                                  );
 
   if (kind != CORBA::tk_union)
     {
-      ACE_THROW (DynamicAny::DynAnyFactory::InconsistentTypeCode ());
+      throw DynamicAny::DynAnyFactory::InconsistentTypeCode ();
     }
 
   // Initialize the typecode holder.
@@ -59,21 +57,18 @@ TAO_DynUnion_i::init (const CORBA::Any& any
   // Set the from_factory arg to TRUE, so any problems will throw
   // InconsistentTypeCode.
   this->set_from_any (any
-                      ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+                     );
 }
 
 void
-TAO_DynUnion_i::init (CORBA::TypeCode_ptr tc
-                      ACE_ENV_ARG_DECL)
+TAO_DynUnion_i::init (CORBA::TypeCode_ptr tc)
 {
   CORBA::TCKind kind = TAO_DynAnyFactory::unalias (tc
-                                                   ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+                                                  );
 
   if (kind != CORBA::tk_union)
     {
-      ACE_THROW (DynamicAny::DynAnyFactory::InconsistentTypeCode ());
+      throw DynamicAny::DynAnyFactory::InconsistentTypeCode ();
     }
 
   // Initialize the typecode holder and current index.
@@ -84,13 +79,11 @@ TAO_DynUnion_i::init (CORBA::TypeCode_ptr tc
   // member_type()/member_label() do not work with aliased type codes.
   CORBA::TypeCode_var unaliased_tc =
   TAO_DynAnyFactory::strip_alias (this->type_.in ()
-                                  ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+                                 );
 
   CORBA::Any_var first_label =
     unaliased_tc->member_label (this->current_position_
-                                ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+                               );
 
   // Initialize the discriminator to the label value of the first member.
   this->discriminator_ =
@@ -100,8 +93,7 @@ TAO_DynUnion_i::init (CORBA::TypeCode_ptr tc
 
   CORBA::TypeCode_var first_type =
     unaliased_tc->member_type (this->current_position_
-                               ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+                              );
 
   // Recursively initialize the member to its default value.
   this->member_ =
@@ -113,8 +105,7 @@ TAO_DynUnion_i::init (CORBA::TypeCode_ptr tc
 // ****************************************************************
 
 TAO_DynUnion_i *
-TAO_DynUnion_i::_narrow (CORBA::Object_ptr _tao_objref
-                         ACE_ENV_ARG_DECL_NOT_USED)
+TAO_DynUnion_i::_narrow (CORBA::Object_ptr _tao_objref)
 {
   if (CORBA::is_nil (_tao_objref))
     {
@@ -127,8 +118,7 @@ TAO_DynUnion_i::_narrow (CORBA::Object_ptr _tao_objref
 // This code is common to from_any() and the init() overload that takes
 // an Any argument.
 void
-TAO_DynUnion_i::set_from_any (const CORBA::Any & any
-                              ACE_ENV_ARG_DECL)
+TAO_DynUnion_i::set_from_any (const CORBA::Any & any)
   ACE_THROW_SPEC ((
       CORBA::SystemException,
       DynamicAny::DynAny::TypeMismatch,
@@ -140,12 +130,10 @@ TAO_DynUnion_i::set_from_any (const CORBA::Any & any
   //
   CORBA::TypeCode_var tc =
    TAO_DynAnyFactory::strip_alias (any._tao_get_typecode ()
-                                   ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+                                  );
 
   CORBA::TypeCode_var disc_tc =
-    tc->discriminator_type (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+    tc->discriminator_type ();
 
   CORBA::Any disc_any;
   TAO::Unknown_IDL_Type *unk = 0;
@@ -179,8 +167,7 @@ TAO_DynUnion_i::set_from_any (const CORBA::Any & any
   // Need this here because we might have been called from init().
   if (!CORBA::is_nil (this->discriminator_.in ()))
     {
-      this->discriminator_->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK;
+      this->discriminator_->destroy ();
     }
 
   // Set the discriminator.
@@ -192,17 +179,14 @@ TAO_DynUnion_i::set_from_any (const CORBA::Any & any
   // Move to the next field in the CDR stream.
   (void) TAO_Marshal_Object::perform_skip (disc_tc.in (),
                                            &in
-                                           ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+                                          );
 
   CORBA::TypeCode_var unaliased =
     TAO_DynAnyFactory::strip_alias (tc.in ()
-                                    ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+                                   );
 
   CORBA::ULong const count =
-    unaliased->member_count (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+    unaliased->member_count ();
 
   CORBA::Boolean match = false;
   CORBA::ULong i;
@@ -211,13 +195,11 @@ TAO_DynUnion_i::set_from_any (const CORBA::Any & any
   for (i = 0; i < count; ++i)
     {
       CORBA::Any_var label_any = tc->member_label (i
-                                                   ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
+                                                  );
 
       match = this->label_match (label_any.in (),
                                  disc_any
-                                 ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
+                                );
 
       if (match)
         {
@@ -228,16 +210,14 @@ TAO_DynUnion_i::set_from_any (const CORBA::Any & any
   // Need this here because we might have been called from init().
   if (!CORBA::is_nil (this->member_.in ()))
     {
-      this->member_->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK;
+      this->member_->destroy ();
     }
 
   if (match)
     {
       CORBA::TypeCode_var member_tc =
         tc->member_type (i
-                         ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
+                        );
 
       CORBA::Any member_any;
       TAO::Unknown_IDL_Type *unk = 0;
@@ -261,17 +241,14 @@ TAO_DynUnion_i::set_from_any (const CORBA::Any & any
       // default_index() does not work with aliased type codes.
       CORBA::TypeCode_var unaliased_tc =
         TAO_DynAnyFactory::strip_alias (this->type_.in ()
-                                        ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
+                                       );
 
       CORBA::Long default_index =
-        unaliased_tc->default_index (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK;
+        unaliased_tc->default_index ();
 
       if (default_index == -1)
         {
-           set_to_no_active_member (ACE_ENV_SINGLE_ARG_PARAMETER);
-           ACE_CHECK;
+           set_to_no_active_member ();
         }
       else
         {
@@ -279,8 +256,7 @@ TAO_DynUnion_i::set_from_any (const CORBA::Any & any
 
           CORBA::TypeCode_var default_tc =
             tc->member_type (index
-                             ACE_ENV_ARG_PARAMETER);
-          ACE_CHECK;
+                            );
 
           CORBA::Any default_any;
           TAO::Unknown_IDL_Type *unk = 0;
@@ -302,7 +278,7 @@ TAO_DynUnion_i::set_from_any (const CORBA::Any & any
 // ****************************************************************
 
 DynamicAny::DynAny_ptr
-TAO_DynUnion_i::get_discriminator (ACE_ENV_SINGLE_ARG_DECL)
+TAO_DynUnion_i::get_discriminator (void)
   ACE_THROW_SPEC ((
       CORBA::SystemException
     ))
@@ -317,14 +293,13 @@ TAO_DynUnion_i::get_discriminator (ACE_ENV_SINGLE_ARG_DECL)
   // Set the flag so the caller can't destroy.
   this->set_flag (this->discriminator_.in (),
                   0
-                  ACE_ENV_ARG_PARAMETER);
+                 );
 
   return DynamicAny::DynAny::_duplicate (this->discriminator_.in ());
 }
 
 void
-TAO_DynUnion_i::set_discriminator (DynamicAny::DynAny_ptr value
-                                   ACE_ENV_ARG_DECL)
+TAO_DynUnion_i::set_discriminator (DynamicAny::DynAny_ptr value)
   ACE_THROW_SPEC ((
       CORBA::SystemException,
       DynamicAny::DynAny::TypeMismatch
@@ -332,31 +307,26 @@ TAO_DynUnion_i::set_discriminator (DynamicAny::DynAny_ptr value
 {
   if (this->destroyed_)
     {
-      ACE_THROW (CORBA::OBJECT_NOT_EXIST ());
+      throw ::CORBA::OBJECT_NOT_EXIST ();
     }
 
-  CORBA::TypeCode_var tc = value->type (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+  CORBA::TypeCode_var tc = value->type ();
 
   CORBA::TypeCode_var disc_tc =
-    this->discriminator_->type (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+    this->discriminator_->type ();
 
   CORBA::Boolean equivalent = disc_tc->equivalent (tc.in ()
-                                                   ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+                                                  );
 
   if (!equivalent)
     {
-      ACE_THROW (DynamicAny::DynAny::TypeMismatch ());
+      throw (DynamicAny::DynAny::TypeMismatch ());
     }
 
-  CORBA::Any_var value_any = value->to_any (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+  CORBA::Any_var value_any = value->to_any ();
 
   CORBA::ULong length =
-    this->type_->member_count (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+    this->type_->member_count ();
 
   CORBA::Any_var label_any;
   CORBA::ULong i;
@@ -364,21 +334,18 @@ TAO_DynUnion_i::set_discriminator (DynamicAny::DynAny_ptr value
   // member_label() does not work with aliased type codes.
   CORBA::TypeCode_var unaliased_tc =
     TAO_DynAnyFactory::strip_alias (this->type_.in ()
-                                    ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+                                   );
 
   CORBA::Boolean match = 0;
 
   for (i = 0; i < length; ++i)
     {
       label_any = unaliased_tc->member_label (i
-                                              ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
+                                             );
 
       match = this->label_match (label_any.in (),
                                  value_any.in ()
-                                 ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
+                                );
 
       if (match)
         {
@@ -397,17 +364,14 @@ TAO_DynUnion_i::set_discriminator (DynamicAny::DynAny_ptr value
 
       // If we got a match, a named member will be active.
       this->discriminator_->from_any (label_any.in ()
-                                      ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
+                                     );
 
       // member_type() does not work with aliased type codes.
       CORBA::TypeCode_var member_tc =
         unaliased_tc->member_type (i
-                                   ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
+                                  );
 
-      this->member_->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK;
+      this->member_->destroy ();
 
       // Initialize member to default value.
       this->member_ =
@@ -426,25 +390,21 @@ TAO_DynUnion_i::set_discriminator (DynamicAny::DynAny_ptr value
       // default_index() does not work with aliased type codes.
       CORBA::TypeCode_var unaliased_tc =
         TAO_DynAnyFactory::strip_alias (this->type_.in ()
-                                        ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
+                                       );
 
       // If no match, either the default member or no member is active.
       CORBA::Long default_index =
-        unaliased_tc->default_index (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK;
+        unaliased_tc->default_index ();
 
       if (default_index == -1)
         {
           // This can't throw InvalidValue - if there's no default case
           // and all possible labels are used, we'd have had a match above.
-          this->set_to_no_active_member (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_CHECK;
+          this->set_to_no_active_member ();
         }
       else
         {
-          this->set_to_default_member (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_CHECK;
+          this->set_to_default_member ();
 
           this->member_slot_ = static_cast<CORBA::ULong> (default_index);
         }
@@ -452,15 +412,13 @@ TAO_DynUnion_i::set_discriminator (DynamicAny::DynAny_ptr value
 
   // If we get here, we update the discriminator no matter what.
   // Any value will correspond to one of the three cases above.
-  this->discriminator_->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+  this->discriminator_->destroy ();
 
-  this->discriminator_ = value->copy (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+  this->discriminator_ = value->copy ();
 }
 
 void
-TAO_DynUnion_i::set_to_default_member (ACE_ENV_SINGLE_ARG_DECL)
+TAO_DynUnion_i::set_to_default_member (void)
   ACE_THROW_SPEC ((
       CORBA::SystemException,
       DynamicAny::DynAny::TypeMismatch
@@ -468,23 +426,21 @@ TAO_DynUnion_i::set_to_default_member (ACE_ENV_SINGLE_ARG_DECL)
 {
   if (this->destroyed_)
     {
-      ACE_THROW (CORBA::OBJECT_NOT_EXIST ());
+      throw ::CORBA::OBJECT_NOT_EXIST ();
     }
 
   // default_index() does not work with aliased type codes.
   CORBA::TypeCode_var unaliased_tc =
     TAO_DynAnyFactory::strip_alias (this->type_.in ()
-                                    ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+                                   );
 
   CORBA::Long default_index =
-    unaliased_tc->default_index (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+    unaliased_tc->default_index ();
 
   if (default_index == -1)
     {
       // No explicit default case.
-      ACE_THROW (DynamicAny::DynAny::TypeMismatch ());
+      throw (DynamicAny::DynAny::TypeMismatch ());
     }
   else
     {
@@ -492,11 +448,9 @@ TAO_DynUnion_i::set_to_default_member (ACE_ENV_SINGLE_ARG_DECL)
 
       CORBA::TypeCode_var default_tc =
         unaliased_tc->member_type (index
-                                   ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
+                                  );
 
-      this->member_->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK;
+      this->member_->destroy ();
 
       this->member_ =
         TAO::MakeDynAnyUtils::make_dyn_any_t<CORBA::TypeCode_ptr> (
@@ -512,7 +466,7 @@ TAO_DynUnion_i::set_to_default_member (ACE_ENV_SINGLE_ARG_DECL)
 }
 
 void
-TAO_DynUnion_i::set_to_no_active_member (ACE_ENV_SINGLE_ARG_DECL)
+TAO_DynUnion_i::set_to_no_active_member (void)
   ACE_THROW_SPEC ((
       CORBA::SystemException,
       DynamicAny::DynAny::TypeMismatch
@@ -520,49 +474,43 @@ TAO_DynUnion_i::set_to_no_active_member (ACE_ENV_SINGLE_ARG_DECL)
 {
   if (this->destroyed_)
     {
-      ACE_THROW (CORBA::OBJECT_NOT_EXIST ());
+      throw ::CORBA::OBJECT_NOT_EXIST ();
     }
 
   // default_index() does not work with aliased type codes.
   CORBA::TypeCode_var unaliased_tc =
     TAO_DynAnyFactory::strip_alias (this->type_.in ()
-                                    ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+                                   );
 
   CORBA::Long default_index =
-    unaliased_tc->default_index (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+    unaliased_tc->default_index ();
 
   // Throw an exception is there is an explicit default case or if all
   // possible case label values are used.
   if (default_index != -1)
     {
-      ACE_THROW (DynamicAny::DynAny::TypeMismatch ());
+      throw (DynamicAny::DynAny::TypeMismatch ());
     }
   else
     {
       CORBA::TypeCode_var disc_tc =
-        this->discriminator_->type (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK;
+        this->discriminator_->type ();
 
       CORBA::TCKind kind =
         TAO_DynAnyFactory::unalias (disc_tc.in ()
-                                    ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
+                                   );
 
       if (kind == CORBA::tk_enum)
         {
           CORBA::ULong const member_count =
-            this->type_->member_count (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_CHECK;
+            this->type_->member_count ();
 
           CORBA::ULong const label_count =
-            disc_tc->member_count (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_CHECK;
+            disc_tc->member_count ();
 
           if (member_count == label_count)
             {
-              ACE_THROW (DynamicAny::DynAny::TypeMismatch ());
+              throw (DynamicAny::DynAny::TypeMismatch ());
             }
         }
     }
@@ -573,7 +521,7 @@ TAO_DynUnion_i::set_to_no_active_member (ACE_ENV_SINGLE_ARG_DECL)
 }
 
 CORBA::Boolean
-TAO_DynUnion_i::has_no_active_member (ACE_ENV_SINGLE_ARG_DECL)
+TAO_DynUnion_i::has_no_active_member (void)
   ACE_THROW_SPEC ((
       CORBA::SystemException
     ))
@@ -590,7 +538,7 @@ TAO_DynUnion_i::has_no_active_member (ACE_ENV_SINGLE_ARG_DECL)
 }
 
 CORBA::TCKind
-TAO_DynUnion_i::discriminator_kind (ACE_ENV_SINGLE_ARG_DECL)
+TAO_DynUnion_i::discriminator_kind (void)
   ACE_THROW_SPEC ((
       CORBA::SystemException
     ))
@@ -602,18 +550,16 @@ TAO_DynUnion_i::discriminator_kind (ACE_ENV_SINGLE_ARG_DECL)
     }
 
   CORBA::TypeCode_var tc =
-    this->discriminator_->type (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (CORBA::tk_null);
+    this->discriminator_->type ();
 
   CORBA::TCKind retval = TAO_DynAnyFactory::unalias (tc.in ()
-                                                     ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (CORBA::tk_null);
+                                                    );
 
   return retval;
 }
 
 DynamicAny::DynAny_ptr
-TAO_DynUnion_i::member (ACE_ENV_SINGLE_ARG_DECL)
+TAO_DynUnion_i::member (void)
   ACE_THROW_SPEC ((
       CORBA::SystemException,
       DynamicAny::DynAny::InvalidValue
@@ -626,8 +572,7 @@ TAO_DynUnion_i::member (ACE_ENV_SINGLE_ARG_DECL)
     }
 
   CORBA::Boolean has_no_active_member =
-    this->has_no_active_member (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (DynamicAny::DynAny::_nil ());
+    this->has_no_active_member ();
 
   if (has_no_active_member)
     {
@@ -639,14 +584,13 @@ TAO_DynUnion_i::member (ACE_ENV_SINGLE_ARG_DECL)
   // Set the flag so the caller can't destroy.
   this->set_flag (this->member_.in (),
                   0
-                  ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (DynamicAny::DynAny::_nil ());
+                 );
 
   return DynamicAny::DynAny::_duplicate (this->member_.in ());
 }
 
 char *
-TAO_DynUnion_i::member_name (ACE_ENV_SINGLE_ARG_DECL)
+TAO_DynUnion_i::member_name (void)
   ACE_THROW_SPEC ((
       CORBA::SystemException,
       DynamicAny::DynAny::InvalidValue
@@ -659,8 +603,7 @@ TAO_DynUnion_i::member_name (ACE_ENV_SINGLE_ARG_DECL)
     }
 
   CORBA::Boolean has_no_active_member =
-    this->has_no_active_member (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (0);
+    this->has_no_active_member ();
 
   if (has_no_active_member)
     {
@@ -669,14 +612,13 @@ TAO_DynUnion_i::member_name (ACE_ENV_SINGLE_ARG_DECL)
     }
 
   const char *retval = this->type_->member_name (this->member_slot_
-                                                 ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (0);
+                                                );
 
   return CORBA::string_dup (retval);
 }
 
 CORBA::TCKind
-TAO_DynUnion_i::member_kind (ACE_ENV_SINGLE_ARG_DECL)
+TAO_DynUnion_i::member_kind (void)
   ACE_THROW_SPEC ((
       CORBA::SystemException,
       DynamicAny::DynAny::InvalidValue
@@ -689,8 +631,7 @@ TAO_DynUnion_i::member_kind (ACE_ENV_SINGLE_ARG_DECL)
     }
 
   CORBA::Boolean has_no_active_member =
-    this->has_no_active_member (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (CORBA::tk_null);
+    this->has_no_active_member ();
 
   if (has_no_active_member)
     {
@@ -699,12 +640,10 @@ TAO_DynUnion_i::member_kind (ACE_ENV_SINGLE_ARG_DECL)
     }
 
   CORBA::TypeCode_var tc =
-    this->member_->type (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (CORBA::tk_null);
+    this->member_->type ();
 
   CORBA::TCKind retval = TAO_DynAnyFactory::unalias (tc.in ()
-                                                     ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (CORBA::tk_null);
+                                                    );
 
   return retval;
 }
@@ -712,8 +651,7 @@ TAO_DynUnion_i::member_kind (ACE_ENV_SINGLE_ARG_DECL)
 // ****************************************************************
 
 void
-TAO_DynUnion_i::from_any (const CORBA::Any& any
-                          ACE_ENV_ARG_DECL)
+TAO_DynUnion_i::from_any (const CORBA::Any& any)
   ACE_THROW_SPEC ((
       CORBA::SystemException,
       DynamicAny::DynAny::TypeMismatch,
@@ -722,14 +660,13 @@ TAO_DynUnion_i::from_any (const CORBA::Any& any
 {
   if (this->destroyed_)
     {
-      ACE_THROW (CORBA::OBJECT_NOT_EXIST ());
+      throw ::CORBA::OBJECT_NOT_EXIST ();
     }
 
   CORBA::TypeCode_var tc = any.type ();
   CORBA::Boolean equivalent =
     this->type_.in ()->equivalent (tc.in ()
-                                   ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+                                  );
 
   if (equivalent)
     {
@@ -742,17 +679,16 @@ TAO_DynUnion_i::from_any (const CORBA::Any& any
       // Set the from_factory arg to FALSE, so any problems will throw
       // TypeMismatch.
       this->set_from_any (any
-                          ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
+                         );
     }
   else
     {
-      ACE_THROW (DynamicAny::DynAny::TypeMismatch ());
+      throw (DynamicAny::DynAny::TypeMismatch ());
     }
 }
 
 CORBA::Any_ptr
-TAO_DynUnion_i::to_any (ACE_ENV_SINGLE_ARG_DECL)
+TAO_DynUnion_i::to_any (void)
   ACE_THROW_SPEC ((
       CORBA::SystemException
     ))
@@ -768,12 +704,10 @@ TAO_DynUnion_i::to_any (ACE_ENV_SINGLE_ARG_DECL)
   // Add the discriminator to the CDR stream.
 
   CORBA::TypeCode_var disc_tc =
-    this->discriminator_->type (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (0);
+    this->discriminator_->type ();
 
   CORBA::Any_var disc_any =
-    this->discriminator_->to_any (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (0);
+    this->discriminator_->to_any ();
 
   TAO::Any_Impl *disc_any_impl = disc_any->impl ();
   TAO_OutputCDR disc_out_cdr;
@@ -796,19 +730,16 @@ TAO_DynUnion_i::to_any (ACE_ENV_SINGLE_ARG_DECL)
   (void) TAO_Marshal_Object::perform_append (disc_tc.in (),
                                              &disc_in_cdr,
                                              &out_cdr
-                                             ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (0);
+                                            );
 
   // Add the member to the CDR stream unless it has no active member.
   if (this->has_no_active_member () == 0)
     {
       CORBA::TypeCode_var member_tc =
-        this->member_->type (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK_RETURN (0);
+        this->member_->type ();
 
       CORBA::Any_var member_any =
-        this->member_->to_any (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK_RETURN (0);
+        this->member_->to_any ();
 
       TAO::Any_Impl *member_any_impl = member_any->impl ();
       TAO_OutputCDR member_out_cdr;
@@ -831,8 +762,7 @@ TAO_DynUnion_i::to_any (ACE_ENV_SINGLE_ARG_DECL)
       (void) TAO_Marshal_Object::perform_append (member_tc.in (),
                                                 &member_in_cdr,
                                                 &out_cdr
-                                                ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK_RETURN (0);
+                                               );
     }
 
   // Make the Any.
@@ -842,22 +772,19 @@ TAO_DynUnion_i::to_any (ACE_ENV_SINGLE_ARG_DECL)
   ACE_NEW_THROW_EX (retval,
                     CORBA::Any,
                     CORBA::NO_MEMORY ());
-  ACE_CHECK_RETURN (0);
 
   TAO::Unknown_IDL_Type *unk = 0;
   ACE_NEW_THROW_EX (unk,
                     TAO::Unknown_IDL_Type (this->type_.in (),
                                            in_cdr),
                     CORBA::NO_MEMORY ());
-  ACE_CHECK_RETURN (0);
 
   retval->replace (unk);
   return retval;
 }
 
 CORBA::Boolean
-TAO_DynUnion_i::equal (DynamicAny::DynAny_ptr rhs
-                       ACE_ENV_ARG_DECL)
+TAO_DynUnion_i::equal (DynamicAny::DynAny_ptr rhs)
   ACE_THROW_SPEC ((
       CORBA::SystemException
     ))
@@ -869,8 +796,7 @@ TAO_DynUnion_i::equal (DynamicAny::DynAny_ptr rhs
     }
 
   TAO_DynUnion_i *impl = TAO_DynUnion_i::_narrow (rhs
-                                                  ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (0);
+                                                 );
 
   if (impl == 0)
     {
@@ -878,9 +804,7 @@ TAO_DynUnion_i::equal (DynamicAny::DynAny_ptr rhs
     }
 
   CORBA::Boolean equivalent =
-    this->type_->equivalent (impl->type_.in ()
-                             ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (0);
+    this->type_->equivalent (impl->type_.in ());
 
   if (!equivalent)
     {
@@ -888,14 +812,10 @@ TAO_DynUnion_i::equal (DynamicAny::DynAny_ptr rhs
     }
 
   CORBA::Boolean member_equal =
-    this->member_->equal (impl->member_.in ()
-                          ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (0);
+    this->member_->equal (impl->member_.in ());
 
   CORBA::Boolean disc_equal =
-    this->discriminator_->equal (impl->discriminator_.in ()
-                                 ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (0);
+    this->discriminator_->equal (impl->discriminator_.in ());
 
   impl->_remove_ref ();
 
@@ -903,14 +823,14 @@ TAO_DynUnion_i::equal (DynamicAny::DynAny_ptr rhs
 }
 
 void
-TAO_DynUnion_i::destroy (ACE_ENV_SINGLE_ARG_DECL)
+TAO_DynUnion_i::destroy (void)
   ACE_THROW_SPEC ((
       CORBA::SystemException
     ))
 {
   if (this->destroyed_)
     {
-      ACE_THROW (CORBA::OBJECT_NOT_EXIST ());
+      throw ::CORBA::OBJECT_NOT_EXIST ();
     }
 
   if (!this->ref_to_component_ || this->container_is_destroying_)
@@ -919,26 +839,22 @@ TAO_DynUnion_i::destroy (ACE_ENV_SINGLE_ARG_DECL)
 
       this->set_flag (this->member_.in (),
                       1
-                      ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
+                     );
 
-      this->member_->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK;
+      this->member_->destroy ();
 
       this->set_flag (this->discriminator_.in (),
                       1
-                      ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
+                     );
 
-      this->discriminator_->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK;
+      this->discriminator_->destroy ();
 
       this->destroyed_ = 1;
     }
 }
 
 DynamicAny::DynAny_ptr
-TAO_DynUnion_i::current_component (ACE_ENV_SINGLE_ARG_DECL)
+TAO_DynUnion_i::current_component (void)
   ACE_THROW_SPEC ((
       CORBA::SystemException,
       DynamicAny::DynAny::TypeMismatch
@@ -954,8 +870,7 @@ TAO_DynUnion_i::current_component (ACE_ENV_SINGLE_ARG_DECL)
     {
       this->set_flag (this->member_.in (),
                       0
-                      ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK_RETURN (DynamicAny::DynAny::_nil ());
+                     );
 
       return DynamicAny::DynAny::_duplicate (this->member_.in ());
     }
@@ -963,8 +878,7 @@ TAO_DynUnion_i::current_component (ACE_ENV_SINGLE_ARG_DECL)
     {
       this->set_flag (this->discriminator_.in (),
                       0
-                      ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK_RETURN (DynamicAny::DynAny::_nil ());
+                     );
 
       return DynamicAny::DynAny::_duplicate (this->discriminator_.in ());
     }
@@ -975,7 +889,7 @@ TAO_DynUnion_i::current_component (ACE_ENV_SINGLE_ARG_DECL)
 CORBA::Boolean
 TAO_DynUnion_i::label_match (const CORBA::Any &my_any,
                              const CORBA::Any &other_any
-                             ACE_ENV_ARG_DECL)
+                             )
   ACE_THROW_SPEC ((
       CORBA::SystemException
     ))
@@ -986,8 +900,7 @@ TAO_DynUnion_i::label_match (const CORBA::Any &my_any,
   CORBA::TypeCode_var tc = my_any.type ();
 
   CORBA::TCKind kind = TAO_DynAnyFactory::unalias (tc.in ()
-                                                   ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (0);
+                                                  );
 
   // No need to do any type checking - it was done before this
   // call was made.

@@ -41,8 +41,7 @@ class TAO_BiDir_PolicyFactory
 public:
 
   virtual CORBA::Policy_ptr create_policy (CORBA::PolicyType type,
-                                           const CORBA::Any & value
-                                           ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+                                           const CORBA::Any & value)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      CORBA::PolicyError));
 

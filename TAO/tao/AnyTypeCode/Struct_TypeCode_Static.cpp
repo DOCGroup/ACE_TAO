@@ -107,15 +107,14 @@ TAO::TypeCode::Struct<char const *,
                                                   CORBA::TypeCode_ptr const *> const *,
                       TAO::Null_RefCount_Policy>::equal_i (
   CORBA::TypeCode_ptr tc
-  ACE_ENV_ARG_DECL) const
+  ) const
 {
   // This call shouldn't throw since CORBA::TypeCode::equal() verified
   // that the TCKind is the same as our's prior to invoking this
   // method, meaning that member_count() is supported.
 
   CORBA::ULong const tc_nfields =
-    tc->member_count (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (false);
+    tc->member_count ();
 
   if (tc_nfields != this->nfields_)
     return false;
@@ -128,8 +127,7 @@ TAO::TypeCode::Struct<char const *,
       char const * const lhs_name =
         Traits<char const *>::get_string (lhs_field.name);
       char const * const rhs_name = tc->member_name (i
-                                                     ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK_RETURN (false);
+                                                    );
 
       if (ACE_OS::strcmp (lhs_name, rhs_name) != 0)
         return false;
@@ -138,13 +136,11 @@ TAO::TypeCode::Struct<char const *,
         Traits<char const *>::get_typecode (lhs_field.type);
       CORBA::TypeCode_var const rhs_tc =
         tc->member_type (i
-                         ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK_RETURN (false);
+                        );
 
       CORBA::Boolean const equal_members =
         lhs_tc->equal (rhs_tc.in ()
-                       ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK_RETURN (false);
+                      );
 
       if (!equal_members)
         return false;
@@ -160,14 +156,13 @@ TAO::TypeCode::Struct<char const *,
                                                   CORBA::TypeCode_ptr const *> const *,
                       TAO::Null_RefCount_Policy>::equivalent_i (
   CORBA::TypeCode_ptr tc
-  ACE_ENV_ARG_DECL) const
+  ) const
 {
   // Perform a structural comparison, excluding the name() and
   // member_name() operations.
 
   CORBA::ULong const tc_nfields =
-    tc->member_count (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (false);
+    tc->member_count ();
 
   if (tc_nfields != this->nfields_)
     return false;
@@ -178,13 +173,11 @@ TAO::TypeCode::Struct<char const *,
         Traits<char const *>::get_typecode (this->fields_[i].type);
       CORBA::TypeCode_var const rhs =
         tc->member_type (i
-                         ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK_RETURN (false);
+                        );
 
       CORBA::Boolean const equiv_members =
         lhs->equivalent (rhs.in ()
-                         ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK_RETURN (false);
+                        );
 
       if (!equiv_members)
         return false;
@@ -199,7 +192,7 @@ TAO::TypeCode::Struct<char const *,
                       TAO::TypeCode::Struct_Field<char const *,
                                                   CORBA::TypeCode_ptr const *> const *,
                       TAO::Null_RefCount_Policy>::get_compact_typecode_i (
-  ACE_ENV_SINGLE_ARG_DECL) const
+  void) const
 {
   ACE_Array_Base<Struct_Field<CORBA::String_var,
                               CORBA::TypeCode_var> >
@@ -221,8 +214,7 @@ TAO::TypeCode::Struct<char const *,
           tc_fields[i].type =
             Traits<char const *>::get_typecode (
               this->fields_[i].type)->get_compact_typecode (
-                ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_CHECK_RETURN (CORBA::TypeCode::_nil ());
+                );
         }
     }
 
@@ -242,7 +234,7 @@ TAO::TypeCode::Struct<char const *,
                                       ""  /* empty name */,
                                       tc_fields,
                                       this->nfields_
-                                      ACE_ENV_ARG_PARAMETER);
+                                     );
 }
 
 char const *
@@ -251,7 +243,7 @@ TAO::TypeCode::Struct<char const *,
                       TAO::TypeCode::Struct_Field<char const *,
                                                   CORBA::TypeCode_ptr const *> const *,
                       TAO::Null_RefCount_Policy>::id_i (
-  ACE_ENV_SINGLE_ARG_DECL_NOT_USED) const
+  void) const
 {
   // Ownership is retained by the TypeCode, as required by the C++
   // mapping.
@@ -264,7 +256,7 @@ TAO::TypeCode::Struct<char const *,
                       TAO::TypeCode::Struct_Field<char const *,
                                                   CORBA::TypeCode_ptr const *> const *,
                       TAO::Null_RefCount_Policy>::name_i (
-  ACE_ENV_SINGLE_ARG_DECL_NOT_USED) const
+  void) const
 {
   // Ownership is retained by the TypeCode, as required by the C++
   // mapping.
@@ -277,7 +269,7 @@ TAO::TypeCode::Struct<char const *,
                       TAO::TypeCode::Struct_Field<char const *,
                                                   CORBA::TypeCode_ptr const *> const *,
                       TAO::Null_RefCount_Policy>::member_count_i (
-  ACE_ENV_SINGLE_ARG_DECL_NOT_USED) const
+  void) const
 {
   return this->nfields_;
 }
@@ -289,7 +281,7 @@ TAO::TypeCode::Struct<char const *,
                                                   CORBA::TypeCode_ptr const *> const *,
                       TAO::Null_RefCount_Policy>::member_name_i (
   CORBA::ULong index
-  ACE_ENV_ARG_DECL) const
+  ) const
 {
   // Ownership is retained by the TypeCode, as required by the C++
   // mapping.
@@ -306,7 +298,7 @@ TAO::TypeCode::Struct<char const *,
                                                   CORBA::TypeCode_ptr const *> const *,
                       TAO::Null_RefCount_Policy>::member_type_i (
   CORBA::ULong index
-  ACE_ENV_ARG_DECL) const
+  ) const
 {
   if (index >= this->nfields_)
     ACE_THROW_RETURN (CORBA::TypeCode::Bounds (),

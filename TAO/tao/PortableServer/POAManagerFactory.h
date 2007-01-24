@@ -50,17 +50,17 @@ public:
   virtual ::PortableServer::POAManager_ptr create_POAManager (
       const char * id,
       const ::CORBA::PolicyList & policies
-      ACE_ENV_ARG_DECL)
+      )
     ACE_THROW_SPEC ((CORBA::SystemException,
                       ::PortableServer::POAManagerFactory::ManagerAlreadyExists,
                       ::CORBA::PolicyError));
 
   virtual ::PortableServer::POAManagerFactory::POAManagerSeq * list (
-      ACE_ENV_SINGLE_ARG_DECL)
+      void)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual ::PortableServer::POAManager_ptr find (
-      const char * id ACE_ENV_ARG_DECL)
+      const char * id )
   ACE_THROW_SPEC ((CORBA::SystemException));
 
   void remove_all_poamanagers (void);

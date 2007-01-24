@@ -123,10 +123,10 @@ TAO_Network_Priority_Mapping_Manager_var::nil (void)
 ACE_INLINE ::TAO_Network_Priority_Mapping_Manager_ptr
 TAO_Network_Priority_Mapping_Manager_var::narrow (
     CORBA::Object *p
-    ACE_ENV_ARG_DECL
+
   )
 {
-  return ::TAO_Network_Priority_Mapping_Manager::_narrow (p ACE_ENV_ARG_PARAMETER);
+  return ::TAO_Network_Priority_Mapping_Manager::_narrow (p);
 }
 
 ACE_INLINE CORBA::Object *

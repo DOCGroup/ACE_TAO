@@ -54,7 +54,7 @@ namespace TAO
     virtual int _tao_byte_order (void) const;
 
     virtual void _tao_decode (TAO_InputCDR &
-                              ACE_ENV_ARG_DECL);
+                             );
 
     virtual CORBA::Boolean to_object (CORBA::Object_ptr &) const;
     virtual CORBA::Boolean to_value (CORBA::ValueBase *&) const;

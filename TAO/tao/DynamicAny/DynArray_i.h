@@ -53,21 +53,21 @@ public:
 
   /// Initialize using just a TypeCode.
   void init (CORBA::TypeCode_ptr tc
-             ACE_ENV_ARG_DECL);
+            );
 
   /// Initialize using an Any.
   void init (const CORBA::Any& any
-             ACE_ENV_ARG_DECL);
+            );
 
   // = LocalObject methods
   static TAO_DynArray_i *_narrow (
       CORBA::Object_ptr obj
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS);
+      );
 
   // = Functions specific to DynArray.
 
   virtual DynamicAny::AnySeq * get_elements (
-      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+      void)
 
     ACE_THROW_SPEC ((
         CORBA::SystemException
@@ -75,7 +75,7 @@ public:
 
   virtual void set_elements (
       const DynamicAny::AnySeq & value
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+      )
 
     ACE_THROW_SPEC ((
         CORBA::SystemException,
@@ -84,7 +84,7 @@ public:
       ));
 
   virtual DynamicAny::DynAnySeq * get_elements_as_dyn_any (
-      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+      void)
 
     ACE_THROW_SPEC ((
         CORBA::SystemException
@@ -92,7 +92,7 @@ public:
 
   virtual void set_elements_as_dyn_any (
       const DynamicAny::DynAnySeq & value
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+      )
 
     ACE_THROW_SPEC ((
         CORBA::SystemException,
@@ -104,7 +104,7 @@ public:
 
   virtual void from_any (
       const CORBA::Any & value
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+      )
 
     ACE_THROW_SPEC ((
         CORBA::SystemException,
@@ -113,7 +113,7 @@ public:
     ));
 
   virtual CORBA::Any * to_any (
-      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+      void)
 
     ACE_THROW_SPEC ((
         CORBA::SystemException
@@ -121,21 +121,21 @@ public:
 
   virtual CORBA::Boolean equal (
       DynamicAny::DynAny_ptr dyn_any
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+      )
 
     ACE_THROW_SPEC ((
         CORBA::SystemException
       ));
 
   virtual void destroy (
-      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+      void)
 
     ACE_THROW_SPEC ((
         CORBA::SystemException
       ));
 
   virtual DynamicAny::DynAny_ptr current_component (
-      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+      void)
 
     ACE_THROW_SPEC ((
         CORBA::SystemException,
@@ -144,11 +144,11 @@ public:
 
 private:
   /// Returns the type of elements contained in the array.
-  CORBA::TypeCode_ptr get_element_type (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
+  CORBA::TypeCode_ptr get_element_type (void);
 
   /// Gets the length of the array from the typecode.
   CORBA::ULong get_tc_length (CORBA::TypeCode_ptr tc
-                              ACE_ENV_ARG_DECL_WITH_DEFAULTS);
+                              );
 
   /// Called by both versions of init().
   void init_common (void);

@@ -79,36 +79,36 @@ namespace TAO
     /// This method implements one of the "starting" client side
     /// interception points.
     virtual void send_request (Invocation_Base &invocation
-                               ACE_ENV_ARG_DECL);
+                              );
 
     /// This method implements one of the "ending" client side
     /// interception point.
     virtual void receive_reply (Invocation_Base &invocation
-                                ACE_ENV_ARG_DECL);
+                               );
 
     /// This method implements one of the "ending" client side
     /// interception point.
     virtual void receive_exception (Invocation_Base &invocation
-                                    ACE_ENV_ARG_DECL);
+                                   );
 
     /// This method implements one of the "ending" client side
     /// interception point.
     virtual void receive_other (Invocation_Base &invocation
-                                ACE_ENV_ARG_DECL);
+                               );
     //@}
 
     /// Register an interceptor.
     virtual void add_interceptor (
       PortableInterceptor::ClientRequestInterceptor_ptr interceptor
-      ACE_ENV_ARG_DECL);
+     );
 
     /// Register an interceptor with policies.
     virtual void add_interceptor (
       PortableInterceptor::ClientRequestInterceptor_ptr interceptor,
       const CORBA::PolicyList& policies
-      ACE_ENV_ARG_DECL);
+     );
 
-    virtual void destroy_interceptors (ACE_ENV_SINGLE_ARG_DECL);
+    virtual void destroy_interceptors (void);
 
     virtual PortableInterceptor::ReplyStatus reply_status (
       TAO::Invocation_Base const &invocation_base);
@@ -120,7 +120,7 @@ namespace TAO
     /// to notifying the Invocation object of the LOCATION_FORWARD.
     void process_forward_request (Invocation_Base &invocation,
                                   PortableInterceptor::ForwardRequest &exc
-                                  ACE_ENV_ARG_DECL);
+                                 );
 
   private:
 

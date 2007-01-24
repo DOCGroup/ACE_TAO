@@ -27,7 +27,7 @@ TAO_POAManager_Factory::~TAO_POAManager_Factory (void)
 TAO_POAManager_Factory::create_POAManager (
   const char * id,
   const ::CORBA::PolicyList & policies
-  ACE_ENV_ARG_DECL)
+  )
     ACE_THROW_SPEC ((CORBA::SystemException,
                      ::PortableServer::POAManagerFactory::ManagerAlreadyExists,
                      ::CORBA::PolicyError))
@@ -37,13 +37,11 @@ TAO_POAManager_Factory::create_POAManager (
 
   // Merge policies from the ORB level.
   this->object_adapter_.validator ().merge_policies (tao_policies.policies ()
-                                                      ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (::PortableServer::POAManager::_nil ());
+                                                     );
 
   // Merge in any policies that the user may have specified.
   tao_policies.merge_policies (policies
-                              ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (::PortableServer::POAManager::_nil ());
+                             );
 
   // If any of the policy objects specified are not valid for the ORB
   // implementation, if conflicting policy objects are specified, or
@@ -53,15 +51,13 @@ TAO_POAManager_Factory::create_POAManager (
   // policies parameter value of the first offending policy object.
   tao_policies.validate_policies (this->object_adapter_.validator (),
                                   this->object_adapter_.orb_core ()
-                                  ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (::PortableServer::POAManager::_nil ());
+                                 );
 
   PortableServer::POAManager_var poamanager;
 
   if (id != 0)
   {
-    poamanager = this->find (id ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK_RETURN (::PortableServer::POAManager::_nil ());
+    poamanager = this->find (id);
 
     // If we already have a manager with the same name throw an exception
     if (!CORBA::is_nil (poamanager.in()))
@@ -81,7 +77,6 @@ TAO_POAManager_Factory::create_POAManager (
                       CORBA::NO_MEMORY
                       (CORBA::SystemException::_tao_minor_code (0, ENOMEM),
                        CORBA::COMPLETED_NO));
-    ACE_CHECK_RETURN (::PortableServer::POAManager::_nil ());
     poamanager = pm;
   }
 
@@ -92,7 +87,7 @@ TAO_POAManager_Factory::create_POAManager (
 
 ::PortableServer::POAManagerFactory::POAManagerSeq *
 TAO_POAManager_Factory::list (
-  ACE_ENV_SINGLE_ARG_DECL)
+  void)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ::PortableServer::POAManagerFactory::POAManagerSeq_var poamanagers;
@@ -102,7 +97,6 @@ TAO_POAManager_Factory::list (
                     PortableServer::POAManagerFactory::POAManagerSeq (
                       number_of_poamanagers),
                     CORBA::NO_MEMORY ());
-  ACE_CHECK_RETURN (0);
 
   poamanagers->length (number_of_poamanagers);
 
@@ -121,7 +115,7 @@ TAO_POAManager_Factory::list (
 
 ::PortableServer::POAManager_ptr
 TAO_POAManager_Factory::find (
-  const char * id ACE_ENV_ARG_DECL)
+  const char * id )
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ::PortableServer::POAManager_ptr poamanager =
@@ -132,8 +126,7 @@ TAO_POAManager_Factory::find (
         ++iterator)
     {
       CORBA::String_var poamanagerid =
-        (*iterator)->get_id (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK_RETURN (::PortableServer::POAManager::_nil());
+        (*iterator)->get_id ();
 
       if (ACE_OS::strcmp (id, poamanagerid.in()) == 0)
         {

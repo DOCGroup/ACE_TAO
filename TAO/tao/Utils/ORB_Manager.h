@@ -68,7 +68,7 @@ public:
    */
   int init (int &argc,
             char *argv[]
-            ACE_ENV_ARG_DECL_WITH_DEFAULTS);
+            );
 
   /**
    * Initialize the ORB/root POA, using the supplied command line
@@ -80,7 +80,7 @@ public:
   int init (int &argc,
             char *argv[],
             const char *orb_name
-            ACE_ENV_ARG_DECL_WITH_DEFAULTS);
+            );
 
 #if !defined (CORBA_E_MICRO)
   /**
@@ -95,7 +95,7 @@ public:
                       char *argv[],
                       const char *poa_name,
                       const char *orb_name = 0
-                      ACE_ENV_ARG_DECL_WITH_DEFAULTS);
+                      );
 #endif /* CORBA_E_MICRO */
 
   /**
@@ -104,7 +104,7 @@ public:
    * @retval -1 Failure
    * @retval 0 Success
    */
-  int fini (ACE_ENV_SINGLE_ARG_DECL);
+  int fini (void);
 
   /// Destructor.
   ~TAO_ORB_Manager (void);
@@ -121,7 +121,7 @@ public:
    * @retval -1 Failure
    * @retval 0 Success
    */
-  int activate_poa_manager (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
+  int activate_poa_manager (void);
 
   /**
    * Activate <servant>, using the POA <activate_object> call.  Users
@@ -132,7 +132,7 @@ public:
    *         memory deallocation of the string.
    */
   char *activate (PortableServer::Servant servant
-                  ACE_ENV_ARG_DECL_WITH_DEFAULTS);
+                  );
 
   /** Deactivate object in RootPOA.
    *
@@ -140,7 +140,7 @@ public:
    *             of the servant to deactivate in the POA
    */
   void deactivate (const char *id
-                   ACE_ENV_ARG_DECL_WITH_DEFAULTS);
+                   );
 
 #if !defined (CORBA_E_MICRO)
   /**
@@ -159,7 +159,7 @@ public:
    */
   char *activate_under_child_poa (const char *object_name,
                                   PortableServer::Servant servant
-                                  ACE_ENV_ARG_DECL_WITH_DEFAULTS);
+                                  );
 
   /**
    * Deactivate object in child POA.
@@ -168,7 +168,7 @@ public:
    *            the object to deactivate in the POA
    */
   void deactivate_under_child_poa (const char *id
-                                   ACE_ENV_ARG_DECL_WITH_DEFAULTS);
+                                   );
 #endif /* CORBA_E_MICRO */
 
   /**
@@ -179,12 +179,12 @@ public:
    * @retval 0 Success
    */
   int run (ACE_Time_Value &tv
-           ACE_ENV_ARG_DECL_WITH_DEFAULTS);
+           );
 
   /**
    * Run the ORB event loop.
    */
-  int run (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
+  int run (void);
 
   /**
    * Accessor which returns the ORB pointer.  Following the normal

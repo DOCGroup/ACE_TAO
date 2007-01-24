@@ -50,8 +50,7 @@ public:
   TAO_Active_Object_Map (int user_id_policy,
                          int unique_id_policy,
                          int persistent_id_policy,
-                         const TAO_Server_Strategy_Factory::Active_Object_Map_Creation_Parameters &creation_parameters
-                         ACE_ENV_ARG_DECL);
+                         const TAO_Server_Strategy_Factory::Active_Object_Map_Creation_Parameters &creation_parameters);
 
   /// Destructor.
   ~TAO_Active_Object_Map (void);
@@ -228,7 +227,7 @@ public:
 
   /// Flag to see if we are using active maps in this active object
   /// map.
-  int using_active_maps_;
+  bool using_active_maps_;
 
   /// Size of the system id produced by the map.
   static size_t system_id_size_;

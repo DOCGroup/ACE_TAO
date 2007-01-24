@@ -13,17 +13,17 @@ TAO_Policy_Current_Impl::TAO_Policy_Current_Impl (void)
 ACE_INLINE CORBA::Policy_ptr
 TAO_Policy_Current_Impl::get_policy (
       CORBA::PolicyType policy
-      ACE_ENV_ARG_DECL)
+      )
 {
-  return this->manager_impl_.get_policy (policy ACE_ENV_ARG_PARAMETER);
+  return this->manager_impl_.get_policy (policy);
 }
 
 ACE_INLINE CORBA::Policy_ptr
 TAO_Policy_Current_Impl::get_cached_policy (TAO_Cached_Policy_Type type
-                                            ACE_ENV_ARG_DECL)
+                                            )
 {
   return this->manager_impl_.get_cached_policy (type
-                                                ACE_ENV_ARG_PARAMETER);
+                                               );
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL

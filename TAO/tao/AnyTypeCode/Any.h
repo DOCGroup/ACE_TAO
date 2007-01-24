@@ -52,7 +52,6 @@ namespace CORBA
 
   class ValueBase;
   class Exception;
-  class Environment;
 
   /**
    * @class Any
@@ -155,7 +154,7 @@ namespace CORBA
     /// For use along with <<= of a value of aliased type when the alias must
     /// be preserved.
     void type (TypeCode_ptr
-               ACE_ENV_ARG_DECL);
+              );
 
     /// TAO extension, does not return a duplicate.
     CORBA::TypeCode_ptr _tao_get_typecode (void) const;

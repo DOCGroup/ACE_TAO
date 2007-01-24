@@ -87,9 +87,9 @@ namespace CORBA
       virtual void _raise (void) const;
 
       virtual void _tao_encode (TAO_OutputCDR & cdr
-                                ACE_ENV_ARG_DECL) const;
+                                ) const;
       virtual void _tao_decode (TAO_InputCDR & cdr
-                                ACE_ENV_ARG_DECL);
+                               );
 
     };
 
@@ -116,9 +116,9 @@ namespace CORBA
       virtual void _raise (void) const;
 
       virtual void _tao_encode (TAO_OutputCDR & cdr
-                                ACE_ENV_ARG_DECL) const;
+                                ) const;
       virtual void _tao_decode (TAO_InputCDR & cdr
-                                ACE_ENV_ARG_DECL);
+                               );
 
     };
 
@@ -160,7 +160,7 @@ namespace CORBA
      *         @c TypeCode and @a tc returns identical results.
      */
     Boolean equal (TypeCode_ptr tc
-                   ACE_ENV_ARG_DECL) const;
+                   ) const;
 
     /// Equivalence of two @c TypeCodes.
     /**
@@ -170,10 +170,10 @@ namespace CORBA
      * @see equal
      */
     Boolean equivalent (TypeCode_ptr tc
-                        ACE_ENV_ARG_DECL) const;
+                        ) const;
 
     /// The kind of @c TypeCode.
-    TCKind kind (ACE_ENV_SINGLE_ARG_DECL) const;
+    TCKind kind (void) const;
 
     /// Return @c TypeCode stripped of optional @c name and
     /// @c member_name fields.
@@ -195,7 +195,7 @@ namespace CORBA
      *       the TAO_IDL compiler by invoking it with its "-Gt"
      *       (i.e. enable optimized TypeCodes) command line option.
      */
-    TypeCode_ptr get_compact_typecode (ACE_ENV_SINGLE_ARG_DECL) const;
+    TypeCode_ptr get_compact_typecode (void) const;
 
     /// The @c RepositoryId globally identifying the type.
     /**
@@ -221,7 +221,7 @@ namespace CORBA
      *       is required by the C++ mapping.  In particular, ownership
      *       is maintained by the @c TypeCode.
      */
-    char const * id (ACE_ENV_SINGLE_ARG_DECL) const;
+    char const * id (void) const;
 
     /// The simple name identifying the type within its enclosing
     /// scope.
@@ -248,7 +248,7 @@ namespace CORBA
      *       behavior is required by the C++ mapping.  In particular,
      *       ownership is maintained by the @c TypeCode.
      */
-    char const * name (ACE_ENV_SINGLE_ARG_DECL) const;
+    char const * name (void) const;
 
     /// The type member count.
     /**
@@ -261,7 +261,7 @@ namespace CORBA
      * @li @c tk_except
      * @li @c tk_event
      */
-    ULong member_count (ACE_ENV_SINGLE_ARG_DECL) const;
+    ULong member_count (void) const;
 
     /// The type member name.
     /**
@@ -280,7 +280,7 @@ namespace CORBA
      *       ownership is maintained by the @c TypeCode.
      */
     char const * member_name (ULong index
-                              ACE_ENV_ARG_DECL) const;
+                              ) const;
 
     /// The type member @c TypeCode.
     /**
@@ -293,7 +293,7 @@ namespace CORBA
      * @li @c tk_event
      */
     TypeCode_ptr member_type (ULong index
-                              ACE_ENV_ARG_DECL) const;
+                              ) const;
 
     /// The union member label.
     /**
@@ -302,7 +302,7 @@ namespace CORBA
      * @li @c tk_union
      */
     Any * member_label (ULong index
-                        ACE_ENV_ARG_DECL) const;
+                        ) const;
 
     /// The type of all non-default union member labels.
     /**
@@ -310,7 +310,7 @@ namespace CORBA
      *
      * @li @c tk_union
      */
-    TypeCode_ptr discriminator_type (ACE_ENV_SINGLE_ARG_DECL) const;
+    TypeCode_ptr discriminator_type (void) const;
 
     /// The index of the default union member.
     /**
@@ -318,7 +318,7 @@ namespace CORBA
      *
      * @li @c tk_union
      */
-    Long default_index (ACE_ENV_SINGLE_ARG_DECL) const;
+    Long default_index (void) const;
 
     /// The length of the type.
     /**
@@ -329,7 +329,7 @@ namespace CORBA
      * @li @c tk_sequence
      * @li @c tk_array
      */
-    ULong length (ACE_ENV_SINGLE_ARG_DECL) const;
+    ULong length (void) const;
 
     /// The underlying content type.
     /**
@@ -340,7 +340,7 @@ namespace CORBA
      * @li @c tk_value_box
      * @li @c tk_alias
      */
-    TypeCode_ptr content_type (ACE_ENV_SINGLE_ARG_DECL) const;
+    TypeCode_ptr content_type (void) const;
 
     /// The number of significant digits.
     /**
@@ -348,7 +348,7 @@ namespace CORBA
      *
      * @li @c tk_fixed
      */
-    UShort fixed_digits (ACE_ENV_SINGLE_ARG_DECL) const;
+    UShort fixed_digits (void) const;
 
     /// The scale factor.
     /**
@@ -356,7 +356,7 @@ namespace CORBA
      *
      * @li @c tk_fixed
      */
-    UShort fixed_scale (ACE_ENV_SINGLE_ARG_DECL) const;
+    UShort fixed_scale (void) const;
 
     /// The @c Visibility of the @c valuetype or @c eventtype member
     /// corresponding to index @a index.
@@ -367,7 +367,7 @@ namespace CORBA
      * @li @c tk_event
      */
     Visibility member_visibility (ULong index
-                                  ACE_ENV_ARG_DECL) const;
+                                  ) const;
 
     /// The @c ValueModifier of the @c valuetype of @c eventtype
     /// represented by this @c TypeCode.
@@ -377,7 +377,7 @@ namespace CORBA
      * @li @c tk_value
      * @li @c tk_event
      */
-    ValueModifier type_modifier (ACE_ENV_SINGLE_ARG_DECL) const;
+    ValueModifier type_modifier (void) const;
 
     /// The @c TypeCode corresponding to the concrete base
     /// @c valuetype or @c eventtype.
@@ -391,7 +391,7 @@ namespace CORBA
      *         @c valuetype or @c eventtype.
      *         @c CORBA::TypeCode::_nil() if no concrete base exists.
      */
-    TypeCode_ptr concrete_base_type (ACE_ENV_SINGLE_ARG_DECL) const;
+    TypeCode_ptr concrete_base_type (void) const;
     //@}
 
     /// Marshal the @c TypeCode @c TCKind.
@@ -472,33 +472,33 @@ namespace CORBA
      */
     //@{
     virtual Boolean equal_i (TypeCode_ptr tc
-                             ACE_ENV_ARG_DECL) const = 0;
+                             ) const = 0;
     virtual Boolean equivalent_i (TypeCode_ptr tc
-                                  ACE_ENV_ARG_DECL) const = 0;
+                                  ) const = 0;
     virtual TypeCode_ptr get_compact_typecode_i (
-      ACE_ENV_SINGLE_ARG_DECL) const = 0;
+      void) const = 0;
 
-    virtual char const * id_i (ACE_ENV_SINGLE_ARG_DECL) const;
-    virtual char const * name_i (ACE_ENV_SINGLE_ARG_DECL) const;
-    virtual ULong member_count_i (ACE_ENV_SINGLE_ARG_DECL) const;
+    virtual char const * id_i (void) const;
+    virtual char const * name_i (void) const;
+    virtual ULong member_count_i (void) const;
     virtual char const * member_name_i (ULong index
-                                        ACE_ENV_ARG_DECL) const;
+                                        ) const;
     virtual TypeCode_ptr member_type_i (ULong index
-                                        ACE_ENV_ARG_DECL) const;
+                                        ) const;
     virtual Any * member_label_i (ULong index
-                                  ACE_ENV_ARG_DECL) const;
+                                  ) const;
     virtual TypeCode_ptr discriminator_type_i (
-      ACE_ENV_SINGLE_ARG_DECL) const;
-    virtual Long default_index_i (ACE_ENV_SINGLE_ARG_DECL) const;
-    virtual ULong length_i (ACE_ENV_SINGLE_ARG_DECL) const;
-    virtual TypeCode_ptr content_type_i (ACE_ENV_SINGLE_ARG_DECL) const;
-    virtual UShort fixed_digits_i (ACE_ENV_SINGLE_ARG_DECL) const;
-    virtual UShort fixed_scale_i (ACE_ENV_SINGLE_ARG_DECL) const;
+      void) const;
+    virtual Long default_index_i (void) const;
+    virtual ULong length_i (void) const;
+    virtual TypeCode_ptr content_type_i (void) const;
+    virtual UShort fixed_digits_i (void) const;
+    virtual UShort fixed_scale_i (void) const;
     virtual Visibility member_visibility_i (ULong index
-                                            ACE_ENV_ARG_DECL) const;
-    virtual ValueModifier type_modifier_i (ACE_ENV_SINGLE_ARG_DECL) const;
+                                            ) const;
+    virtual ValueModifier type_modifier_i (void) const;
     virtual TypeCode_ptr concrete_base_type_i (
-      ACE_ENV_SINGLE_ARG_DECL) const;
+      void) const;
     //@}
 
   private:
@@ -546,7 +546,7 @@ namespace TAO
   /// @c TypeCode.
   TAO_AnyTypeCode_Export CORBA::TypeCode_ptr unaliased_typecode (
     CORBA::TypeCode_ptr tc
-    ACE_ENV_ARG_DECL);
+   );
 
   /// Return the unaliased @c TCKind of the given @c TypeCode.
   /**
@@ -556,7 +556,7 @@ namespace TAO
    */
   TAO_AnyTypeCode_Export
   CORBA::TCKind unaliased_kind (CORBA::TypeCode_ptr tc
-                                ACE_ENV_ARG_DECL);
+                               );
 
   // ---------------------------------------------------------------
 

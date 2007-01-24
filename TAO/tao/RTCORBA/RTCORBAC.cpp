@@ -186,7 +186,7 @@ RTCORBA::PriorityModelPolicy::_tao_any_destructor (void *_tao_void_pointer)
 RTCORBA::PriorityModelPolicy_ptr
 RTCORBA::PriorityModelPolicy::_narrow (
     CORBA::Object_ptr _tao_objref
-    ACE_ENV_ARG_DECL_NOT_USED
+
   )
 {
   return PriorityModelPolicy::_duplicate (
@@ -197,7 +197,7 @@ RTCORBA::PriorityModelPolicy::_narrow (
 RTCORBA::PriorityModelPolicy_ptr
 RTCORBA::PriorityModelPolicy::_unchecked_narrow (
     CORBA::Object_ptr _tao_objref
-    ACE_ENV_ARG_DECL_NOT_USED
+
   )
 {
   return PriorityModelPolicy::_duplicate (
@@ -225,7 +225,7 @@ RTCORBA::PriorityModelPolicy::_tao_release (PriorityModelPolicy_ptr obj)
 CORBA::Boolean
 RTCORBA::PriorityModelPolicy::_is_a (
     const char *value
-    ACE_ENV_ARG_DECL_NOT_USED
+
   )
 {
   if (
@@ -319,7 +319,7 @@ RTCORBA::ThreadpoolPolicy::_tao_any_destructor (void *_tao_void_pointer)
 RTCORBA::ThreadpoolPolicy_ptr
 RTCORBA::ThreadpoolPolicy::_narrow (
     CORBA::Object_ptr _tao_objref
-    ACE_ENV_ARG_DECL_NOT_USED
+
   )
 {
   return ThreadpoolPolicy::_duplicate (
@@ -330,7 +330,7 @@ RTCORBA::ThreadpoolPolicy::_narrow (
 RTCORBA::ThreadpoolPolicy_ptr
 RTCORBA::ThreadpoolPolicy::_unchecked_narrow (
     CORBA::Object_ptr _tao_objref
-    ACE_ENV_ARG_DECL_NOT_USED
+
   )
 {
   return ThreadpoolPolicy::_duplicate (
@@ -358,7 +358,7 @@ RTCORBA::ThreadpoolPolicy::_tao_release (ThreadpoolPolicy_ptr obj)
 CORBA::Boolean
 RTCORBA::ThreadpoolPolicy::_is_a (
     const char *value
-    ACE_ENV_ARG_DECL_NOT_USED
+
   )
 {
   if (
@@ -452,7 +452,7 @@ RTCORBA::ProtocolProperties::_tao_any_destructor (void *_tao_void_pointer)
 RTCORBA::ProtocolProperties_ptr
 RTCORBA::ProtocolProperties::_narrow (
     CORBA::Object_ptr _tao_objref
-    ACE_ENV_ARG_DECL_NOT_USED
+
   )
 {
   return ProtocolProperties::_duplicate (
@@ -463,7 +463,7 @@ RTCORBA::ProtocolProperties::_narrow (
 RTCORBA::ProtocolProperties_ptr
 RTCORBA::ProtocolProperties::_unchecked_narrow (
     CORBA::Object_ptr _tao_objref
-    ACE_ENV_ARG_DECL_NOT_USED
+
   )
 {
   return ProtocolProperties::_duplicate (
@@ -491,7 +491,7 @@ RTCORBA::ProtocolProperties::_tao_release (ProtocolProperties_ptr obj)
 CORBA::Boolean
 RTCORBA::ProtocolProperties::_is_a (
     const char *value
-    ACE_ENV_ARG_DECL_NOT_USED
+
   )
 {
   if (
@@ -647,7 +647,7 @@ RTCORBA::ServerProtocolPolicy::_tao_any_destructor (void *_tao_void_pointer)
 RTCORBA::ServerProtocolPolicy_ptr
 RTCORBA::ServerProtocolPolicy::_narrow (
     CORBA::Object_ptr _tao_objref
-    ACE_ENV_ARG_DECL_NOT_USED
+
   )
 {
   return ServerProtocolPolicy::_duplicate (
@@ -658,7 +658,7 @@ RTCORBA::ServerProtocolPolicy::_narrow (
 RTCORBA::ServerProtocolPolicy_ptr
 RTCORBA::ServerProtocolPolicy::_unchecked_narrow (
     CORBA::Object_ptr _tao_objref
-    ACE_ENV_ARG_DECL_NOT_USED
+
   )
 {
   return ServerProtocolPolicy::_duplicate (
@@ -686,7 +686,7 @@ RTCORBA::ServerProtocolPolicy::_tao_release (ServerProtocolPolicy_ptr obj)
 CORBA::Boolean
 RTCORBA::ServerProtocolPolicy::_is_a (
     const char *value
-    ACE_ENV_ARG_DECL_NOT_USED
+
   )
 {
   if (
@@ -780,7 +780,7 @@ RTCORBA::ClientProtocolPolicy::_tao_any_destructor (void *_tao_void_pointer)
 RTCORBA::ClientProtocolPolicy_ptr
 RTCORBA::ClientProtocolPolicy::_narrow (
     CORBA::Object_ptr _tao_objref
-    ACE_ENV_ARG_DECL_NOT_USED
+
   )
 {
   return ClientProtocolPolicy::_duplicate (
@@ -791,7 +791,7 @@ RTCORBA::ClientProtocolPolicy::_narrow (
 RTCORBA::ClientProtocolPolicy_ptr
 RTCORBA::ClientProtocolPolicy::_unchecked_narrow (
     CORBA::Object_ptr _tao_objref
-    ACE_ENV_ARG_DECL_NOT_USED
+
   )
 {
   return ClientProtocolPolicy::_duplicate (
@@ -819,7 +819,7 @@ RTCORBA::ClientProtocolPolicy::_tao_release (ClientProtocolPolicy_ptr obj)
 CORBA::Boolean
 RTCORBA::ClientProtocolPolicy::_is_a (
     const char *value
-    ACE_ENV_ARG_DECL_NOT_USED
+
   )
 {
   if (
@@ -913,7 +913,7 @@ RTCORBA::PrivateConnectionPolicy::_tao_any_destructor (void *_tao_void_pointer)
 RTCORBA::PrivateConnectionPolicy_ptr
 RTCORBA::PrivateConnectionPolicy::_narrow (
     CORBA::Object_ptr _tao_objref
-    ACE_ENV_ARG_DECL_NOT_USED
+
   )
 {
   return PrivateConnectionPolicy::_duplicate (
@@ -924,7 +924,7 @@ RTCORBA::PrivateConnectionPolicy::_narrow (
 RTCORBA::PrivateConnectionPolicy_ptr
 RTCORBA::PrivateConnectionPolicy::_unchecked_narrow (
     CORBA::Object_ptr _tao_objref
-    ACE_ENV_ARG_DECL_NOT_USED
+
   )
 {
   return PrivateConnectionPolicy::_duplicate (
@@ -952,7 +952,7 @@ RTCORBA::PrivateConnectionPolicy::_tao_release (PrivateConnectionPolicy_ptr obj)
 CORBA::Boolean
 RTCORBA::PrivateConnectionPolicy::_is_a (
     const char *value
-    ACE_ENV_ARG_DECL_NOT_USED
+
   )
 {
   if (
@@ -1046,7 +1046,7 @@ RTCORBA::TCPProtocolProperties::_tao_any_destructor (void *_tao_void_pointer)
 RTCORBA::TCPProtocolProperties_ptr
 RTCORBA::TCPProtocolProperties::_narrow (
     CORBA::Object_ptr _tao_objref
-    ACE_ENV_ARG_DECL_NOT_USED
+
   )
 {
   return TCPProtocolProperties::_duplicate (
@@ -1057,7 +1057,7 @@ RTCORBA::TCPProtocolProperties::_narrow (
 RTCORBA::TCPProtocolProperties_ptr
 RTCORBA::TCPProtocolProperties::_unchecked_narrow (
     CORBA::Object_ptr _tao_objref
-    ACE_ENV_ARG_DECL_NOT_USED
+
   )
 {
   return TCPProtocolProperties::_duplicate (
@@ -1085,7 +1085,7 @@ RTCORBA::TCPProtocolProperties::_tao_release (TCPProtocolProperties_ptr obj)
 CORBA::Boolean
 RTCORBA::TCPProtocolProperties::_is_a (
     const char *value
-    ACE_ENV_ARG_DECL_NOT_USED
+
   )
 {
   if (
@@ -1179,7 +1179,7 @@ RTCORBA::GIOPProtocolProperties::_tao_any_destructor (void *_tao_void_pointer)
 RTCORBA::GIOPProtocolProperties_ptr
 RTCORBA::GIOPProtocolProperties::_narrow (
     CORBA::Object_ptr _tao_objref
-    ACE_ENV_ARG_DECL_NOT_USED
+
   )
 {
   return GIOPProtocolProperties::_duplicate (
@@ -1190,7 +1190,7 @@ RTCORBA::GIOPProtocolProperties::_narrow (
 RTCORBA::GIOPProtocolProperties_ptr
 RTCORBA::GIOPProtocolProperties::_unchecked_narrow (
     CORBA::Object_ptr _tao_objref
-    ACE_ENV_ARG_DECL_NOT_USED
+
   )
 {
   return GIOPProtocolProperties::_duplicate (
@@ -1218,7 +1218,7 @@ RTCORBA::GIOPProtocolProperties::_tao_release (GIOPProtocolProperties_ptr obj)
 CORBA::Boolean
 RTCORBA::GIOPProtocolProperties::_is_a (
     const char *value
-    ACE_ENV_ARG_DECL_NOT_USED
+
   )
 {
   if (
@@ -1312,7 +1312,7 @@ RTCORBA::UnixDomainProtocolProperties::_tao_any_destructor (void *_tao_void_poin
 RTCORBA::UnixDomainProtocolProperties_ptr
 RTCORBA::UnixDomainProtocolProperties::_narrow (
     CORBA::Object_ptr _tao_objref
-    ACE_ENV_ARG_DECL_NOT_USED
+
   )
 {
   return UnixDomainProtocolProperties::_duplicate (
@@ -1323,7 +1323,7 @@ RTCORBA::UnixDomainProtocolProperties::_narrow (
 RTCORBA::UnixDomainProtocolProperties_ptr
 RTCORBA::UnixDomainProtocolProperties::_unchecked_narrow (
     CORBA::Object_ptr _tao_objref
-    ACE_ENV_ARG_DECL_NOT_USED
+
   )
 {
   return UnixDomainProtocolProperties::_duplicate (
@@ -1351,7 +1351,7 @@ RTCORBA::UnixDomainProtocolProperties::_tao_release (UnixDomainProtocolPropertie
 CORBA::Boolean
 RTCORBA::UnixDomainProtocolProperties::_is_a (
     const char *value
-    ACE_ENV_ARG_DECL_NOT_USED
+
   )
 {
   if (
@@ -1445,7 +1445,7 @@ RTCORBA::SharedMemoryProtocolProperties::_tao_any_destructor (void *_tao_void_po
 RTCORBA::SharedMemoryProtocolProperties_ptr
 RTCORBA::SharedMemoryProtocolProperties::_narrow (
     CORBA::Object_ptr _tao_objref
-    ACE_ENV_ARG_DECL_NOT_USED
+
   )
 {
   return SharedMemoryProtocolProperties::_duplicate (
@@ -1456,7 +1456,7 @@ RTCORBA::SharedMemoryProtocolProperties::_narrow (
 RTCORBA::SharedMemoryProtocolProperties_ptr
 RTCORBA::SharedMemoryProtocolProperties::_unchecked_narrow (
     CORBA::Object_ptr _tao_objref
-    ACE_ENV_ARG_DECL_NOT_USED
+
   )
 {
   return SharedMemoryProtocolProperties::_duplicate (
@@ -1484,7 +1484,7 @@ RTCORBA::SharedMemoryProtocolProperties::_tao_release (SharedMemoryProtocolPrope
 CORBA::Boolean
 RTCORBA::SharedMemoryProtocolProperties::_is_a (
     const char *value
-    ACE_ENV_ARG_DECL_NOT_USED
+
   )
 {
   if (
@@ -1578,7 +1578,7 @@ RTCORBA::UserDatagramProtocolProperties::_tao_any_destructor (void *_tao_void_po
 RTCORBA::UserDatagramProtocolProperties_ptr
 RTCORBA::UserDatagramProtocolProperties::_narrow (
     CORBA::Object_ptr _tao_objref
-    ACE_ENV_ARG_DECL_NOT_USED
+
   )
 {
   return UserDatagramProtocolProperties::_duplicate (
@@ -1589,7 +1589,7 @@ RTCORBA::UserDatagramProtocolProperties::_narrow (
 RTCORBA::UserDatagramProtocolProperties_ptr
 RTCORBA::UserDatagramProtocolProperties::_unchecked_narrow (
     CORBA::Object_ptr _tao_objref
-    ACE_ENV_ARG_DECL_NOT_USED
+
   )
 {
   return UserDatagramProtocolProperties::_duplicate (
@@ -1617,7 +1617,7 @@ RTCORBA::UserDatagramProtocolProperties::_tao_release (UserDatagramProtocolPrope
 CORBA::Boolean
 RTCORBA::UserDatagramProtocolProperties::_is_a (
     const char *value
-    ACE_ENV_ARG_DECL_NOT_USED
+
   )
 {
   if (
@@ -1711,7 +1711,7 @@ RTCORBA::StreamControlProtocolProperties::_tao_any_destructor (void *_tao_void_p
 RTCORBA::StreamControlProtocolProperties_ptr
 RTCORBA::StreamControlProtocolProperties::_narrow (
     CORBA::Object_ptr _tao_objref
-    ACE_ENV_ARG_DECL_NOT_USED
+
   )
 {
   return StreamControlProtocolProperties::_duplicate (
@@ -1722,7 +1722,7 @@ RTCORBA::StreamControlProtocolProperties::_narrow (
 RTCORBA::StreamControlProtocolProperties_ptr
 RTCORBA::StreamControlProtocolProperties::_unchecked_narrow (
     CORBA::Object_ptr _tao_objref
-    ACE_ENV_ARG_DECL_NOT_USED
+
   )
 {
   return StreamControlProtocolProperties::_duplicate (
@@ -1750,7 +1750,7 @@ RTCORBA::StreamControlProtocolProperties::_tao_release (StreamControlProtocolPro
 CORBA::Boolean
 RTCORBA::StreamControlProtocolProperties::_is_a (
     const char *value
-    ACE_ENV_ARG_DECL_NOT_USED
+
   )
 {
   if (
@@ -1910,7 +1910,7 @@ RTCORBA::PriorityBandedConnectionPolicy::_tao_any_destructor (void *_tao_void_po
 RTCORBA::PriorityBandedConnectionPolicy_ptr
 RTCORBA::PriorityBandedConnectionPolicy::_narrow (
     CORBA::Object_ptr _tao_objref
-    ACE_ENV_ARG_DECL_NOT_USED
+
   )
 {
   return PriorityBandedConnectionPolicy::_duplicate (
@@ -1921,7 +1921,7 @@ RTCORBA::PriorityBandedConnectionPolicy::_narrow (
 RTCORBA::PriorityBandedConnectionPolicy_ptr
 RTCORBA::PriorityBandedConnectionPolicy::_unchecked_narrow (
     CORBA::Object_ptr _tao_objref
-    ACE_ENV_ARG_DECL_NOT_USED
+
   )
 {
   return PriorityBandedConnectionPolicy::_duplicate (
@@ -1949,7 +1949,7 @@ RTCORBA::PriorityBandedConnectionPolicy::_tao_release (PriorityBandedConnectionP
 CORBA::Boolean
 RTCORBA::PriorityBandedConnectionPolicy::_is_a (
     const char *value
-    ACE_ENV_ARG_DECL_NOT_USED
+
   )
 {
   if (
@@ -2043,7 +2043,7 @@ RTCORBA::Current::_tao_any_destructor (void *_tao_void_pointer)
 RTCORBA::Current_ptr
 RTCORBA::Current::_narrow (
     CORBA::Object_ptr _tao_objref
-    ACE_ENV_ARG_DECL_NOT_USED
+
   )
 {
   return Current::_duplicate (
@@ -2054,7 +2054,7 @@ RTCORBA::Current::_narrow (
 RTCORBA::Current_ptr
 RTCORBA::Current::_unchecked_narrow (
     CORBA::Object_ptr _tao_objref
-    ACE_ENV_ARG_DECL_NOT_USED
+
   )
 {
   return Current::_duplicate (
@@ -2082,7 +2082,7 @@ RTCORBA::Current::_tao_release (Current_ptr obj)
 CORBA::Boolean
 RTCORBA::Current::_is_a (
     const char *value
-    ACE_ENV_ARG_DECL_NOT_USED
+
   )
 {
   if (
@@ -2176,7 +2176,7 @@ RTCORBA::Mutex::_tao_any_destructor (void *_tao_void_pointer)
 RTCORBA::Mutex_ptr
 RTCORBA::Mutex::_narrow (
     CORBA::Object_ptr _tao_objref
-    ACE_ENV_ARG_DECL_NOT_USED
+
   )
 {
   return Mutex::_duplicate (
@@ -2187,7 +2187,7 @@ RTCORBA::Mutex::_narrow (
 RTCORBA::Mutex_ptr
 RTCORBA::Mutex::_unchecked_narrow (
     CORBA::Object_ptr _tao_objref
-    ACE_ENV_ARG_DECL_NOT_USED
+
   )
 {
   return Mutex::_duplicate (
@@ -2215,7 +2215,7 @@ RTCORBA::Mutex::_tao_release (Mutex_ptr obj)
 CORBA::Boolean
 RTCORBA::Mutex::_is_a (
     const char *value
-    ACE_ENV_ARG_DECL_NOT_USED
+
   )
 {
   if (
@@ -2363,18 +2363,18 @@ void RTCORBA::RTORB::MutexNotFound::_raise (void) const
 
 void RTCORBA::RTORB::MutexNotFound::_tao_encode (
     TAO_OutputCDR &
-    ACE_ENV_ARG_DECL
+
   ) const
 {
-  ACE_THROW (CORBA::MARSHAL ());
+  throw ::CORBA::MARSHAL ();
 }
 
 void RTCORBA::RTORB::MutexNotFound::_tao_decode (
     TAO_InputCDR &
-    ACE_ENV_ARG_DECL
+
   )
 {
-  ACE_THROW (CORBA::MARSHAL ());
+  throw ::CORBA::MARSHAL ();
 }
 
 // TAO extension - the virtual _type method.
@@ -2458,18 +2458,18 @@ void RTCORBA::RTORB::InvalidThreadpool::_raise (void) const
 
 void RTCORBA::RTORB::InvalidThreadpool::_tao_encode (
     TAO_OutputCDR &
-    ACE_ENV_ARG_DECL
+
   ) const
 {
-  ACE_THROW (CORBA::MARSHAL ());
+  throw ::CORBA::MARSHAL ();
 }
 
 void RTCORBA::RTORB::InvalidThreadpool::_tao_decode (
     TAO_InputCDR &
-    ACE_ENV_ARG_DECL
+
   )
 {
-  ACE_THROW (CORBA::MARSHAL ());
+  throw ::CORBA::MARSHAL ();
 }
 
 // TAO extension - the virtual _type method.
@@ -2495,7 +2495,7 @@ RTCORBA::RTORB::_tao_any_destructor (void *_tao_void_pointer)
 RTCORBA::RTORB_ptr
 RTCORBA::RTORB::_narrow (
     CORBA::Object_ptr _tao_objref
-    ACE_ENV_ARG_DECL_NOT_USED
+
   )
 {
   return RTORB::_duplicate (
@@ -2506,7 +2506,7 @@ RTCORBA::RTORB::_narrow (
 RTCORBA::RTORB_ptr
 RTCORBA::RTORB::_unchecked_narrow (
     CORBA::Object_ptr _tao_objref
-    ACE_ENV_ARG_DECL_NOT_USED
+
   )
 {
   return RTORB::_duplicate (
@@ -2534,7 +2534,7 @@ RTCORBA::RTORB::_tao_release (RTORB_ptr obj)
 CORBA::Boolean
 RTCORBA::RTORB::_is_a (
     const char *value
-    ACE_ENV_ARG_DECL_NOT_USED
+
   )
 {
   if (

@@ -136,14 +136,14 @@ TAO::CSD::TP_Task::svc()
   // execution of this svc() method.
   {
     GuardType guard(this->lock_);
-    // Put the thread id into a collection which is used to check whether  
+    // Put the thread id into a collection which is used to check whether
     // the orb shutdown is called by one of the threads in the pool.
     ACE_thread_t thr_id = ACE_OS::thr_self ();
     if (this->activated_threads_.set(thr_id, this->num_threads_) == -1)
       {
         ACE_ERROR_RETURN((LM_ERROR,
           ACE_TEXT("(%P|%t)TP_Task::svc: number of threads is out of range \n")),
-          0); 
+          0);
       }
     ++this->num_threads_;
     this->active_workers_.signal();
@@ -268,10 +268,10 @@ TAO::CSD::TP_Task::close(u_long flag)
 
       ACE_thread_t my_thr_id = ACE_OS::thr_self ();
 
-      // Check whether the calling thread(calling orb shutdown) is one of the 
+      // Check whether the calling thread(calling orb shutdown) is one of the
       // threads in the pool. If it is then it should not wait itself.
       size_t size = this->activated_threads_.size ();
-      
+
       for (size_t i = 0; i < size; i ++)
         {
           ACE_thread_t thr_id = 0;
@@ -300,7 +300,7 @@ TAO::CSD::TP_Task::close(u_long flag)
 
 void
 TAO::CSD::TP_Task::cancel_servant (PortableServer::Servant servant
-                                   ACE_ENV_ARG_DECL)
+                                   )
 {
   GuardType guard(this->lock_);
 

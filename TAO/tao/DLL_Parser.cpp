@@ -3,7 +3,6 @@
 #include "tao/DLL_Parser.h"
 #include "tao/Object_Loader.h"
 #include "tao/Object.h"
-#include "tao/Environment.h"
 #include "tao/ORB_Constants.h"
 #include "tao/SystemException.h"
 #include "tao/ORB_Core.h"

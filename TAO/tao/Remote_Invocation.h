@@ -29,11 +29,6 @@ class TAO_Operation_Details;
 class TAO_Target_Specification;
 class TAO_OutputCDR;
 
-namespace CORBA
-{
-  class Environment;
-}
-
 namespace TAO
 {
   class Profile_Transport_Resolver;
@@ -72,22 +67,22 @@ namespace TAO
 
     /// Initialize the @a spec.
     void init_target_spec (TAO_Target_Specification &spec
-                           ACE_ENV_ARG_DECL);
+                          );
 
     /// Write the GIOP header into the stream.
     void write_header (TAO_Target_Specification &spec,
                        TAO_OutputCDR &out_stream
-                       ACE_ENV_ARG_DECL);
+                      );
 
     /// Marshal the arguments into the stream.
     void marshal_data (TAO_OutputCDR &cdr
-                       ACE_ENV_ARG_DECL);
+                      );
 
     /// Write the message onto the socket
     Invocation_Status send_message (TAO_OutputCDR &cdr,
                                     short message_semantics,
                                     ACE_Time_Value *max_wait_time
-                                    ACE_ENV_ARG_DECL);
+                                   );
 
   protected:
     /// Our resolver

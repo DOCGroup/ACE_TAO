@@ -16,14 +16,13 @@ TAO_IORInterceptor_Adapter_Factory_Impl::~TAO_IORInterceptor_Adapter_Factory_Imp
 }
 
 TAO_IORInterceptor_Adapter *
-TAO_IORInterceptor_Adapter_Factory_Impl::create (ACE_ENV_SINGLE_ARG_DECL)
+TAO_IORInterceptor_Adapter_Factory_Impl::create (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_IORInterceptor_Adapter_Impl *nia = 0;
   ACE_NEW_THROW_EX (nia,
                     TAO_IORInterceptor_Adapter_Impl (),
                     CORBA::NO_MEMORY ());
-  ACE_CHECK_RETURN (nia);
 
   return nia;
 }

@@ -112,7 +112,7 @@ protected:
 
   /// More TAO_Connector methods, please check the documentation on
   /// Transport_Connector.h
-  virtual TAO_Profile *make_profile (ACE_ENV_SINGLE_ARG_DECL);
+  virtual TAO_Profile *make_profile (void);
 
   /// Cancel the passed cvs handler from the connector
   virtual int cancel_svc_handler (TAO_Connection_Handler * svc_handler);

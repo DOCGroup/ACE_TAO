@@ -95,12 +95,11 @@ TAO_UIOP_Profile::endpoint_count (void) const
 }
 
 void
-TAO_UIOP_Profile::parse_string_i (const char *string
-                                  ACE_ENV_ARG_DECL)
+TAO_UIOP_Profile::parse_string_i (const char *string)
 {
   if (!string || !*string)
     {
-      ACE_THROW (CORBA::INV_OBJREF (
+      throw ( ::CORBA::INV_OBJREF (
                    CORBA::SystemException::_tao_minor_code (
                      0,
                      EINVAL),
@@ -127,7 +126,7 @@ TAO_UIOP_Profile::parse_string_i (const char *string
   if (this->version_.major != TAO_DEF_GIOP_MAJOR ||
       this->version_.minor  > TAO_DEF_GIOP_MINOR)
     {
-      ACE_THROW (CORBA::INV_OBJREF (
+      throw ( ::CORBA::INV_OBJREF (
                    CORBA::SystemException::_tao_minor_code (
                      0,
                      EINVAL),
@@ -144,7 +143,7 @@ TAO_UIOP_Profile::parse_string_i (const char *string
 
   if (cp == 0)
     {
-      ACE_THROW (CORBA::INV_OBJREF (
+      throw ( ::CORBA::INV_OBJREF (
                    CORBA::SystemException::_tao_minor_code (
                      TAO::VMCID,
                      EINVAL),
@@ -161,7 +160,7 @@ TAO_UIOP_Profile::parse_string_i (const char *string
 
   if (this->endpoint_.object_addr_.set (rendezvous.in ()) != 0)
     {
-      ACE_THROW (CORBA::INV_OBJREF (
+      throw ( ::CORBA::INV_OBJREF (
                    CORBA::SystemException::_tao_minor_code (
                      TAO::VMCID,
                      EINVAL),
@@ -203,8 +202,7 @@ TAO_UIOP_Profile::do_is_equivalent (const TAO_Profile *other_profile)
 }
 
 CORBA::ULong
-TAO_UIOP_Profile::hash (CORBA::ULong max
-                        ACE_ENV_ARG_DECL_NOT_USED)
+TAO_UIOP_Profile::hash (CORBA::ULong max)
 {
   // Get the hashvalue for all endpoints.
   CORBA::ULong hashval = 0;
@@ -243,7 +241,7 @@ TAO_UIOP_Profile::add_endpoint (TAO_UIOP_Endpoint *endp)
 
 
 char *
-TAO_UIOP_Profile::to_string (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+TAO_UIOP_Profile::to_string (void)
 {
   CORBA::String_var key;
   TAO::ObjectKey::encode_sequence_to_string (key.inout(),

@@ -57,14 +57,12 @@ TAO_Reactive_Connect_Strategy::wait_i (TAO_LF_Event *ev,
                   ACE_TEXT ("connection completion - wait ()\n")));
     }
 
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  try
     {
       while (ev->keep_waiting ())
         {
           result =
-            this->orb_core_->run (max_wait_time, 1 ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+            this->orb_core_->run (max_wait_time, 1);
 
           // Did we timeout? If so, stop running the loop.
           if (result == 0 &&
@@ -81,11 +79,10 @@ TAO_Reactive_Connect_Strategy::wait_i (TAO_LF_Event *ev,
             break;
         }
     }
-  ACE_CATCHANY
+  catch ( ::CORBA::Exception&)
     {
       result = -1;
     }
-  ACE_ENDTRY;
 
   // Set the result.
   if (result != -1 && ev->error_detected ())

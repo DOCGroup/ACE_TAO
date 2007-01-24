@@ -45,7 +45,7 @@ namespace TAO
   void
   Interceptor_List<InterceptorType,DetailsType>::add_interceptor (
     InterceptorType_ptr_type interceptor
-    ACE_ENV_ARG_DECL)
+    )
   {
     if (!CORBA::is_nil (interceptor))
       {
@@ -59,8 +59,7 @@ namespace TAO
             /// If the Interceptor is not anonymous, make sure an
             /// Interceptor with the same isn't already registered.
             CORBA::String_var name =
-              interceptor->name (ACE_ENV_SINGLE_ARG_PARAMETER);
-            ACE_CHECK;
+              interceptor->name ();
 
             if (ACE_OS::strlen (name.in ()) != 0)
               {
@@ -87,7 +86,7 @@ namespace TAO
                     if (ACE_OS::strcmp (existing_name.in (),
                                         name.in ()) == 0)
                       {
-                        ACE_THROW (PortableInterceptor::ORBInitInfo::DuplicateName ());
+                        throw (PortableInterceptor::ORBInitInfo::DuplicateName ());
                       }
                   }
               }
@@ -103,7 +102,7 @@ namespace TAO
       }
     else
       {
-        ACE_THROW (
+        throw (
             CORBA::INV_OBJREF (
                 CORBA::SystemException::_tao_minor_code (
                     0,
@@ -120,7 +119,7 @@ namespace TAO
   Interceptor_List<InterceptorType,DetailsType>::add_interceptor (
     InterceptorType_ptr_type interceptor,
     const CORBA::PolicyList& policies
-    ACE_ENV_ARG_DECL)
+    )
   {
     if (!CORBA::is_nil (interceptor))
       {
@@ -134,8 +133,7 @@ namespace TAO
             /// If the Interceptor is not anonymous, make sure an
             /// Interceptor with the same isn't already registered.
             CORBA::String_var name =
-              interceptor->name (ACE_ENV_SINGLE_ARG_PARAMETER);
-            ACE_CHECK;
+              interceptor->name ();
 
             if (ACE_OS::strlen (name.in ()) != 0)
               {
@@ -162,7 +160,7 @@ namespace TAO
                     if (ACE_OS::strcmp (existing_name.in (),
                                         name.in ()) == 0)
                       {
-                        ACE_THROW (PortableInterceptor::ORBInitInfo::DuplicateName ());
+                        throw (PortableInterceptor::ORBInitInfo::DuplicateName ());
                       }
                   }
               }
@@ -170,8 +168,7 @@ namespace TAO
 
         // Create a DetailsType object, and attempt to apply the policies.
         DetailsType details;
-        details.apply_policies(policies ACE_ENV_ARG_PARAMETER);
-        ACE_CHECK;
+        details.apply_policies(policies);
 
         /// Increase the length of the Interceptor sequence by one.
         const size_t new_len = old_len + 1;
@@ -186,7 +183,7 @@ namespace TAO
       }
     else
       {
-        ACE_THROW (
+        throw (
             CORBA::INV_OBJREF (
                 CORBA::SystemException::_tao_minor_code (
                     0,
@@ -201,12 +198,12 @@ namespace TAO
   template <typename InterceptorType, typename DetailsType>
   void
   Interceptor_List<InterceptorType,DetailsType>::destroy_interceptors (
-    ACE_ENV_SINGLE_ARG_DECL)
+    void)
   {
     size_t const len = this->interceptors_.size ();
     size_t ilen = len;
 
-    ACE_TRY
+    try
       {
         for (size_t k = 0; k < len; ++k)
           {
@@ -215,8 +212,7 @@ namespace TAO
             // invocation occurs afterwards.
             --ilen;
 
-            this->interceptor (k)->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-            ACE_TRY_CHECK;
+            this->interceptor (k)->destroy ();
 
             // Since Interceptor::destroy() can throw an exception,
             // decrease the size of the interceptor array incrementally
@@ -226,7 +222,7 @@ namespace TAO
             this->interceptors_.size (ilen);
           }
       }
-    ACE_CATCHALL
+    catch (...)
       {
         // Exceptions should not be propagated beyond this call.
         if (TAO_debug_level > 3)
@@ -237,8 +233,6 @@ namespace TAO
                         ACE_TEXT ("::destroy_interceptors () \n")));
           }
       }
-    ACE_ENDTRY;
-    ACE_CHECK;
   }
 }
 

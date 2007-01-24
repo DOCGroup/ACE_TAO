@@ -40,27 +40,22 @@ TAO::CSD::TP_Collocated_Synch_With_Server_Request::dispatch_i()
   // This is done *before* we do_dispatch().
   this->synch_helper_.dispatched();
 
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  try
     {
-      this->do_dispatch(ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      this->do_dispatch();
     }
-  ACE_CATCHANY
+  catch ( ::CORBA::Exception&)
     {
       // Eat these.  We probably should log these, but since we have already
       // unblocked the requesting thread there is no point in saving it or
       // doing anything with it.
     }
-#if defined (TAO_HAS_EXCEPTIONS)
-  ACE_CATCHALL
+  catch (...)
     {
       // Eat these.  We probably should log these, but since we have already
       // unblocked the requesting thread there is no point in saving it or
       // doing anything with it.
     }
-#endif
-  ACE_ENDTRY;
 }
 
 void

@@ -83,20 +83,19 @@ CORBA::Boolean
 TAO::TypeCode::Alias<StringType,
                      TypeCodeType,
                      RefCountPolicy>::equal_i (CORBA::TypeCode_ptr tc
-                                               ACE_ENV_ARG_DECL) const
+                                               ) const
 {
   // The CORBA::TypeCode base class already verified equality of the
   // base attributes (id and name).  Perform an equality comparison of
   // the content.
 
   CORBA::TypeCode_var rhs_content_type =
-    tc->content_type (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (0);
+    tc->content_type ();
 
   return
     Traits<StringType>::get_typecode (this->content_type_)->equal (
       rhs_content_type.in ()
-      ACE_ENV_ARG_PARAMETER);
+     );
 }
 
 template<typename StringType,
@@ -107,7 +106,7 @@ TAO::TypeCode::Alias<StringType,
                      TypeCodeType,
                      RefCountPolicy>::equivalent_i (
   CORBA::TypeCode_ptr
-  ACE_ENV_ARG_DECL_NOT_USED) const
+  ) const
 {
   // Equivalence already verified in the base class
   // CORBA::TypeCode::equivalent() method.
@@ -121,8 +120,7 @@ template<typename StringType,
 CORBA::TypeCode_ptr
 TAO::TypeCode::Alias<StringType,
                      TypeCodeType,
-                     RefCountPolicy>::get_compact_typecode_i (
-  ACE_ENV_SINGLE_ARG_DECL) const
+                     RefCountPolicy>::get_compact_typecode_i (void) const
 {
   TAO_TypeCodeFactory_Adapter * const adapter =
     ACE_Dynamic_Service<TAO_TypeCodeFactory_Adapter>::instance (
@@ -138,22 +136,21 @@ TAO::TypeCode::Alias<StringType,
   CORBA::TypeCode_var compact_content_type =
     Traits<StringType>::get_typecode (
       this->content_type_)->get_compact_typecode (
-        ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (CORBA::TypeCode::_nil ());
+        );
 
   if (this->kind_ == CORBA::tk_alias)
     {
       return adapter->create_alias_tc (this->attributes_.id (),
                                        "",  /* empty name */
                                        compact_content_type.in ()
-                                       ACE_ENV_ARG_PARAMETER);
+                                      );
     }
   else
     {
       return adapter->create_value_box_tc (this->attributes_.id (),
                                            "",  /* empty name */
                                            compact_content_type.in ()
-                                           ACE_ENV_ARG_PARAMETER);
+                                          );
     }
 }
 
@@ -164,7 +161,7 @@ char const *
 TAO::TypeCode::Alias<StringType,
                      TypeCodeType,
                      RefCountPolicy>::id_i (
-  ACE_ENV_SINGLE_ARG_DECL_NOT_USED) const
+  void) const
 {
   // Ownership is retained by the TypeCode, as required by the C++
   // mapping.
@@ -178,7 +175,7 @@ char const *
 TAO::TypeCode::Alias<StringType,
                      TypeCodeType,
                      RefCountPolicy>::name_i (
-  ACE_ENV_SINGLE_ARG_DECL_NOT_USED) const
+  void) const
 {
   // Ownership is retained by the TypeCode, as required by the C++
   // mapping.
@@ -192,7 +189,7 @@ CORBA::TypeCode_ptr
 TAO::TypeCode::Alias<StringType,
                      TypeCodeType,
                      RefCountPolicy>::content_type_i (
-  ACE_ENV_SINGLE_ARG_DECL_NOT_USED) const
+  void) const
 {
   return
      CORBA::TypeCode::_duplicate (

@@ -47,27 +47,27 @@ public:
 
   /// Obtain a single cached policy.
   CORBA::Policy_ptr get_cached_policy (TAO_Cached_Policy_Type type
-                                       ACE_ENV_ARG_DECL);
+                                      );
 
   void merge_policies (const CORBA::PolicyList &policies
-                       ACE_ENV_ARG_DECL);
+                      );
 
   void merge_policy (const CORBA::Policy_ptr policy
-                     ACE_ENV_ARG_DECL);
+                    );
 
   void validate_policies (TAO_Policy_Validator &validator,
                           TAO_ORB_Core &orb_core
-                          ACE_ENV_ARG_DECL);
+                         );
 
   /// Add all of the client exposed policies to the specified list.
   void add_client_exposed_fixed_policies (CORBA::PolicyList *client_exposed_policies
-                                          ACE_ENV_ARG_DECL);
+                                         );
 
   TAO_Policy_Set &policies (void);
 
   /// Obtain a single policy.
   CORBA::Policy_ptr get_policy (CORBA::PolicyType policy
-                                ACE_ENV_ARG_DECL);
+                               );
 
 protected:
   TAO_Policy_Set impl_;

@@ -34,19 +34,18 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
  *
  * @brief DII_Arguments_Converter_Impl.
  *
- * This class provides the implementation to expand the DII arguments in NVList 
- * to the list of arguments. 
+ * This class provides the implementation to expand the DII arguments in NVList
+ * to the list of arguments.
  */
 class TAO_DynamicInterface_Export TAO_DII_Arguments_Converter_Impl
   : public TAO_DII_Arguments_Converter
 {
 public:
 
-  virtual void convert ( TAO_ServerRequest & server_request,
-                         TAO::Argument * const args[],
-                         size_t nargs
-                         ACE_ENV_ARG_DECL );
- 
+  virtual void convert (TAO_ServerRequest & server_request,
+                        TAO::Argument * const args[],
+                        size_t nargs);
+
   // Used to force the initialization of the ORB code.
   static int Initializer (void);
 };

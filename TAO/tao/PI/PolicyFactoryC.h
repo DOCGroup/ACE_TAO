@@ -108,12 +108,12 @@ namespace PortableInterceptor
 
     static PolicyFactory_ptr _narrow (
         ::CORBA::Object_ptr obj
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
+
       );
 
     static PolicyFactory_ptr _unchecked_narrow (
         ::CORBA::Object_ptr obj
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
+
       );
 
     static PolicyFactory_ptr _nil (void)
@@ -129,7 +129,7 @@ namespace PortableInterceptor
     virtual ::CORBA::Policy_ptr create_policy (
         ::CORBA::PolicyType type,
         const ::CORBA::Any & value
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
+
       )
       ACE_THROW_SPEC ((
         ::CORBA::SystemException,
@@ -139,7 +139,7 @@ namespace PortableInterceptor
     // Hand-crafted addition.
     virtual ::CORBA::Policy_ptr _create_policy (
         CORBA::PolicyType type
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
+
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
@@ -151,7 +151,7 @@ namespace PortableInterceptor
 
     virtual ::CORBA::Boolean _is_a (
         const char *type_id
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
+
       );
 
     virtual const char* _interface_repository_id (void) const;

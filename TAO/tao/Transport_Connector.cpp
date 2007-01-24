@@ -3,7 +3,6 @@
 #include "tao/ORB_Core.h"
 #include "tao/MProfile.h"
 #include "tao/Profile.h"
-#include "tao/Environment.h"
 #include "tao/Thread_Lane_Resources.h"
 #include "tao/debug.h"
 #include "tao/Connect_Strategy.h"
@@ -86,7 +85,7 @@ TAO_Connector::~TAO_Connector (void)
 TAO_Profile *
 TAO_Connector::corbaloc_scan (const char *str,
                               size_t &len
-                              ACE_ENV_ARG_DECL)
+                              )
 {
   if (this->check_prefix (str) != 0)
     return 0;
@@ -99,13 +98,13 @@ TAO_Connector::corbaloc_scan (const char *str,
   else if (comma_pos == 0 || comma_pos > slash_pos)
     len = (slash_pos - str);
   else len = comma_pos - str;
-  return this->make_profile(ACE_ENV_SINGLE_ARG_PARAMETER);
+  return this->make_profile();
 }
 
 int
 TAO_Connector::make_mprofile (const char *string,
                               TAO_MProfile &mprofile
-                              ACE_ENV_ARG_DECL)
+                              )
 {
   // This method utilizes the "Template Method" design pattern to
   // parse the given URL style IOR for the protocol being used
@@ -243,16 +242,14 @@ TAO_Connector::make_mprofile (const char *string,
           //    `endpoint/object_key'
 
           TAO_Profile *profile =
-            this->make_profile (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_CHECK_RETURN (-1);
+            this->make_profile ();
           // Failure:  Problem during profile creation
 
           // Initialize a Profile using the individual endpoint
           // string.
           // @@ Not exception safe!  We need a TAO_Profile_var!
           profile->parse_string (endpoint.c_str ()
-                                 ACE_ENV_ARG_PARAMETER);
-          ACE_CHECK_RETURN (-1);
+                                );
 
           // Give up ownership of the profile.
           if (mprofile.give_profile (profile) == -1)
@@ -298,7 +295,7 @@ TAO_Transport*
 TAO_Connector::parallel_connect (TAO::Profile_Transport_Resolver *r,
                                  TAO_Transport_Descriptor_Interface *desc,
                                  ACE_Time_Value *timeout
-                                 ACE_ENV_ARG_DECL_NOT_USED)
+                                 )
 {
   if (this->supports_parallel_connects() == 0)
     {
@@ -361,7 +358,7 @@ TAO_Transport*
 TAO_Connector::connect (TAO::Profile_Transport_Resolver *r,
                         TAO_Transport_Descriptor_Interface *desc,
                         ACE_Time_Value *timeout
-                        ACE_ENV_ARG_DECL)
+                        )
 {
   if (desc == 0 ||
       (this->set_validate_endpoint (desc->endpoint ()) == -1))
@@ -410,7 +407,7 @@ TAO_Connector::connect (TAO::Profile_Transport_Resolver *r,
           return this->connect (r,
                                 desc,
                                 timeout
-                                ACE_ENV_ARG_PARAMETER);
+                               );
         }
 
       return t;

@@ -157,7 +157,7 @@ TAO_Stub::add_forward_profiles (const TAO_MProfile &mprofiles,
 int
 TAO_Stub::create_ior_info (IOP::IOR *&ior_info,
                            CORBA::ULong &index
-                           ACE_ENV_ARG_DECL)
+                           )
 {
   // We are creating the IOR info. Let us not be disturbed. So grab a
   // lock.
@@ -174,8 +174,7 @@ TAO_Stub::create_ior_info (IOP::IOR *&ior_info,
         {
           this->get_profile_ior_info (*this->forward_profiles_,
                                       tmp_info
-                                       ACE_ENV_ARG_PARAMETER);
-          ACE_CHECK_RETURN (-1);
+                                      );
 
           this->forwarded_ior_info_ = tmp_info;
         }
@@ -201,8 +200,7 @@ TAO_Stub::create_ior_info (IOP::IOR *&ior_info,
     {
       this->get_profile_ior_info (this->base_profiles_,
                                   tmp_info
-                                   ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK_RETURN (-1);
+                                  );
 
       this->ior_info_ = tmp_info;
     }
@@ -248,14 +246,13 @@ TAO_Stub::object_key (void) const
 int
 TAO_Stub::get_profile_ior_info (TAO_MProfile &profiles,
                                 IOP::IOR *&ior_info
-                                ACE_ENV_ARG_DECL)
+                                )
 {
 
 
   ACE_NEW_THROW_EX (ior_info,
                     IOP::IOR (),
                     CORBA::NO_MEMORY ());
-  ACE_CHECK_RETURN (-1);
 
 
   // Get the number of elements
@@ -309,10 +306,10 @@ TAO_Stub::is_collocated (CORBA::Boolean collocated)
 
 CORBA::ULong
 TAO_Stub::hash (CORBA::ULong max
-                ACE_ENV_ARG_DECL)
+                )
 {
   // we rely on the profile objects that its address info
-  return this->base_profiles_.hash (max ACE_ENV_ARG_PARAMETER);
+  return this->base_profiles_.hash (max);
 }
 
 // Expensive comparison of objref data, to see if two objrefs
@@ -429,7 +426,7 @@ TAO_Stub::forward_back_one (void)
 
 CORBA::Policy_ptr
 TAO_Stub::get_policy (CORBA::PolicyType type
-                      ACE_ENV_ARG_DECL)
+                      )
 {
   // No need to lock, the stub only changes its policies at
   // construction time...
@@ -439,7 +436,7 @@ TAO_Stub::get_policy (CORBA::PolicyType type
     {
       result =
         this->policies_->get_policy (type
-                                     ACE_ENV_ARG_PARAMETER);
+                                    );
       ACE_CHECK (CORBA::Policy::_nil ());
     }
 
@@ -447,7 +444,7 @@ TAO_Stub::get_policy (CORBA::PolicyType type
     {
       result =
         this->orb_core_->get_policy_including_current (type
-                                                       ACE_ENV_ARG_PARAMETER);
+                                                      );
       ACE_CHECK (CORBA::Policy::_nil ());
     }
 
@@ -456,7 +453,7 @@ TAO_Stub::get_policy (CORBA::PolicyType type
 
 CORBA::Policy_ptr
 TAO_Stub::get_cached_policy (TAO_Cached_Policy_Type type
-                             ACE_ENV_ARG_DECL)
+                             )
 {
   // No need to lock, the stub only changes its policies at
   // construction time...
@@ -466,9 +463,8 @@ TAO_Stub::get_cached_policy (TAO_Cached_Policy_Type type
     {
       result =
         this->policies_->get_cached_policy (type
-                                            ACE_ENV_ARG_PARAMETER);
+                                           );
 
-      ACE_CHECK_RETURN (CORBA::Policy::_nil ());
 
     }
 
@@ -476,8 +472,7 @@ TAO_Stub::get_cached_policy (TAO_Cached_Policy_Type type
     {
       result =
         this->orb_core_->get_cached_policy_including_current (type
-                                                              ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK_RETURN (CORBA::Policy::_nil ());
+                                                             );
     }
 
   return result._retn ();
@@ -486,7 +481,7 @@ TAO_Stub::get_cached_policy (TAO_Cached_Policy_Type type
 TAO_Stub *
 TAO_Stub::set_policy_overrides (const CORBA::PolicyList & policies,
                                 CORBA::SetOverrideType set_add
-                                ACE_ENV_ARG_DECL)
+                                )
 {
   // Notice the use of an explicit constructor....
   auto_ptr<TAO_Policy_Set> policy_manager (
@@ -496,32 +491,27 @@ TAO_Stub::set_policy_overrides (const CORBA::PolicyList & policies,
     {
       policy_manager->set_policy_overrides (policies,
                                             set_add
-                                            ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK_RETURN (0);
+                                           );
     }
   else if (this->policies_ == 0)
     {
       policy_manager->set_policy_overrides (policies,
                                             CORBA::SET_OVERRIDE
-                                            ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK_RETURN (0);
+                                           );
     }
   else
     {
       policy_manager->copy_from (this->policies_
-                                  ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK_RETURN (0);
+                                 );
 
       policy_manager->set_policy_overrides (policies,
                                             set_add
-                                            ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK_RETURN (0);
+                                           );
     }
 
   TAO_Stub* stub = this->orb_core_->create_stub (this->type_id.in (),
                                                  this->base_profiles_
-                                                 ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (0);
+                                                );
 
   stub->policies_ = policy_manager.release ();
 
@@ -533,7 +523,7 @@ TAO_Stub::set_policy_overrides (const CORBA::PolicyList & policies,
 
 CORBA::PolicyList *
 TAO_Stub::get_policy_overrides (const CORBA::PolicyTypeSeq &types
-                                ACE_ENV_ARG_DECL)
+                                )
 {
   if (this->policies_ == 0)
     {
@@ -541,14 +531,13 @@ TAO_Stub::get_policy_overrides (const CORBA::PolicyTypeSeq &types
       ACE_NEW_THROW_EX (policy_list_ptr,
                         CORBA::PolicyList (),
                         CORBA::NO_MEMORY ());
-      ACE_CHECK_RETURN (0);
 
       return policy_list_ptr;
     }
   else
     {
       return this->policies_->get_policy_overrides (types
-                                                    ACE_ENV_ARG_PARAMETER);
+                                                   );
     }
 }
 

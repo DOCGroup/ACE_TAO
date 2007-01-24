@@ -36,8 +36,6 @@ class TAO_ORB_Core;
 namespace CORBA
 {
   typedef ULong PolicyType;
-
-  class Environment;
 }
 
 /**
@@ -67,13 +65,13 @@ public:
    * if that is not the case.
    */
   void validate (TAO_Policy_Set &policies
-                 ACE_ENV_ARG_DECL);
+                );
 
   /**
    * Add/merge policies.
    **/
   void merge_policies (TAO_Policy_Set &policies
-                       ACE_ENV_ARG_DECL);
+                      );
 
   /**
    * Return whether the specified policy type is legal for the
@@ -100,10 +98,10 @@ public:
 
 protected:
   virtual void validate_impl (TAO_Policy_Set &policies
-                              ACE_ENV_ARG_DECL) = 0;
+                              ) = 0;
 
   virtual void merge_policies_impl (TAO_Policy_Set &policies
-                                    ACE_ENV_ARG_DECL) = 0;
+                                    ) = 0;
 
   virtual CORBA::Boolean legal_policy_impl (CORBA::PolicyType type) = 0;
 

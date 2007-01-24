@@ -10,7 +10,7 @@ CORBA::Object_ptr
 TAO_POA_Current_Factory::create_object (CORBA::ORB_ptr,
                                         int,
                                         ACE_TCHAR * []
-                                        ACE_ENV_ARG_DECL_NOT_USED)
+                                        )
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO::Portable_Server::POA_Current* adapter = 0;

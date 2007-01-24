@@ -45,15 +45,15 @@ public:
                   PortableServer::POA_ptr poa);
 
   /// Ping method.
-  void ping (ACE_ENV_SINGLE_ARG_DECL)
+  void ping (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   /// Shutdown the server.
-  void shutdown (ACE_ENV_SINGLE_ARG_DECL)
+  void shutdown (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   /// Returns the default POA for this servant.
-  PortableServer::POA_ptr _default_POA (ACE_ENV_SINGLE_ARG_DECL);
+  PortableServer::POA_ptr _default_POA (void);
 
 protected:
   /// Our ORB.  We need this member in case we need to shutdown the

@@ -78,16 +78,14 @@ namespace TAO
         return false;
       }
 
-    ACE_TRY_NEW_ENV
+    try
       {
-        this->value_->_tao_decode (cdr ACE_ENV_ARG_PARAMETER);
-        ACE_TRY_CHECK;
+        this->value_->_tao_decode (cdr);
       }
-    ACE_CATCHANY
+    catch ( ::CORBA::Exception&)
       {
         return false;
       }
-    ACE_ENDTRY;
 
     return true;
   }

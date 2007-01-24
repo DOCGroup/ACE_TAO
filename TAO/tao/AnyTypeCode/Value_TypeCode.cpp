@@ -117,34 +117,30 @@ TAO::TypeCode::Value<StringType,
                      FieldArrayType,
                      RefCountPolicy>::equal_i (
   CORBA::TypeCode_ptr tc
-  ACE_ENV_ARG_DECL) const
+  ) const
 {
   // None of these calls should throw since CORBA::TypeCode::equal()
   // verified that the TCKind is the same as our's prior to invoking
   // this method.
 
   CORBA::ValueModifier const tc_type_modifier =
-    tc->type_modifier (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (false);
+    tc->type_modifier ();
 
   if (tc_type_modifier != this->type_modifier_)
     return false;
 
   CORBA::TypeCode_var rhs_concrete_base_type =
-    tc->concrete_base_type (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (false);
+    tc->concrete_base_type ();
 
   CORBA::Boolean const equal_concrete_base_types =
     this->equal (rhs_concrete_base_type.in ()
-                 ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (false);
+                );
 
   if (!equal_concrete_base_types)
     return false;
 
   CORBA::ULong const tc_nfields =
-    tc->member_count (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (false);
+    tc->member_count ();
 
   if (tc_nfields != this->nfields_)
     return false;
@@ -157,17 +153,14 @@ TAO::TypeCode::Value<StringType,
       CORBA::Visibility const lhs_visibility = lhs_field.visibility;
       CORBA::Visibility const rhs_visibility =
         tc->member_visibility (i
-                               ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK_RETURN (false);
+                              );
 
       if (lhs_visibility != rhs_visibility)
         return false;
 
       char const * const lhs_name =
-        Traits<StringType>::get_string (lhs_field.name);;
-      char const * const rhs_name = tc->member_name (i
-                                                     ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK_RETURN (false);
+        Traits<StringType>::get_string (lhs_field.name);
+      char const * const rhs_name = tc->member_name (i);
 
       if (ACE_OS::strcmp (lhs_name, rhs_name) != 0)
         return false;
@@ -175,14 +168,10 @@ TAO::TypeCode::Value<StringType,
       CORBA::TypeCode_ptr const lhs_tc =
         Traits<StringType>::get_typecode (lhs_field.type);
       CORBA::TypeCode_var const rhs_tc =
-        tc->member_type (i
-                         ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK_RETURN (false);
+        tc->member_type (i);
 
       CORBA::Boolean const equal_members =
-        lhs_tc->equal (rhs_tc.in ()
-                       ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK_RETURN (false);
+        lhs_tc->equal (rhs_tc.in ());
 
       if (!equal_members)
         return false;
@@ -201,23 +190,19 @@ TAO::TypeCode::Value<StringType,
                      FieldArrayType,
                      RefCountPolicy>::equivalent_i (
   CORBA::TypeCode_ptr tc
-  ACE_ENV_ARG_DECL) const
+  ) const
 {
   CORBA::ValueModifier const tc_type_modifier =
-    tc->type_modifier (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (false);
+    tc->type_modifier ();
 
   if (tc_type_modifier != this->type_modifier_)
     return false;
 
   CORBA::TypeCode_var rhs_concrete_base_type =
-    tc->concrete_base_type (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (false);
+    tc->concrete_base_type ();
 
   CORBA::Boolean const equivalent_concrete_base_types =
-    this->equivalent (rhs_concrete_base_type.in ()
-                      ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (false);
+    this->equivalent (rhs_concrete_base_type.in ());
 
   if (!equivalent_concrete_base_types)
     return false;
@@ -226,8 +211,7 @@ TAO::TypeCode::Value<StringType,
   // member_name() operations.
 
   CORBA::ULong const tc_nfields =
-    tc->member_count (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (false);
+    tc->member_count ();
 
   if (tc_nfields != this->nfields_)
     return false;
@@ -240,9 +224,7 @@ TAO::TypeCode::Value<StringType,
       CORBA::Visibility const lhs_visibility =
         lhs_field.visibility;
       CORBA::Visibility const rhs_visibility =
-        tc->member_visibility (i
-                               ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK_RETURN (false);
+        tc->member_visibility (i);
 
       if (lhs_visibility != rhs_visibility)
         return false;
@@ -250,14 +232,11 @@ TAO::TypeCode::Value<StringType,
       CORBA::TypeCode_ptr const lhs_tc =
         Traits<StringType>::get_typecode (lhs_field.type);
       CORBA::TypeCode_var const rhs_tc =
-        tc->member_type (i
-                         ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK_RETURN (false);
+        tc->member_type (i);
 
       CORBA::Boolean const equiv_types =
         lhs_tc->equivalent (rhs_tc.in ()
-                            ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK_RETURN (false);
+                           );
 
       if (!equiv_types)
         return false;
@@ -274,8 +253,7 @@ CORBA::TypeCode_ptr
 TAO::TypeCode::Value<StringType,
                      TypeCodeType,
                      FieldArrayType,
-                     RefCountPolicy>::get_compact_typecode_i (
-  ACE_ENV_SINGLE_ARG_DECL) const
+                     RefCountPolicy>::get_compact_typecode_i (void) const
 {
   ACE_Array_Base<Value_Field<CORBA::String_var, CORBA::TypeCode_var> >
     tc_fields (this->nfields_);
@@ -296,8 +274,7 @@ TAO::TypeCode::Value<StringType,
           tc_fields[i].type =
             Traits<StringType>::get_typecode (
               this->fields_[i].type)->get_compact_typecode (
-                ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_CHECK_RETURN (CORBA::TypeCode::_nil ());
+                );
           tc_fields[i].visibility = this->fields_[i].visibility;
         }
     }
@@ -321,7 +298,7 @@ TAO::TypeCode::Value<StringType,
       Traits<StringType>::get_typecode (this->concrete_base_),
       tc_fields,
       this->nfields_
-      ACE_ENV_ARG_PARAMETER);
+     );
 }
 
 template <typename StringType,
@@ -332,8 +309,7 @@ char const *
 TAO::TypeCode::Value<StringType,
                      TypeCodeType,
                      FieldArrayType,
-                     RefCountPolicy>::id_i (
-  ACE_ENV_SINGLE_ARG_DECL_NOT_USED) const
+                     RefCountPolicy>::id_i (void) const
 {
   // Ownership is retained by the TypeCode, as required by the C++
   // mapping.
@@ -348,8 +324,7 @@ char const *
 TAO::TypeCode::Value<StringType,
                      TypeCodeType,
                      FieldArrayType,
-                     RefCountPolicy>::name_i (
-  ACE_ENV_SINGLE_ARG_DECL_NOT_USED) const
+                     RefCountPolicy>::name_i (void) const
 {
   // Ownership is retained by the TypeCode, as required by the C++
   // mapping.
@@ -364,8 +339,7 @@ CORBA::ULong
 TAO::TypeCode::Value<StringType,
                      TypeCodeType,
                      FieldArrayType,
-                     RefCountPolicy>::member_count_i (
-  ACE_ENV_SINGLE_ARG_DECL_NOT_USED) const
+                     RefCountPolicy>::member_count_i (void) const
 {
   return this->nfields_;
 }
@@ -378,9 +352,7 @@ char const *
 TAO::TypeCode::Value<StringType,
                      TypeCodeType,
                      FieldArrayType,
-                     RefCountPolicy>::member_name_i (
-  CORBA::ULong index
-  ACE_ENV_ARG_DECL) const
+                     RefCountPolicy>::member_name_i (CORBA::ULong index) const
 {
   // Ownership is retained by the TypeCode, as required by the C++
   // mapping.
@@ -398,9 +370,7 @@ CORBA::TypeCode_ptr
 TAO::TypeCode::Value<StringType,
                      TypeCodeType,
                      FieldArrayType,
-                     RefCountPolicy>::member_type_i (
-  CORBA::ULong index
-  ACE_ENV_ARG_DECL) const
+                     RefCountPolicy>::member_type_i (CORBA::ULong index) const
 {
   if (index >= this->nfields_)
     ACE_THROW_RETURN (CORBA::TypeCode::Bounds (),
@@ -419,9 +389,7 @@ CORBA::Visibility
 TAO::TypeCode::Value<StringType,
                      TypeCodeType,
                      FieldArrayType,
-                     RefCountPolicy>::member_visibility_i (
-  CORBA::ULong index
-  ACE_ENV_ARG_DECL) const
+                     RefCountPolicy>::member_visibility_i (CORBA::ULong index) const
 {
   if (index >= this->nfields_)
     ACE_THROW_RETURN (CORBA::TypeCode::Bounds (),
@@ -438,8 +406,7 @@ CORBA::ValueModifier
 TAO::TypeCode::Value<StringType,
                      TypeCodeType,
                      FieldArrayType,
-                     RefCountPolicy>::type_modifier_i (
-  ACE_ENV_SINGLE_ARG_DECL_NOT_USED) const
+                     RefCountPolicy>::type_modifier_i (void) const
 {
   return this->type_modifier_;
 }
@@ -452,8 +419,7 @@ CORBA::TypeCode_ptr
 TAO::TypeCode::Value<StringType,
                      TypeCodeType,
                      FieldArrayType,
-                     RefCountPolicy>::concrete_base_type_i (
-  ACE_ENV_SINGLE_ARG_DECL_NOT_USED) const
+                     RefCountPolicy>::concrete_base_type_i (void) const
 {
   return
     CORBA::TypeCode::_duplicate (
