@@ -357,12 +357,12 @@ TAO_POA_Manager::check_state (void)
       // should be re-issued. (Of course, an ORB may always reject a
       // request for other reasons and raise some other system
       // exception.)
-      throw (
+      throw
         CORBA::TRANSIENT (
           CORBA::SystemException::_tao_minor_code (
             TAO_POA_DISCARDING,
             1),
-          CORBA::COMPLETED_NO));
+          CORBA::COMPLETED_NO);
     }
 
   if (state_ == PortableServer::POAManager::HOLDING)

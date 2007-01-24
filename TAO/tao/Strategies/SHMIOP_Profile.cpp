@@ -140,11 +140,11 @@ TAO_SHMIOP_Profile::parse_string_i (const char *string
   if (cp == 0)
     {
       // No host/port delimiter!
-      throw ( ::CORBA::INV_OBJREF (
+      throw ::CORBA::INV_OBJREF (
                    CORBA::SystemException::_tao_minor_code (
                      TAO::VMCID,
                      EINVAL),
-                   CORBA::COMPLETED_NO));
+                   CORBA::COMPLETED_NO);
     }
 
   char *okd = ACE_OS::strchr (start, this->object_key_delimiter_);
@@ -152,11 +152,11 @@ TAO_SHMIOP_Profile::parse_string_i (const char *string
   if (okd == 0)
     {
       // No object key delimiter!
-      throw ( ::CORBA::INV_OBJREF (
+      throw ::CORBA::INV_OBJREF (
                    CORBA::SystemException::_tao_minor_code (
                      TAO::VMCID,
                      EINVAL),
-                   CORBA::COMPLETED_NO));
+                   CORBA::COMPLETED_NO);
     }
 
   // Don't increment the pointer 'cp' directly since we still need
@@ -180,11 +180,11 @@ TAO_SHMIOP_Profile::parse_string_i (const char *string
       ACE_INET_Addr ia;
       if (ia.string_to_addr (tmp.in ()) == -1)
         {
-          throw ( ::CORBA::INV_OBJREF (
+          throw ::CORBA::INV_OBJREF (
               CORBA::SystemException::_tao_minor_code (
                   TAO::VMCID,
                   EINVAL),
-              CORBA::COMPLETED_NO));
+              CORBA::COMPLETED_NO);
         }
       else
         {
@@ -222,11 +222,11 @@ TAO_SHMIOP_Profile::parse_string_i (const char *string
                           ACE_TEXT ("cannot determine hostname")));
 
             // @@ What's the right exception to throw here?
-            throw ( ::CORBA::INV_OBJREF (
+            throw ::CORBA::INV_OBJREF (
                          CORBA::SystemException::_tao_minor_code (
                            TAO::VMCID,
                            EINVAL),
-                         CORBA::COMPLETED_NO));
+                         CORBA::COMPLETED_NO);
           }
         else
           this->endpoint_.host_ = tmp;
@@ -248,11 +248,11 @@ TAO_SHMIOP_Profile::parse_string_i (const char *string
         }
 
       // @@ What's the right exception to throw here?
-      throw ( ::CORBA::INV_OBJREF (
+      throw ::CORBA::INV_OBJREF (
                    CORBA::SystemException::_tao_minor_code (
                      TAO::VMCID,
                      EINVAL),
-                   CORBA::COMPLETED_NO));
+                   CORBA::COMPLETED_NO);
     }
 
   start = ++okd;  // increment past the object key separator

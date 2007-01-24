@@ -65,8 +65,7 @@ namespace TAO
       // standard minor code 6 being raised (see 11.3.9.12 of the corba spec)
       if (!CORBA::is_nil (this->servant_activator_.in ()))
         {
-          throw ( ::CORBA::BAD_INV_ORDER (CORBA::OMGVMCID | 6,
-                                           CORBA::COMPLETED_NO));
+          throw ::CORBA::BAD_INV_ORDER (CORBA::OMGVMCID | 6, CORBA::COMPLETED_NO);
         }
 
       this->servant_activator_ =

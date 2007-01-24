@@ -109,11 +109,11 @@ TAO_COIOP_Profile::parse_string_i (const char *ior)
   if (okd == 0 || okd == ior)
     {
       // No object key delimiter or no hostname specified.
-      throw ( ::CORBA::INV_OBJREF (
+      throw ::CORBA::INV_OBJREF (
                    CORBA::SystemException::_tao_minor_code (
                      TAO::VMCID,
                      EINVAL),
-                   CORBA::COMPLETED_NO));
+                   CORBA::COMPLETED_NO);
     }
 
   // Length of host string.

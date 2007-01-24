@@ -109,7 +109,7 @@ TAO_RTScheduler_Current::update_scheduling_segment (const char * name,
   TAO_RTScheduler_Current_i *impl = this->implementation ();
 
   if (impl == 0)
-    throw ( ::CORBA::BAD_INV_ORDER ());
+    throw ::CORBA::BAD_INV_ORDER ();
 
   impl->update_scheduling_segment (name,
                                    sched_param,
@@ -127,7 +127,7 @@ TAO_RTScheduler_Current::end_scheduling_segment (const char * name)
     {
       ACE_ERROR ((LM_ERROR,
                   "Missing scheduling context OR DT cancelled\n"));
-      throw ( ::CORBA::BAD_INV_ORDER ());
+      throw ::CORBA::BAD_INV_ORDER ();
       return;
     }
 
@@ -728,7 +728,7 @@ TAO_RTScheduler_Current_i::cancel_thread (void)
   this->delete_all_currents ();
 
   // Throw exception.
-  throw ( ::CORBA::THREAD_CANCELLED ());
+  throw ::CORBA::THREAD_CANCELLED ();
 }
 
 void
