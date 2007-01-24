@@ -458,7 +458,7 @@ TAO_Profile::get_policies (CORBA::PolicyList& pl
 
           if (!(in_cdr >> policy_value_seq))
             {
-              throw ( ::CORBA::INV_OBJREF ());
+              throw ::CORBA::INV_OBJREF ();
             }
 
           // Here we extract the Messaging::PolicyValue out of the sequence
@@ -488,7 +488,7 @@ TAO_Profile::get_policies (CORBA::PolicyList& pl
                         policy_value_seq[i].pvalue.length ());
 
                       if (!(in_cdr >> ACE_InputCDR::to_boolean (byte_order)))
-                        throw ( ::CORBA::INV_OBJREF ());
+                        throw ::CORBA::INV_OBJREF ();
 
                       in_cdr.reset_byte_order (static_cast <int> (byte_order));
 

@@ -58,7 +58,7 @@ void TAO_CSD_POA::set_csd_strategy (
 {
   if (CORBA::is_nil (strategy))
     {
-      throw ( ::CORBA::BAD_PARAM ());
+      throw ::CORBA::BAD_PARAM ();
     }
   this->sds_proxy_->custom_strategy (strategy);
 }

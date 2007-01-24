@@ -39,7 +39,7 @@ TAO_DII_Arguments_Converter_Impl::convert (
 
   if (sz != nargs - 1)
     {
-      throw ( ::CORBA::BAD_PARAM ());
+      throw ::CORBA::BAD_PARAM ();
     }
 
   // To avoid the use of extraction operators on CORBA::Any, we will

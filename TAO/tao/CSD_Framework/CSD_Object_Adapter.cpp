@@ -33,7 +33,7 @@ TAO_CSD_Object_Adapter::do_dispatch (
 
   if (csd_poa == 0)
     {
-      throw ( ::CORBA::BAD_PARAM ());
+      throw ::CORBA::BAD_PARAM ();
     }
 
   TAO::CSD::Strategy_Proxy& proxy
