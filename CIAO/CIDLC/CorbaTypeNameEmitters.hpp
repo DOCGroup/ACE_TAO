@@ -291,48 +291,6 @@ public:
   virtual void traverse (SemanticGraph::Home&);
 };
 
-// Generates 'return' plus the appropriate NULL return value,
-// including no output for Void.
-//
-//
-class AceCheckReturnEmitter : public CorbaTypeNameEmitter
-{
-public:
-  AceCheckReturnEmitter (Context&);
-
-  virtual void traverse (Void&);
-  virtual void traverse (Boolean&);
-  virtual void traverse (Octet&);
-  virtual void traverse (Char&);
-  virtual void traverse (Wchar&);
-  virtual void traverse (Short&);
-  virtual void traverse (UnsignedShort&);
-  virtual void traverse (Long&);
-  virtual void traverse (UnsignedLong&);
-  virtual void traverse (LongLong&);
-  virtual void traverse (UnsignedLongLong&);
-  virtual void traverse (Float&);
-  virtual void traverse (Double&);
-  virtual void traverse (String&);
-  virtual void traverse (SemanticGraph::BoundedString&);
-  virtual void traverse (Wstring&);
-  virtual void traverse (SemanticGraph::BoundedWideString&);
-  virtual void traverse (Object&);
-  virtual void traverse (ValueBase&);
-  virtual void traverse (Any&);
-  virtual void traverse (SemanticGraph::Array&);
-  virtual void traverse (SemanticGraph::Enum&);
-  virtual void traverse (SemanticGraph::Struct&);
-  virtual void traverse (SemanticGraph::Union&);
-  virtual void traverse (SemanticGraph::BoundedSequence&);
-  virtual void traverse (SemanticGraph::UnboundedSequence&);
-  virtual void traverse (SemanticGraph::Interface&);
-  virtual void traverse (SemanticGraph::ValueType&);
-  virtual void traverse (SemanticGraph::EventType&);
-  virtual void traverse (SemanticGraph::Component&);
-  virtual void traverse (SemanticGraph::Home&);
-};
-
 /* Not currently used, but it was at one time and may be useful again.
 
 // Generates the appropriate NULL value, including the assignment operator,
