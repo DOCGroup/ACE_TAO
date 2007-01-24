@@ -344,7 +344,7 @@ namespace TAO
 
         if (result == -1)
           // Locking error.
-          throw ( ::CORBA::OBJ_ADAPTER ());
+          throw ::CORBA::OBJ_ADAPTER ();
 #endif /* !TAO_HAS_MINIMUM_POA == 0 */
     }
 

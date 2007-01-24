@@ -204,7 +204,7 @@ namespace TAO
 
       if (result != 0)
         {
-          throw ( ::CORBA::OBJ_ADAPTER ());
+          throw ::CORBA::OBJ_ADAPTER ();
         }
     }
 

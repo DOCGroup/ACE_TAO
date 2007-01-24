@@ -47,7 +47,7 @@ TAO::CSD::TP_Servant_State_Map::insert(PortableServer::Servant servant
 
   if (result == 1)
     {
-      throw (PortableServer::POA::ServantAlreadyActive ());
+      throw PortableServer::POA::ServantAlreadyActive ();
     }
 
   ACE_ASSERT (result == 0);
