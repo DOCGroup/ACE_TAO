@@ -1,3 +1,12 @@
+Wed Jan 24 12:25:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * TAO_IDL/be/be_codegen.cpp:
+          Instead of Environment.h generate Basic_Types.h as include
+
+        * TAO_IDL/be/be_visitor_exception/exception_cs.cpp:
+        * TAO_IDL/be/be_visitor_operation/ami_handler_reply_stub_operation_cs.cpp:
+          Generate throw instead of ACE_THROW
+
 Mon Jan 22 23:14:56 2007  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * TAO version 1.5.5 released.

@@ -235,7 +235,7 @@ int be_visitor_exception_cs::visit_exception (be_exception *node)
 
   *os << "void " << node->name () << "::_raise (void) const" << be_nl
       << "{" << be_idt_nl
-      << "TAO_RAISE (*this);" << be_uidt_nl
+      << "throw (*this);" << be_uidt_nl
       << "}" << be_nl << be_nl;
 
   *os << "void " << node->name ()
@@ -250,14 +250,7 @@ int be_visitor_exception_cs::visit_exception (be_exception *node)
           << "return;" << be_uidt_nl
           << "}" << be_uidt_nl << be_nl;
 
-      if (be_global->use_raw_throw ())
-        {
-          *os << "throw ::CORBA::MARSHAL ();" << be_uidt_nl;
-        }
-      else
-        {
-          *os << "ACE_THROW ( ::CORBA::MARSHAL ());" << be_uidt_nl;
-        }
+      *os << "throw ::CORBA::MARSHAL ();" << be_uidt_nl;
 
       *os << "}" << be_nl << be_nl;
     }
@@ -266,14 +259,7 @@ int be_visitor_exception_cs::visit_exception (be_exception *node)
       *os << "TAO_OutputCDR &) const" << be_nl
           << "{" << be_idt_nl;
 
-      if (be_global->use_raw_throw ())
-        {
-          *os << "throw ::CORBA::MARSHAL ();" << be_uidt_nl;
-        }
-      else
-        {
-          *os << "ACE_THROW ( ::CORBA::MARSHAL ());" << be_uidt_nl;
-        }
+      *os << "throw ::CORBA::MARSHAL ();" << be_uidt_nl;
 
       *os << "}" << be_nl << be_nl;
     }
@@ -290,14 +276,7 @@ int be_visitor_exception_cs::visit_exception (be_exception *node)
           << "return;" << be_uidt_nl
           << "}" << be_uidt_nl << be_nl;
 
-      if (be_global->use_raw_throw ())
-        {
-          *os << "throw ::CORBA::MARSHAL ();" << be_uidt_nl;
-        }
-      else
-        {
-          *os << "ACE_THROW ( ::CORBA::MARSHAL ());" << be_uidt_nl;
-        }
+      *os << "throw ::CORBA::MARSHAL ();" << be_uidt_nl;
 
       *os << "}" << be_nl << be_nl;
     }
@@ -306,14 +285,7 @@ int be_visitor_exception_cs::visit_exception (be_exception *node)
       *os << "TAO_InputCDR &)" << be_nl
           << "{" << be_idt_nl;
 
-      if (be_global->use_raw_throw ())
-        {
-          *os << "throw ::CORBA::MARSHAL ();" << be_uidt_nl;
-        }
-      else
-        {
-          *os << "ACE_THROW ( ::CORBA::MARSHAL ());" << be_uidt_nl;
-        }
+      *os << "throw ::CORBA::MARSHAL ();" << be_uidt_nl;
 
       *os << "}" << be_nl << be_nl;
     }
