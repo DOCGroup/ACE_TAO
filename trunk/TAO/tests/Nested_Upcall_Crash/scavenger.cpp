@@ -87,7 +87,7 @@ main (int argc, char *argv[])
        ACE_DEBUG ((LM_DEBUG, "(%P|%t) scavenger - event loop finished\n"));
 
       orb->destroy ();
-/
+      */
     }
   ACE_CATCHANY
     {
