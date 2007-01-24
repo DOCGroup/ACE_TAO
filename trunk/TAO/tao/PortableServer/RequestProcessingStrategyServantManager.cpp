@@ -42,7 +42,7 @@ namespace TAO
     {
       ACE_UNUSED_ARG (servant);
 
-      throw (PortableServer::POA::WrongPolicy ());
+      throw PortableServer::POA::WrongPolicy ();
     }
 
     void
@@ -54,8 +54,7 @@ namespace TAO
       // see 11.3.8.6 of the corba spec
       if (CORBA::is_nil (servant_manager))
         {
-          throw ( ::CORBA::OBJ_ADAPTER (CORBA::OMGVMCID | 4,
-                                         CORBA::COMPLETED_NO));
+          throw ::CORBA::OBJ_ADAPTER (CORBA::OMGVMCID | 4, CORBA::COMPLETED_NO);
         }
     }
 

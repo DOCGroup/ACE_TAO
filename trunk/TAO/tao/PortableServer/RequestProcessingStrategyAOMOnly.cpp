@@ -39,7 +39,7 @@ namespace TAO
       ACE_THROW_SPEC ((CORBA::SystemException,
                        PortableServer::POA::WrongPolicy))
     {
-      throw (PortableServer::POA::WrongPolicy ());
+      throw PortableServer::POA::WrongPolicy ();
     }
 
     void
@@ -49,7 +49,7 @@ namespace TAO
         ACE_THROW_SPEC ((CORBA::SystemException,
                          PortableServer::POA::WrongPolicy))
     {
-      throw (PortableServer::POA::WrongPolicy ());
+      throw PortableServer::POA::WrongPolicy ();
     }
 
 #endif /* TAO_HAS_MINIMUM_POA == 0 */

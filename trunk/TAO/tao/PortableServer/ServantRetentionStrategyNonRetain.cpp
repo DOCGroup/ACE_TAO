@@ -53,7 +53,7 @@ namespace TAO
     {
       // When using Non_Retain we don't have an active object map and we just
       // can't deactivate any object
-      throw (PortableServer::POA::WrongPolicy ());
+      throw PortableServer::POA::WrongPolicy ();
     }
 
     PortableServer::Servant
@@ -206,7 +206,7 @@ namespace TAO
                          PortableServer::POA::ObjectAlreadyActive,
                          PortableServer::POA::WrongPolicy))
     {
-      throw (PortableServer::POA::WrongPolicy ());
+      throw PortableServer::POA::WrongPolicy ();
     }
 #endif
 
