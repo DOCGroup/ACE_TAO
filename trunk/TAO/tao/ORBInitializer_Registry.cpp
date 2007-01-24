@@ -80,7 +80,7 @@ namespace PortableInterceptor
                     ACE_TEXT ("ERROR: ORBInitializer Registry unable to find the ")
                     ACE_TEXT ("ORBInitializer Registry instance")));
 
-        throw ( ::CORBA::INTERNAL ());
+        throw ::CORBA::INTERNAL ();
       }
   }
 }

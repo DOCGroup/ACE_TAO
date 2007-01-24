@@ -65,7 +65,7 @@ TAO_PolicyFactory_Registry::register_policy_factory (
       else
         {
           // Could not add PolicyFactory due to internal bind failures.
-          throw ( ::CORBA::INTERNAL ());
+          throw ::CORBA::INTERNAL ();
         }
     }
 }

@@ -513,7 +513,7 @@ TAO::ServerRequestInfo::set_slot (PortableInterceptor::SlotId id,
     dynamic_cast <TAO::PICurrent*> (pi_current_obj);
 
   if (pi_current == 0)
-    throw ( ::CORBA::INTERNAL ());
+    throw ::CORBA::INTERNAL ();
 
   pi_current->check_validity (id);
 

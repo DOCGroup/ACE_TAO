@@ -52,7 +52,7 @@ void
                     "\"PortableInterceptor::ORBInitInfo_ptr\" to\n"
                     "(%P|%t)   \"TAO_ORBInitInfo *.\"\n"));
 
-      throw ( ::CORBA::INTERNAL ());
+      throw ::CORBA::INTERNAL ();
     }
 
 
@@ -153,7 +153,7 @@ TAO_RTScheduler_ORB_Initializer::post_init (PortableInterceptor::ORBInitInfo_ptr
       ACE_DEBUG ((LM_DEBUG,
                   "(%P|%t) ::post_init \n"
                   "(%P|%t) Unable to narrow to RTCORBA::Current\n"));
-      throw ( ::CORBA::INTERNAL ());
+      throw ::CORBA::INTERNAL ();
     }
 
   this->current_->rt_current (rt_current.in ());

@@ -276,7 +276,7 @@ CORBA::ORB::create_list (CORBA::Long count, CORBA::NVList_ptr &new_list)
                   ACE_TEXT ("(%P|%t) %p\n"),
                   ACE_TEXT ("ORB unable to find the ")
                   ACE_TEXT ("NVList Adapter instance")));
-      throw ( ::CORBA::INTERNAL ());
+      throw ::CORBA::INTERNAL ();
     }
 
   adapter->create_list (count, new_list);
@@ -337,7 +337,7 @@ CORBA::ORB::create_named_value (CORBA::NamedValue_ptr &nv)
                   ACE_TEXT ("ORB unable to find the ")
                   ACE_TEXT ("NVList Adapter instance")));
 
-      throw ( ::CORBA::INTERNAL ());
+      throw ::CORBA::INTERNAL ();
     }
 
   adapter->create_named_value (nv);

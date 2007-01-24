@@ -119,7 +119,7 @@ TAO::ServerRequestInterceptor_Adapter_Impl::receive_request_service_contexts (
       // evaluates to "true," then it is likely that a starting
       // interception point was never invoked.  This is of course, an
       // internal error that must be corrected.
-      throw ( ::CORBA::INTERNAL ());
+      throw ::CORBA::INTERNAL ();
     }
 
   try
@@ -259,7 +259,7 @@ TAO::ServerRequestInterceptor_Adapter_Impl::receive_request (
       // evaluates to "true," then it is likely that a starting
       // interception point was never invoked.  This is of course, an
       // internal error that must be corrected.
-      throw ( ::CORBA::INTERNAL ());
+      throw ::CORBA::INTERNAL ();
     }
 
   TAO::ServerRequestInfo request_info (server_request,

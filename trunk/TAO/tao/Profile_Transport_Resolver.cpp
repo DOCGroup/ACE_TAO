@@ -93,7 +93,7 @@ namespace TAO
 
     if (this->transport_.get () == 0)
       {
-        throw ( ::CORBA::INTERNAL ());
+        throw ::CORBA::INTERNAL ();
       }
 
     const TAO_GIOP_Message_Version& version =

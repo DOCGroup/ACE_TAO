@@ -176,7 +176,7 @@ TAO_RT_ORBInitializer::pre_init (
                     "\"PortableInterceptor::ORBInitInfo_ptr\" to\n"
                     "(%P|%t)   \"TAO_ORBInitInfo *.\"\n"));
 
-      throw ( ::CORBA::INTERNAL ());
+      throw ::CORBA::INTERNAL ();
     }
 
   // Create the RT_ORB.

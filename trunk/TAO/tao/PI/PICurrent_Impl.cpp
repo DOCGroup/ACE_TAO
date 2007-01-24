@@ -33,7 +33,7 @@ TAO::PICurrent_Impl::get_slot (PortableInterceptor::SlotId identifier
   {
     if (TAO_debug_level > 0)
       ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("TAO (%P|%t) Lazy copy of self detected at %N,%l\n")));
-    throw ( ::CORBA::INTERNAL ());
+    throw ::CORBA::INTERNAL ();
   }
 
   // Get the slot table that is currently active
@@ -91,7 +91,7 @@ TAO::PICurrent_Impl::set_slot (PortableInterceptor::SlotId identifier,
   // slots for the reason stated above.
   if (identifier >= this->slot_table_.size ()
       && this->slot_table_.size (identifier + 1) != 0)
-    throw ( ::CORBA::INTERNAL ());
+    throw ::CORBA::INTERNAL ();
 
   this->slot_table_[identifier] = CORBA::Any (data);
 }
