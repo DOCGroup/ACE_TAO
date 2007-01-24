@@ -54,7 +54,6 @@ main (int argc, char *argv[])
       CORBA::ORB_var orb = CORBA::ORB_init (argc, argv,
                                             ""
                                             ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       if (parse_args (argc, argv) != 0)
         {
@@ -64,11 +63,9 @@ main (int argc, char *argv[])
       CORBA::Object_var obj =
         orb->string_to_object (ior
                                ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       Hello::Sender_var sender = Hello::Sender::_narrow (obj.in ()
                                                          ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       if (CORBA::is_nil (sender.in ()))
         {
@@ -82,11 +79,9 @@ main (int argc, char *argv[])
         sender->local_message (message);
       }
 
-      sender->start (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      sender->start ();
 
-      orb->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      orb->destroy ();
     }
   ACE_CATCHANY
     {

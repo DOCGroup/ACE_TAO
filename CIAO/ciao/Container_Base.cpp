@@ -108,7 +108,6 @@ namespace CIAO
     CORBA::Object_var poa_object =
       this->orb_->resolve_initial_references("RootPOA"
                                              ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK_RETURN (-1);
 
     if (CORBA::is_nil (poa_object.in ()))
       {
@@ -120,13 +119,11 @@ namespace CIAO
     PortableServer::POA_var root_poa =
       PortableServer::POA::_narrow (poa_object.in ()
                                     ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK_RETURN (-1);
 
     this->create_component_POA (name,
                                 more_policies,
                                 root_poa.in ()
                                 ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK_RETURN (-1);
 
     ACE_CString port_poa_name (name);
     port_poa_name += ":Port_POA";
@@ -134,14 +131,11 @@ namespace CIAO
                                      more_policies,
                                      root_poa.in ()
                                      ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK_RETURN (-1);
 
     PortableServer::POAManager_var poa_manager =
-      root_poa->the_POAManager (ACE_ENV_SINGLE_ARG_PARAMETER);
-    ACE_CHECK_RETURN (-1);
+      root_poa->the_POAManager ();
 
-    poa_manager->activate (ACE_ENV_SINGLE_ARG_PARAMETER);
-    ACE_CHECK_RETURN (-1);
+    poa_manager->activate ();
 
     return 0;
   }
@@ -167,15 +161,13 @@ namespace CIAO
       }
 
     PortableServer::POAManager_var poa_manager =
-      root->the_POAManager (ACE_ENV_SINGLE_ARG_PARAMETER);
-    ACE_CHECK;
+      root->the_POAManager ();
 
     this->component_poa_ =
       root->create_POA (name,
                         poa_manager.in (),
                         policies
                         ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK;
   }
 
   void
@@ -188,8 +180,7 @@ namespace CIAO
     CIAO_TRACE ("Session_Container::create_facet_consumer_POA");
 
     PortableServer::POAManager_var poa_manager =
-      root->the_POAManager (ACE_ENV_SINGLE_ARG_PARAMETER);
-    ACE_CHECK;
+      root->the_POAManager ();
 
     CORBA::ULong p_length = 0;
     if (p != 0)
@@ -203,20 +194,17 @@ namespace CIAO
     policies[0] =
       root->create_id_assignment_policy (PortableServer::USER_ID
                                          ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK;
 
     // Servant Manager Policy
     policies[1] =
       root->create_request_processing_policy
       (PortableServer::USE_SERVANT_MANAGER
        ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK;
 
     // Servant Retention Policy
     policies[2] =
       root->create_servant_retention_policy (PortableServer::RETAIN
                                              ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK;
 
     for (CORBA::ULong i = 0; i < p_length; ++i)
       {
@@ -228,7 +216,6 @@ namespace CIAO
                         poa_manager.in (),
                         policies
                         ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK;
 
     ACE_NEW_THROW_EX (this->sa_,
                       Servant_Activator (this->orb_.in ()),
@@ -238,7 +225,6 @@ namespace CIAO
                                                 this->sa_
                                                 ACE_ENV_ARG_PARAMETER
                                                 );
-    ACE_CHECK;
   }
 
   CORBA::Object_ptr
@@ -263,12 +249,10 @@ namespace CIAO
     PortableServer::ObjectId_var oid =
       tmp->activate_object (p
                             ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK_RETURN (0);
 
     CORBA::Object_var objref =
       tmp->id_to_reference (oid.in ()
                             ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK_RETURN (0);
 
     return objref._retn ();
   }
@@ -283,12 +267,10 @@ namespace CIAO
     PortableServer::ObjectId_var id =
       this->component_poa_->activate_object (p
                                              ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK_RETURN (0);
 
     CORBA::Object_var objref =
       this->component_poa_->id_to_reference (id.in ()
                                              ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK_RETURN (0);
 
     oid = id._retn ();
 
@@ -490,7 +472,6 @@ namespace CIAO
                                                      this,
                                                      ins_name
                                                      ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK_RETURN (Components::CCMHome::_nil ());
 
     if (home_servant == 0)
       {
@@ -507,12 +488,10 @@ namespace CIAO
       this->install_servant (home_servant,
                              Container::Component
                              ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK_RETURN (Components::CCMHome::_nil ());
 
     Components::CCMHome_var homeref =
       Components::CCMHome::_narrow (objref.in ()
                                     ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK_RETURN (0);
 
     return homeref._retn ();
   }
@@ -527,7 +506,6 @@ namespace CIAO
     this->uninstall (homeref,
                      Container::Component
                      ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK;
   }
 
   void
@@ -552,11 +530,9 @@ namespace CIAO
     PortableServer::ObjectId_var oid =
       tmp->reference_to_id (objref
                             ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK;
 
     tmp->deactivate_object (oid.in ()
                             ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK;
   }
 
   void
@@ -580,11 +556,9 @@ namespace CIAO
     PortableServer::ObjectId_var oid
       = tmp->servant_to_id (svt
                             ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK;
 
     tmp->deactivate_object (oid.in ()
                             ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK;
   }
 
   void
@@ -598,11 +572,9 @@ namespace CIAO
     PortableServer::ObjectId_var id =
       this->component_poa_->reference_to_id (objref
                                              ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK;
 
     this->component_poa_->deactivate_object (id.in ()
                                              ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK;
 
     oid = id._retn ();
   }
@@ -679,7 +651,6 @@ namespace CIAO
       tmp->create_reference_with_id (oid.in (),
                                      repo_id
                                      ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK_RETURN (CORBA::Object::_nil ());
 
     return objref._retn ();
   }

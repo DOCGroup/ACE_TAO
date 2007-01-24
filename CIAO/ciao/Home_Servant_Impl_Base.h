@@ -50,11 +50,11 @@ namespace CIAO
     // Operations for CCMHome interface.
 
     virtual ::CORBA::IRObject_ptr
-    get_component_def (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+    get_component_def (void)
       ACE_THROW_SPEC ((CORBA::SystemException));
 
     virtual ::CORBA::IRObject_ptr
-    get_home_def (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+    get_home_def (void)
       ACE_THROW_SPEC ((CORBA::SystemException));
 
     virtual void

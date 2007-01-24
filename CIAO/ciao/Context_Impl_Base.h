@@ -68,20 +68,20 @@ namespace CIAO
     // Operations from ::Components::CCMContext.
 
     virtual Components::Principal_ptr
-    get_caller_principal (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+    get_caller_principal (void)
       ACE_THROW_SPEC ((CORBA::SystemException));
 
     virtual Components::CCMHome_ptr
-    get_CCM_home (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+    get_CCM_home (void)
       ACE_THROW_SPEC ((CORBA::SystemException));
 
     virtual CORBA::Boolean
-    get_rollback_only (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+    get_rollback_only (void)
       ACE_THROW_SPEC ((CORBA::SystemException,
                        Components::IllegalState));
 
     virtual Components::Transaction::UserTransaction_ptr
-    get_user_transaction (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+    get_user_transaction (void)
       ACE_THROW_SPEC ((CORBA::SystemException,
                        Components::IllegalState));
 
@@ -91,7 +91,7 @@ namespace CIAO
       ACE_THROW_SPEC ((CORBA::SystemException));
 
     virtual void
-    set_rollback_only (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+    set_rollback_only (void)
       ACE_THROW_SPEC ((CORBA::SystemException,
                        Components::IllegalState));
 

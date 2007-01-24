@@ -28,10 +28,10 @@ namespace CIAO
         virtual ~Controller_exec_i (void);
 
         // Supported operations.
-        virtual void start (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+        virtual void start (void)
         ACE_THROW_SPEC ((::CORBA::SystemException));
 
-        virtual void stop (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+        virtual void stop (void)
         ACE_THROW_SPEC ((::CORBA::SystemException));
 
         // Attribute operations.

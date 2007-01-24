@@ -117,7 +117,7 @@ CIAO::Deployment_Configuration::get_node_manager (const char *name
                                                   ACE_ENV_ARG_DECL)
 {
   if (name == 0)
-    return get_default_node_manager (ACE_ENV_SINGLE_ARG_PARAMETER);
+    return get_default_node_manager ();
 
   ACE_Hash_Map_Entry
     <ACE_CString,
@@ -140,7 +140,6 @@ CIAO::Deployment_Configuration::get_node_manager (const char *name
           CORBA::Object_var temp = this->orb_->string_to_object
                                    (entry->int_id_.IOR_.c_str ()
                                     ACE_ENV_ARG_PARAMETER);
-          ACE_CHECK_RETURN (0);
 
           entry->int_id_.node_manager_ =
             ::Deployment::NodeManager::_narrow (temp.in ()
@@ -153,26 +152,23 @@ CIAO::Deployment_Configuration::get_node_manager (const char *name
           ACE_RE_THROW;
         }
       ACE_ENDTRY;
-      ACE_CHECK_RETURN (0);
     }
   return ::Deployment::NodeManager::_duplicate
     (entry->int_id_.node_manager_.in ());
 }
 
 ::Deployment::NodeManager_ptr
-CIAO::Deployment_Configuration::get_default_node_manager (ACE_ENV_SINGLE_ARG_DECL)
+CIAO::Deployment_Configuration::get_default_node_manager (void)
 {
   if (CORBA::is_nil (this->default_node_manager_.node_manager_.in ()))
     {
       CORBA::Object_var temp = this->orb_->string_to_object
         (this->default_node_manager_.IOR_.c_str ()
          ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK_RETURN (0);
 
       this->default_node_manager_.node_manager_ =
         ::Deployment::NodeManager::_narrow (temp.in ()
                                             ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK_RETURN (0);
     }
   return ::Deployment::NodeManager::_duplicate
     (this->default_node_manager_.node_manager_.in ());

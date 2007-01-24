@@ -16,7 +16,7 @@ CIAO::NodeApplication_Impl::~NodeApplication_Impl (void)
 
 
 CORBA::Long
-CIAO::NodeApplication_Impl::init (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+CIAO::NodeApplication_Impl::init (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   /// @todo initialize this NodeApplication properties
@@ -181,7 +181,7 @@ CIAO::NodeApplication_Impl::finishLaunch_i (
 }
 
 void
-CIAO::NodeApplication_Impl::ciao_preactivate (ACE_ENV_SINGLE_ARG_DECL)
+CIAO::NodeApplication_Impl::ciao_preactivate (void)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Deployment::StartError))
 {
@@ -192,8 +192,7 @@ CIAO::NodeApplication_Impl::ciao_preactivate (ACE_ENV_SINGLE_ARG_DECL)
   {
     if (((*iter).int_id_).state_ == NEW_BORN)
       {
-        ((*iter).int_id_).objref_->ciao_preactivate (ACE_ENV_SINGLE_ARG_PARAMETER);
-        ACE_CHECK;
+        ((*iter).int_id_).objref_->ciao_preactivate ();
       }
 
     ((*iter).int_id_).state_ = PRE_ACTIVE;
@@ -201,7 +200,7 @@ CIAO::NodeApplication_Impl::ciao_preactivate (ACE_ENV_SINGLE_ARG_DECL)
 }
 
 void
-CIAO::NodeApplication_Impl::start (ACE_ENV_SINGLE_ARG_DECL)
+CIAO::NodeApplication_Impl::start (void)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Deployment::StartError))
 {
@@ -212,8 +211,7 @@ CIAO::NodeApplication_Impl::start (ACE_ENV_SINGLE_ARG_DECL)
   {
     if (((*iter).int_id_).state_ == PRE_ACTIVE)
       {
-        ((*iter).int_id_).objref_->ciao_activate (ACE_ENV_SINGLE_ARG_PARAMETER);
-        ACE_CHECK;
+        ((*iter).int_id_).objref_->ciao_activate ();
       }
 
     ((*iter).int_id_).state_ = ACTIVE;
@@ -221,7 +219,7 @@ CIAO::NodeApplication_Impl::start (ACE_ENV_SINGLE_ARG_DECL)
 }
 
 void
-CIAO::NodeApplication_Impl::ciao_postactivate (ACE_ENV_SINGLE_ARG_DECL)
+CIAO::NodeApplication_Impl::ciao_postactivate (void)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Deployment::StartError))
 {
@@ -232,8 +230,7 @@ CIAO::NodeApplication_Impl::ciao_postactivate (ACE_ENV_SINGLE_ARG_DECL)
   {
     if (((*iter).int_id_).state_ == ACTIVE)
       {
-        ((*iter).int_id_).objref_->ciao_postactivate (ACE_ENV_SINGLE_ARG_PARAMETER);
-        ACE_CHECK;
+        ((*iter).int_id_).objref_->ciao_postactivate ();
 
         ((*iter).int_id_).state_ = POST_ACTIVE;
       }
@@ -241,7 +238,7 @@ CIAO::NodeApplication_Impl::ciao_postactivate (ACE_ENV_SINGLE_ARG_DECL)
 }
 
 void
-CIAO::NodeApplication_Impl::ciao_passivate (ACE_ENV_SINGLE_ARG_DECL)
+CIAO::NodeApplication_Impl::ciao_passivate (void)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Deployment::StopError))
 {
@@ -250,8 +247,7 @@ CIAO::NodeApplication_Impl::ciao_passivate (ACE_ENV_SINGLE_ARG_DECL)
        iter != end;
        ++iter)
   {
-    ((*iter).int_id_).objref_->ciao_passivate (ACE_ENV_SINGLE_ARG_PARAMETER);
-    ACE_CHECK;
+    ((*iter).int_id_).objref_->ciao_passivate ();
 
     ((*iter).int_id_).state_ = PASSIVE;
   }
@@ -280,7 +276,6 @@ CIAO::NodeApplication_Impl::install (
       ACE_NEW_THROW_EX (retv,
                         Deployment::ComponentInfos,
                         CORBA::NO_MEMORY ());
-      ACE_TRY_CHECK;
 
       retv->length (0UL);
 
@@ -318,7 +313,6 @@ CIAO::NodeApplication_Impl::install (
             this->container_set_.at(i+old_set_size)->
                     install (container_infos[i]
                              ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
 
           // Append the return sequence to the *big* return sequence
           CORBA::ULong curr_len = retv->length ();
@@ -367,7 +361,6 @@ CIAO::NodeApplication_Impl::install (
       ACE_RE_THROW;
     }
   ACE_ENDTRY;
-  ACE_CHECK_RETURN (0);
 
   return retv._retn ();
 }
@@ -424,8 +417,7 @@ CIAO::NodeApplication_Impl::passivate_component (const char * name
       throw Components::RemoveFailure ();
     }
 
-  comp_state.objref_->ciao_passivate (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+  comp_state.objref_->ciao_passivate ();
 }
 
 void
@@ -454,19 +446,16 @@ CIAO::NodeApplication_Impl::activate_component (const char * name
       throw Deployment::StartError ();
     }
 
-  comp_state.objref_->ciao_preactivate (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+  comp_state.objref_->ciao_preactivate ();
 
-  comp_state.objref_->ciao_activate (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+  comp_state.objref_->ciao_activate ();
 
-  comp_state.objref_->ciao_postactivate (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+  comp_state.objref_->ciao_postactivate ();
 }
 
 
 void
-CIAO::NodeApplication_Impl::remove (ACE_ENV_SINGLE_ARG_DECL)
+CIAO::NodeApplication_Impl::remove (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // If we still have components installed, then do nothing
@@ -483,8 +472,7 @@ CIAO::NodeApplication_Impl::remove (ACE_ENV_SINGLE_ARG_DECL)
           ACE_DEBUG ((LM_DEBUG, "NA: calling remove on container %i\n"));
         }
 
-      this->container_set_.at(i)->remove (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK;
+      this->container_set_.at(i)->remove ();
     }
 
   // Remove all containers
@@ -533,7 +521,6 @@ CIAO::NodeApplication_Impl::create_container (
                                           this->get_objref (),
                                           this->static_entrypts_maps_),
                     CORBA::NO_MEMORY ());
-  ACE_CHECK_RETURN (0);
 
   PortableServer::ServantBase_var safe_servant (container_servant);
 
@@ -544,26 +531,21 @@ CIAO::NodeApplication_Impl::create_container (
   // file to describe the deployment plan.
   container_servant->init (policies.ptr ()
                            ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (0);
 
   PortableServer::ObjectId_var oid
     = this->poa_->activate_object (container_servant
                                    ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (0);
 
   CORBA::Object_var obj
     = this->poa_->id_to_reference (oid.in ()
                                    ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (0);
 
   ::Deployment::Container_var ci
     = ::Deployment::Container::_narrow (obj.in ()
                                         ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (0);
 
   // Cached the objref in its servant.
   container_servant->set_objref (ci.in () ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (0);
 
   {
     ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, this->lock_, 0);
@@ -592,18 +574,15 @@ CIAO::NodeApplication_Impl::remove_container (::Deployment::Container_ptr cref
       ACE_THROW (Components::RemoveFailure());
     }
 
-  cref->remove (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+  cref->remove ();
 
   // @@ Deactivate object.
   PortableServer::ObjectId_var oid
     = this->poa_->reference_to_id (cref
                                    ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
   this->poa_->deactivate_object (oid.in ()
                                  ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
   // Should we remove the server still, even if the previous call failed.
   if (this->container_set_.remove (cref) == -1)
@@ -616,7 +595,7 @@ CIAO::NodeApplication_Impl::remove_container (::Deployment::Container_ptr cref
 
 // Get containers
 ::Deployment::Containers *
-CIAO::NodeApplication_Impl::get_containers (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+CIAO::NodeApplication_Impl::get_containers (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return 0;
@@ -649,7 +628,7 @@ ACE_THROW_SPEC ((::CORBA::SystemException,
           // Set up the event channel federations
           for (CORBA::ULong j = 0; j < es_info.addr_servs.length (); ++j)
 		        {
-			        bool retv = 
+			        bool retv =
 			        ciao_rtes->create_addr_serv (
 				        es_info.addr_servs[j].name.in (),
 				        es_info.addr_servs[j].port,
@@ -664,7 +643,7 @@ ACE_THROW_SPEC ((::CORBA::SystemException,
 
 		      for (CORBA::ULong j = 0; j < es_info.senders.length (); ++j)
 		        {
-			        bool retv = 
+			        bool retv =
 			        ciao_rtes->create_sender (
 				        es_info.senders[j].addr_serv_id.in ());
 
@@ -677,7 +656,7 @@ ACE_THROW_SPEC ((::CORBA::SystemException,
 
 		      for (CORBA::ULong j = 0; j < es_info.receivers.length (); ++j)
 		        {
-			        bool retv = 
+			        bool retv =
 			        ciao_rtes->create_receiver (
 				        es_info.receivers[j].addr_serv_id.in (),
 				        es_info.receivers[j].is_multicast,
@@ -747,7 +726,6 @@ handle_facet_receptable_connection (
         comp->connect (connection.portName.in (),
                         connection.endpoint.in ()
                         ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       ACE_CString key = (*create_connection_key (connection));
       if (CIAO::debug_level () > 10)
@@ -812,7 +790,6 @@ handle_emitter_consumer_connection (
   Components::EventConsumerBase_var consumer =
       Components::EventConsumerBase::_narrow (connection.endpoint.in ()
                                               ACE_ENV_ARG_PARAMETER);
-  ACE_TRY_CHECK;
 
   if (CORBA::is_nil (consumer.in ()))
     {
@@ -841,7 +818,6 @@ handle_emitter_consumer_connection (
       comp->connect_consumer (connection.portName.in (),
                               consumer.in ()
                               ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       if (CIAO::debug_level () > 6)
         {
@@ -861,7 +837,6 @@ handle_emitter_consumer_connection (
 //                  comp->disconnect_consumer (connection.portName.in (),
 //                                             0
 //                                             ACE_ENV_ARG_PARAMETER);
-//                  ACE_TRY_CHECK;
 
       if (CIAO::debug_level () > 6)
         {
@@ -890,7 +865,6 @@ handle_publisher_consumer_connection (
   Components::EventConsumerBase_var consumer =
       Components::EventConsumerBase::_narrow (connection.endpoint.in ()
                                               ACE_ENV_ARG_PARAMETER);
-  ACE_TRY_CHECK;
 
   if (CORBA::is_nil (consumer.in ()))
     {
@@ -920,7 +894,6 @@ handle_publisher_consumer_connection (
         comp->subscribe (connection.portName.in (),
                           consumer.in ()
                           ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       ACE_CString key = (*create_connection_key (connection));
       this->cookie_map_.rebind (key, cookie);
@@ -954,7 +927,6 @@ handle_publisher_consumer_connection (
       comp->unsubscribe (connection.portName.in (),
                         cookie.in ()
                         ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
       this->cookie_map_.unbind (key);
 
       if (CIAO::debug_level () > 6)
@@ -1219,7 +1191,6 @@ CIAO::NodeApplication_Impl::build_event_connection (
     Components::EventConsumerBase_var consumer =
       Components::EventConsumerBase::_narrow (connection.endpoint.in ()
                                               ACE_ENV_ARG_PARAMETER);
-    ACE_TRY_CHECK;
 
     if (CORBA::is_nil (consumer.in ()))
       {

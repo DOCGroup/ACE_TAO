@@ -47,7 +47,6 @@ namespace CIAO
     */
 
     this->container_->deactivate_facet (oid ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK;
   }
 
   template <typename BASE_CTX,
@@ -64,13 +63,10 @@ namespace CIAO
     PortableServer::ObjectId_var oid =
       this->container_->the_facet_cons_POA ()->reference_to_id
          (reference ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK;
 
     this->update_port_activator (oid.in () ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK;
 
     this->deactivate_facet (oid.in () ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK;
   }
 
   template <typename BASE_CTX,
@@ -92,7 +88,6 @@ namespace CIAO
     CIAO::Servant_Activator *sa =
         this->container_->ports_servant_activator ();
     sa->update_port_activator (oid ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK;
   }
 
 }

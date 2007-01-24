@@ -35,15 +35,13 @@ MyImpl::BMDisplay_exec_impl::push_data_ready (
 
   // Refresh position
   BasicSP::ReadData_var dat
-    = this->context_->get_connection_comp_data (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+    = this->context_->get_connection_comp_data ();
 
   if (CORBA::is_nil (dat.in ()))
     ACE_THROW (CORBA::BAD_INV_ORDER ());
 
   CORBA::String_var str =
-    dat->get_data (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+    dat->get_data ();
 
   ACE_DEBUG ((LM_DEBUG,
               "BMDisplay - Display data is [%s] \n",
@@ -62,14 +60,13 @@ MyImpl::BMDisplay_exec_impl::set_session_context (
 {
   if (CIAO::debug_level () > 0)
     {
-      ACE_DEBUG ((LM_DEBUG, 
+      ACE_DEBUG ((LM_DEBUG,
                   "MyImpl::BMDisplay_exec_impl::set_session_context\n"));
     }
 
   this->context_ =
     BasicSP::CCM_BMDisplay_Context::_narrow (ctx
                                          ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
   if (CORBA::is_nil (this->context_.in ()))
     ACE_THROW (CORBA::INTERNAL ());
@@ -86,13 +83,13 @@ MyImpl::BMDisplay_exec_impl::ciao_preactivate (
 }
 
 void
-MyImpl::BMDisplay_exec_impl::ccm_activate (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+MyImpl::BMDisplay_exec_impl::ccm_activate (void)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Components::CCMException))
 {
   if (CIAO::debug_level () > 0)
     {
-      ACE_DEBUG ((LM_DEBUG, 
+      ACE_DEBUG ((LM_DEBUG,
                   "MyImpl::BMDisplay_exec_impl::ccm_activate\n"));
     }
 
@@ -116,19 +113,19 @@ MyImpl::BMDisplay_exec_impl::ccm_passivate (
 {
   if (CIAO::debug_level () > 0)
     {
-      ACE_DEBUG ((LM_DEBUG, 
+      ACE_DEBUG ((LM_DEBUG,
                   "MyImpl::BMDisplay_exec_impl::ccm_passivate\n"));
     }
 }
 
 void
-MyImpl::BMDisplay_exec_impl::ccm_remove (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+MyImpl::BMDisplay_exec_impl::ccm_remove (void)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Components::CCMException))
 {
   if (CIAO::debug_level () > 0)
     {
-      ACE_DEBUG ((LM_DEBUG, 
+      ACE_DEBUG ((LM_DEBUG,
                   "MyImpl::BMDisplay_exec_impl::ccm_remove\n"));
     }
 }
@@ -148,7 +145,7 @@ MyImpl::BMDisplayHome_exec_impl::~BMDisplayHome_exec_impl ()
 // Implicit home operations.
 
 ::Components::EnterpriseComponent_ptr
-MyImpl::BMDisplayHome_exec_impl::create (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+MyImpl::BMDisplayHome_exec_impl::create (void)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Components::CCMException))
 {

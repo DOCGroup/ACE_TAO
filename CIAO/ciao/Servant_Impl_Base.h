@@ -61,25 +61,25 @@ namespace CIAO
     /// Operations for CCMObject interface.
 
     virtual ::Components::PrimaryKeyBase *
-    get_primary_key (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+    get_primary_key (void)
       ACE_THROW_SPEC ((CORBA::SystemException,
                        Components::NoKeyAvailable));
 
     virtual CORBA::IRObject_ptr
-    get_component_def (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+    get_component_def (void)
       ACE_THROW_SPEC ((CORBA::SystemException));
 
     virtual Components::SessionComponent_ptr
-    get_executor (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+    get_executor (void)
       ACE_THROW_SPEC ((CORBA::SystemException)) = 0;
 
     virtual void
-    configuration_complete (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+    configuration_complete (void)
       ACE_THROW_SPEC ((CORBA::SystemException,
                        Components::InvalidConfiguration));
 
     virtual void
-    remove (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+    remove (void)
       ACE_THROW_SPEC ((CORBA::SystemException,
                        Components::RemoveFailure));
 
@@ -90,7 +90,7 @@ namespace CIAO
                        Components::InvalidName));
 
     virtual ::Components::ComponentPortDescription *
-    get_all_ports (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+    get_all_ports (void)
       ACE_THROW_SPEC ((CORBA::SystemException));
 
     virtual CORBA::Object_ptr
@@ -106,12 +106,12 @@ namespace CIAO
                        Components::InvalidName));
 
     virtual ::Components::FacetDescriptions *
-    get_all_facets (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+    get_all_facets (void)
       ACE_THROW_SPEC ((CORBA::SystemException));
 
 
     virtual ::Components::ConsumerDescriptions *
-    get_all_consumers (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+    get_all_consumers (void)
       ACE_THROW_SPEC ((CORBA::SystemException));
 
 
@@ -140,7 +140,7 @@ namespace CIAO
                        Components::InvalidName));
 
     virtual ::Components::ReceptacleDescriptions *
-    get_all_receptacles (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+    get_all_receptacles (void)
       ACE_THROW_SPEC ((CORBA::SystemException));
 
     virtual ::Components::PublisherDescriptions *
@@ -155,7 +155,7 @@ namespace CIAO
 
     // Creates and returns the StandardConfigurator for the component.
     virtual ::Components::StandardConfigurator_ptr
-    get_standard_configurator (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+    get_standard_configurator (void)
       ACE_THROW_SPEC ((CORBA::SystemException));
 
     /// Override that returns the (passed-in) default POA of our member

@@ -63,7 +63,6 @@ namespace CIAO
     PortableServer::ObjectId_var oid =
       this->container_->the_POA ()->reference_to_id (comp
                                                      ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK;
 
     Components::CCMObject_var ccm_obj_var = Components::CCMObject::_nil ();
     if (objref_map_.find (oid.in (), ccm_obj_var) != 0)
@@ -76,15 +75,13 @@ namespace CIAO
     typename COMP_SVNT::_stub_var_type _ciao_comp =
       stub_type::_narrow (ccm_obj_var.in ()
                           ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK;
 
     if (CORBA::is_nil (_ciao_comp.in ()))
       {
         ACE_THROW (Components::RemoveFailure ());
       }
 
-    _ciao_comp->remove (ACE_ENV_SINGLE_ARG_PARAMETER);
-    ACE_CHECK;
+    _ciao_comp->remove ();
 
     if (CIAO::debug_level () > 3)
       {
@@ -129,7 +126,7 @@ namespace CIAO
   {
     CIAO_TRACE ("Home_Servant_Impl<>::create_component");
 
-    return this->create (ACE_ENV_SINGLE_ARG_PARAMETER);
+    return this->create ();
   }
 
   // Operations for implicit home interface.
@@ -155,14 +152,12 @@ namespace CIAO
       }
 
     ::Components::EnterpriseComponent_var _ciao_ec =
-      this->executor_->create (ACE_ENV_SINGLE_ARG_PARAMETER);
-    ACE_CHECK_RETURN (COMP::_nil ());
+      this->executor_->create ();
 
 	typedef typename COMP_SVNT::_exec_type exec_type;
     typename COMP_SVNT::_exec_type::_var_type _ciao_comp =
       exec_type::_narrow (_ciao_ec.in ()
                           ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK_RETURN (COMP::_nil ());
 
     return this->_ciao_activate_component (_ciao_comp.in ()
                                            ACE_ENV_ARG_PARAMETER);
@@ -187,12 +182,10 @@ namespace CIAO
     CORBA::Object_var hobj =
       this->container_->get_objref (this
                                     ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK_RETURN (COMP_SVNT::_stub_type::_nil ());
 
     Components::CCMHome_var home =
       Components::CCMHome::_narrow (hobj.in ()
                                     ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK_RETURN (COMP_SVNT::_stub_type::_nil ());
 
     typedef typename COMP_SVNT::_stub_type stub_type;
     COMP_SVNT *svt = 0;
@@ -211,18 +204,15 @@ namespace CIAO
       this->container_->install_component (svt,
                                            oid.out ()
                                            ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK_RETURN (COMP_SVNT::_stub_type::_nil ());
 
     typedef typename COMP_SVNT::_stub_type stub_type;
     typename COMP_SVNT::_stub_var_type ho =
       stub_type::_narrow (objref.in ()
                           ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK_RETURN (COMP_SVNT::_stub_type::_nil ());
 
     Components::CCMObject_var ccmobjref =
       Components::CCMObject::_narrow (objref.in ()
                                       ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK_RETURN (COMP_SVNT::_stub_type::_nil ());
 
     this->objref_map_.bind (
       oid.in (),
@@ -249,7 +239,6 @@ namespace CIAO
     this->container_->uninstall_component (comp,
                                            oid.out ()
                                            ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK;
   }
 }
 

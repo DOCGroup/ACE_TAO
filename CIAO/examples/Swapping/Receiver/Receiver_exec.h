@@ -34,11 +34,11 @@ namespace CIDL_Receiver_Impl
     ~ReceiverSwap_exec_i ();
 
     virtual ::Components::EnterpriseComponent_ptr
-    incarnate (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+    incarnate (void)
       ACE_THROW_SPEC ((CORBA::SystemException));
 
     virtual ::Components::EnterpriseComponent_ptr
-    etherealize (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+    etherealize (void)
       ACE_THROW_SPEC ((CORBA::SystemException));
   };
 
@@ -66,24 +66,24 @@ namespace CIDL_Receiver_Impl
       ACE_THROW_SPEC ((CORBA::SystemException,
                        Components::CCMException));
 
-    virtual void ciao_preactivate (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+    virtual void ciao_preactivate (void)
       ACE_THROW_SPEC ((CORBA::SystemException,
                        Components::CCMException));
 
-    virtual void ccm_activate (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+    virtual void ccm_activate (void)
       ACE_THROW_SPEC ((CORBA::SystemException,
                        Components::CCMException));
 
-    virtual void ciao_postactivate (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+    virtual void ciao_postactivate (void)
       ACE_THROW_SPEC ((CORBA::SystemException,
                        Components::CCMException));
 
 
-    virtual void ccm_passivate (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+    virtual void ccm_passivate (void)
       ACE_THROW_SPEC ((CORBA::SystemException,
                        Components::CCMException));
 
-    virtual void ccm_remove (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+    virtual void ccm_remove (void)
       ACE_THROW_SPEC ((CORBA::SystemException,
                        Components::CCMException));
 
@@ -113,7 +113,7 @@ namespace CIDL_Receiver_Impl
     // Implicit home operations.
 
     virtual ::Components::EnterpriseComponent_ptr
-    create (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+    create (void)
       ACE_THROW_SPEC ((CORBA::SystemException,
                        Components::CCMException));
   };

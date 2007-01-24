@@ -22,7 +22,7 @@ MyImpl::BMClosedED_exec_i::~BMClosedED_exec_i ()
 // Operations from HUDisplay::BMClosedED
 
 BasicSP::CCM_ReadData_ptr
-MyImpl::BMClosedED_exec_i::get_dataout (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+MyImpl::BMClosedED_exec_i::get_dataout (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return BasicSP::CCM_ReadData::_duplicate (this);
@@ -45,8 +45,7 @@ MyImpl::BMClosedED_exec_i::push_in_avail (BasicSP::DataAvailable *
 
   // Refresh position
   BasicSP::ReadData_var dat
-    = this->context_->get_connection_datain (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+    = this->context_->get_connection_datain ();
 
   if (CORBA::is_nil (dat.in ()))
     {
@@ -57,8 +56,7 @@ MyImpl::BMClosedED_exec_i::push_in_avail (BasicSP::DataAvailable *
     }
 
   CORBA::String_var str =
-    dat->get_data (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+    dat->get_data ();
 
   if (CIAO::debug_level () > 0)
     {
@@ -78,13 +76,12 @@ MyImpl::BMClosedED_exec_i::push_in_avail (BasicSP::DataAvailable *
 
   this->context_->push_out_avail (event
                                   ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 }
 
 // Operations from HUDisplay::position
 
 char *
-MyImpl::BMClosedED_exec_i::get_data (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+MyImpl::BMClosedED_exec_i::get_data (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return CORBA::string_dup (this->str_.inout ());
@@ -108,7 +105,6 @@ MyImpl::BMClosedED_exec_i::set_session_context (
   this->context_ =
     BasicSP::CCM_BMClosedED_Context::_narrow (ctx
                                               ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
   if (CORBA::is_nil (this->context_.in ()))
     {
@@ -126,7 +122,7 @@ MyImpl::BMClosedED_exec_i::ciao_preactivate (
 }
 
 void
-MyImpl::BMClosedED_exec_i::ccm_activate (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+MyImpl::BMClosedED_exec_i::ccm_activate (void)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Components::CCMException))
 {
@@ -147,7 +143,7 @@ MyImpl::BMClosedED_exec_i::ciao_postactivate (
 }
 
 void
-MyImpl::BMClosedED_exec_i::ccm_passivate (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+MyImpl::BMClosedED_exec_i::ccm_passivate (void)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Components::CCMException))
 {
@@ -157,7 +153,7 @@ MyImpl::BMClosedED_exec_i::ccm_passivate (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
 }
 
 void
-MyImpl::BMClosedED_exec_i::ccm_remove (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+MyImpl::BMClosedED_exec_i::ccm_remove (void)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Components::CCMException))
 {
@@ -181,7 +177,7 @@ MyImpl::BMClosedEDHome_exec_i::~BMClosedEDHome_exec_i ()
 // Implicit home operations.
 
 ::Components::EnterpriseComponent_ptr
-MyImpl::BMClosedEDHome_exec_i::create (ACE_ENV_SINGLE_ARG_DECL)
+MyImpl::BMClosedEDHome_exec_i::create (void)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Components::CCMException))
 {

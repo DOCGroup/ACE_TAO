@@ -48,12 +48,10 @@ DomainApplicationManager_Impl (CORBA::ORB_ptr orb,
   ACE_NEW_THROW_EX (this->shared_,
                     Deployment::ComponentPlans (),
                     CORBA::NO_MEMORY ());
-  ACE_CHECK;
 
   ACE_NEW_THROW_EX (this->esd_,
                     CIAO::DAnCE::EventServiceDeploymentDescriptions (),
                     CORBA::NO_MEMORY ());
-  ACE_CHECK;
 
   for (CORBA::ULong i = 0; i < this->plan_.infoProperty.length (); ++i)
     {
@@ -104,7 +102,7 @@ get_node_app (const char * node_name)
 
 void
 CIAO::DomainApplicationManager_Impl::
-init (ACE_ENV_SINGLE_ARG_DECL)
+init (void)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Deployment::ResourceNotAvailable,
                    Deployment::StartError,
@@ -190,13 +188,11 @@ init (ACE_ENV_SINGLE_ARG_DECL)
           Deployment::ApplicationManager_var tmp_app_manager =
             my_node_manager->preparePlan (artifacts.child_plan_.in ()
                                           ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
 
           Deployment::NodeApplicationManager_var app_manager =
             Deployment::NodeApplicationManager::_narrow
               (tmp_app_manager.in ()
                ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
 
           if (CORBA::is_nil (app_manager.in ()))
             {
@@ -215,7 +211,6 @@ init (ACE_ENV_SINGLE_ARG_DECL)
                  (Deployment::StartError ("DomainApplicationManager_Impl:init",
                                           error.c_str ()));
             }
-          ACE_TRY_CHECK;
 
           // Cache the NodeApplicationManager object reference.
           artifacts.node_application_manager_ = app_manager._retn ();
@@ -228,7 +223,6 @@ init (ACE_ENV_SINGLE_ARG_DECL)
       ACE_RE_THROW;
     }
   ACE_ENDTRY;
-  ACE_CHECK;
 }
 
 bool
@@ -575,7 +569,6 @@ startLaunch (const ::Deployment::Properties & configProperty,
                      error.c_str ()));
             }
 
-          ACE_TRY_CHECK;
 
           ::Deployment::Connections_var retn_connections;
 
@@ -608,7 +601,6 @@ startLaunch (const ::Deployment::Properties & configProperty,
           ::Deployment::NodeApplication_var my_na =
             ::Deployment::NodeApplication::_narrow (temp_application.in ()
                                                     ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
 
           if (CORBA::is_nil (my_na.in ()))
             {
@@ -630,7 +622,6 @@ startLaunch (const ::Deployment::Properties & configProperty,
                    ("DomainApplicationManager_Impl::startLaunch",
                      error.c_str ()));
             }
-          ACE_TRY_CHECK;
 
           // Cache the returned set of connections into the list.
           this->add_connections (retn_connections.in ());
@@ -656,7 +647,6 @@ startLaunch (const ::Deployment::Properties & configProperty,
     }
   ACE_ENDTRY;
 
-  ACE_CHECK;
 }
 
 
@@ -712,7 +702,6 @@ install_all_es (void)
     }
   ACE_ENDTRY;
 
-  ACE_CHECK;
 }
 
 void
@@ -736,7 +725,6 @@ add_es_to_map (const char * node_name,
     }
   ACE_ENDTRY;
 
-  ACE_CHECK;
 }
 
 void
@@ -807,7 +795,6 @@ finishLaunch (CORBA::Boolean start,
               true,  // we search *new* plan
               DomainApplicationManager_Impl::Internal_Connections
                                             ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
 
           if (my_connections == 0)
             {
@@ -845,7 +832,6 @@ finishLaunch (CORBA::Boolean start,
                   start,
                   true // "true" => establish new connections only
                   ACE_ENV_ARG_PARAMETER);
-              ACE_TRY_CHECK;
             }
 
           //=============================================================
@@ -866,7 +852,6 @@ finishLaunch (CORBA::Boolean start,
                         false, // search in the *old* plan
                         DomainApplicationManager_Impl::Internal_Connections
                                                       ACE_ENV_ARG_PARAMETER);
-              ACE_TRY_CHECK;
 
               // Pass in the "false" parameter to get *all* the connections in
               // the new deployment plan, regardless those in old plan
@@ -877,7 +862,6 @@ finishLaunch (CORBA::Boolean start,
                         true,  // search in the *new* plan
                         DomainApplicationManager_Impl::Internal_Connections
                                                       ACE_ENV_ARG_PARAMETER);
-              ACE_TRY_CHECK;
 
               Deployment::Connections * unnecessary_connections =
                 this->subtract_connections (*connections_in_old_plan,
@@ -910,7 +894,6 @@ finishLaunch (CORBA::Boolean start,
                      start,
                      false  // false ==> remove unnecessary connections
                      ACE_ENV_ARG_PARAMETER);
-                  ACE_TRY_CHECK;
                 }
 
               //=============================================================
@@ -964,13 +947,11 @@ finishLaunch (CORBA::Boolean start,
           my_node_application_manager->destroyApplication
              (0
               ACE_ENV_ARG_PARAMETER);
-          ACE_CHECK;
         }
       ACE_RE_THROW;
     }
   ACE_ENDTRY;
 
-  ACE_CHECK;
 }
 
 void
@@ -1006,7 +987,6 @@ post_finishLaunch (void)
     }
   ACE_ENDTRY;
 
-  ACE_CHECK;
 }
 
 CIAO::Component_Binding_Info *
@@ -1451,7 +1431,7 @@ handle_direct_connection (
 
 void
 CIAO::DomainApplicationManager_Impl::
-start (ACE_ENV_SINGLE_ARG_DECL)
+start (void)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    ::Deployment::StartError))
 {
@@ -1488,8 +1468,7 @@ start (ACE_ENV_SINGLE_ARG_DECL)
           ::Deployment::NodeApplication_ptr my_na =
             (entry->int_id_).node_application_.in ();
 
-          my_na->ciao_preactivate (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+          my_na->ciao_preactivate ();
         }
 
       // Invoke start () operation on each cached NodeApplication object.
@@ -1514,8 +1493,7 @@ start (ACE_ENV_SINGLE_ARG_DECL)
           ::Deployment::NodeApplication_ptr my_na =
            (entry->int_id_).node_application_.in ();
 
-          my_na->start (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+          my_na->start ();
         }
 
      // Invoke ciao_postctivate () operation on each
@@ -1548,8 +1526,7 @@ start (ACE_ENV_SINGLE_ARG_DECL)
           ::Deployment::NodeApplication_ptr my_na =
             (entry->int_id_).node_application_.in ();
 
-          my_na->ciao_postactivate (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+          my_na->ciao_postactivate ();
         }
     }
   ACE_CATCHANY
@@ -1560,12 +1537,11 @@ start (ACE_ENV_SINGLE_ARG_DECL)
     }
   ACE_ENDTRY;
 
-  ACE_CHECK;
 }
 
 void
 CIAO::DomainApplicationManager_Impl::
-destroyApplication (ACE_ENV_SINGLE_ARG_DECL)
+destroyApplication (void)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    ::Deployment::StopError))
 {
@@ -1623,7 +1599,6 @@ destroyApplication (ACE_ENV_SINGLE_ARG_DECL)
               true,  // yes, we search the current plan
               DomainApplicationManager_Impl::External_Connections
               ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
 
           // Invoke finishLaunch() on NodeApplication to remove bindings.
           // If this NodeApplication is not within the control of this DAM,
@@ -1662,7 +1637,6 @@ destroyApplication (ACE_ENV_SINGLE_ARG_DECL)
                  true, // "true" ==> start the components
                  false // "false" => remove connections
                  ACE_ENV_ARG_PARAMETER);
-              ACE_TRY_CHECK;
             }
 
         }
@@ -1680,7 +1654,6 @@ destroyApplication (ACE_ENV_SINGLE_ARG_DECL)
 
           my_node_manager->destroyPlan ((entry->int_id_).child_plan_
                                         ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
         }
 
       // ??
@@ -1699,12 +1672,11 @@ destroyApplication (ACE_ENV_SINGLE_ARG_DECL)
     }
   ACE_ENDTRY;
 
-  ACE_CHECK;
 }
 
 void
 CIAO::DomainApplicationManager_Impl::
-destroyManager (ACE_ENV_SINGLE_ARG_DECL)
+destroyManager (void)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Deployment::StopError))
 {
@@ -1730,7 +1702,6 @@ destroyManager (ACE_ENV_SINGLE_ARG_DECL)
 
           my_node_manager->destroyManager (my_nam.in ()
                                            ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
         }
     }
   ACE_CATCHANY
@@ -1741,7 +1712,6 @@ destroyManager (ACE_ENV_SINGLE_ARG_DECL)
     }
   ACE_ENDTRY;
 
-  ACE_CHECK;
 }
 
 void
@@ -1801,14 +1771,13 @@ perform_redeployment (
       ACE_RE_THROW;
     }
   ACE_ENDTRY;
-  ACE_CHECK;
 }
 
 
 // Returns the DeploymentPlan associated with this ApplicationManager.
 ::Deployment::DeploymentPlan *
 CIAO::DomainApplicationManager_Impl::
-getPlan (ACE_ENV_SINGLE_ARG_DECL)
+getPlan (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   CIAO_TRACE("CIAO::DomainApplicationManager_Impl::getPlan");
@@ -1971,7 +1940,6 @@ passivate_shared_components (void)
     }
   ACE_ENDTRY;
 
-  ACE_CHECK;
 }
 
 void
@@ -2007,7 +1975,6 @@ activate_shared_components (void)
     }
   ACE_ENDTRY;
 
-  ACE_CHECK;
 }
 
 void

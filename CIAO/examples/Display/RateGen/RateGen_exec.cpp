@@ -146,7 +146,7 @@ MyImpl::RateGen_exec_i::~RateGen_exec_i ()
 }
 
 CORBA::Long
-MyImpl::RateGen_exec_i::hertz (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+MyImpl::RateGen_exec_i::hertz (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return this->hertz_;
@@ -163,7 +163,7 @@ MyImpl::RateGen_exec_i::hertz (CORBA::Long hertz
 // Operations from supported interface(s)
 
 void
-MyImpl::RateGen_exec_i::start (ACE_ENV_SINGLE_ARG_DECL)
+MyImpl::RateGen_exec_i::start (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   if (this->hertz_ == 0 || this->pulser_.active())
@@ -176,7 +176,7 @@ MyImpl::RateGen_exec_i::start (ACE_ENV_SINGLE_ARG_DECL)
 }
 
 void
-MyImpl::RateGen_exec_i::stop (ACE_ENV_SINGLE_ARG_DECL)
+MyImpl::RateGen_exec_i::stop (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   if (! this->pulser_.active ())
@@ -189,7 +189,7 @@ MyImpl::RateGen_exec_i::stop (ACE_ENV_SINGLE_ARG_DECL)
 }
 
 CORBA::Boolean
-MyImpl::RateGen_exec_i::active (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+MyImpl::RateGen_exec_i::active (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return this->pulser_.active ();
@@ -214,7 +214,6 @@ MyImpl::RateGen_exec_i::set_session_context (
   this->context_ =
     HUDisplay::CCM_RateGen_Context::_narrow (ctx
                                              ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
   if (CORBA::is_nil (this->context_.in ()))
     {
@@ -225,14 +224,14 @@ MyImpl::RateGen_exec_i::set_session_context (
 }
 
 void
-MyImpl::RateGen_exec_i::ciao_preactivate (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+MyImpl::RateGen_exec_i::ciao_preactivate (void)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Components::CCMException))
 {
 }
 
 void
-MyImpl::RateGen_exec_i::ccm_activate (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+MyImpl::RateGen_exec_i::ccm_activate (void)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Components::CCMException))
 {
@@ -246,14 +245,14 @@ MyImpl::RateGen_exec_i::ccm_activate (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
 }
 
 void
-MyImpl::RateGen_exec_i::ciao_postactivate (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+MyImpl::RateGen_exec_i::ciao_postactivate (void)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Components::CCMException))
 {
 }
 
 void
-MyImpl::RateGen_exec_i::ccm_passivate (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+MyImpl::RateGen_exec_i::ccm_passivate (void)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Components::CCMException))
 {
@@ -267,7 +266,7 @@ MyImpl::RateGen_exec_i::ccm_passivate (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
 }
 
 void
-MyImpl::RateGen_exec_i::ccm_remove (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+MyImpl::RateGen_exec_i::ccm_remove (void)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Components::CCMException))
 {
@@ -293,7 +292,6 @@ MyImpl::RateGen_exec_i::pulse (void)
 
       this->context_->push_Pulse (ev.in ()
                                   ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
     }
   ACE_CATCHANY
     {
@@ -320,13 +318,12 @@ MyImpl::RateGenHome_exec_i::new_RateGen (CORBA::Long /* hertz */
   ACE_NEW_THROW_EX (tmp,
                     MyImpl::RateGen_exec_i,
                     CORBA::NO_MEMORY ());
-  ACE_CHECK_RETURN (tmp);
 
   return tmp;
 }
 
 ::Components::EnterpriseComponent_ptr
-MyImpl::RateGenHome_exec_i::create (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+MyImpl::RateGenHome_exec_i::create (void)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Components::CCMException))
 {

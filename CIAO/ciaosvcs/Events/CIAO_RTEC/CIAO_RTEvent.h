@@ -283,31 +283,31 @@ namespace CIAO
     virtual void consumer_id (const char * consumer_id ACE_ENV_ARG_DECL)
       ACE_THROW_SPEC ((CORBA::SystemException));
 
-    virtual CONNECTION_ID consumer_id (ACE_ENV_SINGLE_ARG_DECL)
+    virtual CONNECTION_ID consumer_id (void)
       ACE_THROW_SPEC ((CORBA::SystemException));
 
     //virtual void supplier_id (const char * supplier_id ACE_ENV_ARG_DECL)
     //  ACE_THROW_SPEC ((CORBA::SystemException));
 
-    //virtual CONNECTION_ID supplier_id (ACE_ENV_SINGLE_ARG_DECL)
+    //virtual CONNECTION_ID supplier_id (void)
     //  ACE_THROW_SPEC ((CORBA::SystemException));
 
     virtual void consumer (Components::EventConsumerBase_ptr consumer ACE_ENV_ARG_DECL)
       ACE_THROW_SPEC ((CORBA::SystemException));
 
-    virtual Components::EventConsumerBase_ptr consumer (ACE_ENV_SINGLE_ARG_DECL)
+    virtual Components::EventConsumerBase_ptr consumer (void)
       ACE_THROW_SPEC ((CORBA::SystemException));
 
-    virtual EventServiceType service_type (ACE_ENV_SINGLE_ARG_DECL)
+    virtual EventServiceType service_type (void)
       ACE_THROW_SPEC ((CORBA::SystemException));
 
     //@@ (GD) There should be a place where the deployment tool could
   //        set up the rt_event_qos properties for Consumer Config.
 
-    virtual RtecEventChannelAdmin::ConsumerQOS * rt_event_qos (ACE_ENV_SINGLE_ARG_DECL)
+    virtual RtecEventChannelAdmin::ConsumerQOS * rt_event_qos (void)
       ACE_THROW_SPEC ((CORBA::SystemException));
 
-    virtual void destroy (ACE_ENV_SINGLE_ARG_DECL)
+    virtual void destroy (void)
       ACE_THROW_SPEC ((CORBA::SystemException));
 
   private:
@@ -342,19 +342,19 @@ namespace CIAO
     void supplier_id (const char * supplier_id ACE_ENV_ARG_DECL)
       ACE_THROW_SPEC ((CORBA::SystemException));
 
-    CONNECTION_ID supplier_id (ACE_ENV_SINGLE_ARG_DECL)
+    CONNECTION_ID supplier_id (void)
       ACE_THROW_SPEC ((CORBA::SystemException));
 
-    EventServiceType service_type (ACE_ENV_SINGLE_ARG_DECL)
+    EventServiceType service_type (void)
       ACE_THROW_SPEC ((CORBA::SystemException));
 
     //@@ (GD) There should be a place where the deployment tool could
     //        set up the rt_event_qos properties for Supplier Config.
 
-    RtecEventChannelAdmin::SupplierQOS * rt_event_qos (ACE_ENV_SINGLE_ARG_DECL)
+    RtecEventChannelAdmin::SupplierQOS * rt_event_qos (void)
       ACE_THROW_SPEC ((CORBA::SystemException));
 
-    virtual void destroy (ACE_ENV_SINGLE_ARG_DECL)
+    virtual void destroy (void)
       ACE_THROW_SPEC ((CORBA::SystemException));
 
   private:

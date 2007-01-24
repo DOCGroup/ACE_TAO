@@ -44,17 +44,17 @@ namespace CIDL_RoundTrip_Impl
 
     /*
       virtual ::NodeAppTest::CCM_LatencyTest*
-      get_latency (ACE_ENV_SINGLE_ARG_DECL)
+      get_latency (void)
       ACE_THROW_SPEC ((CORBA::SystemException));
     */
 
     NodeAppTest::CCM_LatencyTest_ptr
-    get_facet_1(ACE_ENV_SINGLE_ARG_DECL)
+    get_facet_1(void)
       ACE_THROW_SPEC ((CORBA::SystemException));
 
 
     NodeAppTest::CCM_LatencyTest_ptr
-    get_facet_2(ACE_ENV_SINGLE_ARG_DECL)
+    get_facet_2(void)
       ACE_THROW_SPEC ((CORBA::SystemException));
 
     // Operations from Components::SessionComponent
@@ -63,15 +63,15 @@ namespace CIDL_RoundTrip_Impl
       ACE_THROW_SPEC ((CORBA::SystemException,
                        Components::CCMException));
 
-    virtual void ccm_activate (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+    virtual void ccm_activate (void)
       ACE_THROW_SPEC ((CORBA::SystemException,
                        Components::CCMException));
 
-    virtual void ccm_passivate (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+    virtual void ccm_passivate (void)
       ACE_THROW_SPEC ((CORBA::SystemException,
                        Components::CCMException));
 
-    virtual void ccm_remove (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+    virtual void ccm_remove (void)
       ACE_THROW_SPEC ((CORBA::SystemException,
                        Components::CCMException));
 
@@ -79,11 +79,11 @@ namespace CIDL_RoundTrip_Impl
     void pulse (void);
 
     // CIAO defined methods
-    virtual void ciao_preactivate (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+    virtual void ciao_preactivate (void)
       ACE_THROW_SPEC ((CORBA::SystemException,
                        Components::CCMException));
 
-    virtual void ciao_postactivate (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+    virtual void ciao_postactivate (void)
       ACE_THROW_SPEC ((CORBA::SystemException,
                        Components::CCMException));
 
@@ -130,7 +130,7 @@ namespace CIDL_RoundTrip_Impl
     // Implicit home operations.
 
     virtual ::Components::EnterpriseComponent_ptr
-    create (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+    create (void)
       ACE_THROW_SPEC ((CORBA::SystemException,
                        Components::CCMException));
 
