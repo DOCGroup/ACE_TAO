@@ -38,11 +38,11 @@ TAO_PolicyFactory_Registry::register_policy_factory (
 {
   if (CORBA::is_nil (policy_factory))
     {
-      throw ( ::CORBA::BAD_PARAM (
+      throw ::CORBA::BAD_PARAM (
                    CORBA::SystemException::_tao_minor_code (
                      0,
                      EINVAL),
-                   CORBA::COMPLETED_NO));
+                   CORBA::COMPLETED_NO);
     }
 
   PortableInterceptor::PolicyFactory_ptr factory =
@@ -59,8 +59,8 @@ TAO_PolicyFactory_Registry::register_policy_factory (
       if (result == 1)
         {
           // PolicyFactory of given type already exists.
-          throw ( ::CORBA::BAD_INV_ORDER (CORBA::OMGVMCID | 16,
-                                           CORBA::COMPLETED_NO));
+          throw ::CORBA::BAD_INV_ORDER (CORBA::OMGVMCID | 16,
+                                           CORBA::COMPLETED_NO);
         }
       else
         {

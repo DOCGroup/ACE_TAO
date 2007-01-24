@@ -95,11 +95,11 @@ TAO_AMH_Response_Handler::_tao_rh_init_reply (void)
         // request and is now trying to send back the reply.  Hence we
         // say that the operation has completed but let the server
         // anyway that it is not doing something right.
-        throw ( ::CORBA::BAD_INV_ORDER
+        throw ::CORBA::BAD_INV_ORDER
                           (CORBA::SystemException::_tao_minor_code
                                   (TAO_AMH_REPLY_LOCATION_CODE,
                                    EEXIST),
-                           CORBA::COMPLETED_YES));
+                           CORBA::COMPLETED_YES);
       }
   }
 
@@ -141,11 +141,11 @@ TAO_AMH_Response_Handler::_tao_rh_send_reply (void)
     // server-app saying it is not doing something right.
     if (this->reply_status_ != TAO_RS_INITIALIZED)
       {
-        throw ( ::CORBA::BAD_INV_ORDER (
+        throw ::CORBA::BAD_INV_ORDER (
                           CORBA::SystemException::_tao_minor_code (
                                                   TAO_AMH_REPLY_LOCATION_CODE,
                                                   ENOTSUP),
-                          CORBA::COMPLETED_YES));
+                          CORBA::COMPLETED_YES);
       }
     this->reply_status_ = TAO_RS_SENDING;
   }
@@ -183,11 +183,11 @@ TAO_AMH_Response_Handler::_tao_rh_send_exception (CORBA::Exception &ex
     ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->mutex_);
     if (this->reply_status_ != TAO_RS_UNINITIALIZED)
       {
-        throw ( ::CORBA::BAD_INV_ORDER (
+        throw ::CORBA::BAD_INV_ORDER (
           CORBA::SystemException::_tao_minor_code (
             TAO_AMH_REPLY_LOCATION_CODE,
             ENOTSUP),
-          CORBA::COMPLETED_YES));
+          CORBA::COMPLETED_YES);
       }
     this->reply_status_ = TAO_RS_SENDING;
   }

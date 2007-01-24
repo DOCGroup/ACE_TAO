@@ -112,11 +112,11 @@ TAO::ORBInitializer_Registry::register_orb_initializer (
         PortableInterceptor::ORBInitializer::_duplicate (init);
     }
   else
-    throw ( ::CORBA::INV_OBJREF (
+    throw ::CORBA::INV_OBJREF (
                  CORBA::SystemException::_tao_minor_code (
                    0,
                    EINVAL),
-                 CORBA::COMPLETED_NO));
+                 CORBA::COMPLETED_NO);
 }
 
 size_t

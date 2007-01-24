@@ -98,7 +98,7 @@ namespace TAO
 
         if (rd == 0)
           {
-            throw ( ::CORBA::NO_MEMORY ());
+            throw ::CORBA::NO_MEMORY ();
           }
 
         this->safe_rd_.reset (rd);
