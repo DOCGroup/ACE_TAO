@@ -1,8 +1,7 @@
 // -*- MPC -*-
 // $Id$
 
-project(Netsvcs_server) : aceexe {
-  avoids   += ace_for_tao
+project(Netsvcs_server) : aceexe, avoids_ace_for_tao {
   exename  = main
   libs     += netsvcs
   after    += netsvcs

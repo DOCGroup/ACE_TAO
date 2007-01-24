@@ -59,7 +59,7 @@ namespace ACE_OS
 #if defined (ACE_HAS_WCHAR) && defined (ACE_LACKS_WCSCHR)
   /// Emulated wcschr - Finds a character in a string.
   extern ACE_Export
-  wchar_t *wcschr_emulation (const wchar_t *string, wint_t c);
+  wchar_t *wcschr_emulation (const wchar_t *string, wchar_t c);
 #endif /* ACE_HAS_WCHAR && ACE_LACKS_WCSCHR */
 
 #if !defined (ACE_HAS_WCHAR) || defined (ACE_LACKS_WCSCMP)

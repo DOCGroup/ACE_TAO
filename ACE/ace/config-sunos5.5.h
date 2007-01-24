@@ -33,8 +33,6 @@
 # if (__SUNPRO_CC >= 0x500)
     // string.h and memory.h conflict for memchr definitions
 #   define ACE_LACKS_MEMORY_H
-    // Sun C++ 5.0 supports the `using' and `typename' keywords.
-#   define ACE_HAS_TYPENAME_KEYWORD
     // If -compat=4 is turned on, the old 4.2 settings for iostreams are used,
     // but the newer, explicit instantiation is used (above)
 #   if (__SUNPRO_CC_COMPAT >= 5)
@@ -366,7 +364,6 @@
 
 #define ACE_HAS_GPERF
 #define ACE_HAS_DIRENT
-#define ACE_HAS_MEMCHR
 
 #if defined (__SUNPRO_CC)
 # define ACE_CC_NAME ACE_LIB_TEXT ("SunPro C++")

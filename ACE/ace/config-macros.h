@@ -96,11 +96,13 @@
 #   define ACE_USING using
 #endif /* !ACE_LACKS_DEPRECATED_MACROS */
 
-# if defined (ACE_HAS_TYPENAME_KEYWORD)
-#   define ACE_TYPENAME typename
-# else
-#   define ACE_TYPENAME
-# endif /* ACE_HAS_TYPENAME_KEYWORD */
+#if !defined (ACE_LACKS_DEPRECATED_MACROS)
+/**
+ * @deprecated The @c ACE_TYPENAME macros is deprecated.  Use standard
+ *             C++ keyword typename instead.
+ */
+# define ACE_TYPENAME typename
+#endif /* !ACE_LACKS_DEPRECATED_MACROS */
 
 #if !defined (ACE_LACKS_DEPRECATED_MACROS)
 /**
