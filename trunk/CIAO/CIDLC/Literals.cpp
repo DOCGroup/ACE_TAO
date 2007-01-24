@@ -30,16 +30,6 @@ namespace StringLiterals
 
   char const* const STRS[LIT_SIZE] =
   {
-    // ACE Environment portability macros.
-    "ACE_ENV_ARG_DECL_WITH_DEFAULTS",                     // ENV_HDR
-    "ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS",              // ENV_SNGL_HDR
-    "ACE_ENV_ARG_DECL",                                   // ENV_SRC
-    "ACE_ENV_ARG_DECL_NOT_USED",                          // ENV_SRC_NOTUSED
-    "ACE_ENV_SINGLE_ARG_DECL",                            // ENV_SNGL_SRC
-    "ACE_ENV_SINGLE_ARG_DECL_NOT_USED",                   // ENV_SNGL_SRC_NOTUSED
-    "ACE_ENV_ARG_PARAMETER",                              // ENV_ARG
-    "ACE_ENV_SINGLE_ARG_PARAMETER",                       // ENV_SNGL_ARG
-
     // Common CORBA and all Components exceptions.
     "ACE_THROW_SPEC (( ::CORBA::SystemException))",       // EXCP_SNGL
     "ACE_THROW_SPEC ((",                                  // EXCP_START
@@ -85,9 +75,7 @@ namespace StringLiterals
     "_ciao_extract_val",                                  // EXTRACT
     "_ciao_extract_tmp",                                  // EXTRACT_TMP
     "ACE_UNUSED_ARG",                                     // ACE_UA
-    "ACE_CHECK",                                          // ACE_CK
-    "ACE_CHECK_RETURN",                                   // ACE_CR
-    "ACE_THROW",                                          // ACE_TH
+    "throw",                                              // ACE_TH
     "ACE_THROW_RETURN"                                    // ACE_TR
   };
 }

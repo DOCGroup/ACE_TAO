@@ -142,12 +142,10 @@ struct AttributeSourceEmitter : Traversal::ReadAttribute,
       read_type_name_emitter_ (c),
       type_name_emitter_ (c),
       return_emitter_ (c),
-      ace_check_return_emitter_ (c),
       exec_src_ (exec_src)
   {
     read_belongs_.node_traverser (read_type_name_emitter_);
     return_belongs_.node_traverser (return_emitter_);
-    ace_check_return_belongs_.node_traverser (ace_check_return_emitter_);
     edge_traverser (get_raises_);
     get_raises_.node_traverser (type_name_emitter_);
   }
@@ -357,7 +355,6 @@ private:
   ReturnTypeNameEmitter read_type_name_emitter_;
   FullTypeNameEmitter type_name_emitter_;
   NullReturnEmitter return_emitter_;
-  AceCheckReturnEmitter ace_check_return_emitter_;
   Traversal::Belongs read_belongs_;
   Traversal::Belongs return_belongs_;
   Traversal::Belongs ace_check_return_belongs_;
