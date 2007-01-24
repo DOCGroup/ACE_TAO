@@ -235,7 +235,7 @@ int be_visitor_exception_cs::visit_exception (be_exception *node)
 
   *os << "void " << node->name () << "::_raise (void) const" << be_nl
       << "{" << be_idt_nl
-      << "throw (*this);" << be_uidt_nl
+      << "throw *this;" << be_uidt_nl
       << "}" << be_nl << be_nl;
 
   *os << "void " << node->name ()
