@@ -45,16 +45,16 @@ namespace TAO
     public:
       IdUniquenessPolicy (::PortableServer::IdUniquenessPolicyValue value);
 
-      CORBA::Policy_ptr copy (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+      CORBA::Policy_ptr copy (void)
         ACE_THROW_SPEC ((CORBA::SystemException));
 
-      void destroy (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+      void destroy (void)
         ACE_THROW_SPEC ((CORBA::SystemException));
 
-      ::PortableServer::IdUniquenessPolicyValue value (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+      ::PortableServer::IdUniquenessPolicyValue value (void)
         ACE_THROW_SPEC ((CORBA::SystemException));
 
-      CORBA::PolicyType policy_type (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+      CORBA::PolicyType policy_type (void)
         ACE_THROW_SPEC ((CORBA::SystemException));
 
       /// Return the cached policy type for this policy.

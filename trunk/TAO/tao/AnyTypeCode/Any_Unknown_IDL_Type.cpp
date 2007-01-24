@@ -32,15 +32,13 @@ TAO::Unknown_IDL_Type::Unknown_IDL_Type (
   : TAO::Any_Impl (0, tc, true)
   , cdr_ (static_cast<ACE_Message_Block*>(0), lock_i ())
 {
-  ACE_TRY_NEW_ENV
+  try
     {
-      this->_tao_decode (cdr ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      this->_tao_decode (cdr);
     }
-  ACE_CATCH (CORBA::Exception, ex)
+  catch ( ::CORBA::Exception&)
     {
     }
-  ACE_ENDTRY;
 }
 
 TAO::Unknown_IDL_Type::Unknown_IDL_Type (
@@ -58,7 +56,7 @@ TAO::Unknown_IDL_Type::~Unknown_IDL_Type (void)
 CORBA::Boolean
 TAO::Unknown_IDL_Type::marshal_value (TAO_OutputCDR &cdr)
 {
-  ACE_TRY_NEW_ENV
+  try
     {
       // We don't want the rd_ptr to move, in case we are shared by
       // another Any, so we use this to copy the state, not the buffer.
@@ -68,19 +66,17 @@ TAO::Unknown_IDL_Type::marshal_value (TAO_OutputCDR &cdr)
         TAO_Marshal_Object::perform_append (this->type_,
                                             &for_reading,
                                             &cdr
-                                            ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+                                           );
 
       if (status != TAO::TRAVERSE_CONTINUE)
         {
           return false;
         }
     }
-  ACE_CATCH (CORBA::Exception, ex)
+  catch ( ::CORBA::Exception&)
     {
       return false;
     }
-  ACE_ENDTRY;
 
   return true;
 }
@@ -110,7 +106,7 @@ TAO::Unknown_IDL_Type::_tao_byte_order (void) const
 }
 void
 TAO::Unknown_IDL_Type::_tao_decode (TAO_InputCDR &cdr
-                                    ACE_ENV_ARG_DECL)
+                                    )
 {
   // @@ (JP) The following code depends on the fact that
   //         TAO_InputCDR does not contain chained message blocks,
@@ -124,12 +120,11 @@ TAO::Unknown_IDL_Type::_tao_decode (TAO_InputCDR &cdr
   TAO::traverse_status status =
     TAO_Marshal_Object::perform_skip (this->type_,
                                       &cdr
-                                      ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+                                     );
 
   if (status != TAO::TRAVERSE_CONTINUE)
     {
-      ACE_THROW (CORBA::MARSHAL ());
+      throw ::CORBA::MARSHAL ();
     }
 
   // This will be the end of the new message block.
@@ -174,22 +169,19 @@ TAO::Unknown_IDL_Type::_tao_decode (TAO_InputCDR &cdr
 CORBA::Boolean
 TAO::Unknown_IDL_Type::to_object (CORBA::Object_ptr &obj) const
 {
-  ACE_TRY_NEW_ENV
+  try
     {
       CORBA::ULong kind =
-        this->type_->kind (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        this->type_->kind ();
 
       CORBA::TypeCode_var tcvar =
         CORBA::TypeCode::_duplicate (this->type_);
 
       while (kind == CORBA::tk_alias)
         {
-          tcvar = tcvar->content_type (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+          tcvar = tcvar->content_type ();
 
-          kind = tcvar->kind (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+          kind = tcvar->kind ();
         }
 
       if (kind != CORBA::tk_objref)
@@ -200,13 +192,12 @@ TAO::Unknown_IDL_Type::to_object (CORBA::Object_ptr &obj) const
       // We don't want the rd_ptr to move, in case we are shared by
       // another Any, so we use this to copy the state, not the buffer.
       TAO_InputCDR for_reading (this->cdr_);
-      
+
       return for_reading >> obj;
     }
-  ACE_CATCH (CORBA::Exception, ex)
+  catch ( ::CORBA::Exception&)
     {
     }
-  ACE_ENDTRY;
 
   return false;
 }
@@ -214,22 +205,19 @@ TAO::Unknown_IDL_Type::to_object (CORBA::Object_ptr &obj) const
 CORBA::Boolean
 TAO::Unknown_IDL_Type::to_value (CORBA::ValueBase *&val) const
 {
-  ACE_TRY_NEW_ENV
+  try
     {
       CORBA::ULong kind =
-        this->type_->kind (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        this->type_->kind ();
 
       CORBA::TypeCode_var tcvar =
         CORBA::TypeCode::_duplicate (this->type_);
 
       while (kind == CORBA::tk_alias)
         {
-          tcvar = tcvar->content_type (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+          tcvar = tcvar->content_type ();
 
-          kind = tcvar->kind (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+          kind = tcvar->kind ();
         }
 
       if (kind != CORBA::tk_value)
@@ -253,10 +241,9 @@ TAO::Unknown_IDL_Type::to_value (CORBA::ValueBase *&val) const
       TAO_Valuetype_Adapter *adapter = orb_core->valuetype_adapter();
       return adapter->stream_to_value (this->cdr_, val);
     }
-  ACE_CATCH (CORBA::Exception, ex)
+  catch ( ::CORBA::Exception&)
     {
     }
-  ACE_ENDTRY;
 
   return false;
 }
@@ -264,22 +251,19 @@ TAO::Unknown_IDL_Type::to_value (CORBA::ValueBase *&val) const
 CORBA::Boolean
 TAO::Unknown_IDL_Type::to_abstract_base (CORBA::AbstractBase_ptr &obj) const
 {
-  ACE_TRY_NEW_ENV
+  try
     {
       CORBA::ULong kind =
-        this->type_->kind (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        this->type_->kind ();
 
       CORBA::TypeCode_var tcvar =
         CORBA::TypeCode::_duplicate (this->type_);
 
       while (kind == CORBA::tk_alias)
         {
-          tcvar = tcvar->content_type (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+          tcvar = tcvar->content_type ();
 
-          kind = tcvar->kind (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+          kind = tcvar->kind ();
         }
 
       if (kind != CORBA::tk_value)
@@ -304,10 +288,9 @@ TAO::Unknown_IDL_Type::to_abstract_base (CORBA::AbstractBase_ptr &obj) const
       return adapter->stream_to_abstract_base (this->cdr_,
                                                obj);
     }
-  ACE_CATCH (CORBA::Exception, ex)
+  catch ( ::CORBA::Exception&)
     {
     }
-  ACE_ENDTRY;
 
   return false;
 }

@@ -60,12 +60,12 @@ public:
   virtual CORBA::InterfaceDef_ptr get_interface (
       CORBA::ORB_ptr orb,
       const char *repo_id
-      ACE_ENV_ARG_DECL
+
     );
 
   virtual CORBA::InterfaceDef_ptr get_interface_remote (
       CORBA::Object_ptr target
-      ACE_ENV_ARG_DECL
+
     );
 
 #if (TAO_HAS_MINIMUM_CORBA == 0) && !defined (CORBA_E_COMPACT) && !defined (CORBA_E_MICRO)
@@ -73,7 +73,7 @@ public:
       CORBA::ORB_ptr orb,
       CORBA::OperationDef_ptr,
       CORBA::NVList_ptr&
-      ACE_ENV_ARG_DECL
+
     );
 #endif /*TAO_HAS_MINIMUM_CORBA*/
 

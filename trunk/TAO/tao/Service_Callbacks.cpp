@@ -1,7 +1,6 @@
 #include "tao/Service_Callbacks.h"
 #include "tao/ORB_Constants.h"
 #include "tao/SystemException.h"
-#include "tao/Environment.h"
 #include "tao/Invocation_Utils.h"
 
 ACE_RCSID (tao,
@@ -57,7 +56,7 @@ TAO::Invocation_Status
 TAO_Service_Callbacks::raise_comm_failure (
     IOP::ServiceContextList &,
     TAO_Profile * /*profile*/
-    ACE_ENV_ARG_DECL)
+    )
 {
   ACE_THROW_RETURN (CORBA::COMM_FAILURE (
       CORBA::SystemException::_tao_minor_code (
@@ -71,7 +70,7 @@ TAO::Invocation_Status
 TAO_Service_Callbacks::raise_transient_failure (
     IOP::ServiceContextList &,
     TAO_Profile * /*profile*/
-    ACE_ENV_ARG_DECL)
+    )
 {
   ACE_THROW_RETURN (CORBA::TRANSIENT (
       CORBA::SystemException::_tao_minor_code (

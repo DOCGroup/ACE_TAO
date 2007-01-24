@@ -47,17 +47,17 @@ namespace TAO
       /// narrow it.
       static _ptr_type narrow (CORBA::ORB_ptr orb,
                                char const * id
-                               ACE_ENV_ARG_DECL_WITH_DEFAULTS);
+                               );
 
       /// Use resolve_initial_references to find an object and then
       /// narrow it.
       static _ptr_type narrow (PortableInterceptor::ORBInitInfo_ptr orb,
                                char const * id
-                               ACE_ENV_ARG_DECL_WITH_DEFAULTS);
+                               );
 
     private:
       static _ptr_type narrow_object (CORBA::Object_ptr object
-                                      ACE_ENV_ARG_DECL_WITH_DEFAULTS);
+                                      );
     };
 
   } // namespace Utils

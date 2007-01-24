@@ -40,11 +40,6 @@ class TAO_New_Leader_Generator;
 class TAO_Connector_Registry;
 class TAO_Resource_Factory;
 
-namespace CORBA
-{
-  class Environment;
-}
-
 namespace TAO
 {
   class Transport_Cache_Manager;
@@ -74,8 +69,7 @@ public:
 
   /// Open the acceptor registry.
   int open_acceptor_registry (const TAO_EndpointSet &endpoint_set,
-                              bool ignore_address
-                              ACE_ENV_ARG_DECL);
+                              bool ignore_address);
 
   /// Finalize resources.
   void finalize (void);
@@ -97,7 +91,7 @@ public:
    * @note Returning a pointer helps to return 0 in case of
    * exceptions.
    */
-  TAO_Connector_Registry *connector_registry (ACE_ENV_SINGLE_ARG_DECL);
+  TAO_Connector_Registry *connector_registry (void);
 
   TAO::Transport_Cache_Manager &transport_cache (void);
 

@@ -57,8 +57,7 @@ namespace TAO
     CORBA::Boolean demarshal_value (TAO_InputCDR &,
                                     CORBA::Long);
 
-    virtual void _tao_decode (TAO_InputCDR &
-                              ACE_ENV_ARG_DECL);
+    virtual void _tao_decode (TAO_InputCDR &);
 
     static Any_Basic_Impl *create_empty (CORBA::TypeCode_ptr);
 

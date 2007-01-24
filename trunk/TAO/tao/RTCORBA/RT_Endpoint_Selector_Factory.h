@@ -61,7 +61,7 @@ public:
   virtual ~RT_Endpoint_Selector_Factory (void);
 
   virtual TAO_Invocation_Endpoint_Selector *get_selector (
-              ACE_ENV_SINGLE_ARG_DECL);
+              void);
 
 private:
   TAO_RT_Invocation_Endpoint_Selector *rt_invocation_endpoint_selector_;

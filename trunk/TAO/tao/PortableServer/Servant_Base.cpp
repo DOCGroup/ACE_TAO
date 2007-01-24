@@ -74,32 +74,31 @@ TAO_ServantBase::~TAO_ServantBase (void)
 }
 
 PortableServer::POA_ptr
-TAO_ServantBase::_default_POA (ACE_ENV_SINGLE_ARG_DECL)
+TAO_ServantBase::_default_POA (void)
 {
   CORBA::Object_var object =
-    TAO_ORB_Core_instance ()->root_poa (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (PortableServer::POA::_nil ());
+    TAO_ORB_Core_instance ()->root_poa ();
 
   return PortableServer::POA::_narrow (object.in ()
-                                       ACE_ENV_ARG_PARAMETER);
+                                      );
 }
 
 CORBA::Boolean
 TAO_ServantBase::_is_a (const char *logical_type_id
-                        ACE_ENV_ARG_DECL_NOT_USED)
+                        )
 {
   static char const id[] = "IDL:omg.org/CORBA/Object:1.0";
   return ACE_OS::strcmp (logical_type_id, id) == 0;
 }
 
 CORBA::Boolean
-TAO_ServantBase::_non_existent (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+TAO_ServantBase::_non_existent (void)
 {
   return false;
 }
 
 CORBA::InterfaceDef_ptr
-TAO_ServantBase::_get_interface (ACE_ENV_SINGLE_ARG_DECL)
+TAO_ServantBase::_get_interface (void)
 {
   TAO_IFR_Client_Adapter *adapter =
     ACE_Dynamic_Service<TAO_IFR_Client_Adapter>::instance (
@@ -116,17 +115,17 @@ TAO_ServantBase::_get_interface (ACE_ENV_SINGLE_ARG_DECL)
   // used only to resolve the IFR, so we should be ok.
   return adapter->get_interface (TAO_ORB_Core_instance ()->orb (),
                                  this->_interface_repository_id ()
-                                 ACE_ENV_ARG_PARAMETER);
+                                );
 }
 
 CORBA::Object_ptr
-TAO_ServantBase::_get_component (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+TAO_ServantBase::_get_component (void)
 {
   return CORBA::Object::_nil ();
 }
 
 char *
-TAO_ServantBase::_repository_id (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+TAO_ServantBase::_repository_id (void)
 {
   return CORBA::string_dup (this->_interface_repository_id ());
 }
@@ -151,7 +150,7 @@ TAO_ServantBase::_find (const char *opname,
 }
 
 TAO_Stub *
-TAO_ServantBase::_create_stub (ACE_ENV_SINGLE_ARG_DECL)
+TAO_ServantBase::_create_stub (void)
 {
   TAO_Stub *stub = 0;
 
@@ -171,19 +170,16 @@ TAO_ServantBase::_create_stub (ACE_ENV_SINGLE_ARG_DECL)
             poa_current_impl->object_key (),
             this->_interface_repository_id (),
             poa_current_impl->priority ()
-            ACE_ENV_ARG_PARAMETER
+
           );
-      ACE_CHECK_RETURN (0);
     }
   else
     {
       PortableServer::POA_var poa =
-        this->_default_POA (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK_RETURN (0);
+        this->_default_POA ();
 
       CORBA::Object_var object =
-        poa->servant_to_reference (this ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK_RETURN (0);
+        poa->servant_to_reference (this);
 
       // Get the stub object
       stub = object->_stubobj ();
@@ -202,7 +198,7 @@ TAO_ServantBase::_create_stub (ACE_ENV_SINGLE_ARG_DECL)
 void TAO_ServantBase::synchronous_upcall_dispatch (TAO_ServerRequest & req,
                                                    void * servant_upcall,
                                                    void * derived_this
-                                                   ACE_ENV_ARG_DECL)
+                                                   )
 {
   TAO_Skeleton skel;
   char const * const opname = req.operation ();
@@ -222,7 +218,7 @@ void TAO_ServantBase::synchronous_upcall_dispatch (TAO_ServerRequest & req,
                    skel,
                    static_cast <unsigned int> (req.operation_length())) == -1)
     {
-      ACE_THROW (CORBA::BAD_OPERATION ());
+      throw ( ::CORBA::BAD_OPERATION ());
     }
 
   CORBA::Boolean const send_reply =
@@ -230,7 +226,7 @@ void TAO_ServantBase::synchronous_upcall_dispatch (TAO_ServerRequest & req,
     && req.response_expected ()
     && !req.deferred_reply ();
 
-  ACE_TRY
+  try
     {
       // Invoke the skeleton, it will demarshal the arguments, invoke
       // the right operation on the skeleton class, and marshal any
@@ -239,8 +235,7 @@ void TAO_ServantBase::synchronous_upcall_dispatch (TAO_ServerRequest & req,
       skel (req,
             servant_upcall,
             derived_this
-            ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+           );
 
       /*
        * Dispatch resolution specialization add hook.
@@ -258,7 +253,7 @@ void TAO_ServantBase::synchronous_upcall_dispatch (TAO_ServerRequest & req,
           req.tao_send_reply ();
         }
     }
-  ACE_CATCHANY
+  catch ( ::CORBA::Exception& ex)
     {
       // If an exception was raised we should marshal it and send
       // the appropriate reply to the client
@@ -267,14 +262,12 @@ void TAO_ServantBase::synchronous_upcall_dispatch (TAO_ServerRequest & req,
           if (req.collocated ())
             {
               // Report the exception to the collocated client.
-              ACE_RE_THROW;
+              throw;
             }
           else
             req.tao_send_reply_exception (ACE_ANY_EXCEPTION);
         }
     }
-  ACE_ENDTRY;
-  ACE_CHECK;
 
   return;
 }
@@ -282,7 +275,7 @@ void TAO_ServantBase::synchronous_upcall_dispatch (TAO_ServerRequest & req,
 void TAO_ServantBase::asynchronous_upcall_dispatch (TAO_ServerRequest & req,
                                                     void * servant_upcall,
                                                     void * derived_this
-                                                    ACE_ENV_ARG_DECL)
+                                                    )
 {
   TAO_Skeleton skel;
   const char *opname = req.operation ();
@@ -302,10 +295,10 @@ void TAO_ServantBase::asynchronous_upcall_dispatch (TAO_ServerRequest & req,
                    skel,
                    static_cast <unsigned int> (req.operation_length())) == -1)
     {
-      ACE_THROW (CORBA::BAD_OPERATION ());
+      throw ( ::CORBA::BAD_OPERATION ());
     }
 
-  ACE_TRY
+  try
     {
       // Invoke the skeleton, it will demarshal the arguments, invoke
       // the right operation on the skeleton class, and marshal any
@@ -314,8 +307,7 @@ void TAO_ServantBase::asynchronous_upcall_dispatch (TAO_ServerRequest & req,
       skel (req,
             servant_upcall,
             derived_this
-            ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+           );
 
       // It is our job to send the already marshaled reply, but only
       // send if it is expected and it has not already been sent
@@ -325,26 +317,24 @@ void TAO_ServantBase::asynchronous_upcall_dispatch (TAO_ServerRequest & req,
       // exception.
 
     }
-  ACE_CATCHANY
+  catch ( ::CORBA::Exception& ex)
     {
       // If an exception was raised we should marshal it and send
       // the appropriate reply to the client
       req.tao_send_reply_exception (ACE_ANY_EXCEPTION);
     }
-  ACE_ENDTRY;
-  ACE_CHECK;
 
   return;
 }
 
 void
-TAO_ServantBase::_add_ref (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+TAO_ServantBase::_add_ref (void)
 {
   ++this->ref_count_;
 }
 
 void
-TAO_ServantBase::_remove_ref (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+TAO_ServantBase::_remove_ref (void)
 {
   long const new_count = --this->ref_count_;
 
@@ -353,7 +343,7 @@ TAO_ServantBase::_remove_ref (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
 }
 
 CORBA::ULong
-TAO_ServantBase::_refcount_value (ACE_ENV_SINGLE_ARG_DECL_NOT_USED) const
+TAO_ServantBase::_refcount_value (void) const
 {
   return static_cast<CORBA::ULong> (this->ref_count_.value ());
 }

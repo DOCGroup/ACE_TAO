@@ -30,7 +30,7 @@ TAO_RT_Current::~TAO_RT_Current (void)
 }
 
 RTCORBA::Priority
-TAO_RT_Current::the_priority (ACE_ENV_SINGLE_ARG_DECL)
+TAO_RT_Current::the_priority (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_Protocols_Hooks *tph =
@@ -40,8 +40,7 @@ TAO_RT_Current::the_priority (ACE_ENV_SINGLE_ARG_DECL)
 
   int result =
     tph->get_thread_CORBA_priority (priority
-                                    ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
+                                   );
 
   if (result == -1)
     ACE_THROW_RETURN (CORBA::DATA_CONVERSION (1, CORBA::COMPLETED_NO), -1);
@@ -51,7 +50,7 @@ TAO_RT_Current::the_priority (ACE_ENV_SINGLE_ARG_DECL)
 
 void
 TAO_RT_Current::the_priority (RTCORBA::Priority the_priority
-                              ACE_ENV_ARG_DECL)
+                              )
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
 
@@ -60,11 +59,10 @@ TAO_RT_Current::the_priority (RTCORBA::Priority the_priority
 
   int result =
     tph->set_thread_CORBA_priority (the_priority
-                                    ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+                                   );
 
   if (result == -1)
-    ACE_THROW (CORBA::DATA_CONVERSION (1, CORBA::COMPLETED_NO));
+    throw ( ::CORBA::DATA_CONVERSION (1, CORBA::COMPLETED_NO));
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL

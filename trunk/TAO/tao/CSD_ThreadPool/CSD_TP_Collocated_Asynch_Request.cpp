@@ -28,27 +28,22 @@ TAO::CSD::TP_Collocated_Asynch_Request::prepare_for_queue_i()
 void
 TAO::CSD::TP_Collocated_Asynch_Request::dispatch_i()
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  try
     {
-      this->do_dispatch(ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      this->do_dispatch();
     }
-  ACE_CATCHANY
+  catch ( ::CORBA::Exception&)
     {
       // Eat these.  We probably should log these, but since we have already
       // unblocked the requesting thread there is no point in saving it or
       // doing anything with it.
     }
-#if defined (TAO_HAS_EXCEPTIONS)
-  ACE_CATCHALL
+  catch (...)
     {
       // Eat these.  We probably should log these, but since we have already
       // unblocked the requesting thread there is no point in saving it or
       // doing anything with it.
     }
-#endif
-  ACE_ENDTRY;
 }
 
 void

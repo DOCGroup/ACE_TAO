@@ -54,10 +54,10 @@ namespace TAO
       static int Initializer (void);
 
       /// ImplRepo helper method, notify the ImplRepo on startup
-      virtual void imr_notify_startup (TAO_Root_POA* poa ACE_ENV_ARG_DECL);
+      virtual void imr_notify_startup (TAO_Root_POA* poa);
 
       /// ImplRepo helper method, notify the ImplRepo on shutdown
-      virtual void imr_notify_shutdown (TAO_Root_POA* poa ACE_ENV_ARG_DECL);
+      virtual void imr_notify_shutdown (TAO_Root_POA* poa);
 
     private:
       /// Implementation Repository Server Object

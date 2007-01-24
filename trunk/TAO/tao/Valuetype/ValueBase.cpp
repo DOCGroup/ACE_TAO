@@ -703,7 +703,7 @@ TAO_ChunkInfo::handle_chunking (TAO_InputCDR &strm)
   // Read a long value that might be an endtag, the chunk size or the value tag
   // of the nested valuetype.
   CORBA::Long tag;
-  
+
   if (!strm.read_long (tag))
     {
       return false;
@@ -721,7 +721,7 @@ TAO_ChunkInfo::handle_chunking (TAO_InputCDR &strm)
                              this->value_nesting_level_),
                             false);
         }
-        
+
       this->value_nesting_level_ = - tag;
       this->value_nesting_level_--;
 
@@ -796,7 +796,7 @@ CORBA::ValueBase::_tao_read_repository_id_list (ACE_InputCDR& strm,
                                                 Repository_Id_List& ids)
 {
   CORBA::Long num_ids;
-  
+
   if (!strm.read_long (num_ids))
     {
       return false;
@@ -849,7 +849,7 @@ CORBA::ValueBase::_tao_read_repository_id (ACE_InputCDR& strm,
         {
           return false;
         }
-        
+
       buffer_size = -(offset) + sizeof (CORBA::Long);
     }
 
@@ -862,7 +862,7 @@ CORBA::ValueBase::_tao_read_repository_id (ACE_InputCDR& strm,
     {
       return false;
     }
-    
+
   indir_stream.read_string (id);
 
   // Since the ID is always read from the indirection cdr we have to skip
@@ -881,11 +881,7 @@ CORBA::ValueBase::_tao_read_repository_id (ACE_InputCDR& strm,
 void
 CORBA::ValueBase::truncation_hook ()
 {
-#if defined (ACE_HAS_EXCEPTIONS)
-      ACE_THROW (CORBA::INTERNAL ());
-#else
-      ACE_OS::abort ();
-#endif /* ACE_HAS_EXCEPTIONS */
+  throw ::CORBA::INTERNAL ();
 }
 
 

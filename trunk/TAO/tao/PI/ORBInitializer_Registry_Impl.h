@@ -65,7 +65,7 @@ namespace TAO
     /// array.
     virtual void register_orb_initializer (
                    PortableInterceptor::ORBInitializer_ptr init
-                   ACE_ENV_ARG_DECL);
+                  );
 
     /// Begin initialization of all registered ORBInitializers before
     /// the ORB itself is initialized.
@@ -74,7 +74,7 @@ namespace TAO
                              int argc,
                              char *argv[],
                              PortableInterceptor::SlotId &slotid
-                             ACE_ENV_ARG_DECL);
+                            );
 
     /// Complete initialization of all registered ORBInitializers after
     /// the ORB has been initialized.
@@ -84,7 +84,7 @@ namespace TAO
                             int argc,
                             char *argv[],
                             PortableInterceptor::SlotId slotid
-                            ACE_ENV_ARG_DECL);
+                           );
 
   private:
     // Prevent copying

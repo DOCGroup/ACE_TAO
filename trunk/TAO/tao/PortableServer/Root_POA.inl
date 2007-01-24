@@ -26,25 +26,24 @@ TAO_Root_POA::policies (void)
 }
 
 ACE_INLINE PortableServer::POA_ptr
-TAO_Root_POA::the_parent (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+TAO_Root_POA::the_parent (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return PortableServer::POA::_nil ();
 }
 
 ACE_INLINE PortableInterceptor::AdapterName *
-TAO_Root_POA::adapter_name (ACE_ENV_SINGLE_ARG_DECL)
+TAO_Root_POA::adapter_name (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  return this->adapter_name_i (ACE_ENV_SINGLE_ARG_PARAMETER);
+  return this->adapter_name_i ();
 }
 
 ACE_INLINE PortableInterceptor::ObjectReferenceTemplate *
-TAO_Root_POA::get_adapter_template (ACE_ENV_SINGLE_ARG_DECL)
+TAO_Root_POA::get_adapter_template (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  TAO::ORT_Adapter *adapter = this->ORT_adapter (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (0);
+  TAO::ORT_Adapter *adapter = this->ORT_adapter ();
 
   if (adapter)
     {
@@ -66,11 +65,10 @@ TAO_Root_POA::get_adapter_template_i ()
 }
 
 ACE_INLINE PortableInterceptor::ObjectReferenceFactory *
-TAO_Root_POA::get_obj_ref_factory (ACE_ENV_SINGLE_ARG_DECL)
+TAO_Root_POA::get_obj_ref_factory (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  TAO::ORT_Adapter *adapter = this->ORT_adapter (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (0);
+  TAO::ORT_Adapter *adapter = this->ORT_adapter ();
 
   if (adapter)
     {
@@ -99,7 +97,7 @@ TAO_Root_POA::name (void) const
 }
 
 ACE_INLINE char *
-TAO_Root_POA::the_name (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+TAO_Root_POA::the_name (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return CORBA::string_dup (this->name_.c_str ());
@@ -226,7 +224,7 @@ TAO_Root_POA::orb_core (void) const
 }
 
 ACE_INLINE PortableInterceptor::AdapterState
-TAO_Root_POA::get_adapter_state (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+TAO_Root_POA::get_adapter_state (void)
 {
   return this->adapter_state_;
 }

@@ -81,7 +81,7 @@ namespace TAO
     void
     RequestProcessingStrategyFactoryImpl::destroy (
       RequestProcessingStrategy *strategy
-      ACE_ENV_ARG_DECL)
+      )
     {
       RequestProcessingStrategyFactory *strategy_factory = 0;
 
@@ -127,8 +127,7 @@ namespace TAO
 
       if (strategy_factory != 0)
         {
-          strategy_factory->destroy (strategy ACE_ENV_ARG_PARAMETER);
-          ACE_CHECK;
+          strategy_factory->destroy (strategy);
         }
     }
   }

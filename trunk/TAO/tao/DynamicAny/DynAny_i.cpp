@@ -27,12 +27,11 @@ TAO_DynAny_i::~TAO_DynAny_i (void)
 }
 
 void
-TAO_DynAny_i::check_typecode (CORBA::TypeCode_ptr tc
-                              ACE_ENV_ARG_DECL)
+TAO_DynAny_i::check_typecode (CORBA::TypeCode_ptr tc)
 {
   // Check to see if it's a simple type.
-  CORBA::TCKind tk = TAO_DynAnyFactory::unalias (tc ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+  CORBA::TCKind tk = TAO_DynAnyFactory::unalias (tc);
+
   switch (tk)
   {
     case CORBA::tk_null:
@@ -74,16 +73,15 @@ TAO_DynAny_i::check_typecode (CORBA::TypeCode_ptr tc
           break;
         }
     default:
-      ACE_THROW (DynamicAny::DynAnyFactory::InconsistentTypeCode ());
+      throw DynamicAny::DynAnyFactory::InconsistentTypeCode ();
   }
 }
 
 void
-TAO_DynAny_i::set_to_default_value (CORBA::TypeCode_ptr tc
-                                    ACE_ENV_ARG_DECL)
+TAO_DynAny_i::set_to_default_value (CORBA::TypeCode_ptr tc)
 {
-  CORBA::TCKind tk = TAO_DynAnyFactory::unalias (tc ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+  CORBA::TCKind tk = TAO_DynAnyFactory::unalias (tc);
+
   switch (tk)
   {
     case CORBA::tk_null:
@@ -174,16 +172,11 @@ TAO_DynAny_i::init_common (void)
 }
 
 void
-TAO_DynAny_i::init (CORBA::TypeCode_ptr tc
-                    ACE_ENV_ARG_DECL)
+TAO_DynAny_i::init (CORBA::TypeCode_ptr tc)
 {
-  this->check_typecode (tc
-                        ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+  this->check_typecode (tc);
 
-  this->set_to_default_value (tc
-                              ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+  this->set_to_default_value (tc);
 
   this->init_common ();
 
@@ -191,13 +184,10 @@ TAO_DynAny_i::init (CORBA::TypeCode_ptr tc
 }
 
 void
-TAO_DynAny_i::init (const CORBA::Any& any
-                    ACE_ENV_ARG_DECL)
+TAO_DynAny_i::init (const CORBA::Any& any)
 {
   this->type_ = any.type ();
-  this->check_typecode (this->type_.in ()
-                        ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+  this->check_typecode (this->type_.in ());
 
   this->init_common ();
 
@@ -207,8 +197,7 @@ TAO_DynAny_i::init (const CORBA::Any& any
 // ****************************************************************
 
 TAO_DynAny_i *
-TAO_DynAny_i::_narrow (CORBA::Object_ptr _tao_objref
-                       ACE_ENV_ARG_DECL_NOT_USED)
+TAO_DynAny_i::_narrow (CORBA::Object_ptr _tao_objref)
 {
   if (CORBA::is_nil (_tao_objref))
     {
@@ -221,8 +210,7 @@ TAO_DynAny_i::_narrow (CORBA::Object_ptr _tao_objref
 // ****************************************************************
 
 void
-TAO_DynAny_i::from_any (const CORBA::Any &any
-                        ACE_ENV_ARG_DECL)
+TAO_DynAny_i::from_any (const CORBA::Any &any)
   ACE_THROW_SPEC ((
       CORBA::SystemException,
       DynamicAny::DynAny::TypeMismatch,
@@ -231,19 +219,18 @@ TAO_DynAny_i::from_any (const CORBA::Any &any
 {
   if (this->destroyed_)
     {
-      ACE_THROW (CORBA::OBJECT_NOT_EXIST ());
+      throw ::CORBA::OBJECT_NOT_EXIST ();
     }
 
   CORBA::TypeCode_var any_tc = any.type ();
 
   CORBA::Boolean equiv =
     this->type_->equivalent (any_tc.in ()
-                             ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+                            );
 
   if (!equiv)
     {
-      ACE_THROW (DynamicAny::DynAny::TypeMismatch ());
+      throw (DynamicAny::DynAny::TypeMismatch ());
     }
 
 // @@@ (JP) Spec also says we should check for illegal Any
@@ -254,10 +241,8 @@ TAO_DynAny_i::from_any (const CORBA::Any &any
 }
 
 CORBA::Any_ptr
-TAO_DynAny_i::to_any (ACE_ENV_SINGLE_ARG_DECL)
-  ACE_THROW_SPEC ((
-      CORBA::SystemException
-    ))
+TAO_DynAny_i::to_any (void)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   if (this->destroyed_)
     {
@@ -270,17 +255,13 @@ TAO_DynAny_i::to_any (ACE_ENV_SINGLE_ARG_DECL)
   ACE_NEW_THROW_EX (retval,
                     CORBA::Any (this->any_),
                     CORBA::NO_MEMORY ());
-  ACE_CHECK_RETURN (0);
 
   return retval;
 }
 
 CORBA::Boolean
-TAO_DynAny_i::equal (DynamicAny::DynAny_ptr rhs
-                     ACE_ENV_ARG_DECL)
-  ACE_THROW_SPEC ((
-      CORBA::SystemException
-    ))
+TAO_DynAny_i::equal (DynamicAny::DynAny_ptr rhs)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   if (this->destroyed_)
     {
@@ -288,33 +269,27 @@ TAO_DynAny_i::equal (DynamicAny::DynAny_ptr rhs
                         0);
     }
 
-  TAO_DynAny_i *rhs_n = TAO_DynAny_i::_narrow (rhs
-                                               ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (0);
+  TAO_DynAny_i *rhs_n = TAO_DynAny_i::_narrow (rhs);
 
   if (rhs_n == 0)
     {
-      return 0;
+      return false;
     }
 
-  CORBA::Boolean equiv = this->type_->equivalent (rhs_n->type_.in ()
-                                                  ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (0);
+  CORBA::Boolean const equiv = this->type_->equivalent (rhs_n->type_.in ());
 
   if (!equiv)
     {
-      return 0;
+      return false;
     }
 
-  CORBA::TCKind tk = TAO_DynAnyFactory::unalias (this->type_.in ()
-                                                 ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (0);
+  CORBA::TCKind tk = TAO_DynAnyFactory::unalias (this->type_.in ());
 
   switch (tk)
     {
     case CORBA::tk_null:
     case CORBA::tk_void:
-      return 1;
+      return true;
     case CORBA::tk_short:
       {
         CORBA::Short rhs_v;
@@ -428,15 +403,11 @@ TAO_DynAny_i::equal (DynamicAny::DynAny_ptr rhs
             lhs_v->_tao_get_typecode (),
             *lhs_v);
 
-        CORBA::Boolean b = rhs_dyn->equal (lhs_dyn.in ()
-                                           ACE_ENV_ARG_PARAMETER);
-        ACE_CHECK_RETURN (0);
+        CORBA::Boolean const b = rhs_dyn->equal (lhs_dyn.in ());
 
-        rhs_dyn->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-        ACE_CHECK_RETURN (0);
+        rhs_dyn->destroy ();
 
-        lhs_dyn->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-        ACE_CHECK_RETURN (0);
+        lhs_dyn->destroy ();
 
         return b;
       }
@@ -448,7 +419,7 @@ TAO_DynAny_i::equal (DynamicAny::DynAny_ptr rhs
         this->any_ >>= lhs_v;
         // See CORBA 2.4.2 - must use equal() here.
         return lhs_v->equal (lhs_v
-                             ACE_ENV_ARG_PARAMETER);
+                            );
       }
     case CORBA::tk_objref:
       {
@@ -457,18 +428,15 @@ TAO_DynAny_i::equal (DynamicAny::DynAny_ptr rhs
         CORBA::Object_ptr lhs_v;
         this->any_ >>= CORBA::Any::to_object (lhs_v);
         return lhs_v->_is_equivalent (lhs_v
-                                      ACE_ENV_ARG_PARAMETER);
+                                     );
       }
     case CORBA::tk_string:
       {
         CORBA::TypeCode_var unaliased_tc =
-          TAO_DynAnyFactory::strip_alias (this->type_.in ()
-                                          ACE_ENV_ARG_PARAMETER);
-        ACE_CHECK_RETURN (0);
+          TAO_DynAnyFactory::strip_alias (this->type_.in ());
 
         CORBA::ULong bound =
-          unaliased_tc->length (ACE_ENV_SINGLE_ARG_PARAMETER);
-        ACE_CHECK_RETURN (0);
+          unaliased_tc->length ();
 
         const char *rhs_v, *lhs_v;
         CORBA::Boolean rstatus, lstatus;
@@ -502,12 +470,10 @@ TAO_DynAny_i::equal (DynamicAny::DynAny_ptr rhs
       {
         CORBA::TypeCode_var unaliased_tc =
           TAO_DynAnyFactory::strip_alias (this->type_.in ()
-                                          ACE_ENV_ARG_PARAMETER);
-        ACE_CHECK_RETURN (0);
+                                         );
 
         CORBA::ULong bound =
-          unaliased_tc->length (ACE_ENV_SINGLE_ARG_PARAMETER);
-        ACE_CHECK_RETURN (0);
+          unaliased_tc->length ();
 
         const CORBA::WChar *rhs_v, *lhs_v;
         CORBA::Boolean rstatus, lstatus;
@@ -545,14 +511,14 @@ TAO_DynAny_i::equal (DynamicAny::DynAny_ptr rhs
 }
 
 void
-TAO_DynAny_i::destroy (ACE_ENV_SINGLE_ARG_DECL)
+TAO_DynAny_i::destroy (void)
   ACE_THROW_SPEC ((
       CORBA::SystemException
     ))
 {
   if (this->destroyed_)
     {
-      ACE_THROW (CORBA::OBJECT_NOT_EXIST ());
+      throw ::CORBA::OBJECT_NOT_EXIST ();
     }
 
   if (!this->ref_to_component_ || this->container_is_destroying_)
@@ -563,7 +529,7 @@ TAO_DynAny_i::destroy (ACE_ENV_SINGLE_ARG_DECL)
 
 
 DynamicAny::DynAny_ptr
-TAO_DynAny_i::current_component (ACE_ENV_SINGLE_ARG_DECL)
+TAO_DynAny_i::current_component (void)
   ACE_THROW_SPEC ((
       CORBA::SystemException,
       DynamicAny::DynAny::TypeMismatch

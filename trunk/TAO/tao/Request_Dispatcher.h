@@ -57,8 +57,7 @@ public:
    */
   virtual void dispatch (TAO_ORB_Core *orb_core,
                          TAO_ServerRequest &request,
-                         CORBA::Object_out forward_to
-                         ACE_ENV_ARG_DECL);
+                         CORBA::Object_out forward_to);
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

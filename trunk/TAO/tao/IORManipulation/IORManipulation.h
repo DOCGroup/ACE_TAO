@@ -55,7 +55,7 @@ public:
 
   virtual CORBA::Object_ptr merge_iors (
     const TAO_IOP::TAO_IOR_Manipulation::IORList & iors
-    ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+    )
       ACE_THROW_SPEC ((
         CORBA::SystemException,
         TAO_IOP::EmptyProfileList,
@@ -66,7 +66,7 @@ public:
   virtual CORBA::Object_ptr add_profiles (
       CORBA::Object_ptr ior1,
       CORBA::Object_ptr ior2
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+      )
       ACE_THROW_SPEC ((
         CORBA::SystemException,
         TAO_IOP::EmptyProfileList,
@@ -77,7 +77,7 @@ public:
   virtual CORBA::Object_ptr remove_profiles (
     CORBA::Object_ptr group,
     CORBA::Object_ptr ior2
-    ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+    )
       ACE_THROW_SPEC ((
         CORBA::SystemException,
         TAO_IOP::Invalid_IOR,
@@ -88,7 +88,7 @@ public:
   virtual CORBA::Boolean set_property (
       TAO_IOP::TAO_IOR_Property_ptr prop,
       CORBA::Object_ptr group
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+      )
 
     ACE_THROW_SPEC ((
       CORBA::SystemException,
@@ -101,7 +101,7 @@ public:
       TAO_IOP::TAO_IOR_Property_ptr prop,
       CORBA::Object_ptr new_primary,
       CORBA::Object_ptr group
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+      )
 
     ACE_THROW_SPEC ((
       CORBA::SystemException,
@@ -113,7 +113,7 @@ public:
   virtual CORBA::Object_ptr get_primary (
       TAO_IOP::TAO_IOR_Property_ptr prop,
       CORBA::Object_ptr group
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+      )
 
     ACE_THROW_SPEC ((
       CORBA::SystemException,
@@ -123,7 +123,7 @@ public:
   virtual CORBA::Boolean is_primary_set (
       TAO_IOP::TAO_IOR_Property_ptr prop,
       CORBA::Object_ptr group
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+      )
 
     ACE_THROW_SPEC ((
       CORBA::SystemException
@@ -132,7 +132,7 @@ public:
    virtual CORBA::Boolean remove_primary_tag (
        TAO_IOP::TAO_IOR_Property_ptr prop,
        CORBA::Object_ptr iogr
-       ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+       )
     ACE_THROW_SPEC ((
       CORBA::SystemException
     ));
@@ -140,7 +140,7 @@ public:
   virtual CORBA::ULong is_in_ior (
     CORBA::Object_ptr ior1,
     CORBA::Object_ptr ior2
-    ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+    )
       ACE_THROW_SPEC ((
         CORBA::SystemException,
         TAO_IOP::NotFound
@@ -148,7 +148,7 @@ public:
 
   virtual CORBA::ULong get_profile_count (
     CORBA::Object_ptr group
-    ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+    )
       ACE_THROW_SPEC ((
         CORBA::SystemException,
         TAO_IOP::EmptyProfileList

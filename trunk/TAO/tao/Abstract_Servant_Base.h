@@ -20,13 +20,12 @@
 
 #include /**/ "ace/pre.h"
 
-#include "ace/CORBA_macros.h"
+#include /**/ "tao/TAO_Export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include /**/ "tao/TAO_Export.h"
 #include "tao/Basic_Types.h"
 #include "tao/Collocation_Strategy.h"
 #include "tao/CORBA_methods.h"
@@ -43,8 +42,6 @@ namespace CORBA
   class InterfaceDef;
   typedef InterfaceDef *InterfaceDef_ptr;
 
-  class Environment;
-
   class Object;
   typedef Object *Object_ptr;
   typedef TAO_Pseudo_Var_T<Object> Object_var;
@@ -60,18 +57,12 @@ typedef void (*TAO_Skeleton)(
     TAO_ServerRequest &,
     void *,
     void *
-#if !defined (TAO_HAS_EXCEPTIONS) || defined (ACE_ENV_BKWD_COMPAT)
-    , CORBA::Environment &
-#endif
   );
 
 typedef void (*TAO_Collocated_Skeleton)(
     TAO_Abstract_ServantBase *,
     TAO::Argument **,
     int
-#if !defined (TAO_HAS_EXCEPTIONS) || defined (ACE_ENV_BKWD_COMPAT)
-    , CORBA::Environment &
-#endif
   );
 
 class TAO_Export TAO_Abstract_ServantBase
@@ -81,49 +72,40 @@ public:
   virtual ~TAO_Abstract_ServantBase (void);
 
   /// Local implementation of the CORBA::Object::_is_a method.
-  virtual CORBA::Boolean _is_a (const char* logical_type_id
-                                ACE_ENV_ARG_DECL) = 0;
+  virtual CORBA::Boolean _is_a (const char* logical_type_id) = 0;
 
   /// Default @c _non_existent: always returns false.
-  virtual CORBA::Boolean _non_existent (
-    ACE_ENV_SINGLE_ARG_DECL) = 0;
+  virtual CORBA::Boolean _non_existent (void) = 0;
 
   /// Query the Interface Repository.
-  virtual CORBA::InterfaceDef_ptr _get_interface (
-      ACE_ENV_SINGLE_ARG_DECL
-    ) = 0;
+  virtual CORBA::InterfaceDef_ptr _get_interface (void) = 0;
 
   /// Default @c _get_component: always returns nil.
-  virtual CORBA::Object_ptr _get_component (
-    ACE_ENV_SINGLE_ARG_DECL) = 0;
+  virtual CORBA::Object_ptr _get_component (void) = 0;
 
   /// Default @c _repository_id
-  virtual char * _repository_id (
-    ACE_ENV_SINGLE_ARG_DECL) = 0;
+  virtual char * _repository_id (void) = 0;
 
   //@{
   /**
    * @name Reference Counting Operations
    */
   /// Increase reference count by one.
-  virtual void _add_ref (
-    ACE_ENV_SINGLE_ARG_DECL) = 0;
+  virtual void _add_ref (void) = 0;
 
   /**
    * Decreases reference count by one; if the resulting reference
    * count equals zero, _remove_ref invokes delete on its this pointer
    * in order to destroy the servant.
    */
-  virtual void _remove_ref (
-    ACE_ENV_SINGLE_ARG_DECL) = 0;
+  virtual void _remove_ref (void) = 0;
 
   /// Returns the current reference count value.
-  virtual CORBA::ULong _refcount_value (
-    ACE_ENV_SINGLE_ARG_DECL) const = 0;
+  virtual CORBA::ULong _refcount_value (void) const = 0;
   //@}
 
   /// This is an auxiliary method for _this() and _narrow().
-  virtual TAO_Stub *_create_stub (ACE_ENV_SINGLE_ARG_DECL) = 0;
+  virtual TAO_Stub *_create_stub (void) = 0;
 
   /// Find an operation in the operation table and return a
   /// TAO_Skeleton which can be used to make upcalls
@@ -158,17 +140,14 @@ protected:
    * any) or the exceptions thrown into @a request.
    */
   virtual void _dispatch (TAO_ServerRequest &request,
-                          void *servant_upcall
-                          ACE_ENV_ARG_DECL) = 0;
+                          void *servant_upcall) = 0;
 
   virtual void synchronous_upcall_dispatch (TAO_ServerRequest &req,
                                             void *servant_upcall,
-                                            void *derived_this
-                                            ACE_ENV_ARG_DECL) = 0;
+                                            void *derived_this) = 0;
 
   /// Get this interface's repository id (TAO specific).
   virtual const char *_interface_repository_id (void) const = 0;
-
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

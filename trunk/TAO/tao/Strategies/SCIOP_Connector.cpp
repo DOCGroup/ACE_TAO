@@ -356,7 +356,7 @@ TAO_SCIOP_Connector::create_profile (TAO_InputCDR& cdr)
 }
 
 TAO_Profile *
-TAO_SCIOP_Connector::make_profile (ACE_ENV_SINGLE_ARG_DECL)
+TAO_SCIOP_Connector::make_profile (void)
 {
   // The endpoint should be of the form:
   //    N.n@host:port/object_key
@@ -371,7 +371,6 @@ TAO_SCIOP_Connector::make_profile (ACE_ENV_SINGLE_ARG_DECL)
                         TAO::VMCID,
                         ENOMEM),
                       CORBA::COMPLETED_NO));
-  ACE_CHECK_RETURN (0);
 
   return profile;
 }

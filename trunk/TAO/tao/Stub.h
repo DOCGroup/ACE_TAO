@@ -77,18 +77,18 @@ public:
    * types.
    */
   virtual CORBA::Policy_ptr get_policy (CORBA::PolicyType type
-                                        ACE_ENV_ARG_DECL);
+                                       );
 
   virtual CORBA::Policy_ptr get_cached_policy (TAO_Cached_Policy_Type type
-                                               ACE_ENV_ARG_DECL);
+                                              );
 
   virtual TAO_Stub* set_policy_overrides (const CORBA::PolicyList & policies,
                                           CORBA::SetOverrideType set_add
-                                          ACE_ENV_ARG_DECL);
+                                         );
 
   virtual CORBA::PolicyList *get_policy_overrides (
     const CORBA::PolicyTypeSeq & types
-    ACE_ENV_ARG_DECL);
+   );
 
 #endif /* TAO_HAS_CORBA_MESSAGING == 1 */
 
@@ -107,7 +107,7 @@ public:
    * equivalent).
    */
   CORBA::ULong hash (CORBA::ULong maximum
-                     ACE_ENV_ARG_DECL_WITH_DEFAULTS);
+                     );
 
   /// Implement the is_equivalent() method for the CORBA::Object
   CORBA::Boolean is_equivalent (CORBA::Object_ptr other_obj);
@@ -252,7 +252,7 @@ public:
    */
   int create_ior_info (IOP::IOR *&ior_info,
                        CORBA::ULong &index
-                       ACE_ENV_ARG_DECL);
+                      );
 
   /// Deallocate the TAO_Stub object.
   /**
@@ -306,7 +306,7 @@ private:
   /// THREAD-SAFE Create the IOR info
   int get_profile_ior_info (TAO_MProfile &profile,
                             IOP::IOR *&ior_info
-                            ACE_ENV_ARG_DECL);
+                           );
 
 private:
 

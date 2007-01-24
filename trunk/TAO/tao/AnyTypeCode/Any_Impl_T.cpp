@@ -60,12 +60,11 @@ TAO::Any_Impl_T<T>::extract (const CORBA::Any & any,
 {
   _tao_elem = 0;
 
-  ACE_TRY_NEW_ENV
+  try
     {
       CORBA::TypeCode_ptr any_tc = any._tao_get_typecode ();
       CORBA::Boolean _tao_equiv = any_tc->equivalent (tc
-                                                      ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+                                                     );
 
       if (_tao_equiv == 0)
         {
@@ -119,10 +118,9 @@ TAO::Any_Impl_T<T>::extract (const CORBA::Any & any,
       // Duplicated by Any_Impl base class constructor.
       ::CORBA::release (any_tc);
     }
-  ACE_CATCHANY
+  catch ( ::CORBA::Exception&)
     {
     }
-  ACE_ENDTRY;
 
   return 0;
 }
@@ -141,7 +139,7 @@ TAO::Any_Impl_T<T>::to_value (CORBA::ValueBase *&) const
   return 0;
 }
 
-template<typename T> 
+template<typename T>
 
 CORBA::Boolean
 TAO::Any_Impl_T<T>::to_abstract_base (CORBA::AbstractBase_ptr &) const
@@ -180,11 +178,11 @@ TAO::Any_Impl_T<T>::free_value (void)
 template<typename T>
 void
 TAO::Any_Impl_T<T>::_tao_decode (TAO_InputCDR &cdr
-                                 ACE_ENV_ARG_DECL)
+                                 )
 {
   if (! this->demarshal_value (cdr))
     {
-      ACE_THROW (CORBA::MARSHAL ());
+      throw ::CORBA::MARSHAL ();
     }
 }
 

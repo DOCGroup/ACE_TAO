@@ -24,14 +24,14 @@ namespace TAO
   void
   ClientRequestInterceptor_Adapter_Impl::send_request (
       Invocation_Base &invocation
-      ACE_ENV_ARG_DECL)
+      )
   {
     // This method implements one of the "starting" client side
     // interception point.
 
     bool const is_remote_request = invocation.is_remote_request();
 
-    ACE_TRY
+    try
       {
         TAO_ClientRequestInfo ri (&invocation);
 
@@ -44,8 +44,7 @@ namespace TAO
               {
                 registered.interceptor_->
                   send_request (&ri
-                                ACE_ENV_ARG_PARAMETER);
-                ACE_TRY_CHECK;
+                               );
               }
 
             // The starting interception point completed successfully.
@@ -53,21 +52,18 @@ namespace TAO
             ++invocation.stack_size ();
           }
       }
-    ACE_CATCH (PortableInterceptor::ForwardRequest, exc)
+    catch ( ::PortableInterceptor::ForwardRequest& exc)
       {
         this->process_forward_request (invocation,
                                        exc
-                                       ACE_ENV_ARG_PARAMETER);
-        ACE_TRY_CHECK;
+                                      );
       }
-    ACE_ENDTRY;
-    ACE_CHECK;
   }
 
   void
   ClientRequestInterceptor_Adapter_Impl::receive_reply (
     Invocation_Base &invocation
-    ACE_ENV_ARG_DECL)
+    )
   {
     // This is an "ending" interception point so we only process the
     // interceptors pushed on to the flow stack.
@@ -99,8 +95,7 @@ namespace TAO
             registered.interceptor_->
               receive_reply (
                 &ri
-                ACE_ENV_ARG_PARAMETER);
-            ACE_CHECK;
+               );
           }
       }
 
@@ -112,7 +107,7 @@ namespace TAO
   void
   ClientRequestInterceptor_Adapter_Impl::receive_exception (
       Invocation_Base &invocation
-      ACE_ENV_ARG_DECL)
+      )
   {
     // This is an "ending" interception point so we only process the
     // interceptors pushed on to the flow stack.
@@ -122,7 +117,7 @@ namespace TAO
     // Notice that the interceptors are processed in the opposite order
     // they were pushed onto the stack since this is an "ending"
     // interception point.
-    ACE_TRY
+    try
       {
         TAO_ClientRequestInfo ri (&invocation);
 
@@ -145,19 +140,17 @@ namespace TAO
                 registered.interceptor_->
                   receive_exception (
                     &ri
-                    ACE_ENV_ARG_PARAMETER);
-                ACE_TRY_CHECK;
+                   );
               }
           }
       }
-    ACE_CATCH (PortableInterceptor::ForwardRequest, exc)
+    catch ( ::PortableInterceptor::ForwardRequest& exc)
       {
         this->process_forward_request (invocation,
                                        exc
-                                       ACE_ENV_ARG_PARAMETER);
-        ACE_TRY_CHECK;
+                                      );
       }
-    ACE_CATCHANY
+    catch ( ::CORBA::Exception& ex)
       {
         // The receive_exception() interception point in the remaining
         // interceptors must be called so call this method (not the
@@ -171,8 +164,7 @@ namespace TAO
 
         invocation.exception (&ACE_ANY_EXCEPTION);
 
-        this->receive_exception (invocation ACE_ENV_ARG_PARAMETER);
-        ACE_TRY_CHECK;
+        this->receive_exception (invocation);
 
         PortableInterceptor::ReplyStatus status =
           this->reply_status (invocation);
@@ -182,16 +174,14 @@ namespace TAO
         // LOCATION_FORWARD).
         if (status == PortableInterceptor::SYSTEM_EXCEPTION
             || status == PortableInterceptor::USER_EXCEPTION)
-          ACE_RE_THROW;
+          throw;
       }
-    ACE_ENDTRY;
-    ACE_CHECK;
   }
 
   void
   ClientRequestInterceptor_Adapter_Impl::receive_other (
       Invocation_Base &invocation
-      ACE_ENV_ARG_DECL)
+      )
   {
     // This is an "ending" interception point so we only process the
     // interceptors pushed on to the flow stack.
@@ -202,7 +192,7 @@ namespace TAO
     // they were pushed onto the stack since this is an "ending"
     // interception point.
 
-    ACE_TRY
+    try
       {
         TAO_ClientRequestInfo ri (&invocation);
 
@@ -222,22 +212,16 @@ namespace TAO
 
           if (registered.details_.should_be_processed (is_remote_request))
             {
-              registered.interceptor_->
-                receive_other (
-                  &ri
-                  ACE_ENV_ARG_PARAMETER);
-              ACE_TRY_CHECK;
+              registered.interceptor_->receive_other (&ri);
             }
         }
       }
-    ACE_CATCH (PortableInterceptor::ForwardRequest, exc)
+    catch ( ::PortableInterceptor::ForwardRequest& exc)
       {
         this->process_forward_request (invocation,
-                                       exc
-                                       ACE_ENV_ARG_PARAMETER);
-        ACE_TRY_CHECK;
+                                       exc);
       }
-    ACE_CATCHANY
+    catch ( ::CORBA::Exception& ex)
       {
         // The receive_exception() interception point in the remaining
         // interceptors must be called so call this method (not the
@@ -251,8 +235,7 @@ namespace TAO
 
         invocation.exception (&ACE_ANY_EXCEPTION);
 
-        this->receive_exception (invocation ACE_ENV_ARG_PARAMETER);
-        ACE_TRY_CHECK;
+        this->receive_exception (invocation);
 
         PortableInterceptor::ReplyStatus status =
           this->reply_status (invocation);
@@ -262,53 +245,41 @@ namespace TAO
         // LOCATION_FORWARD).
         if (status == PortableInterceptor::SYSTEM_EXCEPTION
             || status == PortableInterceptor::USER_EXCEPTION)
-          ACE_RE_THROW;
+          throw;
       }
-    ACE_ENDTRY;
-    ACE_CHECK;                                      
   }
 
   void
   ClientRequestInterceptor_Adapter_Impl::process_forward_request (
       Invocation_Base &invocation,
-      PortableInterceptor::ForwardRequest &exc
-      ACE_ENV_ARG_DECL)
+      PortableInterceptor::ForwardRequest &exc)
   {
     invocation.forwarded_reference (exc.forward.in ());
 
     // receive_other() is potentially invoked recursively.
-    this->receive_other (invocation
-                         ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK;
+    this->receive_other (invocation);
   }
 
   void
   ClientRequestInterceptor_Adapter_Impl::add_interceptor (
-    PortableInterceptor::ClientRequestInterceptor_ptr interceptor
-    ACE_ENV_ARG_DECL)
+    PortableInterceptor::ClientRequestInterceptor_ptr interceptor)
   {
-    this->interceptor_list_.add_interceptor (interceptor ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK;
+    this->interceptor_list_.add_interceptor (interceptor);
   }
 
   void
   ClientRequestInterceptor_Adapter_Impl::add_interceptor (
     PortableInterceptor::ClientRequestInterceptor_ptr interceptor,
-    const CORBA::PolicyList& policies
-    ACE_ENV_ARG_DECL)
+    const CORBA::PolicyList& policies)
   {
     this->interceptor_list_.add_interceptor (interceptor,
-                                             policies
-                                             ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK;
+                                             policies);
   }
 
   void
-  ClientRequestInterceptor_Adapter_Impl::destroy_interceptors (
-    ACE_ENV_SINGLE_ARG_DECL)
+  ClientRequestInterceptor_Adapter_Impl::destroy_interceptors (void)
   {
-    this->interceptor_list_.destroy_interceptors (ACE_ENV_SINGLE_ARG_PARAMETER);
-    ACE_CHECK;
+    this->interceptor_list_.destroy_interceptors ();
   }
 
   PortableInterceptor::ReplyStatus

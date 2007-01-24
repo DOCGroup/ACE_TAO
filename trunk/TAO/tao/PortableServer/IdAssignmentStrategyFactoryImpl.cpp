@@ -48,8 +48,7 @@ namespace TAO
 
     void
     IdAssignmentStrategyFactoryImpl::destroy (
-      IdAssignmentStrategy * /*strategy*/
-      ACE_ENV_ARG_DECL_NOT_USED)
+      IdAssignmentStrategy * /*strategy*/)
     {
       // Noop because both types are singletons
     }

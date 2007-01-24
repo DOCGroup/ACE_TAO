@@ -5,7 +5,6 @@
 #include "tao/IIOP_Profile.h"
 #include "tao/debug.h"
 #include "tao/ORB_Core.h"
-#include "tao/Environment.h"
 #include "tao/Protocols_Hooks.h"
 #include "tao/Connect_Strategy.h"
 #include "tao/Thread_Lane_Resources.h"
@@ -644,7 +643,7 @@ TAO_IIOP_Connector::create_profile (TAO_InputCDR& cdr)
 }
 
 TAO_Profile *
-TAO_IIOP_Connector::make_profile (ACE_ENV_SINGLE_ARG_DECL)
+TAO_IIOP_Connector::make_profile (void)
 {
   // The endpoint should be of the form:
   //    N.n@host:port/object_key
@@ -659,7 +658,6 @@ TAO_IIOP_Connector::make_profile (ACE_ENV_SINGLE_ARG_DECL)
                         0,
                         ENOMEM),
                       CORBA::COMPLETED_NO));
-  ACE_CHECK_RETURN (0);
 
   return profile;
 }

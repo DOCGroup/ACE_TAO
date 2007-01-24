@@ -97,45 +97,45 @@ namespace POA_CORBA
 
     virtual CORBA::Boolean _is_a (
         const char* logical_type_id
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
+
       );
 
     static void _is_a_skel (
         TAO_ServerRequest & req,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL
+
       );
 
     static void _non_existent_skel (
         TAO_ServerRequest & req,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL
+
       );
 
     static void _interface_skel (
         TAO_ServerRequest & req,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL
+
       );
 
     static void _component_skel (
         TAO_ServerRequest & req,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL
+
       );
 
     virtual void _dispatch (
         TAO_ServerRequest & req,
         void * servant_upcall
-        ACE_ENV_ARG_DECL
+
       );
 
     ::CORBA::Policy *_this (
-        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
+        void
       );
 
     virtual const char* _interface_repository_id (void) const;
@@ -144,7 +144,7 @@ namespace POA_CORBA
     // be\be_visitor_operation/operation_sh.cpp:45
 
     virtual CORBA::PolicyType policy_type (
-        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
+        void
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
@@ -154,14 +154,14 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL
+
       );
 
     // TAO_IDL - Generated from
     // be\be_visitor_operation/operation_sh.cpp:45
 
     virtual ::CORBA::Policy_ptr copy (
-        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
+        void
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
@@ -171,14 +171,14 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL
+
       );
 
     // TAO_IDL - Generated from
     // be\be_visitor_operation/operation_sh.cpp:45
 
     virtual void destroy (
-        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
+        void
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
@@ -188,7 +188,7 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL
+
       );
   };
 
@@ -210,7 +210,7 @@ namespace POA_CORBA
     TAO::Collocation_Strategy
     get_strategy (
         CORBA::Object_ptr obj
-        ACE_ENV_ARG_DECL
+
       )
       ACE_THROW_SPEC ((CORBA::SystemException));
 
@@ -223,7 +223,7 @@ namespace POA_CORBA
         const char * op,
         size_t op_len,
         TAO::Collocation_Strategy strategy
-        ACE_ENV_ARG_DECL
+
       )
       ACE_THROW_SPEC ((CORBA::Exception));
 
@@ -259,7 +259,7 @@ namespace POA_CORBA
         TAO_Abstract_ServantBase *servant,
         TAO::Argument ** args,
         int num_args
-        ACE_ENV_ARG_DECL
+
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
@@ -273,7 +273,7 @@ namespace POA_CORBA
         TAO_Abstract_ServantBase *servant,
         TAO::Argument ** args,
         int num_args
-        ACE_ENV_ARG_DECL
+
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
@@ -287,7 +287,7 @@ namespace POA_CORBA
         TAO_Abstract_ServantBase *servant,
         TAO::Argument ** args,
         int num_args
-        ACE_ENV_ARG_DECL
+
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException

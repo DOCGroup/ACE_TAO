@@ -20,27 +20,22 @@ TAO::CSD::TP_Custom_Asynch_Request::~TP_Custom_Asynch_Request()
 void
 TAO::CSD::TP_Custom_Asynch_Request::dispatch_i()
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  try
     {
       this->execute_op();
-      ACE_TRY_CHECK;
     }
-  ACE_CATCHANY
+  catch ( ::CORBA::Exception&)
     {
       // Eat these.  We probably should log these, but since we have already
       // unblocked the requesting thread there is no point in saving it or
       // doing anything with it.
     }
-#if defined (TAO_HAS_EXCEPTIONS)
-  ACE_CATCHALL
+  catch (...)
     {
       // Eat these.  We probably should log these, but since we have already
       // unblocked the requesting thread there is no point in saving it or
       // doing anything with it.
     }
-#endif
-  ACE_ENDTRY;
 }
 
 void

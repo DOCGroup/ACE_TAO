@@ -94,7 +94,7 @@ public:
 
   /// Add the given tagged component to the profile.
   void add_tagged_component (const IOP::TaggedComponent &component
-                             ACE_ENV_ARG_DECL);
+                            );
 
   /**
    * Return the current addressing mode for this profile.
@@ -135,11 +135,11 @@ public:
   /// This method sets the client exposed policies, i.e., the ones
   /// propagated in the IOR, for this profile.
   virtual void policies (CORBA::PolicyList *policy_list
-                         ACE_ENV_ARG_DECL);
+                        );
 
   /// Accessor for the client exposed policies of this profile.
   virtual void  get_policies (CORBA::PolicyList &policy_list
-                              ACE_ENV_ARG_DECL);
+                             );
 
   /// Returns true if this profile can specify multicast endpoints.
   virtual int supports_multicast (void) const;
@@ -175,7 +175,7 @@ public:
    * the critical path, this decision seems like a good thing.
    */
   virtual void addressing_mode (CORBA::Short addr_mode
-                                ACE_ENV_ARG_DECL);
+                               );
 
   /// The object key delimiter.
   virtual char object_key_delimiter (void) const = 0;
@@ -183,12 +183,12 @@ public:
   /// Initialize this object using the given input string.
   /// Supports URL style of object references
   virtual void parse_string (const char *string
-                             ACE_ENV_ARG_DECL);
+                            );
 
   /// Return a string representation for this profile.  Client must
   /// deallocate memory. Only one endpoint is included into the
   /// string.
-  virtual char* to_string (ACE_ENV_SINGLE_ARG_DECL) = 0;
+  virtual char* to_string (void) = 0;
 
   /**
    * Encodes this profile's endpoints into a tagged component.
@@ -262,7 +262,7 @@ public:
 
   /// Return a hash value for this object.
   virtual CORBA::ULong hash (CORBA::ULong max
-                             ACE_ENV_ARG_DECL) = 0;
+                             ) = 0;
   //@}
 
   //@@ TAO_PROFILE_SPL_PUBLIC_METHODS_ADD_HOOK
@@ -292,7 +292,7 @@ protected:
 
   /// Protocol specific implementation of parse_string ()
   virtual void parse_string_i (const char *string
-                               ACE_ENV_ARG_DECL) = 0;
+                               ) = 0;
   //@}
 
   /// To be used by inherited classes
@@ -330,11 +330,11 @@ private:
 
   /// Verify that the current ORB's configuration supports tagged
   /// components in IORs.
-  void verify_orb_configuration (ACE_ENV_SINGLE_ARG_DECL);
+  void verify_orb_configuration (void);
 
   /// Verify that the given profile supports tagged components,
   /// i.e. is not a GIOP 1.0 profile.
-  void verify_profile_version (ACE_ENV_SINGLE_ARG_DECL);
+  void verify_profile_version (void);
 
   // Profiles should not be copied or assigned!
   TAO_Profile (const TAO_Profile&);
@@ -417,9 +417,9 @@ public:
 
   // = The TAO_Profile methods look above
   virtual void parse_string (const char *string
-                             ACE_ENV_ARG_DECL);
+                            );
   virtual char object_key_delimiter (void) const;
-  virtual char* to_string (ACE_ENV_SINGLE_ARG_DECL);
+  virtual char* to_string (void);
   virtual int decode (TAO_InputCDR& cdr);
   virtual int encode (TAO_OutputCDR &stream) const;
   virtual int encode_endpoints (void);
@@ -428,7 +428,7 @@ public:
   virtual TAO_Endpoint *endpoint (void);
   virtual CORBA::ULong endpoint_count (void) const;
   virtual CORBA::ULong hash (CORBA::ULong max
-                             ACE_ENV_ARG_DECL);
+                            );
 
   virtual int decode_profile (TAO_InputCDR &cdr);
   virtual int decode_endpoints (void);
@@ -443,7 +443,7 @@ private:
   virtual void create_profile_body (TAO_OutputCDR &encap) const;
 
   virtual void parse_string_i (const char *string
-                               ACE_ENV_ARG_DECL);
+                              );
 private:
   TAO_opaque body_;
 };

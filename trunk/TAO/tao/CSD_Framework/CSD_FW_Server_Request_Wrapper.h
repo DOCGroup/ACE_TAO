@@ -71,7 +71,7 @@ namespace TAO
       void clone();
 
       /// Dispatch the request to the servant.
-      void dispatch(PortableServer::Servant servant ACE_ENV_ARG_DECL);
+      void dispatch(PortableServer::Servant servant);
 
       /// Cancel the request.
       void cancel();

@@ -482,10 +482,8 @@ TAO::TypeCodeFactory::tc_union_factory (CORBA::TCKind /* kind */,
         && cdr >> discriminant_type.out ())) // No need to use tc_demarshal()
     return false;
 
-  ACE_DECLARE_NEW_CORBA_ENV;
   CORBA::TCKind const discriminant_kind =
-    discriminant_type->kind (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (false);
+    discriminant_type->kind ();
 
   // Check for valid discriminant type.
   if (!(discriminant_kind == CORBA::tk_enum
@@ -1392,9 +1390,8 @@ namespace
 
          TAO::TypeCodeFactory::TC_Info & info = infos[old_size];
 
-         ACE_DECLARE_NEW_CORBA_ENV;
-         info.id = tc->id (ACE_ENV_SINGLE_ARG_PARAMETER);
-         ACE_CHECK_RETURN (false);  // Should never throw!
+         info.id = tc->id ();
+ // Should never throw!
 
          info.type = tc;
        }

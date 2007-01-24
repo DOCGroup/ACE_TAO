@@ -33,7 +33,6 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 namespace CORBA
 {
   class Policy;
-  class Environment;
 }
 
 class TAO_ORB_Core;
@@ -112,58 +111,58 @@ public:
 
   /// Initialize the protocols hooks instance.
   virtual void init_hooks (TAO_ORB_Core *orb_core
-                           ACE_ENV_ARG_DECL) = 0;
+                           ) = 0;
 
   virtual CORBA::Boolean set_client_network_priority (IOP::ProfileId protocol_tag,
                                                       TAO_Stub *stub
-                                                      ACE_ENV_ARG_DECL) = 0;
+                                                      ) = 0;
 
   virtual CORBA::Boolean set_server_network_priority (IOP::ProfileId protocol_tag,
                                                       CORBA::Policy *policy
-                                                      ACE_ENV_ARG_DECL) = 0;
+                                                      ) = 0;
 
   virtual void server_protocol_properties_at_orb_level (TAO_IIOP_Protocol_Properties &protocol_properties
-                                                        ACE_ENV_ARG_DECL) = 0;
+                                                        ) = 0;
 
   virtual void client_protocol_properties_at_orb_level (TAO_IIOP_Protocol_Properties &protocol_properties
-                                                        ACE_ENV_ARG_DECL) = 0;
+                                                        ) = 0;
 
   virtual void server_protocol_properties_at_orb_level (TAO_UIOP_Protocol_Properties &protocol_properties
-                                                        ACE_ENV_ARG_DECL) = 0;
+                                                        ) = 0;
 
   virtual void client_protocol_properties_at_orb_level (TAO_UIOP_Protocol_Properties &protocol_properties
-                                                        ACE_ENV_ARG_DECL) = 0;
+                                                        ) = 0;
 
   virtual void server_protocol_properties_at_orb_level (TAO_SHMIOP_Protocol_Properties &protocol_properties
-                                                        ACE_ENV_ARG_DECL) = 0;
+                                                        ) = 0;
 
   virtual void client_protocol_properties_at_orb_level (TAO_SHMIOP_Protocol_Properties &protocol_properties
-                                                        ACE_ENV_ARG_DECL) = 0;
+                                                        ) = 0;
 
   virtual void server_protocol_properties_at_orb_level (TAO_DIOP_Protocol_Properties &protocol_properties
-                                                        ACE_ENV_ARG_DECL) = 0;
+                                                        ) = 0;
 
   virtual void client_protocol_properties_at_orb_level (TAO_DIOP_Protocol_Properties &protocol_properties
-                                                        ACE_ENV_ARG_DECL) = 0;
+                                                        ) = 0;
 
   virtual void server_protocol_properties_at_orb_level (TAO_SCIOP_Protocol_Properties &protocol_properties
-                                                        ACE_ENV_ARG_DECL) = 0;
+                                                        ) = 0;
 
   virtual void client_protocol_properties_at_orb_level (TAO_SCIOP_Protocol_Properties &protocol_properties
-                                                        ACE_ENV_ARG_DECL) = 0;
+                                                        ) = 0;
 
   virtual CORBA::Long get_dscp_codepoint (void) = 0;
 
   virtual void rt_service_context (TAO_Stub *stub,
                                    TAO_Service_Context &service_context,
                                    CORBA::Boolean restart
-                                   ACE_ENV_ARG_DECL) = 0;
+                                   ) = 0;
 
   virtual void add_rt_service_context_hook (
     TAO_Service_Context &service_context,
     CORBA::Policy *model_policy,
     CORBA::Short &client_priority
-    ACE_ENV_ARG_DECL) = 0;
+    ) = 0;
 
   virtual void get_selector_hook (CORBA::Policy *model_policy,
                                   CORBA::Boolean
@@ -174,7 +173,7 @@ public:
                                                CORBA::Short priority,
                                                CORBA::Short &min_priority,
                                                CORBA::Short &max_priority,
-                                               int &in_range) = 0;
+                                               bool &in_range) = 0;
 
   /**
    * @name Accessor and modifier to the current thread priority, used to
@@ -184,21 +183,21 @@ public:
    */
   //@{
   virtual int get_thread_CORBA_priority (CORBA::Short &
-                                         ACE_ENV_ARG_DECL) = 0;
+                                         ) = 0;
 
   virtual int get_thread_native_priority (CORBA::Short &
-                                          ACE_ENV_ARG_DECL) = 0;
+                                          ) = 0;
 
   virtual int get_thread_CORBA_and_native_priority (
     CORBA::Short &,
     CORBA::Short &
-    ACE_ENV_ARG_DECL) = 0;
+    ) = 0;
 
   virtual int set_thread_CORBA_priority (CORBA::Short
-                                         ACE_ENV_ARG_DECL) = 0;
+                                         ) = 0;
 
   virtual int set_thread_native_priority (CORBA::Short
-                                          ACE_ENV_ARG_DECL) = 0;
+                                          ) = 0;
 
   //@}
 };

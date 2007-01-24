@@ -35,8 +35,7 @@ TAO_PI_Init::Initializer (void)
 
   PortableInterceptor::ORBInitializer_var orb_initializer;
 
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  try
     {
       /// Register the PI ORBInitializer.
 
@@ -47,15 +46,13 @@ TAO_PI_Init::Initializer (void)
                             TAO::VMCID,
                             ENOMEM),
                           CORBA::COMPLETED_NO));
-      ACE_TRY_CHECK;
 
       orb_initializer = temp_orb_initializer;
 
       PortableInterceptor::register_orb_initializer (orb_initializer.in ()
-                                                     ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+                                                    );
     }
-  ACE_CATCHANY
+  catch ( ::CORBA::Exception& ex)
     {
       if (TAO_debug_level > 0)
         {
@@ -64,7 +61,6 @@ TAO_PI_Init::Initializer (void)
         }
       return -1;
     }
-  ACE_ENDTRY;
 #endif  /* TAO_HAS_INTERCEPTORS == 1 */
   return status;
 }

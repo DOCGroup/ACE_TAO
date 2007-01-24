@@ -3,7 +3,6 @@
 #include "tao/HTTP_Parser.h"
 #include "tao/HTTP_Client.h"
 #include "tao/ORB.h"
-#include "tao/Environment.h"
 #include "tao/Object.h"
 
 #include "ace/Read_Buffer.h"
@@ -36,7 +35,7 @@ TAO_HTTP_Parser::match_prefix (const char *ior_string) const
 CORBA::Object_ptr
 TAO_HTTP_Parser::parse_string (const char *ior,
                                CORBA::ORB_ptr orb
-                               ACE_ENV_ARG_DECL)
+                               )
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // Skip the prefix, we know it is there because this method in only
@@ -120,17 +119,14 @@ TAO_HTTP_Parser::parse_string (const char *ior,
     string += curr->rd_ptr();
 
   CORBA::Object_ptr object = CORBA::Object::_nil ();
-  ACE_TRY
+  try
     {
-      object = orb->string_to_object (string.c_str() ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      object = orb->string_to_object (string.c_str());
     }
-  ACE_CATCHANY
+  catch ( ::CORBA::Exception&)
     {
-      ACE_RE_THROW;
+      throw;
     }
-  ACE_ENDTRY;
-  ACE_CHECK_RETURN (CORBA::Object::_nil ());
 
   return object;
 }

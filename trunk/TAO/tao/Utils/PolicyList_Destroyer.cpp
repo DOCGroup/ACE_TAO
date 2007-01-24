@@ -14,7 +14,6 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 TAO::Utils::PolicyList_Destroyer::~PolicyList_Destroyer()
   ACE_THROW_SPEC (())
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
 
   for (CORBA::ULong i = 0; i != length(); ++i)
     {
@@ -24,15 +23,13 @@ TAO::Utils::PolicyList_Destroyer::~PolicyList_Destroyer()
           continue;
         }
 
-      ACE_TRY
+      try
         {
-          policy->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+          policy->destroy ();
         }
-      ACE_CATCHALL
+      catch (...)
         {
         }
-      ACE_ENDTRY;
 
       (*this)[i] = CORBA::Policy::_nil();
     }

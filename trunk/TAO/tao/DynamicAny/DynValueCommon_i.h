@@ -43,21 +43,21 @@ public:
   TAO_DynValueCommon_i (void);
 
   ~TAO_DynValueCommon_i (void);
-    
+
   virtual CORBA::Boolean is_null (
-      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+      void)
     ACE_THROW_SPEC ((
         CORBA::SystemException
       ));
-  
+
   virtual void set_to_null (
-      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+      void)
     ACE_THROW_SPEC ((
         CORBA::SystemException
       ));
-  
+
   virtual void set_to_value (
-      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+      void)
     ACE_THROW_SPEC ((
         CORBA::SystemException
       ));

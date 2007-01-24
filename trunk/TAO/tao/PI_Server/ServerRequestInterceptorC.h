@@ -130,12 +130,12 @@ namespace PortableInterceptor
 
     static ServerRequestInterceptor_ptr _narrow (
         ::CORBA::Object_ptr obj
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
+
       );
 
     static ServerRequestInterceptor_ptr _unchecked_narrow (
         ::CORBA::Object_ptr obj
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
+
       );
 
     static ServerRequestInterceptor_ptr _nil (void)
@@ -153,7 +153,7 @@ namespace PortableInterceptor
     virtual void tao_ft_interception_point (
         ::PortableInterceptor::ServerRequestInfo_ptr ri,
         ::CORBA::OctetSeq_out os
-        ACE_ENV_ARG_DECL_NOT_USED
+
       )
       ACE_THROW_SPEC ((
         ::CORBA::SystemException,
@@ -167,7 +167,7 @@ namespace PortableInterceptor
 
     virtual void receive_request_service_contexts (
         ::PortableInterceptor::ServerRequestInfo_ptr ri
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
+
       )
       ACE_THROW_SPEC ((
         ::CORBA::SystemException,
@@ -179,7 +179,7 @@ namespace PortableInterceptor
 
     virtual void receive_request (
         ::PortableInterceptor::ServerRequestInfo_ptr ri
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
+
       )
       ACE_THROW_SPEC ((
         ::CORBA::SystemException,
@@ -191,7 +191,7 @@ namespace PortableInterceptor
 
     virtual void send_reply (
         ::PortableInterceptor::ServerRequestInfo_ptr ri
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
+
       )
       ACE_THROW_SPEC ((
         ::CORBA::SystemException
@@ -202,7 +202,7 @@ namespace PortableInterceptor
 
     virtual void send_exception (
         ::PortableInterceptor::ServerRequestInfo_ptr ri
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
+
       )
       ACE_THROW_SPEC ((
         ::CORBA::SystemException,
@@ -214,7 +214,7 @@ namespace PortableInterceptor
 
     virtual void send_other (
         ::PortableInterceptor::ServerRequestInfo_ptr ri
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
+
       )
       ACE_THROW_SPEC ((
         ::CORBA::SystemException,
@@ -226,7 +226,7 @@ namespace PortableInterceptor
 
     virtual ::CORBA::Boolean _is_a (
         const char *type_id
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
+
       );
 
     virtual const char* _interface_repository_id (void) const;

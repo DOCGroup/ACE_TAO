@@ -24,7 +24,6 @@
 #include "ace/Service_Config.h"
 #include "tao/Versioned_Namespace.h"
 
-
 #if TAO_HAS_TRANSPORT_CURRENT == 1
 
 #include "tao/TransportCurrent/Transport_Current_Export.h"

@@ -1,7 +1,6 @@
 // $Id$
 
 #include "tao/Policy_Validator.h"
-#include "tao/Environment.h"
 #include "tao/debug.h"
 
 #include "ace/Log_Msg.h"
@@ -24,9 +23,9 @@ TAO_Policy_Validator::~TAO_Policy_Validator (void)
   delete this->next_;
 }
 
-TAO_ORB_Core & 
+TAO_ORB_Core &
 TAO_Policy_Validator::orb_core() const
-{ 
+{
   return this->orb_core_;
 }
 
@@ -67,29 +66,25 @@ TAO_Policy_Validator::add_validator (TAO_Policy_Validator *validator)
 
 void
 TAO_Policy_Validator::validate (TAO_Policy_Set &policies
-                                ACE_ENV_ARG_DECL)
+                                )
 {
-  this->validate_impl (policies ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+  this->validate_impl (policies);
 
   if (this->next_ != 0)
     {
-      this->next_->validate (policies ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
+      this->next_->validate (policies);
     }
 }
 
 void
 TAO_Policy_Validator::merge_policies (TAO_Policy_Set &policies
-                                      ACE_ENV_ARG_DECL)
+                                      )
 {
-  this->merge_policies_impl (policies ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+  this->merge_policies_impl (policies);
 
   if (this->next_)
     {
-      this->next_->merge_policies (policies ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
+      this->next_->merge_policies (policies);
     }
 }
 

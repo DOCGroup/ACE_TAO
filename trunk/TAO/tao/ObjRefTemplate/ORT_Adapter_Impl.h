@@ -26,11 +26,6 @@
 #include "tao/PortableServer/ORT_Adapter.h"
 #include "tao/ObjRefTemplate/ObjectReferenceTemplate_i.h"
 
-#if defined(_MSC_VER)
-#pragma warning(push)
-#pragma warning(disable:4250)
-#endif /* _MSC_VER */
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO
@@ -48,8 +43,7 @@ namespace TAO
     virtual int activate (const char *server_id,
                           const char *orb_id,
                           PortableInterceptor::AdapterName *adapter_name,
-                          PortableServer::POA_ptr poa
-                          ACE_ENV_ARG_DECL);
+                          PortableServer::POA_ptr poa);
 
     /// Accessor methods to ObjectReferenceTemplate template
     virtual PortableInterceptor::ObjectReferenceTemplate *get_adapter_template (void);
@@ -59,8 +53,7 @@ namespace TAO
 
     /// Set a different ort_factory to be used.
     virtual int set_obj_ref_factory (
-      PortableInterceptor::ObjectReferenceFactory * current_factory
-      ACE_ENV_ARG_DECL);
+      PortableInterceptor::ObjectReferenceFactory * current_factory);
 
     /**
      * @see @c TAO::ORT_Adapter for details.
@@ -72,14 +65,13 @@ namespace TAO
      * Methods
      */
     //@{
-    virtual char * tao_server_id (ACE_ENV_SINGLE_ARG_DECL)
+    virtual char * tao_server_id (void)
         ACE_THROW_SPEC ((CORBA::SystemException));
 
-    virtual char * tao_orb_id (ACE_ENV_SINGLE_ARG_DECL)
+    virtual char * tao_orb_id (void)
         ACE_THROW_SPEC ((CORBA::SystemException));
 
-    virtual PortableInterceptor::AdapterName * tao_adapter_name (
-        ACE_ENV_SINGLE_ARG_DECL)
+    virtual PortableInterceptor::AdapterName * tao_adapter_name (void)
         ACE_THROW_SPEC ((CORBA::SystemException));
     //@}
 
@@ -92,8 +84,7 @@ namespace TAO
     //@{
     virtual CORBA::Object_ptr make_object (
         const char * repository_id,
-        const PortableInterceptor::ObjectId & id
-        ACE_ENV_ARG_DECL)
+        const PortableInterceptor::ObjectId & id)
     ACE_THROW_SPEC ((CORBA::SystemException));
     //@}
 
@@ -110,10 +101,6 @@ namespace TAO
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL
-
-#if defined(_MSC_VER)
-# pragma warning(pop)
-#endif /* _MSC_VER */
 
 #include /**/ "ace/post.h"
 

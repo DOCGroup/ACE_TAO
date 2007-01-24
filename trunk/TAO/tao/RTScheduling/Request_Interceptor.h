@@ -26,32 +26,30 @@ public:
 
   //  Client_Interceptor (RTScheduling::Current_ptr current);
   virtual void send_request (PortableInterceptor::ClientRequestInfo_ptr ri
-                             ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+                             )
     ACE_THROW_SPEC ((CORBA::SystemException,
                      PortableInterceptor::ForwardRequest));
 
   virtual void send_poll (PortableInterceptor::ClientRequestInfo_ptr ri
-                          ACE_ENV_ARG_DECL_NOT_USED)
+                          )
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual void receive_reply (PortableInterceptor::ClientRequestInfo_ptr ri
-                              ACE_ENV_ARG_DECL_NOT_USED)
+                              )
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual void receive_exception (PortableInterceptor::ClientRequestInfo_ptr ri
-                                  ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+  virtual void receive_exception (PortableInterceptor::ClientRequestInfo_ptr ri)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      PortableInterceptor::ForwardRequest));
 
-  virtual void receive_other (PortableInterceptor::ClientRequestInfo_ptr ri
-                              ACE_ENV_ARG_DECL_NOT_USED)
+  virtual void receive_other (PortableInterceptor::ClientRequestInfo_ptr ri)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      PortableInterceptor::ForwardRequest));
 
-  virtual char* name (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+  virtual char* name (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual void destroy (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+  virtual void destroy (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   static const IOP::ServiceId SchedulingInfo;
@@ -66,34 +64,29 @@ class TAO_RTScheduler_Export Server_Interceptor :
 public:
   Server_Interceptor (TAO_RTScheduler_Current_ptr current);
 
-  virtual void receive_request_service_contexts (PortableInterceptor::ServerRequestInfo_ptr ri
-                                                 ACE_ENV_ARG_DECL_NOT_USED)
+  virtual void receive_request_service_contexts (PortableInterceptor::ServerRequestInfo_ptr ri)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      PortableInterceptor::ForwardRequest));
 
-  virtual void receive_request (PortableInterceptor::ServerRequestInfo_ptr ri
-                                ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+  virtual void receive_request (PortableInterceptor::ServerRequestInfo_ptr ri)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      PortableInterceptor::ForwardRequest));
 
-  virtual void send_reply (PortableInterceptor::ServerRequestInfo_ptr ri
-                           ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+  virtual void send_reply (PortableInterceptor::ServerRequestInfo_ptr ri)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual void send_exception (PortableInterceptor::ServerRequestInfo_ptr ri
-                               ACE_ENV_ARG_DECL_NOT_USED)
+  virtual void send_exception (PortableInterceptor::ServerRequestInfo_ptr ri)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      PortableInterceptor::ForwardRequest));
 
-  virtual void send_other (PortableInterceptor::ServerRequestInfo_ptr ri
-                           ACE_ENV_ARG_DECL_NOT_USED)
+  virtual void send_other (PortableInterceptor::ServerRequestInfo_ptr ri)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      PortableInterceptor::ForwardRequest));
 
-  virtual char* name (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+  virtual char* name (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual void destroy (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+  virtual void destroy (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   static const IOP::ServiceId SchedulingInfo;

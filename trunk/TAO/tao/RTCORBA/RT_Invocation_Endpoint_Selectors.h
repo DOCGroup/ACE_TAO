@@ -52,7 +52,7 @@ public:
 
   virtual void select_endpoint (TAO::Profile_Transport_Resolver *r,
                                 ACE_Time_Value *val
-                                ACE_ENV_ARG_DECL);
+                               );
 
 protected:
   void select_endpoint_based_on_client_protocol_policy (
@@ -60,12 +60,12 @@ protected:
       RTCORBA::ClientProtocolPolicy_ptr client_protocol_policy,
       RTCORBA::ProtocolList &protocols,
       ACE_Time_Value *v
-      ACE_ENV_ARG_DECL
+
     );
 
   int endpoint_from_profile (TAO::Profile_Transport_Resolver &r,
                              ACE_Time_Value *v
-                             ACE_ENV_ARG_DECL);
+                            );
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

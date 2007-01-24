@@ -42,21 +42,16 @@ namespace TAO
       Current_ORBInitializer_Base (const ACE_TCHAR* id);
       virtual ~Current_ORBInitializer_Base (void);
 
-      virtual void pre_init (PortableInterceptor::ORBInitInfo_ptr
-                             ACE_ENV_ARG_DECL_NOT_USED )
-        ACE_THROW_SPEC( (CORBA::SystemException) );
+      virtual void pre_init (PortableInterceptor::ORBInitInfo_ptr)
+        ACE_THROW_SPEC ((CORBA::SystemException));
 
-      virtual void post_init (PortableInterceptor::ORBInitInfo_ptr info
-                              ACE_ENV_ARG_DECL_NOT_USED )
-        ACE_THROW_SPEC( (CORBA::SystemException) );
-
+       virtual void post_init (PortableInterceptor::ORBInitInfo_ptr info)
+          ACE_THROW_SPEC ((CORBA::SystemException));
     protected:
-      virtual TAO::Transport::Current_ptr
-      make_current_instance (TAO_ORB_Core* core,
-                             size_t tss_slot_id
-                             ACE_ENV_ARG_DECL)
-        ACE_THROW_SPEC ((CORBA::SystemException)) = 0;
-
+        virtual TAO::Transport::Current_ptr
+        make_current_instance (TAO_ORB_Core* core,
+                               size_t tss_slot_id)
+          ACE_THROW_SPEC ((CORBA::SystemException)) = 0;
     protected:
       const ACE_TString id_;
     };

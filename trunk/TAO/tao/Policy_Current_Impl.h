@@ -48,21 +48,21 @@ public:
 
   /// Obtain a single policy.
   CORBA::Policy_ptr get_policy (CORBA::PolicyType policy
-                                ACE_ENV_ARG_DECL);
+                               );
 
   /// Obtain a single cached policy.
   CORBA::Policy_ptr get_cached_policy (TAO_Cached_Policy_Type type
-                                       ACE_ENV_ARG_DECL);
+                                      );
 
   // = The CORBA::PolicyManager operations
 
   CORBA::PolicyList * get_policy_overrides (
         const CORBA::PolicyTypeSeq & ts
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
+
       );
   void set_policy_overrides (const CORBA::PolicyList & policies,
                              CORBA::SetOverrideType set_add
-                             ACE_ENV_ARG_DECL_WITH_DEFAULTS);
+                             );
 
 private:
   /// The implementation.

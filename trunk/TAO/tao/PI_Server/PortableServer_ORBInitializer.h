@@ -42,11 +42,11 @@ public:
   //@{
 
   void pre_init (PortableInterceptor::ORBInitInfo_ptr info
-                 ACE_ENV_ARG_DECL)
+                 )
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   void post_init (PortableInterceptor::ORBInitInfo_ptr info
-                  ACE_ENV_ARG_DECL)
+                  )
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   //@}
@@ -55,7 +55,7 @@ private:
 
   /// Register PortableServer policy factories.
   void register_policy_factories (PortableInterceptor::ORBInitInfo_ptr info
-                                  ACE_ENV_ARG_DECL);
+                                 );
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

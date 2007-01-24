@@ -90,10 +90,8 @@ CORBA::Environment::exception (CORBA::Exception *ex)
 
   this->exception_ = ex;
 
-#if defined (TAO_HAS_EXCEPTIONS)
   if (this->exception_ != 0)
     this->exception_->_raise ();
-#endif /* TAO_HAS_EXCEPTIONS */
 }
 
 void
@@ -106,7 +104,6 @@ CORBA::Environment::clear (void)
 CORBA::Environment&
 CORBA::Environment::default_environment ()
 {
-#if defined (TAO_HAS_EXCEPTIONS)
   //
   // If we are using native C++ exceptions the user is *not* supposed
   // to clear the environment every time she calls into TAO.  In fact
@@ -122,7 +119,6 @@ CORBA::Environment::default_environment ()
   // clear the environment before calling into the ORB.
   //
   TAO_ORB_Core_instance ()->default_environment ()->clear ();
-#endif /* TAO_HAS_EXCEPTIONS */
 
   return TAO_default_environment ();;
 }

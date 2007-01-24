@@ -32,9 +32,9 @@ namespace TAO
       : public Policy_Strategy
     {
     public:
-      virtual void strategy_init(TAO_Root_POA *poa ACE_ENV_ARG_DECL);
+      virtual void strategy_init(TAO_Root_POA *poa);
 
-      virtual void strategy_cleanup(ACE_ENV_SINGLE_ARG_DECL);
+      virtual void strategy_cleanup(void);
 
       /**
        * Returns the key type the says which specific policy we have

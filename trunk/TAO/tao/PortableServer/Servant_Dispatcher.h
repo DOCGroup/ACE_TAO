@@ -58,7 +58,7 @@ public:
       CORBA::Short servant_priority,
 			TAO_ServerRequest &req,
       TAO::Portable_Server::Servant_Upcall::Pre_Invoke_State &pre_invoke_state
-      ACE_ENV_ARG_DECL
+
     ) = 0;
 
   /// Pre_invoke collocated request.
@@ -66,7 +66,7 @@ public:
       TAO_Root_POA &poa,
       CORBA::Short servant_priority,
       TAO::Portable_Server::Servant_Upcall::Pre_Invoke_State &pre_invoke_state
-      ACE_ENV_ARG_DECL) = 0;
+      ) = 0;
 
   /// Post_invoke request.
   virtual void post_invoke (
@@ -82,7 +82,7 @@ public:
       TAO_SYNCH_MUTEX &thread_lock,
       TAO_ORB_Core &orb_core,
       TAO_Object_Adapter *object_adapter
-      ACE_ENV_ARG_DECL) = 0;
+      ) = 0;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

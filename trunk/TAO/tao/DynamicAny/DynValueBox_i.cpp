@@ -18,7 +18,7 @@ TAO_DynValueBox_i::~TAO_DynValueBox_i (void)
 
 CORBA::Any *
 TAO_DynValueBox_i::get_boxed_value (
-    ACE_ENV_SINGLE_ARG_DECL
+
   )
   ACE_THROW_SPEC ((
       CORBA::SystemException,
@@ -31,7 +31,7 @@ TAO_DynValueBox_i::get_boxed_value (
 void
 TAO_DynValueBox_i::set_boxed_value (
     const CORBA::Any & /* boxed */
-    ACE_ENV_ARG_DECL
+
   )
   ACE_THROW_SPEC ((
       CORBA::SystemException,
@@ -39,12 +39,12 @@ TAO_DynValueBox_i::set_boxed_value (
       DynamicAny::DynAny::InvalidValue
     ))
 {
-  ACE_THROW (CORBA::NO_IMPLEMENT ());
+  throw ::CORBA::NO_IMPLEMENT ();
 }
 
 DynamicAny::DynAny_ptr
 TAO_DynValueBox_i::get_boxed_value_as_dyn_any (
-    ACE_ENV_SINGLE_ARG_DECL
+
   )
   ACE_THROW_SPEC ((
       CORBA::SystemException,
@@ -58,14 +58,14 @@ TAO_DynValueBox_i::get_boxed_value_as_dyn_any (
 void
 TAO_DynValueBox_i::set_boxed_value_as_dyn_any (
     DynamicAny::DynAny_ptr /* boxed */
-    ACE_ENV_ARG_DECL
+
   )
   ACE_THROW_SPEC ((
       CORBA::SystemException,
       DynamicAny::DynAny::TypeMismatch
     ))
 {
-  ACE_THROW (CORBA::NO_IMPLEMENT ());
+  throw ::CORBA::NO_IMPLEMENT ();
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL

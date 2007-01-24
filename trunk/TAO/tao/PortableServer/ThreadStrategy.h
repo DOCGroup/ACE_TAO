@@ -37,9 +37,9 @@ namespace TAO
 
       virtual int exit () = 0;
 
-      virtual void strategy_init (TAO_Root_POA *poa ACE_ENV_ARG_DECL);
+      virtual void strategy_init (TAO_Root_POA *poa);
 
-      virtual void strategy_cleanup(ACE_ENV_SINGLE_ARG_DECL);
+      virtual void strategy_cleanup(void);
 
       virtual ::PortableServer::ThreadPolicyValue type() const = 0;
     };

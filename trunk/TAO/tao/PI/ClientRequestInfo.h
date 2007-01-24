@@ -79,50 +79,50 @@ public:
   /// Return an ID unique to the current request.  This request ID may
   /// or may not be the same as the GIOP request ID.
   virtual CORBA::ULong request_id (
-      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+      void)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   /// Return the operation name for the current request.
   virtual char * operation (
-      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+      void)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   /// Return the list of arguments passed to the current operation.
   virtual Dynamic::ParameterList * arguments (
-      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+      void)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   /// Return the list of exceptions the current operation is capable
   /// of throwing.
   virtual Dynamic::ExceptionList * exceptions (
-      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+      void)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual Dynamic::ContextList * contexts (
-      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+      void)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual Dynamic::RequestContext * operation_context (
-      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+      void)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   /// Return the result of the current request.  If there is no return
   /// value then an Any with tk_void TypeCode is returned.  This is
   /// method is not valid for oneway operations.
   virtual CORBA::Any * result (
-      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+      void)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   /// Returns true for a two-way operation, and false otherwise.
   virtual CORBA::Boolean response_expected (
-      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+      void)
     ACE_THROW_SPEC ((CORBA::SystemException)) ;
 
   /// Return the sync_scope policy value for the current one-way
   /// operation.  If the operation is not a one-way, a
   /// CORBA::BAD_INV_ORDER exception is thrown.
   virtual Messaging::SyncScope sync_scope (
-      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+      void)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   /// Return the reply status for the current request.
@@ -132,18 +132,18 @@ public:
    * TRANSPORT_RETRY, UNKNOWN.
    */
   virtual PortableInterceptor::ReplyStatus reply_status (
-      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+      void)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   /// If the reply status is PortableInterceptor::LOCATION_FORWARD or
   /// return the object reference to which the request was forwarded.
   virtual CORBA::Object_ptr forward_reference (
-      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+      void)
     ACE_THROW_SPEC ((CORBA::SystemException)) ;
 
   virtual CORBA::Any * get_slot (
       PortableInterceptor::SlotId id
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+      )
     ACE_THROW_SPEC ((CORBA::SystemException,
                      PortableInterceptor::InvalidSlot));
 
@@ -151,30 +151,30 @@ public:
   /// from the request service context list.
   virtual IOP::ServiceContext * get_request_service_context (
       IOP::ServiceId id
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+      )
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   /// Return the IOP::ServiceContext with the given IOP::ServiceId
   /// from the reply service context list.
   virtual IOP::ServiceContext * get_reply_service_context (
       IOP::ServiceId id
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+      )
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   /// Return the (initial, non-forwarded, or permanently forwarded)
   /// object reference of the target.
   virtual CORBA::Object_ptr target (
-      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+      void)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   /// Return the object reference for the current target.  The target
   /// may change in the even of a location forward.
   virtual CORBA::Object_ptr effective_target (
-      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+      void)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual IOP::TaggedProfile * effective_profile (
-      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+      void)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   /// Return an Any containing the received exception, if any.
@@ -183,12 +183,12 @@ public:
    * @note There is no trivial way to extract the exception from an Any.
    */
   virtual CORBA::Any * received_exception (
-      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+      void)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   /// Return the repository ID for the received exception.
   virtual char * received_exception_id (
-      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+      void)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   /// Return the first IOP::TaggedComponent that matches the given
@@ -196,7 +196,7 @@ public:
   /// target.
   virtual IOP::TaggedComponent * get_effective_component (
       IOP::ComponentId id
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+      )
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   /// Return all IOP::TaggedComponent(s) that match the given
@@ -204,14 +204,14 @@ public:
   /// target.
   virtual IOP::TaggedComponentSeq * get_effective_components (
       IOP::ComponentId id
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+      )
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   /// Return the policy of the given type in effect for the current
   /// request.
   virtual CORBA::Policy_ptr get_request_policy (
       CORBA::PolicyType type
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+      )
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   /// Add the IOP::ServiceContext to the request (outgoing)
@@ -219,7 +219,7 @@ public:
   virtual void add_request_service_context (
       const IOP::ServiceContext & service_context,
       CORBA::Boolean replace
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+      )
      ACE_THROW_SPEC ((CORBA::SystemException));
 
   /*
@@ -253,7 +253,7 @@ private:
 
   /// Check if this ClientRequestInfo object is called within the
   /// context of a request.
-  void check_validity (ACE_ENV_SINGLE_ARG_DECL);
+  void check_validity (void);
 
   /// Setup thread scope and request scope
   /// PortableInterceptor::Current objects.
@@ -263,7 +263,7 @@ private:
   IOP::ServiceContext *get_service_context_i (
       TAO_Service_Context &service_context_list,
       IOP::ServiceId id
-      ACE_ENV_ARG_DECL)
+      )
     ACE_THROW_SPEC ((CORBA::SystemException));
 
 private:

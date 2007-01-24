@@ -51,8 +51,6 @@ namespace CORBA
   class ValueBase;
   class AbstractBase;
   typedef AbstractBase *AbstractBase_ptr;
-
-  class Environment;
 }
 
 namespace TAO
@@ -89,8 +87,7 @@ namespace TAO
     static void _tao_any_string_destructor (void *);
     static void _tao_any_wstring_destructor (void *);
 
-    virtual void _tao_decode (TAO_InputCDR &
-                              ACE_ENV_ARG_DECL);
+    virtual void _tao_decode (TAO_InputCDR &);
 
     virtual CORBA::Boolean to_object (CORBA::Object_ptr &) const;
     virtual CORBA::Boolean to_value (CORBA::ValueBase *&) const;

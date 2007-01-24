@@ -39,7 +39,7 @@ TAO_Buffering_Constraint_Policy::TAO_Buffering_Constraint_Policy (const TAO_Buff
 }
 
 CORBA::PolicyType
-TAO_Buffering_Constraint_Policy::policy_type (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+TAO_Buffering_Constraint_Policy::policy_type (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return TAO::BUFFERING_CONSTRAINT_POLICY_TYPE;
@@ -56,27 +56,26 @@ TAO_Buffering_Constraint_Policy::clone (void) const
 }
 
 TAO::BufferingConstraint
-TAO_Buffering_Constraint_Policy::buffering_constraint (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+TAO_Buffering_Constraint_Policy::buffering_constraint (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return this->buffering_constraint_;
 }
 
 CORBA::Policy_ptr
-TAO_Buffering_Constraint_Policy::copy (ACE_ENV_SINGLE_ARG_DECL)
+TAO_Buffering_Constraint_Policy::copy (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_Buffering_Constraint_Policy* servant = 0;
   ACE_NEW_THROW_EX (servant,
                     TAO_Buffering_Constraint_Policy (*this),
                     CORBA::NO_MEMORY ());
-  ACE_CHECK_RETURN (CORBA::Policy::_nil ());
 
   return servant;
 }
 
 void
-TAO_Buffering_Constraint_Policy::destroy (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+TAO_Buffering_Constraint_Policy::destroy (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
 }

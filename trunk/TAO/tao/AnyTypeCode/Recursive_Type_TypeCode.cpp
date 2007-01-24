@@ -58,7 +58,7 @@ TAO::TypeCode::Recursive_Type<TypeCodeBase,
                               TypeCodeType,
                               MemberArrayType>::equal_i (
   CORBA::TypeCode_ptr tc
-  ACE_ENV_ARG_DECL) const
+  ) const
 {
   ACE_GUARD_RETURN (TAO_SYNCH_RECURSIVE_MUTEX,
                     guard,
@@ -77,7 +77,7 @@ TAO::TypeCode::Recursive_Type<TypeCodeBase,
       Reset flag (this->in_recursion_);
 
       return this->TypeCodeBase::equal_i (tc
-                                          ACE_ENV_ARG_PARAMETER);
+                                         );
     }
 
   // Nothing else to do.
@@ -90,7 +90,7 @@ TAO::TypeCode::Recursive_Type<TypeCodeBase,
                               TypeCodeType,
                               MemberArrayType>::equivalent_i (
   CORBA::TypeCode_ptr tc
-  ACE_ENV_ARG_DECL) const
+  ) const
 {
   ACE_GUARD_RETURN (TAO_SYNCH_RECURSIVE_MUTEX,
                     guard,
@@ -109,7 +109,7 @@ TAO::TypeCode::Recursive_Type<TypeCodeBase,
       Reset flag (this->in_recursion_);
 
       return this->TypeCodeBase::equivalent_i (tc
-                                               ACE_ENV_ARG_PARAMETER);
+                                              );
     }
 
   // Nothing else to do.

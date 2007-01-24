@@ -24,10 +24,6 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-namespace CORBA
-{
-  class Environment;
-}
 /**
  * @class TAO_Default_Collocation_Resolver
  *
@@ -44,7 +40,7 @@ public:
 
   /// Is @a object collocated?
   virtual CORBA::Boolean is_collocated (CORBA::Object_ptr object
-                                        ACE_ENV_ARG_DECL) const;
+                                        ) const;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

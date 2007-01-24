@@ -63,43 +63,31 @@ namespace CORBA
      * regular object.  Or, even easier, add a @c is_local member into
      * CORBA::Object.  I'll take the easier route for now.
      */
-    static LocalObject_ptr _narrow (CORBA::Object_ptr obj
-                                    ACE_ENV_ARG_DECL_WITH_DEFAULTS);
+    static LocalObject_ptr _narrow (CORBA::Object_ptr obj);
 
 #if (TAO_HAS_MINIMUM_CORBA == 0)
 
     /// Always returns false.
-    virtual CORBA::Boolean _non_existent (
-        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
-      );
+    virtual CORBA::Boolean _non_existent (void);
 
     /// Throws CORBA::NO_IMPLEMENT.
-    virtual CORBA::ImplementationDef_ptr _get_implementation (
-        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
-      );
+    virtual CORBA::ImplementationDef_ptr _get_implementation (void);
 
     /// Gets info about object from the Interface Repository.
-    virtual CORBA::InterfaceDef_ptr _get_interface (
-        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
-      );
+    virtual CORBA::InterfaceDef_ptr _get_interface (void);
 
     /// Throws NO_IMPLEMENT.
-    virtual CORBA::Object_ptr _get_component (
-        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
-      );
+    virtual CORBA::Object_ptr _get_component (void);
 
     /// Get the repository id.
-    virtual char * _repository_id (
-        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
-    );
+    virtual char * _repository_id (void);
 
     virtual void _create_request (CORBA::Context_ptr ctx,
                                   const char * operation,
                                   CORBA::NVList_ptr arg_list,
                                   CORBA::NamedValue_ptr result,
                                   CORBA::Request_ptr & request,
-                                  CORBA::Flags req_flags
-                                  ACE_ENV_ARG_DECL_WITH_DEFAULTS);
+                                  CORBA::Flags req_flags);
 
     virtual void _create_request (CORBA::Context_ptr ctx,
                                   const char * operation,
@@ -108,43 +96,33 @@ namespace CORBA
                                   CORBA::ExceptionList_ptr exclist,
                                   CORBA::ContextList_ptr ctxtlist,
                                   CORBA::Request_ptr & request,
-                                  CORBA::Flags req_flags
-                                  ACE_ENV_ARG_DECL_WITH_DEFAULTS);
+                                  CORBA::Flags req_flags);
 
     /// Throws NO_IMPLEMENT.
-    virtual CORBA::Request_ptr _request (const char * operation
-                                         ACE_ENV_ARG_DECL_WITH_DEFAULTS);
+    virtual CORBA::Request_ptr _request (const char * operation);
 
 #endif /* TAO_HAS_MINIMUM_CORBA */
 
 #if (TAO_HAS_CORBA_MESSAGING == 1)
 
     /// Throws CORBA::NO_IMPLEMENT.
-    CORBA::Policy_ptr _get_policy (CORBA::PolicyType type
-                                   ACE_ENV_ARG_DECL_WITH_DEFAULTS);
+    CORBA::Policy_ptr _get_policy (CORBA::PolicyType type);
 
     /// Throws CORBA::NO_IMPLEMENT.
-    CORBA::Policy_ptr _get_cached_policy (TAO_Cached_Policy_Type type
-                                          ACE_ENV_ARG_DECL_WITH_DEFAULTS);
+    CORBA::Policy_ptr _get_cached_policy (TAO_Cached_Policy_Type type);
 
     /// Throws CORBA::NO_IMPLEMENT.
     CORBA::Object_ptr _set_policy_overrides (
         const CORBA::PolicyList & policies,
-        CORBA::SetOverrideType set_add
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      );
+        CORBA::SetOverrideType set_add);
 
     /// Throws CORBA::NO_IMPLEMENT.
     CORBA::PolicyList * _get_policy_overrides (
-        const CORBA::PolicyTypeSeq & types
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      );
+        const CORBA::PolicyTypeSeq & types);
 
     /// Throws CORBA::NO_IMPLEMENT.
     CORBA::Boolean _validate_connection (
-        CORBA::PolicyList_out inconsistent_policies
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      );
+        CORBA::PolicyList_out inconsistent_policies);
 
 #endif /* TAO_HAS_CORBA_MESSAGING == 1 */
 
@@ -153,8 +131,7 @@ namespace CORBA
      * address of the object.  On non-32 bit platforms, the hash may
      * be non-unique.
      */
-    virtual CORBA::ULong _hash (CORBA::ULong maximum
-                                ACE_ENV_ARG_DECL_WITH_DEFAULTS);
+    virtual CORBA::ULong _hash (CORBA::ULong maximum);
 
     /**
      * Try to determine if this object is the same as @c other_obj.
@@ -163,8 +140,7 @@ namespace CORBA
      * different ORB protocols are in use) there is no default
      * implementation.
      */
-    virtual CORBA::Boolean _is_equivalent (CORBA::Object_ptr other_obj
-                                           ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+    virtual CORBA::Boolean _is_equivalent (CORBA::Object_ptr other_obj)
       ACE_THROW_SPEC (());
 
     // = Reference count managment.
@@ -174,14 +150,12 @@ namespace CORBA
     /// Decrement the reference count.
     virtual void _remove_ref (void);
 
-    virtual CORBA::ORB_ptr _get_orb (
-        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
-      );
+    virtual CORBA::ORB_ptr _get_orb (void);
 
     // = TAO extensions
 
     /// Throws CORBA::NO_IMPLEMENT.
-    virtual TAO::ObjectKey * _key (ACE_ENV_SINGLE_ARG_DECL);
+    virtual TAO::ObjectKey * _key (void);
 
     /// Useful for template programming.
     typedef LocalObject_ptr _ptr_type;

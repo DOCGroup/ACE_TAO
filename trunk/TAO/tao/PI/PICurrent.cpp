@@ -32,28 +32,25 @@ TAO::PICurrent::~PICurrent (void)
 
 CORBA::Any *
 TAO::PICurrent::get_slot (PortableInterceptor::SlotId identifier
-                         ACE_ENV_ARG_DECL)
+                         )
   ACE_THROW_SPEC ((CORBA::SystemException,
                    PortableInterceptor::InvalidSlot))
 {
-  this->check_validity (identifier ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (0);
+  this->check_validity (identifier);
 
-  return this->tsc ()->get_slot (identifier ACE_ENV_ARG_PARAMETER);
+  return this->tsc ()->get_slot (identifier);
 }
 
 void
 TAO::PICurrent::set_slot (PortableInterceptor::SlotId identifier,
                          const CORBA::Any &data
-                         ACE_ENV_ARG_DECL)
+                         )
   ACE_THROW_SPEC ((CORBA::SystemException,
                    PortableInterceptor::InvalidSlot))
 {
-  this->check_validity (identifier ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+  this->check_validity (identifier);
 
-  this->tsc ()->set_slot (identifier, data ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+  this->tsc ()->set_slot (identifier, data);
 }
 
 namespace
@@ -90,30 +87,30 @@ TAO::PICurrent::tsc (void)
 
 void
 TAO::PICurrent::check_validity (const PortableInterceptor::SlotId &identifier
-                                ACE_ENV_ARG_DECL)
+                                )
 {
   // If the slot_count is zero, no initialization has been done (if there are
   // no slots, then the PICurrent_impl object is not created as there is no
   // data to copy).
   if (0 == this->slot_count_)
-    ACE_THROW (CORBA::BAD_INV_ORDER (CORBA::OMGVMCID | 14,
+    throw ( ::CORBA::BAD_INV_ORDER (CORBA::OMGVMCID | 14,
                                      CORBA::COMPLETED_NO));
 
   // No need to acquire a lock for this check.  At this point, these
   // attributes are read only.
   if (identifier >= this->slot_count_)
-    ACE_THROW (PortableInterceptor::InvalidSlot ());
+    throw (PortableInterceptor::InvalidSlot ());
 }
 
 CORBA::ORB_ptr
-TAO::PICurrent::_get_orb (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+TAO::PICurrent::_get_orb (void)
 {
   return CORBA::ORB::_duplicate (this->orb_core_.orb ());
 }
 
 void
 TAO::PICurrent::initialize (PortableInterceptor::SlotId sc
-                            ACE_ENV_ARG_DECL)
+                            )
 {
   // Only allow a single initialization; sc is the number of
   // allocated PICurrent data slots the end user wants. If 0
@@ -125,7 +122,7 @@ TAO::PICurrent::initialize (PortableInterceptor::SlotId sc
     // It MUST be called BEFORE we attempt to get/set any
     // PICurrent slot data.
     if (0 != orb_core_.add_tss_cleanup_func (CleanUpPICurrent, this->tss_slot_))
-      ACE_THROW (CORBA::NO_MEMORY (
+      throw ( ::CORBA::NO_MEMORY (
                    CORBA::SystemException::_tao_minor_code (
                      TAO::VMCID,
                      ENOMEM),

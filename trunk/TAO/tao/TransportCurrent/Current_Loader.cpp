@@ -51,13 +51,11 @@ namespace TAO
                           (CORBA::SystemException::_tao_minor_code (TAO::VMCID,
                                                                     ENOMEM),
                            CORBA::COMPLETED_NO));
-      ACE_TRY_CHECK;
 
       PortableInterceptor::ORBInitializer_var initializer (tmp);
 
       PortableInterceptor::register_orb_initializer (initializer.in ()
-                                                     ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+                                                    );
 
       return 0;
     }

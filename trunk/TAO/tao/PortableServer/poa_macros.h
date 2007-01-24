@@ -29,12 +29,12 @@
   ACE_CHECK_RETURN (RETURN)
 
 #define TAO_POA_GUARD \
-  TAO::Portable_Server::POA_Guard poa_guard (*this ACE_ENV_ARG_PARAMETER); \
+  TAO::Portable_Server::POA_Guard poa_guard (*this); \
   ACE_UNUSED_ARG (poa_guard); \
   ACE_CHECK
 
 #define TAO_POA_GUARD_RETURN(RETURN) \
-  TAO::Portable_Server::POA_Guard poa_guard (*this ACE_ENV_ARG_PARAMETER); \
+  TAO::Portable_Server::POA_Guard poa_guard (*this); \
   ACE_UNUSED_ARG (poa_guard); \
   ACE_CHECK_RETURN (RETURN)
 

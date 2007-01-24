@@ -18,14 +18,12 @@ TAO::TypeCodeFactory::Recursive_TypeCode::the_typecode (CORBA::TypeCode_ptr tc)
 {
   this->the_typecode_ = CORBA::TypeCode::_duplicate (tc);
 
-  ACE_DECLARE_NEW_CORBA_ENV;
 
   // @@ Lazy, I know.  :(
   CORBA::TCKind & mutable_kind =
     const_cast<CORBA::TCKind &> (this->kind_);
 
-  mutable_kind = tc->kind (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+  mutable_kind = tc->kind ();
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL

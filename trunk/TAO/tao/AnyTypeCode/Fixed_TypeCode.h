@@ -75,14 +75,11 @@ namespace TAO
        * @see @c CORBA::TypeCode
        */
       //@{
-      virtual CORBA::Boolean equal_i (CORBA::TypeCode_ptr tc
-                                      ACE_ENV_ARG_DECL) const;
-      virtual CORBA::Boolean equivalent_i (CORBA::TypeCode_ptr tc
-                                           ACE_ENV_ARG_DECL) const;
-      virtual CORBA::TypeCode_ptr get_compact_typecode_i (
-        ACE_ENV_SINGLE_ARG_DECL) const;
-      virtual CORBA::UShort fixed_digits_i (ACE_ENV_SINGLE_ARG_DECL) const;
-      virtual CORBA::UShort fixed_scale_i (ACE_ENV_SINGLE_ARG_DECL) const;
+      virtual CORBA::Boolean equal_i (CORBA::TypeCode_ptr tc) const;
+      virtual CORBA::Boolean equivalent_i (CORBA::TypeCode_ptr tc) const;
+      virtual CORBA::TypeCode_ptr get_compact_typecode_i (void) const;
+      virtual CORBA::UShort fixed_digits_i (void) const;
+      virtual CORBA::UShort fixed_scale_i (void) const;
 
     private:
 

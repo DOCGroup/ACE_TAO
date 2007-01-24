@@ -42,7 +42,7 @@ namespace TAO
     {
     public:
       POA_Guard (::TAO_Root_POA &poa
-                 ACE_ENV_ARG_DECL,
+                 ,
                  int check_for_destruction = 1);
 
     private:

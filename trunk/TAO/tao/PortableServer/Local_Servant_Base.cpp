@@ -16,9 +16,9 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 void
 TAO_Local_ServantBase::_dispatch (TAO_ServerRequest &,
                                   void *
-                                  ACE_ENV_ARG_DECL)
+                                  )
 {
-  ACE_THROW (CORBA::BAD_OPERATION ());
+  throw ( ::CORBA::BAD_OPERATION ());
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL

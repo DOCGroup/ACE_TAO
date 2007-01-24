@@ -28,7 +28,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 /**
  * @class TAO_CSD_Object_Adapter
  *
- * @brief Defines the CSD version Object Adapter which overrides 
+ * @brief Defines the CSD version Object Adapter which overrides
  *        default dispatch implementation.
  *
  * This class will be used as a facade for the CSD POAs in a server
@@ -44,11 +44,11 @@ public:
   /// Destructor
   virtual ~TAO_CSD_Object_Adapter (void);
 
-  /// Hand the request to the Service_Dispatching_Strategy_Proxy for 
+  /// Hand the request to the Service_Dispatching_Strategy_Proxy for
   /// dispatching.
   virtual void do_dispatch (TAO_ServerRequest& req,
                             TAO::Portable_Server::Servant_Upcall& upcall
-                            ACE_ENV_ARG_DECL);
+                           );
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

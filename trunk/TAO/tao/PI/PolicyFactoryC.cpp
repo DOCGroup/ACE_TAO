@@ -89,7 +89,7 @@ PortableInterceptor::PolicyFactory::~PolicyFactory (void)
 PortableInterceptor::PolicyFactory_ptr
 PortableInterceptor::PolicyFactory::_narrow (
     ::CORBA::Object_ptr _tao_objref
-    ACE_ENV_ARG_DECL_NOT_USED
+
   )
 {
   return PolicyFactory::_duplicate (
@@ -100,7 +100,7 @@ PortableInterceptor::PolicyFactory::_narrow (
 PortableInterceptor::PolicyFactory_ptr
 PortableInterceptor::PolicyFactory::_unchecked_narrow (
     ::CORBA::Object_ptr _tao_objref
-    ACE_ENV_ARG_DECL_NOT_USED
+
   )
 {
   return PolicyFactory::_duplicate (
@@ -128,7 +128,7 @@ PortableInterceptor::PolicyFactory::_tao_release (PolicyFactory_ptr obj)
 ::CORBA::Boolean
 PortableInterceptor::PolicyFactory::_is_a (
     const char *value
-    ACE_ENV_ARG_DECL_NOT_USED
+
   )
 {
   if (
@@ -168,7 +168,7 @@ PortableInterceptor::PolicyFactory::marshal (TAO_OutputCDR &)
 // Hand-crafted.
 ::CORBA::Policy_ptr
 PortableInterceptor::PolicyFactory::_create_policy (CORBA::PolicyType
-                                                    ACE_ENV_ARG_DECL)
+                                                    )
   ACE_THROW_SPEC ((CORBA::SystemException,
                    CORBA::PolicyError))
 {

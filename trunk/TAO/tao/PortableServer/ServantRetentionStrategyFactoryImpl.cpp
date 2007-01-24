@@ -50,7 +50,7 @@ namespace TAO
     void
     ServantRetentionStrategyFactoryImpl::destroy (
       ServantRetentionStrategy *strategy
-      ACE_ENV_ARG_DECL)
+      )
     {
       const char *strategy_factory_name = 0;
 
@@ -73,8 +73,7 @@ namespace TAO
 
       if (servantretention_strategy_factory != 0)
         {
-          servantretention_strategy_factory->destroy (strategy ACE_ENV_ARG_PARAMETER);
-          ACE_CHECK;
+          servantretention_strategy_factory->destroy (strategy);
         }
     }
   }

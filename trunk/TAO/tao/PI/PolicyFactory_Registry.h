@@ -71,18 +71,18 @@ public:
   void register_policy_factory (
     CORBA::PolicyType type,
     PortableInterceptor::PolicyFactory_ptr policy_factory
-    ACE_ENV_ARG_DECL);
+   );
 
   /// Construct a policy of the given type with the information
   /// contained in the CORBA::Any @a value.
   CORBA::Policy_ptr create_policy (CORBA::PolicyType type,
                                    const CORBA::Any &value
-                                   ACE_ENV_ARG_DECL);
+                                  );
 
   /// Create an empty policy, usually to be filled in later by
   /// demarshaling.
   CORBA::Policy_ptr _create_policy (CORBA::PolicyType type
-                                    ACE_ENV_ARG_DECL);
+                                   );
 
   /// Check if a @c PolicyFactory corresponding to the given type,
   /// exists.

@@ -85,14 +85,12 @@ class TAO_RTScheduler_Export TAO_RTScheduler_Current
   TAO_RTScheduler_Current (void);
   virtual ~TAO_RTScheduler_Current (void);
 
-  void init (TAO_ORB_Core* orb
-             ACE_ENV_ARG_DECL_WITH_DEFAULTS);
+  void init (TAO_ORB_Core* orb);
 
-  virtual RTCORBA::Priority the_priority (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+  virtual RTCORBA::Priority the_priority (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual void the_priority (RTCORBA::Priority the_priority
-                             ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+  virtual void the_priority (RTCORBA::Priority the_priority)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   void rt_current (RTCORBA::Current_ptr rt_current);
@@ -100,27 +98,22 @@ class TAO_RTScheduler_Export TAO_RTScheduler_Current
   virtual void begin_scheduling_segment
     (const char * name,
      CORBA::Policy_ptr sched_param,
-     CORBA::Policy_ptr implicit_sched_param
-     ACE_ENV_ARG_DECL)
+     CORBA::Policy_ptr implicit_sched_param)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      RTScheduling::Current::UNSUPPORTED_SCHEDULING_DISCIPLINE));
 
   virtual void update_scheduling_segment
     (const char * name,
      CORBA::Policy_ptr sched_param,
-     CORBA::Policy_ptr implicit_sched_param
-     ACE_ENV_ARG_DECL)
+     CORBA::Policy_ptr implicit_sched_param)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      RTScheduling::Current::UNSUPPORTED_SCHEDULING_DISCIPLINE));
 
-  virtual void end_scheduling_segment
-    (const char * name
-     ACE_ENV_ARG_DECL)
+  virtual void end_scheduling_segment (const char * name)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual RTScheduling::DistributableThread_ptr
-    lookup(const RTScheduling::Current::IdType & id
-           ACE_ENV_ARG_DECL_NOT_USED)
+    lookup(const RTScheduling::Current::IdType & id)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   // returns a null reference if
@@ -134,24 +127,20 @@ class TAO_RTScheduler_Export TAO_RTScheduler_Current
            CORBA::Policy_ptr sched_param,
            CORBA::Policy_ptr implicit_sched_param,
            CORBA::ULong stack_size,
-           RTCORBA::Priority base_priority
-           ACE_ENV_ARG_DECL)
+           RTCORBA::Priority base_priority)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual ::RTScheduling::Current::IdType *
-    id (ACE_ENV_SINGLE_ARG_DECL)
+  virtual ::RTScheduling::Current::IdType *id (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual ::CORBA::Policy_ptr
-    scheduling_parameter (ACE_ENV_SINGLE_ARG_DECL)
+  virtual ::CORBA::Policy_ptr scheduling_parameter (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual ::CORBA::Policy_ptr
-    implicit_scheduling_parameter (ACE_ENV_SINGLE_ARG_DECL)
+  virtual ::CORBA::Policy_ptr implicit_scheduling_parameter (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual ::RTScheduling::Current::NameList *
-    current_scheduling_segment_names (ACE_ENV_SINGLE_ARG_DECL)
+    current_scheduling_segment_names (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   TAO_RTScheduler_Current_i* implementation (void);
@@ -173,7 +162,7 @@ class TAO_RTScheduler_Export TAO_RTScheduler_Current
 
   static TAO_RTScheduler_Current_ptr _narrow (
       CORBA::Object_ptr obj
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS);
+      );
 
 
   static TAO_RTScheduler_Current_ptr _nil (void)
@@ -226,7 +215,7 @@ public:
   static TAO_RTScheduler_Current_ptr nil (void);
   static TAO_RTScheduler_Current_ptr narrow (
       CORBA::Object *
-      ACE_ENV_ARG_DECL_NOT_USED
+
     );
   static CORBA::Object * upcast (void *);
 
@@ -245,8 +234,7 @@ class TAO_RTScheduler_Export TAO_RTScheduler_Current_i
  public:
 
   TAO_RTScheduler_Current_i (TAO_ORB_Core* orb,
-                             DT_Hash_Map* dt_hash
-                             ACE_ENV_ARG_DECL_WITH_DEFAULTS);
+                             DT_Hash_Map* dt_hash);
 
   TAO_RTScheduler_Current_i (TAO_ORB_Core* orb,
                              DT_Hash_Map* dt_hash,
@@ -255,8 +243,7 @@ class TAO_RTScheduler_Export TAO_RTScheduler_Current_i
                              CORBA::Policy_ptr sched_param,
                              CORBA::Policy_ptr implicit_sched_param,
                              RTScheduling::DistributableThread_ptr dt,
-                             TAO_RTScheduler_Current_i* prev_current
-                             ACE_ENV_ARG_DECL_WITH_DEFAULTS);
+                             TAO_RTScheduler_Current_i* prev_current);
 
   virtual ~TAO_RTScheduler_Current_i (void);
 
@@ -267,56 +254,47 @@ class TAO_RTScheduler_Export TAO_RTScheduler_Current_i
            CORBA::Policy_ptr sched_param,
            CORBA::Policy_ptr implicit_sched_param,
            CORBA::ULong stack_size,
-           RTCORBA::Priority base_priority
-           ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+           RTCORBA::Priority base_priority)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual void begin_scheduling_segment
     (const char * name,
      CORBA::Policy_ptr sched_param,
-     CORBA::Policy_ptr implicit_sched_param
-     ACE_ENV_ARG_DECL)
+     CORBA::Policy_ptr implicit_sched_param)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      RTScheduling::Current::UNSUPPORTED_SCHEDULING_DISCIPLINE));
 
   virtual void update_scheduling_segment
     (const char * name,
      CORBA::Policy_ptr sched_param,
-     CORBA::Policy_ptr implicit_sched_param
-     ACE_ENV_ARG_DECL)
+     CORBA::Policy_ptr implicit_sched_param)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      RTScheduling::Current::UNSUPPORTED_SCHEDULING_DISCIPLINE));
 
-  virtual void end_scheduling_segment
-    (const char * name
-     ACE_ENV_ARG_DECL)
+  virtual void end_scheduling_segment (const char * name)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual RTScheduling::Current::IdType *
-    id (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+  virtual RTScheduling::Current::IdType *id (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
 
-  void  id (RTScheduling::Current::IdType guid );
+  void id (RTScheduling::Current::IdType guid);
 
-  virtual CORBA::Policy_ptr
-    scheduling_parameter (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+  virtual CORBA::Policy_ptr scheduling_parameter (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual CORBA::Policy_ptr
-    implicit_scheduling_parameter (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+  virtual CORBA::Policy_ptr implicit_scheduling_parameter (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
-
 
   void scheduling_parameter (CORBA::Policy_ptr);
 
   void implicit_scheduling_parameter (CORBA::Policy_ptr);
 
   virtual RTScheduling::Current::NameList *
-    current_scheduling_segment_names (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+    current_scheduling_segment_names (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  void cancel_thread (ACE_ENV_SINGLE_ARG_DECL)
+  void cancel_thread (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   void cleanup_DT (void);
@@ -353,8 +331,7 @@ class TAO_RTScheduler_Export TAO_RTScheduler_Current_i
 class DTTask : public ACE_Task <ACE_SYNCH>
 {
 public:
-  DTTask (//ACE_Thread_Manager manager,
-          TAO_ORB_Core* orb,
+  DTTask (TAO_ORB_Core* orb,
           DT_Hash_Map* dt_hash,
           TAO_RTScheduler_Current_i*,
           RTScheduling::ThreadAction_ptr start,
@@ -366,13 +343,11 @@ public:
   virtual ~DTTask (void);
 
   int activate_task (RTCORBA::Priority base_priority,
-                     CORBA::ULong stack_size
-                     ACE_ENV_ARG_DECL_WITH_DEFAULTS);
+                     CORBA::ULong stack_size);
 
   virtual int svc (void);
 
  private:
-  //ACE_Thread_Manager* manager_;
   TAO_ORB_Core* orb_;
   DT_Hash_Map* dt_hash_;
   TAO_RTScheduler_Current_i* current_;

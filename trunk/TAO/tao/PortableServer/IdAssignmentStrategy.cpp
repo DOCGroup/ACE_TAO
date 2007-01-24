@@ -14,13 +14,12 @@ namespace TAO
   namespace Portable_Server
   {
     void
-    IdAssignmentStrategy::strategy_init (TAO_Root_POA * /*poa*/
-					 ACE_ENV_ARG_DECL_NOT_USED)
+    IdAssignmentStrategy::strategy_init (TAO_Root_POA * /*poa*/)
     {
     }
 
     void
-    IdAssignmentStrategy::strategy_cleanup(ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+    IdAssignmentStrategy::strategy_cleanup(void)
     {
     }
 

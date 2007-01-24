@@ -54,7 +54,7 @@ public:
   void finalize (void);
 
   /// Open default resources.
-  int open_default_resources (ACE_ENV_SINGLE_ARG_DECL);
+  int open_default_resources (void);
 
   /// Shutdown reactor.
   void shutdown_reactor (void);

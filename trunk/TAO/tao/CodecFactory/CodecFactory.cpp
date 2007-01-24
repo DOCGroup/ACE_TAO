@@ -25,7 +25,7 @@ TAO_CodecFactory_Loader::create_object (
   CORBA::ORB_ptr orb,
   int,
   ACE_TCHAR *[]
-  ACE_ENV_ARG_DECL_NOT_USED)
+  )
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   CORBA::Object_ptr obj = CORBA::Object::_nil ();

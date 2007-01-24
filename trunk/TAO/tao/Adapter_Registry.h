@@ -63,7 +63,7 @@ public:
    * POA while performing an upcall).
    */
   void close (int wait_for_completion
-              ACE_ENV_ARG_DECL);
+             );
 
   /**
    * Verify if the close() call can be invoked in the current
@@ -71,11 +71,11 @@ public:
    * Raise the right exception if not.
    */
   void check_close (int wait_for_completion
-                    ACE_ENV_ARG_DECL);
+                   );
 
   /// Insert a new adapter into the registry.
   void insert (TAO_Adapter *adapter
-               ACE_ENV_ARG_DECL);
+              );
 
   /**
    * Dispatch the request to all the adapters.
@@ -85,7 +85,7 @@ public:
   void dispatch (TAO::ObjectKey &key,
                  TAO_ServerRequest &request,
                  CORBA::Object_out forward_to
-                 ACE_ENV_ARG_DECL);
+                );
 
   /// Create a collocated object using the given profile and stub.
   CORBA::Object_ptr create_collocated_object (TAO_Stub *,

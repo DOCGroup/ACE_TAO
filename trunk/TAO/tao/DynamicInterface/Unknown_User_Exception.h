@@ -80,9 +80,9 @@ namespace CORBA
 
     virtual CORBA::Exception *_tao_duplicate (void) const;
     virtual void _tao_encode (TAO_OutputCDR &cdr
-                              ACE_ENV_ARG_DECL) const;
+                              ) const;
     virtual void _tao_decode (TAO_InputCDR &cdr
-                              ACE_ENV_ARG_DECL);
+                             );
 
     /// Narrow to an UnknowUserException.
     static UnknownUserException * _downcast (CORBA::Exception *ex);

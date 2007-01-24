@@ -27,8 +27,7 @@ bool
 TAO_GIOP_Message_Generator_Parser_12::write_request_header (
     const TAO_Operation_Details &opdetails,
     TAO_Target_Specification &spec,
-    TAO_OutputCDR &msg
-  )
+    TAO_OutputCDR &msg)
 {
   // First the request id
   msg << opdetails.request_id ();
@@ -95,9 +94,8 @@ TAO_GIOP_Message_Generator_Parser_12::write_request_header (
 bool
 TAO_GIOP_Message_Generator_Parser_12::write_locate_request_header (
     CORBA::ULong request_id,
-    TAO_Target_Specification    &spec,
-    TAO_OutputCDR &msg
-  )
+    TAO_Target_Specification &spec,
+    TAO_OutputCDR &msg)
 {
   // Write the request id
   msg << request_id;
@@ -120,9 +118,7 @@ TAO_GIOP_Message_Generator_Parser_12::write_locate_request_header (
 bool
 TAO_GIOP_Message_Generator_Parser_12::write_reply_header (
     TAO_OutputCDR & output,
-    TAO_Pluggable_Reply_Params_Base &reply
-    ACE_ENV_ARG_DECL_NOT_USED
-  )
+    TAO_Pluggable_Reply_Params_Base &reply)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // Write the request ID
@@ -187,8 +183,7 @@ bool
 TAO_GIOP_Message_Generator_Parser_12::write_locate_reply_mesg (
     TAO_OutputCDR & output,
     CORBA::ULong request_id,
-    TAO_GIOP_Locate_Status_Msg &status_info
-  )
+    TAO_GIOP_Locate_Status_Msg &status_info)
 {
   output.write_ulong (request_id);
 
@@ -260,8 +255,7 @@ TAO_GIOP_Message_Generator_Parser_12::write_fragment_header (
 
 int
 TAO_GIOP_Message_Generator_Parser_12::parse_request_header (
-    TAO_ServerRequest &request
-  )
+    TAO_ServerRequest &request)
 {
   // Get the input CDR in the request class
   TAO_InputCDR & input = *request.incoming ();
@@ -339,8 +333,7 @@ TAO_GIOP_Message_Generator_Parser_12::parse_request_header (
 
 int
 TAO_GIOP_Message_Generator_Parser_12::parse_locate_header (
-    TAO_GIOP_Locate_Request_Header &request
-  )
+    TAO_GIOP_Locate_Request_Header &request)
 {
   // Get the stream .
   TAO_InputCDR &msg = request.incoming_stream ();
@@ -367,8 +360,7 @@ TAO_GIOP_Message_Generator_Parser_12::parse_locate_header (
 int
 TAO_GIOP_Message_Generator_Parser_12::parse_reply (
     TAO_InputCDR &cdr,
-    TAO_Pluggable_Reply_Params &params
-  )
+    TAO_Pluggable_Reply_Params &params)
 {
   if (TAO_GIOP_Message_Generator_Parser::parse_reply (cdr,
                                                       params) == -1)
@@ -397,8 +389,7 @@ TAO_GIOP_Message_Generator_Parser_12::parse_reply (
 int
 TAO_GIOP_Message_Generator_Parser_12::parse_locate_reply (
     TAO_InputCDR &cdr,
-    TAO_Pluggable_Reply_Params &params
-  )
+    TAO_Pluggable_Reply_Params &params)
 {
   if (TAO_GIOP_Message_Generator_Parser::parse_locate_reply (cdr,
                                                              params) == -1)
@@ -442,8 +433,7 @@ TAO_GIOP_Message_Generator_Parser_12::is_ready_for_bidirectional (void) const
 bool
 TAO_GIOP_Message_Generator_Parser_12::marshall_target_spec (
     TAO_Target_Specification &spec,
-    TAO_OutputCDR &msg
-  )
+    TAO_OutputCDR &msg)
 {
   switch (spec.specifier ())
     {

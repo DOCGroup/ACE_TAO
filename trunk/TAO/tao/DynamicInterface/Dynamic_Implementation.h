@@ -60,7 +60,7 @@ public:
   /// incarnated by the DSI servant and performs the processing
   /// necessary to execute the request.
   virtual void invoke (CORBA::ServerRequest_ptr request
-                       ACE_ENV_ARG_DECL_WITH_DEFAULTS) = 0;
+                       ) = 0;
 
   /// The _primary_interface() method receives an ObjectId value and a
   /// POA_ptr as input parameters and returns a valid RepositoryId
@@ -68,19 +68,19 @@ public:
   virtual CORBA::RepositoryId _primary_interface (
       const PortableServer::ObjectId &oid,
       PortableServer::POA_ptr poa
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS
+
     ) = 0;
 
   /// Local implementation of the CORBA::Object::_is_a method.
   virtual CORBA::Boolean _is_a (const char *logical_type_id
-                                ACE_ENV_ARG_DECL_WITH_DEFAULTS);
+                                );
 
   /// Returns a CORBA::Object_ptr for the target object.
-  CORBA::Object_ptr _this (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
+  CORBA::Object_ptr _this (void);
 
   /// Query the Interface Repository for the interface definition.
   virtual CORBA::InterfaceDef_ptr _get_interface (
-      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
+      void
     );
 
 protected:
@@ -92,17 +92,17 @@ protected:
   virtual void *_downcast (const char *repository_id);
 
   /// This is an auxiliary method for _this() and _narrow().
-  virtual TAO_Stub *_create_stub (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
+  virtual TAO_Stub *_create_stub (void);
 
   /// Turns around and calls invoke.
   virtual void _dispatch (TAO_ServerRequest &request,
                           void *context
-                          ACE_ENV_ARG_DECL_WITH_DEFAULTS);
+                          );
 
 private:
   /// Encapsulates code common to _is_a(), _get_interface() and _create_stub().
   CORBA::RepositoryId get_id_from_primary_interface (
-      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
+      void
     );
 };
 

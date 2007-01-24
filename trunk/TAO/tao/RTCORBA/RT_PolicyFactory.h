@@ -48,12 +48,12 @@ public:
 
   CORBA::Policy_ptr create_policy (CORBA::PolicyType type,
                                    const CORBA::Any &value
-                                   ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+                                   )
     ACE_THROW_SPEC ((CORBA::SystemException,
                      CORBA::PolicyError));
 
   CORBA::Policy_ptr _create_policy (CORBA::PolicyType type
-                                    ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+                                    )
     ACE_THROW_SPEC ((CORBA::SystemException,
                      CORBA::PolicyError));
 };

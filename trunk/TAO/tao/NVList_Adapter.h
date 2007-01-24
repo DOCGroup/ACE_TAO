@@ -35,8 +35,6 @@ namespace CORBA
 
   class NamedValue;
   typedef NamedValue *NamedValue_ptr;
-
-  class Environment;
 }
 
 /**
@@ -49,12 +47,10 @@ public:
 
   virtual void create_list (
       CORBA::Long count,
-      CORBA::NVList_ptr &new_list
-      ACE_ENV_ARG_DECL) = 0;
+      CORBA::NVList_ptr &new_list) = 0;
 
   virtual void create_named_value (
-      CORBA::NamedValue_ptr &nv
-      ACE_ENV_ARG_DECL) = 0;
+      CORBA::NamedValue_ptr &nv) = 0;
 
 };
 

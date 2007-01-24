@@ -65,17 +65,17 @@ public:
 
   virtual void add_interceptor (
       PortableInterceptor::IORInterceptor_ptr interceptor
-      ACE_ENV_ARG_DECL
+
     ) = 0;
 
   virtual void add_interceptor (
       PortableInterceptor::IORInterceptor_ptr interceptor,
       const CORBA::PolicyList& policies
-      ACE_ENV_ARG_DECL
+
     ) = 0;
 
   virtual void destroy_interceptors (
-      ACE_ENV_SINGLE_ARG_DECL
+
       ) = 0;
 
   /// Call the IORInterceptor::establish_components() method on all
@@ -86,25 +86,25 @@ public:
    * IORInterceptor::components_established() once the former is
    * completed.
    */
-  virtual void establish_components (TAO_Root_POA *poa ACE_ENV_ARG_DECL)
+  virtual void establish_components (TAO_Root_POA *poa )
     ACE_THROW_SPEC ((CORBA::SystemException)) = 0;
 
   /// Call the IORInterceptor::components_established() method on all
   /// registered IORInterceptors.
   virtual void components_established (PortableInterceptor::IORInfo_ptr info
-                                       ACE_ENV_ARG_DECL)
+                                       )
     ACE_THROW_SPEC ((CORBA::SystemException)) = 0;
 
   virtual void adapter_state_changed (
       const TAO::ObjectReferenceTemplate_Array &array_obj_ref_template,
       PortableInterceptor::AdapterState state
-      ACE_ENV_ARG_DECL)
+      )
     ACE_THROW_SPEC ((CORBA::SystemException)) = 0;
 
   virtual void adapter_manager_state_changed (
       const char * id,
       PortableInterceptor::AdapterState state
-      ACE_ENV_ARG_DECL)
+      )
     ACE_THROW_SPEC ((CORBA::SystemException)) = 0;
 };
 

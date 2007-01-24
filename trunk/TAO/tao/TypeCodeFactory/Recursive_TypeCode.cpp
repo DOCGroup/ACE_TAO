@@ -21,7 +21,6 @@ TAO::TypeCodeFactory::Recursive_TypeCode::tao_marshal (
   TAO_OutputCDR & cdr,
   CORBA::ULong offset) const
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
 
   if (CORBA::is_nil (this->the_typecode_.in ()))
     {
@@ -40,7 +39,6 @@ bool
 TAO::TypeCodeFactory::Recursive_TypeCode::tao_marshal_kind (
   TAO_OutputCDR & cdr) const
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
 
   if (CORBA::is_nil (this->the_typecode_.in ()))
     {
@@ -69,7 +67,7 @@ TAO::TypeCodeFactory::Recursive_TypeCode::tao_release (void)
 
 CORBA::Boolean
 TAO::TypeCodeFactory::Recursive_TypeCode::equal_i (CORBA::TypeCode_ptr tc
-                                                   ACE_ENV_ARG_DECL) const
+                                                   ) const
 {
   if (CORBA::is_nil (this->the_typecode_.in ()))
     {
@@ -81,12 +79,12 @@ TAO::TypeCodeFactory::Recursive_TypeCode::equal_i (CORBA::TypeCode_ptr tc
     }
 
   return this->the_typecode_->equal (tc
-                                     ACE_ENV_ARG_PARAMETER);
+                                    );
 }
 
 CORBA::Boolean
 TAO::TypeCodeFactory::Recursive_TypeCode::equivalent_i (CORBA::TypeCode_ptr tc
-                                                        ACE_ENV_ARG_DECL) const
+                                                        ) const
 {
   if (CORBA::is_nil (this->the_typecode_.in ()))
     {
@@ -98,12 +96,12 @@ TAO::TypeCodeFactory::Recursive_TypeCode::equivalent_i (CORBA::TypeCode_ptr tc
     }
 
   return this->the_typecode_->equivalent (tc
-                                          ACE_ENV_ARG_PARAMETER);
+                                         );
 }
 
 CORBA::TypeCode_ptr
 TAO::TypeCodeFactory::Recursive_TypeCode::get_compact_typecode_i (
-  ACE_ENV_SINGLE_ARG_DECL) const
+  void) const
 {
   if (CORBA::is_nil (this->the_typecode_.in ()))
     {
@@ -115,12 +113,12 @@ TAO::TypeCodeFactory::Recursive_TypeCode::get_compact_typecode_i (
     }
 
   return
-    this->the_typecode_->get_compact_typecode (ACE_ENV_SINGLE_ARG_PARAMETER);
+    this->the_typecode_->get_compact_typecode ();
 }
 
 char const *
 TAO::TypeCodeFactory::Recursive_TypeCode::id_i (
-  ACE_ENV_SINGLE_ARG_DECL_NOT_USED) const
+  void) const
 {
   // Ownership is retained by the TypeCode, as required by the C++
   // mapping.
@@ -129,7 +127,7 @@ TAO::TypeCodeFactory::Recursive_TypeCode::id_i (
 
 char const *
 TAO::TypeCodeFactory::Recursive_TypeCode::name_i (
-  ACE_ENV_SINGLE_ARG_DECL) const
+  void) const
 {
   if (CORBA::is_nil (this->the_typecode_.in ()))
     {
@@ -138,12 +136,12 @@ TAO::TypeCodeFactory::Recursive_TypeCode::name_i (
                         0);
     }
 
-  return this->the_typecode_->name (ACE_ENV_SINGLE_ARG_PARAMETER);
+  return this->the_typecode_->name ();
 }
 
 CORBA::ULong
 TAO::TypeCodeFactory::Recursive_TypeCode::member_count_i (
-  ACE_ENV_SINGLE_ARG_DECL) const
+  void) const
 {
   if (CORBA::is_nil (this->the_typecode_.in ()))
     {
@@ -152,13 +150,13 @@ TAO::TypeCodeFactory::Recursive_TypeCode::member_count_i (
                         0);
     }
 
-  return this->the_typecode_->member_count (ACE_ENV_SINGLE_ARG_PARAMETER);
+  return this->the_typecode_->member_count ();
 }
 
 char const *
 TAO::TypeCodeFactory::Recursive_TypeCode::member_name_i (
   CORBA::ULong index
-  ACE_ENV_ARG_DECL) const
+  ) const
 {
   if (CORBA::is_nil (this->the_typecode_.in ()))
     {
@@ -168,13 +166,13 @@ TAO::TypeCodeFactory::Recursive_TypeCode::member_name_i (
     }
 
   return this->the_typecode_->member_name (index
-                                       ACE_ENV_ARG_PARAMETER);
+                                      );
 }
 
 CORBA::TypeCode_ptr
 TAO::TypeCodeFactory::Recursive_TypeCode::member_type_i (
   CORBA::ULong index
-  ACE_ENV_ARG_DECL) const
+  ) const
 {
   if (CORBA::is_nil (this->the_typecode_.in ()))
     {
@@ -184,13 +182,13 @@ TAO::TypeCodeFactory::Recursive_TypeCode::member_type_i (
     }
 
   return this->the_typecode_->member_type (index
-                                           ACE_ENV_ARG_PARAMETER);
+                                          );
 }
 
 CORBA::Any *
 TAO::TypeCodeFactory::Recursive_TypeCode::member_label_i (
   CORBA::ULong index
-  ACE_ENV_ARG_DECL) const
+  ) const
 {
   if (CORBA::is_nil (this->the_typecode_.in ()))
     {
@@ -201,12 +199,12 @@ TAO::TypeCodeFactory::Recursive_TypeCode::member_label_i (
 
   return
     this->the_typecode_->member_label (index
-                                       ACE_ENV_ARG_PARAMETER);
+                                      );
 }
 
 CORBA::TypeCode_ptr
 TAO::TypeCodeFactory::Recursive_TypeCode::discriminator_type_i (
-  ACE_ENV_SINGLE_ARG_DECL) const
+  void) const
 {
   if (CORBA::is_nil (this->the_typecode_.in ()))
     {
@@ -216,12 +214,12 @@ TAO::TypeCodeFactory::Recursive_TypeCode::discriminator_type_i (
     }
 
   return
-    this->the_typecode_->discriminator_type (ACE_ENV_SINGLE_ARG_PARAMETER);
+    this->the_typecode_->discriminator_type ();
 }
 
 CORBA::Long
 TAO::TypeCodeFactory::Recursive_TypeCode::default_index_i (
-  ACE_ENV_SINGLE_ARG_DECL) const
+  void) const
 {
   if (CORBA::is_nil (this->the_typecode_.in ()))
     {
@@ -230,13 +228,13 @@ TAO::TypeCodeFactory::Recursive_TypeCode::default_index_i (
                         0);
     }
 
-  return this->the_typecode_->default_index (ACE_ENV_SINGLE_ARG_PARAMETER);
+  return this->the_typecode_->default_index ();
 }
 
 CORBA::Visibility
 TAO::TypeCodeFactory::Recursive_TypeCode::member_visibility_i (
   CORBA::ULong index
-  ACE_ENV_ARG_DECL) const
+  ) const
 {
   if (CORBA::is_nil (this->the_typecode_.in ()))
     {
@@ -246,12 +244,12 @@ TAO::TypeCodeFactory::Recursive_TypeCode::member_visibility_i (
     }
 
   return this->the_typecode_->member_visibility (index
-                                                 ACE_ENV_ARG_PARAMETER);
+                                                );
 }
 
 CORBA::ValueModifier
 TAO::TypeCodeFactory::Recursive_TypeCode::type_modifier_i (
-  ACE_ENV_SINGLE_ARG_DECL) const
+  void) const
 {
   if (CORBA::is_nil (this->the_typecode_.in ()))
     {
@@ -260,12 +258,12 @@ TAO::TypeCodeFactory::Recursive_TypeCode::type_modifier_i (
                         CORBA::VM_NONE);
     }
 
-  return this->the_typecode_->type_modifier (ACE_ENV_SINGLE_ARG_PARAMETER);
+  return this->the_typecode_->type_modifier ();
 }
 
 CORBA::TypeCode_ptr
 TAO::TypeCodeFactory::Recursive_TypeCode::concrete_base_type_i (
-  ACE_ENV_SINGLE_ARG_DECL) const
+  void) const
 {
   if (CORBA::is_nil (this->the_typecode_.in ()))
     {
@@ -275,7 +273,7 @@ TAO::TypeCodeFactory::Recursive_TypeCode::concrete_base_type_i (
     }
 
   return
-    this->the_typecode_->concrete_base_type (ACE_ENV_SINGLE_ARG_PARAMETER);
+    this->the_typecode_->concrete_base_type ();
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL

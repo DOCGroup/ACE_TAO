@@ -1,7 +1,6 @@
 // $Id$
 
 #include "tao/SystemException.h"
-#include "tao/Environment.h"
 #include "tao/ORB_Constants.h"
 #include "tao/CORBA_String.h"
 #include "tao/CDR.h"
@@ -112,7 +111,7 @@ CORBA::SystemException::operator= (const CORBA::SystemException &src)
 
 void
 CORBA::SystemException::_tao_encode (TAO_OutputCDR &cdr
-                                     ACE_ENV_ARG_DECL) const
+                                     ) const
 {
   if (cdr.write_string (this->_rep_id ())
       && cdr.write_ulong (this->minor ())
@@ -121,12 +120,12 @@ CORBA::SystemException::_tao_encode (TAO_OutputCDR &cdr
       return;
     }
 
-  ACE_THROW (CORBA::MARSHAL ());
+  throw ::CORBA::MARSHAL ();
 }
 
 void
 CORBA::SystemException::_tao_decode (TAO_InputCDR &cdr
-                                     ACE_ENV_ARG_DECL)
+                                     )
 {
   // The string is read by the caller, to determine the exact type of
   // the exception.  We just decode the fields...
@@ -140,7 +139,7 @@ CORBA::SystemException::_tao_decode (TAO_InputCDR &cdr
       return;
     }
 
-  ACE_THROW (CORBA::MARSHAL ());
+  throw ::CORBA::MARSHAL ();
 }
 
 CORBA::ULong

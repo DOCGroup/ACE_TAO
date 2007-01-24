@@ -78,15 +78,14 @@ TAO_Active_Object_Map::set_system_id_size
 TAO_Active_Object_Map::TAO_Active_Object_Map (int user_id_policy,
                                               int unique_id_policy,
                                               int persistent_id_policy,
-                                              const TAO_Server_Strategy_Factory::Active_Object_Map_Creation_Parameters &creation_parameters
-                                              ACE_ENV_ARG_DECL)
+                                              const TAO_Server_Strategy_Factory::Active_Object_Map_Creation_Parameters &creation_parameters)
   : user_id_map_ (0),
     servant_map_ (0),
     id_uniqueness_strategy_ (0),
     lifespan_strategy_ (0),
     id_assignment_strategy_ (0),
     id_hint_strategy_ (0),
-    using_active_maps_ (0)
+    using_active_maps_ (false)
 {
   TAO_Active_Object_Map::set_system_id_size (creation_parameters);
 
@@ -97,14 +96,12 @@ TAO_Active_Object_Map::TAO_Active_Object_Map (int user_id_policy,
       ACE_NEW_THROW_EX (id_uniqueness_strategy,
                         TAO_Unique_Id_Strategy,
                         CORBA::NO_MEMORY ());
-      ACE_CHECK;
     }
   else
     {
       ACE_NEW_THROW_EX (id_uniqueness_strategy,
                         TAO_Multiple_Id_Strategy,
                         CORBA::NO_MEMORY ());
-      ACE_CHECK;
     }
 
   // Give ownership to the auto pointer.
@@ -117,14 +114,12 @@ TAO_Active_Object_Map::TAO_Active_Object_Map (int user_id_policy,
       ACE_NEW_THROW_EX (lifespan_strategy,
                         TAO_Persistent_Strategy,
                         CORBA::NO_MEMORY ());
-      ACE_CHECK;
     }
   else
     {
       ACE_NEW_THROW_EX (lifespan_strategy,
                         TAO_Transient_Strategy,
                         CORBA::NO_MEMORY ());
-      ACE_CHECK;
     }
 
   // Give ownership to the auto pointer.
@@ -137,21 +132,18 @@ TAO_Active_Object_Map::TAO_Active_Object_Map (int user_id_policy,
       ACE_NEW_THROW_EX (id_assignment_strategy,
                         TAO_User_Id_Strategy,
                         CORBA::NO_MEMORY ());
-      ACE_CHECK;
     }
   else if (unique_id_policy)
     {
       ACE_NEW_THROW_EX (id_assignment_strategy,
                         TAO_System_Id_With_Unique_Id_Strategy,
                         CORBA::NO_MEMORY ());
-      ACE_CHECK;
     }
   else
     {
       ACE_NEW_THROW_EX (id_assignment_strategy,
                         TAO_System_Id_With_Multiple_Id_Strategy,
                         CORBA::NO_MEMORY ());
-      ACE_CHECK;
     }
 
   // Give ownership to the auto pointer.
@@ -162,19 +154,17 @@ TAO_Active_Object_Map::TAO_Active_Object_Map (int user_id_policy,
        || creation_parameters.allow_reactivation_of_system_ids_)
       && creation_parameters.use_active_hint_in_ids_)
     {
-      this->using_active_maps_ = 1;
+      this->using_active_maps_ = true;
 
       ACE_NEW_THROW_EX (id_hint_strategy,
                         TAO_Active_Hint_Strategy (creation_parameters.active_object_map_size_),
                         CORBA::NO_MEMORY ());
-      ACE_CHECK;
     }
   else
     {
       ACE_NEW_THROW_EX (id_hint_strategy,
                         TAO_No_Hint_Strategy,
                         CORBA::NO_MEMORY ());
-      ACE_CHECK;
     }
 
   // Give ownership to the auto pointer.
@@ -190,7 +180,6 @@ TAO_Active_Object_Map::TAO_Active_Object_Map (int user_id_policy,
           ACE_NEW_THROW_EX (sm,
                             servant_linear_map (creation_parameters.active_object_map_size_),
                             CORBA::NO_MEMORY ());
-          ACE_CHECK;
           break;
 #else
           ACE_ERROR ((LM_ERROR,
@@ -205,7 +194,6 @@ TAO_Active_Object_Map::TAO_Active_Object_Map (int user_id_policy,
           ACE_NEW_THROW_EX (sm,
                             servant_hash_map (creation_parameters.active_object_map_size_),
                             CORBA::NO_MEMORY ());
-          ACE_CHECK;
           break;
         }
     }
@@ -224,7 +212,6 @@ TAO_Active_Object_Map::TAO_Active_Object_Map (int user_id_policy,
           ACE_NEW_THROW_EX (uim,
                             user_id_linear_map (creation_parameters.active_object_map_size_),
                             CORBA::NO_MEMORY ());
-          ACE_CHECK;
           break;
 #else
           ACE_ERROR ((LM_ERROR,
@@ -239,7 +226,6 @@ TAO_Active_Object_Map::TAO_Active_Object_Map (int user_id_policy,
           ACE_NEW_THROW_EX (uim,
                             user_id_hash_map (creation_parameters.active_object_map_size_),
                             CORBA::NO_MEMORY ());
-          ACE_CHECK;
           break;
         }
     }
@@ -252,14 +238,12 @@ TAO_Active_Object_Map::TAO_Active_Object_Map (int user_id_policy,
           ACE_NEW_THROW_EX (uim,
                             user_id_linear_map (creation_parameters.active_object_map_size_),
                             CORBA::NO_MEMORY ());
-          ACE_CHECK;
           break;
 
         case TAO_DYNAMIC_HASH:
           ACE_NEW_THROW_EX (uim,
                             user_id_hash_map (creation_parameters.active_object_map_size_),
                             CORBA::NO_MEMORY ());
-          ACE_CHECK;
           break;
 #else
         case TAO_LINEAR:
@@ -274,12 +258,11 @@ TAO_Active_Object_Map::TAO_Active_Object_Map (int user_id_policy,
         case TAO_ACTIVE_DEMUX:
         default:
 
-          this->using_active_maps_ = 1;
+          this->using_active_maps_ = true;
 
           ACE_NEW_THROW_EX (uim,
                             user_id_active_map (creation_parameters.active_object_map_size_),
                             CORBA::NO_MEMORY ());
-          ACE_CHECK;
           break;
         }
     }
