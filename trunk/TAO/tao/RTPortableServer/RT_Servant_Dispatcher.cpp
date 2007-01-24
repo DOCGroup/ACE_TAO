@@ -166,8 +166,8 @@ TAO_RT_Servant_Dispatcher::pre_invoke_remote_request (
                 pre_invoke_state.original_CORBA_priority_,
                 pre_invoke_state.original_native_priority_
                ) == -1)
-            throw ( ::CORBA::DATA_CONVERSION (CORBA::OMGVMCID | 2,
-                                               CORBA::COMPLETED_NO));
+            throw ::CORBA::DATA_CONVERSION (CORBA::OMGVMCID | 2,
+                                               CORBA::COMPLETED_NO);
 
           ACE_DEBUG ((LM_DEBUG,
                       ACE_TEXT ("(%P|%t): %s processing using %s ")
@@ -201,18 +201,16 @@ TAO_RT_Servant_Dispatcher::pre_invoke_remote_request (
             pre_invoke_state.original_CORBA_priority_,
             pre_invoke_state.original_native_priority_
            ) == -1)
-        throw ( ::CORBA::DATA_CONVERSION (CORBA::OMGVMCID | 2,
-                                           CORBA::COMPLETED_NO));
+        throw ::CORBA::DATA_CONVERSION (CORBA::OMGVMCID | 2,
+                                           CORBA::COMPLETED_NO);
 
       // Priority needs to be changed temporarily changed for the
       // duration of request.
       if (target_priority != pre_invoke_state.original_CORBA_priority_)
         {
-          if (tph->set_thread_CORBA_priority (target_priority
-                                             )
-              == -1)
-            throw ( ::CORBA::DATA_CONVERSION (CORBA::OMGVMCID | 2,
-                                               CORBA::COMPLETED_NO));
+          if (tph->set_thread_CORBA_priority (target_priority) == -1)
+            throw ::CORBA::DATA_CONVERSION (CORBA::OMGVMCID | 2,
+                                               CORBA::COMPLETED_NO);
 
           pre_invoke_state.state_ =
             TAO::Portable_Server::Servant_Upcall::Pre_Invoke_State::PRIORITY_RESET_REQUIRED;
@@ -310,8 +308,7 @@ TAO_RT_Servant_Dispatcher::pre_invoke_collocated_request (TAO_Root_POA &poa,
                                                  pre_invoke_state.original_native_priority_
                                                 )
       == -1)
-    throw ( ::CORBA::DATA_CONVERSION (CORBA::OMGVMCID | 2,
-                                       CORBA::COMPLETED_NO));
+    throw ::CORBA::DATA_CONVERSION (CORBA::OMGVMCID | 2, CORBA::COMPLETED_NO);
 
   // Change the priority of the current thread for the duration of
   // request.
@@ -320,8 +317,7 @@ TAO_RT_Servant_Dispatcher::pre_invoke_collocated_request (TAO_Root_POA &poa,
       if (tph->set_thread_CORBA_priority (servant_priority
                                          )
           == -1)
-        throw ( ::CORBA::DATA_CONVERSION (CORBA::OMGVMCID | 2,
-                                           CORBA::COMPLETED_NO));
+        throw ::CORBA::DATA_CONVERSION (CORBA::OMGVMCID | 2, CORBA::COMPLETED_NO);
 
       pre_invoke_state.state_ =
         TAO::Portable_Server::Servant_Upcall::Pre_Invoke_State::PRIORITY_RESET_REQUIRED;
@@ -351,8 +347,8 @@ TAO_RT_Servant_Dispatcher::post_invoke (TAO_Root_POA &poa,
                  pre_invoke_state.original_native_priority_
                                               )
               == -1)
-            throw ( ::CORBA::DATA_CONVERSION (CORBA::OMGVMCID | 2,
-                                               CORBA::COMPLETED_NO));
+            throw ::CORBA::DATA_CONVERSION (CORBA::OMGVMCID | 2,
+                                               CORBA::COMPLETED_NO);
         }
       catch ( ::CORBA::Exception& ex)
         {

@@ -85,11 +85,10 @@ namespace TAO
       // Id, the operation raises an ObjectNotActive exception.
       if (result != 0)
         {
-          throw (PortableServer::POA::ObjectNotActive ());
+          throw PortableServer::POA::ObjectNotActive ();
         }
 
-      this->deactivate_map_entry (active_object_map_entry
-                                 );
+      this->deactivate_map_entry (active_object_map_entry);
     }
 
     void

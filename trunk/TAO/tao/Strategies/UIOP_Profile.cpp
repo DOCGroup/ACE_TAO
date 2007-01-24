@@ -99,11 +99,11 @@ TAO_UIOP_Profile::parse_string_i (const char *string)
 {
   if (!string || !*string)
     {
-      throw ( ::CORBA::INV_OBJREF (
+      throw ::CORBA::INV_OBJREF (
                    CORBA::SystemException::_tao_minor_code (
                      0,
                      EINVAL),
-                   CORBA::COMPLETED_NO));
+                   CORBA::COMPLETED_NO);
     }
 
   // Remove the "N.n@" version prefix, if it exists, and verify the
@@ -126,11 +126,11 @@ TAO_UIOP_Profile::parse_string_i (const char *string)
   if (this->version_.major != TAO_DEF_GIOP_MAJOR ||
       this->version_.minor  > TAO_DEF_GIOP_MINOR)
     {
-      throw ( ::CORBA::INV_OBJREF (
+      throw ::CORBA::INV_OBJREF (
                    CORBA::SystemException::_tao_minor_code (
                      0,
                      EINVAL),
-                   CORBA::COMPLETED_NO));
+                   CORBA::COMPLETED_NO);
     }
 
 
@@ -143,11 +143,11 @@ TAO_UIOP_Profile::parse_string_i (const char *string)
 
   if (cp == 0)
     {
-      throw ( ::CORBA::INV_OBJREF (
+      throw ::CORBA::INV_OBJREF (
                    CORBA::SystemException::_tao_minor_code (
                      TAO::VMCID,
                      EINVAL),
-                   CORBA::COMPLETED_NO));
+                   CORBA::COMPLETED_NO);
       // No rendezvous point specified
     }
 
@@ -160,11 +160,11 @@ TAO_UIOP_Profile::parse_string_i (const char *string)
 
   if (this->endpoint_.object_addr_.set (rendezvous.in ()) != 0)
     {
-      throw ( ::CORBA::INV_OBJREF (
+      throw ::CORBA::INV_OBJREF (
                    CORBA::SystemException::_tao_minor_code (
                      TAO::VMCID,
                      EINVAL),
-                   CORBA::COMPLETED_NO));
+                   CORBA::COMPLETED_NO);
     }
 
   start = ++cp;  // increment past the object key separator
