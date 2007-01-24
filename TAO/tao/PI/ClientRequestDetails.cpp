@@ -44,7 +44,7 @@ namespace TAO
               {
                 // This is the second time we have run into this policy type,
                 // and that is not allowed.
-                throw ( ::CORBA::INV_POLICY ());
+                throw ::CORBA::INV_POLICY ();
               }
 
             // Flip the flag to true in order to trap any dupes.
@@ -63,7 +63,7 @@ namespace TAO
         else
           {
             // We don't support the current policy type.
-            throw ( ::CORBA::INV_POLICY ());
+            throw ::CORBA::INV_POLICY ();
           }
       }
   }

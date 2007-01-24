@@ -145,7 +145,7 @@ TAO_RT_Invocation_Endpoint_Selector::select_endpoint_based_on_client_protocol_po
           (*p)[0u] =
             CORBA::Policy::_duplicate (client_protocol_policy);
         }
-      throw ( ::CORBA::INV_POLICY ());
+      throw ::CORBA::INV_POLICY ();
     }
 
   // If we get here, we found at least one pertinent profile, but no
