@@ -34,8 +34,7 @@ Client_Task::svc (void)
       for (int i = 0; i != this->event_count_; ++i)
         {
           Test::Octet_Seq_var dummy =
-          this->reply_gen_->get_big_reply (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+          this->reply_gen_->get_big_reply ();
         }
     }
   ACE_CATCHANY
@@ -66,8 +65,7 @@ Client_Task::validate_connection (void)
       ACE_TRY
         {
 
-          this->reply_gen_->ping (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+          this->reply_gen_->ping ();
         }
       ACE_CATCHANY {}
       ACE_ENDTRY;

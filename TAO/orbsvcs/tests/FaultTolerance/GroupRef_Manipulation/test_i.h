@@ -33,11 +33,11 @@ public:
   ~test_i (void);
 
   /// Return the number assigned to this object.
-  virtual CORBA::Short number (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+  virtual CORBA::Short number (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   /// Shutdown the ORB.
-  virtual void shutdown (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+  virtual void shutdown (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
 private:

@@ -159,7 +159,6 @@ Progress_Window::start ()
           this->peers_[i]->start (this->peers_,
                                   this->n_iterations_
                                   ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
         }
       ACE_CATCHANY
         {

@@ -17,7 +17,7 @@ StubFaultConsumer::~StubFaultConsumer ()
 {
 }
 
-::PortableServer::POA_ptr StubFaultConsumer::_default_POA (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+::PortableServer::POA_ptr StubFaultConsumer::_default_POA (void)
 {
   return ::PortableServer::POA::_duplicate(this->poa_.in ());
 }
@@ -169,7 +169,6 @@ int StubFaultConsumer::init (CORBA::ORB_ptr orb,
   CORBA::Object_var poa_object =
     this->orb_->resolve_initial_references (TAO_OBJID_ROOTPOA
                                             ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
 
   if (CORBA::is_nil (poa_object.in ()))
     ACE_ERROR_RETURN ((LM_ERROR,
@@ -181,7 +180,6 @@ int StubFaultConsumer::init (CORBA::ORB_ptr orb,
     PortableServer::POA::_narrow (poa_object.in ()
                                   ACE_ENV_ARG_PARAMETER);
 
-  ACE_CHECK_RETURN (-1);
   if (CORBA::is_nil(this->poa_.in ()))
   {
     ACE_ERROR_RETURN ((LM_ERROR,
@@ -190,23 +188,19 @@ int StubFaultConsumer::init (CORBA::ORB_ptr orb,
   }
 
   PortableServer::POAManager_var poa_manager =
-    this->poa_->the_POAManager (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
+    this->poa_->the_POAManager ();
 
-  poa_manager->activate (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
+  poa_manager->activate ();
 
   // Register with the POA.
 
   this->object_id_ = this->poa_->activate_object (this ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
 
   // find my identity as an object
 
   CORBA::Object_var this_obj =
     this->poa_->id_to_reference (object_id_.in ()
                                  ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
 
   CosNotifyFilter::Filter_var filter = CosNotifyFilter::Filter::_nil();
 
@@ -228,7 +222,7 @@ const char * StubFaultConsumer::identity () const
 /**
  * Clean house for process shut down.
  */
-int StubFaultConsumer::fini (ACE_ENV_SINGLE_ARG_DECL)
+int StubFaultConsumer::fini (void)
 {
   this->notifier_->disconnect_consumer(this->consumer_id_ ACE_ENV_ARG_PARAMETER);
   return 0;
@@ -301,7 +295,7 @@ void StubFaultConsumer::offer_change (
   ));
 }
 
-void StubFaultConsumer::disconnect_structured_push_consumer(ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+void StubFaultConsumer::disconnect_structured_push_consumer(void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_ERROR ((LM_ERROR,

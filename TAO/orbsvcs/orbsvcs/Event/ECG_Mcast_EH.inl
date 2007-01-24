@@ -45,7 +45,7 @@ Observer_Disconnect_Command::operator= (
 
 ACE_INLINE void
 TAO_ECG_Mcast_EH::
-Observer_Disconnect_Command::execute (ACE_ENV_SINGLE_ARG_DECL)
+Observer_Disconnect_Command::execute (void)
 {
   if (CORBA::is_nil (this->ec_.in ()))
     // We are not connected.
@@ -55,7 +55,6 @@ Observer_Disconnect_Command::execute (ACE_ENV_SINGLE_ARG_DECL)
     this->ec_._retn ();
 
   release_ec->remove_observer (this->handle_ ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 }
 
 //***************************************************************************

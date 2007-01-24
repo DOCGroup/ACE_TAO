@@ -99,11 +99,9 @@ main (int argc, char *argv[])
     {
       CORBA::ORB_var orb =
         CORBA::ORB_init (argc, argv, "" ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       CORBA::Object_var poa_object =
         orb->resolve_initial_references("RootPOA" ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       if (CORBA::is_nil (poa_object.in ()))
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -112,11 +110,9 @@ main (int argc, char *argv[])
 
       PortableServer::POA_var root_poa =
         PortableServer::POA::_narrow (poa_object.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       PortableServer::POAManager_var poa_manager =
-        root_poa->the_POAManager (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        root_poa->the_POAManager ();
 
       if (parse_args (argc, argv) != 0)
         return 1;
@@ -126,12 +122,10 @@ main (int argc, char *argv[])
           CORBA::Object_ptr manager_obj =
             orb->resolve_initial_references ("RTSchedulerManager"
                                              ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
 
           TAO_RTScheduler_Manager_var manager =
             TAO_RTScheduler_Manager::_narrow (manager_obj
                                               ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
 
           Kokyu::DSRT_Dispatcher_Impl_t disp_impl_type;
           if (enable_yield)
@@ -154,11 +148,9 @@ main (int argc, char *argv[])
           CORBA::Object_var object =
             orb->resolve_initial_references ("RTScheduler_Current"
                                               ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
 
           current  =
             RTScheduling::Current::_narrow (object.in () ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
         }
 
       Simple_Server_i server_impl (orb.in (),
@@ -167,12 +159,10 @@ main (int argc, char *argv[])
                                    enable_yield);
 
       Simple_Server_var server =
-        server_impl._this (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        server_impl._this ();
 
       CORBA::String_var ior =
         orb->object_to_string (server.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       ACE_DEBUG ((LM_DEBUG, "Activated as <%s>\n", ior.in ()));
 
@@ -189,8 +179,7 @@ main (int argc, char *argv[])
           ACE_OS::fclose (output_file);
         }
 
-      poa_manager->activate (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      poa_manager->activate ();
 
       Worker worker (orb.in ());
       if (worker.activate (flags,
@@ -250,7 +239,6 @@ Worker::svc (void)
   ACE_TRY
     {
       this->orb_->run (tv ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
     }
   ACE_CATCHANY
     {

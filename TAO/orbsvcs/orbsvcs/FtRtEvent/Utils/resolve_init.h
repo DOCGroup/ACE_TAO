@@ -26,7 +26,6 @@ resolve_init (CORBA::ORB_ptr orb,
     {
       CORBA::Object_var obj;
       obj = orb->resolve_initial_references(id ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       ref = T::_narrow(obj.in() ACE_ENV_ARG_PARAMETER);
     }
@@ -59,7 +58,6 @@ resolve (CosNaming::NamingContext_ptr context,
 {
     CORBA::Object_var obj;
     obj = context->resolve(id ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK_RETURN(T::_nil());
 
     ACE_ASSERT(!CORBA::is_nil(obj.in()));
 

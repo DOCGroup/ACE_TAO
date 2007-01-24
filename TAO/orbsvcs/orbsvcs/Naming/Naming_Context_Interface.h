@@ -175,7 +175,7 @@ public:
    * NOTE: after <destroy> is invoked on a Naming Context, all
    * BindingIterators associated with that Naming Context are also destroyed.
    */
-  virtual void destroy (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+  virtual void destroy (void)
       ACE_THROW_SPEC ((CORBA::SystemException,
                        CosNaming::NamingContext::NotEmpty));
 
@@ -220,8 +220,7 @@ public:
    */
   virtual char * to_url ( const char * addr,
                           const char * sn
-                          ACE_ENV_ARG_DECL_WITH_DEFAULTS
-                          )
+                          ACE_ENV_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((
                      CORBA::SystemException,
                      CosNaming::NamingContextExt::InvalidAddress,
@@ -232,9 +231,7 @@ public:
    * Similar to <resolve> as in the CosNaming::NamingContext interface.
    * It accepts a strigified name as an argument instead of a Name.
    */
-  virtual CORBA::Object_ptr resolve_str (const char * n
-                                         ACE_ENV_ARG_DECL_WITH_DEFAULTS
-                                         )
+  virtual CORBA::Object_ptr resolve_str (const char * n)
     ACE_THROW_SPEC ((
                      CORBA::SystemException,
                      CosNaming::NamingContext::NotFound,
@@ -243,7 +240,7 @@ public:
                      ));
 
   /// Returns the Default POA of this Servant object
-  virtual PortableServer::POA_ptr _default_POA (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
+  virtual PortableServer::POA_ptr _default_POA (void);
 
 private:
 
@@ -379,7 +376,7 @@ public:
    * same naming server in which the operation was invoked.  The
    * context is not bound.
    */
-  virtual CosNaming::NamingContext_ptr new_context (ACE_ENV_SINGLE_ARG_DECL) = 0;
+  virtual CosNaming::NamingContext_ptr new_context (void) = 0;
 
   /**
    * This operation creates a new context and binds it to the name
@@ -398,7 +395,7 @@ public:
    * NOTE: after <destroy> is invoked on a Naming Context, all
    * BindingIterators associated with that Naming Context are also destroyed.
    */
-  virtual void destroy (ACE_ENV_SINGLE_ARG_DECL) = 0;
+  virtual void destroy (void) = 0;
 
   /**
    * Returns at most the requested number of bindings <how_many> in

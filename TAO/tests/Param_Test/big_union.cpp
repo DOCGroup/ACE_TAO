@@ -56,8 +56,7 @@ Test_Big_Union::dii_req_invoke (CORBA::Request *req
 
   req->set_return_type (Param_Test::_tc_Big_Union);
 
-  req->invoke (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+  req->invoke ();
 
   Param_Test::Big_Union *tmp;
   req->return_value () >>= tmp;
@@ -65,13 +64,11 @@ Test_Big_Union::dii_req_invoke (CORBA::Request *req
 
   CORBA::NamedValue_ptr o2 =
     req->arguments ()->item (1 ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
   *o2->value () >>= tmp;
   this->inout_ = *tmp;
 
   CORBA::NamedValue_ptr o3 =
     req->arguments ()->item (2 ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
   *o3->value () >>= tmp;
   this->out_ = new Param_Test::Big_Union (*tmp);
 }
@@ -83,8 +80,7 @@ Test_Big_Union::init_parameters (Param_Test_ptr objref
   ACE_TRY
     {
       // get access to a Coffee Object
-      this->cobj_ = objref->make_coffee (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      this->cobj_ = objref->make_coffee ();
 
       this->reset_parameters ();
       return 0;
@@ -239,7 +235,6 @@ Test_Big_Union::run_sii_test (Param_Test_ptr objref
                                            this->inout_,
                                            this->out_
                                            ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       return 0;
     }
@@ -303,17 +298,13 @@ Test_Big_Union::check_validity (void)
               return 0;
 
             Coffee::Desc_var in_desc =
-              in->description (ACE_ENV_SINGLE_ARG_PARAMETER);
-            ACE_TRY_CHECK;
+              in->description ();
             Coffee::Desc_var inout_desc =
-              inout->description (ACE_ENV_SINGLE_ARG_PARAMETER);
-            ACE_TRY_CHECK;
+              inout->description ();
             Coffee::Desc_var out_desc =
-              out->description (ACE_ENV_SINGLE_ARG_PARAMETER);
-            ACE_TRY_CHECK;
+              out->description ();
             Coffee::Desc_var ret_desc =
-              ret->description (ACE_ENV_SINGLE_ARG_PARAMETER);
-            ACE_TRY_CHECK;
+              ret->description ();
 
             if (ACE_OS::strcmp (in_desc->name.in (),
                                 inout_desc->name.in ())

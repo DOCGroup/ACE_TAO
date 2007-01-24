@@ -83,7 +83,6 @@ TAO_Storable_Naming_Context_Activator::incarnate (
                                                  persistence_directory_,
                                                  context_size_),
                                                  CORBA::NO_MEMORY ());
-  ACE_CHECK_RETURN (0);
 
   // Put <context_impl> into the auto pointer temporarily, in case next
   // allocation fails.
@@ -93,7 +92,6 @@ TAO_Storable_Naming_Context_Activator::incarnate (
   ACE_NEW_THROW_EX (context,
                     TAO_Naming_Context (context_impl),
                     CORBA::NO_MEMORY ());
-  ACE_CHECK_RETURN (0);
 
   // Let <implementation> know about it's <interface>.
   context_impl->interface (context);

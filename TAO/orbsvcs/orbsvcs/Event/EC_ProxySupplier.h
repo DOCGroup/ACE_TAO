@@ -73,7 +73,7 @@ public:
    ACE_THROW_SPEC ((CORBA::SystemException)) = 0;
 
   /// Deactivate from the POA
-  virtual void deactivate (ACE_ENV_SINGLE_ARG_DECL)
+  virtual void deactivate (void)
     ACE_THROW_SPEC (());
 
   /// Disconnect this from
@@ -114,7 +114,7 @@ public:
                              ACE_ENV_ARG_DECL);
 
   /// The event channel is shutting down
-  virtual void shutdown (ACE_ENV_SINGLE_ARG_DECL);
+  virtual void shutdown (void);
 
   /// Pushes to the consumer, verifies that it is connected and that it
   /// is not suspended.
@@ -168,13 +168,13 @@ protected:
   void consumer (RtecEventComm::PushConsumer_ptr consumer);
   void consumer_i (RtecEventComm::PushConsumer_ptr consumer);
 
-  void suspend_connection_i (ACE_ENV_SINGLE_ARG_DECL)
+  void suspend_connection_i (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
-  void resume_connection_i (ACE_ENV_SINGLE_ARG_DECL)
+  void resume_connection_i (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
-  void suspend_connection_locked (ACE_ENV_SINGLE_ARG_DECL)
+  void suspend_connection_locked (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
-  void resume_connection_locked (ACE_ENV_SINGLE_ARG_DECL)
+  void resume_connection_locked (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   /// The private version (without locking) of is_connected().
@@ -216,7 +216,7 @@ private:
   virtual void pre_dispatch_hook (RtecEventComm::EventSet&
                                   ACE_ENV_ARG_DECL);
   virtual PortableServer::ObjectId
-            object_id (ACE_ENV_SINGLE_ARG_DECL)
+            object_id (void)
     ACE_THROW_SPEC ((CORBA::SystemException)) = 0;
 };
 

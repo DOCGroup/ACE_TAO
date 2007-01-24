@@ -42,7 +42,6 @@ TAO_Notify_POA_Helper::init (PortableServer::POA_ptr parent_poa, const char* poa
   CORBA::PolicyList policy_list (2);
 
   this->set_policy (parent_poa, policy_list ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
   this->create_i (parent_poa, poa_name, policy_list ACE_ENV_ARG_PARAMETER);
 }
@@ -63,12 +62,10 @@ TAO_Notify_POA_Helper::set_policy (PortableServer::POA_ptr parent_poa, CORBA::Po
   policy_list[0] =
     parent_poa->create_id_uniqueness_policy (PortableServer::UNIQUE_ID
                                              ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
   policy_list[1] =
     parent_poa->create_id_assignment_policy (PortableServer::USER_ID
                                              ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 }
 
 
@@ -76,21 +73,18 @@ void
 TAO_Notify_POA_Helper::create_i (PortableServer::POA_ptr parent_poa, const char* poa_name, CORBA::PolicyList &policy_list ACE_ENV_ARG_DECL)
 {
   PortableServer::POAManager_var manager =
-    parent_poa->the_POAManager (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+    parent_poa->the_POAManager ();
 
   // Create the child POA.
   this->poa_ = parent_poa->create_POA (poa_name,
                                        manager.in (),
                                        policy_list
                                        ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
   if (DEBUG_LEVEL > 0)
     {
       CORBA::String_var the_name = this->poa_->the_name (
                                            ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK;
       ACE_DEBUG ((LM_DEBUG, "Created POA : %s\n", the_name.in ()));
     }
 
@@ -143,7 +137,6 @@ TAO_Notify_POA_Helper::activate (PortableServer::Servant servant, CORBA::Long& i
     {
       CORBA::String_var the_name = this->poa_->the_name (
                                            ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK_RETURN (0);
 
       ACE_DEBUG ((LM_DEBUG, "Activating object with id = %d in  POA : %s\n", id, the_name.in ()));
     }
@@ -151,12 +144,10 @@ TAO_Notify_POA_Helper::activate (PortableServer::Servant servant, CORBA::Long& i
   // Convert CORBA::Long to ObjectId
   PortableServer::ObjectId_var oid =
     this->long_to_ObjectId (id ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (CORBA::Object::_nil ());
 
   poa_->activate_object_with_id (oid.in (),
                                  servant
                                  ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (CORBA::Object::_nil ());
 
   return poa_->id_to_reference (oid.in ()
                                 ACE_ENV_ARG_PARAMETER);
@@ -169,7 +160,6 @@ TAO_Notify_POA_Helper::activate_with_id (PortableServer::Servant servant, CORBA:
     {
       CORBA::String_var the_name = this->poa_->the_name (
                                            ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK_RETURN (0);
       ACE_DEBUG ((LM_DEBUG, "Activating object with existing id = %d in  POA : %s\n", id, the_name.in ()));
     }
   this->id_factory_.set_last_used (id);
@@ -177,12 +167,10 @@ TAO_Notify_POA_Helper::activate_with_id (PortableServer::Servant servant, CORBA:
   // Convert CORBA::Long to ObjectId
   PortableServer::ObjectId_var oid =
     this->long_to_ObjectId (id ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (CORBA::Object::_nil ());
 
   poa_->activate_object_with_id (oid.in (),
                                  servant
                                  ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (CORBA::Object::_nil ());
 
   return poa_->id_to_reference (oid.in ()
                                 ACE_ENV_ARG_PARAMETER);
@@ -194,7 +182,6 @@ TAO_Notify_POA_Helper::deactivate (CORBA::Long id ACE_ENV_ARG_DECL) const
   // Convert CORBA::Long to ObjectId
   PortableServer::ObjectId_var oid =
     this->long_to_ObjectId (id ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
   poa_->deactivate_object (oid.in () ACE_ENV_ARG_PARAMETER);
 }
@@ -205,7 +192,6 @@ TAO_Notify_POA_Helper::id_to_reference (CORBA::Long id ACE_ENV_ARG_DECL) const
   // Convert CORBA::Long to ObjectId
   PortableServer::ObjectId_var oid =
     this->long_to_ObjectId (id ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (CORBA::Object::_nil ());
 
   return poa_->id_to_reference (oid.in ()
                                 ACE_ENV_ARG_PARAMETER);
@@ -226,7 +212,7 @@ TAO_Notify_POA_Helper::servant_to_reference (
 
 
 void
-TAO_Notify_POA_Helper::destroy (ACE_ENV_SINGLE_ARG_DECL)
+TAO_Notify_POA_Helper::destroy (void)
 {
   poa_->destroy (1,0 ACE_ENV_ARG_PARAMETER);
  // The <wait_for_completion> flag = 0

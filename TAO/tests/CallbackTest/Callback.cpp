@@ -23,7 +23,7 @@ Callback::are_you_there (CORBA::String_out answer ACE_ENV_ARG_DECL_NOT_USED)
 }
 
 void
-Callback::test_oneway (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+Callback::test_oneway (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_DEBUG ((LM_DEBUG,
@@ -31,7 +31,7 @@ Callback::test_oneway (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
 }
 
 void
-Callback::shutdown (ACE_ENV_SINGLE_ARG_DECL)
+Callback::shutdown (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_DEBUG ((LM_DEBUG,

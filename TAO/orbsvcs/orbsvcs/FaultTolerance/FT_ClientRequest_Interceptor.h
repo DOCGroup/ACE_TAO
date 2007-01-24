@@ -76,11 +76,11 @@ namespace TAO
     FT_ClientRequest_Interceptor (void);
 
     /// Canonical name of the interceptor.
-    virtual char * name (ACE_ENV_SINGLE_ARG_DECL)
+    virtual char * name (void)
       ACE_THROW_SPEC ((CORBA::SystemException));
 
 
-    virtual void destroy (ACE_ENV_SINGLE_ARG_DECL)
+    virtual void destroy (void)
       ACE_THROW_SPEC ((CORBA::SystemException));
 
     virtual void send_poll (PortableInterceptor::ClientRequestInfo_ptr

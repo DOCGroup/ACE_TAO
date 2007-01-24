@@ -60,17 +60,14 @@ associate_state (CORBA::ORB_ptr orb, CORBA::Any const& state)
     CORBA::Object_var pic_obj =
       orb->resolve_initial_references ("PICurrent" ACE_ENV_ARG_PARAMETER);
 
-    ACE_TRY_CHECK;
 
     PortableInterceptor::Current_var pic =
       PortableInterceptor::Current::_narrow (
         pic_obj.in () ACE_ENV_ARG_PARAMETER);
 
-    ACE_TRY_CHECK;
 
     pic->set_slot (state_slot_id (), state ACE_ENV_ARG_PARAMETER);
 
-    ACE_TRY_CHECK;
   }
   ACE_CATCHANY
   {
@@ -97,11 +94,9 @@ ReplicaController (CORBA::ORB_ptr orb)
   {
     CORBA::Object_var poa_object =
       orb_->resolve_initial_references ("RootPOA" ACE_ENV_ARG_PARAMETER);
-    ACE_TRY_CHECK;
 
     root_poa_ = PortableServer::POA::_narrow (
       poa_object.in () ACE_ENV_ARG_PARAMETER);
-    ACE_TRY_CHECK;
   }
   ACE_CATCHANY
   {
@@ -286,15 +281,13 @@ ReplicaController::send_reply (
   // Prepare reply for logging.
 
   CORBA::Any_var result =
-    ri->result (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+    ri->result ();
 
   TAO_OutputCDR cdr;
   result->impl ()->marshal_value (cdr);
 
   Dynamic::ParameterList_var pl =
-    ri->arguments (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+    ri->arguments ();
 
   CORBA::ULong len = pl->length ();
 
@@ -444,7 +437,6 @@ namespace
     IOP::ServiceContext_var svc =
       ri->get_request_service_context (IOP::FT_REQUEST
                                        ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK;
 
     TAO_InputCDR cdr (reinterpret_cast<const char*> (svc->context_data.get_buffer ()),
                       svc->context_data.length ());
@@ -491,7 +483,7 @@ namespace
 
 
 char*
-ReplicaController::name (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+ReplicaController::name (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return CORBA::string_dup ("ReplicaController");
@@ -516,7 +508,7 @@ ReplicaController::send_other (
 }
 
 void
-ReplicaController::destroy (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+ReplicaController::destroy (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
 }

@@ -54,8 +54,8 @@ public:
   void init (TAO_Notify_EventChannel *ec ACE_ENV_ARG_DECL);
 
   /// ServantBase refcount methods.
-  virtual void _add_ref (ACE_ENV_SINGLE_ARG_DECL);
-  virtual void _remove_ref (ACE_ENV_SINGLE_ARG_DECL);
+  virtual void _add_ref (void);
+  virtual void _remove_ref (void);
 
 
   virtual const char * get_admin_type_name () const;
@@ -92,7 +92,7 @@ protected:
                      CosNotification::UnsupportedQoS));
 
   /// = CosNotifyChannelAdmin::SupplierAdmin methods
-  virtual CosNotifyChannelAdmin::AdminID MyID (ACE_ENV_SINGLE_ARG_DECL)
+  virtual CosNotifyChannelAdmin::AdminID MyID (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual ::CosNotifyChannelAdmin::EventChannel_ptr MyChannel (
@@ -140,10 +140,10 @@ protected:
     ACE_THROW_SPEC ((CORBA::SystemException,
                      CosNotifyChannelAdmin::AdminLimitExceeded));
 
-  virtual void destroy (ACE_ENV_SINGLE_ARG_DECL)
+  virtual void destroy (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual ::CosNotification::QoSProperties* get_qos (ACE_ENV_SINGLE_ARG_DECL)
+  virtual ::CosNotification::QoSProperties* get_qos (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual void set_qos (const CosNotification::QoSProperties& qos
@@ -190,7 +190,7 @@ protected:
     )
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual void remove_all_filters (ACE_ENV_SINGLE_ARG_DECL)
+  virtual void remove_all_filters (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual ::CosEventChannelAdmin::ProxyPushConsumer_ptr obtain_push_consumer (

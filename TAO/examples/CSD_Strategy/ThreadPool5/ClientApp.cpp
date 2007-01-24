@@ -24,9 +24,8 @@ ClientApp::~ClientApp()
 int
 ClientApp::run(int argc, char* argv[] ACE_ENV_ARG_DECL)
 {
-  CORBA::ORB_var orb 
+  CORBA::ORB_var orb
     = CORBA::ORB_init(argc, argv, "" ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
 
   // Parse the command-line args for this application.
   // * Raises -1 if problems are encountered.
@@ -38,9 +37,8 @@ ClientApp::run(int argc, char* argv[] ACE_ENV_ARG_DECL)
       return result;
     }
 
-  CORBA::Object_var obj 
+  CORBA::Object_var obj
     = orb->string_to_object(this->ior_.c_str() ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
 
   if (CORBA::is_nil(obj.in()))
     {
@@ -50,7 +48,6 @@ ClientApp::run(int argc, char* argv[] ACE_ENV_ARG_DECL)
     }
 
   Foo_var foo = Foo::_narrow(obj.in() ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
 
   if (CORBA::is_nil(foo.in()))
     {
@@ -62,7 +59,6 @@ ClientApp::run(int argc, char* argv[] ACE_ENV_ARG_DECL)
   // Create the callback object using the child poa with the custom
   // strategy.
   obj = orb->resolve_initial_references("RootPOA" ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
 
   if (CORBA::is_nil(obj.in()))
     {
@@ -71,9 +67,8 @@ ClientApp::run(int argc, char* argv[] ACE_ENV_ARG_DECL)
       ACE_THROW_RETURN (TestException(), -1);
     }
 
-  PortableServer::POA_var root_poa 
+  PortableServer::POA_var root_poa
     = PortableServer::POA::_narrow(obj.in() ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
 
   if (CORBA::is_nil(root_poa.in()))
     {
@@ -82,20 +77,18 @@ ClientApp::run(int argc, char* argv[] ACE_ENV_ARG_DECL)
       ACE_THROW_RETURN (TestException(), -1);
     }
 
-  PortableServer::POAManager_var poa_manager 
-    = root_poa->the_POAManager(ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
+  PortableServer::POAManager_var poa_manager
+    = root_poa->the_POAManager();
 
   // Create the child POA.
   CORBA::PolicyList policies(0);
   policies.length(0);
 
-  PortableServer::POA_var child_poa 
+  PortableServer::POA_var child_poa
     = root_poa->create_POA("ChildPoa",
                            poa_manager.in(),
-                           policies 
+                           policies
                            ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
 
   if (CORBA::is_nil(child_poa.in()))
     {
@@ -118,7 +111,6 @@ ClientApp::run(int argc, char* argv[] ACE_ENV_ARG_DECL)
                  "Failed to apply custom dispatching strategy to child poa.\n"));
       ACE_THROW_RETURN (TestException(), -1);
     }
-  ACE_CHECK_RETURN (-1);
 
   // Create the servant object.
   Callback_i* servant = new Callback_i ();
@@ -128,14 +120,12 @@ ClientApp::run(int argc, char* argv[] ACE_ENV_ARG_DECL)
   PortableServer::ServantBase_var owner_transfer(servant);
 
   // Activate the servant using the Child POA.
-  PortableServer::ObjectId_var oid 
-    = child_poa->activate_object(servant 
+  PortableServer::ObjectId_var oid
+    = child_poa->activate_object(servant
                                  ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
 
   // Obtain the object reference.
   obj = child_poa->servant_to_reference(servant ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
 
   if (CORBA::is_nil(obj.in()))
     {
@@ -145,7 +135,6 @@ ClientApp::run(int argc, char* argv[] ACE_ENV_ARG_DECL)
     }
 
   Callback_var callback = Callback::_narrow (obj.in () ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
 
   ClientTask client_task(orb.in (), foo.in (), callback.in ());
 
@@ -155,14 +144,12 @@ ClientApp::run(int argc, char* argv[] ACE_ENV_ARG_DECL)
     }
 
     // Activate the POA Manager
-  poa_manager->activate(ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
+  poa_manager->activate();
 
   ACE_DEBUG((LM_DEBUG,
              "(%P|%t) ClientApp is ready.\n"));
 
-  orb->run(ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
+  orb->run();
 
   client_task.wait ();
 
@@ -171,13 +158,11 @@ ClientApp::run(int argc, char* argv[] ACE_ENV_ARG_DECL)
 
   // Tear-down the root poa and orb.
   root_poa->destroy(1, 1 ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
 
   ACE_DEBUG((LM_DEBUG,
              "(%P|%t) ClientApp is destroying the ORB.\n"));
 
-  orb->destroy(ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
+  orb->destroy();
 
   ACE_DEBUG((LM_DEBUG,
              "(%P|%t) ClientApp has completed running successfully.\n"));

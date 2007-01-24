@@ -90,8 +90,7 @@ validate_connection (CORBA::Object_ptr object
     {
       ACE_TRY
         {
-          object->_non_existent (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+          object->_non_existent ();
         }
       ACE_CATCH (CORBA::TRANSIENT, exception)
         {
@@ -103,7 +102,6 @@ validate_connection (CORBA::Object_ptr object
           ACE_RE_THROW;
         }
       ACE_ENDTRY;
-      ACE_CHECK;
     }
 }
 
@@ -117,22 +115,18 @@ MTTEST (void *args)
     {
       CORBA::Object_var object = orb->string_to_object (ior.c_str ()
                                                         ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       validate_connection (object.in ()
                            ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       // Narrow the object reference to a File::System
       File::System_var file_system = File::System::_narrow (object.in ()
                                                             ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       // Creat the file filename i.e "test"
       File::Descriptor_var fd = file_system->open (filename,
                                                    O_RDONLY
                                                    ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       for( int i = 0; i < iterations; ++i)
         {
@@ -142,18 +136,15 @@ MTTEST (void *args)
 #endif /*if 0*/
 
           fd->lseek (0, SEEK_SET ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
 
           // Read back the written message
           // Twice the size of the socket buffer
           File::Descriptor::DataBuffer_var data_received = fd->read (128*1024
                                                                      ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
         }
 
       // close the file
-      fd->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      fd->destroy ();
     }
   ACE_CATCHANY
     {
@@ -174,7 +165,6 @@ main (int argc, char **argv)
     {
       // Initialize the ORB
       orb = CORBA::ORB_init (argc, argv, 0 ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       // Parse the command-line arguments to get the IOR
       parse_args (argc, argv);
@@ -218,7 +208,6 @@ main (int argc, char **argv)
       return -1;
     }
   ACE_ENDTRY;
-  ACE_CHECK_RETURN (-1);
 
   return 0;
 }

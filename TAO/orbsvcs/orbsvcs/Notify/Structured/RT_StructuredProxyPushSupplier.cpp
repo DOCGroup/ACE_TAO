@@ -22,11 +22,9 @@ CORBA::Object_ptr
 TAO_Notify_RT_StructuredProxyPushSupplier::activate (PortableServer::Servant servant ACE_ENV_ARG_DECL)
 {
   CORBA::Object_var object = TAO_Notify_Proxy::activate (servant ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (CORBA::Object::_nil ());
 
   // Obtain our ref.
-  CORBA::Object_var obj = this->ref (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (CORBA::Object::_nil ());
+  CORBA::Object_var obj = this->ref ();
 
   this->event_forwarder_ = Event_Forwarder::StructuredProxyPushSupplier::_narrow (obj.in () ACE_ENV_ARG_PARAMETER);
 
@@ -46,7 +44,6 @@ TAO_Notify_RT_StructuredProxyPushSupplier::deliver (TAO_Notify_Method_Request_Di
   ACE_TRY
     {
       request.event()->push (this->event_forwarder_.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
     }
   ACE_CATCHANY
     {
@@ -65,7 +62,6 @@ TAO_Notify_RT_StructuredProxyPushSupplier::push_no_filtering (const TAO_Notify_E
   ACE_TRY
     {
       event->push_no_filtering (this->event_forwarder_.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
     }
   ACE_CATCHANY
     {

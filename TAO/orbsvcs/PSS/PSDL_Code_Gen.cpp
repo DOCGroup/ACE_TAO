@@ -35,11 +35,9 @@ TAO_PSDL_Code_Gen::set_codec (void)
   CORBA::Object_var obj =
     this->orb_->resolve_initial_references ("CodecFactory"
                                             ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
 
   IOP::CodecFactory_var codec_factory =
     IOP::CodecFactory::_narrow (obj.in () ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
 
   // Set up a structure that contains information necessary to
   // create a GIOP 1.1 CDR encapsulation Codec.
@@ -51,7 +49,6 @@ TAO_PSDL_Code_Gen::set_codec (void)
   // Obtain the CDR encapsulation Codec.
   this->codec_ =
     codec_factory->create_codec (encoding ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
 
   if (this->codec_.in () == 0)
     {
@@ -76,7 +73,6 @@ TAO_PSDL_Code_Gen::set_name_obj_ref (const char *name,
   // Encode the stringified object reference to a CORBA::OctetSeq *
   CORBA::OctetSeq_var octet_seq = this->encode (string_obj_ref
                                                 ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
 
   // Insert the new entry to the hash map which contains all the
   // name-octet_seq entries. And, write the hash_map to a file.
@@ -119,7 +115,6 @@ TAO_PSDL_Code_Gen::get_obj_ref (const char *name
       // Decode the octet_seq.
       const char *obj_ref = this->decode (octet_seq
                                           ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK_RETURN (0);
 
       return CORBA::string_dup (obj_ref);
     }
@@ -144,7 +139,6 @@ TAO_PSDL_Code_Gen::encode (const char *string_obj_ref
   CORBA::OctetSeq *encoded_data = 0;
 
   encoded_data = this->codec_->encode (data ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (0);
 
   CORBA::OctetSeq_var safe_encoded_data = encoded_data;
 
@@ -162,7 +156,6 @@ TAO_PSDL_Code_Gen::decode (const CORBA::OctetSeq &data
   CORBA::Any_var decoded_data =
     this->codec_->decode (data
                           ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (0);
 
   decoded_data.in() >>= extracted_value;
 

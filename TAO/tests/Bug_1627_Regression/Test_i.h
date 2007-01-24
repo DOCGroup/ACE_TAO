@@ -18,7 +18,7 @@ public:
    ~Test_i (void);
 
    /// A method
-   void test_method(ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+   void test_method(void)
      ACE_THROW_SPEC ((CORBA::SystemException));
 };
 

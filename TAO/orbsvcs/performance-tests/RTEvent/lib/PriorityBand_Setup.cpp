@@ -14,8 +14,8 @@
 #include "PriorityBand_Setup.inl"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID (TAO_PERF_RTEC, 
-           PriorityBand_Setup, 
+ACE_RCSID (TAO_PERF_RTEC,
+           PriorityBand_Setup,
            "$Id$")
 
 PriorityBand_Setup::PriorityBand_Setup (CORBA::ORB_ptr orb,
@@ -26,13 +26,11 @@ PriorityBand_Setup::PriorityBand_Setup (CORBA::ORB_ptr orb,
     RIR_Narrow<CORBA::PolicyManager>::resolve (orb,
                                                "ORBPolicyManager"
                                                ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
   RTCORBA::RTORB_var rtorb =
     RIR_Narrow<RTCORBA::RTORB>::resolve (orb,
                                          "RTORB"
                                          ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
   const RTCORBA::ThreadpoolLanes &lanes = rtcorba_setup.lanes ();
 
@@ -48,14 +46,11 @@ PriorityBand_Setup::PriorityBand_Setup (CORBA::ORB_ptr orb,
   policy_list[0] =
     rtorb->create_priority_banded_connection_policy (priority_bands
                                                      ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
   policy_manager->set_policy_overrides (policy_list,
                                         CORBA::ADD_OVERRIDE
                                         ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
-  policy_list[0]->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+  policy_list[0]->destroy ();
 }
 
 PriorityBand_Setup::~PriorityBand_Setup (void)

@@ -65,10 +65,10 @@ public:
    */
   //@{
   /// Return the name of this ClientRequestinterceptor.
-  virtual char * name (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+  virtual char * name (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual void destroy (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+  virtual void destroy (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual void send_request (

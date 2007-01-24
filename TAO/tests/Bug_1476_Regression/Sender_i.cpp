@@ -23,7 +23,7 @@ Sender_i::active_objects (CORBA::ULong no_threads
 
 
 void
-Sender_i::send_ready_message (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+Sender_i::send_ready_message (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_DEBUG ((LM_DEBUG,

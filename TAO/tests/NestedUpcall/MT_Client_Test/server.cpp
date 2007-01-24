@@ -73,7 +73,6 @@ MT_Object_Server::init (int argc,
                                      argv,
                                      "child_poa"
                                      ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
 
   this->argc_ = argc;
   this->argv_ = argv;
@@ -85,7 +84,6 @@ MT_Object_Server::init (int argc,
   str = this->orb_manager_.activate_under_child_poa ("MT_Object",
                                                      &this->mT_Object_i_
                                                      ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
 
 #if 0
   ACE_DEBUG ((LM_DEBUG,
@@ -107,10 +105,9 @@ MT_Object_Server::init (int argc,
 
 
 int
-MT_Object_Server::run (ACE_ENV_SINGLE_ARG_DECL)
+MT_Object_Server::run (void)
 {
-  int result = this->orb_manager_.run (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
+  int result = this->orb_manager_.run ();
 
   if (result == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
@@ -135,14 +132,12 @@ main (int argc, char *argv[])
   ACE_TRY
     {
       int r = MT_Object_Server.init (argc,argv ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       if (r == -1)
         return 1;
       else
         {
-          MT_Object_Server.run (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+          MT_Object_Server.run ();
         }
     }
   ACE_CATCH (CORBA::SystemException, sysex)

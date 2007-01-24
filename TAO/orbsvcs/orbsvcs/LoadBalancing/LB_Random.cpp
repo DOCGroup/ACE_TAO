@@ -28,14 +28,14 @@ TAO_LB_Random::TAO_LB_Random (PortableServer::POA_ptr poa)
 }
 
 char *
-TAO_LB_Random::name (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+TAO_LB_Random::name (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return CORBA::string_dup ("Random");
 }
 
 CosLoadBalancing::Properties *
-TAO_LB_Random::get_properties (ACE_ENV_SINGLE_ARG_DECL)
+TAO_LB_Random::get_properties (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   CosLoadBalancing::Properties * props = 0;
@@ -46,7 +46,6 @@ TAO_LB_Random::get_properties (ACE_ENV_SINGLE_ARG_DECL)
                         TAO::VMCID,
                         ENOMEM),
                       CORBA::COMPLETED_NO));
-  ACE_CHECK_RETURN (props);
 
   return props;
 }
@@ -91,7 +90,6 @@ TAO_LB_Random::next_member (
   PortableGroup::Locations_var locations =
     load_manager->locations_of_members (object_group
                                         ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (CORBA::Object::_nil ());
 
   return TAO_LB_Random::_tao_next_member (object_group,
                                           load_manager,
@@ -109,7 +107,7 @@ TAO_LB_Random::analyze_loads (
 }
 
 PortableServer::POA_ptr
-TAO_LB_Random::_default_POA (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+TAO_LB_Random::_default_POA (void)
 {
   return PortableServer::POA::_duplicate (this->poa_.in ());
 }

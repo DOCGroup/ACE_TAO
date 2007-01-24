@@ -26,11 +26,9 @@ ACE_TMAIN (int argc, ACE_TCHAR* argv[])
       // Initialize ORB.
       CORBA::ORB_var orb =
         CORBA::ORB_init (command_line.get_argc(), command_line.get_ASCII_argv(), "internet" ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       CORBA::Object_var naming_obj =
         orb->resolve_initial_references ("NameService" ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       if (CORBA::is_nil(naming_obj.in ()))
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -39,7 +37,6 @@ ACE_TMAIN (int argc, ACE_TCHAR* argv[])
 
       CosNaming::NamingContext_var naming_context =
         CosNaming::NamingContext::_narrow (naming_obj.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       const char *name = "ScheduleService";
       if (command_line.get_argc() > 1)
@@ -60,7 +57,6 @@ ACE_TMAIN (int argc, ACE_TCHAR* argv[])
                                          ACE_SCOPE_THREAD),
          infos.out (), deps.out (), configs.out (), anomalies.out ()
          ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       ACE_Scheduler_Factory::dump_schedule (infos.in (),
                                             deps.in (),

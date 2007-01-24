@@ -27,7 +27,7 @@ TAO_Time_Service_Server::~TAO_Time_Service_Server (void)
 // inaccuracy in a UTO.
 
 CosTime::UTO_ptr
-TAO_Time_Service_Server::universal_time (ACE_ENV_SINGLE_ARG_DECL)
+TAO_Time_Service_Server::universal_time (void)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      CosTime::TimeUnavailable))
 {
@@ -43,13 +43,12 @@ TAO_Time_Service_Server::universal_time (ACE_ENV_SINGLE_ARG_DECL)
                              0),
                     CORBA::NO_MEMORY ());
 
-  ACE_CHECK_RETURN (CosTime::UTO::_nil ());
 
   if (TAO_debug_level > 0)
     ACE_DEBUG ((LM_DEBUG,
                 "Returning a UTO\n"));
 
-  return uto->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
+  return uto->_this ();
 }
 
 // This method returns the current time in a UTO only if the time can
@@ -57,7 +56,7 @@ TAO_Time_Service_Server::universal_time (ACE_ENV_SINGLE_ARG_DECL)
 // implemented currently.
 
 CosTime::UTO_ptr
-TAO_Time_Service_Server::secure_universal_time (ACE_ENV_SINGLE_ARG_DECL)
+TAO_Time_Service_Server::secure_universal_time (void)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      CosTime::TimeUnavailable))
 {
@@ -81,9 +80,8 @@ TAO_Time_Service_Server::new_universal_time (TimeBase::TimeT time,
                              inaccuracy,
                              tdf),
                     CORBA::NO_MEMORY ());
-  ACE_CHECK_RETURN (CosTime::UTO::_nil ());
 
-  return uto->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
+  return uto->_this ();
 }
 
 // This creates a new UTO given a time in the UtcT form.
@@ -100,9 +98,8 @@ TAO_Time_Service_Server::uto_from_utc (const TimeBase::UtcT &utc
                              utc.inacclo + utc.inacchi,
                              utc.tdf),
                     CORBA::NO_MEMORY ());
-  ACE_CHECK_RETURN (CosTime::UTO::_nil ());
 
-  return uto->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
+  return uto->_this ();
 }
 
 // This creates a new TIO with the given parameters.
@@ -119,9 +116,8 @@ TAO_Time_Service_Server::new_interval (TimeBase::TimeT lower,
                     TAO_TIO (lower,
                              upper),
                     CORBA::NO_MEMORY ());
-  ACE_CHECK_RETURN (CosTime::TIO::_nil ());
 
-  return tio->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
+  return tio->_this ();
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL

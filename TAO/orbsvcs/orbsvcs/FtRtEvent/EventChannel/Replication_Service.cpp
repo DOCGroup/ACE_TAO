@@ -87,12 +87,10 @@ namespace FTRTEC
         ACE_NEW_THROW_EX (temp_orb_initializer,
           FTEC_ORBInitializer,
           CORBA::NO_MEMORY ());
-        ACE_TRY_CHECK;
         orb_initializer = temp_orb_initializer;
 
         PortableInterceptor::register_orb_initializer (orb_initializer.in ()
           ACE_ENV_ARG_PARAMETER);
-        ACE_TRY_CHECK;
       }
       ACE_CATCHANY
       {
@@ -120,9 +118,9 @@ namespace FTRTEC
     }
   }
 
-  void Replication_Service::check_validity(ACE_ENV_SINGLE_ARG_DECL)
+  void Replication_Service::check_validity(void)
   {
-    replication_strategy->check_validity(ACE_ENV_SINGLE_ARG_PARAMETER);
+    replication_strategy->check_validity();
   }
 
 

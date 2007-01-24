@@ -53,7 +53,6 @@ TAO::Security::PolicyFactory::create_policy (
                             TAO::VMCID,
                             ENOMEM),
                           CORBA::COMPLETED_NO));
-      ACE_CHECK_RETURN (CORBA::Policy::_nil ());
 
       return qop_policy;
     }
@@ -80,7 +79,6 @@ TAO::Security::PolicyFactory::create_policy (
                             TAO::VMCID,
                             ENOMEM),
                           CORBA::COMPLETED_NO));
-      ACE_CHECK_RETURN (CORBA::Policy::_nil ());
 
       return trust_policy;
     }
@@ -113,7 +111,6 @@ TAO::Security::PolicyFactory::create_policy (
                             TAO::VMCID,
                             ENOMEM),
                           CORBA::COMPLETED_NO));
-      ACE_CHECK_RETURN (CORBA::Policy::_nil ());
 
       return policy;
     }
@@ -140,7 +137,6 @@ TAO::Security::PolicyFactory::create_policy (
                             TAO::VMCID,
                             ENOMEM),
                           CORBA::COMPLETED_NO));
-      ACE_CHECK_RETURN (CORBA::Policy::_nil ());
 
       return policy;
     }

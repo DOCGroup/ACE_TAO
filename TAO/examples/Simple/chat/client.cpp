@@ -29,7 +29,6 @@ main (int argc, char *argv[])
 	  || client_i.run () == -1)
 	return -1;
 
-      ACE_TRY_CHECK;
     }
   ACE_CATCHANY
     {

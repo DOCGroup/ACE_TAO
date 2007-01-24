@@ -249,7 +249,7 @@ namespace TAO
     /**
      * @@TODO DOC
      */
-    PortableGroup::Locations * locations_of_members (ACE_ENV_SINGLE_ARG_DECL)
+    PortableGroup::Locations * locations_of_members (void)
       ACE_THROW_SPEC ((CORBA::SystemException));
 
     /**
@@ -266,12 +266,12 @@ namespace TAO
     /**
      * @@TODO DOC
      */
-    void initial_populate (ACE_ENV_SINGLE_ARG_DECL);
+    void initial_populate (void);
 
     /**
      * @@TODO DOC
      */
-    void minimum_populate (ACE_ENV_SINGLE_ARG_DECL);
+    void minimum_populate (void);
 
 
     /**
@@ -285,7 +285,7 @@ namespace TAO
 
     int increment_version ();
 
-    void distribute_iogr (ACE_ENV_SINGLE_ARG_DECL);
+    void distribute_iogr (void);
 
     PortableGroup::ObjectGroup_ptr add_member_to_iogr(CORBA::Object_ptr member ACE_ENV_ARG_DECL);
 

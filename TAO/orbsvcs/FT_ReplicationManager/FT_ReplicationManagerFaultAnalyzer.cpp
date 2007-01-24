@@ -400,7 +400,6 @@ int TAO::FT_ReplicationManagerFaultAnalyzer::is_primary_member (
     CORBA::Boolean got_tagged_component =
       temp_ft_prop.get_tagged_component (
           iogr, ft_group_tagged_component ACE_ENV_ARG_PARAMETER);
-    ACE_TRY_CHECK;
     if (got_tagged_component)
     {
       // Create a new TAO_FT_IOGR_Property with the tagged
@@ -410,13 +409,11 @@ int TAO::FT_ReplicationManagerFaultAnalyzer::is_primary_member (
       // Check to see if a primary is set.
       CORBA::Boolean primary_is_set = ft_prop.is_primary_set (
         iogr ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
       if (primary_is_set)
       {
         // Get the primary object.
         CORBA::Object_var primary_obj = ft_prop.get_primary (
           iogr ACE_ENV_ARG_PARAMETER);
-        ACE_TRY_CHECK;
         if (CORBA::is_nil (primary_obj.in()))
         {
           ACE_ERROR_RETURN ((LM_ERROR,
@@ -430,7 +427,6 @@ int TAO::FT_ReplicationManagerFaultAnalyzer::is_primary_member (
         CORBA::Object_var failed_obj =
           this->replication_manager_->get_member_ref (
             iogr, location ACE_ENV_ARG_PARAMETER);
-        ACE_TRY_CHECK;
         if (CORBA::is_nil (failed_obj.in()))
         {
           ACE_ERROR_RETURN ((LM_ERROR,
@@ -443,7 +439,6 @@ int TAO::FT_ReplicationManagerFaultAnalyzer::is_primary_member (
         // Are the two object refs (primary and failed) equivalent?
         CORBA::Boolean equiv = primary_obj->_is_equivalent (
           failed_obj.in() ACE_ENV_ARG_PARAMETER);
-        ACE_TRY_CHECK;
         if (equiv)
         {
           object_is_primary = 1;
@@ -499,7 +494,6 @@ int TAO::FT_ReplicationManagerFaultAnalyzer::single_replica_failure (
       this->replication_manager_->get_object_group_ref_from_id (
         fault_event_desc.object_group_id
         ACE_ENV_ARG_PARAMETER);
-    ACE_TRY_CHECK;
 
     // This should not happen, but let us be safe.
     if (CORBA::is_nil (the_object_group.in()))
@@ -517,7 +511,6 @@ int TAO::FT_ReplicationManagerFaultAnalyzer::single_replica_failure (
     properties = this->replication_manager_->get_properties (
       the_object_group.in()
       ACE_ENV_ARG_PARAMETER);
-    ACE_TRY_CHECK;
   }
   ACE_CATCHANY
   {
@@ -794,7 +787,6 @@ int TAO::FT_ReplicationManagerFaultAnalyzer::remove_failed_member (
         iogr,
         fault_event_desc.location.in()
         ACE_ENV_ARG_PARAMETER);
-    ACE_TRY_CHECK;
     new_iogr = temp_iogr._retn ();
   }
   ACE_CATCHANY
@@ -827,7 +819,6 @@ int TAO::FT_ReplicationManagerFaultAnalyzer::set_new_primary (
       this->replication_manager_->locations_of_members (
         iogr
         ACE_ENV_ARG_PARAMETER);
-    ACE_TRY_CHECK;
 
     // Choose the first location as our new primary location.
     if (locations->length() >= 1)
@@ -836,7 +827,6 @@ int TAO::FT_ReplicationManagerFaultAnalyzer::set_new_primary (
         iogr,
         (*locations)[0]
         ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
     }
     else
     {
@@ -881,7 +871,6 @@ int TAO::FT_ReplicationManagerFaultAnalyzer::add_members (
       this->replication_manager_->locations_of_members (
         iogr
         ACE_ENV_ARG_PARAMETER);
-    ACE_TRY_CHECK;
     CORBA::ULong num_members = locations->length();
 
     // If it is less than the MinimumNumberMembers property, add
@@ -896,7 +885,6 @@ int TAO::FT_ReplicationManagerFaultAnalyzer::add_members (
       PortableGroup::FactoryRegistry_var factory_registry =
         this->replication_manager_->get_factory_registry (
           fake_criteria ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
 
       // @@ DLW SAYS: we need to find out the role played by this object
@@ -906,7 +894,6 @@ int TAO::FT_ReplicationManagerFaultAnalyzer::add_members (
       PortableGroup::FactoryInfos_var factories_by_type =
           factory_registry->list_factories_by_role (
           fault_event_desc.type_id.in(), type_id ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       //
       // Build a set of locations of factories for this type that we
@@ -946,7 +933,6 @@ int TAO::FT_ReplicationManagerFaultAnalyzer::add_members (
           fault_event_desc.type_id.in(),
           fake_criteria
           ACE_ENV_ARG_PARAMETER);
-        ACE_TRY_CHECK;
 
         // Stop adding members when we reach the value of the
         // MinimumNumberMembers property.
@@ -990,19 +976,16 @@ int TAO::FT_ReplicationManagerFaultAnalyzer::location_failure (
     PortableGroup::FactoryRegistry_var factory_registry =
       this->replication_manager_->get_factory_registry (
         fake_criteria ACE_ENV_ARG_PARAMETER);
-    ACE_TRY_CHECK;
 
     // Unregister all factories at the failed location.
     factory_registry->unregister_factory_by_location (
       fault_event_desc.location.in() ACE_ENV_ARG_PARAMETER);
-    ACE_TRY_CHECK;
 
     // Determine all the object groups that had members at that
     // location.
     PortableGroup::ObjectGroups_var object_groups_at_location =
       this->replication_manager_->groups_at_location (
       fault_event_desc.location.in() ACE_ENV_ARG_PARAMETER);
-    ACE_TRY_CHECK;
 
     // Handle each one of them as a single replica failure.
     for (CORBA::ULong i=0;
@@ -1013,13 +996,11 @@ int TAO::FT_ReplicationManagerFaultAnalyzer::location_failure (
       fault_event_desc.object_group_id =
         this->replication_manager_->get_object_group_id (
           object_groups_at_location[i] ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       // Get type id of this object group.
       fault_event_desc.type_id =
         this->replication_manager_->type_id (
           object_groups_at_location[i] ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       // Handle it as a single replica failure.
       result = this->single_replica_failure (fault_event_desc);
@@ -1059,7 +1040,6 @@ int TAO::FT_ReplicationManagerFaultAnalyzer::type_failure (
     PortableGroup::FactoryRegistry_var factory_registry =
       this->replication_manager_->get_factory_registry (
         fake_criteria ACE_ENV_ARG_PARAMETER);
-    ACE_TRY_CHECK;
 
     // Unregister the factory at the failed location associated with
     // the role.
@@ -1068,14 +1048,12 @@ int TAO::FT_ReplicationManagerFaultAnalyzer::type_failure (
       fault_event_desc.type_id.in(),
       fault_event_desc.location.in()
       ACE_ENV_ARG_PARAMETER);
-    ACE_TRY_CHECK;
 
     // Get all the object groups that had members at that
     // location.
     PortableGroup::ObjectGroups_var object_groups_at_location =
       this->replication_manager_->groups_at_location (
       fault_event_desc.location.in() ACE_ENV_ARG_PARAMETER);
-    ACE_TRY_CHECK;
 
     // For each one, if it was of the same type as the failed type,
     // handle it as a single replica failure.
@@ -1087,13 +1065,11 @@ int TAO::FT_ReplicationManagerFaultAnalyzer::type_failure (
       fault_event_desc.object_group_id =
         this->replication_manager_->get_object_group_id (
           object_groups_at_location[i] ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       // Get type id of this object group.
       PortableGroup::TypeId_var type_id =
         this->replication_manager_->type_id (
           object_groups_at_location[i] ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       // If the type id is the same as the failed type id...
       if (ACE_OS::strcmp (type_id.in(), fault_event_desc.type_id.in()) == 0)

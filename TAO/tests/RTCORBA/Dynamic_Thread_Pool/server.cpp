@@ -65,7 +65,6 @@ write_ior_to_file (CORBA::ORB_ptr orb,
   CORBA::String_var ior =
     orb->object_to_string (test
                            ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
 
   char filename[BUFSIZ];
   ACE_OS::sprintf (filename,
@@ -109,7 +108,6 @@ create_POA_and_register_servant (CORBA::Policy_ptr threadpool_policy,
     root_poa->create_implicit_activation_policy
     (PortableServer::IMPLICIT_ACTIVATION
      ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
 
   // Thread pool policy.
   policies[1] =
@@ -120,7 +118,6 @@ create_POA_and_register_servant (CORBA::Policy_ptr threadpool_policy,
     rt_orb->create_priority_model_policy (RTCORBA::CLIENT_PROPAGATED,
                                           0
                                           ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
 
   // Create the POA under the RootPOA.
   PortableServer::POA_var poa =
@@ -128,15 +125,13 @@ create_POA_and_register_servant (CORBA::Policy_ptr threadpool_policy,
                           poa_manager,
                           policies
                           ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
 
   // Creation of POAs is over. Destroy the Policy objects.
   for (CORBA::ULong i = 0;
        i < policies.length ();
        ++i)
     {
-      policies[i]->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK_RETURN (-1);
+      policies[i]->destroy ();
     }
 
   test_i *servant =
@@ -148,14 +143,12 @@ create_POA_and_register_servant (CORBA::Policy_ptr threadpool_policy,
   ACE_UNUSED_ARG (safe_servant);
 
   test_var test =
-    servant->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
+    servant->_this ();
 
   int result =
     write_ior_to_file (orb,
                        test.in ()
                        ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
 
   return result;
 }
@@ -188,59 +181,48 @@ Task::svc (void)
       CORBA::Object_var object =
         this->orb_->resolve_initial_references ("RootPOA"
                                                 ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       PortableServer::POA_var root_poa =
         PortableServer::POA::_narrow (object.in ()
                                       ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       PortableServer::POAManager_var poa_manager =
-        root_poa->the_POAManager (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        root_poa->the_POAManager ();
 
       object =
         this->orb_->resolve_initial_references ("RTORB"
                                                 ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       RTCORBA::RTORB_var rt_orb =
         RTCORBA::RTORB::_narrow (object.in ()
                                  ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       object =
         this->orb_->resolve_initial_references ("RTCurrent"
                                                 ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       RTCORBA::Current_var current =
         RTCORBA::Current::_narrow (object.in ()
                                    ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       RTCORBA::Priority default_thread_priority =
-        current->the_priority (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        current->the_priority ();
 
       test_i servant (this->orb_.in (),
                       root_poa.in (),
                       nap_time);
       test_var test =
-        servant._this (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        servant._this ();
 
       int result =
         write_ior_to_file (this->orb_.in (),
                            test.in ()
                            ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       if (result != 0)
         return result;
 
-      poa_manager->activate (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      poa_manager->activate ();
 
       CORBA::ULong stacksize = 0;
       CORBA::Boolean allow_request_buffering = 0;
@@ -256,12 +238,10 @@ Task::svc (void)
                                    max_buffered_requests,
                                    max_request_buffer_size
                                    ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       CORBA::Policy_var threadpool_policy_1 =
         rt_orb->create_threadpool_policy (threadpool_id_1
                                           ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       CORBA::Boolean allow_borrowing = 0;
       RTCORBA::ThreadpoolLanes lanes (1);
@@ -279,12 +259,10 @@ Task::svc (void)
                                               max_buffered_requests,
                                               max_request_buffer_size
                                               ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       CORBA::Policy_var threadpool_policy_2 =
         rt_orb->create_threadpool_policy (threadpool_id_2
                                           ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       result =
         create_POA_and_register_servant (threadpool_policy_1.in (),
@@ -294,7 +272,6 @@ Task::svc (void)
                                          this->orb_.in (),
                                          rt_orb.in ()
                                          ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
       if (result != 0)
         return result;
 
@@ -306,15 +283,12 @@ Task::svc (void)
                                          this->orb_.in (),
                                          rt_orb.in ()
                                          ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
       if (result != 0)
         return result;
 
-      this->orb_->run (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      this->orb_->run ();
 
-      this->orb_->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      this->orb_->destroy ();
     }
   ACE_CATCHANY
     {
@@ -337,7 +311,6 @@ main (int argc, char *argv[])
                          argv,
                          ""
                          ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       int result =
         parse_args (argc, argv);

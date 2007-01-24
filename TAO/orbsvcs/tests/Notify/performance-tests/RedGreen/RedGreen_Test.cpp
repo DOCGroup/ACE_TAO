@@ -82,8 +82,7 @@ RedGreen_Test::destroy_ec ()
       // the EC is still around.  So, trap exceptions.
       ACE_TRY_NEW_ENV
         {
-          this->ec_->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+          this->ec_->destroy ();
         }
       ACE_CATCH (CORBA::COMM_FAILURE, ex)
         {
@@ -116,40 +115,29 @@ RedGreen_Test::init (int argc,
   this->init_ORB (argc,
                   argv
                   ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
-  this->resolve_naming_service (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
-  this->resolve_Notify_factory (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
-  this->create_EC (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
-  this->create_supplieradmin (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
-  this->create_consumeradmin (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
-  this->create_consumers (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
-  this->create_suppliers (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+  this->resolve_naming_service ();
+  this->resolve_Notify_factory ();
+  this->create_EC ();
+  this->create_supplieradmin ();
+  this->create_consumeradmin ();
+  this->create_consumers ();
+  this->create_suppliers ();
 }
 
 void
-RedGreen_Test::run (ACE_ENV_SINGLE_ARG_DECL)
+RedGreen_Test::run (void)
 {
   ACE_TRY_NEW_ENV
   {
-    this->send_events (ACE_ENV_SINGLE_ARG_PARAMETER);
-    ACE_TRY_CHECK;
+    this->send_events ();
 
     while (! consumer_is_done)
     {
       ACE_Time_Value tv(0, 10 * 1000);
       this->orb_->run(tv ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
     }
 
     this->orb_->shutdown (0 ACE_ENV_ARG_PARAMETER);
-    ACE_TRY_CHECK;
   }
   ACE_CATCHANY
   {
@@ -157,7 +145,6 @@ RedGreen_Test::run (ACE_ENV_SINGLE_ARG_DECL)
     ACE_RE_THROW;
   }
   ACE_ENDTRY;
-  ACE_CHECK;
 
   worker_.thr_mgr ()->wait ();
 }
@@ -178,12 +165,10 @@ RedGreen_Test::init_ORB (int argc,
                                 argv,
                                 ""
                                 ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
   CORBA::Object_ptr poa_object  =
     this->orb_->resolve_initial_references("RootPOA"
                                            ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
   if (CORBA::is_nil (poa_object))
     {
@@ -194,14 +179,11 @@ RedGreen_Test::init_ORB (int argc,
   this->root_poa_ =
     PortableServer::POA::_narrow (poa_object
                                   ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
   PortableServer::POAManager_var poa_manager =
-    root_poa_->the_POAManager (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+    root_poa_->the_POAManager ();
 
-  poa_manager->activate (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+  poa_manager->activate ();
 
   worker_.orb (this->orb_.in ());
 
@@ -214,12 +196,11 @@ RedGreen_Test::init_ORB (int argc,
 }
 
 void
-RedGreen_Test::resolve_naming_service (ACE_ENV_SINGLE_ARG_DECL)
+RedGreen_Test::resolve_naming_service (void)
 {
   CORBA::Object_var naming_obj =
     this->orb_->resolve_initial_references (NAMING_SERVICE_NAME
                                             ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
   // Need to check return value for errors.
   if (CORBA::is_nil (naming_obj.in ()))
@@ -230,11 +211,10 @@ RedGreen_Test::resolve_naming_service (ACE_ENV_SINGLE_ARG_DECL)
   this->naming_context_ =
     CosNaming::NamingContext::_narrow (naming_obj.in ()
                                        ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 }
 
 void
-RedGreen_Test::resolve_Notify_factory (ACE_ENV_SINGLE_ARG_DECL)
+RedGreen_Test::resolve_Notify_factory (void)
 {
   CosNaming::Name name (1);
   name.length (1);
@@ -243,18 +223,16 @@ RedGreen_Test::resolve_Notify_factory (ACE_ENV_SINGLE_ARG_DECL)
   CORBA::Object_var obj =
     this->naming_context_->resolve (name
                                     ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
   this->notify_factory_ =
     CosNotifyChannelAdmin::EventChannelFactory::_narrow (
         obj.in ()
         ACE_ENV_ARG_PARAMETER
       );
-  ACE_CHECK;
 }
 
 void
-RedGreen_Test::create_EC (ACE_ENV_SINGLE_ARG_DECL)
+RedGreen_Test::create_EC (void)
 {
   CosNotifyChannelAdmin::ChannelID id;
 
@@ -262,13 +240,12 @@ RedGreen_Test::create_EC (ACE_ENV_SINGLE_ARG_DECL)
                                                this->initial_admin_,
                                                id
                                                ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
   ACE_ASSERT (!CORBA::is_nil (ec_.in ()));
 }
 
 void
-RedGreen_Test::create_supplieradmin (ACE_ENV_SINGLE_ARG_DECL)
+RedGreen_Test::create_supplieradmin (void)
 {
   CosNotifyChannelAdmin::AdminID adminid;
 
@@ -276,13 +253,12 @@ RedGreen_Test::create_supplieradmin (ACE_ENV_SINGLE_ARG_DECL)
     ec_->new_for_suppliers (this->ifgop_,
                             adminid
                             ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
   ACE_ASSERT (!CORBA::is_nil (supplier_admin_.in ()));
 }
 
 void
-RedGreen_Test::create_consumeradmin (ACE_ENV_SINGLE_ARG_DECL)
+RedGreen_Test::create_consumeradmin (void)
 {
   CosNotifyChannelAdmin::AdminID adminid;
 
@@ -290,39 +266,35 @@ RedGreen_Test::create_consumeradmin (ACE_ENV_SINGLE_ARG_DECL)
     ec_->new_for_consumers (this->ifgop_,
                             adminid
                             ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
   ACE_ASSERT (!CORBA::is_nil (consumer_admin_.in ()));
 }
 
 void
-RedGreen_Test::create_consumers (ACE_ENV_SINGLE_ARG_DECL)
+RedGreen_Test::create_consumers (void)
 {
   ACE_NEW (this->normal_consumer_,
            RedGreen_Test_StructuredPushConsumer (this));
   this->normal_consumer_->connect (this->consumer_admin_.in ()
                                    ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
   ACE_NEW (this->slow_consumer_,
            SlowConsumer (this));
   this->slow_consumer_->connect (this->consumer_admin_.in ()
                                  ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 }
 
 void
-RedGreen_Test::create_suppliers (ACE_ENV_SINGLE_ARG_DECL)
+RedGreen_Test::create_suppliers (void)
 {
   ACE_NEW (this->supplier_,
            RedGreen_Test_StructuredPushSupplier ());
   this->supplier_->connect (this->supplier_admin_.in ()
                             ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 }
 
 void
-RedGreen_Test::send_events (ACE_ENV_SINGLE_ARG_DECL)
+RedGreen_Test::send_events (void)
 {
   // Setup the Consumer 1 to receive
   //event_type : "DOMAIN_GREEN", "DOMAIN_GREEN".
@@ -339,7 +311,6 @@ RedGreen_Test::send_events (ACE_ENV_SINGLE_ARG_DECL)
                                                      removed_1
                                                      ACE_ENV_ARG_PARAMETER
                                                    );
-  ACE_CHECK;
 
   // Setup the Consumer 2 to receive event_type : "DOMAIN_RED", "TYPE_RED"
   CosNotification::EventTypeSeq added_2(1);
@@ -355,7 +326,6 @@ RedGreen_Test::send_events (ACE_ENV_SINGLE_ARG_DECL)
                                                    removed_2
                                                    ACE_ENV_ARG_PARAMETER
                                                  );
-  ACE_CHECK;
 
   // Create the events - one of each type
 
@@ -388,11 +358,9 @@ RedGreen_Test::send_events (ACE_ENV_SINGLE_ARG_DECL)
     {
       this->supplier_->send_event (red_event
                                    ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
 
       this->supplier_->send_event (green_event
                                    ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
     }
 }
 
@@ -478,8 +446,7 @@ RedGreen_Test_StructuredPushConsumer::connect (
 {
   // Activate the consumer with the default_POA_.
   CosNotifyComm::StructuredPushConsumer_var objref =
-    this->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+    this->_this ();
 
   CosNotifyChannelAdmin::ProxySupplier_var proxysupplier =
     consumer_admin->obtain_notification_push_supplier (
@@ -487,7 +454,6 @@ RedGreen_Test_StructuredPushConsumer::connect (
         proxy_supplier_id_
         ACE_ENV_ARG_PARAMETER
       );
-  ACE_CHECK;
 
   ACE_ASSERT (!CORBA::is_nil (proxysupplier.in ()));
 
@@ -497,21 +463,18 @@ RedGreen_Test_StructuredPushConsumer::connect (
         proxysupplier.in ()
         ACE_ENV_ARG_PARAMETER
       );
-  ACE_CHECK;
 
   ACE_ASSERT (!CORBA::is_nil (proxy_supplier_.in ()));
 
   proxy_supplier_->connect_structured_push_consumer (objref.in ()
                                                      ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 }
 
 void
-RedGreen_Test_StructuredPushConsumer::disconnect (ACE_ENV_SINGLE_ARG_DECL)
+RedGreen_Test_StructuredPushConsumer::disconnect (void)
 {
   this->proxy_supplier_->
-    disconnect_structured_push_supplier (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+    disconnect_structured_push_supplier ();
 }
 
 void
@@ -650,8 +613,7 @@ RedGreen_Test_StructuredPushSupplier::connect (
   )
 {
   CosNotifyComm::StructuredPushSupplier_var objref =
-    this->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+    this->_this ();
 
   CosNotifyChannelAdmin::ProxyConsumer_var proxyconsumer =
     supplier_admin->obtain_notification_push_consumer (
@@ -659,7 +621,6 @@ RedGreen_Test_StructuredPushSupplier::connect (
         proxy_consumer_id_
         ACE_ENV_ARG_PARAMETER
       );
-  ACE_CHECK;
 
   ACE_ASSERT (!CORBA::is_nil (proxyconsumer.in ()));
 
@@ -669,17 +630,15 @@ RedGreen_Test_StructuredPushSupplier::connect (
         proxyconsumer.in ()
         ACE_ENV_ARG_PARAMETER
       );
-  ACE_CHECK;
 
   ACE_ASSERT (!CORBA::is_nil (proxy_consumer_.in ()));
 
   proxy_consumer_->connect_structured_push_supplier (objref.in ()
                                                      ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 }
 
 void
-RedGreen_Test_StructuredPushSupplier::disconnect (ACE_ENV_SINGLE_ARG_DECL)
+RedGreen_Test_StructuredPushSupplier::disconnect (void)
 {
   ACE_ASSERT (!CORBA::is_nil (this->proxy_consumer_.in ()));
 
@@ -718,13 +677,11 @@ RedGreen_Test_StructuredPushSupplier::send_event (
   // any
   event.filterable_data[0].value <<= latency_base;
   proxy_consumer_->push_structured_event (event ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
   ACE_hrtime_t end = ACE_OS::gethrtime ();
 
   this->throughput_.sample (end - g_throughput_start_,
                             end - start);
-  ACE_CHECK;
 }
 
 void
@@ -759,8 +716,7 @@ Worker::svc (void)
 {
   ACE_TRY_NEW_ENV
   {
-    this->orb_->run (ACE_ENV_SINGLE_ARG_PARAMETER);
-    ACE_TRY_CHECK;
+    this->orb_->run ();
   }
   ACE_CATCHANY
   {

@@ -67,7 +67,7 @@ public:
             ACE_ENV_ARG_DECL);
   // Initialize the Trading Service with arguments.
 
-  int run (ACE_ENV_SINGLE_ARG_DECL);
+  int run (void);
   // Run the Trading Service.
 
   int shutdown (void);

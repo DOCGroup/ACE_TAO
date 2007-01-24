@@ -47,11 +47,9 @@ main (int argc, char *argv[])
     {
       CORBA::ORB_var orb =
         CORBA::ORB_init (argc, argv, "" ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       CORBA::Object_var poa_object =
         orb->resolve_initial_references ("RootPOA" ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       if (CORBA::is_nil (poa_object.in ()))
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -60,11 +58,9 @@ main (int argc, char *argv[])
 
       PortableServer::POA_var root_poa =
         PortableServer::POA::_narrow (poa_object.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       PortableServer::POAManager_var poa_manager =
-        root_poa->the_POAManager (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        root_poa->the_POAManager ();
 
       // Policies for the childPOA to be created.
       CORBA::PolicyList policies (1);
@@ -76,7 +72,6 @@ main (int argc, char *argv[])
         orb->create_policy (BiDirPolicy::BIDIRECTIONAL_POLICY_TYPE,
                             pol
                             ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       // Create POA as child of RootPOA with the above policies.  This POA
       // will receive request in the same connection in which it sent
@@ -86,19 +81,16 @@ main (int argc, char *argv[])
                               poa_manager.in (),
                               policies
                               ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       // Creation of childPOA is over. Destroy the Policy objects.
       for (CORBA::ULong i = 0;
            i < policies.length ();
            ++i)
         {
-          policies[i]->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+          policies[i]->destroy ();
         }
 
-      poa_manager->activate (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      poa_manager->activate ();
 
       if (parse_args (argc, argv) != 0)
         return 1;
@@ -117,16 +109,13 @@ main (int argc, char *argv[])
       child_poa->activate_object_with_id (id.in (),
                                           server_impl
                                           ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       CORBA::Object_var obj =
         child_poa->id_to_reference (id.in ()
                                     ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       CORBA::String_var ior =
         orb->object_to_string (obj.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       ACE_DEBUG ((LM_DEBUG, "Activated as <%s>\n", ior.in ()));
 
@@ -144,13 +133,11 @@ main (int argc, char *argv[])
         }
 
       // Run the event loop
-      orb->run (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      orb->run ();
 
       ACE_DEBUG ((LM_DEBUG, "event loop finished\n"));
 
       root_poa->destroy (1, 1 ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
     }
   ACE_CATCHANY
     {

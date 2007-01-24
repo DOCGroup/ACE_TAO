@@ -42,7 +42,7 @@ public:
                             ACE_ENV_ARG_DECL);
   virtual void disconnected (PROXY *proxy
                              ACE_ENV_ARG_DECL);
-  virtual void shutdown (ACE_ENV_SINGLE_ARG_DECL);
+  virtual void shutdown (void);
 
 private:
   COLLECTION collection_;

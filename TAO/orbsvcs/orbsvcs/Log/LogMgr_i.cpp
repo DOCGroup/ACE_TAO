@@ -34,8 +34,7 @@ TAO_LogMgr_i::init (CORBA::ORB_ptr orb,
   this->poa_ = PortableServer::POA::_duplicate (poa);
 
   PortableServer::POAManager_var poa_manager =
-    this->poa_->the_POAManager (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+    this->poa_->the_POAManager ();
 
   {
     TAO::Utils::PolicyList_Destroyer policies(1);
@@ -45,13 +44,11 @@ TAO_LogMgr_i::init (CORBA::ORB_ptr orb,
     policies[0] =
       this->poa_->create_lifespan_policy (PortableServer::PERSISTENT
 					  ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK;
 
     this->factory_poa_ = this->poa_->create_POA ("factory_POA",
 						 poa_manager.in (),
 						 policies
 						 ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK;
   }
 
 
@@ -63,31 +60,26 @@ TAO_LogMgr_i::init (CORBA::ORB_ptr orb,
     policies[0] =
       this->poa_->create_lifespan_policy (PortableServer::PERSISTENT
 					  ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK;
 
     policies[1] =
       this->poa_->create_id_assignment_policy (PortableServer::USER_ID
 					       ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK;
 
 #if (TAO_HAS_MINIMUM_POA == 0) && !defined (CORBA_E_COMPACT)
     policies.length(4);
     policies[2] =
       this->poa_->create_servant_retention_policy (PortableServer::RETAIN
 						   ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK;
 
     policies[3] =
       this->poa_->create_request_processing_policy (PortableServer::USE_SERVANT_MANAGER
 						    ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK;
 #endif
 
     this->log_poa_ = this->factory_poa_->create_POA ("log_POA",
 						     poa_manager.in (),
 						     policies
 						     ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK;
   }
 
 #if (TAO_HAS_MINIMUM_POA == 0) && !defined (CORBA_E_COMPACT)
@@ -99,7 +91,6 @@ TAO_LogMgr_i::init (CORBA::ORB_ptr orb,
 
   this->log_poa_->set_servant_manager(servant_activator
               ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 #endif
 
   // Load Log Strategy
@@ -140,14 +131,12 @@ TAO_LogMgr_i::create_log_reference (DsLogAdmin::LogId id
     this->log_poa_->create_reference_with_id (oid.in (),
                 intf.in ()
 					      ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (DsLogAdmin::Log::_nil ());
 
   // Use _unchecked_narrow() because this may be called from a servant
   // activator's incarnate() method.  A plain _narrow() will result in
   // infinate recursion.
   DsLogAdmin::Log_var log =
     DsLogAdmin::Log::_unchecked_narrow (obj.in () ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (DsLogAdmin::Log::_nil ());
 
   return log._retn();
 }
@@ -159,7 +148,6 @@ TAO_LogMgr_i::create_log_object (DsLogAdmin::LogId id
   PortableServer::ServantBase* servant = 0;
 
   servant = create_log_servant (id ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (DsLogAdmin::Log::_nil ());
 
   PortableServer::ServantBase_var safe_servant = servant;
   // Transfer ownership to the POA.
@@ -171,28 +159,27 @@ TAO_LogMgr_i::create_log_object (DsLogAdmin::LogId id
   this->log_poa_->activate_object_with_id (oid.in (),
 					   servant
 					   ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (DsLogAdmin::Log::_nil ());
 
   return create_log_reference (id ACE_ENV_ARG_PARAMETER);
 }
 
 DsLogAdmin::LogList*
-TAO_LogMgr_i::list_logs (ACE_ENV_SINGLE_ARG_DECL)
+TAO_LogMgr_i::list_logs (void)
   ACE_THROW_SPEC ((
                    CORBA::SystemException
                    ))
 {
-  return this->logstore_->list_logs (ACE_ENV_SINGLE_ARG_PARAMETER);
+  return this->logstore_->list_logs ();
 }
 
 
 DsLogAdmin::LogIdList*
-TAO_LogMgr_i::list_logs_by_id (ACE_ENV_SINGLE_ARG_DECL)
+TAO_LogMgr_i::list_logs_by_id (void)
   ACE_THROW_SPEC ((
                    CORBA::SystemException
                    ))
 {
-  return this->logstore_->list_logs_by_id (ACE_ENV_SINGLE_ARG_PARAMETER);
+  return this->logstore_->list_logs_by_id ();
 }
 
 
@@ -241,7 +228,7 @@ TAO_LogMgr_i::create_i (DsLogAdmin::LogFullActionType full_action,
   if (full_action != DsLogAdmin::wrap && full_action != DsLogAdmin::halt)
     ACE_THROW (DsLogAdmin::InvalidLogFullAction ());
 
-  if (thresholds) 
+  if (thresholds)
     {
       // @@ JTC - validate thresholds here
     }
@@ -251,7 +238,6 @@ TAO_LogMgr_i::create_i (DsLogAdmin::LogFullActionType full_action,
 			   thresholds,
 			   id_out
 			   ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 }
 
 void
@@ -265,7 +251,7 @@ TAO_LogMgr_i::create_with_id_i (DsLogAdmin::LogId id,
   if (full_action != DsLogAdmin::wrap && full_action != DsLogAdmin::halt)
     ACE_THROW (DsLogAdmin::InvalidLogFullAction ());
 
-  if (thresholds) 
+  if (thresholds)
     {
       // @@ JTC - validate thresholds here
     }
@@ -275,7 +261,6 @@ TAO_LogMgr_i::create_with_id_i (DsLogAdmin::LogId id,
 				   max_size,
 				   thresholds
 				   ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 }
 
 CORBA::ORB_ptr

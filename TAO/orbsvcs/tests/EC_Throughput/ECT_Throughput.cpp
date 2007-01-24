@@ -71,12 +71,10 @@ ECT_Throughput::run (int argc, char* argv[])
 
       this->orb_ =
         CORBA::ORB_init (argc, argv, "" ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       CORBA::Object_var poa_object =
         this->orb_->resolve_initial_references("RootPOA"
                                                ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       if (CORBA::is_nil (poa_object.in ()))
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -85,14 +83,11 @@ ECT_Throughput::run (int argc, char* argv[])
 
       PortableServer::POA_var root_poa =
         PortableServer::POA::_narrow (poa_object.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       PortableServer::POAManager_var poa_manager =
-        root_poa->the_POAManager (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        root_poa->the_POAManager ();
 
-      poa_manager->activate (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      poa_manager->activate ();
 
       if (this->parse_args (argc, argv))
         return 1;
@@ -185,14 +180,12 @@ ECT_Throughput::run (int argc, char* argv[])
         runtime_infos);
 #endif
       RtecScheduler::Scheduler_var scheduler =
-        scheduler_impl._this (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        scheduler_impl._this ();
 
 #if 0
       CORBA::Object_var naming_obj =
         this->orb_->resolve_initial_references ("NameService"
                                                 ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       if (CORBA::is_nil (naming_obj.in ()))
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -201,7 +194,6 @@ ECT_Throughput::run (int argc, char* argv[])
 
       CosNaming::NamingContext_var naming_context =
         CosNaming::NamingContext::_narrow (naming_obj.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       // This is the name we (potentially) register the Scheduling
       // Service in the Naming Service.
@@ -211,13 +203,11 @@ ECT_Throughput::run (int argc, char* argv[])
 
       CORBA::String_var str =
         this->orb_->object_to_string (scheduler.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
       ACE_DEBUG ((LM_DEBUG, "The (local) scheduler IOR is <%s>\n",
                   str.in ()));
 
       // Register the servant with the Naming Context....
       naming_context->rebind (schedule_name, scheduler.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       ACE_Scheduler_Factory::use_config (naming_context.in ());
 #endif /* 0 */
@@ -230,31 +220,26 @@ ECT_Throughput::run (int argc, char* argv[])
       TAO_EC_Event_Channel *ec =
         new TAO_EC_Event_Channel (attr);
 
-      ec->activate (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      ec->activate ();
 
       auto_ptr<POA_RtecEventChannelAdmin::EventChannel> auto_ec_impl (ec);
       ec_impl = auto_ec_impl;
 
       RtecEventChannelAdmin::EventChannel_var channel =
-        ec_impl->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        ec_impl->_this ();
 
       this->connect_consumers (scheduler.in (),
                                channel.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       ACE_DEBUG ((LM_DEBUG, "connected consumer(s)\n"));
 
       this->connect_suppliers (scheduler.in (),
                                channel.in ()
                                ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       ACE_DEBUG ((LM_DEBUG, "connected supplier(s)\n"));
 
-      this->activate_suppliers (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      this->activate_suppliers ();
 
       ACE_DEBUG ((LM_DEBUG, "suppliers are active\n"));
 
@@ -269,31 +254,25 @@ ECT_Throughput::run (int argc, char* argv[])
 
       this->dump_results ();
 
-      this->disconnect_consumers (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      this->disconnect_consumers ();
 
       ACE_DEBUG ((LM_DEBUG, "consumers disconnected\n"));
 
-      this->disconnect_suppliers (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      this->disconnect_suppliers ();
 
       ACE_DEBUG ((LM_DEBUG, "suppliers disconnected\n"));
 
-      channel->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      channel->destroy ();
 
       ACE_DEBUG ((LM_DEBUG, "channel destroyed\n"));
 
       {
         // Deactivate the EC
         PortableServer::POA_var poa =
-          ec_impl->_default_POA (ACE_ENV_SINGLE_ARG_PARAMETER);
-        ACE_TRY_CHECK;
+          ec_impl->_default_POA ();
         PortableServer::ObjectId_var id =
           poa->servant_to_id (ec_impl.get () ACE_ENV_ARG_PARAMETER);
-        ACE_TRY_CHECK;
         poa->deactivate_object (id.in () ACE_ENV_ARG_PARAMETER);
-        ACE_TRY_CHECK;
 
         ACE_DEBUG ((LM_DEBUG, "EC deactivated\n"));
       }
@@ -301,13 +280,10 @@ ECT_Throughput::run (int argc, char* argv[])
       {
         // Deactivate the Scheduler
         PortableServer::POA_var poa =
-          scheduler_impl._default_POA (ACE_ENV_SINGLE_ARG_PARAMETER);
-        ACE_TRY_CHECK;
+          scheduler_impl._default_POA ();
         PortableServer::ObjectId_var id =
           poa->servant_to_id (&scheduler_impl ACE_ENV_ARG_PARAMETER);
-        ACE_TRY_CHECK;
         poa->deactivate_object (id.in () ACE_ENV_ARG_PARAMETER);
-        ACE_TRY_CHECK;
 
         ACE_DEBUG ((LM_DEBUG, "scheduler deactivated\n"));
       }
@@ -375,7 +351,6 @@ ECT_Throughput::connect_consumers
                                     this->consumer_type_count_,
                                     channel
                                     ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
     }
 }
 
@@ -403,12 +378,11 @@ ECT_Throughput::connect_suppliers
                                     this->supplier_type_count_,
                                     channel
                                     ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
     }
 }
 
 void
-ECT_Throughput::activate_suppliers (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+ECT_Throughput::activate_suppliers (void)
 {
   int priority =
     (ACE_Sched_Params::priority_min (ACE_SCHED_FIFO)
@@ -427,22 +401,20 @@ ECT_Throughput::activate_suppliers (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
 }
 
 void
-ECT_Throughput::disconnect_suppliers (ACE_ENV_SINGLE_ARG_DECL)
+ECT_Throughput::disconnect_suppliers (void)
 {
   for (int i = 0; i < this->n_suppliers_; ++i)
     {
-      this->suppliers_[i]->disconnect (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK;
+      this->suppliers_[i]->disconnect ();
     }
 }
 
 void
-ECT_Throughput::disconnect_consumers (ACE_ENV_SINGLE_ARG_DECL)
+ECT_Throughput::disconnect_consumers (void)
 {
   for (int i = 0; i < this->n_consumers_; ++i)
     {
-      this->consumers_[i]->disconnect (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK;
+      this->consumers_[i]->disconnect ();
     }
 }
 

@@ -43,11 +43,9 @@ main (int argc, char *argv[])
     {
       CORBA::ORB_var orb =
         CORBA::ORB_init (argc, argv, "" ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       CORBA::Object_var poa_object =
         orb->resolve_initial_references ("RootPOA" ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       if (CORBA::is_nil (poa_object.in ()))
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -56,11 +54,9 @@ main (int argc, char *argv[])
 
       PortableServer::POA_var root_poa =
         PortableServer::POA::_narrow (poa_object.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       PortableServer::POAManager_var poa_manager =
-        root_poa->the_POAManager (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        root_poa->the_POAManager ();
 
       if (parse_args (argc, argv) != 0)
         return 1;
@@ -71,22 +67,17 @@ main (int argc, char *argv[])
 
       root_poa->activate_object (   &server_impl
                                     ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
-      CORBA::Object_var server = server_impl._this (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      CORBA::Object_var server = server_impl._this ();
 
       CORBA::String_var ior =
         orb->object_to_string (server.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       CORBA::Object_var table_object =
         orb->resolve_initial_references ("IORTable" ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       IORTable::Table_var adapter =
         IORTable::Table::_narrow (table_object.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       adapter->bind("Name-with-hyphens", ior.in());
 
@@ -107,11 +98,9 @@ main (int argc, char *argv[])
 
       poa_manager->activate();
 
-      orb->run (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      orb->run ();
 
       root_poa->destroy (1, 1 ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
     }
   ACE_CATCHANY
     {

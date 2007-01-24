@@ -70,7 +70,6 @@ main (int argc, char **argv)
                          argv,
                          0
                          ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       int parse_args_result =
         parse_args (argc, argv);
@@ -80,40 +79,30 @@ main (int argc, char **argv)
       CORBA::Object_var object =
         orb->string_to_object (IOR
                                ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       test_var test1 =
         test::_narrow (object.in ()
                        ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
-      test1->method (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      test1->method ();
 
       test_var test2 =
-        test1->create_POA (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        test1->create_POA ();
 
-      test2->method (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      test2->method ();
 
-      test1->destroy_POA (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      test1->destroy_POA ();
 
       test_var test3 =
-        test1->create_POA (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        test1->create_POA ();
 
-      test2->method (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      test2->method ();
 
-      test3->method (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      test3->method ();
 
       if (shutdown_server)
         {
-          test1->shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+          test1->shutdown ();
         }
     }
   ACE_CATCHANY
@@ -122,7 +111,6 @@ main (int argc, char **argv)
       return -1;
     }
   ACE_ENDTRY;
-  ACE_CHECK_RETURN (-1);
 
   return 0;
 }

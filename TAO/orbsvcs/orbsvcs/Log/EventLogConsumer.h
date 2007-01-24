@@ -71,7 +71,7 @@ public:
 private:
 
   /// Disconnect from EventLog.
-  void disconnect_push_consumer (ACE_ENV_SINGLE_ARG_DECL)
+  void disconnect_push_consumer (void)
     ACE_THROW_SPEC ((
             CORBA::SystemException
     ));

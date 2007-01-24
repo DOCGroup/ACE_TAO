@@ -43,11 +43,9 @@ TAO_EC_Priority_Scheduling::add_proxy_supplier_dependencies (
                                   p_subpriority,
                                   p_priority
                                    ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
       qos_info.preemption_priority = p_priority;
 
       supplier->add_dependencies (header, qos_info ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
     }
 }
 
@@ -87,13 +85,11 @@ TAO_EC_Priority_Scheduling::schedule_event (const RtecEventComm::EventSet &event
                                       p_subpriority,
                                       p_priority
                                       ACE_ENV_ARG_PARAMETER);
-          ACE_CHECK;
           qos_info.preemption_priority = p_priority;
         }
 
       filter->push_scheduled_event (single_event, qos_info
                                     ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
     }
 }
 

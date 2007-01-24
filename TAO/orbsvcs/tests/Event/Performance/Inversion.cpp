@@ -56,11 +56,10 @@ EC_Inversion::parse_args (int &argc, char *argv [])
 }
 
 void
-EC_Inversion::connect_consumers (ACE_ENV_SINGLE_ARG_DECL)
+EC_Inversion::connect_consumers (void)
 {
   RtecEventChannelAdmin::ConsumerAdmin_var consumer_admin =
-    this->event_channel_->for_consumers (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+    this->event_channel_->for_consumers ();
 
   ACE_ConsumerQOS_Factory qos0;
   qos0.start_disjunction_group (2);
@@ -93,11 +92,10 @@ EC_Inversion::connect_consumers (ACE_ENV_SINGLE_ARG_DECL)
 }
 
 void
-EC_Inversion::connect_suppliers (ACE_ENV_SINGLE_ARG_DECL)
+EC_Inversion::connect_suppliers (void)
 {
   RtecEventChannelAdmin::SupplierAdmin_var supplier_admin =
-    this->event_channel_->for_suppliers (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+    this->event_channel_->for_suppliers ();
 
   ACE_SupplierQOS_Factory qos0;
   qos0.insert (1, ACE_ES_EVENT_UNDEFINED, 0, 1);
@@ -129,7 +127,7 @@ EC_Inversion::connect_suppliers (ACE_ENV_SINGLE_ARG_DECL)
 }
 
 void
-EC_Inversion::activate_tasks (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+EC_Inversion::activate_tasks (void)
 {
   int priority;
 

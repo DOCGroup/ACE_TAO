@@ -31,14 +31,12 @@ Server_ORBInitializer::post_init (
   ACE_NEW_THROW_EX (this->server_interceptor_,
                     Echo_Server_Request_Interceptor,
                     CORBA::NO_MEMORY ());
-  ACE_CHECK;
 
   PortableInterceptor::ServerRequestInterceptor_var interceptor =
     this->server_interceptor_;
 
   info->add_server_request_interceptor (interceptor.in ()
                                         ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 }
 
 Echo_Server_Request_Interceptor *

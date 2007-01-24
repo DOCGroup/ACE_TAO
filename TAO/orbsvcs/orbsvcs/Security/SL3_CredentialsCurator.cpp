@@ -76,7 +76,7 @@ TAO::SL3::CredentialsCurator::_nil (void)
 }
 
 SecurityLevel3::AcquisitionMethodList *
-TAO::SL3::CredentialsCurator::supported_methods (ACE_ENV_SINGLE_ARG_DECL)
+TAO::SL3::CredentialsCurator::supported_methods (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   SecurityLevel3::AcquisitionMethodList * list;
@@ -128,14 +128,13 @@ TAO::SL3::CredentialsCurator::acquire_credentials (
 }
 
 SecurityLevel3::OwnCredentialsList *
-TAO::SL3::CredentialsCurator::default_creds_list (ACE_ENV_SINGLE_ARG_DECL)
+TAO::SL3::CredentialsCurator::default_creds_list (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   SecurityLevel3::OwnCredentialsList * list;
   ACE_NEW_THROW_EX (list,
                     SecurityLevel3::OwnCredentialsList,
                     CORBA::NO_MEMORY ());
-  ACE_CHECK_RETURN (0);
 
   SecurityLevel3::OwnCredentialsList_var creds_list = list;
 
@@ -161,7 +160,7 @@ TAO::SL3::CredentialsCurator::default_creds_list (ACE_ENV_SINGLE_ARG_DECL)
 }
 
 SecurityLevel3::CredentialsIdList *
-TAO::SL3::CredentialsCurator::default_creds_ids (ACE_ENV_SINGLE_ARG_DECL)
+TAO::SL3::CredentialsCurator::default_creds_ids (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   SecurityLevel3::CredentialsIdList * list;
@@ -265,8 +264,7 @@ TAO::SL3::CredentialsCurator::_tao_add_own_credentials (
   ACE_ENV_ARG_DECL)
 {
   CORBA::String_var credentials_id =
-    credentials->creds_id (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+    credentials->creds_id ();
 
   SecurityLevel3::OwnCredentials_var creds =
     SecurityLevel3::OwnCredentials::_duplicate (credentials);

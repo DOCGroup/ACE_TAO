@@ -48,8 +48,7 @@ TAO_ETCL_Literal_Constraint::TAO_ETCL_Literal_Constraint (CORBA::Any * any)
 
   ACE_TRY_NEW_ENV
     {
-      corba_type = type->kind (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      corba_type = type->kind ();
     }
   ACE_CATCHANY
     {
@@ -331,18 +330,15 @@ TAO_ETCL_Literal_Constraint::comparable_type (CORBA::TypeCode_ptr type)
 
   ACE_TRY_NEW_ENV
     {
-      kind = type->kind (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      kind = type->kind ();
 
       CORBA::TypeCode_var tmp = CORBA::TypeCode::_duplicate (type);
 
       while (kind == CORBA::tk_alias)
         {
-          tmp = tmp->content_type (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+          tmp = tmp->content_type ();
 
-          kind = tmp->kind (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+          kind = tmp->kind ();
         }
     }
   ACE_CATCHANY

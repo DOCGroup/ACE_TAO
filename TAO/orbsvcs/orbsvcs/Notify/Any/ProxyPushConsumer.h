@@ -59,7 +59,7 @@ public:
 protected:
   ///= CosNotifyChannelAdmin::ProxyPushConsumer methods
 
-  virtual CosNotifyChannelAdmin::ProxyType MyType (ACE_ENV_SINGLE_ARG_DECL)
+  virtual CosNotifyChannelAdmin::ProxyType MyType (void)
     ACE_THROW_SPEC ((
                      CORBA::SystemException
                      ));
@@ -76,7 +76,7 @@ protected:
                      CosEventChannelAdmin::AlreadyConnected
                      ));
 
-  virtual void disconnect_push_consumer (ACE_ENV_SINGLE_ARG_DECL)
+  virtual void disconnect_push_consumer (void)
     ACE_THROW_SPEC ((
                      CORBA::SystemException
                      ));

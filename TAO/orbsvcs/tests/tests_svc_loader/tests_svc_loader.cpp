@@ -45,7 +45,6 @@ int main (int argc, char *argv [])
       // First initialize the ORB, that will remove some arguments...
       CORBA::ORB_var orb =
         CORBA::ORB_init (argc, argv, 0 ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       // There must be at least one argument, the file that has to be
       // retrieved
@@ -61,12 +60,10 @@ int main (int argc, char *argv [])
       // Use the first argument to create the object reference.
       CORBA::Object_var object =
         orb->string_to_object (argv[1] ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       // Check if this object reference is a valid one..
       CORBA::Boolean not_exists =
-        object->_non_existent (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        object->_non_existent ();
 
       if (not_exists)
         {
@@ -88,7 +85,6 @@ int main (int argc, char *argv [])
                   "CORBA System Exception Raised!\n"));
     }
   ACE_ENDTRY;
-  ACE_CHECK_RETURN (-1);
 
   return 0;
 }

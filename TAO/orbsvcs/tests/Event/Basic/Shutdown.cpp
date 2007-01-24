@@ -22,19 +22,17 @@ EC_Shutdown::EC_Shutdown (void)
 }
 
 void
-EC_Shutdown::execute_test (ACE_ENV_SINGLE_ARG_DECL)
+EC_Shutdown::execute_test (void)
 {
   if (this->verbose ())
     ACE_DEBUG ((LM_DEBUG, "EC_Shutdown (%P|%t) destroying EC\n"));
 
-  this->destroy_ec (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+  this->destroy_ec ();
 
   if (this->verbose ())
     ACE_DEBUG ((LM_DEBUG, "EC_Shutdown (%P|%t) ec destroyed\n"));
 
-  this->deactivate_ec (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+  this->deactivate_ec ();
 
   if (this->verbose ())
     ACE_DEBUG ((LM_DEBUG, "EC_Shutdown (%P|%t) ec deactivated\n"));
@@ -44,16 +42,13 @@ EC_Shutdown::execute_test (ACE_ENV_SINGLE_ARG_DECL)
   if (this->verbose ())
     ACE_DEBUG ((LM_DEBUG, "EC_Shutdown (%P|%t) ec cleanup\n"));
 
-  this->initialize_ec_impl (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
-  this->connect_consumers (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
-  this->connect_suppliers (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+  this->initialize_ec_impl ();
+  this->connect_consumers ();
+  this->connect_suppliers ();
   if (this->verbose ())
     ACE_DEBUG ((LM_DEBUG, "EC_Shutdown (%P|%t) status reset\n"));
 
-  // this->EC_Driver::execute_test (ACE_ENV_SINGLE_ARG_PARAMETER);
+  // this->EC_Driver::execute_test ();
 }
 
 void

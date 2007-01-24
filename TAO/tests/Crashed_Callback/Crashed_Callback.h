@@ -17,13 +17,13 @@ public:
   Crashed_Callback (void);
 
   // = The skeleton methods
-  virtual CORBA::Boolean are_you_there (ACE_ENV_SINGLE_ARG_DECL)
+  virtual CORBA::Boolean are_you_there (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual void crash_now_please (ACE_ENV_SINGLE_ARG_DECL)
+  virtual void crash_now_please (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual void test_oneway (ACE_ENV_SINGLE_ARG_DECL)
+  virtual void test_oneway (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
 };
 

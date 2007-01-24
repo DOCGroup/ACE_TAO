@@ -33,7 +33,6 @@ TAO_Notify_Tests_Consumer_T<Consumer_Traits>::obtain_proxy (ACE_TYPENAME TAO_Not
                                                   ACE_ENV_ARG_PARAMETER
                                                   );
 
-  ACE_CHECK_RETURN (Proxy_Traits_INTERFACE::_nil ());
 
   ACE_ASSERT (!CORBA::is_nil (proxy_supplier.in ()));
 
@@ -54,7 +53,6 @@ TAO_Notify_Tests_Consumer_T<Consumer_Traits>::obtain_proxy (ACE_TYPENAME TAO_Not
                                                            , this->proxy_id_
                                                            , qos
                                                            ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (Proxy_Traits_INTERFACE::_nil ());
 
   ACE_ASSERT (!CORBA::is_nil (proxy_supplier.in ()));
 
@@ -87,7 +85,6 @@ TAO_Notify_Tests_Consumer_T<Consumer_Traits>::subscription_change (CosNotificati
   if (proxy_supplier != 0)
     {
       proxy_supplier->subscription_change (added, removed ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
     }
   else
     ACE_DEBUG ((LM_DEBUG, "Proxy Supplier not available, subscription change not made."));

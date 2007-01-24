@@ -29,7 +29,6 @@ Notifier_Server::close (void)
       // disconnect all the consumers.
       this->servant_.disconnect ("notifier shutdown."
                                  ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       // Name the object.
       CosNaming::Name notifier_obj_name (1);
@@ -39,7 +38,6 @@ Notifier_Server::close (void)
 
       this->naming_server_->unbind (notifier_obj_name
                                     ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       // Instruct the ORB to shutdown.
       this->orb_manager_.orb ()->shutdown ();
@@ -57,7 +55,7 @@ Notifier_Server::close (void)
 // the object name is bound to the naming server.
 
 int
-Notifier_Server::init_naming_service (ACE_ENV_SINGLE_ARG_DECL)
+Notifier_Server::init_naming_service (void)
 {
   ACE_TRY
     {
@@ -72,21 +70,18 @@ Notifier_Server::init_naming_service (ACE_ENV_SINGLE_ARG_DECL)
 
       // Register the object implementation with the POA.
       Event_Comm::Notifier_var notifier_obj =
-        this->servant_._this (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        this->servant_._this ();
 
       // Name the object.
       CosNaming::Name notifier_obj_name (1);
       notifier_obj_name.length (1);
       notifier_obj_name[0].id =
         CORBA::string_dup (NOTIFIER_BIND_NAME);
-      ACE_TRY_CHECK;
 
       // Now, attach the object name to the context.
       this->naming_server_->bind (notifier_obj_name,
                                   notifier_obj.in ()
                                   ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
     }
   ACE_CATCHANY
     {
@@ -118,10 +113,8 @@ Notifier_Server::init (int argc,
                        "%p\n",
                       "init_child_poa"),
                       -1);
- ACE_CHECK_RETURN (-1);
 
- this->orb_manager_.activate_poa_manager (ACE_ENV_SINGLE_ARG_PARAMETER);
- ACE_CHECK_RETURN (-1);
+ this->orb_manager_.activate_poa_manager ();
 
  // Activate the servant in the POA.
  CORBA::String_var str =
@@ -129,18 +122,17 @@ Notifier_Server::init (int argc,
                                                  &this->servant_
                                                 ACE_ENV_ARG_PARAMETER);
 
- return this->init_naming_service (ACE_ENV_SINGLE_ARG_PARAMETER);
+ return this->init_naming_service ();
 }
 
 int
-Notifier_Server::run (ACE_ENV_SINGLE_ARG_DECL)
+Notifier_Server::run (void)
 {
   ACE_DEBUG ((LM_DEBUG,
               "Running the notifier server...\n"));
 
   // Run the main event loop for the ORB.
-  this->orb_manager_.run (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
+  this->orb_manager_.run ();
 
   return 0;
 }

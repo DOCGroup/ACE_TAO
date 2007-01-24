@@ -47,31 +47,28 @@ Server_Request_Interceptor::forward_references (
 
   char *argv[] = {NULL};
   int   argc = 0;
-  
+
   // Fetch the ORB having been initialized in main()
   CORBA::ORB_var orb =
     CORBA::ORB_init (argc, argv, "Server ORB" ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
   CORBA::String_var str1 = orb->object_to_string (obj1 ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
   CORBA::String_var str2 = orb->object_to_string (obj2 ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
   this->obj_[0] = orb->string_to_object (str1.in () ACE_ENV_ARG_PARAMETER);
   this->obj_[1] = orb->string_to_object (str2.in () ACE_ENV_ARG_PARAMETER);
 }
 
 char *
-Server_Request_Interceptor::name (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+Server_Request_Interceptor::name (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return CORBA::string_dup ("Server_Request_Interceptor");
 }
 
 void
-Server_Request_Interceptor::destroy (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+Server_Request_Interceptor::destroy (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   CORBA::release (this->obj_[0]);
@@ -97,7 +94,6 @@ Server_Request_Interceptor::receive_request_service_contexts (
       IOP::ServiceContext_var svc =
         ri->get_request_service_context (IOP::FT_GROUP_VERSION
                                          ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
 
       // extract the group component
       TAO_InputCDR cdr (reinterpret_cast<const char*> (svc->context_data.get_buffer ()),
@@ -155,7 +151,6 @@ Server_Request_Interceptor::receive_request (
       IOP::ServiceContext_var svc =
         ri->get_request_service_context (IOP::FT_GROUP_VERSION
                                          ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
 
       // extract the group component
       TAO_InputCDR cdr (reinterpret_cast<const char*> (svc->context_data.get_buffer ()),

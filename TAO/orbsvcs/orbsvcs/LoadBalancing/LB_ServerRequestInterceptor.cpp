@@ -23,14 +23,14 @@ TAO_LB_ServerRequestInterceptor::~TAO_LB_ServerRequestInterceptor (void)
 }
 
 char *
-TAO_LB_ServerRequestInterceptor::name (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+TAO_LB_ServerRequestInterceptor::name (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return CORBA::string_dup ("TAO_LB_ServerRequestInterceptor");
 }
 
 void
-TAO_LB_ServerRequestInterceptor::destroy (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+TAO_LB_ServerRequestInterceptor::destroy (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
 }
@@ -44,8 +44,7 @@ TAO_LB_ServerRequestInterceptor::receive_request_service_contexts (
 {
   if (this->load_alert_.alerted ())
     {
-      CORBA::String_var op = ri->operation (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK;
+      CORBA::String_var op = ri->operation ();
 
       if (ACE_OS::strcmp (op.in (), "_get_loads") == 0        // LoadMonitor
           || ACE_OS::strcmp (op.in (), "disable_alert") == 0  // LoadAlert
@@ -58,7 +57,6 @@ TAO_LB_ServerRequestInterceptor::receive_request_service_contexts (
           IOP::ServiceContext_var service_context =
             ri->get_request_service_context (CosLoadBalancing::LOAD_MANAGED
                                              ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
 
           /*
           // Use TAO-specific "compiled marshaling" instead of
@@ -109,7 +107,6 @@ TAO_LB_ServerRequestInterceptor::receive_request_service_contexts (
             ACE_RE_THROW;
         }
       ACE_ENDTRY;
-      ACE_CHECK;
 #else
       // Force the client to try another profile since this location
       // is currently overloaded.
@@ -169,8 +166,7 @@ TAO_LB_ServerRequestInterceptor::send_other (
       // LoadAlert object that its member is overloaded, for example.
 
       const PortableInterceptor::ReplyStatus status =
-        ri->reply_status (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK;
+        ri->reply_status ();
 
       if (status == PortableInterceptor::LOCATION_FORWARD)
         ACE_DEBUG ((LM_INFO,

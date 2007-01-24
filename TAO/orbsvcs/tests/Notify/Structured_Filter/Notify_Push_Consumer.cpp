@@ -35,27 +35,22 @@ Notify_Push_Consumer::_connect (CosNotifyChannelAdmin::ConsumerAdmin_ptr consume
 {
   ACE_UNUSED_ARG(notify_channel);
   CosNotifyComm::StructuredPushConsumer_var objref =
-    this->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+    this->_this ();
 
   CosNotifyChannelAdmin::ProxySupplier_var proxysupplier =
     consumer_admin->obtain_notification_push_supplier (
     CosNotifyChannelAdmin::STRUCTURED_EVENT,
     proxy_id_
     ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
   this->proxy_ =
     CosNotifyChannelAdmin::StructuredProxyPushSupplier::_narrow (
     proxysupplier.in () ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
   this->proxy_->connect_structured_push_consumer (objref.in () ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
   // give ownership to POA
-  this->_remove_ref (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+  this->_remove_ref ();
 }
 
 static void validate_expression(bool expr, const char* msg)

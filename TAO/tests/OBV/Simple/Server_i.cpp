@@ -55,7 +55,7 @@ Checkpoint_i::put_event (Event *event
 // Shutdown the server application.
 
 void
-Checkpoint_i::shutdown (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+Checkpoint_i::shutdown (void)
       ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_DEBUG ((LM_DEBUG,

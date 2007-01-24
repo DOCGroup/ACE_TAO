@@ -26,7 +26,6 @@ Sender_StreamEndPoint::get_callback (const char *,
       CORBA::Any_ptr streamctrl_any =
         this->get_property_value ("Related_StreamCtrl"
                                   ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       AVStreams::StreamCtrl_ptr streamctrl;
       *streamctrl_any >>= streamctrl;
@@ -162,8 +161,7 @@ Sender::init (int argc,
     this->sender_mmdevice_;
 
   AVStreams::MMDevice_var mmdevice =
-    this->sender_mmdevice_->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN(-1);
+    this->sender_mmdevice_->_this ();
 
   CosNaming::Name name (1);
   name.length (1);
@@ -174,14 +172,13 @@ Sender::init (int argc,
   this->naming_client_->rebind (name,
                                 mmdevice.in ()
                                 ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
 
   return 0;
 }
 
 // Method to send data at the specified rate
 int
-Sender::pace_data (ACE_ENV_SINGLE_ARG_DECL)
+Sender::pace_data (void)
 {
   // The time that should lapse between two consecutive frames sent.
   ACE_Time_Value inter_frame_time;
@@ -209,7 +206,6 @@ Sender::pace_data (ACE_ENV_SINGLE_ARG_DECL)
           ACE_Time_Value wait_time (5);
           TAO_AV_CORE::instance ()->orb ()->run (wait_time
                                                  ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
         }
 
       // Continue to send data till the file is read to the end.
@@ -271,7 +267,6 @@ Sender::pace_data (ACE_ENV_SINGLE_ARG_DECL)
                   // continue other orb requests.
                   TAO_AV_CORE::instance ()->orb ()->run (wait_time
                                                          ACE_ENV_ARG_PARAMETER);
-                  ACE_TRY_CHECK;
                 }
             }
 
@@ -304,7 +299,6 @@ Sender::pace_data (ACE_ENV_SINGLE_ARG_DECL)
           AVStreams::flowSpec stop_spec;
           this->streamctrl_->destroy (stop_spec
                                       ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
         }
     }
   ACE_CATCHANY
@@ -333,41 +327,34 @@ main (int argc,
       CORBA::Object_var obj
         = orb->resolve_initial_references ("RootPOA"
                                            ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       // Get the POA_var object from Object_var
       PortableServer::POA_var root_poa
         = PortableServer::POA::_narrow (obj.in ()
                                         ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       PortableServer::POAManager_var mgr
-        = root_poa->the_POAManager (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        = root_poa->the_POAManager ();
 
-      mgr->activate (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      mgr->activate ();
 
       // Initialize the AV Stream components.
       TAO_AV_CORE::instance ()->init (orb.in (),
                                       root_poa.in ()
                                       ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       // Initialize the Sender.
       int result = 0;
       result = SENDER::instance ()->init (argc,
                                           argv
                                           ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       if (result < 0)
         ACE_ERROR_RETURN ((LM_ERROR,
                            "Sender::init failed\n"),
                           -1);
 
-      SENDER::instance ()->pace_data (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      SENDER::instance ()->pace_data ();
 
       ACE_Time_Value tv (10);
       orb->run (tv);
@@ -381,7 +368,6 @@ main (int argc,
       return -1;
     }
   ACE_ENDTRY;
-  ACE_CHECK_RETURN (-1);
 
   SENDER::close ();  // Explicitly finalize the Unmanaged_Singleton.
 

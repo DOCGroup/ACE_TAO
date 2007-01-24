@@ -69,7 +69,6 @@ Cubit_Server::init (int argc,
                        "%p\n",
                        "init_child_poa"),
                       -1);
-  ACE_CHECK_RETURN (-1);
   this->argc_ = argc;
   this->argv_ = argv;
 
@@ -91,7 +90,6 @@ Cubit_Server::init (int argc,
     this->orb_manager_.activate_under_child_poa ("factory",
                                                  this->factory_impl_
                                                  ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
 
   ACE_DEBUG ((LM_DEBUG,
               "The IOR is: <%s>\n",
@@ -109,9 +107,9 @@ Cubit_Server::init (int argc,
 }
 
 int
-Cubit_Server::run (ACE_ENV_SINGLE_ARG_DECL)
+Cubit_Server::run (void)
 {
-  if (this->orb_manager_.run (ACE_ENV_SINGLE_ARG_PARAMETER) == -1)
+  if (this->orb_manager_.run () == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "Cubit_Server::run"),
                       -1);

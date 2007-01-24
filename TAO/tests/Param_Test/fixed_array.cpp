@@ -19,8 +19,8 @@
 #include "helper.h"
 #include "fixed_array.h"
 
-ACE_RCSID (Param_Test, 
-           fixed_array, 
+ACE_RCSID (Param_Test,
+           fixed_array,
            "$Id$")
 
 // ************************************************************************
@@ -54,8 +54,7 @@ Test_Fixed_Array::dii_req_invoke (CORBA::Request *req
   req->add_out_arg ("s3") <<= Param_Test::Fixed_Array_forany (this->out_);
   req->set_return_type (Param_Test::_tc_Fixed_Array);
 
-  req->invoke (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+  req->invoke ();
 
   Param_Test::Fixed_Array_forany forany;
   req->return_value () >>= forany;
@@ -63,13 +62,11 @@ Test_Fixed_Array::dii_req_invoke (CORBA::Request *req
 
   CORBA::NamedValue_ptr arg2 =
     req->arguments ()->item (1 ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
   *arg2->value () >>= forany;
   Param_Test::Fixed_Array_copy (this->inout_, forany.in ());
 
   CORBA::NamedValue_ptr arg3 =
     req->arguments ()->item (2 ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
   Param_Test::Fixed_Array_forany out_any (this->out_);
   *arg3->value () >>= forany;
   Param_Test::Fixed_Array_copy (this->out_, forany.in ());
@@ -117,7 +114,6 @@ Test_Fixed_Array::run_sii_test (Param_Test_ptr objref
                                              this->inout_,
                                              this->out_
                                              ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       return 0;
     }

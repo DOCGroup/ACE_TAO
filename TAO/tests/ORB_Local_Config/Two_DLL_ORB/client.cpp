@@ -50,7 +50,6 @@ Client_Worker::test_main (int argc, ACE_TCHAR *argv[] ACE_ENV_ARG_DECL)
   ACE_Argv_Type_Converter cvt (argc, argv);
 
   CORBA::ORB_var orb = CORBA::ORB_init (cvt.get_argc (), cvt.get_ASCII_argv () ACE_ENV_ARG_PARAMETER);
-  ACE_TRY_CHECK;
 
   if (parse_args (cvt.get_argc (), cvt.get_ASCII_argv ()) != 0)
     ACE_ERROR_RETURN ((LM_DEBUG,
@@ -68,7 +67,6 @@ Client_Worker::test_main (int argc, ACE_TCHAR *argv[] ACE_ENV_ARG_DECL)
     ACE_TRY
     {
       co = orb->string_to_object(ior_file_.c_str () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       if (co == 0)
         {
@@ -80,7 +78,6 @@ Client_Worker::test_main (int argc, ACE_TCHAR *argv[] ACE_ENV_ARG_DECL)
 
       Test::Hello_var hello =
         Test::Hello::_narrow(tmp.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       if (CORBA::is_nil (hello.in ()))
         {
@@ -94,15 +91,13 @@ Client_Worker::test_main (int argc, ACE_TCHAR *argv[] ACE_ENV_ARG_DECL)
                   ACE_TEXT ("(%P|%t) Successfuly narrowed the Hello interface\n")));
 
       CORBA::String_var the_string =
-        hello->get_string (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        hello->get_string ();
 
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("(%P|%t) String returned from the server <%s>\n"),
                   the_string.in ()));
 
-      hello->shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      hello->shutdown ();
 
       attempts_left = 0; // We're done here!
 
@@ -123,10 +118,8 @@ Client_Worker::test_main (int argc, ACE_TCHAR *argv[] ACE_ENV_ARG_DECL)
   }
 
   orb->shutdown (0 ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
-  orb->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_TRY_CHECK;
+  orb->destroy ();
 
   return 0;
 }

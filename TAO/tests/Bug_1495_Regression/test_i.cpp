@@ -49,10 +49,8 @@ Bug1495_i::shutdown (
                 "Shutting down orb %i\n",
                 ACE_Thread::self()));
 
-    this->_remove_ref (ACE_ENV_SINGLE_ARG_PARAMETER);
-    ACE_CHECK;
+    this->_remove_ref ();
 
     this->orb_->shutdown (0 ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK;
 }
 

@@ -98,13 +98,13 @@ public:
 private:
   /// Check if the consumers still exists.  It is a helper method for
   /// handle_timeout() to isolate the exceptions.
-  void query_eventchannel (ACE_ENV_SINGLE_ARG_DECL);
+  void query_eventchannel (void);
 
   /// Look if we can reconnect again.
-  void try_reconnect (ACE_ENV_SINGLE_ARG_DECL);
+  void try_reconnect (void);
 
   /// Reconnect to the consumer ec.
-  void reconnect (ACE_ENV_SINGLE_ARG_DECL);
+  void reconnect (void);
 
 private:
   /// The polling rate

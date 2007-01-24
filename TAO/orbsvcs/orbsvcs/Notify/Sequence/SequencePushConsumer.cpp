@@ -60,9 +60,8 @@ TAO_Notify_SequencePushConsumer::init (CosNotifyComm::SequencePushConsumer_ptr p
 
       ACE_TRY
         {
-          CosNotifyComm::SequencePushConsumer_var new_push_consumer =  
+          CosNotifyComm::SequencePushConsumer_var new_push_consumer =
             CosNotifyComm::SequencePushConsumer::_unchecked_narrow(obj.in());
-          ACE_TRY_CHECK;
 
           this->push_consumer_ = CosNotifyComm::SequencePushConsumer::_duplicate (new_push_consumer.in());
           this->publish_ = CosNotifyComm::NotifyPublish::_duplicate (new_push_consumer.in());
@@ -212,8 +211,7 @@ TAO_Notify_SequencePushConsumer::dispatch_from_queue (Request_Queue& requests, A
         ACE_DECLARE_NEW_ENV;
         ACE_TRY
         {
-          this->proxy_supplier ()->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+          this->proxy_supplier ()->destroy ();
         }
         ACE_CATCHANY
         {
@@ -269,14 +267,12 @@ TAO_Notify_SequencePushConsumer::enqueue_if_necessary (
   if (DEBUG_LEVEL > 0)
     ACE_DEBUG ( (LM_DEBUG, "SequencePushConsumer enqueing event.\n"));
   this->enqueue_request (request ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (false);
 
   size_t mbs = static_cast<size_t>(this->max_batch_size_.value());
 
   if (this->pending_events().size() >= mbs || this->pacing_.is_valid () == 0)
   {
-    this->dispatch_pending (ACE_ENV_SINGLE_ARG_PARAMETER);
-    ACE_CHECK_RETURN (false);
+    this->dispatch_pending ();
   }
   else
   {
@@ -310,7 +306,6 @@ TAO_Notify_SequencePushConsumer::push (const CosNotification::EventBatch& event_
   //--cj end
 
   this->push_consumer_->push_structured_events (event_batch ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 }
 
 ACE_CString
@@ -322,7 +317,6 @@ TAO_Notify_SequencePushConsumer::get_ior (void) const
   ACE_TRY
   {
     CORBA::String_var ior = orb->object_to_string (this->push_consumer_.in () ACE_ENV_ARG_PARAMETER);
-    ACE_TRY_CHECK;
     result = static_cast<const char*> (ior.in ());
   }
   ACE_CATCHANY
@@ -340,7 +334,6 @@ TAO_Notify_SequencePushConsumer::reconnect_from_consumer (TAO_Notify_Consumer* o
   TAO_Notify_SequencePushConsumer* tmp = dynamic_cast<TAO_Notify_SequencePushConsumer *> (old_consumer);
   ACE_ASSERT(tmp != 0);
   this->init(tmp->push_consumer_.in() ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
   this->schedule_timer(false);
 }
 

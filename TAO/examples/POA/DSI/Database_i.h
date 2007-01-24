@@ -52,7 +52,7 @@ public:
     // a POA_ptr as input parameters and returns a valid RepositoryId
     // representing the most-derived interface for that oid.
 
-    virtual PortableServer::POA_ptr _default_POA (ACE_ENV_SINGLE_ARG_DECL);
+    virtual PortableServer::POA_ptr _default_POA (void);
     // Returns the default POA for this servant.
 
     virtual void is_a (CORBA::ServerRequest_ptr request
@@ -100,10 +100,10 @@ public:
                        Database::Unknown_Type,
                        Database::Unknown_Key));
 
-    virtual void shutdown (ACE_ENV_SINGLE_ARG_DECL)
+    virtual void shutdown (void)
       ACE_THROW_SPEC ((CORBA::SystemException));
 
-    virtual PortableServer::POA_ptr _default_POA (ACE_ENV_SINGLE_ARG_DECL);
+    virtual PortableServer::POA_ptr _default_POA (void);
     // Returns the default POA for this servant.
 
   protected:

@@ -170,7 +170,6 @@ main (int argc, char *argv[])
                                             argv,
                                             0
                                             ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       int n = 64;
       int lo = 128;

@@ -32,7 +32,6 @@ main (int argc, char *argv[])
 
       {
         CORBA::ORB_var orb = CORBA::ORB_init (argc, argv, orbid ACE_ENV_ARG_PARAMETER);
-        ACE_TRY_CHECK;
 
         my_orb = orb.in ();
 
@@ -49,7 +48,6 @@ main (int argc, char *argv[])
       // -------------------------------------------------------------
 
       orb = CORBA::ORB_init (argc, argv, orbid ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       // This isn't portable, but TAO implements an ORB_ptr as a
       // pointer so we're okay.
@@ -83,11 +81,9 @@ main (int argc, char *argv[])
       // attempt to initialize a new ORB with the same ORBid.
       // -------------------------------------------------------------
 
-      orb->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      orb->destroy ();
 
       orb = CORBA::ORB_init (argc, argv, orbid ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       // This isn't portable, but TAO implements an ORB_ptr as a
       // pointer so we're okay.
@@ -123,7 +119,6 @@ main (int argc, char *argv[])
 
       CORBA::Object_var object =
         orb->string_to_object (IOR ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       // -------------------------------------------------------------
       // Initialize another two ORBs but don't explicitly destroy them
@@ -132,11 +127,9 @@ main (int argc, char *argv[])
       // -------------------------------------------------------------
       CORBA::ORB_var orb2 =
         CORBA::ORB_init (argc, argv, "ORB number 2" ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       CORBA::ORB_var orb3 =
         CORBA::ORB_init (argc, argv, "ORB number 3" ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       // -------------------------------------------------------------
       // Now try to perform an operation using the destroyed ORB
@@ -145,12 +138,10 @@ main (int argc, char *argv[])
       // ORB itself break when the last ORB is released.
       // -------------------------------------------------------------
 
-      orb->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      orb->destroy ();
 
       CORBA::Object_var obj =
         orb->resolve_initial_references ("RootPOA" ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       // If we get here, then something went wrong.  A
       // CORBA::OBJECT_NOT_EXIST() exception should have been thrown!.

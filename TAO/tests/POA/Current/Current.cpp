@@ -35,29 +35,24 @@ main (int argc, char **argv)
                          argv,
                          0
                          ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       CORBA::Object_var object;
 
       object =
         orb->resolve_initial_references ("POACurrent"
                                          ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       PortableServer::Current_var current =
         PortableServer::Current::_narrow (object.in ()
                                           ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       object =
         orb->resolve_initial_references ("RootPOA"
                                          ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       PortableServer::POA_var root_poa =
         PortableServer::POA::_narrow (object.in ()
                                       ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       ACE_DEBUG ((LM_DEBUG,
                   "%s successful\n",
@@ -70,7 +65,6 @@ main (int argc, char **argv)
       return -1;
     }
   ACE_ENDTRY;
-  ACE_CHECK_RETURN (-1);
 
   return 0;
 }

@@ -45,7 +45,7 @@ public:
   TAO_Notify_Method_Request_Queueable* copy (void);
 
   /// Execute the Request
-  virtual int execute (ACE_ENV_SINGLE_ARG_DECL);
+  virtual int execute (void);
 
 private:
   // Task to shutdown

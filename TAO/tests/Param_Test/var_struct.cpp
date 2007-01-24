@@ -20,7 +20,7 @@
 #include "var_struct.h"
 
 ACE_RCSID (Param_Test,
-           var_struct, 
+           var_struct,
            "$Id$")
 
 // ************************************************************************
@@ -59,8 +59,7 @@ Test_Var_Struct::dii_req_invoke (CORBA::Request *req
 
   req->set_return_type (Param_Test::_tc_Var_Struct);
 
-  req->invoke (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+  req->invoke ();
 
   Param_Test::Var_Struct *tmp;
   req->return_value () >>= tmp;
@@ -68,13 +67,11 @@ Test_Var_Struct::dii_req_invoke (CORBA::Request *req
 
   CORBA::NamedValue_ptr o2 =
     req->arguments ()->item (1 ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
   *o2->value () >>= tmp;
   this->inout_ = new Param_Test::Var_Struct (*tmp);
 
   CORBA::NamedValue_ptr o3 =
     req->arguments ()->item (2 ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
   *o3->value () >>= tmp;
   this->out_ = new Param_Test::Var_Struct (*tmp);
 }
@@ -145,7 +142,6 @@ Test_Var_Struct::run_sii_test (Param_Test_ptr objref
                                             this->inout_.inout (),
                                             out
                                             ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       return 0;
     }

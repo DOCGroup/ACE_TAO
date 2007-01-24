@@ -36,7 +36,7 @@ public:
       ACE_THROW_SPEC ((CORBA::SystemException));
   // Returns the name of this object.
 
-  PortableServer::POA_ptr _default_POA (ACE_ENV_SINGLE_ARG_DECL)
+  PortableServer::POA_ptr _default_POA (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
   // Method for the POA that will return the persistent POA_ptr stored
   // in here..

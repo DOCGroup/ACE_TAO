@@ -78,7 +78,6 @@ TAO_Notify_Tests_Periodic_Supplier_Command::init (ACE_Arg_Shifter& arg_shifter)
          {
            ACE_DECLARE_NEW_CORBA_ENV;
            act_mgr->_register (supplier, this->name_.c_str () ACE_ENV_ARG_PARAMETER);
-           ACE_CHECK;
          }
 
          supplier->init_state (arg_shifter);
@@ -149,7 +148,6 @@ TAO_Notify_Tests_Periodic_Supplier_Command::supplier (void)
 
   ACE_DECLARE_NEW_CORBA_ENV;
   act_mgr->resolve (supplier, this->name_.c_str () ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (0);
 
   if (supplier == 0)
     ACE_DEBUG ((LM_DEBUG, "Supplier %s not found by Lookup Manager\n", this->name_.c_str ()));
@@ -158,64 +156,60 @@ TAO_Notify_Tests_Periodic_Supplier_Command::supplier (void)
 }
 
 void
-TAO_Notify_Tests_Periodic_Supplier_Command::handle_create (ACE_ENV_SINGLE_ARG_DECL)
+TAO_Notify_Tests_Periodic_Supplier_Command::handle_create (void)
 {
   TAO_Notify_Tests_Periodic_Supplier* supplier = this->supplier ();
   if (supplier == 0)
     return;
 
-  supplier->connect (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+  supplier->connect ();
 
   ACE_DEBUG ((LM_DEBUG, "Supplier %s is connected\n", this->name_.c_str ()));
 }
 
 void
-TAO_Notify_Tests_Periodic_Supplier_Command::handle_offers (ACE_ENV_SINGLE_ARG_DECL)
+TAO_Notify_Tests_Periodic_Supplier_Command::handle_offers (void)
 {
   TAO_Notify_Tests_Periodic_Supplier* supplier = this->supplier ();
   if (supplier == 0)
     return;
 
   supplier->offer_change (this->added_, this->removed_ ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 }
 
 void
-TAO_Notify_Tests_Periodic_Supplier_Command::handle_disconnect (ACE_ENV_SINGLE_ARG_DECL)
+TAO_Notify_Tests_Periodic_Supplier_Command::handle_disconnect (void)
 {
   TAO_Notify_Tests_Periodic_Supplier* supplier= this->supplier ();
   if (supplier == 0)
     return;
 
-  supplier->disconnect (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+  supplier->disconnect ();
 }
 
 void
-TAO_Notify_Tests_Periodic_Supplier_Command::handle_deactivate (ACE_ENV_SINGLE_ARG_DECL)
+TAO_Notify_Tests_Periodic_Supplier_Command::handle_deactivate (void)
 {
   TAO_Notify_Tests_Periodic_Supplier* supplier = this->supplier ();
   if (supplier == 0)
     return;
 
-  supplier->deactivate (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+  supplier->deactivate ();
 }
 
 void
-TAO_Notify_Tests_Periodic_Supplier_Command::handle_status (ACE_ENV_SINGLE_ARG_DECL)
+TAO_Notify_Tests_Periodic_Supplier_Command::handle_status (void)
 {
   TAO_Notify_Tests_Periodic_Supplier* supplier = this->supplier ();
 
   if (supplier == 0)
     return;
 
-  supplier->status (ACE_ENV_SINGLE_ARG_PARAMETER);
+  supplier->status ();
 }
 
 void
-TAO_Notify_Tests_Periodic_Supplier_Command::handle_set_qos (ACE_ENV_SINGLE_ARG_DECL)
+TAO_Notify_Tests_Periodic_Supplier_Command::handle_set_qos (void)
 {
   TAO_Notify_Tests_Periodic_Supplier* supplier = this->supplier ();
 
@@ -226,36 +220,30 @@ TAO_Notify_Tests_Periodic_Supplier_Command::handle_set_qos (ACE_ENV_SINGLE_ARG_D
 }
 
 void
-TAO_Notify_Tests_Periodic_Supplier_Command::execute_i (ACE_ENV_SINGLE_ARG_DECL)
+TAO_Notify_Tests_Periodic_Supplier_Command::execute_i (void)
 {
   if (this->command_ == CREATE)
     {
-      this->handle_create (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK;
+      this->handle_create ();
     }
   else if (this->command_ == OFFER)
     {
-      this->handle_offers (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK;
+      this->handle_offers ();
     }
   else if (this->command_ == DISCONNECT)
     {
-      this->handle_disconnect (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK;
+      this->handle_disconnect ();
     }
   else if (this->command_ == DEACTIVATE)
     {
-      this->handle_deactivate (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK;
+      this->handle_deactivate ();
     }
   else  if (this->command_ == DUMP_STATE)
     {
-      this->handle_status (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK;
+      this->handle_status ();
     }
   else if (this->command_ == SET_QOS)
     {
-      this->handle_set_qos (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK;
+      this->handle_set_qos ();
     }
 }

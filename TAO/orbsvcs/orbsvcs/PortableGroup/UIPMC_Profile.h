@@ -81,14 +81,14 @@ public:
   ~TAO_UIPMC_Profile (void);
 
   /// Template methods. Please see tao/Profile.h for documentation.
-  
+
   /// N.B. We have to override the TAO_Profile default decode because
   /// in UIPMC there is no object key marshalled and we do not implement
   /// a useable ::decode_endpoints
   virtual int decode (TAO_InputCDR& cdr);
   virtual void parse_string (const char *string
                              ACE_ENV_ARG_DECL);
-  virtual char * to_string (ACE_ENV_SINGLE_ARG_DECL);
+  virtual char * to_string (void);
   virtual int encode_endpoints (void);
   virtual TAO_Endpoint *endpoint (void);
   virtual CORBA::ULong endpoint_count (void) const;

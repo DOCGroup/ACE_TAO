@@ -54,7 +54,7 @@ public:
              ACE_ENV_ARG_DECL);
   // This method connects the supplier to the EC.
 
-  void close (ACE_ENV_SINGLE_ARG_DECL);
+  void close (void);
   // Disconnect from the EC.
 
   void activate (const char* name,
@@ -64,11 +64,11 @@ public:
 
   void push (const RtecEventComm::EventSet& events
              ACE_ENV_ARG_DECL);
-  void disconnect_push_consumer (ACE_ENV_SINGLE_ARG_DECL_NOT_USED);
+  void disconnect_push_consumer (void);
   // Implement the callbacks for our consumer personality.
 
 
-  virtual void disconnect_push_supplier (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+  virtual void disconnect_push_supplier (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
   // The methods in the skeleton.
 
@@ -124,13 +124,13 @@ public:
              ACE_ENV_ARG_DECL);
   // This method connects the consumer to the EC.
 
-  void close (ACE_ENV_SINGLE_ARG_DECL);
+  void close (void);
   // Disconnect from the EC.
 
   virtual void push (const RtecEventComm::EventSet& events
                      ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
-  virtual void disconnect_push_consumer (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+  virtual void disconnect_push_consumer (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
   // The skeleton methods.
 
@@ -213,7 +213,7 @@ private:
 
   void connect_suppliers (RtecEventChannelAdmin::EventChannel_ptr local_ec
                           ACE_ENV_ARG_DECL);
-  void disconnect_suppliers (ACE_ENV_SINGLE_ARG_DECL);
+  void disconnect_suppliers (void);
   // Connect the suppliers.
 
   void activate_suppliers (RtecEventChannelAdmin::EventChannel_ptr local_ec
@@ -229,10 +229,10 @@ private:
 
   void connect_consumers (RtecEventChannelAdmin::EventChannel_ptr local_ec
                           ACE_ENV_ARG_DECL);
-  void disconnect_consumers (ACE_ENV_SINGLE_ARG_DECL);
+  void disconnect_consumers (void);
   // Connect and disconnect the consumers.
 
-  int shutdown (ACE_ENV_SINGLE_ARG_DECL_NOT_USED);
+  int shutdown (void);
   // Called when the main thread (i.e. not the scavenger thread) is
   // shutting down.
 

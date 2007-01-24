@@ -11,8 +11,8 @@
 #include "ace/OS_NS_arpa_inet.h"
 #include "ace/OS_NS_sys_time.h"
 
-ACE_RCSID (Logger, 
-           Logging_Test_i, 
+ACE_RCSID (Logger,
+           Logging_Test_i,
            "$Id$")
 
   // Constructor
@@ -45,7 +45,6 @@ Logger_Client::init (int argc, char *argv[])
                               "internet"
                               ACE_ENV_ARG_PARAMETER);
 
-      ACE_TRY_CHECK;
       if (TAO_debug_level > 0)
         ACE_DEBUG ((LM_DEBUG,
                     "\nOrb initialized successfully\n"));
@@ -55,16 +54,14 @@ Logger_Client::init (int argc, char *argv[])
         return -1;
 
       // Initialize the naming service
-      int ret = this->init_naming_service (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      int ret = this->init_naming_service ();
       if (ret != 0)
         ACE_ERROR_RETURN ((LM_ERROR,
                            " (%P|%t) Unable to initialize naming"
                            "services.\n"),
                           -1);
       // Create the logger instances
-      ret = this->init_loggers (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      ret = this->init_loggers ();
       if (ret != 0)
         ACE_ERROR_RETURN ((LM_ERROR,
                            " (%P|%t) Unable to initialize logger"
@@ -77,14 +74,13 @@ Logger_Client::init (int argc, char *argv[])
       return -1;
     }
   ACE_ENDTRY;
-  ACE_CHECK_RETURN (-1);
 
   return 0;
 
 }
 
 int
-Logger_Client::init_naming_service (ACE_ENV_SINGLE_ARG_DECL)
+Logger_Client::init_naming_service (void)
 {
   // Initialize the naming services
   if (my_name_client_.init (orb_.in ()) != 0)
@@ -141,7 +137,7 @@ Logger_Client::init_naming_service (ACE_ENV_SINGLE_ARG_DECL)
 }
 
 int
-Logger_Client::init_loggers (ACE_ENV_SINGLE_ARG_DECL)
+Logger_Client::init_loggers (void)
 {
   // Retrieve the Logger obj ref corresponding to key1 and
   // key2.
@@ -149,11 +145,9 @@ Logger_Client::init_loggers (ACE_ENV_SINGLE_ARG_DECL)
     {
       this->logger_1_ = factory_->make_logger ("key1"
                                                ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       this->logger_2_ = factory_->make_logger ("key2"
                                                ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       if (CORBA::is_nil (this->logger_1_.in ()))
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -175,7 +169,6 @@ Logger_Client::init_loggers (ACE_ENV_SINGLE_ARG_DECL)
                       "\nTrying to resolve already created logger..."));
           Logger_var logger_3 = factory_->make_logger ("key1"
                                                        ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
 
           if (CORBA::is_nil (logger_3.in ()))
             ACE_DEBUG ((LM_DEBUG,
@@ -251,23 +244,18 @@ Logger_Client::run (void)
 
       // Change the verbosity.
       this->logger_1_->verbosity (Logger::VERBOSE_LITE ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       // Log the first Log_Record (VERBOSE_LITE)
       this->logger_1_->log (rec1 ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       // Change the verbosity again.
       this->logger_2_->verbosity (Logger::VERBOSE ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       // Log the second Log_Record (VERBOSE)
       this->logger_2_->log (rec2 ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       // Change the verbosity again
       this->logger_2_->verbosity (Logger::SILENT ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       // Log the third log record using logv() (this shows if the
       // verbosity level overrides the logger's verbosity level)
@@ -276,11 +264,9 @@ Logger_Client::run (void)
       // Change the verbosity again (so that regular log msgs can be
       // seen again)
       this->logger_2_->verbosity (Logger::VERBOSE ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       // Log the fourth record using log_twoway()
       this->logger_2_->log_twoway (rec4 ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
     }
 
   ACE_CATCHANY
@@ -288,7 +274,6 @@ Logger_Client::run (void)
       ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "run");
     }
   ACE_ENDTRY;
-  ACE_CHECK_RETURN (-1);
   return 0;
 }
 

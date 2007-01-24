@@ -198,7 +198,6 @@ namespace TAO_Notify
           Topology_Object* next = cur->load_child (
             cname, id, attrs ACE_ENV_ARG_PARAMETER);
           ACE_ASSERT(next != 0);
-          ACE_TRY_CHECK;
           object_stack_.push (next);
         }
         ACE_CATCHANY

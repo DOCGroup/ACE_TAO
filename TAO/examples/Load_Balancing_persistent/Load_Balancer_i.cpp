@@ -39,7 +39,7 @@ Object_Group_Factory_i::~Object_Group_Factory_i (void)
 }
 
 PortableServer::POA_ptr
-Object_Group_Factory_i::_default_POA (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+Object_Group_Factory_i::_default_POA (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return PortableServer::POA::_duplicate (this->poa_.in ());
@@ -60,7 +60,6 @@ Object_Group_Factory_i::make_round_robin (const char * id
       ACE_NEW_THROW_EX (this->rr_groups_,
                         (hash_map) HASH_MAP (this->mem_pool_),
                         CORBA::NO_MEMORY ());
-      ACE_CHECK_RETURN (Load_Balancer::Object_Group::_nil ());
 
       // Bind it in the mem pool with a name
       if (this->mem_pool_->bind (rr_name_bind,
@@ -132,7 +131,6 @@ Object_Group_Factory_i::make_random (const char * id
       ACE_NEW_THROW_EX (this->random_groups_,
                         (hash_map) HASH_MAP (this->mem_pool_),
                         CORBA::NO_MEMORY ());
-      ACE_CHECK_RETURN (Load_Balancer::Object_Group::_nil ());
 
       // Bind it in the mem pool with a name
       if (this->mem_pool_->bind (random_name_bind,
@@ -234,19 +232,15 @@ Object_Group_Factory_i::make_group (int random,
                       RR_Object_Group (id,
                                        this->poa_.in ()),
                       CORBA::NO_MEMORY ());
-  ACE_CHECK_RETURN (group._retn ());
 
   // Register with the poa, begin using ref. counting.
-  group = group_servant->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (group._retn ());
+  group = group_servant->_this ();
 
-  group_servant->_remove_ref (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (Load_Balancer::Object_Group::_nil ());
+  group_servant->_remove_ref ();
 
   CORBA::String_var ior =
     this->orb_->object_to_string (group.in ()
                                   ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (Load_Balancer::Object_Group::_nil ());
 
 
   // Calculate and allocate the memory we need to store this name to
@@ -288,7 +282,6 @@ Object_Group_Factory_i::make_group (int random,
   // Update the value of flags_
   this->update_flags (random
                       ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (Load_Balancer::Object_Group::_nil ());
 
   if (result == -1)
     {
@@ -358,8 +351,7 @@ Object_Group_Factory_i::resolve (const char * id
     {
       this->mem_pool_->find (flags_name_bind,
                              (void *&)this->flags_);
-      this->update_objects (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK_RETURN (Load_Balancer::Object_Group::_nil ());
+      this->update_objects ();
     }
 
   char *ior = 0;
@@ -376,13 +368,11 @@ Object_Group_Factory_i::resolve (const char * id
   CORBA::Object_var objref =
     this->orb_->string_to_object (ior
                                   ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (Load_Balancer::Object_Group::_nil ());
 
   Load_Balancer::Object_Group_ptr
     object_group = Load_Balancer::Object_Group::_narrow (objref.in ()
                                                          ACE_ENV_ARG_PARAMETER);
 
-  ACE_CHECK_RETURN (Load_Balancer::Object_Group::_nil ());
 
 
 #if defined (DOORS_MEASURE_STATS)
@@ -418,7 +408,6 @@ Object_Group_Factory_i::list_groups (int random
   ACE_NEW_THROW_EX (list,
                     Load_Balancer::Group_List (len),
                     CORBA::NO_MEMORY ());
-  ACE_CHECK_RETURN (list);
   list->length (len);
 
   // Create an iterator for group structure to populate the list.
@@ -444,14 +433,14 @@ Object_Group_Factory_i::list_groups (int random
 }
 
 Load_Balancer::Group_List *
-Object_Group_Factory_i::round_robin_groups (ACE_ENV_SINGLE_ARG_DECL)
+Object_Group_Factory_i::round_robin_groups (void)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return list_groups (0 ACE_ENV_ARG_PARAMETER);
 }
 
 Load_Balancer::Group_List *
-Object_Group_Factory_i::random_groups (ACE_ENV_SINGLE_ARG_DECL)
+Object_Group_Factory_i::random_groups (void)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return list_groups (1 ACE_ENV_ARG_PARAMETER);
@@ -473,7 +462,6 @@ Object_Group_Factory_i::update_flags (int random
           ACE_NEW_THROW_EX (this->flags_,
                             (value) CORBA::Short (0),
                             CORBA::NO_MEMORY ());
-          ACE_CHECK;
 
           // Initialize the variable
           this->mem_pool_->bind (flags_name_bind,
@@ -503,7 +491,7 @@ Object_Group_Factory_i::update_flags (int random
 }
 
 void
-Object_Group_Factory_i::update_objects (ACE_ENV_SINGLE_ARG_DECL)
+Object_Group_Factory_i::update_objects (void)
 {
   // Create an appropriate servant.
   Object_Group_i * group_servant = 0;
@@ -583,7 +571,7 @@ Object_Group_i::~Object_Group_i (void)
 
 
 PortableServer::POA_ptr
-Object_Group_i::_default_POA (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+Object_Group_i::_default_POA (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return PortableServer::POA::_duplicate (this->poa_.in ());
@@ -591,7 +579,7 @@ Object_Group_i::_default_POA (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
 
 
 char *
-Object_Group_i::id (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+Object_Group_i::id (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return CORBA::string_dup (id_.c_str ());
@@ -606,8 +594,7 @@ Object_Group_i::bind (const Load_Balancer::Member & member
 
   if (this->members_ == 0)
     {
-      ACE_CString id = this->id (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK;
+      ACE_CString id = this->id ();
 
       id += server_id_name_bind;
 
@@ -617,7 +604,6 @@ Object_Group_i::bind (const Load_Balancer::Member & member
           ACE_NEW_THROW_EX (this->members_,
                             (hash_map) HASH_MAP (this->allocator_),
                             CORBA::NO_MEMORY ());
-          ACE_CHECK;
 
           // Bind it in the mem pool with a name
           if (this->allocator_->bind (id.c_str (),
@@ -664,8 +650,7 @@ Object_Group_i::bind (const Load_Balancer::Member & member
   // member's id into <member_id_list_>.
 
   ACE_CString id = dll_name_bind;
-  id += this->id (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+  id += this->id ();
 
 
   if (this->allocator_->find (id.c_str (),
@@ -676,7 +661,6 @@ Object_Group_i::bind (const Load_Balancer::Member & member
       ACE_NEW_THROW_EX (this->member_id_list_,
                         (dll_list) LIST (this->allocator_),
                         CORBA::NO_MEMORY ());
-      ACE_CHECK;
 
       // Bind it in the mem pool with a name
       if (this->allocator_->bind (id.c_str (),
@@ -705,8 +689,7 @@ Object_Group_i::unbind (const char * id
   // Check whether the this->member_ is NULL
   if (this->members_ == 0)
     {
-      ACE_CString id = this->id (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK;
+      ACE_CString id = this->id ();
 
       id += server_id_name_bind;
 
@@ -728,8 +711,7 @@ Object_Group_i::unbind (const char * id
   if (this->member_id_list_ == 0)
     {
       ACE_CString id = dll_name_bind;
-      id += this->id (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK;
+      id += this->id ();
 
       if (this->allocator_->find (id.c_str (),
                                   (void *&)this->member_id_list_)
@@ -771,13 +753,12 @@ Object_Group_i::resolve_with_id (const char * id
 }
 
 Load_Balancer::Member_ID_List *
-Object_Group_i::members (ACE_ENV_SINGLE_ARG_DECL)
+Object_Group_i::members (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   Load_Balancer::Member_ID_List * list = 0;
 
-  this->read_from_memory (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (0);
+  this->read_from_memory ();
 
   // Figure out the length of the list.
   CORBA::ULong len = this->members_->current_size ();
@@ -786,7 +767,6 @@ Object_Group_i::members (ACE_ENV_SINGLE_ARG_DECL)
   ACE_NEW_THROW_EX (list,
                     Load_Balancer::Member_ID_List (len),
                     CORBA::NO_MEMORY ());
-  ACE_CHECK_RETURN (list);
   list->length (len);
 
   // Create an iterator for <member_id_list_> to populate the list.
@@ -805,30 +785,26 @@ Object_Group_i::members (ACE_ENV_SINGLE_ARG_DECL)
 }
 
 void
-Object_Group_i::destroy (ACE_ENV_SINGLE_ARG_DECL)
+Object_Group_i::destroy (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // Deregister with POA.
   PortableServer::POA_var poa =
-    this->_default_POA (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+    this->_default_POA ();
 
   PortableServer::ObjectId_var id =
     poa->servant_to_id (this
                         ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
   poa->deactivate_object (id.in ()
                           ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 }
 
 void
-Object_Group_i::read_from_memory (ACE_ENV_SINGLE_ARG_DECL)
+Object_Group_i::read_from_memory (void)
 {
     // Sanity check needs to be done in all the places
-  ACE_CString id = this->id (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+  ACE_CString id = this->id ();
 
   if (!this->members_)
     {
@@ -846,8 +822,7 @@ Object_Group_i::read_from_memory (ACE_ENV_SINGLE_ARG_DECL)
   if (!this->member_id_list_)
     {
       id = dll_name_bind;
-      id += this->id (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK;
+      id += this->id ();
 
       if (this->allocator_->find (id.c_str (),
                                   (void *&)this->member_id_list_) == -1)
@@ -869,13 +844,12 @@ Random_Object_Group::Random_Object_Group (const char *id,
 }
 
 char *
-Random_Object_Group::resolve (ACE_ENV_SINGLE_ARG_DECL)
+Random_Object_Group::resolve (void)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Load_Balancer::no_such_member))
 {
 
-  this->read_from_memory (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (0);
+  this->read_from_memory ();
 
   size_t group_size = this->members_->current_size ();
   if (group_size == 0)
@@ -909,14 +883,13 @@ RR_Object_Group::RR_Object_Group (const char *id,
 }
 
 char *
-RR_Object_Group::resolve (ACE_ENV_SINGLE_ARG_DECL)
+RR_Object_Group::resolve (void)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Load_Balancer::no_such_member))
 {
   char *objref = 0;
 
-  this->read_from_memory (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (0);
+  this->read_from_memory ();
 
   size_t group_size = this->members_->current_size ();
   if (group_size == 0)
@@ -954,8 +927,7 @@ RR_Object_Group::unbind (const char *id
 
   if (this->members_ == 0)
     {
-      ACE_CString id = this->id (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK;
+      ACE_CString id = this->id ();
 
       id += server_id_name_bind;
 
@@ -980,8 +952,7 @@ RR_Object_Group::unbind (const char *id
   if (this->member_id_list_ == 0)
     {
       ACE_CString id = dll_name_bind;
-      id += this->id (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK;
+      id += this->id ();
 
       if (this->allocator_->find (id.c_str (),
                                   (void *&)this->member_id_list_)

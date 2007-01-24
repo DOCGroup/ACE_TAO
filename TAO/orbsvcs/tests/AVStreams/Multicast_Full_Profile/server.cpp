@@ -14,14 +14,12 @@ FTP_Server_FlowEndPoint::FTP_Server_FlowEndPoint (void)
     {
       this->set_protocol_restriction (protocols
                                       ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
     }
   ACE_CATCHANY
     {
       ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,"FTP_Server_FlowEndPoint::FTP_Server_FlowEndPoint");
     }
   ACE_ENDTRY;
-  ACE_CHECK;
 }
 
 int
@@ -89,8 +87,7 @@ FTP_Server_Callback::handle_end_stream (void)
 //   ACE_NEW_RETURN (endpoint,
 //                   FTP_Server_FlowEndPoint,
 //                   0);
-//   return endpoint->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
-//   ACE_CHECK_RETURN (0);
+//   return endpoint->_this ();
 // }
 
 Server::Server (void)
@@ -148,13 +145,10 @@ Server::init (int argc,
                       FTP_Server_FDev,
                       -1);
       this->fdev_->flowname ("Data");
-      AVStreams::MMDevice_var mmdevice = this->mmdevice_->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
-      AVStreams::FDev_var fdev = this->fdev_->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      AVStreams::MMDevice_var mmdevice = this->mmdevice_->_this ();
+      AVStreams::FDev_var fdev = this->fdev_->_this ();
       mmdevice->add_fdev (fdev.in ()
                           ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       // Register the mmdevice with the naming service.
       CosNaming::Name server_mmdevice_name (1);
@@ -174,10 +168,8 @@ Server::init (int argc,
           this->my_naming_client_->bind (server_mmdevice_name,
                                          mmdevice.in ()
                                          ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
         }
       ACE_ENDTRY;
-      ACE_CHECK_RETURN (-1);
     }
   ACE_CATCHANY
     {
@@ -185,7 +177,6 @@ Server::init (int argc,
       return -1;
     }
   ACE_ENDTRY;
-  ACE_CHECK_RETURN (-1);
   return 0;
 }
 
@@ -195,8 +186,7 @@ Server::run (void)
   ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY
     {
-      TAO_AV_CORE::instance ()->orb ()->run (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      TAO_AV_CORE::instance ()->orb ()->run ();
     }
     ACE_CATCHANY
     {
@@ -204,7 +194,6 @@ Server::run (void)
       return -1;
     }
   ACE_ENDTRY;
-  ACE_CHECK_RETURN (-1);
   return 0;
 }
 
@@ -255,7 +244,6 @@ main (int argc,
     {
       CORBA::Object_var obj
         = orb->resolve_initial_references ("RootPOA" ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       PortableServer::POA_var poa
         = PortableServer::POA::_narrow (obj.in ());
@@ -263,7 +251,6 @@ main (int argc,
       TAO_AV_CORE::instance ()->init (orb.in (),
                                       poa.in ()
                                       ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
     }
   ACE_CATCHANY
     {
@@ -271,7 +258,6 @@ main (int argc,
       return -1;
     }
   ACE_ENDTRY;
-  ACE_CHECK_RETURN (-1);
 
   int result = 0;
   result = FTP_SERVER::instance ()->init (argc,argv);

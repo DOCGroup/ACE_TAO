@@ -31,13 +31,11 @@ TAO_LB_ClientORBInitializer::post_init (
                         TAO::VMCID,
                         ENOMEM),
                       CORBA::COMPLETED_NO));
-  ACE_CHECK;
 
   PortableInterceptor::ClientRequestInterceptor_var client_interceptor = tmp;
 
   info->add_client_request_interceptor (client_interceptor.in ()
                                         ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL

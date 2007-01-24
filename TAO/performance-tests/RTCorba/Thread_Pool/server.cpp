@@ -25,10 +25,10 @@ public:
                ACE_ENV_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  void shutdown (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+  void shutdown (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  PortableServer::POA_ptr _default_POA (ACE_ENV_SINGLE_ARG_DECL);
+  PortableServer::POA_ptr _default_POA (void);
 
 private:
   CORBA::ORB_var orb_;
@@ -60,18 +60,17 @@ test_i::method (CORBA::ULong work,
 }
 
 PortableServer::POA_ptr
-test_i::_default_POA (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+test_i::_default_POA (void)
 {
   return PortableServer::POA::_duplicate (this->poa_.in ());
 }
 
 void
-test_i::shutdown (ACE_ENV_SINGLE_ARG_DECL)
+test_i::shutdown (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->orb_->shutdown (0
                         ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 }
 
 static const char *ior_output_file = "ior";
@@ -175,7 +174,6 @@ write_ior_to_file (const char *ior_file,
   CORBA::String_var ior =
     orb->object_to_string (object
                            ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
 
   FILE *output_file =
     ACE_OS::fopen (ior_file,
@@ -224,40 +222,32 @@ Task::svc (void)
       CORBA::Object_var object =
         this->orb_->resolve_initial_references ("RootPOA"
                                                 ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       PortableServer::POA_var root_poa =
         PortableServer::POA::_narrow (object.in ()
                                       ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       PortableServer::POAManager_var poa_manager =
-        root_poa->the_POAManager (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        root_poa->the_POAManager ();
 
       object =
         this->orb_->resolve_initial_references ("RTORB"
                                                 ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       RTCORBA::RTORB_var rt_orb =
         RTCORBA::RTORB::_narrow (object.in ()
                                  ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       object =
         this->orb_->resolve_initial_references ("RTCurrent"
                                                 ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       RTCORBA::Current_var current =
         RTCORBA::Current::_narrow (object.in ()
                                    ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       default_thread_priority =
-        current->the_priority (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        current->the_priority ();
 
       int result = 0;
       CORBA::ULong stacksize = 0;
@@ -282,7 +272,6 @@ Task::svc (void)
                                              policies,
                                              1
                                              ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
         }
       else if (ACE_OS::strcmp (lanes_file, "empty-file") != 0)
         {
@@ -300,7 +289,6 @@ Task::svc (void)
                                 policies,
                                 1
                                 ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
 
           if (result != 0)
             return result;
@@ -312,7 +300,6 @@ Task::svc (void)
                                 policies,
                                 1
                                 ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
 
           if (result != 0)
             return result;
@@ -332,13 +319,11 @@ Task::svc (void)
                                        max_buffered_requests,
                                        max_request_buffer_size
                                        ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
 
           policies.length (policies.length () + 1);
           policies[policies.length () - 1] =
             rt_orb->create_threadpool_policy (threadpool_id
                                               ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
 
           if (ACE_OS::strcmp (bands_file, "empty-file") != 0)
             {
@@ -349,7 +334,6 @@ Task::svc (void)
                                     policies,
                                     1
                                     ACE_ENV_ARG_PARAMETER);
-              ACE_TRY_CHECK;
 
               if (result != 0)
                 return result;
@@ -361,21 +345,18 @@ Task::svc (void)
         root_poa->create_implicit_activation_policy
         (PortableServer::IMPLICIT_ACTIVATION
          ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       policies.length (policies.length () + 1);
       policies[policies.length () - 1] =
         rt_orb->create_priority_model_policy (RTCORBA::CLIENT_PROPAGATED,
                                               default_thread_priority
                                               ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       PortableServer::POA_var poa =
         root_poa->create_POA ("RT POA",
                               poa_manager.in (),
                               policies
                               ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       test_i *servant =
         new test_i (this->orb_.in (),
@@ -385,27 +366,22 @@ Task::svc (void)
       ACE_UNUSED_ARG (safe_servant);
 
       test_var test =
-        servant->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        servant->_this ();
 
       result =
         write_ior_to_file (ior_output_file,
                            this->orb_.in (),
                            test.in ()
                            ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       if (result != 0)
         return result;
 
-      poa_manager->activate (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      poa_manager->activate ();
 
-      this->orb_->run (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      this->orb_->run ();
 
-      this->orb_->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      this->orb_->destroy ();
     }
   ACE_CATCHANY
     {
@@ -428,7 +404,6 @@ main (int argc, char *argv[])
                          argv,
                          ""
                          ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       int result =
         parse_args (argc, argv);

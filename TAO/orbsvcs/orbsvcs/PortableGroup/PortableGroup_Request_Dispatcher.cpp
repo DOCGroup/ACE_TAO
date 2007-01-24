@@ -42,7 +42,6 @@ PortableGroup_Request_Dispatcher::dispatch (TAO_ORB_Core *orb_core,
                                      request,
                                      forward_to
                                      ACE_ENV_ARG_PARAMETER);
-          ACE_CHECK;
 
           return;
         }
@@ -55,7 +54,6 @@ PortableGroup_Request_Dispatcher::dispatch (TAO_ORB_Core *orb_core,
                                            request,
                                            forward_to
                                            ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL

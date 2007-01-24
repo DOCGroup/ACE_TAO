@@ -82,28 +82,28 @@ TAO::SSLIOP_Credentials::~SSLIOP_Credentials (void)
 }
 
 char *
-TAO::SSLIOP_Credentials::creds_id (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+TAO::SSLIOP_Credentials::creds_id (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return CORBA::string_dup (this->id_.in ());
 }
 
 SecurityLevel3::CredentialsUsage
-TAO::SSLIOP_Credentials::creds_usage (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+TAO::SSLIOP_Credentials::creds_usage (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return SecurityLevel3::CU_Indefinite;
 }
 
 TimeBase::UtcT
-TAO::SSLIOP_Credentials::expiry_time (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+TAO::SSLIOP_Credentials::expiry_time (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return this->expiry_time_;
 }
 
 SecurityLevel3::CredentialsState
-TAO::SSLIOP_Credentials::creds_state (ACE_ENV_SINGLE_ARG_DECL)
+TAO::SSLIOP_Credentials::creds_state (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   const ::X509 *x = this->x509_.in ();
@@ -179,13 +179,11 @@ TAO::SSLIOP_Credentials::operator== (const TAO::SSLIOP_Credentials &rhs)
   // No need for a full blown ACE_TRY/CATCH block.
 
   const SecurityLevel3::CredentialsType lct =
-    this->creds_type (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (false);
+    this->creds_type ();
 
   const SecurityLevel3::CredentialsType rct =
     const_cast<TAO::SSLIOP_Credentials &> (rhs).creds_type (
       ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (false);
 
   // Don't bother check the creds_id and expiry_time attributes.  They
   // are checked implicitly by the below X509_cmp() call.

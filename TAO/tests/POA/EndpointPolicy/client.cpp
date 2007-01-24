@@ -47,13 +47,11 @@ main (int argc, char *argv[])
   ACE_TRY_NEW_ENV
     {
       orb = CORBA::ORB_init (argc, argv, "" ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       if (parse_args (argc, argv) != 0)
         return 1;
 
       tmp = orb->string_to_object(ior ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
     }
   ACE_CATCHANY
     {
@@ -69,7 +67,6 @@ main (int argc, char *argv[])
                   (bad_ior ? "fail" : "work")));
       Test::Hello_var hello =
         Test::Hello::_narrow(tmp.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       if (CORBA::is_nil (hello.in ()))
         {
@@ -80,8 +77,7 @@ main (int argc, char *argv[])
         }
 
       CORBA::String_var the_string =
-        hello->get_string (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        hello->get_string ();
 
       if (bad_ior)
         {
@@ -91,8 +87,7 @@ main (int argc, char *argv[])
 
       ACE_DEBUG ((LM_DEBUG, "client: success!\n"));
 
-      hello->shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      hello->shutdown ();
     }
   ACE_CATCHANY
     {
@@ -106,7 +101,7 @@ main (int argc, char *argv[])
     }
   ACE_ENDTRY;
 
-  orb->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
+  orb->destroy ();
 
   return 0;
 }

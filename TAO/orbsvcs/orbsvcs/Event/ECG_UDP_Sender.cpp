@@ -50,7 +50,6 @@ TAO_ECG_UDP_Sender::init (RtecEventChannelAdmin::EventChannel_ptr lcl_ec,
     }
 
   this->cdr_sender_.init (endpoint_rptr ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
   this->lcl_ec_ =
     RtecEventChannelAdmin::EventChannel::_duplicate (lcl_ec);
@@ -80,12 +79,10 @@ TAO_ECG_UDP_Sender::connect (const RtecEventChannelAdmin::ConsumerQOS& sub
   if (CORBA::is_nil (this->supplier_proxy_.in ()))
     {
       this->new_connect (sub ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
     }
   else
     {
       this->reconnect (sub ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
     }
 }
 
@@ -103,22 +100,18 @@ TAO_ECG_UDP_Sender::new_connect (const RtecEventChannelAdmin::ConsumerQOS& sub
             this,
             deactivator
             ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
   // Connect as a consumer to the local EC.
   RtecEventChannelAdmin::ConsumerAdmin_var consumer_admin =
-    this->lcl_ec_->for_consumers (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+    this->lcl_ec_->for_consumers ();
 
   RtecEventChannelAdmin::ProxyPushSupplier_var proxy =
-    consumer_admin->obtain_push_supplier (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+    consumer_admin->obtain_push_supplier ();
   ECG_Sender_Auto_Proxy_Disconnect new_proxy_disconnect (proxy.in ());
 
   proxy->connect_push_consumer (consumer_ref.in (),
                                 sub
                                 ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
   // Update resource managers.
   this->supplier_proxy_ = proxy._retn ();
@@ -135,10 +128,8 @@ TAO_ECG_UDP_Sender::reconnect (const RtecEventChannelAdmin::ConsumerQOS& sub
   PortableServer::POA_var poa = this->_default_POA ();
 
   CORBA::Object_var obj = poa->servant_to_reference (this ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
   consumer_ref =
     RtecEventComm::PushConsumer::_narrow (obj.in () ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
   if (CORBA::is_nil (consumer_ref.in ()))
     {
@@ -149,21 +140,20 @@ TAO_ECG_UDP_Sender::reconnect (const RtecEventChannelAdmin::ConsumerQOS& sub
   this->supplier_proxy_->connect_push_consumer (consumer_ref.in (),
                                                 sub
                                                 ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 }
 
 void
-TAO_ECG_UDP_Sender::disconnect_push_consumer (ACE_ENV_SINGLE_ARG_DECL)
+TAO_ECG_UDP_Sender::disconnect_push_consumer (void)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // Prevent attempts to disconnect.
   this->auto_proxy_disconnect_.disallow_command ();
 
-  this->shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
+  this->shutdown ();
 }
 
 void
-TAO_ECG_UDP_Sender::shutdown (ACE_ENV_SINGLE_ARG_DECL)
+TAO_ECG_UDP_Sender::shutdown (void)
 {
   this->supplier_proxy_ =
     RtecEventChannelAdmin::ProxyPushSupplier::_nil ();
@@ -174,8 +164,7 @@ TAO_ECG_UDP_Sender::shutdown (ACE_ENV_SINGLE_ARG_DECL)
   this->lcl_ec_ = RtecEventChannelAdmin::EventChannel::_nil ();
 
   this->deactivator_.deactivate ();
-  this->cdr_sender_.shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+  this->cdr_sender_.shutdown ();
 }
 
 void
@@ -223,13 +212,11 @@ TAO_ECG_UDP_Sender::push (const RtecEventComm::EventSet &events
       // Grab the right mcast group for this event...
       RtecUDPAdmin::UDP_Addr udp_addr;
       this->addr_server_->get_addr (header, udp_addr ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
 
       ACE_INET_Addr inet_addr (udp_addr.port,
                                udp_addr.ipaddr);
 
       this->cdr_sender_.send_message (cdr, inet_addr ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
     }
 }
 

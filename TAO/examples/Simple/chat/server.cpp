@@ -28,13 +28,11 @@ main (int argc, char *argv[])
       Server_i server_i;
 
       int ret = server_i.init (argc, argv ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
       if (ret != 0)
         ACE_ERROR_RETURN ((LM_ERROR,
                            "\n error in init.\n"),
                           1);
-      ret = server_i.run (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      ret = server_i.run ();
       if (ret != 0)
         ACE_ERROR_RETURN ((LM_ERROR,
                            "\n error in run.\n"),

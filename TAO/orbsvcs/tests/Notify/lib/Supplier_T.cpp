@@ -33,7 +33,6 @@ TAO_Notify_Tests_Supplier_T<Supplier_Traits>::obtain_proxy (ACE_TYPENAME TAO_Not
                                                   ACE_ENV_ARG_PARAMETER
                                                   );
 
-  ACE_CHECK_RETURN (Proxy_Traits_INTERFACE::_nil ());
 
   ACE_ASSERT (!CORBA::is_nil (proxy_consumer.in ()));
 
@@ -54,7 +53,6 @@ TAO_Notify_Tests_Supplier_T<Supplier_Traits>::obtain_proxy (ACE_TYPENAME TAO_Not
                                                            , this->proxy_id_
                                                            , qos
                                                            ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (Proxy_Traits_INTERFACE::_nil ());
 
   ACE_ASSERT (!CORBA::is_nil (proxy_consumer.in ()));
 
@@ -85,7 +83,6 @@ TAO_Notify_Tests_Supplier_T<Supplier_Traits>::offer_change (CosNotification::Eve
   ACE_TYPENAME Proxy_Traits::PTR proxy_consumer = this->get_proxy ();
 
   proxy_consumer->offer_change (added, removed ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 }
 
 template <class Supplier_Traits> void

@@ -34,7 +34,7 @@ public:
   {
   }
 
-  virtual void run_test (ACE_ENV_SINGLE_ARG_DECL) = 0;
+  virtual void run_test (void) = 0;
 
   virtual int svc (void)
   {
@@ -42,8 +42,7 @@ public:
     ACE_DECLARE_NEW_CORBA_ENV;
     ACE_TRY
       {
-        this->run_test (ACE_ENV_SINGLE_ARG_PARAMETER);
-        ACE_TRY_CHECK;
+        this->run_test ();
       }
     ACE_CATCHANY
       {
@@ -76,7 +75,7 @@ public:
   {
   }
 
-  virtual void run_test (ACE_ENV_SINGLE_ARG_DECL)
+  virtual void run_test (void)
   {
     for (int i = 0; i != this->iterations_; ++i)
       {
@@ -88,7 +87,6 @@ public:
           (void) this->roundtrip_->test_method (start,
                                                 this->workload_
                                                 ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
           ACE_hrtime_t elapsed = ACE_OS::gethrtime () - start;
 
           this->sample_history.sample (elapsed);
@@ -128,7 +126,7 @@ public:
     this->stopped_ = 1;
   }
 
-  virtual void run_test (ACE_ENV_SINGLE_ARG_DECL)
+  virtual void run_test (void)
   {
     for (;;)
       {
@@ -146,7 +144,6 @@ public:
           (void) this->roundtrip_->test_method (dummy,
                                                 this->workload_
                                                 ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
 
         } ACE_CATCHANY {
         } ACE_ENDTRY;
@@ -171,7 +168,6 @@ int main (int argc, char *argv[])
     {
       ORB_Holder orb (argc, argv, ""
                       ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       Client_Options options (argc, argv);
       if (argc != 1)
@@ -197,23 +193,19 @@ int main (int argc, char *argv[])
                                      rt_class,
                                      options.nthreads
                                      ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       ACE_DEBUG ((LM_DEBUG, "Finished ORB and POA configuration\n"));
 
       CORBA::Object_var object =
         orb->string_to_object (options.ior ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       Test::Roundtrip_var roundtrip =
         Test::Roundtrip::_narrow (object.in ()
                                   ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       CORBA::PolicyList_var inconsistent_policies;
       (void) roundtrip->_validate_connection (inconsistent_policies
                                               ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       int thread_count = 1 + options.nthreads;
       ACE_Barrier the_barrier (thread_count);
@@ -263,8 +255,7 @@ int main (int argc, char *argv[])
 
       ACE_DEBUG ((LM_DEBUG, "(%P|%t) client - all task(s) joined\n"));
 
-      roundtrip->shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      roundtrip->shutdown ();
 
       ACE_DEBUG ((LM_DEBUG, "(%P|%t) client - starting cleanup\n"));
     }

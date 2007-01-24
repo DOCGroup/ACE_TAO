@@ -136,14 +136,12 @@ int StubFaultAnalyzer::init (CORBA::ORB_ptr orb ACE_ENV_ARG_DECL)
   {
     result = this->faultConsumer_.init (orb, this->notifier_
                             ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK_RETURN (-1);
   }
 
   if (result == 0)
   {
     result = this->batchConsumer_.init (orb, this->notifier_
                             ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK_RETURN (-1);
   }
 
   /////////////////////////
@@ -221,7 +219,6 @@ int StubFaultAnalyzer::init (CORBA::ORB_ptr orb ACE_ENV_ARG_DECL)
             criteria.in(),
             factory_creation_id
             ACE_ENV_ARG_PARAMETER);
-          ACE_CHECK_RETURN (-1);
         }
       }
     }
@@ -251,10 +248,10 @@ const char * StubFaultAnalyzer::identity () const
 /**
  * Clean house for process shut down.
  */
-int StubFaultAnalyzer::fini (ACE_ENV_SINGLE_ARG_DECL)
+int StubFaultAnalyzer::fini (void)
 {
-  this->faultConsumer_.fini(ACE_ENV_SINGLE_ARG_PARAMETER);
-  this->batchConsumer_.fini(ACE_ENV_SINGLE_ARG_PARAMETER);
+  this->faultConsumer_.fini();
+  this->batchConsumer_.fini();
   return 0;
 }
 

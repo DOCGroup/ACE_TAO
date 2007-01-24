@@ -31,15 +31,15 @@ public:
 
 private:
   /// Make sure that the current thread has a connection available.
-  void validate_connection (ACE_ENV_SINGLE_ARG_DECL);
+  void validate_connection (void);
 
   /// Some performance test methods
-  void test_octet_seq (ACE_ENV_SINGLE_ARG_DECL);
-  void test_long_seq (ACE_ENV_SINGLE_ARG_DECL);
-  void test_short_seq (ACE_ENV_SINGLE_ARG_DECL);
-  void test_char_seq (ACE_ENV_SINGLE_ARG_DECL);
-  void test_longlong_seq (ACE_ENV_SINGLE_ARG_DECL);
-  void test_double_seq (ACE_ENV_SINGLE_ARG_DECL);
+  void test_octet_seq (void);
+  void test_long_seq (void);
+  void test_short_seq (void);
+  void test_char_seq (void);
+  void test_longlong_seq (void);
+  void test_double_seq (void);
 
 private:
   /// The data type of the sequence load to be tested

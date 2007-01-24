@@ -41,7 +41,7 @@ public:
 
   void connect (CosEventChannelAdmin::ConsumerAdmin_ptr consumer_admin
                 ACE_ENV_ARG_DECL);
-  void disconnect (ACE_ENV_SINGLE_ARG_DECL);
+  void disconnect (void);
   // Simple connect/disconnect methods..
 
   void dump_results (int expected_count, int tolerance);
@@ -53,7 +53,7 @@ public:
   virtual void push (const CORBA::Any& events
                      ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
-  virtual void disconnect_push_consumer (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+  virtual void disconnect_push_consumer (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
   // The skeleton methods.
 
@@ -87,19 +87,19 @@ public:
 
   void connect (CosEventChannelAdmin::ConsumerAdmin_ptr consumer_admin
                 ACE_ENV_ARG_DECL);
-  void disconnect (ACE_ENV_SINGLE_ARG_DECL);
+  void disconnect (void);
   // Simple connect/disconnect methods..
 
   void dump_results (int expected_count, int tolerance);
   // Print out an error message if the event count is too far from the
   // expected count.
 
-  CORBA::Any *pull (ACE_ENV_SINGLE_ARG_DECL);
+  CORBA::Any *pull (void);
   CORBA::Any *try_pull (CORBA::Boolean_out has_event
                         ACE_ENV_ARG_DECL);
 
   // = The CosEventComm::PullConsumer methods
-  virtual void disconnect_pull_consumer (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+  virtual void disconnect_pull_consumer (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
   // The skeleton methods.
 
@@ -132,7 +132,7 @@ public:
   void stop (void);
   CORBA::ULong pull_count (void);
 
-  void run (ACE_ENV_SINGLE_ARG_DECL);
+  void run (void);
   // Run a single iteration of the test
 
 private:

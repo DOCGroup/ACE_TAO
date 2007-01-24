@@ -31,7 +31,6 @@ Client_Task::svc (void)
           // run the even loop for 1 second...
           ACE_Time_Value tv (1, 0);
           this->orb_->run (tv ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
 
           ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, this->mutex_, -1);
           if (this->terminate_loop_ != 0)

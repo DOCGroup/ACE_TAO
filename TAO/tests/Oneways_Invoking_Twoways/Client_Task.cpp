@@ -31,7 +31,6 @@ Client_Task::svc (void)
 
           this->sender_->send_ready_message (this->us_.in ()
                                              ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
         }
     }
   ACE_CATCHANY

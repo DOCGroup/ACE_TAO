@@ -21,19 +21,14 @@ main (int argc, char* argv[])
       // ORB initialization boiler plate...
       CORBA::ORB_var orb =
         CORBA::ORB_init (argc, argv, "" ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       CORBA::Object_var object =
         orb->resolve_initial_references ("RootPOA" ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
       PortableServer::POA_var poa =
         PortableServer::POA::_narrow (object.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
       PortableServer::POAManager_var poa_manager =
-        poa->the_POAManager (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
-      poa_manager->activate (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        poa->the_POAManager ();
+      poa_manager->activate ();
 
       // ****************************************************************
 
@@ -41,24 +36,20 @@ main (int argc, char* argv[])
                                                   poa.in ());
 
       TAO_CEC_EventChannel ec_impl (attributes);
-      ec_impl.activate (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      ec_impl.activate ();
 
       CosEventChannelAdmin::EventChannel_var event_channel =
-        ec_impl._this (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        ec_impl._this ();
 
       // ****************************************************************
 
       // Obtain the consumer admin..
       CosEventChannelAdmin::ConsumerAdmin_var consumer_admin =
-        event_channel->for_consumers (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        event_channel->for_consumers ();
 
       // Obtain the supplier admin..
       CosEventChannelAdmin::SupplierAdmin_var supplier_admin =
-        event_channel->for_suppliers (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        event_channel->for_suppliers ();
 
       // ****************************************************************
 
@@ -68,7 +59,6 @@ main (int argc, char* argv[])
 
       supplier_00.connect (supplier_admin.in ()
                            ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       // ****************************************************************
 
@@ -76,7 +66,6 @@ main (int argc, char* argv[])
 
       supplier_01.connect (supplier_admin.in ()
                            ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       // ****************************************************************
 
@@ -84,7 +73,6 @@ main (int argc, char* argv[])
 
       supplier_10.connect (supplier_admin.in ()
                            ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       // ****************************************************************
 
@@ -92,7 +80,6 @@ main (int argc, char* argv[])
 
       supplier_11.connect (supplier_admin.in ()
                            ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       // ****************************************************************
 
@@ -101,14 +88,12 @@ main (int argc, char* argv[])
       CEC_Counting_Consumer consumer_00 ("Consumer/00");
       consumer_00.connect (consumer_admin.in ()
                            ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       // ****************************************************************
 
       CEC_Counting_Consumer consumer_01 ("Consumer/01");
       consumer_01.connect (consumer_admin.in ()
                            ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       // ****************************************************************
 
@@ -147,33 +132,24 @@ main (int argc, char* argv[])
 
       // ****************************************************************
 
-      consumer_01.disconnect (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      consumer_01.disconnect ();
 
-      consumer_00.disconnect (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      consumer_00.disconnect ();
 
-      supplier_11.disconnect (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
-      supplier_10.disconnect (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
-      supplier_01.disconnect (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
-      supplier_00.disconnect (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      supplier_11.disconnect ();
+      supplier_10.disconnect ();
+      supplier_01.disconnect ();
+      supplier_00.disconnect ();
 
       // ****************************************************************
 
-      event_channel->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      event_channel->destroy ();
 
       // ****************************************************************
 
       poa->destroy (1, 1 ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
-      orb->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      orb->destroy ();
 
       // ****************************************************************
 

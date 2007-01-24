@@ -144,7 +144,6 @@ TAO_FT_IOGR_Property::get_primary (
 
   CORBA::Object_var new_obj = temp_obj;
 
-  ACE_CHECK_RETURN (CORBA::Object::_nil ());
 
   // Clean up in case of errors.
   if (CORBA::is_nil (new_obj.in ()))

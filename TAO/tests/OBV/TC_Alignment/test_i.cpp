@@ -72,7 +72,7 @@ test_i::get_value (CORBA::Long offset
 }
 
 void
-test_i::shutdown (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+test_i::shutdown (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->orb_->shutdown ();

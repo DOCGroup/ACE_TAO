@@ -78,11 +78,9 @@ Task::svc (void)
     {
       CORBA::Object_var object =
         this->orb_->string_to_object (ior ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       test_var test =
         test::_narrow (object.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       pid_t pid =
         ACE_OS::getpid ();
@@ -93,7 +91,6 @@ Task::svc (void)
             test->method (pid,
                           i
                           ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
 
           ACE_ASSERT (r == i);
           // Assert disappears on with optimizations on.
@@ -102,8 +99,7 @@ Task::svc (void)
 
       if (shutdown_server)
         {
-          test->shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+          test->shutdown ();
         }
     }
   ACE_CATCHANY
@@ -124,7 +120,6 @@ main (int argc, char *argv[])
     {
       CORBA::ORB_var orb =
         CORBA::ORB_init (argc, argv, "" ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       int result =
         parse_args (argc, argv);

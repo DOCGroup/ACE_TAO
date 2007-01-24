@@ -99,7 +99,7 @@ public:
         ACE_THROW_SPEC ((CORBA::SystemException));
 
   // Shutdown this component.  Frees up the endpoint.
-  void shutdown (ACE_ENV_SINGLE_ARG_DECL);
+  void shutdown (void);
   //@}
 
   /// Setters/getters.

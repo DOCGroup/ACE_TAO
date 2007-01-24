@@ -47,24 +47,18 @@ Gateway::run (int argc, char* argv[])
       // ORB initialization boiler plate...
       CORBA::ORB_var orb =
         CORBA::ORB_init (argc, argv, "" ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       CORBA::Object_var object =
         orb->resolve_initial_references ("RootPOA" ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
       PortableServer::POA_var poa =
         PortableServer::POA::_narrow (object.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
       PortableServer::POAManager_var poa_manager =
-        poa->the_POAManager (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
-      poa_manager->activate (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        poa->the_POAManager ();
+      poa_manager->activate ();
 
       // Obtain the event channel from the naming service
       CORBA::Object_var naming_obj =
         orb->resolve_initial_references ("NameService" ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       if (CORBA::is_nil (naming_obj.in ()))
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -73,7 +67,6 @@ Gateway::run (int argc, char* argv[])
 
       CosNaming::NamingContext_var naming_context =
         CosNaming::NamingContext::_narrow (naming_obj.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       CosNaming::Name supplierecname (1);
       supplierecname.length (1);
@@ -81,7 +74,6 @@ Gateway::run (int argc, char* argv[])
 
       CORBA::Object_var supplierec_obj =
         naming_context->resolve (supplierecname ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       CosNaming::Name consumerecname (1);
       consumerecname.length (1);
@@ -89,12 +81,10 @@ Gateway::run (int argc, char* argv[])
 
       CORBA::Object_var consumerec_obj =
         naming_context->resolve (consumerecname ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       RtecEventChannelAdmin::EventChannel_var supplier_event_channel =
         RtecEventChannelAdmin::EventChannel::_narrow (supplierec_obj.in ()
                                                       ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       if (CORBA::is_nil (supplier_event_channel.in ()))
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -104,7 +94,6 @@ Gateway::run (int argc, char* argv[])
       RtecEventChannelAdmin::EventChannel_var consumer_event_channel =
         RtecEventChannelAdmin::EventChannel::_narrow (consumerec_obj.in ()
                                                       ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       if (CORBA::is_nil (consumer_event_channel.in ()))
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -114,23 +103,18 @@ Gateway::run (int argc, char* argv[])
       TAO_EC_Gateway_IIOP gateway;
 
       gateway.init(supplier_event_channel.in(), consumer_event_channel.in() ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       PortableServer::ObjectId_var gateway_oid =
          poa->activate_object(&gateway ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       CORBA::Object_var gateway_obj =
          poa->id_to_reference(gateway_oid.in() ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
        RtecEventChannelAdmin::Observer_var obs =
          RtecEventChannelAdmin::Observer::_narrow(gateway_obj.in() ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
        RtecEventChannelAdmin::Observer_Handle local_ec_obs_handle =
          consumer_event_channel->append_observer (obs.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       // Wait for events, using work_pending()/perform_work() may help
       // or using another thread, this example is too simple for that.
@@ -138,14 +122,11 @@ Gateway::run (int argc, char* argv[])
 
       consumer_event_channel->remove_observer (local_ec_obs_handle
                                                ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       poa->deactivate_object (gateway_oid.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       // Destroy the POA
       poa->destroy (1, 0 ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
     }
   ACE_CATCHANY
     {

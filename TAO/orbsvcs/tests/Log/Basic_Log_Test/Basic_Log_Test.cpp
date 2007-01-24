@@ -38,7 +38,6 @@ BasicLog_Test::init (int argc, char *argv[])
                               argv,
                               "internet"
                               ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       if (TAO_debug_level > 0)
         ACE_DEBUG ((LM_DEBUG,
@@ -49,8 +48,7 @@ BasicLog_Test::init (int argc, char *argv[])
         return -1;
 
       // Initialize the factory
-      int init_result = this->init_factory (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      int init_result = this->init_factory ();
 
       if (init_result != 0)
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -70,7 +68,7 @@ BasicLog_Test::init (int argc, char *argv[])
 }
 
 int
-BasicLog_Test::init_factory (ACE_ENV_SINGLE_ARG_DECL)
+BasicLog_Test::init_factory (void)
 {
 
   // Assumpting INS for finding LogServie
@@ -78,11 +76,9 @@ BasicLog_Test::init_factory (ACE_ENV_SINGLE_ARG_DECL)
   //CORBA::Object_var logging_obj = orb_->resolve_initial_references ("BasicLogFactory",
   //                                                         ACE_TRY_ENV);
 
-  this->resolve_naming_service (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
+  this->resolve_naming_service ();
 
-  this->resolve_basic_factory (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
+  this->resolve_basic_factory ();
 
   /*
   if (TAO_debug_level > 0)
@@ -116,7 +112,6 @@ BasicLog_Test::init_factory (ACE_ENV_SINGLE_ARG_DECL)
   CORBA::String_var str =
     orb_->object_to_string (basicLog_.in()
                             ACE_ENV_ARG_PARAMETER); //Init the Client
-  ACE_CHECK_RETURN (-1);
 
   if (TAO_debug_level > 0)
     ACE_DEBUG ((LM_DEBUG,
@@ -136,7 +131,6 @@ BasicLog_Test::test_CreateLog (CORBA::ULongLong maxSize)
       basicLog_ = factory_->create(DsLogAdmin::wrap, maxSize, id);
       // @@ Krish, never use != 0 to compare a NIL object reference!!!
       ACE_ASSERT (!CORBA::is_nil (basicLog_.in ()));
-      ACE_TRY_CHECK;
       ACE_DEBUG ((LM_DEBUG,
                   "The logger id is %d\n",
                   id));
@@ -203,7 +197,6 @@ BasicLog_Test::test_LogAction ()
 
       // make sure that it is full and when writing
       this->write_records (0 ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       ACE_DEBUG ((LM_DEBUG,
                   "Wrote records instead should have thrown exception"));
@@ -369,7 +362,6 @@ BasicLog_Test::test_adminState()
   ACE_TRY
     {
       this->write_records(0 ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       ACE_ERROR_RETURN((LM_ERROR,"Setting administrative state to lock failed.  DsLogAdmin::LogLocked not thrown.\n"),-1);
 
@@ -412,7 +404,6 @@ BasicLog_Test::test_logSize (void)
   ACE_TRY
     {
       basicLog_->set_max_size (1);
-      ACE_TRY_CHECK;
 
       ACE_ERROR_RETURN ((LM_ERROR,
                          "Setting max size less than current size failed.\n"
@@ -463,7 +454,6 @@ BasicLog_Test::test_logCompaction(CORBA::ULong lifeExpectancy)
       ACE_TRY
         {
           this->write_records (0 ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
         }
       ACE_CATCHANY
         {
@@ -567,12 +557,11 @@ BasicLog_Test::parse_args (int argc, char *argv[])
 }
 
 void
-BasicLog_Test::resolve_naming_service (ACE_ENV_SINGLE_ARG_DECL)
+BasicLog_Test::resolve_naming_service (void)
 {
   CORBA::Object_var naming_obj =
     this->orb_->resolve_initial_references (naming_sevice_name_
                                             ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
   // Need to check return value for errors.
   if (CORBA::is_nil (naming_obj.in ()))
@@ -580,11 +569,10 @@ BasicLog_Test::resolve_naming_service (ACE_ENV_SINGLE_ARG_DECL)
 
   this->naming_context_ =
     CosNaming::NamingContext::_narrow (naming_obj.in () ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 }
 
 void
-BasicLog_Test::resolve_basic_factory (ACE_ENV_SINGLE_ARG_DECL)
+BasicLog_Test::resolve_basic_factory (void)
 {
   CosNaming::Name name (1);
   name.length (1);
@@ -592,11 +580,9 @@ BasicLog_Test::resolve_basic_factory (ACE_ENV_SINGLE_ARG_DECL)
 
   CORBA::Object_var obj =
     this->naming_context_->resolve (name ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
   this->factory_ =
     DsLogAdmin::BasicLogFactory::_narrow (obj.in () ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 }
 
 void
@@ -606,8 +592,7 @@ BasicLog_Test::destroy_log()
     {
       if (!CORBA::is_nil(basicLog_.in ()))
         {
-          basicLog_->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+          basicLog_->destroy ();
 
           basicLog_ = DsLogAdmin::BasicLog::_nil ();
         }
@@ -629,7 +614,6 @@ BasicLog_Test::test_log_destroy (void)
   ACE_TRY_NEW_ENV
     {
       this->write_records (1 ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
       ACE_DEBUG ((LM_INFO, "Wrote to log\n"));
     }
   ACE_CATCH (CORBA::OBJECT_NOT_EXIST, ex)
@@ -749,7 +733,6 @@ BasicLog_Test::test_capacity_alarm_threshold (void)
   ACE_TRY
     {
       basicLog_->set_capacity_alarm_thresholds (list);
-      ACE_TRY_CHECK;
       ACE_ERROR_RETURN ((LM_ERROR,
                          "Setting an invalid alarm threshold failed.  "
                          "DsLogAdmin::InvalidThreshold not thrown.\n"),

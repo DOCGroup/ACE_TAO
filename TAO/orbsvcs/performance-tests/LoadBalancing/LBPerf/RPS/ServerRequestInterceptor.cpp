@@ -14,14 +14,14 @@ ServerRequestInterceptor::~ServerRequestInterceptor (void)
 }
 
 char *
-ServerRequestInterceptor::name (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+ServerRequestInterceptor::name (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return CORBA::string_dup ("ServerRequestInterceptor");
 }
 
 void
-ServerRequestInterceptor::destroy (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+ServerRequestInterceptor::destroy (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
 }

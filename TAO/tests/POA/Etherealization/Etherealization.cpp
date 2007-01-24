@@ -39,7 +39,7 @@ class test_i_with_reference_counting :
   public virtual POA_test
 {
 public:
-  void method (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+  void method (void)
     ACE_THROW_SPEC ((CORBA::SystemException))
   {
   }
@@ -111,8 +111,7 @@ Servant_Activator::etherealize (const PortableServer::ObjectId &id,
     delete servant;
   else
     {
-      servant->_remove_ref (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK;
+      servant->_remove_ref ();
     }
 }
 
@@ -128,24 +127,20 @@ main (int argc, char **argv)
                                             argv,
                                             0
                                             ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       // Obtain the RootPOA.
       CORBA::Object_var object =
         orb->resolve_initial_references ("RootPOA"
                                          ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       // Get the POA_var object from Object_var.
       PortableServer::POA_var root_poa =
         PortableServer::POA::_narrow (object.in ()
                                       ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       // Get the POAManager of the RootPOA.
       PortableServer::POAManager_var poa_manager =
-        root_poa->the_POAManager (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        root_poa->the_POAManager ();
 
       CORBA::PolicyList policies (3);
       policies.length (3);
@@ -154,29 +149,24 @@ main (int argc, char **argv)
       policies[0] =
         root_poa->create_id_assignment_policy (PortableServer::USER_ID
                                                ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       // Lifespan Policy
       policies[1] =
         root_poa->create_lifespan_policy (PortableServer::PERSISTENT
                                           ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       // Request Processing Policy
       policies[2] =
         root_poa->create_request_processing_policy (PortableServer::USE_SERVANT_MANAGER
                                                     ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       PortableServer::POA_var child_poa =
         root_poa->create_POA ("child",
                               poa_manager.in (),
                               policies
                               ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
-      poa_manager->activate (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      poa_manager->activate ();
 
       // Create servant activator.
       PortableServer::ServantManager_var servant_manager =
@@ -185,7 +175,6 @@ main (int argc, char **argv)
       // Set servant_activator as the servant_manager of child POA.
       child_poa->set_servant_manager (servant_manager.in ()
                                       ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       {
         // Create a reference with user created ID in child POA which
@@ -197,19 +186,15 @@ main (int argc, char **argv)
           child_poa->create_reference_with_id (id.in (),
                                                "IDL:test:1.0"
                                                ACE_ENV_ARG_PARAMETER);
-        ACE_TRY_CHECK;
 
         test_var test =
           test::_narrow (object.in ()
                          ACE_ENV_ARG_PARAMETER);
-        ACE_TRY_CHECK;
 
-        test->method (ACE_ENV_SINGLE_ARG_PARAMETER);
-        ACE_TRY_CHECK;
+        test->method ();
 
         child_poa->deactivate_object (id.in ()
                                       ACE_ENV_ARG_PARAMETER);
-        ACE_TRY_CHECK;
       }
 
       {
@@ -222,19 +207,15 @@ main (int argc, char **argv)
           child_poa->create_reference_with_id (id.in (),
                                                "IDL:test:1.0"
                                                ACE_ENV_ARG_PARAMETER);
-        ACE_TRY_CHECK;
 
         test_var test =
           test::_narrow (object.in ()
                          ACE_ENV_ARG_PARAMETER);
-        ACE_TRY_CHECK;
 
-        test->method (ACE_ENV_SINGLE_ARG_PARAMETER);
-        ACE_TRY_CHECK;
+        test->method ();
 
         child_poa->deactivate_object (id.in ()
                                       ACE_ENV_ARG_PARAMETER);
-        ACE_TRY_CHECK;
       }
 
       {
@@ -247,11 +228,9 @@ main (int argc, char **argv)
           child_poa->create_reference_with_id (id.in (),
                                                "IDL:test:1.0"
                                                ACE_ENV_ARG_PARAMETER);
-        ACE_TRY_CHECK;
 
         child_poa->deactivate_object (id.in ()
                                       ACE_ENV_ARG_PARAMETER);
-        ACE_TRY_CHECK;
       }
 
       {
@@ -264,15 +243,12 @@ main (int argc, char **argv)
           child_poa->create_reference_with_id (id.in (),
                                                "IDL:test:1.0"
                                                ACE_ENV_ARG_PARAMETER);
-        ACE_TRY_CHECK;
 
         PortableServer::ObjectId_var oid =
           child_poa->reference_to_id (object.in () ACE_ENV_ARG_PARAMETER);
-        ACE_TRY_CHECK;
 
         child_poa->deactivate_object (oid.in ()
                                       ACE_ENV_ARG_PARAMETER);
-        ACE_TRY_CHECK;
       }
 
       ACE_DEBUG ((LM_DEBUG,
@@ -284,7 +260,6 @@ main (int argc, char **argv)
       return -1;
     }
   ACE_ENDTRY;
-  ACE_CHECK_RETURN (-1);
 
   return 0;
 }

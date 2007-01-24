@@ -75,7 +75,6 @@ Notifier_i::register_callback (const char *stock_name,
     {
       // the unbounded set entry is created.
       ACE_NEW_THROW_EX (consumers, CONSUMERS, CORBA::NO_MEMORY ());
-      ACE_CHECK;
 
       // When a new entry is tried to be inserted into the unbounded set and it
       // fails an exception is raised.
@@ -202,7 +201,7 @@ Notifier_i::market_status (const char *stock_name,
 }
 
 void
-Notifier_i::shutdown (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+Notifier_i::shutdown (void)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   if ( this->consumer_map_.close () > 0)

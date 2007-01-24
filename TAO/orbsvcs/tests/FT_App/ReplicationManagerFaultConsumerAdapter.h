@@ -60,7 +60,7 @@ public:
   /**
    * Clean house for process shut down.
    */
-  int fini (ACE_ENV_SINGLE_ARG_DECL);
+  int fini (void);
 
 
   size_t notifications() const;

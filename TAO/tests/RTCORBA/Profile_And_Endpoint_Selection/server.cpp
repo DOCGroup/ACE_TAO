@@ -30,13 +30,13 @@ public:
   test_i (CORBA::ORB_ptr orb,
           PortableServer::POA_ptr poa);
 
-  void method (ACE_ENV_SINGLE_ARG_DECL)
+  void method (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  void shutdown (ACE_ENV_SINGLE_ARG_DECL)
+  void shutdown (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  PortableServer::POA_ptr _default_POA (ACE_ENV_SINGLE_ARG_DECL);
+  PortableServer::POA_ptr _default_POA (void);
 
 private:
 
@@ -52,7 +52,7 @@ test_i::test_i (CORBA::ORB_ptr orb,
 }
 
 void
-test_i::method (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+test_i::method (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // Get the ORB_Core's TSS resources.
@@ -77,7 +77,7 @@ test_i::method (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
 }
 
 void
-test_i::shutdown (ACE_ENV_SINGLE_ARG_DECL)
+test_i::shutdown (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   if (debug)
@@ -86,11 +86,10 @@ test_i::shutdown (ACE_ENV_SINGLE_ARG_DECL)
 
   this->orb_->shutdown (0
                         ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 }
 
 PortableServer::POA_ptr
-test_i::_default_POA (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+test_i::_default_POA (void)
 {
   return PortableServer::POA::_duplicate (this->poa_.in ());
 }
@@ -157,7 +156,6 @@ write_iors_to_file (CORBA::Object_ptr object,
   CORBA::String_var ior =
     orb->object_to_string (object
                            ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
   u_int result = 0;
   result =
@@ -182,7 +180,6 @@ vanilla_poa (CORBA::ORB_ptr orb,
   CORBA::Policy_var implicit_activation_policy =
     root_poa->create_implicit_activation_policy (PortableServer::IMPLICIT_ACTIVATION
                                                  ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
   policies.length (policies.length () + 1);
   policies[policies.length () - 1] =
@@ -193,25 +190,21 @@ vanilla_poa (CORBA::ORB_ptr orb,
                           poa_manager,
                           policies
                           ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
   test_i *servant = 0;
   ACE_NEW_THROW_EX (servant,
                     test_i (orb,
                             poa.in ()),
                     CORBA::NO_MEMORY ());
-  ACE_CHECK;
 
   PortableServer::ServantBase_var safe_servant (servant);
 
   test_var test =
-    servant->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+    servant->_this ();
 
   write_iors_to_file (test.in (),
                       orb
                       ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 }
 
 void
@@ -230,7 +223,6 @@ rt_poa (CORBA::ORB_ptr orb,
                         policies,
                         debug
                         ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
   if (result != 0)
     {
       ACE_ERROR ((LM_ERROR,
@@ -253,7 +245,6 @@ rt_poa (CORBA::ORB_ptr orb,
                         policies,
                         debug
                         ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
   if (result != 0)
     {
       ACE_ERROR ((LM_ERROR,
@@ -266,13 +257,11 @@ rt_poa (CORBA::ORB_ptr orb,
     rt_orb->create_priority_model_policy (RTCORBA::CLIENT_PROPAGATED,
                                           0
                                           ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
   // Implicit_activation policy.
   CORBA::Policy_var implicit_activation_policy =
     root_poa->create_implicit_activation_policy (PortableServer::IMPLICIT_ACTIVATION
                                                  ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
   policies.length (policies.length () + 1);
   policies[policies.length () - 1] =
@@ -287,25 +276,21 @@ rt_poa (CORBA::ORB_ptr orb,
                           poa_manager,
                           policies
                           ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
   test_i *servant = 0;
   ACE_NEW_THROW_EX (servant,
                     test_i (orb,
                             poa.in ()),
                     CORBA::NO_MEMORY ());
-  ACE_CHECK;
 
   PortableServer::ServantBase_var safe_servant (servant);
 
   test_var test =
-    servant->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+    servant->_this ();
 
   write_iors_to_file (test.in (),
                       orb
                       ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 }
 
 class Task : public ACE_Task_Base
@@ -336,48 +321,38 @@ Task::svc (void)
       CORBA::Object_var object =
         this->orb_->resolve_initial_references ("RTORB"
                                          ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       RTCORBA::RTORB_var rt_orb =
         RTCORBA::RTORB::_narrow (object.in ()
                                  ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       object =
         this->orb_->resolve_initial_references ("RootPOA"
                                          ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       PortableServer::POA_var root_poa =
         PortableServer::POA::_narrow (object.in ()
                                       ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       PortableServer::POAManager_var poa_manager =
-        root_poa->the_POAManager (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        root_poa->the_POAManager ();
 
       vanilla_poa (this->orb_.in (),
                    root_poa.in (),
                    poa_manager.in ()
                    ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       rt_poa (this->orb_.in (),
               rt_orb.in (),
               root_poa.in (),
               poa_manager.in ()
               ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
-      poa_manager->activate (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      poa_manager->activate ();
 
-      this->orb_->run (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      this->orb_->run ();
 
-      this->orb_->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      this->orb_->destroy ();
     }
   ACE_CATCHANY
     {
@@ -399,7 +374,6 @@ main (int argc, char **argv)
                          argv,
                          0
                          ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       int result =
         parse_args (argc, argv);

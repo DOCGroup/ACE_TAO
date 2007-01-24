@@ -28,14 +28,14 @@ public:
                              ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  void remove_all_types (ACE_ENV_SINGLE_ARG_DECL)
+  void remove_all_types (void)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      CosTrading::IllegalServiceType,
                      CosTrading::UnknownServiceType,
                      CosTradingRepos::ServiceTypeRepository::HasSubTypes));
   // Remove all service types from the trading service instance.
 
-  void add_all_types (ACE_ENV_SINGLE_ARG_DECL)
+  void add_all_types (void)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      CosTrading::IllegalServiceType,
                      CosTradingRepos::ServiceTypeRepository::ServiceTypeExists,
@@ -47,7 +47,7 @@ public:
                      CosTradingRepos::ServiceTypeRepository::DuplicateServiceTypeName));
   // Add all the generated service types to the trading service instance.
 
-  void add_all_types_to_all (ACE_ENV_SINGLE_ARG_DECL)
+  void add_all_types_to_all (void)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      CosTrading::IllegalServiceType,
                      CosTradingRepos::ServiceTypeRepository::ServiceTypeExists,
@@ -60,19 +60,19 @@ public:
   // Add all the generated service types to all the trading service
   // instances linked to the trading service we bootstrapped to.
 
-  void list_all_types (ACE_ENV_SINGLE_ARG_DECL)
+  void list_all_types (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
   // List all the service types registered with the trading service
   // instance.
 
-  void describe_all_types (ACE_ENV_SINGLE_ARG_DECL)
+  void describe_all_types (void)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    CosTrading::IllegalServiceType,
                    CosTrading::UnknownServiceType));
   // Describe all the service types registered with the trading
   // service instance.
 
-  void fully_describe_all_types (ACE_ENV_SINGLE_ARG_DECL)
+  void fully_describe_all_types (void)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      CosTrading::IllegalServiceType,
                      CosTrading::UnknownServiceType));

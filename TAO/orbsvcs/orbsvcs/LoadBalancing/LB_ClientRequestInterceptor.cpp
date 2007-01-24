@@ -18,7 +18,7 @@ TAO_LB_ClientRequestInterceptor::name (
 }
 
 void
-TAO_LB_ClientRequestInterceptor::destroy (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+TAO_LB_ClientRequestInterceptor::destroy (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
 }
@@ -31,8 +31,7 @@ TAO_LB_ClientRequestInterceptor::send_request (
                    PortableInterceptor::ForwardRequest))
 {
   /*
-  CORBA::Object_var t = ri->target (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+  CORBA::Object_var t = ri->target ();
   */
 
   // A ServiceContext with an empty payload (i.e. zero length
@@ -74,7 +73,6 @@ TAO_LB_ClientRequestInterceptor::send_request (
   ri->add_request_service_context (service_context,
                                    replace
                                    ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 }
 
 void

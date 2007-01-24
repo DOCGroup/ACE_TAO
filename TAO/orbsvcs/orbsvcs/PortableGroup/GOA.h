@@ -149,28 +149,28 @@ public:
 
 #endif /* TAO_HAS_MINIMUM_POA == 0 */
 
-  char * the_name (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+  char * the_name (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  PortableServer::POA_ptr the_parent (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+  PortableServer::POA_ptr the_parent (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  PortableServer::POAList *the_children (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+  PortableServer::POAList *the_children (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  PortableServer::POAManager_ptr the_POAManager (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+  PortableServer::POAManager_ptr the_POAManager (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
 #if (TAO_HAS_MINIMUM_POA == 0)
 
-  PortableServer::AdapterActivator_ptr the_activator (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+  PortableServer::AdapterActivator_ptr the_activator (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   void the_activator (PortableServer::AdapterActivator_ptr adapter_activator
                       ACE_ENV_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  PortableServer::ServantManager_ptr get_servant_manager (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+  PortableServer::ServantManager_ptr get_servant_manager (void)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      PortableServer::POA::WrongPolicy));
 
@@ -179,7 +179,7 @@ public:
     ACE_THROW_SPEC ((CORBA::SystemException,
                      PortableServer::POA::WrongPolicy));
 
-  PortableServer::Servant get_servant (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+  PortableServer::Servant get_servant (void)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      PortableServer::POA::NoServant,
                      PortableServer::POA::WrongPolicy));
@@ -258,7 +258,7 @@ public:
                      PortableServer::POA::ObjectNotActive,
                      PortableServer::POA::WrongPolicy));
 
-  CORBA::OctetSeq *id (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+  CORBA::OctetSeq *id (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   // End standard POA interface methods.

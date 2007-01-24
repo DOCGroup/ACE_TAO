@@ -43,17 +43,14 @@ TAO_ECG_Reactive_ConsumerEC_Control::query_eventchannel (
       CORBA::Boolean non_existent =
         gateway_->consumer_ec_non_existent (disconnected
                                             ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
       if (non_existent && !disconnected)
         {
           this->event_channel_not_exist (gateway_ ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
         }
     }
   ACE_CATCH (CORBA::OBJECT_NOT_EXIST, ex)
     {
       this->event_channel_not_exist (gateway_ ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
     }
   ACE_CATCH (CORBA::TRANSIENT, transient)
     {
@@ -61,7 +58,6 @@ TAO_ECG_Reactive_ConsumerEC_Control::query_eventchannel (
       // want to be more lenient in the future..
       // if (transient.minor () == 0x54410085)
       this->event_channel_not_exist (gateway_ ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
     }
   ACE_CATCHANY
     {
@@ -91,26 +87,21 @@ TAO_ECG_Reactive_ConsumerEC_Control::handle_timeout (
       CORBA::PolicyList_var policies =
         this->policy_current_->get_policy_overrides (types
                                                       ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       // Change the timeout
       this->policy_current_->set_policy_overrides (this->policy_list_,
                                                    CORBA::ADD_OVERRIDE
                                                     ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       // Query the state of the consumers...
-      this->query_eventchannel (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      this->query_eventchannel ();
 
       this->policy_current_->set_policy_overrides (policies.in (),
                                                    CORBA::SET_OVERRIDE
                                                     ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
       for (CORBA::ULong i = 0; i != policies->length (); ++i)
         {
-          policies[i]->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+          policies[i]->destroy ();
         }
     }
   ACE_CATCHANY
@@ -130,12 +121,10 @@ TAO_ECG_Reactive_ConsumerEC_Control::activate (void)
       CORBA::Object_var tmp =
         this->orb_->resolve_initial_references ("PolicyCurrent"
                                                  ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       this->policy_current_ =
         CORBA::PolicyCurrent::_narrow (tmp.in ()
                                         ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       // Timeout for polling state (default = 10 msec)
       TimeBase::TimeT timeout = timeout_.usec() * 10;
@@ -148,7 +137,6 @@ TAO_ECG_Reactive_ConsumerEC_Control::activate (void)
                Messaging::RELATIVE_RT_TIMEOUT_POLICY_TYPE,
                any
                ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       // Only schedule the timer, when the rate is not zero
       if (this->rate_ != ACE_Time_Value::zero)
@@ -199,8 +187,7 @@ TAO_ECG_Reactive_ConsumerEC_Control::event_channel_not_exist (
                   "channel %x does not exists\n"));
       gateway->cleanup_consumer_ec ();
 
-      gateway->cleanup_consumer_proxies (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      gateway->cleanup_consumer_proxies ();
 
     }
   ACE_CATCHANY
@@ -222,8 +209,7 @@ TAO_ECG_Reactive_ConsumerEC_Control::system_exception (
     {
       gateway->cleanup_consumer_ec ();
 
-      gateway->cleanup_consumer_proxies (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      gateway->cleanup_consumer_proxies ();
 
     }
   ACE_CATCHANY

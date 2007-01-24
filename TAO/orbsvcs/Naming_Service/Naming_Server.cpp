@@ -52,8 +52,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY
     {
-      naming_service.run (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      naming_service.run ();
     }
   ACE_CATCHANY
     {
@@ -61,7 +60,6 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       return 1;
     }
   ACE_ENDTRY;
-  ACE_CHECK_RETURN (1);
 
   naming_service.fini ();
 

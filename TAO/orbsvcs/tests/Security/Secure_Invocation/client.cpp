@@ -30,7 +30,6 @@ insecure_invocation_test (CORBA::ORB_ptr orb,
     orb->create_policy (Security::SecQOPPolicy,
                         no_protection
                         ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
   CORBA::PolicyList policy_list (1);
   policy_list.length (1);
@@ -42,11 +41,9 @@ insecure_invocation_test (CORBA::ORB_ptr orb,
     obj->_set_policy_overrides (policy_list,
                                 CORBA::SET_OVERRIDE
                                 ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
   Foo::Bar_var server =
     Foo::Bar::_narrow (object.in () ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
   if (CORBA::is_nil (server.in ()))
     {
@@ -62,8 +59,7 @@ insecure_invocation_test (CORBA::ORB_ptr orb,
     {
       // This invocation should result in a CORBA::NO_PERMISSION
       // exception.
-      server->baz (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      server->baz ();
     }
   ACE_CATCH (CORBA::NO_PERMISSION, exc)
     {
@@ -74,7 +70,6 @@ insecure_invocation_test (CORBA::ORB_ptr orb,
       return;
     }
   ACE_ENDTRY;
-  ACE_CHECK;
 
   ACE_ERROR ((LM_ERROR,
               "(%P|%t) ERROR: CORBA::NO_PERMISSION was not thrown.\n"
@@ -89,7 +84,6 @@ secure_invocation_test (CORBA::Object_ptr object
 {
   Foo::Bar_var server =
     Foo::Bar::_narrow (object ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
   if (CORBA::is_nil (server.in ()))
     {
@@ -102,11 +96,9 @@ secure_invocation_test (CORBA::Object_ptr object
     }
 
   // This invocation should return successfully.
-  server->baz (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+  server->baz ();
 
-  server->shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+  server->shutdown ();
 }
 
 int
@@ -145,14 +137,12 @@ main (int argc, char *argv[])
 
       CORBA::ORB_var orb =
         CORBA::ORB_init (argc, argv, "" ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       if (parse_args (argc, argv) != 0)
         return 1;
 
       CORBA::Object_var object =
         orb->string_to_object (ior ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       // This test sets creates a Security::QOPPolicy with the
       // Quality-of-Protection set to "no protection."  It then
@@ -161,17 +151,14 @@ main (int argc, char *argv[])
       //
       // The server is not shutdown by this test.
       insecure_invocation_test (orb.in (), object.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       // This test uses the default secure SSLIOP settings to securely
       // invoke a method on the server.  No exception should occur.
       //
       // The server *is* shutdown by this test.
       secure_invocation_test (object.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
-      orb->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      orb->destroy ();
     }
   ACE_CATCHANY
     {

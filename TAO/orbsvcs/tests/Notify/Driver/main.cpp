@@ -11,15 +11,13 @@ ACE_TMAIN (int argc, char *argv[])
   ACE_TRY_NEW_ENV
     {
       int result = driver.init (argc, argv ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       if (result == -1)
           ACE_ERROR_RETURN ((LM_ERROR,
                              ACE_TEXT("Failed to initialize the Notify Testing Driver.\n")),
                             1);
 
-      driver.run (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      driver.run ();
     }
   ACE_CATCHANY
     {

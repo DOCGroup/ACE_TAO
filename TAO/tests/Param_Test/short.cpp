@@ -19,8 +19,8 @@
 #include "helper.h"
 #include "short.h"
 
-ACE_RCSID (Param_Test, 
-           short, 
+ACE_RCSID (Param_Test,
+           short,
            "$Id$")
 
 // ************************************************************************
@@ -54,19 +54,16 @@ Test_Short::dii_req_invoke (CORBA::Request *req
 
   req->set_return_type (CORBA::_tc_short);
 
-  req->invoke (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+  req->invoke ();
 
   req->return_value () >>= this->ret_;
 
   CORBA::NamedValue_ptr o2 =
     req->arguments ()->item (1 ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
   *o2->value () >>= this->inout_;
 
   CORBA::NamedValue_ptr o3 =
     req->arguments ()->item (2 ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
   *o3->value () >>= this->out_;
 }
 
@@ -100,7 +97,6 @@ Test_Short::run_sii_test (Param_Test_ptr objref
                                        this->inout_,
                                        this->out_
                                        ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       return 0;
     }

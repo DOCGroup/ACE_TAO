@@ -92,14 +92,12 @@ Test_Server_Module::init (int argc, ACE_TCHAR *argv[])
                                     new_argv.get_buffer (),
                                     "SERVER"
                                     ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       if (CORBA::is_nil (this->orb_.in ()))
         return -1;
 
       CORBA::Object_var poa_object =
         this->orb_->resolve_initial_references ("RootPOA" ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       if (CORBA::is_nil (poa_object.in ()))
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -108,23 +106,18 @@ Test_Server_Module::init (int argc, ACE_TCHAR *argv[])
 
       this->poa_ =
         PortableServer::POA::_narrow (poa_object.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
-      this->poa_manager_ = this->poa_->the_POAManager (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      this->poa_manager_ = this->poa_->the_POAManager ();
 
-      this->poa_manager_->activate (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      this->poa_manager_->activate ();
 
       if (::parse_args (new_argc, new_argv.get_buffer ()) != 0)
         return -1;
 
-      CORBA::Object_var obj = this->servant_._this (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      CORBA::Object_var obj = this->servant_._this ();
 
       CORBA::String_var ior =
         this->orb_->object_to_string (obj.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       ACE_DEBUG ((LM_DEBUG,
                   "Servant:\n<%s>\n",
@@ -150,7 +143,6 @@ Test_Server_Module::init (int argc, ACE_TCHAR *argv[])
       return -1;
     }
   ACE_ENDTRY;
-  ACE_CHECK_RETURN (-1);
 
 #if defined (ACE_HAS_THREADS)
 
@@ -192,8 +184,7 @@ Test_Server_Module::svc (void)
   ACE_TRY
     {
       // Run the ORB event loop in its own thread.
-      this->orb_->run (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      this->orb_->run ();
 
       ACE_DEBUG ((LM_INFO,
                   "Server is being destroyed.\n"));
@@ -209,8 +200,7 @@ Test_Server_Module::svc (void)
       // deleted resources.
       if (!CORBA::is_nil (this->orb_.in ()))
         {
-          this->orb_->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+          this->orb_->destroy ();
         }
     }
   ACE_CATCHANY
@@ -220,7 +210,6 @@ Test_Server_Module::svc (void)
       return -1;
     }
   ACE_ENDTRY;
-  ACE_CHECK_RETURN (-1);
 
   return 0;
 }

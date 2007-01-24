@@ -19,7 +19,7 @@ Event_impl::~Event_impl ()
 }
 
 void
-Event_impl::do_print (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+Event_impl::do_print (void)
 {
   ACE_DEBUG((LM_DEBUG, "(time %d origin %d)  ",
              (CORBA::ULong) this->time_(),
@@ -33,7 +33,7 @@ Event_factory::~Event_factory ()
 }
 
 TAO_OBV_CREATE_RETURN_TYPE (Event)
-Event_factory::create_for_unmarshal (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+Event_factory::create_for_unmarshal (void)
 {
   return new Event_impl;
 }
@@ -55,10 +55,10 @@ Temperature_impl::~Temperature_impl ()
 }
 
 void
-Temperature_impl::do_print (ACE_ENV_SINGLE_ARG_DECL)
+Temperature_impl::do_print (void)
 {
   // The timestamp
-  Event_impl::do_print (ACE_ENV_SINGLE_ARG_PARAMETER);
+  Event_impl::do_print ();
 
   ACE_DEBUG((LM_DEBUG, "Temperature is %f\n", this->temperature_() ));
 }
@@ -68,7 +68,7 @@ Temperature_factory::~Temperature_factory ()
 }
 
 TAO_OBV_CREATE_RETURN_TYPE (Temperature)
-Temperature_factory::create_for_unmarshal (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+Temperature_factory::create_for_unmarshal (void)
 {
   return new Temperature_impl;
 }
@@ -91,22 +91,22 @@ Position_impl::~Position_impl ()
 }
 
 void
-Position_impl::do_print (ACE_ENV_SINGLE_ARG_DECL)
+Position_impl::do_print (void)
 {
   // The timestamp
-  Event_impl::do_print (ACE_ENV_SINGLE_ARG_PARAMETER);
+  Event_impl::do_print ();
 
   CORBA::Float x =
-    this->x(ACE_ENV_SINGLE_ARG_PARAMETER);
+    this->x();
   CORBA::Float y =
-    this->y(ACE_ENV_SINGLE_ARG_PARAMETER);
+    this->y();
   CORBA::Float z =
-    this->z(ACE_ENV_SINGLE_ARG_PARAMETER);
+    this->z();
   ACE_DEBUG((LM_DEBUG, "Position is (%f, %f, %f)\n",
              x, y, z));
 }
 
-CORBA::Float Position_impl::x (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+CORBA::Float Position_impl::x (void)
 {
   return this->xyz()[0];
 }
@@ -116,7 +116,7 @@ void Position_impl::x (CORBA::Float x ACE_ENV_ARG_DECL_NOT_USED)
   this->xyz()[0] = x;
 }
 
-CORBA::Float Position_impl::y (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+CORBA::Float Position_impl::y (void)
 {
   return this->xyz()[1];
 }
@@ -126,7 +126,7 @@ void Position_impl::y (CORBA::Float y ACE_ENV_ARG_DECL_NOT_USED)
   this->xyz()[1] = y;
 }
 
-CORBA::Float Position_impl::z (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+CORBA::Float Position_impl::z (void)
 {
   return this->xyz()[2];
 }
@@ -142,7 +142,7 @@ Position_factory::~Position_factory ()
 }
 
 TAO_OBV_CREATE_RETURN_TYPE (Position)
-Position_factory::create_for_unmarshal (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+Position_factory::create_for_unmarshal (void)
 {
   return new Position_impl;
 }
@@ -165,11 +165,10 @@ Log_Msg_impl::~Log_Msg_impl ()
 }
 
 void
-Log_Msg_impl::do_print (ACE_ENV_SINGLE_ARG_DECL)
+Log_Msg_impl::do_print (void)
 {
   // The timestamp
-  Event_impl::do_print (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+  Event_impl::do_print ();
 
   if (this->urgency () > 0)
     {
@@ -186,7 +185,7 @@ Log_Msg_factory::~Log_Msg_factory ()
 }
 
 TAO_OBV_CREATE_RETURN_TYPE (Log_Msg)
-Log_Msg_factory::create_for_unmarshal (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+Log_Msg_factory::create_for_unmarshal (void)
 {
   return new Log_Msg_impl;
 }
@@ -217,13 +216,13 @@ Event_List_Link_impl::~Event_List_Link_impl ()
 }
 
 Event*
-Event_List_Link_impl::get_event (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+Event_List_Link_impl::get_event (void)
 {
   return this->my_event ();
 }
 
 Event_List_Link*
-Event_List_Link_impl::get_next_link (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+Event_List_Link_impl::get_next_link (void)
 {
   return this->next ();
 }
@@ -240,7 +239,7 @@ Event_List_Link_factory::~Event_List_Link_factory ()
 }
 
 TAO_OBV_CREATE_RETURN_TYPE (Event_List_Link)
-Event_List_Link_factory::create_for_unmarshal (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+Event_List_Link_factory::create_for_unmarshal (void)
 {
   return new Event_List_Link_impl;
 }
@@ -307,7 +306,7 @@ Event_List_factory::~Event_List_factory (void)
 }
 
 TAO_OBV_CREATE_RETURN_TYPE (Event_List)
-Event_List_factory::create_for_unmarshal (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+Event_List_factory::create_for_unmarshal (void)
 {
   return new Event_List_impl;
 }
@@ -420,7 +419,7 @@ Temperature_Criterion_impl::is_critical (Event* e
 
 
 void
-Temperature_Criterion_impl::do_print (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+Temperature_Criterion_impl::do_print (void)
 {
   ACE_DEBUG((LM_DEBUG, "Alarm boundary for events with origin id %d is\n",
              this->origin_id_ () ));
@@ -433,7 +432,7 @@ Temperature_Criterion_factory::~Temperature_Criterion_factory ()
 }
 
 TAO_OBV_CREATE_RETURN_TYPE (Temperature_Criterion)
-Temperature_Criterion_factory::create_for_unmarshal (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+Temperature_Criterion_factory::create_for_unmarshal (void)
 {
   return new Temperature_Criterion_impl;
 }
@@ -485,8 +484,8 @@ Position_Criterion_impl::do_print ( ACE_ENV_SINGLE_ARG_DECL )
   ACE_DEBUG((LM_DEBUG,
              "Alarm boundary for events with origin id %d is the box\n",
              this->origin_id_ () ));
-  this->leftbottom ()->do_print(ACE_ENV_SINGLE_ARG_PARAMETER);
-  this->topright ()->do_print(ACE_ENV_SINGLE_ARG_PARAMETER);
+  this->leftbottom ()->do_print();
+  this->topright ()->do_print();
 }
 
 Position_Criterion_factory::~Position_Criterion_factory ()
@@ -494,7 +493,7 @@ Position_Criterion_factory::~Position_Criterion_factory ()
 }
 
 TAO_OBV_CREATE_RETURN_TYPE (Position_Criterion)
-Position_Criterion_factory::create_for_unmarshal (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+Position_Criterion_factory::create_for_unmarshal (void)
 {
   return new Position_Criterion_impl;
 }
@@ -527,7 +526,7 @@ Log_Msg_Criterion_impl::is_critical (Event* e
 
 
 void
-Log_Msg_Criterion_impl::do_print (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+Log_Msg_Criterion_impl::do_print (void)
 {
   ACE_DEBUG((LM_DEBUG,
              "All log messages with urgency greater zero are registered.\n" ));
@@ -538,7 +537,7 @@ Log_Msg_Criterion_factory::~Log_Msg_Criterion_factory ()
 }
 
 TAO_OBV_CREATE_RETURN_TYPE (Log_Msg_Criterion)
-Log_Msg_Criterion_factory::create_for_unmarshal (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+Log_Msg_Criterion_factory::create_for_unmarshal (void)
 {
   return new Log_Msg_Criterion_impl;
 }

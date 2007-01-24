@@ -44,8 +44,7 @@ Roundtrip_Handler::test_octet_method_excep (::Messaging::ExceptionHolder *holder
   ACE_TRY
     {
       --this->pending_callbacks_;
-      holder->raise_exception (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      holder->raise_exception ();
     }
   ACE_CATCHANY
     {
@@ -75,8 +74,7 @@ Roundtrip_Handler::test_char_method_excep (::Messaging::ExceptionHolder *holder
   ACE_TRY
     {
       --this->pending_callbacks_;
-      holder->raise_exception (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      holder->raise_exception ();
     }
   ACE_CATCHANY
     {
@@ -106,8 +104,7 @@ Roundtrip_Handler::test_long_method_excep (::Messaging::ExceptionHolder *holder
   ACE_TRY
     {
       --this->pending_callbacks_;
-      holder->raise_exception (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      holder->raise_exception ();
     }
   ACE_CATCHANY
     {
@@ -137,8 +134,7 @@ Roundtrip_Handler::test_short_method_excep (::Messaging::ExceptionHolder *holder
   ACE_TRY
     {
       --this->pending_callbacks_;
-      holder->raise_exception (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      holder->raise_exception ();
     }
   ACE_CATCHANY
     {
@@ -168,8 +164,7 @@ Roundtrip_Handler::test_double_method_excep (::Messaging::ExceptionHolder *holde
   ACE_TRY
     {
       --this->pending_callbacks_;
-      holder->raise_exception (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      holder->raise_exception ();
     }
   ACE_CATCHANY
     {
@@ -199,8 +194,7 @@ Roundtrip_Handler::test_longlong_method_excep (::Messaging::ExceptionHolder *hol
   ACE_TRY
     {
       --this->pending_callbacks_;
-      holder->raise_exception (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      holder->raise_exception ();
     }
   ACE_CATCHANY
     {
@@ -213,7 +207,7 @@ Roundtrip_Handler::test_longlong_method_excep (::Messaging::ExceptionHolder *hol
 // = Other methods
 
 void
-Roundtrip_Handler::shutdown (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+Roundtrip_Handler::shutdown (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
 }
@@ -225,8 +219,7 @@ Roundtrip_Handler::shutdown_excep (::Messaging::ExceptionHolder *holder
 {
   ACE_TRY
     {
-      holder->raise_exception (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      holder->raise_exception ();
     }
   ACE_CATCHANY
     {

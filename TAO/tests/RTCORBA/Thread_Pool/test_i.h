@@ -26,11 +26,11 @@ public:
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   /// Shutdown the server.
-  void shutdown (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+  void shutdown (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   /// Our POA.
-  PortableServer::POA_ptr _default_POA (ACE_ENV_SINGLE_ARG_DECL);
+  PortableServer::POA_ptr _default_POA (void);
 
 private:
   /// ORB.

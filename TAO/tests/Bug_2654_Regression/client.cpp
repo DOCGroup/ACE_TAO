@@ -27,7 +27,7 @@ const char *ior = "file://test.ior";
 class Callback_i : public POA_Test::CallBack
 {
 public:
-  void method2(ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+  void method2(void)
     ACE_THROW_SPEC ((CORBA::SystemException))
   {
     ACE_DEBUG ((LM_DEBUG,"(%t) Callback_i::method2 called\n"));
@@ -137,7 +137,6 @@ init_callback (Worker &w)
 {
   CORBA::Object_var obj =
     w.orb_->resolve_initial_references ("RootPOA" ACE_ENV_ARG_PARAMETER);
-  ACE_TRY_CHECK;
 
   if (CORBA::is_nil (obj.in ()))
     ACE_ERROR_RETURN ((LM_ERROR,
@@ -146,11 +145,9 @@ init_callback (Worker &w)
 
   PortableServer::POA_var root_poa =
     PortableServer::POA::_narrow (obj.in () ACE_ENV_ARG_PARAMETER);
-  ACE_TRY_CHECK;
 
   PortableServer::POAManager_var poa_manager =
-    root_poa->the_POAManager (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_TRY_CHECK;
+    root_poa->the_POAManager ();
 
   // Policies for the childPOA to be created.
   CORBA::PolicyList policies (1);
@@ -162,7 +159,6 @@ init_callback (Worker &w)
     w.orb_->create_policy (BiDirPolicy::BIDIRECTIONAL_POLICY_TYPE,
                         pol
                         ACE_ENV_ARG_PARAMETER);
-  ACE_TRY_CHECK;
 
   // Create POA as child of RootPOA with the above policies.  This POA
   // will receive request in the same connection in which it sent
@@ -172,7 +168,6 @@ init_callback (Worker &w)
                           poa_manager.in (),
                           policies
                           ACE_ENV_ARG_PARAMETER);
-  ACE_TRY_CHECK;
 
 
   Callback_i *servant = new Callback_i;
@@ -187,12 +182,10 @@ init_callback (Worker &w)
        i < policies.length ();
        ++i)
     {
-      policies[i]->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      policies[i]->destroy ();
     }
 
-  poa_manager->activate (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_TRY_CHECK;
+  poa_manager->activate ();
 
   return 0;
 }

@@ -22,12 +22,10 @@ main (int argc, char *argv[])
       Policy_Verifier policy_verifier;
 
       bool retval = policy_verifier.init (argc, argv ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       if (retval)
         {
-          policy_verifier.run (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+          policy_verifier.run ();
         }
       else
         {

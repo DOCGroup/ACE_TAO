@@ -48,17 +48,14 @@ TAO_EC_RTCORBA_Factory::create_dispatching (TAO_EC_Event_Channel_Base *)
       CORBA::ORB_var orb =
         CORBA::ORB_init (argc, 0, ""
                          ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       CORBA::Object_var obj =
         orb->resolve_initial_references ("PriorityMappingManager"
                                          ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       RTCORBA::PriorityMappingManager_var priority_mapping_manager =
         RTCORBA::PriorityMappingManager::_narrow (obj.in ()
                                                   ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       RTCORBA::PriorityMapping *priority_mapping =
         priority_mapping_manager->mapping ();
@@ -66,12 +63,10 @@ TAO_EC_RTCORBA_Factory::create_dispatching (TAO_EC_Event_Channel_Base *)
       obj =
         orb->resolve_initial_references ("RTCurrent"
                                          ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       RTCORBA::Current_var current =
         RTCORBA::Current::_narrow (obj.in ()
                                    ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       ACE_NEW_RETURN (dispatching,
                       TAO_EC_RTCORBA_Dispatching (this->lanes_,

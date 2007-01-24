@@ -109,7 +109,6 @@ TAO_Notify_ProxySupplier_T<SERVANT_TYPE>::subscription_change (const CosNotifica
   {
     ACE_GUARD_THROW_EX (TAO_SYNCH_MUTEX, ace_mon, this->lock_,
                         CORBA::INTERNAL ());
-    ACE_CHECK;
 
     this->subscribed_types_.add_and_remove (seq_added, seq_removed);
   }
@@ -118,7 +117,7 @@ TAO_Notify_ProxySupplier_T<SERVANT_TYPE>::subscription_change (const CosNotifica
 }
 
 template <class SERVANT_TYPE> void
-TAO_Notify_ProxySupplier_T<SERVANT_TYPE>::suspend_connection (ACE_ENV_SINGLE_ARG_DECL)
+TAO_Notify_ProxySupplier_T<SERVANT_TYPE>::suspend_connection (void)
   ACE_THROW_SPEC ((
                    CORBA::SystemException,
                    CosNotifyChannelAdmin::ConnectionAlreadyInactive,
@@ -135,14 +134,12 @@ TAO_Notify_ProxySupplier_T<SERVANT_TYPE>::suspend_connection (ACE_ENV_SINGLE_ARG
       ACE_THROW (CosNotifyChannelAdmin::ConnectionAlreadyInactive ());
   }
 
-  this->consumer()->suspend (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
-  this->self_change (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+  this->consumer()->suspend ();
+  this->self_change ();
 }
 
 template <class SERVANT_TYPE> void
-TAO_Notify_ProxySupplier_T<SERVANT_TYPE>::resume_connection (ACE_ENV_SINGLE_ARG_DECL)
+TAO_Notify_ProxySupplier_T<SERVANT_TYPE>::resume_connection (void)
   ACE_THROW_SPEC ((
                    CORBA::SystemException,
                    CosNotifyChannelAdmin::ConnectionAlreadyActive,
@@ -159,19 +156,18 @@ TAO_Notify_ProxySupplier_T<SERVANT_TYPE>::resume_connection (ACE_ENV_SINGLE_ARG_
       ACE_THROW (CosNotifyChannelAdmin::ConnectionAlreadyActive ());
   }
 
-  this->consumer()->resume (ACE_ENV_SINGLE_ARG_PARAMETER);
+  this->consumer()->resume ();
 }
 
 template <class SERVANT_TYPE> CosNotifyChannelAdmin::ConsumerAdmin_ptr
-TAO_Notify_ProxySupplier_T<SERVANT_TYPE>::MyAdmin (ACE_ENV_SINGLE_ARG_DECL)
+TAO_Notify_ProxySupplier_T<SERVANT_TYPE>::MyAdmin (void)
   ACE_THROW_SPEC ((
                    CORBA::SystemException
                    ))
 {
   CosNotifyChannelAdmin::ConsumerAdmin_var ret;
 
-  CORBA::Object_var object = this->consumer_admin().ref (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (ret._retn ());
+  CORBA::Object_var object = this->consumer_admin().ref ();
 
   ret = CosNotifyChannelAdmin::ConsumerAdmin::_narrow (object.in () ACE_ENV_ARG_PARAMETER);
 
@@ -181,7 +177,7 @@ TAO_Notify_ProxySupplier_T<SERVANT_TYPE>::MyAdmin (ACE_ENV_SINGLE_ARG_DECL)
 /***************************** UNIMPLEMENTED METHODS***************************************/
 
 template <class SERVANT_TYPE> CosNotifyFilter::MappingFilter_ptr
-TAO_Notify_ProxySupplier_T<SERVANT_TYPE>::priority_filter (ACE_ENV_SINGLE_ARG_DECL)
+TAO_Notify_ProxySupplier_T<SERVANT_TYPE>::priority_filter (void)
   ACE_THROW_SPEC ((
                    CORBA::SystemException
                    ))
@@ -202,7 +198,7 @@ TAO_Notify_ProxySupplier_T<SERVANT_TYPE>::priority_filter (CosNotifyFilter::Mapp
 }
 
 template <class SERVANT_TYPE> CosNotifyFilter::MappingFilter_ptr
-TAO_Notify_ProxySupplier_T<SERVANT_TYPE>::lifetime_filter (ACE_ENV_SINGLE_ARG_DECL)
+TAO_Notify_ProxySupplier_T<SERVANT_TYPE>::lifetime_filter (void)
   ACE_THROW_SPEC ((
                    CORBA::SystemException
                    ))

@@ -249,7 +249,7 @@ push_structured_event (StructuredEvent const& e ACE_ENV_ARG_DECL_NOT_USED)
 
 
 void Gate::
-disconnect_structured_push_consumer (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+disconnect_structured_push_consumer (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // We don't care.

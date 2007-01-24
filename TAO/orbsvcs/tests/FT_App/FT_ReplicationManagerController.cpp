@@ -64,7 +64,6 @@ int TAO_FT_ReplicationManagerController::init (int & argc, char * argv[])
   {
     // Initialize the ORB.
     this->orb_ = CORBA::ORB_init (argc, argv, "" ACE_ENV_ARG_PARAMETER);
-    ACE_TRY_CHECK;
 
     // Parse arguments.
     result = this->parse_args (argc, argv);
@@ -75,17 +74,14 @@ int TAO_FT_ReplicationManagerController::init (int & argc, char * argv[])
       {
         obj = this->orb_->string_to_object (
           this->rm_ior_ ACE_ENV_ARG_PARAMETER);
-        ACE_TRY_CHECK;
       }
       else
       {
         obj = this->orb_->resolve_initial_references (
           "ReplicationManager" ACE_ENV_ARG_PARAMETER);
-        ACE_TRY_CHECK;
       }
       this->replication_manager_ = FT::ReplicationManager::_narrow (
         obj.in() ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
       if (CORBA::is_nil (this->replication_manager_.in()))
       {
         ACE_ERROR ((LM_ERROR,
@@ -166,8 +162,7 @@ int TAO_FT_ReplicationManagerController::run ()
   {
     if (this->shutdown_ == 1)
     {
-      this->replication_manager_->shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      this->replication_manager_->shutdown ();
       ACE_Time_Value tv (0, 500000);
       ACE_OS::sleep (tv);
     }

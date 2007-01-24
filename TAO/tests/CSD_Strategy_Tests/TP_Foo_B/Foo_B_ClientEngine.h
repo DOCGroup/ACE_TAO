@@ -24,14 +24,14 @@ class CSD_TP_Foo_B_Export Foo_B_ClientEngine : public ClientEngine
 {
   public:
 
-    Foo_B_ClientEngine(Foo_B_ptr obj, 
+    Foo_B_ClientEngine(Foo_B_ptr obj,
                        Callback_ptr callback,
                        unsigned client_id = 0,
                        bool collocated = false);
 
     virtual ~Foo_B_ClientEngine();
 
-    virtual bool execute(ACE_ENV_SINGLE_ARG_DECL);
+    virtual bool execute(void);
 
     static void expected_results(Foo_B_Statistics& stats);
     static unsigned expected_callbacks ();

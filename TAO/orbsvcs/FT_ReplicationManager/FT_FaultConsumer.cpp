@@ -92,21 +92,17 @@ int TAO::FT_FaultConsumer::init (
 
   // Activate this consumer in the POA.
   this->object_id_ = this->poa_->activate_object (this ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
   CORBA::Object_var obj =
     this->poa_->id_to_reference (this->object_id_.in() ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
 
   // Narrow it to CosNotifyComm::StructuredPushConsumer.
   this->consumer_ref_ = CosNotifyComm::StructuredPushConsumer::_narrow (
     obj.in() ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
 
   // Subscribe to the FaultNotifier.
   CosNotifyFilter::Filter_var filter = CosNotifyFilter::Filter::_nil ();
   this->consumer_id_ = fault_notifier_->connect_structured_fault_consumer (
     this->consumer_ref_.in(), filter.in () ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
 
   if (TAO_debug_level > 1)
   {
@@ -125,7 +121,7 @@ int TAO::FT_FaultConsumer::init (
 * - Disconnect from FT::FaultNotifier.
 * - Deactivate from the POA.
 */
-int TAO::FT_FaultConsumer::fini (ACE_ENV_SINGLE_ARG_DECL)
+int TAO::FT_FaultConsumer::fini (void)
 {
 
   if (TAO_debug_level > 1)
@@ -153,7 +149,6 @@ int TAO::FT_FaultConsumer::fini (ACE_ENV_SINGLE_ARG_DECL)
 
       this->fault_notifier_->disconnect_consumer (
         this->consumer_id_ ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       if (TAO_debug_level > 1)
       {
@@ -167,7 +162,6 @@ int TAO::FT_FaultConsumer::fini (ACE_ENV_SINGLE_ARG_DECL)
       // Deactivate ourself from the POA.
       this->poa_->deactivate_object (
         this->object_id_.in() ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
     }
   }
   ACE_CATCHANY
@@ -179,7 +173,6 @@ int TAO::FT_FaultConsumer::fini (ACE_ENV_SINGLE_ARG_DECL)
     );
   }
   ACE_ENDTRY;
-  ACE_CHECK_RETURN(1);
 
   if (TAO_debug_level > 1)
   {

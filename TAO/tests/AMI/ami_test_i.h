@@ -36,10 +36,10 @@ public:
     ACE_THROW_SPEC ((CORBA::SystemException,
                      A::DidTheRightThing));
 
-  void shutdown (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+  void shutdown (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  CORBA::Long yadda (ACE_ENV_SINGLE_ARG_DECL)
+  CORBA::Long yadda (void)
       ACE_THROW_SPEC ((CORBA::SystemException));
 
   void yadda (CORBA::Long yadda

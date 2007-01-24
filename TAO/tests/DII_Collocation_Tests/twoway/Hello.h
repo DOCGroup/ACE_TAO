@@ -10,16 +10,16 @@
 
 #include "ace/OS.h"
 
-class  Test_Simple_Test_i 
+class  Test_Simple_Test_i
   : public virtual POA_Test::Simple_Test
 {
 public:
-  //Constructor 
+  //Constructor
   Test_Simple_Test_i (void);
-  
-  //Destructor 
+
+  //Destructor
   virtual ~Test_Simple_Test_i (void);
-  
+
   virtual
   void test_method (
       ::CORBA::ULong & error_count
@@ -58,7 +58,7 @@ public:
     ACE_THROW_SPEC ((
       CORBA::SystemException
     ));
-  
+
   virtual
   void test_bounded_string_arg (
       const char * message
@@ -67,7 +67,7 @@ public:
     ACE_THROW_SPEC ((
       CORBA::SystemException
     ));
-  
+
   virtual
   void test_fixed_array_arg (
       const ::Test::Fixed_Array message
@@ -76,7 +76,7 @@ public:
     ACE_THROW_SPEC ((
       CORBA::SystemException
     ));
-  
+
   virtual
   void test_var_array_arg (
       const ::Test::Var_Array messages
@@ -85,7 +85,7 @@ public:
     ACE_THROW_SPEC ((
       CORBA::SystemException
     ));
-  
+
   virtual
   void test_bounded_var_size_arg (
       const ::Test::Bounded_Var_Size_Arg & message
@@ -94,7 +94,7 @@ public:
     ACE_THROW_SPEC ((
       CORBA::SystemException
     ));
-  
+
   virtual
   void test_unbounded_var_size_arg (
       const ::Test::Unbounded_Var_Size_Arg & message
@@ -103,7 +103,7 @@ public:
     ACE_THROW_SPEC ((
       CORBA::SystemException
     ));
-  
+
   virtual
   void test_fixed_size_arg (
       const ::Test::TimeOfDay & t
@@ -112,7 +112,7 @@ public:
     ACE_THROW_SPEC ((
       CORBA::SystemException
     ));
-  
+
   virtual
   void test_special_basic_arg (
       ::CORBA::Char value
@@ -121,7 +121,7 @@ public:
     ACE_THROW_SPEC ((
       CORBA::SystemException
     ));
-  
+
   virtual
   void test_objref_arg (
       ::Test::Simple_Test_ptr test
@@ -130,7 +130,7 @@ public:
     ACE_THROW_SPEC ((
       CORBA::SystemException
     ));
-  
+
   virtual
   void test_object_arg (
       ::CORBA::Object_ptr o
@@ -139,7 +139,7 @@ public:
     ACE_THROW_SPEC ((
       CORBA::SystemException
     ));
-  
+
   virtual
   void test_args_1 (
       ::CORBA::Object_ptr arg1,
@@ -150,7 +150,7 @@ public:
     ACE_THROW_SPEC ((
       CORBA::SystemException
     ));
-  
+
   virtual
   void test_args_2 (
       const char * arg1,
@@ -161,7 +161,7 @@ public:
     ACE_THROW_SPEC ((
       CORBA::SystemException
     ));
-  
+
   virtual
   void test_args_3 (
       const char * arg1,
@@ -174,7 +174,7 @@ public:
       CORBA::SystemException
     ));
 
-  virtual char * get_string (ACE_ENV_SINGLE_ARG_DECL)
+  virtual char * get_string (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual
@@ -187,8 +187,8 @@ public:
     ACE_THROW_SPEC ((
       CORBA::SystemException
     ));
-  
-  virtual void shutdown (ACE_ENV_SINGLE_ARG_DECL)
+
+  virtual void shutdown (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   CORBA::ULong error_count () const;

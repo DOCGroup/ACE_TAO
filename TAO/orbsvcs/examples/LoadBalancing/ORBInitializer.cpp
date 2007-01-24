@@ -40,14 +40,12 @@ ORBInitializer::post_init (
                         TAO::VMCID,
                         ENOMEM),
                       CORBA::COMPLETED_NO));
-  ACE_CHECK;
 
   PortableInterceptor::ServerRequestInterceptor_var sr_interceptor =
     this->interceptor_;
 
   info->add_server_request_interceptor (sr_interceptor.in ()
                                         ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
   PortableInterceptor::ServerRequestInterceptor_ptr reject_interceptor;
   ACE_NEW_THROW_EX (reject_interceptor,
@@ -57,14 +55,12 @@ ORBInitializer::post_init (
                         TAO::VMCID,
                         ENOMEM),
                       CORBA::COMPLETED_NO));
-  ACE_CHECK;
 
   PortableInterceptor::ServerRequestInterceptor_var safe_reject_interceptor =
     reject_interceptor;
 
   info->add_server_request_interceptor (safe_reject_interceptor.in ()
                                         ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 }
 
 

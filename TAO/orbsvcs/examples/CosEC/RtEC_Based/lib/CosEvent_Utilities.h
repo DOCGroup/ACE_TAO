@@ -57,48 +57,48 @@ class TAO_RTEC_COSEC_Export CosEC_ServantBase :
   // activate the contained servants.
   // The POA <thispoa> is used to activate this.
 
-  int activate (ACE_ENV_SINGLE_ARG_DECL);
+  int activate (void);
   // Activates the CosEC with <thispoa_> and friends with the <poa_>
 
   int activate (const char* servant_id ACE_ENV_ARG_DECL);
   // If the servant_id is not nil then it is used to supply the object id
   // for <this> servant.
 
-  void deactivate (ACE_ENV_SINGLE_ARG_DECL);
+  void deactivate (void);
   // Deactivates the CosEC and friends with the POA.
 
   // =  POA_CosEventChannelAdmin::EventChannel methods.
-  virtual CosEventChannelAdmin::ConsumerAdmin_ptr for_consumers (ACE_ENV_SINGLE_ARG_DECL)
+  virtual CosEventChannelAdmin::ConsumerAdmin_ptr for_consumers (void)
       ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual CosEventChannelAdmin::SupplierAdmin_ptr for_suppliers (ACE_ENV_SINGLE_ARG_DECL)
+  virtual CosEventChannelAdmin::SupplierAdmin_ptr for_suppliers (void)
       ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual void destroy (ACE_ENV_SINGLE_ARG_DECL)
+  virtual void destroy (void)
       ACE_THROW_SPEC ((CORBA::SystemException));
   // Destroys this Event Channel object.
 
  protected:
   // = RtEC creation, activation and deactivation methods.
   virtual POA_RtecEventChannelAdmin::EventChannel_ptr
-  create_rtec (ACE_ENV_SINGLE_ARG_DECL);
+  create_rtec (void);
   // Create a local rtec.
 
-  virtual void activate_rtec (ACE_ENV_SINGLE_ARG_DECL);
+  virtual void activate_rtec (void);
   // Activates the rtec.
 
-  virtual void deactivate_rtec (ACE_ENV_SINGLE_ARG_DECL);
+  virtual void deactivate_rtec (void);
   // Deactivates the rtec.
 
   // = CosEC creation, activation and deactivation methods.
   TAO_CosEC_EventChannel_i*
-  create_cosec (ACE_ENV_SINGLE_ARG_DECL);
+  create_cosec (void);
   // Create a local cosec.
 
-  int activate_cosec (ACE_ENV_SINGLE_ARG_DECL);
+  int activate_cosec (void);
   // Activates the cosec.
 
-  void deactivate_cosec (ACE_ENV_SINGLE_ARG_DECL);
+  void deactivate_cosec (void);
   // Deactivates the cosec.
 
   void init_SupplierQOS (RtecBase::handle_t supp_handle,

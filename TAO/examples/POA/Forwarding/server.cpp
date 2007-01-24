@@ -75,17 +75,14 @@ setup_poa (PortableServer::POA_ptr root_poa
   policies[0] =
     root_poa->create_request_processing_policy (PortableServer::USE_SERVANT_MANAGER
                                                 ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (PortableServer::POA::_nil ());
 
   // Allow implicit activation.
   policies[1] =
     root_poa->create_implicit_activation_policy (PortableServer::IMPLICIT_ACTIVATION
                                                  ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (PortableServer::POA::_nil ());
 
   PortableServer::POAManager_var poa_manager =
-    root_poa->the_POAManager (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (PortableServer::POA::_nil ());
+    root_poa->the_POAManager ();
 
   // Create POA as child of RootPOA with the above policies.  This POA
   // will use a SERVANT_ACTIVATOR because of RETAIN policy.
@@ -94,15 +91,13 @@ setup_poa (PortableServer::POA_ptr root_poa
                           poa_manager.in (),
                           policies
                           ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (PortableServer::POA::_nil ());
 
   // Creation of childPOAs is over. Destroy the Policy objects.
   for (CORBA::ULong i = 0;
        i < policies.length ();
        ++i)
     {
-      policies[i]->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK_RETURN (PortableServer::POA::_nil ());
+      policies[i]->destroy ();
     }
 
   return child_poa._retn ();
@@ -119,7 +114,6 @@ create_servant_manager (CORBA::ORB_ptr orb,
       forward_to =
         orb->string_to_object (forward_to_ior
                                ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK_RETURN (0);
     }
 
   ServantActivator *activator = 0;
@@ -140,7 +134,6 @@ create_servant_manager (CORBA::ORB_ptr orb,
   //
   // child_poa->set_servant_manager (servant_activator.in (),
   //                                 ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (0);
 
   test_i *servant = 0;
   ACE_NEW_RETURN (servant,
@@ -153,13 +146,11 @@ create_servant_manager (CORBA::ORB_ptr orb,
   PortableServer::ServantBase_var servant_var (servant);
 
   test_var test =
-    servant->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (0);
+    servant->_this ();
 
   CORBA::String_var ior =
     orb->object_to_string (test.in ()
                            ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (0);
 
   FILE *output_file = ACE_OS::fopen (ior_output_file, "w");
   if (output_file == 0)
@@ -187,7 +178,6 @@ main (int argc,
                          argv,
                          0
                          ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       int result =
         parse_args (argc, argv);
@@ -199,37 +189,29 @@ main (int argc,
       CORBA::Object_var obj =
         orb->resolve_initial_references ("RootPOA"
                                          ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       PortableServer::POA_var root_poa =
         PortableServer::POA::_narrow (obj.in ()
                                       ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       // Get the POAManager of the RootPOA.
       PortableServer::POAManager_var poa_manager =
-        root_poa->the_POAManager (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        root_poa->the_POAManager ();
 
       PortableServer::POA_var child_poa =
         setup_poa (root_poa.in ()
                    ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       PortableServer::ServantManager_var manager =
         create_servant_manager (orb.in (),
                                 child_poa.in ()
                                 ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
-      poa_manager->activate (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      poa_manager->activate ();
 
-      orb->run (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      orb->run ();
 
-      orb->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      orb->destroy ();
     }
   ACE_CATCHANY
     {
@@ -237,7 +219,6 @@ main (int argc,
       return -1;
     }
   ACE_ENDTRY;
-  ACE_CHECK_RETURN (-1);
 
   return 0;
 }

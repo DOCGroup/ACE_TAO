@@ -112,7 +112,6 @@ main (int argc, char *argv[])
         }
 
       lb_server.orb ()->shutdown (0 ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       ACE_DEBUG ((LM_DEBUG, "(%P|%t) server - event loop finished\n"));
 

@@ -54,7 +54,6 @@ namespace TAO
             ACE_NEW_THROW_EX (this->client_interceptor_,
                               RTCosScheduling_ClientScheduler_Interceptor(orb),
                               CORBA::NO_MEMORY());
-          ACE_CHECK;
 
           TAO_ORB_Core *orb_core = orb->orb_core();
 
@@ -102,19 +101,16 @@ namespace TAO
          CORBA::Object_var rt_obj =
            orb->resolve_initial_references("RTORB"
                                            ACE_ENV_ARG_PARAMETER);
-         ACE_TRY_CHECK;
 
          // Get a reference to the real time orb
          RTCORBA::RTORB_var rt_orb =
            RTCORBA::RTORB::_narrow (rt_obj.in ()
                                     ACE_ENV_ARG_PARAMETER);
-         ACE_TRY_CHECK;
 
          /// resolve a reference to RT Current
          rt_obj =
            orb->resolve_initial_references ("RTCurrent"
                                             ACE_ENV_ARG_PARAMETER);
-         ACE_TRY_CHECK;
 
          this->current_ =
            RTCORBA::Current::_narrow (rt_obj.in () ACE_ENV_ARG_PARAMETER);
@@ -127,7 +123,6 @@ namespace TAO
          RTCORBA::PriorityMappingManager_var mapping_manager =
            RTCORBA::PriorityMappingManager::_narrow(rt_obj.in()
                                                     ACE_ENV_ARG_PARAMETER);
-         ACE_TRY_CHECK;
 
          /// Create the Linear Priority Mapping Manager
          ACE_NEW_THROW_EX(this->pm_,
@@ -137,7 +132,6 @@ namespace TAO
          // WHERE the parameter is one of SCHED_OTHER, SCHED_FIFO, or SCHED_RR
 
          mapping_manager->mapping(this->pm_);
-         ACE_TRY_CHECK;
        }
     }
   ACE_CATCHANY
@@ -178,7 +172,6 @@ void  RTCosScheduling_ClientScheduler_i::schedule_activity (
     {
       this->current_->the_priority(priority
                                    ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
     }
   /// If the activity was not found, throw an UnknownName exception.
   else
@@ -325,7 +318,6 @@ RTCosScheduling_ClientScheduler_Interceptor::RTCosScheduling_ClientScheduler_Int
       CORBA::Object_var obj =
         orb->resolve_initial_references ("RTCurrent"
                                      ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
       if (CORBA::is_nil(obj.in()))
         {
           ACE_OS::exit(1);
@@ -335,7 +327,6 @@ RTCosScheduling_ClientScheduler_Interceptor::RTCosScheduling_ClientScheduler_Int
           this->current_ =
              RTCORBA::Current::_narrow (obj.in () ACE_ENV_ARG_PARAMETER);
         }
-      ACE_CHECK;
 
       obj =
         orb->resolve_initial_references("CodecFactory"
@@ -380,7 +371,6 @@ RTCosScheduling_ClientScheduler_Interceptor::RTCosScheduling_ClientScheduler_Int
       CORBA::Object_var obj =
         orb->resolve_initial_references ("RTCurrent"
                                          ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
       if (CORBA::is_nil(obj.in()))
         {
           ACE_OS::exit(1);
@@ -390,7 +380,6 @@ RTCosScheduling_ClientScheduler_Interceptor::RTCosScheduling_ClientScheduler_Int
           this->current_ =
              RTCORBA::Current::_narrow (obj.in () ACE_ENV_ARG_PARAMETER);
         }
-      ACE_TRY_CHECK;
 
       obj =
         orb->resolve_initial_references("CodecFactory"
@@ -418,7 +407,6 @@ RTCosScheduling_ClientScheduler_Interceptor::RTCosScheduling_ClientScheduler_Int
 
       // Create the codec
       this->codec_ = codec_factory->create_codec(encoding);
-      ACE_TRY_CHECK;
     }
   ACE_CATCHANY
     {
@@ -457,7 +445,6 @@ RTCosScheduling_ClientScheduler_Interceptor::send_request (
       CORBA::Any the_priority_as_any;
       the_priority_as_any <<=
         this->current_->the_priority();
-      ACE_TRY_CHECK;
 
       // Set up a service context to hold the priority
       IOP::ServiceContext sc;
@@ -467,11 +454,9 @@ RTCosScheduling_ClientScheduler_Interceptor::send_request (
       // (that is how service contexts send data)
       sc.context_data =
         reinterpret_cast<CORBA::OctetSeq &> (*this->codec_->encode (the_priority_as_any));
-      ACE_TRY_CHECK;
 
       // add the service context
       ri->add_request_service_context(sc, 0);
-      ACE_TRY_CHECK;
 
     }
   ACE_CATCHANY

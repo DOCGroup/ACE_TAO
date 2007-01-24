@@ -19,14 +19,13 @@ Receiver_i::~Receiver_i (void)
 
 
 CORBA::Long
-Receiver_i::receive_call (ACE_ENV_SINGLE_ARG_DECL)
+Receiver_i::receive_call (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_DEBUG ((LM_DEBUG,
               "(%P|%t)  Doing a ping... \n"));
 
-  this->sender_->ping (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
+  this->sender_->ping ();
 
   return this->no_calls_++;
 }

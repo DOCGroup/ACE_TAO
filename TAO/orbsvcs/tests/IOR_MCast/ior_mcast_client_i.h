@@ -21,7 +21,7 @@ class ior_mcast_Client_i
   ior_mcast_Client_i (void);
   ~ior_mcast_Client_i (void);
 
-  int run (ACE_ENV_SINGLE_ARG_DECL);
+  int run (void);
   // Execute the client example code.
 
   int init (int& argc, char *argv[] ACE_ENV_ARG_DECL);

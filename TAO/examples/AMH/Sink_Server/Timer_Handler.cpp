@@ -29,7 +29,6 @@ Timer_Handler::handle_timeout (const ACE_Time_Value &,
   ACE_TRY_NEW_ENV
     {
       this->rh_->test_method (this->send_time_);
-      ACE_TRY_CHECK;
     }
   ACE_CATCHANY
     {

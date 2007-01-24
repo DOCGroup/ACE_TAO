@@ -52,14 +52,14 @@ public:
 
   /// Lists all log object references.
   DsLogAdmin::LogList *
-    list_logs (ACE_ENV_SINGLE_ARG_DECL)
+    list_logs (void)
     ACE_THROW_SPEC ((
                      CORBA::SystemException
                      ));
 
   /// Lists all log ids.
   DsLogAdmin::LogIdList *
-    list_logs_by_id (ACE_ENV_SINGLE_ARG_DECL)
+    list_logs_by_id (void)
     ACE_THROW_SPEC ((
                      CORBA::SystemException
                      ));
@@ -75,7 +75,7 @@ public:
   /// Returns true if log exists, otherwise false
   bool exists (DsLogAdmin::LogId id
                ACE_ENV_ARG_DECL);
-  
+
   /// Remove the given entry from the container.
   int remove (DsLogAdmin::LogId id
 	      ACE_ENV_ARG_DECL);
@@ -88,7 +88,7 @@ public:
   ///
   /// @return object id
   ///
-  virtual PortableServer::ObjectId* 
+  virtual PortableServer::ObjectId*
     create_objectid (DsLogAdmin::LogId id);
 
   /// @brief Create log reference
@@ -99,7 +99,7 @@ public:
   ///
   /// @return object reference
   ///
-  virtual DsLogAdmin::Log_ptr 
+  virtual DsLogAdmin::Log_ptr
     create_log_reference (DsLogAdmin::LogId id
 			  ACE_ENV_ARG_DECL);
 
@@ -111,7 +111,7 @@ public:
   ///
   /// @return object reference
   ///
-  virtual DsLogAdmin::Log_ptr 
+  virtual DsLogAdmin::Log_ptr
     create_log_object (DsLogAdmin::LogId id
 		       ACE_ENV_ARG_DECL);
 
@@ -134,8 +134,8 @@ public:
   virtual PortableServer::ServantBase*
     create_log_servant (DsLogAdmin::LogId id
 			ACE_ENV_ARG_DECL)			= 0;
-  
-  /// @brief Get log record store 
+
+  /// @brief Get log record store
   ///
   /// Get/Create a log record store for log channel @a id.
   ///
@@ -156,7 +156,7 @@ protected:
   ///
   /// Creates factory and log channel POAs, and obtains the LogStore
   /// from a dynamically loaded Log_Persistence_Strategy (if one was
-  /// specified in the service config file, otherwise the default 
+  /// specified in the service config file, otherwise the default
   /// Hash_Persistence_Strategy is used.)
   ///
   /// @param orb ORB
@@ -179,7 +179,7 @@ protected:
 			 CORBA::ULongLong max_size,
 			 const DsLogAdmin::CapacityAlarmThresholdList* thresholds
 			 ACE_ENV_ARG_DECL);
-  
+
   /// ORB.
   CORBA::ORB_var                orb_;
 

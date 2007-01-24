@@ -24,7 +24,7 @@ MUF_Sched_Param_Policy::MUF_Sched_Param_Policy (
 }
 
 MUF_Scheduling::SchedulingParameter
-MUF_Sched_Param_Policy::value (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+MUF_Sched_Param_Policy::value (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return this->value_;
@@ -38,7 +38,7 @@ MUF_Sched_Param_Policy::value (const MUF_Scheduling::SchedulingParameter& value 
 }
 
 CORBA::Policy_ptr
-MUF_Sched_Param_Policy::copy (ACE_ENV_SINGLE_ARG_DECL)
+MUF_Sched_Param_Policy::copy (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   MUF_Sched_Param_Policy* tmp;
@@ -46,13 +46,12 @@ MUF_Sched_Param_Policy::copy (ACE_ENV_SINGLE_ARG_DECL)
 		    MUF_Sched_Param_Policy (*this),
                     CORBA::NO_MEMORY (TAO::VMCID,
                                       CORBA::COMPLETED_NO));
-  ACE_CHECK_RETURN (CORBA::Policy::_nil ());
 
   return tmp;
 }
 
 void
-MUF_Sched_Param_Policy::destroy (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+MUF_Sched_Param_Policy::destroy (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
 }
@@ -82,17 +81,14 @@ MUF_Scheduler::MUF_Scheduler (CORBA::ORB_ptr orb,
   CORBA::Object_var object =
     orb->resolve_initial_references ("RTScheduler_Current"
                                      ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
   this->current_ =
     RTScheduling::Current::_narrow (object.in () ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
   IOP::CodecFactory_var codec_factory;
   CORBA::Object_var obj =
     orb->resolve_initial_references ("CodecFactory"
                                      ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
   if (CORBA::is_nil(obj.in ()))
     {
@@ -196,7 +192,6 @@ MUF_Scheduler::begin_nested_scheduling_segment (const RTScheduling::Current::IdT
                                       sched_param,
                                       implicit_sched_param
                                       ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 }
 
 void
@@ -267,8 +262,7 @@ MUF_Scheduler::send_request (PortableInterceptor::ClientRequestInfo_ptr ri
 {
   Kokyu::Svc_Ctxt_DSRT_QoS sc_qos;
 
-  CORBA::String_var operation = ri->operation (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+  CORBA::String_var operation = ri->operation ();
 
 #ifdef KOKYU_DSRT_LOGGING
   ACE_DEBUG ((LM_DEBUG,
@@ -282,8 +276,7 @@ MUF_Scheduler::send_request (PortableInterceptor::ClientRequestInfo_ptr ri
   sc.context_id = Client_Interceptor::SchedulingInfo;
 
   CORBA::Policy_ptr sched_policy =
-    this->current_->scheduling_parameter(ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+    this->current_->scheduling_parameter();
 
   /*
   int guid;
@@ -342,7 +335,6 @@ MUF_Scheduler::send_request (PortableInterceptor::ClientRequestInfo_ptr ri
 
       // Add this context to the service context list.
       ri->add_request_service_context (sc, 0 ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
     }
 
 
@@ -380,8 +372,7 @@ MUF_Scheduler::receive_request (PortableInterceptor::ServerRequestInfo_ptr ri,
 
   RTScheduling::Current::IdType guid;
 
-  CORBA::String_var operation = ri->operation (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+  CORBA::String_var operation = ri->operation ();
 
 #ifdef KOKYU_DSRT_LOGGING
   ACE_DEBUG ((LM_DEBUG,
@@ -399,7 +390,6 @@ MUF_Scheduler::receive_request (PortableInterceptor::ServerRequestInfo_ptr ri,
   IOP::ServiceContext_var sc =
     ri->get_request_service_context (Server_Interceptor::SchedulingInfo
                                      ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
   CORBA::Long criticality;
   TimeBase::TimeT deadline,exec_time;
@@ -482,8 +472,7 @@ MUF_Scheduler::send_reply (PortableInterceptor::ServerRequestInfo_ptr ri
 
   Kokyu::Svc_Ctxt_DSRT_QoS sc_qos;
 
-  CORBA::String_var operation = ri->operation (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+  CORBA::String_var operation = ri->operation ();
 
 #ifdef KOKYU_DSRT_LOGGING
   ACE_DEBUG ((LM_DEBUG,
@@ -500,8 +489,7 @@ MUF_Scheduler::send_reply (PortableInterceptor::ServerRequestInfo_ptr ri
   TimeBase::TimeT deadline,exec_time;
 
   CORBA::Policy_ptr sched_policy =
-    this->current_->scheduling_parameter(ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+    this->current_->scheduling_parameter();
 
   if (CORBA::is_nil (sched_policy))
   {
@@ -544,7 +532,6 @@ MUF_Scheduler::send_reply (PortableInterceptor::ServerRequestInfo_ptr ri
 
       // Add this context to the service context list.
       ri->add_reply_service_context (sc, 1 ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
 
 #ifdef KOKYU_DSRT_LOGGING
       ACE_DEBUG ((LM_DEBUG, "(%t|%T):reply sc added\n"));
@@ -566,7 +553,6 @@ MUF_Scheduler::send_exception (PortableInterceptor::ServerRequestInfo_ptr ri
                    PortableInterceptor::ForwardRequest))
 {
   send_reply (ri ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 }
 
 void
@@ -576,7 +562,6 @@ MUF_Scheduler::send_other (PortableInterceptor::ServerRequestInfo_ptr ri
                    PortableInterceptor::ForwardRequest))
 {
   send_reply (ri ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 }
 
 void
@@ -586,11 +571,9 @@ MUF_Scheduler::receive_reply (PortableInterceptor::ClientRequestInfo_ptr ri
 {
   RTScheduling::Current::IdType guid;
 
-  CORBA::String_var operation = ri->operation (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+  CORBA::String_var operation = ri->operation ();
 
-  CORBA::Object_var target = ri->target (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+  CORBA::Object_var target = ri->target ();
 
   ACE_CString opname = operation.in ();
 #ifdef KOKYU_DSRT_LOGGING
@@ -605,7 +588,6 @@ MUF_Scheduler::receive_reply (PortableInterceptor::ClientRequestInfo_ptr ri
   IOP::ServiceContext_var sc =
     ri->get_reply_service_context (Client_Interceptor::SchedulingInfo
                                    ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
   CORBA::Long criticality;
   TimeBase::TimeT deadline,exec_time;
@@ -659,7 +641,6 @@ MUF_Scheduler::receive_exception (PortableInterceptor::ClientRequestInfo_ptr ri
                    PortableInterceptor::ForwardRequest))
 {
   receive_reply (ri ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 }
 
 void
@@ -669,7 +650,6 @@ MUF_Scheduler::receive_other (PortableInterceptor::ClientRequestInfo_ptr ri
                    PortableInterceptor::ForwardRequest))
 {
   receive_reply (ri ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 }
 
 void
@@ -681,7 +661,7 @@ MUF_Scheduler::cancel (const RTScheduling::Current::IdType &
 }
 
 CORBA::PolicyList*
-MUF_Scheduler::scheduling_policies (ACE_ENV_SINGLE_ARG_DECL)
+MUF_Scheduler::scheduling_policies (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (), 0);
@@ -696,14 +676,14 @@ MUF_Scheduler::scheduling_policies (const CORBA::PolicyList &
 }
 
 CORBA::PolicyList*
-MUF_Scheduler::poa_policies (ACE_ENV_SINGLE_ARG_DECL)
+MUF_Scheduler::poa_policies (void)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (), 0);
 }
 
 char *
-MUF_Scheduler::scheduling_discipline_name (ACE_ENV_SINGLE_ARG_DECL)
+MUF_Scheduler::scheduling_discipline_name (void)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (), 0);

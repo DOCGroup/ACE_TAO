@@ -24,8 +24,8 @@ Simple_Server_i::test_method (CORBA::Long exec_duration ACE_ENV_ARG_DECL)
 
   ACE_OS::
     memcpy (&guid,
-            this->current_->id (ACE_ENV_SINGLE_ARG_PARAMETER)->get_buffer (),
-            sizeof (this->current_->id (ACE_ENV_SINGLE_ARG_PARAMETER)->length ()));
+            this->current_->id ()->get_buffer (),
+            sizeof (this->current_->id ()->length ()));
 
   ACE_High_Res_Timer timer;
   ACE_Time_Value elapsed_time;
@@ -95,7 +95,7 @@ Simple_Server_i::test_method (CORBA::Long exec_duration ACE_ENV_ARG_DECL)
             {
               CORBA::Policy_var sched_param_policy =
                 CORBA::Policy::_duplicate (current_->
-                                           scheduling_parameter(ACE_ENV_SINGLE_ARG_PARAMETER));
+                                           scheduling_parameter());
 
               const char * name = 0;
 
@@ -122,7 +122,7 @@ Simple_Server_i::test_method (CORBA::Long exec_duration ACE_ENV_ARG_DECL)
 }
 
 void
-Simple_Server_i::shutdown (ACE_ENV_SINGLE_ARG_DECL)
+Simple_Server_i::shutdown (void)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_DEBUG ((LM_DEBUG, "shutdown request from client\n"));

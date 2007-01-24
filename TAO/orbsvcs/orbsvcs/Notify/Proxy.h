@@ -62,7 +62,7 @@ public:
       ACE_ENV_ARG_DECL);
 
   /// Deactivate
-  void deactivate (ACE_ENV_SINGLE_ARG_DECL);
+  void deactivate (void);
 
   /// Obtain the Proxy's subscribed types.
   void subscribed_types (TAO_Notify_EventTypeSeq& subscribed_types
@@ -85,7 +85,7 @@ public:
   CORBA::Boolean updates_off (void);
 
   /// Destroy this object.
-  virtual void destroy (ACE_ENV_SINGLE_ARG_DECL) = 0;
+  virtual void destroy (void) = 0;
 
   /// Access our Peer.
   virtual TAO_Notify_Peer* peer (void) = 0;

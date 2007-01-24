@@ -35,7 +35,7 @@ public:
                                ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual void shutdown (ACE_ENV_SINGLE_ARG_DECL)
+  virtual void shutdown (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
 private:
@@ -51,7 +51,7 @@ public:
 
   ~TimeoutHandler_i ();
 
-  virtual void sendTimeToWait (ACE_ENV_SINGLE_ARG_DECL)
+  virtual void sendTimeToWait (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual void sendTimeToWait_excep (

@@ -85,22 +85,17 @@ DualEC_Supplier::DualEC_Supplier (int argc, char** argv)
     {
       this->sched_hi_name_.length (1);
       this->sched_hi_name_[0].id = CORBA::string_dup ("DUAL_SCHED_HI");
-      ACE_TRY_CHECK;
 
       this->sched_lo_name_.length (1);
       this->sched_lo_name_[0].id = CORBA::string_dup ("DUAL_SCHED_LO");
-      ACE_TRY_CHECK;
 
       this->channel_hi_name_.length (1);
       this->channel_hi_name_[0].id = CORBA::string_dup ("DUAL_EC_HI");
-      ACE_TRY_CHECK;
 
       this->channel_lo_name_.length (1);
       this->channel_lo_name_[0].id = CORBA::string_dup ("DUAL_EC_LO");
-      ACE_TRY_CHECK;
 
-      this->terminator_ = terminator_impl_._this (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      this->terminator_ = terminator_impl_._this ();
     }
   ACE_CATCHANY
   {
@@ -152,15 +147,11 @@ DualEC_Supplier::~DualEC_Supplier ()
 
       // Unbind the schedulers from the NS.
       this->naming_context_->unbind (this->sched_hi_name_ ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
       this->naming_context_->unbind (this->sched_lo_name_ ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       // Unbind the ECs from the NS.
       this->naming_context_->unbind (this->channel_hi_name_ ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
       this->naming_context_->unbind (this->channel_lo_name_ ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
     }
   ACE_CATCHANY
     {
@@ -183,7 +174,6 @@ DualEC_Supplier::init ()
     // Connect to the RootPOA.
     CORBA::Object_var poaObject_var =
       TAO_ORB_Core_instance()->orb()->resolve_initial_references("RootPOA" ACE_ENV_ARG_PARAMETER);
-    ACE_TRY_CHECK;
 
     if (CORBA::is_nil (poaObject_var.in ()))
       ACE_ERROR_RETURN ((LM_ERROR,
@@ -192,21 +182,17 @@ DualEC_Supplier::init ()
 
     this->root_POA_var_ =
       PortableServer::POA::_narrow (poaObject_var.in () ACE_ENV_ARG_PARAMETER);
-    ACE_TRY_CHECK;
 
     this->poa_manager_ =
-       root_POA_var_->the_POAManager (ACE_ENV_SINGLE_ARG_PARAMETER);
-    ACE_TRY_CHECK;
+       root_POA_var_->the_POAManager ();
 
-    poa_manager_->activate (ACE_ENV_SINGLE_ARG_PARAMETER);
-    ACE_TRY_CHECK;
+    poa_manager_->activate ();
 
     // Get the Naming Service object reference.
     CORBA::Object_var namingObj_var =
       TAO_ORB_Core_instance()->orb()->resolve_initial_references (
           "NameService"
           ACE_ENV_ARG_PARAMETER);
-    ACE_TRY_CHECK;
 
     if (CORBA::is_nil (namingObj_var.in ()))
       ACE_ERROR_RETURN ((LM_ERROR,
@@ -216,7 +202,6 @@ DualEC_Supplier::init ()
     this->naming_context_ =
       CosNaming::NamingContext::_narrow (namingObj_var.in ()
                                        ACE_ENV_ARG_PARAMETER);
-    ACE_TRY_CHECK;
 
   }
   ACE_CATCHANY
@@ -299,7 +284,7 @@ DualEC_Supplier::init ()
 // Private class that implements a termination servant.
 
 void
-DualEC_Supplier::Terminator::shutdown (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+DualEC_Supplier::Terminator::shutdown (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_ORB_Core_instance ()->orb ()->shutdown ();
@@ -364,7 +349,6 @@ DualEC_Supplier::run_nav_thread (void *arg)
               }
 
             sup->navigation_Supplier_.notify (any);
-            ACE_TRY_CHECK;
           }
         else
           {
@@ -435,7 +419,6 @@ DualEC_Supplier::run_weap_thread (void *arg)
             ACE_OS::sleep (sup->weap_pause_);
 
             sup->weapons_Supplier_.notify (any);
-            ACE_TRY_CHECK;
           }
         else
           {
@@ -497,25 +480,21 @@ DualEC_Supplier::create_schedulers (void)
                           ACE_Config_Scheduler,
                           -1);
 
-          this->sched_hi_ = sched_hi_impl_->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+          this->sched_hi_ = sched_hi_impl_->_this ();
 
           ACE_NEW_RETURN (this->sched_lo_impl_,
                           ACE_Config_Scheduler,
                           -1);
 
-          this->sched_lo_ = sched_lo_impl_->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+          this->sched_lo_ = sched_lo_impl_->_this ();
 
           // Register Scheduling Service Implementations with Naming Service
 
           this->naming_context_->bind (this ->sched_hi_name_,
                                        this->sched_hi_.in () ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
 
           naming_context_->bind (this->sched_lo_name_,
                                  this->sched_lo_.in () ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
 
           // Register high and low priority rt_infos with the
           // schedulers to force priority differentiation.
@@ -525,7 +504,6 @@ DualEC_Supplier::create_schedulers (void)
               create (this->rt_info_dummy_hi_.entry_point
                       ACE_ENV_ARG_PARAMETER);
 
-          ACE_TRY_CHECK;
 
           this->sched_hi_->
             set (this->sched_hi_rt_info_hi_,
@@ -540,14 +518,12 @@ DualEC_Supplier::create_schedulers (void)
                  static_cast<RtecScheduler::Info_Type_t> (this->rt_info_dummy_hi_.info_type)
                  ACE_ENV_ARG_PARAMETER);
 
-          ACE_TRY_CHECK;
 
           this->sched_hi_rt_info_lo_ =
             this->sched_hi_->
               create (this->rt_info_dummy_lo_.entry_point
                       ACE_ENV_ARG_PARAMETER);
 
-          ACE_TRY_CHECK;
 
           this->sched_hi_->
             set (this->sched_hi_rt_info_lo_,
@@ -562,14 +538,12 @@ DualEC_Supplier::create_schedulers (void)
                  static_cast<RtecScheduler::Info_Type_t> (this->rt_info_dummy_lo_.info_type)
                  ACE_ENV_ARG_PARAMETER);
 
-          ACE_TRY_CHECK;
 
           this->sched_hi_rt_info_hi_ =
             this->sched_lo_->
               create (this->rt_info_dummy_hi_.entry_point
                       ACE_ENV_ARG_PARAMETER);
 
-          ACE_TRY_CHECK;
 
           this->sched_lo_->
             set (this->sched_hi_rt_info_hi_,
@@ -584,14 +558,12 @@ DualEC_Supplier::create_schedulers (void)
                  static_cast<RtecScheduler::Info_Type_t> (this->rt_info_dummy_hi_.info_type)
                  ACE_ENV_ARG_PARAMETER);
 
-          ACE_TRY_CHECK;
 
           this->sched_hi_rt_info_lo_ =
             this->sched_lo_->
               create (this->rt_info_dummy_lo_.entry_point
                       ACE_ENV_ARG_PARAMETER);
 
-          ACE_TRY_CHECK;
 
           this->sched_lo_->
             set (this->sched_hi_rt_info_lo_,
@@ -606,7 +578,6 @@ DualEC_Supplier::create_schedulers (void)
                  static_cast<RtecScheduler::Info_Type_t> (this->rt_info_dummy_lo_.info_type)
                  ACE_ENV_ARG_PARAMETER);
 
-          ACE_TRY_CHECK;
 
         }
     }
@@ -641,8 +612,7 @@ DualEC_Supplier::create_event_channels (void)
                       TAO_EC_Event_Channel (attr_high),
                       -1);
 
-      this->ec_hi_ = ec_hi_impl_->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      this->ec_hi_ = ec_hi_impl_->_this ();
 
       TAO_EC_Event_Channel_Attributes attr_low (root_POA_var_.in (),
                                                 root_POA_var_.in ());
@@ -653,18 +623,15 @@ DualEC_Supplier::create_event_channels (void)
                       TAO_EC_Event_Channel (attr_low),
                       -1);
 
-      this->ec_lo_ = ec_lo_impl_->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      this->ec_lo_ = ec_lo_impl_->_this ();
 
       // Register Event Service Implementations with Naming Service
 
       naming_context_->bind (this->channel_hi_name_,
                              this->ec_hi_.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       naming_context_->bind (this->channel_lo_name_,
                                      this->ec_lo_.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
   }
   ACE_CATCHANY
@@ -692,7 +659,6 @@ DualEC_Supplier::compute_schedules (void)
          this->deps_hi_.out (),
          this->configs_hi_.out (),
          this->anomalies_hi_.out () ACE_ENV_ARG_PARAMETER);
-       ACE_TRY_CHECK;
 
       sched_lo_->compute_scheduling
         (ACE_Sched_Params::priority_min (ACE_SCHED_FIFO,
@@ -703,7 +669,6 @@ DualEC_Supplier::compute_schedules (void)
          this->deps_hi_.out (),
          this->configs_lo_.out (),
          this->anomalies_lo_.out () ACE_ENV_ARG_PARAMETER);
-       ACE_TRY_CHECK;
 
       if (dump_schedule_headers_ && (this->hi_schedule_file_name_ != 0))
         {
@@ -712,7 +677,6 @@ DualEC_Supplier::compute_schedules (void)
                                                 configs_hi_.in (),
                                                 anomalies_hi_.in (),
                                                 this->hi_schedule_file_name_);
-          ACE_TRY_CHECK;
         }
 
       if (dump_schedule_headers_ && (this->lo_schedule_file_name_ != 0))
@@ -722,7 +686,6 @@ DualEC_Supplier::compute_schedules (void)
                                                 configs_lo_.in (),
                                                 anomalies_lo_.in (),
                                                 this->lo_schedule_file_name_);
-          ACE_TRY_CHECK;
         }
     }
   ACE_CATCHANY
@@ -770,7 +733,6 @@ DualEC_Supplier::start_generating_events (void)
 
       // Shut down the ORB via the termination servant
       this->terminator_->shutdown ();
-      ACE_TRY_CHECK;
 
       // Wait for the thread that runs the orb event loop.
       orb_thread_manager.wait ();
@@ -1114,7 +1076,6 @@ main (int argc, char *argv [])
       orb_Manager.init (argc,
                         argv
                         ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
 
       // Create the demo supplier.
@@ -1133,7 +1094,6 @@ main (int argc, char *argv [])
 
       // when done, we clean up
       delete event_Supplier_ptr;
-      ACE_TRY_CHECK;
     }
   ACE_CATCHANY
     {

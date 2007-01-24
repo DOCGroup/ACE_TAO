@@ -68,7 +68,6 @@ AsyncStartupWaiter_i::send_response (ImplementationRepository::AMH_AsyncStartupW
   ACE_TRY
     {
       rh.wait_for_startup (si.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
     }
   ACE_CATCHANY
     {
@@ -124,7 +123,6 @@ AsyncStartupWaiter_i::unblock_all (const char* name) {
         ImplementationRepository::AMH_AsyncStartupWaiterResponseHandler_var& rh = tmp[i];
 
         rh->wait_for_startup (si.in () ACE_ENV_ARG_PARAMETER);
-        ACE_TRY_CHECK;
       }
     ACE_CATCHANY
       {

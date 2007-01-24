@@ -127,7 +127,7 @@ public:
   // Destructor.
 
   virtual CosPropertyService::PropertySet_ptr
-  create_propertyset (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+  create_propertyset (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
   // Returns a  new TAO_PropertySet object. "The property set returned
   // will *not* have any initial properties."
@@ -180,7 +180,7 @@ public:
   // Destructor.
 
   virtual CosPropertyService::PropertySetDef_ptr
-  create_propertysetdef (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+  create_propertysetdef (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
   // Returns a new TAO_PropertySetDef object.
 
@@ -262,7 +262,7 @@ public:
                      CosPropertyService::MultipleExceptions));
   // Define a sequence of properties at a time.
 
-  virtual CORBA::ULong get_number_of_properties (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+  virtual CORBA::ULong get_number_of_properties (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
   // Get the number of properties that are currently defined in the
   // PropertySet.
@@ -311,7 +311,7 @@ public:
                      CosPropertyService::MultipleExceptions));
   // Delete all the these properties from this property set.
 
-  virtual CORBA::Boolean delete_all_properties (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+  virtual CORBA::Boolean delete_all_properties (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
   // Delete everything from this property set.
 
@@ -509,7 +509,7 @@ public:
   virtual ~TAO_PropertyNamesIterator (void);
   // Destructor.
 
-  virtual void reset (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+  virtual void reset (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
   // The reset operation resets the position in an iterator to the
   // first property name, if one exists.
@@ -532,7 +532,7 @@ public:
   // with at most the how_many number of names. A return of false
   // signifies no more items in the iterator.
 
-  virtual void destroy (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+  virtual void destroy (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
   // Destroys the iterator.
 private:
@@ -572,7 +572,7 @@ public:
   virtual ~TAO_PropertiesIterator (void);
   // Destructor.
 
-  virtual void reset (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+  virtual void reset (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
   // Resets the position in an iterator to the first property, if one exists.
 
@@ -594,7 +594,7 @@ public:
   // at most the how_many number of properties. A return of false
   // signifies no more items in the iterator.
 
-  virtual void destroy (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+  virtual void destroy (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
   // Destroys the iterator.
 

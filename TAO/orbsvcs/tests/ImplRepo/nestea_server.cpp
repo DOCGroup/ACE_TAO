@@ -15,14 +15,12 @@ main (int argc, char *argv[])
   ACE_TRY
     {
       int retval = server.init (argc, argv ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       if (retval == -1)
         return -1;
       else
         {
-          server.run (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+          server.run ();
         }
     }
   ACE_CATCH (CORBA::SystemException, sysex)

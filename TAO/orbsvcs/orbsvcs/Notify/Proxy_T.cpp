@@ -26,13 +26,13 @@ TAO_Notify_Proxy_T<SERVANT_TYPE>::servant (void)
 }
 
 template <class SERVANT_TYPE> void
-TAO_Notify_Proxy_T<SERVANT_TYPE>::_add_ref (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+TAO_Notify_Proxy_T<SERVANT_TYPE>::_add_ref (void)
 {
   this->_incr_refcnt ();
 }
 
 template <class SERVANT_TYPE> void
-TAO_Notify_Proxy_T<SERVANT_TYPE>::_remove_ref (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+TAO_Notify_Proxy_T<SERVANT_TYPE>::_remove_ref (void)
 {
   this->_decr_refcnt ();
 }
@@ -48,16 +48,15 @@ TAO_Notify_Proxy_T<SERVANT_TYPE>::validate_event_qos (const CosNotification::QoS
 }
 
 template <class SERVANT_TYPE> CosNotification::QoSProperties*
-TAO_Notify_Proxy_T<SERVANT_TYPE>::get_qos (ACE_ENV_SINGLE_ARG_DECL)
+TAO_Notify_Proxy_T<SERVANT_TYPE>::get_qos (void)
   ACE_THROW_SPEC ((
                    CORBA::SystemException
                    ))
 {
   ACE_GUARD_THROW_EX (TAO_SYNCH_MUTEX, ace_mon, this->lock_,
                       CORBA::INTERNAL ());
-  ACE_CHECK_RETURN (0);
 
-  return this->TAO_Notify_Object::get_qos (ACE_ENV_SINGLE_ARG_PARAMETER);
+  return this->TAO_Notify_Object::get_qos ();
 }
 
 template <class SERVANT_TYPE> void
@@ -95,13 +94,10 @@ TAO_Notify_Proxy_T<SERVANT_TYPE>::add_filter (CosNotifyFilter::Filter_ptr new_fi
 {
   ACE_GUARD_THROW_EX (TAO_SYNCH_MUTEX, ace_mon, this->lock_,
                       CORBA::INTERNAL ());
-  ACE_CHECK_RETURN (0);
 
   CosNotifyFilter::FilterID fid =
     this->filter_admin_.add_filter (new_filter ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN(0);
-  this->self_change (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN(fid);
+  this->self_change ();
   return fid;
 }
 
@@ -130,26 +126,24 @@ TAO_Notify_Proxy_T<SERVANT_TYPE>::get_filter (CosNotifyFilter::FilterID filter A
 {
   ACE_GUARD_THROW_EX (TAO_SYNCH_MUTEX, ace_mon, this->lock_,
                       CORBA::INTERNAL ());
-  ACE_CHECK_RETURN (CosNotifyFilter::Filter::_nil ());
 
   return this->filter_admin_.get_filter (filter ACE_ENV_ARG_PARAMETER);
 }
 
 template <class SERVANT_TYPE> CosNotifyFilter::FilterIDSeq*
-TAO_Notify_Proxy_T<SERVANT_TYPE>::get_all_filters (ACE_ENV_SINGLE_ARG_DECL)
+TAO_Notify_Proxy_T<SERVANT_TYPE>::get_all_filters (void)
   ACE_THROW_SPEC ((
                    CORBA::SystemException
                    ))
 {
   ACE_GUARD_THROW_EX (TAO_SYNCH_MUTEX, ace_mon, this->lock_,
                       CORBA::INTERNAL ());
-  ACE_CHECK_RETURN (0);
 
-  return this->filter_admin_.get_all_filters (ACE_ENV_SINGLE_ARG_PARAMETER);
+  return this->filter_admin_.get_all_filters ();
 }
 
 template <class SERVANT_TYPE> void
-TAO_Notify_Proxy_T<SERVANT_TYPE>::remove_all_filters (ACE_ENV_SINGLE_ARG_DECL)
+TAO_Notify_Proxy_T<SERVANT_TYPE>::remove_all_filters (void)
   ACE_THROW_SPEC ((
                    CORBA::SystemException
                    ))
@@ -157,7 +151,7 @@ TAO_Notify_Proxy_T<SERVANT_TYPE>::remove_all_filters (ACE_ENV_SINGLE_ARG_DECL)
   ACE_GUARD_THROW_EX (TAO_SYNCH_MUTEX, ace_mon, this->lock_,
                       CORBA::INTERNAL ());
 
-  this->filter_admin_.remove_all_filters (ACE_ENV_SINGLE_ARG_PARAMETER);
+  this->filter_admin_.remove_all_filters ();
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL

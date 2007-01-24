@@ -59,7 +59,7 @@ public:
    * destroyed.
    * END SPEC
    */
-  virtual void destroy (ACE_ENV_SINGLE_ARG_DECL)
+  virtual void destroy (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   /// Add an offer to the collection of offers the iterator will
@@ -67,7 +67,7 @@ public:
   virtual void add_offer (CosTrading::OfferId offer_id,
                           const CosTrading::Offer* offer) = 0;
 
-  virtual CORBA::ULong max_left (ACE_ENV_SINGLE_ARG_DECL)
+  virtual CORBA::ULong max_left (void)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      CosTrading::UnknownMaxLeft)) = 0;
 
@@ -138,7 +138,7 @@ public:
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   /// Return the number of items left in the iterator.
-  virtual CORBA::ULong max_left (ACE_ENV_SINGLE_ARG_DECL)
+  virtual CORBA::ULong max_left (void)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      CosTrading::UnknownMaxLeft));
 
@@ -192,11 +192,11 @@ public:
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   /// Destroy the collection of iterators.
-  virtual void destroy (ACE_ENV_SINGLE_ARG_DECL)
+  virtual void destroy (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   /// Determine how many offers are left in the collection.
-  virtual CORBA::ULong max_left (ACE_ENV_SINGLE_ARG_DECL)
+  virtual CORBA::ULong max_left (void)
     ACE_THROW_SPEC ((CORBA::SystemException,
                     CosTrading::UnknownMaxLeft));
 
@@ -248,7 +248,7 @@ class TAO_Offer_Id_Iterator :
    * identifiers (e.g., if the iterator determines its set of offer
    * identifiers through lazy evaluation).
    */
-  virtual CORBA::ULong max_left(ACE_ENV_SINGLE_ARG_DECL)
+  virtual CORBA::ULong max_left(void)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      CosTrading::UnknownMaxLeft));
 
@@ -257,7 +257,7 @@ class TAO_Offer_Id_Iterator :
    * operations can be invoked on an iterator after it has been
    * destroyed.
    */
-  virtual void destroy(ACE_ENV_SINGLE_ARG_DECL)
+  virtual void destroy(void)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   /**

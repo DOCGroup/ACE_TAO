@@ -47,8 +47,7 @@ svc(void) {
 
   ACE_TRY
     {
-      orb_->run(ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      orb_->run();
     }
   ACE_CATCHANY
     {
@@ -129,23 +128,19 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[]) {
                          argv,
                          "testORB"
                          ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       /// get the root poa
       CORBA::Object_var object=
         orb->resolve_initial_references ("RootPOA"
                                          ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       PortableServer::POA_var rootPOA=
         PortableServer::POA::_narrow (object.in ()
                                       ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       /// Create a manager for the POA
       PortableServer::POAManager_var poa_manager =
-        rootPOA->the_POAManager (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        rootPOA->the_POAManager ();
 
       CORBA::PolicyList poa_policy_list;
       poa_policy_list.length (1);
@@ -176,23 +171,19 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[]) {
       ACE_NEW_THROW_EX(servant,
                        Object1_impl(),
                        CORBA::NO_MEMORY());
-      ACE_TRY_CHECK;
 
       PortableServer::ObjectId_var id =
         RTPOA->activate_object(servant
                                ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       CORBA::Object_var testObject =
         RTPOA->id_to_reference(id.in()
                            ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
 
       CORBA::String_var testObject_IORString =
         orb->object_to_string (testObject.in ()
                                ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
 
       // If the ior_output_file exists, output the ior to it
@@ -223,7 +214,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[]) {
         }
 
       // Activate the manager and run the event loop
-      poa_manager->activate (ACE_ENV_SINGLE_ARG_PARAMETER);
+      poa_manager->activate ();
 
       // Need to set the main thread pthread scope and pthread policy to
       // the values that are specified in svc.conf.  This change was
@@ -253,7 +244,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[]) {
 
       /// clean up
       rootPOA->destroy (1, 1 ACE_ENV_ARG_PARAMETER);
-      orb->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
+      orb->destroy ();
     }
   ACE_CATCHANY
     {

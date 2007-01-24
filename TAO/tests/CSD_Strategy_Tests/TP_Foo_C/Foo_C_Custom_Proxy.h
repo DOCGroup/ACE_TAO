@@ -30,18 +30,18 @@ public:
 
   bool validate_connection ();
 
-  void op1(ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
+  void op1(void);
   void op2(CORBA::Long x ACE_ENV_ARG_DECL_WITH_DEFAULTS);
   CORBA::Long op3(CORBA::Long x ACE_ENV_ARG_DECL_WITH_DEFAULTS);
   void op4(CORBA::Long x ACE_ENV_ARG_DECL_WITH_DEFAULTS);
-  void op5(ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
-  void done(ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
+  void op5(void);
+  void done(void);
 
-  void cust_op1(ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
+  void cust_op1(void);
   void cust_op2(long x ACE_ENV_ARG_DECL_WITH_DEFAULTS);
   long cust_op3(long x ACE_ENV_ARG_DECL_WITH_DEFAULTS);
   void cust_op4(long x ACE_ENV_ARG_DECL_WITH_DEFAULTS);
-  void cust_op5(ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
+  void cust_op5(void);
 
 private:
   Foo_C_i*                        servant_;

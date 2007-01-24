@@ -30,7 +30,6 @@ TAO_LB_Monitor_Signal_Handler::perform_cleanup (int signum)
         {
           this->load_manager_->remove_load_monitor (this->location_
                                                     ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
         }
     }
   ACE_CATCHANY
@@ -45,7 +44,6 @@ TAO_LB_Monitor_Signal_Handler::perform_cleanup (int signum)
                         -1);
     }
   ACE_ENDTRY;
-  ACE_CHECK_RETURN (-1);
 
   return this->TAO_LB_Signal_Handler::perform_cleanup (signum);
 }

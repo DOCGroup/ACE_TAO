@@ -66,7 +66,7 @@ protected:
                      CosEventChannelAdmin::AlreadyConnected
                      ));
 
-  virtual void disconnect_push_consumer (ACE_ENV_SINGLE_ARG_DECL)
+  virtual void disconnect_push_consumer (void)
     ACE_THROW_SPEC ((
                      CORBA::SystemException
                      ));

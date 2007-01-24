@@ -57,13 +57,12 @@ TAO_Notify_StructuredEvent_No_Copy::unmarshal (TAO_InputCDR & cdr)
 }
 
 TAO_Notify_Event *
-TAO_Notify_StructuredEvent_No_Copy::copy (ACE_ENV_SINGLE_ARG_DECL) const
+TAO_Notify_StructuredEvent_No_Copy::copy (void) const
 {
   TAO_Notify_Event * new_event;
   ACE_NEW_THROW_EX (new_event,
                     TAO_Notify_StructuredEvent (*this->notification_),
                     CORBA::NO_MEMORY ());
-  ACE_CHECK_RETURN (0);
   return new_event;
 }
 

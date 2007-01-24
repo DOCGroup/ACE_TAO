@@ -55,10 +55,10 @@ public:
 
 private:
   /// Run one iteration of the test
-  int one_iteration (ACE_ENV_SINGLE_ARG_DECL);
+  int one_iteration (void);
 
   /// Make sure that the thread has a connection available
-  void validate_connection (ACE_ENV_SINGLE_ARG_DECL);
+  void validate_connection (void);
 
 private:
   /// A reference to the ORB

@@ -28,19 +28,14 @@ main (int argc, char* argv[])
       // ORB initialization boiler plate...
       CORBA::ORB_var orb =
         CORBA::ORB_init (argc, argv, "" ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       CORBA::Object_var object =
         orb->resolve_initial_references ("RootPOA" ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
       PortableServer::POA_var poa =
         PortableServer::POA::_narrow (object.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
       PortableServer::POAManager_var poa_manager =
-        poa->the_POAManager (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
-      poa_manager->activate (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        poa->the_POAManager ();
+      poa_manager->activate ();
 
       // ****************************************************************
 
@@ -50,25 +45,21 @@ main (int argc, char* argv[])
       attributes.supplier_reconnect = 1;
 
       TAO_EC_Event_Channel ec_impl (attributes);
-      ec_impl.activate (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      ec_impl.activate ();
 
       RtecEventChannelAdmin::EventChannel_var event_channel =
-        ec_impl._this (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        ec_impl._this ();
 
 
       // ****************************************************************
 
       // Obtain the consumer admin..
       RtecEventChannelAdmin::ConsumerAdmin_var consumer_admin =
-        event_channel->for_consumers (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        event_channel->for_consumers ();
 
       // Obtain the supplier admin..
       RtecEventChannelAdmin::SupplierAdmin_var supplier_admin =
-        event_channel->for_suppliers (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        event_channel->for_suppliers ();
 
       // ****************************************************************
 
@@ -81,7 +72,6 @@ main (int argc, char* argv[])
                          event_source,
                          event_type
                          ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       supplier1.connect (supplier_admin.in (),
                          event_source,
@@ -89,7 +79,6 @@ main (int argc, char* argv[])
                          event_source,
                          event_type + 1
                          ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       // ****************************************************************
 
@@ -113,7 +102,6 @@ main (int argc, char* argv[])
       consumer01.connect (consumer_admin.in (),
                           consumer_qos01.get_ConsumerQOS ()
                           ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       Consumer consumer0 ("Consumer/0", event_type);
       // Create a consumer, intialize its RT_Info structures, and
@@ -122,7 +110,6 @@ main (int argc, char* argv[])
       consumer0.connect (consumer_admin.in (),
                          consumer_qos0.get_ConsumerQOS ()
                          ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       Consumer consumer1 ("Consumer/1", event_type);
       // Create a consumer, intialize its RT_Info structures, and
@@ -131,7 +118,6 @@ main (int argc, char* argv[])
       consumer1.connect (consumer_admin.in (),
                          consumer_qos1.get_ConsumerQOS ()
                          ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       // ****************************************************************
 
@@ -151,24 +137,20 @@ main (int argc, char* argv[])
           consumer0.connect (consumer_admin.in (),
                              consumer_qos0.get_ConsumerQOS ()
                              ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
           consumer1.connect (consumer_admin.in (),
                              consumer_qos1.get_ConsumerQOS ()
                              ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
           if (i % 2 == 0)
             {
               consumer01.connect (consumer_admin.in (),
                                   consumer_qos0.get_ConsumerQOS ()
                                   ACE_ENV_ARG_PARAMETER);
-              ACE_TRY_CHECK;
             }
           else
             {
               consumer01.connect (consumer_admin.in (),
                                   consumer_qos01.get_ConsumerQOS ()
                                   ACE_ENV_ARG_PARAMETER);
-              ACE_TRY_CHECK;
             }
 
           ACE_OS::sleep (tv);
@@ -184,29 +166,22 @@ main (int argc, char* argv[])
 
       // Cleanup..
 
-      consumer01.disconnect (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
-      consumer1.disconnect (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
-      consumer0.disconnect (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      consumer01.disconnect ();
+      consumer1.disconnect ();
+      consumer0.disconnect ();
 
       // ****************************************************************
 
-      supplier1.disconnect (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
-      supplier0.disconnect (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      supplier1.disconnect ();
+      supplier0.disconnect ();
 
       // ****************************************************************
 
-      event_channel->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      event_channel->destroy ();
 
       // ****************************************************************
 
       poa->destroy (1, 1 ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       // ****************************************************************
 

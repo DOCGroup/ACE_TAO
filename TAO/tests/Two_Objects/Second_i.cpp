@@ -23,7 +23,7 @@ Second_i::Second_i (CORBA::ORB_ptr orb,
 }
 
 Two_Objects_Test::Octet_Seq *
-Second_i::twoway_method (ACE_ENV_SINGLE_ARG_DECL)
+Second_i::twoway_method (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   Two_Objects_Test::Octet_Seq  *preply_mesg;
@@ -55,7 +55,7 @@ Second_i::twoway_method (ACE_ENV_SINGLE_ARG_DECL)
 }
 
 void
-Second_i::shutdown (ACE_ENV_SINGLE_ARG_DECL)
+Second_i::shutdown (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_DEBUG ((LM_DEBUG, "(%P|%t) about to shutdown the orb\n"));

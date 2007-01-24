@@ -128,10 +128,10 @@ Cubit_Factory_i::~Cubit_Factory_i (void)
 }
 
 Cubit_ptr
-Cubit_Factory_i::make_cubit (ACE_ENV_SINGLE_ARG_DECL)
+Cubit_Factory_i::make_cubit (void)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  return my_cubit_._this (ACE_ENV_SINGLE_ARG_PARAMETER);
+  return my_cubit_._this ();
 }
 
 void
@@ -154,7 +154,7 @@ Cubit_i::~Cubit_i (void)
 }
 
 PortableServer::POA_ptr
-Cubit_i::_default_POA (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+Cubit_i::_default_POA (void)
 {
   return PortableServer::POA::_duplicate (this->poa_.in ());
 }
@@ -166,14 +166,14 @@ Cubit_i::set_default_poa (PortableServer::POA_ptr poa)
 }
 
 void
-Cubit_i::cube_oneway (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+Cubit_i::cube_oneway (void)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_FUNCTION_TIMEPROBE (CUBIT_I_CUBE_ONEWAY_START);
 }
 
 void
-Cubit_i::cube_void (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+Cubit_i::cube_void (void)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_FUNCTION_TIMEPROBE (CUBIT_I_CUBE_VOID_START);
@@ -441,7 +441,7 @@ Cubit_i::cube_any_struct (const CORBA::Any & any
 
 // Shutdown.
 
-void Cubit_i::shutdown (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+void Cubit_i::shutdown (void)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_DEBUG ((LM_DEBUG,
@@ -453,7 +453,7 @@ void Cubit_i::shutdown (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
 
 
 void
-Cubit_i::ping (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+Cubit_i::ping (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // do nothing

@@ -31,11 +31,11 @@ public:
   Callback_i (CORBA::ORB_ptr orb);
   // ctor
 
-  void shutdown (ACE_ENV_SINGLE_ARG_DECL)
+  void shutdown (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
   // Safe way to shutdown
 
-  void callback_method (ACE_ENV_SINGLE_ARG_DECL)
+  void callback_method (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
   // The callback method
 
@@ -65,7 +65,7 @@ public:
                         ACE_ENV_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  void shutdown (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+  void shutdown (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
 private:

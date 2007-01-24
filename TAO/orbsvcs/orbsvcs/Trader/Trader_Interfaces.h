@@ -697,7 +697,7 @@ public:
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual CosTrading::Admin::OctetSeq*
-    request_id_stem (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+    request_id_stem (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual CosTrading::Admin::OctetSeq*
@@ -871,7 +871,7 @@ public:
   // state.
   // END SPEC
 
-  virtual CosTrading::LinkNameSeq* list_links (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+  virtual CosTrading::LinkNameSeq* list_links (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   // BEGIN SPEC

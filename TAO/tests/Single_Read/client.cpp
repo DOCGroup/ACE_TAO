@@ -81,7 +81,6 @@ main (int argc, char **argv)
                          argv,
                          0
                          ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       // Initialize options based on command-line arguments.
       int parse_args_result = parse_args (argc, argv);
@@ -92,12 +91,10 @@ main (int argc, char **argv)
       CORBA::Object_var object =
         orb->string_to_object (IOR
                                ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       // Try to narrow the object reference to a <test> reference.
       test_var test_object = test::_narrow (object.in ()
                                             ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       test::data the_data0 (data_bytes);
       the_data0.length (data_bytes);
@@ -120,19 +117,16 @@ main (int argc, char **argv)
           test_object->method (i,
                                the_data0
                                ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
 
           // Invoke the oneway method.
           test_object->method (i,
                                the_data1
                                ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
 
           // Invoke the oneway method.
           test_object->method (i,
                                the_data2
                                ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
         }
 
       // Shutdown server.
@@ -140,8 +134,7 @@ main (int argc, char **argv)
         {
           ACE_DEBUG ((LM_DEBUG,
                       "(%P|%t) Sending a shutdown call..\n"));
-          test_object->shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+          test_object->shutdown ();
         }
 
       // Destroy the ORB.  On some platforms, e.g., Win32, the socket
@@ -150,8 +143,7 @@ main (int argc, char **argv)
       // static destructors to flush the queues, it will be too late.
       // Therefore, we use explicit destruction here and flush the
       // queues before main() ends.
-      orb->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      orb->destroy ();
     }
   ACE_CATCHANY
     {
@@ -161,7 +153,6 @@ main (int argc, char **argv)
     }
   ACE_ENDTRY;
 
-  ACE_CHECK_RETURN (-1);
 
   return 0;
 }

@@ -73,7 +73,7 @@ namespace TAO
      * Prepare to exit
      * @return zero for success; nonzero is process return code for failure.
      */
-    int fini (ACE_ENV_SINGLE_ARG_DECL);
+    int fini (void);
 
     /**
      * Identify this fault notifier.
@@ -132,15 +132,15 @@ namespace TAO
 
     //////////////////////////////////////////
     // CORBA interface PullMonitorable methods
-    virtual CORBA::Boolean is_alive (ACE_ENV_SINGLE_ARG_DECL)
+    virtual CORBA::Boolean is_alive (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
 
     /////////////////////////////////////////
     // Override CORBA servant virtual methods
-    virtual PortableServer::POA_ptr _default_POA (ACE_ENV_SINGLE_ARG_DECL);
+    virtual PortableServer::POA_ptr _default_POA (void);
 
-    virtual void _remove_ref (ACE_ENV_SINGLE_ARG_DECL);
+    virtual void _remove_ref (void);
 
     /////////////////////////
     // Implementation methods

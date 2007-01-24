@@ -80,7 +80,7 @@ public:
 
 protected:
   /// returns a copy of this event allocated from the heap
-  virtual TAO_Notify_Event * copy (ACE_ENV_SINGLE_ARG_DECL) const;
+  virtual TAO_Notify_Event * copy (void) const;
 
 protected:
 

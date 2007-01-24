@@ -16,10 +16,8 @@ main (int argc, char *argv [])
     {
       client.init (argc, argv
                    ACE_ENV_ARG_PARAMETER); //Init the Client
-      ACE_TRY_CHECK;
 
-      client.run (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      client.run ();
 
       client.destroy_ec ();
     }

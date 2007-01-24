@@ -30,7 +30,7 @@ class CSD_TP_Foo_C_Export Foo_C_cust_op3 : public TAO::CSD::TP_Custom_Request_Op
     Foo_C_cust_op3(Foo_C_i* servant, long arg);
     virtual ~Foo_C_cust_op3();
 
-    long result(ACE_ENV_SINGLE_ARG_DECL);
+    long result(void);
 
 
   protected:

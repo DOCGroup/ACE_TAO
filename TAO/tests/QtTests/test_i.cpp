@@ -13,7 +13,7 @@ LCD_Display_imp::LCD_Display_imp (CORBA::ORB_ptr orb)
 }
 
 void
-LCD_Display_imp::shutdown (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+LCD_Display_imp::shutdown (void)
       ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_DEBUG ((LM_DEBUG,

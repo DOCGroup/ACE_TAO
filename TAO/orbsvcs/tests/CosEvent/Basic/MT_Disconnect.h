@@ -34,7 +34,7 @@ public:
   // = Check the ACE_Task_Base documentation.
   int svc (void);
 
-  void run_iteration (ACE_ENV_SINGLE_ARG_DECL);
+  void run_iteration (void);
   // Run a single iteration of the test
 
 private:

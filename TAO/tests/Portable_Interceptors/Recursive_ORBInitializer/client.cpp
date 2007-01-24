@@ -31,15 +31,12 @@ main (int argc, char *argv[])
     {
       PortableInterceptor::register_orb_initializer (initializer_var1.in ()
                                                      ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       CORBA::ORB_var orb =
         CORBA::ORB_init (argc, argv, "" ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       CORBA::ORB_var orb2 =
         CORBA::ORB_init (argc, argv, "SecondORB" ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
     }
   ACE_CATCHANY
     {

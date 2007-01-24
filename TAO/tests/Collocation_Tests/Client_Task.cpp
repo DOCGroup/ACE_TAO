@@ -25,11 +25,9 @@ Client_Task::svc (void)
       CORBA::Object_var tmp =
         this->corb_->string_to_object (input_
 				       ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       Test::Hello_var hello =
         Test::Hello::_narrow(tmp.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       if (CORBA::is_nil (hello.in ()))
         {
@@ -40,14 +38,12 @@ Client_Task::svc (void)
         }
 
       CORBA::String_var the_string =
-        hello->get_string (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        hello->get_string ();
 
       ACE_DEBUG ((LM_DEBUG, "(%P|%t) - string returned <%s>\n",
 		  the_string.in ()));
 
-      hello->shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      hello->shutdown ();
     }
   ACE_CATCHANY
     {

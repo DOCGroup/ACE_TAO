@@ -16,7 +16,7 @@ public:
   One_Impl (CORBA::ORB_ptr orb);
 
   // = The skeleton methods
-  virtual char * get_string (ACE_ENV_SINGLE_ARG_DECL)
+  virtual char * get_string (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
 private:
@@ -33,7 +33,7 @@ public:
   Two_Impl (CORBA::ORB_ptr orb);
 
   // = The skeleton methods
-  virtual char * get_string (ACE_ENV_SINGLE_ARG_DECL)
+  virtual char * get_string (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
 private:
@@ -50,7 +50,7 @@ public:
   Three_Impl (CORBA::ORB_ptr orb);
 
   // = The skeleton methods
-  virtual char * get_string (ACE_ENV_SINGLE_ARG_DECL)
+  virtual char * get_string (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
 private:

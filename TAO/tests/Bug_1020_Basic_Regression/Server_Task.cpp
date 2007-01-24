@@ -29,7 +29,6 @@ Server_Task::svc (void)
         {
           this->echo_->echo_payload (payload
                                      ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
         }
     }
   ACE_CATCHANY
@@ -37,7 +36,6 @@ Server_Task::svc (void)
       return -1;
     }
   ACE_ENDTRY;
-  ACE_CHECK_RETURN (-1);
 
   ACE_NOTREACHED (return 0);
 }

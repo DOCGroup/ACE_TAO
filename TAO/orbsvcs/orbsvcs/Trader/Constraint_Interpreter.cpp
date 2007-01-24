@@ -30,7 +30,6 @@ TAO_Constraint_Interpreter::TAO_Constraint_Interpreter (
       ACE_NEW_THROW_EX (this->root_,
                         TAO_Literal_Constraint ((CORBA::Boolean) 1),
                         CORBA::NO_MEMORY ());
-      ACE_CHECK;
     }
   else
     {
@@ -54,7 +53,6 @@ TAO_Constraint_Interpreter (TAO_Constraint_Validator& validator,
       ACE_NEW_THROW_EX (this->root_,
                         TAO_Literal_Constraint ((CORBA::Boolean) 1),
                         CORBA::NO_MEMORY ());
-      ACE_CHECK;
     }
   else
     {
@@ -99,7 +97,6 @@ TAO_Preference_Interpreter::TAO_Preference_Interpreter (
       ACE_NEW_THROW_EX (this->root_,
                         TAO_Noop_Constraint (TAO_FIRST),
                         CORBA::NO_MEMORY ());
-      ACE_CHECK;
     }
   else
     {
@@ -124,7 +121,6 @@ TAO_Preference_Interpreter (TAO_Constraint_Validator& validator,
       ACE_NEW_THROW_EX (this->root_,
                         TAO_Noop_Constraint (TAO_FIRST),
                         CORBA::NO_MEMORY ());
-      ACE_CHECK;
     }
   else
     {

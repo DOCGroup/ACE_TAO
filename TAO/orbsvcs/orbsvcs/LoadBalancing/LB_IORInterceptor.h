@@ -71,11 +71,11 @@ public:
    */
   //@{
   /// Return the name of this IORInterceptor.
-  virtual char * name (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+  virtual char * name (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   /// Cleanup resources acquired by this IORInterceptor.
-  virtual void destroy (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+  virtual void destroy (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   /// Add the tagged components to the IOR.
@@ -112,7 +112,7 @@ public:
 private:
 
   /// Create and register the LoadAlert object with the LoadManager.
-  void register_load_alert (ACE_ENV_SINGLE_ARG_DECL);
+  void register_load_alert (void);
 
 private:
 

@@ -46,14 +46,12 @@ svr_worker (void *arg)
       int result = cubit_server.init (args.argc (),
                                       args.argv ()
                                       ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       if (result == -1)
         return (void *) 1;
 
       thread_barrier->server_init_.wait ();
-      cubit_server.run (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      cubit_server.run ();
 
       thread_barrier->client_fini_.wait ();
     }

@@ -41,7 +41,6 @@ Thread_Task::svc (void)
                                                 sched_param_.in (),
                                                 implicit_sched_param.in ()
                                                 ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       ACE_OS::memcpy (&count_,
                       this->current_->id ()->get_buffer (),
@@ -61,7 +60,6 @@ Thread_Task::svc (void)
 
       this->current_->end_scheduling_segment (name
                                               ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       dt_creator_->dt_ended () ;
     }

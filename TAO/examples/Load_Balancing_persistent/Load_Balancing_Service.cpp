@@ -72,7 +72,6 @@ Load_Balancing_Service::init (int argc,
       result = this->orb_manager_.init (argc,
                                         argv
                                         ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
       if (result == -1)
         return result;
 
@@ -89,19 +88,16 @@ Load_Balancing_Service::init (int argc,
       policies[0] =
         this->orb_manager_.root_poa()->create_lifespan_policy (PortableServer::PERSISTENT
                                                                ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       policies[1] =
         this->orb_manager_.root_poa()->create_implicit_activation_policy (PortableServer::IMPLICIT_ACTIVATION
                                                                           ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       PortableServer::POA_var persistent_POA =
         this->orb_manager_.root_poa()->create_POA ("persistent",
                                                    this->orb_manager_.poa_manager (),
                                                    policies
                                                    ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
 
       // Destroy policy objects
@@ -109,8 +105,7 @@ Load_Balancing_Service::init (int argc,
            i < policies.length ();
            ++i)
         {
-          policies[i]->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+          policies[i]->destroy ();
         }
 
       // Create, ref. count, and activate the servant.
@@ -122,14 +117,12 @@ Load_Balancing_Service::init (int argc,
 
       // Activate the POA manager
       //PortableServer::ServantBase_var s = factory_servant;
-      this->orb_manager_.activate_poa_manager (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      this->orb_manager_.activate_poa_manager ();
 
       CORBA::Object_var objref = factory_servant->_this ();
 
       ior = this->orb_manager_.orb ()->object_to_string (objref.in ()
                                                          ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       if (ior.in () == 0)
         return -1;
@@ -144,7 +137,6 @@ Load_Balancing_Service::init (int argc,
       return -1;
     }
   ACE_ENDTRY;
-  ACE_CHECK_RETURN (-1);
 
   if (this->ior_output_file_ != 0)
     {
@@ -159,12 +151,11 @@ Load_Balancing_Service::init (int argc,
 
 
 int
-Load_Balancing_Service::run (ACE_ENV_SINGLE_ARG_DECL)
+Load_Balancing_Service::run (void)
 {
   int result;
 
-  result = this->orb_manager_.run (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
+  result = this->orb_manager_.run ();
 
   return result;
 }
@@ -185,8 +176,7 @@ main (int argc, char *argv[])
   ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY
     {
-      result = factory.run (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      result = factory.run ();
     }
   ACE_CATCHANY
     {
@@ -194,7 +184,6 @@ main (int argc, char *argv[])
       return 1;
     }
   ACE_ENDTRY;
-  ACE_CHECK_RETURN (1);
 
   if (result == -1)
     return 1;

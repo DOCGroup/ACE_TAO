@@ -32,7 +32,7 @@ public:
     ACE_THROW_SPEC ((CORBA::SystemException, RolyPoly::E));
 
   virtual void
-  shutdown (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+  shutdown (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
 private:

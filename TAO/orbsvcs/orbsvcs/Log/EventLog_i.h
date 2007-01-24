@@ -82,22 +82,22 @@ public:
 
   /// Destroy the log object and all contained records.
   void
-  destroy (ACE_ENV_SINGLE_ARG_DECL)
+  destroy (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   /// Activate the EventLog.
   void
-  activate (ACE_ENV_SINGLE_ARG_DECL);
+  activate (void);
 
   // = The CosEventChannelAdmin::EventChannel interface methods.
   CosEventChannelAdmin::ConsumerAdmin_ptr
-  for_consumers (ACE_ENV_SINGLE_ARG_DECL)
+  for_consumers (void)
         ACE_THROW_SPEC ((
                 CORBA::SystemException
         ));
 
   CosEventChannelAdmin::SupplierAdmin_ptr
-  for_suppliers (ACE_ENV_SINGLE_ARG_DECL)
+  for_suppliers (void)
         ACE_THROW_SPEC ((
                 CORBA::SystemException
         ));

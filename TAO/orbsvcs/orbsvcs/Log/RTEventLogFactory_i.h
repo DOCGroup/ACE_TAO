@@ -68,7 +68,7 @@ public:
 
   /// Activate this servant
   RTEventLogAdmin::EventLogFactory_ptr
-  activate (ACE_ENV_SINGLE_ARG_DECL);
+  activate (void);
 
   /// Used to create a RTEventLog.
   RTEventLogAdmin::EventLog_ptr create (
@@ -110,7 +110,7 @@ public:
 protected:
   virtual CORBA::RepositoryId
     create_repositoryid ();
-	
+
   virtual PortableServer::ServantBase*
     create_log_servant (DsLogAdmin::LogId id
 			ACE_ENV_ARG_DECL);

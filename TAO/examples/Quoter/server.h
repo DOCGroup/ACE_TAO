@@ -55,14 +55,14 @@ public:
   int init (int argc, char *argv[] ACE_ENV_ARG_DECL);
   // Initialize the Quoter_Server state - parsing arguments and ...
 
-  int run (ACE_ENV_SINGLE_ARG_DECL);
+  int run (void);
   // Run the server.
 
 private:
   int parse_args (void);
   // Parses the commandline arguments.
 
-  int init_naming_service (ACE_ENV_SINGLE_ARG_DECL);
+  int init_naming_service (void);
   // Initializes the name server and registers cubit factory with the
   // name server.
 

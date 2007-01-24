@@ -23,17 +23,14 @@ main (int argc, char *argv[])
       CORBA::ORB_var orb =
         CORBA::ORB_init (argc, argv, ""
                          ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       CORBA::Object_var poa_object =
         orb->resolve_initial_references("RootPOA"
                                         ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       PortableServer::POA_var root_poa =
         PortableServer::POA::_narrow (poa_object.in ()
                                       ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       if (CORBA::is_nil (root_poa.in ()))
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -41,16 +38,13 @@ main (int argc, char *argv[])
                           1);
 
       PortableServer::POAManager_var poa_manager =
-        root_poa->the_POAManager (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        root_poa->the_POAManager ();
 
       CORBA::Object_var object =
         orb->resolve_initial_references ("PolicyCurrent" ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       CORBA::PolicyCurrent_var policy_current =
         CORBA::PolicyCurrent::_narrow (object.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       if (CORBA::is_nil (policy_current.in ()))
         {
@@ -65,14 +59,11 @@ main (int argc, char *argv[])
         orb->create_policy (Messaging::SYNC_SCOPE_POLICY_TYPE,
                             scope_as_any
                             ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       policy_current->set_policy_overrides (policies, CORBA::ADD_OVERRIDE
                                             ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
-      policies[0]->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      policies[0]->destroy ();
 
       if (parse_args (argc, argv) != 0)
         return 1;
@@ -91,18 +82,15 @@ main (int argc, char *argv[])
       }
 
       Test::Echo_var echo =
-        impl->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        impl->_this ();
 
       CORBA::Object_var tmp =
         orb->string_to_object(ior
                               ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       Test::Echo_Caller_var server =
         Test::Echo_Caller::_narrow(tmp.in ()
                               ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       if (CORBA::is_nil (echo.in ()))
         {
@@ -112,25 +100,20 @@ main (int argc, char *argv[])
                             1);
         }
 
-      poa_manager->activate (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      poa_manager->activate ();
 
       server->start_task(echo.in()
                          ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
-      orb->run (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      orb->run ();
 
       ACE_DEBUG ((LM_DEBUG, "(%P|%t) client - event loop finished\n"));
 
       // Actually the code here should never be reached.
       root_poa->destroy (1, 1
                          ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
-      orb->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      orb->destroy ();
     }
   ACE_CATCHANY
     {

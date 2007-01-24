@@ -62,7 +62,7 @@ public:
                           ACE_ENV_ARG_DECL);
   void set_object_id(const FtRtecEventChannelAdmin::ObjectId& object_id
                      ACE_ENV_ARG_DECL);
-  FtRtecEventChannelAdmin::ObjectId_var get_object_id(ACE_ENV_SINGLE_ARG_DECL);
+  FtRtecEventChannelAdmin::ObjectId_var get_object_id(void);
   FtRtecEventChannelAdmin::ObjectId_var
     get_object_id(PortableInterceptor::ServerRequestInfo_ptr ri
                   ACE_ENV_ARG_DECL);
@@ -71,7 +71,7 @@ public:
                          const CORBA::Any& result
                          ACE_ENV_ARG_DECL);
 
-  CORBA::Any_ptr get_cached_result(ACE_ENV_SINGLE_ARG_DECL);
+  CORBA::Any_ptr get_cached_result(void);
   bool is_executed_request();
 
   void set_sequence_number(PortableInterceptor::ServerRequestInfo_ptr ri,
@@ -83,7 +83,7 @@ public:
   FTRT::SequenceNumber get_sequence_number(PortableInterceptor::ClientRequestInfo_ptr ri
                            ACE_ENV_ARG_DECL);
 
-  FTRT::SequenceNumber get_sequence_number(ACE_ENV_SINGLE_ARG_DECL);
+  FTRT::SequenceNumber get_sequence_number(void);
 
   void set_ft_request_service_context(
     PortableInterceptor::ServerRequestInfo_ptr ri,

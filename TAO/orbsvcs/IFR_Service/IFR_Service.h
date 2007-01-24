@@ -46,10 +46,10 @@ public:
             ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
   /// Shut down the IFR Service.
-  int fini (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
+  int fini (void);
 
   /// Run the IFR service.
-  int run (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
+  int run (void);
 
 protected:
 

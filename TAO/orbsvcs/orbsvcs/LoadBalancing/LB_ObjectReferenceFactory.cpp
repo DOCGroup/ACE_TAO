@@ -68,7 +68,6 @@ TAO_LB_ObjectReferenceFactory::~TAO_LB_ObjectReferenceFactory (void)
               // Clean up all object groups we created.
               this->lm_->delete_object (this->fcids_[i].in ()
                                         ACE_ENV_ARG_PARAMETER);
-              ACE_TRY_CHECK;
             }
           ACE_CATCHANY
             {
@@ -98,7 +97,6 @@ TAO_LB_ObjectReferenceFactory::make_object (
     this->old_orf_->make_object (repository_id,
                                  id
                                  ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (CORBA::Object::_nil ());
 
   PortableGroup::ObjectGroup_var object_group;
 
@@ -109,7 +107,6 @@ TAO_LB_ObjectReferenceFactory::make_object (
                              index,
                              object_group.out ()
                              ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (CORBA::Object::_nil ());
 
   if (found_group)
     {
@@ -124,7 +121,6 @@ TAO_LB_ObjectReferenceFactory::make_object (
                                        this->location_,
                                        obj.in ()
                                        ACE_ENV_ARG_PARAMETER);
-              ACE_TRY_CHECK;
             }
           ACE_CATCH (PortableGroup::ObjectGroupNotFound, ex)
             {
@@ -158,7 +154,6 @@ TAO_LB_ObjectReferenceFactory::make_object (
                                 CORBA::Object::_nil ());
             }
           ACE_ENDTRY;
-          ACE_CHECK_RETURN (CORBA::Object::_nil ());
 
           this->registered_members_[index] = 1;
         }
@@ -209,7 +204,6 @@ TAO_LB_ObjectReferenceFactory::find_object_group (
                                       criteria,
                                       fcid.out ()
                                       ACE_ENV_ARG_PARAMETER);
-          ACE_CHECK_RETURN (0);
 
           CORBA::ULong const len = this->fcids_.size ();
           this->fcids_.size (len + 1); // Incremental growth.  Yuck!
@@ -220,7 +214,6 @@ TAO_LB_ObjectReferenceFactory::find_object_group (
           group =
             this->orb_->string_to_object (this->object_groups_[index]
                                           ACE_ENV_ARG_PARAMETER);
-          ACE_CHECK_RETURN (0);
         }
 
       if (this->table_.bind (repository_id, group) != 0)

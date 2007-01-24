@@ -79,7 +79,6 @@ ClientTask::svc()
         GuardType guard(this->lock_);
         this->failure_count_++;
       }
-    ACE_TRY_CHECK;
   }
   ACE_CATCHANY
   {

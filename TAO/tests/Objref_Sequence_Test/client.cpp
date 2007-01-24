@@ -45,7 +45,6 @@ main (int argc, char *argv [])
                          argv,
                          ""
                          ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       if (parse_args (argc, argv) == -1)
         return -1;
@@ -54,11 +53,9 @@ main (int argc, char *argv [])
       CORBA::Object_var tmp =
         orb->string_to_object(ior
                               ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       Server_var server = Server::_narrow (tmp.in ()
                                        ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       // Create object instances
       // This portion of the test was given by Petr Tuma and am just
@@ -84,7 +81,6 @@ main (int argc, char *argv [])
           server->CreateExtra (iAddSize,
                                vAddition.out ()
                                ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
 
 
           vServers->length (iSize);
@@ -114,18 +110,15 @@ main (int argc, char *argv [])
 
       server->DeleteExtra (vServers.in ()
                            ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       ACE_DEBUG ((LM_DEBUG,
                   "(%P|%t) Calling shutdown \n"));
-      server->shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      server->shutdown ();
 
     }
   ACE_CATCHANY
     {
       ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "");
-      ACE_CHECK_RETURN (-1);
     }
   ACE_ENDTRY;
 

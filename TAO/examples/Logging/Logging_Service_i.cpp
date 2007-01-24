@@ -60,10 +60,8 @@ Logger_Server::init (int argc,
                        "init_child_poa"),
                       -1);
 
-  ACE_CHECK_RETURN (-1);
 
-  this->orb_manager_.activate_poa_manager (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
+  this->orb_manager_.activate_poa_manager ();
 
   // Parse the command line arguments.
   if (this->parse_args () != 0)
@@ -83,8 +81,7 @@ Logger_Server::init (int argc,
                 str.in ()));
 
     // Initialize the naming service
-    int ret = this->init_naming_service (ACE_ENV_SINGLE_ARG_PARAMETER);
-    ACE_CHECK_RETURN (-1);
+    int ret = this->init_naming_service ();
     if (ret != 0)
       ACE_ERROR_RETURN ((LM_ERROR,
                        "%p\n",
@@ -109,8 +106,7 @@ Logger_Server::init_naming_service (ACE_ENV_SINGLE_ARG_DECL_NOT_USED ACE_ENV_SIN
     return -1;
 
   // Create an instance of the Logger_Factory
-  Logger_Factory_var factory = this->factory_impl_._this (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
+  Logger_Factory_var factory = this->factory_impl_._this ();
 
   //Register the logger_factory
   CosNaming::Name factory_name (1);
@@ -119,16 +115,14 @@ Logger_Server::init_naming_service (ACE_ENV_SINGLE_ARG_DECL_NOT_USED ACE_ENV_SIN
   this->my_name_server_->bind (factory_name,
                                factory.in ()
                                ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
 
   return 0;
 }
 
 int
-Logger_Server::run (ACE_ENV_SINGLE_ARG_DECL)
+Logger_Server::run (void)
 {
-  int ret = this->orb_manager_.run (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
+  int ret = this->orb_manager_.run ();
   if (ret == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "Logger_Server::run"),

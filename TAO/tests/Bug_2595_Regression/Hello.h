@@ -25,7 +25,7 @@ public:
         ::CORBA::SystemException
       ));
 
-  virtual void shutdown (ACE_ENV_SINGLE_ARG_DECL)
+  virtual void shutdown (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
 private:

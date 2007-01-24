@@ -8,7 +8,7 @@
 ACE_Atomic_Op<TAO_SYNCH_MUTEX, long> server_guid_counter;
 
 RTCORBA::Priority
-Segment_Sched_Param_Policy::value (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+Segment_Sched_Param_Policy::value (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return this->value_;
@@ -23,23 +23,21 @@ Segment_Sched_Param_Policy::value (RTCORBA::Priority value
 }
 
 CORBA::Policy_ptr
-Segment_Sched_Param_Policy::copy (ACE_ENV_SINGLE_ARG_DECL)
+Segment_Sched_Param_Policy::copy (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   Segment_Sched_Param_Policy *copy = 0;
   ACE_NEW_THROW_EX (copy,
                     Segment_Sched_Param_Policy,
                     CORBA::NO_MEMORY ());
-  ACE_CHECK_RETURN (CORBA::Policy::_nil ());
 
   copy->value (this->value_ ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (CORBA::Policy::_nil ());
 
   return copy;
 }
 
 void
-Segment_Sched_Param_Policy::destroy (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+Segment_Sched_Param_Policy::destroy (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
 }
@@ -51,11 +49,9 @@ Fixed_Priority_Scheduler::Fixed_Priority_Scheduler (CORBA::ORB_ptr orb)
       CORBA::Object_var object =
         orb->resolve_initial_references ("RTScheduler_Current"
                                          ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       this->current_ =
         RTScheduling::Current::_narrow (object.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
     }
   ACE_CATCHANY
     {
@@ -115,7 +111,6 @@ Fixed_Priority_Scheduler::begin_nested_scheduling_segment (const RTScheduling::C
                                       sched_param,
                                       implicit_sched_param
                                       ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 }
 
 void
@@ -132,7 +127,6 @@ Fixed_Priority_Scheduler::update_scheduling_segment (const RTScheduling::Current
                                       sched_param,
                                       implicit_sched_param
                                       ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
 }
 
@@ -178,13 +172,11 @@ Fixed_Priority_Scheduler::send_request (PortableInterceptor::ClientRequestInfo_p
   srv_con->context_id = Client_Interceptor::SchedulingInfo;
   srv_con->context_data.length (sizeof (size_t));
   ACE_OS::memcpy (srv_con->context_data.get_buffer (),
-                  current_->id (ACE_ENV_SINGLE_ARG_PARAMETER)->get_buffer (),
+                  current_->id ()->get_buffer (),
                   sizeof (size_t));
-  ACE_CHECK;
   request_info->add_request_service_context (*srv_con,
                                              0
                                              ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
 }
 
@@ -201,7 +193,6 @@ Fixed_Priority_Scheduler::receive_request (PortableInterceptor::ServerRequestInf
   IOP::ServiceContext* serv_cxt =
     request_info->get_request_service_context (Server_Interceptor::SchedulingInfo
                                                ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
   if (serv_cxt != 0)
     {
@@ -302,7 +293,7 @@ Fixed_Priority_Scheduler::cancel (const RTScheduling::Current::IdType &
 }
 
 CORBA::PolicyList*
-Fixed_Priority_Scheduler::scheduling_policies (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+Fixed_Priority_Scheduler::scheduling_policies (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return 0;
@@ -316,14 +307,14 @@ Fixed_Priority_Scheduler::scheduling_policies (const CORBA::PolicyList &
 }
 
 CORBA::PolicyList*
-Fixed_Priority_Scheduler::poa_policies (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+Fixed_Priority_Scheduler::poa_policies (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return 0;
 }
 
 char *
-Fixed_Priority_Scheduler::scheduling_discipline_name (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+Fixed_Priority_Scheduler::scheduling_discipline_name (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return 0;

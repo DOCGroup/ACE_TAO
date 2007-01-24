@@ -62,13 +62,12 @@ Trading_Service::init (int argc,
 }
 
 int
-Trading_Service::run (ACE_ENV_SINGLE_ARG_DECL)
+Trading_Service::run (void)
 {
   Trading_Shutdown trading_shutdown (*this);
 
   int return_value =
-    this->trading_loader_.run (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
+    this->trading_loader_.run ();
 
   return return_value;
 }

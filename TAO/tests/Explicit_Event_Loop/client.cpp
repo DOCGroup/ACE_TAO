@@ -39,7 +39,6 @@ main (int argc, char *argv[])
                                             argv,
                                             ""
                                             ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       // Check arguments.
       if  (argc != 2)
@@ -52,7 +51,6 @@ main (int argc, char *argv[])
       // Destringify argv[1].
       CORBA::Object_var obj = orb->string_to_object (argv[1]
                                                      ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       if  (CORBA::is_nil (obj.in ()))
         {
@@ -64,7 +62,6 @@ main (int argc, char *argv[])
       // Narrow.
       Time_var tm = Time::_narrow (obj.in ()
                                    ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       if  (CORBA::is_nil (tm.in ()))
         {
@@ -74,8 +71,7 @@ main (int argc, char *argv[])
         }
 
       // Get time.
-      TimeOfDay tod = tm->get_gmt (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      TimeOfDay tod = tm->get_gmt ();
 
       ACE_DEBUG ((LM_DEBUG,
                   "%s%s%d:%s%d:%d\n",
@@ -101,6 +97,5 @@ main (int argc, char *argv[])
     }
   ACE_ENDTRY;
 
-  ACE_CHECK_RETURN (-1);
   return 0;
 }

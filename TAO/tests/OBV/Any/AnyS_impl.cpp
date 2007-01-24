@@ -62,7 +62,7 @@ Test_impl::get_vb(
 }
 
 void
-Test_impl::shutdown (ACE_ENV_SINGLE_ARG_DECL)
+Test_impl::shutdown (void)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->orb_->shutdown (0 ACE_ENV_ARG_PARAMETER);

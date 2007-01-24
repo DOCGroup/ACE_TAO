@@ -75,7 +75,7 @@ public:
                 ACE_ENV_ARG_DECL);
 
   /// Disconnect from the event channel
-  void disconnect (ACE_ENV_SINGLE_ARG_DECL);
+  void disconnect (void);
 
   //@{
   /** @name Accessors

@@ -45,12 +45,10 @@ ORB_Initializer::post_init (PortableInterceptor::ORBInitInfo_ptr info
                           ENOMEM),
                       CORBA::COMPLETED_NO));
 
-    ACE_CHECK;
 
     interceptor = tmp_interceptor;
   }
 
   info->add_server_request_interceptor (interceptor.in ()
                                         ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 }

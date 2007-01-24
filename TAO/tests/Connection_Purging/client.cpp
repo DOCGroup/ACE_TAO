@@ -40,7 +40,6 @@ main (int argc, char *argv[])
     {
       CORBA::ORB_var orb =
         CORBA::ORB_init (argc, argv, "" ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       if (parse_args (argc, argv) != 0)
         return 1;
@@ -60,11 +59,9 @@ main (int argc, char *argv[])
               iorfile = "file://" + iorfile;
               CORBA::Object_var tmp =
                 orb->string_to_object(iorfile.c_str () ACE_ENV_ARG_PARAMETER);
-              ACE_TRY_CHECK;
 
               test_var test =
                 test::_narrow(tmp.in () ACE_ENV_ARG_PARAMETER);
-              ACE_TRY_CHECK;
 
               if (CORBA::is_nil (test.in ()))
                 {
@@ -104,10 +101,8 @@ main (int argc, char *argv[])
         }
 
       orb->shutdown (1 ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
-      orb->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      orb->destroy ();
     }
   ACE_CATCHANY
     {

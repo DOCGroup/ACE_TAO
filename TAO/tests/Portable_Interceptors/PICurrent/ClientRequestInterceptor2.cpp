@@ -25,7 +25,7 @@ ClientRequestInterceptor2::name (
 }
 
 void
-ClientRequestInterceptor2::destroy (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+ClientRequestInterceptor2::destroy (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
 }
@@ -37,8 +37,7 @@ ClientRequestInterceptor2::send_request (
   ACE_THROW_SPEC ((CORBA::SystemException,
                    PortableInterceptor::ForwardRequest))
 {
-  CORBA::String_var op = ri->operation (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+  CORBA::String_var op = ri->operation ();
 
   if (ACE_OS::strcmp (op.in (), "invoke_you") != 0)
     return; // Don't mess with PICurrent if not invoking test method.
@@ -57,7 +56,6 @@ ClientRequestInterceptor2::send_request (
       CORBA::Any_var data =
         ri->get_slot (this->slot_id_
                       ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       if (!(data.in () >>= number))
         {
@@ -86,7 +84,6 @@ ClientRequestInterceptor2::send_request (
       ACE_TRY_THROW (CORBA::INTERNAL ());
     }
   ACE_ENDTRY;
-  ACE_CHECK;
 
   ACE_DEBUG ((LM_INFO,
               "(%P|%t) RSC->TSC->RSC copying appears to be working.\n"));

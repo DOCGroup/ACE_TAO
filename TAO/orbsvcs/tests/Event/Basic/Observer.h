@@ -94,8 +94,8 @@ public:
   virtual void print_usage (void);
 
   /// Run the suppliers, using the <thread_manager> parameter
-  void execute_test (ACE_ENV_SINGLE_ARG_DECL);
-  void run_cleanup (ACE_ENV_SINGLE_ARG_DECL);
+  void execute_test (void);
+  void run_cleanup (void);
 
   void dump_results (void);
   void connect_consumer (

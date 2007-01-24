@@ -31,7 +31,6 @@ test_transport_current (CORBA::ORB_ptr orb
   CORBA::Object_var tcobject =
     orb->resolve_initial_references (ACE_TEXT_ALWAYS_CHAR ("TAO::Transport::IIOP::Current")
                                      ACE_ENV_ARG_PARAMETER);
-  ACE_TRY_CHECK;
 
 
   if (TAO_debug_level >= 1)
@@ -41,7 +40,6 @@ test_transport_current (CORBA::ORB_ptr orb
   Transport::IIOP::Current_var tc =
     Transport::IIOP::Current::_narrow (tcobject.in ()
                                        ACE_ENV_SINGLE_ARG_DECL);
-  ACE_TRY_CHECK;
 
   if (TAO_debug_level >= 1)
     ACE_DEBUG ((LM_DEBUG,
@@ -56,33 +54,26 @@ test_transport_current (CORBA::ORB_ptr orb
       ACE_TRY_THROW (CORBA::INTERNAL ());
     }
 
-  ::CORBA::String_var rhost (tc->remote_host (ACE_ENV_SINGLE_ARG_PARAMETER));
-  ACE_TRY_CHECK;
+  ::CORBA::String_var rhost (tc->remote_host ());
 
-  ::CORBA::String_var lhost (tc->local_host (ACE_ENV_SINGLE_ARG_PARAMETER));
-  ACE_TRY_CHECK;
+  ::CORBA::String_var lhost (tc->local_host ());
 
-  ::CORBA::Long id = tc->id (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_TRY_CHECK;
+  ::CORBA::Long id = tc->id ();
 
-  ::TAO::CounterT bs = tc->bytes_sent (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_TRY_CHECK;
+  ::TAO::CounterT bs = tc->bytes_sent ();
 
-  ::TAO::CounterT br = tc->bytes_received (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_TRY_CHECK;
+  ::TAO::CounterT br = tc->bytes_received ();
 
-  ::TAO::CounterT rs = tc->messages_sent (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_TRY_CHECK;
+  ::TAO::CounterT rs = tc->messages_sent ();
 
-  ::TAO::CounterT rr = tc->messages_received (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_TRY_CHECK;
+  ::TAO::CounterT rr = tc->messages_received ();
 
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("Tester (%P|%t) Transport [%q] [%s:%d -> %s:%d] ")
               ACE_TEXT ("Sent/Received [bytes=%q/%q, messages=%q/%q]\n"),
               (ACE_UINT64)id,
-              rhost.in (), tc->remote_port (ACE_ENV_SINGLE_ARG_PARAMETER),
-              lhost.in (), tc->local_port (ACE_ENV_SINGLE_ARG_PARAMETER),
+              rhost.in (), tc->remote_port (),
+              lhost.in (), tc->local_port (),
               (ACE_UINT64)bs,
               (ACE_UINT64)br,
               (ACE_UINT64)rs,

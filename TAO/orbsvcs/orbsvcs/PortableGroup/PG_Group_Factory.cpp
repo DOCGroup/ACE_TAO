@@ -66,7 +66,6 @@ void TAO::PG_Group_Factory::init (
   ACE_ASSERT (!CORBA::is_nil (this->factory_registry_.in ()));
 
   this->manipulator_.init (orb, poa ACE_ENV_ARG_PARAMETER);
-//  ACE_CHECK;
 }
 
 
@@ -92,7 +91,6 @@ TAO::PG_Object_Group * TAO::PG_Group_Factory::create_group (
       this->domain_id_,
       group_id
       ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (0);
 
   // pick up the object group information as assigned by
   // ObjectGroupManager
@@ -209,7 +207,6 @@ TAO::PG_Group_Factory::groups_at_location (
     result,
     PortableGroup::ObjectGroups (upper_limit),
     CORBA::NO_MEMORY());
-  ACE_CHECK_RETURN (0);
 
   result->length(upper_limit);
 

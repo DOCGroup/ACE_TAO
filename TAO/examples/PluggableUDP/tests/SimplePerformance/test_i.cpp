@@ -36,7 +36,7 @@ Simple_Server_i::get_number (CORBA::Long
 }
 
 void
-Simple_Server_i::shutdown (ACE_ENV_SINGLE_ARG_DECL)
+Simple_Server_i::shutdown (void)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_DEBUG ((LM_DEBUG,
@@ -44,7 +44,6 @@ Simple_Server_i::shutdown (ACE_ENV_SINGLE_ARG_DECL)
   ACE_TRY
     {
       this->orb_->shutdown (0 ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
     }
   ACE_CATCHANY
     {

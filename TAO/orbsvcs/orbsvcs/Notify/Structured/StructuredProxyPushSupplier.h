@@ -62,7 +62,7 @@ public:
 
   /// = Servant methods
   // = interface methods
-  virtual CosNotifyChannelAdmin::ProxyType MyType (ACE_ENV_SINGLE_ARG_DECL)
+  virtual CosNotifyChannelAdmin::ProxyType MyType (void)
     ACE_THROW_SPEC ((
                      CORBA::SystemException
                      ));

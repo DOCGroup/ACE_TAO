@@ -53,14 +53,14 @@ public:
 
   /// Lists all logs created by the log factory.
   virtual DsLogAdmin::LogList *
-    list_logs (ACE_ENV_SINGLE_ARG_DECL)
+    list_logs (void)
     ACE_THROW_SPEC ((
                      CORBA::SystemException
                      ));
 
   /// Lists all log ids.
   virtual DsLogAdmin::LogIdList *
-    list_logs_by_id (ACE_ENV_SINGLE_ARG_DECL)
+    list_logs_by_id (void)
     ACE_THROW_SPEC ((
                      CORBA::SystemException
                      ));

@@ -30,11 +30,11 @@ void
 Request_Context_Repository::allocate_slots(PortableInterceptor::ORBInitInfo_ptr info
             ACE_ENV_ARG_DECL)
 {
-  object_id_slot = info->allocate_slot_id(ACE_ENV_SINGLE_ARG_PARAMETER);
-  cached_result_slot = info->allocate_slot_id(ACE_ENV_SINGLE_ARG_PARAMETER);
-  seq_num_slot = info->allocate_slot_id(ACE_ENV_SINGLE_ARG_PARAMETER);
-  ft_request_service_context_slot = info->allocate_slot_id(ACE_ENV_SINGLE_ARG_PARAMETER);
-  transaction_depth_slot = info->allocate_slot_id(ACE_ENV_SINGLE_ARG_PARAMETER);
+  object_id_slot = info->allocate_slot_id();
+  cached_result_slot = info->allocate_slot_id();
+  seq_num_slot = info->allocate_slot_id();
+  ft_request_service_context_slot = info->allocate_slot_id();
+  transaction_depth_slot = info->allocate_slot_id();
 }
 
 void
@@ -51,7 +51,6 @@ void Request_Context_Repository::generate_object_id(
   UUID::create(oid.get_buffer());
   set_object_id(oid
                 ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 }
 
 void
@@ -63,14 +62,12 @@ Request_Context_Repository::set_object_id(
   PortableInterceptor::Current_var pic =
     resolve_init<PortableInterceptor::Current>(orb, "PICurrent"
                                                ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
   CORBA::Any a;
   a <<= object_id;
   pic->set_slot(object_id_slot, a
                 ACE_ENV_ARG_PARAMETER);
 
-  ACE_CHECK;
   */
   *oid = object_id;
 }
@@ -95,17 +92,15 @@ get_object_id(CORBA::Any_var a
 
 
 FtRtecEventChannelAdmin::ObjectId_var
-Request_Context_Repository::get_object_id(ACE_ENV_SINGLE_ARG_DECL)
+Request_Context_Repository::get_object_id(void)
 {
   /*
   PortableInterceptor::Current_var pic =
     resolve_init<PortableInterceptor::Current>(orb, "PICurrent"
                                                ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN(FtRtecEventChannelAdmin::ObjectId_var());
 
   CORBA::Any_var a = pic->get_slot(object_id_slot
                                    ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN(FtRtecEventChannelAdmin::ObjectId_var());
 
   return ::get_object_id(a
                          ACE_ENV_ARG_PARAMETER);
@@ -124,7 +119,6 @@ Request_Context_Repository::get_object_id(
 {
   CORBA::Any_var a = ri->get_slot(object_id_slot
                                    ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN(FtRtecEventChannelAdmin::ObjectId_var());
 
   return ::get_object_id(a
                          ACE_ENV_ARG_PARAMETER);
@@ -142,27 +136,23 @@ Request_Context_Repository::set_cached_result(
 }
 
 CORBA::Any_ptr
-Request_Context_Repository::get_cached_result(ACE_ENV_SINGLE_ARG_DECL)
+Request_Context_Repository::get_cached_result(void)
 {
   PortableInterceptor::Current_var pic =
     resolve_init<PortableInterceptor::Current>(orb, "PICurrent"
                                                ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN(0);
 
   CORBA::Any_var a = pic->get_slot(cached_result_slot
                                    ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN(0);
   return a._retn();
 }
 
 bool Request_Context_Repository::is_executed_request()
 {
   ACE_TRY_NEW_ENV {
-    CORBA::Any_var any = get_cached_result(ACE_ENV_SINGLE_ARG_PARAMETER);
-    ACE_TRY_CHECK;
+    CORBA::Any_var any = get_cached_result();
     CORBA::TypeCode_var type = any->type();
-    CORBA::TCKind const kind = type->kind(ACE_ENV_SINGLE_ARG_PARAMETER);
-    ACE_TRY_CHECK;
+    CORBA::TCKind const kind = type->kind();
     return kind != CORBA::tk_null;
   }
   ACE_CATCHALL {
@@ -192,7 +182,6 @@ Request_Context_Repository::set_sequence_number(
   PortableInterceptor::Current_var pic =
     resolve_init<PortableInterceptor::Current>(orb, "PICurrent"
                                                ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
   CORBA::Any a;
 
@@ -203,14 +192,12 @@ Request_Context_Repository::set_sequence_number(
 
 
 FTRT::SequenceNumber
-Request_Context_Repository::get_sequence_number(ACE_ENV_SINGLE_ARG_DECL)
+Request_Context_Repository::get_sequence_number(void)
 {
   PortableInterceptor::Current_var pic =
     resolve_init<PortableInterceptor::Current>(orb, "PICurrent"
                                                ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN(0);
   CORBA::Any_var a = pic->get_slot(seq_num_slot ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN(0);
   FTRT::SequenceNumber result  = 0;
   a >>= result;
   return result;
@@ -222,7 +209,6 @@ Request_Context_Repository::get_sequence_number(
       ACE_ENV_ARG_DECL)
 {
   CORBA::Any_var a = ri->get_slot(seq_num_slot ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN(0);
   FTRT::SequenceNumber result  = 0;
   a >>= result;
   return result;
@@ -259,7 +245,6 @@ Request_Context_Repository::set_transaction_depth(
   a <<= depth;
   ri->set_slot(transaction_depth_slot,a
                ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 }
 
 void
@@ -270,13 +255,11 @@ Request_Context_Repository::set_transaction_depth(
   PortableInterceptor::Current_var pic =
       resolve_init<PortableInterceptor::Current>(orb, "PICurrent"
       ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
   CORBA::Any a;
   a <<= depth;
   pic->set_slot(transaction_depth_slot,a
                ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 }
 
 
@@ -287,7 +270,6 @@ Request_Context_Repository::get_transaction_depth(
 {
   CORBA::Any_var a = ri->get_slot(transaction_depth_slot
     ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN(0);
   FTRT::TransactionDepth result=0;
   a >>= result;
   return result;
@@ -301,11 +283,9 @@ Request_Context_Repository::get_transaction_depth(
   PortableInterceptor::Current_var pic =
       resolve_init<PortableInterceptor::Current>(orb, "PICurrent"
       ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN(0);
 
   CORBA::Any_var a = pic->get_slot(transaction_depth_slot
     ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN(0);
 
   FTRT::TransactionDepth result=0;
   a >>= result;

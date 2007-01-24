@@ -23,7 +23,6 @@ ORB_Task_Activator::~ORB_Task_Activator (void)
   ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY {
     (*this->task_)->shutdown (0 ACE_ENV_ARG_PARAMETER);
-    ACE_TRY_CHECK;
   } ACE_CATCHANY {
   } ACE_ENDTRY;
 }

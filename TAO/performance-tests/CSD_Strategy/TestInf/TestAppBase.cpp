@@ -23,7 +23,6 @@ int
 TestAppBase::run(int argc, char* argv[] ACE_ENV_ARG_DECL)
 {
   int rc = this->run_i(argc, argv ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
 
   // Convert 1 to 0.  Leave 0 and -1 as they are.
   return (rc == 1) ? 0 : rc;

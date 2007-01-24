@@ -102,7 +102,7 @@ TAO_PropertySetFactory::~TAO_PropertySetFactory (void)
 // things.
 
 CosPropertyService::PropertySet_ptr
-TAO_PropertySetFactory::create_propertyset (ACE_ENV_SINGLE_ARG_DECL)
+TAO_PropertySetFactory::create_propertyset (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // New a TAO_PropertySet.
@@ -113,7 +113,7 @@ TAO_PropertySetFactory::create_propertyset (ACE_ENV_SINGLE_ARG_DECL)
   CORBA::ULong cur_len = this->propertyset_products_.length ();
   this->propertyset_products_.length (cur_len + 1);
   this->propertyset_products_[cur_len] = new_set;
-  return new_set->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
+  return new_set->_this ();
 }
 
 // Allows a client to create a new TAO_PropertySet with specific
@@ -136,7 +136,6 @@ TAO_PropertySetFactory::create_constrained_propertyset (const CosPropertyService
                       TAO_PropertySet (allowed_property_types,
                                        allowed_properties
                                        ACE_ENV_ARG_PARAMETER), 0);
-      ACE_TRY_CHECK;
 
       // Successful, store this in the products sequence.
       CORBA::ULong products_len = this->propertyset_products_.length ();
@@ -144,8 +143,7 @@ TAO_PropertySetFactory::create_constrained_propertyset (const CosPropertyService
       this->propertyset_products_[products_len] = new_set;
 
       // All done.
-      propset_ptr = new_set->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      propset_ptr = new_set->_this ();
     }
   ACE_CATCH (CORBA::UserException, ex)
     {
@@ -164,7 +162,6 @@ TAO_PropertySetFactory::create_constrained_propertyset (const CosPropertyService
       ACE_RE_THROW;
     }
   ACE_ENDTRY;
-  ACE_CHECK_RETURN (0);
 
   return propset_ptr;
 }
@@ -187,7 +184,6 @@ TAO_PropertySetFactory::create_initial_propertyset (const CosPropertyService::Pr
       ACE_NEW_RETURN (new_set,
                       TAO_PropertySet (initial_properties
                                        ACE_ENV_ARG_PARAMETER), 0);
-      ACE_TRY_CHECK;
 
       // Successful, store this in the products sequence.
       CORBA::ULong products_len = this->propertyset_products_.length ();
@@ -195,8 +191,7 @@ TAO_PropertySetFactory::create_initial_propertyset (const CosPropertyService::Pr
       this->propertyset_products_[products_len] = new_set;
 
       // All done.
-      propset_ptr = new_set->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      propset_ptr = new_set->_this ();
     }
   ACE_CATCH (CosPropertyService::MultipleExceptions, ex)
     {
@@ -215,7 +210,6 @@ TAO_PropertySetFactory::create_initial_propertyset (const CosPropertyService::Pr
       ACE_RE_THROW;
     }
   ACE_ENDTRY;
-  ACE_CHECK_RETURN (0);
 
   return propset_ptr;
 }
@@ -243,7 +237,7 @@ TAO_PropertySetDefFactory::TAO_PropertySetDefFactory (void)
 // delete all these New'ed things.
 
 CosPropertyService::PropertySetDef_ptr
-TAO_PropertySetDefFactory::create_propertysetdef (ACE_ENV_SINGLE_ARG_DECL)
+TAO_PropertySetDefFactory::create_propertysetdef (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // New a TAO_PropertySetDef.
@@ -256,8 +250,7 @@ TAO_PropertySetDefFactory::create_propertysetdef (ACE_ENV_SINGLE_ARG_DECL)
   this->propertysetdef_products_[cur_len] = new_set;
 
   CosPropertyService::PropertySetDef_ptr propsetdef_ptr =
-    new_set->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (0);
+    new_set->_this ();
 
   return propsetdef_ptr;
 }
@@ -279,7 +272,6 @@ TAO_PropertySetDefFactory::create_constrained_propertysetdef (const CosPropertyS
                       TAO_PropertySetDef (allowed_property_types,
                                           allowed_property_defs
                                           ACE_ENV_ARG_PARAMETER), 0);
-      ACE_TRY_CHECK;
 
       // Successful, store this in the products sequence.
       CORBA::ULong products_len = this->propertysetdef_products_.length ();
@@ -287,8 +279,7 @@ TAO_PropertySetDefFactory::create_constrained_propertysetdef (const CosPropertyS
       this->propertysetdef_products_[products_len] = new_set;
 
       // All done. Return the pointer.
-      propsetdef_ptr = new_set->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      propsetdef_ptr = new_set->_this ();
     }
   ACE_CATCH (CORBA::UserException, ex)
     {
@@ -307,7 +298,6 @@ TAO_PropertySetDefFactory::create_constrained_propertysetdef (const CosPropertyS
       ACE_RE_THROW;
     }
   ACE_ENDTRY;
-  ACE_CHECK_RETURN (0);
 
   return propsetdef_ptr;
 }
@@ -330,7 +320,6 @@ TAO_PropertySetDefFactory::create_initial_propertysetdef (const CosPropertyServi
       ACE_NEW_RETURN (new_set,
                       TAO_PropertySetDef (initial_property_defs
                                           ACE_ENV_ARG_PARAMETER), 0);
-      ACE_TRY_CHECK;
 
       // Successful, store this in the products sequence.
       CORBA::ULong products_len = this->propertysetdef_products_.length ();
@@ -338,8 +327,7 @@ TAO_PropertySetDefFactory::create_initial_propertysetdef (const CosPropertyServi
       this->propertysetdef_products_[products_len] = new_set;
 
       // All done.
-      propsetdef_ptr = new_set->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      propsetdef_ptr = new_set->_this ();
     }
   ACE_CATCH (CosPropertyService::MultipleExceptions, ex)
     {
@@ -358,7 +346,6 @@ TAO_PropertySetDefFactory::create_initial_propertysetdef (const CosPropertyServi
       ACE_RE_THROW;
     }
   ACE_ENDTRY;
-  ACE_CHECK_RETURN (0);
 
   return propsetdef_ptr;
 }
@@ -398,7 +385,6 @@ TAO_PropertySet::TAO_PropertySet (const CosPropertyService::PropertyTypes allowe
     {
       this->define_properties (allowed_properties
                                ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
     }
   ACE_CATCHANY
     {
@@ -406,7 +392,6 @@ TAO_PropertySet::TAO_PropertySet (const CosPropertyService::PropertyTypes allowe
       ACE_RE_THROW;
     }
   ACE_ENDTRY;
-  ACE_CHECK;
 }
 
 // TAO_PropertySetDef's constructor needs this, for initializing the
@@ -433,7 +418,6 @@ TAO_PropertySet::TAO_PropertySet (const CosPropertyService::Properties initial_p
     {
       this->define_properties (initial_properties
                                ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
     }
   ACE_CATCHANY
     {
@@ -441,7 +425,6 @@ TAO_PropertySet::TAO_PropertySet (const CosPropertyService::Properties initial_p
       ACE_RE_THROW;
     }
   ACE_ENDTRY;
-  ACE_CHECK;
 }
 
 // Destructor. All sequences will be deleted.
@@ -514,7 +497,6 @@ TAO_PropertySet::define_property (const char *property_name,
         CORBA::Boolean const equal_tc =
           mapped_tc.in ()->equal (arg_tc.in ()
                                   ACE_ENV_ARG_PARAMETER);
-        ACE_CHECK;
 
         // If type is not the same, raise exception.
         if (!equal_tc)
@@ -567,7 +549,6 @@ TAO_PropertySet::is_type_allowed (CORBA::TypeCode_ptr type)
         {
           ret_val = this->allowed_property_types_[ti]->equal (type
                                                               ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
 
           if (ret_val == 1)
             return 1;
@@ -579,7 +560,6 @@ TAO_PropertySet::is_type_allowed (CORBA::TypeCode_ptr type)
           return ret_val;
         }
       ACE_ENDTRY;
-      ACE_CHECK_RETURN (0);
     }
 
   // Type not found.
@@ -633,7 +613,6 @@ TAO_PropertySet::define_properties (const CosPropertyService::Properties &nprope
           this->define_property (nproperties [pi].property_name.in (),
                                  nproperties [pi].property_value
                                  ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
         }
       ACE_CATCH (CosPropertyService::InvalidPropertyName, ex)
         {
@@ -685,7 +664,6 @@ TAO_PropertySet::define_properties (const CosPropertyService::Properties &nprope
            ACE_RE_THROW;
          }
        ACE_ENDTRY;
-       ACE_CHECK;
     }
 
   // Raise the multi exception if needed.
@@ -698,7 +676,7 @@ TAO_PropertySet::define_properties (const CosPropertyService::Properties &nprope
 
 
 CORBA::ULong
-TAO_PropertySet::get_number_of_properties (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+TAO_PropertySet::get_number_of_properties (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return static_cast<CORBA::ULong> (this->hash_table_.current_size ());
@@ -722,8 +700,7 @@ TAO_PropertySet::get_all_property_names (CORBA::ULong how_many,
            CosPropertyService::PropertyNames);
 
   CORBA::ULong num_of_properties =
-    this->get_number_of_properties (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+    this->get_number_of_properties ();
 
   if (num_of_properties == 0)
     // Nothing to do.
@@ -780,14 +757,12 @@ TAO_PropertySet::get_all_property_names (CORBA::ULong how_many,
 
       // Get the Interface ptr.
       CosPropertyService::PropertyNamesIterator_ptr iterator_ptr =
-        names_iterator->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK;
+        names_iterator->_this ();
 
       // POA stuff todo here, since we have <destroy> method in the
       // <NamesIterator> interface.
       // Give ownership of this servant to the POA.
-      names_iterator->_remove_ref (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK;
+      names_iterator->_remove_ref ();
 
       // Init the out parameter.
       rest = iterator_ptr;
@@ -861,7 +836,6 @@ TAO_PropertySet::get_properties (const CosPropertyService::PropertyNames &proper
     {
       any_ptr = get_property_value (property_names [i]
                                     ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK_RETURN (0);
 
       if (any_ptr != 0)
         {
@@ -902,8 +876,7 @@ TAO_PropertySet::get_all_properties (CORBA::ULong how_many,
 
   // Validate the length.
   CORBA::ULong num_of_properties =
-          this->get_number_of_properties (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+          this->get_number_of_properties ();
 
   if (num_of_properties == 0)
     return;
@@ -969,14 +942,12 @@ TAO_PropertySet::get_all_properties (CORBA::ULong how_many,
 
       // Get the interface ptr.
       CosPropertyService::PropertiesIterator_ptr iterator_ptr =
-        iterator->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK;
+        iterator->_this ();
 
       // POA stuff todo here, since we have <destroy> method in the
       // <NamesIterator> interface.
       // Give ownership of this servant to the POA.
-      iterator->_remove_ref (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK;
+      iterator->_remove_ref ();
 
       // Init the out parameter.
       rest = iterator_ptr;
@@ -1047,7 +1018,6 @@ TAO_PropertySet::delete_properties (const CosPropertyService::PropertyNames &pro
           // Delete this property.
           this->delete_property (property_names[pi]
                                  ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
         }
       ACE_CATCH (CosPropertyService::InvalidPropertyName, ex)
         {
@@ -1085,7 +1055,6 @@ TAO_PropertySet::delete_properties (const CosPropertyService::PropertyNames &pro
           ACE_RE_THROW;
         }
       ACE_ENDTRY;
-      ACE_CHECK;
     }
 
   // Raise the multiple exceptions if there are any.
@@ -1098,7 +1067,7 @@ TAO_PropertySet::delete_properties (const CosPropertyService::PropertyNames &pro
 
 
 CORBA::Boolean
-TAO_PropertySet::delete_all_properties (ACE_ENV_SINGLE_ARG_DECL)
+TAO_PropertySet::delete_all_properties (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // Get all the property names in a names' sequence.
@@ -1110,14 +1079,12 @@ TAO_PropertySet::delete_all_properties (ACE_ENV_SINGLE_ARG_DECL)
   CosPropertyService::PropertyNamesIterator_out iter_out (iter_ptr);
   CosPropertyService::PropertyNamesIterator_var iter;
 
-  CORBA::ULong size = this->get_number_of_properties (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (0);
+  CORBA::ULong size = this->get_number_of_properties ();
 
   this->get_all_property_names (size,
                                 names_out,
                                 iter_out
                                 ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (0);
 
   // Get the out values on to the var varibles.
   names = names_out.ptr ();
@@ -1126,7 +1093,6 @@ TAO_PropertySet::delete_all_properties (ACE_ENV_SINGLE_ARG_DECL)
   // Delete all these properties.
   this->delete_properties (names.in ()
                            ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (0);
 
   // All properties deleted.
   return 1;
@@ -1186,14 +1152,12 @@ TAO_PropertySetDef::TAO_PropertySetDef (const CosPropertyService::PropertyTypes 
     {
       this->define_properties_with_modes (allowed_property_defs
                                           ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
     }
   ACE_CATCHANY
     {
       ACE_RE_THROW;
     }
   ACE_ENDTRY;
-  ACE_CHECK;
 }
 
 // Constructor that the factory uses.
@@ -1203,7 +1167,6 @@ TAO_PropertySetDef::TAO_PropertySetDef (const CosPropertyService::PropertyDefs i
 {
   this->define_properties_with_modes (initial_property_defs
                                       ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 }
 
 // Destructor.
@@ -1351,7 +1314,6 @@ TAO_PropertySetDef::define_properties_with_modes (const CosPropertyService::Prop
                                            property_defs[i].property_value,
                                            property_defs[i].property_mode
                                            ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
         }
       ACE_CATCH (CosPropertyService::InvalidPropertyName, ex)
         {
@@ -1412,7 +1374,6 @@ TAO_PropertySetDef::define_properties_with_modes (const CosPropertyService::Prop
           ACE_RE_THROW;
         }
       ACE_ENDTRY;
-      ACE_CHECK;
     }
 
   // Raise the multi exception if needed.
@@ -1491,7 +1452,6 @@ TAO_PropertySetDef::get_property_modes (const CosPropertyService::PropertyNames 
           // Invoke get_property_mode for this name.
           mode = this->get_property_mode (property_names[i]
                                           ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
 
           // Store the mode in the out sequence.
           property_modes[i].property_name = property_names[i];
@@ -1508,7 +1468,6 @@ TAO_PropertySetDef::get_property_modes (const CosPropertyService::PropertyNames 
           property_modes[i].property_mode = CosPropertyService::undefined;
         }
       ACE_ENDTRY;
-      ACE_CHECK_RETURN (0);
     }
 
   return ret;
@@ -1634,7 +1593,6 @@ TAO_PropertySetDef::set_property_modes (const CosPropertyService::PropertyModes 
           this->set_property_mode (property_modes[i].property_name,
                                    property_modes[i].property_mode
                                    ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
         }
       ACE_CATCH (CosPropertyService::PropertyNotFound, ex)
         {
@@ -1671,7 +1629,6 @@ TAO_PropertySetDef::set_property_modes (const CosPropertyService::PropertyModes 
           ACE_RE_THROW;
         }
       ACE_ENDTRY;
-      ACE_CHECK;
     }
 
   // Raise the multi_ex, if needed.
@@ -1698,7 +1655,7 @@ TAO_PropertyNamesIterator::~TAO_PropertyNamesIterator (void)
 // one exists.
 
 void
-TAO_PropertyNamesIterator::reset (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+TAO_PropertyNamesIterator::reset (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->iterator_ = this->iterator_.map ().begin ();
@@ -1763,23 +1720,20 @@ TAO_PropertyNamesIterator::next_n (CORBA::ULong how_many,
 }
 
 void
-TAO_PropertyNamesIterator::destroy (ACE_ENV_SINGLE_ARG_DECL)
+TAO_PropertyNamesIterator::destroy (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // Remove self from POA.  Because of reference counting, the POA
   // will automatically delete the servant when all pending requests
   // on this servant are complete.
 
-  PortableServer::POA_var poa = this->_default_POA (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+  PortableServer::POA_var poa = this->_default_POA ();
 
   PortableServer::ObjectId_var id = poa->servant_to_id (this
                                                         ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
   poa->deactivate_object (id.in ()
                           ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 }
 
 //======================================================================
@@ -1794,7 +1748,7 @@ TAO_PropertiesIterator::~TAO_PropertiesIterator (void)
 }
 
 void
-TAO_PropertiesIterator::reset (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+TAO_PropertiesIterator::reset (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->iterator_ = this->iterator_.map ().begin ();
@@ -1866,23 +1820,20 @@ TAO_PropertiesIterator::next_n (CORBA::ULong how_many,
 }
 
 void
-TAO_PropertiesIterator::destroy (ACE_ENV_SINGLE_ARG_DECL)
+TAO_PropertiesIterator::destroy (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // Remove self from POA.  Because of reference counting, the POA
   // will automatically delete the servant when all pending requests
   // on this servant are complete.
 
-  PortableServer::POA_var poa = this->_default_POA (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+  PortableServer::POA_var poa = this->_default_POA ();
 
   PortableServer::ObjectId_var id = poa->servant_to_id (this
                                                         ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
   poa->deactivate_object (id.in ()
                           ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL

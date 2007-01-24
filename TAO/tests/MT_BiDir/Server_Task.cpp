@@ -55,8 +55,7 @@ Server_Task::svc (void)
           if (i%50 == 0)
             ACE_DEBUG ((LM_DEBUG, "(%P|%t) Sending message ....\n"));
 
-          this->sender_->send_message (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+          this->sender_->send_message ();
 
           // Sanity check for connections..
           if (connection_no <

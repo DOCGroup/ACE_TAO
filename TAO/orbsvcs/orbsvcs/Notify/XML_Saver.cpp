@@ -41,12 +41,11 @@ namespace TAO_Notify
   }
 
   void
-  XML_Saver::close (ACE_ENV_SINGLE_ARG_DECL)
+  XML_Saver::close (void)
   {
     if (this->close_out_ && this->output_ != 0)
     {
       this->end_object(0, "notification_service" ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
 
       ACE_OS::fclose(this->output_);
       this->output_ = 0;
@@ -140,7 +139,6 @@ namespace TAO_Notify
           attrs.push_back(NVP("timestamp", nowusstr));
         }
         this->begin_object(0, "notification_service", attrs, changed ACE_ENV_ARG_PARAMETER);
-        ACE_TRY_CHECK;
       }
       ACE_CATCHANY
       {

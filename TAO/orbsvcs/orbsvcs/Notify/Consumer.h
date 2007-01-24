@@ -83,19 +83,19 @@ public:
   DispatchStatus dispatch_batch (const CosNotification::EventBatch& batch);
 
   /// Dispatch the pending events
-  void dispatch_pending (ACE_ENV_SINGLE_ARG_DECL);
+  void dispatch_pending (void);
 
   /// Is the connection suspended?
   CORBA::Boolean is_suspended (void);
 
   /// Suspend Connection
-  void suspend (ACE_ENV_SINGLE_ARG_DECL);
+  void suspend (void);
 
   /// Resume Connection
-  void resume (ACE_ENV_SINGLE_ARG_DECL);
+  void resume (void);
 
   /// Shutdown the consumer
-  virtual void shutdown (ACE_ENV_SINGLE_ARG_DECL);
+  virtual void shutdown (void);
 
   /// on reconnect we need to move events from the old consumer
   /// to the new one

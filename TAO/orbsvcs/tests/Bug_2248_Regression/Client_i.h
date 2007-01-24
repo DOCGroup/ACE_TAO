@@ -27,7 +27,7 @@ public:
   Client_i (CORBA::ORB_ptr orb);
   // Our constructor
 
-  int init (ACE_ENV_SINGLE_ARG_DECL);
+  int init (void);
   // Initialize the ORB etc.
 
 private:

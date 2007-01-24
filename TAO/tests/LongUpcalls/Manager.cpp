@@ -20,11 +20,9 @@ validate_connection (Test::Controller_ptr controller
       CORBA::PolicyList_var unused;
       controller->_validate_connection (unused
                                         ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 #else
       controller->_is_a ("Not_an_IDL_Type"
                          ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 #endif
     }
   ACE_CATCHANY
@@ -49,7 +47,6 @@ Manager::start_workers (CORBA::Short worker_count,
 
   validate_connection(controller
                       ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
   // ACE_DEBUG ((LM_DEBUG, "Starting %d workers\n", worker_count));
   Worker worker (&thread_manager,
@@ -61,7 +58,7 @@ Manager::start_workers (CORBA::Short worker_count,
 }
 
 void
-Manager::shutdown (ACE_ENV_SINGLE_ARG_DECL)
+Manager::shutdown (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->orb_->shutdown (0 ACE_ENV_ARG_PARAMETER);
@@ -88,18 +85,15 @@ Worker::svc (void)
     {
       validate_connection(this->controller_.in()
                           ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
-      this->controller_->worker_started (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      this->controller_->worker_started ();
 
       // ACE_DEBUG ((LM_DEBUG, "Worker start reported\n"));
 
       ACE_Time_Value tv (0, 1000 * this->milliseconds_);
       ACE_OS::sleep (tv);
 
-      this->controller_->worker_finished (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      this->controller_->worker_finished ();
 
       // ACE_DEBUG ((LM_DEBUG, "Worker completion reported\n"));
     }

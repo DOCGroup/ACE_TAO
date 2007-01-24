@@ -31,7 +31,7 @@ Tie_i::~Tie_i (void)
 
 // Return this->value
 CORBA::Long
-Tie_i::doit (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+Tie_i::doit (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return this->value_;
@@ -47,7 +47,7 @@ A_i::A_i (CORBA::Long value,
 
 // Return this->value
 CORBA::Long
-A_i::doit (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+A_i::doit (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return this->value_;
@@ -55,7 +55,7 @@ A_i::doit (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
 
 // Return the Default POA of this Servant
 PortableServer::POA_ptr
-A_i::_default_POA (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+A_i::_default_POA (void)
 {
   return PortableServer::POA::_duplicate (this->poa_.in ());
 }
@@ -70,7 +70,7 @@ Outer_i::B_i::B_i (CORBA::Long value,
 
 // Return this->value
 CORBA::Long
-Outer_i::B_i::doit (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+Outer_i::B_i::doit (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return this->value_;
@@ -78,7 +78,7 @@ Outer_i::B_i::doit (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
 
 // Return the Default POA of this Servant
 PortableServer::POA_ptr
-Outer_i::B_i::_default_POA (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+Outer_i::B_i::_default_POA (void)
 {
   return PortableServer::POA::_duplicate (this->poa_.in ());
 }
@@ -93,7 +93,7 @@ Outer_i::Inner_i::C_i::C_i (CORBA::Long value,
 
 // Return this->value
 CORBA::Long
-Outer_i::Inner_i::C_i::doit (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+Outer_i::Inner_i::C_i::doit (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return this->value_;
@@ -101,7 +101,7 @@ Outer_i::Inner_i::C_i::doit (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
 
 // Return the Default POA of this Servant
 PortableServer::POA_ptr
-Outer_i::Inner_i::C_i::_default_POA (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+Outer_i::Inner_i::C_i::_default_POA (void)
 {
   return PortableServer::POA::_duplicate (this->poa_.in ());
 }

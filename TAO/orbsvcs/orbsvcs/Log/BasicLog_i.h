@@ -72,7 +72,7 @@ public:
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   /// Destroy the log object and all contained records.
-  void destroy (ACE_ENV_SINGLE_ARG_DECL)
+  void destroy (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
 protected:

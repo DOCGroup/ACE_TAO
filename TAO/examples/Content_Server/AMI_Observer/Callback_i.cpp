@@ -98,8 +98,7 @@ Callback_i::next_chunk (const Web_Server::Chunk_Type & chunk_data,
       if (this->metadata_received ())
         {
           (void) this->file_io_.close ();
-          this->deactivate (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_CHECK;
+          this->deactivate ();
 
           (void) this->spawn_viewer ();
         }
@@ -131,8 +130,7 @@ Callback_i::metadata (const Web_Server::Metadata_Type &metadata)
       // an external viewer to display it.
       if (this->content_received ())
         {
-          this->deactivate (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+          this->deactivate ();
 
           (void) this->spawn_viewer ();
         }
@@ -278,19 +276,16 @@ Callback_i::spawn_viewer (void)
 }
 
 void
-Callback_i::deactivate (ACE_ENV_SINGLE_ARG_DECL)
+Callback_i::deactivate (void)
 {
   // Get the POA used when activating the Reply Handler object.
-  PortableServer::POA_var poa = this->_default_POA (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+  PortableServer::POA_var poa = this->_default_POA ();
 
   // Get the object ID associated with this servant.
   PortableServer::ObjectId_var oid =
     poa->servant_to_id (this
                         ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
   // Now deactivate the iterator object.
   poa->deactivate_object (oid.in () ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 }

@@ -87,7 +87,6 @@ Grid_Client_i::run (const char *name,
       Grid_var grid = client->make_grid (width_,
                                          height_
                                          ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       ACE_DEBUG ((LM_DEBUG,
                   "(%P|%t) Made the grid succesfully\n"));
@@ -97,7 +96,6 @@ Grid_Client_i::run (const char *name,
                  sety_,
                  value_
                  ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       ACE_DEBUG ((LM_DEBUG,
                   "(%P|%t) Setting a value for the grid\n"));
@@ -105,13 +103,11 @@ Grid_Client_i::run (const char *name,
       CORBA::Long ret_val = grid->get (setx_,
                                        sety_
                                        ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       ACE_ASSERT (ret_val == value_);
 
       if (client.shutdown () == 1) {
-        client->shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
-        ACE_TRY_CHECK;
+        client->shutdown ();
       }
 
       client.orb ()->destroy ();
@@ -130,7 +126,6 @@ Grid_Client_i::run (const char *name,
       return -1;
     }
   ACE_ENDTRY;
-  ACE_CHECK_RETURN (-1);
 
   return 0;
 }

@@ -29,13 +29,13 @@ public:
   {
   }
 
-  void go (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+  void go (void)
     ACE_THROW_SPEC ((CORBA::SystemException))
   {
     started_ = true;
   }
 
-  void done (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+  void done (void)
     ACE_THROW_SPEC ((CORBA::SystemException))
   {
     started_ = false;
@@ -143,7 +143,6 @@ create_supplieradmin (CosNotifyChannelAdmin::EventChannel_ptr ec
     adminid
     ACE_ENV_ARG_PARAMETER);
 
-  ACE_CHECK_RETURN (0);
 
   return CosNotifyChannelAdmin::SupplierAdmin::_duplicate (admin.in ());
 }
@@ -171,7 +170,6 @@ SendEvent (int id ACE_ENV_ARG_DECL_NOT_USED)
   ACE_TRY_NEW_ENV
   {
     supplier_1->send_event (event ACE_ENV_ARG_PARAMETER);
-    ACE_TRY_CHECK;
   }
   ACE_CATCH (CORBA::Exception, e)
   {
@@ -191,10 +189,8 @@ create_suppliers (CosNotifyChannelAdmin::SupplierAdmin_ptr admin,
     CORBA::NO_MEMORY ());
 
   supplier_1->init (poa ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
   supplier_1->connect (admin ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 }
 
 int main (int argc, char* argv[])
@@ -204,30 +200,25 @@ int main (int argc, char* argv[])
   {
     Supplier_Client client;
     int status = client.init (argc, argv ACE_ENV_ARG_PARAMETER);
-    ACE_TRY_CHECK;
     ACE_UNUSED_ARG(status);
     ACE_ASSERT(status == 0);
 
     CosNotifyChannelAdmin::EventChannel_var ec =
       client.create_event_channel ("MyEventChannel", 0 ACE_ENV_ARG_PARAMETER);
-    ACE_TRY_CHECK;
 
     CosNotification::QoSProperties qos (1);
     qos.length (1);
     qos[0].name = CORBA::string_dup (CosNotification::OrderPolicy);
     qos[0].value <<= order_policy;
     ec->set_qos (qos ACE_ENV_ARG_PARAMETER);
-    ACE_TRY_CHECK;
 
     CORBA::ORB_ptr orb = client.orb ();
 
     sig_impl.reset( new sig_i( orb ) );
-    sig_var sig = sig_impl->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
-    ACE_TRY_CHECK;
+    sig_var sig = sig_impl->_this ();
 
     CORBA::String_var ior =
       orb->object_to_string (sig.in () ACE_ENV_ARG_PARAMETER);
-    ACE_TRY_CHECK;
 
     if (ior_output_file != 0)
     {
@@ -246,7 +237,6 @@ int main (int argc, char* argv[])
       create_supplieradmin (ec.in () ACE_ENV_ARG_PARAMETER);
     ACE_ASSERT(!CORBA::is_nil (admin.in ()));
     create_suppliers (admin.in (), client.root_poa () ACE_ENV_ARG_PARAMETER);
-    ACE_TRY_CHECK;
 
     sig_impl->wait_for_startup();
 
@@ -255,7 +245,6 @@ int main (int argc, char* argv[])
     {
       ACE_DEBUG((LM_DEBUG, "+"));
       SendEvent (i ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
     }
     ACE_DEBUG((LM_DEBUG, "\nSupplier sent %d events.\n", num_events));
 
@@ -263,11 +252,9 @@ int main (int argc, char* argv[])
 
     ACE_OS::unlink (ior_output_file);
 
-    supplier_1->disconnect(ACE_ENV_SINGLE_ARG_PARAMETER);
-    ACE_TRY_CHECK;
+    supplier_1->disconnect();
 
-    ec->destroy(ACE_ENV_SINGLE_ARG_PARAMETER);
-    ACE_TRY_CHECK;
+    ec->destroy();
 
     return 0;
   }

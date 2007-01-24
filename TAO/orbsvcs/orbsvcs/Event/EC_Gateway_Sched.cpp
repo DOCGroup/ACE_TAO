@@ -3,8 +3,8 @@
 #include "orbsvcs/Event/EC_Gateway_Sched.h"
 #include "orbsvcs/Time_Utilities.h"
 
-ACE_RCSID (Event, 
-           EC_Gateway_sched, 
+ACE_RCSID (Event,
+           EC_Gateway_sched,
            "$Id$")
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
@@ -30,7 +30,6 @@ TAO_EC_Gateway_Sched::init (RtecEventChannelAdmin::EventChannel_ptr supplier_ec,
   ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->lock_);
 
   this->init_i (supplier_ec, consumer_ec ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
   // @@ Should we throw a system exception here?
   if (CORBA::is_nil (supplier_sched)
@@ -41,7 +40,6 @@ TAO_EC_Gateway_Sched::init (RtecEventChannelAdmin::EventChannel_ptr supplier_ec,
 
   this->supplier_info_ =
     supplier_sched->create (supplier_name ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
   // @@ TODO Many things are hard-coded in the RT_Info here.
 
@@ -59,11 +57,9 @@ TAO_EC_Gateway_Sched::init (RtecEventChannelAdmin::EventChannel_ptr supplier_ec,
                        0,
                        RtecScheduler::OPERATION
                        ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
   this->consumer_info_ =
     consumer_sched->create (consumer_name ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
   tv = ACE_Time_Value (0, 500);
   ORBSVCS_Time::Time_Value_to_TimeT (time, tv);
@@ -76,7 +72,6 @@ TAO_EC_Gateway_Sched::init (RtecEventChannelAdmin::EventChannel_ptr supplier_ec,
                        1,
                        RtecScheduler::REMOTE_DEPENDANT
                        ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL

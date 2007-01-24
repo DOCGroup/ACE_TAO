@@ -40,7 +40,6 @@ main (int argc, char *argv[])
                                              argv,
                                              0
                                              ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
       // **********************************************************************
 
       // Get an object reference for the ORBs IORManipulation object!
@@ -48,23 +47,19 @@ main (int argc, char *argv[])
         orb_->resolve_initial_references (TAO_OBJID_IORMANIPULATION,
                                           0
                                           ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       TAO_IOP::TAO_IOR_Manipulation_var iorm =
                TAO_IOP::TAO_IOR_Manipulation::_narrow (IORM.in ()
                                                        ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
       // **********************************************************************
 
       // Create a few fictitious IORs
       CORBA::Object_var name1 =
         orb_->string_to_object ("iiop://acme.cs.wustl.edu:6060/xyz"
                                 ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
       CORBA::Object_var name2 =
         orb_->string_to_object ("iiop://tango.cs.wustl.edu:7070/xyz"
                                 ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       // **********************************************************************
       // Create IOR list for use with merge_iors.
@@ -76,7 +71,6 @@ main (int argc, char *argv[])
 
       CORBA::Object_var merged =
         iorm->merge_iors (iors ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       // Check for set and get primaries
       // Make a dummy property set
@@ -85,7 +79,6 @@ main (int argc, char *argv[])
 
       CORBA::Boolean retval =
         iorm->set_primary (&prop, name2.in (), merged.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       if (retval != 0)
         ACE_DEBUG ((LM_DEBUG,
@@ -101,7 +94,6 @@ main (int argc, char *argv[])
       retval = iorm->is_primary_set (&prop,
                                      merged.in ()
                                      ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       if (retval)
         ACE_DEBUG ((LM_DEBUG,
@@ -121,7 +113,6 @@ main (int argc, char *argv[])
         iorm->get_primary (&prop,
                            merged.in ()
                            ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       // Check whether we got back the right primary
       if (prim->_is_equivalent (name2.in ()))
@@ -161,7 +152,6 @@ main (int argc, char *argv[])
       retval = iorm->set_property (&prop,
                                    merged.in ()
                                    ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       /// Extract the property
       FT::TagFTGroupTaggedComponent ftc;
@@ -172,7 +162,6 @@ main (int argc, char *argv[])
                                        ftc
                                        ACE_ENV_ARG_PARAMETER);
 
-      ACE_TRY_CHECK;
 
       ACE_DEBUG ((LM_DEBUG,
                   "(%P|%t) Testing for tagged component \n"));

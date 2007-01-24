@@ -73,11 +73,9 @@ Updates::init (int argc,
   Notify_Test_Client::init (argc,
                             argv
                             ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
 
   // Create all participents.
-  this->create_EC (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
+  this->create_EC ();
 
   CosNotifyChannelAdmin::AdminID adminid;
 
@@ -85,7 +83,6 @@ Updates::init (int argc,
     ec_->new_for_suppliers (this->ifgop_,
                             adminid
                             ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
 
   ACE_ASSERT (!CORBA::is_nil (supplier_admin_.in ()));
 
@@ -93,7 +90,6 @@ Updates::init (int argc,
     ec_->new_for_consumers (this->ifgop_,
                             adminid
                             ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
 
   ACE_ASSERT (!CORBA::is_nil (consumer_admin_.in ()));
 
@@ -102,28 +98,24 @@ Updates::init (int argc,
                   -1);
   consumer_->init (root_poa_.in ()
                    ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
 
   consumer_->connect (this->consumer_admin_.in ()
                       ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
 
   ACE_NEW_RETURN (supplier_,
                  Updates_StructuredPushSupplier (this),
                  -1);
   supplier_->init (root_poa_.in ()
                    ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
 
   supplier_->connect (this->supplier_admin_.in ()
                       ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
 
   return 0;
 }
 
 void
-Updates::create_EC (ACE_ENV_SINGLE_ARG_DECL)
+Updates::create_EC (void)
 {
   CosNotifyChannelAdmin::ChannelID id;
 
@@ -131,7 +123,6 @@ Updates::create_EC (ACE_ENV_SINGLE_ARG_DECL)
                                          initial_admin_,
                                          id
                                          ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
   ACE_ASSERT (!CORBA::is_nil (ec_.in ()));
 }
@@ -198,22 +189,20 @@ Updates::reset_counts (void)
 }
 
 void
-Updates::run_test (ACE_ENV_SINGLE_ARG_DECL)
+Updates::run_test (void)
 {
-  this->test_subscription_change (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+  this->test_subscription_change ();
 
   if (TAO_debug_level)
     ACE_DEBUG ((LM_DEBUG, "Finished testing subscription_change!\n"));
 
-  this->test_offer_change (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+  this->test_offer_change ();
 
   ACE_DEBUG ((LM_DEBUG, "Updates test has run successfully!\n"));
 }
 
 void
-Updates::test_subscription_change (ACE_ENV_SINGLE_ARG_DECL)
+Updates::test_subscription_change (void)
 {
   {
     // reset counts.
@@ -244,7 +233,6 @@ Updates::test_subscription_change (ACE_ENV_SINGLE_ARG_DECL)
                                                                  removed
                                                                  ACE_ENV_ARG_PARAMETER
                                                                  );
-    ACE_CHECK;
 
     this->wait_for_updates (3, 0); // The supplier should receive Added (RED, GREEN, BLUE)
 
@@ -282,7 +270,6 @@ Updates::test_subscription_change (ACE_ENV_SINGLE_ARG_DECL)
                                                                  removed
                                                                  ACE_ENV_ARG_PARAMETER
                                                                  );
-    ACE_CHECK;
 
     this->wait_for_updates (1, 0); // The supplier should receive Added (PURPLE).
 
@@ -318,7 +305,6 @@ Updates::test_subscription_change (ACE_ENV_SINGLE_ARG_DECL)
                                                                  removed
                                                                  ACE_ENV_ARG_PARAMETER
                                                                  );
-    ACE_CHECK;
 
     this->wait_for_updates (0, 4);
     // The supplier should receive Remove {RED, GREEN} out of the 4 actally removed (RED, GREEN, BLUE, PURPLE) becaue that whats it offered for.
@@ -337,7 +323,7 @@ Updates::test_subscription_change (ACE_ENV_SINGLE_ARG_DECL)
 }
 
 void
-Updates::test_offer_change (ACE_ENV_SINGLE_ARG_DECL)
+Updates::test_offer_change (void)
 {
   {
     // reset counts.
@@ -368,7 +354,6 @@ Updates::test_offer_change (ACE_ENV_SINGLE_ARG_DECL)
                                                           removed
                                                           ACE_ENV_ARG_PARAMETER
                                                           );
-    ACE_CHECK;
 
     this->wait_for_updates (3, 0); // The consumer should receive Added (RED, GREEN, BLUE)
 
@@ -406,7 +391,6 @@ Updates::test_offer_change (ACE_ENV_SINGLE_ARG_DECL)
                                                           removed
                                                           ACE_ENV_ARG_PARAMETER
                                                                  );
-    ACE_CHECK;
 
     this->wait_for_updates (1, 0); // The consumer should receive Added (PURPLE).
 
@@ -442,7 +426,6 @@ Updates::test_offer_change (ACE_ENV_SINGLE_ARG_DECL)
                                                           removed
                                                           ACE_ENV_ARG_PARAMETER
                                                           );
-    ACE_CHECK;
 
     this->wait_for_updates (0, 4);
     // The consumer should receive Remove {RED, GREEN} out of the 4 actally removed (RED, GREEN, BLUE, PURPLE) becaue that whats it offered for.
@@ -472,10 +455,8 @@ main (int argc, char* argv[])
       updates.init (argc,
                     argv
                     ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
-      updates.run_test (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      updates.run_test ();
     }
   ACE_CATCH (CORBA::SystemException, se)
     {

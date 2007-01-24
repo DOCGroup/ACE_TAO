@@ -9,8 +9,8 @@
 #include "orbsvcs/Notify/Event_Map_Entry_T.inl"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID (Notify, 
-           TAO_Notify_Event_Map_Entry_T, 
+ACE_RCSID (Notify,
+           TAO_Notify_Event_Map_Entry_T,
            "$Id$")
 
 #include "orbsvcs/ESF/ESF_Proxy_Collection.h"
@@ -32,7 +32,7 @@ TAO_Notify_Event_Map_Entry_T<PROXY>::~TAO_Notify_Event_Map_Entry_T ()
 }
 
 template <class PROXY> void
-TAO_Notify_Event_Map_Entry_T<PROXY>::init (ACE_ENV_SINGLE_ARG_DECL)
+TAO_Notify_Event_Map_Entry_T<PROXY>::init (void)
 {
   TAO_Notify_Factory* factory = TAO_Notify_PROPERTIES::instance ()->factory ();
 

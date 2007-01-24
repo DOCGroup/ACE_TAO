@@ -63,7 +63,6 @@ UDP_i::invoke (const char * client_name,
                               UDP::_nil (),
                               request_id
                               ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
         }
 
     }
@@ -78,7 +77,7 @@ UDP_i::invoke (const char * client_name,
 // Shutdown.
 
 void
-UDP_i::shutdown (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+UDP_i::shutdown (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_DEBUG ((LM_DEBUG,

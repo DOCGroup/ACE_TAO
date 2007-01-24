@@ -19,7 +19,6 @@ test_invalid_compression_factory (Compression::CompressionManager_ptr cm)
       // Get an invalid compression factory
       Compression::CompressorFactory_var factory =
         cm->get_factory (100);
-      ACE_TRY_CHECK;
     }
   ACE_CATCH (Compression::UnknownCompressorId, ex)
     {
@@ -51,7 +50,6 @@ test_duplicate_compression_factory (
     {
       // Register duplicate
       cm->register_factory (cf);
-      ACE_TRY_CHECK;
     }
   ACE_CATCH (Compression::FactoryAlreadyRegistered, ex)
     {
@@ -81,7 +79,6 @@ test_register_nil_compression_factory (
     {
       // Register nil factory
       cm->register_factory (Compression::CompressorFactory::_nil());
-      ACE_TRY_CHECK;
     }
   ACE_CATCH (CORBA::BAD_PARAM, ex)
     {
@@ -113,7 +110,6 @@ main (int argc, char *argv[])
     {
       CORBA::ORB_var orb =
         CORBA::ORB_init (argc, argv, "" ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       CORBA::Object_var compression_manager =
         orb->resolve_initial_references("CompressionManager");
@@ -171,8 +167,7 @@ main (int argc, char *argv[])
       if (!test_invalid_compression_factory (manager.in ()))
         retval = 1;
 
-      orb->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      orb->destroy ();
     }
   ACE_CATCHANY
     {

@@ -91,7 +91,6 @@ Client_i::init (int argc, char *argv[])
                                argv,
                                0
                                ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       CORBA::ORB_var orb = this->orb_manager_.orb ();
 
@@ -108,7 +107,6 @@ Client_i::init (int argc, char *argv[])
       CORBA::Object_var server_object =
         orb->string_to_object (this->ior_
                                ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       if (CORBA::is_nil (server_object.in ()))
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -118,7 +116,6 @@ Client_i::init (int argc, char *argv[])
 
       this->server_ = Broadcaster::_narrow (server_object.in ()
                                             ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
     }
   ACE_CATCHANY
     {
@@ -153,22 +150,18 @@ Client_i::run (void)
     {
       PortableServer::POAManager_var poa_manager =
         this->orb_manager_.poa_manager ();
-      poa_manager->activate (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      poa_manager->activate ();
 
       this->receiver_var_ =
-        this->receiver_i_._this (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        this->receiver_i_._this ();
 
       // Register ourselves with the server.
       server_->add (this->receiver_var_.in (),
                     this->nickname_
                     ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       // Run the ORB.
-      this->orb_manager_.run (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      this->orb_manager_.run ();
     }
   ACE_CATCHANY
     {
@@ -198,9 +191,8 @@ Client_i::handle_input (ACE_HANDLE)
         {
           // Remove ourselves from the server.
           this->server_->remove (this->receiver_var_.in ());
-          this->receiver_i_.shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
+          this->receiver_i_.shutdown ();
 
-          ACE_TRY_CHECK;
           return 0;
         }
 
@@ -209,7 +201,6 @@ Client_i::handle_input (ACE_HANDLE)
       this->server_->say (this->receiver_var_.in (),
                           buf
                           ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
     }
   ACE_CATCHANY
     {

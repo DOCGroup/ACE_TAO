@@ -45,7 +45,7 @@ Receiver::receive_data (const Test::Message &the_message
 }
 
 void
-Receiver::done (ACE_ENV_SINGLE_ARG_DECL)
+Receiver::done (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   if (this->message_count_ == 0)
@@ -87,13 +87,10 @@ Receiver::done (ACE_ENV_SINGLE_ARG_DECL)
 
   ACE_TRY
     {
-      PortableServer::POA_var poa = this->_default_POA (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      PortableServer::POA_var poa = this->_default_POA ();
       PortableServer::ObjectId_var oid =
         poa->servant_to_id (this ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
       poa->deactivate_object (oid.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
     }
   ACE_CATCHANY {} ACE_ENDTRY;
 }

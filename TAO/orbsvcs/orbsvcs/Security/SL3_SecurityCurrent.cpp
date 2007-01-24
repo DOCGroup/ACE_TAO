@@ -27,7 +27,7 @@ TAO::SL3::SecurityCurrent::~SecurityCurrent (void)
 }
 
 SecurityLevel3::ClientCredentials_ptr
-TAO::SL3::SecurityCurrent::client_credentials (ACE_ENV_SINGLE_ARG_DECL)
+TAO::SL3::SecurityCurrent::client_credentials (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO::SL3::SecurityCurrent_Impl * impl = this->implementation ();
@@ -39,11 +39,11 @@ TAO::SL3::SecurityCurrent::client_credentials (ACE_ENV_SINGLE_ARG_DECL)
     ACE_THROW_RETURN (CORBA::BAD_INV_ORDER (),
                       SecurityLevel3::ClientCredentials::_nil ());
 
-  return impl->client_credentials (ACE_ENV_SINGLE_ARG_PARAMETER);
+  return impl->client_credentials ();
 }
 
 CORBA::Boolean
-TAO::SL3::SecurityCurrent::request_is_local (ACE_ENV_SINGLE_ARG_DECL)
+TAO::SL3::SecurityCurrent::request_is_local (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO::SL3::SecurityCurrent_Impl * impl = this->implementation ();
@@ -54,7 +54,7 @@ TAO::SL3::SecurityCurrent::request_is_local (ACE_ENV_SINGLE_ARG_DECL)
   if (impl == 0)
     ACE_THROW_RETURN (CORBA::BAD_INV_ORDER (), false);
 
-  return impl->request_is_local (ACE_ENV_SINGLE_ARG_PARAMETER);
+  return impl->request_is_local ();
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL

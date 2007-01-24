@@ -25,16 +25,16 @@ TAO_Notify_Peer::qos_changed (const TAO_Notify_QoSProperties& /*qos_properties*/
 }
 
 void
-TAO_Notify_Peer::shutdown (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+TAO_Notify_Peer::shutdown (void)
 {
   // NOP.
 }
 
 void
-TAO_Notify_Peer::handle_dispatch_exception (ACE_ENV_SINGLE_ARG_DECL)
+TAO_Notify_Peer::handle_dispatch_exception (void)
 {
   // Sever all association when a remote client misbehaves. Other strategies like reties are possible but not implemented.
-  this->proxy ()->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
+  this->proxy ()->destroy ();
 }
 
 void
@@ -42,7 +42,6 @@ TAO_Notify_Peer::dispatch_updates (const TAO_Notify_EventTypeSeq & added, const 
 {
   TAO_Notify_EventTypeSeq subscribed_types ;
   this->proxy ()->subscribed_types (subscribed_types ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
   ACE_TRY
     {
@@ -85,13 +84,11 @@ TAO_Notify_Peer::dispatch_updates (const TAO_Notify_EventTypeSeq & added, const 
           TAO_Notify_Proxy::Ptr proxy_guard(this->proxy ());
 
           this->dispatch_updates_i (cos_added, cos_removed ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
         }
     }
   ACE_CATCH (CORBA::OBJECT_NOT_EXIST, not_exist)
     {
-      this->handle_dispatch_exception (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      this->handle_dispatch_exception ();
     }
   ACE_CATCH (CORBA::NO_IMPLEMENT, no_impl)
     {
@@ -100,8 +97,7 @@ TAO_Notify_Peer::dispatch_updates (const TAO_Notify_EventTypeSeq & added, const 
     }
   ACE_CATCH (CORBA::SystemException, sysex)
     {
-      this->handle_dispatch_exception (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      this->handle_dispatch_exception ();
     }
   ACE_CATCHANY
     {

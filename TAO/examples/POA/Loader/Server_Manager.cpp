@@ -117,7 +117,6 @@ Server_i::init (int argc, char **argv)
                               argv,
                               0
                               ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       int result = parse_args (argc, argv);
       if (result != 0)
@@ -127,16 +126,13 @@ Server_i::init (int argc, char **argv)
       CORBA::Object_var obj =
         orb_->resolve_initial_references ("RootPOA"
                                           ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       // Narrow the Object reference to a POA reference
       root_poa_ = PortableServer::POA::_narrow (obj.in ()
                                                 ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       // Get the POAManager of RootPOA
-      poa_manager_ = root_poa_->the_POAManager (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      poa_manager_ = root_poa_->the_POAManager ();
 
     }
   ACE_CATCHANY
@@ -170,21 +166,18 @@ Server_i::create_poa (const char *name,
         root_poa_->create_id_assignment_policy
         (PortableServer::USER_ID
          ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       // Lifespan Policy.
       policies_[1] =
         root_poa_->create_lifespan_policy
         (PortableServer::PERSISTENT
          ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       // Request Processing Policy.
       policies_[2] =
         root_poa_->create_request_processing_policy
         (PortableServer::USE_SERVANT_MANAGER
          ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       // Servant Retention Policy.
       if (servant_retention_policy == 1)
@@ -193,7 +186,6 @@ Server_i::create_poa (const char *name,
             root_poa_->create_servant_retention_policy
             (PortableServer::RETAIN
              ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
         }
 
       if (servant_retention_policy == 0)
@@ -202,7 +194,6 @@ Server_i::create_poa (const char *name,
             root_poa_->create_servant_retention_policy
             (PortableServer::NON_RETAIN
              ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
         }
 
       // Create myPOA as the child of RootPOA with the above
@@ -213,7 +204,6 @@ Server_i::create_poa (const char *name,
                                       poa_manager_.in (),
                                       policies_
                                       ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       // Destroy the policy objects as they have been passed to
       // create_POA and no longer needed.
@@ -222,8 +212,7 @@ Server_i::create_poa (const char *name,
            ++i)
         {
           CORBA::Policy_ptr policy = policies_[i];
-          policy->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+          policy->destroy ();
         }
     }
   ACE_CATCHANY
@@ -232,7 +221,6 @@ Server_i::create_poa (const char *name,
       return 0;
     }
   ACE_ENDTRY;
-  ACE_CHECK_RETURN (0);
 
   return my_poa;
 }
@@ -269,7 +257,6 @@ Server_i::create_activator (PortableServer::POA_var first_poa)
       //
       // first_poa->set_servant_manager (this->servant_activator_.in ()
       //                                ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       // Create a reference with user created ID in firstPOA which
       // uses the ServantActivator.
@@ -279,7 +266,6 @@ Server_i::create_activator (PortableServer::POA_var first_poa)
       first_test_ = first_poa->create_reference_with_id (first_test_oid.in (),
                                                         "IDL:test:1.0"
                                                         ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
     }
   ACE_CATCHANY
     {
@@ -324,7 +310,6 @@ Server_i::create_locator (PortableServer::POA_var second_poa)
       // secondPOA.
       // second_poa->set_servant_manager (this->servant_locator_.in ()
       //                                  ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       // Try to create a reference with user created ID in second_poa
       // which uses ServantLocator.
@@ -335,7 +320,6 @@ Server_i::create_locator (PortableServer::POA_var second_poa)
         second_poa->create_reference_with_id (second_test_oid.in (),
                                               "IDL:test:1.0"
                                               ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
     }
   ACE_CATCHANY
     {
@@ -362,12 +346,10 @@ Server_i::run (void)
       CORBA::String_var first_test_ior =
         orb_->object_to_string (first_test_.in ()
                                 ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       CORBA::String_var second_test_ior =
         orb_->object_to_string (second_test_.in ()
                                 ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       // Print the ior's of first_test and second_test.
 
@@ -383,13 +365,11 @@ Server_i::run (void)
 
       // Set the poa_manager state to active, ready to process
       // requests.
-      poa_manager_->activate (ACE_ENV_SINGLE_ARG_PARAMETER);
+      poa_manager_->activate ();
 
-      ACE_TRY_CHECK;
 
       // Run the ORB.
-      orb_->run (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      orb_->run ();
     }
   ACE_CATCHANY
     {

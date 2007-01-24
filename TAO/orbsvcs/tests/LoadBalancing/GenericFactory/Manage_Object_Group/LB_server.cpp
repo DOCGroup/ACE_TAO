@@ -22,17 +22,13 @@ LB_server::destroy (void)
     {
       this->lm_->delete_object (this->basic_fcid_.in ()
                                 ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       this->lm_->delete_object (this->simple_fcid_.in ()
                                 ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       this->root_poa_->destroy (1, 1 ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
-      this->orb_->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      this->orb_->destroy ();
     }
   ACE_CATCHANY
     {
@@ -79,12 +75,10 @@ LB_server::start_orb_and_poa (void)
       this->orb_ = CORBA::ORB_init (this->argc_,
                                     this->argv_,
                                     "" ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       CORBA::Object_var poa_object =
         this->orb_->resolve_initial_references("RootPOA"
                                                ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       if (CORBA::is_nil (poa_object.in ()))
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -93,14 +87,11 @@ LB_server::start_orb_and_poa (void)
 
       this->root_poa_ = PortableServer::POA::_narrow (poa_object.in ()
                                                       ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       PortableServer::POAManager_var poa_manager =
-        this->root_poa_->the_POAManager (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        this->root_poa_->the_POAManager ();
 
-      poa_manager->activate (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      poa_manager->activate ();
 
       CORBA::Object_var obj =
         this->orb_->resolve_initial_references ("LoadManager" ACE_ENV_ARG_PARAMETER);
@@ -108,7 +99,6 @@ LB_server::start_orb_and_poa (void)
       this->lm_ =
         CosLoadBalancing::LoadManager::_narrow (obj.in ()
                                                 ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       if (CORBA::is_nil (this->lm_.in ()))
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -152,12 +142,10 @@ LB_server::create_basic_object_group (void)
                                                             criteria,
                                                             this->basic_fcid_.out ()
                                                             ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       CORBA::String_var ior =
         this->orb_->object_to_string (this->basic_object_group_.in ()
                                       ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
     }
   ACE_CATCHANY
@@ -196,12 +184,10 @@ LB_server::create_simple_object_group (void)
                                                              criteria,
                                                              this->simple_fcid_.out ()
                                                              ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       CORBA::String_var ior =
         this->orb_->object_to_string (this->simple_object_group_.in ()
                                       ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
     }
   ACE_CATCHANY
@@ -231,7 +217,6 @@ LB_server::remove_basic_member (void)
       this->lm_->remove_member (this->basic_object_group_.in (),
                                 location
                                 ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       printf("Removed Basic Member at location %s\n\n", loc);
     }
@@ -261,7 +246,6 @@ LB_server::remove_simple_member (void)
       this->lm_->remove_member (this->simple_object_group_.in (),
                                 location
                                 ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       printf("Removed Simple Member at location %s\n\n", loc);
     }
@@ -282,8 +266,7 @@ LB_server::register_basic_servant (Basic *servant, const char *loc)
   ACE_TRY_NEW_ENV
     {
       Test::Basic_var basic =
-        servant->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        servant->_this ();
 
       PortableGroup::Location location (1);
       location.length (1);
@@ -294,10 +277,9 @@ LB_server::register_basic_servant (Basic *servant, const char *loc)
                              location,
                              basic.in ()
                              ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       CORBA::Short number = 0;
-      number = servant->number (ACE_ENV_SINGLE_ARG_PARAMETER);
+      number = servant->number ();
 
       printf("Added Basic member %d at location %s\n", number, loc);
     }
@@ -318,8 +300,7 @@ LB_server::register_simple_servant (Simple *servant, const char *loc)
   ACE_TRY_NEW_ENV
     {
       Test::Simple_var simple =
-        servant->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        servant->_this ();
 
       PortableGroup::Location location (1);
       location.length (1);
@@ -330,10 +311,9 @@ LB_server::register_simple_servant (Simple *servant, const char *loc)
                              location,
                              simple.in ()
                              ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       CORBA::Short number = 0;
-      number = servant->number (ACE_ENV_SINGLE_ARG_PARAMETER);
+      number = servant->number ();
 
       printf("Added Simple member %d at location %s\n", number, loc);
     }

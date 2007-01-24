@@ -59,16 +59,16 @@ public:
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   /// For the readonly attribute <inaccuracy>.
-  virtual TimeBase::InaccuracyT  inaccuracy (ACE_ENV_SINGLE_ARG_DECL)
+  virtual TimeBase::InaccuracyT  inaccuracy (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   /// For the readonly attribute <tdf>, which is the "time displacement
   /// factor".
-  virtual TimeBase::TdfT tdf (ACE_ENV_SINGLE_ARG_DECL)
+  virtual TimeBase::TdfT tdf (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   /// For the readonly attribute <utc_time>.
-  virtual TimeBase::UtcT utc_time (ACE_ENV_SINGLE_ARG_DECL)
+  virtual TimeBase::UtcT utc_time (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   /**
@@ -76,7 +76,7 @@ public:
    * ?? Find out more about the Base Time, UTC and
    *    Distributed Time Sync. Algos. [3
    */
-  CosTime::UTO_ptr absolute_time (ACE_ENV_SINGLE_ARG_DECL)
+  CosTime::UTO_ptr absolute_time (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   /// Compares the time contained in the object with the time in the
@@ -99,7 +99,7 @@ public:
 
   /// Returns a TIO object representing the error interval around the
   /// time value in the UTO.
-  CosTime::TIO_ptr interval (ACE_ENV_SINGLE_ARG_DECL)
+  CosTime::TIO_ptr interval (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
 private:

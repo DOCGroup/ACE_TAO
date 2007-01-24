@@ -42,30 +42,26 @@ run_test (Test_Interceptors::Visual_ptr server
 {
 
   server->normal (10 ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
   ACE_DEBUG ((LM_DEBUG, "\"normal\" operation done\n"));
 
-  server->nothing (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+  server->nothing ();
 
   ACE_DEBUG ((LM_DEBUG, "\"nothing\" operation done\n"));
 
   ACE_TRY
     {
-      server->user (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      server->user ();
     }
   ACE_CATCH (Test_Interceptors::Silly, userex)
     {
       ACE_DEBUG ((LM_DEBUG, "Caught Silly\n"));
     }
   ACE_ENDTRY;
-  ACE_CHECK;
 
   ACE_TRY_EX (SYS)
     {
-      server->system (ACE_ENV_SINGLE_ARG_PARAMETER);
+      server->system ();
       ACE_TRY_CHECK_EX (SYS);
     }
   ACE_CATCH (CORBA::INV_OBJREF, sysex)
@@ -73,7 +69,6 @@ run_test (Test_Interceptors::Visual_ptr server
       ACE_DEBUG ((LM_DEBUG, "Caught CORBA::INV_OBJREF\n"));
     }
   ACE_ENDTRY;
-  ACE_CHECK;
 }
 
 int
@@ -91,22 +86,18 @@ main (int argc, char *argv[])
 
       PortableInterceptor::register_orb_initializer (initializer.in ()
                                                      ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       CORBA::ORB_var orb =
         CORBA::ORB_init (argc, argv, "" ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       if (parse_args (argc, argv) != 0)
         return 1;
 
       CORBA::Object_var object =
         orb->string_to_object (ior ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       Test_Interceptors::Visual_var server =
         Test_Interceptors::Visual::_narrow (object.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       if (CORBA::is_nil (server.in ()))
         {
@@ -117,10 +108,8 @@ main (int argc, char *argv[])
         }
 
       run_test (server.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
-      server->shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      server->shutdown ();
     }
   ACE_CATCHANY
     {

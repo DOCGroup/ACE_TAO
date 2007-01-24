@@ -36,7 +36,6 @@ Iterator_Factory_i::get_iterator (const char *pathname,
                     Content_Iterator_i (pathname,
                                         file_status.st_size),
                     CORBA::NO_MEMORY ());
-  ACE_CHECK;
 
   if (iterator_servant->init () != 0)
     {
@@ -51,14 +50,12 @@ Iterator_Factory_i::get_iterator (const char *pathname,
 
   // Activate the Content_Iterator object.
   Web_Server::Content_Iterator_var iterator =
-    iterator_servant->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+    iterator_servant->_this ();
 
   Web_Server::Metadata_Type *tmp = 0;
   ACE_NEW_THROW_EX (tmp,
                     Web_Server::Metadata_Type,
                     CORBA::NO_MEMORY ());
-  ACE_CHECK;
 
   metadata = tmp;
 

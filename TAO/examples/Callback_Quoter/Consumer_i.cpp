@@ -42,7 +42,7 @@ Consumer_i::push (const Callback_Quoter::Info &data
 }
 
 void
-Consumer_i::shutdown (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+Consumer_i::shutdown (void)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
 

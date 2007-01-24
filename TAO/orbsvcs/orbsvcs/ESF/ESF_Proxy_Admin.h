@@ -56,7 +56,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
  * // The T_var for the IDL interface implemented by the PROXY.
  *
  * PROXY::_ptr_type
- * PROXY::activate (ACE_ENV_SINGLE_ARG_DECL_NOT_USED) throw ();
+ * PROXY::activate (void) throw ();
  * // activate the proxy and return the object reference
  * @endverbatim
  *
@@ -83,7 +83,7 @@ public:
   // code is supposed to run under TAO only.
   /// Create a new PROXY and activate it.
   virtual INTERFACE*
-      obtain (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+      obtain (void)
           ACE_THROW_SPEC ((CORBA::SystemException));
 
   /**
@@ -91,7 +91,7 @@ public:
    * down. Invoke <shutdown> on all the proxies, cleanup the
    * collection and prepare to terminate.
    */
-  virtual void shutdown (ACE_ENV_SINGLE_ARG_DECL)
+  virtual void shutdown (void)
       ACE_THROW_SPEC ((CORBA::SystemException));
 
   /**

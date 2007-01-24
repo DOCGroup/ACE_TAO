@@ -403,7 +403,6 @@ TAO_Metrics_Logger::process_aggregate_QoS (const Metrics::QoSParameter_Set & qos
       ACE_TRY_NEW_ENV
         {
           any.replace (Metrics::_tc_QoSData, &qos_data_, 0, ACE_TRY_ENV);
-          ACE_TRY_CHECK;
         }
       ACE_CATCHANY
         {
@@ -442,7 +441,6 @@ TAO_Metrics_Logger::set_identities (const Metrics::ProbeIdentity_Set &
     {
       this->set_identity (probe_identities [i]
                           ACE_ENV_ARG_DECL);
-      ACE_CHECK;
     }
 }
 
@@ -460,7 +458,6 @@ TAO_Metrics_Logger::set_identity (const Metrics::ProbeIdentity_t & probe_identit
       ACE_NEW_THROW_EX (name,
                         CORBA::String_var (probe_identity.probe_name),
                         CORBA::NO_MEMORY ());
-      ACE_CHECK;
 
       // What is this used for?  BRM
       auto_ptr<CORBA::String_var> name_ptr (name);
@@ -839,7 +836,6 @@ TAO_Metrics_Logger::process_timeprobe_data (const Metrics::TimeprobeParameter_Se
           ACE_TRY_NEW_ENV
             {
               any.replace (Metrics::_tc_UtilData, &util_data_, 0, ACE_TRY_ENV);
-              ACE_TRY_CHECK;
             }
           ACE_CATCHANY
             {

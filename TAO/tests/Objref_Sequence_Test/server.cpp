@@ -21,7 +21,7 @@ public:
                     ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  void shutdown (ACE_ENV_SINGLE_ARG_DECL)
+  void shutdown (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
 private:
@@ -99,10 +99,8 @@ ServerServant::DeleteExtra (const ServerSequence &seq
         this->root_poa_->reference_to_servant (seq [cnt]);
 
       this->root_poa_->deactivate_object (oid.in ());
-      servant->_remove_ref (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK;
-      servant->_remove_ref (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK;
+      servant->_remove_ref ();
+      servant->_remove_ref ();
     }
 
   ACE_DEBUG ((LM_DEBUG,
@@ -111,7 +109,7 @@ ServerServant::DeleteExtra (const ServerSequence &seq
 }
 
 void
-ServerServant::shutdown (ACE_ENV_SINGLE_ARG_DECL)
+ServerServant::shutdown (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->orb_->shutdown (0 ACE_ENV_ARG_PARAMETER);
@@ -163,17 +161,14 @@ main (int argc, char *argv [])
                          argv,
                          ""
                          ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       CORBA::Object_var vRootPOABase =
         orb->resolve_initial_references ("RootPOA"
                                          ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       PortableServer::POA_var root_poa =
         PortableServer::POA::_narrow (vRootPOABase.in ()
                                       ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       if (CORBA::is_nil (root_poa.in ()))
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -181,8 +176,7 @@ main (int argc, char *argv [])
                           1);
 
       PortableServer::POAManager_ptr pRootPOAManager =
-        root_poa->the_POAManager (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        root_poa->the_POAManager ();
 
       // Instantiate the server
       ServerServant *servant = 0;
@@ -195,14 +189,12 @@ main (int argc, char *argv [])
       PortableServer::ServantBase_var owner_transfer(servant);
 
       Server_var server =
-        servant->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        servant->_this ();
 
       // Announce the server
       CORBA::String_var obj_ref =
         orb->object_to_string (server.in ()
                                 ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       // Output the IOR to the <ior_output_file>
       FILE *output_file= ACE_OS::fopen (ior_output_file, "w");
@@ -214,19 +206,15 @@ main (int argc, char *argv [])
       ACE_OS::fprintf (output_file, "%s", obj_ref.in ());
       ACE_OS::fclose (output_file);
 
-      pRootPOAManager->activate (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      pRootPOAManager->activate ();
 
-      orb->run (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      orb->run ();
 
       ACE_DEBUG ((LM_DEBUG, "(%P|%t) server - event loop finished\n"));
 
       root_poa->destroy (1, 1 ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
-      orb->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      orb->destroy ();
     }
   ACE_CATCHANY
     {

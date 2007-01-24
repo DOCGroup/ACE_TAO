@@ -141,10 +141,8 @@ int FTAPP::FT_Creator::init (CORBA::ORB_ptr orb ACE_ENV_ARG_DECL)
   {
     CORBA::Object_var registry_obj
       = this->orb_->string_to_object (this->registry_ior_  ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK_RETURN (-1);
     PortableGroup::FactoryRegistry_var registry
       = PortableGroup::FactoryRegistry::_narrow(registry_obj.in ()  ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK_RETURN (-1);
     if (! CORBA::is_nil (registry.in ()))
     {
       result = this->creator_.set_factory_registry(registry.in());
@@ -154,7 +152,6 @@ int FTAPP::FT_Creator::init (CORBA::ORB_ptr orb ACE_ENV_ARG_DECL)
   if (result == 0)
   {
     result = this->creator_.init (orb ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK_RETURN (-1);
   }
 
 
@@ -162,7 +159,6 @@ int FTAPP::FT_Creator::init (CORBA::ORB_ptr orb ACE_ENV_ARG_DECL)
   {
     CORBA::Object_var naming_obj =
       this->orb_->resolve_initial_references ("NameService" ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK_RETURN (-1);
 
     if (CORBA::is_nil(naming_obj.in ()))
     {
@@ -172,13 +168,12 @@ int FTAPP::FT_Creator::init (CORBA::ORB_ptr orb ACE_ENV_ARG_DECL)
     }
     this->naming_context_=
       CosNaming::NamingContext::_narrow (naming_obj.in () ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK_RETURN (-1);
   }
 
   return result;
 }
 
-int FTAPP::FT_Creator::run (ACE_ENV_SINGLE_ARG_DECL)
+int FTAPP::FT_Creator::run (void)
 {
   int result = 0;
   size_t typeCount = this->create_roles_.size();
@@ -191,12 +186,10 @@ int FTAPP::FT_Creator::run (ACE_ENV_SINGLE_ARG_DECL)
       role,
       this->write_iors_
       ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK_RETURN (1);
 
     if (this->write_iogr_)
     {
       CORBA::String_var iogr = this->orb_->object_to_string (group.in () ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK_RETURN (1);
 
       char iogr_filename[1000];
       ACE_OS::snprintf (iogr_filename, sizeof(iogr_filename)-1, "%s%s_%d.iogr",
@@ -231,7 +224,6 @@ int FTAPP::FT_Creator::run (ACE_ENV_SINGLE_ARG_DECL)
 
       this->naming_context_->rebind (this_name, group.in()
                               ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK_RETURN (1);
     }
 
     iogr_seq_ += 1;
@@ -243,7 +235,6 @@ int FTAPP::FT_Creator::run (ACE_ENV_SINGLE_ARG_DECL)
   {
     const char * role = this->unregister_roles_[nType].c_str();
     result = this->creator_.unregister_role (role ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK_RETURN (-1);
   }
 
   return result;
@@ -261,17 +252,14 @@ main (int argc, char *argv[])
   ACE_TRY_NEW_ENV
   {
     CORBA::ORB_var orb = CORBA::ORB_init(argc, argv);
-    ACE_TRY_CHECK;
     FTAPP::FT_Creator app;
     result = app.parse_args(argc, argv);
     if (result == 0)
     {
       result = app.init (orb.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
       if (result == 0)
       {
-        result = app.run (ACE_ENV_SINGLE_ARG_PARAMETER);
-        ACE_TRY_CHECK;
+        result = app.run ();
       }
       if (result == 0)
       {

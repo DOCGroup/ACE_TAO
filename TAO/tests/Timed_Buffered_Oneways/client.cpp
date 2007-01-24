@@ -139,20 +139,16 @@ setup_policies (CORBA::ORB_ptr orb, test_ptr object ACE_ENV_ARG_DECL)
         orb->create_policy (Messaging::RELATIVE_RT_TIMEOUT_POLICY_TYPE,
                             rt_timeout_any
                             ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
 
       CORBA::Object_var object_temp =
         object->_set_policy_overrides (policy_list,
                                        CORBA::ADD_OVERRIDE
                                        ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
 
       object_with_policy = test::_narrow (object_temp.in ()
                                           ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
 
-      policy_list[0]->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK;
+      policy_list[0]->destroy ();
     }
 
   Messaging::SyncScope sync =
@@ -166,20 +162,16 @@ setup_policies (CORBA::ORB_ptr orb, test_ptr object ACE_ENV_ARG_DECL)
     orb->create_policy (Messaging::SYNC_SCOPE_POLICY_TYPE,
                         sync_any
                         ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
   CORBA::Object_var object_temp =
     object_with_policy->_set_policy_overrides (policy_list,
                                                CORBA::ADD_OVERRIDE
                                                ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
   test_var object_with_two_policies = test::_narrow (object_temp.in ()
                                                      ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
-  policy_list[0]->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+  policy_list[0]->destroy ();
 
   return object_with_two_policies._retn ();
 }
@@ -197,7 +189,6 @@ main (int argc, char **argv)
                          argv,
                          0
                          ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       // Initialize options based on command-line arguments.
       int parse_args_result = parse_args (argc, argv);
@@ -208,18 +199,15 @@ main (int argc, char **argv)
       CORBA::Object_var object =
         orb->string_to_object (IOR
                                ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       // Try to narrow the object reference to a <test> reference.
       test_var test_object_no_policy = test::_narrow (object.in ()
                                                       ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       // Setup buffering and timeout
       test_var test_object = setup_policies (orb.in (),
                                              test_object_no_policy.in ()
                                              ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       test::data the_data (data_bytes);
       the_data.length (data_bytes);
@@ -233,7 +221,6 @@ main (int argc, char **argv)
                                the_data,
                                work
                                ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
 
           ACE_Time_Value end = ACE_OS::gettimeofday ();
 
@@ -247,12 +234,10 @@ main (int argc, char **argv)
           // If we don't run the orb, then no data will be sent, and no
           // connection will be made initially.
           orb->run (sleep_interval ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
         }
 
       ACE_DEBUG ((LM_DEBUG, "client: flushing\n"));
-      test_object_no_policy->flush (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      test_object_no_policy->flush ();
 
       ACE_DEBUG ((LM_DEBUG, "client: Shutting down...\n"));
       if (shutdown_server)
@@ -260,11 +245,9 @@ main (int argc, char **argv)
           ACE_DEBUG ((LM_DEBUG,"client killing server\n"));
           long now = ACE_OS::gettimeofday ().msec ();
           test_object_no_policy->shutdown (now ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
         }
 
       orb->shutdown (1 ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       // Destroy the ORB.  On some platforms, e.g., Win32, the socket
       // library is closed at the end of main().  This means that any
@@ -272,8 +255,7 @@ main (int argc, char **argv)
       // static destructors to flush the queues, it will be too late.
       // Therefore, we use explicit destruction here and flush the
       // queues before main() ends.
-      orb->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      orb->destroy ();
     }
   ACE_CATCHANY
     {
@@ -283,7 +265,6 @@ main (int argc, char **argv)
     }
   ACE_ENDTRY;
 
-  ACE_CHECK_RETURN (-1);
 
   return 0;
 }

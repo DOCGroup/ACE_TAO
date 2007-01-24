@@ -305,7 +305,7 @@ public:
                      AVStreams::noSuchFlow));
 
   /// unbind the stream. Same effect as Basic_StreamCtrl::destroy ()
-  virtual void unbind (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+  virtual void unbind (void)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      AVStreams::streamOpFailed));
 
@@ -1047,15 +1047,15 @@ public:
   TAO_FlowConnection (void);
 
   /// stop this flow.
-  virtual void stop (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+  virtual void stop (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   /// start this flow.
-  virtual void start (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+  virtual void start (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   /// destroy this flow.
-  virtual void destroy (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+  virtual void destroy (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   /// modify the QoS for this flow.
@@ -1099,7 +1099,7 @@ public:
                      AVStreams::alreadyConnected));
 
   /// disconnect this flow connection.
-  virtual CORBA::Boolean disconnect (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+  virtual CORBA::Boolean disconnect (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   /// adds the producer to this flow connection.
@@ -1179,21 +1179,21 @@ public:
                                    TAO_AV_Protocol_Object *object);
 
   /// lock the flow endpoint for a particular flow.
-  virtual CORBA::Boolean lock (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+  virtual CORBA::Boolean lock (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   /// unlock the flow endpoint for subsequent use.
-  virtual void unlock (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+  virtual void unlock (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
 
   /// destroy this flow.
-  virtual void destroy (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+  virtual void destroy (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   /// get method for the related streamendpoint under which this
   /// flowendpoint is.
-  virtual AVStreams::StreamEndPoint_ptr related_sep(ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+  virtual AVStreams::StreamEndPoint_ptr related_sep(void)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   /// set method for the related streamendpoint under which this
@@ -1202,7 +1202,7 @@ public:
                             ACE_ENV_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual AVStreams::FlowConnection_ptr related_flow_connection(ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+  virtual AVStreams::FlowConnection_ptr related_flow_connection(void)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   // accessor for the related flow connection attribute.
@@ -1213,7 +1213,7 @@ public:
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   /// returns the other flowendpoint to which this is connected.
-  virtual AVStreams::FlowEndPoint_ptr get_connected_fep (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+  virtual AVStreams::FlowEndPoint_ptr get_connected_fep (void)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      AVStreams::notConnected,
                      AVStreams::notSupported));
@@ -1376,11 +1376,11 @@ public:
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   /// stop this flow, to be overridden by the application.
-  virtual void stop (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+  virtual void stop (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   /// start this flow, to be overridden by the application.
-  virtual void start (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+  virtual void start (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual char * go_to_listen (AVStreams::QoS & the_qos,
@@ -1446,11 +1446,11 @@ public:
                     const char *format);
 
   /// stop this flow, to be overridden by the application.
-  virtual void stop (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+  virtual void stop (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   /// start this flow, to be overridden by the application.
-  virtual void start (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+  virtual void start (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual char * go_to_listen (AVStreams::QoS & the_qos,

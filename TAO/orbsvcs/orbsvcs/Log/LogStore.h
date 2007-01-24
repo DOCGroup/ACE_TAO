@@ -37,14 +37,14 @@ public:
 
   /// Lists all logs created by the log factory.
   virtual DsLogAdmin::LogList *
-    list_logs (ACE_ENV_SINGLE_ARG_DECL)
+    list_logs (void)
     ACE_THROW_SPEC ((
                      CORBA::SystemException
                      ))					= 0;
 
   /// Lists all log ids.
   virtual DsLogAdmin::LogIdList *
-    list_logs_by_id (ACE_ENV_SINGLE_ARG_DECL)
+    list_logs_by_id (void)
     ACE_THROW_SPEC ((
                      CORBA::SystemException
                      ))					= 0;
@@ -58,12 +58,12 @@ public:
                      ))					= 0;
 
   /// Returns true if log exists, otherwise false
-  virtual bool 
+  virtual bool
     exists (DsLogAdmin::LogId id
 	    ACE_ENV_ARG_DECL)				= 0;
 
   /// Remove the given entry from the hash table.
-  virtual int 
+  virtual int
     remove (DsLogAdmin::LogId id
 	    ACE_ENV_ARG_DECL)				= 0;
 
@@ -76,14 +76,14 @@ public:
 	    ACE_ENV_ARG_DECL)				= 0;
 
   /// @brief Create log
-  virtual void 
+  virtual void
     create_with_id (DsLogAdmin::LogId id,
 		    DsLogAdmin::LogFullActionType full_action,
 		    CORBA::ULongLong max_size,
 		    const DsLogAdmin::CapacityAlarmThresholdList* thresholds
 		    ACE_ENV_ARG_DECL)			= 0;
 
-  /// @brief Get log record store 
+  /// @brief Get log record store
   ///
   /// Get/Create a log record store for log channel @a id.
   ///
@@ -94,7 +94,7 @@ public:
 		          ACE_ENV_ARG_DECL)		= 0;
 
 protected:
-  // Constructor 
+  // Constructor
   TAO_LogStore() {}
 
 

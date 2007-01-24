@@ -97,7 +97,7 @@ public:
 private:
   /// Check if the consumers still exists.  It is a helper method for
   /// handle_timeout() to isolate the exceptions.
-  void query_consumers (ACE_ENV_SINGLE_ARG_DECL);
+  void query_consumers (void);
 
 private:
   /// The polling rate

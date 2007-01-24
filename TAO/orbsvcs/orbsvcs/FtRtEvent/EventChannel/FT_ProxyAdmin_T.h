@@ -33,7 +33,7 @@ public:
   FT_ProxyAdmin(EC_PROXY_ADMIN* admin,
               PortableServer::POA_var poa);
 
-  ProxyInterface_ptr obtain_proxy (ACE_ENV_SINGLE_ARG_DECL);
+  ProxyInterface_ptr obtain_proxy (void);
 
   /// this is used for updating the state
   void obtain_proxy (const FtRtecEventChannelAdmin::Operation& op

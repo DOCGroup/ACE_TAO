@@ -41,27 +41,24 @@ TAO_Notify_ProxyPushSupplier::connect_any_push_consumer (CosEventComm::PushConsu
                     CORBA::NO_MEMORY ());
 
   consumer->init (push_consumer ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
   this->connect (consumer ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
-  this->self_change (ACE_ENV_SINGLE_ARG_PARAMETER);
+  this->self_change ();
 }
 
 void
-TAO_Notify_ProxyPushSupplier::disconnect_push_supplier (ACE_ENV_SINGLE_ARG_DECL)
+TAO_Notify_ProxyPushSupplier::disconnect_push_supplier (void)
   ACE_THROW_SPEC ((
                    CORBA::SystemException
                    ))
 {
   TAO_Notify_ProxyPushSupplier::Ptr guard( this );
-  this->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
-  this->self_change (ACE_ENV_SINGLE_ARG_PARAMETER);
+  this->destroy ();
+  this->self_change ();
 }
 
 CosNotifyChannelAdmin::ProxyType
-TAO_Notify_ProxyPushSupplier::MyType (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+TAO_Notify_ProxyPushSupplier::MyType (void)
   ACE_THROW_SPEC ((
                    CORBA::SystemException
                    ))
@@ -92,12 +89,9 @@ TAO_Notify_ProxyPushSupplier::load_attrs (const TAO_Notify::NVPList& attrs)
             {
               CORBA::Object_var obj =
                 orb->string_to_object(ior.c_str() ACE_ENV_ARG_PARAMETER);
-              ACE_TRY_CHECK;
               pc = CosNotifyComm::PushConsumer::_unchecked_narrow(obj.in() ACE_ENV_ARG_PARAMETER);
-              ACE_TRY_CHECK;
             }
           this->connect_any_push_consumer(pc.in() ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
         }
       ACE_CATCHANY
         {

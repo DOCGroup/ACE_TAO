@@ -62,7 +62,6 @@ TAO_EC_Null_Filter::filter (const RtecEventComm::EventSet& event,
   // This is a leaf, no need to query any children, and we accept all
   // events, so push it.
   this->push (event, qos_info ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (0);
   return 1;
 }
 
@@ -74,7 +73,6 @@ TAO_EC_Null_Filter::filter_nocopy (RtecEventComm::EventSet& event,
   // This is a leaf, no need to query any children, and we accept all
   // events, so push it.
   this->push_nocopy (event, qos_info ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (0);
   return 1;
 }
 

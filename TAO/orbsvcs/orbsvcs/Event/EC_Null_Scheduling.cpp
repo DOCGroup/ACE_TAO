@@ -34,6 +34,5 @@ TAO_EC_Null_Scheduling::schedule_event (const RtecEventComm::EventSet &event,
       TAO_EC_QOS_Info event_info;
       filter->push_scheduled_event (single_event, event_info
                                     ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
     }
 }

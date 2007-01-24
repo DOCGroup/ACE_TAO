@@ -44,13 +44,13 @@ public:
              ACE_ENV_ARG_DECL);
   // This method connects the consumer to the EC.
 
-  void close (ACE_ENV_SINGLE_ARG_DECL);
+  void close (void);
   // Disconnect from the EC.
 
-  void connect (ACE_ENV_SINGLE_ARG_DECL);
+  void connect (void);
   // Connect the Consumer to the EventChannel.
 
-  void disconnect (ACE_ENV_SINGLE_ARG_DECL);
+  void disconnect (void);
   // Disconnect from the supplier, but do not forget about it or close
   // it.
 
@@ -62,7 +62,7 @@ public:
       ));
   // push the event to the consumer.
 
-  virtual void disconnect_push_consumer (ACE_ENV_SINGLE_ARG_DECL)
+  virtual void disconnect_push_consumer (void)
     ACE_THROW_SPEC ((
         CORBA::SystemException
       ));

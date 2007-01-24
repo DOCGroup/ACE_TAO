@@ -31,10 +31,10 @@ public:
   virtual void receive_data (const Test::Payload &payload
                              ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
-  virtual CORBA::Long get_event_count (ACE_ENV_SINGLE_ARG_DECL)
+  virtual CORBA::Long get_event_count (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual void shutdown (ACE_ENV_SINGLE_ARG_DECL)
+  virtual void shutdown (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
 private:

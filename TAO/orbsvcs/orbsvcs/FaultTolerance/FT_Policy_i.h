@@ -61,7 +61,7 @@ public:
   virtual TAO_FT_Request_Duration_Policy *clone (void) const;
 
   // = The FT::RequestDurationPolicy methods
-  virtual TimeBase::TimeT request_duration_policy_value (ACE_ENV_SINGLE_ARG_DECL)
+  virtual TimeBase::TimeT request_duration_policy_value (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual CORBA::PolicyType policy_type (
@@ -116,7 +116,7 @@ public:
   virtual TAO_FT_Heart_Beat_Policy *clone (void) const;
 
   // = The FT::HeartBeatPolicy methods
-  virtual FT::HeartbeatPolicyValue heartbeat_policy_value (ACE_ENV_SINGLE_ARG_DECL)
+  virtual FT::HeartbeatPolicyValue heartbeat_policy_value (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual CORBA::PolicyType policy_type (

@@ -37,12 +37,9 @@ TAO_FTEC_ProxyPushConsumer::activate (
 {
   result = RtecEventChannelAdmin::ProxyPushConsumer::_nil();
   ACE_TRY {
-    object_id_ = Request_Context_Repository().get_object_id(ACE_ENV_SINGLE_ARG_PARAMETER);
-    ACE_TRY_CHECK;
-    PortableServer::POA_var poa = _default_POA(ACE_ENV_SINGLE_ARG_PARAMETER);
-    ACE_TRY_CHECK;
+    object_id_ = Request_Context_Repository().get_object_id();
+    PortableServer::POA_var poa = _default_POA();
     activate_object_with_id(result, poa.in(), this, id() ACE_ENV_ARG_PARAMETER);
-    ACE_TRY_CHECK;
   }
   ACE_CATCHANY
   {
@@ -71,7 +68,6 @@ void TAO_FTEC_ProxyPushConsumer::connect_push_supplier (
   update.param.connect_supplier_param(param);
 
   Inherited::connect_push_supplier(push_supplier, qos ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
   ACE_TRY {
     FTRTEC::Replication_Service* svc = FTRTEC::Replication_Service::instance();
@@ -80,17 +76,15 @@ void TAO_FTEC_ProxyPushConsumer::connect_push_supplier (
     svc->replicate_request(update,
                            &FtRtecEventChannelAdmin::EventChannelFacade::disconnect_push_consumer
                            ACE_ENV_ARG_PARAMETER);
-    ACE_TRY_CHECK;
   }
   ACE_CATCHALL {
-    this->disconnect_push_consumer(ACE_ENV_SINGLE_ARG_PARAMETER);
+    this->disconnect_push_consumer();
     ACE_RE_THROW;
   }
   ACE_ENDTRY;
-  ACE_CHECK;
 }
 
-void TAO_FTEC_ProxyPushConsumer::disconnect_push_consumer (ACE_ENV_SINGLE_ARG_DECL)
+void TAO_FTEC_ProxyPushConsumer::disconnect_push_consumer (void)
       ACE_THROW_SPEC ((CORBA::SystemException))
 {
   if (Request_Context_Repository().is_executed_request())
@@ -99,14 +93,12 @@ void TAO_FTEC_ProxyPushConsumer::disconnect_push_consumer (ACE_ENV_SINGLE_ARG_DE
   update.object_id = id();
   update.param._d(FtRtecEventChannelAdmin::DISCONNECT_PUSH_CONSUMER);
 
-  Inherited::disconnect_push_consumer(ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+  Inherited::disconnect_push_consumer();
 
   FTRTEC::Replication_Service* svc = FTRTEC::Replication_Service::instance();
   ACE_Read_Guard<FTRTEC::Replication_Service> locker(*svc);
 
   svc->replicate_request(update, 0 ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 }
 
 void TAO_FTEC_ProxyPushConsumer::get_state(FtRtecEventChannelAdmin::ProxyPushConsumerStat& state)

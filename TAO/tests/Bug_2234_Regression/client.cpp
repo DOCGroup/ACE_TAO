@@ -20,13 +20,10 @@ main(
   {
     CORBA::ORB_var
        orb= CORBA::ORB_init( argc, argv, 0 ACE_ENV_ARG_PARAMETER );
-    ACE_TRY_CHECK;
     CORBA::Object_var
        object= orb->string_to_object( "file://server.ior" ACE_ENV_ARG_PARAMETER );
-    ACE_TRY_CHECK;
     Test::Foo_var
        foo= Test::Foo::_narrow( object.in() ACE_ENV_ARG_PARAMETER );
-    ACE_TRY_CHECK;
 
     //-----------------------------------------------------------------------
     CORBA::Long
@@ -36,7 +33,6 @@ main(
        rL= 0;
     ACE_DEBUG( (LM_INFO, ". Long()            ") );
     rL= foo->TestLong( aL, bL, cL ACE_ENV_ARG_PARAMETER);
-    ACE_TRY_CHECK;
     ACE_DEBUG( (LM_INFO, "a is %d, b is %d, c is %d, r is %d:  ", aL, bL, cL, rL) );
     if (static_cast<CORBA::Long>(1) != aL) {
        ACE_DEBUG( (LM_ERROR, "a is wrong\n") ); testFailed= 1;}
@@ -57,7 +53,6 @@ main(
        rS;
     ACE_DEBUG( (LM_INFO, ". String()          ") );
     rS= foo->TestString( aS.in(), bS.out(), cS.inout() ACE_ENV_ARG_PARAMETER);
-    ACE_TRY_CHECK;
     ACE_DEBUG( (LM_INFO, "a is %s, b is %s, c is %s, r is %s:  ", aS.in(), bS.in(), cS.in(), rS.in()) );
     if ((0 != *aS.in()) && (0 != ACE_OS::strcmp(aS.in(), "1"))) {
        ACE_DEBUG( (LM_ERROR, "a is wrong\n") ); testFailed= 1;}
@@ -80,7 +75,6 @@ main(
     cFS->val= 3;
     ACE_DEBUG( (LM_INFO, ". MyNonVarStruct()  ") );
     rFS= foo->TestNonVarStruct( aFS.in(), bFS.out(), cFS.inout() ACE_ENV_ARG_PARAMETER);
-    ACE_TRY_CHECK;
     ACE_DEBUG( (LM_INFO, "a is %d, b is %d, c is %d, r is %d:  ", aFS.in().val, bFS.in().val, cFS.in().val, rFS.in().val) );
     if (static_cast<CORBA::Long>(1) != aFS->val) {
        ACE_DEBUG( (LM_ERROR, "a is wrong\n") ); testFailed= 1;}
@@ -103,7 +97,6 @@ main(
     cVS->val= CORBA::string_dup("3");
     ACE_DEBUG( (LM_INFO, ". MyVarStruct()     ") );
     rVS= foo->TestVarStruct( aVS.in(), bVS.out(), cVS.inout() ACE_ENV_ARG_PARAMETER);
-    ACE_TRY_CHECK;
     ACE_DEBUG( (LM_INFO, "a is %s, b is %s, c is %s, r is %s:  ", aVS->val.in(), bVS->val.in(), cVS->val.in(), rVS->val.in()) );
     if ((0 != *aVS->val) && (0 != ACE_OS::strcmp(aVS->val, "1"))) {
        ACE_DEBUG( (LM_ERROR, "a is wrong\n") ); testFailed= 1;}
@@ -126,7 +119,6 @@ main(
     cFU->valLong( static_cast<CORBA::Long>(3) );
     ACE_DEBUG( (LM_INFO, ". MyNonVarUnion()   ") );
     rFU= foo->TestNonVarUnion( aFU.in(), bFU.out(), cFU.inout() ACE_ENV_ARG_PARAMETER);
-    ACE_TRY_CHECK;
     ACE_DEBUG( (LM_INFO, "a is ") );
     if (static_cast<CORBA::Short>(1) != aFU->_d())
        ACE_DEBUG( (LM_INFO, "?") );
@@ -169,7 +161,6 @@ main(
     cVU->valLong( static_cast<CORBA::Long>(3) );
     ACE_DEBUG( (LM_INFO, ". MyVarUnion()      ") );
     rVU= foo->TestVarUnion( aVU.in(), bVU.out(), cVU.inout() ACE_ENV_ARG_PARAMETER);
-    ACE_TRY_CHECK;
     ACE_DEBUG( (LM_INFO, "a is ") );
     if (static_cast<CORBA::Short>(1) != aVU->_d())
        ACE_DEBUG( (LM_INFO, "?") );
@@ -214,7 +205,6 @@ main(
     cSL[0]= static_cast<CORBA::Long>(3);
     ACE_DEBUG( (LM_INFO, ". MySeqOfLong()     ") );
     rSL= foo->TestSeqOfLong( aSL.in(), bSL.out(), cSL.inout() ACE_ENV_ARG_PARAMETER);
-    ACE_TRY_CHECK;
     ACE_DEBUG( (LM_INFO, "a is ") );
     if (1u != aSL->length())
        ACE_DEBUG( (LM_INFO, "?") );
@@ -257,7 +247,6 @@ main(
     cA<<= static_cast<CORBA::Long>(3);
     ACE_DEBUG( (LM_INFO, ". Any()             ") );
     rA= foo->TestAny( aA.in(), bA.out(), cA.inout() ACE_ENV_ARG_PARAMETER);
-    ACE_TRY_CHECK;
     CORBA::Boolean
        aB,
        bB,
@@ -297,13 +286,10 @@ main(
 
     //-----------------------------------------------------------------------
     foo->ShutdownServer( ACE_ENV_SINGLE_ARG_PARAMETER );
-    ACE_TRY_CHECK;
 
     //-----------------------------------------------------------------------
     orb->shutdown( true ACE_ENV_ARG_PARAMETER );
-    ACE_TRY_CHECK;
     orb->destroy( ACE_ENV_SINGLE_ARG_PARAMETER );
-    ACE_TRY_CHECK;
   }
   ACE_CATCH( CORBA::SystemException, ex )
   {

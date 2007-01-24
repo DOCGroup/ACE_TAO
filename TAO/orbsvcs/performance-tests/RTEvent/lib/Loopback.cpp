@@ -30,11 +30,10 @@ Loopback::Loopback (CORBA::Long experiment_id,
 }
 
 void
-Loopback::disconnect (ACE_ENV_SINGLE_ARG_DECL)
+Loopback::disconnect (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   Auto_Disconnect<Loopback_Pair> disconnect (&this->loopback_pair_);
 
   Implicit_Deactivator deactivator (this ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 }

@@ -29,13 +29,11 @@ main (int argc, char *argv[])
 
       PortableInterceptor::register_orb_initializer (orb_initializer.in ()
                                                      ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       CORBA::ORB_var orb = CORBA::ORB_init (argc,
                                             argv,
                                             "test_orb"
                                             ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       // Create the test policy.
 
@@ -46,11 +44,9 @@ main (int argc, char *argv[])
       CORBA::Policy_var p (orb->create_policy (Test::POLICY_TYPE,
                                                any
                                                ACE_ENV_ARG_PARAMETER));
-      ACE_TRY_CHECK;
 
       const CORBA::PolicyType ptype =
-        p->policy_type (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        p->policy_type ();
 
       // Sanity check.
       if (ptype != Test::POLICY_TYPE)
@@ -58,10 +54,8 @@ main (int argc, char *argv[])
 
       Test::Policy_var policy (Test::Policy::_narrow (p.in ()
                                                       ACE_ENV_ARG_PARAMETER));
-      ACE_TRY_CHECK;
 
-      const CORBA::ULong pval = policy->value (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      const CORBA::ULong pval = policy->value ();
 
       // Sanity check.
       if (val != pval)
@@ -70,12 +64,10 @@ main (int argc, char *argv[])
       CORBA::Object_var obj =
         orb->resolve_initial_references ("RootPOA"
                                          ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       PortableServer::POA_var root_poa =
         PortableServer::POA::_narrow (obj.in ()
                                       ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       if (CORBA::is_nil (root_poa.in ()))
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -83,33 +75,26 @@ main (int argc, char *argv[])
                           -1);
 
       PortableServer::POAManager_var poa_manager =
-        root_poa->the_POAManager (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        root_poa->the_POAManager ();
 
       CORBA::PolicyList policies (1);
       policies.length (1);
 
-      policies[0] = policy->copy (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      policies[0] = policy->copy ();
 
       PortableServer::POA_var poa =
         root_poa->create_POA ("Test POA",
                               poa_manager.in (),
                               policies
                               ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
-      policy->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      policy->destroy ();
 
-      poa_manager->activate (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      poa_manager->activate ();
 
       root_poa->destroy (1, 1 ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
-      orb->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      orb->destroy ();
 
       ACE_DEBUG ((LM_INFO,
                   "\n"

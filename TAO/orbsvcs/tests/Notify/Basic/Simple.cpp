@@ -62,11 +62,9 @@ Simple_Test::init (int argc,
   Notify_Test_Client::init (argc,
                             argv
                             ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
 
   // Create all participents.
-  this->create_EC (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
+  this->create_EC ();
 
   CosNotifyChannelAdmin::AdminID adminid;
 
@@ -74,7 +72,6 @@ Simple_Test::init (int argc,
     this->ec_->new_for_suppliers (this->ifgop_,
                                   adminid
                                   ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
 
   ACE_ASSERT (!CORBA::is_nil (supplier_admin_.in ()));
 
@@ -82,7 +79,6 @@ Simple_Test::init (int argc,
     this->ec_->new_for_consumers (this->ifgop_,
                                   adminid
                                   ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
 
   ACE_ASSERT (!CORBA::is_nil (consumer_admin_.in ()));
 
@@ -91,10 +87,8 @@ Simple_Test::init (int argc,
                   -1);
   this->consumer_->init (root_poa_.in ()
                          ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
   this->consumer_->connect (this->consumer_admin_.in ()
                             ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
 
   Event_AnyPushConsumer* consumer2;
   ACE_NEW_RETURN (consumer2,
@@ -102,21 +96,17 @@ Simple_Test::init (int argc,
                   -1);
   consumer2->init (root_poa_.in ()
                    ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
   consumer2->connect (this->consumer_admin_.in ()
                       ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
 
   ACE_NEW_RETURN (this->supplier_,
                   Event_AnyPushSupplier (this),
                   -1);
   this->supplier_->init (root_poa_.in ()
                          ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
 
   this->supplier_->connect (this->supplier_admin_.in ()
                             ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
 
   consumer_start( 0 );
 
@@ -161,7 +151,7 @@ Simple_Test::parse_args (int argc,
 }
 
 void
-Simple_Test::create_EC (ACE_ENV_SINGLE_ARG_DECL)
+Simple_Test::create_EC (void)
 {
   CosNotifyChannelAdmin::ChannelID id;
 
@@ -169,7 +159,6 @@ Simple_Test::create_EC (ACE_ENV_SINGLE_ARG_DECL)
                                                this->initial_admin_,
                                                id
                                                ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
   ACE_ASSERT (!CORBA::is_nil (ec_.in ()));
 }
@@ -187,13 +176,12 @@ Simple_Test::on_event_received (void)
   if (this->result_count_ == 2 * this->event_count_)
     {
       ACE_DECLARE_NEW_CORBA_ENV;
-      this->end_test (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK;
+      this->end_test ();
     }
 }
 
 void
-Simple_Test::run_test (ACE_ENV_SINGLE_ARG_DECL)
+Simple_Test::run_test (void)
 {
   CORBA::Any data;
 
@@ -203,12 +191,11 @@ Simple_Test::run_test (ACE_ENV_SINGLE_ARG_DECL)
 
       this->supplier_->send_event (data
                                    ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
     }
 }
 
 void
-Simple_Test::end_test (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+Simple_Test::end_test (void)
 {
   consumer_done( 0 );
 }
@@ -218,8 +205,7 @@ Simple_Test::check_results (void)
 {
   // Destroy the channel
   ACE_DECLARE_NEW_CORBA_ENV;
-  this->ec_->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
+  this->ec_->destroy ();
 
   if (this->result_count_ == 2 * this->event_count_)
     {
@@ -252,13 +238,10 @@ main (int argc, char* argv[])
       events.init (argc,
                    argv
                    ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
-      events.run_test (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      events.run_test ();
 
       events.ORB_run( ACE_ENV_SINGLE_ARG_PARAMETER );
-      ACE_TRY_CHECK;
     }
   ACE_CATCH (CORBA::Exception, se)
     {

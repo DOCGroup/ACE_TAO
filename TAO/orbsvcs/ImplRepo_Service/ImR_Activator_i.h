@@ -70,17 +70,17 @@ public:
    const ImplementationRepository::EnvironmentList & env ACE_ENV_ARG_DECL)
    ACE_THROW_SPEC ((CORBA::SystemException, ImplementationRepository::CannotActivate));
 
-  void shutdown(ACE_ENV_SINGLE_ARG_DECL)
+  void shutdown(void)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   /// Initialize the Server state - parsing arguments and waiting.
   int init (Activator_Options& opts ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
   /// Cleans up any state created by init*.
-  int fini (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
+  int fini (void);
 
   /// Runs the orb.
-  int run (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
+  int run (void);
 
   /// Shutdown the orb.
   void shutdown (bool wait_for_completion ACE_ENV_ARG_DECL);

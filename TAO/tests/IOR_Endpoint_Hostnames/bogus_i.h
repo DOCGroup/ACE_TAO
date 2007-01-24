@@ -15,7 +15,7 @@ public:
   bogus ();
   virtual ~bogus ();
 
-  virtual void noop (ACE_ENV_SINGLE_ARG_DECL)
+  virtual void noop (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
 };
 

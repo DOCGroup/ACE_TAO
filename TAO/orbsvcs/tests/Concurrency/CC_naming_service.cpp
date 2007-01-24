@@ -30,7 +30,6 @@ CC_naming_service::CC_naming_service (CORBA::ORB_var orb
     factory_ (0)
 {
   this->Init(orb ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
   instance_ = this;
 }
@@ -86,7 +85,6 @@ CC_naming_service::get_obj_from_name (const char *c_name,
           ns_name.length (1);
           ns_name[0].id = CORBA::string_dup (name);
           obj = my_name_client_->resolve (ns_name ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
         }
       else
         {
@@ -95,7 +93,6 @@ CC_naming_service::get_obj_from_name (const char *c_name,
           ns_name[0].id = CORBA::string_dup (c_name);
           ns_name[1].id = CORBA::string_dup (name);
           obj = my_name_client_->resolve (ns_name ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
         }
       if (CORBA::is_nil (obj.in ()) )
         ACE_DEBUG((LM_DEBUG,
@@ -127,7 +124,6 @@ CC_naming_service::bind_name (const char *n,
       my_name_client_->bind (ns_name,
                              obj
                              ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
     }
   ACE_CATCHANY
     {
@@ -159,12 +155,10 @@ CC_naming_service::init_naming_service (void)
       CORBA::Object_var factory_obj = get_obj_from_name ("CosConcurrency",
                                                          "LockSetFactory"
                                                          ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       this->factory_ =
         CosConcurrencyControl::LockSetFactory::_narrow
         (factory_obj.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       if (CORBA::is_nil (this->factory_.in ()))
         ACE_ERROR_RETURN ((LM_ERROR,

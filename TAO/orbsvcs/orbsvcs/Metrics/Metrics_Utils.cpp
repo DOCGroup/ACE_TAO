@@ -62,7 +62,6 @@ TAO_Metrics_Utils::set_mission_state (int i, Metrics::QoSLogger_ptr logger)
     {
       logger->send_banner (banner
                            ACE_ENV_ARG_DECL);
-      ACE_TRY_CHECK;
     }
   ACE_CATCHANY
     {
@@ -88,7 +87,6 @@ TAO_Metrics_Utils::get_logger (const char * logger_ior_str,
         {
           CORBA::Object_var obj =
             orb->string_to_object (logger_ior_str);
-          ACE_TRY_CHECK;
 
           if (CORBA::is_nil (obj.in ()))
             {
@@ -104,7 +102,6 @@ TAO_Metrics_Utils::get_logger (const char * logger_ior_str,
           else
             {
               logger = Metrics::QoSLogger::_narrow (obj.in ());
-              ACE_TRY_CHECK;
 
               if (CORBA::is_nil (logger.in ()))
                 {

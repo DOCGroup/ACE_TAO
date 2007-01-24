@@ -19,7 +19,7 @@
 #include "recursive_union.h"
 
 ACE_RCSID (Param_Test,
-           recursive_union, 
+           recursive_union,
            "$Id$")
 
 const CORBA::ULong MAX_DEPTH = 3;
@@ -58,8 +58,7 @@ Test_Recursive_Union::dii_req_invoke (CORBA::Request *req
 
   req->set_return_type (Param_Test::_tc_Recursive_Union);
 
-  req->invoke (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+  req->invoke ();
 
   Param_Test::Recursive_Union *tmp;
   req->return_value () >>= tmp;
@@ -67,13 +66,11 @@ Test_Recursive_Union::dii_req_invoke (CORBA::Request *req
 
   CORBA::NamedValue_ptr o2 =
     req->arguments ()->item (1 ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
   *o2->value () >>= tmp;
   this->inout_ = new Param_Test::Recursive_Union (*tmp);
 
   CORBA::NamedValue_ptr o3 =
     req->arguments ()->item (2 ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
   *o3->value () >>= tmp;
   this->out_ = new Param_Test::Recursive_Union (*tmp);
 }
@@ -131,7 +128,6 @@ Test_Recursive_Union::run_sii_test (Param_Test_ptr objref
                                                  this->inout_.inout (),
                                                  out
                                                  ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       return 0;
     }

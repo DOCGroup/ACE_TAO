@@ -24,7 +24,6 @@ Grid_i::Grid_i (CORBA::Short x,
   ACE_NEW_THROW_EX (array_,
                     CORBA::Long *[y],
                     CORBA::NO_MEMORY ());
-  ACE_CHECK;
 
   // Allocate memory for the matrix.
 
@@ -33,7 +32,6 @@ Grid_i::Grid_i (CORBA::Short x,
       ACE_NEW_THROW_EX (array_[ctr],
                         CORBA::Long[x],
                         CORBA::NO_MEMORY ());
-      ACE_CHECK;
     }
 
 }
@@ -85,14 +83,14 @@ Grid_i::get (CORBA::Short x,
 // Access methods.
 
 CORBA::Short
-Grid_i::width (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+Grid_i::width (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return this->width_;
 }
 
 CORBA::Short
-Grid_i::height (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+Grid_i::height (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return this->height_;
@@ -117,7 +115,7 @@ Grid_i::height (CORBA::Short y
 // Destroy the grid
 
 void
-Grid_i::destroy (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+Grid_i::destroy (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // Delete the array.
@@ -143,7 +141,7 @@ Grid_Factory_i::orb (CORBA::ORB_ptr o)
 // Shutdown.
 
 void
-Grid_Factory_i::shutdown (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+Grid_Factory_i::shutdown (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_DEBUG ((LM_DEBUG,
@@ -194,10 +192,8 @@ Grid_Factory_i::make_grid (CORBA::Short width,
   ACE_NEW_THROW_EX (grid_ptr,
                     Grid_i (width, height ACE_ENV_ARG_PARAMETER),
                     CORBA::NO_MEMORY ());
-  ACE_CHECK_RETURN (Grid::_nil ());
 
   // Register the Grid pointer.
-  Grid_ptr gptr = grid_ptr->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (0);
+  Grid_ptr gptr = grid_ptr->_this ();
   return gptr;
 }

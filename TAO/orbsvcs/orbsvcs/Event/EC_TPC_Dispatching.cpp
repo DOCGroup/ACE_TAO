@@ -199,7 +199,6 @@ TAO_EC_TPC_Dispatching::push_nocopy (TAO_EC_ProxyPushSupplier* proxy,
   else
     {
       dtask->push (proxy, consumer, event ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
     }
 }
 

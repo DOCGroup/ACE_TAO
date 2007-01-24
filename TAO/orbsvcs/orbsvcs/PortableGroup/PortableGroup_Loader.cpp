@@ -38,12 +38,10 @@ TAO_PortableGroup_Loader::init (int /*argc*/,
                             TAO::VMCID,
                             ENOMEM),
                           CORBA::COMPLETED_NO));
-      ACE_TRY_CHECK;
       orb_initializer = temp_orb_initializer;
 
       PortableInterceptor::register_orb_initializer (orb_initializer.in ()
                                                      ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
     }
   ACE_CATCHANY
     {

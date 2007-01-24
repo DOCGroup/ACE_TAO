@@ -43,20 +43,17 @@ Client_Task::svc (void)
             {
               this->receiver_->sendc_next_prime (this->handler_var_.in ()
                                                  ACE_ENV_ARG_PARAMETER);
-              ACE_TRY_CHECK;
             }
 
           CORBA::Short repl = 0;
           while (repl != 25)
             {
               CORBA::Boolean pending =
-                this->orb_->work_pending (ACE_ENV_SINGLE_ARG_PARAMETER);
-              ACE_TRY_CHECK;
+                this->orb_->work_pending ();
 
               if (pending)
                 {
-                  this->orb_->perform_work (ACE_ENV_SINGLE_ARG_PARAMETER);
-                  ACE_TRY_CHECK;
+                  this->orb_->perform_work ();
 
                   ++repl;
                 }

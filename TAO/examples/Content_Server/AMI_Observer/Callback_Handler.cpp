@@ -28,13 +28,12 @@ Callback_Handler::~Callback_Handler (void)
 }
 
 void
-Callback_Handler::next_chunk (ACE_ENV_SINGLE_ARG_DECL)
+Callback_Handler::next_chunk (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   if (this->last_chunk_ == 1)
     {
-      this->deactivate (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK;
+      this->deactivate ();
 
       return;
     }
@@ -81,7 +80,6 @@ Callback_Handler::next_chunk (ACE_ENV_SINGLE_ARG_DECL)
                                      this->chunk_.in (),
                                      this->last_chunk_
                                      ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 }
 
 void
@@ -95,11 +93,9 @@ Callback_Handler::next_chunk_excep
   ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY
     {
-      this->deactivate (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      this->deactivate ();
 
-      excep_holder->raise_exception (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      excep_holder->raise_exception ();
     }
   ACE_CATCHANY
     {
@@ -111,27 +107,24 @@ Callback_Handler::next_chunk_excep
 }
 
 void
-Callback_Handler::run (ACE_ENV_SINGLE_ARG_DECL)
+Callback_Handler::run (void)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Web_Server::Error_Result))
 {
   // Open the file to be downloaded
-  this->open_file (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+  this->open_file ();
 
   // Activate this Reply Handler.
-  this->ami_handler_ = this->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+  this->ami_handler_ = this->_this ();
 
   // Begin the asynchronous invocation.  Note that the AMI
   // "sendc_next_chunk()" call is done within the following call,
   // since data must first be read into the Chunk.
-  this->next_chunk (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+  this->next_chunk ();
 }
 
 void
-Callback_Handler::open_file (ACE_ENV_SINGLE_ARG_DECL)
+Callback_Handler::open_file (void)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Web_Server::Error_Result))
 {
@@ -149,23 +142,20 @@ Callback_Handler::open_file (ACE_ENV_SINGLE_ARG_DECL)
 }
 
 void
-Callback_Handler::deactivate (ACE_ENV_SINGLE_ARG_DECL)
+Callback_Handler::deactivate (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // Close the file that was sent to the client.
   (void) this->file_io_.close ();
 
   // Get the POA used when activating the Reply Handler object.
-  PortableServer::POA_var poa = this->_default_POA (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+  PortableServer::POA_var poa = this->_default_POA ();
 
   // Get the object ID associated with this servant.
   PortableServer::ObjectId_var oid =
     poa->servant_to_id (this
                         ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
   // Now deactivate the AMI_CallbackHandler object.
   poa->deactivate_object (oid.in () ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 }

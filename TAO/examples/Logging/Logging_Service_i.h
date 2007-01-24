@@ -61,7 +61,7 @@ public:
             ACE_ENV_ARG_DECL);
   // Initialize the Logger_Server state - parsing arguments and ...
 
-  int run (ACE_ENV_SINGLE_ARG_DECL);
+  int run (void);
   // Run the ORB.
 
   Logger_ptr make_logger (const char *name
@@ -73,7 +73,7 @@ private:
   int parse_args (void);
   // Parses the commandline arguments.
 
-  int init_naming_service (ACE_ENV_SINGLE_ARG_DECL);
+  int init_naming_service (void);
   // Initialises the name server and registers logger_factory with the
   // name server.
 

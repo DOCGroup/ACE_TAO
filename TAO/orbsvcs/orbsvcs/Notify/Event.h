@@ -88,7 +88,7 @@ public:
   virtual void push_no_filtering (Event_Forwarder::ProxyPushSupplier_ptr forwarder ACE_ENV_ARG_DECL) const = 0;
 
   /// Return a pointer to a copy of this event on the heap
-  TAO_Notify_Event* queueable_copy (ACE_ENV_SINGLE_ARG_DECL) const;
+  TAO_Notify_Event* queueable_copy (void) const;
 
   /// marshal this event into a CDR buffer (for persistence)
   virtual void marshal (TAO_OutputCDR& cdr) const = 0;
@@ -120,7 +120,7 @@ protected:
 
 private:
   /// Return a pointer to a copy of this event on the heap
-  virtual TAO_Notify_Event* copy (ACE_ENV_SINGLE_ARG_DECL) const = 0;
+  virtual TAO_Notify_Event* copy (void) const = 0;
 
   virtual void release (void);
 

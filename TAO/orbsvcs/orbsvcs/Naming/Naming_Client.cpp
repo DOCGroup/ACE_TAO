@@ -32,7 +32,6 @@ TAO_Naming_Client::init (CORBA::ORB_ptr orb,
     {
       CORBA::Object_var naming_obj =
         orb->resolve_initial_references ("NameService", timeout ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       if (CORBA::is_nil (naming_obj.in ()))
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -41,7 +40,6 @@ TAO_Naming_Client::init (CORBA::ORB_ptr orb,
       this->naming_context_ =
         CosNaming::NamingContext::_narrow (naming_obj.in ()
                                            ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
     }
   ACE_CATCHANY
     {
@@ -49,7 +47,6 @@ TAO_Naming_Client::init (CORBA::ORB_ptr orb,
       return -1;
     }
   ACE_ENDTRY;
-  ACE_CHECK_RETURN (-1);
 
   return 0;
 }

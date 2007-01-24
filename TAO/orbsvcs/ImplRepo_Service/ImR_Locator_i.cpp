@@ -34,11 +34,9 @@ createPersistentPOA (PortableServer::POA_ptr root_poa, const char* poa_name ACE_
 
   PortableServer::LifespanPolicy_var life =
     root_poa->create_lifespan_policy (PortableServer::PERSISTENT ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (PortableServer::POA::_nil ());
 
   PortableServer::IdAssignmentPolicy_var assign =
     root_poa->create_id_assignment_policy (PortableServer::USER_ID ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (PortableServer::POA::_nil ());
 
   CORBA::PolicyList pols;
   pols.length (2);
@@ -48,12 +46,9 @@ createPersistentPOA (PortableServer::POA_ptr root_poa, const char* poa_name ACE_
   PortableServer::POAManager_var mgr = root_poa->the_POAManager ();
   PortableServer::POA_var poa =
     root_poa->create_POA (poa_name, mgr.in (), pols ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (PortableServer::POA::_nil ());
 
-  life->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (PortableServer::POA::_nil ());
-  assign->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (PortableServer::POA::_nil ());
+  life->destroy ();
+  assign->destroy ();
 
   return poa._retn ();
 }
@@ -93,9 +88,7 @@ ImR_Locator_i::init_with_orb (CORBA::ORB_ptr orb, Options& opts ACE_ENV_ARG_DECL
 
   CORBA::Object_var obj =
     this->orb_->resolve_initial_references ("RootPOA" ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
   this->root_poa_ = PortableServer::POA::_narrow (obj.in () ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
   ACE_ASSERT (! CORBA::is_nil (this->root_poa_.in ()));
 
   this->forwarder_.init (orb ACE_ENV_ARG_PARAMETER);
@@ -104,48 +97,35 @@ ImR_Locator_i::init_with_orb (CORBA::ORB_ptr orb, Options& opts ACE_ENV_ARG_DECL
   // Register the Adapter_Activator reference to be the RootPOA's
   // Adapter Activator.
   root_poa_->the_activator (&this->adapter_ ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
 
   // Use a persistent POA so that any IOR
   this->imr_poa_ = createPersistentPOA (this->root_poa_.in (),
                                         "ImplRepo_Service" ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
   ACE_ASSERT (! CORBA::is_nil (this->imr_poa_.in ()));
 
   waiter_svt_.debug (debug_ > 1);
   PortableServer::ObjectId_var id = PortableServer::string_to_ObjectId ("ImR_AsyncStartupWaiter");
   this->imr_poa_->activate_object_with_id (id.in (), &waiter_svt_ ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
   obj = this->imr_poa_->id_to_reference (id.in () ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
   if (startup_timeout_ > ACE_Time_Value::zero)
     {
       obj = set_timeout_policy (obj.in (), startup_timeout_);
     }
   waiter_ = ImplementationRepository::AsyncStartupWaiter::_narrow (obj.in () ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
 
   id = PortableServer::string_to_ObjectId ("ImplRepo_Service");
   this->imr_poa_->activate_object_with_id (id.in (), this ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
 
   obj = this->imr_poa_->id_to_reference (id.in () ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
   CORBA::String_var ior = this->orb_->object_to_string (obj.in () ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
 
   // Register the ImR for use with INS
   obj = orb->resolve_initial_references ("IORTable" ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
   IORTable::Table_var ior_table = IORTable::Table::_narrow (obj.in () ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
   ACE_ASSERT (! CORBA::is_nil (ior_table.in ()));
   ior_table->bind ("ImplRepoService", ior.in () ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
   ior_table->bind ("ImR", ior.in () ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
   ior_table->set_locator (this->ins_locator_.in () ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
 
   // Set up multicast support (if enabled)
   if (opts.multicast ())
@@ -168,14 +148,10 @@ ImR_Locator_i::init_with_orb (CORBA::ORB_ptr orb, Options& opts ACE_ENV_ARG_DECL
 
   // Activate the two poa managers
   PortableServer::POAManager_var poaman =
-    this->root_poa_->the_POAManager (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
-  poaman->activate (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
-  poaman = this->imr_poa_->the_POAManager (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
-  poaman->activate (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
+    this->root_poa_->the_POAManager ();
+  poaman->activate ();
+  poaman = this->imr_poa_->the_POAManager ();
+  poaman->activate ();
 
   // We write the ior file last so that the tests can know we are ready.
   if (opts.ior_filename ().length () > 0)
@@ -203,14 +179,12 @@ ImR_Locator_i::init (Options& opts ACE_ENV_ARG_DECL)
   char** argv = av.argv ();
 
   CORBA::ORB_var orb = CORBA::ORB_init (argc, argv, "TAO_ImR_Locator" ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
   int err = this->init_with_orb (orb.in (), opts ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
   return err;
 }
 
 int
-ImR_Locator_i::run (ACE_ENV_SINGLE_ARG_DECL)
+ImR_Locator_i::run (void)
 {
   if (debug_ > 0)
     {
@@ -235,11 +209,9 @@ ImR_Locator_i::run (ACE_ENV_SINGLE_ARG_DECL)
                   debug (),
                   read_only_ ? "True" : "False"));
     }
-  this->auto_start_servers (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
+  this->auto_start_servers ();
 
-  this->orb_->run (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
+  this->orb_->run ();
   return 0;
 }
 
@@ -272,8 +244,7 @@ ImR_Locator_i::shutdown (CORBA::Boolean activators, CORBA::Boolean servers ACE_E
         {
           ACE_TRY
             {
-              acts[i]->shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
-              ACE_TRY_CHECK;
+              acts[i]->shutdown ();
               acts[i] = ImplementationRepository::Activator::_nil ();
             }
           ACE_CATCHANY
@@ -285,7 +256,6 @@ ImR_Locator_i::shutdown (CORBA::Boolean activators, CORBA::Boolean servers ACE_E
                 }
             }
           ACE_ENDTRY;
-          ACE_CHECK;
         }
       if (debug_ > 0 && shutdown_errs > 0)
         {
@@ -304,7 +274,7 @@ ImR_Locator_i::shutdown (bool wait_for_completion ACE_ENV_ARG_DECL)
 }
 
 int
-ImR_Locator_i::fini (ACE_ENV_SINGLE_ARG_DECL)
+ImR_Locator_i::fini (void)
 {
   ACE_TRY
     {
@@ -314,10 +284,8 @@ ImR_Locator_i::fini (ACE_ENV_SINGLE_ARG_DECL)
       teardown_multicast ();
 
       this->root_poa_->destroy (1, 1 ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
-      this->orb_->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      this->orb_->destroy ();
 
       if (debug_ > 0)
         ACE_DEBUG ((LM_DEBUG, "ImR: Shut down successfully.\n"));
@@ -328,7 +296,6 @@ ImR_Locator_i::fini (ACE_ENV_SINGLE_ARG_DECL)
       ACE_RE_THROW;
     }
   ACE_ENDTRY;
-  ACE_CHECK_RETURN (-1);
   return 0;
 }
 
@@ -411,11 +378,9 @@ ImR_Locator_i::register_activator (const char* aname,
   // Before we can register the activator, we need to ensure that any existing
   // registration is purged.
   this->unregister_activator_i (aname);
-  ACE_CHECK_RETURN (0);
 
   CORBA::String_var ior =
     this->orb_->object_to_string (activator ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
 
   CORBA::Long token = ACE_OS::gettimeofday ().msec ();
 
@@ -447,7 +412,6 @@ ImR_Locator_i::unregister_activator (const char* aname,
         }
 
       this->unregister_activator_i (aname);
-      ACE_CHECK;
 
       if (this->debug_ > 0)
         ACE_DEBUG ((LM_DEBUG, "ImR: Activator %s unregistered.\n", aname));
@@ -593,7 +557,6 @@ ACE_THROW_SPEC ((CORBA::SystemException,
       ImplementationRepository::StartupInfo_var si =
         start_server (info, manual_start, info.waiting_clients
                       ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK_RETURN (0);
     }
 }
 
@@ -609,7 +572,6 @@ ACE_THROW_SPEC ((CORBA::SystemException,
       ImplementationRepository::StartupInfo* psi =
         start_server (info, manual_start, shared_info->waiting_clients
                       ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK_RETURN (0);
 
       if (psi != 0)
         {
@@ -695,7 +657,6 @@ ACE_THROW_SPEC ((CORBA::SystemException,
                                           info.dir.c_str (),
                                           info.env_vars
                                           ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
         }
 
       if (info.partial_ior.length () == 0)
@@ -707,7 +668,6 @@ ACE_THROW_SPEC ((CORBA::SystemException,
 
           ImplementationRepository::StartupInfo_var si =
             waiter_->wait_for_startup (info.name.c_str () ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
 
           --waiting_clients;
           info.starting = false;
@@ -776,13 +736,10 @@ ImR_Locator_i::set_timeout_policy (CORBA::Object_ptr obj, const ACE_Time_Value& 
       CORBA::PolicyList policies (1);
       policies.length (1);
       policies[0] = orb_->create_policy (Messaging::RELATIVE_RT_TIMEOUT_POLICY_TYPE, tmp ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       ret = obj->_set_policy_overrides (policies, CORBA::ADD_OVERRIDE ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
-      policies[0]->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      policies[0]->destroy ();
 
       if (CORBA::is_nil (ret.in ()))
         {
@@ -915,13 +872,11 @@ ACE_THROW_SPEC ((CORBA::SystemException, ImplementationRepository::NotFound))
             ACE_DEBUG ((LM_DEBUG, "ImR: Removing Server <%s>...\n", name));
 
           PortableServer::POA_var poa = findPOA (name);
-          ACE_CHECK;
           if (! CORBA::is_nil (poa.in ()))
             {
               bool etherealize = true;
               bool wait = false;
               poa->destroy (etherealize, wait ACE_ENV_ARG_PARAMETER);
-              ACE_CHECK;
             }
           if (this->debug_ > 0)
             ACE_DEBUG ((LM_DEBUG, "ImR: Removed Server <%s>.\n", name));
@@ -942,7 +897,6 @@ ImR_Locator_i::findPOA (const char* name)
     {
       bool activate_it = false;
       return root_poa_->find_POA (name, activate_it ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
     }
   ACE_CATCHANY
     {// Ignore
@@ -982,9 +936,7 @@ ACE_THROW_SPEC ((CORBA::SystemException, ImplementationRepository::NotFound))
       CORBA::Object_var obj = set_timeout_policy (info->server.in (), DEFAULT_SHUTDOWN_TIMEOUT);
       ImplementationRepository::ServerObject_var server =
         ImplementationRepository::ServerObject::_unchecked_narrow (obj.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
-      server->shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      server->shutdown ();
     }
   ACE_CATCH (CORBA::TIMEOUT, ex)
     {
@@ -1034,7 +986,6 @@ ImR_Locator_i::server_is_running (const char* name,
     ACE_DEBUG ((LM_DEBUG, "ImR: Server %s is running at %s.\n", name, partial_ior));
 
   CORBA::String_var ior = orb_->object_to_string (server ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
   if (this->debug_ > 1)
     ACE_DEBUG ((LM_DEBUG, "ImR: Server %s callback at %s.\n", name, ior.in ()));
@@ -1077,7 +1028,7 @@ ImR_Locator_i::server_is_running (const char* name,
         {
           waiter_svt_.unblock_one (name, partial_ior, ior.in (), true);
         }
-        else if (this->debug_ > 1) 
+        else if (this->debug_ > 1)
         {
           ACE_DEBUG ((LM_DEBUG,
                       ACE_TEXT ("ImR - Ignoring server_is_running due to no ")
@@ -1125,7 +1076,7 @@ ImR_Locator_i::find (const char* server,
   Server_Info_Ptr info = this->repository_.get_server (server);
   if (! info.null ())
     {
-      imr_info = info->createImRServerInfo (ACE_ENV_SINGLE_ARG_PARAMETER);
+      imr_info = info->createImRServerInfo ();
 
       if (this->debug_ > 1)
         ACE_DEBUG ((LM_DEBUG, "ImR: Found server %s.\n", server));
@@ -1176,7 +1127,7 @@ ImR_Locator_i::list (CORBA::ULong how_many,
 
       Server_Info_Ptr info = entry->int_id_;
 
-      ImplementationRepository::ServerInformation_var imr_info = info->createImRServerInfo (ACE_ENV_SINGLE_ARG_PARAMETER);
+      ImplementationRepository::ServerInformation_var imr_info = info->createImRServerInfo ();
       server_list[i] = *imr_info;
     }
 
@@ -1197,19 +1148,15 @@ ImR_Locator_i::list (CORBA::ULong how_many,
         {
           PortableServer::ObjectId_var id =
             this->imr_poa_->activate_object (imr_iter ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
           CORBA::Object_var obj = this->imr_poa_->id_to_reference (id.in () ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
           server_iterator = ImplementationRepository::
             ServerInformationIterator::_unchecked_narrow (obj.in () ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
         }
       ACE_CATCHANY
         {
           ACE_RE_THROW;
         }
       ACE_ENDTRY;
-      ACE_CHECK;
     }
 }
 
@@ -1235,7 +1182,6 @@ ImR_Locator_i::connect_activator (Activator_Info& info)
       CORBA::Object_var obj =
         this->orb_->string_to_object (info.ior.c_str ()
                                       ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       if (CORBA::is_nil (obj.in ()))
         {
@@ -1250,7 +1196,6 @@ ImR_Locator_i::connect_activator (Activator_Info& info)
 
       info.activator =
         ImplementationRepository::Activator::_unchecked_narrow (obj.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       if (CORBA::is_nil (info.activator.in ()))
         {
@@ -1269,7 +1214,7 @@ ImR_Locator_i::connect_activator (Activator_Info& info)
 }
 
 void
-ImR_Locator_i::auto_start_servers (ACE_ENV_SINGLE_ARG_DECL)
+ImR_Locator_i::auto_start_servers (void)
 {
   if (this->repository_.servers ().current_size () == 0)
     return;
@@ -1291,7 +1236,6 @@ ImR_Locator_i::auto_start_servers (ACE_ENV_SINGLE_ARG_DECL)
               && info->cmdline.length () > 0)
             {
               this->activate_server_i (*info, true ACE_ENV_ARG_PARAMETER);
-              ACE_TRY_CHECK;
             }
         }
       ACE_CATCHANY
@@ -1306,7 +1250,6 @@ ImR_Locator_i::auto_start_servers (ACE_ENV_SINGLE_ARG_DECL)
           // Ignore exceptions
         }
       ACE_ENDTRY;
-      ACE_CHECK;
     }
 }
 
@@ -1327,7 +1270,6 @@ ImR_Locator_i::connect_server (Server_Info& info)
   ACE_TRY_NEW_ENV
     {
       CORBA::Object_var obj = orb_->string_to_object (info.ior.c_str () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       if (CORBA::is_nil (obj.in ()))
         {
@@ -1339,7 +1281,6 @@ ImR_Locator_i::connect_server (Server_Info& info)
 
       info.server =
         ImplementationRepository::ServerObject::_unchecked_narrow (obj.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       if (CORBA::is_nil (info.server.in ()))
         {
@@ -1471,8 +1412,7 @@ ImR_Locator_i::is_alive_i (Server_Info& info)
       ImplementationRepository::ServerObject_var server = info.server;
 
       // This will timeout if it takes too long
-      server->ping (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      server->ping ();
 
       if (debug_ > 1)
         {

@@ -20,16 +20,13 @@ main (int argc, char *argv[])
     {
       CORBA::ORB_var orb =
         CORBA::ORB_init (argc, argv, "" ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       Client client (orb.in (), app);
 
       client.parse_args (argc, argv ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       // Creates the Qt widgets
-      client.create_widgets (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      client.create_widgets ();
 
       // This may look a bit suspect, but Qt wants the manager widget
       // as the toplevel widget unlike Xt for display purposes.
@@ -89,11 +86,9 @@ Client::parse_args (int argc,
 
   CORBA::Object_var object =
     this->orb_->string_to_object (ior ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
   this->server_ =
     LCD_Display::_narrow (object.in () ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
   if (CORBA::is_nil(this->server_.in ()))
     {

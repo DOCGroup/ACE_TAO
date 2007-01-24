@@ -28,8 +28,7 @@ Client_ORBInitializer::post_init (
 {
 
   CORBA::String_var orb_id =
-    info->orb_id (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+    info->orb_id ();
 
   PortableInterceptor::ClientRequestInterceptor_ptr interceptor =
     PortableInterceptor::ClientRequestInterceptor::_nil ();
@@ -38,13 +37,11 @@ Client_ORBInitializer::post_init (
   ACE_NEW_THROW_EX (interceptor,
                     Echo_Client_Request_Interceptor (orb_id.in ()),
                     CORBA::NO_MEMORY ());
-  ACE_CHECK;
 
   PortableInterceptor::ClientRequestInterceptor_var
     client_interceptor = interceptor;
 
   info->add_client_request_interceptor (client_interceptor.in ()
                                         ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 }
 

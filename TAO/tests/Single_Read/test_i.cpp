@@ -28,7 +28,7 @@ test_i::method (CORBA::ULong request_number,
 }
 
 void
-test_i::shutdown (ACE_ENV_SINGLE_ARG_DECL)
+test_i::shutdown (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_DEBUG ((LM_DEBUG,

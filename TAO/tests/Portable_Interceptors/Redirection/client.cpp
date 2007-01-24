@@ -63,25 +63,21 @@ main (int argc, char *argv[])
 
       PortableInterceptor::register_orb_initializer (orb_initializer.in ()
                                                      ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 #endif  /* TAO_HAS_INTERCEPTORS == 1 */
 
       CORBA::ORB_var orb = CORBA::ORB_init (argc,
                                             argv,
                                             "Client ORB"
                                             ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       if (::parse_args (argc, argv) != 0)
         return -1;
 
       CORBA::Object_var object =
         orb->string_to_object (ior1 ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       RedirectionTest::test_var server =
         RedirectionTest::test::_narrow (object.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       if (CORBA::is_nil (server.in ()))
         {
@@ -98,8 +94,7 @@ main (int argc, char *argv[])
                       "CLIENT: Issuing request %d.\n",
                       i));
 
-          number = server->number (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+          number = server->number ();
 
           ACE_DEBUG ((LM_INFO,
                       "CLIENT: Request %d handled by object %d.\n",
@@ -107,8 +102,7 @@ main (int argc, char *argv[])
                       number));
         }
 
-      server->shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      server->shutdown ();
     }
   ACE_CATCHANY
     {

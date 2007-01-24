@@ -93,18 +93,18 @@ public:
 
 protected:
   /// Bind to the naming service
-  virtual int bind_to_naming_service (ACE_ENV_SINGLE_ARG_DECL);
+  virtual int bind_to_naming_service (void);
 
   /**
    * Get the object reference for the newly created stream
    * endpoint (which will be in the child process)
    * Subclasses will define the functionality for this
    */
-  virtual int get_stream_endpoint (ACE_ENV_SINGLE_ARG_DECL) = 0;
+  virtual int get_stream_endpoint (void) = 0;
 
   /// Get the Vdev object reference for the newly created
   /// endpoint
-  virtual int get_vdev (ACE_ENV_SINGLE_ARG_DECL);
+  virtual int get_vdev (void);
 
   /// Naming context
   CosNaming::NamingContext_var naming_context_;
@@ -144,7 +144,7 @@ protected:
                         ACE_ENV_ARG_DECL);
 
   /// Gets the "A" type stream endpoint from the child process
-  virtual int get_stream_endpoint (ACE_ENV_SINGLE_ARG_DECL);
+  virtual int get_stream_endpoint (void);
 
 };
 
@@ -173,7 +173,7 @@ protected:
 
 
   /// Gets the object reference of the "B" type streamendpoint.
-  virtual int get_stream_endpoint (ACE_ENV_SINGLE_ARG_DECL);
+  virtual int get_stream_endpoint (void);
 
 };
 

@@ -47,11 +47,9 @@ void UpdateableHandler::dispatch(UpdateableHandler::Handler handler ACE_ENV_ARG_
     resolve_init<PortableServer::Current>(strategy_->orb(),
     "POACurrent"
     ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
   PortableServer::ObjectId_var object_id =
-    current->get_object_id(ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+    current->get_object_id();
 
   Update_Manager* mgr;
   int id;
@@ -87,7 +85,6 @@ void UpdateableHandler::set_update_excep (
   ACE_DEBUG((LM_DEBUG, "Received Exception from"));
   ACE_TRY {
     excep_holder->raise_exception();
-    ACE_TRY_CHECK;
   }
   ACE_CATCHANY {
     ACE_PRINT_EXCEPTION(ACE_ANY_EXCEPTION, "A corba exception\n");

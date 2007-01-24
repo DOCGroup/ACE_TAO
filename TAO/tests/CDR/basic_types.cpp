@@ -220,7 +220,6 @@ main (int argc, char *argv[])
                                             argv,
                                             0
                                             ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       ACE_Get_Opt get_opt (argc, argv, "dn:l:");
       int opt;

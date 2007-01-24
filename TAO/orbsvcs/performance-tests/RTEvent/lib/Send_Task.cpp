@@ -115,7 +115,6 @@ Send_Task::svc (void)
         {
           // push one event...
           this->supplier_->push (event ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
         }
       ACE_CATCHANY
         {

@@ -45,7 +45,7 @@ namespace FTRTEC
     /**
      * Used for checking if the incoming replication message is out of sequence.
      */
-    void check_validity(ACE_ENV_SINGLE_ARG_DECL);
+    void check_validity(void);
 
     typedef void (FtRtecEventChannelAdmin::EventChannelFacade::*RollbackOperation)
       (const FtRtecEventChannelAdmin::ObjectId& ACE_ENV_ARG_DECL);

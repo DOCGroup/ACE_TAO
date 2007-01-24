@@ -28,11 +28,9 @@ Service::run_test (Test::Callback_ptr callback
 {
   int exceptions =
     this->call_are_you_there (callback ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
   exceptions +=
     this->call_test_oneway (callback ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
   if (exceptions != 0)
     {
@@ -45,8 +43,7 @@ Service::run_test (Test::Callback_ptr callback
 
   ACE_TRY
     {
-      callback->shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      callback->shutdown ();
     }
   ACE_CATCHANY
     {
@@ -75,7 +72,6 @@ Service::call_are_you_there (Test::Callback_ptr callback
       ACE_TRY
         {
           (void) callback->are_you_there (out_str ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
         }
       ACE_CATCHANY
         {
@@ -101,8 +97,7 @@ Service::call_test_oneway (Test::Callback_ptr callback
     {
       ACE_TRY
         {
-          (void) callback->test_oneway (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+          (void) callback->test_oneway ();
         }
       ACE_CATCHANY
         {

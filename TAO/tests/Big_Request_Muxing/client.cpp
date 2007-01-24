@@ -49,18 +49,15 @@ main (int argc, char *argv[])
   {
     CORBA::ORB_var orb =
       CORBA::ORB_init (argc, argv, "" ACE_ENV_ARG_PARAMETER);
-    ACE_TRY_CHECK;
 
     if (parse_args (argc, argv) != 0)
       return 1;
 
     CORBA::Object_var tmp =
       orb->string_to_object(ior ACE_ENV_ARG_PARAMETER);
-    ACE_TRY_CHECK;
 
     Test::Payload_Receiver_var payload_receiver =
       Test::Payload_Receiver::_narrow(tmp.in () ACE_ENV_ARG_PARAMETER);
-    ACE_TRY_CHECK;
 
     if (CORBA::is_nil (payload_receiver.in ()))
     {
@@ -111,7 +108,6 @@ main (int argc, char *argv[])
     {
       ACE_Time_Value tv (0, 100 * 1000);
       orb->run (tv ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
       if (task0.done() && task1.done() && task2.done())
         break;
     }
@@ -123,11 +119,9 @@ main (int argc, char *argv[])
     {
       ACE_Time_Value tv(0, 100 * 1000);
       orb->run(tv ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
     }
 
-    orb->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-    ACE_TRY_CHECK;
+    orb->destroy ();
   }
   ACE_CATCHANY
   {

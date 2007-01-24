@@ -19,8 +19,8 @@
 #include "helper.h"
 #include "bd_string.h"
 
-ACE_RCSID (Param_Test, 
-           bd_string, 
+ACE_RCSID (Param_Test,
+           bd_string,
            "$Id$")
 
 // ************************************************************************
@@ -69,8 +69,7 @@ Test_Bounded_String::dii_req_invoke (CORBA::Request *req
 
   req->set_return_type (Param_Test::_tc_short_string);
 
-  req->invoke (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+  req->invoke ();
 
   char *tmp;
   req->return_value () >>= CORBA::Any::to_string (tmp, 128);
@@ -78,13 +77,11 @@ Test_Bounded_String::dii_req_invoke (CORBA::Request *req
 
   CORBA::NamedValue_ptr arg2 =
     req->arguments ()->item (1 ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
   *arg2->value () >>= CORBA::Any::to_string (tmp, 128);
   this->inout_ = CORBA::string_dup (tmp);
 
   CORBA::NamedValue_ptr arg3 =
     req->arguments ()->item (2 ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
   *arg3->value () >>= CORBA::Any::to_string (tmp, 128);
   this->out_ = CORBA::string_dup (tmp);
 }
@@ -137,7 +134,6 @@ Test_Bounded_String::run_sii_test (Param_Test_ptr objref
                                                 this->inout_,
                                                 str_out
                                                 ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       return 0;
     }

@@ -60,29 +60,29 @@ public:
   void connect (Admin_Traits_PTR admin_ptr ACE_ENV_ARG_DECL);
 
   /// Connect using options parsed and set initial QoS.
-  virtual void connect (ACE_ENV_SINGLE_ARG_DECL);
+  virtual void connect (void);
 
   // Disconnect from the Peer.
-  void disconnect (ACE_ENV_SINGLE_ARG_DECL);
+  void disconnect (void);
 
   /// Set Qos
   void set_qos (CosNotification::QoSProperties& qos ACE_ENV_ARG_DECL);
 
   /// Dump status
-  void status (ACE_ENV_SINGLE_ARG_DECL);
+  void status (void);
 
   // Accessor for <proxy_>.
   Proxy_Traits_PTR get_proxy (void);
 
   /// Deactivate the object.
-  void deactivate (ACE_ENV_SINGLE_ARG_DECL);
+  void deactivate (void);
 
   // = ServantBase operations
-  virtual PortableServer::POA_ptr _default_POA (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
+  virtual PortableServer::POA_ptr _default_POA (void);
 
 protected:
   /// Activate this object in the default POA.
-  virtual Peer_Traits_PTR activate (ACE_ENV_SINGLE_ARG_DECL);
+  virtual Peer_Traits_PTR activate (void);
 
   ///= To be implemented by specializations.
 
@@ -98,7 +98,7 @@ protected:
                                          ACE_ENV_ARG_DECL) = 0;
 
   /// Disconnect from proxy.
-  virtual void disconnect_from_proxy (ACE_ENV_SINGLE_ARG_DECL) = 0;
+  virtual void disconnect_from_proxy (void) = 0;
 
   // = Data Members
 

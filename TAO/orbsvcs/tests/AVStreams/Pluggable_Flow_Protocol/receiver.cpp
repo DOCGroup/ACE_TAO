@@ -112,8 +112,7 @@ Receiver::init (int,
     this->mmdevice_;
 
   CORBA::Object_var mmdevice =
-    this->mmdevice_->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
+    this->mmdevice_->_this ();
 
   // Register the mmdevice with the naming service.
   CosNaming::Name name (1);
@@ -132,7 +131,6 @@ Receiver::init (int,
   this->naming_client_->rebind (name,
                                 mmdevice.in ()
                                 ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
 
   return 0;
 }
@@ -179,31 +177,25 @@ main (int argc,
                          argv,
                          0
                          ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       CORBA::Object_var obj
         = orb->resolve_initial_references ("RootPOA"
                                            ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       // Get the POA_var object from Object_var.
       PortableServer::POA_var root_poa =
         PortableServer::POA::_narrow (obj.in ()
                                       ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       PortableServer::POAManager_var mgr
-        = root_poa->the_POAManager (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        = root_poa->the_POAManager ();
 
-      mgr->activate (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      mgr->activate ();
 
       // Initialize the AVStreams components.
       TAO_AV_CORE::instance ()->init (orb.in (),
                                       root_poa.in ()
                                       ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       int result =
         parse_args (argc,
@@ -230,22 +222,19 @@ main (int argc,
         receiver.init (argc,
                        argv
                        ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       if (result != 0)
         return result;
 
       while (!endstream)
         {
-          orb->perform_work (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+          orb->perform_work ();
         }
 
       // Hack for now....
       ACE_OS::sleep (1);
 
-      orb->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      orb->destroy ();
     }
   ACE_CATCHANY
     {
@@ -253,7 +242,6 @@ main (int argc,
       return -1;
     }
   ACE_ENDTRY;
-  ACE_CHECK_RETURN (-1);
 
   ACE_OS::fclose (output_file);
 

@@ -20,14 +20,14 @@ ServerRequestInterceptor::ServerRequestInterceptor (
 }
 
 char *
-ServerRequestInterceptor::name (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+ServerRequestInterceptor::name (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return CORBA::string_dup ("ServerRequestInterceptor");
 }
 
 void
-ServerRequestInterceptor::destroy (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+ServerRequestInterceptor::destroy (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
 }
@@ -40,8 +40,7 @@ ServerRequestInterceptor::receive_request_service_contexts (
                    PortableInterceptor::ForwardRequest))
 {
 
-  CORBA::String_var op = ri->operation (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+  CORBA::String_var op = ri->operation ();
 
   if (ACE_OS::strcmp (op.in (), "invoke_me") != 0)
     return; // Don't mess with PICurrent if not invoking test method.
@@ -56,7 +55,6 @@ ServerRequestInterceptor::receive_request_service_contexts (
       data <<= number;
 
       ri->set_slot (this->slot_id_, data ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       ACE_DEBUG ((LM_DEBUG,
                   "(%P|%t) Inserted number <%d> into RSC.\n",
@@ -75,7 +73,6 @@ ServerRequestInterceptor::receive_request_service_contexts (
       ACE_TRY_THROW (CORBA::INTERNAL ());
     }
   ACE_ENDTRY;
-  ACE_CHECK;
 }
 
 void
@@ -95,14 +92,12 @@ ServerRequestInterceptor::receive_request (
       ri->set_slot (this->slot_id_,
                     new_data
                     ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       // Now retrieve the data from the TSC again.  It should not have
       // changed to the new value
       CORBA::Any_var data2 =
         this->pi_current_->get_slot (this->slot_id_
                                      ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       CORBA::Long number2 = 0;
       if ((data2.in () >>= number2)
@@ -128,7 +123,6 @@ ServerRequestInterceptor::receive_request (
       ACE_TRY_THROW (CORBA::INTERNAL ());
     }
   ACE_ENDTRY;
-  ACE_CHECK;
 
   ACE_DEBUG ((LM_INFO,
               "(%P|%t) Server side RSC/TSC semantics appear "
@@ -143,8 +137,7 @@ ServerRequestInterceptor::send_reply (
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
 
-  CORBA::String_var op = ri->operation (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+  CORBA::String_var op = ri->operation ();
 
   if (ACE_OS::strcmp (op.in (), "invoke_me") != 0)
     return; // Don't mess with PICurrent if not invoking test method.
@@ -158,7 +151,6 @@ ServerRequestInterceptor::send_reply (
       // stored into the RSC by the receive_request_service_contexts()
       // interception point.
       data = ri->get_slot (this->slot_id_ ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       // The original data in the RSC was of type CORBA::Long.  If the
       // following extraction from the CORBA::Any fails, then the
@@ -193,14 +185,12 @@ ServerRequestInterceptor::send_reply (
       this->pi_current_->set_slot (this->slot_id_,
                                    new_data
                                    ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       // Now retrieve the data from the RSC again.  It should not have
       // changed!
       CORBA::Any_var data2 =
         ri->get_slot (this->slot_id_
                       ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       const char *str2 = 0;
       if (!(data2.in () >>= str2)
@@ -226,7 +216,6 @@ ServerRequestInterceptor::send_reply (
       ACE_TRY_THROW (CORBA::INTERNAL ());
     }
   ACE_ENDTRY;
-  ACE_CHECK;
 
   ACE_DEBUG ((LM_INFO,
               "(%P|%t) Server side RSC/TSC semantics appear "

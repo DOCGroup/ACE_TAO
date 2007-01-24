@@ -59,7 +59,6 @@ FactoryDriver::start (int argc, char *argv [])
                               argv,
                               ""
                               ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       if (this->parse_args (argc, argv) == -1)
         return -1;
@@ -72,7 +71,6 @@ FactoryDriver::start (int argc, char *argv [])
       CORBA::Object_var poa_object  =
         orb_->resolve_initial_references("RootPOA"
                                          ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       if (CORBA::is_nil (poa_object.in ()))
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -82,16 +80,13 @@ FactoryDriver::start (int argc, char *argv [])
       root_poa_ =
         PortableServer::POA::_narrow (poa_object.in ()
                                       ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       PortableServer::POAManager_var poa_manager =
-        root_poa_->the_POAManager (ACE_ENV_SINGLE_ARG_PARAMETER);
+        root_poa_->the_POAManager ();
 
-      ACE_TRY_CHECK;
 
-      poa_manager->activate (ACE_ENV_SINGLE_ARG_PARAMETER);
+      poa_manager->activate ();
 
-      ACE_TRY_CHECK;
 
       // Initialization of the naming service.
       if (naming_client_.init (orb_.in ()) != 0)
@@ -113,17 +108,14 @@ FactoryDriver::start (int argc, char *argv [])
                           1);
 
       // activate the factory in the root poa.
-      factory_ = factory_servant_->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      factory_ = factory_servant_->_this ();
 
       // Give the ownership to the POA.
-      factory_servant_->_remove_ref (ACE_ENV_SINGLE_ARG_PARAMETER);
+      factory_servant_->_remove_ref ();
 
-      ACE_TRY_CHECK;
       CORBA::String_var
         str = orb_->object_to_string (factory_.in ()
                                       ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       ACE_DEBUG ((LM_DEBUG,
                   "CosEvent_Service: The Cos Event Channel Factory IOR is <%s>\n",
@@ -135,7 +127,6 @@ FactoryDriver::start (int argc, char *argv [])
       naming_client_->rebind (name,
                               factory_.in ()
                               ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       ACE_DEBUG ((LM_DEBUG,
                   "Registered with the naming service as %s\n", factoryName_));
@@ -155,7 +146,6 @@ FactoryDriver::start (int argc, char *argv [])
       return 1;
     }
   ACE_ENDTRY;
-  ACE_CHECK_RETURN (1);
 
   return 0;
 }

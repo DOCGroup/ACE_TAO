@@ -14,7 +14,7 @@
 ACE_RCSID(BiDirectional, test_i, "$Id$")
 
 void
-Callback_i::shutdown (ACE_ENV_SINGLE_ARG_DECL)
+Callback_i::shutdown (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_DEBUG ((LM_DEBUG, "Performing clean shutdown\n"));
@@ -55,14 +55,13 @@ Simple_Server_i::callback_object (Callback_ptr callback
 }
 
 int
-Simple_Server_i::call_client (ACE_ENV_SINGLE_ARG_DECL)
+Simple_Server_i::call_client (void)
 {
   if (this->flag_)
     {
       for (int times = 0; times < this->no_iterations_; ++times)
         {
-          this->callback_->callback_method (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_CHECK_RETURN (0);
+          this->callback_->callback_method ();
 
           // If the cache size has gotten larger this indicates that
           // the connection isn't being shared properly, i.e., a new
@@ -76,8 +75,7 @@ Simple_Server_i::call_client (ACE_ENV_SINGLE_ARG_DECL)
             }
         }
 
-      this->callback_->shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK_RETURN (0);
+      this->callback_->shutdown ();
       this->flag_ = 0;
 
       return 1;
@@ -88,7 +86,7 @@ Simple_Server_i::call_client (ACE_ENV_SINGLE_ARG_DECL)
 
 
 void
-Simple_Server_i::shutdown (ACE_ENV_SINGLE_ARG_DECL)
+Simple_Server_i::shutdown (void)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->orb_->shutdown (0 ACE_ENV_ARG_PARAMETER);

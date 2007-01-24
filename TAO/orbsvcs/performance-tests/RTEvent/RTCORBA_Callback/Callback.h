@@ -40,7 +40,7 @@ public:
                        ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  PortableServer::POA_ptr _default_POA (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+  PortableServer::POA_ptr _default_POA (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
   //@}
 

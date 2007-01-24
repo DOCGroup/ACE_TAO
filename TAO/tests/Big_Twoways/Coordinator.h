@@ -28,7 +28,7 @@ public:
                             ACE_ENV_ARG_DECL);
 
   /// Shutdown all the peers
-  void shutdown_all_peers (ACE_ENV_SINGLE_ARG_DECL);
+  void shutdown_all_peers (void);
 
   // = The skeleton methods
   virtual void add_peer (Test::Peer_ptr peer

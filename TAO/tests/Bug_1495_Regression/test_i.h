@@ -54,7 +54,7 @@ public:
         ACE_THROW_SPEC ((CORBA::SystemException));
 
     virtual
-    void shutdown (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+    void shutdown (void)
         ACE_THROW_SPEC ((CORBA::SystemException));
 private:
     CORBA::ORB_ptr orb_;

@@ -35,7 +35,7 @@ public:
   TAO_EC_TPC_ProxyPushConsumer (TAO_EC_Event_Channel_Base* ec);
   virtual ~TAO_EC_TPC_ProxyPushConsumer (void);
 
-  virtual void disconnect_push_consumer (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+  virtual void disconnect_push_consumer (void)
       ACE_THROW_SPEC ((CORBA::SystemException));
 
 private:

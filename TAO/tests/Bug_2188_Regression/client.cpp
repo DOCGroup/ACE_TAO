@@ -42,14 +42,12 @@ main (int argc, char *argv[])
   ACE_TRY_NEW_ENV
     {
       orb = CORBA::ORB_init (argc, argv, "" ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       if (parse_args (argc, argv) != 0)
         return 1;
 
       CORBA::Object_var tmp =
         orb->string_to_object(ior ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       saobj = ServerAdmin::_narrow (tmp.in() ACE_ENV_ARG_PARAMETER);
 
@@ -61,18 +59,15 @@ main (int argc, char *argv[])
                             1);
         }
 
-      ArrayTest_var atobj = saobj->target(ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      ArrayTest_var atobj = saobj->target();
 
       CharArray_slice * char_array = CharArray_alloc();
       for (int i = 0; i < 10; i++)
         char_array[i] = (char)('a' + i);
       atobj->a_charArray (char_array ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       ACE_DEBUG ((LM_DEBUG, "a_charArray worked OK.\n"));
 
-      ACE_TRY_CHECK;
     }
   ACE_CATCHANY
     {
@@ -83,6 +78,6 @@ main (int argc, char *argv[])
 
   saobj->shutdown();
 
-  orb->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
+  orb->destroy ();
   return 0;
 }

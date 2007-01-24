@@ -125,8 +125,7 @@ public:
                   "Callback method <foo_excep> called: \n"));
       ACE_TRY
         {
-          excep_holder->raise_exception (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+          excep_holder->raise_exception ();
         }
       ACE_CATCHANY
         {
@@ -134,7 +133,6 @@ public:
                                "Caught exception:");
         }
       ACE_ENDTRY;
-      ACE_CHECK;
     };
 
   void get_yadda (CORBA::Long result
@@ -154,7 +152,7 @@ public:
                   "Callback method <get_yadda_excep> called: \n"));
     };
 
-  void set_yadda (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+  void set_yadda (void)
       ACE_THROW_SPEC ((CORBA::SystemException))
     {
       ACE_DEBUG ((LM_DEBUG,
@@ -183,7 +181,6 @@ main (int argc, char *argv[])
     {
       CORBA::ORB_var orb =
         CORBA::ORB_init (argc, argv, "" ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       if (parse_args (argc, argv) != 0)
         return 1;
@@ -192,11 +189,9 @@ main (int argc, char *argv[])
 
       CORBA::Object_var object =
         orb->string_to_object (ior ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       A::AMI_Test_var server =
         A::AMI_Test::_narrow (object.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       if (CORBA::is_nil (server.in ()))
         {
@@ -210,7 +205,6 @@ main (int argc, char *argv[])
 
       CORBA::Object_var poa_object =
         orb->resolve_initial_references("RootPOA" ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       if (CORBA::is_nil (poa_object.in ()))
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -219,14 +213,11 @@ main (int argc, char *argv[])
 
       PortableServer::POA_var root_poa =
         PortableServer::POA::_narrow (poa_object.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       PortableServer::POAManager_var poa_manager =
-        root_poa->the_POAManager (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        root_poa->the_POAManager ();
 
-      poa_manager->activate (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      poa_manager->activate ();
 
       // Let the client perform the test in a separate thread
 
@@ -253,13 +244,11 @@ main (int argc, char *argv[])
       while (number_of_replies > 0)
         {
           CORBA::Boolean pending =
-            orb->work_pending(ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+            orb->work_pending();
 
           if (pending)
             {
-              orb->perform_work(ACE_ENV_SINGLE_ARG_PARAMETER);
-              ACE_TRY_CHECK;
+              orb->perform_work();
             }
         }
 
@@ -280,10 +269,8 @@ main (int argc, char *argv[])
       root_poa->destroy (1,  // ethernalize objects
                          0  // wait for completion
                          ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
-      orb->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      orb->destroy ();
     }
   ACE_CATCHANY
     {
@@ -320,7 +307,6 @@ Client::svc (void)
                                     number,
                                     "Let's talk AMI."
                                     ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
         }
       if (debug)
         {

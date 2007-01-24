@@ -59,7 +59,6 @@ main (int argc, char **argv)
                          argv,
                          0
                          ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       int result =
         parse_args (argc, argv);
@@ -69,12 +68,10 @@ main (int argc, char **argv)
       CORBA::Object_var object =
         orb->string_to_object (ior
                                ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       test_var test =
         test::_narrow (object.in ()
                        ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       if (CORBA::is_nil (test.in ()))
         {
@@ -86,14 +83,12 @@ main (int argc, char **argv)
 
       for (int i = 0; i < iterations; i++)
         {
-          test->method (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+          test->method ();
         }
 
       if (shutdown_server)
         {
-          test->shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+          test->shutdown ();
         }
     }
   ACE_CATCHANY

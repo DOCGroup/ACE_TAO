@@ -45,7 +45,6 @@ TAO::SSLIOP::ORBInitializer::pre_init (
   TAO_ORBInitInfo_var tao_info =
     TAO_ORBInitInfo::_narrow (info
                               ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
   if (CORBA::is_nil (tao_info.in ()))
     ACE_THROW (CORBA::INV_OBJREF ());
@@ -68,7 +67,6 @@ TAO::SSLIOP::ORBInitializer::pre_init (
                         TAO::VMCID,
                         ENOMEM),
                       CORBA::COMPLETED_NO));
-  ACE_CHECK;
 
   SSLIOP::Current_var ssliop_current = current;
 
@@ -76,7 +74,6 @@ TAO::SSLIOP::ORBInitializer::pre_init (
   info->register_initial_reference ("SSLIOPCurrent",
                                     ssliop_current.in ()
                                     ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 }
 
 void
@@ -98,11 +95,9 @@ TAO::SSLIOP::ORBInitializer::post_init (
   CORBA::Object_var obj =
     info->resolve_initial_references ("SSLIOPCurrent"
                                       ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
   SSLIOP::Current_var ssliop_current =
     SSLIOP::Current::_narrow (obj.in () ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
   if (!CORBA::is_nil (ssliop_current.in ()))
     {
@@ -113,7 +108,6 @@ TAO::SSLIOP::ORBInitializer::post_init (
         {
           const size_t slot =
             this->get_tss_slot_id (info ACE_ENV_ARG_PARAMETER);
-          ACE_CHECK;
 
           tao_current->tss_slot (slot);
         }
@@ -133,7 +127,6 @@ TAO::SSLIOP::ORBInitializer::post_init (
                         TAO::VMCID,
                         ENOMEM),
                       CORBA::COMPLETED_NO));
-  ACE_CHECK;
 
   PortableInterceptor::ServerRequestInterceptor_var si_interceptor =
     si;
@@ -142,12 +135,10 @@ TAO::SSLIOP::ORBInitializer::post_init (
   // with the ORB.
   info->add_server_request_interceptor (si_interceptor.in ()
                                         ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
 //   TAO_ORBInitInfo_var tao_info =
 //     TAO_ORBInitInfo::_narrow (info
 //                               ACE_ENV_ARG_PARAMETER);
-//   ACE_CHECK;
 
 //   if (CORBA::is_nil (tao_info.in ()))
 //     ACE_THROW (CORBA::INV_OBJREF ());
@@ -166,7 +157,6 @@ TAO::SSLIOP::ORBInitializer::post_init (
 //                         TAO::VMCID,
 //                         ENOMEM),
 //                       CORBA::COMPLETED_NO));
-//   ACE_CHECK;
 
 //   PortableInterceptor::IORInterceptor_var ior_interceptor =
 //     ii;
@@ -174,40 +164,33 @@ TAO::SSLIOP::ORBInitializer::post_init (
 //   // Register the SSLIOP IORInterceptor.
 //   info->add_ior_interceptor (ior_interceptor.in ()
 //                              ACE_ENV_ARG_PARAMETER);
-//   ACE_CHECK;
 
   // Register the SSLIOP-specific vault with the
   // PrincipalAuthenticator.
   obj = info->resolve_initial_references ("SecurityLevel3:SecurityManager"
                                           ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
   SecurityLevel3::SecurityManager_var manager =
     SecurityLevel3::SecurityManager::_narrow (obj.in ()
                                               ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
   SecurityLevel3::CredentialsCurator_var curator =
-    manager->credentials_curator (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+    manager->credentials_curator ();
 
   TAO::SL3::CredentialsCurator_var tao_curator =
     TAO::SL3::CredentialsCurator::_narrow (curator.in ()
                                            ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
   TAO::SSLIOP::CredentialsAcquirerFactory * factory;
   ACE_NEW_THROW_EX (factory,
                     TAO::SSLIOP::CredentialsAcquirerFactory,
                     CORBA::NO_MEMORY ());
-  ACE_CHECK;
 
   auto_ptr<TAO::SSLIOP::CredentialsAcquirerFactory> safe_factory;
 
   tao_curator->register_acquirer_factory ("SL3TLS",
                                           factory
                                           ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
   (void) safe_factory.release ();  // CredentialsCurator now owns
                                    // CredentialsAcquirerFactory.
@@ -223,12 +206,10 @@ TAO::SSLIOP::ORBInitializer::get_tss_slot_id (
   CORBA::Object_var obj =
     info->resolve_initial_references ("SecurityLevel3:SecurityCurrent"
                                       ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (0);
 
   SecurityLevel3::SecurityCurrent_var current =
     SecurityLevel3::SecurityCurrent::_narrow (obj.in ()
                                               ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (0);
 
   TAO::SL3::SecurityCurrent * security_current =
     dynamic_cast<TAO::SL3::SecurityCurrent *> (current.in ());

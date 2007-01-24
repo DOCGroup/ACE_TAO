@@ -76,12 +76,12 @@ public:
 
   TAO_Notify_EventChannel * event_channel () const;
   /// Shutdown
-  virtual int shutdown (ACE_ENV_SINGLE_ARG_DECL);
+  virtual int shutdown (void);
 
   virtual void save_persistent (TAO_Notify::Topology_Saver& saver ACE_ENV_ARG_DECL);
   virtual TAO_Notify::Topology_Object* load_child (const ACE_CString &type,
     CORBA::Long id, const TAO_Notify::NVPList& attrs ACE_ENV_ARG_DECL);
-  virtual void reconnect (ACE_ENV_SINGLE_ARG_DECL);
+  virtual void reconnect (void);
 
   void set_default (bool is_default);
   bool is_default () const;

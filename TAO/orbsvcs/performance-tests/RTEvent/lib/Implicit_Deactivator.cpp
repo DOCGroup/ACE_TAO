@@ -19,12 +19,10 @@ Implicit_Deactivator::Implicit_Deactivator (PortableServer::Servant servant
                                             ACE_ENV_ARG_DECL)
 {
   this->poa_ =
-    servant->_default_POA (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+    servant->_default_POA ();
 
   this->id_ =
     this->poa_->servant_to_id (servant ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 }
 
 Implicit_Deactivator::Implicit_Deactivator (Implicit_Deactivator &rhs)
@@ -54,7 +52,6 @@ Implicit_Deactivator::~Implicit_Deactivator ()
   ACE_TRY {
     this->poa_->deactivate_object (this->id_.in ()
                                    ACE_ENV_ARG_PARAMETER);
-    ACE_TRY_CHECK;
   } ACE_CATCHANY {
     // @@ TODO This event should be logged. Cannot throw because that
     //    would make it impossible to use this class effectively.

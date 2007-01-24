@@ -35,12 +35,10 @@ print_poa (PortableServer::POA_ptr poa
            ACE_ENV_ARG_DECL)
 {
   CORBA::String_var poa_name =
-    poa->the_name (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+    poa->the_name ();
 
   CORBA::OctetSeq_var poa_id =
-    poa->id (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+    poa->id ();
 
   ACE_DEBUG ((LM_DEBUG,
               "POA name = %s\n",
@@ -62,8 +60,7 @@ print_poa (PortableServer::POA_ptr poa
               "\n"));
 
   PortableServer::POAList_var children =
-    poa->the_children (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+    poa->the_children ();
 
   for (CORBA::ULong index = 0;
        index != children->length ();
@@ -71,7 +68,6 @@ print_poa (PortableServer::POA_ptr poa
     {
       print_poa (children[index]
                  ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
     }
 }
 
@@ -87,18 +83,15 @@ main (int argc, char **argv)
                                             argv,
                                             0
                                             ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       // Obtain the RootPOA.
       CORBA::Object_var obj =
         orb->resolve_initial_references ("RootPOA"
                                          ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       // _narrow() the Object to get the POA object, i.e., the root_poa.
       PortableServer::POA_var root_poa =
         PortableServer::POA::_narrow (obj.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       // Policies for the new POAs
       CORBA::PolicyList policies (2);
@@ -107,12 +100,10 @@ main (int argc, char **argv)
       // Threading policy
       policies[0] =
         root_poa->create_thread_policy (PortableServer::ORB_CTRL_MODEL ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       // Lifespan policy
       policies[1] =
         root_poa->create_lifespan_policy (PortableServer::TRANSIENT ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       // Creation of the firstPOA
       ACE_CString name = "firstPOA";
@@ -121,7 +112,6 @@ main (int argc, char **argv)
                               PortableServer::POAManager::_nil (),
                               policies
                               ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       // Creation of the new POA, i.e. firstPOA/secondPOA
       name = "secondPOA";
@@ -130,7 +120,6 @@ main (int argc, char **argv)
                                PortableServer::POAManager::_nil (),
                                policies
                                ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       // Creation of the new POAs over, so destroy the Policy_ptr's.
       for (CORBA::ULong i = 0;
@@ -138,8 +127,7 @@ main (int argc, char **argv)
            ++i)
         {
           CORBA::Policy_ptr policy = policies[i];
-          policy->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+          policy->destroy ();
         }
 
       CORBA::Any pol;
@@ -151,7 +139,6 @@ main (int argc, char **argv)
         orb->create_policy (BiDirPolicy::BIDIRECTIONAL_POLICY_TYPE,
                             pol
                             ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
 
       // Creating thirdPOA.
@@ -162,34 +149,28 @@ main (int argc, char **argv)
                               PortableServer::POAManager::_nil (),
                               bidir_policy
                               ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       // Creation of childPOA is over. Destroy the Policy objects.
       for (CORBA::ULong k = 0;
            k < bidir_policy.length ();
            ++k)
         {
-          bidir_policy[k]->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+          bidir_policy[k]->destroy ();
         }
 
       // Get the names of all the POAs and print them out.
 
       CORBA::String_var root_poa_name =
-        root_poa->the_name (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        root_poa->the_name ();
 
       CORBA::String_var first_poa_name =
-        first_poa->the_name (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        first_poa->the_name ();
 
       CORBA::String_var second_poa_name =
-        second_poa->the_name (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        second_poa->the_name ();
 
       CORBA::String_var third_poa_name =
-        third_poa->the_name (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        third_poa->the_name ();
 
       ACE_DEBUG ((LM_DEBUG,
                   "%s\n%s\n%s\n%s\n",
@@ -200,7 +181,6 @@ main (int argc, char **argv)
 
       print_poa (root_poa.in ()
                  ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
     }
   ACE_CATCHANY
@@ -209,7 +189,6 @@ main (int argc, char **argv)
       return -1;
     }
   ACE_ENDTRY;
-  ACE_CHECK_RETURN (-1);
 
   return 0;
 }

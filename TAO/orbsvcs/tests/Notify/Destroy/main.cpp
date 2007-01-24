@@ -12,7 +12,6 @@ ACE_TMAIN (int argc, char *argv[])
       // Initialize the base class.
       Notify_Test_Client client;
       client.init (argc, argv ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK_RETURN (-1);
 
       CosNotifyChannelAdmin::EventChannelFactory_ptr ecf = client.notify_factory ();
 
@@ -20,8 +19,7 @@ ACE_TMAIN (int argc, char *argv[])
 
       ACE_DEBUG((LM_DEBUG, "Destroying ECF...\n"));
 
-      ecf_ext->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      ecf_ext->destroy ();
 
       ACE_DEBUG((LM_DEBUG, "ECF destroyed.\n"));
     }

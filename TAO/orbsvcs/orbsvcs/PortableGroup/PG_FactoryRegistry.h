@@ -99,7 +99,7 @@ namespace TAO
      * Prepare to exit.
      * @return zero for success; nonzero is process return code for failure.
      */
-    int fini (ACE_ENV_SINGLE_ARG_DECL);
+    int fini (void);
 
     /**
      * Processing to happen when the ORB's event loop is idle.
@@ -122,7 +122,7 @@ namespace TAO
 
     ////////////////////////////////
     // override servant base methods
-    virtual void _remove_ref (ACE_ENV_SINGLE_ARG_DECL);
+    virtual void _remove_ref (void);
 
     //////////////////
     // CORBA interface

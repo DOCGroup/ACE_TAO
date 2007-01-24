@@ -56,7 +56,7 @@ class RTSCHEDTESTLIB_Export Job_i : public POA_Job
 
   void dump_stats (void);
 
-  virtual void shutdown (ACE_ENV_SINGLE_ARG_DECL)
+  virtual void shutdown (void)
     ACE_THROW_SPEC ((
                      CORBA::SystemException
                      ));

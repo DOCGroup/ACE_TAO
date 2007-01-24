@@ -25,14 +25,14 @@ TAO_LB_RoundRobin::~TAO_LB_RoundRobin (void)
 }
 
 char *
-TAO_LB_RoundRobin::name (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+TAO_LB_RoundRobin::name (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return CORBA::string_dup ("RoundRobin");
 }
 
 CosLoadBalancing::Properties *
-TAO_LB_RoundRobin::get_properties (ACE_ENV_SINGLE_ARG_DECL)
+TAO_LB_RoundRobin::get_properties (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // There are no RoundRobin properties.  Return an empty property
@@ -46,7 +46,6 @@ TAO_LB_RoundRobin::get_properties (ACE_ENV_SINGLE_ARG_DECL)
                         TAO::VMCID,
                         ENOMEM),
                       CORBA::COMPLETED_NO));
-  ACE_CHECK_RETURN (props);
 
   return props;
 }
@@ -91,7 +90,6 @@ TAO_LB_RoundRobin::next_member (
   const PortableGroup::ObjectGroupId id =
     load_manager->get_object_group_id (object_group
                                        ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (CORBA::Object::_nil ());
 
   ACE_GUARD_RETURN (TAO_SYNCH_MUTEX,
                     monitor,
@@ -106,7 +104,6 @@ TAO_LB_RoundRobin::next_member (
   PortableGroup::Locations_var locations =
     load_manager->locations_of_members (object_group
                                         ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (CORBA::Object::_nil ());
 
   const CORBA::ULong len = locations->length ();
 
@@ -128,7 +125,6 @@ TAO_LB_RoundRobin::next_member (
         load_manager->get_member_ref (object_group,
                                       locations[i]
                                       ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK_RETURN (CORBA::Object::_nil ());
 
       // Increment index to point to next location.
       i++;
@@ -163,7 +159,7 @@ TAO_LB_RoundRobin::analyze_loads (
 }
 
 PortableServer::POA_ptr
-TAO_LB_RoundRobin::_default_POA (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+TAO_LB_RoundRobin::_default_POA (void)
 {
   return PortableServer::POA::_duplicate (this->poa_.in ());
 }

@@ -81,7 +81,7 @@ public:
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   /// Deactivate from the POA
-  virtual void deactivate (ACE_ENV_SINGLE_ARG_DECL)
+  virtual void deactivate (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   /// Return 0 if no consumer is connected...
@@ -96,7 +96,7 @@ public:
   CosEventComm::PushConsumer_ptr consumer (void) const;
 
   /// The event channel is shutting down
-  virtual void shutdown (ACE_ENV_SINGLE_ARG_DECL);
+  virtual void shutdown (void);
 
   /// Internal methods to push an event to each consumer.
   virtual void push (const CORBA::Any &event
@@ -136,7 +136,7 @@ public:
       ACE_THROW_SPEC ((CORBA::SystemException,
                        CosEventChannelAdmin::AlreadyConnected,
                        CosEventChannelAdmin::TypeError));
-  virtual void disconnect_push_supplier (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+  virtual void disconnect_push_supplier (void)
       ACE_THROW_SPEC ((CORBA::SystemException));
 
   /// Increment and decrement the reference count.
@@ -144,9 +144,9 @@ public:
   CORBA::ULong _decr_refcnt (void);
 
   // = The Servant methods
-  virtual PortableServer::POA_ptr _default_POA (ACE_ENV_SINGLE_ARG_DECL);
-  virtual void _add_ref (ACE_ENV_SINGLE_ARG_DECL);
-  virtual void _remove_ref (ACE_ENV_SINGLE_ARG_DECL);
+  virtual PortableServer::POA_ptr _default_POA (void);
+  virtual void _add_ref (void);
+  virtual void _remove_ref (void);
 
 protected:
   /// Set the consumer, used by some implementations to change the

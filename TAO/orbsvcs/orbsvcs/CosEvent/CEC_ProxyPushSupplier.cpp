@@ -104,8 +104,7 @@ TAO_CEC_ProxyPushSupplier::activate (
   CosEventChannelAdmin::ProxyPushSupplier_var result;
   ACE_TRY
     {
-      result = this->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      result = this->_this ();
     }
   ACE_CATCHANY
     {
@@ -116,19 +115,16 @@ TAO_CEC_ProxyPushSupplier::activate (
 }
 
 void
-TAO_CEC_ProxyPushSupplier::deactivate (ACE_ENV_SINGLE_ARG_DECL)
+TAO_CEC_ProxyPushSupplier::deactivate (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_TRY
     {
       PortableServer::POA_var poa =
-        this->_default_POA (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        this->_default_POA ();
       PortableServer::ObjectId_var id =
         poa->servant_to_id (this ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
       poa->deactivate_object (id.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
     }
   ACE_CATCHANY
     {
@@ -141,7 +137,7 @@ TAO_CEC_ProxyPushSupplier::deactivate (ACE_ENV_SINGLE_ARG_DECL)
 }
 
 void
-TAO_CEC_ProxyPushSupplier::shutdown (ACE_ENV_SINGLE_ARG_DECL)
+TAO_CEC_ProxyPushSupplier::shutdown (void)
 {
 #if defined (TAO_HAS_TYPED_EVENT_CHANNEL)
   if (this->is_typed_ec () )
@@ -154,20 +150,18 @@ TAO_CEC_ProxyPushSupplier::shutdown (ACE_ENV_SINGLE_ARG_DECL)
             ACE_Lock, ace_mon, *this->lock_,
             CORBA::INTERNAL ());
         // @@ CosEventChannelAdmin::EventChannel::SYNCHRONIZATION_ERROR ());
-        ACE_CHECK;
 
         typed_consumer = this->typed_consumer_._retn ();
       }
 
-      this->deactivate (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK;
+      this->deactivate ();
 
       if (CORBA::is_nil (typed_consumer.in ()))
         return;
 
       ACE_TRY_EX (typed)
         {
-          typed_consumer->disconnect_push_consumer (ACE_ENV_SINGLE_ARG_PARAMETER);
+          typed_consumer->disconnect_push_consumer ();
           ACE_TRY_CHECK_EX (typed);
         }
       ACE_CATCHANY
@@ -190,21 +184,18 @@ TAO_CEC_ProxyPushSupplier::shutdown (ACE_ENV_SINGLE_ARG_DECL)
         ACE_Lock, ace_mon, *this->lock_,
         CORBA::INTERNAL ());
     // @@ CosEventChannelAdmin::EventChannel::SYNCHRONIZATION_ERROR ());
-    ACE_CHECK;
 
     consumer = this->consumer_._retn ();
   }
 
-  this->deactivate (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+  this->deactivate ();
 
   if (CORBA::is_nil (consumer.in ()))
     return;
 
   ACE_TRY
     {
-      consumer->disconnect_push_consumer (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      consumer->disconnect_push_consumer ();
     }
   ACE_CATCHANY
     {
@@ -242,7 +233,6 @@ TAO_CEC_ProxyPushSupplier::push (const CORBA::Any &event
       this->event_channel_->dispatching ()->push (this,
                                                   event
                                                   ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
     }
   }
 }
@@ -273,7 +263,6 @@ TAO_CEC_ProxyPushSupplier::invoke (const TAO_CEC_TypedEvent& typed_event
       this->typed_event_channel_->dispatching ()->invoke (this,
                                                           typed_event
                                                           ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
     }
   }
 }
@@ -302,7 +291,6 @@ TAO_CEC_ProxyPushSupplier::push_nocopy (CORBA::Any &event
       this->event_channel_->dispatching ()->push_nocopy (this,
                                                          event
                                                          ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
     }
   }
 }
@@ -383,20 +371,17 @@ TAO_CEC_ProxyPushSupplier::connect_push_consumer (
         CosTypedEventComm::TypedPushConsumer_var local_typed_consumer =
           CosTypedEventComm::TypedPushConsumer::_narrow (push_consumer
                                                          ACE_ENV_ARG_PARAMETER);
-        ACE_CHECK;
 
         // Obtain the typed object interface from the consumer
         CORBA::Object_var local_typed_consumer_obj =
           CORBA::Object::_duplicate (local_typed_consumer->get_typed_consumer (
                                              ACE_ENV_SINGLE_ARG_PARAMETER) );
-        ACE_CHECK;
 
         {
           ACE_GUARD_THROW_EX (
               ACE_Lock, ace_mon, *this->lock_,
               CORBA::INTERNAL ());
           // @@ CosEventChannelAdmin::EventChannel::SYNCHRONIZATION_ERROR ());
-          ACE_CHECK;
 
           if (this->is_connected_i ())
             {
@@ -407,7 +392,6 @@ TAO_CEC_ProxyPushSupplier::connect_push_consumer (
               this->cleanup_i ();
 
               this->typed_consumer_ = apply_policy (local_typed_consumer.in () );
-              ACE_CHECK;
 
               TAO_CEC_Unlock reverse_lock (*this->lock_);
 
@@ -416,27 +400,22 @@ TAO_CEC_ProxyPushSupplier::connect_push_consumer (
                     TAO_CEC_Unlock, ace_mon, reverse_lock,
                     CORBA::INTERNAL ());
                 // @@ CosEventChannelAdmin::EventChannel::SYNCHRONIZATION_ERROR ());
-                ACE_CHECK;
 
                 this->typed_event_channel_->reconnected (this ACE_ENV_ARG_PARAMETER);
-                ACE_CHECK;
               }
               return;
 
             }
 
           this->typed_consumer_ = apply_policy (local_typed_consumer.in () );
-          ACE_CHECK;
 
           // Store the typed object interface from the consumer
           this->typed_consumer_obj_ =
             apply_policy_obj (local_typed_consumer_obj.in () );
-          ACE_CHECK;
         }
 
         // Notify the event channel...
         this->typed_event_channel_->connected (this ACE_ENV_ARG_PARAMETER);
-        ACE_CHECK;
 
       } /* this->is_typed_ec */
     else
@@ -456,7 +435,6 @@ TAO_CEC_ProxyPushSupplier::connect_push_consumer (
         ACE_Lock, ace_mon, *this->lock_,
         CORBA::INTERNAL ());
     // @@ CosEventChannelAdmin::EventChannel::SYNCHRONIZATION_ERROR ());
-    ACE_CHECK;
 
     if (this->is_connected_i ())
       {
@@ -475,10 +453,8 @@ TAO_CEC_ProxyPushSupplier::connect_push_consumer (
               TAO_CEC_Unlock, ace_mon, reverse_lock,
               CORBA::INTERNAL ());
           // @@ CosEventChannelAdmin::EventChannel::SYNCHRONIZATION_ERROR ());
-          ACE_CHECK;
 
           this->event_channel_->reconnected (this ACE_ENV_ARG_PARAMETER);
-          ACE_CHECK;
         }
         return;
       }
@@ -488,7 +464,6 @@ TAO_CEC_ProxyPushSupplier::connect_push_consumer (
 
   // Notify the event channel...
   this->event_channel_->connected (this ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
 #if defined (TAO_HAS_TYPED_EVENT_CHANNEL)
       } /* ! this->is_typed_ec */
@@ -565,7 +540,6 @@ TAO_CEC_ProxyPushSupplier::disconnect_push_supplier (
         ACE_Lock, ace_mon, *this->lock_,
         CORBA::INTERNAL ());
     // @@ CosEventChannelAdmin::EventChannel::SYNCHRONIZATION_ERROR ());
-    ACE_CHECK;
 
     if (this->is_connected_i () == 0)
       ACE_THROW (CORBA::BAD_INV_ORDER ());
@@ -591,16 +565,13 @@ TAO_CEC_ProxyPushSupplier::disconnect_push_supplier (
   if (this->is_typed_ec () )
     {
       this->typed_event_channel_->disconnected (this ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
     }
   else
     {
       this->event_channel_->disconnected (this ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
     }
 #else
   this->event_channel_->disconnected (this ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 #endif /* TAO_HAS_TYPED_EVENT_CHANNEL */
 
   // Disconnect callbacks
@@ -611,7 +582,7 @@ TAO_CEC_ProxyPushSupplier::disconnect_push_supplier (
         {
           ACE_TRY_EX (typed)
             {
-              typed_consumer->disconnect_push_consumer (ACE_ENV_SINGLE_ARG_PARAMETER);
+              typed_consumer->disconnect_push_consumer ();
               ACE_TRY_CHECK_EX (typed);
             }
           ACE_CATCHANY
@@ -632,8 +603,7 @@ TAO_CEC_ProxyPushSupplier::disconnect_push_supplier (
     {
       ACE_TRY
         {
-          consumer->disconnect_push_consumer (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+          consumer->disconnect_push_consumer ();
         }
       ACE_CATCHANY
         {
@@ -660,7 +630,6 @@ TAO_CEC_ProxyPushSupplier::push_to_consumer (const CORBA::Any& event
             ACE_Lock, ace_mon, *this->lock_,
             CORBA::INTERNAL ());
     // @@ CosEventChannelAdmin::EventChannel::SYNCHRONIZATION_ERROR ());
-    ACE_CHECK;
 
     if (this->is_connected_i () == 0)
       return; // ACE_THROW (CosEventComm::Disconnected ());????
@@ -674,7 +643,6 @@ TAO_CEC_ProxyPushSupplier::push_to_consumer (const CORBA::Any& event
   ACE_TRY
     {
       consumer->push (event ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       // Inform the control that we were able to push something
       control->successful_transmission(this);
@@ -682,14 +650,12 @@ TAO_CEC_ProxyPushSupplier::push_to_consumer (const CORBA::Any& event
   ACE_CATCH (CORBA::OBJECT_NOT_EXIST, not_used)
     {
       control->consumer_not_exist (this ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
     }
   ACE_CATCH (CORBA::SystemException, sysex)
     {
       control->system_exception (this,
                                  sysex
                                  ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
     }
   ACE_CATCHANY
     {
@@ -719,7 +685,6 @@ TAO_CEC_ProxyPushSupplier::reactive_push_to_consumer (
   ACE_TRY
     {
       consumer->push (event ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       // Inform the control that we were able to push something
       control->successful_transmission(this);
@@ -731,7 +696,6 @@ TAO_CEC_ProxyPushSupplier::reactive_push_to_consumer (
           ACE_PRINT_EXCEPTION (not_used, "during TAO_CEC_ProxyPushSupplier::reactive_push_to_consumer");
         }
      control->consumer_not_exist (this ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
     }
   ACE_CATCH (CORBA::SystemException, sysex)
     {
@@ -743,7 +707,6 @@ TAO_CEC_ProxyPushSupplier::reactive_push_to_consumer (
       control->system_exception (this,
                                  sysex
                                  ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
     }
   ACE_CATCHANY
     {
@@ -767,7 +730,6 @@ TAO_CEC_ProxyPushSupplier::invoke_to_consumer (const TAO_CEC_TypedEvent &typed_e
             ACE_Lock, ace_mon, *this->lock_,
             CORBA::INTERNAL ());
     // @@ CosEventChannelAdmin::EventChannel::SYNCHRONIZATION_ERROR ());
-    ACE_CHECK;
 
     if (this->is_connected_i () == 0)
       return; // ACE_THROW (CosEventComm::Disconnected ());????
@@ -791,11 +753,9 @@ TAO_CEC_ProxyPushSupplier::invoke_to_consumer (const TAO_CEC_TypedEvent &typed_e
                                             target_request.inout(),
                                             0
                                             ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       // Call the DII invoke for the operation on the target object
-      target_request->invoke (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      target_request->invoke ();
 
       // Inform the control that we were able to invoke something
       control->successful_transmission(this);
@@ -807,7 +767,6 @@ TAO_CEC_ProxyPushSupplier::invoke_to_consumer (const TAO_CEC_TypedEvent &typed_e
           ACE_PRINT_EXCEPTION (not_used, "during TAO_CEC_ProxyPushSupplier::invoke_to_consumer");
         }
       control->consumer_not_exist (this ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
     }
   ACE_CATCH (CORBA::SystemException, sysex)
     {
@@ -818,7 +777,6 @@ TAO_CEC_ProxyPushSupplier::invoke_to_consumer (const TAO_CEC_TypedEvent &typed_e
       control->system_exception (this,
                                  sysex
                                  ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
     }
   ACE_CATCHANY
     {
@@ -872,11 +830,9 @@ TAO_CEC_ProxyPushSupplier::reactive_invoke_to_consumer (
                                             target_request.inout(),
                                             0
                                             ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       // Call the DII invoke for the operation on the target object
-      target_request->invoke (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      target_request->invoke ();
 
       // Inform the control that we were able to invoke something
       control->successful_transmission(this);
@@ -888,7 +844,6 @@ TAO_CEC_ProxyPushSupplier::reactive_invoke_to_consumer (
           ACE_PRINT_EXCEPTION (not_used, "during TAO_CEC_ProxyPushSupplier::reactive_invoke_to_consumer");
         }
       control->consumer_not_exist (this ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
     }
   ACE_CATCH (CORBA::SystemException, sysex)
     {
@@ -899,7 +854,6 @@ TAO_CEC_ProxyPushSupplier::reactive_invoke_to_consumer (
       control->system_exception (this,
                                  sysex
                                  ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
     }
   ACE_CATCHANY
     {
@@ -923,7 +877,6 @@ TAO_CEC_ProxyPushSupplier::consumer_non_existent (
     ACE_GUARD_THROW_EX (
         ACE_Lock, ace_mon, *this->lock_,
         CORBA::INTERNAL ());
-    ACE_CHECK_RETURN (0);
 
     disconnected = 0;
     if (this->is_connected_i () == 0)
@@ -956,26 +909,26 @@ TAO_CEC_ProxyPushSupplier::consumer_non_existent (
   }
 
 #if (TAO_HAS_MINIMUM_CORBA == 0)
-  return consumer->_non_existent (ACE_ENV_SINGLE_ARG_PARAMETER);
+  return consumer->_non_existent ();
 #else
   return 0;
 #endif /* TAO_HAS_MINIMUM_CORBA */
 }
 
 PortableServer::POA_ptr
-TAO_CEC_ProxyPushSupplier::_default_POA (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+TAO_CEC_ProxyPushSupplier::_default_POA (void)
 {
   return PortableServer::POA::_duplicate (this->default_POA_.in ());
 }
 
 void
-TAO_CEC_ProxyPushSupplier::_add_ref (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+TAO_CEC_ProxyPushSupplier::_add_ref (void)
 {
   this->_incr_refcnt ();
 }
 
 void
-TAO_CEC_ProxyPushSupplier::_remove_ref (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+TAO_CEC_ProxyPushSupplier::_remove_ref (void)
 {
   this->_decr_refcnt ();
 }

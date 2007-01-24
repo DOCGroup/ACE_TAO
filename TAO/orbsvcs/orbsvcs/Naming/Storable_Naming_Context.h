@@ -274,7 +274,7 @@ public:
    * same naming server in which the operation was invoked.  The
    * context is not bound.
    */
-  virtual CosNaming::NamingContext_ptr new_context (ACE_ENV_SINGLE_ARG_DECL);
+  virtual CosNaming::NamingContext_ptr new_context (void);
 
   /**
    * Returns at most the requested number of bindings <how_many> in
@@ -360,7 +360,7 @@ public:
    * NOTE: after <destroy> is invoked on a Naming Context, all
    * BindingIterators associated with that Naming Context are also destroyed.
    */
-  virtual void destroy (ACE_ENV_SINGLE_ARG_DECL);
+  virtual void destroy (void);
 
 protected:
 
@@ -419,7 +419,6 @@ protected:
  * <pre>
  * How to use this class:
  *   File_Open_Lock_and_Check flck(this, name_len > 1 ? "r" : "rw");
-     ACE_CHECK;
  * </pre>
  */
 class File_Open_Lock_and_Check
@@ -428,7 +427,7 @@ public:
 
   /// Constructor - we always need the object which we guard.
   File_Open_Lock_and_Check(TAO_Storable_Naming_Context * context,
-                                const char * mode 
+                                const char * mode
                                 ACE_ENV_ARG_DECL);
 
   /// Destructor

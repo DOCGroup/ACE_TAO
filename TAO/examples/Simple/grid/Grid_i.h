@@ -42,11 +42,11 @@ public:
   ~Grid_i (void);
   // Destructor
 
-  virtual CORBA::Short width (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+  virtual CORBA::Short width (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
   // Returns the width of the grid
 
-  virtual CORBA::Short height (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+  virtual CORBA::Short height (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
   // Returns the height of the grid
 
@@ -75,7 +75,7 @@ public:
                      Grid::RANGE_ERROR));
   // Gets the grid value.
 
-  virtual void destroy (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+  virtual void destroy (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   // Destroy the grid.
@@ -109,7 +109,7 @@ public:
     ACE_THROW_SPEC ((CORBA::SystemException));
   // This function creates and returns a <Grid>.
 
-  virtual void shutdown (ACE_ENV_SINGLE_ARG_DECL)
+  virtual void shutdown (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
   // Shutdown the server.
 

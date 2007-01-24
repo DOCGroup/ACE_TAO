@@ -20,7 +20,7 @@ test_i::~test_i (void)
 }
 
 void
-test_i::invoke_me (ACE_ENV_SINGLE_ARG_DECL)
+test_i::invoke_me (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_DEBUG ((LM_DEBUG,
@@ -44,8 +44,7 @@ test_i::invoke_me (ACE_ENV_SINGLE_ARG_DECL)
   // By this point all of step 1 has occurred.  Step 2 will now
   // occur.
   PICurrentTest::test_var my_ref =
-    this->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+    this->_this ();
 
   // ----------------------------------------------------
 
@@ -59,7 +58,6 @@ test_i::invoke_me (ACE_ENV_SINGLE_ARG_DECL)
       retrieved_any =
         this->current_->get_slot (this->slot_id_
                                   ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
     }
   ACE_CATCH (PortableInterceptor::InvalidSlot, ex)
     {
@@ -80,7 +78,6 @@ test_i::invoke_me (ACE_ENV_SINGLE_ARG_DECL)
                            "Unexpected exception\n");
     }
   ACE_ENDTRY;
-  ACE_CHECK;
 
   CORBA::Long retrieved;
   if (retrieved_any.in() >>= retrieved)
@@ -102,8 +99,7 @@ test_i::invoke_me (ACE_ENV_SINGLE_ARG_DECL)
   // (ClientRequestInterceptor2) to be invoked.  This assumes that
   // DIRECT collocation (and possibly THRU_POA collocation) is
   // disabled.
-  my_ref->invoke_you (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+  my_ref->invoke_you ();
 
   // ----------------------------------------------------
 
@@ -135,7 +131,6 @@ test_i::invoke_me (ACE_ENV_SINGLE_ARG_DECL)
       ACE_TRY_THROW_EX (CORBA::INTERNAL (), foo);
     }
   ACE_ENDTRY;
-  ACE_CHECK;
 
   ACE_DEBUG ((LM_DEBUG,
               "(%P|%t) String \"%s\" inserted into TSC.\n",
@@ -143,7 +138,7 @@ test_i::invoke_me (ACE_ENV_SINGLE_ARG_DECL)
 }
 
 void
-test_i::invoke_you (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+test_i::invoke_you (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // Nothing to be tested here.  This method is here just so that we
@@ -151,7 +146,7 @@ test_i::invoke_you (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
 }
 
 void
-test_i::invoke_we (ACE_ENV_SINGLE_ARG_DECL)
+test_i::invoke_we (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // Insert some data into the TSC PICurrent object.
@@ -182,7 +177,6 @@ test_i::invoke_we (ACE_ENV_SINGLE_ARG_DECL)
       ACE_TRY_THROW_EX (CORBA::INTERNAL (), foo);
     }
   ACE_ENDTRY;
-  ACE_CHECK;
 
   ACE_DEBUG ((LM_DEBUG,
               "(%P|%t) String \"%s\" inserted into TSC.\n",
@@ -190,7 +184,7 @@ test_i::invoke_we (ACE_ENV_SINGLE_ARG_DECL)
 }
 
 void
-test_i::shutdown (ACE_ENV_SINGLE_ARG_DECL)
+test_i::shutdown (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_DEBUG ((LM_DEBUG,

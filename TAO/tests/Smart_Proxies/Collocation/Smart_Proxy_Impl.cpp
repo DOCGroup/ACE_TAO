@@ -46,7 +46,6 @@ Smart_Diamond_Top_Proxy::shape ( ACE_ENV_SINGLE_ARG_DECL)
                 ACE_ENV_SINGLE_ARG_PARAMETER
               )
           );
-      ACE_TRY_CHECK;
 
       ACE_DEBUG ((LM_DEBUG, "%s\n", ans));
     }

@@ -66,7 +66,6 @@ MIF_Task::activate_task (RTScheduling::Current_ptr current,
 
   current_ = RTScheduling::Current::_narrow (current
                ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
 
   sched_param_ = CORBA::Policy::_duplicate (sched_param);
 
@@ -125,7 +124,6 @@ MIF_Task::perform_task (void)
                                                sched_param.in (),
                                                sched_param.in ()
                                                ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
         }
 
       if (this->dist_)
@@ -154,7 +152,6 @@ MIF_Task::perform_task (void)
                                                    sched_param.in (),
                                                    sched_param.in ()
                                                    ACE_ENV_ARG_PARAMETER);
-              ACE_TRY_CHECK;
 
             }
 

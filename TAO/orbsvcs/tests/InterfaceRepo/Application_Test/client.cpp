@@ -3,8 +3,8 @@
 
 #include "ifr_dii_client.h"
 
-ACE_RCSID (Application_Test, 
-           client, 
+ACE_RCSID (Application_Test,
+           client,
            "$Id$")
 
 int
@@ -24,8 +24,7 @@ main (int argc, char *argv[])
         }
       else
         {
-           int status = client.run (ACE_ENV_SINGLE_ARG_PARAMETER);
-           ACE_TRY_CHECK;
+           int status = client.run ();
 
            if (status == -1)
            {

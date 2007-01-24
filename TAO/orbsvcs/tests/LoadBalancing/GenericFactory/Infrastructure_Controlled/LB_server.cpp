@@ -30,7 +30,6 @@ LB_server::run (void)
       while (1)
 	{
           this->orb_->perform_work (&period);
-          ACE_TRY_CHECK;
         }
     }
   ACE_CATCHANY
@@ -52,13 +51,10 @@ LB_server::destroy (void)
     {
       this->lm_->delete_object (this->fcid_.in ()
                                 ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       this->root_poa_->destroy (1, 1 ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
-      this->orb_->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      this->orb_->destroy ();
     }
   ACE_CATCHANY
     {
@@ -99,12 +95,10 @@ LB_server::start_orb_and_poa (void)
       this->orb_ = CORBA::ORB_init (this->argc_,
                                     this->argv_,
                                     "" ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       CORBA::Object_var poa_object =
         this->orb_->resolve_initial_references("RootPOA"
                                                ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       if (CORBA::is_nil (poa_object.in ()))
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -113,14 +107,11 @@ LB_server::start_orb_and_poa (void)
 
       this->root_poa_ = PortableServer::POA::_narrow (poa_object.in ()
                                                       ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       PortableServer::POAManager_var poa_manager =
-        this->root_poa_->the_POAManager (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        this->root_poa_->the_POAManager ();
 
-      poa_manager->activate (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      poa_manager->activate ();
 
       CORBA::Object_var obj =
         this->orb_->resolve_initial_references ("LoadManager" ACE_ENV_ARG_PARAMETER);
@@ -128,7 +119,6 @@ LB_server::start_orb_and_poa (void)
       this->lm_ =
         CosLoadBalancing::LoadManager::_narrow (obj.in ()
                                                 ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       if (CORBA::is_nil (this->lm_.in ()))
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -159,12 +149,10 @@ LB_server::create_object_group (const char *loc_1, const char *loc_2)
       Factory factory_object2;
 
       PortableGroup::GenericFactory_var factory_obj1 =
-        factory_object1._this (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        factory_object1._this ();
 
       PortableGroup::GenericFactory_var factory_obj2 =
-        factory_object2._this (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        factory_object2._this ();
 
       PortableGroup::FactoriesValue  factory_infos;
       factory_infos.length (2);
@@ -226,12 +214,10 @@ LB_server::create_object_group (const char *loc_1, const char *loc_2)
                                                       criteria,
                                                       this->fcid_.out ()
                                                       ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       CORBA::String_var ior =
         this->orb_->object_to_string (this->object_group_.in ()
                                       ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       this->write_ior_to_file (ior.in ());
 

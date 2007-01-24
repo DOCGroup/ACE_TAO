@@ -120,13 +120,13 @@ public:
              ACE_ENV_ARG_DECL);
   // Connect the UDP sender to the EC.
 
-  void close (ACE_ENV_SINGLE_ARG_DECL);
+  void close (void);
   // Close the UDP sender, disconnect from the EC
 
   int sender_local_addr (ACE_INET_Addr& addr);
   // Return the sender local address
 
-  RtecUDPAdmin::AddrServer_ptr addr_server (ACE_ENV_SINGLE_ARG_DECL);
+  RtecUDPAdmin::AddrServer_ptr addr_server (void);
   // This address server can be used to convert event headers
   // (type,source) to UDP addresses (ipaddr,port)
 
@@ -173,7 +173,7 @@ public:
              ACE_ENV_ARG_DECL);
   // This method connects the supplier to the EC.
 
-  void close (ACE_ENV_SINGLE_ARG_DECL);
+  void close (void);
   // Disconnect from the EC.
 
   void activate (RtecEventChannelAdmin::EventChannel_ptr event_channel,
@@ -186,11 +186,11 @@ public:
 
   void push (const RtecEventComm::EventSet& events
              ACE_ENV_ARG_DECL);
-  void disconnect_push_consumer (ACE_ENV_SINGLE_ARG_DECL_NOT_USED);
+  void disconnect_push_consumer (void);
   // Implement the callbacks for our consumer personality.
 
   // = The POA_RtecEventComm::PushSupplier methods.
-  virtual void disconnect_push_supplier (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+  virtual void disconnect_push_supplier (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
 private:
@@ -230,12 +230,12 @@ public:
              ACE_ENV_ARG_DECL);
   // This method connects the consumer to the EC.
 
-  void close (ACE_ENV_SINGLE_ARG_DECL);
+  void close (void);
   // Disconnect from the EC.
 
   void connect (ACE_RANDR_TYPE& seed
                 ACE_ENV_ARG_DECL);
-  void disconnect (ACE_ENV_SINGLE_ARG_DECL);
+  void disconnect (void);
   // Disconnect from the supplier, but do not forget about it or close
   // it.
 
@@ -243,7 +243,7 @@ public:
   virtual void push (const RtecEventComm::EventSet& events
                      ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
-  virtual void disconnect_push_consumer (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+  virtual void disconnect_push_consumer (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
 private:
@@ -275,7 +275,7 @@ public:
              ACE_ENV_ARG_DECL);
   // Connect both the supplier and the consumer.
 
-  void close (ACE_ENV_SINGLE_ARG_DECL);
+  void close (void);
   // Disconnect everybody from the EC
 
   void activate (RtecEventChannelAdmin::EventChannel_ptr event_channel,
@@ -300,7 +300,7 @@ public:
                       ACE_ENV_ARG_DECL);
   // Connect the UDP receiver to the EC.
 
-  void close_receiver (ACE_ENV_SINGLE_ARG_DECL);
+  void close_receiver (void);
   // Close the UDP receiver, disconnect from the EC
 
   void dump_results (void) const;
@@ -434,7 +434,7 @@ private:
                              ACE_ENV_ARG_DECL);
   // Activate all the federations
 
-  void close_federations (ACE_ENV_SINGLE_ARG_DECL);
+  void close_federations (void);
   // Close the federations, i.e. disconnect from the EC, deactivate
   // the objects, etc.
 
@@ -447,13 +447,13 @@ private:
   // Connect all the receivers, thus we accept events arriving through
   // multicast.
 
-  void close_senders (ACE_ENV_SINGLE_ARG_DECL);
+  void close_senders (void);
   // Close all the senders to cleanup resources.
 
-  void close_receivers (ACE_ENV_SINGLE_ARG_DECL);
+  void close_receivers (void);
   // Close all the receivers to cleanup resources.
 
-  int shutdown (ACE_ENV_SINGLE_ARG_DECL_NOT_USED);
+  int shutdown (void);
   // Called when the main thread.
 
   int parse_args (int argc, char* argv[]);

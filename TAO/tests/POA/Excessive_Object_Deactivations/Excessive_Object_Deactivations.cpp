@@ -24,10 +24,10 @@
 class test_i : public POA_test
 {
 public:
-  void deactivate_self (ACE_ENV_SINGLE_ARG_DECL)
+  void deactivate_self (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  PortableServer::POA_ptr _default_POA (ACE_ENV_SINGLE_ARG_DECL);
+  PortableServer::POA_ptr _default_POA (void);
 
   PortableServer::POA_var poa_;
 
@@ -41,12 +41,11 @@ test_i::_default_POA (ACE_ENV_SINGLE_ARG_DECL_NOT_USED /*ACE_ENV_SINGLE_ARG_PARA
 }
 
 void
-test_i::deactivate_self (ACE_ENV_SINGLE_ARG_DECL)
+test_i::deactivate_self (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->poa_->deactivate_object (this->id_
                                  ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
   // Exception flag
   int expected_exception_raised = 0;
@@ -55,7 +54,6 @@ test_i::deactivate_self (ACE_ENV_SINGLE_ARG_DECL)
     {
       this->poa_->deactivate_object (this->id_
                                      ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
     }
   ACE_CATCH (PortableServer::POA::ObjectNotActive, ex)
     {
@@ -68,7 +66,6 @@ test_i::deactivate_self (ACE_ENV_SINGLE_ARG_DECL)
       ACE_ASSERT (0);
     }
   ACE_ENDTRY;
-  ACE_CHECK;
 
   // Make sure an exception was raised and it was of the correct type.
   ACE_ASSERT (expected_exception_raised);
@@ -104,7 +101,6 @@ test_object_deactivation (PortableServer::POA_ptr poa,
       ACE_ASSERT (0);
     }
   ACE_ENDTRY;
-  ACE_CHECK;
 
   // Make sure an exception was raised and it was of the correct
   // type.
@@ -115,11 +111,9 @@ test_object_deactivation (PortableServer::POA_ptr poa,
   poa->activate_object_with_id (id,
                                 &servant
                                 ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
   poa->deactivate_object (id
                           ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
   // Reset flag
   expected_exception_raised = 0;
@@ -141,7 +135,6 @@ test_object_deactivation (PortableServer::POA_ptr poa,
       ACE_ASSERT (0);
     }
   ACE_ENDTRY;
-  ACE_CHECK;
 
   // Make sure an exception was raised and it was of the correct
   // type.
@@ -150,7 +143,6 @@ test_object_deactivation (PortableServer::POA_ptr poa,
   poa->activate_object_with_id (id,
                                 &servant
                                 ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
   servant.poa_ =
     PortableServer::POA::_duplicate (poa);
@@ -158,11 +150,9 @@ test_object_deactivation (PortableServer::POA_ptr poa,
   servant.id_ = id;
 
   test_var test =
-    servant._this (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+    servant._this ();
 
-  test->deactivate_self (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+  test->deactivate_self ();
 
   // ACE_ASSERT dissappears in non-debug builds
   ACE_UNUSED_ARG (expected_exception_raised);
@@ -181,24 +171,20 @@ main (int argc, char **argv)
                                             argv,
                                             0
                                             ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       // Obtain the RootPOA.
       CORBA::Object_var obj =
         orb->resolve_initial_references ("RootPOA"
                                          ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       // Get the POA_var object from Object_var.
       PortableServer::POA_var root_poa =
         PortableServer::POA::_narrow (obj.in ()
                                       ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       // Get the POAManager of the RootPOA.
       PortableServer::POAManager_var poa_manager =
-        root_poa->the_POAManager (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        root_poa->the_POAManager ();
 
       CORBA::PolicyList empty_policies;
       PortableServer::POA_var child_poa =
@@ -206,32 +192,26 @@ main (int argc, char **argv)
                               poa_manager.in (),
                               empty_policies
                               ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
-      poa_manager->activate (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      poa_manager->activate ();
 
       obj =
         root_poa->create_reference ("IDL:test:1.0"
                                     ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       PortableServer::ObjectId_var id =
         root_poa->reference_to_id (obj.in ()
                                    ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       test_object_deactivation (root_poa.in (),
                                 id.in ()
                                 ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       id = PortableServer::string_to_ObjectId ("good id");
 
       test_object_deactivation (child_poa.in (),
                                 id.in ()
                                 ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
     }
   ACE_CATCHANY
     {
@@ -239,7 +219,6 @@ main (int argc, char **argv)
       return -1;
     }
   ACE_ENDTRY;
-  ACE_CHECK_RETURN (-1);
 
   return 0;
 }

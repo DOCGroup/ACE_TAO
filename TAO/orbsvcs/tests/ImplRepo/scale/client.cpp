@@ -11,20 +11,15 @@ int main(int argc, char* argv[]) {
 
   ACE_TRY_NEW_ENV
   {
- 
+
     ORB_var orb = ORB_init(argc, argv, 0 ACE_ENV_ARG_PARAMETER);
-    ACE_TRY_CHECK;
 
     Object_var obj = orb->resolve_initial_references("Test" ACE_ENV_ARG_PARAMETER);
-    ACE_TRY_CHECK;
     test_var test = test::_narrow(obj.in() ACE_ENV_ARG_PARAMETER);
-    ACE_TRY_CHECK;
     ACE_ASSERT(! is_nil(test.in()));
 
-    Long n = test->get(ACE_ENV_SINGLE_ARG_PARAMETER);
-    ACE_TRY_CHECK;
-    Long m = test->get(ACE_ENV_SINGLE_ARG_PARAMETER);
-    ACE_TRY_CHECK;
+    Long n = test->get();
+    Long m = test->get();
     if (m == n + 1)
       ACE_DEBUG((LM_DEBUG, "Client: All tests ran successfully.\n"));
     else

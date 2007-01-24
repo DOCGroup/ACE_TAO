@@ -45,7 +45,6 @@ int main (int argc, char *argv[])
     {
       ORB_Holder orb (argc, argv, ""
                       ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       Client_Options options (argc, argv);
       if (argc != 1)
@@ -71,20 +70,16 @@ int main (int argc, char *argv[])
                                      rt_class,
                                      1 // options.nthreads
                                      ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       PortableServer::POA_var root_poa =
         RIR_Narrow<PortableServer::POA>::resolve (orb,
                                                   "RootPOA"
                                                   ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       PortableServer::POAManager_var poa_manager =
-        root_poa->the_POAManager (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        root_poa->the_POAManager ();
 
-      poa_manager->activate (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      poa_manager->activate ();
 
       PortableServer::POA_var ec_poa (rtserver_setup.poa ());
 
@@ -105,24 +100,19 @@ int main (int argc, char *argv[])
                                         rtserver_setup.rtcorba_setup ()
                                         ACE_ENV_ARG_PARAMETER)
               );
-      ACE_TRY_CHECK;
 
-      ec_impl->activate (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      ec_impl->activate ();
 
       PortableServer::ObjectId_var ec_id =
         ec_poa->activate_object (ec_impl.in ()
                                  ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
       CORBA::Object_var ec_object =
         ec_poa->id_to_reference (ec_id.in ()
                                  ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       RtecEventChannelAdmin::EventChannel_var ec =
         RtecEventChannelAdmin::EventChannel::_narrow (ec_object.in ()
                                                       ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       EC_Destroyer ec_destroyer (ec.in ());
 
@@ -163,7 +153,6 @@ int main (int argc, char *argv[])
         {
           high_priority_group.connect (ec.in ()
                                        ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
           high_priority_disconnect = &high_priority_group;
         }
 
@@ -193,7 +182,6 @@ int main (int argc, char *argv[])
         {
           high_priority_group.connect (ec.in ()
                                        ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
           high_priority_disconnect = &high_priority_group;
         }
       Send_Task high_priority_task;

@@ -47,10 +47,10 @@ protected:
   virtual void init_i (CORBA::ORB_ptr orb ACE_ENV_ARG_DECL);
 
   /// Create the Factory for RT Notify objects.
-  virtual TAO_Notify_Factory* create_factory (ACE_ENV_SINGLE_ARG_DECL);
+  virtual TAO_Notify_Factory* create_factory (void);
 
   /// Creates the Builder for RT Notify objects.
-  virtual TAO_Notify_Builder* create_builder (ACE_ENV_SINGLE_ARG_DECL);
+  virtual TAO_Notify_Builder* create_builder (void);
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

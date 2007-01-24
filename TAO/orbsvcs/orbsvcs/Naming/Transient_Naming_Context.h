@@ -169,7 +169,7 @@ public:
    * same naming server in which the operation was invoked.  The
    * context is not bound.
    */
-  virtual CosNaming::NamingContext_ptr new_context (ACE_ENV_SINGLE_ARG_DECL);
+  virtual CosNaming::NamingContext_ptr new_context (void);
 
   /**
    * Returns at most the requested number of bindings <how_many> in

@@ -13,21 +13,21 @@ Hello::Hello (CORBA::ORB_ptr orb, Test::Hello_ptr, CORBA::ULong)
 }
 
 void
-Hello::shutdown (ACE_ENV_SINGLE_ARG_DECL)
+Hello::shutdown (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->orb_->shutdown (0 ACE_ENV_ARG_PARAMETER);
 }
 
 void
-Hello::ping (ACE_ENV_SINGLE_ARG_DECL)
+Hello::ping (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return;
 }
 
 CORBA::Boolean
-Hello::has_ft_request_service_context (ACE_ENV_SINGLE_ARG_DECL)
+Hello::has_ft_request_service_context (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return ServerRequest_Interceptor2::has_ft_request_sc_;

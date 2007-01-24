@@ -50,8 +50,7 @@ TAO_CEC_ProxyPullSupplier::activate (
   CosEventChannelAdmin::ProxyPullSupplier_var result;
   ACE_TRY
     {
-      result = this->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      result = this->_this ();
     }
   ACE_CATCHANY
     {
@@ -62,19 +61,16 @@ TAO_CEC_ProxyPullSupplier::activate (
 }
 
 void
-TAO_CEC_ProxyPullSupplier::deactivate (ACE_ENV_SINGLE_ARG_DECL)
+TAO_CEC_ProxyPullSupplier::deactivate (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_TRY
     {
       PortableServer::POA_var poa =
-        this->_default_POA (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        this->_default_POA ();
       PortableServer::ObjectId_var id =
         poa->servant_to_id (this ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
       poa->deactivate_object (id.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
     }
   ACE_CATCHANY
     {
@@ -87,7 +83,7 @@ TAO_CEC_ProxyPullSupplier::deactivate (ACE_ENV_SINGLE_ARG_DECL)
 }
 
 void
-TAO_CEC_ProxyPullSupplier::shutdown (ACE_ENV_SINGLE_ARG_DECL)
+TAO_CEC_ProxyPullSupplier::shutdown (void)
 {
   // Save the consumer we where connected to, we need to send a
   // disconnect message to it.
@@ -98,21 +94,18 @@ TAO_CEC_ProxyPullSupplier::shutdown (ACE_ENV_SINGLE_ARG_DECL)
         ACE_Lock, ace_mon, *this->lock_,
         CORBA::INTERNAL ());
     // @@ CosEventChannelAdmin::EventChannel::SYNCHRONIZATION_ERROR ());
-    ACE_CHECK;
 
     consumer = this->consumer_._retn ();
   }
 
-  this->deactivate (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+  this->deactivate ();
 
   if (CORBA::is_nil (consumer.in ()))
     return;
 
   ACE_TRY
     {
-      consumer->disconnect_pull_consumer (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      consumer->disconnect_pull_consumer ();
     }
   ACE_CATCHANY
     {
@@ -132,7 +125,6 @@ TAO_CEC_ProxyPullSupplier::consumer_non_existent (
     ACE_GUARD_THROW_EX (
         ACE_Lock, ace_mon, *this->lock_,
         CORBA::INTERNAL ());
-    ACE_CHECK_RETURN (0);
 
     disconnected = 0;
     if (this->is_connected_i () == 0)
@@ -148,7 +140,7 @@ TAO_CEC_ProxyPullSupplier::consumer_non_existent (
   }
 
 #if (TAO_HAS_MINIMUM_CORBA == 0)
-  return consumer->_non_existent (ACE_ENV_SINGLE_ARG_PARAMETER);
+  return consumer->_non_existent ();
 #else
   return 0;
 #endif /* TAO_HAS_MINIMUM_CORBA */
@@ -170,7 +162,7 @@ TAO_CEC_ProxyPullSupplier::push (const CORBA::Any &event
 }
 
 CORBA::Any *
-TAO_CEC_ProxyPullSupplier::pull (ACE_ENV_SINGLE_ARG_DECL)
+TAO_CEC_ProxyPullSupplier::pull (void)
       ACE_THROW_SPEC ((CORBA::SystemException,
                        CosEventComm::Disconnected))
 {
@@ -257,7 +249,6 @@ TAO_CEC_ProxyPullSupplier::connect_pull_consumer (
         ACE_Lock, ace_mon, *this->lock_,
         CORBA::INTERNAL ());
     // @@ CosEventChannelAdmin::EventChannel::SYNCHRONIZATION_ERROR ());
-    ACE_CHECK;
 
     if (this->is_connected_i ())
       {
@@ -277,10 +268,8 @@ TAO_CEC_ProxyPullSupplier::connect_pull_consumer (
               TAO_CEC_Unlock, ace_mon, reverse_lock,
               CORBA::INTERNAL ());
           // @@ CosEventChannelAdmin::EventChannel::SYNCHRONIZATION_ERROR ());
-          ACE_CHECK;
 
           this->event_channel_->reconnected (this ACE_ENV_ARG_PARAMETER);
-          ACE_CHECK;
         }
         return;
       }
@@ -333,7 +322,6 @@ TAO_CEC_ProxyPullSupplier::disconnect_pull_supplier (
         ACE_Lock, ace_mon, *this->lock_,
         CORBA::INTERNAL ());
     // @@ CosEventChannelAdmin::EventChannel::SYNCHRONIZATION_ERROR ());
-    ACE_CHECK;
 
     if (this->is_connected_i () == 0)
       ACE_THROW (CORBA::BAD_INV_ORDER ());
@@ -345,7 +333,6 @@ TAO_CEC_ProxyPullSupplier::disconnect_pull_supplier (
 
   // Notify the event channel....
   this->event_channel_->disconnected (this ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
   if (CORBA::is_nil (consumer.in ()))
     return;
@@ -354,8 +341,7 @@ TAO_CEC_ProxyPullSupplier::disconnect_pull_supplier (
     {
       ACE_TRY
         {
-          consumer->disconnect_pull_consumer (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+          consumer->disconnect_pull_consumer ();
         }
       ACE_CATCHANY
         {
@@ -369,19 +355,19 @@ TAO_CEC_ProxyPullSupplier::disconnect_pull_supplier (
 }
 
 PortableServer::POA_ptr
-TAO_CEC_ProxyPullSupplier::_default_POA (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+TAO_CEC_ProxyPullSupplier::_default_POA (void)
 {
   return PortableServer::POA::_duplicate (this->default_POA_.in ());
 }
 
 void
-TAO_CEC_ProxyPullSupplier::_add_ref (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+TAO_CEC_ProxyPullSupplier::_add_ref (void)
 {
   this->_incr_refcnt ();
 }
 
 void
-TAO_CEC_ProxyPullSupplier::_remove_ref (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+TAO_CEC_ProxyPullSupplier::_remove_ref (void)
 {
   this->_decr_refcnt ();
 }

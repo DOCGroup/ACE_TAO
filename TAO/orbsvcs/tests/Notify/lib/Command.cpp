@@ -31,7 +31,7 @@ TAO_Notify_Tests_Command::next (TAO_Notify_Tests_Command* command)
 }
 
 void
-TAO_Notify_Tests_Command::execute (ACE_ENV_SINGLE_ARG_DECL)
+TAO_Notify_Tests_Command::execute (void)
 {
   if (this->command_ == INVALID)
     {
@@ -43,8 +43,7 @@ TAO_Notify_Tests_Command::execute (ACE_ENV_SINGLE_ARG_DECL)
 
       ACE_TRY
         {
-          this->execute_i (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+          this->execute_i ();
         }
       ACE_CATCHANY
         {
@@ -55,5 +54,5 @@ TAO_Notify_Tests_Command::execute (ACE_ENV_SINGLE_ARG_DECL)
     }
 
   if (this->next_)
-    this->next_->execute (ACE_ENV_SINGLE_ARG_PARAMETER);
+    this->next_->execute ();
 }

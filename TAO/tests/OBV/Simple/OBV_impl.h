@@ -18,7 +18,7 @@ class Event_impl : public virtual OBV_Event,
   virtual CORBA::ValueBase* _copy_value (void);
 
 
-  virtual void do_print (ACE_ENV_SINGLE_ARG_DECL);
+  virtual void do_print (void);
 };
 
 class Event_factory : public CORBA::ValueFactoryBase
@@ -33,7 +33,7 @@ protected:
 
 private:
 
-  TAO_OBV_CREATE_RETURN_TYPE (Event) create_for_unmarshal (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
+  TAO_OBV_CREATE_RETURN_TYPE (Event) create_for_unmarshal (void);
 };
 
 #endif /* OBV_IMPL_H */

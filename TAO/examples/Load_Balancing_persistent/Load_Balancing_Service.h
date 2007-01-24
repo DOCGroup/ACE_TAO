@@ -44,7 +44,7 @@ public:
   // Initialize the <Load_Balancing_Service>: initializes the ORB, parses
   // arguments, creates a servant ...
 
-  int run (ACE_ENV_SINGLE_ARG_DECL);
+  int run (void);
   // Run the server.
 
 private:

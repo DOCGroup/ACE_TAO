@@ -65,11 +65,9 @@ Server_ORBInitializer::post_init (
         break;
       }
     }
-  ACE_CHECK;
 
   PortableInterceptor::ServerRequestInterceptor_var interceptor = tmp;
 
   info->add_server_request_interceptor (interceptor.in ()
                                         ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 }

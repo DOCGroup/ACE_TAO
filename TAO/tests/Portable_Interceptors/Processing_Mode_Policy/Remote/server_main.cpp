@@ -90,7 +90,6 @@ main (int argc, char *argv[])
 
       PortableInterceptor::register_orb_initializer (orb_initializer.in ()
                                                      ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       ACE_Argv_Type_Converter atc (argc, argv);
       CORBA::ORB_var orb =
@@ -98,7 +97,6 @@ main (int argc, char *argv[])
                          atc.get_TCHAR_argv (),
                          ""
                          ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       ACE_Manual_Event me;
       Server_Task server_task (output,

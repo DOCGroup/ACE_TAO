@@ -83,7 +83,7 @@ public:
   TAO_ECG_UDP_Sender_Disconnect_Command &
    operator= (const TAO_ECG_UDP_Sender_Disconnect_Command & rhs);
 
-  void execute (ACE_ENV_SINGLE_ARG_DECL);
+  void execute (void);
 
 private:
 
@@ -154,7 +154,7 @@ public:
    * Calling this method may result in decrementing of the reference
    * count (due to deactivation) and deletion of the object.
    */
-  void shutdown (ACE_ENV_SINGLE_ARG_DECL);
+  void shutdown (void);
   //@}
 
   /// Accessors.
@@ -176,7 +176,7 @@ public:
   //@{
   /// Invokes shutdown (), which may result in the object being deleted, if
   /// refcounting is used to manage its lifetime.
-  virtual void disconnect_push_consumer (ACE_ENV_SINGLE_ARG_DECL)
+  virtual void disconnect_push_consumer (void)
       ACE_THROW_SPEC ((CORBA::SystemException));
   virtual void push (const RtecEventComm::EventSet &events
                      ACE_ENV_ARG_DECL)

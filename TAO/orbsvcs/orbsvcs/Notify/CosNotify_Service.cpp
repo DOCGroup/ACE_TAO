@@ -234,7 +234,6 @@ TAO_CosNotify_Service::init_service (CORBA::ORB_ptr orb ACE_ENV_ARG_DECL)
           char **argv = &argv0;  // ansi requires argv be null terminated.
           CORBA::ORB_var dispatcher = CORBA::ORB_init (argc, argv,
                                                        "default_dispatcher" ACE_ENV_ARG_PARAMETER);
-          //ACE_CHECK_RETURN (-1);
 
           TAO_Notify_PROPERTIES::instance()->dispatching_orb(dispatcher.in());
         }
@@ -252,7 +251,6 @@ void
 TAO_CosNotify_Service::init_service2 (CORBA::ORB_ptr orb, CORBA::ORB_ptr dispatching_orb ACE_ENV_ARG_DECL)
 {
   this->init_i2 (orb, dispatching_orb ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 }
 
 void
@@ -261,14 +259,12 @@ TAO_CosNotify_Service::init_i (CORBA::ORB_ptr orb ACE_ENV_ARG_DECL)
   // Obtain the Root POA
   CORBA::Object_var object  =
     orb->resolve_initial_references("RootPOA" ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
   if (CORBA::is_nil (object.in ()))
     ACE_ERROR ((LM_ERROR,
                 " (%P|%t) Unable to resolve the RootPOA.\n"));
 
   PortableServer::POA_var default_poa = PortableServer::POA::_narrow (object.in () ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
   // Set the properties
   TAO_Notify_Properties* properties = TAO_Notify_PROPERTIES::instance();
@@ -277,13 +273,11 @@ TAO_CosNotify_Service::init_i (CORBA::ORB_ptr orb ACE_ENV_ARG_DECL)
   properties->default_poa (default_poa.in ());
 
   // Init the factory
-  this->factory_.reset (this->create_factory (ACE_ENV_SINGLE_ARG_PARAMETER));
-  ACE_CHECK;
+  this->factory_.reset (this->create_factory ());
   ACE_ASSERT( this->factory_.get() != 0 );
   TAO_Notify_PROPERTIES::instance()->factory (this->factory_.get());
 
-  this->builder_.reset (this->create_builder (ACE_ENV_SINGLE_ARG_PARAMETER));
-  ACE_CHECK;
+  this->builder_.reset (this->create_builder ());
   ACE_ASSERT( this->builder_.get() != 0 );
   TAO_Notify_PROPERTIES::instance()->builder (this->builder_.get());
 }
@@ -294,13 +288,11 @@ TAO_CosNotify_Service::init_i2 (CORBA::ORB_ptr orb, CORBA::ORB_ptr dispatching_o
   // Obtain the Root POA
   CORBA::Object_var object  =
     orb->resolve_initial_references("RootPOA" ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
   if (CORBA::is_nil (object.in ()))
     ACE_ERROR ((LM_ERROR, " (%P|%t) Unable to resolve the RootPOA.\n"));
 
   PortableServer::POA_var default_poa = PortableServer::POA::_narrow (object.in () ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
   // Set the properties
   TAO_Notify_Properties* properties = TAO_Notify_PROPERTIES::instance();
@@ -312,19 +304,17 @@ TAO_CosNotify_Service::init_i2 (CORBA::ORB_ptr orb, CORBA::ORB_ptr dispatching_o
   properties->default_poa (default_poa.in ());
 
   // Init the factory and builder
-  this->factory_.reset (this->create_factory (ACE_ENV_SINGLE_ARG_PARAMETER));
-  ACE_CHECK;
+  this->factory_.reset (this->create_factory ());
   ACE_ASSERT( this->factory_.get() != 0 );
   TAO_Notify_PROPERTIES::instance()->factory (this->factory_.get());
 
-  this->builder_.reset (this->create_builder (ACE_ENV_SINGLE_ARG_PARAMETER));
-  ACE_CHECK;
+  this->builder_.reset (this->create_builder ());
   ACE_ASSERT( this->builder_.get() != 0 );
   TAO_Notify_PROPERTIES::instance()->builder (this->builder_.get());
 }
 
 TAO_Notify_Factory*
-TAO_CosNotify_Service::create_factory (ACE_ENV_SINGLE_ARG_DECL)
+TAO_CosNotify_Service::create_factory (void)
 {
   TAO_Notify_Factory* factory = ACE_Dynamic_Service<TAO_Notify_Factory>::instance ("TAO_Notify_Factory");
   if (factory == 0)
@@ -332,19 +322,17 @@ TAO_CosNotify_Service::create_factory (ACE_ENV_SINGLE_ARG_DECL)
        ACE_NEW_THROW_EX (factory,
                          TAO_Notify_Default_Factory (),
                          CORBA::NO_MEMORY ());
-       ACE_CHECK_RETURN (0);
     }
   return factory;
 }
 
 TAO_Notify_Builder*
-TAO_CosNotify_Service::create_builder (ACE_ENV_SINGLE_ARG_DECL)
+TAO_CosNotify_Service::create_builder (void)
 {
   TAO_Notify_Builder* builder = 0;
   ACE_NEW_THROW_EX (builder,
                     TAO_Notify_Builder (),
                     CORBA::NO_MEMORY ());
-  ACE_CHECK_RETURN (0);
 
   return builder;
 }

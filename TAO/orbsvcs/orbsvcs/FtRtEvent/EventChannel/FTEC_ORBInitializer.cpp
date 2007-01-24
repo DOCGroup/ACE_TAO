@@ -29,7 +29,6 @@ FTEC_ORBInitializer::post_init (
 {
 
   Request_Context_Repository().allocate_slots(info ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
   PortableInterceptor::ClientRequestInterceptor_var client_interceptor;
   PortableInterceptor::ClientRequestInterceptor_ptr ctmp;
@@ -37,13 +36,11 @@ FTEC_ORBInitializer::post_init (
   ACE_NEW_THROW_EX(ctmp,
                    TAO_Set_Update_Interceptor,
                    CORBA::NO_MEMORY());
-  ACE_CHECK;
 
   client_interceptor = ctmp;
 
   info->add_client_request_interceptor (client_interceptor.in()
                                         ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
   PortableInterceptor::ServerRequestInterceptor_var  server_interceptor;
   PortableInterceptor::ServerRequestInterceptor_ptr  stmp;
@@ -55,7 +52,6 @@ FTEC_ORBInitializer::post_init (
 
   info->add_server_request_interceptor (server_interceptor.in()
                                         ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
   ACE_NEW_THROW_EX(stmp,
                 FtEventServiceInterceptor,
                 CORBA::NO_MEMORY());

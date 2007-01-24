@@ -1,3 +1,22 @@
+Wed Jan 24 14:00:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/IDL_Test/struct.idl:
+        * tests/IDL_Test/IDL_Test.mpc:
+          Added new IDL test file, will fail to compile until Jeff commits a fix
+          for the IDL compiler.
+
+        * tests/Any/Recursive/*:
+          Added some new test cases, one has been fixed already last week, the other
+          one is new and stored in bugzill as 2776
+
+        * tao/*.{h,cpp,inl}:
+          Zapped all environment macros except ACE_THROW_SPEC and ACE_THROW_RETURN.
+
+        * *.{h,cpp,inl}:
+          Zapped part of the environment macros from everything except the core TAO
+          libs, more follow later, first let us stabilize this commit. The goal is to
+          get rid of all environment macros
+
 Wed Jan 24 12:25:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * TAO_IDL/be/be_codegen.cpp:

@@ -98,7 +98,7 @@ namespace TAO
      * resource leaks.
      * @returns a newly allocated PortableGroup::Properties.
      */
-    PortableGroup::Properties * get_default_properties (ACE_ENV_SINGLE_ARG_DECL)
+    PortableGroup::Properties * get_default_properties (void)
       ACE_THROW_SPEC ( (CORBA::SystemException,
                    PortableGroup::InvalidProperty,
                    PortableGroup::UnsupportedProperty));

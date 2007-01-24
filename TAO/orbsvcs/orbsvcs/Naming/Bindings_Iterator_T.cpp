@@ -34,7 +34,7 @@ TAO_Bindings_Iterator<ITERATOR, TABLE_ENTRY>::~TAO_Bindings_Iterator (void)
 
   // Since we are going away, decrement the reference count on the
   // Naming Context we were iterating over.
-  context_->interface ()->_remove_ref (ACE_ENV_SINGLE_ARG_PARAMETER);
+  context_->interface ()->_remove_ref ();
 }
 
 // Return the Default POA of this Servant
@@ -58,7 +58,6 @@ TAO_Bindings_Iterator<ITERATOR, TABLE_ENTRY>::next_one (
   ACE_NEW_THROW_EX (binding,
                     CosNaming::Binding,
                     CORBA::NO_MEMORY ());
-  ACE_CHECK_RETURN (0);
 
   b = binding;
 
@@ -66,7 +65,6 @@ TAO_Bindings_Iterator<ITERATOR, TABLE_ENTRY>::next_one (
                       ace_mon,
                       this->lock_,
                       CORBA::INTERNAL ());
-  ACE_CHECK_RETURN (0);
 
   // Check to make sure this object is still valid.
   if (this->destroyed_)
@@ -76,8 +74,7 @@ TAO_Bindings_Iterator<ITERATOR, TABLE_ENTRY>::next_one (
   // self-destruct.
   if (context_->destroyed ())
     {
-      destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK_RETURN (0);
+      destroy ();
 
       ACE_THROW_RETURN (CORBA::OBJECT_NOT_EXIST (), 0);
     }
@@ -115,13 +112,11 @@ TAO_Bindings_Iterator<ITERATOR, TABLE_ENTRY>::next_n (
   ACE_NEW_THROW_EX (bl,
                     CosNaming::BindingList (0),
                     CORBA::NO_MEMORY ());
-  ACE_CHECK_RETURN (0);
   // Obtain the lock.
   ACE_GUARD_THROW_EX (TAO_SYNCH_RECURSIVE_MUTEX,
                       ace_mon,
                       this->lock_,
                       CORBA::INTERNAL ());
-  ACE_CHECK_RETURN (0);
 
   // Check to make sure this object is still valid.
   if (this->destroyed_)
@@ -131,8 +126,7 @@ TAO_Bindings_Iterator<ITERATOR, TABLE_ENTRY>::next_n (
   // self-destruct.
   if (context_->destroyed ())
     {
-      destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK_RETURN (0);
+      destroy ();
 
       ACE_THROW_RETURN (CORBA::OBJECT_NOT_EXIST (), 0);
     }
@@ -173,14 +167,13 @@ TAO_Bindings_Iterator<ITERATOR, TABLE_ENTRY>::next_n (
 }
 
 template <class ITERATOR, class TABLE_ENTRY> void
-TAO_Bindings_Iterator<ITERATOR, TABLE_ENTRY>::destroy (ACE_ENV_SINGLE_ARG_DECL)
+TAO_Bindings_Iterator<ITERATOR, TABLE_ENTRY>::destroy (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_GUARD_THROW_EX (TAO_SYNCH_RECURSIVE_MUTEX,
                       ace_mon,
                       this->lock_,
                       CORBA::INTERNAL ());
-  ACE_CHECK;
 
   // Check to make sure this object is still valid.
   if (this->destroyed_)
@@ -192,11 +185,9 @@ TAO_Bindings_Iterator<ITERATOR, TABLE_ENTRY>::destroy (ACE_ENV_SINGLE_ARG_DECL)
   PortableServer::ObjectId_var id =
     poa_->servant_to_id (this
                          ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
   poa_->deactivate_object (id.in ()
                            ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 }
 
 template <class ITERATOR, class TABLE_ENTRY> int

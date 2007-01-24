@@ -49,10 +49,10 @@ public:
                 ACE_ENV_ARG_DECL);
   // This method connects the supplier to the EC.
 
-  void disconnect (ACE_ENV_SINGLE_ARG_DECL);
+  void disconnect (void);
   // Disconnect from the EC.
 
-  virtual void disconnect_push_supplier (ACE_ENV_SINGLE_ARG_DECL_NOT_USED);
+  virtual void disconnect_push_supplier (void);
   // The methods in the skeleton.
 
   RtecEventComm::EventSourceID supplier_id (void) const;

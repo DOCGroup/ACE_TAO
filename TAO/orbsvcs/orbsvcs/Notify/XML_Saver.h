@@ -57,7 +57,7 @@ public:
     const ACE_CString& type
     ACE_ENV_ARG_DECL);
 
-  virtual void close (ACE_ENV_SINGLE_ARG_DECL);
+  virtual void close (void);
 
 private:
   void backup_file_name (char * file_path, int nfile);

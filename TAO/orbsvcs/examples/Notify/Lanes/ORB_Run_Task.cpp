@@ -19,10 +19,8 @@ TAO_Notify_ORB_Run_Task::svc (void)
   ACE_TRY_NEW_ENV
     {
       this->orb_objects_.current_->the_priority (0 ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
-      this->orb_objects_.orb_->run (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      this->orb_objects_.orb_->run ();
     }
   ACE_CATCHANY
     {

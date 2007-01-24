@@ -66,7 +66,6 @@ main (int argc, char *argv[])
     {
       CORBA::ORB_var orb =
         CORBA::ORB_init (argc, argv, "" ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       if (parse_args (argc, argv) != 0)
         return 1;
@@ -74,23 +73,19 @@ main (int argc, char *argv[])
       // Primary server
       CORBA::Object_var object_primary =
         orb->string_to_object (ior ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       //Secondary server
       CORBA::Object_var object_secondary =
         orb->string_to_object (name ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       // Get an object reference for the ORBs IORManipultion object!
       CORBA::Object_ptr IORM =
         orb->resolve_initial_references (TAO_OBJID_IORMANIPULATION,
                                          0
                                          ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       TAO_IOP::TAO_IOR_Manipulation_ptr iorm =
         TAO_IOP::TAO_IOR_Manipulation::_narrow (IORM ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       TAO_IOP::TAO_IOR_Manipulation::IORList iors (2);
       iors.length(2);
@@ -98,15 +93,12 @@ main (int argc, char *argv[])
       iors [1] = object_secondary;
 
       CORBA::Object_var merged = iorm->merge_iors (iors ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       CORBA::Object_var object =
         orb->resolve_initial_references ("PolicyCurrent" ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       CORBA::PolicyCurrent_var policy_current =
         CORBA::PolicyCurrent::_narrow (object.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
 
       CORBA::Any timeout_as_any;
@@ -119,27 +111,23 @@ main (int argc, char *argv[])
         orb->create_policy (TAO::CONNECTION_TIMEOUT_POLICY_TYPE,
                             timeout_as_any
                             ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
 
       policy_current->set_policy_overrides (policy_list,
                                             CORBA::ADD_OVERRIDE
                                             ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
 
       for (CORBA::ULong l = 0;
            l != policy_list.length ();
            ++l)
         {
-          policy_list[l]->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+          policy_list[l]->destroy ();
         }
 
       // Combined IOR stuff
       Simple_Server_var server =
         Simple_Server::_narrow (merged.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       if (CORBA::is_nil (server.in ()))
         {
@@ -151,7 +139,6 @@ main (int argc, char *argv[])
 
       CORBA::ULongLong freq =
         run_test (server.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       if (freq != 919263)
         ACE_ERROR ((LM_ERROR,
@@ -161,8 +148,7 @@ main (int argc, char *argv[])
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("(%P|%t) Shutting server down \n")));
 
-      server->shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      server->shutdown ();
     }
   ACE_CATCHANY
     {
@@ -178,5 +164,5 @@ CORBA::ULongLong
 run_test (Simple_Server_ptr server
           ACE_ENV_ARG_DECL)
 {
-  return server->remote_call (ACE_ENV_SINGLE_ARG_PARAMETER);
+  return server->remote_call ();
 }

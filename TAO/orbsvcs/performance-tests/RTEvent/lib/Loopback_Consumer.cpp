@@ -10,8 +10,8 @@
 #include "Implicit_Deactivator.h"
 #include "orbsvcs/Event_Service_Constants.h"
 
-ACE_RCSID (PERF_RTEC, 
-           Loopback_Consumer, 
+ACE_RCSID (PERF_RTEC,
+           Loopback_Consumer,
            "$Id$")
 
 Loopback_Consumer::
@@ -31,8 +31,7 @@ Loopback_Consumer::connect (RtecEventChannelAdmin::EventChannel_ptr ec
                             ACE_ENV_ARG_DECL)
 {
   RtecEventChannelAdmin::ConsumerAdmin_var consumer_admin =
-    ec->for_consumers (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+    ec->for_consumers ();
 
   {
     ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->mutex_);
@@ -40,13 +39,11 @@ Loopback_Consumer::connect (RtecEventChannelAdmin::EventChannel_ptr ec
       return;
 
     this->proxy_supplier_ =
-      consumer_admin->obtain_push_supplier (ACE_ENV_SINGLE_ARG_PARAMETER);
-    ACE_CHECK;
+      consumer_admin->obtain_push_supplier ();
   }
 
   RtecEventComm::PushConsumer_var consumer =
-    this->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+    this->_this ();
 
   RtecEventChannelAdmin::ConsumerQOS consumer_qos;
   consumer_qos.is_gateway = 0;
@@ -64,11 +61,10 @@ Loopback_Consumer::connect (RtecEventChannelAdmin::EventChannel_ptr ec
   this->proxy_supplier_->connect_push_consumer (consumer.in (),
                                                 consumer_qos
                                                 ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 }
 
 void
-Loopback_Consumer::disconnect (ACE_ENV_SINGLE_ARG_DECL)
+Loopback_Consumer::disconnect (void)
 {
   RtecEventChannelAdmin::ProxyPushSupplier_var proxy;
   {
@@ -80,12 +76,10 @@ Loopback_Consumer::disconnect (ACE_ENV_SINGLE_ARG_DECL)
 
   Implicit_Deactivator deactivator (this
                                     ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
   ACE_TRY
     {
-      proxy->disconnect_push_supplier (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      proxy->disconnect_push_supplier ();
     }
   ACE_CATCHANY {} ACE_ENDTRY;
 }
@@ -100,7 +94,7 @@ Loopback_Consumer::push (const RtecEventComm::EventSet &events
 }
 
 void
-Loopback_Consumer::disconnect_push_consumer (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+Loopback_Consumer::disconnect_push_consumer (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->mutex_);
@@ -109,7 +103,7 @@ Loopback_Consumer::disconnect_push_consumer (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
 }
 
 PortableServer::POA_ptr
-Loopback_Consumer::_default_POA (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+Loopback_Consumer::_default_POA (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return PortableServer::POA::_duplicate (this->default_POA_.in ());

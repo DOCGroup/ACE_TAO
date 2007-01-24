@@ -38,7 +38,7 @@ public:
   void init (CORBA::ORB_var& orb ACE_ENV_ARG_DECL);
 
   /// Resolve Notification
-  CosNotifyChannelAdmin::EventChannelFactory_ptr notify_factory (ACE_ENV_SINGLE_ARG_DECL);
+  CosNotifyChannelAdmin::EventChannelFactory_ptr notify_factory (void);
 
   ///= Public Data
   CORBA::ORB_var orb_;

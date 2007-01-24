@@ -177,7 +177,7 @@ TAO_Notify_Tests_RT_POA_Command::init (ACE_Arg_Shifter& arg_shifter)
 }
 
 void
-TAO_Notify_Tests_RT_POA_Command::execute_i (ACE_ENV_SINGLE_ARG_DECL)
+TAO_Notify_Tests_RT_POA_Command::execute_i (void)
 {
   if (this->command_ == CREATE)
     {
@@ -190,12 +190,10 @@ TAO_Notify_Tests_RT_POA_Command::execute_i (ACE_ENV_SINGLE_ARG_DECL)
       CORBA::Object_var object =
         orb->resolve_initial_references ("RTORB"
                                       ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
 
       RTCORBA::RTORB_var rt_orb =
         RTCORBA::RTORB::_narrow (object.in ()
                                  ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
 
       // Resolve parent poa.
       PortableServer::POA_var parent_poa;
@@ -204,7 +202,6 @@ TAO_Notify_Tests_RT_POA_Command::execute_i (ACE_ENV_SINGLE_ARG_DECL)
 
       // Create the POA.
       this->create (rt_orb.in (), parent_poa.in () ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
 
       ACE_DEBUG ((LM_DEBUG, "Created RT POA %s\n", this->POA_name_.c_str ()));
     }
@@ -213,10 +210,8 @@ TAO_Notify_Tests_RT_POA_Command::execute_i (ACE_ENV_SINGLE_ARG_DECL)
       PortableServer::POA_var poa;
 
       LOOKUP_MANAGER->resolve (poa, this->POA_name_.c_str () ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
 
       poa->destroy (1,0 ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
 
       ACE_DEBUG ((LM_DEBUG, "Destroyed RT POA %s\n", this->POA_name_.c_str ()));
     }
@@ -255,7 +250,6 @@ TAO_Notify_Tests_RT_POA_Command::create (RTCORBA::RTORB_ptr rt_orb, PortableServ
     rt_orb->create_priority_model_policy (priority_model_,
                                           server_priority_
                                           ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
   if (lanes_.length () != 0)
     {
@@ -277,14 +271,12 @@ TAO_Notify_Tests_RT_POA_Command::create (RTCORBA::RTORB_ptr rt_orb, PortableServ
                                               max_buffered_requests,
                                               max_request_buffer_size
                                               ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
 
 
       // Create a thread-pool policy.
       lanes_policy =
         rt_orb->create_threadpool_policy (threadpool_id
                                           ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
 
     }
   else if (thread_pool_static_threads_ > 0)
@@ -307,12 +299,10 @@ TAO_Notify_Tests_RT_POA_Command::create (RTCORBA::RTORB_ptr rt_orb, PortableServ
                                  max_buffered_requests,
                                  max_request_buffer_size
                                  ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
 
       thread_pool_policy =
                 rt_orb->create_threadpool_policy (threadpool_id
                                                   ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
     }
 
   if (bands_.length () != 0)
@@ -321,14 +311,12 @@ TAO_Notify_Tests_RT_POA_Command::create (RTCORBA::RTORB_ptr rt_orb, PortableServ
       bands_policy =
         rt_orb->create_priority_banded_connection_policy (this->bands_
                                                           ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
     }
 
   CORBA::PolicyList poa_policy_list;
 
   CORBA::Policy_var activation_policy =
     parent_poa->create_implicit_activation_policy (PortableServer::IMPLICIT_ACTIVATION ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
   if (lanes_.length () == 0 && thread_pool_static_threads_ == 0 && bands_.length () == 0)
     {
@@ -379,12 +367,10 @@ TAO_Notify_Tests_RT_POA_Command::create (RTCORBA::RTORB_ptr rt_orb, PortableServ
 
   // Get the POA Manager.
   PortableServer::POAManager_var poa_manager =
-    parent_poa->the_POAManager (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+    parent_poa->the_POAManager ();
 
   parent_poa->create_POA (POA_name_.c_str (),
                           poa_manager.in (),
                           poa_policy_list
                           ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 }

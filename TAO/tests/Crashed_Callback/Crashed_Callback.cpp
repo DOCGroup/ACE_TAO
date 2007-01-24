@@ -10,14 +10,14 @@ Crashed_Callback::Crashed_Callback (void)
 }
 
 CORBA::Boolean
-Crashed_Callback::are_you_there (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+Crashed_Callback::are_you_there (void)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return 1;
 }
 
 void
-Crashed_Callback::crash_now_please (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+Crashed_Callback::crash_now_please (void)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_DEBUG ((LM_DEBUG,
@@ -34,7 +34,7 @@ Crashed_Callback::crash_now_please (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
 }
 
 void
-Crashed_Callback::test_oneway (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+Crashed_Callback::test_oneway (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
 }

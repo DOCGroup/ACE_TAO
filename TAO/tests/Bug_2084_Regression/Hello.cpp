@@ -57,7 +57,7 @@ Hello::get_string (::CORBA::Long caller_threadid ACE_ENV_ARG_DECL)
 }
 
 void
-Hello::shutdown (ACE_ENV_SINGLE_ARG_DECL)
+Hello::shutdown (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // Give the client thread time to return from the collocated

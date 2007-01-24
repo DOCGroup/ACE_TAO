@@ -53,7 +53,7 @@ void EventNode::registerHello ( ::Test::Hello_ptr h ACE_ENV_ARG_DECL )
 }
 
 void
-EventNode::shutdown (ACE_ENV_SINGLE_ARG_DECL)
+EventNode::shutdown (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->orb_->shutdown (0 ACE_ENV_ARG_PARAMETER);

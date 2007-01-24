@@ -66,7 +66,7 @@ public:
     return CORBA::wstring_dup (s1);
   };
 
-  void shutdown (ACE_ENV_SINGLE_ARG_DECL)
+  void shutdown (void)
     ACE_THROW_SPEC ((CORBA::SystemException))
   {
     this->orb_->shutdown (0 ACE_ENV_ARG_PARAMETER);
@@ -91,13 +91,11 @@ int main(int argc, char *argv[])
                                            argv,
                                            ""
                                            ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       // Initialize POA
       CORBA::Object_var poa_object=
         orb->resolve_initial_references ("RootPOA"
                                          ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       // Check POA
       if (CORBA::is_nil (poa_object.in ()))
@@ -111,12 +109,10 @@ int main(int argc, char *argv[])
       PortableServer::POA_var root_poa =
         PortableServer::POA::_narrow (poa_object.in ()
                                       ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       // Get the POA manager
       PortableServer::POAManager_var poa_manager =
-        root_poa->the_POAManager (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        root_poa->the_POAManager ();
 
       // Create a C++ implementation of CORBA object
       SimpleImpl* my_impl = 0;
@@ -125,13 +121,11 @@ int main(int argc, char *argv[])
                       -1);
 
       // Create CORBA object for servant and REGISTER with POA
-      simple_var server = my_impl->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      simple_var server = my_impl->_this ();
 
       // Get the IOR for our object
       CORBA::String_var ior = orb->object_to_string (server.in ()
                                                      ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       FILE *output_file= ACE_OS::fopen ("server.ior", "w");
       if (output_file == 0)
@@ -143,18 +137,14 @@ int main(int argc, char *argv[])
       ACE_OS::fclose (output_file);
 
       // Activate POA manager
-      poa_manager->activate (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      poa_manager->activate ();
 
       // Wait for calls
-      orb->run (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      orb->run ();
 
       root_poa->destroy (1, 1 ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
-      orb->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      orb->destroy ();
     }
   ACE_CATCHANY
     {

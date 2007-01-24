@@ -94,7 +94,6 @@ TAO_EC_Basic_ObserverStrategy::append_observer (
     ACE_GUARD_THROW_EX (
         ACE_Lock, ace_mon, *this->lock_,
         RtecEventChannelAdmin::EventChannel::SYNCHRONIZATION_ERROR());
-    ACE_CHECK_RETURN (0);
 
     this->handle_generator_++;
     Observer_Entry entry (this->handle_generator_,
@@ -108,15 +107,11 @@ TAO_EC_Basic_ObserverStrategy::append_observer (
 
   RtecEventChannelAdmin::ConsumerQOS c_qos;
   this->fill_qos (c_qos ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (0);
   obs->update_consumer (c_qos ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (0);
 
   RtecEventChannelAdmin::SupplierQOS s_qos;
   this->fill_qos (s_qos ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (0);
   obs->update_supplier (s_qos ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (0);
 
   return this->handle_generator_;
 }
@@ -133,7 +128,6 @@ TAO_EC_Basic_ObserverStrategy::remove_observer (
 {
   ACE_GUARD_THROW_EX (ACE_Lock, ace_mon, *this->lock_,
       RtecEventChannelAdmin::EventChannel::SYNCHRONIZATION_ERROR());
-  ACE_CHECK;
 
   if (this->observers_.unbind (handle) == -1)
     ACE_THROW (
@@ -147,7 +141,6 @@ TAO_EC_Basic_ObserverStrategy::create_observer_list (
 {
   ACE_GUARD_THROW_EX (ACE_Lock, ace_mon, *this->lock_,
                  RtecEventChannelAdmin::EventChannel::SYNCHRONIZATION_ERROR());
-  ACE_CHECK_RETURN (0);
 
   int size = static_cast<int> (this->observers_.current_size ());
   RtecEventChannelAdmin::Observer_var *tmp;
@@ -177,7 +170,6 @@ TAO_EC_Basic_ObserverStrategy::connected (
     ACE_ENV_ARG_DECL)
 {
   this->supplier_qos_update (consumer ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 }
 
 void
@@ -186,7 +178,6 @@ TAO_EC_Basic_ObserverStrategy::disconnected (
     ACE_ENV_ARG_DECL)
 {
   this->supplier_qos_update (consumer ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 }
 
 void
@@ -199,11 +190,9 @@ TAO_EC_Basic_ObserverStrategy::supplier_qos_update (
 
   RtecEventChannelAdmin::SupplierQOS s_qos;
   this->fill_qos (s_qos ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
   RtecEventChannelAdmin::Observer_var *tmp = 0;
   int size = this->create_observer_list (tmp ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
   ACE_Auto_Basic_Array_Ptr<RtecEventChannelAdmin::Observer_var> copy (tmp);
 
   for (int i = 0; i != size; ++i)
@@ -211,7 +200,6 @@ TAO_EC_Basic_ObserverStrategy::supplier_qos_update (
       ACE_TRY
         {
           copy[i]->update_supplier (s_qos ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
         }
       ACE_CATCHANY
         {
@@ -228,7 +216,6 @@ TAO_EC_Basic_ObserverStrategy::connected (
     ACE_ENV_ARG_DECL)
 {
   this->consumer_qos_update (supplier ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 }
 
 void
@@ -237,7 +224,6 @@ TAO_EC_Basic_ObserverStrategy::disconnected (
     ACE_ENV_ARG_DECL)
 {
   this->consumer_qos_update (supplier ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 }
 
 void
@@ -250,11 +236,9 @@ TAO_EC_Basic_ObserverStrategy::consumer_qos_update (
 
   RtecEventChannelAdmin::ConsumerQOS c_qos;
   this->fill_qos (c_qos ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
   RtecEventChannelAdmin::Observer_var *tmp = 0;
   int size = this->create_observer_list (tmp ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
   ACE_Auto_Basic_Array_Ptr<RtecEventChannelAdmin::Observer_var> copy (tmp);
 
   for (int i = 0; i != size; ++i)
@@ -262,7 +246,6 @@ TAO_EC_Basic_ObserverStrategy::consumer_qos_update (
       ACE_TRY
         {
           copy[i]->update_consumer (c_qos ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
         }
       ACE_CATCHANY
         {
@@ -283,7 +266,6 @@ TAO_EC_Basic_ObserverStrategy::fill_qos (
   TAO_EC_Accumulate_Supplier_Headers worker (headers);
   this->event_channel_->for_each_consumer (&worker
                                            ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
   RtecEventChannelAdmin::DependencySet& dep = qos.dependencies;
 
@@ -311,7 +293,6 @@ TAO_EC_Basic_ObserverStrategy::fill_qos (
   TAO_EC_Accumulate_Consumer_Headers worker (headers);
   this->event_channel_->for_each_supplier (&worker
                                            ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
   qos.publications.length (static_cast<CORBA::ULong> (headers.current_size ()));
 
@@ -339,11 +320,9 @@ TAO_EC_Reactive_ObserverStrategy::supplier_qos_update (
 
   RtecEventChannelAdmin::SupplierQOS s_qos;
   this->fill_qos (s_qos ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
   Observer_Map copy;
   this->create_observer_map (copy ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
   Observer_Map_Iterator end = copy.end ();
   for (Observer_Map_Iterator i  = copy.begin ();
@@ -354,21 +333,18 @@ TAO_EC_Reactive_ObserverStrategy::supplier_qos_update (
       ACE_TRY
         {
           entry.observer->update_supplier (s_qos ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
         }
       ACE_CATCH (CORBA::OBJECT_NOT_EXIST, ex)
         {
           // Exception occured while updating observer, so remove it from the
           // observer list
           this->observer_not_exists (entry ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
         }
       ACE_CATCH (CORBA::TRANSIENT, transient)
         {
           // Exception occured while updating observer, so remove it from the
           // observer list
           this->observer_not_exists (entry ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
         }
       ACE_CATCHANY
         {
@@ -388,11 +364,9 @@ TAO_EC_Reactive_ObserverStrategy::consumer_qos_update (
 
   RtecEventChannelAdmin::ConsumerQOS c_qos;
   this->fill_qos (c_qos ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
   Observer_Map copy;
   this->create_observer_map (copy ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
   Observer_Map_Iterator end = copy.end ();
   for (Observer_Map_Iterator i  = copy.begin ();
@@ -403,21 +377,18 @@ TAO_EC_Reactive_ObserverStrategy::consumer_qos_update (
       ACE_TRY
         {
           entry.observer->update_consumer (c_qos ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
         }
       ACE_CATCH (CORBA::OBJECT_NOT_EXIST, ex)
         {
           // Exception occured while updating observer, so remove it from the
           // observer list
           this->observer_not_exists (entry ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
         }
       ACE_CATCH (CORBA::TRANSIENT, transient)
         {
           // Exception occured while updating observer, so remove it from the
           // observer list
           this->observer_not_exists (entry ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
         }
       ACE_CATCHANY
         {
@@ -433,7 +404,6 @@ TAO_EC_Reactive_ObserverStrategy::create_observer_map (Observer_Map &map
 {
   ACE_GUARD_THROW_EX (ACE_Lock, ace_mon, *this->lock_,
                  RtecEventChannelAdmin::EventChannel::SYNCHRONIZATION_ERROR());
-  ACE_CHECK_RETURN (0);
 
   Observer_Map_Iterator end = this->observers_.end ();
   for (Observer_Map_Iterator i  = this->observers_.begin ();
@@ -460,7 +430,6 @@ TAO_EC_Reactive_ObserverStrategy::observer_not_exists (Observer_Entry& observer
   ACE_TRY
     {
       this->remove_observer(observer.handle ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
     }
   ACE_CATCHANY
     {

@@ -26,13 +26,11 @@ Server_ORBInitializer::pre_init (
   ACE_NEW (test,
            test_i);
 
-  CORBA::Object_ptr object = test->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+  CORBA::Object_ptr object = test->_this ();
 
   orbinitinfo->register_initial_reference ("MyService",
                                            object
                                            ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
   bool invalid_name = false;
   ACE_TRY
@@ -41,7 +39,6 @@ Server_ORBInitializer::pre_init (
       orbinitinfo->register_initial_reference ("",
                                                object
                                                ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
     }
   ACE_CATCH (PortableInterceptor::ORBInitInfo::InvalidName, ex)
     {

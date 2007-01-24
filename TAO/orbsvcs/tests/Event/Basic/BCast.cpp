@@ -75,14 +75,13 @@ EC_BCast::modify_attributes (TAO_EC_Event_Channel_Attributes&)
 }
 
 void
-EC_BCast::execute_test (ACE_ENV_SINGLE_ARG_DECL)
+EC_BCast::execute_test (void)
 {
   // Subscription determining which EC events will get sent out on the
   // UDP socket.
   RtecEventChannelAdmin::ConsumerQOS sub;
   int shutdown_event_type;
   this->build_consumer_qos (0, sub, shutdown_event_type ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
   // Obtain UDP address in the string format for Gateway initialization.
   char address_server_arg [256];
@@ -111,13 +110,11 @@ EC_BCast::execute_test (ACE_ENV_SINGLE_ARG_DECL)
   gateway.run (this->orb_.in (),
                this->event_channel_.in ()
                ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
   if (this->allocate_tasks () == -1)
     return;
 
-  this->activate_tasks (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+  this->activate_tasks ();
 
   if (this->verbose ())
     ACE_DEBUG ((LM_DEBUG, "BCast (%P|%t) suppliers are active\n"));

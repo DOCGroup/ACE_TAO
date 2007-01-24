@@ -76,7 +76,6 @@ ACE_Runtime_Scheduler::get (RtecScheduler::handle_t handle
   ACE_NEW_THROW_EX (info,
                     RtecScheduler::RT_Info,
                     CORBA::NO_MEMORY ());
-  ACE_CHECK_RETURN (0);
 
 
   info->entry_point = rt_info_[handle - 1].entry_point;
@@ -188,7 +187,6 @@ ACE_Runtime_Scheduler::set_seq (const RtecScheduler::RT_Info_Set& infos
                  info.threads,
                  info.info_type
                  ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
 #else
       // Call the internal set method.
       this->set (infos[i].handle,
@@ -202,7 +200,6 @@ ACE_Runtime_Scheduler::set_seq (const RtecScheduler::RT_Info_Set& infos
                  infos[i].threads,
                  infos[i].info_type
                  ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
 #endif
     }
 }
@@ -234,7 +231,6 @@ ACE_Runtime_Scheduler::replace_seq (const RtecScheduler::RT_Info_Set& infos
                  info.threads,
                  info.info_type
                  ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
 #else
       // Call the internal set method.
       this->set (infos[i].handle,
@@ -248,7 +244,6 @@ ACE_Runtime_Scheduler::replace_seq (const RtecScheduler::RT_Info_Set& infos
                  infos[i].threads,
                  infos[i].info_type
                  ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
 #endif
     }
 }
@@ -304,7 +299,6 @@ ACE_Runtime_Scheduler::entry_point_priority (const char * entry_point,
                       RtecScheduler::NOT_SCHEDULED))
 {
   RtecScheduler::handle_t handle = lookup (entry_point ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
   if (handle < -1)
     // The exception was thrown or is in ACE_ENV_SINGLE_ARG_PARAMETER already.
@@ -561,7 +555,7 @@ ACE_Runtime_Scheduler::dispatch_configuration (RtecScheduler::Preemption_Priorit
 // to the number returned, inclusive.
 
 RtecScheduler::Preemption_Priority_t
-ACE_Runtime_Scheduler::last_scheduled_priority (ACE_ENV_SINGLE_ARG_DECL)
+ACE_Runtime_Scheduler::last_scheduled_priority (void)
     ACE_THROW_SPEC ((CORBA::SystemException,
                     RtecScheduler::NOT_SCHEDULED))
 {

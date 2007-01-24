@@ -81,20 +81,20 @@ public:
 
   /// Destroy the log object and all contained records.
   void
-  destroy (ACE_ENV_SINGLE_ARG_DECL)
+  destroy (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   /// Activate the RTEventLog.
   void
-  activate (ACE_ENV_SINGLE_ARG_DECL);
+  activate (void);
 
   // = The RtecEventChannelAdmin::EventChannel interface methods.
   RtecEventChannelAdmin::ConsumerAdmin_ptr
-  for_consumers (ACE_ENV_SINGLE_ARG_DECL)
+  for_consumers (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   RtecEventChannelAdmin::SupplierAdmin_ptr
-  for_suppliers (ACE_ENV_SINGLE_ARG_DECL)
+  for_suppliers (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual RtecEventChannelAdmin::Observer_Handle

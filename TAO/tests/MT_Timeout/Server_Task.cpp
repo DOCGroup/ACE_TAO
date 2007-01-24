@@ -22,7 +22,6 @@ Server_Task::svc (void)
   ACE_TRY
     {
       this->orb_->run (this->running_time_ ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
     }
   ACE_CATCHANY
     {

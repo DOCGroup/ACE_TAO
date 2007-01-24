@@ -35,7 +35,7 @@ IOR_corbaname_Client_i::~IOR_corbaname_Client_i (void)
 }
 
 int
-IOR_corbaname_Client_i::run (ACE_ENV_SINGLE_ARG_DECL)
+IOR_corbaname_Client_i::run (void)
 {
 
   ACE_TRY
@@ -65,12 +65,10 @@ IOR_corbaname_Client_i::run (ACE_ENV_SINGLE_ARG_DECL)
       CORBA::Object_var factory_object =
         this->orb_->string_to_object (corbaname_url.c_str ()
                                       ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       // Narrow
       corbaname::Status_var factory =
         corbaname::Status::_narrow (factory_object.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       if (CORBA::is_nil (factory.in ()))
         {
@@ -82,8 +80,7 @@ IOR_corbaname_Client_i::run (ACE_ENV_SINGLE_ARG_DECL)
 
       // Invoke a request on the server
       CORBA::Boolean ret_value =
-        factory->print_status (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        factory->print_status ();
 
       if (ret_value == 0)
         {
@@ -107,7 +104,6 @@ IOR_corbaname_Client_i::run (ACE_ENV_SINGLE_ARG_DECL)
       return -1;
     }
   ACE_ENDTRY;
-  ACE_CHECK_RETURN (-1);
 
   return 0;
 }
@@ -128,7 +124,6 @@ IOR_corbaname_Client_i::init (int argc, char **argv)
                          this->argv_,
                          "" /* the ORB name, it can be anything! */
                          ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       // There must be at least one argument, the file that has to be
       // retrieved

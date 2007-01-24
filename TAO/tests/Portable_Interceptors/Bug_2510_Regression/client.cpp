@@ -43,15 +43,13 @@ static ACE_THR_FUNC_RETURN run_test(void* pData)
     ACE_TRY
     {
         server->normal (10 ACE_ENV_ARG_PARAMETER);
-        ACE_TRY_CHECK;
     }
     ACE_CATCHANY
     {
         ACE_PRINT_EXCEPTION (ex, "Exception thrown in run_test()\n");
     }
     ACE_ENDTRY;
-    ACE_CHECK;
-  
+
     return (ACE_THR_FUNC_RETURN)0;
 }
 
@@ -70,22 +68,18 @@ main (int argc, char *argv[])
 
         PortableInterceptor::register_orb_initializer (initializer.in ()
                                                      ACE_ENV_ARG_PARAMETER);
-        ACE_TRY_CHECK;
 
         CORBA::ORB_var orb =
         CORBA::ORB_init (argc, argv, "" ACE_ENV_ARG_PARAMETER);
-        ACE_TRY_CHECK;
 
         if (parse_args (argc, argv) != 0)
         return 1;
 
         CORBA::Object_var object =
         orb->string_to_object (ior ACE_ENV_ARG_PARAMETER);
-        ACE_TRY_CHECK;
 
         Test_Interceptors::Visual_var server =
         Test_Interceptors::Visual::_narrow (object.in () ACE_ENV_ARG_PARAMETER);
-        ACE_TRY_CHECK;
 
         if (CORBA::is_nil (server.in ()))
         {
@@ -97,7 +91,7 @@ main (int argc, char *argv[])
 
         ACE_hthread_t threadHandle;
         if ( ACE_Thread::spawn(	run_test,
-                                static_cast<void*>(server.in()), 
+                                static_cast<void*>(server.in()),
 						        THR_NEW_LWP | THR_JOINABLE ,
                                 0,
                                 & threadHandle
@@ -107,10 +101,8 @@ main (int argc, char *argv[])
         }
 
         ACE_Thread::join (threadHandle);
-        ACE_TRY_CHECK;
 
-        server->shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
-        ACE_TRY_CHECK;
+        server->shutdown ();
     }
 
     ACE_CATCHANY
@@ -119,7 +111,7 @@ main (int argc, char *argv[])
                            "Caught exception in client:");
         return 1;
     }
-    
+
     ACE_ENDTRY;
 
     return 0;

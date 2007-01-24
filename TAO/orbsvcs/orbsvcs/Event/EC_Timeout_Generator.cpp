@@ -8,8 +8,8 @@
 #include "orbsvcs/Event/EC_Timeout_Generator.inl"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID (Event, 
-           EC_Timeout_Generator, 
+ACE_RCSID (Event,
+           EC_Timeout_Generator,
            "$Id$")
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
@@ -47,7 +47,6 @@ TAO_EC_Timeout_Adapter::handle_timeout (const ACE_Time_Value & /* tv */,
       filter->push_to_proxy (single_event,
                              qos_info
                               ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
     }
   ACE_CATCHANY
     {

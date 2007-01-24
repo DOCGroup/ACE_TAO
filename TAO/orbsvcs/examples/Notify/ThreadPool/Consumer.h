@@ -39,7 +39,7 @@ public:
   void init (PortableServer::POA_var& poa, CosNotifyChannelAdmin::ConsumerAdmin_var& admin, int proxy_supplier_thread_count, int max_events, long delay ACE_ENV_ARG_DECL);
 
   /// Run
-  void run (ACE_ENV_SINGLE_ARG_DECL_NOT_USED);
+  void run (void);
 
   /// Print the consumer throughput
   void dump_throughput (void);
@@ -51,16 +51,16 @@ protected:
 
   /// Connect the Consumer to the EventChannel.
   /// Creates a new proxy supplier and connects to it.
-  void connect (ACE_ENV_SINGLE_ARG_DECL);
+  void connect (void);
 
   /// Disconnect the supplier.
-  void disconnect (ACE_ENV_SINGLE_ARG_DECL);
+  void disconnect (void);
 
   /// Deactivate.
-  void deactivate (ACE_ENV_SINGLE_ARG_DECL);
+  void deactivate (void);
 
   // = ServantBase operations
-  virtual PortableServer::POA_ptr _default_POA (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
+  virtual PortableServer::POA_ptr _default_POA (void);
 
   // = NotifyPublish method
   virtual void offer_change (

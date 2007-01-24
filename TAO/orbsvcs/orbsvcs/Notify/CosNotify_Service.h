@@ -69,10 +69,10 @@ protected:
 private:
 
   /// Create the Factory for Notify objects.
-  virtual TAO_Notify_Factory* create_factory (ACE_ENV_SINGLE_ARG_DECL);
+  virtual TAO_Notify_Factory* create_factory (void);
 
   /// Create the Builder for Notify objects.
-  virtual TAO_Notify_Builder* create_builder (ACE_ENV_SINGLE_ARG_DECL);
+  virtual TAO_Notify_Builder* create_builder (void);
 
   /// Set thread options on <qos>.
   void set_threads (CosNotification::QoSProperties &qos, int threads);

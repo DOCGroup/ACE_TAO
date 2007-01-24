@@ -50,24 +50,24 @@ public:
   // Execute test code.
 
 private:
-  void array_test (ACE_ENV_SINGLE_ARG_DECL);
-  void enum_test (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
-  void alias_test (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
-  void native_test (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
-  void struct_test (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
-  void union_test (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
-  void exception_test (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
-  void constant_test (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
-  void interface_test (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
-  void move_test (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
-  void module_test (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
+  void array_test (void);
+  void enum_test (void);
+  void alias_test (void);
+  void native_test (void);
+  void struct_test (void);
+  void union_test (void);
+  void exception_test (void);
+  void constant_test (void);
+  void interface_test (void);
+  void move_test (void);
+  void module_test (void);
   // The various IFR tests.
 
   int parse_args (int argc,
                   char *argv[]);
   // Process the command line arguments.
 
-  void (Admin_Client::*test_array_[NUMBER_OF_TESTS])(ACE_ENV_SINGLE_ARG_DECL_NOT_USED);
+  void (Admin_Client::*test_array_[NUMBER_OF_TESTS])(void);
   // Array of pointers to the test functions.
 
   static const char *test_names_[];

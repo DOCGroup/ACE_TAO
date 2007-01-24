@@ -46,7 +46,7 @@ public:
                 ACE_ENV_ARG_DECL)
       ACE_THROW_SPEC ((CORBA::SystemException,
                        RtecEventChannelAdmin::AlreadyConnected));
-  virtual void disconnect_push_consumer (ACE_ENV_SINGLE_ARG_DECL)
+  virtual void disconnect_push_consumer (void)
       ACE_THROW_SPEC ((CORBA::SystemException));
 
   const FtRtecEventChannelAdmin::ObjectId& id() const;

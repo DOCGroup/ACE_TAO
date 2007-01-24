@@ -20,7 +20,7 @@
 #include "ub_struct_seq.h"
 
 ACE_RCSID (Param_Test,
-           ub_struct_seq, 
+           ub_struct_seq,
            "$Id$")
 
 // ************************************************************************
@@ -59,8 +59,7 @@ Test_Struct_Sequence::dii_req_invoke (CORBA::Request *req
 
   req->set_return_type (Param_Test::_tc_StructSeq);
 
-  req->invoke (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+  req->invoke ();
 
   Param_Test::StructSeq *tmp;
   req->return_value () >>= tmp;
@@ -68,13 +67,11 @@ Test_Struct_Sequence::dii_req_invoke (CORBA::Request *req
 
   CORBA::NamedValue_ptr o2 =
     req->arguments ()->item (1 ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
   *o2->value () >>= tmp;
   this->inout_ = new Param_Test::StructSeq (*tmp);
 
   CORBA::NamedValue_ptr o3 =
     req->arguments ()->item (2 ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
   *o3->value () >>= tmp;
   this->out_ = new Param_Test::StructSeq (*tmp);
 }
@@ -123,7 +120,6 @@ Test_Struct_Sequence::run_sii_test (Param_Test_ptr objref
                                                  this->inout_.inout (),
                                                  out
                                                  ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       return 0;
     }
@@ -266,8 +262,7 @@ Test_Unbounded_Struct_Sequence::dii_req_invoke (CORBA::Request *req
 
   req->set_return_type (Param_Test::_tc_PathSpec);
 
-  req->invoke (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+  req->invoke ();
 
   Param_Test::PathSpec *tmp;
   req->return_value () >>= tmp;
@@ -275,13 +270,11 @@ Test_Unbounded_Struct_Sequence::dii_req_invoke (CORBA::Request *req
 
   CORBA::NamedValue_ptr o2 =
     req->arguments ()->item (1 ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
   *o2->value () >>= tmp;
   this->inout_ = new Param_Test::PathSpec (*tmp);
 
   CORBA::NamedValue_ptr o3 =
     req->arguments ()->item (2 ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
   *o3->value () >>= tmp;
   this->out_ = new Param_Test::PathSpec (*tmp);
 }
@@ -328,7 +321,6 @@ Test_Unbounded_Struct_Sequence::run_sii_test (Param_Test_ptr objref
                                                        this->inout_.inout (),
                                                        out
                                                        ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
 
   return 0;
 }

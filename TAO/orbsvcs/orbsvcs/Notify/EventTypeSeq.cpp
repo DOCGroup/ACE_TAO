@@ -274,11 +274,9 @@ TAO_Notify_EventTypeSeq::save_persistent (TAO_Notify::Topology_Saver& saver ACE_
   if (this->size() != 0)
   {
     saver.begin_object(0, "subscriptions", attrs, changed ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK;
     for (iter.first (); iter.next (event_type) != 0; iter.advance ())
     {
       event_type->save_persistent(saver ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
     }
 // todo:
 //    for all deleted children
@@ -286,7 +284,6 @@ TAO_Notify_EventTypeSeq::save_persistent (TAO_Notify::Topology_Saver& saver ACE_
 //      saver.delete_child(child_type, child_id);
 //    }
     saver.end_object(0, "subscriptions" ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK;
   }
 }
 

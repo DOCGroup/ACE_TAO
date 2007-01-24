@@ -91,7 +91,7 @@ private:
   TAO_EC_Sched_Filter& operator= (const TAO_EC_Sched_Filter&);
 
   /// Initialize our RT_Info handle and dependencies
-  void init_rt_info (ACE_ENV_SINGLE_ARG_DECL);
+  void init_rt_info (void);
 
   /// Compute a new qos_info to push up.
   void compute_qos_info (TAO_EC_QOS_Info& qos_info

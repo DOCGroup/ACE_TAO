@@ -29,7 +29,6 @@ Server_Task::svc (void)
           Test::Payload_var result =
             this->echo_->echo_payload (pload
 			               ACE_ENV_ARG_PARAMETER);
-	  ACE_TRY_CHECK;
         }
       ACE_CATCHANY
         {

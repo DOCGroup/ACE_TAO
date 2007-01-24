@@ -31,7 +31,7 @@ public:
   int svc (void);
 
   /// Run a single iteration of the test
-  void run_iteration (ACE_ENV_SINGLE_ARG_DECL);
+  void run_iteration (void);
 
 private:
   /// The event channel used on the test

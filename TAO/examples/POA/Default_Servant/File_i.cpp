@@ -31,7 +31,6 @@ FileImpl::System::System (PortableServer::POA_ptr poa)
   ACE_DECLARE_NEW_CORBA_ENV;
   // set the default servant of the POA
   poa->set_servant (&this->fd_servant_ ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 }
 
 FileImpl::System::~System (void)
@@ -39,7 +38,7 @@ FileImpl::System::~System (void)
 }
 
 PortableServer::POA_ptr
-FileImpl::System::_default_POA (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+FileImpl::System::_default_POA (void)
 {
   return PortableServer::POA::_duplicate (this->poa_.in ());
 }
@@ -78,13 +77,11 @@ FileImpl::System::open (const char *file_name,
     this->poa_->create_reference_with_id (oid.in (),
                                           "IDL:File/Descriptor:1.0"
                                           ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (File::Descriptor::_nil ());
 
   // Narrow the object reference to a File Descriptor
   File::Descriptor_var fd =
     File::Descriptor::_narrow (obj.in () ACE_ENV_ARG_PARAMETER);
 
-  ACE_CHECK_RETURN (File::Descriptor::_nil ());
 
   return fd._retn ();
 }
@@ -100,27 +97,25 @@ FileImpl::Descriptor::~Descriptor (void)
 }
 
 PortableServer::POA_ptr
-FileImpl::Descriptor::_default_POA (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+FileImpl::Descriptor::_default_POA (void)
 {
   return PortableServer::POA::_duplicate (this->poa_.in ());
 }
 
 //Extracts the ACE_HANDLE from the passed object reference
 ACE_HANDLE
-FileImpl::Descriptor::fd (ACE_ENV_SINGLE_ARG_DECL)
+FileImpl::Descriptor::fd (void)
 {
   //
   // One way of getting our id.
   //
 
   // Get a reference to myself
-  File::Descriptor_var me = this->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (ACE_INVALID_HANDLE);
+  File::Descriptor_var me = this->_this ();
 
   // Get the ObjectId from the reference
   PortableServer::ObjectId_var oid1 =
     this->poa_->reference_to_id (me.in () ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (ACE_INVALID_HANDLE);
 
   //
   // Another way of getting our id.
@@ -128,7 +123,6 @@ FileImpl::Descriptor::fd (ACE_ENV_SINGLE_ARG_DECL)
 
   PortableServer::ObjectId_var oid2 =
     this->poa_->servant_to_id (this ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (ACE_INVALID_HANDLE);
 
   //
   // Yet another way of getting our id.
@@ -136,23 +130,19 @@ FileImpl::Descriptor::fd (ACE_ENV_SINGLE_ARG_DECL)
 
   int argc = 0;
   CORBA::ORB_var orb = CORBA::ORB_init (argc, 0, 0 ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (ACE_INVALID_HANDLE);
 
   // Get the POA Current object reference
   CORBA::Object_var obj =
     orb->resolve_initial_references ("POACurrent"
                                      ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (ACE_INVALID_HANDLE);
 
   // Narrow the object reference to a POA Current reference
   PortableServer::Current_var poa_current =
     PortableServer::Current::_narrow (obj.in ()
                                       ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (ACE_INVALID_HANDLE);
 
   PortableServer::ObjectId_var oid3 =
-    poa_current->get_object_id (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (ACE_INVALID_HANDLE);
+    poa_current->get_object_id ();
 
   ACE_ASSERT (oid1.in () == oid2.in ());
   ACE_ASSERT (oid2.in () == oid3.in ());
@@ -171,8 +161,7 @@ FileImpl::Descriptor::write (const File::Descriptor::DataBuffer &buffer
   ACE_THROW_SPEC ((CORBA::SystemException,
                    File::IOError))
 {
-  ACE_HANDLE file_descriptor = this->fd (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (0);
+  ACE_HANDLE file_descriptor = this->fd ();
 
   const CORBA::Octet *data = &buffer[0];
 
@@ -191,8 +180,7 @@ FileImpl::Descriptor::read (CORBA::Long num_bytes
   ACE_THROW_SPEC ((CORBA::SystemException,
                    File::IOError))
 {
-  ACE_HANDLE file_descriptor = this->fd (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (0);
+  ACE_HANDLE file_descriptor = this->fd ();
 
   CORBA::Octet *buffer = File::Descriptor::DataBuffer::allocbuf (num_bytes);
   int length = ACE_OS::read (file_descriptor, buffer, num_bytes);
@@ -214,8 +202,7 @@ FileImpl::Descriptor::lseek (CORBA::ULong offset,
   ACE_THROW_SPEC ((CORBA::SystemException,
                    File::IOError))
 {
-  ACE_HANDLE file_descriptor = this->fd (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (0);
+  ACE_HANDLE file_descriptor = this->fd ();
 
   CORBA::Long result = (CORBA::Long) ACE_OS::lseek (file_descriptor,
                                                     offset,
@@ -227,12 +214,11 @@ FileImpl::Descriptor::lseek (CORBA::ULong offset,
 }
 
 void
-FileImpl::Descriptor::destroy (ACE_ENV_SINGLE_ARG_DECL)
+FileImpl::Descriptor::destroy (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // Get the ACE_HANDLE for this object reference
-  ACE_HANDLE file_descriptor = this->fd (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+  ACE_HANDLE file_descriptor = this->fd ();
 
   // Close the file corresponding to this object reference.
   ACE_OS::close (file_descriptor);

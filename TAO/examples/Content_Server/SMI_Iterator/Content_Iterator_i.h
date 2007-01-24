@@ -58,7 +58,7 @@ public:
   // This operation returns the next <chunk> of the file starting at
   // <offset>.  If there are no more bindings, false is returned.
 
-  virtual void destroy (ACE_ENV_SINGLE_ARG_DECL)
+  virtual void destroy (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
   // Destroy the iterator.
 

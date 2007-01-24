@@ -25,14 +25,14 @@ Echo_Client_Request_Interceptor::~Echo_Client_Request_Interceptor ()
 }
 
 char *
-Echo_Client_Request_Interceptor::name (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+Echo_Client_Request_Interceptor::name (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return CORBA::string_dup (this->myname_);
 }
 
 void
-Echo_Client_Request_Interceptor::destroy (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+Echo_Client_Request_Interceptor::destroy (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
 }
@@ -57,8 +57,7 @@ Echo_Client_Request_Interceptor::send_request (
   client_interceptor_check_++;
 
   CORBA::String_var op =
-    ri->operation (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+    ri->operation ();
 
   ACE_DEBUG ((LM_DEBUG,
               "Echo_Client_Request_Interceptor::send_request\n"));
@@ -71,8 +70,7 @@ Echo_Client_Request_Interceptor::send_request (
   if (ACE_OS::strcmp (op.in (), "normal") == 0)
     {
       Dynamic::ParameterList_var paramlist =
-        ri->arguments (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK;
+        ri->arguments ();
 
       CORBA::Long param;
       CORBA::ULong i = 0;  // index -- explicitly used to avoid
@@ -94,8 +92,7 @@ Echo_Client_Request_Interceptor::receive_other (
 {
   client_interceptor_check_++;
 
-  CORBA::String_var op = ri->operation (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+  CORBA::String_var op = ri->operation ();
 
   ACE_DEBUG ((LM_DEBUG,
               "Echo_Client_Request_Interceptor::receive_other "
@@ -111,8 +108,7 @@ Echo_Client_Request_Interceptor::receive_reply (
 {
   client_interceptor_check_++;
 
-  CORBA::String_var op = ri->operation (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+  CORBA::String_var op = ri->operation ();
 
   ACE_DEBUG ((LM_DEBUG,
               "Echo_Client_Request_Interceptor::receive_reply "
@@ -122,8 +118,7 @@ Echo_Client_Request_Interceptor::receive_reply (
   if (ACE_OS::strcmp (op.in (), "normal") == 0)
     {
       Dynamic::ParameterList_var paramlist =
-        ri->arguments (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK;
+        ri->arguments ();
 
       CORBA::Long param;
       CORBA::ULong i = 0;  // index -- explicitly used to avoid
@@ -134,8 +129,7 @@ Echo_Client_Request_Interceptor::receive_reply (
   else if (ACE_OS::strcmp (op.in (), "calculate") == 0)
     {
       Dynamic::ParameterList_var paramlist =
-        ri->arguments (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK;
+        ri->arguments ();
 
       CORBA::Long param1, param2, result;
       CORBA::ULong i = 0;  // index -- explicitly used to avoid
@@ -143,8 +137,7 @@ Echo_Client_Request_Interceptor::receive_reply (
       paramlist[i++].argument >>= param1;
       paramlist[i].argument >>= param2;
 
-      CORBA::Any_var result_any = ri->result (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK;
+      CORBA::Any_var result_any = ri->result ();
 
       (result_any.in ()) >>= result;
 
@@ -165,12 +158,10 @@ Echo_Client_Request_Interceptor::receive_exception (
 {
   client_interceptor_check_++;
 
-  CORBA::String_var op = ri->operation (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+  CORBA::String_var op = ri->operation ();
 
   CORBA::String_var exception_id =
-    ri->received_exception_id (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+    ri->received_exception_id ();
 
   ACE_DEBUG ((LM_DEBUG,
               "Echo_Client_Request_Interceptor::received_exception "

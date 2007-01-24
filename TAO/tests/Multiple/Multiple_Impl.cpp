@@ -48,7 +48,7 @@ Bottom_Impl::bottom_quote (ACE_ENV_SINGLE_ARG_DECL_NOT_USED )
 }
 
 void
-Bottom_Impl::shutdown (ACE_ENV_SINGLE_ARG_DECL)
+Bottom_Impl::shutdown (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->orb_->shutdown (0 ACE_ENV_ARG_PARAMETER);
@@ -70,64 +70,59 @@ Delegated_Bottom_Impl::~Delegated_Bottom_Impl (void)
 }
 
 char *
-Delegated_Bottom_Impl::top_quote (ACE_ENV_SINGLE_ARG_DECL)
+Delegated_Bottom_Impl::top_quote (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("Delegating the call: <top_quote>\n")));
 
   CORBA::String_var msg =
-    this->delegate_->top_quote (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (0);
+    this->delegate_->top_quote ();
   return msg._retn ();
 }
 
 char *
-Delegated_Bottom_Impl::left_quote (ACE_ENV_SINGLE_ARG_DECL)
+Delegated_Bottom_Impl::left_quote (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
     ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("Delegating the call: <left_quote>\n")));
 
   CORBA::String_var msg =
-    this->delegate_->left_quote (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (0);
+    this->delegate_->left_quote ();
   return msg._retn ();
 }
 
 char *
-Delegated_Bottom_Impl::right_quote (ACE_ENV_SINGLE_ARG_DECL)
+Delegated_Bottom_Impl::right_quote (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("Delegating the call: <right_quote>\n")));
 
   CORBA::String_var msg =
-    this->delegate_->right_quote (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (0);
+    this->delegate_->right_quote ();
   return msg._retn ();
 }
 
 char *
-Delegated_Bottom_Impl::bottom_quote (ACE_ENV_SINGLE_ARG_DECL)
+Delegated_Bottom_Impl::bottom_quote (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("Delegating the call: <bottom_quote>\n")));
 
   CORBA::String_var msg =
-    this->delegate_->bottom_quote (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (0);
+    this->delegate_->bottom_quote ();
   return msg._retn ();
 }
 
 void
-Delegated_Bottom_Impl::shutdown (ACE_ENV_SINGLE_ARG_DECL)
+Delegated_Bottom_Impl::shutdown (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("Delegating Shut-Down.\n")));
-  this->delegate_->shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
+  this->delegate_->shutdown ();
   //this->orb_->shutdown (0 ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 }

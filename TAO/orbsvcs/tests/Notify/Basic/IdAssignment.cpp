@@ -87,12 +87,10 @@ IdAssignment::init (int argc,
                                         argv,
                                         ""
                                         ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
   CORBA::Object_var rootObj =
     orb->resolve_initial_references ("NameService"
                                      ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
   if (CORBA::is_nil (rootObj.in ()))
     {
@@ -104,7 +102,6 @@ IdAssignment::init (int argc,
   CosNaming::NamingContext_var rootNC =
     CosNaming::NamingContext::_narrow (rootObj.in ()
                                        ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
   CosNaming::Name name (1);
   name.length (1);
@@ -112,7 +109,6 @@ IdAssignment::init (int argc,
 
   CORBA::Object_var obj = rootNC->resolve (name
                                            ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
   if (CORBA::is_nil (obj.in ()))
     {
@@ -126,12 +122,11 @@ IdAssignment::init (int argc,
         obj.in()
         ACE_ENV_ARG_PARAMETER
       );
-  ACE_CHECK;
 
 }
 
 CosNotifyChannelAdmin::ChannelID
-IdAssignment::create_ec (ACE_ENV_SINGLE_ARG_DECL)
+IdAssignment::create_ec (void)
 {
   CosNotifyChannelAdmin::ChannelID id;
   CosNotification::QoSProperties initial_qos;
@@ -141,7 +136,6 @@ IdAssignment::create_ec (ACE_ENV_SINGLE_ARG_DECL)
                                            initial_admin,
                                            id
                                            ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
 
   return id;
 }
@@ -155,7 +149,6 @@ IdAssignment::destroy_ec(CosNotifyChannelAdmin::ChannelID id
     this->notify_factory_->get_event_channel (id
                                               ACE_ENV_ARG_PARAMETER);
 
-  ACE_CHECK;
 
   if (CORBA::is_nil (ec.in()))
     {
@@ -164,8 +157,7 @@ IdAssignment::destroy_ec(CosNotifyChannelAdmin::ChannelID id
       return;
     }
 
-   ec->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-   ACE_CHECK;
+   ec->destroy ();
 }
 
 CosNotifyChannelAdmin::AdminID
@@ -180,7 +172,6 @@ IdAssignment::create_supplier_admin (CosNotifyChannelAdmin::ChannelID channel_id
     this->notify_factory_->get_event_channel (channel_id
                                               ACE_ENV_ARG_PARAMETER);
 
-  ACE_CHECK_RETURN (0);
 
   if (CORBA::is_nil (ec.in ()))
     {
@@ -193,7 +184,6 @@ IdAssignment::create_supplier_admin (CosNotifyChannelAdmin::ChannelID channel_id
     ec->new_for_suppliers (ifgop,
                            adminid
                            ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (0);
 
   if (CORBA::is_nil (supplier_admin.in ()))
     ACE_ERROR_RETURN ((LM_ERROR,
@@ -218,7 +208,6 @@ IdAssignment::create_consumer_admin (CosNotifyChannelAdmin::ChannelID channel_id
     this->notify_factory_->get_event_channel (channel_id
                                               ACE_ENV_ARG_PARAMETER);
 
-  ACE_CHECK_RETURN (0);
 
   if (CORBA::is_nil (ec.in ()))
     {
@@ -231,7 +220,6 @@ IdAssignment::create_consumer_admin (CosNotifyChannelAdmin::ChannelID channel_id
     ec->new_for_consumers (ifgop,
                            adminid
                            ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (0);
 
   if (CORBA::is_nil (consumer_admin.in ()))
     ACE_ERROR_RETURN ((LM_ERROR,
@@ -256,7 +244,6 @@ IdAssignment::destroy_consumer_admin (
     this->notify_factory_->get_event_channel (channel_id
                                               ACE_ENV_ARG_PARAMETER);
 
-  ACE_CHECK;
 
   if (CORBA::is_nil (ec.in ()))
     {
@@ -268,7 +255,6 @@ IdAssignment::destroy_consumer_admin (
   CosNotifyChannelAdmin::ConsumerAdmin_var consumer_admin =
     ec->get_consumeradmin (admin_id
                            ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
   if (CORBA::is_nil (consumer_admin.in()))
     {
@@ -276,8 +262,7 @@ IdAssignment::destroy_consumer_admin (
                   " (%P|%t) Unable to get consumer admin\n"));
     }
 
-  consumer_admin->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+  consumer_admin->destroy ();
 
   if (TAO_debug_level)
     ACE_DEBUG ((LM_DEBUG,
@@ -296,7 +281,6 @@ IdAssignment::destroy_supplier_admin (
     this->notify_factory_->get_event_channel (channel_id
                                               ACE_ENV_ARG_PARAMETER);
 
-  ACE_CHECK;
 
   if (CORBA::is_nil (ec.in ()))
     {
@@ -307,14 +291,12 @@ IdAssignment::destroy_supplier_admin (
   CosNotifyChannelAdmin::SupplierAdmin_var supplier_admin =
     ec->get_supplieradmin (admin_id
                            ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
   if (CORBA::is_nil (supplier_admin.in ()))
     ACE_ERROR ((LM_ERROR,
                 " (%P|%t) Unable to get supplier admin\n"));
 
-  supplier_admin->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+  supplier_admin->destroy ();
 
   if (TAO_debug_level)
     ACE_DEBUG ((LM_DEBUG,
@@ -322,7 +304,7 @@ IdAssignment::destroy_supplier_admin (
 }
 
 void
-IdAssignment::run_test(ACE_ENV_SINGLE_ARG_DECL)
+IdAssignment::run_test(void)
 {
   CosNotifyChannelAdmin::ChannelID* ec_id = 0;
   ACE_NEW (ec_id,
@@ -346,8 +328,7 @@ IdAssignment::run_test(ACE_ENV_SINGLE_ARG_DECL)
 
       for (ec_count = 0; ec_count < this->ec_count_; ++ec_count)
         {
-          ec_id[ec_count] = this->create_ec (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_CHECK;
+          ec_id[ec_count] = this->create_ec ();
 
           // Connect <consumer_admin_count_> number of consumers
           // to the current ec.
@@ -358,7 +339,6 @@ IdAssignment::run_test(ACE_ENV_SINGLE_ARG_DECL)
               consumer_admin_id [cons_count] =
                 this->create_consumer_admin (ec_id [ec_count]
                                              ACE_ENV_ARG_PARAMETER);
-              ACE_CHECK;
             }
 
           // Connect <supplier_admin_count_> number of suppliers
@@ -370,7 +350,6 @@ IdAssignment::run_test(ACE_ENV_SINGLE_ARG_DECL)
               supplier_admin_id [supp_count] =
                 this->create_supplier_admin (ec_id [ec_count]
                                              ACE_ENV_ARG_PARAMETER);
-              ACE_CHECK;
             }
         }
 
@@ -379,7 +358,6 @@ IdAssignment::run_test(ACE_ENV_SINGLE_ARG_DECL)
         {
           this->destroy_ec (ec_id[ec_count]
                             ACE_ENV_ARG_PARAMETER);
-          ACE_CHECK;
         }
 
     } // for
@@ -393,8 +371,7 @@ IdAssignment::run_test(ACE_ENV_SINGLE_ARG_DECL)
 
       for (ec_count = 0; ec_count < this->ec_count_; ++ec_count)
         {
-          ec_id[ec_count] = this->create_ec (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_CHECK;
+          ec_id[ec_count] = this->create_ec ();
 
           int cons_count, supp_count;
           // Connect <consumer_admin_count_> number of consumers
@@ -406,7 +383,6 @@ IdAssignment::run_test(ACE_ENV_SINGLE_ARG_DECL)
               consumer_admin_id[cons_count] =
                 this->create_consumer_admin (ec_id[ec_count]
                                              ACE_ENV_ARG_PARAMETER);
-              ACE_CHECK;
             }
 
           // Connect <supplier_admin_count_> number of suppliers
@@ -416,7 +392,6 @@ IdAssignment::run_test(ACE_ENV_SINGLE_ARG_DECL)
               supplier_admin_id[supp_count] =
                 this->create_supplier_admin (ec_id[ec_count]
                                              ACE_ENV_ARG_PARAMETER);
-              ACE_CHECK;
             }
 
           // Destroy the admins.
@@ -429,7 +404,6 @@ IdAssignment::run_test(ACE_ENV_SINGLE_ARG_DECL)
               this->destroy_consumer_admin (ec_id[ec_count],
                                             consumer_admin_id[cons_count]
                                             ACE_ENV_ARG_PARAMETER);
-              ACE_CHECK;
             }
 
           // Destroy supplier admins
@@ -440,7 +414,6 @@ IdAssignment::run_test(ACE_ENV_SINGLE_ARG_DECL)
               this->destroy_supplier_admin (ec_id[ec_count],
                                             supplier_admin_id[supp_count]
                                             ACE_ENV_ARG_PARAMETER);
-              ACE_CHECK;
             }
 
         }
@@ -450,7 +423,6 @@ IdAssignment::run_test(ACE_ENV_SINGLE_ARG_DECL)
         {
           this->destroy_ec (ec_id[ec_count]
                             ACE_ENV_ARG_PARAMETER);
-          ACE_CHECK;
         }
 
     } // for
@@ -471,10 +443,8 @@ int main (int argc, char* argv[])
       test.init (argc,
                  argv
                  ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
-      test.run_test (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      test.run_test ();
     }
   ACE_CATCHANY
     {

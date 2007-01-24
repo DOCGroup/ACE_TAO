@@ -51,7 +51,7 @@ public:
    * Methods required by the CosLoadBalancing::Strategy interface.
    */
   //@{
-  virtual char * name (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+  virtual char * name (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual CosLoadBalancing::Properties * get_properties (

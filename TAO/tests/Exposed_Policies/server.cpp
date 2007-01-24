@@ -28,13 +28,11 @@ main (int argc, char *argv[])
       Policy_Tester policy_tester;
 
       int result = policy_tester.init (argc, argv ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       if (result != 0)
         return result;
 
-      policy_tester.run (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      policy_tester.run ();
     }
 
   ACE_CATCHANY

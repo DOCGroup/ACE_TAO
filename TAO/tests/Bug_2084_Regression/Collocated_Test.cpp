@@ -68,7 +68,6 @@ main (int argc, char *argv[])
                          satc.get_TCHAR_argv (),
                          server_orb.c_str ()
                          ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       ACE_Manual_Event me;
       Server_Task server_task (output,
@@ -93,7 +92,6 @@ main (int argc, char *argv[])
                          catc.get_TCHAR_argv(),
                          client_orb.c_str ()
                          ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       Client_Task client_task (input,
                                corb.in (),
@@ -110,12 +108,10 @@ main (int argc, char *argv[])
       ACE_Thread_Manager::instance ()->wait ();
 
       // Now that all threads have completed we can destroy the ORB
-      sorb->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      sorb->destroy ();
       if (server_orb != client_orb)
         {
-          corb->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+          corb->destroy ();
         }
     }
   ACE_CATCHANY

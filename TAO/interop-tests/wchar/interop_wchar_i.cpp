@@ -38,7 +38,7 @@ interop_WChar_Passer_i::~interop_WChar_Passer_i (void)
 }
 
 char *
-interop_WChar_Passer_i::orb_name (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+interop_WChar_Passer_i::orb_name (void)
     ACE_THROW_SPEC (( CORBA::SystemException ))
 {
   return CORBA::string_dup ("TAO");
@@ -115,9 +115,7 @@ interop_WChar_Passer_i::wstruct_from_server (CORBA::Short key
 {
   interop::wstruct_var ws = new interop::wstruct ();
   ws->st_char = this->wchar_from_server(key ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (0);
   ws->st_string = this->wstring_from_server(key ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (0);
   ref_.assign_warray (key, ws->st_array);
   ws->st_any <<= ref_.get_wstring(key);
   return ws._retn ();
@@ -133,7 +131,6 @@ interop_WChar_Passer_i::wstructseq_to_server (const interop::wstructseq & test,
   for (CORBA::ULong i = 0; result && i < test.length(); i++)
     {
       result = this->wstruct_to_server(test[i], key ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK_RETURN (0);
     }
   return result;
 }
@@ -149,9 +146,7 @@ interop_WChar_Passer_i::wstructseq_from_server (CORBA::Short key
   for (CORBA::ULong i = 0; i < wsListI->length(); i++)
     {
       wsListI[i].st_char = this->wchar_from_server(key ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK_RETURN (0);
       wsListI[i].st_string = this->wstring_from_server(key ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK_RETURN (0);
       ref_.assign_warray (key, wsListI[i].st_array);
       // this is to keep Cxx on TRUE64 happy
       // it won't cast a wide character literal (i.e. L"")
@@ -273,7 +268,7 @@ interop_WChar_Passer_i::exception_test ( CORBA::Short key
 }
 
 void
-interop_WChar_Passer_i::shutdown (ACE_ENV_SINGLE_ARG_DECL)
+interop_WChar_Passer_i::shutdown (void)
   ACE_THROW_SPEC (( CORBA::SystemException ))
 {
   this->orb_->shutdown(0 ACE_ENV_ARG_PARAMETER);

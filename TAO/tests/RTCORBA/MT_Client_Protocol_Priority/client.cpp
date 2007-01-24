@@ -169,11 +169,9 @@ Task::svc (void)
       CORBA::Object_var object =
         this->orb_->resolve_initial_references ("PriorityMappingManager"
                                                 ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
       RTCORBA::PriorityMappingManager_var mapping_manager =
         RTCORBA::PriorityMappingManager::_narrow (object.in ()
                                                   ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
       if (check_for_nil (mapping_manager.in (), "Mapping Manager") == -1)
         return -1;
 
@@ -183,19 +181,15 @@ Task::svc (void)
       // RTCurrent.
       object =
         this->orb_->resolve_initial_references ("RTCurrent" ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
       RTCORBA::Current_var current =
         RTCORBA::Current::_narrow (object.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
       if (check_for_nil (current.in (), "RTCurrent") == -1)
         return -1;
 
       // Obtain Test object reference.
       object =
         this->orb_->string_to_object (ior ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
       Test_var server = Test::_narrow (object.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
       if (check_for_nil (server.in (), "Test object") == -1)
         return -1;
 
@@ -204,18 +198,15 @@ Task::svc (void)
       CORBA::Policy_var policy =
         server->_get_policy (RTCORBA::PRIORITY_MODEL_POLICY_TYPE
                              ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       RTCORBA::PriorityModelPolicy_var priority_policy =
         RTCORBA::PriorityModelPolicy::_narrow (policy.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       if (check_for_nil (priority_policy.in (), "PriorityModelPolicy") == -1)
         return -1;
 
       RTCORBA::PriorityModel priority_model =
-        priority_policy->priority_model (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        priority_policy->priority_model ();
       if (priority_model != RTCORBA::CLIENT_PROPAGATED)
         ACE_ERROR_RETURN ((LM_ERROR,
                            "ERROR: priority_model != "
@@ -275,9 +266,7 @@ Task::svc (void)
       // Testing over.  Shut down the server.
       ACE_DEBUG ((LM_DEBUG, "Client threads finished\n"));
       current->the_priority (priority1 ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
-      server->shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      server->shutdown ();
     }
   ACE_CATCHANY
     {
@@ -300,7 +289,6 @@ main (int argc, char *argv[])
       // ORB.
       CORBA::ORB_var orb =
         CORBA::ORB_init (argc, argv, "" ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       // Parse arguments.
       if (parse_args (argc, argv) != 0)
@@ -380,10 +368,8 @@ Worker_Thread::svc (void)
       // RTORB.
       CORBA::Object_var object =
         this->orb_->resolve_initial_references ("RTORB" ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
       RTCORBA::RTORB_var rt_orb = RTCORBA::RTORB::_narrow (object.in ()
                                                            ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
       if (check_for_nil (rt_orb.in (), "RTORB") == -1)
         return 0;
 
@@ -391,10 +377,8 @@ Worker_Thread::svc (void)
       object =
         this->orb_->resolve_initial_references ("PolicyCurrent"
                                                 ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
       CORBA::PolicyCurrent_var policy_current =
         CORBA::PolicyCurrent::_narrow (object.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
       if (check_for_nil (policy_current.in (), "PolicyCurrent")
           == -1)
         return 0;
@@ -413,12 +397,10 @@ Worker_Thread::svc (void)
       policy_list[0] =
         rt_orb->create_client_protocol_policy (protocols
                                                ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       policy_current->set_policy_overrides (policy_list,
                                             CORBA::SET_OVERRIDE
                                             ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       // Wait for other threads.
       this->synchronizer_->wait ();
@@ -426,8 +408,7 @@ Worker_Thread::svc (void)
       for (int i = 0; i < iterations; ++i)
         {
           // Invoke method.
-          this->server_->test_method (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+          this->server_->test_method ();
         }
     }
   ACE_CATCHANY

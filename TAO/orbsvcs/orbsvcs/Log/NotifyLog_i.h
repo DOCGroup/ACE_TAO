@@ -83,16 +83,16 @@ public:
 
   /// Destroy the log object and all contained records.
   void
-  destroy (ACE_ENV_SINGLE_ARG_DECL)
+  destroy (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   /// Activate the NotifyLog.
   void
-  activate (ACE_ENV_SINGLE_ARG_DECL);
+  activate (void);
 
   // = Methods from CosNotifyChannelAdmin::EventChannel.
   CosNotifyFilter::Filter_ptr
-  get_filter (ACE_ENV_SINGLE_ARG_DECL)
+  get_filter (void)
     ACE_THROW_SPEC ((
       CORBA::SystemException
     ));
@@ -103,25 +103,25 @@ public:
     ));
 
   CosNotifyChannelAdmin::EventChannelFactory_ptr
-  MyFactory (ACE_ENV_SINGLE_ARG_DECL)
+  MyFactory (void)
     ACE_THROW_SPEC ((
       CORBA::SystemException
     ));
 
   CosNotifyChannelAdmin::ConsumerAdmin_ptr
-  default_consumer_admin (ACE_ENV_SINGLE_ARG_DECL)
+  default_consumer_admin (void)
     ACE_THROW_SPEC ((
       CORBA::SystemException
     ));
 
   CosNotifyChannelAdmin::SupplierAdmin_ptr
-  default_supplier_admin (ACE_ENV_SINGLE_ARG_DECL)
+  default_supplier_admin (void)
     ACE_THROW_SPEC ((
       CORBA::SystemException
     ));
 
   CosNotifyFilter::FilterFactory_ptr
-  default_filter_factory (ACE_ENV_SINGLE_ARG_DECL)
+  default_filter_factory (void)
     ACE_THROW_SPEC ((
       CORBA::SystemException
     ));
@@ -155,19 +155,19 @@ public:
     ));
 
   CosNotifyChannelAdmin::AdminIDSeq*
-  get_all_consumeradmins (ACE_ENV_SINGLE_ARG_DECL)
+  get_all_consumeradmins (void)
     ACE_THROW_SPEC ((
       CORBA::SystemException
     ));
 
   CosNotifyChannelAdmin::AdminIDSeq*
-  get_all_supplieradmins (ACE_ENV_SINGLE_ARG_DECL)
+  get_all_supplieradmins (void)
     ACE_THROW_SPEC ((
       CORBA::SystemException
     ));
 
   CosNotification::AdminProperties*
-  get_admin (ACE_ENV_SINGLE_ARG_DECL)
+  get_admin (void)
     ACE_THROW_SPEC ((
       CORBA::SystemException
     ));
@@ -179,7 +179,7 @@ public:
     ));
 
   CosNotification::QoSProperties*
-  get_qos (ACE_ENV_SINGLE_ARG_DECL)
+  get_qos (void)
     ACE_THROW_SPEC ((
       CORBA::SystemException
     ));
@@ -199,13 +199,13 @@ public:
 
   // = Methods from DsEventLogAdmin::EventLog.
   CosEventChannelAdmin::ConsumerAdmin_ptr
-  for_consumers (ACE_ENV_SINGLE_ARG_DECL)
+  for_consumers (void)
     ACE_THROW_SPEC ((
       CORBA::SystemException
     ));
 
   CosEventChannelAdmin::SupplierAdmin_ptr
-  for_suppliers (ACE_ENV_SINGLE_ARG_DECL)
+  for_suppliers (void)
     ACE_THROW_SPEC ((
       CORBA::SystemException
     ));

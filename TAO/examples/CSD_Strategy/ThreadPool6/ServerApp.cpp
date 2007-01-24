@@ -26,13 +26,12 @@ int
 ServerApp::run(int argc, char* argv[] ACE_ENV_ARG_DECL)
 {
   CORBA::ORB_var orb = CORBA::ORB_init(argc, argv, "" ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
 
   // Parse the command-line args for this application.
   // * Raises -1 if problems are encountered.
   // * Returns 1 if the usage statement was explicitly requested.
   // * Returns 0 otherwise.
-  int result = this->parse_args(argc, argv); 
+  int result = this->parse_args(argc, argv);
   if (result != 0)
     {
       return result;
@@ -40,9 +39,8 @@ ServerApp::run(int argc, char* argv[] ACE_ENV_ARG_DECL)
 
   TheOrbShutdownTask::instance()->orb (orb.in ());
 
-  CORBA::Object_var obj 
+  CORBA::Object_var obj
     = orb->resolve_initial_references("RootPOA" ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
 
   if (CORBA::is_nil(obj.in()))
     {
@@ -51,9 +49,8 @@ ServerApp::run(int argc, char* argv[] ACE_ENV_ARG_DECL)
       ACE_THROW_RETURN (TestException(), -1);;
     }
 
-  PortableServer::POA_var root_poa 
+  PortableServer::POA_var root_poa
     = PortableServer::POA::_narrow(obj.in() ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
 
   if (CORBA::is_nil(root_poa.in()))
     {
@@ -62,9 +59,8 @@ ServerApp::run(int argc, char* argv[] ACE_ENV_ARG_DECL)
       ACE_THROW_RETURN (TestException(), -1);;
     }
 
-  PortableServer::POAManager_var poa_manager 
-    = root_poa->the_POAManager(ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
+  PortableServer::POAManager_var poa_manager
+    = root_poa->the_POAManager();
 
   // Create the child POA.
   CORBA::PolicyList policies(1);
@@ -73,14 +69,12 @@ ServerApp::run(int argc, char* argv[] ACE_ENV_ARG_DECL)
   policies[0] =
     root_poa->create_implicit_activation_policy (PortableServer::IMPLICIT_ACTIVATION
     ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
 
-  PortableServer::POA_var child_poa 
+  PortableServer::POA_var child_poa
     = root_poa->create_POA("ChildPoa",
                            poa_manager.in(),
-                           policies 
+                           policies
                            ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
 
   if (CORBA::is_nil(child_poa.in()))
     {
@@ -89,8 +83,7 @@ ServerApp::run(int argc, char* argv[] ACE_ENV_ARG_DECL)
       ACE_THROW_RETURN (TestException(), -1);;
     }
 
-  policies[0]->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
+  policies[0]->destroy ();
 
   // Create the thread pool servant dispatching strategy object, and
   // hold it in a (local) smart pointer variable.
@@ -104,17 +97,15 @@ ServerApp::run(int argc, char* argv[] ACE_ENV_ARG_DECL)
                  "Failed to apply custom dispatching strategy to child poa.\n"));
       ACE_THROW_RETURN (TestException(), -1);;
     }
-  ACE_CHECK_RETURN (-1);
 
   // Create the Foo_i object.
   Foo_i foo_i (this->num_clients_);
 
   // Create tie object with the Foo_i object.
-  POA_Foo_tie<Foo_i> foo_tie_i (foo_i, child_poa.in ()); 
+  POA_Foo_tie<Foo_i> foo_tie_i (foo_i, child_poa.in ());
 
   // Get Object Reference for the foo_tie_i object.
-  Foo_var foo = foo_tie_i._this (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
+  Foo_var foo = foo_tie_i._this ();
 
   if (CORBA::is_nil(foo.in()))
     {
@@ -124,9 +115,8 @@ ServerApp::run(int argc, char* argv[] ACE_ENV_ARG_DECL)
     }
 
   // Stringify the object reference
-  CORBA::String_var ior 
+  CORBA::String_var ior
     = orb->object_to_string(foo.in() ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
 
   // Write the stringified object reference to the ior file.
   FILE* ior_file = ACE_OS::fopen(this->ior_filename_.c_str(), "w");
@@ -143,15 +133,13 @@ ServerApp::run(int argc, char* argv[] ACE_ENV_ARG_DECL)
   ACE_OS::fclose(ior_file);
 
   // Activate the POA Manager
-  poa_manager->activate(ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
+  poa_manager->activate();
 
   ACE_DEBUG((LM_DEBUG,
              "(%P|%t) ServerApp is ready.  Running the ORB event loop.\n"));
 
   // Run the ORB event loop.
-  orb->run(ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
+  orb->run();
 
   ACE_DEBUG((LM_DEBUG,
              "(%P|%t) ServerApp ORB has stopped running. "
@@ -170,13 +158,11 @@ ServerApp::run(int argc, char* argv[] ACE_ENV_ARG_DECL)
 
   // Tear-down the root poa and orb.
   root_poa->destroy(1, 1 ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
 
   ACE_DEBUG((LM_DEBUG,
              "(%P|%t) ServerApp is destroying the ORB.\n"));
 
-  orb->destroy(ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
+  orb->destroy();
 
   ACE_DEBUG((LM_DEBUG,
              "(%P|%t) ServerApp has completed running successfully.\n"));

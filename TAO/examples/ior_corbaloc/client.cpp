@@ -30,12 +30,10 @@ int main (int argc, char *argv [])
 
       int init_result;
       init_result = client.init (argc, argv ACE_ENV_ARG_PARAMETER);
-        ACE_TRY_CHECK;
 
         if (init_result == 0)
           {
-            client.run (ACE_ENV_SINGLE_ARG_PARAMETER);
-            ACE_TRY_CHECK;
+            client.run ();
           }
         return 0;
     }
@@ -48,7 +46,6 @@ int main (int argc, char *argv [])
       ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "client");
     }
   ACE_ENDTRY;
-  ACE_CHECK_RETURN (-1);
 
   return 0;
 }

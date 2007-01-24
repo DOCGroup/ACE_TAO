@@ -61,7 +61,6 @@ TAO_EC_Kokyu_Dispatching::setup_lanes (void)
   ACE_TRY
     {
       this->scheduler_->get_config_infos(configs.out());
-      ACE_TRY_CHECK;
     }
   ACE_CATCHANY
     {
@@ -196,7 +195,6 @@ TAO_EC_Kokyu_Push_Command::execute ()
       this->proxy_->push_to_consumer (this->consumer_.in (),
                                       this->event_
                                       ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
     }
   ACE_CATCHANY
     {

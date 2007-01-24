@@ -23,15 +23,12 @@ send_events (RtecEventChannelAdmin::ProxyPushConsumer_ptr consumer
       // Send 1 event of each type.
       events[0].header.type = A_EVENT_TYPE;
       consumer->push (events ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
 
       events[0].header.type = B_EVENT_TYPE;
       consumer->push (events ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
 
       events[0].header.type = C_EVENT_TYPE;
       consumer->push (events ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
     }
 }
 
@@ -62,7 +59,6 @@ main (int argc, char *argv[])
       // Initialize ORB and parse args.
       CORBA::ORB_var orb =
         CORBA::ORB_init (argc, argv, "" ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       if (parse_args (argc, argv) == -1)
         return 1;
@@ -70,23 +66,19 @@ main (int argc, char *argv[])
       // Obtain reference to EC.
       CORBA::Object_var obj =
         orb->resolve_initial_references ("Event_Service" ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
       RtecEventChannelAdmin::EventChannel_var ec =
         RtecEventChannelAdmin::EventChannel::_narrow (obj.in ()
                                                       ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
       if (check_for_nil (ec.in (), "EC") == -1)
         return 1;
 
       // Obtain reference to SupplierAdmin.
       RtecEventChannelAdmin::SupplierAdmin_var supplier_admin =
-        ec->for_suppliers (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        ec->for_suppliers ();
 
       // Obtain ProxyPushConsumer and connect this supplier.
       RtecEventChannelAdmin::ProxyPushConsumer_var consumer =
-        supplier_admin->obtain_push_consumer (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        supplier_admin->obtain_push_consumer ();
 
       ACE_SupplierQOS_Factory qos;
       qos.insert (SOURCE_ID, A_EVENT_TYPE, 0, 1);
@@ -97,15 +89,12 @@ main (int argc, char *argv[])
         (RtecEventComm::PushSupplier::_nil (),
          qos.get_SupplierQOS ()
          ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       // Send events to EC.
       send_events (consumer.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       // Tell EC to shut down.
-      ec->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      ec->destroy ();
     }
 
   ACE_CATCHANY

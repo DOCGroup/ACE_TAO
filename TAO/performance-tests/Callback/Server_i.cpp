@@ -29,7 +29,7 @@ Server_i::request (Test::TimeStamp time_stamp,
 }
 
 void
-Server_i::shutdown (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+Server_i::shutdown (void)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->done_ = 1;

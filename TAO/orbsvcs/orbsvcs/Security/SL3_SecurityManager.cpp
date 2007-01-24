@@ -61,7 +61,6 @@ TAO::SL3::SecurityManager::create_context_estab_policy (
                                                           use_confidentiality,
                                                           use_integrity),
                     CORBA::NO_MEMORY ());
-  ACE_CHECK_RETURN (policy);
 
   return policy;
 }
@@ -76,7 +75,6 @@ TAO::SL3::SecurityManager::create_object_creds_policy (
   ACE_NEW_THROW_EX (policy,
                     TAO::SL3::ObjectCredentialsPolicy (creds_list),
                     CORBA::NO_MEMORY ());
-  ACE_CHECK_RETURN (policy);
 
   return policy;
 }

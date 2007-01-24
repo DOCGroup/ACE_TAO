@@ -90,20 +90,16 @@ ACE_TMAIN( int argc, ACE_TCHAR *argv[] )
         CORBA::Object_var obj =
         orb->resolve_initial_references( "RootPOA"
                                          ACE_ENV_ARG_PARAMETER );
-        ACE_TRY_CHECK;
 
         PortableServer::POA_var poa =
           PortableServer::POA::_narrow( obj.in()
                                         ACE_ENV_ARG_PARAMETER );
-        ACE_TRY_CHECK;
 
         PortableServer::POAManager_var mgr =
           poa->the_POAManager( ACE_ENV_SINGLE_ARG_PARAMETER );
-        ACE_TRY_CHECK;
 
         // Activate POA Manager
         mgr->activate( ACE_ENV_SINGLE_ARG_PARAMETER );
-        ACE_TRY_CHECK;
 
         // Create an object
         interop_WChar_Passer_i servant(orb.in(), verbose);
@@ -112,12 +108,10 @@ ACE_TMAIN( int argc, ACE_TCHAR *argv[] )
         // reference, stringify it, and write it to a file.
         obj = poa->servant_to_reference( &servant
                                          ACE_ENV_ARG_PARAMETER );
-        ACE_TRY_CHECK;
 
         CORBA::String_var str =
           orb->object_to_string( obj.in()
                                  ACE_ENV_ARG_PARAMETER );
-        ACE_TRY_CHECK;
 
         FILE *output_file = ACE_OS::fopen (ior_output_file, ACE_TEXT("w"));
         if (output_file == 0)
@@ -131,9 +125,7 @@ ACE_TMAIN( int argc, ACE_TCHAR *argv[] )
 
         // Accept requests
         orb->run( ACE_ENV_SINGLE_ARG_PARAMETER );
-        ACE_TRY_CHECK;
         orb->destroy( ACE_ENV_SINGLE_ARG_PARAMETER );
-        ACE_TRY_CHECK;
       }
     ACE_CATCH(CORBA::Exception, ex)
       {

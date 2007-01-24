@@ -78,7 +78,7 @@ namespace TAO
        * interface.
        */
       //@{
-      virtual char * context_id (ACE_ENV_SINGLE_ARG_DECL)
+      virtual char * context_id (void)
         ACE_THROW_SPEC ((CORBA::SystemException));
 
       virtual SecurityLevel3::Principal * client_principal (
@@ -109,16 +109,16 @@ namespace TAO
           ACE_ENV_SINGLE_ARG_DECL)
         ACE_THROW_SPEC ((CORBA::SystemException));
 
-      virtual CORBA::Boolean client_authentication (ACE_ENV_SINGLE_ARG_DECL)
+      virtual CORBA::Boolean client_authentication (void)
         ACE_THROW_SPEC ((CORBA::SystemException));
 
-      virtual CORBA::Boolean target_authentication (ACE_ENV_SINGLE_ARG_DECL)
+      virtual CORBA::Boolean target_authentication (void)
         ACE_THROW_SPEC ((CORBA::SystemException));
 
-      virtual CORBA::Boolean confidentiality (ACE_ENV_SINGLE_ARG_DECL)
+      virtual CORBA::Boolean confidentiality (void)
         ACE_THROW_SPEC ((CORBA::SystemException));
 
-      virtual CORBA::Boolean integrity (ACE_ENV_SINGLE_ARG_DECL)
+      virtual CORBA::Boolean integrity (void)
         ACE_THROW_SPEC ((CORBA::SystemException));
       //@}
 

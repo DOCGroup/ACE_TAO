@@ -65,7 +65,6 @@ AccountManager_i::open (const char *name,
                         Account_i (name,
                                    initial_balance),
                         CORBA::NO_MEMORY ());
-      ACE_CHECK_RETURN (Bank::Account::_nil ());
 
       // Enter the new Account in the hash map. If the <bind> fails
       // throw an UNKNOWN exception. <result> may be valid but since
@@ -100,9 +99,8 @@ AccountManager_i::close (Bank::Account_ptr account
   ACE_TRY
     {
       CORBA::String_var name =
-        CORBA::string_dup (account->name (ACE_ENV_SINGLE_ARG_PARAMETER));
+        CORBA::string_dup (account->name ());
 
-      ACE_TRY_CHECK;
 
       if (hash_map_.unbind (name.in ()) == -1)
         {
@@ -121,11 +119,10 @@ AccountManager_i::close (Bank::Account_ptr account
                            "Unable to close Account\n");
     }
   ACE_ENDTRY;
-  ACE_CHECK;
 }
 
 void
-AccountManager_i::shutdown (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+AccountManager_i::shutdown (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_DEBUG ((LM_DEBUG,

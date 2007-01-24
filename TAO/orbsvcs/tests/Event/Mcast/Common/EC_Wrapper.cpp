@@ -24,8 +24,7 @@ EC_Wrapper::~EC_Wrapper (void)
 {
   ACE_TRY_NEW_ENV
     {
-      this->destroy_ec (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      this->destroy_ec ();
     }
   ACE_CATCHANY
     {
@@ -61,8 +60,7 @@ EC_Wrapper::init (CORBA::ORB_ptr orb,
 
   ACE_TRY_NEW_ENV
     {
-      impl->activate (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      impl->activate ();
     }
   ACE_CATCHANY
     {
@@ -78,27 +76,27 @@ EC_Wrapper::init (CORBA::ORB_ptr orb,
 }
 
 RtecEventChannelAdmin::ConsumerAdmin_ptr
-EC_Wrapper::for_consumers (ACE_ENV_SINGLE_ARG_DECL)
+EC_Wrapper::for_consumers (void)
       ACE_THROW_SPEC ((CORBA::SystemException))
 {
   if (this->ec_impl_)
-    return this->ec_impl_->for_consumers (ACE_ENV_SINGLE_ARG_PARAMETER);
+    return this->ec_impl_->for_consumers ();
   else
     ACE_THROW_RETURN (CORBA::OBJECT_NOT_EXIST (), RtecEventChannelAdmin::ConsumerAdmin::_nil());
 }
 
 RtecEventChannelAdmin::SupplierAdmin_ptr
-EC_Wrapper::for_suppliers (ACE_ENV_SINGLE_ARG_DECL)
+EC_Wrapper::for_suppliers (void)
       ACE_THROW_SPEC ((CORBA::SystemException))
 {
   if (this->ec_impl_)
-    return this->ec_impl_->for_suppliers (ACE_ENV_SINGLE_ARG_PARAMETER);
+    return this->ec_impl_->for_suppliers ();
   else
     ACE_THROW_RETURN (CORBA::OBJECT_NOT_EXIST (), RtecEventChannelAdmin::SupplierAdmin::_nil());
 }
 
 void
-EC_Wrapper::destroy_ec (ACE_ENV_SINGLE_ARG_DECL)
+EC_Wrapper::destroy_ec (void)
       ACE_THROW_SPEC ((CORBA::SystemException))
 {
   auto_ptr<TAO_EC_Event_Channel> ec_impl_aptr (this->ec_impl_);
@@ -106,13 +104,12 @@ EC_Wrapper::destroy_ec (ACE_ENV_SINGLE_ARG_DECL)
 
   if (ec_impl_aptr.get ())
     {
-      ec_impl_aptr->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK;
+      ec_impl_aptr->destroy ();
     }
 }
 
 void
-EC_Wrapper::destroy (ACE_ENV_SINGLE_ARG_DECL)
+EC_Wrapper::destroy (void)
       ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // Deregister from POA.
@@ -120,8 +117,7 @@ EC_Wrapper::destroy (ACE_ENV_SINGLE_ARG_DECL)
 
   ACE_TRY
     {
-      this->destroy_ec (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      this->destroy_ec ();
     }
   ACE_CATCHANY
     {
@@ -129,7 +125,6 @@ EC_Wrapper::destroy (ACE_ENV_SINGLE_ARG_DECL)
       ACE_RE_THROW;
     }
   ACE_ENDTRY;
-  ACE_CHECK;
 
   this->orb_->shutdown ();
 }

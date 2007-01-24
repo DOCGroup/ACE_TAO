@@ -78,7 +78,7 @@ public:
 
   int svc (void);
 
-  void validate_connection (ACE_ENV_SINGLE_ARG_DECL);
+  void validate_connection (void);
 
 private:
   test_var test_;
@@ -98,7 +98,7 @@ Worker_Thread::Worker_Thread (ACE_Thread_Manager &thread_manager,
 }
 
 void
-Worker_Thread::validate_connection (ACE_ENV_SINGLE_ARG_DECL)
+Worker_Thread::validate_connection (void)
 {
   // Try to validate the connection several times, ignoring transient
   // exceptions.  If the connection can still not be setup, return
@@ -113,7 +113,6 @@ Worker_Thread::validate_connection (ACE_ENV_SINGLE_ARG_DECL)
           ++current_attempt;
           this->test_->_validate_connection (inconsistent_policies.out ()
                                              ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
 
           // If successful, we are done.
           return;
@@ -131,7 +130,6 @@ Worker_Thread::validate_connection (ACE_ENV_SINGLE_ARG_DECL)
           ACE_RE_THROW;
         }
       ACE_ENDTRY;
-      ACE_CHECK;
     }
 }
 
@@ -142,15 +140,12 @@ Worker_Thread::svc (void)
     {
       this->current_->the_priority (this->priority_
                                     ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
-      this->validate_connection (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      this->validate_connection ();
 
       for (int i = 0; i < iterations; i++)
         {
-          this->test_->method (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+          this->test_->method ();
         }
     }
   ACE_CATCHANY
@@ -190,46 +185,37 @@ Task::svc (void)
       CORBA::Object_var object =
         this->orb_->resolve_initial_references ("RTORB"
                                                 ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       RTCORBA::RTORB_var rt_orb =
         RTCORBA::RTORB::_narrow (object.in ()
                                  ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       object =
         this->orb_->resolve_initial_references ("RTCurrent"
                                                 ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       RTCORBA::Current_var current =
         RTCORBA::Current::_narrow (object.in ()
                                    ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       current->the_priority (0
                              ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       object =
         this->orb_->resolve_initial_references ("ORBPolicyManager"
                                                 ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       CORBA::PolicyManager_var policy_manager =
         CORBA::PolicyManager::_narrow (object.in ()
                                        ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       object =
         this->orb_->string_to_object (ior
                                       ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       test_var test =
         test::_narrow (object.in ()
                        ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       ULong_Array priorities;
       int result =
@@ -250,14 +236,12 @@ Task::svc (void)
                             policies,
                             debug
                             ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
       if (result != 0)
         return result;
 
       policy_manager->set_policy_overrides (policies,
                                             CORBA::SET_OVERRIDE
                                             ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       u_long i = 0;
 
@@ -305,8 +289,7 @@ Task::svc (void)
 
       if (shutdown_server)
         {
-          test->shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+          test->shutdown ();
         }
     }
   ACE_CATCHANY
@@ -329,7 +312,6 @@ main (int argc, char **argv)
                          argv,
                          0
                          ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       int result =
         parse_args (argc, argv);

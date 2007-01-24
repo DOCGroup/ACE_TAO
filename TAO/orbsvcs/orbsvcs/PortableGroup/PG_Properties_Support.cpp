@@ -50,7 +50,6 @@ TAO::PG_Properties_Support::get_default_properties (
 {
   PortableGroup::Properties_var result;
   ACE_NEW_THROW_EX ( result, PortableGroup::Properties(), CORBA::NO_MEMORY());
-  ACE_CHECK_RETURN (0);
   this->default_properties_.export_properties (*result);
   return result._retn ();
 }

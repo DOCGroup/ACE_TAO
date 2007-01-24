@@ -41,11 +41,11 @@ public:
   //@{
   /** @name The Federated_Test::Peer methods
    */
-  virtual void shutdown (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+  virtual void shutdown (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual CORBA::Object_ptr
-      channel (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+      channel (void)
         ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual void connect (Federated_Test::Peer_ptr remote_peer
@@ -57,7 +57,7 @@ public:
                                                ACE_ENV_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  PortableServer::POA_ptr _default_POA (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+  PortableServer::POA_ptr _default_POA (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
   //@}
 

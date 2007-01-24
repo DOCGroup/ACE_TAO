@@ -44,18 +44,15 @@ main (int argc, char *argv[])
     {
       CORBA::ORB_var orb =
         CORBA::ORB_init (argc, argv, "" ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       if (parse_args (argc, argv) != 0)
         return 1;
 
       CORBA::Object_var poa_object =
         orb->resolve_initial_references("RootPOA" ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       PortableServer::POA_var root_poa =
         PortableServer::POA::_narrow (poa_object.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       if (CORBA::is_nil (root_poa.in ()))
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -63,8 +60,7 @@ main (int argc, char *argv[])
                           1);
 
       PortableServer::POAManager_var poa_manager =
-        root_poa->the_POAManager (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        root_poa->the_POAManager ();
 
       Hello *hello_impl;
       ACE_NEW_RETURN (hello_impl,
@@ -73,12 +69,10 @@ main (int argc, char *argv[])
       PortableServer::ServantBase_var owner_transfer(hello_impl);
 
       Test::Hello_var hello =
-        hello_impl->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        hello_impl->_this ();
 
       CORBA::String_var ior =
         orb->object_to_string (hello.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       // Output the IOR to the <ior_output_file>
       FILE *output_file= ACE_OS::fopen (ior_output_file, "w");
@@ -90,16 +84,13 @@ main (int argc, char *argv[])
       ACE_OS::fprintf (output_file, "%s", ior.in ());
       ACE_OS::fclose (output_file);
 
-      poa_manager->activate (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      poa_manager->activate ();
 
       CORBA::Object_var tmp =
         orb->string_to_object(server_ior ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       Test::Hello_var server =
         Test::Hello::_narrow(tmp.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       if (CORBA::is_nil (server.in ()))
         {
@@ -112,12 +103,10 @@ main (int argc, char *argv[])
       ACE_DEBUG ((LM_DEBUG, "(%P|%t) - Sending client obj ref to the server and requesting a callback.\n"));
 
       server->request_callback (hello.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       ACE_DEBUG ((LM_DEBUG, "(%P|%t) - Test (client) Succeeded !!!\n"));
 
-      orb->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      orb->destroy ();
     }
   ACE_CATCHANY
     {

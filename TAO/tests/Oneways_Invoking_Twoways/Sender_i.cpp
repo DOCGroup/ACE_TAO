@@ -38,8 +38,7 @@ Sender_i::send_ready_message (Test::Receiver_ptr receiver
        i < this->number_;
        ++i)
     {
-      receiver->receive_call (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK;
+      receiver->receive_call ();
     }
 
 }

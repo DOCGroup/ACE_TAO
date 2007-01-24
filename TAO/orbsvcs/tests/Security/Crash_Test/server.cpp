@@ -6,8 +6,8 @@
 #include "ace/SString.h"
 #include "test_i.h"
 
-ACE_RCSID (Send_File, 
-           server, 
+ACE_RCSID (Send_File,
+           server,
            "$Id$")
 
 const char *ior_output_file = 0;
@@ -51,11 +51,9 @@ main (int argc, char *argv[])
 
       CORBA::ORB_var orb =
         CORBA::ORB_init (argc, argv, "" ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       CORBA::Object_var poa_object =
         orb->resolve_initial_references ("RootPOA" ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       if (CORBA::is_nil (poa_object.in ()))
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -64,11 +62,9 @@ main (int argc, char *argv[])
 
       PortableServer::POA_var root_poa =
         PortableServer::POA::_narrow (poa_object.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       PortableServer::POAManager_var poa_manager =
-        root_poa->the_POAManager (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        root_poa->the_POAManager ();
 
       if (parse_args (argc, argv) != 0)
         return 1;
@@ -81,39 +77,32 @@ main (int argc, char *argv[])
       policies[0] =
         root_poa->create_id_assignment_policy (PortableServer::USER_ID
                                                ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       policies[1] =
         root_poa->create_lifespan_policy (PortableServer::PERSISTENT
                                           ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       PortableServer::POA_var persistent_poa =
         root_poa->create_POA ("PersistentPOA",
                               poa_manager.in (),
                               policies
                               ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       PortableServer::ObjectId_var oid =
         PortableServer::string_to_ObjectId ("object1");
-      ACE_TRY_CHECK;
 
       persistent_poa->activate_object_with_id (oid.in (),
                                                &server_impl
                                                ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
 
       CORBA::Object_var server =
         persistent_poa->create_reference_with_id (oid.in (),
                                                   "IDL:Simple_Server:1.0"
                                                   ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       CORBA::String_var ior =
         orb->object_to_string (server.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       // If the ior_output_file exists, output the ior to it
       if (ior_output_file != 0)
@@ -140,19 +129,15 @@ main (int argc, char *argv[])
         }
 
 
-      poa_manager->activate (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      poa_manager->activate ();
 
-      orb->run (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      orb->run ();
 
       ACE_DEBUG ((LM_DEBUG, "SERVER (%P): Event loop finished.\n"));
 
       persistent_poa->destroy (1, 1 ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       root_poa->destroy (1, 1 ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       ACE_OS::sleep (1);
     }

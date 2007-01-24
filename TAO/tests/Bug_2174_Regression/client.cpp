@@ -48,18 +48,15 @@ int main (int argc, char* argv[])
     {
       CORBA::ORB_var orb =
         CORBA::ORB_init (argc, argv, "" ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       if (parse_args (argc, argv) != 0)
         return 1;
 
       CORBA::Object_var object =
         orb->string_to_object (ior ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       Simple_Server_var server =
         Simple_Server::_narrow (object.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       if (CORBA::is_nil (server.in ()))
         {
@@ -70,7 +67,6 @@ int main (int argc, char* argv[])
         }
 
       CORBA::Boolean non_existent = server->_non_existent ();
-      ACE_TRY_CHECK;
 
       if (non_existent)
           result = 3;
@@ -81,8 +77,7 @@ int main (int argc, char* argv[])
                   "client (%P) _non_existent() returned %d\n",
                   static_cast<int>(non_existent) ));
 
-      orb->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      orb->destroy ();
     }
   ACE_CATCH (CORBA::OBJECT_NOT_EXIST, ex)
   {

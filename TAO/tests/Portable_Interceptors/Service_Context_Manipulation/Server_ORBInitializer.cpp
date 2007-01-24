@@ -33,13 +33,11 @@ Server_ORBInitializer::post_init (
   ACE_NEW_THROW_EX (interceptor,
                     Echo_Server_Request_Interceptor,
                     CORBA::NO_MEMORY ());
-  ACE_CHECK;
 
   PortableInterceptor::ServerRequestInterceptor_var
     server_interceptor = interceptor;
 
   info->add_server_request_interceptor (server_interceptor.in ()
                                         ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 }
 

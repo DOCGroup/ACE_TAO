@@ -44,16 +44,14 @@ TAO_Notify_Method_Request_Lookup::work (
   {
     TAO_Notify_Method_Request_Dispatch_No_Copy request (*this, proxy_supplier, true);
     proxy_supplier->deliver (request ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK;
   }
   else
   {
     delivery_request_->dispatch (proxy_supplier, true ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK;
   }
 }
 
-int TAO_Notify_Method_Request_Lookup::execute_i (ACE_ENV_SINGLE_ARG_DECL)
+int TAO_Notify_Method_Request_Lookup::execute_i (void)
 {
   if (this->proxy_consumer_->has_shutdown ())
     return 0; // If we were shutdown while waiting in the queue, return with no action.
@@ -64,7 +62,6 @@ int TAO_Notify_Method_Request_Lookup::execute_i (ACE_ENV_SINGLE_ARG_DECL)
                                                              parent.filter_admin (),
                                                              parent.filter_operator ()
                                                              ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (0);
 
   if (TAO_debug_level > 1)
     ACE_DEBUG ((LM_DEBUG, "Proxyconsumer %x filter eval result = %d",&this->proxy_consumer_ , val));
@@ -77,7 +74,6 @@ int TAO_Notify_Method_Request_Lookup::execute_i (ACE_ENV_SINGLE_ARG_DECL)
   TAO_Notify_Consumer_Map& map = this->proxy_consumer_->event_manager ().consumer_map ();
 
   TAO_Notify_Consumer_Map::ENTRY* entry = map.find (this->event_->type () ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (0);
 
   TAO_Notify_ProxySupplier_Collection* consumers = 0;
 
@@ -88,7 +84,6 @@ int TAO_Notify_Method_Request_Lookup::execute_i (ACE_ENV_SINGLE_ARG_DECL)
     if (consumers != 0)
       {
         consumers->for_each (this ACE_ENV_ARG_PARAMETER);
-        ACE_CHECK_RETURN (0);
       }
 
     map.release (entry);
@@ -100,7 +95,6 @@ int TAO_Notify_Method_Request_Lookup::execute_i (ACE_ENV_SINGLE_ARG_DECL)
   if (consumers != 0)
     {
       consumers->for_each (this ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK_RETURN (0);
     }
   this->complete ();
   return 0;
@@ -138,7 +132,6 @@ TAO_Notify_Method_Request_Lookup::unmarshal (
       TAO_Notify_ProxyConsumer * proxy_consumer = ecf.find_proxy_consumer (
         id_path,
         0 ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK_RETURN(0);
       if (proxy_consumer != 0)
       {
         ACE_NEW_NORETURN (result,
@@ -191,9 +184,9 @@ TAO_Notify_Method_Request_Lookup_Queueable::~TAO_Notify_Method_Request_Lookup_Qu
 }
 
 int
-TAO_Notify_Method_Request_Lookup_Queueable::execute (ACE_ENV_SINGLE_ARG_DECL)
+TAO_Notify_Method_Request_Lookup_Queueable::execute (void)
 {
-  return this->execute_i (ACE_ENV_SINGLE_ARG_PARAMETER);
+  return this->execute_i ();
 }
 
 /******************************************************************************************************/
@@ -210,18 +203,17 @@ TAO_Notify_Method_Request_Lookup_No_Copy::~TAO_Notify_Method_Request_Lookup_No_C
 }
 
 int
-TAO_Notify_Method_Request_Lookup_No_Copy::execute (ACE_ENV_SINGLE_ARG_DECL)
+TAO_Notify_Method_Request_Lookup_No_Copy::execute (void)
 {
-  return this->execute_i (ACE_ENV_SINGLE_ARG_PARAMETER);
+  return this->execute_i ();
 }
 
 TAO_Notify_Method_Request_Queueable*
-TAO_Notify_Method_Request_Lookup_No_Copy::copy (ACE_ENV_SINGLE_ARG_DECL)
+TAO_Notify_Method_Request_Lookup_No_Copy::copy (void)
 {
   TAO_Notify_Method_Request_Queueable* request;
 
-  TAO_Notify_Event::Ptr event(this->event_->queueable_copy(ACE_ENV_SINGLE_ARG_PARAMETER));
-  ACE_CHECK_RETURN (0);
+  TAO_Notify_Event::Ptr event(this->event_->queueable_copy());
 
   ACE_NEW_THROW_EX (request,
                     TAO_Notify_Method_Request_Lookup_Queueable (event, this->proxy_consumer_),

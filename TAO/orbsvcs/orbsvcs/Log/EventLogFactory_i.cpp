@@ -18,18 +18,15 @@ TAO_EventLogFactory_i::TAO_EventLogFactory_i (void)
   ACE_TRY
     {
       PortableServer::POA_var defPOA =
-        this->_default_POA (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        this->_default_POA ();
 
       TAO_CEC_EventChannel_Attributes attr (defPOA.in (), defPOA.in ());
 
       ACE_NEW_THROW_EX (impl,
                         TAO_CEC_EventChannel (attr),
                         CORBA::NO_MEMORY ());
-      ACE_TRY_CHECK;
 
-      impl->activate (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      impl->activate ();
     }
   ACE_CATCHANY
     {
@@ -38,7 +35,6 @@ TAO_EventLogFactory_i::TAO_EventLogFactory_i (void)
                            "EventLogFactory_i constructor.");
     }
   ACE_ENDTRY;
-  ACE_CHECK;
 }
 
 TAO_EventLogFactory_i::~TAO_EventLogFactory_i (void)
@@ -59,18 +55,15 @@ TAO_EventLogFactory_i::init (PortableServer::POA_ptr /* poa */
   PortableServer::ObjectId_var oid =
     this->poa_->activate_object (ec.get ()
                                  ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (CosEventChannelAdmin::EventChannel::_nil ());
 
   ec.release ();
 
   CORBA::Object_var obj =
     this->poa_->id_to_reference (oid.in () ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (CosEventChannelAdmin::EventChannel::_nil ());
 
   ec_return =
     CosEventChannelAdmin::EventChannel::_narrow (obj.in ()
                                                  ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (CosEventChannelAdmin::EventChannel::_nil ());
 
   return ec_return._retn ();
 }
@@ -81,41 +74,33 @@ TAO_EventLogFactory_i::activate (CORBA::ORB_ptr orb,
                                  ACE_ENV_ARG_DECL)
 {
   TAO_LogMgr_i::init (orb, poa ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (DsEventLogAdmin::EventLogFactory::_nil ());
 
 
   this->event_channel_ = init (this->poa_.in () ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (DsEventLogAdmin::EventLogFactory::_nil ());
 
   this->consumer_admin_ =
-    this->event_channel_->for_consumers (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (DsEventLogAdmin::EventLogFactory::_nil ());
+    this->event_channel_->for_consumers ();
 
   ACE_NEW_THROW_EX (this->notifier_,
                     TAO_EventLogNotification(this->event_channel_.in ()),
                     CORBA::NO_MEMORY ());
-  ACE_CHECK_RETURN (DsEventLogAdmin::EventLogFactory::_nil ());
 
   PortableServer::ObjectId_var oid =
     this->factory_poa_->activate_object (this
 					 ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (DsEventLogAdmin::EventLogFactory::_nil ());
 
   CORBA::Object_var obj =
     this->factory_poa_->id_to_reference (oid.in ()
 					 ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (DsEventLogAdmin::EventLogFactory::_nil ());
 
   // narrow and store the result..
   this->log_mgr_ =
     DsLogAdmin::LogMgr::_narrow (obj.in ()
                                  ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (DsEventLogAdmin::EventLogFactory::_nil ());
 
   DsEventLogAdmin::EventLogFactory_var v_return =
     DsEventLogAdmin::EventLogFactory::_narrow (obj.in ()
                                                ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (DsEventLogAdmin::EventLogFactory::_nil ());
 
   return v_return._retn ();
 }
@@ -136,17 +121,14 @@ TAO_EventLogFactory_i::create (
 		  & thresholds,
 		  id_out
 		  ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (DsEventLogAdmin::EventLog::_nil ());
   DsLogAdmin::LogId id = id_out;
 
 #if (TAO_HAS_MINIMUM_POA == 0)
   DsLogAdmin::Log_var log =
     this->create_log_reference (id ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (DsEventLogAdmin::EventLog::_nil ());
 #else
   DsLogAdmin::Log_var log =
     this->create_log_object (id ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (DsEventLogAdmin::EventLog::_nil ());
 #endif
 
   // narrow to EventLog
@@ -155,7 +137,6 @@ TAO_EventLogFactory_i::create (
 
   // @@ JTC - squelch exception?
   notifier_->object_creation (id ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (DsEventLogAdmin::EventLog::_nil ());
 
   return event_log._retn();
 }
@@ -177,16 +158,13 @@ TAO_EventLogFactory_i::create_with_id (
 			  max_size,
 			  & thresholds
 			  ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (DsEventLogAdmin::EventLog::_nil ());
 
 #if (TAO_HAS_MINIMUM_POA == 0)
   DsLogAdmin::Log_var log =
     this->create_log_reference (id ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (DsEventLogAdmin::EventLog::_nil ());
 #else
   DsLogAdmin::Log_var log =
     this->create_log_object (id ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (DsEventLogAdmin::EventLog::_nil ());
 #endif
 
   // narrow to EventLog
@@ -195,7 +173,6 @@ TAO_EventLogFactory_i::create_with_id (
 
   // @@ JTC - squelch exception?
   notifier_->object_creation (id ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (DsEventLogAdmin::EventLog::_nil ());
 
   return event_log._retn ();
 }
@@ -222,32 +199,29 @@ TAO_EventLogFactory_i::create_log_servant (DsLogAdmin::LogId id
                                     id
                                     ),
                     CORBA::NO_MEMORY ());
-  ACE_CHECK_RETURN (0);
 
-  event_log_i->init (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (0);
+  event_log_i->init ();
 
   //dhanvey
   //initialise the LogConsumer object
-  event_log_i->activate (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (0);
+  event_log_i->activate ();
 
   return event_log_i;
 }
 
 CosEventChannelAdmin::ProxyPushSupplier_ptr
-TAO_EventLogFactory_i::obtain_push_supplier (ACE_ENV_SINGLE_ARG_DECL)
+TAO_EventLogFactory_i::obtain_push_supplier (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  return consumer_admin_->obtain_push_supplier (ACE_ENV_SINGLE_ARG_PARAMETER);
+  return consumer_admin_->obtain_push_supplier ();
 }
 
 CosEventChannelAdmin::ProxyPullSupplier_ptr
-TAO_EventLogFactory_i::obtain_pull_supplier (ACE_ENV_SINGLE_ARG_DECL)
+TAO_EventLogFactory_i::obtain_pull_supplier (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 
 {
-  return consumer_admin_->obtain_pull_supplier (ACE_ENV_SINGLE_ARG_PARAMETER);
+  return consumer_admin_->obtain_pull_supplier ();
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL

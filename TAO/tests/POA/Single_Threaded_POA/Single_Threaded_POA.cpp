@@ -28,10 +28,10 @@ class test_i : public virtual POA_test
 public:
   test_i (PortableServer::POA_ptr poa);
 
-  void method (ACE_ENV_SINGLE_ARG_DECL)
+  void method (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  PortableServer::POA_ptr _default_POA (ACE_ENV_SINGLE_ARG_DECL);
+  PortableServer::POA_ptr _default_POA (void);
 
 private:
   PortableServer::POA_var poa_;
@@ -45,7 +45,7 @@ test_i::test_i (PortableServer::POA_ptr poa)
 }
 
 void
-test_i::method (ACE_ENV_SINGLE_ARG_DECL)
+test_i::method (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_DEBUG ((LM_DEBUG,
@@ -63,16 +63,14 @@ test_i::method (ACE_ENV_SINGLE_ARG_DECL)
       ACE_DEBUG ((LM_DEBUG,
                   "Calling self from %t\n"));
 
-      test_var self = this->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK;
+      test_var self = this->_this ();
 
-      self->method (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK;
+      self->method ();
     }
 }
 
 PortableServer::POA_ptr
-test_i::_default_POA (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+test_i::_default_POA (void)
 {
   return PortableServer::POA::_duplicate (this->poa_.in ());
 }
@@ -97,8 +95,7 @@ Worker::svc (void)
 {
   ACE_TRY_NEW_ENV
     {
-      this->test_->method (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      this->test_->method ();
     }
   ACE_CATCHANY
     {
@@ -120,23 +117,19 @@ main (int argc, char **argv)
                                             argv,
                                             0
                                             ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       // Obtain the RootPOA.
       CORBA::Object_var obj = orb->resolve_initial_references ("RootPOA"
                                                                ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       // Get the POA_var object from Object_var.
       PortableServer::POA_var root_poa =
         PortableServer::POA::_narrow (obj.in ()
                                       ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       // Get the POAManager of the RootPOA.
       PortableServer::POAManager_var poa_manager =
-        root_poa->the_POAManager (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        root_poa->the_POAManager ();
 
       // Policies for the new POA.
       CORBA::PolicyList policies (2);
@@ -145,12 +138,10 @@ main (int argc, char **argv)
       policies[0] =
         root_poa->create_implicit_activation_policy (PortableServer::IMPLICIT_ACTIVATION
                                                      ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       policies[1] =
         root_poa->create_thread_policy (PortableServer::SINGLE_THREAD_MODEL
                                         ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       // Creation of the child POA.
       PortableServer::POA_var child_poa =
@@ -158,28 +149,23 @@ main (int argc, char **argv)
                               poa_manager.in (),
                               policies
                               ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       // Destroy the policies
       for (CORBA::ULong i = 0;
            i < policies.length ();
            ++i)
         {
-          policies[i]->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+          policies[i]->destroy ();
         }
 
-      poa_manager->activate (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      poa_manager->activate ();
 
       test_i servant1 (child_poa.in ());
       test_i servant2 (child_poa.in ());
 
-      test_var object1 = servant1._this (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      test_var object1 = servant1._this ();
 
-      test_var object2 = servant2._this (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      test_var object2 = servant2._this ();
 
       Worker worker1 (object1.in ());
       Worker worker2 (object2.in ());
@@ -198,7 +184,6 @@ main (int argc, char **argv)
       root_poa->destroy (1,
                          1
                          ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
     }
   ACE_CATCHANY
     {

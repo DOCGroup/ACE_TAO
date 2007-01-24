@@ -104,22 +104,22 @@ public:
 
 
   // = Methods from CosNotifyChannelAdmin::ConsumerAdmin.
-  CosNotifyChannelAdmin::AdminID MyID (ACE_ENV_SINGLE_ARG_DECL)
+  CosNotifyChannelAdmin::AdminID MyID (void)
     ACE_THROW_SPEC ((
       CORBA::SystemException
     ));
 
-  CosNotifyChannelAdmin::EventChannel_ptr MyChannel (ACE_ENV_SINGLE_ARG_DECL)
+  CosNotifyChannelAdmin::EventChannel_ptr MyChannel (void)
     ACE_THROW_SPEC ((
       CORBA::SystemException
     ));
 
-  CosNotifyChannelAdmin::InterFilterGroupOperator MyOperator (ACE_ENV_SINGLE_ARG_DECL)
+  CosNotifyChannelAdmin::InterFilterGroupOperator MyOperator (void)
     ACE_THROW_SPEC ((
       CORBA::SystemException
     ));
 
-  CosNotifyFilter::MappingFilter_ptr priority_filter (ACE_ENV_SINGLE_ARG_DECL)
+  CosNotifyFilter::MappingFilter_ptr priority_filter (void)
     ACE_THROW_SPEC ((
       CORBA::SystemException
     ));
@@ -128,7 +128,7 @@ public:
       CORBA::SystemException
     ));
 
-  CosNotifyFilter::MappingFilter_ptr lifetime_filter (ACE_ENV_SINGLE_ARG_DECL)
+  CosNotifyFilter::MappingFilter_ptr lifetime_filter (void)
     ACE_THROW_SPEC ((
       CORBA::SystemException
     ));
@@ -137,11 +137,11 @@ public:
       CORBA::SystemException
     ));
 
-  CosNotifyChannelAdmin::ProxyIDSeq* pull_suppliers (ACE_ENV_SINGLE_ARG_DECL)
+  CosNotifyChannelAdmin::ProxyIDSeq* pull_suppliers (void)
     ACE_THROW_SPEC ((
       CORBA::SystemException
     ));
-  CosNotifyChannelAdmin::ProxyIDSeq* push_suppliers (ACE_ENV_SINGLE_ARG_DECL)
+  CosNotifyChannelAdmin::ProxyIDSeq* push_suppliers (void)
     ACE_THROW_SPEC ((
       CORBA::SystemException
     ));
@@ -183,7 +183,7 @@ public:
           CORBA::SystemException
         ));
 
-  void destroy (ACE_ENV_SINGLE_ARG_DECL)
+  void destroy (void)
         ACE_THROW_SPEC ((
           CORBA::SystemException
         ));
@@ -198,7 +198,7 @@ public:
     ));
 
   /// CosNotification::QoSAdmin.
-  CosNotification::QoSProperties* get_qos (ACE_ENV_SINGLE_ARG_DECL)
+  CosNotification::QoSProperties* get_qos (void)
         ACE_THROW_SPEC ((
           CORBA::SystemException
         ));
@@ -229,11 +229,11 @@ public:
       CosNotifyFilter::FilterNotFound,
       CORBA::SystemException
     ));
-  CosNotifyFilter::FilterIDSeq* get_all_filters (ACE_ENV_SINGLE_ARG_DECL)
+  CosNotifyFilter::FilterIDSeq* get_all_filters (void)
         ACE_THROW_SPEC ((
           CORBA::SystemException
         ));
-  void remove_all_filters (ACE_ENV_SINGLE_ARG_DECL)
+  void remove_all_filters (void)
         ACE_THROW_SPEC ((
           CORBA::SystemException
         ));
@@ -241,7 +241,7 @@ public:
 protected:
   virtual CORBA::RepositoryId
     create_repositoryid ();
-	
+
   virtual PortableServer::ServantBase*
     create_log_servant (DsLogAdmin::LogId id
 			ACE_ENV_ARG_DECL);

@@ -63,18 +63,18 @@ public:
   virtual void push (const RtecEventComm::EventSet& event
                      ACE_ENV_ARG_DECL)
       ACE_THROW_SPEC ((CORBA::SystemException));
-  virtual void disconnect_push_consumer (ACE_ENV_SINGLE_ARG_DECL)
+  virtual void disconnect_push_consumer (void)
       ACE_THROW_SPEC ((CORBA::SystemException));
 
   // = The Servant methods
-  virtual PortableServer::POA_ptr _default_POA (ACE_ENV_SINGLE_ARG_DECL);
-  virtual void _add_ref (ACE_ENV_SINGLE_ARG_DECL);
-  virtual void _remove_ref (ACE_ENV_SINGLE_ARG_DECL);
+  virtual PortableServer::POA_ptr _default_POA (void);
+  virtual void _add_ref (void);
+  virtual void _remove_ref (void);
 
 private:
 
   virtual PortableServer::ObjectId
-         object_id (ACE_ENV_SINGLE_ARG_DECL)
+         object_id (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
 };
 

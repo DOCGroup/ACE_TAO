@@ -38,7 +38,7 @@ class Subscribe
   void init (int argc, char *argv [] ACE_ENV_ARG_DECL);
   // Init the Client.
 
-  void run (ACE_ENV_SINGLE_ARG_DECL);
+  void run (void);
   // Run the demo.
 
   void done (void);
@@ -48,28 +48,28 @@ class Subscribe
   void init_ORB (int argc, char *argv [] ACE_ENV_ARG_DECL);
   // Initializes the ORB.
 
-  void resolve_naming_service (ACE_ENV_SINGLE_ARG_DECL);
+  void resolve_naming_service (void);
   // Try to get hold of a running naming service.
 
-  void resolve_Notify_factory (ACE_ENV_SINGLE_ARG_DECL);
+  void resolve_Notify_factory (void);
   // Try to resolve the Notify factory from the Naming service.
 
-  void create_EC (ACE_ENV_SINGLE_ARG_DECL);
+  void create_EC (void);
   // Create an EC.
 
-  void create_supplieradmin(ACE_ENV_SINGLE_ARG_DECL);
+  void create_supplieradmin(void);
   // Create the Supplier Admin.
 
-  void create_consumeradmin (ACE_ENV_SINGLE_ARG_DECL);
+  void create_consumeradmin (void);
   // Create the Consumer Admin.
 
-  void create_consumers (ACE_ENV_SINGLE_ARG_DECL);
+  void create_consumers (void);
   // Create and initialize the consumers.
 
-  void create_suppliers (ACE_ENV_SINGLE_ARG_DECL);
+  void create_suppliers (void);
   // create and initialize the suppliers.
 
-  void send_events (ACE_ENV_SINGLE_ARG_DECL);
+  void send_events (void);
   // send the events.
 
   // = Data Members
@@ -133,7 +133,7 @@ class Subscribe_StructuredPushConsumer
   // Connect the Consumer to the EventChannel.
   // Creates a new proxy supplier and connects to it.
 
-  virtual void disconnect (ACE_ENV_SINGLE_ARG_DECL);
+  virtual void disconnect (void);
   // Disconnect from the supplier.
 
   CosNotifyChannelAdmin::StructuredProxyPushSupplier_ptr get_proxy_supplier (void);
@@ -204,7 +204,7 @@ class Subscribe_StructuredPushSupplier
   // Connect the Supplier to the EventChannel.
   // Creates a new proxy consumer and connects to it.
 
-  void disconnect (ACE_ENV_SINGLE_ARG_DECL);
+  void disconnect (void);
   // Disconnect from the supplier.
 
   virtual void send_event (const CosNotification::StructuredEvent& event

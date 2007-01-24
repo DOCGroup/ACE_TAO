@@ -92,24 +92,19 @@ Notifier_Handler::init (int argc,
                                     argv,
                                     0
                                     ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       CORBA::Object_var poa_object  =
         this->orb_->resolve_initial_references("RootPOA"
                                            ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       PortableServer::POA_var poa =
         PortableServer::POA::_narrow (poa_object.in ()
                                       ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       PortableServer::POAManager_var poa_manager =
-        poa->the_POAManager (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        poa->the_POAManager ();
 
-      poa_manager->activate (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      poa_manager->activate ();
 
       // Initialization of the naming service.
       if (this->naming_client_.init (orb_.in ()) != 0)
@@ -126,7 +121,6 @@ Notifier_Handler::init (int argc,
       CORBA::Object_var notifier_obj =
        this->naming_client_->resolve (notifier_ref_name
                                       ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
 
       // The CORBA::Object_var object is downcast to Notifier_var
@@ -134,7 +128,6 @@ Notifier_Handler::init (int argc,
       this->notifier_ =
          Event_Comm::Notifier::_narrow (notifier_obj.in ()
                                         ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
   }
  ACE_CATCHANY
    {

@@ -36,7 +36,6 @@ ImR_Locator_Loader::init (int argc, ACE_TCHAR *argv[])
         return -1;
 
       err = this->service_.init (this->opts_ ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
       if (err != 0)
         return -1;
 
@@ -60,8 +59,7 @@ ImR_Locator_Loader::fini (void)
   ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY
     {
-      int ret = this->service_.fini (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      int ret = this->service_.fini ();
 
       this->runner_->wait ();
       this->runner_.reset (0);
@@ -90,8 +88,7 @@ ImR_Locator_Loader::run(void)
   ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY
     {
-      return this->service_.run (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      return this->service_.run ();
     }
   ACE_CATCHALL
     {

@@ -24,11 +24,9 @@ Filter::init (int argc, char* argv []
   Notify_Test_Client::init (argc,
                             argv
                             ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
 
   // Create all participents.
-  this->create_EC (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
+  this->create_EC ();
 
   CosNotifyChannelAdmin::AdminID adminid;
 
@@ -36,7 +34,6 @@ Filter::init (int argc, char* argv []
     this->ec_->new_for_suppliers (this->ifgop_,
                                   adminid
                                   ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
 
   ACE_ASSERT (!CORBA::is_nil (supplier_admin_.in ()));
 
@@ -44,32 +41,27 @@ Filter::init (int argc, char* argv []
     this->ec_->new_for_consumers (this->ifgop_,
                                   adminid
                                   ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
 
   ACE_ASSERT (!CORBA::is_nil (consumer_admin_.in ()));
 
   this->ffact_ =
-    ec_->default_filter_factory (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
+    ec_->default_filter_factory ();
 
   return 0;
 }
 
 void
-Filter::run_test (ACE_ENV_SINGLE_ARG_DECL)
+Filter::run_test (void)
 {
   if (TAO_debug_level)
     ACE_DEBUG ((LM_DEBUG, " Obtaining FilterAdmin interface from ConsumerAdmin\n"));
 
   CosNotifyFilter::FilterAdmin_var ca_filter_admin =
     CosNotifyFilter::FilterAdmin::_narrow (consumer_admin_.in () ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
   this->run_filter_test (consumer_admin_.in () ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
-  this->ec_->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+  this->ec_->destroy ();
 }
 
 void
@@ -79,35 +71,28 @@ Filter::run_filter_test (CosNotifyFilter::FilterAdmin_ptr filter_admin ACE_ENV_A
     ACE_DEBUG ((LM_DEBUG, " Calling remove_all_filters\n"));
 
   // Clear all filters.
-  filter_admin->remove_all_filters (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+  filter_admin->remove_all_filters ();
 
   this->verify_filter_count (filter_admin, 0 ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
   if (TAO_debug_level)
     ACE_DEBUG ((LM_DEBUG, "Adding a filter \n"));
 
   CosNotifyFilter::FilterID id_1 = this->add_filter (filter_admin ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
   this->verify_filter_count (filter_admin, 1 ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
   if (TAO_debug_level)
     ACE_DEBUG ((LM_DEBUG, "Adding another filter \n"));
 
   this->add_filter (filter_admin ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
   this->verify_filter_count (filter_admin, 2 ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
   if (TAO_debug_level)
     {
       ACE_DEBUG ((LM_DEBUG, "Calling print_filters \n"));
       this->print_filters (filter_admin ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
     }
 
   if (TAO_debug_level)
@@ -115,34 +100,28 @@ Filter::run_filter_test (CosNotifyFilter::FilterAdmin_ptr filter_admin ACE_ENV_A
 
   // remove the filter.
   filter_admin->remove_filter (id_1 ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
   this->verify_filter_count (filter_admin, 1 ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
   if (TAO_debug_level)
     {
       ACE_DEBUG ((LM_DEBUG, "Calling print_filters \n"));
       this->print_filters (filter_admin ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
     }
 
   if (TAO_debug_level)
     ACE_DEBUG ((LM_DEBUG, "Calling remove_all_filters \n"));
 
-  filter_admin->remove_all_filters (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+  filter_admin->remove_all_filters ();
 
   if (TAO_debug_level)
     {
       ACE_DEBUG ((LM_DEBUG, "Calling print_filters \n"));
       this->print_filters (filter_admin ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
     }
 
   // Make sure all filters are removed -
   this->verify_filter_count (filter_admin, 0 ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
   ACE_DEBUG ((LM_DEBUG, "Filters test has run successfully\n"));
 }
@@ -151,8 +130,7 @@ void
 Filter::verify_filter_count (CosNotifyFilter::FilterAdmin_ptr filter_admin, CORBA::ULong expected_count ACE_ENV_ARG_DECL)
 {
   expected_count = expected_count; // if we don;t do this, we get a warning on linux about arg not used.
-  CosNotifyFilter::FilterIDSeq_var filter_seq = filter_admin->get_all_filters (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+  CosNotifyFilter::FilterIDSeq_var filter_seq = filter_admin->get_all_filters ();
   ACE_ASSERT (filter_seq->length () == expected_count);
 }
 
@@ -162,7 +140,6 @@ Filter::add_filter (CosNotifyFilter::FilterAdmin_ptr filter_admin ACE_ENV_ARG_DE
   // setup a filter at the filter admin
   CosNotifyFilter::Filter_var filter =
     this->ffact_->create_filter ("ETCL" ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
 
   ACE_ASSERT (!CORBA::is_nil (filter.in ()));
 
@@ -175,10 +152,8 @@ Filter::add_filter (CosNotifyFilter::FilterAdmin_ptr filter_admin ACE_ENV_ARG_DE
   constraint_list[0].constraint_expr = CORBA::string_dup (test_filter_string);
 
   filter->add_constraints (constraint_list ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
 
   CosNotifyFilter::FilterID id = filter_admin->add_filter (filter.in () ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
 
   // Print the ID
   if (TAO_debug_level)
@@ -190,8 +165,7 @@ Filter::add_filter (CosNotifyFilter::FilterAdmin_ptr filter_admin ACE_ENV_ARG_DE
 void
 Filter::print_filters (CosNotifyFilter::FilterAdmin_ptr filter_admin ACE_ENV_ARG_DECL)
 {
-  CosNotifyFilter::FilterIDSeq_var filter_seq = filter_admin->get_all_filters (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+  CosNotifyFilter::FilterIDSeq_var filter_seq = filter_admin->get_all_filters ();
 
   ACE_DEBUG ((LM_DEBUG, "Getting all %d filters...\n ", filter_seq->length ()));
 
@@ -203,7 +177,7 @@ Filter::print_filters (CosNotifyFilter::FilterAdmin_ptr filter_admin ACE_ENV_ARG
 
 
 void
-Filter::create_EC (ACE_ENV_SINGLE_ARG_DECL)
+Filter::create_EC (void)
 {
   CosNotifyChannelAdmin::ChannelID id;
 
@@ -211,7 +185,6 @@ Filter::create_EC (ACE_ENV_SINGLE_ARG_DECL)
                                                this->initial_admin_,
                                                id
                                                ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
   ACE_ASSERT (!CORBA::is_nil (ec_.in ()));
 }
@@ -233,10 +206,8 @@ main (int argc, char* argv[])
       events.init (argc,
                    argv
                    ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
-      events.run_test (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      events.run_test ();
     }
   ACE_CATCH (CORBA::Exception, se)
     {

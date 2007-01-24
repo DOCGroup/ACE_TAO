@@ -23,7 +23,6 @@ Server_Task::svc (void)
       // run the test for at most 30 seconds...
       ACE_Time_Value tv (15, 0);
       this->orb_->run (tv ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
     }
   ACE_CATCHANY
     {

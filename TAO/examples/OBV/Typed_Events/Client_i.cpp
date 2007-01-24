@@ -44,14 +44,12 @@ Checkpoint_Client_i::run (const char *name,
       t_e->origin_id_ (KITCHEN);
       t_e->do_print ();
       checkpoint->put_event (t_e ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       temperature = random_number (25,30);
       t_e = new Temperature_impl (temperature);
       t_e->origin_id_ (BATHROOM);
       t_e->do_print ();
       checkpoint->put_event (t_e ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       Point point = { random_number (0,4),
                       random_number (0,4),
@@ -60,7 +58,6 @@ Checkpoint_Client_i::run (const char *name,
       p_e->origin_id_ (JONAS);
       p_e->do_print ();
       checkpoint->put_event (p_e ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
 
       int urgent = (random_number (0,2) > 1) ? 1 : 0;
@@ -70,13 +67,11 @@ Checkpoint_Client_i::run (const char *name,
       l_e->origin_id_ (JONAS);
       l_e->do_print ();
       checkpoint->put_event (l_e ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
 
       ACE_DEBUG ((LM_DEBUG, "\nNow getting the alarms:\n"));
 
-      Event_List_var list (checkpoint->get_critical_events (ACE_ENV_SINGLE_ARG_PARAMETER));
-      ACE_TRY_CHECK;
+      Event_List_var list (checkpoint->get_critical_events ());
 
       for (Event_List_Iterator i (list); i.next (); i.advance ())
         {
@@ -84,9 +79,8 @@ Checkpoint_Client_i::run (const char *name,
         }
 
       if (checkpoint.shutdown () == 1)
-        checkpoint->shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
+        checkpoint->shutdown ();
 
-      ACE_TRY_CHECK;
     }
   ACE_CATCHANY
     {
@@ -94,7 +88,6 @@ Checkpoint_Client_i::run (const char *name,
       return -1;
     }
   ACE_ENDTRY;
-  ACE_CHECK_RETURN (-1);
 
   return 0;
 }

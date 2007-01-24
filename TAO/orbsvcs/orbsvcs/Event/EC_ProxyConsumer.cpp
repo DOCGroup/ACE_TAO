@@ -52,7 +52,6 @@ TAO_EC_ProxyPushConsumer::supplier_non_existent (
     ACE_GUARD_THROW_EX (
         ACE_Lock, ace_mon, *this->lock_,
         CORBA::INTERNAL ());
-    ACE_CHECK_RETURN (0);
 
     disconnected = 0;
     if (this->is_connected_i () == 0)
@@ -68,7 +67,7 @@ TAO_EC_ProxyPushConsumer::supplier_non_existent (
   }
 
 #if (TAO_HAS_MINIMUM_CORBA == 0)
-  return supplier->_non_existent (ACE_ENV_SINGLE_ARG_PARAMETER);
+  return supplier->_non_existent ();
 #else
   return 0;
 #endif /* TAO_HAS_MINIMUM_CORBA */
@@ -135,12 +134,12 @@ TAO_EC_ProxyPushConsumer::disconnected (TAO_EC_ProxyPushConsumer*
 }
 
 void
-TAO_EC_ProxyPushConsumer::shutdown_hook (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+TAO_EC_ProxyPushConsumer::shutdown_hook (void)
 {
 }
 
 void
-TAO_EC_ProxyPushConsumer::shutdown (ACE_ENV_SINGLE_ARG_DECL)
+TAO_EC_ProxyPushConsumer::shutdown (void)
 {
   RtecEventComm::PushSupplier_var supplier;
 
@@ -148,33 +147,28 @@ TAO_EC_ProxyPushConsumer::shutdown (ACE_ENV_SINGLE_ARG_DECL)
     ACE_GUARD_THROW_EX (
         ACE_Lock, ace_mon, *this->lock_,
         RtecEventChannelAdmin::EventChannel::SYNCHRONIZATION_ERROR ());
-    ACE_CHECK;
 
     supplier = this->supplier_._retn ();
     this->connected_ = 0;
 
-    this->shutdown_hook (ACE_ENV_SINGLE_ARG_PARAMETER);
-    ACE_CHECK;
+    this->shutdown_hook ();
 
     if (this->filter_ != 0)
       {
-        this->filter_->shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
-        ACE_CHECK;
+        this->filter_->shutdown ();
 
         this->cleanup_i ();
       }
   }
 
-  this->deactivate (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+  this->deactivate ();
 
   if (CORBA::is_nil (supplier.in ()))
     return;
 
   ACE_TRY
     {
-      supplier->disconnect_push_supplier (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      supplier->disconnect_push_supplier ();
     }
   ACE_CATCHANY
     {
@@ -200,15 +194,13 @@ TAO_EC_ProxyPushConsumer::cleanup_i (void)
 }
 
 void
-TAO_EC_ProxyPushConsumer::deactivate (ACE_ENV_SINGLE_ARG_DECL)
+TAO_EC_ProxyPushConsumer::deactivate (void)
 {
   ACE_TRY
     {
       PortableServer::ObjectId id =
-          this->object_id (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+          this->object_id ();
       this->default_POA_->deactivate_object (id ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
     }
   ACE_CATCHANY
     {

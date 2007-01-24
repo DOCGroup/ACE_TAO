@@ -59,7 +59,7 @@ public:
                             ACE_ENV_ARG_DECL);
   virtual void disconnected (TAO_EC_ProxyPushSupplier* supplier
                              ACE_ENV_ARG_DECL);
-  virtual void shutdown (ACE_ENV_SINGLE_ARG_DECL);
+  virtual void shutdown (void);
   virtual void push (const RtecEventComm::EventSet& event,
                      TAO_EC_ProxyPushConsumer *consumer
                      ACE_ENV_ARG_DECL_NOT_USED);

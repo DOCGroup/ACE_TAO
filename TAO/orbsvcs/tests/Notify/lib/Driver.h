@@ -110,7 +110,7 @@ public:
   int init (int argc, ACE_TCHAR *argv[] ACE_ENV_ARG_DECL);
 
   /// Execute the commands.
-  void run (ACE_ENV_SINGLE_ARG_DECL);
+  void run (void);
 
   /// Shutdown
   virtual void shutdown (void);

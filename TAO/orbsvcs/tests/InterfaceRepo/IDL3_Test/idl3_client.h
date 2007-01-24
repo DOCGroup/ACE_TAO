@@ -42,7 +42,7 @@ public:
             ACE_ENV_ARG_DECL);
   // Initialize the ORB and get the IFR object reference.
 
-  int run (ACE_ENV_SINGLE_ARG_DECL);
+  int run (void);
   // Execute test code.
 
 private:
@@ -50,8 +50,8 @@ private:
                   char *argv[]);
   // Process the command line arguments.
 
-  int component_test (ACE_ENV_SINGLE_ARG_DECL);
-  int home_test (ACE_ENV_SINGLE_ARG_DECL);
+  int component_test (void);
+  int home_test (void);
 
   // Also tests eventtype.
   int valuetype_test (const char *repo_id,

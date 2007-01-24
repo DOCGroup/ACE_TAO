@@ -68,7 +68,6 @@ main (int argc, char * argv [])
                          satc.get_TCHAR_argv (),
                          server_orb.c_str ()
                          ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       ACE_Argv_Type_Converter catc (argc, argv);
       CORBA::ORB_var corb =
@@ -76,7 +75,6 @@ main (int argc, char * argv [])
                          catc.get_TCHAR_argv (),
                          client_orb.c_str ()
                          ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       {
         ACE_Manual_Event me;
@@ -110,8 +108,7 @@ main (int argc, char * argv [])
         ACE_Thread_Manager::instance ()->wait ();
       }
 
-      sorb->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      sorb->destroy ();
     }
   ACE_CATCHANY
     {

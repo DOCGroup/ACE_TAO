@@ -11,8 +11,8 @@
 #include "orbsvcs/Event_Service_Constants.h"
 #include "ace/OS_NS_unistd.h"
 
-ACE_RCSID (TAO_PERF_RTEC, 
-           Consumer, 
+ACE_RCSID (TAO_PERF_RTEC,
+           Consumer,
            "$Id$")
 
 Consumer::Consumer (CORBA::Long experiment_id,
@@ -35,8 +35,7 @@ Consumer::connect (RtecEventChannelAdmin::EventChannel_ptr ec
                    ACE_ENV_ARG_DECL)
 {
   RtecEventChannelAdmin::ConsumerAdmin_var consumer_admin =
-    ec->for_consumers (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+    ec->for_consumers ();
 
   {
     ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->mutex_);
@@ -44,13 +43,11 @@ Consumer::connect (RtecEventChannelAdmin::EventChannel_ptr ec
       return;
 
     this->proxy_supplier_ =
-      consumer_admin->obtain_push_supplier (ACE_ENV_SINGLE_ARG_PARAMETER);
-    ACE_CHECK;
+      consumer_admin->obtain_push_supplier ();
   }
 
   RtecEventComm::PushConsumer_var consumer =
-    this->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+    this->_this ();
 
   RtecEventChannelAdmin::ConsumerQOS consumer_qos;
   consumer_qos.is_gateway = 0;
@@ -68,11 +65,10 @@ Consumer::connect (RtecEventChannelAdmin::EventChannel_ptr ec
   this->proxy_supplier_->connect_push_consumer (consumer.in (),
                                                 consumer_qos
                                                 ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 }
 
 void
-Consumer::disconnect (ACE_ENV_SINGLE_ARG_DECL)
+Consumer::disconnect (void)
 {
   RtecEventChannelAdmin::ProxyPushSupplier_var proxy;
   {
@@ -84,11 +80,9 @@ Consumer::disconnect (ACE_ENV_SINGLE_ARG_DECL)
 
   Implicit_Deactivator deactivator (this
                                     ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
   ACE_TRY {
-    proxy->disconnect_push_supplier (ACE_ENV_SINGLE_ARG_PARAMETER);
-    ACE_TRY_CHECK;
+    proxy->disconnect_push_supplier ();
   } ACE_CATCHANY {
   } ACE_ENDTRY;
 }
@@ -125,7 +119,7 @@ Consumer::push (const RtecEventComm::EventSet &events
 }
 
 void
-Consumer::disconnect_push_consumer (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+Consumer::disconnect_push_consumer (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->mutex_);
@@ -134,7 +128,7 @@ Consumer::disconnect_push_consumer (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
 }
 
 PortableServer::POA_ptr
-Consumer::_default_POA (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+Consumer::_default_POA (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return PortableServer::POA::_duplicate (this->default_POA_.in ());

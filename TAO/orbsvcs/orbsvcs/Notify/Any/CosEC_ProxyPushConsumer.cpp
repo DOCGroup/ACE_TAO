@@ -66,19 +66,18 @@ TAO_Notify_CosEC_ProxyPushConsumer::connect_push_supplier (CosEventComm::PushSup
                     CORBA::NO_MEMORY ());
 
   supplier->init (push_supplier ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
   this->connect (supplier ACE_ENV_ARG_PARAMETER);
 }
 
 void
-TAO_Notify_CosEC_ProxyPushConsumer::disconnect_push_consumer (ACE_ENV_SINGLE_ARG_DECL)
+TAO_Notify_CosEC_ProxyPushConsumer::disconnect_push_consumer (void)
   ACE_THROW_SPEC ((
                    CORBA::SystemException
                    ))
 {
   TAO_Notify_CosEC_ProxyPushConsumer::Ptr guard( this );
-  this->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
+  this->destroy ();
 }
 
 const char *

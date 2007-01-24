@@ -21,14 +21,14 @@ TAO_Set_Update_Interceptor::~TAO_Set_Update_Interceptor (void)
 }
 
 char *
-TAO_Set_Update_Interceptor::name (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+TAO_Set_Update_Interceptor::name (void)
 ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return CORBA::string_dup (this->myname_);
 }
 
 void
-TAO_Set_Update_Interceptor::destroy (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+TAO_Set_Update_Interceptor::destroy (void)
 ACE_THROW_SPEC ((CORBA::SystemException))
 {
 }
@@ -49,14 +49,12 @@ TAO_Set_Update_Interceptor::send_request (
                                       ACE_THROW_SPEC ((CORBA::SystemException,
                                       PortableInterceptor::ForwardRequest))
 {
-  CORBA::String_var operation = ri->operation (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+  CORBA::String_var operation = ri->operation ();
 
   if (strcmp(operation.in(), "set_update")==0 ||
     strcmp(operation.in(), "oneway_set_update") ==0) {
       CORBA::Any_var a = Request_Context_Repository().get_ft_request_service_context(ri
         ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
 
       IOP::ServiceContext* sc;
 
@@ -64,7 +62,6 @@ TAO_Set_Update_Interceptor::send_request (
         return;
 
       ri->add_request_service_context (*sc, 0 ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
 
       FTRT::TransactionDepth transaction_depth =
         Request_Context_Repository().get_transaction_depth(ri ACE_ENV_ARG_PARAMETER);
@@ -98,7 +95,6 @@ TAO_Set_Update_Interceptor::send_request (
 #endif /* TAO_NO_COPY_OCTET_SEQUENCES == 1 */
 
         ri->add_request_service_context (*sc, 0 ACE_ENV_ARG_PARAMETER);
-        ACE_CHECK;
 
         cdr.reset();
       }
@@ -134,7 +130,6 @@ TAO_Set_Update_Interceptor::send_request (
 #endif /* TAO_NO_COPY_OCTET_SEQUENCES == 1 */
 
         ri->add_request_service_context (*sc, 0 ACE_ENV_ARG_PARAMETER);
-        ACE_CHECK;
       }
     }
 }

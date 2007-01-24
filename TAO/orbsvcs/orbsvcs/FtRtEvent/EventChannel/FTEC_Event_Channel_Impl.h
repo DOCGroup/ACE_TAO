@@ -50,12 +50,12 @@ public:
 
   // = The RtecEventChannelAdmin::EventChannel methods...
   virtual RtecEventChannelAdmin::ConsumerAdmin_ptr
-      for_consumers (ACE_ENV_SINGLE_ARG_DECL)
+      for_consumers (void)
         ACE_THROW_SPEC ((CORBA::SystemException));
 
 
   virtual RtecEventChannelAdmin::SupplierAdmin_ptr
-      for_suppliers (ACE_ENV_SINGLE_ARG_DECL)
+      for_suppliers (void)
         ACE_THROW_SPEC ((CORBA::SystemException));
 
   void get_state (FtRtecEventChannelAdmin::EventChannelState & s

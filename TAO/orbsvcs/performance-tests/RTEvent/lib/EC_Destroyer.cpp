@@ -12,8 +12,8 @@
 #include "EC_Destroyer.inl"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID (TAO_PERF_RTEC, 
-           EC_Destroyer, 
+ACE_RCSID (TAO_PERF_RTEC,
+           EC_Destroyer,
            "$Id$")
 
 EC_Destroyer::EC_Destroyer (RtecEventChannelAdmin::EventChannel_ptr ec)
@@ -25,8 +25,7 @@ EC_Destroyer::~EC_Destroyer (void)
 {
   ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY {
-    this->ec_->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-    ACE_TRY_CHECK;
+    this->ec_->destroy ();
   } ACE_CATCH (CORBA::Exception, ex) {
     // @@ TODO Log this event, check the Servant_var.cpp comments for
     // details.

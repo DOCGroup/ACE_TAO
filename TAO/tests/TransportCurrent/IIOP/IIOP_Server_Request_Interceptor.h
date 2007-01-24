@@ -55,7 +55,7 @@ namespace Test
      */
     //@{
     /// Return the name of this ServerRequestinterceptor.
-    virtual char * name (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+    virtual char * name (void)
       ACE_THROW_SPEC ((CORBA::SystemException));
 
     /// incomming interception point

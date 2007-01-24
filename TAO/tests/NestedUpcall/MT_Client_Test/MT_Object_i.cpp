@@ -52,7 +52,7 @@ MT_Object_i::yadda (CORBA::Long hop_count,
   {
     if (partner != 0)
       return partner->yadda (hop_count + 1,
-                             this->_this (ACE_ENV_SINGLE_ARG_PARAMETER)
+                             this->_this ()
                              ACE_ENV_ARG_PARAMETER) + 1;
   }
 

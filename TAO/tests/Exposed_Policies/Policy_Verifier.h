@@ -44,7 +44,7 @@ public:
              char *argv[]
              ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
-  void run (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
+  void run (void);
 
 private:
   // -- Helper methods --

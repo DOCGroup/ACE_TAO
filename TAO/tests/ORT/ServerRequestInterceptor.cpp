@@ -19,14 +19,14 @@ ServerRequestInterceptor::ServerRequestInterceptor (
 }
 
 char *
-ServerRequestInterceptor::name (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+ServerRequestInterceptor::name (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return CORBA::string_dup ("ServerRequestInterceptor");
 }
 
 void
-ServerRequestInterceptor::destroy (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+ServerRequestInterceptor::destroy (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
 }
@@ -51,8 +51,7 @@ ServerRequestInterceptor::receive_request (
   // shutdown operation.  Don't bother displaying output a second
   // time.
   CORBA::Boolean response_expected =
-    ri->response_expected (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+    ri->response_expected ();
 
   if (!response_expected)
     return;
@@ -61,8 +60,7 @@ ServerRequestInterceptor::receive_request (
 
   ACE_TRY
     {
-      poa = this->poa_current_->get_POA (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      poa = this->poa_current_->get_POA ();
     }
   ACE_CATCH (PortableServer::Current::NoContext, ex)
     {
@@ -72,11 +70,9 @@ ServerRequestInterceptor::receive_request (
       ACE_TRY_THROW (CORBA::INTERNAL ());
     }
   ACE_ENDTRY;
-  ACE_CHECK;
 
   PortableServer::POA_var parent_poa =
-    poa->the_parent (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+    poa->the_parent ();
 
   // Make sure there is more than one POA in the POA hierarchy since
   // the servant should have been registered with a child POA, not the
@@ -84,8 +80,7 @@ ServerRequestInterceptor::receive_request (
   ACE_ASSERT (!CORBA::is_nil (parent_poa.in ()));
 
   PortableInterceptor::AdapterName_var name =
-    ri->adapter_name (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+    ri->adapter_name ();
 
 
   ACE_DEBUG ((LM_INFO,
@@ -117,13 +112,11 @@ ServerRequestInterceptor::receive_request (
   // sequence.
   ACE_ASSERT (ACE_OS::strcmp ("RootPOA", name[(CORBA::ULong) 0]) == 0);
 
-  CORBA::String_var orb_id = ri->orb_id (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+  CORBA::String_var orb_id = ri->orb_id ();
 
   ACE_ASSERT (ACE_OS::strcmp (this->orb_id_.in (), orb_id.in ()) == 0);
 
-  CORBA::String_var server_id = ri->server_id (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+  CORBA::String_var server_id = ri->server_id ();
 
   ACE_ASSERT (ACE_OS::strcmp (server_id.in (), "ORT_test_server") == 0);
 }

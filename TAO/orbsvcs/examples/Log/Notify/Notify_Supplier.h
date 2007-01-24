@@ -77,7 +77,7 @@ class Filter_StructuredPushSupplier
   //
  public:
   // = Initialization and Termination code
-  Filter_StructuredPushSupplier (ACE_ENV_SINGLE_ARG_DECL_NOT_USED);
+  Filter_StructuredPushSupplier (void);
   // Constructor.
 
   void connect (CosNotifyChannelAdmin::SupplierAdmin_ptr supplier_admin
@@ -85,7 +85,7 @@ class Filter_StructuredPushSupplier
   // Connect the Supplier to the EventChannel.
   // Creates a new proxy supplier and connects to it.
 
-  void disconnect (ACE_ENV_SINGLE_ARG_DECL);
+  void disconnect (void);
   // Disconnect from the supplier.
 
   virtual void send_event (const CosNotification::StructuredEvent& event

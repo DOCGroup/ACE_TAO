@@ -49,7 +49,7 @@ public:
   virtual ~TAO_Notify_Method_Request_Updates ();
 
   /// Execute the Request
-  virtual int execute (ACE_ENV_SINGLE_ARG_DECL);
+  virtual int execute (void);
 };
 
 /*****************************************************************************/
@@ -78,10 +78,10 @@ public:
   virtual ~TAO_Notify_Method_Request_Updates_No_Copy ();
 
   /// Create a copy of this object.
-  virtual TAO_Notify_Method_Request_Queueable* copy (ACE_ENV_SINGLE_ARG_DECL);
+  virtual TAO_Notify_Method_Request_Queueable* copy (void);
 
   /// Execute the Request
-  virtual int execute (ACE_ENV_SINGLE_ARG_DECL);
+  virtual int execute (void);
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

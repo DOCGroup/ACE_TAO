@@ -40,24 +40,19 @@ Consumer_Handler::init (int argc,
                                     argv,
                                     0
                                     ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       CORBA::Object_var poa_object  =
         this->orb_->resolve_initial_references("RootPOA"
                                            ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       PortableServer::POA_var poa =
         PortableServer::POA::_narrow (poa_object.in ()
                                       ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       PortableServer::POAManager_var poa_manager =
-        poa->the_POAManager (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        poa->the_POAManager ();
 
-      poa_manager->activate (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      poa_manager->activate ();
 
       // Save the Shutdown callback.
       this->shutdowncallback = _shutdowncallback;
@@ -67,9 +62,8 @@ Consumer_Handler::init (int argc,
 
       // Start the servant.
       this->receiver_ =
-        this->receiver_i_._this (ACE_ENV_SINGLE_ARG_PARAMETER);
+        this->receiver_i_._this ();
 
-      ACE_TRY_CHECK;
 
       if (this->get_notifier () == -1)
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -112,14 +106,12 @@ Consumer_Handler::get_notifier (void)
       CORBA::Object_var notifier_obj =
         this->naming_services_client_->resolve (notifier_ref_name
                                                 ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       // The CORBA::Object_var object is downcast to Notifier_var
       // using the <_narrow> method.
       this->notifier_ =
         Event_Comm::Notifier::_narrow (notifier_obj.in ()
                                        ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
     }
   ACE_CATCHANY
     {
@@ -156,8 +148,7 @@ Consumer_Handler::run (void)
   ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY
     {
-      this->orb_->run (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      this->orb_->run ();
     }
   ACE_CATCHANY
     {

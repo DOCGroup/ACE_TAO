@@ -61,15 +61,12 @@ Server_Worker::test_main (int argc, ACE_TCHAR *argv[] ACE_ENV_ARG_DECL)
   ACE_Argv_Type_Converter cvt (argc, argv);
   CORBA::ORB_var orb = CORBA::ORB_init (cvt.get_argc (),
                                         cvt.get_ASCII_argv () ACE_ENV_ARG_PARAMETER);
-  ACE_TRY_CHECK;
 
   CORBA::Object_var poa_object =
     orb->resolve_initial_references("RootPOA" ACE_ENV_ARG_PARAMETER);
-  ACE_TRY_CHECK;
 
   PortableServer::POA_var root_poa =
     PortableServer::POA::_narrow (poa_object.in () ACE_ENV_ARG_PARAMETER);
-  ACE_TRY_CHECK;
 
   if (CORBA::is_nil (root_poa.in ()))
     ACE_ERROR_RETURN ((LM_ERROR,
@@ -77,8 +74,7 @@ Server_Worker::test_main (int argc, ACE_TCHAR *argv[] ACE_ENV_ARG_DECL)
                       1);
 
   PortableServer::POAManager_var poa_manager =
-    root_poa->the_POAManager (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_TRY_CHECK;
+    root_poa->the_POAManager ();
 
   if (parse_args (cvt.get_argc (), cvt.get_ASCII_argv ()) != 0)
     return 1;
@@ -92,24 +88,19 @@ Server_Worker::test_main (int argc, ACE_TCHAR *argv[] ACE_ENV_ARG_DECL)
 
   PortableServer::ObjectId_var id =
     root_poa->activate_object (hello_impl ACE_ENV_ARG_PARAMETER);
-  ACE_TRY_CHECK;
 
   CORBA::Object_var hello_obj =
     root_poa->id_to_reference (id.in ()
                                ACE_ENV_ARG_PARAMETER);
-  ACE_TRY_CHECK;
 
   Test::Hello_var hello =
     Test::Hello::_narrow (hello_obj.in ()
                           ACE_ENV_ARG_PARAMETER);
-  ACE_TRY_CHECK;
 
   CORBA::String_var ior =
     orb->object_to_string (hello.in () ACE_ENV_ARG_PARAMETER);
-  ACE_TRY_CHECK;
 
-  poa_manager->activate (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_TRY_CHECK;
+  poa_manager->activate ();
 
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%P|%t) Server activated POA manager\n")));
 
@@ -125,22 +116,18 @@ Server_Worker::test_main (int argc, ACE_TCHAR *argv[] ACE_ENV_ARG_DECL)
 
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%P|%t) Server entering the event loop\n")));
 
-  orb->run (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_TRY_CHECK;
+  orb->run ();
 
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%P|%t) Server exiting the event loop\n")));
 
   root_poa->destroy (1, 1 ACE_ENV_ARG_PARAMETER);
-  ACE_TRY_CHECK;
 
   // During normal test execution the ORB would have been destroyed
   // by a request from the client.
 
   //  orb->shutdown (0 ACE_ENV_ARG_PARAMETER);
-  //  ACE_CHECK;
 
-  orb->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_TRY_CHECK;
+  orb->destroy ();
 
   return 0;
 }

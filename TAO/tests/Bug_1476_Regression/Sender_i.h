@@ -36,7 +36,7 @@ public:
                                ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual void send_ready_message (ACE_ENV_SINGLE_ARG_DECL)
+  virtual void send_ready_message (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   CORBA::ULong get_number_received (void) const;

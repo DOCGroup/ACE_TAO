@@ -54,14 +54,12 @@ FooServantList::create_and_activate(CORBA::ORB_ptr orb,
       PortableServer::ObjectId_var id =
                     PortableServer::string_to_ObjectId(servant_name.c_str());
 
-      poa->activate_object_with_id(id.in(), 
+      poa->activate_object_with_id(id.in(),
                                    this->safe_servants_[i].in()
                                    ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
 
       CORBA::Object_var obj = poa->id_to_reference(id.in()
                                                    ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
 
       if (CORBA::is_nil(obj.in()))
         {
@@ -75,7 +73,6 @@ FooServantList::create_and_activate(CORBA::ORB_ptr orb,
       if (this->collocated_test_ && i == 0)
         {
           Foo_var collocated = Foo::_narrow (obj.in () ACE_ENV_ARG_PARAMETER);
-          ACE_CHECK;
 
           // Create the servant object.
           Callback_i* servant = new Callback_i ();
@@ -89,9 +86,8 @@ FooServantList::create_and_activate(CORBA::ORB_ptr orb,
 
           poa->activate_object_with_id(id.in(), safe_servant.in());
 
-          CORBA::Object_var obj = poa->id_to_reference(id.in() 
+          CORBA::Object_var obj = poa->id_to_reference(id.in()
                                                        ACE_ENV_ARG_PARAMETER);
-          ACE_CHECK;
 
           if (CORBA::is_nil(obj.in()))
             {
@@ -101,11 +97,10 @@ FooServantList::create_and_activate(CORBA::ORB_ptr orb,
               ACE_THROW (TestException());
             }
 
-          Callback_var callback 
+          Callback_var callback
             = Callback::_narrow (obj.in () ACE_ENV_ARG_PARAMETER);
-          ACE_CHECK;
 
-          collocated_client_ 
+          collocated_client_
             = new ClientTask(orb, collocated.in (), callback.in (), true);
           if (collocated_client_->open() != 0)
             {
@@ -115,9 +110,8 @@ FooServantList::create_and_activate(CORBA::ORB_ptr orb,
             }
         }
 
-      CORBA::String_var ior 
+      CORBA::String_var ior
         = this->orb_->object_to_string(obj.in() ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
 
       ACE_CString filename = servant_name + ".ior";
       FILE* ior_file = ACE_OS::fopen(filename.c_str(), "w");
@@ -129,7 +123,7 @@ FooServantList::create_and_activate(CORBA::ORB_ptr orb,
                      filename.c_str()));
           ACE_THROW (TestException());
         }
-      else 
+      else
         {
           ACE_DEBUG((LM_DEBUG,
                      "(%P|%t) writing IOR to file %s\n",
@@ -142,7 +136,7 @@ FooServantList::create_and_activate(CORBA::ORB_ptr orb,
 
 
 void
-FooServantList::client_done(ACE_ENV_SINGLE_ARG_DECL)
+FooServantList::client_done(void)
 {
   unsigned num_left;
 
@@ -157,12 +151,12 @@ FooServantList::client_done(ACE_ENV_SINGLE_ARG_DECL)
         {
           ACE_ERROR((LM_ERROR, "(%P|%t)FooServantList::client_done: "
             "failed to create orb shutdown thread.\n"));
-        }        
+        }
     }
 }
 
 
-ClientTask* 
+ClientTask*
 FooServantList::collocated_client () const
 {
   return collocated_client_;
@@ -170,7 +164,7 @@ FooServantList::collocated_client () const
 
 
 void
-FooServantList::deactivate_servant (ACE_ENV_SINGLE_ARG_DECL)
+FooServantList::deactivate_servant (void)
 {
   for (unsigned i = 0; i < this->num_servants_; i++)
     {
@@ -188,19 +182,17 @@ FooServantList::deactivate_servant (ACE_ENV_SINGLE_ARG_DECL)
                 "deactivate %dth servant \n", i+1));
 
               PortableServer::ObjectId_var id =
-                poa_->servant_to_id (safe_servants_[i].in () 
+                poa_->servant_to_id (safe_servants_[i].in ()
                                      ACE_ENV_ARG_PARAMETER);
-              ACE_CHECK;
 
               poa_->deactivate_object (id.in () ACE_ENV_ARG_PARAMETER);
-              ACE_CHECK;
 
               if (this->num_servants_ == 1)
                 {
                   // If there is only one servant and we deactivate it then
                   // all clients will catch exception and we need a way to
                   // shutdown the orb.
-                  // Wait for 5 seconds so we can see the requests queued 
+                  // Wait for 5 seconds so we can see the requests queued
                   // will be cancelled by deactivate servant.
                   ACE_OS::sleep (5);
                   ACE_DEBUG((LM_DEBUG, "(%P|%t)shutdown ORB\n"));
@@ -208,14 +200,14 @@ FooServantList::deactivate_servant (ACE_ENV_SINGLE_ARG_DECL)
                     {
                       ACE_ERROR((LM_ERROR, "(%P|%t)FooServantList::deactivate_servant: "
                         "failed to create orb shutdown thread.\n"));
-                    }        
+                    }
                 }
               else
                 {
                   GuardType guard(this->num_clients_lock_);
                   // The clients that requests this deactivated servant
-                  // will catch exception due to the deactivated servant. 
-                  // We need descrease the num_clients so the alived 
+                  // will catch exception due to the deactivated servant.
+                  // We need descrease the num_clients so the alived
                   // servant can be called to shutdown the orb.
                   this->num_clients_ -= this->init_num_clients_/num_servants_;
                 }

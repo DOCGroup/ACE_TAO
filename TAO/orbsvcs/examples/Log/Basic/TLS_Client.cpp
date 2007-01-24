@@ -28,11 +28,8 @@ void
 TLS_Client::init (int argc, char *argv [] ACE_ENV_ARG_DECL)
 {
   init_ORB (argc, argv ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
-  resolve_naming_service (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
-  resolve_TLS_Basic_factory (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+  resolve_naming_service ();
+  resolve_TLS_Basic_factory ();
 }
 
 void
@@ -44,16 +41,14 @@ TLS_Client::init_ORB (int argc,
                                 argv,
                                 ""
                                 ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 }
 
 void
-TLS_Client::resolve_naming_service (ACE_ENV_SINGLE_ARG_DECL)
+TLS_Client::resolve_naming_service (void)
 {
   CORBA::Object_var naming_obj =
     this->orb_->resolve_initial_references (NAMING_SERVICE_NAME
                                             ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
   // Need to check return value for errors.
   if (CORBA::is_nil (naming_obj.in ()))
@@ -61,11 +56,10 @@ TLS_Client::resolve_naming_service (ACE_ENV_SINGLE_ARG_DECL)
 
   this->naming_context_ =
     CosNaming::NamingContext::_narrow (naming_obj.in () ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 }
 
 void
-TLS_Client::resolve_TLS_Basic_factory (ACE_ENV_SINGLE_ARG_DECL)
+TLS_Client::resolve_TLS_Basic_factory (void)
 {
   CosNaming::Name name (1);
   name.length (1);
@@ -74,16 +68,14 @@ TLS_Client::resolve_TLS_Basic_factory (ACE_ENV_SINGLE_ARG_DECL)
   CORBA::Object_var obj =
     this->naming_context_->resolve (name
                                    ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
   this->basic_log_factory_ =
     DsLogAdmin::BasicLogFactory::_narrow (obj.in ()
                                           ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 }
 
 void
-TLS_Client::run_tests (ACE_ENV_SINGLE_ARG_DECL)
+TLS_Client::run_tests (void)
 {
   ACE_ASSERT (!CORBA::is_nil (this->basic_log_factory_.in ()));
 
@@ -102,7 +94,6 @@ TLS_Client::run_tests (ACE_ENV_SINGLE_ARG_DECL)
                                       max_size,
                                       logid
                                       ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
   ACE_DEBUG ((LM_DEBUG,
               "Create returned logid = %d\n",logid));
@@ -119,16 +110,13 @@ TLS_Client::run_tests (ACE_ENV_SINGLE_ARG_DECL)
   ACE_DEBUG ((LM_DEBUG,
               "Writing %d records...\n", LOG_EVENT_COUNT));
   basic_log->write_records (any_seq ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
   ACE_DEBUG ((LM_DEBUG,
               "Calling BasicLog::get_n_records...\n"));
 #ifndef ACE_LACKS_LONGLONG_T
-  CORBA::ULongLong retval = basic_log->get_n_records (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+  CORBA::ULongLong retval = basic_log->get_n_records ();
 #else
-  CORBA::Long retval = basic_log->get_n_records (ACE_ENV_SINGLE_ARG_PARAMETER).lo();
-  ACE_CHECK;
+  CORBA::Long retval = basic_log->get_n_records ().lo();
 #endif
 
   ACE_DEBUG ((LM_DEBUG, "Number of records in Log = %d \n", retval));
@@ -136,11 +124,9 @@ TLS_Client::run_tests (ACE_ENV_SINGLE_ARG_DECL)
   ACE_DEBUG ((LM_DEBUG,
               "Calling BasicLog::get_current_size...\n"));
 #ifndef ACE_LACKS_LONGLONG_T
-  retval = basic_log->get_current_size (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+  retval = basic_log->get_current_size ();
 #else
-  retval = basic_log->get_current_size (ACE_ENV_SINGLE_ARG_PARAMETER).lo();
-  ACE_CHECK;
+  retval = basic_log->get_current_size ().lo();
 #endif
 
   ACE_DEBUG ((LM_DEBUG, "Size of data in Log = %d \n", retval));
@@ -167,16 +153,13 @@ TLS_Client::run_tests (ACE_ENV_SINGLE_ARG_DECL)
               "Deleting records... \n"));
 
   retval = basic_log->delete_records (QUERY_LANG, QUERY_2 ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
   ACE_DEBUG ((LM_DEBUG,
               "Calling BasicLog::get_n_records...\n"));
 #ifndef ACE_LACKS_LONGLONG_T
-  retval = basic_log->get_n_records (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+  retval = basic_log->get_n_records ();
 #else
-  retval = basic_log->get_n_records (ACE_ENV_SINGLE_ARG_PARAMETER).lo();
-  ACE_CHECK;
+  retval = basic_log->get_n_records ().lo();
 #endif
 
   ACE_DEBUG ((LM_DEBUG, "Number of records in Log after delete = %d \n",
@@ -184,15 +167,12 @@ TLS_Client::run_tests (ACE_ENV_SINGLE_ARG_DECL)
 
   ACE_DEBUG ((LM_DEBUG, "Geting the current_size again...\n"));
 #ifndef ACE_LACKS_LONGLONG_T
-  retval = basic_log->get_current_size (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+  retval = basic_log->get_current_size ();
 #else
-  retval = basic_log->get_current_size (ACE_ENV_SINGLE_ARG_PARAMETER).lo();
-  ACE_CHECK;
+  retval = basic_log->get_current_size ().lo();
 #endif
 
   ACE_DEBUG ((LM_DEBUG, "Size of data in Log = %d \n", retval));
 
-  basic_log->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+  basic_log->destroy ();
 }

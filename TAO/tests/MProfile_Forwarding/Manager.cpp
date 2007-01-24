@@ -63,19 +63,15 @@ main (int argc,
       manager.init (argc,
                     argv
                     ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       if (parse_args (argc, argv) == -1)
         return -1;
 
-      manager.activate_servant (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      manager.activate_servant ();
 
-      manager.make_iors_register (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      manager.make_iors_register ();
 
-      manager.run (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      manager.run ();
     }
   ACE_CATCHANY
     {
@@ -104,25 +100,20 @@ Manager::init (int argc,
                                 argv,
                                 0
                                 ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
 
   // Obtain the RootPOA.
   CORBA::Object_var obj_var =
     this->orb_->resolve_initial_references ("RootPOA" ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
 
   // Get the POA_var object from Object_var.
   PortableServer::POA_var root_poa_var =
     PortableServer::POA::_narrow (obj_var.in () ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
 
   // Get the POAManager of the RootPOA.
   PortableServer::POAManager_var poa_manager_var =
-    root_poa_var->the_POAManager (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
+    root_poa_var->the_POAManager ();
 
-  poa_manager_var->activate (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
+  poa_manager_var->activate ();
 
   // Policies for the childPOA to be created.
   CORBA::PolicyList policies (4);
@@ -133,25 +124,21 @@ Manager::init (int argc,
   policies[0] =
     root_poa_var->create_id_assignment_policy (PortableServer::USER_ID
                                                ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
 
   // Lifespan policy
   policies[1] =
     root_poa_var->create_lifespan_policy (PortableServer::PERSISTENT
                                           ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
 
   // Tell the POA to use a servant manager
   policies[2] =
     root_poa_var->create_request_processing_policy (PortableServer::USE_SERVANT_MANAGER
                                                     ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
 
   // Servant Retention Policy -> Use a locator
   policies[3] =
     root_poa_var->create_servant_retention_policy (PortableServer::NON_RETAIN
                                                    ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
 
   ACE_CString name = "newPOA";
 
@@ -160,7 +147,6 @@ Manager::init (int argc,
                               poa_manager_var.in (),
                               policies
                               ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
 
   // Creation of childPOAs is over. Destroy the Policy objects.
   for (CORBA::ULong i = 0;
@@ -168,8 +154,7 @@ Manager::init (int argc,
        ++i)
     {
       CORBA::Policy_ptr policy = policies[i];
-      policy->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK_RETURN (-1);
+      policy->destroy ();
     }
 
   return 0;
@@ -177,13 +162,12 @@ Manager::init (int argc,
 
 
 int
-Manager::activate_servant (ACE_ENV_SINGLE_ARG_DECL)
+Manager::activate_servant (void)
 {
 
   ACE_NEW_THROW_EX (this->servant_locator_,
                     Servant_Locator (this->orb_.in ()),
                     CORBA::NO_MEMORY ());
-  ACE_CHECK_RETURN (-1);
 
   this->servant_locator_var_ = this->servant_locator_;
 
@@ -191,7 +175,6 @@ Manager::activate_servant (ACE_ENV_SINGLE_ARG_DECL)
   // secondPOA.
   this->new_poa_var_->set_servant_manager (this->servant_locator_
                                            ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
 
   // Try to create a reference with user created ID in new_poa
   // which uses ServantLocator.
@@ -202,26 +185,23 @@ Manager::activate_servant (ACE_ENV_SINGLE_ARG_DECL)
   this->new_manager_ior_ =
     new_poa_var_->create_reference_with_id (second_foo_oid_var.in (),
                                             "IDL:Simple_Server:1.0" ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
 
   return 0;
 }
 
 
 int
-Manager::make_iors_register (ACE_ENV_SINGLE_ARG_DECL)
+Manager::make_iors_register (void)
 {
   // First  server
   CORBA::Object_var object_primary =
     this->orb_->string_to_object (first_ior
                                   ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
 
   //Second server
   CORBA::Object_var object_secondary =
     this->orb_->string_to_object (second_ior
                                   ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
 
   if (third_ior == 0)
     ACE_DEBUG ((LM_DEBUG,
@@ -230,18 +210,15 @@ Manager::make_iors_register (ACE_ENV_SINGLE_ARG_DECL)
   CORBA::Object_var object_tertiary =
     this->orb_->string_to_object (third_ior
                                   ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
 
   // Get an object reference for the ORBs IORManipultion object!
   CORBA::Object_ptr IORM =
     this->orb_->resolve_initial_references (TAO_OBJID_IORMANIPULATION,
                                             0
                                             ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
 
   TAO_IOP::TAO_IOR_Manipulation_ptr iorm =
     TAO_IOP::TAO_IOR_Manipulation::_narrow (IORM ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
 
 
   // Create the list
@@ -254,7 +231,6 @@ Manager::make_iors_register (ACE_ENV_SINGLE_ARG_DECL)
   // Create a merged set 1;
   CORBA::Object_var merged_set1 =
     iorm->merge_iors (iors ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
 
   if (object_secondary.in () == 0)
     ACE_DEBUG ((LM_DEBUG,
@@ -273,7 +249,6 @@ Manager::make_iors_register (ACE_ENV_SINGLE_ARG_DECL)
   // Create merged set 2
   CORBA::Object_var merged_set2 =
     iorm->merge_iors (iors_again ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
 
   CORBA::String_var iorref1 =
     this->orb_->object_to_string (merged_set1.in ());
@@ -297,10 +272,9 @@ Manager::make_iors_register (ACE_ENV_SINGLE_ARG_DECL)
 
 
 int
-Manager::run (ACE_ENV_SINGLE_ARG_DECL)
+Manager::run (void)
 {
-  this->orb_->run (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
+  this->orb_->run ();
 
   return 0;
 }

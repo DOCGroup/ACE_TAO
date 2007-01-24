@@ -55,7 +55,6 @@ CosSchedulingLockList::CosSchedulingLockList(CosSchedulingLockNode *lock_array,
                            ACE_SYNCH_CONDITION(*mutex),
                            CORBA::NO_MEMORY());
         }
-      ACE_TRY_CHECK;
       lock_array[size - 1].next(0); /// terminate the free list
 
 
@@ -265,7 +264,6 @@ PCP_Manager::lock(const int priority_ceiling, const int priority)
       //  at RTCORBA::maxPriority
       this->current_->the_priority(RTCORBA::maxPriority);
       this->mutex_->acquire();
-      ACE_TRY_CHECK;
 
       /// create a structure to store my own lock request
       CosSchedulingLockNode MyLock;
@@ -322,19 +320,16 @@ PCP_Manager::lock(const int priority_ceiling, const int priority)
                   ACE_ERROR((LM_ERROR,
                              "Error in deferring lock\n"));
                 }
-              ACE_TRY_CHECK;
             }
         }
 
       /// remove mutex on the lock list
       this->mutex_->release();
-      ACE_TRY_CHECK;
 
       /// at this point we have the right to set the OS priority
       /// Do so at the priority ceiline.
       this->current_->the_priority(priority_ceiling);
 
-      ACE_TRY_CHECK;
     }
   ACE_CATCHANY
     {
@@ -358,7 +353,6 @@ void PCP_Manager::release_lock()
 
       /// set up the mutex
       this->mutex_->acquire();
-      ACE_TRY_CHECK;
 
       /// remove the lock node from the list of locks
       CosSchedulingLockNode L;
@@ -367,7 +361,6 @@ void PCP_Manager::release_lock()
 
       /// Done with the list, release the mutex
       this->mutex_->release();
-      ACE_TRY_CHECK;
 
       /// Let the highest priority lock signal the condition variable
       CosSchedulingLockNode *waiter = this->locks_->highest_priority();
@@ -375,7 +368,6 @@ void PCP_Manager::release_lock()
         {
           waiter->condition_->signal();
         }
-      ACE_TRY_CHECK;
 
       /// We do not need to restore priority because we have already set this
       // thread to wait at RTCORBA::maxPriority at the start of this method
@@ -411,7 +403,6 @@ PCP_Manager_Factory::PCP_Manager_Factory(const char *shared_file)
                      __LINE__));
           ACE_OS::exit(1);
         }
-      ACE_TRY_CHECK;
 
       /// Add the filename to the end
       ACE_OS_String::strcat (temp_file, shared_file);
@@ -433,7 +424,6 @@ PCP_Manager_Factory::PCP_Manager_Factory(const char *shared_file)
         ACE_ERROR ((LM_ERROR,
                     "(%P|%t) %p\n",
                     this->shm_key_));
-        ACE_TRY_CHECK;
 
 #else /* !ACE_LACKS_MMAP */
         ACE_DEBUG((LM_ERROR,
@@ -464,7 +454,6 @@ PCP_Manager_Factory::PCP_Manager_Factory(const char *shared_file)
           ACE_OS::exit(1);
         }
 
-      ACE_CHECK;
 
       /// Make the shared memory a place for a lock list
       this->lock_array_ = static_cast<CosSchedulingLockNode *> (this->mem_.malloc(CosSchedulingLockList_space));
@@ -489,7 +478,6 @@ PCP_Manager_Factory::PCP_Manager_Factory(const char *shared_file)
                              &this->mutex_),
                            CORBA::NO_MEMORY()
                           );
-          ACE_TRY_CHECK;
         }
     }
   ACE_CATCHANY

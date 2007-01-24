@@ -49,18 +49,15 @@ main (int argc, char* argv [])
                              argv,
                              ""
                              ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       if (parse_args (argc, argv) == -1)
         return (-1);
 
       CORBA::Object_var manager_obj = orb->resolve_initial_references ("RTSchedulerManager"
                                                                        ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       TAO_RTScheduler_Manager_var manager = TAO_RTScheduler_Manager::_narrow (manager_obj.in ()
                                                                               ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       TAO_Scheduler* scheduler;
       ACE_NEW_RETURN (scheduler,
@@ -74,11 +71,9 @@ main (int argc, char* argv [])
       CORBA::Object_var object =
         orb->string_to_object (ior.c_str ()
                                ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       server = test::_narrow (object.in ()
                               ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       if (CORBA::is_nil (server.in ()))
         {
@@ -90,11 +85,9 @@ main (int argc, char* argv [])
 
       CORBA::Object_var current_obj = orb->resolve_initial_references ("RTScheduler_Current"
 								       ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       RTScheduling::Current_var current = RTScheduling::Current::_narrow (current_obj.in ()
                                                                           ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       const char * name = 0;
       CORBA::Policy_ptr sched_param = 0;
@@ -104,7 +97,6 @@ main (int argc, char* argv [])
                                          sched_param,
                                          implicit_sched_param
                                          ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       ACE_DEBUG ((LM_DEBUG,
                   "Making a one-way request\n"));
@@ -114,11 +106,9 @@ main (int argc, char* argv [])
                   "Making a two-way request\n"));
       server->two_way (ior.c_str ()
                        ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       current->end_scheduling_segment (name
                                        ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
     }
   ACE_CATCH (CORBA::THREAD_CANCELLED, thr_ex)

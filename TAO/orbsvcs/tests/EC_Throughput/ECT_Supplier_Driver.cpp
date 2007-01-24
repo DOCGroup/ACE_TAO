@@ -16,8 +16,8 @@
 #include "ace/OS_NS_errno.h"
 #include "ace/OS_NS_unistd.h"
 
-ACE_RCSID (EC_Throughput, 
-           ECT_Supplier_Driver, 
+ACE_RCSID (EC_Throughput,
+           ECT_Supplier_Driver,
            "$Id$")
 
 int
@@ -59,11 +59,9 @@ ECT_Supplier_Driver::run (int argc, char* argv[])
     {
       CORBA::ORB_var orb =
         CORBA::ORB_init (argc, argv, "" ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       CORBA::Object_var poa_object =
         orb->resolve_initial_references("RootPOA" ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       if (CORBA::is_nil (poa_object.in ()))
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -72,11 +70,9 @@ ECT_Supplier_Driver::run (int argc, char* argv[])
 
       PortableServer::POA_var root_poa =
         PortableServer::POA::_narrow (poa_object.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       PortableServer::POAManager_var poa_manager =
-        root_poa->the_POAManager (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        root_poa->the_POAManager ();
 
       if (this->parse_args (argc, argv))
         return 1;
@@ -141,7 +137,6 @@ ECT_Supplier_Driver::run (int argc, char* argv[])
 
       CORBA::Object_var naming_obj =
         orb->resolve_initial_references ("NameService" ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       if (CORBA::is_nil (naming_obj.in ()))
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -150,7 +145,6 @@ ECT_Supplier_Driver::run (int argc, char* argv[])
 
       CosNaming::NamingContext_var naming_context =
         CosNaming::NamingContext::_narrow (naming_obj.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       CosNaming::Name schedule_name (1);
       schedule_name.length (1);
@@ -158,20 +152,17 @@ ECT_Supplier_Driver::run (int argc, char* argv[])
 
       CORBA::Object_var sched_obj =
         naming_context->resolve (schedule_name ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
       if (CORBA::is_nil (sched_obj.in ()))
         return 1;
       RtecScheduler::Scheduler_var scheduler =
         RtecScheduler::Scheduler::_narrow (sched_obj.in ()
                                            ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
       CosNaming::Name name (1);
       name.length (1);
       name[0].id = CORBA::string_dup ("EventService");
 
       CORBA::Object_var ec_obj =
         naming_context->resolve (name ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       RtecEventChannelAdmin::EventChannel_var channel;
       if (CORBA::is_nil (ec_obj.in ()))
@@ -179,20 +170,16 @@ ECT_Supplier_Driver::run (int argc, char* argv[])
       else
         channel = RtecEventChannelAdmin::EventChannel::_narrow (ec_obj.in ()
                                                                 ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
-      poa_manager->activate (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      poa_manager->activate ();
 
       this->connect_suppliers (scheduler.in (),
                                channel.in ()
                                ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       ACE_DEBUG ((LM_DEBUG, "connected supplier(s)\n"));
 
-      this->activate_suppliers (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      this->activate_suppliers ();
 
       ACE_DEBUG ((LM_DEBUG, "suppliers are active\n"));
 
@@ -207,18 +194,15 @@ ECT_Supplier_Driver::run (int argc, char* argv[])
 
       this->dump_results ();
 
-      this->disconnect_suppliers (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      this->disconnect_suppliers ();
 
       ACE_DEBUG ((LM_DEBUG, "suppliers disconnected\n"));
 
       // @@ Deactivate the suppliers (as CORBA Objects?)
 
       root_poa->destroy (1, 1 ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
-      orb->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      orb->destroy ();
 
       ACE_DEBUG ((LM_DEBUG, "orb and poa destroyed\n"));
     }
@@ -257,12 +241,11 @@ ECT_Supplier_Driver::connect_suppliers
                                     this->type_count_,
                                     channel
                                     ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
     }
 }
 
 void
-ECT_Supplier_Driver::activate_suppliers (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+ECT_Supplier_Driver::activate_suppliers (void)
 {
   for (int i = 0; i < this->n_suppliers_; ++i)
     {
@@ -271,12 +254,11 @@ ECT_Supplier_Driver::activate_suppliers (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
 }
 
 void
-ECT_Supplier_Driver::disconnect_suppliers (ACE_ENV_SINGLE_ARG_DECL)
+ECT_Supplier_Driver::disconnect_suppliers (void)
 {
   for (int i = 0; i < this->n_suppliers_; ++i)
     {
-      this->suppliers_[i]->disconnect (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK;
+      this->suppliers_[i]->disconnect ();
 
       delete this->suppliers_[i];
       this->suppliers_[i] = 0;

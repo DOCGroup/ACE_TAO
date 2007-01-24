@@ -48,7 +48,6 @@ main (int argc, char *argv[])
                                             argv,
                                             "Client ORB"
                                             ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       if (::parse_args (argc, argv) != 0)
         return -1;
@@ -56,11 +55,9 @@ main (int argc, char *argv[])
       CORBA::Object_var object =
         orb->string_to_object (ior
                                ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       test_var server = test::_narrow (object.in ()
                                        ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       if (CORBA::is_nil (server.in ()))
         {
@@ -70,11 +67,9 @@ main (int argc, char *argv[])
                             1);
         }
 
-      server->hello (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      server->hello ();
 
-      server->shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      server->shutdown ();
     }
   ACE_CATCHANY
     {

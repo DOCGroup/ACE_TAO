@@ -87,7 +87,7 @@ TAO_Notify_Method_Request_Event_Queueable::~TAO_Notify_Method_Request_Event_Queu
 }
 
 int
-TAO_Notify_Method_Request_Event_Queueable::execute (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+TAO_Notify_Method_Request_Event_Queueable::execute (void)
 {
   ACE_ASSERT (false);
   return -1;

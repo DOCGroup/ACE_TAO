@@ -45,7 +45,6 @@ Server_Timer::handle_timeout (ACE_Time_Value const &, void const *)
 
     echo->echo_payload (pload
                         ACE_ENV_ARG_PARAMETER);
-    ACE_TRY_CHECK;
 
     ACE_Time_Value tv (0, 20000);
     this->reactor()->schedule_timer (this, 0, tv);

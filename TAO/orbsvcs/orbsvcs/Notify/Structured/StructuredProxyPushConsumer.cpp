@@ -30,7 +30,7 @@ TAO_Notify_StructuredProxyPushConsumer::release (void)
 }
 
 CosNotifyChannelAdmin::ProxyType
-TAO_Notify_StructuredProxyPushConsumer::MyType (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+TAO_Notify_StructuredProxyPushConsumer::MyType (void)
   ACE_THROW_SPEC ((
                    CORBA::SystemException
                    ))
@@ -52,10 +52,8 @@ TAO_Notify_StructuredProxyPushConsumer::connect_structured_push_supplier (CosNot
                     CORBA::NO_MEMORY ());
 
   supplier->init (push_supplier ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
   this->connect (supplier ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
-  this->self_change (ACE_ENV_SINGLE_ARG_PARAMETER);
+  this->self_change ();
 }
 
 void
@@ -80,15 +78,14 @@ TAO_Notify_StructuredProxyPushConsumer::push_structured_event (const CosNotifica
 }
 
 void
-TAO_Notify_StructuredProxyPushConsumer::disconnect_structured_push_consumer (ACE_ENV_SINGLE_ARG_DECL)
+TAO_Notify_StructuredProxyPushConsumer::disconnect_structured_push_consumer (void)
   ACE_THROW_SPEC ((
                    CORBA::SystemException
                    ))
 {
   TAO_Notify_StructuredProxyPushConsumer::Ptr guard( this );
-  this->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
-  this->self_change (ACE_ENV_SINGLE_ARG_PARAMETER);
+  this->destroy ();
+  this->self_change ();
 }
 
 const char *
@@ -108,20 +105,16 @@ TAO_Notify_StructuredProxyPushConsumer::load_attrs (const TAO_Notify::NVPList& a
     ACE_DECLARE_NEW_CORBA_ENV;
     ACE_TRY
     {
-      ACE_TRY_CHECK;
       CosNotifyComm::StructuredPushSupplier_var ps = CosNotifyComm::StructuredPushSupplier::_nil();
       if ( ior.length() > 0 )
       {
         CORBA::Object_var obj = orb->string_to_object(ior.c_str() ACE_ENV_ARG_PARAMETER);
-        ACE_TRY_CHECK;
         ps = CosNotifyComm::StructuredPushSupplier::_unchecked_narrow(obj.in() ACE_ENV_ARG_PARAMETER);
-        ACE_TRY_CHECK;
       }
       // minor hack: suppress generating subscription updates during reload.
       bool save_updates = this->updates_off_;
       this->updates_off_ = true;
       this->connect_structured_push_supplier(ps.in() ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
       this->updates_off_ = save_updates;
     }
     ACE_CATCHANY

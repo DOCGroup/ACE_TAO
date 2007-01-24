@@ -27,13 +27,13 @@ public:
          CORBA::ORB_ptr orb,
          const char *loc);
 
-  virtual char * get_string (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+  virtual char * get_string (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual void shutdown (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+  virtual void shutdown (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual void remove_member (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+  virtual void remove_member (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
 private:

@@ -66,10 +66,10 @@ public:
                        ACE_ENV_ARG_DECL_WITH_DEFAULTS);
   // Bind receiver to the sender.
 
-  void connect_to_sender (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
+  void connect_to_sender (void);
   // Connect to the sender that we found.
 
-  void destroy (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
+  void destroy (void);
   // Destroy all streams.
 
   void destroy (const ACE_CString &flowname
@@ -93,7 +93,7 @@ public:
                                ACE_Null_Mutex>
           Protocol_Objects;
 
-  
+
 
   // Map of streamctrl.
   typedef ACE_Hash_Map_Manager<ACE_CString,
@@ -113,12 +113,12 @@ public:
   StreamCtrls &streamctrls (void);
 
   void load_ep_addr (const char* file_name);
-  
+
 protected:
 
 
 
-  void find_receivers (ACE_ENV_SINGLE_ARG_DECL);
+  void find_receivers (void);
 
   void add_to_receivers (CosNaming::BindingList &binding_list
                          ACE_ENV_ARG_DECL);

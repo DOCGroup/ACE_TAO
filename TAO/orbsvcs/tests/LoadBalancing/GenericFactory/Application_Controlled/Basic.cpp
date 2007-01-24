@@ -19,14 +19,14 @@ Basic::Basic (CORBA::Object_ptr object_group,
 }
 
 char *
-Basic::get_string (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+Basic::get_string (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return CORBA::string_dup (this->location_);
 }
 
 void
-Basic::remove_member (ACE_ENV_SINGLE_ARG_DECL)
+Basic::remove_member (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_TRY
@@ -37,7 +37,6 @@ Basic::remove_member (ACE_ENV_SINGLE_ARG_DECL)
       this->lm_->remove_member (this->object_group_.in (),
                                 location
                                 ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       ACE_DEBUG ((LM_DEBUG, "(%P|%t) - Removed Member at Location <%s>\n",
                       this->location_));
@@ -65,7 +64,7 @@ Basic::remove_member (ACE_ENV_SINGLE_ARG_DECL)
 }
 
 void
-Basic::shutdown (ACE_ENV_SINGLE_ARG_DECL)
+Basic::shutdown (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->orb_->shutdown (0 ACE_ENV_ARG_PARAMETER);

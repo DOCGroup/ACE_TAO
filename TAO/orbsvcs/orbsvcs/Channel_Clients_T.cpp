@@ -25,7 +25,7 @@ ACE_PushConsumer_Adapter<TARGET>::disconnect_push_consumer (
       ACE_THROW_SPEC ((CORBA::SystemException))
 {
 
-  target_->disconnect_push_consumer (ACE_ENV_SINGLE_ARG_PARAMETER);
+  target_->disconnect_push_consumer ();
 }
 
 template<class TARGET> void
@@ -33,7 +33,7 @@ ACE_PushSupplier_Adapter<TARGET>::disconnect_push_supplier (
     ACE_ENV_SINGLE_ARG_DECL)
       ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  target_->disconnect_push_supplier (ACE_ENV_SINGLE_ARG_PARAMETER);
+  target_->disconnect_push_supplier ();
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL

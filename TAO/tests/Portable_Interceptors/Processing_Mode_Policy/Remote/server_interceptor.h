@@ -31,11 +31,11 @@ public:
   ~Echo_Server_Request_Interceptor ();
   // dotr.
 
-  virtual char * name (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+  virtual char * name (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
   // Canonical name of the interceptor.
 
-  virtual void destroy (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+  virtual void destroy (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual void receive_request_service_contexts (

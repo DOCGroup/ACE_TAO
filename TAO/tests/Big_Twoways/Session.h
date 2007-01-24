@@ -42,7 +42,7 @@ public:
                                        ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual void destroy (ACE_ENV_SINGLE_ARG_DECL)
+  virtual void destroy (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
 protected:
@@ -60,7 +60,7 @@ private:
   int more_work (void) const;
 
   /// Validate all the connections
-  void validate_connections (ACE_ENV_SINGLE_ARG_DECL)
+  void validate_connections (void)
     ACE_THROW_SPEC (());
 
 private:

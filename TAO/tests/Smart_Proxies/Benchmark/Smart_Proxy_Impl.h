@@ -17,7 +17,7 @@ class Smart_Test_Proxy : public virtual TAO_Test_Smart_Proxy_Base
 public:
   Smart_Test_Proxy (Test_ptr proxy);
 
-  virtual CORBA::Short box_prices(ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+  virtual CORBA::Short box_prices(void)
     ACE_THROW_SPEC ((CORBA::SystemException));
   // "Smartify" the method call!
 

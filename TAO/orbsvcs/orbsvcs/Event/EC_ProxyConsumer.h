@@ -73,7 +73,7 @@ public:
     ACE_THROW_SPEC ((CORBA::SystemException)) = 0;
 
   /// Deactivate from the POA
-  virtual void deactivate (ACE_ENV_SINGLE_ARG_DECL);
+  virtual void deactivate (void);
 
   /// Disconnect this from
   virtual void disconnect_push_consumer (
@@ -116,7 +116,7 @@ public:
                              ACE_ENV_ARG_DECL);
 
   /// The event channel is shutting down
-  virtual void shutdown (ACE_ENV_SINGLE_ARG_DECL_NOT_USED);
+  virtual void shutdown (void);
 
   /// The QoS (subscription) used to connect to the EC, assumes the
   /// locks are held, use with care!
@@ -172,11 +172,11 @@ protected:
 
 private:
   /// Template method hooks.
-  virtual void shutdown_hook (ACE_ENV_SINGLE_ARG_DECL);
+  virtual void shutdown_hook (void);
   virtual void refcount_zero_hook (void);
 
   virtual PortableServer::ObjectId
-            object_id (ACE_ENV_SINGLE_ARG_DECL)
+            object_id (void)
     ACE_THROW_SPEC ((CORBA::SystemException)) = 0;
 };
 

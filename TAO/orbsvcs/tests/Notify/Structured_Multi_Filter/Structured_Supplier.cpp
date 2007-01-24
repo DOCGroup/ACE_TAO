@@ -32,13 +32,13 @@ public:
   {
   }
 
-  void go (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+  void go (void)
     ACE_THROW_SPEC ((CORBA::SystemException))
   {
     started_ = true;
   }
 
-  void done (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+  void done (void)
     ACE_THROW_SPEC ((CORBA::SystemException))
   {
     started_ = false;
@@ -115,7 +115,6 @@ create_supplieradmin (CosNotifyChannelAdmin::EventChannel_ptr ec
   CosNotifyChannelAdmin::AND_OP),
     adminid
     ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (0);
 
   return CosNotifyChannelAdmin::SupplierAdmin::_duplicate (admin.in ());
 }
@@ -147,7 +146,6 @@ send_event (int id)
     ACE_DEBUG((LM_DEBUG, "+"));
 
     supplier->send_event (event ACE_ENV_ARG_PARAMETER);
-    ACE_TRY_CHECK;
   }
   ACE_CATCH (CORBA::Exception, e)
   {
@@ -168,10 +166,8 @@ static void create_supplier (CosNotifyChannelAdmin::SupplierAdmin_ptr admin,
     CORBA::NO_MEMORY ());
 
   supplier->init (poa ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
   supplier->_connect (admin, ec, useFilters ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 }
 
 void add_admin_filter (CosNotifyChannelAdmin::SupplierAdmin_ptr admin,
@@ -179,12 +175,10 @@ void add_admin_filter (CosNotifyChannelAdmin::SupplierAdmin_ptr admin,
                  ACE_ENV_ARG_DECL)
 {
   CosNotifyFilter::FilterFactory_var ffact =
-    notify_channel->default_filter_factory (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+    notify_channel->default_filter_factory ();
 
   CosNotifyFilter::Filter_var filter =
     ffact->create_filter (GRAMMAR ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
   ACE_ASSERT(!CORBA::is_nil (filter.in ()));
 
@@ -195,10 +189,8 @@ void add_admin_filter (CosNotifyChannelAdmin::SupplierAdmin_ptr admin,
   constraint_list[0].constraint_expr = CORBA::string_dup ("type != 0");
 
   filter->add_constraints (constraint_list ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
   admin->add_filter (filter.in () ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 }
 
 int main (int argc, char * argv[])
@@ -208,21 +200,18 @@ int main (int argc, char * argv[])
   {
     Supplier_Client client;
     int status = client.init (argc, argv ACE_ENV_ARG_PARAMETER);
-    ACE_TRY_CHECK;
     ACE_UNUSED_ARG(status);
     ACE_ASSERT(status == 0);
 
     CosNotifyChannelAdmin::EventChannel_var ec =
       client.create_event_channel ("Struct_Multi_Filter", 0 ACE_ENV_ARG_PARAMETER);
-    ACE_TRY_CHECK;
 
     ACE_ASSERT(! CORBA::is_nil(ec.in()));
 
     CORBA::ORB_ptr orb = client.orb ();
 
     sig_impl.reset( new sig_i( orb ) );
-    sig_var sig = sig_impl->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
-    ACE_TRY_CHECK;
+    sig_var sig = sig_impl->_this ();
 
     CosNotifyChannelAdmin::SupplierAdmin_var admin =
       create_supplieradmin (ec.in () ACE_ENV_ARG_PARAMETER);
@@ -241,7 +230,6 @@ int main (int argc, char * argv[])
     {
       CORBA::String_var ior =
         client.orb ()->object_to_string (sig.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       FILE *output_file= ACE_OS::fopen (ior_file, "w");
       ACE_ASSERT (output_file != 0);
@@ -258,7 +246,6 @@ int main (int argc, char * argv[])
     {
       ACE_DEBUG((LM_DEBUG, "+"));
       send_event (i);
-      ACE_TRY_CHECK;
     }
     ACE_DEBUG((LM_DEBUG, "\nSupplier sent %d events.\n", num_events));
 
@@ -266,8 +253,7 @@ int main (int argc, char * argv[])
 
     ACE_OS::unlink (ior_file);
 
-    ec->destroy(ACE_ENV_SINGLE_ARG_PARAMETER);
-    ACE_TRY_CHECK;
+    ec->destroy();
 
     return 0;
   }

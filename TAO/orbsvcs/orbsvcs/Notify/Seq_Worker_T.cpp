@@ -27,7 +27,6 @@ TAO_Notify_Seq_Worker_T<TYPE>::create (CONTAINER &container ACE_ENV_ARG_DECL)
   this->seq_ = tmp;
 
   container.collection ()->for_each (this ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (0);
 
   return this->seq_._retn ();
 

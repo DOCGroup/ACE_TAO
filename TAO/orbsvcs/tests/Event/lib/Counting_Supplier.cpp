@@ -23,12 +23,10 @@ EC_Counting_Supplier::activate (RtecEventChannelAdmin::ConsumerAdmin_ptr consume
                     ACE_ENV_ARG_DECL)
 {
   RtecEventComm::PushConsumer_var consumer =
-    this->consumer_adapter_._this (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+    this->consumer_adapter_._this ();
 
   this->supplier_proxy_ =
-    consumer_admin->obtain_push_supplier (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+    consumer_admin->obtain_push_supplier ();
 
   // Let's say that the execution time for event 2 is 1
   // milliseconds...
@@ -45,23 +43,18 @@ EC_Counting_Supplier::activate (RtecEventChannelAdmin::ConsumerAdmin_ptr consume
   this->supplier_proxy_->connect_push_consumer (consumer.in (),
                                                 consumer_qos.get_ConsumerQOS ()
                                                 ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 }
 
 void
-EC_Counting_Supplier::deactivate (ACE_ENV_SINGLE_ARG_DECL)
+EC_Counting_Supplier::deactivate (void)
 {
-  this->supplier_proxy_->disconnect_push_supplier (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+  this->supplier_proxy_->disconnect_push_supplier ();
 
   PortableServer::POA_var consumer_poa =
-    this->consumer_adapter_._default_POA (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+    this->consumer_adapter_._default_POA ();
   PortableServer::ObjectId_var consumer_id =
     consumer_poa->servant_to_id (&this->consumer_adapter_ ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
   consumer_poa->deactivate_object (consumer_id.in () ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 }
 
 void
@@ -92,39 +85,32 @@ EC_Counting_Supplier::connect (
     ACE_ENV_ARG_DECL)
 {
   RtecEventComm::PushSupplier_var supplier =
-    this->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+    this->_this ();
 
   if (CORBA::is_nil (this->consumer_proxy_.in ()))
     {
       this->consumer_proxy_ =
-        supplier_admin->obtain_push_consumer (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK;
+        supplier_admin->obtain_push_consumer ();
     }
 
   this->consumer_proxy_->connect_push_supplier (supplier.in (),
                                                 qos
                                                 ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 }
 
 void
-EC_Counting_Supplier::disconnect (ACE_ENV_SINGLE_ARG_DECL)
+EC_Counting_Supplier::disconnect (void)
 {
   if (!CORBA::is_nil (this->consumer_proxy_.in ()))
     {
-      this->consumer_proxy_->disconnect_push_consumer (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK;
+      this->consumer_proxy_->disconnect_push_consumer ();
     }
 
   PortableServer::POA_var supplier_poa =
-    this->_default_POA (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+    this->_default_POA ();
   PortableServer::ObjectId_var supplier_id =
     supplier_poa->servant_to_id (this ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
   supplier_poa->deactivate_object (supplier_id.in () ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
   this->consumer_proxy_ =
     RtecEventChannelAdmin::ProxyPushConsumer::_nil ();
@@ -145,18 +131,17 @@ EC_Counting_Supplier::push (const RtecEventComm::EventSet&
   event[0].header.ttl = 1;
 
   this->consumer_proxy_->push (event ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
   this->event_count++;
 }
 
 void
-EC_Counting_Supplier::disconnect_push_consumer (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+EC_Counting_Supplier::disconnect_push_consumer (void)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
 }
 
 void
-EC_Counting_Supplier::disconnect_push_supplier (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+EC_Counting_Supplier::disconnect_push_supplier (void)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->disconnect_count++;
@@ -179,8 +164,7 @@ EC_Counting_Supplier_Task::svc ()
 {
   ACE_TRY_NEW_ENV
     {
-      this->run (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      this->run ();
     }
   ACE_CATCHANY
     {
@@ -204,14 +188,13 @@ EC_Counting_Supplier_Task::push_count (void)
 }
 
 void
-EC_Counting_Supplier_Task::run (ACE_ENV_SINGLE_ARG_DECL)
+EC_Counting_Supplier_Task::run (void)
 {
   this->event_.length (1);
 
   int stop = 0;
   do {
     this->supplier_->push (this->event_ ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK;
 
     // Sleep for a short time to avoid spinning...
     ACE_OS::sleep (0);

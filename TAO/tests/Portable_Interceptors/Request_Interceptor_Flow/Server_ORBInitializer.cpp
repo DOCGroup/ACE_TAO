@@ -34,14 +34,12 @@ Server_ORBInitializer::post_init (
                         TAO::VMCID,
                         ENOMEM),
                       CORBA::COMPLETED_NO));
-  ACE_CHECK;
 
   PortableInterceptor::ServerRequestInterceptor_var si_interceptor =
     si;
 
   info->add_server_request_interceptor (si_interceptor.in ()
                                         ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
   ACE_NEW_THROW_EX (si,
                     Server_Request_Interceptor ("SERVER B"),
@@ -50,13 +48,11 @@ Server_ORBInitializer::post_init (
                         TAO::VMCID,
                         ENOMEM),
                       CORBA::COMPLETED_NO));
-  ACE_CHECK;
 
   si_interceptor = si;
 
   info->add_server_request_interceptor (si_interceptor.in ()
                                         ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
   ACE_NEW_THROW_EX (si,
                     Server_Request_Interceptor ("SERVER C"),
@@ -65,11 +61,9 @@ Server_ORBInitializer::post_init (
                         TAO::VMCID,
                         ENOMEM),
                       CORBA::COMPLETED_NO));
-  ACE_CHECK;
 
   si_interceptor = si;
 
   info->add_server_request_interceptor (si_interceptor.in ()
                                         ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 }

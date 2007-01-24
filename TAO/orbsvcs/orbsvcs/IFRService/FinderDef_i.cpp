@@ -3,8 +3,8 @@
 #include "orbsvcs/IFRService/Repository_i.h"
 #include "orbsvcs/IFRService/FinderDef_i.h"
 
-ACE_RCSID (IFRService, 
-           FinderDef_i, 
+ACE_RCSID (IFRService,
+           FinderDef_i,
            "$Id$")
 
 
@@ -22,7 +22,7 @@ TAO_FinderDef_i::~TAO_FinderDef_i (void)
 }
 
 CORBA::DefinitionKind
-TAO_FinderDef_i::def_kind (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+TAO_FinderDef_i::def_kind (void)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return CORBA::dk_Finder;

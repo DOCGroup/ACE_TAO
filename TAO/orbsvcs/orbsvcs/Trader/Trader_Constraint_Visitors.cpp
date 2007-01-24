@@ -38,14 +38,12 @@ visit_property (TAO_Property_Constraint* literal)
       ACE_TRY
         {
           value = this->prop_eval_.property_value (prop_index ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
         }
       ACE_CATCHANY
         {
           return -1;
         }
       ACE_ENDTRY;
-      //      ACE_CHECK_RETURN (-1);
 
       if (value != 0)
         {

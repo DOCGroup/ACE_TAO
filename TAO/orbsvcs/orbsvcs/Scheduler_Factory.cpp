@@ -163,8 +163,7 @@ static_server (void)
   ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY
     {
-      server_ = ace_scheduler_factory_data->scheduler_._this (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      server_ = ace_scheduler_factory_data->scheduler_._this ();
 
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT("ACE_Scheduler_Factory - configured static server\n")));
@@ -205,12 +204,10 @@ ACE_Scheduler_Factory::use_config (CosNaming::NamingContext_ptr naming,
       CORBA::Object_var objref =
         naming->resolve (schedule_name
                          ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       server_ =
         RtecScheduler::Scheduler::_narrow(objref.in ()
                                           ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
     }
   ACE_CATCHANY
     {

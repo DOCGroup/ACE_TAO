@@ -80,7 +80,7 @@ public:
    * Prepare to exit.
    * @return zero for success; nonzero is process return code for failure.
    */
-  int fini (ACE_ENV_SINGLE_ARG_DECL);
+  int fini (void);
 
   int idle(int & result ACE_ENV_ARG_DECL);
 
@@ -105,7 +105,7 @@ public:
   // CORBA interface
   // See IDL for documentation
 
-  virtual void shutdown (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+  virtual void shutdown (void)
   ACE_THROW_SPEC ((
     CORBA::SystemException
   ));
@@ -139,7 +139,7 @@ public:
   //////////////////////////////////////////
   // CORBA interface PullMonitorable methods
 
-  virtual CORBA::Boolean is_alive (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+  virtual CORBA::Boolean is_alive (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   /////////////////////////

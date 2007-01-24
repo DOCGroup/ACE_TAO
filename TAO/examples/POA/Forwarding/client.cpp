@@ -74,8 +74,7 @@ do_calls (test_ptr test
       for (int i = 1; i <= iterations; i++)
         {
           // Invoke the doit() method of the test reference.
-          CORBA::Long result = test->doit (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_CHECK;
+          CORBA::Long result = test->doit ();
 
           // Print the result of doit () method of the test reference.
           ACE_DEBUG ((LM_DEBUG,
@@ -88,8 +87,7 @@ do_calls (test_ptr test
         {
           ACE_DEBUG ((LM_DEBUG,
                       "Asking server to forward next time\n"));
-          test->forward (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_CHECK;
+          test->forward ();
         }
     }
 }
@@ -104,7 +102,6 @@ main (int argc, char **argv)
     {
       // Initialize the ORB
       CORBA::ORB_var orb = CORBA::ORB_init (argc, argv, 0 ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       // Initialize options based on command-line arguments.
       int parse_args_result =
@@ -115,19 +112,15 @@ main (int argc, char **argv)
       // Get an object reference from the argument string.
       CORBA::Object_var object =
         orb->string_to_object (IOR ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       // Try to narrow the object reference to a test reference.
       test_var test =
         test::_narrow (object.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       do_calls (test.in ()
                 ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
-      test->shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      test->shutdown ();
     }
   ACE_CATCHANY
     {
@@ -135,7 +128,6 @@ main (int argc, char **argv)
       return -1;
     }
   ACE_ENDTRY;
-  ACE_CHECK_RETURN (-1);
 
   return 0;
 }

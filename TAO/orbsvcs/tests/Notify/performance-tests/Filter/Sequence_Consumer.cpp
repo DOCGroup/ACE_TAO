@@ -89,19 +89,16 @@ create_consumeradmin (CosNotifyChannelAdmin::EventChannel_ptr ec
                            adminid
                            ACE_ENV_ARG_PARAMETER);
 
-  ACE_CHECK_RETURN (0);
 
   if (filter)
     {
       ACE_DEBUG((LM_DEBUG, "\nConsumer filter enabled.\n"));
 
       CosNotifyFilter::FilterFactory_var ffact =
-          ec->default_filter_factory (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK_RETURN (0);
+          ec->default_filter_factory ();
 
       CosNotifyFilter::Filter_var filter =
           ffact->create_filter (GRAMMAR ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK_RETURN (0);
 
       CosNotifyFilter::ConstraintExpSeq constraint_list (1);
       constraint_list.length (1);
@@ -111,10 +108,8 @@ create_consumeradmin (CosNotifyChannelAdmin::EventChannel_ptr ec
                                  CORBA::string_dup ("type == 'even'");
 
       filter->add_constraints (constraint_list ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK_RETURN (0);
 
       admin->add_filter (filter.in () ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK_RETURN (0);
     }
 
   return CosNotifyChannelAdmin::ConsumerAdmin::_duplicate (admin.in ());
@@ -140,10 +135,8 @@ create_consumers (CosNotifyChannelAdmin::ConsumerAdmin_ptr admin,
                         CORBA::NO_MEMORY ());
 
       consumer->init (client->root_poa () ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
 
       consumer->_connect (admin ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
     }
 }
 
@@ -159,7 +152,6 @@ int main (int argc, char* argv[])
       Consumer_Client client;
 
       status = client.init (argc, argv ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       if (status == 0)
         {
@@ -173,15 +165,12 @@ int main (int argc, char* argv[])
           CosNotifyChannelAdmin::EventChannel_var ec =
             client.create_event_channel ("MyEventChannel", 1
                                          ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
 
           CORBA::ORB_ptr orb = client.orb ();
           CORBA::Object_var object =
                               orb->string_to_object (ior ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
 
           sig_var sig = sig::_narrow (object.in () ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
 
           if (CORBA::is_nil (sig.in ()))
             {
@@ -193,24 +182,19 @@ int main (int argc, char* argv[])
 
           CosNotifyChannelAdmin::ConsumerAdmin_var admin =
             create_consumeradmin (ec.in () ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
 
           if (!CORBA::is_nil (admin.in ()))
             {
               create_consumers(admin.in (), &client ACE_ENV_ARG_PARAMETER);
-              ACE_TRY_CHECK;
 
               // Tell the supplier to go
-              sig->go (ACE_ENV_SINGLE_ARG_PARAMETER);
-              ACE_TRY_CHECK;
+              sig->go ();
 
-              client.ORB_run(ACE_ENV_SINGLE_ARG_PARAMETER);
-              ACE_TRY_CHECK;
+              client.ORB_run();
 
               ACE_DEBUG((LM_DEBUG, "Consumer done.\n"));
 
-              sig->done (ACE_ENV_SINGLE_ARG_PARAMETER);
-              ACE_TRY_CHECK;
+              sig->done ();
             }
         }
     }

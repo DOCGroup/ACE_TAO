@@ -147,7 +147,6 @@ Thread_Pool::svc (void)
                       ACE_OS::memset (pload.get_buffer(), pload.length(), 0);
                       echo->echo_payload (pload
                                           ACE_ENV_ARG_PARAMETER);
-                      ACE_TRY_CHECK;
 
                     }
                   else
@@ -156,7 +155,6 @@ Thread_Pool::svc (void)
                       Test::Payload_var pout;
                       echo->echo_payload_out (pout.out()
                                               ACE_ENV_ARG_PARAMETER);
-                      ACE_TRY_CHECK;
 
                       // time_t last_success = ACE_OS::time();
                     }

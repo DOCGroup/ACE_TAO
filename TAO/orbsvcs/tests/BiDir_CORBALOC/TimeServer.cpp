@@ -11,15 +11,15 @@ class Time_impl :
 {
 public:
   virtual TimeModule::TimeOfDay
-    get_gmt (ACE_ENV_SINGLE_ARG_DECL)
+    get_gmt (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  void Shutdown (ACE_ENV_SINGLE_ARG_DECL)
+  void Shutdown (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
 };
 
 
-TimeModule::TimeOfDay Time_impl::get_gmt (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+TimeModule::TimeOfDay Time_impl::get_gmt (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
 
@@ -36,7 +36,7 @@ TimeModule::TimeOfDay Time_impl::get_gmt (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
 }
 
 void
-Time_impl::Shutdown (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+Time_impl::Shutdown (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   exit(0);
@@ -55,24 +55,20 @@ main(int argc, char * argv[])
                          argv,
                          ""
                          ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       // Get reference to Root POA.
       CORBA::Object_var obj =
         orb->resolve_initial_references ("RootPOA"
                                          ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       PortableServer::POA_var rootpoa =
         PortableServer::POA::_narrow (obj.in ());
 
       // Activate POA manager
       PortableServer::POAManager_var mgr =
-        rootpoa->the_POAManager (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        rootpoa->the_POAManager ();
 
-      mgr->activate (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      mgr->activate ();
 
       PortableServer::POA_var poa;
 
@@ -82,12 +78,10 @@ main(int argc, char * argv[])
       PolicyList [0] =
         rootpoa->create_lifespan_policy (PortableServer::PERSISTENT
                                          ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       PolicyList [1] =
         rootpoa->create_id_assignment_policy (PortableServer::USER_ID
                                               ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       CORBA::Any CallbackPolicy;
       CallbackPolicy <<= BiDirPolicy::BOTH;
@@ -97,13 +91,11 @@ main(int argc, char * argv[])
         orb->create_policy (BiDirPolicy::BIDIRECTIONAL_POLICY_TYPE,
                             CallbackPolicy
                             ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       poa = rootpoa->create_POA (sServerPoaName,
                                  mgr.in(),
                                  PolicyList
                                  ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
 
       PortableServer::ObjectId_var ServerId =
@@ -116,7 +108,6 @@ main(int argc, char * argv[])
       poa->activate_object_with_id (ServerId.in (),
                                     time_servant
                                     ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       // Get a reference after activating the object
       TimeModule::Time_var tm = time_servant->_this();
@@ -125,7 +116,6 @@ main(int argc, char * argv[])
       CORBA::Object_var name_obj =
         orb->resolve_initial_references ("NameService"
                                          ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       CosNaming::NamingContext_var inc =
         CosNaming::NamingContext::_narrow (name_obj.in ());
@@ -144,7 +134,6 @@ main(int argc, char * argv[])
       inc->rebind (service_name,
                    tm.in ()
                    ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       // Run the event loop for fun
       ACE_Time_Value tv (3, 0);
@@ -152,13 +141,10 @@ main(int argc, char * argv[])
       // Accept requests
       orb->run (&tv
                 ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       rootpoa->destroy (0 , 0 ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
-      orb->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      orb->destroy ();
     }
   ACE_CATCHANY
     {
@@ -168,7 +154,6 @@ main(int argc, char * argv[])
       return -1;
     }
   ACE_ENDTRY;
-  ACE_CHECK_RETURN (-1);
 
   return 0;
 }

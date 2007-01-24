@@ -49,17 +49,14 @@ get_server_priority (Test_ptr server
   CORBA::Policy_var policy =
     server->_get_policy (RTCORBA::PRIORITY_MODEL_POLICY_TYPE
                          ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
 
   // Narrow down to correct type.
   RTCORBA::PriorityModelPolicy_var priority_policy =
     RTCORBA::PriorityModelPolicy::_narrow (policy.in () ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
 
   // Make sure that we have the SERVER_DECLARED priority model.
   RTCORBA::PriorityModel priority_model =
-    priority_policy->priority_model (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
+    priority_policy->priority_model ();
   if (priority_model != RTCORBA::SERVER_DECLARED)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "ERROR: priority_model != "
@@ -67,7 +64,7 @@ get_server_priority (Test_ptr server
                       -1);
 
   // Return the server priority.
-  return priority_policy->server_priority (ACE_ENV_SINGLE_ARG_PARAMETER);
+  return priority_policy->server_priority ();
 }
 
 void
@@ -81,7 +78,6 @@ invocation_exception_test (Test_ptr obj,
       obj->test_method (1,
                         priority
                         ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       // This next line of code should not run because an exception
       // should have been raised.
@@ -100,7 +96,6 @@ invocation_exception_test (Test_ptr obj,
       ACE_RE_THROW;
     }
   ACE_ENDTRY;
-  ACE_CHECK;
 }
 
 class Task : public ACE_Task_Base
@@ -132,42 +127,34 @@ Task::svc (void)
       CORBA::Object_var object =
         this->orb_->resolve_initial_references ("RTORB"
                                                 ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       RTCORBA::RTORB_var rt_orb =
         RTCORBA::RTORB::_narrow (object.in ()
                                  ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       // Get the RTCurrent.
       object =
         this->orb_->resolve_initial_references ("RTCurrent"
                                                 ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       RTCORBA::Current_var current =
         RTCORBA::Current::_narrow (object.in ()
                                    ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       // Test object 1 (with CLIENT_PROPAGATED priority model).
       object =
         this->orb_->string_to_object (ior1
                                       ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       Test_var client_propagated_obj =
         Test::_narrow (object.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       // Test object 2 (with SERVER_DECLARED priority model).
       object = this->orb_->string_to_object (ior2
                                              ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       Test_var server_declared_obj =
         Test::_narrow (object.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       // Test: Attempt to set priority bands that do not match server
       // resource configuration on the <client_propagated_obj>.
@@ -187,7 +174,6 @@ Task::svc (void)
       policies[0] =
         rt_orb->create_priority_banded_connection_policy (false_bands
                                                           ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       // Set false bands at the object level.  Note that a new object
       // is returned.
@@ -195,24 +181,20 @@ Task::svc (void)
         client_propagated_obj->_set_policy_overrides (policies,
                                                       CORBA::SET_OVERRIDE
                                                       ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       client_propagated_obj =
         Test::_narrow (object.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       // Invoking on this object with false bands should produce an
       // exception.
       invocation_exception_test (client_propagated_obj.in (),
                                  0
                                  ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       // Get the correct bands from the <server_declared_obj>.
       policies[0] =
         server_declared_obj->_get_policy (RTCORBA::PRIORITY_BANDED_CONNECTION_POLICY_TYPE
                                           ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       RTCORBA::PriorityBandedConnectionPolicy_var bands_policy =
         RTCORBA::PriorityBandedConnectionPolicy::_narrow (policies[0]);
@@ -226,12 +208,10 @@ Task::svc (void)
         client_propagated_obj->_set_policy_overrides (policies,
                                                       CORBA::SET_OVERRIDE
                                                       ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       // Overwrite existing <client_propagated_obj>.
       client_propagated_obj =
         Test::_narrow (object.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       // Test: Attempt invocation on <client_propagated_obj> with
       // client thread priority not matching any of the bands.  Should
@@ -247,14 +227,12 @@ Task::svc (void)
       // Reset the current thread's priority.
       current->the_priority (client_priority
                              ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       // Invoking on this object with an invalid client thread
       // priority should produce an exception.
       invocation_exception_test (client_propagated_obj.in (),
                                  client_priority
                                  ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       // Test: Make invocations on the <client_propagated_obj>.
       ACE_DEBUG ((LM_DEBUG,
@@ -272,13 +250,11 @@ Task::svc (void)
           // Reset the current thread's priority.
           current->the_priority (client_priority
                                  ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
 
           // Invoke test method on server.
           client_propagated_obj->test_method (1, // CLIENT_PROPAGATED
                                               client_priority
                                               ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
         }
 
       // Test: Attempt invocation with the same thread priority, but
@@ -290,17 +266,14 @@ Task::svc (void)
       CORBA::Short server_priority =
         get_server_priority (server_declared_obj.in ()
                              ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       // Invoke test method on server.
       server_declared_obj->test_method (0, // SERVER_DECLARED
                                         server_priority
                                         ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       // Testing over. Shut down Server ORB.
-      server_declared_obj->shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      server_declared_obj->shutdown ();
     }
   ACE_CATCHANY
     {
@@ -324,7 +297,6 @@ main (int argc, char *argv[])
                          argv,
                          ""
                          ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       // Parse arguments.
       int result =

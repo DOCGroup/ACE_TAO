@@ -16,7 +16,7 @@ class Starter
 
   Starter (CORBA::ORB_ptr orb);
 
-  void init (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
+  void init (void);
 
   void fire (void);
 
@@ -25,7 +25,7 @@ class Starter
                                 ACE_Null_Mutex> Synchs;
 
  private:
-  void resolve_synch_objs (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
+  void resolve_synch_objs (void);
 
   void add_to_synchs (CosNaming::BindingList &binding_list
           ACE_ENV_ARG_DECL_WITH_DEFAULTS);

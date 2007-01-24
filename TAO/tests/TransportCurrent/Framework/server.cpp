@@ -87,8 +87,7 @@ Worker::svc (void)
 {
   ACE_TRY_NEW_ENV
     {
-      this->orb_->run (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      this->orb_->run ();
     }
   ACE_CATCHANY
     {
@@ -123,24 +122,20 @@ server_main (int argc,
 
       PortableInterceptor::register_orb_initializer (orb_initializer.in ()
                                                      ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
 
       CORBA::ORB_var orb = CORBA::ORB_init (argc,
                                             argv,
                                             ACE_TEXT ("test_orb")
                                             ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       CORBA::Object_var obj =
         orb->resolve_initial_references ("RootPOA"
                                          ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       PortableServer::POA_var root_poa =
         PortableServer::POA::_narrow (obj.in ()
                                       ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       if (CORBA::is_nil (root_poa.in ()))
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -149,11 +144,9 @@ server_main (int argc,
                           -1);
 
       PortableServer::POAManager_var poa_manager =
-        root_poa->the_POAManager (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        root_poa->the_POAManager ();
 
-      poa_manager->activate (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      poa_manager->activate ();
 
       if (parse_args (argc, argv) != 0)
         return -1;
@@ -162,13 +155,11 @@ server_main (int argc,
                                      root_poa.in (),
                                      use_collocated_call);
 
-      obj = server_impl._this (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      obj = server_impl._this ();
 
       Test::Transport::CurrentTest_var server =
         Test::Transport::CurrentTest::_narrow (obj.in ()
                                                ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       if (CORBA::is_nil (server.in ()))
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -178,7 +169,6 @@ server_main (int argc,
 
       CORBA::String_var ior =
         orb->object_to_string (server.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       // If the ior_output_file exists, output the IOR to it.
       if (ior_output_file != 0)
@@ -226,15 +216,12 @@ server_main (int argc,
                     ACE_TEXT ("Server (%P|%t) ERROR: Interceptor self_test failed\n")));
 
       root_poa->destroy (1, 1 ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
-      server->shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      server->shutdown ();
 
       ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Server (%P|%t) Invoking orb->destroy ()\n")));
 
-      orb->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      orb->destroy ();
 
     }
   ACE_CATCHANY

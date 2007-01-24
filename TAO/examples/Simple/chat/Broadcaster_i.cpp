@@ -70,7 +70,6 @@ Broadcaster_i::add (Receiver_ptr receiver,
     {
       this->broadcast (broadcast_string.fast_rep ()
                        ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
     }
   ACE_CATCHANY
     {
@@ -78,7 +77,6 @@ Broadcaster_i::add (Receiver_ptr receiver,
                            "Broadcaster_i::broadcast failed.\t\n");
     }
   ACE_ENDTRY;
-  ACE_CHECK;
 }
 
 void
@@ -120,7 +118,6 @@ Broadcaster_i::remove (Receiver_ptr receiver
 
   this->broadcast (broadcast_string.fast_rep ()
                    ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 }
 
 void
@@ -154,7 +151,6 @@ Broadcaster_i::say (Receiver_ptr receiver,
 
       this->broadcast (broadcast_string.fast_rep ()
                        ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
     }
   ACE_CATCHANY
     {
@@ -162,7 +158,6 @@ Broadcaster_i::say (Receiver_ptr receiver,
                            "Broadcaster_i::say\t\n");
     }
   ACE_ENDTRY;
-  ACE_CHECK;
 }
 
 void
@@ -179,14 +174,12 @@ Broadcaster_i::broadcast (const char *text
         {
           (*iter).receiver_->message (text
                                       ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
         }
       ACE_CATCHANY
         {
           ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,"Failed to send a message\n");
         }
       ACE_ENDTRY;
-      ACE_CHECK;
     }
 }
 

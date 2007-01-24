@@ -46,7 +46,7 @@ Stock_Consumer::push (const CORBA::Any& data
 }
 
 void
-Stock_Consumer::disconnect_push_consumer (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+Stock_Consumer::disconnect_push_consumer (void)
     throw (CORBA::SystemException)
 {
   this->supplier_proxy_ = CosEventChannelAdmin::ProxyPushSupplier::_nil ();

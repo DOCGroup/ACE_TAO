@@ -47,7 +47,7 @@ public:
   virtual void init (ACE_Arg_Shifter& arg_shifter);
 
   /// Execute the command.
-  virtual void execute_i (ACE_ENV_SINGLE_ARG_DECL);
+  virtual void execute_i (void);
 
   /// Name of object
   virtual const char* get_name (void);
@@ -82,13 +82,13 @@ protected:
   CORBA::Boolean collocated_;
 
   /// Helper method to create a collocated ECF.
-  void create_collocated_ecf (ACE_ENV_SINGLE_ARG_DECL);
+  void create_collocated_ecf (void);
 
   /// = Handlers
-  void handle_create (ACE_ENV_SINGLE_ARG_DECL);
-  void handle_destroy (ACE_ENV_SINGLE_ARG_DECL);
-  void handle_set_qos (ACE_ENV_SINGLE_ARG_DECL);
-  void handle_status (ACE_ENV_SINGLE_ARG_DECL);
+  void handle_create (void);
+  void handle_destroy (void);
+  void handle_set_qos (void);
+  void handle_status (void);
 };
 
 #include /**/ "ace/post.h"

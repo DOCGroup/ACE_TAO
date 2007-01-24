@@ -22,7 +22,7 @@ TAO_Hash_LogStore::~TAO_Hash_LogStore()
 
 
 DsLogAdmin::LogList*
-TAO_Hash_LogStore::list_logs (ACE_ENV_SINGLE_ARG_DECL)
+TAO_Hash_LogStore::list_logs (void)
   ACE_THROW_SPEC ((
                    CORBA::SystemException
                    ))
@@ -31,7 +31,6 @@ TAO_Hash_LogStore::list_logs (ACE_ENV_SINGLE_ARG_DECL)
                            guard,
                            lock_,
                            CORBA::INTERNAL ());
-  ACE_CHECK_RETURN (0);
 
   DsLogAdmin::LogList* list;
 
@@ -42,7 +41,6 @@ TAO_Hash_LogStore::list_logs (ACE_ENV_SINGLE_ARG_DECL)
   ACE_NEW_THROW_EX (list,
                     DsLogAdmin::LogList (len),
                     CORBA::NO_MEMORY ());
-  ACE_CHECK_RETURN (0);
 
   list->length (len);
 
@@ -64,7 +62,7 @@ TAO_Hash_LogStore::list_logs (ACE_ENV_SINGLE_ARG_DECL)
 }
 
 DsLogAdmin::LogIdList*
-TAO_Hash_LogStore::list_logs_by_id (ACE_ENV_SINGLE_ARG_DECL)
+TAO_Hash_LogStore::list_logs_by_id (void)
   ACE_THROW_SPEC ((
                    CORBA::SystemException
                    ))
@@ -73,7 +71,6 @@ TAO_Hash_LogStore::list_logs_by_id (ACE_ENV_SINGLE_ARG_DECL)
                            guard,
                            lock_,
                            CORBA::INTERNAL ());
-  ACE_CHECK_RETURN (0);
 
   DsLogAdmin::LogIdList* list;
 
@@ -84,7 +81,6 @@ TAO_Hash_LogStore::list_logs_by_id (ACE_ENV_SINGLE_ARG_DECL)
   ACE_NEW_THROW_EX (list,
                     DsLogAdmin::LogIdList (len),
                     CORBA::NO_MEMORY ());
-  ACE_CHECK_RETURN (0);
 
   list->length (len);
 
@@ -137,7 +133,6 @@ TAO_Hash_LogStore::exists (DsLogAdmin::LogId id
                            guard,
                            lock_,
                            CORBA::INTERNAL ());
-  ACE_CHECK_RETURN (false);
 
   return (this->hash_map_.find (id) == 0);
 }
@@ -151,14 +146,13 @@ TAO_Hash_LogStore::remove (DsLogAdmin::LogId id
                             guard,
                             lock_,
                             CORBA::INTERNAL ());
-  ACE_CHECK_RETURN (-1);
 
   TAO_Hash_LogRecordStore* recordstore;
 
   int retval = this->hash_map_.unbind (id, recordstore);
-  if (retval == 0) 
+  if (retval == 0)
     {
-      delete recordstore; 
+      delete recordstore;
     }
 
   return retval;
@@ -176,7 +170,6 @@ TAO_Hash_LogStore::create(DsLogAdmin::LogFullActionType full_action,
                             guard,
                             lock_,
                             CORBA::INTERNAL ());
-  ACE_CHECK;
 
   DsLogAdmin::LogId id;
 
@@ -193,7 +186,6 @@ TAO_Hash_LogStore::create(DsLogAdmin::LogFullActionType full_action,
                                              thresholds
                                              ),
                     CORBA::NO_MEMORY ());
-  ACE_CHECK;
 
   auto_ptr<TAO_Hash_LogRecordStore> recordstore (impl);
 
@@ -217,7 +209,6 @@ TAO_Hash_LogStore::create_with_id (DsLogAdmin::LogId id,
                             guard,
                             lock_,
                             CORBA::INTERNAL ());
-  ACE_CHECK;
 
   if (this->hash_map_.find (id) == 0)
     {
@@ -233,7 +224,6 @@ TAO_Hash_LogStore::create_with_id (DsLogAdmin::LogId id,
                                              thresholds
                                              ),
                     CORBA::NO_MEMORY ());
-  ACE_CHECK;
 
   auto_ptr<TAO_Hash_LogRecordStore> recordstore (impl);
 
@@ -254,7 +244,6 @@ TAO_Hash_LogStore::get_log_record_store (DsLogAdmin::LogId id
                            guard,
                            lock_,
                            CORBA::INTERNAL ());
-  ACE_CHECK_RETURN (0);
 
   TAO_Hash_LogRecordStore* recordstore = 0;
 
