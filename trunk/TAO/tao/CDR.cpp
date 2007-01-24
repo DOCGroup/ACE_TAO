@@ -317,7 +317,7 @@ TAO_InputCDR::throw_skel_exception (int error_num )
 #endif
 
     default :
-      throw ( ::CORBA::MARSHAL());
+      throw ::CORBA::MARSHAL();
 
     }
 }
