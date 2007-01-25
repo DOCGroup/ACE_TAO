@@ -27,14 +27,14 @@ TAO_Notify_Tests_Peer_T<Peer_Traits>::~TAO_Notify_Tests_Peer_T ()
 }
 
 template <class Peer_Traits>
-ACE_TYPENAME TAO_Notify_Tests_Peer_T<Peer_Traits>::Proxy_Traits_PTR
+typename TAO_Notify_Tests_Peer_T<Peer_Traits>::Proxy_Traits_PTR
 TAO_Notify_Tests_Peer_T<Peer_Traits>::get_proxy (void)
 {
   return proxy_.in ();
 }
 
 template <class Peer_Traits>
-ACE_TYPENAME TAO_Notify_Tests_Peer_T<Peer_Traits>::Peer_Traits_PTR
+typename TAO_Notify_Tests_Peer_T<Peer_Traits>::Peer_Traits_PTR
 TAO_Notify_Tests_Peer_T<Peer_Traits>::activate (void)
 {
   return this->_this ();
@@ -49,7 +49,7 @@ TAO_Notify_Tests_Peer_T<Peer_Traits>::connect (Proxy_Traits_PTR proxy,
   // Clients of this class should use raw pointers, not vars.
   PortableServer::ServantBase_var servant_var (this);
 
-  ACE_TYPENAME Peer_Traits::VAR peer_var =
+  typename Peer_Traits::VAR peer_var =
     this->activate ();
 
   this->connect_to_peer (proxy, peer_var.in ());
@@ -70,7 +70,7 @@ template <class Peer_Traits>
 void
 TAO_Notify_Tests_Peer_T<Peer_Traits>::connect (Admin_Traits_PTR admin_ptr)
 {
-  ACE_TYPENAME Proxy_Traits::VAR proxy_var =
+  typename Proxy_Traits::VAR proxy_var =
     this->obtain_proxy (admin_ptr);
 
   ACE_ASSERT (!CORBA::is_nil (proxy_var.in ()));
@@ -93,15 +93,15 @@ TAO_Notify_Tests_Peer_T<Peer_Traits>::connect (void)
   this->set_poa (poa.in ());
 
   // Resolve the admin
-  ACE_TYPENAME Admin_Traits::VAR admin_var;
+  typename Admin_Traits::VAR admin_var;
 
   LOOKUP_MANAGER->resolve (admin_var,
                            this->admin_name_.c_str ());
 
-  ACE_TYPENAME Admin_Ext_Traits::VAR admin_ext_var =
+  typename Admin_Ext_Traits::VAR admin_ext_var =
     Admin_Ext_Traits_INTERFACE::_narrow (admin_var.in ());
 
-  ACE_TYPENAME Proxy_Traits::VAR proxy_var =
+  typename Proxy_Traits::VAR proxy_var =
     this->obtain_proxy (admin_ext_var.in (),
                         this->qos_);
 

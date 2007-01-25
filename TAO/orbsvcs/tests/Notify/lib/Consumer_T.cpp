@@ -16,14 +16,14 @@ TAO_Notify_Tests_Consumer_T<Consumer_Traits>::~TAO_Notify_Tests_Consumer_T ()
 {
 }
 
-template <class Consumer_Traits> ACE_TYPENAME TAO_Notify_Tests_Consumer_T<Consumer_Traits>::Proxy_Traits_PTR
+template <class Consumer_Traits> typename TAO_Notify_Tests_Consumer_T<Consumer_Traits>::Proxy_Traits_PTR
 TAO_Notify_Tests_Consumer_T<Consumer_Traits>::get_proxy_supplier (void)
 {
   return this->get_proxy ();
 }
 
-template <class Consumer_Traits> ACE_TYPENAME TAO_Notify_Tests_Consumer_T<Consumer_Traits>::Proxy_Traits_PTR
-TAO_Notify_Tests_Consumer_T<Consumer_Traits>::obtain_proxy (ACE_TYPENAME TAO_Notify_Tests_Consumer_T<Consumer_Traits>::Admin_Traits_PTR admin_ptr)
+template <class Consumer_Traits> typename TAO_Notify_Tests_Consumer_T<Consumer_Traits>::Proxy_Traits_PTR
+TAO_Notify_Tests_Consumer_T<Consumer_Traits>::obtain_proxy (typename TAO_Notify_Tests_Consumer_T<Consumer_Traits>::Admin_Traits_PTR admin_ptr)
 {
   Consumer_Traits traits;
 
@@ -38,8 +38,8 @@ TAO_Notify_Tests_Consumer_T<Consumer_Traits>::obtain_proxy (ACE_TYPENAME TAO_Not
   return Proxy_Traits_INTERFACE::_narrow (proxy_supplier.in ());
 }
 
-template <class Consumer_Traits> ACE_TYPENAME TAO_Notify_Tests_Consumer_T<Consumer_Traits>::Proxy_Traits_PTR
-TAO_Notify_Tests_Consumer_T<Consumer_Traits>::obtain_proxy (ACE_TYPENAME TAO_Notify_Tests_Consumer_T<Consumer_Traits>::Admin_Ext_Traits_PTR admin_ptr
+template <class Consumer_Traits> typename TAO_Notify_Tests_Consumer_T<Consumer_Traits>::Proxy_Traits_PTR
+TAO_Notify_Tests_Consumer_T<Consumer_Traits>::obtain_proxy (typename TAO_Notify_Tests_Consumer_T<Consumer_Traits>::Admin_Ext_Traits_PTR admin_ptr
                                              , CosNotification::QoSProperties& qos)
 {
   Consumer_Traits traits;
@@ -75,7 +75,7 @@ TAO_Notify_Tests_Consumer_T<Consumer_Traits>::subscription_change (CosNotificati
   ACE_DEBUG ((LM_DEBUG, "\n"));
 
   /// subscribe
-  ACE_TYPENAME Proxy_Traits::PTR proxy_supplier = this->get_proxy ();
+  typename Proxy_Traits::PTR proxy_supplier = this->get_proxy ();
 
   if (proxy_supplier != 0)
     {

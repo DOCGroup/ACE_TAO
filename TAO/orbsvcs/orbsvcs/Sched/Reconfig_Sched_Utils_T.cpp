@@ -243,8 +243,8 @@ postfix_action (TAO_Reconfig_Scheduler_Entry & /* rse */)
 template <class RECONFIG_SCHED_STRATEGY, class ACE_LOCK>
 TAO_RSE_DFS_Visitor<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::
 TAO_RSE_DFS_Visitor
-  (ACE_TYPENAME TAO_RSE_Dependency_Visitor<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::DEPENDENCY_SET_MAP & dependency_map,
-   ACE_TYPENAME TAO_RSE_Dependency_Visitor<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::RT_INFO_MAP & rt_info_map)
+  (typename TAO_RSE_Dependency_Visitor<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::DEPENDENCY_SET_MAP & dependency_map,
+   typename TAO_RSE_Dependency_Visitor<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::RT_INFO_MAP & rt_info_map)
   : TAO_RSE_Dependency_Visitor<RECONFIG_SCHED_STRATEGY, ACE_LOCK>
       (dependency_map, rt_info_map),
     DFS_time_ (0)
@@ -330,8 +330,8 @@ postfix_action (TAO_Reconfig_Scheduler_Entry &rse)
 template <class RECONFIG_SCHED_STRATEGY, class ACE_LOCK>
 TAO_RSE_SCC_Visitor<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::
 TAO_RSE_SCC_Visitor
-  (ACE_TYPENAME TAO_RSE_Dependency_Visitor<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::DEPENDENCY_SET_MAP & dependency_map,
-   ACE_TYPENAME TAO_RSE_Dependency_Visitor<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::RT_INFO_MAP & rt_info_map)
+  (typename TAO_RSE_Dependency_Visitor<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::DEPENDENCY_SET_MAP & dependency_map,
+   typename TAO_RSE_Dependency_Visitor<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::RT_INFO_MAP & rt_info_map)
   : TAO_RSE_Dependency_Visitor<RECONFIG_SCHED_STRATEGY, ACE_LOCK>
       (dependency_map, rt_info_map),
     DFS_time_ (0),
@@ -481,8 +481,8 @@ postfix_action (TAO_Reconfig_Scheduler_Entry &rse)
 template <class RECONFIG_SCHED_STRATEGY, class ACE_LOCK>
 TAO_RSE_Reverse_Propagation_Visitor<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::
 TAO_RSE_Reverse_Propagation_Visitor
-  (ACE_TYPENAME TAO_RSE_Dependency_Visitor<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::DEPENDENCY_SET_MAP & dependency_map,
-   ACE_TYPENAME TAO_RSE_Dependency_Visitor<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::RT_INFO_MAP & rt_info_map)
+  (typename TAO_RSE_Dependency_Visitor<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::DEPENDENCY_SET_MAP & dependency_map,
+   typename TAO_RSE_Dependency_Visitor<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::RT_INFO_MAP & rt_info_map)
   : TAO_RSE_Dependency_Visitor<RECONFIG_SCHED_STRATEGY, ACE_LOCK> (dependency_map, rt_info_map)
 {
 }
@@ -547,8 +547,8 @@ pre_recurse_action (TAO_Reconfig_Scheduler_Entry &entry,
 template <class RECONFIG_SCHED_STRATEGY, class ACE_LOCK>
 TAO_RSE_Forward_Propagation_Visitor<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::
 TAO_RSE_Forward_Propagation_Visitor
-  (ACE_TYPENAME TAO_RSE_Dependency_Visitor<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::DEPENDENCY_SET_MAP & dependency_map,
-   ACE_TYPENAME TAO_RSE_Dependency_Visitor<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::RT_INFO_MAP & rt_info_map)
+  (typename TAO_RSE_Dependency_Visitor<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::DEPENDENCY_SET_MAP & dependency_map,
+   typename TAO_RSE_Dependency_Visitor<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::RT_INFO_MAP & rt_info_map)
   : TAO_RSE_Dependency_Visitor<RECONFIG_SCHED_STRATEGY, ACE_LOCK> (dependency_map, rt_info_map),
     unresolved_locals_ (0),
     unresolved_remotes_ (0),
@@ -1034,8 +1034,8 @@ TAO_Tuple_Admission_Visitor<RECONFIG_SCHED_STRATEGY>::noncritical_utilization_th
 template <class RECONFIG_SCHED_STRATEGY, class ACE_LOCK>
 TAO_RSE_Criticality_Propagation_Visitor<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::
 TAO_RSE_Criticality_Propagation_Visitor
-  (ACE_TYPENAME TAO_RSE_Dependency_Visitor<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::DEPENDENCY_SET_MAP & dependency_map,
-   ACE_TYPENAME TAO_RSE_Dependency_Visitor<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::RT_INFO_MAP & rt_info_map)
+  (typename TAO_RSE_Dependency_Visitor<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::DEPENDENCY_SET_MAP & dependency_map,
+   typename TAO_RSE_Dependency_Visitor<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::RT_INFO_MAP & rt_info_map)
   : TAO_RSE_Dependency_Visitor<RECONFIG_SCHED_STRATEGY, ACE_LOCK> (dependency_map, rt_info_map)
 {
 }

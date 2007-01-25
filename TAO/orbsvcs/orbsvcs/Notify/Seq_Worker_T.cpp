@@ -16,7 +16,7 @@ TAO_Notify_Seq_Worker_T<T>::TAO_Notify_Seq_Worker_T (void)
 {
 }
 
-template<class TYPE> ACE_TYPENAME TAO_Notify_Seq_Worker_T<TYPE>::SEQ*
+template<class TYPE> typename TAO_Notify_Seq_Worker_T<TYPE>::SEQ*
 TAO_Notify_Seq_Worker_T<TYPE>::create (CONTAINER &container)
 {
   SEQ* tmp;
