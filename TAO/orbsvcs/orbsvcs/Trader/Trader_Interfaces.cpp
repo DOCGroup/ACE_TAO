@@ -226,7 +226,7 @@ lookup_one_type (const char* type,
   // HP compiler, which seriously requires the typename keyword
   // here. I apologize if this ifdef offends some ACE users'
   // sensibilities --- it certainly offends mine.
-  ACE_TYPENAME TAO_Offer_Database<MAP_LOCK_TYPE>::offer_iterator
+  typename TAO_Offer_Database<MAP_LOCK_TYPE>::offer_iterator
     offer_iter (type, offer_database);
 #endif
 
@@ -1043,7 +1043,7 @@ withdraw_using_constraint (const char *type,
     // the HP compiler, which seriously requires the typename keyword
     // here. I apologize if this ifdef offends some ACE users'
     // sensibilities --- it certainly offends mine.
-    ACE_TYPENAME TAO_Offer_Database<MAP_LOCK_TYPE>::offer_iterator
+    typename TAO_Offer_Database<MAP_LOCK_TYPE>::offer_iterator
       offer_iter (type, offer_database);
 #endif /* _MSC_VER */
 
@@ -1655,7 +1655,7 @@ TAO_Link<TRADER_LOCK_TYPE,MAP_LOCK_TYPE>::describe_link (const char *name)
     ACE_THROW_RETURN (CosTrading::Link::IllegalLinkName (name), 0);
 
   // Ensure this isn't a duplicate link name.
-  ACE_TYPENAME Links::ENTRY* link_entry = 0;
+  typename Links::ENTRY* link_entry = 0;
   CORBA::String_var link_name (name);
   if (this->links_.find (link_name, link_entry) == -1)
     ACE_THROW_RETURN (CosTrading::Link::UnknownLinkName (name),
@@ -1696,7 +1696,7 @@ TAO_Link<TRADER_LOCK_TYPE,MAP_LOCK_TYPE>::list_links (void)
     CosTrading::LinkNameSeq::allocbuf (static_cast<CORBA::ULong> (size));
 
   // Copy the link names into the buffer.
-  for (ACE_TYPENAME Links::iterator links_iter (this->links_);
+  for (typename Links::iterator links_iter (this->links_);
        ! links_iter.done ();
        links_iter++)
     link_seq[i++] = CORBA::string_dup ((*links_iter).ext_id_.in ());
@@ -1721,7 +1721,7 @@ modify_link (const char *name,
     throw CosTrading::Link::IllegalLinkName (name);
 
   // Ensure this isn't a duplicate link name.
-  ACE_TYPENAME Links::ENTRY* link_entry = 0;
+  typename Links::ENTRY* link_entry = 0;
   CORBA::String_var link_name (name);
   if (this->links_.find (link_name, link_entry) == -1)
     throw CosTrading::Link::UnknownLinkName (name);

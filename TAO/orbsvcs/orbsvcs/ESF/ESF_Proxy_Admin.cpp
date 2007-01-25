@@ -36,10 +36,10 @@ TAO_ESF_Proxy_Admin<EVENT_CHANNEL,PROXY,INTERFACE>::
 
   TAO_ESF_RefCountedRef<PROXY> holder (proxy);
 
-  ACE_TYPENAME PROXY::_ptr_type r;
+  typename PROXY::_ptr_type r;
   proxy->activate (r);
 
-  ACE_TYPENAME PROXY::_var_type result = r;
+  typename PROXY::_var_type result = r;
 
   this->collection_->connected (proxy);
 
